@@ -1,126 +1,118 @@
 From: Tim Henigan <tim.henigan@gmail.com>
-Subject: [PATCH 10/9 v5] difftool: fix regression in '--prompt' options
-Date: Thu, 22 Mar 2012 11:02:19 -0400
-Message-ID: <1332428541-24878-1-git-send-email-tim.henigan@gmail.com>
+Subject: [PATCH 12/9 v5] t7800: add tests for difftool --dir-diff
+Date: Thu, 22 Mar 2012 11:02:20 -0400
+Message-ID: <1332428541-24878-2-git-send-email-tim.henigan@gmail.com>
+References: <1332428541-24878-1-git-send-email-tim.henigan@gmail.com>
 Cc: Tim Henigan <tim.henigan@gmail.com>
 To: gitster@pobox.com, git@vger.kernel.org, davvid@gmail.com
-X-From: git-owner@vger.kernel.org Thu Mar 22 16:08:34 2012
+X-From: git-owner@vger.kernel.org Thu Mar 22 16:08:57 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SAjcs-00082c-BK
-	for gcvg-git-2@plane.gmane.org; Thu, 22 Mar 2012 16:08:30 +0100
+	id 1SAjdI-0008Q2-Bb
+	for gcvg-git-2@plane.gmane.org; Thu, 22 Mar 2012 16:08:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030267Ab2CVPIY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 Mar 2012 11:08:24 -0400
+	id S1030373Ab2CVPIt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 Mar 2012 11:08:49 -0400
 Received: from mail-qc0-f174.google.com ([209.85.216.174]:43136 "EHLO
 	mail-qc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S964878Ab2CVPIX (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Mar 2012 11:08:23 -0400
-Received: by qcqw6 with SMTP id w6so1367266qcq.19
-        for <git@vger.kernel.org>; Thu, 22 Mar 2012 08:08:23 -0700 (PDT)
+	with ESMTP id S1030280Ab2CVPIs (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Mar 2012 11:08:48 -0400
+Received: by mail-qc0-f174.google.com with SMTP id w6so1367266qcq.19
+        for <git@vger.kernel.org>; Thu, 22 Mar 2012 08:08:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        bh=QpizwOOVjNH7Y8C4Etx3y71PWlLQnxw0g5RIdsXgPQE=;
-        b=bPKabgyGGgwzIDMD5vPr+KIB1eNXbkO5euXQQOjiAnf/QpDED0jYlJ1FVQ8x/XFUsC
-         FoG8LPN1E6Z+VUT4/Hu+ijp9o4nlbIfXK9rIwdog1C6efMnrulma/m6dyRSONFnijKWf
-         I26s77MXbRBHaW0JnL9RQjeyc5L2vcUr3OAj7Hy/aBb79hvUKZh+NKOdYiDp485wDQDv
-         tbhgoGmR+Gfq6YDvACoobf50EkS6okoIkAW0ci+hrUy4hlQfn9+yt0udN43bq/S5QJXL
-         Kg4L3oaDOvGvhd3ekrFfx/lHrAjLssuuXDXBMwOhUSjtX76MBVSEO6uPClRD+1PH49GO
-         KktA==
-Received: by 10.224.71.19 with SMTP id f19mr1364724qaj.0.1332428903201;
-        Thu, 22 Mar 2012 08:08:23 -0700 (PDT)
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        bh=1Sc7QlEFqLqA5GOaTR9PL9wuVQFxxwp1L3xbMPJacw8=;
+        b=er8aKw/l86lWtsST0DmN6acBgdpWPqowZcI+MIr/4k4IQ7oCaokl0xvgs3aZkr8FBj
+         pyzptRD3N3KJM+TPzF7BavL52eWMw2LPIzI/U1A0hnCmmqjklZ3nGgwc4dGcu1MhKB13
+         QCsIvnBrp7W1tQczXw5yuJIs407oMThZSBQ7jbYceM3DM1V7jt/97VvdSi73a83vwOp7
+         OcNSE4hdvNDgCNQJOpm8RNcRDfzkJTHTZskfhJRgLGZtzwR4QnwNnEOjp/WdKIj/YhNS
+         J2eY4ed9P19eSKy7SDe4GqbQdjxb2koFyfNMqU9aeENbVE0gffEZu9R9DMkOAg5edj0S
+         e7OQ==
+Received: by 10.229.77.131 with SMTP id g3mr3185553qck.147.1332428927994;
+        Thu, 22 Mar 2012 08:08:47 -0700 (PDT)
 Received: from localhost (adsl-99-38-69-118.dsl.sfldmi.sbcglobal.net. [99.38.69.118])
-        by mx.google.com with ESMTPS id cw5sm8763942qab.20.2012.03.22.08.08.16
+        by mx.google.com with ESMTPS id w9sm8844100qao.0.2012.03.22.08.08.39
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 22 Mar 2012 08:08:21 -0700 (PDT)
+        Thu, 22 Mar 2012 08:08:47 -0700 (PDT)
 X-Mailer: git-send-email 1.7.10.rc1.40.g756bbcd
+In-Reply-To: <1332428541-24878-1-git-send-email-tim.henigan@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193661>
-
-When difftool was changed to use Getopt::Long, it changed the way
-that the '--prompt' and '--no-prompt' options were handled. The
-expected behavior is that the two options may be given any number
-of times. The last option given "wins".
-
-For example, if a user sets "[alias] mdt = difftool --prompt", the
-following must still run without error:
-
-$ git mdt --no-prompt
-
-The changes made during the switch to Getopt::Long broke this
-behavior. This commit teaches difftool to handle them properly
-again.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193662>
 
 Signed-off-by: Tim Henigan <tim.henigan@gmail.com>
 ---
 
-This replaces 10/9 in the previous version of the series.
+This replaces 12/9 in the previous version of the series.
 
 Changes in v5:
-  - Based on an example provided by Thomas Rast on the Git dev list,
-    the '--[no-]prompt' options are parsed by Getopt::Long again.
+
+Based on an example provided by David Aguilar on the Git developer
+list, the 'difftool --dir-diff from subdirectory' test is now wrapped
+in parentheses "()".
+
+>From David's email:
+> If we wrap the subdir operations in parentheses, then the sub-shell
+> saves us from having to do "cd ..".  It also helps prevent leakage
+> from earlier failures, which is helpful when writing new tests.
 
 
- git-difftool.perl |   21 +++++++++++----------
- 1 file changed, 11 insertions(+), 10 deletions(-)
+ t/t7800-difftool.sh |   39 +++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 39 insertions(+)
 
-diff --git a/git-difftool.perl b/git-difftool.perl
-index 9f0f9a9..9892d1e 100755
---- a/git-difftool.perl
-+++ b/git-difftool.perl
-@@ -29,8 +29,8 @@ sub usage
- 	my $exitcode = shift;
- 	print << 'USAGE';
- usage: git difftool [-t|--tool=<tool>] [--tool-help]
--                    [-x|--extcmd=<cmd>]
--                    [-y|--no-prompt]   [-g|--gui]
-+                    [-x|--extcmd=<cmd>] [-g|--gui]
-+                    [--prompt] [-y|--no-prompt]
-                     [-d|--dir-diff]
-                     ['git diff' options]
- USAGE
-@@ -131,15 +131,15 @@ sub setup_dir_diff
+diff --git a/t/t7800-difftool.sh b/t/t7800-difftool.sh
+index 41d8399..5f3ad3f 100755
+--- a/t/t7800-difftool.sh
++++ b/t/t7800-difftool.sh
+@@ -311,4 +311,43 @@ test_expect_success PERL 'difftool --tool-help' '
+ 	echo "$tool_help" | stdin_contains tool
+ '
  
- # parse command-line options. all unrecognized options and arguments
- # are passed through to the 'git diff' command.
--my ($difftool_cmd, $dirdiff, $extcmd, $gui, $help, $no_prompt, $prompt, $tool_help);
-+my ($difftool_cmd, $dirdiff, $extcmd, $gui, $help, $prompt, $tool_help);
- GetOptions('g|gui' => \$gui,
- 	'd|dir-diff' => \$dirdiff,
- 	'h' => \$help,
--	'prompt' => \$prompt,
-+	'prompt!' => \$prompt,
-+	'y' => sub { $prompt = 0; },
- 	't|tool:s' => \$difftool_cmd,
- 	'tool-help' => \$tool_help,
--	'x|extcmd:s' => \$extcmd,
--	'y|no-prompt' => \$no_prompt);
-+	'x|extcmd:s' => \$extcmd);
- 
- if (defined($help)) {
- 	usage(0);
-@@ -203,10 +203,11 @@ if (defined($dirdiff)) {
- 	}
- } else {
- 	if (defined($prompt)) {
--		$ENV{GIT_DIFFTOOL_PROMPT} = 'true';
--	}
--	elsif (defined($no_prompt)) {
--		$ENV{GIT_DIFFTOOL_NO_PROMPT} = 'true';
-+		if ($prompt) {
-+			$ENV{GIT_DIFFTOOL_PROMPT} = 'true';
-+		} else {
-+			$ENV{GIT_DIFFTOOL_NO_PROMPT} = 'true';
-+		}
- 	}
- 
- 	$ENV{GIT_PAGER} = '';
++test_expect_success PERL 'setup change in subdirectory' '
++	git checkout master &&
++	mkdir sub &&
++	echo master >sub/sub &&
++	git add sub/sub &&
++	git commit -m "added sub/sub" &&
++	echo test >>file &&
++	echo test >>sub/sub &&
++	git add . &&
++	git commit -m "modified both"
++'
++
++test_expect_success PERL 'difftool -d' '
++	diff=$(git difftool -d --extcmd ls branch) &&
++	echo "$diff" | stdin_contains sub &&
++	echo "$diff" | stdin_contains file
++'
++
++test_expect_success PERL 'difftool --dir-diff' '
++	diff=$(git difftool --dir-diff --extcmd ls branch) &&
++	echo "$diff" | stdin_contains sub &&
++	echo "$diff" | stdin_contains file
++'
++
++test_expect_success PERL 'difftool --dir-diff ignores --prompt' '
++	diff=$(git difftool --dir-diff --prompt --extcmd ls branch) &&
++	echo "$diff" | stdin_contains sub &&
++	echo "$diff" | stdin_contains file
++'
++
++test_expect_success PERL 'difftool --dir-diff from subdirectory' '
++	(
++		cd sub &&
++		diff=$(git difftool --dir-diff --extcmd ls branch) &&
++		echo "$diff" | stdin_contains sub &&
++		echo "$diff" | stdin_contains file
++	)
++'
++
+ test_done
 -- 
 1.7.10.rc1.40.g756bbcd
