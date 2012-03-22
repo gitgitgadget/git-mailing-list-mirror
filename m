@@ -1,114 +1,80 @@
-From: David Waitzman <djw@bbn.com>
-Subject: small gitweb.txt patch fixing improper "it's"
-Date: Wed, 21 Mar 2012 22:15:02 -0400
-Message-ID: <017CC154-2E41-4F29-B9CE-30D7430CB41B@bbn.com>
-Mime-Version: 1.0 (Apple Message framework v1257)
-Content-Type: multipart/signed; boundary="Apple-Mail=_9EF6AB82-6E2F-41C9-9DC9-6773CC170A0D"; protocol="application/pkcs7-signature"; micalg=sha1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Mar 22 03:49:13 2012
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 10/9 v4] difftool: fix regression in '--prompt' options
+Date: Wed, 21 Mar 2012 21:09:36 -0700
+Message-ID: <7viphxz37j.fsf@alter.siamese.dyndns.org>
+References: <1332358560-13774-4-git-send-email-tim.henigan@gmail.com>
+ <1332381236-16004-1-git-send-email-tim.henigan@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, davvid@gmail.com
+To: Tim Henigan <tim.henigan@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Mar 22 05:09:46 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SAY5Q-0005fE-6d
-	for gcvg-git-2@plane.gmane.org; Thu, 22 Mar 2012 03:49:12 +0100
+	id 1SAZLN-0002Bd-G6
+	for gcvg-git-2@plane.gmane.org; Thu, 22 Mar 2012 05:09:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755461Ab2CVCtI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 Mar 2012 22:49:08 -0400
-Received: from smtp.bbn.com ([128.33.1.81]:60883 "EHLO smtp.bbn.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753625Ab2CVCtG (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Mar 2012 22:49:06 -0400
-X-Greylist: delayed 2039 seconds by postgrey-1.27 at vger.kernel.org; Wed, 21 Mar 2012 22:49:06 EDT
-Received: from [128.89.254.133] (port=53746)
-	by smtp.bbn.com with esmtps (TLSv1:AES128-SHA:128)
-	(Exim 4.77 (FreeBSD))
-	(envelope-from <djw@bbn.com>)
-	id 1SAXYD-0001ue-Qo
-	for git@vger.kernel.org; Wed, 21 Mar 2012 22:14:53 -0400
-X-Mailer: Apple Mail (2.1257)
+	id S1751419Ab2CVEJk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 Mar 2012 00:09:40 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:41619 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751164Ab2CVEJj (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Mar 2012 00:09:39 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8E98476E7;
+	Thu, 22 Mar 2012 00:09:38 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=OVFH4hVxYESPzSHaRqoE7uZw0dg=; b=X+m1V8
+	iG83b2uxGKrB0oF9HTFhoJyjX2DqDz6euCcYV4bFyjuOWUq6rupy1zMWeQZrq+8z
+	4Wtl7bmjsIOyibXN4EF9xyUmAWFJmyIdBUL8a/erGlElhFpclyad9TnVUJjDe4SU
+	iXg3V+yE83IPhcSMo/hvraKR+H0Tt2ihkmMIM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=s8iu7gBP/T92q+sdKfwroIx+H3SA9TeC
+	hGz9FFmnTwi5aV+CaN+p0e/JU8ClCUcI7dbMKlHvKxp/cv/ZDj832FoF4Swk3RIT
+	tutJoMRqWfqFM2o0FDOhLOSfQmVnH/xpV+wAj/3/Kx+6P4Pcs5iuMTBSsV6WXq9v
+	I3lfro4vjYw=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8512C76E6;
+	Thu, 22 Mar 2012 00:09:38 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1B98E76E5; Thu, 22 Mar 2012
+ 00:09:38 -0400 (EDT)
+In-Reply-To: <1332381236-16004-1-git-send-email-tim.henigan@gmail.com> (Tim
+ Henigan's message of "Wed, 21 Mar 2012 21:53:56 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: D75C64DC-73D4-11E1-97A0-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193632>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193633>
 
+Tim Henigan <tim.henigan@gmail.com> writes:
 
---Apple-Mail=_9EF6AB82-6E2F-41C9-9DC9-6773CC170A0D
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain;
-	charset=us-ascii
+> +# the '--prompt' and '--no-prompt' options require special treatment
+> +# because they may be specified more than once...the last one "wins".
+> +for (@ARGV) {
+> +	if (($_ eq "-y") or ($_ eq "--no-prompt")) {
+> +		$prompt = 0;
+> +	} elsif ($_ eq "--prompt") {
+> +		$prompt = 1;
+> +	} else {
+> +		push(@diffargs, $_);
+> +	}
+> +}
 
-=46rom 2cec86150882ba0b7f165b658d54573066e70f14 Mon Sep 17 00:00:00 2001
-From: David Waitzman <djw@bbn.com>
-Date: Wed, 21 Mar 2012 22:10:49 -0400
-Subject: [PATCH] Fixed improper use of "it's" when it should be "its"
+I really do not like the direction in which this series is going.  We do
+not have a similar --no-gui option to defeat --gui option that may appear
+earlier on the command line, but when we fix that bug (isn't it a bug?),
+we would have to teach this loop about that option, wouldn't we?
 
----
- Documentation/gitweb.txt |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/Documentation/gitweb.txt b/Documentation/gitweb.txt
-index 605a085..065c54e 100644
---- a/Documentation/gitweb.txt
-+++ b/Documentation/gitweb.txt
-@@ -14,7 +14,7 @@ gitweb.
-=20
- DESCRIPTION
- -----------
--Gitweb provides a web interface to git repositories.  It's features =
-include:
-+Gitweb provides a web interface to git repositories.  Its features =
-include:
-=20
- * Viewing multiple Git repositories with common root.
- * Browsing every revision of the repository.
-@@ -60,7 +60,7 @@ to gitweb.  The list of projects is generated by =
-default by scanning the
- more exact; gitweb is not interested in a working area, and is best =
-suited
- to showing "bare" repositories).
-=20
--The name of repository in gitweb is path to it's `$GIT_DIR` (it's =
-object
-+The name of repository in gitweb is path to its `$GIT_DIR` (its object
- database) relative to `$projectroot`.  Therefore the repository $repo =
-can be
- found at "$projectroot/$repo".
-=20
---=20
-1.7.9.GIT
-
-
-
---Apple-Mail=_9EF6AB82-6E2F-41C9-9DC9-6773CC170A0D
-Content-Disposition: attachment;
-	filename=smime.p7s
-Content-Type: application/pkcs7-signature;
-	name=smime.p7s
-Content-Transfer-Encoding: base64
-
-MIAGCSqGSIb3DQEHAqCAMIACAQExCzAJBgUrDgMCGgUAMIAGCSqGSIb3DQEHAQAAoIICzjCCAsow
-ggItoAMCAQICAQEwCQYHKoZIzj0EATCBiTEXMBUGA1UEAwwORGF2aWQgV2FpdHptYW4xGTAXBgNV
-BAoMEEJCTiBUZWNobm9sb2dpZXMxCjAIBgNVBAsMAUQxCzAJBgNVBAgMAk1EMQswCQYDVQQGEwJV
-UzERMA8GA1UEBwwIQ29sdW1iaWExGjAYBgkqhkiG9w0BCQEWC2Rqd0BiYm4uY29tMB4XDTEwMDUy
-MzE2MDgzNloXDTIwMDUyMDE2MDgzNlowgYkxFzAVBgNVBAMMDkRhdmlkIFdhaXR6bWFuMRkwFwYD
-VQQKDBBCQk4gVGVjaG5vbG9naWVzMQowCAYDVQQLDAFEMQswCQYDVQQIDAJNRDELMAkGA1UEBhMC
-VVMxETAPBgNVBAcMCENvbHVtYmlhMRowGAYJKoZIhvcNAQkBFgtkandAYmJuLmNvbTCBmzAQBgcq
-hkjOPQIBBgUrgQQAIwOBhgAEAJ7SKuuFJUsacCypMyS+geahMdKB8mOrnDiwRSrE3VivbMGMFcBS
-m2RdJ7Gmc0ajDaulPQpS+hfKvXf3tWQY/yqaAHetqZ5MXsUpkAvRnNnOUhV9CIJuX0DZbJVha0sD
-YnvFmHwvdYdAvIAM6HMaxeL/NybDD8SlB5clLS6pwEnW5K4To0IwQDAOBgNVHQ8BAf8EBAMCB4Aw
-FgYDVR0lAQH/BAwwCgYIKwYBBQUHAwQwFgYDVR0RBA8wDYELZGp3QGJibi5jb20wCQYHKoZIzj0E
-AQOBiwAwgYcCQgGCFV25lZtrb6nGpZYqb+FYJDDY3zTf3stgxiYxx9AtL+gX+3AAzTU6FHwcPOZW
-6+5cmOyQR+J9Qhm4oVr603CBdgJBYFfq9oNCghhZGLJqDO0cNdwvB9LDoodpTippK8jDi3yULVPi
-ZqOSdCvmZyPlg0eKt5ouX7JOZeQQJH/x/DShdW0xggGcMIIBmAIBATCBjzCBiTEXMBUGA1UEAwwO
-RGF2aWQgV2FpdHptYW4xGTAXBgNVBAoMEEJCTiBUZWNobm9sb2dpZXMxCjAIBgNVBAsMAUQxCzAJ
-BgNVBAgMAk1EMQswCQYDVQQGEwJVUzERMA8GA1UEBwwIQ29sdW1iaWExGjAYBgkqhkiG9w0BCQEW
-C2Rqd0BiYm4uY29tAgEBMAkGBSsOAwIaBQCgXTAYBgkqhkiG9w0BCQMxCwYJKoZIhvcNAQcBMBwG
-CSqGSIb3DQEJBTEPFw0xMjAzMjIwMjE1MDRaMCMGCSqGSIb3DQEJBDEWBBTBjJJdw4SxRJb4YQPi
-v4ZxmnCH/TAJBgcqhkjOPQIBBIGLMIGIAkIAx4lxGNA0f33i0+AUwINVnnMBPo8SwcmSb5S1DD+v
-u7q9bNeL0iaBA2io7I+2NN2HhVP4jI1M+lXcZfzK9nk8HoMCQgEdBUZKaM0Ye0o1afO5MpOMYAgx
-Lzr2ZUJMERgKXtt8BkYvP7AzaCOXj1MXyRwSVv5VHfYuDNeqyBMGY98eJhZcogAAAAAAAA==
-
---Apple-Mail=_9EF6AB82-6E2F-41C9-9DC9-6773CC170A0D--
+In the end, won't you end up resurrecting the argument parsing loop that
+you got rid of with the first patch in your series?  Isn't this working
+around the problem introduced only because you are using Getopt::Long and
+hitting its limitations?
