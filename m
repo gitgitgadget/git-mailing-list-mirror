@@ -1,74 +1,73 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [BUG] git bash-completion is incorrect for "git pull origin
- mas<tab>" if the ssh key is encrypted
-Date: Thu, 22 Mar 2012 10:46:05 -0700
-Message-ID: <7vmx78y1eq.fsf@alter.siamese.dyndns.org>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [BUG] git bash-completion is incorrect for "git pull origin mas<tab>" if the ssh key is encrypted
+Date: Thu, 22 Mar 2012 18:55:17 +0100
+Message-ID: <vpqvclwo70a.fsf@bauges.imag.fr>
 References: <4F6AC0FA.7040708@gmail.com> <4F6AFEC8.9090907@in.waw.pl>
+	<7vmx78y1eq.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Hong Xu <xuhdev@gmail.com>, git@vger.kernel.org
-To: Zbigniew =?utf-8?Q?J=C4=99drzejewski-Szmek?= <zbyszek@in.waw.pl>
-X-From: git-owner@vger.kernel.org Thu Mar 22 18:46:19 2012
+Cc: Zbigniew =?utf-8?Q?J=C4=99drzejewski-Szmek?= <zbyszek@in.waw.pl>,
+	Hong Xu <xuhdev@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Mar 22 18:56:04 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SAm5X-0008Sx-ET
-	for gcvg-git-2@plane.gmane.org; Thu, 22 Mar 2012 18:46:15 +0100
+	id 1SAmF2-0007Uk-BD
+	for gcvg-git-2@plane.gmane.org; Thu, 22 Mar 2012 18:56:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755019Ab2CVRqK convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 22 Mar 2012 13:46:10 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:41432 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754774Ab2CVRqI convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 22 Mar 2012 13:46:08 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B4CBE730C;
-	Thu, 22 Mar 2012 13:46:07 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=rWvy3euTigiL
-	gf2MbPCb1LJC1Gw=; b=c3jRBDui42z/wONIxVegCULARfaENyV7nMs9KvWgwdzw
-	RBnvuQ2UqYD0x1gYSLS+j18RtSmk8R5iqZxceWpTsH1JLQGcAxP5InclWGnOcw57
-	ys1mnebaKI2V1FBypwYjhnQNo+Hx19CCqDThbmwSzf0KaenSqoqoSRxped/Xbdk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=g4abLs
-	eGV0iDxB0jmkivN1F3GudLY6DpI049jzw4gLsbqzUeSUXbKGlvbjCL19ZlyqdmWN
-	a03e+P6nHOeAbwKNSXSNjqSMNl1S8xLSnEkps6tvC71f2c4G5Bpm9oA9Vk8Rfgd8
-	phaBN5XV8SAaI+sGwq8I6BZ8GeYx7a26Ip6CI=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AAC05730B;
-	Thu, 22 Mar 2012 13:46:07 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 43F72730A; Thu, 22 Mar 2012
- 13:46:07 -0400 (EDT)
-In-Reply-To: <4F6AFEC8.9090907@in.waw.pl> ("Zbigniew =?utf-8?Q?J=C4=99drze?=
- =?utf-8?Q?jewski-Szmek=22's?= message of "Thu, 22 Mar 2012 11:28:24 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: E72DD0EA-7446-11E1-9B5D-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753069Ab2CVRzz convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 22 Mar 2012 13:55:55 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:41416 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752954Ab2CVRzv convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 22 Mar 2012 13:55:51 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id q2MHoRlx021793
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Thu, 22 Mar 2012 18:50:28 +0100
+Received: from bauges.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1SAmEI-0004NM-NT; Thu, 22 Mar 2012 18:55:18 +0100
+In-Reply-To: <7vmx78y1eq.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Thu, 22 Mar 2012 10:46:05 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.93 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Thu, 22 Mar 2012 18:50:28 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: q2MHoRlx021793
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1333043432.19272@F/5QcznA0Z9Q77BPTkW6TQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193670>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193671>
 
-Zbigniew J=C4=99drzejewski-Szmek  <zbyszek@in.waw.pl> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> Maybe git-ls-remote should learn --quiet?
+> Zbigniew J=C4=99drzejewski-Szmek  <zbyszek@in.waw.pl> writes:
+>
+>> Maybe git-ls-remote should learn --quiet?
+>
+> I would rather think that the completion should ask for refs only whe=
+n
+> dealing with local repositories, without going over network, whether =
+the
+> query involves authentication or not.
 
-I would rather think that the completion should ask for refs only when
-dealing with local repositories, without going over network, whether th=
-e
-query involves authentication or not.
+It depends on what "network" is. When the network is just a machine on
+the same Gb-ethernet LAN, completion can still be useful (only if you
+have password-less authentication of course). I don't use it much with
+Git, but I find it handy that ZSH completes rsync remote pathes for
+example.
 
-When given a repository nickname, do we have a good way for the complet=
-ion
-script to tell if it is local or remote?  "type -d $it" might be cheap =
-way
-to do so, or we could even do "test $it =3D ." to limit it really to th=
-e
-current repository.
+--=20
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
