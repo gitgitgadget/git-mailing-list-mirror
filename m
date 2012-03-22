@@ -1,78 +1,95 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 3/3] merge-recursive: don't detect renames from empty
- files
-Date: Thu, 22 Mar 2012 14:18:51 -0500
-Message-ID: <20120322191851.GA23293@burratino>
-References: <20120322185246.GA27037@sigill.intra.peff.net>
- <20120322185349.GC32727@sigill.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Zbigniew =?utf-8?Q?J=C4=99drzejewski-Szmek?= <zbyszek@in.waw.pl>,
-	"Randal L. Schwartz" <merlyn@stonehenge.com>,
-	Ralf Nyren <ralf.nyren@ericsson.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Mar 22 20:19:14 2012
+From: Lucian Poston <lucian.poston@gmail.com>
+Subject: [PATCH v2 1/3] Add output_prefix_length to diff_options
+Date: Thu, 22 Mar 2012 12:27:39 -0700
+Message-ID: <1332444461-11957-1-git-send-email-lucian.poston@gmail.com>
+Cc: Lucian Poston <lucian.poston@gmail.com>,
+	"Adam Simpkins" <adam@adamsimpkins.net>,
+	"Jeff King" <peff@peff.net>, "Junio C Hamano" <junkio@cox.net>,
+	"Bo Yang" <struggleyb.nku@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Mar 22 20:28:24 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SAnXR-0002Qd-NY
-	for gcvg-git-2@plane.gmane.org; Thu, 22 Mar 2012 20:19:10 +0100
+	id 1SAngN-0001ix-I5
+	for gcvg-git-2@plane.gmane.org; Thu, 22 Mar 2012 20:28:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964944Ab2CVTTG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 Mar 2012 15:19:06 -0400
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:64553 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759359Ab2CVTTC (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Mar 2012 15:19:02 -0400
-Received: by iagz16 with SMTP id z16so3497640iag.19
-        for <git@vger.kernel.org>; Thu, 22 Mar 2012 12:19:02 -0700 (PDT)
+	id S1759359Ab2CVT2S (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 Mar 2012 15:28:18 -0400
+Received: from mail-pb0-f46.google.com ([209.85.160.46]:48069 "EHLO
+	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751714Ab2CVT2S (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Mar 2012 15:28:18 -0400
+Received: by pbcun15 with SMTP id un15so1825988pbc.19
+        for <git@vger.kernel.org>; Thu, 22 Mar 2012 12:28:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=0dXGOKaDJsWmMYQn6Y+WTQ34UzK9Vj17oX5eFi5v7OY=;
-        b=lzYnv4R3mQaKtwCvapS3+NeKe9KsShD3BzwCX3BFuPIH+McdsNrFBnfBNdxiboIdRc
-         mxONCahBC07TkPxHBrAuUuIfDU/MYrIZBeojSGDh3vdyf7t+/L9coOBExjWo3QIGkiI3
-         VyDcJe2jr8S7CUhRC0W9/0pVFydNu/xG1VJdnbpQt2ioy0VFu84hFQTSug2dJT9gHEzN
-         Bt4R+EOX/d89YXjOwmvqjbVzsWfQPDOJ7BK2/HfQWtRnNOgwVTCWhCiHvzh0jClsMUIS
-         W3YSR8panapEyT91EzsRNS88L/HyLn+CeGT9FDIgihBX2c3pZj+MSrihnozhnrJdX3df
-         Qkqg==
-Received: by 10.50.159.198 with SMTP id xe6mr3319496igb.74.1332443942017;
-        Thu, 22 Mar 2012 12:19:02 -0700 (PDT)
-Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
-        by mx.google.com with ESMTPS id cg9sm2732778igb.17.2012.03.22.12.19.00
-        (version=SSLv3 cipher=OTHER);
-        Thu, 22 Mar 2012 12:19:01 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <20120322185349.GC32727@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        bh=9pC2d3dW0B1YyTq+oivAoU7tErZJ7rv2EXFKrl4e/vo=;
+        b=TJPKDcWKX2m9CB5wcrXMWFvcyHB9su/tNiEKmFES4QySaD16aWHqZ87JsnHuJs34YD
+         M4XevYE+h6oKXAUE5MTDdfOHg6UMLwM80dJ+C/0ySMS9lvyB7bCZWZpsiFdswUZ2k5qr
+         INWrdlUcQGaYVMzAA1frstfzgbMpF2Zf79NI1YVR26fjSXWxNW6fX7XDdMpYPHpcfYH7
+         XYA5xovyIQJugN7HwFMDajQp/IV8hKj2QoeeEztrsoe4GcqnAEkgm7EyQav0+NXtFkSb
+         O9e504DB4Kzg8K+/53imhRgSMTklCfMd81NGI/L2SZy06ECPblT807MsOOao47HdZxhf
+         Svag==
+Received: by 10.68.191.134 with SMTP id gy6mr22541617pbc.152.1332444497547;
+        Thu, 22 Mar 2012 12:28:17 -0700 (PDT)
+Received: from localhost.localdomain (c-76-121-54-246.hsd1.wa.comcast.net. [76.121.54.246])
+        by mx.google.com with ESMTPS id m5sm4281227pbo.69.2012.03.22.12.28.16
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 22 Mar 2012 12:28:16 -0700 (PDT)
+X-Mailer: git-send-email 1.7.3.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193693>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193694>
 
-Jeff King wrote:
+Add output_prefix_length to diff_options. Initialize the value to 0 and only
+set it when graph.c:diff_output_prefix_callback() is called.
 
-> We could do the same thing for general diff rename
-> detection. However, the stakes are much less high there, as
-> we are explicitly reporting the rename to the user. It's
-> only the automatic nature of merge-recursive that makes the
-> result confusing. So there's not as much need for caution
-> when just showing a diff.
+Signed-off-by: Lucian Poston <lucian.poston@gmail.com>
+---
+ diff.h  |    1 +
+ graph.c |    3 +++
+ 2 files changed, 4 insertions(+), 0 deletions(-)
 
-The stakes may be different, but doesn't the same justification apply
-anyway?  If "git diff -M" chooses a random pairing to describe a
-renaming of multiple empty files, that seems just as confusing as
-merge-recursive making the same mistake.
-
-If adding this check in diffcore is more complicated, doing it in
-merge-recursive for now seems fine and prudent, but if we are doing it
-at the merge-recursive level just to be conservative then that seems
-like the wrong layer.
-
-Thanks for a clean and pleasant patch.
-Jonathan
+diff --git a/diff.h b/diff.h
+index cb68743..19d762f 100644
+--- a/diff.h
++++ b/diff.h
+@@ -150,6 +150,7 @@ struct diff_options {
+ 	diff_format_fn_t format_callback;
+ 	void *format_callback_data;
+ 	diff_prefix_fn_t output_prefix;
++	int output_prefix_length;
+ 	void *output_prefix_data;
+ };
+ 
+diff --git a/graph.c b/graph.c
+index 7358416..7e0a099 100644
+--- a/graph.c
++++ b/graph.c
+@@ -194,8 +194,10 @@ static struct strbuf *diff_output_prefix_callback(struct diff_options *opt, void
+ 	struct git_graph *graph = data;
+ 	static struct strbuf msgbuf = STRBUF_INIT;
+ 
++	assert(opt);
+ 	assert(graph);
+ 
++	opt->output_prefix_length = graph->width;
+ 	strbuf_reset(&msgbuf);
+ 	graph_padding_line(graph, &msgbuf);
+ 	return &msgbuf;
+@@ -245,6 +247,7 @@ struct git_graph *graph_init(struct rev_info *opt)
+ 	 */
+ 	opt->diffopt.output_prefix = diff_output_prefix_callback;
+ 	opt->diffopt.output_prefix_data = graph;
++	opt->diffopt.output_prefix_length = 0;
+ 
+ 	return graph;
+ }
+-- 
+1.7.3.4
