@@ -1,132 +1,70 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Strange effect merging empty file
-Date: Thu, 22 Mar 2012 14:25:33 -0400
-Message-ID: <20120322182533.GA20360@sigill.intra.peff.net>
-References: <4F69AD3C.4070203@ericsson.com>
- <4F69B375.5050205@in.waw.pl>
- <86iphwomnq.fsf@red.stonehenge.com>
- <4F6B1F48.3040007@in.waw.pl>
- <20120322140140.GA8803@sigill.intra.peff.net>
- <7vty1gy3eh.fsf@alter.siamese.dyndns.org>
- <20120322175952.GA13069@sigill.intra.peff.net>
+From: =?UTF-8?B?WmJpZ25pZXcgSsSZZHJ6ZWpld3NraS1Tem1law==?= 
+	<zbyszek@in.waw.pl>
+Subject: Re: [BUG] git bash-completion is incorrect for "git pull origin mas<tab>"
+ if the ssh key is encrypted
+Date: Thu, 22 Mar 2012 19:30:05 +0100
+Message-ID: <4F6B6FAD.6010905@in.waw.pl>
+References: <4F6AC0FA.7040708@gmail.com> <4F6AFEC8.9090907@in.waw.pl> <7vmx78y1eq.fsf@alter.siamese.dyndns.org> <vpqvclwo70a.fsf@bauges.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Zbigniew =?utf-8?Q?J=C4=99drzejewski-Szmek?= <zbyszek@in.waw.pl>,
-	"Randal L. Schwartz" <merlyn@stonehenge.com>,
-	Ralf Nyren <ralf.nyren@ericsson.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Mar 22 19:25:42 2012
+Content-Type: text/plain; charset=UTF-8;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Hong Xu <xuhdev@gmail.com>, git@vger.kernel.org
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Mar 22 19:30:22 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SAmhh-0004U1-2V
-	for gcvg-git-2@plane.gmane.org; Thu, 22 Mar 2012 19:25:41 +0100
+	id 1SAmmE-0007rw-1z
+	for gcvg-git-2@plane.gmane.org; Thu, 22 Mar 2012 19:30:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754875Ab2CVSZg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 Mar 2012 14:25:36 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:56798
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753992Ab2CVSZf (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Mar 2012 14:25:35 -0400
-Received: (qmail 3277 invoked by uid 107); 22 Mar 2012 18:25:51 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 22 Mar 2012 14:25:51 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 22 Mar 2012 14:25:33 -0400
-Content-Disposition: inline
-In-Reply-To: <20120322175952.GA13069@sigill.intra.peff.net>
+	id S1754923Ab2CVSaQ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 22 Mar 2012 14:30:16 -0400
+Received: from kawka.in.waw.pl ([178.63.212.103]:56081 "EHLO kawka.in.waw.pl"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753226Ab2CVSaO (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Mar 2012 14:30:14 -0400
+Received: from 89-78-221-60.dynamic.chello.pl ([89.78.221.60] helo=[192.168.0.12])
+	by kawka.in.waw.pl with esmtpsa (TLS1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.72)
+	(envelope-from <zbyszek@in.waw.pl>)
+	id 1SAmm3-0002uM-2o; Thu, 22 Mar 2012 19:30:11 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:8.0) Gecko/20120104 Icedove/8.0
+In-Reply-To: <vpqvclwo70a.fsf@bauges.imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193674>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193675>
 
-On Thu, Mar 22, 2012 at 01:59:53PM -0400, Jeff King wrote:
+On 03/22/2012 06:55 PM, Matthieu Moy wrote:
+> Junio C Hamano<gitster@pobox.com>  writes:
+>
+>> Zbigniew J=C4=99drzejewski-Szmek<zbyszek@in.waw.pl>  writes:
+>>
+>>> Maybe git-ls-remote should learn --quiet?
+>>
+>> I would rather think that the completion should ask for refs only wh=
+en
+>> dealing with local repositories, without going over network, whether=
+ the
+>> query involves authentication or not.
+>
+> It depends on what "network" is. When the network is just a machine o=
+n
+> the same Gb-ethernet LAN, completion can still be useful (only if you
+> have password-less authentication of course). I don't use it much wit=
+h
+> Git, but I find it handy that ZSH completes rsync remote pathes for
+> example.
+Yeah, I can second that. Even on a slow network, it can be useful. I us=
+e=20
+ssh with ControlMaster=3Dyes and completion over a relatively slow netw=
+ork=20
+is pretty much instantaneous.
 
-> > Yeah, thanks for digging up the old thread. I was looking at the patch to
-> > merge-recursive from Dscho on that thread and I think it identified the
-> > place that needs patching correctly. I was on a tablet, without the access
-> > to the surrounding code outside the patch context, so I do not know if the
-> > logic to detect the pure-rename of an empty file in the patch was correct,
-> > or the patch still applies to the current codebase, though.
-> 
-> It's easy to apply the patch manually, and I have written a test.
-> However, it seems to cause lots of other parts of t6022 to fail. I'll
-> try to dig up the cause.
-
-Found it. The diff code is very smart about doing as little work as
-possible. For a raw diff (i.e., not patch), we can often get away with
-not loading the blob at all, and therefore have no idea what the size
-is. The inexact rename code may load it, of course, but any file which
-is an exact rename will have a "0" size, also.
-
-We can get around it by just checking for the empty-blob sha1. The patch
-below should do the right thing, and passes the whole test suite.
-
----
-diff --git a/cache.h b/cache.h
-index e5e1aa4..61671b6 100644
---- a/cache.h
-+++ b/cache.h
-@@ -708,6 +708,8 @@ static inline void hashclr(unsigned char *hash)
- #define EMPTY_TREE_SHA1_BIN \
- 	 ((const unsigned char *) EMPTY_TREE_SHA1_BIN_LITERAL)
- 
-+int is_empty_blob_sha1(const unsigned char *sha1);
-+
- int git_mkstemp(char *path, size_t n, const char *template);
- 
- int git_mkstemps(char *path, size_t n, const char *template, int suffix_len);
-diff --git a/merge-recursive.c b/merge-recursive.c
-index 6479a60..ed4ff16 100644
---- a/merge-recursive.c
-+++ b/merge-recursive.c
-@@ -502,7 +502,7 @@ static struct string_list *get_renames(struct merge_options *o,
- 		struct string_list_item *item;
- 		struct rename *re;
- 		struct diff_filepair *pair = diff_queued_diff.queue[i];
--		if (pair->status != 'R') {
-+		if (pair->status != 'R' || is_empty_blob_sha1(pair->one->sha1)) {
- 			diff_free_filepair(pair);
- 			continue;
- 		}
-diff --git a/read-cache.c b/read-cache.c
-index 274e54b..dfabad0 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -157,7 +157,7 @@ static int ce_modified_check_fs(struct cache_entry *ce, struct stat *st)
- 	return 0;
- }
- 
--static int is_empty_blob_sha1(const unsigned char *sha1)
-+int is_empty_blob_sha1(const unsigned char *sha1)
- {
- 	static const unsigned char empty_blob_sha1[20] = {
- 		0xe6,0x9d,0xe2,0x9b,0xb2,0xd1,0xd6,0x43,0x4b,0x8b,
-diff --git a/t/t6022-merge-rename.sh b/t/t6022-merge-rename.sh
-index 9d8584e..1104249 100755
---- a/t/t6022-merge-rename.sh
-+++ b/t/t6022-merge-rename.sh
-@@ -884,4 +884,20 @@ test_expect_success 'no spurious "refusing to lose untracked" message' '
- 	! grep "refusing to lose untracked file" errors.txt
- '
- 
-+test_expect_success 'do not follow renames for empty files' '
-+	git checkout -f -b empty-base &&
-+	>empty1 &&
-+	git add empty1 &&
-+	git commit -m base &&
-+	echo content >empty1 &&
-+	git add empty1 &&
-+	git commit -m fill &&
-+	git checkout -b empty-topic HEAD^ &&
-+	git mv empty1 empty2 &&
-+	git commit -m rename &&
-+	test_must_fail git merge empty-base &&
-+	>expect &&
-+	test_cmp expect empty2
-+'
-+
- test_done
+-
+Zbyszek
