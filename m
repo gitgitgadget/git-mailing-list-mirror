@@ -1,96 +1,86 @@
 From: =?UTF-8?B?WmJpZ25pZXcgSsSZZHJ6ZWpld3NraS1Tem1law==?= 
 	<zbyszek@in.waw.pl>
-Subject: Re: [PATCH] Demonstrate failure of 'core.ignorecase = true'
-Date: Thu, 22 Mar 2012 21:00:31 +0100
-Message-ID: <4F6B84DF.8040806@in.waw.pl>
-References: <1332370222-5123-1-git-send-email-pj@irregularexpressions.net> <4F6ACB67.1080503@viscovery.net> <4F6B0C3E.8090501@in.waw.pl> <20120322141245.GB8803@sigill.intra.peff.net> <7vbonozi8c.fsf@alter.siamese.dyndns.org> <20120322173701.GA11928@sigill.intra.peff.net> <7viphwxyp1.fsf@alter.siamese.dyndns.org>
+Subject: Re: [PATCH v2 2/3] Adjust stat width calculations to take --graph
+ output into account
+Date: Thu, 22 Mar 2012 21:28:09 +0100
+Message-ID: <4F6B8B59.4010106@in.waw.pl>
+References: <1332444461-11957-1-git-send-email-lucian.poston@gmail.com> <1332444461-11957-2-git-send-email-lucian.poston@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>, Johannes Sixt <j.sixt@viscovery.net>,
-	"Peter J. Weisberg" <pj@irregularexpressions.net>,
-	git@vger.kernel.org, Brandon Casey <drafnel@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Mar 22 21:00:51 2012
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <johannes.schindelin@gmx.de>,
+	Junio C Hamano <junkio@cox.net>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	Junio C Hamano <gitster@pobox.com>,
+	Bo Yang <struggleyb.nku@gmail.com>
+To: Lucian Poston <lucian.poston@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Mar 22 21:28:23 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SAoBk-0003E8-V2
-	for gcvg-git-2@plane.gmane.org; Thu, 22 Mar 2012 21:00:49 +0100
+	id 1SAocQ-0000iA-3X
+	for gcvg-git-2@plane.gmane.org; Thu, 22 Mar 2012 21:28:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030599Ab2CVUAo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 Mar 2012 16:00:44 -0400
-Received: from kawka.in.waw.pl ([178.63.212.103]:56089 "EHLO kawka.in.waw.pl"
+	id S932325Ab2CVU2R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 Mar 2012 16:28:17 -0400
+Received: from kawka.in.waw.pl ([178.63.212.103]:56091 "EHLO kawka.in.waw.pl"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1030419Ab2CVUAn (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Mar 2012 16:00:43 -0400
+	id S932141Ab2CVU2Q (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Mar 2012 16:28:16 -0400
 Received: from 89-78-221-60.dynamic.chello.pl ([89.78.221.60] helo=[192.168.0.12])
 	by kawka.in.waw.pl with esmtpsa (TLS1.0:RSA_AES_256_CBC_SHA1:32)
 	(Exim 4.72)
 	(envelope-from <zbyszek@in.waw.pl>)
-	id 1SAoBZ-0003MY-21; Thu, 22 Mar 2012 21:00:37 +0100
+	id 1SAocJ-0003TK-5q; Thu, 22 Mar 2012 21:28:15 +0100
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:8.0) Gecko/20120104 Icedove/8.0
-In-Reply-To: <7viphwxyp1.fsf@alter.siamese.dyndns.org>
+In-Reply-To: <1332444461-11957-2-git-send-email-lucian.poston@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193709>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193710>
 
-On 03/22/2012 07:44 PM, Junio C Hamano wrote:
-> Jeff King<peff@peff.net>  writes:
+On 03/22/2012 08:27 PM, Lucian Poston wrote:
+> The recent change to compute the width of diff --stat did not take into
+> consideration the output from --graph. The consequence is that when both
+> options are used, e.g. in 'log --stat --graph', the lines are too long.
 >
->> On Thu, Mar 22, 2012 at 09:57:23AM -0700, Junio C Hamano wrote:
->>
->>> Hrm, replacing unclear part with clarified text may make sense, but it
->>> would not help adding new text if the existing description is not clear
->>> enough.
->>>
->>> How about doing it like this?
->>>
->>>     Case-insensitive filesystems like FAT and HFS+ have various strange
->>>     behaviours, like reporting that a file "Makefile" already exists when
->>>     the file that actually exists on them is "makefile". By setting this
->>>     variable to `true`, Git employs logic to work around them.
-I think that this paragraph is too judgemental. While case-insensitive 
-filesystems may be a pain, they are not "strange" to their users, but 
-rather natural, and don't require "working around".
-
-> I guess we really need to make the description foolproof then.
+> Adjust stat width calculations to take --graph output into account.
+(1)
+> Adjust stat width calculations to reserve space for required characters before
+> scaling the widths for the filename and graph portions of the diff-stat. For
+> example, consider:
 >
->                     ... exists on them is "makefile". By setting this
-> 	variable to `true`, Git employs logic to work around them.
->          Setting this to `true` on a case insensitive filesystem does
-> 	not make any sense, because it would not magically make your
-> 	system to treat your filesystem case insensitively.
-Even this updated text does not say _what_ happens when core.ignorecase 
-is set on a case-insensitive filesystem. Once that's cleared up, then 
-the corner case of core.ignorecase=true on case-sensitive fs can be tackled.
+> " diff.c |   66 ++-"
+>
+> Before calculating the widths allocated to the filename, "diff.c", and the
+> graph, "++-", reserve space for the initial " " and the part between the
+> filename and graph portions " |   66 ". Then, divide the remaining space so
+> that 5/8ths is given to the filename and 3/8ths for the graph.
+(2)
 
-Maybe:
---- 8< ---
-When set, case-insensitive comparisons will be used when internally 
-comparing file names.
+Hi,
 
-The default is false, but when a new repository is created by 
-git-clone[1] or git-init[1], git will probe the filesystem and set it to 
-`true` if the filesystem is case-insensitive.
+I think that (1) is good. It fixes the bug and even makes the code more 
+readable. But (2) should be separated, IMHO... There was a motivation 
+for the layout in 1b058bc30df5f: not changing previous behaviour ("... 
+at least 5/8 of available space is devoted to filenames. On a standard 
+80 column terminal, or if not connected to a terminal and using the 
+default of 80 columns, this gives the same partition as before.").
+(2) would change the way format-patch --stat output looks, which 
+probably is not wanted.
 
-On case-insensitive filesystems like FAT, NTFS and HSF+, names that 
-differ only in capitalization, like "Makefile" and "makefile", refer to 
-the same file. While such filesystems usually preserve the 
-capitalization used during file creation, tools designed for such 
-filesystems will often modify capitalization when saving files and when 
-displaying filenames. Enabling core.ignorecase causes git to ignore 
-case-only differences in file names.
+-
+Zbyszek
 
-Enabling core.ignorecase on a case insensitive filesystem does
-not make sense, because filenames with different capitalization will 
-still be treated as different by the filesystem.
---- >8 ---
 
-[+cc Brandon Casey]
-
-zByszek
+> Update the affected test, t4502.
+>
+> Signed-off-by: Lucian Poston<lucian.poston@gmail.com>
+> ---
+>   diff.c                 |   66 ++++++++++++++++++++++++++++++++---------------
+>   t/t4052-stat-output.sh |    4 +-
+>   2 files changed, 47 insertions(+), 23 deletions(-)
