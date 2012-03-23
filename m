@@ -1,68 +1,87 @@
-From: Neal Kreitzinger <nkreitzinger@gmail.com>
-Subject: Re: Push from specific directory.
-Date: Thu, 22 Mar 2012 19:09:51 -0500
-Message-ID: <4F6BBF4F.9080302@gmail.com>
-References: <BLU0-SMTP471329E4F80CD64A569A4F7B1410@phx.gbl> <20120322225747.GB14874@sigill.intra.peff.net> <4F6BB425.2010807@gmail.com> <7vlimsur95.fsf@alter.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 0/2] merging renames of empty files
+Date: Thu, 22 Mar 2012 20:23:00 -0400
+Message-ID: <20120323002300.GA15940@sigill.intra.peff.net>
+References: <4F6B1F48.3040007@in.waw.pl>
+ <20120322140140.GA8803@sigill.intra.peff.net>
+ <7vty1gy3eh.fsf@alter.siamese.dyndns.org>
+ <20120322175952.GA13069@sigill.intra.peff.net>
+ <20120322182533.GA20360@sigill.intra.peff.net>
+ <7v62dwxybd.fsf@alter.siamese.dyndns.org>
+ <20120322190303.GA32756@sigill.intra.peff.net>
+ <7vwr6cwiux.fsf@alter.siamese.dyndns.org>
+ <20120322224651.GA14874@sigill.intra.peff.net>
+ <7vpqc4us0u.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>, Anjib Mulepati <anjibcs@hotmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Mar 23 01:10:11 2012
+Content-Type: text/plain; charset=utf-8
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Zbigniew =?utf-8?Q?J=C4=99drzejewski-Szmek?= <zbyszek@in.waw.pl>,
+	"Randal L. Schwartz" <merlyn@stonehenge.com>,
+	Ralf Nyren <ralf.nyren@ericsson.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Mar 23 01:23:11 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SAs54-0006N6-K8
-	for gcvg-git-2@plane.gmane.org; Fri, 23 Mar 2012 01:10:10 +0100
+	id 1SAsHd-0008B6-Qx
+	for gcvg-git-2@plane.gmane.org; Fri, 23 Mar 2012 01:23:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760238Ab2CWAKF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 Mar 2012 20:10:05 -0400
-Received: from plane.gmane.org ([80.91.229.3]:50752 "EHLO plane.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758440Ab2CWAKE (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Mar 2012 20:10:04 -0400
-Received: from list by plane.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1SAs4w-0006FB-Sd
-	for git@vger.kernel.org; Fri, 23 Mar 2012 01:10:03 +0100
-Received: from 67.63.162.200 ([67.63.162.200])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 23 Mar 2012 01:10:02 +0100
-Received: from nkreitzinger by 67.63.162.200 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 23 Mar 2012 01:10:02 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: 67.63.162.200
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.2.28) Gecko/20120306 Thunderbird/3.1.20
-In-Reply-To: <7vlimsur95.fsf@alter.siamese.dyndns.org>
+	id S1754341Ab2CWAXG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 Mar 2012 20:23:06 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:57078
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753474Ab2CWAXD (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Mar 2012 20:23:03 -0400
+Received: (qmail 8076 invoked by uid 107); 23 Mar 2012 00:23:18 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 22 Mar 2012 20:23:18 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 22 Mar 2012 20:23:00 -0400
+Content-Disposition: inline
+In-Reply-To: <7vpqc4us0u.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193738>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193739>
 
-On 3/22/2012 6:53 PM, Junio C Hamano wrote:
-> Neal Kreitzinger<nkreitzinger@gmail.com>  writes:
->
->> See this thread for the "cons" of nested git repos: (I don't think
->> there are any "pros".)
->> http://thread.gmane.org/gmane.comp.version-control.git/190372
->
-> Hmph, I see you saying "I will keep this in mind" and "Thanks" at the end,
-> and back then I took it that you understood why/how nested working trees
-> are useful.  Perhaps you didn't and I misunderstood you?
+On Thu, Mar 22, 2012 at 04:37:05PM -0700, Junio C Hamano wrote:
 
-I neglected to distinguish between ignored-nested-git-repos (has pros) 
-and tracked-subdir-nested-git-repos (has no pros) in my preface to the 
-thread link.  That was an oversight on my part.
+> Jeff King <peff@peff.net> writes:
+> 
+> > Here's a 2-patch series to replace the old 3/3 (they go on top of the
+> > first two cleanups from the previous iteration).
+> 
+> Hrm. As this is probably useful for older maintenance track, I would have
+> preferred not to see the first one that touches sequencer.c that did not
+> exist in the 1.7.7.x maintenance track, as the change is purely "cosmetic"
+> and does not have anything to do with fixing the over-agressive merge.
 
-BTW, I'm am still being compelled to deal with 
-tracked-subdir-nested-git-repos and I have not found any pros to them so 
-your original assessment of that technique still stands. ;-)
+I considered that, but assumed this was not a maint fix, but rather a
+new "feature" to improve the heuristics. That being said, the first
+patch is entirely unrelated.  The others don't depend on it textually or
+semantically, and it does not need to be part of the series (I just
+happened to notice it while in the area).
 
-v/r,
-neal
+> I thought that our recommendation for keeping an otherwise empty
+> directories around was to have .gitignore file with two entries in it,
+> namely:
+> 
+> 	.*
+>         *
+> 
+> So these files will be everywhere and without being empty, no?
+
+I dunno. I have never recommended that, but maybe it is something people
+do.
+
+> But I tend to prefer the simplicity of limiting this to empty files
+> anyway.
+
+Yeah. We might want to do a gitattributes thing on top, but I'd much
+rather have this in the meantime, as it seems like it handles the bulk
+of the complaints we have actually seen on the list.
+
+-Peff
