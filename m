@@ -1,111 +1,86 @@
 From: Lucian Poston <lucian.poston@gmail.com>
 Subject: Re: [PATCH v2 2/3] Adjust stat width calculations to take --graph
  output into account
-Date: Thu, 22 Mar 2012 21:38:54 -0700
-Message-ID: <CACz_eycFU564bz1aO6-QF3=6GV8oHvGYfMWHRfgT1-j9AcAX-g@mail.gmail.com>
+Date: Thu, 22 Mar 2012 21:44:48 -0700
+Message-ID: <CACz_eye13q0BkBTTGgx8VDBKgBydOrAM8Wx6dx+j90ibbpRszA@mail.gmail.com>
 References: <1332444461-11957-1-git-send-email-lucian.poston@gmail.com>
 	<1332444461-11957-2-git-send-email-lucian.poston@gmail.com>
-	<4F6B8B59.4010106@in.waw.pl>
+	<7vd384wejl.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org,
 	Johannes Schindelin <johannes.schindelin@gmx.de>,
 	Michael J Gruber <git@drmicha.warpmail.net>,
-	Junio C Hamano <gitster@pobox.com>,
-	Bo Yang <struggleyb.nku@gmail.com>
-To: =?UTF-8?Q?Zbigniew_J=C4=99drzejewski=2DSzmek?= <zbyszek@in.waw.pl>
-X-From: git-owner@vger.kernel.org Fri Mar 23 05:39:19 2012
+	Bo Yang <struggleyb.nku@gmail.com>,
+	=?UTF-8?Q?Zbigniew_J=C4=99drzejewski=2DSzmek?= <zbyszek@in.waw.pl>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Mar 23 05:44:54 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SAwHW-0005Tl-3g
-	for gcvg-git-2@plane.gmane.org; Fri, 23 Mar 2012 05:39:18 +0100
+	id 1SAwMw-0000x0-C3
+	for gcvg-git-2@plane.gmane.org; Fri, 23 Mar 2012 05:44:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751857Ab2CWEiz convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 23 Mar 2012 00:38:55 -0400
-Received: from mail-pb0-f46.google.com ([209.85.160.46]:52770 "EHLO
-	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751328Ab2CWEiy convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 23 Mar 2012 00:38:54 -0400
-Received: by pbcun15 with SMTP id un15so2189236pbc.19
-        for <git@vger.kernel.org>; Thu, 22 Mar 2012 21:38:54 -0700 (PDT)
+	id S1752812Ab2CWEou convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 23 Mar 2012 00:44:50 -0400
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:51042 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751474Ab2CWEot convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 23 Mar 2012 00:44:49 -0400
+Received: by yenl12 with SMTP id l12so2451023yen.19
+        for <git@vger.kernel.org>; Thu, 22 Mar 2012 21:44:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type:content-transfer-encoding;
-        bh=Ct2t7jTorQ0muBNAMvzrgTNjDuIhJFGT2sHuP3Bfu+k=;
-        b=hK5zdMAmhP3GEB6WB1PralcixkjTCFOs6jfT2nu1q4+vUUNmNWI63esqwdGBjoIQnV
-         fMIpvPJsQTuqMgu+ZImC/vMSIzKcAMhOVRlB4Pza/J428O10EsVnIXegmLfqm/9plALp
-         2ztGqi3l7jRUSaGEfzY9swZf5eF6dXBeh9VJRa4EKVeOCFEMu0uyTSv6CZRf2sAcp5L7
-         WOncCgF6HLi9MsPvlRDdmhMkugE75e6nerqaKU/sldVJnI/z6Nb2FvPW2L2HAK0k1kWT
-         CKKqjIoUphM6RGexn0mvikNPcjhZllqcGOobrxqeo3dFQxuKpOYLYOcAoR/8KL6qsaWW
-         gykA==
-Received: by 10.68.132.40 with SMTP id or8mr25949292pbb.34.1332477534438; Thu,
- 22 Mar 2012 21:38:54 -0700 (PDT)
-Received: by 10.68.47.232 with HTTP; Thu, 22 Mar 2012 21:38:54 -0700 (PDT)
-In-Reply-To: <4F6B8B59.4010106@in.waw.pl>
+        bh=U593NQw2gsXLStVSrux1twxTvFU9wpugy5V0gqMAAoo=;
+        b=DBeLcGoZdjM4Kpr80ZuoCzgH63haFB3CFxmRFjc6xDKzNxibyV53Xu6Z32ExMnIIiI
+         dguIYNk4nIKQ+oMOLI+GYijE9wmOa7+AXq48XtvW496jLLqwDYQMPYvneBRdfqFr5bkM
+         4wSh+1S5yOB9Z/T1b1mQb9IdSHfW3lK3pTYEWEMMJ4Argyl6F9dXZgC8TilX6bk2i+M8
+         hpAjIq1lKrqjLT+cVpw2dRC8rJI9pYZYThCqpQFcWh3IKBRQXQNYA1bgVdGws4XQ3DB4
+         Ms4D5r6BAgBMdKcKljZV+J9q+/SzZZpsL7AG8gGBpBMwhjbzCc9VQn1IgVh7keZVmDWe
+         yQIw==
+Received: by 10.68.230.99 with SMTP id sx3mr25977507pbc.55.1332477888244; Thu,
+ 22 Mar 2012 21:44:48 -0700 (PDT)
+Received: by 10.68.47.232 with HTTP; Thu, 22 Mar 2012 21:44:48 -0700 (PDT)
+In-Reply-To: <7vd384wejl.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193743>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193744>
 
-2012/3/22 Zbigniew J=C4=99drzejewski-Szmek <zbyszek@in.waw.pl>:
-> On 03/22/2012 08:27 PM, Lucian Poston wrote:
->>
->> The recent change to compute the width of diff --stat did not take i=
-nto
->> consideration the output from --graph. The consequence is that when =
-both
->> options are used, e.g. in 'log --stat --graph', the lines are too lo=
-ng.
->>
->> Adjust stat width calculations to take --graph output into account.
+2012/3/22 Junio C Hamano <gitster@pobox.com>:
+> That explains the regression you are introducing, but does not justif=
+y it.
 >
-> (1)
+> When you start showing that line, do you already know how many column=
+s at
+> the left edge of the display will be consumed by the ancestry graph p=
+art?
 >
->> Adjust stat width calculations to reserve space for required charact=
-ers
->> before
->> scaling the widths for the filename and graph portions of the diff-s=
-tat.
->> For
->> example, consider:
->>
->> " diff.c | =C2=A0 66 ++-"
->>
->> Before calculating the widths allocated to the filename, "diff.c", a=
-nd the
->> graph, "++-", reserve space for the initial " " and the part between=
- the
->> filename and graph portions " | =C2=A0 66 ". Then, divide the remain=
-ing space
->> so
->> that 5/8ths is given to the filename and 3/8ths for the graph.
+> When the command is run without "--graph" option, the answer would
+> obviously be zero, but if it is non-zero, wouldn't it be a more sensi=
+ble
+> solution to the problem to subtract that width from the total allowed
+> display width (e.g. on 200-column terminal, if the ancestry graph par=
+t at
+> the left edge uses 20-columns, you do exactly the same as the current
+> algorithm but use 180 as the width of the terminal). =C2=A0When --sta=
+t-width is
+> explicitly given, that specifies the width of whatever comes after th=
+e
+> ancestry graph part, so there is no need to change anything.
 >
-> (2)
->
-> Hi,
->
-> I think that (1) is good. It fixes the bug and even makes the code mo=
-re
-> readable. But (2) should be separated, IMHO... There was a motivation=
- for
-> the layout in 1b058bc30df5f: not changing previous behaviour ("... at=
- least
-> 5/8 of available space is devoted to filenames. On a standard 80 colu=
-mn
-> terminal, or if not connected to a terminal and using the default of =
-80
-> columns, this gives the same partition as before.").
-> (2) would change the way format-patch --stat output looks, which prob=
-ably is
-> not wanted.
+> Am I missing something, or is there something deeper going on?
 
-I suppose changing the format of format-patch --stat output could be
-annoying to anyone expecting it to remain unchanged. I'll update the
-patch so that the diff-stat output using the default of 80 columns
-remains unmodified.
+The approach you describe would work. The only issue is the current
+calculations slightly run off the rails when the number of columns is
+less than 26 or so (or, similarly and more frequently, when the
+difference between the terminal columns and ancestry graph columns is
+less than ~26). To keep the diff-stat output (more or less)
+unmodified, I'll simply add a conditional to address this case, rather
+than my more drastic approach.
