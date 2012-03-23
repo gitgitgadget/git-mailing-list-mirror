@@ -1,71 +1,87 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Listing commits that are _exclusively_ available on a given
- branch
-Date: Fri, 23 Mar 2012 10:38:32 -0700
-Message-ID: <7vaa37usiv.fsf@alter.siamese.dyndns.org>
-References: <CALKQrge-=XExhwxuC14uynpuuO3W+f4YO4=X7kFUx33F3HtnyQ@mail.gmail.com>
- <20120323170640.GA12881@sigill.intra.peff.net>
+From: Sven Strickroth <sven.strickroth@tu-clausthal.de>
+Subject: Re: howto handle name clashes
+Date: Fri, 23 Mar 2012 18:43:37 +0100
+Message-ID: <4F6CB649.8080006@tu-clausthal.de>
+References: <4F6C7539.3080607@tu-clausthal.de> <20120323171219.GB12881@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johan Herland <johan@herland.net>,
-	Git mailing list <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Mar 23 18:38:42 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Jeff King <peff@peff.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Mar 23 18:43:16 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SB8Rm-0004hZ-Bc
-	for gcvg-git-2@plane.gmane.org; Fri, 23 Mar 2012 18:38:42 +0100
+	id 1SB8WA-0008Vm-8T
+	for gcvg-git-2@plane.gmane.org; Fri, 23 Mar 2012 18:43:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932302Ab2CWRig (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 Mar 2012 13:38:36 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:52002 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932224Ab2CWRif (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Mar 2012 13:38:35 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id F20616C2E;
-	Fri, 23 Mar 2012 13:38:34 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=EPmbvQHs4RF/9buYP8Jj159MCe0=; b=iF5baB
-	/4KM67wuKiT5FZbyil1G1DZcJLo+a56tRh2BVvlGH/AVzFUoW6wZxk2oVhT8KweS
-	4o1IIOWTVFMdS7mPoTHml4YTQ9Oyhzn4fn/y9Cu6qh2MNguhKQ42gmPr6tgngVsS
-	rpMprvG4kLzaAiWkVBmxzqgBw/EUsDHu6nyKg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=cgfW7QhA5YkZ0vPLsVyGM3eOHghpTjvR
-	sa9WDsvPFpr4QRLkj+3fwZBNmViJmM76tDciGllwfakT3IG3A6sCTcMWgTUrpjZw
-	hmtvRxTsgcZE8fgg+5SGoZbz/rjXj+oMKLFE+TXHTJ1jiDzrf7h6CZcDH0zCzEJD
-	Wnxdit9ZMmA=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E9A256C2D;
-	Fri, 23 Mar 2012 13:38:34 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 81C7C6C2B; Fri, 23 Mar 2012
- 13:38:34 -0400 (EDT)
-In-Reply-To: <20120323170640.GA12881@sigill.intra.peff.net> (Jeff King's
- message of "Fri, 23 Mar 2012 13:06:41 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 03BBD414-750F-11E1-B4D7-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1757052Ab2CWRnI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 Mar 2012 13:43:08 -0400
+Received: from poseidon.rz.tu-clausthal.de ([139.174.2.21]:12794 "EHLO
+	poseidon.rz.tu-clausthal.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755565Ab2CWRnH (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 23 Mar 2012 13:43:07 -0400
+Received: from poseidon.rz.tu-clausthal.de (localhost [127.0.0.1])
+	by localhost (Postfix) with SMTP id 70C8327AFC4;
+	Fri, 23 Mar 2012 18:43:04 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=tu-clausthal.de; h=
+	message-id:date:from:mime-version:to:cc:subject:references
+	:in-reply-to:content-type:content-transfer-encoding; s=dkim1;
+	 bh=csRtSJqofEUl1yrha2eWZSmjA7o=; b=HrXeODfYgS/pM9gwhxF+Hw2SIyF+
+	I5S4JG1Bnqm2Y0YaTWLwGt6s6zaD8qufOMzS4+QuUOS2TCwpZOrohWrhcGlmQ7fm
+	KTT1stG71LHcn0JT8CjwZiRyx+FkR4gqlXFeSNUzVn1c7TykWjyTl7qjywsZiqru
+	sCGOcbmg+nf0XCY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=tu-clausthal.de; h=
+	message-id:date:from:mime-version:to:cc:subject:references
+	:in-reply-to:content-type:content-transfer-encoding; q=dns; s=
+	dkim1; b=WP0UgwTs5px/kKBntafwBjqZWU5AhO4hKY0bjm+JRoAognrK+c7UhN5
+	4j2zhI5W3ZpTcp7Glo3e2ebRTdZJEN19tHzKCUov5q/68pdIq8LC/hb0ZHpW9GJe
+	K5KwmUosdpauMLthzf7Xfwxs12YqYEOSh+UOBa9cV3O5M1ccnuP4=
+Received: from tu-clausthal.de (hathor.rz.tu-clausthal.de [139.174.2.1])
+	by poseidon.rz.tu-clausthal.de (Postfix) with ESMTP id C59AE27AFBF;
+	Fri, 23 Mar 2012 18:43:03 +0100 (CET)
+Received: from [139.174.101.48] (account sstri@tu-clausthal.de [139.174.101.48] verified)
+  by tu-clausthal.de (CommuniGate Pro SMTP 5.4.3)
+  with ESMTPSA id 29782919; Fri, 23 Mar 2012 18:43:03 +0100
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:11.0) Gecko/20120312 Thunderbird/11.0
+In-Reply-To: <20120323171219.GB12881@sigill.intra.peff.net>
+X-Enigmail-Version: 1.4
+X-Virus-Scanned: by Sophos PureMessage V5.6 at tu-clausthal.de
+X-Spam-Level: (8%, '
+ HTML_00_01 0.05, HTML_00_10 0.05, BODYTEXTP_SIZE_3000_LESS 0, BODY_SIZE_1000_LESS 0, BODY_SIZE_2000_LESS 0, BODY_SIZE_5000_LESS 0, BODY_SIZE_7000_LESS 0, BODY_SIZE_900_999 0, CT_TEXT_PLAIN_UTF8_CAPS 0, __ANY_URI 0, __BOUNCE_CHALLENGE_SUBJ 0, __BOUNCE_NDR_SUBJ_EXEMPT 0, __CP_URI_IN_BODY 0, __CT 0, __CTE 0, __CT_TEXT_PLAIN 0, __HAS_MSGID 0, __MIME_TEXT_ONLY 0, __MIME_VERSION 0, __MOZILLA_MSGID 0, __SANE_MSGID 0, __SUBJ_ALPHA_END 0, __TO_MALFORMED_2 0, __TO_NO_NAME 0, __URI_NO_MAILTO 0, __URI_NO_PATH 0, __URI_NS , __USER_AGENT 0')
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193778>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193779>
 
-Jeff King <peff@peff.net> writes:
+Am 23.03.2012 18:12 schrieb Jeff King:
+>> - for merging "git merge --no-ff refs/branches/test" works, but
+>> generates a not so nice default merge message. ("merged  commit
+>> refs/branches/test" instead of "merged branch test")
+> 
+> Did you mean "refs/heads/test"?
 
-> No, I think that is the only way to do it. The algorithm run by rev-list
-> in that case should be optimal, so there is nothing to improve there.
-> Syntactically, it's a little bit of a pain because there is no way to
-> tell rev-list "--all, except for this one branch" short of using grep.
-> We could add a new syntax for that, but I'm not sure what it would look
-> like (or if it would be any easier on the eyes than what you have).
+yes. Your example was the correct one. Thanks for spotting my problem.
 
-We discussed --exclude-refs="refs/tags/expermental-*" that would affect
-how --all, --heads, and friends are processed several weeks ago, didn't
-we?
+>> - how to drop a remote tag/branch ("git push origin :test" does not work)
+> 
+> Does "git push origin :heads/foo" (or :tags/foo) not work?
+
+seems to work. Thanks.
+
+Really problematic is checkout:
+"git checkout heads/foo" creates a detached HEAD (is this intended).
+However, "git checkout heads/foo -B foo" can be used.
+
+Is there a git command to find out if a name is ambiguous?
+"git rev-parse foo" outputs "warning: refname 'test' is ambiguous.", but
+the return code is zero.
+
+-- 
+Best regards,
+ Sven Strickroth
+ ClamAV, a GPL anti-virus toolkit   http://www.clamav.net
+ PGP key id F5A9D4C4 @ any key-server
