@@ -1,99 +1,55 @@
-From: Hitoshi Mitake <h.mitake@gmail.com>
-Subject: Re: [PATCH v0 0/2] git-less: a specialized pager for git-log
-Date: Sat, 24 Mar 2012 02:18:36 +0900
-Message-ID: <CAMO-S2hZXX-RSN+KQZ=a+dSbkAhziqvF4S_iSH+TqqtcFRiypA@mail.gmail.com>
-References: <1332441744-5142-1-git-send-email-h.mitake@gmail.com>
-	<7v1uokxxzh.fsf@alter.siamese.dyndns.org>
-	<4F6C4B59.8060102@op5.se>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Andreas Ericsson <ae@op5.se>
-X-From: git-owner@vger.kernel.org Fri Mar 23 18:18:44 2012
+From: Heiko Voigt <hvoigt@hvoigt.net>
+Subject: [GIT GUI PATCH 0/2] teach git gui to open the configured editor
+Date: Fri, 23 Mar 2012 18:30:26 +0100
+Message-ID: <cover.1332523097.git.hvoigt@hvoigt.net>
+Cc: git@vger.kernel.org
+To: Pat Thoyts <patthoyts@users.sourceforge.net>
+X-From: git-owner@vger.kernel.org Fri Mar 23 18:37:54 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SB88R-00052x-22
-	for gcvg-git-2@plane.gmane.org; Fri, 23 Mar 2012 18:18:43 +0100
+	id 1SB8Qy-000419-A4
+	for gcvg-git-2@plane.gmane.org; Fri, 23 Mar 2012 18:37:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753119Ab2CWRSi convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 23 Mar 2012 13:18:38 -0400
-Received: from mail-qa0-f46.google.com ([209.85.216.46]:53346 "EHLO
-	mail-qa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751693Ab2CWRSh convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 23 Mar 2012 13:18:37 -0400
-Received: by qaeb19 with SMTP id b19so1074763qae.19
-        for <git@vger.kernel.org>; Fri, 23 Mar 2012 10:18:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=AbkHeBghgqjgR1nxftBD+9ladHvfddvjsJwvWNNKr0E=;
-        b=FmdfExsz8JAkvQsHv09Tx/MvU2yPTWPXsTHSJxTsOkt6L3smtlVdeuYXsDnwv4eHz6
-         viU9i+ztHVxC/hTKRC0YbMvbl2U9gqjahH6DhX70ospb8cQ8E8w/FSQQUAqYQyaBJK6V
-         FQsEmhm1QO8327iGH1K+Ynvkk21rd1i/Jk3ahR85EAjjQjVPxd5M+LJLDoQxks/wJaLH
-         PquztfUy8QOM5rGhV1mmc0HXxlcSczfBWqgcHg5Vty2TYe1eUHRbD6ESlJtPiVWxQiBE
-         1/wndQLWufuqOT2nqmxjdLQ9iQn8+d2KeUd4QrY99AyYq6IDtbIyrbAPsFEL3Czvfzcp
-         2tZA==
-Received: by 10.224.168.147 with SMTP id u19mr16766022qay.89.1332523116699;
- Fri, 23 Mar 2012 10:18:36 -0700 (PDT)
-Received: by 10.229.169.137 with HTTP; Fri, 23 Mar 2012 10:18:36 -0700 (PDT)
-In-Reply-To: <4F6C4B59.8060102@op5.se>
+	id S1756000Ab2CWRhq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 Mar 2012 13:37:46 -0400
+Received: from darksea.de ([83.133.111.250]:59638 "HELO darksea.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1755227Ab2CWRhp (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Mar 2012 13:37:45 -0400
+X-Greylist: delayed 400 seconds by postgrey-1.27 at vger.kernel.org; Fri, 23 Mar 2012 13:37:45 EDT
+Received: (qmail 14360 invoked from network); 23 Mar 2012 18:31:02 +0100
+Received: from unknown (HELO localhost) (127.0.0.1)
+  by localhost with SMTP; 23 Mar 2012 18:31:02 +0100
+X-Mailer: git-send-email 1.7.10.rc1.29.gf035d
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193774>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193775>
 
-On Fri, Mar 23, 2012 at 19:07, Andreas Ericsson <ae@op5.se> wrote:
-> On 03/22/2012 08:00 PM, Junio C Hamano wrote:
->> Hitoshi Mitake<h.mitake@gmail.com> =A0writes:
->>
->>> If the pager can recognize the end of each commit, more confortable=
- viewing of
->>> git-log's output will be possible.
->>
->> I think people just use "/^commit .*<RET>" once and then nagivate wi=
-th "n"
->> (and to change direction, "?<RET>") for this.
->>
->
-> Or capital N.
->
-> It's mostly useful when one wants to view the patch as well as the me=
-ssage,
-> so an alias like
->
-> =A0 =A0logp =3D !PAGER=3D'less -p ^commit' git log -p
+This patch series adds a new right click menuitem which allows the user
+to open the configured editor with the currently viewed file. For some
+popular editors it is also able to move the cursor close to the watched
+line.
 
-Yes, moving is not so large problem. But less cannot search regex with
-specified limit. Sometime I want to search string e.g. "something" only=
- in
-the commit I'm focusing on.
+Please have a look at the parsing of the configured editor commandline.
+I tested it for most situations. Maybe someone has an idea for a more
+elegant way to split up between arguments and command.
 
->
-> should work well, and also make LISP nerds giggle.
->
+Currently I substitute all ' with " and then abuse the lindex command for
+trimming and splitting.
 
-p? :)
+Cheers Heiko
 
-> --
-> Andreas Ericsson =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 andreas.ericsson=
-@op5.se
-> OP5 AB =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 www.op=
-5.se
-> Tel: +46 8-230225 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0Fax: +46 8-23023=
-1
->
-> Considering the successes of the wars on alcohol, poverty, drugs and
-> terror, I think we should give some serious thought to declaring war
-> on peace.
+Heiko Voigt (2):
+  git-gui: teach _which procedure to work with absolute paths
+  git-gui: add "open in editor" diff context menu entry
 
+ git-gui/git-gui.sh |   55 ++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 55 insertions(+)
 
-
---=20
-Hitoshi Mitake
-h.mitake@gmail.com
+-- 
+1.7.10.rc1.29.gf035d
