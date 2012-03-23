@@ -1,58 +1,76 @@
-From: Ben Walton <bwalton@artsci.utoronto.ca>
-Subject: Re: [PATCH] gitweb(1) Fixed English issues
-Date: Fri, 23 Mar 2012 10:52:54 -0400
-Message-ID: <1332514314-sup-412@pinkfloyd.chass.utoronto.ca>
+From: D Waitzman <djw@spamcop.net>
+Subject: [PATCH] gitweb(1) Fixed English issues
+Date: Fri, 23 Mar 2012 11:02:43 -0400
+Message-ID: <08B31D69-CE1F-4D27-8AE6-C1C0D76BEED5@spamcop.net>
 References: <0316A9BA-627B-4B43-8BF1-392DD7408146@bbn.com> <1332509111-sup-2763@pinkfloyd.chass.utoronto.ca> <53140318-34FA-4EF1-80F9-CFAD8828B3A1@bbn.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Cc: git <git@vger.kernel.org>, Jakub Narebski <jnareb@gmail.com>
-To: David Waitzman <djw@bbn.com>
-X-From: git-owner@vger.kernel.org Fri Mar 23 15:53:00 2012
+Mime-Version: 1.0 (Apple Message framework v1257)
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 8BIT
+Cc: Jakub Narebski <jnareb@gmail.com>,
+	Ben Walton <bwalton@artsci.utoronto.ca>
+To: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Mar 23 16:13:00 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SB5rP-0000Hb-SW
-	for gcvg-git-2@plane.gmane.org; Fri, 23 Mar 2012 15:53:00 +0100
+	id 1SB6Am-0000ZG-0P
+	for gcvg-git-2@plane.gmane.org; Fri, 23 Mar 2012 16:13:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756506Ab2CWOwz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 Mar 2012 10:52:55 -0400
-Received: from garcia.cquest.utoronto.ca ([192.82.128.9]:41903 "EHLO
-	garcia.cquest.utoronto.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753134Ab2CWOwz (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Mar 2012 10:52:55 -0400
-Received: from pinkfloyd.chass.utoronto.ca ([128.100.160.254]:59515 ident=93)
-	by garcia.cquest.utoronto.ca with esmtp (Exim 4.63)
-	(envelope-from <bwalton@cquest.utoronto.ca>)
-	id 1SB5rK-0002kw-Bt; Fri, 23 Mar 2012 10:52:54 -0400
-Received: from bwalton by pinkfloyd.chass.utoronto.ca with local (Exim 4.72)
-	(envelope-from <bwalton@cquest.utoronto.ca>)
-	id 1SB5rK-0005ek-Ay; Fri, 23 Mar 2012 10:52:54 -0400
-In-reply-to: <53140318-34FA-4EF1-80F9-CFAD8828B3A1@bbn.com>
-User-Agent: Sup/git
+	id S1758677Ab2CWPMu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 Mar 2012 11:12:50 -0400
+Received: from c60.cesmail.net ([216.154.195.49]:37815 "EHLO c60.cesmail.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754028Ab2CWPMe convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 23 Mar 2012 11:12:34 -0400
+X-Greylist: delayed 579 seconds by postgrey-1.27 at vger.kernel.org; Fri, 23 Mar 2012 11:12:34 EDT
+Received: from unknown (HELO smtprelay1.cesmail.net) ([192.168.1.111])
+  by c60.cesmail.net with ESMTP; 23 Mar 2012 11:01:56 -0400
+Received: from [128.89.254.113] (unknown [128.89.254.113])
+	by smtprelay1.cesmail.net (Postfix) with ESMTPSA id CA10A34C93;
+	Fri, 23 Mar 2012 11:12:44 -0400 (EDT)
+In-Reply-To: <53140318-34FA-4EF1-80F9-CFAD8828B3A1@bbn.com>
+X-Mailer: Apple Mail (2.1257)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193764>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193765>
 
-Excerpts from David Waitzman's message of Fri Mar 23 10:49:55 -0400 2012:
+This is a trivial patch to correct the english in the man page.  Ben Walton suggested an additional english fix which I have added and squashed with my change.  And then I added it again when he pointed out I missed something in his original email.
 
-Hi David,
-
-> +The name of repository in gitweb is the path to its `$GIT_DIR` (its object
->  database) relative to `$projectroot`.  Therefore the repository $repo can be
->  found at "$projectroot/$repo".
-
-Two _the_'s were missing in the original.  This should read:
-
-The name of _the_ repository in gitweb is _the_ path to its...
-
-Thanks
--Ben
 --
-Ben Walton
-Systems Programmer - CHASS
-University of Toronto
-C:416.407.5610 | W:416.978.4302
+
+Fixed improper use of "it's" when it should be "its".
+Added missing "the"; noted by Ben Walton bwalton@artsci.utoronto.ca
+
+    Signed-off-by: David Waitzman <djw@bbn.com>
+---
+ Documentation/gitweb.txt |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/Documentation/gitweb.txt b/Documentation/gitweb.txt
+index 605a085..168e8bf 100644
+--- a/Documentation/gitweb.txt
++++ b/Documentation/gitweb.txt
+@@ -14,7 +14,7 @@ gitweb.
+ 
+ DESCRIPTION
+ -----------
+-Gitweb provides a web interface to git repositories.  It's features include:
++Gitweb provides a web interface to git repositories.  Its features include:
+ 
+ * Viewing multiple Git repositories with common root.
+ * Browsing every revision of the repository.
+@@ -60,7 +60,7 @@ to gitweb.  The list of projects is generated by default by scanning the
+ more exact; gitweb is not interested in a working area, and is best suited
+ to showing "bare" repositories).
+ 
+-The name of repository in gitweb is path to it's `$GIT_DIR` (it's object
++The name of the repository in gitweb is the path to its `$GIT_DIR` (its object
+ database) relative to `$projectroot`.  Therefore the repository $repo can be
+ found at "$projectroot/$repo".
+ 
+-- 
+1.7.9.GIT
