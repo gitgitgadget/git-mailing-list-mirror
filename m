@@ -1,119 +1,58 @@
-From: David Waitzman <djw@bbn.com>
-Subject: [PATCH] gitweb(1) Fixed English issues
-Date: Fri, 23 Mar 2012 10:49:55 -0400
-Message-ID: <53140318-34FA-4EF1-80F9-CFAD8828B3A1@bbn.com>
-References: <0316A9BA-627B-4B43-8BF1-392DD7408146@bbn.com> <1332509111-sup-2763@pinkfloyd.chass.utoronto.ca>
-Mime-Version: 1.0 (Apple Message framework v1257)
-Content-Type: multipart/signed; boundary="Apple-Mail=_E7B9B648-4EF1-41BF-AD30-12CAA9184B06"; protocol="application/pkcs7-signature"; micalg=sha1
-Cc: Jakub Narebski <jnareb@gmail.com>
-To: git <git@vger.kernel.org>, Ben Walton <bwalton@artsci.utoronto.ca>
-X-From: git-owner@vger.kernel.org Fri Mar 23 15:50:11 2012
+From: Ben Walton <bwalton@artsci.utoronto.ca>
+Subject: Re: [PATCH] gitweb(1) Fixed English issues
+Date: Fri, 23 Mar 2012 10:52:54 -0400
+Message-ID: <1332514314-sup-412@pinkfloyd.chass.utoronto.ca>
+References: <0316A9BA-627B-4B43-8BF1-392DD7408146@bbn.com> <1332509111-sup-2763@pinkfloyd.chass.utoronto.ca> <53140318-34FA-4EF1-80F9-CFAD8828B3A1@bbn.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Cc: git <git@vger.kernel.org>, Jakub Narebski <jnareb@gmail.com>
+To: David Waitzman <djw@bbn.com>
+X-From: git-owner@vger.kernel.org Fri Mar 23 15:53:00 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SB5og-0006IN-Ox
-	for gcvg-git-2@plane.gmane.org; Fri, 23 Mar 2012 15:50:11 +0100
+	id 1SB5rP-0000Hb-SW
+	for gcvg-git-2@plane.gmane.org; Fri, 23 Mar 2012 15:53:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753759Ab2CWOuA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 Mar 2012 10:50:00 -0400
-Received: from smtp.bbn.com ([128.33.1.81]:24283 "EHLO smtp.bbn.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751903Ab2CWOuA (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Mar 2012 10:50:00 -0400
-Received: from [128.89.254.113] (port=56411)
-	by smtp.bbn.com with esmtps (TLSv1:AES128-SHA:128)
-	(Exim 4.77 (FreeBSD))
-	(envelope-from <djw@bbn.com>)
-	id 1SB5oI-0009WJ-Tw; Fri, 23 Mar 2012 10:49:47 -0400
-In-Reply-To: <1332509111-sup-2763@pinkfloyd.chass.utoronto.ca>
-X-Mailer: Apple Mail (2.1257)
+	id S1756506Ab2CWOwz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 Mar 2012 10:52:55 -0400
+Received: from garcia.cquest.utoronto.ca ([192.82.128.9]:41903 "EHLO
+	garcia.cquest.utoronto.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753134Ab2CWOwz (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Mar 2012 10:52:55 -0400
+Received: from pinkfloyd.chass.utoronto.ca ([128.100.160.254]:59515 ident=93)
+	by garcia.cquest.utoronto.ca with esmtp (Exim 4.63)
+	(envelope-from <bwalton@cquest.utoronto.ca>)
+	id 1SB5rK-0002kw-Bt; Fri, 23 Mar 2012 10:52:54 -0400
+Received: from bwalton by pinkfloyd.chass.utoronto.ca with local (Exim 4.72)
+	(envelope-from <bwalton@cquest.utoronto.ca>)
+	id 1SB5rK-0005ek-Ay; Fri, 23 Mar 2012 10:52:54 -0400
+In-reply-to: <53140318-34FA-4EF1-80F9-CFAD8828B3A1@bbn.com>
+User-Agent: Sup/git
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193763>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193764>
 
+Excerpts from David Waitzman's message of Fri Mar 23 10:49:55 -0400 2012:
 
---Apple-Mail=_E7B9B648-4EF1-41BF-AD30-12CAA9184B06
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain;
-	charset=us-ascii
+Hi David,
 
-This is a trivial patch to correct the english in the man page.  Ben =
-Walton suggested an additional english fix which I have added and =
-squashed with my change.
+> +The name of repository in gitweb is the path to its `$GIT_DIR` (its object
+>  database) relative to `$projectroot`.  Therefore the repository $repo can be
+>  found at "$projectroot/$repo".
 
------
-Fixed improper use of "it's" when it should be "its".
-Added missing "the"; noted by Ben Walton bwalton@artsci.utoronto.ca
+Two _the_'s were missing in the original.  This should read:
 
-    Signed-off-by: David Waitzman <djw@bbn.com>
----
- Documentation/gitweb.txt |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+The name of _the_ repository in gitweb is _the_ path to its...
 
-diff --git a/Documentation/gitweb.txt b/Documentation/gitweb.txt
-index 605a085..59bdc3e 100644
---- a/Documentation/gitweb.txt
-+++ b/Documentation/gitweb.txt
-@@ -14,7 +14,7 @@ gitweb.
-=20
- DESCRIPTION
- -----------
--Gitweb provides a web interface to git repositories.  It's features =
-include:
-+Gitweb provides a web interface to git repositories.  Its features =
-include:
-=20
- * Viewing multiple Git repositories with common root.
- * Browsing every revision of the repository.
-@@ -60,7 +60,7 @@ to gitweb.  The list of projects is generated by =
-default by scanning the
- more exact; gitweb is not interested in a working area, and is best =
-suited
- to showing "bare" repositories).
-=20
--The name of repository in gitweb is path to it's `$GIT_DIR` (it's =
-object
-+The name of repository in gitweb is the path to its `$GIT_DIR` (its =
-object
- database) relative to `$projectroot`.  Therefore the repository $repo =
-can be
- found at "$projectroot/$repo".
-=20
---=20
-1.7.9.GIT
-
-
---Apple-Mail=_E7B9B648-4EF1-41BF-AD30-12CAA9184B06
-Content-Disposition: attachment;
-	filename=smime.p7s
-Content-Type: application/pkcs7-signature;
-	name=smime.p7s
-Content-Transfer-Encoding: base64
-
-MIAGCSqGSIb3DQEHAqCAMIACAQExCzAJBgUrDgMCGgUAMIAGCSqGSIb3DQEHAQAAoIICzjCCAsow
-ggItoAMCAQICAQEwCQYHKoZIzj0EATCBiTEXMBUGA1UEAwwORGF2aWQgV2FpdHptYW4xGTAXBgNV
-BAoMEEJCTiBUZWNobm9sb2dpZXMxCjAIBgNVBAsMAUQxCzAJBgNVBAgMAk1EMQswCQYDVQQGEwJV
-UzERMA8GA1UEBwwIQ29sdW1iaWExGjAYBgkqhkiG9w0BCQEWC2Rqd0BiYm4uY29tMB4XDTEwMDUy
-MzE2MDgzNloXDTIwMDUyMDE2MDgzNlowgYkxFzAVBgNVBAMMDkRhdmlkIFdhaXR6bWFuMRkwFwYD
-VQQKDBBCQk4gVGVjaG5vbG9naWVzMQowCAYDVQQLDAFEMQswCQYDVQQIDAJNRDELMAkGA1UEBhMC
-VVMxETAPBgNVBAcMCENvbHVtYmlhMRowGAYJKoZIhvcNAQkBFgtkandAYmJuLmNvbTCBmzAQBgcq
-hkjOPQIBBgUrgQQAIwOBhgAEAJ7SKuuFJUsacCypMyS+geahMdKB8mOrnDiwRSrE3VivbMGMFcBS
-m2RdJ7Gmc0ajDaulPQpS+hfKvXf3tWQY/yqaAHetqZ5MXsUpkAvRnNnOUhV9CIJuX0DZbJVha0sD
-YnvFmHwvdYdAvIAM6HMaxeL/NybDD8SlB5clLS6pwEnW5K4To0IwQDAOBgNVHQ8BAf8EBAMCB4Aw
-FgYDVR0lAQH/BAwwCgYIKwYBBQUHAwQwFgYDVR0RBA8wDYELZGp3QGJibi5jb20wCQYHKoZIzj0E
-AQOBiwAwgYcCQgGCFV25lZtrb6nGpZYqb+FYJDDY3zTf3stgxiYxx9AtL+gX+3AAzTU6FHwcPOZW
-6+5cmOyQR+J9Qhm4oVr603CBdgJBYFfq9oNCghhZGLJqDO0cNdwvB9LDoodpTippK8jDi3yULVPi
-ZqOSdCvmZyPlg0eKt5ouX7JOZeQQJH/x/DShdW0xggGcMIIBmAIBATCBjzCBiTEXMBUGA1UEAwwO
-RGF2aWQgV2FpdHptYW4xGTAXBgNVBAoMEEJCTiBUZWNobm9sb2dpZXMxCjAIBgNVBAsMAUQxCzAJ
-BgNVBAgMAk1EMQswCQYDVQQGEwJVUzERMA8GA1UEBwwIQ29sdW1iaWExGjAYBgkqhkiG9w0BCQEW
-C2Rqd0BiYm4uY29tAgEBMAkGBSsOAwIaBQCgXTAYBgkqhkiG9w0BCQMxCwYJKoZIhvcNAQcBMBwG
-CSqGSIb3DQEJBTEPFw0xMjAzMjMxNDQ5NTdaMCMGCSqGSIb3DQEJBDEWBBTxysWYZuOSonfBheVm
-IzwYCU77KzAJBgcqhkjOPQIBBIGLMIGIAkIBHNieGRdGUXTTUfCawoJJfQSK9FpY/zsvQb81h1Us
-xvyD3rglNyLsUE6H8aMS87A/+fKw0L4Nr1TzdQIUHHT8EocCQgH/Vj1hv0XruHHyDm9+MzRM4Fi9
-Kk4Ch77tBDDgTOXh1cobbQdpx+tfWH+xgYt0aVcDCeAk5bBnJ8bqAdn8pCkm1AAAAAAAAA==
-
---Apple-Mail=_E7B9B648-4EF1-41BF-AD30-12CAA9184B06--
+Thanks
+-Ben
+--
+Ben Walton
+Systems Programmer - CHASS
+University of Toronto
+C:416.407.5610 | W:416.978.4302
