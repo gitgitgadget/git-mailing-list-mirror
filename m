@@ -1,65 +1,119 @@
-From: Ben Walton <bwalton@artsci.utoronto.ca>
-Subject: Re: [PATCH] gitweb(1): Fixed improper use of "it's" when it should be "its"
-Date: Fri, 23 Mar 2012 09:27:02 -0400
-Message-ID: <1332509111-sup-2763@pinkfloyd.chass.utoronto.ca>
-References: <0316A9BA-627B-4B43-8BF1-392DD7408146@bbn.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Cc: git <git@vger.kernel.org>, Jakub Narebski <jnareb@gmail.com>
-To: David Waitzman <djw@bbn.com>
-X-From: git-owner@vger.kernel.org Fri Mar 23 15:41:16 2012
+From: David Waitzman <djw@bbn.com>
+Subject: [PATCH] gitweb(1) Fixed English issues
+Date: Fri, 23 Mar 2012 10:49:55 -0400
+Message-ID: <53140318-34FA-4EF1-80F9-CFAD8828B3A1@bbn.com>
+References: <0316A9BA-627B-4B43-8BF1-392DD7408146@bbn.com> <1332509111-sup-2763@pinkfloyd.chass.utoronto.ca>
+Mime-Version: 1.0 (Apple Message framework v1257)
+Content-Type: multipart/signed; boundary="Apple-Mail=_E7B9B648-4EF1-41BF-AD30-12CAA9184B06"; protocol="application/pkcs7-signature"; micalg=sha1
+Cc: Jakub Narebski <jnareb@gmail.com>
+To: git <git@vger.kernel.org>, Ben Walton <bwalton@artsci.utoronto.ca>
+X-From: git-owner@vger.kernel.org Fri Mar 23 15:50:11 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SB5g0-000776-K8
-	for gcvg-git-2@plane.gmane.org; Fri, 23 Mar 2012 15:41:14 +0100
+	id 1SB5og-0006IN-Ox
+	for gcvg-git-2@plane.gmane.org; Fri, 23 Mar 2012 15:50:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756178Ab2CWOlH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 Mar 2012 10:41:07 -0400
-Received: from garcia.cquest.utoronto.ca ([192.82.128.9]:41870 "EHLO
-	garcia.cquest.utoronto.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754476Ab2CWOlG (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Mar 2012 10:41:06 -0400
-X-Greylist: delayed 4442 seconds by postgrey-1.27 at vger.kernel.org; Fri, 23 Mar 2012 10:41:06 EDT
-Received: from pinkfloyd.chass.utoronto.ca ([128.100.160.254]:59469 ident=93)
-	by garcia.cquest.utoronto.ca with esmtp (Exim 4.63)
-	(envelope-from <bwalton@cquest.utoronto.ca>)
-	id 1SB4WE-00021N-H9; Fri, 23 Mar 2012 09:27:02 -0400
-Received: from bwalton by pinkfloyd.chass.utoronto.ca with local (Exim 4.72)
-	(envelope-from <bwalton@cquest.utoronto.ca>)
-	id 1SB4WE-00053U-G8; Fri, 23 Mar 2012 09:27:02 -0400
-In-reply-to: <0316A9BA-627B-4B43-8BF1-392DD7408146@bbn.com>
-User-Agent: Sup/git
+	id S1753759Ab2CWOuA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 Mar 2012 10:50:00 -0400
+Received: from smtp.bbn.com ([128.33.1.81]:24283 "EHLO smtp.bbn.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751903Ab2CWOuA (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Mar 2012 10:50:00 -0400
+Received: from [128.89.254.113] (port=56411)
+	by smtp.bbn.com with esmtps (TLSv1:AES128-SHA:128)
+	(Exim 4.77 (FreeBSD))
+	(envelope-from <djw@bbn.com>)
+	id 1SB5oI-0009WJ-Tw; Fri, 23 Mar 2012 10:49:47 -0400
+In-Reply-To: <1332509111-sup-2763@pinkfloyd.chass.utoronto.ca>
+X-Mailer: Apple Mail (2.1257)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193762>
-
-Excerpts from David Waitzman's message of Fri Mar 23 09:13:44 -0400 2012:
-
-Hi David,
-
-> This is a trivial patch to correct the english in the man page.
-
-Good catch!
-
-> -The name of repository in gitweb is path to it's `$GIT_DIR` (it's object
-> +The name of repository in gitweb is path to its `$GIT_DIR` (its object
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193763>
 
 
-Might I suggest that this be:
+--Apple-Mail=_E7B9B648-4EF1-41BF-AD30-12CAA9184B06
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;
+	charset=us-ascii
 
-+The name of the repository in gitweb is the path to its `$GIT_DIR` (its object
+This is a trivial patch to correct the english in the man page.  Ben =
+Walton suggested an additional english fix which I have added and =
+squashed with my change.
 
-Note the inserted _the_'s.
+-----
+Fixed improper use of "it's" when it should be "its".
+Added missing "the"; noted by Ben Walton bwalton@artsci.utoronto.ca
 
-Thanks
--Ben
---
-Ben Walton
-Systems Programmer - CHASS
-University of Toronto
-C:416.407.5610 | W:416.978.4302
+    Signed-off-by: David Waitzman <djw@bbn.com>
+---
+ Documentation/gitweb.txt |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/Documentation/gitweb.txt b/Documentation/gitweb.txt
+index 605a085..59bdc3e 100644
+--- a/Documentation/gitweb.txt
++++ b/Documentation/gitweb.txt
+@@ -14,7 +14,7 @@ gitweb.
+=20
+ DESCRIPTION
+ -----------
+-Gitweb provides a web interface to git repositories.  It's features =
+include:
++Gitweb provides a web interface to git repositories.  Its features =
+include:
+=20
+ * Viewing multiple Git repositories with common root.
+ * Browsing every revision of the repository.
+@@ -60,7 +60,7 @@ to gitweb.  The list of projects is generated by =
+default by scanning the
+ more exact; gitweb is not interested in a working area, and is best =
+suited
+ to showing "bare" repositories).
+=20
+-The name of repository in gitweb is path to it's `$GIT_DIR` (it's =
+object
++The name of repository in gitweb is the path to its `$GIT_DIR` (its =
+object
+ database) relative to `$projectroot`.  Therefore the repository $repo =
+can be
+ found at "$projectroot/$repo".
+=20
+--=20
+1.7.9.GIT
+
+
+--Apple-Mail=_E7B9B648-4EF1-41BF-AD30-12CAA9184B06
+Content-Disposition: attachment;
+	filename=smime.p7s
+Content-Type: application/pkcs7-signature;
+	name=smime.p7s
+Content-Transfer-Encoding: base64
+
+MIAGCSqGSIb3DQEHAqCAMIACAQExCzAJBgUrDgMCGgUAMIAGCSqGSIb3DQEHAQAAoIICzjCCAsow
+ggItoAMCAQICAQEwCQYHKoZIzj0EATCBiTEXMBUGA1UEAwwORGF2aWQgV2FpdHptYW4xGTAXBgNV
+BAoMEEJCTiBUZWNobm9sb2dpZXMxCjAIBgNVBAsMAUQxCzAJBgNVBAgMAk1EMQswCQYDVQQGEwJV
+UzERMA8GA1UEBwwIQ29sdW1iaWExGjAYBgkqhkiG9w0BCQEWC2Rqd0BiYm4uY29tMB4XDTEwMDUy
+MzE2MDgzNloXDTIwMDUyMDE2MDgzNlowgYkxFzAVBgNVBAMMDkRhdmlkIFdhaXR6bWFuMRkwFwYD
+VQQKDBBCQk4gVGVjaG5vbG9naWVzMQowCAYDVQQLDAFEMQswCQYDVQQIDAJNRDELMAkGA1UEBhMC
+VVMxETAPBgNVBAcMCENvbHVtYmlhMRowGAYJKoZIhvcNAQkBFgtkandAYmJuLmNvbTCBmzAQBgcq
+hkjOPQIBBgUrgQQAIwOBhgAEAJ7SKuuFJUsacCypMyS+geahMdKB8mOrnDiwRSrE3VivbMGMFcBS
+m2RdJ7Gmc0ajDaulPQpS+hfKvXf3tWQY/yqaAHetqZ5MXsUpkAvRnNnOUhV9CIJuX0DZbJVha0sD
+YnvFmHwvdYdAvIAM6HMaxeL/NybDD8SlB5clLS6pwEnW5K4To0IwQDAOBgNVHQ8BAf8EBAMCB4Aw
+FgYDVR0lAQH/BAwwCgYIKwYBBQUHAwQwFgYDVR0RBA8wDYELZGp3QGJibi5jb20wCQYHKoZIzj0E
+AQOBiwAwgYcCQgGCFV25lZtrb6nGpZYqb+FYJDDY3zTf3stgxiYxx9AtL+gX+3AAzTU6FHwcPOZW
+6+5cmOyQR+J9Qhm4oVr603CBdgJBYFfq9oNCghhZGLJqDO0cNdwvB9LDoodpTippK8jDi3yULVPi
+ZqOSdCvmZyPlg0eKt5ouX7JOZeQQJH/x/DShdW0xggGcMIIBmAIBATCBjzCBiTEXMBUGA1UEAwwO
+RGF2aWQgV2FpdHptYW4xGTAXBgNVBAoMEEJCTiBUZWNobm9sb2dpZXMxCjAIBgNVBAsMAUQxCzAJ
+BgNVBAgMAk1EMQswCQYDVQQGEwJVUzERMA8GA1UEBwwIQ29sdW1iaWExGjAYBgkqhkiG9w0BCQEW
+C2Rqd0BiYm4uY29tAgEBMAkGBSsOAwIaBQCgXTAYBgkqhkiG9w0BCQMxCwYJKoZIhvcNAQcBMBwG
+CSqGSIb3DQEJBTEPFw0xMjAzMjMxNDQ5NTdaMCMGCSqGSIb3DQEJBDEWBBTxysWYZuOSonfBheVm
+IzwYCU77KzAJBgcqhkjOPQIBBIGLMIGIAkIBHNieGRdGUXTTUfCawoJJfQSK9FpY/zsvQb81h1Us
+xvyD3rglNyLsUE6H8aMS87A/+fKw0L4Nr1TzdQIUHHT8EocCQgH/Vj1hv0XruHHyDm9+MzRM4Fi9
+Kk4Ch77tBDDgTOXh1cobbQdpx+tfWH+xgYt0aVcDCeAk5bBnJ8bqAdn8pCkm1AAAAAAAAA==
+
+--Apple-Mail=_E7B9B648-4EF1-41BF-AD30-12CAA9184B06--
