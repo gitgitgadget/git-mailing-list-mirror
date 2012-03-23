@@ -1,58 +1,74 @@
-From: Neil Horman <nhorman@tuxdriver.com>
-Subject: odd behavior with git-rebase
-Date: Fri, 23 Mar 2012 14:52:05 -0400
-Message-ID: <20120323185205.GA11916@hmsreliant.think-freely.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] Demonstrate failure of 'core.ignorecase = true'
+Date: Fri, 23 Mar 2012 14:57:43 -0400
+Message-ID: <20120323185743.GA15063@sigill.intra.peff.net>
+References: <1332370222-5123-1-git-send-email-pj@irregularexpressions.net>
+ <7vmx79zeui.fsf@alter.siamese.dyndns.org>
+ <CAJsNXT=YEida53nV7kj6a3cw2GibYJab4n2PucNO6inUR3HPRQ@mail.gmail.com>
+ <7v8viswdho.fsf@alter.siamese.dyndns.org>
+ <87pqc3ei08.fsf@thomas.inf.ethz.ch>
+ <7v62dvus3f.fsf@alter.siamese.dyndns.org>
+ <20120323184823.GA14711@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Mar 23 19:52:19 2012
+Content-Type: text/plain; charset=utf-8
+Cc: Thomas Rast <trast@student.ethz.ch>,
+	PJ Weisberg <pj@irregularexpressions.net>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Mar 23 19:57:54 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SB9b0-0006XX-5h
-	for gcvg-git-2@plane.gmane.org; Fri, 23 Mar 2012 19:52:18 +0100
+	id 1SB9gN-0002hB-Cx
+	for gcvg-git-2@plane.gmane.org; Fri, 23 Mar 2012 19:57:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758155Ab2CWSwN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 Mar 2012 14:52:13 -0400
-Received: from charlotte.tuxdriver.com ([70.61.120.58]:41144 "EHLO
-	smtp.tuxdriver.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753822Ab2CWSwM (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Mar 2012 14:52:12 -0400
-Received: from hmsreliant.think-freely.org ([2001:470:8:a08:7aac:c0ff:fec2:933b] helo=localhost)
-	by smtp.tuxdriver.com with esmtpsa (TLSv1:AES128-SHA:128)
-	(Exim 4.63)
-	(envelope-from <nhorman@tuxdriver.com>)
-	id 1SB9aq-0005Ld-3N
-	for git@vger.kernel.org; Fri, 23 Mar 2012 14:52:09 -0400
+	id S1758150Ab2CWS5q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 Mar 2012 14:57:46 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:57666
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753293Ab2CWS5q (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Mar 2012 14:57:46 -0400
+Received: (qmail 18172 invoked by uid 107); 23 Mar 2012 18:58:02 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 23 Mar 2012 14:58:02 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 23 Mar 2012 14:57:43 -0400
 Content-Disposition: inline
-User-Agent: Mutt/1.5.21 (2010-09-15)
-X-Spam-Score: -2.9 (--)
-X-Spam-Status: No
+In-Reply-To: <20120323184823.GA14711@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193792>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193793>
 
-Hey all-
-	I hit a strange problem with git rebase and I can't quite decide if its
-a design point of the rebase command, or if its happening in error.  When doing
-upstream backports of various kernel components I occasionally run accross
-commits that, for whatever reason, I don't want/need or can't backport.  When
-that happens, I insert an empty commit in my history noting the upstream commit
-hash and the reasoning behind why I skipped it (I use git commit -c <hash>
---allow-empty).  If I later rebase this branch, I note that all my empty commits
-fail indicating the commit cannot be applied.  I can of course do another git
-commit --allow-empty -c <hash>; git rebase --continue, and everything is fine,
-but I'd rather it just take the empty commit in the rebase if possible.
+On Fri, Mar 23, 2012 at 02:48:44PM -0400, Jeff King wrote:
 
-I know that git cherry-pick allows for picking of empty commits, and it appears
-the rebase script uses cherry-picking significantly, so I'm not sure why this
-isn't working, or if its explicitly prevented from working for some reason.
+> I think Thomas's suggestion is to piggy-back it onto an existing file
+> lookup ("head" instead of "HEAD"), so you aren't doing any extra work.
+> However, I'm not sure that would be sufficient. If I copy a repo from a
+> case-insensitive filesystem to a case-sensitive one, what will the case
+> of "HEAD" be on the new filesystem?
+> 
+> If the original filesystem was case-preserving, I would expect "HEAD".
+> But on a true caseless filesystem, it could be either. Of course,
+> current git would already blow up if the file was copied as "head",
+> which makes me think this is probably a rare case. So maybe that is not
+> worth worrying about.
 
-anyone have any insight?
+As soon as I sent this, I had two additional thoughts:
 
-Thanks & Regards
-Neil
+  1. You could probably just use "HeAd", which is unlikely to work
+     anywhere except on a case-insensitive filesystem, and gets around
+     my objection above.
+
+  2. This still isn't a good test, because it is checking case
+     sensitivity of the repo directory, not the working tree, and
+     core.ignorecase is about the latter. It's possible to have the two
+     on different filesystems with different capabilities.
+
+     Though I think the initial test in "git init" suffers from the same
+     problem (it checks that "config" is accessible as "CoNfIg"), and I
+     have no heard anybody complaining about that.
+
+-Peff
