@@ -1,74 +1,99 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Demonstrate failure of 'core.ignorecase = true'
-Date: Fri, 23 Mar 2012 14:57:43 -0400
-Message-ID: <20120323185743.GA15063@sigill.intra.peff.net>
-References: <1332370222-5123-1-git-send-email-pj@irregularexpressions.net>
- <7vmx79zeui.fsf@alter.siamese.dyndns.org>
- <CAJsNXT=YEida53nV7kj6a3cw2GibYJab4n2PucNO6inUR3HPRQ@mail.gmail.com>
- <7v8viswdho.fsf@alter.siamese.dyndns.org>
- <87pqc3ei08.fsf@thomas.inf.ethz.ch>
- <7v62dvus3f.fsf@alter.siamese.dyndns.org>
- <20120323184823.GA14711@sigill.intra.peff.net>
+From: Eric Chamberland <Eric.Chamberland@giref.ulaval.ca>
+Subject: Re: [PATCH] Make 'cvs -n commit ...' not to commit
+Date: Fri, 23 Mar 2012 15:02:04 -0400
+Message-ID: <4F6CC8AC.4050907@giref.ulaval.ca>
+References: <20120323131100.7262D440B33@melkor.giref.ulaval.ca> <7vhaxftb54.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Thomas Rast <trast@student.ethz.ch>,
-	PJ Weisberg <pj@irregularexpressions.net>, git@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Mar 23 19:57:54 2012
+X-From: git-owner@vger.kernel.org Fri Mar 23 20:08:06 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SB9gN-0002hB-Cx
-	for gcvg-git-2@plane.gmane.org; Fri, 23 Mar 2012 19:57:51 +0100
+	id 1SB9qG-0002U2-KT
+	for gcvg-git-2@plane.gmane.org; Fri, 23 Mar 2012 20:08:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758150Ab2CWS5q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 Mar 2012 14:57:46 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:57666
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753293Ab2CWS5q (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Mar 2012 14:57:46 -0400
-Received: (qmail 18172 invoked by uid 107); 23 Mar 2012 18:58:02 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 23 Mar 2012 14:58:02 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 23 Mar 2012 14:57:43 -0400
-Content-Disposition: inline
-In-Reply-To: <20120323184823.GA14711@sigill.intra.peff.net>
+	id S1755559Ab2CWTH7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 Mar 2012 15:07:59 -0400
+Received: from serveur.giref.ulaval.ca ([132.203.7.102]:38445 "EHLO
+	mailhost.giref.ulaval.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754113Ab2CWTH7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Mar 2012 15:07:59 -0400
+X-Greylist: delayed 354 seconds by postgrey-1.27 at vger.kernel.org; Fri, 23 Mar 2012 15:07:59 EDT
+Received: from localhost (localhost [127.0.0.1])
+	by mailhost.giref.ulaval.ca (Postfix) with ESMTP id 02F09102185;
+	Fri, 23 Mar 2012 15:02:05 -0400 (EDT)
+X-Virus-Scanned: amavisd-new at giref.ulaval.ca
+Received: from mailhost.giref.ulaval.ca ([127.0.0.1])
+	by localhost (mailhost.giref.ulaval.ca [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id RHBoyafCSR2a; Fri, 23 Mar 2012 15:02:04 -0400 (EDT)
+Received: from [132.203.7.22] (melkor.giref.ulaval.ca [132.203.7.22])
+	by mailhost.giref.ulaval.ca (Postfix) with ESMTP id D7C661020A6;
+	Fri, 23 Mar 2012 15:02:04 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:10.0.2) Gecko/20120215 Thunderbird/10.0.2
+In-Reply-To: <7vhaxftb54.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193793>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193794>
 
-On Fri, Mar 23, 2012 at 02:48:44PM -0400, Jeff King wrote:
+On 03/23/2012 02:39 PM, Junio C Hamano wrote:
+> ericc<eric.chamberland@giref.ulaval.ca>  writes:
+>
+>> Actually, doing a 'cvs -n commit' will _do_ the commit...
+>> With this patch, it now goes through the code, but don't do the commit.
+>
+> OK.
+>
+>> A further progress would be to do the pre-commit hook is possible...
 
-> I think Thomas's suggestion is to piggy-back it onto an existing file
-> lookup ("head" instead of "HEAD"), so you aren't doing any extra work.
-> However, I'm not sure that would be sufficient. If I copy a repo from a
-> case-insensitive filesystem to a case-sensitive one, what will the case
-> of "HEAD" be on the new filesystem?
-> 
-> If the original filesystem was case-preserving, I would expect "HEAD".
-> But on a true caseless filesystem, it could be either. Of course,
-> current git would already blow up if the file was copied as "head",
-> which makes me think this is probably a rare case. So maybe that is not
-> worth worrying about.
+Sorry, I wanted to write:
 
-As soon as I sent this, I had two additional thoughts:
+"A further progress would be to do the pre-commit hook *if* possible..."
 
-  1. You could probably just use "HeAd", which is unlikely to work
-     anywhere except on a case-insensitive filesystem, and gets around
-     my objection above.
+here, we are used to do "cvs -n commit" just to check if the "hooks" on 
+the cvs server will fail or not...
 
-  2. This still isn't a good test, because it is checking case
-     sensitivity of the repo directory, not the working tree, and
-     core.ignorecase is about the latter. It's possible to have the two
-     on different filesystems with different capabilities.
 
-     Though I think the initial test in "git init" suffers from the same
-     problem (it checks that "config" is accessible as "CoNfIg"), and I
-     have no heard anybody complaining about that.
+>
+> I understand that you tried to make the patch smaller by avoiding
+> re-indenting, but this is *yucky*.
+>
+> It looks to me that the above part could be solved with:
+>
+> 	unless (...) {
+> 		next;
+> 	}
+>
+> I think the function being patched is too big.  Wouldn't it be better to
+> have a refactoring patch to move the above per-path logic to a helper
+> function that deals with a single path, and then insert the "omit call to
+> that helper when run with -n" code in a separate patch?
+>
+> The same comment applies to the other hunk.
+>
+> Also I notice that the indentation used throughout the file is somewhat
+> broken (e.g. "Emulate by running hooks/update" part is indented to 8
+> columns, but earlier parts use 4 space indent).  The right structure for
+> this change may be:
+>
+>   Patch 1: Fix indentation (and do nothing else) to uniformly indent with
+>            HT;
+>
+>   Patch 2: Refactor this big funciton using a handful of helper functions
+> 	  (and do nothing else);
+>
+>   Patch 3: Omit calls to these helper functions under -n option.
+>
+>
 
--Peff
+Ok you are right...  These were my very first lines in Perl... I just 
+wanted to catch the attention of someone who is able to do the changes 
+correctly... and in a more clean way than I...
+
+Eric
