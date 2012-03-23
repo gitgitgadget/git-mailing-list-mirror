@@ -1,102 +1,110 @@
-From: Rodrigo Silva =?utf-8?b?KE1lc3RyZUxpb24p?= 
-	<linux@rodrigosilva.com>
-Subject: [PATCH] Documentation: improve description of =?utf-8?b?R0lUX0VESVRPUg==?= and preference order
-Date: Fri, 23 Mar 2012 12:38:42 +0000 (UTC)
-Message-ID: <loom.20120323T133648-453@post.gmane.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Mar 23 13:45:19 2012
+From: David Waitzman <djw@bbn.com>
+Subject: [PATCH] gitweb(1): Fixed improper use of "it's" when it should be "its"
+Date: Fri, 23 Mar 2012 09:13:44 -0400
+Message-ID: <0316A9BA-627B-4B43-8BF1-392DD7408146@bbn.com>
+Mime-Version: 1.0 (Apple Message framework v1257)
+Content-Type: multipart/signed; boundary="Apple-Mail=_EB1421B1-19DB-413F-BC25-9426AE6346AE"; protocol="application/pkcs7-signature"; micalg=sha1
+To: git@vger.kernel.org, Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Mar 23 14:14:42 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SB3rp-0001BC-Sg
-	for gcvg-git-2@plane.gmane.org; Fri, 23 Mar 2012 13:45:18 +0100
+	id 1SB4KB-0000tx-RG
+	for gcvg-git-2@plane.gmane.org; Fri, 23 Mar 2012 14:14:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932138Ab2CWMpJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 Mar 2012 08:45:09 -0400
-Received: from plane.gmane.org ([80.91.229.3]:40957 "EHLO plane.gmane.org"
+	id S1753597Ab2CWNOQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 Mar 2012 09:14:16 -0400
+Received: from smtp.bbn.com ([128.33.1.81]:56849 "EHLO smtp.bbn.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932075Ab2CWMpF (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Mar 2012 08:45:05 -0400
-Received: from list by plane.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1SB3rb-0000xY-Ab
-	for git@vger.kernel.org; Fri, 23 Mar 2012 13:45:04 +0100
-Received: from baddd5e7.virtua.com.br ([baddd5e7.virtua.com.br])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 23 Mar 2012 13:45:03 +0100
-Received: from linux by baddd5e7.virtua.com.br with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 23 Mar 2012 13:45:03 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: sea.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 186.221.213.231 (Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:11.0) Gecko/20100101 Firefox/11.0)
+	id S1753029Ab2CWNNs (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Mar 2012 09:13:48 -0400
+Received: from [128.89.254.113] (port=56217)
+	by smtp.bbn.com with esmtps (TLSv1:AES128-SHA:128)
+	(Exim 4.77 (FreeBSD))
+	(envelope-from <djw@bbn.com>)
+	id 1SB4JD-0006TZ-Ks; Fri, 23 Mar 2012 09:13:35 -0400
+X-Mailer: Apple Mail (2.1257)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193757>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193758>
 
-Previously GIT_EDITOR was not listed in git(1) "Environment Variables" section,
-which could be very confusing to users. Include it in "other" subsection along
-with a link to git-var(1), since that is the page that fully describes all
-places where editor can be set and also their preference order.
 
-Also, git-var(1) did not say that hardcoded fallback 'vi' may have been changed
-at build time. A user could be puzzled if 'nano' pops up even when none of the
-mentioned environment vars or config.editor are set. Clarify this.
+--Apple-Mail=_EB1421B1-19DB-413F-BC25-9426AE6346AE
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;
+	charset=us-ascii
 
-Ideally, the build system should be changed to reflect the chosen fallback
-editor when creating the man pages. Not sure if that is even possible though.
+This is a trivial patch to correct the english in the man page.
 
-Signed-off-by: Rodrigo Silva (MestreLion) <linux@rodrigosilva.com>
+Signed-off-by: David Waitzman <djw@bbn.com>
+
 ---
- Documentation/git-var.txt |    3 ++-
- Documentation/git.txt     |    6 ++++++
- 2 files changed, 8 insertions(+), 1 deletions(-)
+ Documentation/gitweb.txt |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
- Granted, this is a very minor issue, but if any user stumble on this, this
- patch may reduce investigation from 50 minutes to 5
+diff --git a/Documentation/gitweb.txt b/Documentation/gitweb.txt
+index 605a085..065c54e 100644
+--- a/Documentation/gitweb.txt
++++ b/Documentation/gitweb.txt
+@@ -14,7 +14,7 @@ gitweb.
+=20
+ DESCRIPTION
+ -----------
+-Gitweb provides a web interface to git repositories.  It's features =
+include:
++Gitweb provides a web interface to git repositories.  Its features =
+include:
+=20
+ * Viewing multiple Git repositories with common root.
+ * Browsing every revision of the repository.
+@@ -60,7 +60,7 @@ to gitweb.  The list of projects is generated by =
+default by scanning the
+ more exact; gitweb is not interested in a working area, and is best =
+suited
+ to showing "bare" repositories).
+=20
+-The name of repository in gitweb is path to it's `$GIT_DIR` (it's =
+object
++The name of repository in gitweb is path to its `$GIT_DIR` (its object
+ database) relative to `$projectroot`.  Therefore the repository $repo =
+can be
+ found at "$projectroot/$repo".
+=20
+--=20
+1.7.9.GIT
 
- Patch was tested in 1.7.1, but sources show this is still present in 1.7.10-rc1
 
-diff --git a/Documentation/git-var.txt b/Documentation/git-var.txt
-index 5317cc2..9c49163 100644
---- a/Documentation/git-var.txt
-+++ b/Documentation/git-var.txt
-@@ -43,7 +43,8 @@ GIT_EDITOR::
-     `$SOME_ENVIRONMENT_VARIABLE`, `"C:\Program Files\Vim\gvim.exe"
-     --nofork`.  The order of preference is the `$GIT_EDITOR`
-     environment variable, then `core.editor` configuration, then
--    `$VISUAL`, then `$EDITOR`, and then finally 'vi'.
-+    `$VISUAL`, then `$EDITOR`, and then finally a hardcoded fallback
-+    editor set at build time, by default 'vi'.
- 
- GIT_PAGER::
-     Text viewer for use by git commands (e.g., 'less').  The value
-diff --git a/Documentation/git.txt b/Documentation/git.txt
-index d5b7667..fac57ba 100644
---- a/Documentation/git.txt
-+++ b/Documentation/git.txt
-@@ -711,6 +711,12 @@ other
- 	a pager.  See also the `core.pager` option in
- 	linkgit:git-config[1].
- 
-+'GIT_EDITOR'::
-+    This environment variable overrides `$EDITOR` and `$VISUAL`.
-+    It is used by several git comands when, on interactive mode,
-+    an editor is to be launched. See also linkgit:git-var[1]
-+    and the `core.editor` option in linkgit:git-config[1].
-+
- 'GIT_SSH'::
- 	If this environment variable is set then 'git fetch'
- 	and 'git push' will use this command instead
--- 
-1.7.1
+--Apple-Mail=_EB1421B1-19DB-413F-BC25-9426AE6346AE
+Content-Disposition: attachment;
+	filename=smime.p7s
+Content-Type: application/pkcs7-signature;
+	name=smime.p7s
+Content-Transfer-Encoding: base64
+
+MIAGCSqGSIb3DQEHAqCAMIACAQExCzAJBgUrDgMCGgUAMIAGCSqGSIb3DQEHAQAAoIICzjCCAsow
+ggItoAMCAQICAQEwCQYHKoZIzj0EATCBiTEXMBUGA1UEAwwORGF2aWQgV2FpdHptYW4xGTAXBgNV
+BAoMEEJCTiBUZWNobm9sb2dpZXMxCjAIBgNVBAsMAUQxCzAJBgNVBAgMAk1EMQswCQYDVQQGEwJV
+UzERMA8GA1UEBwwIQ29sdW1iaWExGjAYBgkqhkiG9w0BCQEWC2Rqd0BiYm4uY29tMB4XDTEwMDUy
+MzE2MDgzNloXDTIwMDUyMDE2MDgzNlowgYkxFzAVBgNVBAMMDkRhdmlkIFdhaXR6bWFuMRkwFwYD
+VQQKDBBCQk4gVGVjaG5vbG9naWVzMQowCAYDVQQLDAFEMQswCQYDVQQIDAJNRDELMAkGA1UEBhMC
+VVMxETAPBgNVBAcMCENvbHVtYmlhMRowGAYJKoZIhvcNAQkBFgtkandAYmJuLmNvbTCBmzAQBgcq
+hkjOPQIBBgUrgQQAIwOBhgAEAJ7SKuuFJUsacCypMyS+geahMdKB8mOrnDiwRSrE3VivbMGMFcBS
+m2RdJ7Gmc0ajDaulPQpS+hfKvXf3tWQY/yqaAHetqZ5MXsUpkAvRnNnOUhV9CIJuX0DZbJVha0sD
+YnvFmHwvdYdAvIAM6HMaxeL/NybDD8SlB5clLS6pwEnW5K4To0IwQDAOBgNVHQ8BAf8EBAMCB4Aw
+FgYDVR0lAQH/BAwwCgYIKwYBBQUHAwQwFgYDVR0RBA8wDYELZGp3QGJibi5jb20wCQYHKoZIzj0E
+AQOBiwAwgYcCQgGCFV25lZtrb6nGpZYqb+FYJDDY3zTf3stgxiYxx9AtL+gX+3AAzTU6FHwcPOZW
+6+5cmOyQR+J9Qhm4oVr603CBdgJBYFfq9oNCghhZGLJqDO0cNdwvB9LDoodpTippK8jDi3yULVPi
+ZqOSdCvmZyPlg0eKt5ouX7JOZeQQJH/x/DShdW0xggGcMIIBmAIBATCBjzCBiTEXMBUGA1UEAwwO
+RGF2aWQgV2FpdHptYW4xGTAXBgNVBAoMEEJCTiBUZWNobm9sb2dpZXMxCjAIBgNVBAsMAUQxCzAJ
+BgNVBAgMAk1EMQswCQYDVQQGEwJVUzERMA8GA1UEBwwIQ29sdW1iaWExGjAYBgkqhkiG9w0BCQEW
+C2Rqd0BiYm4uY29tAgEBMAkGBSsOAwIaBQCgXTAYBgkqhkiG9w0BCQMxCwYJKoZIhvcNAQcBMBwG
+CSqGSIb3DQEJBTEPFw0xMjAzMjMxMzEzNDZaMCMGCSqGSIb3DQEJBDEWBBQSEfT4Y4uLercFCpvu
+DUnSzxgwiDAJBgcqhkjOPQIBBIGLMIGIAkIBwEdz6BqrETejSPfb5wNgWOtcBgcGo/KvqTx4TANs
+FwCHRn1W8b52lx+9paGlMqi6sSRHXJPnwSuUXIxK+cEKYukCQgFUKCDseT9jkXhW9ds+g6wVqlKA
+5t1mrRH7Yrh5SMw8rinwdsUhFTt9BWIA+pz9O92gqO4P6+jWOnk+JKiTmpzIjgAAAAAAAA==
+
+--Apple-Mail=_EB1421B1-19DB-413F-BC25-9426AE6346AE--
