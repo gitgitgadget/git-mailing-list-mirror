@@ -1,74 +1,90 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: odd behavior with git-rebase
-Date: Fri, 23 Mar 2012 13:33:30 -0700
-Message-ID: <7vvclvrrad.fsf@alter.siamese.dyndns.org>
-References: <20120323185205.GA11916@hmsreliant.think-freely.org>
+From: Alex Plotnick <shrike@netaxs.com>
+Subject: Re: [PATCH v0 0/2] git-less: a specialized pager for git-log
+Date: Fri, 23 Mar 2012 16:44:10 -0400
+Message-ID: <87obrn6o9x.fsf@sol.localdomain>
+References: <1332441744-5142-1-git-send-email-h.mitake@gmail.com>
+	<7v1uokxxzh.fsf@alter.siamese.dyndns.org> <4F6C4B59.8060102@op5.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Neil Horman <nhorman@tuxdriver.com>
-X-From: git-owner@vger.kernel.org Fri Mar 23 21:34:14 2012
+Content-Type: multipart/mixed; boundary="=-=-="
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Mar 23 21:55:27 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SBBBX-0005Az-Cy
-	for gcvg-git-2@plane.gmane.org; Fri, 23 Mar 2012 21:34:07 +0100
+	id 1SBBW2-00061T-MR
+	for gcvg-git-2@plane.gmane.org; Fri, 23 Mar 2012 21:55:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759885Ab2CWUde (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 Mar 2012 16:33:34 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:57547 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756586Ab2CWUdd (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Mar 2012 16:33:33 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E77046C43;
-	Fri, 23 Mar 2012 16:33:32 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=fLZoCTiGbiBq8ulXbgOOzQbWhI8=; b=V7xJh7
-	jXKAQN9xTQEBmUZCaD5Axk8fX1ostE1Bxda6t66oq2GDyQCTsFB4Q67aHE3ig7Lq
-	2K3/gabcxAFJRCw0Wb53S+opuXNEKz/8GKk7fjm9W7CJH3FTk7loZ6ClAKpopxZs
-	/+rJsND4wimldWERKuwSPmyvXYYbpu4lF2OdU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Yp+W61UzFubZo0BGzKGdCRNYnMI+GOsZ
-	HSIvJsb0OsUzntyqJYWxCFeZ7nanBoLqcgMrWGwcAwscZxcl2mr08k6lABOSbl1S
-	bcY6GbglReNsQATlcoZ6i3nFdGSh23GWeJsh2cRLhVeeo2IW+sVM46LUC5U3tvwp
-	l9TDh3jsXLM=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E03DD6C42;
-	Fri, 23 Mar 2012 16:33:32 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 6086E6C3F; Fri, 23 Mar 2012
- 16:33:32 -0400 (EDT)
-In-Reply-To: <20120323185205.GA11916@hmsreliant.think-freely.org> (Neil
- Horman's message of "Fri, 23 Mar 2012 14:52:05 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 74F2E182-7527-11E1-8C52-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754481Ab2CWUzJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 Mar 2012 16:55:09 -0400
+Received: from plane.gmane.org ([80.91.229.3]:37322 "EHLO plane.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752863Ab2CWUzH (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Mar 2012 16:55:07 -0400
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1SBBVn-0005n0-P9
+	for git@vger.kernel.org; Fri, 23 Mar 2012 21:55:03 +0100
+Received: from pool-108-7-186-97.bstnma.fios.verizon.net ([108.7.186.97])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 23 Mar 2012 21:55:03 +0100
+Received: from shrike by pool-108-7-186-97.bstnma.fios.verizon.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 23 Mar 2012 21:55:03 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: pool-108-7-186-97.bstnma.fios.verizon.net
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.93 (berkeley-unix)
+Cancel-Lock: sha1:MtMAeH74/6WK5dtpu/L7J2TOwHI=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193800>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193801>
 
-Neil Horman <nhorman@tuxdriver.com> writes:
+--=-=-=
+Content-Type: text/plain
 
-> I know that git cherry-pick allows for picking of empty commits, and it appears
-> the rebase script uses cherry-picking significantly, so I'm not sure why this
-> isn't working, or if its explicitly prevented from working for some reason.
+I have on occasion also wished to view log messages (especially with
+patches) one at a time. And although I agree that a dedicated pager is
+overkill, perhaps a small script wouldn't be.
 
-The primary purpose of "rebase" is (or at least was when it was conceived)
-to clean up the existing history, and a part of the cleaning up is not to
-replay a patch that ends up being empty.  Even though we try to omit an
-already applied patch by using "git cherry" internally when choosing which
-commits to replay, a commit that by itself is *not* empty could end up
-being empty when a similar change has already been made to the updated
-base, and we do want to omit them.
+The attached script will eventually run afoul of argument length limits,
+but seems to work well otherwise. If you're using less(1), you can step
+through the files using :n, :p, and :x.
 
-A commit that is empty (i.e. --allow-empty) by itself was a much later
-invention than the basic rebase logic, and the rebase may want to be
-updated to special case it, but as the default behaviour it is doing the
-right thing by not letting an empty commit into the cleaned up history.
+Cheers,
+
+    -- Alex
+
+--=-=-=
+Content-Type: text/x-shellscript
+Content-Disposition: attachment; filename=git-split-log
+Content-Description: View git log as one file per commit
+
+#!/bin/sh
+
+# Use csplit(1) to split a git log into one commit per file, then run the
+# pager on the split files.
+
+. $(git --exec-path)/git-sh-setup
+
+SPLIT_DIR="$GIT_DIR/split-$$"
+CSPLIT="csplit -s -k"
+if csplit --help 2>/dev/null | sane_grep -- "-z" >/dev/null;
+then
+	CSPLIT="$CSPLIT -z"
+fi
+
+_x40='[0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f]'
+_x40="$_x40$_x40$_x40$_x40$_x40$_x40$_x40$_x40"
+_infty=1000000
+
+mkdir "$SPLIT_DIR" && cd "$SPLIT_DIR" || exit 1
+trap 'rm -rf "$SPLIT_DIR"' 0 1 2 3 15
+git log "$@" | $CSPLIT - "/^commit $_x40/" "{$_infty}" 2>/dev/null
+git_pager "$SPLIT_DIR"/xx*
+
+--=-=-=--
