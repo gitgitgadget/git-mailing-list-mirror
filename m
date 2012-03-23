@@ -1,87 +1,82 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 0/2] merging renames of empty files
-Date: Thu, 22 Mar 2012 20:23:00 -0400
-Message-ID: <20120323002300.GA15940@sigill.intra.peff.net>
-References: <4F6B1F48.3040007@in.waw.pl>
- <20120322140140.GA8803@sigill.intra.peff.net>
- <7vty1gy3eh.fsf@alter.siamese.dyndns.org>
- <20120322175952.GA13069@sigill.intra.peff.net>
- <20120322182533.GA20360@sigill.intra.peff.net>
- <7v62dwxybd.fsf@alter.siamese.dyndns.org>
- <20120322190303.GA32756@sigill.intra.peff.net>
- <7vwr6cwiux.fsf@alter.siamese.dyndns.org>
- <20120322224651.GA14874@sigill.intra.peff.net>
- <7vpqc4us0u.fsf@alter.siamese.dyndns.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: GSoC - Designing a faster index format
+Date: Thu, 22 Mar 2012 17:46:09 -0700 (PDT)
+Message-ID: <m3obrob0vk.fsf@localhost.localdomain>
+References: <CAKTdtZm3qfG1rcoashDoMoqtD34JJDUDtDruGqGn9bSMzQTcFA@mail.gmail.com>
+	<87aa3aw5z8.fsf@thomas.inf.ethz.ch>
+	<CAKTdtZkGP3KbMGf88yW7zcCjemUyEy_4CVNkLD0SV=Lm7=Kveg@mail.gmail.com>
+	<CAKTdtZmYc=xz4zCPQiuSTUvdmbLRKXNWNL3N6_4Bj0gujYmRvw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Zbigniew =?utf-8?Q?J=C4=99drzejewski-Szmek?= <zbyszek@in.waw.pl>,
-	"Randal L. Schwartz" <merlyn@stonehenge.com>,
-	Ralf Nyren <ralf.nyren@ericsson.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Mar 23 01:23:11 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Thomas Rast <trast@student.ethz.ch>,
+	Git Mailing List <git@vger.kernel.org>
+To: elton sky <eltonsky9404@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Mar 23 01:46:18 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SAsHd-0008B6-Qx
-	for gcvg-git-2@plane.gmane.org; Fri, 23 Mar 2012 01:23:10 +0100
+	id 1SAse1-0000bi-I4
+	for gcvg-git-2@plane.gmane.org; Fri, 23 Mar 2012 01:46:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754341Ab2CWAXG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 Mar 2012 20:23:06 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:57078
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753474Ab2CWAXD (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Mar 2012 20:23:03 -0400
-Received: (qmail 8076 invoked by uid 107); 23 Mar 2012 00:23:18 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 22 Mar 2012 20:23:18 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 22 Mar 2012 20:23:00 -0400
-Content-Disposition: inline
-In-Reply-To: <7vpqc4us0u.fsf@alter.siamese.dyndns.org>
+	id S964865Ab2CWAqN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 Mar 2012 20:46:13 -0400
+Received: from mail-wi0-f178.google.com ([209.85.212.178]:40754 "EHLO
+	mail-wi0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932207Ab2CWAqL (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Mar 2012 20:46:11 -0400
+Received: by wibhq7 with SMTP id hq7so1451909wib.1
+        for <git@vger.kernel.org>; Thu, 22 Mar 2012 17:46:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        bh=qt61KxYBOS9JJZ+OBQJZxc5rqGFfryJR0Jidv+akNKU=;
+        b=wWGr1HacVDtNG0T2rvYokLCwR41B7gr2m4pxaQAD9MLLZ0eeVxWi8y9w89RWnXrrCX
+         vBpLpHQ1jRPTeqy0fPbMEh9isXbohbCqOsaSZcPyR3ALWlUXnauNf6nXTxm15r1ZKNFl
+         BMHFXiNf2vAuGw+hzVtX9VA7tMjlxIyV2R6yh6pvVnEP3vADQ17AaXzIhjQA33C9sLTq
+         1HIhEzC9sUIEJiqc1Jz1x6IXkJPY+qXEO2IZInAg8sKUxwzb/emOzvFKpdKt4S+6yvJL
+         zN5TE7/lnq99tMPpZhzO33IbsfERdE7ma/6eLlC6UFf77VPonHWQgYH/Socwcw+PGOJJ
+         cZZw==
+Received: by 10.216.145.209 with SMTP id p59mr5917179wej.50.1332463570529;
+        Thu, 22 Mar 2012 17:46:10 -0700 (PDT)
+Received: from localhost.localdomain (abwe160.neoplus.adsl.tpnet.pl. [83.8.228.160])
+        by mx.google.com with ESMTPS id ff2sm15604230wib.9.2012.03.22.17.46.08
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 22 Mar 2012 17:46:09 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id q2N0k8xJ007639;
+	Fri, 23 Mar 2012 01:46:09 +0100
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id q2N0k7cN007636;
+	Fri, 23 Mar 2012 01:46:07 +0100
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <CAKTdtZmYc=xz4zCPQiuSTUvdmbLRKXNWNL3N6_4Bj0gujYmRvw@mail.gmail.com>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193739>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193740>
 
-On Thu, Mar 22, 2012 at 04:37:05PM -0700, Junio C Hamano wrote:
+elton sky <eltonsky9404@gmail.com> writes:
 
-> Jeff King <peff@peff.net> writes:
+> Got a few questions:
 > 
-> > Here's a 2-patch series to replace the old 3/3 (they go on top of the
-> > first two cleanups from the previous iteration).
-> 
-> Hrm. As this is probably useful for older maintenance track, I would have
-> preferred not to see the first one that touches sequencer.c that did not
-> exist in the 1.7.7.x maintenance track, as the change is purely "cosmetic"
-> and does not have anything to do with fixing the over-agressive merge.
+> 1. index is used for building next commit, so it should only include
+> files created/modified/deleted. But I see it has all entries for
+> current working dir. why?
 
-I considered that, but assumed this was not a maint fix, but rather a
-new "feature" to improve the heuristics. That being said, the first
-patch is entirely unrelated.  The others don't depend on it textually or
-semantically, and it does not need to be part of the series (I just
-happened to notice it while in the area).
+Because git is snapshot based, not changeset based.  Ecah commit
+stores state of repository in the form of 'tree' object, which is
+build out of index.
+ 
+Also index stores extra information, like mtime, about all files
+to make operations faster (skip unchanged files).  The index was
+originally at the very beginning named dircache.
 
-> I thought that our recommendation for keeping an otherwise empty
-> directories around was to have .gitignore file with two entries in it,
-> namely:
-> 
-> 	.*
->         *
-> 
-> So these files will be everywhere and without being empty, no?
-
-I dunno. I have never recommended that, but maybe it is something people
-do.
-
-> But I tend to prefer the simplicity of limiting this to empty files
-> anyway.
-
-Yeah. We might want to do a gitattributes thing on top, but I'd much
-rather have this in the meantime, as it seems like it handles the bulk
-of the complaints we have actually seen on the list.
-
--Peff
+[...]
+-- 
+Jakub Narebski
