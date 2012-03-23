@@ -1,118 +1,63 @@
-From: David Waitzman <djw@bbn.com>
-Subject: [PATCH] Documentation/gitweb: trivial English fixes
-Date: Fri, 23 Mar 2012 12:57:11 -0400
-Message-ID: <4F306653-D561-4ACC-9C5F-E69EB4DDF04E@bbn.com>
-Mime-Version: 1.0 (Apple Message framework v1257)
-Content-Type: multipart/signed; boundary="Apple-Mail=_E6D7A70F-D3FF-45B0-BF78-A7CD95E05051"; protocol="application/pkcs7-signature"; micalg=sha1
-To: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Mar 23 17:57:24 2012
+From: Jeff King <peff@peff.net>
+Subject: Re: Listing commits that are _exclusively_ available on a given
+ branch
+Date: Fri, 23 Mar 2012 13:06:41 -0400
+Message-ID: <20120323170640.GA12881@sigill.intra.peff.net>
+References: <CALKQrge-=XExhwxuC14uynpuuO3W+f4YO4=X7kFUx33F3HtnyQ@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Cc: Git mailing list <git@vger.kernel.org>
+To: Johan Herland <johan@herland.net>
+X-From: git-owner@vger.kernel.org Fri Mar 23 18:06:50 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SB7nn-0003lT-9C
-	for gcvg-git-2@plane.gmane.org; Fri, 23 Mar 2012 17:57:23 +0100
+	id 1SB7wv-0003Lm-Tk
+	for gcvg-git-2@plane.gmane.org; Fri, 23 Mar 2012 18:06:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755184Ab2CWQ5S (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 Mar 2012 12:57:18 -0400
-Received: from smtp.bbn.com ([128.33.1.81]:41913 "EHLO smtp.bbn.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754947Ab2CWQ5R (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Mar 2012 12:57:17 -0400
-Received: from [128.89.254.113] (port=56826)
-	by smtp.bbn.com with esmtps (TLSv1:AES128-SHA:128)
-	(Exim 4.77 (FreeBSD))
-	(envelope-from <djw@bbn.com>)
-	id 1SB7nU-000DGH-E2
-	for git@vger.kernel.org; Fri, 23 Mar 2012 12:57:04 -0400
-X-Mailer: Apple Mail (2.1257)
+	id S1757136Ab2CWRGp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 Mar 2012 13:06:45 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:57557
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757060Ab2CWRGo (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Mar 2012 13:06:44 -0400
+Received: (qmail 16246 invoked by uid 107); 23 Mar 2012 17:07:00 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 23 Mar 2012 13:07:00 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 23 Mar 2012 13:06:41 -0400
+Content-Disposition: inline
+In-Reply-To: <CALKQrge-=XExhwxuC14uynpuuO3W+f4YO4=X7kFUx33F3HtnyQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193770>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193771>
 
+On Fri, Mar 23, 2012 at 03:36:33PM +0100, Johan Herland wrote:
 
---Apple-Mail=_E6D7A70F-D3FF-45B0-BF78-A7CD95E05051
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain;
-	charset=us-ascii
+> I'm trying to figure out how to list commits on a given branch that
+> are not available on any other branch, i.e. the commits that are
+> exclusive to my branch.
+> 
+> So far I only have this somewhat brute-force alternative:
+> 
+>   git rev-list refs/heads/mybranch --not $(git show-ref --heads | grep
+> -v refs/heads/mybranch)
+> 
+> Is it possible to phrase this query in a simpler manner? Preferably by
+> not having to list all refs and then run grep on it...
 
-Change "it's" to "its" where a possessive is intended.
-Add two missing "the"s that were noticed by Ben Walton =
-<bwalton@artsci.utoronto.ca>.
+No, I think that is the only way to do it. The algorithm run by rev-list
+in that case should be optimal, so there is nothing to improve there.
+Syntactically, it's a little bit of a pain because there is no way to
+tell rev-list "--all, except for this one branch" short of using grep.
+We could add a new syntax for that, but I'm not sure what it would look
+like (or if it would be any easier on the eyes than what you have).
 
-Signed-off-by: David Waitzman <djw@bbn.com>
----
- This is a trivial patch to correct the english in the man page.  Ben
- Walton suggested an additional english fix which I have added and
- squashed with my change.  And then I added it again when he pointed
- out I missed something in his original email.
+You might consider using "git rev-list --stdin" to avoid running into
+limits on the command-line length.
 
- Documentation/gitweb.txt |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/Documentation/gitweb.txt b/Documentation/gitweb.txt
-index 605a085..168e8bf 100644
---- a/Documentation/gitweb.txt
-+++ b/Documentation/gitweb.txt
-@@ -14,7 +14,7 @@ gitweb.
-=20
- DESCRIPTION
- -----------
--Gitweb provides a web interface to git repositories.  It's features =
-include:
-+Gitweb provides a web interface to git repositories.  Its features =
-include:
-=20
- * Viewing multiple Git repositories with common root.
- * Browsing every revision of the repository.
-@@ -60,7 +60,7 @@ to gitweb.  The list of projects is generated by =
-default by scanning the
- more exact; gitweb is not interested in a working area, and is best =
-suited
- to showing "bare" repositories).
-=20
--The name of repository in gitweb is path to it's `$GIT_DIR` (it's =
-object
-+The name of the repository in gitweb is the path to its `$GIT_DIR` (its =
-object
- database) relative to `$projectroot`.  Therefore the repository $repo =
-can be
- found at "$projectroot/$repo".
-=20
---=20
-1.7.9.GIT
-
-
---Apple-Mail=_E6D7A70F-D3FF-45B0-BF78-A7CD95E05051
-Content-Disposition: attachment;
-	filename=smime.p7s
-Content-Type: application/pkcs7-signature;
-	name=smime.p7s
-Content-Transfer-Encoding: base64
-
-MIAGCSqGSIb3DQEHAqCAMIACAQExCzAJBgUrDgMCGgUAMIAGCSqGSIb3DQEHAQAAoIICzjCCAsow
-ggItoAMCAQICAQEwCQYHKoZIzj0EATCBiTEXMBUGA1UEAwwORGF2aWQgV2FpdHptYW4xGTAXBgNV
-BAoMEEJCTiBUZWNobm9sb2dpZXMxCjAIBgNVBAsMAUQxCzAJBgNVBAgMAk1EMQswCQYDVQQGEwJV
-UzERMA8GA1UEBwwIQ29sdW1iaWExGjAYBgkqhkiG9w0BCQEWC2Rqd0BiYm4uY29tMB4XDTEwMDUy
-MzE2MDgzNloXDTIwMDUyMDE2MDgzNlowgYkxFzAVBgNVBAMMDkRhdmlkIFdhaXR6bWFuMRkwFwYD
-VQQKDBBCQk4gVGVjaG5vbG9naWVzMQowCAYDVQQLDAFEMQswCQYDVQQIDAJNRDELMAkGA1UEBhMC
-VVMxETAPBgNVBAcMCENvbHVtYmlhMRowGAYJKoZIhvcNAQkBFgtkandAYmJuLmNvbTCBmzAQBgcq
-hkjOPQIBBgUrgQQAIwOBhgAEAJ7SKuuFJUsacCypMyS+geahMdKB8mOrnDiwRSrE3VivbMGMFcBS
-m2RdJ7Gmc0ajDaulPQpS+hfKvXf3tWQY/yqaAHetqZ5MXsUpkAvRnNnOUhV9CIJuX0DZbJVha0sD
-YnvFmHwvdYdAvIAM6HMaxeL/NybDD8SlB5clLS6pwEnW5K4To0IwQDAOBgNVHQ8BAf8EBAMCB4Aw
-FgYDVR0lAQH/BAwwCgYIKwYBBQUHAwQwFgYDVR0RBA8wDYELZGp3QGJibi5jb20wCQYHKoZIzj0E
-AQOBiwAwgYcCQgGCFV25lZtrb6nGpZYqb+FYJDDY3zTf3stgxiYxx9AtL+gX+3AAzTU6FHwcPOZW
-6+5cmOyQR+J9Qhm4oVr603CBdgJBYFfq9oNCghhZGLJqDO0cNdwvB9LDoodpTippK8jDi3yULVPi
-ZqOSdCvmZyPlg0eKt5ouX7JOZeQQJH/x/DShdW0xggGbMIIBlwIBATCBjzCBiTEXMBUGA1UEAwwO
-RGF2aWQgV2FpdHptYW4xGTAXBgNVBAoMEEJCTiBUZWNobm9sb2dpZXMxCjAIBgNVBAsMAUQxCzAJ
-BgNVBAgMAk1EMQswCQYDVQQGEwJVUzERMA8GA1UEBwwIQ29sdW1iaWExGjAYBgkqhkiG9w0BCQEW
-C2Rqd0BiYm4uY29tAgEBMAkGBSsOAwIaBQCgXTAYBgkqhkiG9w0BCQMxCwYJKoZIhvcNAQcBMBwG
-CSqGSIb3DQEJBTEPFw0xMjAzMjMxNjU3MTVaMCMGCSqGSIb3DQEJBDEWBBTDlqe3QPJoYcc7XErv
-yd22CS892TAJBgcqhkjOPQIBBIGKMIGHAkIBsws3wvcOuQ+QcTCL1x8Aol74xv0rTYioETGi/kVy
-o5UtUzyYIR9zbECLbX3fm9LhVlMvUfa9Hn+SgT0bIK/nmoYCQTs7FyfKsL1mDfk8hJrvcSkxuq9/
-LJVgQbF96Jecw19/lhtu6sgGjgWEterMbag3FzI79vPuEKiCLr3hR78A4de8AAAAAAAA
-
---Apple-Mail=_E6D7A70F-D3FF-45B0-BF78-A7CD95E05051--
+-Peff
