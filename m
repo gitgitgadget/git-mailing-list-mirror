@@ -1,114 +1,102 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: small gitweb.txt patch fixing improper "it's"
-Date: Fri, 23 Mar 2012 05:44:49 -0700 (PDT)
-Message-ID: <m3k42bbi69.fsf@localhost.localdomain>
-References: <017CC154-2E41-4F29-B9CE-30D7430CB41B@bbn.com>
+From: Rodrigo Silva =?utf-8?b?KE1lc3RyZUxpb24p?= 
+	<linux@rodrigosilva.com>
+Subject: [PATCH] Documentation: improve description of =?utf-8?b?R0lUX0VESVRPUg==?= and preference order
+Date: Fri, 23 Mar 2012 12:38:42 +0000 (UTC)
+Message-ID: <loom.20120323T133648-453@post.gmane.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jakub Narebski <jnareb@gmail.com>
-To: David Waitzman <djw@bbn.com>
-X-From: git-owner@vger.kernel.org Fri Mar 23 13:45:11 2012
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Mar 23 13:45:19 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SB3rg-00012D-IO
-	for gcvg-git-2@plane.gmane.org; Fri, 23 Mar 2012 13:45:08 +0100
+	id 1SB3rp-0001BC-Sg
+	for gcvg-git-2@plane.gmane.org; Fri, 23 Mar 2012 13:45:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932129Ab2CWMow (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 Mar 2012 08:44:52 -0400
-Received: from mail-ey0-f174.google.com ([209.85.215.174]:47830 "EHLO
-	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932075Ab2CWMov (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Mar 2012 08:44:51 -0400
-Received: by eaaq12 with SMTP id q12so999663eaa.19
-        for <git@vger.kernel.org>; Fri, 23 Mar 2012 05:44:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        bh=iPl0XyW4vErYti+80YBZE3tuJtwubwpHh3eVpXTkjsI=;
-        b=faWGHqPS1cmGkLCVg7Xu9LHsJIGgLYhw85nYMGmKQb1nEJQce2XDabjA5Rw7IlJSDe
-         gzkyob1yk/+EqBzrYpzopZMSUwaR7fsI0/fpDVsYosrYF623/oezXGBZXffgCZhn8F64
-         YgfceaZXpo709X0qS7WuUDWaqj4pCVumMvyiOHwIkXvQtYqi4RulwxqJ7wgE3E5bhNsp
-         UYfzNqxIalnxHzJWEeKFCmPqkeZ2T0m/0u78ag+vmAUPwsP7/shKISzFcqzMT+0v8d8g
-         FMjXxyopNoi9O9LKxMVNYKxz9G05wAHdslut+m2qIoFS59lrenC5O2loEhJQIt6scBpD
-         mv/Q==
-Received: by 10.213.10.193 with SMTP id q1mr870265ebq.301.1332506690377;
-        Fri, 23 Mar 2012 05:44:50 -0700 (PDT)
-Received: from localhost.localdomain (aej85.neoplus.adsl.tpnet.pl. [83.25.113.85])
-        by mx.google.com with ESMTPS id n55sm27819347eef.6.2012.03.23.05.44.49
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 23 Mar 2012 05:44:49 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id q2NCilII015757;
-	Fri, 23 Mar 2012 13:44:48 +0100
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id q2NCikuk015754;
-	Fri, 23 Mar 2012 13:44:46 +0100
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <017CC154-2E41-4F29-B9CE-30D7430CB41B@bbn.com>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S932138Ab2CWMpJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 Mar 2012 08:45:09 -0400
+Received: from plane.gmane.org ([80.91.229.3]:40957 "EHLO plane.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932075Ab2CWMpF (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Mar 2012 08:45:05 -0400
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1SB3rb-0000xY-Ab
+	for git@vger.kernel.org; Fri, 23 Mar 2012 13:45:04 +0100
+Received: from baddd5e7.virtua.com.br ([baddd5e7.virtua.com.br])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 23 Mar 2012 13:45:03 +0100
+Received: from linux by baddd5e7.virtua.com.br with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 23 Mar 2012 13:45:03 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 186.221.213.231 (Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:11.0) Gecko/20100101 Firefox/11.0)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193756>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193757>
 
-David Waitzman <djw@bbn.com> writes:
+Previously GIT_EDITOR was not listed in git(1) "Environment Variables" section,
+which could be very confusing to users. Include it in "other" subsection along
+with a link to git-var(1), since that is the page that fully describes all
+places where editor can be set and also their preference order.
 
-> From 2cec86150882ba0b7f165b658d54573066e70f14 Mon Sep 17 00:00:00 2001
-> From: David Waitzman <djw@bbn.com>
-> Date: Wed, 21 Mar 2012 22:10:49 -0400
+Also, git-var(1) did not say that hardcoded fallback 'vi' may have been changed
+at build time. A user could be puzzled if 'nano' pops up even when none of the
+mentioned environment vars or config.editor are set. Clarify this.
 
-The above is not needed, unless you are sending a patch on behalf of
-other author or use different email: then you need to provide "From:"
-only.
+Ideally, the build system should be changed to reflect the chosen fallback
+editor when creating the man pages. Not sure if that is even possible though.
 
-> Subject: [PATCH] Fixed improper use of "it's" when it should be "its"
+Signed-off-by: Rodrigo Silva (MestreLion) <linux@rodrigosilva.com>
+---
+ Documentation/git-var.txt |    3 ++-
+ Documentation/git.txt     |    6 ++++++
+ 2 files changed, 8 insertions(+), 1 deletions(-)
 
-You can use subject of email for that.
+ Granted, this is a very minor issue, but if any user stumble on this, this
+ patch may reduce investigation from 50 minutes to 5
 
-The oneline description of commit (commit summary) should include name
-of subsystem, e.g.:
+ Patch was tested in 1.7.1, but sources show this is still present in 1.7.10-rc1
 
-  Subject: [PATCH] gitweb(1): Fixed improper use of "it's" when it should be "its"
-
-or just
-
-  Subject: [PATCH] Fixed improper use of "it's" in gitweb(1) manpage
-
-Signoff?  See Documentation/SubmittingPatches.
-
-> ---
->  Documentation/gitweb.txt |    4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/Documentation/gitweb.txt b/Documentation/gitweb.txt
-> index 605a085..065c54e 100644
-> --- a/Documentation/gitweb.txt
-> +++ b/Documentation/gitweb.txt
-> @@ -14,7 +14,7 @@ gitweb.
->  
->  DESCRIPTION
->  -----------
-> -Gitweb provides a web interface to git repositories.  It's features include:
-> +Gitweb provides a web interface to git repositories.  Its features include:
->  
->  * Viewing multiple Git repositories with common root.
->  * Browsing every revision of the repository.
-> @@ -60,7 +60,7 @@ to gitweb.  The list of projects is generated by default by scanning the
->  more exact; gitweb is not interested in a working area, and is best suited
->  to showing "bare" repositories).
->  
-> -The name of repository in gitweb is path to it's `$GIT_DIR` (it's object
-> +The name of repository in gitweb is path to its `$GIT_DIR` (its object
->  database) relative to `$projectroot`.  Therefore the repository $repo can be
->  found at "$projectroot/$repo".
->  
-
-Thanks!
-
+diff --git a/Documentation/git-var.txt b/Documentation/git-var.txt
+index 5317cc2..9c49163 100644
+--- a/Documentation/git-var.txt
++++ b/Documentation/git-var.txt
+@@ -43,7 +43,8 @@ GIT_EDITOR::
+     `$SOME_ENVIRONMENT_VARIABLE`, `"C:\Program Files\Vim\gvim.exe"
+     --nofork`.  The order of preference is the `$GIT_EDITOR`
+     environment variable, then `core.editor` configuration, then
+-    `$VISUAL`, then `$EDITOR`, and then finally 'vi'.
++    `$VISUAL`, then `$EDITOR`, and then finally a hardcoded fallback
++    editor set at build time, by default 'vi'.
+ 
+ GIT_PAGER::
+     Text viewer for use by git commands (e.g., 'less').  The value
+diff --git a/Documentation/git.txt b/Documentation/git.txt
+index d5b7667..fac57ba 100644
+--- a/Documentation/git.txt
++++ b/Documentation/git.txt
+@@ -711,6 +711,12 @@ other
+ 	a pager.  See also the `core.pager` option in
+ 	linkgit:git-config[1].
+ 
++'GIT_EDITOR'::
++    This environment variable overrides `$EDITOR` and `$VISUAL`.
++    It is used by several git comands when, on interactive mode,
++    an editor is to be launched. See also linkgit:git-var[1]
++    and the `core.editor` option in linkgit:git-config[1].
++
+ 'GIT_SSH'::
+ 	If this environment variable is set then 'git fetch'
+ 	and 'git push' will use this command instead
 -- 
-Jakub Narebski
+1.7.1
