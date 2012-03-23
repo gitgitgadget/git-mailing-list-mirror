@@ -1,95 +1,118 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: [PATCH] gitweb(1) Fixed English issues
-Date: Fri, 23 Mar 2012 16:46:25 +0100
-Message-ID: <878vircoby.fsf@thomas.inf.ethz.ch>
-References: <0316A9BA-627B-4B43-8BF1-392DD7408146@bbn.com>
-	<1332509111-sup-2763@pinkfloyd.chass.utoronto.ca>
-	<53140318-34FA-4EF1-80F9-CFAD8828B3A1@bbn.com>
-	<08B31D69-CE1F-4D27-8AE6-C1C0D76BEED5@spamcop.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Cc: git <git@vger.kernel.org>, Jakub Narebski <jnareb@gmail.com>,
-	Ben Walton <bwalton@artsci.utoronto.ca>
-To: D Waitzman <djw@spamcop.net>
-X-From: git-owner@vger.kernel.org Fri Mar 23 16:46:37 2012
+From: David Waitzman <djw@bbn.com>
+Subject: [PATCH] Documentation/gitweb: trivial English fixes
+Date: Fri, 23 Mar 2012 12:57:11 -0400
+Message-ID: <4F306653-D561-4ACC-9C5F-E69EB4DDF04E@bbn.com>
+Mime-Version: 1.0 (Apple Message framework v1257)
+Content-Type: multipart/signed; boundary="Apple-Mail=_E6D7A70F-D3FF-45B0-BF78-A7CD95E05051"; protocol="application/pkcs7-signature"; micalg=sha1
+To: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Mar 23 17:57:24 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SB6hF-00039S-Ka
-	for gcvg-git-2@plane.gmane.org; Fri, 23 Mar 2012 16:46:34 +0100
+	id 1SB7nn-0003lT-9C
+	for gcvg-git-2@plane.gmane.org; Fri, 23 Mar 2012 17:57:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758857Ab2CWPq3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 Mar 2012 11:46:29 -0400
-Received: from edge10.ethz.ch ([82.130.75.186]:42341 "EHLO edge10.ethz.ch"
+	id S1755184Ab2CWQ5S (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 Mar 2012 12:57:18 -0400
+Received: from smtp.bbn.com ([128.33.1.81]:41913 "EHLO smtp.bbn.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754872Ab2CWPq2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Mar 2012 11:46:28 -0400
-Received: from CAS11.d.ethz.ch (172.31.38.211) by edge10.ethz.ch
- (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.1.355.2; Fri, 23 Mar
- 2012 16:46:23 +0100
-Received: from thomas.inf.ethz.ch.ethz.ch (129.132.153.233) by CAS11.d.ethz.ch
- (172.31.38.211) with Microsoft SMTP Server (TLS) id 14.1.355.2; Fri, 23 Mar
- 2012 16:46:25 +0100
-In-Reply-To: <08B31D69-CE1F-4D27-8AE6-C1C0D76BEED5@spamcop.net> (D. Waitzman's
-	message of "Fri, 23 Mar 2012 11:02:43 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Originating-IP: [129.132.153.233]
+	id S1754947Ab2CWQ5R (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Mar 2012 12:57:17 -0400
+Received: from [128.89.254.113] (port=56826)
+	by smtp.bbn.com with esmtps (TLSv1:AES128-SHA:128)
+	(Exim 4.77 (FreeBSD))
+	(envelope-from <djw@bbn.com>)
+	id 1SB7nU-000DGH-E2
+	for git@vger.kernel.org; Fri, 23 Mar 2012 12:57:04 -0400
+X-Mailer: Apple Mail (2.1257)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193769>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193770>
 
-D Waitzman <djw@spamcop.net> writes:
 
-> This is a trivial patch to correct the english in the man page.  Ben Walton suggested an additional english fix which I have added and squashed with my change.  And then I added it again when he pointed out I missed something in his original email.
->
-> --
->
-> Fixed improper use of "it's" when it should be "its".
-> Added missing "the"; noted by Ben Walton bwalton@artsci.utoronto.ca
->
->     Signed-off-by: David Waitzman <djw@bbn.com>
-> ---
->  Documentation/gitweb.txt |    4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
->
-> diff --git a/Documentation/gitweb.txt b/Documentation/gitweb.txt
-> index 605a085..168e8bf 100644
-[snip patch]
+--Apple-Mail=_E6D7A70F-D3FF-45B0-BF78-A7CD95E05051
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;
+	charset=us-ascii
 
-Note that the correct way to put commentary in the patch mail that does
-not go into the commit message is putting it after the --- marker.
-Also, we write commit messages in the imperative.  The above should
-probably look roughly like
+Change "it's" to "its" where a possessive is intended.
+Add two missing "the"s that were noticed by Ben Walton =
+<bwalton@artsci.utoronto.ca>.
 
-  Subject: Documentation/gitweb: trivial English fixes
+Signed-off-by: David Waitzman <djw@bbn.com>
+---
+ This is a trivial patch to correct the english in the man page.  Ben
+ Walton suggested an additional english fix which I have added and
+ squashed with my change.  And then I added it again when he pointed
+ out I missed something in his original email.
 
-  Change "it's" to "its" where a possessive is intended.
+ Documentation/gitweb.txt |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-  Also add two missing "the" that were noticed by Ben Walton
-  <bwalton@artsci.utoronto.ca>.
+diff --git a/Documentation/gitweb.txt b/Documentation/gitweb.txt
+index 605a085..168e8bf 100644
+--- a/Documentation/gitweb.txt
++++ b/Documentation/gitweb.txt
+@@ -14,7 +14,7 @@ gitweb.
+=20
+ DESCRIPTION
+ -----------
+-Gitweb provides a web interface to git repositories.  It's features =
+include:
++Gitweb provides a web interface to git repositories.  Its features =
+include:
+=20
+ * Viewing multiple Git repositories with common root.
+ * Browsing every revision of the repository.
+@@ -60,7 +60,7 @@ to gitweb.  The list of projects is generated by =
+default by scanning the
+ more exact; gitweb is not interested in a working area, and is best =
+suited
+ to showing "bare" repositories).
+=20
+-The name of repository in gitweb is path to it's `$GIT_DIR` (it's =
+object
++The name of the repository in gitweb is the path to its `$GIT_DIR` (its =
+object
+ database) relative to `$projectroot`.  Therefore the repository $repo =
+can be
+ found at "$projectroot/$repo".
+=20
+--=20
+1.7.9.GIT
 
-  Signed-off-by: David Waitzman <djw@bbn.com>
-  ---
-  This is a trivial patch to correct the english in the man page.  Ben
-  Walton suggested an additional english fix which I have added and
-  squashed with my change.  And then I added it again when he pointed
-  out I missed something in his original email.
 
-   Documentation/gitweb.txt |    4 ++--
-   1 file changed, 2 insertions(+), 2 deletions(-)
+--Apple-Mail=_E6D7A70F-D3FF-45B0-BF78-A7CD95E05051
+Content-Disposition: attachment;
+	filename=smime.p7s
+Content-Type: application/pkcs7-signature;
+	name=smime.p7s
+Content-Transfer-Encoding: base64
 
-  diff --git a/Documentation/gitweb.txt b/Documentation/gitweb.txt
-  index 605a085..168e8bf 100644
+MIAGCSqGSIb3DQEHAqCAMIACAQExCzAJBgUrDgMCGgUAMIAGCSqGSIb3DQEHAQAAoIICzjCCAsow
+ggItoAMCAQICAQEwCQYHKoZIzj0EATCBiTEXMBUGA1UEAwwORGF2aWQgV2FpdHptYW4xGTAXBgNV
+BAoMEEJCTiBUZWNobm9sb2dpZXMxCjAIBgNVBAsMAUQxCzAJBgNVBAgMAk1EMQswCQYDVQQGEwJV
+UzERMA8GA1UEBwwIQ29sdW1iaWExGjAYBgkqhkiG9w0BCQEWC2Rqd0BiYm4uY29tMB4XDTEwMDUy
+MzE2MDgzNloXDTIwMDUyMDE2MDgzNlowgYkxFzAVBgNVBAMMDkRhdmlkIFdhaXR6bWFuMRkwFwYD
+VQQKDBBCQk4gVGVjaG5vbG9naWVzMQowCAYDVQQLDAFEMQswCQYDVQQIDAJNRDELMAkGA1UEBhMC
+VVMxETAPBgNVBAcMCENvbHVtYmlhMRowGAYJKoZIhvcNAQkBFgtkandAYmJuLmNvbTCBmzAQBgcq
+hkjOPQIBBgUrgQQAIwOBhgAEAJ7SKuuFJUsacCypMyS+geahMdKB8mOrnDiwRSrE3VivbMGMFcBS
+m2RdJ7Gmc0ajDaulPQpS+hfKvXf3tWQY/yqaAHetqZ5MXsUpkAvRnNnOUhV9CIJuX0DZbJVha0sD
+YnvFmHwvdYdAvIAM6HMaxeL/NybDD8SlB5clLS6pwEnW5K4To0IwQDAOBgNVHQ8BAf8EBAMCB4Aw
+FgYDVR0lAQH/BAwwCgYIKwYBBQUHAwQwFgYDVR0RBA8wDYELZGp3QGJibi5jb20wCQYHKoZIzj0E
+AQOBiwAwgYcCQgGCFV25lZtrb6nGpZYqb+FYJDDY3zTf3stgxiYxx9AtL+gX+3AAzTU6FHwcPOZW
+6+5cmOyQR+J9Qhm4oVr603CBdgJBYFfq9oNCghhZGLJqDO0cNdwvB9LDoodpTippK8jDi3yULVPi
+ZqOSdCvmZyPlg0eKt5ouX7JOZeQQJH/x/DShdW0xggGbMIIBlwIBATCBjzCBiTEXMBUGA1UEAwwO
+RGF2aWQgV2FpdHptYW4xGTAXBgNVBAoMEEJCTiBUZWNobm9sb2dpZXMxCjAIBgNVBAsMAUQxCzAJ
+BgNVBAgMAk1EMQswCQYDVQQGEwJVUzERMA8GA1UEBwwIQ29sdW1iaWExGjAYBgkqhkiG9w0BCQEW
+C2Rqd0BiYm4uY29tAgEBMAkGBSsOAwIaBQCgXTAYBgkqhkiG9w0BCQMxCwYJKoZIhvcNAQcBMBwG
+CSqGSIb3DQEJBTEPFw0xMjAzMjMxNjU3MTVaMCMGCSqGSIb3DQEJBDEWBBTDlqe3QPJoYcc7XErv
+yd22CS892TAJBgcqhkjOPQIBBIGKMIGHAkIBsws3wvcOuQ+QcTCL1x8Aol74xv0rTYioETGi/kVy
+o5UtUzyYIR9zbECLbX3fm9LhVlMvUfa9Hn+SgT0bIK/nmoYCQTs7FyfKsL1mDfk8hJrvcSkxuq9/
+LJVgQbF96Jecw19/lhtu6sgGjgWEterMbag3FzI79vPuEKiCLr3hR78A4de8AAAAAAAA
 
-Note that I added "Subject:" here to make it an inline patch (though you
-obviously need to remove my extra formatting indent).  If there's no
-Subject pseudoheader, the patch gets the subject of your email, and
-similarly for From and author.
-
--- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+--Apple-Mail=_E6D7A70F-D3FF-45B0-BF78-A7CD95E05051--
