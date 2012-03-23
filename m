@@ -1,7 +1,7 @@
 From: =?UTF-8?q?Micha=C5=82=20Kiedrowicz?= <michal.kiedrowicz@gmail.com>
-Subject: [PATCH v2 2/8] gitweb: Pass esc_html_hl_regions() options to esc_html()
-Date: Fri, 23 Mar 2012 23:56:51 +0100
-Message-ID: <1332543417-19664-3-git-send-email-michal.kiedrowicz@gmail.com>
+Subject: [PATCH v2 1/8] gitweb: esc_html_hl_regions(): Don't create empty <span> elements
+Date: Fri, 23 Mar 2012 23:56:50 +0100
+Message-ID: <1332543417-19664-2-git-send-email-michal.kiedrowicz@gmail.com>
 References: <1332543417-19664-1-git-send-email-michal.kiedrowicz@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -15,96 +15,69 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SBDQK-0006K1-Gv
-	for gcvg-git-2@plane.gmane.org; Fri, 23 Mar 2012 23:57:32 +0100
+	id 1SBDQL-0006K1-3g
+	for gcvg-git-2@plane.gmane.org; Fri, 23 Mar 2012 23:57:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757220Ab2CWW5H convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 23 Mar 2012 18:57:07 -0400
-Received: from mail-we0-f174.google.com ([74.125.82.174]:34174 "EHLO
-	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755725Ab2CWW5F (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Mar 2012 18:57:05 -0400
-Received: by mail-we0-f174.google.com with SMTP id x9so2998508wej.19
-        for <git@vger.kernel.org>; Fri, 23 Mar 2012 15:57:04 -0700 (PDT)
+	id S1757254Ab2CWW5I convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 23 Mar 2012 18:57:08 -0400
+Received: from mail-wi0-f178.google.com ([209.85.212.178]:41012 "EHLO
+	mail-wi0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755539Ab2CWW5E (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Mar 2012 18:57:04 -0400
+Received: by wibhq7 with SMTP id hq7so2508665wib.1
+        for <git@vger.kernel.org>; Fri, 23 Mar 2012 15:57:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=zt6Q9JEARBuCdyTUOOoYjrhhGLJ4MD7O4amsltaP3P8=;
-        b=jOP2BVNcZX+cahG4AqYEwxbxJQif9kgehv//e7LWZGhUUMnohwblI3nKuOT2N+xjN7
-         AECn4stNWJm594IvwRQ0gXtohicGNlOnCKcind6PeNPLXxxMFmREakGcbES361vRUD6R
-         yVcFw1jDJs8xHVX/9Me42xYiO2ijF8YPvli1JNK8i6bnC3jfPTZMi3E0T7pZs9+y+bmx
-         ptT0eNrtFDn+Gp/0vTf0f7mwHHQn+NLodDA519DH0aG/nJwKeJf1Qn4Rf30Fo6ZO5zss
-         Yp3RJE4w4L8f4TiScAGF46Xj2nu+I4BRg2UelNhhIqYonS20wjZ6frPyy/617R4hpFEG
-         IREQ==
-Received: by 10.180.81.37 with SMTP id w5mr711490wix.16.1332543424726;
-        Fri, 23 Mar 2012 15:57:04 -0700 (PDT)
+        bh=GaNS5BGjFbVt1+QjiHNSB689LfOSZ/9Nl5oHlFSMnZo=;
+        b=kaPF2FOickRKbtSii6dgey9Re/JwdtbazINb83JrJclvEEkBfSPpeAwvHjqRjlP0Pl
+         JPg1EUe5vXCZof3kN34Kd9dgd7d6rcZXnIyV0Tm/WrkwMMflwHBy0yR1TFmy3nCdEty9
+         BQWCiK1tVCvge1uwgdwhiDSQFhvrmvpRift0Zmtoo3QR0SKF+uXN7AyqZuhG0hGJL1xQ
+         kMihAG5Rw9WNkO8JPhPUKQJYHbnuQYhY9FSUn/fKiJAxVOq7BGhZyFTGmvxGNEIVdz1n
+         L+6OFV24Vwo67yvFGjPMDSX3MsBldVMYIk+eOIrYardOvHOqpAYI2pO48b23Cn01AlAZ
+         WvYg==
+Received: by 10.180.105.194 with SMTP id go2mr680730wib.22.1332543422962;
+        Fri, 23 Mar 2012 15:57:02 -0700 (PDT)
 Received: from localhost (77-177-78-94.net.stream.pl. [94.78.177.77])
-        by mx.google.com with ESMTPS id n15sm17645985wiw.6.2012.03.23.15.57.03
+        by mx.google.com with ESMTPS id ex2sm28908101wib.8.2012.03.23.15.57.02
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 23 Mar 2012 15:57:04 -0700 (PDT)
+        Fri, 23 Mar 2012 15:57:02 -0700 (PDT)
 X-Mailer: git-send-email 1.7.8.4
 In-Reply-To: <1332543417-19664-1-git-send-email-michal.kiedrowicz@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193805>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193806>
 
-With this change, esc_html_hl_regions() accepts options and passes them
-down to esc_html().  This may be needed if a caller wants to pass
--nbsp=3D>1 to esc_html().
-
-The idea and implementation example of this change was described in
-337da8d2 (gitweb: Introduce esc_html_match_hl and esc_html_hl_regions,
-2012-02-27).  While other suggestions may be more useful in some cases,
-there is no need to implement them at the moment.  The
-esc_html_hl_regions() interface may be changed later if it's needed.
+if $s->[1] is equal to or less than $s->[0], esc_html_hl_regions()
+generates an empty <span> element.  It normally shouldn't be visible in
+the web broweser, but it doesn't look good when looking at page source.
+It also minimally increases generated page size for no special reason.
 
 Signed-off-by: Micha=C5=82 Kiedrowicz <michal.kiedrowicz@gmail.com>
 ---
 
-Jakub, The code was in fact stolen from a yours patch posted to the
-list (gitweb: Use esc_html_match_hl() in 'grep' search) that wasn't
-merged so maybe I should pass the authorship to you?
+I don't know if any code currently can produce empty <span> elements,
+but diff refinement highlighning does it.
 
- gitweb/gitweb.perl |   10 ++++++----
- 1 files changed, 6 insertions(+), 4 deletions(-)
+ gitweb/gitweb.perl |    3 +++
+ 1 files changed, 3 insertions(+), 0 deletions(-)
 
 diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index af645e5..1744c40 100755
+index a8b5fad..af645e5 100755
 --- a/gitweb/gitweb.perl
 +++ b/gitweb/gitweb.perl
-@@ -1732,7 +1732,9 @@ sub chop_and_escape_str {
- # '<span class=3D"mark">foo</span>bar'
- sub esc_html_hl_regions {
- 	my ($str, $css_class, @sel) =3D @_;
--	return esc_html($str) unless @sel;
-+	my %opts =3D grep { ref($_) ne 'ARRAY' } @sel;
-+	@sel     =3D grep { ref($_) eq 'ARRAY' } @sel;
-+	return esc_html($str, %opts) unless @sel;
-=20
- 	my $out =3D '';
+@@ -1738,6 +1738,9 @@ sub esc_html_hl_regions {
  	my $pos =3D 0;
-@@ -1741,14 +1743,14 @@ sub esc_html_hl_regions {
- 		# Don't craete empty <span> elements.
- 		next if $s->[1] <=3D $s->[0];
 =20
--		$out .=3D esc_html(substr($str, $pos, $s->[0] - $pos))
-+		$out .=3D esc_html(substr($str, $pos, $s->[0] - $pos), %opts)
+ 	for my $s (@sel) {
++		# Don't craete empty <span> elements.
++		next if $s->[1] <=3D $s->[0];
++
+ 		$out .=3D esc_html(substr($str, $pos, $s->[0] - $pos))
  			if ($s->[0] - $pos > 0);
  		$out .=3D $cgi->span({-class =3D> $css_class},
--		                   esc_html(substr($str, $s->[0], $s->[1] - $s->[0])=
-));
-+		                   esc_html(substr($str, $s->[0], $s->[1] - $s->[0])=
-, %opts));
-=20
- 		$pos =3D $s->[1];
- 	}
--	$out .=3D esc_html(substr($str, $pos))
-+	$out .=3D esc_html(substr($str, $pos), %opts)
- 		if ($pos < length($str));
-=20
- 	return $out;
 --=20
 1.7.8.4
