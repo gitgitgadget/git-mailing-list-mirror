@@ -1,80 +1,82 @@
-From: Paul Mackerras <paulus@samba.org>
-Subject: Please pull gitk update
-Date: Sat, 24 Mar 2012 16:55:40 +1100
-Message-ID: <20120324055540.GA20898@bloggs.ozlabs.ibm.com>
+From: chaitanyaa nalla <nallachaitu@gmail.com>
+Subject: gsoc idea adding javascript library / framework in gitweb
+Date: Sat, 24 Mar 2012 12:02:31 +0530
+Message-ID: <CACeyogcFJoUyAiTReDJK_nCMGBp+23OjcS407A1X=fqFR+aGag@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Mar 24 06:56:57 2012
+Cc: =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Mar 24 07:33:04 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SBJyC-0004CE-Gw
-	for gcvg-git-2@plane.gmane.org; Sat, 24 Mar 2012 06:56:56 +0100
+	id 1SBKXA-0005MD-8k
+	for gcvg-git-2@plane.gmane.org; Sat, 24 Mar 2012 07:33:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751972Ab2CXF4T convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 24 Mar 2012 01:56:19 -0400
-Received: from ozlabs.org ([203.10.76.45]:59516 "EHLO ozlabs.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751508Ab2CXF4S (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 24 Mar 2012 01:56:18 -0400
-Received: by ozlabs.org (Postfix, from userid 1003)
-	id 97D88B6EE8; Sat, 24 Mar 2012 16:56:16 +1100 (EST)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1752882Ab2CXGcc convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 24 Mar 2012 02:32:32 -0400
+Received: from mail-ob0-f174.google.com ([209.85.214.174]:46503 "EHLO
+	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752407Ab2CXGcc convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 24 Mar 2012 02:32:32 -0400
+Received: by obbeh20 with SMTP id eh20so3070528obb.19
+        for <git@vger.kernel.org>; Fri, 23 Mar 2012 23:32:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=L4RS1ntYlmCViEdaIHsldnk13yHUARo9G0Cvsu640HI=;
+        b=BQDad2Fajr1PfE3MbB0yo1mqTEKXmckBgmiJIYmKRAco5SVtE8QepEEJjnAwTWePW0
+         RjtzYLtUsoXxvXArBFSb/2tCuFNilxk3KUKASMGgcQZ0mZLIO9A/lKN5SAbCKPTsZiMy
+         u46bLLRzKx8ff7JOAnJuc8TnLgHE2r8m/H8uxrzpTYaPocEZHSDrQ4TB0ys/kb5kVS5A
+         BZvJ4XcZpPaDAuoGmZxHhepuRuDrjxAwOq0Ygn3ywWUP1vTsGuK4Tl02iyHe9UPICpH+
+         RtPmQbZq0GPe6F8+PCY2ucjASdvKK+dp+Z7Gtmq2ITKqL2P0noOkUkovPnqxBlwQ/C7Y
+         KV7A==
+Received: by 10.182.159.35 with SMTP id wz3mr13650201obb.47.1332570751680;
+ Fri, 23 Mar 2012 23:32:31 -0700 (PDT)
+Received: by 10.182.39.234 with HTTP; Fri, 23 Mar 2012 23:32:31 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193817>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193818>
 
-Junio,
+Hello everyone ,
 
-The following changes since commit 811c70fc8369cfeae2f1e843c695c37e3b0c=
-3109:
 
-  gitk: Make vi-style keybindings more vi-like (2011-10-08 18:01:54 +11=
-00)
+=A0I am chaitanya nalla, a final year undergraduate student from India =
+and i
+am pretty much interested in doing the project "Adding javascript libra=
+ry /
+framework in gitweb" suggested by respected Jakub, I have good experien=
+ce
+in javascript ,libraries like jquery,Dojo etc. As per the goals of the
+project i will use the efficient ,concise ,cross browser compatible
+frameworks where ever needed.Also i am planning to create a local libra=
+ry
+version with support for configuration and a good documentation.
 
-are available in the git repository at:
+Using the Dom features of javascript and traversing the whole document
+object is quite cubersome and error prone .so i want to replace them us=
+ing
+well tested libraries that are cross browser compatible.
 
-  git://ozlabs.org/~paulus/gitk.git master
+Emualiting onprogress in XMLHttpRequest :
 
-for you to fetch changes up to b2b76d10696d945bf19318831b64d009d119e051=
-:
+Jquery and Yui provide only statuses success and error .Even Mootools
+provide progress but are constrained to some browers only.It can be han=
+dled
+by using $.ajax Transport utility .
 
-  gitk: Teach gitk to respect log.showroot (2012-03-24 16:44:12 +1100)
+I will also take care progressive enhancement,by carefully implementing=
+ the
+basic functionality of the gitweb so that what ever may be the browser
+version and type , internet connection the basic functionality will not
+disrupted .
 
-----------------------------------------------------------------
-=46r=C3=A9d=C3=A9ric Bri=C3=A8re (1):
-      gitk: Skip over AUTHOR/COMMIT_DATE when searching all fields
-
-Jim Meyering (1):
-      gitk: Make "git describe" output clickable, too
-
-Jonathan Nieder (1):
-      gitk: Use symbolic font names "sans" and "monospace" when availab=
-le
-
-Marcus Karlsson (1):
-      gitk: Teach gitk to respect log.showroot
-
-Pat Thoyts (2):
-      gitk: Use a tabbed dialog to edit preferences
-      gitk: Fix the display of files when filtered by path
-
-Paul Mackerras (2):
-      gitk: Speed up resolution of short SHA1 ids
-      gitk: Add menu items for comparing a commit with the marked commi=
-t
-
-Zbigniew J=C4=99drzejewski-Szmek (1):
-      gitk: Use "gitk: repo-top-level-dir" as window title
-
- gitk |  412 +++++++++++++++++++++++++++++++++++++++++++++-------------=
---------
- 1 files changed, 282 insertions(+), 130 deletions(-)
+yours sincerely,
+chaitanya nalla.
+India.
