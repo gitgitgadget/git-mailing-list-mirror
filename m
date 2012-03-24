@@ -1,82 +1,72 @@
-From: chaitanyaa nalla <nallachaitu@gmail.com>
-Subject: gsoc idea adding javascript library / framework in gitweb
-Date: Sat, 24 Mar 2012 12:02:31 +0530
-Message-ID: <CACeyogcFJoUyAiTReDJK_nCMGBp+23OjcS407A1X=fqFR+aGag@mail.gmail.com>
+From: Stefano Lattarini <stefano.lattarini@gmail.com>
+Subject: Re: [ANNOUNCE] Git 1.7.10-rc2
+Date: Sat, 24 Mar 2012 08:26:07 +0100
+Message-ID: <4F6D770F.1000908@gmail.com>
+References: <7vr4wisyd9.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Mar 24 07:33:04 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Mar 24 08:26:27 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SBKXA-0005MD-8k
-	for gcvg-git-2@plane.gmane.org; Sat, 24 Mar 2012 07:33:04 +0100
+	id 1SBLMo-0004yw-0W
+	for gcvg-git-2@plane.gmane.org; Sat, 24 Mar 2012 08:26:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752882Ab2CXGcc convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 24 Mar 2012 02:32:32 -0400
-Received: from mail-ob0-f174.google.com ([209.85.214.174]:46503 "EHLO
-	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752407Ab2CXGcc convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 24 Mar 2012 02:32:32 -0400
-Received: by obbeh20 with SMTP id eh20so3070528obb.19
-        for <git@vger.kernel.org>; Fri, 23 Mar 2012 23:32:31 -0700 (PDT)
+	id S1753735Ab2CXH0T (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 24 Mar 2012 03:26:19 -0400
+Received: from mail-we0-f174.google.com ([74.125.82.174]:37442 "EHLO
+	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752205Ab2CXH0S (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 24 Mar 2012 03:26:18 -0400
+Received: by wejx9 with SMTP id x9so3135640wej.19
+        for <git@vger.kernel.org>; Sat, 24 Mar 2012 00:26:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=L4RS1ntYlmCViEdaIHsldnk13yHUARo9G0Cvsu640HI=;
-        b=BQDad2Fajr1PfE3MbB0yo1mqTEKXmckBgmiJIYmKRAco5SVtE8QepEEJjnAwTWePW0
-         RjtzYLtUsoXxvXArBFSb/2tCuFNilxk3KUKASMGgcQZ0mZLIO9A/lKN5SAbCKPTsZiMy
-         u46bLLRzKx8ff7JOAnJuc8TnLgHE2r8m/H8uxrzpTYaPocEZHSDrQ4TB0ys/kb5kVS5A
-         BZvJ4XcZpPaDAuoGmZxHhepuRuDrjxAwOq0Ygn3ywWUP1vTsGuK4Tl02iyHe9UPICpH+
-         RtPmQbZq0GPe6F8+PCY2ucjASdvKK+dp+Z7Gtmq2ITKqL2P0noOkUkovPnqxBlwQ/C7Y
-         KV7A==
-Received: by 10.182.159.35 with SMTP id wz3mr13650201obb.47.1332570751680;
- Fri, 23 Mar 2012 23:32:31 -0700 (PDT)
-Received: by 10.182.39.234 with HTTP; Fri, 23 Mar 2012 23:32:31 -0700 (PDT)
+        h=message-id:date:from:mime-version:to:cc:subject:references
+         :in-reply-to:content-type:content-transfer-encoding;
+        bh=mAclXkk6UJNf0NABhk5V078J/V4Llracme6Gjym1WTU=;
+        b=N5+Uias4HsKo2G7IWXobs193C9VCOxE17ILEvlGirN3musxOHpl9fsKJqkG52aS4cy
+         DNykPiJ/Ap6niq1fHDcLRuKLiQcNEeLlRGVnPWBLTXXT0WgV2Lzg4keccpJ3PIMFrW3t
+         MlVpEELacsD5PKXAxmVYZ7/GFNZAiKeRd1tbpsVaJaWnY4vN121pYMMArxF9V4zIwYFF
+         aocS1WpCel4XjfTTQ7MJyQ/x+L8RZn+pQBvX9L6KTXAvhwWQPUWYACvN94+709UCD+C8
+         mRChDyKyN70qoR3ZUpYa0ymrFpX68FXvCR6LVd394QM0XF78e8i3twrbScJc8GxcLDjF
+         gW+Q==
+Received: by 10.180.73.143 with SMTP id l15mr3136535wiv.11.1332573977352;
+        Sat, 24 Mar 2012 00:26:17 -0700 (PDT)
+Received: from [87.21.62.106] (host106-62-dynamic.21-87-r.retail.telecomitalia.it. [87.21.62.106])
+        by mx.google.com with ESMTPS id bx13sm20275838wib.10.2012.03.24.00.26.15
+        (version=SSLv3 cipher=OTHER);
+        Sat, 24 Mar 2012 00:26:16 -0700 (PDT)
+In-Reply-To: <7vr4wisyd9.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193818>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193819>
 
-Hello everyone ,
+[Dropping kernel list]
 
+Hi Junio.  Just a couple of nits regarding my change to configure ...
 
-=A0I am chaitanya nalla, a final year undergraduate student from India =
-and i
-am pretty much interested in doing the project "Adding javascript libra=
-ry /
-framework in gitweb" suggested by respected Jakub, I have good experien=
-ce
-in javascript ,libraries like jquery,Dojo etc. As per the goals of the
-project i will use the efficient ,concise ,cross browser compatible
-frameworks where ever needed.Also i am planning to create a local libra=
-ry
-version with support for configuration and a good documentation.
+On 03/24/2012 12:15 AM, Junio C Hamano wrote:
+>
+>  * "configure" script learned to take "--sane-tool-path"
+>
+The option is "--with-sane-tool-path" actually.
 
-Using the Dom features of javascript and traversing the whole document
-object is quite cubersome and error prone .so i want to replace them us=
-ing
-well tested libraries that are cross browser compatible.
+>    from the command line to record SANE_TOOL_PATH (used to avoid broken
+>    platform tools in /usr/bin) in config.mak-autogen.
+>
+And the configuration file generated by configure is "config.mak.autogen".
 
-Emualiting onprogress in XMLHttpRequest :
+>    This may be useful
+>    for people on Solaris who have saner tools outside /usr/xpg[46]/bin.
+> 
 
-Jquery and Yui provide only statuses success and error .Even Mootools
-provide progress but are constrained to some browers only.It can be han=
-dled
-by using $.ajax Transport utility .
-
-I will also take care progressive enhancement,by carefully implementing=
- the
-basic functionality of the gitweb so that what ever may be the browser
-version and type , internet connection the basic functionality will not
-disrupted .
-
-yours sincerely,
-chaitanya nalla.
-India.
+Thanks,
+  Stefano
