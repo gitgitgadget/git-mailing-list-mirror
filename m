@@ -1,61 +1,55 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: Re: Not a git repository: '.'
-Date: Sat, 24 Mar 2012 19:14:31 +0100
-Message-ID: <4F6E0F07.6030400@kdbg.org>
-References: <87r4wh6hce.fsf@smith.obbligato.org>
+From: Mauricio Galindo <up.mauricio.g@gmail.com>
+Subject: Designing a faster index format GSoC 2012
+Date: Sat, 24 Mar 2012 12:35:01 -0600
+Message-ID: <CAOx2=+fUU5rMuix6XHWgtMwBwUgCtBEokXAgnMRxB9j3YSmz8g@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: greened@obbligato.org
-X-From: git-owner@vger.kernel.org Sat Mar 24 19:15:02 2012
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Mar 24 19:35:31 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SBVUT-0000Le-LF
-	for gcvg-git-2@plane.gmane.org; Sat, 24 Mar 2012 19:15:01 +0100
+	id 1SBVoH-00068c-37
+	for gcvg-git-2@plane.gmane.org; Sat, 24 Mar 2012 19:35:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755733Ab2CXSOf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 24 Mar 2012 14:14:35 -0400
-Received: from bsmtp.bon.at ([213.33.87.14]:25056 "EHLO bsmtp.bon.at"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754047Ab2CXSOf (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 24 Mar 2012 14:14:35 -0400
-Received: from dx.sixt.local (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTP id 2D307130045;
-	Sat, 24 Mar 2012 19:14:31 +0100 (CET)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-	by dx.sixt.local (Postfix) with ESMTP id AE98B19F34A;
-	Sat, 24 Mar 2012 19:14:31 +0100 (CET)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; de; rv:1.9.2.27) Gecko/20120215 SUSE/3.1.19 Thunderbird/3.1.19
-In-Reply-To: <87r4wh6hce.fsf@smith.obbligato.org>
+	id S1752794Ab2CXSfD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 24 Mar 2012 14:35:03 -0400
+Received: from mail-ob0-f174.google.com ([209.85.214.174]:41345 "EHLO
+	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751216Ab2CXSfC (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 24 Mar 2012 14:35:02 -0400
+Received: by obbeh20 with SMTP id eh20so3506967obb.19
+        for <git@vger.kernel.org>; Sat, 24 Mar 2012 11:35:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=159xe+yQ3CRgNvykJsRI0bxjO6zXkRBRT8AS/l8mkOo=;
+        b=OdoT3bu5Wf7LChpOTIq6cXVQo9D9lOY9MYsM8YXgBfbdF9+RzAeIk+wSNT1VG3wMWn
+         GAQhFZSsfU0K7L6GYJO93nVry94PQUJNa2C1rsFtfNdJxI/Uo5QugSp8I7Xpy5ZBicVE
+         2ydnH7zJ8JlxtIze0NVOq2jJCqr+czx8TVpgfNlZHEul/YZk/23yMcANHc5VWaYGZDdC
+         Kz+umJ4PNeEFelMCW3nz9jQJQwvm77t2h3ChqXD2kK5If9atZvTB0MNHNSPMpNacL8xO
+         gsVzJQH8aQ88m3S/4gjd7a4ZUlNfs6/nWqO4mNPT9jn7ThE5jGDOK7Wt5IqnBNQYvvW8
+         a/ow==
+Received: by 10.60.12.99 with SMTP id x3mr20310293oeb.38.1332614101857; Sat,
+ 24 Mar 2012 11:35:01 -0700 (PDT)
+Received: by 10.182.207.10 with HTTP; Sat, 24 Mar 2012 11:35:01 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193835>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193836>
 
-Am 24.03.2012 18:26, schrieb greened@obbligato.org:
-> I have a post-receive hook set up that does the following when something
-> is pushed to a repository.
-> 
-> - Change directory to another non-bare repository
-> - Do 'git status'
-> 
-> I get this error from the original git push:
-> 
-> remote: fatal: Not a git repository: '.'
-> 
-> Debug output tells me I am in the correct directory when attempting the
-> status check.  This directory is a full git workarea (i.e. not a bare
-> repository).
-> 
-> Any idea what git is complaining about?  I can log on to the server and
-> do 'git status' in the target directory and everything is fine.
+Hi
 
-Most likely, GIT_DIR=. is set when the hook is entered. Does unset
-GIT_DIR help?
+I'm a third year computer engineering major wanting to participate at
+GSoC 2012 working on the Git project of designing a faster index
+format.
+I was hoping if someone could give some pointers on where to begin.
+I've already started looking around and found some files that I think
+are important <add.c, read-cache.c, index-format.txt>.
+Is there something I'm missing or that you think I should also check out?
+Any pointer would be greatly appreciated.
 
--- Hannes
+Thank you.
