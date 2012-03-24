@@ -1,7 +1,7 @@
 From: Ivan Todoroski <grnch_lists@gmx.net>
-Subject: [PATCH/RFC 1/2] fetch-pack: new option to read refs from stdin
-Date: Sat, 24 Mar 2012 21:53:26 +0100
-Message-ID: <4F6E3446.9080001@gmx.net>
+Subject: [PATCH/RFC 2/2] remote-curl: send the refs to fetch-pack on stdin
+Date: Sat, 24 Mar 2012 21:54:16 +0100
+Message-ID: <4F6E3478.3090505@gmx.net>
 References: <loom.20120318T083216-96@post.gmane.org> <m3fwd550j3.fsf@localhost.localdomain> <20120318190659.GA24829@sigill.intra.peff.net> <CACsJy8BNT-dY+wDONY_TgLnv0135RZ-47BEVMzX6c3ddH=83Zw@mail.gmail.com> <20120319024436.GB10426@sigill.intra.peff.net> <4F69B5F0.2060605@gmx.net> <CAJo=hJu0H5wfXB_y5XQ6=S0VJ9t4pxHWkuy_=rehJL_6psf00g@mail.gmail.com> <20120321171423.GA13140@sigill.intra.peff.net> <4F6A33C5.2080909@gmx.net> <20120321201722.GA15021@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -10,27 +10,27 @@ Cc: Shawn Pearce <spearce@spearce.org>,
 	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
 	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Mar 24 21:53:15 2012
+X-From: git-owner@vger.kernel.org Sat Mar 24 21:54:09 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SBXxa-0005dt-9O
-	for gcvg-git-2@plane.gmane.org; Sat, 24 Mar 2012 21:53:14 +0100
+	id 1SBXyM-0006AP-K0
+	for gcvg-git-2@plane.gmane.org; Sat, 24 Mar 2012 21:54:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753305Ab2CXUxJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 24 Mar 2012 16:53:09 -0400
-Received: from mailout-de.gmx.net ([213.165.64.22]:37111 "HELO
+	id S1753680Ab2CXUx6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 24 Mar 2012 16:53:58 -0400
+Received: from mailout-de.gmx.net ([213.165.64.23]:34444 "HELO
 	mailout-de.gmx.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with SMTP id S1752812Ab2CXUxI (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 24 Mar 2012 16:53:08 -0400
-Received: (qmail invoked by alias); 24 Mar 2012 20:53:06 -0000
+	with SMTP id S1753622Ab2CXUx6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 24 Mar 2012 16:53:58 -0400
+Received: (qmail invoked by alias); 24 Mar 2012 20:53:56 -0000
 Received: from unknown (EHLO [127.0.0.1]) [77.28.174.228]
-  by mail.gmx.net (mp020) with SMTP; 24 Mar 2012 21:53:06 +0100
+  by mail.gmx.net (mp033) with SMTP; 24 Mar 2012 21:53:56 +0100
 X-Authenticated: #14478976
-X-Provags-ID: V01U2FsdGVkX1+tZvxnOcetOjtZP0IXSIamKJje2aWmTCsV2cXdrY
-	XWSz+uwrQWjPUJ
+X-Provags-ID: V01U2FsdGVkX188b6tzk6I8U20oPz6x6SSc126l373tmHn4ZUbBnh
+	+ygzCMzcGO/wkB
 User-Agent: Thunderbird 2.0.0.24 (Windows/20100228)
 In-Reply-To: <20120321201722.GA15021@sigill.intra.peff.net>
 X-Y-GMX-Trusted: 0
@@ -38,129 +38,85 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193847>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193848>
 
 
->From c4bb55f9f27569faa368d823ca6fe4b236e37cd6 Mon Sep 17 00:00:00 2001
+>From 723a561946824ee367f57f0d9b9d336a6bc28d13 Mon Sep 17 00:00:00 2001
 From: Ivan Todoroski <grnch@gmx.net>
-Date: Sat, 24 Mar 2012 15:13:05 +0100
-Subject: [PATCH/RFC 1/2] fetch-pack: new option to read refs from stdin
+Date: Sat, 24 Mar 2012 15:53:36 +0100
+Subject: [PATCH/RFC 2/2] remote-curl: send the refs to fetch-pack on stdin
 
 ---
- Documentation/git-fetch-pack.txt |    9 ++++++++
- builtin/fetch-pack.c             |   44 ++++++++++++++++++++++++++++++++++++--
- fetch-pack.h                     |    3 ++-
- 3 files changed, 53 insertions(+), 3 deletions(-)
+ remote-curl.c |   18 +++++++++++++-----
+ 1 file changed, 13 insertions(+), 5 deletions(-)
 
-diff --git a/Documentation/git-fetch-pack.txt b/Documentation/git-fetch-pack.txt
-index ed1bdaacd1..7cd7c785bc 100644
---- a/Documentation/git-fetch-pack.txt
-+++ b/Documentation/git-fetch-pack.txt
-@@ -32,6 +32,15 @@ OPTIONS
- --all::
- 	Fetch all remote refs.
+diff --git a/remote-curl.c b/remote-curl.c
+index d159fe7f34..9fdfca9f32 100644
+--- a/remote-curl.c
++++ b/remote-curl.c
+@@ -531,12 +531,13 @@ static int post_rpc(struct rpc_state *rpc)
+ 	return err;
+ }
  
-+--stdin::
-+	Take the list of refs from stdin, one per line. If there
-+	are refs specified on the command line in addition to this
-+	option, then the refs from stdin are processed after those
-+	on the command line.
-+	If '--stateless-rpc' is specified together with this option
-+	then the list of refs must be in packet format (pkt-line)
-+	with a flush packet terminating the list.
-+
- -q::
- --quiet::
- 	Pass '-q' flag to 'git unpack-objects'; this makes the
-diff --git a/builtin/fetch-pack.c b/builtin/fetch-pack.c
-index a4d3e90a86..3c4c193e45 100644
---- a/builtin/fetch-pack.c
-+++ b/builtin/fetch-pack.c
-@@ -23,7 +23,7 @@ static struct fetch_pack_args args = {
- };
- 
- static const char fetch_pack_usage[] =
--"git fetch-pack [--all] [--quiet|-q] [--keep|-k] [--thin] [--include-tag] [--upload-pack=<git-upload-pack>] [--depth=<n>] [--no-progress] [-v] [<host>:]<directory> [<refs>...]";
-+"git fetch-pack [--all] [--stdin] [--quiet|-q] [--keep|-k] [--thin] [--include-tag] [--upload-pack=<git-upload-pack>] [--depth=<n>] [--no-progress] [-v] [<host>:]<directory> [<refs>...]";
- 
- #define COMPLETE	(1U << 0)
- #define COMMON		(1U << 1)
-@@ -896,7 +896,7 @@ static void fetch_pack_setup(void)
- 
- int cmd_fetch_pack(int argc, const char **argv, const char *prefix)
+-static int rpc_service(struct rpc_state *rpc, struct discovery *heads)
++static int rpc_service(struct rpc_state *rpc, struct discovery *heads,
++		int nr_fetch, struct ref **to_fetch)
  {
--	int i, ret, nr_heads;
-+	int i, ret, nr_heads, alloc_heads;
- 	struct ref *ref = NULL;
- 	char *dest = NULL, **heads;
- 	int fd[2];
-@@ -941,6 +941,10 @@ int cmd_fetch_pack(int argc, const char **argv, const char *prefix)
- 				args.fetch_all = 1;
- 				continue;
- 			}
-+			if (!strcmp("--stdin", arg)) {
-+				args.refs_from_stdin = 1;
-+				continue;
-+			}
- 			if (!strcmp("-v", arg)) {
- 				args.verbose = 1;
- 				continue;
-@@ -972,6 +976,42 @@ int cmd_fetch_pack(int argc, const char **argv, const char *prefix)
- 	if (!dest)
- 		usage(fetch_pack_usage);
+ 	const char *svc = rpc->service_name;
+ 	struct strbuf buf = STRBUF_INIT;
+ 	struct child_process client;
+-	int err = 0;
++	int err = 0, i;
  
-+	if (args.refs_from_stdin) {
-+		char ref[1000];
-+		/* copy refs from cmdline to new growable list */
-+		int size = nr_heads * sizeof(*heads);
-+		heads = memcpy(xmalloc(size), heads, size);
-+		alloc_heads = nr_heads;
-+		/* append refs from stdin to ones from cmdline */
-+		for (;;) {
-+			if (args.stateless_rpc) {
-+				/* read using pkt-line in stateless RPC mode,
-+				   flush packet signifies end of refs */
-+				int n = packet_read_line(0, ref, sizeof(ref));
-+				if (!n)
-+					break;
-+				if (ref[n-1] == '\n')
-+					ref[n-1] = '\0';
-+			}
-+			else {
-+				int n;
-+				if (!fgets(ref, sizeof(ref), stdin)) {
-+					if (ferror(stdin))
-+						die_errno("cannot read ref");
-+					if (feof(stdin))
-+						break;
-+				}
-+				n = strlen(ref);
-+				if (ref[n-1] == '\n')
-+					ref[n-1] = '\0';
-+				else if (!feof(stdin))
-+					die("ref too long on stdin");
-+			}
-+			ALLOC_GROW(heads, nr_heads + 1, alloc_heads);
-+			heads[nr_heads++] = xstrdup(ref);
-+		}
-+	}
+ 	memset(&client, 0, sizeof(client));
+ 	client.in = -1;
+@@ -545,6 +546,13 @@ static int rpc_service(struct rpc_state *rpc, struct discovery *heads)
+ 	client.argv = rpc->argv;
+ 	if (start_command(&client))
+ 		exit(1);
 +
- 	if (args.stateless_rpc) {
- 		conn = NULL;
- 		fd[0] = 0;
-diff --git a/fetch-pack.h b/fetch-pack.h
-index 0608edae3f..292d69389e 100644
---- a/fetch-pack.h
-+++ b/fetch-pack.h
-@@ -13,7 +13,8 @@ struct fetch_pack_args {
- 		verbose:1,
- 		no_progress:1,
- 		include_tag:1,
--		stateless_rpc:1;
-+		stateless_rpc:1,
-+		refs_from_stdin:1;
- };
++	/* push the refs to fetch-pack via stdin, if requested */
++	if (to_fetch) {
++		for (i = 0; i < nr_fetch; i++)
++			packet_write(client.in, "%s\n", to_fetch[i]->name);
++		packet_flush(client.in);
++	}
+ 	if (heads)
+ 		write_or_die(client.in, heads->buf, heads->len);
  
- struct ref *fetch_pack(struct fetch_pack_args *args,
+@@ -633,6 +641,7 @@ static int fetch_git(struct discovery *heads,
+ 	argv = xmalloc((15 + nr_heads) * sizeof(char*));
+ 	argv[argc++] = "fetch-pack";
+ 	argv[argc++] = "--stateless-rpc";
++	argv[argc++] = "--stdin";
+ 	argv[argc++] = "--lock-pack";
+ 	if (options.followtags)
+ 		argv[argc++] = "--include-tag";
+@@ -655,7 +664,6 @@ static int fetch_git(struct discovery *heads,
+ 		struct ref *ref = to_fetch[i];
+ 		if (!ref->name || !*ref->name)
+ 			die("cannot fetch by sha1 over smart http");
+-		argv[argc++] = ref->name;
+ 	}
+ 	argv[argc++] = NULL;
+ 
+@@ -664,7 +672,7 @@ static int fetch_git(struct discovery *heads,
+ 	rpc.argv = argv;
+ 	rpc.gzip_request = 1;
+ 
+-	err = rpc_service(&rpc, heads);
++	err = rpc_service(&rpc, heads, nr_heads, to_fetch);
+ 	if (rpc.result.len)
+ 		safe_write(1, rpc.result.buf, rpc.result.len);
+ 	strbuf_release(&rpc.result);
+@@ -783,7 +791,7 @@ static int push_git(struct discovery *heads, int nr_spec, char **specs)
+ 	rpc.service_name = "git-receive-pack",
+ 	rpc.argv = argv;
+ 
+-	err = rpc_service(&rpc, heads);
++	err = rpc_service(&rpc, heads, 0, NULL);
+ 	if (rpc.result.len)
+ 		safe_write(1, rpc.result.buf, rpc.result.len);
+ 	strbuf_release(&rpc.result);
 -- 
 1.7.9.4.16.gd24fa.dirty
