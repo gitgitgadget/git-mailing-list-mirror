@@ -1,52 +1,84 @@
-From: Jules Phillips <julian_a_phillips@yahoo.co.uk>
-Subject: Git for mac
-Date: Sat, 24 Mar 2012 14:41:31 +0000
-Message-ID: <500B25FC-0DC4-4EEB-9729-86689AFE38A2@yahoo.co.uk>
-Mime-Version: 1.0 (Apple Message framework v936)
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Mar 24 15:41:39 2012
+From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <rene.scharfe@lsrfire.ath.cx>
+Subject: Re: git show loop
+Date: Sat, 24 Mar 2012 16:18:46 +0100
+Message-ID: <4F6DE5D6.4010408@lsrfire.ath.cx>
+References: <alpine.DEB.2.02.1203241101390.2046@localhost6.localdomain6> <4F6DB4E9.3090402@in.waw.pl> <4F6DC151.9040707@in.waw.pl>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?UTF-8?B?WmJpZ25pZXcgSsSZZHJ6ZWpld3NraS1Tem1law==?= 
+	<zbyszek@in.waw.pl>, Julia Lawall <julia.lawall@lip6.fr>
+To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Mar 24 16:19:39 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SBS9y-0007oF-Vj
-	for gcvg-git-2@plane.gmane.org; Sat, 24 Mar 2012 15:41:39 +0100
+	id 1SBSkj-0007yx-M2
+	for gcvg-git-2@plane.gmane.org; Sat, 24 Mar 2012 16:19:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753819Ab2CXOle (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 24 Mar 2012 10:41:34 -0400
-Received: from nm4-vm0.bullet.mail.ukl.yahoo.com ([217.146.183.230]:33415 "HELO
-	nm4-vm0.bullet.mail.ukl.yahoo.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S1753041Ab2CXOld (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 24 Mar 2012 10:41:33 -0400
-Received: from [217.146.183.180] by nm4.bullet.mail.ukl.yahoo.com with NNFMP; 24 Mar 2012 14:41:32 -0000
-Received: from [217.146.182.74] by tm11.bullet.mail.ukl.yahoo.com with NNFMP; 24 Mar 2012 14:41:32 -0000
-Received: from [127.0.0.1] by smtp105.mail.ukl.yahoo.com with NNFMP; 24 Mar 2012 14:41:32 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.co.uk; s=s1024; t=1332600092; bh=fwgOJMFjPz+MzvPGLAK14U28nwlGpvp5MwxwL4LEJcM=; h=X-Yahoo-Newman-Id:X-Yahoo-Newman-Property:X-YMail-OSG:X-Yahoo-SMTP:Received:Message-Id:From:To:Content-Type:Content-Transfer-Encoding:Mime-Version:Subject:Date:X-Mailer; b=QWwFkabHR2xMoh9wkjBIpEWOpwBRQN9LwgGsum3dzdLzjXVXUAIsBc82l37/W4R8/7zHfhBRLa8/Wo7ugLgrZAJAM8NkZSOSyJs8GWYrJ5xNYA6QI7VXA1cjep4zOgJU973AkCsxGrA0TOoaBID35r+pSKjgTSIYXA33jToKaNY=
-X-Yahoo-Newman-Id: 188504.71581.bm@smtp105.mail.ukl.yahoo.com
-X-Yahoo-Newman-Property: ymail-3
-X-YMail-OSG: VrhMZa0VM1krQyTnXtHmhU8v5ljEzI37_2EGJFGAciCZELg
- waA.Ah4GymPE_9vhrc7TrCzRLiHBP76qusuqU4jTuk35tYH.yjaK6VpwIahD
- 9MXqrtwfpk._tV4bYf8pvOP.VU1_EHPrsKoCDhUlHqx.WuE6NjLk8hg9n7Bu
- gLHaILD10fBDCGq_ORnZo4SLQCf9Opcm2IlhB4kOLigW5vHHcyufFhj6T9.l
- sLHd8UVtj00__0CmMsCreAP.zReG1oo3iQRbqAa2m5LQGU2_.QhwB_6o55Vq
- QFrLOnlizvqemf8Be6vR_Uc2uHXkyB8gf82pnYAnN9hKTm1oApWE58dbjB8n
- xSjrArAx1KzhgbSZBP_cph0P255eqz0BiTcRb_KvgDp3gOYyWNC3lfkEn6VC
- hHlj_C0xsYTR6w9pN
-X-Yahoo-SMTP: rFcW3xKswBAGcwbEQq.wSP3AgQINbMV8Ql1xBY4N
-Received: from [192.168.2.5] (julian_a_phillips@86.158.46.244 with plain)
-        by smtp105.mail.ukl.yahoo.com with SMTP; 24 Mar 2012 07:41:31 -0700 PDT
-X-Mailer: Apple Mail (2.936)
+	id S1753579Ab2CXPS6 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 24 Mar 2012 11:18:58 -0400
+Received: from india601.server4you.de ([85.25.151.105]:33252 "EHLO
+	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753039Ab2CXPS6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 24 Mar 2012 11:18:58 -0400
+Received: from [192.168.2.105] (p4FFD9E33.dip.t-dialin.net [79.253.158.51])
+	by india601.server4you.de (Postfix) with ESMTPSA id 276C02F805D;
+	Sat, 24 Mar 2012 16:18:56 +0100 (CET)
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:11.0) Gecko/20120312 Thunderbird/11.0
+In-Reply-To: <4F6DC151.9040707@in.waw.pl>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193827>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193828>
 
-Hi which version will work on mac os 10.5.8
+Am 24.03.2012 13:42, schrieb Zbigniew J=C4=99drzejewski-Szmek:
+> On 03/24/2012 12:50 PM, Zbigniew J=C4=99drzejewski-Szmek wrote:
+>> On 03/24/2012 11:05 AM, Julia Lawall wrote:
+>>> In linux, git show 60d9aa7 -U0 goes into an infinite loop.
+>=20
+> Bisect points to
+> commit b810cbbde9232cbe9a3841edccc5b606bbd3a82e (refs/bisect/bad)
+> Author: Junio C Hamano<gitster@pobox.com>
+> Date:   Wed Jul 22 14:48:29 2009 -0700
+>=20
+>       diff --cc: a lost line at the beginning of the file is shown
+> incorrectly
 
-thanks
+That's what I found as well, but I don't understand how this relates to
+the patch below, which should fix the issue.  Valgrind told me where to
+look instead.
 
-Jules
+-- >8 --
+Subject: [PATCH] combine-diff: fix loop index underflow
+
+If both la and context are zero at the start of the loop, la wraps arou=
+nd
+and we end up reading from memory far away.  Skip the loop in that case
+instead.
+
+Reported-by: Julia Lawall <julia.lawall@lip6.fr>
+Signed-off-by: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
+---
+ combine-diff.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/combine-diff.c b/combine-diff.c
+index a2e8dcf..9786680 100644
+--- a/combine-diff.c
++++ b/combine-diff.c
+@@ -423,7 +423,7 @@ static int make_hunks(struct sline *sline, unsigned=
+ long cnt,
+ 						     hunk_begin, j);
+ 				la =3D (la + context < cnt + 1) ?
+ 					(la + context) : cnt + 1;
+-				while (j <=3D --la) {
++				while (la && j <=3D --la) {
+ 					if (sline[la].flag & mark) {
+ 						contin =3D 1;
+ 						break;
+--=20
+1.7.9.2
