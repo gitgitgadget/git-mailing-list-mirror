@@ -1,128 +1,118 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH v2 2/8] gitweb: Pass esc_html_hl_regions() options to esc_html()
-Date: Sat, 24 Mar 2012 20:15:50 +0100
-Message-ID: <201203242015.50421.jnareb@gmail.com>
-References: <1332543417-19664-1-git-send-email-michal.kiedrowicz@gmail.com> <1332543417-19664-3-git-send-email-michal.kiedrowicz@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
-To: =?utf-8?q?Micha=C5=82_Kiedrowicz?= <michal.kiedrowicz@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Mar 24 20:16:10 2012
+From: Jukka Lehtniemi <jukka.lehtniemi@gmail.com>
+Subject: [PATCH] rev-list: fix place holder %N (notes) in user format
+Date: Sat, 24 Mar 2012 21:38:31 +0200
+Message-ID: <1332617911-8281-1-git-send-email-jukka.lehtniemi@gmail.com>
+Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+	Jukka Lehtniemi <jukka.lehtniemi@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Mar 24 20:39:51 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SBWRd-0000Kx-1r
-	for gcvg-git-2@plane.gmane.org; Sat, 24 Mar 2012 20:16:09 +0100
+	id 1SBWoZ-0007su-5m
+	for gcvg-git-2@plane.gmane.org; Sat, 24 Mar 2012 20:39:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756082Ab2CXTP4 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 24 Mar 2012 15:15:56 -0400
-Received: from mail-wg0-f44.google.com ([74.125.82.44]:36456 "EHLO
-	mail-wg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756072Ab2CXTPw (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 24 Mar 2012 15:15:52 -0400
-Received: by wgbdr13 with SMTP id dr13so2842900wgb.1
-        for <git@vger.kernel.org>; Sat, 24 Mar 2012 12:15:50 -0700 (PDT)
+	id S1752554Ab2CXTjS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 24 Mar 2012 15:39:18 -0400
+Received: from mail-lb0-f174.google.com ([209.85.217.174]:50433 "EHLO
+	mail-lb0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752078Ab2CXTjR (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 24 Mar 2012 15:39:17 -0400
+Received: by lbbgm6 with SMTP id gm6so3232528lbb.19
+        for <git@vger.kernel.org>; Sat, 24 Mar 2012 12:39:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        bh=A1DMPzoT3NKe6A3XQ3nzCU1tqhIxMn0gPxu2dnlOM2w=;
-        b=IhGwaFoLQdWQMPzMH4i2qf3qpX/qVpZsO9Ce5BBmsZb8hkvUrTiiahSevftJjNEmf8
-         trglIU3425lOv389FZMeJ0ZBrbLoNL5hB1Q2zkVE+8siZE7jQrLaNn48WeIg3SYMbTFf
-         fEDt1Ans89/kTUrdx/TtiTn0eiDLtBKQcPYmnc0IZ05Blp0hw0Us8rKzDznDOQ1i0fDp
-         cB7CjcgysOUXcFIwFuGHNCYO5yvlDDQzpRJrDHhWp/sLdTrIYq2lIIpgQRuOz7S4jx3L
-         2lOu/PCHIsdOwSPZm66sP5U5otdyLkwKANhQDDxw7uyWPsDLLtZNfE9lm3qKC/9qykcA
-         igyQ==
-Received: by 10.180.81.166 with SMTP id b6mr6668020wiy.0.1332616550607;
-        Sat, 24 Mar 2012 12:15:50 -0700 (PDT)
-Received: from [192.168.1.13] (epw177.neoplus.adsl.tpnet.pl. [83.20.64.177])
-        by mx.google.com with ESMTPS id df3sm25270544wib.1.2012.03.24.12.15.49
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        bh=2DdtO2eh5ixEmskKQunUFVUQmqt2Q8l2xfvP8U7kaj8=;
+        b=YMLP5rKUzYSqfZoY+mYwQPxHO78hPai7VHwWKrKUwYKGKo2ULnEF2+TN7yxCoSWVAZ
+         4cC+xdaEv9yJMt+nEH8lqqOAWV0UK34q38ixoVxGSLwSjD2CYU8io/CZNjoHRlictzGo
+         tetEFaOa9cEsuQsIQRY+rP03Hj5gY7gbAxvhHVA5GrhZQfj+hoyZuVWl6TmBF0K547vb
+         5hvRrCOWHhHx58EIOMm1w6e5GUJ3UKB7BR+ucGucnyEhbihj7fQARsqTI68t6PmfnzQ4
+         SkQMNBjm559BkKjxLdBI/Btvirl68igvgGK6WuIjnLx7/Ng7FpkiA5OqteXPum5a0Rsd
+         V0VA==
+Received: by 10.112.102.65 with SMTP id fm1mr5670750lbb.82.1332617956226;
+        Sat, 24 Mar 2012 12:39:16 -0700 (PDT)
+Received: from localhost.localdomain (dsl-hkibrasgw3-ff5bc100-135.dhcp.inet.fi. [88.193.91.135])
+        by mx.google.com with ESMTPS id u4sm11842968lad.5.2012.03.24.12.39.14
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Sat, 24 Mar 2012 12:15:50 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <1332543417-19664-3-git-send-email-michal.kiedrowicz@gmail.com>
-Content-Disposition: inline
+        Sat, 24 Mar 2012 12:39:15 -0700 (PDT)
+X-Mailer: git-send-email 1.7.4.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193841>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193842>
 
-On Fri, 23 Mar 2012, Micha=C5=82 Kiedrowicz wrote:
 
-> With this change, esc_html_hl_regions() accepts options and passes th=
-em
-> down to esc_html().  This may be needed if a caller wants to pass
-> -nbsp=3D>1 to esc_html().
->=20
-> The idea and implementation example of this change was described in
-> 337da8d2 (gitweb: Introduce esc_html_match_hl and esc_html_hl_regions=
-,
-> 2012-02-27).  While other suggestions may be more useful in some case=
-s,
-> there is no need to implement them at the moment.  The
-> esc_html_hl_regions() interface may be changed later if it's needed.
->=20
-> Signed-off-by: Micha=C5=82 Kiedrowicz <michal.kiedrowicz@gmail.com>
-> ---
->=20
-> Jakub, The code was in fact stolen from a yours patch posted to the
-> list (gitweb: Use esc_html_match_hl() in 'grep' search) that wasn't
-> merged so maybe I should pass the authorship to you?
+Signed-off-by: Jukka Lehtniemi <jukka.lehtniemi@gmail.com>
+---
 
-Either passing authorship, with double signoff (mine and yours), and
-note explaining modification, e.g.
+ Fixes a bug where the place holder for notes (%N) was not expanded 
+ in rev-list. To reproduce the bug:
+   $ git notes add -m foo
+   $ git rev-list --notes --format=format:%N HEAD ^HEAD^
 
-  [mk: extracted from larger patch and wrote commit message]
 
-or courtesy contribution in the form of signoff-like annotation just
-before signoff, e.g.
+ builtin/rev-list.c         |    4 +++-
+ t/t6006-rev-list-format.sh |   12 ++++++++++--
+ 2 files changed, 13 insertions(+), 3 deletions(-)
 
-  Based-on-patch-by: Jakub Nar=C4=99bski <jnareb@gmail.com>
-
-is fine by me.
-=20
->  gitweb/gitweb.perl |   10 ++++++----
->  1 files changed, 6 insertions(+), 4 deletions(-)
->=20
-> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-> index af645e5..1744c40 100755
-> --- a/gitweb/gitweb.perl
-> +++ b/gitweb/gitweb.perl
-> @@ -1732,7 +1732,9 @@ sub chop_and_escape_str {
->  # '<span class=3D"mark">foo</span>bar'
->  sub esc_html_hl_regions {
->  	my ($str, $css_class, @sel) =3D @_;
-> -	return esc_html($str) unless @sel;
-> +	my %opts =3D grep { ref($_) ne 'ARRAY' } @sel;
-> +	@sel     =3D grep { ref($_) eq 'ARRAY' } @sel;
-> +	return esc_html($str, %opts) unless @sel;
-> =20
->  	my $out =3D '';
->  	my $pos =3D 0;
-> @@ -1741,14 +1743,14 @@ sub esc_html_hl_regions {
->  		# Don't craete empty <span> elements.
->  		next if $s->[1] <=3D $s->[0];
-> =20
-> -		$out .=3D esc_html(substr($str, $pos, $s->[0] - $pos))
-> +		$out .=3D esc_html(substr($str, $pos, $s->[0] - $pos), %opts)
->  			if ($s->[0] - $pos > 0);
->  		$out .=3D $cgi->span({-class =3D> $css_class},
-> -		                   esc_html(substr($str, $s->[0], $s->[1] - $s->[0=
-])));
-> +		                   esc_html(substr($str, $s->[0], $s->[1] - $s->[0=
-]), %opts));
-> =20
->  		$pos =3D $s->[1];
->  	}
-> -	$out .=3D esc_html(substr($str, $pos))
-> +	$out .=3D esc_html(substr($str, $pos), %opts)
->  		if ($pos < length($str));
-> =20
->  	return $out;
-> --=20
-> 1.7.8.4
+diff --git a/builtin/rev-list.c b/builtin/rev-list.c
+index 4c4d404..d6e7dfc 100644
+--- a/builtin/rev-list.c
++++ b/builtin/rev-list.c
+@@ -110,6 +110,7 @@ static void show_commit(struct commit *commit, void *data)
+ 		ctx.abbrev = revs->abbrev;
+ 		ctx.date_mode = revs->date_mode;
+ 		ctx.fmt = revs->commit_format;
++		ctx.show_notes = revs->show_notes;
+ 		pretty_print_commit(&ctx, commit, &buf);
+ 		if (revs->graph) {
+ 			if (buf.len) {
+@@ -323,7 +324,8 @@ int cmd_rev_list(int argc, const char **argv, const char *prefix)
+ 	info.revs = &revs;
+ 	if (revs.bisect)
+ 		bisect_list = 1;
+-
++	if (revs.show_notes)
++		init_display_notes(&revs.notes_opt);
+ 	if (DIFF_OPT_TST(&revs.diffopt, QUICK))
+ 		info.flags |= REV_LIST_QUIET;
+ 	for (i = 1 ; i < argc; i++) {
+diff --git a/t/t6006-rev-list-format.sh b/t/t6006-rev-list-format.sh
+index 4442790..76af40a 100755
+--- a/t/t6006-rev-list-format.sh
++++ b/t/t6006-rev-list-format.sh
+@@ -7,18 +7,26 @@ test_description='git rev-list --pretty=format test'
+ test_tick
+ test_expect_success 'setup' '
+ touch foo && git add foo && git commit -m "added foo" &&
+-  echo changed >foo && git commit -a -m "changed foo"
++  echo changed >foo && git commit -a -m "changed foo" &&
++  git notes add -m "note foo"
+ '
+ 
+ # usage: test_format name format_string <expected_output
+ test_format() {
+ 	cat >expect.$1
+ 	test_expect_success "format $1" "
+-git rev-list --pretty=format:'$2' master >output.$1 &&
++git rev-list --notes --pretty=format:'$2' master >output.$1 &&
+ test_cmp expect.$1 output.$1
+ "
+ }
+ 
++test_format notes %N <<'EOF'
++commit 131a310eb913d107dd3c09a65d1651175898735d
++note foo
++
++commit 86c75cfd708a0e5868dc876ed5b8bb66c80b4873
++EOF
++
+ test_format percent %%h <<'EOF'
+ commit 131a310eb913d107dd3c09a65d1651175898735d
+ %h
+-- 
+1.7.4.1
