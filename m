@@ -1,55 +1,95 @@
-From: Mauricio Galindo <up.mauricio.g@gmail.com>
-Subject: Designing a faster index format GSoC 2012
-Date: Sat, 24 Mar 2012 12:35:01 -0600
-Message-ID: <CAOx2=+fUU5rMuix6XHWgtMwBwUgCtBEokXAgnMRxB9j3YSmz8g@mail.gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: GSoC idea: adding JavaScript library / framework in gitweb
+Date: Sat, 24 Mar 2012 19:49:04 +0100
+Message-ID: <201203241949.04956.jnareb@gmail.com>
+References: <CACeyogcFJoUyAiTReDJK_nCMGBp+23OjcS407A1X=fqFR+aGag@mail.gmail.com> <201203241417.10478.jnareb@gmail.com> <CACeyoge7_=aigOnJiXvp=SfVaBVO+4Or_x7Jcnmw-3pj8+VtoA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Mar 24 19:35:31 2012
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: chaitanyaa nalla <nallachaitu@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Mar 24 19:49:19 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SBVoH-00068c-37
-	for gcvg-git-2@plane.gmane.org; Sat, 24 Mar 2012 19:35:29 +0100
+	id 1SBW1a-0007tH-4e
+	for gcvg-git-2@plane.gmane.org; Sat, 24 Mar 2012 19:49:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752794Ab2CXSfD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 24 Mar 2012 14:35:03 -0400
-Received: from mail-ob0-f174.google.com ([209.85.214.174]:41345 "EHLO
-	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751216Ab2CXSfC (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 24 Mar 2012 14:35:02 -0400
-Received: by obbeh20 with SMTP id eh20so3506967obb.19
-        for <git@vger.kernel.org>; Sat, 24 Mar 2012 11:35:01 -0700 (PDT)
+	id S1754325Ab2CXStI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 24 Mar 2012 14:49:08 -0400
+Received: from mail-wi0-f172.google.com ([209.85.212.172]:54029 "EHLO
+	mail-wi0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753716Ab2CXStH (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 24 Mar 2012 14:49:07 -0400
+Received: by wibhj6 with SMTP id hj6so3041230wib.1
+        for <git@vger.kernel.org>; Sat, 24 Mar 2012 11:49:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=159xe+yQ3CRgNvykJsRI0bxjO6zXkRBRT8AS/l8mkOo=;
-        b=OdoT3bu5Wf7LChpOTIq6cXVQo9D9lOY9MYsM8YXgBfbdF9+RzAeIk+wSNT1VG3wMWn
-         GAQhFZSsfU0K7L6GYJO93nVry94PQUJNa2C1rsFtfNdJxI/Uo5QugSp8I7Xpy5ZBicVE
-         2ydnH7zJ8JlxtIze0NVOq2jJCqr+czx8TVpgfNlZHEul/YZk/23yMcANHc5VWaYGZDdC
-         Kz+umJ4PNeEFelMCW3nz9jQJQwvm77t2h3ChqXD2kK5If9atZvTB0MNHNSPMpNacL8xO
-         gsVzJQH8aQ88m3S/4gjd7a4ZUlNfs6/nWqO4mNPT9jn7ThE5jGDOK7Wt5IqnBNQYvvW8
-         a/ow==
-Received: by 10.60.12.99 with SMTP id x3mr20310293oeb.38.1332614101857; Sat,
- 24 Mar 2012 11:35:01 -0700 (PDT)
-Received: by 10.182.207.10 with HTTP; Sat, 24 Mar 2012 11:35:01 -0700 (PDT)
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        bh=7LY9zR9fncL5x/WicuRWghyh4TsEAVjFq8lQk2/HasE=;
+        b=MVNgDtQAGtZj+8/DcUvpvqSJibgQV6m2zUCHuhlfV8uHAA1XbwylyOib7wqDW4UUkB
+         7hYe60M/AYrYaql+legIzB7ZIQgDcXqhzAH7AGi8lk4BVk8OIFIbN5Ilffj0gZs0E4nw
+         KurSlHDUZffZDUdjK94jDBIG11oRbkSsDVd8kupB1Q4N/nWLJWY+5FxsKJUbmbuh5UDH
+         kpXUk3RrWXh7LxmISLcU/4VBAtncTtOufg/+Fsf2PmX1OZKlfroMo62eQfzJEXDox3TF
+         j8MMpTB6wCRfBmcDHyK70Spt6kMSfzppjja/RIuk2BzQAQNhoxFLhsleTLvXKr7ispau
+         1xdA==
+Received: by 10.180.79.72 with SMTP id h8mr6604223wix.1.1332614946077;
+        Sat, 24 Mar 2012 11:49:06 -0700 (PDT)
+Received: from [192.168.1.13] (epw177.neoplus.adsl.tpnet.pl. [83.20.64.177])
+        by mx.google.com with ESMTPS id fz9sm25062349wib.3.2012.03.24.11.49.04
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sat, 24 Mar 2012 11:49:05 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <CACeyoge7_=aigOnJiXvp=SfVaBVO+4Or_x7Jcnmw-3pj8+VtoA@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193836>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193837>
 
-Hi
+On Sat, 24 Mar 2012, chaitanyaa nalla wrote:
 
-I'm a third year computer engineering major wanting to participate at
-GSoC 2012 working on the Git project of designing a faster index
-format.
-I was hoping if someone could give some pointers on where to begin.
-I've already started looking around and found some files that I think
-are important <add.c, read-cache.c, index-format.txt>.
-Is there something I'm missing or that you think I should also check out?
-Any pointer would be greatly appreciated.
+> Dear Jakub ,
+> 
+>  could you please suggest any other ideas or features so that i can
+> think upon them and come up with further good ideas.
 
-Thank you.
+One idea for additional feature that I have already mentioned, and which
+I have put on https://github.com/peff/git/wiki/SoC-2012-Ideas is
+client-side sorting of tables, e.g. of list of all projects, a la
+jQuery / MediaWiki (Wikipedia) "sorttable".
+
+Another would be using deferreds or queues for interactive blame, so
+that repainting (editing DOM) happens asynchronously to avoid locking
+up browser, like in 
+  http://www.nczonline.net/blog/2009/08/11/timed-array-processing-in-javascript/
+
+There was also some time ago a patch that added ability to mark a commit
+to compare current commit to (using JavaScript and cookies), to have an
+UI to compare arbitrary commits using 'commitdiff' view.  Or something
+similar to MediaWiki (Wikipedia) page history view. 
+
+
+Yet another would be support for graphical representation of history in
+'log', 'shortlog' and 'history' views e.g. using Raphael.js
+
+Perhaps it would be possible to employ some JavaScript syntax highlighter
+to pretty-print contents of 'blob' view.
+
+
+Hope That Helps.
+
+
+P.S. You can see gitweb at work here:
+
+  http://git.kernel.org/?p=git/git.git
+  http://repo.or.cz/w/git.git
+-- 
+Jakub Narebski
+Poland
