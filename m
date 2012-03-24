@@ -1,165 +1,52 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: GSoC idea: adding JavaScript library / framework in gitweb
-Date: Sat, 24 Mar 2012 14:17:09 +0100
-Message-ID: <201203241417.10478.jnareb@gmail.com>
-References: <CACeyogcFJoUyAiTReDJK_nCMGBp+23OjcS407A1X=fqFR+aGag@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: chaitanyaa nalla <nallachaitu@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Mar 24 14:17:51 2012
+From: Jules Phillips <julian_a_phillips@yahoo.co.uk>
+Subject: Git for mac
+Date: Sat, 24 Mar 2012 14:41:31 +0000
+Message-ID: <500B25FC-0DC4-4EEB-9729-86689AFE38A2@yahoo.co.uk>
+Mime-Version: 1.0 (Apple Message framework v936)
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Mar 24 15:41:39 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SBQqs-00076V-LA
-	for gcvg-git-2@plane.gmane.org; Sat, 24 Mar 2012 14:17:50 +0100
+	id 1SBS9y-0007oF-Vj
+	for gcvg-git-2@plane.gmane.org; Sat, 24 Mar 2012 15:41:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755859Ab2CXNRQ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 24 Mar 2012 09:17:16 -0400
-Received: from mail-wi0-f172.google.com ([209.85.212.172]:41622 "EHLO
-	mail-wi0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755621Ab2CXNRP (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 24 Mar 2012 09:17:15 -0400
-Received: by wibhj6 with SMTP id hj6so2874764wib.1
-        for <git@vger.kernel.org>; Sat, 24 Mar 2012 06:17:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        bh=iKns/K/BeuLTt9cZxKLMo5lsHaSqm3PaVCinA6DI/O8=;
-        b=WFZnn5Q99OL1sMPm8vu/+0o0sLLp+rH+9xar095SWwPQV8juRNDZXCO+fSEuyQ1uAb
-         akWeTsvhO2gmUI0bzcC+14lCF611sTT8M7yyxIa+aUg7LAuqiOsIyH9z6T2jKALC+SwU
-         uK960/j/opH+XiUqQJMQDveQw9cErFL4eRDEr8qncfZmqTNBSFOitQf/vBZOJjwYxlcb
-         d6WY3bn6ZNah3rkY5KHzkGd3ZYoFry5G3lg9BNUzlDdyHkMHGhd8fuz/iZ+R5zhXv10i
-         r0ihoLOcKwIzIirKbQ2/X8H1gbeF4zoq/4w1t0MMbso/7ASCsw/iIUFsRhhd6OOq0TuF
-         vy2Q==
-Received: by 10.180.104.137 with SMTP id ge9mr4843221wib.20.1332595033713;
-        Sat, 24 Mar 2012 06:17:13 -0700 (PDT)
-Received: from [192.168.1.13] (epw177.neoplus.adsl.tpnet.pl. [83.20.64.177])
-        by mx.google.com with ESMTPS id fl2sm37588457wib.4.2012.03.24.06.17.12
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sat, 24 Mar 2012 06:17:12 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <CACeyogcFJoUyAiTReDJK_nCMGBp+23OjcS407A1X=fqFR+aGag@mail.gmail.com>
-Content-Disposition: inline
+	id S1753819Ab2CXOle (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 24 Mar 2012 10:41:34 -0400
+Received: from nm4-vm0.bullet.mail.ukl.yahoo.com ([217.146.183.230]:33415 "HELO
+	nm4-vm0.bullet.mail.ukl.yahoo.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S1753041Ab2CXOld (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 24 Mar 2012 10:41:33 -0400
+Received: from [217.146.183.180] by nm4.bullet.mail.ukl.yahoo.com with NNFMP; 24 Mar 2012 14:41:32 -0000
+Received: from [217.146.182.74] by tm11.bullet.mail.ukl.yahoo.com with NNFMP; 24 Mar 2012 14:41:32 -0000
+Received: from [127.0.0.1] by smtp105.mail.ukl.yahoo.com with NNFMP; 24 Mar 2012 14:41:32 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.co.uk; s=s1024; t=1332600092; bh=fwgOJMFjPz+MzvPGLAK14U28nwlGpvp5MwxwL4LEJcM=; h=X-Yahoo-Newman-Id:X-Yahoo-Newman-Property:X-YMail-OSG:X-Yahoo-SMTP:Received:Message-Id:From:To:Content-Type:Content-Transfer-Encoding:Mime-Version:Subject:Date:X-Mailer; b=QWwFkabHR2xMoh9wkjBIpEWOpwBRQN9LwgGsum3dzdLzjXVXUAIsBc82l37/W4R8/7zHfhBRLa8/Wo7ugLgrZAJAM8NkZSOSyJs8GWYrJ5xNYA6QI7VXA1cjep4zOgJU973AkCsxGrA0TOoaBID35r+pSKjgTSIYXA33jToKaNY=
+X-Yahoo-Newman-Id: 188504.71581.bm@smtp105.mail.ukl.yahoo.com
+X-Yahoo-Newman-Property: ymail-3
+X-YMail-OSG: VrhMZa0VM1krQyTnXtHmhU8v5ljEzI37_2EGJFGAciCZELg
+ waA.Ah4GymPE_9vhrc7TrCzRLiHBP76qusuqU4jTuk35tYH.yjaK6VpwIahD
+ 9MXqrtwfpk._tV4bYf8pvOP.VU1_EHPrsKoCDhUlHqx.WuE6NjLk8hg9n7Bu
+ gLHaILD10fBDCGq_ORnZo4SLQCf9Opcm2IlhB4kOLigW5vHHcyufFhj6T9.l
+ sLHd8UVtj00__0CmMsCreAP.zReG1oo3iQRbqAa2m5LQGU2_.QhwB_6o55Vq
+ QFrLOnlizvqemf8Be6vR_Uc2uHXkyB8gf82pnYAnN9hKTm1oApWE58dbjB8n
+ xSjrArAx1KzhgbSZBP_cph0P255eqz0BiTcRb_KvgDp3gOYyWNC3lfkEn6VC
+ hHlj_C0xsYTR6w9pN
+X-Yahoo-SMTP: rFcW3xKswBAGcwbEQq.wSP3AgQINbMV8Ql1xBY4N
+Received: from [192.168.2.5] (julian_a_phillips@86.158.46.244 with plain)
+        by smtp105.mail.ukl.yahoo.com with SMTP; 24 Mar 2012 07:41:31 -0700 PDT
+X-Mailer: Apple Mail (2.936)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193826>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193827>
 
-On Sat, 24 Mar 2012, Chaitanyaa Nalla wrote:
+Hi which version will work on mac os 10.5.8
 
-> Hello everyone,
->=20
-> =A0I am Chaitanya Nalla, a final year undergraduate student from Indi=
-a and I
-> am pretty much interested in doing the project "Adding javascript lib=
-rary /
-> framework in gitweb" suggested by respected Jakub.  I have good exper=
-ience
-> in javascript libraries like jQuery, Dojo etc. As per the goals of th=
-e
-> project I will use the efficient, concise, cross browser compatible
-> frameworks where ever needed.
+thanks
 
-JavaScript library / framework is required not only to cover difference=
-s
-between web browsers in DOM manipulation, event handling and Ajax with
-XmlHttpRequest, but also add features which are still[1] lacking from
-JavaScript such as handling cookies, formatting strings, date manipulat=
-ion,
-etc.
-
-Currently gitweb uses hand-crafted micro-library in `gitweb/static/js/l=
-ib/`
-Using existing JavaScript library, be it jQuery (most popular), Dojo,
-MooTools or YUI (probably too much for gitweb) will give us, as you sai=
-d,
-well tested code, and new abilities like client-side sorting of tables
-which we would be able to use in further work.
-
-[1] http://www.nczonline.net/blog/2011/10/03/when-web-standards-fail-us=
-/
-
->                                Also I am planning to create a local l=
-ibrary=20
-> version with support for configuration and a good documentation.
-
-I don't quite understand what you mean here.  The JavaScript code speci=
-fic
-to gitweb would have to be modified to use chosen JavaScript library, b=
-ut
-I wouldn't say it is "local library".  I'd rather we use stock JavaScri=
-pt
-library, which would allow us to leverage existing CDNs like (for jQuer=
-y)
-
-  http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js
-  http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.2.min.js
-  http://code.jquery.com/jquery-1.7.2.min.js
-=20
-We probably would ultimately need to be able to serve local fallback co=
-py
-(but this might be out of scope of GSoC project).
-
-This gitweb-specific JavaScript code (files in `gitweb/static/js/`)
-is IMVHO quite well documented using JSDoc.
-
-> Using the DOM features of JavaScript and traversing the whole documen=
-t
-> object is quite cubersome and error prone, so I want to replace them =
-using
-> well tested libraries that are cross browser compatible.
-
-I think there is missing "using hand-crafted code" in this sentence
-to make it sense.
-
->=20
-> Emulating onprogress in XMLHttpRequest :
->=20
-> jQuery and YUI provide only statuses success and error.
-
-Right.
-
-> Even MooTools provide progress but are constrained to some browers
-> only.
-
-To be more exact MooTools support 'onprogress' event handler only if
-web browser supports it.  Not all do (e.g. older browsers), that is why
-there is need for emulation using timers.
-
-> It can be handled by using $.ajax Transport utility .
-
-You mean in jQuery here, isn't it?  It would be a bit different, I thin=
-k,
-in MooTools or YUI.
-
-C.f. http://stackoverflow.com/questions/5652229/javascript-framework-wi=
-th-or-easily-extendable-with-support-for-xmlhttprequest
-
-> I will also take care progressive enhancement, by carefully implement=
-ing the
-> basic functionality of the gitweb so that what ever may be the browse=
-r
-> version and type, internet connection the basic functionality will no=
-t
-> disrupted.
-
-Errr... "progressive enhancement" is about using client-side scripting
-in such way, that even if web browser doesn't support JavaScript
-(e.g. text browsers such as lynx, elinks or w3m), or has JavaScript
-turned off or blocked, we would get a basic functionality.
-
-Note also that "progressive enhancement" part applies only to writing
-new features, and this is strictly 'as time permits' part, I think.
-But I thin that you would need to lay more complete proposal, i.e.
-what features are you planning to add.=20
-
---=20
-Jakub Narebski
-Poland
+Jules
