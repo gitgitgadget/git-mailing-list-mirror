@@ -1,71 +1,128 @@
-From: chaitanyaa nalla <nallachaitu@gmail.com>
-Subject: Re: Designing a faster index format GSoC 2012
-Date: Sun, 25 Mar 2012 00:32:07 +0530
-Message-ID: <CACeyogfjgASroy8b5maeS8C_opGLURgvNF4DBohGyTyBeC1VUA@mail.gmail.com>
-References: <CAOx2=+fUU5rMuix6XHWgtMwBwUgCtBEokXAgnMRxB9j3YSmz8g@mail.gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH v2 2/8] gitweb: Pass esc_html_hl_regions() options to esc_html()
+Date: Sat, 24 Mar 2012 20:15:50 +0100
+Message-ID: <201203242015.50421.jnareb@gmail.com>
+References: <1332543417-19664-1-git-send-email-michal.kiedrowicz@gmail.com> <1332543417-19664-3-git-send-email-michal.kiedrowicz@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Mauricio Galindo <up.mauricio.g@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Mar 24 20:02:16 2012
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
+To: =?utf-8?q?Micha=C5=82_Kiedrowicz?= <michal.kiedrowicz@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Mar 24 20:16:10 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SBWEB-00080G-1R
-	for gcvg-git-2@plane.gmane.org; Sat, 24 Mar 2012 20:02:15 +0100
+	id 1SBWRd-0000Kx-1r
+	for gcvg-git-2@plane.gmane.org; Sat, 24 Mar 2012 20:16:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755739Ab2CXTCJ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 24 Mar 2012 15:02:09 -0400
-Received: from mail-ob0-f174.google.com ([209.85.214.174]:57561 "EHLO
-	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752138Ab2CXTCI convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 24 Mar 2012 15:02:08 -0400
-Received: by obbeh20 with SMTP id eh20so3524370obb.19
-        for <git@vger.kernel.org>; Sat, 24 Mar 2012 12:02:07 -0700 (PDT)
+	id S1756082Ab2CXTP4 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 24 Mar 2012 15:15:56 -0400
+Received: from mail-wg0-f44.google.com ([74.125.82.44]:36456 "EHLO
+	mail-wg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756072Ab2CXTPw (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 24 Mar 2012 15:15:52 -0400
+Received: by wgbdr13 with SMTP id dr13so2842900wgb.1
+        for <git@vger.kernel.org>; Sat, 24 Mar 2012 12:15:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=Tgss+IjVkdWZgOrB7t/7/GRx6AbdtI9vM2rLOgFkO38=;
-        b=YBSH5yqbLUn/IeqaOt+6bmVLj8+HNAfTlcqjOACAfttNgFtMu9Jw6edA2Haw3Q+eDK
-         MKrPwks8OzTvkedCy9v8izVyw5AEhrwNPa7RKwrbHkvr51q/bxvuJK92rIeUyTLEgchZ
-         bIOx2EyJSAbe0iAmvUDU3Cieln68Lb+ynZKqeNDVFlRnHQVjvbnFXHfM5lQpvXCXrqWF
-         QFuaml8G6VHlHL6yM5nSsR9hevpdbBknYYJtjSCkpEYd6uiIwxzbc8H3a+UZWhxXr7Dt
-         S3fYezFLZO/fp13EDDTNrR98oF7l+8xNjAq5YRkxAkx45nPw6MlySdtUgcH+5fhwrOVS
-         bTog==
-Received: by 10.60.19.106 with SMTP id d10mr10482572oee.40.1332615727830; Sat,
- 24 Mar 2012 12:02:07 -0700 (PDT)
-Received: by 10.182.39.234 with HTTP; Sat, 24 Mar 2012 12:02:07 -0700 (PDT)
-In-Reply-To: <CAOx2=+fUU5rMuix6XHWgtMwBwUgCtBEokXAgnMRxB9j3YSmz8g@mail.gmail.com>
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        bh=A1DMPzoT3NKe6A3XQ3nzCU1tqhIxMn0gPxu2dnlOM2w=;
+        b=IhGwaFoLQdWQMPzMH4i2qf3qpX/qVpZsO9Ce5BBmsZb8hkvUrTiiahSevftJjNEmf8
+         trglIU3425lOv389FZMeJ0ZBrbLoNL5hB1Q2zkVE+8siZE7jQrLaNn48WeIg3SYMbTFf
+         fEDt1Ans89/kTUrdx/TtiTn0eiDLtBKQcPYmnc0IZ05Blp0hw0Us8rKzDznDOQ1i0fDp
+         cB7CjcgysOUXcFIwFuGHNCYO5yvlDDQzpRJrDHhWp/sLdTrIYq2lIIpgQRuOz7S4jx3L
+         2lOu/PCHIsdOwSPZm66sP5U5otdyLkwKANhQDDxw7uyWPsDLLtZNfE9lm3qKC/9qykcA
+         igyQ==
+Received: by 10.180.81.166 with SMTP id b6mr6668020wiy.0.1332616550607;
+        Sat, 24 Mar 2012 12:15:50 -0700 (PDT)
+Received: from [192.168.1.13] (epw177.neoplus.adsl.tpnet.pl. [83.20.64.177])
+        by mx.google.com with ESMTPS id df3sm25270544wib.1.2012.03.24.12.15.49
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sat, 24 Mar 2012 12:15:50 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <1332543417-19664-3-git-send-email-michal.kiedrowicz@gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193840>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193841>
 
-please refer the recent archive, Gmane, that contains the discussion
-on designing a faster index format .Hope that helps .
+On Fri, 23 Mar 2012, Micha=C5=82 Kiedrowicz wrote:
 
-chaitanya nalla.
-On Sun, Mar 25, 2012 at 12:05 AM, Mauricio Galindo
-<up.mauricio.g@gmail.com> wrote:
-> Hi
->
-> I'm a third year computer engineering major wanting to participate at
-> GSoC 2012 working on the Git project of designing a faster index
-> format.
-> I was hoping if someone could give some pointers on where to begin.
-> I've already started looking around and found some files that I think
-> are important <add.c, read-cache.c, index-format.txt>.
-> Is there something I'm missing or that you think I should also check =
-out?
-> Any pointer would be greatly appreciated.
->
-> Thank you.
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at =A0http://vger.kernel.org/majordomo-info.html
+> With this change, esc_html_hl_regions() accepts options and passes th=
+em
+> down to esc_html().  This may be needed if a caller wants to pass
+> -nbsp=3D>1 to esc_html().
+>=20
+> The idea and implementation example of this change was described in
+> 337da8d2 (gitweb: Introduce esc_html_match_hl and esc_html_hl_regions=
+,
+> 2012-02-27).  While other suggestions may be more useful in some case=
+s,
+> there is no need to implement them at the moment.  The
+> esc_html_hl_regions() interface may be changed later if it's needed.
+>=20
+> Signed-off-by: Micha=C5=82 Kiedrowicz <michal.kiedrowicz@gmail.com>
+> ---
+>=20
+> Jakub, The code was in fact stolen from a yours patch posted to the
+> list (gitweb: Use esc_html_match_hl() in 'grep' search) that wasn't
+> merged so maybe I should pass the authorship to you?
+
+Either passing authorship, with double signoff (mine and yours), and
+note explaining modification, e.g.
+
+  [mk: extracted from larger patch and wrote commit message]
+
+or courtesy contribution in the form of signoff-like annotation just
+before signoff, e.g.
+
+  Based-on-patch-by: Jakub Nar=C4=99bski <jnareb@gmail.com>
+
+is fine by me.
+=20
+>  gitweb/gitweb.perl |   10 ++++++----
+>  1 files changed, 6 insertions(+), 4 deletions(-)
+>=20
+> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+> index af645e5..1744c40 100755
+> --- a/gitweb/gitweb.perl
+> +++ b/gitweb/gitweb.perl
+> @@ -1732,7 +1732,9 @@ sub chop_and_escape_str {
+>  # '<span class=3D"mark">foo</span>bar'
+>  sub esc_html_hl_regions {
+>  	my ($str, $css_class, @sel) =3D @_;
+> -	return esc_html($str) unless @sel;
+> +	my %opts =3D grep { ref($_) ne 'ARRAY' } @sel;
+> +	@sel     =3D grep { ref($_) eq 'ARRAY' } @sel;
+> +	return esc_html($str, %opts) unless @sel;
+> =20
+>  	my $out =3D '';
+>  	my $pos =3D 0;
+> @@ -1741,14 +1743,14 @@ sub esc_html_hl_regions {
+>  		# Don't craete empty <span> elements.
+>  		next if $s->[1] <=3D $s->[0];
+> =20
+> -		$out .=3D esc_html(substr($str, $pos, $s->[0] - $pos))
+> +		$out .=3D esc_html(substr($str, $pos, $s->[0] - $pos), %opts)
+>  			if ($s->[0] - $pos > 0);
+>  		$out .=3D $cgi->span({-class =3D> $css_class},
+> -		                   esc_html(substr($str, $s->[0], $s->[1] - $s->[0=
+])));
+> +		                   esc_html(substr($str, $s->[0], $s->[1] - $s->[0=
+]), %opts));
+> =20
+>  		$pos =3D $s->[1];
+>  	}
+> -	$out .=3D esc_html(substr($str, $pos))
+> +	$out .=3D esc_html(substr($str, $pos), %opts)
+>  		if ($pos < length($str));
+> =20
+>  	return $out;
+> --=20
+> 1.7.8.4
