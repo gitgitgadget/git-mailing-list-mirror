@@ -1,105 +1,126 @@
-From: chaitanyaa nalla <nallachaitu@gmail.com>
-Subject: Re: GSoC idea: adding JavaScript library / framework in gitweb
-Date: Sun, 25 Mar 2012 00:27:08 +0530
-Message-ID: <CACeyogenMu2HO9iDBGgGmg0QvtdxY5cKcuGEeMAwckJsEi9RbQ@mail.gmail.com>
-References: <CACeyogcFJoUyAiTReDJK_nCMGBp+23OjcS407A1X=fqFR+aGag@mail.gmail.com>
-	<201203241417.10478.jnareb@gmail.com>
-	<CACeyoge7_=aigOnJiXvp=SfVaBVO+4Or_x7Jcnmw-3pj8+VtoA@mail.gmail.com>
-	<201203241949.04956.jnareb@gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH v2 1/8] gitweb: esc_html_hl_regions(): Don't create empty <span> elements
+Date: Sat, 24 Mar 2012 19:58:23 +0100
+Message-ID: <201203241958.23835.jnareb@gmail.com>
+References: <1332543417-19664-1-git-send-email-michal.kiedrowicz@gmail.com> <1332543417-19664-2-git-send-email-michal.kiedrowicz@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Mar 24 19:57:19 2012
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
+To: =?utf-8?q?Micha=C5=82_Kiedrowicz?= <michal.kiedrowicz@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Mar 24 19:58:33 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SBW9N-0004lX-B1
-	for gcvg-git-2@plane.gmane.org; Sat, 24 Mar 2012 19:57:17 +0100
+	id 1SBWAY-0005Xa-9I
+	for gcvg-git-2@plane.gmane.org; Sat, 24 Mar 2012 19:58:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755584Ab2CXS5K convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 24 Mar 2012 14:57:10 -0400
-Received: from mail-ob0-f174.google.com ([209.85.214.174]:58772 "EHLO
-	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755130Ab2CXS5J convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 24 Mar 2012 14:57:09 -0400
-Received: by obbeh20 with SMTP id eh20so3521168obb.19
-        for <git@vger.kernel.org>; Sat, 24 Mar 2012 11:57:08 -0700 (PDT)
+	id S1755249Ab2CXS60 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 24 Mar 2012 14:58:26 -0400
+Received: from mail-wi0-f178.google.com ([209.85.212.178]:50777 "EHLO
+	mail-wi0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752184Ab2CXS6Z (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 24 Mar 2012 14:58:25 -0400
+Received: by wibhq7 with SMTP id hq7so3093327wib.1
+        for <git@vger.kernel.org>; Sat, 24 Mar 2012 11:58:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=+2eH3leIuIFdhawfc03D5JQXNH9B8rg3XImDxiKXMfU=;
-        b=K7d1SSSP6aoigLvh/1Hp6wuYkQ4G6SA3s7Yd/9cUDp99YsB2dEAIKQ2PTDTFsyQJHB
-         P/1/ndcYs8FdTtwNzI/4fKqyiYZCnNNQnE7ESZbxrlt4fEKD7XVtJmGt5jrDsn0vyPmd
-         0lhV0QFrlyXW9rAtIcl+adwtIu6epSrUuKpXvHRyQxro1AqWV+QsYgQgu30e4wcFs3a8
-         wDlGoqcYG/okNAeM30QIzBxwq3C/fYz9IspTwki1MH3acJplpWGc5yZJT6REVd71bPoy
-         8NTuDttHf8dUCWa2w2EEIOfclX6UcuhSiSrRQ51blp0PFV/VobK4WWnB3cvmsXsMuPui
-         h/sw==
-Received: by 10.182.188.38 with SMTP id fx6mr10557032obc.77.1332615428627;
- Sat, 24 Mar 2012 11:57:08 -0700 (PDT)
-Received: by 10.182.39.234 with HTTP; Sat, 24 Mar 2012 11:57:08 -0700 (PDT)
-In-Reply-To: <201203241949.04956.jnareb@gmail.com>
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        bh=I1p2QhWvft+tJahG6Jb2HrnSZpq+Ugh7em4StFf+w+4=;
+        b=vxgUX3K8OCXnCUu/DYQ93n8VgNnWzVhgPVHRZ+M7b7GJF4v0zFtFf7QurDXT+yVdur
+         /hVuT2qsGxbjhfcKyvk6Gp7nfmV+u4PEpaMLdVjRsEYVwer0NX9OjTV59/drQVUFCNay
+         ydNdRmsanzBn0pZNbPAxxAd+797sMakJougT7VRVOwWmMQibyaFSreYM+BBTPbI9MffD
+         aSwwX3AMTL4C2cgZDiESKmE2bQb6vtJj4uxPB6IxL8gqjfzLFo+Eus2vld91IxWMmlZC
+         YnDnIDp1ITXcFcOC/NhjCfajYWQrhOgLIX+LJXuX6Wj22SrYamhpld6OLslZLRdOtSMf
+         +3OA==
+Received: by 10.216.132.226 with SMTP id o76mr9309705wei.93.1332615504294;
+        Sat, 24 Mar 2012 11:58:24 -0700 (PDT)
+Received: from [192.168.1.13] (epw177.neoplus.adsl.tpnet.pl. [83.20.64.177])
+        by mx.google.com with ESMTPS id gg2sm41229263wib.7.2012.03.24.11.58.23
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sat, 24 Mar 2012 11:58:23 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <1332543417-19664-2-git-send-email-michal.kiedrowicz@gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193838>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193839>
 
-that's great ,thanks for your time and concern.I will carefully
-consider each and every suggestion and approach you if i need any
-clarification .
+Note: all those minor issues can be fixed while applying, I think.
 
-On Sun, Mar 25, 2012 at 12:19 AM, Jakub Narebski <jnareb@gmail.com> wro=
-te:
-> On Sat, 24 Mar 2012, chaitanyaa nalla wrote:
->
->> Dear Jakub ,
->>
->> =A0could you please suggest any other ideas or features so that i ca=
-n
->> think upon them and come up with further good ideas.
->
-> One idea for additional feature that I have already mentioned, and wh=
-ich
-> I have put on https://github.com/peff/git/wiki/SoC-2012-Ideas is
-> client-side sorting of tables, e.g. of list of all projects, a la
-> jQuery / MediaWiki (Wikipedia) "sorttable".
->
-> Another would be using deferreds or queues for interactive blame, so
-> that repainting (editing DOM) happens asynchronously to avoid locking
-> up browser, like in
-> =A0http://www.nczonline.net/blog/2009/08/11/timed-array-processing-in=
--javascript/
->
-> There was also some time ago a patch that added ability to mark a com=
-mit
-> to compare current commit to (using JavaScript and cookies), to have =
-an
-> UI to compare arbitrary commits using 'commitdiff' view. =A0Or someth=
-ing
-> similar to MediaWiki (Wikipedia) page history view.
->
->
-> Yet another would be support for graphical representation of history =
+On Fri, 23 Mar 2012, Micha=C5=82 Kiedrowicz wrote:
+
+> if $s->[1] is equal to or less than $s->[0], esc_html_hl_regions()
+  ^^
+s/if/If/
+
+> generates an empty <span> element.  It normally shouldn't be visible =
 in
-> 'log', 'shortlog' and 'history' views e.g. using Raphael.js
->
-> Perhaps it would be possible to employ some JavaScript syntax highlig=
-hter
-> to pretty-print contents of 'blob' view.
->
->
-> Hope That Helps.
->
->
-> P.S. You can see gitweb at work here:
->
-> =A0http://git.kernel.org/?p=3Dgit/git.git
-> =A0http://repo.or.cz/w/git.git
-> --
-> Jakub Narebski
-> Poland
+> the web broweser, but it doesn't look good when looking at page sourc=
+e.
+          ^^^^^^^^=20
+s/broweser/browser/
+
+> It also minimally increases generated page size for no special reason=
+=2E
+>=20
+> Signed-off-by: Micha=C5=82 Kiedrowicz <michal.kiedrowicz@gmail.com>
+> ---
+>=20
+> I don't know if any code currently can produce empty <span> elements,
+> but diff refinement highlighning does it.
+
+I didn't want to make esc_html_hl_regions() paranoid and boggle it down
+with checking that gitweb called it with sane values of parameters,
+but this one is cheap and simple. =20
+
+It might be better to make esc_html_hl_regions() more robust instead
+of modifying future caller to skip empty regions.
+
+I have not read the rest of this series; for the time being conditional
+ACK from me.
+
+>  gitweb/gitweb.perl |    3 +++
+>  1 files changed, 3 insertions(+), 0 deletions(-)
+>=20
+> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+> index a8b5fad..af645e5 100755
+> --- a/gitweb/gitweb.perl
+> +++ b/gitweb/gitweb.perl
+> @@ -1738,6 +1738,9 @@ sub esc_html_hl_regions {
+>  	my $pos =3D 0;
+> =20
+>  	for my $s (@sel) {
+> +		# Don't craete empty <span> elements.
+                        ^^^^^^
+s/craete/create/
+
+> +		next if $s->[1] <=3D $s->[0];
+> +
+>  		$out .=3D esc_html(substr($str, $pos, $s->[0] - $pos))
+>  			if ($s->[0] - $pos > 0);
+>  		$out .=3D $cgi->span({-class =3D> $css_class},
+> --=20
+> 1.7.8.4
+=20
+P.S. I wonder if it wouldn't be better if we created and used loop-loca=
+l
+variables with descriptive names, e.g.
+
+  my ($beg, $end) =3D @$s;
+
+and use $beg in place of $s->[0] and $end in place of $s->[1], which ar=
+e
+a bit cryptic.
+
+This of course doesn't affect this patch.
+
+--=20
+Jakub Narebski
+Poland
