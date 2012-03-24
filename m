@@ -1,61 +1,59 @@
-From: greened@obbligato.org
-Subject: Re: New git-subtree almost ready
-Date: Fri, 23 Mar 2012 22:34:04 -0500
-Message-ID: <87y5qq65ar.fsf@smith.obbligato.org>
-References: <87limu7hhi.fsf@smith.obbligato.org>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: [PATCH v0 0/2] git-less: a specialized pager for git-log
+Date: Sat, 24 Mar 2012 11:43:46 +0700
+Message-ID: <CACsJy8Ctyujq+F0qSe_=ddHxWLUaD6xAtwCZBvySFi275_P2Cg@mail.gmail.com>
+References: <1332441744-5142-1-git-send-email-h.mitake@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Mar 24 04:37:42 2012
+Content-Type: text/plain; charset=UTF-8
+Cc: gitster@pobox.com, git@vger.kernel.org
+To: Hitoshi Mitake <h.mitake@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Mar 24 05:44:30 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SBHnR-0006Ub-UG
-	for gcvg-git-2@plane.gmane.org; Sat, 24 Mar 2012 04:37:42 +0100
+	id 1SBIq0-00074I-Hs
+	for gcvg-git-2@plane.gmane.org; Sat, 24 Mar 2012 05:44:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755693Ab2CXDhg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 Mar 2012 23:37:36 -0400
-Received: from li209-253.members.linode.com ([173.255.199.253]:35853 "EHLO
-	johnson.obbligato.org" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1754485Ab2CXDhf (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Mar 2012 23:37:35 -0400
-Received: from c-75-73-20-8.hsd1.mn.comcast.net ([75.73.20.8] helo=smith.obbligato.org)
-	by johnson.obbligato.org with esmtpsa (TLS1.2:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.77)
-	(envelope-from <greened@obbligato.org>)
-	id 1SBE3w-0006aQ-Np
-	for git@vger.kernel.org; Fri, 23 Mar 2012 18:38:29 -0500
-In-Reply-To: <87limu7hhi.fsf@smith.obbligato.org> (greened@obbligato.org's
-	message of "Tue, 20 Mar 2012 22:36:25 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Filter-Spam-Score: ()
-X-Filter-Spam-Report: Spam detection software, running on the system "johnson.obbligato.org", has
- identified this incoming email as possible spam.  The original message
- has been attached to this so you can view it (if it isn't spam) or label
- similar future email.  If you have any questions, see
- @@CONTACT_ADDRESS@@ for details.
- Content preview:  greened@obbligato.org writes: > Before I can put the new tree
-    up I need a little help. Anyone? How do I properly rebase a subtree merge?
-    [...] 
- Content analysis details:   (1.4 points, 5.0 required)
-  pts rule name              description
- ---- ---------------------- --------------------------------------------------
- -1.0 ALL_TRUSTED            Passed through trusted hosts only via SMTP
-  2.4 DATE_IN_FUTURE_03_06   Date: is 3 to 6 hours after Received: date
+	id S1753798Ab2CXEoT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 24 Mar 2012 00:44:19 -0400
+Received: from mail-wi0-f172.google.com ([209.85.212.172]:49930 "EHLO
+	mail-wi0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752966Ab2CXEoS (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 24 Mar 2012 00:44:18 -0400
+Received: by wibhj6 with SMTP id hj6so2614218wib.1
+        for <git@vger.kernel.org>; Fri, 23 Mar 2012 21:44:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=2P6sdAOnitV/zvPm6UALAw0lsiRjpPblAA9m04F8Cv4=;
+        b=C5L+KUac47u07Iv02Yj1q4/Y16V5JgqIWWBm6/E1zxTw7m4cyA0PUZ3mD7BROtOokz
+         unLb3NeWXvAXXzQ8JaT+vWxmPwkpMDa0DGnCBkjvlJ08zB4qwFZPfvjdDWP7xTiizn1l
+         Pqp9vt5AMQ4I6y6PRmKa6G7RBXQaIMwRH2FqFBMlYKTioQx7XDNypXCYaWvP2sY5D0m6
+         PMqOxLwwoKaaA3koEKuOFBSR9UQRXukXDCNPn/EFtMFXEtbvBCOzcNV3y1yS/hKppecB
+         BnVmmAz9XYKeRwPtmVH3xKHXbHOKV0Dpb12tF3GaLgHi9e9Oys9kRfItAKuuLlM5WzxS
+         Qiew==
+Received: by 10.180.107.101 with SMTP id hb5mr2472943wib.7.1332564256852; Fri,
+ 23 Mar 2012 21:44:16 -0700 (PDT)
+Received: by 10.223.109.144 with HTTP; Fri, 23 Mar 2012 21:43:46 -0700 (PDT)
+In-Reply-To: <1332441744-5142-1-git-send-email-h.mitake@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193815>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193816>
 
-greened@obbligato.org writes:
+On Fri, Mar 23, 2012 at 1:42 AM, Hitoshi Mitake <h.mitake@gmail.com> wrote:
+> Hi Junio C Hamano and git people,
+>
+> I'd like to post this patch series for adding a pager program for git-log,
+> named "git-less". It seems that less is today's the most popular pager for
+> git-log. But I don't think that less is confortable pager when its input is come
+> from git-log. Because less treats its input as a simple text. So less cannot
+> recognize the end of each commit.
 
-> Before I can put the new tree up I need a little help.
-
-Anyone?  How do I properly rebase a subtree merge?
-
-Thanks!
-
-                            -Dave
+How does it compare to tig?
+-- 
+Duy
