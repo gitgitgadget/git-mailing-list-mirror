@@ -1,72 +1,106 @@
-From: Stefano Lattarini <stefano.lattarini@gmail.com>
-Subject: Re: [ANNOUNCE] Git 1.7.10-rc2
-Date: Sat, 24 Mar 2012 08:26:07 +0100
-Message-ID: <4F6D770F.1000908@gmail.com>
-References: <7vr4wisyd9.fsf@alter.siamese.dyndns.org>
+From: David Aguilar <davvid@gmail.com>
+Subject: Re: New git-subtree almost ready
+Date: Sat, 24 Mar 2012 01:00:42 -0700
+Message-ID: <CAJDDKr6VSgZksGkXg2oW4nwWCggW1M5TapiyeH-rAkfo+FjnmQ@mail.gmail.com>
+References: <87limu7hhi.fsf@smith.obbligato.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Mar 24 08:26:27 2012
+To: greened@obbligato.org
+X-From: git-owner@vger.kernel.org Sat Mar 24 09:00:49 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SBLMo-0004yw-0W
-	for gcvg-git-2@plane.gmane.org; Sat, 24 Mar 2012 08:26:26 +0100
+	id 1SBLu5-0007e9-3x
+	for gcvg-git-2@plane.gmane.org; Sat, 24 Mar 2012 09:00:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753735Ab2CXH0T (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 24 Mar 2012 03:26:19 -0400
-Received: from mail-we0-f174.google.com ([74.125.82.174]:37442 "EHLO
-	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752205Ab2CXH0S (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 24 Mar 2012 03:26:18 -0400
-Received: by wejx9 with SMTP id x9so3135640wej.19
-        for <git@vger.kernel.org>; Sat, 24 Mar 2012 00:26:17 -0700 (PDT)
+	id S1753963Ab2CXIAo convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 24 Mar 2012 04:00:44 -0400
+Received: from mail-yw0-f46.google.com ([209.85.213.46]:42688 "EHLO
+	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752687Ab2CXIAn convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 24 Mar 2012 04:00:43 -0400
+Received: by yhmm54 with SMTP id m54so3228830yhm.19
+        for <git@vger.kernel.org>; Sat, 24 Mar 2012 01:00:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=message-id:date:from:mime-version:to:cc:subject:references
-         :in-reply-to:content-type:content-transfer-encoding;
-        bh=mAclXkk6UJNf0NABhk5V078J/V4Llracme6Gjym1WTU=;
-        b=N5+Uias4HsKo2G7IWXobs193C9VCOxE17ILEvlGirN3musxOHpl9fsKJqkG52aS4cy
-         DNykPiJ/Ap6niq1fHDcLRuKLiQcNEeLlRGVnPWBLTXXT0WgV2Lzg4keccpJ3PIMFrW3t
-         MlVpEELacsD5PKXAxmVYZ7/GFNZAiKeRd1tbpsVaJaWnY4vN121pYMMArxF9V4zIwYFF
-         aocS1WpCel4XjfTTQ7MJyQ/x+L8RZn+pQBvX9L6KTXAvhwWQPUWYACvN94+709UCD+C8
-         mRChDyKyN70qoR3ZUpYa0ymrFpX68FXvCR6LVd394QM0XF78e8i3twrbScJc8GxcLDjF
-         gW+Q==
-Received: by 10.180.73.143 with SMTP id l15mr3136535wiv.11.1332573977352;
-        Sat, 24 Mar 2012 00:26:17 -0700 (PDT)
-Received: from [87.21.62.106] (host106-62-dynamic.21-87-r.retail.telecomitalia.it. [87.21.62.106])
-        by mx.google.com with ESMTPS id bx13sm20275838wib.10.2012.03.24.00.26.15
-        (version=SSLv3 cipher=OTHER);
-        Sat, 24 Mar 2012 00:26:16 -0700 (PDT)
-In-Reply-To: <7vr4wisyd9.fsf@alter.siamese.dyndns.org>
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=t8M6BBVpDVZQVgVzbFj4I86U544e/m71nTwCrYW8/oo=;
+        b=Pqf+/Y8PlR5KR1V//2KJi+DS/KdPF8rCCPlyIfeSRGzQpRaxPx3MqSQadd5dlH5BeB
+         g51t1+pHVVjymFpo3sfzWIq4PSqJy7DSK9w05EHIE0vCcvsUGUnf2SqtJRBEWQiKUbzI
+         WvLTDwnI8SALzmoNlJMu0IF9EtWkJupnZFsPBMgNkhWDU8wfJWt7ATOkoXboKVqWuuj1
+         t4AhWXRRCyxNleG3HIAe2xPF4iQ/PfixYfHasxWUka4YSLdRywIAH9RaA8OHaL6DamR/
+         4I5fHtIAsY4fAyHQo65giOtgvzpc8SM7HxZdOUdJIIK8VG+zQHpnj+3ncGrIrV73k5QO
+         bLZg==
+Received: by 10.236.134.211 with SMTP id s59mr15000857yhi.131.1332576042802;
+ Sat, 24 Mar 2012 01:00:42 -0700 (PDT)
+Received: by 10.147.143.4 with HTTP; Sat, 24 Mar 2012 01:00:42 -0700 (PDT)
+In-Reply-To: <87limu7hhi.fsf@smith.obbligato.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193819>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193820>
 
-[Dropping kernel list]
-
-Hi Junio.  Just a couple of nits regarding my change to configure ...
-
-On 03/24/2012 12:15 AM, Junio C Hamano wrote:
+On Tue, Mar 20, 2012 at 8:36 PM,  <greened@obbligato.org> wrote:
+> I've got the git-subtree merge in pretty good shape now. =C2=A0After =
+being
+> taught about TEST_DIRECTORY, I've been able to get rid of all of the
+> test system changes and can run the git-subtree tests using the stock
+> test infrastructure.
 >
->  * "configure" script learned to take "--sane-tool-path"
+> Before I can put the new tree up I need a little help. =C2=A0Since it=
+'s been
+> a while since I posted the last version of the tree, I tried to updat=
+e
+> from upstream master. =C2=A0git-subtree is in a separate branch (it w=
+qas
+> applied as a subtree merge) so I did the usual switch-to-master-and-p=
+ull
+> thing.
 >
-The option is "--with-sane-tool-path" actually.
-
->    from the command line to record SANE_TOOL_PATH (used to avoid broken
->    platform tools in /usr/bin) in config.mak-autogen.
+> However, now I don't know how to rebase from master to the subtree
+> branch. =C2=A0If I do a "git rebase master" then the subtree merge ge=
+ts
+> re-applied as if the files were placed in the root directory rather t=
+han
+> in the target directory of the original subtree merge.
 >
-And the configuration file generated by configure is "config.mak.autogen".
+> The problem is described pretty well here and the issue has been cove=
+red
+> on the mailing list before:
+>
+> http://groups.google.com/group/git-users/browse_thread/thread/d54bacd=
+234d95639
+> http://comments.gmane.org/gmane.comp.version-control.git/191934
+>
+> I can think of a few strategies to move forward.
+>
+> 1. Keep the git-subtree branch where it is. =C2=A0Don't rebase and ju=
+st push
+> =C2=A0 the branch to a public repository. =C2=A0Make Junio do the har=
+d work. =C2=A0:)
 
->    This may be useful
->    for people on Solaris who have saner tools outside /usr/xpg[46]/bin.
-> 
+Hehe, I'm pretty sure the option that involves Junio doing the least
+amount of work is the option to take ;-)
 
-Thanks,
-  Stefano
+
+
+> 2. Split the subtree merge, remove it from the git repository, rebase
+> =C2=A0 from master and then re-subtree-merge it.
+
+I don't know if git-gui or gitk maintainers have advice for you, but
+it sounds like this may be the best option, IMO.  git-subtree is not
+yet part of the git history.
+
+git is in a RC cycle right now, which is likely why you have not heard
+much on this topic (new feature).  Folks will be busy testing the RC
+and ensuring we have no regressions.
+
+Looking forward to git-subtree,
+--=20
+David
