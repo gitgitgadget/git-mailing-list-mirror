@@ -1,161 +1,180 @@
 From: chaitanyaa nalla <nallachaitu@gmail.com>
-Subject: Re: [RFH] SoC 2012 Guidelines
-Date: Sat, 24 Mar 2012 21:48:17 +0530
-Message-ID: <CACeyogeTep3WL0f=FDTzaN8osvKyYa0VLVZJWPgbfVCquEp4yg@mail.gmail.com>
-References: <201203241711.30270.jnareb@gmail.com>
+Subject: Re: GSoC idea: adding JavaScript library / framework in gitweb
+Date: Sat, 24 Mar 2012 22:18:03 +0530
+Message-ID: <CACeyogdUg4QnHjkYM5sKXJ7Wm9rOGgmhNrhqQxnrv24N530cVg@mail.gmail.com>
+References: <CACeyogcFJoUyAiTReDJK_nCMGBp+23OjcS407A1X=fqFR+aGag@mail.gmail.com>
+	<201203241417.10478.jnareb@gmail.com>
+	<CACeyoge7_=aigOnJiXvp=SfVaBVO+4Or_x7Jcnmw-3pj8+VtoA@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Shawn Pearce <spearce@spearce.org>
+Cc: git@vger.kernel.org
 To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Mar 24 17:18:52 2012
+X-From: git-owner@vger.kernel.org Sat Mar 24 17:48:13 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SBTg2-0006Vc-CD
-	for gcvg-git-2@plane.gmane.org; Sat, 24 Mar 2012 17:18:50 +0100
+	id 1SBU8S-0003Jk-2k
+	for gcvg-git-2@plane.gmane.org; Sat, 24 Mar 2012 17:48:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754318Ab2CXQST convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 24 Mar 2012 12:18:19 -0400
-Received: from mail-ob0-f174.google.com ([209.85.214.174]:33431 "EHLO
+	id S1755063Ab2CXQsG convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 24 Mar 2012 12:48:06 -0400
+Received: from mail-ob0-f174.google.com ([209.85.214.174]:41501 "EHLO
 	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752815Ab2CXQSS convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 24 Mar 2012 12:18:18 -0400
-Received: by obbeh20 with SMTP id eh20so3410460obb.19
-        for <git@vger.kernel.org>; Sat, 24 Mar 2012 09:18:17 -0700 (PDT)
+	with ESMTP id S1755065Ab2CXQsE convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 24 Mar 2012 12:48:04 -0400
+Received: by obbeh20 with SMTP id eh20so3430956obb.19
+        for <git@vger.kernel.org>; Sat, 24 Mar 2012 09:48:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type:content-transfer-encoding;
-        bh=zcXNMzRiQ2Tfui+E0O6O/yRboyoZfywdCSL9x1nzbnw=;
-        b=jZm4xO9UUBymNwZdH0cQbtLboAcSUJHJCDdb01Oqwc6U6BAh093rQ9w0JGJWpEMr0n
-         oPjbbHJ/lPGMJXQBrFCinGgtGJBPVwbMuwIB3hYyyd0Uzi3iqTR+Bt/eDalMGu/qjmpr
-         dIK2D01VqRbDwTKlGzq4Junxm1hSqkocBkfS5S0GZC2xf+p90GIaQgI19IcaJxv8Zzxc
-         gbR9/TuDXHE034Peesazp2XySRbEqlKq6vWISHJMgJvCzo7ESi7YC9Gyfu4//X3muPzm
-         PnaMv9W6RsU0ZUnILrlCWr7fSibpg+aJYqF9dTNZ1re13Hk+fnlc+ad7KPQjPsFo9IS2
-         e/RA==
-Received: by 10.182.188.38 with SMTP id fx6mr10084990obc.77.1332605897560;
- Sat, 24 Mar 2012 09:18:17 -0700 (PDT)
-Received: by 10.182.39.234 with HTTP; Sat, 24 Mar 2012 09:18:17 -0700 (PDT)
-In-Reply-To: <201203241711.30270.jnareb@gmail.com>
+        bh=LAmLqG6z+JGXQN8I9B2vbIV/QOAQqP1ogw0vcqFjQgc=;
+        b=hQNOnr1g6xYz0Utk5i81DeKA3rvQ5tRj1s666qh4sJ2BfyvlrmGBxX4LATeq4ZXzji
+         pnriBZ/Mg6CLMIBGth08z+HGsJbUTY0MRanMlZEjczJi78H4SWt0BFtdpeFpsF/KXPhN
+         R7OZGcOBrW0Z6y3ZlarphoxYL7iyK20OntxyyxNrUSrOdh55fkNu5n/lhfsdO7VfbhGo
+         48L/jTG2mUTp5i3Xvh6TDbX2+3ddmGLxJ0zdrH5cth7uzl2t4x5oWEOiYck8BCTKWcZA
+         XRJ+0WObWhtYOXDGfudBmUY7CyjU135TnTdrLAdIJLOVdc26GY0IlfTNAnrgHxcSBKkG
+         qIPQ==
+Received: by 10.182.188.38 with SMTP id fx6mr10172170obc.77.1332607683891;
+ Sat, 24 Mar 2012 09:48:03 -0700 (PDT)
+Received: by 10.182.39.234 with HTTP; Sat, 24 Mar 2012 09:48:03 -0700 (PDT)
+In-Reply-To: <CACeyoge7_=aigOnJiXvp=SfVaBVO+4Or_x7Jcnmw-3pj8+VtoA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193831>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193832>
 
-Those are very good ideas and everyone should think about implementing =
-these :).
+ok,  first i will think and come up with good ideas and then ask you
+about your suggestions :)
 
-On Sat, Mar 24, 2012 at 9:41 PM, Jakub Narebski <jnareb@gmail.com> wrot=
-e:
-> First, I'd like to thank Jeff King for creating and hosting GSoC wiki
-> pages for Git. =A0Without his initiative, and even more his volunteer=
-ing
-> to be GSoC Git organizator we (as the Git Development Community)
-> wouldn't be in Google Summer of Code 2012.
+On Sat, Mar 24, 2012 at 9:39 PM, chaitanyaa nalla <nallachaitu@gmail.co=
+m> wrote:
+> Dear Jakub ,
 >
-> The https://github.com/peff/git/wiki/ includes the following pages:
+> =A0could you please suggest any other ideas or features so that i can
+> think upon them and come up with further good ideas.
 >
-> * "SoC 2012 Application", which should probably be renamed to
-> =A0"SoC 2012 Organization Application"; it was here to help (crowd)cr=
-aft
-> =A0organization application.
->
-> * "SoC 2012 Template", which perhaps should be better named
-> =A0"SoC 2012 Student Application Template"; it is here for prospectiv=
-e
-> =A0(would-be) student to help craft better project application.
->
-> * "SoC 2012 Ideas", to gather ideas for GSoC project from Git develop=
-ers
-> =A0and others, as _example_ ideas for students applications.
->
-> =A0We really should have more ideas, as it looks like students would =
-be
-> =A0battling for a few projects (I think there are two would-be studen=
-ts
-> =A0for any proposed project). =A0Well, too late now.
->
-> I'd really like to see blue-sky proposals not mentioned on ideas list=
+> On Sat, Mar 24, 2012 at 6:47 PM, Jakub Narebski <jnareb@gmail.com> wr=
+ote:
+>> On Sat, 24 Mar 2012, Chaitanyaa Nalla wrote:
+>>
+>>> Hello everyone,
+>>>
+>>> =A0I am Chaitanya Nalla, a final year undergraduate student from In=
+dia and I
+>>> am pretty much interested in doing the project "Adding javascript l=
+ibrary /
+>>> framework in gitweb" suggested by respected Jakub. =A0I have good e=
+xperience
+>>> in javascript libraries like jQuery, Dojo etc. As per the goals of =
+the
+>>> project I will use the efficient, concise, cross browser compatible
+>>> frameworks where ever needed.
+>>
+>> JavaScript library / framework is required not only to cover differe=
+nces
+>> between web browsers in DOM manipulation, event handling and Ajax wi=
+th
+>> XmlHttpRequest, but also add features which are still[1] lacking fro=
+m
+>> JavaScript such as handling cookies, formatting strings, date manipu=
+lation,
+>> etc.
+>>
+>> Currently gitweb uses hand-crafted micro-library in `gitweb/static/j=
+s/lib/`
+>> Using existing JavaScript library, be it jQuery (most popular), Dojo=
 ,
-> or at least greatly expanded on proposed ideas.
->
-> When students proposals would get accepted at April 23, there would
-> be created "SoC 2012 Projects", listing accepted projects and hopeful=
-ly
-> tracking their status. =A0I guess we would try to list git-related GS=
-oC
-> projects from other organizations, like in previous years.
->
->
-> What is lacking (for me) is something like "SoC 2012 Guidelines" wiki
-> page, which would gather guidelines and suggestions both for mentors
-> and for students.
->
-> One can find some information buried in GSoC FAQ:
->
-> http://www.google-melange.com/gsoc/document/show/gsoc_program/google/=
-gsoc2012/faqs
->
-> It would be nice however to have it extracted and make easier to find=
-=2E
->
-> This page could also serve to gather organization-specific requiremen=
-ts,
-> for example:
->
-> * That the discussion of GSoC project application ideas with mentorin=
+>> MooTools or YUI (probably too much for gitweb) will give us, as you =
+said,
+>> well tested code, and new abilities like client-side sorting of tabl=
+es
+>> which we would be able to use in further work.
+>>
+>> [1] http://www.nczonline.net/blog/2011/10/03/when-web-standards-fail=
+-us/
+>>
+>>> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0Also=
+ I am planning to create a local library
+>>> version with support for configuration and a good documentation.
+>>
+>> I don't quite understand what you mean here. =A0The JavaScript code =
+specific
+>> to gitweb would have to be modified to use chosen JavaScript library=
+, but
+>> I wouldn't say it is "local library". =A0I'd rather we use stock Jav=
+aScript
+>> library, which would allow us to leverage existing CDNs like (for jQ=
+uery)
+>>
+>> =A0http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js
+>> =A0http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.2.min.js
+>> =A0http://code.jquery.com/jquery-1.7.2.min.js
+>>
+>> We probably would ultimately need to be able to serve local fallback=
+ copy
+>> (but this might be out of scope of GSoC project).
+>>
+>> This gitweb-specific JavaScript code (files in `gitweb/static/js/`)
+>> is IMVHO quite well documented using JSDoc.
+>>
+>>> Using the DOM features of JavaScript and traversing the whole docum=
+ent
+>>> object is quite cubersome and error prone, so I want to replace the=
+m using
+>>> well tested libraries that are cross browser compatible.
+>>
+>> I think there is missing "using hand-crafted code" in this sentence
+>> to make it sense.
+>>
+>>>
+>>> Emulating onprogress in XMLHttpRequest :
+>>>
+>>> jQuery and YUI provide only statuses success and error.
+>>
+>> Right.
+>>
+>>> Even MooTools provide progress but are constrained to some browers
+>>> only.
+>>
+>> To be more exact MooTools support 'onprogress' event handler only if
+>> web browser supports it. =A0Not all do (e.g. older browsers), that i=
+s why
+>> there is need for emulation using timers.
+>>
+>>> It can be handled by using $.ajax Transport utility .
+>>
+>> You mean in jQuery here, isn't it? =A0It would be a bit different, I=
+ think,
+>> in MooTools or YUI.
+>>
+>> C.f. http://stackoverflow.com/questions/5652229/javascript-framework=
+-with-or-easily-extendable-with-support-for-xmlhttprequest
+>>
+>>> I will also take care progressive enhancement, by carefully impleme=
+nting the
+>>> basic functionality of the gitweb so that what ever may be the brow=
+ser
+>>> version and type, internet connection the basic functionality will =
+not
+>>> disrupted.
+>>
+>> Errr... "progressive enhancement" is about using client-side scripti=
+ng
+>> in such way, that even if web browser doesn't support JavaScript
+>> (e.g. text browsers such as lynx, elinks or w3m), or has JavaScript
+>> turned off or blocked, we would get a basic functionality.
+>>
+>> Note also that "progressive enhancement" part applies only to writin=
 g
-> =A0organization (i.e. with us) should take place in the open, here on=
- git
-> =A0mailing list, git@vger.kernel.org.
->
-> * That each student should examine relevant parts of existing git cod=
-e,
-> =A0read SubmittingPatches and Coding Guidelines, and at least lurk (r=
-ead)
-> =A0on git mailing list during the Community Bonding Period (e.g. via
-> =A0GMane; I don't think we should require subscribing to git mailing
-> =A0list).
->
-> * That for each project there should be created a public git reposito=
-ry
-> =A0on one of git hosting sites like repo.or.cz, Gitorious or GitHub.
->
-> * How often students (and/or mentors) should send updates about statu=
-s
-> =A0of a project (once per week perhaps?), and what should those
-> =A0announcements include.
->
->
-> And to gather help:
->
-> * There should be some information about what parts of discussion and
-> =A0work should take place in private communication between student an=
-d
-> =A0mentor, and how much should it take place in public, on git mailin=
-g
-> =A0list.
->
-> * How can and how should mentors help students.
->
-> * How to make use of comments on patches (or design ideas), while not
-> =A0getting bogged down in "bikeshed"-ding :-)
->
-> * Perhaps also some advice from successfull students to students,
-> =A0and from mentors to mentors.
->
->
-> [I was neither GSoC student, or GSoC mentor.]
->
-> --
-> Jakub Narebski
-> Poland
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at =A0http://vger.kernel.org/majordomo-info.html
+>> new features, and this is strictly 'as time permits' part, I think.
+>> But I thin that you would need to lay more complete proposal, i.e.
+>> what features are you planning to add.
+>>
+>> --
+>> Jakub Narebski
+>> Poland
