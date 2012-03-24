@@ -1,79 +1,67 @@
-From: Neil Horman <nhorman@tuxdriver.com>
-Subject: Re: odd behavior with git-rebase
-Date: Sat, 24 Mar 2012 12:55:36 -0400
-Message-ID: <20120324165536.GA17932@neilslaptop.think-freely.org>
-References: <20120323185205.GA11916@hmsreliant.think-freely.org>
- <7vvclvrrad.fsf@alter.siamese.dyndns.org>
+From: greened@obbligato.org
+Subject: Not a git repository: '.'
+Date: Sat, 24 Mar 2012 12:26:09 -0500
+Message-ID: <87r4wh6hce.fsf@smith.obbligato.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Mar 24 17:55:54 2012
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Mar 24 18:29:46 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SBUFs-0000hr-OH
-	for gcvg-git-2@plane.gmane.org; Sat, 24 Mar 2012 17:55:53 +0100
+	id 1SBUmf-0000cn-M2
+	for gcvg-git-2@plane.gmane.org; Sat, 24 Mar 2012 18:29:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755375Ab2CXQzr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 24 Mar 2012 12:55:47 -0400
-Received: from charlotte.tuxdriver.com ([70.61.120.58]:48557 "EHLO
-	smtp.tuxdriver.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755317Ab2CXQzq (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 24 Mar 2012 12:55:46 -0400
-Received: from neilslaptop.think-freely.org ([2001:470:8:a08:4a5d:60ff:fe96:79da] helo=localhost)
-	by smtp.tuxdriver.com with esmtpsa (TLSv1:AES128-SHA:128)
-	(Exim 4.63)
-	(envelope-from <nhorman@tuxdriver.com>)
-	id 1SBUFg-0000cq-5J; Sat, 24 Mar 2012 12:55:42 -0400
-Content-Disposition: inline
-In-Reply-To: <7vvclvrrad.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-X-Spam-Score: -2.9 (--)
-X-Spam-Status: No
+	id S1754952Ab2CXR3l (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 24 Mar 2012 13:29:41 -0400
+Received: from li209-253.members.linode.com ([173.255.199.253]:35996 "EHLO
+	johnson.obbligato.org" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1754310Ab2CXR3k (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 24 Mar 2012 13:29:40 -0400
+Received: from c-75-73-20-8.hsd1.mn.comcast.net ([75.73.20.8] helo=smith.obbligato.org)
+	by johnson.obbligato.org with esmtpsa (TLS1.2:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.77)
+	(envelope-from <greened@obbligato.org>)
+	id 1SBR3F-0006yk-1o
+	for git@vger.kernel.org; Sat, 24 Mar 2012 08:30:37 -0500
+X-Filter-Spam-Score: ()
+X-Filter-Spam-Report: Spam detection software, running on the system "johnson.obbligato.org", has
+ identified this incoming email as possible spam.  The original message
+ has been attached to this so you can view it (if it isn't spam) or label
+ similar future email.  If you have any questions, see
+ @@CONTACT_ADDRESS@@ for details.
+ Content preview:  I have a post-receive hook set up that does the following
+   when something is pushed to a repository. - Change directory to another non-bare
+    repository - Do 'git status' I get this error from the original git push:
+    [...] 
+ Content analysis details:   (1.4 points, 5.0 required)
+  pts rule name              description
+ ---- ---------------------- --------------------------------------------------
+ -1.0 ALL_TRUSTED            Passed through trusted hosts only via SMTP
+  2.4 DATE_IN_FUTURE_03_06   Date: is 3 to 6 hours after Received: d 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193833>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193834>
 
-On Fri, Mar 23, 2012 at 01:33:30PM -0700, Junio C Hamano wrote:
-> Neil Horman <nhorman@tuxdriver.com> writes:
-> 
-> > I know that git cherry-pick allows for picking of empty commits, and it appears
-> > the rebase script uses cherry-picking significantly, so I'm not sure why this
-> > isn't working, or if its explicitly prevented from working for some reason.
-> 
-> The primary purpose of "rebase" is (or at least was when it was conceived)
-> to clean up the existing history, and a part of the cleaning up is not to
-I can understand that, although IMHO it seems equally usefull as a tool for
-simply doing what its name implies, moving a history to a new starting point,
-e.g. to plainly rebase it.  Thats the use that I have for it anyway.
+I have a post-receive hook set up that does the following when something
+is pushed to a repository.
 
-> replay a patch that ends up being empty.  Even though we try to omit an
-> already applied patch by using "git cherry" internally when choosing which
-> commits to replay, a commit that by itself is *not* empty could end up
-> being empty when a similar change has already been made to the updated
-> base, and we do want to omit them.
-> 
-Is there a way to differentiate a commit that is made empty as the result of a
-previous patch in the rebase, and a commit that is simply empty?
+- Change directory to another non-bare repository
+- Do 'git status'
 
-> A commit that is empty (i.e. --allow-empty) by itself was a much later
-> invention than the basic rebase logic, and the rebase may want to be
-> updated to special case it, but as the default behaviour it is doing the
-> right thing by not letting an empty commit into the cleaned up history.
-I agree, I think perhaps adding an --allow-empty option to the rebase logic, so
-that empty commits (or perhaps just initially empty, as opposed to commits made
-empty) would be very beneficial.  
+I get this error from the original git push:
 
-Thanks all, I'll start trying to pick through the rebase logic this week.
+remote: fatal: Not a git repository: '.'
 
-Best
-Neil
+Debug output tells me I am in the correct directory when attempting the
+status check.  This directory is a full git workarea (i.e. not a bare
+repository).
 
-> 
-> 
-> 
+Any idea what git is complaining about?  I can log on to the server and
+do 'git status' in the target directory and everything is fine.
+
+                            -Dave
