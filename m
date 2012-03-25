@@ -1,91 +1,105 @@
-From: Ivan Todoroski <grnch_lists@gmx.net>
-Subject: Re: Clone fails on a repo with too many heads/tags
-Date: Sun, 25 Mar 2012 19:54:19 +0200
-Message-ID: <4F6F5BCB.9050406@gmx.net>
-References: <20120318190659.GA24829@sigill.intra.peff.net> <CACsJy8BNT-dY+wDONY_TgLnv0135RZ-47BEVMzX6c3ddH=83Zw@mail.gmail.com> <20120319024436.GB10426@sigill.intra.peff.net> <4F69B5F0.2060605@gmx.net> <CAJo=hJu0H5wfXB_y5XQ6=S0VJ9t4pxHWkuy_=rehJL_6psf00g@mail.gmail.com> <20120321171423.GA13140@sigill.intra.peff.net> <4F6A33C5.2080909@gmx.net> <20120321201722.GA15021@sigill.intra.peff.net> <4F6E3373.7090500@gmx.net> <20120325010609.GB27651@sigill.intra.peff.net> <20120325023215.GA13958@sigill.intra.peff.net> <4F6F56D5.3000309@gmx.net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: GSoC idea: adding JavaScript library / framework in gitweb
+Date: Sun, 25 Mar 2012 18:55:19 +0100
+Message-ID: <201203251955.21454.jnareb@gmail.com>
+References: <CACeyogcFJoUyAiTReDJK_nCMGBp+23OjcS407A1X=fqFR+aGag@mail.gmail.com> <201203241949.04956.jnareb@gmail.com> <CACeyogdkEdkYa+SQvUq50FU5P7ohq-tLf8tgi1v6o_HMM5bSsg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain;
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-Cc: Shawn Pearce <spearce@spearce.org>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sun Mar 25 19:54:05 2012
+Cc: git@vger.kernel.org
+To: chaitanyaa nalla <nallachaitu@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Mar 25 19:55:35 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SBrdi-0001zm-Be
-	for gcvg-git-2@plane.gmane.org; Sun, 25 Mar 2012 19:54:02 +0200
+	id 1SBrfA-0002pa-O0
+	for gcvg-git-2@plane.gmane.org; Sun, 25 Mar 2012 19:55:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756692Ab2CYRx5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 25 Mar 2012 13:53:57 -0400
-Received: from mailout-de.gmx.net ([213.165.64.23]:38318 "HELO
-	mailout-de.gmx.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with SMTP id S1756601Ab2CYRx5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 25 Mar 2012 13:53:57 -0400
-Received: (qmail invoked by alias); 25 Mar 2012 17:53:55 -0000
-Received: from unknown (EHLO [127.0.0.1]) [77.28.173.43]
-  by mail.gmx.net (mp027) with SMTP; 25 Mar 2012 19:53:55 +0200
-X-Authenticated: #14478976
-X-Provags-ID: V01U2FsdGVkX19+4st8bnF+3hwL1OK9fRW3UMlimVS6TDAqsydoZf
-	4ewgWvJIfgC/iS
-User-Agent: Thunderbird 2.0.0.24 (Windows/20100228)
-In-Reply-To: <4F6F56D5.3000309@gmx.net>
-X-Y-GMX-Trusted: 0
+	id S1756712Ab2CYRz1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 25 Mar 2012 13:55:27 -0400
+Received: from mail-wi0-f172.google.com ([209.85.212.172]:48856 "EHLO
+	mail-wi0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756704Ab2CYRz1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 25 Mar 2012 13:55:27 -0400
+Received: by wibhj6 with SMTP id hj6so3590517wib.1
+        for <git@vger.kernel.org>; Sun, 25 Mar 2012 10:55:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        bh=rvrugVag6ufwsHPiQrHs4FkbWWS9Du3vJ72alMMcfhQ=;
+        b=w3ZmF6lpkdF0HBvhVo9tChsTtXBGjYYOSPlmf0SeTXknQN4zn1kD/Mu5IWuXzXasDL
+         POAv9vdu8FwlkDuVVAjq7QLP1FFTQuT+62krlkYIdm50+aB+zdFjQvNvyYunGuIHyeg4
+         HGQv6jAbJ+HJLY0Yjm3JlJmdXtQ6h2xrw1fhHZxwpR2xHpd3jFogre2T8Hd/4uAW4nU0
+         Iuun1coqgC4zt0XArZccC7yIuUP44ydxa2eiARB1+TWufJ9LynfDn0xMN1iwHo6RZ29a
+         R/fpfG0gMma74yDiX8haQ0x6wDT8kLKWxHo5wKfTNvdv57QSJ9S+pfAmNaFHXSsNQbAm
+         rRxQ==
+Received: by 10.216.132.169 with SMTP id o41mr10853116wei.121.1332698125654;
+        Sun, 25 Mar 2012 10:55:25 -0700 (PDT)
+Received: from [192.168.1.13] (addd160.neoplus.adsl.tpnet.pl. [79.184.55.160])
+        by mx.google.com with ESMTPS id n8sm55439490wix.10.2012.03.25.10.55.24
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sun, 25 Mar 2012 10:55:25 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <CACeyogdkEdkYa+SQvUq50FU5P7ohq-tLf8tgi1v6o_HMM5bSsg@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193878>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193879>
 
-On 25.03.2012 19:33, Ivan Todoroski wrote:
-> On 25.03.2012 04:32, Jeff King wrote:
->> On Sat, Mar 24, 2012 at 09:06:09PM -0400, Jeff King wrote:
->>
->>> That's weird. 405 is "Method Not Allowed". Clone shouldn't be doing
->>> anything more exotic than GET and POST. And the prior tests pass, so it
->>> means that it's working in general. The only thing different about this
->>> test is that apache is configured to use mod_rewrite to issue a
->>> redirect.
->>>
->>> Does your machine have mod_rewrite installed and enabled? I would think
->>> apache would complain at startup if it wasn't.  I wonder if there's
->>> something non-portable in the minimal apache config we ship.
->>>
->>> Does httpd/error.log in the trash directory say anything interesting?
->>
->> Also, does it work any better with this patch?
->>
->> diff --git a/t/lib-httpd/apache.conf b/t/lib-httpd/apache.conf
->> index 3c12b05..714760d 100644
->> --- a/t/lib-httpd/apache.conf
->> +++ b/t/lib-httpd/apache.conf
->> @@ -61,9 +61,8 @@ ScriptAlias /smart_noexport/ 
->> ${GIT_EXEC_PATH}/git-http-backend/
->>      Options ExecCGI
->>  </Files>
->>  
->> -RewriteEngine on
->> -RewriteRule ^/smart-redir-perm/(.*)$ /smart/$1 [R=301]
->> -RewriteRule ^/smart-redir-temp/(.*)$ /smart/$1 [R=302]
->> +RedirectMatch 301 ^/smart-redir-perm/(.*)$ /smart/$1
->> +RedirectMatch 302 ^/smart-redir-temp/(.*)$ /smart/$1
->>  
->>  <IfDefine SSL>
->>  LoadModule ssl_module modules/mod_ssl.so
+On Sun, 25 Mar 2012, chaitanyaa nalla wrote:
+
+> Dear Jakub,
 > 
+> if we handle the sorting of the tables on the client side itself,
+> will that be a  load on the browser?
+
+Well, if it turns out to be too heavy a load, we can use the same trick
+of "timed array processing":
+
+  http://www.nczonline.net/blog/2009/08/11/timed-array-processing-in-javascript/
+
+See for example this page to see sorttable in action:
+
+  http://en.wikipedia.org/wiki/Comparison_of_open_source_software_hosting_facilities
+
+> Other ideas which I have in mind are
 > 
-> Yes! That patch did it, t5551-http-fetch.sh now passes fully. Thank you.
+> 1. Highligting matched portions of project name while searching the
+>    project name, even more intuitively
 
-Ah, no... I spoke too soon.
+You probably couldn't have known that match highlighting in project
+search is done on server side by gitweb.cgi since commit 6759f95
+(Merge branch 'jn/gitweb-hilite-regions', 2012-03-04):
 
-I didn't look closely enough, I wasn't logged in at the right machine, 
-sorry. :)
+  gitweb: Highlight matched part of shortened project description
+  gitweb: Highlight matched part of project description when searching projects
+  gitweb: Highlight matched part of project name when searching projects
 
-It's still failing on CentOS 5.8 with Apache 2.2.3. I will just find 
-another machine where the test suite works.
+It is not used by either git.kernel.org or repo.or.cz because it is
+too fresh (it is to be in yet to be released v1.7.10).
 
-If you'd still like to debug the problem on CentOS 5.8 I can run any 
-commands or test any patches for you.
+> 2. project pagination.
+
+Is there any sense in pagination on client side?  Unless you turn it into
+lazy loading / loading on demand Ajax-y pagination...
+
+
+Yet another idea is to implement creating side-by-side diff from unified
+diff in JavaScript, so that swicthing between unified and side-by-side
+diff view could be done entirely client-side, without hitting the server.
+
+
+Note however that I think that it wouldn't be possible in time given to
+implement all those ideas.  You need to select those of them that you
+will put in project application.
+
+-- 
+Jakub Narebski
+Poland
