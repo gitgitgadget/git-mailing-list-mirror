@@ -1,91 +1,111 @@
-From: Ivan Todoroski <grnch_lists@gmx.net>
-Subject: Re: Clone fails on a repo with too many heads/tags
-Date: Sun, 25 Mar 2012 17:30:04 +0200
-Message-ID: <4F6F39FC.2070801@gmx.net>
-References: <m3fwd550j3.fsf@localhost.localdomain> <20120318190659.GA24829@sigill.intra.peff.net> <CACsJy8BNT-dY+wDONY_TgLnv0135RZ-47BEVMzX6c3ddH=83Zw@mail.gmail.com> <20120319024436.GB10426@sigill.intra.peff.net> <4F69B5F0.2060605@gmx.net> <CAJo=hJu0H5wfXB_y5XQ6=S0VJ9t4pxHWkuy_=rehJL_6psf00g@mail.gmail.com> <20120321171423.GA13140@sigill.intra.peff.net> <4F6A33C5.2080909@gmx.net> <20120321201722.GA15021@sigill.intra.peff.net> <4F6E3373.7090500@gmx.net> <20120325010609.GB27651@sigill.intra.peff.net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [RFH] SoC 2012 Guidelines
+Date: Sun, 25 Mar 2012 16:45:47 +0100
+Message-ID: <201203251745.48858.jnareb@gmail.com>
+References: <201203241711.30270.jnareb@gmail.com> <CALUzUxrZibRf5ERgM7QAxsP4QDNZj-RvuLLh0bW5mqMWQnDcig@mail.gmail.com> <4F6F3286.5040803@andrewalker.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Shawn Pearce <spearce@spearce.org>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sun Mar 25 17:29:51 2012
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Tay Ray Chuan <rctay89@gmail.com>, git@vger.kernel.org,
+	Jeff King <peff@peff.net>, Shawn Pearce <spearce@spearce.org>
+To: =?iso-8859-1?q?Andr=E9_Walker?= <andre@andrewalker.net>
+X-From: git-owner@vger.kernel.org Sun Mar 25 17:46:25 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SBpO9-00073H-07
-	for gcvg-git-2@plane.gmane.org; Sun, 25 Mar 2012 17:29:49 +0200
+	id 1SBpeC-0000D0-Kr
+	for gcvg-git-2@plane.gmane.org; Sun, 25 Mar 2012 17:46:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756368Ab2CYP3o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 25 Mar 2012 11:29:44 -0400
-Received: from mailout-de.gmx.net ([213.165.64.22]:34352 "HELO
-	mailout-de.gmx.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with SMTP id S1756285Ab2CYP3n (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 25 Mar 2012 11:29:43 -0400
-Received: (qmail invoked by alias); 25 Mar 2012 15:29:41 -0000
-Received: from unknown (EHLO [127.0.0.1]) [77.28.166.17]
-  by mail.gmx.net (mp010) with SMTP; 25 Mar 2012 17:29:41 +0200
-X-Authenticated: #14478976
-X-Provags-ID: V01U2FsdGVkX1/949ghyEL9QxR2kNnqUkM4ajkayzRuDOMgqRboyY
-	pQPF2EULr3KMQl
-User-Agent: Thunderbird 2.0.0.24 (Windows/20100228)
-In-Reply-To: <20120325010609.GB27651@sigill.intra.peff.net>
-X-Y-GMX-Trusted: 0
+	id S1756500Ab2CYPpx convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 25 Mar 2012 11:45:53 -0400
+Received: from mail-we0-f174.google.com ([74.125.82.174]:43834 "EHLO
+	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756486Ab2CYPpw (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 25 Mar 2012 11:45:52 -0400
+Received: by wejx9 with SMTP id x9so3688348wej.19
+        for <git@vger.kernel.org>; Sun, 25 Mar 2012 08:45:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        bh=EtcFjgdjLUiavMWEtd7O9fcDlsMrssaQWTYJ/er48Sk=;
+        b=dpUtAyDorWZ+sscgeRGTF9w6aEfrAEnbokzEPvEhPeWihkkTtCl2RNAEwlO6HnVD/I
+         RJtw7aSdSh6oQaEcbdBsB59vd7sMHof4yWoGA49kuxzoxomWawTZ56EmyoQNAkE15iX4
+         z/qyDLxRQ3hkvm60oSC2UnYLoqOFfgf94tNtutztGAPDycdTMrd2Bf/dn3DoZY/JjScQ
+         4dW1WIq+e1br+x3oeprr40eZ73JwVi+6DUEW0xnJLrSPU2hocXRgLYKs2ZLw/Z653wtE
+         L3h3DA4JnTvoycQVPOriamN70p2HWg2WRWyU/DCY7qqppAg0dMBU7N8Ys88Im9Ud7IC5
+         t/Fg==
+Received: by 10.216.134.24 with SMTP id r24mr10575391wei.84.1332690351132;
+        Sun, 25 Mar 2012 08:45:51 -0700 (PDT)
+Received: from [192.168.1.13] (addd160.neoplus.adsl.tpnet.pl. [79.184.55.160])
+        by mx.google.com with ESMTPS id l5sm32848925wia.11.2012.03.25.08.45.49
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sun, 25 Mar 2012 08:45:50 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <4F6F3286.5040803@andrewalker.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193870>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193871>
 
-On 25.03.2012 03:06, Jeff King wrote:
-> On Sat, Mar 24, 2012 at 09:49:55PM +0100, Ivan Todoroski wrote:
-> 
->> Is it failing for anyone else on the vanilla "maint" branch? I would
->> appreciate any help I could get here.
-> 
-> No, it passes fine here (Debian unstable).
+Andr=E9 Walker wrote:
+> On 03/25/2012 03:19 AM, Tay Ray Chuan wrote:
+> > 2012/3/25 Jakub Narebski<jnareb@gmail.com>:
+> >
+> > >   We really should have more ideas, as it looks like students wou=
+ld be
+> > >   battling for a few projects (I think there are two would-be stu=
+dents
+> > >   for any proposed project).  Well, too late now.
+>
+> Right. But would there be room for every student anyhow? Or, at least=
+,=20
+> would there be room for more students if there were more ideas / proj=
+ects?
 
-OK, thanks for checking, it's good to know.
+I don't know the details of how decision is made on how many project
+slots a GSoC organization will get, but in earlier GSoC (see Git Wiki)
+we get 2 to 6 projects (IIRC).
 
+One limitation is number of possible mentors.
+=20
+> > Looking through the ideas page on the wiki, it's not that we don't
+> > have enough ideas, it's just that students are all "clustering" aro=
+und
+> > a few proposals (or just one, to be exact).
+>
+> Which proposal (or proposals) is that?
 
-> Does your machine have mod_rewrite installed and enabled? I would think
-> apache would complain at startup if it wasn't.  I wonder if there's
-> something non-portable in the minimal apache config we ship.
+"Improving parallelism in various commands" (3-4 proposals), "Designing
+a faster index format" (2-3 proposals), "Remote helper for Subversion"
+(this has 1 proposal I think), "Modernizing and expanding Git.pm"
+(2 proposals), "Use JavaScript library / framework in gitweb"
+(2 proposals), 'Complete "Linus's ultimate content tracking tool"'
+(0.5 proposal).
 
-Looks like it comes by default with the RPM. Maybe the Apache version is 
-too old?
+That is from what I remember, and from public and not so public info
+I have available.  There might be dragons^W errors.
+=20
+> > I wonder if they are aware of this, given that they most probably
+> > aren't subscribed to the list and thus wouldn't see "competing"
+> > proposals.
+>
+> Yes, at least I'm aware :) But I think it would be good to everybody =
+if=20
+> we could manage to get us students to talk and pick one different=20
+> proposal each, specially if there is a possibility to get more people=
+ to=20
+> participate in GSoC for Git.
 
-$ rpm -q httpd
-httpd-2.2.3-63.el5.centos.1
+BTW. according to Google Summer of Code FAQ there can be more than one
+student working on the same project.  Though IIRC it never happened in
+history of Git participation in GSoC, isn't it?
 
-$ rpm -ql httpd | grep rewrite
-/usr/lib64/httpd/modules/mod_rewrite.so
-
-$ ls -l /usr/lib64/httpd/modules/mod_rewrite.so
--rwxr-xr-x 1 root root 60384 Feb 23 19:23 
-/usr/lib64/httpd/modules/mod_rewrite.so
-
-$ ls -l trash\ directory.t5551-http-fetch/httpd/modules/mod_rewrite.so
--rwxr-xr-x 1 root root 60384 Feb 23 19:23 trash 
-directory.t5551-http-fetch/httpd/modules/mod_rewrite.so
-
-
-Also, mod_rewrite is enabled in both the master config file 
-/etc/httpd/conf/httpd.conf, as well as the minimal 
-git/t/lib-httpd/apache.conf.
-
-
-> Does httpd/error.log in the trash directory say anything interesting?
-
-Nothing, it just gives the startup and shutdown message:
-
-$ cat trash\ directory.t5551-http-fetch/httpd/error.log
-[Sun Mar 25 15:27:12 2012] [notice] Apache/2.2.3 (CentOS) configured -- 
-resuming normal operations
-[Sun Mar 25 15:27:12 2012] [notice] caught SIGTERM, shutting down
-
-
-I will try your patch from the other message a bit later and let you know.
+--=20
+Jakub Narebski
+Poland
