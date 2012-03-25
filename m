@@ -1,111 +1,78 @@
-From: chaitanyaa nalla <nallachaitu@gmail.com>
-Subject: Re: GSoC idea: adding JavaScript library / framework in gitweb
-Date: Sun, 25 Mar 2012 14:01:57 +0530
-Message-ID: <CACeyogdkEdkYa+SQvUq50FU5P7ohq-tLf8tgi1v6o_HMM5bSsg@mail.gmail.com>
-References: <CACeyogcFJoUyAiTReDJK_nCMGBp+23OjcS407A1X=fqFR+aGag@mail.gmail.com>
-	<201203241417.10478.jnareb@gmail.com>
-	<CACeyoge7_=aigOnJiXvp=SfVaBVO+4Or_x7Jcnmw-3pj8+VtoA@mail.gmail.com>
-	<201203241949.04956.jnareb@gmail.com>
+From: Ivan Todoroski <grnch_lists@gmx.net>
+Subject: Re: [PATCH/RFC 1/2] fetch-pack: new option to read refs from stdin
+Date: Sun, 25 Mar 2012 11:39:46 +0200
+Message-ID: <4F6EE7E2.1020702@gmx.net>
+References: <m3fwd550j3.fsf@localhost.localdomain> <20120318190659.GA24829@sigill.intra.peff.net> <CACsJy8BNT-dY+wDONY_TgLnv0135RZ-47BEVMzX6c3ddH=83Zw@mail.gmail.com> <20120319024436.GB10426@sigill.intra.peff.net> <4F69B5F0.2060605@gmx.net> <CAJo=hJu0H5wfXB_y5XQ6=S0VJ9t4pxHWkuy_=rehJL_6psf00g@mail.gmail.com> <20120321171423.GA13140@sigill.intra.peff.net> <4F6A33C5.2080909@gmx.net> <20120321201722.GA15021@sigill.intra.peff.net> <4F6E3446.9080001@gmx.net> <20120325011948.GC27651@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Mar 25 10:32:08 2012
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Shawn Pearce <spearce@spearce.org>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sun Mar 25 11:39:32 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SBirw-0005Fj-5v
-	for gcvg-git-2@plane.gmane.org; Sun, 25 Mar 2012 10:32:08 +0200
+	id 1SBjv9-0008Bp-0W
+	for gcvg-git-2@plane.gmane.org; Sun, 25 Mar 2012 11:39:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753216Ab2CYIcA convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 25 Mar 2012 04:32:00 -0400
-Received: from mail-ob0-f174.google.com ([209.85.214.174]:57712 "EHLO
-	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753061Ab2CYIb6 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 25 Mar 2012 04:31:58 -0400
-Received: by obbeh20 with SMTP id eh20so3939119obb.19
-        for <git@vger.kernel.org>; Sun, 25 Mar 2012 01:31:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=hjYbhIuTnfh31GDwKCLHouI1KAmIXVJF/ljdr7dG2bg=;
-        b=JuczNRg62irSeipHPJSFvkjODq+ptsHyQsV2ClQU3OCf8qsyY/NBSWJF08wF/+3vFJ
-         AUBFPJ1gWWIqn6viFlsCaGgmm1CgepB9qzf0MF7ZdFKWIWYnlsV4PIfe/hvQdpOfqO9a
-         U1EPaOnUV+r1A5h6QGptsdvsuMqCkySXSQjbzk8ZaFZ6GFC2O/EVUJCVGSLg4nUMObJj
-         +VWVL/Gjg62ljM/Qm3c5YmNGQQxOwA01Ai40gg/I0rXu9U8KQoWdUtMPT8oPRickroBy
-         hTRgQrF/2TOXrlFb3j5eGHm+dRdOpU79PtR1hNAlmm40zs75109HOdj0H/giWRgaVz/M
-         Rrnw==
-Received: by 10.60.28.137 with SMTP id b9mr21830245oeh.57.1332664317958; Sun,
- 25 Mar 2012 01:31:57 -0700 (PDT)
-Received: by 10.182.39.234 with HTTP; Sun, 25 Mar 2012 01:31:57 -0700 (PDT)
-In-Reply-To: <201203241949.04956.jnareb@gmail.com>
+	id S1755450Ab2CYJj2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 25 Mar 2012 05:39:28 -0400
+Received: from mailout-de.gmx.net ([213.165.64.23]:57900 "HELO
+	mailout-de.gmx.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with SMTP id S1755159Ab2CYJj1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 25 Mar 2012 05:39:27 -0400
+Received: (qmail invoked by alias); 25 Mar 2012 09:39:25 -0000
+Received: from unknown (EHLO [127.0.0.1]) [77.28.174.228]
+  by mail.gmx.net (mp041) with SMTP; 25 Mar 2012 11:39:25 +0200
+X-Authenticated: #14478976
+X-Provags-ID: V01U2FsdGVkX1/BEXYm0JfB8VY26te+wbMaEwGv2IQzwBC1OLDC+q
+	EVWo20GPdbxw96
+User-Agent: Thunderbird 2.0.0.24 (Windows/20100228)
+In-Reply-To: <20120325011948.GC27651@sigill.intra.peff.net>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193861>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193862>
 
-Dear Jakub,
+On 25.03.2012 03:19, Jeff King wrote:
+> On Sat, Mar 24, 2012 at 09:53:26PM +0100, Ivan Todoroski wrote:
+> 
+>> ---
+>>  Documentation/git-fetch-pack.txt |    9 ++++++++
+>>  builtin/fetch-pack.c             |   44 ++++++++++++++++++++++++++++++++++++--
+>>  fetch-pack.h                     |    3 ++-
+>>  3 files changed, 53 insertions(+), 3 deletions(-)
+> 
+> Give more of a commit message. Why is this option useful (I know, of
+> course, from our previous discussion. But keep in mind the audience of
+> developers reading "git log" a year from now).
 
-    if we handle the sorting of the tables on the client side itself
-,will that be a  load on the browser?
-Other ideas which i have in mind are
+Definitely. This was just work in progress I posted while I figure out 
+the test suite problem. I will add full commit messages when I complete 
+the test cases. Thanks for reviewing, I will incorporate all your 
+suggestions in the next version.
 
-1.Highligting matched portions of project name while searching the
-project name ,even more intuitively
-2.project pagination.
+>> @@ -972,6 +976,42 @@ int cmd_fetch_pack(int argc, const char **argv, const char *prefix)
+>>  	if (!dest)
+>>  		usage(fetch_pack_usage);
+>>  
+>> +	if (args.refs_from_stdin) {
+>> +		char ref[1000];
+> 
+> Ick. Is there any reason not to use a strbuf here? 1000 is probably
+> plenty, but we are generally moving towards removing such limits where
+> possible.
+> 
+> You'd also get to use strbuf_getline and strbuf_trim in the
+> newline-delimited case.
 
-On Sun, Mar 25, 2012 at 12:19 AM, Jakub Narebski <jnareb@gmail.com> wro=
-te:
-> On Sat, 24 Mar 2012, chaitanyaa nalla wrote:
->
->> Dear Jakub ,
->>
->> =A0could you please suggest any other ideas or features so that i ca=
-n
->> think upon them and come up with further good ideas.
->
-> One idea for additional feature that I have already mentioned, and wh=
-ich
-> I have put on https://github.com/peff/git/wiki/SoC-2012-Ideas is
-> client-side sorting of tables, e.g. of list of all projects, a la
-> jQuery / MediaWiki (Wikipedia) "sorttable".
->
-> Another would be using deferreds or queues for interactive blame, so
-> that repainting (editing DOM) happens asynchronously to avoid locking
-> up browser, like in
-> =A0http://www.nczonline.net/blog/2009/08/11/timed-array-processing-in=
--javascript/
->
-> There was also some time ago a patch that added ability to mark a com=
-mit
-> to compare current commit to (using JavaScript and cookies), to have =
-an
-> UI to compare arbitrary commits using 'commitdiff' view. =A0Or someth=
-ing
-> similar to MediaWiki (Wikipedia) page history view.
->
->
-> Yet another would be support for graphical representation of history =
-in
-> 'log', 'shortlog' and 'history' views e.g. using Raphael.js
->
-> Perhaps it would be possible to employ some JavaScript syntax highlig=
-hter
-> to pretty-print contents of 'blob' view.
->
->
-> Hope That Helps.
->
->
-> P.S. You can see gitweb at work here:
->
-> =A0http://git.kernel.org/?p=3Dgit/git.git
-> =A0http://repo.or.cz/w/git.git
-> --
-> Jakub Narebski
-> Poland
+Right now that "char ref[1000]" code is rejecting refs on stdin if they 
+are longer than 1000 chars or if they contain an ASCII NUL char in them. 
+When I change this to strbuf_getline() should I be doing any similar 
+checks, or do I just pass on whatever I read?
