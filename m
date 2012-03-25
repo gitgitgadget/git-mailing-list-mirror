@@ -1,83 +1,58 @@
-From: Ben Walton <bwalton@artsci.utoronto.ca>
-Subject: [PATCH 0/2] Make run-command.c honour SHELL_PATH
-Date: Sun, 25 Mar 2012 08:31:34 -0400
-Message-ID: <1332678696-4001-1-git-send-email-bwalton@artsci.utoronto.ca>
-Cc: git@vger.kernel.org, Ben Walton <bwalton@artsci.utoronto.ca>
-To: gitster@pobox.com, peff@peff.net
-X-From: git-owner@vger.kernel.org Sun Mar 25 14:31:53 2012
+From: Pete Wyckoff <pw@padd.com>
+Subject: Re: How does --assume-unchanged impact git-p4?
+Date: Sun, 25 Mar 2012 09:55:48 -0400
+Message-ID: <20120325135548.GA4664@padd.com>
+References: <20120309155848.GA5998@jerec>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Corey Thompson <cmtptr@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Mar 25 15:56:06 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SBmbt-0000Ki-Cd
-	for gcvg-git-2@plane.gmane.org; Sun, 25 Mar 2012 14:31:49 +0200
+	id 1SBnvN-00085m-8P
+	for gcvg-git-2@plane.gmane.org; Sun, 25 Mar 2012 15:56:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755997Ab2CYMbq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 25 Mar 2012 08:31:46 -0400
-Received: from garcia.cquest.utoronto.ca ([192.82.128.9]:46324 "EHLO
-	garcia.cquest.utoronto.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755637Ab2CYMbl (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 25 Mar 2012 08:31:41 -0400
-Received: from pinkfloyd.chass.utoronto.ca ([128.100.160.254]:60891 ident=93)
-	by garcia.cquest.utoronto.ca with esmtp (Exim 4.63)
-	(envelope-from <bwalton@cquest.utoronto.ca>)
-	id 1SBmbj-0002Oi-1C; Sun, 25 Mar 2012 08:31:39 -0400
-Received: from bwalton by pinkfloyd.chass.utoronto.ca with local (Exim 4.72)
-	(envelope-from <bwalton@cquest.utoronto.ca>)
-	id 1SBmbi-000131-Ry; Sun, 25 Mar 2012 08:31:38 -0400
-X-Mailer: git-send-email 1.7.4.1
+	id S1754722Ab2CYNzy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 25 Mar 2012 09:55:54 -0400
+Received: from honk.padd.com ([74.3.171.149]:54141 "EHLO honk.padd.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754322Ab2CYNzx (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 25 Mar 2012 09:55:53 -0400
+Received: from arf.padd.com (unknown [50.55.145.32])
+	by honk.padd.com (Postfix) with ESMTPSA id 9FC09D02;
+	Sun, 25 Mar 2012 06:55:52 -0700 (PDT)
+Received: by arf.padd.com (Postfix, from userid 7770)
+	id 192033149B; Sun, 25 Mar 2012 09:55:48 -0400 (EDT)
+Content-Disposition: inline
+In-Reply-To: <20120309155848.GA5998@jerec>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193866>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193867>
 
-Hi Jeff and Junio,
+cmtptr@gmail.com wrote on Fri, 09 Mar 2012 10:58 -0500:
+> My workplace uses Perforce, so I've started using git-p4 to interface
+> with it.  Some of the files included in our depot are cached
+> pre-compiled binaries which do a great deal of damage to git's
+> performance, so after some research I found that I can "git update-index
+> --assume-unchanged" on these files.  This is great except that now I'm
+> worried that this might prevent git-p4 from doing its thing when someone
+> else updates these files.
+> 
+> So am I going to miss updates to our cached binaries using this method?
+> Is there a better method I should be using in this scenario?
 
-[Others touched this file too, but it appears Jeff wrote the affected
-functionality.]
+When you use "git-p4 sync" to pull content from p4, it doesn't
+look at any of the existing files.  Then when you rebase or
+merge, changes from p4 will show up in your workspace okay, again
+regardless of the setting of --assume-unchanged.
 
-I hit a glitch with t7006-pager while testing the 1.7.10 rc1/rc2
-builds for OpenCSW/Solaris that turned out to be a problem with the
-way run-command.c:prepare_shell_cmd was setting up external
-utilities.  It was hard coded to fork 'sh -c' instead of honouring the
-SHELL_PATH as set at build time.
+The risks outlined in the documentation for git-update-index are
+still there, but using git-p4 shouldn't add any new ones.
 
-In this case, the failing test was t7006-pager:command-specific
-pager.  That test (and some subsequent ones) were setting the pager
-command used by git log to "sed s/^/foo:/ >actual" which is fine in a
-POSIX-compliant sh, but not in Solaris' sh.  If the user PATH at
-runtime happened to allow the broken system sh used instead of a sane
-sh, the ^ is interpreted the same as[1] | and this caused sed to fail
-with incomplete s/ command and a "command not found: /foo:" from the
-other forked process.
-
-To mitigate this, the following patches introduce the macro SHELL_PATH
-for use in run-command.c, defaulting to "sh" to preserve the current
-behaviour and then cause the build system to provide the SHELL_PATH as
-set by the builder.  This means that all processed forked by
-run-command will use the same interpreter as the shell scripts in the
-git suite.
-
-I considered implementing a dynamically generated .h file for this,
-similar to common-cmds.h, but thought that was overkill at the current
-time.  If you think that (or something else) is a better fit for the
-change, let me know and I'll make the required adjustments.
-
-Thanks
--Ben
-
-[1] http://src.opensolaris.org/source/xref/onnv/onnv-gate/usr/src/cmd/sh/cmd.c#184
-
-
-Ben Walton (2):
-  run-command.c: Define SHELL_PATH macro for use in prepare_shell_cmd
-  Makefile: Set EXTRA_CPPFLAGS during the compilation of run-command
-
- Makefile      |    2 ++
- run-command.c |    6 +++++-
- 2 files changed, 7 insertions(+), 1 deletions(-)
-
--- 
-1.7.5.4
+		-- Pete
