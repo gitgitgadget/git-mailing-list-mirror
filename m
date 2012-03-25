@@ -1,75 +1,60 @@
-From: "Peter C." <th3flyboy@gmail.com>
-Subject: [GSOC 2012] Some questions regarding a possible project to improve
- big file support
-Date: Sun, 25 Mar 2012 16:48:09 -0400
-Message-ID: <4F6F8489.20108@gmail.com>
+From: greened@obbligato.org
+Subject: Re: Not a git repository: '.'
+Date: Sun, 25 Mar 2012 16:59:55 -0500
+Message-ID: <877gy8e3z8.fsf@smith.obbligato.org>
+References: <87r4wh6hce.fsf@smith.obbligato.org> <4F6E0F07.6030400@kdbg.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Mar 25 22:48:19 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Johannes Sixt <j6t@kdbg.org>
+X-From: git-owner@vger.kernel.org Mon Mar 26 00:03:38 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SBuMM-0006rJ-LY
-	for gcvg-git-2@plane.gmane.org; Sun, 25 Mar 2012 22:48:19 +0200
+	id 1SBvXE-0001f4-UB
+	for gcvg-git-2@plane.gmane.org; Mon, 26 Mar 2012 00:03:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757051Ab2CYUsN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 25 Mar 2012 16:48:13 -0400
-Received: from mail-qa0-f46.google.com ([209.85.216.46]:34596 "EHLO
-	mail-qa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757027Ab2CYUsN (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 25 Mar 2012 16:48:13 -0400
-Received: by qaeb19 with SMTP id b19so1826499qae.19
-        for <git@vger.kernel.org>; Sun, 25 Mar 2012 13:48:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:subject
-         :content-type:content-transfer-encoding;
-        bh=4DkzuagGenfFZpiop9BYvXGY7e3H58agmJ7/bOiH2XI=;
-        b=MTWJmJ7iPoC1cHJhSZGCH171SDKi3J8tYhO/yhA6YKXFxq0e2sbWFJKrssJYl8ICZ5
-         fEnRvsVqPTG/B4+34LFxS4mH8L445lX5D+xV6jVv30S8iprFe96Fg8Hf5l7hLncGxcUF
-         AuboUvNLySmt+dvHuTf5morZZFQNwjLvyiC6PmUnmupePRG3QZ+iqoRZHgDlkDLojRwz
-         Cg/WyHiGDSaXnxD3bV2UfpMx3MvBXqdfnunaZGlkaIdWBcOYqEhkoX7VcWh7raabUDMA
-         gX97fuF6ROE1OF0K2+vMIGc8wruB/IATR9kpOux1++puaR2cD14pE/Nn2QEAJ1BTfu2G
-         f7Pw==
-Received: by 10.224.223.76 with SMTP id ij12mr24973736qab.11.1332708492587;
-        Sun, 25 Mar 2012 13:48:12 -0700 (PDT)
-Received: from [127.0.0.1] (c-71-204-217-209.hsd1.de.comcast.net. [71.204.217.209])
-        by mx.google.com with ESMTPS id dw1sm26305251qab.4.2012.03.25.13.48.11
-        (version=SSLv3 cipher=OTHER);
-        Sun, 25 Mar 2012 13:48:12 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:11.0) Gecko/20120312 Thunderbird/11.0
+	id S932228Ab2CYWDb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 25 Mar 2012 18:03:31 -0400
+Received: from li209-253.members.linode.com ([173.255.199.253]:36252 "EHLO
+	johnson.obbligato.org" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S932199Ab2CYWDa (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 25 Mar 2012 18:03:30 -0400
+Received: from c-75-73-20-8.hsd1.mn.comcast.net ([75.73.20.8] helo=smith.obbligato.org)
+	by johnson.obbligato.org with esmtpsa (TLS1.2:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.77)
+	(envelope-from <greened@obbligato.org>)
+	id 1SBrnq-0000ja-9g; Sun, 25 Mar 2012 13:04:30 -0500
+In-Reply-To: <4F6E0F07.6030400@kdbg.org> (Johannes Sixt's message of "Sat, 24
+	Mar 2012 19:14:31 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Filter-Spam-Score: ()
+X-Filter-Spam-Report: Spam detection software, running on the system "johnson.obbligato.org", has
+ identified this incoming email as possible spam.  The original message
+ has been attached to this so you can view it (if it isn't spam) or label
+ similar future email.  If you have any questions, see
+ @@CONTACT_ADDRESS@@ for details.
+ Content preview:  Johannes Sixt <j6t@kdbg.org> writes: > Most likely, GIT_DIR=.
+    is set when the hook is entered. Does unset > GIT_DIR help? That was indeed
+    the problem. Thank you! [...] 
+ Content analysis details:   (1.4 points, 5.0 required)
+  pts rule name              description
+ ---- ---------------------- --------------------------------------------------
+ -1.0 ALL_TRUSTED            Passed through trusted hosts only via SMTP
+  2.4 DATE_IN_FUTURE_03_06   Date: is 3 to 6 hours after Received: date
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193883>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193884>
 
-Hello, I'm considering working on Git for GSOC 2012, specifically in
-improving big file support, however I wanted to ask a few questions
-first, some about the low level operations of how Git handles diffs
-between files, and also a question or two regarding implementation.
+Johannes Sixt <j6t@kdbg.org> writes:
 
-My first question is more of a question regarding low level
-functionality of how Git diffs files. The question is, in the diff
-process, does git just parse the file and see if there are diffs, or
-does it use something like hashing to first tell if the file has been
-modified at all, and then go to the diff process if the hash is
-different. An extension to this question is, in Git's internal database,
-does it set any kind of flag to say that a file is a binary if it is one.
+> Most likely, GIT_DIR=. is set when the hook is entered. Does unset
+> GIT_DIR help?
 
-My thought process in implementation involves checking the hash, and if
-the hash is the same, skip it, if the hash is different, check the MIME
-type possibly using libmagic, and if it matches a known binary format,
-then just commit the new version, rather than trying to run a whole diff
-and load the whole file in the process.
+That was indeed the problem.  Thank you!
 
-The thing I'm worried about is, would anything involved in this break
-existing Git functionality, or backward compatibility. I'd also greatly
-appreciate any feedback on my ideas.
-
-Thanks,
-Peter
+                        -Dave
