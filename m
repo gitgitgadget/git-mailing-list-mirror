@@ -1,73 +1,79 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] rev-list: fix place holder %N (notes) in user format
-Date: Sat, 24 Mar 2012 20:55:04 -0400
-Message-ID: <20120325005504.GA27651@sigill.intra.peff.net>
-References: <1332617911-8281-1-git-send-email-jukka.lehtniemi@gmail.com>
+Subject: Re: Clone fails on a repo with too many heads/tags
+Date: Sat, 24 Mar 2012 21:06:09 -0400
+Message-ID: <20120325010609.GB27651@sigill.intra.peff.net>
+References: <m3fwd550j3.fsf@localhost.localdomain>
+ <20120318190659.GA24829@sigill.intra.peff.net>
+ <CACsJy8BNT-dY+wDONY_TgLnv0135RZ-47BEVMzX6c3ddH=83Zw@mail.gmail.com>
+ <20120319024436.GB10426@sigill.intra.peff.net>
+ <4F69B5F0.2060605@gmx.net>
+ <CAJo=hJu0H5wfXB_y5XQ6=S0VJ9t4pxHWkuy_=rehJL_6psf00g@mail.gmail.com>
+ <20120321171423.GA13140@sigill.intra.peff.net>
+ <4F6A33C5.2080909@gmx.net>
+ <20120321201722.GA15021@sigill.intra.peff.net>
+ <4F6E3373.7090500@gmx.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Jukka Lehtniemi <jukka.lehtniemi@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Mar 25 01:55:53 2012
+Cc: Shawn Pearce <spearce@spearce.org>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+To: Ivan Todoroski <grnch_lists@gmx.net>
+X-From: git-owner@vger.kernel.org Sun Mar 25 03:06:24 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SBbkP-0003pz-7m
-	for gcvg-git-2@plane.gmane.org; Sun, 25 Mar 2012 01:55:53 +0100
+	id 1SBbua-000144-5p
+	for gcvg-git-2@plane.gmane.org; Sun, 25 Mar 2012 03:06:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754297Ab2CYAzN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 24 Mar 2012 20:55:13 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:58741
+	id S1754776Ab2CYBGO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 24 Mar 2012 21:06:14 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:58752
 	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754217Ab2CYAzM (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 24 Mar 2012 20:55:12 -0400
-Received: (qmail 29874 invoked by uid 107); 25 Mar 2012 00:55:28 -0000
+	id S1754341Ab2CYBGM (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 24 Mar 2012 21:06:12 -0400
+Received: (qmail 29935 invoked by uid 107); 25 Mar 2012 01:06:28 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Sat, 24 Mar 2012 20:55:28 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 24 Mar 2012 20:55:04 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Sat, 24 Mar 2012 21:06:28 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 24 Mar 2012 21:06:09 -0400
 Content-Disposition: inline
-In-Reply-To: <1332617911-8281-1-git-send-email-jukka.lehtniemi@gmail.com>
+In-Reply-To: <4F6E3373.7090500@gmx.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193852>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193853>
 
-On Sat, Mar 24, 2012 at 09:38:31PM +0200, Jukka Lehtniemi wrote:
+On Sat, Mar 24, 2012 at 09:49:55PM +0100, Ivan Todoroski wrote:
 
-> Signed-off-by: Jukka Lehtniemi <jukka.lehtniemi@gmail.com>
-> ---
+> Unfortunately it failed, and to make matters worse it failed exactly
+> on the parts dealing with smart HTTP, which is what I need to test in
+> the first place. Talk about Murphy's law...
 > 
->  Fixes a bug where the place holder for notes (%N) was not expanded 
->  in rev-list. To reproduce the bug:
->    $ git notes add -m foo
->    $ git rev-list --notes --format=format:%N HEAD ^HEAD^
+> Is it failing for anyone else on the vanilla "maint" branch? I would
+> appreciate any help I could get here.
 
-This explanation should probably go in the commit message.
+No, it passes fine here (Debian unstable).
 
-I am not sure the behavior afterwards is right, though. With git-log, I
-see the following behaviors:
+> expecting success:
+>         git clone $HTTPD_URL/smart-redir-perm/repo.git --quiet repo-p
+> 
+> error: RPC failed; result=22, HTTP code = 405
+> fatal: The remote end hung up unexpectedly
+> not ok - 6 follow redirects (301)
 
-  1. With --notes, notes are displayed.
+That's weird. 405 is "Method Not Allowed". Clone shouldn't be doing
+anything more exotic than GET and POST. And the prior tests pass, so it
+means that it's working in general. The only thing different about this
+test is that apache is configured to use mod_rewrite to issue a
+redirect.
 
-  3. With --no-notes, notes are not displayed.
+Does your machine have mod_rewrite installed and enabled? I would think
+apache would complain at startup if it wasn't.  I wonder if there's
+something non-portable in the minimal apache config we ship.
 
-  3. With no options, notes are displayed (i.e., we default to --notes).
-
-  4. With --format=%N, notes are displayed (automatically, without
-     having to use "--notes").
-
-Shouldn't rev-list behave exactly the same way, except for (3)? That is,
-it should respect the options in the same way, but default to not
-showing notes?
-
-Even with your patch, we seem to be violating points (1) and (4).
-"--notes" does nothing by itself, and you need to use it to make "%N"
-work.
-
-For (4), you need to use userformat_find_requirement, as git-log does.
-I'm not sure without digging how to make (1) work.
+Does httpd/error.log in the trash directory say anything interesting?
 
 -Peff
