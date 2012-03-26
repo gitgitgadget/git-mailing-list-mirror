@@ -1,75 +1,79 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Documentation: improve description of GIT_EDITOR and
- preference order
-Date: Mon, 26 Mar 2012 11:31:58 -0700
-Message-ID: <7v4ntbp61t.fsf@alter.siamese.dyndns.org>
-References: <loom.20120323T133648-453@post.gmane.org>
- <7vty1ftc4e.fsf@alter.siamese.dyndns.org>
- <loom.20120326T100258-967@post.gmane.org>
+Subject: Re: [PATCH v4 2/3] gitweb: refactor If-Modified-Since handling
+Date: Mon, 26 Mar 2012 11:39:26 -0700
+Message-ID: <7vsjgvnr4x.fsf@alter.siamese.dyndns.org>
+References: <20120326173646.GA6524@odin.tremily.us>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Rodrigo Silva "\(MestreLion\)" <linux@rodrigosilva.com>
-X-From: git-owner@vger.kernel.org Mon Mar 26 20:32:09 2012
+Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+To: "W. Trevor King" <wking@drexel.edu>
+X-From: git-owner@vger.kernel.org Mon Mar 26 20:39:35 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SCEi8-00019r-OL
-	for gcvg-git-2@plane.gmane.org; Mon, 26 Mar 2012 20:32:09 +0200
+	id 1SCEpK-0006gR-Q5
+	for gcvg-git-2@plane.gmane.org; Mon, 26 Mar 2012 20:39:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932860Ab2CZScC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Mar 2012 14:32:02 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:43828 "EHLO
+	id S933014Ab2CZSja (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Mar 2012 14:39:30 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47004 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932796Ab2CZScB (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Mar 2012 14:32:01 -0400
+	id S932830Ab2CZSj3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Mar 2012 14:39:29 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4D7FC7878;
-	Mon, 26 Mar 2012 14:32:00 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C05E379F4;
+	Mon, 26 Mar 2012 14:39:28 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 s=sasl; bh=vsKw0rTmXKg6qnMCy//wdFZCIlw=; b=UXp395sHlHX026lkYrrS
-	NTPf5qJW2zwAK1uVJBSP9Yv+e9ShUnZyVaoUALSxhLCc0qr/yRqSwLq5N2jTPP72
-	CgcCcqyDwv78o5lF2NzVXpiHxAXttXl0c1g3cS/rBcVA0Saprqxo1+7FaBBlGBYv
-	+kzmVZ3BQD6MSjbqRf5kEow=
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=VlU+RrvknkbX0ngc9Pk31YeO2eI=; b=DGvTm8
+	EbIO/0Afq2S4ZuH7XHGHljIdsXxYpl0vM1VOW7e8wqvppRLnKf7fncFi07LLHo0t
+	ReIxK1vnNCPjNnuwJ2jQcwBgmcgSj4c0kxl7Yfp3tee/MkFF9eYB70GTaw9PQ8ii
+	RcHO4RHTlQaMxEeNVJ5cvQu3tizGEvzA5JjV8=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 q=dns; s=sasl; b=Dsu8ThtB7BTqTp+8ocJU4Z/cq85nf0+ZjAhMBakBbFwC6W
-	R2p6ade7N15sJ50gp8WqqRMLSUBjcusJZTNe6bXl5qnyiJ3oEFbGOZHRNGgoHKPD
-	jk8CvRoP/7xnZi5nSoqFRxQVPzteiU3js/IV6Wpo/M/xJaoxkwP+7Ba+i2bHI=
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=yjwi4yEFrk7v1UxSzYyUM155Mp8ITvKV
+	WJID3LMNy09UWUv37hm2bdDsqqsNQffScdT1p5FAJaTCT5qlyWsTES8i+cA8rq++
+	92+vBf3yph5YDyUfRyXoR2kDxbbz07VOjVOQ3efNMC8uslB4Zdxni2xk6LlaBXVZ
+	JadsBCdXKiU=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3812F7877;
-	Mon, 26 Mar 2012 14:32:00 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B825379F3;
+	Mon, 26 Mar 2012 14:39:28 -0400 (EDT)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id AF9097875; Mon, 26 Mar 2012
- 14:31:59 -0400 (EDT)
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2EE8379F1; Mon, 26 Mar 2012
+ 14:39:28 -0400 (EDT)
+In-Reply-To: <20120326173646.GA6524@odin.tremily.us> (W. Trevor King's
+ message of "Mon, 26 Mar 2012 13:36:46 -0400")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: F969CABA-7771-11E1-AF79-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 04B981D4-7773-11E1-96C6-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193952>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193953>
 
-Rodrigo Silva "(MestreLion)"  <linux@rodrigosilva.com> writes:
+"W. Trevor King" <wking@drexel.edu> writes:
 
-> So, what should I do now? Re-send the patch with just the accepted parts
-> (and adjusting commit message accordingly)? Or this will be done by you?
+> On Mon, Mar 26, 2012 at 10:12:36AM -0700, Junio C Hamano wrote:
+> ...
+> Only passing in the epoch.  We could reduce computation at the expense
+> of complication by passing in both the epoch and a formatted time
+> string, but after Jakub's suggestions, I felt like a simpler interface
+> was the better approach.  I don't feel particularly committed to
+> either way, so just tell me which you'd like best ;).
 
-People either say "Yeah, I agree with the suggestions---can you apply it
-without the change to git-var.txt?", or respond to the review message with
-an updated patch with "I agree with the review suggestion and dropped the
-change to git-var.txt" after the three-dash lines (i.e. the comment does
-not become part of the commit log message).
+The existing codepath already had the call to parse_date() nearby and that
+was the only reason I made the suggestion.  The caller in the snapshot
+codepath would need to call parse_date() much earlier and it would have to
+be conditional to the availability of %co, so the simpler interface would
+probably be overall win.
 
-For something small and easy like this one, it's OK to do either way.
+>> Missing " &&" at the end (same in 3/3).
+>
+> Oops.  I wonder why my tests still passed :p.  Will fix in v5.
 
-For larger changes, people tend to do the latter, as often they do not
-agree (and they do not have to) with *all* the point raised in the review,
-and it would become more error prone to let me pick, choose and edit the
-original submission.
-
-I'll just apply your patch with minor tweaks.  Thanks.
+The test will pass if there is no breakage.  The offence of missing " &&"
+after your "grep 200" is that it will let the test pass even if you did
+not have "200" in the output, failing to catch future breakage.
