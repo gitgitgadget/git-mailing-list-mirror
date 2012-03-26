@@ -1,82 +1,77 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/4] grep: add more information to hunk separators
-Date: Mon, 26 Mar 2012 14:19:01 -0700
-Message-ID: <7v8vinnjqy.fsf@alter.siamese.dyndns.org>
-References: <1332729705-9283-1-git-send-email-lodatom@gmail.com>
- <4F709664.1060206@lsrfire.ath.cx> <7vobrjp7gu.fsf@alter.siamese.dyndns.org>
- <4F70DBAC.4010609@lsrfire.ath.cx>
+From: =?UTF-8?B?WmJpZ25pZXcgSsSZZHJ6ZWpld3NraS1Tem1law==?= 
+	<zbyszek@in.waw.pl>
+Subject: Re: [PATCH v5 3/3] push: teach --recurse-submodules the on-demand
+ option
+Date: Mon, 26 Mar 2012 23:22:49 +0200
+Message-ID: <4F70DE29.6050808@in.waw.pl>
+References: <20120213092541.GA15585@t1405.greatnet.de> <20120213093008.GD15585@t1405.greatnet.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Mark Lodato <lodatom@gmail.com>, git@vger.kernel.org
-To: =?utf-8?Q?Ren=C3=A9?= Scharfe <rene.scharfe@lsrfire.ath.cx>
-X-From: git-owner@vger.kernel.org Mon Mar 26 23:19:16 2012
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Fredrik Gustafsson <iveqy@iveqy.com>,
+	Jens Lehmann <jens.lehmann@web.de>
+To: Heiko Voigt <hvoigt@hvoigt.net>
+X-From: git-owner@vger.kernel.org Mon Mar 26 23:23:09 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SCHJm-0004D4-Pf
-	for gcvg-git-2@plane.gmane.org; Mon, 26 Mar 2012 23:19:11 +0200
+	id 1SCHNW-0006WL-Da
+	for gcvg-git-2@plane.gmane.org; Mon, 26 Mar 2012 23:23:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756317Ab2CZVTF convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 26 Mar 2012 17:19:05 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:40629 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756212Ab2CZVTE convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 26 Mar 2012 17:19:04 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DDA687B02;
-	Mon, 26 Mar 2012 17:19:03 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=h3jCv+xJoPCR
-	Q099qyfFpcrNto0=; b=b2tZ/y/P9lyKnfRy5CbbjVZKjzY4i3ug5cKJaXjOPunK
-	4kgjPtL1LD4LU+6UyFnfTI2DMMzgp79avtqj7D3YAJBYwbRAZDTo35xpDV6S1WXr
-	+XbS6twnM0x/KcyQVPypDqU3iZJk9otf6owGw8RABdy2Xd+5uqXGmlSU4SXptOc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=NV+oZC
-	cxo0rLl0KPc4oQL49oZH0tuNw2gp63pSJ2djKFzLt8v4ohUr+PdVTXDd44HkWHAj
-	V8TREoqWzA7l/hWyTjsuoVJMNLycyg3ZUE+cKgKGErQeyJriDtstL17YgzTvDkat
-	Fog+QFf42x2/ESLDcOE8/syzdLCfqtasALq4U=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D381E7B01;
-	Mon, 26 Mar 2012 17:19:03 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id DDCCD7AFE; Mon, 26 Mar 2012
- 17:19:02 -0400 (EDT)
-In-Reply-To: <4F70DBAC.4010609@lsrfire.ath.cx> (=?utf-8?Q?=22Ren=C3=A9?=
- Scharfe"'s message of "Mon, 26 Mar 2012 23:12:12 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 4FB33EC6-7789-11E1-8FC6-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1756345Ab2CZVW5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Mar 2012 17:22:57 -0400
+Received: from kawka.in.waw.pl ([178.63.212.103]:56321 "EHLO kawka.in.waw.pl"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755327Ab2CZVW5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Mar 2012 17:22:57 -0400
+Received: from 89-78-221-60.dynamic.chello.pl ([89.78.221.60] helo=[192.168.0.12])
+	by kawka.in.waw.pl with esmtpsa (TLS1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.72)
+	(envelope-from <zbyszek@in.waw.pl>)
+	id 1SCHNP-0001tT-Ns; Mon, 26 Mar 2012 23:22:55 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:10.0.3) Gecko/20120324 Icedove/10.0.3
+In-Reply-To: <20120213093008.GD15585@t1405.greatnet.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193978>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193979>
 
-Ren=C3=A9 Scharfe <rene.scharfe@lsrfire.ath.cx> writes:
+On 02/13/2012 10:30 AM, Heiko Voigt wrote:
+> When using this option git will search for all submodules that
+> have changed in the revisions to be send. It will then try to
+> push the currently checked out branch of each submodule.
+>
+> This helps when a user has finished working on a change which
+> involves submodules and just wants to push everything in one go.
 
-> What we also could do: Produce a valid unified diff that would remove
-> the matching lines if we were to apply it (or the --reverse, i.e. +
-> instead of -).  Then we wouldn't need to invent a special format, but
-> the output would be a bit more verbose due to the added +++ lines.
+> ---recurse-submodules=check::
+> -	Check whether all submodule commits used by the revisions to be
+> -	pushed are available on a remote tracking branch. Otherwise the
+> -	push will be aborted and the command will exit with non-zero status.
+> +--recurse-submodules=<check|on-demand>::
+> +	Make sure all submodule commits used by the revisions to be
+> +	pushed are available on a remote tracking branch. If check is
+> +	used it will be checked that all submodule commits that changed
+> +	in the revisions to be pushed are available on a remote.
+> +	Otherwise the push will be aborted and exit with non-zero
+> +	status. If on-demand is used all submodules that changed in the
+> +	revisions to be pushed will be pushed. If on-demand was not able
+> +	to push all necessary revisions it will also be aborted and exit
+> +	with non-zero status.
+Hi,
+this desciption seems awkward. Not sure how to improve it, but:
+- the argument 'check' is changed to '<check|on-demand>', i.e. brackets 
+are added. This changes the meaning, because brackets are used around a 
+name for a value provided by the user. So here brackets shouldn't be 
+used, because 'check' and 'on-demand' are literals.
+- s/if check is used it will be checked/if check is used git will verify 
+that/
+- s/a remote/the remote/
+- s/Otherwise the push/If any commits are missing the push/ (because 
+'Otherwise' could refer to 'If check is used'.)
 
-Hrm, certainly that is an option that saves a lot of thinking.
-
-As people tend to learn to focus more on '+' lines when reading patches=
- in
-the unified context format, the reverse option would produce output tha=
-t
-is easier to read, I would guess.
-
-> I guess it's time to implement these options in order to try them out
-> against real code.  Won't have time to do so before the second half o=
-f
-> the week, however.
-
-That's OK---we are in no hurry.  Have you heard about pre-release featu=
-re
-freeze already ;-)?
+Zbyszek
