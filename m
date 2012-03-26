@@ -1,106 +1,120 @@
-From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <rene.scharfe@lsrfire.ath.cx>
-Subject: Re: [PATCH 0/4] grep: add more information to hunk separators
-Date: Mon, 26 Mar 2012 23:12:12 +0200
-Message-ID: <4F70DBAC.4010609@lsrfire.ath.cx>
-References: <1332729705-9283-1-git-send-email-lodatom@gmail.com> <4F709664.1060206@lsrfire.ath.cx> <7vobrjp7gu.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [GSoC] Designing a faster index format
+Date: Mon, 26 Mar 2012 14:14:23 -0700
+Message-ID: <7vd37znjyo.fsf@alter.siamese.dyndns.org>
+References: <F9D452C3-B11E-4915-A0F2-B248F92CE5DE@gmail.com>
+ <CACsJy8CKqv2P2Co9MKpePfOTwe4fu-wxAYiigbYt3YHTxZ6wWQ@mail.gmail.com>
+ <8D287169-1AD9-4586-BDBC-F820220328FC@gmail.com>
+ <CACsJy8D2RwG-Nr5btcQj0f9=JACvH6mf7LNi=Jnb_y+j4_2u0A@mail.gmail.com>
+ <871uomrubl.fsf@thomas.inf.ethz.ch>
+ <8901F6B5-7396-44E1-9687-20BF95114728@gmail.com>
+ <871uomq64c.fsf@thomas.inf.ethz.ch>
+ <BDFA27C9-C999-4C95-8804-5E7B3B3D1BFD@gmail.com>
+ <878virfx11.fsf@thomas.inf.ethz.ch>
+ <2A61C352-5C71-4EDF-9DBE-01CC09AE03A5@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Mark Lodato <lodatom@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Mar 26 23:12:31 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Thomas Rast <trast@student.ethz.ch>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	<git@vger.kernel.org>
+To: Thomas Gummerer <t.gummerer@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Mar 26 23:14:41 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SCHDK-00005B-4Q
-	for gcvg-git-2@plane.gmane.org; Mon, 26 Mar 2012 23:12:30 +0200
+	id 1SCHFJ-0001Os-9S
+	for gcvg-git-2@plane.gmane.org; Mon, 26 Mar 2012 23:14:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756814Ab2CZVMR convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 26 Mar 2012 17:12:17 -0400
-Received: from india601.server4you.de ([85.25.151.105]:33460 "EHLO
-	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756556Ab2CZVMO (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Mar 2012 17:12:14 -0400
-Received: from [192.168.2.105] (p4FFD8F84.dip.t-dialin.net [79.253.143.132])
-	by india601.server4you.de (Postfix) with ESMTPSA id 3237D2F8038;
-	Mon, 26 Mar 2012 23:12:13 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:11.0) Gecko/20120312 Thunderbird/11.0
-In-Reply-To: <7vobrjp7gu.fsf@alter.siamese.dyndns.org>
+	id S1756907Ab2CZVO1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Mar 2012 17:14:27 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:38869 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756556Ab2CZVO0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Mar 2012 17:14:26 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 780E67A40;
+	Mon, 26 Mar 2012 17:14:25 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=XqJl0QroACvk+u+ghRLAWpFVSs4=; b=x8/Vkk
+	qNVdRuW6wKT+uOPX3AuWyJHx49WAOV93gywNTigdm6qyDdNuydYCHC2y5Ysty988
+	/4sT+adbrDzizvyo80bdOSjMeHwcyXtR/7UOm/dS1HsRNMFQpigo+XI6d4xNmPmY
+	0W8qkjO92ar5dmrUK5EFupxQnipQx8q6T0jw0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Ua3w3iEila5XRbYTLy2mtwxPETZH3HZs
+	JkaPBGvpE9EWxadejrMBOHVPaznjTYG1GwzOJ4yvCMOldpb76W46zlE8o/CJTrIB
+	mHe3o2/z5Z24cPl6FZKcCjPBmBMptn7GUDrY96R+e/rbbA4ywKAuY94Thd3Kz6zb
+	q0E0TnPp7Pg=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6F2617A3F;
+	Mon, 26 Mar 2012 17:14:25 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B1E1F7A3C; Mon, 26 Mar 2012
+ 17:14:24 -0400 (EDT)
+In-Reply-To: <2A61C352-5C71-4EDF-9DBE-01CC09AE03A5@gmail.com> (Thomas
+ Gummerer's message of "Mon, 26 Mar 2012 22:35:07 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: A9E4693E-7788-11E1-9C30-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193976>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193977>
 
-Am 26.03.2012 20:01, schrieb Junio C Hamano:
-> Ren=C3=A9 Scharfe<rene.scharfe@lsrfire.ath.cx>  writes:
->
->> Looking at the above, I thought: We have unified diffs between two
->> files, we have combined diffs between more than two, what about
->> showing grep results as one-sided unified diffs?  ("What's the sound
->> of one hand clapping?" :-)
->>
->> 	--- a/git.c
->> 	@ -570,3 @ int main(int argc, const char **argv)
->> 	-		printf("usage: %s\n\n", git_usage_string);
->> 	:		list_common_cmds_help();
->> 	-		printf("\n%s\n", git_more_info_string);
->>
->> Pro: Generalization of an established format for showing interesting
->> parts of a file.  Less duplication of meta-information.  Markers tha=
-t
->> tell us the kind of the shown lines are kept ("-" for context, ":" f=
-or
->> matches).  Machine parsable.
->>
->> Con: Why the "a/" prefix?  One-sided diffs, srsly?
->
-> Cute, and I tend to agree that this is probably easier to read if you=
- are
-> used to reading unified diffs.
->
-> Wouldn't it make more sense to replace your '-/:' with ' /=3D', so th=
-at at
-> least ' ' SP retains the meaning of "this is shown merely to give you
-> context, it is not a proper part of what you are looking for"?
+Thomas Gummerer <t.gummerer@gmail.com> writes:
 
-Ah, good idea, the space makes for a less cluttered output.  For=20
-completeness sake, I have to mention that the current grep output uses=20
-'-/:/=3D', however, for context/match/function line ("especially=20
-interesting context").  Even function lines that happen to fall within=20
-the --context are marked with an equal sign.  That's not the case for=20
-unified diffs; they simply get shown as normal context.
+> The proposed solution is to rework the index, in order to make it possible to
+> have a complexity of O(log(n)), where n is the number of index entries, for 
+> simple operations like adding files. More complex operations shall also
+> benefit from the new index format, although a complexity of O(log(n)) might not
+> be reached, while keeping the index format easy enough to parse for .git reading
+> programs. The amount of data for which that the hash will be computed however
+> shall be log(n). N is the number of entries in the index.
 
-> The reasoning behind '=3D' is that it is not either -/+ as we are not=
- really
-> comparing anything with anything.
+Where does log(N) come from, and is that a hard requirement?
 
-Mapping the '-/:/=3D' of grep to ' /:/=3D' or ' /:/ ' might be easier t=
-o=20
-understand.  However, seeing a line starting with a colon or an equal=20
-sign feels both strange, because they are normally used as binary=20
-operators.  Normal grep output shows a filename or a line number before=
-=20
-the separator, so it doesn't invoke that strange feeling.
+Rephrasing your problem description, you want to address the inefficiency
+that we have to write the full 1m entries to a new file in order to update
+only one file when the index tracks 1m paths.  
 
-Perhaps mapping to ' /!/ ' is better instead, similar to context diffs?
+Wouldn't the goal be more in line with that problem statement if you
+instead aim to make the cost proportional to the number of entries that
+are updated, regardless of how many entries exist in the index?
 
-> It may also make sense to replace the
-> per-file header line with "=3D=3D=3D git.c" to be consistent.
+> In phase one the pysical index format shall be replaced with the new index 
+> format, which does neither require a full recalculation of the sha-1 hash nor a
+> full rewrite of the index to the disk. The new index format will be mapped to 
+> the current in-memory structure, which will only be changed in phase two. For 
+> further optimization the cache-tree sha-1 hashes shall be mapped to the new 
+> index format, which should avoid cache-tree invalidations.
 
-A context diffs would have '*** git.c', but they are ugly IMHO, overall=
-=2E
+It is unclear what you meant by the last sentence.  The cache-tree
+invalidation is a critical part of the machinery that allows later
+write-tree to reuse the already computed subtree object names, without
+having to recompute subtree object names until they are really necessary
+(i.e. when writing a tree out).  By "avoiding" it, are you going to make
+write-tree always recompute all the subtree object names?  Or are you
+planning to keep the cached tree information always up to date by
+recomputing subtree object names and keeping them in the index even when
+they are not yet needed?  If the latter, how would you handle when a part
+of the index contains unmerged entries?
 
-What we also could do: Produce a valid unified diff that would remove=20
-the matching lines if we were to apply it (or the --reverse, i.e. +=20
-instead of -).  Then we wouldn't need to invent a special format, but=20
-the output would be a bit more verbose due to the added +++ lines.
+Right now, the code that updates the in-core index records "Is the in-core
+index clean, or modified?" bit and nothing else.  Without updating the
+in-core structure and the codepaths that access it, how is it possible for
+your phase I to selectively write out only the modified (either added,
+updated or removed) part of it?  In other words, I do not think it is
+realistic to expect that the core parts to stay oblivious to the new index
+semantics during the "phase one".
 
-I guess it's time to implement these options in order to try them out=20
-against real code.  Won't have time to do so before the second half of=20
-the week, however.
+> -- Timeline --
+> 24/04 - 12/05: Getting familiar with the old index
 
-Ren=C3=A9
+It might make more sense to write the "proposed solution" *after* this
+step is done; otherwise you wouldn't even know the problems you are trying
+to solve.  That may mean that this part of the schedule may need to be
+shortened or started way before the beginning of GSoC.
