@@ -1,88 +1,201 @@
-From: Kumar Pande <pandekumar023@gmail.com>
-Subject: How to setup git repository for internal collaboration, that can be
- rebased easily?
-Date: Mon, 26 Mar 2012 12:08:33 -0700
-Message-ID: <CANz+fEmN2qm9Nwk4tyg0eCrKPR6WZg4kvqCkhB7TmYw2JKoJJQ@mail.gmail.com>
+From: "W. Trevor King" <wking@drexel.edu>
+Subject: Re: [PATCH v5 2/3] gitweb: refactor If-Modified-Since handling
+Date: Mon, 26 Mar 2012 15:12:42 -0400
+Message-ID: <20120326191242.GA9041@odin.tremily.us>
+References: <20120326173646.GA6524@odin.tremily.us>
+ <7vsjgvnr4x.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Mar 26 21:08:43 2012
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature"; boundary=Nq2Wo0NMKNjxTN9z
+Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Mar 26 21:13:12 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SCFHU-0005SL-SX
-	for gcvg-git-2@plane.gmane.org; Mon, 26 Mar 2012 21:08:41 +0200
+	id 1SCFLr-0000aB-Vg
+	for gcvg-git-2@plane.gmane.org; Mon, 26 Mar 2012 21:13:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751216Ab2CZTIg convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 26 Mar 2012 15:08:36 -0400
-Received: from mail-lb0-f174.google.com ([209.85.217.174]:47206 "EHLO
-	mail-lb0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751062Ab2CZTIf convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 26 Mar 2012 15:08:35 -0400
-Received: by lbbgm6 with SMTP id gm6so4232747lbb.19
-        for <git@vger.kernel.org>; Mon, 26 Mar 2012 12:08:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        bh=6/xW77ALGE7pRhcem0aCwNjToQjDmzTVEEDQHGJ00X0=;
-        b=xDif+qY6fW6hIe/8RWK+7ddAJwjisr2HbX9CRKIK3Gg0MxzZMhtiujF7fluQN4qDuo
-         pH5DRq/Pu1j3TY6BQzdJCnr2m80Qq4+Ej2Xh3fKZ0P6wz6MKhIPHAT2Apdo5Qey4dNsY
-         cj6Uv4DvvPRqh7GTAlJbeRe13/MW+N+AO8xzibWPO5/VxUpqw3Rd/dKtwmSdlZj+2GMC
-         1h7TvAfSiUyt8MLZCExLaIeF+rwydnNniP5UaqJ1JFMSPMsnxaXa21wsPmwXtV1tCr5X
-         QuD3oO3M/fnwesBe+xxbgvtVbSvQTruUyA9eOYNATPGzEtyuwSJcvtW8zrNX6fwFKDaO
-         EnFQ==
-Received: by 10.112.11.9 with SMTP id m9mr7981741lbb.60.1332788914159; Mon, 26
- Mar 2012 12:08:34 -0700 (PDT)
-Received: by 10.112.42.8 with HTTP; Mon, 26 Mar 2012 12:08:33 -0700 (PDT)
+	id S1751403Ab2CZTNG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Mar 2012 15:13:06 -0400
+Received: from vms173011pub.verizon.net ([206.46.173.11]:42040 "EHLO
+	vms173011pub.verizon.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751062Ab2CZTNF (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Mar 2012 15:13:05 -0400
+Received: from odin.tremily.us ([unknown] [72.68.85.198])
+ by vms173011.mailsrvcs.net
+ (Sun Java(tm) System Messaging Server 7u2-7.02 32bit (built Apr 16 2009))
+ with ESMTPA id <0M1I00KOJAP7QG10@vms173011.mailsrvcs.net> for
+ git@vger.kernel.org; Mon, 26 Mar 2012 14:12:44 -0500 (CDT)
+Received: by odin.tremily.us (Postfix, from userid 1000)	id B081442E934; Mon,
+ 26 Mar 2012 15:12:42 -0400 (EDT)
+Content-disposition: inline
+In-reply-to: <7vsjgvnr4x.fsf@alter.siamese.dyndns.org>
+OpenPGP: id=39A2F3FA2AB17E5D8764F388FC29BDCDF15F5BE8;
+ url=http://tremily.us/pubkey.txt
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193957>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193958>
 
-Pardon if this embarrassingly simple question, I am new to git haven't
-found git-newbies mailing list.
 
-We have a situation where we want to setup internal git repository that
-will be based on say linux-3.3 kernel.
+--Nq2Wo0NMKNjxTN9z
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-There are about four engineers working on developing things for custom
-hardware. So would create a development branch say companyx-devel and w=
-e
-will commit all of our changes to this compnayx-devel branch.
+The current gitweb only generates Last-Modified and handles
+If-Modified-Since headers for the git_feed action.  This patch breaks
+the Last-Modified and If-Modified-Since handling code out from
+git_feed into a new function exit_if_unmodified_since.  This makes the
+code easy to reuse for other actions.
 
-We also want to keep upto date with latest kernel, so say if we want to
-move to latest 3.4-rc4 we could rebase (?) our origin to 3.4-rc4, of co=
-urse
-fix any of the conflicts we may find etc.
+Only gitweb actions which can easily calculate a modification time
+should use exit_if_unmodified_since, as the goal is to balance local
+processing time vs. upload bandwidth.
 
-We are not sure how to =A0go about setting up the initial import of lin=
-ux3-3
-kernel into git repository on of my local servers?
+Signed-off-by: W Trevor King <wking@drexel.edu>
+---
+Patch v4 1/3 is unchanged.  Should I mail it back in with a [PATCH v5
+1/3] tag?
 
-We know we should do following on the server:
+Changes since v4:
+* die_if_unmodified() -> exit_if_unmodified_since()
+* Added missing `&&` to tests for feed-last-modified (patch 2/3) and
+  snapshot-last-modified (patch 3/3).
 
-git init --bare
-git config core.sharedrepository 1
+ gitweb/gitweb.perl                       |   40 +++++++++++++++++---------=
+---
+ t/t9501-gitweb-standalone-http-status.sh |   27 +++++++++++++++++++-
+ 2 files changed, 49 insertions(+), 18 deletions(-)
 
-Should we be cloning the linux kernel on the server?
-git clone path-to-kernel-org-git-tree
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index 041da17..229f3da 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -7003,6 +7003,28 @@ sub snapshot_name {
+ 	return wantarray ? ($name, $name) : $name;
+ }
+=20
++sub exit_if_unmodified_since {
++	my ($latest_epoch) =3D @_;
++	our $cgi;
++
++	my $if_modified =3D $cgi->http('IF_MODIFIED_SINCE');
++	if (defined $if_modified) {
++		my $since;
++		if (eval { require HTTP::Date; 1; }) {
++			$since =3D HTTP::Date::str2time($if_modified);
++		} elsif (eval { require Time::ParseDate; 1; }) {
++			$since =3D Time::ParseDate::parsedate($if_modified, GMT =3D> 1);
++		}
++		if (defined $since && $latest_epoch <=3D $since) {
++			my %latest_date =3D parse_date($latest_epoch);
++			print $cgi->header(
++				-last_modified =3D> $latest_date{'rfc2822'},
++				-status =3D> '304 Not Modified');
++			goto DONE_GITWEB;
++		}
++	}
++}
++
+ sub git_snapshot {
+ 	my $format =3D $input_params{'snapshot_format'};
+ 	if (!@snapshot_fmts) {
+@@ -7820,24 +7842,8 @@ sub git_feed {
+ 	if (defined($commitlist[0])) {
+ 		%latest_commit =3D %{$commitlist[0]};
+ 		my $latest_epoch =3D $latest_commit{'committer_epoch'};
++		exit_if_unmodified_since($latest_epoch);
+ 		%latest_date   =3D parse_date($latest_epoch, $latest_commit{'comitter_tz=
+'});
+-		my $if_modified =3D $cgi->http('IF_MODIFIED_SINCE');
+-		if (defined $if_modified) {
+-			my $since;
+-			if (eval { require HTTP::Date; 1; }) {
+-				$since =3D HTTP::Date::str2time($if_modified);
+-			} elsif (eval { require Time::ParseDate; 1; }) {
+-				$since =3D Time::ParseDate::parsedate($if_modified, GMT =3D> 1);
+-			}
+-			if (defined $since && $latest_epoch <=3D $since) {
+-				print $cgi->header(
+-					-type =3D> $content_type,
+-					-charset =3D> 'utf-8',
+-					-last_modified =3D> $latest_date{'rfc2822'},
+-					-status =3D> '304 Not Modified');
+-				return;
+-			}
+-		}
+ 		print $cgi->header(
+ 			-type =3D> $content_type,
+ 			-charset =3D> 'utf-8',
+diff --git a/t/t9501-gitweb-standalone-http-status.sh b/t/t9501-gitweb-stan=
+dalone-http-status.sh
+index 31076ed..0e49f29 100755
+--- a/t/t9501-gitweb-standalone-http-status.sh
++++ b/t/t9501-gitweb-standalone-http-status.sh
+@@ -92,7 +92,7 @@ test_debug 'cat gitweb.output'
+ test_expect_success 'snapshots: bad tree-ish id (tagged object)' '
+ 	echo object > tag-object &&
+ 	git add tag-object &&
+-	git commit -m "Object to be tagged" &&
++	test_tick && git commit -m "Object to be tagged" &&
+ 	git tag tagged-object `git hash-object tag-object` &&
+ 	gitweb_run "p=3D.git;a=3Dsnapshot;h=3Dtagged-object;sf=3Dtgz" &&
+ 	grep "400 - Object is not a tree-ish" gitweb.output
+@@ -112,6 +112,31 @@ test_expect_success 'snapshots: bad object id' '
+ '
+ test_debug 'cat gitweb.output'
+=20
++# ----------------------------------------------------------------------
++# modification times (Last-Modified and If-Modified-Since)
++
++test_expect_success 'modification: feed last-modified' '
++	gitweb_run "p=3D.git;a=3Datom;h=3Dmaster" &&
++	grep "Status: 200 OK" gitweb.output &&
++	grep "Last-modified: Thu, 7 Apr 2005 22:14:13 +0000" gitweb.output
++'
++test_debug 'cat gitweb.headers'
++
++test_expect_success 'modification: feed if-modified-since (modified)' '
++	export HTTP_IF_MODIFIED_SINCE=3D"Wed, 6 Apr 2005 22:14:13 +0000" &&
++	gitweb_run "p=3D.git;a=3Datom;h=3Dmaster" &&
++	unset HTTP_IF_MODIFIED_SINCE &&
++	grep "Status: 200 OK" gitweb.output
++'
++test_debug 'cat gitweb.headers'
++
++test_expect_success 'modification: feed if-modified-since (unmodified)' '
++	export HTTP_IF_MODIFIED_SINCE=3D"Thu, 7 Apr 2005 22:14:13 +0000" &&
++	gitweb_run "p=3D.git;a=3Datom;h=3Dmaster" &&
++	unset HTTP_IF_MODIFIED_SINCE &&
++	grep "Status: 304 Not Modified" gitweb.output
++'
++test_debug 'cat gitweb.headers'
+=20
+ # ----------------------------------------------------------------------
+ # load checking
+--=20
+1.7.3.4
 
-Or I should clone the tree from kernel.dot.org client and then push it =
-to my
-local git repo?
+--Nq2Wo0NMKNjxTN9z
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
 
-We tried cloning the tree from kernel.dot.org on client and pushing it =
-to our
-internal server but that doesn't push kernel code as cloned directory
-already has .git directory.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.17 (GNU/Linux)
 
-Is there a document/web page one can refer to that might help us handli=
-ng
-this scenario?
+iQEcBAEBAgAGBQJPcL+oAAoJEPe7CdOcrcTZFRkIAInlcSD42ylzWEj49bddZpHY
+6Ef8zmr9Z7c+egPKjcR66j/16ZcVJKxITV29DhkFgvlaCMQfia3wnzvC1EIQUD85
+hQ85hZFV3yB7GA671vpgHnxYyA9WJtRG6PugxIgJmldH5bbvEAyXAPPCW4Zb/lUf
+UvEJ+HzogRhFOqWG1HJ+E5jQiJ9zhywnwRI+rsfatHFoBcbL1FBlpC569HEeYD+T
+MgV4cNJogfIZ9dhiG2qCcepLp9u7wQ5P6k62PleooRDh94p+p9tzf9ptjsqERu6b
+WUcqaeKRmWxYTZ2eGCKIus7v4HEk1RqTaZMYMjxGHFWm6KE3PhuTSPZDFJ+l+iM=
+=TbXa
+-----END PGP SIGNATURE-----
 
--Kumar
+--Nq2Wo0NMKNjxTN9z--
