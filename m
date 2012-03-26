@@ -1,78 +1,74 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH/RFC 2/2] remote-curl: send the refs to fetch-pack on stdin
-Date: Mon, 26 Mar 2012 13:24:32 -0400
-Message-ID: <20120326172432.GD7942@sigill.intra.peff.net>
-References: <CACsJy8BNT-dY+wDONY_TgLnv0135RZ-47BEVMzX6c3ddH=83Zw@mail.gmail.com>
- <20120319024436.GB10426@sigill.intra.peff.net>
- <4F69B5F0.2060605@gmx.net>
- <CAJo=hJu0H5wfXB_y5XQ6=S0VJ9t4pxHWkuy_=rehJL_6psf00g@mail.gmail.com>
- <20120321171423.GA13140@sigill.intra.peff.net>
- <4F6A33C5.2080909@gmx.net>
- <20120321201722.GA15021@sigill.intra.peff.net>
- <4F6E3478.3090505@gmx.net>
- <20120325012432.GD27651@sigill.intra.peff.net>
- <4F6EEAE3.60204@gmx.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] documentation: fix alphabetic ordered list for
+ git-rebase man page
+Date: Mon, 26 Mar 2012 10:32:31 -0700
+Message-ID: <7vwr67p8sw.fsf@alter.siamese.dyndns.org>
+References: <4F6C5F1B.6010603@seap.minhap.es>
+ <7vd383t8vp.fsf@alter.siamese.dyndns.org> <4F7059B7.8080406@op5.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Shawn Pearce <spearce@spearce.org>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-To: Ivan Todoroski <grnch_lists@gmx.net>
-X-From: git-owner@vger.kernel.org Mon Mar 26 19:24:43 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Nelson Benitez Leon <nelsonjesus.benitez@seap.minhap.es>,
+	git@vger.kernel.org
+To: Andreas Ericsson <ae@op5.se>
+X-From: git-owner@vger.kernel.org Mon Mar 26 19:32:42 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SCDer-0006tq-5Z
-	for gcvg-git-2@plane.gmane.org; Mon, 26 Mar 2012 19:24:41 +0200
+	id 1SCDmb-00052N-88
+	for gcvg-git-2@plane.gmane.org; Mon, 26 Mar 2012 19:32:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933089Ab2CZRYg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Mar 2012 13:24:36 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:60000
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932742Ab2CZRYe (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Mar 2012 13:24:34 -0400
-Received: (qmail 14198 invoked by uid 107); 26 Mar 2012 17:24:52 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 26 Mar 2012 13:24:52 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 26 Mar 2012 13:24:32 -0400
-Content-Disposition: inline
-In-Reply-To: <4F6EEAE3.60204@gmx.net>
+	id S933091Ab2CZRcf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Mar 2012 13:32:35 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:53428 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S933048Ab2CZRce (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Mar 2012 13:32:34 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E83BA6C7E;
+	Mon, 26 Mar 2012 13:32:33 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=KQk77InzkNc+TiJLQYBauezUlsg=; b=ToWm/o
+	ewiUo/d7rj2NqqTJvmVxRmYQo3H4+4dJ2htLHzKJ4vYI50Ixtlt3d9aCv7FlWY3j
+	mh18d8oOudTeON0XkdmKnnw2jEYfnvWyp3WrwJ+IR7Hr6xHhOdTou/9d6HJMIRxs
+	2SyQBzE60kZOjEDy9Y+lJy/d9TPatDpEebXoo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=SoeqmtkBk8FtPaTxdfZyS42DElUSPHbk
+	7pjKVE1xB6gidcmogkvpYIJyJo1lO4efVQG+bCmza7RiiemtGulQIYK4zyJAv3XW
+	6ZaeI4DwbWCXTUtw0U9YWmI6qZAMoA126XXby89ZQYx0xEm7DhXCrDlxwlGHqS2J
+	JL4mkfEzHUQ=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DD3486C7D;
+	Mon, 26 Mar 2012 13:32:33 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4EBD26C7B; Mon, 26 Mar 2012
+ 13:32:33 -0400 (EDT)
+In-Reply-To: <4F7059B7.8080406@op5.se> (Andreas Ericsson's message of "Mon,
+ 26 Mar 2012 13:57:43 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: ABACF944-7769-11E1-99DB-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193935>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193936>
 
-On Sun, Mar 25, 2012 at 11:52:35AM +0200, Ivan Todoroski wrote:
+Andreas Ericsson <ae@op5.se> writes:
 
-> >>-static int rpc_service(struct rpc_state *rpc, struct discovery *heads)
-> >>+static int rpc_service(struct rpc_state *rpc, struct discovery *heads,
-> >>+		int nr_fetch, struct ref **to_fetch)
-> [...]
-> Yeah, I realized this was ugly after I sent it.... not only are new
-> arguments added to rpc_service(), but they seem completely arbitrary
-> and specific to fetch-pack. There is no reason other callers of
-> rpc_service() would want args in the exact same format.
+> On 03/23/2012 08:28 PM, Junio C Hamano wrote:
+>> Thanks; sign-off?
+> ...
+> Just thought I'd throw that out there in case you, like I did, run into
+> useful patches you dare not use because the original author gets hard
+> to contact all of a sudden.
 
-Yeah, I think that is what was bugging me about it.
+Thanks, but after seeing another series that is not as trivial as this one
+from the same author, I was hoping that Nelson will become a part of our
+regular contributor base ;-)
 
-> On the other hand I can't reuse rpc_state.argv because that is
-> already passed to client.argv for start_command().
-
-Right. You'd need a new member.
-
-> Would it be OK if I add a new memeber in rpc_state, e.g. "struct
-> strbuf *stdin_preamble"? If non-NULL, it would contain any data the
-> caller of rpc_service() wants shoved into the stdin of the
-> sub-command before anything else. That way the caller is free to
-> format this data in whatever format they need, not only in the
-> pkt-line format needed by fetch-pack.
-
-I think that is the cleanest solution. It's a little less efficient, in
-that we build the whole buffer in memory instead of sending each packet
-as we form it. But I think we are talking about a few kilobytes at most.
-
--Peff
+And obviously it will be less work on me in the longer term if I train the
+regular contributors to do S-o-b themselves earlier in the process.
