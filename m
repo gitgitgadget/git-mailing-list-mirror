@@ -1,146 +1,135 @@
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: GSoC - Designing a faster index format
-Date: Mon, 26 Mar 2012 09:08:12 -0700
-Message-ID: <CAJo=hJsPgUZi2qMc5aDUn0+o5=9n7pBS+yWBASfqtov8WuFBRA@mail.gmail.com>
-References: <CAKTdtZm3qfG1rcoashDoMoqtD34JJDUDtDruGqGn9bSMzQTcFA@mail.gmail.com>
- <87aa3aw5z8.fsf@thomas.inf.ethz.ch> <CAKTdtZkGP3KbMGf88yW7zcCjemUyEy_4CVNkLD0SV=Lm7=Kveg@mail.gmail.com>
- <CAKTdtZmYc=xz4zCPQiuSTUvdmbLRKXNWNL3N6_4Bj0gujYmRvw@mail.gmail.com>
- <CACsJy8AYs5bzRnhRj_R33qTt-2gPh-rJaO0=1iTva9n14wHB4w@mail.gmail.com>
- <CAKTdtZk4FJD9qXEybpN01+S=5fOm=4AbOp8trFr5c6Uxbfykkg@mail.gmail.com>
- <CACsJy8CU_q+3ROO9z5nHe8NZDjTD4mvnEUP7C0+T3u3bRD11rQ@mail.gmail.com>
- <CAKTdtZmLOzAgG0uCDcVr+O41XPX-XnoVZjsZWPN-BLjq2oG-7A@mail.gmail.com>
- <CACsJy8C=4WaN4MZrZMaD3FqZrF2jCP5sm0F0SpDvzQnYfka9Ew@mail.gmail.com>
- <CAKTdtZkpjVaBSkcieojKj+V7WztT3UDzjGfXyghY=S8mq+X9zw@mail.gmail.com>
- <CACsJy8D85thmK_5jLC7MxJtsitLr=zphKiw2miwPu7Exf7ty=Q@mail.gmail.com>
- <CAKTdtZkx+7iU5T4oBNDEx-A5cgZCLU9ocdXmC9jRbD39J1zb3Q@mail.gmail.com>
- <87iphrjv23.fsf@thomas.inf.ethz.ch> <CACsJy8CsdZpQUQ7ydM1fOpSomm6+LyACCR83ccncVtUk+HbLKA@mail.gmail.com>
+From: =?ISO-8859-15?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
+Subject: Re: [PATCH 0/4] grep: add more information to hunk separators
+Date: Mon, 26 Mar 2012 18:16:36 +0200
+Message-ID: <4F709664.1060206@lsrfire.ath.cx>
+References: <1332729705-9283-1-git-send-email-lodatom@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=ISO-8859-15;
+	format=flowed
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Thomas Rast <trast@student.ethz.ch>,
-	elton sky <eltonsky9404@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 26 18:08:45 2012
+Cc: git@vger.kernel.org
+To: Mark Lodato <lodatom@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Mar 26 18:16:53 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SCCTM-0003cH-9H
-	for gcvg-git-2@plane.gmane.org; Mon, 26 Mar 2012 18:08:44 +0200
+	id 1SCCbC-00081a-Bl
+	for gcvg-git-2@plane.gmane.org; Mon, 26 Mar 2012 18:16:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932901Ab2CZQIf convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 26 Mar 2012 12:08:35 -0400
-Received: from mail-pb0-f46.google.com ([209.85.160.46]:37893 "EHLO
-	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932540Ab2CZQIc convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 26 Mar 2012 12:08:32 -0400
-Received: by pbcun15 with SMTP id un15so6141925pbc.19
-        for <git@vger.kernel.org>; Mon, 26 Mar 2012 09:08:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=spearce.org; s=google;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=48ClBDb93Glk5PV/5uniOLcCxvZTrOa0kaRamFnMmxA=;
-        b=Fg9/ZJxVDSAiZb6TKKJ2N/BwN2BDWLlWgZnSeaxDFh7F/RTsln9i3igrG2Pu5dzrcl
-         cJzCZ2qitX65NClq/DfP7nMmhVVWeQwND/GqDsAIsVuAmJgnJWgA1Zljmvwn3qndxzi1
-         AW8DmvN+wDYyfGIF+BBBgyBtVeeIoH93O0dO8=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding:x-gm-message-state;
-        bh=48ClBDb93Glk5PV/5uniOLcCxvZTrOa0kaRamFnMmxA=;
-        b=gGoAI1kRJISvjK0H6JyKpC8hBBrzPgJ0PPwqmjBaUDlnYaX/ClO3bXGh0950m6RZEt
-         LuiCpptfkRCD1mtz8tS747LvdjObBzG+YEVhDql4xlUVJz5wmL1OoZ2Em7WOTlC9NaEk
-         W+3O5Ty9KDpUth+W3hR/BByArqI04lr6OoStOOf9W9z1rNOPwhS4GvhdOQDL0HfLSc8p
-         Hy1IHtu1wlQraNwMELl93mMAExi8DC5ofTVoWnJBWNqspRfZa79wwJsRjKcPhsPRn9w1
-         nDW5ANaF4B0ttkV0fFS/371t/0f4uGfesfEUJT5IzXSM2VaoXZfKPCtNK+7JO0IPQfnN
-         gV+A==
-Received: by 10.68.234.106 with SMTP id ud10mr43016899pbc.128.1332778112184;
- Mon, 26 Mar 2012 09:08:32 -0700 (PDT)
-Received: by 10.68.237.201 with HTTP; Mon, 26 Mar 2012 09:08:12 -0700 (PDT)
-In-Reply-To: <CACsJy8CsdZpQUQ7ydM1fOpSomm6+LyACCR83ccncVtUk+HbLKA@mail.gmail.com>
-X-Gm-Message-State: ALoCoQl3ID59krzmVEB7zhjcVKWAxybZF64ER5/N+T2TlSiS888Mnson8p+YtOmgRpJTEQTB9t3b
+	id S932924Ab2CZQQo convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 26 Mar 2012 12:16:44 -0400
+Received: from india601.server4you.de ([85.25.151.105]:33443 "EHLO
+	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932866Ab2CZQQm (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Mar 2012 12:16:42 -0400
+Received: from [192.168.2.105] (p4FFD9672.dip.t-dialin.net [79.253.150.114])
+	by india601.server4you.de (Postfix) with ESMTPSA id 9CD242F8038;
+	Mon, 26 Mar 2012 18:16:40 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:11.0) Gecko/20120312 Thunderbird/11.0
+In-Reply-To: <1332729705-9283-1-git-send-email-lodatom@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193921>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193922>
 
-On Mon, Mar 26, 2012 at 08:25, Nguyen Thai Ngoc Duy <pclouds@gmail.com>=
- wrote:
-> On Mon, Mar 26, 2012 at 9:28 PM, Thomas Rast <trast@student.ethz.ch> =
-wrote:
->> elton sky <eltonsky9404@gmail.com> writes:
->>
->>> On Mon, Mar 26, 2012 at 12:06 PM, Nguyen Thai Ngoc Duy
->>> <pclouds@gmail.com> wrote:
->>>> (I think this should be on git@vger as there are many experienced =
-devs there)
->>>>
->>>> On Sun, Mar 25, 2012 at 11:13 AM, elton sky <eltonsky9404@gmail.co=
-m> wrote:
->>>>> About the new format:
->>>>>
->>>>> The index is a single file. Entries in the index still stored
->>>>> sequentially as old format. The difference is they are grouped in=
-to
->>>>> blocks. A block contains many entries and they are ordered by nam=
-es.
->>>>> Blocks are also ordered by the name of the first entry. Each bloc=
-k
->>>>> contains a sha1 for entries in it.
->>>>
->>>> If I remove an entry in the first block, because blocks are of fix=
-ed
->>>> size, you would need to shift all entries up by one, thus update a=
-ll
->>>> blocks?
->>>
->>> We need some GC here. I am not moving all blocks. Rather I would
->>> consider merge or recycle the block. In a simple case if a block
->>> becomes empty, I ll change the offset of new block in the header po=
-int
->>> to this block, and make this block points to the original offset of
->>> new block. In this way, I keep the list of empty blocks I can reuse=
+Am 26.03.2012 04:41, schrieb Mark Lodato:
+> This patch series adds a new `grep --hunk-heading' option that moves =
+the
+> filename and line number to the hunk separator lines ("--") rather th=
+an at the
+> beginning of each matching (or context) line.  In my opinion, this ma=
+kes the
+> output easier to read, especially when combined with `--heading'.
+>
+> I am not sure that "hunk-heading" is the best term, so I welcome idea=
+s on
+> better names.
+>
+> Here's an example:
+>
+>      # Current behavior:
+>      $ git grep -p -C1 -n list_common -- git.c
+>      git.c=3D531=3Dint main(int argc, const char **argv)
+>      --
+>      git.c-570-              printf("usage: %s\n\n", git_usage_string=
+);
+>      git.c:571:              list_common_cmds_help();
+>      git.c-572-              printf("\n%s\n", git_more_info_string);
+>
+>      # New option:
+>      $ git grep -p -C1 --hunk-heading list_common -- git.c
+>      -- git.c:531 --
+>      int main(int argc, char argv)
+>      -- git.c:570 --
+>                      printf("usage: %s\n\n", git_usage_string);
+>                      list_common_cmds_help();
+>                      printf("\n%s\n", git_more_info_string);
+>
+>      # New option with --heading:
+>      $ git grep -p -C1 --hunk-heading --heading list_common -- git.c
+>      git.c
+>      -- 531 --
+>      int main(int argc, char argv)
+>      -- 570 --
+>                      printf("usage: %s\n\n", git_usage_string);
+>                      list_common_cmds_help();
+>                      printf("\n%s\n", git_more_info_string);
+>
+> Originally, I had envisioned also moving the function name (`-p') to =
+the hunk
+> header, similar to the diff context line.  For example:
+>
+>      -- git.c:570 -- int main(int argc, char argv)
+>                      printf("usage: %s\n\n", git_usage_string);
+>                      list_common_cmds_help();
+>                      printf("\n%s\n", git_more_info_string);
+>
+> After implementing this feature, I was not happy with the result and
+> subsequently removed it.  To me, the output was too cluttered and the=
+ line
+> number was ambigous.  For example, in the above, it is not obvious to=
+ me that
+> line 570 is the "printf" line and not the "int main" line.  Still, if=
+ you
+> would like to see the patch to implement this feature, please let me =
+know.
+
+Interesting.
+
+By the way, I keep this alias in my config (a single line), to mimic ac=
+k=20
+(http://betterthangrep.com/) -- another way to format results, with=20
+similar goals:
+
+	ack =3D -c color.grep.filename=3D'bold green' \
+	-c color.grep.match=3D'black yellow' grep --break --heading -n
+
+Back to your patch: Why the second set of "--" after the line number?  =
+I=20
+can see it make sense if a section comment follows, but not without one=
 =2E
->> [...]
->>
->> Doesn't that venture into database land?
->>
->> If we go that far, wouldn't it be better to use a proper database
->> library? =A0All other things being equal, writing such complex code =
-from
->> scratch is probably not a good idea.
->
-> If there's a library that fits our needs (including linking
-> statically). I think we've come close to sqlite file format [1]. But
-> sqlite comes with sql engine, transactional updates... that we don't
-> need. Another obvious source for inspiration is file systems, but I
-> dare not go that way.
->
-> [1] http://www.sqlite.org/fileformat2.html
 
-Or use LevelDb[2]. Its BSD license. Uses an immutable file format, but
-writes updates to new smaller files and eventually collapses
-everything back together into a bigger file. This can be a
-dramatically simpler approach than dealing with your own free block
-system inside of a single file. Its only real downside is needing to
-periodically pay a penalty to rewrite the whole index. But this
-rewrite is going to be faster than the time it takes to rewrite the
-pack files for the same repository, which git gc or git repack
-handles. So I don't think its actually a problem for the index.
+Looking at the above, I thought: We have unified diffs between two=20
+files, we have combined diffs between more than two, what about showing=
+=20
+grep results as one-sided unified diffs?  ("What's the sound of one han=
+d=20
+clapping?" :-)
 
-You might even be able to take a two level approach to compacting the
-LevelDb database (or something like it). In a minor compaction you
-compact all of the files except the huge base file, leaving you with 2
-files. A huge base file that contains the first tree the user checked
-out, and a second smaller file containing any differences they have
-since the initial checkout (this may just be updated stat data for a
-handful of files that differed across two branches as they switched
-back and forth). During a git gc or git repack, add a new stage to
-collapse the base file and everything else into a single new base file
-as a major compaction.
+	--- a/git.c
+	@ -570,3 @ int main(int argc, const char **argv)
+	-		printf("usage: %s\n\n", git_usage_string);
+	:		list_common_cmds_help();
+	-		printf("\n%s\n", git_more_info_string);
 
-[2] http://code.google.com/p/leveldb/
+Pro: Generalization of an established format for showing interesting=20
+parts of a file.  Less duplication of meta-information.  Markers that=20
+tell us the kind of the shown lines are kept ("-" for context, ":" for=20
+matches).  Machine parsable.
+
+Con: Why the "a/" prefix?  One-sided diffs, srsly?
+
+Ren=E9
