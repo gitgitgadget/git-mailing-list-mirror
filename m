@@ -1,87 +1,68 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: GSoC - Designing a faster index format
-Date: Mon, 26 Mar 2012 16:28:20 +0200
-Message-ID: <87iphrjv23.fsf@thomas.inf.ethz.ch>
-References: <CAKTdtZm3qfG1rcoashDoMoqtD34JJDUDtDruGqGn9bSMzQTcFA@mail.gmail.com>
-	<87aa3aw5z8.fsf@thomas.inf.ethz.ch>
-	<CAKTdtZkGP3KbMGf88yW7zcCjemUyEy_4CVNkLD0SV=Lm7=Kveg@mail.gmail.com>
-	<CAKTdtZmYc=xz4zCPQiuSTUvdmbLRKXNWNL3N6_4Bj0gujYmRvw@mail.gmail.com>
-	<CACsJy8AYs5bzRnhRj_R33qTt-2gPh-rJaO0=1iTva9n14wHB4w@mail.gmail.com>
-	<CAKTdtZk4FJD9qXEybpN01+S=5fOm=4AbOp8trFr5c6Uxbfykkg@mail.gmail.com>
-	<CACsJy8CU_q+3ROO9z5nHe8NZDjTD4mvnEUP7C0+T3u3bRD11rQ@mail.gmail.com>
-	<CAKTdtZmLOzAgG0uCDcVr+O41XPX-XnoVZjsZWPN-BLjq2oG-7A@mail.gmail.com>
-	<CACsJy8C=4WaN4MZrZMaD3FqZrF2jCP5sm0F0SpDvzQnYfka9Ew@mail.gmail.com>
-	<CAKTdtZkpjVaBSkcieojKj+V7WztT3UDzjGfXyghY=S8mq+X9zw@mail.gmail.com>
-	<CACsJy8D85thmK_5jLC7MxJtsitLr=zphKiw2miwPu7Exf7ty=Q@mail.gmail.com>
-	<CAKTdtZkx+7iU5T4oBNDEx-A5cgZCLU9ocdXmC9jRbD39J1zb3Q@mail.gmail.com>
+From: Neal Kreitzinger <nkreitzinger@gmail.com>
+Subject: Re: Push from specific directory.
+Date: Mon, 26 Mar 2012 09:41:51 -0500
+Message-ID: <4F70802F.4020603@gmail.com>
+References: <BLU0-SMTP471329E4F80CD64A569A4F7B1410@phx.gbl> <20120322225747.GB14874@sigill.intra.peff.net> <4F6BD1E2.2050607@gmail.com> <BLU0-SMTP315865C5026D08E76594E5DB1460@phx.gbl> <4F6C970B.2010803@gmail.com> <4F707CB4.3030308@ira.uka.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: elton sky <eltonsky9404@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 26 16:29:33 2012
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Anjib Mulepati <anjibcs@hotmail.com>, git <git@vger.kernel.org>
+To: Holger Hellmuth <hellmuth@ira.uka.de>
+X-From: git-owner@vger.kernel.org Mon Mar 26 16:42:03 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SCAvM-0005EB-KE
-	for gcvg-git-2@plane.gmane.org; Mon, 26 Mar 2012 16:29:32 +0200
+	id 1SCB7Q-0003vz-5b
+	for gcvg-git-2@plane.gmane.org; Mon, 26 Mar 2012 16:42:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932554Ab2CZO3V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Mar 2012 10:29:21 -0400
-Received: from edge10.ethz.ch ([82.130.75.186]:18458 "EHLO edge10.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932636Ab2CZO2Y (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Mar 2012 10:28:24 -0400
-Received: from CAS12.d.ethz.ch (172.31.38.212) by edge10.ethz.ch
- (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.1.355.2; Mon, 26 Mar
- 2012 16:28:20 +0200
-Received: from thomas.inf.ethz.ch.ethz.ch (129.132.153.233) by CAS12.d.ethz.ch
- (172.31.38.212) with Microsoft SMTP Server (TLS) id 14.1.355.2; Mon, 26 Mar
- 2012 16:28:20 +0200
-In-Reply-To: <CAKTdtZkx+7iU5T4oBNDEx-A5cgZCLU9ocdXmC9jRbD39J1zb3Q@mail.gmail.com>
-	(elton sky's message of "Mon, 26 Mar 2012 23:36:59 +1100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Originating-IP: [129.132.153.233]
+	id S932633Ab2CZOlz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Mar 2012 10:41:55 -0400
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:48003 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932609Ab2CZOly (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Mar 2012 10:41:54 -0400
+Received: by ghrr11 with SMTP id r11so3848855ghr.19
+        for <git@vger.kernel.org>; Mon, 26 Mar 2012 07:41:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=YNNC9mwyN6D9XYD3XkMj2oucwvIXR7O9+ZkQJf9J8xU=;
+        b=HVIM1WO1Yaw4oQTDUwMbwiIuvoAdeoFWAWfjKKhL1kqY8Z3ZAyFklLk4KM57NoTr+B
+         9iCo6IjnhS2slwDfok6Z9+lZ/IYsJrxUndT3qefCJZ1z9RqRAPYbsSaLHvf5hpcLOFxz
+         LXWCbvsfJMnfEKv/fYvyNzlPRTvxYDE34EALTtTu7xLjyrt9mSIEE+mPDswVicqrvifb
+         TSMMv0qbWMWbPbS1IKqbw+JeZvQ6cN+gxX/y+//uFUI7oTAAK1urW5bUOMlq4smolN7P
+         o2peHryVEb3++sDk3yc93pJvs4PojfFJjOmeqPL8PwmOod/GzaIOfVjKYRcYiSRXljTZ
+         ICfQ==
+Received: by 10.60.10.137 with SMTP id i9mr29245775oeb.23.1332772913828;
+        Mon, 26 Mar 2012 07:41:53 -0700 (PDT)
+Received: from [172.25.2.210] ([67.63.162.200])
+        by mx.google.com with ESMTPS id 8sm16530390obv.19.2012.03.26.07.41.52
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Mon, 26 Mar 2012 07:41:53 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.2.28) Gecko/20120306 Thunderbird/3.1.20
+In-Reply-To: <4F707CB4.3030308@ira.uka.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193914>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193915>
 
-elton sky <eltonsky9404@gmail.com> writes:
-
-> On Mon, Mar 26, 2012 at 12:06 PM, Nguyen Thai Ngoc Duy
-> <pclouds@gmail.com> wrote:
->> (I think this should be on git@vger as there are many experienced devs there)
->>
->> On Sun, Mar 25, 2012 at 11:13 AM, elton sky <eltonsky9404@gmail.com> wrote:
->>> About the new format:
->>>
->>> The index is a single file. Entries in the index still stored
->>> sequentially as old format. The difference is they are grouped into
->>> blocks. A block contains many entries and they are ordered by names.
->>> Blocks are also ordered by the name of the first entry. Each block
->>> contains a sha1 for entries in it.
->>
->> If I remove an entry in the first block, because blocks are of fixed
->> size, you would need to shift all entries up by one, thus update all
->> blocks?
+On 3/26/2012 9:27 AM, Holger Hellmuth wrote:
+> On 23.03.2012 16:30, Neal Kreitzinger wrote:
 >
-> We need some GC here. I am not moving all blocks. Rather I would
-> consider merge or recycle the block. In a simple case if a block
-> becomes empty, I ll change the offset of new block in the header point
-> to this block, and make this block points to the original offset of
-> new block. In this way, I keep the list of empty blocks I can reuse.
-[...]
+>> You would want to setup the gitignore before doing the init.
+>
+> Why that? "git init" doesn't add any files, the repo is still empty.
+>
+> I would even say "git init" helps because you get a comprehensive list 
+> of non-ignored files with "git status" and can sift through that list 
+> for files you want to be ignored
+>
+>
+Thanks for correcting that.
 
-Doesn't that venture into database land?
-
-If we go that far, wouldn't it be better to use a proper database
-library?  All other things being equal, writing such complex code from
-scratch is probably not a good idea.
-
--- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+v/r,
+neal
