@@ -1,174 +1,157 @@
-From: "W. Trevor King" <wking@drexel.edu>
-Subject: [PATCH v4 3/3] gitweb: add If-Modified-Since handling to
- git_snapshot().
-Date: Mon, 26 Mar 2012 07:13:00 -0400
-Message-ID: <20120326111300.GD2951@odin.tremily.us>
-References: <7v62dy4zhf.fsf@alter.siamese.dyndns.org>
- <m3sjh2ay6j.fsf@localhost.localdomain>
- <7v1uol3m5m.fsf@alter.siamese.dyndns.org>
- <201203221346.35295.jnareb@gmail.com> <20120326110943.GA2951@odin.tremily.us>
+From: elton sky <eltonsky9404@gmail.com>
+Subject: Re: GSoC - Designing a faster index format
+Date: Mon, 26 Mar 2012 23:36:59 +1100
+Message-ID: <CAKTdtZkx+7iU5T4oBNDEx-A5cgZCLU9ocdXmC9jRbD39J1zb3Q@mail.gmail.com>
+References: <CAKTdtZm3qfG1rcoashDoMoqtD34JJDUDtDruGqGn9bSMzQTcFA@mail.gmail.com>
+	<87aa3aw5z8.fsf@thomas.inf.ethz.ch>
+	<CAKTdtZkGP3KbMGf88yW7zcCjemUyEy_4CVNkLD0SV=Lm7=Kveg@mail.gmail.com>
+	<CAKTdtZmYc=xz4zCPQiuSTUvdmbLRKXNWNL3N6_4Bj0gujYmRvw@mail.gmail.com>
+	<CACsJy8AYs5bzRnhRj_R33qTt-2gPh-rJaO0=1iTva9n14wHB4w@mail.gmail.com>
+	<CAKTdtZk4FJD9qXEybpN01+S=5fOm=4AbOp8trFr5c6Uxbfykkg@mail.gmail.com>
+	<CACsJy8CU_q+3ROO9z5nHe8NZDjTD4mvnEUP7C0+T3u3bRD11rQ@mail.gmail.com>
+	<CAKTdtZmLOzAgG0uCDcVr+O41XPX-XnoVZjsZWPN-BLjq2oG-7A@mail.gmail.com>
+	<CACsJy8C=4WaN4MZrZMaD3FqZrF2jCP5sm0F0SpDvzQnYfka9Ew@mail.gmail.com>
+	<CAKTdtZkpjVaBSkcieojKj+V7WztT3UDzjGfXyghY=S8mq+X9zw@mail.gmail.com>
+	<CACsJy8D85thmK_5jLC7MxJtsitLr=zphKiw2miwPu7Exf7ty=Q@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature"; boundary=a2FkP9tdjPU2nyhF
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 26 14:13:37 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Mar 26 14:37:12 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SC8nn-0002VT-B4
-	for gcvg-git-2@plane.gmane.org; Mon, 26 Mar 2012 14:13:35 +0200
+	id 1SC9Ad-0006Al-8I
+	for gcvg-git-2@plane.gmane.org; Mon, 26 Mar 2012 14:37:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756427Ab2CZMNa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Mar 2012 08:13:30 -0400
-Received: from vms173005pub.verizon.net ([206.46.173.5]:51744 "EHLO
-	vms173005pub.verizon.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755269Ab2CZMN3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Mar 2012 08:13:29 -0400
-X-Greylist: delayed 3602 seconds by postgrey-1.27 at vger.kernel.org; Mon, 26 Mar 2012 08:13:29 EDT
-Received: from odin.tremily.us ([unknown] [72.68.85.198])
- by vms173005.mailsrvcs.net
- (Sun Java(tm) System Messaging Server 7u2-7.02 32bit (built Apr 16 2009))
- with ESMTPA id <0M1H007WCOHOKO20@vms173005.mailsrvcs.net> for
- git@vger.kernel.org; Mon, 26 Mar 2012 06:13:01 -0500 (CDT)
-Received: by odin.tremily.us (Postfix, from userid 1000)	id 4AE6A42DC4D; Mon,
- 26 Mar 2012 07:13:00 -0400 (EDT)
-Content-disposition: inline
-In-reply-to: <20120326110943.GA2951@odin.tremily.us>
-OpenPGP: id=39A2F3FA2AB17E5D8764F388FC29BDCDF15F5BE8;
- url=http://tremily.us/pubkey.txt
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1756392Ab2CZMhB convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 26 Mar 2012 08:37:01 -0400
+Received: from mail-vb0-f46.google.com ([209.85.212.46]:64254 "EHLO
+	mail-vb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754746Ab2CZMhA convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 26 Mar 2012 08:37:00 -0400
+Received: by vbbff1 with SMTP id ff1so2565901vbb.19
+        for <git@vger.kernel.org>; Mon, 26 Mar 2012 05:36:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :content-type:content-transfer-encoding;
+        bh=MhMj5OBb55WXcs/u7sNfzCgELWatu5itmIzgkdgs54M=;
+        b=tuo84G/ffNVu5+Sxk/JCMTaUvZ5vtyYM+DMTZulNYJgk1gBB1Xw6Euo1t4G4tpGtDt
+         y2i/fpetGqUCBZJKkHxhCWc/5HLT9mUdVGZl9O0bbK4PTMBZtUtpOoaX+bAblLAxFq0d
+         SE50EegmwdKE1XKgSSstTK+SpHQIB9Ge5PwgTE5flDtKMIFdeDEUFMoIeR1eazTCI1dT
+         6x7ataG8FEk8u9CxtS03cu1/jcqqw+Sit0hSy03hhvaqn0jiw5i2Ck5lj7usK+ynA6XL
+         vDZ8KcGJHqN+PETPoS9ThyHEsoezenWfJ9W2d5oA9Vju80QxXnltx9XHLkbyY1S41ZPT
+         jXGQ==
+Received: by 10.52.22.166 with SMTP id e6mr8414173vdf.5.1332765419450; Mon, 26
+ Mar 2012 05:36:59 -0700 (PDT)
+Received: by 10.52.182.233 with HTTP; Mon, 26 Mar 2012 05:36:59 -0700 (PDT)
+In-Reply-To: <CACsJy8D85thmK_5jLC7MxJtsitLr=zphKiw2miwPu7Exf7ty=Q@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193908>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193909>
+
+Hi Nguyen,
+
+On Mon, Mar 26, 2012 at 12:06 PM, Nguyen Thai Ngoc Duy
+<pclouds@gmail.com> wrote:
+> (I think this should be on git@vger as there are many experienced dev=
+s there)
+>
+> On Sun, Mar 25, 2012 at 11:13 AM, elton sky <eltonsky9404@gmail.com> =
+wrote:
+>> About the new format:
+>>
+>> The index is a single file. Entries in the index still stored
+>> sequentially as old format. The difference is they are grouped into
+>> blocks. A block contains many entries and they are ordered by names.
+>> Blocks are also ordered by the name of the first entry. Each block
+>> contains a sha1 for entries in it.
+>
+> If I remove an entry in the first block, because blocks are of fixed
+> size, you would need to shift all entries up by one, thus update all
+> blocks?
+>
+
+We need some GC here. I am not moving all blocks. Rather I would
+consider merge or recycle the block. In a simple case if a block
+becomes empty, I ll change the offset of new block in the header point
+to this block, and make this block points to the original offset of
+new block. In this way, I keep the list of empty blocks I can reuse.
+If a block is not empty but not full, we better merge it with adjacent
+block for efficiency. But I don't know an light way to handle that
+when refreshing index. But we can always run a background thread to
+rebuild the index, at some stage, while system is quiet.
+
+> Also note the sequence format means duplication because we always
+> store full path.
+
+You are right, this keeps the size of the index as current system. Use
+a tree will save disk space for sure. Need think more about this.
+
+> --
+> Duy
+
+Attach my previous email here:
+
+The goal of this project is :
+1. verify checksum for only necessary part of index
+2. keep the time complexity of most git-app below logn
+
+About the new format:
+
+The index is a single file. Entries in the index still stored
+sequentially as old format. The difference is they are grouped into
+blocks. A block contains many entries and they are ordered by names.
+Blocks are also ordered by the name of the first entry. Each block
+contains a sha1 for entries in it.
+=46or using a binary search to locate the block for an entry, the
+offsets of blocks are stored in the header of the index. We reserve
+100 spaces for block offsets in the header. More offsets are stored in
+a meta block (see below) afterwards. An offset of the first meta block
+is stored.
+The checksum is computed on block. After we locate the block, the
+checksum is recomputed for the block. And only the this block will be
+read and write back later. As the block is read into ram, it is easy
+to do a binary search for entries in a block when they are in ram.
+When the index doesn't have many entries, it works very similar with
+current format. When more entries git-added, blocks will come into
+play.
+
+=46ormat:
+
+Head:
+* 4-byte signature
+* 4-byte version num
+* 4-byte num of entries blocks
+* 4-byte offset for new block
+* list of offsets for blocks (e.g. 96, 14096, 8192, ..) : For binary
+search. Each offset is 8 bytes, we reserve 100 x 4 =3D 400 bytes for
+first 100 blocks. More offsets (if applicable) will be stored in a
+meta blocks.
+* 4-byte offset to the first meta block
+* 20-byte sha1 for above and meta blocks
+
+List of Blocks:
+* sha1 for all entries
+* list of entries
+
+Meta block:
+* offset to next meta block
+* list of offsets
+
+Extensions:
+=A0 =A0 =A0 TBD. Have not hacked cache tree yet. Need more knowledge of=
+ cache tree...
 
 
---a2FkP9tdjPU2nyhF
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Block Split & Delete:
+=A0 =A0 =A0 TBD.
 
-Because snapshots can be large, you can save some bandwidth by
-supporting caching via If-Modified-Since.  This patch adds support for
-the i-m-s request to git_snapshot() if the requested hash is a commit.
-Requests for snapshots of tree-ishes, which lack well defined
-timestamps, are still handled as they were before.
 
-Signed-off-by: W Trevor King <wking@drexel.edu>
----
- gitweb/gitweb.perl                       |   21 +++++++++++++++---
- t/t9501-gitweb-standalone-http-status.sh |   33 ++++++++++++++++++++++++++=
-++++
- 2 files changed, 50 insertions(+), 4 deletions(-)
-
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 229f3da..be9ad5d 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -7051,6 +7051,10 @@ sub git_snapshot {
-=20
- 	my ($name, $prefix) =3D snapshot_name($project, $hash);
- 	my $filename =3D "$name$known_snapshot_formats{$format}{'suffix'}";
-+
-+	my %co =3D parse_commit($hash);
-+	die_if_unmodified($co{'committer_epoch'}) if %co;
-+
- 	my $cmd =3D quote_command(
- 		git_cmd(), 'archive',
- 		"--format=3D$known_snapshot_formats{$format}{'format'}",
-@@ -7060,10 +7064,19 @@ sub git_snapshot {
- 	}
-=20
- 	$filename =3D~ s/(["\\])/\\$1/g;
--	print $cgi->header(
--		-type =3D> $known_snapshot_formats{$format}{'type'},
--		-content_disposition =3D> 'inline; filename=3D"' . $filename . '"',
--		-status =3D> '200 OK');
-+	if (%co) {
-+		my %latest_date =3D parse_date($co{'committer_epoch'}, $co{'committer_tz=
-'});
-+		print $cgi->header(
-+			-type =3D> $known_snapshot_formats{$format}{'type'},
-+			-content_disposition =3D> 'inline; filename=3D"' . $filename . '"',
-+			-last_modified =3D> $latest_date{'rfc2822'},
-+			-status =3D> '200 OK');
-+	} else {
-+		print $cgi->header(
-+			-type =3D> $known_snapshot_formats{$format}{'type'},
-+			-content_disposition =3D> 'inline; filename=3D"' . $filename . '"',
-+			-status =3D> '200 OK');
-+	}
-=20
- 	open my $fd, "-|", $cmd
- 		or die_error(500, "Execute git-archive failed");
-diff --git a/t/t9501-gitweb-standalone-http-status.sh b/t/t9501-gitweb-stan=
-dalone-http-status.sh
-index 0e49f29..38e90bd 100755
---- a/t/t9501-gitweb-standalone-http-status.sh
-+++ b/t/t9501-gitweb-standalone-http-status.sh
-@@ -138,6 +138,39 @@ test_expect_success 'modification: feed if-modified-si=
-nce (unmodified)' '
- '
- test_debug 'cat gitweb.headers'
-=20
-+test_expect_success 'modification: snapshot last-modified' '
-+	gitweb_run "p=3D.git;a=3Dsnapshot;h=3Dmaster;sf=3Dtgz" &&
-+	grep "Status: 200 OK" gitweb.output
-+	grep "Last-modified: Thu, 7 Apr 2005 22:14:13 +0000" gitweb.output
-+'
-+test_debug 'cat gitweb.headers'
-+
-+test_expect_success 'modification: snapshot if-modified-since (modified)' '
-+	export HTTP_IF_MODIFIED_SINCE=3D"Wed, 6 Apr 2005 22:14:13 +0000" &&
-+	gitweb_run "p=3D.git;a=3Dsnapshot;h=3Dmaster;sf=3Dtgz" &&
-+	unset HTTP_IF_MODIFIED_SINCE &&
-+	grep "Status: 200 OK" gitweb.output
-+'
-+test_debug 'cat gitweb.headers'
-+
-+test_expect_success 'modification: snapshot if-modified-since (unmodified)=
-' '
-+	export HTTP_IF_MODIFIED_SINCE=3D"Thu, 7 Apr 2005 22:14:13 +0000" &&
-+	gitweb_run "p=3D.git;a=3Dsnapshot;h=3Dmaster;sf=3Dtgz" &&
-+	unset HTTP_IF_MODIFIED_SINCE &&
-+	grep "Status: 304 Not Modified" gitweb.output
-+'
-+test_debug 'cat gitweb.headers'
-+
-+test_expect_success 'modification: tree-ish snapshot' '
-+	ID=3D`git rev-parse --verify HEAD^{tree}` &&
-+	export HTTP_IF_MODIFIED_SINCE=3D"Wed, 6 Apr 2005 22:14:13 +0000" &&
-+	gitweb_run "p=3D.git;a=3Dsnapshot;h=3Dmaster;sf=3Dtgz" &&
-+	unset HTTP_IF_MODIFIED_SINCE &&
-+	grep "Status: 200 OK" gitweb.output &&
-+	! grep "Last-Modified" gitweb.output
-+'
-+test_debug 'cat gitweb.headers'
-+
- # ----------------------------------------------------------------------
- # load checking
-=20
---=20
-1.7.3.4
-
---a2FkP9tdjPU2nyhF
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.17 (GNU/Linux)
-
-iQEcBAEBAgAGBQJPcE86AAoJEPe7CdOcrcTZXZsH/j/bvsBRllw67HzDvJm5w0eF
-+4mm30YUCY3RXgrGmWBx+B5tDOU052w2x8P3JB13VAjno1fKx2bMXOhz7kDQbgGt
-fEmy8u3Jy/IhbShSBGVMnUAWqZpoKJus6xrKAhUP02pTIDp6E2iiIPFDbkLJ9CBL
-riop4jNBcpy65RgJndWQMFVesfw9vk7mnJPXDE0I2ZgvFuli2Y9xW2D73Skx/73J
-3/rnesHSfHgvjZXr/b/zuFUnzK8xkqCGALla6uTdmLq5q1bZzODUY/STOSg6Yom1
-12ZMjD7mHtvbyk3/tE+WaKoW35jRwLAT+jjuNMb8chOw5YOLZ4gG3WJph+r/+wU=
-=zKb+
------END PGP SIGNATURE-----
-
---a2FkP9tdjPU2nyhF--
+-Elton
