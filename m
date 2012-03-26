@@ -1,96 +1,83 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git show loop
-Date: Sun, 25 Mar 2012 21:34:28 -0700
-Message-ID: <7v7gy8rne3.fsf@alter.siamese.dyndns.org>
-References: <alpine.DEB.2.02.1203241101390.2046@localhost6.localdomain6>
- <4F6DB4E9.3090402@in.waw.pl> <4F6DC151.9040707@in.waw.pl>
- <4F6DE5D6.4010408@lsrfire.ath.cx>
+Subject: Re: [PATCH 0/4] grep: add more information to hunk separators
+Date: Sun, 25 Mar 2012 22:14:05 -0700
+Message-ID: <7vr4wgq6zm.fsf@alter.siamese.dyndns.org>
+References: <1332729705-9283-1-git-send-email-lodatom@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org,
-	Zbigniew =?utf-8?Q?J=C4=99drzejewski-Szmek?= <zbyszek@in.waw.pl>,
-	Julia Lawall <julia.lawall@lip6.fr>
-To: =?utf-8?Q?Ren=C3=A9?= Scharfe <rene.scharfe@lsrfire.ath.cx>
-X-From: git-owner@vger.kernel.org Mon Mar 26 06:35:03 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Mark Lodato <lodatom@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Mar 26 07:14:15 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SC1e1-0003YO-Mq
-	for gcvg-git-2@plane.gmane.org; Mon, 26 Mar 2012 06:35:02 +0200
+	id 1SC2Fz-0001mG-3e
+	for gcvg-git-2@plane.gmane.org; Mon, 26 Mar 2012 07:14:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751370Ab2CZEed convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 26 Mar 2012 00:34:33 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:52756 "EHLO
+	id S1751997Ab2CZFOJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Mar 2012 01:14:09 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64724 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751272Ab2CZEec convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 26 Mar 2012 00:34:32 -0400
+	id S1751874Ab2CZFOI (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Mar 2012 01:14:08 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EC0BE7106;
-	Mon, 26 Mar 2012 00:34:31 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2C6B774D0;
+	Mon, 26 Mar 2012 01:14:07 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=aIQ1koCBtOFP
-	4hcbOscaxUKliW4=; b=Dqm4jslJN8ev0QGek1fpAL50ltdpcDVHk8pQhATrCNJ4
-	D4IakS0Ni9JPxCCV/lxy6MyGdjKlEqpv7+PaVnU0gcW07dI+d2zVcgIlVfPnDWC/
-	ZIPVB6FO3hmp5rDYVoQpkw90OdxdOwPb8z9WVYEW9p7s+DVzXbYtwoMsiEs5vFo=
+	:content-type; s=sasl; bh=jz4a61UsG73EXrTO5ZXA2fQEBUI=; b=A7oTqJ
+	cRSKJQkHeOisztYLq+qMzrr3LQIyTG0CVXTssSVDoy4DI94FfIu3oOpcCIE5hlb5
+	WyjQC+926jc30/IS5XsI4g9YtVHTYrI5hQSh6UmU5akrzLvIZYIE0pjEtv6KxR9F
+	wJaBNTevF7MbSShI1Tj3sikfQNj8KOEEOiot8=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=W+bpdg
-	Tq9mncluhWqNX7fsye6XGfJ8XrA0s5xf+1OVV9+Yr5R3x+1FrFOeyc8Z3rM6rFXp
-	4xZniMHM74e7Qu0xz6UbgaaojjOAoRv/Hi3Nb8GaAt4dCGRdjG2EsRECyWSolxOf
-	+cdcZoc+6+Na8Sl00kxhZzYF7O7u5MkBZNU6g=
+	:content-type; q=dns; s=sasl; b=Uk8k/jG0VbThKqdPLzTNH3Du2F+IaOEC
+	4sECm62Zsdim/lTcUWfshWiZLUmpmbwoXUGm8sd1s8i5ewfhnSQ7T6eHHYCi3dz5
+	7YFSOhtz20XdudnDxjhVchLkhfteWMi6O5wS48LRYzjVaepDl0bAzX04ZXHA241N
+	y4z8jQdyW4Y=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E30357105;
-	Mon, 26 Mar 2012 00:34:31 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1AFCB74CF;
+	Mon, 26 Mar 2012 01:14:07 -0400 (EDT)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7382F7104; Mon, 26 Mar 2012
- 00:34:30 -0400 (EDT)
-In-Reply-To: <4F6DE5D6.4010408@lsrfire.ath.cx> (=?utf-8?Q?=22Ren=C3=A9?=
- Scharfe"'s message of "Sat, 24 Mar 2012 16:18:46 +0100")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 99B9374CE; Mon, 26 Mar 2012
+ 01:14:06 -0400 (EDT)
+In-Reply-To: <1332729705-9283-1-git-send-email-lodatom@gmail.com> (Mark
+ Lodato's message of "Sun, 25 Mar 2012 22:41:41 -0400")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: FA877D72-76FC-11E1-9094-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 82D41320-7702-11E1-AEDE-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193897>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193898>
 
-Ren=C3=A9 Scharfe <rene.scharfe@lsrfire.ath.cx> writes:
+Mark Lodato <lodatom@gmail.com> writes:
 
-> Subject: [PATCH] combine-diff: fix loop index underflow
+> Originally, I had envisioned also moving the function name (`-p') to the hunk
+> header, similar to the diff context line.  For example:
 >
-> If both la and context are zero at the start of the loop, la wraps ar=
-ound
-> and we end up reading from memory far away.  Skip the loop in that ca=
-se
-> instead.
+>     -- git.c:570 -- int main(int argc, char argv)
+>                     printf("usage: %s\n\n", git_usage_string);
+>                     list_common_cmds_help();
+>                     printf("\n%s\n", git_more_info_string);
 >
-> Reported-by: Julia Lawall <julia.lawall@lip6.fr>
-> Signed-off-by: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
-> ---
+> After implementing this feature, I was not happy with the result and
+> subsequently removed it.  To me, the output was too cluttered and the line
+> number was ambigous.  For example, in the above, it is not obvious to me that
+> line 570 is the "printf" line and not the "int main" line.  Still, if you
+> would like to see the patch to implement this feature, please let me know.
 
-Thanks. This dates back to 1.3.0.
+The worst part of all of the above is that the output becomes utterly
+ambiguous and the reader cannot tell if "-- git.c..." came because the
+file had such a line that begin with two dashes in it and grep found it,
+or it is your output format embellishment. It is obvious that these are
+not meant to be machine parseable, but if the goal is to make the output
+more useful to the humans, then it may be a better approach to come up
+with a front end that reads our machine readable output and shows output
+with its own embellishments. You could even make it an interactive front
+end.
 
-Will queue.
-
->  combine-diff.c |    2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/combine-diff.c b/combine-diff.c
-> index a2e8dcf..9786680 100644
-> --- a/combine-diff.c
-> +++ b/combine-diff.c
-> @@ -423,7 +423,7 @@ static int make_hunks(struct sline *sline, unsign=
-ed long cnt,
->  						     hunk_begin, j);
->  				la =3D (la + context < cnt + 1) ?
->  					(la + context) : cnt + 1;
-> -				while (j <=3D --la) {
-> +				while (la && j <=3D --la) {
->  					if (sline[la].flag & mark) {
->  						contin =3D 1;
->  						break;
+In other words, I am not yet convinced this belongs to "git grep" proper.
