@@ -1,79 +1,69 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 0/2] Make run-command.c honour SHELL_PATH
-Date: Mon, 26 Mar 2012 13:17:20 -0500
-Message-ID: <20120326181720.GG7599@burratino>
-References: <1332678696-4001-1-git-send-email-bwalton@artsci.utoronto.ca>
- <20120326011148.GA4428@burratino>
- <1332768900-sup-4533@pinkfloyd.chass.utoronto.ca>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Merge-friendly text-based data storage
+Date: Mon, 26 Mar 2012 11:17:45 -0700
+Message-ID: <7vfwcvp6pi.fsf@alter.siamese.dyndns.org>
+References: <CAD77+gRTv4Aq_4FLAQcD9E0p7VBD7h6hQq3CJ9Wo5DU9Zjt+Hg@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: gitster <gitster@pobox.com>, peff <peff@peff.net>,
-	git <git@vger.kernel.org>
-To: Ben Walton <bwalton@artsci.utoronto.ca>
-X-From: git-owner@vger.kernel.org Mon Mar 26 20:17:37 2012
+Cc: Git List <git@vger.kernel.org>
+To: Richard Hartmann <richih.mailinglist@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Mar 26 20:17:56 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SCEU3-0006AR-9T
-	for gcvg-git-2@plane.gmane.org; Mon, 26 Mar 2012 20:17:35 +0200
+	id 1SCEUL-0006Ls-Ma
+	for gcvg-git-2@plane.gmane.org; Mon, 26 Mar 2012 20:17:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932913Ab2CZSRa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Mar 2012 14:17:30 -0400
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:33021 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932830Ab2CZSR3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Mar 2012 14:17:29 -0400
-Received: by yenl12 with SMTP id l12so4064883yen.19
-        for <git@vger.kernel.org>; Mon, 26 Mar 2012 11:17:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=BOx3DurEXXPPS0U8dub1sg6Wg/X6EJflI4K2HjTHMM4=;
-        b=zC01+wggJaIcNuRCuLg35ivvt/5waGM2EaVyFhkugItumEAtsMJa42B3FiDWu5J1DX
-         x4TQYQbIDx7Ilc1ybQaukKpXfh091MGJshpDTRLO220PV+Fa9iXt6u3f3ppP+oXdVF6k
-         5vBe6+Sd9hEft8YZ9AJfatHbLYuGuhaLI4ySxfgUODU9yUE8sH5QjkB0oImMa+rc1WdK
-         aafC2yIK5Qth2TS7vz8UaXtL82cg4DQxC/cSPcjxIMwpMyPxZD4qOw2kMhy536kPSkHk
-         s/oxBtdAVHJ4rCnFOUwDGTBUzG7yeWYWk/ptoyD0YYB+V+0xUA/aRf/n+mZPNi7joMCt
-         iH8Q==
-Received: by 10.50.161.232 with SMTP id xv8mr6591279igb.9.1332785848775;
-        Mon, 26 Mar 2012 11:17:28 -0700 (PDT)
-Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
-        by mx.google.com with ESMTPS id zv10sm10690526igb.13.2012.03.26.11.17.27
-        (version=SSLv3 cipher=OTHER);
-        Mon, 26 Mar 2012 11:17:28 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <1332768900-sup-4533@pinkfloyd.chass.utoronto.ca>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S932963Ab2CZSRs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Mar 2012 14:17:48 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39183 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932830Ab2CZSRs (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Mar 2012 14:17:48 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9E7AC75CB;
+	Mon, 26 Mar 2012 14:17:47 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=fTFGCq/5QKOivXAO5zptwKhhj8w=; b=G1Wp3E
+	bO7x3jp4O2Mn/m2EhpJBFffuNBLDuMq45Qe0GB4d+V016bNW3CZyKQ0XefsOupJf
+	/6hYcEKRp1K6b9gXT4/+MK72fSfYK9FYsclTzYzFMXsiiLfb+GEXPiAHfvta81sm
+	2YW4EXMKgIsz3ZMo1McjB1JS+hGVyKK547suU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=REvcRLbYmfnAc044TpPLLQ1Uv8th2FHs
+	yiawlZ4WykOtveHYV09TQftog1C/GxB04NJky1jn/QDCdElN+e9jYRdclOoN4nNx
+	rZ7QfpGSSzpHh6rTOXgAa6bMIPfBsNbJ5WFPn7z5UBTTgFpTIzazY3aOGhd4wgH1
+	7fWcVGb01Fc=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 958EC75CA;
+	Mon, 26 Mar 2012 14:17:47 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 30FFB75C9; Mon, 26 Mar 2012
+ 14:17:47 -0400 (EDT)
+In-Reply-To: <CAD77+gRTv4Aq_4FLAQcD9E0p7VBD7h6hQq3CJ9Wo5DU9Zjt+Hg@mail.gmail.com> (Richard
+ Hartmann's message of "Mon, 26 Mar 2012 16:19:39 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: FD45C7C6-776F-11E1-B38B-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193946>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193947>
 
-Ben Walton wrote:
-> Excerpts from Jonathan Nieder's message of Sun Mar 25 21:11:48 -0400 2012:
+Richard Hartmann <richih.mailinglist@gmail.com> writes:
 
-[...]
->>                                          at least in the short term
->> while we require a POSIX-style shell elsewhere in git.
->
-> I'm unclear what you're meaning by this.  Are you implying that the
-> requirement for a POSIX-style shell should be relaxes to the point
-> where things don't rely on that base set of functionality?
+> As long as there are no lines that start with the same file name, this
+> file format would allow for efficient merging _if_ git has an internal
+> concept of line identifiers.
 
-Currently git uses bash on Windows by necessity.  I suspect we could
-make a lot of people happy by dropping that dependency some day and
-using cmd.exe or something like powershell in places the user provides
-a script.
+You can write a custom low-level merge driver, and use the attribute
+system to mark that your file is meant to be handled by that ll-merge
+driver.  There is no need for Git to have "an internal concept of line
+identifiers".
 
-Context: [1]
-
-Of course that's far in the future and not certain at all. ;-)
-
-Ciao,
-Jonathan
-
-[1] http://thread.gmane.org/gmane.comp.version-control.git/164656/focus=164716
+It may be of interest to run "git help attributes" and read up on
+"Defining a custom merge driver" section.
