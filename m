@@ -1,135 +1,92 @@
-From: =?ISO-8859-15?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
+From: =?ISO-8859-1?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
 Subject: Re: [PATCH 0/4] grep: add more information to hunk separators
-Date: Mon, 26 Mar 2012 18:16:36 +0200
-Message-ID: <4F709664.1060206@lsrfire.ath.cx>
-References: <1332729705-9283-1-git-send-email-lodatom@gmail.com>
+Date: Mon, 26 Mar 2012 18:16:43 +0200
+Message-ID: <4F70966B.4050107@lsrfire.ath.cx>
+References: <1332729705-9283-1-git-send-email-lodatom@gmail.com> <7vr4wgq6zm.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15;
+Content-Type: text/plain; charset=ISO-8859-1;
 	format=flowed
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Mark Lodato <lodatom@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 26 18:16:53 2012
+Cc: Mark Lodato <lodatom@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Mar 26 18:16:52 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SCCbC-00081a-Bl
-	for gcvg-git-2@plane.gmane.org; Mon, 26 Mar 2012 18:16:50 +0200
+	id 1SCCbC-00081a-Tc
+	for gcvg-git-2@plane.gmane.org; Mon, 26 Mar 2012 18:16:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932924Ab2CZQQo convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 26 Mar 2012 12:16:44 -0400
-Received: from india601.server4you.de ([85.25.151.105]:33443 "EHLO
+	id S932927Ab2CZQQr convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 26 Mar 2012 12:16:47 -0400
+Received: from india601.server4you.de ([85.25.151.105]:33445 "EHLO
 	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932866Ab2CZQQm (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Mar 2012 12:16:42 -0400
+	with ESMTP id S932866Ab2CZQQp (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Mar 2012 12:16:45 -0400
 Received: from [192.168.2.105] (p4FFD9672.dip.t-dialin.net [79.253.150.114])
-	by india601.server4you.de (Postfix) with ESMTPSA id 9CD242F8038;
-	Mon, 26 Mar 2012 18:16:40 +0200 (CEST)
+	by india601.server4you.de (Postfix) with ESMTPSA id 0D7B12F8038;
+	Mon, 26 Mar 2012 18:16:44 +0200 (CEST)
 User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:11.0) Gecko/20120312 Thunderbird/11.0
-In-Reply-To: <1332729705-9283-1-git-send-email-lodatom@gmail.com>
+In-Reply-To: <7vr4wgq6zm.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193922>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193923>
 
-Am 26.03.2012 04:41, schrieb Mark Lodato:
-> This patch series adds a new `grep --hunk-heading' option that moves =
-the
-> filename and line number to the hunk separator lines ("--") rather th=
-an at the
-> beginning of each matching (or context) line.  In my opinion, this ma=
-kes the
-> output easier to read, especially when combined with `--heading'.
+Am 26.03.2012 07:14, schrieb Junio C Hamano:
+> Mark Lodato<lodatom@gmail.com>  writes:
 >
-> I am not sure that "hunk-heading" is the best term, so I welcome idea=
-s on
-> better names.
+>> Originally, I had envisioned also moving the function name (`-p') to=
+ the hunk
+>> header, similar to the diff context line.  For example:
+>>
+>>      -- git.c:570 -- int main(int argc, char argv)
+>>                      printf("usage: %s\n\n", git_usage_string);
+>>                      list_common_cmds_help();
+>>                      printf("\n%s\n", git_more_info_string);
+>>
+>> After implementing this feature, I was not happy with the result and
+>> subsequently removed it.  To me, the output was too cluttered and th=
+e line
+>> number was ambigous.  For example, in the above, it is not obvious t=
+o me that
+>> line 570 is the "printf" line and not the "int main" line.  Still, i=
+f you
+>> would like to see the patch to implement this feature, please let me=
+ know.
 >
-> Here's an example:
->
->      # Current behavior:
->      $ git grep -p -C1 -n list_common -- git.c
->      git.c=3D531=3Dint main(int argc, const char **argv)
->      --
->      git.c-570-              printf("usage: %s\n\n", git_usage_string=
-);
->      git.c:571:              list_common_cmds_help();
->      git.c-572-              printf("\n%s\n", git_more_info_string);
->
->      # New option:
->      $ git grep -p -C1 --hunk-heading list_common -- git.c
->      -- git.c:531 --
->      int main(int argc, char argv)
->      -- git.c:570 --
->                      printf("usage: %s\n\n", git_usage_string);
->                      list_common_cmds_help();
->                      printf("\n%s\n", git_more_info_string);
->
->      # New option with --heading:
->      $ git grep -p -C1 --hunk-heading --heading list_common -- git.c
->      git.c
->      -- 531 --
->      int main(int argc, char argv)
->      -- 570 --
->                      printf("usage: %s\n\n", git_usage_string);
->                      list_common_cmds_help();
->                      printf("\n%s\n", git_more_info_string);
->
-> Originally, I had envisioned also moving the function name (`-p') to =
-the hunk
-> header, similar to the diff context line.  For example:
->
->      -- git.c:570 -- int main(int argc, char argv)
->                      printf("usage: %s\n\n", git_usage_string);
->                      list_common_cmds_help();
->                      printf("\n%s\n", git_more_info_string);
->
-> After implementing this feature, I was not happy with the result and
-> subsequently removed it.  To me, the output was too cluttered and the=
- line
-> number was ambigous.  For example, in the above, it is not obvious to=
- me that
-> line 570 is the "printf" line and not the "int main" line.  Still, if=
- you
-> would like to see the patch to implement this feature, please let me =
-know.
+> The worst part of all of the above is that the output becomes utterly
+> ambiguous and the reader cannot tell if "-- git.c..." came because th=
+e
+> file had such a line that begin with two dashes in it and grep found =
+it,
+> or it is your output format embellishment. It is obvious that these a=
+re
+> not meant to be machine parseable, but if the goal is to make the out=
+put
+> more useful to the humans, then it may be a better approach to come u=
+p
+> with a front end that reads our machine readable output and shows out=
+put
+> with its own embellishments. You could even make it an interactive fr=
+ont
+> end.
 
-Interesting.
+Human readers can differentiate between contents and heading by color;=20
+separators are cyan by default.
 
-By the way, I keep this alias in my config (a single line), to mimic ac=
-k=20
-(http://betterthangrep.com/) -- another way to format results, with=20
-similar goals:
-
-	ack =3D -c color.grep.filename=3D'bold green' \
-	-c color.grep.match=3D'black yellow' grep --break --heading -n
-
-Back to your patch: Why the second set of "--" after the line number?  =
-I=20
-can see it make sense if a section comment follows, but not without one=
-=2E
-
-Looking at the above, I thought: We have unified diffs between two=20
-files, we have combined diffs between more than two, what about showing=
+A separate frontend would probably have to implement match highlighting=
 =20
-grep results as one-sided unified diffs?  ("What's the sound of one han=
-d=20
-clapping?" :-)
+again.  That's not too hard, but a bit sad.
 
-	--- a/git.c
-	@ -570,3 @ int main(int argc, const char **argv)
-	-		printf("usage: %s\n\n", git_usage_string);
-	:		list_common_cmds_help();
-	-		printf("\n%s\n", git_more_info_string);
+> In other words, I am not yet convinced this belongs to "git grep" pro=
+per.
 
-Pro: Generalization of an established format for showing interesting=20
-parts of a file.  Less duplication of meta-information.  Markers that=20
-tell us the kind of the shown lines are kept ("-" for context, ":" for=20
-matches).  Machine parsable.
-
-Con: Why the "a/" prefix?  One-sided diffs, srsly?
+All in all, I'm not sure either.  But I think the idea to deduplicate=20
+the meta-information and give found content more screen real estate is =
+a=20
+good one in general.
 
 Ren=E9
