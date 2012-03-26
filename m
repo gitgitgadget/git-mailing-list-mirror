@@ -1,90 +1,110 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: GSoC idea: adding JavaScript library / framework in gitweb
-Date: Mon, 26 Mar 2012 01:44:22 +0100
-Message-ID: <201203260244.23556.jnareb@gmail.com>
-References: <CACeyogcFJoUyAiTReDJK_nCMGBp+23OjcS407A1X=fqFR+aGag@mail.gmail.com> <201203251955.21454.jnareb@gmail.com> <CACeyogdCsFZEqmm057ZMcCYRuxiZ2-yfcV9+e1AdOOhTjne8vA@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 0/2] Make run-command.c honour SHELL_PATH
+Date: Sun, 25 Mar 2012 20:11:48 -0500
+Message-ID: <20120326011148.GA4428@burratino>
+References: <1332678696-4001-1-git-send-email-bwalton@artsci.utoronto.ca>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: chaitanyaa nalla <nallachaitu@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 26 02:44:30 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: gitster@pobox.com, peff@peff.net, git@vger.kernel.org
+To: Ben Walton <bwalton@artsci.utoronto.ca>
+X-From: git-owner@vger.kernel.org Mon Mar 26 03:12:40 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SBy2w-0004NR-7w
-	for gcvg-git-2@plane.gmane.org; Mon, 26 Mar 2012 02:44:30 +0200
+	id 1SByU8-0006ga-EQ
+	for gcvg-git-2@plane.gmane.org; Mon, 26 Mar 2012 03:12:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752605Ab2CZAoY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 25 Mar 2012 20:44:24 -0400
-Received: from mail-we0-f174.google.com ([74.125.82.174]:33542 "EHLO
-	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752430Ab2CZAoY (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 25 Mar 2012 20:44:24 -0400
-Received: by wejx9 with SMTP id x9so3856530wej.19
-        for <git@vger.kernel.org>; Sun, 25 Mar 2012 17:44:22 -0700 (PDT)
+	id S1753333Ab2CZBL6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 25 Mar 2012 21:11:58 -0400
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:44053 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753213Ab2CZBL5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 25 Mar 2012 21:11:57 -0400
+Received: by iagz16 with SMTP id z16so7468703iag.19
+        for <git@vger.kernel.org>; Sun, 25 Mar 2012 18:11:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        bh=QvBTBM1EuVzk+NOdPmHUoUo66g4ffAc7jwVYO1IF2vA=;
-        b=PbiyvB10K6KkPRk/aMeyAKJ6i6uSUpeOoprjgR9sYnytHDaEmQw782tPUJTMki1zZO
-         WKKfydbeOPqFSyJ68RYHX/yoZf+CGOeRKQrfRlWmGpv0tsb7626oeh+g8Hok2DzMykb/
-         7YOJ4KaG3AeXMg0ujNoI8iDOsEHIkheVCUyUreK8nOSIM9xgcoY3jdKKkvJW2KUMx3B6
-         luY/cuMMBE1woc8Xp6DgGBqO6SzolvRCd0ejf8F9XJJMxJ18jmafJB9/remsfNJSeNLy
-         WkTMACf9ZSlyhpZIf8Bi77VRXdrWznorKOtBbKHcasGeiYce8k6ZVr2B8MuJVyLUcHrE
-         nunA==
-Received: by 10.180.80.70 with SMTP id p6mr13901434wix.21.1332722662685;
-        Sun, 25 Mar 2012 17:44:22 -0700 (PDT)
-Received: from [192.168.1.13] (epy159.neoplus.adsl.tpnet.pl. [83.20.66.159])
-        by mx.google.com with ESMTPS id l5sm36503523wia.11.2012.03.25.17.44.21
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sun, 25 Mar 2012 17:44:22 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <CACeyogdCsFZEqmm057ZMcCYRuxiZ2-yfcV9+e1AdOOhTjne8vA@mail.gmail.com>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=E5Tas/w1MuQUuP4xd6a5Wy9qP7ZlKkhLeBst0R3Rz0k=;
+        b=tsnDT1nNYu0HyeiDmF6rVkMMHvQC3aqyz6ptY+0/xFhxQU6t0zzSBFvEWbLhdUJHGX
+         Hp8+WxRzlZ5JAG6wkIgSBg3g8A2EdYo97OkrmdGEDqidn0ZDeMNlcawexrUV2P6hTUvv
+         wr5tZFTOPpgTaoSSFYe+5p0dqxuY6fbFP4nQ3paPUkJUXvInzsPAs/3VXjrh03UQDIXa
+         LXLCrFvsoBb95G1W1Ix9duLtALAjPAyDLzbJrThI9o5URD4jwoIh8pGIxbxlSDQaB4eu
+         tun4jTer9hr5/qBXkkLWuV4GeP9kZV3dkBuz0cgyFcXd9Gqa1yCphWGay8IvJ8WxJDpH
+         ekNQ==
+Received: by 10.42.141.72 with SMTP id n8mr11698850icu.47.1332724316612;
+        Sun, 25 Mar 2012 18:11:56 -0700 (PDT)
+Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
+        by mx.google.com with ESMTPS id md6sm13088408igc.0.2012.03.25.18.11.55
+        (version=SSLv3 cipher=OTHER);
+        Sun, 25 Mar 2012 18:11:55 -0700 (PDT)
 Content-Disposition: inline
+In-Reply-To: <1332678696-4001-1-git-send-email-bwalton@artsci.utoronto.ca>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193887>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193888>
 
-On Sun, 25 Mar 2012, chaitanyaa nalla wrote:
+Hi Ben,
 
-> "creating side-by-side diff from unified  diff in JavaScript, so that
->  switching between unified and side-by-side diff view  could be done
->  entirely client-side, without hitting the server"
->
->  could you please elaborate on this, I didn't understand this completly. 
+Good catch.  A few comments:
 
-Side-by-side diff is a new gitweb feature, available in v.7.9 (since
-commit 6ba1eb5 (gitweb: Add a feature to show side-by-side diff, 2011-10-31))
+Ben Walton wrote:
 
-Both git.kernel.org and repo.or.cz are based on an older version of
-gitweb.  You need to install gitweb to test this (and perhaps git-instaweb
-for easier HTML preview).
+> In this case, the failing test was t7006-pager:command-specific
+> pager.  That test (and some subsequent ones) were setting the pager
+> command used by git log to "sed s/^/foo:/ >actual" which is fine in a
+> POSIX-compliant sh, but not in Solaris' sh.  If the user PATH at
+> runtime happened to allow the broken system sh used instead of a sane
+> sh, the ^ is interpreted the same as[1] | and this caused sed to fail
+> with incomplete s/ command and a "command not found: /foo:" from the
+> other forked process.
 
-In short: unified diff like this:
+When I first read the corresponding patch without reading this cover
+letter I was mystified.  Until I saw the above paragraph, I did not
+even see what problem was being solved.  The above paragraph should
+probably be part of the commit message.
 
-  @@ -119,8 +119,8 @@ UI, Workflows & Features
-   ctx
-  -foo
-  +bar
+Ok, on to the proposed solution. ;-)
 
-is turned into side-by-side diff:
+My first reaction was to suspect the series is solving the problem in
+the wrong place.  The core of the bug might be t7006 itself, which
+assumes that the shell used to interpret the GIT_PAGER setting is a
+POSIX-style shell rather than an ancient Bourne shell or cmd.exe.
+In the far long term, we should probably skip this test on some
+platforms using an appropriate test prerequisite.
 
-   ctx                    ctx
-  -foo                   +bar
+To put it another way, the RUN_USING_SHELL magic is just supposed to
+be a more featureful way to do what system() normally does.  What
+shell does system() use on Solaris?
 
-Commit  6ae683c (gitweb: Add navigation to select side-by-side diff,
-2011-10-31) allows switching between unified and side-by-side diff;
-the goal of this feature would be to make it client-side (hijacking
-the link).
+A second reaction was to wonder why the usual fixup from
+v1.6.4-rc0~66^2~1 (Makefile: insert SANE_TOOL_PATH to PATH before /bin
+or /usr/bin, 2009-07-08) didn't apply.  Should the git wrapper prepend
+the same magic to $PATH that git-sh-setup.sh does to make the behavior
+of scripted and unscripted commands a little more consistent?
 
--- 
-Jakub Narebski
-Poland
+A third reaction was that git_pager in the sh-setup library uses the
+eval builtin, so we are already assuming that GIT_PAGER is appropriate
+input for a POSIX-style shell.  So maybe the approach you've adopted
+is appropriate after all, at least in the short term while we require
+a POSIX-style shell elsewhere in git.
+
+A few added words in the commit message could save the next reader
+from going through so long a thought process before seeing why what
+the patch does is the right thing to do.
+
+A more minor comment: patch 1/2 was even more mysterious.  Combining
+the two patches would be enough to avoid confusion there.  I haven't
+checked the makefile changes and interaction with GIT-CFLAGS carefully
+yet and hope to do so in the next round.
+
+Thanks for working on this.
+
+Sincerely,
+Jonathan
