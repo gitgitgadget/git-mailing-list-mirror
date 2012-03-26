@@ -1,7 +1,8 @@
 From: Stefano Lattarini <stefano.lattarini@gmail.com>
-Subject: [PATCH 0/3] configure: consistency and cosmetic improvements
-Date: Mon, 26 Mar 2012 18:42:23 +0200
-Message-ID: <cover.1331333479.git.stefano.lattarini@gmail.com>
+Subject: [PATCH 2/3] configure: avoid some code repetitions thanks to m4_{push,pop}def
+Date: Mon, 26 Mar 2012 18:42:25 +0200
+Message-ID: <4732affdd77695e93817935c3f44bbad5e450d8c.1332779755.git.stefano.lattarini@gmail.com>
+References: <cover.1331333479.git.stefano.lattarini@gmail.com>
 Cc: Stefano Lattarini <stefano.lattarini@gmail.com>
 To: git@vger.kernel.org
 X-From: git-owner@vger.kernel.org Mon Mar 26 18:42:53 2012
@@ -10,690 +11,112 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SCD0K-0000uJ-DM
-	for gcvg-git-2@plane.gmane.org; Mon, 26 Mar 2012 18:42:49 +0200
+	id 1SCD0M-0000uJ-39
+	for gcvg-git-2@plane.gmane.org; Mon, 26 Mar 2012 18:42:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932906Ab2CZQml (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Mar 2012 12:42:41 -0400
-Received: from mail-ee0-f46.google.com ([74.125.83.46]:63231 "EHLO
-	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932738Ab2CZQmk (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Mar 2012 12:42:40 -0400
-Received: by eekc41 with SMTP id c41so1627630eek.19
-        for <git@vger.kernel.org>; Mon, 26 Mar 2012 09:42:38 -0700 (PDT)
+	id S932940Ab2CZQmp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Mar 2012 12:42:45 -0400
+Received: from mail-ey0-f174.google.com ([209.85.215.174]:45699 "EHLO
+	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932784Ab2CZQmn (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Mar 2012 12:42:43 -0400
+Received: by mail-ey0-f174.google.com with SMTP id q12so1592623eaa.19
+        for <git@vger.kernel.org>; Mon, 26 Mar 2012 09:42:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        bh=5ytfGyPiC3f/lz5WC3IJgbzarlAETiTnRmTL2G7gVAc=;
-        b=dBm3docW8UMSe8t28Lfz2R1iULSOU1tx1yXjda2qSIlOhsL+tjdqGMRxitORJmXL3R
-         jB5tJscZoY+AUhu1hmEel029WkfMxepdaEFujx3ATwyn8lMuTka+JH+Z+0o7VbPDUu0l
-         HqFjBaV59+3Z0rJ2xKKApQPsiYjeE8+lrIr89ydn4nOKG96zz4wEQapqRdQbpr0ouIv5
-         DD5W9KE47Nt0RnGT9x6JHHozG7dqDy08E1NLHcfzVEGFPvRw7Zg8o3bNT27r32bySyF+
-         3BLpK8/dPfXDNmHqz9Ehp2NeuajDXgnNjq5TWOSRdI7Tm37i3uk9rqUgvlte4ZiYnNRg
-         l2wg==
-Received: by 10.14.187.4 with SMTP id x4mr3118380eem.14.1332780158104;
-        Mon, 26 Mar 2012 09:42:38 -0700 (PDT)
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
+         :in-reply-to:references;
+        bh=Q945Wbekxn5ZXSe6dHrX02NiQTSVByQLZ4CBpmDauXo=;
+        b=vTS/7bRmbnPciwdlh21/+sq1swyWlqQuRBpE7dphjV3EQkk5rzS76GdgXyzYMLeVg4
+         oj/YfvkRHO1LmrfLYKtGyfWjG3bRfI8gWx+ofNm7qFxGrtfO6smf1m/EvQaASBOl7HIX
+         EDjCYsQcSXkjhhVRUGUeiY8aKg5fBOQnWA5tkKgGmPBU2UL59r6urzs76X0PscvoTXKC
+         BWn6Nl1e8oTlov3Ebjv0o7t2Y/qwkATy36fDyN8aJFCGCSiEv6fh0cWkOOvRwvPjcYLD
+         pwzT49++mvKptEzkwN1nOXR4DSyT7SrSnIgFVo0QhTU/04viUSAiWqUlgcmZemFSkvOC
+         yOKg==
+Received: by 10.213.15.129 with SMTP id k1mr1584363eba.70.1332780162954;
+        Mon, 26 Mar 2012 09:42:42 -0700 (PDT)
 Received: from localhost.localdomain (host210-95-dynamic.0-87-r.retail.telecomitalia.it. [87.0.95.210])
-        by mx.google.com with ESMTPS id p57sm60152731eei.8.2012.03.26.09.42.35
+        by mx.google.com with ESMTPS id p57sm60152731eei.8.2012.03.26.09.42.40
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 26 Mar 2012 09:42:37 -0700 (PDT)
+        Mon, 26 Mar 2012 09:42:41 -0700 (PDT)
 X-Mailer: git-send-email 1.7.9
+In-Reply-To: <cover.1331333479.git.stefano.lattarini@gmail.com>
+In-Reply-To: <cover.1332779754.git.stefano.lattarini@gmail.com>
+References: <cover.1332779754.git.stefano.lattarini@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193926>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193927>
 
-This series (based on 'master') presents three simple patches that
-improve the style of git's configure.ac a little.  They should cause
-no semantic change.
+This change is just cosmetic, and should cause no semantic change, nor
+any change in the generated configure script.
 
-There is still ample room for improvements in configure.ac, but that
-is better done incrementally IMHO -- no need for a patch bomb.
+Signed-off-by: Stefano Lattarini <stefano.lattarini@gmail.com>
+---
+ configure.ac |   26 ++++++++++++++------------
+ 1 files changed, 14 insertions(+), 12 deletions(-)
 
-Below is the diff between the 'configure' script generated before
-this series is applied and the one generated afterwards.  Both have
-been generated with autoconf 2.68.
-
-Stefano Lattarini (3):
-  configure: move definitions of private m4 macros before AC_INIT invocation
-  configure: avoid some code repetitions thanks to m4_{push,pop}def
-  configure: be more idiomatic
-
- configure.ac |  198 +++++++++++++++++++++++++++++-----------------------------
- 1 files changed, 100 insertions(+), 98 deletions(-)
-
--*-*-
-
---- configure.before	2012-03-26 18:18:42.000000000 +0200
-+++ configure.after	2012-03-26 18:32:13.000000000 +0200
-@@ -1,6 +1,6 @@
- #! /bin/sh
- # Guess values for system-dependent variables and create Makefiles.
--# Generated by GNU Autoconf 2.68 for git 1.7.10.rc2.10.gb47606.
-+# Generated by GNU Autoconf 2.68 for git 1.7.10.rc2.13.g4f748.
+diff --git a/configure.ac b/configure.ac
+index 0743a70..e888601 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -27,10 +27,11 @@ AC_DEFUN([GIT_ARG_SET_PATH],
+ # Optional second argument allows setting NO_PROGRAM=YesPlease if
+ # --without-PROGRAM is used.
+ AC_DEFUN([GIT_CONF_APPEND_PATH],
+-[PROGRAM=m4_toupper($1); \
++[m4_pushdef([GIT_UC_PROGRAM], m4_toupper([$1]))dnl
++PROGRAM=GIT_UC_PROGRAM; \
+ if test "$withval" = "no"; then \
+ 	if test -n "$2"; then \
+-		m4_toupper($1)_PATH=$withval; \
++		GIT_UC_PROGRAM[]_PATH=$withval; \
+ 		AC_MSG_NOTICE([Disabling use of ${PROGRAM}]); \
+ 		GIT_CONF_APPEND_LINE(NO_${PROGRAM}=YesPlease); \
+ 		GIT_CONF_APPEND_LINE(${PROGRAM}_PATH=); \
+@@ -41,12 +42,12 @@ else \
+ 	if test "$withval" = "yes"; then \
+ 		AC_MSG_WARN([You should provide path for --with-$1=PATH]); \
+ 	else \
+-		m4_toupper($1)_PATH=$withval; \
+-		AC_MSG_NOTICE([Setting m4_toupper($1)_PATH to $withval]); \
++		GIT_UC_PROGRAM[]_PATH=$withval; \
++		AC_MSG_NOTICE([Setting GIT_UC_PROGRAM[]_PATH to $withval]); \
+ 		GIT_CONF_APPEND_LINE(${PROGRAM}_PATH=$withval); \
+ 	fi; \
+ fi; \
+-]) # GIT_CONF_APPEND_PATH
++m4_popdef([GIT_UC_PROGRAM])]) # GIT_CONF_APPEND_PATH
  #
- # Report bugs to <git@vger.kernel.org>.
+ # GIT_PARSE_WITH(PACKAGE)
+ # -----------------------
+@@ -55,18 +56,19 @@ fi; \
+ # * Set PACKAGEDIR=PATH for --with-PACKAGE=PATH
+ # * Unset NO_PACKAGE for --with-PACKAGE without ARG
+ AC_DEFUN([GIT_PARSE_WITH],
+-[PACKAGE=m4_toupper($1); \
++[m4_pushdef([GIT_UC_PACKAGE], m4_toupper([$1]))dnl
++PACKAGE=GIT_UC_PACKAGE; \
+ if test "$withval" = "no"; then \
+-	m4_toupper(NO_$1)=YesPlease; \
++	NO_[]GIT_UC_PACKAGE=YesPlease; \
+ elif test "$withval" = "yes"; then \
+-	m4_toupper(NO_$1)=; \
++	NO_[]GIT_UC_PACKAGE=; \
+ else \
+-	m4_toupper(NO_$1)=; \
+-	m4_toupper($1)DIR=$withval; \
+-	AC_MSG_NOTICE([Setting m4_toupper($1)DIR to $withval]); \
++	NO_[]GIT_UC_PACKAGE=; \
++	GIT_UC_PACKAGE[]DIR=$withval; \
++	AC_MSG_NOTICE([Setting GIT_UC_PACKAGE[]DIR to $withval]); \
+ 	GIT_CONF_APPEND_LINE(${PACKAGE}DIR=$withval); \
+ fi \
+-])# GIT_PARSE_WITH
++m4_popdef([GIT_UC_PACKAGE])]) # GIT_PARSE_WITH
  #
-@@ -560,8 +560,8 @@
- # Identity of this package.
- PACKAGE_NAME='git'
- PACKAGE_TARNAME='git'
--PACKAGE_VERSION='1.7.10.rc2.10.gb47606'
--PACKAGE_STRING='git 1.7.10.rc2.10.gb47606'
-+PACKAGE_VERSION='1.7.10.rc2.13.g4f748'
-+PACKAGE_STRING='git 1.7.10.rc2.13.g4f748'
- PACKAGE_BUGREPORT='git@vger.kernel.org'
- PACKAGE_URL=''
- 
-@@ -1283,7 +1283,7 @@
-   # Omit some internal or obsolete options to make the list less imposing.
-   # This message is too long to be a string in the A/UX 3.1 sh.
-   cat <<_ACEOF
--\`configure' configures git 1.7.10.rc2.10.gb47606 to adapt to many kinds of systems.
-+\`configure' configures git 1.7.10.rc2.13.g4f748 to adapt to many kinds of systems.
- 
- Usage: $0 [OPTION]... [VAR=VALUE]...
- 
-@@ -1344,7 +1344,7 @@
- 
- if test -n "$ac_init_help"; then
-   case $ac_init_help in
--     short | recursive ) echo "Configuration of git 1.7.10.rc2.10.gb47606:";;
-+     short | recursive ) echo "Configuration of git 1.7.10.rc2.13.g4f748:";;
-    esac
-   cat <<\_ACEOF
- 
-@@ -1483,7 +1483,7 @@
- test -n "$ac_init_help" && exit $ac_status
- if $ac_init_version; then
-   cat <<\_ACEOF
--git configure 1.7.10.rc2.10.gb47606
-+git configure 1.7.10.rc2.13.g4f748
- generated by GNU Autoconf 2.68
- 
- Copyright (C) 2010 Free Software Foundation, Inc.
-@@ -1963,7 +1963,7 @@
- This file contains any messages produced by compilers while
- running configure, to aid debugging if configure makes a mistake.
- 
--It was created by git $as_me 1.7.10.rc2.10.gb47606, which was
-+It was created by git $as_me 1.7.10.rc2.13.g4f748, which was
- generated by GNU Autoconf 2.68.  Invocation command line was
- 
-   $ $0 $@
-@@ -2320,51 +2320,6 @@
- 
- echo "# ${config_append}.  Generated by configure." > "${config_append}"
- 
--
--## Definitions of macros
--# GIT_CONF_APPEND_LINE(LINE)
--# --------------------------
--# Append LINE to file ${config_append}
--# GIT_CONF_APPEND_LINE
--#
--# GIT_ARG_SET_PATH(PROGRAM)
--# -------------------------
--# Provide --with-PROGRAM=PATH option to set PATH to PROGRAM
--# Optional second argument allows setting NO_PROGRAM=YesPlease if
--# --without-PROGRAM version used.
--# GIT_ARG_SET_PATH
--#
--# GIT_CONF_APPEND_PATH(PROGRAM)
--# ------------------------------
--# Parse --with-PROGRAM=PATH option to set PROGRAM_PATH=PATH
--# Used by GIT_ARG_SET_PATH(PROGRAM)
--# Optional second argument allows setting NO_PROGRAM=YesPlease if
--# --without-PROGRAM is used.
-- # GIT_CONF_APPEND_PATH
--#
--# GIT_PARSE_WITH(PACKAGE)
--# -----------------------
--# For use in AC_ARG_WITH action-if-found, for packages default ON.
--# * Set NO_PACKAGE=YesPlease for --without-PACKAGE
--# * Set PACKAGEDIR=PATH for --with-PACKAGE=PATH
--# * Unset NO_PACKAGE for --with-PACKAGE without ARG
--# GIT_PARSE_WITH
--#
--# GIT_PARSE_WITH_SET_MAKE_VAR(WITHNAME, VAR, HELP_TEXT)
--# ---------------------
--# Set VAR to the value specied by --with-WITHNAME.
--# No verification of arguments is performed, but warnings are issued
--# if either 'yes' or 'no' is specified.
--# HELP_TEXT is presented when --help is called.
--# This is a direct way to allow setting variables in the Makefile.
--# GIT_PARSE_WITH_SET_MAKE_VAR
--
--
--
--
--
--
--
- # Directories holding "saner" versions of common or POSIX binaries.
- 
- # Check whether --with-sane-tool-path was given.
-@@ -2392,16 +2347,15 @@
- 
- # Check whether --with-lib was given.
- if test "${with_lib+set}" = set; then :
--  withval=$with_lib; if test "$withval" = "no" || test "$withval" = "yes"; then \
-+  withval=$with_lib; if test "$withval" = "no" || test "$withval" = "yes"; then
- 	{ $as_echo "$as_me:${as_lineno-$LINENO}: WARNING: You should provide name for --with-lib=ARG" >&5
--$as_echo "$as_me: WARNING: You should provide name for --with-lib=ARG" >&2;}; \
--else \
--	lib=$withval; \
-+$as_echo "$as_me: WARNING: You should provide name for --with-lib=ARG" >&2;}
-+  else
-+	lib=$withval
- 	{ $as_echo "$as_me:${as_lineno-$LINENO}: Setting lib to '$lib'" >&5
--$as_echo "$as_me: Setting lib to '$lib'" >&6;}; \
--	echo "lib=$withval" >> "${config_append}"; \
--fi; \
--
-+$as_echo "$as_me: Setting lib to '$lib'" >&6;}
-+	echo "lib=$withval" >> "${config_append}"
-+  fi
- fi
- 
- 
-@@ -2479,23 +2433,22 @@
- 
- # Check whether --with-openssl was given.
- if test "${with_openssl+set}" = set; then :
--  withval=$with_openssl; \
--PACKAGE=OPENSSL; \
--if test "$withval" = "no"; then \
--	NO_OPENSSL=YesPlease; \
--elif test "$withval" = "yes"; then \
--	NO_OPENSSL=; \
--else \
--	NO_OPENSSL=; \
--	OPENSSLDIR=$withval; \
-+  withval=$with_openssl;     PACKAGE=OPENSSL
-+    if test "$withval" = "no"; then
-+	NO_OPENSSL=YesPlease
-+    elif test "$withval" = "yes"; then
-+	NO_OPENSSL=
-+    else
-+	NO_OPENSSL=
-+	OPENSSLDIR=$withval
- 	{ $as_echo "$as_me:${as_lineno-$LINENO}: Setting OPENSSLDIR to $withval" >&5
--$as_echo "$as_me: Setting OPENSSLDIR to $withval" >&6;}; \
--	echo "${PACKAGE}DIR=$withval" >> "${config_append}"; \
--fi \
-+$as_echo "$as_me: Setting OPENSSLDIR to $withval" >&6;}
-+	echo "${PACKAGE}DIR=$withval" >> "${config_append}"
-+    fi
- 
- fi
- 
--#
-+
- # Define USE_LIBPCRE if you have and want to use libpcre. git-grep will be
- # able to use Perl-compatible regular expressions.
- #
-@@ -2505,18 +2458,17 @@
- 
- # Check whether --with-libpcre was given.
- if test "${with_libpcre+set}" = set; then :
--  withval=$with_libpcre; if test "$withval" = "no"; then \
--	USE_LIBPCRE=; \
--elif test "$withval" = "yes"; then \
--	USE_LIBPCRE=YesPlease; \
--else
--	USE_LIBPCRE=YesPlease; \
--	LIBPCREDIR=$withval; \
-+  withval=$with_libpcre; if test "$withval" = "no"; then
-+	USE_LIBPCRE=
-+    elif test "$withval" = "yes"; then
-+	USE_LIBPCRE=YesPlease
-+    else
-+	USE_LIBPCRE=YesPlease
-+	LIBPCREDIR=$withval
- 	{ $as_echo "$as_me:${as_lineno-$LINENO}: Setting LIBPCREDIR to $withval" >&5
--$as_echo "$as_me: Setting LIBPCREDIR to $withval" >&6;}; \
--	echo "LIBPCREDIR=$withval" >> "${config_append}"; \
--fi \
--
-+$as_echo "$as_me: Setting LIBPCREDIR to $withval" >&6;}
-+	echo "LIBPCREDIR=$withval" >> "${config_append}"
-+    fi
- fi
- 
- #
-@@ -2529,18 +2481,18 @@
- 
- # Check whether --with-curl was given.
- if test "${with_curl+set}" = set; then :
--  withval=$with_curl; PACKAGE=CURL; \
--if test "$withval" = "no"; then \
--	NO_CURL=YesPlease; \
--elif test "$withval" = "yes"; then \
--	NO_CURL=; \
--else \
--	NO_CURL=; \
--	CURLDIR=$withval; \
-+  withval=$with_curl;     PACKAGE=CURL
-+    if test "$withval" = "no"; then
-+	NO_CURL=YesPlease
-+    elif test "$withval" = "yes"; then
-+	NO_CURL=
-+    else
-+	NO_CURL=
-+	CURLDIR=$withval
- 	{ $as_echo "$as_me:${as_lineno-$LINENO}: Setting CURLDIR to $withval" >&5
--$as_echo "$as_me: Setting CURLDIR to $withval" >&6;}; \
--	echo "${PACKAGE}DIR=$withval" >> "${config_append}"; \
--fi \
-+$as_echo "$as_me: Setting CURLDIR to $withval" >&6;}
-+	echo "${PACKAGE}DIR=$withval" >> "${config_append}"
-+    fi
- 
- fi
- 
-@@ -2553,18 +2505,18 @@
- 
- # Check whether --with-expat was given.
- if test "${with_expat+set}" = set; then :
--  withval=$with_expat; PACKAGE=EXPAT; \
--if test "$withval" = "no"; then \
--	NO_EXPAT=YesPlease; \
--elif test "$withval" = "yes"; then \
--	NO_EXPAT=; \
--else \
--	NO_EXPAT=; \
--	EXPATDIR=$withval; \
-+  withval=$with_expat;     PACKAGE=EXPAT
-+    if test "$withval" = "no"; then
-+	NO_EXPAT=YesPlease
-+    elif test "$withval" = "yes"; then
-+	NO_EXPAT=
-+    else
-+	NO_EXPAT=
-+	EXPATDIR=$withval
- 	{ $as_echo "$as_me:${as_lineno-$LINENO}: Setting EXPATDIR to $withval" >&5
--$as_echo "$as_me: Setting EXPATDIR to $withval" >&6;}; \
--	echo "${PACKAGE}DIR=$withval" >> "${config_append}"; \
--fi \
-+$as_echo "$as_me: Setting EXPATDIR to $withval" >&6;}
-+	echo "${PACKAGE}DIR=$withval" >> "${config_append}"
-+    fi
- 
- fi
- 
-@@ -2587,18 +2539,18 @@
- 
- # Check whether --with-iconv was given.
- if test "${with_iconv+set}" = set; then :
--  withval=$with_iconv; PACKAGE=ICONV; \
--if test "$withval" = "no"; then \
--	NO_ICONV=YesPlease; \
--elif test "$withval" = "yes"; then \
--	NO_ICONV=; \
--else \
--	NO_ICONV=; \
--	ICONVDIR=$withval; \
-+  withval=$with_iconv;     PACKAGE=ICONV
-+    if test "$withval" = "no"; then
-+	NO_ICONV=YesPlease
-+    elif test "$withval" = "yes"; then
-+	NO_ICONV=
-+    else
-+	NO_ICONV=
-+	ICONVDIR=$withval
- 	{ $as_echo "$as_me:${as_lineno-$LINENO}: Setting ICONVDIR to $withval" >&5
--$as_echo "$as_me: Setting ICONVDIR to $withval" >&6;}; \
--	echo "${PACKAGE}DIR=$withval" >> "${config_append}"; \
--fi \
-+$as_echo "$as_me: Setting ICONVDIR to $withval" >&6;}
-+	echo "${PACKAGE}DIR=$withval" >> "${config_append}"
-+    fi
- 
- fi
- 
-@@ -2619,17 +2571,16 @@
- 
- # Check whether --with-gitconfig was given.
- if test "${with_gitconfig+set}" = set; then :
--  withval=$with_gitconfig; if test -n "$withval"; then \
--  if test "$withval" = "yes" -o "$withval" = "no"; then \
-+  withval=$with_gitconfig; if test -n "$withval"; then
-+  if test "$withval" = "yes" -o "$withval" = "no"; then
-     { $as_echo "$as_me:${as_lineno-$LINENO}: WARNING: You likely do not want either 'yes' or 'no' as
- 		     a value for gitconfig (ETC_GITCONFIG).  Maybe you do...?" >&5
- $as_echo "$as_me: WARNING: You likely do not want either 'yes' or 'no' as
--		     a value for gitconfig (ETC_GITCONFIG).  Maybe you do...?" >&2;}; \
--  fi; \
--  \
-+		     a value for gitconfig (ETC_GITCONFIG).  Maybe you do...?" >&2;}
-+  fi
-   { $as_echo "$as_me:${as_lineno-$LINENO}: Setting ETC_GITCONFIG to $withval" >&5
--$as_echo "$as_me: Setting ETC_GITCONFIG to $withval" >&6;}; \
--  echo "ETC_GITCONFIG=$withval" >> "${config_append}"; \
-+$as_echo "$as_me: Setting ETC_GITCONFIG to $withval" >&6;}
-+  echo "ETC_GITCONFIG=$withval" >> "${config_append}"
-  fi
- fi
- 
-@@ -2639,17 +2590,16 @@
- 
- # Check whether --with-gitattributes was given.
- if test "${with_gitattributes+set}" = set; then :
--  withval=$with_gitattributes; if test -n "$withval"; then \
--  if test "$withval" = "yes" -o "$withval" = "no"; then \
-+  withval=$with_gitattributes; if test -n "$withval"; then
-+  if test "$withval" = "yes" -o "$withval" = "no"; then
-     { $as_echo "$as_me:${as_lineno-$LINENO}: WARNING: You likely do not want either 'yes' or 'no' as
- 		     a value for gitattributes (ETC_GITATTRIBUTES).  Maybe you do...?" >&5
- $as_echo "$as_me: WARNING: You likely do not want either 'yes' or 'no' as
--		     a value for gitattributes (ETC_GITATTRIBUTES).  Maybe you do...?" >&2;}; \
--  fi; \
--  \
-+		     a value for gitattributes (ETC_GITATTRIBUTES).  Maybe you do...?" >&2;}
-+  fi
-   { $as_echo "$as_me:${as_lineno-$LINENO}: Setting ETC_GITATTRIBUTES to $withval" >&5
--$as_echo "$as_me: Setting ETC_GITATTRIBUTES to $withval" >&6;}; \
--  echo "ETC_GITATTRIBUTES=$withval" >> "${config_append}"; \
-+$as_echo "$as_me: Setting ETC_GITATTRIBUTES to $withval" >&6;}
-+  echo "ETC_GITATTRIBUTES=$withval" >> "${config_append}"
-  fi
- fi
- 
-@@ -2659,17 +2609,16 @@
- 
- # Check whether --with-pager was given.
- if test "${with_pager+set}" = set; then :
--  withval=$with_pager; if test -n "$withval"; then \
--  if test "$withval" = "yes" -o "$withval" = "no"; then \
-+  withval=$with_pager; if test -n "$withval"; then
-+  if test "$withval" = "yes" -o "$withval" = "no"; then
-     { $as_echo "$as_me:${as_lineno-$LINENO}: WARNING: You likely do not want either 'yes' or 'no' as
- 		     a value for pager (DEFAULT_PAGER).  Maybe you do...?" >&5
- $as_echo "$as_me: WARNING: You likely do not want either 'yes' or 'no' as
--		     a value for pager (DEFAULT_PAGER).  Maybe you do...?" >&2;}; \
--  fi; \
--  \
-+		     a value for pager (DEFAULT_PAGER).  Maybe you do...?" >&2;}
-+  fi
-   { $as_echo "$as_me:${as_lineno-$LINENO}: Setting DEFAULT_PAGER to $withval" >&5
--$as_echo "$as_me: Setting DEFAULT_PAGER to $withval" >&6;}; \
--  echo "DEFAULT_PAGER=$withval" >> "${config_append}"; \
-+$as_echo "$as_me: Setting DEFAULT_PAGER to $withval" >&6;}
-+  echo "DEFAULT_PAGER=$withval" >> "${config_append}"
-  fi
- fi
- 
-@@ -2678,17 +2627,16 @@
- 
- # Check whether --with-editor was given.
- if test "${with_editor+set}" = set; then :
--  withval=$with_editor; if test -n "$withval"; then \
--  if test "$withval" = "yes" -o "$withval" = "no"; then \
-+  withval=$with_editor; if test -n "$withval"; then
-+  if test "$withval" = "yes" -o "$withval" = "no"; then
-     { $as_echo "$as_me:${as_lineno-$LINENO}: WARNING: You likely do not want either 'yes' or 'no' as
- 		     a value for editor (DEFAULT_EDITOR).  Maybe you do...?" >&5
- $as_echo "$as_me: WARNING: You likely do not want either 'yes' or 'no' as
--		     a value for editor (DEFAULT_EDITOR).  Maybe you do...?" >&2;}; \
--  fi; \
--  \
-+		     a value for editor (DEFAULT_EDITOR).  Maybe you do...?" >&2;}
-+  fi
-   { $as_echo "$as_me:${as_lineno-$LINENO}: Setting DEFAULT_EDITOR to $withval" >&5
--$as_echo "$as_me: Setting DEFAULT_EDITOR to $withval" >&6;}; \
--  echo "DEFAULT_EDITOR=$withval" >> "${config_append}"; \
-+$as_echo "$as_me: Setting DEFAULT_EDITOR to $withval" >&6;}
-+  echo "DEFAULT_EDITOR=$withval" >> "${config_append}"
-  fi
- fi
- 
-@@ -2698,143 +2646,138 @@
- 
- # Check whether --with-shell was given.
- if test "${with_shell+set}" = set; then :
--  withval=$with_shell; PROGRAM=SHELL; \
--if test "$withval" = "no"; then \
--	if test -n ""; then \
--		SHELL_PATH=$withval; \
-+  withval=$with_shell;     PROGRAM=SHELL
-+    if test "$withval" = "no"; then
-+	if test -n ""; then
-+		SHELL_PATH=$withval
- 		{ $as_echo "$as_me:${as_lineno-$LINENO}: Disabling use of ${PROGRAM}" >&5
--$as_echo "$as_me: Disabling use of ${PROGRAM}" >&6;}; \
--		echo "NO_${PROGRAM}=YesPlease" >> "${config_append}"; \
--		echo "${PROGRAM}_PATH=" >> "${config_append}"; \
--	else \
--		as_fn_error $? "You cannot use git without shell" "$LINENO" 5; \
--	fi; \
--else \
--	if test "$withval" = "yes"; then \
-+$as_echo "$as_me: Disabling use of ${PROGRAM}" >&6;}
-+		echo "NO_${PROGRAM}=YesPlease" >> "${config_append}"
-+		echo "${PROGRAM}_PATH=" >> "${config_append}"
-+	else
-+		as_fn_error $? "You cannot use git without shell" "$LINENO" 5
-+	fi
-+    else
-+	if test "$withval" = "yes"; then
- 		{ $as_echo "$as_me:${as_lineno-$LINENO}: WARNING: You should provide path for --with-shell=PATH" >&5
--$as_echo "$as_me: WARNING: You should provide path for --with-shell=PATH" >&2;}; \
--	else \
--		SHELL_PATH=$withval; \
-+$as_echo "$as_me: WARNING: You should provide path for --with-shell=PATH" >&2;}
-+	else
-+		SHELL_PATH=$withval
- 		{ $as_echo "$as_me:${as_lineno-$LINENO}: Setting SHELL_PATH to $withval" >&5
--$as_echo "$as_me: Setting SHELL_PATH to $withval" >&6;}; \
--		echo "${PROGRAM}_PATH=$withval" >> "${config_append}"; \
--	fi; \
--fi; \
-+$as_echo "$as_me: Setting SHELL_PATH to $withval" >&6;}
-+		echo "${PROGRAM}_PATH=$withval" >> "${config_append}"
-+	fi
-+    fi
- 
- fi
- 
--
- #
- # Define PERL_PATH to provide path to Perl.
- 
- # Check whether --with-perl was given.
- if test "${with_perl+set}" = set; then :
--  withval=$with_perl; PROGRAM=PERL; \
--if test "$withval" = "no"; then \
--	if test -n ""; then \
--		PERL_PATH=$withval; \
-+  withval=$with_perl;     PROGRAM=PERL
-+    if test "$withval" = "no"; then
-+	if test -n ""; then
-+		PERL_PATH=$withval
- 		{ $as_echo "$as_me:${as_lineno-$LINENO}: Disabling use of ${PROGRAM}" >&5
--$as_echo "$as_me: Disabling use of ${PROGRAM}" >&6;}; \
--		echo "NO_${PROGRAM}=YesPlease" >> "${config_append}"; \
--		echo "${PROGRAM}_PATH=" >> "${config_append}"; \
--	else \
--		as_fn_error $? "You cannot use git without perl" "$LINENO" 5; \
--	fi; \
--else \
--	if test "$withval" = "yes"; then \
-+$as_echo "$as_me: Disabling use of ${PROGRAM}" >&6;}
-+		echo "NO_${PROGRAM}=YesPlease" >> "${config_append}"
-+		echo "${PROGRAM}_PATH=" >> "${config_append}"
-+	else
-+		as_fn_error $? "You cannot use git without perl" "$LINENO" 5
-+	fi
-+    else
-+	if test "$withval" = "yes"; then
- 		{ $as_echo "$as_me:${as_lineno-$LINENO}: WARNING: You should provide path for --with-perl=PATH" >&5
--$as_echo "$as_me: WARNING: You should provide path for --with-perl=PATH" >&2;}; \
--	else \
--		PERL_PATH=$withval; \
-+$as_echo "$as_me: WARNING: You should provide path for --with-perl=PATH" >&2;}
-+	else
-+		PERL_PATH=$withval
- 		{ $as_echo "$as_me:${as_lineno-$LINENO}: Setting PERL_PATH to $withval" >&5
--$as_echo "$as_me: Setting PERL_PATH to $withval" >&6;}; \
--		echo "${PROGRAM}_PATH=$withval" >> "${config_append}"; \
--	fi; \
--fi; \
-+$as_echo "$as_me: Setting PERL_PATH to $withval" >&6;}
-+		echo "${PROGRAM}_PATH=$withval" >> "${config_append}"
-+	fi
-+    fi
- 
- fi
- 
--
- #
- # Define PYTHON_PATH to provide path to Python.
- 
- # Check whether --with-python was given.
- if test "${with_python+set}" = set; then :
--  withval=$with_python; PROGRAM=PYTHON; \
--if test "$withval" = "no"; then \
--	if test -n "allow-without"; then \
--		PYTHON_PATH=$withval; \
-+  withval=$with_python;     PROGRAM=PYTHON
-+    if test "$withval" = "no"; then
-+	if test -n "allow-without"; then
-+		PYTHON_PATH=$withval
- 		{ $as_echo "$as_me:${as_lineno-$LINENO}: Disabling use of ${PROGRAM}" >&5
--$as_echo "$as_me: Disabling use of ${PROGRAM}" >&6;}; \
--		echo "NO_${PROGRAM}=YesPlease" >> "${config_append}"; \
--		echo "${PROGRAM}_PATH=" >> "${config_append}"; \
--	else \
--		as_fn_error $? "You cannot use git without python" "$LINENO" 5; \
--	fi; \
--else \
--	if test "$withval" = "yes"; then \
-+$as_echo "$as_me: Disabling use of ${PROGRAM}" >&6;}
-+		echo "NO_${PROGRAM}=YesPlease" >> "${config_append}"
-+		echo "${PROGRAM}_PATH=" >> "${config_append}"
-+	else
-+		as_fn_error $? "You cannot use git without python" "$LINENO" 5
-+	fi
-+    else
-+	if test "$withval" = "yes"; then
- 		{ $as_echo "$as_me:${as_lineno-$LINENO}: WARNING: You should provide path for --with-python=PATH" >&5
--$as_echo "$as_me: WARNING: You should provide path for --with-python=PATH" >&2;}; \
--	else \
--		PYTHON_PATH=$withval; \
-+$as_echo "$as_me: WARNING: You should provide path for --with-python=PATH" >&2;}
-+	else
-+		PYTHON_PATH=$withval
- 		{ $as_echo "$as_me:${as_lineno-$LINENO}: Setting PYTHON_PATH to $withval" >&5
--$as_echo "$as_me: Setting PYTHON_PATH to $withval" >&6;}; \
--		echo "${PROGRAM}_PATH=$withval" >> "${config_append}"; \
--	fi; \
--fi; \
-+$as_echo "$as_me: Setting PYTHON_PATH to $withval" >&6;}
-+		echo "${PROGRAM}_PATH=$withval" >> "${config_append}"
-+	fi
-+    fi
- 
- fi
- 
--
- #
- # Define ZLIB_PATH to provide path to zlib.
- 
- # Check whether --with-zlib was given.
- if test "${with_zlib+set}" = set; then :
--  withval=$with_zlib; PROGRAM=ZLIB; \
--if test "$withval" = "no"; then \
--	if test -n ""; then \
--		ZLIB_PATH=$withval; \
-+  withval=$with_zlib;     PROGRAM=ZLIB
-+    if test "$withval" = "no"; then
-+	if test -n ""; then
-+		ZLIB_PATH=$withval
- 		{ $as_echo "$as_me:${as_lineno-$LINENO}: Disabling use of ${PROGRAM}" >&5
--$as_echo "$as_me: Disabling use of ${PROGRAM}" >&6;}; \
--		echo "NO_${PROGRAM}=YesPlease" >> "${config_append}"; \
--		echo "${PROGRAM}_PATH=" >> "${config_append}"; \
--	else \
--		as_fn_error $? "You cannot use git without zlib" "$LINENO" 5; \
--	fi; \
--else \
--	if test "$withval" = "yes"; then \
-+$as_echo "$as_me: Disabling use of ${PROGRAM}" >&6;}
-+		echo "NO_${PROGRAM}=YesPlease" >> "${config_append}"
-+		echo "${PROGRAM}_PATH=" >> "${config_append}"
-+	else
-+		as_fn_error $? "You cannot use git without zlib" "$LINENO" 5
-+	fi
-+    else
-+	if test "$withval" = "yes"; then
- 		{ $as_echo "$as_me:${as_lineno-$LINENO}: WARNING: You should provide path for --with-zlib=PATH" >&5
--$as_echo "$as_me: WARNING: You should provide path for --with-zlib=PATH" >&2;}; \
--	else \
--		ZLIB_PATH=$withval; \
-+$as_echo "$as_me: WARNING: You should provide path for --with-zlib=PATH" >&2;}
-+	else
-+		ZLIB_PATH=$withval
- 		{ $as_echo "$as_me:${as_lineno-$LINENO}: Setting ZLIB_PATH to $withval" >&5
--$as_echo "$as_me: Setting ZLIB_PATH to $withval" >&6;}; \
--		echo "${PROGRAM}_PATH=$withval" >> "${config_append}"; \
--	fi; \
--fi; \
-+$as_echo "$as_me: Setting ZLIB_PATH to $withval" >&6;}
-+		echo "${PROGRAM}_PATH=$withval" >> "${config_append}"
-+	fi
-+    fi
- 
- fi
- 
--
- #
- # Declare the with-tcltk/without-tcltk options.
- 
- # Check whether --with-tcltk was given.
- if test "${with_tcltk+set}" = set; then :
--  withval=$with_tcltk; \
--PACKAGE=TCLTK; \
--if test "$withval" = "no"; then \
--	NO_TCLTK=YesPlease; \
--elif test "$withval" = "yes"; then \
--	NO_TCLTK=; \
--else \
--	NO_TCLTK=; \
--	TCLTKDIR=$withval; \
-+  withval=$with_tcltk;     PACKAGE=TCLTK
-+    if test "$withval" = "no"; then
-+	NO_TCLTK=YesPlease
-+    elif test "$withval" = "yes"; then
-+	NO_TCLTK=
-+    else
-+	NO_TCLTK=
-+	TCLTKDIR=$withval
- 	{ $as_echo "$as_me:${as_lineno-$LINENO}: Setting TCLTKDIR to $withval" >&5
--$as_echo "$as_me: Setting TCLTKDIR to $withval" >&6;}; \
--	echo "${PACKAGE}DIR=$withval" >> "${config_append}"; \
--fi \
-+$as_echo "$as_me: Setting TCLTKDIR to $withval" >&6;}
-+	echo "${PACKAGE}DIR=$withval" >> "${config_append}"
-+    fi
- 
- fi
- 
-@@ -7183,7 +7126,7 @@
- # report actual input values of CONFIG_FILES etc. instead of their
- # values after options handling.
- ac_log="
--This file was extended by git $as_me 1.7.10.rc2.10.gb47606, which was
-+This file was extended by git $as_me 1.7.10.rc2.13.g4f748, which was
- generated by GNU Autoconf 2.68.  Invocation command line was
- 
-   CONFIG_FILES    = $CONFIG_FILES
-@@ -7236,7 +7179,7 @@
- cat >>$CONFIG_STATUS <<_ACEOF || ac_write_fail=1
- ac_cs_config="`$as_echo "$ac_configure_args" | sed 's/^ //; s/[\\""\`\$]/\\\\&/g'`"
- ac_cs_version="\\
--git config.status 1.7.10.rc2.10.gb47606
-+git config.status 1.7.10.rc2.13.g4f748
- configured by $0, generated by GNU Autoconf 2.68,
-   with options \\"\$ac_cs_config\\"
+ # GIT_PARSE_WITH_SET_MAKE_VAR(WITHNAME, VAR, HELP_TEXT)
+ # ---------------------
+-- 
+1.7.9
