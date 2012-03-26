@@ -1,52 +1,78 @@
-From: Holger Hellmuth <hellmuth@ira.uka.de>
-Subject: Re: Push from specific directory.
-Date: Mon, 26 Mar 2012 16:27:00 +0200
-Message-ID: <4F707CB4.3030308@ira.uka.de>
-References: <BLU0-SMTP471329E4F80CD64A569A4F7B1410@phx.gbl> <20120322225747.GB14874@sigill.intra.peff.net> <4F6BD1E2.2050607@gmail.com> <BLU0-SMTP315865C5026D08E76594E5DB1460@phx.gbl> <4F6C970B.2010803@gmail.com>
+From: Richard Hartmann <richih.mailinglist@gmail.com>
+Subject: Merge-friendly text-based data storage
+Date: Mon, 26 Mar 2012 16:19:39 +0200
+Message-ID: <CAD77+gRTv4Aq_4FLAQcD9E0p7VBD7h6hQq3CJ9Wo5DU9Zjt+Hg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Anjib Mulepati <anjibcs@hotmail.com>, git <git@vger.kernel.org>
-To: Neal Kreitzinger <nkreitzinger@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 26 16:26:43 2012
+Content-Type: text/plain; charset=UTF-8
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Mar 26 16:26:46 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SCAsc-0003VI-OA
-	for gcvg-git-2@plane.gmane.org; Mon, 26 Mar 2012 16:26:43 +0200
+	id 1SCAsd-0003VI-Mo
+	for gcvg-git-2@plane.gmane.org; Mon, 26 Mar 2012 16:26:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932546Ab2CZO0f (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Mar 2012 10:26:35 -0400
-Received: from iramx2.ira.uni-karlsruhe.de ([141.3.10.81]:46279 "EHLO
-	iramx2.ira.uni-karlsruhe.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S932489Ab2CZO0e (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 26 Mar 2012 10:26:34 -0400
-Received: from irams1.ira.uni-karlsruhe.de ([141.3.10.5])
-	by iramx2.ira.uni-karlsruhe.de with esmtps port 25 
-	id 1SCArz-0007DP-Ot; Mon, 26 Mar 2012 16:26:26 +0200
-Received: from i20s141.iaks.uni-karlsruhe.de ([141.3.32.141] helo=[172.16.22.120])
-	by irams1.ira.uni-karlsruhe.de with esmtpsa port 25 
-	id 1SCArz-0003J1-Fi; Mon, 26 Mar 2012 16:26:03 +0200
-User-Agent: Mozilla/5.0 (X11; U; Linux i686 (x86_64); en-US; rv:1.9.2.24) Gecko/20111101 SUSE/3.1.16 Thunderbird/3.1.16
-In-Reply-To: <4F6C970B.2010803@gmail.com>
-X-ATIS-AV: ClamAV (irams1.ira.uni-karlsruhe.de)
-X-ATIS-AV: ClamAV (iramx2.ira.uni-karlsruhe.de)
-X-ATIS-AV: Kaspersky (iramx2.ira.uni-karlsruhe.de)
-X-ATIS-Timestamp: iramx2.ira.uni-karlsruhe.de 1332771987.048449000
+	id S932549Ab2CZO0k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Mar 2012 10:26:40 -0400
+Received: from mail-lpp01m010-f46.google.com ([209.85.215.46]:44735 "EHLO
+	mail-lpp01m010-f46.google.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S932489Ab2CZO0i (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 26 Mar 2012 10:26:38 -0400
+Received: by lahj13 with SMTP id j13so3937517lah.19
+        for <git@vger.kernel.org>; Mon, 26 Mar 2012 07:26:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to:content-type;
+        bh=Y1Gi9JnKDbf06gW2aRARHGq6rVgfiPfXs911v22aM5k=;
+        b=Hbp9E/CYsU8Xh0in7vTCpHWluoBjQZqH3X9+MzrOpN3xWpjZ4fnmPkDDnP6jEQ0VGh
+         96PibAuEWaCrQVJqwg1ufLUcoNslNKJ6fLBju3bUtXYE6r55GCPRyiRJwVjh4E6faqpp
+         hkuEVqzHhawUe5LPMuaAC1HbHN0HAUp3tIB1ziUD3dPHYmE6HNj8PMds/deijc3rz9xn
+         tPZ7T87n2a+4sWGsf3KKhHrxv2X9x9qlBqNXq3CazFTsyjc76r1HhsH4EY80QktwsekW
+         +wtv3otQQ1eY2UH+BsRXHwm5/gaZknKbHElroL61eCrNb9BXjtDS9GjTy2SS9X6xg0fY
+         a2KQ==
+Received: by 10.112.26.135 with SMTP id l7mr8012087lbg.67.1332771997485; Mon,
+ 26 Mar 2012 07:26:37 -0700 (PDT)
+Received: by 10.112.99.233 with HTTP; Mon, 26 Mar 2012 07:19:39 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193912>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193913>
 
-On 23.03.2012 16:30, Neal Kreitzinger wrote:
+Hi all,
 
-> You would want to setup the gitignore before doing the init.
+I am looking for information on how to design a merge-friendly data
+layout. Oddly enough, there does not seem to be much online other than
+the obvious "use text-based lines, one per data point".
 
-Why that? "git init" doesn't add any files, the repo is still empty.
+My current plan looks like:
 
-I would even say "git init" helps because you get a comprehensive list 
-of non-ignored files with "git status" and can sift through that list 
-for files you want to be ignored
+  metamonger\tversion: 0
+  filename\towner_name\tgroup_name\tetc\tpp
+  ##########
+  file1\trichih\trichih\tfoo\tbar
+  relative/path/to/file2\troot\troot\tfoo\tbar
+
+the two upper lines are designed to fail a merge if the version of the
+file layout changes. Anything starting with a hash-pound is a comment
+and will be ignored.
+
+All other lines are data about random files, relative paths being
+allowed, absolute paths and upper paths being forbidden for security
+reasons. Values are tab-separated as the format is expressively meant
+to be edited by hand. Hex, if needed, would be ASCII-armoured.
+
+As long as there are no lines that start with the same file name, this
+file format would allow for efficient merging _if_ git has an internal
+concept of line identifiers.
+
+
+Are there any considerations I missed? Are there any design
+guides/best practices to follow?
+
+
+
+Thanks,
+Richard
