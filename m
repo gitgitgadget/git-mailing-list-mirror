@@ -1,72 +1,131 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Merge-friendly text-based data storage
-Date: Mon, 26 Mar 2012 12:51:19 -0700
-Message-ID: <7vobrjnnt4.fsf@alter.siamese.dyndns.org>
-References: <CAD77+gRTv4Aq_4FLAQcD9E0p7VBD7h6hQq3CJ9Wo5DU9Zjt+Hg@mail.gmail.com>
- <7vfwcvp6pi.fsf@alter.siamese.dyndns.org>
- <CAD77+gQVDtoK0vJnSgX-+i9EeJo6QErUGuzd25_cfBmUfPvW4g@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH v3] push: Provide situational hints for non-fast-forward
+ errors
+Date: Mon, 26 Mar 2012 15:51:50 -0400
+Message-ID: <20120326195150.GA13098@sigill.intra.peff.net>
+References: <20120320043133.GA2755@gmail.com>
+ <20120323214114.GB18198@sigill.intra.peff.net>
+ <20120326192001.GB32387@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git List <git@vger.kernel.org>
-To: Richard Hartmann <richih.mailinglist@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 26 21:51:31 2012
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, gitster@pobox.com, zbyszek@in.waw.pl,
+	Matthieu.Moy@grenoble-inp.fr, drizzd@aon.at
+To: Christopher Tiwald <christiwald@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Mar 26 21:51:59 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SCFwt-000789-PG
-	for gcvg-git-2@plane.gmane.org; Mon, 26 Mar 2012 21:51:28 +0200
+	id 1SCFxP-0007WU-0A
+	for gcvg-git-2@plane.gmane.org; Mon, 26 Mar 2012 21:51:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754857Ab2CZTvW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Mar 2012 15:51:22 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:40187 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751136Ab2CZTvW (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Mar 2012 15:51:22 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 523676977;
-	Mon, 26 Mar 2012 15:51:21 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=/GnJqSi/PGL+T9LDCuiZrBT/G7c=; b=oKNrPC
-	pZzjrhu0jvqv5uuv3GX+/bCO2Hoh4ptkDxvFEhzZFkGq63FFfpP7SWs4UxH8l3dj
-	9DmAGiBxUDN8AmyL5myH23jLiaOs+u/P4alJHEUV4UJjUjpYUta86D5OPjKldbjE
-	ytdmI5rYZq3q4FzXh8QJwbXhc0HziojjtG9y8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=d2aePXG9MkFWnFaNZUF2b3+w25b7A6XN
-	K2m4RcKx4KjeqmnKL8OzdM62cOHf9ByxF/6SATvZs79k8FMogUNkQdmorZoIUGCV
-	H5AgZTeWPwaWsWin5NbqwxlUDxpqUYFWxKOeFbB71TooqwJ5sKjZ9b7RwwT7q9/w
-	Zw8aSoGDGoc=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4A1FC6975;
-	Mon, 26 Mar 2012 15:51:21 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D147F6974; Mon, 26 Mar 2012
- 15:51:20 -0400 (EDT)
-In-Reply-To: <CAD77+gQVDtoK0vJnSgX-+i9EeJo6QErUGuzd25_cfBmUfPvW4g@mail.gmail.com> (Richard
- Hartmann's message of "Mon, 26 Mar 2012 21:06:30 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 0F45D602-777D-11E1-AA49-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755277Ab2CZTvx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Mar 2012 15:51:53 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:60143
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751136Ab2CZTvw (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Mar 2012 15:51:52 -0400
+Received: (qmail 16442 invoked by uid 107); 26 Mar 2012 19:52:10 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 26 Mar 2012 15:52:10 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 26 Mar 2012 15:51:50 -0400
+Content-Disposition: inline
+In-Reply-To: <20120326192001.GB32387@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193964>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193965>
 
-Richard Hartmann <richih.mailinglist@gmail.com> writes:
+On Mon, Mar 26, 2012 at 03:20:01PM -0400, Christopher Tiwald wrote:
 
-> On Mon, Mar 26, 2012 at 20:17, Junio C Hamano <gitster@pobox.com> wrote:
->
->> It may be of interest to run "git help attributes" and read up on
->> "Defining a custom merge driver" section.
->
-> Sounds good, thanks.
->
-> My file layout looks fine?
+> I used the REF_STATUS_* enum as a template for what I wanted to accomplish
+> when authoring v1, but did notice there was no other place my new
+> options made much sense (Junio helped me remove one other call between v1
+> and v2). I like the readability fixup, but it won't compile as both push.c
+> and transport.c need to see these. Would something like the following
+> work? It simply moves the define statements to cache.h, so that both push and
+> transport can use them.
 
-I have no opinion on it. It is for the consumers of your datafile (the
-ones that read it and find these databasy items in it, and your custom
-merge driver) to decide.
+My suggestion put them in transport.h, which is included from both
+places. It compiles fine for me. Am I missing something?
+
+Generally I would try to keep their definition near the function
+interface which uses them (i.e., transport_push). But I don't feel that
+strongly about it.
+
+Your patch is already in 'next', so we will have to build on top rather
+than squashing. So here it is with an actual commit message:
+
+-- >8 --
+Subject: [PATCH] clean up struct ref's nonfastforward field
+
+Each ref structure contains a "nonfastforward" field which
+is set during push to show whether the ref rewound history.
+Originally this was a single bit, but it was changed in
+f25950f (push: Provide situational hints for non-fast-forward
+errors) to an enum differentiating a non-ff of the current
+branch versus another branch.
+
+However, we never actually set the member according to the
+enum values, nor did we ever read it expecting anything but
+a boolean value. But we did use the side effect of declaring
+the enum constants to store those values in a totally
+different integer variable. The code as-is isn't buggy, but
+the enum declaration inside "struct ref" is somewhat
+misleading.
+
+Let's convert nonfastforward back into a single bit, and
+then define the NON_FF_* constants closer to where they
+would be used (they are returned via the "int *nonfastforward"
+parameter to transport_push, so we can define them there).
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+This is the least-invasive patch. You could also turn the "int
+*nonfastforward" into an enum, which might be even more readable.
+
+ cache.h     |    5 +----
+ transport.h |    2 ++
+ 2 files changed, 3 insertions(+), 4 deletions(-)
+
+diff --git a/cache.h b/cache.h
+index 427b600..35f3075 100644
+--- a/cache.h
++++ b/cache.h
+@@ -1009,6 +1009,7 @@ struct ref {
+ 	char *symref;
+ 	unsigned int force:1,
+ 		merge:1,
++		nonfastforward:1,
+ 		deletion:1;
+ 	enum {
+ 		REF_STATUS_NONE = 0,
+@@ -1019,10 +1020,6 @@ struct ref {
+ 		REF_STATUS_REMOTE_REJECT,
+ 		REF_STATUS_EXPECTING_REPORT
+ 	} status;
+-	enum {
+-		NON_FF_HEAD = 1,
+-		NON_FF_OTHER
+-	} nonfastforward;
+ 	char *remote_status;
+ 	struct ref *peer_ref; /* when renaming */
+ 	char name[FLEX_ARRAY]; /* more */
+diff --git a/transport.h b/transport.h
+index ce99ef8..1631a35 100644
+--- a/transport.h
++++ b/transport.h
+@@ -138,6 +138,8 @@ int transport_set_option(struct transport *transport, const char *name,
+ void transport_set_verbosity(struct transport *transport, int verbosity,
+ 	int force_progress);
+ 
++#define NON_FF_HEAD 1
++#define NON_FF_OTHER 2
+ int transport_push(struct transport *connection,
+ 		   int refspec_nr, const char **refspec, int flags,
+ 		   int * nonfastforward);
+-- 
+1.7.10.rc2.3.g0850
