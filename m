@@ -1,108 +1,72 @@
-From: Heiko Voigt <hvoigt@hvoigt.net>
-Subject: Re: [PATCH v5 3/3] push: teach --recurse-submodules the on-demand
-	option
-Date: Mon, 26 Mar 2012 21:33:34 +0200
-Message-ID: <20120326193334.GC41087@book.hvoigt.net>
-References: <20120213092541.GA15585@t1405.greatnet.de> <20120213093008.GD15585@t1405.greatnet.de> <7v7gzq9jg2.fsf@alter.siamese.dyndns.org> <4F3C3172.8030505@web.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Merge-friendly text-based data storage
+Date: Mon, 26 Mar 2012 12:51:19 -0700
+Message-ID: <7vobrjnnt4.fsf@alter.siamese.dyndns.org>
+References: <CAD77+gRTv4Aq_4FLAQcD9E0p7VBD7h6hQq3CJ9Wo5DU9Zjt+Hg@mail.gmail.com>
+ <7vfwcvp6pi.fsf@alter.siamese.dyndns.org>
+ <CAD77+gQVDtoK0vJnSgX-+i9EeJo6QErUGuzd25_cfBmUfPvW4g@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Fredrik Gustafsson <iveqy@iveqy.com>
-To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Mon Mar 26 21:33:47 2012
+Cc: Git List <git@vger.kernel.org>
+To: Richard Hartmann <richih.mailinglist@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Mar 26 21:51:31 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SCFfh-0005Z5-DZ
-	for gcvg-git-2@plane.gmane.org; Mon, 26 Mar 2012 21:33:41 +0200
+	id 1SCFwt-000789-PG
+	for gcvg-git-2@plane.gmane.org; Mon, 26 Mar 2012 21:51:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754683Ab2CZTdh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Mar 2012 15:33:37 -0400
-Received: from darksea.de ([83.133.111.250]:49971 "HELO darksea.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754494Ab2CZTdg (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Mar 2012 15:33:36 -0400
-Received: (qmail 23883 invoked from network); 26 Mar 2012 21:33:34 +0200
-Received: from unknown (HELO localhost) (127.0.0.1)
-  by localhost with SMTP; 26 Mar 2012 21:33:34 +0200
-Content-Disposition: inline
-In-Reply-To: <4F3C3172.8030505@web.de>
-User-Agent: Mutt/1.5.19 (2009-01-05)
+	id S1754857Ab2CZTvW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Mar 2012 15:51:22 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:40187 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751136Ab2CZTvW (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Mar 2012 15:51:22 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 523676977;
+	Mon, 26 Mar 2012 15:51:21 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=/GnJqSi/PGL+T9LDCuiZrBT/G7c=; b=oKNrPC
+	pZzjrhu0jvqv5uuv3GX+/bCO2Hoh4ptkDxvFEhzZFkGq63FFfpP7SWs4UxH8l3dj
+	9DmAGiBxUDN8AmyL5myH23jLiaOs+u/P4alJHEUV4UJjUjpYUta86D5OPjKldbjE
+	ytdmI5rYZq3q4FzXh8QJwbXhc0HziojjtG9y8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=d2aePXG9MkFWnFaNZUF2b3+w25b7A6XN
+	K2m4RcKx4KjeqmnKL8OzdM62cOHf9ByxF/6SATvZs79k8FMogUNkQdmorZoIUGCV
+	H5AgZTeWPwaWsWin5NbqwxlUDxpqUYFWxKOeFbB71TooqwJ5sKjZ9b7RwwT7q9/w
+	Zw8aSoGDGoc=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4A1FC6975;
+	Mon, 26 Mar 2012 15:51:21 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D147F6974; Mon, 26 Mar 2012
+ 15:51:20 -0400 (EDT)
+In-Reply-To: <CAD77+gQVDtoK0vJnSgX-+i9EeJo6QErUGuzd25_cfBmUfPvW4g@mail.gmail.com> (Richard
+ Hartmann's message of "Mon, 26 Mar 2012 21:06:30 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 0F45D602-777D-11E1-AA49-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193963>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193964>
 
-On Wed, Feb 15, 2012 at 11:28:02PM +0100, Jens Lehmann wrote:
-> Am 14.02.2012 04:34, schrieb Junio C Hamano:
-> > Heiko Voigt <hvoigt@hvoigt.net> writes:
-> > 
-> >> diff --git a/submodule.c b/submodule.c
-> >> index 3c714c2..ff0cfd8 100644
-> >> --- a/submodule.c
-> >> +++ b/submodule.c
-> >> @@ -411,6 +411,54 @@ int check_submodule_needs_pushing(unsigned char new_sha1[20],
-> >>  	return needs_pushing->nr;
-> >>  }
-> >>  
-> >> +static int push_submodule(const char *path)
-> >> +{
-> >> +	if (add_submodule_odb(path))
-> >> +		return 1;
-> >> +
-> >> +	if (for_each_remote_ref_submodule(path, has_remote, NULL) > 0) {
-> >> +		struct child_process cp;
-> >> +		const char *argv[] = {"push", NULL};
-> >> +
-> >> +		memset(&cp, 0, sizeof(cp));
-> >> +		cp.argv = argv;
-> >> +		cp.env = local_repo_env;
-> >> +		cp.git_cmd = 1;
-> >> +		cp.no_stdin = 1;
-> >> +		cp.dir = path;
-> >> +		if (run_command(&cp))
-> >> +			return 0;
-> >> +		close(cp.out);
-> >> +	}
-> >> +
-> >> +	return 1;
-> >> +}
-> > 
-> > Hmm, this makes me wonder if we fire subprocesses and have them run in
-> > parallel (to a reasonably limited parallelism), it might make the overall
-> > user experience more pleasant, and if we did the same on the fetching
-> > side, it would be even nicer.
-> 
-> Yeah, I had the same idea and did some experiments when working on
-> fetch some time ago.
-> 
-> > We would need to keep track of children and after firing a handful of them
-> > we would need to start waiting for some to finish and collect their exit
-> > status before firing more, and at the end we would need to wait for the
-> > remaining ones and find how each one of them did before returning from
-> > push_unpushed_submodules().  If we were to do so, what are the missing
-> > support we would need from the run_command() subsystem?
-> 
-> We would not only have to collect the exit status but also the output
-> lines. You don't want to see the output of multiple fetches or pushes
-> mixed together, so it makes sense to just defer that until the command
-> exited and then print everything at once. The interesting part I couldn't
-> come up with an easy solution for is to preserve the output order between
-> the stdout and stdin lines, as they contain different parts of the
-> progress which would look strange when shuffled around.
-> 
-> And I saw that sometimes parallel fetches took way longer than doing them
-> sequentially (in my case because of strange DNS behavior of my DSL router),
-> so we would definitely want a config option for that (maybe setting the
-> maximum number of simultaneous threads to be used).
-> 
-> But don't get me wrong, I'm all for having that feature! :-)
+Richard Hartmann <richih.mailinglist@gmail.com> writes:
 
-Me too, but I would suggest that we first implement the basic recursive
-push functionality and then start to do optimizations like this. I think
-we will definitely be interested in parallel pushing once we start using it.
+> On Mon, Mar 26, 2012 at 20:17, Junio C Hamano <gitster@pobox.com> wrote:
+>
+>> It may be of interest to run "git help attributes" and read up on
+>> "Defining a custom merge driver" section.
+>
+> Sounds good, thanks.
+>
+> My file layout looks fine?
 
-Cheers Heiko
+I have no opinion on it. It is for the consumers of your datafile (the
+ones that read it and find these databasy items in it, and your custom
+merge driver) to decide.
