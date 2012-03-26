@@ -1,92 +1,101 @@
-From: =?ISO-8859-1?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
-Subject: Re: [PATCH 0/4] grep: add more information to hunk separators
-Date: Mon, 26 Mar 2012 18:16:43 +0200
-Message-ID: <4F70966B.4050107@lsrfire.ath.cx>
-References: <1332729705-9283-1-git-send-email-lodatom@gmail.com> <7vr4wgq6zm.fsf@alter.siamese.dyndns.org>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: GSoC - Designing a faster index format
+Date: Mon, 26 Mar 2012 23:19:36 +0700
+Message-ID: <CACsJy8AqQdWO4E2oYTMLbpYhxobH8iXE-jXPoj2BcEGtfh+T=Q@mail.gmail.com>
+References: <CAKTdtZm3qfG1rcoashDoMoqtD34JJDUDtDruGqGn9bSMzQTcFA@mail.gmail.com>
+ <87aa3aw5z8.fsf@thomas.inf.ethz.ch> <CAKTdtZkGP3KbMGf88yW7zcCjemUyEy_4CVNkLD0SV=Lm7=Kveg@mail.gmail.com>
+ <CAKTdtZmYc=xz4zCPQiuSTUvdmbLRKXNWNL3N6_4Bj0gujYmRvw@mail.gmail.com>
+ <CACsJy8AYs5bzRnhRj_R33qTt-2gPh-rJaO0=1iTva9n14wHB4w@mail.gmail.com>
+ <CAKTdtZk4FJD9qXEybpN01+S=5fOm=4AbOp8trFr5c6Uxbfykkg@mail.gmail.com>
+ <CACsJy8CU_q+3ROO9z5nHe8NZDjTD4mvnEUP7C0+T3u3bRD11rQ@mail.gmail.com>
+ <CAKTdtZmLOzAgG0uCDcVr+O41XPX-XnoVZjsZWPN-BLjq2oG-7A@mail.gmail.com>
+ <CACsJy8C=4WaN4MZrZMaD3FqZrF2jCP5sm0F0SpDvzQnYfka9Ew@mail.gmail.com>
+ <CAKTdtZkpjVaBSkcieojKj+V7WztT3UDzjGfXyghY=S8mq+X9zw@mail.gmail.com>
+ <CACsJy8D85thmK_5jLC7MxJtsitLr=zphKiw2miwPu7Exf7ty=Q@mail.gmail.com>
+ <CAKTdtZkx+7iU5T4oBNDEx-A5cgZCLU9ocdXmC9jRbD39J1zb3Q@mail.gmail.com> <87iphrjv23.fsf@thomas.inf.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Mark Lodato <lodatom@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Mar 26 18:16:52 2012
+Content-Type: text/plain; charset=UTF-8
+Cc: elton sky <eltonsky9404@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Mon Mar 26 18:20:20 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SCCbC-00081a-Tc
-	for gcvg-git-2@plane.gmane.org; Mon, 26 Mar 2012 18:16:51 +0200
+	id 1SCCeX-0001KN-5d
+	for gcvg-git-2@plane.gmane.org; Mon, 26 Mar 2012 18:20:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932927Ab2CZQQr convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 26 Mar 2012 12:16:47 -0400
-Received: from india601.server4you.de ([85.25.151.105]:33445 "EHLO
-	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932866Ab2CZQQp (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Mar 2012 12:16:45 -0400
-Received: from [192.168.2.105] (p4FFD9672.dip.t-dialin.net [79.253.150.114])
-	by india601.server4you.de (Postfix) with ESMTPSA id 0D7B12F8038;
-	Mon, 26 Mar 2012 18:16:44 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:11.0) Gecko/20120312 Thunderbird/11.0
-In-Reply-To: <7vr4wgq6zm.fsf@alter.siamese.dyndns.org>
+	id S932854Ab2CZQUK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Mar 2012 12:20:10 -0400
+Received: from mail-we0-f174.google.com ([74.125.82.174]:52430 "EHLO
+	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932655Ab2CZQUI (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Mar 2012 12:20:08 -0400
+Received: by wejx9 with SMTP id x9so4316106wej.19
+        for <git@vger.kernel.org>; Mon, 26 Mar 2012 09:20:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=0hn/mjY87kZKy+prOAqTEgX6+zFgwyZ7TIE0WLfVUYg=;
+        b=x2giym/miOqv8Wmfyjkl/WG1LXo9NzMl8KfpkTKciboMnMg++AaFVa8bKgIw5hR5bL
+         233yK3znj6X649KmlHxgBQx6GF2LZu6EkxaWFER6+mSceNTRwP0t9geKCLlDF9SO5RdF
+         GduaK8wSTOs2qKeyhD1zryd0YkOK4W0cKp7sORaEub5DzM53RxUaQWgcp70reHpNqBiu
+         qjH/W55WNWk8+/SyewBuMyGQFCgvUFnXQzONBFC09Br310edola7h5g3WhGXAhT7Wlib
+         s7J9ZwLHo99Fj+SrXCzrLT4WDSdsZsrXGPRibM23hAuSRvfuJwpSttQOuNij5pXhSZpR
+         731Q==
+Received: by 10.216.135.225 with SMTP id u75mr11915391wei.97.1332778807139;
+ Mon, 26 Mar 2012 09:20:07 -0700 (PDT)
+Received: by 10.223.109.144 with HTTP; Mon, 26 Mar 2012 09:19:36 -0700 (PDT)
+In-Reply-To: <87iphrjv23.fsf@thomas.inf.ethz.ch>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193923>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193924>
 
-Am 26.03.2012 07:14, schrieb Junio C Hamano:
-> Mark Lodato<lodatom@gmail.com>  writes:
->
->> Originally, I had envisioned also moving the function name (`-p') to=
- the hunk
->> header, similar to the diff context line.  For example:
->>
->>      -- git.c:570 -- int main(int argc, char argv)
->>                      printf("usage: %s\n\n", git_usage_string);
->>                      list_common_cmds_help();
->>                      printf("\n%s\n", git_more_info_string);
->>
->> After implementing this feature, I was not happy with the result and
->> subsequently removed it.  To me, the output was too cluttered and th=
-e line
->> number was ambigous.  For example, in the above, it is not obvious t=
-o me that
->> line 570 is the "printf" line and not the "int main" line.  Still, i=
-f you
->> would like to see the patch to implement this feature, please let me=
- know.
->
-> The worst part of all of the above is that the output becomes utterly
-> ambiguous and the reader cannot tell if "-- git.c..." came because th=
-e
-> file had such a line that begin with two dashes in it and grep found =
-it,
-> or it is your output format embellishment. It is obvious that these a=
-re
-> not meant to be machine parseable, but if the goal is to make the out=
-put
-> more useful to the humans, then it may be a better approach to come u=
-p
-> with a front end that reads our machine readable output and shows out=
-put
-> with its own embellishments. You could even make it an interactive fr=
-ont
-> end.
+On Mon, Mar 26, 2012 at 9:28 PM, Thomas Rast <trast@student.ethz.ch> wrote:
+> Doesn't that venture into database land?
 
-Human readers can differentiate between contents and heading by color;=20
-separators are cyan by default.
+How about this (a bit like memory management). Maybe it's simpler than
+a database and fits us better.
 
-A separate frontend would probably have to implement match highlighting=
-=20
-again.  That's not too hard, but a bit sad.
+The header consists of crc32 and three uint32_t, one points to the
+root tree, one the first extension block, the last one the free list
+at the end of the file. The rest of the file contains sizable blocks.
+There can be free space between them. Free spaces (offset and size)
+are recorded at the end of the file, pointed in header. The header's
+crc32 covers the header and free list.
 
-> In other words, I am not yet convinced this belongs to "git grep" pro=
-per.
+When we need a new block, we look up in free list. If we cannot find a
+suitable space, we append to the end of the file (moving free list
+further to keep it always the end of the file). Removing a block means
+marking it in free list. We only truncate if there is free space at
+the end. Operations that we know will scratch the whole index are our
+opportunity to rewrite the index and make it compact again. No random
+garbage collection (iow disk is cheap).
 
-All in all, I'm not sure either.  But I think the idea to deduplicate=20
-the meta-information and give found content more screen real estate is =
-a=20
-good one in general.
+A block starts with a signature (a tree block, or an extension...). A
+tree block consists of:
 
-Ren=E9
+ - uint32_t tree object's size
+ - sha-1 of tree object
+ - crc32 of the rest of the block except tree object
+ - maybe reference counter of a block can be refered by many blocks??
+ - tree object (i.e. something that tree-walk.c can parse)
+ - other index attributes, stored separately in the same order as in
+tree object above, uint32_t block offset of subdirectories.
+
+An extension block basically consists of what we have now in an
+extension plus uint32_t offset to the next extension block, so we can
+keep track of all extensions. crc32 is used for extension blocks.
+
+This way we only need to verify checksum of the header (and free list)
+and blocks we visit. We don't need cache-tree extension because it's
+part of the format. There will be headache with unpack-trees.c because
+of entry order change. But in the end we would use the same order tree
+objects are using now, much simpler for us.
+-- 
+Duy
