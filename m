@@ -1,39 +1,40 @@
 From: "W. Trevor King" <wking@drexel.edu>
-Subject: Re: [PATCH v4 0/3] Isolate If-Modified-Since handling in gitweb
-Date: Mon, 26 Mar 2012 07:09:46 -0400
-Message-ID: <20120326110943.GA2951@odin.tremily.us>
+Subject: [PATCH v4 1/3] gitweb: add `status` headers to git_feed() responses.
+Date: Mon, 26 Mar 2012 07:11:10 -0400
+Message-ID: <20120326111110.GB2951@odin.tremily.us>
 References: <7v62dy4zhf.fsf@alter.siamese.dyndns.org>
  <m3sjh2ay6j.fsf@localhost.localdomain>
- <7v1uol3m5m.fsf@alter.siamese.dyndns.org> <201203221346.35295.jnareb@gmail.com>
+ <7v1uol3m5m.fsf@alter.siamese.dyndns.org>
+ <201203221346.35295.jnareb@gmail.com> <20120326110943.GA2951@odin.tremily.us>
 Mime-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature"; boundary="tThc/1wpZn/ma/RB"
+ protocol="application/pgp-signature"; boundary="CUfgB8w4ZwR/yMy5"
 Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
 To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 26 13:10:09 2012
+X-From: git-owner@vger.kernel.org Mon Mar 26 13:11:46 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SC7oP-0002kz-4p
-	for gcvg-git-2@plane.gmane.org; Mon, 26 Mar 2012 13:10:09 +0200
+	id 1SC7pv-0003aC-A5
+	for gcvg-git-2@plane.gmane.org; Mon, 26 Mar 2012 13:11:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757378Ab2CZLKC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Mar 2012 07:10:02 -0400
-Received: from vms173017pub.verizon.net ([206.46.173.17]:43914 "EHLO
-	vms173017pub.verizon.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757362Ab2CZLKA (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Mar 2012 07:10:00 -0400
+	id S1757407Ab2CZLLj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Mar 2012 07:11:39 -0400
+Received: from vms173001pub.verizon.net ([206.46.173.1]:12828 "EHLO
+	vms173001pub.verizon.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757362Ab2CZLLi (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Mar 2012 07:11:38 -0400
 Received: from odin.tremily.us ([unknown] [72.68.85.198])
- by vms173017.mailsrvcs.net
+ by vms173001.mailsrvcs.net
  (Sun Java(tm) System Messaging Server 7u2-7.02 32bit (built Apr 16 2009))
- with ESMTPA id <0M1H00MF5OCAXL20@vms173017.mailsrvcs.net> for
- git@vger.kernel.org; Mon, 26 Mar 2012 06:09:47 -0500 (CDT)
-Received: by odin.tremily.us (Postfix, from userid 1000)	id 8560D42DBFF; Mon,
- 26 Mar 2012 07:09:46 -0400 (EDT)
+ with ESMTPA id <0M1H0084OOENL420@vms173001.mailsrvcs.net> for
+ git@vger.kernel.org; Mon, 26 Mar 2012 06:11:23 -0500 (CDT)
+Received: by odin.tremily.us (Postfix, from userid 1000)	id 1E33A42DC1B; Mon,
+ 26 Mar 2012 07:11:10 -0400 (EDT)
 Content-disposition: inline
-In-reply-to: <201203221346.35295.jnareb@gmail.com>
+In-reply-to: <20120326110943.GA2951@odin.tremily.us>
 OpenPGP: id=39A2F3FA2AB17E5D8764F388FC29BDCDF15F5BE8;
  url=http://tremily.us/pubkey.txt
 User-Agent: Mutt/1.5.21 (2010-09-15)
@@ -41,60 +42,61 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193902>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193903>
 
 
---tThc/1wpZn/ma/RB
+--CUfgB8w4ZwR/yMy5
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-Sorry for the delay since my last message, it's been a busy week ;).
+The git_feed() method was not setting a `Status` header unless it was
+responding to an If-Modified-Since request with `304 Not Modified`.
+Now, when it is serving successful responses, it sets status to `200
+OK`.
 
-On Thu, Mar 22, 2012 at 01:46:34PM +0100, Jakub Narebski wrote:
-> ...if not for the fact that control flow changes from using conditional
-> and early return to [longjump] "exception" based one.  That is why
-> I think it would be better to put tests and refactoring in a commit
-> separate from adding If-Modified-Since handling to 'snapshot' action.
+Signed-off-by: W Trevor King <wking@drexel.edu>
+---
+ gitweb/gitweb.perl |    6 ++++--
+ 1 files changed, 4 insertions(+), 2 deletions(-)
 
-I'll be sending along three patches.  The second and third are the
-ones you discuss above.  The first is a teensy patch to add `Status`
-output to non-304 calls to git_feed().  Without it you'd have to get a
-bit more creative in the test suite.  If the status lines were left
-out intentionally, let me know, and I'll come up with another
-condition for those tests.
-
-The second patch refactors and tests git_feed(), and the third patch
-adds i-m-s support to git_snapshot() with associated tests.
-
-Changes since v3:
-* Patch 1/3 is completely new.
-* Split previous patch into 2/3 and 3/3.
-* Conditionals in 3/3 to avoid 404-ing on non-commits like v1.7.6^{tree}.
-* Added testing to both 2/3 and 3/3.
-* Reworked commit messages.
-
-Cheers,
-Trevor
-
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index a8b5fad..041da17 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -7841,11 +7841,13 @@ sub git_feed {
+ 		print $cgi->header(
+ 			-type =3D> $content_type,
+ 			-charset =3D> 'utf-8',
+-			-last_modified =3D> $latest_date{'rfc2822'});
++			-last_modified =3D> $latest_date{'rfc2822'},
++			-status =3D> '200 OK');
+ 	} else {
+ 		print $cgi->header(
+ 			-type =3D> $content_type,
+-			-charset =3D> 'utf-8');
++			-charset =3D> 'utf-8',
++			-status =3D> '200 OK');
+ 	}
+=20
+ 	# Optimization: skip generating the body if client asks only
 --=20
-This email may be signed or encrypted with GnuPG (http://www.gnupg.org).
-For more information, see http://en.wikipedia.org/wiki/Pretty_Good_Privacy
+1.7.3.4
 
---tThc/1wpZn/ma/RB
+--CUfgB8w4ZwR/yMy5
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Description: OpenPGP digital signature
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v2.0.17 (GNU/Linux)
 
-iQEcBAEBAgAGBQJPcE5zAAoJEPe7CdOcrcTZBXgH/1wEdyuNpI/8OhDNxwyU11to
-1f6nW9xnghZoVDCsh3x3Ymd7ltIDxhuqSoBgVTBjcmMiFGNk8bu0WeSOlBIW9Zqq
-SXNMlCME8kUSo4zPmzJnjW9GcQ44CXJIn3yPZZEAVtRCbifnUqyqFyqOP1b+PXeL
-A/U8RzpBt6SwjvOARR8OlVA+7EaXedzWtJm/OtKKtHiE3qJJO1Vf4iRTQty9rFYl
-m3ggJjrYXhN56T+0dr3jBeIo9i+AR0nUasl5L2F0t+fdD1vleGgWnzWpWOcFD9vm
-lQRW3Sxb+8LbcvBRZnOPnyVZyD1WS8cByAV5E9d+WACGhAi+nhaE18xpFKFLMyw=
-=XwWT
+iQEcBAEBAgAGBQJPcE7NAAoJEPe7CdOcrcTZrK0IALT1079PVXKw8yaF8myOulnt
+aaDyuzu61i8AkekdPbGpIL3yPVq2JXvjr73Y+GVirE7nPPQKD5rP6/ElvhfWFzsZ
+ogfaLc6+FDzQC2ItkXx/8iX1CWPhBA5570bfWDxd0NATO/JvNs9JZKHrnXmZdDmR
+HLS/6exVc3wY7LYbqbqmgUmB9oLh0WUr2Pm9y2Z2AdLL7VcxMsLZMMLZljL80Sij
+pNrkXixQh85PhKVptosXrTuPVnYXEfjIKkESP14/2Pcb0vrDpgiuNxp+/5YVU1SU
+LsS6yNfWI/M1qljW4KnLddLGxKOVfEdQ/JpayftiwbmF3UKaZXuBM9CXCNalcrQ=
+=9ikj
 -----END PGP SIGNATURE-----
 
---tThc/1wpZn/ma/RB--
+--CUfgB8w4ZwR/yMy5--
