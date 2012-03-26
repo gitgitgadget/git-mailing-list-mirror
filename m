@@ -1,110 +1,85 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 0/2] Make run-command.c honour SHELL_PATH
-Date: Sun, 25 Mar 2012 20:11:48 -0500
-Message-ID: <20120326011148.GA4428@burratino>
-References: <1332678696-4001-1-git-send-email-bwalton@artsci.utoronto.ca>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: [GSOC 2012] Some questions regarding a possible project to
+ improve big file support
+Date: Mon, 26 Mar 2012 08:21:53 +0700
+Message-ID: <CACsJy8CQHbwCQGypVRgKhD9Wb4O6kXGoDLD9EUZgnBP-6ZivMw@mail.gmail.com>
+References: <4F6F8489.20108@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: gitster@pobox.com, peff@peff.net, git@vger.kernel.org
-To: Ben Walton <bwalton@artsci.utoronto.ca>
-X-From: git-owner@vger.kernel.org Mon Mar 26 03:12:40 2012
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org
+To: "Peter C." <th3flyboy@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Mar 26 03:22:30 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SByU8-0006ga-EQ
-	for gcvg-git-2@plane.gmane.org; Mon, 26 Mar 2012 03:12:36 +0200
+	id 1SBydi-0002fT-5g
+	for gcvg-git-2@plane.gmane.org; Mon, 26 Mar 2012 03:22:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753333Ab2CZBL6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 25 Mar 2012 21:11:58 -0400
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:44053 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753213Ab2CZBL5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 25 Mar 2012 21:11:57 -0400
-Received: by iagz16 with SMTP id z16so7468703iag.19
-        for <git@vger.kernel.org>; Sun, 25 Mar 2012 18:11:56 -0700 (PDT)
+	id S1754234Ab2CZBWZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 25 Mar 2012 21:22:25 -0400
+Received: from mail-we0-f174.google.com ([74.125.82.174]:50535 "EHLO
+	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754023Ab2CZBWZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 25 Mar 2012 21:22:25 -0400
+Received: by wejx9 with SMTP id x9so3867020wej.19
+        for <git@vger.kernel.org>; Sun, 25 Mar 2012 18:22:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=E5Tas/w1MuQUuP4xd6a5Wy9qP7ZlKkhLeBst0R3Rz0k=;
-        b=tsnDT1nNYu0HyeiDmF6rVkMMHvQC3aqyz6ptY+0/xFhxQU6t0zzSBFvEWbLhdUJHGX
-         Hp8+WxRzlZ5JAG6wkIgSBg3g8A2EdYo97OkrmdGEDqidn0ZDeMNlcawexrUV2P6hTUvv
-         wr5tZFTOPpgTaoSSFYe+5p0dqxuY6fbFP4nQ3paPUkJUXvInzsPAs/3VXjrh03UQDIXa
-         LXLCrFvsoBb95G1W1Ix9duLtALAjPAyDLzbJrThI9o5URD4jwoIh8pGIxbxlSDQaB4eu
-         tun4jTer9hr5/qBXkkLWuV4GeP9kZV3dkBuz0cgyFcXd9Gqa1yCphWGay8IvJ8WxJDpH
-         ekNQ==
-Received: by 10.42.141.72 with SMTP id n8mr11698850icu.47.1332724316612;
-        Sun, 25 Mar 2012 18:11:56 -0700 (PDT)
-Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
-        by mx.google.com with ESMTPS id md6sm13088408igc.0.2012.03.25.18.11.55
-        (version=SSLv3 cipher=OTHER);
-        Sun, 25 Mar 2012 18:11:55 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <1332678696-4001-1-git-send-email-bwalton@artsci.utoronto.ca>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=jJnyNakkgxP0XddUiuioriTLhdcv9aQ+V4ftolJ+0Fg=;
+        b=OYRGIRaUlPZP2tCtA6HxNamSoTWyxFqKDTFz30z2VgLuOU6FoDQ7MzCEsz3HIyuMBs
+         sNosF+LdS9ejXxWD3S0VzYzcJFJTsQuzDOmGjHCMAb59AzL7YEGJNXtGcMQPPpKD6/fd
+         xmXUOIAQxxAKvjpm6mxk07M0wXCd7aFdTKyDXYoEN8ZhTrYsB5ePrQ5zylD8UcdOgHay
+         Odze6dQLMfmTWjzk8D3VrmURFlwKWm/ZQhBii6ChjD5EzEx/cCDoFR3gL1T3SFcejCiz
+         0gPuH6GbGh8BnTIQ8/M6lSy3mG0stjPz9ywW1Q5VXO10Nn45LI7gEjjefRi2c4BuKhyK
+         0BIg==
+Received: by 10.180.80.40 with SMTP id o8mr14180719wix.10.1332724943892; Sun,
+ 25 Mar 2012 18:22:23 -0700 (PDT)
+Received: by 10.223.109.144 with HTTP; Sun, 25 Mar 2012 18:21:53 -0700 (PDT)
+In-Reply-To: <4F6F8489.20108@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193888>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193889>
 
-Hi Ben,
+On Mon, Mar 26, 2012 at 3:48 AM, Peter C. <th3flyboy@gmail.com> wrote:
+> My first question is more of a question regarding low level
+> functionality of how Git diffs files. The question is, in the diff
+> process, does git just parse the file and see if there are diffs, or
+> does it use something like hashing to first tell if the file has been
+> modified at all, and then go to the diff process if the hash is
+> different. An extension to this question is, in Git's internal database,
+> does it set any kind of flag to say that a file is a binary if it is one.
 
-Good catch.  A few comments:
+If hashes are available, we compare hash first (e.g. diff-tree). We
+can mark a file binary with gitattributes. I think the binary
+detection code, buffer_is_binary, could be just moved up a little bit
+before we unpack file contents. But I'm not really familiar with this
+area.
 
-Ben Walton wrote:
+> My thought process in implementation involves checking the hash, and if
+> the hash is the same, skip it, if the hash is different, check the MIME
+> type possibly using libmagic, and if it matches a known binary format,
+> then just commit the new version, rather than trying to run a whole diff
+> and load the whole file in the process.
 
-> In this case, the failing test was t7006-pager:command-specific
-> pager.  That test (and some subsequent ones) were setting the pager
-> command used by git log to "sed s/^/foo:/ >actual" which is fine in a
-> POSIX-compliant sh, but not in Solaris' sh.  If the user PATH at
-> runtime happened to allow the broken system sh used instead of a sane
-> sh, the ^ is interpreted the same as[1] | and this caused sed to fail
-> with incomplete s/ command and a "command not found: /foo:" from the
-> other forked process.
+Overkill, compared to how binary is detected today :)
 
-When I first read the corresponding patch without reading this cover
-letter I was mystified.  Until I saw the above paragraph, I did not
-even see what problem was being solved.  The above paragraph should
-probably be part of the commit message.
+#define FIRST_FEW_BYTES 8000
+int buffer_is_binary(const char *ptr, unsigned long size)
+{
+	if (FIRST_FEW_BYTES < size)
+		size = FIRST_FEW_BYTES;
+	return !!memchr(ptr, 0, size);
+}
 
-Ok, on to the proposed solution. ;-)
-
-My first reaction was to suspect the series is solving the problem in
-the wrong place.  The core of the bug might be t7006 itself, which
-assumes that the shell used to interpret the GIT_PAGER setting is a
-POSIX-style shell rather than an ancient Bourne shell or cmd.exe.
-In the far long term, we should probably skip this test on some
-platforms using an appropriate test prerequisite.
-
-To put it another way, the RUN_USING_SHELL magic is just supposed to
-be a more featureful way to do what system() normally does.  What
-shell does system() use on Solaris?
-
-A second reaction was to wonder why the usual fixup from
-v1.6.4-rc0~66^2~1 (Makefile: insert SANE_TOOL_PATH to PATH before /bin
-or /usr/bin, 2009-07-08) didn't apply.  Should the git wrapper prepend
-the same magic to $PATH that git-sh-setup.sh does to make the behavior
-of scripted and unscripted commands a little more consistent?
-
-A third reaction was that git_pager in the sh-setup library uses the
-eval builtin, so we are already assuming that GIT_PAGER is appropriate
-input for a POSIX-style shell.  So maybe the approach you've adopted
-is appropriate after all, at least in the short term while we require
-a POSIX-style shell elsewhere in git.
-
-A few added words in the commit message could save the next reader
-from going through so long a thought process before seeing why what
-the patch does is the right thing to do.
-
-A more minor comment: patch 1/2 was even more mysterious.  Combining
-the two patches would be enough to avoid confusion there.  I haven't
-checked the makefile changes and interaction with GIT-CFLAGS carefully
-yet and hope to do so in the next round.
-
-Thanks for working on this.
-
-Sincerely,
-Jonathan
+If you are interested in this big file support, I think you should
+focus on the "Many large files do not delta well..." item in the wiki
+page. The framework has already been done by Junio. That can make git
+manage gigabyte files just fine (aka "bup").
+-- 
+Duy
