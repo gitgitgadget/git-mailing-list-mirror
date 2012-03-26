@@ -1,38 +1,39 @@
 From: "W. Trevor King" <wking@drexel.edu>
-Subject: Re: [PATCH v5 2/3] gitweb: refactor If-Modified-Since handling
-Date: Mon, 26 Mar 2012 15:12:42 -0400
-Message-ID: <20120326191242.GA9041@odin.tremily.us>
-References: <20120326173646.GA6524@odin.tremily.us>
- <7vsjgvnr4x.fsf@alter.siamese.dyndns.org>
+Subject: Re: [PATCH v5 3/3] gitweb: add If-Modified-Since handling to
+ git_snapshot().
+Date: Mon, 26 Mar 2012 15:14:19 -0400
+Message-ID: <20120326191418.GB9041@odin.tremily.us>
+References: <7vsjgvnr4x.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature"; boundary=Nq2Wo0NMKNjxTN9z
+ protocol="application/pgp-signature"; boundary=DKU6Jbt7q3WqK7+M
 Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Mar 26 21:13:12 2012
+X-From: git-owner@vger.kernel.org Mon Mar 26 21:14:52 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SCFLr-0000aB-Vg
-	for gcvg-git-2@plane.gmane.org; Mon, 26 Mar 2012 21:13:12 +0200
+	id 1SCFNS-0001cN-St
+	for gcvg-git-2@plane.gmane.org; Mon, 26 Mar 2012 21:14:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751403Ab2CZTNG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Mar 2012 15:13:06 -0400
-Received: from vms173011pub.verizon.net ([206.46.173.11]:42040 "EHLO
-	vms173011pub.verizon.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751062Ab2CZTNF (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Mar 2012 15:13:05 -0400
+	id S1751606Ab2CZTOq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Mar 2012 15:14:46 -0400
+Received: from vms173015pub.verizon.net ([206.46.173.15]:41692 "EHLO
+	vms173015pub.verizon.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751062Ab2CZTOp (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Mar 2012 15:14:45 -0400
 Received: from odin.tremily.us ([unknown] [72.68.85.198])
- by vms173011.mailsrvcs.net
+ by vms173015.mailsrvcs.net
  (Sun Java(tm) System Messaging Server 7u2-7.02 32bit (built Apr 16 2009))
- with ESMTPA id <0M1I00KOJAP7QG10@vms173011.mailsrvcs.net> for
- git@vger.kernel.org; Mon, 26 Mar 2012 14:12:44 -0500 (CDT)
-Received: by odin.tremily.us (Postfix, from userid 1000)	id B081442E934; Mon,
- 26 Mar 2012 15:12:42 -0400 (EDT)
+ with ESMTPA id <0M1I00EVEAS1NM70@vms173015.mailsrvcs.net> for
+ git@vger.kernel.org; Mon, 26 Mar 2012 14:14:36 -0500 (CDT)
+Received: by odin.tremily.us (Postfix, from userid 1000)	id 090E042E94F; Mon,
+ 26 Mar 2012 15:14:19 -0400 (EDT)
 Content-disposition: inline
 In-reply-to: <7vsjgvnr4x.fsf@alter.siamese.dyndns.org>
+ <20120326111300.GD2951@odin.tremily.us>
 OpenPGP: id=39A2F3FA2AB17E5D8764F388FC29BDCDF15F5BE8;
  url=http://tremily.us/pubkey.txt
 User-Agent: Mutt/1.5.21 (2010-09-15)
@@ -40,162 +41,131 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193958>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193959>
 
 
---Nq2Wo0NMKNjxTN9z
+--DKU6Jbt7q3WqK7+M
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-The current gitweb only generates Last-Modified and handles
-If-Modified-Since headers for the git_feed action.  This patch breaks
-the Last-Modified and If-Modified-Since handling code out from
-git_feed into a new function exit_if_unmodified_since.  This makes the
-code easy to reuse for other actions.
-
-Only gitweb actions which can easily calculate a modification time
-should use exit_if_unmodified_since, as the goal is to balance local
-processing time vs. upload bandwidth.
+Because snapshots can be large, you can save some bandwidth by
+supporting caching via If-Modified-Since.  This patch adds support for
+the i-m-s request to git_snapshot() if the requested hash is a commit.
+Requests for snapshots of tree-ishes, which lack well defined
+timestamps, are still handled as they were before.
 
 Signed-off-by: W Trevor King <wking@drexel.edu>
 ---
-Patch v4 1/3 is unchanged.  Should I mail it back in with a [PATCH v5
-1/3] tag?
-
-Changes since v4:
-* die_if_unmodified() -> exit_if_unmodified_since()
-* Added missing `&&` to tests for feed-last-modified (patch 2/3) and
-  snapshot-last-modified (patch 3/3).
-
- gitweb/gitweb.perl                       |   40 +++++++++++++++++---------=
----
- t/t9501-gitweb-standalone-http-status.sh |   27 +++++++++++++++++++-
- 2 files changed, 49 insertions(+), 18 deletions(-)
+ gitweb/gitweb.perl                       |   21 +++++++++++++++---
+ t/t9501-gitweb-standalone-http-status.sh |   33 ++++++++++++++++++++++++++=
+++++
+ 2 files changed, 50 insertions(+), 4 deletions(-)
 
 diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 041da17..229f3da 100755
+index 229f3da..be9ad5d 100755
 --- a/gitweb/gitweb.perl
 +++ b/gitweb/gitweb.perl
-@@ -7003,6 +7003,28 @@ sub snapshot_name {
- 	return wantarray ? ($name, $name) : $name;
- }
+@@ -7051,6 +7051,10 @@ sub git_snapshot {
 =20
-+sub exit_if_unmodified_since {
-+	my ($latest_epoch) =3D @_;
-+	our $cgi;
+ 	my ($name, $prefix) =3D snapshot_name($project, $hash);
+ 	my $filename =3D "$name$known_snapshot_formats{$format}{'suffix'}";
 +
-+	my $if_modified =3D $cgi->http('IF_MODIFIED_SINCE');
-+	if (defined $if_modified) {
-+		my $since;
-+		if (eval { require HTTP::Date; 1; }) {
-+			$since =3D HTTP::Date::str2time($if_modified);
-+		} elsif (eval { require Time::ParseDate; 1; }) {
-+			$since =3D Time::ParseDate::parsedate($if_modified, GMT =3D> 1);
-+		}
-+		if (defined $since && $latest_epoch <=3D $since) {
-+			my %latest_date =3D parse_date($latest_epoch);
-+			print $cgi->header(
-+				-last_modified =3D> $latest_date{'rfc2822'},
-+				-status =3D> '304 Not Modified');
-+			goto DONE_GITWEB;
-+		}
-+	}
-+}
++	my %co =3D parse_commit($hash);
++	exit_if_unmodified_since($co{'committer_epoch'}) if %co;
 +
- sub git_snapshot {
- 	my $format =3D $input_params{'snapshot_format'};
- 	if (!@snapshot_fmts) {
-@@ -7820,24 +7842,8 @@ sub git_feed {
- 	if (defined($commitlist[0])) {
- 		%latest_commit =3D %{$commitlist[0]};
- 		my $latest_epoch =3D $latest_commit{'committer_epoch'};
-+		exit_if_unmodified_since($latest_epoch);
- 		%latest_date   =3D parse_date($latest_epoch, $latest_commit{'comitter_tz=
+ 	my $cmd =3D quote_command(
+ 		git_cmd(), 'archive',
+ 		"--format=3D$known_snapshot_formats{$format}{'format'}",
+@@ -7060,10 +7064,19 @@ sub git_snapshot {
+ 	}
+=20
+ 	$filename =3D~ s/(["\\])/\\$1/g;
+-	print $cgi->header(
+-		-type =3D> $known_snapshot_formats{$format}{'type'},
+-		-content_disposition =3D> 'inline; filename=3D"' . $filename . '"',
+-		-status =3D> '200 OK');
++	if (%co) {
++		my %latest_date =3D parse_date($co{'committer_epoch'}, $co{'committer_tz=
 '});
--		my $if_modified =3D $cgi->http('IF_MODIFIED_SINCE');
--		if (defined $if_modified) {
--			my $since;
--			if (eval { require HTTP::Date; 1; }) {
--				$since =3D HTTP::Date::str2time($if_modified);
--			} elsif (eval { require Time::ParseDate; 1; }) {
--				$since =3D Time::ParseDate::parsedate($if_modified, GMT =3D> 1);
--			}
--			if (defined $since && $latest_epoch <=3D $since) {
--				print $cgi->header(
--					-type =3D> $content_type,
--					-charset =3D> 'utf-8',
--					-last_modified =3D> $latest_date{'rfc2822'},
--					-status =3D> '304 Not Modified');
--				return;
--			}
--		}
- 		print $cgi->header(
- 			-type =3D> $content_type,
- 			-charset =3D> 'utf-8',
++		print $cgi->header(
++			-type =3D> $known_snapshot_formats{$format}{'type'},
++			-content_disposition =3D> 'inline; filename=3D"' . $filename . '"',
++			-last_modified =3D> $latest_date{'rfc2822'},
++			-status =3D> '200 OK');
++	} else {
++		print $cgi->header(
++			-type =3D> $known_snapshot_formats{$format}{'type'},
++			-content_disposition =3D> 'inline; filename=3D"' . $filename . '"',
++			-status =3D> '200 OK');
++	}
+=20
+ 	open my $fd, "-|", $cmd
+ 		or die_error(500, "Execute git-archive failed");
 diff --git a/t/t9501-gitweb-standalone-http-status.sh b/t/t9501-gitweb-stan=
 dalone-http-status.sh
-index 31076ed..0e49f29 100755
+index 0e49f29..38e90bd 100755
 --- a/t/t9501-gitweb-standalone-http-status.sh
 +++ b/t/t9501-gitweb-standalone-http-status.sh
-@@ -92,7 +92,7 @@ test_debug 'cat gitweb.output'
- test_expect_success 'snapshots: bad tree-ish id (tagged object)' '
- 	echo object > tag-object &&
- 	git add tag-object &&
--	git commit -m "Object to be tagged" &&
-+	test_tick && git commit -m "Object to be tagged" &&
- 	git tag tagged-object `git hash-object tag-object` &&
- 	gitweb_run "p=3D.git;a=3Dsnapshot;h=3Dtagged-object;sf=3Dtgz" &&
- 	grep "400 - Object is not a tree-ish" gitweb.output
-@@ -112,6 +112,31 @@ test_expect_success 'snapshots: bad object id' '
+@@ -138,6 +138,39 @@ test_expect_success 'modification: feed if-modified-si=
+nce (unmodified)' '
  '
- test_debug 'cat gitweb.output'
+ test_debug 'cat gitweb.headers'
 =20
-+# ----------------------------------------------------------------------
-+# modification times (Last-Modified and If-Modified-Since)
-+
-+test_expect_success 'modification: feed last-modified' '
-+	gitweb_run "p=3D.git;a=3Datom;h=3Dmaster" &&
++test_expect_success 'modification: snapshot last-modified' '
++	gitweb_run "p=3D.git;a=3Dsnapshot;h=3Dmaster;sf=3Dtgz" &&
 +	grep "Status: 200 OK" gitweb.output &&
 +	grep "Last-modified: Thu, 7 Apr 2005 22:14:13 +0000" gitweb.output
 +'
 +test_debug 'cat gitweb.headers'
 +
-+test_expect_success 'modification: feed if-modified-since (modified)' '
++test_expect_success 'modification: snapshot if-modified-since (modified)' '
 +	export HTTP_IF_MODIFIED_SINCE=3D"Wed, 6 Apr 2005 22:14:13 +0000" &&
-+	gitweb_run "p=3D.git;a=3Datom;h=3Dmaster" &&
++	gitweb_run "p=3D.git;a=3Dsnapshot;h=3Dmaster;sf=3Dtgz" &&
 +	unset HTTP_IF_MODIFIED_SINCE &&
 +	grep "Status: 200 OK" gitweb.output
 +'
 +test_debug 'cat gitweb.headers'
 +
-+test_expect_success 'modification: feed if-modified-since (unmodified)' '
++test_expect_success 'modification: snapshot if-modified-since (unmodified)=
+' '
 +	export HTTP_IF_MODIFIED_SINCE=3D"Thu, 7 Apr 2005 22:14:13 +0000" &&
-+	gitweb_run "p=3D.git;a=3Datom;h=3Dmaster" &&
++	gitweb_run "p=3D.git;a=3Dsnapshot;h=3Dmaster;sf=3Dtgz" &&
 +	unset HTTP_IF_MODIFIED_SINCE &&
 +	grep "Status: 304 Not Modified" gitweb.output
 +'
 +test_debug 'cat gitweb.headers'
-=20
++
++test_expect_success 'modification: tree-ish snapshot' '
++	ID=3D`git rev-parse --verify HEAD^{tree}` &&
++	export HTTP_IF_MODIFIED_SINCE=3D"Wed, 6 Apr 2005 22:14:13 +0000" &&
++	gitweb_run "p=3D.git;a=3Dsnapshot;h=3Dmaster;sf=3Dtgz" &&
++	unset HTTP_IF_MODIFIED_SINCE &&
++	grep "Status: 200 OK" gitweb.output &&
++	! grep "Last-Modified" gitweb.output
++'
++test_debug 'cat gitweb.headers'
++
  # ----------------------------------------------------------------------
  # load checking
+=20
 --=20
 1.7.3.4
 
---Nq2Wo0NMKNjxTN9z
+--DKU6Jbt7q3WqK7+M
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Description: OpenPGP digital signature
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v2.0.17 (GNU/Linux)
 
-iQEcBAEBAgAGBQJPcL+oAAoJEPe7CdOcrcTZFRkIAInlcSD42ylzWEj49bddZpHY
-6Ef8zmr9Z7c+egPKjcR66j/16ZcVJKxITV29DhkFgvlaCMQfia3wnzvC1EIQUD85
-hQ85hZFV3yB7GA671vpgHnxYyA9WJtRG6PugxIgJmldH5bbvEAyXAPPCW4Zb/lUf
-UvEJ+HzogRhFOqWG1HJ+E5jQiJ9zhywnwRI+rsfatHFoBcbL1FBlpC569HEeYD+T
-MgV4cNJogfIZ9dhiG2qCcepLp9u7wQ5P6k62PleooRDh94p+p9tzf9ptjsqERu6b
-WUcqaeKRmWxYTZ2eGCKIus7v4HEk1RqTaZMYMjxGHFWm6KE3PhuTSPZDFJ+l+iM=
-=TbXa
+iQEcBAEBAgAGBQJPcMAJAAoJEPe7CdOcrcTZ5nYIAIeCU1DQOykZbCoPqulikN+e
+ADjVO+CHCHGn9sMVSekqtrfpym/G1hM6BX+rDpffIabhAGvNBZlKpd7BPmHLOdo3
+gDH12pa0YXJQIHn/dbqCW7HNAaA4Yw5sm5dt5pmzCJ/+xnfI/M+kFVRaO3s7LRN/
+sFBFdFPlrEinmuYsbtS5Ic2wfMjpRAjlk57ORsGGHqnEMJBX79OTVN8A2Dge4dWB
+zCc92N07L3gFsbuUWQCgqkIjxK97AhkUPwhb3nvfGDMP0kQdXeGgH9qAXw5s1Gpa
+Z4RtHWK2bWyvNn6GRDi2n92m1DZai6p1qThVRQvLzdKKbtfpqSz3xzDLR3SmpNw=
+=42I7
 -----END PGP SIGNATURE-----
 
---Nq2Wo0NMKNjxTN9z--
+--DKU6Jbt7q3WqK7+M--
