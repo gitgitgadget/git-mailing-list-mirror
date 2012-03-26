@@ -1,101 +1,211 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: GSoC - Designing a faster index format
-Date: Mon, 26 Mar 2012 23:19:36 +0700
-Message-ID: <CACsJy8AqQdWO4E2oYTMLbpYhxobH8iXE-jXPoj2BcEGtfh+T=Q@mail.gmail.com>
-References: <CAKTdtZm3qfG1rcoashDoMoqtD34JJDUDtDruGqGn9bSMzQTcFA@mail.gmail.com>
- <87aa3aw5z8.fsf@thomas.inf.ethz.ch> <CAKTdtZkGP3KbMGf88yW7zcCjemUyEy_4CVNkLD0SV=Lm7=Kveg@mail.gmail.com>
- <CAKTdtZmYc=xz4zCPQiuSTUvdmbLRKXNWNL3N6_4Bj0gujYmRvw@mail.gmail.com>
- <CACsJy8AYs5bzRnhRj_R33qTt-2gPh-rJaO0=1iTva9n14wHB4w@mail.gmail.com>
- <CAKTdtZk4FJD9qXEybpN01+S=5fOm=4AbOp8trFr5c6Uxbfykkg@mail.gmail.com>
- <CACsJy8CU_q+3ROO9z5nHe8NZDjTD4mvnEUP7C0+T3u3bRD11rQ@mail.gmail.com>
- <CAKTdtZmLOzAgG0uCDcVr+O41XPX-XnoVZjsZWPN-BLjq2oG-7A@mail.gmail.com>
- <CACsJy8C=4WaN4MZrZMaD3FqZrF2jCP5sm0F0SpDvzQnYfka9Ew@mail.gmail.com>
- <CAKTdtZkpjVaBSkcieojKj+V7WztT3UDzjGfXyghY=S8mq+X9zw@mail.gmail.com>
- <CACsJy8D85thmK_5jLC7MxJtsitLr=zphKiw2miwPu7Exf7ty=Q@mail.gmail.com>
- <CAKTdtZkx+7iU5T4oBNDEx-A5cgZCLU9ocdXmC9jRbD39J1zb3Q@mail.gmail.com> <87iphrjv23.fsf@thomas.inf.ethz.ch>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: elton sky <eltonsky9404@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Mon Mar 26 18:20:20 2012
+From: Tim Henigan <tim.henigan@gmail.com>
+Subject: [PATCH 9/9 v7] difftool: print list of valid tools with '--tool-help'
+Date: Mon, 26 Mar 2012 12:23:35 -0400
+Message-ID: <1332779015-22882-1-git-send-email-tim.henigan@gmail.com>
+References: <7vzkb7rtd0.fsf@alter.siamese.dyndns.org>
+Cc: Tim Henigan <tim.henigan@gmail.com>
+To: gitster@pobox.com, git@vger.kernel.org, davvid@gmail.com
+X-From: git-owner@vger.kernel.org Mon Mar 26 18:24:13 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SCCeX-0001KN-5d
-	for gcvg-git-2@plane.gmane.org; Mon, 26 Mar 2012 18:20:17 +0200
+	id 1SCCiK-0003dO-Oa
+	for gcvg-git-2@plane.gmane.org; Mon, 26 Mar 2012 18:24:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932854Ab2CZQUK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Mar 2012 12:20:10 -0400
-Received: from mail-we0-f174.google.com ([74.125.82.174]:52430 "EHLO
-	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932655Ab2CZQUI (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Mar 2012 12:20:08 -0400
-Received: by wejx9 with SMTP id x9so4316106wej.19
-        for <git@vger.kernel.org>; Mon, 26 Mar 2012 09:20:07 -0700 (PDT)
+	id S932934Ab2CZQYH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Mar 2012 12:24:07 -0400
+Received: from mail-qa0-f53.google.com ([209.85.216.53]:60148 "EHLO
+	mail-qa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932919Ab2CZQYG (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Mar 2012 12:24:06 -0400
+Received: by qadc11 with SMTP id c11so2253798qad.19
+        for <git@vger.kernel.org>; Mon, 26 Mar 2012 09:24:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=0hn/mjY87kZKy+prOAqTEgX6+zFgwyZ7TIE0WLfVUYg=;
-        b=x2giym/miOqv8Wmfyjkl/WG1LXo9NzMl8KfpkTKciboMnMg++AaFVa8bKgIw5hR5bL
-         233yK3znj6X649KmlHxgBQx6GF2LZu6EkxaWFER6+mSceNTRwP0t9geKCLlDF9SO5RdF
-         GduaK8wSTOs2qKeyhD1zryd0YkOK4W0cKp7sORaEub5DzM53RxUaQWgcp70reHpNqBiu
-         qjH/W55WNWk8+/SyewBuMyGQFCgvUFnXQzONBFC09Br310edola7h5g3WhGXAhT7Wlib
-         s7J9ZwLHo99Fj+SrXCzrLT4WDSdsZsrXGPRibM23hAuSRvfuJwpSttQOuNij5pXhSZpR
-         731Q==
-Received: by 10.216.135.225 with SMTP id u75mr11915391wei.97.1332778807139;
- Mon, 26 Mar 2012 09:20:07 -0700 (PDT)
-Received: by 10.223.109.144 with HTTP; Mon, 26 Mar 2012 09:19:36 -0700 (PDT)
-In-Reply-To: <87iphrjv23.fsf@thomas.inf.ethz.ch>
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        bh=eNBls5TyaVxABY7y/SAU223c6laFGvaUpOV4sfWUZHQ=;
+        b=DMgIJr7emBaHIHhmQiMKRBR+oFQ+XsLP3EL8v2LsgTgyu/pCMWjMtgsZTjoxmPUoDr
+         eGy3jsk5S6Abs+M5Yw/F80z0tw/S53z3tWDQOG6qx8dp0yb387rWtY/XM6Z+cqaLrJ0S
+         rHTXu8LBX/GAraGBPRClYGcUiyzXsefeBq11QSuoaISgfSzCuUDPgthqI5PRJ8W8FW0C
+         grYw47S6p09getUWWYL98O2V8DLLZ9H1wvUShlE8zNnk5CzQ9edQpC9an6y4FZ/6WlZR
+         YHtwRyZ8g+3qsUVogHnFt12YRi0v8KN1SKjyxnWIa66mdWRyjHPpj4HKqKfUIHpYXbk7
+         1W5A==
+Received: by 10.224.58.205 with SMTP id i13mr28008448qah.97.1332779045538;
+        Mon, 26 Mar 2012 09:24:05 -0700 (PDT)
+Received: from localhost (adsl-99-38-69-118.dsl.sfldmi.sbcglobal.net. [99.38.69.118])
+        by mx.google.com with ESMTPS id dv7sm30659777qab.15.2012.03.26.09.23.51
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Mon, 26 Mar 2012 09:24:03 -0700 (PDT)
+X-Mailer: git-send-email 1.7.10.rc1.36.gdd92a
+In-Reply-To: <7vzkb7rtd0.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193924>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193925>
 
-On Mon, Mar 26, 2012 at 9:28 PM, Thomas Rast <trast@student.ethz.ch> wrote:
-> Doesn't that venture into database land?
+Since bc7a96a (mergetool--lib: Refactor tools into separate files,
+2011-08-18), it is possible to add a new diff tool by creating a simple
+script in the '$(git --exec-path)/mergetools' directory.  Updating the
+difftool help text is still a manual process, and the documentation can
+easily go out of sync.
 
-How about this (a bit like memory management). Maybe it's simpler than
-a database and fits us better.
+Teach the command to read the list of valid tools from the 'mergetools'
+directory, determine which of them are actually installed and then print
+them for the user when the '--tool-help' option is given.
 
-The header consists of crc32 and three uint32_t, one points to the
-root tree, one the first extension block, the last one the free list
-at the end of the file. The rest of the file contains sizable blocks.
-There can be free space between them. Free spaces (offset and size)
-are recorded at the end of the file, pointed in header. The header's
-crc32 covers the header and free list.
+Signed-off-by: Tim Henigan <tim.henigan@gmail.com>
+---
 
-When we need a new block, we look up in free list. If we cannot find a
-suitable space, we append to the end of the file (moving free list
-further to keep it always the end of the file). Removing a block means
-marking it in free list. We only truncate if there is free space at
-the end. Operations that we know will scratch the whole index are our
-opportunity to rewrite the index and make it compact again. No random
-garbage collection (iow disk is cheap).
+This replaces 9/9 in the previous version the series.
 
-A block starts with a signature (a tree block, or an extension...). A
-tree block consists of:
+Changes in v7:
 
- - uint32_t tree object's size
- - sha-1 of tree object
- - crc32 of the rest of the block except tree object
- - maybe reference counter of a block can be refered by many blocks??
- - tree object (i.e. something that tree-walk.c can parse)
- - other index attributes, stored separately in the same order as in
-tree object above, uint32_t block offset of subdirectories.
+  - The list of possible tools is now tested to find out which are
+    actually installed and available to run.
+  - The user is informed that tools that require a windowed session will
+    fail if they are running a terminal-only session.
 
-An extension block basically consists of what we have now in an
-extension plus uint32_t offset to the next extension block, so we can
-keep track of all extensions. crc32 is used for extension blocks.
+This change is based on a suggestion given by Junio Hamano on the Git
+developer list [1].
 
-This way we only need to verify checksum of the header (and free list)
-and blocks we visit. We don't need cache-tree extension because it's
-part of the format. There will be headache with unpack-trees.c because
-of entry order change. But in the end we would use the same order tree
-objects are using now, much simpler for us.
+[1]: http://permalink.gmane.org/gmane.comp.version-control.git/193237
+
+
+ Documentation/git-difftool.txt |   11 ++++++-----
+ git-difftool.perl              |   40 +++++++++++++++++++++++++++++++++++++---
+ t/t7800-difftool.sh            |    5 +++++
+ 3 files changed, 48 insertions(+), 8 deletions(-)
+
+diff --git a/Documentation/git-difftool.txt b/Documentation/git-difftool.txt
+index aba5e76..31fc2e3 100644
+--- a/Documentation/git-difftool.txt
++++ b/Documentation/git-difftool.txt
+@@ -36,11 +36,9 @@ OPTIONS
+ 
+ -t <tool>::
+ --tool=<tool>::
+-	Use the diff tool specified by <tool>.
+-	Valid diff tools are:
+-	araxis, bc3, deltawalker, diffuse, emerge, ecmerge, gvimdiff,
+-	kdiff3,	kompare, meld, opendiff, p4merge, tkdiff, vimdiff and
+-	xxdiff.
++	Use the diff tool specified by <tool>.  Valid values include
++	emerge, kompare, meld, and vimdiff. Run `git difftool --tool-help`
++	for the list of valid <tool> settings.
+ +
+ If a diff tool is not specified, 'git difftool'
+ will use the configuration variable `diff.tool`.  If the
+@@ -68,6 +66,9 @@ of the diff post-image.  `$MERGED` is the name of the file which is
+ being compared. `$BASE` is provided for compatibility
+ with custom merge tool commands and has the same value as `$MERGED`.
+ 
++--tool-help::
++	Print a list of diff tools that may be used with `--tool`.
++
+ -x <command>::
+ --extcmd=<command>::
+ 	Specify a custom command for viewing diffs.
+diff --git a/git-difftool.perl b/git-difftool.perl
+index 0fa131c..35370b8 100755
+--- a/git-difftool.perl
++++ b/git-difftool.perl
+@@ -14,7 +14,7 @@
+ use 5.008;
+ use strict;
+ use warnings;
+-use File::Basename qw(dirname);
++use File::Basename qw(dirname basename);
+ use File::Copy;
+ use File::stat;
+ use File::Path qw(mkpath);
+@@ -28,7 +28,7 @@ sub usage
+ {
+ 	my $exitcode = shift;
+ 	print << 'USAGE';
+-usage: git difftool [-t|--tool=<tool>]
++usage: git difftool [-t|--tool=<tool>] [--tool-help]
+                     [-x|--extcmd=<cmd>]
+                     [-g|--gui] [--no-gui]
+                     [--prompt] [-y|--no-prompt]
+@@ -38,6 +38,36 @@ USAGE
+ 	exit($exitcode);
+ }
+ 
++sub print_tool_help
++{
++	my ($cmd, @found, @notfound);
++	my $gitpath = Git::exec_path();
++
++	for (glob "$gitpath/mergetools/*") {
++		my $tool = basename($_);
++		next if ($tool eq "defaults");
++
++		$cmd  = '. "$(git --exec-path)/git-mergetool--lib"';
++		$cmd .= " && get_merge_tool_path $tool >/dev/null 2>&1";
++		if (system('sh', '-c', $cmd) == 0) {
++			push(@found, $tool);
++		} else {
++			push(@notfound, $tool);
++		}
++	}
++
++	print "'git difftool --tool=<tool>' may be set to one of the following:\n";
++	print "\t$_\n" for (@found);
++
++	print "\nThe following tools are valid, but not currently available:\n";
++	print "\t$_\n" for (@notfound);
++
++	print "\nNOTE: Some of the tools listed above only work in a windowed\n";
++	print "environment. If run in a terminal-only session, they will fail.\n";
++
++	exit(0);
++}
++
+ sub setup_dir_diff
+ {
+ 	# Run the diff; exit immediately if no diff found
+@@ -132,18 +162,22 @@ sub setup_dir_diff
+ 
+ # parse command-line options. all unrecognized options and arguments
+ # are passed through to the 'git diff' command.
+-my ($difftool_cmd, $dirdiff, $extcmd, $gui, $help, $prompt);
++my ($difftool_cmd, $dirdiff, $extcmd, $gui, $help, $prompt, $tool_help);
+ GetOptions('g|gui!' => \$gui,
+ 	'd|dir-diff' => \$dirdiff,
+ 	'h' => \$help,
+ 	'prompt!' => \$prompt,
+ 	'y' => sub { $prompt = 0; },
+ 	't|tool:s' => \$difftool_cmd,
++	'tool-help' => \$tool_help,
+ 	'x|extcmd:s' => \$extcmd);
+ 
+ if (defined($help)) {
+ 	usage(0);
+ } 
++if (defined($tool_help)) {
++	print_tool_help();
++}
+ if (defined($difftool_cmd)) {
+ 	if (length($difftool_cmd) > 0) {
+ 		$ENV{GIT_DIFF_TOOL} = $difftool_cmd;
+diff --git a/t/t7800-difftool.sh b/t/t7800-difftool.sh
+index 478c1be..bbe71e5 100755
+--- a/t/t7800-difftool.sh
++++ b/t/t7800-difftool.sh
+@@ -319,6 +319,11 @@ test_expect_success PERL 'say no to the second file' '
+ 	echo "$diff" | stdin_doesnot_contain br2
+ '
+ 
++test_expect_success PERL 'difftool --tool-help' '
++	tool_help=$(git difftool --tool-help) &&
++	echo "$tool_help" | stdin_contains tool
++'
++
+ test_expect_success PERL 'setup change in subdirectory' '
+ 	git checkout master &&
+ 	mkdir sub &&
 -- 
-Duy
+1.7.10.rc1.36.gdd92a
