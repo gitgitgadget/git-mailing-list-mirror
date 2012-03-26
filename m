@@ -1,83 +1,104 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/4] grep: add more information to hunk separators
-Date: Sun, 25 Mar 2012 22:14:05 -0700
-Message-ID: <7vr4wgq6zm.fsf@alter.siamese.dyndns.org>
-References: <1332729705-9283-1-git-send-email-lodatom@gmail.com>
+From: Rodrigo Silva =?utf-8?b?KE1lc3RyZUxpb24p?= 
+	<linux@rodrigosilva.com>
+Subject: Re: [PATCH] Documentation: improve description of =?utf-8?b?R0lUX0VESVRPUg==?= and preference order
+Date: Mon, 26 Mar 2012 08:11:44 +0000 (UTC)
+Message-ID: <loom.20120326T100258-967@post.gmane.org>
+References: <loom.20120323T133648-453@post.gmane.org> <7vty1ftc4e.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Mark Lodato <lodatom@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 26 07:14:15 2012
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Mar 26 10:12:30 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SC2Fz-0001mG-3e
-	for gcvg-git-2@plane.gmane.org; Mon, 26 Mar 2012 07:14:15 +0200
+	id 1SC52S-00037r-OG
+	for gcvg-git-2@plane.gmane.org; Mon, 26 Mar 2012 10:12:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751997Ab2CZFOJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Mar 2012 01:14:09 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64724 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751874Ab2CZFOI (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Mar 2012 01:14:08 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2C6B774D0;
-	Mon, 26 Mar 2012 01:14:07 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=jz4a61UsG73EXrTO5ZXA2fQEBUI=; b=A7oTqJ
-	cRSKJQkHeOisztYLq+qMzrr3LQIyTG0CVXTssSVDoy4DI94FfIu3oOpcCIE5hlb5
-	WyjQC+926jc30/IS5XsI4g9YtVHTYrI5hQSh6UmU5akrzLvIZYIE0pjEtv6KxR9F
-	wJaBNTevF7MbSShI1Tj3sikfQNj8KOEEOiot8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Uk8k/jG0VbThKqdPLzTNH3Du2F+IaOEC
-	4sECm62Zsdim/lTcUWfshWiZLUmpmbwoXUGm8sd1s8i5ewfhnSQ7T6eHHYCi3dz5
-	7YFSOhtz20XdudnDxjhVchLkhfteWMi6O5wS48LRYzjVaepDl0bAzX04ZXHA241N
-	y4z8jQdyW4Y=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1AFCB74CF;
-	Mon, 26 Mar 2012 01:14:07 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 99B9374CE; Mon, 26 Mar 2012
- 01:14:06 -0400 (EDT)
-In-Reply-To: <1332729705-9283-1-git-send-email-lodatom@gmail.com> (Mark
- Lodato's message of "Sun, 25 Mar 2012 22:41:41 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 82D41320-7702-11E1-AEDE-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754329Ab2CZIMD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Mar 2012 04:12:03 -0400
+Received: from plane.gmane.org ([80.91.229.3]:60578 "EHLO plane.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754034Ab2CZIMB (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Mar 2012 04:12:01 -0400
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1SC51z-0002uh-RU
+	for git@vger.kernel.org; Mon, 26 Mar 2012 10:12:00 +0200
+Received: from baddd5e7.virtua.com.br ([baddd5e7.virtua.com.br])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 26 Mar 2012 10:11:59 +0200
+Received: from linux by baddd5e7.virtua.com.br with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 26 Mar 2012 10:11:59 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 186.221.213.231 (Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:11.0) Gecko/20100101 Firefox/11.0)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193898>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193899>
 
-Mark Lodato <lodatom@gmail.com> writes:
+Junio C Hamano <gitster <at> pobox.com> writes:
 
-> Originally, I had envisioned also moving the function name (`-p') to the hunk
-> header, similar to the diff context line.  For example:
->
->     -- git.c:570 -- int main(int argc, char argv)
->                     printf("usage: %s\n\n", git_usage_string);
->                     list_common_cmds_help();
->                     printf("\n%s\n", git_more_info_string);
->
-> After implementing this feature, I was not happy with the result and
-> subsequently removed it.  To me, the output was too cluttered and the line
-> number was ambigous.  For example, in the above, it is not obvious to me that
-> line 570 is the "printf" line and not the "int main" line.  Still, if you
-> would like to see the patch to implement this feature, please let me know.
+> >
+> > diff --git a/Documentation/git-var.txt b/Documentation/git-var.txt
+> > index 5317cc2..9c49163 100644
+> > --- a/Documentation/git-var.txt
+> > +++ b/Documentation/git-var.txt
+> > @@ -43,7 +43,8 @@ GIT_EDITOR::
+> >      `$SOME_ENVIRONMENT_VARIABLE`, `"C:\Program Files\Vim\gvim.exe"
+> >      --nofork`.  The order of preference is the `$GIT_EDITOR`
+> >      environment variable, then `core.editor` configuration, then
+> > -    `$VISUAL`, then `$EDITOR`, and then finally 'vi'.
+> > +    `$VISUAL`, then `$EDITOR`, and then finally a hardcoded fallback
+> > +    editor set at build time, by default 'vi'.
+> 
+> I do not think this is needed; please file a bug to whoever is replacing
+> 'vi' with 'nono' and distributing the resulting binary, without updating
+> this part of the documentation.
 
-The worst part of all of the above is that the output becomes utterly
-ambiguous and the reader cannot tell if "-- git.c..." came because the
-file had such a line that begin with two dashes in it and grep found it,
-or it is your output format embellishment. It is obvious that these are
-not meant to be machine parseable, but if the goal is to make the output
-more useful to the humans, then it may be a better approach to come up
-with a front end that reads our machine readable output and shows output
-with its own embellishments. You could even make it an interactive front
-end.
+Ok, I'll do so. Just a clarification: the actual built-time replacement
+value is "/usr/bin/editor", which, in my system, points to nano.
 
-In other words, I am not yet convinced this belongs to "git grep" proper.
+This is done in Debian and other derivatives, like Ubuntu and Linux Mint
+
+> 
+> > diff --git a/Documentation/git.txt b/Documentation/git.txt
+> > index d5b7667..fac57ba 100644
+> > --- a/Documentation/git.txt
+> > +++ b/Documentation/git.txt
+> > @@ -711,6 +711,12 @@ other
+> >  	a pager.  See also the `core.pager` option in
+> >  	linkgit:git-config[1].
+> >  
+> > +'GIT_EDITOR'::
+> > +    This environment variable overrides `$EDITOR` and `$VISUAL`.
+> > +    It is used by several git comands when, on interactive mode,
+> > +    an editor is to be launched. See also linkgit:git-var[1]
+> > +    and the `core.editor` option in linkgit:git-config[1].
+> > +
+> 
+> This is a good addition.  Thanks.
+
+You're welcome, always glad to help such a fabulous project.
+
+
+> >  'GIT_SSH'::
+> >  	If this environment variable is set then 'git fetch'
+> >  	and 'git push' will use this command instead
+> 
+
+
+So, what should I do now? Re-send the patch with just the accepted parts
+(and adjusting commit message accordingly)? Or this will be done by you?
+This is my first contribution, not sure about the workflow
+
+Thanks,
+ML
