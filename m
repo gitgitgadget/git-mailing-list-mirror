@@ -1,83 +1,63 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v7a 6/9] diff --stat: use a maximum of 5/8 for the
- filename part
-Date: Mon, 26 Mar 2012 19:45:49 -0400
-Message-ID: <20120326234549.GA10172@sigill.intra.peff.net>
-References: <7vfwdts6wj.fsf@alter.siamese.dyndns.org>
- <1330604806-30288-1-git-send-email-zbyszek@in.waw.pl>
- <1330604806-30288-6-git-send-email-zbyszek@in.waw.pl>
+From: James Pickens <jepicken@gmail.com>
+Subject: Bug? Bad permissions in $PATH breaks Git aliases
+Date: Mon, 26 Mar 2012 16:48:29 -0700
+Message-ID: <CAJMEqRBmuBJuUmeoAU-_xf=s10ybD9pXhUJT+fn8aHNE2WJz6A@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, gitster@pobox.com, pclouds@gmail.com,
-	j.sixt@viscovery.net
-To: Zbigniew =?utf-8?Q?J=C4=99drzejewski-Szmek?= <zbyszek@in.waw.pl>
-X-From: git-owner@vger.kernel.org Tue Mar 27 01:46:01 2012
+Content-Type: text/plain; charset=UTF-8
+To: Git ML <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Mar 27 01:48:57 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SCJbr-0007Fv-Tx
-	for gcvg-git-2@plane.gmane.org; Tue, 27 Mar 2012 01:46:00 +0200
+	id 1SCJei-0000eQ-Go
+	for gcvg-git-2@plane.gmane.org; Tue, 27 Mar 2012 01:48:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932158Ab2CZXpz convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 26 Mar 2012 19:45:55 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:60268
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932065Ab2CZXpy (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Mar 2012 19:45:54 -0400
-Received: (qmail 19866 invoked by uid 107); 26 Mar 2012 23:46:12 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 26 Mar 2012 19:46:12 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 26 Mar 2012 19:45:49 -0400
-Content-Disposition: inline
-In-Reply-To: <1330604806-30288-6-git-send-email-zbyszek@in.waw.pl>
+	id S1757734Ab2CZXsv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Mar 2012 19:48:51 -0400
+Received: from mail-wi0-f178.google.com ([209.85.212.178]:36165 "EHLO
+	mail-wi0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753459Ab2CZXsu (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Mar 2012 19:48:50 -0400
+Received: by wibhq7 with SMTP id hq7so4903968wib.1
+        for <git@vger.kernel.org>; Mon, 26 Mar 2012 16:48:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to:content-type;
+        bh=drFDZ0EUyTqtSaWWk8Z+xWcDRkTzmj4YpTMrSUnzUBA=;
+        b=YVQTKlbAe9E2UuPUzer7e74tW6e8lgvKDho+nP96jmxHbRIx1ZMC3xYOzhD5vd2Utr
+         d7tOU1zHIK6K+Aw/hecl8AW7sN/0QoDzzkjUYGG/Ts1eqABUd1sTgJwtWmVzT5Yoougd
+         1ZoIVcnonlzBlmyEboUH+l0iHTleDADZNVAXpygyJkfodzZgzQOHtoRpEFQBpVaHLqzr
+         KRlOU7fVdy6zpO4okFwrQyFnApnmjeUV5FctE26c3SF6LglrbW5WwGCsUn5J2//RSvdU
+         9dY6hr4QMOLF2IvFT4fJUdUdP+gmXjLzuoQBsjBQYjbagjBUdabqjds906M+DHckFeHC
+         wUDw==
+Received: by 10.180.82.136 with SMTP id i8mr22370154wiy.19.1332805729787; Mon,
+ 26 Mar 2012 16:48:49 -0700 (PDT)
+Received: by 10.223.154.205 with HTTP; Mon, 26 Mar 2012 16:48:29 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193987>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193988>
 
-On Thu, Mar 01, 2012 at 01:26:43PM +0100, Zbigniew J=C4=99drzejewski-Sz=
-mek wrote:
+Hi,
 
-> ---
->  Documentation/diff-options.txt |   14 ++++---
->  diff.c                         |   90 ++++++++++++++++++++++++++----=
-----------
->  t/t4052-stat-output.sh         |   16 +++----
->  3 files changed, 76 insertions(+), 44 deletions(-)
+I'm not sure if this should be considered a bug or not, but I've noticed that
+when my $PATH contains an inaccessible directory, Git fails to execute aliases.
+For example:
 
-I am seeing test failures from t4052 in 'master'. Bisecting points to
-1b058bc (diff --stat: use a maximum of 5/8 for the filename part,
-2012-03-01). The output from the test script looks like this:
+git config alias.l log
+git l
+# works fine
+PATH=boguspath:$PATH
+mkdir boguspath
+chmod 000 boguspath
+git l
+# fatal: cannot exec 'git-l': Permission denied
 
---- expect      2012-03-26 23:41:29.688039554 +0000
-+++ actual      2012-03-26 23:41:29.696039549 +0000
-@@ -1 +1 @@
-- ...aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa=
- |    1 +
-+ ...aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa=
-aaaaaaaaaaaaa |    1 +
-not ok - 8 diff: small change with long name gives more space to the na=
-me
-#      =20
-#                       git $cmd $args >output &&
-#                       grep " | " output >actual &&
-#                       test_cmp expect actual
-#              =20
+I lean towards calling it a bug, since my shell doesn't seem to care if there
+are inaccessible directories in my $PATH.  It just ignores them, and I think Git
+ought to do the same.
 
-There are a few other failures, but they all have the same mismatched
-length (the output is slightly longer than expected). I know Junio won'=
-t
-push out a 'master' that doesn't pass the tests for him, so I'm
-wondering if some environment information like the terminal width is
-leaking through the test scripts.
-
-I haven't actually investigated any further yet, but I thought I'd firs=
-t
-see if anything obvious occurs to you.
-
--Peff
+James
