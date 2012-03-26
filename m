@@ -1,82 +1,80 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/4] grep: add more information to hunk separators
-Date: Mon, 26 Mar 2012 11:05:28 -0700
-Message-ID: <7vk427p79z.fsf@alter.siamese.dyndns.org>
-References: <1332729705-9283-1-git-send-email-lodatom@gmail.com>
- <7vr4wgq6zm.fsf@alter.siamese.dyndns.org> <4F70966B.4050107@lsrfire.ath.cx>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 0/2] Make run-command.c honour SHELL_PATH
+Date: Mon, 26 Mar 2012 14:08:02 -0400
+Message-ID: <20120326180802.GG7942@sigill.intra.peff.net>
+References: <1332678696-4001-1-git-send-email-bwalton@artsci.utoronto.ca>
+ <20120326011148.GA4428@burratino>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Mark Lodato <lodatom@gmail.com>, git@vger.kernel.org
-To: =?utf-8?Q?Ren=C3=A9?= Scharfe <rene.scharfe@lsrfire.ath.cx>
-X-From: git-owner@vger.kernel.org Mon Mar 26 20:05:40 2012
+Cc: Ben Walton <bwalton@artsci.utoronto.ca>, gitster@pobox.com,
+	git@vger.kernel.org
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Mar 26 20:08:17 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SCEIU-0005O4-16
-	for gcvg-git-2@plane.gmane.org; Mon, 26 Mar 2012 20:05:38 +0200
+	id 1SCEL1-0007hu-TM
+	for gcvg-git-2@plane.gmane.org; Mon, 26 Mar 2012 20:08:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933219Ab2CZSFc convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 26 Mar 2012 14:05:32 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:34661 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933211Ab2CZSFc convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 26 Mar 2012 14:05:32 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B2D437369;
-	Mon, 26 Mar 2012 14:05:31 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=oLijuC3tVJ7E
-	5z14Rm9+uJxBZ9k=; b=tAzHcxbL5K+PuM2t7Ii6nnnc3bpuhFuDSzC3nlIZsmoT
-	fp9JqQmeKRHefgN8p5Zeb1DWLawjDg6BXyWZ5qPwiEiiz2///IMJFv6FKNhLwsmX
-	JsF6i/b+Bj/YqWT2G8EUs3BpdOdXtCIFIrCS8XbRxwWbNGS62eiz0i9+RgPIXis=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=RpAsvn
-	FLy8aPSMI+DepWTyPXhdPN178FzyqbvF0H1JbDpWBiAZSiutyaPr143WhaJUA4h4
-	srzBU+4NZKsFt67tbgFvYAz43P+nj5RSovvfUU9+tt2g1/OoC8YEFu4aJsQCi954
-	eNxcmXhFgc4sb9pSc60E8cafbn6t67HAv6K7A=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A93F97368;
-	Mon, 26 Mar 2012 14:05:31 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 91E817365; Mon, 26 Mar 2012
- 14:05:30 -0400 (EDT)
-In-Reply-To: <4F70966B.4050107@lsrfire.ath.cx> (=?utf-8?Q?=22Ren=C3=A9?=
- Scharfe"'s message of "Mon, 26 Mar 2012 18:16:43 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 46394338-776E-11E1-912B-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S933262Ab2CZSIG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Mar 2012 14:08:06 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:60054
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S933231Ab2CZSIE (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Mar 2012 14:08:04 -0400
+Received: (qmail 14923 invoked by uid 107); 26 Mar 2012 18:08:21 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 26 Mar 2012 14:08:21 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 26 Mar 2012 14:08:02 -0400
+Content-Disposition: inline
+In-Reply-To: <20120326011148.GA4428@burratino>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193943>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193944>
 
-Ren=C3=A9 Scharfe <rene.scharfe@lsrfire.ath.cx> writes:
+On Sun, Mar 25, 2012 at 08:11:48PM -0500, Jonathan Nieder wrote:
 
-> Human readers can differentiate between contents and heading by color=
-;
-> separators are cyan by default.
+> My first reaction was to suspect the series is solving the problem in
+> the wrong place.  The core of the bug might be t7006 itself, which
+> assumes that the shell used to interpret the GIT_PAGER setting is a
+> POSIX-style shell rather than an ancient Bourne shell or cmd.exe.
+> In the far long term, we should probably skip this test on some
+> platforms using an appropriate test prerequisite.
 
-OK.
+I don't think that's an unreasonable assumption. Solaris /bin/sh is
+really a total piece of junk, and we have already gone to lengths to let
+users avoid it. We have SHELL_PATH, but we also have SANE_TOOL_PATH.
+This is a case that should have been caught by SANE_TOOL_PATH, but
+wasn't. So I think the problem is worth fixing, and just lets Solaris
+people enjoy the same reasonable assumption about having a working shell
+that other systems do.
 
-> A separate frontend would probably have to implement match
-> highlighting again.  That's not too hard, but a bit sad.
+> A second reaction was to wonder why the usual fixup from
+> v1.6.4-rc0~66^2~1 (Makefile: insert SANE_TOOL_PATH to PATH before /bin
+> or /usr/bin, 2009-07-08) didn't apply.  Should the git wrapper prepend
+> the same magic to $PATH that git-sh-setup.sh does to make the behavior
+> of scripted and unscripted commands a little more consistent?
 
-Yeah, but at the same time, a separate front-end could do a lot more th=
-an
-just grep.  Letting the user pick a function name from the current outp=
-ut
-and run grep again, letting the user highlight the line range and run
-blame (or "Linus's ultimate content tracking tool"), etc.
+I think that would be an OK solution, too. Though I wonder if using
+SHELL_PATH isn't simply easier for the user to get right (I seem to
+recall people finding SANE_TOOL_PATH confusing to set up in the past,
+but I have not personally used it myself).
 
-> ...  But I think the idea to deduplicate the meta-information and giv=
-e
-> found content more screen real estate is a good one in general.
+> A more minor comment: patch 1/2 was even more mysterious.  Combining
+> the two patches would be enough to avoid confusion there.  I haven't
+> checked the makefile changes and interaction with GIT-CFLAGS carefully
+> yet and hope to do so in the next round.
 
-Yeah, I found the "sound of one hand clapping" in your other message
-somewhat intriguing ;-).
+I think they would be easier to understand squashed, too. If there were
+many users of the new macro to be converted individually, I would say it
+might make sense to introduce it in one commit, then convert each class
+of callsites separately. But here there is really only one user, so
+seeing the application can help understand the rationale for the
+definition.
+
+-Peff
