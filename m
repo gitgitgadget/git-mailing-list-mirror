@@ -1,94 +1,76 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: odd behavior with git-rebase
-Date: Mon, 26 Mar 2012 15:56:19 -0400
-Message-ID: <20120326195619.GB13098@sigill.intra.peff.net>
-References: <20120323185205.GA11916@hmsreliant.think-freely.org>
- <20120323195455.GB15063@sigill.intra.peff.net>
- <CABURp0qeJEwELpg_YKxn9Ghb6EMphrwwfueM2XCqua3X_dacdA@mail.gmail.com>
+From: Christopher Tiwald <christiwald@gmail.com>
+Subject: Re: [PATCH v3] push: Provide situational hints for non-fast-forward
+ errors
+Date: Mon, 26 Mar 2012 15:57:43 -0400
+Message-ID: <20120326195743.GD32387@gmail.com>
+References: <20120320043133.GA2755@gmail.com>
+ <20120323214114.GB18198@sigill.intra.peff.net>
+ <20120326192001.GB32387@gmail.com>
+ <20120326195150.GA13098@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Neil Horman <nhorman@tuxdriver.com>, git@vger.kernel.org
-To: Phil Hord <phil.hord@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 26 21:56:28 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, gitster@pobox.com, zbyszek@in.waw.pl,
+	Matthieu.Moy@grenoble-inp.fr, drizzd@aon.at
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Mar 26 21:57:57 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SCG1i-0001yr-HR
-	for gcvg-git-2@plane.gmane.org; Mon, 26 Mar 2012 21:56:26 +0200
+	id 1SCG3A-0002wS-Nt
+	for gcvg-git-2@plane.gmane.org; Mon, 26 Mar 2012 21:57:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755188Ab2CZT4W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Mar 2012 15:56:22 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:60153
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753251Ab2CZT4V (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Mar 2012 15:56:21 -0400
-Received: (qmail 16521 invoked by uid 107); 26 Mar 2012 19:56:39 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 26 Mar 2012 15:56:39 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 26 Mar 2012 15:56:19 -0400
+	id S1755474Ab2CZT5v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Mar 2012 15:57:51 -0400
+Received: from mail-qa0-f46.google.com ([209.85.216.46]:63550 "EHLO
+	mail-qa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753283Ab2CZT5u (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Mar 2012 15:57:50 -0400
+Received: by qaeb19 with SMTP id b19so2415218qae.19
+        for <git@vger.kernel.org>; Mon, 26 Mar 2012 12:57:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=gNEOyWkTwYSWWINH5Dpq53VRdmTPzcItMF4gVKHYGh4=;
+        b=MLB8ZrqeF6UpTEvTKp44v0iKKTss1nYM5/BnNbRSfdUdNGREeXobnkjTO5FEb9Lmbw
+         EJzsT7cyJVX9m3gSVQ5gyOx0Wa72cIekMHBJGkmZFIuRI/+RbUI79JtqxAkuDMsyNpSy
+         id/qVDyMkJIxbCq/+zwIMIkkodojguTA0TGcVe4bcu6nosOMOKwwUsw+LGle17tv4+Ay
+         ETI7wJ/SIndzldaJ7ACOT6D7T9lYasiuXV4f4whPD+p+NvcvJbtaMbQ2G6SzWD3FBz1c
+         OBDAdi4xoU33dY0F+G97ggA9aRLvT2CbXs07oleiAN6R8wsoD9eyw7w5so0oafirAzTW
+         xUZw==
+Received: by 10.224.189.137 with SMTP id de9mr7124324qab.45.1332791869337;
+        Mon, 26 Mar 2012 12:57:49 -0700 (PDT)
+Received: from gmail.com ([216.55.38.246])
+        by mx.google.com with ESMTPS id ha10sm31577593qab.14.2012.03.26.12.57.46
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Mon, 26 Mar 2012 12:57:48 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <CABURp0qeJEwELpg_YKxn9Ghb6EMphrwwfueM2XCqua3X_dacdA@mail.gmail.com>
+In-Reply-To: <20120326195150.GA13098@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193967>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193968>
 
-On Mon, Mar 26, 2012 at 02:31:05PM -0400, Phil Hord wrote:
-
-> Coincidentally I ran into this same behavior this week.  But what
-> bothered me about it was the messages git gave me.  The empty commit
-> gave me cherry-pick hints instead of rebase ones, including advising
-> me to "use 'git reset'" to resolve the problem if I don't want this
-> commit after all.
+On Mon, Mar 26, 2012 at 03:51:50PM -0400, Jeff King wrote:
+> On Mon, Mar 26, 2012 at 03:20:01PM -0400, Christopher Tiwald wrote:
 > 
-> $ git rebase -i HEAD~10
-> ...
-> The previous cherry-pick is now empty, possibly due to conflict resolution.
-> If you wish to commit it anyway, use:
+> > I used the REF_STATUS_* enum as a template for what I wanted to accomplish
+> > when authoring v1, but did notice there was no other place my new
+> > options made much sense (Junio helped me remove one other call between v1
+> > and v2). I like the readability fixup, but it won't compile as both push.c
+> > and transport.c need to see these. Would something like the following
+> > work? It simply moves the define statements to cache.h, so that both push and
+> > transport can use them.
 > 
->     git commit --allow-empty
-> 
-> Otherwise, please use 'git reset'
-> # Not currently on any branch.
-> nothing to commit (working directory clean)
-> Could not apply d513504... Some commit message
-> 
-> 
-> I'm not sure if this is the norm or if it's a result of some other
-> things I did in this sequence.  But I've seen it several times now.
-> I've only tested it on 1.7.10 versions, including RC2.
+> My suggestion put them in transport.h, which is included from both
+> places. It compiles fine for me. Am I missing something?
 
-This is easily reproducible on a simple test case:
+Ah nope. That was me. Sorry about the noise. This otherwise makes sense
+to me.
 
-  commit() {
-    echo $1 >$1 && git add $1 && git commit -m $1 && git tag $1
-  }
-
-  git init repo &&
-  cd repo &&
-  commit one &&
-  commit two &&
-  git commit --allow-empty -m empty &&
-  commit three &&
-  git checkout -b fork one &&
-  commit four &&
-  git rebase -i fork master
-  git --no-pager log --oneline
-
-(this is the same test case I used without "-i" to check the rebase
-skipping behavior).
-
-I agree the mention of cherry-pick is a little confusing. I think the
-advice to use "git commit --allow-empty" is still the right thing
-(although better still would be to recognize that the commit was empty
-in the first place and not stop at all). I think the message is showing
-the fact that "rebase -i" is cobbled together from other pieces. I
-wonder if the sequencer work would make this a little smoother (I
-confess I have not paid much attention to what is happening in that
-area).
-
--Peff
+--
+Christopher Tiwald
