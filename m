@@ -1,72 +1,99 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] tag: add --author option
-Date: Tue, 27 Mar 2012 16:05:54 -0700
-Message-ID: <7v1uodzlt9.fsf@alter.siamese.dyndns.org>
-References: <4F71E415.9030800@gmx.ch> <4F71F902.8090200@in.waw.pl>
- <4F7223D0.5000801@gmx.ch> <7vr4wdhilj.fsf@alter.siamese.dyndns.org>
- <4F722D18.50502@gmx.ch>
+From: Ivan Todoroski <grnch@gmx.net>
+Subject: Re: [PATCH/RFC v2 1/4] fetch-pack: new --stdin option to read refs
+ from stdin
+Date: Wed, 28 Mar 2012 01:18:52 +0200
+Message-ID: <4F724ADC.2030909@gmx.net>
+References: <loom.20120318T083216-96@post.gmane.org> <m3fwd550j3.fsf@localhost.localdomain> <20120318190659.GA24829@sigill.intra.peff.net> <CACsJy8BNT-dY+wDONY_TgLnv0135RZ-47BEVMzX6c3ddH=83Zw@mail.gmail.com> <20120319024436.GB10426@sigill.intra.peff.net> <4F69B5F0.2060605@gmx.net> <CAJo=hJu0H5wfXB_y5XQ6=S0VJ9t4pxHWkuy_=rehJL_6psf00g@mail.gmail.com> <20120321171423.GA13140@sigill.intra.peff.net> <4F715CF7.5070903@gmx.net> <4F715D55.8020109@gmx.net> <7vhaxaj7yi.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Zbigniew =?utf-8?Q?J=C4=99drzejewski-Szmek?= <zbyszek@in.waw.pl>,
-	git@vger.kernel.org, peff@peff.net
-To: Mathias Weber <mweb@gmx.ch>
-X-From: git-owner@vger.kernel.org Wed Mar 28 01:06:03 2012
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Jeff King <peff@peff.net>, Shawn Pearce <spearce@spearce.org>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Mar 28 01:18:31 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SCfSk-0001BH-KR
-	for gcvg-git-2@plane.gmane.org; Wed, 28 Mar 2012 01:06:02 +0200
+	id 1SCfeo-000172-7k
+	for gcvg-git-2@plane.gmane.org; Wed, 28 Mar 2012 01:18:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756247Ab2C0XF5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Mar 2012 19:05:57 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48871 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756136Ab2C0XF4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Mar 2012 19:05:56 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 765D479B4;
-	Tue, 27 Mar 2012 19:05:56 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=InrNMOXMdBzwuMYiwPZDuDvKPk0=; b=EjfBpI
-	eMo8q5EsZBCijEcm290SPi09+xzHqYJv1EC76EeYD0EwbSKGtOHqqDfeDxsLsRaV
-	hgFHNPT+z+PHnzPUjuTnn/iTxO7O7p0lw9Mx53g6BdFFeAdNh3Wl53JBhOQAZNg5
-	BkI4wtQCEatvkKna9A31yHaB45p+c3V++a8BE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=BdBSycK2x/T63eJj+0SJue1VlLF7//sl
-	INR/p/3e58bdcDaS+6kwdql4k3WKEkkToPYb3L5u1hLgvQC4MmgdCOmkdKIEuG0g
-	gArbylZ5sT2FBfU9AeydGjO1CW4e7seMygA6A4Eq4du13bOxtGmEsSfsz8NwZkzp
-	FGdGvRO/kR0=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6D50E79B3;
-	Tue, 27 Mar 2012 19:05:56 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 04A5479B2; Tue, 27 Mar 2012
- 19:05:55 -0400 (EDT)
-In-Reply-To: <4F722D18.50502@gmx.ch> (Mathias Weber's message of "Tue, 27 Mar
- 2012 23:11:52 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 68A02AF6-7861-11E1-97E5-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1756615Ab2C0XSZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Mar 2012 19:18:25 -0400
+Received: from mailout-de.gmx.net ([213.165.64.23]:54715 "HELO
+	mailout-de.gmx.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with SMTP id S1755884Ab2C0XSY (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Mar 2012 19:18:24 -0400
+Received: (qmail invoked by alias); 27 Mar 2012 23:18:22 -0000
+Received: from unknown (EHLO [127.0.0.1]) [77.28.166.58]
+  by mail.gmx.net (mp031) with SMTP; 28 Mar 2012 01:18:22 +0200
+X-Authenticated: #7905487
+X-Provags-ID: V01U2FsdGVkX198vDs2NYh8QBZcx3DI+75XI+kzS6Bkd2ZVIWhI/a
+	k29+RGG5PXtnKW
+User-Agent: Thunderbird 2.0.0.24 (Windows/20100228)
+In-Reply-To: <7vhaxaj7yi.fsf@alter.siamese.dyndns.org>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194093>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194094>
 
-Mathias Weber <mweb@gmx.ch> writes:
+On 27.03.2012 18:59, Junio C Hamano wrote:
+> Ivan Todoroski <grnch@gmx.net> writes:
+> 
+>> +		int alloc_heads = nr_heads;
+>> +		int size = nr_heads * sizeof(*heads);
+>> +		heads = memcpy(xmalloc(size), heads, size);
+>> +		if (args.stateless_rpc) {
+>> +			/* in stateless RPC mode we use pkt-line to read
+>> +			   from stdin, until we get a flush packet */
+>> +			static char line[1000];
+> 
+> We will never have a refname that is longer than this limit?
 
-> ... To change the committer you have to
-> provide the env variable GIT_COMMITTER_NAME and GIT_COMMITER_EMAIL or
-> change the config file. I haven't found a option to change the
-> committer. I think the tagger is about the same as the committer.
+I don't know. I grepped the code for existing usages of packet_read_line 
+and that seemed to be a common idiom everywhere. Should I just bump up 
+the size or is there some accepted way to read arbitrary length packets?
 
-OK, so not giving an easy option to forge it, while leaving the door open
-for scripts to use GIT_COMMITTER_{NAME,EMAIL} to override it if needed, is
-a good way to keep people honest and make the behaviour consistent across
-tools.  I can understand the reasoning.
+>> +			}
+>> +		}
+>> +		else {
+>> +			/* read from stdin one ref per line, until EOF */
+>> +			struct strbuf line;
+>> +			strbuf_init(&line, 0);
+>> +			for (;;) {
+>> +				if (strbuf_getline(&line, stdin, '\n') == EOF)
+>> +					break;
+>> +				strbuf_trim(&line);
+>> +				if (!line.len)
+>> +					continue; /* skip empty lines */
+> 
+> Curious.  "stop at EOF", "trim" and "skip empty" imply that you are
+> catering to people who debug this from the terminal by typing (or copy
+> pasting).  Is that the expected use case?
 
-Thanks.
+The expected use case is people using this from shell scripts that could 
+be getting refs by slicing and dicing output of other commands with 
+regexps and what not which could leave some whitespace here and there, 
+so a more liberal interface might be more friendly to such script writers.
+
+Currently you would pass a list of generated refs to fetch-pack using 
+something like this:
+
+     generate-refs | xargs fetch-pack
+
+or this:
+
+     fetch-pack $(generate-refs)
+
+Both of these commands will ignore any extra whitespace produced by 
+"generate-refs".
+
+Since --stdin is meant to be a spiritual replacement for the two 
+commands above, I thought it should behave in a similar spirit.
+
+At least that was the reasoning... if you're not swayed by it I can just 
+remove those lines and not tolerate any extra whitespace.
