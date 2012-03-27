@@ -1,99 +1,58 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [RFH] SoC 2012 Guidelines
-Date: Tue, 27 Mar 2012 01:57:47 -0400
-Message-ID: <20120327055747.GB24170@sigill.intra.peff.net>
-References: <201203241711.30270.jnareb@gmail.com>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: Bug? Bad permissions in $PATH breaks Git aliases
+Date: Tue, 27 Mar 2012 08:14:21 +0200
+Message-ID: <4F715ABD.4080102@viscovery.net>
+References: <CAJMEqRBmuBJuUmeoAU-_xf=s10ybD9pXhUJT+fn8aHNE2WJz6A@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, Shawn Pearce <spearce@spearce.org>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 27 07:58:01 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Git ML <git@vger.kernel.org>
+To: James Pickens <jepicken@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 27 08:14:56 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SCPPp-0003gk-65
-	for gcvg-git-2@plane.gmane.org; Tue, 27 Mar 2012 07:57:57 +0200
+	id 1SCPgG-0004FL-6D
+	for gcvg-git-2@plane.gmane.org; Tue, 27 Mar 2012 08:14:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756197Ab2C0F5x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Mar 2012 01:57:53 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:33934
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755836Ab2C0F5w (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Mar 2012 01:57:52 -0400
-Received: (qmail 31363 invoked by uid 107); 27 Mar 2012 05:58:10 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 27 Mar 2012 01:58:10 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 27 Mar 2012 01:57:47 -0400
-Content-Disposition: inline
-In-Reply-To: <201203241711.30270.jnareb@gmail.com>
+	id S1756666Ab2C0GOm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Mar 2012 02:14:42 -0400
+Received: from lilzmailso02.liwest.at ([212.33.55.13]:26945 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756386Ab2C0GOX (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Mar 2012 02:14:23 -0400
+Received: from cpe228-254-static.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.76)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1SCPfh-0005pv-MU; Tue, 27 Mar 2012 08:14:21 +0200
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id 686621660F;
+	Tue, 27 Mar 2012 08:14:21 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:11.0) Gecko/20120312 Thunderbird/11.0
+In-Reply-To: <CAJMEqRBmuBJuUmeoAU-_xf=s10ybD9pXhUJT+fn8aHNE2WJz6A@mail.gmail.com>
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194015>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194016>
 
-On Sat, Mar 24, 2012 at 05:11:29PM +0100, Jakub Narebski wrote:
+Am 3/27/2012 1:48, schrieb James Pickens:
+> I'm not sure if this should be considered a bug or not, but I've noticed that
+> when my $PATH contains an inaccessible directory, Git fails to execute aliases.
+> ...
+> I lean towards calling it a bug, since my shell doesn't seem to care if there
+> are inaccessible directories in my $PATH.  It just ignores them, and I think Git
+> ought to do the same.
 
-> The https://github.com/peff/git/wiki/ includes the following pages:
-> 
-> * "SoC 2012 Application", which should probably be renamed to
->   "SoC 2012 Organization Application"; it was here to help (crowd)craft
->   organization application.
-> 
-> * "SoC 2012 Template", which perhaps should be better named
->   "SoC 2012 Student Application Template"; it is here for prospective
->   (would-be) student to help craft better project application.
+Git is not a shell. And I'm sure it is not the only program that has this
+issue. "Don't do it, then."
 
-Good renaming suggestions; I just pushed this.
+Git's implementation depends on the system's execvp behavior. As it
+stands, current implementations of execvp path lookup and of popular
+shells' path lookup differ in this respect. Bad luck. Don't check the
+sanity of your PATH by testing how your shell looks up executables.
 
-The template page was not well-advertised, so I linked to it from the
-ideas page.
-
-> What is lacking (for me) is something like "SoC 2012 Guidelines" wiki
-> page, which would gather guidelines and suggestions both for mentors
-> and for students.
-
-Some of that (for the students) is at the ideas page, and on the
-application template page. To a large degree, the advice is: engage the
-community. Hopefully that results in interesting discussions and the
-students getting a sense of what is required for each project.  But
-there is probably room to provide some more specific guidance.
-
-For the mentor side, we have pretty much left the mentors alone to
-decide how to do their jobs, recognizing that every mentor and every
-student-mentor pair will be a little bit different.
-
-> This page could also serve to gather organization-specific requirements,
-> for example:
-> [...]
-
-All of what you said looks reasonable to me, and follows the practices
-we've had in years past. It's a wiki. Feel free to add a new page, or
-edit (or if you want to get feedback before changing the wiki, post
-patches).
-
-> And to gather help:
-> 
-> * There should be some information about what parts of discussion and
->   work should take place in private communication between student and
->   mentor, and how much should it take place in public, on git mailing
->   list.
-> 
-> * How can and how should mentors help students.
-> 
-> * How to make use of comments on patches (or design ideas), while not
->   getting bogged down in "bikeshed"-ding :-)
-> 
-> * Perhaps also some advice from successfull students to students,
->   and from mentors to mentors.
-
-Some of these things are discussed in more general terms on the GSoC
-mentors list. We don't have particular policies in git, though in general
-I would encourage mentors to integrate the students into the usual list
-workflow. So lots of communication and status reports, and as much as
-possible in the open and on the list.
-
--Peff
+-- Hannes
