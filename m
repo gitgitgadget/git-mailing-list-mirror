@@ -1,95 +1,87 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Bug? Bad permissions in $PATH breaks Git aliases
-Date: Tue, 27 Mar 2012 11:03:11 -0700
-Message-ID: <7vlimlj50g.fsf@alter.siamese.dyndns.org>
-References: <CAJMEqRBmuBJuUmeoAU-_xf=s10ybD9pXhUJT+fn8aHNE2WJz6A@mail.gmail.com>
- <4F715ABD.4080102@viscovery.net>
- <CAJMEqRAQZwaeMNai9wckmPE2mRVVpttzEobZrsn29fMAo+LRRQ@mail.gmail.com>
- <7v7gy6krei.fsf@alter.siamese.dyndns.org>
- <CAJMEqRDodYQa_4vZ0+BZYS1+zL3e1iFXAMPgONbg8miEEs9wJQ@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: [PATCH 1/2] run-command: propagate EACCES errors to parent
+Date: Tue, 27 Mar 2012 14:04:25 -0400
+Message-ID: <20120327180425.GA4659@sigill.intra.peff.net>
+References: <20120327175933.GA1716@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Sixt <j.sixt@viscovery.net>, Git ML <git@vger.kernel.org>
-To: James Pickens <jepicken@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 27 20:03:26 2012
+Content-Type: text/plain; charset=utf-8
+Cc: James Pickens <jepicken@gmail.com>, Git ML <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Mar 27 20:04:34 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SCajt-0005ht-06
-	for gcvg-git-2@plane.gmane.org; Tue, 27 Mar 2012 20:03:25 +0200
+	id 1SCakz-0006SM-73
+	for gcvg-git-2@plane.gmane.org; Tue, 27 Mar 2012 20:04:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755470Ab2C0SDV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Mar 2012 14:03:21 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:40112 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752400Ab2C0SDO (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Mar 2012 14:03:14 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 36A5F65CA;
-	Tue, 27 Mar 2012 14:03:14 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=0UpaepxUVbQit/TTNxNDuZqAshw=; b=T/2aiu
-	fvIk+NzrOP5LaFJIbH93gkP3Q1DFc+nx8jAspwzV44E2ic/KkGR1s+juhVZ67VQE
-	RJRwSdMTSh1Zv9naRyb8hE00gTn+0TP0tmNFFMVTH81gPBvhfnb0/fYY2HfzRArN
-	R/Yf7iEbCG1Lwwa4+9ZkweQj7sCrqwIJSqEgE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=l5ihEr/GTKt8fDT29Y66vlwkm6m2f/aA
-	QWx0MIt1yBlfw59WvN/JeYTSY4kW0pjSMuIeSAXkQ6QgeJmsyMN2vGZDtwk7H1uk
-	OnIn0cS9lLxik+VMKPEJPHIda0rLfKttN6T/ACXplxDQi4inpjVpjR+eXbh/iWwk
-	0b3jLQhf+Bk=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2E6FF65C9;
-	Tue, 27 Mar 2012 14:03:14 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D7D1F65C8; Tue, 27 Mar 2012
- 14:03:12 -0400 (EDT)
-In-Reply-To: <CAJMEqRDodYQa_4vZ0+BZYS1+zL3e1iFXAMPgONbg8miEEs9wJQ@mail.gmail.com> (James
- Pickens's message of "Tue, 27 Mar 2012 10:48:31 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 1E8D842E-7837-11E1-949F-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754977Ab2C0SE2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Mar 2012 14:04:28 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:34381
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752400Ab2C0SE1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Mar 2012 14:04:27 -0400
+Received: (qmail 5574 invoked by uid 107); 27 Mar 2012 18:04:46 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 27 Mar 2012 14:04:46 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 27 Mar 2012 14:04:25 -0400
+Content-Disposition: inline
+In-Reply-To: <20120327175933.GA1716@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194066>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194067>
 
-James Pickens <jepicken@gmail.com> writes:
+The caller of run_command does not directly get access to
+the errno from exec, because it happens in the forked child.
+However, knowing the specific reason for an exec failure can
+help the parent respond better or produce better error
+messages.
 
-> On Tue, Mar 27, 2012 at 8:14 AM, Junio C Hamano <gitster@pobox.com> wrote:
->> James Pickens <jepicken@gmail.com> writes:
->>> I'm not claiming that it's sane to have a broken PATH, but as I
->>> mentioned in an earlier email, sometimes my PATH gets broken through
->>> no fault of my own, and it would be nice if Git could be more helpful
->>> in that case.
->>
->> Hrm, so which was more helpful in diagnosing the broken PATH? Git by
->> letting you be aware that there is some problem, or your shell by keeping
->> me oblivious of the issue?
->
-> In this case the broken parts of my PATH were completely uninteresting
-> to me - they didn't contain any executables that I would ever use.  So
-> if it didn't break my Git aliases, I could have continued working with
-> the broken PATH and never known or cared that it was broken.
->
-> But I get your point - sometimes it's more helpful to let the user
-> know something is amiss than try to guess what was intended.
+We already propagate ENOENT to the parent via exit code 127.
+Let's do the same for EACCES with exit code 126, which is
+already used by bash to indicate the same thing.
 
-That was not the "point" of my question.  In fact, there was no point.  I
-may be a mean person and may often throw rhetorical questions to embarrass
-others, but I am not *that* mean to always ask only rhetorical questions ;-).
+Signed-off-by: Jeff King <peff@peff.net>
+---
+Actually, there is a slight bending of the truth in the commit message.
+bash implements its own execvp, and it will only return 126/EACCES if a
+file is found via stat(), but is not executable. If there is an
+inaccessible directory in the PATH (meaning that stat() will fail), it
+will silently convert that to 127/ENOENT.
 
-Judging from your answer, it would have been better for you if Git didn't
-even tell you that there was an error due to an unreadable directory.  And
-if that is the case, "Git could be more helpful in that case" will lead us
-in one direction (i.e. "we simply ignore EACCESS and treat it as ENOENT"),
-which is a quite different direction from what others discussed and
-suggested in the thread (i.e. "we give more detailed diagnosis, perhaps
-saying "your PATH has /usr/local/bin but it cannot be read, so we cannot
-tell git-frotz exists there or not").
+ run-command.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-I just wanted to see what was the desired behaviour you have in mind.
+diff --git a/run-command.c b/run-command.c
+index 1db8abf..e303beb 100644
+--- a/run-command.c
++++ b/run-command.c
+@@ -185,6 +185,10 @@ static int wait_or_whine(pid_t pid, const char *argv0, int silent_exec_failure)
+ 			code = -1;
+ 			failed_errno = ENOENT;
+ 		}
++		else if (code == 126) {
++			code = -1;
++			failed_errno = EACCES;
++		}
+ 	} else {
+ 		error("waitpid is confused (%s)", argv0);
+ 	}
+@@ -346,6 +350,11 @@ fail_pipe:
+ 				error("cannot run %s: %s", cmd->argv[0],
+ 					strerror(ENOENT));
+ 			exit(127);
++		} else if (errno == EACCES) {
++			if (!cmd->silent_exec_failure)
++				error("cannot run %s: %s", cmd->argv[0],
++					strerror(errno));
++			exit(126);
+ 		} else {
+ 			die_errno("cannot exec '%s'", cmd->argv[0]);
+ 		}
+-- 
+1.7.9.5.5.g9b709b
