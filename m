@@ -1,84 +1,72 @@
-From: Jiang Xin <worldhello.net@gmail.com>
-Subject: Please pull git-l10n update
-Date: Tue, 27 Mar 2012 17:46:25 +0800
-Message-ID: <CANYiYbGUaKzg1KjjK_oAQgnDQg31uuvx65JyyK5p8dExfvk9JA@mail.gmail.com>
+From: Paul Mackerras <paulus@samba.org>
+Subject: Re: Please pull gitk update
+Date: Tue, 27 Mar 2012 20:52:05 +1100
+Message-ID: <20120327095204.GA8718@bloggs.ozlabs.ibm.com>
+References: <20120324055540.GA20898@bloggs.ozlabs.ibm.com>
+ <7vsjgvkl69.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>,
-	Peter Krefting <peter@softwolves.pp.se>,
-	Vincent van Ravesteijn <vfr@lyx.org>,
-	=?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 27 11:46:32 2012
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Mar 27 11:53:31 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SCSz1-0006Hw-KI
-	for gcvg-git-2@plane.gmane.org; Tue, 27 Mar 2012 11:46:31 +0200
+	id 1SCT5l-00020m-FU
+	for gcvg-git-2@plane.gmane.org; Tue, 27 Mar 2012 11:53:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757917Ab2C0Jq1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Mar 2012 05:46:27 -0400
-Received: from mail-vx0-f174.google.com ([209.85.220.174]:48779 "EHLO
-	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757802Ab2C0Jq0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Mar 2012 05:46:26 -0400
-Received: by vcqp1 with SMTP id p1so5008542vcq.19
-        for <git@vger.kernel.org>; Tue, 27 Mar 2012 02:46:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:cc:content-type;
-        bh=iut604/y3tX8ncylsj12/yXFftrYj5A4re39uBJwQqQ=;
-        b=mmWtWr56Sm4C/EIGEjp9Cz7MHJEUuL9rH8tV4W4/vWtHprdM01TVBJqOzhIDAkQi6V
-         HyCBeo2yok2pvLzkd97dDwCsMD4oPIbPwKrpkbF5aMvpmNPDPPyROzaHkFcD4O1nMGVG
-         +DH+/0328Qe44kCHdrqXPBUPVMmi5LiE6khz+QyOciBnIJjqBoCPftIF+h3IjHTVuQe3
-         yMvkgvzA1jblx/aECPbo19YBY18H21IMuoERXz18djOdQ4wuArf8FelV2waP7DtXaRTP
-         fuRLrzKFQL3FMn1k9a/WveM2fgiV4Feolvv2d7x9eVbLnS3lIGuNfeCVwHb2P0eVI8Vj
-         n4Mg==
-Received: by 10.52.179.165 with SMTP id dh5mr9702460vdc.30.1332841585658; Tue,
- 27 Mar 2012 02:46:25 -0700 (PDT)
-Received: by 10.52.96.38 with HTTP; Tue, 27 Mar 2012 02:46:25 -0700 (PDT)
+	id S1757938Ab2C0JxZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Mar 2012 05:53:25 -0400
+Received: from ozlabs.org ([203.10.76.45]:45664 "EHLO ozlabs.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757908Ab2C0JxY (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Mar 2012 05:53:24 -0400
+Received: by ozlabs.org (Postfix, from userid 1003)
+	id 6E8BCB6EF1; Tue, 27 Mar 2012 20:53:23 +1100 (EST)
+Content-Disposition: inline
+In-Reply-To: <7vsjgvkl69.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194035>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194036>
 
-Hi, Junio
+On Mon, Mar 26, 2012 at 04:16:30PM -0700, Junio C Hamano wrote:
+> Here is what I came up with after looking at the result of this pull.
+> Could you eyeball it?
+> 
+> Thanks.
+> 
+> diff --git a/Documentation/RelNotes/1.7.10.txt b/Documentation/RelNotes/1.7.10.txt
+> index 11b0b10..e1f493c 100644
+> --- a/Documentation/RelNotes/1.7.10.txt
+> +++ b/Documentation/RelNotes/1.7.10.txt
+> @@ -46,6 +46,14 @@ Updates since v1.7.9
+>  UI, Workflows & Features
+>  
+>   * various "gitk" updates.
+> +   - show the path to the top level directory in the window title
+> +   - update preference edit dialog
+> +   - pathspecs like "gitk -- .", "gitk -- ..\t" did not work well
 
-This pull request includes updates of sv and zh_CN translations.
-Vincent's commit
-(create new l10n team on Dutch) is withdrawed last minute when I
-create this pull
-request: https://github.com/git-l10n/git-po/pull/6#issuecomment-4712718 .
+This sounds a bit awkward, how about:
 
-The following changes since commit 0e2d57fd50f61e668be3180bc8f25991ea88aa8c:
+ +   - display file list correctly when directories are given on command line
 
-  Git 1.7.10-rc1 (2012-03-14 15:47:45 -0700)
+or something like that?
 
-are available in the git repository at:
+> +   - make "git-describe" output in the log message into a clickable link
+> +   - avoid matching the UNIX timestamp part when searching all fields
+> +   - give preference to symboic font names like sans & monospace
+> +   - allow comparing two commits using a mark
+> +   - "gitk" honors log.showroot configuration.
+>  
+>   * Teams for localizing the messages from the Porcelain layer of
+>     commands are starting to form, thanks to Jiang Xin who volunteered
 
-  git://github.com/git-l10n/git-po.git master
+Other than that, looks fine.
 
-for you to fetch changes up to 3601b1d3593cbe856ea79fa554233b7d6fe52b2e:
-
-  Add url of Swedish l10n team in TEAMS file (2012-03-27 17:11:34 +0800)
-
-----------------------------------------------------------------
-Jiang Xin (5):
-      Merge v1.7.10-rc0 for git l10n update
-      l10n: Update git.pot (1 new message)
-      l10n: Update zh_CN translation for Git 1.7.10-rc1
-      l10n: Review zh_CN translation for Git 1.7.10-rc1
-      Add url of Swedish l10n team in TEAMS file
-
-Peter Krefting (1):
-      Update Swedish translation (724t0f0u).
-
- po/TEAMS    |    1 +
- po/git.pot  |   29 ++++----
- po/sv.po    |   41 ++++++-----
- po/zh_CN.po |  531
-+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++--------------------------------------------------------------------
- 4 files changed, 310 insertions(+), 292 deletions(-)
+Paul.
