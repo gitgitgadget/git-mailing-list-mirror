@@ -1,86 +1,80 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH/RFC v2 4/4] remote-curl: main test case for the OS
- command line overflow
-Date: Tue, 27 Mar 2012 10:43:17 -0700
-Message-ID: <7vzkb2hrd6.fsf@alter.siamese.dyndns.org>
-References: <loom.20120318T083216-96@post.gmane.org>
- <m3fwd550j3.fsf@localhost.localdomain>
- <20120318190659.GA24829@sigill.intra.peff.net>
- <CACsJy8BNT-dY+wDONY_TgLnv0135RZ-47BEVMzX6c3ddH=83Zw@mail.gmail.com>
- <20120319024436.GB10426@sigill.intra.peff.net> <4F69B5F0.2060605@gmx.net>
- <CAJo=hJu0H5wfXB_y5XQ6=S0VJ9t4pxHWkuy_=rehJL_6psf00g@mail.gmail.com>
- <20120321171423.GA13140@sigill.intra.peff.net> <4F715CF7.5070903@gmx.net>
- <4F715DF6.7080401@gmx.net>
+From: James Pickens <jepicken@gmail.com>
+Subject: Re: Bug? Bad permissions in $PATH breaks Git aliases
+Date: Tue, 27 Mar 2012 10:48:31 -0700
+Message-ID: <CAJMEqRDodYQa_4vZ0+BZYS1+zL3e1iFXAMPgONbg8miEEs9wJQ@mail.gmail.com>
+References: <CAJMEqRBmuBJuUmeoAU-_xf=s10ybD9pXhUJT+fn8aHNE2WJz6A@mail.gmail.com>
+ <4F715ABD.4080102@viscovery.net> <CAJMEqRAQZwaeMNai9wckmPE2mRVVpttzEobZrsn29fMAo+LRRQ@mail.gmail.com>
+ <7v7gy6krei.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, Shawn Pearce <spearce@spearce.org>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-To: Ivan Todoroski <grnch@gmx.net>
-X-From: git-owner@vger.kernel.org Tue Mar 27 19:43:36 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Johannes Sixt <j.sixt@viscovery.net>, Git ML <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Mar 27 19:49:03 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SCaQg-0007Zl-Mu
-	for gcvg-git-2@plane.gmane.org; Tue, 27 Mar 2012 19:43:35 +0200
+	id 1SCaVu-00037A-RB
+	for gcvg-git-2@plane.gmane.org; Tue, 27 Mar 2012 19:48:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754708Ab2C0RnX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Mar 2012 13:43:23 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:62775 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754635Ab2C0RnT (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Mar 2012 13:43:19 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5ED0460F2;
-	Tue, 27 Mar 2012 13:43:19 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=k7WGoiCIs9Ec8mjz1MeN0BEkHZ0=; b=C950vm
-	xOSuSizmSSnBaAVJ1YblIA75vHYsJZTza7fOkGrmE+KCC0C8LoSHGWlWmiG9wzPC
-	VcsVwr95qRGX0Ink6KJouhl14kTL/FqKcI42ZoYdwXeT7vZOlf2zQZRcqe9jRcWT
-	lCIcbarB5C9K8IX/s96k/lKN8bKzK6FvYjacs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=lIRl2qJUPvS5Vhv9CFJKJWYeczAoYqHi
-	Ae9L94+bJXgtltkP+9suDafUjyEJBHUWPKeaGjAqjsXfmceZK9sjjSFv9disY+jw
-	YdbXMfWT4RpUlOpqJzyBOAkX+MwdrsZwYig363CSWpD6qP3MRnnpVOXyUwbhaXRL
-	2QC7Ld7C1VI=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 56E3060F1;
-	Tue, 27 Mar 2012 13:43:19 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id DF94960EF; Tue, 27 Mar 2012
- 13:43:18 -0400 (EDT)
-In-Reply-To: <4F715DF6.7080401@gmx.net> (Ivan Todoroski's message of "Tue, 27
- Mar 2012 08:28:06 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 56E4EEB4-7834-11E1-AC4E-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754871Ab2C0Rsx convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 27 Mar 2012 13:48:53 -0400
+Received: from mail-wg0-f44.google.com ([74.125.82.44]:49804 "EHLO
+	mail-wg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751302Ab2C0Rsx convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 27 Mar 2012 13:48:53 -0400
+Received: by wgbdr13 with SMTP id dr13so168206wgb.1
+        for <git@vger.kernel.org>; Tue, 27 Mar 2012 10:48:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=vtQuqIVCdQzVUeO4kofWYuzr5HiLOM+bpEdCA4MTWZo=;
+        b=V3CNXtwf1hroSSkgfLe41aTBI8vz8AB9UT+sjLXg2hdT7oSIFnB9XL5ufdu0xmFK11
+         J3qmvL7Swmd54g3xkHaiWFQYDZzbLP05uauG9YU5SL/vbmUywKHIplfHZFZzDKhSpMqB
+         73th0NSIcIM7JqgzCAoHsf89IkRRfRfarQIAAFPs4M561/SkGSTnrLpG4uJC8pliFLSH
+         X6+NoJXL+AWDuLDRc//mW/sfqWs60d9e86oCLtKIsgqHx4gpwq5R0plkgt7VRWCQLRDU
+         ivQOFd6QaMMTZ61QKcw8isZq0Zki4I99ZGUUS0TwNEyEZO/a3y5FV3SrOGDS6cf8S8Lc
+         2itg==
+Received: by 10.180.104.230 with SMTP id gh6mr29358591wib.22.1332870531920;
+ Tue, 27 Mar 2012 10:48:51 -0700 (PDT)
+Received: by 10.223.154.205 with HTTP; Tue, 27 Mar 2012 10:48:31 -0700 (PDT)
+In-Reply-To: <7v7gy6krei.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194062>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194063>
 
-Ivan Todoroski <grnch@gmx.net> writes:
+On Tue, Mar 27, 2012 at 8:14 AM, Junio C Hamano <gitster@pobox.com> wro=
+te:
+> James Pickens <jepicken@gmail.com> writes:
+>> I'm not claiming that it's sane to have a broken PATH, but as I
+>> mentioned in an earlier email, sometimes my PATH gets broken through
+>> no fault of my own, and it would be nice if Git could be more helpfu=
+l
+>> in that case.
+>
+> Hrm, so which was more helpful in diagnosing the broken PATH? =C2=A0G=
+it by
+> letting you be aware that there is some problem, or your shell by kee=
+ping
+> me oblivious of the issue?
 
-> +test_expect_success EXPENSIVE 'create 50,000 tags in the repo' '
-> +	(
-> +	cd "$HTTPD_DOCUMENT_ROOT_PATH/repo.git" &&
-> +	N=50000 &&
-> +	for ((i=1; i<=$N; i++)); do
+In this case the broken parts of my PATH were completely uninteresting
+to me - they didn't contain any executables that I would ever use.  So
+if it didn't break my Git aliases, I could have continued working with
+the broken PATH and never known or cared that it was broken.
 
-That's bash-ism isn't it?
+But I get your point - sometimes it's more helpful to let the user
+know something is amiss than try to guess what was intended.  I just
+don't think this is one of those cases, mainly because Git's behavior
+is inconsistent with other programs.  Git's behavior is not even
+consistent with itself - IMO, a PATH containing a directory that
+doesn't exist is just as broken as a PATH containing an inaccessible
+directory, but Git only has a problem with the latter.  That doesn't
+make sense to me.
 
-	N=50000 I=1
-        while test $I -le $N
-        do
-		...
-                I=$(( $I + 1 ))
-	done
-
-The body of the test itself looked reasonable.
-
-Thanks.
+James
