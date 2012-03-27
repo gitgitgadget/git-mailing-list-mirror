@@ -1,73 +1,76 @@
-From: Jakub Narebski <jnareb@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH v4 0/3] Isolate If-Modified-Since handling in gitweb
-Date: Tue, 27 Mar 2012 20:57:31 +0100
-Message-ID: <201203272157.31870.jnareb@gmail.com>
-References: <7v62dy4zhf.fsf@alter.siamese.dyndns.org> <201203272124.23145.jnareb@gmail.com> <20120327194933.GA32529@odin.tremily.us>
+Date: Tue, 27 Mar 2012 13:18:56 -0700
+Message-ID: <7vzkb1hk5r.fsf@alter.siamese.dyndns.org>
+References: <7v62dy4zhf.fsf@alter.siamese.dyndns.org>
+ <201203221346.35295.jnareb@gmail.com> <20120326110943.GA2951@odin.tremily.us>
+ <201203272124.23145.jnareb@gmail.com>
+ <20120327195558.GA32699@odin.tremily.us>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-2"
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
 To: "W. Trevor King" <wking@drexel.edu>
-X-From: git-owner@vger.kernel.org Tue Mar 27 21:57:38 2012
+X-From: git-owner@vger.kernel.org Tue Mar 27 22:19:09 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SCcWP-0004Lg-8H
-	for gcvg-git-2@plane.gmane.org; Tue, 27 Mar 2012 21:57:37 +0200
+	id 1SCcrB-0002l1-Ek
+	for gcvg-git-2@plane.gmane.org; Tue, 27 Mar 2012 22:19:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755559Ab2C0T5d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Mar 2012 15:57:33 -0400
-Received: from mail-we0-f174.google.com ([74.125.82.174]:63828 "EHLO
-	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755366Ab2C0T5c (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Mar 2012 15:57:32 -0400
-Received: by wejx9 with SMTP id x9so179213wej.19
-        for <git@vger.kernel.org>; Tue, 27 Mar 2012 12:57:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        bh=AFTOav+jazKMzZabS8z4u/sTtkG8LFYBV/lObsih+Oo=;
-        b=ZIhVbI3OHLIWKiaCQKtIG3Q905+DTI1ttdVA09h/+Zgu3Nr1lAgCB2lbJB2wtpGVfj
-         +W4/aCYXXRL5GLyEj6vQVm4a7XKRVzqv8LHp3Lcn42Ucc2pig++tncMx7oTYfOoBgUyn
-         q1dVqw6BI15z3xIVdCixUP1TMZoYazOZ+Niv7zDDDM4smJ958f5oWVKbvuw9/gLm43Vm
-         1qjq8GKUM+CX0hi28fAD2f1APeRMBHOHO0oQa6Z++ShrCbO+Hpvtc+9K5aLPSEFHTCoL
-         nWEL+K/u2oqVT+MIyZoJHIrMIyhSYhHXvlMnlTZGn0kM/tu8zGTmDv2EmPt7yeAuozjb
-         gecQ==
-Received: by 10.180.104.231 with SMTP id gh7mr724098wib.10.1332878251553;
-        Tue, 27 Mar 2012 12:57:31 -0700 (PDT)
-Received: from [192.168.1.13] (adhb238.neoplus.adsl.tpnet.pl. [79.184.157.238])
-        by mx.google.com with ESMTPS id o2sm3121647wiv.11.2012.03.27.12.57.30
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 27 Mar 2012 12:57:30 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <20120327194933.GA32529@odin.tremily.us>
-Content-Disposition: inline
+	id S1753653Ab2C0UTA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Mar 2012 16:19:00 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:46414 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753389Ab2C0US7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Mar 2012 16:18:59 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 64DDA5585;
+	Tue, 27 Mar 2012 16:18:58 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=+05DM3d//pdOPlft75d7tmE2U+E=; b=vK+3Cg
+	4TljYkOTA4PIC5DKA1wvv2BECMlJ2KQhJ7wi//7RkEAJLKAyZ9Kv+t9LqkR8Hm4l
+	YmbYTi5/mK+lOSTilp3Y1ur59REoZVxSS6YGo/eN3OASWxq6i/dCA296LXycC0P0
+	U23YCnSQvZ0PbjLlUGu8f5kb8y+ysCyezuHH8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=ZKAAIJX8VdO/HJxDHGmMhRA5wZy/eZNj
+	fVOGIDhWaQAKibKV70+OoPM3fYFszw5/QYthYGU6WxuiELfhk+5F0U/flFvBUpzr
+	ztiwHUMhme0/ByGo2Dn0RhT7clvV/jpBOvA37k+e6+WQHMXSwszmUwOrfmFDA8sR
+	HueHlUdMpFU=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5D3665580;
+	Tue, 27 Mar 2012 16:18:58 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id CBDF6557F; Tue, 27 Mar 2012
+ 16:18:57 -0400 (EDT)
+In-Reply-To: <20120327195558.GA32699@odin.tremily.us> (W. Trevor King's
+ message of "Tue, 27 Mar 2012 15:55:58 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 15525A2A-784A-11E1-A109-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194081>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194082>
 
-W. Trevor King wrote:
+"W. Trevor King" <wking@drexel.edu> writes:
+
 > On Tue, Mar 27, 2012 at 08:24:22PM +0100, Jakub Narebski wrote:
+>> No, the status line was omitted unintentionally, thanks for fixing this.
+>> I guess that web server (at least Apache) adds it if it is missing.
+>
+> From the CGI 1.1 specs [1], section 9.2:
+>
+>   If the script does not return a Status header, then "200 OK" should
+>   be assumed.
+>
+> So, perhaps it is better to skip the Status header on success (less
+> for the server to parse).
 
-> > Though I am not sure how lack of "Status:" header is different from
-> > incorrect "Status:" header for 'grep "Status: 304" gitweb.headers'...
-> 
-> It's not for the 304 tests.  I thought it would be a good idea to grep
-> for a 200 status before looking for Last-Modified times, to ensure you
-> actually get to the successful response stage.
+I do not think it matters either way.  It is just a single header line, no?
 
-Right.
-
-Testing both sides of a new feature (i.e. modified and unmodified here)
-is a good testing practice.  Thanks.
-
--- 
-Jakub Narebski
-Poland
+The code is certainly more explicit with your patch.
