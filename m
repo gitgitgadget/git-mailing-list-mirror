@@ -1,68 +1,62 @@
-From: greened@obbligato.org
-Subject: Re: What's cooking in git.git (Mar 2012, #09; Mon, 26)
-Date: Mon, 26 Mar 2012 20:16:02 -0500
-Message-ID: <87limmdest.fsf@smith.obbligato.org>
-References: <7vzkb3kl6f.fsf@alter.siamese.dyndns.org>
+From: Jay Soffian <jaysoffian@gmail.com>
+Subject: Re: odd behavior with git-rebase
+Date: Mon, 26 Mar 2012 21:58:28 -0400
+Message-ID: <CAG+J_Dx8o_cpS3zLyRf66dgsRZEzP-yD8nBwLmfZhWkydX_MVA@mail.gmail.com>
+References: <20120323185205.GA11916@hmsreliant.think-freely.org>
+	<7vvclvrrad.fsf@alter.siamese.dyndns.org>
+	<20120324165536.GA17932@neilslaptop.think-freely.org>
+	<7v1uofqoa7.fsf@alter.siamese.dyndns.org>
+	<CABURp0oJwM-KtdBRVHgvOaqFVjA-MEAfJoJH=52Y=QRcgFL+3Q@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Mar 27 03:19:48 2012
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Neil Horman <nhorman@tuxdriver.com>, git@vger.kernel.org
+To: Phil Hord <phil.hord@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 27 03:58:35 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SCL4b-00084T-N1
-	for gcvg-git-2@plane.gmane.org; Tue, 27 Mar 2012 03:19:46 +0200
+	id 1SCLgA-0002pl-RY
+	for gcvg-git-2@plane.gmane.org; Tue, 27 Mar 2012 03:58:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753206Ab2C0BTk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Mar 2012 21:19:40 -0400
-Received: from li209-253.members.linode.com ([173.255.199.253]:36680 "EHLO
-	johnson.obbligato.org" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751828Ab2C0BTj (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Mar 2012 21:19:39 -0400
-Received: from c-75-73-20-8.hsd1.mn.comcast.net ([75.73.20.8] helo=smith.obbligato.org)
-	by johnson.obbligato.org with esmtpsa (TLS1.2:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.77)
-	(envelope-from <greened@obbligato.org>)
-	id 1SCHLJ-0001XG-Es; Mon, 26 Mar 2012 16:20:45 -0500
-In-Reply-To: <7vzkb3kl6f.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Mon, 26 Mar 2012 16:16:24 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Filter-Spam-Score: ()
-X-Filter-Spam-Report: Spam detection software, running on the system "johnson.obbligato.org", has
- identified this incoming email as possible spam.  The original message
- has been attached to this so you can view it (if it isn't spam) or label
- similar future email.  If you have any questions, see
- @@CONTACT_ADDRESS@@ for details.
- Content preview:  Junio C Hamano <gitster@pobox.com> writes: > * dg/test-from-elsewhere
-    (2012-03-04) 2 commits > - Support out-of-tree Valgrind tests > - Allow overriding
-    GIT_BUILD_DIR > > Better support for out-of-tree test scripts, but it appears
-    that the > approach needs to be rethought. By repointing TEST_DIRECTORY to
-    a > directory other than $(pwd)/.., an out of place test script can reach
-    > test helpers and freshly built Git relative to it (GIT_BUILD_DIR is > a
-    mere short-hand for $TEST_DIRECTORY/..). > > Discussion stalled. [...] 
+	id S1755683Ab2C0B63 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Mar 2012 21:58:29 -0400
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:47362 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751759Ab2C0B63 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Mar 2012 21:58:29 -0400
+Received: by ghrr11 with SMTP id r11so4354353ghr.19
+        for <git@vger.kernel.org>; Mon, 26 Mar 2012 18:58:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=4RcpZu+vbUlIYmSyF6262Opj6b28LBGNk2mv3v1lhoc=;
+        b=oMqHeMqIkeKMdEO8IN1t6MNpGduP3XUYNF+ZajBEGSUY5n5IxlptPLR3KrNk7O+2Mu
+         77VGaWNmKKvXB13Ao0y9OYkFukf5HxhTBsFYmCYqrlYf4ccRGc8TSXA9n5Ad2bF9qXVS
+         Uq04uLe+Z4l1txx4z0wI7ALnRqXK6J50VrzG9rYCGRtWn1zdIFkyT54LS5NCmtQqhzE4
+         qDAqKcevMpvPR4LaAMJDtoTOnBBodyrlqNJMIgAYIh8fb8uElrAvKn9TElw1wSBt5qNy
+         EN3o8CgbHZZ22UHA/Oo2nTVvAf0aObv9NIEPKi9ktIqG5TiowkcS9DZIaOZ6zLukPkd+
+         tRJg==
+Received: by 10.236.197.41 with SMTP id s29mr24888163yhn.7.1332813508501; Mon,
+ 26 Mar 2012 18:58:28 -0700 (PDT)
+Received: by 10.147.47.19 with HTTP; Mon, 26 Mar 2012 18:58:28 -0700 (PDT)
+In-Reply-To: <CABURp0oJwM-KtdBRVHgvOaqFVjA-MEAfJoJH=52Y=QRcgFL+3Q@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193992>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193993>
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> * dg/test-from-elsewhere (2012-03-04) 2 commits
->  - Support out-of-tree Valgrind tests
->  - Allow overriding GIT_BUILD_DIR
+On Mon, Mar 26, 2012 at 2:29 PM, Phil Hord <phil.hord@gmail.com> wrote:
+> Can we have three behaviors?
 >
-> Better support for out-of-tree test scripts, but it appears that the
-> approach needs to be rethought.  By repointing TEST_DIRECTORY to a
-> directory other than $(pwd)/.., an out of place test script can reach
-> test helpers and freshly built Git relative to it (GIT_BUILD_DIR is
-> a mere short-hand for $TEST_DIRECTORY/..).
->
-> Discussion stalled.
+> A: Current mode, stop and error on empty commits
+> B: --keep-empty, to retain empty commits without further notice
+> C: --purge-empty, to remove empty commits without further notice
 
-We don't need this anymore, so go ahead and drop it.
+FWIW, filter-branch uses "--prune-empty", should we wish to be consistent.
 
-                          -Dave
+j.
