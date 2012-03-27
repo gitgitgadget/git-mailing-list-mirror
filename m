@@ -1,111 +1,89 @@
-From: Ivan Todoroski <grnch@gmx.net>
-Subject: [PATCH/RFC v2 4/4] remote-curl: main test case for the OS command
- line overflow
-Date: Tue, 27 Mar 2012 08:28:06 +0200
-Message-ID: <4F715DF6.7080401@gmx.net>
-References: <loom.20120318T083216-96@post.gmane.org> <m3fwd550j3.fsf@localhost.localdomain> <20120318190659.GA24829@sigill.intra.peff.net> <CACsJy8BNT-dY+wDONY_TgLnv0135RZ-47BEVMzX6c3ddH=83Zw@mail.gmail.com> <20120319024436.GB10426@sigill.intra.peff.net> <4F69B5F0.2060605@gmx.net> <CAJo=hJu0H5wfXB_y5XQ6=S0VJ9t4pxHWkuy_=rehJL_6psf00g@mail.gmail.com> <20120321171423.GA13140@sigill.intra.peff.net> <4F715CF7.5070903@gmx.net>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: GSoC - Designing a faster index format
+Date: Tue, 27 Mar 2012 13:31:54 +0700
+Message-ID: <CACsJy8BZVFKZvd1=jz8PoCvTKjX6LorRidJgTxsjFUGfBUai+w@mail.gmail.com>
+References: <CAKTdtZm3qfG1rcoashDoMoqtD34JJDUDtDruGqGn9bSMzQTcFA@mail.gmail.com>
+ <87aa3aw5z8.fsf@thomas.inf.ethz.ch> <CAKTdtZkGP3KbMGf88yW7zcCjemUyEy_4CVNkLD0SV=Lm7=Kveg@mail.gmail.com>
+ <CAKTdtZmYc=xz4zCPQiuSTUvdmbLRKXNWNL3N6_4Bj0gujYmRvw@mail.gmail.com>
+ <CACsJy8AYs5bzRnhRj_R33qTt-2gPh-rJaO0=1iTva9n14wHB4w@mail.gmail.com>
+ <CAKTdtZk4FJD9qXEybpN01+S=5fOm=4AbOp8trFr5c6Uxbfykkg@mail.gmail.com>
+ <CACsJy8CU_q+3ROO9z5nHe8NZDjTD4mvnEUP7C0+T3u3bRD11rQ@mail.gmail.com>
+ <CAKTdtZmLOzAgG0uCDcVr+O41XPX-XnoVZjsZWPN-BLjq2oG-7A@mail.gmail.com>
+ <CACsJy8C=4WaN4MZrZMaD3FqZrF2jCP5sm0F0SpDvzQnYfka9Ew@mail.gmail.com>
+ <CAKTdtZkpjVaBSkcieojKj+V7WztT3UDzjGfXyghY=S8mq+X9zw@mail.gmail.com>
+ <CACsJy8D85thmK_5jLC7MxJtsitLr=zphKiw2miwPu7Exf7ty=Q@mail.gmail.com>
+ <CAKTdtZkx+7iU5T4oBNDEx-A5cgZCLU9ocdXmC9jRbD39J1zb3Q@mail.gmail.com>
+ <87iphrjv23.fsf@thomas.inf.ethz.ch> <CACsJy8CsdZpQUQ7ydM1fOpSomm6+LyACCR83ccncVtUk+HbLKA@mail.gmail.com>
+ <CAJo=hJsPgUZi2qMc5aDUn0+o5=9n7pBS+yWBASfqtov8WuFBRA@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Shawn Pearce <spearce@spearce.org>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Mar 27 08:27:43 2012
+Cc: Thomas Rast <trast@student.ethz.ch>,
+	elton sky <eltonsky9404@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Shawn Pearce <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Tue Mar 27 08:32:35 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SCPsc-0002aZ-IN
-	for gcvg-git-2@plane.gmane.org; Tue, 27 Mar 2012 08:27:42 +0200
+	id 1SCPxI-00059U-Kw
+	for gcvg-git-2@plane.gmane.org; Tue, 27 Mar 2012 08:32:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757179Ab2C0G1i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Mar 2012 02:27:38 -0400
-Received: from mailout-de.gmx.net ([213.165.64.22]:39126 "HELO
-	mailout-de.gmx.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with SMTP id S1756788Ab2C0G1h (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Mar 2012 02:27:37 -0400
-Received: (qmail invoked by alias); 27 Mar 2012 06:27:36 -0000
-Received: from unknown (EHLO [127.0.0.1]) [77.28.160.201]
-  by mail.gmx.net (mp040) with SMTP; 27 Mar 2012 08:27:36 +0200
-X-Authenticated: #7905487
-X-Provags-ID: V01U2FsdGVkX1+O/ckulyGO5fHa0FELDD1js7yGtrLz/xLXeTYBn4
-	BAs13Qmjj21Stk
-User-Agent: Thunderbird 2.0.0.24 (Windows/20100228)
-In-Reply-To: <4F715CF7.5070903@gmx.net>
-X-Y-GMX-Trusted: 0
+	id S1757228Ab2C0Gc1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Mar 2012 02:32:27 -0400
+Received: from mail-we0-f174.google.com ([74.125.82.174]:33843 "EHLO
+	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756788Ab2C0Gc0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Mar 2012 02:32:26 -0400
+Received: by wejx9 with SMTP id x9so4687894wej.19
+        for <git@vger.kernel.org>; Mon, 26 Mar 2012 23:32:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=qoIXNitOtQevVmGg++DjG3vcGcREh85m+syYFq9CclQ=;
+        b=EI/xGgyNFl3tt1GVGBHBLgbDU3w47hlmQPmQZ6xkQ8WFOHzo0Mjg8knU6V5uzI3S1J
+         smbeMd0yqKB3dx9Ez8kPBolzovlzglOWtyEJgFRkHrT3ExRVUlDZdobdNYKeXU+PkCUY
+         WKqpNkyOpm5zPyafSFhCHeveuLZeTRo0IL6GcQzChlB+cZnBIYg9twP1QRmY19mGr8LA
+         3h1uhSncVIa9DwDY/925teRQsNZzTpWSjO2Y4MJAdh7nGptwXZ+/yI9blBgEcgwIE2yW
+         QbbFJAfR+FzoGm/dQCxN8qiVmpQdpZUIKuAanyTmplvoEwI7NJ+5DRVUR30CPBFyKZGH
+         OBVA==
+Received: by 10.180.102.102 with SMTP id fn6mr24735691wib.10.1332829944934;
+ Mon, 26 Mar 2012 23:32:24 -0700 (PDT)
+Received: by 10.223.109.144 with HTTP; Mon, 26 Mar 2012 23:31:54 -0700 (PDT)
+In-Reply-To: <CAJo=hJsPgUZi2qMc5aDUn0+o5=9n7pBS+yWBASfqtov8WuFBRA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194023>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194024>
 
-This is main test case for the original problem that triggered this
-patch series. We create a repo with 50k tags and then test whether
-git-clone over the smart HTTP protocol succeeds.
+On Mon, Mar 26, 2012 at 11:08 PM, Shawn Pearce <spearce@spearce.org> wrote:
+>> [1] http://www.sqlite.org/fileformat2.html
+>
+> Or use LevelDb[2]. Its BSD license. Uses an immutable file format, but
+> writes updates to new smaller files and eventually collapses
+> everything back together into a bigger file. This can be a
+> dramatically simpler approach than dealing with your own free block
+> system inside of a single file. Its only real downside is needing to
+> periodically pay a penalty to rewrite the whole index. But this
+> rewrite is going to be faster than the time it takes to rewrite the
+> pack files for the same repository, which git gc or git repack
+> handles. So I don't think its actually a problem for the index.
 
-Note that we construct the repo in a slightly different way than the
-original script used to reproduce the problem. This is because the
-original script just created 50k tags all pointing to the same commit,
-so if there was a bug where remote-curl.c was not passing all the refs
-to fetch-pack we wouldn't know. The clone would succed even if only one
-tag was passed, because all the other tags were pointing at the same SHA
-and would be considered present.
+Cool. I had an experiment with it. A database is created where are
+keys  `git ls-files` on linux-2.6. A few things after the experiment:
 
-Instead we create a repo with 50k independent (dangling) commits and
-then tag each of those commits with a unique tag. This way if one of the
-tags is not given to fetch-pack, later stages of the clone would
-complain about it.
+ - we need to link to libstdc++.so. I still hope to avoid any new
+runtime dependencies
+ - I use gettimeofday to time some operations. On linux-2.6,
+read_cache() costs 27ms. leveldb_open() alone takes 90ms. Iterating
+over all keys takes ~200ms.
 
-This allows us to test both that the command line overflow was fixed, as
-well as that it was fixed in a way that doesn't leave out any of the
-refs.
----
- t/t5551-http-fetch.sh |   32 ++++++++++++++++++++++++++++++++
- 1 file changed, 32 insertions(+)
+Performance wise it does not look very good but maybe I'm just not
+doing it right.
 
-diff --git a/t/t5551-http-fetch.sh b/t/t5551-http-fetch.sh
-index 26d355725f..fb970bda22 100755
---- a/t/t5551-http-fetch.sh
-+++ b/t/t5551-http-fetch.sh
-@@ -109,5 +109,37 @@ test_expect_success 'follow redirects (302)' '
- 	git clone $HTTPD_URL/smart-redir-temp/repo.git --quiet repo-t
- '
- 
-+
-+test -n "$GIT_TEST_LONG" && test_set_prereq EXPENSIVE
-+
-+test_expect_success EXPENSIVE 'create 50,000 tags in the repo' '
-+	(
-+	cd "$HTTPD_DOCUMENT_ROOT_PATH/repo.git" &&
-+	N=50000 &&
-+	for ((i=1; i<=$N; i++)); do
-+		echo "commit refs/heads/too-many-refs"
-+		echo "mark :$i"
-+		echo "committer git <git@example.com> $i +0000"
-+		echo "data 0"
-+		echo "M 644 inline bla.txt"
-+		echo "data 4"
-+		echo "bla"
-+		# make every commit dangling by always
-+		# rewinding the branch after each commit
-+		echo "reset refs/heads/too-many-refs"
-+		echo "from :1"
-+	done | git fast-import --export-marks=marks &&
-+
-+	# now assign tags to all the dangling commits we created above
-+	export tag=refs/tags/artificially-long-tag-name-to-more-easily-demonstrate-the-problem &&
-+	perl -nle '\''/:(.+) (.+)/; print "$2 $ENV{tag}-$1"'\'' < marks >> packed-refs
-+	)
-+'
-+
-+test_expect_success EXPENSIVE 'clone the 50,000 tag repo to check OS command line overflow' '
-+	git clone $HTTPD_URL/smart/repo.git too-many-refs 2> too-many-refs.err &&
-+	test_line_count = 0 too-many-refs.err
-+'
-+
- stop_httpd
- test_done
+> [2] http://code.google.com/p/leveldb/
 -- 
-1.7.9.5.4.g4f508
+Duy
