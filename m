@@ -1,7 +1,7 @@
 From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
 Subject: Re: GSoC - Designing a faster index format
-Date: Tue, 27 Mar 2012 13:31:54 +0700
-Message-ID: <CACsJy8BZVFKZvd1=jz8PoCvTKjX6LorRidJgTxsjFUGfBUai+w@mail.gmail.com>
+Date: Tue, 27 Mar 2012 13:33:33 +0700
+Message-ID: <CACsJy8BfCpH3jtfaOyyAgjH3P5fv4FYjboqjoFYF2GiG44TmoA@mail.gmail.com>
 References: <CAKTdtZm3qfG1rcoashDoMoqtD34JJDUDtDruGqGn9bSMzQTcFA@mail.gmail.com>
  <87aa3aw5z8.fsf@thomas.inf.ethz.ch> <CAKTdtZkGP3KbMGf88yW7zcCjemUyEy_4CVNkLD0SV=Lm7=Kveg@mail.gmail.com>
  <CAKTdtZmYc=xz4zCPQiuSTUvdmbLRKXNWNL3N6_4Bj0gujYmRvw@mail.gmail.com>
@@ -15,75 +15,62 @@ References: <CAKTdtZm3qfG1rcoashDoMoqtD34JJDUDtDruGqGn9bSMzQTcFA@mail.gmail.com>
  <CAKTdtZkx+7iU5T4oBNDEx-A5cgZCLU9ocdXmC9jRbD39J1zb3Q@mail.gmail.com>
  <87iphrjv23.fsf@thomas.inf.ethz.ch> <CACsJy8CsdZpQUQ7ydM1fOpSomm6+LyACCR83ccncVtUk+HbLKA@mail.gmail.com>
  <CAJo=hJsPgUZi2qMc5aDUn0+o5=9n7pBS+yWBASfqtov8WuFBRA@mail.gmail.com>
+ <CAKTdtZngYaTCwd5cri=XjUu3-o44ECjDotrDBNxqYL-Kcsosnw@mail.gmail.com> <CAFfmPPM_GOkOp6-tE2=YxdrZq6TL3s4EgOjXdRKf8+ffMD29xg@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Thomas Rast <trast@student.ethz.ch>,
-	elton sky <eltonsky9404@gmail.com>,
+Cc: elton sky <eltonsky9404@gmail.com>,
+	Shawn Pearce <spearce@spearce.org>,
 	Git Mailing List <git@vger.kernel.org>
-To: Shawn Pearce <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Tue Mar 27 08:32:35 2012
+To: David Barr <davidbarr@google.com>
+X-From: git-owner@vger.kernel.org Tue Mar 27 08:34:18 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SCPxI-00059U-Kw
-	for gcvg-git-2@plane.gmane.org; Tue, 27 Mar 2012 08:32:32 +0200
+	id 1SCPyt-00067M-Uh
+	for gcvg-git-2@plane.gmane.org; Tue, 27 Mar 2012 08:34:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757228Ab2C0Gc1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Mar 2012 02:32:27 -0400
-Received: from mail-we0-f174.google.com ([74.125.82.174]:33843 "EHLO
-	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756788Ab2C0Gc0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Mar 2012 02:32:26 -0400
-Received: by wejx9 with SMTP id x9so4687894wej.19
-        for <git@vger.kernel.org>; Mon, 26 Mar 2012 23:32:25 -0700 (PDT)
+	id S1757233Ab2C0GeI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Mar 2012 02:34:08 -0400
+Received: from mail-wg0-f44.google.com ([74.125.82.44]:48887 "EHLO
+	mail-wg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756788Ab2C0GeF (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Mar 2012 02:34:05 -0400
+Received: by wgbdr13 with SMTP id dr13so4543802wgb.1
+        for <git@vger.kernel.org>; Mon, 26 Mar 2012 23:34:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type;
-        bh=qoIXNitOtQevVmGg++DjG3vcGcREh85m+syYFq9CclQ=;
-        b=EI/xGgyNFl3tt1GVGBHBLgbDU3w47hlmQPmQZ6xkQ8WFOHzo0Mjg8knU6V5uzI3S1J
-         smbeMd0yqKB3dx9Ez8kPBolzovlzglOWtyEJgFRkHrT3ExRVUlDZdobdNYKeXU+PkCUY
-         WKqpNkyOpm5zPyafSFhCHeveuLZeTRo0IL6GcQzChlB+cZnBIYg9twP1QRmY19mGr8LA
-         3h1uhSncVIa9DwDY/925teRQsNZzTpWSjO2Y4MJAdh7nGptwXZ+/yI9blBgEcgwIE2yW
-         QbbFJAfR+FzoGm/dQCxN8qiVmpQdpZUIKuAanyTmplvoEwI7NJ+5DRVUR30CPBFyKZGH
-         OBVA==
-Received: by 10.180.102.102 with SMTP id fn6mr24735691wib.10.1332829944934;
- Mon, 26 Mar 2012 23:32:24 -0700 (PDT)
-Received: by 10.223.109.144 with HTTP; Mon, 26 Mar 2012 23:31:54 -0700 (PDT)
-In-Reply-To: <CAJo=hJsPgUZi2qMc5aDUn0+o5=9n7pBS+yWBASfqtov8WuFBRA@mail.gmail.com>
+        bh=kh2EAkTxRFaovm55yoyzRcqDWCksPFltMG/aR/LE4Lw=;
+        b=pUIudufkS7tlcFwV5zpsBYCLlBIwIh5469h1TZVPs510i3O/2n6Xm4nqjNqos02yN+
+         Ss8+1moDFxAHGtfr6ZKQlwURwJ8dqmZwalqjYmMpnIQKEcDEjkbF1ZGz2HtJ4nQZbf7w
+         /aFL1Yqzq7ZZ3oRa6LETuWpZiXt66nDszsj14Mwoq8f+rZklo1h7qMAhneLkxCSKVSgi
+         yIZKe6Wj4eZi30sgHjM+fwcg1v9U3r/Gk2oJOgwdtM2IiFXmoeU9XhRq2L5rf6u+LU46
+         TQr52qGeCvHd21q0tIuntv3Iwca0BapwxcwQQMC6+UlVt8IRhqJcv5pCwlqZ9ARsgISI
+         Snnw==
+Received: by 10.216.135.225 with SMTP id u75mr13055722wei.97.1332830043399;
+ Mon, 26 Mar 2012 23:34:03 -0700 (PDT)
+Received: by 10.223.109.144 with HTTP; Mon, 26 Mar 2012 23:33:33 -0700 (PDT)
+In-Reply-To: <CAFfmPPM_GOkOp6-tE2=YxdrZq6TL3s4EgOjXdRKf8+ffMD29xg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194024>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194025>
 
-On Mon, Mar 26, 2012 at 11:08 PM, Shawn Pearce <spearce@spearce.org> wrote:
->> [1] http://www.sqlite.org/fileformat2.html
+On Tue, Mar 27, 2012 at 10:34 AM, David Barr <davidbarr@google.com> wrote:
+> Another implementation in this general class is TinyCDB[1].
+> It is <1600 lines of plain C. Too few to be complete?
+> It is a derivative of DJB's CDB[2].
 >
-> Or use LevelDb[2]. Its BSD license. Uses an immutable file format, but
-> writes updates to new smaller files and eventually collapses
-> everything back together into a bigger file. This can be a
-> dramatically simpler approach than dealing with your own free block
-> system inside of a single file. Its only real downside is needing to
-> periodically pay a penalty to rewrite the whole index. But this
-> rewrite is going to be faster than the time it takes to rewrite the
-> pack files for the same repository, which git gc or git repack
-> handles. So I don't think its actually a problem for the index.
+> [1] http://www.corpit.ru/mjt/tinycdb.html
 
-Cool. I had an experiment with it. A database is created where are
-keys  `git ls-files` on linux-2.6. A few things after the experiment:
+"CDB is a constant database, that is, it cannot be updated at a
+runtime, only rebuilt.". It does not sound promising to me. I have not
+read the description carefully though.
 
- - we need to link to libstdc++.so. I still hope to avoid any new
-runtime dependencies
- - I use gettimeofday to time some operations. On linux-2.6,
-read_cache() costs 27ms. leveldb_open() alone takes 90ms. Iterating
-over all keys takes ~200ms.
-
-Performance wise it does not look very good but maybe I'm just not
-doing it right.
-
-> [2] http://code.google.com/p/leveldb/
+> [2] http://cr.yp.to/cdb.html
 -- 
 Duy
