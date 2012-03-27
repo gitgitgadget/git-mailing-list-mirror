@@ -1,62 +1,63 @@
-From: Holger Hellmuth <hellmuth@ira.uka.de>
-Subject: Re: Merge-friendly text-based data storage
-Date: Tue, 27 Mar 2012 17:46:25 +0200
-Message-ID: <4F71E0D1.2040600@ira.uka.de>
-References: <CAD77+gRTv4Aq_4FLAQcD9E0p7VBD7h6hQq3CJ9Wo5DU9Zjt+Hg@mail.gmail.com> <4F718496.4030808@ira.uka.de> <CAD77+gR=p+jhN5qNoRgjtQPHqgqrdtcSmqAy_4d0NUaqE6ZkVg@mail.gmail.com> <7vzkb2jchu.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: git://github.com/some/thing.git/?
+Date: Tue, 27 Mar 2012 08:46:42 -0700
+Message-ID: <7vpqbyjbbx.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Richard Hartmann <richih.mailinglist@gmail.com>,
-	Git List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Mar 27 17:45:55 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>, Scott Chacon <schacon@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 27 17:46:52 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SCYan-00049U-E3
-	for gcvg-git-2@plane.gmane.org; Tue, 27 Mar 2012 17:45:53 +0200
+	id 1SCYbj-0004u4-GJ
+	for gcvg-git-2@plane.gmane.org; Tue, 27 Mar 2012 17:46:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755291Ab2C0Pps (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Mar 2012 11:45:48 -0400
-Received: from iramx2.ira.uni-karlsruhe.de ([141.3.10.81]:57589 "EHLO
-	iramx2.ira.uni-karlsruhe.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755131Ab2C0Pps (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 27 Mar 2012 11:45:48 -0400
-Received: from irams1.ira.uni-karlsruhe.de ([141.3.10.5])
-	by iramx2.ira.uni-karlsruhe.de with esmtps port 25 
-	id 1SCYaQ-0004XS-9w; Tue, 27 Mar 2012 17:45:45 +0200
-Received: from i20s141.iaks.uni-karlsruhe.de ([141.3.32.141] helo=[172.16.22.120])
-	by irams1.ira.uni-karlsruhe.de with esmtpsa port 25 
-	id 1SCYaQ-0000U4-56; Tue, 27 Mar 2012 17:45:30 +0200
-User-Agent: Mozilla/5.0 (X11; U; Linux i686 (x86_64); en-US; rv:1.9.2.24) Gecko/20111101 SUSE/3.1.16 Thunderbird/3.1.16
-In-Reply-To: <7vzkb2jchu.fsf@alter.siamese.dyndns.org>
-X-ATIS-AV: ClamAV (irams1.ira.uni-karlsruhe.de)
-X-ATIS-AV: ClamAV (iramx2.ira.uni-karlsruhe.de)
-X-ATIS-AV: Kaspersky (iramx2.ira.uni-karlsruhe.de)
-X-ATIS-Timestamp: iramx2.ira.uni-karlsruhe.de 1332863145.295590000
+	id S1755358Ab2C0Pqr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Mar 2012 11:46:47 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:46641 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755131Ab2C0Pqq (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Mar 2012 11:46:46 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5908D43E1;
+	Tue, 27 Mar 2012 11:46:45 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:date:message-id:mime-version:content-type; s=sasl; bh=t
+	dznJNfBwGXpXQeoDlqU12fxbvE=; b=YJqlaRJlF1C8V3C4rvEBK3sKwebdLNAGE
+	BGqseAWMCI5wopefXcFKPBNzQd6HjP2sQGrhFHQcsO0CvRks1Fnp91Tm0xNY4wKY
+	576+a7xH4/QTcNOebjV0kb8kTQzsCtdMikcf/IIgqleVO6RKYK30pmsvzceD0U/Y
+	H6n8d80lrc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:date:message-id:mime-version:content-type; q=dns; s=
+	sasl; b=lNYlFTAOj3wfzJxh7HnA10rsLultrK73yPprqitTgxH0DQMKqpwtmP+M
+	s2J8wCJX6vf74T/aiqFG3lHqjXXqjk6oLQYywVHLppO+LWZlnqeBzzheu82epiSV
+	BbZM0NZeVIMUpgW5v+JONv/LPiV3eU6q1yupNX71CUqRCOhO6sQ=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4C39D43DF;
+	Tue, 27 Mar 2012 11:46:45 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A6FEF43D2; Tue, 27 Mar 2012
+ 11:46:43 -0400 (EDT)
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 0D68C0A4-7824-11E1-99E7-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194052>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194053>
 
-On 27.03.2012 17:21, Junio C Hamano wrote:
-> Richard Hartmann<richih.mailinglist@gmail.com>  writes:
->
->>> the only way
->>> would be to store each data line in its own file. As you store file paths
->>> that would even fit, but I doubt it is what you had in mind
->>
->> I considered this as well, but that's extremely expensive and wasteful.
->
-> And it does not solve anything.  The "version" file may cleanly merge to a
-> new version, and there is no way for the merge result of "version" file to
-> affect the outcome of merges in other files.
+I just noticed that
 
-It solves the data merging.
+	git ls-remote git://repo.or.cz/alt-git.git/
 
-And since a version change is presumably a very scarce event, this could 
-be solved with a merge hook that simply aborts the merge with a message 
-how to update the older version, then commit and merge.
+works, but neither of the following does:
+
+	git ls-remote git://git://github.com/gitster/git.git/
+	git ls-remote git://git://github.com/gitster/git/
+
+It is just a minor irritation but it would be really nice if you can fix
+it (please don't spend too much time on it if it is too involved, though).
