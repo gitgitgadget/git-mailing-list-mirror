@@ -1,101 +1,91 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] git: continue alias lookup on EACCES errors
-Date: Tue, 27 Mar 2012 12:16:36 -0700
-Message-ID: <7v4nt9j1m3.fsf@alter.siamese.dyndns.org>
-References: <20120327175933.GA1716@sigill.intra.peff.net>
- <20120327180503.GB4659@sigill.intra.peff.net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH v4 0/3] Isolate If-Modified-Since handling in gitweb
+Date: Tue, 27 Mar 2012 20:24:22 +0100
+Message-ID: <201203272124.23145.jnareb@gmail.com>
+References: <7v62dy4zhf.fsf@alter.siamese.dyndns.org> <201203221346.35295.jnareb@gmail.com> <20120326110943.GA2951@odin.tremily.us>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: James Pickens <jepicken@gmail.com>, Git ML <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Mar 27 21:16:50 2012
+Content-Type: text/plain;
+  charset="iso-8859-2"
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: "W. Trevor King" <wking@drexel.edu>
+X-From: git-owner@vger.kernel.org Tue Mar 27 21:24:59 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SCbsr-0000CX-6u
-	for gcvg-git-2@plane.gmane.org; Tue, 27 Mar 2012 21:16:45 +0200
+	id 1SCc0o-0005uF-DQ
+	for gcvg-git-2@plane.gmane.org; Tue, 27 Mar 2012 21:24:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755399Ab2C0TQj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Mar 2012 15:16:39 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50107 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754942Ab2C0TQi (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Mar 2012 15:16:38 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id ED1D076AD;
-	Tue, 27 Mar 2012 15:16:37 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=bgikqFAc8jYQfIijG4sE1NmawKE=; b=PJdJrK
-	0Kfftp4H6DsPF4+u2eU8c3Ezz9hguVeGOGU9c/1DJIWZRWOOzG7e+1Mf/Icr7fKV
-	g3V2S+J97yjq0s7IqK3z4slfCYCUd2EuVZYIspQZZekekkpY8LCXFhny588eMYQg
-	2bNtSdXULxFhz29aPpC4xD2VCSmdLMfTxvI4g=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=RNLdTkWrBPAi7HWaQKTUvLb/p9dinV0H
-	/tUOxK6dJqKSEsSI+xUFoQbZjXElxqclvHEM1ws55AHDZv5ME/yfK16xWJ4TcXwk
-	QmAYf2JA6kT/VrAu0bmWjC7pl6YXk5KDu9Utzt6pEwrHD7JvR0GW0tWJOnuo3yi2
-	7nhu/nugAL0=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D873C76A2;
-	Tue, 27 Mar 2012 15:16:37 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 55EC476A1; Tue, 27 Mar 2012
- 15:16:37 -0400 (EDT)
-In-Reply-To: <20120327180503.GB4659@sigill.intra.peff.net> (Jeff King's
- message of "Tue, 27 Mar 2012 14:05:03 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 5FD20A22-7841-11E1-B05A-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755544Ab2C0TYZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Mar 2012 15:24:25 -0400
+Received: from mail-wg0-f44.google.com ([74.125.82.44]:38933 "EHLO
+	mail-wg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755497Ab2C0TYY (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Mar 2012 15:24:24 -0400
+Received: by wgbdr13 with SMTP id dr13so237274wgb.1
+        for <git@vger.kernel.org>; Tue, 27 Mar 2012 12:24:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        bh=QqqFDaRoSgVMwdKQJDz5J3QX5263Hhdkb3m8kQhsF3g=;
+        b=kzclwmToA+Iq4r5T7DRYIb4N4KTZSdveq762vhxdO6N9JMjJzcidB8tsRYSL1A4bZs
+         MPEQaByLYyE23kmzHLxoslM8XU+hSizucjM5LNhcANTqfv5/6ZMDIfq0iXRlqAsBhlGA
+         Qmm+fSEFWfq6aga64fF73Yp+Mo67Zb+oa/4kQoG9t9VPkAGYVDm7b/2ed5vgjixqrjV8
+         fIWet5xH/2+o3RYoauyuxmjPLGXgc13X7irFm35g5XEgRgO27HKbrb2cjrN5bQvHgmHa
+         KopcMBCuU19VQPFsRGwprCx3vbXs9NVLTtrg+pxy1VItvo5fdoKalU/MXv3y/lOYeWiC
+         oaWg==
+Received: by 10.180.24.35 with SMTP id r3mr551729wif.7.1332876263178;
+        Tue, 27 Mar 2012 12:24:23 -0700 (PDT)
+Received: from [192.168.1.13] (adhb238.neoplus.adsl.tpnet.pl. [79.184.157.238])
+        by mx.google.com with ESMTPS id 9sm2890360wid.2.2012.03.27.12.24.21
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Tue, 27 Mar 2012 12:24:22 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <20120326110943.GA2951@odin.tremily.us>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194077>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194078>
 
-Jeff King <peff@peff.net> writes:
+On Mon, 26 Mar 2012, W. Trevor King wrote:
 
-> If git receives an EACCES error while trying to execute an
-> external command, we currently give up and report the error.
-> However, the EACCES may be caused by an inaccessible
-> directory in the user's PATH.
+> Sorry for the delay since my last message, it's been a busy week ;).
 
-Regardless of EACCES/ENOENT change we discussed, the observable behaviour
-should be testable.  Something like this?
+Thanks for working on this topic.  
 
- t/t0061-run-command.sh |   15 ++++++++++++++-
- 1 file changed, 14 insertions(+), 1 deletion(-)
-
-diff --git a/t/t0061-run-command.sh b/t/t0061-run-command.sh
-index 8d4938f..dbb1d9e 100755
---- a/t/t0061-run-command.sh
-+++ b/t/t0061-run-command.sh
-@@ -26,7 +26,7 @@ test_expect_success 'run_command can run a command' '
- 	test_cmp empty err
- '
+BTW. we are in feature freeze currently, before release of v1.7.10.
  
--test_expect_success POSIXPERM 'run_command reports EACCES' '
-+test_expect_failure POSIXPERM 'run_command reports EACCES' '
- 	cat hello-script >hello.sh &&
- 	chmod -x hello.sh &&
- 	test_must_fail test-run-command run-command ./hello.sh 2>err &&
-@@ -34,4 +34,17 @@ test_expect_success POSIXPERM 'run_command reports EACCES' '
- 	grep "fatal: cannot exec.*hello.sh" err
- '
+> I'll be sending along three patches.  [...]
+> [...] The first is a teensy patch to add `Status` 
+> output to non-304 calls to git_feed().  Without it you'd have to get a
+> bit more creative in the test suite.  If the status lines were left
+> out intentionally, let me know, and I'll come up with another
+> condition for those tests.
+
+No, the status line was omitted unintentionally, thanks for fixing this.
+I guess that web server (at least Apache) adds it if it is missing.
+
+Though I am not sure how lack of "Status:" header is different from
+incorrect "Status:" header for 'grep "Status: 304" gitweb.headers'...
  
-+test_expect_success POSIXPERM 'unreadable directory in PATH' '
-+	mkdir local-command &&
-+	test_when_finished "chmod u+rwx local-command && rm -fr local-command" &&
-+	git config alias.nitfol "!echo frotz" &&
-+	chmod a-rx local-command &&
-+	(
-+		PATH=./local-command:$PATH &&
-+		git nitfol >actual
-+	) &&
-+	echo frotz >expect &&
-+	test_cmp expect actual
-+'
-+
- test_done
+> The second patch refactors and tests git_feed(), and the third patch
+> adds i-m-s support to git_snapshot() with associated tests.
+> 
+> Changes since v3:
+> * Patch 1/3 is completely new.
+> * Split previous patch into 2/3 and 3/3.
+> * Conditionals in 3/3 to avoid 404-ing on non-commits like v1.7.6^{tree}.
+> * Added testing to both 2/3 and 3/3.
+> * Reworked commit messages.
+
+Good.
+
+-- 
+Jakub Narebski
+Poland
