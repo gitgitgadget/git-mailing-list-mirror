@@ -1,140 +1,95 @@
-From: Jeff King <peff@peff.net>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: Bug? Bad permissions in $PATH breaks Git aliases
-Date: Tue, 27 Mar 2012 13:59:33 -0400
-Message-ID: <20120327175933.GA1716@sigill.intra.peff.net>
+Date: Tue, 27 Mar 2012 11:03:11 -0700
+Message-ID: <7vlimlj50g.fsf@alter.siamese.dyndns.org>
 References: <CAJMEqRBmuBJuUmeoAU-_xf=s10ybD9pXhUJT+fn8aHNE2WJz6A@mail.gmail.com>
- <20120327031953.GA17338@sigill.intra.peff.net>
- <7vbonikrj4.fsf@alter.siamese.dyndns.org>
+ <4F715ABD.4080102@viscovery.net>
+ <CAJMEqRAQZwaeMNai9wckmPE2mRVVpttzEobZrsn29fMAo+LRRQ@mail.gmail.com>
+ <7v7gy6krei.fsf@alter.siamese.dyndns.org>
+ <CAJMEqRDodYQa_4vZ0+BZYS1+zL3e1iFXAMPgONbg8miEEs9wJQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: James Pickens <jepicken@gmail.com>, Git ML <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Mar 27 19:59:47 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Sixt <j.sixt@viscovery.net>, Git ML <git@vger.kernel.org>
+To: James Pickens <jepicken@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 27 20:03:26 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SCagJ-00034b-Qv
-	for gcvg-git-2@plane.gmane.org; Tue, 27 Mar 2012 19:59:44 +0200
+	id 1SCajt-0005ht-06
+	for gcvg-git-2@plane.gmane.org; Tue, 27 Mar 2012 20:03:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755460Ab2C0R7i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Mar 2012 13:59:38 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:34373
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754977Ab2C0R7g (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Mar 2012 13:59:36 -0400
-Received: (qmail 5480 invoked by uid 107); 27 Mar 2012 17:59:54 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 27 Mar 2012 13:59:54 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 27 Mar 2012 13:59:33 -0400
-Content-Disposition: inline
-In-Reply-To: <7vbonikrj4.fsf@alter.siamese.dyndns.org>
+	id S1755470Ab2C0SDV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Mar 2012 14:03:21 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:40112 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752400Ab2C0SDO (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Mar 2012 14:03:14 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 36A5F65CA;
+	Tue, 27 Mar 2012 14:03:14 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=0UpaepxUVbQit/TTNxNDuZqAshw=; b=T/2aiu
+	fvIk+NzrOP5LaFJIbH93gkP3Q1DFc+nx8jAspwzV44E2ic/KkGR1s+juhVZ67VQE
+	RJRwSdMTSh1Zv9naRyb8hE00gTn+0TP0tmNFFMVTH81gPBvhfnb0/fYY2HfzRArN
+	R/Yf7iEbCG1Lwwa4+9ZkweQj7sCrqwIJSqEgE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=l5ihEr/GTKt8fDT29Y66vlwkm6m2f/aA
+	QWx0MIt1yBlfw59WvN/JeYTSY4kW0pjSMuIeSAXkQ6QgeJmsyMN2vGZDtwk7H1uk
+	OnIn0cS9lLxik+VMKPEJPHIda0rLfKttN6T/ACXplxDQi4inpjVpjR+eXbh/iWwk
+	0b3jLQhf+Bk=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2E6FF65C9;
+	Tue, 27 Mar 2012 14:03:14 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D7D1F65C8; Tue, 27 Mar 2012
+ 14:03:12 -0400 (EDT)
+In-Reply-To: <CAJMEqRDodYQa_4vZ0+BZYS1+zL3e1iFXAMPgONbg8miEEs9wJQ@mail.gmail.com> (James
+ Pickens's message of "Tue, 27 Mar 2012 10:48:31 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 1E8D842E-7837-11E1-949F-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194065>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194066>
 
-On Tue, Mar 27, 2012 at 08:11:27AM -0700, Junio C Hamano wrote:
+James Pickens <jepicken@gmail.com> writes:
 
-> > I think the general feeling last time this came up was "why not just
-> > remove the cruft from your PATH?" But I would personally be OK with
-> > option (3) above, and it is probably not that hard to implement.
-> 
-> http://thread.gmane.org/gmane.comp.version-control.git/171755/focus=171838
-> shows that it was almost exactly a year ago; we tried (2) and nobody liked
-> it.
+> On Tue, Mar 27, 2012 at 8:14 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>> James Pickens <jepicken@gmail.com> writes:
+>>> I'm not claiming that it's sane to have a broken PATH, but as I
+>>> mentioned in an earlier email, sometimes my PATH gets broken through
+>>> no fault of my own, and it would be nice if Git could be more helpful
+>>> in that case.
+>>
+>> Hrm, so which was more helpful in diagnosing the broken PATH? Git by
+>> letting you be aware that there is some problem, or your shell by keeping
+>> me oblivious of the issue?
+>
+> In this case the broken parts of my PATH were completely uninteresting
+> to me - they didn't contain any executables that I would ever use.  So
+> if it didn't break my Git aliases, I could have continued working with
+> the broken PATH and never known or cared that it was broken.
+>
+> But I get your point - sometimes it's more helpful to let the user
+> know something is amiss than try to guess what was intended.
 
-I was actually thinking of:
+That was not the "point" of my question.  In fact, there was no point.  I
+may be a mean person and may often throw rhetorical questions to embarrass
+others, but I am not *that* mean to always ask only rhetorical questions ;-).
 
-  http://thread.gmane.org/gmane.comp.version-control.git/189077
+Judging from your answer, it would have been better for you if Git didn't
+even tell you that there was an error due to an unreadable directory.  And
+if that is the case, "Git could be more helpful in that case" will lead us
+in one direction (i.e. "we simply ignore EACCESS and treat it as ENOENT"),
+which is a quite different direction from what others discussed and
+suggested in the thread (i.e. "we give more detailed diagnosis, perhaps
+saying "your PATH has /usr/local/bin but it cannot be read, so we cannot
+tell git-frotz exists there or not").
 
-> I got an impression from the discussion in it that #3 may give confusing
-> messages to the end users, but I didn't think the issues through.
-
-The implementation for #3 is straight-forward; I'll post the patches in
-a moment. However, it still ends up being confusing, because git ends up
-talking about permissions instead of offering its usual help.
-
-Here are a few cases with stock git and no broken entries in PATH:
-
-  (1)
-  $ git does-not-exist
-  git: 'does-not-exist' is not a git command. See 'git --help'.
-
-  (2)
-  $ git cerry-pick
-  git: 'cerry-pick' is not a git command. See 'git --help'.
-
-  Did you mean this?
-          cherry-pick
-
-  (3)
-  $ git config alias.broken does-not-exist
-  $ git broken
-  Expansion of alias 'broken' failed; 'does-not-exist' is not a git command
-
-  (4)
-  $ git config alias.ok '!echo ok'
-  $ git ok
-  ok
-
-Here are the same cases with a broken entry in PATH:
-
-  $ mkdir foo; chmod 0 foo; PATH=$PWD/foo:$PATH
-
-  (1)
-  $ git does-not-exist
-  fatal: cannot exec 'git-does-not-exist': Permission denied
-
-  (2)
-  $ git cerry-pick
-  fatal: cannot exec 'git-cerry-pick': Permission denied
-
-  (3)
-  $ git broken
-  fatal: cannot exec 'git-broken': Permission denied
-
-  (4)
-  $ git ok
-  fatal: cannot exec 'git-ok': Permission denied
-
-Case (1) is OK; we report the differing error. But case (2) is worse, as
-we don't offer suggestions any more. Cases (3) and (4) are both worse,
-because we don't even try to expand the alias (whether it would work or
-not).
-
-Here are the same cases with my patches:
-
-  (1)
-  $ git does-not-exist
-  Failed to run command 'does-not-exist': Permission denied
-
-  (2)
-  $ git cerry-pick
-  Failed to run command 'cerry-pick': Permission denied
-
-  (3)
-  $ git broken
-  Expansion of alias 'broken' failed; 'does-not-exist': Permission
-  denied
-
-  (4)
-  $ git ok
-  ok
-
-This is somewhat improved. Case (4) now runs the alias. Case (3) has a
-better error message, which is that it tells you it was not "broken"
-which was a problem, but its subcommand. But the "permission denied"
-error still ends up being somewhat confusing. And in case (2), you don't
-get a list of suggestions (nor should you, because we still don't know
-whether "cerry-pick" exists and cannot be executed, or if there is a
-broken directory in the PATH).
-
-So we've made the situation better, but it's still way less nice than
-having a fixed PATH. Which makes me wonder if this half-way effort is
-worth it.
-
--Peff
+I just wanted to see what was the desired behaviour you have in mind.
