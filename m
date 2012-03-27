@@ -1,58 +1,77 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: Bug? Bad permissions in $PATH breaks Git aliases
-Date: Tue, 27 Mar 2012 08:14:21 +0200
-Message-ID: <4F715ABD.4080102@viscovery.net>
-References: <CAJMEqRBmuBJuUmeoAU-_xf=s10ybD9pXhUJT+fn8aHNE2WJz6A@mail.gmail.com>
+From: Ivan Todoroski <grnch@gmx.net>
+Subject: [PATCH/RFC v2 0/4] Fix fetch-pack command line overflow during clone
+Date: Tue, 27 Mar 2012 08:23:51 +0200
+Message-ID: <4F715CF7.5070903@gmx.net>
+References: <loom.20120318T083216-96@post.gmane.org> <m3fwd550j3.fsf@localhost.localdomain> <20120318190659.GA24829@sigill.intra.peff.net> <CACsJy8BNT-dY+wDONY_TgLnv0135RZ-47BEVMzX6c3ddH=83Zw@mail.gmail.com> <20120319024436.GB10426@sigill.intra.peff.net> <4F69B5F0.2060605@gmx.net> <CAJo=hJu0H5wfXB_y5XQ6=S0VJ9t4pxHWkuy_=rehJL_6psf00g@mail.gmail.com> <20120321171423.GA13140@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: Git ML <git@vger.kernel.org>
-To: James Pickens <jepicken@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 27 08:14:56 2012
+Cc: Shawn Pearce <spearce@spearce.org>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Mar 27 08:23:28 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SCPgG-0004FL-6D
-	for gcvg-git-2@plane.gmane.org; Tue, 27 Mar 2012 08:14:56 +0200
+	id 1SCPoW-0000Kr-2c
+	for gcvg-git-2@plane.gmane.org; Tue, 27 Mar 2012 08:23:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756666Ab2C0GOm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Mar 2012 02:14:42 -0400
-Received: from lilzmailso02.liwest.at ([212.33.55.13]:26945 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756386Ab2C0GOX (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Mar 2012 02:14:23 -0400
-Received: from cpe228-254-static.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.76)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1SCPfh-0005pv-MU; Tue, 27 Mar 2012 08:14:21 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id 686621660F;
-	Tue, 27 Mar 2012 08:14:21 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:11.0) Gecko/20120312 Thunderbird/11.0
-In-Reply-To: <CAJMEqRBmuBJuUmeoAU-_xf=s10ybD9pXhUJT+fn8aHNE2WJz6A@mail.gmail.com>
-X-Spam-Score: -1.4 (-)
+	id S1756262Ab2C0GXX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Mar 2012 02:23:23 -0400
+Received: from mailout-de.gmx.net ([213.165.64.23]:51332 "HELO
+	mailout-de.gmx.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with SMTP id S1755868Ab2C0GXX (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Mar 2012 02:23:23 -0400
+Received: (qmail invoked by alias); 27 Mar 2012 06:23:21 -0000
+Received: from unknown (EHLO [127.0.0.1]) [77.28.160.201]
+  by mail.gmx.net (mp069) with SMTP; 27 Mar 2012 08:23:21 +0200
+X-Authenticated: #7905487
+X-Provags-ID: V01U2FsdGVkX19PHEpmTClP6O5/U7724tCstIHjvUiUiHwptAToAr
+	63Zfs3UFSRBYO6
+User-Agent: Thunderbird 2.0.0.24 (Windows/20100228)
+In-Reply-To: <20120321171423.GA13140@sigill.intra.peff.net>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194016>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194017>
 
-Am 3/27/2012 1:48, schrieb James Pickens:
-> I'm not sure if this should be considered a bug or not, but I've noticed that
-> when my $PATH contains an inaccessible directory, Git fails to execute aliases.
-> ...
-> I lean towards calling it a bug, since my shell doesn't seem to care if there
-> are inaccessible directories in my $PATH.  It just ignores them, and I think Git
-> ought to do the same.
+This patch series is against the latest "maint" branch. Please let me
+know if I need to rebase this on top of some other branch.
 
-Git is not a shell. And I'm sure it is not the only program that has this
-issue. "Don't do it, then."
+The problem we are fixing is described in the first patch in the series.
 
-Git's implementation depends on the system's execvp behavior. As it
-stands, current implementations of execvp path lookup and of popular
-shells' path lookup differ in this respect. Bad luck. Don't check the
-sanity of your PATH by testing how your shell looks up executables.
 
--- Hannes
+Changes since the original patch:
+
+* add test cases
+* add full commit messages
+* fix formatting problem in --stdin doc
+* split overly long fetch_pack_usage line
+* use strbuf_getline() instead of fgets() for reading refs from stdin
+* minor optimization of the pkt-line reading loop, it was using xstrdup()
+  even though the string length was already known, use xmemdupz() instead
+* rework the remote-curl.c patch to not add new parameters to rpc_service(),
+  instead add a new strbuf member to rpc_state to pass the info around
+
+
+Ivan Todoroski (4):
+  fetch-pack: new --stdin option to read refs from stdin
+  remote-curl: send the refs to fetch-pack on stdin
+  fetch-pack: test cases for the new --stdin option
+  remote-curl: main test case for the OS command line overflow
+
+ Documentation/git-fetch-pack.txt |   10 ++++
+ builtin/fetch-pack.c             |   45 ++++++++++++++++-
+ fetch-pack.h                     |    3 +-
+ remote-curl.c                    |   15 +++++-
+ t/t5500-fetch-pack.sh            |  100 ++++++++++++++++++++++++++++++++++++++
+ t/t5551-http-fetch.sh            |   32 ++++++++++++
+ 6 files changed, 201 insertions(+), 4 deletions(-)
+
+-- 
+1.7.9.5.4.g4f508
