@@ -1,7 +1,7 @@
 From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
 Subject: Re: GSoC - Designing a faster index format
-Date: Tue, 27 Mar 2012 13:33:33 +0700
-Message-ID: <CACsJy8BfCpH3jtfaOyyAgjH3P5fv4FYjboqjoFYF2GiG44TmoA@mail.gmail.com>
+Date: Tue, 27 Mar 2012 13:43:27 +0700
+Message-ID: <CACsJy8BjYLAKqFDeGRyUj+SDKOTRbjW8shomhnhORM082HM9yw@mail.gmail.com>
 References: <CAKTdtZm3qfG1rcoashDoMoqtD34JJDUDtDruGqGn9bSMzQTcFA@mail.gmail.com>
  <87aa3aw5z8.fsf@thomas.inf.ethz.ch> <CAKTdtZkGP3KbMGf88yW7zcCjemUyEy_4CVNkLD0SV=Lm7=Kveg@mail.gmail.com>
  <CAKTdtZmYc=xz4zCPQiuSTUvdmbLRKXNWNL3N6_4Bj0gujYmRvw@mail.gmail.com>
@@ -13,64 +13,102 @@ References: <CAKTdtZm3qfG1rcoashDoMoqtD34JJDUDtDruGqGn9bSMzQTcFA@mail.gmail.com>
  <CAKTdtZkpjVaBSkcieojKj+V7WztT3UDzjGfXyghY=S8mq+X9zw@mail.gmail.com>
  <CACsJy8D85thmK_5jLC7MxJtsitLr=zphKiw2miwPu7Exf7ty=Q@mail.gmail.com>
  <CAKTdtZkx+7iU5T4oBNDEx-A5cgZCLU9ocdXmC9jRbD39J1zb3Q@mail.gmail.com>
- <87iphrjv23.fsf@thomas.inf.ethz.ch> <CACsJy8CsdZpQUQ7ydM1fOpSomm6+LyACCR83ccncVtUk+HbLKA@mail.gmail.com>
- <CAJo=hJsPgUZi2qMc5aDUn0+o5=9n7pBS+yWBASfqtov8WuFBRA@mail.gmail.com>
- <CAKTdtZngYaTCwd5cri=XjUu3-o44ECjDotrDBNxqYL-Kcsosnw@mail.gmail.com> <CAFfmPPM_GOkOp6-tE2=YxdrZq6TL3s4EgOjXdRKf8+ffMD29xg@mail.gmail.com>
+ <87iphrjv23.fsf@thomas.inf.ethz.ch> <CACsJy8AqQdWO4E2oYTMLbpYhxobH8iXE-jXPoj2BcEGtfh+T=Q@mail.gmail.com>
+ <CAKTdtZnxSRffZ5xAq+SgW6fmy+b3P2Fu3AZmBB1jmGca6HmJAw@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: elton sky <eltonsky9404@gmail.com>,
-	Shawn Pearce <spearce@spearce.org>,
-	Git Mailing List <git@vger.kernel.org>
-To: David Barr <davidbarr@google.com>
-X-From: git-owner@vger.kernel.org Tue Mar 27 08:34:18 2012
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>
+To: elton sky <eltonsky9404@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 27 08:44:04 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SCPyt-00067M-Uh
-	for gcvg-git-2@plane.gmane.org; Tue, 27 Mar 2012 08:34:12 +0200
+	id 1SCQ8R-0003Uz-Ku
+	for gcvg-git-2@plane.gmane.org; Tue, 27 Mar 2012 08:44:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757233Ab2C0GeI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Mar 2012 02:34:08 -0400
-Received: from mail-wg0-f44.google.com ([74.125.82.44]:48887 "EHLO
-	mail-wg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756788Ab2C0GeF (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Mar 2012 02:34:05 -0400
-Received: by wgbdr13 with SMTP id dr13so4543802wgb.1
-        for <git@vger.kernel.org>; Mon, 26 Mar 2012 23:34:03 -0700 (PDT)
+	id S1752876Ab2C0Gn7 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 27 Mar 2012 02:43:59 -0400
+Received: from mail-wi0-f172.google.com ([209.85.212.172]:54430 "EHLO
+	mail-wi0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751945Ab2C0Gn6 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 27 Mar 2012 02:43:58 -0400
+Received: by wibhj6 with SMTP id hj6so5058317wib.1
+        for <git@vger.kernel.org>; Mon, 26 Mar 2012 23:43:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=kh2EAkTxRFaovm55yoyzRcqDWCksPFltMG/aR/LE4Lw=;
-        b=pUIudufkS7tlcFwV5zpsBYCLlBIwIh5469h1TZVPs510i3O/2n6Xm4nqjNqos02yN+
-         Ss8+1moDFxAHGtfr6ZKQlwURwJ8dqmZwalqjYmMpnIQKEcDEjkbF1ZGz2HtJ4nQZbf7w
-         /aFL1Yqzq7ZZ3oRa6LETuWpZiXt66nDszsj14Mwoq8f+rZklo1h7qMAhneLkxCSKVSgi
-         yIZKe6Wj4eZi30sgHjM+fwcg1v9U3r/Gk2oJOgwdtM2IiFXmoeU9XhRq2L5rf6u+LU46
-         TQr52qGeCvHd21q0tIuntv3Iwca0BapwxcwQQMC6+UlVt8IRhqJcv5pCwlqZ9ARsgISI
-         Snnw==
-Received: by 10.216.135.225 with SMTP id u75mr13055722wei.97.1332830043399;
- Mon, 26 Mar 2012 23:34:03 -0700 (PDT)
-Received: by 10.223.109.144 with HTTP; Mon, 26 Mar 2012 23:33:33 -0700 (PDT)
-In-Reply-To: <CAFfmPPM_GOkOp6-tE2=YxdrZq6TL3s4EgOjXdRKf8+ffMD29xg@mail.gmail.com>
+         :cc:content-type:content-transfer-encoding;
+        bh=NAflTd6w7WMavlAhf/mlSZSp5TKQir/PyOZgFkaoR/k=;
+        b=W8HSYaHF9og3lhzaB2Yj/0v1VY1oe5Pgc8I6kgXvDEPEYKRGoeKC+HpQhTBk+3OYd7
+         i6mdu7YjS2jjHE7IZcXH53xh6SZat+WORPrZ4cirowJ7XvktBlkeeOL5zUAuwuntuWxe
+         uA+4KlXjV2Gr8JDoDrOFRiCX0CJEpiLecP22Dbvhk++s0sB8riciHAaS9/SnnOpoOCTs
+         n4lRPkzVKm8Pd+qCP51aAQqWKWGKvLWCx0mDdH3M7kHr2ACUTbpAsUNCKfsX+BWHEdjS
+         HpwgSSg4V8TKYOIGlA4Pt+3ASNE7C4s64ar2YdNPe1vyuo98hqqt/u4tJ5IEjJBOYJS+
+         63uA==
+Received: by 10.180.24.66 with SMTP id s2mr24842459wif.7.1332830637419; Mon,
+ 26 Mar 2012 23:43:57 -0700 (PDT)
+Received: by 10.223.109.144 with HTTP; Mon, 26 Mar 2012 23:43:27 -0700 (PDT)
+In-Reply-To: <CAKTdtZnxSRffZ5xAq+SgW6fmy+b3P2Fu3AZmBB1jmGca6HmJAw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194025>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194026>
 
-On Tue, Mar 27, 2012 at 10:34 AM, David Barr <davidbarr@google.com> wrote:
-> Another implementation in this general class is TinyCDB[1].
-> It is <1600 lines of plain C. Too few to be complete?
-> It is a derivative of DJB's CDB[2].
+On Tue, Mar 27, 2012 at 10:20 AM, elton sky <eltonsky9404@gmail.com> wr=
+ote:
+> On Tue, Mar 27, 2012 at 3:19 AM, Nguyen Thai Ngoc Duy <pclouds@gmail.=
+com> wrote:
+>> The header consists of crc32 and three uint32_t, one points to the
+>> root tree, one the first extension block, the last one the free list
+>> at the end of the file. The rest of the file contains sizable blocks=
+=2E
+>> There can be free space between them. Free spaces (offset and size)
+>> are recorded at the end of the file, pointed in header. The header's
+>> crc32 covers the header and free list.
 >
-> [1] http://www.corpit.ru/mjt/tinycdb.html
+> How do you record free spaces at the end of file? Are you gonna have =
+a
+> fixed size for the index and reserve space for free spaces offsets.
 
-"CDB is a constant database, that is, it cannot be updated at a
-runtime, only rebuilt.". It does not sound promising to me. I have not
-read the description carefully though.
+A list of (offset,size) with (0,0) to terminate. No index can shrink
+or expand at will. Free list is always at the end of the index.
 
-> [2] http://cr.yp.to/cdb.html
--- 
+>> A block starts with a signature (a tree block, or an extension...). =
+A
+>> tree block consists of:
+>>
+>> =C2=A0- uint32_t tree object's size
+>> =C2=A0- sha-1 of tree object
+>> =C2=A0- crc32 of the rest of the block except tree object
+>> =C2=A0- maybe reference counter of a block can be refered by many bl=
+ocks??
+>> =C2=A0- tree object (i.e. something that tree-walk.c can parse)
+>
+> Do you mean each block contains a tree and all its blobs? So the tree
+> object here, effectively a dir, also contains files in the dir ? In
+> this way, some blocks can be very big.
+
+No, the tree object contains pathname, mode and SHA-1 of its entries,
+one level only (try "git ls-tree HEAD"). If an entry is a directory
+and we have not built it yet, we won't have its sha-1, so it will be
+zero (similar to invalid cache-tree).
+
+>> =C2=A0- other index attributes, stored separately in the same order =
+as in
+>> tree object above, uint32_t block offset of subdirectories.
+>
+> There can be many sub dirs some times. But maybe not a prob.
+>
+> As tree object and =C2=A0offset of subdirectories are variables, how =
+do you
+> make a block resizable?
+
+If there are free space right after it, it can be expanded. Otherwise
+we need to move the block elsewhere and update its parent about its
+new offset, then mark where the block was as free space.
+--=20
 Duy
