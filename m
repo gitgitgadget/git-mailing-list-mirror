@@ -1,131 +1,94 @@
-From: chaitanyaa nalla <nallachaitu@gmail.com>
-Subject: Re: GSoC idea: adding JavaScript library / framework in gitweb
-Date: Tue, 27 Mar 2012 20:25:04 +0530
-Message-ID: <CACeyogd4NBto3SRU-0uCPzpUiVyEJpA=giEc7zvsZ06b-m9b0Q@mail.gmail.com>
-References: <CACeyogcFJoUyAiTReDJK_nCMGBp+23OjcS407A1X=fqFR+aGag@mail.gmail.com>
-	<201203241949.04956.jnareb@gmail.com>
-	<CACeyogdkEdkYa+SQvUq50FU5P7ohq-tLf8tgi1v6o_HMM5bSsg@mail.gmail.com>
-	<201203251955.21454.jnareb@gmail.com>
-	<CACeyogdhChrGe-k+VLkAzq1F9U1TFYsCN5Kc_u7jAwRhaz+fJQ@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Bug? Bad permissions in $PATH breaks Git aliases
+Date: Tue, 27 Mar 2012 08:11:27 -0700
+Message-ID: <7vbonikrj4.fsf@alter.siamese.dyndns.org>
+References: <CAJMEqRBmuBJuUmeoAU-_xf=s10ybD9pXhUJT+fn8aHNE2WJz6A@mail.gmail.com>
+ <20120327031953.GA17338@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 27 16:55:13 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: James Pickens <jepicken@gmail.com>, Git ML <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Mar 27 17:11:39 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SCXnl-0001RB-2w
-	for gcvg-git-2@plane.gmane.org; Tue, 27 Mar 2012 16:55:13 +0200
+	id 1SCY3c-0004yu-4q
+	for gcvg-git-2@plane.gmane.org; Tue, 27 Mar 2012 17:11:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751300Ab2C0OzI convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 27 Mar 2012 10:55:08 -0400
-Received: from mail-gx0-f174.google.com ([209.85.161.174]:62878 "EHLO
-	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750993Ab2C0OzF convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 27 Mar 2012 10:55:05 -0400
-Received: by gghe5 with SMTP id e5so4690098ggh.19
-        for <git@vger.kernel.org>; Tue, 27 Mar 2012 07:55:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=Z0fGGDg+4FEqXDllH5tKH8NYq8pL8C/EWNAz8OdIEPo=;
-        b=LFNrjvp22LH1df6umPMAc9eLRO4/oNIzflirGDjN+treG0Pj/IBgEyebmbPQecPwc2
-         quXX8jQQyuLrvrVIZZakiMgK2AT4HJ2FLyDP+LA2LNnFfZwVX5eSAuAhZueheOnsK3OB
-         xLkWROjP7Kq7gIxL0z44xk9vjGQawEyzepJHTqiQdooLEniBFpwDP0l2+7ga37wwfRdL
-         YFdud5oxfNIwksgxvDitxCgtAxifgg8NS+p0yVWqda5sKgCbTp5aIewN4Mib2wmSubDo
-         ym9NDKmJPCGtGUgo7RhswnCCAgYhS8VhsDFZ72VjCs1Yfi2tDsZyb7tmRdhw0PXW/jr3
-         alWQ==
-Received: by 10.60.4.170 with SMTP id l10mr32568957oel.67.1332860104946; Tue,
- 27 Mar 2012 07:55:04 -0700 (PDT)
-Received: by 10.182.39.234 with HTTP; Tue, 27 Mar 2012 07:55:04 -0700 (PDT)
-In-Reply-To: <CACeyogdhChrGe-k+VLkAzq1F9U1TFYsCN5Kc_u7jAwRhaz+fJQ@mail.gmail.com>
+	id S1755149Ab2C0PLb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Mar 2012 11:11:31 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:63778 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753992Ab2C0PLa (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Mar 2012 11:11:30 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A55F95956;
+	Tue, 27 Mar 2012 11:11:29 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=ZpwdvxkI2/a8svZeiq4aQ8xEKwk=; b=tPHpnq
+	v0PhaqrKNpm/1Ij5ay1Jr7Wp262O2K4tptHCb/j2g1S3PcGyl3hbSAHqm4vj01e6
+	CVbCkbVunK1d7WuvEd0eN7rqTyTLZiB+FY7LktVi00KyEcehecfSsN87mh1HSeUs
+	2ads8By3RYdDlF47XScgReY6jFqTSVHK3y9dI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=ofTG2bdGpLiETtFHgvGliZm/4/ZbG+ha
+	eiY+3H66qVBYeEuqcrZchgMBYFGME5s+nsQfKvlpJ/bPiju8wGy+y5W5kUUchdyR
+	0os8J4ADbHz2EIr2lMiItpqL1xJMH8qVQXGtjBVYjjXdrurtWH7KcaIbCSNBJbuA
+	JQfGwTiLL9k=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9BAD25955;
+	Tue, 27 Mar 2012 11:11:29 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 051355953; Tue, 27 Mar 2012
+ 11:11:28 -0400 (EDT)
+In-Reply-To: <20120327031953.GA17338@sigill.intra.peff.net> (Jeff King's
+ message of "Mon, 26 Mar 2012 23:19:53 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 20F96650-781F-11E1-8606-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194047>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194048>
 
-On Tue, Mar 27, 2012 at 8:23 PM, chaitanyaa nalla <nallachaitu@gmail.co=
-m> wrote:
->>There was also some time ago a patch that added ability to mark a com=
-mit
->>to compare current commit to (using JavaScript and cookies), to have =
-an
->> UI to compare arbitrary commits using 'commitdiff' view. =A0Or somet=
-hing
->> similar to MediaWiki (Wikipedia) page history view.
+Jeff King <peff@peff.net> writes:
+
+> This seems to come up about once a year....
+> ...
+> So basically our options are:
 >
-> Hey jakub,
-> will that patch be included in future version , if it is the case can
-> i consider implementing with some enhancements??
+>   1. Start treating EACCESS silently as ENOENT. The downside is that we
+>      fail to report the proper error when the file really does have
+>      permissions problems (we would say "command not found", but that is
+>      misleading).
 >
+>   2. Implement our own execvp, differentiating between "path not
+>      available for looking in" and "we found the command, but there was
+>      a permissions problem". I think somebody was working on this a few
+>      months ago (search for "add exeecvp failure diagnostics") but it
+>      seems to have fizzled.
 >
+>   3. If we get an EACCESS, remember it, try to do the alias lookup, and
+>      then if that fails, report the "Permission denied" error (not
+>      "command not found"). That is following the spirit of what execvp
+>      does (it will find later entries in the PATH if they are there, but
+>      otherwise will remember the EACCESS error).
 >
-> On Sun, Mar 25, 2012 at 11:25 PM, Jakub Narebski <jnareb@gmail.com> w=
-rote:
->> On Sun, 25 Mar 2012, chaitanyaa nalla wrote:
->>
->>> Dear Jakub,
->>>
->>> if we handle the sorting of the tables on the client side itself,
->>> will that be a =A0load on the browser?
->>
->> Well, if it turns out to be too heavy a load, we can use the same tr=
-ick
->> of "timed array processing":
->>
->> =A0http://www.nczonline.net/blog/2009/08/11/timed-array-processing-i=
-n-javascript/
->>
->> See for example this page to see sorttable in action:
->>
->> =A0http://en.wikipedia.org/wiki/Comparison_of_open_source_software_h=
-osting_facilities
->>
->>> Other ideas which I have in mind are
->>>
->>> 1. Highligting matched portions of project name while searching the
->>> =A0 =A0project name, even more intuitively
->>
->> You probably couldn't have known that match highlighting in project
->> search is done on server side by gitweb.cgi since commit 6759f95
->> (Merge branch 'jn/gitweb-hilite-regions', 2012-03-04):
->>
->> =A0gitweb: Highlight matched part of shortened project description
->> =A0gitweb: Highlight matched part of project description when search=
-ing projects
->> =A0gitweb: Highlight matched part of project name when searching pro=
-jects
->>
->> It is not used by either git.kernel.org or repo.or.cz because it is
->> too fresh (it is to be in yet to be released v1.7.10).
->>
->>> 2. project pagination.
->>
->> Is there any sense in pagination on client side? =A0Unless you turn =
-it into
->> lazy loading / loading on demand Ajax-y pagination...
->>
->>
->> Yet another idea is to implement creating side-by-side diff from uni=
-fied
->> diff in JavaScript, so that swicthing between unified and side-by-si=
-de
->> diff view could be done entirely client-side, without hitting the se=
-rver.
->>
->>
->> Note however that I think that it wouldn't be possible in time given=
- to
->> implement all those ideas. =A0You need to select those of them that =
-you
->> will put in project application.
->>
->> --
->> Jakub Narebski
->> Poland
+> From what I can tell, dash uses stock execvp, and ends up closest to
+> (3). Bash seems to have implemented their own path lookup, as it will
+> distinguish between the two cases as in (2):
+> ...
+> I think the general feeling last time this came up was "why not just
+> remove the cruft from your PATH?" But I would personally be OK with
+> option (3) above, and it is probably not that hard to implement.
+
+http://thread.gmane.org/gmane.comp.version-control.git/171755/focus=171838
+shows that it was almost exactly a year ago; we tried (2) and nobody liked
+it.
+
+I got an impression from the discussion in it that #3 may give confusing
+messages to the end users, but I didn't think the issues through.
