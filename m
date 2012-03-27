@@ -1,100 +1,116 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH 2/2] git: continue alias lookup on EACCES errors
-Date: Tue, 27 Mar 2012 14:05:03 -0400
-Message-ID: <20120327180503.GB4659@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/2] run-command: propagate EACCES errors to parent
+Date: Tue, 27 Mar 2012 11:24:02 -0700
+Message-ID: <7vhax9j41p.fsf@alter.siamese.dyndns.org>
 References: <20120327175933.GA1716@sigill.intra.peff.net>
+ <20120327180425.GA4659@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Cc: James Pickens <jepicken@gmail.com>, Git ML <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Mar 27 20:05:15 2012
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Mar 27 20:24:14 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SCalc-0006sr-7W
-	for gcvg-git-2@plane.gmane.org; Tue, 27 Mar 2012 20:05:12 +0200
+	id 1SCb41-00043r-Jd
+	for gcvg-git-2@plane.gmane.org; Tue, 27 Mar 2012 20:24:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755243Ab2C0SFG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Mar 2012 14:05:06 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:34385
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754428Ab2C0SFG (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Mar 2012 14:05:06 -0400
-Received: (qmail 5611 invoked by uid 107); 27 Mar 2012 18:05:23 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 27 Mar 2012 14:05:23 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 27 Mar 2012 14:05:03 -0400
-Content-Disposition: inline
-In-Reply-To: <20120327175933.GA1716@sigill.intra.peff.net>
+	id S1755509Ab2C0SYH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Mar 2012 14:24:07 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50654 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755118Ab2C0SYG (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Mar 2012 14:24:06 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id ABA146AC1;
+	Tue, 27 Mar 2012 14:24:04 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=DAAC+Lb5NG1mPgoaX+6DWrtpbsM=; b=oSNuXK
+	Cy659UStjXIOWeQ7Yq90mSaBoivJhgIFpBGf/Lz43YAL6uHdf/KOflcm12uqvgg+
+	t5TxHjDVzNSFXIDgdOoBHnZ3WfTnqrwr0iNrlFtqxgxQ1Ex0+Gw093c/G11RORS8
+	j4rekEOEdKonKJRMNMXWH5w51r4XoSchrgtsU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=EKygFTXzM92HPayeLqTb7x2Oq/0Qcj1S
+	LIDu4YT1ZH4Uq8e6xHhixkYOJUobw3lc6m7hnvyuCMSN/kaANfjZdghEGdHOD0+I
+	UDpT/JHXDTGqLjbLmnAri8LQo9jG03JZRaVTBx1yIbyhPZbVuRe4xCwfITT3hzc3
+	QXAgKC93VR0=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A2CCF6AC0;
+	Tue, 27 Mar 2012 14:24:04 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 36F346ABF; Tue, 27 Mar 2012
+ 14:24:04 -0400 (EDT)
+In-Reply-To: <20120327180425.GA4659@sigill.intra.peff.net> (Jeff King's
+ message of "Tue, 27 Mar 2012 14:04:25 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 0868F554-783A-11E1-A310-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194068>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194069>
 
-If git receives an EACCES error while trying to execute an
-external command, we currently give up and report the error.
-However, the EACCES may be caused by an inaccessible
-directory in the user's PATH.
+Jeff King <peff@peff.net> writes:
 
-In this case, execvp will skip over the inaccessible
-directory and keep searching the PATH. If it finds
-something, then that gets executed. Otherwise, the earlier
-EACCES is remembered and returned.
+> The caller of run_command does not directly get access to
+> the errno from exec, because it happens in the forked child.
+> However, knowing the specific reason for an exec failure can
+> help the parent respond better or produce better error
+> messages.
+>
+> We already propagate ENOENT to the parent via exit code 127.
+> Let's do the same for EACCES with exit code 126, which is
+> already used by bash to indicate the same thing.
+>
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+> Actually, there is a slight bending of the truth in the commit message.
+> bash implements its own execvp, and it will only return 126/EACCES if a
+> file is found via stat(), but is not executable. If there is an
+> inaccessible directory in the PATH (meaning that stat() will fail), it
+> will silently convert that to 127/ENOENT.
 
-However, git does not implement the same rule when looking
-up aliases. It will return immediately upon seeing EACCES
-from execvp, without trying aliases.  This renders aliases
-unusable if there is an inaccessible directory in the PATH.
+I am wondering what would happen if we treated EACCESS and ENOENT exactly
+the same way.  Wouldn't the four breakage scenarios in the cover letter
+end up being even better?  Case (3) will still say does-not-exist is not a
+git command (instead of "permission denied", which this patch gives), but
+your case (2) will see a much better diagnosis.
 
-This patch implements a logical extension of execvp's lookup
-rules to aliases. We will try to find aliases even after
-execvp returns EACCES. If there is an alias, then we expand
-it as usual.  If ther eisn't, then we will remember and
-report the EACCES error.
+Take the above with a grain of salt, though, as this is written soon after
+I wrote my response to James (the one with "I may be a mean person").
 
-Signed-off-by: Jeff King <peff@peff.net>
----
- git.c |   14 ++++++++------
- 1 file changed, 8 insertions(+), 6 deletions(-)
-
-diff --git a/git.c b/git.c
-index 3805616..917bc9e 100644
---- a/git.c
-+++ b/git.c
-@@ -496,7 +496,7 @@ static void execv_dashed_external(const char **argv)
- 	 * OK to return. Otherwise, we just pass along the status code.
- 	 */
- 	status = run_command_v_opt(argv, RUN_SILENT_EXEC_FAILURE | RUN_CLEAN_ON_EXIT);
--	if (status >= 0 || errno != ENOENT)
-+	if (status >= 0 || (errno != ENOENT && errno != EACCES))
- 		exit(status);
- 
- 	argv[0] = tmp;
-@@ -586,14 +586,16 @@ int main(int argc, const char **argv)
- 		static int done_help = 0;
- 		static int was_alias = 0;
- 		was_alias = run_argv(&argc, &argv);
--		if (errno != ENOENT)
--			break;
--		if (was_alias) {
-+		if (was_alias && (errno == ENOENT || errno == EACCES)) {
- 			fprintf(stderr, "Expansion of alias '%s' failed; "
--				"'%s' is not a git command\n",
--				cmd, argv[0]);
-+				"'%s'%s\n", cmd, argv[0],
-+				errno == ENOENT ?
-+				  " is not a git command" :
-+				  ": Permission denied");
- 			exit(1);
- 		}
-+		if (errno != ENOENT)
-+			break;
- 		if (!done_help) {
- 			cmd = argv[0] = help_unknown_cmd(cmd);
- 			done_help = 1;
--- 
-1.7.9.5.5.g9b709b
+>  run-command.c |    9 +++++++++
+>  1 file changed, 9 insertions(+)
+>
+> diff --git a/run-command.c b/run-command.c
+> index 1db8abf..e303beb 100644
+> --- a/run-command.c
+> +++ b/run-command.c
+> @@ -185,6 +185,10 @@ static int wait_or_whine(pid_t pid, const char *argv0, int silent_exec_failure)
+>  			code = -1;
+>  			failed_errno = ENOENT;
+>  		}
+> +		else if (code == 126) {
+> +			code = -1;
+> +			failed_errno = EACCES;
+> +		}
+>  	} else {
+>  		error("waitpid is confused (%s)", argv0);
+>  	}
+> @@ -346,6 +350,11 @@ fail_pipe:
+>  				error("cannot run %s: %s", cmd->argv[0],
+>  					strerror(ENOENT));
+>  			exit(127);
+> +		} else if (errno == EACCES) {
+> +			if (!cmd->silent_exec_failure)
+> +				error("cannot run %s: %s", cmd->argv[0],
+> +					strerror(errno));
+> +			exit(126);
+>  		} else {
+>  			die_errno("cannot exec '%s'", cmd->argv[0]);
+>  		}
