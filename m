@@ -1,106 +1,74 @@
 From: Ben Walton <bwalton@artsci.utoronto.ca>
-Subject: [PATCH] Use SHELL_PATH to fork commands in run_command.c:prepare_shell_cmd
-Date: Mon, 26 Mar 2012 22:41:18 -0400
-Message-ID: <1332816078-26829-1-git-send-email-bwalton@artsci.utoronto.ca>
-References: <20120326182427.GA10333@sigill.intra.peff.net>
-Cc: git@vger.kernel.org, Ben Walton <bwalton@artsci.utoronto.ca>
-To: peff@peff.net, jrnieder@gmail.com, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Tue Mar 27 04:41:50 2012
+Subject: Re: [PATCH 0/2] Make run-command.c honour SHELL_PATH
+Date: Mon, 26 Mar 2012 22:45:41 -0400
+Message-ID: <1332816105-sup-9131@pinkfloyd.chass.utoronto.ca>
+References: <1332678696-4001-1-git-send-email-bwalton@artsci.utoronto.ca> <20120326011148.GA4428@burratino> <1332768900-sup-4533@pinkfloyd.chass.utoronto.ca> <20120326181238.GH7942@sigill.intra.peff.net> <1332785666-sup-5513@pinkfloyd.chass.utoronto.ca> <20120326182427.GA10333@sigill.intra.peff.net>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Cc: Jonathan Nieder <jrnieder@gmail.com>, gitster <gitster@pobox.com>,
+	git <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Mar 27 04:45:49 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SCMM1-0000qK-7Q
-	for gcvg-git-2@plane.gmane.org; Tue, 27 Mar 2012 04:41:49 +0200
+	id 1SCMPs-0003Fs-Ob
+	for gcvg-git-2@plane.gmane.org; Tue, 27 Mar 2012 04:45:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755159Ab2C0Clo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Mar 2012 22:41:44 -0400
-Received: from garcia.cquest.utoronto.ca ([192.82.128.9]:50418 "EHLO
+	id S1755709Ab2C0Cpn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Mar 2012 22:45:43 -0400
+Received: from garcia.cquest.utoronto.ca ([192.82.128.9]:50432 "EHLO
 	garcia.cquest.utoronto.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753610Ab2C0Cln (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Mar 2012 22:41:43 -0400
-Received: from pinkfloyd.chass.utoronto.ca ([128.100.160.254]:33710 ident=93)
+	with ESMTP id S1754732Ab2C0Cpm (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Mar 2012 22:45:42 -0400
+Received: from pinkfloyd.chass.utoronto.ca ([128.100.160.254]:33714 ident=93)
 	by garcia.cquest.utoronto.ca with esmtp (Exim 4.63)
 	(envelope-from <bwalton@cquest.utoronto.ca>)
-	id 1SCMLs-0001fC-Da; Mon, 26 Mar 2012 22:41:40 -0400
+	id 1SCMPl-0001g8-PR; Mon, 26 Mar 2012 22:45:41 -0400
 Received: from bwalton by pinkfloyd.chass.utoronto.ca with local (Exim 4.72)
 	(envelope-from <bwalton@cquest.utoronto.ca>)
-	id 1SCMLs-0006zD-CI; Mon, 26 Mar 2012 22:41:40 -0400
-X-Mailer: git-send-email 1.7.4.1
-In-Reply-To: <20120326182427.GA10333@sigill.intra.peff.net>
+	id 1SCMPl-0006zn-OO; Mon, 26 Mar 2012 22:45:41 -0400
+In-reply-to: <20120326182427.GA10333@sigill.intra.peff.net>
+User-Agent: Sup/git
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193994>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193995>
 
-The shell spawned in run-command.c:prepare_shell_cmd was hard coded to
-"sh."  This was breaking "t7006-pager:command-specific pager" when the
-"sh" found in the PATH happened to be a broken one such as Solaris'
-/usr/bin/sh.  (The breakage in this case was due to ^ being
-interpreted the same as | which was seeing two processes forked
-instead of a single sed process.)
+Excerpts from Jeff King's message of Mon Mar 26 14:24:27 -0400 2012:
 
-To allow the build system to supply a value that is deemed sane, thus
-removing variation injected by the local user environment, define a
-macro named SHELL_PATH (to match the variable of the same name in the
-build system).  Use this macro instead of the literal "sh" when
-preparing a set of arguments to be forked.  Set "sh" as the default
-value of this macro if none is set through other means to preserve the
-original behaviour.
+Hi Jeff,
 
-The Makefile now sets EXTRA_CPPFLAGS to a value that includes a
-definition of SHELL_PATH when building run_command.c.  This sees the
-sane shell passed to run_command.c and used when forking external
-commands.
+> OK, that's gross. I would argue that your SANE_TOOL_PATH is not
+> great, then, because the "sh" is not sane. But that being said, this
+> is exactly the sort of thing I was talking about in my first
+> message, which is that SANE_TOOL_PATH is hard to get right. If we
+> can make things Just Work by using SHELL_PATH, I don't see that as a
+> bad thing.
 
-Leveraging SANE_TOOL_PATH was considered here but had downsides that
-may have made it an incomplete solution.  For example, some builds may
-use bash as the shell and not want sh used at all.
+Ok, thanks for the great feedback.  I just sent an updated version of
+the patch with the squash done and what I hope is a better commit
+message.
 
-Signed-off-by: Ben Walton <bwalton@artsci.utoronto.ca>
----
- Makefile      |    2 ++
- run-command.c |    6 +++++-
- 2 files changed, 7 insertions(+), 1 deletions(-)
+> It sounds like using bash is probably the least bad thing to do, and
+> doing anything else would not be worth the complexity. You could use
+> "bash -posix" (or an sh-symlink to bash), but in practice I doubt it
+> is really hurting anybody.
 
-diff --git a/Makefile b/Makefile
-index be1957a..344e2e0 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1913,6 +1913,8 @@ builtin/help.sp builtin/help.s builtin/help.o: EXTRA_CPPFLAGS = \
- 	'-DGIT_MAN_PATH="$(mandir_SQ)"' \
- 	'-DGIT_INFO_PATH="$(infodir_SQ)"'
- 
-+run-command.o: EXTRA_CPPFLAGS = -DSHELL_PATH='"$(SHELL_PATH)"'
-+
- $(BUILT_INS): git$X
- 	$(QUIET_BUILT_IN)$(RM) $@ && \
- 	ln git$X $@ 2>/dev/null || \
-diff --git a/run-command.c b/run-command.c
-index 1db8abf..f005a31 100644
---- a/run-command.c
-+++ b/run-command.c
-@@ -4,6 +4,10 @@
- #include "sigchain.h"
- #include "argv-array.h"
- 
-+#ifndef SHELL_PATH
-+# define SHELL_PATH "sh"
-+#endif
-+
- struct child_to_clean {
- 	pid_t pid;
- 	struct child_to_clean *next;
-@@ -90,7 +94,7 @@ static const char **prepare_shell_cmd(const char **argv)
- 		die("BUG: shell command is empty");
- 
- 	if (strcspn(argv[0], "|&;<>()$`\\\"' \t\n*?[#~=%") != strlen(argv[0])) {
--		nargv[nargc++] = "sh";
-+		nargv[nargc++] = SHELL_PATH;
- 		nargv[nargc++] = "-c";
- 
- 		if (argc < 2)
--- 
-1.7.5.4
+I'd need to jump through some hoops to do an sh-symlink that was
+within our packaging standards, although it's not impossible.  Using
+"bash -posix" is likely a better path for me to travel.  I'll still
+need to plan out the change with lots of notice for users in case
+there have been bashism's used in local scripts, but as you say it's
+not likely hurting anyone in practice.
+
+Thanks
+-Ben
+--
+Ben Walton
+Systems Programmer - CHASS
+University of Toronto
+C:416.407.5610 | W:416.978.4302
