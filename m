@@ -1,109 +1,142 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Bug? Bad permissions in $PATH breaks Git aliases
-Date: Mon, 26 Mar 2012 23:19:53 -0400
-Message-ID: <20120327031953.GA17338@sigill.intra.peff.net>
-References: <CAJMEqRBmuBJuUmeoAU-_xf=s10ybD9pXhUJT+fn8aHNE2WJz6A@mail.gmail.com>
+From: elton sky <eltonsky9404@gmail.com>
+Subject: Re: GSoC - Designing a faster index format
+Date: Tue, 27 Mar 2012 14:20:07 +1100
+Message-ID: <CAKTdtZnxSRffZ5xAq+SgW6fmy+b3P2Fu3AZmBB1jmGca6HmJAw@mail.gmail.com>
+References: <CAKTdtZm3qfG1rcoashDoMoqtD34JJDUDtDruGqGn9bSMzQTcFA@mail.gmail.com>
+	<87aa3aw5z8.fsf@thomas.inf.ethz.ch>
+	<CAKTdtZkGP3KbMGf88yW7zcCjemUyEy_4CVNkLD0SV=Lm7=Kveg@mail.gmail.com>
+	<CAKTdtZmYc=xz4zCPQiuSTUvdmbLRKXNWNL3N6_4Bj0gujYmRvw@mail.gmail.com>
+	<CACsJy8AYs5bzRnhRj_R33qTt-2gPh-rJaO0=1iTva9n14wHB4w@mail.gmail.com>
+	<CAKTdtZk4FJD9qXEybpN01+S=5fOm=4AbOp8trFr5c6Uxbfykkg@mail.gmail.com>
+	<CACsJy8CU_q+3ROO9z5nHe8NZDjTD4mvnEUP7C0+T3u3bRD11rQ@mail.gmail.com>
+	<CAKTdtZmLOzAgG0uCDcVr+O41XPX-XnoVZjsZWPN-BLjq2oG-7A@mail.gmail.com>
+	<CACsJy8C=4WaN4MZrZMaD3FqZrF2jCP5sm0F0SpDvzQnYfka9Ew@mail.gmail.com>
+	<CAKTdtZkpjVaBSkcieojKj+V7WztT3UDzjGfXyghY=S8mq+X9zw@mail.gmail.com>
+	<CACsJy8D85thmK_5jLC7MxJtsitLr=zphKiw2miwPu7Exf7ty=Q@mail.gmail.com>
+	<CAKTdtZkx+7iU5T4oBNDEx-A5cgZCLU9ocdXmC9jRbD39J1zb3Q@mail.gmail.com>
+	<87iphrjv23.fsf@thomas.inf.ethz.ch>
+	<CACsJy8AqQdWO4E2oYTMLbpYhxobH8iXE-jXPoj2BcEGtfh+T=Q@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Git ML <git@vger.kernel.org>
-To: James Pickens <jepicken@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 27 05:20:08 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 27 05:20:18 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SCMx1-0003eI-RW
-	for gcvg-git-2@plane.gmane.org; Tue, 27 Mar 2012 05:20:04 +0200
+	id 1SCMxC-0003js-Lx
+	for gcvg-git-2@plane.gmane.org; Tue, 27 Mar 2012 05:20:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757131Ab2C0DT6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Mar 2012 23:19:58 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:60359
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756816Ab2C0DT6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Mar 2012 23:19:58 -0400
-Received: (qmail 28104 invoked by uid 107); 27 Mar 2012 03:20:16 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 26 Mar 2012 23:20:16 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 26 Mar 2012 23:19:53 -0400
-Content-Disposition: inline
-In-Reply-To: <CAJMEqRBmuBJuUmeoAU-_xf=s10ybD9pXhUJT+fn8aHNE2WJz6A@mail.gmail.com>
+	id S1757493Ab2C0DUK convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 26 Mar 2012 23:20:10 -0400
+Received: from mail-vb0-f46.google.com ([209.85.212.46]:56340 "EHLO
+	mail-vb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757395Ab2C0DUI convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 26 Mar 2012 23:20:08 -0400
+Received: by vbbff1 with SMTP id ff1so3077528vbb.19
+        for <git@vger.kernel.org>; Mon, 26 Mar 2012 20:20:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=6odp6zmJo3VNUqQiLrYxmqPowWUEqV4M/gw4aVUBojE=;
+        b=rvo8krpctLjkiJ1I0ZJS4kqLQEymhOBYoNQIOVEsGLwHnQAc7VZr7MkuC2nl7TaK2z
+         3GzT5c6U1Yxz7ZScFKwz6Q0NVpbRJplR8+FWdkf8hPxSzgCaRJIv7iNNIgozCV59ksvm
+         0T3v4kl8qBpkMCFXUXny5DPvt0R1/z2g7HmJqRD/VUcZMnJeyAUtF7kKmmDyH8iMGDTl
+         dHiIcCEBzVKxyUiJnJccxbaS61Lh7kODDgHU/8LN23fLSNRR3HPqzmkjuSVMhc9M8B0Y
+         oUew11gvJDaCXufkBmNS+URVZ5tqsHBbNfhH2/uYYy0osIN7y+cZ1GDhqC0+rGR6ch6A
+         YxMQ==
+Received: by 10.220.226.3 with SMTP id iu3mr11242200vcb.50.1332818407948; Mon,
+ 26 Mar 2012 20:20:07 -0700 (PDT)
+Received: by 10.52.182.233 with HTTP; Mon, 26 Mar 2012 20:20:07 -0700 (PDT)
+In-Reply-To: <CACsJy8AqQdWO4E2oYTMLbpYhxobH8iXE-jXPoj2BcEGtfh+T=Q@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193997>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193998>
 
-On Mon, Mar 26, 2012 at 04:48:29PM -0700, James Pickens wrote:
+Hi Nguyen,
 
-> I'm not sure if this should be considered a bug or not, but I've noticed that
-> when my $PATH contains an inaccessible directory, Git fails to execute aliases.
-> For example:
-> 
-> git config alias.l log
-> git l
-> # works fine
-> PATH=boguspath:$PATH
-> mkdir boguspath
-> chmod 000 boguspath
-> git l
-> # fatal: cannot exec 'git-l': Permission denied
+Thanks for the idea. just a few questions
 
-This seems to come up about once a year. The short of it is that execve
-will return EACCESS whether the file exists is not actually executable
-by you, or if you have an inaccessible element in your PATH. execvp will
-continue the search if it sees EACCESS, but will return EACCESS if it
-finds nothing.  So git just sees the EACCESS and doesn't know if you
-have bogus entries in your PATH or if there is a permissions problem
-with your executable files.
+On Tue, Mar 27, 2012 at 3:19 AM, Nguyen Thai Ngoc Duy <pclouds@gmail.co=
+m> wrote:
+> On Mon, Mar 26, 2012 at 9:28 PM, Thomas Rast <trast@student.ethz.ch> =
+wrote:
+>> Doesn't that venture into database land?
+>
+> How about this (a bit like memory management). Maybe it's simpler tha=
+n
+> a database and fits us better.
+>
+> The header consists of crc32 and three uint32_t, one points to the
+> root tree, one the first extension block, the last one the free list
+> at the end of the file. The rest of the file contains sizable blocks.
+> There can be free space between them. Free spaces (offset and size)
+> are recorded at the end of the file, pointed in header. The header's
+> crc32 covers the header and free list.
 
-For something like a shell, it's not that big a deal; either way, you
-couldn't execute the command in question. For git, it matters more
-because we first try to exec an external command, and then fall back to
-an alias (because externals take precedence over aliases).
+How do you record free spaces at the end of file? Are you gonna have a
+fixed size for the index and reserve space for free spaces offsets.
 
-So basically our options are:
+>
+> When we need a new block, we look up in free list. If we cannot find =
+a
+> suitable space, we append to the end of the file (moving free list
+> further to keep it always the end of the file). Removing a block mean=
+s
+> marking it in free list. We only truncate if there is free space at
+> the end. Operations that we know will scratch the whole index are our
+> opportunity to rewrite the index and make it compact again. No random
+> garbage collection (iow disk is cheap).
+>
 
-  1. Start treating EACCESS silently as ENOENT. The downside is that we
-     fail to report the proper error when the file really does have
-     permissions problems (we would say "command not found", but that is
-     misleading).
+I agree with you. Maybe we just ignore free spaces in the index and
+let a background thread to compact it.
 
-  2. Implement our own execvp, differentiating between "path not
-     available for looking in" and "we found the command, but there was
-     a permissions problem". I think somebody was working on this a few
-     months ago (search for "add exeecvp failure diagnostics") but it
-     seems to have fizzled.
+> A block starts with a signature (a tree block, or an extension...). A
+> tree block consists of:
+>
+> =A0- uint32_t tree object's size
+> =A0- sha-1 of tree object
+> =A0- crc32 of the rest of the block except tree object
+> =A0- maybe reference counter of a block can be refered by many blocks=
+??
+> =A0- tree object (i.e. something that tree-walk.c can parse)
 
-  3. If we get an EACCESS, remember it, try to do the alias lookup, and
-     then if that fails, report the "Permission denied" error (not
-     "command not found"). That is following the spirit of what execvp
-     does (it will find later entries in the PATH if they are there, but
-     otherwise will remember the EACCESS error).
+Do you mean each block contains a tree and all its blobs? So the tree
+object here, effectively a dir, also contains files in the dir ? In
+this way, some blocks can be very big.
 
->From what I can tell, dash uses stock execvp, and ends up closest to
-(3). Bash seems to have implemented their own path lookup, as it will
-distinguish between the two cases as in (2):
+> =A0- other index attributes, stored separately in the same order as i=
+n
+> tree object above, uint32_t block offset of subdirectories.
 
-  $ mkdir /tmp/foo
-  $ chmod 0 /tmp/foo
-  $ PATH=/tmp/foo:$PATH
-  $ dash -c does-not-exist
-  dash: 1: does-not-exist: Permission denied
-  $ bash -c does-not-exist
-  bash: does-not-exist: command not found
+There can be many sub dirs some times. But maybe not a prob.
 
-  $ chmod 755 /tmp/foo
-  $ >/tmp/foo/does-not-exist
-  $ chmod 0 /tmp/foo/does-not-exist
-  $ dash -c does-not-exist
-  dash: 1: does-not-exist: Permission denied
-  $ bash -c does-not-exist
-  bash: /tmp/foo/does-not-exist: Permission denied
+As tree object and =A0offset of subdirectories are variables, how do yo=
+u
+make a block resizable?
 
-I think the general feeling last time this came up was "why not just
-remove the cruft from your PATH?" But I would personally be OK with
-option (3) above, and it is probably not that hard to implement.
+>
+> An extension block basically consists of what we have now in an
+> extension plus uint32_t offset to the next extension block, so we can
+> keep track of all extensions. crc32 is used for extension blocks.
+>
+> This way we only need to verify checksum of the header (and free list=
+)
+> and blocks we visit. We don't need cache-tree extension because it's
+> part of the format. There will be headache with unpack-trees.c becaus=
+e
+> of entry order change. But in the end we would use the same order tre=
+e
+> objects are using now, much simpler for us.
+> --
+> Duy
 
--Peff
+Cheers,
+Elton
