@@ -1,76 +1,98 @@
-From: "W. Trevor King" <wking@drexel.edu>
-Subject: [PATCH v7 1/3] gitweb: add `status` headers to git_feed() responses.
-Date: Wed, 28 Mar 2012 13:44:16 -0400
-Message-ID: <4958e06536924de10105bb453d88e8f4c28bb8c1.1332956550.git.wking@drexel.edu>
-References: <20120328164513.GA4389@odin.tremily.us>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Jakub Narebski <jnareb@gmail.com>,
-	"W. Trevor King" <wking@drexel.edu>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 28 20:44:41 2012
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 9/9 v8] difftool: print list of valid tools with
+ '--tool-help'
+Date: Wed, 28 Mar 2012 11:58:01 -0700
+Message-ID: <7vvclov9hi.fsf@alter.siamese.dyndns.org>
+References: <1332959684-2231-1-git-send-email-tim.henigan@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, davvid@gmail.com
+To: Tim Henigan <tim.henigan@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 28 20:58:13 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SCxrG-0004ey-84
-	for gcvg-git-2@plane.gmane.org; Wed, 28 Mar 2012 20:44:34 +0200
+	id 1SCy4R-00070U-2S
+	for gcvg-git-2@plane.gmane.org; Wed, 28 Mar 2012 20:58:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932587Ab2C1So3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Mar 2012 14:44:29 -0400
-Received: from vms173019pub.verizon.net ([206.46.173.19]:43363 "EHLO
-	vms173019pub.verizon.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932358Ab2C1So3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Mar 2012 14:44:29 -0400
-X-Greylist: delayed 3609 seconds by postgrey-1.27 at vger.kernel.org; Wed, 28 Mar 2012 14:44:29 EDT
-Received: from odin.tremily.us ([unknown] [72.68.98.116])
- by vms173019.mailsrvcs.net
- (Sun Java(tm) System Messaging Server 7u2-7.02 32bit (built Apr 16 2009))
- with ESMTPA id <0M1L0029CVXPZ190@vms173019.mailsrvcs.net> for
- git@vger.kernel.org; Wed, 28 Mar 2012 12:44:14 -0500 (CDT)
-Received: from mjolnir (mjolnir.tremily.us [192.168.0.6])
-	by odin.tremily.us (Postfix) with ESMTPS id 1C35843B265; Wed,
- 28 Mar 2012 13:44:12 -0400 (EDT)
-Received: by mjolnir (sSMTP sendmail emulation); Wed, 28 Mar 2012 13:44:28 -0400
-X-Mailer: git-send-email 1.7.3.4
-In-reply-to: <20120328164513.GA4389@odin.tremily.us>
-In-reply-to: <cover.1332956550.git.wking@drexel.edu>
-References: <cover.1332956550.git.wking@drexel.edu>
+	id S1754199Ab2C1S6F (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Mar 2012 14:58:05 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:57732 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752294Ab2C1S6E (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Mar 2012 14:58:04 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8A077703C;
+	Wed, 28 Mar 2012 14:58:03 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=/e0wqrLdX7R/MmoGy+7V3eVPd5g=; b=IxeNcz
+	ScjLgTlNYFS3/Q06egGhmRub6+R5005REQBn9XZ56xJ2bhuVDYBm8P6kSP0wVNwk
+	GwL81TuawnFgW6bZhbYM6Fl5wAhyMHPGjtsnLJPOA76JAoTiyHH6vK4FQjlSiGcu
+	YQ5bG7pjo3p55seN3pbRq/XU7hWYH96kiUuzs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=ao4R1TKeO1HdGcYqk0rbUDxxVpzcwvtL
+	UzCoawC9i19ds74Qm96VjaWpI7hsZhKaYnWoeWqXxY6ph2UclTJS8qsJDpKBN0TP
+	6KWiny8/VfgN6Vzoe0oXftsClYfbUUrAsqgDvo7Z/AfCo7cu8Ker1e1zBZDzEz4/
+	Ids1uZwPXso=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7A86F703B;
+	Wed, 28 Mar 2012 14:58:03 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D37647039; Wed, 28 Mar 2012
+ 14:58:02 -0400 (EDT)
+In-Reply-To: <1332959684-2231-1-git-send-email-tim.henigan@gmail.com> (Tim
+ Henigan's message of "Wed, 28 Mar 2012 14:34:44 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: F1F29860-7907-11E1-B1A1-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194162>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194163>
 
-The git_feed() method was not setting a `Status` header unless it was
-responding to an If-Modified-Since request with `304 Not Modified`.
-Now, when it is serving successful responses, it sets status to `200
-OK`.
+Tim Henigan <tim.henigan@gmail.com> writes:
 
-Signed-off-by: W Trevor King <wking@drexel.edu>
----
- gitweb/gitweb.perl |    6 ++++--
- 1 files changed, 4 insertions(+), 2 deletions(-)
+> Changes in v8:
+>   - Replaced 'glob' with 'File::Find'. Glob will fail if file paths include
+>     spaces.  Using File::Find overcomes that limitation.
 
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index a8b5fad..041da17 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -7841,11 +7841,13 @@ sub git_feed {
- 		print $cgi->header(
- 			-type => $content_type,
- 			-charset => 'utf-8',
--			-last_modified => $latest_date{'rfc2822'});
-+			-last_modified => $latest_date{'rfc2822'},
-+			-status => '200 OK');
- 	} else {
- 		print $cgi->header(
- 			-type => $content_type,
--			-charset => 'utf-8');
-+			-charset => 'utf-8',
-+			-status => '200 OK');
- 	}
- 
- 	# Optimization: skip generating the body if client asks only
--- 
-1.7.3.4
+OK, but doesn't File::Find recurse into its subdirectories?  If you create
+a 'foo' directory there and drop a 'bar' script in it, is the rest of the
+code prepared to give you "git difftool -t foo/bar"?
+
+>   - Added 'TOOL_MODE=DIFF' prior to calling 'git-mergetool--lib.sh'. This
+>     insures that the shell script executes as designed.
+>   - difftool now calls 'can_diff' from 'git-mergetool--lib.sh' to insure that
+>     only tools that are capable of diffing are shown as valid options. For
+>     example, 'tortoisemerge' cannot be used as a diff viewer.
+
+Good that you caught these brown-paper-bag bugs ;-) It feels a bit awkward
+that nobody pointed these out, even though the series has been queued in
+'pu' since its early iterations.
+
+> diff --git a/git-difftool.perl b/git-difftool.perl
+> index 0fa131c..15fd572 100755
+> --- a/git-difftool.perl
+> +++ b/git-difftool.perl
+> @@ -38,6 +39,40 @@ USAGE
+>  	exit($exitcode);
+>  }
+>  
+> +sub print_tool_help
+> +{
+> +	my ($cmd, @found, @notfound, @tools);
+> +	my $gitpath = Git::exec_path();
+> +
+> +	find(sub { push(@tools, $_) unless (-d $_) }, "$gitpath/mergetools");
+> +
+> +	for (@tools) {
+> +		my $tool = $_;
+> +		next if ($tool eq "defaults");
+
+Now you use File::Find::find(), you probably should do this kind of
+trivial filtering inside the callback, no?
