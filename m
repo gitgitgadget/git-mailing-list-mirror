@@ -1,66 +1,61 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: git://github.com/some/thing.git/?
-Date: Wed, 28 Mar 2012 00:28:26 -0400
-Message-ID: <20120328042826.GC30251@sigill.intra.peff.net>
-References: <7vpqbyjbbx.fsf@alter.siamese.dyndns.org>
- <20120327163339.GA5941@sigill.intra.peff.net>
- <7vd37xj3zh.fsf@alter.siamese.dyndns.org>
- <20120327183833.GB8460@sigill.intra.peff.net>
- <20120327184754.GA27070@burratino>
+Subject: Re: [PATCH 2/2] git: continue alias lookup on EACCES errors
+Date: Wed, 28 Mar 2012 00:30:58 -0400
+Message-ID: <20120328043058.GD30251@sigill.intra.peff.net>
+References: <20120327175933.GA1716@sigill.intra.peff.net>
+ <20120327180503.GB4659@sigill.intra.peff.net>
+ <7v4nt9j1m3.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Scott Chacon <schacon@gmail.com>, git@vger.kernel.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 28 06:28:40 2012
+Cc: James Pickens <jepicken@gmail.com>, Git ML <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Mar 28 06:31:08 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SCkUt-0004Q7-98
-	for gcvg-git-2@plane.gmane.org; Wed, 28 Mar 2012 06:28:35 +0200
+	id 1SCkXL-00066w-FY
+	for gcvg-git-2@plane.gmane.org; Wed, 28 Mar 2012 06:31:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751103Ab2C1E23 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Mar 2012 00:28:29 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:34874
+	id S1751079Ab2C1EbC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Mar 2012 00:31:02 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:34886
 	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750804Ab2C1E23 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Mar 2012 00:28:29 -0400
-Received: (qmail 10958 invoked by uid 107); 28 Mar 2012 04:28:47 -0000
+	id S1750804Ab2C1EbB (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Mar 2012 00:31:01 -0400
+Received: (qmail 11009 invoked by uid 107); 28 Mar 2012 04:31:19 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 28 Mar 2012 00:28:47 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 28 Mar 2012 00:28:26 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 28 Mar 2012 00:31:19 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 28 Mar 2012 00:30:58 -0400
 Content-Disposition: inline
-In-Reply-To: <20120327184754.GA27070@burratino>
+In-Reply-To: <7v4nt9j1m3.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194104>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194105>
 
-On Tue, Mar 27, 2012 at 01:47:54PM -0500, Jonathan Nieder wrote:
+On Tue, Mar 27, 2012 at 12:16:36PM -0700, Junio C Hamano wrote:
 
-> > For some definition of "we"; AFAICT, github has never allowed this, and
-> > this is the first complaint
+> Jeff King <peff@peff.net> writes:
 > 
-> I complained and got a dismissive response about two years ago. ;-)  I
-> am not sure if bugs from back then are tracked any more.  The URL in
-> my records is [1].
-
-I wasn't able to find the original discussion, as we've migrated through
-a few different support systems in the last few years. Probably it is in
-there somewhere, but I don't usually do support stuff, and I didn't
-think it was worth bothering the regular support people with it.
-
-> > However, it turned out to be a one-line patch. I've pushed it out for
-> > review by other GitHubbers.
+> > If git receives an EACCES error while trying to execute an
+> > external command, we currently give up and report the error.
+> > However, the EACCES may be caused by an inaccessible
+> > directory in the user's PATH.
 > 
-> Hoorah!  Thanks for taking care of it.
+> Regardless of EACCES/ENOENT change we discussed, the observable behaviour
+> should be testable.  Something like this?
 
-FYI, this is now deployed, and the various front-end machines are
-getting updated slowly over the next few hours (until then, it's
-non-deterministic whether it will work for you or not :) ).
+Yes, though I held back on writing tests, because I don't think we've
+quite decided what the behavior _should_ be. Should we be
+differentiating "chmod -x /bin/ls" from "chmod -x /bin"? Should we be
+continuing alias lookup on EACCES? Should we print edit-distance
+suggestions on EACCES?
+
+I think the four cases from my previous email would be reasonable things
+to test, but I wasn't sure what the expected outcomes should look like.
 
 -Peff
