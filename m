@@ -1,83 +1,80 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] add -p: skip conflicted paths
-Date: Wed, 28 Mar 2012 12:28:10 -0700
-Message-ID: <7viphov839.fsf@alter.siamese.dyndns.org>
-References: <1332962282-4040-1-git-send-email-kusmabite@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 2/2] git: continue alias lookup on EACCES errors
+Date: Wed, 28 Mar 2012 15:38:11 -0400
+Message-ID: <20120328193811.GA29019@sigill.intra.peff.net>
+References: <20120327175933.GA1716@sigill.intra.peff.net>
+ <20120327180503.GB4659@sigill.intra.peff.net>
+ <7v4nt9j1m3.fsf@alter.siamese.dyndns.org>
+ <20120328043058.GD30251@sigill.intra.peff.net>
+ <7vaa30wrjx.fsf@alter.siamese.dyndns.org>
+ <20120328174841.GA27876@sigill.intra.peff.net>
+ <20120328180404.GA9052@burratino>
+ <7v1uocwpap.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, matthieu.moy@grenoble-inp.fr,
-	hellmuth@ira.uka.de
-To: Erik Faye-Lund <kusmabite@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 28 21:28:23 2012
+Content-Type: text/plain; charset=utf-8
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	James Pickens <jepicken@gmail.com>,
+	Git ML <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Mar 28 21:38:20 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SCyXf-0007dE-3G
-	for gcvg-git-2@plane.gmane.org; Wed, 28 Mar 2012 21:28:23 +0200
+	id 1SCyhH-0007NQ-88
+	for gcvg-git-2@plane.gmane.org; Wed, 28 Mar 2012 21:38:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758044Ab2C1T2P (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Mar 2012 15:28:15 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:37233 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757996Ab2C1T2N (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Mar 2012 15:28:13 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8C86576D9;
-	Wed, 28 Mar 2012 15:28:12 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=PVra5+9wYElbrMLEIVo49Cm85+A=; b=rf26An
-	QIJIT4BeHHQPEKdmuxUIZA9o3ED5TVYKY25yCRCbo2s6x0NU9r8U93n4uUmNnjNU
-	3teCnD3Rcd+xPsmV39CB1QO2UM4T5zD8fIIlh0lnZO0z5YlKhclPLwa2X3Vo9dzM
-	cRdb83V8kpK86l6X98euvZcqRwPKW2nPeB3d4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=cXfx3nir3n5aDFdmi2/dpr/UuX/qv390
-	D3HvlaVP9crk1AUoLA3DalOJES9mBLCTaeiYffo1NF3BCJqbjiRdJPxyNUg2zhk/
-	JB4LHELONEsgY0CrJdv4qMJxxKR0lv7nNtegGpoX7cm1FKDaHarCbSo2gk0iyM/K
-	zvAos3jJIj8=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 83B4A76D8;
-	Wed, 28 Mar 2012 15:28:12 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 14CCA76D7; Wed, 28 Mar 2012
- 15:28:11 -0400 (EDT)
-In-Reply-To: <1332962282-4040-1-git-send-email-kusmabite@gmail.com> (Erik
- Faye-Lund's message of "Wed, 28 Mar 2012 21:18:02 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 2853A9F4-790C-11E1-BFC7-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1758119Ab2C1TiO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Mar 2012 15:38:14 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:36267
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758027Ab2C1TiN (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Mar 2012 15:38:13 -0400
+Received: (qmail 20530 invoked by uid 107); 28 Mar 2012 19:38:32 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 28 Mar 2012 15:38:32 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 28 Mar 2012 15:38:11 -0400
+Content-Disposition: inline
+In-Reply-To: <7v1uocwpap.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194169>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194170>
 
-Erik Faye-Lund <kusmabite@gmail.com> writes:
+On Wed, Mar 28, 2012 at 11:31:10AM -0700, Junio C Hamano wrote:
 
-> diff --git a/git-add--interactive.perl b/git-add--interactive.perl
-> index 8f0839d..a52507f 100755
-> --- a/git-add--interactive.perl
-> +++ b/git-add--interactive.perl
-> @@ -1259,6 +1259,13 @@ sub patch_update_file {
->  	my $quit = 0;
->  	my ($ix, $num);
->  	my $path = shift;
-> +
-> +	# skip conflicted paths
-> +	if (run_cmd_pipe(qw(git ls-files -u --), $path)) {
-> +		print colored $error_color, "Warning: $path is in conflicted state, skipping.\n";
-> +		return 0;
-> +	}
-> +
+> > If I understood Junio correctly, then checking for ENOENT and EACCES
+> > should be enough.
+> >
+> > Example: when I try
+> >
+> >  :; mkdir $HOME/cannotread
+> >  :; chmod -x $HOME/cannotread
+> >  :; echo nonsense >$HOME/bin/cat
+> >  :; chmod -x $HOME/bin/cat
+> >  :; PATH=$HOME/cannotread:$HOME/bin/cat:/usr/local/bin:/usr/bin:/bin
+> >  :; cat /etc/fstab
+> >
+> > the shell uses /bin/cat without complaint.
+> 
+> Yeah, but I think that the case Peff is worried about is:
+> 
+>         $ >~/bin/nosuch
+>         $ nosuch
+>         nosuch: Permission denied
 
-Thanks.
+Right. My reading of your suggestion was that we would differentiate
+those two cases, which one cannot do simply from the return value and
+errno after execvp. The former case (inaccessible directory) is common
+and probably harmless. The latter (non-executable file) is rare and
+probably an actual error we should point out.
 
-I have to wonder if the filtering should go to much higher level in the
-callchain.
+I'd also be OK with saying that the latter is too rare to worry about,
+and simply accept it as collateral damage (or we could even flag it with
+test_expect_failure and leave it for somebody else to work on later if
+they care).
 
-Perhaps teach list_modified(), which currently takes 'file-only' and
-'index-only', to also take an option to omit (and warn if it is
-appropriate) unmerged paths?
+-Peff
