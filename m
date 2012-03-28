@@ -1,142 +1,94 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] git: continue alias lookup on EACCES errors
-Date: Wed, 28 Mar 2012 13:43:39 -0700
-Message-ID: <7vzkb0tq10.fsf@alter.siamese.dyndns.org>
-References: <20120327180503.GB4659@sigill.intra.peff.net>
- <7v4nt9j1m3.fsf@alter.siamese.dyndns.org>
- <20120328043058.GD30251@sigill.intra.peff.net>
- <7vaa30wrjx.fsf@alter.siamese.dyndns.org>
- <20120328174841.GA27876@sigill.intra.peff.net>
- <20120328180404.GA9052@burratino> <7v1uocwpap.fsf@alter.siamese.dyndns.org>
- <20120328184014.GA8982@burratino>
- <20120328193909.GB29019@sigill.intra.peff.net>
- <20120328194516.GD8982@burratino>
- <20120328201851.GA29315@sigill.intra.peff.net>
+Subject: Re: git add -p and unresolved conflicts
+Date: Wed, 28 Mar 2012 13:50:44 -0700
+Message-ID: <7vvclotpp7.fsf@alter.siamese.dyndns.org>
+References: <CABPQNSYVXMxS3kugu1j=62ArJ_1saYYfMjJdZvqhjgPFGN=Eqw@mail.gmail.com>
+ <7vbongyd67.fsf@alter.siamese.dyndns.org> <vpqvclozr7e.fsf@bauges.imag.fr>
+ <4F73632E.1060408@ira.uka.de> <vpqk424zfb1.fsf@bauges.imag.fr>
+ <4F737027.5020503@ira.uka.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	James Pickens <jepicken@gmail.com>,
-	Git ML <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Mar 28 22:43:52 2012
+Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Junio C Hamano <gitster@pobox.com>, kusmabite@gmail.com,
+	Git Mailing List <git@vger.kernel.org>
+To: Holger Hellmuth <hellmuth@ira.uka.de>
+X-From: git-owner@vger.kernel.org Wed Mar 28 22:50:55 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SCzie-0000rK-0I
-	for gcvg-git-2@plane.gmane.org; Wed, 28 Mar 2012 22:43:48 +0200
+	id 1SCzpV-0006ht-EL
+	for gcvg-git-2@plane.gmane.org; Wed, 28 Mar 2012 22:50:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932746Ab2C1Unn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Mar 2012 16:43:43 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35180 "EHLO
+	id S932501Ab2C1Uur (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Mar 2012 16:50:47 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:37761 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758014Ab2C1Unm (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Mar 2012 16:43:42 -0400
+	id S1758014Ab2C1Uuq (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Mar 2012 16:50:46 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E4D6C65EF;
-	Wed, 28 Mar 2012 16:43:41 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1ACA96770;
+	Wed, 28 Mar 2012 16:50:46 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Tw5GCOUkKYutEzlrOq927YXs3AM=; b=pFQuoy
-	K2PqY/X/AU0cx0wlnvNS3FXRAcuXxkoWzqBH21hEk/vwWOm9+ahfRQ5YZ5mFbTXL
-	pamSysy25Ev8V4YWZqMhCyNkupJwMytk8y/kGs9NrOie1VPvxaziD7l5TRRZ/Djn
-	ZbHNhRfZxRdMnSs1IPU5+WlPHrKAaRrK0m+VQ=
+	:content-type; s=sasl; bh=Rd63x9ij5WOhF9jOZ7qEEDc+i5Q=; b=pgI1uH
+	yScuRPpVOJk916U6TNaWbwtYp//M+cH9TOpB210wKVd3P1CmHsgxMcw4juvb1JFd
+	EFnaD9+dI1G4Zcrv6LHy1DmnfngfBDes/2vVV6LjZr2b5kQZadlTl+r7jadchMER
+	u+HM3WJjqsLoIWqyeLqL+NNNFVJBocWYw5dfk=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=QT6fIqQJCniR8Y2EEAzlbROoezVpygFF
-	kbq4S2i50SA1quaNDyFp6EWLCm3kWPUfYbDw3qJ7w8uogyUhhee6FwnLDCeey9wG
-	HMA5KCMKgdfa5EyJYSdy8KTGZ7uAnZWTjmlQjKP84B3D8IQ3fBtU1IFrRhhApTsb
-	U1DOHpGIe6o=
+	:content-type; q=dns; s=sasl; b=G69iaehecBsse5+H9PLPDVhvDqiHGiit
+	0aV8WUkYFvC/bpEFhRD8RWFiDCpGXVLSLqwNwd3zGhDAcQ3AFObxIwgAbmoFkugF
+	m5lgpeJvV5Igpu2uHbYklHMGxxmONFEzSr+YgmFYCIB0w/PnjF3uqiuuTEKp7nI9
+	4yEHh2KhfuM=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DC32065EE;
-	Wed, 28 Mar 2012 16:43:41 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1121E676F;
+	Wed, 28 Mar 2012 16:50:46 -0400 (EDT)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 595F065ED; Wed, 28 Mar 2012
- 16:43:41 -0400 (EDT)
-In-Reply-To: <20120328201851.GA29315@sigill.intra.peff.net> (Jeff King's
- message of "Wed, 28 Mar 2012 16:18:51 -0400")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 927B9676E; Wed, 28 Mar 2012
+ 16:50:45 -0400 (EDT)
+In-Reply-To: <4F737027.5020503@ira.uka.de> (Holger Hellmuth's message of
+ "Wed, 28 Mar 2012 22:10:15 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: B3FD6CD8-7916-11E1-AE77-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: B0DCACB6-7917-11E1-AF51-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194191>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194192>
 
-Jeff King <peff@peff.net> writes:
+Holger Hellmuth <hellmuth@ira.uka.de> writes:
 
-> +static int file_in_path_is_nonexecutable(const char *file)
-> +{
-> +	const char *p = getenv("PATH");
-> +
-> +	if (!p)
-> +		return 0;
-> +
-> +	while (1) {
-> +		const char *end = strchrnul(p, ':');
-> +		const char *path;
-> +		struct stat st;
-> +
-> +		path = mkpath("%.*s/%s", (int)(end - p), p, file);
+> But the conflicted chunks are of the form "<<<< our ... ||||||||||
+> theirs >>>>>>" in your work tree. So there are two cases:
+>
+> a) You have removed the markers thereby removing the conflict -> this
+> means the chunk will not be offered to you as a conflicting chunk
+>
+> b) You haven't removed the markers. Then there is a choice between
+> base, our and their version.
+> If you had edited one of the versions between the conflict markers in
+> your working tree without removing the markers (which wouldn't be a
+> sensible thing) then it depends on whether the chunk in the working
+> tree or the versions in the index are used as a basis for the
+> choosing, but I suspect using the working tree version is easier to
+> do.
 
-Given PATH=":/usr/bin:/bin" and file "frotz" (please call it "cmd" or
-something, by the way), end points at the first colon and path becomes
-"/frotz".  Oops?
+I think Matthieu is not thinking about the "resolve conflicted merge (or
+rebase, am) and make a single commit" use case, for which your "pick one
+of the sides" makes sense.  His is more about "I like some change in that
+unrelated commit---while I have no intention to replay that change as a
+whole, I want to use "cherry-pick --no-commit" and pick only the bits out
+of the change that are useful for what I am doing" use case.
 
-> +		if (!stat(path, &st) && access(path, X_OK) < 0)
-> +			return 1;
-> +
-> +		if (!*end)
-> +			break;
-> +
-> +		p = end + 1;
-> +	}
-> +
-> +	return 0;
-> +}
-> +
-> +int sane_execvp(const char *file, char * const argv[])
-> +{
-> +	int ret = execvp(file, argv);
-> +	if (ret < 0 && errno == EACCES && !file_in_path_is_nonexecutable(file))
-> +		errno = ENOENT;
-> +	return ret;
+In such a context, after resolving conflicts in the working tree, "add -p"
+would be a good tool to pick hunks in the diff between the HEAD and the
+working tree.
 
-Double negation makes my head hurt, but unfortunately, we cannot rename it
-to "executable_exists_on_path()" and negate its return value.
-
-Anyway, the logic is to set errno to ENOENT when
-
- - We tried to exec, and got EACCES; and
- - There is a file on the PATH that lacks executable bit.
-
-In such a case, the error from execvp() is not about the file it tried to
-execute lacked executable bit, but there was nothing that match the name,
-but it couldn't be certain because some directories were not readable.
-
-OK.  I think I can follow that logic.
-
-If there are more than one entry on PATH, and a system call made during
-first round of the loop fails but a later round finds a non-executable
-file, i.e.
-
-	$ PATH=/nosuch:/home/peff/bin; export PATH
-        $ >/home/peff/bin/frotz; chmod -x /home/peff/bin/frotz
-        git frotz
-
-we would get EACCES from execvp(), the first round runs stat("/nosuch/frotz")
-and sets errno to ENOTDIR, and the second round runs stat() and access()
-on "/home/peff/bin/frotz" and returns 1 to say "Yeah, there is a plain
-file frotz that cannot be executed".
-
-And sane_execvp() will return ENOTDIR?
-
-So sane_execvp() would probably need to do a bit more (but not that much).
-
-	if (ret < 0 && errno == EACCES)
-		errno = file_in_path_is_nonexecutable(file) ? EACCES : ENOENT;
-	return ret;
-
-or something.
+I tend to think that use case, while valid, may be a minority case and
+giving a version of "add -p" to make that mode too easy to use by mistake
+during a true conflict resolution is inviting trouble for newbies.  As I
+said, "reset $path" followed by regular "add -p $path" would be a usable
+workaround for Matthieu's workflow.
