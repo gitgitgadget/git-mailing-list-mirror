@@ -1,126 +1,94 @@
-From: Thomas Rast <trast@inf.ethz.ch>
-Subject: Clarifications on the "faster index format" project
-Date: Wed, 28 Mar 2012 02:36:49 +0200
-Message-ID: <878vilr272.fsf@thomas.inf.ethz.ch>
-Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Cc: <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-	Jan =?utf-8?Q?Kr=C3=BCger?= <jk@jk.gs>,
-	Tay Ray Chuan <rctay89@gmail.com>,
-	"Jakub Narebski" <jnareb@gmail.com>, Jeff King <peff@peff.net>,
-	Shawn Pearce <spearce@spearce.org>
-To: Thomas Gummerer <t.gummerer@gmail.com>,
-	elton sky <eltonsky9404@gmail.com>,
-	Calvin Deutschbein <deutschbeinc@gmail.com>,
-	Mauricio Galindo <up.mauricio.g@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 28 02:37:26 2012
+From: Ben Walton <bwalton@artsci.utoronto.ca>
+Subject: Re: [PATCH] Use SHELL_PATH to fork commands in run_command.c:prepare_shell_cmd
+Date: Tue, 27 Mar 2012 22:46:15 -0400
+Message-ID: <1332901381-sup-4406@pinkfloyd.chass.utoronto.ca>
+References: <20120326182427.GA10333@sigill.intra.peff.net> <1332816078-26829-1-git-send-email-bwalton@artsci.utoronto.ca> <20120327032917.GB17338@sigill.intra.peff.net>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Cc: Johannes Sixt <j.sixt@viscovery.net>,
+	jrnieder <jrnieder@gmail.com>,
+	gitster <gitster@pobox.com> (junio),
+	git <git@vger.kernel.org> (git)
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Mar 28 04:46:33 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SCgt5-0001Qs-Bc
-	for gcvg-git-2@plane.gmane.org; Wed, 28 Mar 2012 02:37:19 +0200
+	id 1SCiu2-0000HQ-E7
+	for gcvg-git-2@plane.gmane.org; Wed, 28 Mar 2012 04:46:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756456Ab2C1Agx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Mar 2012 20:36:53 -0400
-Received: from edge20.ethz.ch ([82.130.99.26]:52872 "EHLO edge20.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753679Ab2C1Agx (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Mar 2012 20:36:53 -0400
-Received: from CAS21.d.ethz.ch (172.31.51.111) by edge20.ethz.ch
- (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.2.283.3; Wed, 28 Mar
- 2012 02:36:50 +0200
-Received: from thomas.inf.ethz.ch.ethz.ch (188.155.176.28) by CAS21.d.ethz.ch
- (172.31.51.111) with Microsoft SMTP Server (TLS) id 14.1.355.2; Wed, 28 Mar
- 2012 02:36:49 +0200
-User-Agent: Notmuch/0.3.1-59-g676d251 (http://notmuchmail.org) Emacs/23.3.1 (x86_64-suse-linux-gnu)
-X-Originating-IP: [188.155.176.28]
+	id S1756963Ab2C1CqT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Mar 2012 22:46:19 -0400
+Received: from garcia.cquest.utoronto.ca ([192.82.128.9]:53200 "EHLO
+	garcia.cquest.utoronto.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755528Ab2C1CqS (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Mar 2012 22:46:18 -0400
+Received: from pinkfloyd.chass.utoronto.ca ([128.100.160.254]:34436 ident=93)
+	by garcia.cquest.utoronto.ca with esmtp (Exim 4.63)
+	(envelope-from <bwalton@cquest.utoronto.ca>)
+	id 1SCitr-0003tn-9T; Tue, 27 Mar 2012 22:46:15 -0400
+Received: from bwalton by pinkfloyd.chass.utoronto.ca with local (Exim 4.72)
+	(envelope-from <bwalton@cquest.utoronto.ca>)
+	id 1SCitr-0007tc-8F; Tue, 27 Mar 2012 22:46:15 -0400
+In-reply-to: <20120327032917.GB17338@sigill.intra.peff.net>
+User-Agent: Sup/git
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194101>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194102>
 
-Dear students,
+Excerpts from Jeff King's message of Mon Mar 26 23:29:17 -0400 2012:
 
-The proposal "Designing a faster index format" has attracted quite a bit
-more attention that we expected.  We would like to emphasize that it is
-not an easy project.
+Hi Jeff,
 
-I have myself only found out about most of the points I am listing here
-through interaction with students.  My apologies for this.  Take them as
-a (non-exhaustive!) list of concerns.  The more of them you can address
-in your proposal, the better.
+> > +run-command.o: EXTRA_CPPFLAGS = -DSHELL_PATH='"$(SHELL_PATH)"'
+> > +
+> 
+> This should be $(SHELL_PATH_SQ), no?
 
-Issues with the original project idea:
+Yes, you're right, it should be.
 
-- Further timings have shown that even on humongous indexes such as
-  Webkit's (roughly 25MB), git-add is still pretty fast.  It is a good
-  baseline for what index-changing commands need to do however.  Judge
-  from your own timings and state what case you want to optimize.
+> > +#ifndef SHELL_PATH
+> > +# define SHELL_PATH "sh"
+> > +#endif
+> 
+> Does this default ever kick in? The Makefile defaults SHELL_PATH to
+> /bin/sh, so we will always end up with at least that.
 
-- The notation is confusing.  Asymptotics noted in the proposal should
-  distinguish the variables "# index entries" (n), "# changed entries",
-  and depending on the application also "size of index file" (though
-  this is fairly tightly coupled with n) or other variables.
+Not when using the build system, but as Hannes mentioned, there is
+potential for this to be used outside of the default build system, so
+I think having the fallback is a good defensive option.  Should it
+maybe be set to /bin/sh though to be more consistent with system()?
 
-Some hardnesses that we expect:
+> The whole SHELL_PATH and SANE_TOOL_PATH mess is about helping people
+> on less-abled systems, and I do not mind bending the usual
+> conventions to make things more convenient on those systems (e.g.,
+> by not doing the PATH lookup of the shell name). But it would be
+> nice if that bending did not affect people on more mainstream
+> systems.
 
-- Without prior knowledge of the index, it is hard to see how a new
-  format must be designed to stay within the requirements.
+Given the rest of the discussion that happened, I think I understand
+that my patch is actually ok with the following caveats:
 
-- The index format is closely tied to a lot of core git's code.  The
-  main work of git-ls-files, git-status, git-read-tree, git-add,
-  git-diff etc. all directly accesses the index memory structure.  This
-  means that changing the in-memory structure is a lot of work.
+1. My commit message still needs work.
+2. Possibly change the default setting of the SHELL_PATH macro from
+   "sh" to "/bin/sh"
+3. Use the _SQ variant of SHELL_PATH.
 
-- Changing the in-memory structure also makes conversion between the old
-  and new format more difficult.
+(The tracking of changes for SHELL_PATH is considered too heavy for
+now when the other _PATH items aren't tracked the same way.  This
+might make a nice separate patch series though, using the idea from
+the kernel where individual commands are tracked.)
 
-- Writing out only the changed entries would save a lot of time.
-  However there are many code paths that change/add/remove index
-  entries, and they must all record what to write in some way.
+Did I miss anything else?
 
-- Cutting down the amount of verification going on is very tempting, but
-  needs careful design to keep the chances of a bit error propagating
-  all the way into the repository small.
-
-There are many tradeoffs to be made, which must be evaluated carefully:
-
-- If the current lock-rewrite-rename scheme remains in place, any change
-  only affects the in-core work done.  If the lock scheme is changed,
-  there are many different cases of corruption/partial writes that must
-  be handled.
-
-- There may be ways to reduce the data written (and thus checksummed) at
-  the cost of extra work.  Similarly, a more complex data structure may
-  or may not pay off depending on the extra space taken (or saved) and
-  extra bookkeeping done.
-
-- Some improvements would be possible by using techniques from database
-  libraries.  However, this either means an external dependency or a lot
-  of extra work.  It may also come with extra startup costs.
-
-- Using database libraries may be a deal-breaker for git's own
-  portability or the other readers (libgit2 and jgit, mainly).
-
-The format should cope with requirements that are not clearly specified
-at this time.  For example:
-
-- The existing code also assumes that iterating over an index is not a
-  problem.  For possible future work, the format should allow for
-  iterating over only a select part of the index (known, e.g., from an
-  inotify daemon or a pathspec) quickly.
-
-Finally I have a request not related to project hardness: please Cc the
-proposed mentors for discussions on the respective projects :-)
-
-Thanks for reading,
-
-Thomas
-
--- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+Thanks
+-Ben
+--
+Ben Walton
+Systems Programmer - CHASS
+University of Toronto
+C:416.407.5610 | W:416.978.4302
