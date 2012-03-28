@@ -1,143 +1,125 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 2/2] git: continue alias lookup on EACCES errors
-Date: Wed, 28 Mar 2012 18:07:31 -0400
-Message-ID: <20120328220731.GC10795@sigill.intra.peff.net>
-References: <20120328043058.GD30251@sigill.intra.peff.net>
- <7vaa30wrjx.fsf@alter.siamese.dyndns.org>
- <20120328174841.GA27876@sigill.intra.peff.net>
- <20120328180404.GA9052@burratino>
- <7v1uocwpap.fsf@alter.siamese.dyndns.org>
- <20120328184014.GA8982@burratino>
- <20120328193909.GB29019@sigill.intra.peff.net>
- <20120328194516.GD8982@burratino>
- <20120328201851.GA29315@sigill.intra.peff.net>
- <20120328215704.GB10795@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] add -p: skip conflicted paths
+Date: Wed, 28 Mar 2012 15:14:31 -0700
+Message-ID: <7v62dotltk.fsf@alter.siamese.dyndns.org>
+References: <7viphov839.fsf@alter.siamese.dyndns.org>
+ <1332966017-6100-1-git-send-email-kusmabite@gmail.com>
+ <7viphotng8.fsf@alter.siamese.dyndns.org>
+ <7vaa30tmk9.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	James Pickens <jepicken@gmail.com>,
-	Git ML <git@vger.kernel.org>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 29 00:07:39 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, matthieu.moy@grenoble-inp.fr,
+	hellmuth@ira.uka.de
+To: Erik Faye-Lund <kusmabite@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Mar 29 00:14:42 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SD11n-0007RA-AR
-	for gcvg-git-2@plane.gmane.org; Thu, 29 Mar 2012 00:07:39 +0200
+	id 1SD18a-0005pb-1U
+	for gcvg-git-2@plane.gmane.org; Thu, 29 Mar 2012 00:14:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758740Ab2C1WHe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Mar 2012 18:07:34 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:36453
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753679Ab2C1WHd (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Mar 2012 18:07:33 -0400
-Received: (qmail 22781 invoked by uid 107); 28 Mar 2012 22:07:52 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 28 Mar 2012 18:07:52 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 28 Mar 2012 18:07:31 -0400
-Content-Disposition: inline
-In-Reply-To: <20120328215704.GB10795@sigill.intra.peff.net>
+	id S1758752Ab2C1WOf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Mar 2012 18:14:35 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:43340 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758083Ab2C1WOe (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Mar 2012 18:14:34 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CCEA67901;
+	Wed, 28 Mar 2012 18:14:33 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Zx825Bpcn1bAmzpRVuxczm0tuTE=; b=gXLYcU
+	lkc2EvT558y++wyMFT497Y3Rauijb/lAwnPr3oeuAZctUsLlvvLQJGBAYCM2gyNC
+	7Ej5oxWFCIQwPMZnLAgJ2PLdxvF8j6lCdnGtlih5kvpg8lnxx2EbmwMY58G8U7rA
+	Zn6XRdMrDEQwvpLy3nIU9X9ZEpaXiSVNkHnOU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=ij0rbf3dchbiIDZvKowJgPkVX/mVlWrz
+	1KuDBJb3UVnwPzYO/Bj9q+ckfwxOD+eSXbjv6pIBeiV/R1nTX9wTKzBPYymY3IXN
+	aPPsF5blaCpkhl5EY6FWQ5LNCrxPWMC/RYJCeo0YhthX2XsTi3PMZejXXHZci89m
+	LYD3DQiktLs=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C04E87900;
+	Wed, 28 Mar 2012 18:14:33 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 23B3E78FF; Wed, 28 Mar 2012
+ 18:14:33 -0400 (EDT)
+In-Reply-To: <7vaa30tmk9.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Wed, 28 Mar 2012 14:58:30 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 6580A838-7923-11E1-879A-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194208>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194209>
 
-On Wed, Mar 28, 2012 at 05:57:04PM -0400, Jeff King wrote:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> +static int exists_in_PATH(const char *file)
-> +{
-> +	const char *p = getenv("PATH");
-> +	struct strbuf buf = STRBUF_INIT;
-> +
-> +	if (!p || !*p)
-> +		return 0;
+>> Totally untested, but something along this line...
+>
+> Well, probably along that line but not there.  I think the patch would be
+> a lot cleaner to keep the part I touched intact, and instead add an extra
+> "ls-files -u" that creates %unmerged hash in the way this patch does,
+> immediately before the last for() loop in the function.  And then the loop
+> can use %unmerged hash to filter the elements.
 
-One thing to note: real execvp, when it sees a NULL $PATH, will fill in
-some OS-dependent default path. My linux box has _PATH_DEFPATH, but I
-don't know how portable that is (I can't find anything useful in POSIX).
+That is, something like this.
 
-> No tests yet. I'll post some output on that in a minute.
+ git-add--interactive.perl |   23 ++++++++++++++++++++---
+ 1 file changed, 20 insertions(+), 3 deletions(-)
 
-So here is a quick test script to show the output for a couple different
-cases. Should this be a real test script? A lot of what is being tested
-is the actual stderr output in many cases, which we tend to try not to
-include in tests.
-
--- >8 --
-#!/bin/sh
-
-rm -rf bin .git
-
-# bin/broken is a PATH directory that cannot be searched
-# bin/ok can be searched, but has a broken entry
-mkdir bin bin/broken bin/ok
-chmod -x bin/broken
-
-# The "yes" command lets us know when things are working.
-cat >bin/ok/git-yes <<\EOF
-#!/bin/sh
-echo yes
-EOF
-chmod +x bin/ok/git-yes
-
-# and the "no" command is broken, and should be reported as EACCES
- >bin/ok/git-no
-
-git init -q
-git config alias.alias-yes yes
-git config alias.alias-no no
-
-PATH=$PWD/bin/broken:$PWD/bin/ok:$PATH
-
-set -x
-git does-not-exist
-git yes
-git no
-git alias-yes
-git alias-no
-
--- >8 --
-
-The output I get is:
-
-# stock git
-+ git does-not-exist
-fatal: cannot exec 'git-does-not-exist': Permission denied
-+ git yes
-yes
-+ git no
-fatal: cannot exec 'git-no': Permission denied
-+ git alias-yes
-fatal: cannot exec 'git-alias-yes': Permission denied
-+ git alias-no
-fatal: cannot exec 'git-alias-no': Permission denied
-
-# my earlier patches to do alias lookup after EACCES
-+ git does-not-exist
-Failed to run command 'does-not-exist': Permission denied
-+ git yes
-yes
-+ git no
-Failed to run command 'no': Permission denied
-+ git alias-yes
-yes
-+ git alias-no
-Expansion of alias 'alias-no' failed; 'no': Permission denied
-
-# this patch
-+ git does-not-exist
-git: 'does-not-exist' is not a git command. See 'git --help'.
-+ git yes
-yes
-+ git no
-fatal: cannot exec 'git-no': Permission denied
-+ git alias-yes
-yes
-+ git alias-no
-fatal: cannot exec 'git-no': Permission denied
-
--Peff
+diff --git a/git-add--interactive.perl b/git-add--interactive.perl
+index 8f0839d..ddb2e77 100755
+--- a/git-add--interactive.perl
++++ b/git-add--interactive.perl
+@@ -270,7 +270,7 @@ sub get_empty_tree {
+ # FILE_ADDDEL:	is it add/delete between index and file?
+ 
+ sub list_modified {
+-	my ($only) = @_;
++	my ($only, $filter_unmerged) = @_;
+ 	my (%data, @return);
+ 	my ($add, $del, $adddel, $file);
+ 	my @tracked = ();
+@@ -348,9 +348,26 @@ sub list_modified {
+ 		}
+ 	}
+ 
++	my %unmerged;
++	if ($filter_unmerged) {
++		for (run_cmd_pipe(qw(git ls-files -u --), @ARGV)) {
++			chomp $_;
++			if (/^[0-7]+ [0-9a-f]{40} [0-3]	(.*)/) {
++				my $path = unquote_path($1);
++				$unmerged{$path} = 1;
++			}
++		}
++		if (%unmerged) {
++			for (sort keys %unmerged) {
++				print colored $error_color, "ignoring unmerged: $_\n";
++			}
++		}
++	}
++
+ 	for (sort keys %data) {
+-		my $it = $data{$_};
++		next if exists $unmerged{$_};
+ 
++		my $it = $data{$_};
+ 		if ($only) {
+ 			if ($only eq 'index-only') {
+ 				next if ($it->{INDEX} eq 'unchanged');
+@@ -1189,7 +1206,7 @@ sub apply_patch_for_checkout_commit {
+ }
+ 
+ sub patch_update_cmd {
+-	my @all_mods = list_modified($patch_mode_flavour{FILTER});
++	my @all_mods = list_modified($patch_mode_flavour{FILTER}, 'filter-unmerged');
+ 	my @mods = grep { !($_->{BINARY}) } @all_mods;
+ 	my @them;
+ 
