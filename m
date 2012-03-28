@@ -1,111 +1,65 @@
-From: Erik Faye-Lund <kusmabite@gmail.com>
-Subject: Re: git add -p and unresolved conflicts
-Date: Wed, 28 Mar 2012 17:33:46 +0200
-Message-ID: <CABPQNSYp7k82mjzNqZmBX+7Dh6R7rgjQ3ZNqikZyM71GshMqqg@mail.gmail.com>
-References: <CABPQNSYVXMxS3kugu1j=62ArJ_1saYYfMjJdZvqhjgPFGN=Eqw@mail.gmail.com>
- <7vbongyd67.fsf@alter.siamese.dyndns.org>
-Reply-To: kusmabite@gmail.com
+From: Anjib Mulepati <anjibcs@hotmail.com>
+Subject: Re: Working directory managment
+Date: Wed, 28 Mar 2012 11:39:39 -0400
+Message-ID: <BLU0-SMTP194A55718CFB9375EA9D7BBB14B0@phx.gbl>
+References: <BLU0-SMTP1958653CC391F120060F8B6B14A0@phx.gbl> <7vd37yj7h2.fsf@alter.siamese.dyndns.org> <BLU0-SMTP479C08A291DA7BEA81F1875B14B0@phx.gbl> <7v7gy4yd0w.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="ISO-8859-1"; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Mar 28 17:34:33 2012
+X-From: git-owner@vger.kernel.org Wed Mar 28 17:39:49 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SCutM-0001jd-No
-	for gcvg-git-2@plane.gmane.org; Wed, 28 Mar 2012 17:34:33 +0200
+	id 1SCuyS-0005FV-VQ
+	for gcvg-git-2@plane.gmane.org; Wed, 28 Mar 2012 17:39:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758091Ab2C1Pe2 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 28 Mar 2012 11:34:28 -0400
-Received: from mail-pb0-f46.google.com ([209.85.160.46]:39303 "EHLO
-	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756518Ab2C1Pe1 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 28 Mar 2012 11:34:27 -0400
-Received: by pbcun15 with SMTP id un15so1928045pbc.19
-        for <git@vger.kernel.org>; Wed, 28 Mar 2012 08:34:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type:content-transfer-encoding;
-        bh=jIcP5Y5zmPZXXCUgLL/Ov9JDYN8Ca1T3SNxgj7e9Cz0=;
-        b=tjx8AWC55vbyz4K4e1ynt6t9j44Ry9l8q3mpYmvF7hSJbCdPontXLc6OC242mZHlIv
-         lN7AZ4RWAdhXsiCv1evVcC3Vyg4rGMXNbs/3dwmO9wqHTkpCs2a0i3n37PwunbjgzsrB
-         ba2Z0iYwgtqC4fOa9Uam/fXYPe7XdFPA/k89/mdn7Th9eblIMAUj0meP4yT0liOQrB/H
-         nIhkpqb7JDuhhTTco0LJjxa3sD2gvSQ1dFH201woxGd+l4ZvkgwSSKU05Z4Id0ju+fxl
-         W0AqU3b0SXFwfNBwQ8+bgjpNP3NiWZsOBDaYqndx2E7rj7dyp+0xS70cV8n3aymlsbNb
-         XCpA==
-Received: by 10.68.132.40 with SMTP id or8mr72677407pbb.34.1332948866935; Wed,
- 28 Mar 2012 08:34:26 -0700 (PDT)
-Received: by 10.68.1.135 with HTTP; Wed, 28 Mar 2012 08:33:46 -0700 (PDT)
-In-Reply-To: <7vbongyd67.fsf@alter.siamese.dyndns.org>
+	id S1758256Ab2C1Pjn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Mar 2012 11:39:43 -0400
+Received: from blu0-omc3-s38.blu0.hotmail.com ([65.55.116.113]:20291 "EHLO
+	blu0-omc3-s38.blu0.hotmail.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754734Ab2C1Pjn (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 28 Mar 2012 11:39:43 -0400
+Received: from BLU0-SMTP194 ([65.55.116.73]) by blu0-omc3-s38.blu0.hotmail.com with Microsoft SMTPSVC(6.0.3790.4675);
+	 Wed, 28 Mar 2012 08:39:42 -0700
+X-Originating-IP: [146.243.44.97]
+X-Originating-Email: [anjibcs@hotmail.com]
+Received: from [146.243.44.97] ([146.243.44.97]) by BLU0-SMTP194.phx.gbl over TLS secured channel with Microsoft SMTPSVC(6.0.3790.4675);
+	 Wed, 28 Mar 2012 08:39:41 -0700
+User-Agent: Mozilla/5.0 (Windows NT 6.1; rv:11.0) Gecko/20120312 Thunderbird/11.0
+In-Reply-To: <7v7gy4yd0w.fsf@alter.siamese.dyndns.org>
+X-OriginalArrivalTime: 28 Mar 2012 15:39:41.0560 (UTC) FILETIME=[FDF30F80:01CD0CF8]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194131>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194132>
 
-On Wed, Mar 28, 2012 at 5:10 PM, Junio C Hamano <gitster@pobox.com> wro=
-te:
-> Erik Faye-Lund <kusmabite@gmail.com> writes:
+I am sorry if I haven't put my follow up question in proper place. It 
+was on top. My question was
+
+So these removed or replaced is done automatically or as I understood we 
+do merge and and see conflict and do changes as per necessary?
+
+i don't want to waste someone precious time but I am reading book and 
+searching my own in internet to clear my confusion. That is not clear 
+all time so that's why I am using this forum. I am reading all replies 
+and trying to get basic concept as I go.
+
+Thanks All
+Anjib
+
+
+On 3/28/2012 11:13 AM, Junio C Hamano wrote:
+> Anjib Mulepati<anjibcs@hotmail.com>  writes:
 >
->> I'm running git version 1.7.9.msysgit.0.390.g01fca.dirty, and I've
->> noticed a puzzling behavior with "git add -p" on a conflicted file: =
-it
->> seems to simply spew the diff and exit the process.
+>> What does it mean by this " Files in this directory are often removed
+>> or replaced by Git as you switch branches"?
+> Don't you already have an answer from me in the message you are responding
+> to, which you quoted but perhaps you didn't read?
 >
-> Yeah, when I wrote the 'p'atch mode in "add--interactive", I wasn't
-> interested at all in letting it be used on a conflicted path, so that=
- is
-> not a designed-in behaviour but merely whatever it happens to do.
-
-OK, that's pretty much what I suspected ;)
-
-> So at
-> least it should not allow the user to pick a path that has conflicts =
-in
-> it.
-
-So, the options are:
- 1) Keep the current behavior
- 2) Abort with an error immediately if one of the picked paths are in
-a conflicted state
- 3) Abort with an error when first encounter a path that is in a
-conflicted state
- 4) Warn and skip any paths that are in a conflicted state
- 5) Implement "git add -p" for conflicted files (if we can agree on a b=
-ehavior)
-
-1) and 3) makes little sense to me. 5) only makes sense if we can
-agree on what should have happened.
-
-> What the behaviour for people who *do* want to use the patch mode for
-> conflicted paths should be is a separate matter. =A0As I said, I am n=
-ot
-> interested in it, so I wouldn't be the best person to design it.
 >
-> I mildly suspect nobody would come up with a sane behaviour, but what
-> would I know...
-
-Well, I can explain what I expected to happen:
-
-I had stashed away some of my "hacking"-code to rebase a branch to the
-current master. I was going to stage parts of the stashed changes as a
-commit on top. However after rebasing, "git stash pop" lead to a
-conflict. So I manually resolved the conflicts, but only wanted to
-stage some of the hunks to be committed.
-
-Now, what is obvious in hindsight, is that I should simply have done
-"git reset" after resolving the conflicts manually. When I do "git add
--p", I add hunks to the index. But for a conflicted file, the index
-isn't in a well-defined state (or, the contents of the file is in a
-not-yet-defined state).
-
-However, as it happened it made me confused (and a little bit
-frustrated). I suspect this could confuse other users as well. Perhaps
-we should implement 1) or 3) and come up with a helpful error/warning
-message? I don't have a very strong opinion on which one is better,
-but I suspect 3) is easier.
+>
