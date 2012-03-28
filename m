@@ -1,81 +1,66 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Use SHELL_PATH to fork commands in
- run_command.c:prepare_shell_cmd
-Date: Wed, 28 Mar 2012 00:22:15 -0400
-Message-ID: <20120328042215.GB30251@sigill.intra.peff.net>
-References: <20120326182427.GA10333@sigill.intra.peff.net>
- <1332816078-26829-1-git-send-email-bwalton@artsci.utoronto.ca>
- <20120327032917.GB17338@sigill.intra.peff.net>
- <1332901381-sup-4406@pinkfloyd.chass.utoronto.ca>
+Subject: Re: git://github.com/some/thing.git/?
+Date: Wed, 28 Mar 2012 00:28:26 -0400
+Message-ID: <20120328042826.GC30251@sigill.intra.peff.net>
+References: <7vpqbyjbbx.fsf@alter.siamese.dyndns.org>
+ <20120327163339.GA5941@sigill.intra.peff.net>
+ <7vd37xj3zh.fsf@alter.siamese.dyndns.org>
+ <20120327183833.GB8460@sigill.intra.peff.net>
+ <20120327184754.GA27070@burratino>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Johannes Sixt <j.sixt@viscovery.net>,
-	jrnieder <jrnieder@gmail.com>, gitster <gitster@pobox.com>,
-	git <git@vger.kernel.org>
-To: Ben Walton <bwalton@artsci.utoronto.ca>
-X-From: git-owner@vger.kernel.org Wed Mar 28 06:22:28 2012
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Scott Chacon <schacon@gmail.com>, git@vger.kernel.org
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 28 06:28:40 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SCkOv-0000O0-VU
-	for gcvg-git-2@plane.gmane.org; Wed, 28 Mar 2012 06:22:26 +0200
+	id 1SCkUt-0004Q7-98
+	for gcvg-git-2@plane.gmane.org; Wed, 28 Mar 2012 06:28:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751047Ab2C1EWT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Mar 2012 00:22:19 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:34867
+	id S1751103Ab2C1E23 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Mar 2012 00:28:29 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:34874
 	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750995Ab2C1EWS (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Mar 2012 00:22:18 -0400
-Received: (qmail 10906 invoked by uid 107); 28 Mar 2012 04:22:36 -0000
+	id S1750804Ab2C1E23 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Mar 2012 00:28:29 -0400
+Received: (qmail 10958 invoked by uid 107); 28 Mar 2012 04:28:47 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 28 Mar 2012 00:22:36 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 28 Mar 2012 00:22:15 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 28 Mar 2012 00:28:47 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 28 Mar 2012 00:28:26 -0400
 Content-Disposition: inline
-In-Reply-To: <1332901381-sup-4406@pinkfloyd.chass.utoronto.ca>
+In-Reply-To: <20120327184754.GA27070@burratino>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194103>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194104>
 
-On Tue, Mar 27, 2012 at 10:46:15PM -0400, Ben Walton wrote:
+On Tue, Mar 27, 2012 at 01:47:54PM -0500, Jonathan Nieder wrote:
 
-> > > +#ifndef SHELL_PATH
-> > > +# define SHELL_PATH "sh"
-> > > +#endif
-> > 
-> > Does this default ever kick in? The Makefile defaults SHELL_PATH to
-> > /bin/sh, so we will always end up with at least that.
+> > For some definition of "we"; AFAICT, github has never allowed this, and
+> > this is the first complaint
 > 
-> Not when using the build system, but as Hannes mentioned, there is
-> potential for this to be used outside of the default build system, so
-> I think having the fallback is a good defensive option.  Should it
-> maybe be set to /bin/sh though to be more consistent with system()?
+> I complained and got a dismissive response about two years ago. ;-)  I
+> am not sure if bugs from back then are tracked any more.  The URL in
+> my records is [1].
 
-Yeah, I think making it "/bin/sh" is better. It's more obvious to people
-reading the code as part of git (since even though it is a repetition of
-the default from the Makefile, at least it is the _same_ default), and
-if it does get reused, it's probably a better default.
+I wasn't able to find the original discussion, as we've migrated through
+a few different support systems in the last few years. Probably it is in
+there somewhere, but I don't usually do support stuff, and I didn't
+think it was worth bothering the regular support people with it.
 
-> Given the rest of the discussion that happened, I think I understand
-> that my patch is actually ok with the following caveats:
+> > However, it turned out to be a one-line patch. I've pushed it out for
+> > review by other GitHubbers.
 > 
-> 1. My commit message still needs work.
-> 2. Possibly change the default setting of the SHELL_PATH macro from
->    "sh" to "/bin/sh"
-> 3. Use the _SQ variant of SHELL_PATH.
+> Hoorah!  Thanks for taking care of it.
 
-Yeah, I think so (not that I am the final word, but that at least
-matches my perception of the discussion so far, too).
-
-> (The tracking of changes for SHELL_PATH is considered too heavy for
-> now when the other _PATH items aren't tracked the same way.  This
-> might make a nice separate patch series though, using the idea from
-> the kernel where individual commands are tracked.)
-
-Agreed.
+FYI, this is now deployed, and the various front-end machines are
+getting updated slowly over the next few hours (until then, it's
+non-deterministic whether it will work for you or not :) ).
 
 -Peff
