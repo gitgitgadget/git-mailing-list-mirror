@@ -1,59 +1,165 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] correct a few doubled-word nits in comments and
- documentation
-Date: Wed, 28 Mar 2012 08:57:42 -0700
-Message-ID: <7vty18wweh.fsf@alter.siamese.dyndns.org>
-References: <87d37xun9r.fsf@rho.meyering.net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH v6 3/3] gitweb: add If-Modified-Since handling to git_snapshot().
+Date: Wed, 28 Mar 2012 17:08:55 +0100
+Message-ID: <201203281808.56432.jnareb@gmail.com>
+References: <201203281613.52624.jnareb@gmail.com>  <8129a671c793613ad2a0b00e1239e6a7ded7491a.1332949186.git.wking@drexel.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git list <git@vger.kernel.org>
-To: Jim Meyering <jim@meyering.net>
-X-From: git-owner@vger.kernel.org Wed Mar 28 17:58:02 2012
+Content-Type: text/plain;
+  charset="iso-8859-2"
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: "W. Trevor King" <wking@drexel.edu>
+X-From: git-owner@vger.kernel.org Wed Mar 28 18:09:08 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SCvG2-0003DO-MQ
-	for gcvg-git-2@plane.gmane.org; Wed, 28 Mar 2012 17:57:59 +0200
+	id 1SCvQm-0004Ar-8d
+	for gcvg-git-2@plane.gmane.org; Wed, 28 Mar 2012 18:09:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758384Ab2C1P5r (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Mar 2012 11:57:47 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:42970 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758359Ab2C1P5p (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Mar 2012 11:57:45 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BBEED6548;
-	Wed, 28 Mar 2012 11:57:44 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=gjYIoJXfWAzpm0J6p0lMkWvIiJE=; b=Rs+gnm
-	A+9Uv+WOJagxXNks69Fb5lQRM6JuNoIeSBLLjxtJK6uu56UkBkPE9lbi0cMM8J4/
-	HnshYMl1lSdUq23SN3dbLRfHpyUVk1JSuR98/LpdxyYkKAA/jO5x93JLvxjAy8yd
-	P+leEgXpO8bVWteimn2ya/c16EjBdgLZqRrWM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=mLvlZ9W3isxN00wP+N0lE/g/QQ4lAVNJ
-	iiqKOwMJ7To3H3/7komm0zZp6LkfE2SV477ScA3LeT7it86Dof6CkHRytLq9vkRq
-	hp96vhY4BZL3t6SLS3BuMQQRAqBIOSzccrzVhSESWz0XnQEpyxP5uFs4dW2CJxkj
-	36UIk6PFXgU=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B361F6547;
-	Wed, 28 Mar 2012 11:57:44 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4A9326546; Wed, 28 Mar 2012
- 11:57:44 -0400 (EDT)
-In-Reply-To: <87d37xun9r.fsf@rho.meyering.net> (Jim Meyering's message of
- "Wed, 28 Mar 2012 10:45:36 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: C19558A6-78EE-11E1-8F04-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1758302Ab2C1QI6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Mar 2012 12:08:58 -0400
+Received: from mail-we0-f174.google.com ([74.125.82.174]:56166 "EHLO
+	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758258Ab2C1QI5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Mar 2012 12:08:57 -0400
+Received: by wejx9 with SMTP id x9so740427wej.19
+        for <git@vger.kernel.org>; Wed, 28 Mar 2012 09:08:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        bh=i9sWX5DM+QoszBkUv4bXi0umN8OJu4MhQ7HvfIcR+qI=;
+        b=SqWK/+LKbrFOzwG6ZjkuKy7mfSY4GksvDTi8eVhO9MYNR73TeRU3BbCAcPVlBWq7UN
+         r48wCrWCDfN5lgxnF5LQhkSLXzcy92+yssog1tI6BejIApwZZqZosCmp4zFGLNANmtC6
+         MQn38heGyhLw2l4pbyF26ARBhD38rQ2xw2fYt5+QKDa6c42aRFfmDe7A7VecDCBqlhi5
+         Hezh5Ytuitcyjt44zB1OhvzGwbCv75J/PyeD4By+8KnOrUKVmMPzTSpiNveMVR/oTxzz
+         T2vlr/qEhbXqCWUz6ILG0f45m+29AL+CCDL+drBbHay87H5Zndr8OAVXw2eqalYeLRK+
+         6fqw==
+Received: by 10.216.136.157 with SMTP id w29mr17884142wei.23.1332950936428;
+        Wed, 28 Mar 2012 09:08:56 -0700 (PDT)
+Received: from [192.168.1.13] (euy254.neoplus.adsl.tpnet.pl. [83.20.196.254])
+        by mx.google.com with ESMTPS id o2sm14932116wiv.11.2012.03.28.09.08.55
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 28 Mar 2012 09:08:55 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <8129a671c793613ad2a0b00e1239e6a7ded7491a.1332949186.git.wking@drexel.edu>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194141>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194142>
 
-Thanks; by the way, you have an extra patch message concatenated after
-the main one.
+On Wed, 28 Mar 2012, wking@tremily.us wrote:
+
+> Because snapshots can be large, you can save some bandwidth by
+> supporting caching via If-Modified-Since.  This patch adds support for
+> the i-m-s request to git_snapshot() if the request is a commit.
+> Requests for snapshots of trees, which lack well defined timestamps,
+> are still handled as they were before.
+> 
+> Signed-off-by: W Trevor King <wking@drexel.edu>
+> ---
+>  gitweb/gitweb.perl                       |   10 +++++++++
+>  t/t9501-gitweb-standalone-http-status.sh |   33 ++++++++++++++++++++++++++++++
+>  2 files changed, 43 insertions(+), 0 deletions(-)
+> 
+> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+> index ba106c1..591c793 100755
+> --- a/gitweb/gitweb.perl
+> +++ b/gitweb/gitweb.perl
+> @@ -7051,6 +7051,10 @@ sub git_snapshot {
+>  
+>  	my ($name, $prefix) = snapshot_name($project, $hash);
+>  	my $filename = "$name$known_snapshot_formats{$format}{'suffix'}";
+> +
+> +	my %co = parse_commit($hash);
+> +	exit_if_unmodified_since($co{'committer_epoch'}) if %co;
+> +
+
+Nice.
+
+>  	my $cmd = quote_command(
+>  		git_cmd(), 'archive',
+>  		"--format=$known_snapshot_formats{$format}{'format'}",
+> @@ -7060,9 +7064,15 @@ sub git_snapshot {
+>  	}
+>  
+>  	$filename =~ s/(["\\])/\\$1/g;
+> +	my %latest_date;
+> +	if (%co) {
+> +		%latest_date = parse_date($co{'committer_epoch'}, $co{'committer_tz'});
+> +	}
+> +
+
+That is probably more readable than
+
+  +	%latest_date = parse_date($co{'committer_epoch'}, $co{'committer_tz'})
+  +		if %co;
+
+>  	print $cgi->header(
+>  		-type => $known_snapshot_formats{$format}{'type'},
+>  		-content_disposition => 'inline; filename="' . $filename . '"',
+> +		-last_modified => (%co ? $latest_date{'rfc2822'} : undef),
+>  		-status => '200 OK');
+>  
+
+Same issue as with previous patch:
+
+   	print $cgi->header(
+   		-type => $known_snapshot_formats{$format}{'type'},
+   		-content_disposition => 'inline; filename="' . $filename . '"',
+  +		%co ? (-last_modified => $latest_date{'rfc2822'}) : (),
+   		-status => '200 OK');
+
+
+>  	open my $fd, "-|", $cmd
+> diff --git a/t/t9501-gitweb-standalone-http-status.sh b/t/t9501-gitweb-standalone-http-status.sh
+> index afa6bd4..1487820 100755
+> --- a/t/t9501-gitweb-standalone-http-status.sh
+> +++ b/t/t9501-gitweb-standalone-http-status.sh
+> @@ -138,6 +138,39 @@ test_expect_success 'modification: feed if-modified-since (unmodified)' '
+>  '
+>  test_debug 'cat gitweb.headers'
+>  
+> +test_expect_success 'modification: snapshot last-modified' '
+> +	gitweb_run "p=.git;a=snapshot;h=master;sf=tgz" &&
+> +	grep "Status: 200 OK" gitweb.output &&
+> +	grep "Last-modified: Thu, 7 Apr 2005 22:14:13 +0000" gitweb.output
+> +'
+> +test_debug 'cat gitweb.headers'
+> +
+> +test_expect_success 'modification: snapshot if-modified-since (modified)' '
+> +	export HTTP_IF_MODIFIED_SINCE="Wed, 6 Apr 2005 22:14:13 +0000" &&
+> +	test_when_finished "unset HTTP_IF_MODIFIED_SINCE" &&
+> +	gitweb_run "p=.git;a=snapshot;h=master;sf=tgz" &&
+> +	grep "Status: 200 OK" gitweb.output
+> +'
+> +test_debug 'cat gitweb.headers'
+> +
+> +test_expect_success 'modification: snapshot if-modified-since (unmodified)' '
+> +	export HTTP_IF_MODIFIED_SINCE="Thu, 7 Apr 2005 22:14:13 +0000" &&
+> +	test_when_finished "unset HTTP_IF_MODIFIED_SINCE" &&
+> +	gitweb_run "p=.git;a=snapshot;h=master;sf=tgz" &&
+> +	grep "Status: 304 Not Modified" gitweb.output
+> +'
+> +test_debug 'cat gitweb.headers'
+> +
+> +test_expect_success 'modification: tree snapshot' '
+> +	ID=`git rev-parse --verify HEAD^{tree}` &&
+> +	export HTTP_IF_MODIFIED_SINCE="Wed, 6 Apr 2005 22:14:13 +0000" &&
+> +	test_when_finished "unset HTTP_IF_MODIFIED_SINCE" &&
+> +	gitweb_run "p=.git;a=snapshot;h=$ID;sf=tgz" &&
+> +	grep "Status: 200 OK" gitweb.output &&
+> +	! grep "Last-Modified" gitweb.output
+> +'
+> +test_debug 'cat gitweb.headers'
+
+Good!
+
+-- 
+Jakub Narebski
+Poland
