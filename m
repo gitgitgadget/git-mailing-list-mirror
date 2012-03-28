@@ -1,73 +1,75 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v7 3/3] gitweb: add If-Modified-Since handling to
- git_snapshot().
-Date: Wed, 28 Mar 2012 12:11:27 -0700
-Message-ID: <7vr4wcv8v4.fsf@alter.siamese.dyndns.org>
-References: <20120328164513.GA4389@odin.tremily.us>
- <81004880a876bb9b9f607129956363d3167bff72.1332956550.git.wking@drexel.edu>
- <201203282011.32148.jnareb@gmail.com> <20120328183712.GA5992@odin.tremily.us>
+From: Holger Hellmuth <hellmuth@ira.uka.de>
+Subject: Re: git add -p and unresolved conflicts
+Date: Wed, 28 Mar 2012 21:14:54 +0200
+Message-ID: <4F73632E.1060408@ira.uka.de>
+References: <CABPQNSYVXMxS3kugu1j=62ArJ_1saYYfMjJdZvqhjgPFGN=Eqw@mail.gmail.com>	<7vbongyd67.fsf@alter.siamese.dyndns.org> <vpqvclozr7e.fsf@bauges.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-2022-jp
-Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-To: "W. Trevor King" <wking@drexel.edu>
-X-From: git-owner@vger.kernel.org Wed Mar 28 21:11:40 2012
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, kusmabite@gmail.com,
+	Git Mailing List <git@vger.kernel.org>
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Wed Mar 28 21:14:18 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SCyHP-0001Gp-Px
-	for gcvg-git-2@plane.gmane.org; Wed, 28 Mar 2012 21:11:36 +0200
+	id 1SCyJz-0003Tz-QN
+	for gcvg-git-2@plane.gmane.org; Wed, 28 Mar 2012 21:14:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756925Ab2C1TLb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Mar 2012 15:11:31 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:63415 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756189Ab2C1TLa (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Mar 2012 15:11:30 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 698117375;
-	Wed, 28 Mar 2012 15:11:29 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=J9Nn+tDhm/PnyfhyAOfKKKBrM6c=; b=lhlIl/
-	shAH9J+eUuKjUYK89yqLE8+PSCgHRpN8+7kUNqyG4esWWv9Y+NOd0ZrrCmOCYFxw
-	GExbZ+LrnD8jPOKfSbre+yR+LJfjLEUIEqwcKo4MUxIuOm/s/DBGQUidlNCEqOub
-	z/6/sxImDvKJJjzA9wBMZCIJPtbQSmSrCr5Bg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=OKcsLxpXH+zWZTLPv8UNw+fA+4fupLFh
-	gJRfKzVyADqJdQkHsl1eRul0RBUyW/sRsGzshWi/JDaDoyp/hPURUl7DqTcCmi9Z
-	Uog/NkiMAkchcWHd9FPtNso1XquY5BrKFsrHzQmqWbKJTcwZckr6tz5K2lpiDE/X
-	xFrR+5uxQqM=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5FDD87374;
-	Wed, 28 Mar 2012 15:11:29 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E9C607373; Wed, 28 Mar 2012
- 15:11:28 -0400 (EDT)
-In-Reply-To: <20120328183712.GA5992@odin.tremily.us> (W. Trevor King's
- message of "Wed, 28 Mar 2012 14:37:12 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: D26A82C6-7909-11E1-B762-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752892Ab2C1TOL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Mar 2012 15:14:11 -0400
+Received: from iramx2.ira.uni-karlsruhe.de ([141.3.10.81]:58514 "EHLO
+	iramx2.ira.uni-karlsruhe.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753377Ab2C1TOK (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 28 Mar 2012 15:14:10 -0400
+Received: from irams1.ira.uni-karlsruhe.de ([141.3.10.5])
+	by iramx2.ira.uni-karlsruhe.de with esmtps port 25 
+	id 1SCyJl-0004sW-AJ; Wed, 28 Mar 2012 21:14:06 +0200
+Received: from i20s141.iaks.uni-karlsruhe.de ([141.3.32.141] helo=[172.16.22.120])
+	by irams1.ira.uni-karlsruhe.de with esmtpsa port 25 
+	id 1SCyJk-0006ZI-ON; Wed, 28 Mar 2012 21:14:01 +0200
+User-Agent: Mozilla/5.0 (X11; U; Linux i686 (x86_64); en-US; rv:1.9.2.24) Gecko/20111101 SUSE/3.1.16 Thunderbird/3.1.16
+In-Reply-To: <vpqvclozr7e.fsf@bauges.imag.fr>
+X-ATIS-AV: ClamAV (irams1.ira.uni-karlsruhe.de)
+X-ATIS-AV: ClamAV (iramx2.ira.uni-karlsruhe.de)
+X-ATIS-AV: Kaspersky (iramx2.ira.uni-karlsruhe.de)
+X-ATIS-Timestamp: iramx2.ira.uni-karlsruhe.de 1332962046.859744000
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194164>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194165>
 
-"W. Trevor King" <wking@drexel.edu> writes:
+On 28.03.2012 17:21, Matthieu Moy wrote:
+> Junio C Hamano<gitster@pobox.com>  writes:
+>
+>> I mildly suspect nobody would come up with a sane behaviour, but what
+>> would I know...
+>
+> Designing a per-hunk behavior would clearly be very tricky.
+>
 
-> Grr.  Thanks.  I'm getting lots of rebase practice on this patch set,
-> but I'm still missing things…
+I don't think it's that tricky:
 
-How do you "rebase"?
+For a conflicted file show any conflicted hunks first(!) and only 
+provide the following options for them:
+q - quit, do not stage...
+d - do not stage this hunk nor any of the remaining hunks in the file
+e - manually edit the current hunk
+? - print help
 
-It often is the easiest to check out the tip of the previous iteration,
-fix all issues that were brought up in the working tree, eyeball the
-output from "git diff HEAD" to make sure you addressed all the comments,o
-and then make separate commits, using "add -p" to sift the fix-ups
-according to which commit in the previous round they need to update.
+and additionally the following three options:
+b - choose the base version
+< - choose our version
+ > - choose their version
 
-And then finally you run "rebase -i" to squash these fix-ups in.
+< and > correspond to the conflict markers, alternatives would be o and t
+
+The user now has the option to remove the conflicts (through editing or 
+choosing one of the versions) or abort adding the file.
+
+The tricky part might be sorting the hunks so that conflicts are first 
+(depending on how the code works now), choosing the right version in a 
+hunk (the three new options) should be relatively easy.
