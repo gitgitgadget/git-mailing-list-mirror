@@ -1,75 +1,188 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git add -p and unresolved conflicts
-Date: Wed, 28 Mar 2012 12:54:38 -0700
-Message-ID: <7v8vikv6v5.fsf@alter.siamese.dyndns.org>
-References: <CABPQNSYVXMxS3kugu1j=62ArJ_1saYYfMjJdZvqhjgPFGN=Eqw@mail.gmail.com>
- <7vbongyd67.fsf@alter.siamese.dyndns.org> <vpqvclozr7e.fsf@bauges.imag.fr>
- <4F73632E.1060408@ira.uka.de> <vpqk424zfb1.fsf@bauges.imag.fr>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Holger Hellmuth <hellmuth@ira.uka.de>, kusmabite@gmail.com,
-	Git Mailing List <git@vger.kernel.org>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Wed Mar 28 21:54:49 2012
+From: Tim Henigan <tim.henigan@gmail.com>
+Subject: [PATCH 1/2] mergetools: split config files for vim and gvim
+Date: Wed, 28 Mar 2012 15:58:12 -0400
+Message-ID: <1332964693-4058-1-git-send-email-tim.henigan@gmail.com>
+Cc: Tim Henigan <tim.henigan@gmail.com>
+To: gitster@pobox.com, git@vger.kernel.org, davvid@gmail.com
+X-From: git-owner@vger.kernel.org Wed Mar 28 21:58:50 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SCyxB-0003jZ-OF
-	for gcvg-git-2@plane.gmane.org; Wed, 28 Mar 2012 21:54:46 +0200
+	id 1SCz16-0006zW-NU
+	for gcvg-git-2@plane.gmane.org; Wed, 28 Mar 2012 21:58:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758582Ab2C1Tyl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Mar 2012 15:54:41 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47441 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758501Ab2C1Tyk (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Mar 2012 15:54:40 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 21E3C7BDC;
-	Wed, 28 Mar 2012 15:54:40 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=PTv4mk1Cnc8q4G4t62nmHjPmUK0=; b=GopSBc
-	Re8tZY6NwvAzONLSGP5jFGmvXcPu2zxyXz2EVeJlmMlQ6ES2L1Jd3G2iyr622NQv
-	YwHomvEZicmJOmEf6D18srdgvsdOWKRfuWi0UMfNebwTIe++NtKp+04bL7knZyFl
-	IGrNpIFAa+eMOi+ebPvQAfE+pvrSFHrvbBQsU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=pafQUA6ZIq2snsBLT3XnTVIQGiiG+1Bo
-	wH7siGRqsT7T8yB0A2qgOIb1UQ2+ggZX+LYNZPXPzAejFKsYeEft/3xIv2kzBQ4+
-	o/+OHor5pa9wydijx+GJ8gvtThNDYVBsHbgjzXm7yhsPcqE8ReAN+kxQvMLixwoR
-	bG+N8STC+qA=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 18AEC7BD2;
-	Wed, 28 Mar 2012 15:54:40 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A22737BD1; Wed, 28 Mar 2012
- 15:54:39 -0400 (EDT)
-In-Reply-To: <vpqk424zfb1.fsf@bauges.imag.fr> (Matthieu Moy's message of
- "Wed, 28 Mar 2012 21:38:42 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: DA991114-790F-11E1-89E4-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1758264Ab2C1T6n (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Mar 2012 15:58:43 -0400
+Received: from mail-qa0-f53.google.com ([209.85.216.53]:40527 "EHLO
+	mail-qa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752457Ab2C1T6m (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Mar 2012 15:58:42 -0400
+Received: by qadc11 with SMTP id c11so1066535qad.19
+        for <git@vger.kernel.org>; Wed, 28 Mar 2012 12:58:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        bh=uhqIm7uDDY/bA6mBXxKcgQ0lx9lrzMlIoSFXNRSOY0g=;
+        b=kLSLdqd5IyvXod9PS1f0x6/2BAlEZboTgtj746Drrxz1v9xgLWXm7vIob0m4XybG1R
+         YIDNu2/8bhTfDvNSg5XuYjch9yHMl5TqJghhaPBulXVi+Yt6BKPsbgqazmHOMi9KA0LB
+         erFYDrszduFlsTeKcGXcVhrcTxiv9FA8M6NcuMmPsleUAurKJbLZhveKRP5MwYSUW5SE
+         lAsF+hDOttux9ux0xNEsTq7zYm4gQKw7BrnyGfJy6DLEvlPTCY0KGOF1ss2XzZQzeEz6
+         qQxUE38PpuX2VBrPLBNLgVcRpErQP3sb9CL6JPi6lYac4eQgOF65ZZv7TVPGZQ2vEGxW
+         CtSw==
+Received: by 10.224.215.10 with SMTP id hc10mr40571051qab.28.1332964722293;
+        Wed, 28 Mar 2012 12:58:42 -0700 (PDT)
+Received: from localhost (adsl-99-38-69-118.dsl.sfldmi.sbcglobal.net. [99.38.69.118])
+        by mx.google.com with ESMTPS id cv8sm8218379qab.12.2012.03.28.12.58.38
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 28 Mar 2012 12:58:41 -0700 (PDT)
+X-Mailer: git-send-email 1.7.10.rc2.21.g8cb1a
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194178>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194179>
 
-Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+In ae69fd0 (mergetool-lib: combine vimdiff and gvimdiff run blocks),
+the config files for these two tools were combined since they were
+nearly identical.  This remains true, but having a single config
+file for both makes it difficult to test that each is installed
+and capable of running.
 
-> And you miss the most usefull (to me at least): "choose the version in
-> the worktree".
+This commit splits the two config files. Now 'vim' and 'gvim'
+follow the pattern used by all the other diff/merge tools:
+  - There is a single file per tool
+  - To use the tool, 'diff.tool' (or other similar option) may be
+    set to the exact name of the file.
 
-I tend to think that "add -p" whose sole purpose is to make partial commit
-is fundamentally incompatible with "am", "merge" and (mostly) "rebase",
-which you do not want to record partial commit.
+Signed-off-by: Tim Henigan <tim.henigan@gmail.com>
+---
 
-When "rebase -i" or "cherry-pick" that is used for the purpose of
-replaying only a part of a larger commit, letting "add -p" show the
-difference between "HEAD" and the working tree version, and letting the
-user pick hunks, would make a lot of sense, though.
+This series should apply cleanly on the current master, but it was
+developed on top of the series that implements the 'difftool --dir-diff'
+option (currently th/difftool-diffall branched from pu).
 
-For such an application, however, the user could first "reset $path" and
-use "add -p" normally.
+This patch does some cleanup needed to be compatible with the new
+'--dir-diff' option for 'difftool'.
+
+One side-effect of this change which may be a problem is that we
+lose support for the 'vimdiff2' and 'gvimdiff2' tools that were
+created in 0008669 (mergetool-lib: make the three-way diff the
+default for vim/gvim).  The 2-panel options were not advertised in
+any way, so I don't know if it is important to keep them.
+
+
+ git-mergetool--lib.sh |    9 +--------
+ mergetools/gvim       |   21 +++++++++++++++++++++
+ mergetools/vim        |   41 +++++++++--------------------------------
+ 3 files changed, 31 insertions(+), 40 deletions(-)
+ create mode 100644 mergetools/gvim
+
+diff --git a/git-mergetool--lib.sh b/git-mergetool--lib.sh
+index ed630b2..89b16dc 100644
+--- a/git-mergetool--lib.sh
++++ b/git-mergetool--lib.sh
+@@ -44,14 +44,7 @@ valid_tool () {
+ }
+ 
+ setup_tool () {
+-	case "$1" in
+-	vim*|gvim*)
+-		tool=vim
+-		;;
+-	*)
+-		tool="$1"
+-		;;
+-	esac
++	tool="$1"
+ 	mergetools="$(git --exec-path)/mergetools"
+ 
+ 	# Load the default definitions
+diff --git a/mergetools/gvim b/mergetools/gvim
+new file mode 100644
+index 0000000..b746e6f
+--- /dev/null
++++ b/mergetools/gvim
+@@ -0,0 +1,21 @@
++diff_cmd () {
++	"$merge_tool_path" -R -f -d \
++		-c 'wincmd l' -c 'cd $GIT_PREFIX' "$LOCAL" "$REMOTE"
++}
++
++merge_cmd () {
++	touch "$BACKUP"
++	if $base_present
++	then
++		"$merge_tool_path" -f -d -c 'wincmd J' \
++			"$MERGED" "$LOCAL" "$BASE" "$REMOTE"
++	else
++		"$merge_tool_path" -f -d -c 'wincmd l' \
++			"$LOCAL" "$MERGED" "$REMOTE"
++	fi
++	check_unchanged
++}
++
++translate_merge_tool_path() {
++	echo gvim
++}
+diff --git a/mergetools/vim b/mergetools/vim
+index 619594a..6817708 100644
+--- a/mergetools/vim
++++ b/mergetools/vim
+@@ -1,44 +1,21 @@
+ diff_cmd () {
+-	case "$1" in
+-	gvimdiff|vimdiff)
+-		"$merge_tool_path" -R -f -d \
+-			-c 'wincmd l' -c 'cd $GIT_PREFIX' "$LOCAL" "$REMOTE"
+-		;;
+-	gvimdiff2|vimdiff2)
+-		"$merge_tool_path" -R -f -d \
+-			-c 'wincmd l' -c 'cd $GIT_PREFIX' "$LOCAL" "$REMOTE"
+-		;;
+-	esac
++	"$merge_tool_path" -R -f -d \
++		-c 'wincmd l' -c 'cd $GIT_PREFIX' "$LOCAL" "$REMOTE"
+ }
+ 
+ merge_cmd () {
+ 	touch "$BACKUP"
+-	case "$1" in
+-	gvimdiff|vimdiff)
+-		if $base_present
+-		then
+-			"$merge_tool_path" -f -d -c 'wincmd J' \
+-				"$MERGED" "$LOCAL" "$BASE" "$REMOTE"
+-		else
+-			"$merge_tool_path" -f -d -c 'wincmd l' \
+-				"$LOCAL" "$MERGED" "$REMOTE"
+-		fi
+-		;;
+-	gvimdiff2|vimdiff2)
++	if $base_present
++	then
++		"$merge_tool_path" -f -d -c 'wincmd J' \
++			"$MERGED" "$LOCAL" "$BASE" "$REMOTE"
++	else
+ 		"$merge_tool_path" -f -d -c 'wincmd l' \
+ 			"$LOCAL" "$MERGED" "$REMOTE"
+-		;;
+-	esac
++	fi
+ 	check_unchanged
+ }
+ 
+ translate_merge_tool_path() {
+-	case "$1" in
+-	gvimdiff|gvimdiff2)
+-		echo gvim
+-		;;
+-	vimdiff|vimdiff2)
+-		echo vim
+-		;;
+-	esac
++	echo vim
+ }
+-- 
+1.7.10.rc2.21.g8cb1a
