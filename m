@@ -1,84 +1,88 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 2/2] git: continue alias lookup on EACCES errors
-Date: Wed, 28 Mar 2012 17:25:27 -0400
-Message-ID: <20120328212526.GA10795@sigill.intra.peff.net>
-References: <20120328174841.GA27876@sigill.intra.peff.net>
- <20120328180404.GA9052@burratino>
- <7v1uocwpap.fsf@alter.siamese.dyndns.org>
- <20120328184014.GA8982@burratino>
- <20120328193909.GB29019@sigill.intra.peff.net>
- <20120328194516.GD8982@burratino>
- <20120328201851.GA29315@sigill.intra.peff.net>
- <20120328204221.GE8982@burratino>
- <20120328205144.GA10174@sigill.intra.peff.net>
- <20120328210145.GG8982@burratino>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH v7 3/3] gitweb: add If-Modified-Since handling to git_snapshot().
+Date: Wed, 28 Mar 2012 22:28:08 +0100
+Message-ID: <201203282328.08876.jnareb@gmail.com>
+References: <20120328164513.GA4389@odin.tremily.us> <201203282011.32148.jnareb@gmail.com> <20120328183712.GA5992@odin.tremily.us>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	James Pickens <jepicken@gmail.com>,
-	Git ML <git@vger.kernel.org>,
-	Frans Klaver <fransklaver@gmail.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 28 23:25:39 2012
+Content-Type: text/plain;
+  charset="iso-8859-2"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: "W. Trevor King" <wking@drexel.edu>
+X-From: git-owner@vger.kernel.org Wed Mar 28 23:28:24 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SD0N6-0002Zc-3K
-	for gcvg-git-2@plane.gmane.org; Wed, 28 Mar 2012 23:25:36 +0200
+	id 1SD0Pk-0004wL-G0
+	for gcvg-git-2@plane.gmane.org; Wed, 28 Mar 2012 23:28:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933073Ab2C1VZa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Mar 2012 17:25:30 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:36411
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933045Ab2C1VZ3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Mar 2012 17:25:29 -0400
-Received: (qmail 22215 invoked by uid 107); 28 Mar 2012 21:25:47 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 28 Mar 2012 17:25:47 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 28 Mar 2012 17:25:27 -0400
+	id S933050Ab2C1V2P (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Mar 2012 17:28:15 -0400
+Received: from mail-wg0-f44.google.com ([74.125.82.44]:41301 "EHLO
+	mail-wg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932969Ab2C1V2O (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Mar 2012 17:28:14 -0400
+Received: by wgbdr13 with SMTP id dr13so1371092wgb.1
+        for <git@vger.kernel.org>; Wed, 28 Mar 2012 14:28:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        bh=C98H0d36hTsGIlfD1LvlvZEboSZ3bMHKWy3WIMl20ew=;
+        b=b0SK8yO8KOOFtf1kzIIWQU7KReE7btaRQHMBMlHkkCWgXQm/oyr6Nw/W6JNJE1TLGU
+         vLNRU8wkm6ZVrhzfnHvC0tsvPdSHJaQzPRXj2MtdMfgU7ZD+n0Vj33xnzKwih+XDvq/7
+         o1VWiR1CBNNogWOxMfkgEl55IFDrHMT8ejfisaqXToYFQl91+NP6HuI4LJ3Q3y1KzaMR
+         K43rdcbGs2fFoa8bIXB3Y0dPgv4Whd6qOftydCq/Km1qhy1ONeUwCagjPAg9Gij56X7S
+         ZH5+tqWib4KPb56vPBktVR1ywwhQpgqgOFEsXHqQ3RFiELC9eZBjijX/BCKVnw4nI3i0
+         cnIQ==
+Received: by 10.180.101.231 with SMTP id fj7mr1509240wib.15.1332970093549;
+        Wed, 28 Mar 2012 14:28:13 -0700 (PDT)
+Received: from [192.168.1.13] (euy254.neoplus.adsl.tpnet.pl. [83.20.196.254])
+        by mx.google.com with ESMTPS id k6sm61119403wie.9.2012.03.28.14.28.12
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 28 Mar 2012 14:28:13 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <20120328183712.GA5992@odin.tremily.us>
 Content-Disposition: inline
-In-Reply-To: <20120328210145.GG8982@burratino>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194200>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194201>
 
-On Wed, Mar 28, 2012 at 04:01:45PM -0500, Jonathan Nieder wrote:
+On Wed, 28 Mar 2012, W. Trevor King wrote:
+> On Wed, Mar 28, 2012 at 07:11:31PM +0100, Jakub Narebski wrote:
 
-> Jeff King wrote:
+[...]
+> > And it was not caught by test because CGI.pm can output the last modified
+> > header as "Last-modified" (RFC 2616, sec 4.2 states "Field names are
+> > case-insensitive"), so the last check should be
+> > 
+> >   +	! grep -i "Last-Modified" gitweb.output
+> > 
+> > Hmmm... why we use gitweb.output and not gitweb.headers?  Is it consistency
+> > with earlier tests?
 > 
-> > That is the cost of using the mkpath convenience function (otherwise,
-> > the compiler will complain that ".*" expects an int). We can do it
-> > manually, but in practice, do you really expect your PATH environment
-> > variable to overflow an int?
-> 
-> I'd think a check like
-> 
-> 	if (end - p > INT_MAX)
-> 		die("holy cow your PATH is big");
-> 
-> would be good enough.  Or even
-> 
-> 	assert(end - p <= INT_MAX);
-> 
-> if there is some environment limit I forgot about that makes that
-> always true.
+> Yes, but I can switch to `gitweb.headers` if you'd like.  Should I
+> adjust all the header tests in t9501 to use `gitweb.headers` and `grep
+> -i`?  It should probably be a separate patch for the tests that
+> existed before my i-m-s additions.
 
-You can generally only pass a limited amount through execve. In theory
-we could putenv() an arbitrarily large string, but I'm not sure we need
-to worry about that. The execve limitation ranges from a few pages to a
-few dozen pages by default. On recent versions of linux, it is based on
-the stack rlimit. But my reading of execve(2) says that individual items
-are still capped at 32 pages.
+Eh, don't worry about this.  First, I think we can assume that HTTP
+headers from CGI.pm will all start with capital letter.
 
-However, you have a much bigger problem with giant PATH elements, which
-is that the whole thing is generally going to get stuck in a PATH_MAX
-buffer and truncated. I would expect ENAMETOOLONG or EINVAL from execvp
-in that case. That's what dietlibc will do. But glibc being glibc, it's
-dynamically allocated there.
+Second, for positive match being overly strict is safe - if assumption
+doesn't hold we would get false failure.  The problem is for negative
+match - being overly strict means that we won't catch the breakage.
 
--Peff
+I think that the gitweb.output vs gitweb.headers (and gitweb.body) is
+because those tests predate gitweb_run producing gitweb.headers file.
+Be consistent if you want, or use new feature in new test; you don't
+need to modernize t9501.
+
+-- 
+Jakub Narebski
+Poland
