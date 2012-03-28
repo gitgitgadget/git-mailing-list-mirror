@@ -1,74 +1,76 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 2/2] git: continue alias lookup on EACCES errors
-Date: Wed, 28 Mar 2012 13:48:42 -0400
-Message-ID: <20120328174841.GA27876@sigill.intra.peff.net>
-References: <20120327175933.GA1716@sigill.intra.peff.net>
- <20120327180503.GB4659@sigill.intra.peff.net>
- <7v4nt9j1m3.fsf@alter.siamese.dyndns.org>
- <20120328043058.GD30251@sigill.intra.peff.net>
- <7vaa30wrjx.fsf@alter.siamese.dyndns.org>
+From: LordSmoke <dslice@morphometrics.org>
+Subject: Re: Sharing nested subparts of large repository?
+Date: Wed, 28 Mar 2012 10:52:18 -0700 (PDT)
+Message-ID: <1332957138457-7414676.post@n2.nabble.com>
+References: <1332693502389-7403743.post@n2.nabble.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: James Pickens <jepicken@gmail.com>, Git ML <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Mar 28 19:48:56 2012
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Mar 28 19:52:35 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SCwzN-0001FW-2d
-	for gcvg-git-2@plane.gmane.org; Wed, 28 Mar 2012 19:48:53 +0200
+	id 1SCx2w-0004D9-PM
+	for gcvg-git-2@plane.gmane.org; Wed, 28 Mar 2012 19:52:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932487Ab2C1Rss (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Mar 2012 13:48:48 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:36172
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932434Ab2C1Rss (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Mar 2012 13:48:48 -0400
-Received: (qmail 19281 invoked by uid 107); 28 Mar 2012 17:49:05 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 28 Mar 2012 13:49:05 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 28 Mar 2012 13:48:42 -0400
-Content-Disposition: inline
-In-Reply-To: <7vaa30wrjx.fsf@alter.siamese.dyndns.org>
+	id S932513Ab2C1RwY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Mar 2012 13:52:24 -0400
+Received: from sam.nabble.com ([216.139.236.26]:54101 "EHLO sam.nabble.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752693Ab2C1RwT (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Mar 2012 13:52:19 -0400
+Received: from jim.nabble.com ([192.168.236.80])
+	by sam.nabble.com with esmtp (Exim 4.72)
+	(envelope-from <dslice@morphometrics.org>)
+	id 1SCx2g-0004vq-Fh
+	for git@vger.kernel.org; Wed, 28 Mar 2012 10:52:18 -0700
+In-Reply-To: <1332693502389-7403743.post@n2.nabble.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194151>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194152>
 
-On Wed, Mar 28, 2012 at 10:42:26AM -0700, Junio C Hamano wrote:
+Thanks for the helpful replies. It does seem that branches will do what I
+want. Yesterday, I organized my files and created an (eventually)
+open-source startup project (distinct from the development application
+startup).
 
-> > Yes, though I held back on writing tests, because I don't think we've
-> > quite decided what the behavior _should_ be. Should we be
-> > differentiating "chmod -x /bin/ls" from "chmod -x /bin"? Should we be
-> > continuing alias lookup on EACCES? Should we print edit-distance
-> > suggestions on EACCES?
-> 
-> I am leaning to think that it would be the least surprising if we treat as
-> if /bin/ls does not even exist if /bin is not searchable.  If /bin/ls is
-> unreadable or unexecutable but /bin is searchable, then we _know_ it
-> exists, and we follow the usual exec*p() rule to ignore it so "git ls"
-> would try to find an alias and when all else fails will give the edit
-> distance suggestions but should exclude /bin/ls from candidates.  If /bin
-> itself is unsearchable, we do not even know what it contains, so it is
-> needless to say that /bin/ls will not be part of suggestion candidates.
+I created a branch "development" and "git rm"'d the (many) files I didn't
+want to pass along to my developers. The trick here, I think, is you have to
+do an initial commit before the rm's or else it will affect the master...or
+something. Anyway, I had to reset and try a couple of times, but in the end
+it worked. 
 
-That sounds sensible to me. I think it involves writing our own
-execvp, though, right? If we use stock execvp, we can't tell the
-difference between the two cases. OTOH, I think we already have an
-implementation in compat/mingw.
+After checking out that branch, I created "public", initial commit, then
+rm'd the development startup project and the other files I wouldn't want to
+post to the world.
 
-> That way, the only thing people _could_ complain about is "I have a
-> directory $HOME/sillybin in my $PATH but do not have an executable bit on
-> it.  When I try to run 'git stupid', 'git-stupid' in that diretory is not
-> executed, and I do not even get an error message to point out that I am
-> missing the executable bit on $HOME/sillybin directory".  And you can say
-> "Ah, just like the shell.  So make sure you have necessary permission bits
-> on things".  Very easy and straightforward to explain and understand.
+I also managed to push these branches to my remote repository. Add them to
+my office repository as tracked branches, and test cloning, It works just as
+I had envisioned - cloning the public branch produces the minimal structure.
 
-Agreed.
+I think I am two steps away from complete satisfaction. Not related to this,
+I have some files that are reluctant to be updated, added, tracked, or
+untracked, but that's a different issue. 
 
--Peff
+Now, though, I am wondering about merging the changes across branches. Say I
+make changes on the development branch. If I merge that into the master,
+will the reduced tracking be merged? - don't want that. If I merge the other
+way - from, say, checkout public and merge in development? Will a bunch of
+other stuff come over?
+
+Anyway, that is where I am now and what I am looking into. Very happy with
+progress, so far.
+
+Oh, while I do everything from the command line, seeing it graphically with
+gitx has really helped me conceptualize what is going on. All of this has
+given me a much better understanding of what is going on in the little time
+I have been able to spend on it. 
+
+--
+View this message in context: http://git.661346.n2.nabble.com/Sharing-nested-subparts-of-large-repository-tp7403743p7414676.html
+Sent from the git mailing list archive at Nabble.com.
