@@ -1,159 +1,93 @@
-From: Tim Henigan <tim.henigan@gmail.com>
-Subject: [PATCH 2/2] mergetools: fail if display needed but not present
-Date: Wed, 28 Mar 2012 15:58:13 -0400
-Message-ID: <1332964693-4058-2-git-send-email-tim.henigan@gmail.com>
-References: <1332964693-4058-1-git-send-email-tim.henigan@gmail.com>
-Cc: Tim Henigan <tim.henigan@gmail.com>
-To: gitster@pobox.com, git@vger.kernel.org, davvid@gmail.com
-X-From: git-owner@vger.kernel.org Wed Mar 28 21:59:01 2012
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 9/9 v8] difftool: print list of valid tools with
+ '--tool-help'
+Date: Wed, 28 Mar 2012 13:02:06 -0700
+Message-ID: <7v4nt8v6ip.fsf@alter.siamese.dyndns.org>
+References: <1332959684-2231-1-git-send-email-tim.henigan@gmail.com>
+ <7vvclov9hi.fsf@alter.siamese.dyndns.org>
+ <CAFouetjbq+A04HECXN39KeLBgkTd+HJyxeM0wSDhS2Xo=_gQVQ@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	davvid@gmail.com
+To: Tim Henigan <tim.henigan@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 28 22:02:17 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SCz1I-00078a-TV
-	for gcvg-git-2@plane.gmane.org; Wed, 28 Mar 2012 21:59:01 +0200
+	id 1SCz4S-0001Jy-Hs
+	for gcvg-git-2@plane.gmane.org; Wed, 28 Mar 2012 22:02:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758483Ab2C1T64 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Mar 2012 15:58:56 -0400
-Received: from mail-qa0-f53.google.com ([209.85.216.53]:40527 "EHLO
-	mail-qa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758273Ab2C1T6z (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Mar 2012 15:58:55 -0400
-Received: by mail-qa0-f53.google.com with SMTP id c11so1066535qad.19
-        for <git@vger.kernel.org>; Wed, 28 Mar 2012 12:58:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=hHw49PUTRWPzQXgfGHCQ53dRd1HuzGJrFO4OlmqNbFY=;
-        b=hnsbEV5cVYMMf7+z6u+8RZsTIy071UNCLcc6L/gH93W+yUdvjIGXTULsO1BmVzOZll
-         qrc8FQQ/itlhqJOXyjY7g5nsKMb/SOHKfxW20/niw5/CCoNvybcT0KDO6LFZ57qNUKm+
-         uHUWc+4bfxgRFEd/RaRpZwHeJaZPRYwdaWBoI3zKmiRvYulRjLQiMQU15jHNQ9aCMW3n
-         pT09+SLcTVc0ZqMylpT2HsFezaUU5WOB6HVNznTpmFIYpuWeAzx1nVJvULP9CbsAK4d8
-         2WzAIfafVRDaGAvpBBACaDu5MV4K+a2mDEzPBS33im+o8vS91ISCC2Ibfs8kUXmyqoxs
-         dDkg==
-Received: by 10.224.208.1 with SMTP id ga1mr39998786qab.21.1332964735549;
-        Wed, 28 Mar 2012 12:58:55 -0700 (PDT)
-Received: from localhost (adsl-99-38-69-118.dsl.sfldmi.sbcglobal.net. [99.38.69.118])
-        by mx.google.com with ESMTPS id fq1sm8223989qab.10.2012.03.28.12.58.51
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 28 Mar 2012 12:58:54 -0700 (PDT)
-X-Mailer: git-send-email 1.7.10.rc2.21.g8cb1a
-In-Reply-To: <1332964693-4058-1-git-send-email-tim.henigan@gmail.com>
+	id S1758188Ab2C1UCL convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 28 Mar 2012 16:02:11 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50779 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753499Ab2C1UCK convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 28 Mar 2012 16:02:10 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9079E7D8D;
+	Wed, 28 Mar 2012 16:02:09 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=N//e0+lzIDaa
+	FcJcyWeAm08tHNs=; b=Jfcn5cx7TJd7tTb6gViQgTBcM01u/HzB+KfB1ejART4w
+	+51xF9kl5AvgFQeyhvm3Pfr5E/JWx/K142I2MEaO0aU6WHDe0Alu7GqWc9/Ox+p8
+	lCZSt+iZyLkAuVY5T36lb7J8JUsv6kXUtYThnplYWMD13135OWs/Hdpsa6wyTfE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=FYhvzC
+	PGoPYoiOG5anyOij0gObcf4RF2IzfMd02FHlp5fapwYkxLqp7xGyUzyqLBojvFzK
+	ZpQt5QOqZT/9w19etB28GtS6B/ACjaYxbATdZ9ZtJnmHzZ2bc4lkCgVtAT3pR6iH
+	PGVrCVOhNtyUKHYZim3K6gHTWixuecR1Jeo8E=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 86F307D8C;
+	Wed, 28 Mar 2012 16:02:09 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1059C7D89; Wed, 28 Mar 2012
+ 16:02:07 -0400 (EDT)
+In-Reply-To: <CAFouetjbq+A04HECXN39KeLBgkTd+HJyxeM0wSDhS2Xo=_gQVQ@mail.gmail.com> (Tim
+ Henigan's message of "Wed, 28 Mar 2012 15:48:05 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: E5DDD2C0-7910-11E1-9366-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194180>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194181>
 
-Prior to this commit, if 'git mergetool' or 'git difftool' were run in a
-terminal-only session, they might still try to open a tool that required
-a windowed environment.
+Tim Henigan <tim.henigan@gmail.com> writes:
 
-This commit teaches 'git-mergetool--lib.sh' to test for the presence of
-a display prior to opening tools that require one.
+> On Wed, Mar 28, 2012 at 2:58 PM, Junio C Hamano <gitster@pobox.com> w=
+rote:
+>> Tim Henigan <tim.henigan@gmail.com> writes:
+>>
+>> OK, but doesn't File::Find recurse into its subdirectories? =C2=A0If=
+ you create
+>> a 'foo' directory there and drop a 'bar' script in it, is the rest o=
+f the
+>> code prepared to give you "git difftool -t foo/bar"?
+>
+> It does recurse, but in this context '$_' only contains the current
+> file name within the directory...not the directory itself [1].  So if
+> we call 'find' on a directory that contains:
+>
+>   foo
+>   bar/
+>       baz
+>
+> then @tools =3D ('foo', 'baz')
 
-NOTE: The DISPLAY variable is not set in msysgit or cygwin Git.  In the
-absence of that variable, the script assumes that a window environment
-is always available when running msysgit or cygwin.
+That is even worse, no?  Is the rest of the code prepared to give you "=
+git
+difftool -t baz" in such a layout?  What if you have another baz next t=
+o
+foo and bar?
 
-Signed-off-by: Tim Henigan <tim.henigan@gmail.com>
----
-
-Only 2 of the current diff/merge tools (vim and emerge) can operate
-without a display.
-
-The assumption that a display is always available on msys or cygwin is
-probably not optimal.  However, I was not able to find a better work-
-around.  It also matches the previous behavior that did not test for
-the DISPLAY prior to opening the tool.
-
-
- git-mergetool--lib.sh |   23 +++++++++++++++++++++++
- mergetools/defaults   |    4 ++++
- mergetools/emerge     |    4 ++++
- mergetools/vim        |    4 ++++
- 4 files changed, 35 insertions(+)
-
-diff --git a/git-mergetool--lib.sh b/git-mergetool--lib.sh
-index 89b16dc..75c8b11 100644
---- a/git-mergetool--lib.sh
-+++ b/git-mergetool--lib.sh
-@@ -12,6 +12,19 @@ translate_merge_tool_path () {
- 	echo "$1"
- }
- 
-+display_available() {
-+	if test -n "$DISPLAY"
-+	then
-+		return 0
-+	fi
-+
-+	case "$(uname -s)" in
-+	MINGW*|CYGWIN*) return 0; break;;
-+	esac
-+
-+	return 1
-+}
-+
- check_unchanged () {
- 	if test "$MERGED" -nt "$BACKUP"
- 	then
-@@ -190,6 +203,16 @@ get_merge_tool_path () {
- 			 "'$merge_tool_path'"
- 		exit 1
- 	fi
-+	if ! display_available
-+	then
-+		if tool_requires_display
-+		then
-+			echo >&2 "The $TOOL_MODE tool $merge_tool cannot"\
-+			"be run from a terminal-only session.  A window"\
-+			"environment is required."
-+			exit 1
-+		fi
-+	fi
- 	echo "$merge_tool_path"
- }
- 
-diff --git a/mergetools/defaults b/mergetools/defaults
-index 1d8f2a3..f150227 100644
---- a/mergetools/defaults
-+++ b/mergetools/defaults
-@@ -7,6 +7,10 @@ can_diff () {
- 	return 0
- }
- 
-+tool_requires_display() {
-+	return 0
-+}
-+
- diff_cmd () {
- 	merge_tool_cmd="$(get_merge_tool_cmd "$1")"
- 	if test -z "$merge_tool_cmd"
-diff --git a/mergetools/emerge b/mergetools/emerge
-index f96d9e5..c7eb80b 100644
---- a/mergetools/emerge
-+++ b/mergetools/emerge
-@@ -1,3 +1,7 @@
-+tool_requires_display () {
-+	return 1
-+}
-+
- diff_cmd () {
- 	"$merge_tool_path" -f emerge-files-command "$LOCAL" "$REMOTE"
- }
-diff --git a/mergetools/vim b/mergetools/vim
-index 6817708..ffd9fd6 100644
---- a/mergetools/vim
-+++ b/mergetools/vim
-@@ -1,3 +1,7 @@
-+tool_requires_display () {
-+	return 1
-+}
-+
- diff_cmd () {
- 	"$merge_tool_path" -R -f -d \
- 		-c 'wincmd l' -c 'cd $GIT_PREFIX' "$LOCAL" "$REMOTE"
--- 
-1.7.10.rc2.21.g8cb1a
+What I was hinting at was that you may want to $File::Find::prune=3D1 w=
+hen
+you find a subdirectory.  While at it, you may also want to replace
+the "unless -d $_" with "if -f $_ && -x _" or something.
