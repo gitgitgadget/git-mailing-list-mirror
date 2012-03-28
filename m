@@ -1,76 +1,87 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: git add -p and unresolved conflicts
-Date: Wed, 28 Mar 2012 17:21:41 +0200
-Message-ID: <vpqvclozr7e.fsf@bauges.imag.fr>
-References: <CABPQNSYVXMxS3kugu1j=62ArJ_1saYYfMjJdZvqhjgPFGN=Eqw@mail.gmail.com>
-	<7vbongyd67.fsf@alter.siamese.dyndns.org>
+From: Heiko Voigt <hvoigt@hvoigt.net>
+Subject: Re: [PATCH v5 3/3] push: teach --recurse-submodules the on-demand
+	option
+Date: Wed, 28 Mar 2012 17:30:11 +0200
+Message-ID: <20120328153010.GA46920@book.hvoigt.net>
+References: <20120213092541.GA15585@t1405.greatnet.de> <20120213093008.GD15585@t1405.greatnet.de> <4F70DE29.6050808@in.waw.pl>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: kusmabite@gmail.com, Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Mar 28 17:21:55 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Fredrik Gustafsson <iveqy@iveqy.com>,
+	Jens Lehmann <jens.lehmann@web.de>
+To: Zbigniew J??drzejewski-Szmek <zbyszek@in.waw.pl>
+X-From: git-owner@vger.kernel.org Wed Mar 28 17:30:24 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SCuh8-0007rr-IV
-	for gcvg-git-2@plane.gmane.org; Wed, 28 Mar 2012 17:21:54 +0200
+	id 1SCupI-0006dC-LF
+	for gcvg-git-2@plane.gmane.org; Wed, 28 Mar 2012 17:30:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757702Ab2C1PVt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Mar 2012 11:21:49 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:55015 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754734Ab2C1PVs (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Mar 2012 11:21:48 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id q2SFGXVn027259
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Wed, 28 Mar 2012 17:16:33 +0200
-Received: from bauges.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1SCugw-0006as-3Z; Wed, 28 Mar 2012 17:21:42 +0200
-In-Reply-To: <7vbongyd67.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Wed, 28 Mar 2012 08:10:08 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.93 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Wed, 28 Mar 2012 17:16:34 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: q2SFGXVn027259
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1333552595.23232@M9mec9G5X0X6JmVnUaddMw
+	id S932096Ab2C1PaO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Mar 2012 11:30:14 -0400
+Received: from darksea.de ([83.133.111.250]:47001 "HELO darksea.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1756518Ab2C1PaN (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Mar 2012 11:30:13 -0400
+Received: (qmail 29704 invoked from network); 28 Mar 2012 17:30:11 +0200
+Received: from unknown (HELO localhost) (127.0.0.1)
+  by localhost with SMTP; 28 Mar 2012 17:30:11 +0200
+Content-Disposition: inline
+In-Reply-To: <4F70DE29.6050808@in.waw.pl>
+User-Agent: Mutt/1.5.19 (2009-01-05)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194129>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194130>
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Mon, Mar 26, 2012 at 11:22:49PM +0200, Zbigniew J??drzejewski-Szmek wrote:
+> On 02/13/2012 10:30 AM, Heiko Voigt wrote:
+>> When using this option git will search for all submodules that
+>> have changed in the revisions to be send. It will then try to
+>> push the currently checked out branch of each submodule.
+>>
+>> This helps when a user has finished working on a change which
+>> involves submodules and just wants to push everything in one go.
+>
+>> ---recurse-submodules=check::
+>> -	Check whether all submodule commits used by the revisions to be
+>> -	pushed are available on a remote tracking branch. Otherwise the
+>> -	push will be aborted and the command will exit with non-zero status.
+>> +--recurse-submodules=<check|on-demand>::
+>> +	Make sure all submodule commits used by the revisions to be
+>> +	pushed are available on a remote tracking branch. If check is
+>> +	used it will be checked that all submodule commits that changed
+>> +	in the revisions to be pushed are available on a remote.
+>> +	Otherwise the push will be aborted and exit with non-zero
+>> +	status. If on-demand is used all submodules that changed in the
+>> +	revisions to be pushed will be pushed. If on-demand was not able
+>> +	to push all necessary revisions it will also be aborted and exit
+>> +	with non-zero status.
+> Hi,
+> this desciption seems awkward. Not sure how to improve it, but:
+> - the argument 'check' is changed to '<check|on-demand>', i.e. brackets  
+> are added. This changes the meaning, because brackets are used around a  
+> name for a value provided by the user. So here brackets shouldn't be  
+> used, because 'check' and 'on-demand' are literals.
+> - s/if check is used it will be checked/if check is used git will verify  
+> that/
+> - s/a remote/the remote/
+> - s/Otherwise the push/If any commits are missing the push/ (because  
+> 'Otherwise' could refer to 'If check is used'.)
 
-> I mildly suspect nobody would come up with a sane behaviour, but what
-> would I know...
+I agree on all of these except
 
-Designing a per-hunk behavior would clearly be very tricky.
+	s/a remote/the remote/
 
-But a simple way to deal with this would be to show the whole-file
-patch, and ask "stage this file (yes/no)?".
+which I changed to
 
-My fingers are used to typing
+	s/a remote/at least one remote of the submodule/
 
-git add -p
-y
-y
-y
-git commit
+since it really just checks whether the commits are on some remote. It
+it not strictly the one defined in .gitmodules. Doing it this way allows
+to work with forks without the need to change .gitmodules.
 
-and they would appreciate if it worked in the presence of conflicts.
-Most of the time, I have small conflicts, so a whole-file behavior
-wouldn't be disturbing, but I like seeing the changes before commiting
-them.
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Cheers Heiko
