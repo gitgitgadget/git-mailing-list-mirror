@@ -1,75 +1,83 @@
-From: Holger Hellmuth <hellmuth@ira.uka.de>
-Subject: Re: git add -p and unresolved conflicts
-Date: Wed, 28 Mar 2012 21:14:54 +0200
-Message-ID: <4F73632E.1060408@ira.uka.de>
-References: <CABPQNSYVXMxS3kugu1j=62ArJ_1saYYfMjJdZvqhjgPFGN=Eqw@mail.gmail.com>	<7vbongyd67.fsf@alter.siamese.dyndns.org> <vpqvclozr7e.fsf@bauges.imag.fr>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, kusmabite@gmail.com,
-	Git Mailing List <git@vger.kernel.org>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Wed Mar 28 21:14:18 2012
+From: Erik Faye-Lund <kusmabite@gmail.com>
+Subject: [PATCH] add -p: skip conflicted paths
+Date: Wed, 28 Mar 2012 21:18:02 +0200
+Message-ID: <1332962282-4040-1-git-send-email-kusmabite@gmail.com>
+Cc: gitster@pobox.com, matthieu.moy@grenoble-inp.fr,
+	hellmuth@ira.uka.de
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Mar 28 21:18:16 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SCyJz-0003Tz-QN
-	for gcvg-git-2@plane.gmane.org; Wed, 28 Mar 2012 21:14:16 +0200
+	id 1SCyNr-0007F0-Hy
+	for gcvg-git-2@plane.gmane.org; Wed, 28 Mar 2012 21:18:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752892Ab2C1TOL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Mar 2012 15:14:11 -0400
-Received: from iramx2.ira.uni-karlsruhe.de ([141.3.10.81]:58514 "EHLO
-	iramx2.ira.uni-karlsruhe.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753377Ab2C1TOK (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 28 Mar 2012 15:14:10 -0400
-Received: from irams1.ira.uni-karlsruhe.de ([141.3.10.5])
-	by iramx2.ira.uni-karlsruhe.de with esmtps port 25 
-	id 1SCyJl-0004sW-AJ; Wed, 28 Mar 2012 21:14:06 +0200
-Received: from i20s141.iaks.uni-karlsruhe.de ([141.3.32.141] helo=[172.16.22.120])
-	by irams1.ira.uni-karlsruhe.de with esmtpsa port 25 
-	id 1SCyJk-0006ZI-ON; Wed, 28 Mar 2012 21:14:01 +0200
-User-Agent: Mozilla/5.0 (X11; U; Linux i686 (x86_64); en-US; rv:1.9.2.24) Gecko/20111101 SUSE/3.1.16 Thunderbird/3.1.16
-In-Reply-To: <vpqvclozr7e.fsf@bauges.imag.fr>
-X-ATIS-AV: ClamAV (irams1.ira.uni-karlsruhe.de)
-X-ATIS-AV: ClamAV (iramx2.ira.uni-karlsruhe.de)
-X-ATIS-AV: Kaspersky (iramx2.ira.uni-karlsruhe.de)
-X-ATIS-Timestamp: iramx2.ira.uni-karlsruhe.de 1332962046.859744000
+	id S1757585Ab2C1TSK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Mar 2012 15:18:10 -0400
+Received: from mail-bk0-f46.google.com ([209.85.214.46]:43687 "EHLO
+	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755431Ab2C1TSJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Mar 2012 15:18:09 -0400
+Received: by bkcik5 with SMTP id ik5so1272886bkc.19
+        for <git@vger.kernel.org>; Wed, 28 Mar 2012 12:18:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        bh=unoEsCVPbeQQvfjgUUaWsf+8DqMyDy7/qq50YO+FaT0=;
+        b=cjAfthHrOI8c7fz3cxTYQrFIniHtYDOaozLzNx+85tO1VND/Kgg5iRBB+IydzmeUPa
+         1yINolZoztlQharmXjoryED6U+N53+pB+Co0BAPzZssSje0WIgDCpjlEpYsOD3kmf1sO
+         T2kTBQPHuI4Jx9N2ui5+SP6XSzFt6TnJifN2kl4KNWCJq+K/eFm1krnNOP8IpLrKuNvS
+         StkPYll8YRN3t5zW2MWDeRqDIv2o7AYrcHMI3ixIXg2BtvAoKIxxn5hm1SK/XOwCIBX7
+         95DF+nh8/IQTMm8I/kHOUBDYwUrJPAKyR3AWZmkmpjN5gTIKekHhcNNgFC4VtCyHbuj4
+         jCQw==
+Received: by 10.204.143.151 with SMTP id v23mr12778749bku.63.1332962288141;
+        Wed, 28 Mar 2012 12:18:08 -0700 (PDT)
+Received: from localhost (cm-84.215.107.111.getinternet.no. [84.215.107.111])
+        by mx.google.com with ESMTPS id jr13sm8636871bkb.14.2012.03.28.12.18.05
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 28 Mar 2012 12:18:06 -0700 (PDT)
+X-Mailer: git-send-email 1.7.9
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194165>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194166>
 
-On 28.03.2012 17:21, Matthieu Moy wrote:
-> Junio C Hamano<gitster@pobox.com>  writes:
->
->> I mildly suspect nobody would come up with a sane behaviour, but what
->> would I know...
->
-> Designing a per-hunk behavior would clearly be very tricky.
->
+When performing "git add -p" on a file in a conflicted state, we
+currently spew the diff and terminate the process.
 
-I don't think it's that tricky:
+This is not very helpful to the user. Change the behaviour to
+skipping the file, while outputting a warning.
 
-For a conflicted file show any conflicted hunks first(!) and only 
-provide the following options for them:
-q - quit, do not stage...
-d - do not stage this hunk nor any of the remaining hunks in the file
-e - manually edit the current hunk
-? - print help
+Signed-off-by: Erik Faye-Lund <kusmabite@gmail.com>
+---
 
-and additionally the following three options:
-b - choose the base version
-< - choose our version
- > - choose their version
+OK, here's a quick stab at fixing the "add -p" issue. Note that
+I'm not very fluent in Perl, so apologies if this is not up to
+standards.
 
-< and > correspond to the conflict markers, alternatives would be o and t
+ git-add--interactive.perl |    7 +++++++
+ 1 files changed, 7 insertions(+), 0 deletions(-)
 
-The user now has the option to remove the conflicts (through editing or 
-choosing one of the versions) or abort adding the file.
-
-The tricky part might be sorting the hunks so that conflicts are first 
-(depending on how the code works now), choosing the right version in a 
-hunk (the three new options) should be relatively easy.
+diff --git a/git-add--interactive.perl b/git-add--interactive.perl
+index 8f0839d..a52507f 100755
+--- a/git-add--interactive.perl
++++ b/git-add--interactive.perl
+@@ -1259,6 +1259,13 @@ sub patch_update_file {
+ 	my $quit = 0;
+ 	my ($ix, $num);
+ 	my $path = shift;
++
++	# skip conflicted paths
++	if (run_cmd_pipe(qw(git ls-files -u --), $path)) {
++		print colored $error_color, "Warning: $path is in conflicted state, skipping.\n";
++		return 0;
++	}
++
+ 	my ($head, @hunk) = parse_diff($path);
+ 	($head, my $mode, my $deletion) = parse_diff_header($head);
+ 	for (@{$head->{DISPLAY}}) {
+-- 
+1.7.9
