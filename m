@@ -1,93 +1,78 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 9/9 v8] difftool: print list of valid tools with
- '--tool-help'
-Date: Wed, 28 Mar 2012 13:02:06 -0700
-Message-ID: <7v4nt8v6ip.fsf@alter.siamese.dyndns.org>
-References: <1332959684-2231-1-git-send-email-tim.henigan@gmail.com>
- <7vvclov9hi.fsf@alter.siamese.dyndns.org>
- <CAFouetjbq+A04HECXN39KeLBgkTd+HJyxeM0wSDhS2Xo=_gQVQ@mail.gmail.com>
+From: Holger Hellmuth <hellmuth@ira.uka.de>
+Subject: Re: git add -p and unresolved conflicts
+Date: Wed, 28 Mar 2012 22:10:15 +0200
+Message-ID: <4F737027.5020503@ira.uka.de>
+References: <CABPQNSYVXMxS3kugu1j=62ArJ_1saYYfMjJdZvqhjgPFGN=Eqw@mail.gmail.com>	<7vbongyd67.fsf@alter.siamese.dyndns.org>	<vpqvclozr7e.fsf@bauges.imag.fr> <4F73632E.1060408@ira.uka.de> <vpqk424zfb1.fsf@bauges.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	davvid@gmail.com
-To: Tim Henigan <tim.henigan@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 28 22:02:17 2012
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, kusmabite@gmail.com,
+	Git Mailing List <git@vger.kernel.org>
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Wed Mar 28 22:09:37 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SCz4S-0001Jy-Hs
-	for gcvg-git-2@plane.gmane.org; Wed, 28 Mar 2012 22:02:16 +0200
+	id 1SCzBY-0007Cu-F4
+	for gcvg-git-2@plane.gmane.org; Wed, 28 Mar 2012 22:09:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758188Ab2C1UCL convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 28 Mar 2012 16:02:11 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50779 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753499Ab2C1UCK convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 28 Mar 2012 16:02:10 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9079E7D8D;
-	Wed, 28 Mar 2012 16:02:09 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=N//e0+lzIDaa
-	FcJcyWeAm08tHNs=; b=Jfcn5cx7TJd7tTb6gViQgTBcM01u/HzB+KfB1ejART4w
-	+51xF9kl5AvgFQeyhvm3Pfr5E/JWx/K142I2MEaO0aU6WHDe0Alu7GqWc9/Ox+p8
-	lCZSt+iZyLkAuVY5T36lb7J8JUsv6kXUtYThnplYWMD13135OWs/Hdpsa6wyTfE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=FYhvzC
-	PGoPYoiOG5anyOij0gObcf4RF2IzfMd02FHlp5fapwYkxLqp7xGyUzyqLBojvFzK
-	ZpQt5QOqZT/9w19etB28GtS6B/ACjaYxbATdZ9ZtJnmHzZ2bc4lkCgVtAT3pR6iH
-	PGVrCVOhNtyUKHYZim3K6gHTWixuecR1Jeo8E=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 86F307D8C;
-	Wed, 28 Mar 2012 16:02:09 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1059C7D89; Wed, 28 Mar 2012
- 16:02:07 -0400 (EDT)
-In-Reply-To: <CAFouetjbq+A04HECXN39KeLBgkTd+HJyxeM0wSDhS2Xo=_gQVQ@mail.gmail.com> (Tim
- Henigan's message of "Wed, 28 Mar 2012 15:48:05 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: E5DDD2C0-7910-11E1-9366-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S932261Ab2C1UJa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Mar 2012 16:09:30 -0400
+Received: from iramx2.ira.uni-karlsruhe.de ([141.3.10.81]:60869 "EHLO
+	iramx2.ira.uni-karlsruhe.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S932206Ab2C1UJa (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 28 Mar 2012 16:09:30 -0400
+Received: from irams1.ira.uni-karlsruhe.de ([141.3.10.5])
+	by iramx2.ira.uni-karlsruhe.de with esmtps port 25 
+	id 1SCzBK-0001vr-Bm; Wed, 28 Mar 2012 22:09:27 +0200
+Received: from i20s141.iaks.uni-karlsruhe.de ([141.3.32.141] helo=[172.16.22.120])
+	by irams1.ira.uni-karlsruhe.de with esmtpsa port 25 
+	id 1SCzBK-0003Zo-6U; Wed, 28 Mar 2012 22:09:22 +0200
+User-Agent: Mozilla/5.0 (X11; U; Linux i686 (x86_64); en-US; rv:1.9.2.24) Gecko/20111101 SUSE/3.1.16 Thunderbird/3.1.16
+In-Reply-To: <vpqk424zfb1.fsf@bauges.imag.fr>
+X-ATIS-AV: ClamAV (irams1.ira.uni-karlsruhe.de)
+X-ATIS-AV: ClamAV (iramx2.ira.uni-karlsruhe.de)
+X-ATIS-AV: Kaspersky (iramx2.ira.uni-karlsruhe.de)
+X-ATIS-Timestamp: iramx2.ira.uni-karlsruhe.de 1332965367.839743000
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194181>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194182>
 
-Tim Henigan <tim.henigan@gmail.com> writes:
-
-> On Wed, Mar 28, 2012 at 2:58 PM, Junio C Hamano <gitster@pobox.com> w=
-rote:
->> Tim Henigan <tim.henigan@gmail.com> writes:
->>
->> OK, but doesn't File::Find recurse into its subdirectories? =C2=A0If=
- you create
->> a 'foo' directory there and drop a 'bar' script in it, is the rest o=
-f the
->> code prepared to give you "git difftool -t foo/bar"?
+On 28.03.2012 21:38, Matthieu Moy wrote:
+> Holger Hellmuth<hellmuth@ira.uka.de>  writes:
 >
-> It does recurse, but in this context '$_' only contains the current
-> file name within the directory...not the directory itself [1].  So if
-> we call 'find' on a directory that contains:
+>> and additionally the following three options:
+>> b - choose the base version
+>> <  - choose our version
+>>> - choose their version
 >
->   foo
->   bar/
->       baz
+> What does it mean to "choose" in this context? In general, it means "put
+> this into the index", but if the file is in conflicted state, you have 3
+> different versions of the file in the index.
+
+The only ways to exit with the proposed reduced options is to either 
+quit adding this file (which is comparable to Eriks option 4) or 
+resolving all conflicts in the file thereby allowing to add this file to 
+the index.
+
+> And you miss the most usefull (to me at least): "choose the version in
+> the worktree".
 >
-> then @tools =3D ('foo', 'baz')
 
-That is even worse, no?  Is the rest of the code prepared to give you "=
-git
-difftool -t baz" in such a layout?  What if you have another baz next t=
-o
-foo and bar?
+But the conflicted chunks are of the form "<<<< our ... |||||||||| 
+theirs >>>>>>" in your work tree. So there are two cases:
 
-What I was hinting at was that you may want to $File::Find::prune=3D1 w=
-hen
-you find a subdirectory.  While at it, you may also want to replace
-the "unless -d $_" with "if -f $_ && -x _" or something.
+a) You have removed the markers thereby removing the conflict -> this 
+means the chunk will not be offered to you as a conflicting chunk
+
+b) You haven't removed the markers. Then there is a choice between base, 
+our and their version.
+If you had edited one of the versions between the conflict markers in 
+your working tree without removing the markers (which wouldn't be a 
+sensible thing) then it depends on whether the chunk in the working tree 
+or the versions in the index are used as a basis for the choosing, but I 
+suspect using the working tree version is easier to do.
