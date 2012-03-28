@@ -1,150 +1,95 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] correct a few doubled-word nits in comments and
- documentation
-Date: Wed, 28 Mar 2012 12:41:33 -0500
-Message-ID: <20120328174133.GA8732@burratino>
-References: <87d37xun9r.fsf@rho.meyering.net>
- <7vty18wweh.fsf@alter.siamese.dyndns.org>
- <878viku26e.fsf@rho.meyering.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/2] git: continue alias lookup on EACCES errors
+Date: Wed, 28 Mar 2012 10:42:26 -0700
+Message-ID: <7vaa30wrjx.fsf@alter.siamese.dyndns.org>
+References: <20120327175933.GA1716@sigill.intra.peff.net>
+ <20120327180503.GB4659@sigill.intra.peff.net>
+ <7v4nt9j1m3.fsf@alter.siamese.dyndns.org>
+ <20120328043058.GD30251@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git list <git@vger.kernel.org>,
-	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To: Jim Meyering <jim@meyering.net>
-X-From: git-owner@vger.kernel.org Wed Mar 28 19:41:50 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: James Pickens <jepicken@gmail.com>, Git ML <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Mar 28 19:42:41 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SCwsW-000426-NX
-	for gcvg-git-2@plane.gmane.org; Wed, 28 Mar 2012 19:41:49 +0200
+	id 1SCwtM-0004g1-2W
+	for gcvg-git-2@plane.gmane.org; Wed, 28 Mar 2012 19:42:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932208Ab2C1Rlo convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 28 Mar 2012 13:41:44 -0400
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:57872 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753377Ab2C1Rln convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 28 Mar 2012 13:41:43 -0400
-Received: by yenl12 with SMTP id l12so916758yen.19
-        for <git@vger.kernel.org>; Wed, 28 Mar 2012 10:41:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=ArSL+lP6AkqoBdN18NXxX9qyor9o+Cdy31ki/RdYlOc=;
-        b=aauXrdRdtYfdAsDQuihPj21DD10jvm/ANLgW37qI5WU1cuYKynRNUonqfJzH9iZmA+
-         RuNDNw8Hr3Bk7d1i4q1rnh8NsJgZI1neWIHY2BQVqiuRbCAkRmoXGHobJGySEC6rwmge
-         s0l9/yfdvm9/DvZXpaLy54Ts96MJjKYcSjWSD6am2AcikgX4SIwukUeLdMBCYR/nuT9j
-         GqeGgFxXegFSCawQ2WRotoR59AD4AxDFyDrMl9KZRc7CaY9GInJexyt4cQkIJ0BLJkP3
-         N90AJ3YxdhY51FnsOX/AyzcPCvh1WG6YZSjOelfvBPl2mwiK59rOZZYIdcHFNmc+0BFI
-         R8mA==
-Received: by 10.50.40.233 with SMTP id a9mr40784igl.24.1332956502391;
-        Wed, 28 Mar 2012 10:41:42 -0700 (PDT)
-Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
-        by mx.google.com with ESMTPS id en3sm3611128igc.2.2012.03.28.10.41.39
-        (version=SSLv3 cipher=OTHER);
-        Wed, 28 Mar 2012 10:41:39 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <878viku26e.fsf@rho.meyering.net>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S932429Ab2C1Rma (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Mar 2012 13:42:30 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:57079 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932270Ab2C1Rm3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Mar 2012 13:42:29 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 280CA7F40;
+	Wed, 28 Mar 2012 13:42:28 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=h6qoyOdfqFsdEwfq0Fer8YN3Wn0=; b=XnKRsA
+	7aLWvZziKz5YcUZ4ICtGfNUCzH49GlxpnGse5XaaoNkCwy+0rLEoIxuA3Rx5BonL
+	XNfodTotceZRoefZD8JToSvmhUIY52Y2VCJdo38cR0vmXHspB0kZuMSChDZ53bhq
+	1ZtHWboUx5BebRkxNp2Pk64GJlgBrsCNN/Hec=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Q7P4WKqc7E9G90QFD7zDk5NrA5ZTt4Cw
+	dQY2RoK+jZSIxCAkkDIvwN6idkA8z6840g7uD/MVBfbZ5GzIrI/SRYMuXn7ox5Gq
+	SRvnGix00IuoQeSNsc2HNoaoNds52ySV0VphTkxU6xrs5n8AKvq4SFpBsRAQZLEU
+	mwXdrF08m2E=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1F7947F3F;
+	Wed, 28 Mar 2012 13:42:28 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A5F6C7F3E; Wed, 28 Mar 2012
+ 13:42:27 -0400 (EDT)
+In-Reply-To: <20120328043058.GD30251@sigill.intra.peff.net> (Jeff King's
+ message of "Wed, 28 Mar 2012 00:30:58 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 62C4197A-78FD-11E1-9836-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194147>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194148>
 
-(+cc: =C3=86var for a side note marked with (*) below)
-Hi,
+Jeff King <peff@peff.net> writes:
 
-Jim Meyering wrote:
+> On Tue, Mar 27, 2012 at 12:16:36PM -0700, Junio C Hamano wrote:
+>
+>> Jeff King <peff@peff.net> writes:
+>> 
+>> > If git receives an EACCES error while trying to execute an
+>> > external command, we currently give up and report the error.
+>> > However, the EACCES may be caused by an inaccessible
+>> > directory in the user's PATH.
+>> 
+>> Regardless of EACCES/ENOENT change we discussed, the observable behaviour
+>> should be testable.  Something like this?
+>
+> Yes, though I held back on writing tests, because I don't think we've
+> quite decided what the behavior _should_ be. Should we be
+> differentiating "chmod -x /bin/ls" from "chmod -x /bin"? Should we be
+> continuing alias lookup on EACCES? Should we print edit-distance
+> suggestions on EACCES?
 
-> Found by running this command:
-> $ git ls-files -z|xargs -0 perl -0777 -n \
->  -e 'while (/\b(then?|[iao]n|i[fst]|but|f?or|at|and|[dt]o)\s+\1\b/gim=
-s)' \
->  -e '  {' \
->  -e '    $n =3D ($` =3D~ tr/\n/\n/ + 1);' \
->  -e '    ($v =3D $&) =3D~ s/\n/\\n/g;' \
->  -e '    print "$ARGV:$n:$v\n";' \
->  -e '  }'
+I am leaning to think that it would be the least surprising if we treat as
+if /bin/ls does not even exist if /bin is not searchable.  If /bin/ls is
+unreadable or unexecutable but /bin is searchable, then we _know_ it
+exists, and we follow the usual exec*p() rule to ignore it so "git ls"
+would try to find an alias and when all else fails will give the edit
+distance suggestions but should exclude /bin/ls from candidates.  If /bin
+itself is unsearchable, we do not even know what it contains, so it is
+needless to say that /bin/ls will not be part of suggestion candidates.
 
-Yeah, this often happens when a person returns to writing after being
-interrupted in the middle of a train of thought.
-
-[...]
-> +++ b/Documentation/git-sh-i18n--envsubst.txt
-> @@ -25,7 +25,7 @@ plumbing scripts and/or are writing new ones.
-[...]
->  used internally by linkgit:git-sh-i18n[1] to interpolate the variabl=
-es
-> -passed to the the `eval_gettext` function.
-> +passed to the `eval_gettext` function.
-
-Good catch.
-
-[...]
-> +++ b/attr.h
-> @@ -40,7 +40,7 @@ int git_check_attr(const char *path, int, struct gi=
-t_attr_check *);
->=20
->  /*
->   * Retrieve all attributes that apply to the specified path.  *num
-> - * will be set the the number of attributes on the path; **check wil=
-l
-> + * will be set the number of attributes on the path; **check will
-
-Shouldn't this say "to the"?
-
-[...]
-> +++ b/gitweb/static/js/lib/cookies.js
-> @@ -30,7 +30,7 @@
->   *                            If set to null or omitted, the cookie =
-will be a session cookie
-> - *                            and will not be retained when the the =
-browser exits.
-> + *                            and will not be retained when the brow=
-ser exits.
-
-Looks good.
-
-[...]
-> +++ b/po/README
-> @@ -178,7 +178,7 @@ used:
->=20
->  C:
->=20
-> - - Include builtin.h at the top, it'll pull in in gettext.h, which
-> + - Include builtin.h at the top, it'll pull in gettext.h, which
->     defines the gettext interface. Consult with the list if you need =
-to
->     use gettext.h directly.
-
-Not related to this patch, but the sentence is a comma splice.  I'm
-also not convinced that #include-ing builtin.h is actually a good idea
-when you are not defining or using functions declared in that header. (=
-*)
-
-But that's all orthogonal to your patch, so looks good.
-
-Patch for squashing in follows.
-
-Thanks,
-Jonathan
-
-diff --git i/attr.h w/attr.h
-index dea590a7..8b08d33a 100644
---- i/attr.h
-+++ w/attr.h
-@@ -40,7 +40,7 @@ int git_check_attr(const char *path, int, struct git_=
-attr_check *);
-=20
- /*
-  * Retrieve all attributes that apply to the specified path.  *num
-- * will be set the number of attributes on the path; **check will
-+ * will be set to the number of attributes on the path; **check will
-  * be set to point at a newly-allocated array of git_attr_check
-  * objects describing the attributes and their values.  *check must be
-  * free()ed by the caller.
+That way, the only thing people _could_ complain about is "I have a
+directory $HOME/sillybin in my $PATH but do not have an executable bit on
+it.  When I try to run 'git stupid', 'git-stupid' in that diretory is not
+executed, and I do not even get an error message to point out that I am
+missing the executable bit on $HOME/sillybin directory".  And you can say
+"Ah, just like the shell.  So make sure you have necessary permission bits
+on things".  Very easy and straightforward to explain and understand.
