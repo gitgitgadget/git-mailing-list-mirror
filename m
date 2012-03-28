@@ -1,78 +1,94 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] git: continue alias lookup on EACCES errors
-Date: Wed, 28 Mar 2012 14:44:34 -0700
-Message-ID: <7vehsctn7h.fsf@alter.siamese.dyndns.org>
-References: <20120328043058.GD30251@sigill.intra.peff.net>
- <7vaa30wrjx.fsf@alter.siamese.dyndns.org>
- <20120328174841.GA27876@sigill.intra.peff.net>
- <20120328180404.GA9052@burratino> <7v1uocwpap.fsf@alter.siamese.dyndns.org>
- <20120328184014.GA8982@burratino>
- <20120328193909.GB29019@sigill.intra.peff.net>
- <20120328194516.GD8982@burratino>
- <20120328201851.GA29315@sigill.intra.peff.net>
- <7vzkb0tq10.fsf@alter.siamese.dyndns.org>
- <20120328210407.GC10174@sigill.intra.peff.net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH v7 3/3] gitweb: add If-Modified-Since handling to git_snapshot().
+Date: Wed, 28 Mar 2012 22:45:49 +0100
+Message-ID: <201203282345.49673.jnareb@gmail.com>
+References: <20120328164513.GA4389@odin.tremily.us> <7vr4wcv8v4.fsf@alter.siamese.dyndns.org> <20120328192750.GA6909@odin.tremily.us>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	James Pickens <jepicken@gmail.com>,
-	Git ML <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Mar 28 23:44:42 2012
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: "W. Trevor King" <wking@drexel.edu>
+X-From: git-owner@vger.kernel.org Wed Mar 28 23:46:05 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SD0fZ-0001bW-UN
-	for gcvg-git-2@plane.gmane.org; Wed, 28 Mar 2012 23:44:42 +0200
+	id 1SD0gq-00035Y-Qb
+	for gcvg-git-2@plane.gmane.org; Wed, 28 Mar 2012 23:46:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933193Ab2C1Voh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Mar 2012 17:44:37 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:63590 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933180Ab2C1Vog (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Mar 2012 17:44:36 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4964E73F5;
-	Wed, 28 Mar 2012 17:44:36 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=BKHKElT4Gzf5JqNcqZlQjBSVOu0=; b=IWkYcG
-	3yTKNc/T484jcxBmismEIcmjxbRRRY2hXNKjUs1BmCMrQ7N3cBy+BYDR7O72el0A
-	uxCeskwHNe0rZn2KSC9C0vOZLy2+unrmGWTdqhm+ble9xbCzuOrpvw3cOQJBtydl
-	jsfB3K0wL+6kxx3zqUcHNtYCVO4SulAaSJpSo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=aQX39ol3Rv5OYs4UaWWwTda8BMBvQ+D3
-	TFU6gPTc2/TcnvnMzOp0SGiH4SB8lTeRT27Rh+6dH16AdDNe4dPtSqAEA23V52sN
-	d/NGf4aiHeKHbcMwOCNA2jY17CKFsCBvkn+ARPDSmv+mNs4dGW5P1a1dxf3NyJfX
-	zMnXdKvAej8=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4082D73F4;
-	Wed, 28 Mar 2012 17:44:36 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C90F973F2; Wed, 28 Mar 2012
- 17:44:35 -0400 (EDT)
-In-Reply-To: <20120328210407.GC10174@sigill.intra.peff.net> (Jeff King's
- message of "Wed, 28 Mar 2012 17:04:07 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 3637033C-791F-11E1-A9BB-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1758516Ab2C1Vpv convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 28 Mar 2012 17:45:51 -0400
+Received: from mail-wi0-f178.google.com ([209.85.212.178]:35732 "EHLO
+	mail-wi0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758145Ab2C1Vpt (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Mar 2012 17:45:49 -0400
+Received: by wibhq7 with SMTP id hq7so1388812wib.1
+        for <git@vger.kernel.org>; Wed, 28 Mar 2012 14:45:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        bh=vZsq+l6EOszNnqogLe0xouz5vDIujw5dRDpIlynj7vM=;
+        b=UCGLwNGPQZ6agt12CLBBNsjHkJKQh1/1yTNxnizwk24mm70N7IGQfqUQ4+gfPkH9EH
+         Z3CS5npBLfWw3OWGKT9P+vHCP2y8oaKrpZtGEazGRRZZnLNxhw8jK3FvylrAqXGDnISC
+         E+7FmPceWaMMX1KCiHmSD2xZRdZA+DnBm8lBTSZ1+3oTBI3P7CeaCMPehsTRVplUBtyq
+         HDz5wRP0miGdYHSfswSIgDOVW9r1JsUxv6AIJqDuofrX9IKrUiT62ErcaVzqbzOkS7zP
+         jToNUug/DgwBfQx4zemY8KbEjwkrBWTzYYdAtY6YS517ShkaKsHfL7PPKgDkVUzw3GC6
+         lHag==
+Received: by 10.180.101.231 with SMTP id fj7mr1602527wib.15.1332971148516;
+        Wed, 28 Mar 2012 14:45:48 -0700 (PDT)
+Received: from [192.168.1.13] (euy254.neoplus.adsl.tpnet.pl. [83.20.196.254])
+        by mx.google.com with ESMTPS id ea6sm30970054wib.5.2012.03.28.14.45.47
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 28 Mar 2012 14:45:48 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <20120328192750.GA6909@odin.tremily.us>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194204>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194205>
 
-Jeff King <peff@peff.net> writes:
+On Wed, 28 Mar 2012, W. Trevor King wrote:
+> On Wed, Mar 28, 2012 at 12:11:27PM -0700, Junio C Hamano wrote:
+> > "W. Trevor King" <wking@drexel.edu> writes:
+> >=20
+> > > Grr.  Thanks.  I'm getting lots of rebase practice on this patch =
+set,
+> > > but I'm still missing things=E2=80=A6
+> >=20
+> > How do you "rebase"?
+> >=20
+> > It often is the easiest to check out the tip of the previous iterat=
+ion,
+> > fix all issues that were brought up in the working tree, eyeball th=
+e
+> > output from "git diff HEAD" to make sure you addressed all the comm=
+ents,o
+> > and then make separate commits, using "add -p" to sift the fix-ups
+> > according to which commit in the previous round they need to update=
+=2E
+> >=20
+> > And then finally you run "rebase -i" to squash these fix-ups in.
+>=20
+> Ah, that makes a lot of sense.  I had been running `rebase -i`,
+> editing the earlier commits, and using `commit -a --amend` to squash
+> them on.  The problem with that approach is that you need to check th=
+e
+> changes vs the previous release before each amend, while with your
+> suggestion there's a single diff to look through.
 
-> Regarding the name, I pulled it from the linux-manpages execvp(3), since
-> this is supposed to be compatible. POSIX uses the even worse "path" as
-> the first element. But there is no reason we have to follow those naming
-> conventions.
+BTW. I personally use StGit (a patch management interface on top of git=
+)
+instead of interactive rebase.  Just in case, and to be able to write
+differences to previous version, I use git-format-patch to generate
+patches to a subdirectory, e.g. mdir.gitweb.v7/, and compare with previ=
+ous
+version.
 
-Let me take that back.  We are checking if there is a non-command in a
-directory that is somewhere on the PATH, so calling it file like you did
-is a lot saner than calling it cmd.
+--=20
+Jakub Narebski
+Poland
