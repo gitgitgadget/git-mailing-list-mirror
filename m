@@ -1,69 +1,79 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: git add -p and unresolved conflicts
-Date: Wed, 28 Mar 2012 21:38:42 +0200
-Message-ID: <vpqk424zfb1.fsf@bauges.imag.fr>
-References: <CABPQNSYVXMxS3kugu1j=62ArJ_1saYYfMjJdZvqhjgPFGN=Eqw@mail.gmail.com>
-	<7vbongyd67.fsf@alter.siamese.dyndns.org>
-	<vpqvclozr7e.fsf@bauges.imag.fr> <4F73632E.1060408@ira.uka.de>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 2/2] git: continue alias lookup on EACCES errors
+Date: Wed, 28 Mar 2012 15:39:09 -0400
+Message-ID: <20120328193909.GB29019@sigill.intra.peff.net>
+References: <20120327175933.GA1716@sigill.intra.peff.net>
+ <20120327180503.GB4659@sigill.intra.peff.net>
+ <7v4nt9j1m3.fsf@alter.siamese.dyndns.org>
+ <20120328043058.GD30251@sigill.intra.peff.net>
+ <7vaa30wrjx.fsf@alter.siamese.dyndns.org>
+ <20120328174841.GA27876@sigill.intra.peff.net>
+ <20120328180404.GA9052@burratino>
+ <7v1uocwpap.fsf@alter.siamese.dyndns.org>
+ <20120328184014.GA8982@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Junio C Hamano <gitster@pobox.com>, kusmabite@gmail.com,
-	Git Mailing List <git@vger.kernel.org>
-To: Holger Hellmuth <hellmuth@ira.uka.de>
-X-From: git-owner@vger.kernel.org Wed Mar 28 21:39:04 2012
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	James Pickens <jepicken@gmail.com>,
+	Git ML <git@vger.kernel.org>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 28 21:39:18 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SCyhy-00080Q-93
-	for gcvg-git-2@plane.gmane.org; Wed, 28 Mar 2012 21:39:02 +0200
+	id 1SCyiD-0008DX-V2
+	for gcvg-git-2@plane.gmane.org; Wed, 28 Mar 2012 21:39:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758165Ab2C1Ti6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Mar 2012 15:38:58 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:34882 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758027Ab2C1Ti5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Mar 2012 15:38:57 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id q2SJXorL007888
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Wed, 28 Mar 2012 21:33:50 +0200
-Received: from bauges.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1SCyhf-0001hP-DV; Wed, 28 Mar 2012 21:38:43 +0200
-In-Reply-To: <4F73632E.1060408@ira.uka.de> (Holger Hellmuth's message of "Wed,
-	28 Mar 2012 21:14:54 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.93 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Wed, 28 Mar 2012 21:33:50 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: q2SJXorL007888
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1333568035.36318@6bc5AeCzuwX6oeQU2XL+aQ
+	id S1758220Ab2C1TjN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Mar 2012 15:39:13 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:36276
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758027Ab2C1TjL (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Mar 2012 15:39:11 -0400
+Received: (qmail 20587 invoked by uid 107); 28 Mar 2012 19:39:30 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 28 Mar 2012 15:39:30 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 28 Mar 2012 15:39:09 -0400
+Content-Disposition: inline
+In-Reply-To: <20120328184014.GA8982@burratino>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194171>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194172>
 
-Holger Hellmuth <hellmuth@ira.uka.de> writes:
+On Wed, Mar 28, 2012 at 01:40:14PM -0500, Jonathan Nieder wrote:
 
-> and additionally the following three options:
-> b - choose the base version
-> < - choose our version
-> > - choose their version
+> On Wed, Mar 28, 2012 at 11:31:10AM -0700, Junio C Hamano wrote:
+> > Jonathan Nieder <jrnieder@gmail.com> writes:
+> 
+> >> Example: when I try
+> >>
+> >>  :; mkdir $HOME/cannotread
+> >>  :; chmod -x $HOME/cannotread
+> >>  :; echo nonsense >$HOME/bin/cat
+> >>  :; chmod -x $HOME/bin/cat
+> >>  :; PATH=$HOME/cannotread:$HOME/bin:/usr/local/bin:/usr/bin:/bin
+> >>  :; cat /etc/fstab
+> >>
+> >> the shell uses /bin/cat without complaint.
+> >
+> > Yeah, but I think that the case Peff is worried about is:
+> >
+> >         $ >~/bin/nosuch
+> >         $ nosuch
+> >         nosuch: Permission denied
+> 
+> Just remembering the EACCES and reporting it when no alias exists
+> would take care of that, no?  In other words, this seems analogous
+> to the example of a non-executable "cat" that is reported if no
+> other cat exists but does not prevent /bin/cat from being run.
 
-What does it mean to "choose" in this context? In general, it means "put
-this into the index", but if the file is in conflicted state, you have 3
-different versions of the file in the index.
+That's what the patch I posted earlier does. But it means we _also_
+report "permission denied" for inaccessible directories, which is
+needlessly confusing (and much more common, I would think).
 
-And you miss the most usefull (to me at least): "choose the version in
-the worktree".
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+-Peff
