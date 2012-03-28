@@ -1,76 +1,83 @@
-From: LordSmoke <dslice@morphometrics.org>
-Subject: Re: Sharing nested subparts of large repository?
-Date: Wed, 28 Mar 2012 10:52:18 -0700 (PDT)
-Message-ID: <1332957138457-7414676.post@n2.nabble.com>
-References: <1332693502389-7403743.post@n2.nabble.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 2/2] git: continue alias lookup on EACCES errors
+Date: Wed, 28 Mar 2012 13:04:04 -0500
+Message-ID: <20120328180404.GA9052@burratino>
+References: <20120327175933.GA1716@sigill.intra.peff.net>
+ <20120327180503.GB4659@sigill.intra.peff.net>
+ <7v4nt9j1m3.fsf@alter.siamese.dyndns.org>
+ <20120328043058.GD30251@sigill.intra.peff.net>
+ <7vaa30wrjx.fsf@alter.siamese.dyndns.org>
+ <20120328174841.GA27876@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 28 19:52:35 2012
+Cc: Junio C Hamano <gitster@pobox.com>,
+	James Pickens <jepicken@gmail.com>,
+	Git ML <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Mar 28 20:04:46 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SCx2w-0004D9-PM
-	for gcvg-git-2@plane.gmane.org; Wed, 28 Mar 2012 19:52:35 +0200
+	id 1SCxEj-0005bE-5X
+	for gcvg-git-2@plane.gmane.org; Wed, 28 Mar 2012 20:04:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932513Ab2C1RwY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Mar 2012 13:52:24 -0400
-Received: from sam.nabble.com ([216.139.236.26]:54101 "EHLO sam.nabble.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752693Ab2C1RwT (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Mar 2012 13:52:19 -0400
-Received: from jim.nabble.com ([192.168.236.80])
-	by sam.nabble.com with esmtp (Exim 4.72)
-	(envelope-from <dslice@morphometrics.org>)
-	id 1SCx2g-0004vq-Fh
-	for git@vger.kernel.org; Wed, 28 Mar 2012 10:52:18 -0700
-In-Reply-To: <1332693502389-7403743.post@n2.nabble.com>
+	id S1758425Ab2C1SEO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Mar 2012 14:04:14 -0400
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:39495 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758389Ab2C1SEN (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Mar 2012 14:04:13 -0400
+Received: by iagz16 with SMTP id z16so1785967iag.19
+        for <git@vger.kernel.org>; Wed, 28 Mar 2012 11:04:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=+MvFLNSQjU6P/iZE0Sl0yEMreBxp1xR864zrNzhaXhE=;
+        b=FbaBJUeYaU8nmjVPtQMaagQaVhFFjeaxq0VpQ2q6y2tups/Pt5OacQDJUw73iNayu1
+         Zibd+7TLV39HJONKwy7dI75Qfz5ZQCVDPp+X8KILoXsdPTisG/JjhanHFg4HEdzz5pM9
+         IO0RPrB6VDh1tkcBiID7CB5o/6CE+Bwy90fiPUo3vaPOTx7L+RMABrxYpqKvCNAGY7ef
+         vz+OHxDsAD11OMaTyZD+dZjAwaKxdJMX6ZRDGiAS2b5m4f19lHYXLhE5XsTxMR+vvZ8F
+         3FY5dPCd3Z7ZL6j5OSwLNhh7Io9o0eZUJPbItf4zth7mx2PH0bZrihbzwuP9DXPlhoSw
+         ecSw==
+Received: by 10.50.36.193 with SMTP id s1mr53576igj.45.1332957852919;
+        Wed, 28 Mar 2012 11:04:12 -0700 (PDT)
+Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
+        by mx.google.com with ESMTPS id md6sm3665294igc.0.2012.03.28.11.04.10
+        (version=SSLv3 cipher=OTHER);
+        Wed, 28 Mar 2012 11:04:11 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <20120328174841.GA27876@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194152>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194153>
 
-Thanks for the helpful replies. It does seem that branches will do what I
-want. Yesterday, I organized my files and created an (eventually)
-open-source startup project (distinct from the development application
-startup).
+Jeff King wrote:
+> On Wed, Mar 28, 2012 at 10:42:26AM -0700, Junio C Hamano wrote:
 
-I created a branch "development" and "git rm"'d the (many) files I didn't
-want to pass along to my developers. The trick here, I think, is you have to
-do an initial commit before the rm's or else it will affect the master...or
-something. Anyway, I had to reset and try a couple of times, but in the end
-it worked. 
+>> I am leaning to think that it would be the least surprising if we treat as
+>> if /bin/ls does not even exist if /bin is not searchable.  If /bin/ls is
+>> unreadable or unexecutable but /bin is searchable, then we _know_ it
+>> exists, and we follow the usual exec*p() rule to ignore it
+[...]
+> That sounds sensible to me. I think it involves writing our own
+> execvp, though, right?
 
-After checking out that branch, I created "public", initial commit, then
-rm'd the development startup project and the other files I wouldn't want to
-post to the world.
+If I understood Junio correctly, then checking for ENOENT and EACCES
+should be enough.
 
-I also managed to push these branches to my remote repository. Add them to
-my office repository as tracked branches, and test cloning, It works just as
-I had envisioned - cloning the public branch produces the minimal structure.
+Example: when I try
 
-I think I am two steps away from complete satisfaction. Not related to this,
-I have some files that are reluctant to be updated, added, tracked, or
-untracked, but that's a different issue. 
+ :; mkdir $HOME/cannotread
+ :; chmod -x $HOME/cannotread
+ :; echo nonsense >$HOME/bin/cat
+ :; chmod -x $HOME/bin/cat
+ :; PATH=$HOME/cannotread:$HOME/bin/cat:/usr/local/bin:/usr/bin:/bin
+ :; cat /etc/fstab
 
-Now, though, I am wondering about merging the changes across branches. Say I
-make changes on the development branch. If I merge that into the master,
-will the reduced tracking be merged? - don't want that. If I merge the other
-way - from, say, checkout public and merge in development? Will a bunch of
-other stuff come over?
-
-Anyway, that is where I am now and what I am looking into. Very happy with
-progress, so far.
-
-Oh, while I do everything from the command line, seeing it graphically with
-gitx has really helped me conceptualize what is going on. All of this has
-given me a much better understanding of what is going on in the little time
-I have been able to spend on it. 
-
---
-View this message in context: http://git.661346.n2.nabble.com/Sharing-nested-subparts-of-large-repository-tp7403743p7414676.html
-Sent from the git mailing list archive at Nabble.com.
+the shell uses /bin/cat without complaint.
