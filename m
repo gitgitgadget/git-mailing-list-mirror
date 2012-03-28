@@ -1,85 +1,62 @@
-From: Tim Henigan <tim.henigan@gmail.com>
-Subject: Re: [PATCH 9/9 v8] difftool: print list of valid tools with '--tool-help'
-Date: Wed, 28 Mar 2012 15:48:05 -0400
-Message-ID: <CAFouetjbq+A04HECXN39KeLBgkTd+HJyxeM0wSDhS2Xo=_gQVQ@mail.gmail.com>
-References: <1332959684-2231-1-git-send-email-tim.henigan@gmail.com>
-	<7vvclov9hi.fsf@alter.siamese.dyndns.org>
+From: Holger Hellmuth <hellmuth@ira.uka.de>
+Subject: Re: git add -p and unresolved conflicts
+Date: Wed, 28 Mar 2012 21:52:55 +0200
+Message-ID: <4F736C17.4000403@ira.uka.de>
+References: <CABPQNSYVXMxS3kugu1j=62ArJ_1saYYfMjJdZvqhjgPFGN=Eqw@mail.gmail.com> <7vbongyd67.fsf@alter.siamese.dyndns.org> <vpqvclozr7e.fsf@bauges.imag.fr> <4F73632E.1060408@ira.uka.de> <7vmx70v8ho.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, davvid@gmail.com
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>, kusmabite@gmail.com,
+	Git Mailing List <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Mar 28 21:48:13 2012
+X-From: git-owner@vger.kernel.org Wed Mar 28 21:52:25 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SCyqq-000709-Ig
-	for gcvg-git-2@plane.gmane.org; Wed, 28 Mar 2012 21:48:12 +0200
+	id 1SCyur-0001uU-U3
+	for gcvg-git-2@plane.gmane.org; Wed, 28 Mar 2012 21:52:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758489Ab2C1TsH convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 28 Mar 2012 15:48:07 -0400
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:56916 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758381Ab2C1TsF convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 28 Mar 2012 15:48:05 -0400
-Received: by iagz16 with SMTP id z16so1900625iag.19
-        for <git@vger.kernel.org>; Wed, 28 Mar 2012 12:48:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=30wGl3jfKY2SFivAK9K9ngOPF1zuqEvyzOno7FpQeX4=;
-        b=JuZn4zoY3Rya1o9z4sENxHTTvAZcS2kn+5AZcAXXEQhHvVziv3ouhYSfL+04+wxa/2
-         oIU0PrTcX60Xqfq6HDLek8BnsUjTqRW+Zrqabnl/cqnijn2vCbVTWSMQv0tj2RnrPitJ
-         HwUU+KIHhnNR2AOEe+yn4g38ZRgnPB1mzHhAz15vAJomV9HPiifaim0qi4BVyZWzFIo8
-         GsjDq4mzOYkR63kRDh3ymn1YhpU14qCoz1feT52yFjt/7BmvnQVWjA3JMdGloRy9hY85
-         gvZ06sh99eSt6dp3BtYw0zJ3axn6U66ff/TducS/Jf4f6SWgyO53v2R9g/5dw3uFy7Ye
-         DGfg==
-Received: by 10.50.188.138 with SMTP id ga10mr264439igc.51.1332964085129; Wed,
- 28 Mar 2012 12:48:05 -0700 (PDT)
-Received: by 10.42.225.193 with HTTP; Wed, 28 Mar 2012 12:48:05 -0700 (PDT)
-In-Reply-To: <7vvclov9hi.fsf@alter.siamese.dyndns.org>
+	id S1758552Ab2C1TwR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Mar 2012 15:52:17 -0400
+Received: from iramx2.ira.uni-karlsruhe.de ([141.3.10.81]:60299 "EHLO
+	iramx2.ira.uni-karlsruhe.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1758501Ab2C1TwQ (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 28 Mar 2012 15:52:16 -0400
+Received: from irams1.ira.uni-karlsruhe.de ([141.3.10.5])
+	by iramx2.ira.uni-karlsruhe.de with esmtps port 25 
+	id 1SCyuY-0000X6-Es; Wed, 28 Mar 2012 21:52:12 +0200
+Received: from i20s141.iaks.uni-karlsruhe.de ([141.3.32.141] helo=[172.16.22.120])
+	by irams1.ira.uni-karlsruhe.de with esmtpsa port 25 
+	id 1SCyuY-0003T5-90; Wed, 28 Mar 2012 21:52:02 +0200
+User-Agent: Mozilla/5.0 (X11; U; Linux i686 (x86_64); en-US; rv:1.9.2.24) Gecko/20111101 SUSE/3.1.16 Thunderbird/3.1.16
+In-Reply-To: <7vmx70v8ho.fsf@alter.siamese.dyndns.org>
+X-ATIS-AV: ClamAV (irams1.ira.uni-karlsruhe.de)
+X-ATIS-AV: ClamAV (iramx2.ira.uni-karlsruhe.de)
+X-ATIS-AV: Kaspersky (iramx2.ira.uni-karlsruhe.de)
+X-ATIS-Timestamp: iramx2.ira.uni-karlsruhe.de 1332964332.430080000
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194176>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194177>
 
-On Wed, Mar 28, 2012 at 2:58 PM, Junio C Hamano <gitster@pobox.com> wro=
-te:
-> Tim Henigan <tim.henigan@gmail.com> writes:
+On 28.03.2012 21:19, Junio C Hamano wrote:
+> Holger Hellmuth<hellmuth@ira.uka.de>  writes:
 >
-> OK, but doesn't File::Find recurse into its subdirectories? =C2=A0If =
-you create
-> a 'foo' directory there and drop a 'bar' script in it, is the rest of=
- the
-> code prepared to give you "git difftool -t foo/bar"?
+>> I don't think it's that tricky:
 
-It does recurse, but in this context '$_' only contains the current
-file name within the directory...not the directory itself [1].  So if
-we call 'find' on a directory that contains:
+I was assuming this "tricky" was about a sensible user interface.
 
-  foo
-  bar/
-      baz
-
-then @tools =3D ('foo', 'baz')
-
-[1]: http://perldoc.perl.org/File/Find.html#The-wanted-function
-
-
->> + =C2=A0 =C2=A0 for (@tools) {
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 my $tool =3D $_;
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 next if ($tool eq "defau=
-lts");
+>> ...
+>> The tricky part might be sorting the hunks so that conflicts are first
+>> (depending on how the code works now), choosing the right version in a
+>> hunk (the three new options) should be relatively easy.
 >
-> Now you use File::Find::find(), you probably should do this kind of
-> trivial filtering inside the callback, no?
+> Code it and then tell us if it is tricky or not.  Until then, especially
+> when you have to say "depending on how the code works now", implying you
+> do not know, why should we even listen to you?
 
-I thought about that, but the filter is so simple that it seemed like
-overkill to add another function.  If there is another revision of
-this patch, I will reconsider.
-
-As always, thanks for the review :)
+As it is perl I'm already looking at it. I'll try to find out if my 
+meagre programming skills can do something here.
