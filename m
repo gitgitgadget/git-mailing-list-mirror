@@ -1,59 +1,70 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 2/2] git: continue alias lookup on EACCES errors
-Date: Wed, 28 Mar 2012 16:52:51 -0400
-Message-ID: <20120328205251.GB10174@sigill.intra.peff.net>
-References: <7vaa30wrjx.fsf@alter.siamese.dyndns.org>
- <20120328174841.GA27876@sigill.intra.peff.net>
- <20120328180404.GA9052@burratino>
- <7v1uocwpap.fsf@alter.siamese.dyndns.org>
- <20120328184014.GA8982@burratino>
- <20120328193909.GB29019@sigill.intra.peff.net>
- <20120328194516.GD8982@burratino>
- <20120328201851.GA29315@sigill.intra.peff.net>
- <20120328203758.GA10104@sigill.intra.peff.net>
- <20120328205133.GF8982@burratino>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/2] mergetools: split config files for vim and gvim
+Date: Wed, 28 Mar 2012 13:53:08 -0700
+Message-ID: <7vr4wctpl7.fsf@alter.siamese.dyndns.org>
+References: <1332964693-4058-1-git-send-email-tim.henigan@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	James Pickens <jepicken@gmail.com>,
-	Git ML <git@vger.kernel.org>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 28 22:53:02 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, davvid@gmail.com
+To: Tim Henigan <tim.henigan@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 28 22:53:18 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SCzrW-0000FL-PM
-	for gcvg-git-2@plane.gmane.org; Wed, 28 Mar 2012 22:52:59 +0200
+	id 1SCzrp-0000WI-5M
+	for gcvg-git-2@plane.gmane.org; Wed, 28 Mar 2012 22:53:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932853Ab2C1Uwy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Mar 2012 16:52:54 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:36381
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932847Ab2C1Uwx (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Mar 2012 16:52:53 -0400
-Received: (qmail 21873 invoked by uid 107); 28 Mar 2012 20:53:12 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 28 Mar 2012 16:53:12 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 28 Mar 2012 16:52:51 -0400
-Content-Disposition: inline
-In-Reply-To: <20120328205133.GF8982@burratino>
+	id S932877Ab2C1UxM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Mar 2012 16:53:12 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:38903 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932847Ab2C1UxM (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Mar 2012 16:53:12 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B4BA76834;
+	Wed, 28 Mar 2012 16:53:11 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=GZ/kE8A4I7pJ+vsYMzHKp0yf23E=; b=atdAfz
+	BsspB4myutgyPt3Ur3mTxTNMIHNZE6bFPfq6gLWrej50n8J+5SC88mYzZRpAzrX/
+	HHKhqPABTid4TW9Q3rTy915zV0Lsrco1PKWTHFMh8lfWhCD3kNDH0NHWFJRHNVjW
+	1y4BSbpsiQzkakfedHE9tX+oR2C7YL7kuFb/E=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=f71lsBt4OzZAdWrMp7HCPKGvY7sfTSCy
+	S32JwLsfq0Aa8gaB2HN7n76JOenMUZcP9gRHEsooZIhZCmxsJfftwoDgzd4DzOWv
+	DcREbAasZomAVQgjEIRNAGFy1y/LXso17fHGsmG8NUDOonxjaPyVH4DtpsIQU3GZ
+	HvufftkwWww=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AC4B26833;
+	Wed, 28 Mar 2012 16:53:11 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 50CF36820; Wed, 28 Mar 2012
+ 16:53:10 -0400 (EDT)
+In-Reply-To: <1332964693-4058-1-git-send-email-tim.henigan@gmail.com> (Tim
+ Henigan's message of "Wed, 28 Mar 2012 15:58:12 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 071E186C-7918-11E1-9042-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194195>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194196>
 
-On Wed, Mar 28, 2012 at 03:51:33PM -0500, Jonathan Nieder wrote:
+Tim Henigan <tim.henigan@gmail.com> writes:
 
-> > Hmm, this should check for (*file == '/') to handle absolute paths
-> > properly.
-> 
-> Or rather for "strchr(file, '/')", because "path/to/cmd" does not mean to
-> append that string to each term of $PATH.
+> One side-effect of this change which may be a problem is that we
+> lose support for the 'vimdiff2' and 'gvimdiff2' tools that were
+> created in 0008669 (mergetool-lib: make the three-way diff the
+> default for vim/gvim).  The 2-panel options were not advertised in
+> any way, so I don't know if it is important to keep them.
 
-Yes, thanks for a sanity check.
+By default, anything we support is important unless there is a sound
+justification to say otherwise.  I think they were kept for people who
+were already used to the 2-pane version when 3-pane one was introduced.
 
--Peff
+But I will not be a good judge for this particular case, as I do not use
+vim nor gvim for merge resolution.  Davidd?
