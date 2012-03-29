@@ -1,134 +1,116 @@
-From: Dave Zarzycki <zarzycki@apple.com>
-Subject: Re: git-svn: cloning an SVN repo with sub-branches and sub-tags
-Date: Thu, 29 Mar 2012 07:40:22 -0700
-Message-ID: <92FA9CF9-7E8E-4DE6-8524-030A0AD33C9E@apple.com>
-References: <4F7467E1.3090004@pocock.com.au>
+From: Jeremy Ramer <jdramer@gmail.com>
+Subject: Re: Currently checked out branch is not bold in gitk when using ssh X-forwarding
+Date: Thu, 29 Mar 2012 10:34:36 -0600
+Message-ID: <CALykgB0a+dazZn7rdeiUVcXDa58=fydQVwe_-fq-_jqxeUY4PQ@mail.gmail.com>
+References: <CALykgB0LCjDsMYSB1jAxBmPxsf-f6XDDFv+1nmtvCLP65ex5vw@mail.gmail.com>
+	<4F6BB0EC.2080209@gmail.com>
+	<4F6BBD8D.1050905@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; CHARSET=US-ASCII
-Content-Transfer-Encoding: 7BIT
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Daniel Pocock <daniel@pocock.com.au>
-X-From: git-owner@vger.kernel.org Thu Mar 29 18:22:54 2012
+To: Neal Kreitzinger <nkreitzinger@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Mar 29 18:34:49 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SDI7h-0001IY-Ca
-	for gcvg-git-2@plane.gmane.org; Thu, 29 Mar 2012 18:22:53 +0200
+	id 1SDIJ9-0004wa-QG
+	for gcvg-git-2@plane.gmane.org; Thu, 29 Mar 2012 18:34:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758027Ab2C2QWt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 Mar 2012 12:22:49 -0400
-Received: from bramley.apple.com ([17.151.62.49]:37053 "EHLO
-	mail-out.apple.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754443Ab2C2QWr (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Mar 2012 12:22:47 -0400
-X-Greylist: delayed 3927 seconds by postgrey-1.27 at vger.kernel.org; Thu, 29 Mar 2012 12:22:47 EDT
-Received: from relay17.apple.com ([17.128.113.18])
- by mail-out.apple.com (Oracle Communications Messaging Server 7u4-23.01
- (7.0.4.23.0) 64bit (built Aug 10 2011))
- with ESMTP id <0M1N00JOKHYV3SL0@mail-out.apple.com> for git@vger.kernel.org;
- Thu, 29 Mar 2012 07:40:27 -0700 (PDT)
-X-AuditID: 11807112-b7f466d00000131a-6c-4f74745b2762
-Received: from koseret (koseret.apple.com [17.151.62.39])
-	(using TLS with cipher RC4-MD5 (RC4-MD5/128 bits))
-	(Client did not present a certificate)	by relay17.apple.com (Apple SCV relay)
- with SMTP id 4F.2D.04890.B54747F4; Thu, 29 Mar 2012 07:40:27 -0700 (PDT)
-Received: from [17.153.52.236] (unknown [17.153.52.236])
- by koseret.apple.com (Oracle Communications Messaging Server 7u4-23.01
- (7.0.4.23.0) 64bit (built Aug 10 2011))
- with ESMTPSA id <0M1N00DNKI3AYY00@koseret.apple.com> for git@vger.kernel.org;
- Thu, 29 Mar 2012 07:40:27 -0700 (PDT)
-In-reply-to: <4F7467E1.3090004@pocock.com.au>
-X-Mailer: Apple Mail (2.1446)
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrKLMWRmVeSWpSXmKPExsUiON1OXTe6pMTfYM9aYYuuK91MDowenzfJ
-	BTBGcdmkpOZklqUW6dslcGX0rNnBWnBPrOLiyUssDYzLhbsYOTkkBEwkFv7sZYOwxSQu3FsP
-	ZHNxCAl0Mkncm3GHEcJZzCRxZskfdpAqZgEdid7v35hBbF4BPYnJT1czgdjCAh4SzV/ngMXZ
-	BDQkPp26C2ZzCuhK3N9wC2gqBweLgKrE8skCEGPEJdbNPQ81UlviybsLrBAjbSQu915gBLGF
-	gFZtbWliAbFFgEb+ubmFCeJQWYnHCzayTWAUmIXkollILpqFZOwCRuZVjIJFqTmJlYbmeokF
-	BTmpesn5uZsYQYHXUCi0g/H+Lr1DjAIcjEo8vCc1i/2FWBPLiitzDzFKcDArifAejyjxF+JN
-	SaysSi3Kjy8qzUktPsQozcGiJM7rZlfkLySQnliSmp2aWpBaBJNl4uCUamC0UevLq/7iYDFv
-	V13z/vXVP2cWLu7ZfXxqqdHbKqflMmtWuL9SFM5P7N0b9erRtNZdnKs4/s72/fzXUur1Pral
-	N28v3NSvtdzrhcsfW6GminhWowgL0aRd7U65ax68Y2U5Pse1Nmqnbl22OaN20aWuQFOrZge/
-	dxKdZTNMa048sivNEcj/fkWJpTgj0VCLuag4EQAFEpPVOAIAAA==
+	id S1759063Ab2C2Qej convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 29 Mar 2012 12:34:39 -0400
+Received: from mail-bk0-f46.google.com ([209.85.214.46]:53368 "EHLO
+	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758963Ab2C2Qei convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 29 Mar 2012 12:34:38 -0400
+Received: by bkcik5 with SMTP id ik5so2157808bkc.19
+        for <git@vger.kernel.org>; Thu, 29 Mar 2012 09:34:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=lg4l2RGs1YFLp4aFdl5NBKbYnkNgdBB14i535gq/iyc=;
+        b=tHHMX535IjEjqqoZ/EiQvSzspYhT84XIB5rsO/4BOR50dlsc8ZRQRHqliFsm+8NTTR
+         z40KBYy9bHK7F9Loi3puzYb70eUv0Sk5AahDXwn/AIde7RbSH/GO1wRMdLCvQO6zczQQ
+         5vGpKc1f39elNYUP2Q8zU+UyT2TilWBm35YjfOgJ2BjHG4g8yDBZ+LgJqyQ7ZM+xWerI
+         lAsRo/mkHRiUCwatQzj7gd/gjV0FbEVlHxJm2K767MXl24nWoYbg3yHqHDq3tCzI3+5q
+         YsLt6ivxDhgnBTad/qVhsaDV/+oqRVaZgTpsUmPMd5c/DKNuw4a7sZCBUUFzitbCFDZd
+         RRow==
+Received: by 10.204.132.72 with SMTP id a8mr14302344bkt.42.1333038876705; Thu,
+ 29 Mar 2012 09:34:36 -0700 (PDT)
+Received: by 10.204.36.135 with HTTP; Thu, 29 Mar 2012 09:34:36 -0700 (PDT)
+In-Reply-To: <4F6BBD8D.1050905@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194267>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194268>
 
-You can make this work, but it is very fragile, doesn't scale well, and it only works on recent versions of git. For example, from the LLVM clang project:
+On Thu, Mar 22, 2012 at 6:02 PM, Neal Kreitzinger
+<nkreitzinger@gmail.com> wrote:
+> On 3/22/2012 6:08 PM, Neal Kreitzinger wrote:
+>>
+>> On 3/22/2012 4:10 PM, Jeremy Ramer wrote:
+>>>
+>>> However, when I log in from my newer Ubuntu 11.11 laptop (ssh -X
+>>> buildserver) and start gitk the currently checked out branch is
+>>> not displayed in bold font. In fact, all the fonts are a little
+>>> ugly, though it is the lack of bold that is the hardest to work
+>>> with.
+>>>
+>> FWIW, my theory is that is has something to do with your fonts. Just
+>> a simple end user observation. I'm not a gitk programmer.
+>>
+>> Maybe you don't have your fonts set for what-you-want in gitk. Maybe
+>> you don't have the fonts installed/setup on your ubuntu box for
+>> what-you-want in gitk.
+>>
+>> I assume gitk uses the fonts that you tell it to, or that are
+>> available.
+>>
+> Hint: the bold version of a font is its own font. =A0You could have t=
+he
+> non-bold font installed, but not the bold font. =A0Here's a link on h=
+ow to
+> install fonts: http://karmak.org/archive/2004/06/ttfonts.html?lang=3D=
+en
+>
+> *If* that is the reason for your lack of bold-ness in gitk.
+>
+> Also, I see from my install log that it does do something with fonts:
+>
+> =A0DEST /usr/share/git-gui/lib
+> =A0 =A0INSTALL 644 tclIndex
+> =A0 =A0INSTALL 644 about.tcl
+> =A0 =A0INSTALL 644 blame.tcl
+> =A0 =A0INSTALL 644 branch_checkout.tcl
+> =A0 =A0INSTALL 644 branch_create.tcl
+> =A0 =A0INSTALL 644 branch_delete.tcl
+> =A0 =A0INSTALL 644 branch_rename.tcl
+> =A0 =A0INSTALL 644 branch.tcl
+> =A0 =A0INSTALL 644 browser.tcl
+> =A0 =A0INSTALL 644 checkout_op.tcl
+> =A0 =A0INSTALL 644 choose_font.tcl
+>
+> I'm not sure how closely gitk and git-gui are tied together.
+>
+> Hope this helps some more.
+>
+> v/r,
+> neal
 
-ignore-refs = ^refs/remotes/svn/(Apple|ggreif|misc/Apple/williamson-llvm|misc/Apple/Necropolis|tags/Apple|tags/RELEASE_29|tags/RELEASE_30|tags/checker|tags/cremebrulee)
-fetch = cfe/trunk:refs/remotes/svn/trunk
-branches = cfe/branches/*:refs/remotes/svn/*
-branches = cfe/branches/Apple/*:refs/remotes/svn/misc/Apple/*
-branches = cfe/branches/Apple/Necropolis/*:refs/remotes/svn/misc/AppleNecropolis/*
-branches = cfe/branches/ggreif/*:refs/remotes/svn/misc/ggreif/*
-tags = cfe/tags/*:refs/remotes/svn/tags/*
-tags = cfe/tags/Apple/*:refs/remotes/svn/tags2/Apple/*
-tags = cfe/tags/RELEASE_29/*:refs/remotes/svn/tags2/RELEASE_29/*
-tags = cfe/tags/RELEASE_30/*:refs/remotes/svn/tags2/RELEASE_30/*
-tags = cfe/tags/checker/*:refs/remotes/svn/tags2/checker/*
-tags = cfe/tags/cremebrulee/*:refs/remotes/svn/tags2/cremebrulee/*
+It does seem to be a font issue. The strange thing is that the fonts
+work correctly when I do it locally on my laptop and when I do it
+locally on the build server. But when I use the ssh x-forwarding the
+fonts seem broken. I've tried installing several font packages with no
+luck.
 
+I have found a workaround that resolves my issue for now. I changed
+the font used in gitk to "fixed" (Helvetica is the default selection,
+but doesn't appear in the list when I try to change the font). With
+fixed the bold checked out branch shows up properly.
 
-
-On Mar 29, 2012, at 6:47 AM, Daniel Pocock <daniel@pocock.com.au> wrote:
-
-> 
-> 
-> 
-> I'm trying to use git-svn to clone a repo that has sub-branches and sub-tags
-> 
-> The SVN layout is like this:
-> 
-> branches/user1/workitem1
-> branches/user1/workitem2
-> branches/user2/workitem1
-> branches/user2/workitem2
-> 
-> tags/v1.0
-> tags/v1.1
-> tags/debian/v1.0-1
-> tags/debian/v1.1-1
-> tags/debian/v1.1-2
-> 
-> In git, I would like to have branches with the same names, e.g.
-> 
-> branches/user1/workitem1
-> branches/user1/workitem2
-> branches/user2/workitem1
-> branches/user2/workitem2
-> 
-> and tags like this:
-> 
-> 1.0  (notice I don't want to keep the v1.0, drop the v)
-> 1.1
-> debian/1.0-1
-> debian/1.1-1
-> debian/1.1-2
-> 
-> However, if I run
-> 
-> git svn clone \
->  -T trunk \
->  -t tags \
->  -b branches \
->  https://flactag.svn.sourceforge.net/svnroot/flactag \
->  flactag-git1
-> 
-> I don't get any of the branches or tags, and I get numerous warnings like this:
-> 
-> W: -empty_dir: branches/d_pocock/autotools/HTTPFetch.cc
-> W: -empty_dir: branches/d_pocock/autotools/HTTPFetch.h
-> W: Cannot find common ancestor between f475b655c10b55b36df8376a396c0d9534418617 and 7e277bfd626a1caa84681e93a7af73e0160eb2eb. Ignoring merge info.
-> W: Cannot find common ancestor between f475b655c10b55b36df8376a396c0d9534418617 and a82cd9bd2197a89303558af9aad43fa0c23d1ddb. Ignoring merge info.
-> 
-> I have the impression that git-svn does not like the repository layout, and it is not clear from the manual page how to make it work.  Can anyone share any advice about this?
-> 
-> 
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+Thanks!
+Jeremy
