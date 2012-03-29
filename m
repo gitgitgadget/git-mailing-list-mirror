@@ -1,85 +1,72 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Make http-backend REMOTE_USER configurable
-Date: Thu, 29 Mar 2012 15:02:52 -0700
-Message-ID: <7vzkazoyk3.fsf@alter.siamese.dyndns.org>
-References: <1333051139-14262-1-git-send-email-willsk@bnl.gov>
+Subject: Re: top-level gitignore considered harmful
+Date: Thu, 29 Mar 2012 15:06:54 -0700
+Message-ID: <7vvclnoydd.fsf@alter.siamese.dyndns.org>
+References: <20120329211136.GA1112@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Git List <git@vger.kernel.org>, spearce@spearce.org
-To: William Strecker-Kellogg <willsk@bnl.gov>
-X-From: git-owner@vger.kernel.org Fri Mar 30 00:03:02 2012
+Cc: git@vger.kernel.org,
+	Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto <cmn@elego.de>,
+	Jay Soffian <jaysoffian@gmail.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Mar 30 00:07:03 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SDNQr-0004gX-Hp
-	for gcvg-git-2@plane.gmane.org; Fri, 30 Mar 2012 00:03:01 +0200
+	id 1SDNUl-00009M-37
+	for gcvg-git-2@plane.gmane.org; Fri, 30 Mar 2012 00:07:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754311Ab2C2WC5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 Mar 2012 18:02:57 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:52150 "EHLO
+	id S1760007Ab2C2WG6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 Mar 2012 18:06:58 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:53788 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753478Ab2C2WCz (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Mar 2012 18:02:55 -0400
+	id S1753978Ab2C2WG4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Mar 2012 18:06:56 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id ED60B65E3;
-	Thu, 29 Mar 2012 18:02:54 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 618D766AD;
+	Thu, 29 Mar 2012 18:06:56 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=yFHqI5YHIgGiHet0zr+sMTO30/w=; b=JajTR2
-	6FINvhY77OaQG5v1mWPL/pVJei2jfIr8+B8JHkpJN/ziYFBUGSQV9+ZPj/KXQPNj
-	IXVrQpRy/jzTHu/QhKTuR0CT4Tkv954hG8d9cu+vuDxENEp5joaqBDLth0lVUBgo
-	Gv+/Rv6r2UP/68vnW2lWI0d6lKvjXM2v7BAzE=
+	:content-type; s=sasl; bh=gU61bcphi4FH0iWj/OJpMx9sUwY=; b=uZ/rwi
+	fRewLAJQANPE4HEoRx+J3AhWiq4XXNyWVXAC3E9jS6hPg7fkikwhC54uLoTcMoZD
+	G4LmTnjajDgdRHdMqX+QpzKErzpZZ+B7YIOv3C25w6CoPxPihu3h4QPQDMifqw78
+	6vNlORfwyzNzMhWUD6aw+WtNxIO3FztLXebqo=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=yMKLNQk7xegwq23Q2+hBfLWezPECbFBC
-	tFI2q9ruqj16Uh0ar7b8WTxo6S4u+21LnFhUEy7SbgO3563Gr748SbZ+ygG0sn8G
-	VkRC42ZKGmIIWWLRl5QnODHy+Gx861sEqFIIT6ZT9kVkbAGAU9eGLxP1Nu/vXRl3
-	aj9iLYqYc9c=
+	:content-type; q=dns; s=sasl; b=Rej1vjclKGhOJ4Jz3bKd/MP0dI60ycAi
+	lghao3Tidfm26DCYf7erWsSYvlnFL5gO2sTg9yNxg1xo62uu31MeQscgxQ7iFSMN
+	RqVRvKgGO67ZOfmTUIPC9SX8ov2+pv5rERNBLwevY0/xMxMxIctnmOlskPdgnj7p
+	XBYvKw4mtdo=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E317C65E2;
-	Thu, 29 Mar 2012 18:02:54 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 58A6466AC;
+	Thu, 29 Mar 2012 18:06:56 -0400 (EDT)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7333D65E1; Thu, 29 Mar 2012
- 18:02:54 -0400 (EDT)
-In-Reply-To: <1333051139-14262-1-git-send-email-willsk@bnl.gov> (William
- Strecker-Kellogg's message of "Thu, 29 Mar 2012 15:58:59 -0400")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E5E2466AB; Thu, 29 Mar 2012
+ 18:06:55 -0400 (EDT)
+In-Reply-To: <20120329211136.GA1112@sigill.intra.peff.net> (Jeff King's
+ message of "Thu, 29 Mar 2012 17:11:36 -0400")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: EF793402-79EA-11E1-B431-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 7F668EE8-79EB-11E1-BB41-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194297>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194298>
 
-William Strecker-Kellogg <willsk@bnl.gov> writes:
+Jeff King <peff@peff.net> writes:
 
-> The http-backend looks at $REMOTE_USER and sets $GIT_COMMITTER_NAME to
-> that for use in the hooks. At our site we have a third party
-> authentication module for our proxy (Shibboleth) which sets an alternative
-> environment variable that our backend sees instead of REMOTE USER.
->
-> This patch adds the config option http.remoteuser which changes what
-> environment variable is inspected by the http-backend code (it defaults
-> to REMOTE_USER).
+> [1] ... But we could do better in git, too. fnmatch
+>     patterns need to be examined linearly because of wildcards. But
+>     many patterns don't have wildcards, or the wildcards come much later
+>     in the pattern. There's no reason we couldn't preprocess the
+>     patterns into a data structure with fast lookup properties, grouped
+>     by non-wildcard prefixes (so seeing "foo/bar/*.baz", we could build
+>     a trie that lets us reject "other/directory" after only a
+>     single-character match).
 
-What is the chain of systems that pass the authenticated ident down to
-this CGI program?  Can another part of that chain stuff the value of
-SHIBBOLETH_USER (or whatever) to REMOTE_USER before running it?
-
-As a design, I am not convinced this is a good change.  
-
-What if the next person wants to interoperate with an authentication
-system that passes the same information via a mechanism different from
-environment variables?  This change does not help him at all, as it is
-still married to "the information has to come from an environment
-variable" limitation.
-
-What if an authentication system can supply more appropriate committer
-ident information other than just the uesrname part?
-
-If it were a patch to teach the CGI program a new command line parameter,
-e.g. --log-as="C O Mitter <committer@example.xz>", it may have made a lot
-more sense, though.
+It sounds like a good project for somebody who has three months working on
+full-time, especially if she can be helped with a good mentor.  The result
+will reasonably be self-contained.
