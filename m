@@ -1,237 +1,118 @@
 From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH v2 8/8] gitweb: Refinement highlightning in combined diffs
-Date: Fri, 30 Mar 2012 00:37:10 +0100
-Message-ID: <201203300137.11932.jnareb@gmail.com>
-References: <1332543417-19664-1-git-send-email-michal.kiedrowicz@gmail.com> <1332543417-19664-9-git-send-email-michal.kiedrowicz@gmail.com>
+Subject: Re: What's cooking in git.git (Mar 2012, #10; Wed, 28)
+Date: Thu, 29 Mar 2012 16:51:01 -0700 (PDT)
+Message-ID: <m3fwcrarwo.fsf@localhost.localdomain>
+References: <7vsjgss6ua.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=iso-8859-2
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
-To: =?utf-8?q?Micha=C5=82_Kiedrowicz?= <michal.kiedrowicz@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Mar 30 01:37:27 2012
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Mar 30 01:51:12 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SDOuD-0008Qb-9W
-	for gcvg-git-2@plane.gmane.org; Fri, 30 Mar 2012 01:37:25 +0200
+	id 1SDP7V-0005ZV-Hx
+	for gcvg-git-2@plane.gmane.org; Fri, 30 Mar 2012 01:51:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760365Ab2C2XhU convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 29 Mar 2012 19:37:20 -0400
-Received: from mail-we0-f174.google.com ([74.125.82.174]:42114 "EHLO
+	id S933191Ab2C2XvF convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 29 Mar 2012 19:51:05 -0400
+Received: from mail-we0-f174.google.com ([74.125.82.174]:39867 "EHLO
 	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760341Ab2C2XhT (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Mar 2012 19:37:19 -0400
-Received: by wejx9 with SMTP id x9so38100wej.19
-        for <git@vger.kernel.org>; Thu, 29 Mar 2012 16:37:17 -0700 (PDT)
+	with ESMTP id S932511Ab2C2XvC convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 29 Mar 2012 19:51:02 -0400
+Received: by wejx9 with SMTP id x9so42320wej.19
+        for <git@vger.kernel.org>; Thu, 29 Mar 2012 16:51:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        bh=dbOYPoOAPIZRUei495chlyvIca3GJDfIxZry9CqtYgQ=;
-        b=wiPNVXLXg9do+qtjjcCcUezC0FASSTHmG9ozIyQDgIXISyUVEkueeDT1QNAe2xWiYe
-         y2sGs7a0nXEfG0y0WFm7yzRjPDN8RBGV37upcgxqyeGLe+pgICmWtBS2c6Ee06bJb1L/
-         TNIDDbvrHQ1yShf+5AThRRpExdTMNlmtHZHW/o6QtW4HOA31t1H2oXqVmBXJ980aOkCo
-         kdFvkD9J9FCM9MrAARQTjuocUfXzk/df056abOUyOlkBFAbI8bMJED3vmvskS3Ur6gkp
-         QBDObpxGT+LAS3pgNAP8rzYy7DqtUlQ4yJMsfywAyx6xvdYOsdGTGDa5+U0r6NjZtqEg
-         VvqA==
-Received: by 10.180.85.35 with SMTP id e3mr136371wiz.6.1333064237609;
-        Thu, 29 Mar 2012 16:37:17 -0700 (PDT)
-Received: from [192.168.1.13] (aeh224.neoplus.adsl.tpnet.pl. [83.25.111.224])
-        by mx.google.com with ESMTPS id k6sm1200946wie.9.2012.03.29.16.37.16
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type
+         :content-transfer-encoding;
+        bh=FVB8F5TmM/iLcMgQ5kTKqeOM4vLB4Xa909wYMDnAv2Y=;
+        b=ZLZXi5irkMHq6+w7zqQN1WFQfOvaW4PMtW6EC6muj/eoUZmJ7ICWX0rQD7J1VruyPi
+         J9jnNf8hcAYl2FygKYVZRPoF/OKvKk3WYpsMNxPoZEOIkg5ryuXYMZLLANY1wd8ZNDcE
+         6Lnpi5FIxFeENpYH9iMfCDvn6tBtSkUnSafS+rCfQ+14smDAeFvIVc7GBTcdeIp5TEHg
+         jyiOWUjkkgO8k/lEzy9AlLPML7VC0NuSlGbdjBEseq9/uaIZuUmB2n+UJ2GIS3uxrVLm
+         UXdkV+lJvvHJXSEy17LRE3BHK+KG/DVvy25iItrRIEQ3TlRopc+MO9Tc+jpEMcYjQF2+
+         gG5Q==
+Received: by 10.180.82.132 with SMTP id i4mr194441wiy.12.1333065061439;
+        Thu, 29 Mar 2012 16:51:01 -0700 (PDT)
+Received: from localhost.localdomain (aeh224.neoplus.adsl.tpnet.pl. [83.25.111.224])
+        by mx.google.com with ESMTPS id n15sm1317899wiw.6.2012.03.29.16.51.00
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 29 Mar 2012 16:37:16 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <1332543417-19664-9-git-send-email-michal.kiedrowicz@gmail.com>
-Content-Disposition: inline
+        Thu, 29 Mar 2012 16:51:01 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id q2TNoWXV012234;
+	Fri, 30 Mar 2012 01:50:43 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id q2TNoGcS012230;
+	Fri, 30 Mar 2012 01:50:16 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <7vsjgss6ua.fsf@alter.siamese.dyndns.org>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194304>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194305>
 
-On Fri, 23 Mar 2012, Micha=C5=82 Kiedrowicz wrote:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> The highlightning of combined diffs is currently disabled.  This is
-> because output from a combined diff is much harder to highlight becau=
-se
-> it's not obvious which removed and added lines should be compared.
+> --------------------------------------------------
+> [Cooking]
+
+> * wk/gitweb-snapshot-use-if-modified-since (2012-03-26) 3 commits
+>  - gitweb: add If-Modified-Since handling to git_snapshot().
+>  - gitweb: refactor If-Modified-Since handling
+>  - gitweb: add `status` headers to git_feed() responses.
 >=20
-Is -> was?
+> Makes 'snapshot' request to "gitweb" honor If-Modified-Since: header,
+> based on the commit date.
 
-> Moreover, code that compares added and removed lines doesn't care abo=
-ut
-> combined diffs. It only skips first +/- character, treating second +/=
--
-> as a line content.
+What about "[PATCH v2 0/8] gitweb: Highlight interesting parts of diff"
+series by Micha=B3 Kiedrowicz:
 
-Well, we explicitly skip combined diffs.  I think what you want to say
-here is that it is not possible to simply use existing algorithm
-unchanged for combined diffs.
+  Message-ID: <1332543417-19664-1-git-send-email-michal.kiedrowicz@gmai=
+l.com>
+  http://thread.gmane.org/gmane.comp.version-control.git/193804
 
->=20
-> Let's start with a simple case: only highlight changes that come from
-> one parent, i.e. when every removed line has a corresponding added li=
-ne
-> for the same parent.  This way the highlightning cannot get wrong. Fo=
-r
-> example, following diffs would be highlighted:
->=20
-> 	- removed line for first parent
-> 	+ added line for first parent
-> 	  context line
-> 	 -removed line for second parent
-> 	 +added line for second parent
->=20
-> or
->=20
-> 	- removed line for first parent
-> 	 -removed line for second parent
-> 	+ added line for first parent
-> 	 +added line for second parent
->=20
-> but following output will not:
->=20
-> 	- removed line for first parent
-> 	 -removed line for second parent
-> 	 +added line for second parent
-> 	++added line for both parents
+I have copy of them in 'gitweb/diff-hl' branch:
 
-O.K., that's a nice and sensible first step.
+-- >8 --
+The following changes since commit 455cf268dbaf227bdbd5e9fbf96525452bcf=
+e44f:
 
-I wonder if it would be worth to specify that we currently require that
-pattern of '-'-es in pre-image match pattern of '+'-es in postimage.
+  Git 1.7.10-rc3 (2012-03-28 11:18:42 -0700)
 
-Nb. the prefix of combined diff would either include '+', or '-',
-but never mixed (this is documented, but I had trouble with this).
+are available in the git repository at:
 
->=20
-> Further changes may introduce more intelligent approach that better
-> handles combined diffs.
+  git://repo.or.cz/git/jnareb-git.git gitweb/diff-hl
 
-Very sensible approach.
->=20
-> Signed-off-by: Micha=C5=82 Kiedrowicz <michal.kiedrowicz@gmail.com>
+for you to fetch changes up to 60b06478f0349729dc9a4ddeb1abf5e28986fb7e=
+:
 
-  Acked-by: Jakub Nar=C4=99bski <jnareb@gmail.com>
+  gitweb: Refinement highlightning in combined diffs (2012-03-29 21:26:=
+36 +0200)
 
-> ---
+----------------------------------------------------------------
+Micha=B3 Kiedrowicz (8):
+      gitweb: esc_html_hl_regions(): Don't create empty <span> elements
+      gitweb: Pass esc_html_hl_regions() options to esc_html()
+      gitweb: Extract print_sidebyside_diff_lines()
+      gitweb: Use print_diff_chunk() for both side-by-side and inline d=
+iffs
+      gitweb: Move HTML-formatting diff line back to process_diff_line(=
+)
+      gitweb: Push formatting diff lines to print_diff_chunk()
+      gitweb: Highlight interesting parts of diff
+      gitweb: Refinement highlightning in combined diffs
 
-BTW. I went and checked if this approach helps for non-trivial merges
-in git.git history:
-
-* b10656c - helps a bit, though one can see limitation of pre/post-fix
-  matching here, but it is present also for non-combined diff.
-
-* 8b132bc - helps a bit, though char-interdiff or word-interdiff might
-  be better.  Nb. I think that red background for 'marked' is a bit
-  too dark (intensive).
-
-* c58499c - doesn't help too much.
-
-* f629c23, aa145bf - helps.
-
->  gitweb/gitweb.perl |   57 +++++++++++++++++++++++++++++++++++++++---=
----------
->  1 files changed, 43 insertions(+), 14 deletions(-)
->=20
-> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-> index 872ba12..c056e83 100755
-> --- a/gitweb/gitweb.perl
-> +++ b/gitweb/gitweb.perl
-> @@ -5057,12 +5057,12 @@ sub print_inline_diff_lines {
->  # Format removed and added line, mark changed part and HTML-format t=
-hem.
->  # Impementation is based on contrib/diff-highlight
-
-Implementation
-   ^---
-
->  sub format_rem_add_line {
-> -	my ($rem, $add) =3D @_;
-> +	my ($rem, $add, $num_parents) =3D @_;
->  	my @rem =3D split(//, $rem);
->  	my @add =3D split(//, $add);
->  	my ($esc_rem, $esc_add);
-> -	# Ignore +/- character, thus $prefix_len is set to 1.
-> -	my ($prefix_len, $suffix_len) =3D (1, 0);
-> +	# Ignore leading +/- characters for each parent.
-> +	my ($prefix_len, $suffix_len) =3D ($num_parents, 0);
-
-Nice.
-
-[...]
-> @@ -5099,15 +5099,43 @@ sub format_rem_add_line {
-> =20
->  # HTML-format diff context, removed and added lines.
->  sub format_ctx_rem_add_lines {
-> -	my ($ctx, $rem, $add, $is_combined) =3D @_;
-> +	my ($ctx, $rem, $add, $num_parents) =3D @_;
->  	my (@new_ctx, @new_rem, @new_add);
-> +	my $can_highlight =3D 0;
-> +	my $is_combined =3D ($num_parents > 1);
-> =20
->  	# Highlight if every removed line has a corresponding added line.
-> -	# Combined diffs are not supported ATM.
-> -	if (!$is_combined && @$add > 0 && @$add =3D=3D @$rem) {
-> +	if (@$add > 0 && @$add =3D=3D @$rem) {
-> +		$can_highlight =3D 1;
-> +
-> +		# Highlight lines in combined diff only if the chunk contains
-> +		# diff between the same version, e.g.
-> +		#
-> +		#    - a
-> +		#   -  b
-> +		#    + c
-> +		#   +  d
-> +		#
-> +		# Otherwise the highlightling would be confusing.
-> +		if ($is_combined) {
-> +			for (my $i =3D 0; $i < @$add; $i++) {
-> +				my $prefix_rem =3D substr($rem->[$i], 0, $num_parents);
-> +				my $prefix_add =3D substr($add->[$i], 0, $num_parents);
-> +
-> +				$prefix_rem =3D~ s/-/+/g;
-> +
-> +				if ($prefix_rem ne $prefix_add) {
-> +					$can_highlight =3D 0;
-> +					last;
-> +				}
-> +			}
-> +		}
-> +	}
-
-Good.
-
-> +
-> +	if ($can_highlight) {
->  		for (my $i =3D 0; $i < @$add; $i++) {
->  			my ($line_rem, $line_add) =3D format_rem_add_line(
-> -			        $rem->[$i], $add->[$i]);
-> +			        $rem->[$i], $add->[$i], $num_parents);
->  			push @new_rem, $line_rem;
->  			push @new_add, $line_add;
->  		}
-
-[...]
-> @@ -5326,7 +5355,7 @@ sub git_patchset_body {
-> =20
->  	} continue {
->  		if (@chunk) {
-> -			print_diff_chunk($diff_style, $is_combined, \%from, \%to, @chunk)=
-;
-> +			print_diff_chunk($diff_style, scalar @hash_parents, \%from, \%to,=
- @chunk);
->  			@chunk =3D ();
->  		}
->  		print "</div>\n"; # class=3D"patch"
-
-I was wondering about 'commitdiff' between two commits, which is not
-combined even ifany of those commits is a merge commit... but it looks
-like it works all right.
+ gitweb/gitweb.perl       |  299 +++++++++++++++++++++++++++++++++-----=
+--------
+ gitweb/static/gitweb.css |    8 ++
+ 2 files changed, 225 insertions(+), 82 deletions(-)
 
 --=20
 Jakub Narebski
-Poland
