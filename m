@@ -1,36 +1,37 @@
 From: "W. Trevor King" <wking@drexel.edu>
-Subject: [PATCH v8 2/3] gitweb: refactor If-Modified-Since handling
-Date: Thu, 29 Mar 2012 08:45:48 -0400
-Message-ID: <8839345a047a7dee825565032029b1c08890a0f0.1333024238.git.wking@drexel.edu>
+Subject: [PATCH v8 3/3] gitweb: add If-Modified-Since handling to
+ git_snapshot().
+Date: Thu, 29 Mar 2012 08:45:49 -0400
+Message-ID: <bfbde5354e25dfbf535307a72016a6b5ac3a2c56.1333024238.git.wking@drexel.edu>
 References: <201203282328.08876.jnareb@gmail.com>
 Cc: Junio C Hamano <gitster@pobox.com>,
 	Jakub Narebski <jnareb@gmail.com>,
 	"W. Trevor King" <wking@drexel.edu>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Mar 29 14:46:18 2012
+X-From: git-owner@vger.kernel.org Thu Mar 29 14:46:19 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SDEjx-0002V7-TC
-	for gcvg-git-2@plane.gmane.org; Thu, 29 Mar 2012 14:46:10 +0200
+	id 1SDEk6-0002bC-6W
+	for gcvg-git-2@plane.gmane.org; Thu, 29 Mar 2012 14:46:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758159Ab2C2MqE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 Mar 2012 08:46:04 -0400
-Received: from vms173001pub.verizon.net ([206.46.173.1]:47590 "EHLO
-	vms173001pub.verizon.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751338Ab2C2MqC (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Mar 2012 08:46:02 -0400
+	id S1759228Ab2C2MqK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 Mar 2012 08:46:10 -0400
+Received: from vms173003pub.verizon.net ([206.46.173.3]:43435 "EHLO
+	vms173003pub.verizon.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758917Ab2C2MqI (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Mar 2012 08:46:08 -0400
 Received: from odin.tremily.us ([unknown] [72.68.98.116])
- by vms173001.mailsrvcs.net
+ by vms173003.mailsrvcs.net
  (Sun Java(tm) System Messaging Server 7u2-7.02 32bit (built Apr 16 2009))
- with ESMTPA id <0M1N009PECSJ2630@vms173001.mailsrvcs.net> for
- git@vger.kernel.org; Thu, 29 Mar 2012 07:45:56 -0500 (CDT)
+ with ESMTPA id <0M1N00IKTCSKN620@vms173003.mailsrvcs.net> for
+ git@vger.kernel.org; Thu, 29 Mar 2012 07:45:57 -0500 (CDT)
 Received: from mjolnir (mjolnir.tremily.us [192.168.0.6])
-	by odin.tremily.us (Postfix) with ESMTPS id E168643C2A1; Thu,
- 29 Mar 2012 08:45:53 -0400 (EDT)
-Received: by mjolnir (sSMTP sendmail emulation); Thu, 29 Mar 2012 08:46:10 -0400
+	by odin.tremily.us (Postfix) with ESMTPS id 481F143C2A2; Thu,
+ 29 Mar 2012 08:45:55 -0400 (EDT)
+Received: by mjolnir (sSMTP sendmail emulation); Thu, 29 Mar 2012 08:46:11 -0400
 X-Mailer: git-send-email 1.7.3.4
 In-reply-to: <201203282328.08876.jnareb@gmail.com>
 In-reply-to: <cover.1333024238.git.wking@drexel.edu>
@@ -39,144 +40,94 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194249>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194250>
 
-The current gitweb only generates Last-Modified and handles
-If-Modified-Since headers for the git_feed action.  This patch breaks
-the Last-Modified and If-Modified-Since handling code out from
-git_feed into a new function exit_if_unmodified_since.  This makes the
-code easy to reuse for other actions.
-
-Only gitweb actions which can easily calculate a modification time
-should use exit_if_unmodified_since, as the goal is to balance local
-processing time vs. upload bandwidth.
+Because snapshots can be large, you can save some bandwidth by
+supporting caching via If-Modified-Since.  This patch adds support for
+the i-m-s request to git_snapshot() if the request is a commit.
+Requests for snapshots of trees, which lack well defined timestamps,
+are still handled as they were before.
 
 Signed-off-by: W Trevor King <wking@drexel.edu>
 ---
- gitweb/gitweb.perl                       |   57 +++++++++++++++--------------
- t/t9501-gitweb-standalone-http-status.sh |   27 +++++++++++++-
- 2 files changed, 55 insertions(+), 29 deletions(-)
+ gitweb/gitweb.perl                       |   10 +++++++++
+ t/t9501-gitweb-standalone-http-status.sh |   33 ++++++++++++++++++++++++++++++
+ 2 files changed, 43 insertions(+), 0 deletions(-)
 
 diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 041da17..6d3f9c0 100755
+index 6d3f9c0..ede804a 100755
 --- a/gitweb/gitweb.perl
 +++ b/gitweb/gitweb.perl
-@@ -7003,6 +7003,28 @@ sub snapshot_name {
- 	return wantarray ? ($name, $name) : $name;
- }
+@@ -7051,6 +7051,10 @@ sub git_snapshot {
  
-+sub exit_if_unmodified_since {
-+	my ($latest_epoch) = @_;
-+	our $cgi;
+ 	my ($name, $prefix) = snapshot_name($project, $hash);
+ 	my $filename = "$name$known_snapshot_formats{$format}{'suffix'}";
 +
-+	my $if_modified = $cgi->http('IF_MODIFIED_SINCE');
-+	if (defined $if_modified) {
-+		my $since;
-+		if (eval { require HTTP::Date; 1; }) {
-+			$since = HTTP::Date::str2time($if_modified);
-+		} elsif (eval { require Time::ParseDate; 1; }) {
-+			$since = Time::ParseDate::parsedate($if_modified, GMT => 1);
-+		}
-+		if (defined $since && $latest_epoch <= $since) {
-+			my %latest_date = parse_date($latest_epoch);
-+			print $cgi->header(
-+				-last_modified => $latest_date{'rfc2822'},
-+				-status => '304 Not Modified');
-+			goto DONE_GITWEB;
-+		}
-+	}
-+}
++	my %co = parse_commit($hash);
++	exit_if_unmodified_since($co{'committer_epoch'}) if %co;
 +
- sub git_snapshot {
- 	my $format = $input_params{'snapshot_format'};
- 	if (!@snapshot_fmts) {
-@@ -7820,35 +7842,14 @@ sub git_feed {
- 	if (defined($commitlist[0])) {
- 		%latest_commit = %{$commitlist[0]};
- 		my $latest_epoch = $latest_commit{'committer_epoch'};
--		%latest_date   = parse_date($latest_epoch, $latest_commit{'comitter_tz'});
--		my $if_modified = $cgi->http('IF_MODIFIED_SINCE');
--		if (defined $if_modified) {
--			my $since;
--			if (eval { require HTTP::Date; 1; }) {
--				$since = HTTP::Date::str2time($if_modified);
--			} elsif (eval { require Time::ParseDate; 1; }) {
--				$since = Time::ParseDate::parsedate($if_modified, GMT => 1);
--			}
--			if (defined $since && $latest_epoch <= $since) {
--				print $cgi->header(
--					-type => $content_type,
--					-charset => 'utf-8',
--					-last_modified => $latest_date{'rfc2822'},
--					-status => '304 Not Modified');
--				return;
--			}
--		}
--		print $cgi->header(
--			-type => $content_type,
--			-charset => 'utf-8',
--			-last_modified => $latest_date{'rfc2822'},
--			-status => '200 OK');
--	} else {
--		print $cgi->header(
--			-type => $content_type,
--			-charset => 'utf-8',
--			-status => '200 OK');
-+		exit_if_unmodified_since($latest_epoch);
-+		%latest_date = parse_date($latest_epoch, $latest_commit{'comitter_tz'});
+ 	my $cmd = quote_command(
+ 		git_cmd(), 'archive',
+ 		"--format=$known_snapshot_formats{$format}{'format'}",
+@@ -7060,9 +7064,15 @@ sub git_snapshot {
  	}
-+	print $cgi->header(
-+		-type => $content_type,
-+		-charset => 'utf-8',
-+		%latest_date ? (-last_modified => $latest_date{'rfc2822'}) : (),
-+		-status => '200 OK');
  
- 	# Optimization: skip generating the body if client asks only
- 	# for Last-Modified date.
+ 	$filename =~ s/(["\\])/\\$1/g;
++	my %latest_date;
++	if (%co) {
++		%latest_date = parse_date($co{'committer_epoch'}, $co{'committer_tz'});
++	}
++
+ 	print $cgi->header(
+ 		-type => $known_snapshot_formats{$format}{'type'},
+ 		-content_disposition => 'inline; filename="' . $filename . '"',
++		%co ? (-last_modified => $latest_date{'rfc2822'}) : (),
+ 		-status => '200 OK');
+ 
+ 	open my $fd, "-|", $cmd
 diff --git a/t/t9501-gitweb-standalone-http-status.sh b/t/t9501-gitweb-standalone-http-status.sh
-index 31076ed..3580103 100755
+index 3580103..fa2f65f 100755
 --- a/t/t9501-gitweb-standalone-http-status.sh
 +++ b/t/t9501-gitweb-standalone-http-status.sh
-@@ -92,7 +92,7 @@ test_debug 'cat gitweb.output'
- test_expect_success 'snapshots: bad tree-ish id (tagged object)' '
- 	echo object > tag-object &&
- 	git add tag-object &&
--	git commit -m "Object to be tagged" &&
-+	test_tick && git commit -m "Object to be tagged" &&
- 	git tag tagged-object `git hash-object tag-object` &&
- 	gitweb_run "p=.git;a=snapshot;h=tagged-object;sf=tgz" &&
- 	grep "400 - Object is not a tree-ish" gitweb.output
-@@ -112,6 +112,31 @@ test_expect_success 'snapshots: bad object id' '
+@@ -138,6 +138,39 @@ test_expect_success 'modification: feed if-modified-since (unmodified)' '
  '
- test_debug 'cat gitweb.output'
+ test_debug 'cat gitweb.headers'
  
-+# ----------------------------------------------------------------------
-+# modification times (Last-Modified and If-Modified-Since)
-+
-+test_expect_success 'modification: feed last-modified' '
-+	gitweb_run "p=.git;a=atom;h=master" &&
++test_expect_success 'modification: snapshot last-modified' '
++	gitweb_run "p=.git;a=snapshot;h=master;sf=tgz" &&
 +	grep "Status: 200 OK" gitweb.headers &&
 +	grep "Last-modified: Thu, 7 Apr 2005 22:14:13 +0000" gitweb.headers
 +'
 +test_debug 'cat gitweb.headers'
 +
-+test_expect_success 'modification: feed if-modified-since (modified)' '
++test_expect_success 'modification: snapshot if-modified-since (modified)' '
 +	export HTTP_IF_MODIFIED_SINCE="Wed, 6 Apr 2005 22:14:13 +0000" &&
 +	test_when_finished "unset HTTP_IF_MODIFIED_SINCE" &&
-+	gitweb_run "p=.git;a=atom;h=master" &&
++	gitweb_run "p=.git;a=snapshot;h=master;sf=tgz" &&
 +	grep "Status: 200 OK" gitweb.headers
 +'
 +test_debug 'cat gitweb.headers'
 +
-+test_expect_success 'modification: feed if-modified-since (unmodified)' '
++test_expect_success 'modification: snapshot if-modified-since (unmodified)' '
 +	export HTTP_IF_MODIFIED_SINCE="Thu, 7 Apr 2005 22:14:13 +0000" &&
 +	test_when_finished "unset HTTP_IF_MODIFIED_SINCE" &&
-+	gitweb_run "p=.git;a=atom;h=master" &&
++	gitweb_run "p=.git;a=snapshot;h=master;sf=tgz" &&
 +	grep "Status: 304 Not Modified" gitweb.headers
 +'
 +test_debug 'cat gitweb.headers'
- 
++
++test_expect_success 'modification: tree snapshot' '
++	ID=`git rev-parse --verify HEAD^{tree}` &&
++	export HTTP_IF_MODIFIED_SINCE="Wed, 6 Apr 2005 22:14:13 +0000" &&
++	test_when_finished "unset HTTP_IF_MODIFIED_SINCE" &&
++	gitweb_run "p=.git;a=snapshot;h=$ID;sf=tgz" &&
++	grep "Status: 200 OK" gitweb.headers &&
++	! grep -i "last-modified" gitweb.headers
++'
++test_debug 'cat gitweb.headers'
++
  # ----------------------------------------------------------------------
  # load checking
+ 
 -- 
 1.7.3.4
