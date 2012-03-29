@@ -1,113 +1,69 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: GSoC idea: adding JavaScript library / framework in gitweb
-Date: Thu, 29 Mar 2012 10:14:10 +0100
-Message-ID: <201203291114.15284.jnareb@gmail.com>
-References: <CACeyogcFJoUyAiTReDJK_nCMGBp+23OjcS407A1X=fqFR+aGag@mail.gmail.com> <201203281238.49171.jnareb@gmail.com> <CACeyogf_ssqS6LdiYiopkh8UYGiBw5Cm06e-sut_y33cimiMJQ@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: GSoC - Designing a faster index format
+Date: Thu, 29 Mar 2012 05:45:54 -0400
+Message-ID: <20120329094554.GA11603@sigill.intra.peff.net>
+References: <CACsJy8C=4WaN4MZrZMaD3FqZrF2jCP5sm0F0SpDvzQnYfka9Ew@mail.gmail.com>
+ <CAKTdtZkpjVaBSkcieojKj+V7WztT3UDzjGfXyghY=S8mq+X9zw@mail.gmail.com>
+ <CACsJy8D85thmK_5jLC7MxJtsitLr=zphKiw2miwPu7Exf7ty=Q@mail.gmail.com>
+ <CAKTdtZkx+7iU5T4oBNDEx-A5cgZCLU9ocdXmC9jRbD39J1zb3Q@mail.gmail.com>
+ <87iphrjv23.fsf@thomas.inf.ethz.ch>
+ <CACsJy8CsdZpQUQ7ydM1fOpSomm6+LyACCR83ccncVtUk+HbLKA@mail.gmail.com>
+ <CAJo=hJsPgUZi2qMc5aDUn0+o5=9n7pBS+yWBASfqtov8WuFBRA@mail.gmail.com>
+ <CAKTdtZngYaTCwd5cri=XjUu3-o44ECjDotrDBNxqYL-Kcsosnw@mail.gmail.com>
+ <CAFfmPPM_GOkOp6-tE2=YxdrZq6TL3s4EgOjXdRKf8+ffMD29xg@mail.gmail.com>
+ <CACsJy8BfCpH3jtfaOyyAgjH3P5fv4FYjboqjoFYF2GiG44TmoA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: chaitanyaa nalla <nallachaitu@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 29 11:14:36 2012
+Content-Type: text/plain; charset=utf-8
+Cc: David Barr <davidbarr@google.com>,
+	elton sky <eltonsky9404@gmail.com>,
+	Shawn Pearce <spearce@spearce.org>,
+	Git Mailing List <git@vger.kernel.org>
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Mar 29 11:46:10 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SDBRC-0003DK-W7
-	for gcvg-git-2@plane.gmane.org; Thu, 29 Mar 2012 11:14:35 +0200
+	id 1SDBvm-0004YR-4Z
+	for gcvg-git-2@plane.gmane.org; Thu, 29 Mar 2012 11:46:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758610Ab2C2JOZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 Mar 2012 05:14:25 -0400
-Received: from mail-ee0-f46.google.com ([74.125.83.46]:43120 "EHLO
-	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750932Ab2C2JOX (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Mar 2012 05:14:23 -0400
-Received: by eekc41 with SMTP id c41so822602eek.19
-        for <git@vger.kernel.org>; Thu, 29 Mar 2012 02:14:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        bh=K0fotkdbCCt5C/5nwqBBh8ueEDbyhT12vzb7TSFeCbw=;
-        b=T/mkq97Lm+gjuFNi+BpaeV9ILQduf6QVDN5tZizMyxbSOBbK5Sej29ZKlRE2l63wCo
-         dTBIagsdr6X+UfRGATnUuLo0M5UFctwLLoMGrqg0487isV80XUE5TxMZ5eCUvmcQBl27
-         YUtLzh4wg/TSd8U3ucq5DFi8fdpRVHfzNjqbhyoe0eDUxtTnZ4hxr48x6ciwFXunfADe
-         kXB2T/lKdFyvBIxYHHkeyvIoiyBeWVe9+/tkmThTuvWKm28NipZXgUWAGUe844bdAxkb
-         S/wWUFrCCwdVihVqJYEWMBeQG6SuZtiiNcHOoIXBrlqo0z5syXoX8GmWvo/w9S2XeIxB
-         wyvw==
-Received: by 10.180.101.8 with SMTP id fc8mr3709869wib.12.1333012462598;
-        Thu, 29 Mar 2012 02:14:22 -0700 (PDT)
-Received: from [192.168.1.13] (euy254.neoplus.adsl.tpnet.pl. [83.20.196.254])
-        by mx.google.com with ESMTPS id l5sm65390934wia.11.2012.03.29.02.14.20
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 29 Mar 2012 02:14:21 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <CACeyogf_ssqS6LdiYiopkh8UYGiBw5Cm06e-sut_y33cimiMJQ@mail.gmail.com>
+	id S1758300Ab2C2JqF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 Mar 2012 05:46:05 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:39140
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751796Ab2C2JqC (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Mar 2012 05:46:02 -0400
+Received: (qmail 29894 invoked by uid 107); 29 Mar 2012 09:46:00 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 29 Mar 2012 05:46:00 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 29 Mar 2012 05:45:54 -0400
 Content-Disposition: inline
+In-Reply-To: <CACsJy8BfCpH3jtfaOyyAgjH3P5fv4FYjboqjoFYF2GiG44TmoA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194242>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194243>
 
-Please remove those parts of quoted (cited) message that are irrelevant
-to your response.  Try to not top-post, either.
+On Tue, Mar 27, 2012 at 01:33:33PM +0700, Nguyen Thai Ngoc Duy wrote:
 
-On Wed, 28 Mar 2012, chaitanyaa nalla wrote:
+> On Tue, Mar 27, 2012 at 10:34 AM, David Barr <davidbarr@google.com> wrote:
+> > Another implementation in this general class is TinyCDB[1].
+> > It is <1600 lines of plain C. Too few to be complete?
+> > It is a derivative of DJB's CDB[2].
+> >
+> > [1] http://www.corpit.ru/mjt/tinycdb.html
+> 
+> "CDB is a constant database, that is, it cannot be updated at a
+> runtime, only rebuilt.". It does not sound promising to me. I have not
+> read the description carefully though.
 
-> I forgot to add this feature to employ JavaScript syntax highlighter
-> to pretty-print contents of the blob view.
+No, you are right. I did some work with cdb many years ago. It optimizes
+for lookup by spending time building an optimal hash table at generation
+time. There is no way to add or modify an entry short of rewriting the
+complete contents of the database, which is exactly what we are trying
+to get away from with the current index format.
 
-O.K.  Anyway, I think adding this feature is optional, as time permits;
-especially that it is, I think, not easy.
-
-> Here are my views regarding which JavaScript library to use.
-> I want to stick to one or two libraries, as I don't want to
-> mix things up which is a bad practise.
-
-This is a good idea.
-
-> For DOM manipulation jQuery is better than others.
-> For graphics representation Raphael library or Dojo is better.
-> If one need robust Object Oriented platform, Dojo is better.
-> Based on popularity, light weight jQuery library is pretty famous
-> because of its simplicity and power, it got added advantage that
-> Microsoft's ASP.Net and Nokia are supporting it.
-> YUI is modular.
-> MooTools lets have us our own way .. http://jqueryvsmootools.com/
-> Please take a look at this link:
->
->    http://en.wikipedia.org/wiki/Comparison_of_JavaScript_frameworks.
-
-What is lacking in above description and comparison of various 
-JavaScript frameworks is note about *your familiarity* with said 
-libraries.
-
-> Based on the goal of the project, I would prefer jQuery as it is well
-> tested, robust, simple to use, widely popular, has good support for
-> DOM manipulating, is fast (performance) in most cases.
-
-Additional advantage is that there are many CDN (Content Delivery
-Network) for jQuery that one can use.
-
-I also think that for gitweb, where goal is to enhance its views
-(rather than creating JavaScript app like e.g. GMail or Google Docs),
-lightweight and popular jQuery library might be a best choice.
-
-> Though for graphics I would go for Raphael.js, as it has clean
-> and neat API similar to jQuery, and it has good graphics support.
-
-Well, if there is time for adding client-side graphical history view
-to gitweb, Raphael.js seems like a good choice.  But I am afraid that
-this feature it as large as separate GSoC project.
-
-
-P.S. Another source of inspiration for JavaScript usage in gitweb might
-be git-browser project.  Just FYI.
-
--- 
-Jakub Narebski
-Poland
+-Peff
