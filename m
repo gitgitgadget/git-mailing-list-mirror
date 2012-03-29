@@ -1,104 +1,120 @@
-From: =?UTF-8?q?Micha=C5=82=20Kiedrowicz?= <michal.kiedrowicz@gmail.com>
-Subject: =?UTF-8?q?=5BPATCH=5D=20gitweb=3A=20Use=20descriptive=20names=20in=20esc=5Fhtml=5Fhl=5Fregions=28=29?=
-Date: Thu, 29 Mar 2012 20:04:20 +0200
-Message-ID: <1333044260-31278-1-git-send-email-michal.kiedrowicz@gmail.com>
-References: <201203241958.23835.jnareb@gmail.com>
+From: Ivan Heffner <iheffner@gmail.com>
+Subject: Re: [PATCH] git-commit doc: say -t requires editing commit message
+Date: Thu, 29 Mar 2012 11:09:48 -0700
+Message-ID: <CAF_oF=xGHdbkYw-ytvcZvJnqZ_jdckUCBiuUDzkqGDk=66+yMQ@mail.gmail.com>
+References: <1333043876-19966-1-git-send-email-haircut@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	=?UTF-8?q?Micha=C5=82=20Kiedrowicz?= <michal.kiedrowicz@gmail.com>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 29 20:04:53 2012
+Cc: git@vger.kernel.org
+To: Adam Monsen <haircut@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Mar 29 20:10:00 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SDJiI-0001xL-PJ
-	for gcvg-git-2@plane.gmane.org; Thu, 29 Mar 2012 20:04:47 +0200
+	id 1SDJnK-0006nl-LZ
+	for gcvg-git-2@plane.gmane.org; Thu, 29 Mar 2012 20:09:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933537Ab2C2SEl convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 29 Mar 2012 14:04:41 -0400
-Received: from mail-wi0-f170.google.com ([209.85.212.170]:56108 "EHLO
-	mail-wi0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933285Ab2C2SEi (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Mar 2012 14:04:38 -0400
-Received: by wibhr17 with SMTP id hr17so44843wib.1
-        for <git@vger.kernel.org>; Thu, 29 Mar 2012 11:04:35 -0700 (PDT)
+	id S1759193Ab2C2SJ4 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 29 Mar 2012 14:09:56 -0400
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:45723 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759507Ab2C2SJs convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 29 Mar 2012 14:09:48 -0400
+Received: by iagz16 with SMTP id z16so3332251iag.19
+        for <git@vger.kernel.org>; Thu, 29 Mar 2012 11:09:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        bh=yXaqbTzra3LE0QKw7AqrLRo52nKVB7/+qwLl13IiNnE=;
-        b=PYXCUtt60esO/qdCVU+5KwfLaqYcM4jA3Padf5IW3SaLpbDHzYP2M4hqDFe0i158WP
-         sMsBtOHpQsVnbBq6kj3b8032KX+M78Rt0b1eohmdsxVeNqbYcIAA6pfhHzg+RhZDzoLV
-         zTnMewtd086siu4e76m0DcCz37HnbFU1RN3bNL153pI+B4NniLyzDyy/g5HDGvEe0sp6
-         /bzlcLcedzvhDt0O6QYBWmcrONPheEd05ITCGQ19fiKI8LWCo28qhfKEPUWcTP0SXwA/
-         fzdMTsvGE05BOLuh8JHisreBz5kTJ8CVSXVZjv+WvgeXvHWfzU9FDIyIeEw0XorGdZ6m
-         1EhA==
-Received: by 10.180.97.4 with SMTP id dw4mr7814795wib.18.1333044275651;
-        Thu, 29 Mar 2012 11:04:35 -0700 (PDT)
-Received: from localhost (77-177-78-94.net.stream.pl. [94.78.177.77])
-        by mx.google.com with ESMTPS id n15sm68805731wiw.6.2012.03.29.11.04.34
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 29 Mar 2012 11:04:34 -0700 (PDT)
-X-Mailer: git-send-email 1.7.8.4
-In-Reply-To: <201203241958.23835.jnareb@gmail.com>
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=PZw7NLjWDVWpSiUmBFhJ120ntx/ILMv5eV+B/wx2/Fk=;
+        b=yOHWHloRIDdpvo3/Xi7+ESRwT/hA3VWQQwESXg6OoXId08TO/m0GZIXfWNIOt3voKk
+         iODV4SRihyLB7RpbQQZZ/Ln5CbulxQ2SDb2W0Jn3gs4gjW6lyWqnD4anmRCKFBPiB1FW
+         Ls7Vb2ZwAMrn/d6DBWN1D5vq+v3wAe9HchgUOvZduVzQQxuG1NBjKsiNLOhpdCVmGyt1
+         2bVrt9cyUm4mBiupSg6Wo5aZeXo48B4McSmb4EWdI/Iw8BGCN6HWU97b2Xf3mJ+Si6oU
+         MhTu1kDLkcO4LpYCa0d1HJxrxyGk5+Ckcbai7omGXcnbNN7QmJIH6ZT2g905+xaaP0D/
+         lvSQ==
+Received: by 10.43.52.74 with SMTP id vl10mr20713761icb.55.1333044588258; Thu,
+ 29 Mar 2012 11:09:48 -0700 (PDT)
+Received: by 10.231.3.74 with HTTP; Thu, 29 Mar 2012 11:09:48 -0700 (PDT)
+In-Reply-To: <1333043876-19966-1-git-send-email-haircut@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194281>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194282>
 
-The $s->[0] and $s->[1] variables look a bit cryptic.  Let's rename the=
-m
-to $beg and $end so that it's clear what they do.
+I'd suggest being much more verbose about what's going on and why.
 
-Signed-off-by: Micha=C5=82 Kiedrowicz <michal.kiedrowicz@gmail.com>
----
+diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.tx=
+t
+index 5cc84a1..e842916 100644
+--- a/Documentation/git-commit.txt
++++ b/Documentation/git-commit.txt
+@@ -133,10 +133,12 @@ OPTIONS
+ -t <file>::
+ --template=3D<file>::
+        Use the contents of the given file as the initial version
+-       of the commit message. The editor is invoked and you can
+-       make subsequent changes. If a message is specified using
+-       the `-m` or `-F` options, this option has no effect. This
+-       overrides the `commit.template` configuration variable.
++       of the commit message. The editor is invoked so you can
++       make changes. If a message is specified using the `-m` or `-F`
++       options, this option has no effect. This overrides the
++       `commit.template` configuration variable. If the message is
++       unchanged, the message is considered to be empty and the commit=
+ is
++       aborted
 
-> P.S. I wonder if it wouldn't be better if we created and used loop-lo=
-cal
-> variables with descriptive names, e.g.
->=20
->   my ($beg, $end) =3D @$s;
->=20
-> and use $beg in place of $s->[0] and $end in place of $s->[1], which =
-are
-> a bit cryptic.
->=20
-> This of course doesn't affect this patch.
+ -s::
+ --signoff::
+--
+1.7.6.553.g917d7.dirty
 
-Something like this? (patch not based on this series, may be applied
-independently).
-
- gitweb/gitweb.perl |   10 ++++++----
- 1 files changed, 6 insertions(+), 4 deletions(-)
-
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index a8b5fad..a3754ff 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -1738,12 +1738,14 @@ sub esc_html_hl_regions {
- 	my $pos =3D 0;
-=20
- 	for my $s (@sel) {
--		$out .=3D esc_html(substr($str, $pos, $s->[0] - $pos))
--			if ($s->[0] - $pos > 0);
-+		my ($beg, $end) =3D @$s;
-+
-+		$out .=3D esc_html(substr($str, $pos, $beg - $pos))
-+			if ($beg - $pos > 0);
- 		$out .=3D $cgi->span({-class =3D> $css_class},
--		                   esc_html(substr($str, $s->[0], $s->[1] - $s->[0])=
-));
-+		                   esc_html(substr($str, $beg, $end - $beg)));
-=20
--		$pos =3D $s->[1];
-+		$pos =3D $end;
- 	}
- 	$out .=3D esc_html(substr($str, $pos))
- 		if ($pos < length($str));
---=20
-1.7.8.4
+On Thu, Mar 29, 2012 at 10:57 AM, Adam Monsen <haircut@gmail.com> wrote=
+:
+>
+> Make it clear that, when using a commit template, the message *must* =
+be
+> changed or the commit will be aborted "due to empty commit message".
+>
+> Signed-off-by: Adam Monsen <haircut@gmail.com>
+> ---
+>
+> I found it confusing that the commit template itself, even if
+> non-empty, must be edited. Hopefully this clears that up a bit.
+>
+> =C2=A0Documentation/git-commit.txt | =C2=A0 =C2=A02 +-
+> =C2=A01 files changed, 1 insertions(+), 1 deletions(-)
+>
+> diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.=
+txt
+> index 5cc84a1..44947ab 100644
+> --- a/Documentation/git-commit.txt
+> +++ b/Documentation/git-commit.txt
+> @@ -133,7 +133,7 @@ OPTIONS
+> =C2=A0-t <file>::
+> =C2=A0--template=3D<file>::
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0Use the contents of the given file as the =
+initial version
+> - =C2=A0 =C2=A0 =C2=A0 of the commit message. The editor is invoked a=
+nd you can
+> + =C2=A0 =C2=A0 =C2=A0 of the commit message. The editor is invoked a=
+nd you must
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0make subsequent changes. If a message is s=
+pecified using
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0the `-m` or `-F` options, this option has =
+no effect. This
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0overrides the `commit.template` configurat=
+ion variable.
+> --
+> 1.7.5.4
+>
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at =C2=A0http://vger.kernel.org/majordomo-info.ht=
+ml
