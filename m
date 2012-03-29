@@ -1,130 +1,182 @@
-From: Frans Klaver <fransklaver@gmail.com>
-Subject: Re: [PATCH 2/2] git: continue alias lookup on EACCES errors
-Date: Thu, 29 Mar 2012 13:31:09 +0200
-Message-ID: <CAH6sp9OcWUks_n1bD2n1KbePHeUX+FSY0+wLFu+zPik1Pwj3Aw@mail.gmail.com>
-References: <7v4nt9j1m3.fsf@alter.siamese.dyndns.org>
-	<20120328043058.GD30251@sigill.intra.peff.net>
-	<7vaa30wrjx.fsf@alter.siamese.dyndns.org>
-	<20120328174841.GA27876@sigill.intra.peff.net>
-	<20120328180404.GA9052@burratino>
-	<7v1uocwpap.fsf@alter.siamese.dyndns.org>
-	<20120328184014.GA8982@burratino>
-	<20120328193909.GB29019@sigill.intra.peff.net>
-	<20120328194516.GD8982@burratino>
-	<20120328201851.GA29315@sigill.intra.peff.net>
-	<20120328215704.GB10795@sigill.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	James Pickens <jepicken@gmail.com>,
-	Git ML <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Mar 29 13:31:19 2012
+From: "W. Trevor King" <wking@drexel.edu>
+Subject: [PATCH v8 2/3] gitweb: refactor If-Modified-Since handling
+Date: Thu, 29 Mar 2012 08:45:48 -0400
+Message-ID: <8839345a047a7dee825565032029b1c08890a0f0.1333024238.git.wking@drexel.edu>
+References: <201203282328.08876.jnareb@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Jakub Narebski <jnareb@gmail.com>,
+	"W. Trevor King" <wking@drexel.edu>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Mar 29 14:46:18 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SDDZT-0003k3-EJ
-	for gcvg-git-2@plane.gmane.org; Thu, 29 Mar 2012 13:31:15 +0200
+	id 1SDEjx-0002V7-TC
+	for gcvg-git-2@plane.gmane.org; Thu, 29 Mar 2012 14:46:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759124Ab2C2LbL convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 29 Mar 2012 07:31:11 -0400
-Received: from mail-qc0-f174.google.com ([209.85.216.174]:33472 "EHLO
-	mail-qc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756854Ab2C2LbJ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 29 Mar 2012 07:31:09 -0400
-Received: by qcqw6 with SMTP id w6so1297029qcq.19
-        for <git@vger.kernel.org>; Thu, 29 Mar 2012 04:31:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=salHvL8CWjFw2ZSnc1LrrpJrCm8xAUMeceUg9g5ZcIU=;
-        b=eH+alDf44DWGa4vby5XwZusYRRRrqfO9WpRXcC+WbL2sfMxhpDBnwCjMV+anBUj3kn
-         UmRAUWb2lwSub1xx+ZlhQRutuFzzRz39ReXhpjJHUGH1N8GYGH5aktjWM93Sv4jhMNGF
-         0KISfVhv9BoeuHssOWldFXaDeXZ9cfsjVCYRGXKjzalzLVTNMZpQax4qVpIps+Gl/QXS
-         luu4KKAy3YNSrU78Rg75ADQkdB/dg3WuVk5qQTsaYoSuBOlTX+AcTwVVOproDgNKcLYo
-         yS5O1ahLiRS+5qnGdpXb8l8si4XFsCoaNiMOgHH11VIOEIdEBY3x0/t/OvEWx3axchAh
-         YB1A==
-Received: by 10.224.58.147 with SMTP id g19mr42598493qah.58.1333020669397;
- Thu, 29 Mar 2012 04:31:09 -0700 (PDT)
-Received: by 10.224.32.19 with HTTP; Thu, 29 Mar 2012 04:31:09 -0700 (PDT)
-In-Reply-To: <20120328215704.GB10795@sigill.intra.peff.net>
+	id S1758159Ab2C2MqE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 Mar 2012 08:46:04 -0400
+Received: from vms173001pub.verizon.net ([206.46.173.1]:47590 "EHLO
+	vms173001pub.verizon.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751338Ab2C2MqC (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Mar 2012 08:46:02 -0400
+Received: from odin.tremily.us ([unknown] [72.68.98.116])
+ by vms173001.mailsrvcs.net
+ (Sun Java(tm) System Messaging Server 7u2-7.02 32bit (built Apr 16 2009))
+ with ESMTPA id <0M1N009PECSJ2630@vms173001.mailsrvcs.net> for
+ git@vger.kernel.org; Thu, 29 Mar 2012 07:45:56 -0500 (CDT)
+Received: from mjolnir (mjolnir.tremily.us [192.168.0.6])
+	by odin.tremily.us (Postfix) with ESMTPS id E168643C2A1; Thu,
+ 29 Mar 2012 08:45:53 -0400 (EDT)
+Received: by mjolnir (sSMTP sendmail emulation); Thu, 29 Mar 2012 08:46:10 -0400
+X-Mailer: git-send-email 1.7.3.4
+In-reply-to: <201203282328.08876.jnareb@gmail.com>
+In-reply-to: <cover.1333024238.git.wking@drexel.edu>
+References: <cover.1333024238.git.wking@drexel.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194248>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194249>
 
-On Wed, Mar 28, 2012 at 11:57 PM, Jeff King <peff@peff.net> wrote:
+The current gitweb only generates Last-Modified and handles
+If-Modified-Since headers for the git_feed action.  This patch breaks
+the Last-Modified and If-Modified-Since handling code out from
+git_feed into a new function exit_if_unmodified_since.  This makes the
+code easy to reuse for other actions.
 
-> +static int exists_in_PATH(const char *file)
-> +{
-> + =C2=A0 =C2=A0 =C2=A0 const char *p =3D getenv("PATH");
-> + =C2=A0 =C2=A0 =C2=A0 struct strbuf buf =3D STRBUF_INIT;
-> +
-> + =C2=A0 =C2=A0 =C2=A0 if (!p || !*p)
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return 0;
-> +
-> + =C2=A0 =C2=A0 =C2=A0 while (1) {
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 const char *end =3D=
- strchrnul(p, ':');
-> +
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 strbuf_reset(&buf)=
-;
-> +
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 /* POSIX specifies=
- an empty entry as the current directory. */
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (end !=3D p) {
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 strbuf_add(&buf, p, end - p);
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 strbuf_addch(&buf, '/');
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 strbuf_addstr(&buf=
-, file);
-> +
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (!access(buf.bu=
-f, F_OK)) {
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 strbuf_release(&buf);
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 return 1;
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }
-> +
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (!*end)
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 break;
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 p =3D end + 1;
-> + =C2=A0 =C2=A0 =C2=A0 }
-> +
-> + =C2=A0 =C2=A0 =C2=A0 strbuf_release(&buf);
-> + =C2=A0 =C2=A0 =C2=A0 return 0;
-> +}
+Only gitweb actions which can easily calculate a modification time
+should use exit_if_unmodified_since, as the goal is to balance local
+processing time vs. upload bandwidth.
 
-I expect that if more post-mortem checking is done, this function is
-going to need a sibling that provides you with the first found entry
-in PATH, so you can do more checks on it.
+Signed-off-by: W Trevor King <wking@drexel.edu>
+---
+ gitweb/gitweb.perl                       |   57 +++++++++++++++--------------
+ t/t9501-gitweb-standalone-http-status.sh |   27 +++++++++++++-
+ 2 files changed, 55 insertions(+), 29 deletions(-)
 
-
-> +
-> +int sane_execvp(const char *file, char * const argv[])
-> +{
-> + =C2=A0 =C2=A0 =C2=A0 if (!execvp(file, argv))
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return 0;
-
-> + =C2=A0 =C2=A0 =C2=A0 if (errno =3D=3D EACCES && !strchr(file, '/'))
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 errno =3D exists_i=
-n_PATH(file) ? EACCES : ENOENT;
-> + =C2=A0 =C2=A0 =C2=A0 return -1;
-> +}
-
-One of the things I ran into while working on [1] is that quite some
-errors that are produced can also be caused by the interpreter. This
-does cover most of the itch I had earlier. I will still want to have
-the interpreter check [2] in though; errno can for example also be set
-to ENOENT if the interpreter or a required library isn't available. In
-that case you wouldn't want to continue to the aliases, right?
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index 041da17..6d3f9c0 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -7003,6 +7003,28 @@ sub snapshot_name {
+ 	return wantarray ? ($name, $name) : $name;
+ }
+ 
++sub exit_if_unmodified_since {
++	my ($latest_epoch) = @_;
++	our $cgi;
++
++	my $if_modified = $cgi->http('IF_MODIFIED_SINCE');
++	if (defined $if_modified) {
++		my $since;
++		if (eval { require HTTP::Date; 1; }) {
++			$since = HTTP::Date::str2time($if_modified);
++		} elsif (eval { require Time::ParseDate; 1; }) {
++			$since = Time::ParseDate::parsedate($if_modified, GMT => 1);
++		}
++		if (defined $since && $latest_epoch <= $since) {
++			my %latest_date = parse_date($latest_epoch);
++			print $cgi->header(
++				-last_modified => $latest_date{'rfc2822'},
++				-status => '304 Not Modified');
++			goto DONE_GITWEB;
++		}
++	}
++}
++
+ sub git_snapshot {
+ 	my $format = $input_params{'snapshot_format'};
+ 	if (!@snapshot_fmts) {
+@@ -7820,35 +7842,14 @@ sub git_feed {
+ 	if (defined($commitlist[0])) {
+ 		%latest_commit = %{$commitlist[0]};
+ 		my $latest_epoch = $latest_commit{'committer_epoch'};
+-		%latest_date   = parse_date($latest_epoch, $latest_commit{'comitter_tz'});
+-		my $if_modified = $cgi->http('IF_MODIFIED_SINCE');
+-		if (defined $if_modified) {
+-			my $since;
+-			if (eval { require HTTP::Date; 1; }) {
+-				$since = HTTP::Date::str2time($if_modified);
+-			} elsif (eval { require Time::ParseDate; 1; }) {
+-				$since = Time::ParseDate::parsedate($if_modified, GMT => 1);
+-			}
+-			if (defined $since && $latest_epoch <= $since) {
+-				print $cgi->header(
+-					-type => $content_type,
+-					-charset => 'utf-8',
+-					-last_modified => $latest_date{'rfc2822'},
+-					-status => '304 Not Modified');
+-				return;
+-			}
+-		}
+-		print $cgi->header(
+-			-type => $content_type,
+-			-charset => 'utf-8',
+-			-last_modified => $latest_date{'rfc2822'},
+-			-status => '200 OK');
+-	} else {
+-		print $cgi->header(
+-			-type => $content_type,
+-			-charset => 'utf-8',
+-			-status => '200 OK');
++		exit_if_unmodified_since($latest_epoch);
++		%latest_date = parse_date($latest_epoch, $latest_commit{'comitter_tz'});
+ 	}
++	print $cgi->header(
++		-type => $content_type,
++		-charset => 'utf-8',
++		%latest_date ? (-last_modified => $latest_date{'rfc2822'}) : (),
++		-status => '200 OK');
+ 
+ 	# Optimization: skip generating the body if client asks only
+ 	# for Last-Modified date.
+diff --git a/t/t9501-gitweb-standalone-http-status.sh b/t/t9501-gitweb-standalone-http-status.sh
+index 31076ed..3580103 100755
+--- a/t/t9501-gitweb-standalone-http-status.sh
++++ b/t/t9501-gitweb-standalone-http-status.sh
+@@ -92,7 +92,7 @@ test_debug 'cat gitweb.output'
+ test_expect_success 'snapshots: bad tree-ish id (tagged object)' '
+ 	echo object > tag-object &&
+ 	git add tag-object &&
+-	git commit -m "Object to be tagged" &&
++	test_tick && git commit -m "Object to be tagged" &&
+ 	git tag tagged-object `git hash-object tag-object` &&
+ 	gitweb_run "p=.git;a=snapshot;h=tagged-object;sf=tgz" &&
+ 	grep "400 - Object is not a tree-ish" gitweb.output
+@@ -112,6 +112,31 @@ test_expect_success 'snapshots: bad object id' '
+ '
+ test_debug 'cat gitweb.output'
+ 
++# ----------------------------------------------------------------------
++# modification times (Last-Modified and If-Modified-Since)
++
++test_expect_success 'modification: feed last-modified' '
++	gitweb_run "p=.git;a=atom;h=master" &&
++	grep "Status: 200 OK" gitweb.headers &&
++	grep "Last-modified: Thu, 7 Apr 2005 22:14:13 +0000" gitweb.headers
++'
++test_debug 'cat gitweb.headers'
++
++test_expect_success 'modification: feed if-modified-since (modified)' '
++	export HTTP_IF_MODIFIED_SINCE="Wed, 6 Apr 2005 22:14:13 +0000" &&
++	test_when_finished "unset HTTP_IF_MODIFIED_SINCE" &&
++	gitweb_run "p=.git;a=atom;h=master" &&
++	grep "Status: 200 OK" gitweb.headers
++'
++test_debug 'cat gitweb.headers'
++
++test_expect_success 'modification: feed if-modified-since (unmodified)' '
++	export HTTP_IF_MODIFIED_SINCE="Thu, 7 Apr 2005 22:14:13 +0000" &&
++	test_when_finished "unset HTTP_IF_MODIFIED_SINCE" &&
++	gitweb_run "p=.git;a=atom;h=master" &&
++	grep "Status: 304 Not Modified" gitweb.headers
++'
++test_debug 'cat gitweb.headers'
+ 
+ # ----------------------------------------------------------------------
+ # load checking
+-- 
+1.7.3.4
