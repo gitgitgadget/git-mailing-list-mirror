@@ -1,91 +1,102 @@
-From: "Frans Klaver" <fransklaver@gmail.com>
-Subject: Re: [PATCH 2/2] git: continue alias lookup on EACCES errors
-Date: Thu, 29 Mar 2012 19:23:12 +0200
-Message-ID: <op.wbxzwyre0aolir@keputer>
-References: <7vaa30wrjx.fsf@alter.siamese.dyndns.org>
- <20120328174841.GA27876@sigill.intra.peff.net>
- <20120328180404.GA9052@burratino> <7v1uocwpap.fsf@alter.siamese.dyndns.org>
- <20120328184014.GA8982@burratino>
- <20120328193909.GB29019@sigill.intra.peff.net>
- <20120328194516.GD8982@burratino>
- <20120328201851.GA29315@sigill.intra.peff.net>
- <20120328215704.GB10795@sigill.intra.peff.net>
- <CAH6sp9OcWUks_n1bD2n1KbePHeUX+FSY0+wLFu+zPik1Pwj3Aw@mail.gmail.com>
- <20120329172033.GC12318@sigill.intra.peff.net>
+From: =?UTF-8?B?TWljaGHFgg==?= Kiedrowicz <michal.kiedrowicz@gmail.com>
+Subject: Re: [PATCH v2 3/8] gitweb: Extract print_sidebyside_diff_lines()
+Date: Thu, 29 Mar 2012 19:25:57 +0200
+Message-ID: <20120329192557.4bd45322@gmail.com>
+References: <1332543417-19664-1-git-send-email-michal.kiedrowicz@gmail.com>
+	<1332543417-19664-4-git-send-email-michal.kiedrowicz@gmail.com>
+	<201203281633.53916.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-Cc: "Jonathan Nieder" <jrnieder@gmail.com>,
-	"Junio C Hamano" <gitster@pobox.com>,
-	"James Pickens" <jepicken@gmail.com>,
-	"Git ML" <git@vger.kernel.org>
-To: "Jeff King" <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Mar 29 19:23:23 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Mar 29 19:26:12 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SDJ4D-0003h8-RM
-	for gcvg-git-2@plane.gmane.org; Thu, 29 Mar 2012 19:23:22 +0200
+	id 1SDJ6v-0006OU-Dh
+	for gcvg-git-2@plane.gmane.org; Thu, 29 Mar 2012 19:26:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932609Ab2C2RXS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 Mar 2012 13:23:18 -0400
-Received: from mail-ey0-f174.google.com ([209.85.215.174]:63925 "EHLO
-	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757666Ab2C2RXQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Mar 2012 13:23:16 -0400
-Received: by eaaq12 with SMTP id q12so1150925eaa.19
-        for <git@vger.kernel.org>; Thu, 29 Mar 2012 10:23:15 -0700 (PDT)
+	id S1759766Ab2C2R0F convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 29 Mar 2012 13:26:05 -0400
+Received: from mail-wi0-f172.google.com ([209.85.212.172]:44925 "EHLO
+	mail-wi0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758773Ab2C2R0D convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 29 Mar 2012 13:26:03 -0400
+Received: by wibhj6 with SMTP id hj6so262760wib.1
+        for <git@vger.kernel.org>; Thu, 29 Mar 2012 10:26:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=content-type:to:cc:subject:references:date:mime-version
-         :content-transfer-encoding:from:message-id:in-reply-to:user-agent;
-        bh=dWIlwr24Z9ubcoWjG5mYqpZXtLe8dyLDTURlmYbOlSk=;
-        b=ML4I+WbBq+PLDDc7aFypRZNUh9VWbPaaykboaVoopm1vzsgQ/qoWnFt/k2hHxz8ynV
-         GIAqLMfIZi6wmG/1HqJtF7+DmMZ1Vu4hORSwR2f/6COHv+DXLHqK/YF+0N2YeBBgKzwh
-         XDk8ifvDl2zmrKd98eOy4Koczm4VabPsIGIKZ0KaLawWAqoKDy0E7Zqx1ueyhYZjsns4
-         uDnxkjeLUnHS/+uFMYy3JEdx9uF13ELdyHnzXINNHSA7HljXzz4kUwC3OI7eVHRAOnKD
-         hWzsOb4a2TTm2NUYYYxk1X0vGNrRqq51Z4OLZzkrY2HvQ1o4Jo184A2l7GJBc+gyF1dG
-         HcQg==
-Received: by 10.14.187.134 with SMTP id y6mr1961020eem.44.1333041795318;
-        Thu, 29 Mar 2012 10:23:15 -0700 (PDT)
-Received: from keputer (82-136-253-149.ip.telfort.nl. [82.136.253.149])
-        by mx.google.com with ESMTPS id r44sm23727123eef.2.2012.03.29.10.23.14
+        h=date:from:to:cc:subject:message-id:in-reply-to:references:x-mailer
+         :mime-version:content-type:content-transfer-encoding;
+        bh=6BwjiNQ41cUVfIF4k2wi7p5nH48MuCWN/4iAAg2Fj6k=;
+        b=pChGzpTz18mfwb3U3DvFF+6tAxY0M9tg12T5Bgl6c5yvkFU5eLY+yuhAlzQpEL+8id
+         Ik7iQhJuF60ONbSyGJze8J7QMm+5eboYOCWX2R9/ar1YtuM+UtOpQ4Jb3cM7aq/XJi05
+         khEJP/vcDJhbBtxx6RUJcWTU+0L5ERYfBkxp5jC9DXUpr6M4Hh8k9DbqrVVCjJDil188
+         w79yWehqZfcvnjpyfczWPtrBgHIx6xU2+AZTC1FKCvW+1LD7xrqQKhUSpTz+kvEBukTW
+         5Ss8SNReO72nPf/N7RSIxwqwjUe+uMtcxE/hCtH0on0H84+6eXqMQooyExgyohMnKoLn
+         tphA==
+Received: by 10.180.106.9 with SMTP id gq9mr7584996wib.17.1333041960424;
+        Thu, 29 Mar 2012 10:26:00 -0700 (PDT)
+Received: from localhost (77-177-78-94.net.stream.pl. [94.78.177.77])
+        by mx.google.com with ESMTPS id fl2sm31159816wib.4.2012.03.29.10.25.58
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 29 Mar 2012 10:23:14 -0700 (PDT)
-In-Reply-To: <20120329172033.GC12318@sigill.intra.peff.net>
-User-Agent: Opera Mail/12.00 (Linux)
+        Thu, 29 Mar 2012 10:25:59 -0700 (PDT)
+In-Reply-To: <201203281633.53916.jnareb@gmail.com>
+X-Mailer: Claws Mail 3.8.0 (GTK+ 2.24.8; x86_64-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194275>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194276>
 
-On Thu, 29 Mar 2012 19:20:33 +0200, Jeff King <peff@peff.net> wrote:
+Jakub Narebski <jnareb@gmail.com> wrote:
 
-> On Thu, Mar 29, 2012 at 01:31:09PM +0200, Frans Klaver wrote:
->
->> On Wed, Mar 28, 2012 at 11:57 PM, Jeff King <peff@peff.net> wrote:
->>
->> > +static int exists_in_PATH(const char *file)
->> [...]
->>
->> I expect that if more post-mortem checking is done, this function is
->> going to need a sibling that provides you with the first found entry
->> in PATH, so you can do more checks on it.
->
-> It should be easy to write it that way. I'm not personally planning on
-> adding more checks, but I think it's worth considering future additions.
+> On Fri, 23 Mar 2012, Micha=C5=82 Kiedrowicz wrote:
+>=20
+> > Currently, print_sidebyside_diff_chunk() does two things: it
+> > accumulates diff lines and prints them.  Accumulation may be used t=
+o
+> > perform additional operations on diff lines,  so it makes sense to =
+split
+> > these two things.  Thus, the code that prints diff lines in a side-=
+by-side
+> > manner is moved out of print_sidebyside_diff_chunk() to a separate
+> > subroutine.
+> >
+> Right, that is quite sensible.
+>=20
+> > The outcome of this patch is that print_sidebyside_diff_chunk() is =
+now
+> > much shorter and easier to read.
+> >=20
+> Nice effect.
+>=20
+> > This is a preparation patch for diff refinement highlightning.  It =
+should
+> > not change the gitweb output, but it slightly changes its behavior.
+> > Before this commit, context is printed on the class change. Now, it=
+'it
+> > printed just before printing added and removed lines.
+>=20
+>                                                       , and at the en=
+d
+>   of chunk.
+>=20
+> IMVHO such change is irrelevant.
+>=20
+> Acked-by: Jakub Nar=C4=99bski <jnareb@gmail.com>
 
-I have some similar code lying around. It shouldn't be too hard to rebase  
-that on top of this.
+Thanks.
 
-
->> One of the things I ran into while working on [1] is that quite some
->> errors that are produced can also be caused by the interpreter.
->
-> Yeah, they can be confusing and hard to track down. I'll leave that
-> topic out of this round, and you can build on it if you like.
-
-I was planning to do that, yea.
+>=20
+> > Signed-off-by: Micha=C5=82 Kiedrowicz <michal.kiedrowicz@gmail.com>
+> > ---
+> >  gitweb/gitweb.perl |   97 ++++++++++++++++++++++++++++------------=
+------------
+> >  1 files changed, 52 insertions(+), 45 deletions(-)
+>=20
+> Nice code movement.
+> =20
