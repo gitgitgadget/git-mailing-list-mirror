@@ -1,98 +1,113 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: git add -p and unresolved conflicts
-Date: Thu, 29 Mar 2012 09:26:55 +0200
-Message-ID: <vpqvclnhnpc.fsf@bauges.imag.fr>
-References: <CABPQNSYVXMxS3kugu1j=62ArJ_1saYYfMjJdZvqhjgPFGN=Eqw@mail.gmail.com>
-	<7vbongyd67.fsf@alter.siamese.dyndns.org>
-	<vpqvclozr7e.fsf@bauges.imag.fr> <4F73632E.1060408@ira.uka.de>
-	<vpqk424zfb1.fsf@bauges.imag.fr> <4F737027.5020503@ira.uka.de>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: GSoC idea: adding JavaScript library / framework in gitweb
+Date: Thu, 29 Mar 2012 10:14:10 +0100
+Message-ID: <201203291114.15284.jnareb@gmail.com>
+References: <CACeyogcFJoUyAiTReDJK_nCMGBp+23OjcS407A1X=fqFR+aGag@mail.gmail.com> <201203281238.49171.jnareb@gmail.com> <CACeyogf_ssqS6LdiYiopkh8UYGiBw5Cm06e-sut_y33cimiMJQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Junio C Hamano <gitster@pobox.com>, kusmabite@gmail.com,
-	Git Mailing List <git@vger.kernel.org>
-To: Holger Hellmuth <hellmuth@ira.uka.de>
-X-From: git-owner@vger.kernel.org Thu Mar 29 09:27:47 2012
+Content-Type: text/plain;
+  charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: chaitanyaa nalla <nallachaitu@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Mar 29 11:14:36 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SD9ln-0006sQ-Ua
-	for gcvg-git-2@plane.gmane.org; Thu, 29 Mar 2012 09:27:44 +0200
+	id 1SDBRC-0003DK-W7
+	for gcvg-git-2@plane.gmane.org; Thu, 29 Mar 2012 11:14:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751703Ab2C2H1I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 Mar 2012 03:27:08 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:36312 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751097Ab2C2H1G (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Mar 2012 03:27:06 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id q2T7LjE9029722
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Thu, 29 Mar 2012 09:21:45 +0200
-Received: from bauges.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1SD9l1-0008A5-VB; Thu, 29 Mar 2012 09:26:56 +0200
-In-Reply-To: <4F737027.5020503@ira.uka.de> (Holger Hellmuth's message of "Wed,
-	28 Mar 2012 22:10:15 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.93 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Thu, 29 Mar 2012 09:21:45 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: q2T7LjE9029722
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1333610506.12652@8xjpdx39UuKQetE1/ImbzQ
+	id S1758610Ab2C2JOZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 Mar 2012 05:14:25 -0400
+Received: from mail-ee0-f46.google.com ([74.125.83.46]:43120 "EHLO
+	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750932Ab2C2JOX (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Mar 2012 05:14:23 -0400
+Received: by eekc41 with SMTP id c41so822602eek.19
+        for <git@vger.kernel.org>; Thu, 29 Mar 2012 02:14:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        bh=K0fotkdbCCt5C/5nwqBBh8ueEDbyhT12vzb7TSFeCbw=;
+        b=T/mkq97Lm+gjuFNi+BpaeV9ILQduf6QVDN5tZizMyxbSOBbK5Sej29ZKlRE2l63wCo
+         dTBIagsdr6X+UfRGATnUuLo0M5UFctwLLoMGrqg0487isV80XUE5TxMZ5eCUvmcQBl27
+         YUtLzh4wg/TSd8U3ucq5DFi8fdpRVHfzNjqbhyoe0eDUxtTnZ4hxr48x6ciwFXunfADe
+         kXB2T/lKdFyvBIxYHHkeyvIoiyBeWVe9+/tkmThTuvWKm28NipZXgUWAGUe844bdAxkb
+         S/wWUFrCCwdVihVqJYEWMBeQG6SuZtiiNcHOoIXBrlqo0z5syXoX8GmWvo/w9S2XeIxB
+         wyvw==
+Received: by 10.180.101.8 with SMTP id fc8mr3709869wib.12.1333012462598;
+        Thu, 29 Mar 2012 02:14:22 -0700 (PDT)
+Received: from [192.168.1.13] (euy254.neoplus.adsl.tpnet.pl. [83.20.196.254])
+        by mx.google.com with ESMTPS id l5sm65390934wia.11.2012.03.29.02.14.20
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 29 Mar 2012 02:14:21 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <CACeyogf_ssqS6LdiYiopkh8UYGiBw5Cm06e-sut_y33cimiMJQ@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194241>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194242>
 
-Holger Hellmuth <hellmuth@ira.uka.de> writes:
+Please remove those parts of quoted (cited) message that are irrelevant
+to your response.  Try to not top-post, either.
 
->> And you miss the most usefull (to me at least): "choose the version in
->> the worktree".
->>
+On Wed, 28 Mar 2012, chaitanyaa nalla wrote:
+
+> I forgot to add this feature to employ JavaScript syntax highlighter
+> to pretty-print contents of the blob view.
+
+O.K.  Anyway, I think adding this feature is optional, as time permits;
+especially that it is, I think, not easy.
+
+> Here are my views regarding which JavaScript library to use.
+> I want to stick to one or two libraries, as I don't want to
+> mix things up which is a bad practise.
+
+This is a good idea.
+
+> For DOM manipulation jQuery is better than others.
+> For graphics representation Raphael library or Dojo is better.
+> If one need robust Object Oriented platform, Dojo is better.
+> Based on popularity, light weight jQuery library is pretty famous
+> because of its simplicity and power, it got added advantage that
+> Microsoft's ASP.Net and Nokia are supporting it.
+> YUI is modular.
+> MooTools lets have us our own way .. http://jqueryvsmootools.com/
+> Please take a look at this link:
 >
-> But the conflicted chunks are of the form "<<<< our ... ||||||||||
-> theirs >>>>>>" in your work tree. So there are two cases:
->
-> a) You have removed the markers thereby removing the conflict -> this
-> means the chunk will not be offered to you as a conflicting chunk
+>    http://en.wikipedia.org/wiki/Comparison_of_JavaScript_frameworks.
 
-If you have removed the markers, then the file is still marked as
-conflicted in the index, and the user may still want to see the combined
-diff.
+What is lacking in above description and comparison of various 
+JavaScript frameworks is note about *your familiarity* with said 
+libraries.
 
-My use-case is actually quite simple: I see "git add -p" both as a way
-to make partial commits, and as a way to manually validate what I'm
-about to commit. I review the diff, validate them with "y", and if I see
-something wrong, I quit "git add -p", fix the issue, and next "git add
--p" won't show it again. This flow could work also with conflicts:
+> Based on the goal of the project, I would prefer jQuery as it is well
+> tested, robust, simple to use, widely popular, has good support for
+> DOM manipulating, is fast (performance) in most cases.
 
-$ git add -p
-# see an unresolved diff for file foo.txt
-n
-# see a resolved diff for file bar.txt
-y        <-- the "missing" possibility for me
-$ edit foo.txt
-$ git add -p
-# see resolution for file foo.txt
-y
-$ git commit
+Additional advantage is that there are many CDN (Content Delivery
+Network) for jQuery that one can use.
 
-The "'git reset $path' before 'add -p'" workaround is not really handy
-there: it requires typing the path, while my workflow with "git add -p"
-does not, and it wouldn't show the combined diff, which is usually the
-best tool to see if a merge has been resolved properly.
+I also think that for gitweb, where goal is to enhance its views
+(rather than creating JavaScript app like e.g. GMail or Google Docs),
+lightweight and popular jQuery library might be a best choice.
 
-The current behavior is not that bad for me: I see the combined diff in
-the output, I just have one extra "git add $path" to type. Being able to
-just say "y" instead would be handy, but not fundamentally different.
+> Though for graphics I would go for Raphael.js, as it has clean
+> and neat API similar to jQuery, and it has good graphics support.
+
+Well, if there is time for adding client-side graphical history view
+to gitweb, Raphael.js seems like a good choice.  But I am afraid that
+this feature it as large as separate GSoC project.
+
+
+P.S. Another source of inspiration for JavaScript usage in gitweb might
+be git-browser project.  Just FYI.
 
 -- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Jakub Narebski
+Poland
