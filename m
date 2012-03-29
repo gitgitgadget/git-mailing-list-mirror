@@ -1,123 +1,73 @@
-From: =?UTF-8?B?TWljaGHFgg==?= Kiedrowicz <michal.kiedrowicz@gmail.com>
-Subject: Re: [PATCH v2 6/8] gitweb: Push formatting diff lines to
- print_diff_chunk()
-Date: Thu, 29 Mar 2012 19:41:53 +0200
-Message-ID: <20120329194153.2e1ad827@gmail.com>
-References: <1332543417-19664-1-git-send-email-michal.kiedrowicz@gmail.com>
-	<1332543417-19664-7-git-send-email-michal.kiedrowicz@gmail.com>
-	<201203291859.44891.jnareb@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 29 19:42:20 2012
+From: Adam Monsen <haircut@gmail.com>
+Subject: [PATCH] git-commit doc: say -t requires editing commit message
+Date: Thu, 29 Mar 2012 10:57:56 -0700
+Message-ID: <1333043876-19966-1-git-send-email-haircut@gmail.com>
+Cc: Adam Monsen <haircut@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Mar 29 19:58:20 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SDJMR-0005Kz-IC
-	for gcvg-git-2@plane.gmane.org; Thu, 29 Mar 2012 19:42:11 +0200
+	id 1SDJby-00048j-HN
+	for gcvg-git-2@plane.gmane.org; Thu, 29 Mar 2012 19:58:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759194Ab2C2Rl6 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 29 Mar 2012 13:41:58 -0400
-Received: from mail-wg0-f44.google.com ([74.125.82.44]:62956 "EHLO
-	mail-wg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759052Ab2C2Rl5 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 29 Mar 2012 13:41:57 -0400
-Received: by wgbdr13 with SMTP id dr13so1783143wgb.1
-        for <git@vger.kernel.org>; Thu, 29 Mar 2012 10:41:56 -0700 (PDT)
+	id S1758169Ab2C2R6H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 Mar 2012 13:58:07 -0400
+Received: from mail-qa0-f53.google.com ([209.85.216.53]:46887 "EHLO
+	mail-qa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752645Ab2C2R6E (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Mar 2012 13:58:04 -0400
+Received: by qadc11 with SMTP id c11so263424qad.19
+        for <git@vger.kernel.org>; Thu, 29 Mar 2012 10:58:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:in-reply-to:references:x-mailer
-         :mime-version:content-type:content-transfer-encoding;
-        bh=ia9UDhOmckbgkdmg92Z6M6BmS5k/6/2cVZ3ABjVjrC4=;
-        b=XEfOORGUN/ylqB12GG/3YT2HsBe6KBdZ1WOHKEwfpNoKDIppEmYL1nOD5xS2gVrftk
-         qJdP22DQ++kNKU20YIaHNsRIRf6ijo2UMSWIwJpMjlsNUboDR/6x3F8RPfZw6npgRKtJ
-         eWjn4BTVTBXwyPScXbtv0Vdl+faxC02YY4LmrbIuOaoER23uLNd351F0rrAyWvea4U3D
-         bfEDvZ83EdFp3TDAhurbkfiG+dETy6w0+3m2wwtipzNy8nl4hwePXIpayTiebvSk8tMS
-         vOzmQbagim4vDCB8av0U5iJqzQv2lHyXwvrNG2SehImRrbeo2Y9B0S1RlzFUwug4VKcs
-         XErg==
-Received: by 10.180.24.7 with SMTP id q7mr7711642wif.11.1333042916339;
-        Thu, 29 Mar 2012 10:41:56 -0700 (PDT)
-Received: from localhost (77-177-78-94.net.stream.pl. [94.78.177.77])
-        by mx.google.com with ESMTPS id w10sm31331758wiy.3.2012.03.29.10.41.54
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        bh=ARPqrkhvkNRm9vaUeZ595AGfU3IRt/bItrBoO10t94Y=;
+        b=mefGhoMv6waiA3umCMznTsv2a7hIOgYtII3YA11pkCN/IL5aXjOIT03zutKBk6/CL+
+         0mOxcjK0ARy3tVM3F8nAPVOm5FEW6a9o347sCmrHDFZJZotvnrNOry5NuvXaj6hXAkxa
+         EEPMBl+t6Rn5gi8FsJEYYeDe5WZjrbhHb6MLDEmMAil3ZkHAW7D0gC1ZQc7bDYcSMzFG
+         KGXr5otdJh57EQAwMNyv7u5bDil9mvMH7tloRLgogLDg0ZoX9VlIrqEjXunQEtocJHyv
+         OVjmQ5oYjGI39+MzEH1lQ8vX0mD2QYuGTh+pk9zPoASm59MROzf3KPkL9VXhdXY97pli
+         1VyQ==
+Received: by 10.224.39.211 with SMTP id h19mr1574012qae.24.1333043883672;
+        Thu, 29 Mar 2012 10:58:03 -0700 (PDT)
+Received: from localhost.localdomain (c-67-183-137-177.hsd1.wa.comcast.net. [67.183.137.177])
+        by mx.google.com with ESMTPS id gv7sm13592046qab.5.2012.03.29.10.58.01
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 29 Mar 2012 10:41:55 -0700 (PDT)
-In-Reply-To: <201203291859.44891.jnareb@gmail.com>
-X-Mailer: Claws Mail 3.8.0 (GTK+ 2.24.8; x86_64-pc-linux-gnu)
+        Thu, 29 Mar 2012 10:58:02 -0700 (PDT)
+X-Mailer: git-send-email 1.7.5.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194279>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194280>
 
-Jakub Narebski <jnareb@gmail.com> wrote:
+Make it clear that, when using a commit template, the message *must* be
+changed or the commit will be aborted "due to empty commit message".
 
-> On Fri, 23 Mon 2012, Micha=C5=82 Kiedrowicz wrote:
->=20
-> > Now git_patchset_body() only calls diff_line_class(), which is remo=
-ved
-> > from process_diff_line(). The latter function is renamed to
-> > format_diff_line() and its output is changed to return only
-> > HTML-formatted line, which brings it in line with outher format_*
-> > subroutined.
-> >=20
-> > This slightly changes the order of operations performed on diff lin=
-es.
-> > Before this commit, each read line was formatted and then put to th=
-e
-> > @chunk accumulator. Now, lines are formatted inside print_diff_chun=
-k(),
->=20
-> This is a bit convoluted description.
->=20
->=20
-> As I understand it, what happens here is that formatting lines is
-> pushed down to print_diff_chunk(), closer to the place where we
-> actually use HTML formatted output.
+Signed-off-by: Adam Monsen <haircut@gmail.com>
+---
 
-Yes.
+I found it confusing that the commit template itself, even if
+non-empty, must be edited. Hopefully this clears that up a bit.
 
->=20
-> This means that we put raw lines in the @chunk accumulator, rather
-> than formatted lines.  Because we still need to know class (type)
-> of line when accumulating data to post-process and print,=20
-> process_diff_line() subroutine was retired and replaced by=20
-> diff_line_class() used in git_patchset_body() and new / resurrected
-> format_diff_line() used in print_diff_chunk().
->=20
-> Isn't it?
+ Documentation/git-commit.txt |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-Very true.
-
-> =20
->=20
-> A side effect is that we have to pass \%from and \%to down the
-> callstack.
-
-Yes.
-
->=20
-> > This is a preparation patch for diff refinement highlightning. It's=
- not
-> > meant to change gitweb output.
-> >=20
-> This is a very nice refactoring.  I was never really comfortable with
-> the API of process_diff_line(), which was different from all other
-> subroutines in gitweb, and error prone to call.  I wish we used this
-> solution presented in this commit from the very beginning.
->=20
-> BTW. I think we can simply squash this commit with previous one; no
-> need to improve process_diff_line() if we are retiring it.
-
-OK, will do.
-
->=20
-> > Signed-off-by: Micha=C5=82 Kiedrowicz <michal.kiedrowicz@gmail.com>
-> > Acked-by: Jakub Nar=C4=99bski <jnareb@gmail.com>
-> > ---
-> >  gitweb/gitweb.perl |   25 ++++++++++++-------------
-> >  1 files changed, 12 insertions(+), 13 deletions(-)
->=20
+diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
+index 5cc84a1..44947ab 100644
+--- a/Documentation/git-commit.txt
++++ b/Documentation/git-commit.txt
+@@ -133,7 +133,7 @@ OPTIONS
+ -t <file>::
+ --template=<file>::
+ 	Use the contents of the given file as the initial version
+-	of the commit message. The editor is invoked and you can
++	of the commit message. The editor is invoked and you must
+ 	make subsequent changes. If a message is specified using
+ 	the `-m` or `-F` options, this option has no effect. This
+ 	overrides the `commit.template` configuration variable.
+-- 
+1.7.5.4
