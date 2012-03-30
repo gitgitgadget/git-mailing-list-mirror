@@ -1,82 +1,110 @@
-From: Yuval Adam <yuv.adm@gmail.com>
-Subject: Re: Maintaining historical data in a git repo
-Date: Fri, 30 Mar 2012 23:39:38 +0300
-Message-ID: <CA+P+rLeDFu4KgEZPw=k67iMWVVGcZ3q48VZjgXNLXn3NdyQnow@mail.gmail.com>
-References: <CA+P+rLeyEcZPudhLWavB74CiDAqpn+iNkk4F8=NK_yGaJPMmyA@mail.gmail.com>
- <201203301510.q2UFAqn6003864@no.baka.org> <CA+P+rLcWT0SZQjW2LtFXXCDRwjMp8daJ2hVup=7cnsRGbKw7xw@mail.gmail.com>
- <7vehsam3pn.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/4] git-rebase: add keep_empty flag
+Date: Fri, 30 Mar 2012 13:43:22 -0700
+Message-ID: <7vhax5lt05.fsf@alter.siamese.dyndns.org>
+References: <1333136922-12872-1-git-send-email-nhorman@tuxdriver.com>
+ <1333136922-12872-3-git-send-email-nhorman@tuxdriver.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Mar 30 22:40:07 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Phil Hord <phil.hord@gmail.com>
+To: Neil Horman <nhorman@tuxdriver.com>
+X-From: git-owner@vger.kernel.org Fri Mar 30 22:43:34 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SDicA-0003Rz-16
-	for gcvg-git-2@plane.gmane.org; Fri, 30 Mar 2012 22:40:06 +0200
+	id 1SDifV-00068c-IM
+	for gcvg-git-2@plane.gmane.org; Fri, 30 Mar 2012 22:43:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933336Ab2C3UkA convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 30 Mar 2012 16:40:00 -0400
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:56055 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933072Ab2C3Uj7 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 30 Mar 2012 16:39:59 -0400
-Received: by iagz16 with SMTP id z16so1444701iag.19
-        for <git@vger.kernel.org>; Fri, 30 Mar 2012 13:39:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :content-type:content-transfer-encoding;
-        bh=qWKCoB5MbVrk3RJsKqtOwIAvuC6X3XPJEME0yINtpqk=;
-        b=xfwqewMH9BOMDDaUhVAq6LBwGCsoMKmTWB+DtIUFlze3evyT7Xp1hzzhVyb/KZghYj
-         gHEw9LvqfBvbpLpFs486y2ArUfSWNZ4A+/pR8K8qlBotkU0xnamdnIRwdSI+812JHgJ8
-         /RORxItGfDQtyosjg7QcFgW5eL4lVU5v8xn5oUvlP3XXLDZWfrb6rbvDuQF3m2dA24oK
-         RK6Q+RThPqb7Pm6xwWe/jQRC1GZDk0mSlaRTI+UMrIwRS9sC94I/ulLdS+EXY5ZBDsP+
-         EemxmsTHR4Ft7W1IYUbiYOed2j0uXWt0roRW84QBUSgy8naDkCCinUs1meFU8iy53F/V
-         Sbdg==
-Received: by 10.42.152.68 with SMTP id h4mr2103260icw.15.1333139998766; Fri,
- 30 Mar 2012 13:39:58 -0700 (PDT)
-Received: by 10.42.137.66 with HTTP; Fri, 30 Mar 2012 13:39:38 -0700 (PDT)
-In-Reply-To: <7vehsam3pn.fsf@alter.siamese.dyndns.org>
+	id S934590Ab2C3Un0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 Mar 2012 16:43:26 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48540 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S934521Ab2C3UnY (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Mar 2012 16:43:24 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0A80D4116;
+	Fri, 30 Mar 2012 16:43:24 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=hC7c+n58uKxGDk6TkgNmQt3g4+0=; b=FqvFj0
+	ko9S662HpN2pvDqHF0IP0q6OY2Lplv3KHR0jUoN6CK9WfGsHLQ47vlA++ODSJ9p/
+	4HWPCx3k4gmueUYhXup2C1ONo4gUbju1PIUXboVVxVw7KR/mxQguq+1diUCL4ExT
+	u+mr5r3CaeoLABr41qZEGCP9X37SIzj9Ly/NU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=LluNo17TcTiDyBdBbd//1MMu37+zBdBz
+	QNhyWh0hYdaARxITpQnyZrhcdzOUhYtgm3rGwRd7mNat+xYymkrAm0zYTaPBVNlb
+	Bl1GYOw6+zF1xU6sWEwXJo/xrlf2Xtmhiz6+cMegJFjsIk1I2uSSkyQUv9wfBlhO
+	9NSE6zNAdqA=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id F40ED4115;
+	Fri, 30 Mar 2012 16:43:23 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 58D314114; Fri, 30 Mar 2012
+ 16:43:23 -0400 (EDT)
+In-Reply-To: <1333136922-12872-3-git-send-email-nhorman@tuxdriver.com> (Neil
+ Horman's message of "Fri, 30 Mar 2012 15:48:40 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: FE15A9A0-7AA8-11E1-869C-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194404>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194405>
 
-On Fri, Mar 30, 2012 at 7:52 PM, Junio C Hamano <gitster@pobox.com> wro=
-te:
-> That's not really "is it complicated with git" question, I would have=
- to
-> say. =A0Any version control system you would build history starting f=
-rom one
-> point going _forward_, never inserting past event as you dig back.
+Neil Horman <nhorman@tuxdriver.com> writes:
 
-That is true.
-It is very clear to us that an SCM is optimized for the prevalent use
-case, which is tracking code (well, mostly code) as it is written.
-Naturally this always starts at some point in time and progresses into
-the future.
+> Add a command line switch to git-rebase to allow a user the ability to specify
+> that they want to keep any commits in a series that are empty.
+>
+> Signed-off-by: Neil Horman <nhorman@tuxdriver.com>
+> CC: Jeff King <peff@peff.net>
+> CC: Phil Hord <phil.hord@gmail.com>
+> CC: Junio C Hamano <gitster@pobox.com>
 
-However, we perceive git as a very powerful tool, that can fit
-beautifully with the way legislation works today.
-The challenge for us - should we choose to accept it ;) - is to build
-a set of wrapper tools that allow us to use git in such a way, while
-enabling us to build up past history.
+The same comments on Cc: apply to all of your patches.
 
-Yes, this is not the usual use case, but we're highly motivated on
-making this work.
-We believe this could also be an interesting experience for the git
-community in seeing how the git plumbing can be used for other cases,
-even if they veer off on some weird tangent.
+>  Documentation/git-rebase.txt |    6 ++++++
+>  git-rebase.sh                |    5 +++++
+>  2 files changed, 11 insertions(+), 0 deletions(-)
+>
+> diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
+> index 504945c..9717d3e 100644
+> --- a/Documentation/git-rebase.txt
+> +++ b/Documentation/git-rebase.txt
+> @@ -238,6 +238,12 @@ leave out at most one of A and B, in which case it defaults to HEAD.
+>  	will be reset to where it was when the rebase operation was
+>  	started.
+>  
+> +--keep-empty::
+> +	Informs git-rebase that comits which are empty should not be
+> +	automatically removed.  This is at times useful when empty commits
+> +	are used to hold developer information and notes, but contain no real
+> +	code changes
+> +
 
-We'll definitely be back with more questions and updates, as we progres=
-s.
-Thanks, everyone, for your responses and feedback!
+Unlike "cherry-pick", I think "--keep-empty" is a better name for the
+option than "--allow-empty" in this context.  The difference is that from
+the end-user's point of view, cherry-pick _replays_ commits that exist
+elsewhere, and you are allowing the command to replay empty ones as well,
+while rebase _rebuilds_ commits on the same branch, and you are telling
+the command to keep empty ones.
 
---
-Yuval Adam
-http://y3xz.com
+"... which are empty should not be removed" is a bit of double-negation,
+though.  Perhaps
+
+	--keep-empty::
+		Keep the commits that do not change anything from its
+		parents in the result.  This is at times useful when empty
+		commits are used to hold developer information and notes
+		without having any real changes.
+
+But as I rephrased the first part, the last line may have become redundant
+and could safely be removed.
+
+The patch does not seem to do anything other than accepting and silently
+ignoring the option, though.
