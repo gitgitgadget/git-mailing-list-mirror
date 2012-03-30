@@ -1,67 +1,89 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: push.default: current vs upstream
-Date: Fri, 30 Mar 2012 18:20:44 -0400
-Message-ID: <20120330222044.GA22371@sigill.intra.peff.net>
-References: <20120329095236.GA11911@sigill.intra.peff.net>
- <7vbonfqezs.fsf@alter.siamese.dyndns.org>
- <20120329221154.GA1413@sigill.intra.peff.net>
- <7vfwcqq2dw.fsf@alter.siamese.dyndns.org>
- <20120330071358.GB30656@sigill.intra.peff.net>
- <7vty15ltuo.fsf@alter.siamese.dyndns.org>
- <20120330210112.GA20734@sigill.intra.peff.net>
- <7vzkaxkccg.fsf@alter.siamese.dyndns.org>
- <20120330215344.GD20734@sigill.intra.peff.net>
- <7vvcllka61.fsf@alter.siamese.dyndns.org>
+From: david@lang.hm
+Subject: Re: Maintaining historical data in a git repo
+Date: Fri, 30 Mar 2012 15:29:12 -0700 (PDT)
+Message-ID: <alpine.DEB.2.02.1203301513480.5814@asgard.lang.hm>
+References: <CA+P+rLeyEcZPudhLWavB74CiDAqpn+iNkk4F8=NK_yGaJPMmyA@mail.gmail.com> <201203301510.q2UFAqn6003864@no.baka.org> <CA+P+rLcWT0SZQjW2LtFXXCDRwjMp8daJ2hVup=7cnsRGbKw7xw@mail.gmail.com> <7vehsam3pn.fsf@alter.siamese.dyndns.org>
+ <CA+P+rLeDFu4KgEZPw=k67iMWVVGcZ3q48VZjgXNLXn3NdyQnow@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, Matthieu Moy <Matthieu.Moy@imag.fr>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Mar 31 00:21:06 2012
+Content-Type: MULTIPART/MIXED; BOUNDARY="680960-2070111694-1333146552=:5814"
+Cc: git@vger.kernel.org
+To: Yuval Adam <yuv.adm@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Mar 31 00:38:24 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SDkBs-0005wB-JX
-	for gcvg-git-2@plane.gmane.org; Sat, 31 Mar 2012 00:21:04 +0200
+	id 1SDkSd-0002NF-Ul
+	for gcvg-git-2@plane.gmane.org; Sat, 31 Mar 2012 00:38:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964894Ab2C3WUv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 Mar 2012 18:20:51 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:41463
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S964868Ab2C3WUq (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Mar 2012 18:20:46 -0400
-Received: (qmail 21280 invoked by uid 107); 30 Mar 2012 22:20:46 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 30 Mar 2012 18:20:46 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 30 Mar 2012 18:20:44 -0400
-Content-Disposition: inline
-In-Reply-To: <7vvcllka61.fsf@alter.siamese.dyndns.org>
+	id S935483Ab2C3WiR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 Mar 2012 18:38:17 -0400
+Received: from mail.lang.hm ([64.81.33.126]:44136 "EHLO bifrost.lang.hm"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S933942Ab2C3WiO (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Mar 2012 18:38:14 -0400
+X-Greylist: delayed 540 seconds by postgrey-1.27 at vger.kernel.org; Fri, 30 Mar 2012 18:38:14 EDT
+Received: from asgard.lang.hm (asgard.lang.hm [10.0.0.100])
+	by bifrost.lang.hm (8.13.4/8.13.4/Debian-3) with ESMTP id q2UMTCJY030175;
+	Fri, 30 Mar 2012 14:29:12 -0800
+X-X-Sender: dlang@asgard.lang.hm
+In-Reply-To: <CA+P+rLeDFu4KgEZPw=k67iMWVVGcZ3q48VZjgXNLXn3NdyQnow@mail.gmail.com>
+User-Agent: Alpine 2.02 (DEB 1266 2009-07-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194417>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194418>
 
-On Fri, Mar 30, 2012 at 03:15:34PM -0700, Junio C Hamano wrote:
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-> In the meantime, we can do this.
+--680960-2070111694-1333146552=:5814
+Content-Type: TEXT/PLAIN; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 8BIT
 
-I'm OK with this. We could perhaps even invite people to take part in
-the discussion. I'm not sure if that will generate anything more than a
-set of "me too" votes, though.
+On Fri, 30 Mar 2012, Yuval Adam wrote:
 
-> -   locally have.  In future versions of Git, this will change to use the
-> -   "upstream" rule to update the branch at the remote you would "pull"
-> -   from into your current branch with your local current branch.  The
-> -   release after 1.7.10 will start issuing a warning about this change,
-> -   to encourage you to tell the command what to push out, e.g. by setting
-> -   push.default configuration.
-> +   locally have.  In future versions of Git, this will change to and push
-> +   out only your current branch according to either "upstream" or "current"
-> +   rule (we haven't yet decided which).
+> On Fri, Mar 30, 2012 at 7:52 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>> That's not really "is it complicated with git" question, I would have to
+>> say.  Any version control system you would build history starting from one
+>> point going _forward_, never inserting past event as you dig back.
+>
+> That is true.
+> It is very clear to us that an SCM is optimized for the prevalent use
+> case, which is tracking code (well, mostly code) as it is written.
+> Naturally this always starts at some point in time and progresses into
+> the future.
+>
+> However, we perceive git as a very powerful tool, that can fit
+> beautifully with the way legislation works today.
+> The challenge for us - should we choose to accept it ;) - is to build
+> a set of wrapper tools that allow us to use git in such a way, while
+> enabling us to build up past history.
+>
+> Yes, this is not the usual use case, but we're highly motivated on
+> making this work.
+> We believe this could also be an interesting experience for the git
+> community in seeing how the git plumbing can be used for other cases,
+> even if they veer off on some weird tangent.
+>
+> We'll definitely be back with more questions and updates, as we progress.
+> Thanks, everyone, for your responses and feedback!
 
-s/to and/to/
+you may want to take a hint from how the linux repository works.
 
--Peff
+When git was created, the as-of-then current version was commited as the 
+base and development went on from there.
+
+Later on the linux historical repository was created (and re-created over 
+time as other versions were found).
+
+The git graft command can be used to join the 'current' repository to the 
+'historical' repository so that they can be treated as one.
+
+I strongly suspect that something along these lines is what you are 
+needing.
+
+David Lang
+--680960-2070111694-1333146552=:5814--
