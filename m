@@ -1,139 +1,81 @@
-From: Seth Robertson <in-gitvger@baka.org>
-Subject: Re: Maintaining historical data in a git repo
-Date: Fri, 30 Mar 2012 11:10:52 -0400
-Message-ID: <201203301510.q2UFAqn6003864@no.baka.org>
-References: <CA+P+rLeyEcZPudhLWavB74CiDAqpn+iNkk4F8=NK_yGaJPMmyA@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8bit
-Cc: git@vger.kernel.org
-To: Yuval Adam <yuv.adm@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Mar 30 17:11:20 2012
+From: Marcin Cieslak <saper@saper.info>
+Subject: Re: [PATCH] fix display overlap between remote and local progress
+Date: Fri, 30 Mar 2012 14:56:03 +0000 (UTC)
+Organization: http://saper.info
+Message-ID: <slrnjnbic3.30f0.saper@saper.info>
+References: <alpine.LFD.0.9999.0711032328490.21255@xanadu.home>
+ <Pine.LNX.4.64.0711041331520.4362@racer.site>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Mar 30 17:15:15 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SDdTy-0002Wj-VB
-	for gcvg-git-2@plane.gmane.org; Fri, 30 Mar 2012 17:11:19 +0200
+	id 1SDdXl-0006py-QW
+	for gcvg-git-2@plane.gmane.org; Fri, 30 Mar 2012 17:15:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751559Ab2C3PK6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 Mar 2012 11:10:58 -0400
-Received: from tsutomu.baka.org ([66.114.72.182]:59967 "EHLO tsutomu.baka.org"
+	id S1751691Ab2C3PPJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 Mar 2012 11:15:09 -0400
+Received: from plane.gmane.org ([80.91.229.3]:35844 "EHLO plane.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751083Ab2C3PK4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Mar 2012 11:10:56 -0400
-Received: from no.baka.org (no.baka.org [IPv6:2001:470:88bb::2])
-	by tsutomu.baka.org (8.14.4/8.14.4) with ESMTP id q2UFArQM017833
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Fri, 30 Mar 2012 11:10:53 -0400
-Received: from no.baka.org (localhost [127.0.0.1])
-	by no.baka.org (8.14.4/8.14.0) with ESMTP id q2UFAqn6003864;
-	Fri, 30 Mar 2012 11:10:53 -0400
-In-reply-to: <CA+P+rLeyEcZPudhLWavB74CiDAqpn+iNkk4F8=NK_yGaJPMmyA@mail.gmail.com>
-Comments: In reply to a message from "Yuval Adam <yuv.adm@gmail.com>" dated "Fri, 30 Mar 2012 16:34:08 +0300."
+	id S1751571Ab2C3PPI (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Mar 2012 11:15:08 -0400
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1SDdXe-0006i3-EJ
+	for git@vger.kernel.org; Fri, 30 Mar 2012 17:15:06 +0200
+Received: from l.saper.info ([91.121.203.103])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 30 Mar 2012 17:15:06 +0200
+Received: from saper by l.saper.info with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 30 Mar 2012 17:15:06 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: l.saper.info
+User-Agent: slrn/0.9.9p1 (FreeBSD)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194364>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194365>
 
+(This is about ANSI clear-eol sequence introduced to sideline.c in commit
+ ebe8fa738dcf6911fe520adce0cfa0cb26dee5e2)
 
-In message <CA+P+rLeyEcZPudhLWavB74CiDAqpn+iNkk4F8=NK_yGaJPMmyA@mail.gmail.com>, Yuval Adam writes:
+>> Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> Hi,
+>
+> On Sun, 4 Nov 2007, Nicolas Pitre wrote:
+>
+>> +#define SUFFIX "\e[K"  /* change to "        " if ANSI sequences don't work */ 
+>
+> I am almost certain (without even testing) that cmd.exe has problems with 
+> that.  It does not even understand colorisation.
+>
+> My vote is to let it be for the moment, and us msysGit people will 
+> probably add something like NO_ANSI_TERM=YesPlease later.
 
-    As part of a public project to open-source the Israeli law code, we
-    are looking into ways of represent such data in a git repository.
+Hi,
 
-This is extremely cool.  I wish others were forward thinking enough
-to do this.
+We are using script(1) to record the workflow and troubleshoot problems.
+script utility records all control codes as well (actually everything
+that passes via pseudoterminal it creates.
 
-    The main challenge is to represent historical data _in a semantically
-    correct way_ within a git repository, while having the ability to
-    change data that has occurred in the past.
+We managed to get git quiet on most control codes with color.ui=false
+and pager set to nothing, but we still get ESC [ K codes from the
+remote output (we are using gerrit and it generates some). 
 
-Revision control shouldn't be used to change the past (even if git
-allows this with sufficient amounts of pain/warning to all users).
-What it is extremely good at is preserving the past and tracking the
-changes that are made.
+While I can live with git progress output lines in the log, it's
+quite annoying to edit those ANSI sequences out of the script.
+One has to remember to set TERM=dumb before invoking _some_ git
+operations.
 
-    For example, we might have revisions B and C of a certain legal
-    document, commit to repo, and at a later time want to add revision A
-    to the proper place in the git commit tree (probably with rebasing or
-    replacing).
+Is there any better solution possible?
 
-There is no problem doing this.  I'll make up a mythical workflow
-which might be realistic.  Someone proposes a bill, so a branch for
-the proposal is created.  In many of the laws I am familiar with,
-there is the text of the law and then the text says "Amend V.5.12.A.b
-to add '25: or to commit a nasal offense (as defined in V.5.12.A) with
-a shoe'".  So the branch might contain the text of the proposed law
-and then actually go through to the document V.5.12.A.b and add the
-new data to the appropriate file (in an ideal world that might be an
-automatic process, but laws are rarely so precise).  The proposed law
-changes and the bill text changes would be committed onto the branch.
-
-As the bill goes through committee people make changes, adding things,
-removing things, etc.  Each change is a commit.  One example change
-might be a new change saying "remove the change made 2 days ago" or
-"make the current version the version from 10 days ago".  Both of
-those specific changes would ideally be positive changes.  You would
-not actually be deleting the change made two days ago or removing all
-changes made between 10 days ago and now, you would be making a new
-commit to remove the effects of the unwanted changes.
-
-When the negotiations are over and assuming the bill gets all three
-readings (each reading could be a "tag" to document exactly what was
-read) and voted into a law, you would then merge the bill branch into
-the "law" branch which represents the actual legally active laws.
-This could be done as a "squash" merge which hides all of the
-committee negotiations or it could be done as a normal merge which
-allows the history of the negotiations to be visible, or, depending on
-the visibility of the committee negotiations, you could even do a
-combination of the two.
-
-And yes, git supports more complex processes automatically, like each
-Knesset member making their own proposed changes and the committee
-chair merging the appropriate version in if it was approved and the
-others being either discarded or archived for history but not
-incorporated.
-
-    Allowing decentralization and updates is a major requirement.
-
-git is extremely good at this.
-
-    We're trying to map out the various pros and cons of the different
-    options of maintaining such a repo.
-
-Ideally the data being represented would be structured, textual, and
-somewhat line oriented, plain text/UTF-8 files (no matter the word
-direction) like this email are ideal.  Committing binary Office
-documents (Word, OpenXML, ODF, etc) is not ideal, since under most
-circumstances/without a lot of work you are not going to get good
-differences so that you can easily see the history of the law.  You
-can write custom binary drivers to extract this difference information
-from these binary documents, but that is the "lot of work" I was
-talking about.
-
-You additionally might want to have separate repositories for separate
-groups of laws to prevent repositories from getting unwieldy.  There
-are tools which let you group repositories together.
-
-    Has anyone ever attempted something like this?
-
-Many people use git to track living documents.  Perhaps not law per
-se, but I don't particularly see why that would matter.
-
-    Are there any projects that build on the git plumbing which provide
-    wrapper APIs to handle historic data?
-
-Are you talking about "get rid of that change, it was bad" and
-"restore this version of the document as the good one" or "how do I
-import 64 years of law into git"?  Git provides native tools to handle
-both.
-
-    We really could use any reference or advice we can get on this subject.
-
-I'll point you at http://progit.org/book/ as a general reference about
-git and http://sethrobertson.github.com/GitBestPractices/ as a
-reference about best practices.
-
-					-Seth Robertson
+//Marcin
