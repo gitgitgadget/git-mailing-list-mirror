@@ -1,118 +1,83 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: What's cooking in git.git (Mar 2012, #10; Wed, 28)
-Date: Thu, 29 Mar 2012 16:51:01 -0700 (PDT)
-Message-ID: <m3fwcrarwo.fsf@localhost.localdomain>
-References: <7vsjgss6ua.fsf@alter.siamese.dyndns.org>
+From: Martin Fick <mfick@codeaurora.org>
+Subject: Git push performance problems with ~100K refs
+Date: Thu, 29 Mar 2012 18:18:49 -0600
+Organization: CAF
+Message-ID: <201203291818.49933.mfick@codeaurora.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-2
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Mar 30 01:51:12 2012
+Content-Type: Text/Plain;
+  charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Mar 30 02:19:23 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SDP7V-0005ZV-Hx
-	for gcvg-git-2@plane.gmane.org; Fri, 30 Mar 2012 01:51:09 +0200
+	id 1SDPYo-0000Hq-EN
+	for gcvg-git-2@plane.gmane.org; Fri, 30 Mar 2012 02:19:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933191Ab2C2XvF convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 29 Mar 2012 19:51:05 -0400
-Received: from mail-we0-f174.google.com ([74.125.82.174]:39867 "EHLO
-	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932511Ab2C2XvC convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 29 Mar 2012 19:51:02 -0400
-Received: by wejx9 with SMTP id x9so42320wej.19
-        for <git@vger.kernel.org>; Thu, 29 Mar 2012 16:51:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type
-         :content-transfer-encoding;
-        bh=FVB8F5TmM/iLcMgQ5kTKqeOM4vLB4Xa909wYMDnAv2Y=;
-        b=ZLZXi5irkMHq6+w7zqQN1WFQfOvaW4PMtW6EC6muj/eoUZmJ7ICWX0rQD7J1VruyPi
-         J9jnNf8hcAYl2FygKYVZRPoF/OKvKk3WYpsMNxPoZEOIkg5ryuXYMZLLANY1wd8ZNDcE
-         6Lnpi5FIxFeENpYH9iMfCDvn6tBtSkUnSafS+rCfQ+14smDAeFvIVc7GBTcdeIp5TEHg
-         jyiOWUjkkgO8k/lEzy9AlLPML7VC0NuSlGbdjBEseq9/uaIZuUmB2n+UJ2GIS3uxrVLm
-         UXdkV+lJvvHJXSEy17LRE3BHK+KG/DVvy25iItrRIEQ3TlRopc+MO9Tc+jpEMcYjQF2+
-         gG5Q==
-Received: by 10.180.82.132 with SMTP id i4mr194441wiy.12.1333065061439;
-        Thu, 29 Mar 2012 16:51:01 -0700 (PDT)
-Received: from localhost.localdomain (aeh224.neoplus.adsl.tpnet.pl. [83.25.111.224])
-        by mx.google.com with ESMTPS id n15sm1317899wiw.6.2012.03.29.16.51.00
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 29 Mar 2012 16:51:01 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id q2TNoWXV012234;
-	Fri, 30 Mar 2012 01:50:43 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id q2TNoGcS012230;
-	Fri, 30 Mar 2012 01:50:16 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <7vsjgss6ua.fsf@alter.siamese.dyndns.org>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1760322Ab2C3ASw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 Mar 2012 20:18:52 -0400
+Received: from wolverine02.qualcomm.com ([199.106.114.251]:40304 "EHLO
+	wolverine02.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759505Ab2C3ASv (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Mar 2012 20:18:51 -0400
+X-IronPort-AV: E=McAfee;i="5400,1158,6664"; a="174870735"
+Received: from pdmz-ns-mip.qualcomm.com (HELO mostmsg01.qualcomm.com) ([199.106.114.10])
+  by wolverine02.qualcomm.com with ESMTP/TLS/ADH-AES256-SHA; 29 Mar 2012 17:18:50 -0700
+Received: from mfick-lnx.localnet (pdmz-snip-v218.qualcomm.com [192.168.218.1])
+	by mostmsg01.qualcomm.com (Postfix) with ESMTPA id E586510004AB
+	for <git@vger.kernel.org>; Thu, 29 Mar 2012 17:18:50 -0700 (PDT)
+User-Agent: KMail/1.13.5 (Linux/2.6.32-37-generic; KDE/4.4.5; x86_64; ; )
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194305>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194306>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Hello,
 
-> --------------------------------------------------
-> [Cooking]
+I am back to talk about git performance with lots of refs: 
+~100K.  This time I am investigating pushes to a repo with 
+about ~100K ref, a gerrit mirror which includes the gerrit 
+changes.  When I push just a simple one line change to a 
+file, the push takes about ~43s.  If I delete the changes
+from the destination repo, this push takes about 6s.  This 
+seems rather excessive to me, in fact given that the repo 
+with 100K refs has more data in it and is more likely to 
+have the objects I am pushing in it, if things are done 
+right, it should be a faster push (in theory).
 
-> * wk/gitweb-snapshot-use-if-modified-since (2012-03-26) 3 commits
->  - gitweb: add If-Modified-Since handling to git_snapshot().
->  - gitweb: refactor If-Modified-Since handling
->  - gitweb: add `status` headers to git_feed() responses.
->=20
-> Makes 'snapshot' request to "gitweb" honor If-Modified-Since: header,
-> based on the commit date.
+So, upon early investigation, I noticed that the time to 
+push seems mostly determined by the receiving end which is 
+processing all out for 100% on a CPU.  During this time 
+period, the receiving end git commands look like this:
 
-What about "[PATCH v2 0/8] gitweb: Highlight interesting parts of diff"
-series by Micha=B3 Kiedrowicz:
+  git-receive-pack path/to/repo.git
 
-  Message-ID: <1332543417-19664-1-git-send-email-michal.kiedrowicz@gmai=
-l.com>
-  http://thread.gmane.org/gmane.comp.version-control.git/193804
+and:
 
-I have copy of them in 'gitweb/diff-hl' branch:
+  git rev-list --objects --stdin --not --all
 
--- >8 --
-The following changes since commit 455cf268dbaf227bdbd5e9fbf96525452bcf=
-e44f:
+The latter of these two commands is the one burning CPU.
 
-  Git 1.7.10-rc3 (2012-03-28 11:18:42 -0700)
+Does anyone have any hints as to what might be wrong with 
+the receiving end algorithm that would cause a small change 
+to use so much CPU?  Is there anything that can be done 
+about it?  I noticed that the --all option will effectively 
+feed  all the 100K refs to rev-list, is this really 
+necessary?  Are there any tests that I can perform to help 
+debug this?
 
-are available in the git repository at:
+I am using git 1.7.8.3 and I also tried 1.7.10.rc3, same 
+results.
 
-  git://repo.or.cz/git/jnareb-git.git gitweb/diff-hl
+Thanks,
 
-for you to fetch changes up to 60b06478f0349729dc9a4ddeb1abf5e28986fb7e=
-:
+-Martin
 
-  gitweb: Refinement highlightning in combined diffs (2012-03-29 21:26:=
-36 +0200)
 
-----------------------------------------------------------------
-Micha=B3 Kiedrowicz (8):
-      gitweb: esc_html_hl_regions(): Don't create empty <span> elements
-      gitweb: Pass esc_html_hl_regions() options to esc_html()
-      gitweb: Extract print_sidebyside_diff_lines()
-      gitweb: Use print_diff_chunk() for both side-by-side and inline d=
-iffs
-      gitweb: Move HTML-formatting diff line back to process_diff_line(=
-)
-      gitweb: Push formatting diff lines to print_diff_chunk()
-      gitweb: Highlight interesting parts of diff
-      gitweb: Refinement highlightning in combined diffs
-
- gitweb/gitweb.perl       |  299 +++++++++++++++++++++++++++++++++-----=
---------
- gitweb/static/gitweb.css |    8 ++
- 2 files changed, 225 insertions(+), 82 deletions(-)
-
---=20
-Jakub Narebski
+-- 
+Employee of Qualcomm Innovation Center, Inc. which is a 
+member of Code Aurora Forum
