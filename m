@@ -1,72 +1,141 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: git-svn: cloning an SVN repo with sub-branches and sub-tags
-Date: Fri, 30 Mar 2012 18:05:45 +0530
-Message-ID: <CALkWK0k7eCTuDdjdABpYrecf7G4_ejcsNmeCxPKSN46406U_2g@mail.gmail.com>
-References: <4F7467E1.3090004@pocock.com.au> <CALkWK0mn=vWexhYMNPV5iKf-hX5gTHYjOS4o+E1mFjUtL49hmg@mail.gmail.com>
- <4F75A571.2020304@pocock.com.au>
+From: jaseem abid <jaseemabid@gmail.com>
+Subject: Re: [GSOC] Contributing to git.
+Date: Fri, 30 Mar 2012 18:16:06 +0530
+Message-ID: <CAH-tXsAMJXNs7fM=9msiZT+F_s_06o526kPXLLcQzABBePHxwQ@mail.gmail.com>
+References: <CAH-tXsB39OpbmVcD3Fd+tq8UcBsyCf6JBZ-rSyf1VwrQPKLiFQ@mail.gmail.com>
+ <20120330052631.GB11648@sigill.intra.peff.net> <201203301305.23567.jnareb@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: Daniel Pocock <daniel@pocock.com.au>
-X-From: git-owner@vger.kernel.org Fri Mar 30 14:36:17 2012
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Mar 30 14:46:57 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SDb3t-0001mH-UE
-	for gcvg-git-2@plane.gmane.org; Fri, 30 Mar 2012 14:36:14 +0200
+	id 1SDbEE-0004xE-19
+	for gcvg-git-2@plane.gmane.org; Fri, 30 Mar 2012 14:46:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760087Ab2C3MgJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 Mar 2012 08:36:09 -0400
-Received: from mail-we0-f174.google.com ([74.125.82.174]:64619 "EHLO
-	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759519Ab2C3MgI (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Mar 2012 08:36:08 -0400
-Received: by wejx9 with SMTP id x9so334872wej.19
-        for <git@vger.kernel.org>; Fri, 30 Mar 2012 05:36:05 -0700 (PDT)
+	id S933557Ab2C3Mqu convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 30 Mar 2012 08:46:50 -0400
+Received: from mail-wi0-f170.google.com ([209.85.212.170]:48462 "EHLO
+	mail-wi0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933448Ab2C3Mqs convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 30 Mar 2012 08:46:48 -0400
+Received: by wibhr17 with SMTP id hr17so654066wib.1
+        for <git@vger.kernel.org>; Fri, 30 Mar 2012 05:46:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=hEjU2r+CIn81d1y7pxKzYrOD+UNu+k4uI/Fe9TGA938=;
-        b=bZ7M1iwVLLBcisqjzCiv3+CvIOi+h/NO1rcpN1BM5sNpqlgB1D8lSV3syY8V8POTvP
-         8vGVcDAwAo7quMF+T05TJVBySitla8FH0XkFh3fcc4CuRZlX77wiamPFsfumqJcNLKbX
-         mofEQF07rBiSx7gtter+9ilDfYcXmuIQkfevQ10rCtvKlaHp3GjHiAPpGOuB0GfFOUBX
-         lv0L/NyFVfl44OxHKhHsErv8Dyh33MkTPU0ggcWJKjs/0T+tTvR5fiS4KsqlkCzzdoWh
-         cXdKYSTjKHR6GlmIntCu5CWw+GCaL4o2vy4DW31q+SfVXs49z5luPcKVsbJJ6MQZaTgy
-         Ug2Q==
-Received: by 10.180.102.101 with SMTP id fn5mr6140462wib.6.1333110965367; Fri,
- 30 Mar 2012 05:36:05 -0700 (PDT)
-Received: by 10.216.11.199 with HTTP; Fri, 30 Mar 2012 05:35:45 -0700 (PDT)
-In-Reply-To: <4F75A571.2020304@pocock.com.au>
+         :cc:content-type:content-transfer-encoding;
+        bh=j5JKPc+FUlT+ADrf9ap+ahB7161/D3UKCQIbANrWdGM=;
+        b=iLjSUmCpYzwGb/PjnIYX1/iOw8yea0Xp3BFLnGu7VTjBZeXPiGhNYnV/tQBk5ODA1j
+         w4X7z2XIgS/VS2Oa4vnPtE5Q2n+wii9t9c72gYxDvIY6jyrkgvrK8JYxQVO0q7h8zCQ7
+         QhA6QlIQmcrHb4rua1t3juI/foQalH7kK3DAZLhxMWMaQPpeVGQIGJaKpQ/SVA9dLXNr
+         TQtPN3zNxus+wL/QDpzyj9sx0f/rdJ1yOFfEAkp11lR2m6ru0rNqGg7I/bjPDMfBOcOZ
+         wfMEk7qdQFvX3sjA0YJw63iQmjrLsaBb2S1NlQ0Vv7pst8bBoyTQITmutj4Sq8xqio6h
+         DaKg==
+Received: by 10.180.92.130 with SMTP id cm2mr6233540wib.4.1333111607291; Fri,
+ 30 Mar 2012 05:46:47 -0700 (PDT)
+Received: by 10.227.155.6 with HTTP; Fri, 30 Mar 2012 05:46:06 -0700 (PDT)
+In-Reply-To: <201203301305.23567.jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194353>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194354>
 
-Hi again,
+>> > =C2=A0 =C2=A0 1. Where can I find general instructions on "Contrib=
+uting to git? "
+>> > more specifically, gitweb?
+>>
+>> Documentation/SubmittingPatches in the git.git repository.
 
-Daniel Pocock wrote:
-> One other factor I didn't mention in the original email, some of the
-> branches have been renamed/moved within the SVN repo - is that a problem for
-> git-svn?
+Generally informative, thank you.
 
-Yes, I think so.
+> For GSoC we prefer if you had a public git repository with your stuff
+> (GitHub, repo.or.cz or wherever), and that patches were Cc-ed to ment=
+or.
 
-> One compromise I have thought about would be just extracting trunk, and
-> forgetting about the branches, and manually tagging the official releases
-> (as there were very few of them, this is quick)
+I just started some experiments with code. I branched 'gsoc'  from
+'next' and pushed to github. From the docs I understand that I should
+have branched from master. What should I be doing now?
+[github clone](https://github.com/jaseemabid/git/tree/gsoc)
 
-Just use contrib/svn-fe in that case: it's really quick and
-lightweight.  You can then filter-branch the history and pull out
-branches by hand.
 
-> However, based on the errors/warnings, is it possible that there is any
-> corruption in the gitified version of trunk (or the history of trunk)?
+>> > =C2=A0 =C2=A0 2. Where can I find coding standards for git? I am l=
+ooking for the
+>> > git version of this document.
+>>
+>> Documentation/CodingGuidelines
+>
+> There are no special rules for JavaScript (and neither for that matte=
+r
+> for Perl), but:
 
-No corruption is possible on the Git side of things- it has
-cryptographic hashes for everything.
+Parts of my mail are not quoted so I'm mentioning some points again.
 
-    Ram
+Since we don't have a strict coding guidelines for JavaScript till
+now, and since we are thinking of an almost rewrite, I would suggest
+that we can follow guidelines from the Jquery project.
+[http://docs.jquery.com/JQuery_Core_Style_Guidelines]. Since this is
+the library we are going to use mostly, I think this will be a good
+choice, considering we might write few plugins ourselves for the
+project.
+
+[Tips from Douglas
+Crockford](http://javascript.crockford.com/code.html ) are very
+important in the context of JavaScript. Following this will make it
+pass [JSLint](http://www.jslint.com/) which is a good measure for
+JavaScript code quality. Will try to make sure that every piece of
+JavaScript I write pass JSLint (which is not very easy). I think it is
+like the POSIX example from Documentation/CodingGuidelines for C :P
+
+I have tried to follow these till date and wont be hard to continue
+doing it for gitweb.
+
+> For JavaScript this includes using subset of JSDoc in comments.
+
+[JSDoc]((http://code.google.com/p/jsdoc-toolkit/)) tool kit seems like
+a very good choice.
+
+>> > =C2=A0 =C2=A0 3. Is JavaScript code unit tested? I cant find much =
+docs regarding
+>> > this anywhere.
+
+> The problem with automated testing of JavaScript is integrating it wi=
+th
+> our testsuite, which is run from command line and outputs TAP (Test
+> Anything Protocol), so it can e.g. be run by 'prove'.
+
+This is what I proposed originally,
+
+		I have shortlisted the following for JavaScript unit testing in
+priority order.
+		[JSDev by Douglas
+Crockford](https://github.com/douglascrockford/JSDev) for its
+simplicity and elegance.
+		[Jasmine](http://pivotal.github.com/jasmine/) for its power.
+		[Sinon.js](http://sinonjs.org/)	- overall goodness.
+
+After reading through the mail and the TAP requirement, I would love
+to recommend JSDev and [node.js](http://nodejs.org/) for this task. I
+think it can be integrated with TAP well afaik. I need to learn more
+about TA. I wont be able to confirm something without knowing much
+about it now. I know that we should not be adding more requirements to
+git project, but node.js seems trivial for testing JavaScript in a
+terminal. Since not many will be developing JavaScript for gitweb, I
+dont think its a bad idea.
+
+> But even if the JavaScript tests would have to be run in browser
+
+Not necessarily.
+
+
+--=20
+Jaseem Abid
++91 8891 72 43 72
+S6 CSE student
+National Institute of Technology , Calicut.
