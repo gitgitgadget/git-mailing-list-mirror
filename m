@@ -1,78 +1,74 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Git push performance problems with ~100K refs
-Date: Fri, 30 Mar 2012 05:40:52 -0400
-Message-ID: <20120330094052.GB12298@sigill.intra.peff.net>
-References: <201203291818.49933.mfick@codeaurora.org>
- <7v7gy2q1kq.fsf@alter.siamese.dyndns.org>
- <60bff12d-544c-4fbd-b48a-0fdf44efaded@email.android.com>
- <20120330093207.GA12298@sigill.intra.peff.net>
+From: jaseem abid <jaseemabid@gmail.com>
+Subject: Re: [GSOC] Contributing to git.
+Date: Fri, 30 Mar 2012 15:54:52 +0530
+Message-ID: <CAH-tXsBM1Nh5ZXGs=jp8oCERKQEuAkfMG_=afLw77ACTDmnSbg@mail.gmail.com>
+References: <CAH-tXsB39OpbmVcD3Fd+tq8UcBsyCf6JBZ-rSyf1VwrQPKLiFQ@mail.gmail.com>
+ <20120330052631.GB11648@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Martin Fick <mfick@codeaurora.org>
-X-From: git-owner@vger.kernel.org Fri Mar 30 11:41:05 2012
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org, Jakub Narebski <jnareb@gmail.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Mar 30 12:25:53 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SDYKK-0006Cb-2w
-	for gcvg-git-2@plane.gmane.org; Fri, 30 Mar 2012 11:41:00 +0200
+	id 1SDZ1b-0002zO-8g
+	for gcvg-git-2@plane.gmane.org; Fri, 30 Mar 2012 12:25:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760107Ab2C3Jkz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 Mar 2012 05:40:55 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:41057
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1759343Ab2C3Jky (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Mar 2012 05:40:54 -0400
-Received: (qmail 13712 invoked by uid 107); 30 Mar 2012 09:40:54 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 30 Mar 2012 05:40:54 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 30 Mar 2012 05:40:52 -0400
-Content-Disposition: inline
-In-Reply-To: <20120330093207.GA12298@sigill.intra.peff.net>
+	id S933809Ab2C3KZi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 Mar 2012 06:25:38 -0400
+Received: from mail-wg0-f44.google.com ([74.125.82.44]:60369 "EHLO
+	mail-wg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760157Ab2C3KZf (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Mar 2012 06:25:35 -0400
+Received: by wgbdr13 with SMTP id dr13so457589wgb.1
+        for <git@vger.kernel.org>; Fri, 30 Mar 2012 03:25:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=yfJfH75Hd2Lq5N/xUbR1Hyf/c5xh5RFJLIKDRzkudXc=;
+        b=sn+P4tWUdPkMmyc/D/Ny+gghyrB94I5gcU5eAykPHJsqKDg4MJLFPF7HrRQE4idAD2
+         iuTcWaXBOqbd23G/NYG7ftEUS5jgZYCVg1nlitRHOAuz6dmc5tH1VGFFebjW+i0XCfHY
+         n7CPk8IagDZp0Cf+WErsqo3BgYYhJqRzTKYUfFJbdPm6Vng0t3MgYKEyvitQ3lPisFVE
+         xg6Hr2aIPjiZ8RrxbOYhwJzjq2cYq5FH6m8SbiJIynuCpdwtAAa/77hRDEdGruoTJulH
+         GqNX98rxSdYgVV/cnKUrTXIHjWeKtqV/SZlwuLzDRQHQyuzXcoczv40Y6CruUHv0t6F/
+         LNLQ==
+Received: by 10.180.102.100 with SMTP id fn4mr5122276wib.1.1333103132709; Fri,
+ 30 Mar 2012 03:25:32 -0700 (PDT)
+Received: by 10.227.155.6 with HTTP; Fri, 30 Mar 2012 03:24:52 -0700 (PDT)
+In-Reply-To: <20120330052631.GB11648@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194343>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194344>
 
-On Fri, Mar 30, 2012 at 05:32:08AM -0400, Jeff King wrote:
+>> Is JavaScript code unit tested? I cant find much docs regarding
+>> this anywhere.
+>
+> Jakub can answer this much better than I can, but I suspect the answer
+> is "no". We hardly have any javascript at all, and I doubt the gitweb
+> tests cover the javascript bits.
+>
+> If there is going to be a javascript-heavy SoC project, I think part of
+> that should probably be adding some automated testing infrastructure.
 
-> But that's just a suspicion. I don't have time tonight to work out a
-> test case. Is it possible for you to run something like:
-> 
->   # make a new commit on top of HEAD, but not yet referenced
->   sha1=`git commit-tree HEAD^{tree} -p HEAD </dev/null`
-> 
->   # now do the same "connected" test that receive-pack would do
->   git rev-list --objects $sha1 --not --all
-> 
-> That should replicate the slow behavior you are seeing. If that works,
-> try running the latter command under "perf"; my guess is that you will
-> see commit_list_insert_by_date as a hot-spot.
-> 
-> Even doing this simple test on a moderate repository (my git.git has
-> ~1100 refs), commit_list_insert_by_date accounts for 10% of the CPU
-> according to perf.
+AFAIK now, the gsoc project will be almost JavaScript only and some
+Perl. Since this is the main thing I am planning do, I would love to
+do it in a good manner.
 
-Actually, I did have time for a simple test. Doing:
+The current contributors are mainly,
+    John 'Warthog9' Hawley <warthog9@**.net>
+    Jakub Narebski <jnareb@**.com>
+    Petr Baudis <pasky@**.cz>
 
-  git rev-list HEAD |
-  while read sha1; do
-    echo $sha1 refs/heads/$sha1
-  done >>packed-refs
-  git pack-refs
+I would love to get some advice regarding this from them.
 
-in git.git slows down the test above considerably, and perf reports 90%
-of the time spent in commit_list_insert_by_date. So I think that is
-indeed the problem.
-
-At one point, I looked at replacing the commit_list implementation with
-a heap-based priority queue, but unfortunately many parts of the code
-depend on the list-like nature and would need to be rewritten. We might
-be able to hack around it by at least adding all of the initial items to
-an unordered list, then sorting it into its final form.
-
--Peff
+-- 
+Jaseem Abid
++91 8891 72 43 72
+S6 CSE student
+National Institute of Technology , Calicut.
