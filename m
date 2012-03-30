@@ -1,75 +1,65 @@
-From: Andrew Sayers <andrew-20120330@pileofstuff.org>
-Subject: Re: [GSOC] Contributing to git.
-Date: Fri, 30 Mar 2012 23:39:16 +0100
-Message-ID: <4F763614.1010503@pileofstuff.org>
-References: <CAH-tXsB39OpbmVcD3Fd+tq8UcBsyCf6JBZ-rSyf1VwrQPKLiFQ@mail.gmail.com> <20120330052631.GB11648@sigill.intra.peff.net> <201203301305.23567.jnareb@gmail.com>
+From: jaseem abid <jaseemabid@gmail.com>
+Subject: [GSOC][HELP] Incremental blame in gitweb.
+Date: Sat, 31 Mar 2012 02:36:56 +0530
+Message-ID: <CAH-tXsDHJ98LLcHVs5U-OYS1maKoM+sDn6hw5HeD6c6wZ8mBHQ@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>, jaseem abid <jaseemabid@gmail.com>,
-	git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Mar 31 00:39:49 2012
+Cc: Jakub Narebski <jnareb@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Mar 31 00:43:19 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SDkU0-0003Pn-7c
-	for gcvg-git-2@plane.gmane.org; Sat, 31 Mar 2012 00:39:48 +0200
+	id 1SDkXL-00064s-Mz
+	for gcvg-git-2@plane.gmane.org; Sat, 31 Mar 2012 00:43:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935372Ab2C3Wjl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 Mar 2012 18:39:41 -0400
-Received: from mtaout01-winn.ispmail.ntl.com ([81.103.221.47]:7219 "EHLO
-	mtaout01-winn.ispmail.ntl.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S935322Ab2C3WjW (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 30 Mar 2012 18:39:22 -0400
-Received: from aamtaout02-winn.ispmail.ntl.com ([81.103.221.35])
-          by mtaout01-winn.ispmail.ntl.com
-          (InterMail vM.7.08.04.00 201-2186-134-20080326) with ESMTP
-          id <20120330223919.VDTX29686.mtaout01-winn.ispmail.ntl.com@aamtaout02-winn.ispmail.ntl.com>;
-          Fri, 30 Mar 2012 23:39:19 +0100
-Received: from [192.168.0.2] (really [94.170.150.126])
-          by aamtaout02-winn.ispmail.ntl.com
-          (InterMail vG.3.00.04.00 201-2196-133-20080908) with ESMTP
-          id <20120330223919.VVHQ3795.aamtaout02-winn.ispmail.ntl.com@[192.168.0.2]>;
-          Fri, 30 Mar 2012 23:39:19 +0100
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.28) Gecko/20120313 Thunderbird/3.1.20
-In-Reply-To: <201203301305.23567.jnareb@gmail.com>
-X-Cloudmark-Analysis: v=1.1 cv=JvdXmxIgLJv2/GthKqHpGJEEHukvLcvELVXUanXFreg= c=1 sm=0 a=yXtjXN6ItgYA:10 a=aReBA_32PFcA:10 a=u4BGzq-dJbcA:10 a=IkcTkHD0fZMA:10 a=JQSNpBNHAAAA:8 a=1dG1fGEEAAAA:8 a=eHMbLMad-zLIjUB--yQA:9 a=5F_cP6whoG_av6qFaoUA:7 a=QEXdDO2ut3YA:10 a=HpAAvcLHHh0Zw7uRqdWCyQ==:117
+	id S935269Ab2C3WnC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 Mar 2012 18:43:02 -0400
+Received: from mail-wi0-f172.google.com ([209.85.212.172]:55694 "EHLO
+	mail-wi0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S935221Ab2C3VHh (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Mar 2012 17:07:37 -0400
+Received: by wibhj6 with SMTP id hj6so956882wib.1
+        for <git@vger.kernel.org>; Fri, 30 Mar 2012 14:07:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to:cc:content-type;
+        bh=Tcc5LXJ03GXv6NLf0d60bCwmHlEgnbLiAFd5hYnYb1g=;
+        b=MELUI17JzyM+uf2wsq/3fEjWJoO2/cLrbUY4W6df/VvUXTveX671gXn8VoE11VVPjs
+         rJeoVe4KOHpqXnH/FMf4gR/VTa81Tp1gcDH1Io/t6EoMIcgxjdZiGzcRnTXGxnn8QiK+
+         uLkBxChbsvTFP9VHRmKcOY1jk0GKjkF2fBoHdyTaluooIWDdWcyj8WIfD1L4xcCMGCLu
+         E/taijsBcQinmIeOS9bkEzwNolixSahmcnH5F3PKY/CFa9ZbZgGv3PGVWxJ1FnlMNWcz
+         6zKf7rbfQtgsXyx5+zJl0Hb04s4ePtvc+VwqqpP/1qCQznbUlqMkpemz3XpR1VB0tiuj
+         73Uw==
+Received: by 10.180.101.136 with SMTP id fg8mr597840wib.4.1333141656345; Fri,
+ 30 Mar 2012 14:07:36 -0700 (PDT)
+Received: by 10.227.155.6 with HTTP; Fri, 30 Mar 2012 14:06:56 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194419>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194420>
 
-On 30/03/12 12:05, Jakub Narebski wrote:
-> But even if the JavaScript tests would have to be run in browser (like
-> most of all of them seems to), having any automated test for gitweb's 
-> JavaScript code would be a very good idea.
-> 
-> P.S. I wonder how JavaScript-scriptable Veracity DVCS solved that...
+Hello again,
 
-JS test suites generally run in the browser because knowing that your
-tests pass in some sane command-line compiler tells you nothing about
-how it will be mangled by IE (or in rare cases, other browsers).
+I was learning from the gitweb source code and I am a bit stuck at a
+particular point.
+What does incremental blame do in gitweb? I tried to get some
+information from the documentation.
+I was expecting it to be used for pagination of huge git-blame output
+or something similar. Doc says it can be used for similar purposes
+I notice code written in JavaScript for AJAX calls etc, but i cant
+find a place where it is being used. Can somebody give me a link to
+one in k.org or somewhere for a demo? I tried to find some AJAX calls
+in the web console but cant trace any. I'm a bit confused here.
 
-IMHO, the best thing to do with JS unit tests would be to make them
-easily available from gitweb.  Then when someone reports a bug, you just
-ask them to run the tests in their browser - the pattern of errors will
-quickly show you that e.g. their AdBlock filters are getting a bit
-overexcited about all these `git add`s it can remove (that sort of thing
-was a frequently-reported problem at my last job).
+Any help will be very much appreciated.
 
-Obviously it's good to run tests automatically too - you might want to
-consider writing tests with QUnit[1] and automating them with
-Selenium[2].  The former is designed to be appealing to human eyes and
-trivially testable with the latter (although I'd expect other suites to
-include the necessary <div>s with the necessary id's too).  I haven't
-used the Perl interface myself, but I'm sure you could make some TAP
-output with WWW::Selenium pretty easily.
 
-	- Andrew
-
-1. http://docs.jquery.com/QUnit
-2. http://seleniumhq.org/
+-- 
+Jaseem Abid
++91 8891 72 43 72
+S6 CSE student
+National Institute of Technology , Calicut.
