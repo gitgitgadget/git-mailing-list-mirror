@@ -1,92 +1,72 @@
-From: Daniel Pocock <daniel@pocock.com.au>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
 Subject: Re: git-svn: cloning an SVN repo with sub-branches and sub-tags
-Date: Fri, 30 Mar 2012 13:22:09 +0100
-Message-ID: <4F75A571.2020304@pocock.com.au>
+Date: Fri, 30 Mar 2012 18:05:45 +0530
+Message-ID: <CALkWK0k7eCTuDdjdABpYrecf7G4_ejcsNmeCxPKSN46406U_2g@mail.gmail.com>
 References: <4F7467E1.3090004@pocock.com.au> <CALkWK0mn=vWexhYMNPV5iKf-hX5gTHYjOS4o+E1mFjUtL49hmg@mail.gmail.com>
+ <4F75A571.2020304@pocock.com.au>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=UTF-8
 Cc: git@vger.kernel.org
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Mar 30 14:28:32 2012
+To: Daniel Pocock <daniel@pocock.com.au>
+X-From: git-owner@vger.kernel.org Fri Mar 30 14:36:17 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SDawR-0001kr-TS
-	for gcvg-git-2@plane.gmane.org; Fri, 30 Mar 2012 14:28:32 +0200
+	id 1SDb3t-0001mH-UE
+	for gcvg-git-2@plane.gmane.org; Fri, 30 Mar 2012 14:36:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754543Ab2C3M21 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 Mar 2012 08:28:27 -0400
-Received: from mail1.trendhosting.net ([195.8.117.5]:43111 "EHLO
-	mail1.trendhosting.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754872Ab2C3M20 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Mar 2012 08:28:26 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by mail1.trendhosting.net (Postfix) with ESMTP id 5A76615782;
-	Fri, 30 Mar 2012 13:28:25 +0100 (BST)
-Received: from mail1.trendhosting.net ([127.0.0.1])
-	by localhost (thp003.trendhosting.net [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id 0gY4z-+8kZTD; Fri, 30 Mar 2012 13:28:19 +0100 (BST)
-Received: from [192.168.5.2] (thp001.trendhosting.net [195.8.117.3])
-	by mail1.trendhosting.net (Postfix) with ESMTP id B8C9015765;
-	Fri, 30 Mar 2012 13:28:18 +0100 (BST)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.2.20) Gecko/20110804 Lightning/1.0b2 Thunderbird/3.1.12
-In-Reply-To: <CALkWK0mn=vWexhYMNPV5iKf-hX5gTHYjOS4o+E1mFjUtL49hmg@mail.gmail.com>
+	id S1760087Ab2C3MgJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 Mar 2012 08:36:09 -0400
+Received: from mail-we0-f174.google.com ([74.125.82.174]:64619 "EHLO
+	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759519Ab2C3MgI (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Mar 2012 08:36:08 -0400
+Received: by wejx9 with SMTP id x9so334872wej.19
+        for <git@vger.kernel.org>; Fri, 30 Mar 2012 05:36:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=hEjU2r+CIn81d1y7pxKzYrOD+UNu+k4uI/Fe9TGA938=;
+        b=bZ7M1iwVLLBcisqjzCiv3+CvIOi+h/NO1rcpN1BM5sNpqlgB1D8lSV3syY8V8POTvP
+         8vGVcDAwAo7quMF+T05TJVBySitla8FH0XkFh3fcc4CuRZlX77wiamPFsfumqJcNLKbX
+         mofEQF07rBiSx7gtter+9ilDfYcXmuIQkfevQ10rCtvKlaHp3GjHiAPpGOuB0GfFOUBX
+         lv0L/NyFVfl44OxHKhHsErv8Dyh33MkTPU0ggcWJKjs/0T+tTvR5fiS4KsqlkCzzdoWh
+         cXdKYSTjKHR6GlmIntCu5CWw+GCaL4o2vy4DW31q+SfVXs49z5luPcKVsbJJ6MQZaTgy
+         Ug2Q==
+Received: by 10.180.102.101 with SMTP id fn5mr6140462wib.6.1333110965367; Fri,
+ 30 Mar 2012 05:36:05 -0700 (PDT)
+Received: by 10.216.11.199 with HTTP; Fri, 30 Mar 2012 05:35:45 -0700 (PDT)
+In-Reply-To: <4F75A571.2020304@pocock.com.au>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194352>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194353>
 
-On 29/03/2012 16:32, Ramkumar Ramachandra wrote:
-> Hi Daniel,
->
-> Daniel Pocock wrote:
->> git svn clone \
->>   -T trunk \
->>   -t tags \
->>   -b branches \
->>   https://flactag.svn.sourceforge.net/svnroot/flactag \
->>   flactag-git1
->>
->> I don't get any of the branches or tags, and I get numerous warnings like
->> this:
->>
->> W: -empty_dir: branches/d_pocock/autotools/HTTPFetch.cc
->> W: -empty_dir: branches/d_pocock/autotools/HTTPFetch.h
->> W: Cannot find common ancestor between
->> f475b655c10b55b36df8376a396c0d9534418617 and
->> 7e277bfd626a1caa84681e93a7af73e0160eb2eb. Ignoring merge info.
->> W: Cannot find common ancestor between
->> f475b655c10b55b36df8376a396c0d9534418617 and
->> a82cd9bd2197a89303558af9aad43fa0c23d1ddb. Ignoring merge info.
->
-> These look like genuine warnings; git-svn probably doesn't like your
-> repository (nested branches/ tags, missing mergeinfo etc)
->
->> I have the impression that git-svn does not like the repository layout, and
->> it is not clear from the manual page how to make it work.  Can anyone share
->> any advice about this?
->
-> Off the top of my head, you could try doing two things:
-> 1. Try exporting the branches and tags by hand one-by-one.
-> 2. You could try using reposurgeon [1] to fix the repository.
->
-> [1]: http://esr.ibiblio.org/?p=4071
+Hi again,
 
+Daniel Pocock wrote:
+> One other factor I didn't mention in the original email, some of the
+> branches have been renamed/moved within the SVN repo - is that a problem for
+> git-svn?
 
-The flactag project is not something of a commercial nature, so we were 
-really looking at quick solutions
+Yes, I think so.
 
-One other factor I didn't mention in the original email, some of the 
-branches have been renamed/moved within the SVN repo - is that a problem 
-for git-svn?
+> One compromise I have thought about would be just extracting trunk, and
+> forgetting about the branches, and manually tagging the official releases
+> (as there were very few of them, this is quick)
 
-One compromise I have thought about would be just extracting trunk, and 
-forgetting about the branches, and manually tagging the official 
-releases (as there were very few of them, this is quick)
+Just use contrib/svn-fe in that case: it's really quick and
+lightweight.  You can then filter-branch the history and pull out
+branches by hand.
 
-However, based on the errors/warnings, is it possible that there is any 
-corruption in the gitified version of trunk (or the history of trunk)?
+> However, based on the errors/warnings, is it possible that there is any
+> corruption in the gitified version of trunk (or the history of trunk)?
+
+No corruption is possible on the Git side of things- it has
+cryptographic hashes for everything.
+
+    Ram
