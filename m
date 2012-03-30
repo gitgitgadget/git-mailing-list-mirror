@@ -1,87 +1,104 @@
-From: William Strecker-Kellogg <willsk@bnl.gov>
-Subject: Re: [PATCH] Make http-backend REMOTE_USER configurable
-Date: Thu, 29 Mar 2012 23:24:39 -0400
-Message-ID: <4F752777.2020000@bnl.gov>
-References: <1333051139-14262-1-git-send-email-willsk@bnl.gov> <7vzkazoyk3.fsf@alter.siamese.dyndns.org> <20120329222230.GB1413@sigill.intra.peff.net> <20120329222632.GC1413@sigill.intra.peff.net> <7vk422q2ho.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2] git-commit.txt: clarify -t requires editing message
+Date: Thu, 29 Mar 2012 20:52:51 -0700
+Message-ID: <7vr4waoics.fsf@alter.siamese.dyndns.org>
+References: <CAF_oF=xGHdbkYw-ytvcZvJnqZ_jdckUCBiuUDzkqGDk=66+yMQ@mail.gmail.com>
+ <1333062296-27823-1-git-send-email-haircut@gmail.com>
+ <7vboneq1vs.fsf@alter.siamese.dyndns.org> <4F75236C.4050703@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>, Git List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Mar 30 05:24:50 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Ivan Heffner <iheffner@gmail.com>
+To: Adam Monsen <haircut@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Mar 30 05:53:01 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SDSSD-0001FG-PV
-	for gcvg-git-2@plane.gmane.org; Fri, 30 Mar 2012 05:24:46 +0200
+	id 1SDStX-000499-5e
+	for gcvg-git-2@plane.gmane.org; Fri, 30 Mar 2012 05:52:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932491Ab2C3DYm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 Mar 2012 23:24:42 -0400
-Received: from smtpgw.bnl.gov ([130.199.3.132]:15337 "EHLO smtpgw.bnl.gov"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1759598Ab2C3DYk (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Mar 2012 23:24:40 -0400
-X-BNL-policy-q: 
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: Ar0GAD0mdU+CxzYH/2dsb2JhbABEgw+2D4EHggkBAQQBeAEFCwsYCRYPCQMCAQIBRQYNAQUCAQGIAQW7K5EQBJtRg2CGXoMDgTgCAgQR
-X-IronPort-AV: E=Sophos;i="4.75,339,1330923600"; 
-   d="scan'208";a="175140248"
-Received: from rcf.rhic.bnl.gov ([130.199.54.7])
-  by smtpgw.sec.bnl.local with ESMTP/TLS/DHE-RSA-AES256-SHA; 29 Mar 2012 23:24:39 -0400
-Received: from [192.168.1.131] (ool-457ccb3b.dyn.optonline.net [69.124.203.59])
-	(authenticated bits=0)
-	by rcf.rhic.bnl.gov (8.13.8/8.13.8) with ESMTP id q2U3OdjR001365
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 29 Mar 2012 23:24:39 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:11.0) Gecko/20120316 Thunderbird/11.0
-In-Reply-To: <7vk422q2ho.fsf@alter.siamese.dyndns.org>
-X-Enigmail-Version: 1.4
+	id S1760455Ab2C3Dwy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 Mar 2012 23:52:54 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:51124 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1759808Ab2C3Dwx (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Mar 2012 23:52:53 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 340FA6344;
+	Thu, 29 Mar 2012 23:52:53 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=vXTeoAnYJahBLHHOpxVT2W3a/ms=; b=mah+Uu
+	y1g87hj6cwn598UdX/hki23Kz0eWoRsiUrQ5f2c3TW5hmM6Y0C0PZ7SIgiZX/Fyt
+	L7WQKRj4ISWbsi4H7yusHlKx7bzLSSlohWcqBNDxzlkDo042OeysSJxw+QN2fVnX
+	40xvFwTuxcmqawU6TbusO38ZMaKh3kVUIMPU0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=KEyFM1C6agoaDM0d7ouIzWsMeDhGqPgU
+	BRcF5CjiPRvmEAvyUFFVGXf7lzZTKPIW5UOzPArhYdXw982L/jzxfketu7//mYjz
+	OjNdaty6L0GLylvj1bkljl7WQyU17vot/76Al7JR6Y3x5DHZ/J6WhJvcsVjxCQ1Y
+	VaZCVgjt2SI=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 295356343;
+	Thu, 29 Mar 2012 23:52:53 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 827AE6342; Thu, 29 Mar 2012
+ 23:52:52 -0400 (EDT)
+In-Reply-To: <4F75236C.4050703@gmail.com> (Adam Monsen's message of "Thu, 29
+ Mar 2012 20:07:24 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: D34B3CA4-7A1B-11E1-BF4A-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194319>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194321>
 
-On 03/29/2012 09:52 PM, Junio C Hamano wrote:
-> Jeff King <peff@peff.net> writes:
-> 
->> On Thu, Mar 29, 2012 at 06:22:30PM -0400, Jeff King wrote:
->>
->>> I think an even better thing would be for http-backend to leave
->>> GIT_COMMITTER_* alone if it exists; that is the usual well-known
->>> interface for setting such things. And then you could specify a
->>> detailed committer name and email if you want, or leave them blank to
->>> pull from $REMOTE_USER as we do now. As it is now, even if you specify
->>> GIT_COMMITTER_EMAIL, it gets overwritten with
->>> "$REMOTE_USER@http.$REMOTE_ADDR".
->>
->> That patch would look something like this:
-> 
-> It would regress for somebody who is running the CGI program while
-> exporting these environment variables pointing at himself and relying on
-> the fact that these are canceled by REMOTE_USER/ADDR (perhaps a web-based
-> editor can write into some repository and commits made by that editor
-> takes the ident information from COMMITTER variables, while another part
-> of the webserver takes a push by spawning the http backend???).
-> 
-> Which is very unlikely.
+Adam Monsen <haircut@gmail.com> writes:
 
-Agreed.
+> ~~~
+> Use the contents of the given file as the initial version of the
+> commit message. Think of this initial version as a mandatory
+> fillable form. The editor is invoked so you can fill in the form. If
+> you do not fill in the form (if you make no changes), the message is
+> considered empty and the commit is aborted. If a message is
+> specified using the `-m` or `-F` options, this option has no effect.
+> This overrides the `commit.template` configuration variable.
+> ~~~
+>
+> Thoughts?
 
-> 
-> If somebody else comes up with a valid scenario to show why this patch is
-> a bad idea, I'd stand corrected but at the same time I'd be very surprised.
-> 
-> But I think this is the right thing to do, even though it is not related
-> to the issue William wanted to address with his patch.
-> 
+You still say "the message is considered empty and" but I think it
+probably reads better without it.  Strictly speaking, it is not a
+"mandatory fillable form", but whatever text you put in the template is
+advisory to the users.  For example, if your project wants its contributor
+to always refer to a bug id in its issue tracker, it may want to give a
+customized "template", instead of the plain "template" we give to the
+users that begins with:
 
-The reason we're interested in this is validation -- who can push to our
-production puppet branch is determined by a post-update hook.  A wrapper
-around http-backend like Jeff's combined with his patch would accomplish
-what we need just fine.
+	~~~~~~~~
 
-> Care to sign it off?
-> 
+        # Please enter the commit message for your changes. Lines starting
+        # with '#' will be ignored, and an empty message aborts the commit.
+	~~~~~~~~
+
+to guide them what to write in the log and how to explain your change,
+e.g. something like:
+
+	~~~~~~~~
+	<<one line summary your change here>>
+
+	# explain the problem your change tries to solve in the first
+        # paragraph
+
+	# describe the approach your solution takes to solve it in the
+        # second and subsequent paragraphs
+
+	# Please write issue tracker ID at the end, if available
+	Frotz-Bug-Id: XXXXXX
+
+        # Always sign-off your commit
+        Signed-off-by: XXXXXX
+	~~~~~~~~
