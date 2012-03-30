@@ -1,92 +1,82 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: GSoC - Some questions on the idea of
-Date: Fri, 30 Mar 2012 16:34:30 -0400
-Message-ID: <20120330203430.GB20376@sigill.intra.peff.net>
-References: <CA+M5ThS2iS-NMNDosk2oR25N=PMJJVTi1D=zg7MnMCUiRoX4BQ@mail.gmail.com>
- <CACsJy8APtMsMJ=FrZjOP=DbzuFoemSLJTmkjaiK5Wkq9XtA4rg@mail.gmail.com>
- <loom.20120328T131530-717@post.gmane.org>
- <CA+M5ThTPyic=RhFL2SvuNB0xBWOHxNTaUZrYMB144UjpjCiLoQ@mail.gmail.com>
+From: Yuval Adam <yuv.adm@gmail.com>
+Subject: Re: Maintaining historical data in a git repo
+Date: Fri, 30 Mar 2012 23:39:38 +0300
+Message-ID: <CA+P+rLeDFu4KgEZPw=k67iMWVVGcZ3q48VZjgXNLXn3NdyQnow@mail.gmail.com>
+References: <CA+P+rLeyEcZPudhLWavB74CiDAqpn+iNkk4F8=NK_yGaJPMmyA@mail.gmail.com>
+ <201203301510.q2UFAqn6003864@no.baka.org> <CA+P+rLcWT0SZQjW2LtFXXCDRwjMp8daJ2hVup=7cnsRGbKw7xw@mail.gmail.com>
+ <7vehsam3pn.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Sergio <sergio.callegari@gmail.com>, git@vger.kernel.org
-To: Bo Chen <chen@chenirvine.org>
-X-From: git-owner@vger.kernel.org Fri Mar 30 22:34:38 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Mar 30 22:40:07 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SDiWs-0007ky-0Z
-	for gcvg-git-2@plane.gmane.org; Fri, 30 Mar 2012 22:34:38 +0200
+	id 1SDicA-0003Rz-16
+	for gcvg-git-2@plane.gmane.org; Fri, 30 Mar 2012 22:40:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761379Ab2C3Uee (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 Mar 2012 16:34:34 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:41382
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756964Ab2C3Uec (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Mar 2012 16:34:32 -0400
-Received: (qmail 19982 invoked by uid 107); 30 Mar 2012 20:34:32 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 30 Mar 2012 16:34:32 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 30 Mar 2012 16:34:30 -0400
-Content-Disposition: inline
-In-Reply-To: <CA+M5ThTPyic=RhFL2SvuNB0xBWOHxNTaUZrYMB144UjpjCiLoQ@mail.gmail.com>
+	id S933336Ab2C3UkA convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 30 Mar 2012 16:40:00 -0400
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:56055 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933072Ab2C3Uj7 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 30 Mar 2012 16:39:59 -0400
+Received: by iagz16 with SMTP id z16so1444701iag.19
+        for <git@vger.kernel.org>; Fri, 30 Mar 2012 13:39:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :content-type:content-transfer-encoding;
+        bh=qWKCoB5MbVrk3RJsKqtOwIAvuC6X3XPJEME0yINtpqk=;
+        b=xfwqewMH9BOMDDaUhVAq6LBwGCsoMKmTWB+DtIUFlze3evyT7Xp1hzzhVyb/KZghYj
+         gHEw9LvqfBvbpLpFs486y2ArUfSWNZ4A+/pR8K8qlBotkU0xnamdnIRwdSI+812JHgJ8
+         /RORxItGfDQtyosjg7QcFgW5eL4lVU5v8xn5oUvlP3XXLDZWfrb6rbvDuQF3m2dA24oK
+         RK6Q+RThPqb7Pm6xwWe/jQRC1GZDk0mSlaRTI+UMrIwRS9sC94I/ulLdS+EXY5ZBDsP+
+         EemxmsTHR4Ft7W1IYUbiYOed2j0uXWt0roRW84QBUSgy8naDkCCinUs1meFU8iy53F/V
+         Sbdg==
+Received: by 10.42.152.68 with SMTP id h4mr2103260icw.15.1333139998766; Fri,
+ 30 Mar 2012 13:39:58 -0700 (PDT)
+Received: by 10.42.137.66 with HTTP; Fri, 30 Mar 2012 13:39:38 -0700 (PDT)
+In-Reply-To: <7vehsam3pn.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194403>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194404>
 
-On Fri, Mar 30, 2012 at 03:51:20PM -0400, Bo Chen wrote:
+On Fri, Mar 30, 2012 at 7:52 PM, Junio C Hamano <gitster@pobox.com> wro=
+te:
+> That's not really "is it complicated with git" question, I would have=
+ to
+> say. =A0Any version control system you would build history starting f=
+rom one
+> point going _forward_, never inserting past event as you dig back.
 
-> The sub-problems of "delta for large file" problem.
-> 
-> 1 large file
-> 
-> 1.1 text file (always delta well? need to be confirmed)
+That is true.
+It is very clear to us that an SCM is optimized for the prevalent use
+case, which is tracking code (well, mostly code) as it is written.
+Naturally this always starts at some point in time and progresses into
+the future.
 
-They often do, but text files don't tend to be large. There are some
-exceptions (e.g., genetic data is often kept in line-oriented text
-files, but is very large).
+However, we perceive git as a very powerful tool, that can fit
+beautifully with the way legislation works today.
+The challenge for us - should we choose to accept it ;) - is to build
+a set of wrapper tools that allow us to use git in such a way, while
+enabling us to build up past history.
 
-But let's take a step back for a moment. Forget about whether a file is
-binary or not. Imagine you want to store a very large file in git.
+Yes, this is not the usual use case, but we're highly motivated on
+making this work.
+We believe this could also be an interesting experience for the git
+community in seeing how the git plumbing can be used for other cases,
+even if they veer off on some weird tangent.
 
-What are the operations that will perform badly? How can we make them
-perform acceptably, and what tradeoffs must we make? E.g., the way the
-diff code is written, it would be very difficult to run "git diff" on a
-2 gigabyte file. But is that actually a problem? Answering that means
-talking about the characteristics of 2 gigabyte files, and what we
-expect to see, and to what degree our tradeoffs will impact them.
+We'll definitely be back with more questions and updates, as we progres=
+s.
+Thanks, everyone, for your responses and feedback!
 
-Here's a more concrete example. At first, even storing a 2 gigabyte file
-with "git add" was painful, because we would load the whole thing in
-memory. Repacking the repository was painful, because we had to rewrite
-the whole 2G file into a packfile. Nowadays, we stream large files
-directly into their own packfiles, and we have to pay the I/O only once
-(and the memory cost never). As a tradeoff, we no longer get delta
-compression of large objects. That's OK for some large objects, like
-movie files (which don't tend to delta well, anyway). But it's not for
-other objects, like virtual machine images, which do tend to delta well.
-
-So can we devise a solution which efficiently stores these
-delta-friendly objects, without losing the performance improvements we
-got with the stream-directly-to-packfile approach?
-
-One possible solution is breaking large files into smaller chunks using
-something like the bupsplit algorithm (and I won't go into the details
-here, as links to bup have already been mentioned elsewhere, and Junio's
-patches make a start at this sort of splitting).
-
-Note that there are other problem areas with big files that can be
-worked on, too. For example, some people want to store 100 gigabytes in
-a repository. Because git is distributed, that means 100G in the repo
-database, and 100G in the working directory, for a total of 200G. People
-in this situation may want to be able to store part of the repository
-database in a network-accessible location, trading some of the
-convenience of being fully distributed for the space savings. So another
-project could be designing a network-based alternate object storage
-system.
-
--Peff
+--
+Yuval Adam
+http://y3xz.com
