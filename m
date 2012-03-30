@@ -1,71 +1,139 @@
-From: Martin Fick <mfick@codeaurora.org>
-Subject: Re: Git push performance problems with ~100K refs
-Date: Fri, 30 Mar 2012 08:22:15 -0600
-Message-ID: <53c2a263-69f5-4de0-b2e2-17639d311405@email.android.com>
-References: <201203291818.49933.mfick@codeaurora.org> <7v7gy2q1kq.fsf@alter.siamese.dyndns.org> <60bff12d-544c-4fbd-b48a-0fdf44efaded@email.android.com> <20120330093207.GA12298@sigill.intra.peff.net> <20120330094052.GB12298@sigill.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain;
- charset=UTF-8
+From: Seth Robertson <in-gitvger@baka.org>
+Subject: Re: Maintaining historical data in a git repo
+Date: Fri, 30 Mar 2012 11:10:52 -0400
+Message-ID: <201203301510.q2UFAqn6003864@no.baka.org>
+References: <CA+P+rLeyEcZPudhLWavB74CiDAqpn+iNkk4F8=NK_yGaJPMmyA@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Mar 30 16:25:29 2012
+Cc: git@vger.kernel.org
+To: Yuval Adam <yuv.adm@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Mar 30 17:11:20 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SDcla-0002NK-WE
-	for gcvg-git-2@plane.gmane.org; Fri, 30 Mar 2012 16:25:27 +0200
+	id 1SDdTy-0002Wj-VB
+	for gcvg-git-2@plane.gmane.org; Fri, 30 Mar 2012 17:11:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760417Ab2C3OZX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 Mar 2012 10:25:23 -0400
-Received: from wolverine01.qualcomm.com ([199.106.114.254]:35141 "EHLO
-	wolverine01.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759560Ab2C3OZW (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Mar 2012 10:25:22 -0400
-X-IronPort-AV: E=McAfee;i="5400,1158,6664"; a="177338326"
-Received: from pdmz-ns-mip.qualcomm.com (HELO mostmsg01.qualcomm.com) ([199.106.114.10])
-  by wolverine01.qualcomm.com with ESMTP/TLS/ADH-AES256-SHA; 30 Mar 2012 07:25:21 -0700
-Received: from [192.168.1.160] (pdmz-snip-v218.qualcomm.com [192.168.218.1])
-	by mostmsg01.qualcomm.com (Postfix) with ESMTPA id 1C79D10004AB;
-	Fri, 30 Mar 2012 07:25:21 -0700 (PDT)
-User-Agent: K-9 Mail for Android
-In-Reply-To: <20120330094052.GB12298@sigill.intra.peff.net>
+	id S1751559Ab2C3PK6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 Mar 2012 11:10:58 -0400
+Received: from tsutomu.baka.org ([66.114.72.182]:59967 "EHLO tsutomu.baka.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751083Ab2C3PK4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Mar 2012 11:10:56 -0400
+Received: from no.baka.org (no.baka.org [IPv6:2001:470:88bb::2])
+	by tsutomu.baka.org (8.14.4/8.14.4) with ESMTP id q2UFArQM017833
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Fri, 30 Mar 2012 11:10:53 -0400
+Received: from no.baka.org (localhost [127.0.0.1])
+	by no.baka.org (8.14.4/8.14.0) with ESMTP id q2UFAqn6003864;
+	Fri, 30 Mar 2012 11:10:53 -0400
+In-reply-to: <CA+P+rLeyEcZPudhLWavB74CiDAqpn+iNkk4F8=NK_yGaJPMmyA@mail.gmail.com>
+Comments: In reply to a message from "Yuval Adam <yuv.adm@gmail.com>" dated "Fri, 30 Mar 2012 16:34:08 +0300."
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194363>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194364>
 
 
+In message <CA+P+rLeyEcZPudhLWavB74CiDAqpn+iNkk4F8=NK_yGaJPMmyA@mail.gmail.com>, Yuval Adam writes:
 
-Jeff King <peff@peff.net> wrote:
->
->Actually, I did have time for a simple test. Doing:
->
->  git rev-list HEAD |
->  while read sha1; do
->    echo $sha1 refs/heads/$sha1
->  done >>packed-refs
->  git pack-refs
->
->in git.git slows down the test above considerably, and perf reports 90%
->of the time spent in commit_list_insert_by_date. So I think that is
->indeed the problem.
->
->At one point, I looked at replacing the commit_list implementation with
->a heap-based priority queue, but unfortunately many parts of the code
->depend on the list-like nature and would need to be rewritten. We might
->be able to hack around it by at least adding all of the initial items
->to
->an unordered list, then sorting it into its final form.
+    As part of a public project to open-source the Israeli law code, we
+    are looking into ways of represent such data in a git repository.
 
-Thanks Peff for the explanation.  Jgit actually has the exact same problem, it slows down the pushing side.  Fortunately, in jgit it is well isolated and can easily be remedied by both the solutions you mention, and both work to speed it (jgit) up drastically!  I wonder if libgit2 suffers from the same problem?
+This is extremely cool.  I wish others were forward thinking enough
+to do this.
 
-This might be one of the last pieces to git ref scalability left?  Does this affect many other use cases, fetches?
+    The main challenge is to represent historical data _in a semantically
+    correct way_ within a git repository, while having the ability to
+    change data that has occurred in the past.
 
--Martin
+Revision control shouldn't be used to change the past (even if git
+allows this with sufficient amounts of pain/warning to all users).
+What it is extremely good at is preserving the past and tracking the
+changes that are made.
 
+    For example, we might have revisions B and C of a certain legal
+    document, commit to repo, and at a later time want to add revision A
+    to the proper place in the git commit tree (probably with rebasing or
+    replacing).
 
-Employee of Qualcomm Innovation Center,Inc. which is a member of Code Aurora Forum
+There is no problem doing this.  I'll make up a mythical workflow
+which might be realistic.  Someone proposes a bill, so a branch for
+the proposal is created.  In many of the laws I am familiar with,
+there is the text of the law and then the text says "Amend V.5.12.A.b
+to add '25: or to commit a nasal offense (as defined in V.5.12.A) with
+a shoe'".  So the branch might contain the text of the proposed law
+and then actually go through to the document V.5.12.A.b and add the
+new data to the appropriate file (in an ideal world that might be an
+automatic process, but laws are rarely so precise).  The proposed law
+changes and the bill text changes would be committed onto the branch.
+
+As the bill goes through committee people make changes, adding things,
+removing things, etc.  Each change is a commit.  One example change
+might be a new change saying "remove the change made 2 days ago" or
+"make the current version the version from 10 days ago".  Both of
+those specific changes would ideally be positive changes.  You would
+not actually be deleting the change made two days ago or removing all
+changes made between 10 days ago and now, you would be making a new
+commit to remove the effects of the unwanted changes.
+
+When the negotiations are over and assuming the bill gets all three
+readings (each reading could be a "tag" to document exactly what was
+read) and voted into a law, you would then merge the bill branch into
+the "law" branch which represents the actual legally active laws.
+This could be done as a "squash" merge which hides all of the
+committee negotiations or it could be done as a normal merge which
+allows the history of the negotiations to be visible, or, depending on
+the visibility of the committee negotiations, you could even do a
+combination of the two.
+
+And yes, git supports more complex processes automatically, like each
+Knesset member making their own proposed changes and the committee
+chair merging the appropriate version in if it was approved and the
+others being either discarded or archived for history but not
+incorporated.
+
+    Allowing decentralization and updates is a major requirement.
+
+git is extremely good at this.
+
+    We're trying to map out the various pros and cons of the different
+    options of maintaining such a repo.
+
+Ideally the data being represented would be structured, textual, and
+somewhat line oriented, plain text/UTF-8 files (no matter the word
+direction) like this email are ideal.  Committing binary Office
+documents (Word, OpenXML, ODF, etc) is not ideal, since under most
+circumstances/without a lot of work you are not going to get good
+differences so that you can easily see the history of the law.  You
+can write custom binary drivers to extract this difference information
+from these binary documents, but that is the "lot of work" I was
+talking about.
+
+You additionally might want to have separate repositories for separate
+groups of laws to prevent repositories from getting unwieldy.  There
+are tools which let you group repositories together.
+
+    Has anyone ever attempted something like this?
+
+Many people use git to track living documents.  Perhaps not law per
+se, but I don't particularly see why that would matter.
+
+    Are there any projects that build on the git plumbing which provide
+    wrapper APIs to handle historic data?
+
+Are you talking about "get rid of that change, it was bad" and
+"restore this version of the document as the good one" or "how do I
+import 64 years of law into git"?  Git provides native tools to handle
+both.
+
+    We really could use any reference or advice we can get on this subject.
+
+I'll point you at http://progit.org/book/ as a general reference about
+git and http://sethrobertson.github.com/GitBestPractices/ as a
+reference about best practices.
+
+					-Seth Robertson
