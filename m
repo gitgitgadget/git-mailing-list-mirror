@@ -1,177 +1,155 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 4/4] git-commit-interactive: Allow rebasing to preserve
- empty commits
-Date: Fri, 30 Mar 2012 13:59:02 -0700
-Message-ID: <7v4nt5lsa1.fsf@alter.siamese.dyndns.org>
-References: <1333136922-12872-1-git-send-email-nhorman@tuxdriver.com>
- <1333136922-12872-5-git-send-email-nhorman@tuxdriver.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: push.default: current vs upstream
+Date: Fri, 30 Mar 2012 17:01:12 -0400
+Message-ID: <20120330210112.GA20734@sigill.intra.peff.net>
+References: <7vd37wv77j.fsf@alter.siamese.dyndns.org>
+ <20120329095236.GA11911@sigill.intra.peff.net>
+ <7vbonfqezs.fsf@alter.siamese.dyndns.org>
+ <20120329221154.GA1413@sigill.intra.peff.net>
+ <7vfwcqq2dw.fsf@alter.siamese.dyndns.org>
+ <20120330071358.GB30656@sigill.intra.peff.net>
+ <7vty15ltuo.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Phil Hord <phil.hord@gmail.com>
-To: Neil Horman <nhorman@tuxdriver.com>
-X-From: git-owner@vger.kernel.org Fri Mar 30 22:59:16 2012
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, Matthieu Moy <Matthieu.Moy@imag.fr>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Mar 30 23:01:26 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SDiuf-0001In-Ev
-	for gcvg-git-2@plane.gmane.org; Fri, 30 Mar 2012 22:59:13 +0200
+	id 1SDiwh-0002rl-9Y
+	for gcvg-git-2@plane.gmane.org; Fri, 30 Mar 2012 23:01:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761391Ab2C3U7I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 Mar 2012 16:59:08 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:55896 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1761132Ab2C3U7F (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Mar 2012 16:59:05 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A5D6F450A;
-	Fri, 30 Mar 2012 16:59:04 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=TtGfRUjWYHb2RfX11DJTIoaVb+4=; b=AGeUgn
-	P9kc1d22pEa4tnzEzZwmVUKYghEM+wHSuUoYVnLTisHyRnxLLMiSQByugYX4VvRZ
-	e5ewmuPewhCOmqGi6RD7MlIsnKBuHEe1NU51lliBSIVfNKWCVQeVubU3Qj1Xb4vj
-	p3zu6kNyJqWn2lzfS/us8RbOsUy1hjksVNFi8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=osMifd2NprH8IRkh+1cjNST3XVyxNpBy
-	wVPHDNcBmFSHweQM2EnAhcpgDQadq+y+ZH6H/5yy3SR3u5BXdUMiV5mHpldTHX7g
-	QsqqA4Gfkx/OV/BieT12sA9giZeLB+j53k66VSugUcd22wkzIbpMqQYQxo6x/VSH
-	PFauBHNuhdQ=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9D1B74509;
-	Fri, 30 Mar 2012 16:59:04 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 08B864507; Fri, 30 Mar 2012
- 16:59:03 -0400 (EDT)
-In-Reply-To: <1333136922-12872-5-git-send-email-nhorman@tuxdriver.com> (Neil
- Horman's message of "Fri, 30 Mar 2012 15:48:42 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 2EC4D24A-7AAB-11E1-821F-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1761078Ab2C3VBP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 Mar 2012 17:01:15 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:41406
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1760597Ab2C3VBO (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Mar 2012 17:01:14 -0400
+Received: (qmail 20492 invoked by uid 107); 30 Mar 2012 21:01:14 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 30 Mar 2012 17:01:14 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 30 Mar 2012 17:01:12 -0400
+Content-Disposition: inline
+In-Reply-To: <7vty15ltuo.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194408>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194409>
 
-Neil Horman <nhorman@tuxdriver.com> writes:
+On Fri, Mar 30, 2012 at 01:25:03PM -0700, Junio C Hamano wrote:
 
-> This updates git-commit-interactive to recognize and make use of the keep_empty
-> flag.  When not set, git-rebase -i will now comment out commits that are empty,
-> and informs the user that commits which they wish to explicitly keep that are
-> empty should be uncommented, or --keep-empty should be specified.  if keep_empty
-> is specified, all commits, regardless of their empty status are included.
->
-> Signed-off-by: Neil Horman <nhorman@tuxdriver.com>
-> CC: Jeff King <peff@peff.net>
-> CC: Phil Hord <phil.hord@gmail.com>
-> CC: Junio C Hamano <gitster@pobox.com>
-> ---
->  git-rebase--interactive.sh |   38 +++++++++++++++++++++++++++++++++++---
->  1 files changed, 35 insertions(+), 3 deletions(-)
->
-> diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-> index 5812222..97eeb21 100644
-> --- a/git-rebase--interactive.sh
-> +++ b/git-rebase--interactive.sh
-> @@ -191,12 +191,24 @@ git_sequence_editor () {
->  
->  pick_one () {
->  	ff=--ff
-> +	is_empty=$(git show --pretty=format:%b "$@" | wc -l)
+> And this "only the doneness of the current branch matter" is fundamentally
+> different from "push everything in one go", and I am already happy to see
+> that future Git is moving in this direction, which also matches the way
+> vast majority of people seem to work.  So in that sense, I do not care
+> which one we picked between "current" and "upstream".  Obviously the
+> former is much simpler to explain and understand, as people do not have to
+> learn upstream tracking before doing their first "push".
 
-That is a very expensive way to see if the commit is empty, no?
+Right. I also think either is a huge improvement for new users over
+"matching". But since we are going through the pain of changing the
+default, I think it's worth nit-picking between the options to come up
+with the best default.
 
-If and only if commit C is empty, "git rev-parse" on C^{tree} and
-C^^{tree}" will yield the same tree object name.
+> > I think we can deal with my first issue (some workflows will cause "git
+> > push" to error out without doing anything) with targeted advice for each
+> > situation.
+> 
+> Yes.  I think that is up to the people who favored "upstream" over
+> "current" to share their anecdotes to polish such advice messages.
 
-> +	if [ $is_empty -eq 0 ]
+I guess part of me is just cynical. We are announcing "the default will
+change to upstream" under the assumption that upstream will get polished
+to everyone's liking. But until that polishing is actually done, I am
+pessimistic. :)
 
-Also this test (which by the way is against our coding style guideline)
-shows that the variable is misnamed.
+> > my two concerns is that this:
+> >
+> >   $ git clone ...
+> >   $ git checkout -b topic origin/master
+> >   $ hack hack hack
+> >   $ git push
+> >
+> > will try to implicitly fast-forward merge your commits onto master.
+> 
+> And the reason why it is surprising to the beginners is?  Because "topic"
+> and "master" (of "origin/master") are not the same name?
 
-> +	then
-> +		empty_args=--keep-empty
-> +	fi
-> +
-> +	if [ -n "$keep_empty" ]
-> +	then
-> +		empty_args=--keep_empty
-> +	fi
-> +
->  	case "$1" in -n) sha1=$2; ff= ;; *) sha1=$1 ;; esac
->  	case "$force_rebase" in '') ;; ?*) ff= ;; esac
->  	output git rev-parse --verify $sha1 || die "Invalid commit name: $sha1"
->  	test -d "$rewritten" &&
->  		pick_one_preserving_merges "$@" && return
-> -	output git cherry-pick $ff "$@"
-> +	output git cherry-pick $empty_args $ff "$@"
->  }
->  
->  pick_one_preserving_merges () {
-> @@ -780,9 +792,24 @@ git rev-list $merges_option --pretty=oneline --abbrev-commit \
->  	sed -n "s/^>//p" |
->  while read -r shortsha1 rest
->  do
-> +	local comment_out
+Sort of. It is more because "upstream" is an overloaded concept. Perhaps
+you created the branch from origin/master because you wanted to say
+"this is where my topic is based, and when I 'rebase -i' later, I want
+it to be considered the baseline". Or perhaps you meant to say "I am
+going to work on origin's master branch, but I would prefer to call it
+'topic' here".
 
-bashism.
+In the latter case, pushing back to origin/master makes sense. They are
+forks of the same branch to you, and pushing back is how
+you will share your changes to master. But in the former case, you may
+or may not consider them the same branch, and you may be pushing simply
+to share your work-in-progress of the topic. Putting that work onto
+"master" would be confusing in that case.
 
-> +
-> +	if [ -z "$keep_empty" ]
-> +	then
-> +		comment_out=$(git show --pretty=format:%b $shortsha1 | wc -l)
+Note that "current" has the same assumption in reverse. If you create a
+local "master" branch (whether or not it is based on a remote
+"origin/master"), you may or may not mean them to be the same branch.
 
-Ditto.
+So we have to decide when two things are forks of "the same branch", and
+when it is merely "X is based on Y", or "X happens to have the same name
+as Y". And I think the "name is the same" semantics are way more
+obvious.
 
-> +		if [ $comment_out -eq 0 ]
-> +		then
-> +			comment_out="#pick"
+Do you recall discussions a few years back about git's branching model
+versus that of mercurial and other systems? One of the confusing things
+for people new to git was the idea that git fundamentally doesn't care
+about "what is a branch". They got confused that "master" in the local
+repository really had no connection to "master" on the remote repository
+(whereas in hg, I think there is some magic in the DAG that connects
+them). But that leads me to think that people really do consider "same
+name is the same branch", which means "current" is going to be a lot
+less likely to confuse people (for that matter, look at the current
+matching semantics, which use name mapping; people get confused that we
+are pushing all matching branches, but I don't remember anyone ever
+complaining that they expect "foo" to go to "bar").
 
-Perhaps it is easier to read if you say "# pick"?
+> I tend to think that this is on the "understandable" side of the line
+> (after all, I said "Let's start a topic to be merged to origin/master"
+> when I started the topic, and I've been rebasing the topic up to date from
+> time to time), but obviously you don't think so.
 
-> +		else
-> +			comment_out="pick"
-> +		fi
-> +	else
-> +		comment_out="pick"
-> +	fi
-> +
->  	if test t != "$preserve_merges"
->  	then
-> -		printf '%s\n' "pick $shortsha1 $rest" >> "$todo"
-> +		printf '%s\n' "$comment_out $shortsha1 $rest" >> "$todo"
+Is that what you said? Or did you say "I am starting a new topic that
+will be based on origin/master?" I feel like the concept of "upstream"
+is very loosely specified, and can mean many things. And even if you do
+eventually expect it to be merged into master, it does not mean you
+expect it to do so by default during "git push". You might also simply
+want to push the current state of your topic.
 
-The variable comment_out is grossly misnamed.  Why not do it this way?
+> And I think your aversion to the "implicit fast-forward" will lead you to
+> teach beginners to do this instead:
+> 
+>    $ git clone ...
+>    $ git checkout -b topic origin/master
+>    $ hack hack hack
+>    $ git checkout master
+>    $ git merge topic
+>    $ eyeball, test, think
+>    $ git push
+> 
+> which arguably is a more disciplined way, but I do not know if we can
+> expect that people can be trained to be _that_ well disciplined.
 
-	comment_out=
-	if test -z "$keep_empty" && is_empty_commit $shortsha1
-        then
-        	comment_out="# "
-	fi
+Sure, I think that is a better workflow. But I don't expect everyone to
+follow it, and I don't think "upstream" is wrong to behave the other
+way. You could also teach them what "upstream" means, and have them set
+push.default to it.
 
-        if ...
-        then
-		printf "%s\n" "${leader}pick $shortsha1 $rest" >>"$todo"
+Ultimately, it is not about whether one workflow is better than the
+other. It is about having a default that stops the user and says "hey, I
+don't know what workflow you're using. So you need to tell me before I
+can continue."
 
-> @@ -849,6 +876,11 @@ cat >> "$todo" << EOF
->  # If you remove a line here THAT COMMIT WILL BE LOST.
->  # However, if you remove everything, the rebase will be aborted.
->  #
-> +# Note that commits which are empty at the time of rebasing are 
-> +# commented out.  If you wish to keep empty commits, either 
-> +# specify the --keep-empty option to the rebase command, or 
-> +# uncomment the commits you wish to keep
-> +#
-
-Good.
-
-I do not think " either specify...rebase command, or" is necessary here,
-though.  This message is meant to be a quick reminder, not a tutorial.
-Keep it short and sweet.
-
-Also, you may probably want to add this text _only_ when you have actually
-commented out something.
+-Peff
