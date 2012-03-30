@@ -1,113 +1,87 @@
-From: Adam Monsen <haircut@gmail.com>
-Subject: Re: [PATCH v2] git-commit.txt: clarify -t requires editing message
-Date: Thu, 29 Mar 2012 20:07:24 -0700
-Message-ID: <4F75236C.4050703@gmail.com>
-References: <CAF_oF=xGHdbkYw-ytvcZvJnqZ_jdckUCBiuUDzkqGDk=66+yMQ@mail.gmail.com> <1333062296-27823-1-git-send-email-haircut@gmail.com> <7vboneq1vs.fsf@alter.siamese.dyndns.org>
+From: William Strecker-Kellogg <willsk@bnl.gov>
+Subject: Re: [PATCH] Make http-backend REMOTE_USER configurable
+Date: Thu, 29 Mar 2012 23:24:39 -0400
+Message-ID: <4F752777.2020000@bnl.gov>
+References: <1333051139-14262-1-git-send-email-willsk@bnl.gov> <7vzkazoyk3.fsf@alter.siamese.dyndns.org> <20120329222230.GB1413@sigill.intra.peff.net> <20120329222632.GC1413@sigill.intra.peff.net> <7vk422q2ho.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature";
- boundary="------------enigBB7D0FCDCEA972DA05EDBBF7"
-Cc: git@vger.kernel.org, Ivan Heffner <iheffner@gmail.com>
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Jeff King <peff@peff.net>, Git List <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Mar 30 05:13:47 2012
+X-From: git-owner@vger.kernel.org Fri Mar 30 05:24:50 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SDSHZ-0006a9-Rz
-	for gcvg-git-2@plane.gmane.org; Fri, 30 Mar 2012 05:13:46 +0200
+	id 1SDSSD-0001FG-PV
+	for gcvg-git-2@plane.gmane.org; Fri, 30 Mar 2012 05:24:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759815Ab2C3DNk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 Mar 2012 23:13:40 -0400
-Received: from mail-qa0-f49.google.com ([209.85.216.49]:44858 "EHLO
-	mail-qa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759709Ab2C3DNj (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Mar 2012 23:13:39 -0400
-X-Greylist: delayed 370 seconds by postgrey-1.27 at vger.kernel.org; Thu, 29 Mar 2012 23:13:38 EDT
-Received: by qafi29 with SMTP id i29so200864qaf.1
-        for <git@vger.kernel.org>; Thu, 29 Mar 2012 20:13:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:x-enigmail-version:content-type;
-        bh=FWQQwJSCFJtciRuEzwi3kB4sblnJujOt+XHIMY3Xb48=;
-        b=FPyV763qGsgxrXOLn+9mYF/IGlza99kLa4v5WZw7ctEUDANIvezUuimvHoejYt9E5e
-         C8drRDQiDkUhEfFGLn+0xjoxvXJBOPB3HHpVRJCpqeaFaFVaLna4fyrDIdHzhKH2YGhE
-         7TDf/y8thz+FYi5qqoRmd5/MVvo06xs5hATfzq0Woq0GT/CCXiBLse1iuWDoiTV/foWi
-         rSh+jlcicA7fJsZDslmIlKRPTjulUEAlHsTw7MGj1odVhrLdahh55RZTFCAkLiHtttdW
-         JVjljCh8zuIYoBPokEdrUz8YHGx0v6+y2rqsesPBhXaSjNOEIL4Vco53TuIEzcmHTTiz
-         +xiw==
-Received: by 10.224.180.206 with SMTP id bv14mr3417103qab.56.1333076847209;
-        Thu, 29 Mar 2012 20:07:27 -0700 (PDT)
-Received: from [192.168.13.92] (c-67-183-137-177.hsd1.wa.comcast.net. [67.183.137.177])
-        by mx.google.com with ESMTPS id er10sm553056qab.16.2012.03.29.20.07.25
-        (version=SSLv3 cipher=OTHER);
-        Thu, 29 Mar 2012 20:07:26 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:11.0) Gecko/20120310 Thunderbird/11.0
-In-Reply-To: <7vboneq1vs.fsf@alter.siamese.dyndns.org>
+	id S932491Ab2C3DYm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 Mar 2012 23:24:42 -0400
+Received: from smtpgw.bnl.gov ([130.199.3.132]:15337 "EHLO smtpgw.bnl.gov"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1759598Ab2C3DYk (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Mar 2012 23:24:40 -0400
+X-BNL-policy-q: 
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: Ar0GAD0mdU+CxzYH/2dsb2JhbABEgw+2D4EHggkBAQQBeAEFCwsYCRYPCQMCAQIBRQYNAQUCAQGIAQW7K5EQBJtRg2CGXoMDgTgCAgQR
+X-IronPort-AV: E=Sophos;i="4.75,339,1330923600"; 
+   d="scan'208";a="175140248"
+Received: from rcf.rhic.bnl.gov ([130.199.54.7])
+  by smtpgw.sec.bnl.local with ESMTP/TLS/DHE-RSA-AES256-SHA; 29 Mar 2012 23:24:39 -0400
+Received: from [192.168.1.131] (ool-457ccb3b.dyn.optonline.net [69.124.203.59])
+	(authenticated bits=0)
+	by rcf.rhic.bnl.gov (8.13.8/8.13.8) with ESMTP id q2U3OdjR001365
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Thu, 29 Mar 2012 23:24:39 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:11.0) Gecko/20120316 Thunderbird/11.0
+In-Reply-To: <7vk422q2ho.fsf@alter.siamese.dyndns.org>
 X-Enigmail-Version: 1.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194318>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194319>
 
-This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
---------------enigBB7D0FCDCEA972DA05EDBBF7
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+On 03/29/2012 09:52 PM, Junio C Hamano wrote:
+> Jeff King <peff@peff.net> writes:
+> 
+>> On Thu, Mar 29, 2012 at 06:22:30PM -0400, Jeff King wrote:
+>>
+>>> I think an even better thing would be for http-backend to leave
+>>> GIT_COMMITTER_* alone if it exists; that is the usual well-known
+>>> interface for setting such things. And then you could specify a
+>>> detailed committer name and email if you want, or leave them blank to
+>>> pull from $REMOTE_USER as we do now. As it is now, even if you specify
+>>> GIT_COMMITTER_EMAIL, it gets overwritten with
+>>> "$REMOTE_USER@http.$REMOTE_ADDR".
+>>
+>> That patch would look something like this:
+> 
+> It would regress for somebody who is running the CGI program while
+> exporting these environment variables pointing at himself and relying on
+> the fact that these are canceled by REMOTE_USER/ADDR (perhaps a web-based
+> editor can write into some repository and commits made by that editor
+> takes the ident information from COMMITTER variables, while another part
+> of the webserver takes a push by spawning the http backend???).
+> 
+> Which is very unlikely.
 
-Junio C. Hamano wrote:
-> First, think of template not as the "initial version" but as "a form
-> that needs to be filled"
+Agreed.
 
-Ah, that clarifies for me what the authors had in mind when
-implementing this feature.
+> 
+> If somebody else comes up with a valid scenario to show why this patch is
+> a bad idea, I'd stand corrected but at the same time I'd be very surprised.
+> 
+> But I think this is the right thing to do, even though it is not related
+> to the issue William wanted to address with his patch.
+> 
 
-I was hoping to use this feature to pre-populate the commit message
-in my editor and have the option to edit it or leave it as-is. This
-is what the word "template" means for me. For example: if I open a
-"template" in LibreOffice, I can make changes or not, and
-LibreOffice still lets me print or save at any point.
+The reason we're interested in this is validation -- who can push to our
+production puppet branch is determined by a post-update hook.  A wrapper
+around http-backend like Jeff's combined with his patch would accomplish
+what we need just fine.
 
-Now that I know it's not that at all, but rather something more like
-a mandatory fillable form, I'll find another way to achieve my need.
-Since git really wants me to enter *something* for a commit message,
-I understand why git "templates" work differently than LibreOffice
-"templates".
-
-It's getting a little wordy, but here's an attempt to work in the
-"form" concept:
-
-~~~
-Use the contents of the given file as the initial version of the
-commit message. Think of this initial version as a mandatory
-fillable form. The editor is invoked so you can fill in the form. If
-you do not fill in the form (if you make no changes), the message is
-considered empty and the commit is aborted. If a message is
-specified using the `-m` or `-F` options, this option has no effect.
-This overrides the `commit.template` configuration variable.
-~~~
-
-Thoughts?
-
-
---------------enigBB7D0FCDCEA972DA05EDBBF7
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (GNU/Linux)
-
-iQEcBAEBAgAGBQJPdSNsAAoJEJtdmT+DbynA5WsH/122JBEY+FhTAiLn+FPmY/PV
-hcI8W7FnvlwDkkMBWxJjjqU5+VxFSdt3TpXR/5C2oc1e8QmeSQcAv3sDHmf6hLPW
-E1wURw4zbbBPJQLpqvGclGllQwKpKuZ313RmMc+vPDTZV2V9r6nu9ARrD50VKqWg
-eqOO5rKjDD2UQBWXbQcE5JUwjFdWrZ5Cn8DAXYR7lKqy9Huk791754uNFAYqvGYy
-hwtgVQeDFZUCi1oRL3CN9I17YUtUD1oWU8bbOhnPS55eVv6x+mcWVvusxhErdY6O
-hpoHY26pDxI0bS3VHxKNB1E7mmQAQ4nzPHCzTWk52dShio9n8nLGuuVpShq8wnA=
-=qz2I
------END PGP SIGNATURE-----
-
---------------enigBB7D0FCDCEA972DA05EDBBF7--
+> Care to sign it off?
+> 
