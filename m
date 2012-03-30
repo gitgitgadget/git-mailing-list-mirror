@@ -1,113 +1,79 @@
-From: Adam Monsen <haircut@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH v2] git-commit.txt: clarify -t requires editing message
-Date: Thu, 29 Mar 2012 21:53:19 -0700
-Message-ID: <4F753C3F.7010805@gmail.com>
-References: <CAF_oF=xGHdbkYw-ytvcZvJnqZ_jdckUCBiuUDzkqGDk=66+yMQ@mail.gmail.com> <1333062296-27823-1-git-send-email-haircut@gmail.com> <7vboneq1vs.fsf@alter.siamese.dyndns.org> <4F75236C.4050703@gmail.com> <7vr4waoics.fsf@alter.siamese.dyndns.org>
+Date: Thu, 29 Mar 2012 22:08:14 -0700
+Message-ID: <7vehsaoev5.fsf@alter.siamese.dyndns.org>
+References: <CAF_oF=xGHdbkYw-ytvcZvJnqZ_jdckUCBiuUDzkqGDk=66+yMQ@mail.gmail.com>
+ <1333062296-27823-1-git-send-email-haircut@gmail.com>
+ <7vboneq1vs.fsf@alter.siamese.dyndns.org> <4F75236C.4050703@gmail.com>
+ <7vr4waoics.fsf@alter.siamese.dyndns.org> <4F753C3F.7010805@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org, Ivan Heffner <iheffner@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Mar 30 06:53:42 2012
+To: Adam Monsen <haircut@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Mar 30 07:08:25 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SDTqG-0004Ez-G9
-	for gcvg-git-2@plane.gmane.org; Fri, 30 Mar 2012 06:53:40 +0200
+	id 1SDU4W-0002Sc-NB
+	for gcvg-git-2@plane.gmane.org; Fri, 30 Mar 2012 07:08:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751339Ab2C3ExY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 Mar 2012 00:53:24 -0400
-Received: from mail-qc0-f174.google.com ([209.85.216.174]:56412 "EHLO
-	mail-qc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750731Ab2C3ExX (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Mar 2012 00:53:23 -0400
-Received: by qcqw6 with SMTP id w6so146426qcq.19
-        for <git@vger.kernel.org>; Thu, 29 Mar 2012 21:53:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:x-enigmail-version:content-type
-         :content-transfer-encoding;
-        bh=3wV9I3QjSXLCUTN3PMS8KQFVLQ2g1ToPDp75TJiVDok=;
-        b=h5LAu32LrwEnH2lqU+twwcL3S+++I2JCLiIWPtY/PidNuEXnnLQpqPi/pZCplppGdZ
-         q6kc71pG0lyQeIn6scbQUdeD3MEmiON8eYBpPtHTG6ZiI4W04bUfu4wAkRbeAZWWwNiU
-         mukxb+WVWT1iB3FiERFzwRGZILE0Z7co1IIv+/sap+W1ZWVc2GglP97d6wnseirp99Yz
-         LjDBOvONP9uZb7nmg0C2XqYsM2bJ3xYFeFlu2shzKOMIZwdvEKnjK5WMw+05qt3mKxQ3
-         1jl+Zhv+QYtizMcxF61k1YgYJ8tjCXsDjwyJSxlWTK75hZreBGatO/CIK1qGRmGtEnUf
-         BNfg==
-Received: by 10.224.184.10 with SMTP id ci10mr3833891qab.4.1333083202280;
-        Thu, 29 Mar 2012 21:53:22 -0700 (PDT)
-Received: from [192.168.13.92] (c-67-183-137-177.hsd1.wa.comcast.net. [67.183.137.177])
-        by mx.google.com with ESMTPS id w9sm16427073qao.0.2012.03.29.21.53.20
-        (version=SSLv3 cipher=OTHER);
-        Thu, 29 Mar 2012 21:53:21 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:11.0) Gecko/20120310 Thunderbird/11.0
-In-Reply-To: <7vr4waoics.fsf@alter.siamese.dyndns.org>
-X-Enigmail-Version: 1.4
+	id S1751461Ab2C3FIU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 Mar 2012 01:08:20 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:44275 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750731Ab2C3FIS (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Mar 2012 01:08:18 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9FFAB6E75;
+	Fri, 30 Mar 2012 01:08:17 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Krw3kxC+Xhbw/SNm5qqg5WD42HQ=; b=PuZJTs
+	w+WnthyqDrIE3GdKETnBaObbn8/YlNmg1Q9gfmKvlRWqDrZB46ADRjiZ48O8VlnZ
+	cpdsMflvxOF0nCGw9O8/odwmrNXmFppaXs3FnAqa2D6KMTd1bL6YySrSXKPPq7vb
+	9NQXWblJhfD/aCmPhETJg8D+jPvWB1EqCps1E=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=UPDYsU3gfAULJVwwe+TRLJMBmweeWumS
+	rxC6bJR9aaNXfnA70q0HbRJPhABkgxn85u+YYsh2JpvFRfSscskbelXiohUrDjIb
+	OczV9FTp3ZW0fduq+X06x44q95OoP4dfVYj45QQmvoMUtc97MewOUSYPCOajIh3f
+	3mmQdI6qdxg=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 974426E74;
+	Fri, 30 Mar 2012 01:08:17 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2FDDE6E73; Fri, 30 Mar 2012
+ 01:08:16 -0400 (EDT)
+In-Reply-To: <4F753C3F.7010805@gmail.com> (Adam Monsen's message of "Thu, 29
+ Mar 2012 21:53:19 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 5B9BAECC-7A26-11E1-AE7A-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194325>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194326>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Adam Monsen <haircut@gmail.com> writes:
 
-Junio C Hamano wrote:
-> You still say "the message is considered empty and" but I think it
->  probably reads better without it.
+> I *cannot* just save and quit my editor (unless I supply
+> --allow-empty-message). That's the behavior I find confusing...
 
-Do you like the patch without those words?
+The root cause of the confusion is that the entire "--template" code piggy
+backs on the non-templated case, where we would want to error out if the
+user leaves the editor without explaining the commit. And an appropriate
+diagnosis message for the "normal" case is "you gave me an empty message",
+but "--template" code did not bother updating that to suit what it tries
+to do better, e.g. "you did not edit the template I gave you".
 
-> Strictly speaking, it is not a "mandatory fillable form", but 
-> whatever text you put in the template is advisory to the users.
+The check to see if the message the user left matches that came from the
+template was tacked into a wrong function message_is_empty(); it should be
+made into its own helper function and called from the same caller where
+it calls message_is_empty() only when template_file is not NULL.  Also its
+honoring "--allow-empty" needs to be reconsidered.
 
-Ok, right on. I understand the template feature now since you've
-patiently explained it to me (thank you!). I still want to plainly
-convey that even if my template is the following:
-
-	~~~~
-	zip module: continue to expand transformer
-	
-	This WIP will eventually provide expanded
-	transformer functionality.
-	~~~~
-
-I *cannot* just save and quit my editor (unless I supply
-- --allow-empty-message). That's the behavior I find confusing: git
-telling me a non-empty commit message is an empty commit message. If I
-save that text above (zip module... etc) in FILE and do `git commit -t
-FILE`, save and quit my editor, git says "Aborting commit due to empty
-commit message." Lies! A more precise message would be "Aborting
-commit due to unmodified commit message template."
-
-Based on the current documentation I misunderstood that -t could be
-used to review a boilerplate commit message and save it verbatim.
-
-...AHA! I just figured out a way to do exactly that:
-
-	git commit --edit --file=FILE
-
-aka
-
-	git commit -eF FILE
-
-Yay! No idea how I missed that before.
-
-Anyway, it still seems like the documentation for "git commit -t"
-could use improvement. I actually wouldn't mind seeing a short example
-template like the one you provided, maybe in the EXAMPLES or
-DISCUSSION section.
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (GNU/Linux)
-
-iQEcBAEBAgAGBQJPdTw/AAoJEJtdmT+DbynAte4IALRx50yW5bEfzXskvSDewPuL
-SgaU4CqUHRm8sWXHeFbd4I2rG4dEJuqYqzKKbfay3EMwEbIkThiwoC2pJ9xJoFpe
-8O95GVp3ikYvsY3mn87ebiwA9FBhnTy1Fz+MREfuzETpJbdtJSHhbRXMxfJ9ZabU
-FOPE/qeZDvQJA9b9QFY3QS/BcxsGHXhW9xCULZlAprDggMcchhHDEbqJCh/1wObw
-cQvoONiqZSkXA17K3gxfs7NgafUVFIg3+N9vcq90eZXbT/s1MM+1zxj5ezTh9jbV
-sOkzepfE5+NBK3PnewMDxDxhF0LD5lzHCwnfkTl1Om3okSE0nxVyRZKabuzc99s=
-=NUN8
------END PGP SIGNATURE-----
+In other words, I think that is something that needs fixing the broken
+code to behave less confusingly, not documenting its wrong behaviour.
