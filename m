@@ -1,115 +1,77 @@
-From: Frans Klaver <fransklaver@gmail.com>
-Subject: Re: [PATCH] run-command: treat inaccessible directories as ENOENT
-Date: Fri, 30 Mar 2012 10:23:16 +0200
-Message-ID: <CAH6sp9N=JsWp7iQ=AAdXHe0J+aB5L9cBq2_0BJgUO=Y-vgAbNg@mail.gmail.com>
-References: <20120330075217.GA8384@sigill.intra.peff.net>
+From: Tomas Carnecky <tomas.carnecky@gmail.com>
+Subject: Re: top-level gitignore considered harmful
+Date: Fri, 30 Mar 2012 09:30:27 +0000
+Message-ID: <1333099827-ner-1054@calvin>
+References: <20120329211136.GA1112@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	James Pickens <jepicken@gmail.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Mar 30 10:23:29 2012
+Content-Type: text/plain
+Cc: Carlos =?iso-8859-1?q?Mart=EDn?= Nieto <cmn@elego.de>,
+	Jay Soffian <jaysoffian@gmail.com>
+To: Jeff King <peff@peff.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Mar 30 11:30:58 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SDX7H-0005XJ-4A
-	for gcvg-git-2@plane.gmane.org; Fri, 30 Mar 2012 10:23:27 +0200
+	id 1SDYAa-0003DE-Ob
+	for gcvg-git-2@plane.gmane.org; Fri, 30 Mar 2012 11:30:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759730Ab2C3IXW convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 30 Mar 2012 04:23:22 -0400
-Received: from mail-qc0-f174.google.com ([209.85.216.174]:44766 "EHLO
-	mail-qc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759610Ab2C3IXR convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 30 Mar 2012 04:23:17 -0400
-Received: by qcqw6 with SMTP id w6so208720qcq.19
-        for <git@vger.kernel.org>; Fri, 30 Mar 2012 01:23:16 -0700 (PDT)
+	id S1760483Ab2C3Jav (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 Mar 2012 05:30:51 -0400
+Received: from mail-wi0-f178.google.com ([209.85.212.178]:44686 "EHLO
+	mail-wi0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760089Ab2C3Jat (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Mar 2012 05:30:49 -0400
+Received: by wibhq7 with SMTP id hq7so404610wib.1
+        for <git@vger.kernel.org>; Fri, 30 Mar 2012 02:30:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=IDYEz4DKTz1c2P/5i5AklnbftswsQnDvh5SUafhWQS0=;
-        b=JAhWDUOOzSBWHWcT3RpUPsvXDZGmvIZOSVOiv02RsRnbASer8fOC1GTzNbrZRVu7PR
-         qNNXnL7idQEnN7Z7FYy8cagOGgBLo/PfrAstv/w79Z/8KrE4JaRzyEQJJYrjAJvLvs+L
-         UfSPacf3W6aWY8b/37Jsh63aRTS+kZjt3vqZ/G/ramcEPjdD2coT0Yji6GEcCfZIsd/A
-         OYeYtkav6TBgr3Az8WHF7j+xq34vm4zhI2vMSMcqkZCxhvVUaZVHuTSTCUrLFJuj5MC/
-         dGAkRgVlFq+sXar9I/pfr1SDezKHmpX+l8pXz0DWlvAuaHrAHA84eARdS3sz3bO8t+xF
-         gkAw==
-Received: by 10.229.111.76 with SMTP id r12mr473362qcp.43.1333095796428; Fri,
- 30 Mar 2012 01:23:16 -0700 (PDT)
-Received: by 10.224.32.19 with HTTP; Fri, 30 Mar 2012 01:23:16 -0700 (PDT)
-In-Reply-To: <20120330075217.GA8384@sigill.intra.peff.net>
+        h=from:subject:to:cc:references:in-reply-to:mime-version:date
+         :message-id:content-type;
+        bh=wXQM3Hgo5S2tPOeW3KvSB0U9plH+IxRsSl2jYlCvy+A=;
+        b=k1pUj7nT9dTQkGJosUsTMwCO4VaHOlj6XF8RWblqqToftxA0yO4u6URg92cmfpKPkK
+         tUPqWGB6eWCszUI0Qwel9xy2VShgvVD9SOl7FOWBaW7/F1j/YclU8WOFgdDXn6kvdZUX
+         o8NIkh/DNXv5eNb4+Z6i5MGM+IuQq4eVdXAK6okus5Rnz96jMyoEHE3w/9umbLjaRbBT
+         4OA1dddqg1damYBjuqCdUcZUuaBBVThC9/yaq3jejc/z3t748ljyyDH9UjTCbJhMDoep
+         QD6Bp4+V6o37r+66QLFa3N4HbO5i0gOYAmVayBTzvQN94D21Wcw26cGdYAav037EVyK6
+         ajhg==
+Received: by 10.180.95.197 with SMTP id dm5mr4507465wib.20.1333099847602;
+        Fri, 30 Mar 2012 02:30:47 -0700 (PDT)
+Received: from calvin.caurea.org (62-2-168-230.static.cablecom.ch. [62.2.168.230])
+        by mx.google.com with ESMTPS id l5sm4851067wia.11.2012.03.30.02.30.45
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 30 Mar 2012 02:30:45 -0700 (PDT)
+Received: by calvin.caurea.org (Postfix, from userid 3301)
+	id AC4E217321A; Fri, 30 Mar 2012 09:30:27 +0000 (UTC)
+In-Reply-To: <20120329211136.GA1112@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194340>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194341>
 
-On Fri, Mar 30, 2012 at 9:52 AM, Jeff King <peff@peff.net> wrote:
+On Thu, 29 Mar 2012 17:11:36 -0400, Jeff King <peff@peff.net> wrote:
+> So we were sitting around chatting today about how slow "git status" is
+> in the gigantic WebKit repository (because really, what else would one
+> chat about?). Carlos noticed that git spends a lot of time in the
+> gitignore code path.  It turns out that the WebKit repository has a
+> couple hundred excludes in the top-level .gitignore, many of which are
+> for specific files deep in the repository.
+> 
+> Since these patterns are compared via fnmatch(), we have to process them
+> linearly for each entry[1]. And since the patterns are at the top level,
+> we check them for each of the ~180,000 files in the repository. So "git
+> status" will do O(m*n) work, where "m" is the number of patterns and "n"
+> is the number of files in the repository. And as a project grows over
+> time, one might expect "m" to be some constant factor of "n". So this is
+> really O(n^2) (albeit with some mitigating constant at the front).
 
-> =C2=A01. I split the find-in-path function so that Frans can build on=
- it
-> =C2=A0 =C2=A0 with further checks if he wants. However, note that it =
-will need a
-> =C2=A0 =C2=A0 little more refactoring; it finds the first entry in th=
-e PATH,
-> =C2=A0 =C2=A0 whereas I think he would want the first executable entr=
-y
-> =C2=A0 =C2=A0 (admittedly, having a non-executable entry followed by =
-an
-> =C2=A0 =C2=A0 executable one which _also_ fails for a different reaso=
-n is a
-> =C2=A0 =C2=A0 pretty wild corner case).
+Many months ago I noticed that as well, when somebody came to #git and
+complained that git status is slow (it toook *many* seconds for him). We
+tracked that down to the fact that his .gitignore contained hundreds of
+entries. He basically did `git ls-files --other >> .gitignore`, so his
+.gitignore included every single object file and all other build artefacts.
+I told him to use wildcards and `git status` became usable again.
 
-Thanks. I think this corner case is something to fix when someone is
-running into it. Bash doesn't cover this case either (stops looking at
-the first found entry) so I would go as far as saying that it doesn't
-happen.
-
-
-> =C2=A02. I pulled the test from what Junio posted earlier. I started =
-to
-> =C2=A0 =C2=A0 write a full test script that checked each of the cases=
- I
-> =C2=A0 =C2=A0 mentioned earlier. However, in all but the alias case (=
-which is
-> =C2=A0 =C2=A0 what is tested here), the behavior is really only disti=
-nguishable
-> =C2=A0 =C2=A0 by the error messages, and I didn't want to get into te=
-sting what
-> =C2=A0 =C2=A0 strerror(EACCES) prints. I can re-roll if we really wan=
-t to go
-> =C2=A0 =C2=A0 there.
-
-I wouldn't think there is much point in testing strerror output.
-
-
-
-> +test_expect_success POSIXPERM 'unreadable directory in PATH' '
-> + =C2=A0 =C2=A0 =C2=A0 mkdir local-command &&
-> + =C2=A0 =C2=A0 =C2=A0 test_when_finished "chmod u+rwx local-command =
-&& rm -fr local-command" &&
-> + =C2=A0 =C2=A0 =C2=A0 git config alias.nitfol "!echo frotz" &&
-> + =C2=A0 =C2=A0 =C2=A0 chmod a-rx local-command &&
-> + =C2=A0 =C2=A0 =C2=A0 (
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 PATH=3D./local-com=
-mand:$PATH &&
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 git nitfol >actual
-> + =C2=A0 =C2=A0 =C2=A0 ) &&
-> + =C2=A0 =C2=A0 =C2=A0 echo frotz >expect &&
-> + =C2=A0 =C2=A0 =C2=A0 test_cmp expect actual
-> +'
-> +
-> =C2=A0test_done
-> --
-> 1.7.9.5.7.g11b89
-
-Hadn't looked into Junio's test earlier (probably missed it entirely),
-but isn't it rather more sensible from a unit-test perspective to see
-if start_command returns 127 instead of 128 in this specific case?
-Aside from that, this test doesn't seem to fit in t0061, looking at
-the t???? guidelines.
-
-Rest looks sensible to me.
+tom
