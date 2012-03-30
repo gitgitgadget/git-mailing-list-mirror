@@ -1,108 +1,133 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] Documentation: replace 'vi' for 'editor' to reflect
- build-time option
-Date: Thu, 29 Mar 2012 19:55:23 -0500
-Message-ID: <20120330005523.GA28519@burratino>
-References: <20120330002543.2138.91961.reportbug@localhost6.localdomain6>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: What's cooking in git.git (Mar 2012, #10; Wed, 28)
+Date: Thu, 29 Mar 2012 18:41:46 -0700
+Message-ID: <7vobreq2zp.fsf@alter.siamese.dyndns.org>
+References: <7vsjgss6ua.fsf@alter.siamese.dyndns.org>
+ <m3fwcrarwo.fsf@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Ben Walton <bwalton@artsci.utoronto.ca>
-To: "Rodrigo Silva (MestreLion)" <linux@rodrigosilva.com>
-X-From: git-owner@vger.kernel.org Fri Mar 30 02:55:40 2012
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Mar 30 03:42:26 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SDQ7v-00032M-B6
-	for gcvg-git-2@plane.gmane.org; Fri, 30 Mar 2012 02:55:39 +0200
+	id 1SDQrA-0007ce-IB
+	for gcvg-git-2@plane.gmane.org; Fri, 30 Mar 2012 03:42:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758391Ab2C3Azf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 Mar 2012 20:55:35 -0400
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:50653 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751903Ab2C3Azd (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Mar 2012 20:55:33 -0400
-Received: by iagz16 with SMTP id z16so199314iag.19
-        for <git@vger.kernel.org>; Thu, 29 Mar 2012 17:55:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=Es6Yd1eBz3zXCIpmjcgQ4fbAec7qVoc3LNQPEtCTi8c=;
-        b=xIC2OL7zJ6DD39Frb43QvtBJZmUgtTvO7DgxaI7qUeVciZOPGluRsvnEzYBvw9E8l3
-         8A7FbovrwkDeTf10G/odcxuZQeIbsH32TwpkRZpVFAzXRW4hsFBcrOjh9+t38Ejhq2cR
-         LhpMmiaZ5eLDHcJ+cTdVjM8tLJAZx43esTWKLjv8vD+3thpOZUgeN9qBrvSo/dExEHT6
-         W2SYrks+R1Ak6HMw/DCpPV57uH2DhkqdAXSjuMgv1HZlp7FUCDy7LFmGfCCMDjrKCwP4
-         TgPYE6dAAFyMDUd+ShkG61LW1UPQGQn5jukQn0sFcsFT285Da7/AA8dFbFZFMm96UaMR
-         wyeQ==
-Received: by 10.50.217.137 with SMTP id oy9mr57089igc.31.1333068933172;
-        Thu, 29 Mar 2012 17:55:33 -0700 (PDT)
-Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
-        by mx.google.com with ESMTPS id c2sm608170igj.1.2012.03.29.17.55.32
-        (version=SSLv3 cipher=OTHER);
-        Thu, 29 Mar 2012 17:55:32 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <20120330002543.2138.91961.reportbug@localhost6.localdomain6>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1759600Ab2C3Blu convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 29 Mar 2012 21:41:50 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:34861 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758487Ab2C3Blt convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 29 Mar 2012 21:41:49 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 458AF6D82;
+	Thu, 29 Mar 2012 21:41:48 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=8AuZWllC7/vm
+	Jg07csJG81GdfG0=; b=v11ZSIez1eyogeTNEWGz0QXgV/wNywSlVufn/ceYDkSW
+	+K4HCwAGmhLSAfBcRPyP9AsOE1KGGscn3Z1FUPV2JSw3Ui2Y+Dqxa47nytWa22/7
+	pUZuXbWTjxS2IKghBthy5M53ukz2V7Ae+jYtoT8pai+2bE4NqYi+AQH1oaD66z8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=pZkeIY
+	xcVlCNhWKDeycAWElA5Rq4qpkGfP7JHSN7JGS/Hu/WBLvOMGwnWzeLTnYjiZ2Geu
+	HM1NSUcj76fwwRBFVHnGt7dHB5Yvu1AOAe1uHDwmnU0TRU2+xijzFY/97kVL6S7a
+	PfDp3FCQcKuyT699GYO8hv5tEIWNPVD1yC6OE=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3C7A06D81;
+	Thu, 29 Mar 2012 21:41:48 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B01366D7F; Thu, 29 Mar 2012
+ 21:41:47 -0400 (EDT)
+In-Reply-To: <m3fwcrarwo.fsf@localhost.localdomain> (Jakub Narebski's message
+ of "Thu, 29 Mar 2012 16:51:01 -0700 (PDT)")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 837FF9CE-7A09-11E1-BBFA-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194307>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194309>
 
-Hi Rodrigo,
+Jakub Narebski <jnareb@gmail.com> writes:
 
-Rodrigo Silva (MestreLion) wrote:
-
-> git-var(1) did not say that hardcoded fallback 'vi' may have been changed
-> at build time. A user could be puzzled if 'nano' pops up even when none of the
-> mentioned environment vars or config.editor are set.
+> Junio C Hamano <gitster@pobox.com> writes:
 >
-> Ideally, the build system should be changed to reflect the chosen fallback
-> editor when creating the man pages. Not sure if that is even possible though.
+>> --------------------------------------------------
+>> [Cooking]
+>
+>> * wk/gitweb-snapshot-use-if-modified-since (2012-03-26) 3 commits
+>>  - gitweb: add If-Modified-Since handling to git_snapshot().
+>>  - gitweb: refactor If-Modified-Since handling
+>>  - gitweb: add `status` headers to git_feed() responses.
+>>=20
+>> Makes 'snapshot' request to "gitweb" honor If-Modified-Since: header=
+,
+>> based on the commit date.
+>
+> What about "[PATCH v2 0/8] gitweb: Highlight interesting parts of dif=
+f"
+> series by Micha=C5=82 Kiedrowicz:
+>
+>   Message-ID: <1332543417-19664-1-git-send-email-michal.kiedrowicz@gm=
+ail.com>
+>   http://thread.gmane.org/gmane.comp.version-control.git/193804
 
-Good catch.
+I was waiting for the review cycle to come to a resolution.
 
-Filling in the blank at compile time would be possible, but I'm not
-convinced it's a good idea.  Wouldn't the same user be just as puzzled
-when
+> I have copy of them in 'gitweb/diff-hl' branch:
 
-  http://git.kernel.org/?p=git/git-htmldocs.git;a=blob_plain;f=git-var.html
+Thanks for collecting them. I wasn't paying much attention to the list
+discussion.
 
-(or whatever page with a nicer URL arises to replace the old
-www.kernel.org/...  pages) says the fallback is 'vi' and git behaves
-differently?
+Do you mean "I collected them for you to review, I do not yet vouch for
+them"?  I see one of them has your Ack, but otherwise there is no Sign-=
+off
+by you on any of the commit, so it is unclear if your "What about" was
+your way of saying "I think this round is ready, go ahead and pull." wi=
+th
+a rhetorical question, or a pure question "What is your opinion on this
+series?"
 
-How about something like this?
 
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
----
-Context: http://bugs.debian.org/666250
-
- Documentation/git-var.txt |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
-
-diff --git i/Documentation/git-var.txt w/Documentation/git-var.txt
-index 5317cc24..beef9e28 100644
---- i/Documentation/git-var.txt
-+++ w/Documentation/git-var.txt
-@@ -43,13 +43,15 @@ GIT_EDITOR::
-     `$SOME_ENVIRONMENT_VARIABLE`, `"C:\Program Files\Vim\gvim.exe"
-     --nofork`.  The order of preference is the `$GIT_EDITOR`
-     environment variable, then `core.editor` configuration, then
--    `$VISUAL`, then `$EDITOR`, and then finally 'vi'.
-+    `$VISUAL`, then `$EDITOR`, and then the default chosen at compile
-+    time, which is usually 'vi'.
- 
- GIT_PAGER::
-     Text viewer for use by git commands (e.g., 'less').  The value
-     is meant to be interpreted by the shell.  The order of preference
-     is the `$GIT_PAGER` environment variable, then `core.pager`
--    configuration, then `$PAGER`, and then finally 'less'.
-+    configuration, then `$PAGER`, and then the default chosen at
-+    compile time (usually 'less').
- 
- Diagnostics
- -----------
--- 
+> -- >8 --
+> The following changes since commit 455cf268dbaf227bdbd5e9fbf96525452b=
+cfe44f:
+>
+>   Git 1.7.10-rc3 (2012-03-28 11:18:42 -0700)
+>
+> are available in the git repository at:
+>
+>   git://repo.or.cz/git/jnareb-git.git gitweb/diff-hl
+>
+> for you to fetch changes up to 60b06478f0349729dc9a4ddeb1abf5e28986fb=
+7e:
+>
+>   gitweb: Refinement highlightning in combined diffs (2012-03-29 21:2=
+6:36 +0200)
+>
+> ----------------------------------------------------------------
+> Micha=C5=82 Kiedrowicz (8):
+>       gitweb: esc_html_hl_regions(): Don't create empty <span> elemen=
+ts
+>       gitweb: Pass esc_html_hl_regions() options to esc_html()
+>       gitweb: Extract print_sidebyside_diff_lines()
+>       gitweb: Use print_diff_chunk() for both side-by-side and inline=
+ diffs
+>       gitweb: Move HTML-formatting diff line back to process_diff_lin=
+e()
+>       gitweb: Push formatting diff lines to print_diff_chunk()
+>       gitweb: Highlight interesting parts of diff
+>       gitweb: Refinement highlightning in combined diffs
+>
+>  gitweb/gitweb.perl       |  299 +++++++++++++++++++++++++++++++++---=
+----------
+>  gitweb/static/gitweb.css |    8 ++
+>  2 files changed, 225 insertions(+), 82 deletions(-)
