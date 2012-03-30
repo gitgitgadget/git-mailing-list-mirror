@@ -1,83 +1,108 @@
-From: Martin Fick <mfick@codeaurora.org>
-Subject: Git push performance problems with ~100K refs
-Date: Thu, 29 Mar 2012 18:18:49 -0600
-Organization: CAF
-Message-ID: <201203291818.49933.mfick@codeaurora.org>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH] Documentation: replace 'vi' for 'editor' to reflect
+ build-time option
+Date: Thu, 29 Mar 2012 19:55:23 -0500
+Message-ID: <20120330005523.GA28519@burratino>
+References: <20120330002543.2138.91961.reportbug@localhost6.localdomain6>
 Mime-Version: 1.0
-Content-Type: Text/Plain;
-  charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Mar 30 02:19:23 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Ben Walton <bwalton@artsci.utoronto.ca>
+To: "Rodrigo Silva (MestreLion)" <linux@rodrigosilva.com>
+X-From: git-owner@vger.kernel.org Fri Mar 30 02:55:40 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SDPYo-0000Hq-EN
-	for gcvg-git-2@plane.gmane.org; Fri, 30 Mar 2012 02:19:22 +0200
+	id 1SDQ7v-00032M-B6
+	for gcvg-git-2@plane.gmane.org; Fri, 30 Mar 2012 02:55:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760322Ab2C3ASw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 Mar 2012 20:18:52 -0400
-Received: from wolverine02.qualcomm.com ([199.106.114.251]:40304 "EHLO
-	wolverine02.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759505Ab2C3ASv (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Mar 2012 20:18:51 -0400
-X-IronPort-AV: E=McAfee;i="5400,1158,6664"; a="174870735"
-Received: from pdmz-ns-mip.qualcomm.com (HELO mostmsg01.qualcomm.com) ([199.106.114.10])
-  by wolverine02.qualcomm.com with ESMTP/TLS/ADH-AES256-SHA; 29 Mar 2012 17:18:50 -0700
-Received: from mfick-lnx.localnet (pdmz-snip-v218.qualcomm.com [192.168.218.1])
-	by mostmsg01.qualcomm.com (Postfix) with ESMTPA id E586510004AB
-	for <git@vger.kernel.org>; Thu, 29 Mar 2012 17:18:50 -0700 (PDT)
-User-Agent: KMail/1.13.5 (Linux/2.6.32-37-generic; KDE/4.4.5; x86_64; ; )
+	id S1758391Ab2C3Azf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 Mar 2012 20:55:35 -0400
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:50653 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751903Ab2C3Azd (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Mar 2012 20:55:33 -0400
+Received: by iagz16 with SMTP id z16so199314iag.19
+        for <git@vger.kernel.org>; Thu, 29 Mar 2012 17:55:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=Es6Yd1eBz3zXCIpmjcgQ4fbAec7qVoc3LNQPEtCTi8c=;
+        b=xIC2OL7zJ6DD39Frb43QvtBJZmUgtTvO7DgxaI7qUeVciZOPGluRsvnEzYBvw9E8l3
+         8A7FbovrwkDeTf10G/odcxuZQeIbsH32TwpkRZpVFAzXRW4hsFBcrOjh9+t38Ejhq2cR
+         LhpMmiaZ5eLDHcJ+cTdVjM8tLJAZx43esTWKLjv8vD+3thpOZUgeN9qBrvSo/dExEHT6
+         W2SYrks+R1Ak6HMw/DCpPV57uH2DhkqdAXSjuMgv1HZlp7FUCDy7LFmGfCCMDjrKCwP4
+         TgPYE6dAAFyMDUd+ShkG61LW1UPQGQn5jukQn0sFcsFT285Da7/AA8dFbFZFMm96UaMR
+         wyeQ==
+Received: by 10.50.217.137 with SMTP id oy9mr57089igc.31.1333068933172;
+        Thu, 29 Mar 2012 17:55:33 -0700 (PDT)
+Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
+        by mx.google.com with ESMTPS id c2sm608170igj.1.2012.03.29.17.55.32
+        (version=SSLv3 cipher=OTHER);
+        Thu, 29 Mar 2012 17:55:32 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <20120330002543.2138.91961.reportbug@localhost6.localdomain6>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194306>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194307>
 
-Hello,
+Hi Rodrigo,
 
-I am back to talk about git performance with lots of refs: 
-~100K.  This time I am investigating pushes to a repo with 
-about ~100K ref, a gerrit mirror which includes the gerrit 
-changes.  When I push just a simple one line change to a 
-file, the push takes about ~43s.  If I delete the changes
-from the destination repo, this push takes about 6s.  This 
-seems rather excessive to me, in fact given that the repo 
-with 100K refs has more data in it and is more likely to 
-have the objects I am pushing in it, if things are done 
-right, it should be a faster push (in theory).
+Rodrigo Silva (MestreLion) wrote:
 
-So, upon early investigation, I noticed that the time to 
-push seems mostly determined by the receiving end which is 
-processing all out for 100% on a CPU.  During this time 
-period, the receiving end git commands look like this:
+> git-var(1) did not say that hardcoded fallback 'vi' may have been changed
+> at build time. A user could be puzzled if 'nano' pops up even when none of the
+> mentioned environment vars or config.editor are set.
+>
+> Ideally, the build system should be changed to reflect the chosen fallback
+> editor when creating the man pages. Not sure if that is even possible though.
 
-  git-receive-pack path/to/repo.git
+Good catch.
 
-and:
+Filling in the blank at compile time would be possible, but I'm not
+convinced it's a good idea.  Wouldn't the same user be just as puzzled
+when
 
-  git rev-list --objects --stdin --not --all
+  http://git.kernel.org/?p=git/git-htmldocs.git;a=blob_plain;f=git-var.html
 
-The latter of these two commands is the one burning CPU.
+(or whatever page with a nicer URL arises to replace the old
+www.kernel.org/...  pages) says the fallback is 'vi' and git behaves
+differently?
 
-Does anyone have any hints as to what might be wrong with 
-the receiving end algorithm that would cause a small change 
-to use so much CPU?  Is there anything that can be done 
-about it?  I noticed that the --all option will effectively 
-feed  all the 100K refs to rev-list, is this really 
-necessary?  Are there any tests that I can perform to help 
-debug this?
+How about something like this?
 
-I am using git 1.7.8.3 and I also tried 1.7.10.rc3, same 
-results.
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+---
+Context: http://bugs.debian.org/666250
 
-Thanks,
+ Documentation/git-var.txt |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
--Martin
-
-
+diff --git i/Documentation/git-var.txt w/Documentation/git-var.txt
+index 5317cc24..beef9e28 100644
+--- i/Documentation/git-var.txt
++++ w/Documentation/git-var.txt
+@@ -43,13 +43,15 @@ GIT_EDITOR::
+     `$SOME_ENVIRONMENT_VARIABLE`, `"C:\Program Files\Vim\gvim.exe"
+     --nofork`.  The order of preference is the `$GIT_EDITOR`
+     environment variable, then `core.editor` configuration, then
+-    `$VISUAL`, then `$EDITOR`, and then finally 'vi'.
++    `$VISUAL`, then `$EDITOR`, and then the default chosen at compile
++    time, which is usually 'vi'.
+ 
+ GIT_PAGER::
+     Text viewer for use by git commands (e.g., 'less').  The value
+     is meant to be interpreted by the shell.  The order of preference
+     is the `$GIT_PAGER` environment variable, then `core.pager`
+-    configuration, then `$PAGER`, and then finally 'less'.
++    configuration, then `$PAGER`, and then the default chosen at
++    compile time (usually 'less').
+ 
+ Diagnostics
+ -----------
 -- 
-Employee of Qualcomm Innovation Center, Inc. which is a 
-member of Code Aurora Forum
