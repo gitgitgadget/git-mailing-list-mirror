@@ -1,116 +1,80 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Maintaining historical data in a git repo
-Date: Fri, 30 Mar 2012 09:32:51 -0700 (PDT)
-Message-ID: <m3boneaw27.fsf@localhost.localdomain>
-References: <CA+P+rLeyEcZPudhLWavB74CiDAqpn+iNkk4F8=NK_yGaJPMmyA@mail.gmail.com>
-	<201203301510.q2UFAqn6003864@no.baka.org>
-	<CA+P+rLcWT0SZQjW2LtFXXCDRwjMp8daJ2hVup=7cnsRGbKw7xw@mail.gmail.com>
-	<201203301618.q2UGIF3Q005388@no.baka.org>
+From: Dave Zarzycki <zarzycki@apple.com>
+Subject: Re: git-svn: cloning an SVN repo with sub-branches and sub-tags
+Date: Fri, 30 Mar 2012 09:20:11 -0700
+Message-ID: <A3CEE238-4A0F-4335-BC81-BB90885938BF@apple.com>
+References: <4F7467E1.3090004@pocock.com.au>
+ <92FA9CF9-7E8E-4DE6-8524-030A0AD33C9E@apple.com> <4F75A413.409@pocock.com.au>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Yuval Adam <yuv.adm@gmail.com>, git@vger.kernel.org
-To: Seth Robertson <in-gitvger@baka.org>
-X-From: git-owner@vger.kernel.org Fri Mar 30 18:32:58 2012
+Content-Type: text/plain; CHARSET=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+To: Daniel Pocock <daniel@pocock.com.au>
+X-From: git-owner@vger.kernel.org Fri Mar 30 18:40:57 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SDekz-0004eL-J2
-	for gcvg-git-2@plane.gmane.org; Fri, 30 Mar 2012 18:32:57 +0200
+	id 1SDesi-0002lU-Jx
+	for gcvg-git-2@plane.gmane.org; Fri, 30 Mar 2012 18:40:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756637Ab2C3Qcy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 Mar 2012 12:32:54 -0400
-Received: from mail-wi0-f172.google.com ([209.85.212.172]:51315 "EHLO
-	mail-wi0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754991Ab2C3Qcw (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Mar 2012 12:32:52 -0400
-Received: by wibhj6 with SMTP id hj6so775216wib.1
-        for <git@vger.kernel.org>; Fri, 30 Mar 2012 09:32:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        bh=kzeKUi7jHoeu5yGmCjwPwXyexVAvwEOUQuVQDUn0Ss8=;
-        b=mZy4o6jREBRA1wQtN/ULE1s5eViDbZXUanvGh+v1l/UXuiAHQ4DbWVpIJCdCsvdbtA
-         XP5vmWnFEQAXh6TuT8dGulRdzjb4uyRKOpb7WzpkuIVRftUb+IDap4p/6kJOqGPnmywl
-         NRnrYKh2EjpwXes+Y4CIQU+F7hlKpZ39xbts+WbyeaqDJPy8pdTfeflP4+Fqv1ZqfuTy
-         PMmgue1a3jM+S+EWI/JutPYRpivLM+NoBLiLW79PKOK2+QzCqT6nagS1U8hd1ATRoHqt
-         cxbS9Bqy6GwUCstRm4urjmAlKPbRhXLJzACnvbnNpc6u/JOICBADPqGt/iH9neWRy/CB
-         11qQ==
-Received: by 10.180.81.37 with SMTP id w5mr7962746wix.16.1333125171454;
-        Fri, 30 Mar 2012 09:32:51 -0700 (PDT)
-Received: from localhost.localdomain (addb154.neoplus.adsl.tpnet.pl. [79.184.53.154])
-        by mx.google.com with ESMTPS id o2sm12047991wiv.11.2012.03.30.09.32.50
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 30 Mar 2012 09:32:51 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id q2UGWojn023129;
-	Fri, 30 Mar 2012 18:32:50 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id q2UGWmId023126;
-	Fri, 30 Mar 2012 18:32:48 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <201203301618.q2UGIF3Q005388@no.baka.org>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1760262Ab2C3Qkw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 Mar 2012 12:40:52 -0400
+Received: from crispin.apple.com ([17.151.62.50]:44805 "EHLO
+	mail-out.apple.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757167Ab2C3Qku (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Mar 2012 12:40:50 -0400
+Received: from relay13.apple.com ([17.128.113.29])
+ by mail-out.apple.com (Oracle Communications Messaging Server 7u4-23.01
+ (7.0.4.23.0) 64bit (built Aug 10 2011))
+ with ESMTPS id <0M1P005L0HCU0MU0@mail-out.apple.com> for git@vger.kernel.org;
+ Fri, 30 Mar 2012 09:20:09 -0700 (PDT)
+X-AuditID: 1180711d-b7f026d0000072e1-eb-4f75dd393e1c
+Received: from koseret (koseret.apple.com [17.151.62.39])
+	(using TLS with cipher RC4-MD5 (RC4-MD5/128 bits))
+	(Client did not present a certificate)	by relay13.apple.com (Apple SCV relay)
+ with SMTP id 89.C0.29409.93DD57F4; Fri, 30 Mar 2012 09:20:09 -0700 (PDT)
+Received: from davez.apple.com (davez.apple.com [17.226.34.35])
+ by koseret.apple.com
+ (Oracle Communications Messaging Server 7u4-23.01(7.0.4.23.0) 64bit (built Aug
+ 10 2011)) with ESMTPSA id <0M1P00BV2HDK5600@koseret.apple.com> for
+ git@vger.kernel.org; Fri, 30 Mar 2012 09:20:09 -0700 (PDT)
+In-reply-to: <4F75A413.409@pocock.com.au>
+X-Mailer: Apple Mail (2.1447)
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrKLMWRmVeSWpSXmKPExsUiON1OXdfybqm/waMJfBZdV7qZHBg9Pm+S
+	C2CM4rJJSc3JLEst0rdL4Mo4fmweS8FT9orjDVdZGxjXsXUxcnJICJhIfHv4nRXCFpO4cG89
+	UJyLQ0igk0niw7ojjBDOSiaJ94cXMYNUMQvoSPR+/wZm8wroSRy83g/WLSzgIdH8dQ5YnE1A
+	Q+LTqbtgNqeApsTSrmNgNSwCqhJTZk1hg5gjLrFu7nl2CFtb4sm7C6wQM20kVr9tAesVEqiR
+	eP3iFiOILQI088/NLUxdjBxAl8pKPDhVNYFRYBaSi2YhuWgWkqkLGJlXMQoWpeYkVhoa6yUW
+	FOSk6iXn525iBAVeQ6HsDsb9P/kPMQpwMCrx8CqdL/UXYk0sK67MPcQowcGsJMLbvbrEX4g3
+	JbGyKrUoP76oNCe1+BCjNAeLkjhv52eglEB6YklqdmpqQWoRTJaJg1OqgdG3c4a+86MqlsOb
+	rlmsWLf00Z2yIzJd4Q9bXp/0E41/4uzgwpYyo1t+0qJE0+8Zt0NvsbuUvclQ5bKdfPdwWhun
+	0fk1a38xebRy6B1bPHnK4qxtyXWPNgjNiLTk11917fcLGSX7hXLCn67dWB7bxHL137Ofs95+
+	PO661MTMl2UnX8lRLa39p74osRRnJBpqMRcVJwIA6FErPDgCAAA=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194378>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194379>
 
-Seth Robertson <in-gitvger@baka.org> writes:
 
-> In message <CA+P+rLcWT0SZQjW2LtFXXCDRwjMp8daJ2hVup=7cnsRGbKw7xw@mail.gmail.com>, Yuval Adam writes:
+On Mar 30, 2012, at 5:16 AM, Daniel Pocock <daniel@pocock.com.au> wrote:
+
+> On 29/03/2012 15:40, Dave Zarzycki wrote:
+>> You can make this work, but it is very fragile, doesn't scale well, and it only works on recent versions of git. For example, from the LLVM clang project:
 > 
->     On Fri, Mar 30, 2012 at 6:10 PM, Seth Robertson <in-gitvger@baka.org> wrote:
->     > Revision control shouldn't be used to change the past (even if git
->     > allows this with sufficient amounts of pain/warning to all users).
->     > What it is extremely good at is preserving the past and tracking the
->     > changes that are made.
+> ...
 > 
->     This is exactly what we _do_ want to do.
+>> branches = cfe/branches/Apple/*:refs/remotes/svn/misc/Apple/*
+>> branches = cfe/branches/Apple/Necropolis/*:refs/remotes/svn/misc/AppleNecropolis/*
 > 
->     Is this something that is definitively complicated with git?
 > 
-> Ah, I understand now.  I imagine others will chime in as well, but
-> this should not be too complex with git.  You can easily go back into
-> history and change it.  The problem comes in when you have shared your
-> repository with other people.
-> 
-> In general, rewriting public history is a bad idea because git cannot
-> tell the difference between someone adding to history for good reasons
-> (expanding on known history) and bad reasons (retroactively rewriting
-> the law to add a loophole).
-> 
-> You can absolutely do it, 
+> In the first line, (Apple/*), can it accidentally think that Necropolis is a branch, when it actually appears to be a directory containing branches?
 
-For example using `git filter-branch`, or grafts mechanism plus said
-git-filter-branch, or interactive rebase for changes closer to current
-version, or `git commit --amend` for latest version (latest commit).
+Correct.
 
->                           but then you have to "force push" your
-> changes to the master server to override the history (assuming that is
-> allowed, and it typically is not by default) and then everyone else
-> would have to do special things (`git pull --rebase` in the simple
-> case, rebuilding branches and tags in more complex cases) to get the
-> new history.  Clearly for something like the law and the probable
-> complex workflow it will have, this isn't a good method.
+> Or does it consider all the lines in the file together?
 
-Well, if nobody is basing their work on this repository, and it is
-meant as read-only source of information, that doesn't matter much.
+It does not. That is why the "ignore-refs" setting is necessary. The "ignore-refs" setting tells git that "Necropolis" etc are not valid branches (because they are SVN subdirectories). The "ignore-refs" setting is useful for working around other SVN user errors too.
 
-> 
-> What I would probably suggest is having either a historical branch or
-> a historical repository which is allowed and expected to be rewritten.
-[...]
-
-Yet another solution would be to fix mistakes using `git replace`
-mechanism.  It doesn't as much rewrite history, as paste on fixes;
-this of course requires setting up sharing of those replacements
-(fixes).
-
-See git-replace(1) manpage for more information.
-
--- 
-Jakub Narebski
+davez
