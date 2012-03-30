@@ -1,68 +1,80 @@
-From: Yuval Adam <yuv.adm@gmail.com>
-Subject: Maintaining historical data in a git repo
-Date: Fri, 30 Mar 2012 16:34:08 +0300
-Message-ID: <CA+P+rLeyEcZPudhLWavB74CiDAqpn+iNkk4F8=NK_yGaJPMmyA@mail.gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH v2 4/8] gitweb: Use print_diff_chunk() for both side-by-side and inline diffs
+Date: Fri, 30 Mar 2012 14:34:34 +0100
+Message-ID: <201203301534.35484.jnareb@gmail.com>
+References: <1332543417-19664-1-git-send-email-michal.kiedrowicz@gmail.com> <201203281756.42653.jnareb@gmail.com> <20120329193152.3d0f27e2@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Mar 30 15:34:38 2012
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
+To: =?utf-8?q?Micha=C5=82_Kiedrowicz?= <michal.kiedrowicz@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Mar 30 15:34:51 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SDbyM-000645-4Z
-	for gcvg-git-2@plane.gmane.org; Fri, 30 Mar 2012 15:34:34 +0200
+	id 1SDbyV-0006G6-Oo
+	for gcvg-git-2@plane.gmane.org; Fri, 30 Mar 2012 15:34:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933035Ab2C3Nea (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 Mar 2012 09:34:30 -0400
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:34217 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932511Ab2C3Ne3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Mar 2012 09:34:29 -0400
-Received: by iagz16 with SMTP id z16so992021iag.19
-        for <git@vger.kernel.org>; Fri, 30 Mar 2012 06:34:28 -0700 (PDT)
+	id S933528Ab2C3Nek convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 30 Mar 2012 09:34:40 -0400
+Received: from mail-wg0-f44.google.com ([74.125.82.44]:60477 "EHLO
+	mail-wg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932511Ab2C3Nei (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Mar 2012 09:34:38 -0400
+Received: by wgbdr13 with SMTP id dr13so608697wgb.1
+        for <git@vger.kernel.org>; Fri, 30 Mar 2012 06:34:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to:content-type;
-        bh=9HtNBWhk/mWu3d0tFU27Gl+ztQhdUhHmSCN+j8H4Gt8=;
-        b=KxrOPac0oNIgDNRR7U9FsH72FZBpmUaHGQ9G8GZwfHRWKpSVV3NTvKiQ0dl3ozauHM
-         CRE7KiXxgY59eJ1II0DMOWtkufmvn06cJ+Li3v7mYSqarUrIQCsqys3viL8LZ4O869/W
-         cEuTWKWqQJ34rNmZsZE0gvNB+aptttBRwTAd/yl20qN37ijUaXMZQWQpmTfcmFPKi8gZ
-         PKaWYYv03rJq5GTd4nuSLDRmmUSIt1bl4+WlJBFOBa7hOnWk0It0V+TpGHs2FPv7mAvf
-         NqYaL9tH35XdtnIGpZqdyYDXJr+LXIrFwMNUVSbvgmwjCivyWY8q4ugQnpSKgvpAQ6Qa
-         YFZw==
-Received: by 10.50.194.232 with SMTP id hz8mr1369852igc.38.1333114468875; Fri,
- 30 Mar 2012 06:34:28 -0700 (PDT)
-Received: by 10.42.137.66 with HTTP; Fri, 30 Mar 2012 06:34:08 -0700 (PDT)
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        bh=sZB3K+EnzuIjWhBUZ0lMOMV6wmmJMs8gU3V8rd0cZU4=;
+        b=hLvcAhsF6GV1nlXCn1MoYdGE6tUtwWFS+vreqIkxb6zdELRXjAh3T68VgeHol/H4I+
+         3baAQgyzhoNNcZZkYLe19m/0g2JhBZqCITim1jskWDUZOlkE5TCklD0F+Mz5rNCMq8S4
+         ctPtzush2eUt1/t9GAk8ZXa5fgBBfNkIvGm9mL6Gkfq+fp5bYZ+vBsCfxJx6mm5u5kR8
+         8WodCIPfmXPKMIHu/21q/ZmE7DqCkjUwx2bGqCcDLH/ZyRL5YPY1Fko//PoivBSy+Ucp
+         VA2zObYtJkQ9PMerZzcIYAai836MjdFj8vzLvFrXmx/5+RTc8+/K/5Z1WsplkPFPs9f/
+         cLcg==
+Received: by 10.180.107.132 with SMTP id hc4mr6453530wib.21.1333114477134;
+        Fri, 30 Mar 2012 06:34:37 -0700 (PDT)
+Received: from [192.168.1.13] (aeh224.neoplus.adsl.tpnet.pl. [83.25.111.224])
+        by mx.google.com with ESMTPS id 6sm6427666wiz.1.2012.03.30.06.34.35
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 30 Mar 2012 06:34:36 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <20120329193152.3d0f27e2@gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194358>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194359>
 
-As part of a public project to open-source the Israeli law code, we
-are looking into ways of represent such data in a git repository.
+On Thu, 29 Mar 2012, Micha=C5=82 Kiedrowicz wrote:
+> Jakub Narebski <jnareb@gmail.com> wrote:
 
-The main challenge is to represent historical data _in a semantically
-correct way_ within a git repository, while having the ability to
-change data that has occurred in the past.
-For example, we might have revisions B and C of a certain legal
-document, commit to repo, and at a later time want to add revision A
-to the proper place in the git commit tree (probably with rebasing or
-replacing).
-Allowing decentralization and updates is a major requirement.
+> > BTW. I was wondering about binary files, but this commit wouldn't m=
+ake
+> > it worse anyway as we parse diff output assuming unified-like diff =
+for
+> > diff syntax highlighting... and binary diffs are shown as
+> >=20
+> >   "Binary files a/foo.png and b/foo.png differ"
+> >=20
+> > in extended diff header.
+>=20
+> Yeah, this is what I wrote in the cover letter:
+>=20
+> 	* Ensured that binary patches are not supported in HTML format,
+> 	  thus this series canot break it :) (answering Jakub's questions)
+>=20
+> but maybe I wasn't clear enough.
 
-We're trying to map out the various pros and cons of the different
-options of maintaining such a repo.
-Has anyone ever attempted something like this?
-Are there any projects that build on the git plumbing which provide
-wrapper APIs to handle historic data?
+Eh, sorry, this was more of reminder to myself, rather than questioning
+you if you really checked that.  Sorry for that.=20
 
-We really could use any reference or advice we can get on this subject.
-
-Thanks,
-
---
-Yuval Adam
-http://y3xz.com
+--=20
+Jakub Narebski
+Poland
