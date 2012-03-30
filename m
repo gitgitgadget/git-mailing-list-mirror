@@ -1,115 +1,93 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Is the "text" attribute meant *only* to specify end-of-line
- normalization behavior, or does it have broader implications?
-Date: Fri, 30 Mar 2012 17:30:56 -0400
-Message-ID: <20120330213055.GC20734@sigill.intra.peff.net>
-References: <CANSc5vG0o_eAn7X39XhCzUoN4ab52pGCP+PvzOQCyTV31R8LGg@mail.gmail.com>
- <4F7555BC.1000804@viscovery.net>
- <20120330072546.GC30656@sigill.intra.peff.net>
- <CANSc5vGaodyv4H5qp2ZkjY7q6ot7_JG0jdvNDFRBFW1+p7v4sw@mail.gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [GSOC][HELP] Incremental blame in gitweb.
+Date: Fri, 30 Mar 2012 22:33:48 +0100
+Message-ID: <201203302333.48770.jnareb@gmail.com>
+References: <CAH-tXsDHJ98LLcHVs5U-OYS1maKoM+sDn6hw5HeD6c6wZ8mBHQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org
-To: Chris Harris <ryguasu@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Mar 30 23:31:16 2012
+Content-Type: text/plain;
+  charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: jaseem abid <jaseemabid@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Mar 30 23:34:01 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SDjPd-00019O-99
-	for gcvg-git-2@plane.gmane.org; Fri, 30 Mar 2012 23:31:13 +0200
+	id 1SDjSK-0003Py-67
+	for gcvg-git-2@plane.gmane.org; Fri, 30 Mar 2012 23:34:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S936113Ab2C3VbG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 Mar 2012 17:31:06 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:41432
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S936109Ab2C3Va6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Mar 2012 17:30:58 -0400
-Received: (qmail 20710 invoked by uid 107); 30 Mar 2012 21:30:58 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 30 Mar 2012 17:30:58 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 30 Mar 2012 17:30:56 -0400
+	id S966378Ab2C3Vdx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 Mar 2012 17:33:53 -0400
+Received: from mail-wi0-f172.google.com ([209.85.212.172]:45801 "EHLO
+	mail-wi0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S966155Ab2C3Vdt (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Mar 2012 17:33:49 -0400
+Received: by wibhj6 with SMTP id hj6so969516wib.1
+        for <git@vger.kernel.org>; Fri, 30 Mar 2012 14:33:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        bh=TtMxxBngRlUKS0Zx+Vv9hzPLot/KKhX2ew1pI68/nVY=;
+        b=GG7lGHbJoMHwXu/Uwd/4KdQ13oXsVe5pyugSdZYz5ITtJtGOklIFuohwqNKstDz0Eu
+         w4mrrSjxr10F4n+g4FdFPTgH3Sd+1YRUR0As/O+c8m3hptXfqJdq64pjSh/SSG2O05tz
+         PFL5Jekr2ZgmIh1l6QNC+GOxUYU9S8y5hVjH9c2Ugp0pCpC2W4cfrPNEwFOUCaZi+R9+
+         TwotIvezHQ5LVJj05kUewIrGVMW/NKAMt3xh3sFQj4/JpxWqsJ1j8Boh3WYesWPXbfcW
+         CSHJfzRXViyox9rNt76kREPtH+dSdkivfmoZTifdAWzgHXmAnsD/eOHHpkcuWHQlpjUY
+         mIIQ==
+Received: by 10.180.81.166 with SMTP id b6mr813642wiy.0.1333143228141;
+        Fri, 30 Mar 2012 14:33:48 -0700 (PDT)
+Received: from [192.168.1.13] (addb154.neoplus.adsl.tpnet.pl. [79.184.53.154])
+        by mx.google.com with ESMTPS id fz9sm9742587wib.3.2012.03.30.14.33.47
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 30 Mar 2012 14:33:47 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <CAH-tXsDHJ98LLcHVs5U-OYS1maKoM+sDn6hw5HeD6c6wZ8mBHQ@mail.gmail.com>
 Content-Disposition: inline
-In-Reply-To: <CANSc5vGaodyv4H5qp2ZkjY7q6ot7_JG0jdvNDFRBFW1+p7v4sw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194411>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194412>
 
-On Fri, Mar 30, 2012 at 10:49:42AM -0700, Chris Harris wrote:
+On Fri, 30 Mar 2012, jaseem abid wrote:
 
-> > However, I find the behavior of "Git Extensions" to be questionable. I
-> > can see the rationale for thinking that "-text" means more than just
-> > handling line-endings, but I think "-diff" is probably a better choice
-> > for seeing if something is binary (or even checking the "binary" macro).
-> > Those are what git uses itself.
-> [...]
-> A related point of confusion: I've noticed that, if you start with a
-> question along the lines of "how can I explicitly tell git that a file
-> is binary", then the web currently gives a slightly confusing array of
-> answers. For example:
-> * The Pro Git Book (http://progit.org/book/ch7-2.html) tells you to
-> use either "binary" or "-crlf -diff"
+> I was learning from the gitweb source code and I am a bit stuck at a
+> particular point.
+> What does incremental blame do in gitweb? I tried to get some
+> information from the documentation.
+> I was expecting it to be used for pagination of huge git-blame output
+> or something similar. Doc says it can be used for similar purposes
+> I notice code written in JavaScript for AJAX calls etc, but i cant
+> find a place where it is being used. Can somebody give me a link to
+> one in k.org or somewhere for a demo? I tried to find some AJAX calls
+> in the web console but cant trace any. I'm a bit confused here.
+> 
+> Any help will be very much appreciated.
 
-I think setting "binary" is the most sane thing. Ultimately, I think
-what it comes down to is this: git provides a bunch of per-operation
-attributes for treating a file as binary for a particular operation. It
-also provides a "binary" macro to conveniently cover all of the
-operations.
+The 'incremental_blame' view should produce the same output as ordinary
+'blame' view, but in different way (using JavaScript and Ajax, and
+"git blame --incremental").
 
-Git Extensions cares about binary-ness for a _new_ operation, which is
-showing the file at all (that is what I got from your original email, at
-least; I have never used Git Extensions myself). The equivalent in git
-would be perhaps for "git show HEAD:file" to either print a text file,
-or to say "This is a binary file". But since git itself does not care
-about binary-ness for that operation (we just always show the file), we
-have not defined an operation-specific attribute.
+With the ordinary 'blame' view we have to wait for the blame data to be
+generated in full for the whole file (on server) before we get the view.
+This can take quite a while (and that is why 'blame' feature is disabled
+by default).
 
-So what is something like Git Extensions to do? It can introduce a new
-attribute, but of course nobody is likely to be using it. It can depend
-on "binary", except that some people will manually spell out "-crlf
--diff" instead of saying "binary". Or it can piggy-back on "-text" or
-"-diff", which can be subtly wrong in cases where the file is not
-binary, but you want to disable those operations (i.e., your case).
+The Ajax-y 'incremental_blame' view gets the contents of the file from
+"git cat-file blob <blob-id>" and shows it to web browser, then adds
+blame view incrementally, from the most recent blame to most ancient,
+calling "git blame --incremental" and getting its response via XHR,
+and repainting contents of file with blame data.
 
-Of those, just checking "binary" seems like the least wrong thing to me.
 
-> * "man gitattributes" has helpful info, but it's scattered across
-> different sections. In the section "Marking files as binary", it says
-> "The simplest way to mark a file as binary is to unset the diff
-> attribute in the .gitattributes file".
+You can run gitweb by yourself, for example using git-instaweb script
+(I think it enables all features by default).
 
-Note that "Marking files as binary" is actually a subsection in
-"Generating diff text". We could probably do a better job of mentioning
-the "binary" macro there, though.
-
-> (Note: This implies that there > are other ways you might also want to
-> consider.)
-
-Yes. You can also use a custom diff driver (e.g., "diff=foo"), and then
-tell the diff driver that the file should be considered binary (by
-setting diff.foo.binary in your config).
-
-> Under "Performing a three-way merge" you also learn that "-merge" is
-> "suitable for binary files that do not have a well-defined merge
-> semantics".
-
-Arguably the "binary" macro should imply "-merge". And like -diff, we
-the documentation should probably reference the section on the "binary"
-macro.
-
-> You learn about the "binary" attribute only under the section
-> "Defining Macro Attributes", which says that it means "-text -diff",
-> but not in what cases you might want to use it. The section describing
-> "text"/"-text" does not contain the word "binary" at all, so you have
-> to infer whether it's a helpful setting for binary files.
-
-I think it is the case that binary files should imply "-text", but
-"-text" does not necessarily imply binary files. But like the other
-spots, it should probably say "hey, if you are dealing with a binary
-file, you might want to just set the binary attribute macro".
-
--Peff
+HTH
+-- 
+Jakub Narebski
+Poland
