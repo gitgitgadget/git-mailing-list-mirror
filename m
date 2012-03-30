@@ -1,78 +1,103 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: What's cooking in git.git (Mar 2012, #10; Wed, 28)
-Date: Fri, 30 Mar 2012 08:56:51 -0700
-Message-ID: <7v4nt6nku4.fsf@alter.siamese.dyndns.org>
-References: <7vsjgss6ua.fsf@alter.siamese.dyndns.org>
- <m3fwcrarwo.fsf@localhost.localdomain>
- <7vobreq2zp.fsf@alter.siamese.dyndns.org>
- <201203301313.01432.jnareb@gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH v8 3/3] gitweb: add If-Modified-Since handling to git_snapshot().
+Date: Fri, 30 Mar 2012 17:07:54 +0100
+Message-ID: <201203301807.55284.jnareb@gmail.com>
+References: <201203282328.08876.jnareb@gmail.com>  <bfbde5354e25dfbf535307a72016a6b5ac3a2c56.1333024238.git.wking@drexel.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org,
-	=?utf-8?Q?Micha=C5=82?= Kiedrowicz <michal.kiedrowicz@gmail.com>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Mar 30 17:57:03 2012
+Content-Type: text/plain;
+  charset="iso-8859-2"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: "W. Trevor King" <wking@drexel.edu>
+X-From: git-owner@vger.kernel.org Fri Mar 30 18:08:16 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SDeCC-0002Vg-6P
-	for gcvg-git-2@plane.gmane.org; Fri, 30 Mar 2012 17:57:00 +0200
+	id 1SDeN2-00055S-64
+	for gcvg-git-2@plane.gmane.org; Fri, 30 Mar 2012 18:08:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934136Ab2C3P44 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 Mar 2012 11:56:56 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:40598 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753347Ab2C3P4y (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Mar 2012 11:56:54 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 678567DF5;
-	Fri, 30 Mar 2012 11:56:53 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=050AO6VMlJ/K+u6z3VNQYykF8mE=; b=Swx6qQ
-	7Btet8PYYUGgEXtUv8o5+38x+TS0Ms8NF4HBqVNm8VOSFw8a2WwtMFaLTTOrXlHW
-	vzH2Z7QZJv5H5uRu3TWUmWkvdsN9lhLf7kXwXTWNgNLO3QjYjBA7be12dVhSxGWU
-	1YVXdV/H/iviYP20sSBmUiKW1LpL2zzc96to4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=M3//Z7foGs3fJQPIIeIwkjUelnXjG3ZD
-	iHCDHcJMaHENFU1XeBHTehmoHprh6+OZh23zEgwQaZu6mw3OHjZI8b5cM6+49eEY
-	xnhHeIe74TkjiSNOy2ZIHCzw2Y3zjoUGRq7zDpvgGQFkfUcJtAuhxjhuQWoIUbe/
-	E99N9RXhMlc=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5D3807DF4;
-	Fri, 30 Mar 2012 11:56:53 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id CE0487DF3; Fri, 30 Mar 2012
- 11:56:52 -0400 (EDT)
-In-Reply-To: <201203301313.01432.jnareb@gmail.com> (Jakub Narebski's message
- of "Fri, 30 Mar 2012 12:13:00 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: F7BC8AF6-7A80-11E1-A449-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753846Ab2C3QH7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 Mar 2012 12:07:59 -0400
+Received: from mail-wg0-f44.google.com ([74.125.82.44]:60199 "EHLO
+	mail-wg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751832Ab2C3QH5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Mar 2012 12:07:57 -0400
+Received: by wgbdr13 with SMTP id dr13so741982wgb.1
+        for <git@vger.kernel.org>; Fri, 30 Mar 2012 09:07:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        bh=9NHsLrOxEiVmT6Mly2WQGx7d1q/zqEGFj/lVJFDWw20=;
+        b=AJedpRYGJigSTlP0GWdycX9FrYA5vmKNusgcqTAtkJvQ0WDagQOSH1oSyJ8zkx5444
+         3HT4Uvgm7osh+yV4yK7xLgW8ZBDTtBZy7BIc3orMDk5h95hKkOwuXZaDsKdQYYsDfiq1
+         mu/2Qlbnk/xFRdUkEfmKjHpFt+U/unEe76SLDvC35YnJHlckDfSaCWcoYgmtRgHBEkmY
+         HKyKxH/7upIp6oLP8knR4hMaGxTOJdyOBQSMIlZRDIfki61Bby7tSjEYXUgWvFi6ejHu
+         LgA3h4boYcAAlEsASzHFO85Agv6YpJQfQhcUvF9KVbNLgYjPh9HT3sIa8LJFYWxx7cpE
+         sCOA==
+Received: by 10.180.102.101 with SMTP id fn5mr7850280wib.6.1333123676271;
+        Fri, 30 Mar 2012 09:07:56 -0700 (PDT)
+Received: from [192.168.1.13] (addb154.neoplus.adsl.tpnet.pl. [79.184.53.154])
+        by mx.google.com with ESMTPS id o2sm11796916wiv.11.2012.03.30.09.07.55
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 30 Mar 2012 09:07:55 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <bfbde5354e25dfbf535307a72016a6b5ac3a2c56.1333024238.git.wking@drexel.edu>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194369>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194370>
 
-Jakub Narebski <jnareb@gmail.com> writes:
+On Thu, 29 Mar 2012, W. Trevor King wrote:
 
->> I was waiting for the review cycle to come to a resolution.
+> Because snapshots can be large, you can save some bandwidth by
+> supporting caching via If-Modified-Since.  This patch adds support for
+> the i-m-s request to git_snapshot() if the request is a commit.
 >
-> Ah, so you were waiting for review before even considering this
-> series even for 'pu'...
+Perhaps it is worth clarifying that "caching" here means external HTTP
+caching, either by web browser, or by web accelerator / reverse proxy.
+Supporting Last-Modified and If-Modified-Since helps that[1][2].
 
-It was more like "Putting a version from a random day I happened to pick
-the series up and queue them in 'pu' and leaving it there while if it is
-still daily being churned would not make any sense, because, I wouldn't be
-able to keep up with it anyway; it is not my area."
+[1]: http://www.mnot.net/cache_docs/#VALIDATE
+[2]: http://www.mnot.net/cache_docs/#SCRIPT
 
-> I think this series is in quite good shape, and I expect in next revision
-> or two might be even ready for 'next'.  One more serious issue that I'd
-> like to see solved is requiring untabify() run before format_diff*() vs
-> having format_diff*() do it itself which is more future-proof I think.
+> Requests for snapshots of trees, which lack well defined timestamps,
+> are still handled as they were before.
 
-Thanks for reviewing and helping the topic move forward.
+"still handled as they were before" means "do not support l-m / i-m-s",
+isn't it?  Wouldn't it be better to write it explicitely?
+> 
+> Signed-off-by: W Trevor King <wking@drexel.edu>
+
+Anyway, I like those changes:
+
+  Acked-by: Jakub Narebski <jnareb@gmail.com>
+
+[...]
+> +test_expect_success 'modification: tree snapshot' '
+> +	ID=`git rev-parse --verify HEAD^{tree}` &&
+> +	export HTTP_IF_MODIFIED_SINCE="Wed, 6 Apr 2005 22:14:13 +0000" &&
+> +	test_when_finished "unset HTTP_IF_MODIFIED_SINCE" &&
+> +	gitweb_run "p=.git;a=snapshot;h=$ID;sf=tgz" &&
+> +	grep "Status: 200 OK" gitweb.headers &&
+> +	! grep -i "last-modified" gitweb.headers
+
+If we ignore case, we can write
+
+  +	! grep -i "Last-Modified:" gitweb.headers
+
+which is IMVVVHO slightly more readable.
+
+Not that it matters much.  Just nitpicking.
+
+> +'
+> +test_debug 'cat gitweb.headers'
+
+-- 
+Jakub Narebski
+Poland
