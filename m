@@ -1,75 +1,107 @@
-From: Kevin <compufreak@gmail.com>
-Subject: Re: hi,
-Date: Sat, 31 Mar 2012 08:04:02 +0200
-Message-ID: <20120331060402.GA4140@ikke-laptop.lokaal>
-References: <20120329170349.Horde.RdBMRSoH6vhPdIflPy3mByA@correio.portugalmail.pt>
- <CACeyogdBUoK-34Rxm_fzbw5OV75u8CiBSfzU=z5UUzv_RBvRQw@mail.gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Purging old history
+Date: Sat, 31 Mar 2012 01:25:27 -0700 (PDT)
+Message-ID: <m37gy1b2j0.fsf@localhost.localdomain>
+References: <17650-1333167969-40275@sneakemail.com>
+	<CALkWK0=mcQR3CBMpa5P1f+JwqNMqUs3D4=tVPx4c_4R+TXCKbw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=iso-8859-15
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: chaitanyaa nalla <nallachaitu@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Mar 31 08:04:31 2012
+Cc: "John M. Dlugosz" <ngnr63q02@sneakemail.com>, git@vger.kernel.org
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Mar 31 10:26:13 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SDrQK-00066U-NM
-	for gcvg-git-2@plane.gmane.org; Sat, 31 Mar 2012 08:04:29 +0200
+	id 1SDtdU-0007RF-DH
+	for gcvg-git-2@plane.gmane.org; Sat, 31 Mar 2012 10:26:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752065Ab2CaGEH convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 31 Mar 2012 02:04:07 -0400
-Received: from mail-wi0-f178.google.com ([209.85.212.178]:65439 "EHLO
-	mail-wi0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752477Ab2CaGEF (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 31 Mar 2012 02:04:05 -0400
-Received: by wibhq7 with SMTP id hq7so1162890wib.1
-        for <git@vger.kernel.org>; Fri, 30 Mar 2012 23:04:04 -0700 (PDT)
+	id S1754436Ab2CaIZd convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 31 Mar 2012 04:25:33 -0400
+Received: from mail-wg0-f42.google.com ([74.125.82.42]:50889 "EHLO
+	mail-wg0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752805Ab2CaIZa convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 31 Mar 2012 04:25:30 -0400
+Received: by wgbds11 with SMTP id ds11so1226343wgb.1
+        for <git@vger.kernel.org>; Sat, 31 Mar 2012 01:25:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=om7ZIby9z9GMAH+ddMNJxrY2FBnwgfg83UKJsNtk/nM=;
-        b=jElMnvJ+U+NU1UYCPKQasdw4h9gfIatDPKlUa3g4bX1EtiqWA9LJ1YAUMtFaYwSVog
-         FE3I5FQncpZDP3G91m7tfh27VPdMZJccWjZX2qjjHKphwojEizJFNMBxJ+l/+qKYniZr
-         UC9pUxcQ/OL8mub6yanSH4cd6ifg6i8vdU9IsQN29LwU+vZNKRJ1LHvXkShdzZKCqSp2
-         nDJ/8UP6+5HUzUQIWiv1VFrXiaCvx04G0XQRuuGOgOkrCisCDU0G+jJ21/6f32sfYY8S
-         mzR8LjpLJoDlAmUZdcpvRviOef/AF24eH4zak4Evu5zplcjz9SP5HWzwbnLvVHXWe333
-         Bfsg==
-Received: by 10.180.104.137 with SMTP id ge9mr3456585wib.20.1333173844063;
-        Fri, 30 Mar 2012 23:04:04 -0700 (PDT)
-Received: from localhost (82-169-71-110.ip.telfort.nl. [82.169.71.110])
-        by mx.google.com with ESMTPS id l5sm12704171wia.11.2012.03.30.23.04.02
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type
+         :content-transfer-encoding;
+        bh=SRwQOfBqodcV5l+bAwawhF3d9D60toweeufmR7geTzc=;
+        b=uC0UFza+gyik5zkVFIYLOvoPSiJEuiEqw93ubFnKrEU8zpOhhFOw0X+8L7corRDQei
+         OAZkYVa5mLHeEFM1i62VtO9diXklpf+djDpORdwU9Ro9peBgxYWu/WWHjnUy5DOHWj8l
+         onrnXBqRIvioyKrzXg6euk2tSidQrU7spJsrPnpgx0P9s3zQyMKq+oGencE9/hyDwFuV
+         q6OKXXJy1Uo1okmVl49SNLWIFengQe8KnJ+2w6/B747BVbtNxPRnFW+lXDfAyU1tqb3Y
+         lA5f6K1p0T5FtrK0f79FFqJpuwORijgZ7Dy1ENUzxpfYUR8FfAQeGfDvrUp322Ju6Uqj
+         EmxQ==
+Received: by 10.180.96.228 with SMTP id dv4mr5046252wib.14.1333182328481;
+        Sat, 31 Mar 2012 01:25:28 -0700 (PDT)
+Received: from localhost.localdomain (addb154.neoplus.adsl.tpnet.pl. [79.184.53.154])
+        by mx.google.com with ESMTPS id e6sm13730357wix.8.2012.03.31.01.25.27
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 30 Mar 2012 23:04:03 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <CACeyogdBUoK-34Rxm_fzbw5OV75u8CiBSfzU=z5UUzv_RBvRQw@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        Sat, 31 Mar 2012 01:25:27 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id q2V8PP0u000953;
+	Sat, 31 Mar 2012 10:25:25 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id q2V8POEK000950;
+	Sat, 31 Mar 2012 10:25:24 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <CALkWK0=mcQR3CBMpa5P1f+JwqNMqUs3D4=tVPx4c_4R+TXCKbw@mail.gmail.com>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194436>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194437>
 
-On Thu, Mar 29, 2012 at 10:36:37PM +0530, chaitanyaa nalla wrote:
-> This is not the place for posting this kind of trash.The dedicated Gi=
-t
-> community mailing lists are intended for discussing useful things.
+Ramkumar Ramachandra <artagnon@gmail.com> writes:
+> John M. Dlugosz wrote:
+
+> > Is there a simple way to delete old commits, say beyond a certain a=
+ge,
+> > before putting it on the server? =A0The ancient stuff is not releva=
+nt and
+> > there are a lot of binaries. =A0Some users may have trouble with an=
+ extensive
+> > download when syncing the first time.
+
+It seems that you have XY problem.
+
+One solution to extensive initial download is to create a git-bundle
+of all commits up to e.g. some tag, and host it using HTTP, FTP
+(which are resumable), or even P2P like BitTorrent.
+=20
+Another solution would be to educate users to use shallow clones,
+i.e. use "--depth" option to git-clone... and help git developers make
+shallow clones better (there are some unncessary limitations in using
+shallow clones).
+
+> Yes, although your terminology is wrong: it's not about "deleting"
+> commits; simply create a fresh root commit and rebase your work on to=
+p
+> of it.  As an example, let's say you want to squash history from the
+> 67afe1 (the old root) to 7ef42b on the master branch:
 >=20
-> On Thu, Mar 29, 2012 at 9:33 PM, Gift Give <g24_2012@yahoo.com> wrote=
-:
-> >
-> > --
-> > Dear,
-> > =A0I am so delighted to contact you and i appreciate the opportunit=
-y to write
-> > you this email,i will be please if you will reply my mail for me to=
- send to
-> > you my picture and discuss my emotional feelings with you in privat=
-e.Thanks.
-> > Gift
-> >
+> $ git checkout -b newroot 7ef42b
+> $ git reset 67afe1
+> $ git add .
+> $ git commit --amend
+> $ git checkout master
+> $ git rebase --onto newroot 7ef42b
 
-Most of the time this is automated spam and it does not help to reply
+A simpler solution, one that would work also in presence of merges, is
+to use grafts mechanism (see gitrepository-layout(5)) to cauterize
+history, check using git-log or gitk that shortened history is
+correct, make grafts permanent altering history with
+git-filter-branch, and finally removing grafts.
+
+P.S. Please read first all the warnings about rewriting history, and
+about all its disadvantages for downstream.
+
+--=20
+Jakub Narebski
