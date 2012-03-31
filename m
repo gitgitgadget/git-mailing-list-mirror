@@ -1,75 +1,61 @@
-From: Jon Seymour <jon.seymour@gmail.com>
-Subject: Re: rebase -p loses amended changes
-Date: Sat, 31 Mar 2012 20:39:05 +1100
-Message-ID: <CAH3AnrpasFU2bLEZsAXRQu4U+=R_YyW+-yRXDfzy2JQpqf9dNw@mail.gmail.com>
-References: <592E2EEC-6CBA-48D6-8D44-34A971DD78EC@gmail.com>
-	<CAH3Anrqorf481jw6GdHqOPg9WC0rD-OraOHZ7twWRF4+oJ9X4A@mail.gmail.com>
-	<87fwcpun95.fsf@thomas.inf.ethz.ch>
+From: Andrew Sayers <andrew-git@pileofstuff.org>
+Subject: Re: Importing a subversion repository where some branches come from
+ trunk subtrees
+Date: Sat, 31 Mar 2012 11:07:37 +0100
+Message-ID: <4F76D769.7040301@pileofstuff.org>
+References: <CABaB1pJNs1FL6=CbJ97pq7O=jKK=G_4t-vsx-2c4vHXsuzr40g@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>, jrobertray@gmail.com
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Sat Mar 31 11:39:14 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "frnchfrgg.jr" <frnchfrgg.jr@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Mar 31 12:08:22 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SDum9-0004eh-HX
-	for gcvg-git-2@plane.gmane.org; Sat, 31 Mar 2012 11:39:13 +0200
+	id 1SDvEJ-0003Xm-Oo
+	for gcvg-git-2@plane.gmane.org; Sat, 31 Mar 2012 12:08:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755705Ab2CaJjI convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 31 Mar 2012 05:39:08 -0400
-Received: from mail-bk0-f46.google.com ([209.85.214.46]:50042 "EHLO
-	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755531Ab2CaJjG convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 31 Mar 2012 05:39:06 -0400
-Received: by bkcik5 with SMTP id ik5so1254769bkc.19
-        for <git@vger.kernel.org>; Sat, 31 Mar 2012 02:39:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=W/YtbaQS3be/zOT0GHJzEo8MclBS7RTyMkPDvpgjruc=;
-        b=EuU7I1r38w/5zxTOVoQLcc9J2ZmwGKTdwFhkjoHVq2zomz9fDjsaf8UPpb/NyDKTrC
-         aHx2SOWnSeiQZBF1rbHhjfdZ6Aw+zt1D1GRssppCxx7KOj5Ki5SfaiW5Ma/00bv4/6VQ
-         2YKVuQJE1eyMcWq/vl8hXSMcM5HLiTaTeLx3Da0FBcAx0jOcHVBF32+iaXcvc91rBwrN
-         QswfwpQu5XW3bmvqE+DFb7gGTLVL+k6uxEY7PyR1Oqa3UUV4t84/5oZ+qhIJdr7itp/q
-         3Zgh4ioaCm+QWpj2+TmgxMc1H6Wu3L95MmR7a9Pb9N3uh5UHoZBT8e5w6coB2c01qU8h
-         5P9g==
-Received: by 10.204.155.73 with SMTP id r9mr619130bkw.22.1333186745206; Sat,
- 31 Mar 2012 02:39:05 -0700 (PDT)
-Received: by 10.204.40.131 with HTTP; Sat, 31 Mar 2012 02:39:05 -0700 (PDT)
-In-Reply-To: <87fwcpun95.fsf@thomas.inf.ethz.ch>
+	id S1756279Ab2CaKHo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 31 Mar 2012 06:07:44 -0400
+Received: from mtaout02-winn.ispmail.ntl.com ([81.103.221.48]:22524 "EHLO
+	mtaout02-winn.ispmail.ntl.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755578Ab2CaKHn (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 31 Mar 2012 06:07:43 -0400
+Received: from aamtaout03-winn.ispmail.ntl.com ([81.103.221.35])
+          by mtaout02-winn.ispmail.ntl.com
+          (InterMail vM.7.08.04.00 201-2186-134-20080326) with ESMTP
+          id <20120331100740.MMAG9621.mtaout02-winn.ispmail.ntl.com@aamtaout03-winn.ispmail.ntl.com>;
+          Sat, 31 Mar 2012 11:07:40 +0100
+Received: from [192.168.0.2] (really [94.170.150.126])
+          by aamtaout03-winn.ispmail.ntl.com
+          (InterMail vG.3.00.04.00 201-2196-133-20080908) with ESMTP
+          id <20120331100740.ZQCS13318.aamtaout03-winn.ispmail.ntl.com@[192.168.0.2]>;
+          Sat, 31 Mar 2012 11:07:40 +0100
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.28) Gecko/20120313 Thunderbird/3.1.20
+In-Reply-To: <CABaB1pJNs1FL6=CbJ97pq7O=jKK=G_4t-vsx-2c4vHXsuzr40g@mail.gmail.com>
+X-Cloudmark-Analysis: v=1.1 cv=R50lirqlHffDPPkwUlkuVa99MrvKdVWo//yz83qex8g= c=1 sm=0 a=yXtjXN6ItgYA:10 a=nPi-Q3pzXAIA:10 a=u4BGzq-dJbcA:10 a=8nJEP1OIZ-IA:10 a=NEAV23lmAAAA:8 a=kD2G1YbbSvJCIuL9lykA:9 a=wPNLvfGTeEIA:10 a=HpAAvcLHHh0Zw7uRqdWCyQ==:117
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194444>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194445>
 
-On Sat, Mar 31, 2012 at 8:35 PM, Thomas Rast <trast@student.ethz.ch> wr=
-ote:
-> Jon Seymour <jon.seymour@gmail.com> writes:
->
->> On Sat, Mar 31, 2012 at 9:49 AM, Thomas Rast <trast@student.ethz.ch>=
- wrote:
->>
->> I wonder if there are any really good justifications for changing th=
-e
->> content, as distinct from the comments of a merge during an amendmen=
-t?
->
-> Semantic conflicts do not necessarily show up as
-> conflicts-to-be-resolved. =C2=A0The canonical example is when you cha=
-nge the
-> signature of a function on one side of the merge, and introduce new
-> callers on the other side. =C2=A0The merge must then patch all new ca=
-llers
-> too.
+I'm not an expert on git-svn internals, but I believe sub-project
+branches are a limitation of its branching implementation.  svn-fe
+doesn't have this problem at the downloading stage (and will do 20,000
+revisions much quicker than git-svn), but requires you to split branches
+out by hand.
 
-=46air enough - I was thinking that you could these with a commit after
-the merge, but I can see that's not the right thing to do, from a
-correctness point of view.
+I'm currently trying to document these strange edge cases as part of an
+ongoing effort to add branch information on top of svn-fe's output.
+Would you mind taking a look at [1] and letting me know if it's an
+understandable description of your problem?  Improvements and other edge
+cases are very much welcome, and I hope to have something in the coming
+months that tackles these issues.
 
-jon.
+	- Andrew
+
+[1]https://github.com/andrew-sayers/SVN-Branching-Language/blob/master/t/advanced/subproject_branch.sh
