@@ -1,58 +1,58 @@
-From: Sergio Callegari <sergio.callegari@gmail.com>
-Subject: Re: GSoC - Some questions on the idea of
-Date: Sat, 31 Mar 2012 13:02:08 +0200
-Message-ID: <4F76E430.6020605@gmail.com>
-References: <CA+M5ThS2iS-NMNDosk2oR25N=PMJJVTi1D=zg7MnMCUiRoX4BQ@mail.gmail.com> <CACsJy8APtMsMJ=FrZjOP=DbzuFoemSLJTmkjaiK5Wkq9XtA4rg@mail.gmail.com> <loom.20120328T131530-717@post.gmane.org> <CA+M5ThTPyic=RhFL2SvuNB0xBWOHxNTaUZrYMB144UjpjCiLoQ@mail.gmail.com> <20120330203430.GB20376@sigill.intra.peff.net> <CA+M5ThR6jtxqs0-Kz-8fcRuOFRbLr-GvsJcTmrOQ7_geNspDLg@mail.gmail.com>
+From: Neil Horman <nhorman@tuxdriver.com>
+Subject: Re: [PATCH 1/4] git-cherry-pick: add keep-empty option
+Date: Sat, 31 Mar 2012 08:57:16 -0400
+Message-ID: <20120331125716.GA2409@neilslaptop.think-freely.org>
+References: <1333136922-12872-1-git-send-email-nhorman@tuxdriver.com>
+ <1333136922-12872-2-git-send-email-nhorman@tuxdriver.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Bo Chen <chen@chenirvine.org>
-X-From: git-owner@vger.kernel.org Sat Mar 31 13:02:55 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeff King <peff@peff.net>, Phil Hord <phil.hord@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Mar 31 14:57:53 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SDw54-0008F7-Jm
-	for gcvg-git-2@plane.gmane.org; Sat, 31 Mar 2012 13:02:50 +0200
+	id 1SDxsN-0005Yc-AQ
+	for gcvg-git-2@plane.gmane.org; Sat, 31 Mar 2012 14:57:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757127Ab2CaLCQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 31 Mar 2012 07:02:16 -0400
-Received: from mail-we0-f174.google.com ([74.125.82.174]:49689 "EHLO
-	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756961Ab2CaLCP (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 31 Mar 2012 07:02:15 -0400
-Received: by wejx9 with SMTP id x9so826360wej.19
-        for <git@vger.kernel.org>; Sat, 31 Mar 2012 04:02:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=io3ymSRZbbWoAs1WRRzNikmi6yq9Yo2aMfIN+iUiYFA=;
-        b=SS/PBEhrvKrsamgkYPgohiCrXcP31PZzVphXHbx90ZGwKL/LENpHjeVbPyWChzgotY
-         GP2+tSkGdQswfKz9exG8MlCb8+WkH1syTauYEMGOri4zj/FOtC3bLQD/TjtEY6TMl9lZ
-         9BFSijAYC3GLzDaV8hSbUPHYTgDnJ45hdWutOI9p+s3eaUOF+evw32Q5pnKNwCCvrl0I
-         S3nQfMHMxAS0gBNERBoECbE2l38yQ9h5VqCNKUgbsSSKR3r2COOe1tNrMvWGTxQA5Ea2
-         bslj4XCAw3dbplGLDpI/Rv9yy3+4bdna30VqO6OknQSUpG5qmTL68x3fxrKp3zVKY0yP
-         ee0w==
-Received: by 10.180.97.4 with SMTP id dw4mr6023786wib.18.1333191733617;
-        Sat, 31 Mar 2012 04:02:13 -0700 (PDT)
-Received: from [192.168.1.14] (host171-45-dynamic.7-87-r.retail.telecomitalia.it. [87.7.45.171])
-        by mx.google.com with ESMTPS id w10sm24164387wiy.3.2012.03.31.04.02.10
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sat, 31 Mar 2012 04:02:11 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:11.0) Gecko/20120310 Thunderbird/11.0
-In-Reply-To: <CA+M5ThR6jtxqs0-Kz-8fcRuOFRbLr-GvsJcTmrOQ7_geNspDLg@mail.gmail.com>
+	id S1751896Ab2CaM5d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 31 Mar 2012 08:57:33 -0400
+Received: from charlotte.tuxdriver.com ([70.61.120.58]:42752 "EHLO
+	smtp.tuxdriver.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756452Ab2CaM5Z (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 31 Mar 2012 08:57:25 -0400
+Received: from neilslaptop.think-freely.org ([2001:470:8:a08:4a5d:60ff:fe96:79da] helo=localhost)
+	by smtp.tuxdriver.com with esmtpsa (TLSv1:AES128-SHA:128)
+	(Exim 4.63)
+	(envelope-from <nhorman@tuxdriver.com>)
+	id 1SDxrp-0005hy-Q7; Sat, 31 Mar 2012 08:57:19 -0400
+Content-Disposition: inline
+In-Reply-To: <1333136922-12872-2-git-send-email-nhorman@tuxdriver.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+X-Spam-Score: -2.9 (--)
+X-Spam-Status: No
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194448>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194449>
 
-I wonder if it could make sense to have some pluggable mechanism for file 
-splitting. Something under the lines of filters, so to say.
-Bupsplit can be a rather general mechanism, but large binaries that are 
-containers (zip, jar, docx, tgz, pdf - seen as a collection of streams) may 
-possibly be
-more conveniently split by their inherent components.
+On Fri, Mar 30, 2012 at 03:48:39PM -0400, Neil Horman wrote:
+> git cherry-pick fails when picking a non-ff commit that is empty.  The advice
+> given with the failure is that a git-commit --allow-empty should be issued to
+> explicitly add the empty commit during the cherry pick.  This option allows a
+> user to specify before hand that they want to keep the empty commit.  This
+> eliminates the need to issue both a cherry pick and a commit operaion.
+> 
+> Signed-off-by: Neil Horman <nhorman@tuxdriver.com>
+> CC: Jeff King <peff@peff.net>
+> CC: Phil Hord <phil.hord@gmail.com>
+> CC: Junio C Hamano <gitster@pobox.com>
+As you and Jeff noted, I can certainly change keep-empty to allow-empty, both
+here and in the rebase command.  I'll add a test for it as well, early this
+comming week.  Thanks!
+
+Neil
