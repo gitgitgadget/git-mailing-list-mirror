@@ -1,85 +1,70 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: hi,
-Date: Sat, 31 Mar 2012 11:20:39 +0200
-Message-ID: <4F76CC67.1020306@op5.se>
-References: <20120329170349.Horde.RdBMRSoH6vhPdIflPy3mByA@correio.portugalmail.pt> <CACeyogdBUoK-34Rxm_fzbw5OV75u8CiBSfzU=z5UUzv_RBvRQw@mail.gmail.com> <20120331060402.GA4140@ikke-laptop.lokaal>
+From: "frnchfrgg.jr" <frnchfrgg.jr@gmail.com>
+Subject: Importing a subversion repository where some branches come from trunk subtrees
+Date: Sat, 31 Mar 2012 11:28:42 +0200
+Message-ID: <CABaB1pJNs1FL6=CbJ97pq7O=jKK=G_4t-vsx-2c4vHXsuzr40g@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: chaitanyaa nalla <nallachaitu@gmail.com>, git@vger.kernel.org
-To: Kevin <compufreak@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Mar 31 11:20:57 2012
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Mar 31 11:28:51 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SDuUP-0006XD-5J
-	for gcvg-git-2@plane.gmane.org; Sat, 31 Mar 2012 11:20:53 +0200
+	id 1SDuc6-0004Gu-JF
+	for gcvg-git-2@plane.gmane.org; Sat, 31 Mar 2012 11:28:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754298Ab2CaJUs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 31 Mar 2012 05:20:48 -0400
-Received: from mail-bk0-f46.google.com ([209.85.214.46]:57165 "EHLO
-	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751788Ab2CaJUq (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 31 Mar 2012 05:20:46 -0400
-Received: by bkcik5 with SMTP id ik5so1248803bkc.19
-        for <git@vger.kernel.org>; Sat, 31 Mar 2012 02:20:44 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding
-         :x-gm-message-state;
-        bh=14xiK5KcKm328hcEe4zPqGrdPYhsM/nSE8cduCKWAm8=;
-        b=KP5xqSx4g1VvmWUURff7IhEo0mNBuFslzt64m3d6+AjALFbh0uUrSjTYMnEaj5xw6V
-         FODr1WJDK+Sevpdb1/709TTOhNq6A4SC4WbRd5Hh2L5RBdbW6abCE1CMPhv1VBMjk/My
-         1s3/QegYcwL4be+jS/kq9/Mu8yViGebuMoQbc/QiDtzTqzSAJmv9ps0TOgvWijPfGakh
-         jjEfPOiAbI2w+vzDsmeZeeZuJ9sbWXHZGVn/4X2edcJrj6ro+ZeYzuL35olZYvQQFU/y
-         kOBIENKq/gRus0/12mFXuBVRhevWmIMTjl6RemKciwmYPXKSZm/s3g6ZZWpYYGEbQurQ
-         JaCg==
-Received: by 10.204.152.12 with SMTP id e12mr623777bkw.29.1333185643169;
-        Sat, 31 Mar 2012 02:20:43 -0700 (PDT)
-Received: from vix.int.op5.se (c80-217-218-226.bredband.comhem.se. [80.217.218.226])
-        by mx.google.com with ESMTPS id r14sm25576220bkv.11.2012.03.31.02.20.41
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sat, 31 Mar 2012 02:20:41 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:11.0) Gecko/20120316 Thunderbird/11.0
-In-Reply-To: <20120331060402.GA4140@ikke-laptop.lokaal>
-X-Gm-Message-State: ALoCoQlmRZiQEs5uO7OtHO8kUGk3hsmIj26CWqUgqm/ZvaiiQX8VN2ME+HjShCb4OoakK6OVpE9A
+	id S1754437Ab2CaJ2q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 31 Mar 2012 05:28:46 -0400
+Received: from mail-ey0-f174.google.com ([209.85.215.174]:45220 "EHLO
+	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752673Ab2CaJ2o (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 31 Mar 2012 05:28:44 -0400
+Received: by eaaq12 with SMTP id q12so400898eaa.19
+        for <git@vger.kernel.org>; Sat, 31 Mar 2012 02:28:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=k2Qgjp/akB4na92Bk73jnCqBg0tsChM7H6n3EU7g2IY=;
+        b=aR3axnfpkUZK3jBtay4k9aGMPV7x2QkgKi9L7+yBadM45sRyrRalKrGqbNf9UHmwwp
+         BDTAcql/H3ssMsJrC2E5JtbaLuO+pYMU5PSZX/EsrREu4hWJ8aswM3e1fnWyDMc2gm4z
+         tGoJ7cNgTHL6xABCX8TX81Ecy1q5V9q3hK+aT9o0HkF2lvVx7CnXgPFFiATAH31aGzEk
+         psHKrllf0bPR8Es3FRAmH3SRP1w1q0hA/kD8fonApCEX2KuXjt3tf0Qd88OXwc3ZqS/S
+         nGdISRGFwh02qJzHzlB3kD8uwEm+ZPFDdlsoSBen8tjJkiVAJaB5vkOGiYUIYN8Rc9I1
+         hv6Q==
+Received: by 10.213.19.196 with SMTP id c4mr105064ebb.96.1333186122729; Sat,
+ 31 Mar 2012 02:28:42 -0700 (PDT)
+Received: by 10.213.30.12 with HTTP; Sat, 31 Mar 2012 02:28:42 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194441>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194442>
 
-On 03/31/2012 08:04 AM, Kevin wrote:
-> On Thu, Mar 29, 2012 at 10:36:37PM +0530, chaitanyaa nalla wrote:
->> This is not the place for posting this kind of trash.The dedicated Git
->> community mailing lists are intended for discussing useful things.
->>
->> On Thu, Mar 29, 2012 at 9:33 PM, Gift Give<g24_2012@yahoo.com>  wrote:
->>>
->>> --
->>> Dear,
->>>   I am so delighted to contact you and i appreciate the opportunity to write
->>> you this email,i will be please if you will reply my mail for me to send to
->>> you my picture and discuss my emotional feelings with you in private.Thanks.
->>> Gift
->>>
-> 
-> Most of the time this is automated spam and it does not help to reply
+Hello,
 
-Not only that; Replies normally makes the receiving end gather and store
-the sender's email and the address to which the previous message was sent
-in a "known-to-work" list, which is later used to address more spam. Not
-to mention that such lists are frequently sold to other spammers, and so
-the wheels of spamconomy keep on turning.
+I noticed that a svn branch made out of a subtree of trunk confuses
+git-svn which fetches the whole history a second time (restricted to
+that subtree). Unfortunately this kind of strange branching has been
+repeatedly made in the Blender svn repository and I can end up with 5
+or 6 times the full history from rev1 to rev20000, which makes the
+conversion even slower, the mirror bigger and loooong to clone and
+bisects completely unuseful.
 
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+Is this expected ? Or when git-svn identified the svn revision number
+of the parent and there already is a git commit imported from this
+revision, should it use that commit as the parent ? This would make
+the branch creation commit have a big "mangling paths" diff with its
+parent but I think it is logical.
 
-Considering the successes of the wars on alcohol, poverty, drugs and
-terror, I think we should give some serious thought to declaring war
-on peace.
+That also means that when importing a revision, git-svn should always
+import the state of the whole tree (up to the branch, tag, or trunk
+root) and not only a part of it.
+
+I have made a 4-revision sample svn repo which exhibits the problem,
+but it is quite simple to reproduce.
+
+Is there a good reason for this behaviour (in other cases I can't think of) ?
+
+
+Julien "_FrnchFrgg_" Rivaud
