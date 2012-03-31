@@ -1,100 +1,101 @@
-From: Mark Lodato <lodatom@gmail.com>
-Subject: Re: Maintaining historical data in a git repo
-Date: Fri, 30 Mar 2012 21:04:18 -0400
-Message-ID: <CAHREChiNbEVGR1+xvOhAa2Yg35N2O+JreF-mVm793bZGWzu+rw@mail.gmail.com>
-References: <CA+P+rLeyEcZPudhLWavB74CiDAqpn+iNkk4F8=NK_yGaJPMmyA@mail.gmail.com>
- <201203301510.q2UFAqn6003864@no.baka.org> <CA+P+rLcWT0SZQjW2LtFXXCDRwjMp8daJ2hVup=7cnsRGbKw7xw@mail.gmail.com>
- <7vehsam3pn.fsf@alter.siamese.dyndns.org> <CA+P+rLeDFu4KgEZPw=k67iMWVVGcZ3q48VZjgXNLXn3NdyQnow@mail.gmail.com>
+From: Andrew Sayers <andrew-git@pileofstuff.org>
+Subject: Re: SVN Branch Description Format
+Date: Sat, 31 Mar 2012 02:27:59 +0100
+Message-ID: <4F765D9F.70404@pileofstuff.org>
+References: <4F5C85A3.4080806@pileofstuff.org> <CALkWK0mh5hKz+=-Ur3bE2+YBiSwFiPtZXQOJdMwY=BemXrqwWQ@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Jakub Narebski <jnareb@gmail.com>,
-	Seth Robertson <in-gitvger@baka.org>
-To: Yuval Adam <yuv.adm@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Mar 31 03:05:19 2012
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Sam Vilain <sam@vilain.net>, Stephen Bash <bash@genarts.com>,
+	Nathan Gray <n8gray@n8gray.org>, Jeff King <peff@peff.net>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Dmitry Ivankov <divanorama@gmail.com>,
+	David Barr <davidbarr@google.com>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Mar 31 04:08:35 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SDmkn-0001NF-PJ
-	for gcvg-git-2@plane.gmane.org; Sat, 31 Mar 2012 03:05:18 +0200
+	id 1SDnk2-0000mu-O5
+	for gcvg-git-2@plane.gmane.org; Sat, 31 Mar 2012 04:08:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759092Ab2CaBEl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 Mar 2012 21:04:41 -0400
-Received: from mail-pz0-f52.google.com ([209.85.210.52]:42652 "EHLO
-	mail-pz0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752932Ab2CaBEj (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Mar 2012 21:04:39 -0400
-Received: by dake40 with SMTP id e40so126808dak.11
-        for <git@vger.kernel.org>; Fri, 30 Mar 2012 18:04:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=XqvXwOVuSve6O9aCWXl3lvi0mdlzZKVIRCE3fgz2h2w=;
-        b=1DK4vzw6VOI82+FrguyOFoNXxRM1YBd5krY169zcJsa/B2Z76t3m2S6drJUyLjZCRe
-         jC/JqIVhZw103ypiWwOFx1deqAyvTrIHik1/GNkLRRgV0rXHgOMvROwRfyHeFkWtCBOw
-         J+MUwD4rued6DmP1+bw8g65Canu0K4X0d/TNVqmRLkrKVOSjBk+XPYhHX3Kmem8bty0R
-         BKyR3o8kXMchWQl9OTCfdcdlJAgRf6rB0i/k8S4ibPMhpGju4Y4DVYH2QgmqGqf+awch
-         AeJQSSZpKoGZHWwNrJOJsEAuBLG2bk3XgDFxDwYBbOb5AIs3fRDZ4fiHVBxhrG/Frcjd
-         rlVA==
-Received: by 10.68.222.165 with SMTP id qn5mr1595026pbc.88.1333155879127; Fri,
- 30 Mar 2012 18:04:39 -0700 (PDT)
-Received: by 10.143.39.9 with HTTP; Fri, 30 Mar 2012 18:04:18 -0700 (PDT)
-In-Reply-To: <CA+P+rLeDFu4KgEZPw=k67iMWVVGcZ3q48VZjgXNLXn3NdyQnow@mail.gmail.com>
+	id S1752266Ab2CaCIa convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 30 Mar 2012 22:08:30 -0400
+Received: from queueout04-winn.ispmail.ntl.com ([81.103.221.58]:10376 "EHLO
+	queueout04-winn.ispmail.ntl.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751269Ab2CaCI2 (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 30 Mar 2012 22:08:28 -0400
+Received: from aamtaout01-winn.ispmail.ntl.com ([81.103.221.35])
+          by mtaout01-winn.ispmail.ntl.com
+          (InterMail vM.7.08.04.00 201-2186-134-20080326) with ESMTP
+          id <20120331012801.GVJZ29686.mtaout01-winn.ispmail.ntl.com@aamtaout01-winn.ispmail.ntl.com>;
+          Sat, 31 Mar 2012 02:28:01 +0100
+Received: from [192.168.0.2] (really [94.170.150.126])
+          by aamtaout01-winn.ispmail.ntl.com
+          (InterMail vG.3.00.04.00 201-2196-133-20080908) with ESMTP
+          id <20120331012801.YSXK10211.aamtaout01-winn.ispmail.ntl.com@[192.168.0.2]>;
+          Sat, 31 Mar 2012 02:28:01 +0100
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.28) Gecko/20120313 Thunderbird/3.1.20
+In-Reply-To: <CALkWK0mh5hKz+=-Ur3bE2+YBiSwFiPtZXQOJdMwY=BemXrqwWQ@mail.gmail.com>
+X-Cloudmark-Analysis: v=1.1 cv=JvdXmxIgLJv2/GthKqHpGJEEHukvLcvELVXUanXFreg= c=1 sm=0 a=yXtjXN6ItgYA:10 a=_K96qfqeG7gA:10 a=u4BGzq-dJbcA:10 a=IkcTkHD0fZMA:10 a=wkj3dZ8WAAAA:8 a=NEAV23lmAAAA:8 a=h6NBuFSXrVJB8wr3D5cA:9 a=LHaL6IAPl94zH-ZfZzAA:7 a=QEXdDO2ut3YA:10 a=HpAAvcLHHh0Zw7uRqdWCyQ==:117
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194426>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194427>
 
-On Fri, Mar 30, 2012 at 4:39 PM, Yuval Adam <yuv.adm@gmail.com> wrote:
-> However, we perceive git as a very powerful tool, that can fit
-> beautifully with the way legislation works today.
-> The challenge for us - should we choose to accept it ;) - is to build
-> a set of wrapper tools that allow us to use git in such a way, while
-> enabling us to build up past history.
+On 30/03/12 05:06, Ramkumar Ramachandra wrote:
+> Hi,
+>=20
+> Andrew Sayers wrote:
+>> SVN Branch Description Format v0.1
+>=20
+> I found this pretty interesting.  Doesn't it duplicate some of the
+> functionality of reposurgeon [1] though?
+>=20
+> [1]: http://esr.ibiblio.org/?p=3D4071
 
-If you're willing to put some time into either writing new tools or
-doing complicated work by hand, you could use git to keep track of the
-history's history.  Have two branches: a real "master" branch and a
-"meta" branch to keep track of master's history.  The former is what
-end users would see: the most accurate history of the code to date.
-The latter is what "developers" would use to rebuild the master branch
-with new information (say, adding A before B and C).
+Yes, I've been procrastinating all week instead of reading up on
+reposurgeon and contacting ESR about possibile collaboration.
 
-To do this, you could try the following: Use normal git commands on
-the master branch, but every time you change master (say, commit or
-rebase), also make a special commit on the meta branch with the first
-parent being a reference to the new value of master.  Use the
-remaining parents as "normal" references to previous meta commits, and
-use an empty tree.  Now, the meta branch contains a complete history
-of the history, though viewing it will be extremely ugly unless you
-develop a custom tool to deal with its special form.
+I think you need something a bit more expressive than reposurgeon's
+format to do SVN<->Git conversion well, and I think you need something =
+a
+bit more accessible in order to document SVN edge cases.  For example, =
+I
+don't see how reposurgeon could represent all the madness around SVN
+cherry-picks that become merges when you manually add information from
+revision logs, then become cherry-picks again when you find a revert
+coming in from another branch.  Having said that, a (lossy) conversion
+between SBL and reposurgeon format would probably be useful and not tha=
+t
+hard.
 
-Optionally, on the server, you could set up an update hook to disallow
-updates of the master branch and disallow non-fast-forward updates of
-the meta branch, and a post-receive hook to the master branch to point
-to the first parent of the meta branch each time the meta branch is
-updated.
+The link above put it very well that most people leave an embarrassed
+=E2=80=9Cto be done=E2=80=9D comment and disappear when they realise ho=
+w much of a
+nightmare the mapping is.  What it doesn't mention is that everyone
+experiences a slightly different part of the nightmare, and that we can
+only really tackle the problem by getting everyone's freaky edge cases
+written up in one language in one place.  The test suite[1] isn't that
+impressive right now, but in the long-term I'm really keen to get
+implementers to pool their knowledge so we can all benefit.  SBL is
+designed to let people open the relevant test without reading the spec
+and say "oh right I understand what a piecemeal merge is now.  I'll go
+implement that in my project".
 
-One caveat is that you must be careful about merges on the meta
-branch, since git's default strategy will automatically do the wrong
-thing.  You could write your own merge strategy to handle this.
-(Sadly there does not appear to be a way to use this strategy
-automatically on per-branch basis.)  Another workaround would be to
-use something that is unmergable in the tree of the meta commit,
-rather than an empty tree - say, a single file with the commit ID of
-the master branch - which would prevent the default strategy from
-trivially and incorrectly merging.
+I'm currently working on code to read an SVN dump and write to SBL.
+This will definitely overlap with reposurgeon's SVN export
+functionality, but without seeing the final code I can't say how much.
+That's fine though - as I say, the only way to get a good solution is
+for multiple implementers to investigate the problem and share the edge
+cases they find.
 
-Using such a system would be awkward by hand but not terribly
-difficult to automate.  You could create a "git-meta-commit" command
-to create a meta commit for the current branch.  You might find
-contrib/examples/git-merge.sh useful as a guide for how to do this.
-If you'd like more details, please ask.
+	- Andrew
 
-It would be nice if you could write a hook that automatically creates
-a meta commit every time master's reflog is updated, but this does not
-seem possible at the moment.
+[1]https://github.com/andrew-sayers/SVN-Branching-Language/tree/master/=
+t
