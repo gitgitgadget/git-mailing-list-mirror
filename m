@@ -1,99 +1,101 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] Use SHELL_PATH from build system in
- run_command.c:prepare_shell_cmd
-Date: Fri, 30 Mar 2012 22:48:02 -0500
-Message-ID: <20120331034802.GB2475@burratino>
-References: <7vvclmoit6.fsf@alter.siamese.dyndns.org>
- <1333157601-6458-1-git-send-email-bwalton@artsci.utoronto.ca>
+From: David Aguilar <davvid@gmail.com>
+Subject: Re: t7800-difftool.sh failure on pu
+Date: Fri, 30 Mar 2012 21:05:30 -0700
+Message-ID: <CAJDDKr50oDwih2fyb5iuFqYDsXSD3EXje4vZJwO=1_JBvuMYsA@mail.gmail.com>
+References: <4F74A604.3040402@ramsay1.demon.co.uk>
+	<7v7gy3qesv.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: peff@peff.net, j.sixt@viscovery.net, gitster@pobox.com,
-	git@vger.kernel.org
-To: Ben Walton <bwalton@artsci.utoronto.ca>
-X-From: git-owner@vger.kernel.org Sat Mar 31 05:48:14 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Ramsay Jones <ramsay@ramsay1.demon.co.uk>, tim.henigan@gmail.com,
+	GIT Mailing-list <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Mar 31 06:06:09 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SDpIU-0006oJ-3I
-	for gcvg-git-2@plane.gmane.org; Sat, 31 Mar 2012 05:48:14 +0200
+	id 1SDpZo-0001cx-NJ
+	for gcvg-git-2@plane.gmane.org; Sat, 31 Mar 2012 06:06:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751622Ab2CaDsI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 Mar 2012 23:48:08 -0400
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:48226 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751389Ab2CaDsH (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Mar 2012 23:48:07 -0400
-Received: by iagz16 with SMTP id z16so1801178iag.19
-        for <git@vger.kernel.org>; Fri, 30 Mar 2012 20:48:06 -0700 (PDT)
+	id S1751016Ab2CaEFc convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 31 Mar 2012 00:05:32 -0400
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:56544 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750721Ab2CaEFb convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 31 Mar 2012 00:05:31 -0400
+Received: by yenl12 with SMTP id l12so715609yen.19
+        for <git@vger.kernel.org>; Fri, 30 Mar 2012 21:05:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=T//MyBmmyk7fFsjW+jga2JMyCDNHa0cGpyr40vFXCS4=;
-        b=kmd9NHqZzPd2h8HIcEK6Zx41+bPxsU9nWQTZHeZIb7PV0I1lWNzHlwKRpxbcjY2zD+
-         2jJ6McyYv7Xnh206cYrCH8nxM6zyQBnKFAhLIKtkE/xoeEakPdvi/UcYSqCf1LfNdQC+
-         GucxaKXfXq54/FfXRHbHXWgvZQhkoa/IhS4N1nVDB8KxJr60qiYPvTNkSjdJlBXscqXA
-         C53F/vQa0Spcpz8MSCpwmyBAVjk0e+WPf8MOG7iTQzALsbNGoognPxX4vfQCrngH4TGn
-         FdkUE/hcQMTpKDkwmdQI9yOOnytTKariynx+BaOHmGWjPa8xS727DF6HYaOuomhevEhz
-         qJxw==
-Received: by 10.50.161.228 with SMTP id xv4mr656699igb.19.1333165686614;
-        Fri, 30 Mar 2012 20:48:06 -0700 (PDT)
-Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
-        by mx.google.com with ESMTPS id vr4sm12171387igb.1.2012.03.30.20.48.05
-        (version=SSLv3 cipher=OTHER);
-        Fri, 30 Mar 2012 20:48:05 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <1333157601-6458-1-git-send-email-bwalton@artsci.utoronto.ca>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=XDgpnCg23rlTZ7U6xa06ULvhqncbpFqCPrVVSMyLSeI=;
+        b=KZdfkvvR+1pz9CNGr7URyLSplLi0uREQO87w56u/o7eHt8BIyQfjQ9KVcKBTG19KzB
+         i6MWxTowD89DN945R2Mvs2OqKqIHVFhK/gBv+ZOcEmp7KKKi0EdFzkly1VTOPGrUy+uI
+         NAoOexD6AcPn2gWyOui87x3zkEfMWCDULtf+vWlt3c7Y+no4xo/XsMTzHN88rBCvZANp
+         c4tccgJcA23M2FNAiBEKDWPWPjZ+CWLr1+Md6AufmRS8yb0qJ0XgDxetpOUWugPmPynV
+         4DWk7x2jsPRLTmaV4d4QAIF8YlNHJu2WqHu4BZqfaw/MvX/hm4TENx0pCsjN9PC/l+v6
+         6Jug==
+Received: by 10.236.157.9 with SMTP id n9mr615351yhk.96.1333166730535; Fri, 30
+ Mar 2012 21:05:30 -0700 (PDT)
+Received: by 10.147.128.8 with HTTP; Fri, 30 Mar 2012 21:05:30 -0700 (PDT)
+In-Reply-To: <7v7gy3qesv.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194429>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194430>
 
-Ben Walton wrote:
+On Thu, Mar 29, 2012 at 2:26 PM, Junio C Hamano <gitster@pobox.com> wro=
+te:
+> Ramsay Jones <ramsay@ramsay1.demon.co.uk> writes:
+>
+>> Hi Tim,
+>>
+>> With the current pu branch, I have t7800.3 (difftool ignores bad --t=
+ool values)
+>> failing on Linux (I haven't tried cygwin or mingw yet). The failure =
+is caused
+>> by the test for the value of the exit code; for me the exit code is =
+9 not 1.
+>>
+>> I have investigated, briefly, and found *two* alternatives for a fix=
+=2E ;-)
+>>
+>> The first option is to (effectively) revert commit 0440ed72 ("diffto=
+ol: replace
+>> system call with Git::command_noisy", 22-03-2012), like so:
+>>
+>> -- >8 --
+>> diff --git a/git-difftool.perl b/git-difftool.perl
+>> index e1754ff..49613b1 100755
+>> --- a/git-difftool.perl
+>> +++ b/git-difftool.perl
+>> @@ -237,5 +237,7 @@ if (defined($dirdiff)) {
+>>
+>> =C2=A0 =C2=A0 =C2=A0 $ENV{GIT_PAGER} =3D '';
+>> =C2=A0 =C2=A0 =C2=A0 $ENV{GIT_EXTERNAL_DIFF} =3D 'git-difftool--help=
+er';
+>> - =C2=A0 =C2=A0 git_cmd_try { Git::command_noisy(('diff', @ARGV)) } =
+'exit code %d';
+>> + =C2=A0 =C2=A0 my @command =3D ('git', 'diff', @ARGV);
+>> + =C2=A0 =C2=A0 my $rc =3D system(@command);
+>> + =C2=A0 =C2=A0 exit($rc | ($rc >> 8));
+>> =C2=A0}
+>> -- 8< --
+>
+> I would prefer this, regardless of the issue.
+>
+> I actually recall asking Tim about the exit status when I reviewed th=
+is
+> change.
 
-> During the testing of the 1.7.10 rc series on Solaris for OpenCSW, it
-> was discovered that t7006-pager was failing
-[...]
-> --- a/run-command.c
-> +++ b/run-command.c
-> @@ -4,6 +4,10 @@
->  #include "sigchain.h"
->  #include "argv-array.h"
->  
-> +#ifndef SHELL_PATH
-> +# define SHELL_PATH "/bin/sh"
-> +#endif
-> +
->  struct child_to_clean {
->  	pid_t pid;
->  	struct child_to_clean *next;
-> @@ -90,7 +94,7 @@ static const char **prepare_shell_cmd(const char **argv)
->  		die("BUG: shell command is empty");
->  
->  	if (strcspn(argv[0], "|&;<>()$`\\\"' \t\n*?[#~=%") != strlen(argv[0])) {
-> -		nargv[nargc++] = "sh";
-> +		nargv[nargc++] = SHELL_PATH;
+I would also prefer this.
 
-The underlying problem is an old one.  Thanks for fixing it.
+A question for the msysgit/cygwin folks:
 
-For what it's worth,
-Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
-
-[...]
-> Essentially, the shell is a
-> special case of tool that should not rely on SANE_TOOL_PATH and must
-> be called explicitly.
-
-It is probably annoying to hear me say this, but:
-
-The above doesn't tell me _why_ it is a special case and that on
-Solaris users have been burned by "sh" being the original Bourne shell
-or a temperamental version of ksh so SHELL_PATH usually points to bash
-or ksh93 instead.
-
-I trust the reader enough to fill in the blank, though, so I think the
-patch is ok as is.
+would we need to go back to use "git.exe" as well?
+--=20
+David
