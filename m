@@ -1,101 +1,140 @@
-From: Andrew Sayers <andrew-git@pileofstuff.org>
-Subject: Re: SVN Branch Description Format
-Date: Sat, 31 Mar 2012 02:27:59 +0100
-Message-ID: <4F765D9F.70404@pileofstuff.org>
-References: <4F5C85A3.4080806@pileofstuff.org> <CALkWK0mh5hKz+=-Ur3bE2+YBiSwFiPtZXQOJdMwY=BemXrqwWQ@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Sam Vilain <sam@vilain.net>, Stephen Bash <bash@genarts.com>,
-	Nathan Gray <n8gray@n8gray.org>, Jeff King <peff@peff.net>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Dmitry Ivankov <divanorama@gmail.com>,
-	David Barr <davidbarr@google.com>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Mar 31 04:08:35 2012
+From: Ben Walton <bwalton@artsci.utoronto.ca>
+Subject: [PATCH] Use SHELL_PATH from build system in run_command.c:prepare_shell_cmd
+Date: Fri, 30 Mar 2012 21:33:21 -0400
+Message-ID: <1333157601-6458-1-git-send-email-bwalton@artsci.utoronto.ca>
+References: <7vvclmoit6.fsf@alter.siamese.dyndns.org>
+Cc: git@vger.kernel.org, Ben Walton <bwalton@artsci.utoronto.ca>
+To: peff@peff.net, j.sixt@viscovery.net, jrnieder@gmail.com,
+	gitster@pobox.com
+X-From: git-owner@vger.kernel.org Sat Mar 31 04:41:17 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SDnk2-0000mu-O5
-	for gcvg-git-2@plane.gmane.org; Sat, 31 Mar 2012 04:08:35 +0200
+	id 1SDoFd-00056A-TG
+	for gcvg-git-2@plane.gmane.org; Sat, 31 Mar 2012 04:41:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752266Ab2CaCIa convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 30 Mar 2012 22:08:30 -0400
-Received: from queueout04-winn.ispmail.ntl.com ([81.103.221.58]:10376 "EHLO
-	queueout04-winn.ispmail.ntl.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751269Ab2CaCI2 (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 30 Mar 2012 22:08:28 -0400
-Received: from aamtaout01-winn.ispmail.ntl.com ([81.103.221.35])
-          by mtaout01-winn.ispmail.ntl.com
-          (InterMail vM.7.08.04.00 201-2186-134-20080326) with ESMTP
-          id <20120331012801.GVJZ29686.mtaout01-winn.ispmail.ntl.com@aamtaout01-winn.ispmail.ntl.com>;
-          Sat, 31 Mar 2012 02:28:01 +0100
-Received: from [192.168.0.2] (really [94.170.150.126])
-          by aamtaout01-winn.ispmail.ntl.com
-          (InterMail vG.3.00.04.00 201-2196-133-20080908) with ESMTP
-          id <20120331012801.YSXK10211.aamtaout01-winn.ispmail.ntl.com@[192.168.0.2]>;
-          Sat, 31 Mar 2012 02:28:01 +0100
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.28) Gecko/20120313 Thunderbird/3.1.20
-In-Reply-To: <CALkWK0mh5hKz+=-Ur3bE2+YBiSwFiPtZXQOJdMwY=BemXrqwWQ@mail.gmail.com>
-X-Cloudmark-Analysis: v=1.1 cv=JvdXmxIgLJv2/GthKqHpGJEEHukvLcvELVXUanXFreg= c=1 sm=0 a=yXtjXN6ItgYA:10 a=_K96qfqeG7gA:10 a=u4BGzq-dJbcA:10 a=IkcTkHD0fZMA:10 a=wkj3dZ8WAAAA:8 a=NEAV23lmAAAA:8 a=h6NBuFSXrVJB8wr3D5cA:9 a=LHaL6IAPl94zH-ZfZzAA:7 a=QEXdDO2ut3YA:10 a=HpAAvcLHHh0Zw7uRqdWCyQ==:117
+	id S1754601Ab2CaClI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 Mar 2012 22:41:08 -0400
+Received: from garcia.cquest.utoronto.ca ([192.82.128.9]:60942 "EHLO
+	garcia.cquest.utoronto.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753669Ab2CaClH (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Mar 2012 22:41:07 -0400
+Received: from pinkfloyd.chass.utoronto.ca ([128.100.160.254]:37570 ident=93)
+	by garcia.cquest.utoronto.ca with esmtp (Exim 4.63)
+	(envelope-from <bwalton@cquest.utoronto.ca>)
+	id 1SDnBz-0000w1-4R; Fri, 30 Mar 2012 21:33:23 -0400
+Received: from bwalton by pinkfloyd.chass.utoronto.ca with local (Exim 4.72)
+	(envelope-from <bwalton@cquest.utoronto.ca>)
+	id 1SDnBz-0001ge-3D; Fri, 30 Mar 2012 21:33:23 -0400
+X-Mailer: git-send-email 1.7.4.1
+In-Reply-To: <7vvclmoit6.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194427>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194428>
 
-On 30/03/12 05:06, Ramkumar Ramachandra wrote:
-> Hi,
->=20
-> Andrew Sayers wrote:
->> SVN Branch Description Format v0.1
->=20
-> I found this pretty interesting.  Doesn't it duplicate some of the
-> functionality of reposurgeon [1] though?
->=20
-> [1]: http://esr.ibiblio.org/?p=3D4071
+During the testing of the 1.7.10 rc series on Solaris for OpenCSW, it
+was discovered that t7006-pager was failing due to finding a bad "sh"
+in PATH after a call to execvp("sh", ...).  This call was setup by
+run_command.c:prepare_shell_cmd.
 
-Yes, I've been procrastinating all week instead of reading up on
-reposurgeon and contacting ESR about possibile collaboration.
+The PATH in use at the time saw /opt/csw/bin given precedence to
+traditional Solaris paths such as /usr/bin and /usr/xpg4/bin.  A
+package named schilyutils (Joerg Schilling's utilities) was installed
+on the build system and it delivered a modified version of the
+traditional Solaris /usr/bin/sh as /opt/csw/bin/sh.  This version of
+sh suffers from many of the same problems as /usr/bin/sh.
 
-I think you need something a bit more expressive than reposurgeon's
-format to do SVN<->Git conversion well, and I think you need something =
-a
-bit more accessible in order to document SVN edge cases.  For example, =
-I
-don't see how reposurgeon could represent all the madness around SVN
-cherry-picks that become merges when you manually add information from
-revision logs, then become cherry-picks again when you find a revert
-coming in from another branch.  Having said that, a (lossy) conversion
-between SBL and reposurgeon format would probably be useful and not tha=
-t
-hard.
+The command-specific pager test failed due to the broken "sh" handling
+^ as a pipe character.  It tried to fork two processes when it
+encountered "sed s/^/foo:/" as the pager command.  This problem was
+entirely dependent on the PATH of the user at runtime.
 
-The link above put it very well that most people leave an embarrassed
-=E2=80=9Cto be done=E2=80=9D comment and disappear when they realise ho=
-w much of a
-nightmare the mapping is.  What it doesn't mention is that everyone
-experiences a slightly different part of the nightmare, and that we can
-only really tackle the problem by getting everyone's freaky edge cases
-written up in one language in one place.  The test suite[1] isn't that
-impressive right now, but in the long-term I'm really keen to get
-implementers to pool their knowledge so we can all benefit.  SBL is
-designed to let people open the relevant test without reading the spec
-and say "oh right I understand what a piecemeal merge is now.  I'll go
-implement that in my project".
+Possible fixes for this issue are:
 
-I'm currently working on code to read an SVN dump and write to SBL.
-This will definitely overlap with reposurgeon's SVN export
-functionality, but without seeing the final code I can't say how much.
-That's fine though - as I say, the only way to get a good solution is
-for multiple implementers to investigate the problem and share the edge
-cases they find.
+1. Use the standard system() or popen() which both launch a POSIX
+   shell on Solaris as long as _POSIX_SOURCE is defined.
 
-	- Andrew
+2. The git wrapper could prepend SANE_TOOL_PATH to PATH thus forcing
+   all unqualified commands run to use the known good tools on the
+   system.
 
-[1]https://github.com/andrew-sayers/SVN-Branching-Language/tree/master/=
-t
+3. The run_command.c:prepare_shell_command() could use the same
+   SHELL_PATH that is in the #! line of all all scripts and not rely
+   on PATH to find the sh to run.
+
+Option 1 would preclude opening a bidirectional pipe to a filter
+script and would also break git for Windows as cmd.exe is spawned from
+system() (cf. v1.7.5-rc0~144^2, "alias: use run_command api to execute
+aliases, 2011-01-07).
+
+Option 2 is not friendly to users as it would negate their ability to
+use tools of their choice in many cases.  Alternately, injecting
+SANE_TOOL_PATH such that it takes precedence over /bin and /usr/bin
+(and anything with lower precedence than those paths) as
+git-sh-setup.sh does would not solve the problem either as the user
+environment could still allow a bad sh to be found.  (Many OpenCSW
+users will have /opt/csw/bin leading their PATH and some subset would
+have schilyutils installed.)
+
+Option 3 allows us to use a known good shell while still honouring the
+users' PATH for the utilities being run.  Thus, it solves the problem
+while not negatively impacting either users or git's ability to run
+external commands in convenient ways.  Essentially, the shell is a
+special case of tool that should not rely on SANE_TOOL_PATH and must
+be called explicitly.
+
+With this patch applied, any code path leading to
+run_command.c:prepare_shell_cmd can count on using the same sane shell
+that all shell scripts in the git suite use.  Both the build system
+and run_command.c will default this shell to /bin/sh unless
+overridden.
+
+Signed-off-by: Ben Walton <bwalton@artsci.utoronto.ca>
+---
+ Makefile      |    2 ++
+ run-command.c |    6 +++++-
+ 2 files changed, 7 insertions(+), 1 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index be1957a..dea1f15 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1913,6 +1913,8 @@ builtin/help.sp builtin/help.s builtin/help.o: EXTRA_CPPFLAGS = \
+ 	'-DGIT_MAN_PATH="$(mandir_SQ)"' \
+ 	'-DGIT_INFO_PATH="$(infodir_SQ)"'
+ 
++run-command.o: EXTRA_CPPFLAGS = -DSHELL_PATH='"$(SHELL_PATH_SQ)"'
++
+ $(BUILT_INS): git$X
+ 	$(QUIET_BUILT_IN)$(RM) $@ && \
+ 	ln git$X $@ 2>/dev/null || \
+diff --git a/run-command.c b/run-command.c
+index 1db8abf..2af3e0f 100644
+--- a/run-command.c
++++ b/run-command.c
+@@ -4,6 +4,10 @@
+ #include "sigchain.h"
+ #include "argv-array.h"
+ 
++#ifndef SHELL_PATH
++# define SHELL_PATH "/bin/sh"
++#endif
++
+ struct child_to_clean {
+ 	pid_t pid;
+ 	struct child_to_clean *next;
+@@ -90,7 +94,7 @@ static const char **prepare_shell_cmd(const char **argv)
+ 		die("BUG: shell command is empty");
+ 
+ 	if (strcspn(argv[0], "|&;<>()$`\\\"' \t\n*?[#~=%") != strlen(argv[0])) {
+-		nargv[nargc++] = "sh";
++		nargv[nargc++] = SHELL_PATH;
+ 		nargv[nargc++] = "-c";
+ 
+ 		if (argc < 2)
+-- 
+1.7.5.4
