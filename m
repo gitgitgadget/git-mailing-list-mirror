@@ -1,72 +1,70 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: Purging old history
-Date: Sat, 31 Mar 2012 10:13:43 +0530
-Message-ID: <CALkWK0=mcQR3CBMpa5P1f+JwqNMqUs3D4=tVPx4c_4R+TXCKbw@mail.gmail.com>
-References: <17650-1333167969-40275@sneakemail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Use SHELL_PATH from build system in
+ run_command.c:prepare_shell_cmd
+Date: Fri, 30 Mar 2012 22:38:10 -0700
+Message-ID: <7vd37tjpod.fsf@alter.siamese.dyndns.org>
+References: <7vvclmoit6.fsf@alter.siamese.dyndns.org>
+ <1333157601-6458-1-git-send-email-bwalton@artsci.utoronto.ca>
+ <20120331034802.GB2475@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: "John M. Dlugosz" <ngnr63q02@sneakemail.com>
-X-From: git-owner@vger.kernel.org Sat Mar 31 06:44:14 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Ben Walton <bwalton@artsci.utoronto.ca>, peff@peff.net,
+	j.sixt@viscovery.net, gitster@pobox.com, git@vger.kernel.org
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Mar 31 07:38:51 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SDqAf-00010A-Eh
-	for gcvg-git-2@plane.gmane.org; Sat, 31 Mar 2012 06:44:13 +0200
+	id 1SDr1W-00056n-4v
+	for gcvg-git-2@plane.gmane.org; Sat, 31 Mar 2012 07:38:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751370Ab2CaEoH convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 31 Mar 2012 00:44:07 -0400
-Received: from mail-wg0-f44.google.com ([74.125.82.44]:41497 "EHLO
-	mail-wg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750748Ab2CaEoG convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 31 Mar 2012 00:44:06 -0400
-Received: by wgbdr13 with SMTP id dr13so1129871wgb.1
-        for <git@vger.kernel.org>; Fri, 30 Mar 2012 21:44:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=XInccFdG6uUYYZ6rVOs7wJkIB0p+T4smQveSUiaTbEA=;
-        b=fo1U+b6KKPNtqVxAj0pvJYHZK7jvJbnaJw54InbQdEC2qJOyQMZagHSYNnvWCYzG5O
-         D3QF709bzzLjvh+3Dganm22IHem6bXRipQp6GEHjK/36QikOTwoBE4o2rpPuXrEtr9iT
-         oJKDkIWzsGFYVlAeS33eIC0D/9iYYS/b3EuhM3Hbn9lvHpesfb6pquim6JoRZ5ZGS4IG
-         TM5argZEMYntZXQ5MwzY3hwyOlv9Y6pNpvCbrglHqlB+Gtw6T9xcZmku/NpexhajalVR
-         A6h6o11Wnsodcq0RvaU/WjPC40dWT4dPL1Vh2+bnGntkElTNHXacZHeNve/M5SHcABsh
-         i1lg==
-Received: by 10.180.102.129 with SMTP id fo1mr3062022wib.6.1333169044008; Fri,
- 30 Mar 2012 21:44:04 -0700 (PDT)
-Received: by 10.216.11.199 with HTTP; Fri, 30 Mar 2012 21:43:43 -0700 (PDT)
-In-Reply-To: <17650-1333167969-40275@sneakemail.com>
+	id S1751548Ab2CaFiP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 31 Mar 2012 01:38:15 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47599 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751417Ab2CaFiN (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 31 Mar 2012 01:38:13 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A27EC4BB1;
+	Sat, 31 Mar 2012 01:38:12 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=XICG3NE6AWU7a3s74/JhXEKB58k=; b=NnfTp0
+	D5LSKd5Zfa0vOCXzdrnUs83pVpUnqqUmSdmEyAXxTfz1JXXwwTARvD0SFcd+5y/N
+	AWm8lMdY0bSGBbQeSSk6Z6ltLsKn4281Gww6c47qNcvnCk9FQTDloDyib2gp2RYJ
+	qcgnOWzG/U+GXIvCEWaNRMHWM25lRTgweqoSw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=SuRWMy7z3HuGJJQLhBzMmd543xsk5UM8
+	JdU5mlGEhaar+bR9Ok0oqNLklDiYCuC0pZAJ64HvbcPJZbiVlGtojkrCZk5k1zcT
+	JdfGR4+rDM5Scv6u9m6ypZq4BekxEAhktRyVCrW3FAoX3h65t5CC4OH+nNAFWN9g
+	vgx9J+hGZlc=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 97E5F4BB0;
+	Sat, 31 Mar 2012 01:38:12 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2336B4BAF; Sat, 31 Mar 2012
+ 01:38:12 -0400 (EDT)
+In-Reply-To: <20120331034802.GB2475@burratino> (Jonathan Nieder's message of
+ "Fri, 30 Mar 2012 22:48:02 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: B4808DDC-7AF3-11E1-AFB2-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194432>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194433>
 
-Hi John,
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-John M. Dlugosz wrote:
-> Is there a simple way to delete old commits, say beyond a certain age=
-,
-> before putting it on the server? =C2=A0The ancient stuff is not relev=
-ant and
-> there are a lot of binaries. =C2=A0Some users may have trouble with a=
-n extensive
-> download when syncing the first time.
+> Ben Walton wrote:
+>
+> The underlying problem is an old one.  Thanks for fixing it.
+>
+> For what it's worth,
+> Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
 
-Yes, although your terminology is wrong: it's not about "deleting"
-commits; simply create a fresh root commit and rebase your work on top
-of it.  As an example, let's say you want to squash history from the
-67afe1 (the old root) to 7ef42b on the master branch:
-
-$ git checkout -b newroot 7ef42b
-$ git reset 67afe1
-$ git add .
-$ git commit --amend
-$ git checkout master
-$ git rebase --onto newroot 7ef42b
-
-    Ram
+Thanks, all of you who participated in the review process.
