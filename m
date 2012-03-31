@@ -1,79 +1,88 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 3/3] revision: insert unsorted, then sort in
- prepare_revision_walk()
-Date: Sat, 31 Mar 2012 16:45:21 -0700
-Message-ID: <7vlimgibce.fsf@alter.siamese.dyndns.org>
-References: <201203291818.49933.mfick@codeaurora.org>
- <7v7gy2q1kq.fsf@alter.siamese.dyndns.org>
- <60bff12d-544c-4fbd-b48a-0fdf44efaded@email.android.com>
- <20120330093207.GA12298@sigill.intra.peff.net>
- <20120330094052.GB12298@sigill.intra.peff.net>
- <4F7780F5.3060306@lsrfire.ath.cx>
+From: Seth Robertson <in-gitvger@baka.org>
+Subject: Re: push.default: current vs upstream
+Date: Sat, 31 Mar 2012 19:48:54 -0400
+Message-ID: <201203312348.q2VNmsmc015543@no.baka.org>
+References: <7vd37wv77j.fsf@alter.siamese.dyndns.org> <20120329095236.GA11911@sigill.intra.peff.net> <7vbonfqezs.fsf@alter.siamese.dyndns.org> <20120329221154.GA1413@sigill.intra.peff.net> <7vfwcqq2dw.fsf@alter.siamese.dyndns.org> <20120330071358.GB30656@sigill.intra.peff.net> <7vty15ltuo.fsf@alter.siamese.dyndns.org> <20120330210112.GA20734@sigill.intra.peff.net>
+        <CA+7g9JxK5DHj3vbdGgF2dEJxvn=_ZfjAv7Y+AL_P-aO1FVB6-w@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: TEXT/PLAIN; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jeff King <peff@peff.net>, Martin Fick <mfick@codeaurora.org>,
-	git@vger.kernel.org
-To: =?utf-8?Q?Ren=C3=A9?= Scharfe <rene.scharfe@lsrfire.ath.cx>
-X-From: git-owner@vger.kernel.org Sun Apr 01 01:46:00 2012
+Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+	git@vger.kernel.org, Matthieu Moy <Matthieu.Moy@imag.fr>
+To: Nathan Gray <n8gray@n8gray.org>
+X-From: git-owner@vger.kernel.org Sun Apr 01 01:49:14 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SE7za-0003kE-Uf
-	for gcvg-git-2@plane.gmane.org; Sun, 01 Apr 2012 01:45:59 +0200
+	id 1SE82j-00066X-Ke
+	for gcvg-git-2@plane.gmane.org; Sun, 01 Apr 2012 01:49:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752934Ab2CaXpY convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 31 Mar 2012 19:45:24 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:43447 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752849Ab2CaXpX convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 31 Mar 2012 19:45:23 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 10AEB74FC;
-	Sat, 31 Mar 2012 19:45:23 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=QQvEhUaD/qvF
-	bZ5hAAdo8K/6DWY=; b=MiNR3ztg6gDVFntOsMzPj9T1kOu4dF/JjbMSUGM+KmC2
-	Ix0sIpftlOUQuFVeJi1OtW9FM5BefNTW13Hy74o1Q3/r2jk+Bd3sVkeCpxvYsPB1
-	NLgdbdC2+Xhd6EpdUdruppyZAhjI2tNRLxM2ND8sGIqrqmJq6E2MNSbv/IGxx90=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=mbysLc
-	51L303BD4px01+9KybAKPlfur8lG+Ta07ZgfJAEbO5HoaMZaNFWIgfOwsrRmSY5l
-	bm6ajdXwxzKCbOaonlVORHj8Q1drQhkbK83ms+IFWYBN3GhdWh2p+O3OdNgj/bSw
-	PdhOwZsN4z8+aqTIcsLSi8TKhNxnToRrvpD6U=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 05FB474FB;
-	Sat, 31 Mar 2012 19:45:23 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 77BE674FA; Sat, 31 Mar 2012
- 19:45:22 -0400 (EDT)
-In-Reply-To: <4F7780F5.3060306@lsrfire.ath.cx> (=?utf-8?Q?=22Ren=C3=A9?=
- Scharfe"'s message of "Sun, 01 Apr 2012 00:11:01 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 94CDF5C2-7B8B-11E1-B897-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753274Ab2CaXtI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 31 Mar 2012 19:49:08 -0400
+X-Warning: Original message contained 8-bit characters, however during
+	   the SMTP transport session the receiving system did not announce
+	   capability of receiving 8-bit SMTP (RFC 1651-1653), and as this
+	   message does not have MIME headers (RFC 2045-2049) to enable
+	   encoding change, we had very little choice.
+X-Warning: We ASSUME it is less harmful to add the MIME headers, and
+	   convert the text to Quoted-Printable, than not to do so,
+	   and to strip the message to 7-bits.. (RFC 1428 Appendix A)
+X-Warning: We don't know what character set the user used, thus we had to
+	   write these MIME-headers with our local system default value.
+Received: from tsutomu.baka.org ([66.114.72.182]:41083 "EHLO tsutomu.baka.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752186Ab2CaXtH (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 31 Mar 2012 19:49:07 -0400
+Received: from no.baka.org (no.baka.org [IPv6:2001:470:88bb::2])
+	by tsutomu.baka.org (8.14.4/8.14.4) with ESMTP id q2VNmsAY023619
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Sat, 31 Mar 2012 19:48:54 -0400
+Received: from no.baka.org (localhost [127.0.0.1])
+	by no.baka.org (8.14.4/8.14.0) with ESMTP id q2VNmsmc015543;
+	Sat, 31 Mar 2012 19:48:54 -0400
+In-reply-to: <CA+7g9JxK5DHj3vbdGgF2dEJxvn=_ZfjAv7Y+AL_P-aO1FVB6-w@mail.gmail.com>
+Comments: In reply to a message from "Nathan Gray <n8gray@n8gray.org>" dated "Sat, 31 Mar 2012 15:49:09 -0700."
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194471>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194472>
 
-Ren=C3=A9 Scharfe <rene.scharfe@lsrfire.ath.cx> writes:
 
-> Speed up prepare_revision_walk() by adding commits without sorting
-> to the commit_list and at the end sort the list in one go.  Thanks
-> to mergesort() working behind the scenes, this is a lot faster for
-> large numbers of commits than the current insert sort.
+In message <CA+7g9JxK5DHj3vbdGgF2dEJxvn=3D_ZfjAv7Y+AL_P-aO1FVB6-w@mail.=
+gmail.com>, Nathan Gray writes:
 
-This is one of these moments I am reminded why I am grateful to have yo=
-u
-in the community.  The first message from you in a topic that needs to
-touch a quite core part of the system often is not a participation in t=
-he
-discussion, but is a solution that is already well crafted.
+    If a user does some work on his new "features/frobnitz" branch and
+    does a "git push" only to find that his work has been committed to =
+the
+    company's master branch he will be confused, frustrated, and public=
+ly
+    embarrassed.  He then has to apologize and figure out how to revert
+    the changes.  I really don't see any scenario where that user ends =
+up
+    saying "oh yeah, I guess git was right and I was wrong."
 
-Thanks, will queue.
+When working with a single remote, I tend to agree with you (though
+since I also think receive.denyDeletes should be on by default for
+shared repos the public humiliation of creating a branch when you did
+not mean to might still exist but of course it will be less damaging
+to others) .  However, tracking really comes into its own when working
+with multiple remotes.  Is creating a stumbling block between na=C3=AFv=
+e
+use and more sophisticated use really necessary?
+
+However, the current message for this use case could seem to be
+tweaked to take care of this:
+
+$ git branch BB origin/B
+Branch BB set up to track remote branch B from origin.
+
+Add "If you push your changes will go there."
+And "See git branch --upstream to modify both settings"
+
+This provides the power of tracking with smaller possibility of
+the type of embarrassment you envision.
+
+					-Seth Robertson
