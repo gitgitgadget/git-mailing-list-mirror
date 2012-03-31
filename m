@@ -1,179 +1,113 @@
-From: Neil Horman <nhorman@tuxdriver.com>
-Subject: Re: [PATCH 4/4] git-commit-interactive: Allow rebasing to preserve
- empty commits
-Date: Sat, 31 Mar 2012 09:11:16 -0400
-Message-ID: <20120331131116.GE2409@neilslaptop.think-freely.org>
-References: <1333136922-12872-1-git-send-email-nhorman@tuxdriver.com>
- <1333136922-12872-5-git-send-email-nhorman@tuxdriver.com>
- <7v4nt5lsa1.fsf@alter.siamese.dyndns.org>
+From: Neal Kreitzinger <nkreitzinger@gmail.com>
+Subject: Re: GSoC - Some questions on the idea of
+Date: Sat, 31 Mar 2012 10:19:54 -0500
+Message-ID: <4F77209A.8050607@gmail.com>
+References: <CA+M5ThS2iS-NMNDosk2oR25N=PMJJVTi1D=zg7MnMCUiRoX4BQ@mail.gmail.com> <CACsJy8APtMsMJ=FrZjOP=DbzuFoemSLJTmkjaiK5Wkq9XtA4rg@mail.gmail.com> <loom.20120328T131530-717@post.gmane.org> <CA+M5ThTPyic=RhFL2SvuNB0xBWOHxNTaUZrYMB144UjpjCiLoQ@mail.gmail.com> <20120330203430.GB20376@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Phil Hord <phil.hord@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Mar 31 15:11:59 2012
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Bo Chen <chen@chenirvine.org>, Sergio <sergio.callegari@gmail.com>,
+	git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sat Mar 31 17:20:15 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SDy62-0001ZP-J5
-	for gcvg-git-2@plane.gmane.org; Sat, 31 Mar 2012 15:11:58 +0200
+	id 1SE06A-00040V-EC
+	for gcvg-git-2@plane.gmane.org; Sat, 31 Mar 2012 17:20:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756392Ab2CaNLX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 31 Mar 2012 09:11:23 -0400
-Received: from charlotte.tuxdriver.com ([70.61.120.58]:42882 "EHLO
-	smtp.tuxdriver.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755053Ab2CaNLW (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 31 Mar 2012 09:11:22 -0400
-Received: from neilslaptop.think-freely.org ([2001:470:8:a08:4a5d:60ff:fe96:79da] helo=localhost)
-	by smtp.tuxdriver.com with esmtpsa (TLSv1:AES128-SHA:128)
-	(Exim 4.63)
-	(envelope-from <nhorman@tuxdriver.com>)
-	id 1SDy5N-0005kg-8j; Sat, 31 Mar 2012 09:11:19 -0400
-Content-Disposition: inline
-In-Reply-To: <7v4nt5lsa1.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-X-Spam-Score: -2.9 (--)
-X-Spam-Status: No
+	id S1760139Ab2CaPUB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 31 Mar 2012 11:20:01 -0400
+Received: from mail-ob0-f174.google.com ([209.85.214.174]:37122 "EHLO
+	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760057Ab2CaPUA (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 31 Mar 2012 11:20:00 -0400
+Received: by obbtb18 with SMTP id tb18so255474obb.19
+        for <git@vger.kernel.org>; Sat, 31 Mar 2012 08:19:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:newsgroups:to:cc
+         :subject:references:in-reply-to:content-type
+         :content-transfer-encoding;
+        bh=7Yg3DEBl5Wm1AIFF7xkipPio07RnnPDyzoQKP3JwC5s=;
+        b=Qr80JFMQeb2vBOA6+g5OOYFxhVz8zXF+g0tYWL2o2T8nM/8Cu2meYPoD0wvNpWUtvp
+         EzyXdL2EqBvFGrzcmOvdbaDMIcvmAxm4w/u0/j34LAn7CNhyrY/Wc4r659Sii4B6yOSq
+         Dgur/xcjtG6zM2pu/ZOsypd9VnmcQtPEyH4MaEbTyhRPImgRhSED5f/bjvkVKjaYqc+i
+         yo1pRqAc6OEV/WweFNBGEwHY8PKDQKjQKdzSjbBxoNUsMaf80gIn/AhVmNTcQX0Tb6zZ
+         giJQES+FKn27Dlto67uK6jsKsEO9/AxP51PCbn8zfU4QY0K/nKclJQJMo7nB0eORWchy
+         xwDA==
+Received: by 10.182.74.8 with SMTP id p8mr3164886obv.41.1333207199928;
+        Sat, 31 Mar 2012 08:19:59 -0700 (PDT)
+Received: from [172.25.2.210] ([67.63.162.200])
+        by mx.google.com with ESMTPS id c6sm9794709oec.13.2012.03.31.08.19.57
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sat, 31 Mar 2012 08:19:58 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.2.28) Gecko/20120306 Thunderbird/3.1.20
+Newsgroups: gmane.comp.version-control.git
+In-Reply-To: <20120330203430.GB20376@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194453>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194454>
 
-On Fri, Mar 30, 2012 at 01:59:02PM -0700, Junio C Hamano wrote:
-> Neil Horman <nhorman@tuxdriver.com> writes:
-> 
-> > This updates git-commit-interactive to recognize and make use of the keep_empty
-> > flag.  When not set, git-rebase -i will now comment out commits that are empty,
-> > and informs the user that commits which they wish to explicitly keep that are
-> > empty should be uncommented, or --keep-empty should be specified.  if keep_empty
-> > is specified, all commits, regardless of their empty status are included.
-> >
-> > Signed-off-by: Neil Horman <nhorman@tuxdriver.com>
-> > CC: Jeff King <peff@peff.net>
-> > CC: Phil Hord <phil.hord@gmail.com>
-> > CC: Junio C Hamano <gitster@pobox.com>
-> > ---
-> >  git-rebase--interactive.sh |   38 +++++++++++++++++++++++++++++++++++---
-> >  1 files changed, 35 insertions(+), 3 deletions(-)
-> >
-> > diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-> > index 5812222..97eeb21 100644
-> > --- a/git-rebase--interactive.sh
-> > +++ b/git-rebase--interactive.sh
-> > @@ -191,12 +191,24 @@ git_sequence_editor () {
-> >  
-> >  pick_one () {
-> >  	ff=--ff
-> > +	is_empty=$(git show --pretty=format:%b "$@" | wc -l)
-> 
-> That is a very expensive way to see if the commit is empty, no?
-> 
-> If and only if commit C is empty, "git rev-parse" on C^{tree} and
-> C^^{tree}" will yield the same tree object name.
-> 
-Ah, you see, I'm learning something :).  I can fix that up.
+On 3/30/2012 3:34 PM, Jeff King wrote:
+> On Fri, Mar 30, 2012 at 03:51:20PM -0400, Bo Chen wrote:
+>
+>> The sub-problems of "delta for large file" problem.
+>>
+>> 1 large file
+>>
+> Note that there are other problem areas with big files that can be
+> worked on, too. For example, some people want to store 100 gigabytes
+> in a repository.
 
-> > +	if [ $is_empty -eq 0 ]
-> 
-> Also this test (which by the way is against our coding style guideline)
-> shows that the variable is misnamed.
-> 
-Ok, sorry about that.  I'll switch that to use test
+I take it that you have in mind a 100G set of files comprised entirely
+of big-files that cannot be logically separated into smaller submodules?
 
-> > +	then
-> > +		empty_args=--keep-empty
-> > +	fi
-> > +
-> > +	if [ -n "$keep_empty" ]
-> > +	then
-> > +		empty_args=--keep_empty
-> > +	fi
-> > +
-> >  	case "$1" in -n) sha1=$2; ff= ;; *) sha1=$1 ;; esac
-> >  	case "$force_rebase" in '') ;; ?*) ff= ;; esac
-> >  	output git rev-parse --verify $sha1 || die "Invalid commit name: $sha1"
-> >  	test -d "$rewritten" &&
-> >  		pick_one_preserving_merges "$@" && return
-> > -	output git cherry-pick $ff "$@"
-> > +	output git cherry-pick $empty_args $ff "$@"
-> >  }
-> >  
-> >  pick_one_preserving_merges () {
-> > @@ -780,9 +792,24 @@ git rev-list $merges_option --pretty=oneline --abbrev-commit \
-> >  	sed -n "s/^>//p" |
-> >  while read -r shortsha1 rest
-> >  do
-> > +	local comment_out
-> 
-> bashism.
-> 
-Roger.
+My understanding is that a main strategy for "big files" is to separate
+your big-files logically into their own submodule(s) to keep them from
+bogging down the not-big-file repo(s).
 
-> > +
-> > +	if [ -z "$keep_empty" ]
-> > +	then
-> > +		comment_out=$(git show --pretty=format:%b $shortsha1 | wc -l)
-> 
-> Ditto.
-> 
-> > +		if [ $comment_out -eq 0 ]
-> > +		then
-> > +			comment_out="#pick"
-> 
-> Perhaps it is easier to read if you say "# pick"?
-> 
-Sure, easy enough fix
+Is one of the goals of big-file-support to make submodule strategizing 
+unconcerned about big-file groupings and only concerned about 
+logical-file groupings?  Big-file groupings are not necessarily logical 
+file groupings, but perhaps a technical file grouping subset of a 
+logical file grouping that is necessitated by big-file performance 
+considerations.  IOW, is the goal of big-file-support to make big-files 
+"just work" so that users don't have to think about graphics files, 
+binaries, etc, and just treat them like everything else?  Obviously, a 
+100G database file will always be a 'big-file' for the foreseeable 
+future, but a 0.5G graphics file is not a "big file" generally speaking 
+(as opposed to git-speaking).
 
-> > +		else
-> > +			comment_out="pick"
-> > +		fi
-> > +	else
-> > +		comment_out="pick"
-> > +	fi
-> > +
-> >  	if test t != "$preserve_merges"
-> >  	then
-> > -		printf '%s\n' "pick $shortsha1 $rest" >> "$todo"
-> > +		printf '%s\n' "$comment_out $shortsha1 $rest" >> "$todo"
-> 
-> The variable comment_out is grossly misnamed.  Why not do it this way?
-> 
-I think you meant to assign leader there instead of comment_out, but your point
-is a good one :).
+> Because git is distributed, that means 100G in the repo database,
+> and 100G in the working directory, for a total of 200G.
 
-> 	comment_out=
-> 	if test -z "$keep_empty" && is_empty_commit $shortsha1
->         then
->         	comment_out="# "
-> 	fi
-> 
->         if ...
->         then
-> 		printf "%s\n" "${leader}pick $shortsha1 $rest" >>"$todo"
-> 
-> > @@ -849,6 +876,11 @@ cat >> "$todo" << EOF
-> >  # If you remove a line here THAT COMMIT WILL BE LOST.
-> >  # However, if you remove everything, the rebase will be aborted.
-> >  #
-> > +# Note that commits which are empty at the time of rebasing are 
-> > +# commented out.  If you wish to keep empty commits, either 
-> > +# specify the --keep-empty option to the rebase command, or 
-> > +# uncomment the commits you wish to keep
-> > +#
-> 
-> Good.
-> 
-> I do not think " either specify...rebase command, or" is necessary here,
-> though.  This message is meant to be a quick reminder, not a tutorial.
-> Keep it short and sweet.
-> 
-Copy that, I'll tone down the verbosity.
+I take it that you are implying that the 100G object-store size is due
+to the notion that binary files cannot-be/are-not compressed well?
 
-> Also, you may probably want to add this text _only_ when you have actually
-> commented out something.
-> 
-Easily done.  thanks!
-Neil
+> People in this situation may want to be able to store part of the
+> repository database in a network-accessible location, trading some
+> of the convenience of being fully distributed for the space savings.
+> So another project could be designing a network-based alternate
+> object storage system.
+>
+I take it you are implying a local area network with users git repos on 
+workstations?
+
+In regards to "network-based alternate objects" that are in fact on the 
+internet they would need to first be cloned onto the local area network. 
+  Or are you imagining this would work for internet "network-based 
+alternate objects"?
+
+Some setups login to a linux server and have all their repos there.  The 
+"alternate objects" does not need to network-based in that case.  It is 
+"local", but local does not mean 20 people cloning the alternate objects 
+to their workstations.  It means one copy of alternate objects, and 
+twenty repos referencing that one copy.
+
+v/r,
+neal
