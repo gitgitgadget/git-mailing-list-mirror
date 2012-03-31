@@ -1,105 +1,107 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] var doc: advertise current DEFAULT_PAGER and
- DEFAULT_EDITOR settings
-Date: Sat, 31 Mar 2012 10:55:06 -0700
-Message-ID: <7v1uo8k64l.fsf@alter.siamese.dyndns.org>
-References: <20120330002543.2138.91961.reportbug@localhost6.localdomain6>
- <20120330005523.GA28519@burratino> <7v398qq1ei.fsf@alter.siamese.dyndns.org>
- <20120331084015.GC4119@burratino> <20120331084453.GE4119@burratino>
+Subject: Re: [PATCH] Use SHELL_PATH from build system in
+ run_command.c:prepare_shell_cmd
+Date: Sat, 31 Mar 2012 11:04:57 -0700
+Message-ID: <7vwr60ir3q.fsf@alter.siamese.dyndns.org>
+References: <7vvclmoit6.fsf@alter.siamese.dyndns.org>
+ <1333157601-6458-1-git-send-email-bwalton@artsci.utoronto.ca>
+ <20120331055520.GA7939@burratino> <7v62dkk6dl.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: "Rodrigo Silva \(MestreLion\)" <linux@rodrigosilva.com>,
-	git@vger.kernel.org, Ben Walton <bwalton@artsci.utoronto.ca>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Mar 31 19:55:16 2012
+Cc: peff@peff.net, j.sixt@viscovery.net, git@vger.kernel.org
+To: Jonathan Nieder <jrnieder@gmail.com>,
+	Ben Walton <bwalton@artsci.utoronto.ca>
+X-From: git-owner@vger.kernel.org Sat Mar 31 20:05:08 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SE2WB-0005dj-Rp
-	for gcvg-git-2@plane.gmane.org; Sat, 31 Mar 2012 19:55:16 +0200
+	id 1SE2fk-0004vV-65
+	for gcvg-git-2@plane.gmane.org; Sat, 31 Mar 2012 20:05:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751494Ab2CaRzL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 31 Mar 2012 13:55:11 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:60896 "EHLO
+	id S1751615Ab2CaSFD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 31 Mar 2012 14:05:03 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64507 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751493Ab2CaRzJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 31 Mar 2012 13:55:09 -0400
+	id S1751568Ab2CaSFA (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 31 Mar 2012 14:05:00 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1141563AF;
-	Sat, 31 Mar 2012 13:55:09 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3F2476559;
+	Sat, 31 Mar 2012 14:05:00 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=mhpgg8dmoPfi7TixVUi37paRs98=; b=skAHWY
-	iXQ9WDLZRilvKQcE59EawmKJeM1tZSemo0HXQiWMHlWBZIkKuj2pKoKvCeXw/wv9
-	7MaA1mRXlbxUHUR9MlNAeBYSw0CES18sh8DKGG8vGn6j6859g5B56M32ryKNbgYa
-	81+NQMjUKeG1maSZq+ZxH0xneeqbD9ONtUiKo=
+	:content-type; s=sasl; bh=iO2FcMGKsxB/OTl3TxthUuaKXmI=; b=YIvGbG
+	ZVyu4WhP4+ofslv0sZVQ7R35ZODstHQ2RjzHwl1Zp4Qtul6kpEU49JcP9GPzCNyU
+	AG3pnes4dnGUuBx8E3OXV/1RdQ1WZcfjbTxjJCPn+SLPOxpe8kphxlUznure0DoY
+	m01w/8GIuG+NwU/VJbqmqwuODhep+/AXhYUFg=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=yIzzmB7Vh5ajFOODBc6mZFE3WstkM/9l
-	AgPQy6uXQYqw2D5ErsDlzRoAJEya2wglhpSX6l4YQyXjOzGC2fsVov24WEv99u2x
-	hJAcSu13EI1BOLOY46aNBVFVbVfgG9HtuIuTGbZC7vbG+xFWe/FKQQFRWQjJHUIt
-	lxMsfP0cXHk=
+	:content-type; q=dns; s=sasl; b=JUCAU4GsCHQZiXtZ9AAZ6x6cNZQPavNf
+	gLa7cOvWX8Mc2r/dBJ9LLi1AScCvegXRHoEHNkh+Consd/s+JTHIx0Z2R7H/jfaZ
+	dp9ZoemK3/lX58DoJ2LEi85AyNABQfAwA9cS8ys+pG5BzC0TDmanLuAKkMOlzDb0
+	JeXES6YaDnc=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0920463AE;
-	Sat, 31 Mar 2012 13:55:09 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3412D6558;
+	Sat, 31 Mar 2012 14:05:00 -0400 (EDT)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 830D963AA; Sat, 31 Mar 2012
- 13:55:07 -0400 (EDT)
-In-Reply-To: <20120331084453.GE4119@burratino> (Jonathan Nieder's message of
- "Sat, 31 Mar 2012 03:44:53 -0500")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id BC2BA6556; Sat, 31 Mar 2012
+ 14:04:59 -0400 (EDT)
+In-Reply-To: <7v62dkk6dl.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Sat, 31 Mar 2012 10:49:42 -0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: A6EA90DE-7B5A-11E1-A70C-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 07EA5616-7B5C-11E1-B580-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194458>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194459>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> Document the default pager and editor chosen at compile time in the
-> git-var(1) manpage so users curious about what command _this_ copy of
-> git will fall back to when EDITOR, VISUAL, and PAGER are unset can
-> find the answer quickly.
+> Jonathan Nieder <jrnieder@gmail.com> writes:
+> ...
+>> -run-command.o: EXTRA_CPPFLAGS = -DSHELL_PATH='"$(SHELL_PATH_SQ)"'
+>> +run-command.sp run-command.s run-command.o: EXTRA_CPPFLAGS = \
+>> +	'-DSHELL_PATH="$(SHELL_PATH_SQ)"'
+>>  
+>>  $(BUILT_INS): git$X
+>>  	$(QUIET_BUILT_IN)$(RM) $@ && \
 >
-> In builds leaving those settings uncustomized, this patch makes the
-> manpage continue to say "usually vi" and "usually less" so the
-> formatted documentation is usable for a wide audience including users
-> of custom builds that change those settings.  If you would like your
-> copy of the docs to be less noncommittal, you will need to set
-> DEFAULT_PAGER=less and DEFAULT_EDITOR=vi explicitly.
+> Actually, I do not think this is sufficient, and it happens that you and I
+> are in the best position to realize it ;-).
 >
-> Suggested-by: Junio C Hamano <gitster@pobox.com>
-> Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
-> ---
-> Thanks for reading.
+> Look at what is done in the Makefile for DEFAULT_EDITOR and DEFAULT_PAGER,
+> and compare with what the above is doing, and think why the EDITOR/PAGER
+> needs to have another level of quoting.
 
-Thanks for a patch.
+In other words, something like this squashed into Ben's patch...
 
-I think the Makefile patch to use "-a" takes the right approach (assuming
-that the name of the EDITOR/PAGER won't have funny character that would
-trip up AsciiDoc, which I think is a reasonably assumption), but I think
-even the customized package should say what it is "usually" set on other
-people's systems.
-
-In other words, instead of:
-
->      `$VISUAL`, then `$EDITOR`, and then the default chosen at compile
-> +ifndef::git-default-editor[]
->      time, which is usually 'vi'.
-> +endif::git-default-editor[]
-> +ifdef::git-default-editor[]
-> +    time ('{git-default-editor}').
-> +endif::git-default-editor[]
-
-something like:
-
-	... then the default chosen at compile time, which is usually 'vi'.
-ifdef::git-default-editor[]
-	The build you are using chose '{git-default-editor}' as the default.
-endif::git-default-editor[]
-
-may be less confusing.
+diff --git i/Makefile w/Makefile
+index dea1f15..abee43e 100644
+--- i/Makefile
++++ w/Makefile
+@@ -1849,6 +1849,13 @@ DEFAULT_PAGER_CQ_SQ = $(subst ','\'',$(DEFAULT_PAGER_CQ))
+ BASIC_CFLAGS += -DDEFAULT_PAGER='$(DEFAULT_PAGER_CQ_SQ)'
+ endif
+ 
++ifdef SHELL_PATH
++SHELL_PATH_CQ = "$(subst ",\",$(subst \,\\,$(SHELL_PATH)))"
++SHELL_PATH_CQ_SQ = $(subst ','\'',$(SHELL_PATH_CQ))
++
++BASIC_CFLAGS += -DSHELL_PATH='$(SHELL_PATH_CQ_SQ)'
++endif
++
+ ALL_CFLAGS += $(BASIC_CFLAGS)
+ ALL_LDFLAGS += $(BASIC_LDFLAGS)
+ 
+@@ -1913,8 +1920,6 @@ builtin/help.sp builtin/help.s builtin/help.o: EXTRA_CPPFLAGS = \
+ 	'-DGIT_MAN_PATH="$(mandir_SQ)"' \
+ 	'-DGIT_INFO_PATH="$(infodir_SQ)"'
+ 
+-run-command.o: EXTRA_CPPFLAGS = -DSHELL_PATH='"$(SHELL_PATH_SQ)"'
+-
+ $(BUILT_INS): git$X
+ 	$(QUIET_BUILT_IN)$(RM) $@ && \
+ 	ln git$X $@ 2>/dev/null || \
