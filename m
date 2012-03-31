@@ -1,49 +1,72 @@
-From: "John M. Dlugosz" <ngnr63q02@sneakemail.com>
-Subject: Purging old history
-Date: Fri, 30 Mar 2012 23:25:08 -0500
-Message-ID: <17650-1333167969-40275@sneakemail.com>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: Purging old history
+Date: Sat, 31 Mar 2012 10:13:43 +0530
+Message-ID: <CALkWK0=mcQR3CBMpa5P1f+JwqNMqUs3D4=tVPx4c_4R+TXCKbw@mail.gmail.com>
+References: <17650-1333167969-40275@sneakemail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
-	format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Mar 31 06:33:30 2012
+Cc: git@vger.kernel.org
+To: "John M. Dlugosz" <ngnr63q02@sneakemail.com>
+X-From: git-owner@vger.kernel.org Sat Mar 31 06:44:14 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SDq0H-0002RJ-KX
-	for gcvg-git-2@plane.gmane.org; Sat, 31 Mar 2012 06:33:29 +0200
+	id 1SDqAf-00010A-Eh
+	for gcvg-git-2@plane.gmane.org; Sat, 31 Mar 2012 06:44:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751282Ab2CaEcw convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 31 Mar 2012 00:32:52 -0400
-Received: from sneak2.sneakemail.com ([38.113.6.65]:36942 "HELO
-	sneak2.sneakemail.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with SMTP id S1751245Ab2CaEcv (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 31 Mar 2012 00:32:51 -0400
-X-Greylist: delayed 400 seconds by postgrey-1.27 at vger.kernel.org; Sat, 31 Mar 2012 00:32:51 EDT
-Received: (qmail 10019 invoked from network); 31 Mar 2012 04:26:09 -0000
-Received: from unknown (HELO localhost.localdomain) (192.168.0.1)
-  by sneak2.sneakemail.com with SMTP; 31 Mar 2012 04:26:09 -0000
-Received: from 207.58.245.194 by mail.sneakemail.com with SMTP;
- 31 Mar 2012 04:26:09 -0000
-Received: (sneakemail censored 17650-1333167969-40275 #1); 31 Mar 2012
- 04:26:09 -0000
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.2; en-US; rv:1.8.1.24)
- Gecko/20100228 Thunderbird/2.0.0.24 Mnenhy/0.7.5.666
-X-Mailer: Perl5 Mail::Internet v
+	id S1751370Ab2CaEoH convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 31 Mar 2012 00:44:07 -0400
+Received: from mail-wg0-f44.google.com ([74.125.82.44]:41497 "EHLO
+	mail-wg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750748Ab2CaEoG convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 31 Mar 2012 00:44:06 -0400
+Received: by wgbdr13 with SMTP id dr13so1129871wgb.1
+        for <git@vger.kernel.org>; Fri, 30 Mar 2012 21:44:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=XInccFdG6uUYYZ6rVOs7wJkIB0p+T4smQveSUiaTbEA=;
+        b=fo1U+b6KKPNtqVxAj0pvJYHZK7jvJbnaJw54InbQdEC2qJOyQMZagHSYNnvWCYzG5O
+         D3QF709bzzLjvh+3Dganm22IHem6bXRipQp6GEHjK/36QikOTwoBE4o2rpPuXrEtr9iT
+         oJKDkIWzsGFYVlAeS33eIC0D/9iYYS/b3EuhM3Hbn9lvHpesfb6pquim6JoRZ5ZGS4IG
+         TM5argZEMYntZXQ5MwzY3hwyOlv9Y6pNpvCbrglHqlB+Gtw6T9xcZmku/NpexhajalVR
+         A6h6o11Wnsodcq0RvaU/WjPC40dWT4dPL1Vh2+bnGntkElTNHXacZHeNve/M5SHcABsh
+         i1lg==
+Received: by 10.180.102.129 with SMTP id fo1mr3062022wib.6.1333169044008; Fri,
+ 30 Mar 2012 21:44:04 -0700 (PDT)
+Received: by 10.216.11.199 with HTTP; Fri, 30 Mar 2012 21:43:43 -0700 (PDT)
+In-Reply-To: <17650-1333167969-40275@sneakemail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194431>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194432>
 
-Is there a simple way to delete old commits, say beyond a certain age, =
-before putting it=20
-on the server?  The ancient stuff is not relevant and there are a lot o=
-f binaries.  Some=20
-users may have trouble with an extensive download when syncing the firs=
-t time.
+Hi John,
 
-=E2=80=94John
+John M. Dlugosz wrote:
+> Is there a simple way to delete old commits, say beyond a certain age=
+,
+> before putting it on the server? =C2=A0The ancient stuff is not relev=
+ant and
+> there are a lot of binaries. =C2=A0Some users may have trouble with a=
+n extensive
+> download when syncing the first time.
+
+Yes, although your terminology is wrong: it's not about "deleting"
+commits; simply create a fresh root commit and rebase your work on top
+of it.  As an example, let's say you want to squash history from the
+67afe1 (the old root) to 7ef42b on the master branch:
+
+$ git checkout -b newroot 7ef42b
+$ git reset 67afe1
+$ git add .
+$ git commit --amend
+$ git checkout master
+$ git rebase --onto newroot 7ef42b
+
+    Ram
