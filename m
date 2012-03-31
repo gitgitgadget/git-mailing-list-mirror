@@ -1,95 +1,92 @@
-From: Neal Kreitzinger <nkreitzinger@gmail.com>
-Subject: Re: GSoC - Some questions on the idea of
-Date: Sat, 31 Mar 2012 11:49:59 -0500
-Message-ID: <4F7735B7.1050707@gmail.com>
-References: <CA+M5ThS2iS-NMNDosk2oR25N=PMJJVTi1D=zg7MnMCUiRoX4BQ@mail.gmail.com> <CACsJy8APtMsMJ=FrZjOP=DbzuFoemSLJTmkjaiK5Wkq9XtA4rg@mail.gmail.com> <loom.20120328T131530-717@post.gmane.org> <CA+M5ThTPyic=RhFL2SvuNB0xBWOHxNTaUZrYMB144UjpjCiLoQ@mail.gmail.com> <20120330203430.GB20376@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Use SHELL_PATH from build system in
+ run_command.c:prepare_shell_cmd
+Date: Sat, 31 Mar 2012 10:49:42 -0700
+Message-ID: <7v62dkk6dl.fsf@alter.siamese.dyndns.org>
+References: <7vvclmoit6.fsf@alter.siamese.dyndns.org>
+ <1333157601-6458-1-git-send-email-bwalton@artsci.utoronto.ca>
+ <20120331055520.GA7939@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Bo Chen <chen@chenirvine.org>, Sergio <sergio.callegari@gmail.com>,
-	git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Mar 31 18:50:12 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Ben Walton <bwalton@artsci.utoronto.ca>, peff@peff.net,
+	j.sixt@viscovery.net, gitster@pobox.com, git@vger.kernel.org
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Mar 31 19:50:30 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SE1VC-00029W-Fi
-	for gcvg-git-2@plane.gmane.org; Sat, 31 Mar 2012 18:50:10 +0200
+	id 1SE2RX-0001w1-Rr
+	for gcvg-git-2@plane.gmane.org; Sat, 31 Mar 2012 19:50:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751058Ab2CaQuF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 31 Mar 2012 12:50:05 -0400
-Received: from mail-ob0-f174.google.com ([209.85.214.174]:54869 "EHLO
-	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750900Ab2CaQuD (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 31 Mar 2012 12:50:03 -0400
-Received: by obbtb18 with SMTP id tb18so321641obb.19
-        for <git@vger.kernel.org>; Sat, 31 Mar 2012 09:50:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:newsgroups:to:cc
-         :subject:references:in-reply-to:content-type
-         :content-transfer-encoding;
-        bh=DZeMaBvO3WxSbvruG+zI+mrlyQX1NoHV7LwqMG5xHic=;
-        b=nV3kcRU3B4oZGMXmOrBcB93DcbHcuSayk9or/fvD22grSh/L30M7IVVLRHUUEySI8P
-         0eNRr3oetFamhhyiaXsuLLzVjBDUEzvr2v4KJKUc95cqC+9g7vzbLinaqBsWkI/EBGG0
-         5Xb2FsGLdvVSSBznrkMp4XaB2aNAvBkwRhe82xcnWmy9HQuyabaD26NZHlAQmt/Uu3iK
-         jUWoJFalPgz6aENAGarNdc9vTiZTVEp0znEgSge2hCS85yNL7C8b3LW/fQikEBaNiXir
-         aJjmXk4B6uMuOooDykyhD1zZqXgTZ2zMSUsgiIEIDiiRCsHZuSFS6rjnYZHltnw32iAC
-         UcaA==
-Received: by 10.60.22.70 with SMTP id b6mr3496882oef.5.1333212603166;
-        Sat, 31 Mar 2012 09:50:03 -0700 (PDT)
-Received: from [172.25.2.210] ([67.63.162.200])
-        by mx.google.com with ESMTPS id uu10sm1051973obb.1.2012.03.31.09.50.02
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sat, 31 Mar 2012 09:50:02 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.2.28) Gecko/20120306 Thunderbird/3.1.20
-Newsgroups: gmane.comp.version-control.git
-In-Reply-To: <20120330203430.GB20376@sigill.intra.peff.net>
+	id S1751443Ab2CaRtq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 31 Mar 2012 13:49:46 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59250 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751427Ab2CaRtp (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 31 Mar 2012 13:49:45 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3F1846301;
+	Sat, 31 Mar 2012 13:49:44 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=vPYkaT9CwW1p3QlN1K8cewsjJr4=; b=UqBK//
+	tyFvjyXvz+2pp+CC6u5uB3Ua0Id5eLnB8D3m/aPdF1td8BIzq1rdZz0gKt5vu0wd
+	V3GJUTAG301ZkNNqbmIdyT87h8sySpj2IklJKDU93DKhsYbqlCOSeB1uxhiQh9+r
+	wPFHZbi76wsiFf16ZXkmP0orTSIBVK8zxVuxY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=HWald0XOHhaL2TK5iOZO4cbgcJsCAIjg
+	4MtCWdaQtUXPODxgq+agyrC/7HxN6sWH0uJON6BmitGIUy5aDLkoSCTJWVzQLAJ0
+	SXcuAvwt5kwDiIwapcVFiEfVSKIugPw9CazROp3EOrUC9eVKzN9v5np7KbzPv7Nf
+	Vj4tapOUXlI=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 364AD6300;
+	Sat, 31 Mar 2012 13:49:44 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B892262FE; Sat, 31 Mar 2012
+ 13:49:43 -0400 (EDT)
+In-Reply-To: <20120331055520.GA7939@burratino> (Jonathan Nieder's message of
+ "Sat, 31 Mar 2012 00:55:20 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: E5EFF05E-7B59-11E1-A1EE-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194456>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194457>
 
-On 3/30/2012 3:34 PM, Jeff King wrote:
-> On Fri, Mar 30, 2012 at 03:51:20PM -0400, Bo Chen wrote:
->
->> The sub-problems of "delta for large file" problem.
->>
->> 1 large file
->>
->> 1.1 text file (always delta well? need to be confirmed)
->
-> ...But let's take a step back for a moment. Forget about whether a file
-> is binary or not. Imagine you want to store a very large file in
-> git.
->
-> ...Nowadays, we stream large files directly into their own packfiles,
-> and we have to pay the I/O only once (and the memory cost never). As
-> a tradeoff, we no longer get delta compression of large objects.
-> That's OK for some large objects, like movie files (which don't tend
-> to delta well, anyway). But it's not for other objects, like virtual
-> machine images, which do tend to delta well.
->
-> So can we devise a solution which efficiently stores these
-> delta-friendly objects, without losing the performance improvements
-> we got with the stream-directly-to-packfile approach?
->
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-gitconfig or gitattributes could specify big-file handlers for 
-filetypes.  It seems a bit ridiculous to expect git to autoconfigure 
-big-file handlers for everything from gif's to vm-images.  In the case 
-of vm-images you would need to read the "big-files" man-page and then 
-configure your git for the "vm image handler" for whatever your vm-image 
-wildcards are for those files.  For movie files you would also read the 
-big-file man-page and configure "movie file 'x' big file handler' for 
-whatever your movie file wildcards are.  Movie files and vm-images are 
-very expectable (version control) but not very normative (source code 
-management) so you need to configure those as needed.  More 
-widely-tracked-by-the-public-at-large files like gif, png, etc, could be 
-autoconfigured by git to used the correct big-file handler.
+> Sorry I forgot to send this before.  Quick tweaks:
+>
+>  - let assembler listings (from "make run-command.s") and sparse checks
+>    reflect the SHELL_PATH setting, too
+>
+>  - the entire -DFOO="bar" argument is surrounded with single quotes
+>    in other EXTRA_CPPFLAGS settings, so let this one follow that
+>    pattern to avoid standing out
+>
+> diff --git i/Makefile w/Makefile
+> index dea1f157..a3791139 100644
+> --- i/Makefile
+> +++ w/Makefile
+> @@ -1913,7 +1913,8 @@ builtin/help.sp builtin/help.s builtin/help.o: EXTRA_CPPFLAGS = \
+>  	'-DGIT_MAN_PATH="$(mandir_SQ)"' \
+>  	'-DGIT_INFO_PATH="$(infodir_SQ)"'
+>  
+> -run-command.o: EXTRA_CPPFLAGS = -DSHELL_PATH='"$(SHELL_PATH_SQ)"'
+> +run-command.sp run-command.s run-command.o: EXTRA_CPPFLAGS = \
+> +	'-DSHELL_PATH="$(SHELL_PATH_SQ)"'
+>  
+>  $(BUILT_INS): git$X
+>  	$(QUIET_BUILT_IN)$(RM) $@ && \
 
-v/r,
-neal
+Actually, I do not think this is sufficient, and it happens that you and I
+are the best position to realize it ;-).
+
+Look at what is done in the Makefile for DEFAULT_EDITOR and DEFAULT_PAGER,
+and compare with what the above is doing, and think why the EDITOR/PAGER
+needs to have another level of quoting.
