@@ -1,139 +1,85 @@
-From: Neal Kreitzinger <nkreitzinger@gmail.com>
-Subject: Re: GSoC - Some questions on the idea of
-Date: Sat, 31 Mar 2012 15:28:06 -0500
-Message-ID: <4F7768D6.3010400@gmail.com>
-References: <CA+M5ThS2iS-NMNDosk2oR25N=PMJJVTi1D=zg7MnMCUiRoX4BQ@mail.gmail.com> <CACsJy8APtMsMJ=FrZjOP=DbzuFoemSLJTmkjaiK5Wkq9XtA4rg@mail.gmail.com> <loom.20120328T131530-717@post.gmane.org> <CA+M5ThTPyic=RhFL2SvuNB0xBWOHxNTaUZrYMB144UjpjCiLoQ@mail.gmail.com> <20120330203430.GB20376@sigill.intra.peff.net>
+From: Phil Hord <phil.hord@gmail.com>
+Subject: Re: [PATCH] Documentation: replace 'vi' for 'editor' to reflect
+ build-time option
+Date: Sat, 31 Mar 2012 16:29:47 -0400
+Message-ID: <CABURp0o06PsOWznpDh+c_YngLf74jO-qJeqmmwqRyqcU92HyYg@mail.gmail.com>
+References: <20120330002543.2138.91961.reportbug@localhost6.localdomain6>
+ <20120330005523.GA28519@burratino> <7v398qq1ei.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Bo Chen <chen@chenirvine.org>, Sergio <sergio.callegari@gmail.com>,
-	git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Mar 31 22:28:24 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	"Rodrigo Silva (MestreLion)" <linux@rodrigosilva.com>,
+	git@vger.kernel.org, Ben Walton <bwalton@artsci.utoronto.ca>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Mar 31 22:30:15 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SE4uI-0002dW-KM
-	for gcvg-git-2@plane.gmane.org; Sat, 31 Mar 2012 22:28:19 +0200
+	id 1SE4wA-00048L-79
+	for gcvg-git-2@plane.gmane.org; Sat, 31 Mar 2012 22:30:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750903Ab2CaU2O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 31 Mar 2012 16:28:14 -0400
-Received: from mail-ob0-f174.google.com ([209.85.214.174]:35637 "EHLO
-	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752166Ab2CaU2N (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 31 Mar 2012 16:28:13 -0400
-Received: by obbtb18 with SMTP id tb18so470734obb.19
-        for <git@vger.kernel.org>; Sat, 31 Mar 2012 13:28:12 -0700 (PDT)
+	id S1752095Ab2CaUaK convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 31 Mar 2012 16:30:10 -0400
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:38967 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751342Ab2CaUaI convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 31 Mar 2012 16:30:08 -0400
+Received: by ghrr11 with SMTP id r11so834317ghr.19
+        for <git@vger.kernel.org>; Sat, 31 Mar 2012 13:30:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:newsgroups:to:cc
-         :subject:references:in-reply-to:content-type
-         :content-transfer-encoding;
-        bh=FhTLrHjXi0b7GrXQXzBeMMxhrm7kpcfG6mmxMeSYE5Y=;
-        b=E6202FlVqpSmiVGEP+muG5/oVqjlfBDxqNOYWxvXiVWZmIaLWiS18JBywxX4UdvPgl
-         GUFpnmYsBpa0xzQpMVqvrZ4Yf/xS8QV92JrOkDGkffjKIwYHguTlTltSxyDzAUF+5B9P
-         b2Ht0uUNRNGPbvzj9luubJvJ/zJFlo4sJF7fAg06IUMsLEJmazbh6NfuE48YChCfXXz8
-         Cqrq1QS4v/64pKIbAwmVr93d2iKH1d+lA7xjdEiMzGLONwPowCIrRggoXIOsJQ4RSLL5
-         RURpY25ZIHMmg5MOVXe+E45hlup6dWo/aPmgNWzjqfkCG486buC0idHWdKsGNNrqM+WJ
-         oq9w==
-Received: by 10.60.25.162 with SMTP id d2mr4243677oeg.30.1333225692747;
-        Sat, 31 Mar 2012 13:28:12 -0700 (PDT)
-Received: from [172.25.2.210] ([67.63.162.200])
-        by mx.google.com with ESMTPS id vk10sm13105359obb.8.2012.03.31.13.28.11
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sat, 31 Mar 2012 13:28:11 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.2.28) Gecko/20120306 Thunderbird/3.1.20
-Newsgroups: gmane.comp.version-control.git
-In-Reply-To: <20120330203430.GB20376@sigill.intra.peff.net>
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=FlvH9N4JTlgAe7tSaOvI1bFE9gzGz59zIDS5O395r18=;
+        b=PAttMpgLhaEFXdvsP5jzOVyS15Ql8lt6rQPSpOMcBYDzR5IurJ6835Q2o5gm82oMYL
+         O0ZlAr0z0POhBcL+SFdMGZQMIIyuel4E2dgw2ExcUJ3UkbKaflGykCSYDk2W7EVik5Qo
+         zK4TbUPFuSDeWon2b7IGBOrqrD/+P7LDFY72NlSYFAtTQxDEMK5b5i4Na0qsYYSjbAtP
+         Qrq/+9E+2tvuZqb9bLnLoG8DrdlmMjuxjfPleO4w24Lvjng0PNi2YLBBFeU/7vMq3/5J
+         8o++8f9rnFRzjSqb1hNWx6G/8du2OiyI7V8e4TsT3EWO+JSagvnr5DN/PrsD8ENMod0R
+         GW5A==
+Received: by 10.236.175.36 with SMTP id y24mr2524974yhl.64.1333225807760; Sat,
+ 31 Mar 2012 13:30:07 -0700 (PDT)
+Received: by 10.146.207.6 with HTTP; Sat, 31 Mar 2012 13:29:47 -0700 (PDT)
+In-Reply-To: <7v398qq1ei.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194463>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194464>
 
-On 3/30/2012 3:34 PM, Jeff King wrote:
-> On Fri, Mar 30, 2012 at 03:51:20PM -0400, Bo Chen wrote:
+On Thu, Mar 29, 2012 at 10:16 PM, Junio C Hamano <gitster@pobox.com> wr=
+ote:
+> Jonathan Nieder <jrnieder@gmail.com> writes:
 >
->> The sub-problems of "delta for large file" problem.
+>> Filling in the blank at compile time would be possible, but I'm not
+>> convinced it's a good idea. =A0Wouldn't the same user be just as puz=
+zled
+>> when
 >>
->> 1 large file
+>> =A0 http://git.kernel.org/?p=3Dgit/git-htmldocs.git;a=3Dblob_plain;f=
+=3Dgit-var.html
 >>
-> But let's take a step back for a moment. Forget about whether a file is
-> binary or not. Imagine you want to store a very large file in git.
+>> (or whatever page with a nicer URL arises to replace the old
+>> www.kernel.org/... =A0pages) says the fallback is 'vi' and git behav=
+es
+>> differently?
 >
-> What are the operations that will perform badly? How can we make them
-> perform acceptably, and what tradeoffs must we make? E.g., the way the
-> diff code is written, it would be very difficult to run "git diff" on a
-> 2 gigabyte file. But is that actually a problem? Answering that means
-> talking about the characteristics of 2 gigabyte files, and what we
-> expect to see, and to what degree our tradeoffs will impact them.
->
-> Here's a more concrete example. At first, even storing a 2 gigabyte file
-> with "git add" was painful, because we would load the whole thing in
-> memory. Repacking the repository was painful, because we had to rewrite
-> the whole 2G file into a packfile. Nowadays, we stream large files
-> directly into their own packfiles, and we have to pay the I/O only once
-> (and the memory cost never). As a tradeoff, we no longer get delta
-> compression of large objects. That's OK for some large objects, like
-> movie files (which don't tend to delta well, anyway). But it's not for
-> other objects, like virtual machine images, which do tend to delta well.
->
-> So can we devise a solution which efficiently stores these
-> delta-friendly objects, without losing the performance improvements we
-> got with the stream-directly-to-packfile approach?
->
-> One possible solution is breaking large files into smaller chunks using
-> something like the bupsplit algorithm (and I won't go into the details
-> here, as links to bup have already been mentioned elsewhere, and Junio's
-> patches make a start at this sort of splitting).
->
-(I'm no expert on "big-files" in git or elsewhere, but this thread is 
-immensely interesting to me as a git user who wants to track all sorts 
-of binary files and possibly large text files in the very near future, 
-ie. all components tied to a server build and upgrades beyond the 
-linux-distro/rpms and perhaps including them also.)
+> I've already rejected this patch once, but that was primarily because=
+ the
+> patch was not justified with the above "I read everybody else's git u=
+ses
+> 'vi' on the Interweb, and even though my distro's manual page says it=
+ uses
+> 'nano', I didn't bother to read it." scenario.
 
-Let's take an even bigger step back for a moment.  Who determines if a 
-file shall be a big-file or not?  Git or the user?  How is it determined 
-if a file shall be a "big-file" or not?
+I like this original patch, and I like being able to refer to "the"
+online docs wherever I and google may happen to find them.
 
-Who decides bigness:
-Bigness seems to be relative to system resources.  Does the user crunch 
-the numbers to determine if a file is big-file, or does git?  If the 
-numbers are relative then should git query the system and make the 
-determination?  Either way, once the system-resources are upgraded and 
-formerly "big-files" are no longer considered "big" how is the previous 
-history refactored to behave "non-big-file-like"?  Conversely, if the 
-system-resources are re-distributed so that formerly non-big files are 
-now relatively big (ie, moved from powerful central server login to 
-laptops), how is the history refactored to accommodate the 
-newly-relative-bigness?
+Because "my distro" may be a resource-constrained minimal OS which
+omitted the git manual.  The same system for similar reasons may
+default to 'nano' & 'more' if vi and less are unavailable.
 
-How bigness is decided:
-There seems to be two basic types of big-files:  big-worktree-files, and 
-big-history-files.  A big-worktree-file that is delta-friendly is not a 
-big-history-file.  A non-big-worktree-file that is delta-unfriendly is a 
-big-file-history problem.  If you are working alone on an old computer 
-you are probably more concerned about big-worktree-files (memory).  If 
-you are working in a large group making lots of changes to the same 
-files on a powerful server then you are probably more concerned about 
-big-history-file-size (diskspace).  Of course, all are concerned about 
-big-worktree-files that are delta-unfriendly.
-
-At what point is a delta-friendly file considered a "big-file"?  I 
-assume that may depend on the degree delta-friendliness.  I imagine that 
-a text file and vm-image differ in delta-friendliness by several degrees.
-
-At what point(s) is a delta-unfriendly file considered a "big-file"?  I 
-assume that may depend on the degree(s) of delta-unfriendliness.  I 
-imagine a compiled program and compressed-container differ in 
-delta-unfriendliness by several degrees.
-
-My understanding is that git does not ever delta-compress binary files. 
-  That would mean even a small-worktree-binary-file becomes a 
-big-history-file over time.
-
-v/r,
-neal
+Phil
