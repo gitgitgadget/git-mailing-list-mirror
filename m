@@ -1,107 +1,69 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Use SHELL_PATH from build system in
- run_command.c:prepare_shell_cmd
-Date: Sat, 31 Mar 2012 11:04:57 -0700
-Message-ID: <7vwr60ir3q.fsf@alter.siamese.dyndns.org>
-References: <7vvclmoit6.fsf@alter.siamese.dyndns.org>
- <1333157601-6458-1-git-send-email-bwalton@artsci.utoronto.ca>
- <20120331055520.GA7939@burratino> <7v62dkk6dl.fsf@alter.siamese.dyndns.org>
+From: Sebastian Schuberth <sschuberth@gmail.com>
+Subject: Re: Git push to samba/cifs share fails
+Date: Sat, 31 Mar 2012 20:47:40 +0200
+Message-ID: <4F77514C.10205@gmail.com>
+References: <4F75DDF9.8060305@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: peff@peff.net, j.sixt@viscovery.net, git@vger.kernel.org
-To: Jonathan Nieder <jrnieder@gmail.com>,
-	Ben Walton <bwalton@artsci.utoronto.ca>
-X-From: git-owner@vger.kernel.org Sat Mar 31 20:05:08 2012
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Emanuel Rietveld <codehotter@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Mar 31 20:48:00 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SE2fk-0004vV-65
-	for gcvg-git-2@plane.gmane.org; Sat, 31 Mar 2012 20:05:08 +0200
+	id 1SE3LE-0005kL-Cw
+	for gcvg-git-2@plane.gmane.org; Sat, 31 Mar 2012 20:48:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751615Ab2CaSFD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 31 Mar 2012 14:05:03 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64507 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751568Ab2CaSFA (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 31 Mar 2012 14:05:00 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3F2476559;
-	Sat, 31 Mar 2012 14:05:00 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=iO2FcMGKsxB/OTl3TxthUuaKXmI=; b=YIvGbG
-	ZVyu4WhP4+ofslv0sZVQ7R35ZODstHQ2RjzHwl1Zp4Qtul6kpEU49JcP9GPzCNyU
-	AG3pnes4dnGUuBx8E3OXV/1RdQ1WZcfjbTxjJCPn+SLPOxpe8kphxlUznure0DoY
-	m01w/8GIuG+NwU/VJbqmqwuODhep+/AXhYUFg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=JUCAU4GsCHQZiXtZ9AAZ6x6cNZQPavNf
-	gLa7cOvWX8Mc2r/dBJ9LLi1AScCvegXRHoEHNkh+Consd/s+JTHIx0Z2R7H/jfaZ
-	dp9ZoemK3/lX58DoJ2LEi85AyNABQfAwA9cS8ys+pG5BzC0TDmanLuAKkMOlzDb0
-	JeXES6YaDnc=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3412D6558;
-	Sat, 31 Mar 2012 14:05:00 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id BC2BA6556; Sat, 31 Mar 2012
- 14:04:59 -0400 (EDT)
-In-Reply-To: <7v62dkk6dl.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Sat, 31 Mar 2012 10:49:42 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 07EA5616-7B5C-11E1-B580-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751568Ab2CaSr4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 31 Mar 2012 14:47:56 -0400
+Received: from mail-bk0-f46.google.com ([209.85.214.46]:57328 "EHLO
+	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750898Ab2CaSrz (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 31 Mar 2012 14:47:55 -0400
+Received: by bkcik5 with SMTP id ik5so1447268bkc.19
+        for <git@vger.kernel.org>; Sat, 31 Mar 2012 11:47:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:newsgroups:to:cc
+         :subject:references:in-reply-to:content-type
+         :content-transfer-encoding;
+        bh=VQyWP16FgFslesHk/p0vAhehrOYk2VJbYahB1d8O03s=;
+        b=asZaTkKF6/+Oz/CVFBGDHNCWCnnxq0Pzxqe025y7VtGs5Ly7Ngp3qvSaVfzv4b5KIG
+         BGGoOFceXdzCXDQBBa0IRpoHsTi1sLHn7Ljld9pmAuRrkBeZZ8QVgnfU5wIK+5GUkK9r
+         sPVWNkiIjpi5xx5FkkXmP2MCLquxIt9xxT+D77jY90ozgpZeZXDOgC2Pllep9fHrFevK
+         LJMTGktOzkrh4bTPJ8e5Sq5CL4xUWjQjGbYU8mWoAjxwN74Uu+LPSG/Yd/RZkrMhRkwB
+         51o2SvVMqvHTFzhSYByxOfLYXsXIBdIfnGYGUvVO/s/8B+p5DjIWrCZ6d2vndHt4jAUb
+         MDzA==
+Received: by 10.204.151.86 with SMTP id b22mr1173322bkw.81.1333219674146;
+        Sat, 31 Mar 2012 11:47:54 -0700 (PDT)
+Received: from [192.168.178.22] (p5DDB0164.dip0.t-ipconnect.de. [93.219.1.100])
+        by mx.google.com with ESMTPS id s16sm27831705bkt.3.2012.03.31.11.47.51
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sat, 31 Mar 2012 11:47:52 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.12) Gecko/20080213 Thunderbird/2.0.0.12 Mnenhy/0.7.5.0
+Newsgroups: gmane.comp.version-control.git
+In-Reply-To: <4F75DDF9.8060305@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194459>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194460>
 
-Junio C Hamano <gitster@pobox.com> writes:
+On 30.03.2012 18:23, Emanuel Rietveld wrote:
 
-> Jonathan Nieder <jrnieder@gmail.com> writes:
-> ...
->> -run-command.o: EXTRA_CPPFLAGS = -DSHELL_PATH='"$(SHELL_PATH_SQ)"'
->> +run-command.sp run-command.s run-command.o: EXTRA_CPPFLAGS = \
->> +	'-DSHELL_PATH="$(SHELL_PATH_SQ)"'
->>  
->>  $(BUILT_INS): git$X
->>  	$(QUIET_BUILT_IN)$(RM) $@ && \
->
-> Actually, I do not think this is sufficient, and it happens that you and I
-> are in the best position to realize it ;-).
->
-> Look at what is done in the Makefile for DEFAULT_EDITOR and DEFAULT_PAGER,
-> and compare with what the above is doing, and think why the EDITOR/PAGER
-> needs to have another level of quoting.
+> I get an error message when I try to push my git repository to a share
+> mounted with mount.cifs.
 
-In other words, something like this squashed into Ben's patch...
+Hmm, I wonder if this is related to msysgit's "Cannot fetch to mapped 
+network drives (Samba)" issue here:
 
-diff --git i/Makefile w/Makefile
-index dea1f15..abee43e 100644
---- i/Makefile
-+++ w/Makefile
-@@ -1849,6 +1849,13 @@ DEFAULT_PAGER_CQ_SQ = $(subst ','\'',$(DEFAULT_PAGER_CQ))
- BASIC_CFLAGS += -DDEFAULT_PAGER='$(DEFAULT_PAGER_CQ_SQ)'
- endif
- 
-+ifdef SHELL_PATH
-+SHELL_PATH_CQ = "$(subst ",\",$(subst \,\\,$(SHELL_PATH)))"
-+SHELL_PATH_CQ_SQ = $(subst ','\'',$(SHELL_PATH_CQ))
-+
-+BASIC_CFLAGS += -DSHELL_PATH='$(SHELL_PATH_CQ_SQ)'
-+endif
-+
- ALL_CFLAGS += $(BASIC_CFLAGS)
- ALL_LDFLAGS += $(BASIC_LDFLAGS)
- 
-@@ -1913,8 +1920,6 @@ builtin/help.sp builtin/help.s builtin/help.o: EXTRA_CPPFLAGS = \
- 	'-DGIT_MAN_PATH="$(mandir_SQ)"' \
- 	'-DGIT_INFO_PATH="$(infodir_SQ)"'
- 
--run-command.o: EXTRA_CPPFLAGS = -DSHELL_PATH='"$(SHELL_PATH_SQ)"'
--
- $(BUILT_INS): git$X
- 	$(QUIET_BUILT_IN)$(RM) $@ && \
- 	ln git$X $@ 2>/dev/null || \
+http://code.google.com/p/msysgit/issues/detail?id=130
+
+Please note that the msysgit issue tracker is closed, so you should not 
+place any comments there. Post to the msysgit mailing list instead.
+
+-- 
+Sebastian Schuberth
