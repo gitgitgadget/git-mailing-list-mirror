@@ -1,116 +1,70 @@
-From: Clemens Buchacher <drizzd@aon.at>
-Subject: Re: Cannot clone the git repository shared over http with
- authorization.
-Date: Sun, 1 Apr 2012 22:53:26 +0200
-Message-ID: <20120401205324.GA31046@ecki>
-References: <20120401184804.GJ3236@szczaw.snafu.pl>
- <20120401194534.GA16512@ecki>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: "Artur R. Czechowski" <arturcz@hell.pl>
-X-From: git-owner@vger.kernel.org Sun Apr 01 22:53:44 2012
+From: Pat Thoyts <patthoyts@users.sourceforge.net>
+Subject: [PATCH 1/2] gitk: fix tabbed preferences construction when using tcl 8.4
+Date: Sun,  1 Apr 2012 23:00:51 +0100
+Message-ID: <1333317652-1464-2-git-send-email-patthoyts@users.sourceforge.net>
+References: <4F749C71.7050201@ramsay1.demon.co.uk>
+ <1333317652-1464-1-git-send-email-patthoyts@users.sourceforge.net>
+Cc: <git@vger.kernel.org>, Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
+	Pat Thoyts <patthoyts@users.sourceforge.net>
+To: Paul Mackerras <paulus@samba.org>
+X-From: git-owner@vger.kernel.org Mon Apr 02 00:04:15 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SERmQ-0000dH-T0
-	for gcvg-git-2@plane.gmane.org; Sun, 01 Apr 2012 22:53:43 +0200
+	id 1SESsf-0008MR-0F
+	for gcvg-git-2@plane.gmane.org; Mon, 02 Apr 2012 00:04:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752856Ab2DAUxh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 1 Apr 2012 16:53:37 -0400
-Received: from bsmtp.bon.at ([213.33.87.14]:53933 "EHLO bsmtp.bon.at"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752608Ab2DAUxh (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 1 Apr 2012 16:53:37 -0400
-Received: from localhost (p5B22DD1B.dip.t-dialin.net [91.34.221.27])
-	by bsmtp.bon.at (Postfix) with ESMTP id 95D3010019;
-	Sun,  1 Apr 2012 22:49:59 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <20120401194534.GA16512@ecki>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1753693Ab2DAWDh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 1 Apr 2012 18:03:37 -0400
+Received: from mtaout01-winn.ispmail.ntl.com ([81.103.221.47]:55315 "EHLO
+	mtaout01-winn.ispmail.ntl.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752713Ab2DAWDg (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 1 Apr 2012 18:03:36 -0400
+Received: from know-smtpout-4.server.virginmedia.net ([62.254.123.2])
+          by mtaout01-winn.ispmail.ntl.com
+          (InterMail vM.7.08.04.00 201-2186-134-20080326) with ESMTP
+          id <20120401220335.DDKZ3740.mtaout01-winn.ispmail.ntl.com@know-smtpout-4.server.virginmedia.net>;
+          Sun, 1 Apr 2012 23:03:35 +0100
+Received: from [94.171.229.22] (helo=fox.patthoyts.tk)
+	by know-smtpout-4.server.virginmedia.net with esmtpa (Exim 4.63)
+	(envelope-from <patthoyts@users.sourceforge.net>)
+	id 1SESs3-0006ob-5o; Sun, 01 Apr 2012 23:03:35 +0100
+Received: from localhost.localdomain (frog.patthoyts.tk [192.168.0.25])
+	by fox.patthoyts.tk (Postfix) with ESMTP id BEE4720054;
+	Sun,  1 Apr 2012 23:03:34 +0100 (BST)
+X-Mailer: git-send-email 1.7.9.msysgit.0
+In-Reply-To: <1333317652-1464-1-git-send-email-patthoyts@users.sourceforge.net>
+X-Cloudmark-Analysis: v=1.1 cv=R50lirqlHffDPPkwUlkuVa99MrvKdVWo//yz83qex8g= c=1 sm=0 a=b6FCpATyD-EA:10 a=i_RdsMQ9AAAA:8 a=FP58Ms26AAAA:8 a=VAqSxcoB84_ssdWeK-MA:9 a=HpAAvcLHHh0Zw7uRqdWCyQ==:117
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194485>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194486>
 
-On Sun, Apr 01, 2012 at 09:45:36PM +0200, Clemens Buchacher wrote:
-> On Sun, Apr 01, 2012 at 08:48:04PM +0200, Artur R. Czechowski wrote:
-> > 
-> > arturcz@szczaw:/tmp$ git clone http://blabluga.hell.pl/git/test.git
-> > Cloning into 'test'...
-> > error: The requested URL returned error: 401 (curl_result = 22, http_code = 401, sha1 = e884293079beab9f2583b59b4e05479fc84fc588)
-> > error: Unable to find e884293079beab9f2583b59b4e05479fc84fc588 under http://blabluga.hell.pl/git/test.git
-> > Cannot obtain needed commit e884293079beab9f2583b59b4e05479fc84fc588
-> > while processing commit c64bcf957545f61436d405326d985521dc45058f.
-> > error: Fetch failed.
+In 8.5 the incr command creates the target variable if it does not exist
+but in 8.4 using incr on a non-existing variable raises an error. Ensure
+we have created our counter variable when creating the tabbed dialog for
+non-themed preferences.
 
-This is the minimal test case I could find to reproduce this reliably on
-in our test suite. It seems that a certain number of loose objects is
-also required to trigger the issue.
+Reported-by: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+Signed-off-by: Pat Thoyts <patthoyts@users.sourceforge.net>
+---
+ gitk |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
 
-diff --git a/t/lib-httpd/apache.conf b/t/lib-httpd/apache.conf
-index 3c12b05..d31c083 100644
---- a/t/lib-httpd/apache.conf
-+++ b/t/lib-httpd/apache.conf
-@@ -77,6 +77,13 @@ SSLMutex file:ssl_mutex
- SSLEngine On
- </IfDefine>
- 
-+<Location /dumb/auth/>
-+	AuthType Basic
-+	AuthName "git-auth"
-+	AuthUserFile passwd
-+	Require valid-user
-+</Location>
-+
- <Location /auth/>
- 	AuthType Basic
- 	AuthName "git-auth"
-diff --git a/t/t5550-http-fetch.sh b/t/t5550-http-fetch.sh
-index e5e6b8f..3eb8753 100755
---- a/t/t5550-http-fetch.sh
-+++ b/t/t5550-http-fetch.sh
-@@ -13,17 +13,22 @@ LIB_HTTPD_PORT=${LIB_HTTPD_PORT-'5550'}
- start_httpd
- 
- test_expect_success 'setup repository' '
--	echo content >file &&
-+	echo content1 >file &&
- 	git add file &&
- 	git commit -m one
-+	echo content2 >file &&
-+	git add file &&
-+	git commit -m two
- '
- 
- test_expect_success 'create http-accessible bare repository' '
--	mkdir "$HTTPD_DOCUMENT_ROOT_PATH/repo.git" &&
-+	cp -r .git "$HTTPD_DOCUMENT_ROOT_PATH/repo.git" &&
- 	(cd "$HTTPD_DOCUMENT_ROOT_PATH/repo.git" &&
--	 git --bare init &&
-+	 git config core.bare true &&
-+	 mv hooks-disabled hooks &&
- 	 echo "exec git update-server-info" >hooks/post-update &&
--	 chmod +x hooks/post-update
-+	 chmod +x hooks/post-update &&
-+	 hooks/post-update
- 	) &&
- 	git remote add public "$HTTPD_DOCUMENT_ROOT_PATH/repo.git" &&
- 	git push public master:master
-@@ -73,6 +78,13 @@ expect_askpass() {
- 	test_cmp askpass-expect askpass-query
- }
- 
-+test_expect_success 'clone password-protected repository with dumb http' '
-+	>askpass-query &&
-+	echo user@host >askpass-response &&
-+	GIT_CURL_VERBOSE=1 git clone "$HTTPD_URL/dumb/auth/repo.git" repo-dumb-auth &&
-+	expect_askpass both user@host
-+'
-+
- test_expect_success 'cloning password-protected repository can fail' '
- 	>askpass-query &&
- 	echo wrong >askpass-response &&
+diff --git a/gitk b/gitk
+index 651b740..68cd1a1 100755
+--- a/gitk
++++ b/gitk
+@@ -11012,6 +11012,7 @@ proc doprefs {} {
+     lappend pages [prefspage_general $notebook] [mc "General"]
+     lappend pages [prefspage_colors $notebook] [mc "Colors"]
+     lappend pages [prefspage_fonts $notebook] [mc "Fonts"]
++    set col 0
+     foreach {page title} $pages {
+ 	if {$use_notebook} {
+ 	    $notebook add $page -text $title
+-- 
+1.7.9.msysgit.0
