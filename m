@@ -1,104 +1,116 @@
-From: =?ISO-8859-1?Q?Andr=E9_Walker?= <andre@andrewalker.net>
-Subject: GSoC mentors for Git.pm
-Date: Sun, 01 Apr 2012 16:53:24 -0300
-Message-ID: <4F78B234.3060901@andrewalker.net>
+From: Clemens Buchacher <drizzd@aon.at>
+Subject: Re: Cannot clone the git repository shared over http with
+ authorization.
+Date: Sun, 1 Apr 2012 22:53:26 +0200
+Message-ID: <20120401205324.GA31046@ecki>
+References: <20120401184804.GJ3236@szczaw.snafu.pl>
+ <20120401194534.GA16512@ecki>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Apr 01 21:53:34 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: "Artur R. Czechowski" <arturcz@hell.pl>
+X-From: git-owner@vger.kernel.org Sun Apr 01 22:53:44 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SEQqD-000258-OU
-	for gcvg-git-2@plane.gmane.org; Sun, 01 Apr 2012 21:53:34 +0200
+	id 1SERmQ-0000dH-T0
+	for gcvg-git-2@plane.gmane.org; Sun, 01 Apr 2012 22:53:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752807Ab2DATx2 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 1 Apr 2012 15:53:28 -0400
-Received: from oproxy8-pub.bluehost.com ([69.89.22.20]:56516 "HELO
-	oproxy8-pub.bluehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with SMTP id S1752559Ab2DATx1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 1 Apr 2012 15:53:27 -0400
-Received: (qmail 1931 invoked by uid 0); 1 Apr 2012 19:53:27 -0000
-Received: from unknown (HELO host245.hostmonster.com) (74.220.215.245)
-  by oproxy8.bluehost.com with SMTP; 1 Apr 2012 19:53:27 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=andrewalker.net; s=default;
-	h=Content-Transfer-Encoding:Content-Type:Subject:To:MIME-Version:From:Date:Message-ID; bh=SLiFUytR8E+yMSRxeu593am3ZjWupXDXbAckep+/ZPk=;
-	b=mnnSdDn3LyIa0Ee38I9qgYBJmNqQ6pZj8Q0sFLw/aFrEh8n+L5o/yxbnu/fYduEFn6qiMJk2PBBAPCKH8TJHJ3kX+Jqqb4qT2bLojKSjoCs4bwZr7+LaOlRrxX2HlR76;
-Received: from [187.104.134.84] (helo=[192.168.0.100])
-	by host245.hostmonster.com with esmtpsa (TLSv1:AES256-SHA:256)
-	(Exim 4.76)
-	(envelope-from <andre@andrewalker.net>)
-	id 1SEQq7-0001c4-3a
-	for git@vger.kernel.org; Sun, 01 Apr 2012 13:53:27 -0600
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:10.0.1) Gecko/20120209 Thunderbird/10.0.1
-X-Identified-User: {2744:host245.hostmonster.com:picloadc:andrewalker.net} {sentby:smtp auth 187.104.134.84 authed with andre@andrewalker.net}
+	id S1752856Ab2DAUxh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 1 Apr 2012 16:53:37 -0400
+Received: from bsmtp.bon.at ([213.33.87.14]:53933 "EHLO bsmtp.bon.at"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752608Ab2DAUxh (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 1 Apr 2012 16:53:37 -0400
+Received: from localhost (p5B22DD1B.dip.t-dialin.net [91.34.221.27])
+	by bsmtp.bon.at (Postfix) with ESMTP id 95D3010019;
+	Sun,  1 Apr 2012 22:49:59 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <20120401194534.GA16512@ecki>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194483>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194485>
 
-Hello,
+On Sun, Apr 01, 2012 at 09:45:36PM +0200, Clemens Buchacher wrote:
+> On Sun, Apr 01, 2012 at 08:48:04PM +0200, Artur R. Czechowski wrote:
+> > 
+> > arturcz@szczaw:/tmp$ git clone http://blabluga.hell.pl/git/test.git
+> > Cloning into 'test'...
+> > error: The requested URL returned error: 401 (curl_result = 22, http_code = 401, sha1 = e884293079beab9f2583b59b4e05479fc84fc588)
+> > error: Unable to find e884293079beab9f2583b59b4e05479fc84fc588 under http://blabluga.hell.pl/git/test.git
+> > Cannot obtain needed commit e884293079beab9f2583b59b4e05479fc84fc588
+> > while processing commit c64bcf957545f61436d405326d985521dc45058f.
+> > error: Fetch failed.
 
-I was considering applying for GSoC this year, but for personal reasons=
-=20
-I decided not to propose anything this year, and focus on some other=20
-personal projects. Anyway, I was thinking about something that might=20
-still help the Git organization this year, so I'd like to share the ide=
-a=20
-with you, to see if it's not too crazy, and if it would be doable.
+This is the minimal test case I could find to reproduce this reliably on
+in our test suite. It seems that a certain number of loose objects is
+also required to trigger the issue.
 
-In a previous mail, Jakub said one of the limitations for the number of=
-=20
-accepted students is the number of available mentors. Well, for the=20
-project I'm interested in, modernizing Git.pm, he is the suggested=20
-mentor himself, and also for the gitweb one (adding a JS framework). Bu=
-t=20
-if he is the only available mentor for both projects, and there are man=
-y=20
-students interested in both of them, only one will be accepted, as he'l=
-l=20
-probably be unable to mentor two students. Is that correct? So that=20
-either "Javascript library in gitweb" is accepted, or "modernizing=20
-Git.pm". (Of course, it seems one person can mentor two projects, but=20
-that's not advised by Google, and Git would profit if there were at=20
-least co-mentors for one of the projects.)
-
-I was thinking... if the problem is the lack of mentors, would it be=20
-possible, for instance, for the Git.pm proposal, to ask people from the=
-=20
-Perl community, like the ones who wrote Git modules on CPAN=20
-(Git::Wrapper, Git::PurePerl, etc) to help out? Maybe they would have=20
-different insights on what can be done in Git.pm, how it could be done=20
-in a better way, etc. On the other hand, they would not make anything=20
-the git community wouldn't approve, because the community would be=20
-involved in every step. Do you think this is viable? Maybe there could=20
-even be more than one mentor per student (last year I had two mentors=20
-for GSoC), so that we could have one mentor who has a stronger knowledg=
-e=20
-in the Perl language, and another who has a stronger knowledge in Git's=
-=20
-internals, etc.
-
-If this would be helpful, I'd be willing to contact people to see=20
-whether they'd like to candidate for being a Git mentor. Also, I'm=20
-suggesting the Perl community because I know some of them, and it makes=
-=20
-sense (at least in my head) for the project I was interested in. But=20
-maybe this could be expanded to other proposals? If this was possible,=20
-it could ease the burden for the current mentors, and get more projects=
-=20
-accepted for git.
-
-Or maybe there are more people in this mailing list who would volunteer=
-=20
-for the job? I contacted =C6var Bjarmason to see if he is interested, b=
-ut=20
-maybe someone here would like too.
-
-Regards,
-Andr=E9
+diff --git a/t/lib-httpd/apache.conf b/t/lib-httpd/apache.conf
+index 3c12b05..d31c083 100644
+--- a/t/lib-httpd/apache.conf
++++ b/t/lib-httpd/apache.conf
+@@ -77,6 +77,13 @@ SSLMutex file:ssl_mutex
+ SSLEngine On
+ </IfDefine>
+ 
++<Location /dumb/auth/>
++	AuthType Basic
++	AuthName "git-auth"
++	AuthUserFile passwd
++	Require valid-user
++</Location>
++
+ <Location /auth/>
+ 	AuthType Basic
+ 	AuthName "git-auth"
+diff --git a/t/t5550-http-fetch.sh b/t/t5550-http-fetch.sh
+index e5e6b8f..3eb8753 100755
+--- a/t/t5550-http-fetch.sh
++++ b/t/t5550-http-fetch.sh
+@@ -13,17 +13,22 @@ LIB_HTTPD_PORT=${LIB_HTTPD_PORT-'5550'}
+ start_httpd
+ 
+ test_expect_success 'setup repository' '
+-	echo content >file &&
++	echo content1 >file &&
+ 	git add file &&
+ 	git commit -m one
++	echo content2 >file &&
++	git add file &&
++	git commit -m two
+ '
+ 
+ test_expect_success 'create http-accessible bare repository' '
+-	mkdir "$HTTPD_DOCUMENT_ROOT_PATH/repo.git" &&
++	cp -r .git "$HTTPD_DOCUMENT_ROOT_PATH/repo.git" &&
+ 	(cd "$HTTPD_DOCUMENT_ROOT_PATH/repo.git" &&
+-	 git --bare init &&
++	 git config core.bare true &&
++	 mv hooks-disabled hooks &&
+ 	 echo "exec git update-server-info" >hooks/post-update &&
+-	 chmod +x hooks/post-update
++	 chmod +x hooks/post-update &&
++	 hooks/post-update
+ 	) &&
+ 	git remote add public "$HTTPD_DOCUMENT_ROOT_PATH/repo.git" &&
+ 	git push public master:master
+@@ -73,6 +78,13 @@ expect_askpass() {
+ 	test_cmp askpass-expect askpass-query
+ }
+ 
++test_expect_success 'clone password-protected repository with dumb http' '
++	>askpass-query &&
++	echo user@host >askpass-response &&
++	GIT_CURL_VERBOSE=1 git clone "$HTTPD_URL/dumb/auth/repo.git" repo-dumb-auth &&
++	expect_askpass both user@host
++'
++
+ test_expect_success 'cloning password-protected repository can fail' '
+ 	>askpass-query &&
+ 	echo wrong >askpass-response &&
