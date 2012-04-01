@@ -1,39 +1,89 @@
-From: DutchGlory <info@verwijs-pc.nl>
-Subject: still error with git on (windows) x64 based systems...
-Date: Sun, 1 Apr 2012 10:51:26 -0700 (PDT)
-Message-ID: <1333302686111-7427240.post@n2.nabble.com>
+From: greened@obbligato.org
+Subject: Re: git-subtree Next Round Ready
+Date: Sun, 01 Apr 2012 13:00:58 -0500
+Message-ID: <87mx6v49id.fsf@smith.obbligato.org>
+References: <87398we3ox.fsf@smith.obbligato.org>
+	<7vobrgs5tb.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Apr 01 19:51:39 2012
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Apr 01 20:04:56 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SEOwD-0004Hu-Dq
-	for gcvg-git-2@plane.gmane.org; Sun, 01 Apr 2012 19:51:37 +0200
+	id 1SEP95-0006kG-ID
+	for gcvg-git-2@plane.gmane.org; Sun, 01 Apr 2012 20:04:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753583Ab2DARv3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 1 Apr 2012 13:51:29 -0400
-Received: from sam.nabble.com ([216.139.236.26]:49612 "EHLO sam.nabble.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753128Ab2DARv1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 1 Apr 2012 13:51:27 -0400
-Received: from jim.nabble.com ([192.168.236.80])
-	by sam.nabble.com with esmtp (Exim 4.72)
-	(envelope-from <info@verwijs-pc.nl>)
-	id 1SEOw2-0002Dp-DU
-	for git@vger.kernel.org; Sun, 01 Apr 2012 10:51:26 -0700
+	id S1751769Ab2DASEu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 1 Apr 2012 14:04:50 -0400
+Received: from li209-253.members.linode.com ([173.255.199.253]:38806 "EHLO
+	johnson.obbligato.org" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751266Ab2DASEt (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 1 Apr 2012 14:04:49 -0400
+Received: from c-75-73-20-8.hsd1.mn.comcast.net ([75.73.20.8] helo=smith.obbligato.org)
+	by johnson.obbligato.org with esmtpsa (TLS1.2:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.77)
+	(envelope-from <greened@obbligato.org>)
+	id 1SELQ9-00079Y-AZ; Sun, 01 Apr 2012 09:06:17 -0500
+In-Reply-To: <7vobrgs5tb.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Wed, 28 Mar 2012 15:45:36 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Filter-Spam-Score: ()
+X-Filter-Spam-Report: Spam detection software, running on the system "johnson.obbligato.org", has
+ identified this incoming email as possible spam.  The original message
+ has been attached to this so you can view it (if it isn't spam) or label
+ similar future email.  If you have any questions, see
+ @@CONTACT_ADDRESS@@ for details.
+ Content preview:  Junio C Hamano <gitster@pobox.com> writes: > I do not see
+   the point of your subtree branch, especially after 1f30551 > (Set TEST_DIRECTORY,
+    2012-03-20) where it starts depending on files > outside its top-level directory.
+    At that point, the tree ceases to be > viable as a standalone project. [...]
+ Content analysis details:   (1.4 points, 5.0 required)
+  pts rule name              description
+ ---- ---------------------- --------------------------------------------------
+ -1.0 ALL_TRUSTED            Passed through trusted hosts onl 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194478>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194479>
 
+Junio C Hamano <gitster@pobox.com> writes:
 
+> I do not see the point of your subtree branch, especially after 1f30551
+> (Set TEST_DIRECTORY, 2012-03-20) where it starts depending on files
+> outside its top-level directory. At that point, the tree ceases to be
+> viable as a standalone project.
 
---
-View this message in context: http://git.661346.n2.nabble.com/still-error-with-git-on-windows-x64-based-systems-tp7427240p7427240.html
-Sent from the git mailing list archive at Nabble.com.
+The point of the branch was to provide an easy reference to subtree
+merge into the main git repository.  I have no intention of keeping a
+separate git-subtree project.
+
+> I think it would make more sense, from the history viewpoint, to:
+>
+>  - Stop the history of the "subtree" branch at commit d3a04e0 (Use Test
+>    Harness, 2012-01-29);
+>
+>  - Create "for-upstream" branch that is a fork of 1.7.10 (when tagged);
+>
+>  - On "for-upstream" branch, add all the files from d3a04e0 (Use Test
+>    Harness, 2012-01-29) to contrib/subtree, and record it as a merge
+>    between 1.7.10 and d3a04e0 (you can use subtree merge for this); and
+>    finally
+>
+>  - Replay the commits between d3a04e0 and the tip of your current
+>    "subtree" branch on top of "for-upstream".
+>
+> And then have me pull the "for-upstream" branch.
+
+Ok, that sounds fine to me.
+
+> Further development after that point can continue in-tree just like any
+> other contrib subsystems like "completion/" and "fast-import/git-p4".
+
+Yep, sounds good!
+
+                         -Dave
