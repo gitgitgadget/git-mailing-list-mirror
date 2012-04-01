@@ -1,35 +1,34 @@
 From: greened@obbligato.org
-Subject: Re: git-subtree Next Round Ready
-Date: Sun, 01 Apr 2012 13:00:58 -0500
-Message-ID: <87mx6v49id.fsf@smith.obbligato.org>
-References: <87398we3ox.fsf@smith.obbligato.org>
-	<7vobrgs5tb.fsf@alter.siamese.dyndns.org>
+Subject: Re: git-subtree recent contributions
+Date: Sun, 01 Apr 2012 13:07:37 -0500
+Message-ID: <87iphj497a.fsf@smith.obbligato.org>
+References: <4F7562AD.1040303@initfour.nl>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Apr 01 20:04:56 2012
+Cc: git@vger.kernel.org, apenwarr@gmail.com
+To: Herman van Rink <rink@initfour.nl>
+X-From: git-owner@vger.kernel.org Sun Apr 01 20:11:33 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SEP95-0006kG-ID
-	for gcvg-git-2@plane.gmane.org; Sun, 01 Apr 2012 20:04:55 +0200
+	id 1SEPFT-0003eR-4A
+	for gcvg-git-2@plane.gmane.org; Sun, 01 Apr 2012 20:11:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751769Ab2DASEu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 1 Apr 2012 14:04:50 -0400
-Received: from li209-253.members.linode.com ([173.255.199.253]:38806 "EHLO
+	id S1752161Ab2DASL1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 1 Apr 2012 14:11:27 -0400
+Received: from li209-253.members.linode.com ([173.255.199.253]:38813 "EHLO
 	johnson.obbligato.org" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751266Ab2DASEt (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 1 Apr 2012 14:04:49 -0400
+	with ESMTP id S1751266Ab2DASL0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 1 Apr 2012 14:11:26 -0400
 Received: from c-75-73-20-8.hsd1.mn.comcast.net ([75.73.20.8] helo=smith.obbligato.org)
 	by johnson.obbligato.org with esmtpsa (TLS1.2:DHE_RSA_AES_128_CBC_SHA1:16)
 	(Exim 4.77)
 	(envelope-from <greened@obbligato.org>)
-	id 1SELQ9-00079Y-AZ; Sun, 01 Apr 2012 09:06:17 -0500
-In-Reply-To: <7vobrgs5tb.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Wed, 28 Mar 2012 15:45:36 -0700")
+	id 1SELWa-0007A1-99; Sun, 01 Apr 2012 09:12:56 -0500
+In-Reply-To: <4F7562AD.1040303@initfour.nl> (Herman van Rink's message of
+	"Fri, 30 Mar 2012 09:37:17 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
 X-Filter-Spam-Score: ()
 X-Filter-Spam-Report: Spam detection software, running on the system "johnson.obbligato.org", has
@@ -37,53 +36,36 @@ X-Filter-Spam-Report: Spam detection software, running on the system "johnson.ob
  has been attached to this so you can view it (if it isn't spam) or label
  similar future email.  If you have any questions, see
  @@CONTACT_ADDRESS@@ for details.
- Content preview:  Junio C Hamano <gitster@pobox.com> writes: > I do not see
-   the point of your subtree branch, especially after 1f30551 > (Set TEST_DIRECTORY,
-    2012-03-20) where it starts depending on files > outside its top-level directory.
-    At that point, the tree ceases to be > viable as a standalone project. [...]
+ Content preview:  Herman van Rink <rink@initfour.nl> writes: > Hi, > > I'm glad
+    to see some interest here to merge git-subtree into git.git. > > Related
+   to that I would like to draw your attention to a fork of mine on > github.
+    > I've recently spent some time to pull many contributions to git-subtree
+    > together. [...] 
  Content analysis details:   (1.4 points, 5.0 required)
   pts rule name              description
  ---- ---------------------- --------------------------------------------------
- -1.0 ALL_TRUSTED            Passed through trusted hosts onl 
+ -1.0 ALL_TRUSTED            Passed through trusted h 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194479>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194480>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Herman van Rink <rink@initfour.nl> writes:
 
-> I do not see the point of your subtree branch, especially after 1f30551
-> (Set TEST_DIRECTORY, 2012-03-20) where it starts depending on files
-> outside its top-level directory. At that point, the tree ceases to be
-> viable as a standalone project.
-
-The point of the branch was to provide an easy reference to subtree
-merge into the main git repository.  I have no intention of keeping a
-separate git-subtree project.
-
-> I think it would make more sense, from the history viewpoint, to:
+> Hi,
 >
->  - Stop the history of the "subtree" branch at commit d3a04e0 (Use Test
->    Harness, 2012-01-29);
+> I'm glad to see some interest here to merge git-subtree into git.git.
 >
->  - Create "for-upstream" branch that is a fork of 1.7.10 (when tagged);
->
->  - On "for-upstream" branch, add all the files from d3a04e0 (Use Test
->    Harness, 2012-01-29) to contrib/subtree, and record it as a merge
->    between 1.7.10 and d3a04e0 (you can use subtree merge for this); and
->    finally
->
->  - Replay the commits between d3a04e0 and the tip of your current
->    "subtree" branch on top of "for-upstream".
->
-> And then have me pull the "for-upstream" branch.
+> Related to that I would like to draw your attention to a fork of mine on
+> github.
+> I've recently spent some time to pull many contributions to git-subtree
+> together.
 
-Ok, that sounds fine to me.
+Thanks!  I'll have a look at these.  In the meantime, we'll get
+git-subtree merged after the next release and then we can look at
+applying these patches.
 
-> Further development after that point can continue in-tree just like any
-> other contrib subsystems like "completion/" and "fast-import/git-p4".
+Sound good?
 
-Yep, sounds good!
-
-                         -Dave
+                                  -Dave
