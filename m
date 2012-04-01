@@ -1,113 +1,66 @@
-From: Bo Chen <chen@chenirvine.org>
-Subject: Re: GSoC - Some questions on the idea of
-Date: Sun, 1 Apr 2012 19:30:51 -0400
-Message-ID: <CA+M5ThTnd+TST6WsAn-Jd=Gb=1EWaJ+QbLMxXgtAVFNVqnRcMw@mail.gmail.com>
-References: <CA+M5ThS2iS-NMNDosk2oR25N=PMJJVTi1D=zg7MnMCUiRoX4BQ@mail.gmail.com>
-	<CACsJy8APtMsMJ=FrZjOP=DbzuFoemSLJTmkjaiK5Wkq9XtA4rg@mail.gmail.com>
-	<loom.20120328T131530-717@post.gmane.org>
-	<CA+M5ThTPyic=RhFL2SvuNB0xBWOHxNTaUZrYMB144UjpjCiLoQ@mail.gmail.com>
-	<20120330203430.GB20376@sigill.intra.peff.net>
-	<4F7768D6.3010400@gmail.com>
-	<CA+M5ThTKtSFPq8A3oc1wvc9i0vG1NMyHCRE+poYaq+65FQWOxw@mail.gmail.com>
-	<CACsJy8DTegW78Qw7-T6uK_oZj2CELv57bbH6sU=bScHDesGYPQ@mail.gmail.com>
+From: =?ISO-8859-1?Q?Andr=E9_Walker?= <andre@andrewalker.net>
+Subject: Re: GSoC mentors for Git.pm
+Date: Sun, 01 Apr 2012 20:43:39 -0300
+Message-ID: <4F78E82B.4080801@andrewalker.net>
+References: <4F78B234.3060901@andrewalker.net> <4F78D4F5.4020603@pileofstuff.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Neal Kreitzinger <nkreitzinger@gmail.com>,
-	Jeff King <peff@peff.net>, Sergio <sergio.callegari@gmail.com>,
-	git@vger.kernel.org
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Apr 02 01:31:11 2012
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Andrew Sayers <andrew-git@pileofstuff.org>
+X-From: git-owner@vger.kernel.org Mon Apr 02 01:43:54 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SEUEm-0006Yg-Pv
-	for gcvg-git-2@plane.gmane.org; Mon, 02 Apr 2012 01:31:09 +0200
+	id 1SEUR7-000583-8q
+	for gcvg-git-2@plane.gmane.org; Mon, 02 Apr 2012 01:43:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753131Ab2DAXax convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 1 Apr 2012 19:30:53 -0400
-Received: from mail-wi0-f178.google.com ([209.85.212.178]:37045 "EHLO
-	mail-wi0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752707Ab2DAXax convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 1 Apr 2012 19:30:53 -0400
-Received: by wibhq7 with SMTP id hq7so2157821wib.1
-        for <git@vger.kernel.org>; Sun, 01 Apr 2012 16:30:51 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:x-originating-ip:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding:x-gm-message-state;
-        bh=K6kJKVQsi0rPZX0HmEaqTJiR/8sUTk5pyP4j1LdECF4=;
-        b=NjV4NhVPZ/q2bTv7eDL9sjP40Ca3eLM5bXqZSIJewNTcWdtmoI89i09Kf9ebVQ6FEp
-         LWoauhm3b2UBLiY1lC2FT2kT/9lXP/mIFzt4vHNPXyO2oAXqnlPeQIVTJg6amIEhEbJ9
-         qdZnRzD80PerYNJ8E8Xw+6NCARj/v7RcosJOjj8hex4IooKy/8JUiOBJpT80s6Q3XXqC
-         owu8y9DQoqTcDFg/fVZuqX56OrTFxdB5EjR00pOHY97eMiFaAgOlWE2oUVfHWb1aKish
-         lvnAyT6ntb8h/afDU9u0dsIfjCQHtaHXPdgoAdFXHFQ6uS2shDcanhTzLnhYH4UHkIJv
-         Imfw==
-Received: by 10.180.97.41 with SMTP id dx9mr19472238wib.9.1333323051695; Sun,
- 01 Apr 2012 16:30:51 -0700 (PDT)
-Received: by 10.216.47.65 with HTTP; Sun, 1 Apr 2012 16:30:51 -0700 (PDT)
-X-Originating-IP: [69.248.109.119]
-In-Reply-To: <CACsJy8DTegW78Qw7-T6uK_oZj2CELv57bbH6sU=bScHDesGYPQ@mail.gmail.com>
-X-Gm-Message-State: ALoCoQnJF0989Wk5XKfC2j6u9XkHBHsb5ORXdeJv7x5i8S839zt7rTDeKOiXEnpDycMxw1caEle0
+	id S1753561Ab2DAXnq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 1 Apr 2012 19:43:46 -0400
+Received: from oproxy9.bluehost.com ([69.89.24.6]:45047 "HELO
+	oproxy9.bluehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with SMTP id S1752753Ab2DAXnp (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 1 Apr 2012 19:43:45 -0400
+Received: (qmail 9885 invoked by uid 0); 1 Apr 2012 23:43:45 -0000
+Received: from unknown (HELO host245.hostmonster.com) (74.220.215.245)
+  by oproxy9.bluehost.com with SMTP; 1 Apr 2012 23:43:45 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=andrewalker.net; s=default;
+	h=Content-Transfer-Encoding:Content-Type:In-Reply-To:References:Subject:CC:To:MIME-Version:From:Date:Message-ID; bh=UG5Uhwjw3Z6Nqv506GXKW+KO5HzdVbAZmbLco7z7u18=;
+	b=RJ91/kGpsHNr4omZU7vhZ7wIVrOsa3Ni60kfvSJqMNPb9G906nEFdeV1mv/0NrTBuXpBZNCzudC1GWQ/bVbGQ/fIH3g5L0WnAyEeuUBzPEPQLnX7C1bt3UK9wkSlBxWO;
+Received: from [189.79.200.72] (helo=[192.168.2.103])
+	by host245.hostmonster.com with esmtpsa (TLSv1:AES256-SHA:256)
+	(Exim 4.76)
+	(envelope-from <andre@andrewalker.net>)
+	id 1SEUQy-0001A0-GU; Sun, 01 Apr 2012 17:43:45 -0600
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:10.0.1) Gecko/20120209 Thunderbird/10.0.1
+In-Reply-To: <4F78D4F5.4020603@pileofstuff.org>
+X-Identified-User: {2744:host245.hostmonster.com:picloadc:andrewalker.net} {sentby:smtp auth 189.79.200.72 authed with andre@andrewalker.net}
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194493>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194494>
 
-One question,  can anyone help me clear?
-
-My .git/objects has 3 blobs, a, b, and c. a is a unique file, b and c
-two sequential versions of the same file. When I run "git gc", what
-exactly happens here, e.g., how exactly git (in the latest version)
-delta compresses-the blobs here?
-
-Any help will be appreciated.
-
-Bo
-
-On Sun, Apr 1, 2012 at 12:22 AM, Nguyen Thai Ngoc Duy <pclouds@gmail.co=
-m> wrote:
-> On Sun, Apr 1, 2012 at 4:27 AM, Bo Chen <chen@chenirvine.org> wrote:
->>> Who decides bigness:
->>> Bigness seems to be relative to system resources. =A0Does the user =
-crunch the
->>> numbers to determine if a file is big-file, or does git? =A0If the =
-numbers are
->>> relative then should git query the system and make the determinatio=
-n?
->>> =A0Either way, once the system-resources are upgraded and formerly =
-"big-files"
->>> are no longer considered "big" how is the previous history refactor=
-ed tot
->>> behave "non-big-file-like"? =A0Conversely, if the system-resources =
-are
->>> re-distributed so that formerly non-big files are now relatively bi=
-g (ie,
->>> moved from powerful central server login to laptops), how is the hi=
-story
->>> refactored to accommodate the newly-relative-bigness?
->>>
->>
->> In common sense, a file of tens of MBs should not be considered as a
->> big file, but a file of tens of GBs should definitely be considered =
-as
->> a big file. I think one simple workable solution is to let the user
->> set the threshold of the big file.
+On 04/01/2012 07:21 PM, Andrew Sayers wrote:
+> I'd be interested in doing what I can to help, but I'm not in a position
+> to put myself up as a full mentor.  The good news is that I've got
+> several years of Perl and JS experience under my belt, and am quite used
+> to finding where people are stuck and nudging them along.  The bad news
+> is that I know next to nothing about git internals or about XS (which
+> I'd expect to feature heavily in a new Git.pm).  I'm also settling in to
+> a new job, so can't give strong guarantees about availability - for
+> example, I'm pretty sure IRC access from work isn't going to happen, and
+> have no idea what the olympics will do to my commute in the summer.
 >
-> We currently have core.bigFileThreshold =3D 512MB.
->
->> One complicate but intelligent
->> solution is to let git auto-config the threshold by evaluating curre=
-nt
->> computing resources in the running platform (a physical machine or
->> just a VM). As to the problem of migrating git in different platform=
-s
->> which equip with different computing power, the git repo should also
->> keep tract of under what big file threshold a specific file is
->> handled.
-> --
-> Duy
+> If Jakub needs some kind of teaching assistant to help with code review
+> and firming questions up then I'd be happy to help.  But if it needs to
+> be someone who can infuse a strong vision for the end result then you're
+> better off looking elsewhere.
+Well, this sounds great, at least to me. Jakub will probably know better 
+how and if you're fit as a mentor. From what I can tell, specially if 
+there is more than one mentor for a project, you wouldn't have to spend 
+more than 5 hours a week on it. Probably even less. And I think the Perl 
++ JS experience is good enough for it. Maybe you'd be more fit for the 
+JavaScript framework in gitweb project?
