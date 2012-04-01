@@ -1,123 +1,112 @@
-From: Nathan Gray <n8gray@n8gray.org>
-Subject: Re: push.default: current vs upstream
-Date: Sat, 31 Mar 2012 22:58:50 -0700
-Message-ID: <CA+7g9Jy=JRV8mXd6fxja3k1g2Vss6YZotPzVPs9xsPr6uoCg+Q@mail.gmail.com>
-References: <7vd37wv77j.fsf@alter.siamese.dyndns.org>
-	<20120329095236.GA11911@sigill.intra.peff.net>
-	<7vbonfqezs.fsf@alter.siamese.dyndns.org>
-	<20120329221154.GA1413@sigill.intra.peff.net>
-	<7vfwcqq2dw.fsf@alter.siamese.dyndns.org>
-	<20120330071358.GB30656@sigill.intra.peff.net>
-	<7vty15ltuo.fsf@alter.siamese.dyndns.org>
-	<20120330210112.GA20734@sigill.intra.peff.net>
-	<CA+7g9JxK5DHj3vbdGgF2dEJxvn=_ZfjAv7Y+AL_P-aO1FVB6-w@mail.gmail.com>
-	<201203312348.q2VNmsmc015543@no.baka.org>
+From: chaitanya nalla <nallachaitu@gmail.com>
+Subject: Re: GSoC idea: adding JavaScript library / framework in gitweb
+Date: Sun, 1 Apr 2012 15:17:54 +0530
+Message-ID: <CACeyoge0ynCdTJtLWr2DES7r5C8L_QZy=C8EJNnd2HXwft=jtw@mail.gmail.com>
+References: <CACeyogcFJoUyAiTReDJK_nCMGBp+23OjcS407A1X=fqFR+aGag@mail.gmail.com>
+	<201203291114.15284.jnareb@gmail.com>
+	<CACeyogcCGhqcQp98JFJVntP9=BvX0TkMWA5JPj7At0bxPwvmfQ@mail.gmail.com>
+	<201203301529.20942.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-	git@vger.kernel.org, Matthieu Moy <Matthieu.Moy@imag.fr>
-To: Seth Robertson <in-gitvger@baka.org>
-X-From: git-owner@vger.kernel.org Sun Apr 01 07:58:58 2012
+Cc: git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Apr 01 11:48:01 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SEDoX-0007VS-PZ
-	for gcvg-git-2@plane.gmane.org; Sun, 01 Apr 2012 07:58:58 +0200
+	id 1SEHOD-0000pP-56
+	for gcvg-git-2@plane.gmane.org; Sun, 01 Apr 2012 11:48:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751552Ab2DAF6x convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 1 Apr 2012 01:58:53 -0400
-Received: from mail-bk0-f46.google.com ([209.85.214.46]:39394 "EHLO
-	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751291Ab2DAF6w convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 1 Apr 2012 01:58:52 -0400
-Received: by bkcik5 with SMTP id ik5so1627228bkc.19
-        for <git@vger.kernel.org>; Sat, 31 Mar 2012 22:58:50 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:x-originating-ip:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding:x-gm-message-state;
-        bh=IytlDUjQlO0AlUxG7jVhO88n7weU8XIYwUTMEM/iG2E=;
-        b=hGfmY9ma7dU2X5YP/36IYWodbm8hxyi8PeQ/Vj91QOaOM1/vftXmNzHhEhqrvvG3XS
-         rD+56RErDB7h23FP4bQK6/SHIk+5XYI5dFFtd5NvC41DKjXM1Aa9fpDzds5GlJwmOgtm
-         OsFqnTE2btWBgdPZhX1i4zM5XjaB4dkG4CoFTXgKhVGsiZpTwUcwxnJlptHcChqsIP09
-         O2j1lvQffmF0HfuGEoHYpOOh4+jcaP8XvhqO1I8fgSwrieLlOtVIeKZtWCP3vyJh+Shs
-         US2JYHDWPZEgRNuO10S1GdGjuM2GWHFhigibjvZm6WNY7xQO+vItEtMY5MwLzdMk7ETb
-         5cVA==
-Received: by 10.204.128.201 with SMTP id l9mr1634942bks.90.1333259930432; Sat,
- 31 Mar 2012 22:58:50 -0700 (PDT)
-Received: by 10.204.128.200 with HTTP; Sat, 31 Mar 2012 22:58:50 -0700 (PDT)
-X-Originating-IP: [66.75.229.176]
-In-Reply-To: <201203312348.q2VNmsmc015543@no.baka.org>
-X-Gm-Message-State: ALoCoQl1YRCXitGA5J6iPGhhPj6gdGbqmdBEwluPo9yclf13KhJEeIA2O4FfkF5lbecY/6bnSgpV
+	id S1751257Ab2DAJr5 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 1 Apr 2012 05:47:57 -0400
+Received: from mail-ob0-f174.google.com ([209.85.214.174]:36820 "EHLO
+	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751212Ab2DAJrz convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 1 Apr 2012 05:47:55 -0400
+Received: by obbtb18 with SMTP id tb18so872727obb.19
+        for <git@vger.kernel.org>; Sun, 01 Apr 2012 02:47:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=AOK8jJEsDp6ZXY6n3cmXDeZ1Qa1ttie175XbVCwKDWs=;
+        b=BclUG41I4iAWmcnkxG0tO7Wo3lbBrL/7CQQoZaSCIsELjP8K4KCv8vzk1ioC3eFN/R
+         JMwals8DFzaKeE3Fu7aAlMW6dssVH0pmWmhY+2U7PheKcnP+ERKkaLSbhib/a0GKamID
+         VPvTrIOegcuorytHw2J9qsKHG7Akb35dIXYLn65jzbM02ffZqf0xJ1gFiC7RFrJd+7XD
+         +yOFBh73RgSQ4eALsCg8mIGixkrkegrO5ZyW9OImwG816u6wXc/AdwL+W6FvqfuvE1XE
+         llFmfJY1LFdHWpW9G0LS4NSGx5ZX7Snli6SAJXfhxLvxmoGfTnbDUHzrsejhOGMelorS
+         mjFQ==
+Received: by 10.60.19.106 with SMTP id d10mr6625879oee.40.1333273674512; Sun,
+ 01 Apr 2012 02:47:54 -0700 (PDT)
+Received: by 10.182.39.234 with HTTP; Sun, 1 Apr 2012 02:47:54 -0700 (PDT)
+In-Reply-To: <201203301529.20942.jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194476>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194477>
 
-On Sat, Mar 31, 2012 at 4:48 PM, Seth Robertson <in-gitvger@baka.org> w=
-rote:
->
-> In message <CA+7g9JxK5DHj3vbdGgF2dEJxvn=3D_ZfjAv7Y+AL_P-aO1FVB6-w@mai=
-l.gmail.com>, Nathan Gray writes:
->
-> =A0 =A0If a user does some work on his new "features/frobnitz" branch=
- and
-> =A0 =A0does a "git push" only to find that his work has been committe=
-d to the
-> =A0 =A0company's master branch he will be confused, frustrated, and p=
-ublicly
-> =A0 =A0embarrassed. =A0He then has to apologize and figure out how to=
- revert
-> =A0 =A0the changes. =A0I really don't see any scenario where that use=
-r ends up
-> =A0 =A0saying "oh yeah, I guess git was right and I was wrong."
->
-> When working with a single remote, I tend to agree with you (though
-> since I also think receive.denyDeletes should be on by default for
-> shared repos the public humiliation of creating a branch when you did
-> not mean to might still exist but of course it will be less damaging
-> to others) . =A0However, tracking really comes into its own when work=
-ing
-> with multiple remotes. =A0Is creating a stumbling block between na=EF=
-ve
-> use and more sophisticated use really necessary?
+Dear jakub,
 
-Where's the stumbling block?  Nobody's talking about taking away the
-upstream option, so sophisticated users who prefer upstream behavior
-can configure their repos to get it.  The default should be tailored
-for na=EFve users, not power users.
+I have changed schedule based on the good suggetions given by you.
+please look at it.
 
-> However, the current message for this use case could seem to be
-> tweaked to take care of this:
->
-> $ git branch BB origin/B
-> Branch BB set up to track remote branch B from origin.
->
-> Add "If you push your changes will go there."
-> And "See git branch --upstream to modify both settings"
->
-> This provides the power of tracking with smaller possibility of
-> the type of embarrassment you envision.
+Before May 21st =EF=83=A0 interacting with the beloved community member=
+s and
+get familiarize  with the code base.
+Week 1 =EF=83=A0 Gaining a proper understanding regarding how various a=
+re
+implemented , their design philosophy , coding standards ,
+documentation standards to maintain the best  coding practices
+=2EDetailed discussions on which  JavaScript library / framework to use
+for client-side scripting in gitweb (jQuery, MooTools, Dojo, YUI)
+based on several criteria.(as you mentioned , a short paragraph
+describing which framework to use is also added)
+Week 2  =EF=83=A0 Transform existing code of JavaScript detection, adju=
+sting
+timezones and from hand written JavaScript to using JavaScript
+library,improving their features wherever possible, incrementally  and
+removing the  mini-library in `gitweb/static/js/lib/` by  proper
+design and analysis.
 
-I like the idea of telling users where their pushes will go, but I
-don't think this will work as well as you might expect.  You're
-relying on a new user to read every part of the message, understand
-the terminology, and internalize the meaning well enough to remember
-it in the distant future when he's ready to push.  Considering the
-onslaught of new concepts to absorb when a user switches from
-centralized to distributed SCM that's a pretty tall order.
-
-I think it's backwards to put a heavier cognitive load on newbies for
-the sake of saving power users from running git config.  After all,
-power users *love* running git config.  ;^)
-
-Cheers,
--Nathan
-
---=20
-http://n8gray.org
+Week 3 =EF=83=A0transform the existing code of incremental blame and im=
+proving
+its features wherever possible by proper design and analysis
+Week 4 & 5=EF=83=A0 design and implementation of client side sorting of=
+ tables
+and client side syntax highlighting of the blob view by handling how
+git web splits the output into lines and providing line numbers.
+There is also a question of integrating it with server-side source
+highlighting (turning off JS-based if server side already does syntax
+highlighting, and using
+the same CSS).
+Week 6 =EF=83=A0 testing the code robustly on as many browsers as possi=
+ble
+(with their versions) and documenting the code neatly .If possible
+automated testing will also be done using selenium web driver.
+MidTerm Delivarables : Transform existing code of JavaScript
+detection, adjusting timezones and from hand written JavaScript to
+using JavaScript library,improving their features wherever possible,
+incrementally  and removing the  mini-library in
+`gitweb/static/js/lib/` by  proper design and analysis. Adding client
+side sorting of tables and client side syntax highlighting of blob
+view .
+Week 7 & 8=EF=83=A0 Using deferrands or queues in the interactive blame=
+ to
+avoid the editing of DOM which happens asynchronously to avoid
+locking and automatic extending of clickable area for places where the
+link is constrained to a single cell or of that type.
+Week 9 & 10 & 11 adding user interface  to compare arbitrary commits
+in the page using commitdiff view similar to MediaWiki page history
+view . Creating a side by side diff from unified diff in javascript so
+that switching between unified diff and side by side diff could be
+handled on client side.
+Week 12 =EF=83=A0 documentation , writing a detail report , testing
+exhaustively and checking whether the written code follows the best
+coding practises and good design.
+Note: considerable amount of time will be spent each week
+concentrating on design for adding a new feature since its design
+greatly affects many things.
