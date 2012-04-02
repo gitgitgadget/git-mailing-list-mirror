@@ -1,80 +1,149 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: push.default: current vs upstream
-Date: Mon, 02 Apr 2012 12:47:57 -0700
-Message-ID: <7vzkatex02.fsf@alter.siamese.dyndns.org>
-References: <7vd37wv77j.fsf@alter.siamese.dyndns.org>
- <20120329095236.GA11911@sigill.intra.peff.net>
- <7vbonfqezs.fsf@alter.siamese.dyndns.org>
- <20120329221154.GA1413@sigill.intra.peff.net>
- <7vfwcqq2dw.fsf@alter.siamese.dyndns.org>
- <20120330071358.GB30656@sigill.intra.peff.net>
- <7vty15ltuo.fsf@alter.siamese.dyndns.org> <vpqty12h995.fsf@bauges.imag.fr>
- <7vlimegjw9.fsf@alter.siamese.dyndns.org> <vpqy5qejbjl.fsf@bauges.imag.fr>
- <7vobraf057.fsf@alter.siamese.dyndns.org> <vpqwr5ydkqt.fsf@bauges.imag.fr>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 3/3] revision: insert unsorted, then sort in
+ prepare_revision_walk()
+Date: Mon, 2 Apr 2012 16:14:33 -0400
+Message-ID: <20120402201432.GA26503@sigill.intra.peff.net>
+References: <201203291818.49933.mfick@codeaurora.org>
+ <7v7gy2q1kq.fsf@alter.siamese.dyndns.org>
+ <60bff12d-544c-4fbd-b48a-0fdf44efaded@email.android.com>
+ <20120330093207.GA12298@sigill.intra.peff.net>
+ <20120330094052.GB12298@sigill.intra.peff.net>
+ <4F7780F5.3060306@lsrfire.ath.cx>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Mon Apr 02 21:48:14 2012
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Martin Fick <mfick@codeaurora.org>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: =?utf-8?B?UmVuw6k=?= Scharfe <rene.scharfe@lsrfire.ath.cx>
+X-From: git-owner@vger.kernel.org Mon Apr 02 22:15:16 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SEnEV-0005T8-Hh
-	for gcvg-git-2@plane.gmane.org; Mon, 02 Apr 2012 21:48:07 +0200
+	id 1SEnel-00011e-Ac
+	for gcvg-git-2@plane.gmane.org; Mon, 02 Apr 2012 22:15:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751458Ab2DBTsA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 Apr 2012 15:48:00 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:42346 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751212Ab2DBTsA (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Apr 2012 15:48:00 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 856F765AC;
-	Mon,  2 Apr 2012 15:47:59 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=XhT3e2MAxNa7eV7NohHX0PS6BpM=; b=fWwqHE
-	Xz+qPacIRtfDv3lvTTgp3F06Y5+08lr3IR5/diZWnXUHESyHkO4JNTu+IbcLUQzx
-	N7S/0/3LQ+1m7E4SsodkDmrb1DH1dTALgxE/Eua5K6iEC/hgtZ/D1hoM5jT959yv
-	7niFlIhlZMhxok/8W6STbp8T9KZZ037dRkN18=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=LVIm31kto4CgybASC+98hKk+o9TMBl5B
-	rrkPHwbHLvKuWV3qPnNmU+qwLV8pZCpnqeDTXZZkXSmOCzFKSiTApK0gdqpr9VRV
-	bpYoQHKJXyvKq7jgZm9Hxf+1ss3JTiQeAgqxYkUiLo3JIzN8/Y5/l23pyOHMSGK+
-	JnHPyUsLHXo=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7C4A565AA;
-	Mon,  2 Apr 2012 15:47:59 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 14B0965A9; Mon,  2 Apr 2012
- 15:47:58 -0400 (EDT)
-In-Reply-To: <vpqwr5ydkqt.fsf@bauges.imag.fr> (Matthieu Moy's message of
- "Mon, 02 Apr 2012 20:58:02 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: BFE61E98-7CFC-11E1-A5DA-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752037Ab2DBUOf convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 2 Apr 2012 16:14:35 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:43499
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751703Ab2DBUOf (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Apr 2012 16:14:35 -0400
+Received: (qmail 20673 invoked by uid 107); 2 Apr 2012 20:14:36 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 02 Apr 2012 16:14:36 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 02 Apr 2012 16:14:33 -0400
+Content-Disposition: inline
+In-Reply-To: <4F7780F5.3060306@lsrfire.ath.cx>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194553>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194554>
 
-Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+On Sun, Apr 01, 2012 at 12:11:01AM +0200, Ren=C3=A9 Scharfe wrote:
 
-> Junio C Hamano <gitster@pobox.com> writes:
-> ...
->> In the former case, you may want to push it to 'topic' to work further
->> with your collaborators.  In the latter case, you would want to push it
->> back to 'master', even though you are calling it locally 'topic' for some
->> sick reason (read: because you can).
->
-> I still don't see pull involved here.
+> Speed up prepare_revision_walk() by adding commits without sorting
+> to the commit_list and at the end sort the list in one go.  Thanks
+> to mergesort() working behind the scenes, this is a lot faster for
+> large numbers of commits than the current insert sort.
 
-Think again.  Hint: realize that these people are not working alone, and
-will be keeping their topic in sync with collaborators, and then imagine
-how they are doing so.
+I think this is probably a sane thing to do, but I have two slight
+misgivings:
 
-No more words from me on this subthread.
+  1. Is it worth the complexity of the linked-list mergesort? I was
+     planning to just build an array, qsort it, and then put the result=
+s
+     into a linked list. The patch for that is below for reference.
+
+     It's a lot less code and complexity for the same performance
+     (actually, I measured it at 1% faster, but that is probably
+     negligible). The downside is that it is not nicely encapsulated in
+     commit_list_sort_by_date(). We call the latter from two other
+     places; I don't know if they can be fed with enough commits to
+     actually benefit from the performance gain or not.
+
+  2. I'm not super happy about fixing this one spot. This quadratic
+     behavior comes up in a lot of places, and we're slowly hacking the=
+m
+     one by one. E.g., this does nothing to help the same case in
+     fetch-pack.c:mark_complete[1]. Nor does it help the fact that
+     when we follow parents, we will do an O(n) insert_by_date for each
+     commit we insert. The latter is largely saved by the locality of
+     timestamps (i.e., timestamps of the parents of recently popped
+     commits tend to be near the front of the list), as well as the hac=
+k
+     in fce87ae (Fix quadratic performance in rewrite_one., 2008-07-12)=
+=2E
+
+     So I wonder if in the long term we would benefit from a better dat=
+a
+     structure, which would make these problems just go away. That bein=
+g
+     said, there is a lot of code to be updated with such a change, so
+     even if we do want to do that eventually, a quick fix like this is
+     probably still a good thing.
+
+-Peff
+
+[1] I fixed the mark_complete thing in ea5f220 (fetch: avoid repeated
+    commits in mark_complete, 2011-05-19), but only for exact-duplicate
+    commits. The real-world case where it came up was an "alternates"
+    repository that held refs for many clones (so we had hundreds or
+    thousands of copies of each tag). But on a repository like the one
+    we are testing on, I think it would be similarly slow.
+
+---
+Here's the qsort-in-array patch, for reference.
+
+diff --git a/revision.c b/revision.c
+index b3554ed..22c26d0 100644
+--- a/revision.c
++++ b/revision.c
+@@ -2062,10 +2062,24 @@ static void set_children(struct rev_info *revs)
+ 	}
+ }
+=20
++static int commit_compare_by_date(const void *va, const void *vb)
++{
++	const struct commit *a =3D va;
++	const struct commit *b =3D vb;
++	if (a->date < b->date)
++		return -1;
++	if (b->date < a->date)
++		return 1;
++	return 0;
++}
++
+ int prepare_revision_walk(struct rev_info *revs)
+ {
+ 	int nr =3D revs->pending.nr;
+ 	struct object_array_entry *e, *list;
++	struct commit **commits =3D NULL;
++	int commits_nr =3D 0, commits_alloc =3D 0;
++	int i;
+=20
+ 	e =3D list =3D revs->pending.objects;
+ 	revs->pending.nr =3D 0;
+@@ -2076,11 +2090,17 @@ int prepare_revision_walk(struct rev_info *revs=
+)
+ 		if (commit) {
+ 			if (!(commit->object.flags & SEEN)) {
+ 				commit->object.flags |=3D SEEN;
+-				commit_list_insert_by_date(commit, &revs->commits);
++				ALLOC_GROW(commits, commits_nr + 1, commits_alloc);
++				commits[commits_nr++] =3D commit;
+ 			}
+ 		}
+ 		e++;
+ 	}
++	qsort(commits, commits_nr, sizeof(*commits), commit_compare_by_date);
++	for (i =3D commits_nr - 1; i >=3D 0; i--)
++		commit_list_insert(commits[i], &revs->commits);
++	free(commits);
++
+ 	if (!revs->leak_pending)
+ 		free(list);
+=20
