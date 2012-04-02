@@ -1,107 +1,99 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: push.default: current vs upstream
-Date: Mon, 02 Apr 2012 11:40:04 -0700
-Message-ID: <7vobraf057.fsf@alter.siamese.dyndns.org>
-References: <7vd37wv77j.fsf@alter.siamese.dyndns.org>
- <20120329095236.GA11911@sigill.intra.peff.net>
- <7vbonfqezs.fsf@alter.siamese.dyndns.org>
- <20120329221154.GA1413@sigill.intra.peff.net>
- <7vfwcqq2dw.fsf@alter.siamese.dyndns.org>
- <20120330071358.GB30656@sigill.intra.peff.net>
- <7vty15ltuo.fsf@alter.siamese.dyndns.org> <vpqty12h995.fsf@bauges.imag.fr>
- <7vlimegjw9.fsf@alter.siamese.dyndns.org> <vpqy5qejbjl.fsf@bauges.imag.fr>
+Subject: Re: [PATCH v3 2/4] remote-curl: send the refs to fetch-pack on stdin
+Date: Mon, 02 Apr 2012 11:50:58 -0700
+Message-ID: <7vfwcmezn1.fsf@alter.siamese.dyndns.org>
+References: <4F79C195.6090905@gmx.net> <4F79C264.1060508@gmx.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Mon Apr 02 20:40:19 2012
+Cc: git@vger.kernel.org
+To: Ivan Todoroski <grnch@gmx.net>
+X-From: git-owner@vger.kernel.org Mon Apr 02 20:51:09 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SEmAr-0002GV-1N
-	for gcvg-git-2@plane.gmane.org; Mon, 02 Apr 2012 20:40:17 +0200
+	id 1SEmLM-0002Ib-0y
+	for gcvg-git-2@plane.gmane.org; Mon, 02 Apr 2012 20:51:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753684Ab2DBSkK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 Apr 2012 14:40:10 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:46288 "EHLO
+	id S1753365Ab2DBSvC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 Apr 2012 14:51:02 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50510 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753173Ab2DBSkI (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Apr 2012 14:40:08 -0400
+	id S1751291Ab2DBSvB (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Apr 2012 14:51:01 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3A09B7546;
-	Mon,  2 Apr 2012 14:40:07 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B96B977D2;
+	Mon,  2 Apr 2012 14:51:00 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=+ivr22himJcQFDm8x+oHrxniCz4=; b=RbQ2sl
-	N4PBlMJ8OZnlBTw70Vi5OxxdxJBGD9AEI4Z2M62T+SCVwjkDGAwk/B7e+r+BJZAc
-	8bT03w5uHe+MjA50BozsQyQ3WFXwbi6MKMpRH7tWO9IFdsV3d11KPdDt4nGnXS96
-	x7YCap7MX0JsMounuGKqbEcICPRlOsMqIFJLA=
+	:content-type; s=sasl; bh=SiZSJSBRoaDqBG/Dcq+dtqK1cqA=; b=KTvVVy
+	60qzezArcBOLTyoIA1PV8pm8izBgIm2RjaCf3PIMcdvKPUO0JX+JIaytVNPIuR5i
+	RB74D/hI8hr2lj7mjEs6Ctm0uKtBY2kPB266JS5sxKTIjcrLwrXgbQDOZdZufwq7
+	7AaRRwUE2W/5sGKSUqYbqMfLgzyf9RhtLYER4=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=u2HBcEcj6NvRgeogNp4Jz7tof9N6/Joi
-	G1Re1f2MSerLaFXucDqufhItMCSFIfMbWAhThi2QOj/GUUc0MPNas7PAYQNAUdt5
-	znTGxDDScZ09UlhbXiGzDFBb3Y7FGL43XQoqB52QXS8bLHzLPfon2MqTmYGMBh4A
-	VPDwMnrmiow=
+	:content-type; q=dns; s=sasl; b=WCZbhNvKOqlFlr4dInzUhK94ippFerCf
+	BNjNerk39zGYV0WAO37xcTxKoZRdBpgUBQwELI/9AU5QbKq5JDLNYA/F8AUSnl+Z
+	MWhbYSpyXFMdrSvDrkRKLZ48SjZbfoOt1lgtrlwJ84rK4CO9haK8ti0iyswIs6cB
+	kcP5BolsXRY=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 30FA07545;
-	Mon,  2 Apr 2012 14:40:07 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B0D1577D1;
+	Mon,  2 Apr 2012 14:51:00 -0400 (EDT)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 82F58753F; Mon,  2 Apr 2012
- 14:40:05 -0400 (EDT)
-In-Reply-To: <vpqy5qejbjl.fsf@bauges.imag.fr> (Matthieu Moy's message of
- "Mon, 02 Apr 2012 19:20:14 +0200")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 141A477CF; Mon,  2 Apr 2012
+ 14:50:59 -0400 (EDT)
+In-Reply-To: <4F79C264.1060508@gmx.net> (Ivan Todoroski's message of "Mon, 02
+ Apr 2012 17:14:44 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 43E00286-7CF3-11E1-945D-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: CA03C3C4-7CF4-11E1-9B0D-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194548>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194549>
 
-Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+Ivan Todoroski <grnch@gmx.net> writes:
 
-> Junio C Hamano <gitster@pobox.com> writes:
+> Now that we can throw an arbitrary number of refs at fetch-pack using
+> its --stdin option, we use it in the remote-curl helper to bypass the
+> OS command line length limit.
 >
->> Before saying "again", perhaps we should read and think about what the
->> other side said.  I think [*1*] raises a good point.
+> Signed-off-by: Ivan Todoroski <grnch@gmx.net>
+> ---
+>  remote-curl.c |   14 ++++++++++++--
+>  1 file changed, 12 insertions(+), 2 deletions(-)
 >
->> *1* http://thread.gmane.org/gmane.comp.version-control.git/194175/focus=194470
->
-> I think this message precisely supports my claim: we focus the
-> discussion on "git push", without thinking on the big picture "git pull"
-> AND "git push". The message you point to does not talk at all about "git
-> pull".
+> diff --git a/remote-curl.c b/remote-curl.c
+> index d159fe7f34..a728edfa7f 100644
+> --- a/remote-curl.c
+> +++ b/remote-curl.c
+> @@ -633,6 +638,7 @@ static int fetch_git(struct discovery *heads,
+>  	argv = xmalloc((15 + nr_heads) * sizeof(char*));
 
-I do not think so; that "name" argument is about this part from Peff's
-message, to which it is a response:
+You no longer need an argv array whose size is proportional to nr_heads.
+I'll queue the patch without "+ nr_heads" part, but we should probably
+switch this to use argv_array API after this series settles.
 
->> > my two concerns is that this:
->> >
->> >   $ git clone ...
->> >   $ git checkout -b topic origin/master
->> >   $ hack hack hack
->> >   $ git push
->> >
->> > will try to implicitly fast-forward merge your commits onto master.
->> 
->> And the reason why it is surprising to the beginners is?  Because "topic"
->> and "master" (of "origin/master") are not the same name?
->
-> Sort of. It is more because "upstream" is an overloaded concept. Perhaps
-> you created the branch from origin/master because you wanted to say
-> "this is where my topic is based, and when I 'rebase -i' later, I want
-> it to be considered the baseline". Or perhaps you meant to say "I am
-> going to work on origin's master branch, but I would prefer to call it
-> 'topic' here".
-
-If you re-read it, it should be clear that this is _also_ about "git pull";
-"I am going to work on origin's master branch" is about pushing the result
-back there.
-
-In the former case, you may want to push it to 'topic' to work further
-with your collaborators.  In the latter case, you would want to push it
-back to 'master', even though you are calling it locally 'topic' for some
-sick reason (read: because you can).
+>  	argv[argc++] = "fetch-pack";
+>  	argv[argc++] = "--stateless-rpc";
+> +	argv[argc++] = "--stdin";
+>  	argv[argc++] = "--lock-pack";
+>  	if (options.followtags)
+>  		argv[argc++] = "--include-tag";
+> @@ -651,23 +657,27 @@ static int fetch_git(struct discovery *heads,
+>  		argv[argc++] = depth_arg;
+>  	}
+>  	argv[argc++] = url;
+> +	argv[argc++] = NULL;
+> +
+>  	for (i = 0; i < nr_heads; i++) {
+>  		struct ref *ref = to_fetch[i];
+>  		if (!ref->name || !*ref->name)
+>  			die("cannot fetch by sha1 over smart http");
+> -		argv[argc++] = ref->name;
+> +		packet_buf_write(&preamble, "%s\n", ref->name);
+>  	}
+> -	argv[argc++] = NULL;
+> +	packet_buf_flush(&preamble);
