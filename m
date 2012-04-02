@@ -1,161 +1,70 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: GSOC Proposal draft: git-remote-svn
-Date: Mon, 2 Apr 2012 16:30:14 +0530
-Message-ID: <CALkWK0nYhfPQrwrrnGP21za6CkryuzfV+ki+WKUdtA1BaLHTsA@mail.gmail.com>
-References: <11292500.AVmZFUUvNi@flobuntu> <CALkWK0nW91PE2810qrZUbL0x-_YTTA_2tLFVhvXBJ2NFGvVxog@mail.gmail.com>
- <2148933.pnpYo0xMAP@flomedio> <2487557.B8qfnaixh3@flomedio>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: Maintaining historical data in a git repo
+Date: Mon, 2 Apr 2012 13:38:17 +0200
+Message-ID: <CACBZZX46d8rx4ueY3-mNHfZ7T-zrw8rKsRG7VAoGZSbYEvOpiw@mail.gmail.com>
+References: <CA+P+rLeyEcZPudhLWavB74CiDAqpn+iNkk4F8=NK_yGaJPMmyA@mail.gmail.com>
+ <201203301510.q2UFAqn6003864@no.baka.org> <CA+P+rLcWT0SZQjW2LtFXXCDRwjMp8daJ2hVup=7cnsRGbKw7xw@mail.gmail.com>
+ <7vehsam3pn.fsf@alter.siamese.dyndns.org> <CA+P+rLeDFu4KgEZPw=k67iMWVVGcZ3q48VZjgXNLXn3NdyQnow@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: David Barr <davidbarr@google.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Andrew Sayers <andrew-git@pileofstuff.org>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Dmitry Ivankov <divanorama@gmail.com>
-To: Florian Achleitner <florian.achleitner@student.tugraz.at>
-X-From: git-owner@vger.kernel.org Mon Apr 02 13:00:41 2012
+Cc: git@vger.kernel.org
+To: Yuval Adam <yuv.adm@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Apr 02 13:38:48 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SEf05-0005k8-92
-	for gcvg-git-2@plane.gmane.org; Mon, 02 Apr 2012 13:00:41 +0200
+	id 1SEfau-0006hI-Ju
+	for gcvg-git-2@plane.gmane.org; Mon, 02 Apr 2012 13:38:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752230Ab2DBLAg convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 2 Apr 2012 07:00:36 -0400
-Received: from mail-wi0-f172.google.com ([209.85.212.172]:62754 "EHLO
-	mail-wi0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752183Ab2DBLAg convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 2 Apr 2012 07:00:36 -0400
-Received: by wibhj6 with SMTP id hj6so2527489wib.1
-        for <git@vger.kernel.org>; Mon, 02 Apr 2012 04:00:34 -0700 (PDT)
+	id S1752346Ab2DBLik (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 Apr 2012 07:38:40 -0400
+Received: from mail-ee0-f46.google.com ([74.125.83.46]:38544 "EHLO
+	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751807Ab2DBLij (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Apr 2012 07:38:39 -0400
+Received: by eekc41 with SMTP id c41so813081eek.19
+        for <git@vger.kernel.org>; Mon, 02 Apr 2012 04:38:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=Y0NKiVMT9e91K/7oO1HXO+C/HIYZdC69iuEp6i3adtM=;
-        b=bBU4ooqh5zQVOb7if2FWTeB2g1gMA9k6DN/oNEa/a9DUSEBxlTf2rY9H3qMWwCo8c7
-         JU3+w2BXs5V3C9trw26jAMGr5dAQzH5bqur1+PsKzvbaTcXiZRv5VioPorWCih1HfDXA
-         0tTfQ3tn5rqtNl/0LsujoR+H1DBATH37c8n3rVPAluMCYhbNMlIXEuPoJO/MshmC6BpJ
-         PWFhZaeTpXSXE93LxzCA88PDN7+VViqhlnWRhEBe6EY/iVkssTtOXS3lcrnmLNt8/AKp
-         uZ0zZtOEFAWDoCI6iwX8dHf+Zbg7uDKI/R7Zjt6N1miPJxryqKWh8P6GveiobPGQgUV9
-         a4NQ==
-Received: by 10.180.102.101 with SMTP id fn5mr24024752wib.6.1333364434531;
- Mon, 02 Apr 2012 04:00:34 -0700 (PDT)
-Received: by 10.216.11.199 with HTTP; Mon, 2 Apr 2012 04:00:14 -0700 (PDT)
-In-Reply-To: <2487557.B8qfnaixh3@flomedio>
+         :cc:content-type;
+        bh=7zQ+gf1JPN2mZzfFXWPNboP3nt+IV5FGnBo/zhXa+jA=;
+        b=Hf5J8z/KK8KJWa7t2mvVP6vMqvtJ2O09c/Mo2cPzIJIR031xK0JLbya9skrzTyKWHd
+         OM4qJnYIL94Fk7DeaubQ2gYys4wc2sX0OQgAEsDZ1C/QWGIUzZqbeJhC25n5s0MIa3+c
+         pu9AsTkTfWtw4qUaz1majmOgPJJ5oO2MWioPfn0n0veVA9IUuokCyPyV0t7mGgaa0Ieu
+         ulZQ+DObRk94CoBGjqAXSit1ho6FVCGtP7qvxLZNkwRQxfHvLTK8YIt/KJ6GJS/e+NsY
+         R0uoxm2Bfd4mK/uVoKiLb8GzDyVcs8/jhPspei7bZ66HRzw4uUYorji1bsVRz6N8pJxi
+         ADog==
+Received: by 10.14.99.10 with SMTP id w10mr1135359eef.51.1333366718063; Mon,
+ 02 Apr 2012 04:38:38 -0700 (PDT)
+Received: by 10.213.103.1 with HTTP; Mon, 2 Apr 2012 04:38:17 -0700 (PDT)
+In-Reply-To: <CA+P+rLeDFu4KgEZPw=k67iMWVVGcZ3q48VZjgXNLXn3NdyQnow@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194509>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194510>
 
-Hi Florian,
+On Fri, Mar 30, 2012 at 22:39, Yuval Adam <yuv.adm@gmail.com> wrote:
+> However, we perceive git as a very powerful tool, that can fit
+> beautifully with the way legislation works today.
+> The challenge for us - should we choose to accept it ;) - is to build
+> a set of wrapper tools that allow us to use git in such a way, while
+> enabling us to build up past history.
 
-=46lorian Achleitner wrote:
-> - svn commits are only possible after updating the working copy first=
-, i.e.
-> fetching and merging new revisions on the server. This is like implic=
-itly
-> rebasing your local work on the remote head before pushing to an svn
-> repository.
+You can always solve this by having two repositories, you have one
+canonical Git repository with your laws using some text-based format
+to describe when each change was added.
 
-This shouldn't worry you, because we don't have a Git -> SVN converter
-yet.  However, I have written a prototype svn-fi.  Unfortunately, due
-to the way marks work in fast-import, svn-fi is far from complete.
+You'd never rewrite the history of this repository since it would
+represent the history of your project to give a commit timeline to the
+law, and not attempt to make your commit log reflect changes in the
+law.
 
-See: https://github.com/artagnon/git/tree/svn-fi
+You could then have tools to export another Git history from that
+original repository, that one would be constantly rewritten and nobody
+would base changes on that.
 
-> Branches exist due to the convention of having branches/, trunk/, and=
- tags/
-> directories in a repository, so do tags. But this is not mandatory an=
-d
-> therefore there are many different layouts. It follows that in svn it=
- is also
-> possible to commit across branches. This means that a single commit c=
-an change
-> files on more than one branch (accidentally or deliberately).
-> To convert svn branches to git we have to detect branch semantics by =
-examining
-> the svn tree's structure and it's metadata (it has a 'copyfrom' prope=
-rty).
-> Previous efforts show that this will not be possible fully automatica=
-lly
-> without configuration and interaction with the user.
-
-See also: http://article.gmane.org/gmane.comp.version-control.git/15000=
-7
-
-> "esr" developed a tool to manipulate and export subversion repositori=
-es [7]
-> that should be able to detect branches, but it's sources are not avai=
-lable
-> yet.
-
-Sources are available at git://gitorious.org/reposurgeon/reposurgeon.gi=
-t
-Do let us know how SBL compares to reposurgeon.  Personally, I like
-the idea of a standard "language" to express the mapping.
-
-> In git's source tree we have a vcs-svn/, a set of functions to conver=
-t svn
-> dumps to git-fast-import streams. Those are used by svn-fe to one-way=
- import
-> svn history to git. svn-fe doesn't do branch mapping yet.
-
-Are you planning to extend svn-fe to do the mapping, write it as a
-separate program, or write it into the remote helper? I personally
-don't mind if the mapping is done in Perl (like in git-svn or SBL) as
-opposed to C; mapping is just parse-intensive.
-
-> 1. Write a new bi-directional remote helper in C.
-> [...]
-> =C2=A0- It reads a configuration file containing branch mappings acco=
-rding to [6].
-> These mapping have to be pre-generated using tools developed along wi=
-th the
-> language. The remote helper has no way of asking the user what to do.=
- It will
-> fail if a mapping is unclear.
-
-Right.
-
-> =C2=A0- Because generating the branch mapping configuration already r=
-equires that
-> you have a dump of the svn repo, the helper should probably be able t=
-o read
-> from a file in place of svnrdump too.
-
-You can clone the SVN dumpstream from svnrdump using tee (or similar),
-sending one copy to svn-fe and another to the SBL configuration
-generator.
-
-> =C2=A0- Using the config the helper translates svn branches/tags to g=
-it
-> branches/tags and converts other metadata as applicable. It probably =
-has to
-> store some information about the mapping in a file in .git to allow a
-> reconstruction on subsequent invocations. I think this is especially =
-important
-> when pushing to branches (does it already exist in svn, and where? is=
- it new).
-
-How will the actual mapping be done?  Using filter-branch's
-subdirectory filter, or something else?
-
-> 3. Add output capabilities to vcs-svn. Currently the code in vcs-svn =
-can only
-> convert svn to git. To push to svn we also need conversion and mappin=
-g from
-> git to svn. The actual mapping code for branches should also be place=
-d here
-> {??} and called by the remote helper.
-
-I think this bit sounds overtly ambitious.  I think if you can build a
-seamless one-way SVN -> Git bridge in one summer, it'll be quite an
-achievement in itself.  Finishing and getting svn-fi merged should be
-last priority; I'll try to work on it myself in summer.
-
-    Ram
+You could also make the two one and the same, but you don't have to.
