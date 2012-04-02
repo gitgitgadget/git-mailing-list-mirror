@@ -1,142 +1,112 @@
-From: Andrew Sayers <andrew-git@pileofstuff.org>
-Subject: Re: GSOC Proposal draft: git-remote-svn
-Date: Mon, 02 Apr 2012 23:17:48 +0100
-Message-ID: <4F7A258C.5000200@pileofstuff.org>
-References: <11292500.AVmZFUUvNi@flobuntu> <CALkWK0nW91PE2810qrZUbL0x-_YTTA_2tLFVhvXBJ2NFGvVxog@mail.gmail.com> <2148933.pnpYo0xMAP@flomedio> <2487557.B8qfnaixh3@flomedio>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: GSoC - Some questions on the idea of
+Date: Mon, 02 Apr 2012 15:19:35 -0700
+Message-ID: <7vvclhdbew.fsf@alter.siamese.dyndns.org>
+References: <CA+M5ThS2iS-NMNDosk2oR25N=PMJJVTi1D=zg7MnMCUiRoX4BQ@mail.gmail.com>
+ <CACsJy8APtMsMJ=FrZjOP=DbzuFoemSLJTmkjaiK5Wkq9XtA4rg@mail.gmail.com>
+ <loom.20120328T131530-717@post.gmane.org>
+ <CA+M5ThTPyic=RhFL2SvuNB0xBWOHxNTaUZrYMB144UjpjCiLoQ@mail.gmail.com>
+ <20120330203430.GB20376@sigill.intra.peff.net> <4F77209A.8050607@gmail.com>
+ <20120402214049.GB28926@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
-	David Barr <davidbarr@google.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Dmitry Ivankov <divanorama@gmail.com>
-To: Florian Achleitner <florian.achleitner@student.tugraz.at>
-X-From: git-owner@vger.kernel.org Tue Apr 03 00:18:03 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Neal Kreitzinger <nkreitzinger@gmail.com>,
+	Bo Chen <chen@chenirvine.org>,
+	Sergio <sergio.callegari@gmail.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Apr 03 00:19:46 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SEpZW-0001E2-Lb
-	for gcvg-git-2@plane.gmane.org; Tue, 03 Apr 2012 00:17:59 +0200
+	id 1SEpbD-0002TQ-Qk
+	for gcvg-git-2@plane.gmane.org; Tue, 03 Apr 2012 00:19:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752776Ab2DBWRy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 Apr 2012 18:17:54 -0400
-Received: from mtaout01-winn.ispmail.ntl.com ([81.103.221.47]:33484 "EHLO
-	mtaout01-winn.ispmail.ntl.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752619Ab2DBWRw (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 2 Apr 2012 18:17:52 -0400
-Received: from aamtaout03-winn.ispmail.ntl.com ([81.103.221.35])
-          by mtaout01-winn.ispmail.ntl.com
-          (InterMail vM.7.08.04.00 201-2186-134-20080326) with ESMTP
-          id <20120402221750.KTFA3740.mtaout01-winn.ispmail.ntl.com@aamtaout03-winn.ispmail.ntl.com>;
-          Mon, 2 Apr 2012 23:17:50 +0100
-Received: from [192.168.0.2] (really [94.170.150.126])
-          by aamtaout03-winn.ispmail.ntl.com
-          (InterMail vG.3.00.04.00 201-2196-133-20080908) with ESMTP
-          id <20120402221750.PZNS13318.aamtaout03-winn.ispmail.ntl.com@[192.168.0.2]>;
-          Mon, 2 Apr 2012 23:17:50 +0100
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.28) Gecko/20120313 Thunderbird/3.1.20
-In-Reply-To: <2487557.B8qfnaixh3@flomedio>
-X-Cloudmark-Analysis: v=1.1 cv=JvdXmxIgLJv2/GthKqHpGJEEHukvLcvELVXUanXFreg= c=1 sm=0 a=yXtjXN6ItgYA:10 a=Hd5Tmzg1rDkA:10 a=u4BGzq-dJbcA:10 a=8nJEP1OIZ-IA:10 a=NEAV23lmAAAA:8 a=q0Az1FFTx-w6Jxf5xrIA:9 a=-UiiLsmtVNUip7UKYzYA:7 a=wPNLvfGTeEIA:10 a=KDS-H1m-k2RTesoJ:21 a=Ln5cHK7-V-9lt06r:21 a=HpAAvcLHHh0Zw7uRqdWCyQ==:117
+	id S1752918Ab2DBWTj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 Apr 2012 18:19:39 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39364 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752534Ab2DBWTi (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Apr 2012 18:19:38 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A5B706631;
+	Mon,  2 Apr 2012 18:19:37 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=u8eakzTlBwf1z0bnoyzStAOeILo=; b=NqiMKS
+	fdU6TpN93OnonZ9Qvb5gvPgJoFC5dXltBip2Bu/jy+cjFahaV746X1J7ca53cR7k
+	N1OHTmA8wdjGrz4wod9j/09ljbMI03KcKctnYwP8iP/p0TTRz46rYST0S1ivj3x8
+	GkZHnU1VUrB4/yp1aw5UfX3+q6LvtD1GWxM5Y=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=lXECGqztYWTDkP49B6/28uqpCRP5cy2M
+	T6FuYQ7lKAWTRPp1BEtDkW6/ZYyqU2G1S3nOf1mwq4xbJj+xzgqOuKGYO0uKwhhr
+	8TkXANMcmiNTR60ZUcN4RoBjuyHP6v713ELg0QV5qQg5la5eWfF04rrQqRrcz7TK
+	5oNKxZsVvJw=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9D2D96630;
+	Mon,  2 Apr 2012 18:19:37 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 14844662F; Mon,  2 Apr 2012
+ 18:19:36 -0400 (EDT)
+In-Reply-To: <20120402214049.GB28926@sigill.intra.peff.net> (Jeff King's
+ message of "Mon, 2 Apr 2012 17:40:49 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: EEBAD370-7D11-11E1-88F8-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194570>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194571>
 
-Hey Florian,
+Jeff King <peff@peff.net> writes:
 
-Comments below.  The nitpickier ones aren't so much there to help the
-proposal as for general information.
+>   1. You really have 100G of data in the current version that doesn't
+>      compress well (e.g., you are storing your music collection). You
+>      can't afford to store two copies on your laptop (because you have a
+>      fancy SSD, and 100G is expensive again).  You need the working tree
+>      version, but it's OK to stream the repo version of a blob from the
+>      network when you actually need it (mostly "checkout", assuming you
+>      have marked the file as "-diff").
 
-On 02/04/12 09:30, Florian Achleitner wrote:
-<snip>
-> 
-> Subversion (svn) [2] was created as a successor of CVS, both follow a strict 
-> client-server design, where the repository exclusively lives on the central 
-> server and every client only checks out a copy of a single revision at a time. 
-> SVN doesn't truly have a concept of branches. SVN branches are a copy of a 
-> directory (so are tags).
+This feels like a good candidate for an independent project that allows
+you fuse-mount from a remote repository to give you an illusion that you
+have a checkout of a specific version.  Such a remote fuse-server would be
+an application that is built using Git, but I do not think we are in any
+business on the client end in such a setup.
 
-Just a little nitpick - SVN was primarily inspired by CVS, but there's
-no formal connection between the projects - both are developed by
-different development teams even to this day.
+So I'll write it off as a "non-Git" issue for now.
 
-<snip>
-> git-fast-import [4] is a format to serialize a git repository into a text 
-> format. It is used by the tools git-fast-import and git-fast-export.
-> 
-> The remote helper has to convert the foreign protocol and data (svn) to the 
-> git-fast-import format.
+The other parts of your message is much more interesting.
 
-As discussed on IRC, I'd like to see some discussion of solutions that
-use plumbing directly (e.g. git-commit-tree) if you choose to focus on
-branch import.
+> Right. This is the same concept, except over the network. So people's
+> working repositories are on their own workstations instead of a central
+> server. You could even do it today by network-mounting a filesystem and
+> pointing your alternates file at it. However, I think it's worth making
+> git aware that the objects are on the network for a few reasons:
+>
+>   1. Git can be more careful about how it handles the objects, including
+>      when to fetch, when to stream, and when to cache. For example,
+>      you'd want to fetch the manifest of objects and cache it in your
+>      local repository, because you want fast lookups of "do I have this
+>      object".
+>
+>   2. Providing remote filesystems on an Internet scale is a management
+>      pain (and it's a pain for the user, too). My thought was that this
+>      would be implemented on top of http (the connection setup cost is
+>      negligible, since these objects would generally be large).
+>
+>   3. Usually alternate repositories are full repositories that meet the
+>      connectivity requirements (so you could run "git fsck" in them).
+>      But this is explicitly about taking just a few disconnected large
+>      blobs out of the repository and putting them elsewhere. So it needs
+>      a new set of tools for managing the upstream repository.
 
-<snip>
-> Branches exist due to the convention of having branches/, trunk/, and tags/ 
-> directories in a repository, so do tags. But this is not mandatory and 
-> therefore there are many different layouts. It follows that in svn it is also 
-> possible to commit across branches. This means that a single commit can change 
-> files on more than one branch (accidentally or deliberately).
+Or you can split out the really large write-only blobs out of SCM control.
+Every time you introduce a new blob, throw it verbatim in an append-only
+directory on a networked filesystem under some unique ID as its filename,
+and maintain a symlink into that networked filesystem under SCM control.
 
-This is basically accurate, but a contrived example might help explain
-why fully automatic branch export is impossible in the general case:
-
-Imagine a repository that consists of a single revision with a single
-file, "scratchpad/libfoo/foo.c" - how would we decide which directory is
-the branch?  Has the author has even decided yet?  For example, he might
-be learning version control and not understand what branches are.
-
-Having said that, automatic branch export might be possible in some
-important special cases (like repositories that use the standard
-layout).  I haven't really looked into this yet.
-
-<snip>
->   - Because generating the branch mapping configuration already requires that 
-> you have a dump of the svn repo, the helper should probably be able to read 
-> from a file in place of svnrdump too.
-
-It might help if I explain how the SVN branch exporter will work:
-
-First, it will read an SVN dump and create a file containing JSON blobs
-summarising each revision - e.g. it specifies which files were changed,
-but not the contents of the changes.  As Ram mentioned, downloading the
-dump and tee'ing it to both this process and svn-fe makes a lot of sense.
-
-Next, it will read the JSON file and detect trunks.  This turns out to
-be extremely fast now it's been freed from the SVN dump format.
-
-Next, the user will have the opportunity to review the detected trunks.
- For example, if somebody put a "README.txt" in the root directory, the
-previous step will need to be rerun with that file ignored.
-
-Next, the main branch detection stage will be run using the JSON file
-and the previous branch information.
-
-Next, the user has another chance to make changes.  Some users will blow
-straight past this stage, but sufficiently fussy users with sufficiently
-large repositories could spend several days looping through this and the
-previous stage until their branches and merges are just right.
-
-The SBL file is finally complete whenever the user decides - you'll need
-to tell them how to restart the import process, in case they restarted
-their computer while they were refining the file.
-
-<snip>
-> 3. Add output capabilities to vcs-svn. Currently the code in vcs-svn can only 
-> convert svn to git. To push to svn we also need conversion and mapping from 
-> git to svn. The actual mapping code for branches should also be placed here 
-> {??} and called by the remote helper.
-
-I agree with Jonathan and Ram that we're not ready for this yet.  Even
-mapping git branches back to a branchless representation won't be
-practical until branch import is fairly mature.
-
-	- Andrew
-
-[1]https://github.com/andrew-sayers/Proof-of-concept-History-Converter/blob/master/git-branch-import.pl
-[2]git sources git/Documentation/git-commit-tree.txt
+I think git-annex already does something like that...
