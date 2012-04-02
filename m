@@ -1,71 +1,73 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: GSoC - Some questions on the idea of
-Date: Mon, 2 Apr 2012 08:00:22 +0700
-Message-ID: <CACsJy8CJK4gZwnrqkhq2DUqErS94X=99kvB9z=x9TefG=MrE4A@mail.gmail.com>
-References: <CA+M5ThS2iS-NMNDosk2oR25N=PMJJVTi1D=zg7MnMCUiRoX4BQ@mail.gmail.com>
- <CACsJy8APtMsMJ=FrZjOP=DbzuFoemSLJTmkjaiK5Wkq9XtA4rg@mail.gmail.com>
- <loom.20120328T131530-717@post.gmane.org> <CA+M5ThTPyic=RhFL2SvuNB0xBWOHxNTaUZrYMB144UjpjCiLoQ@mail.gmail.com>
- <20120330203430.GB20376@sigill.intra.peff.net> <4F7768D6.3010400@gmail.com>
- <CA+M5ThTKtSFPq8A3oc1wvc9i0vG1NMyHCRE+poYaq+65FQWOxw@mail.gmail.com>
- <CACsJy8DTegW78Qw7-T6uK_oZj2CELv57bbH6sU=bScHDesGYPQ@mail.gmail.com> <CA+M5ThTnd+TST6WsAn-Jd=Gb=1EWaJ+QbLMxXgtAVFNVqnRcMw@mail.gmail.com>
+From: Jiang Xin <worldhello.net@gmail.com>
+Subject: Please pull git-l10n update with Portuguese (Portugal) language support
+Date: Mon, 2 Apr 2012 10:25:07 +0800
+Message-ID: <CANYiYbGDRP2cag3TLdW1=No6RS-K_E7ez9Q7iws=CEgDKgkgCw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Neal Kreitzinger <nkreitzinger@gmail.com>,
-	Jeff King <peff@peff.net>, Sergio <sergio.callegari@gmail.com>,
-	git@vger.kernel.org
-To: Bo Chen <chen@chenirvine.org>
-X-From: git-owner@vger.kernel.org Mon Apr 02 03:01:01 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Git List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>,
+	Marco Sousa <marcomsousa@gmail.com>,
+	=?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Apr 02 04:25:17 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SEVdj-0008Rm-LM
-	for gcvg-git-2@plane.gmane.org; Mon, 02 Apr 2012 03:01:00 +0200
+	id 1SEWxI-00068K-FK
+	for gcvg-git-2@plane.gmane.org; Mon, 02 Apr 2012 04:25:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753695Ab2DBBAz convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 1 Apr 2012 21:00:55 -0400
-Received: from mail-wg0-f44.google.com ([74.125.82.44]:42776 "EHLO
-	mail-wg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753044Ab2DBBAy convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 1 Apr 2012 21:00:54 -0400
-Received: by wgbdr13 with SMTP id dr13so2192965wgb.1
-        for <git@vger.kernel.org>; Sun, 01 Apr 2012 18:00:53 -0700 (PDT)
+	id S1754057Ab2DBCZJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 1 Apr 2012 22:25:09 -0400
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:44207 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754018Ab2DBCZI (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 1 Apr 2012 22:25:08 -0400
+Received: by iagz16 with SMTP id z16so3504130iag.19
+        for <git@vger.kernel.org>; Sun, 01 Apr 2012 19:25:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=JiXiFt4p7PqcdQYo1N1DBoGwT5KEMuDeIR7lmLdgviQ=;
-        b=ACMVI4re6Zq6ne2DhdPv2U0S06z48nwBAn7WN64hMtkCbWmh9rrHMP3TiRzQ+WYscx
-         6B0wUwrmdiqFEkuUbVoT4jRX7GoSjQYvSn+qEgwIg55W3ccoiubcDXrt+AYllWXBoLEy
-         CsZu9b9no8h6cX5DtbYu6ROPIz3FN+S2zdQkBZqCDdnqurTqPbBQNBxaeTYwjp0wd/vo
-         aXQ9S1nKl747W6FyCeNmv7QsxIQ8YvloCFHytxTm1YB0XwFS0lFwrmYbcsrO4i/TRzKT
-         P1VMiWa8NO5Wm4o1T0ghL6FCF6u5QrEmSNTOKQWaZTSY21qho/ekQeUtjQ5nyw3d+VHr
-         5AGA==
-Received: by 10.180.97.41 with SMTP id dx9mr20042047wib.9.1333328453130; Sun,
- 01 Apr 2012 18:00:53 -0700 (PDT)
-Received: by 10.223.109.144 with HTTP; Sun, 1 Apr 2012 18:00:22 -0700 (PDT)
-In-Reply-To: <CA+M5ThTnd+TST6WsAn-Jd=Gb=1EWaJ+QbLMxXgtAVFNVqnRcMw@mail.gmail.com>
+        h=mime-version:date:message-id:subject:from:to:cc:content-type;
+        bh=h5Eh5BNMzSUQHw1d+h8tqw5Xqtg1FCXhEmziHzow1b4=;
+        b=g3CDwnYVx5fGWSNVRyVxHRFLPP8quo+BjOeJ/TLStfPQCbLvg13/756hL1Yu3hBUhI
+         6dwOn/NqJJdHIQ438PnNW4UIvmcpB2psAkTwxwy+OUHgq5JnqNPrTyYs+wOFrtOsAb1a
+         IBQLAX2L0k7MdrChPYb5QHFH7Bij3aOp/n8g9Llkb/iMsbPeplgBjlOO+pmKN8/9/EdR
+         DHNyJ9u2A6GyapfHEr6ywQ89YE9QD9od/hKp5G2aRCh7c6OEwrgl3RPIw7+xk5Pt46cX
+         gQRcsYVO4QhTfOv+tHdN8LwbFOnJbwswfg+MwtFg+Ouyou/d/UUPKjJVhVyOLL8CSJQH
+         kA2Q==
+Received: by 10.42.18.67 with SMTP id w3mr3347179ica.46.1333333507674; Sun, 01
+ Apr 2012 19:25:07 -0700 (PDT)
+Received: by 10.50.207.40 with HTTP; Sun, 1 Apr 2012 19:25:07 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194496>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194497>
 
-On Mon, Apr 2, 2012 at 6:30 AM, Bo Chen <chen@chenirvine.org> wrote:
-> One question, =C2=A0can anyone help me clear?
->
-> My .git/objects has 3 blobs, a, b, and c. a is a unique file, b and c
-> two sequential versions of the same file. When I run "git gc", what
-> exactly happens here, e.g., how exactly git (in the latest version)
-> delta compresses-the blobs here?
+Junio,
 
-See Documentation/technical/pack-heuristics.txt for how pack-objects
-(called by"git gc") decides to delta either b or c based on the other
-one. Once it chooses, say, b to be delta against c, it generates delta
-using diff-delta.c, then store the delta in either ref-delta or
-ofs-delta format. The former stores sha-1 of c, the latter the offset
-of c in the pack.
---=20
-Duy
+The following changes since commit 455cf268dbaf227bdbd5e9fbf96525452bcfe44f:
+
+  Git 1.7.10-rc3 (2012-03-28 11:18:42 -0700)
+
+are available in the git repository at:
+
+  http://github.com/git-l10n/git-po.git/ master
+
+for you to fetch changes up to 833662295e6b9515617f96323d6821bcb6662cf0:
+
+  l10n: Inital Portuguese Portugal language (pt_PT) (2012-04-02 09:46:11 +0800)
+
+----------------------------------------------------------------
+Jiang Xin (1):
+      l10n: Improve zh_CN translation for Git 1.7.10-rc3
+
+Marco Sousa (1):
+      l10n: Inital Portuguese Portugal language (pt_PT)
+
+ po/TEAMS    |    4 +
+ po/pt_PT.po | 3583
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ po/zh_CN.po |   38 +-
+ 3 files changed, 3606 insertions(+), 19 deletions(-)
+ create mode 100644 po/pt_PT.po
