@@ -1,68 +1,96 @@
-From: Martin Fick <mfick@codeaurora.org>
-Subject: Re: [PATCH 3/3] revision: insert unsorted, then sort in prepare_revision_walk()
-Date: Mon, 2 Apr 2012 10:49:04 -0600
-Organization: CAF
-Message-ID: <201204021049.04901.mfick@codeaurora.org>
-References: <201203291818.49933.mfick@codeaurora.org> <201204021024.49706.mfick@codeaurora.org> <CAJo=hJshOBg4pT8nuWZ=eZvj=E9x+4b9M_EANa=02x=NFW2OfQ@mail.gmail.com>
+From: Sebastian Pipping <sebastian@pipping.org>
+Subject: [PATCH] Gitweb: Fix unintended "--no-merges" for regular Atom feed
+Date: Mon, 02 Apr 2012 18:44:29 +0200
+Message-ID: <4F79D76D.80805@pipping.org>
 Mime-Version: 1.0
-Content-Type: Text/Plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?iso-8859-1?q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>,
-	Shawn Pearce <sop@google.com>, Jeff King <peff@peff.net>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Shawn Pearce <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Mon Apr 02 18:49:14 2012
+Content-Type: multipart/mixed;
+ boundary="------------040707080301070106000703"
+To: Git ML <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Apr 02 18:51:57 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SEkRN-0000HD-9f
-	for gcvg-git-2@plane.gmane.org; Mon, 02 Apr 2012 18:49:13 +0200
+	id 1SEkTv-0002QC-Ly
+	for gcvg-git-2@plane.gmane.org; Mon, 02 Apr 2012 18:51:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752743Ab2DBQtI convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 2 Apr 2012 12:49:08 -0400
-Received: from wolverine02.qualcomm.com ([199.106.114.251]:30584 "EHLO
-	wolverine02.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751628Ab2DBQtG convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 2 Apr 2012 12:49:06 -0400
-X-IronPort-AV: E=McAfee;i="5400,1158,6668"; a="175807218"
-Received: from pdmz-css-vrrp.qualcomm.com (HELO mostmsg01.qualcomm.com) ([199.106.114.130])
-  by wolverine02.qualcomm.com with ESMTP/TLS/ADH-AES256-SHA; 02 Apr 2012 09:49:05 -0700
-Received: from mfick-lnx.localnet (pdmz-snip-v218.qualcomm.com [192.168.218.1])
-	by mostmsg01.qualcomm.com (Postfix) with ESMTPA id BF77710004AA;
-	Mon,  2 Apr 2012 09:49:05 -0700 (PDT)
-User-Agent: KMail/1.13.5 (Linux/2.6.32-37-generic; KDE/4.4.5; x86_64; ; )
-In-Reply-To: <CAJo=hJshOBg4pT8nuWZ=eZvj=E9x+4b9M_EANa=02x=NFW2OfQ@mail.gmail.com>
+	id S1753362Ab2DBQvm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 Apr 2012 12:51:42 -0400
+Received: from smtprelay06.ispgateway.de ([80.67.31.101]:33390 "EHLO
+	smtprelay06.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752936Ab2DBQvk (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Apr 2012 12:51:40 -0400
+X-Greylist: delayed 391 seconds by postgrey-1.27 at vger.kernel.org; Mon, 02 Apr 2012 12:51:40 EDT
+Received: from [85.177.89.251] (helo=[192.168.1.2])
+	by smtprelay06.ispgateway.de with esmtpsa (TLSv1:AES256-SHA:256)
+	(Exim 4.68)
+	(envelope-from <sebastian@pipping.org>)
+	id 1SEkNO-0002cW-JY
+	for git@vger.kernel.org; Mon, 02 Apr 2012 18:45:06 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:11.0) Gecko/20120402 Thunderbird/11.0.1
+X-Df-Sender: aGFydHdvcmtAYmluZXJhLmRl
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194534>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194535>
 
-On Monday, April 02, 2012 10:39:59 am Shawn Pearce wrote:
-> On Mon, Apr 2, 2012 at 09:24, Martin Fick=20
-<mfick@codeaurora.org> wrote:
-> > On Saturday, March 31, 2012 04:11:01 pm Ren=E9 Scharfe=20
-wrote:
-> Git can't really do the same thing as "cache the
-> RevWalk". Its spawning a new process that needs to
-> decompress and parse each commit object to determine its
-> timestamp so the commits can be sorted into the priority
-> queue. This is still an O(N) operation given N
-> references.
+This is a multi-part message in MIME format.
+--------------040707080301070106000703
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
 
-While I suspect this has been suggested before, an ondisk=20
-cache of commits to timestamps would probably help here with=20
-large repos.  Such a cache could make even new processes=20
-able to create this list much quicker.  Since this cache=20
-would contain immutable data, even if it is out of date it=20
-would likely provided significant improvements by providing=20
-most of the timestamps leaving only a few to parse from=20
-newer commits?
+Hello!
 
--Martin
 
---=20
-Employee of Qualcomm Innovation Center, Inc. which is a=20
-member of Code Aurora Forum
+Please excuse that I send the patch as an attachment and consider
+application.  Thanks!
+
+Best,
+
+
+
+Sebastian
+
+--------------040707080301070106000703
+Content-Type: text/x-patch;
+ name="0001-Gitweb-Fix-unintended-no-merges-for-regular-Atom-fee.patch"
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment;
+ filename*0="0001-Gitweb-Fix-unintended-no-merges-for-regular-Atom-fee.pa";
+ filename*1="tch"
+
+>From 03bed689671df47040c4a0ad158c0c9b039a50bf Mon Sep 17 00:00:00 2001
+From: Sebastian Pipping <sebastian@pipping.org>
+Date: Mon, 2 Apr 2012 18:39:48 +0200
+Subject: [PATCH] Gitweb: Fix unintended "--no-merges" for regular Atom feed
+
+Before:
+<link rel="alternate" title="[..] - Atom feed" href="/?p=.git;a=atom;opt=--no-merges" type="application/atom+xml" />
+<link rel="alternate" title="[..] - Atom feed (no merges)" href="/?p=.git;a=atom;opt=--no-merges" type="application/atom+xml" />
+
+After:
+<link rel="alternate" title="[..] - Atom feed" href="/?p=.git;a=atom;opt=" type="application/atom+xml" />
+<link rel="alternate" title="[..] - Atom feed (no merges)" href="/?p=.git;a=atom;opt=--no-merges" type="application/atom+xml" />
+---
+ gitweb/gitweb.perl |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index a8b5fad..cc45ae3 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -3886,6 +3886,7 @@ sub print_feed_meta {
+ 				'-type' => "application/$type+xml"
+ 			);
+ 
++			$href_params{'extra_options'} = '';
+ 			$href_params{'action'} = $type;
+ 			$link_attr{'-href'} = href(%href_params);
+ 			print "<link ".
+-- 
+1.7.8.5
+
+
+--------------040707080301070106000703--
