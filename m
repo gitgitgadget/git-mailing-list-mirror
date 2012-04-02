@@ -1,112 +1,104 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: GSoC - Some questions on the idea of
-Date: Mon, 02 Apr 2012 15:19:35 -0700
-Message-ID: <7vvclhdbew.fsf@alter.siamese.dyndns.org>
-References: <CA+M5ThS2iS-NMNDosk2oR25N=PMJJVTi1D=zg7MnMCUiRoX4BQ@mail.gmail.com>
- <CACsJy8APtMsMJ=FrZjOP=DbzuFoemSLJTmkjaiK5Wkq9XtA4rg@mail.gmail.com>
- <loom.20120328T131530-717@post.gmane.org>
- <CA+M5ThTPyic=RhFL2SvuNB0xBWOHxNTaUZrYMB144UjpjCiLoQ@mail.gmail.com>
- <20120330203430.GB20376@sigill.intra.peff.net> <4F77209A.8050607@gmail.com>
- <20120402214049.GB28926@sigill.intra.peff.net>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: GSOC Proposal draft: git-remote-svn
+Date: Mon, 2 Apr 2012 17:29:59 -0500
+Message-ID: <20120402222958.GD13969@burratino>
+References: <11292500.AVmZFUUvNi@flobuntu>
+ <CALkWK0nW91PE2810qrZUbL0x-_YTTA_2tLFVhvXBJ2NFGvVxog@mail.gmail.com>
+ <2148933.pnpYo0xMAP@flomedio>
+ <2487557.B8qfnaixh3@flomedio>
+ <4F7A258C.5000200@pileofstuff.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Neal Kreitzinger <nkreitzinger@gmail.com>,
-	Bo Chen <chen@chenirvine.org>,
-	Sergio <sergio.callegari@gmail.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Apr 03 00:19:46 2012
+Cc: Florian Achleitner <florian.achleitner@student.tugraz.at>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	David Barr <davidbarr@google.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Dmitry Ivankov <divanorama@gmail.com>
+To: Andrew Sayers <andrew-git@pileofstuff.org>
+X-From: git-owner@vger.kernel.org Tue Apr 03 00:30:27 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SEpbD-0002TQ-Qk
-	for gcvg-git-2@plane.gmane.org; Tue, 03 Apr 2012 00:19:44 +0200
+	id 1SEplT-0001Jl-Rm
+	for gcvg-git-2@plane.gmane.org; Tue, 03 Apr 2012 00:30:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752918Ab2DBWTj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 Apr 2012 18:19:39 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39364 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752534Ab2DBWTi (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Apr 2012 18:19:38 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A5B706631;
-	Mon,  2 Apr 2012 18:19:37 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=u8eakzTlBwf1z0bnoyzStAOeILo=; b=NqiMKS
-	fdU6TpN93OnonZ9Qvb5gvPgJoFC5dXltBip2Bu/jy+cjFahaV746X1J7ca53cR7k
-	N1OHTmA8wdjGrz4wod9j/09ljbMI03KcKctnYwP8iP/p0TTRz46rYST0S1ivj3x8
-	GkZHnU1VUrB4/yp1aw5UfX3+q6LvtD1GWxM5Y=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=lXECGqztYWTDkP49B6/28uqpCRP5cy2M
-	T6FuYQ7lKAWTRPp1BEtDkW6/ZYyqU2G1S3nOf1mwq4xbJj+xzgqOuKGYO0uKwhhr
-	8TkXANMcmiNTR60ZUcN4RoBjuyHP6v713ELg0QV5qQg5la5eWfF04rrQqRrcz7TK
-	5oNKxZsVvJw=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9D2D96630;
-	Mon,  2 Apr 2012 18:19:37 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 14844662F; Mon,  2 Apr 2012
- 18:19:36 -0400 (EDT)
-In-Reply-To: <20120402214049.GB28926@sigill.intra.peff.net> (Jeff King's
- message of "Mon, 2 Apr 2012 17:40:49 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: EEBAD370-7D11-11E1-88F8-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753692Ab2DBWaM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 Apr 2012 18:30:12 -0400
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:36985 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753254Ab2DBWaK (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Apr 2012 18:30:10 -0400
+Received: by iagz16 with SMTP id z16so4698242iag.19
+        for <git@vger.kernel.org>; Mon, 02 Apr 2012 15:30:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=YZ+PnormlSCqUQoKLadCzQv4UlmxUS/pp5IjQBVij0Y=;
+        b=mfg7TXgKO1NyI5tJUEeEUYJJZHnvTUp5995mg/KAtgBtuFmmCwIMQZOPNL7Yx5X4zI
+         7HUNcIspgH0M0L14h1HefsVe77UiSQSsPeLJgJnINvyqYE9J+1Fd5ybEu4f1+O5F238W
+         NCwG52UW1H5vgLqryOBsMTbrtCOQx9zQhEv2KUk3aiUuu1Z+69oC8aw6HgSglfjml/tR
+         seG9KcKbqwA7dcLynHQtt4SSaIr53Jzlr56KrJ+P+HFQCUA7nYaMgVUnKbiFwA26GjoH
+         PThD9INW1uT5Fa79e0Mbsc2zk18qexvBAVMsZKzpHVEve3oEGCSSZrHsddous76luxXE
+         Szgg==
+Received: by 10.50.153.132 with SMTP id vg4mr7035371igb.2.1333405810210;
+        Mon, 02 Apr 2012 15:30:10 -0700 (PDT)
+Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
+        by mx.google.com with ESMTPS id re5sm110062igb.0.2012.04.02.15.30.08
+        (version=SSLv3 cipher=OTHER);
+        Mon, 02 Apr 2012 15:30:09 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <4F7A258C.5000200@pileofstuff.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194571>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194572>
 
-Jeff King <peff@peff.net> writes:
+Hi Andrew,
 
->   1. You really have 100G of data in the current version that doesn't
->      compress well (e.g., you are storing your music collection). You
->      can't afford to store two copies on your laptop (because you have a
->      fancy SSD, and 100G is expensive again).  You need the working tree
->      version, but it's OK to stream the repo version of a blob from the
->      network when you actually need it (mostly "checkout", assuming you
->      have marked the file as "-diff").
+Andrew Sayers wrote:
+> On 02/04/12 09:30, Florian Achleitner wrote:
 
-This feels like a good candidate for an independent project that allows
-you fuse-mount from a remote repository to give you an illusion that you
-have a checkout of a specific version.  Such a remote fuse-server would be
-an application that is built using Git, but I do not think we are in any
-business on the client end in such a setup.
-
-So I'll write it off as a "non-Git" issue for now.
-
-The other parts of your message is much more interesting.
-
-> Right. This is the same concept, except over the network. So people's
-> working repositories are on their own workstations instead of a central
-> server. You could even do it today by network-mounting a filesystem and
-> pointing your alternates file at it. However, I think it's worth making
-> git aware that the objects are on the network for a few reasons:
+>> The remote helper has to convert the foreign protocol and data (svn) to the 
+>> git-fast-import format.
 >
->   1. Git can be more careful about how it handles the objects, including
->      when to fetch, when to stream, and when to cache. For example,
->      you'd want to fetch the manifest of objects and cache it in your
->      local repository, because you want fast lookups of "do I have this
->      object".
->
->   2. Providing remote filesystems on an Internet scale is a management
->      pain (and it's a pain for the user, too). My thought was that this
->      would be implemented on top of http (the connection setup cost is
->      negligible, since these objects would generally be large).
->
->   3. Usually alternate repositories are full repositories that meet the
->      connectivity requirements (so you could run "git fsck" in them).
->      But this is explicitly about taking just a few disconnected large
->      blobs out of the repository and putting them elsewhere. So it needs
->      a new set of tools for managing the upstream repository.
+> As discussed on IRC, I'd like to see some discussion of solutions that
+> use plumbing directly (e.g. git-commit-tree) if you choose to focus on
+> branch import.
 
-Or you can split out the really large write-only blobs out of SCM control.
-Every time you introduce a new blob, throw it verbatim in an append-only
-directory on a networked filesystem under some unique ID as its filename,
-and maintain a symlink into that networked filesystem under SCM control.
+Do you mean that fast-import is not a plumbing command?
 
-I think git-annex already does something like that...
+>From the IRC log[1]:
+
+> andrew_sayers	From my reading of the protocol, you'd have to pass
+>              	all the files in for each branch.
+> andrew_sayers	For each commit.
+
+I'm a little confused by this.  Do you mean that a fast-import stream
+is not allowed to use multiple branches, or that when a fast-import
+stream represents a commit that changes one file, it needs to list
+all files rather than the one that changed?  Neither is true.
+
+The fast-import tool started as a tool to write objects to pack
+directly, or in other words to save time by avoiding the step of
+writing loose objects.  That is still one of its main benefits.
+
+[...]
+>> 3. Add output capabilities to vcs-svn. Currently the code in vcs-svn can only 
+>> convert svn to git. To push to svn we also need conversion and mapping from 
+>> git to svn. The actual mapping code for branches should also be placed here 
+>> {??} and called by the remote helper.
+>
+> I agree with Jonathan and Ram that we're not ready for this yet.
+
+Just to be clear, I never said such a thing. :)
+
+Thanks for some useful clarifications.
+Jonathan
+
+[1] http://colabti.org/irclogger/irclogger_log/git-devel?date=2012-04-02#l153
