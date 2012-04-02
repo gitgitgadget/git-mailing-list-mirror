@@ -1,74 +1,76 @@
-From: Nazri Ramliy <ayiehere@gmail.com>
-Subject: Re: [GSOC] Contributing to git.
-Date: Mon, 2 Apr 2012 15:32:46 +0800
-Message-ID: <CAEY4ZpNek5-8s6hG8qUos9TfNEn83Hf4KCyCcreY3MM5P9qAkw@mail.gmail.com>
-References: <CAH-tXsB39OpbmVcD3Fd+tq8UcBsyCf6JBZ-rSyf1VwrQPKLiFQ@mail.gmail.com>
-	<201203301305.23567.jnareb@gmail.com>
-	<CAH-tXsAMJXNs7fM=9msiZT+F_s_06o526kPXLLcQzABBePHxwQ@mail.gmail.com>
-	<201203310137.59657.jnareb@gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: push.default: current vs upstream
+Date: Mon, 02 Apr 2012 09:40:22 +0200
+Message-ID: <vpqty12h995.fsf@bauges.imag.fr>
+References: <7vd37wv77j.fsf@alter.siamese.dyndns.org>
+	<20120329095236.GA11911@sigill.intra.peff.net>
+	<7vbonfqezs.fsf@alter.siamese.dyndns.org>
+	<20120329221154.GA1413@sigill.intra.peff.net>
+	<7vfwcqq2dw.fsf@alter.siamese.dyndns.org>
+	<20120330071358.GB30656@sigill.intra.peff.net>
+	<7vty15ltuo.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: jaseem abid <jaseemabid@gmail.com>, Jeff King <peff@peff.net>,
-	git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Apr 02 09:32:54 2012
+Content-Type: text/plain
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Apr 02 09:40:55 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SEbky-0004GT-CA
-	for gcvg-git-2@plane.gmane.org; Mon, 02 Apr 2012 09:32:52 +0200
+	id 1SEbsl-0000yJ-6a
+	for gcvg-git-2@plane.gmane.org; Mon, 02 Apr 2012 09:40:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751266Ab2DBHcr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 Apr 2012 03:32:47 -0400
-Received: from mail-vx0-f174.google.com ([209.85.220.174]:33034 "EHLO
-	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751047Ab2DBHcr (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Apr 2012 03:32:47 -0400
-Received: by vcqp1 with SMTP id p1so1490680vcq.19
-        for <git@vger.kernel.org>; Mon, 02 Apr 2012 00:32:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=qR0A8V8jkDDSe0r7YXWZhxtK3apg7R2iqugesax6hVM=;
-        b=bMiHrguinIt5NS7S+Ktoj5yCEl35Rficj6/pP+AoaevPFlgiWLCAUM/UmjFTcKRLEP
-         ZPytWv/HAgpe/HC3IKqmrtWlR+JSW/1YcOCsw9dV7iIvIN0NJ0x1dz8L+bzUu0oGC+M9
-         yznLTI3ZqYGWrNQlhuGYN/aY6nLuLaRWqYV6zBTlgAgP+gnoiGb6O5XvqelF2iOMgwta
-         x6c9e4OyDnZbKRstr+T9Spm02Z0mw56swaHdIhUJrjwlgpZSY5+xBSBBjQVLMGtnQ9+o
-         XcHlqJEKD7R38c5dbv6mltQ2HZdFyvbRWH8nNV3MJ+D9pXZrpKpCnTWdyf5y02DShCUA
-         YbtA==
-Received: by 10.220.38.200 with SMTP id c8mr3552964vce.28.1333351966420; Mon,
- 02 Apr 2012 00:32:46 -0700 (PDT)
-Received: by 10.220.171.193 with HTTP; Mon, 2 Apr 2012 00:32:46 -0700 (PDT)
-In-Reply-To: <201203310137.59657.jnareb@gmail.com>
+	id S1751295Ab2DBHkl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 Apr 2012 03:40:41 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:49312 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751040Ab2DBHkk (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Apr 2012 03:40:40 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id q327ZGF8014899
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Mon, 2 Apr 2012 09:35:16 +0200
+Received: from bauges.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1SEbsF-0007rh-OG; Mon, 02 Apr 2012 09:40:23 +0200
+In-Reply-To: <7vty15ltuo.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Fri, 30 Mar 2012 13:25:03 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.93 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Mon, 02 Apr 2012 09:35:16 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: q327ZGF8014899
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1333956918.56902@HhXsc70vU8FP90swZvvrCw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194499>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194500>
 
-On Sat, Mar 31, 2012 at 7:37 AM, Jakub Narebski <jnareb@gmail.com> wrote:
-> Test.Simple and Test.More (http://search.cpan.org/dist/JS-Test-Simple/)
-> both output TAP (they are port of Perl's Test::Simple and Test::More);
-> part of JS::Test::Simple.
->
-> Node.js requires V8 JavaScript engine from Google; if we have that, we
-> can as well use e.g. JavaScript::V8x::TestMoreish[2] from CPAN.
->
-> Other solutions include using Test::JavaScript (uses SpiderMonkey
-> JavaScript engine), or Selenium.
->
-> [2] http://search.cpan.org/perldoc?JavaScript::V8x::TestMoreish
+Junio C Hamano <gitster@pobox.com> writes:
 
-Just to add to the discussion, consider these too (descriptions copied
-verbatim off their tins):
+> Obviously the
+> former is much simpler to explain and understand, as people do not have to
+> learn upstream tracking before doing their first "push".
 
-1. phantomjs[1] - headless WebKit with JavaScript API
-2. casperjs[2] - navigation scripting & testing utility for PhantomJS
+Again, this is simple only for people who never run "git pull" without
+argument.
 
-[1] http://www.phantomjs.org/
-[2] http://casperjs.org/
+For the others, they already have to learn about the "upstream"
+semantics. And making argumentless "git pull" and "git push" purposely
+asymetric to make it simple for the user sounds like an oxymoron to me.
 
-nazri
+The discussion seems to focuse on 'let's make "git push" easy to
+explain', but I think the right thing to do is to make _Git_ easy to
+explain. With "push.default = current", we'll have a hard time
+explaining how "git pull" works.
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
