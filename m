@@ -1,102 +1,110 @@
 From: Tim Henigan <tim.henigan@gmail.com>
 Subject: Re: t7800-difftool.sh failure on pu
-Date: Mon, 2 Apr 2012 13:09:45 -0400
-Message-ID: <CAFouethd9yEVNhX3_m4B3akxTmPh2RS4-NUkakYk3fcjfTB7YA@mail.gmail.com>
+Date: Mon, 2 Apr 2012 13:19:31 -0400
+Message-ID: <CAFouetg2ME6f7=p191qPq=YC7Z7ZeBpm23tgb_wDmsEmwV7etw@mail.gmail.com>
 References: <4F74A604.3040402@ramsay1.demon.co.uk>
+	<7v7gy3qesv.fsf@alter.siamese.dyndns.org>
+	<CAJDDKr50oDwih2fyb5iuFqYDsXSD3EXje4vZJwO=1_JBvuMYsA@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	GIT Mailing-list <git@vger.kernel.org>,
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
+	GIT Mailing-list <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>,
 	David Aguilar <davvid@gmail.com>
-To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-X-From: git-owner@vger.kernel.org Mon Apr 02 19:09:54 2012
+X-From: git-owner@vger.kernel.org Mon Apr 02 19:19:42 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SEklM-0008Mr-Bp
-	for gcvg-git-2@plane.gmane.org; Mon, 02 Apr 2012 19:09:52 +0200
+	id 1SEkuq-0007Xo-Qv
+	for gcvg-git-2@plane.gmane.org; Mon, 02 Apr 2012 19:19:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753206Ab2DBRJr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 Apr 2012 13:09:47 -0400
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:51638 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751805Ab2DBRJq (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Apr 2012 13:09:46 -0400
-Received: by iagz16 with SMTP id z16so4347590iag.19
-        for <git@vger.kernel.org>; Mon, 02 Apr 2012 10:09:46 -0700 (PDT)
+	id S1753686Ab2DBRTd convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 2 Apr 2012 13:19:33 -0400
+Received: from mail-gx0-f174.google.com ([209.85.161.174]:42686 "EHLO
+	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753669Ab2DBRTc convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 2 Apr 2012 13:19:32 -0400
+Received: by gghe5 with SMTP id e5so1344825ggh.19
+        for <git@vger.kernel.org>; Mon, 02 Apr 2012 10:19:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=nsBZemtfJq5vqJ+wdvxXFc2Ui+pZZ6pVN1nQRaz3y4M=;
-        b=cHQFTOgnDkVlN/nnUYtOaxsSGF0OgD8Afsk0JQQxxWJSiD4Plw5SWV1uow3pwRlUwe
-         hz1ydrKbslQUVUJobY6/XkRoyRBl5oPXrYF0c8PSc/jRMs8hyk5JEdGwGScJH7+F725f
-         3gNsgDA8g9OVklZhx9G4VtiffT/7u8xElkOow8sIJvqjLHGuTA0DbbBYJA5hr6dDvfWe
-         cTIf1tR/wDbGFZ6eSAuObgPZS4E/8/zlXghbvMDtx97uYA7zzFMEhKYhYAIM4UcZl+VE
-         5eqwBDhIRB4Du4sWNAWpmI9ObHxyUdTq63V/cO4NW4nfhwHsl2FQTx3FcKlksQv+nZHR
-         VPjw==
-Received: by 10.50.42.132 with SMTP id o4mr6318328igl.41.1333386585950; Mon,
- 02 Apr 2012 10:09:45 -0700 (PDT)
-Received: by 10.42.225.193 with HTTP; Mon, 2 Apr 2012 10:09:45 -0700 (PDT)
-In-Reply-To: <4F74A604.3040402@ramsay1.demon.co.uk>
+         :cc:content-type:content-transfer-encoding;
+        bh=Kkpa3Z3t8mE78HySKLHuSwDMRZ7YnkWkpGBgtamot/s=;
+        b=Q9Cj5oH0KZIx0VCXLrtAtc5dcrkXDBKIip0L5SDu2HbxP855zli81XbFgxPSs0RRxA
+         k6ugWMVc0lsiDNtyML8uR3PxpYGu+E4QUUjDmty+q4FarKLT/kXOOjn7nCBatiq6yk/S
+         jDH2t0aTrCKp7gAeY2yFD6N8PJ2nm7iM6aAqunPjGfLVmQ7wEX0AoXgCWr0zUH2ZcK/B
+         LQ1E9NghzVUwr5P3uO8Hvq5ePrLNXYwHQoi59H3nZ2IMvuIpa8vCUrjhZV9X4XpfUnfA
+         FmVWlP7KNSc1tD8OL1ovOb7wmJ2dEtPw3i76GlXSfHVY4WKChqszEhV8WbIDIRgYR2j7
+         D0aw==
+Received: by 10.50.188.138 with SMTP id ga10mr6325363igc.51.1333387171473;
+ Mon, 02 Apr 2012 10:19:31 -0700 (PDT)
+Received: by 10.42.225.193 with HTTP; Mon, 2 Apr 2012 10:19:31 -0700 (PDT)
+In-Reply-To: <CAJDDKr50oDwih2fyb5iuFqYDsXSD3EXje4vZJwO=1_JBvuMYsA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194539>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194540>
 
-Hi Ramsay - thank you for running the tests and trying this out.
+On Sat, Mar 31, 2012 at 12:05 AM, David Aguilar <davvid@gmail.com> wrot=
+e:
+> On Thu, Mar 29, 2012 at 2:26 PM, Junio C Hamano <gitster@pobox.com> w=
+rote:
+>> Ramsay Jones <ramsay@ramsay1.demon.co.uk> writes:
+>>
+>>> The first option is to (effectively) revert commit 0440ed72 ("difft=
+ool: replace
+>>> system call with Git::command_noisy", 22-03-2012), like so:
+>>>
+>>> -- >8 --
+>>> diff --git a/git-difftool.perl b/git-difftool.perl
+>>> index e1754ff..49613b1 100755
+>>> --- a/git-difftool.perl
+>>> +++ b/git-difftool.perl
+>>> @@ -237,5 +237,7 @@ if (defined($dirdiff)) {
+>>>
+>>> =C2=A0 =C2=A0 =C2=A0 $ENV{GIT_PAGER} =3D '';
+>>> =C2=A0 =C2=A0 =C2=A0 $ENV{GIT_EXTERNAL_DIFF} =3D 'git-difftool--hel=
+per';
+>>> - =C2=A0 =C2=A0 git_cmd_try { Git::command_noisy(('diff', @ARGV)) }=
+ 'exit code %d';
+>>> + =C2=A0 =C2=A0 my @command =3D ('git', 'diff', @ARGV);
+>>> + =C2=A0 =C2=A0 my $rc =3D system(@command);
+>>> + =C2=A0 =C2=A0 exit($rc | ($rc >> 8));
+>>> =C2=A0}
+>>> -- 8< --
+>>
+>> I would prefer this, regardless of the issue.
+>>
+>> I actually recall asking Tim about the exit status when I reviewed t=
+his
+>> change.
+
+This breakage is a surprise to me.  All the tests in t7800 have passed
+for me since my first modifications to them.  They continue to pass
+for me on Ubuntu.  That being said, the simple tests that Ramsay
+posted in his email (simply printing $!) also fail for me on msysgit.
 
 
-On Thu, Mar 29, 2012 at 2:12 PM, Ramsay Jones
-<ramsay@ramsay1.demon.co.uk> wrote:
+> I would also prefer this.
 >
-> With the current pu branch, I have t7800.3 (difftool ignores bad --tool values)
-> failing on Linux (I haven't tried cygwin or mingw yet). The failure is caused
-> by the test for the value of the exit code; for me the exit code is 9 not 1.
 
-This is interesting.  On my Ubuntu box, I am able to run all of t7800
-without error.  This has been my primary development platform and the
-tests have consistently passed for me on that system.
+This change will involve:
+  - Dropping 7/9 from the series
+  - Editing 8/9 to replace 'git_cmd_try' with simple system calls
 
-I have had trouble getting the test suite to run on msysgit.  However,
-I just tried the simple test sequence that you demonstrated and found
-that I get the same failure on that platform (i.e. "9 Bad file
-descriptor").  So it appears that Carp is broken on some platforms.
+Would it be better to resend the entire series or just edit and resend =
+8/9?
 
 
-> I have investigated, briefly, and found *two* alternatives for a fix. ;-)
+> A question for the msysgit/cygwin folks:
 >
-> The first option is to (effectively) revert commit 0440ed72 ("difftool: replace
-> system call with Git::command_noisy", 22-03-2012), like so:
+> would we need to go back to use "git.exe" as well?
 
-Thanks again for spending the time to dig into the problem.  Based on
-feedback from Junio and David in later emails, I plan to revert commit
-0440ed72.
-
-
-> The second option is a bit of a mystery, since I don't see why it is necessary
-> or why it works! :-P
->
-> First take a look at the following:
->
-> $ perl -e 'print $!+0, " $!\n";'
-> 0
-> $ echo $?
-> 0
->
-> $ perl -e 'use Carp qw(croak); print $!+0, " $!\n";'
-> 9 Bad file descriptor
-> $ echo $?
-> 0
-
-I agree that this is mysterious.  On my Ubuntu box, this Perl
-one-liner prints and exits with 0 for me (i.e. no bad file descriptor
-error).  However, I was able to replicate the failure on msysgit.
-This makes me wonder if other users of Git.pm have had the same
-problem.  The primary user appears to be 'git-svn.perl' and its
-related tests.  A quick review of those files did not show any mention
-of problems with Carp.  Perhaps they simply do not check the exact
-exit code on failure?
+I would welcome some feedback from other Windows users.  I have been
+successfully using this series on Win7 with msysgit, but obviously
+some setups differ.
