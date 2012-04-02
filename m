@@ -1,85 +1,91 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: GSoC - Some questions on the idea of
-Date: Mon, 2 Apr 2012 17:07:08 -0400
-Message-ID: <20120402210708.GA28926@sigill.intra.peff.net>
-References: <CA+M5ThS2iS-NMNDosk2oR25N=PMJJVTi1D=zg7MnMCUiRoX4BQ@mail.gmail.com>
- <CACsJy8APtMsMJ=FrZjOP=DbzuFoemSLJTmkjaiK5Wkq9XtA4rg@mail.gmail.com>
- <loom.20120328T131530-717@post.gmane.org>
- <CA+M5ThTPyic=RhFL2SvuNB0xBWOHxNTaUZrYMB144UjpjCiLoQ@mail.gmail.com>
- <20120330203430.GB20376@sigill.intra.peff.net>
- <CA+M5ThR6jtxqs0-Kz-8fcRuOFRbLr-GvsJcTmrOQ7_geNspDLg@mail.gmail.com>
- <4F76E430.6020605@gmail.com>
- <4F772E48.3030708@gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: push.default: current vs upstream
+Date: Mon, 02 Apr 2012 23:16:55 +0200
+Message-ID: <vpqd37pbzqw.fsf@bauges.imag.fr>
+References: <7vd37wv77j.fsf@alter.siamese.dyndns.org>
+	<20120329095236.GA11911@sigill.intra.peff.net>
+	<7vbonfqezs.fsf@alter.siamese.dyndns.org>
+	<20120329221154.GA1413@sigill.intra.peff.net>
+	<7vfwcqq2dw.fsf@alter.siamese.dyndns.org>
+	<20120330071358.GB30656@sigill.intra.peff.net>
+	<7vty15ltuo.fsf@alter.siamese.dyndns.org>
+	<vpqty12h995.fsf@bauges.imag.fr>
+	<7vlimegjw9.fsf@alter.siamese.dyndns.org>
+	<vpqy5qejbjl.fsf@bauges.imag.fr>
+	<7vobraf057.fsf@alter.siamese.dyndns.org>
+	<vpqwr5ydkqt.fsf@bauges.imag.fr>
+	<7vzkatex02.fsf@alter.siamese.dyndns.org>
+	<vpqiphhdfzw.fsf@bauges.imag.fr>
+	<CANgJU+V57Yz2FXStsYtL38td7FLR=ihaKzvbOBqzbR=qEFgESw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Sergio Callegari <sergio.callegari@gmail.com>,
-	Bo Chen <chen@chenirvine.org>, git@vger.kernel.org
-To: Neal Kreitzinger <nkreitzinger@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Apr 02 23:07:19 2012
+Content-Type: text/plain
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	git@vger.kernel.org
+To: demerphq <demerphq@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Apr 02 23:17:13 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SEoT6-00089x-Pg
-	for gcvg-git-2@plane.gmane.org; Mon, 02 Apr 2012 23:07:17 +0200
+	id 1SEoci-0007ZA-Vj
+	for gcvg-git-2@plane.gmane.org; Mon, 02 Apr 2012 23:17:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752554Ab2DBVHL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 Apr 2012 17:07:11 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:43564
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750962Ab2DBVHK (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Apr 2012 17:07:10 -0400
-Received: (qmail 21788 invoked by uid 107); 2 Apr 2012 21:07:11 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 02 Apr 2012 17:07:11 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 02 Apr 2012 17:07:08 -0400
-Content-Disposition: inline
-In-Reply-To: <4F772E48.3030708@gmail.com>
+	id S1752625Ab2DBVRI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 Apr 2012 17:17:08 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:33309 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752458Ab2DBVRG (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Apr 2012 17:17:06 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id q32LBkCm023304
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Mon, 2 Apr 2012 23:11:46 +0200
+Received: from bauges.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1SEocS-0006zg-Iq; Mon, 02 Apr 2012 23:16:56 +0200
+In-Reply-To: <CANgJU+V57Yz2FXStsYtL38td7FLR=ihaKzvbOBqzbR=qEFgESw@mail.gmail.com>
+	(demerphq@gmail.com's message of "Mon, 2 Apr 2012 23:02:53 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.93 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Mon, 02 Apr 2012 23:11:47 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: q32LBkCm023304
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1334005908.97785@qgc2V+1jspqb3MH5bvT+sw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194564>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194565>
 
-On Sat, Mar 31, 2012 at 11:18:16AM -0500, Neal Kreitzinger wrote:
+demerphq <demerphq@gmail.com> writes:
 
-> On 3/31/2012 6:02 AM, Sergio Callegari wrote:
-> >I wonder if it could make sense to have some pluggable mechanism for
-> > file splitting. Something under the lines of filters, so to say.
-> >Bupsplit can be a rather general mechanism, but large binaries that
-> >are containers (zip, jar, docx, tgz, pdf - seen as a collection of
-> >streams) may possibly be more conveniently split by their inherent
-> >components.
-> >
-> 
-> gitattributes or gitconfig could configure the big-file handler for
-> specified files.  Known/supported filetypes like gif, png, zip, pdf,
-> etc., could be auto-configured by git.  Any
-> yet-unknown/yet-unsupported filetypes could be configured manually by
-> the user, e.g.
-> *.zgp=bigcontainer
+> And actually I find your use of "git pull" and "pull" in the
+> expression "pull from a branch other than one with the same name"
+> confusing. Barring misconfiguration pull operates on only one local
+> branch and it is usually the one with the same name. However push
+> operates on multiple local branches.
 
-This is a tempting route (and one I've even suggested myself before),
-but I think ultimately it is a bad way to go. The problem is that
-splitting is only half of the equation. Once you have split contents,
-you have to use them intelligently, which means looking at the sha1s of
-each split chunk and discarding whole chunks as "the same" without even
-looking at the contents.
+It does with push.default = matching, but with either options we are
+discussing here, argumentless "git push" would push only one branch.
+The choice we have is whether to push to the branch with the same name,
+or to the branch from which "git pull" would take the changes.
 
-Which means that it is very important that your chunking algorithm
-remain stable from version to version. A change in the algorithm is
-going to completely negate the benefits of chunking in the first place.
-So something configurable, or something that is not applied consistently
-(because it depends on each user's git config, or even on the specific
-version of a tool used) can end up being no help at all.
+(I realize that in this discussion, "current" may be misleading. I mean
+"push.default=current", not "the behavior we have currently")
 
-Properly applied, I think a content-aware chunking algorithm could
-out-perform a generic one. But I think we need to first find out exactly
-how well the generic algorithm can perform. It may be "good enough"
-compared to the hassle that inconsistent application of a content-aware
-algorithm will cause.  So I wouldn't rule it out, but I'd rather try the
-bup-style splitting first, and see how good (or bad) it is.
+> Lastly I have never really encountered any confusion with explaining
+> the default behaviour of git-fetch, nor actually git-pull, but I have
+> encountered lots of confusion of people using git-push.  They expect
+> git-push to be the opposite of git-pull not git-fetch.
 
--Peff
+I do also expect "git pull" to be symmetrical to "git pull", and
+"push.default=upstream" is the closest to symmetry.
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
