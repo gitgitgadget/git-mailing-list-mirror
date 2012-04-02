@@ -1,120 +1,58 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: push.default: current vs upstream
-Date: Mon, 02 Apr 2012 20:58:02 +0200
-Message-ID: <vpqwr5ydkqt.fsf@bauges.imag.fr>
-References: <7vd37wv77j.fsf@alter.siamese.dyndns.org>
-	<20120329095236.GA11911@sigill.intra.peff.net>
-	<7vbonfqezs.fsf@alter.siamese.dyndns.org>
-	<20120329221154.GA1413@sigill.intra.peff.net>
-	<7vfwcqq2dw.fsf@alter.siamese.dyndns.org>
-	<20120330071358.GB30656@sigill.intra.peff.net>
-	<7vty15ltuo.fsf@alter.siamese.dyndns.org>
-	<vpqty12h995.fsf@bauges.imag.fr>
-	<7vlimegjw9.fsf@alter.siamese.dyndns.org>
-	<vpqy5qejbjl.fsf@bauges.imag.fr>
-	<7vobraf057.fsf@alter.siamese.dyndns.org>
+From: Sebastien Tardif <sebastien_tardif@oxfordcorp.com>
+Subject: Updated tags on repo are not updated when pull
+Date: Mon, 2 Apr 2012 19:16:21 +0000
+Message-ID: <27353249354D994D8E42D75D75FBA614896543@OASBEVEXM01.oaifield.onasgn.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Apr 02 20:58:34 2012
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Apr 02 21:25:55 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SEmSX-0008WV-Kq
-	for gcvg-git-2@plane.gmane.org; Mon, 02 Apr 2012 20:58:34 +0200
+	id 1SEmt1-0004XQ-6S
+	for gcvg-git-2@plane.gmane.org; Mon, 02 Apr 2012 21:25:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753663Ab2DBS63 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 Apr 2012 14:58:29 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:56914 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752391Ab2DBS62 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Apr 2012 14:58:28 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id q32IqsRU009027
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Mon, 2 Apr 2012 20:52:54 +0200
-Received: from bauges.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1SEmS3-0005k9-LY; Mon, 02 Apr 2012 20:58:03 +0200
-In-Reply-To: <7vobraf057.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Mon, 02 Apr 2012 11:40:04 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.93 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Mon, 02 Apr 2012 20:52:54 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: q32IqsRU009027
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1333997577.99943@5qMuqVB+aEIionSnMeyvHQ
+	id S1751559Ab2DBTZp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 Apr 2012 15:25:45 -0400
+Received: from smtp12.onasgn.net ([166.70.65.168]:39330 "EHLO
+	smtp12.onasgn.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751458Ab2DBTZo convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 2 Apr 2012 15:25:44 -0400
+X-Greylist: delayed 557 seconds by postgrey-1.27 at vger.kernel.org; Mon, 02 Apr 2012 15:25:44 EDT
+Received: from pps.filterd (smtp12 [127.0.0.1])
+	by smtp12.onasgn.net (8.14.4/8.14.4) with SMTP id q32JBmb0005012
+	for <git@vger.kernel.org>; Mon, 2 Apr 2012 12:16:24 -0700
+Received: from oasslcexh03.oaifield.onasgn.com ([172.23.1.141])
+	by smtp12.onasgn.net with ESMTP id 13y7hwsm5e-2
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=FAIL)
+	for <git@vger.kernel.org>; Mon, 02 Apr 2012 12:16:24 -0700
+Received: from OASBEVEXH01.oaifield.onasgn.com (172.22.1.46) by
+ oasslcexh03.oaifield.onasgn.com (172.23.1.141) with Microsoft SMTP Server
+ (TLS) id 14.1.339.1; Mon, 2 Apr 2012 12:16:23 -0700
+Received: from OASBEVEXM01.oaifield.onasgn.com ([fe80::693c:1ef:7afc:6e9f]) by
+ OASBEVEXH01.oaifield.onasgn.com ([fe80::70a5:31ce:8a13:d1f8%10]) with mapi id
+ 14.01.0339.001; Mon, 2 Apr 2012 12:16:22 -0700
+Thread-Topic: Updated tags on repo are not updated when pull
+Thread-Index: Ac0RBRIJ7NuhP9kdRiGOIq5xgbyYnw==
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [172.23.1.140]
+x-loop: 1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194550>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194551>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Default pull behavior does bring new tag that are hitting the revisions involved in the pull, in other words all tags that would point to log entries that are pulled.
 
-> Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
->
->> Junio C Hamano <gitster@pobox.com> writes:
->>
->>> Before saying "again", perhaps we should read and think about what the
->>> other side said.  I think [*1*] raises a good point.
->>
->>> *1* http://thread.gmane.org/gmane.comp.version-control.git/194175/focus=194470
->>
->> I think this message precisely supports my claim: we focus the
->> discussion on "git push", without thinking on the big picture "git pull"
->> AND "git push". The message you point to does not talk at all about "git
->> pull".
->
-> I do not think so; that "name" argument is about this part from Peff's
-> message, to which it is a response:
+I have tag like: LATEST_UIT, LATEST_QA, LATEST_CONTINOUS_BUILD
 
-What I read in the message is that branch names are important, and "same
-name" usually have some sort of semantics for users. I agree with that.
-But why doesn't the same applies to "git pull"? Why would it be natural
-for "git pull" to pull from a branch other than the one with the same
-name?
+But with this incoherent behavior of not having the already pulled tag been updated when doing a pull, my developers end-up with misleading information in their log since their tags point to old pointer.
 
->>> > my two concerns is that this:
->>> >
->>> >   $ git clone ...
->>> >   $ git checkout -b topic origin/master
->>> >   $ hack hack hack
->>> >   $ git push
->>> >
->>> > will try to implicitly fast-forward merge your commits onto master.
->>> 
->>> And the reason why it is surprising to the beginners is?  Because "topic"
->>> and "master" (of "origin/master") are not the same name?
->>
->> Sort of. It is more because "upstream" is an overloaded concept. Perhaps
->> you created the branch from origin/master because you wanted to say
->> "this is where my topic is based, and when I 'rebase -i' later, I want
->> it to be considered the baseline". Or perhaps you meant to say "I am
->> going to work on origin's master branch, but I would prefer to call it
->> 'topic' here".
->
-> If you re-read it, it should be clear that this is _also_ about "git pull";
-> "I am going to work on origin's master branch" is about pushing the result
-> back there.
-
-That's still not clear. Your explanation shows me how "git push" is
-involved, not "git pull".
-
-> In the former case, you may want to push it to 'topic' to work further
-> with your collaborators.  In the latter case, you would want to push it
-> back to 'master', even though you are calling it locally 'topic' for some
-> sick reason (read: because you can).
-
-I still don't see pull involved here.
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Please fix.
