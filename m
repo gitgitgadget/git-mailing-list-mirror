@@ -1,93 +1,74 @@
-From: Andrew Sayers <andrew-git@pileofstuff.org>
-Subject: Re: GSOC Proposal draft: git-remote-svn
-Date: Tue, 03 Apr 2012 00:20:48 +0100
-Message-ID: <4F7A3450.7000302@pileofstuff.org>
-References: <11292500.AVmZFUUvNi@flobuntu> <CALkWK0nW91PE2810qrZUbL0x-_YTTA_2tLFVhvXBJ2NFGvVxog@mail.gmail.com> <2148933.pnpYo0xMAP@flomedio> <2487557.B8qfnaixh3@flomedio> <4F7A258C.5000200@pileofstuff.org> <20120402222958.GD13969@burratino>
+From: PJ Weisberg <pj@irregularexpressions.net>
+Subject: Re: Updated tags on repo are not updated when pull
+Date: Mon, 2 Apr 2012 16:29:44 -0700
+Message-ID: <CAJsNXTk8R0yjad0T9605v-CMMdCA+C0v3Rqt65h_k6MK88UD9g@mail.gmail.com>
+References: <27353249354D994D8E42D75D75FBA614896543@OASBEVEXM01.oaifield.onasgn.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Florian Achleitner <florian.achleitner@student.tugraz.at>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	David Barr <davidbarr@google.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Dmitry Ivankov <divanorama@gmail.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 03 01:20:58 2012
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Sebastien Tardif <sebastien_tardif@oxfordcorp.com>
+X-From: git-owner@vger.kernel.org Tue Apr 03 01:29:52 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SEqYU-0001y4-Dd
-	for gcvg-git-2@plane.gmane.org; Tue, 03 Apr 2012 01:20:58 +0200
+	id 1SEqh6-00089F-6l
+	for gcvg-git-2@plane.gmane.org; Tue, 03 Apr 2012 01:29:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752549Ab2DBXUy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 Apr 2012 19:20:54 -0400
-Received: from mtaout03-winn.ispmail.ntl.com ([81.103.221.49]:5398 "EHLO
-	mtaout03-winn.ispmail.ntl.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751548Ab2DBXUx (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 2 Apr 2012 19:20:53 -0400
-Received: from aamtaout04-winn.ispmail.ntl.com ([81.103.221.35])
-          by mtaout03-winn.ispmail.ntl.com
-          (InterMail vM.7.08.04.00 201-2186-134-20080326) with ESMTP
-          id <20120402232051.WJZ18388.mtaout03-winn.ispmail.ntl.com@aamtaout04-winn.ispmail.ntl.com>;
-          Tue, 3 Apr 2012 00:20:51 +0100
-Received: from [192.168.0.2] (really [94.170.150.126])
-          by aamtaout04-winn.ispmail.ntl.com
-          (InterMail vG.3.00.04.00 201-2196-133-20080908) with ESMTP
-          id <20120402232050.KXWW23925.aamtaout04-winn.ispmail.ntl.com@[192.168.0.2]>;
-          Tue, 3 Apr 2012 00:20:50 +0100
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.28) Gecko/20120313 Thunderbird/3.1.20
-In-Reply-To: <20120402222958.GD13969@burratino>
-X-Cloudmark-Analysis: v=1.1 cv=JvdXmxIgLJv2/GthKqHpGJEEHukvLcvELVXUanXFreg= c=1 sm=0 a=yXtjXN6ItgYA:10 a=Hd5Tmzg1rDkA:10 a=u4BGzq-dJbcA:10 a=8nJEP1OIZ-IA:10 a=dRiOB2z9pnJ3xSgKBWoA:9 a=wPNLvfGTeEIA:10 a=HpAAvcLHHh0Zw7uRqdWCyQ==:117
+	id S1753136Ab2DBX3q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 Apr 2012 19:29:46 -0400
+Received: from mail-wg0-f44.google.com ([74.125.82.44]:59013 "EHLO
+	mail-wg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750970Ab2DBX3q (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Apr 2012 19:29:46 -0400
+Received: by wgbdr13 with SMTP id dr13so3146920wgb.1
+        for <git@vger.kernel.org>; Mon, 02 Apr 2012 16:29:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
+        bh=wYiLX6kLIPTyJC2tTO+sep6QSWLbqQfOVqA0IYv7+BI=;
+        b=qtGCziQstim9jDr5UWWz653nMGBn1plIGCiIZQNTzOQ/ojGhpEmT2ykUKlIbSypduM
+         LzzR8IG38iMv2S/z7+AjTzo89HLI58+SbH3zjR+846cf1vQa5EzlK7f2QHSs0XCgVpmu
+         g76DPwrCgiT+30ns01tFGVSIPDCQJnSoJjwYJfiMxBokpIwR1/AxW7TxBiMAOvem2pZk
+         qL2mVgCuWyrQ7zC6lFtOEG7mvNw6U2bVzR7tCjFwkUCO77K6Ua3QVcU1+2dz5WTi2rV+
+         3TTrcQMJNih0pOl526ikpiLXmtFGklldQ8phb2DSPNSaOaNU4hIRqDPTUoRPAA2DhDk2
+         TcuQ==
+Received: by 10.180.79.135 with SMTP id j7mr30155538wix.19.1333409384979; Mon,
+ 02 Apr 2012 16:29:44 -0700 (PDT)
+Received: by 10.223.116.200 with HTTP; Mon, 2 Apr 2012 16:29:44 -0700 (PDT)
+In-Reply-To: <27353249354D994D8E42D75D75FBA614896543@OASBEVEXM01.oaifield.onasgn.com>
+X-Google-Sender-Auth: Fa3a-yRozPfDBdiJ8MhmY_lYQzg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194579>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194580>
 
-On 02/04/12 23:29, Jonathan Nieder wrote:
-> Hi Andrew,
-> 
-> Andrew Sayers wrote:
->> On 02/04/12 09:30, Florian Achleitner wrote:
-> 
->>> The remote helper has to convert the foreign protocol and data (svn) to the 
->>> git-fast-import format.
->>
->> As discussed on IRC, I'd like to see some discussion of solutions that
->> use plumbing directly (e.g. git-commit-tree) if you choose to focus on
->> branch import.
-> 
-> Do you mean that fast-import is not a plumbing command?
+On Mon, Apr 2, 2012 at 12:16 PM, Sebastien Tardif
+<sebastien_tardif@oxfordcorp.com> wrote:
+> Default pull behavior does bring new tag that are hitting the revisions involved in the pull, in other words all tags that would point to log entries that are pulled.
+>
+> I have tag like: LATEST_UIT, LATEST_QA, LATEST_CONTINOUS_BUILD
+>
+> But with this incoherent behavior of not having the already pulled tag been updated when doing a pull, my developers end-up with misleading information in their log since their tags point to old pointer.
+>
+> Please fix.
 
-Sorry, that wasn't clear.  I meant commands that just expose a single
-primitive bit of functionality (like git-commit-tree) instead of those
-that present an abstract interface to the whole git machinery (like
-git-fast-import).  I'm not sure what the right word for that would be?
+There's a discussion in the git-tag man page about titled "On
+Re-tagging," the upshot of which is:
 
-I agree it's possible to use fast-import for this problem, but it seems
-like it's redundant after svn-fe has already loaded everything into git.
- For example, if svn-fe loaded three revisions into the master branch,
-you could create a trunk branch by doing something like:
+'Just admit you screwed up, and use a different
+name. Others have already seen one tag-name, and if you keep the
+same name, you may be in the situation that two people both have
+"version X", but they actually have different "X"'s. So just call
+it "X.1" and be done with it.'
 
-COMMIT=$( git show -s --pretty=%b master^^ | \
-          git commit-tree master^^:trunk )
-COMMIT=$( git show -s --pretty=%b master^ | \
-          git commit-tree master^:trunk -p $COMMIT )
-COMMIT=$( git show -s --pretty=%b master | \
-          git commit-tree master:trunk -p $COMMIT )
-echo $COMMIT > .git/refs/heads/foo
+You could use branches instead of tags for your 'latest X' things.  A
+branch is basically a tag that moves.
 
-The point I was making in IRC was that (so far as I understand)
-fast-import doesn't let you pass trees around in this way, but instead
-requires you to transmit the contents of all the changed files.
+-PJ
 
-The code above could of course be achieved more easily with
-git-filter-branch, or achieved more efficiently with a custom bit of C.
- I suggested discussing the problem in terms of single-purpose commands
-because it strikes me as about the right level to expose the
-architectural questions without getting bogged down in detail.
-
-	- Andrew
+Gehm's Corollary to Clark's Law: Any technology distinguishable from
+magic is insufficiently advanced.
