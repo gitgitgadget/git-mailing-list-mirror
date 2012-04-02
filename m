@@ -1,93 +1,138 @@
-From: Roman Kagan <rkagan@mail.ru>
-Subject: [PATCH 1/2] git-svn: use POSIX::sigprocmask to block signals
-Date: Mon, 2 Apr 2012 20:13:37 +0400 (MSK)
-Message-ID: <9eaaebac91dc2b1a45a4dec77142be0b0b338056.1333381684.git.rkagan@mail.ru>
-References: <cover.1333381684.git.rkagan@mail.ru>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Apr 02 18:14:19 2012
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] fast-import: catch garbage after marks in from/merge
+Date: Mon, 02 Apr 2012 09:15:32 -0700
+Message-ID: <7v398mhzyz.fsf@alter.siamese.dyndns.org>
+References: <20120401225407.GA12127@padd.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>,
+	Dmitry Ivankov <divanorama@gmail.com>
+To: Pete Wyckoff <pw@padd.com>
+X-From: git-owner@vger.kernel.org Mon Apr 02 18:15:44 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SEjtb-0007rg-7h
-	for gcvg-git-2@plane.gmane.org; Mon, 02 Apr 2012 18:14:19 +0200
+	id 1SEjux-0000P2-HS
+	for gcvg-git-2@plane.gmane.org; Mon, 02 Apr 2012 18:15:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752963Ab2DBQOJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 Apr 2012 12:14:09 -0400
-Received: from mailhub.sw.ru ([195.214.232.25]:20845 "EHLO relay.sw.ru"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753055Ab2DBQOI (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Apr 2012 12:14:08 -0400
-Received: from localhost ([10.30.3.95])
-	by relay.sw.ru (8.13.4/8.13.4) with ESMTP id q32GDbhN021547;
-	Mon, 2 Apr 2012 20:13:38 +0400 (MSK)
-In-Reply-To: <cover.1333381684.git.rkagan@mail.ru>
+	id S1752749Ab2DBQPi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 Apr 2012 12:15:38 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47516 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751988Ab2DBQPh (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Apr 2012 12:15:37 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 871DE7EFF;
+	Mon,  2 Apr 2012 12:15:34 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=z4PZkh59aG2jo2hUQJpIErsiTW4=; b=xO4ECu
+	9X8L4naQj14aBVdmCCxKNFbUqlK2Y2OZDy8CPdnRuKPzMkjTl5VTx8MWqBKrWjil
+	icCmVtqTf/Po2TKOZE+TUKq3rgx+VfD0JQOzvAclTggsxf2pxcXuWhV7F6oJ/Gcb
+	7k7cZz5nxN6dYto4GtEHOaBiI+StkpoJMXtNo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=yRU0w27wOG+wRQnAqq8NtxNrtoBLhHoh
+	a+ldZWHNuXMR7UYQwKQA3shtV9blXK3DIPFtrI8ElZFgduV84g3rIlexiG7UmBmD
+	N9p2/TlwVuW+L6Eu8yNX9IrPl0WOy0G8hLiQvxmUTg9ow5gm48qGD8GWge5zTzPQ
+	GS6V/erNNOM=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7E82B7EFE;
+	Mon,  2 Apr 2012 12:15:34 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id EBF4D7EFD; Mon,  2 Apr 2012
+ 12:15:33 -0400 (EDT)
+In-Reply-To: <20120401225407.GA12127@padd.com> (Pete Wyckoff's message of
+ "Sun, 1 Apr 2012 18:54:07 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 13377498-7CDF-11E1-929B-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194525>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194526>
 
-rev_map_set() tries to avoid being interrupted by signals.
+Pete Wyckoff <pw@padd.com> writes:
 
-The conventional way to achieve this is through sigprocmask(), which is
-available in the standard POSIX module.
+> A forgotten LF can lead to a confusing bug.  The last
+> line in this commit command is wrong:
+> ...
+> It is missing a newline and should be:
+>
+>     from :1
+>     M 100644 :103 hello.c
 
-This is implemented by this patch.  One important consequence of it is
-that the signal handlers won't be unconditionally set to SIG_DFL anymore
-upon the first invocation of rev_map_set() as they used to.
+During my first reading of this, this introductory part made me think "oh,
+so this is a patch to fix somebody who produces a wrong data that is fed
+to fast-import".  But it does not seem to be the case.
 
-[That said, I'm not convinced that messing with signals is necessary
-(and sufficient) here at all, but my perl-foo is too weak for a more
-intrusive change.]
+Please rephrase the first sentence.  Is it a confusing _bug_, or the
+program produces a garbage output when fed a garbage output?
 
-Signed-off-by: Roman Kagan <rkagan@mail.ru>
----
- git-svn.perl |   15 +++++++++------
- 1 files changed, 9 insertions(+), 6 deletions(-)
+> Make fast-import complain about the buggy input, for both
+> from and merge lines that use marks.
 
-diff --git a/git-svn.perl b/git-svn.perl
-index 4334b95..570504c 100755
---- a/git-svn.perl
-+++ b/git-svn.perl
-@@ -2031,6 +2031,7 @@ use IPC::Open3;
- use Time::Local;
- use Memoize;  # core since 5.8.0, Jul 2002
- use Memoize::Storable;
-+use POSIX qw(:signal_h);
- 
- my ($_gc_nr, $_gc_period);
- 
-@@ -4059,11 +4060,14 @@ sub rev_map_set {
- 	length $commit == 40 or die "arg3 must be a full SHA1 hexsum\n";
- 	my $db = $self->map_path($uuid);
- 	my $db_lock = "$db.lock";
--	my $sig;
-+	my $sigmask;
- 	$update_ref ||= 0;
- 	if ($update_ref) {
--		$SIG{INT} = $SIG{HUP} = $SIG{TERM} = $SIG{ALRM} = $SIG{PIPE} =
--		            $SIG{USR1} = $SIG{USR2} = sub { $sig = $_[0] };
-+		$sigmask = POSIX::SigSet->new();
-+		my $signew = POSIX::SigSet->new(SIGINT, SIGHUP, SIGTERM,
-+			SIGALRM, SIGPIPE, SIGUSR1, SIGUSR2);
-+		sigprocmask(SIG_BLOCK, $signew, $sigmask) or
-+			croak "Can't block signals: $!";
- 	}
- 	mkfile($db);
- 
-@@ -4102,9 +4106,8 @@ sub rev_map_set {
- 	                            "$db_lock => $db ($!)\n";
- 	delete $LOCKFILES{$db_lock};
- 	if ($update_ref) {
--		$SIG{INT} = $SIG{HUP} = $SIG{TERM} = $SIG{ALRM} = $SIG{PIPE} =
--		            $SIG{USR1} = $SIG{USR2} = 'DEFAULT';
--		kill $sig, $$ if defined $sig;
-+		sigprocmask(SIG_SETMASK, $sigmask) or
-+			croak "Can't restore signal mask: $!";
- 	}
- }
- 
--- 
-1.7.7.6
+Perhaps these two lines, negated to state the current behaviour e.g. "git
+fast-import does not complain when a mark that is used in 'from' or
+'merge' command to name a commit is not followed by the mandatory LF." can
+be used to replace the first sentence, followed by "It does X" to describe
+the user-observable breakage for a bonus point.
+
+> Signed-off-by: Pete Wyckoff <pw@padd.com>
+> ---
+> I spent too long tracking down the bug described in the
+> commit message.  It might help future users if fast-import
+> were to complain in this case.
+
+It would help future users if the commit log actually described the
+symptom caused by the bug; otherwise, future users would not notice when
+hitting the same issue.
+
+> diff --git a/fast-import.c b/fast-import.c
+> index a85275d..13001bb 100644
+> --- a/fast-import.c
+> +++ b/fast-import.c
+> @@ -2537,8 +2537,16 @@ static int parse_from(struct branch *b)
+>  		hashcpy(b->branch_tree.versions[0].sha1, t);
+>  		hashcpy(b->branch_tree.versions[1].sha1, t);
+>  	} else if (*from == ':') {
+> -		uintmax_t idnum = strtoumax(from + 1, NULL, 10);
+> -		struct object_entry *oe = find_mark(idnum);
+> +		char *eptr;
+> +		uintmax_t idnum = strtoumax(from + 1, &eptr, 10);
+> +		struct object_entry *oe;
+> +		if (eptr) {
+> +			for (; *eptr && isspace(*eptr); eptr++) ;
+
+Put the empty body on a separate line, i.e.
+
+			for ( ; isspace(*eptr); eptr++)
+				; /* nothing */
+
+> +			if (*eptr)
+> +				die("Garbage after mark: %s",
+> +				    command_buf.buf);
+
+Good.
+
+> +		}
+> +		oe = find_mark(idnum);
+>  		if (oe->type != OBJ_COMMIT)
+>  			die("Mark :%" PRIuMAX " not a commit", idnum);
+
+Would it help future callers if you made this small part that parses a
+mark into a separate small helper function that returns an oe and
+increment the pointer so that the caller can peek at the terminating
+character to enforce the syntax?  E.g.
+
+	} else if (*from == ':') {
+		char *cp = from + 1;
+		struct object_entry *oe = parse_mark(&cp);
+		if (*cp)
+			die("Garbage after mark: %s", command_buf.buf);
+                if (!oe || oe->type != OBJ_COMMIT)
+                	die("No such commit: %s", command_buf.buf);
+	}
