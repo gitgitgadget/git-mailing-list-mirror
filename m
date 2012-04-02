@@ -1,61 +1,72 @@
-From: "Holding, Lawrence" <Lawrence.Holding@cubic.com>
-Subject: Question: how to have ls-files use the .gitignore in the index
-Date: Tue, 3 Apr 2012 11:07:08 +1200
-Message-ID: <A5E8E180685CEF45AB9E737A010799805DFACA@cdnz-ex1.corp.cubic.cub>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] rebase -i: remove CHERRY_PICK_HEAD when cherry-pick
+ failed
+Date: Mon, 02 Apr 2012 16:08:38 -0700
+Message-ID: <7vr4w5d955.fsf@alter.siamese.dyndns.org>
+References: <CAMP44s1EAwHjQ7S2ArLvhNg5qkR05DRJ70tQmP8sXYdOP=i_zQ@mail.gmail.com>
+ <1332106632-31882-1-git-send-email-andrew.kw.w@gmail.com>
+ <7vk42gbkl1.fsf@alter.siamese.dyndns.org> <4F679E67.4080708@sohovfx.com>
+ <4F6E289B.4020104@sohovfx.com> <4F7A2A79.1040900@sohovfx.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Apr 03 01:07:27 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Andrew Wong <andrew.w@sohovfx.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Andrew Wong <andrew.kw.w@gmail.com>, git@vger.kernel.org
+To: Andrew Wong <andrew.w-lists@sohovfx.com>
+X-From: git-owner@vger.kernel.org Tue Apr 03 01:08:51 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SEqLO-0001G2-GX
-	for gcvg-git-2@plane.gmane.org; Tue, 03 Apr 2012 01:07:26 +0200
+	id 1SEqMh-0002Ce-38
+	for gcvg-git-2@plane.gmane.org; Tue, 03 Apr 2012 01:08:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754013Ab2DBXHR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 Apr 2012 19:07:17 -0400
-Received: from exprod6og117.obsmtp.com ([64.18.1.39]:58439 "HELO
-	exprod6og117.obsmtp.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with SMTP id S1753502Ab2DBXHN convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 2 Apr 2012 19:07:13 -0400
-Received: from bb-corp-outmail1.corp.cubic.com ([149.63.70.140]) (using TLSv1) by exprod6ob117.postini.com ([64.18.5.12]) with SMTP
-	ID DSNKT3oxIHPelhB/sYR74m/J5Ep2hCLBcIZe@postini.com; Mon, 02 Apr 2012 16:07:12 PDT
-Received: from bb-corp-ex4.corp.cubic.cub ([149.63.2.70])
-	by bb-corp-outmail1.corp.cubic.com (8.13.1/8.13.1) with ESMTP id q32N7BG4010314
-	for <git@vger.kernel.org>; Mon, 2 Apr 2012 16:07:12 -0700
-Received: from cdnz-ex1.corp.cubic.cub ([172.19.33.136]) by bb-corp-ex4.corp.cubic.cub with Microsoft SMTPSVC(6.0.3790.4675);
-	 Mon, 2 Apr 2012 16:07:12 -0700
-X-MimeOLE: Produced By Microsoft Exchange V6.5
-Content-class: urn:content-classes:message
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-Thread-Topic: Question: how to have ls-files use the .gitignore in the index
-Thread-Index: Ac0RJVRsaTOcMXe0RH+X+HzAjja1zw==
-X-OriginalArrivalTime: 02 Apr 2012 23:07:12.0063 (UTC) FILETIME=[56296CF0:01CD1125]
+	id S1751814Ab2DBXIl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 Apr 2012 19:08:41 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:57032 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751331Ab2DBXIl (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Apr 2012 19:08:41 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 136C16F2B;
+	Mon,  2 Apr 2012 19:08:40 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=+5mwgkoCNdS/C80bCORTOxPiO5I=; b=TcWL7z
+	YMw6O6z0jxqLIND29Y3thBYxe4cz35dUqk8ch0D5iffmHdJusHbCCiVReBAs/dm5
+	J+GW/NnyXQNJgxS5eZqddDzoUhy6kOMSkqAIi/P8Vw1UHOdfc875Q/29jPpdWovx
+	Ih39a6hj9ItYcr7AY799W0mr3MsghCKgza6JU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=DpHrwoH4BzkWMbECnhuQwqe+Dh88+XZn
+	prKuCz8IDw1kiT6tDK8XSrVYhftrJVmDgbzbfUJdjN9KXy2xfdy7JnX5Q0iK+Bii
+	/KsDYFWLJGr9c0AZJy8WPs8aTreNv6RlvU7IYF3U3DXngQwAdREIhULC8EGiIlky
+	bq2Vh3Dovoo=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0BC076F2A;
+	Mon,  2 Apr 2012 19:08:40 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 989966F29; Mon,  2 Apr 2012
+ 19:08:39 -0400 (EDT)
+In-Reply-To: <4F7A2A79.1040900@sohovfx.com> (Andrew Wong's message of "Mon,
+ 02 Apr 2012 18:38:49 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: C89EE8FA-7D18-11E1-8CC8-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194576>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194577>
 
-I have a pre-commit hook that checks the index for files that match the
-ignores / excludes in the repository. But sometimes this will run on a
-repository where not all the folders are up-to-date with the tip, and
-will then test against the working tree versions of these files and not
-those in the index.
+Andrew Wong <andrew.w-lists@sohovfx.com> writes:
 
-from pre-commit:
+> Can we look into queuing this patch? Or does anyone have any thoughts on
+> this?
 
-	if git ls-files -i --exclude-standard | grep .
-	then
-	    exit 1
-	fi 
+I do not recall if I convinced myself that the patch was fixing the right
+problem, or it does not look like it would break other cases; reviews from
+interested parties are very much appreciated.
 
-Is there an option to have ls-files use the excludes in the index
-without checking out the whole file tree?
-
-Thanks,
+This fell through the crack. Thanks for sending a reminder.
