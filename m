@@ -1,78 +1,62 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: push.default: current vs upstream
-Date: Mon, 02 Apr 2012 13:50:17 -0700
-Message-ID: <7vmx6teu46.fsf@alter.siamese.dyndns.org>
-References: <7vd37wv77j.fsf@alter.siamese.dyndns.org>
- <20120329095236.GA11911@sigill.intra.peff.net>
- <7vbonfqezs.fsf@alter.siamese.dyndns.org>
- <20120329221154.GA1413@sigill.intra.peff.net>
- <7vfwcqq2dw.fsf@alter.siamese.dyndns.org>
- <20120330071358.GB30656@sigill.intra.peff.net>
- <7vty15ltuo.fsf@alter.siamese.dyndns.org> <vpqty12h995.fsf@bauges.imag.fr>
- <7vlimegjw9.fsf@alter.siamese.dyndns.org> <vpqy5qejbjl.fsf@bauges.imag.fr>
- <7vobraf057.fsf@alter.siamese.dyndns.org> <vpqwr5ydkqt.fsf@bauges.imag.fr>
- <7vzkatex02.fsf@alter.siamese.dyndns.org> <vpqiphhdfzw.fsf@bauges.imag.fr>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 3/3] revision: insert unsorted, then sort in
+ prepare_revision_walk()
+Date: Mon, 2 Apr 2012 16:51:12 -0400
+Message-ID: <20120402205112.GA28824@sigill.intra.peff.net>
+References: <201203291818.49933.mfick@codeaurora.org>
+ <201204021024.49706.mfick@codeaurora.org>
+ <CAJo=hJshOBg4pT8nuWZ=eZvj=E9x+4b9M_EANa=02x=NFW2OfQ@mail.gmail.com>
+ <201204021049.04901.mfick@codeaurora.org>
+ <CAJo=hJsprQtjDChtrSMcne+OCeUx=NVxLHs3k_qnYLzO=aQWuw@mail.gmail.com>
+ <20120402203728.GB26503@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Mon Apr 02 22:50:28 2012
+Content-Type: text/plain; charset=utf-8
+Cc: Martin Fick <mfick@codeaurora.org>,
+	=?utf-8?B?UmVuw6k=?= Scharfe <rene.scharfe@lsrfire.ath.cx>,
+	Shawn Pearce <sop@google.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Shawn Pearce <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Mon Apr 02 22:51:22 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SEoCp-0003mk-IM
-	for gcvg-git-2@plane.gmane.org; Mon, 02 Apr 2012 22:50:27 +0200
+	id 1SEoDe-0004S2-Vi
+	for gcvg-git-2@plane.gmane.org; Mon, 02 Apr 2012 22:51:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752538Ab2DBUuW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 Apr 2012 16:50:22 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:34361 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752425Ab2DBUuV (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Apr 2012 16:50:21 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A0D9B735F;
-	Mon,  2 Apr 2012 16:50:20 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=TMo9xMA4KO0nE9yV+geePelINJk=; b=LvK9Gd
-	i2d6XrB7Ur+Oo0cdgMZI429pqq9rrerMtoLkUXHLQIHx+/Ll10Iq3il6knBe2nBR
-	91msoISuE6AubyfOF8WW9Aap8ziYJnnl/5cJv0TMYEEuM7n9gI6PhQkU+1SZAxFK
-	ZSWnQgwPxbpUaDGzjZ57p4J+vYLIHaoi8BDbM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=T6OhNw26sR0iODNkw/lDwB8Q9V2Twwmu
-	MP+T82wAKGgAnu5hUckN82k/nfx0bpFPgCi88w4R+vwoqM0jQnZp2pSNzVNerByN
-	GBHkVFvFpqFNWuv1aDB+ZN1Kw3uIfAkc68id/PaDiUatz/jFriy8yjh5egllumIj
-	Srbbr9Tt9AQ=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9845E735E;
-	Mon,  2 Apr 2012 16:50:20 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 32D087357; Mon,  2 Apr 2012
- 16:50:19 -0400 (EDT)
-In-Reply-To: <vpqiphhdfzw.fsf@bauges.imag.fr> (Matthieu Moy's message of
- "Mon, 02 Apr 2012 22:40:35 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 752FBC8E-7D05-11E1-A48E-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752514Ab2DBUvO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 Apr 2012 16:51:14 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:43541
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751861Ab2DBUvO (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Apr 2012 16:51:14 -0400
+Received: (qmail 21318 invoked by uid 107); 2 Apr 2012 20:51:15 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 02 Apr 2012 16:51:15 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 02 Apr 2012 16:51:12 -0400
+Content-Disposition: inline
+In-Reply-To: <20120402203728.GB26503@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194559>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194560>
 
-Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+On Mon, Apr 02, 2012 at 04:37:28PM -0400, Jeff King wrote:
 
-> Junio C Hamano <gitster@pobox.com> writes:
->
->> No more words from me on this subthread.
->
-> It's a pity. I still have no answer to my question:
+> Has anyone looked seriously at a new index format that stores the
+> redundant information in a more easily accessible way? It would increase
+> our disk usage, but for something like linux-2.6, only by 10MB per
+> 32-bit word. On most of my systems I would gladly spare some extra RAM
+> for the disk cache if it meant I could avoid inflating a bunch of
+> objects.
 
-That's OK.
+Actually, that is an over-statement of the size. That would be a
+per-object piece of metadata. A per-commit piece like timestamp would be
+only 1M per 32-bit word in linux-2.6 (about 1/4 million commits). Or put
+another way, we could store timestamps and 20-byte parent sha1s in about
+11M.
 
-The above is not "I hate you enough that I won't talk to you", but "I
-realize that I am not the best person to explain".  You'll hopefully get
-responses from those who prefer to see 'current' over 'upstream' ;-).
+-Peff
