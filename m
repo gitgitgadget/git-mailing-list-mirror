@@ -1,80 +1,106 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: GSOC Proposal draft: git-remote-svn
-Date: Tue, 3 Apr 2012 17:21:00 -0500
-Message-ID: <20120403222100.GA20252@burratino>
-References: <11292500.AVmZFUUvNi@flobuntu>
- <CALkWK0nW91PE2810qrZUbL0x-_YTTA_2tLFVhvXBJ2NFGvVxog@mail.gmail.com>
- <2148933.pnpYo0xMAP@flomedio>
- <2487557.B8qfnaixh3@flomedio>
- <4F7A258C.5000200@pileofstuff.org>
- <20120402222958.GD13969@burratino>
- <4F7A3450.7000302@pileofstuff.org>
- <20120403000945.GA15075@burratino>
- <4F7B7169.4050507@pileofstuff.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: push.default: current vs upstream
+Date: Tue, 03 Apr 2012 15:29:34 -0700
+Message-ID: <7vsjgkbga9.fsf@alter.siamese.dyndns.org>
+References: <7vd37wv77j.fsf@alter.siamese.dyndns.org>
+ <20120329095236.GA11911@sigill.intra.peff.net>
+ <7vbonfqezs.fsf@alter.siamese.dyndns.org>
+ <20120329221154.GA1413@sigill.intra.peff.net>
+ <7vfwcqq2dw.fsf@alter.siamese.dyndns.org>
+ <20120330071358.GB30656@sigill.intra.peff.net>
+ <7vlimhk7rz.fsf@alter.siamese.dyndns.org>
+ <20120403205906.GB24815@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Florian Achleitner <florian.achleitner@student.tugraz.at>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	David Barr <davidbarr@google.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Dmitry Ivankov <divanorama@gmail.com>
-To: Andrew Sayers <andrew-git@pileofstuff.org>
-X-From: git-owner@vger.kernel.org Wed Apr 04 00:21:26 2012
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Apr 04 00:29:50 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SFC6P-0004gP-4P
-	for gcvg-git-2@plane.gmane.org; Wed, 04 Apr 2012 00:21:25 +0200
+	id 1SFCER-0001EF-ED
+	for gcvg-git-2@plane.gmane.org; Wed, 04 Apr 2012 00:29:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754953Ab2DCWVU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Apr 2012 18:21:20 -0400
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:47698 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754133Ab2DCWVT (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Apr 2012 18:21:19 -0400
-Received: by yenl12 with SMTP id l12so136379yen.19
-        for <git@vger.kernel.org>; Tue, 03 Apr 2012 15:21:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=3PeFlEN1sr0jqxDNXowrAe9KgMNFG6r0FXAFZN6j1SY=;
-        b=RDoe+qS4QD6MI3QdH7c5utzsvVxSFjMvmXSApBCnWvtptjI72SQ59bQ4MtX0ErCAYB
-         wIZtWHTZ/CCg1AhuVQTFkRje+QLmZkGRIHpZ0onwDq1B5H6EBNhhPWMsYiu0KzDxLzRC
-         fJJE4Lyowyb1CmLA5Dab+NNsR04lexqsO9epk6DMH6AzEmSUag/Z/q74fkPLOJURXmmw
-         1j4yBO3XixiPU1oH4fQjCCoyNAsncNvNjh5denRGQIxssdllcDSXlLUMj3Ye/00YTLvd
-         mQTFLfXsm6YLflSHcKPxCTIY/lNrEQBjpSzYHV3YtQWB/hniWoj3P7z3ygMsSbazdAX4
-         VcfQ==
-Received: by 10.50.187.233 with SMTP id fv9mr3376076igc.34.1333491679225;
-        Tue, 03 Apr 2012 15:21:19 -0700 (PDT)
-Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
-        by mx.google.com with ESMTPS id gh8sm12284497igb.16.2012.04.03.15.21.17
-        (version=SSLv3 cipher=OTHER);
-        Tue, 03 Apr 2012 15:21:17 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <4F7B7169.4050507@pileofstuff.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1755581Ab2DCW3h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Apr 2012 18:29:37 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47453 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753690Ab2DCW3h (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Apr 2012 18:29:37 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 20F267AA5;
+	Tue,  3 Apr 2012 18:29:36 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=vzLGAprTy3BdAQcs31oHBubF0R4=; b=n17MWv
+	lkxf9lYWl85ze06JBe59ZAQHQUgp5YmQAxsJAYxeNloXLTcNfJGNV++1wurw5uFt
+	TVLsh7IMw68Aq16+R/xP/PtjapPp2ytSy6Z+vAt7m8lQnziRkJmCUIUp86nLeWTS
+	gFhYSvGIK6dIp96xv9xJf5C5MeKELy4+z8Xzo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=yZu4otMqihqVz7ZRDaaGsVPpRyfJuSrY
+	B/rS1BTVLxH2t5vcFBjoQrklefo8hUklD7v4/xwwXG/BZurw/raC1Aiu0el7pz6a
+	gmZpeuKvvyGaNaDLzSrdq3NrryfG1EdG0iSwP/yAn80ciglQDw/5S5l6yW9gCscx
+	ZA5431gIC+Q=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 191937AA4;
+	Tue,  3 Apr 2012 18:29:36 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 94C6C7AA3; Tue,  3 Apr 2012
+ 18:29:35 -0400 (EDT)
+In-Reply-To: <20120403205906.GB24815@sigill.intra.peff.net> (Jeff King's
+ message of "Tue, 3 Apr 2012 16:59:07 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 7DE41078-7DDC-11E1-91FF-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194657>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194658>
 
-Andrew Sayers wrote:
+Jeff King <peff@peff.net> writes:
 
-> This is a pretty solid heuristic for detecting branches copied from an
-> existing branch even in scheme (2) or (3), but does absolutely nothing
-> for trunk detection.  Although trunk detection is trivial in the sane
-> case (the "trunk" directory is the one and only trunk, end of story),
-> here's a contrived example for why it's hard in the general case:
+>> +	if (strcmp(branch->remote_name, remote->name)) {
+>> +		struct remote *branch_dest = remote_get(branch->remote_name);
+>> +		const char **branch_dest_url, **dest_url;
+>> +
+>> +		if (!push_url_of_remote(remote, &dest_url) ||
+>> +		    !push_url_of_remote(branch_dest, &branch_dest_url) ||
+>> +		    strcmp(dest_url[0], branch_dest_url[0]))
+>> +			die(_("You are pushing to remote '%s', which is not the "
+>> +			      "upstream of your\ncurrent branch '%s'.\n"),
+>> +			    remote->name, branch->name);
+>> +	}
+>
+> Hmm. So this will actually detect "git push $URL" when $URL matches the
+> remote's configured URL. I feel like this distinction has come up
+> before, and we decided not to equate the two. But now I can't remember
+> where (maybe it when fetching via URL versus via remote?).
+>
+> What should happen if there are multiple push URLs configured?
 
-For the remote helper in its default configuration, I think it's ok to
-assume the standard layout (trunk/, branches/*, tags/*).
+This is me merely try to be extra nice without succeeding.
 
-Thanks for some useful examples.
+Perhaps it was an ill-thought-out part of the patch.  The reasoning was
+that when you know that your 'origin' is at $URL, it might be irritating
+if "git push $URL" did not do what "git push origin" did, but we can
+always say 'origin' that is a remoteo nickname is different from $URL; a
+remote nickname does not have to be _only_ substitute of the URL, but it
+can do more for you.  That would give you more incentive to define remotes
+that you interact with often, while keeping the bare-metal flexibility
+when interacting with other remotes in a one-shot fashion.
 
-Sincerely,
-Jonathan
+I personally would be perfectly fine if
+
+	$ git push $URL
+
+that does not say what to push out how, regardless of push.default
+settings, errors out.
+
+The same can be said when a remote has more than one URL to be pushed to.
+
+Personally I do not care too much about it, but this is one more reason
+not to support "upstream" over "current" as the default setting.
