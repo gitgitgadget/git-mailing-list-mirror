@@ -1,75 +1,77 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH 3/4] revert: simplify insn parsing logic
-Date: Tue, 3 Apr 2012 10:20:06 +0530
-Message-ID: <CALkWK0nMx84G9_FdqFKp1j30bfV7mjHyD5paSHU5EgcsitGSEA@mail.gmail.com>
-References: <1333029495-10034-1-git-send-email-artagnon@gmail.com>
- <1333029495-10034-4-git-send-email-artagnon@gmail.com> <7vr4w5euvg.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] rebase -i: remove CHERRY_PICK_HEAD when cherry-pick
+ failed
+Date: Mon, 02 Apr 2012 22:15:21 -0700
+Message-ID: <7vk41xcs5y.fsf@alter.siamese.dyndns.org>
+References: <CAMP44s1EAwHjQ7S2ArLvhNg5qkR05DRJ70tQmP8sXYdOP=i_zQ@mail.gmail.com>
+ <1332106632-31882-1-git-send-email-andrew.kw.w@gmail.com>
+ <7vk42gbkl1.fsf@alter.siamese.dyndns.org> <4F679E67.4080708@sohovfx.com>
+ <4F6E289B.4020104@sohovfx.com> <4F7A2A79.1040900@sohovfx.com>
+ <7vr4w5d955.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Apr 03 06:51:03 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Andrew Wong <andrew.w-lists@sohovfx.com>,
+	Andrew Wong <andrew.w@sohovfx.com>,
+	Andrew Wong <andrew.kw.w@gmail.com>, git@vger.kernel.org
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Apr 03 07:16:00 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SEvhv-0006x8-5C
-	for gcvg-git-2@plane.gmane.org; Tue, 03 Apr 2012 06:51:03 +0200
+	id 1SEw62-00041i-Pu
+	for gcvg-git-2@plane.gmane.org; Tue, 03 Apr 2012 07:15:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751394Ab2DCEu2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Apr 2012 00:50:28 -0400
-Received: from mail-we0-f174.google.com ([74.125.82.174]:53610 "EHLO
-	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750751Ab2DCEu1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Apr 2012 00:50:27 -0400
-Received: by wejx9 with SMTP id x9so2110026wej.19
-        for <git@vger.kernel.org>; Mon, 02 Apr 2012 21:50:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=nvHxL9Cb7VXAgz4HBrB7NlAh3hDdF1D15qmSV7iHCnM=;
-        b=UDFOXs/KzgWhxlekUUkjjcvrCdHko+Go/U2VQMzJZaOyHR2pQsMbKwULq4+UjavAyR
-         VjjEXq1AoYbahWAcAGHtVuBYzW9PzwhnzReyFdiSzraQ2+ZUeDTrdErneXrbYbqg4rhQ
-         msLCC1X+X6pYZuAM8oY2vGBNo0ScUdZoZyqrxUAvgTZLo/5SeHCjl1S6n2EXVb+nNB9I
-         dtSda8o740QBisgfLKO5gA4xbqndsr0M4I51UhWP+j8Ry8IEnnY7gVf//7ikvLPP7iEJ
-         u6LpnAjamKQKxicKGt4xAJn2s0FLbc2aoHWvrHa4ABngNdtABrLuLyEzmw3E5QWWSExI
-         0kmQ==
-Received: by 10.180.102.101 with SMTP id fn5mr32403186wib.6.1333428626567;
- Mon, 02 Apr 2012 21:50:26 -0700 (PDT)
-Received: by 10.216.11.199 with HTTP; Mon, 2 Apr 2012 21:50:06 -0700 (PDT)
-In-Reply-To: <7vr4w5euvg.fsf@alter.siamese.dyndns.org>
+	id S1751515Ab2DCFPZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Apr 2012 01:15:25 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47374 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750756Ab2DCFPY (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Apr 2012 01:15:24 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DFFA66BA3;
+	Tue,  3 Apr 2012 01:15:23 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=94xSvC6QueldwrNiajv8xXQeQ0k=; b=Wf+wrd
+	gLSbBz/Oo8CNcNPVDL6meK6KlihK7jXcrspwsXSoFHwHw/vDZGtdXYKgkvKX4BaH
+	p3iZDVgmDU2dAMmEcE4oR2tvVb3Glv3ThU7CgeYwRMQSLUdRfwAWjS8ukquz3prf
+	bgcdJYFgRk6ocjNiakBR7Wx0KsRATZ84AxX4g=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Q4zhMDqagQXejGWmsxMPzTOjC/Rf4dM+
+	1muW0NqlJShxhl8+X8ndkgk0gKgDrm14evuUQEx9T5FxhKcppczsK7EBwgs6aSqq
+	Dm560bay8Cas56BQ2M1mJdmkS6qRUVMvs3EA3ATnWrGpw7a4ZQUImmJHTUCV+Haa
+	da7BrOyFkXQ=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D4F4A6BA2;
+	Tue,  3 Apr 2012 01:15:23 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 6734C6BA1; Tue,  3 Apr 2012
+ 01:15:23 -0400 (EDT)
+In-Reply-To: <7vr4w5d955.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Mon, 02 Apr 2012 16:08:38 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 03E7F9AA-7D4C-11E1-A23C-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194592>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194593>
 
-Hi Junio,
+Junio C Hamano <gitster@pobox.com> writes:
 
-Junio C Hamano wrote:
-> I suspect that this may be a bit over-engineered, but on the other hand,
-> if we do not foresee that we would be adding many other verbs, I do not
-> think there is much point in your patch to clean up the verb parsing part,
-> either, so...
+> Andrew Wong <andrew.w-lists@sohovfx.com> writes:
+>
+>> Can we look into queuing this patch? Or does anyone have any thoughts on
+>> this?
+>
+> I do not recall if I convinced myself that the patch was fixing the right
+> problem, or it does not look like it would break other cases; reviews from
+> interested parties are very much appreciated.
+>
+> This fell through the crack. Thanks for sending a reminder.
 
-interesting; yes, it does look a little over-engineered for the
-moment.  I should have been clearer in the commit message: this patch
-exists mainly so that [4/4] can report a sensible error message
-instead of a literal "Missing space after valid verb".  So, we have
-four options from here:
-1. Squash this part into [4/4].  Will this give rise to additional confusion?
-2. Use your version of the patch.
-3. Append the following to the commit message: "This patch exists so
-that the next patch can report a sensible error message when an
-invalid verb is encountered".
-4. If you don't think [4/4] is valuable yet, just apply the first two
-parts of this series.
-
-I'm personally in favor of (1) now.
-
-Thanks.
-
-    Ram
+And I forgot to Cc who is responsible for that CHERRY_PICK_HEAD part...
