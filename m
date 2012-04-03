@@ -1,117 +1,153 @@
-From: Kacper Kornet <draenog@pld-linux.org>
-Subject: [PATCH] gitweb: Option to omit column with time of the last change
-Date: Tue, 3 Apr 2012 15:27:36 +0200
-Message-ID: <20120403132735.GA12389@camk.edu.pl>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCHv2 1/2] fast-import: test behavior of garbage after mark
+ references
+Date: Tue, 3 Apr 2012 09:00:55 -0500
+Message-ID: <20120403140055.GC15589@burratino>
+References: <20120401225407.GA12127@padd.com>
+ <1333417910-17955-1-git-send-email-pw@padd.com>
+ <1333417910-17955-2-git-send-email-pw@padd.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-2
-To: git@vger.kernel.org, jnareb@gmail.com
-X-From: git-owner@vger.kernel.org Tue Apr 03 15:51:30 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Dmitry Ivankov <divanorama@gmail.com>,
+	David Barr <davidbarr@google.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: Pete Wyckoff <pw@padd.com>
+X-From: git-owner@vger.kernel.org Tue Apr 03 16:01:17 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SF48v-0003jH-Oy
-	for gcvg-git-2@plane.gmane.org; Tue, 03 Apr 2012 15:51:30 +0200
+	id 1SF4IO-00039j-5K
+	for gcvg-git-2@plane.gmane.org; Tue, 03 Apr 2012 16:01:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753939Ab2DCNvZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Apr 2012 09:51:25 -0400
-Received: from moat.camk.edu.pl ([148.81.175.50]:45594 "EHLO moat.camk.edu.pl"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752508Ab2DCNvY (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Apr 2012 09:51:24 -0400
-X-Greylist: delayed 1416 seconds by postgrey-1.27 at vger.kernel.org; Tue, 03 Apr 2012 09:51:24 EDT
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by moat.camk.edu.pl (Postfix) with ESMTP id A1AF45F0049;
-	Tue,  3 Apr 2012 15:28:33 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at camk.edu.pl
-Received: from moat.camk.edu.pl ([127.0.0.1])
-	by localhost (liam.camk.edu.pl [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id taPFkQHgJ4bM; Tue,  3 Apr 2012 15:28:23 +0200 (CEST)
-Received: from gatekeeper2.camk.edu.pl (gatekeeper.camk.edu.pl [192.168.1.23])
-	by moat.camk.edu.pl (Postfix) with ESMTP id EB61C5F0046;
-	Tue,  3 Apr 2012 15:28:22 +0200 (CEST)
-Received: by gatekeeper2.camk.edu.pl (Postfix, from userid 1293)
-	id 314134669F; Tue,  3 Apr 2012 15:27:36 +0200 (CEST)
+	id S1754068Ab2DCOBK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Apr 2012 10:01:10 -0400
+Received: from mail-ob0-f174.google.com ([209.85.214.174]:49451 "EHLO
+	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752209Ab2DCOBJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Apr 2012 10:01:09 -0400
+Received: by obbtb18 with SMTP id tb18so3591804obb.19
+        for <git@vger.kernel.org>; Tue, 03 Apr 2012 07:01:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=4/cqrzNeB67A1OE9Zo8crevnX5ZHfmyW23z/lYJPU5U=;
+        b=VwhO60r03dpMrI3nIf+EDB8ISYw6aAvT0/7nHVU8zt32fKBo2ursBAcATJT9h4d4+H
+         2dK0FgfNIsvQoJe54Ly8IJ8DfIhT7sCSFwMRGN1BXwmoEnyq+35+DwwMOKKfWeNdV+xz
+         zcdMNz+jzRV0RPeGnAQVfR8cv3IUsv5n+YsilrwRICtroZ3Z+crex6xn1edXvqthvywN
+         sR++S1sU4YQaHWshHnYp+9pSaFzjDFwHAl/31VS22mndhs798+zFUIMpQ4ZkwM3ifFD2
+         aP8kYHGXVBaQZyn3lbCaR6RA6B7T/XJXzlUIJnrDxQyO3t1OonkmfU8ZcCFYllU/9LHQ
+         p8eA==
+Received: by 10.182.14.35 with SMTP id m3mr11542717obc.34.1333461668511;
+        Tue, 03 Apr 2012 07:01:08 -0700 (PDT)
+Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
+        by mx.google.com with ESMTPS id w4sm16867810oeg.12.2012.04.03.07.01.05
+        (version=SSLv3 cipher=OTHER);
+        Tue, 03 Apr 2012 07:01:07 -0700 (PDT)
 Content-Disposition: inline
-User-Agent: Mutt/1.5.20 (2009-06-14)
+In-Reply-To: <1333417910-17955-2-git-send-email-pw@padd.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194623>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194624>
 
-Generating information about last change for a large number of git
-repositories can be time consuming. This commit adds an option to
-omit 'Last Change' column when presenting the list of repositories.
+Pete Wyckoff wrote:
 
-Signed-off-by: Kacper Kornet <draenog@pld-linux.org>
----
- Documentation/gitweb.conf.txt |    3 +++
- gitweb/gitweb.perl            |   16 +++++++++++-----
- 2 files changed, 14 insertions(+), 5 deletions(-)
+> --- a/t/t9300-fast-import.sh
+> +++ b/t/t9300-fast-import.sh
+> @@ -2635,4 +2635,271 @@ test_expect_success \
+>  	'n=$(grep $a verify | wc -l) &&
+>  	 test 1 = $n'
+>  
+> +###
+> +### series S
+> +###
+> +#
+> +# Set up is roughly this.  Commits marked 1,2,3,4.  Blobs
+> +# marked 100 + commit.  Notes 200 +.  Make sure missing spaces
+> +# and EOLs after mark references cause errors.
 
-diff --git a/Documentation/gitweb.conf.txt b/Documentation/gitweb.conf.txt
-index 7aba497..bfeef21 100644
---- a/Documentation/gitweb.conf.txt
-+++ b/Documentation/gitweb.conf.txt
-@@ -403,6 +403,9 @@ $default_projects_order::
- 	i.e. path to repository relative to `$projectroot`), "descr"
- 	(project description), "owner", and "age" (by date of most current
- 	commit).
-+
-+$no_list_age::
-+	Omit column with date of the most curren commit
- +
- Default value is "project".  Unknown value means unsorted.
- 
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index a8b5fad..f42468c 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -133,6 +133,9 @@ our $default_projects_order = "project";
- # (only effective if this variable evaluates to true)
- our $export_ok = "++GITWEB_EXPORT_OK++";
- 
-+# don't generate age column
-+our $no_list_age = 0;
-+
- # show repository only if this subroutine returns true
- # when given the path to the project, for example:
- #    sub { return -e "$_[0]/git-daemon-export-ok"; }
-@@ -5462,9 +5465,11 @@ sub git_project_list_rows {
- 		                        : esc_html($pr->{'descr'})) .
- 		      "</td>\n" .
- 		      "<td><i>" . chop_and_escape_str($pr->{'owner'}, 15) . "</i></td>\n";
--		print "<td class=\"". age_class($pr->{'age'}) . "\">" .
--		      (defined $pr->{'age_string'} ? $pr->{'age_string'} : "No commits") . "</td>\n" .
--		      "<td class=\"link\">" .
-+		unless ($no_list_age) {
-+		        print "<td class=\"". age_class($pr->{'age'}) . "\">" .
-+		            (defined $pr->{'age_string'} ? $pr->{'age_string'} : "No commits") . "</td>\n";
-+		}
-+		print"<td class=\"link\">" .
- 		      $cgi->a({-href => href(project=>$pr->{'path'}, action=>"summary")}, "summary")   . " | " .
- 		      $cgi->a({-href => href(project=>$pr->{'path'}, action=>"shortlog")}, "shortlog") . " | " .
- 		      $cgi->a({-href => href(project=>$pr->{'path'}, action=>"log")}, "log") . " | " .
-@@ -5495,7 +5500,8 @@ sub git_project_list_body {
- 	                                 'tagfilter'  => $tagfilter)
- 		if ($tagfilter || $search_regexp);
- 	# fill the rest
--	@projects = fill_project_list_info(\@projects);
-+	my @all_fields = $no_list_age ? ('descr', 'descr_long', 'owner', 'ctags', 'category') : ();
-+	@projects = fill_project_list_info(\@projects, @all_fields);
- 
- 	$order ||= $default_projects_order;
- 	$from = 0 unless defined $from;
-@@ -5527,7 +5533,7 @@ sub git_project_list_body {
- 		print_sort_th('project', $order, 'Project');
- 		print_sort_th('descr', $order, 'Description');
- 		print_sort_th('owner', $order, 'Owner');
--		print_sort_th('age', $order, 'Last Change');
-+		print_sort_th('age', $order, 'Last Change') unless $no_list_age;
- 		print "<th></th>\n" . # for links
- 		      "</tr>\n";
- 	}
--- 
-1.7.10.rc3
+Nit: "Set up" should be "Setup" when it is a noun.
+
+[...]
+> +test_expect_success 'S: add commits 1 and 2, and blob 103' '
+> +	git fast-import --export-marks=marks <input
+> +'
+
+Ok, this one sets up for later ones...
+
+> +
+> +#
+> +# filemodify, three datarefs
+> +#
+> +test_expect_failure 'S: filemodify markref no space' '
+
+What is this testing for?  The ideal is that each test_expect_foo line
+contains a proposition and the test checks whether that proposition is
+true or false.  For example:
+
+	test_expect_failure 'S: filemodify with garbage after mark errors out' '
+
+Likewise in later tests.
+
+> +	test_must_fail git fast-import --import-marks=marks <<-EOF 2>err &&
+> +	commit refs/heads/S
+> +	committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
+> +	data <<COMMIT
+> +	commit N
+> +	COMMIT
+> +	M 100644 :103x hello.c
+> +	EOF
+> +	cat err &&
+> +	grep -q "Missing space after mark" err
+
+Is this using "grep -q" to avoid repeating the same line in the output
+twice?  It seems better to use plain grep or test_i18ngrep.
+
+I'm also worried that if someone wants to change these messages
+(perhaps to make the 'm' in "Missing" lowercase or something), they
+will have to change all of these tests.  If we want to be absolutely
+sure that git detects the right error instead of something else, I
+would suggest
+
+	test_i18ngrep "space after mark" message
+
+I'm also not convinced the error message is worth checking at all ---
+as long as fast-import errors out, won't the frontend author be able
+to look in the logs to find out the problematic line anyway?
+
+> +'
+> +
+> +test_expect_failure 'S: filemodify inline no space' '
+> +	test_must_fail git fast-import --import-marks=marks <<-EOF 2>err &&
+> +	commit refs/heads/S
+> +	committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
+> +	data <<COMMIT
+> +	commit N
+> +	COMMIT
+> +	M 100644 inlineX hello.c
+> +	data <<BLOB
+> +	inline
+> +	BLOB
+> +	EOF
+> +	cat err &&
+> +	grep -q "Missing space after .inline." err
+
+Does this fail because the error message is "Missing space after SHA1"
+instead?  I'm not sure that's actually a bug, unless we want to
+correctly nitpick that the keyword "inline" that is a stand-in for an
+object name is not itself one.
+
+I don't think the tests for exact error messages make too much sense
+without the next patch, so I would suggest leaving them out if this
+patch is supposed to be applicable on its own.
+
+Thanks for some thorough tests.
+
+Hope that helps,
+Jonathan
