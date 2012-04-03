@@ -1,107 +1,103 @@
-From: Florian Achleitner <florian.achleitner2.6.31@gmail.com>
-Subject: Re: GSOC Proposal draft: git-remote-svn
-Date: Tue, 03 Apr 2012 09:49:40 +0200
-Message-ID: <2576556.3d3popQR3z@flomedio>
-References: <11292500.AVmZFUUvNi@flobuntu> <2487557.B8qfnaixh3@flomedio> <20120402205659.GA13725@burratino>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 3/3] revision: insert unsorted, then sort in
+ prepare_revision_walk()
+Date: Tue, 3 Apr 2012 04:40:36 -0400
+Message-ID: <20120403084035.GA14483@sigill.intra.peff.net>
+References: <201203291818.49933.mfick@codeaurora.org>
+ <7v7gy2q1kq.fsf@alter.siamese.dyndns.org>
+ <60bff12d-544c-4fbd-b48a-0fdf44efaded@email.android.com>
+ <20120330093207.GA12298@sigill.intra.peff.net>
+ <20120330094052.GB12298@sigill.intra.peff.net>
+ <4F7780F5.3060306@lsrfire.ath.cx>
+ <20120402201432.GA26503@sigill.intra.peff.net>
+ <4F7A2E0D.9030402@lsrfire.ath.cx>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7Bit
-Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
-	David Barr <davidbarr@google.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Andrew Sayers <andrew-git@pileofstuff.org>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Dmitry Ivankov <divanorama@gmail.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 03 09:50:15 2012
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Martin Fick <mfick@codeaurora.org>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: =?utf-8?B?UmVuw6k=?= Scharfe <rene.scharfe@lsrfire.ath.cx>
+X-From: git-owner@vger.kernel.org Tue Apr 03 10:40:48 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SEyVK-0003ie-Qt
-	for gcvg-git-2@plane.gmane.org; Tue, 03 Apr 2012 09:50:15 +0200
+	id 1SEzIF-00027G-Du
+	for gcvg-git-2@plane.gmane.org; Tue, 03 Apr 2012 10:40:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752866Ab2DCHuH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Apr 2012 03:50:07 -0400
-Received: from mailrelay.tu-graz.ac.at ([129.27.2.202]:28402 "EHLO
-	mailrelay.tugraz.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751333Ab2DCHuF (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Apr 2012 03:50:05 -0400
-Received: from flomedio.localnet (91-115-91-234.adsl.highway.telekom.at [91.115.91.234])
-	(authenticated bits=0)
-	by mailrelay2.tugraz.at (8.14.4/8.14.4) with ESMTP id q337ng8p016510
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Tue, 3 Apr 2012 09:49:42 +0200 (CEST)
-User-Agent: KMail/4.7.3 (Linux/3.0.0-17-generic; KDE/4.7.4; x86_64; ; )
-In-Reply-To: <20120402205659.GA13725@burratino>
-X-TUG-Backscatter-control: qyH/vN2riZ/masrHmZoJqQ
-X-Spam-Scanner: SpamAssassin 3.003000 
-X-Spam-Score-relay: 0.6
-X-Scanned-By: MIMEDefang 2.70 on 129.27.10.19
+	id S1752324Ab2DCIkn convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 3 Apr 2012 04:40:43 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:44072
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751743Ab2DCIkl (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Apr 2012 04:40:41 -0400
+Received: (qmail 27053 invoked by uid 107); 3 Apr 2012 08:40:42 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 03 Apr 2012 04:40:41 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 03 Apr 2012 04:40:36 -0400
+Content-Disposition: inline
+In-Reply-To: <4F7A2E0D.9030402@lsrfire.ath.cx>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194603>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194604>
 
-Hi!
+On Tue, Apr 03, 2012 at 12:54:05AM +0200, Ren=C3=A9 Scharfe wrote:
 
-I'm curiously watching the discussion I kicked off with my proposal. Before 
-refining the proposal I think I will let the discussion continue at the moment.
-But just to clarify some things:
-You know I'm rather new to this topic. I've used svn and git, I know what git 
-plumbing is about, but I haven't used plumbing commands to write something 
-into git yet. So I can't tell from experience if it would be good or not, 
-compared to fast-import.
-So please explain what's the advantage/disadvantage of which design decision.
-That makes it easier to get the point.
+> >   1. Is it worth the complexity of the linked-list mergesort? I was
+> >      planning to just build an array, qsort it, and then put the re=
+sults
+> >      into a linked list. The patch for that is below for reference.
+>
+> Using a temporary array here is just sad, because linked lists are
+> already sortable, albeit not with qsort().  Your measurements seem to
+> answer my question regarding the overhead of the callback functions
+> of mergesort(), in any case. :)
 
-I'm also not yet familiar with svn's internals and what properties they use 
-for what. 
-So there are several questions I simply don't have an answer for.
-I know that you have discussed several issues in a huge lot of mails on this 
-list. I'm watching and learning currently.
+I agree it is a little gross. The main impetus was shortened code, sinc=
+e
+we get qsort for free. However, after reading Simon's page that you
+referenced and reading your code carefully, I'm beginning to think that
+the linked-list mergesort is pretty damn cool (I hadn't seen it before)=
+=2E
+After all, mergesort without the auxiliary space should be better than
+qsort.
 
-Jonathan wrote about a script "floating around". What's that?
-Is it somewhere in a tree in some repo, is at a patch somewhere in a mail on 
-the list, is it in git.git in some branch?? 
-How does one find catch floating scripts?
+So let's go with your patches.
 
-And two clarifications about what I meant in the proposal:
+> [...]
+> It looks nice and to the point, but breaks several tests for me
+> (t3508, t4013, t4041, t4202, t6003, t6009, t6016, t6018 and t7401).
+> Not sure why.
 
-On Monday 02 April 2012 16:30:14 Ramkumar Ramachandra wrote:
-> Are you planning to extend svn-fe to do the mapping, write it as a
-> separate program, or write it into the remote helper? I personally
-> don't mind if the mapping is done in Perl (like in git-svn or SBL) as
-> opposed to C; mapping is just parse-intensive.
+I probably screwed up the reversal or something. My patch was a quick "=
+I
+was thinking of this direction" and I didn't actually test it well.
 
-I personally don't like Perl. :p (I would use python if i need a scripting 
-language).
-As far as I've seen, svn-fe is a 5-liner calling functions in vcs-svn/. So I 
-thought there is no point of piping something through svn-fe in the remote-
-helper. I thought I would use those functions like svn-fe does.
-I thought about vcs-svn/ being a library for svn interaction that the remote-
-helper, and svn-fe, and svn-fi (?) are using.
+> >      So I wonder if in the long term we would benefit from a better=
+ data
+> >      structure, which would make these problems just go away. That =
+being
+> >      said, there is a lot of code to be updated with such a change,=
+ so
+> >      even if we do want to do that eventually, a quick fix like thi=
+s is
+> >      probably still a good thing.
+>=20
+> Using a more appropriate data structure sounds good in general. How
+> about using a skip list?  (Or perhaps I need to lay the hammer of
+> linked lists to rest for a while to stop seeing all data structures
+> as the proverbial nails, or something. ;-)
 
-On Monday 02 April 2012 15:57:00 Jonathan Nieder wrote:
-> Florian Achleitner wrote:
-> Because of the above:
-> > 1. Write a new bi-directional remote helper in C.
-> 
-> The word "new" makes me worried that you'd be throwing away whatever
-> work already exists. :)
+Actually, I think a skip list would make a lot of sense, as it mostly
+retains the linked-list properties. When I tried converting it to a
+heap-based priority queue, I seem to recall that there were some spots
+that wanted to splice the commit list (among other things). Although I'=
+m
+not sure how splicing works in a skip list; I guess you'd have to do a
+list merge.
 
-Probably I missed something. 
-But all I've seen that is directly a remote-helper is a bash script which 
-basically calls a pipeline from svnrdump | svn-fe | fast-import [2]. 
-I'm not planning to write a longer program in bash. (I personally use bash 
-only for things that fit on one terminal height).
-
-Bash and Perl are not my favourites ;)
-
-[1] https://github.com/divanorama/git/blob/remote-svn-alpha_v2/contrib/svn-
-fe/git-remote-svn-alpha
-
-Cheers,
-Florian
+-Peff
