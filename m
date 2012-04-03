@@ -1,76 +1,67 @@
-From: Holger Hellmuth <hellmuth@ira.uka.de>
-Subject: Re: How to create empty CENTRAL  git with master / development branch
- ?
-Date: Tue, 03 Apr 2012 16:54:19 +0200
-Message-ID: <4F7B0F1B.3000304@ira.uka.de>
+From: Tomas Carnecky <tomas.carnecky@gmail.com>
+Subject: Re: How to create empty CENTRAL  git with master / development
+ branch ?
+Date: Tue, 03 Apr 2012 15:22:22 +0000
+Message-ID: <1333466542-ner-2699@calvin>
 References: <20120403162352.67cb165e@shiva.selfip.org>
+	<4F7B0F1B.3000304@ira.uka.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 Cc: git@vger.kernel.org
-To: "J. Bakshi" <joydeep.bakshi@infoservices.in>
-X-From: git-owner@vger.kernel.org Tue Apr 03 16:53:48 2012
+To: Holger Hellmuth <hellmuth@ira.uka.de>,
+	"J. Bakshi" <joydeep.bakshi@infoservices.in>
+X-From: git-owner@vger.kernel.org Tue Apr 03 17:22:54 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SF57C-0001Ko-7a
-	for gcvg-git-2@plane.gmane.org; Tue, 03 Apr 2012 16:53:46 +0200
+	id 1SF5ZO-0006B4-BV
+	for gcvg-git-2@plane.gmane.org; Tue, 03 Apr 2012 17:22:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753401Ab2DCOxl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Apr 2012 10:53:41 -0400
-Received: from iramx2.ira.uni-karlsruhe.de ([141.3.10.81]:33880 "EHLO
-	iramx2.ira.uni-karlsruhe.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753206Ab2DCOxk (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 3 Apr 2012 10:53:40 -0400
-Received: from irams1.ira.uni-karlsruhe.de ([141.3.10.5])
-	by iramx2.ira.uni-karlsruhe.de with esmtps port 25 
-	id 1SF570-0005KW-NF; Tue, 03 Apr 2012 16:53:39 +0200
-Received: from i20s141.iaks.uni-karlsruhe.de ([141.3.32.141] helo=[172.16.22.120])
-	by irams1.ira.uni-karlsruhe.de with esmtpsa port 25 
-	id 1SF570-0003Cy-Hm; Tue, 03 Apr 2012 16:53:34 +0200
-User-Agent: Mozilla/5.0 (X11; U; Linux i686 (x86_64); en-US; rv:1.9.2.24) Gecko/20111101 SUSE/3.1.16 Thunderbird/3.1.16
-In-Reply-To: <20120403162352.67cb165e@shiva.selfip.org>
-X-ATIS-AV: ClamAV (irams1.ira.uni-karlsruhe.de)
-X-ATIS-AV: ClamAV (iramx2.ira.uni-karlsruhe.de)
-X-ATIS-AV: Kaspersky (iramx2.ira.uni-karlsruhe.de)
-X-ATIS-Timestamp: iramx2.ira.uni-karlsruhe.de 1333464819.721759000
+	id S1752927Ab2DCPWs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Apr 2012 11:22:48 -0400
+Received: from mail-wg0-f44.google.com ([74.125.82.44]:63506 "EHLO
+	mail-wg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751413Ab2DCPWr (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Apr 2012 11:22:47 -0400
+Received: by wgbdr13 with SMTP id dr13so3851405wgb.1
+        for <git@vger.kernel.org>; Tue, 03 Apr 2012 08:22:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:subject:to:cc:references:in-reply-to:mime-version:date
+         :message-id:content-type;
+        bh=gG1KHxuk0AgkKfiR0g0LIU3mBi+FF5blk0+StFDycJc=;
+        b=A8J7EeoT+MvKW3g9WtQLoExnS8HhijkjlsSZRh6T7J79TLd9qj3j2tSvrkYnkl81+U
+         4fxrCCyTm78bXmmOsowizUKDt9ZYOAbZE5k1NO1Bd1OGnFCHgVnqGHkSMzjIUv8CUqd6
+         V3a9lYfJO27As2UhEi5SqW/Mi45o2ml4pWhwdZRFLEDHN/+V6356GloXvHckJ3BkYsxF
+         vmpXckgaSVqIcanSGDGuf50nHvO6k9Es0MsMZkupPT4XgoKdjxMoDmp2guVuO+XD0RRu
+         Wv0ONNL+/RbWwjZoJhKM/MebWL3r8mwyI5zFSqqtsCqg4ZKdKOrtBu12wfkkB0tjxj4J
+         YWjw==
+Received: by 10.180.91.168 with SMTP id cf8mr37052561wib.0.1333466566530;
+        Tue, 03 Apr 2012 08:22:46 -0700 (PDT)
+Received: from calvin.caurea.org (62-2-168-230.static.cablecom.ch. [62.2.168.230])
+        by mx.google.com with ESMTPS id j3sm70674494wiw.1.2012.04.03.08.22.44
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Tue, 03 Apr 2012 08:22:44 -0700 (PDT)
+Received: by calvin.caurea.org (Postfix, from userid 3301)
+	id C6241192CD4; Tue,  3 Apr 2012 15:22:22 +0000 (UTC)
+In-Reply-To: <4F7B0F1B.3000304@ira.uka.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194628>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194629>
 
-On 03.04.2012 12:53, J. Bakshi wrote:
-> Dear list,
->
-> I need to create git repos on a remote server by the command executed on that server
-> through ssh as
->
-> ` ` ` ` `
-> git --bare init project_name.git
+On Tue, 03 Apr 2012 16:54:19 +0200, Holger Hellmuth <hellmuth@ira.uka.de> wrote:
+> Generally: If you want a central repository, the first one to push to it 
+> might do something like this:
+> 
+> git remote add origin ssh://big.brother.edu/repo.git
+> git push origin master
+> git config branch.master.remote origin
+> git config branch.master.merge refs/heads/master
 
-you probably meant "git init --bare project_name.git"
+or simply: git push -u origin master
 
-> How can I also add the master branch, so that users don't need to
-> execute  [ git push origin master ]  ?
-
-What else do you want them to execute? "git init --bare" creates an 
-empty repository. Without pushing to it it will always stay empty
-
-Generally: If you want a central repository, the first one to push to it 
-might do something like this:
-
-git remote add origin ssh://big.brother.edu/repo.git
-git push origin master
-git config branch.master.remote origin
-git config branch.master.merge refs/heads/master
-
-Everyone else could do
-
-git clone ssh://big.brother.edu/repo.git
-
-Now everyone will push to the repository master when they do "git push".
-
-Is that what you wanted to know?
+tom
