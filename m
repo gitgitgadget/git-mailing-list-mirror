@@ -1,97 +1,116 @@
-From: Neal Kreitzinger <nkreitzinger@gmail.com>
-Subject: Re: query: picking dependant commits from a latest tree
-Date: Tue, 03 Apr 2012 11:55:27 -0500
-Message-ID: <4F7B2B7F.8050308@gmail.com>
-References: <20120327095504.GM1806@localhost.localdomain> <4F75DF56.10902@gmail.com> <20120403040001.GQ1766@localhost.localdomain>
+From: Adam Monsen <haircut@gmail.com>
+Subject: Re: [PATCH 0/3] "commit --template" fixes
+Date: Tue, 03 Apr 2012 10:11:17 -0700
+Message-ID: <4F7B2F35.40807@gmail.com>
+References: <7vaa2ylzrm.fsf@alter.siamese.dyndns.org> <1333136719-12657-1-git-send-email-gitster@pobox.com> <4F775ACF.50007@gmail.com> <7vaa2vhyso.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	spear-devel <spear-devel@list.st.com>
-To: Shiraz Hashim <shiraz.hashim@st.com>
-X-From: git-owner@vger.kernel.org Tue Apr 03 18:55:42 2012
+Cc: git@vger.kernel.org, Ivan Heffner <iheffner@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Apr 03 19:11:27 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SF715-0005Vn-3r
-	for gcvg-git-2@plane.gmane.org; Tue, 03 Apr 2012 18:55:35 +0200
+	id 1SF7GR-000060-D3
+	for gcvg-git-2@plane.gmane.org; Tue, 03 Apr 2012 19:11:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754797Ab2DCQza (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Apr 2012 12:55:30 -0400
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:65377 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753502Ab2DCQz3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Apr 2012 12:55:29 -0400
-Received: by yenl12 with SMTP id l12so1895492yen.19
-        for <git@vger.kernel.org>; Tue, 03 Apr 2012 09:55:29 -0700 (PDT)
+	id S1753890Ab2DCRLX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Apr 2012 13:11:23 -0400
+Received: from mail-qc0-f174.google.com ([209.85.216.174]:39824 "EHLO
+	mail-qc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753001Ab2DCRLV (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Apr 2012 13:11:21 -0400
+Received: by qcro28 with SMTP id o28so1008092qcr.19
+        for <git@vger.kernel.org>; Tue, 03 Apr 2012 10:11:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=kNsIoVUDhvdmDWwf0Rz2sdxeqyOYJ1EBJJn1X5Qzz5c=;
-        b=c/zKgMojZs1nmeTkm7Hw0uX5IJotGL2OdxM6AKA+qQUcWKkzlEMg9ceTttydhIO4pG
-         CJ40z7k8EN1bqTOhhVVT3O700f/t9Z2vHuEtb2YJjk4syyqy3AaryZZECy1T0UEn9OVa
-         ZcV/FS0RohTIZZksbL0nZoeu/Hldnic8VRDJ0yqq4FzP+63sNyzNQfAyUJ7jB1YHO3SV
-         u8+GPGIuQOUopjHI9HQ4WSnhmi+9gOfGClt6udNf0PvOHPnjdNY4TkvqUvmtl64H+tYl
-         9vLYHVJ3uzmGyDAB4UDyxLWs5tGSON+5VnYsE2m6Sx5mcJBWX0CctDAC5zrFn+33iSQK
-         q21A==
-Received: by 10.60.32.210 with SMTP id l18mr19919559oei.1.1333472129032;
-        Tue, 03 Apr 2012 09:55:29 -0700 (PDT)
-Received: from [172.25.2.210] ([67.63.162.200])
-        by mx.google.com with ESMTPS id t5sm17280552oef.10.2012.04.03.09.55.27
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 03 Apr 2012 09:55:28 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.2.28) Gecko/20120306 Thunderbird/3.1.20
-In-Reply-To: <20120403040001.GQ1766@localhost.localdomain>
+         :references:in-reply-to:x-enigmail-version:content-type
+         :content-transfer-encoding;
+        bh=Q4ecbWy1CdHb6sVyHT2GZZtnBaTNDutvTG0lLPT8Uac=;
+        b=0N9eByYgRw+G1OJopoLfudRAX/mXRO5JHNmsh1VGxwYnqwoJNwD9qGYPpLuQ6Ty19j
+         kVt25arIhYUzWOfgZOLqNZ6PLakF5g0OR7Aem/VTv7FsPL9z9Gsd9M+waPoQZVWXm9Qr
+         GFfCupFpcVkXopp9RxMPTHQd/bgQSGvMBDLu2tomXZfYgb4B53CU8gpwdRS+olMzAPt6
+         wUJWqi3yA4Wv/HLE//Oz0U3doml0KF6M3aOUY982MFnGGnvO/OA6Z+x0Ez8PyM3gSl1K
+         +p3MfjgkO9VIy5No0+X7bRqccq6jfVYgvmujNxEQ8yc2fViXlEgEUBgGXfx6u7eZP+i3
+         rksw==
+Received: by 10.229.111.66 with SMTP id r2mr5410542qcp.140.1333473080136;
+        Tue, 03 Apr 2012 10:11:20 -0700 (PDT)
+Received: from [192.168.13.92] (c-67-183-137-177.hsd1.wa.comcast.net. [67.183.137.177])
+        by mx.google.com with ESMTPS id 1sm40517212qac.3.2012.04.03.10.11.18
+        (version=SSLv3 cipher=OTHER);
+        Tue, 03 Apr 2012 10:11:19 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:11.0) Gecko/20120310 Thunderbird/11.0
+In-Reply-To: <7vaa2vhyso.fsf@alter.siamese.dyndns.org>
+X-Enigmail-Version: 1.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194632>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194633>
 
-On 4/2/2012 11:00 PM, Shiraz Hashim wrote:
-> On Sat, Mar 31, 2012 at 12:29:10AM +0800, Neal Kreitzinger wrote:
->> On 3/27/2012 4:55 AM, Shiraz Hashim wrote:
->>> If I try to pick commits from a latest tree for a particular feature
->>> then what is the best way to find out all dependant commits.
->>>
->>> So for example for the commit which I want to pick there are 10 other
->>> commits around that file but some affect other files which themselves
->>> have several commits which I must apply.
->>>
->>> Is their a way to do this efficiently ?
->>>
->> You're assuming all dependencies reside in the same commits or in common
->> files.  If the changes in a commit are dependent on the previous commit
->> and they do not share any of the same files then what you are proposing
->> is not going to catch that.
-> You are right, but this would perhaps be caught during tests. But in
-> the first place how can I find dependent commits to pass build test.
->
-Theoretically, all the ancestors of a commit are dependencies.  When you 
-cherry-pick you run the risk of not getting dependencies.  That will be 
-up to you to figure out.  Different software has different dependency 
-scenarios.  IMO, you will analyze what yours specifically are and then 
-perhaps submit more specific examples to the newsgroup.  There are many 
-possibilities.
+On 04/01/2012 03:28 PM, Junio C Hamano wrote:
+> One established way to do this is to have a discussion like the above
+> (mostly elided), followed by a "scissors" line...
 
-Just one example is that you would have to write a script that scans 
-your all programs in your commit for called programs and then 
-interrogates history to see of any of the called programs were changed 
-in other commits.  Of course you would have to repeat that and it could 
-be quite extensive.  You would also have to git-grep repo history for 
-all callers of programs changed in your commit.  Of course you would 
-have to repeat that and it could be quite extensive.  Git is not going 
-to do this for you.  You can use git to do powerful interrogations to 
-aid you in this.  Even after all of that, someone has to review the 
-results and make judgement calls on which dependencies matter and which 
-ones don't.  This is where your own knowledge or that of senior 
-(system-wise) people has to make judgement calls.  Human knowledge of 
-your software is the best first approach at assessing commit 
-dependencies, and then supplement it with git interrogations if you have 
-any remaining questions or doubts.
+I can do that. Thanks!
 
-v/r,
-neal
+> When rewording or clarifying only a handful of words in the documentation,
+> it is often better to avoid reflowing lines in the same patch.
+
+I thought of that, but it made the right margin jagged. :)
+My new suggestion (below) isolates the changes a bit better.
+
+> This is a tangent, but we might want to rephrase the first sentence
+> without using the word "version"; every time I read this paragraph, the
+> "initial version" makes me go "Huh?" because the word sounds as if it is
+> talking about commits in the context of SCM, which is not the case here.
+
+Yeah, that bugs me too.
+
+How about this? I'm a little bummed it doesn't include why
+commit --template exists at all, but it reads well: terse and to the
+point like (IMHO) a manpage should.
+
+-- >8 --
+Subject: [PATCH v4] git-commit.txt: clarify -t requires editing message
+
+Make it clear that, when using commit --template, the message *must* be
+changed or the commit will be aborted.
+
+Also, remove the words "initial version" to avoid confusion. Commit
+messages are not versioned independently of commits.
+
+Helped-by: Junio C Hamano <gitster@pobox.com>
+Helped-by: Ivan Heffner <iheffner@gmail.com>
+Signed-off-by: Adam Monsen <haircut@gmail.com>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+Replaces b0ad5e27803cd of jc/commit-unedited-template. I'm assuming that's ok
+since the branch isn't merged into maint or master.
+
+ Documentation/git-commit.txt |    6 +++---
+ 1 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
+index 5cc84a1..bd82431 100644
+--- a/Documentation/git-commit.txt
++++ b/Documentation/git-commit.txt
+@@ -132,9 +132,9 @@ OPTIONS
+ 
+ -t <file>::
+ --template=<file>::
+-	Use the contents of the given file as the initial version
+-	of the commit message. The editor is invoked and you can
+-	make subsequent changes. If a message is specified using
++	Use the contents of the given file as the commit message. The
++	editor is invoked so you can make subsequent changes. If you make no
++	changes, the commit is aborted. If a message is specified using
+ 	the `-m` or `-F` options, this option has no effect. This
+ 	overrides the `commit.template` configuration variable.
+ 
+-- 
+1.7.5.4
