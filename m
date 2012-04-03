@@ -1,67 +1,72 @@
-From: Tomas Carnecky <tomas.carnecky@gmail.com>
-Subject: Re: How to create empty CENTRAL  git with master / development
- branch ?
-Date: Tue, 03 Apr 2012 15:22:22 +0000
-Message-ID: <1333466542-ner-2699@calvin>
-References: <20120403162352.67cb165e@shiva.selfip.org>
-	<4F7B0F1B.3000304@ira.uka.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: gitk: Failure of new tabbed preferences dialog
+Date: Tue, 03 Apr 2012 09:53:29 -0700
+Message-ID: <7vaa2sdaeu.fsf@alter.siamese.dyndns.org>
+References: <4F749C71.7050201@ramsay1.demon.co.uk>
+ <1333317652-1464-1-git-send-email-patthoyts@users.sourceforge.net>
+ <7vty12gl8r.fsf@alter.siamese.dyndns.org>
+ <20120403121944.GC24141@bloggs.ozlabs.ibm.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Holger Hellmuth <hellmuth@ira.uka.de>,
-	"J. Bakshi" <joydeep.bakshi@infoservices.in>
-X-From: git-owner@vger.kernel.org Tue Apr 03 17:22:54 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Pat Thoyts <patthoyts@users.sourceforge.net>, git@vger.kernel.org,
+	Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+To: Paul Mackerras <paulus@samba.org>
+X-From: git-owner@vger.kernel.org Tue Apr 03 18:53:39 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SF5ZO-0006B4-BV
-	for gcvg-git-2@plane.gmane.org; Tue, 03 Apr 2012 17:22:54 +0200
+	id 1SF6zB-00048e-KO
+	for gcvg-git-2@plane.gmane.org; Tue, 03 Apr 2012 18:53:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752927Ab2DCPWs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Apr 2012 11:22:48 -0400
-Received: from mail-wg0-f44.google.com ([74.125.82.44]:63506 "EHLO
-	mail-wg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751413Ab2DCPWr (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Apr 2012 11:22:47 -0400
-Received: by wgbdr13 with SMTP id dr13so3851405wgb.1
-        for <git@vger.kernel.org>; Tue, 03 Apr 2012 08:22:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:subject:to:cc:references:in-reply-to:mime-version:date
-         :message-id:content-type;
-        bh=gG1KHxuk0AgkKfiR0g0LIU3mBi+FF5blk0+StFDycJc=;
-        b=A8J7EeoT+MvKW3g9WtQLoExnS8HhijkjlsSZRh6T7J79TLd9qj3j2tSvrkYnkl81+U
-         4fxrCCyTm78bXmmOsowizUKDt9ZYOAbZE5k1NO1Bd1OGnFCHgVnqGHkSMzjIUv8CUqd6
-         V3a9lYfJO27As2UhEi5SqW/Mi45o2ml4pWhwdZRFLEDHN/+V6356GloXvHckJ3BkYsxF
-         vmpXckgaSVqIcanSGDGuf50nHvO6k9Es0MsMZkupPT4XgoKdjxMoDmp2guVuO+XD0RRu
-         Wv0ONNL+/RbWwjZoJhKM/MebWL3r8mwyI5zFSqqtsCqg4ZKdKOrtBu12wfkkB0tjxj4J
-         YWjw==
-Received: by 10.180.91.168 with SMTP id cf8mr37052561wib.0.1333466566530;
-        Tue, 03 Apr 2012 08:22:46 -0700 (PDT)
-Received: from calvin.caurea.org (62-2-168-230.static.cablecom.ch. [62.2.168.230])
-        by mx.google.com with ESMTPS id j3sm70674494wiw.1.2012.04.03.08.22.44
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 03 Apr 2012 08:22:44 -0700 (PDT)
-Received: by calvin.caurea.org (Postfix, from userid 3301)
-	id C6241192CD4; Tue,  3 Apr 2012 15:22:22 +0000 (UTC)
-In-Reply-To: <4F7B0F1B.3000304@ira.uka.de>
+	id S1754056Ab2DCQxd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Apr 2012 12:53:33 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:34905 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753846Ab2DCQxc (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Apr 2012 12:53:32 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6295D6A1B;
+	Tue,  3 Apr 2012 12:53:31 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=rPPMcMHRc5hluW7WH5Mc3GFeFz0=; b=dAGYoj
+	2Gpdy/3k5D7LqSZzSfclqu+o4zEDpMmkH4GEajuTpvDqVE24nYR6ZwIG4FUJBYNd
+	pm+5GclJStCvQ6x1LaK3/gBWf/n2w0DqbFRHKNTWmoCCV9u8M9xLcfozUFsMw6pl
+	JTTf/dtTmXZy588+ipNrAeytV90SxeWzBdXhY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=whFrsqR1kcPY57Q3QEw+VBno2PVr517h
+	kVQtpamOt3Ui4KLVM/+035mzvhp0WXAxBqjtgfHcAeBbgCRVorVSoiE0oq0VGKwL
+	ky03ansbJ9fpfti7Q/Hwpg+mPoUHJd+FQs/H5PvEiI8shn4lmF1B5ysO29SYS3NX
+	jBUtfuwvvco=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5A4986A1A;
+	Tue,  3 Apr 2012 12:53:31 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E4EA96A17; Tue,  3 Apr 2012
+ 12:53:30 -0400 (EDT)
+In-Reply-To: <20120403121944.GC24141@bloggs.ozlabs.ibm.com> (Paul Mackerras's
+ message of "Tue, 3 Apr 2012 22:19:45 +1000")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 8ACF8896-7DAD-11E1-A452-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194629>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194631>
 
-On Tue, 03 Apr 2012 16:54:19 +0200, Holger Hellmuth <hellmuth@ira.uka.de> wrote:
-> Generally: If you want a central repository, the first one to push to it 
-> might do something like this:
-> 
-> git remote add origin ssh://big.brother.edu/repo.git
-> git push origin master
-> git config branch.master.remote origin
-> git config branch.master.merge refs/heads/master
+Paul Mackerras <paulus@samba.org> writes:
 
-or simply: git push -u origin master
+> On Mon, Apr 02, 2012 at 09:19:00AM -0700, Junio C Hamano wrote:
+>> 
+>> This seems severe enough that we should put it in the coming release.
+>> I can queue them directory to gitk tree (and later ask Paul to pull it
+>> from me), and merge the result to expedite the roundtrip.
+>
+> OK; the patches look fine to me.  If that's what you're doing, I won't
+> apply them to my tree, to avoid duplication.
 
-tom
+Thanks.
