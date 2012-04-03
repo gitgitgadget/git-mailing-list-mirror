@@ -1,193 +1,107 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] gitweb: Option to omit column with time of the last change
-Date: Wed, 4 Apr 2012 01:12:01 +0200
-Message-ID: <201204040112.02269.jnareb@gmail.com>
-References: <20120403132735.GA12389@camk.edu.pl>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: push.default: current vs upstream
+Date: Tue, 03 Apr 2012 16:23:47 -0700
+Message-ID: <7vk41wbdrw.fsf@alter.siamese.dyndns.org>
+References: <7vd37wv77j.fsf@alter.siamese.dyndns.org>
+ <20120329095236.GA11911@sigill.intra.peff.net>
+ <7vbonfqezs.fsf@alter.siamese.dyndns.org>
+ <20120329221154.GA1413@sigill.intra.peff.net>
+ <7vfwcqq2dw.fsf@alter.siamese.dyndns.org>
+ <20120330071358.GB30656@sigill.intra.peff.net>
+ <7vlimhk7rz.fsf@alter.siamese.dyndns.org>
+ <20120403205906.GB24815@sigill.intra.peff.net>
+ <7vsjgkbga9.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-2"
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Kacper Kornet <draenog@pld-linux.org>
-X-From: git-owner@vger.kernel.org Wed Apr 04 01:12:11 2012
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Apr 04 01:23:56 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SFCtW-0001Lc-3B
-	for gcvg-git-2@plane.gmane.org; Wed, 04 Apr 2012 01:12:10 +0200
+	id 1SFD4t-0008Un-Sq
+	for gcvg-git-2@plane.gmane.org; Wed, 04 Apr 2012 01:23:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754958Ab2DCXMF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Apr 2012 19:12:05 -0400
-Received: from mail-wi0-f178.google.com ([209.85.212.178]:58228 "EHLO
-	mail-wi0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754818Ab2DCXMD (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Apr 2012 19:12:03 -0400
-Received: by wibhq7 with SMTP id hq7so195124wib.1
-        for <git@vger.kernel.org>; Tue, 03 Apr 2012 16:12:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        bh=4nPqsFlMlc5S85pPsy8TmYotvNXM1q0icbIPdgOjNrY=;
-        b=xJ6NfHYmetyNF1zozEqwRhm67Qp/wQnYRcKYtQ8+RU6iJp4Idqq3Nmj7g/FQlhbBIk
-         7PVo2X80LO1JnMREDkq5UsoM27flJ2FGRxqaeDMdqBUdABJmG5qblFbK9EpmKSNIAgEe
-         HPmwacO0aVILKd4SxzT/Aa8EfzF8H9e2WtNYmxw9tFsFiXmhR+mHC5znMQeranKj38x4
-         Rkx9wBYirLw0Pxy1LzAyPVNHDlTSH4oNV7D4M8VPuqBhV4K3vjfayiyrRA/uUK4kAqMv
-         vYemRTDSJakJk4YZWQ8wlUfZeHnVVKE0KwnboiAU6Y52/RMtP2VLQX/jb0hMlqfG7cLT
-         3xqQ==
-Received: by 10.180.104.137 with SMTP id ge9mr41010501wib.20.1333494721834;
-        Tue, 03 Apr 2012 16:12:01 -0700 (PDT)
-Received: from [192.168.1.13] (epp57.neoplus.adsl.tpnet.pl. [83.20.57.57])
-        by mx.google.com with ESMTPS id n15sm46658030wiw.6.2012.04.03.16.12.00
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 03 Apr 2012 16:12:01 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <20120403132735.GA12389@camk.edu.pl>
-Content-Disposition: inline
+	id S1755151Ab2DCXXu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Apr 2012 19:23:50 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:36363 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754548Ab2DCXXu (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Apr 2012 19:23:50 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 145E9669B;
+	Tue,  3 Apr 2012 19:23:49 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=LddYaDdoln2IzGELbQE68JcGovg=; b=x6aJwM
+	gkkwfiLRTMeviqXzYAIUqL1efea78HCbVKsDt0wCzgFSq0IGjIKp0cDbGp0RQfRK
+	+yTBDNFG5lINS3wkdkilScT+0JzgDXrDpYGxQXXF4QofcEAZBjPxiunXvfZJitRt
+	uQOrhqBtY2Uf07Zci1jmDW8i5jiuVmhxd9uMQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=d6CAI7GdF2iT3vgjNCvUABOIY+j8DwDy
+	chV3JDJE9Kzcj91PE4qWkxNQUoO0hNola+MAL7fWEPQWZtlryxkuFzAadgrChLEG
+	FoJw/BtdHWhnPzu7rPPa03c77ZFqxsOtmwrzr2YSeKyheHEZw6HbFmqijJ3sNXiA
+	lpktqPjiMTc=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0BADD669A;
+	Tue,  3 Apr 2012 19:23:49 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 943FA6699; Tue,  3 Apr 2012
+ 19:23:48 -0400 (EDT)
+In-Reply-To: <7vsjgkbga9.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Tue, 03 Apr 2012 15:29:34 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 10D426D2-7DE4-11E1-BCE9-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194671>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194672>
 
-On Tue, 3 Apr 2012, Kacper Kornet wrote:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> Generating information about last change for a large number of git
-> repositories can be time consuming. This commit adds an option to
-> omit 'Last Change' column when presenting the list of repositories.
+> Jeff King <peff@peff.net> writes:
+> ...
+>> Hmm. So this will actually detect "git push $URL" when $URL matches the
+>> remote's configured URL. I feel like this distinction has come up
+>> before, and we decided not to equate the two. But now I can't remember
+>> where (maybe it when fetching via URL versus via remote?).
 >
-This is quite a good idea, I think.
+> This is me merely try to be extra nice without succeeding.
 
-Even a better solution would be to add caching support to gitweb, but
-first it is a long way from being ready, and second not in all cases
-you are able to / wants to have a cache.
+An obvious patch to remove the misguided "be nice and try to see if URLs
+are the same" bit should look like this.
+
+ builtin/push.c |   15 ++++-----------
+ 1 file changed, 4 insertions(+), 11 deletions(-)
+
+diff --git a/builtin/push.c b/builtin/push.c
+index 3e18cd3..765b19c 100644
+--- a/builtin/push.c
++++ b/builtin/push.c
+@@ -97,17 +97,10 @@ static void setup_push_upstream(struct remote *remote)
+ 	if (branch->merge_nr != 1)
+ 		die(_("The current branch %s has multiple upstream branches, "
+ 		    "refusing to push."), branch->name);
+-	if (strcmp(branch->remote_name, remote->name)) {
+-		struct remote *branch_dest = remote_get(branch->remote_name);
+-		const char **branch_dest_url, **dest_url;
+-
+-		if (!push_url_of_remote(remote, &dest_url) ||
+-		    !push_url_of_remote(branch_dest, &branch_dest_url) ||
+-		    strcmp(dest_url[0], branch_dest_url[0]))
+-			die(_("You are pushing to remote '%s', which is not the "
+-			      "upstream of your\ncurrent branch '%s'.\n"),
+-			    remote->name, branch->name);
+-	}
++	if (strcmp(branch->remote_name, remote->name))
++		die(_("You are pushing to remote '%s', which is not the "
++		      "upstream of your\ncurrent branch '%s'.\n"),
++		    remote->name, branch->name);
  
-> Signed-off-by: Kacper Kornet <draenog@pld-linux.org>
-> ---
->  Documentation/gitweb.conf.txt |    3 +++
->  gitweb/gitweb.perl            |   16 +++++++++++-----
->  2 files changed, 14 insertions(+), 5 deletions(-)
-> 
-> diff --git a/Documentation/gitweb.conf.txt b/Documentation/gitweb.conf.txt
-> index 7aba497..bfeef21 100644
-> --- a/Documentation/gitweb.conf.txt
-> +++ b/Documentation/gitweb.conf.txt
-> @@ -403,6 +403,9 @@ $default_projects_order::
->  	i.e. path to repository relative to `$projectroot`), "descr"
->  	(project description), "owner", and "age" (by date of most current
->  	commit).
-> +
-> +$no_list_age::
-> +	Omit column with date of the most curren commit
-
-s/curren/current/
-
-Thanks for adding documentation, though I would prefer if you expanded
-this description (for example including the information that it touches
-projects list page).
-
->  +
-
-This '+' here means "continuation".  You by accident inserted
-description of new $no_list_age in the middle of description for
-$default_projects_order variable...
-
->  Default value is "project".  Unknown value means unsorted.
-
-...as you can see here.
-
->  
-> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-> index a8b5fad..f42468c 100755
-> --- a/gitweb/gitweb.perl
-> +++ b/gitweb/gitweb.perl
-> @@ -133,6 +133,9 @@ our $default_projects_order = "project";
->  # (only effective if this variable evaluates to true)
->  our $export_ok = "++GITWEB_EXPORT_OK++";
->  
-> +# don't generate age column
-> +our $no_list_age = 0;
-
-"age" column where?
-
-Hmmm... can't we come with a better name than $no_list_age?
-
-> +
->  # show repository only if this subroutine returns true
->  # when given the path to the project, for example:
->  #    sub { return -e "$_[0]/git-daemon-export-ok"; }
-> @@ -5462,9 +5465,11 @@ sub git_project_list_rows {
->  		                        : esc_html($pr->{'descr'})) .
->  		      "</td>\n" .
->  		      "<td><i>" . chop_and_escape_str($pr->{'owner'}, 15) . "</i></td>\n";
-> -		print "<td class=\"". age_class($pr->{'age'}) . "\">" .
-> -		      (defined $pr->{'age_string'} ? $pr->{'age_string'} : "No commits") . "</td>\n" .
-> -		      "<td class=\"link\">" .
-> +		unless ($no_list_age) {
-> +		        print "<td class=\"". age_class($pr->{'age'}) . "\">" .
-> +		            (defined $pr->{'age_string'} ? $pr->{'age_string'} : "No commits") . "</td>\n";
-> +		}
-> +		print"<td class=\"link\">" .
-
-O.K.  I guess that it ismore readable than
-
-  +		print "<td class=\"". age_class($pr->{'age'}) . "\">" .
-  +		      (defined $pr->{'age_string'} ? $pr->{'age_string'} : "No commits") . "</td>\n" .
-  +		      "<td class=\"link\">"
-  +			unless ($no_list_age);
-
->  		      $cgi->a({-href => href(project=>$pr->{'path'}, action=>"summary")}, "summary")   . " | " .
->  		      $cgi->a({-href => href(project=>$pr->{'path'}, action=>"shortlog")}, "shortlog") . " | " .
->  		      $cgi->a({-href => href(project=>$pr->{'path'}, action=>"log")}, "log") . " | " .
-> @@ -5495,7 +5500,8 @@ sub git_project_list_body {
->  	                                 'tagfilter'  => $tagfilter)
->  		if ($tagfilter || $search_regexp);
->  	# fill the rest
-> -	@projects = fill_project_list_info(\@projects);
-> +	my @all_fields = $no_list_age ? ('descr', 'descr_long', 'owner', 'ctags', 'category') : ();
-> +	@projects = fill_project_list_info(\@projects, @all_fields);
-
-That looks quite strange on first glance.  I know that empty list means
-filling all fields, but the casual reader migh wonder about this
-conditional expression.
-
-Perhaps it would be better to write it this way:
-
-  -	@projects = fill_project_list_info(\@projects);
-  +	my @fields = qw(descr descr_long owner ctags category);
-  +	push @fields, 'age' unless ($no_list_age);
-  +	@projects = fill_project_list_info(\@projects, @fields);
-
-or something like that.
-
-Well, at least until we come up with a better way to specify "all fields
-except those specified".
-
->  
->  	$order ||= $default_projects_order;
->  	$from = 0 unless defined $from;
-> @@ -5527,7 +5533,7 @@ sub git_project_list_body {
->  		print_sort_th('project', $order, 'Project');
->  		print_sort_th('descr', $order, 'Description');
->  		print_sort_th('owner', $order, 'Owner');
-> -		print_sort_th('age', $order, 'Last Change');
-> +		print_sort_th('age', $order, 'Last Change') unless $no_list_age;
-
-  +		print_sort_th('age', $order, 'Last Change')
-  +			unless $no_list_age;
-
-might be more readable.
-
->  		print "<th></th>\n" . # for links
->  		      "</tr>\n";
->  	}
-> -- 
-> 1.7.10.rc3
-> 
-
--- 
-Jakub Narebski
-Poland
+ 	strbuf_addf(&refspec, "%s:%s", branch->name, branch->merge[0]->src);
+ 	add_refspec(refspec.buf);
