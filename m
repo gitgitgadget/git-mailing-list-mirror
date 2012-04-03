@@ -1,87 +1,104 @@
-From: Andrew Wong <andrew.w@sohovfx.com>
-Subject: Re: [PATCH] rebase -i: remove CHERRY_PICK_HEAD when cherry-pick failed
-Date: Tue, 03 Apr 2012 17:01:00 -0400
-Message-ID: <4F7B650C.9060800@sohovfx.com>
-References: <CAMP44s1EAwHjQ7S2ArLvhNg5qkR05DRJ70tQmP8sXYdOP=i_zQ@mail.gmail.com> <1332106632-31882-1-git-send-email-andrew.kw.w@gmail.com> <CALkWK0nmNWaOKcyGH2N0s3B1AFD-+3vHz1BBc3U=RMEFLNuc7A@mail.gmail.com> <20120403144505.GE15589@burratino>
+From: Jeff King <peff@peff.net>
+Subject: Re: push.default: current vs upstream
+Date: Tue, 3 Apr 2012 17:04:14 -0400
+Message-ID: <20120403210414.GC24815@sigill.intra.peff.net>
+References: <7vd37wv77j.fsf@alter.siamese.dyndns.org>
+ <20120329095236.GA11911@sigill.intra.peff.net>
+ <7vbonfqezs.fsf@alter.siamese.dyndns.org>
+ <20120329221154.GA1413@sigill.intra.peff.net>
+ <7vfwcqq2dw.fsf@alter.siamese.dyndns.org>
+ <20120330071358.GB30656@sigill.intra.peff.net>
+ <7vlimhk7rz.fsf@alter.siamese.dyndns.org>
+ <20120403205906.GB24815@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
-	Andrew Wong <andrew.kw.w@gmail.com>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>,
-	Jay Soffian <jaysoffian@gmail.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 03 23:01:46 2012
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Apr 03 23:04:21 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SFArJ-0004I6-4k
-	for gcvg-git-2@plane.gmane.org; Tue, 03 Apr 2012 23:01:45 +0200
+	id 1SFAto-0005uv-Mq
+	for gcvg-git-2@plane.gmane.org; Tue, 03 Apr 2012 23:04:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754239Ab2DCVBk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Apr 2012 17:01:40 -0400
-Received: from smtp01.beanfield.com ([76.9.193.170]:57573 "EHLO
-	smtp01.beanfield.com" rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753519Ab2DCVBk (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Apr 2012 17:01:40 -0400
-X-Spam-Status: No
-X-beanfield-mta01-MailScanner-From: andrew.w@sohovfx.com
-X-beanfield-mta01-MailScanner-SpamCheck: not spam, SpamAssassin (not cached,
-	score=-2.9, required 6, autolearn=not spam, ALL_TRUSTED -1.00,
-	BAYES_00 -1.90)
-X-beanfield-mta01-MailScanner: Found to be clean
-X-beanfield-mta01-MailScanner-ID: 1SFAqb-000F8v-Dk
-Received: from [66.207.196.114] (helo=[192.168.1.112])
-	by mta01.beanfield.com with esmtpsa (TLSv1:CAMELLIA256-SHA:256)
-	(Exim 4.76)
-	(envelope-from <andrew.w@sohovfx.com>)
-	id 1SFAqb-000F8v-Dk; Tue, 03 Apr 2012 17:01:01 -0400
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.15) Gecko/20101026 SUSE/3.0.10 Thunderbird/3.0.10
-In-Reply-To: <20120403144505.GE15589@burratino>
+	id S1755206Ab2DCVEQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Apr 2012 17:04:16 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:44854
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753684Ab2DCVEP (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Apr 2012 17:04:15 -0400
+Received: (qmail 321 invoked by uid 107); 3 Apr 2012 21:04:18 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 03 Apr 2012 17:04:18 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 03 Apr 2012 17:04:14 -0400
+Content-Disposition: inline
+In-Reply-To: <20120403205906.GB24815@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194645>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194646>
 
-On 04/03/2012 10:45 AM, Jonathan Nieder wrote:
-> Ok.  Now the user (sensibly) ignores the message from cherry-pick and
-> just runs "git rebase --continue".  The rebase finishes but nobody
-> feels it's his responsibility to remove the .git/CHERRY_PICK_HEAD file
-> and it gets left behind.
->   
-Yes, that's exactly what's happening. That particular rebase will leave
-behind CHERRY_PICK_HEAD, which have bad consequences such as:
-1. Confuses __git_ps1 (from git-completion.bash) into thinking a
-cherry-pick is still in progress. (which is what started this discussion)
-2. Cause "cherry-pick --continue" to think a cherry-pick is still in
-progress.
-3. Similarly, if a user then continue on to modifying their files, and
-do a "add" and "commit", "commit" would reuse the message from the
-CHERRY_PICK_HEAD.
+On Tue, Apr 03, 2012 at 04:59:07PM -0400, Jeff King wrote:
 
-> I suspect a more appropriate long-term fix would involve "git
-> cherry-pick" noticing when a patch has resolved to nothing instead of
-> leaving it to "git commit" to detect that.
->   
-I actually tried implementing a fix like that too. But then I thought
-there might be other scenarios where "commit" could fail, and it doesn't
-seem to make sense for "cherry-pick" to have to detect all possible
-"commit" failures. Though it also feels like the question of whether or
-not "cherry-pick" should detects the "empty commit" is a separate issue
-altogether.
+> > +		if (!push_url_of_remote(remote, &dest_url) ||
+> > +		    !push_url_of_remote(branch_dest, &branch_dest_url) ||
+> > +		    strcmp(dest_url[0], branch_dest_url[0]))
+> > +			die(_("You are pushing to remote '%s', which is not the "
+> > +			      "upstream of your\ncurrent branch '%s'.\n"),
+> > +			    remote->name, branch->name);
+> > +	}
+> 
+> Hmm. So this will actually detect "git push $URL" when $URL matches the
+> remote's configured URL. I feel like this distinction has come up
+> before, and we decided not to equate the two. But now I can't remember
+> where (maybe it when fetching via URL versus via remote?).
+> 
+> What should happen if there are multiple push URLs configured? Your code
+> will match iff it is the first one. I would think it should either
+> require all to match, or it should proceed if any of the URLs match.
+> I think the latter makes more sense, though personally I would simply
+> have compared the remote names.
 
-Besides the "empty commit" failure, "cherry-pick" can still run into
-various errors, such as merge conflict. So it will have to keep a state
-somehow. And instead of having "cherry-pick" make special cases for
-"rebase -i" to remove the state, it makes more sense to teach "rebase
--i" that "cherry-pick" now keeps a state on failure. So if "cherry-pick"
-fails, "rebase -i" is responsible for clearing that state. And that's
-what this patch is supposed to do.
+If this is the behavior we want, here are some squashable tests (on top
+of my other tests) to check the URL-matching, and to expose the
+multiple-URL case.
 
-Perhaps I should rephrase my description to reflect this better?
-Something along the line of: "cherry-pick" now keeps a state on failure.
-Instead of having a special case inside the sequencer to remove the
-state, we teach "rebase -i" that we need to clear the state.
+---
+diff --git a/t/t5528-push-default.sh b/t/t5528-push-default.sh
+index c334c51..d809615 100755
+--- a/t/t5528-push-default.sh
++++ b/t/t5528-push-default.sh
+@@ -51,4 +51,29 @@ test_expect_success '"upstream" does not push when remotes do not match' '
+ 	test_must_fail git push parent2
+ '
+ 
++test_expect_success '"upstream" remote-match checks URLs' '
++	git checkout master &&
++	test_config branch.master.remote parent1 &&
++	test_config branch.master.merge refs/heads/foo &&
++	test_config push.default upstream &&
++	test_commit six &&
++	git push repo1 &&
++	echo six >expect &&
++	git --git-dir=repo1 log -1 --format=%s foo >actual &&
++	test_cmp expect actual
++'
++
++test_expect_failure '"upstream" remote-match checks all URLs' '
++	git checkout master &&
++	git config --add remote.parent1.push repo2 &&
++	test_config branch.master.remote parent1 &&
++	test_config branch.master.merge refs/heads/foo &&
++	test_config push.default upstream &&
++	test_commit seven &&
++	git push repo2 &&
++	echo seven >expect &&
++	git --git-dir=repo2 log -1 --format=%s foo >actual &&
++	test_cmp expect actual
++'
++
+ test_done
