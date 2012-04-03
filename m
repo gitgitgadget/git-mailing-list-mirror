@@ -1,130 +1,76 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] rebase -i: remove CHERRY_PICK_HEAD when cherry-pick
- failed
-Date: Tue, 3 Apr 2012 09:45:05 -0500
-Message-ID: <20120403144505.GE15589@burratino>
-References: <CAMP44s1EAwHjQ7S2ArLvhNg5qkR05DRJ70tQmP8sXYdOP=i_zQ@mail.gmail.com>
- <1332106632-31882-1-git-send-email-andrew.kw.w@gmail.com>
- <CALkWK0nmNWaOKcyGH2N0s3B1AFD-+3vHz1BBc3U=RMEFLNuc7A@mail.gmail.com>
+From: Holger Hellmuth <hellmuth@ira.uka.de>
+Subject: Re: How to create empty CENTRAL  git with master / development branch
+ ?
+Date: Tue, 03 Apr 2012 16:54:19 +0200
+Message-ID: <4F7B0F1B.3000304@ira.uka.de>
+References: <20120403162352.67cb165e@shiva.selfip.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Andrew Wong <andrew.kw.w@gmail.com>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>,
-	Andrew Wong <andrew.w-lists@sohovfx.com>,
-	Andrew Wong <andrew.w@sohovfx.com>,
-	Jay Soffian <jaysoffian@gmail.com>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 03 16:45:28 2012
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "J. Bakshi" <joydeep.bakshi@infoservices.in>
+X-From: git-owner@vger.kernel.org Tue Apr 03 16:53:48 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SF4zA-0003h3-2y
-	for gcvg-git-2@plane.gmane.org; Tue, 03 Apr 2012 16:45:28 +0200
+	id 1SF57C-0001Ko-7a
+	for gcvg-git-2@plane.gmane.org; Tue, 03 Apr 2012 16:53:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753365Ab2DCOpS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Apr 2012 10:45:18 -0400
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:48495 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753082Ab2DCOpR (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Apr 2012 10:45:17 -0400
-Received: by iagz16 with SMTP id z16so5683523iag.19
-        for <git@vger.kernel.org>; Tue, 03 Apr 2012 07:45:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=fHv7CLpsLU6Z0MLZkm+ShMasWd+BAtFcXgJSG9F5Eig=;
-        b=X8l20vRHvTqPl6NRq9fgU/E/UjCl7g8OiaVGzZtHxeDKYeWYzKlckA5+Tds695jkud
-         J5FdpmV40ZeqVSrPmoPUL2GPwSEUSYbyJL0HGagh9BS9wU+UXfiSrlnqdxRB6q5ipzyH
-         vZceVUJLlr3lKl6jRsgWByffVt/m4pwBYHHkpeL2s4iOr6B8vDNY9qvX11A+fTFWylsj
-         tmSqK+esl+HmYNo7WtB5uvAi2yoktKG7q9aHisehCXgsdcUZh56hPIg3UeMxlXuy5exn
-         J02XeYZhB+yxIR3BhmwmCuaIH/gMfFGac0IDBhWX1/8WgofyIraRnPNHFJj1fgeZri7n
-         3xhg==
-Received: by 10.42.155.9 with SMTP id s9mr7456506icw.51.1333464316504;
-        Tue, 03 Apr 2012 07:45:16 -0700 (PDT)
-Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
-        by mx.google.com with ESMTPS id b11sm15619012igq.7.2012.04.03.07.45.15
-        (version=SSLv3 cipher=OTHER);
-        Tue, 03 Apr 2012 07:45:15 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <CALkWK0nmNWaOKcyGH2N0s3B1AFD-+3vHz1BBc3U=RMEFLNuc7A@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1753401Ab2DCOxl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Apr 2012 10:53:41 -0400
+Received: from iramx2.ira.uni-karlsruhe.de ([141.3.10.81]:33880 "EHLO
+	iramx2.ira.uni-karlsruhe.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753206Ab2DCOxk (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 3 Apr 2012 10:53:40 -0400
+Received: from irams1.ira.uni-karlsruhe.de ([141.3.10.5])
+	by iramx2.ira.uni-karlsruhe.de with esmtps port 25 
+	id 1SF570-0005KW-NF; Tue, 03 Apr 2012 16:53:39 +0200
+Received: from i20s141.iaks.uni-karlsruhe.de ([141.3.32.141] helo=[172.16.22.120])
+	by irams1.ira.uni-karlsruhe.de with esmtpsa port 25 
+	id 1SF570-0003Cy-Hm; Tue, 03 Apr 2012 16:53:34 +0200
+User-Agent: Mozilla/5.0 (X11; U; Linux i686 (x86_64); en-US; rv:1.9.2.24) Gecko/20111101 SUSE/3.1.16 Thunderbird/3.1.16
+In-Reply-To: <20120403162352.67cb165e@shiva.selfip.org>
+X-ATIS-AV: ClamAV (irams1.ira.uni-karlsruhe.de)
+X-ATIS-AV: ClamAV (iramx2.ira.uni-karlsruhe.de)
+X-ATIS-AV: Kaspersky (iramx2.ira.uni-karlsruhe.de)
+X-ATIS-Timestamp: iramx2.ira.uni-karlsruhe.de 1333464819.721759000
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194627>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194628>
 
-(cc-ing Jay, expert on the CHERRY_PICK_HEAD facility)
-Hi all,
-
-Ramkumar Ramachandra wrote:
-> Andrew Wong wrote:
-
->> Instead of having the sequencer catch errors and remove CHERRY_PICK_HEAD
->> for its caller's sake, let its caller do the work. This way, the
->> sequencer doesn't have to check all points of failures where its caller
->> doesn't want CHERRY_PICK_HEAD.
+On 03.04.2012 12:53, J. Bakshi wrote:
+> Dear list,
 >
-> This part makes sense.
+> I need to create git repos on a remote server by the command executed on that server
+> through ssh as
+>
+> ` ` ` ` `
+> git --bare init project_name.git
 
-Sorry, I think I've missed the point.  Can you explain to me what
-problem this is solving, aside from somehow dividing responsibility
-for the CHERRY_PICK_HEAD file among different tools?
+you probably meant "git init --bare project_name.git"
 
->From the surrounding thread, it looks like the following sequence of
-commands is at stake:
+> How can I also add the master branch, so that users don't need to
+> execute  [ git push origin master ]  ?
 
-	git checkout -b tmp v1.7.9
-	git cherry-pick 6e1c9bb^2^
-	git rebase -i --onto 6e1c9bb HEAD^
-	git rebase --continue
+What else do you want them to execute? "git init --bare" creates an 
+empty repository. Without pushing to it it will always stay empty
 
-The pick works fine and is just part of the setup.  The rebase produces
+Generally: If you want a central repository, the first one to push to it 
+might do something like this:
 
-	The previous cherry-pick is now empty, possibly due to conflict resolution.
-	If you wish to commit it anyway, use:
+git remote add origin ssh://big.brother.edu/repo.git
+git push origin master
+git config branch.master.remote origin
+git config branch.master.merge refs/heads/master
 
-	    git commit --allow-empty
+Everyone else could do
 
-	Otherwise, please use 'git reset'
+git clone ssh://big.brother.edu/repo.git
 
-CHERRY_PICK_HEAD points to "run-command: optionally kill children on
-exit" to help the user understand how to resolve the conflict.
-Normally print_advice() would remove it because the caller has set
-GIT_CHERRY_PICK_HELP to indicate that it wants to use some other
-mechanism than "git commit" to deal with resolved conflicts.
-Unfortunately the GIT_CHERRY_PICK_HELP facility does not give the
-caller a way to specify an alternative message for this case, like:
+Now everyone will push to the repository master when they do "git push".
 
-	The previous cherry-pick is now empty, possibly due to conflict resolution.
-
-	When you have resolved this problem run "git rebase --continue".
-	If you would prefer to skip this patch, instead run "git rebase --skip".
-	To check out the original branch and stop rebasing run "git rebase --abort".
-
-In fact, "git cherry-pick" does not handle this case at all.  It lets
-"git commit" notice the lack of change.  "git commit" emits a message
-and follows the usual rules for a failed commit, including preserving
-CHERRY_PICK_HEAD to help the operator clean up.
-
-Ok.  Now the user (sensibly) ignores the message from cherry-pick and
-just runs "git rebase --continue".  The rebase finishes but nobody
-feels it's his responsibility to remove the .git/CHERRY_PICK_HEAD file
-and it gets left behind.
-
-For symptom relief, your patch makes sense, though I haven't checked
-it in detail yet.  The description distracted me --- it would be
-better to say "this sequence of commands has this bad consequence;
-this patch papers over the problem to make people happier until the
-underlying problem can be addressed" instead of pretending the design
-was almost sane and we are just fixing the last detail. ;-)
-
-I suspect a more appropriate long-term fix would involve "git
-cherry-pick" noticing when a patch has resolved to nothing instead of
-leaving it to "git commit" to detect that.
-
-Sensible?
-Jonathan
+Is that what you wanted to know?
