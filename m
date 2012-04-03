@@ -1,106 +1,95 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: push.default: current vs upstream
-Date: Tue, 03 Apr 2012 15:29:34 -0700
-Message-ID: <7vsjgkbga9.fsf@alter.siamese.dyndns.org>
-References: <7vd37wv77j.fsf@alter.siamese.dyndns.org>
- <20120329095236.GA11911@sigill.intra.peff.net>
- <7vbonfqezs.fsf@alter.siamese.dyndns.org>
- <20120329221154.GA1413@sigill.intra.peff.net>
- <7vfwcqq2dw.fsf@alter.siamese.dyndns.org>
- <20120330071358.GB30656@sigill.intra.peff.net>
- <7vlimhk7rz.fsf@alter.siamese.dyndns.org>
- <20120403205906.GB24815@sigill.intra.peff.net>
+From: Vitor Antunes <vitor.hda@gmail.com>
+Subject: Re: [PATCHv1 2/2] git-p4: import/export of labels to/from p4
+Date: Tue, 3 Apr 2012 23:52:47 +0100
+Message-ID: <20120403235247.02c85147@fenix.utopia.dhis.org>
+References: <1333438715-14902-1-git-send-email-luke@diamand.org>
+	<1333438715-14902-3-git-send-email-luke@diamand.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Apr 04 00:29:50 2012
+To: Luke Diamand <luke@diamand.org>, Pete Wyckoff <pw@padd.com>
+X-From: git-owner@vger.kernel.org Wed Apr 04 00:53:11 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SFCER-0001EF-ED
-	for gcvg-git-2@plane.gmane.org; Wed, 04 Apr 2012 00:29:43 +0200
+	id 1SFCb8-0006an-J8
+	for gcvg-git-2@plane.gmane.org; Wed, 04 Apr 2012 00:53:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755581Ab2DCW3h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Apr 2012 18:29:37 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47453 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753690Ab2DCW3h (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Apr 2012 18:29:37 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 20F267AA5;
-	Tue,  3 Apr 2012 18:29:36 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=vzLGAprTy3BdAQcs31oHBubF0R4=; b=n17MWv
-	lkxf9lYWl85ze06JBe59ZAQHQUgp5YmQAxsJAYxeNloXLTcNfJGNV++1wurw5uFt
-	TVLsh7IMw68Aq16+R/xP/PtjapPp2ytSy6Z+vAt7m8lQnziRkJmCUIUp86nLeWTS
-	gFhYSvGIK6dIp96xv9xJf5C5MeKELy4+z8Xzo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=yZu4otMqihqVz7ZRDaaGsVPpRyfJuSrY
-	B/rS1BTVLxH2t5vcFBjoQrklefo8hUklD7v4/xwwXG/BZurw/raC1Aiu0el7pz6a
-	gmZpeuKvvyGaNaDLzSrdq3NrryfG1EdG0iSwP/yAn80ciglQDw/5S5l6yW9gCscx
-	ZA5431gIC+Q=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 191937AA4;
-	Tue,  3 Apr 2012 18:29:36 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 94C6C7AA3; Tue,  3 Apr 2012
- 18:29:35 -0400 (EDT)
-In-Reply-To: <20120403205906.GB24815@sigill.intra.peff.net> (Jeff King's
- message of "Tue, 3 Apr 2012 16:59:07 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 7DE41078-7DDC-11E1-91FF-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753765Ab2DCWxE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Apr 2012 18:53:04 -0400
+Received: from mail-wg0-f44.google.com ([74.125.82.44]:40973 "EHLO
+	mail-wg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753519Ab2DCWxD (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Apr 2012 18:53:03 -0400
+Received: by wgbdr13 with SMTP id dr13so182102wgb.1
+        for <git@vger.kernel.org>; Tue, 03 Apr 2012 15:53:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:in-reply-to:references:x-mailer
+         :mime-version:content-type:content-transfer-encoding;
+        bh=8fcFlPQK/aiPLnqTbdL0YukeKpTM5CX41mRUGBX0M7U=;
+        b=Q1UJPwWnSnPaEbzhrsQ0E/hBCdiLeK6+xH6xwTlAe4rlR+9rBzeK+AsSvwsn0lZVIB
+         VOmn9ObtaICm2pFUA4V0lejdmiAU85bsxUWechbAjg1+YuAnuPfOBv/pjeLhaCqWJa1X
+         7yJmTfHzSxao7jaRNopPl8XUuQyS5sNXzvaCu2KJvwQ0n92C/N17uqoje4MqPanmlYgH
+         OeXhYlQUHSQempK8vJ7SGgWAZABm0knd2ClvUphKIy5h8RVlZacJ77Ud7A4GP6LNK51R
+         vg597FBR9KXN5jLsDi42U1qdwpbZ/+kwATIVcdHUI8rdKLdp0Umgg1tZMyQB6cQHe9Tn
+         FcNg==
+Received: by 10.180.101.136 with SMTP id fg8mr11060168wib.4.1333493581573;
+        Tue, 03 Apr 2012 15:53:01 -0700 (PDT)
+Received: from fenix.utopia.dhis.org (111.216.54.77.rev.vodafone.pt. [77.54.216.111])
+        by mx.google.com with ESMTPS id 9sm75269316wid.2.2012.04.03.15.53.00
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Tue, 03 Apr 2012 15:53:00 -0700 (PDT)
+In-Reply-To: <1333438715-14902-3-git-send-email-luke@diamand.org>
+X-Mailer: Claws Mail 3.8.0 (GTK+ 2.24.10; x86_64-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194658>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194659>
 
-Jeff King <peff@peff.net> writes:
+On Tue,  3 Apr 2012 08:38:35 +0100
+Luke Diamand <luke@diamand.org> wrote:
 
->> +	if (strcmp(branch->remote_name, remote->name)) {
->> +		struct remote *branch_dest = remote_get(branch->remote_name);
->> +		const char **branch_dest_url, **dest_url;
->> +
->> +		if (!push_url_of_remote(remote, &dest_url) ||
->> +		    !push_url_of_remote(branch_dest, &branch_dest_url) ||
->> +		    strcmp(dest_url[0], branch_dest_url[0]))
->> +			die(_("You are pushing to remote '%s', which is not the "
->> +			      "upstream of your\ncurrent branch '%s'.\n"),
->> +			    remote->name, branch->name);
->> +	}
->
-> Hmm. So this will actually detect "git push $URL" when $URL matches the
-> remote's configured URL. I feel like this distinction has come up
-> before, and we decided not to equate the two. But now I can't remember
-> where (maybe it when fetching via URL versus via remote?).
->
-> What should happen if there are multiple push URLs configured?
+> The existing label import code looks at each commit being
+> imported, and then checks for labels at that commit. This
+> doesn't work in the real world though because it will drop
+> labels applied on changelists that have already been imported,
+> a common pattern.
+> 
+> This change adds a new --import-labels option. With this option,
+> at the end of the sync, git-p4 gets sets of labels in p4 and git,
+> and then creates a git tag for each missing p4 label.
+> 
+> This means that tags created on older changelists are
+> still imported.
+> 
+> Tags that could not be imported are added to an ignore
+> list.
+> 
+> The same sets of git and p4 tags and labels can also be used to
+> derive a list of git tags to export to p4. This is enabled with
+> --export-tags.
+> 
+> Signed-off-by: Luke Diamand <luke@diamand.org>
+> ---
+>  Documentation/git-p4.txt       |   39 ++++++-
+>  contrib/fast-import/git-p4     |  249
+> ++++++++++++++++++++++++++++++++++------ t/t9811-git-p4-label-import.sh
+> |  145 +++++++++++++++++++++++ 3 files changed, 398 insertions(+), 35
+> deletions(-) create mode 100755 t/t9811-git-p4-label-import.sh
+> 
 
-This is me merely try to be extra nice without succeeding.
+Would it be possible to only export git tags during commit?
 
-Perhaps it was an ill-thought-out part of the patch.  The reasoning was
-that when you know that your 'origin' is at $URL, it might be irritating
-if "git push $URL" did not do what "git push origin" did, but we can
-always say 'origin' that is a remoteo nickname is different from $URL; a
-remote nickname does not have to be _only_ substitute of the URL, but it
-can do more for you.  That would give you more incentive to define remotes
-that you interact with often, while keeping the bare-metal flexibility
-when interacting with other remotes in a one-shot fashion.
+I don't think it is intuitive to make changes in P4 during sync operation.
+And because it is possible to configure git-p4 to always export tags it will
+be easy to forget that while sync'ing we are also updating P4.
 
-I personally would be perfectly fine if
+I still did not test the patch in my branch environment, so I may have more
+updates later. But for now, everything else seems ok by me.
 
-	$ git push $URL
-
-that does not say what to push out how, regardless of push.default
-settings, errors out.
-
-The same can be said when a remote has more than one URL to be pushed to.
-
-Personally I do not care too much about it, but this is one more reason
-not to support "upstream" over "current" as the default setting.
+Vitor
