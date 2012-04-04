@@ -1,77 +1,141 @@
-From: Corey F <coyotebush22@gmail.com>
-Subject: GSoC git-add--interactive improvements
-Date: Tue, 03 Apr 2012 21:07:26 -0700
-Message-ID: <4F7BC8FE.4060808@gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCHv2 2/2] fast-import: tighten parsing of mark references
+Date: Wed, 4 Apr 2012 00:32:37 -0500
+Message-ID: <20120404053236.GA2460@burratino>
+References: <20120401225407.GA12127@padd.com>
+ <1333417910-17955-1-git-send-email-pw@padd.com>
+ <1333417910-17955-3-git-send-email-pw@padd.com>
+ <20120403142001.GD15589@burratino>
+ <20120404012037.GB4124@padd.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 04 06:07:41 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Dmitry Ivankov <divanorama@gmail.com>,
+	David Barr <davidbarr@google.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Johan Herland <johan@herland.net>
+To: Pete Wyckoff <pw@padd.com>
+X-From: git-owner@vger.kernel.org Wed Apr 04 07:33:29 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SFHVS-0002Ie-Ik
-	for gcvg-git-2@plane.gmane.org; Wed, 04 Apr 2012 06:07:38 +0200
+	id 1SFIqS-00026N-VG
+	for gcvg-git-2@plane.gmane.org; Wed, 04 Apr 2012 07:33:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750918Ab2DDEHb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Apr 2012 00:07:31 -0400
-Received: from mail-ob0-f174.google.com ([209.85.214.174]:64437 "EHLO
-	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750824Ab2DDEHa (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Apr 2012 00:07:30 -0400
-Received: by obbtb18 with SMTP id tb18so638760obb.19
-        for <git@vger.kernel.org>; Tue, 03 Apr 2012 21:07:29 -0700 (PDT)
+	id S1751380Ab2DDFcq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Apr 2012 01:32:46 -0400
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:37309 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750912Ab2DDFcp (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Apr 2012 01:32:45 -0400
+Received: by iagz16 with SMTP id z16so670732iag.19
+        for <git@vger.kernel.org>; Tue, 03 Apr 2012 22:32:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:subject
-         :content-type:content-transfer-encoding;
-        bh=v7Mu/YlN5Q3NgapNMMmidsB8eHb/uGruIggnKoOIR54=;
-        b=z8IbWov8PTRzLVssGV2ECJAanjMf5JvnFI+t4whxXN48LbaXXDuDjNgQtJaFpOmiKJ
-         t0lOheR5Qb/GFh5Ki6e6Uy0wS2wErhwIIE0+nGtNI1GywzMCEIMmVJnn/5RR9zUGpqzS
-         xYVOkqqlC/EPww4WP36gjoxj0mOR7nURpvoxSYAHKCLyrLMrrHSm6azSb31zLmb5+3Ee
-         G2W2GqrgrPjg1tNK1vvvz+W/Xub148xdH7wV1TNgLz5d7j/4nb0C/jMvC+p0Yusyzhb8
-         u4LBOPp1mWD4AZu7KvV362Ea7DFRcXnjYg+LuDDTp7OLxPM1aWCMkMa+3+XdIlfZlv2v
-         y5kw==
-Received: by 10.60.0.135 with SMTP id 7mr22388600oee.25.1333512449935;
-        Tue, 03 Apr 2012 21:07:29 -0700 (PDT)
-Received: from [198.188.150.160] (pcp037279pcs.cabrillo.reshall.calpoly.edu. [198.188.150.160])
-        by mx.google.com with ESMTPS id s2sm18942139oea.2.2012.04.03.21.07.28
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=UCoj4kjUR7vwg5yZxLSeceA/mZmJZzyKefGfHi52xfk=;
+        b=1Egimpc6VoEyVAxZMDshhtG0l2sVfE4bSZlzbffvTkFVr1WD6raZ117WAaQYkjd2wv
+         ThzcKfoy3Br+eqTuw3/Vayu9Y3oMk4DBK/ZOZ0A1k2CbotiZkYd9qX+xXng5Ip9Gs9lt
+         yp8NNDBip+jEcA+Vkxw76WQJfiYvJ1YA1EJj9bGa0cLY+h7jsBJ4mdUOLzeTSy9eyjaw
+         I17Pr9VxU/0WuYcAU1K+AH1+nJ3bnPTFYNtlYir9xJrzZM37fYRcjOOue4k25UeC2vd2
+         YwizHnz89GRlsQo99v/g9syj02WWp2A40zFskjePMIAn2EqWwQAVpSoX6dG7NX0ZFAfj
+         0lxQ==
+Received: by 10.50.89.234 with SMTP id br10mr543447igb.14.1333517563943;
+        Tue, 03 Apr 2012 22:32:43 -0700 (PDT)
+Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
+        by mx.google.com with ESMTPS id gr1sm1242591igc.1.2012.04.03.22.32.42
         (version=SSLv3 cipher=OTHER);
-        Tue, 03 Apr 2012 21:07:28 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:8.0) Gecko/20120216 Icedove/8.0
+        Tue, 03 Apr 2012 22:32:43 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <20120404012037.GB4124@padd.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194677>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194678>
 
-Hi all,
+Pete Wyckoff wrote:
+> jrnieder@gmail.com wrote on Tue, 03 Apr 2012 09:20 -0500:
 
-I'd be interested in making improvements to the git add -p (etc.) 
-interface as a Google Summer of Code project, as suggested on the ideas 
-page [1].
+>> Simpler:
+>> 
+>> 	if (*p == ':') {
+>> 		oe = find_mark(parse_mark_ref_space(p, &p));
+>> 		hashcpy(sha1, oe->idx.sha1);
+>> 	} else if ...
+>
+> Yes.  I thought about just passing in plain old &p.  Even though
+> these approaches would work, it is a bit more difficult for
+> novice C coders to read.  Figured we should err on the side of
+> helping future code readers.  I can add more cleverness if you
+> feel strongly.
 
-The page lists some interesting ideas for both larger architectural 
-changes and smaller interface improvements, though I agree that getting 
-lots of community input during the project will be important. So at this 
-point I'm wondering how much I should plan out in my proposal -- maybe 
-pin down a few important features and a process for getting more input?
+It would be clearest with one argument, like so:
 
-Last year's SoC ideas page included rewriting some commands in C, 
-including this one. I'm at least as comfortable with C as with Perl, but 
-I'm guessing that incorporating a rewrite into the project would be an 
-ambitious and/or dangerous idea.
+		oe = find_mark(parse_mark_...(&p));
+		hashcpy(sha1, oe->idx.sha1);
 
-Any thoughts on how best to approach this project idea are welcome.
+[...]
+> Insead of "Missing space after 'inline'", you'll get "Invalid
+> SHA1".  You misspelled "inline" with "inliness"?  And would
+> prefer to be told you provided an invalid SHA1?
 
-Alternately, the "ultimate content tracking" tool to find similar 
-sections that might have been the basis for newly added lines sounds 
-intriguing, and I will refresh myself on the previous list discussion 
-regarding that idea.
+It wasn't a great example, but what I meant is that if someone
+asked me, a human, to parse
 
-Thanks,
-Corey
+	M 100644 foobar path/to/file
 
-1: https://github.com/peff/git/wiki/SoC-2012-Ideas
+I would assume that foobar is a <dataref>.  Likewise, for any
+string baz in
+
+	M 100644 baz path/to/file
+
+including strings that start with "inline", except for "inline"
+itself.
+
+To put it another way: checking for 'inline' at the start of a word as
+a way to check for typos seems odd to me.  We do not diagnose
+
+	M 100644 Inline path/to/file
+
+as a misspelled version of "inline", nor
+
+	M 100644inline path/to/file
+
+as an instance of a missing space character, and we shouldn't.
+
+The goal in fast-import's behavior is usually predictability and
+simplicity in terms of the mental model of the person writing a
+frontend.  Trying to guess the user's intention on malformed input
+only takes away from that goal.
+
+Why I care: if some day git permits other kinds of <dataref> (for
+example if it supports refnames some day), I do not want datarefs
+beginning with "inline" to be forbidden.
+
+[...]
+> There are two cases it handles:  mark and sha1.  The mark case
+> uses the handy new parse_mark_ref_space(), which does the space
+> checking.  The sha1 branch had no check in this function.  So
+> I hoisted the space check up to make the branches symmetrical.
+
+I think it's ok to sacrifice symmetry here, but:
+
+[...]
+> I would prefer just to inline the whole thing.  Or new name
+> parse_ls_dataref() if you have a preference.
+
+if changing the behavior of the function that parses a treeish dataref
+seems right, that's fine with me as long as its name or signature
+changes.
+
+For example, it could become
+
+	static struct object_entry *parse_treeish(const char **p);
+
+Hope that helps,
+Jonathan
