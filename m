@@ -1,135 +1,80 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] add -p: skip conflicted paths
-Date: Wed, 04 Apr 2012 11:29:21 -0700
-Message-ID: <7vty0z8i66.fsf@alter.siamese.dyndns.org>
-References: <7viphov839.fsf@alter.siamese.dyndns.org>
- <1332966017-6100-1-git-send-email-kusmabite@gmail.com>
- <7viphotng8.fsf@alter.siamese.dyndns.org>
- <7vaa30tmk9.fsf@alter.siamese.dyndns.org>
- <7v62dotltk.fsf@alter.siamese.dyndns.org>
- <20120329054558.GA27604@sigill.intra.peff.net>
- <CABPQNSY8gNPZTV77AjFbHn1HA9S=fw3NC+H8bCzZOPFyLg0nHQ@mail.gmail.com>
- <7v398mgfdu.fsf@alter.siamese.dyndns.org>
- <20120404094618.GA13870@sigill.intra.peff.net>
- <7v398jbjbo.fsf@alter.siamese.dyndns.org>
+Subject: Re: [PATCH 0/9] Prefix-compress on-disk index entries
+Date: Wed, 04 Apr 2012 11:44:36 -0700
+Message-ID: <7vpqbn8hgr.fsf@alter.siamese.dyndns.org>
+References: <1333493596-14202-1-git-send-email-gitster@pobox.com>
+ <CACsJy8A+cJtzKdqJSWbmjT1LgP10LB69-NHfOv8S6BusGcMeFw@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: kusmabite@gmail.com, git@vger.kernel.org,
-	matthieu.moy@grenoble-inp.fr, hellmuth@ira.uka.de
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Apr 04 20:29:30 2012
+Cc: git@vger.kernel.org
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 04 20:44:45 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SFUxW-0000qH-76
-	for gcvg-git-2@plane.gmane.org; Wed, 04 Apr 2012 20:29:30 +0200
+	id 1SFVCG-0002xx-8s
+	for gcvg-git-2@plane.gmane.org; Wed, 04 Apr 2012 20:44:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932348Ab2DDS3Y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Apr 2012 14:29:24 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:49844 "EHLO
+	id S932391Ab2DDSoj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Apr 2012 14:44:39 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:58267 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932267Ab2DDS3Y (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Apr 2012 14:29:24 -0400
+	id S932261Ab2DDSoi (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Apr 2012 14:44:38 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6542B781D;
-	Wed,  4 Apr 2012 14:29:23 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3E5887D92;
+	Wed,  4 Apr 2012 14:44:38 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=qbO55UCYrKMMxQcKBLIduxir8xk=; b=hHhWWo
-	8umjehmlV8o3dyPRJUHRQUnCqQ1mNMrhTmorbAONuoGfw6Tjig77pxErSHMeRzuq
-	BGXQASTZ8VOOHocLT9PfI0GZmQ7BH+UoVJUm/6X8yeUon6oybvhAVPJfIgI7AvsE
-	Dfgdz5VtlbphzMSPBVsUa8HWev4g4kN0ls2PQ=
+	:content-type; s=sasl; bh=B4bsj1MkNaRwDYmO/yqe0GivUF4=; b=AtamkC
+	2oKq+M4Eln+Ea64lfhVHyXLbbyUQFQBIlL4YwNMn3Aia9LWGguCcFOmly8l2Chn0
+	Jto6hrTxNycBY4VIoE9ZizRMOgB+5hoRdpIGOUmFknjg1QshsvjKwlDdVgLB2gvF
+	ciKm5WU+d3OoGSMvbVBDynxk0b0hUvnfhDwys=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Q3NGAqrPFZWDBJt6WUtBk2eqOjxTgysQ
-	EEVrqGtohegB/lWJoKNZe0PiG7p4ojDBWs7QD9CF4fFqUJO6whoEoemHRyzr2TyR
-	goP+zGLFEIoCVt/FGOkv6QkBKfZf37HQS1Mxvg8jMsZcPsyiwLZtRSHW2jdyUXXI
-	IR7qL+Y5hjo=
+	:content-type; q=dns; s=sasl; b=sQfU2YfnUVrecijp+trWrcD3pddgjG11
+	NPXvn28wBZrAPybtuuVmzr0XMiptC0uigAWzX5+cu7XrG+4lqGySpKixjRt51qnj
+	sjL190hMVoe4hjgyZl4r0qHLRRMaDIL4XPV2sk0PnWHWNoTQcpwt+AruE80BIteD
+	RWsxCKcyAbY=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5B47C781C;
-	Wed,  4 Apr 2012 14:29:23 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 358AB7D91;
+	Wed,  4 Apr 2012 14:44:38 -0400 (EDT)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id CB02C781A; Wed,  4 Apr 2012
- 14:29:22 -0400 (EDT)
-In-Reply-To: <7v398jbjbo.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Wed, 04 Apr 2012 08:36:11 -0700")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8D7FA7D8D; Wed,  4 Apr 2012
+ 14:44:37 -0400 (EDT)
+In-Reply-To: <CACsJy8A+cJtzKdqJSWbmjT1LgP10LB69-NHfOv8S6BusGcMeFw@mail.gmail.com> (Nguyen
+ Thai Ngoc Duy's message of "Wed, 4 Apr 2012 19:34:20 +0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 199E9DB0-7E84-11E1-9F29-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 3AD9E55A-7E86-11E1-A401-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194718>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194719>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
 
-> Jeff King <peff@peff.net> writes:
->
->> I do still think it would be nicer to pass the information out to the
->> caller instead of just filtering.
->
-> Indeed.
->
->> So combining the two patches, we have
->> something like:
->
-> Hrm.  I kind of liked the idea of doing this with a single plumbing call
-> to diff-files (the entries that come from --raw will be mostly discarded
-> except for the ones that are marked with "U"), though.
+> On Wed, Apr 4, 2012 at 5:53 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> ...
+> I wonder what causes user time drop from .29s to .13s here. I think
+> the main patch should increase computation, even only slightly, not
+> less.
 
-That is, something like this on top of your patch.
+The main patch reduced the amount of the data needs to be sent to the
+machinery to checksum and write to disk by about 45%, saving both I/O
+and computation.
 
- git-add--interactive.perl |   25 +++++++++----------------
- 1 file changed, 9 insertions(+), 16 deletions(-)
+This is a tangent, but I wonder why we are not using csum-file API to do
+this (I know the dircache code came first way before csum-file; I am
+wondering why we haven't rewritten the codepath using it later).
 
-diff --git a/git-add--interactive.perl b/git-add--interactive.perl
-index 28d36f7..28c28b7 100755
---- a/git-add--interactive.perl
-+++ b/git-add--interactive.perl
-@@ -318,7 +318,9 @@ sub list_modified {
- 		}
- 	}
- 
--	for (run_cmd_pipe(qw(git diff-files --numstat --summary --), @tracked)) {
-+	for (run_cmd_pipe(qw(git diff-files --numstat --summary),
-+			  ($note_unmerged ? ("--raw") : ()),
-+			  "--", @tracked)) {
- 		if (($add, $del, $file) =
- 		    /^([-\d]+)	([-\d]+)	(.*)/) {
- 			$file = unquote_path($file);
-@@ -340,26 +342,17 @@ sub list_modified {
- 			if ($bin) {
- 				$data{$file}{BINARY} = 1;
- 			}
--		}
--		elsif (($adddel, $file) =
--		       /^ (create|delete) mode [0-7]+ (.*)$/) {
-+		} elsif (/^:[0-7]+ [0-7]+ [0-9a-f]+ [0-9a-f]+ (.)	(.*)$/) {
-+			if ($1 eq 'U') {
-+				$file = unquote_path($2);
-+				$data{$file}{UNMERGED} = 1;
-+			}
-+		} elsif (($adddel, $file) = /^ (create|delete) mode [0-7]+ (.*)$/) {
- 			$file = unquote_path($file);
- 			$data{$file}{FILE_ADDDEL} = $adddel;
- 		}
- 	}
- 
--	if ($note_unmerged) {
--		for (run_cmd_pipe(qw(git ls-files -u --), @ARGV)) {
--			chomp $_;
--			if (/^[0-7]+ [0-9a-f]{40} [0-3]	(.*)/) {
--				my $path = unquote_path($1);
--				if (exists($data{$path})) {
--					$data{$path}{UNMERGED} = 1;
--				}
--			}
--		}
--	}
--
- 	for (sort keys %data) {
- 		my $it = $data{$_};
- 
+> Anything else you have in mind for v4? Any chance we can adopt crc32
+> instead of sha-1?
+
+I am not interested in sacrificing integrity over unproven/unmeasured
+performance "issues" on SHA-1, so I am not planning to experiment with
+such a change myself.  The choice of hashing algorithm from my point of
+view is the least interesting part.
