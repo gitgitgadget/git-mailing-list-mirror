@@ -1,102 +1,101 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: GSoC - Designing a faster index format
-Date: Wed, 4 Apr 2012 19:20:47 +0700
-Message-ID: <CACsJy8A+0GxePYPSJh9g_N83QXY8cf8HHGT65M_eNGBeAs-5uQ@mail.gmail.com>
-References: <CAKTdtZmLOzAgG0uCDcVr+O41XPX-XnoVZjsZWPN-BLjq2oG-7A@mail.gmail.com>
- <CACsJy8C=4WaN4MZrZMaD3FqZrF2jCP5sm0F0SpDvzQnYfka9Ew@mail.gmail.com>
- <CAKTdtZkpjVaBSkcieojKj+V7WztT3UDzjGfXyghY=S8mq+X9zw@mail.gmail.com>
- <CACsJy8D85thmK_5jLC7MxJtsitLr=zphKiw2miwPu7Exf7ty=Q@mail.gmail.com>
- <CAKTdtZkx+7iU5T4oBNDEx-A5cgZCLU9ocdXmC9jRbD39J1zb3Q@mail.gmail.com>
- <87iphrjv23.fsf@thomas.inf.ethz.ch> <CACsJy8AqQdWO4E2oYTMLbpYhxobH8iXE-jXPoj2BcEGtfh+T=Q@mail.gmail.com>
- <CAKTdtZnxSRffZ5xAq+SgW6fmy+b3P2Fu3AZmBB1jmGca6HmJAw@mail.gmail.com>
- <CACsJy8BjYLAKqFDeGRyUj+SDKOTRbjW8shomhnhORM082HM9yw@mail.gmail.com>
- <CAKTdtZkSEs7Z+0NrfEaFDt-LJEPCLg5FhHgSGAsF32gqQB+DCg@mail.gmail.com>
- <20120402123146.GA24813@do> <CAKTdtZm4JFkWOq7D=tHC-t8C5yd=AG6MEkKD46z5D7fCRDEfZQ@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>
-To: elton sky <eltonsky9404@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 04 14:21:26 2012
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: [PATCH (bugfix)] gitweb: Fix unintended "--no-merges" for regular Atom feed
+Date: Wed,  4 Apr 2012 14:25:44 +0200
+Message-ID: <1333542344-20421-1-git-send-email-jnareb@gmail.com>
+References: <4F79D76D.80805@pipping.org>
+Cc: Sebastian Pipping <sebastian@pipping.org>,
+	Jakub Narebski <jnareb@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Apr 04 14:26:08 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SFPDI-0002q0-OS
-	for gcvg-git-2@plane.gmane.org; Wed, 04 Apr 2012 14:21:25 +0200
+	id 1SFPHq-0005sh-M9
+	for gcvg-git-2@plane.gmane.org; Wed, 04 Apr 2012 14:26:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756223Ab2DDMVU convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 4 Apr 2012 08:21:20 -0400
-Received: from mail-wi0-f172.google.com ([209.85.212.172]:52295 "EHLO
-	mail-wi0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756141Ab2DDMVT convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 4 Apr 2012 08:21:19 -0400
-Received: by wibhj6 with SMTP id hj6so525558wib.1
-        for <git@vger.kernel.org>; Wed, 04 Apr 2012 05:21:17 -0700 (PDT)
+	id S932078Ab2DDM0B (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Apr 2012 08:26:01 -0400
+Received: from mail-bk0-f46.google.com ([209.85.214.46]:54561 "EHLO
+	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756418Ab2DDM0A (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Apr 2012 08:26:00 -0400
+Received: by bkcik5 with SMTP id ik5so217568bkc.19
+        for <git@vger.kernel.org>; Wed, 04 Apr 2012 05:25:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=AiOn/5qtSOFeoAPVGOdMdjrUqaEa2PgPVsGZAyjH+nE=;
-        b=CWq06x0V0c5Je0+qgJ3/RE8QLD3HuiIB2hQXB8fy0EmHJXzxC3ndZ407Oc/FeCSpEi
-         1Zl9FFXp8Sdc4aLVdfuwXVTjU1NLvqAwM1VjjCYAs96zV4+t1ldpVlkZGekEMZ4AiLwI
-         O54WkS3QjZEwFtyalGmi6CQE11Lfr+MClIEx6e/WrilSOF0MhsQ9fCQu78WqbuWui4TG
-         Vcil2ZGdvqnqWYdfC/36n7KjrpxClVtI+7+2oeD7OsN1SB9YwWrW8lWO6qVahdQP+ech
-         osfo0iThleI5kQ56fWa83uoh4qNACNgpfOw7zY8hD/8hQaIgFz3phsy07uURPXFc3I+g
-         5Ppw==
-Received: by 10.216.135.20 with SMTP id t20mr1200963wei.99.1333542077851; Wed,
- 04 Apr 2012 05:21:17 -0700 (PDT)
-Received: by 10.223.109.144 with HTTP; Wed, 4 Apr 2012 05:20:47 -0700 (PDT)
-In-Reply-To: <CAKTdtZm4JFkWOq7D=tHC-t8C5yd=AG6MEkKD46z5D7fCRDEfZQ@mail.gmail.com>
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        bh=trF03k2Y8bhFcb8b9l/ZRUM5CnmxIk9f395rq2LRScw=;
+        b=MBgNDCMDstxIS4fR059bmT85aiWm3gTpKMZvOis1CeK62QNIM+0ViVHphtn6sNirij
+         3XTBAGBuDx56Kc3b47OMR6brrIEBV3tatLNc7SOhMmLtYAiUIOf1sVf5w2U1KP8C7Al/
+         psM8ctKIKO/ca+zj3Vq1uR/RWaxbtpzrVi6TyQHGZDbE+LwSyoyg1z7SaCjSLeeJlUs/
+         eUIKnG8bKWh15+XJIqD7mwnrmlCbXIFE8L3d8/JpqWniL+3P/RHUwNLV8wyg57a4O+Ou
+         2cNu4PMuVvu8K+CXOQ4ExDbj/NCoF8NNoDfh3LpbnyB8aWlxD7t3tczqW/uJW+MCAdiX
+         5fjA==
+Received: by 10.205.122.77 with SMTP id gf13mr7621881bkc.15.1333542358962;
+        Wed, 04 Apr 2012 05:25:58 -0700 (PDT)
+Received: from localhost.localdomain (epp57.neoplus.adsl.tpnet.pl. [83.20.57.57])
+        by mx.google.com with ESMTPS id f5sm1483444bke.9.2012.04.04.05.25.57
+        (version=SSLv3 cipher=OTHER);
+        Wed, 04 Apr 2012 05:25:58 -0700 (PDT)
+X-Mailer: git-send-email 1.7.9
+In-Reply-To: <4F79D76D.80805@pipping.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194694>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194695>
 
-On Wed, Apr 4, 2012 at 3:26 PM, elton sky <eltonsky9404@gmail.com> wrot=
-e:
-> I am not sure how the trailer works.
-> I assume there can be multiple trailers, each update will generate a
-> new one. Every trailer will point to the root tree (i.e. all trailers
-> point to the same block?). So if there are some changes to root, like
-> rename, trailers all point to the latest root block?
+From: Sebastian Pipping <sebastian@pipping.org>
 
-Each trailer points to the whole new tree. Because trees are
-immutable, changing in a tree meangs creating a new one and will also
-make a new parent tree (to point to the updated tree because old
-parent will always point to old tree). This eventually leads to root
-tree change, recorded by the trailer.
+The print_feed_meta() subroutine generates links for feeds with and
+without merges, in RSS and Atom formats.  However because %href_params
+was not properly reset, it generated links with "--no-merges" for all
+except the very first link.
 
-> Is the index looks like :
-> | HEADER | TREE BLOCKS | TRAILER | =C2=A0TREE BLOCKS | TRAILER | TREE
-> BLOCKS | TRAILER | ...
->
-> Blocks and trailers are interleaved. The index starts from a few
-> blocks (git add file1 file2 file3 ..) and expands as it goes. If file=
-1
-> is updated, the tree block containing file1 is updated and appended.
-> (At this point, 2 versions of tree blocks containing file is in index
-> ?) How do you organize these 2 block in a tree ?
+Before:
+<link rel="alternate" title="[..] - Atom feed" href="/?p=.git;a=atom;opt=--no-merges" type="application/atom+xml" />
+<link rel="alternate" title="[..] - Atom feed (no merges)" href="/?p=.git;a=atom;opt=--no-merges" type="application/atom+xml" />
 
-I leave them where they are. They will be indirectly referenced by two
-different roots. At that point we have to new full trees, sharing many
-subtrees except the one that contains file1 and its ancestors. This
-makes it possible to access an old index version by traversing from an
-older trailer. Heavy "add -p" users may like this.
+After:
+<link rel="alternate" title="[..] - Atom feed" href="/?p=.git;a=atom" type="application/atom+xml" />
+<link rel="alternate" title="[..] - Atom feed (no merges)" href="/?p=.git;a=atom;opt=--no-merges" type="application/atom+xml" />
 
-> Appended blocks are also a tree or just a list. If it's a list, it
-> needs O(n) read time. If it's like a sub tree, I assume it's small,
-> because I guess there won't be many changes each time. If it's too
-> small then lgn -> n, and in total read time -> n.
+Signed-off-by: Sebastian Pipping <sebastian@pipping.org>
+Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+---
+Sebastian Pipping wrote:
 
-It's trees all the way down. I'm not sure why read time is related
-here. You read it by traversing from root tree to leaves, no matter
-old or new root. Appended trees may push trees farther away and
-increase seek time. Other than that, I don't see significant read
-performance degradation (really crowded trees may degrade a little bit
-because we need to read trees in addition to leaves, but I don't think
-it's a big problem).
---=20
-Duy
+> Please excuse that I send the patch as an attachment and consider
+> application.  Thanks!
+
+Beside sending this patch as an attachement instead of putting it
+inline (what was the cause of this?) it was also lacking
+Signed-off-by... which I have forged.
+
+I have added explanation of this error in the commit message, and
+changed from using '' to undef to get rid of 'opt' / 'extra_options'
+parameter instead of having it empty.  It is a better way of doing the
+reset.
+
+Junio, the bug is very minor, so I don't know if it is worth fixing
+for 1.7.10.
+
+ gitweb/gitweb.perl |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index a8b5fad2..ca6f038 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -3886,6 +3886,7 @@ sub print_feed_meta {
+ 				'-type' => "application/$type+xml"
+ 			);
+ 
++			$href_params{'extra_options'} = undef;
+ 			$href_params{'action'} = $type;
+ 			$link_attr{'-href'} = href(%href_params);
+ 			print "<link ".
+-- 
+1.7.9
