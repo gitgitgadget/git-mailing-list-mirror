@@ -1,124 +1,111 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH v3 4/8] gitweb: Extract print_sidebyside_diff_lines()
-Date: Thu, 5 Apr 2012 00:47:09 +0200
-Message-ID: <201204050047.10357.jnareb@gmail.com>
-References: <1333569433-3245-1-git-send-email-michal.kiedrowicz@gmail.com> <1333569433-3245-5-git-send-email-michal.kiedrowicz@gmail.com> <7vsjgj6ufi.fsf@alter.siamese.dyndns.org>
+From: Jon Seymour <jon.seymour@gmail.com>
+Subject: Re: rebase -p loses amended changes
+Date: Thu, 5 Apr 2012 08:55:30 +1000
+Message-ID: <CAH3AnrrE9Fbs_p_=ETRns4vyz8J879-m+KDF5K4j7vDdTh9bEg@mail.gmail.com>
+References: <592E2EEC-6CBA-48D6-8D44-34A971DD78EC@gmail.com>
+	<CAH3Anrqorf481jw6GdHqOPg9WC0rD-OraOHZ7twWRF4+oJ9X4A@mail.gmail.com>
+	<87fwcpun95.fsf@thomas.inf.ethz.ch>
+	<CAH3AnrpasFU2bLEZsAXRQu4U+=R_YyW+-yRXDfzy2JQpqf9dNw@mail.gmail.com>
+	<CADb3U=4Y0njLiYC1qrYbdm+h0h8vLh78yfz_u3B6veEqCX0xCQ@mail.gmail.com>
+	<CAH3Anrq_Z0V=DpU1iH-A3F8RFWTG0_C1hEe3iDZYe=AYDTRT3g@mail.gmail.com>
+	<CABURp0pnXvnT2=fDJXk-yiGctsJBHiNGSCOZiT4Vo74woi0Zxg@mail.gmail.com>
+	<4F7BEA9F.3060805@viscovery.net>
+	<7vpqbna0cd.fsf@alter.siamese.dyndns.org>
+	<7viphf8cqh.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?utf-8?q?Micha=C5=82_Kiedrowicz?= <michal.kiedrowicz@gmail.com>,
-	git@vger.kernel.org
+Cc: Johannes Sixt <j.sixt@viscovery.net>,
+	Phil Hord <phil.hord@gmail.com>,
+	J Robert Ray <jrobertray@gmail.com>,
+	Thomas Rast <trast@student.ethz.ch>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Apr 05 00:47:20 2012
+X-From: git-owner@vger.kernel.org Thu Apr 05 00:55:56 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SFYz0-0005bo-Jk
-	for gcvg-git-2@plane.gmane.org; Thu, 05 Apr 2012 00:47:18 +0200
+	id 1SFZ7M-0001O4-GT
+	for gcvg-git-2@plane.gmane.org; Thu, 05 Apr 2012 00:55:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757352Ab2DDWrN convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 4 Apr 2012 18:47:13 -0400
-Received: from mail-we0-f174.google.com ([74.125.82.174]:52038 "EHLO
-	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757349Ab2DDWrL (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Apr 2012 18:47:11 -0400
-Received: by wejx9 with SMTP id x9so487190wej.19
-        for <git@vger.kernel.org>; Wed, 04 Apr 2012 15:47:10 -0700 (PDT)
+	id S1757350Ab2DDWzc convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 4 Apr 2012 18:55:32 -0400
+Received: from mail-wi0-f178.google.com ([209.85.212.178]:61188 "EHLO
+	mail-wi0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752697Ab2DDWzc convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 4 Apr 2012 18:55:32 -0400
+Received: by wibhq7 with SMTP id hq7so735059wib.1
+        for <git@vger.kernel.org>; Wed, 04 Apr 2012 15:55:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        bh=Shoe/FlPrpkVn1ErzeHWjRUIgM1QNgLRzYQLSdWQtSU=;
-        b=xvHOnzspZHf5o7G4ZE5/q4NVFcz0BO+fzDGTcxLsCEon0PY4L0C9JXPvX9b6NVzQVa
-         MX48VxeJMWik/j90VjlwmwRBwuL847UWSEF4851/+G5PhJN7rYFy7LsSOPc7bumlqohe
-         cPWn/25Vrj0QaDkSy8H407AJzWxdbyZXKsJBuMhc6Cf6X0OJ+X/yUb2yh+Ob9dUxnuHq
-         a50GfE5EBW+dgAJx4pd27JLw1pQ4rlPm5ICyrYx5XT7NtSRX5JljFoOzCsGYlITg5QV5
-         VNrl2P+9/fSLFTdVkxqxrwqH+WE/qio+4GNtFa4Okvm4EGmBY8l1wHsql6fOBYGYjdrb
-         CXaA==
-Received: by 10.216.134.233 with SMTP id s83mr127044wei.104.1333579630336;
-        Wed, 04 Apr 2012 15:47:10 -0700 (PDT)
-Received: from [192.168.1.13] (adgy104.neoplus.adsl.tpnet.pl. [79.184.154.104])
-        by mx.google.com with ESMTPS id u9sm8523843wix.0.2012.04.04.15.47.09
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 04 Apr 2012 15:47:09 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <7vsjgj6ufi.fsf@alter.siamese.dyndns.org>
-Content-Disposition: inline
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=xN4r5RzBMTfHbAkSjDnoYoBRxeou6wcr21zV1eVerEw=;
+        b=QJIhQpLTHeZFqbQA+5OkVvY569iLGyyeqNDC6bvDj65HYqoxHQLSnJ/HM4ll7ywXXE
+         +CdDXO+MGFWIJGJsWrPtseS5us7bD2/zwp+JYdCCOza4f+pMfp8q79LO5zRrzCMRcz8c
+         y8+kMgHFqS0igQeSgxK17b/h32r+A2qDPsKKl2uYk10I2l7SyIkInoIB8VbWKcX5b1UV
+         ypaHAx+Jy3CQqxTi0jwwBfPOnm9Gm5/pOKbyY41zUReDjDaxeUvXAtCnT4gLXYiQHoVA
+         kimsMwiIEywqyMWYigM+GbByNdBmnpOllIcHSf4akDWrPmtoi8QdXeZ0S7Sp7F/ayZLR
+         zMJg==
+Received: by 10.216.135.102 with SMTP id t80mr189450wei.59.1333580130821; Wed,
+ 04 Apr 2012 15:55:30 -0700 (PDT)
+Received: by 10.180.82.35 with HTTP; Wed, 4 Apr 2012 15:55:30 -0700 (PDT)
+In-Reply-To: <7viphf8cqh.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194750>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194751>
 
-Junio C Hamano wrote:
-> Micha=C5=82 Kiedrowicz <michal.kiedrowicz@gmail.com> writes:
->=20
-> > +	if (!@$add) {
-> > +		# pure removal
-> > +...
-> > +	} elsif (!@$rem) {
-> > +		# pure addition
-> > +...
-> > +	} else {
-> > +		# assume that it is change
-> > +		print join '',
->=20
-> I know this is not a new problem, but if your patch hunk has both '-'=
- and
-> '+' lines, what's there to "assume" that it is a change?  Isn't it al=
-ways?
-
-What I meant here when I was writing it that they are lines that change=
-d
-between two versions, like '!' in original (not unified) context format=
+On Thu, Apr 5, 2012 at 6:26 AM, Junio C Hamano <gitster@pobox.com> wrot=
+e:
+> Junio C Hamano <gitster@pobox.com> writes:
+>
+>> Johannes Sixt <j.sixt@viscovery.net> writes:
+>>
+>>> IMO, it is a sub-optimal implementation of rebase -p that it attemp=
+ts to
+>>> redo the merge. A better strategy is to just replay the changes bet=
+ween
+>>> the first parent and the merge commit, and then generate a new merg=
+e commit:
+>>>
+>>> =C2=A0 =C2=A0git diff-tree -p M^ M | git apply --index &&
+>>> =C2=A0 =C2=A0git rev-parse M^2 > .git/MERGE_HEAD &&
+>>> =C2=A0 =C2=A0git commit -c M
+>>>
+>>> This would side-step all the issues discussed here, no?
+>>
+>> Or cherry-pick the change made by the merge to its first parent, i.e=
 =2E
+>>
+>> =C2=A0 =C2=A0 =C2=A0 git cherry-pick -m 1 M
+>
+> Err, that was a confusing unfinished message. =C2=A0I meant the step =
+to replace
+> the part that uses pipe to "git apply", more like
+>
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0git rev-parse M^2 >.git/MERGE_HEAD &&
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0git cherry-pick --no-commit -m 1 M &&
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0git commit -c M
+>
+> The primary difference is that, because "apply -3" is not implemented=
+ yet,
+> this will help when the base has drifted too much from the correspond=
+ing
+> blob recorded in M^.
+>
 
-We can omit this comment.
+Ah, not so impossible after all :-).
 
-> > -		# empty add/rem block on start context block, or end of chunk
-> > -		if ((@rem || @add) && (!$class || $class eq 'ctx')) {
-> > -...
-> > +		## print from accumulator when have some add/rem lines or end
-> > +		# of chunk (flush context lines)
-> > +		if (((@rem || @add) && $class eq 'ctx') || !$class) {
->=20
-> This seems to change the condition.  Earlier, it held true if (there =
-is
-> anything to show), and (class is unset or equal to ctx).  The new cod=
-e
-> says something different.
+Yeah, I know, you were talking specifically about the approach
+suggested in my thought experiment.
 
-Yes it does, as described in the commit message:
+It does seem like such an approach would yield an outcome much closer
+to J Robert Ray's expectation.
 
-                                                    [...] It should
-  not change the gitweb output, but it **slightly changes its behavior*=
-*.
-  Before this commit, context is printed on the class change. Now,  it'=
-s
-  printed just before printing added and removed lines, and at the end =
-of
-  chunk.
+Good suggestion, Hannes! Are there any flaws, I wonder?
 
-The difference is that context lines are also printed accumulated now.
-Though why this change is required for refactoring could have been
-described in more detail...
-
->                             Also can $class be undef, and if so, does=
-n't=20
-> it trigger comparison between undef and 'ctx' by having !$class check=
- at
-> the end of || chain?
-
-Thanks for noticing this (I wonder why testsuite didn't caught it).
-It should be
-
- +		## print from accumulator when have some add/rem lines or end
- +		# of chunk (flush context lines)
- +		if (!$class || ((@rem || @add) && $class eq 'ctx')) {
-
---=20
-Jakub Narebski
-Poland
+jon.
