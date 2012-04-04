@@ -1,112 +1,64 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: displaying subtree merges
-Date: Wed, 04 Apr 2012 14:09:17 -0700
-Message-ID: <7vehs38arm.fsf@alter.siamese.dyndns.org>
-References: <4F7C787A.6050905@in.waw.pl>
+From: Shouichi KAMIYA <shouichi.kamiya@gmail.com>
+Subject: Question about include feature in .gitconfig
+Date: Thu, 5 Apr 2012 06:09:41 +0900
+Message-ID: <CALOHgxG2q_6EN5HFs=btX2hF4jC7AaJuMu=2AqbCeZBD+wNj3w@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "git\@vger.kernel.org" <git@vger.kernel.org>
-To: Zbigniew =?utf-8?Q?J=C4=99drzejewski-Szmek?= <zbyszek@in.waw.pl>
-X-From: git-owner@vger.kernel.org Wed Apr 04 23:09:28 2012
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Apr 04 23:10:11 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SFXSI-0005ZX-9d
-	for gcvg-git-2@plane.gmane.org; Wed, 04 Apr 2012 23:09:26 +0200
+	id 1SFXT0-0005xh-Qc
+	for gcvg-git-2@plane.gmane.org; Wed, 04 Apr 2012 23:10:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752167Ab2DDVJV convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 4 Apr 2012 17:09:21 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59331 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751944Ab2DDVJV convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 4 Apr 2012 17:09:21 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 32FAF3548;
-	Wed,  4 Apr 2012 17:09:20 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=PCZ7MB1pzE62
-	bh6wquYo83DVZWo=; b=nGlIwYzWVN1FOgpFCsqqUToKoslg0rxwIChzac9Xqvn/
-	pL8JVKVDfBQiQloqprzGyix8XLR9rRw8qttOnFlw4nUMOxDGG7aUvEvibnkq8lHO
-	xvDDmbFF3Qmofz76KB4Z/k2jZyQy72gKONY9rCsx0y9QQw0OAx0BqScGzmmkthM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=d7rEYd
-	yXiWvfA+xLrBBIpXLfUrz5bjrd30I5I8lmAqpAmgsim37tw19544ovXveFoMX9ID
-	ZDjDYkYoNRDgRTpimFYYutGL0ApV8A1CDv+pOg1NwFNpSNrrdp1Vcq/sLxU7Rlgu
-	gdUxpcQFUgAfY8iwxwNH2lrgf9AVmxh+We0U0=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2A9A03547;
-	Wed,  4 Apr 2012 17:09:20 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 86B083546; Wed,  4 Apr 2012
- 17:09:19 -0400 (EDT)
-In-Reply-To: <4F7C787A.6050905@in.waw.pl> ("Zbigniew =?utf-8?Q?J=C4=99drze?=
- =?utf-8?Q?jewski-Szmek=22's?= message of "Wed, 04 Apr 2012 18:36:10 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 71B5B6BC-7E9A-11E1-9596-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752203Ab2DDVKE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Apr 2012 17:10:04 -0400
+Received: from mail-pb0-f46.google.com ([209.85.160.46]:37987 "EHLO
+	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751935Ab2DDVKD (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Apr 2012 17:10:03 -0400
+Received: by pbcun15 with SMTP id un15so724335pbc.19
+        for <git@vger.kernel.org>; Wed, 04 Apr 2012 14:10:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to:content-type;
+        bh=QAAUbc8cTiYQlm37x7Q8vW7svViSMSN7Nl/DCkvghLE=;
+        b=VUq+fNVb1h2uxL0Q0/f5XxMiO8v6BP/F2UbsaI1aY1N9XYEXL5L/mjD68FDrQiNpU0
+         DmG1yE+qn5CcxFcn7Ylwr7lkqRPs0m72LhsWnzbNILrMG0Z+MTfqReq/pnAZbzs6vV9f
+         A4KgWN5O2RQ+iFJuajLpHGZWdBs18fWHtvH6RD6wrwd92sGekR3qyAU6Q6Md6fxBGR4c
+         esLioH7PoSr5+0avj3kim0KzZUC1Tg/nZceC5ehBw9EGD3v82L9jdEcIlFesKGgakW/i
+         41SpTTVq/wWgAH7+7BP2UYDGtPG7n41VDCAghmJoYjxdOqLTZx/5zI/gWsLSogk/tsJ4
+         2l1Q==
+Received: by 10.68.197.39 with SMTP id ir7mr1368994pbc.17.1333573803062; Wed,
+ 04 Apr 2012 14:10:03 -0700 (PDT)
+Received: by 10.142.222.4 with HTTP; Wed, 4 Apr 2012 14:09:41 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194741>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194742>
 
-Zbigniew J=C4=99drzejewski-Szmek  <zbyszek@in.waw.pl> writes:
+Hello git users and developers,
 
-> what is the best way to display merge commits of two branches with
-> separate roots?
-> ...
-> % git log --oneline --follow -- src/udevd.c
-> 4309599 warn about deprecated RUN+=3D"socket:" use
-> e64fae5 udevd: kill hanging event processes after 30 seconds
-> 912541b tabs are as useful as a hole in the head
-> ad29a9f merge udev/, libudev/, systemd/ files in src/; move extras/ t=
-o src/
-> ...
->
-> [src/udev/src/udevd.c is the original path]
+I have a question about "include" feature in config file.
+In .gitconfig I included .my_super_secret_file like below.
 
-I am absolutely sure I wrote on how to look at gitk and gitweb part of =
-the
-history on this list in the past few months, but my archive digging ski=
-ll
-seems to be failing me today X-<.
+# .gitconfig
+[include]
+    path = .my_super_secret_file
 
-I'd do something like this
+# .my_super_secret_file
+[github]
+    password = foobar
 
-	(
-		echo ^v1.7.9
-		git rev-list --first-parent --parents \
-                	v1.7.9..master -- gitk-git |
-	        sed -e 's/.* //'
-	) | xargs git log
+Now, my question is return value of "git config --global github.password".
+I expect it to return foobar but it returns nothing. Is this behavior expected?
 
-when I want to see a more detailed history than
+Cheers!
+Shouichi
 
-	git log v1.7.9..master -- gitk-git
-
-would give me.  The inner rev-list grabs the tips of the gitk history a=
-s
-of each merge points between v1.7.9..master, and the first echo ^v1.7.9
-excludes the part of gitk history that were already in v1.7.9.
-
-> Is there a way to follow the history also in the subtree?
-
-In any case, from the point of view of the history that is merged into =
-the
-other history as its subpart, each and every merge looks like a humongo=
-us
-rename with bunch of new additions.  It is a known limitation of the
-"subtree" merge, which was an ugly hack I invented before submodules ha=
-ve
-become ready.  It does not help that the "--follow" is merely a checkbo=
-x
-hack and does not keep track of different set of paths for each individ=
-ual
-traversal point is digging the history for; improving "--follow" to do =
-so
-will make it more useful but nobody has bothered.
+-- 
+Shouichi KAMIYA
