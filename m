@@ -1,72 +1,120 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: rebase -p loses amended changes
-Date: Wed, 04 Apr 2012 08:30:55 +0200
-Message-ID: <4F7BEA9F.3060805@viscovery.net>
-References: <592E2EEC-6CBA-48D6-8D44-34A971DD78EC@gmail.com> <CAH3Anrqorf481jw6GdHqOPg9WC0rD-OraOHZ7twWRF4+oJ9X4A@mail.gmail.com> <87fwcpun95.fsf@thomas.inf.ethz.ch> <CAH3AnrpasFU2bLEZsAXRQu4U+=R_YyW+-yRXDfzy2JQpqf9dNw@mail.gmail.com> <CADb3U=4Y0njLiYC1qrYbdm+h0h8vLh78yfz_u3B6veEqCX0xCQ@mail.gmail.com> <CAH3Anrq_Z0V=DpU1iH-A3F8RFWTG0_C1hEe3iDZYe=AYDTRT3g@mail.gmail.com> <CABURp0pnXvnT2=fDJXk-yiGctsJBHiNGSCOZiT4Vo74woi0Zxg@mail.gmail.com>
+From: Kacper Kornet <draenog@pld-linux.org>
+Subject: Re: [PATCH] gitweb: Option to omit column with time of the last
+ change
+Date: Wed, 4 Apr 2012 08:39:39 +0200
+Message-ID: <20120404063939.GA17024@camk.edu.pl>
+References: <20120403132735.GA12389@camk.edu.pl>
+ <201204040112.02269.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Jon Seymour <jon.seymour@gmail.com>,
-	J Robert Ray <jrobertray@gmail.com>,
-	Thomas Rast <trast@student.ethz.ch>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Phil Hord <phil.hord@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 04 08:31:07 2012
+Content-Type: text/plain; charset=iso-8859-2
+Cc: git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 04 08:40:00 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SFJkI-0002z0-Cs
-	for gcvg-git-2@plane.gmane.org; Wed, 04 Apr 2012 08:31:06 +0200
+	id 1SFJst-00008f-Ib
+	for gcvg-git-2@plane.gmane.org; Wed, 04 Apr 2012 08:39:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751287Ab2DDGbB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Apr 2012 02:31:01 -0400
-Received: from lilzmailso02.liwest.at ([212.33.55.13]:30337 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751239Ab2DDGbA (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Apr 2012 02:31:00 -0400
-Received: from cpe228-254-static.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.76)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1SFJkF-0006iW-R7; Wed, 04 Apr 2012 08:31:04 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id 77AA81660F;
-	Wed,  4 Apr 2012 08:30:56 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:11.0) Gecko/20120327 Thunderbird/11.0.1
-In-Reply-To: <CABURp0pnXvnT2=fDJXk-yiGctsJBHiNGSCOZiT4Vo74woi0Zxg@mail.gmail.com>
-X-Spam-Score: -1.4 (-)
+	id S1751428Ab2DDGjx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Apr 2012 02:39:53 -0400
+Received: from moat.camk.edu.pl ([148.81.175.50]:33200 "EHLO moat.camk.edu.pl"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750997Ab2DDGjw (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Apr 2012 02:39:52 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by moat.camk.edu.pl (Postfix) with ESMTP id 1A8305F0047;
+	Wed,  4 Apr 2012 08:40:38 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at camk.edu.pl
+Received: from moat.camk.edu.pl ([127.0.0.1])
+	by localhost (liam.camk.edu.pl [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id DKpio7kn-5eX; Wed,  4 Apr 2012 08:40:27 +0200 (CEST)
+Received: from gatekeeper2.camk.edu.pl (gatekeeper.camk.edu.pl [192.168.1.23])
+	by moat.camk.edu.pl (Postfix) with ESMTP id 43F245F0049;
+	Wed,  4 Apr 2012 08:40:26 +0200 (CEST)
+Received: by gatekeeper2.camk.edu.pl (Postfix, from userid 1293)
+	id 8BB494669F; Wed,  4 Apr 2012 08:39:39 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <201204040112.02269.jnareb@gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194680>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194681>
 
-Am 4/4/2012 0:09, schrieb Phil Hord:
-> On Tue, Apr 3, 2012 at 5:43 PM, Jon Seymour <jon.seymour@gmail.com> wrote:
->> Suppose you have a merge of a A and B that produces M, which is then
->> amended as M'.
->>
->> During rebase, you redo the merge A and B. If there are no conflicts,
->> then compare M with M' to produce D. You now have enough information
->> to reproduce the amended commit M' during a rebase (merge Ar and,Br
->> then apply D).
-> 
-> How does M' know it is an amended version of M?  When you amended the
-> commit M you threw away this linkage.
-> 
-> If you created M' as a new commit D instead, then I would agree that
-> you have enough information to do what you seek.  In fact, I'm pretty
-> sure git does this already.
+On Wed, Apr 04, 2012 at 01:12:01AM +0200, Jakub Narebski wrote:
+> On Tue, 3 Apr 2012, Kacper Kornet wrote:
+> > diff --git a/Documentation/gitweb.conf.txt b/Documentation/gitweb.conf.txt
+> > index 7aba497..bfeef21 100644
+> > --- a/Documentation/gitweb.conf.txt
+> > +++ b/Documentation/gitweb.conf.txt
+> > @@ -403,6 +403,9 @@ $default_projects_order::
+> >  	i.e. path to repository relative to `$projectroot`), "descr"
+> >  	(project description), "owner", and "age" (by date of most current
+> >  	commit).
+> > +
+> > +$no_list_age::
+> > +	Omit column with date of the most curren commit
 
-IMO, it is a sub-optimal implementation of rebase -p that it attempts to
-redo the merge. A better strategy is to just replay the changes between
-the first parent and the merge commit, and then generate a new merge commit:
+> s/curren/current/
 
-   git diff-tree -p M^ M | git apply --index &&
-   git rev-parse M^2 > .git/MERGE_HEAD &&
-   git commit -c M
+> Thanks for adding documentation, though I would prefer if you expanded
+> this description (for example including the information that it touches
+> projects list page).
 
-This would side-step all the issues discussed here, no?
+What about:
 
--- Hannes
+$no_list_age::
+	Whether to show the column with date of the most current commit on the
+	projects list page. It can save a bit of I/O.
+
+> > diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+> > index a8b5fad..f42468c 100755
+> > --- a/gitweb/gitweb.perl
+> > +++ b/gitweb/gitweb.perl
+> > @@ -133,6 +133,9 @@ our $default_projects_order = "project";
+> >  # (only effective if this variable evaluates to true)
+> >  our $export_ok = "++GITWEB_EXPORT_OK++";
+
+> > +# don't generate age column
+> > +our $no_list_age = 0;
+
+> "age" column where?
+
+> Hmmm... can't we come with a better name than $no_list_age?
+
+Any of $no_age_column, $omit_age_column, $no_last_commit would be better?
+
+
+> > @@ -5495,7 +5500,8 @@ sub git_project_list_body {
+> >  	                                 'tagfilter'  => $tagfilter)
+> >  		if ($tagfilter || $search_regexp);
+> >  	# fill the rest
+> > -	@projects = fill_project_list_info(\@projects);
+> > +	my @all_fields = $no_list_age ? ('descr', 'descr_long', 'owner', 'ctags', 'category') : ();
+> > +	@projects = fill_project_list_info(\@projects, @all_fields);
+
+> That looks quite strange on first glance.  I know that empty list means
+> filling all fields, but the casual reader migh wonder about this
+> conditional expression.
+
+> Perhaps it would be better to write it this way:
+
+>   -	@projects = fill_project_list_info(\@projects);
+>   +	my @fields = qw(descr descr_long owner ctags category);
+>   +	push @fields, 'age' unless ($no_list_age);
+>   +	@projects = fill_project_list_info(\@projects, @fields);
+
+> or something like that.
+
+> Well, at least until we come up with a better way to specify "all fields
+> except those specified".
+
+Yes, that's better. Especially that I would like also to introduce
+option to prevent printing repository owner everywhere.
+
+-- 
+  Kacper Kornet
