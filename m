@@ -1,79 +1,100 @@
-From: Holger Hellmuth <hellmuth@ira.uka.de>
-Subject: Re: How to create empty CENTRAL  git with master / development branch
- ?
-Date: Wed, 04 Apr 2012 20:00:17 +0200
-Message-ID: <4F7C8C31.7050206@ira.uka.de>
-References: <20120403162352.67cb165e@shiva.selfip.org>	<4F7B0F1B.3000304@ira.uka.de> <201204040711.q347BTXg025316@VM-MailSafe-02.soltecsis.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Output of 'diff' and 'diff --raw' not the same for modified
+ submodule
+Date: Wed, 04 Apr 2012 11:02:46 -0700
+Message-ID: <7v1uo39xyx.fsf@alter.siamese.dyndns.org>
+References: <CAFouetg6rB7oyYGBuMMSgWzaKFwUWTdp4OUo3czvJro4iHa_kg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "J. Bakshi" <joydeep.bakshi@infoservices.in>
-X-From: git-owner@vger.kernel.org Wed Apr 04 19:59:45 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Tim Henigan <tim.henigan@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 04 20:02:54 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SFUUj-0000Hg-6Z
-	for gcvg-git-2@plane.gmane.org; Wed, 04 Apr 2012 19:59:45 +0200
+	id 1SFUXl-0002DY-A7
+	for gcvg-git-2@plane.gmane.org; Wed, 04 Apr 2012 20:02:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932428Ab2DDR7k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Apr 2012 13:59:40 -0400
-Received: from iramx2.ira.uni-karlsruhe.de ([141.3.10.81]:52567 "EHLO
-	iramx2.ira.uni-karlsruhe.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S932300Ab2DDR7j (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 4 Apr 2012 13:59:39 -0400
-Received: from irams1.ira.uni-karlsruhe.de ([141.3.10.5])
-	by iramx2.ira.uni-karlsruhe.de with esmtps port 25 
-	id 1SFUUX-000737-7Z; Wed, 04 Apr 2012 19:59:38 +0200
-Received: from i20s141.iaks.uni-karlsruhe.de ([141.3.32.141] helo=[172.16.22.120])
-	by irams1.ira.uni-karlsruhe.de with esmtpsa port 25 
-	id 1SFUUX-00018w-2m; Wed, 04 Apr 2012 19:59:33 +0200
-User-Agent: Mozilla/5.0 (X11; U; Linux i686 (x86_64); en-US; rv:1.9.2.24) Gecko/20111101 SUSE/3.1.16 Thunderbird/3.1.16
-In-Reply-To: <201204040711.q347BTXg025316@VM-MailSafe-02.soltecsis.com>
-X-ATIS-AV: ClamAV (irams1.ira.uni-karlsruhe.de)
-X-ATIS-AV: ClamAV (iramx2.ira.uni-karlsruhe.de)
-X-ATIS-AV: Kaspersky (iramx2.ira.uni-karlsruhe.de)
-X-ATIS-Timestamp: iramx2.ira.uni-karlsruhe.de 1333562378.335460000
+	id S932453Ab2DDSCt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Apr 2012 14:02:49 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:34580 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932300Ab2DDSCs (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Apr 2012 14:02:48 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D31636DB8;
+	Wed,  4 Apr 2012 14:02:47 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=x2bNwqTjLjJlU34pd9PO2R0zrFo=; b=IS/IhR
+	zPBq3Y5mlOoR76HTPpXassS5uNKfvypOgtqSgaRT+FOI7/HJeTdumbA6s81QekhD
+	eunK6Zmj/buVUxp/bVCo2ki1UPFl2X1jAY4RoUl7y95FwHbhkgg13QX3+5M/PqEh
+	2W7pblP1EkhlPUAiQ+zUmxUsWUvehziS+u1kA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=MUWd5Kx/qCPYOjYxoUkhben1R1uBeU2G
+	X7E6eG+Jm2oYR06WGNDMng83+eSbOGMQJgmgVjxxmA1vK62BkVEdjNqFm3fEntMa
+	fYYVybmHlYJmD5BRY4Gcxp3xoGNR5ToPLO/iM1PpfY/YRYoadx1rvAM9pWxGaB6A
+	ZzG6xBVuPIY=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CB1656DB7;
+	Wed,  4 Apr 2012 14:02:47 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 558196DB4; Wed,  4 Apr 2012
+ 14:02:47 -0400 (EDT)
+In-Reply-To: <CAFouetg6rB7oyYGBuMMSgWzaKFwUWTdp4OUo3czvJro4iHa_kg@mail.gmail.com> (Tim
+ Henigan's message of "Wed, 4 Apr 2012 09:03:26 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 62A33E98-7E80-11E1-997C-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194714>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194715>
 
-On 04.04.2012 09:11, J. Bakshi wrote:
-> well.... I like to create the master just after creating the bare repo.
-> So that the users can just start working on it without "git push origin master"
+Tim Henigan <tim.henigan@gmail.com> writes:
 
-But what do you mean by working on it? The users don't work on the 
-central repository, everyone has his own repository. And when this user 
-wants to put something into the central repository he needs to push
+> If a submodule has new commits, then 'git diff' and 'git diff --raw'
+> report different outputs.
 
-> As I can already ssh into the central git server, I don't need any further
-> ssh://big.brother.edu/repo.git
+There is nothing different except for the inherent difference between a
+patch and the row information.
+
+> $ git version
+> git version 1.7.10.rc4
 >
-> So what should I do after creating a bare empty repo to generate the master
-> there ?
+> $ git diff
+> diff --git a/lib/tst-mergetool b/lib/tst-mergetool
+> index 9917ea0..5bc1908 160000
+> --- a/lib/tst-mergetool
+> +++ b/lib/tst-mergetool
+> @@ -1 +1 @@
+> -Subproject commit 9917ea0c228a0c24153da38df954f8a9d78cafac
+> +Subproject commit 5bc19083c436aaa85762cdc309e62ed98f5cc276
+>
+> $ git diff --raw --no-abbrev
+> :160000 160000 9917ea0c228a0c24153da38df954f8a9d78cafac
+> 0000000000000000000000000000000000000000 M  lib/tst-mergetool
+>
+>
+> 'git diff' shows the new SHA1 for the submodule, but 'git diff --raw'
+> shows the NULL ID.  From the diff man page, I understand that the NULL
+> ID indicates "creation, unmerged or 'look at the work tree'", but I
+> expected the output of two commands to match.
 
-I can give you two answers to that, both somewhat true:
+You are fooled by the textual patch output.
 
-1) The master branch already exists, HEAD already points to it (look 
-into the file HEAD).
+Consider "Subproject commit <blah>" a textconv-ed version of what is on
+that path.  Repeat the above but with a regular file at tst-mergetool in
+both preimage and postimage.  You will see exactly the same output.  Lines
+that begin with "-" show the information for the preimage, while those
+that begin with "+" show the information for the postimage.
 
-2) Without a commit that master can point to a master branch can't 
-exist. You first have to have a commit that you put into this 
-repository. Since it is bare you can't use "git add"+"git commit" you 
-have to push it from some other repository
-
-A branch is like a pointer in a programming language, it points to a 
-commit. If you don't have any commits, the pointer is NIL. I don't know 
-if git has any use for NIL pointers (i.e. an empty /refs/heads/master 
-file), but no file refs/heads/master or an empty file refs/heads/master 
-means practically the same as having the NIL value (as far as I know)
-
-
-Instead of "git push -u" you could also clone the bare repository from 
-somewhere (it will give a warning), add a file (for example ".gitignore" 
-if you want to keep the repository practically empty), commit, and push. 
-You can do this locally on the server if you want to.
+The --raw output always uses 0{40} to tell you that you need to look at
+the working tree for the information you seek for the right hand side (for
+"U" entries, 0{40} merely means that we do not have any information to
+show on the unmerged side in the first place), and also to mark that the
+side that has 0{40} on an "M" entry talks about the working tree.
