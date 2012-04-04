@@ -1,95 +1,138 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Updated tags on repo are not updated when pull
-Date: Tue, 03 Apr 2012 16:39:28 -0700
-Message-ID: <7vfwckbd1r.fsf@alter.siamese.dyndns.org>
-References: <27353249354D994D8E42D75D75FBA614896543@OASBEVEXM01.oaifield.onasgn.com>
- <CAJsNXTk8R0yjad0T9605v-CMMdCA+C0v3Rqt65h_k6MK88UD9g@mail.gmail.com>
- <27353249354D994D8E42D75D75FBA6148965A9@OASBEVEXM01.oaifield.onasgn.com>
- <27353249354D994D8E42D75D75FBA6148967BE@OASBEVEXM01.oaifield.onasgn.com>
- <CAJsNXT=mQgt++g-Tz=kfDjC+PC7wJhc77f6zu7vg8GSnJfDq3w@mail.gmail.com>
+From: Pete Wyckoff <pw@padd.com>
+Subject: Re: [PATCHv2 1/2] fast-import: test behavior of garbage after mark
+ references
+Date: Tue, 3 Apr 2012 20:46:10 -0400
+Message-ID: <20120404004610.GA4124@padd.com>
+References: <20120401225407.GA12127@padd.com>
+ <1333417910-17955-1-git-send-email-pw@padd.com>
+ <1333417910-17955-2-git-send-email-pw@padd.com>
+ <20120403140055.GC15589@burratino>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Sebastien Tardif <sebastien_tardif@oxfordcorp.com>,
-	"git\@vger.kernel.org" <git@vger.kernel.org>
-To: PJ Weisberg <pj@irregularexpressions.net>
-X-From: git-owner@vger.kernel.org Wed Apr 04 01:39:36 2012
+Cc: git@vger.kernel.org, Dmitry Ivankov <divanorama@gmail.com>,
+	David Barr <davidbarr@google.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 04 02:46:21 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SFDK4-0001Uh-27
-	for gcvg-git-2@plane.gmane.org; Wed, 04 Apr 2012 01:39:36 +0200
+	id 1SFEMe-0000Kf-GD
+	for gcvg-git-2@plane.gmane.org; Wed, 04 Apr 2012 02:46:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755057Ab2DCXjb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Apr 2012 19:39:31 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:43122 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754548Ab2DCXjb (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Apr 2012 19:39:31 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 717B769F1;
-	Tue,  3 Apr 2012 19:39:30 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=/dlOYiAc2TdSNjZZ4/uzvV2nMBQ=; b=WuUCtD
-	By7TW2NuZb2/Ww2XXZySNkNF9IEiaUyYC3x+zcUeqYgdM8YegaoeVrxTdl/CjKdi
-	v3SXChDnPtCcaOs2JjbLf/tyYXBZTC0DDbXOHBSUTE4U3FFLXQTIWP0iGPCT1mfv
-	yjF0LxPOSyZYxptQd85y6p85nWAEF52M2nFW8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=kdRykF0cz5p22tRrqE+frjoOOyqCxjzI
-	+l5eGebnsLor3U9gE297MlS4ES0iWSXXVrEyqw9HlV0wzPHMsteRHQpbQ+GFKVze
-	e83gygdX6nRAFIGf6sa217I9Ri4aDcc6jYRGgAcfpBl+gmcD5KdHedqf40p1gpC2
-	AD1CN10uDE4=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 68E5269EF;
-	Tue,  3 Apr 2012 19:39:30 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id BF9D669EE; Tue,  3 Apr 2012
- 19:39:29 -0400 (EDT)
-In-Reply-To: <CAJsNXT=mQgt++g-Tz=kfDjC+PC7wJhc77f6zu7vg8GSnJfDq3w@mail.gmail.com> (PJ
- Weisberg's message of "Tue, 3 Apr 2012 12:44:54 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 41D097BE-7DE6-11E1-84B8-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755281Ab2DDAqO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Apr 2012 20:46:14 -0400
+Received: from honk.padd.com ([74.3.171.149]:44033 "EHLO honk.padd.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754946Ab2DDAqN (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Apr 2012 20:46:13 -0400
+Received: from arf.padd.com (unknown [50.55.145.32])
+	by honk.padd.com (Postfix) with ESMTPSA id 91B4F20CE;
+	Tue,  3 Apr 2012 17:46:12 -0700 (PDT)
+Received: by arf.padd.com (Postfix, from userid 7770)
+	id 1FE73313CD; Tue,  3 Apr 2012 20:46:10 -0400 (EDT)
+Content-Disposition: inline
+In-Reply-To: <20120403140055.GC15589@burratino>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194673>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194674>
 
-PJ Weisberg <pj@irregularexpressions.net> writes:
+jrnieder@gmail.com wrote on Tue, 03 Apr 2012 09:00 -0500:
+> Pete Wyckoff wrote:
+> > +
+> > +#
+> > +# filemodify, three datarefs
+> > +#
+> > +test_expect_failure 'S: filemodify markref no space' '
+> 
+> What is this testing for?  The ideal is that each test_expect_foo line
+> contains a proposition and the test checks whether that proposition is
+> true or false.  For example:
+> 
+> 	test_expect_failure 'S: filemodify with garbage after mark errors out' '
+> 
+> Likewise in later tests.
 
-> Basically it's a branch that no one updates
-> except the build server under specific circumstances.  You could
-> enforce that with hooks, but I think the biggest problem is the word
-> "branch".  People (and UIs) have ideas of what a branch is and what
-> it's used for, which don't *quite* match the intended use.
->
-> I wonder if the Git developers have any ideas on the best way to
-> maintain a pointer to the latest successful automated build, and other
-> such things?
+I've fixed these locally, thanks for reading them!
 
-Such things, if they are not branches nor tags, can be placed under
-different naming hierarchy, e.g. refs/built, without interfering the
-normal semantics of "branches" (people expect to be able to check them
-out, build on them and push them back to advance their tips) or "tags"
-(people expect them to anchored at known points without floating).  Any
-semantics the project wants to assign to them by social convention, and
-Git does not care.  If the project participants are expected to always
-fetch them to keep them up to date in their local namespace, the project
-can tell them to place an extra entry for remote.origin.fetch in their
-repository config
+> > +	test_must_fail git fast-import --import-marks=marks <<-EOF 2>err &&
+> > +	commit refs/heads/S
+> > +	committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
+> > +	data <<COMMIT
+> > +	commit N
+> > +	COMMIT
+> > +	M 100644 :103x hello.c
+> > +	EOF
+> > +	cat err &&
+> > +	grep -q "Missing space after mark" err
+> 
+> Is this using "grep -q" to avoid repeating the same line in the output
+> twice?  It seems better to use plain grep or test_i18ngrep.
+> 
+> I'm also worried that if someone wants to change these messages
+> (perhaps to make the 'm' in "Missing" lowercase or something), they
+> will have to change all of these tests.  If we want to be absolutely
+> sure that git detects the right error instead of something else, I
+> would suggest
+> 
+> 	test_i18ngrep "space after mark" message
+> 
+> I'm also not convinced the error message is worth checking at all ---
+> as long as fast-import errors out, won't the frontend author be able
+> to look in the logs to find out the problematic line anyway?
 
-	[remote "origin"]
-        	fetch = +refs/built/*:refs/built/*
+I'm a bit confused.  I read through 5e9637c (i18n: add
+infrastructure for translating Git with gettext, 2011-11-18), and
+GETTEXT_POISON seems to be used to find untranslated messages.
+What I want to test here is that the functionality works: do the
+right untranslated messages get printed.
 
-in the same document they tell them where and how to clone the project
-history from.
+Changing the "Missing" to "missing" would require fixing the
+tests, and that seems okay.
 
-I would however use the usual branch perhaps with a well-known prefix if I
-were doing this.  You would want to forbid updates of them from random
-people at the central site with a pre-receive hook anyway; using a
-different hierarchy only to avoid the word "branch" is not worth the extra
-complexity.
+I'm happy to drop the "-q" and drop the "Missing", but wonder if
+you're looking for something deeper.
+
+> > +test_expect_failure 'S: filemodify inline no space' '
+> > +	test_must_fail git fast-import --import-marks=marks <<-EOF 2>err &&
+> > +	commit refs/heads/S
+> > +	committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
+> > +	data <<COMMIT
+> > +	commit N
+> > +	COMMIT
+> > +	M 100644 inlineX hello.c
+> > +	data <<BLOB
+> > +	inline
+> > +	BLOB
+> > +	EOF
+> > +	cat err &&
+> > +	grep -q "Missing space after .inline." err
+> 
+> Does this fail because the error message is "Missing space after SHA1"
+> instead?  I'm not sure that's actually a bug, unless we want to
+> correctly nitpick that the keyword "inline" that is a stand-in for an
+> object name is not itself one.
+
+The form of the message matters.  Datarefs can be inline, SHA1s,
+or marks.  It is confusing to see an error message about a SHA1
+when the input stream has no SHA1s.  The existing code always
+says "SHA1", which is wrong if you gave it a mark or an inline.
+
+> I don't think the tests for exact error messages make too much sense
+> without the next patch, so I would suggest leaving them out if this
+> patch is supposed to be applicable on its own.
+> 
+> Thanks for some thorough tests.
+
+You think I should squash it all together, then?  Or factor the
+tests into two chunks:
+    - tests for behavior that silently accepts broken input; and,
+    - tests for behavior where the bogus input is detcetd, but
+      incorrect error messages are given?
+
+		-- Pete
