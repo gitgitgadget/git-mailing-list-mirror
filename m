@@ -1,83 +1,79 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH (bugfix)] gitweb: Fix unintended "--no-merges" for
- regular Atom feed
-Date: Wed, 04 Apr 2012 10:47:38 -0700
-Message-ID: <7v62df9yo5.fsf@alter.siamese.dyndns.org>
-References: <4F79D76D.80805@pipping.org>
- <1333542344-20421-1-git-send-email-jnareb@gmail.com>
+From: Holger Hellmuth <hellmuth@ira.uka.de>
+Subject: Re: How to create empty CENTRAL  git with master / development branch
+ ?
+Date: Wed, 04 Apr 2012 20:00:17 +0200
+Message-ID: <4F7C8C31.7050206@ira.uka.de>
+References: <20120403162352.67cb165e@shiva.selfip.org>	<4F7B0F1B.3000304@ira.uka.de> <201204040711.q347BTXg025316@VM-MailSafe-02.soltecsis.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Sebastian Pipping <sebastian@pipping.org>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 04 19:47:47 2012
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "J. Bakshi" <joydeep.bakshi@infoservices.in>
+X-From: git-owner@vger.kernel.org Wed Apr 04 19:59:45 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SFUJ7-0001nT-Ca
-	for gcvg-git-2@plane.gmane.org; Wed, 04 Apr 2012 19:47:45 +0200
+	id 1SFUUj-0000Hg-6Z
+	for gcvg-git-2@plane.gmane.org; Wed, 04 Apr 2012 19:59:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932373Ab2DDRrl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Apr 2012 13:47:41 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:60747 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932348Ab2DDRrk (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Apr 2012 13:47:40 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 448926A09;
-	Wed,  4 Apr 2012 13:47:40 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=8Lr5SNUCd4h89DOF6xcqob0HXoo=; b=Lxg8Rk
-	DiN2ikS+zpttkjbDPHJpgVgffjtNBSrLlb/w6Cal55saiXYHuUZyPvCMimmQRroZ
-	p5fe4skRFdTPuj0GCBhB8OiDv4l2ZoYIiomv/62gGWHoNsquUmdJ+jHoiNMyQzYX
-	BVXfNKT7BDzAIyE1VWMBJhnnAz5fXTulwke0Y=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Ye2kwpvAziZyTRMvUQABoaerEXOPWmfb
-	nvHQnM2coDuSrMtiJsw5VNHcAZSY/c0/pswiLDkebHg6Tl521vEmzEg6sSvecCcr
-	XfRkYsC7NJ9oLwYSRUPmu97p+TI7u+/7Yj2Tg9fIejLAoenf6HwNIiLZp+Ze+1EX
-	1K0OKhMPwYg=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3B9046A08;
-	Wed,  4 Apr 2012 13:47:40 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C692E6A06; Wed,  4 Apr 2012
- 13:47:39 -0400 (EDT)
-In-Reply-To: <1333542344-20421-1-git-send-email-jnareb@gmail.com> (Jakub
- Narebski's message of "Wed, 4 Apr 2012 14:25:44 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 45B46E08-7E7E-11E1-9BD8-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S932428Ab2DDR7k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Apr 2012 13:59:40 -0400
+Received: from iramx2.ira.uni-karlsruhe.de ([141.3.10.81]:52567 "EHLO
+	iramx2.ira.uni-karlsruhe.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S932300Ab2DDR7j (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 4 Apr 2012 13:59:39 -0400
+Received: from irams1.ira.uni-karlsruhe.de ([141.3.10.5])
+	by iramx2.ira.uni-karlsruhe.de with esmtps port 25 
+	id 1SFUUX-000737-7Z; Wed, 04 Apr 2012 19:59:38 +0200
+Received: from i20s141.iaks.uni-karlsruhe.de ([141.3.32.141] helo=[172.16.22.120])
+	by irams1.ira.uni-karlsruhe.de with esmtpsa port 25 
+	id 1SFUUX-00018w-2m; Wed, 04 Apr 2012 19:59:33 +0200
+User-Agent: Mozilla/5.0 (X11; U; Linux i686 (x86_64); en-US; rv:1.9.2.24) Gecko/20111101 SUSE/3.1.16 Thunderbird/3.1.16
+In-Reply-To: <201204040711.q347BTXg025316@VM-MailSafe-02.soltecsis.com>
+X-ATIS-AV: ClamAV (irams1.ira.uni-karlsruhe.de)
+X-ATIS-AV: ClamAV (iramx2.ira.uni-karlsruhe.de)
+X-ATIS-AV: Kaspersky (iramx2.ira.uni-karlsruhe.de)
+X-ATIS-Timestamp: iramx2.ira.uni-karlsruhe.de 1333562378.335460000
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194713>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194714>
 
-Jakub Narebski <jnareb@gmail.com> writes:
+On 04.04.2012 09:11, J. Bakshi wrote:
+> well.... I like to create the master just after creating the bare repo.
+> So that the users can just start working on it without "git push origin master"
 
-> Junio, the bug is very minor, so I don't know if it is worth fixing
-> for 1.7.10.
+But what do you mean by working on it? The users don't work on the 
+central repository, everyone has his own repository. And when this user 
+wants to put something into the central repository he needs to push
 
-Does this exist in 1.7.9.x maintenance track?  If it is an old bug, I do
-not think it should go to 1.7.10 proper (perhaps 1.7.10.1) this late, and
-if it is a bug in a new feature added for 1.7.10, we may want to fix it
-before the final, as the impact of the patch seems very minor.
-
->  gitweb/gitweb.perl |    1 +
->  1 files changed, 1 insertions(+), 0 deletions(-)
+> As I can already ssh into the central git server, I don't need any further
+> ssh://big.brother.edu/repo.git
 >
-> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-> index a8b5fad2..ca6f038 100755
-> --- a/gitweb/gitweb.perl
-> +++ b/gitweb/gitweb.perl
-> @@ -3886,6 +3886,7 @@ sub print_feed_meta {
->  				'-type' => "application/$type+xml"
->  			);
->  
-> +			$href_params{'extra_options'} = undef;
->  			$href_params{'action'} = $type;
->  			$link_attr{'-href'} = href(%href_params);
->  			print "<link ".
+> So what should I do after creating a bare empty repo to generate the master
+> there ?
+
+I can give you two answers to that, both somewhat true:
+
+1) The master branch already exists, HEAD already points to it (look 
+into the file HEAD).
+
+2) Without a commit that master can point to a master branch can't 
+exist. You first have to have a commit that you put into this 
+repository. Since it is bare you can't use "git add"+"git commit" you 
+have to push it from some other repository
+
+A branch is like a pointer in a programming language, it points to a 
+commit. If you don't have any commits, the pointer is NIL. I don't know 
+if git has any use for NIL pointers (i.e. an empty /refs/heads/master 
+file), but no file refs/heads/master or an empty file refs/heads/master 
+means practically the same as having the NIL value (as far as I know)
+
+
+Instead of "git push -u" you could also clone the bare repository from 
+somewhere (it will give a warning), add a file (for example ".gitignore" 
+if you want to keep the repository practically empty), commit, and push. 
+You can do this locally on the server if you want to.
