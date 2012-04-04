@@ -1,105 +1,72 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCHv2 1/2] fast-import: test behavior of garbage after mark
- references
-Date: Wed, 4 Apr 2012 00:43:17 -0500
-Message-ID: <20120404054316.GB2460@burratino>
-References: <20120401225407.GA12127@padd.com>
- <1333417910-17955-1-git-send-email-pw@padd.com>
- <1333417910-17955-2-git-send-email-pw@padd.com>
- <20120403140055.GC15589@burratino>
- <20120404004610.GA4124@padd.com>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: rebase -p loses amended changes
+Date: Wed, 04 Apr 2012 08:30:55 +0200
+Message-ID: <4F7BEA9F.3060805@viscovery.net>
+References: <592E2EEC-6CBA-48D6-8D44-34A971DD78EC@gmail.com> <CAH3Anrqorf481jw6GdHqOPg9WC0rD-OraOHZ7twWRF4+oJ9X4A@mail.gmail.com> <87fwcpun95.fsf@thomas.inf.ethz.ch> <CAH3AnrpasFU2bLEZsAXRQu4U+=R_YyW+-yRXDfzy2JQpqf9dNw@mail.gmail.com> <CADb3U=4Y0njLiYC1qrYbdm+h0h8vLh78yfz_u3B6veEqCX0xCQ@mail.gmail.com> <CAH3Anrq_Z0V=DpU1iH-A3F8RFWTG0_C1hEe3iDZYe=AYDTRT3g@mail.gmail.com> <CABURp0pnXvnT2=fDJXk-yiGctsJBHiNGSCOZiT4Vo74woi0Zxg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Dmitry Ivankov <divanorama@gmail.com>,
-	David Barr <davidbarr@google.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: Pete Wyckoff <pw@padd.com>
-X-From: git-owner@vger.kernel.org Wed Apr 04 07:43:51 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Jon Seymour <jon.seymour@gmail.com>,
+	J Robert Ray <jrobertray@gmail.com>,
+	Thomas Rast <trast@student.ethz.ch>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Phil Hord <phil.hord@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 04 08:31:07 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SFJ0V-0008DF-LP
-	for gcvg-git-2@plane.gmane.org; Wed, 04 Apr 2012 07:43:47 +0200
+	id 1SFJkI-0002z0-Cs
+	for gcvg-git-2@plane.gmane.org; Wed, 04 Apr 2012 08:31:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751428Ab2DDFnV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Apr 2012 01:43:21 -0400
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:57494 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751082Ab2DDFnU (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Apr 2012 01:43:20 -0400
-Received: by iagz16 with SMTP id z16so680070iag.19
-        for <git@vger.kernel.org>; Tue, 03 Apr 2012 22:43:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=rz+1IzujjJyXneFu4KJHrDueTW0XeoVUbFxR6G9Vnzs=;
-        b=EKMAs+smIKgb17d3ZYokS8H0JK0x4beZohDgiIbEqAJVlziwIUByEIUkRdPFFvTBio
-         XgRkirWDlXxXVdtSrMhmt97lGmXgrwAgIQyQ++WiT+6x6uKTSres9kZt7OuvdmXKgwkt
-         MYFlmVhchI5ja6wTFJuDJzoUmABxtx+5sAZiTG9R5TPwBQevdLrjF5A2w86RaKRXO4SD
-         KJIY5wJweACUtWT7Y+9dhe5Jyf1ybJYWPYwKSCz4nl0IZITI1l3ph19E8tDAqw99JVBG
-         x05ZX/hYlPgCbFQUL5jwWwnmhV9gKGAJ2KvfHNfdeSpwDrc5ebHunBlTFHs0D/xkXO4P
-         5/2Q==
-Received: by 10.50.6.167 with SMTP id c7mr579444iga.4.1333518200292;
-        Tue, 03 Apr 2012 22:43:20 -0700 (PDT)
-Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
-        by mx.google.com with ESMTPS id gf4sm1253665igb.14.2012.04.03.22.43.19
-        (version=SSLv3 cipher=OTHER);
-        Tue, 03 Apr 2012 22:43:19 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <20120404004610.GA4124@padd.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1751287Ab2DDGbB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Apr 2012 02:31:01 -0400
+Received: from lilzmailso02.liwest.at ([212.33.55.13]:30337 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751239Ab2DDGbA (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Apr 2012 02:31:00 -0400
+Received: from cpe228-254-static.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.76)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1SFJkF-0006iW-R7; Wed, 04 Apr 2012 08:31:04 +0200
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id 77AA81660F;
+	Wed,  4 Apr 2012 08:30:56 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:11.0) Gecko/20120327 Thunderbird/11.0.1
+In-Reply-To: <CABURp0pnXvnT2=fDJXk-yiGctsJBHiNGSCOZiT4Vo74woi0Zxg@mail.gmail.com>
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194679>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194680>
 
-On Tue, Apr 03, 2012 at 08:46:10PM -0400, Pete Wyckoff wrote:
-> jrnieder@gmail.com wrote on Tue, 03 Apr 2012 09:00 -0500:
+Am 4/4/2012 0:09, schrieb Phil Hord:
+> On Tue, Apr 3, 2012 at 5:43 PM, Jon Seymour <jon.seymour@gmail.com> wrote:
+>> Suppose you have a merge of a A and B that produces M, which is then
+>> amended as M'.
+>>
+>> During rebase, you redo the merge A and B. If there are no conflicts,
+>> then compare M with M' to produce D. You now have enough information
+>> to reproduce the amended commit M' during a rebase (merge Ar and,Br
+>> then apply D).
+> 
+> How does M' know it is an amended version of M?  When you amended the
+> commit M you threw away this linkage.
+> 
+> If you created M' as a new commit D instead, then I would agree that
+> you have enough information to do what you seek.  In fact, I'm pretty
+> sure git does this already.
 
->> Is this using "grep -q" to avoid repeating the same line in the output
->> twice?  It seems better to use plain grep or test_i18ngrep.
-[...]
-> What I want to test here is that the functionality works: do the
-> right untranslated messages get printed.
->
-> Changing the "Missing" to "missing" would require fixing the
-> tests, and that seems okay.
+IMO, it is a sub-optimal implementation of rebase -p that it attempts to
+redo the merge. A better strategy is to just replay the changes between
+the first parent and the merge commit, and then generate a new merge commit:
 
-Let me reiterate this a little then.
+   git diff-tree -p M^ M | git apply --index &&
+   git rev-parse M^2 > .git/MERGE_HEAD &&
+   git commit -c M
 
-Suppose I mark the messages in fast-import.c with _() so they get
-translated.  Then your tests will fail, so I have to tweak them.  Fine
---- the test tweaks take some time, but they're doable.  Nothing lost,
-right?
+This would side-step all the issues discussed here, no?
 
-No, something major would be lost.
-
-Tests normally save later coders time, by giving immediate feedback
-that they would normally only get by letting a feature be used over a
-long time by real users.  They also dissuade people from changing
-git's behavior without thinking carefully about the consequences ---
-each broken test represents a class of script or user expectation that
-is potentially being broken.
-
-Similarly, a test that checks that git produces such-and-such exact
-output is dissuading me from making certain behavior changes by adding
-to the work needed to make them (I have to adjust tests, too).  So now
-I am less likely to
-
- (1) reword the message to make it clearer in some way in response to
-     user feedback
-
- (2) mark it for translation so the operator can see a message in her
-     native language
-
-How is making that hard in any way a good thing?
-
-Relaxing the pattern addresses (1).  Using test_i18ngrep instead of
-grep addresses (2).
-
-Jonathan
+-- Hannes
