@@ -1,99 +1,108 @@
-From: "J. Bakshi" <joydeep.bakshi@infoservices.in>
-Subject: Re: How to create empty CENTRAL  git with master / development
- branch ?
-Date: Wed, 4 Apr 2012 12:41:22 +0530
-Message-ID: <201204040711.q347BTXg025316@VM-MailSafe-02.soltecsis.com>
-References: <20120403162352.67cb165e@shiva.selfip.org>
-	<4F7B0F1B.3000304@ira.uka.de>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH 1/4] sha1_name: introduce getn_sha1() to take length
+Date: Wed, 04 Apr 2012 09:35:26 +0200
+Message-ID: <vpqr4w40x1d.fsf@bauges.imag.fr>
+References: <1333029495-10034-1-git-send-email-artagnon@gmail.com>
+	<1333029495-10034-2-git-send-email-artagnon@gmail.com>
+	<20120403220817.GE19858@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Holger Hellmuth <hellmuth@ira.uka.de>
-X-From: git-owner@vger.kernel.org Wed Apr 04 09:12:14 2012
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
+	Git List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	=?iso-8859-1?Q?Cl=E9ment?= Poulain 
+	<clement.poulain@ensimag.imag.fr>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 04 09:35:41 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SFKO6-0002xL-9K
-	for gcvg-git-2@plane.gmane.org; Wed, 04 Apr 2012 09:12:14 +0200
+	id 1SFKkl-0000wW-1t
+	for gcvg-git-2@plane.gmane.org; Wed, 04 Apr 2012 09:35:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753418Ab2DDHLx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Apr 2012 03:11:53 -0400
-Received: from smtp.unlimitedmail.net ([94.127.184.243]:45641 "EHLO
-	VM-MailSafe-02.soltecsis.com" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1753390Ab2DDHLx (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 4 Apr 2012 03:11:53 -0400
-Received: from shiva.selfip.org (ABTS-North-Static-116.30.176.122.airtelbroadband.in [122.176.30.116] (may be forged))
-	(authenticated bits=0)
-	by VM-MailSafe-02.soltecsis.com (8.14.5/8.14.5) with ESMTP id q347BTXg025316;
-	Wed, 4 Apr 2012 09:11:32 +0200
-In-Reply-To: <4F7B0F1B.3000304@ira.uka.de>
-X-Mailer: Claws Mail 3.8.0 (GTK+ 2.24.10; x86_64-pc-linux-gnu)
-Face: iVBORw0KGgoAAAANSUhEUgAAADAAAAAwAgMAAAAqbBEUAAAADFBMVEW2UCaWJQ3jnnRrCARshP4hAAACQElEQVQokRWSzU4aYRiFDwhiJjGAimxqRlzhbGpDm24wjmhTQtIIOlMag6GXUP92Tj5obcaaJqRJidvBlDi8N1FpbUzcFGgNK0MvgZKZsmHydVw+OWd1zgOiaH+98Ejt/SGCaTDlmZMYdl+cEmjMKQydBL97kJFAYlfbVab5KHS5AONrnoenPhVHbU1A4yezEYup+1crGRhtfuv9kPZtLRcz8Mw4ykJ1UPJF72Qkg09SdHFFxkY/iZW1HxNSY/zLSbS1B9sKLW7TaU3yB55DHXnjL4n0m1BSRNOZoKo8IXqx1YVqZ6is+C0YwS7Gml4q5/mdRFEbSkig95xbZEaHCMpEJ5x3yPRzyCEqzcTm0lMUscEEE0gfm/64RwPbpJyTIlPbLnNoMoku1JxNAHyTzhzQO2fWXL5PKgOD9H+fPQW4lUqnJk0OqkYEWorETE0SBzrmwFP0lj7Gn1r6qgZ4z8/jM/GVm7Mcg5apH4db8d43PccBoY6oHGAdPRuBX2m8DrSn+Y1+GALLNtLskjWFQHaEXsvMFvsFgc5sD4oyZT39wjiJQwu5ljRbSheqQnHIEfGfV2n+oL7KeBetvrcumQc1lbsQWJVj2fkDk/dceCwqi6qn4y7gcLxhlnCY71DgyGG4yNuvKnyPfBtzNipdRy6r/YXI9Pc+dM7WocqIHGU7KDlsSQn7wsHfSS9MVti9Dau5jfYkuU
- 9Y13Z45+havZRg6H/Xhgk+au7c61L6FVD3XVu44IpkPpxUtnrqkiXRf3v/EFxxaZnHAAAAAElFTkSuQmCC
-X-SOLTECSIS-MailScanner-ID: q347BTXg025316
-X-SOLTECSIS-MailScanner: Found to be clean
-X-SOLTECSIS-MailScanner-From: joydeep.bakshi@infoservices.in
-X-Spam-Status: No
+	id S1751550Ab2DDHfe convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 4 Apr 2012 03:35:34 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:45962 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751447Ab2DDHfd (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Apr 2012 03:35:33 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id q347UC9q032517
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Wed, 4 Apr 2012 09:30:12 +0200
+Received: from bauges.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1SFKkZ-0002Ci-7M; Wed, 04 Apr 2012 09:35:27 +0200
+In-Reply-To: <20120403220817.GE19858@burratino> (Jonathan Nieder's message of
+	"Tue, 3 Apr 2012 17:08:18 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.93 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Wed, 04 Apr 2012 09:30:13 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: q347UC9q032517
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1334129414.76032@9fQ5qrpfK2GT6mpF+FN2ow
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194683>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194684>
 
-On Tue, 03 Apr 2012 16:54:19 +0200
-Holger Hellmuth <hellmuth@ira.uka.de> wrote:
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-> On 03.04.2012 12:53, J. Bakshi wrote:
-> > Dear list,
-> >
-> > I need to create git repos on a remote server by the command executed on that server
-> > through ssh as
-> >
-> > ` ` ` ` `
-> > git --bare init project_name.git
-> 
-> you probably meant "git init --bare project_name.git"
+> (cc-ing Cl=E9ment who is one of the last people to change this family=
+ of
+>  APIs, and Matthieu who knows these codepaths well and may have been =
+a
+>  mentor for that project)
 
-Yes right. Sorry for the mistake.
+I wouldn't say I know them well, but I did touch them in the past.
 
-> 
-> > How can I also add the master branch, so that users don't need to
-> > execute  [ git push origin master ]  ?
-> 
-> What else do you want them to execute? "git init --bare" creates an 
-> empty repository. Without pushing to it it will always stay empty
-> 
-> Generally: If you want a central repository, the first one to push to it 
-> might do something like this:
-> 
-> git remote add origin ssh://big.brother.edu/repo.git
-> git push origin master
-> git config branch.master.remote origin
-> git config branch.master.merge refs/heads/master
-> 
-> Everyone else could do
-> 
-> git clone 
-> 
-> Now everyone will push to the repository master when they do "git push".
-> 
-> Is that what you wanted to know?
+> Holy cow this function is going crazy.  So let's take a survey of
+> the public functions in this family.
+>
+>  [... nice explanations of different functions ...]
 
-well.... I like to create the master just after creating the bare repo.
-So that the users can just start working on it without "git push origin master"
-As I can already ssh into the central git server, I don't need any further
-ssh://big.brother.edu/repo.git
+Good job. I think your explanations could actually be added as comments
+to cache.h to document the corresponding functions.
 
-So what should I do after creating a bare empty repo to generate the master
-there ?
+> My first reaction is that the meaning of the _1 suffix is not going t=
+o
+> be obvious to newcomers.  Any ideas for addressing that?
 
-# git init --bare project_name.git
+It seems I'm the one who introduced get_sha1_with_context_1. I meant
+"internal variant of the one without _1", which is a convention used in
+other places of Git's code, but usually as static functions, not in .h
+files.
 
-# cd project_name.git
+> "get_sha1_with_context_1" has no external callers so it could probabl=
+y
+> be made private.
 
-.... and can I execute here any command to add master ?
+I kept it public as a very small implementation detail: I tried not to
+introduce performance penalty, hence made get_sha1_with_mode inline
+(since it is really a trivial wrapper). But we probably wouldn't notice
+the difference in performance making the _1 version private and losing
+the "static inline"-ness of the public version.
 
-Thanks
+Another way to say this is: get_sha1_with_context_1() does the real job
+(perhaps it should be called get_sha1_real()?), and others are
+convenience wrappers. Since convenience wrappers are convenient, nobody
+use the actual function directly.
+
+> Or maybe it makes sense to bite the bullet and add the length
+> argument to all callers:
+
+I don't think so. Convenience wrappers are meant to be simple to call,
+and I don't think we want to force everybody to call strlen() before
+calling them.
+
+--=20
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
