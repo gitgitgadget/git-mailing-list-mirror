@@ -1,86 +1,68 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] add -p: skip conflicted paths
-Date: Wed, 04 Apr 2012 14:31:56 -0700
-Message-ID: <7v62df89pv.fsf@alter.siamese.dyndns.org>
-References: <1332966017-6100-1-git-send-email-kusmabite@gmail.com>
- <7viphotng8.fsf@alter.siamese.dyndns.org>
- <7vaa30tmk9.fsf@alter.siamese.dyndns.org>
- <7v62dotltk.fsf@alter.siamese.dyndns.org>
- <20120329054558.GA27604@sigill.intra.peff.net>
- <CABPQNSY8gNPZTV77AjFbHn1HA9S=fw3NC+H8bCzZOPFyLg0nHQ@mail.gmail.com>
- <7v398mgfdu.fsf@alter.siamese.dyndns.org>
- <20120404094618.GA13870@sigill.intra.peff.net>
- <7v398jbjbo.fsf@alter.siamese.dyndns.org>
- <7vty0z8i66.fsf@alter.siamese.dyndns.org>
- <20120404202527.GA1363@sigill.intra.peff.net>
+Subject: Re: sparse-checkout test failures [powerpc-darwin8]
+Date: Wed, 04 Apr 2012 14:34:43 -0700
+Message-ID: <7v1uo389l8.fsf@alter.siamese.dyndns.org>
+References: <Pine.LNX.4.64.1204041616001.16407@hal-00.csl.cornell.edu>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: kusmabite@gmail.com, git@vger.kernel.org,
-	matthieu.moy@grenoble-inp.fr, hellmuth@ira.uka.de
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Apr 04 23:32:09 2012
+Cc: git@vger.kernel.org
+To: David Fang <fang@csl.cornell.edu>
+X-From: git-owner@vger.kernel.org Wed Apr 04 23:34:56 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SFXoD-000109-DI
-	for gcvg-git-2@plane.gmane.org; Wed, 04 Apr 2012 23:32:05 +0200
+	id 1SFXqu-0002Q1-RR
+	for gcvg-git-2@plane.gmane.org; Wed, 04 Apr 2012 23:34:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753173Ab2DDVcA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Apr 2012 17:32:00 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:37731 "EHLO
+	id S1756759Ab2DDVes (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Apr 2012 17:34:48 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:38946 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752771Ab2DDVb7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Apr 2012 17:31:59 -0400
+	id S1753935Ab2DDVer (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Apr 2012 17:34:47 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 122C93A72;
-	Wed,  4 Apr 2012 17:31:59 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 80EBA3AE0;
+	Wed,  4 Apr 2012 17:34:47 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=wfdsJFsvkt0sNYHU+XpxvnJuBME=; b=Ie8j86
-	LdV/mCh3wztR0KFxDZ9QDPzpzWJyi8+KpKb6/nAiSuZAlT33zCmRYIsCJuYAf5O2
-	lNbwN1cUVCeHehM3TGFePrmZ5KphvoXxqrTu4s6F4V1ZEHCJhktG8qGuPjKBxUUX
-	MCyDjbZGIpuhV4SiXcQHu7OHo/8IvcagBqcn0=
+	:content-type; s=sasl; bh=NrIhkwuAv6ecC5eBTgFhZmTj1DU=; b=BkKJ6L
+	zU33m+WA0RRpOEuVyV1br9N/1oN9Si5YWJWe28Sl4/KBjVwO6fAiKCKX1B5STdt/
+	rntKE/Pn8VdlX6w2CVrxBHy0L9NWfy2oy/xB92Tgkh0aUWsuEqt+GUVLFwv8d0+T
+	enzL+PnpxK0X+iBKSLdm5ot4XkJ/rlTCFg+ro=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=GeNkeBq3XUSiKUNcsBrXV4j9a/HGZnKq
-	HxTZ9YrTBm6dxotrDamaQwYb8f5VRzf7xrDDq+3gf6MZJ9/CWBQelDXTIS+lPYjk
-	vhubNDsYw6hY17rAZ3UVoyVdiMxdCa6lFSye9qszaumJxdK/VSg7ANmz/sg/vrkX
-	r88e76bQl/w=
+	:content-type; q=dns; s=sasl; b=p5SXVmT5buKemql9bkOzz0A0gRCRO/jL
+	r4ud24qavhqoNqpcAx0Jj9AWiIUHwRT19NpvDHS0ZjjQEjQISAtC93Y64P5SNtYC
+	M/l3ENagPWAjvKPOTdR/5nBXwrHsJT6yJun1pqJJQj4v6sJXjnv3NVHpFwpCYSCl
+	thV6Wt7cbZY=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 099283A71;
-	Wed,  4 Apr 2012 17:31:59 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7613C3ADF;
+	Wed,  4 Apr 2012 17:34:47 -0400 (EDT)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 937293A70; Wed,  4 Apr 2012
- 17:31:58 -0400 (EDT)
-In-Reply-To: <20120404202527.GA1363@sigill.intra.peff.net> (Jeff King's
- message of "Wed, 4 Apr 2012 16:25:27 -0400")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 450BE3ADD; Wed,  4 Apr 2012
+ 17:34:45 -0400 (EDT)
+In-Reply-To: <Pine.LNX.4.64.1204041616001.16407@hal-00.csl.cornell.edu>
+ (David Fang's message of "Wed, 4 Apr 2012 16:20:08 -0400 (EDT)")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 9BC4BD60-7E9D-11E1-8128-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: FF1DD900-7E9D-11E1-8059-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194745>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194746>
 
-Jeff King <peff@peff.net> writes:
+David Fang <fang@csl.cornell.edu> writes:
 
-> Yes, this is way better. I don't mind discarding the --raw entries that
-> are not used; they cost nothing to generate on top of what we are
-> already doing, so it is really just the cost of shuttling a few bytes
-> across the pipe.
->
->> -	for (run_cmd_pipe(qw(git diff-files --numstat --summary --), @tracked)) {
->> +	for (run_cmd_pipe(qw(git diff-files --numstat --summary),
->> +			  ($note_unmerged ? ("--raw") : ()),
->> +			  "--", @tracked)) {
->
-> Maybe it is not worth even having $note_unmerged, and just filling in
-> the UNMERGED field unconditionally? I know other callers don't care
-> about the information, but it's so cheap, and it just makes the function
-> interface that much simpler.
+> 	With git 1.7.9.4, I'm seeing test failures with
+> t1011-read-tree-sparse-checkout.sh.
 
-Perhaps.  Care to do the honors of rolling the final version perhaps with
-a test?
+Hrm.  Do you mean 1.7.9 worked and 1.7.9.4 doesn't, or you just happened
+to try 1.7.9.4 and do not know if this is a regression?
+
+I do not have any Darwin or PowerPC boxes, but the answer to the above may
+help others who do to help diagnosing the issue further.
+
+Thanks.
