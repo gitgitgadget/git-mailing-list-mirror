@@ -1,68 +1,68 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 1/4] sha1_name: introduce getn_sha1() to take length
-Date: Wed, 4 Apr 2012 15:53:21 -0500
-Message-ID: <20120404205321.GA17985@burratino>
-References: <1333029495-10034-1-git-send-email-artagnon@gmail.com>
- <1333029495-10034-2-git-send-email-artagnon@gmail.com>
- <20120403220817.GE19858@burratino>
- <CALkWK0nsO_xeuKpuPp0wvvbdhHnmKnX_JCPr6yapztC-Gq3Ljw@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: Git stops forever while cloning remote repo
+Date: Wed, 4 Apr 2012 17:07:07 -0400
+Message-ID: <20120404210707.GA5054@sigill.intra.peff.net>
+References: <805073108.1332078446.170729064.12423@mcgi-wr-20.rambler.ru>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-	=?utf-8?Q?Cl=C3=A9ment?= Poulain 
-	<clement.poulain@ensimag.imag.fr>,
-	Matthieu Moy <Matthieu.Moy@imag.fr>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 04 22:53:42 2012
+Content-Type: text/plain; charset=utf-8
+Cc: Tomas Carnecky <tomas.carnecky@gmail.com>, git@vger.kernel.org
+To: oldb0t@ro.ru
+X-From: git-owner@vger.kernel.org Wed Apr 04 23:07:18 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SFXD0-0005w1-7l
-	for gcvg-git-2@plane.gmane.org; Wed, 04 Apr 2012 22:53:38 +0200
+	id 1SFXQD-0004U2-ET
+	for gcvg-git-2@plane.gmane.org; Wed, 04 Apr 2012 23:07:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751671Ab2DDUxe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Apr 2012 16:53:34 -0400
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:36356 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750959Ab2DDUxd (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Apr 2012 16:53:33 -0400
-Received: by ghrr11 with SMTP id r11so448116ghr.19
-        for <git@vger.kernel.org>; Wed, 04 Apr 2012 13:53:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=YREPDHj1T2Opmkb8X6sfpzHgRkZMLbdyKbdXxJOCHNA=;
-        b=LgnpelAOWNZlsd3QAUUtPHkAMm32c1PJUSNOA8yFxPkmtFfBuLObisSCqmksuLmgTP
-         ldNXiCDe7oELSr8TxKMnpkgoIu5RYv97datLT8tK/Fg7AUmm8Y8motzkaTnp0Qodt5qm
-         LJKQXoEa0oGh7t0JlVovjKlrgfa++E0fT66AKUTp/ZK+N1BrLyvliWam+CB97Xtr/2VY
-         yaoyyCBSdQw7omo2sAlvQOfL0RJSqW1ZhFKG9YZkPxmp3tj8R4UmTW2kXl4pVCfNMB/O
-         EzaWo9QewwOj/rHIoiuwNnlsnTqfa184Ln45MGTGB/HK412N7MH3rRA9ZWpFpSD3lmLq
-         4t/g==
-Received: by 10.60.169.174 with SMTP id af14mr26382993oec.13.1333572812750;
-        Wed, 04 Apr 2012 13:53:32 -0700 (PDT)
-Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
-        by mx.google.com with ESMTPS id c6sm1500107oec.13.2012.04.04.13.53.30
-        (version=SSLv3 cipher=OTHER);
-        Wed, 04 Apr 2012 13:53:31 -0700 (PDT)
+	id S1751898Ab2DDVHK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Apr 2012 17:07:10 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:46234
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751883Ab2DDVHJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Apr 2012 17:07:09 -0400
+Received: (qmail 14215 invoked by uid 107); 4 Apr 2012 21:07:11 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 04 Apr 2012 17:07:11 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 04 Apr 2012 17:07:07 -0400
 Content-Disposition: inline
-In-Reply-To: <CALkWK0nsO_xeuKpuPp0wvvbdhHnmKnX_JCPr6yapztC-Gq3Ljw@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <805073108.1332078446.170729064.12423@mcgi-wr-20.rambler.ru>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194739>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194740>
 
-Ramkumar Ramachandra wrote:
+On Sun, Mar 18, 2012 at 05:47:26PM +0400, oldb0t@ro.ru wrote:
 
-> Makes a lot of sense.
+> I try to clone https://github.com/angband/angband.git locally, and
+> git stops in the middle, again and again, in different places. For
+> instance, one time it was 38% of full repo, and another time it was
+> 4% of depth 1 shallow clone. Once it stopped, it doesn't try to
+> continue anymore, just get stuk forever. My internet connection is
+> fine, all other works perfect: wget, browsers, mail client.
 
-Ok, but please keep in mind Matthieu's advice about keeping
-convenience wrappers convenient as well.  I trust him more in these
-questions.
+I tried to reproduce this here, but it works fine for me. Have you tried
+cloning from git://github.com/angband/angband.git instead? If that works
+better, that would give us a data point about where the problem is.
 
-Thanks.
-Jonathan
+> Is there any way to force git to retry the connection? Something like
+> wget does with -t and -T options. I use git 1.7.9.1 from Debian
+> testing.
+
+Unfortunately, no. Because the packs are generated on the fly, resuming
+is tricky. One solution is to create static "bundles" that are
+resumable, but not every service (nor most, really) does that[1].
+However, you can try Tomas's bundler service, which will generate a
+resumable bundle for you:
+
+  https://bundler.caurea.org/
+
+-Peff
+
+[1] I hope to eventually have GitHub do this itself, but right now the
+    client side of it is very manual. I have some patches in the works
+    to make this happen transparently if the server advertises a bundle
+    mirror.
