@@ -1,75 +1,53 @@
-From: Andrew Wong <andrew.w@sohovfx.com>
-Subject: Re: [PATCH] rebase -i: remove CHERRY_PICK_HEAD when cherry-pick failed
-Date: Wed, 04 Apr 2012 15:23:26 -0400
-Message-ID: <4F7C9FAE.5050806@sohovfx.com>
-References: <CAMP44s1EAwHjQ7S2ArLvhNg5qkR05DRJ70tQmP8sXYdOP=i_zQ@mail.gmail.com> <1332106632-31882-1-git-send-email-andrew.kw.w@gmail.com> <CALkWK0nmNWaOKcyGH2N0s3B1AFD-+3vHz1BBc3U=RMEFLNuc7A@mail.gmail.com> <20120403144505.GE15589@burratino> <4F7B650C.9060800@sohovfx.com> <20120403210815.GB19858@burratino> <20120403211219.GC19858@burratino> <4F7B69FE.9010600@sohovfx.com> <20120403212650.GD19858@burratino> <4F7B839D.2020808@sohovfx.com> <20120404181148.GB16993@burratino>
+From: Tim Henigan <tim.henigan@gmail.com>
+Subject: Re: [PATCH 8/9 v11] difftool: teach difftool to handle directory diffs
+Date: Wed, 4 Apr 2012 15:31:25 -0400
+Message-ID: <CAFouetjn9hW6YruCvsBQR+a4dcsCfV8nQ8Wma=3reSu__84_UQ@mail.gmail.com>
+References: <1333567265-23986-1-git-send-email-tim.henigan@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
-	Andrew Wong <andrew.kw.w@gmail.com>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>,
-	Jay Soffian <jaysoffian@gmail.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 04 21:23:42 2012
+Content-Type: text/plain; charset=UTF-8
+Cc: Tim Henigan <tim.henigan@gmail.com>
+To: gitster@pobox.com, git@vger.kernel.org, davvid@gmail.com,
+	ramsay@ramsay1.demon.co.uk
+X-From: git-owner@vger.kernel.org Wed Apr 04 21:31:42 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SFVnw-00067c-Lr
-	for gcvg-git-2@plane.gmane.org; Wed, 04 Apr 2012 21:23:41 +0200
+	id 1SFVvh-0003Cn-8j
+	for gcvg-git-2@plane.gmane.org; Wed, 04 Apr 2012 21:31:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932663Ab2DDTXf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Apr 2012 15:23:35 -0400
-Received: from smtp01.beanfield.com ([76.9.193.170]:64736 "EHLO
-	smtp01.beanfield.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932645Ab2DDTXe (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Apr 2012 15:23:34 -0400
-X-Spam-Status: No
-X-beanfield-mta01-MailScanner-From: andrew.w@sohovfx.com
-X-beanfield-mta01-MailScanner-SpamCheck: not spam, SpamAssassin (not cached,
-	score=-2.9, required 6, autolearn=not spam, ALL_TRUSTED -1.00,
-	BAYES_00 -1.90)
-X-beanfield-mta01-MailScanner: Found to be clean
-X-beanfield-mta01-MailScanner-ID: 1SFVnj-000OtG-85
-Received: from [66.207.196.114] (helo=[192.168.1.112])
-	by mta01.beanfield.com with esmtpsa (TLSv1:CAMELLIA256-SHA:256)
-	(Exim 4.76)
-	(envelope-from <andrew.w@sohovfx.com>)
-	id 1SFVnj-000OtG-85; Wed, 04 Apr 2012 15:23:27 -0400
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.15) Gecko/20101026 SUSE/3.0.10 Thunderbird/3.0.10
-In-Reply-To: <20120404181148.GB16993@burratino>
+	id S932723Ab2DDTb0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Apr 2012 15:31:26 -0400
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:43142 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932505Ab2DDTb0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Apr 2012 15:31:26 -0400
+Received: by iagz16 with SMTP id z16so705879iag.19
+        for <git@vger.kernel.org>; Wed, 04 Apr 2012 12:31:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=JcsxGbxtmDcnpt/R1YLRturA24EdTIka8HObQeNnosk=;
+        b=fIo5Cw5WOAGZzINpkwTq4mIazbGd2QxsYvXXeGT3SoibyxpKBIlvRnHMtt99iGx2tb
+         Z6v4TJKULXFl8/sjau191H8vgBSwgR6hZYTmrDfbuJhhXscg8DOVNIpbYEvzBKxuVNC+
+         bb/59vEqb2bQfZM21ef4gl1Tsf9wwsAN2sUYrDrqPEPJYy8mwELDMbU+uRYJBtB6knEB
+         TTzbjBisCam46AVIWP7ib7gAeBtUEXbiCsR2SGVZDHxUs7uD8a4jLGNx/6BUYPXSz+lI
+         26NHEnRtiE5z4zgvhQBt6UeJ8o5hKMSeYSHd1VcIoIqmvmUaghjLRlh3rL2WJpqH/atQ
+         4ZNA==
+Received: by 10.42.97.194 with SMTP id p2mr1435900icn.36.1333567885762; Wed,
+ 04 Apr 2012 12:31:25 -0700 (PDT)
+Received: by 10.42.225.193 with HTTP; Wed, 4 Apr 2012 12:31:25 -0700 (PDT)
+In-Reply-To: <1333567265-23986-1-git-send-email-tim.henigan@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194722>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194723>
 
-On 04/04/2012 02:11 PM, Jonathan Nieder wrote:
-> Do you mean we should get rid of CHERRY_PICK_HELP?
->   
-No. I thought you meant that if "cherry-pick" runs into an error, it
-should not leave behind a state (i.e. CHERRY_PICK_HEAD) when
-CHERRY_PICK_HELP is defined. And I was arguing that defining
-CHERRY_PICK_HELP shouldn't affect the behavior of "cherry-pick" at all.
-So it shouldn't be trying to remove the state in the first place. The
-cleanup responsibility should fall into caller of "cherry-pick". i.e.
-"rebase -i"
+> This replaces commit 4d6efe0 in the 'th/difftool-diffall' branch based
+> on pu. This version corrects some problems with submodule support in
+> difftool.
 
-Though I now think that my original patch description could be improved
-to better reflect that.
-
-And you also mention earlier that the patch is more of a symptom relief,
-and that
-> a more appropriate long-term fix would involve "git
-> cherry-pick" noticing when a patch has resolved to nothing instead of
-> leaving it to "git commit" to detect that.
-And I was arguing that "cherry-pick" doesn't have to detect scenarios
-where "commit" could fail. Since there could be other scenarios where
-"commit" could fail and "cherry-pick" is already handling "commit"
-failing, I think there's no need for "cherry-pick" to handle an empty
-commit specifically.
-
-So if the list or Junio thinks that the patch is the right thing to do,
-I should improve on the patch description before we queue it.
+Please s/4d6efe0/4b6efe0/.  Sorry for the confusion.
