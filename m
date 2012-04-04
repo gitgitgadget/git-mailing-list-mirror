@@ -1,101 +1,581 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: rebase -p loses amended changes
-Date: Wed, 04 Apr 2012 16:20:52 -0700
-Message-ID: <7vhawz6q3v.fsf@alter.siamese.dyndns.org>
-References: <592E2EEC-6CBA-48D6-8D44-34A971DD78EC@gmail.com>
- <CAH3Anrqorf481jw6GdHqOPg9WC0rD-OraOHZ7twWRF4+oJ9X4A@mail.gmail.com>
- <87fwcpun95.fsf@thomas.inf.ethz.ch>
- <CAH3AnrpasFU2bLEZsAXRQu4U+=R_YyW+-yRXDfzy2JQpqf9dNw@mail.gmail.com>
- <CADb3U=4Y0njLiYC1qrYbdm+h0h8vLh78yfz_u3B6veEqCX0xCQ@mail.gmail.com>
- <CAH3Anrq_Z0V=DpU1iH-A3F8RFWTG0_C1hEe3iDZYe=AYDTRT3g@mail.gmail.com>
- <CABURp0pnXvnT2=fDJXk-yiGctsJBHiNGSCOZiT4Vo74woi0Zxg@mail.gmail.com>
- <4F7BEA9F.3060805@viscovery.net> <7vpqbna0cd.fsf@alter.siamese.dyndns.org>
- <7viphf8cqh.fsf@alter.siamese.dyndns.org>
- <CAH3AnrrE9Fbs_p_=ETRns4vyz8J879-m+KDF5K4j7vDdTh9bEg@mail.gmail.com>
- <7vlimb6r37.fsf@alter.siamese.dyndns.org>
- <CAH3AnrphGmrZSxALP3j3ADt6Cg4Tr2O83mcDBU2LfUdpdtUCUw@mail.gmail.com>
+Subject: What's cooking in git.git (Apr 2012, #02; Wed, 4)
+Date: Wed, 04 Apr 2012 16:26:39 -0700
+Message-ID: <7v8vib6pu8.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Sixt <j.sixt@viscovery.net>,
-	Phil Hord <phil.hord@gmail.com>,
-	J Robert Ray <jrobertray@gmail.com>,
-	Thomas Rast <trast@student.ethz.ch>,
-	"git\@vger.kernel.org" <git@vger.kernel.org>
-To: Jon Seymour <jon.seymour@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Apr 05 01:21:01 2012
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Apr 05 01:27:19 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SFZVc-0004wl-D4
-	for gcvg-git-2@plane.gmane.org; Thu, 05 Apr 2012 01:21:00 +0200
+	id 1SFZbc-00083Z-4F
+	for gcvg-git-2@plane.gmane.org; Thu, 05 Apr 2012 01:27:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757320Ab2DDXUz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Apr 2012 19:20:55 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:49629 "EHLO
+	id S1757359Ab2DDX0r convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 4 Apr 2012 19:26:47 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:51833 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757127Ab2DDXUy (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Apr 2012 19:20:54 -0400
+	id S1757286Ab2DDX0p convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 4 Apr 2012 19:26:45 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 450A660AF;
-	Wed,  4 Apr 2012 19:20:54 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=xGamAYh7EyWOjbOrZ4b5jpft6F0=; b=aUJnle
-	2Ng64fDtQFU4v8IBrtIFflnXC7W3JQQo19FISpcrr4PeaDhJka3Zx7+EwpjjzS2Y
-	HfM+GBbnluK5rZ0bZt7LKhP+6hXgQAYGk2PeO3TPGgh7B7kMtR8mRAa10Hkq3SWo
-	vQE6SRQ10qGbTymorABF33HVFcKkq0+CFWHZs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ujQ/dzuhTImLHknq/Go3gCoEIHlWctWV
-	S+xFm8NK50X/3lXCn1fNpX7haYQXrnkYRVISsDW+ctSQ/RQodNhvQooVLQQwop2p
-	LFrFYgLkzrBTXwC2Tj4e3+trpvztQ2bJbmZc0nWtGapNqFvvEG44n6ZN3nFrGFg1
-	0zkNdsQVUJ0=
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 366AA61A7;
+	Wed,  4 Apr 2012 19:26:44 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
+	:subject:date:message-id:mime-version:content-type
+	:content-transfer-encoding; s=sasl; bh=IjXMlEIFiikgQYurH94gBuI/a
+	dA=; b=Le0ePTuMbNtg1uRVQ6VeZmmxkqcPXftUeyTaX/6VaSYu3jQ9RlFfP7Nh4
+	Mbxhb3m6RgzgttuRe1MROfTneyXPeXANGS9Vvc2FFMSYuod1hMsjd0huptbK19Ox
+	K8OiOC56AMLr2yk/U5CjMslMIDjY3lA+SprSNcLIleSrxYuZUg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
+	:date:message-id:mime-version:content-type
+	:content-transfer-encoding; q=dns; s=sasl; b=OuYT+i1HBOlqoLc/mXE
+	iJXb9p1+lxb0gp/0HlPCriGxLDbCZZJZBqKykDWX7BgWLcIpLKX8dZBb7YjIQ2UC
+	0sZvOyDI73h9QFNqnW3mg1TgpNO4NCa0Dd3oSOkpyVdMPxoHk4lQbyYDrYBPz6kq
+	Dr0bEnEvonjeuTJBYELn9zGY=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3B99560AE;
-	Wed,  4 Apr 2012 19:20:54 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2C9B761A6;
+	Wed,  4 Apr 2012 19:26:44 -0400 (EDT)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B339A60AD; Wed,  4 Apr 2012
- 19:20:53 -0400 (EDT)
-In-Reply-To: <CAH3AnrphGmrZSxALP3j3ADt6Cg4Tr2O83mcDBU2LfUdpdtUCUw@mail.gmail.com> (Jon
- Seymour's message of "Thu, 5 Apr 2012 09:05:16 +1000")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 6501D61A2; Wed,  4 Apr 2012
+ 19:26:41 -0400 (EDT)
+X-master-at: e5056c05ecd2bdaceaa95e12e9e94b1584ec59c8
+X-next-at: 0677f639064c22077f02df7b77b29cd097a4ecef
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: D302A31E-7EAC-11E1-BBD8-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: A23DEA1C-7EAD-11E1-829C-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194754>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194755>
 
-Jon Seymour <jon.seymour@gmail.com> writes:
+What's cooking in git.git (Apr 2012, #02; Wed, 4)
+--------------------------------------------------
 
-> On Thu, Apr 5, 2012 at 8:59 AM, Junio C Hamano <gitster@pobox.com> wrote:
->> Jon Seymour <jon.seymour@gmail.com> writes:
->>
->>> Are there any flaws, I wonder?
->>
->> It all depends on how close the base is to M^1. ...
->
-> True. I guess it is still true there are no perfect solutions in this
-> area. This does seem like a step in a better direction, though.
+Here are the topics that have been cooking.  Commits prefixed with '-' =
+are
+only in 'pu' (proposed updates) while commits prefixed with '+' are in =
+'next'.
 
-The nice thing about Hannes's "replay the change between M^1 and M" is
-that it sidesteps the fundamentally impossible part of your original idea,
-which is to mechanically sift the "evil" part out of "pure merge" part
-out.  Instead, it replays the change as a single ball of wax.
+With a couple of last-minute fixes to gitk breakage, 1.7.10-rc4 is out,
+and hopefully we can do the real 1.7.10 by the end of the week.
 
-That difference between these two approaches may make the replaying of M
-easier or harder, depending on how M^1 and your new base relate to each
-other, so it is hard to say if it is really a step in a better direction.
-Perhaps M is a merge made to the maint branch, and you may be replaying it
-on top of a newer codebase based on the master track.  M^1 may lack many
-changes the new base has, so replaying M by applying the patch between M^1
-and M may give you a lot of conflict that you should not have to resolve
-if you simply merged M^2 to the new base.  And the worst part of this
-conflict resolution is that you cannot easily tell what the right solution
-should be unless you look at M, M^1 and M^2---that forces you to sift the
-"evil" part out of "pure merge" part in the original merge. The good news
-is that this is *not* mechanical, as you have your own intelligence to
-help that process ;-)
+You can find the changes described here in the integration branches of =
+the
+repositories listed at
+
+    http://git-blame.blogspot.com/p/git-public-repositories.html
+
+--------------------------------------------------
+[New Topics]
+
+* jc/index-v4 (2012-04-04) 10 commits
+ - update-index: upgrade/downgrade on-disk index version
+ - read-cache.c: write prefix-compressed names in the index
+ - read-cache.c: read prefix-compressed names in index on-disk version =
+v4
+ - read-cache.c: move code to copy incore to ondisk cache to a helper f=
+unction
+ - read-cache.c: move code to copy ondisk to incore cache to a helper f=
+unction
+ - read-cache.c: report the header version we do not understand
+ - read-cache.c: make create_from_disk() report number of bytes it cons=
+umed
+ - read-cache.c: allow unaligned mapping of the index file
+ - cache.h: hide on-disk index details
+ - varint: make it available outside the context of pack
+ (this branch is tangled with jc/split-blob.)
+
+* jk/add-p-skip-conflicts (2012-04-04) 3 commits
+ - fixup from rctay
+ - snap
+ - add -p: skip conflicted paths
+
+--------------------------------------------------
+[Graduated to "master"]
+
+* pt/gitk (2012-04-02) 2 commits
+ + gitk: fix setting font display with new tabbed dialog layout.
+ + gitk: fix tabbed preferences construction when using tcl 8.4
+
+Pat spotted and fixed a few bugs in the latest gitk updates; we may nee=
+d
+these in 1.7.10 so testing on various platforms is very much appreciate=
+d.
+
+--------------------------------------------------
+[Stalled]
+
+* lp/maint-diff-three-dash-with-graph (2012-03-20) 3 commits
+ - t4202: add test for "log --graph --stat -p" separator lines
+ - log --graph: fix break in graph lines
+ - log --graph --stat: three-dash separator should come after graph lin=
+es
+
+The combination of two options "log --graph --stat" was an obscure corn=
+er
+case nobody cared about, and did not correctly show the ancestry graph
+lines.
+
+I've split the original patch into three pieces, one for fixes to two
+different issues and a test.  Also the test is adjusted so that the ser=
+ies
+can be back-merged to older codebase that did not have 7f81463 (Use
+correct grammar in diffstat summary line, 2012-02-01) that first appear=
+ed
+in v1.7.9.2
+
+With a review from Zbigniew, I would expect that this would be rerolled
+again.
+
+* cn/apply-fix-ws-can-lengthen-lines (2012-03-11) 1 commit
+ . apply: reallocate the postimage buffer when needed
+
+Attempts to address an ancient bug that dates back to the addition
+of an oddball "tab-in-indent" whitespace breakage class that wants
+to have longer lines than the original when fixing things up.
+
+Needs more work; results in double-frees.
+
+* nd/columns (2012-03-13) 12 commits
+ - column: support grouping entries
+ - column: support "denser" mode
+ - ls-files: support --column
+ - tag: add --column
+ - column: support piping stdout to external git-column process
+ - status: add --column
+ - branch: add --column
+ - help: reuse print_columns() for help -a
+ - column: add dense layout support
+ - column: add columnar layout
+ - Stop starting pager recursively
+ - Add column layout skeleton and git-column
+
+Rerolled again.  Modulo minor nits, looked nicer than the previous roun=
+d.
+
+* nd/threaded-index-pack (2012-03-11) 2 commits
+ - index-pack: support multithreaded delta resolving
+ - index-pack: split second pass obj handling into own function
+
+Another reroll after a bugreport on pthread usage discovered by Ramsey,
+but it seems the topic is cooking between Ramsay and Duy out of tree.
+Waiting for resolution.
+
+* jh/apply-free-patch (2012-03-28) 7 commits
+ - apply.c: WIP ownership audit
+ - apply: free unused fragments for submodule patch
+ - apply: free patch->result
+ - apply: release memory for fn_table
+ - apply: free patch->{def,old,new}_name fields
+ - apply: rename free_patch() to free_patch_list()
+ - apply: do not leak patches and fragments
+
+Valgrind reports quite a lot of discarded memory inside apply.  I start=
+ed
+auditing the memory ownership rules in the command, and am almost done.
+
+Will defer til 1.7.10.
+
+* ss/git-svn-prompt-sans-terminal (2012-01-04) 3 commits
+ - fixup! 15eaaf4
+ - git-svn, perl/Git.pm: extend Git::prompt helper for querying users
+ - perl/Git.pm: "prompt" helper to honor GIT_ASKPASS and SSH_ASKPASS
+
+The bottom one has been replaced with a rewrite based on comments
+from =C3=86var. The second one needs more work, both in perl/Git.pm and
+prompt.c, to give precedence to tty over SSH_ASKPASS when terminal
+is available.
+
+* jc/split-blob (2012-04-03) 7 commits
+ - chunked-object: streaming checkout
+ - chunked-object: fallback checkout codepaths
+ - bulk-checkin: support chunked-object encoding
+ - bulk-checkin: allow the same data to be multiply hashed
+ - new representation types in the packstream
+ - packfile: use varint functions
+ - varint: make it available outside the context of pack
+ (this branch is tangled with jc/index-v4.)
+
+Not ready.
+
+I finished the streaming checkout codepath, but as explained in
+127b177 (bulk-checkin: support chunked-object encoding, 2011-11-30),
+these are still early steps of a long and painful journey. At least
+pack-objects and fsck need to learn the new encoding for the series
+to be usable locally, and then index-pack/unpack-objects needs to
+learn it to be used remotely.
+
+Given that I heard a lot of noise that people want large files, and
+that I was asked by somebody at GitTogether'11 privately for an
+advice on how to pay developers (not me) to help adding necessary
+support, I am somewhat dissapointed that the original patch series
+that was sent almost two months ago still remains here without much
+comments and updates from the developer community. I even made the
+interface to the logic that decides where to split chunks easily
+replaceable, and I deliberately made the logic in the original patch
+extremely stupid to entice others, especially the "bup" fanboys, to
+come up with a better logic, thinking that giving people an easy
+target to shoot for, they may be encouraged to help out. The plan is
+not working :-(.
+
+--------------------------------------------------
+[Cooking]
+
+* bw/spawn-via-shell-path (2012-04-03) 1 commit
+ - Use SHELL_PATH from build system in run_command.c:prepare_shell_cmd
+
+"sh" on the user's PATH may be utterly broken on some systems;
+consistently use SHELL_PATH even from inside run-command API.
+
+* jc/commit-unedited-template (2012-04-03) 5 commits
+ - Documentation/git-commit: rephrase the "initial-ness" of templates
+ - git-commit.txt: clarify -t requires editing message
+ - commit: rephrase the error when user did not touch templated log mes=
+sage
+ - commit: do not trigger bogus "has templated message edited" check
+ - t7501: test the right kind of breakage
+
+When "git commit --template F" errors out because the user did not touc=
+h
+the message, it claimed that it aborts due to "empty message", which wa=
+s
+utterly wrong.
+
+* jc/push-upstream-sanity (2012-04-03) 2 commits
+ - [fixup] remove misguided "try to see if URLs are the same"
+ - push: detect nonsense "upstream" check more carefully
+
+"git push $there" without refspec, when the current branch is set to pu=
+sh
+to a remote different from $there, used to push to $there using the
+upstream information to a remote unreleated to $there.
+
+This is necessary if we were to switch the push.default to 'current'.
+
+* jk/http-backend-keep-committer-ident-env (2012-03-30) 1 commit
+ - http-backend: respect existing GIT_COMMITTER_* variables
+
+The smart-http backend used to always override GIT_COMMITTER_* variable=
+s
+with REMOTE_USER and REMOTE_ADDR.
+
+* mk/gitweb-diff-hl (2012-04-04) 8 commits
+ - gitweb: Refinement highlightning in combined diffs
+ - gitweb: Highlight interesting parts of diff
+ - gitweb: Push formatting diff lines to print_diff_chunk()
+ - gitweb: Use print_diff_chunk() for both side-by-side and inline diff=
+s
+ - gitweb: Extract print_sidebyside_diff_lines()
+ - gitweb: Pass esc_html_hl_regions() options to esc_html()
+ - gitweb: esc_html_hl_regions(): Don't create empty <span> elements
+ - gitweb: Use descriptive names in esc_html_hl_regions()
+
+* it/fetch-pack-many-refs (2012-04-02) 5 commits
+ - remote-curl: main test case for the OS command line overflow
+ - fetch-pack: test cases for the new --stdin option
+ - fixup? no longer need flex argv[]
+ - remote-curl: send the refs to fetch-pack on stdin
+ - fetch-pack: new --stdin option to read refs from stdin
+
+Will squash the fix-up one and then requeue.
+
+* jn/debian-customizes-default-editor (2012-03-31) 3 commits
+ - fixup? do not hide the "usual" default from readers
+ - var doc: advertise current DEFAULT_PAGER and DEFAULT_EDITOR settings
+ - var doc: default editor and pager are configurable at build time
+
+Haven't heard anything back for the fix-up suggestion, but otherwise
+looked sane.
+
+* rs/commit-list-sort-in-batch (2012-04-02) 3 commits
+ - revision: insert unsorted, then sort in prepare_revision_walk()
+ - commit: use mergesort() in commit_list_sort_by_date()
+ - add mergesort() for linked lists
+
+* hv/submodule-recurse-push (2012-03-30) 3 commits
+ - push: teach --recurse-submodules the on-demand option
+ - Refactor submodule push check to use string list instead of integer
+ - Teach revision walking machinery to walk multiple times sequencially
+
+* dg/subtree (2012-03-25) 112 commits
+ - Add 'contrib/subtree/' from commit '2e63f75b8f49abe220ef55ec4e978e7a=
+3b8dc351'
+ - Add Subtree Test Makefile
+ - Build Subtree
+ - Use Project Config Files
+ - Remove Unneeded Files
+ - ...
+
+A test merge of the 'subtree'.
+
+* jk/branch-quiet (2012-03-26) 2 commits
+ - teach "git branch" a --quiet option
+ - checkout: suppress tracking message with "-q"
+
+Even with "-q"uiet option, "checkout" used to report setting up trackin=
+g.
+Also "branch" learns "-q"uiet option to squelch informational message.
+
+* jk/run-command-eacces (2012-04-03) 1 commit
+ - run-command: treat inaccessible directories as ENOENT
+
+When PATH contains an unreadable directory, alias expansion code did no=
+t
+kick in, and failed with an error that said "git-subcmd" was not found.
+
+* jb/am-include (2012-03-28) 1 commit
+ - am: support --include option
+
+* jc/am-report-3way (2012-03-28) 1 commit
+ - am -3: list the paths that needed 3-way fallback
+
+* rs/combine-diff-zero-context-at-the-beginning (2012-03-25) 1 commit
+ - combine-diff: fix loop index underflow
+
+=46ixes an age old corner case bug in combine diff (only triggered with=
+ -U0
+and the hunk at the beginning of the file needs to be shown).
+
+* sl/autoconf (2012-03-26) 3 commits
+ - configure: be more idiomatic
+ - configure: avoid some code repetitions thanks to m4_{push,pop}def
+ - configure: move definitions of private m4 macros before AC_INIT invo=
+cation
+
+Updates our configure.ac to follow a better "autoconf" style.
+
+* wk/gitweb-snapshot-use-if-modified-since (2012-03-30) 3 commits
+ - gitweb: add If-Modified-Since handling to git_snapshot().
+ - gitweb: refactor If-Modified-Since handling
+ - gitweb: add `status` headers to git_feed() responses.
+
+Makes 'snapshot' request to "gitweb" honor If-Modified-Since: header,
+based on the commit date.
+
+* jk/diff-no-rename-empty (2012-03-23) 4 commits
+ - merge-recursive: don't detect renames of empty files
+ - teach diffcore-rename to optionally ignore empty content
+ - make is_empty_blob_sha1 available everywhere
+ - drop casts from users EMPTY_TREE_SHA1_BIN
+
+=46orbids rename detection logic from matching two empty files as renam=
+es
+during merge-recursive to prevent mismerges.
+
+* th/difftool-diffall (2012-04-04) 8 commits
+ - difftool: print list of valid tools with '--tool-help'
+ - difftool: teach difftool to handle directory diffs
+ - difftool: eliminate setup_environment function
+ - difftool: stop appending '.exe' to git
+ - difftool: remove explicit change of PATH
+ - difftool: exit(0) when usage is printed
+ - difftool: add '--no-gui' option
+ - difftool: parse options using Getopt::Long
+
+Rolls the two-directory-diff logic from diffall script (in contrib/) in=
+to
+"git difftool" framework.=20
+
+* jc/maint-clean-nested-worktree-in-subdir (2012-03-15) 2 commits
+  (merged to 'next' on 2012-03-20 at fb5485e)
+ + clean: preserve nested git worktree in subdirectories
+ + remove_dir_recursively(): Add flag for skipping removal of toplevel =
+dir
+ (this branch is tangled with jh/notes-merge-in-git-dir-worktree.)
+
+"git clean -d -f" (not "-d -f -f") is supposed to protect nested workin=
+g
+trees of independent git repositories that exist in the current project
+working tree from getting removed, but the protection applied only to s=
+uch
+working trees that are at the top-level of the current project by mista=
+ke.
+
+Not urgent.
+
+* ct/advise-push-default (2012-03-26) 2 commits
+  (merged to 'next' on 2012-03-28 at 62764ae)
+ + clean up struct ref's nonfastforward field
+ + push: Provide situational hints for non-fast-forward errors
+
+Breaks down the cases in which "git push" fails due to non-ff into thre=
+e
+categories, and gives separate advise messages.  This should be a good
+change regardless of mm/push-default-switch-warning topic.
+
+* nl/rebase-i-cheat-sheet (2012-03-20) 1 commit
+  (merged to 'next' on 2012-03-20 at 3092a2b)
+ + rebase -i: remind that the lines are top-to-bottom
+
+Not urgent.
+
+* da/difftool-test (2012-03-19) 1 commit
+  (merged to 'next' on 2012-03-20 at 0ada7d4)
+ + t7800: Test difftool passing arguments to diff
+
+Makes sure "difftool" options can be given in any order.
+
+* jh/notes-merge-in-git-dir-worktree (2012-03-15) 4 commits
+  (merged to 'next' on 2012-03-20 at 0c1b1de)
+ + notes-merge: Don't remove .git/NOTES_MERGE_WORKTREE; it may be the u=
+ser's cwd
+ + notes-merge: use opendir/readdir instead of using read_directory()
+ + t3310: illustrate failure to "notes merge --commit" inside $GIT_DIR/
+ + remove_dir_recursively(): Add flag for skipping removal of toplevel =
+dir
+ (this branch is tangled with jc/maint-clean-nested-worktree-in-subdir.=
+)
+
+Running "notes merge --commit" failed to perform correctly when run
+from any directory inside $GIT_DIR/.  When "notes merge" stops with
+conflicts, $GIT_DIR/NOTES_MERGE_WORKTREE is the place a user edits
+to resolve it.
+
+Not urgent.
+
+* jn/diffstat-tests (2012-03-13) 7 commits
+  (merged to 'next' on 2012-03-20 at 8791b2f)
+ + diffstat summary line varies by locale: miscellany
+ + test: use numstat instead of diffstat in binary-diff test
+ + test: use --numstat instead of --stat in "git stash show" tests
+ + test: test cherry-pick functionality and output separately
+ + test: modernize funny-names test style
+ + test: use numstat instead of diffstat in funny-names test
+ + test: use test_i18ncmp when checking --stat output
+
+Some tests checked the "diff --stat" output when they do not have to,
+which unnecessarily made things harder to verify under GETTEXT_POISON.
+
+Not urgent.
+
+* tr/maint-word-diff-regex-sticky (2012-03-14) 3 commits
+  (merged to 'next' on 2012-03-20 at b3f67cd)
+ + diff: tweak a _copy_ of diff_options with word-diff
+ + diff: refactor the word-diff setup from builtin_diff_cmd
+ + t4034: diff.*.wordregex should not be "sticky" in --word-diff
+
+The regexp configured with wordregex was incorrectly reused across
+files.
+Not urgent.
+
+* zj/test-cred-helper-nicer-prove (2012-03-15) 2 commits
+  (merged to 'next' on 2012-03-20 at b675ec1)
+ + t0303: resurrect commit message as test documentation
+ + t0303: immediately bail out w/o GIT_TEST_CREDENTIAL_HELPER
+
+Minor improvement to t0303.
+Not urgent.
+
+* jc/commit-hook-authorship (2012-03-11) 3 commits
+  (merged to 'next' on 2012-03-12 at 05ca7f8)
+ + commit: pass author/committer info to hooks
+ + t7503: does pre-commit-hook learn authorship?
+ + ident.c: add split_ident_line() to parse formatted ident line
+ (this branch is tangled with jc/run-hook-env-1.)
+
+"git commit --author=3D$name" did not tell the name that was being
+recorded in the resulting commit to hooks, even though it does do so
+when the end user overrode the authorship via the "GIT_AUTHOR_NAME"
+environment variable.  This is a simpler of the two approaches.
+
+Will defer til 1.7.10.
+
+* jc/run-hook-env-1 (2012-03-11) 3 commits
+ - run_hook(): enhance the interface to pass arbitrary environment
+ + t7503: does pre-commit-hook learn authorship?
+ + ident.c: add split_ident_line() to parse formatted ident line
+ (this branch is tangled with jc/commit-hook-authorship.)
+
+Not urgent.
+
+Updates run_hook() API to be much less specific to "commit".  It would
+only be useful if people start doing more interesting things with hooks=
+=2E
+
+* jc/diff-algo-cleanup (2012-02-19) 2 commits
+  (merged to 'next' on 2012-03-15 at cca0032)
+ + xdiff: PATIENCE/HISTOGRAM are not independent option bits
+ + xdiff: remove XDL_PATCH_* macros
+
+Resurrects the preparatory clean-up patches from another topic that was
+discarded, as this would give a saner foundation to build on diff.algo
+configuration option series.
+
+Not urgent.
+
+* rs/unpack-trees-leakfix (2012-03-06) 1 commit
+  (merged to 'next' on 2012-03-07 at 69a69cd)
+ + unpack-trees: plug minor memory leak
+
+Will defer til 1.7.10.
+
+* mm/push-default-switch-warning (2012-03-09) 1 commit
+  (merged to 'next' on 2012-03-28 at 074b16b)
+ + push: start warning upcoming default change for push.default
+
+Not urgent.
+
+This resurrects an ancient patch I wrote during a discussion we had in =
+the
+1.6.3-1.6.4 era.  This should probably come after ct/advise-push-defaul=
+t
+topic and at that point the advise messages need to be rephrased, takin=
+g
+the future default change into account.
+
+* jc/fmt-merge-msg-people (2012-03-13) 1 commit
+ - fmt-merge-msg: show those involved in a merged series
+
+The "fmt-merge-msg" command learns to list the primary contributors
+involved in the side topic you are merging.
+
+Will defer til 1.7.10.
+
+* nl/http-proxy-more (2012-03-15) 5 commits
+  (merged to 'next' on 2012-03-20 at c004001)
+ + http: rename HTTP_REAUTH to HTTP_AUTH_RETRY
+ + http: Avoid limit of retrying request only twice
+ + http: handle proxy authentication failure (error 407)
+ + http: handle proxy proactive authentication
+ + http: try http_proxy env var when http.proxy config option is not se=
+t
+
+The code to talk to http proxies learn to use the same credential
+API used to talk to the final http destinations.
+
+Will defer til 1.7.10.
+
+* nd/stream-more (2012-03-07) 7 commits
+  (merged to 'next' on 2012-03-07 at 7325922)
+ + update-server-info: respect core.bigfilethreshold
+ + fsck: use streaming API for writing lost-found blobs
+ + show: use streaming API for showing blobs
+ + parse_object: avoid putting whole blob in core
+ + cat-file: use streaming API to print blobs
+ + Add more large blob test cases
+ + streaming: make streaming-write-entry to be more reusable
+
+Use API to read blob data in smaller chunks in more places to
+reduce the memory footprint.  In general, looked fairly good.
+
+Will defer til 1.7.10.
+
+--------------------------------------------------
+[Discarded]
+
+* tb/maint-remove-irrelevant-i18n-test (2012-03-06) 1 commit
+  (merged to 'next' on 2012-03-07 at 23f2dd1)
+ + t0204: remove a test that checks undefined behaviour
+
+I tentatively parked this in 'next' but later reverted the merge.
+
+* dg/test-from-elsewhere (2012-03-04) 2 commits
+ . Support out-of-tree Valgrind tests
+ . Allow overriding GIT_BUILD_DIR
+
+No immediate need; dropped.
