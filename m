@@ -1,7 +1,7 @@
 From: =?UTF-8?q?Micha=C5=82=20Kiedrowicz?= <michal.kiedrowicz@gmail.com>
-Subject: [PATCH v3 7/8] gitweb: Highlight interesting parts of diff
-Date: Wed,  4 Apr 2012 21:57:12 +0200
-Message-ID: <1333569433-3245-8-git-send-email-michal.kiedrowicz@gmail.com>
+Subject: [PATCH v3 5/8] gitweb: Use print_diff_chunk() for both side-by-side and inline diffs
+Date: Wed,  4 Apr 2012 21:57:10 +0200
+Message-ID: <1333569433-3245-6-git-send-email-michal.kiedrowicz@gmail.com>
 References: <1333569433-3245-1-git-send-email-michal.kiedrowicz@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -9,246 +9,179 @@ Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Jakub Narebski <jnareb@gmail.com>,
 	=?UTF-8?q?Micha=C5=82=20Kiedrowicz?= <michal.kiedrowicz@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 04 21:57:55 2012
+X-From: git-owner@vger.kernel.org Wed Apr 04 21:57:56 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SFWL2-0001rM-GG
-	for gcvg-git-2@plane.gmane.org; Wed, 04 Apr 2012 21:57:52 +0200
+	id 1SFWL1-0001rM-C6
+	for gcvg-git-2@plane.gmane.org; Wed, 04 Apr 2012 21:57:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932794Ab2DDT5n convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 4 Apr 2012 15:57:43 -0400
-Received: from mail-wi0-f178.google.com ([209.85.212.178]:53202 "EHLO
-	mail-wi0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932770Ab2DDT5k (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Apr 2012 15:57:40 -0400
-Received: by mail-wi0-f178.google.com with SMTP id hq7so630903wib.1
-        for <git@vger.kernel.org>; Wed, 04 Apr 2012 12:57:40 -0700 (PDT)
+	id S932773Ab2DDT5i convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 4 Apr 2012 15:57:38 -0400
+Received: from mail-wg0-f42.google.com ([74.125.82.42]:40072 "EHLO
+	mail-wg0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932624Ab2DDT5f (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Apr 2012 15:57:35 -0400
+Received: by wgbds11 with SMTP id ds11so800182wgb.1
+        for <git@vger.kernel.org>; Wed, 04 Apr 2012 12:57:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=pMshgdrDH0UnT8Ahl5niYqzOO0GJIg+9dbebbSgBRd4=;
-        b=Sg+mtBJGWxeqriLKMnEAX6vWwHfaSVMByOGnrvcdQeyOfV2E94cTOrlpEyedHt+0Y+
-         wMCgfsrRf31ws+ZclaPWPkd4WCO7w6T/Dg1mCIqmg4EN3m/oj8jLHE7lF4Ok5bNxSJ1S
-         uv35BlDsixmIrqxO1IX6PXKaENtuZv8C6lS9YqJuQPN9tsWfFuBvv98aHVs0xU0tB0rf
-         TwfdMbbacsMk2jZqLlekNTTBXYa7u9VLcSHwQeCVgICuSFM+Rb+LyDKF4C1zm3iodyG9
-         jaeihPf4+o1Rkyk7fDi9BP7/o8N8uAgIVU1X3y/D5t81WJqtPTKoZI1y6Uc1MC2U53fK
-         EInQ==
-Received: by 10.216.135.131 with SMTP id u3mr2165811wei.46.1333569460077;
-        Wed, 04 Apr 2012 12:57:40 -0700 (PDT)
+        bh=fIz8VNVGDXazZrSrv7d4pGxfyig1tx5XvFdYQmTxgWA=;
+        b=uL5JkkphBvtVsNcyLHTiPLidKOaDqrb21hPAsRiM+jwu50+YKAIChXN5UmivWWPxlH
+         alj5ZQCzwT+ohQ84fIt519WuHhDD6yfYj1efyc10nRXYl9mYg+qTZGXbHiSTR+ldSA7F
+         dg7XPaTLtUO7izZoXI1Rs4q9bFS/bXRVmXYZUN6F8gV7Ltss2kdeYD8kshKh7m4dKhiu
+         cz0/cQzDMey5PPEBYGRCDGXYAzfNt7E4Um+UOwyOZTxIJUBBRe8H+1JTw/8cP+RBONTG
+         0dKFoA1jb1GmJ91V7qE5R77G0qmzFAClWK24tQShlljom1JtcVLxEbzIM9yZiX+9Q72d
+         zgng==
+Received: by 10.216.136.100 with SMTP id v78mr2202301wei.88.1333569453655;
+        Wed, 04 Apr 2012 12:57:33 -0700 (PDT)
 Received: from localhost (77-177-78-94.net.stream.pl. [94.78.177.77])
-        by mx.google.com with ESMTPS id b3sm7371048wib.4.2012.04.04.12.57.37
+        by mx.google.com with ESMTPS id bx13sm7351244wib.10.2012.04.04.12.57.31
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 04 Apr 2012 12:57:39 -0700 (PDT)
+        Wed, 04 Apr 2012 12:57:33 -0700 (PDT)
 X-Mailer: git-send-email 1.7.8.4
 In-Reply-To: <1333569433-3245-1-git-send-email-michal.kiedrowicz@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194730>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194731>
 
-Reading diff output is sometimes very hard, even if it's colored,
-especially if lines differ only in few characters.  This is often true
-when a commit fixes a typo or renames some variables or functions.
+This renames print_sidebyside_diff_chunk() to print_diff_chunk() and
+makes use of it for both side-by-side and inline diffs.  Now diff lines
+are always accumulated before they are printed.  This opens the
+possibility to preprocess diff output before it's printed, which is
+needed for diff refinement highlightning (implemented in incoming
+patches).
 
-This commit teaches gitweb to highlight characters that are different
-between old and new line with a light green/red background.  This shoul=
+If print_diff_chunk() was left as is, the new function
+print_inline_diff_lines() could reorder diff lines.  It first prints al=
+l
+context lines, then all removed lines and finally all added lines.  If
+the diff output consisted of mixed added and removed lines, gitweb woul=
 d
-work in the similar manner as in Trac or GitHub.
+reorder these lines.  This is true for combined diff output, for
+example:
 
-The algorithm that compares lines is based on contrib/diff-highlight.
-Basically, it works by determining common prefix/suffix of correspondin=
-g
-lines and highlightning only the middle part of lines.  For more
-information, see contrib/diff-highlight/README.
+	 - removed line for first parent
+	 + added line for first parent
+	  -removed line for second parent
+	 ++added line for both parents
 
-Combined diffs are not supported but a following commit will change it.
+would be rendered as:
 
-Since we need to pass esc_html()'ed or esc_html_hl_regions()'ed lines t=
-o
-format_diff_lines(), so it was taught to accept preformatted lines
-passed as a reference.
+	- removed line for first parent
+	 -removed line for second parent
+	+ added line for first parent
+	++added line for both parents
+
+To prevent gitweb from reordering lines, print_diff_chunk() calls
+print_diff_lines() as soon as it detects that both added and removed
+lines are present and there was a class change.
 
 Signed-off-by: Micha=C5=82 Kiedrowicz <michal.kiedrowicz@gmail.com>
-Acked-by: Jakub Nar=C4=99bski <jnareb@gmail.com>
 ---
- gitweb/gitweb.perl       |  106 ++++++++++++++++++++++++++++++++++++++=
-++-----
- gitweb/static/gitweb.css |    8 ++++
- 2 files changed, 102 insertions(+), 12 deletions(-)
+ gitweb/gitweb.perl |   55 ++++++++++++++++++++++++++++++++++++--------=
+-------
+ 1 files changed, 39 insertions(+), 16 deletions(-)
 
 diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 926e83c..579592a 100755
+index 56721a3..4f6b043 100755
 --- a/gitweb/gitweb.perl
 +++ b/gitweb/gitweb.perl
-@@ -2428,19 +2428,25 @@ sub format_cc_diff_chunk_header {
- }
-=20
- # process patch (diff) line (not to be used for diff headers),
--# returning HTML-formatted (but not wrapped) line
-+# returning HTML-formatted (but not wrapped) line.
-+# If the line is passed as a reference, it is treated as HTML and not
-+# esc_html()'ed.
- sub format_diff_line {
- 	my ($line, $diff_class, $from, $to) =3D @_;
-=20
--	chomp $line;
--	$line =3D untabify($line);
--
--	if ($from && $to && $line =3D~ m/^\@{2} /) {
--		$line =3D format_unidiff_chunk_header($line, $from, $to);
--	} elsif ($from && $to && $line =3D~ m/^\@{3}/) {
--		$line =3D format_cc_diff_chunk_header($line, $from, $to);
-+	if (ref($line)) {
-+		$line =3D $$line;
- 	} else {
--		$line =3D esc_html($line, -nbsp=3D>1);
-+		chomp $line;
-+		$line =3D untabify($line);
-+
-+		if ($from && $to && $line =3D~ m/^\@{2} /) {
-+			$line =3D format_unidiff_chunk_header($line, $from, $to);
-+		} elsif ($from && $to && $line =3D~ m/^\@{3}/) {
-+			$line =3D format_cc_diff_chunk_header($line, $from, $to);
-+		} else {
-+			$line =3D esc_html($line, -nbsp=3D>1);
-+		}
+@@ -5047,10 +5047,32 @@ sub print_sidebyside_diff_lines {
  	}
-=20
- 	my $diff_classes =3D "diff";
-@@ -5054,10 +5060,88 @@ sub print_inline_diff_lines {
- 	print @$ctx, @$rem, @$add;
  }
 =20
-+# Format removed and added line, mark changed part and HTML-format the=
-m.
-+# Implementation is based on contrib/diff-highlight
-+sub format_rem_add_lines_pair {
-+	my ($rem, $add) =3D @_;
+-sub print_sidebyside_diff_chunk {
+-	my @chunk =3D @_;
++# Print context lines and then rem/add lines in inline manner.
++sub print_inline_diff_lines {
++	my ($ctx, $rem, $add) =3D @_;
 +
-+	# We need to untabify lines before split()'ing them;
-+	# otherwise offsets would be invalid.
-+	chomp $rem, $add;
-+	$rem =3D untabify($rem);
-+	$add =3D untabify($add);
-+
-+	my @rem =3D split(//, $rem);
-+	my @add =3D split(//, $add);
-+	my ($esc_rem, $esc_add);
-+	# Ignore +/- character, thus $prefix_len is set to 1.
-+	my ($prefix_len, $suffix_len) =3D (1, 0);
-+	my ($prefix_has_nonspace, $suffix_has_nonspace);
-+
-+	my $shorter =3D (@rem < @add) ? @rem : @add;
-+	while ($prefix_len < $shorter) {
-+		last if ($rem[$prefix_len] ne $add[$prefix_len]);
-+
-+		$prefix_has_nonspace =3D 1 if ($rem[$prefix_len] !~ /\s/);
-+		$prefix_len++;
-+	}
-+
-+	while ($prefix_len + $suffix_len < $shorter) {
-+		last if ($rem[-1 - $suffix_len] ne $add[-1 - $suffix_len]);
-+
-+		$suffix_has_nonspace =3D 1 if ($rem[-1 - $suffix_len] !~ /\s/);
-+		$suffix_len++;
-+	}
-+
-+	# Mark lines that are different from each other, but have some common
-+	# part that isn't whitespace.  If lines are completely different, don=
-'t
-+	# mark them because that would make output unreadable, especially if
-+	# diff consists of multiple lines.
-+	if ($prefix_has_nonspace || $suffix_has_nonspace) {
-+		$esc_rem =3D esc_html_hl_regions($rem, 'marked',
-+		        [$prefix_len, @rem - $suffix_len], -nbsp=3D>1);
-+		$esc_add =3D esc_html_hl_regions($add, 'marked',
-+		        [$prefix_len, @add - $suffix_len], -nbsp=3D>1);
-+	} else {
-+		$esc_rem =3D esc_html($rem, -nbsp=3D>1);
-+		$esc_add =3D esc_html($add, -nbsp=3D>1);
-+	}
-+
-+	return format_diff_line(\$esc_rem, 'rem'),
-+	       format_diff_line(\$esc_add, 'add');
++	print @$ctx, @$rem, @$add;
 +}
 +
-+# HTML-format diff context, removed and added lines.
-+sub format_ctx_rem_add_lines {
-+	my ($ctx, $rem, $add, $is_combined) =3D @_;
-+	my (@new_ctx, @new_rem, @new_add);
++# Print context lines and then rem/add lines.
++sub print_diff_lines {
++	my ($ctx, $rem, $add, $diff_style, $is_combined) =3D @_;
 +
-+	# Highlight if every removed line has a corresponding added line.
-+	# Combined diffs are not supported at this moment.
-+	if (!$is_combined && @$add > 0 && @$add =3D=3D @$rem) {
-+		for (my $i =3D 0; $i < @$add; $i++) {
-+			my ($line_rem, $line_add) =3D format_rem_add_lines_pair(
-+			        $rem->[$i], $add->[$i]);
-+			push @new_rem, $line_rem;
-+			push @new_add, $line_add;
-+		}
++	if ($diff_style eq 'sidebyside' && !$is_combined) {
++		print_sidebyside_diff_lines($ctx, $rem, $add);
 +	} else {
-+		@new_rem =3D map { format_diff_line($_, 'rem') } @$rem;
-+		@new_add =3D map { format_diff_line($_, 'add') } @$add;
++		# default 'inline' style and unknown styles
++		print_inline_diff_lines($ctx, $rem, $add);
 +	}
-+
-+	@new_ctx =3D map { format_diff_line($_, 'ctx') } @$ctx;
-+
-+	return (\@new_ctx, \@new_rem, \@new_add);
 +}
 +
- # Print context lines and then rem/add lines.
- sub print_diff_lines {
- 	my ($ctx, $rem, $add, $diff_style, $is_combined) =3D @_;
++sub print_diff_chunk {
++	my ($diff_style, $is_combined, @chunk) =3D @_;
+ 	my (@ctx, @rem, @add);
 =20
-+	($ctx, $rem, $add) =3D format_ctx_rem_add_lines($ctx, $rem, $add,
-+	        $is_combined);
++	# The class of the previous line.=20
++	my $prev_class =3D '';
 +
- 	if ($diff_style eq 'sidebyside' && !$is_combined) {
- 		print_sidebyside_diff_lines($ctx, $rem, $add);
- 	} else {
-@@ -5089,11 +5173,9 @@ sub print_diff_chunk {
- 	foreach my $line_info (@chunk) {
- 		my ($class, $line) =3D @$line_info;
+ 	return unless @chunk;
 =20
--		$line =3D format_diff_line($line, $class, $from, $to);
--
- 		# print chunk headers
- 		if ($class && $class eq 'chunk_header') {
--			print $line;
-+			print format_diff_line($line, $class, $from, $to);
- 			next;
+ 	# incomplete last line might be among removed or added lines,
+@@ -5074,9 +5096,13 @@ sub print_sidebyside_diff_chunk {
  		}
 =20
-diff --git a/gitweb/static/gitweb.css b/gitweb/static/gitweb.css
-index c530355..cb86d2d 100644
---- a/gitweb/static/gitweb.css
-+++ b/gitweb/static/gitweb.css
-@@ -438,6 +438,10 @@ div.diff.add {
- 	color: #008800;
+ 		## print from accumulator when have some add/rem lines or end
+-		# of chunk (flush context lines)
+-		if (((@rem || @add) && $class eq 'ctx') || !$class) {
+-			print_sidebyside_diff_lines(\@ctx, \@rem, \@add);
++		# of chunk (flush context lines), or when have add and rem
++		# lines and new block is reached (otherwise add/rem lines could
++		# be reordered)
++		if (((@rem || @add) && $class eq 'ctx') || !$class ||
++		    (@rem && @add && $class ne $prev_class)) {
++			print_diff_lines(\@ctx, \@rem, \@add,
++		                         $diff_style, $is_combined);
+ 			@ctx =3D @rem =3D @add =3D ();
+ 		}
+=20
+@@ -5093,6 +5119,8 @@ sub print_sidebyside_diff_chunk {
+ 		if ($class eq 'ctx') {
+ 			push @ctx, $line;
+ 		}
++
++		$prev_class =3D $class;
+ 	}
  }
 =20
-+div.diff.add span.marked {
-+	background-color: #aaffaa;
-+}
-+
- div.diff.from_file a.path,
- div.diff.from_file {
- 	color: #aa0000;
-@@ -447,6 +451,10 @@ div.diff.rem {
- 	color: #cc0000;
- }
+@@ -5219,22 +5247,17 @@ sub git_patchset_body {
+ 			$diff_classes .=3D " $class" if ($class);
+ 			$line =3D "<div class=3D\"$diff_classes\">$line</div>\n";
 =20
-+div.diff.rem span.marked {
-+	background-color: #ffaaaa;
-+}
+-			if ($diff_style eq 'sidebyside' && !$is_combined) {
+-				if ($class eq 'chunk_header') {
+-					print_sidebyside_diff_chunk(@chunk);
+-					@chunk =3D ( [ $class, $line ] );
+-				} else {
+-					push @chunk, [ $class, $line ];
+-				}
+-			} else {
+-				# default 'inline' style and unknown styles
+-				print $line;
++			if ($class eq 'chunk_header') {
++				print_diff_chunk($diff_style, $is_combined, @chunk);
++				@chunk =3D ();
+ 			}
 +
- div.diff.chunk_header a,
- div.diff.chunk_header {
- 	color: #990099;
++			push @chunk, [ $class, $line ];
+ 		}
+=20
+ 	} continue {
+ 		if (@chunk) {
+-			print_sidebyside_diff_chunk(@chunk);
++			print_diff_chunk($diff_style, $is_combined, @chunk);
+ 			@chunk =3D ();
+ 		}
+ 		print "</div>\n"; # class=3D"patch"
 --=20
 1.7.8.4
