@@ -1,141 +1,105 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCHv2 2/2] fast-import: tighten parsing of mark references
-Date: Wed, 4 Apr 2012 00:32:37 -0500
-Message-ID: <20120404053236.GA2460@burratino>
+Subject: Re: [PATCHv2 1/2] fast-import: test behavior of garbage after mark
+ references
+Date: Wed, 4 Apr 2012 00:43:17 -0500
+Message-ID: <20120404054316.GB2460@burratino>
 References: <20120401225407.GA12127@padd.com>
  <1333417910-17955-1-git-send-email-pw@padd.com>
- <1333417910-17955-3-git-send-email-pw@padd.com>
- <20120403142001.GD15589@burratino>
- <20120404012037.GB4124@padd.com>
+ <1333417910-17955-2-git-send-email-pw@padd.com>
+ <20120403140055.GC15589@burratino>
+ <20120404004610.GA4124@padd.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org, Dmitry Ivankov <divanorama@gmail.com>,
 	David Barr <davidbarr@google.com>,
 	Sverre Rabbelier <srabbelier@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Johan Herland <johan@herland.net>
+	Junio C Hamano <gitster@pobox.com>
 To: Pete Wyckoff <pw@padd.com>
-X-From: git-owner@vger.kernel.org Wed Apr 04 07:33:29 2012
+X-From: git-owner@vger.kernel.org Wed Apr 04 07:43:51 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SFIqS-00026N-VG
-	for gcvg-git-2@plane.gmane.org; Wed, 04 Apr 2012 07:33:25 +0200
+	id 1SFJ0V-0008DF-LP
+	for gcvg-git-2@plane.gmane.org; Wed, 04 Apr 2012 07:43:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751380Ab2DDFcq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Apr 2012 01:32:46 -0400
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:37309 "EHLO
+	id S1751428Ab2DDFnV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Apr 2012 01:43:21 -0400
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:57494 "EHLO
 	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750912Ab2DDFcp (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Apr 2012 01:32:45 -0400
-Received: by iagz16 with SMTP id z16so670732iag.19
-        for <git@vger.kernel.org>; Tue, 03 Apr 2012 22:32:44 -0700 (PDT)
+	with ESMTP id S1751082Ab2DDFnU (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Apr 2012 01:43:20 -0400
+Received: by iagz16 with SMTP id z16so680070iag.19
+        for <git@vger.kernel.org>; Tue, 03 Apr 2012 22:43:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-type:content-disposition:in-reply-to:user-agent;
-        bh=UCoj4kjUR7vwg5yZxLSeceA/mZmJZzyKefGfHi52xfk=;
-        b=1Egimpc6VoEyVAxZMDshhtG0l2sVfE4bSZlzbffvTkFVr1WD6raZ117WAaQYkjd2wv
-         ThzcKfoy3Br+eqTuw3/Vayu9Y3oMk4DBK/ZOZ0A1k2CbotiZkYd9qX+xXng5Ip9Gs9lt
-         yp8NNDBip+jEcA+Vkxw76WQJfiYvJ1YA1EJj9bGa0cLY+h7jsBJ4mdUOLzeTSy9eyjaw
-         I17Pr9VxU/0WuYcAU1K+AH1+nJ3bnPTFYNtlYir9xJrzZM37fYRcjOOue4k25UeC2vd2
-         YwizHnz89GRlsQo99v/g9syj02WWp2A40zFskjePMIAn2EqWwQAVpSoX6dG7NX0ZFAfj
-         0lxQ==
-Received: by 10.50.89.234 with SMTP id br10mr543447igb.14.1333517563943;
-        Tue, 03 Apr 2012 22:32:43 -0700 (PDT)
+        bh=rz+1IzujjJyXneFu4KJHrDueTW0XeoVUbFxR6G9Vnzs=;
+        b=EKMAs+smIKgb17d3ZYokS8H0JK0x4beZohDgiIbEqAJVlziwIUByEIUkRdPFFvTBio
+         XgRkirWDlXxXVdtSrMhmt97lGmXgrwAgIQyQ++WiT+6x6uKTSres9kZt7OuvdmXKgwkt
+         MYFlmVhchI5ja6wTFJuDJzoUmABxtx+5sAZiTG9R5TPwBQevdLrjF5A2w86RaKRXO4SD
+         KJIY5wJweACUtWT7Y+9dhe5Jyf1ybJYWPYwKSCz4nl0IZITI1l3ph19E8tDAqw99JVBG
+         x05ZX/hYlPgCbFQUL5jwWwnmhV9gKGAJ2KvfHNfdeSpwDrc5ebHunBlTFHs0D/xkXO4P
+         5/2Q==
+Received: by 10.50.6.167 with SMTP id c7mr579444iga.4.1333518200292;
+        Tue, 03 Apr 2012 22:43:20 -0700 (PDT)
 Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
-        by mx.google.com with ESMTPS id gr1sm1242591igc.1.2012.04.03.22.32.42
+        by mx.google.com with ESMTPS id gf4sm1253665igb.14.2012.04.03.22.43.19
         (version=SSLv3 cipher=OTHER);
-        Tue, 03 Apr 2012 22:32:43 -0700 (PDT)
+        Tue, 03 Apr 2012 22:43:19 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <20120404012037.GB4124@padd.com>
+In-Reply-To: <20120404004610.GA4124@padd.com>
 User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194678>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194679>
 
-Pete Wyckoff wrote:
-> jrnieder@gmail.com wrote on Tue, 03 Apr 2012 09:20 -0500:
+On Tue, Apr 03, 2012 at 08:46:10PM -0400, Pete Wyckoff wrote:
+> jrnieder@gmail.com wrote on Tue, 03 Apr 2012 09:00 -0500:
 
->> Simpler:
->> 
->> 	if (*p == ':') {
->> 		oe = find_mark(parse_mark_ref_space(p, &p));
->> 		hashcpy(sha1, oe->idx.sha1);
->> 	} else if ...
+>> Is this using "grep -q" to avoid repeating the same line in the output
+>> twice?  It seems better to use plain grep or test_i18ngrep.
+[...]
+> What I want to test here is that the functionality works: do the
+> right untranslated messages get printed.
 >
-> Yes.  I thought about just passing in plain old &p.  Even though
-> these approaches would work, it is a bit more difficult for
-> novice C coders to read.  Figured we should err on the side of
-> helping future code readers.  I can add more cleverness if you
-> feel strongly.
+> Changing the "Missing" to "missing" would require fixing the
+> tests, and that seems okay.
 
-It would be clearest with one argument, like so:
+Let me reiterate this a little then.
 
-		oe = find_mark(parse_mark_...(&p));
-		hashcpy(sha1, oe->idx.sha1);
+Suppose I mark the messages in fast-import.c with _() so they get
+translated.  Then your tests will fail, so I have to tweak them.  Fine
+--- the test tweaks take some time, but they're doable.  Nothing lost,
+right?
 
-[...]
-> Insead of "Missing space after 'inline'", you'll get "Invalid
-> SHA1".  You misspelled "inline" with "inliness"?  And would
-> prefer to be told you provided an invalid SHA1?
+No, something major would be lost.
 
-It wasn't a great example, but what I meant is that if someone
-asked me, a human, to parse
+Tests normally save later coders time, by giving immediate feedback
+that they would normally only get by letting a feature be used over a
+long time by real users.  They also dissuade people from changing
+git's behavior without thinking carefully about the consequences ---
+each broken test represents a class of script or user expectation that
+is potentially being broken.
 
-	M 100644 foobar path/to/file
+Similarly, a test that checks that git produces such-and-such exact
+output is dissuading me from making certain behavior changes by adding
+to the work needed to make them (I have to adjust tests, too).  So now
+I am less likely to
 
-I would assume that foobar is a <dataref>.  Likewise, for any
-string baz in
+ (1) reword the message to make it clearer in some way in response to
+     user feedback
 
-	M 100644 baz path/to/file
+ (2) mark it for translation so the operator can see a message in her
+     native language
 
-including strings that start with "inline", except for "inline"
-itself.
+How is making that hard in any way a good thing?
 
-To put it another way: checking for 'inline' at the start of a word as
-a way to check for typos seems odd to me.  We do not diagnose
+Relaxing the pattern addresses (1).  Using test_i18ngrep instead of
+grep addresses (2).
 
-	M 100644 Inline path/to/file
-
-as a misspelled version of "inline", nor
-
-	M 100644inline path/to/file
-
-as an instance of a missing space character, and we shouldn't.
-
-The goal in fast-import's behavior is usually predictability and
-simplicity in terms of the mental model of the person writing a
-frontend.  Trying to guess the user's intention on malformed input
-only takes away from that goal.
-
-Why I care: if some day git permits other kinds of <dataref> (for
-example if it supports refnames some day), I do not want datarefs
-beginning with "inline" to be forbidden.
-
-[...]
-> There are two cases it handles:  mark and sha1.  The mark case
-> uses the handy new parse_mark_ref_space(), which does the space
-> checking.  The sha1 branch had no check in this function.  So
-> I hoisted the space check up to make the branches symmetrical.
-
-I think it's ok to sacrifice symmetry here, but:
-
-[...]
-> I would prefer just to inline the whole thing.  Or new name
-> parse_ls_dataref() if you have a preference.
-
-if changing the behavior of the function that parses a treeish dataref
-seems right, that's fine with me as long as its name or signature
-changes.
-
-For example, it could become
-
-	static struct object_entry *parse_treeish(const char **p);
-
-Hope that helps,
 Jonathan
