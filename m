@@ -1,120 +1,68 @@
-From: Kacper Kornet <draenog@pld-linux.org>
-Subject: Re: [PATCH] gitweb: Option to omit column with time of the last
- change
-Date: Wed, 4 Apr 2012 08:39:39 +0200
-Message-ID: <20120404063939.GA17024@camk.edu.pl>
-References: <20120403132735.GA12389@camk.edu.pl>
- <201204040112.02269.jnareb@gmail.com>
+From: "J. Bakshi" <joydeep.bakshi@infoservices.in>
+Subject: Re: How to add folder NON RECURSIVELY ?
+Date: Wed, 4 Apr 2012 12:22:24 +0530
+Message-ID: <201204040652.q346qaC8020941@VM-MailSafe-02.soltecsis.com>
+References: <20120403173111.5329d7ed@shiva.selfip.org>
+	<vpqzkatc915.fsf@bauges.imag.fr>
+	<201204031223.q33CMvQC004186@VM-MailSafe-02.soltecsis.com>
+	<vpqaa2tc5xi.fsf@bauges.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-2
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 04 08:40:00 2012
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Wed Apr 04 08:53:08 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SFJst-00008f-Ib
-	for gcvg-git-2@plane.gmane.org; Wed, 04 Apr 2012 08:39:59 +0200
+	id 1SFK5X-000891-IQ
+	for gcvg-git-2@plane.gmane.org; Wed, 04 Apr 2012 08:53:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751428Ab2DDGjx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Apr 2012 02:39:53 -0400
-Received: from moat.camk.edu.pl ([148.81.175.50]:33200 "EHLO moat.camk.edu.pl"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750997Ab2DDGjw (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Apr 2012 02:39:52 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by moat.camk.edu.pl (Postfix) with ESMTP id 1A8305F0047;
-	Wed,  4 Apr 2012 08:40:38 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at camk.edu.pl
-Received: from moat.camk.edu.pl ([127.0.0.1])
-	by localhost (liam.camk.edu.pl [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id DKpio7kn-5eX; Wed,  4 Apr 2012 08:40:27 +0200 (CEST)
-Received: from gatekeeper2.camk.edu.pl (gatekeeper.camk.edu.pl [192.168.1.23])
-	by moat.camk.edu.pl (Postfix) with ESMTP id 43F245F0049;
-	Wed,  4 Apr 2012 08:40:26 +0200 (CEST)
-Received: by gatekeeper2.camk.edu.pl (Postfix, from userid 1293)
-	id 8BB494669F; Wed,  4 Apr 2012 08:39:39 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <201204040112.02269.jnareb@gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1751579Ab2DDGw6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Apr 2012 02:52:58 -0400
+Received: from smtp.unlimitedmail.net ([94.127.184.243]:43220 "EHLO
+	VM-MailSafe-02.soltecsis.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1751290Ab2DDGw6 (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 4 Apr 2012 02:52:58 -0400
+Received: from shiva.selfip.org (ABTS-North-Static-116.30.176.122.airtelbroadband.in [122.176.30.116] (may be forged))
+	(authenticated bits=0)
+	by VM-MailSafe-02.soltecsis.com (8.14.5/8.14.5) with ESMTP id q346qaC8020941;
+	Wed, 4 Apr 2012 08:52:38 +0200
+In-Reply-To: <vpqaa2tc5xi.fsf@bauges.imag.fr>
+X-Mailer: Claws Mail 3.8.0 (GTK+ 2.24.10; x86_64-pc-linux-gnu)
+Face: iVBORw0KGgoAAAANSUhEUgAAADAAAAAwAgMAAAAqbBEUAAAADFBMVEW2UCaWJQ3jnnRrCARshP4hAAACQElEQVQokRWSzU4aYRiFDwhiJjGAimxqRlzhbGpDm24wjmhTQtIIOlMag6GXUP92Tj5obcaaJqRJidvBlDi8N1FpbUzcFGgNK0MvgZKZsmHydVw+OWd1zgOiaH+98Ejt/SGCaTDlmZMYdl+cEmjMKQydBL97kJFAYlfbVab5KHS5AONrnoenPhVHbU1A4yezEYup+1crGRhtfuv9kPZtLRcz8Mw4ykJ1UPJF72Qkg09SdHFFxkY/iZW1HxNSY/zLSbS1B9sKLW7TaU3yB55DHXnjL4n0m1BSRNOZoKo8IXqx1YVqZ6is+C0YwS7Gml4q5/mdRFEbSkig95xbZEaHCMpEJ5x3yPRzyCEqzcTm0lMUscEEE0gfm/64RwPbpJyTIlPbLnNoMoku1JxNAHyTzhzQO2fWXL5PKgOD9H+fPQW4lUqnJk0OqkYEWorETE0SBzrmwFP0lj7Gn1r6qgZ4z8/jM/GVm7Mcg5apH4db8d43PccBoY6oHGAdPRuBX2m8DrSn+Y1+GALLNtLskjWFQHaEXsvMFvsFgc5sD4oyZT39wjiJQwu5ljRbSheqQnHIEfGfV2n+oL7KeBetvrcumQc1lbsQWJVj2fkDk/dceCwqi6qn4y7gcLxhlnCY71DgyGG4yNuvKnyPfBtzNipdRy6r/YXI9Pc+dM7WocqIHGU7KDlsSQn7wsHfSS9MVti9Dau5jfYkuU
+ 9Y13Z45+havZRg6H/Xhgk+au7c61L6FVD3XVu44IpkPpxUtnrqkiXRf3v/EFxxaZnHAAAAAElFTkSuQmCC
+X-SOLTECSIS-MailScanner-ID: q346qaC8020941
+X-SOLTECSIS-MailScanner: Found to be clean
+X-SOLTECSIS-MailScanner-From: joydeep.bakshi@infoservices.in
+X-Spam-Status: No
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194681>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194682>
 
-On Wed, Apr 04, 2012 at 01:12:01AM +0200, Jakub Narebski wrote:
-> On Tue, 3 Apr 2012, Kacper Kornet wrote:
-> > diff --git a/Documentation/gitweb.conf.txt b/Documentation/gitweb.conf.txt
-> > index 7aba497..bfeef21 100644
-> > --- a/Documentation/gitweb.conf.txt
-> > +++ b/Documentation/gitweb.conf.txt
-> > @@ -403,6 +403,9 @@ $default_projects_order::
-> >  	i.e. path to repository relative to `$projectroot`), "descr"
-> >  	(project description), "owner", and "age" (by date of most current
-> >  	commit).
-> > +
-> > +$no_list_age::
-> > +	Omit column with date of the most curren commit
+On Tue, 03 Apr 2012 15:15:37 +0200
+Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> wrote:
 
-> s/curren/current/
+> "J. Bakshi" <joydeep.bakshi@infoservices.in> writes:
+> 
+> > Could you please suggest how can I add foo/dir1/file1 ?
+> >
+> > guess
+> >
+> > touch foo/dir1/.gitignore
+> > git add foo/dir1/
+> 
+> Not if you want only "file1" to be added. As I said, Git doesn't know
+> and doesn't want to know about directories. So "git add directory/" is
+> just a shorthand that adds all (non-ignored) files in this directory.
+> 
+> > git add foo/dir1/file1
+> 
+> This last line alone will do it.
+> 
 
-> Thanks for adding documentation, though I would prefer if you expanded
-> this description (for example including the information that it touches
-> projects list page).
-
-What about:
-
-$no_list_age::
-	Whether to show the column with date of the most current commit on the
-	projects list page. It can save a bit of I/O.
-
-> > diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-> > index a8b5fad..f42468c 100755
-> > --- a/gitweb/gitweb.perl
-> > +++ b/gitweb/gitweb.perl
-> > @@ -133,6 +133,9 @@ our $default_projects_order = "project";
-> >  # (only effective if this variable evaluates to true)
-> >  our $export_ok = "++GITWEB_EXPORT_OK++";
-
-> > +# don't generate age column
-> > +our $no_list_age = 0;
-
-> "age" column where?
-
-> Hmmm... can't we come with a better name than $no_list_age?
-
-Any of $no_age_column, $omit_age_column, $no_last_commit would be better?
-
-
-> > @@ -5495,7 +5500,8 @@ sub git_project_list_body {
-> >  	                                 'tagfilter'  => $tagfilter)
-> >  		if ($tagfilter || $search_regexp);
-> >  	# fill the rest
-> > -	@projects = fill_project_list_info(\@projects);
-> > +	my @all_fields = $no_list_age ? ('descr', 'descr_long', 'owner', 'ctags', 'category') : ();
-> > +	@projects = fill_project_list_info(\@projects, @all_fields);
-
-> That looks quite strange on first glance.  I know that empty list means
-> filling all fields, but the casual reader migh wonder about this
-> conditional expression.
-
-> Perhaps it would be better to write it this way:
-
->   -	@projects = fill_project_list_info(\@projects);
->   +	my @fields = qw(descr descr_long owner ctags category);
->   +	push @fields, 'age' unless ($no_list_age);
->   +	@projects = fill_project_list_info(\@projects, @fields);
-
-> or something like that.
-
-> Well, at least until we come up with a better way to specify "all fields
-> except those specified".
-
-Yes, that's better. Especially that I would like also to introduce
-option to prevent printing repository owner everywhere.
-
--- 
-  Kacper Kornet
+Thanks a lot to all of you for your valuable suggestion.
