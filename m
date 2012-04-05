@@ -1,97 +1,116 @@
-From: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
-Subject: Re: rebase -p loses amended changes
-Date: Thu, 5 Apr 2012 09:43:34 -0700
-Message-ID: <CAOeW2eHJYiHswmzJeMnce5cpcA7zFi7kiH9CsZdNcHB7G+CtUA@mail.gmail.com>
-References: <592E2EEC-6CBA-48D6-8D44-34A971DD78EC@gmail.com>
-	<CAH3Anrqorf481jw6GdHqOPg9WC0rD-OraOHZ7twWRF4+oJ9X4A@mail.gmail.com>
-	<87fwcpun95.fsf@thomas.inf.ethz.ch>
-	<CAH3AnrpasFU2bLEZsAXRQu4U+=R_YyW+-yRXDfzy2JQpqf9dNw@mail.gmail.com>
-	<CADb3U=4Y0njLiYC1qrYbdm+h0h8vLh78yfz_u3B6veEqCX0xCQ@mail.gmail.com>
-	<CAH3Anrq_Z0V=DpU1iH-A3F8RFWTG0_C1hEe3iDZYe=AYDTRT3g@mail.gmail.com>
-	<CABURp0pnXvnT2=fDJXk-yiGctsJBHiNGSCOZiT4Vo74woi0Zxg@mail.gmail.com>
-	<4F7BEA9F.3060805@viscovery.net>
-	<CAOeW2eHHW6de1qcnajV7DLzWyiSJyh+ZpMbhQU-1WKnRuSeNhg@mail.gmail.com>
-	<CAH3AnrrYVNDN4cY7EmFsFyjC50wifuoPj1jSLPTxsSUy5+4aiQ@mail.gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: push.default: current vs upstream
+Date: Thu, 05 Apr 2012 18:46:51 +0200
+Message-ID: <vpqwr5uceis.fsf@bauges.imag.fr>
+References: <7vd37wv77j.fsf@alter.siamese.dyndns.org>
+	<20120329095236.GA11911@sigill.intra.peff.net>
+	<7vbonfqezs.fsf@alter.siamese.dyndns.org>
+	<20120329221154.GA1413@sigill.intra.peff.net>
+	<7vfwcqq2dw.fsf@alter.siamese.dyndns.org>
+	<20120330071358.GB30656@sigill.intra.peff.net>
+	<7vty15ltuo.fsf@alter.siamese.dyndns.org>
+	<vpqty12h995.fsf@bauges.imag.fr>
+	<20120405131301.GB10293@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Johannes Sixt <j.sixt@viscovery.net>,
-	Phil Hord <phil.hord@gmail.com>,
-	J Robert Ray <jrobertray@gmail.com>,
-	Thomas Rast <trast@student.ethz.ch>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Jon Seymour <jon.seymour@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Apr 05 18:43:56 2012
+Content-Type: text/plain
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Apr 05 18:47:40 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SFpmp-0001HT-P4
-	for gcvg-git-2@plane.gmane.org; Thu, 05 Apr 2012 18:43:52 +0200
+	id 1SFpqV-0003rc-U1
+	for gcvg-git-2@plane.gmane.org; Thu, 05 Apr 2012 18:47:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755462Ab2DEQng convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 5 Apr 2012 12:43:36 -0400
-Received: from mail-pz0-f52.google.com ([209.85.210.52]:51722 "EHLO
-	mail-pz0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755403Ab2DEQnf convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 5 Apr 2012 12:43:35 -0400
-Received: by dake40 with SMTP id e40so1821056dak.11
-        for <git@vger.kernel.org>; Thu, 05 Apr 2012 09:43:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=tIoQ/IQNByb1F8thqIbQi/oETw0LZo09XQKMe1jbaiU=;
-        b=y59lfNjNSehzo/kdlYceB127Dwl0/5tmfVPGXfhBY1qAIk9wVFlhJZdV1c+yKr6FaK
-         nvs5qit7zp5jl0tVn+p7Sonz3eMjGoyJnACXn3dHDfysqIlI8JQZ76iOb9Kz3rGxtGo/
-         QqugX9MtUU8SV3v76kiI969v4K5TjdIeBq9/AJtwAvjFAKjyeUHAhVWmtFthV/HV023b
-         IdzU0IRKBsU1aHSpTXqYd2a14tFMhZ32Us1Gg0+O5BPmpOh5QqH8r/enlwmfVy3TABAA
-         wQ66nqCpTHwLhHgMnoYMMn9FVRQbhRz/mOGVYG+Ap1GhIeB9dqQiRKFqYv1zulY+DlsO
-         k7Rw==
-Received: by 10.50.157.137 with SMTP id wm9mr5650530igb.64.1333644214706; Thu,
- 05 Apr 2012 09:43:34 -0700 (PDT)
-Received: by 10.68.224.97 with HTTP; Thu, 5 Apr 2012 09:43:34 -0700 (PDT)
-In-Reply-To: <CAH3AnrrYVNDN4cY7EmFsFyjC50wifuoPj1jSLPTxsSUy5+4aiQ@mail.gmail.com>
+	id S1755094Ab2DEQre (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Apr 2012 12:47:34 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:46242 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754760Ab2DEQrd (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Apr 2012 12:47:33 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id q35GfKCO023794
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Thu, 5 Apr 2012 18:41:20 +0200
+Received: from bauges.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1SFppk-00036V-O8; Thu, 05 Apr 2012 18:46:52 +0200
+In-Reply-To: <20120405131301.GB10293@sigill.intra.peff.net> (Jeff King's
+	message of "Thu, 5 Apr 2012 09:13:01 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.93 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Thu, 05 Apr 2012 18:41:20 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: q35GfKCO023794
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1334248883.4525@jIaYaGoxIeiKp4uNM1PM9A
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194787>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194788>
 
-On Thu, Apr 5, 2012 at 9:33 AM, Jon Seymour <jon.seymour@gmail.com> wro=
-te:
->>
->> With this history
->>
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0.-e-.
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 / =C2=A0 =C2=A0 \
->> =C2=A0 =C2=A0 =C2=A0.-c---d---f
->> =C2=A0 =C2=A0 /
->> a---b---g
->>
->> , "git rebase -p --onto g b f" produces
->>
->>
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0.-e'.
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 / =C2=A0 =C2=A0 \
->> a---b---g---c'--d'--f'
->>
+Jeff King <peff@peff.net> writes:
+
+> On Mon, Apr 02, 2012 at 09:40:22AM +0200, Matthieu Moy wrote:
 >
-> Perhaps there is a a formatting issue here, but wouldn't the resultin=
-g
-> history be, instead:
+>> For the others, they already have to learn about the "upstream"
+>> semantics. And making argumentless "git pull" and "git push" purposely
+>> asymetric to make it simple for the user sounds like an oxymoron to me.
 >
-> =C2=A0=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 . -e'.
-> =C2=A0=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0/ =C2=A0=
- =C2=A0 \
-> =C2=A0a---b---g---c'--d'--f'
+> We can make the operations technically symmetric in terms of the actual
+> sources and destinations from which commits are moved, but they are not
+> necessarily symmetric in the user's workflow.
 
-That's how it looked before I pasted it into gmail. Sorry about that
-and thanks for clarifying.
+It seems rather natural to me to have "asymetric workflow, asymetric
+commands" by default. So, if one wants to push to a place other than
+upstream, say "git push public-repo branch", or set your upstream to
+where you want to push (simple with "git push -u"), and say explicitely
+"git pull repo branch".
 
-> I don't really understand why e' - c' would be different to e-c?
+I can hardly imagine someone knowing what "git pull" does, and
+_surprised_ to see that "git push" sends commits to the same place. I
+agree that sending commits to upstream may be a mistake, but I don't
+think it can happen "by surprise".
 
-Not "would", but "could", if you're using -i as well and choose the
-"edit" action for commit e (or if merge conflict makes it halt while
-creating e').
+There are also ways to shoot yourself in the foot with when setting
+upstream to something other that where you usually push. For example,
+run "git rebase -i" without argument, and it will offer you to rewrite
+some published history. "git pull --rebase" also becomes a potentially
+dangerous operation, while it's normally harmless with
+'push.default=upstream'.
+
+And I still have my concern with real beginners: what advice would you
+give to a user whose "git push" is denied because of non-fast forward. I
+raised this concern already:
+
+  http://thread.gmane.org/gmane.comp.version-control.git/192547/focus=193196
+
+and I essentially had the answer "telling the user to pull is wrong"
+(with which I disagree), but no one managed to give another advice.
+
+With real-real-newbies, this is my number 1 issue (they don't even do
+branches, they just run push, git tells them to pull, and they come to
+me saying "git is broken, we can't work"). With not-so-newbies, I have
+less experience ;-).
+
+>> The discussion seems to focuse on 'let's make "git push" easy to
+>> explain', but I think the right thing to do is to make _Git_ easy to
+>> explain. With "push.default = current", we'll have a hard time
+>> explaining how "git pull" works.
+>
+> Do we have a hard time explaining how "git pull" works now?
+
+I don't think so, but Junio's argument is that explaining what push
+would do with 'upstream' would be too complex, and that 'current' is
+easier to explain. If 'git pull' is simple, then 'git -c
+push.current=upstream push' is equally simple.
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
