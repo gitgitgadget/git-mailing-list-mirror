@@ -1,98 +1,106 @@
-From: Michal Kiedrowicz <michal.kiedrowicz@gmail.com>
-Subject: Re: [PATCH v3 7/8] gitweb: Highlight interesting parts of diff
-Date: Thu, 5 Apr 2012 08:25:57 +0200
-Message-ID: <20120405082557.7223ff6e@mkiedrowicz.ivo.pl>
-References: <1333569433-3245-1-git-send-email-michal.kiedrowicz@gmail.com>
-	<1333569433-3245-8-git-send-email-michal.kiedrowicz@gmail.com>
+From: Luke Diamand <luke@diamand.org>
+Subject: Re: [PATCHv1 2/2] git-p4: import/export of labels to/from p4
+Date: Thu, 05 Apr 2012 07:54:43 +0100
+Message-ID: <4F7D41B3.7010202@diamand.org>
+References: <1333438715-14902-1-git-send-email-luke@diamand.org> <1333438715-14902-3-git-send-email-luke@diamand.org> <20120403235247.02c85147@fenix.utopia.dhis.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Jakub Narebski <jnareb@gmail.com>
-To: =?UTF-8?B?TWljaGHFgg==?= Kiedrowicz <michal.kiedrowicz@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Apr 05 08:26:50 2012
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Pete Wyckoff <pw@padd.com>, git@vger.kernel.org
+To: Vitor Antunes <vitor.hda@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Apr 05 08:54:53 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SFg9g-0006Su-DJ
-	for gcvg-git-2@plane.gmane.org; Thu, 05 Apr 2012 08:26:48 +0200
+	id 1SFgap-0004sx-T3
+	for gcvg-git-2@plane.gmane.org; Thu, 05 Apr 2012 08:54:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754974Ab2DEG0S convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 5 Apr 2012 02:26:18 -0400
-Received: from mail-wi0-f172.google.com ([209.85.212.172]:41888 "EHLO
-	mail-wi0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754490Ab2DEG0L convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 5 Apr 2012 02:26:11 -0400
-Received: by wibhj6 with SMTP id hj6so1270382wib.1
-        for <git@vger.kernel.org>; Wed, 04 Apr 2012 23:26:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:in-reply-to:references:x-mailer
-         :mime-version:content-type:content-transfer-encoding;
-        bh=8kpVkItTeHyj8xCzKKTRJwscRmlAGF8BecKdcm0armI=;
-        b=GSQMaeC5cKh7Gg+z5VZAlVrD8yi9+p/Sej2Nukc/vVU4JT+K3ZHEfer2WQLSfpGUEv
-         MSaPl4K5RfpElYppsr5v9UnXY5fnJrbqomjSBrGwcLecunH8g/biUPL45pj+GfishGwp
-         4AwA4o44rh+p0tilMC/rB74kA/mwjxpFE5t0RXrXngoNRsnEEMCbz3RyAGA38d5x77+j
-         cRlyOSeNT82n4toYvCaRABvW8czuJuLGL05s3XVvgWaPByf8Vg1IJtSSMMg7ABh/DRqJ
-         zRG+Hf8dP+3Ox4iys2KClFY3li+Z52QkUadkY4TR6YlXcisxDAquExh84MRGwqno7B1o
-         eTnw==
-Received: by 10.180.104.230 with SMTP id gh6mr1760065wib.22.1333607168457;
-        Wed, 04 Apr 2012 23:26:08 -0700 (PDT)
-Received: from mkiedrowicz.ivo.pl (pc10.ivo.park.gdynia.pl. [153.19.128.10])
-        by mx.google.com with ESMTPS id ea6sm11009187wib.5.2012.04.04.23.26.06
+	id S1752624Ab2DEGyr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Apr 2012 02:54:47 -0400
+Received: from mail-ey0-f174.google.com ([209.85.215.174]:55850 "EHLO
+	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752035Ab2DEGyq (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Apr 2012 02:54:46 -0400
+Received: by eaaq12 with SMTP id q12so322393eaa.19
+        for <git@vger.kernel.org>; Wed, 04 Apr 2012 23:54:45 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding
+         :x-gm-message-state;
+        bh=DrnikPsF/wlxRYren0rEa7Qbw+eWSLUmN9f6djN6qzQ=;
+        b=Q/UH3v8FsXc87XyE1cAKpF7wCLKrCTeBWEvePqEKHKg1ZUJ0nstmPuKQv/CWwkClx/
+         Ql8UXjSCNJOCARSOeU17HM/v23zkgMxxmmyr4MCLFy2YjFvxEDj6ox9Njn1ZmDTNKmIp
+         EF/hDQyse3US8TwF9aQ2h9Jji88t2kDEvudgGxu9XQ0WcGzmUz1ic1M/gE6a6gIlg3to
+         fDp7rrIz7LAWSNR3WUk5FrjJKpkEiX0zyNB4jktScEopzUEDs5vOoCK+XnelXDRcr3g1
+         BLMtM6RQUxf0VTygkatbmycXE4Bap8884H2RkY63SsgNCNS5AN2JTtHovH0QVWkvHTN+
+         cjFw==
+Received: by 10.213.15.144 with SMTP id k16mr293552eba.10.1333608885199;
+        Wed, 04 Apr 2012 23:54:45 -0700 (PDT)
+Received: from [86.6.30.7] (cpc19-cmbg14-2-0-cust6.5-4.cable.virginmedia.com. [86.6.30.7])
+        by mx.google.com with ESMTPS id n55sm9870516eef.6.2012.04.04.23.54.44
         (version=SSLv3 cipher=OTHER);
-        Wed, 04 Apr 2012 23:26:07 -0700 (PDT)
-In-Reply-To: <1333569433-3245-8-git-send-email-michal.kiedrowicz@gmail.com>
-X-Mailer: Claws Mail 3.8.0 (GTK+ 2.24.8; x86_64-pc-linux-gnu)
+        Wed, 04 Apr 2012 23:54:44 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:7.0.1) Gecko/20110929 Thunderbird/7.0.1
+In-Reply-To: <20120403235247.02c85147@fenix.utopia.dhis.org>
+X-Gm-Message-State: ALoCoQlPFfPv0gulPS1jJMjBHVBiobqV/y6xjclqdzEJfV3wSg3G/ERk5KmhPVgiOIzFdaTWGsV5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194762>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194763>
 
-Micha=C5=82 Kiedrowicz <michal.kiedrowicz@gmail.com> wrote:
+On 03/04/12 23:52, Vitor Antunes wrote:
+> On Tue,  3 Apr 2012 08:38:35 +0100
+> Luke Diamand<luke@diamand.org>  wrote:
+>
+>> The existing label import code looks at each commit being
+>> imported, and then checks for labels at that commit. This
+>> doesn't work in the real world though because it will drop
+>> labels applied on changelists that have already been imported,
+>> a common pattern.
+>>
+>> This change adds a new --import-labels option. With this option,
+>> at the end of the sync, git-p4 gets sets of labels in p4 and git,
+>> and then creates a git tag for each missing p4 label.
+>>
 
-> Reading diff output is sometimes very hard, even if it's colored,
-> especially if lines differ only in few characters.  This is often tru=
-e
-> when a commit fixes a typo or renames some variables or functions.
->=20
-> This commit teaches gitweb to highlight characters that are different
-> between old and new line with a light green/red background.  This
-> should work in the similar manner as in Trac or GitHub.
->=20
-> The algorithm that compares lines is based on contrib/diff-highlight.
-> Basically, it works by determining common prefix/suffix of
-> corresponding lines and highlightning only the middle part of lines.
-> For more information, see contrib/diff-highlight/README.
->=20
-> Combined diffs are not supported but a following commit will change
-> it.
->=20
-> Since we need to pass esc_html()'ed or esc_html_hl_regions()'ed lines
-> to format_diff_lines(), so it was taught to accept preformatted lines
-> passed as a reference.
->=20
-> Signed-off-by: Micha=C5=82 Kiedrowicz <michal.kiedrowicz@gmail.com>
-> Acked-by: Jakub Nar=C4=99bski <jnareb@gmail.com>
+<snip>
 
-Junio,
+>>
+>
+> Would it be possible to only export git tags during commit?
+>
+> I don't think it is intuitive to make changes in P4 during sync operation.
+> And because it is possible to configure git-p4 to always export tags it will
+> be easy to forget that while sync'ing we are also updating P4.
 
-can you please fixup this patch?  I just noticed "chomp $rem, $add" bre=
-aks
-the testsuite.
+Commit isn't a great time to do it because you don't know the p4 
+changelist number for your git commits.
 
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index e4351fe..961fbdc 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -5067,7 +5067,8 @@ sub format_rem_add_lines_pair {
+e.g.
 
-        # We need to untabify lines before split()'ing them;
-        # otherwise offsets would be invalid.
--       chomp $rem, $add;
-+       chomp $rem;
-+       chomp $add;
-        $rem =3D untabify($rem);
-        $add =3D untabify($add);
+git commit -m 'Some change'
+git tag -a MYTAG -m 'whatever'
+git-p4 submit [--export-tags]
+
+======= the tag must be ignored here ========
+======= as you don't know the p4 cl  ========
+
+git-p4 sync --export-tags
+======= *Now* you know the p4 cl     ========
+
+So it either has to be part of sync/rebase, or we add a new command, 
+e.g. git-p4 export-tags (and presumably git-p4 import-tags). But that 
+seems awkward as well.
+
+
+>
+> I still did not test the patch in my branch environment, so I may have more
+> updates later. But for now, everything else seems ok by me.
+>
+
+Thanks,
+Luke
