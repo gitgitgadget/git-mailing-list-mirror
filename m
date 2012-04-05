@@ -1,90 +1,95 @@
-From: =?ISO-8859-1?Q?Jos=E9_Mar=EDa_Escart=EDn_Esteban?= 
-	<ripero84@gmail.com>
-Subject: Static gitweb content when using pathinfo
-Date: Thu, 05 Apr 2012 15:54:27 +0200
-Message-ID: <4F7DA413.2020502@gmail.com>
+From: Adam Monsen <haircut@gmail.com>
+Subject: Re: [PATCH 0/3] "commit --template" fixes
+Date: Thu, 05 Apr 2012 07:29:53 -0700
+Message-ID: <4F7DAC61.3000104@gmail.com>
+References: <7vaa2ylzrm.fsf@alter.siamese.dyndns.org> <1333136719-12657-1-git-send-email-gitster@pobox.com> <4F775ACF.50007@gmail.com> <7vaa2vhyso.fsf@alter.siamese.dyndns.org> <4F7B2F35.40807@gmail.com> <7v1uo4cwg7.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Jakub Narebski <jnareb@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Apr 05 15:54:39 2012
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature";
+ boundary="------------enig845A5989EAD5B80082DB039D"
+Cc: git@vger.kernel.org, Ivan Heffner <iheffner@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Apr 05 16:30:11 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SFn94-0006XU-PJ
-	for gcvg-git-2@plane.gmane.org; Thu, 05 Apr 2012 15:54:39 +0200
+	id 1SFnhL-0007Jg-RJ
+	for gcvg-git-2@plane.gmane.org; Thu, 05 Apr 2012 16:30:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752882Ab2DENye (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Apr 2012 09:54:34 -0400
-Received: from mail-we0-f174.google.com ([74.125.82.174]:38395 "EHLO
-	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751591Ab2DENyd (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Apr 2012 09:54:33 -0400
-Received: by wejx9 with SMTP id x9so877346wej.19
-        for <git@vger.kernel.org>; Thu, 05 Apr 2012 06:54:32 -0700 (PDT)
+	id S1753214Ab2DEO36 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Apr 2012 10:29:58 -0400
+Received: from mail-qa0-f42.google.com ([209.85.216.42]:49937 "EHLO
+	mail-qa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752779Ab2DEO35 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Apr 2012 10:29:57 -0400
+Received: by qafi31 with SMTP id i31so1752973qaf.1
+        for <git@vger.kernel.org>; Thu, 05 Apr 2012 07:29:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :x-enigmail-version:content-type:content-transfer-encoding;
-        bh=JGuLF0PghZqpjt/sK/seCn765kCbrRvXC+p+zO1YSrw=;
-        b=cBq29yIB+G1UGItbfHs9JbVRJorEKNCzOCv0e5wNJN+55TsidlvGRoiA8oN4UC5E4z
-         ZmlpUpzaYFdQc//VM9SkfYY98kWig+Oy3qBEVQSt0IW4cYuWbDMwavjRcsKQoyvQclMV
-         QzztlhyRIZGW3IA683bZkPOmNep6scJnKkzNtCceRPrB2pEDOjl3373AvwAnvQCRoLV2
-         JfVaWxEPb7NXa/ug9AliSJsT9nm7GCK0/UYZz4ELPm0OXAtdOCmDNUlE+t+hE+Lb6psV
-         QGESYLYC2/KB7+p7uSPHlK1f1wHLohEvpaCbPxVJNiX4vdqeF5pR8dqzO+CsYtAPPWfz
-         uuUw==
-Received: by 10.180.88.199 with SMTP id bi7mr5119701wib.12.1333634072162;
-        Thu, 05 Apr 2012 06:54:32 -0700 (PDT)
-Received: from [192.168.3.8] (AToulouse-552-1-140-126.w83-203.abo.wanadoo.fr. [83.203.91.126])
-        by mx.google.com with ESMTPS id gg2sm17355737wib.7.2012.04.05.06.54.30
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 05 Apr 2012 06:54:31 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.24) Gecko/20111114 Icedove/3.1.16
-X-Enigmail-Version: 1.1.2
+         :references:in-reply-to:x-enigmail-version:content-type;
+        bh=JtikYZrcjqFQ2oyKOocSv85hW6v/VLLbmxBs4a9dX1Y=;
+        b=xebvCA67TbeuIzB8gy2aK8Qc1rxOsjd7MpdgoPAFnQL3Z8LS26ZnouWy1MdibtwbMP
+         VipCWNMG2q/7zc1p325LCiwESUyx7zYFDoiLG+25sAKLuwy8rOPMgzW6sI5O4ZB8KoH7
+         mP9NH6Tw8m/gOCiwfGolUIWKG80k7Fjs+5wNRrMdZL3CYa9riezZMY9wpUftQHyH3TfM
+         kmreEvCZLxOGb55d6c7X4ov8sV1ScoNCHXx9cqLYuhHM/WOYHZWZM0q2oowImb0iVsAH
+         yZRFlVUqsszUJXf05fP78Lofbbvj+4gYUik0DMMyq7vkiLlBZDYyfP9PbDYcXYkNwm41
+         vP6A==
+Received: by 10.224.185.82 with SMTP id cn18mr4155770qab.97.1333636196994;
+        Thu, 05 Apr 2012 07:29:56 -0700 (PDT)
+Received: from [192.168.13.92] (c-67-183-137-177.hsd1.wa.comcast.net. [67.183.137.177])
+        by mx.google.com with ESMTPS id i8sm6347670qah.4.2012.04.05.07.29.54
+        (version=SSLv3 cipher=OTHER);
+        Thu, 05 Apr 2012 07:29:55 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:11.0) Gecko/20120329 Thunderbird/11.0.1
+In-Reply-To: <7v1uo4cwg7.fsf@alter.siamese.dyndns.org>
+X-Enigmail-Version: 1.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194774>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194775>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
+--------------enig845A5989EAD5B80082DB039D
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-Hi,
+On 04/03/2012 02:55 PM, Junio C Hamano wrote:
+> When editing the commit message, start the editor with the contents in =
+the
+> given file.  The `commit.template` configuration variable is often used=
+ to
+> give this option implicitly to the command.  This mechanism can be used=
+ by
+> projects that want to guide participants with some hints on what to wri=
+te
+> in the message in what order.  If the user exits the editor without edi=
+ting
+> the message, the commit is aborted.  This has no effect when a message =
+is
+> given by other means, e.g. with the `-m` or `-F` options.
 
-I'm running gitweb in a server.example.com/gitweb/ scenario.  If I don't enable
-pathinfo everything works fine, but when I enable pathinfo the static content
-stops showing up in the browser.
+I like it!
 
-I'm not an HTML or perl expert, but I think that this may be due to a missing
-slash in the construction of the base tag:  Using the upstream script I am getting
 
-<base href="http://server.example.com/gitweb" />
-
-and no static content.  Once I tune the script to add a final slash to the url
-
-<base href="http://server.example.com/gitweb/" />
-
-the static content shows up again.
-
-Maybe I'm doing something wrong (am I?), and possibly this can be solved from
-the web server side, but maybe it also makes some sense to include in the script
-some check that the url used in the base tag ends with a slash.  In that case,
-given my lack of perl skills, I would be really grateful if somebody implemented it.
-
-Thank you for your attention.
-
-Greetings,
-
-	E.
+--------------enig845A5989EAD5B80082DB039D
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.11 (GNU/Linux)
 
-iEYEARECAAYFAk99pBMACgkQY+7weQMem3y28wCeOotCIgFF8sT4LKgq599IhB/E
-0qcAn2dri0Z61PjV90bxfBG1QMFD3c75
-=6PBz
+iQEcBAEBAgAGBQJPfaxhAAoJEJtdmT+DbynAesEIAMtvD7IlqoIr+ckd2yv+xdGc
+jhZov78OXcguXCIU3x1FonzH8fq863EFe3K5uQyeG9V2mhCQ+JDA+E1xhWbMcbRj
+UApvst+O1uZlQAWDlBWXxvMJ/G+RYf8wpl32dSlBsZSgaehRSH5n0btQrxZZd/iL
+TIBqqrr5pTzl6tbno3LF8i1y7zAG1S25/Vk/1d7hI7qrS/5bHWmVvYwpoe6wd4GJ
+ScDtg/CMxaF/etug0v13ooV/1BLq1HBqp0GWibg7vHse4as7lgch89QFp0xe4lkt
+rwxxr62TAmb33lb7X/nedh7fdAS0i3UTnJqTPSzxWg92rgEU5PNdpyNjzHVxMzU=
+=x8Iv
 -----END PGP SIGNATURE-----
+
+--------------enig845A5989EAD5B80082DB039D--
