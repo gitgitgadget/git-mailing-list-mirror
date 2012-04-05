@@ -1,7 +1,7 @@
 From: Neil Horman <nhorman@tuxdriver.com>
-Subject: [PATCH 5/5] git-rebase: add keep_empty flag [v2]
-Date: Thu,  5 Apr 2012 15:39:05 -0400
-Message-ID: <1333654745-7898-6-git-send-email-nhorman@tuxdriver.com>
+Subject: [PATCH 3/5] git-cherry-pick: Add ignore-if-made-empty option [v2]
+Date: Thu,  5 Apr 2012 15:39:03 -0400
+Message-ID: <1333654745-7898-4-git-send-email-nhorman@tuxdriver.com>
 References: <1333136922-12872-1-git-send-email-nhorman@tuxdriver.com>
  <1333654745-7898-1-git-send-email-nhorman@tuxdriver.com>
 Cc: Neil Horman <nhorman@tuxdriver.com>, Jeff King <peff@peff.net>,
@@ -14,20 +14,20 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SFsYQ-00006V-Bg
+	id 1SFsYP-00006V-JY
 	for gcvg-git-2@plane.gmane.org; Thu, 05 Apr 2012 21:41:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755964Ab2DETkW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Apr 2012 15:40:22 -0400
-Received: from charlotte.tuxdriver.com ([70.61.120.58]:57313 "EHLO
+	id S1754770Ab2DETkS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Apr 2012 15:40:18 -0400
+Received: from charlotte.tuxdriver.com ([70.61.120.58]:57291 "EHLO
 	smtp.tuxdriver.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755935Ab2DETjq (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Apr 2012 15:39:46 -0400
+	with ESMTP id S1755881Ab2DETji (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Apr 2012 15:39:38 -0400
 Received: from hmsreliant.think-freely.org ([2001:470:8:a08:7aac:c0ff:fec2:933b] helo=localhost)
 	by smtp.tuxdriver.com with esmtpsa (TLSv1:AES128-SHA:128)
 	(Exim 4.63)
 	(envelope-from <nhorman@tuxdriver.com>)
-	id 1SFsWy-0005WV-LL; Thu, 05 Apr 2012 15:39:44 -0400
+	id 1SFsWr-0005W8-62; Thu, 05 Apr 2012 15:39:36 -0400
 X-Mailer: git-send-email 1.7.7.6
 In-Reply-To: <1333654745-7898-1-git-send-email-nhorman@tuxdriver.com>
 X-Spam-Score: -2.9 (--)
@@ -36,192 +36,246 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194799>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194800>
 
-Add a command line switch to git-rebase to allow a user the ability to specify
-that they want to keep any commits in a series that are empty.
-
-When git-rebase's type is am, then this option will automatically keep any
-commit that has a tree object identical to its parent.
-
-This patch changes the default behavior of interactive rebases as well.  With
-this patch, git-rebase -i will produce a revision set passed to
-git-revision-editor, in which empty commits are commented out.  Empty commits
-may be kept manually by uncommenting them.  If the new --keep-empty option is
-used in an interactive rebase the empty commits will automatically all be
-uncommented in the editor.
+Since we'll be using git-cherry-pick to enhance git-rebase's ability to preserve
+empty commits, we open ourselves to the possibility of preserving commits that
+are made empty by a previous merge as well, which is almost certainly not what
+we want (most of the time).  To handle this, we can add the ignore-if-made-empty
+option.  If enabled, it will look at cherry-picked commits, and if the origional
+sha1 has the same tree as its parent, then the cherry-pick is comitted as an
+empty commit, otherwise the commit is skipped (because it previously made
+changes to the tree, but no longer does).
 
 Signed-off-by: Neil Horman <nhorman@tuxdriver.com>
 CC: Jeff King <peff@peff.net>
 CC: Phil Hord <phil.hord@gmail.com>
 CC: Junio C Hamano <gitster@pobox.com>
 ---
- Documentation/git-rebase.txt |    4 ++++
- git-rebase--am.sh            |   19 ++++++++++++++-----
- git-rebase--interactive.sh   |   40 +++++++++++++++++++++++++++++++++++++---
- git-rebase.sh                |    5 +++++
- 4 files changed, 60 insertions(+), 8 deletions(-)
+ Documentation/git-cherry-pick.txt |   10 +++-
+ builtin/revert.c                  |    2 +
+ sequencer.c                       |  113 ++++++++++++++++++++++++++++++++-----
+ sequencer.h                       |    1 +
+ 4 files changed, 111 insertions(+), 15 deletions(-)
 
-diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
-index 504945c..131c35d 100644
---- a/Documentation/git-rebase.txt
-+++ b/Documentation/git-rebase.txt
-@@ -238,6 +238,10 @@ leave out at most one of A and B, in which case it defaults to HEAD.
- 	will be reset to where it was when the rebase operation was
- 	started.
+diff --git a/Documentation/git-cherry-pick.txt b/Documentation/git-cherry-pick.txt
+index c283d8c..bb7eb4a 100644
+--- a/Documentation/git-cherry-pick.txt
++++ b/Documentation/git-cherry-pick.txt
+@@ -103,7 +103,7 @@ effect to your index in a row.
+ 	cherry-pick'ed commit, then a fast forward to this commit will
+ 	be performed.
  
-+--keep-empty::
-+	Keep the commits that do not change anything from its
-+	parents in the result.
+---allow-empty:
++--allow-empty:::
+ 	By default, cherry-picking an empty commit will fail,
+ 	indicating that an explicit invocation of `git commit
+ 	--allow-empty` is required. This option overrides that
+@@ -112,6 +112,14 @@ effect to your index in a row.
+ 	commits that meet the "fast-forward" requirement will be kept
+ 	even without this option.
+ 
++--ignore-if-made-empty::
++	If the --allow-empty option is used, all empty commits are kept,
++	including those which were made empty due to a previous change.
++	While this may be desireable, likely it is not.  This option
++	restricts the scope of --allow-empty to only those commits which
++	were created as empty commits (i.e. if for commit C,  C^{tree} and 
++	C^^{tree} are identical).
 +
- --skip::
- 	Restart the rebasing process by skipping the current patch.
+ --strategy=<strategy>::
+ 	Use the given merge strategy.  Should only be used once.
+ 	See the MERGE STRATEGIES section in linkgit:git-merge[1]
+diff --git a/builtin/revert.c b/builtin/revert.c
+index 06b00e6..0fa76ca 100644
+--- a/builtin/revert.c
++++ b/builtin/revert.c
+@@ -115,6 +115,7 @@ static void parse_args(int argc, const char **argv, struct replay_opts *opts)
+ 		OPT_END(),
+ 		OPT_END(),
+ 		OPT_END(),
++		OPT_END(),
+ 	};
  
-diff --git a/git-rebase--am.sh b/git-rebase--am.sh
-index c815a24..a7194f7 100644
---- a/git-rebase--am.sh
-+++ b/git-rebase--am.sh
-@@ -20,11 +20,20 @@ esac
+ 	if (opts->action == REPLAY_PICK) {
+@@ -122,6 +123,7 @@ static void parse_args(int argc, const char **argv, struct replay_opts *opts)
+ 			OPT_BOOLEAN('x', NULL, &opts->record_origin, "append commit name"),
+ 			OPT_BOOLEAN(0, "ff", &opts->allow_ff, "allow fast-forward"),
+ 			OPT_BOOLEAN(0, "allow-empty", &opts->allow_empty, "preserve empty commits"),
++			OPT_BOOLEAN(0, "ignore-if-made-empty", &opts->ignore_if_made_empty, "ignore commits already in tree"),
+ 			OPT_END(),
+ 		};
+ 		if (parse_options_concat(options, ARRAY_SIZE(options), cp_extra))
+diff --git a/sequencer.c b/sequencer.c
+index 71929ba..a512598 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -13,6 +13,7 @@
+ #include "rerere.h"
+ #include "merge-recursive.h"
+ #include "refs.h"
++#include "argv-array.h"
  
- test -n "$rebase_root" && root_flag=--root
+ #define GIT_REFLOG_ACTION "GIT_REFLOG_ACTION"
  
--git format-patch -k --stdout --full-index --ignore-if-in-upstream \
--	--src-prefix=a/ --dst-prefix=b/ \
--	--no-renames $root_flag "$revisions" |
--git am $git_am_opt --rebasing --resolvemsg="$resolvemsg" &&
--move_to_original_branch
-+if [ -n "$keep_empty" ]
-+then
-+	# we have to do this the hard way.  git format-patch completly squashes
-+	# empty commits and even if it didn't the format doesn't really lend
-+	# itself well to recording empty patches.  fortunately, cherry-pick
-+	# makes this easy
-+	git cherry-pick --allow-empty --ignore-if-made-empty "$revisions"
-+else
-+	git format-patch -k --stdout --full-index --ignore-if-in-upstream \
-+		--src-prefix=a/ --dst-prefix=b/ \
-+		--no-renames $root_flag "$revisions" |
-+	git am $git_am_opt --rebasing --resolvemsg="$resolvemsg"
-+fi && move_to_original_branch
+@@ -258,26 +259,107 @@ static int do_recursive_merge(struct commit *base, struct commit *next,
+  * If we are revert, or if our cherry-pick results in a hand merge,
+  * we had better say that the current user is responsible for that.
+  */
+-static int run_git_commit(const char *defmsg, struct replay_opts *opts)
+-{
+-	/* 7 is max possible length of our args array including NULL */
+-	const char *args[7];
+-	int i = 0;
++static int run_git_commit(const char *defmsg, struct replay_opts *opts, int empty)
++{
++	struct argv_array array;
++	int rc;
 +
- ret=$?
- test 0 != $ret -a -d "$state_dir" && write_basic_state
- exit $ret
-diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-index 5812222..beb06cf 100644
---- a/git-rebase--interactive.sh
-+++ b/git-rebase--interactive.sh
-@@ -167,6 +167,12 @@ has_action () {
- 	sane_grep '^[^#]' "$1" >/dev/null
- }
++	argv_array_init(&array);
++	argv_array_push(&array, "commit");
++	argv_array_push(&array, "-n");
++
++	if ((!empty) && (opts->ignore_if_made_empty)) {
++		/* Note: This implies --dry-run */
++		argv_array_push(&array, "--porcelain");
++		if (run_command_v_opt(array.argv, RUN_GIT_CMD) == 1) {
++			/* The dry run exit code of 1 tells us this is
++ 			 * an empty commit, just skip it.
++ 			 */
++			argv_array_clear(&array);
++			return 0;
++		}
++		argv_array_pop(&array, 1);
++	}
++
  
-+is_empty_commit() {
-+	ptree=$(git rev-parse "$1"^{tree})
-+	pptree=$(git rev-parse "$1"^^{tree})
-+	return test "$ptree" = "$pptree"
+-	args[i++] = "commit";
+-	args[i++] = "-n";
+ 	if (opts->signoff)
+-		args[i++] = "-s";
++		argv_array_push(&array, "-s");
+ 	if (!opts->edit) {
+-		args[i++] = "-F";
+-		args[i++] = defmsg;
++		argv_array_push(&array, "-F");
++		argv_array_push(&array, defmsg);
+ 	}
++	
+ 	if (opts->allow_empty)
+-		args[i++] = "--allow-empty";
++		argv_array_push(&array, "--allow-empty");
++
++
++	rc = run_command_v_opt(array.argv, RUN_GIT_CMD);
++	argv_array_clear(&array);
++	return rc;
 +}
 +
- # Run command with GIT_AUTHOR_NAME, GIT_AUTHOR_EMAIL, and
- # GIT_AUTHOR_DATE exported from the current environment.
- do_with_author () {
-@@ -191,12 +197,23 @@ git_sequence_editor () {
++static int is_origional_commit_empty(struct commit *commit)
++{
++	struct argv_array argv_array;
++	struct child_process cp;
++	char ptree[41], pptree[41];
++	int pipefd[2];
++	FILE *output;
++	int ret = 0;
++
++	if (pipe2(pipefd, 0) < 0)
++		return 0;
++
++	output = xfdopen(pipefd[0], "r");
++
++	argv_array_init(&argv_array);
++	memset(&cp, 0, sizeof(struct child_process));
  
- pick_one () {
- 	ff=--ff
+-	args[i] = NULL;
++	argv_array_push(&argv_array, "rev-parse");
++	argv_array_pushf(&argv_array, "%s^{tree}", sha1_to_hex(commit->object.sha1));
+ 
+-	return run_command_v_opt(args, RUN_GIT_CMD);
++	cp.git_cmd = 1;
++	cp.no_stdin = 1;
++	cp.no_stderr = 1;
++	cp.out = pipefd[1];
++	cp.argv = argv_array.argv;
 +
-+	if is_emtpy_commit $@ 
-+	then
-+		empty_args="--allow-empty --ignore-if-made-empty"
-+	fi
++	if (start_command(&cp) < 0)
++		goto out;
 +
-+	if test -n "$keep_empty" 
-+	then
-+		empty_args="--allow_empty --ignore-if-made-empty"
-+	fi
++	if (fscanf(output, "%s\n", ptree) < 1)
++		goto out;
 +
- 	case "$1" in -n) sha1=$2; ff= ;; *) sha1=$1 ;; esac
- 	case "$force_rebase" in '') ;; ?*) ff= ;; esac
- 	output git rev-parse --verify $sha1 || die "Invalid commit name: $sha1"
- 	test -d "$rewritten" &&
- 		pick_one_preserving_merges "$@" && return
--	output git cherry-pick $ff "$@"
-+	output git cherry-pick $empty_args $ff "$@"
++	finish_command(&cp);
++
++	fclose(output);
++	close(pipefd[0]);
++	argv_array_clear(&argv_array);
++
++	if (pipe2(pipefd, 0) < 0)
++		return 0;
++
++	output = xfdopen(pipefd[0], "r");
++
++	argv_array_push(&argv_array, "rev-parse");
++	argv_array_pushf(&argv_array, "%s^^{tree}", sha1_to_hex(commit->object.sha1));
++	cp.argv = argv_array.argv;
++
++	if (start_command(&cp) < 0)
++		goto out;
++
++	if (fscanf(output, "%s\n", pptree) < 1)
++		goto out;
++
++	finish_command(&cp);
++	close(pipefd[0]);
++
++	if (!strncmp(ptree, pptree, 40))
++		ret = 1;
++out:
++	fclose(output);
++	argv_array_clear(&argv_array);	
++	return ret;
  }
  
- pick_one_preserving_merges () {
-@@ -780,9 +797,17 @@ git rev-list $merges_option --pretty=oneline --abbrev-commit \
- 	sed -n "s/^>//p" |
- while read -r shortsha1 rest
- do
-+
-+	if test -z "$keep_empty" && is_empty_commit $sha1
-+	then
-+		comment_out="# pick"
-+	else
-+		comment_out="pick"
-+	fi
-+
- 	if test t != "$preserve_merges"
- 	then
--		printf '%s\n' "pick $shortsha1 $rest" >> "$todo"
-+		printf '%s\n' "$comment_out $shortsha1 $rest" >> "$todo"
- 	else
- 		sha1=$(git rev-parse $shortsha1)
- 		if test -z "$rebase_root"
-@@ -801,7 +826,7 @@ do
- 		if test f = "$preserve"
- 		then
- 			touch "$rewritten"/$sha1
--			printf '%s\n' "pick $shortsha1 $rest" >> "$todo"
-+			printf '%s\n' "$comment_out $shortsha1 $rest" >> "$todo"
- 		fi
- 	fi
- done
-@@ -851,6 +876,15 @@ cat >> "$todo" << EOF
- #
- EOF
+ static int do_pick_commit(struct commit *commit, struct replay_opts *opts)
+@@ -289,6 +371,7 @@ static int do_pick_commit(struct commit *commit, struct replay_opts *opts)
+ 	char *defmsg = NULL;
+ 	struct strbuf msgbuf = STRBUF_INIT;
+ 	int res;
++	int empty_commit;
  
-+if test -z "$keep_empty"
-+then
-+	cat >> "$todo" << EOF
-+	# Note that commits which are empty at the time of rebasing are 
-+	# commented out. 
-+	EOF
-+fi
-+
-+
- has_action "$todo" ||
- 	die_abort "Nothing to do"
+ 	if (opts->no_commit) {
+ 		/*
+@@ -414,6 +497,8 @@ static int do_pick_commit(struct commit *commit, struct replay_opts *opts)
+ 		free_commit_list(remotes);
+ 	}
  
-diff --git a/git-rebase.sh b/git-rebase.sh
-index 69c1374..24a2840 100755
---- a/git-rebase.sh
-+++ b/git-rebase.sh
-@@ -43,6 +43,7 @@ s,strategy=!       use the given merge strategy
- no-ff!             cherry-pick all commits, even if unchanged
- m,merge!           use merging strategies to rebase
- i,interactive!     let the user edit the list of commits to rebase
-+k,keep-empty	   preserve empty commits during rebase
- f,force-rebase!    force rebase even if branch is up to date
- X,strategy-option=! pass the argument through to the merge strategy
- stat!              display a diffstat of what changed upstream
-@@ -97,6 +98,7 @@ state_dir=
- action=
- preserve_merges=
- autosquash=
-+keep_empty=
- test "$(git config --bool rebase.autosquash)" = "true" && autosquash=t
++	empty_commit = is_origional_commit_empty(commit);
++
+ 	/*
+ 	 * If the merge was clean or if it failed due to conflict, we write
+ 	 * CHERRY_PICK_HEAD for the subsequent invocation of commit to use.
+@@ -435,7 +520,7 @@ static int do_pick_commit(struct commit *commit, struct replay_opts *opts)
+ 		rerere(opts->allow_rerere_auto);
+ 	} else {
+ 		if (!opts->no_commit)
+-			res = run_git_commit(defmsg, opts);
++			res = run_git_commit(defmsg, opts, empty_commit);
+ 	}
  
- read_basic_state () {
-@@ -220,6 +222,9 @@ do
- 	-i)
- 		interactive_rebase=explicit
- 		;;
-+	-k)
-+		keep_empty=yes
-+		;;
- 	-p)
- 		preserve_merges=t
- 		test -z "$interactive_rebase" && interactive_rebase=implied
+ 	free_message(&msg);
+diff --git a/sequencer.h b/sequencer.h
+index e2cd725..3e1106f 100644
+--- a/sequencer.h
++++ b/sequencer.h
+@@ -30,6 +30,7 @@ struct replay_opts {
+ 	int allow_ff;
+ 	int allow_rerere_auto;
+ 	int allow_empty;
++	int ignore_if_made_empty;
+ 
+ 	int mainline;
+ 
 -- 
 1.7.7.6
