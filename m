@@ -1,88 +1,100 @@
-From: Corey F <coyotebush22@gmail.com>
-Subject: Re: GSoC git-add--interactive improvements
-Date: Wed, 04 Apr 2012 22:46:01 -0700
-Message-ID: <4F7D3199.5040401@gmail.com>
-References: <4F7BC8FE.4060808@gmail.com> <CAP8UFD0V17Gag3esFd=ZDocZZoiN_4a1bjQ8rFwbBZoJEiasBA@mail.gmail.com>
+From: Michal Kiedrowicz <michal.kiedrowicz@gmail.com>
+Subject: Re: [PATCH v3 1/8] gitweb: Use descriptive names in
+ esc_html_hl_regions()
+Date: Thu, 5 Apr 2012 07:46:19 +0200
+Message-ID: <20120405074619.39174f54@mkiedrowicz.ivo.pl>
+References: <1333569433-3245-1-git-send-email-michal.kiedrowicz@gmail.com>
+	<1333569433-3245-2-git-send-email-michal.kiedrowicz@gmail.com>
+	<7vwr5v6uts.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Christian Couder <christian.couder@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Apr 05 07:46:21 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Jakub Narebski <jnareb@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Apr 05 07:46:43 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SFfWU-000265-DP
-	for gcvg-git-2@plane.gmane.org; Thu, 05 Apr 2012 07:46:18 +0200
+	id 1SFfWm-0002FF-TY
+	for gcvg-git-2@plane.gmane.org; Thu, 05 Apr 2012 07:46:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752284Ab2DEFqH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Apr 2012 01:46:07 -0400
-Received: from mail-ob0-f174.google.com ([209.85.214.174]:42638 "EHLO
-	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751130Ab2DEFqF (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Apr 2012 01:46:05 -0400
-Received: by obbtb18 with SMTP id tb18so1335024obb.19
-        for <git@vger.kernel.org>; Wed, 04 Apr 2012 22:46:05 -0700 (PDT)
+	id S1752890Ab2DEFqc convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 5 Apr 2012 01:46:32 -0400
+Received: from mail-we0-f174.google.com ([74.125.82.174]:45141 "EHLO
+	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752901Ab2DEFqc convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 5 Apr 2012 01:46:32 -0400
+Received: by wejx9 with SMTP id x9so616625wej.19
+        for <git@vger.kernel.org>; Wed, 04 Apr 2012 22:46:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=zuHJQPTbJTMNlyIu3PmUELxslnMplY1z8wNT/NoWiSc=;
-        b=A2B1VF1jjAaGx65lvCb273C/fhvEGn3bHTqeWCHjQqZgINqZSompXSYaksy/4HNAjB
-         RP15ukdhskBR+eycd03aHnbA7KiU4ik9ujc4gSOpnpc8/RR+6IdkF9nNrYbKC8FlFpFI
-         sL9+ln2WNc2M+8iMEiOoyza8977cENScsPjIDBh22uE7rwbSJ6/QE3+6C0lbYrYuKjDN
-         HwiuBxIMhBIbs/CcTR6WPGdyTpzO9/7oP8Q3Lc94b1ai9uUkcylvW82YDLGe3SDSXYss
-         d+d493MIs3G+ACqFqR0vio+KQJbLxBJbFcwsHZesiYtDMQDFIF2bL3lZvJA/RB/d2JxG
-         9G4g==
-Received: by 10.60.28.33 with SMTP id y1mr1562729oeg.62.1333604764842;
-        Wed, 04 Apr 2012 22:46:04 -0700 (PDT)
-Received: from [198.188.150.160] (pcp037279pcs.cabrillo.reshall.calpoly.edu. [198.188.150.160])
-        by mx.google.com with ESMTPS id b2sm3174490obo.22.2012.04.04.22.46.03
+        h=date:from:to:cc:subject:message-id:in-reply-to:references:x-mailer
+         :mime-version:content-type:content-transfer-encoding;
+        bh=wCDalmyYfe9B+nZs7IQnK0E4NtQMhYqQ9kfFyOs9d8Y=;
+        b=rOL2GV75ZOJ5RKMEz1dW+oBm7p8se+KmIWNhcFdo6UIb2QyrjK86Qw8RvVj62s66LL
+         uPQZ0BkccvP5rMfJAuP0ir03FoNJwybDFirXhxenOqXRAuuaZN5X1O7Wl0saLqOh2aPv
+         mOyEUFPnCqCknN3ZifnweX/hLgKLe8JIkzsX03Whxe2R8416JAxbdWVdyKs7SbljQIGQ
+         xJp1WL5fjDolNMr4ELb8VAKBwYaj4hz+yoox0hyhoAHr8S3Sf5EjZsji7QsEyq9Ko0MV
+         PERIGQBwmEuBDyqJjDWz5QrxwmHcG+DBKrhF6TznAcTsLSQawYh/3xp3FCaKq7PY5+tT
+         AP8Q==
+Received: by 10.180.95.34 with SMTP id dh2mr1541036wib.15.1333604790567;
+        Wed, 04 Apr 2012 22:46:30 -0700 (PDT)
+Received: from mkiedrowicz.ivo.pl (pc10.ivo.park.gdynia.pl. [153.19.128.10])
+        by mx.google.com with ESMTPS id n8sm12490672wix.10.2012.04.04.22.46.29
         (version=SSLv3 cipher=OTHER);
-        Wed, 04 Apr 2012 22:46:04 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:10.0.3) Gecko/20120329 Icedove/10.0.3
-In-Reply-To: <CAP8UFD0V17Gag3esFd=ZDocZZoiN_4a1bjQ8rFwbBZoJEiasBA@mail.gmail.com>
+        Wed, 04 Apr 2012 22:46:30 -0700 (PDT)
+In-Reply-To: <7vwr5v6uts.fsf@alter.siamese.dyndns.org>
+X-Mailer: Claws Mail 3.8.0 (GTK+ 2.24.8; x86_64-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194759>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194760>
 
-On 04/04/2012 01:26 AM, Christian Couder wrote:
-> Hi,
->
-> On Wed, Apr 4, 2012 at 6:07 AM, Corey F<coyotebush22@gmail.com>  wrote:
->> Last year's SoC ideas page included rewriting some commands in C, including
->> this one. I'm at least as comfortable with C as with Perl, but I'm guessing
->> that incorporating a rewrite into the project would be an ambitious and/or
->> dangerous idea.
-> It depends how you plan to do it. In builtin/apply.c and perhaps
-> elsewhere there is already some C code that is duplicated in
-> git-add--interactive.perl.
-> Maybe you can first make add--interactive use the C code by creating a
-> helper command and then move more and more stuff from add--interactive
-> to the helper command.
-> Hopefully in the end the code in the helper could be used to add an
-> interactive mode to git apply.
+Junio C Hamano <gitster@pobox.com> wrote:
 
-Okay, that sounds like an interesting way to approach it. The helper 
-command would then constitute a slightly more generic patch-chooser 
-interface, and most of the suggested architectural changes would be 
-broadly applicable.
+> Micha=C5=82 Kiedrowicz <michal.kiedrowicz@gmail.com> writes:
+>=20
+> > The $s->[0] and $s->[1] variables look a bit cryptic.  Let's rename
+> > them to $beg and $end so that it's clear what they do.
+>=20
+> Why not $begin and $end?
 
-Then again, perhaps it would be better to instead, as a sub-project, 
-make git-add--interactive.perl work for apply in addition to 
-add,commit,stash,reset. That would let me still primarily focus on 
-restructuring the Perl code.
+=46or no special reason.  I just took the names that Jakub proposed in
 
-I think the first few suggested design improvements, in particular, will 
-be valuable changes. (I often find myself wanting even more granular 
-control over what exact characters get staged; that may be another 
-improvement I'll aim for.)
-
-I'll think about these some more and hope to put together a GSoC 
-application. Thanks for your insights.
-
-Corey
+	http://article.gmane.org/gmane.comp.version-control.git/193839/
+>=20
+> >
+> > Suggested-by: Jakub Nar=C4=99bski <jnareb@gmail.com>
+> > Signed-off-by: Micha=C5=82 Kiedrowicz <michal.kiedrowicz@gmail.com>
+> > ---
+> >  gitweb/gitweb.perl |   10 ++++++----
+> >  1 files changed, 6 insertions(+), 4 deletions(-)
+> >
+> > diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+> > index a8b5fad..a3754ff 100755
+> > --- a/gitweb/gitweb.perl
+> > +++ b/gitweb/gitweb.perl
+> > @@ -1738,12 +1738,14 @@ sub esc_html_hl_regions {
+> >  	my $pos =3D 0;
+> > =20
+> >  	for my $s (@sel) {
+> > -		$out .=3D esc_html(substr($str, $pos, $s->[0] -
+> > $pos))
+> > -			if ($s->[0] - $pos > 0);
+> > +		my ($beg, $end) =3D @$s;
+> > +
+> > +		$out .=3D esc_html(substr($str, $pos, $beg - $pos))
+> > +			if ($beg - $pos > 0);
+> >  		$out .=3D $cgi->span({-class =3D> $css_class},
+> > -		                   esc_html(substr($str, $s->[0],
+> > $s->[1] - $s->[0])));
+> > +		                   esc_html(substr($str, $beg,
+> > $end - $beg)));=20
+> > -		$pos =3D $s->[1];
+> > +		$pos =3D $end;
+> >  	}
+> >  	$out .=3D esc_html(substr($str, $pos))
+> >  		if ($pos < length($str));
