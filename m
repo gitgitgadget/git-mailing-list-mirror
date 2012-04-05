@@ -1,109 +1,98 @@
-From: Neil Horman <nhorman@tuxdriver.com>
-Subject: Re: [PATCH 1/5] argv-array: Add argv_array_pop function [v2]
-Date: Thu, 5 Apr 2012 19:24:29 -0400
-Message-ID: <20120405232429.GA8654@hmsreliant.think-freely.org>
-References: <1333136922-12872-1-git-send-email-nhorman@tuxdriver.com>
- <1333654745-7898-1-git-send-email-nhorman@tuxdriver.com>
- <1333654745-7898-2-git-send-email-nhorman@tuxdriver.com>
- <7vd37m5458.fsf@alter.siamese.dyndns.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH v3 5/8] gitweb: Use print_diff_chunk() for both side-by-side and inline diffs
+Date: Fri, 6 Apr 2012 01:26:37 +0200
+Message-ID: <201204060126.38337.jnareb@gmail.com>
+References: <1333569433-3245-1-git-send-email-michal.kiedrowicz@gmail.com> <1333569433-3245-6-git-send-email-michal.kiedrowicz@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Phil Hord <phil.hord@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Apr 06 01:24:44 2012
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?utf-8?q?Micha=C5=82_Kiedrowicz?= <michal.kiedrowicz@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Apr 06 01:26:48 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SFw2m-0002y1-4a
-	for gcvg-git-2@plane.gmane.org; Fri, 06 Apr 2012 01:24:44 +0200
+	id 1SFw4h-0004DW-Ff
+	for gcvg-git-2@plane.gmane.org; Fri, 06 Apr 2012 01:26:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756227Ab2DEXYj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Apr 2012 19:24:39 -0400
-Received: from charlotte.tuxdriver.com ([70.61.120.58]:59499 "EHLO
-	smtp.tuxdriver.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752550Ab2DEXYi (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Apr 2012 19:24:38 -0400
-Received: from hmsreliant.think-freely.org ([2001:470:8:a08:7aac:c0ff:fec2:933b] helo=localhost)
-	by smtp.tuxdriver.com with esmtpsa (TLSv1:AES128-SHA:128)
-	(Exim 4.63)
-	(envelope-from <nhorman@tuxdriver.com>)
-	id 1SFw2Y-0006YY-M5; Thu, 05 Apr 2012 19:24:32 -0400
+	id S1756237Ab2DEX0j convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 5 Apr 2012 19:26:39 -0400
+Received: from mail-wg0-f44.google.com ([74.125.82.44]:59402 "EHLO
+	mail-wg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751922Ab2DEX0i (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Apr 2012 19:26:38 -0400
+Received: by wgbdr13 with SMTP id dr13so1733131wgb.1
+        for <git@vger.kernel.org>; Thu, 05 Apr 2012 16:26:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        bh=bTzOKLZ1ljXjwJJYrku7xfrrztcj0k11zhPM7yOsZcw=;
+        b=JhHFmhpCdXCz1ZYUtxCwnLG6yJU2idg2hDKficTA5rFEfDGaUkdbx4XPdpsuvXTt8P
+         X5+Owqgfu2/oTv4bSgEX/YLHHjDqY94W0W15nvLhQAuR3tBFrROtKRDPEftHgCZs+jYj
+         YJW/s0afi0JpRMYWMHYZY0Olw+9piQgLPgD4Da8e4Q/r3z3AgFCobqM8y3jJWnqLSdjp
+         eo/5UcQy+wkdjAgKZeqPLAho5kOJ8ttXSw3t2qcS7BVaPOC37/K/txvga98eC3w3a4JF
+         5sgryKXByJgvoNxtlmP5b2vujzxbGDncvJpBSVNeEmlc6siyM+Y1VrRPnnSyGVRa4/NP
+         Sneg==
+Received: by 10.180.107.132 with SMTP id hc4mr7047862wib.21.1333668397378;
+        Thu, 05 Apr 2012 16:26:37 -0700 (PDT)
+Received: from [192.168.1.13] (acxc205.neoplus.adsl.tpnet.pl. [83.11.160.205])
+        by mx.google.com with ESMTPS id ff9sm1341507wib.2.2012.04.05.16.26.36
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 05 Apr 2012 16:26:36 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <1333569433-3245-6-git-send-email-michal.kiedrowicz@gmail.com>
 Content-Disposition: inline
-In-Reply-To: <7vd37m5458.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-X-Spam-Score: -2.9 (--)
-X-Spam-Status: No
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194820>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194821>
 
-On Thu, Apr 05, 2012 at 01:12:51PM -0700, Junio C Hamano wrote:
-> Neil Horman <nhorman@tuxdriver.com> writes:
-> 
-> > As a convienience, it would be nice if we could pop entries off the argv_array
-> > structs so that if they had multiple uses in a function, we wouldn't have to
-> > clear them and repopulate common entries.  This patch adds the argv_array_pop
-> > function to do just that.  Common entries can be added to an argv_array first,
-> > then useage specific ones can be added on the end and removed later on.
-> >
-> > Signed-off-by: Neil Horman <nhorman@tuxdriver.com>
-> 
-> 
-> > CC: Jeff King <peff@peff.net>
-> > CC: Phil Hord <phil.hord@gmail.com>
-> > CC: Junio C Hamano <gitster@pobox.com>
-> > ---
-> 
-> Please don't do "Cc:" here; they belong to your e-mail header.
-> 
-You mean place them below the snip line?  I can do that.
+Micha=C5=82 Kiedrowicz wrote:
 
-> > diff --git a/argv-array.c b/argv-array.c
-> > index a4e0420..ce24a48 100644
-> > --- a/argv-array.c
-> > +++ b/argv-array.c
-> > @@ -39,6 +39,18 @@ void argv_array_pushf(struct argv_array *array, const char *fmt, ...)
-> >  	argv_array_push_nodup(array, strbuf_detach(&v, NULL));
-> >  }
-> >  
-> > +int argv_array_pop(struct argv_array *array, unsigned int num)
-> > +{
-> > +	if (num > array->argc)
-> > +		return -1;
-> 
-> If your use case is "After using an argv_array for the first invocation,
-> truncate it while keeping the common ones that appear early, so that ones
-> that are specific to the second invocation can be pushed", it strikes me
-> somewhat odd why you would want to specify "how many to pop".
-> 
-Why?  It seems perfectly logical to me to be able to, as a convienience, specify
-how many items to pop, and the api call seems pleasantly symmetric to the
-push[f] calls.
+> This renames print_sidebyside_diff_chunk() to print_diff_chunk() and
+> makes use of it for both side-by-side and inline diffs.  Now diff lin=
+es
+> are always accumulated before they are printed.  This opens the
+> possibility to preprocess diff output before it's printed, which is
+> needed for diff refinement highlightning (implemented in incoming
+> patches).
+>=20
+> If print_diff_chunk() was left as is, the new function
+> print_inline_diff_lines() could reorder diff lines.  It first prints =
+all
+> context lines, then all removed lines and finally all added lines.  I=
+f
+> the diff output consisted of mixed added and removed lines, gitweb wo=
+uld
+> reorder these lines.  This is true for combined diff output, for
+> example:
+>=20
+> 	 - removed line for first parent
+> 	 + added line for first parent
+> 	  -removed line for second parent
+> 	 ++added line for both parents
+>=20
+> would be rendered as:
+>=20
+> 	- removed line for first parent
+> 	 -removed line for second parent
+> 	+ added line for first parent
+> 	++added line for both parents
+>=20
+> To prevent gitweb from reordering lines, print_diff_chunk() calls
+> print_diff_lines() as soon as it detects that both added and removed
+> lines are present and there was a class change.
+                                                 , and at the end of hu=
+nk.
 
-> Wouldn't argv_array_truncate() or argv_array_setlen() make more sense?
-> 
-No, truncate is vague about its meaning.  Truncate to zero would be useless, as
-its equivalent to the clear call at that point, and truncating to a specific
-value is exactly the same as what I have currently, minus the symmetry to the
-push[f] calls.  Likewise setlen doesn't seem to fit in properly, plus theres the
-possibility there of believing the api call might be able to set a length longer
-than what exists in the array already, which, while silly, requires additional
-error checking.  Popping a fixed number of elements off an argv_array that have
-previously been pushed makes perfectly good sense to me.
 
-> 
-> > +	for(num--; num>0; num--) {
-> 
-> Gaah.
-> 
-Eeek :).  If you want something else equally....equal here, please ask for it.
-I prefer for loops, but if you would rather have a while loop here, I'm fine
-with that.
+I think it is worth adding the above to the commit message.
 
-Regards
-Neil
+--=20
+Jakub Narebski
+Poland
