@@ -1,103 +1,67 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] push: error out when the "upstream" semantics does not
- make sense
-Date: Thu, 05 Apr 2012 13:34:31 -0700
-Message-ID: <7vy5q95354.fsf@alter.siamese.dyndns.org>
-References: <7v8vib6pu8.fsf@alter.siamese.dyndns.org>
- <20120405124706.GA3921@sigill.intra.peff.net>
- <7v1uo26ue9.fsf_-_@alter.siamese.dyndns.org>
- <20120405184345.GA6448@burratino> <7vlima5591.fsf@alter.siamese.dyndns.org>
- <7vhawy54nd.fsf@alter.siamese.dyndns.org> <vpqsjgi53mh.fsf@bauges.imag.fr>
+From: Hilco Wijbenga <hilco.wijbenga@gmail.com>
+Subject: Linear history *and* share a branch?
+Date: Thu, 5 Apr 2012 13:48:23 -0700
+Message-ID: <CAE1pOi0-uSaQwgJHMTkw3nqp=idxZxMbyfKtLni0=Xwu-L-_hA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
-	Jeff King <peff@peff.net>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Thu Apr 05 22:34:43 2012
+Content-Type: text/plain; charset=UTF-8
+To: Git Users <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Apr 05 22:49:01 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SFtOE-0000Zr-34
-	for gcvg-git-2@plane.gmane.org; Thu, 05 Apr 2012 22:34:42 +0200
+	id 1SFtc5-00014c-Eb
+	for gcvg-git-2@plane.gmane.org; Thu, 05 Apr 2012 22:49:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755916Ab2DEUef (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Apr 2012 16:34:35 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:53333 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752525Ab2DEUef (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Apr 2012 16:34:35 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id F14D071FF;
-	Thu,  5 Apr 2012 16:34:33 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=S5XuTpAlMDKXutJ5iSCFTB4PVbA=; b=ZRrJXD
-	WvcmXHhJCe3TbhNhkqzG+QfxKjX5cOa6rjc+1Ud7n07V9e/x0eMvJTfNtrK/OH3n
-	HjkhxDEstBchWF90Nb4ts8Xm+3+KgX0oTjEUs1KsyXc3NT3fu74YRpQrWsH0qBHn
-	v2Wm508DH+8U3wrFOJ2HY7d1MnscKxzAPIjy4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=nzTzHn2N+pzx+TAfgKAIOJtVu6psPAJO
-	lsgd3r8bhMjHYopimfHuoauZXFfrjFcQGzVaG4WBv0vF57k8Hk//ygEshU2LXZKt
-	+KQkkuSD9iAXgwg/CH6UYHhEvowyjc9Ev39WNXiLD0dB238r7KVEr6Rr2NpOiqSb
-	EKQ7Hi2Ne+s=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E470C71FE;
-	Thu,  5 Apr 2012 16:34:33 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 775A471F9; Thu,  5 Apr 2012
- 16:34:33 -0400 (EDT)
-In-Reply-To: <vpqsjgi53mh.fsf@bauges.imag.fr> (Matthieu Moy's message of
- "Thu, 05 Apr 2012 22:24:06 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: C0BBBF76-7F5E-11E1-8C9E-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1756223Ab2DEUsc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Apr 2012 16:48:32 -0400
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:35904 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754380Ab2DEUsY (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Apr 2012 16:48:24 -0400
+Received: by yenl12 with SMTP id l12so999158yen.19
+        for <git@vger.kernel.org>; Thu, 05 Apr 2012 13:48:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=jr7KY0rpjnugRjjWPDTfRC5vRBb9O2oC6vBTfR8L+tU=;
+        b=Ji63JD99jcvRq+D9/9Y9prbfxsQAscRk8iEv2FyGLqg/5N5x7p5xN7RUCMB86K07+a
+         tYXA37n5J5XTo3rJuAMSBKIECYAMfcTA16yBkkMFYyO2oqW8RZN1NUFWLi1iHDg3S2Nr
+         JqoNb2kuo0PO6CvSmfyKlaMbrO19j2KdSYmPoi/aIbDQAkjckH8/WAprrhVFo/yjI79r
+         BLI2E3JhKZGuRgnB9v+CVAXGiY7HOLabMdAawFSkjna7gaGg87qXEIYGiOgkOMz4LAns
+         /0uIkKYYgfs3nFmriYchSGfFF9QNb8NJz75DrzyxJvbjJ+PT16kZvzJpolu2wA5NRQ+R
+         LjoQ==
+Received: by 10.236.193.36 with SMTP id j24mr4038418yhn.34.1333658903708; Thu,
+ 05 Apr 2012 13:48:23 -0700 (PDT)
+Received: by 10.236.154.104 with HTTP; Thu, 5 Apr 2012 13:48:23 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194807>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194808>
 
-Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+Hi all,
 
-> Junio C Hamano <gitster@pobox.com> writes:
->
->>  		die(_("You are pushing to remote '%s', which is not the "
->> -		      "upstream of your\ncurrent branch '%s'.\n"),
->> +		      "upstream of your\ncurrent branch '%s',\n"
->> +		      "without telling me to push which local branch to\n"
->> +		      " update which remote branch with."),
->
-> Sounds overly complex sentence to me. "without telling me what to push"
-> sounded good enough without being long, so I prefered it.
+We have been using Git for about a year now in a very small team. So
+far, everyone has worked on their own local branches and been doing
+"git rebase master" to make sure their local branches stay in synch.
+This way we have a nice linear history in master.
 
-You are right; it is overly complex.
+Recently, it has become useful to share one of these local branches
+between two devs. Of course, when one of the devs does his usual "git
+rebase master", he screws up the other dev's environment. Our solution
+has been to keep rebasing the shared branch but to actually work on a
+local branch that is rebased on the shared branch. By judiciously
+using "git reset" and "git pull" on the shared branch the two devs can
+keep the shared branch in synch and then use "git rebase
+shared-branch" on their local branch to keep it in synch to. While
+this works, there is probably a better/simpler solution.
 
-After sending the updated patch, I rewrote it again to:
+Should we simply do "git merge master" instead of "git rebase master"?
+And then do something at the end when we are about to merge the shared
+branch back into master to guarantee linear history? Your thoughts and
+ideas would be greatly appreciated.
 
-    You are pushing to remote '%s', which is not the upstream of
-    your current branch '%s', without telling me what to push
-    to update which remote branch.
-
-The point of Jonathan's 'refspec' and this attempt to rephrase it without
-using a jargon is to make sure that the user realizes that both ends can
-be specified.
-
-> I like accompanying these messages with the way out for the user, so
-> perhaps we can add stg like
->
-> "To push the current branch to this remote, run:
->
->   git push <remote> <branch>
->
-> "
-
-I am afraid that the above advice is a lot worse than leaving it unsaid.
-
-We are in no position to assume that the user wanted the "current"
-semantics when we issue this message.  Otherwise, we would be better off
-switching the default semantics to "current", not "upstream".  But the
-working assumption in this series is that "upstream" is an improvement
-over "current", no?
+Cheers,
+Hilco
