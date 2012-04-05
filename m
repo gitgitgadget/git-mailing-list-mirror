@@ -1,65 +1,90 @@
-From: Florian Achleitner <florian.achleitner2.6.31@gmail.com>
-Subject: Re: GSOC Proposal draft: git-remote-svn
-Date: Thu, 05 Apr 2012 15:36:40 +0200
-Message-ID: <1421035.yALBSXSHGd@flomedio>
-References: <11292500.AVmZFUUvNi@flobuntu> <2148933.pnpYo0xMAP@flomedio> <2487557.B8qfnaixh3@flomedio>
+From: =?ISO-8859-1?Q?Jos=E9_Mar=EDa_Escart=EDn_Esteban?= 
+	<ripero84@gmail.com>
+Subject: Static gitweb content when using pathinfo
+Date: Thu, 05 Apr 2012 15:54:27 +0200
+Message-ID: <4F7DA413.2020502@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7Bit
-Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
-	David Barr <davidbarr@google.com>,
-	Andrew Sayers <andrew-git@pileofstuff.org>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Dmitry Ivankov <divanorama@gmail.com>
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Apr 05 15:37:57 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Jakub Narebski <jnareb@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Apr 05 15:54:39 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SFmsn-0002zs-3L
-	for gcvg-git-2@plane.gmane.org; Thu, 05 Apr 2012 15:37:49 +0200
+	id 1SFn94-0006XU-PJ
+	for gcvg-git-2@plane.gmane.org; Thu, 05 Apr 2012 15:54:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752561Ab2DENhF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Apr 2012 09:37:05 -0400
-Received: from mailrelay.tu-graz.ac.at ([129.27.2.202]:53371 "EHLO
-	mailrelay.tugraz.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751887Ab2DENhE (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Apr 2012 09:37:04 -0400
-Received: from flomedio.localnet (93-82-150-223.adsl.highway.telekom.at [93.82.150.223])
-	(authenticated bits=0)
-	by mailrelay1.tugraz.at (8.14.4/8.14.4) with ESMTP id q35Daelx018219
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 5 Apr 2012 15:36:41 +0200 (CEST)
-User-Agent: KMail/4.7.3 (Linux/3.0.0-17-generic; KDE/4.7.4; x86_64; ; )
-In-Reply-To: <2487557.B8qfnaixh3@flomedio>
-X-TUG-Backscatter-control: qyH/vN2riZ/masrHmZoJqQ
-X-Spam-Scanner: SpamAssassin 3.003000 
-X-Spam-Score-relay: 0.6
-X-Scanned-By: MIMEDefang 2.70 on 129.27.10.18
+	id S1752882Ab2DENye (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Apr 2012 09:54:34 -0400
+Received: from mail-we0-f174.google.com ([74.125.82.174]:38395 "EHLO
+	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751591Ab2DENyd (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Apr 2012 09:54:33 -0400
+Received: by wejx9 with SMTP id x9so877346wej.19
+        for <git@vger.kernel.org>; Thu, 05 Apr 2012 06:54:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :x-enigmail-version:content-type:content-transfer-encoding;
+        bh=JGuLF0PghZqpjt/sK/seCn765kCbrRvXC+p+zO1YSrw=;
+        b=cBq29yIB+G1UGItbfHs9JbVRJorEKNCzOCv0e5wNJN+55TsidlvGRoiA8oN4UC5E4z
+         ZmlpUpzaYFdQc//VM9SkfYY98kWig+Oy3qBEVQSt0IW4cYuWbDMwavjRcsKQoyvQclMV
+         QzztlhyRIZGW3IA683bZkPOmNep6scJnKkzNtCceRPrB2pEDOjl3373AvwAnvQCRoLV2
+         JfVaWxEPb7NXa/ug9AliSJsT9nm7GCK0/UYZz4ELPm0OXAtdOCmDNUlE+t+hE+Lb6psV
+         QGESYLYC2/KB7+p7uSPHlK1f1wHLohEvpaCbPxVJNiX4vdqeF5pR8dqzO+CsYtAPPWfz
+         uuUw==
+Received: by 10.180.88.199 with SMTP id bi7mr5119701wib.12.1333634072162;
+        Thu, 05 Apr 2012 06:54:32 -0700 (PDT)
+Received: from [192.168.3.8] (AToulouse-552-1-140-126.w83-203.abo.wanadoo.fr. [83.203.91.126])
+        by mx.google.com with ESMTPS id gg2sm17355737wib.7.2012.04.05.06.54.30
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 05 Apr 2012 06:54:31 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.24) Gecko/20111114 Icedove/3.1.16
+X-Enigmail-Version: 1.1.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194773>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194774>
 
-Hi everybody!
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Thanks for your inputs. I've now submitted a slightly updated version of my 
-proposal to google. Additionally it's on github [1].
+Hi,
 
-Summary of diffs:
-I'll concentrate on the fetching from svn, writing a remote helper without 
-branch detection (like svn-fe) first, and then creating the branch mapper.
+I'm running gitweb in a server.example.com/gitweb/ scenario.  If I don't enable
+pathinfo everything works fine, but when I enable pathinfo the static content
+stops showing up in the browser.
 
-[1] https://github.com/flyingflo/git/wiki/
+I'm not an HTML or perl expert, but I think that this may be due to a missing
+slash in the construction of the base tag:  Using the upstream script I am getting
 
--- Florian
+<base href="http://server.example.com/gitweb" />
 
-On Monday 02 April 2012 10:30:58 Florian Achleitner wrote:
+and no static content.  Once I tune the script to add a final slash to the url
 
-> 
-> ==Remote helper for Subversion==
-> 
+<base href="http://server.example.com/gitweb/" />
+
+the static content shows up again.
+
+Maybe I'm doing something wrong (am I?), and possibly this can be solved from
+the web server side, but maybe it also makes some sense to include in the script
+some check that the url used in the base tag ends with a slash.  In that case,
+given my lack of perl skills, I would be really grateful if somebody implemented it.
+
+Thank you for your attention.
+
+Greetings,
+
+	E.
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (GNU/Linux)
+
+iEYEARECAAYFAk99pBMACgkQY+7weQMem3y28wCeOotCIgFF8sT4LKgq599IhB/E
+0qcAn2dri0Z61PjV90bxfBG1QMFD3c75
+=6PBz
+-----END PGP SIGNATURE-----
