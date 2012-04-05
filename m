@@ -1,84 +1,161 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] push: error out when the "upstream" semantics does not
- make sense
-Date: Thu, 5 Apr 2012 13:43:45 -0500
-Message-ID: <20120405184345.GA6448@burratino>
-References: <7v8vib6pu8.fsf@alter.siamese.dyndns.org>
- <20120405124706.GA3921@sigill.intra.peff.net>
- <7v1uo26ue9.fsf_-_@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/3] add mergesort() for linked lists
+Date: Thu, 05 Apr 2012 12:17:32 -0700
+Message-ID: <7vpqbm56pf.fsf@alter.siamese.dyndns.org>
+References: <201203291818.49933.mfick@codeaurora.org>
+ <7v7gy2q1kq.fsf@alter.siamese.dyndns.org>
+ <60bff12d-544c-4fbd-b48a-0fdf44efaded@email.android.com>
+ <20120330093207.GA12298@sigill.intra.peff.net>
+ <20120330094052.GB12298@sigill.intra.peff.net>
+ <4F7780C3.2050408@lsrfire.ath.cx>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Matthieu Moy <Matthieu.Moy@imag.fr>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Apr 05 20:44:04 2012
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jeff King <peff@peff.net>, Martin Fick <mfick@codeaurora.org>,
+	git@vger.kernel.org
+To: =?utf-8?Q?Ren=C3=A9?= Scharfe <rene.scharfe@lsrfire.ath.cx>
+X-From: git-owner@vger.kernel.org Thu Apr 05 21:17:43 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SFrf8-0005hd-PT
-	for gcvg-git-2@plane.gmane.org; Thu, 05 Apr 2012 20:44:03 +0200
+	id 1SFsBh-0001p3-Dl
+	for gcvg-git-2@plane.gmane.org; Thu, 05 Apr 2012 21:17:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755691Ab2DESn6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Apr 2012 14:43:58 -0400
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:64532 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754422Ab2DESn5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Apr 2012 14:43:57 -0400
-Received: by iagz16 with SMTP id z16so2108346iag.19
-        for <git@vger.kernel.org>; Thu, 05 Apr 2012 11:43:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=9CkHTRIX/dzh6Fbl2bZ07PysnefFhTuXy1v0YxX8HQA=;
-        b=RmO9+UtvlxNVv/6JM6miXU6IeQ8fAZbuZ0YEeiye3YetiJrPOarXruKxS3uI7EVh49
-         cO1t7eVxi9FmrpVceFQg97Kg06s1PXaqnDMGiLTx1sHEb+la7jeWpgXS+gSxasL1wLbs
-         gLzp0RMv6cCgb70kgG+lKpdoayAew6In10wlUEIQXyAiR5VUcBekWGT23cQ9toeD88Cd
-         4KNaEpX2lLnvwWxhC/a8Xz4rqKpQ1in/bF000xyYXP022YhI46Mi/r6qwRnF8vPHiNJK
-         HGsh23excfcHEiy2c5mauVWajm2PMmDNbr8xiMSMuESu8c4VSjFY+lgnDe/YMZgEgXKD
-         f57Q==
-Received: by 10.50.158.227 with SMTP id wx3mr6147956igb.31.1333651436627;
-        Thu, 05 Apr 2012 11:43:56 -0700 (PDT)
-Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
-        by mx.google.com with ESMTPS id xf6sm13275377igb.13.2012.04.05.11.43.54
-        (version=SSLv3 cipher=OTHER);
-        Thu, 05 Apr 2012 11:43:55 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <7v1uo26ue9.fsf_-_@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1755847Ab2DETRg convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 5 Apr 2012 15:17:36 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47894 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755828Ab2DETRf convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 5 Apr 2012 15:17:35 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 13EF27FEA;
+	Thu,  5 Apr 2012 15:17:34 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=f6pP6JRjnUjb
+	DhZEWUKQ1IwCxgQ=; b=IfJlIb7jmVMIjIRcEQ4SwSANh3aNQQjfFOjwH/acXM7S
+	6I8xyL7LmdaG/gdpk//DkxxQAhepf0Qx7mFcOKNt+Z89HeqlyN6N53ruayq4mM+3
+	bUc688yLbJTnaMf9TQCFZo3fnWyP9rGjb6asYVwaNFZVOfkOFOlntw+AjNWKaCk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=jFd1H/
+	+ylFnCTrIYFlTEWjORKIWx/Tdf42w4pm3W2vwaf9KuqEvNCGtixqpnqvbbGITD8G
+	a+wgloOOQ950jp3LewDx2drGJFhHB+4g+p0DEZgqRTgKF2oVRXCL6DSefWMsH+te
+	HcwgtVk1nAm+WDogUjKwS4ALIxVkZicXg1FU8=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0B04B7FE9;
+	Thu,  5 Apr 2012 15:17:34 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7A9F47FE8; Thu,  5 Apr 2012
+ 15:17:33 -0400 (EDT)
+In-Reply-To: <4F7780C3.2050408@lsrfire.ath.cx> (=?utf-8?Q?=22Ren=C3=A9?=
+ Scharfe"'s message of "Sun, 01 Apr 2012 00:10:11 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: FF01A396-7F53-11E1-8C8C-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194793>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194794>
 
-Junio C Hamano wrote:
+Ren=C3=A9 Scharfe <rene.scharfe@lsrfire.ath.cx> writes:
 
-> --- a/builtin/push.c
-> +++ b/builtin/push.c
-> @@ -65,6 +65,16 @@ static void set_refspecs(const char **refs, int nr)
-[...]
-> @@ -87,6 +97,11 @@ static void setup_push_upstream(struct remote *remote)
->  	if (branch->merge_nr != 1)
->  		die(_("The current branch %s has multiple upstream branches, "
->  		    "refusing to push."), branch->name);
-> +	if (strcmp(branch->remote_name, remote->name))
-> +		die(_("You are pushing to remote '%s', which is not the "
-> +		      "upstream of your\ncurrent branch '%s'.\n"),
-> +		    remote->name, branch->name);
+> This adds a generic bottom-up mergesort implementation for singly lin=
+ked
+> lists.  It was inspired by Simon Tatham's webpage on the topic[1], bu=
+t
+> not so much by his implementation -- for no good reason, really, just=
+ a
+> case of NIH.
+>
+> [1] http://www.chiark.greenend.org.uk/~sgtatham/algorithms/listsort.h=
+tml
+>
+> Signed-off-by: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
+> +void *mergesort(void *list,
+> +		void *(*get_next_fn)(const void *),
+> +		void (*set_next_fn)(void *, void *),
+> +		int (*compare_fn)(const void *, const void *))
+> +{
+> +	unsigned long l;
 > +
+> +	if (!list)
+> +		return NULL;
+> +	for (l =3D 1; ; l *=3D 2) {
+> +		void *curr;
+> +		struct mergesort_sublist p, q;
+> +
+> +		p.ptr =3D list;
+> +		q.ptr =3D get_nth_next(p.ptr, l, get_next_fn);
+> +		if (!q.ptr)
+> +			break;
+> +		p.len =3D q.len =3D l;
+> +
+> +		if (compare_fn(p.ptr, q.ptr) > 0)
+> +			list =3D curr =3D pop_item(&q, get_next_fn);
+> +		else
+> +			list =3D curr =3D pop_item(&p, get_next_fn);
+> +
+> +		while (p.ptr) {
+> +			while (p.len || q.len) {
+> +				void *prev =3D curr;
+> +
+> +				if (!p.len)
+> +					curr =3D pop_item(&q, get_next_fn);
+> +				else if (!q.len)
+> +					curr =3D pop_item(&p, get_next_fn);
+> +				else if (compare_fn(p.ptr, q.ptr) > 0)
+> +					curr =3D pop_item(&q, get_next_fn);
+> +				else
+> +					curr =3D pop_item(&p, get_next_fn);
+> +				set_next_fn(prev, curr);
+> +			}
+> +			p.ptr =3D q.ptr;
+> +			p.len =3D l;
+> +			q.ptr =3D get_nth_next(p.ptr, l, get_next_fn);
+> +			q.len =3D q.ptr ? l : 0;
+> +
+> +		}
+> +		set_next_fn(curr, NULL);
+> +	}
+> +	return list;
+> +}
 
-I worry that a beginner seeing this message would think it means that
-when "master" is set up to track origin/master that there is no way to
-push that branch to any other repository.
+After seeing "I wrote it myself due to NIH", it strikes me a bit odd th=
+at
+you still used "start from bunch of singleton sublist, elongating twice
+per round as we go" structure from the original.
 
-Maybe something like
+I wonder if it would be an improvement if you structured the loop so th=
+at:
 
-		die(_(
-"You are pushing to remote '%s', which is not the upstream of your\n"
-"current branch '%s', without specifying a refspec.\n"),
-		    remote->name, branch->name);
+ (1) the first sublist 'p' grabs as many elements in the ascending orde=
+r
+     as you find;
 
-would be harder to misunderstand.
+ (2) the second sublist 'q' begins at the end of the first sublist and
+     grabs as many elements in the ascending order;
+
+ (3) 'p' and 'q' are merge-sorted into the result list;
+
+ (4) if your two sublists did not cover "list" in its entirety, process
+     the remainder (i.e. where the second sublist stopped because of an
+     unordered element) by going back to step (1); and
+
+ (5) if you did not need to jump back to step (1) from step (4), then y=
+ou
+     had only two sublists (or less), so the result is sorted.  Otherwi=
+se,
+     the result now has fewer ascending sublists than the original, so =
+go
+     back to (1) and iterate.
+
+If the input is in a random order, this may end up doing the same numbe=
+r
+of iterations as the original, but if the input is mostly sorted, would=
+n't
+it allow us to take advantage of the fact by starting with a longer
+sublist in the earlier rounds?
