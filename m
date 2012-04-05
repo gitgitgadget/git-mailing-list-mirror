@@ -1,92 +1,227 @@
 From: Neil Horman <nhorman@tuxdriver.com>
-Subject: [PATCH 0/5] Enhance git-rebases flexibiilty handling empty commits [v2]
-Date: Thu,  5 Apr 2012 15:39:00 -0400
-Message-ID: <1333654745-7898-1-git-send-email-nhorman@tuxdriver.com>
+Subject: [PATCH 5/5] git-rebase: add keep_empty flag [v2]
+Date: Thu,  5 Apr 2012 15:39:05 -0400
+Message-ID: <1333654745-7898-6-git-send-email-nhorman@tuxdriver.com>
 References: <1333136922-12872-1-git-send-email-nhorman@tuxdriver.com>
+ <1333654745-7898-1-git-send-email-nhorman@tuxdriver.com>
 Cc: Neil Horman <nhorman@tuxdriver.com>, Jeff King <peff@peff.net>,
 	Phil Hord <phil.hord@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Apr 05 21:40:35 2012
+X-From: git-owner@vger.kernel.org Thu Apr 05 21:41:13 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SFsXi-0007vM-ID
-	for gcvg-git-2@plane.gmane.org; Thu, 05 Apr 2012 21:40:26 +0200
+	id 1SFsYQ-00006V-Bg
+	for gcvg-git-2@plane.gmane.org; Thu, 05 Apr 2012 21:41:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755856Ab2DETjc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Apr 2012 15:39:32 -0400
-Received: from charlotte.tuxdriver.com ([70.61.120.58]:57262 "EHLO
+	id S1755964Ab2DETkW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Apr 2012 15:40:22 -0400
+Received: from charlotte.tuxdriver.com ([70.61.120.58]:57313 "EHLO
 	smtp.tuxdriver.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753726Ab2DETja (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Apr 2012 15:39:30 -0400
+	with ESMTP id S1755935Ab2DETjq (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Apr 2012 15:39:46 -0400
 Received: from hmsreliant.think-freely.org ([2001:470:8:a08:7aac:c0ff:fec2:933b] helo=localhost)
 	by smtp.tuxdriver.com with esmtpsa (TLSv1:AES128-SHA:128)
 	(Exim 4.63)
 	(envelope-from <nhorman@tuxdriver.com>)
-	id 1SFsWh-0005Vk-0S; Thu, 05 Apr 2012 15:39:25 -0400
+	id 1SFsWy-0005WV-LL; Thu, 05 Apr 2012 15:39:44 -0400
 X-Mailer: git-send-email 1.7.7.6
-In-Reply-To: <1333136922-12872-1-git-send-email-nhorman@tuxdriver.com>
+In-Reply-To: <1333654745-7898-1-git-send-email-nhorman@tuxdriver.com>
 X-Spam-Score: -2.9 (--)
 X-Spam-Status: No
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194798>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194799>
 
-git's ability to handle empty commits is somewhat lacking, especially when
-preforming a rebase.  Nominally empty commits are undesireable entries, the 
-result of commits that are made empty by prior commits covering the same changs.
-But occasionally, empty commits are useful to developers (e.g. inserting notes 
-into the development history without changing any code along the way).  In these
-cases its desireable to easily preserve empty commits during operations like 
-rebases.
+Add a command line switch to git-rebase to allow a user the ability to specify
+that they want to keep any commits in a series that are empty.
 
-This patch series enhances git to do just that.  It adds two options to the 
-git-cherry-pick command, --allow-empty, which allows git cherry-pick to preserve
-an empty commit, even if the fast forward logic isn't applicable during the 
-operation, and --ignore-if-made-empty, which allows the user to restrict the 
-application of --allow-empty to only those commits which were initially empty 
-(not those commits made empty by a prior commit).  It also enhances git-rebase
-to add a --keep-empty option, which implies the use of the above new options to
-cherry-pick.  
+When git-rebase's type is am, then this option will automatically keep any
+commit that has a tree object identical to its parent.
 
-I've tested these operations out myself here and they work well for me
+This patch changes the default behavior of interactive rebases as well.  With
+this patch, git-rebase -i will produce a revision set passed to
+git-revision-editor, in which empty commits are commented out.  Empty commits
+may be kept manually by uncommenting them.  If the new --keep-empty option is
+used in an interactive rebase the empty commits will automatically all be
+uncommented in the editor.
 
 Signed-off-by: Neil Horman <nhorman@tuxdriver.com>
 CC: Jeff King <peff@peff.net>
 CC: Phil Hord <phil.hord@gmail.com>
 CC: Junio C Hamano <gitster@pobox.com>
-
 ---
-Change notes:
+ Documentation/git-rebase.txt |    4 ++++
+ git-rebase--am.sh            |   19 ++++++++++++++-----
+ git-rebase--interactive.sh   |   40 +++++++++++++++++++++++++++++++++++++---
+ git-rebase.sh                |    5 +++++
+ 4 files changed, 60 insertions(+), 8 deletions(-)
 
-Based on version 1 feedback from this list, the following changes have been made
-
-V2)
-	* Changed --keep-empty to --allow-empty in the git cherry-pick command
-
-	* Converted run_git_commit to use argv_array
-
-	* Updated cherry-pick --allow-empty description in man page
-	
-	* added ignore-if-made-empty option to git-cherry-pick
-
-	* Added test to test suite to validate the new cherry-pick options
-
-	* Updated git-rebase man page to be less verbose and more accurate in the
-	description of the keep-empty option
-
-	* squashed the addition of the keep-empty flag in git-rebase down to one
-	commit from 3
-
-	* fixed up coding style in git-rebase script
-
-	* Optimized detection of empty commits
-
-	* Only augmented git-rebase-editor message if empty commits are
-	possible
-	
+diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
+index 504945c..131c35d 100644
+--- a/Documentation/git-rebase.txt
++++ b/Documentation/git-rebase.txt
+@@ -238,6 +238,10 @@ leave out at most one of A and B, in which case it defaults to HEAD.
+ 	will be reset to where it was when the rebase operation was
+ 	started.
+ 
++--keep-empty::
++	Keep the commits that do not change anything from its
++	parents in the result.
++
+ --skip::
+ 	Restart the rebasing process by skipping the current patch.
+ 
+diff --git a/git-rebase--am.sh b/git-rebase--am.sh
+index c815a24..a7194f7 100644
+--- a/git-rebase--am.sh
++++ b/git-rebase--am.sh
+@@ -20,11 +20,20 @@ esac
+ 
+ test -n "$rebase_root" && root_flag=--root
+ 
+-git format-patch -k --stdout --full-index --ignore-if-in-upstream \
+-	--src-prefix=a/ --dst-prefix=b/ \
+-	--no-renames $root_flag "$revisions" |
+-git am $git_am_opt --rebasing --resolvemsg="$resolvemsg" &&
+-move_to_original_branch
++if [ -n "$keep_empty" ]
++then
++	# we have to do this the hard way.  git format-patch completly squashes
++	# empty commits and even if it didn't the format doesn't really lend
++	# itself well to recording empty patches.  fortunately, cherry-pick
++	# makes this easy
++	git cherry-pick --allow-empty --ignore-if-made-empty "$revisions"
++else
++	git format-patch -k --stdout --full-index --ignore-if-in-upstream \
++		--src-prefix=a/ --dst-prefix=b/ \
++		--no-renames $root_flag "$revisions" |
++	git am $git_am_opt --rebasing --resolvemsg="$resolvemsg"
++fi && move_to_original_branch
++
+ ret=$?
+ test 0 != $ret -a -d "$state_dir" && write_basic_state
+ exit $ret
+diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
+index 5812222..beb06cf 100644
+--- a/git-rebase--interactive.sh
++++ b/git-rebase--interactive.sh
+@@ -167,6 +167,12 @@ has_action () {
+ 	sane_grep '^[^#]' "$1" >/dev/null
+ }
+ 
++is_empty_commit() {
++	ptree=$(git rev-parse "$1"^{tree})
++	pptree=$(git rev-parse "$1"^^{tree})
++	return test "$ptree" = "$pptree"
++}
++
+ # Run command with GIT_AUTHOR_NAME, GIT_AUTHOR_EMAIL, and
+ # GIT_AUTHOR_DATE exported from the current environment.
+ do_with_author () {
+@@ -191,12 +197,23 @@ git_sequence_editor () {
+ 
+ pick_one () {
+ 	ff=--ff
++
++	if is_emtpy_commit $@ 
++	then
++		empty_args="--allow-empty --ignore-if-made-empty"
++	fi
++
++	if test -n "$keep_empty" 
++	then
++		empty_args="--allow_empty --ignore-if-made-empty"
++	fi
++
+ 	case "$1" in -n) sha1=$2; ff= ;; *) sha1=$1 ;; esac
+ 	case "$force_rebase" in '') ;; ?*) ff= ;; esac
+ 	output git rev-parse --verify $sha1 || die "Invalid commit name: $sha1"
+ 	test -d "$rewritten" &&
+ 		pick_one_preserving_merges "$@" && return
+-	output git cherry-pick $ff "$@"
++	output git cherry-pick $empty_args $ff "$@"
+ }
+ 
+ pick_one_preserving_merges () {
+@@ -780,9 +797,17 @@ git rev-list $merges_option --pretty=oneline --abbrev-commit \
+ 	sed -n "s/^>//p" |
+ while read -r shortsha1 rest
+ do
++
++	if test -z "$keep_empty" && is_empty_commit $sha1
++	then
++		comment_out="# pick"
++	else
++		comment_out="pick"
++	fi
++
+ 	if test t != "$preserve_merges"
+ 	then
+-		printf '%s\n' "pick $shortsha1 $rest" >> "$todo"
++		printf '%s\n' "$comment_out $shortsha1 $rest" >> "$todo"
+ 	else
+ 		sha1=$(git rev-parse $shortsha1)
+ 		if test -z "$rebase_root"
+@@ -801,7 +826,7 @@ do
+ 		if test f = "$preserve"
+ 		then
+ 			touch "$rewritten"/$sha1
+-			printf '%s\n' "pick $shortsha1 $rest" >> "$todo"
++			printf '%s\n' "$comment_out $shortsha1 $rest" >> "$todo"
+ 		fi
+ 	fi
+ done
+@@ -851,6 +876,15 @@ cat >> "$todo" << EOF
+ #
+ EOF
+ 
++if test -z "$keep_empty"
++then
++	cat >> "$todo" << EOF
++	# Note that commits which are empty at the time of rebasing are 
++	# commented out. 
++	EOF
++fi
++
++
+ has_action "$todo" ||
+ 	die_abort "Nothing to do"
+ 
+diff --git a/git-rebase.sh b/git-rebase.sh
+index 69c1374..24a2840 100755
+--- a/git-rebase.sh
++++ b/git-rebase.sh
+@@ -43,6 +43,7 @@ s,strategy=!       use the given merge strategy
+ no-ff!             cherry-pick all commits, even if unchanged
+ m,merge!           use merging strategies to rebase
+ i,interactive!     let the user edit the list of commits to rebase
++k,keep-empty	   preserve empty commits during rebase
+ f,force-rebase!    force rebase even if branch is up to date
+ X,strategy-option=! pass the argument through to the merge strategy
+ stat!              display a diffstat of what changed upstream
+@@ -97,6 +98,7 @@ state_dir=
+ action=
+ preserve_merges=
+ autosquash=
++keep_empty=
+ test "$(git config --bool rebase.autosquash)" = "true" && autosquash=t
+ 
+ read_basic_state () {
+@@ -220,6 +222,9 @@ do
+ 	-i)
+ 		interactive_rebase=explicit
+ 		;;
++	-k)
++		keep_empty=yes
++		;;
+ 	-p)
+ 		preserve_merges=t
+ 		test -z "$interactive_rebase" && interactive_rebase=implied
+-- 
+1.7.7.6
