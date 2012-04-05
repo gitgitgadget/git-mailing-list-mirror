@@ -1,161 +1,101 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/3] add mergesort() for linked lists
-Date: Thu, 05 Apr 2012 12:17:32 -0700
-Message-ID: <7vpqbm56pf.fsf@alter.siamese.dyndns.org>
-References: <201203291818.49933.mfick@codeaurora.org>
- <7v7gy2q1kq.fsf@alter.siamese.dyndns.org>
- <60bff12d-544c-4fbd-b48a-0fdf44efaded@email.android.com>
- <20120330093207.GA12298@sigill.intra.peff.net>
- <20120330094052.GB12298@sigill.intra.peff.net>
- <4F7780C3.2050408@lsrfire.ath.cx>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jeff King <peff@peff.net>, Martin Fick <mfick@codeaurora.org>,
-	git@vger.kernel.org
-To: =?utf-8?Q?Ren=C3=A9?= Scharfe <rene.scharfe@lsrfire.ath.cx>
-X-From: git-owner@vger.kernel.org Thu Apr 05 21:17:43 2012
+From: Neil Horman <nhorman@tuxdriver.com>
+Subject: [PATCH 4/5] git-cherry-pick: Add test to validate new options [v2]
+Date: Thu,  5 Apr 2012 15:39:04 -0400
+Message-ID: <1333654745-7898-5-git-send-email-nhorman@tuxdriver.com>
+References: <1333136922-12872-1-git-send-email-nhorman@tuxdriver.com>
+ <1333654745-7898-1-git-send-email-nhorman@tuxdriver.com>
+Cc: Neil Horman <nhorman@tuxdriver.com>, Jeff King <peff@peff.net>,
+	Phil Hord <phil.hord@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Apr 05 21:40:29 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SFsBh-0001p3-Dl
-	for gcvg-git-2@plane.gmane.org; Thu, 05 Apr 2012 21:17:41 +0200
+	id 1SFsXk-0007vM-8p
+	for gcvg-git-2@plane.gmane.org; Thu, 05 Apr 2012 21:40:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755847Ab2DETRg convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 5 Apr 2012 15:17:36 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47894 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755828Ab2DETRf convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 5 Apr 2012 15:17:35 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 13EF27FEA;
-	Thu,  5 Apr 2012 15:17:34 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=f6pP6JRjnUjb
-	DhZEWUKQ1IwCxgQ=; b=IfJlIb7jmVMIjIRcEQ4SwSANh3aNQQjfFOjwH/acXM7S
-	6I8xyL7LmdaG/gdpk//DkxxQAhepf0Qx7mFcOKNt+Z89HeqlyN6N53ruayq4mM+3
-	bUc688yLbJTnaMf9TQCFZo3fnWyP9rGjb6asYVwaNFZVOfkOFOlntw+AjNWKaCk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=jFd1H/
-	+ylFnCTrIYFlTEWjORKIWx/Tdf42w4pm3W2vwaf9KuqEvNCGtixqpnqvbbGITD8G
-	a+wgloOOQ950jp3LewDx2drGJFhHB+4g+p0DEZgqRTgKF2oVRXCL6DSefWMsH+te
-	HcwgtVk1nAm+WDogUjKwS4ALIxVkZicXg1FU8=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0B04B7FE9;
-	Thu,  5 Apr 2012 15:17:34 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7A9F47FE8; Thu,  5 Apr 2012
- 15:17:33 -0400 (EDT)
-In-Reply-To: <4F7780C3.2050408@lsrfire.ath.cx> (=?utf-8?Q?=22Ren=C3=A9?=
- Scharfe"'s message of "Sun, 01 Apr 2012 00:10:11 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: FF01A396-7F53-11E1-8C8C-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755946Ab2DETkU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Apr 2012 15:40:20 -0400
+Received: from charlotte.tuxdriver.com ([70.61.120.58]:57302 "EHLO
+	smtp.tuxdriver.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755910Ab2DETjl (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Apr 2012 15:39:41 -0400
+Received: from hmsreliant.think-freely.org ([2001:470:8:a08:7aac:c0ff:fec2:933b] helo=localhost)
+	by smtp.tuxdriver.com with esmtpsa (TLSv1:AES128-SHA:128)
+	(Exim 4.63)
+	(envelope-from <nhorman@tuxdriver.com>)
+	id 1SFsWv-0005WK-Em; Thu, 05 Apr 2012 15:39:39 -0400
+X-Mailer: git-send-email 1.7.7.6
+In-Reply-To: <1333654745-7898-1-git-send-email-nhorman@tuxdriver.com>
+X-Spam-Score: -2.9 (--)
+X-Spam-Status: No
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194794>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194795>
 
-Ren=C3=A9 Scharfe <rene.scharfe@lsrfire.ath.cx> writes:
+Since we've added the --allow-empty and --ignore-if-made-empty
+options to git cherry-pick we should also add a test to ensure that its working
+properly
 
-> This adds a generic bottom-up mergesort implementation for singly lin=
-ked
-> lists.  It was inspired by Simon Tatham's webpage on the topic[1], bu=
-t
-> not so much by his implementation -- for no good reason, really, just=
- a
-> case of NIH.
->
-> [1] http://www.chiark.greenend.org.uk/~sgtatham/algorithms/listsort.h=
-tml
->
-> Signed-off-by: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
-> +void *mergesort(void *list,
-> +		void *(*get_next_fn)(const void *),
-> +		void (*set_next_fn)(void *, void *),
-> +		int (*compare_fn)(const void *, const void *))
-> +{
-> +	unsigned long l;
-> +
-> +	if (!list)
-> +		return NULL;
-> +	for (l =3D 1; ; l *=3D 2) {
-> +		void *curr;
-> +		struct mergesort_sublist p, q;
-> +
-> +		p.ptr =3D list;
-> +		q.ptr =3D get_nth_next(p.ptr, l, get_next_fn);
-> +		if (!q.ptr)
-> +			break;
-> +		p.len =3D q.len =3D l;
-> +
-> +		if (compare_fn(p.ptr, q.ptr) > 0)
-> +			list =3D curr =3D pop_item(&q, get_next_fn);
-> +		else
-> +			list =3D curr =3D pop_item(&p, get_next_fn);
-> +
-> +		while (p.ptr) {
-> +			while (p.len || q.len) {
-> +				void *prev =3D curr;
-> +
-> +				if (!p.len)
-> +					curr =3D pop_item(&q, get_next_fn);
-> +				else if (!q.len)
-> +					curr =3D pop_item(&p, get_next_fn);
-> +				else if (compare_fn(p.ptr, q.ptr) > 0)
-> +					curr =3D pop_item(&q, get_next_fn);
-> +				else
-> +					curr =3D pop_item(&p, get_next_fn);
-> +				set_next_fn(prev, curr);
-> +			}
-> +			p.ptr =3D q.ptr;
-> +			p.len =3D l;
-> +			q.ptr =3D get_nth_next(p.ptr, l, get_next_fn);
-> +			q.len =3D q.ptr ? l : 0;
-> +
-> +		}
-> +		set_next_fn(curr, NULL);
-> +	}
-> +	return list;
-> +}
+Signed-off-by: Neil Horman <nhorman@tuxdriver.com>
+CC: Jeff King <peff@peff.net>
+CC: Phil Hord <phil.hord@gmail.com>
+CC: Junio C Hamano <gitster@pobox.com>
+---
+ t/t3505-cherry-pick-empty.sh |   31 ++++++++++++++++++++++++++++++-
+ 1 files changed, 30 insertions(+), 1 deletions(-)
 
-After seeing "I wrote it myself due to NIH", it strikes me a bit odd th=
-at
-you still used "start from bunch of singleton sublist, elongating twice
-per round as we go" structure from the original.
-
-I wonder if it would be an improvement if you structured the loop so th=
-at:
-
- (1) the first sublist 'p' grabs as many elements in the ascending orde=
-r
-     as you find;
-
- (2) the second sublist 'q' begins at the end of the first sublist and
-     grabs as many elements in the ascending order;
-
- (3) 'p' and 'q' are merge-sorted into the result list;
-
- (4) if your two sublists did not cover "list" in its entirety, process
-     the remainder (i.e. where the second sublist stopped because of an
-     unordered element) by going back to step (1); and
-
- (5) if you did not need to jump back to step (1) from step (4), then y=
-ou
-     had only two sublists (or less), so the result is sorted.  Otherwi=
-se,
-     the result now has fewer ascending sublists than the original, so =
-go
-     back to (1) and iterate.
-
-If the input is in a random order, this may end up doing the same numbe=
-r
-of iterations as the original, but if the input is mostly sorted, would=
-n't
-it allow us to take advantage of the fact by starting with a longer
-sublist in the earlier rounds?
+diff --git a/t/t3505-cherry-pick-empty.sh b/t/t3505-cherry-pick-empty.sh
+index c10b28c..049ed28 100755
+--- a/t/t3505-cherry-pick-empty.sh
++++ b/t/t3505-cherry-pick-empty.sh
+@@ -18,7 +18,12 @@ test_expect_success setup '
+ 	echo third >> file1 &&
+ 	git add file1 &&
+ 	test_tick &&
+-	git commit --allow-empty-message -m ""
++	git commit --allow-empty-message -m "" &&
++
++	git checkout master &&
++	git checkout -b empty-branch2 &&
++	test_tick &&
++	git commit --allow-empty -m "empty"
+ 
+ '
+ 
+@@ -48,4 +53,28 @@ test_expect_success 'index lockfile was removed' '
+ 
+ '
+ 
++test_expect_success 'cherry pick an empty non-ff commit without --allow-empty' '
++	git checkout master &&
++	echo fouth >> file2 &&
++	git add file2 &&
++	git commit -m "fourth" && {
++		git cherry-pick empty-branch2
++		test "$?" = 1 
++	}
++'
++
++test_expect_success 'cherry pick an empty non-ff commit with --allow-empty' '
++	git checkout master && {
++		git cherry-pick --allow-empty empty-branch2
++		test "$?" = 0
++	}
++'
++
++test_expect_success 'cherry pick with --ignore-if-made-empty' '
++	git checkout master && {
++		git cherry-pick --allow-empty --ignore-if-made-empty empty-branch2
++		test "$?" = 0
++	}
++'
++
+ test_done
+-- 
+1.7.7.6
