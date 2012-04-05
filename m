@@ -1,581 +1,591 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: What's cooking in git.git (Apr 2012, #02; Wed, 4)
-Date: Wed, 04 Apr 2012 16:26:39 -0700
-Message-ID: <7v8vib6pu8.fsf@alter.siamese.dyndns.org>
+From: Pete Wyckoff <pw@padd.com>
+Subject: [PATCHv3] fast-import: tighten parsing of mark references
+Date: Wed, 4 Apr 2012 21:51:21 -0400
+Message-ID: <20120405015121.GA10945@padd.com>
+References: <20120401225407.GA12127@padd.com>
+ <1333417910-17955-1-git-send-email-pw@padd.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=us-ascii
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Dmitry Ivankov <divanorama@gmail.com>,
+	David Barr <davidbarr@google.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Johan Herland <johan@herland.net>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Apr 05 01:27:19 2012
+X-From: git-owner@vger.kernel.org Thu Apr 05 03:51:35 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SFZbc-00083Z-4F
-	for gcvg-git-2@plane.gmane.org; Thu, 05 Apr 2012 01:27:12 +0200
+	id 1SFbrJ-00080a-TG
+	for gcvg-git-2@plane.gmane.org; Thu, 05 Apr 2012 03:51:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757359Ab2DDX0r convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 4 Apr 2012 19:26:47 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:51833 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757286Ab2DDX0p convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 4 Apr 2012 19:26:45 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 366AA61A7;
-	Wed,  4 Apr 2012 19:26:44 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:mime-version:content-type
-	:content-transfer-encoding; s=sasl; bh=IjXMlEIFiikgQYurH94gBuI/a
-	dA=; b=Le0ePTuMbNtg1uRVQ6VeZmmxkqcPXftUeyTaX/6VaSYu3jQ9RlFfP7Nh4
-	Mbxhb3m6RgzgttuRe1MROfTneyXPeXANGS9Vvc2FFMSYuod1hMsjd0huptbK19Ox
-	K8OiOC56AMLr2yk/U5CjMslMIDjY3lA+SprSNcLIleSrxYuZUg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:mime-version:content-type
-	:content-transfer-encoding; q=dns; s=sasl; b=OuYT+i1HBOlqoLc/mXE
-	iJXb9p1+lxb0gp/0HlPCriGxLDbCZZJZBqKykDWX7BgWLcIpLKX8dZBb7YjIQ2UC
-	0sZvOyDI73h9QFNqnW3mg1TgpNO4NCa0Dd3oSOkpyVdMPxoHk4lQbyYDrYBPz6kq
-	Dr0bEnEvonjeuTJBYELn9zGY=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2C9B761A6;
-	Wed,  4 Apr 2012 19:26:44 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 6501D61A2; Wed,  4 Apr 2012
- 19:26:41 -0400 (EDT)
-X-master-at: e5056c05ecd2bdaceaa95e12e9e94b1584ec59c8
-X-next-at: 0677f639064c22077f02df7b77b29cd097a4ecef
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: A23DEA1C-7EAD-11E1-829C-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752458Ab2DEBv1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Apr 2012 21:51:27 -0400
+Received: from honk.padd.com ([74.3.171.149]:55762 "EHLO honk.padd.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751788Ab2DEBv0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Apr 2012 21:51:26 -0400
+Received: from arf.padd.com (unknown [50.55.145.32])
+	by honk.padd.com (Postfix) with ESMTPSA id 651062CBE;
+	Wed,  4 Apr 2012 18:51:25 -0700 (PDT)
+Received: by arf.padd.com (Postfix, from userid 7770)
+	id 9308A313D1; Wed,  4 Apr 2012 21:51:21 -0400 (EDT)
+Content-Disposition: inline
+In-Reply-To: <1333417910-17955-1-git-send-email-pw@padd.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194755>
-
-What's cooking in git.git (Apr 2012, #02; Wed, 4)
---------------------------------------------------
-
-Here are the topics that have been cooking.  Commits prefixed with '-' =
-are
-only in 'pu' (proposed updates) while commits prefixed with '+' are in =
-'next'.
-
-With a couple of last-minute fixes to gitk breakage, 1.7.10-rc4 is out,
-and hopefully we can do the real 1.7.10 by the end of the week.
-
-You can find the changes described here in the integration branches of =
-the
-repositories listed at
-
-    http://git-blame.blogspot.com/p/git-public-repositories.html
-
---------------------------------------------------
-[New Topics]
-
-* jc/index-v4 (2012-04-04) 10 commits
- - update-index: upgrade/downgrade on-disk index version
- - read-cache.c: write prefix-compressed names in the index
- - read-cache.c: read prefix-compressed names in index on-disk version =
-v4
- - read-cache.c: move code to copy incore to ondisk cache to a helper f=
-unction
- - read-cache.c: move code to copy ondisk to incore cache to a helper f=
-unction
- - read-cache.c: report the header version we do not understand
- - read-cache.c: make create_from_disk() report number of bytes it cons=
-umed
- - read-cache.c: allow unaligned mapping of the index file
- - cache.h: hide on-disk index details
- - varint: make it available outside the context of pack
- (this branch is tangled with jc/split-blob.)
-
-* jk/add-p-skip-conflicts (2012-04-04) 3 commits
- - fixup from rctay
- - snap
- - add -p: skip conflicted paths
-
---------------------------------------------------
-[Graduated to "master"]
-
-* pt/gitk (2012-04-02) 2 commits
- + gitk: fix setting font display with new tabbed dialog layout.
- + gitk: fix tabbed preferences construction when using tcl 8.4
-
-Pat spotted and fixed a few bugs in the latest gitk updates; we may nee=
-d
-these in 1.7.10 so testing on various platforms is very much appreciate=
-d.
-
---------------------------------------------------
-[Stalled]
-
-* lp/maint-diff-three-dash-with-graph (2012-03-20) 3 commits
- - t4202: add test for "log --graph --stat -p" separator lines
- - log --graph: fix break in graph lines
- - log --graph --stat: three-dash separator should come after graph lin=
-es
-
-The combination of two options "log --graph --stat" was an obscure corn=
-er
-case nobody cared about, and did not correctly show the ancestry graph
-lines.
-
-I've split the original patch into three pieces, one for fixes to two
-different issues and a test.  Also the test is adjusted so that the ser=
-ies
-can be back-merged to older codebase that did not have 7f81463 (Use
-correct grammar in diffstat summary line, 2012-02-01) that first appear=
-ed
-in v1.7.9.2
-
-With a review from Zbigniew, I would expect that this would be rerolled
-again.
-
-* cn/apply-fix-ws-can-lengthen-lines (2012-03-11) 1 commit
- . apply: reallocate the postimage buffer when needed
-
-Attempts to address an ancient bug that dates back to the addition
-of an oddball "tab-in-indent" whitespace breakage class that wants
-to have longer lines than the original when fixing things up.
-
-Needs more work; results in double-frees.
-
-* nd/columns (2012-03-13) 12 commits
- - column: support grouping entries
- - column: support "denser" mode
- - ls-files: support --column
- - tag: add --column
- - column: support piping stdout to external git-column process
- - status: add --column
- - branch: add --column
- - help: reuse print_columns() for help -a
- - column: add dense layout support
- - column: add columnar layout
- - Stop starting pager recursively
- - Add column layout skeleton and git-column
-
-Rerolled again.  Modulo minor nits, looked nicer than the previous roun=
-d.
-
-* nd/threaded-index-pack (2012-03-11) 2 commits
- - index-pack: support multithreaded delta resolving
- - index-pack: split second pass obj handling into own function
-
-Another reroll after a bugreport on pthread usage discovered by Ramsey,
-but it seems the topic is cooking between Ramsay and Duy out of tree.
-Waiting for resolution.
-
-* jh/apply-free-patch (2012-03-28) 7 commits
- - apply.c: WIP ownership audit
- - apply: free unused fragments for submodule patch
- - apply: free patch->result
- - apply: release memory for fn_table
- - apply: free patch->{def,old,new}_name fields
- - apply: rename free_patch() to free_patch_list()
- - apply: do not leak patches and fragments
-
-Valgrind reports quite a lot of discarded memory inside apply.  I start=
-ed
-auditing the memory ownership rules in the command, and am almost done.
-
-Will defer til 1.7.10.
-
-* ss/git-svn-prompt-sans-terminal (2012-01-04) 3 commits
- - fixup! 15eaaf4
- - git-svn, perl/Git.pm: extend Git::prompt helper for querying users
- - perl/Git.pm: "prompt" helper to honor GIT_ASKPASS and SSH_ASKPASS
-
-The bottom one has been replaced with a rewrite based on comments
-from =C3=86var. The second one needs more work, both in perl/Git.pm and
-prompt.c, to give precedence to tty over SSH_ASKPASS when terminal
-is available.
-
-* jc/split-blob (2012-04-03) 7 commits
- - chunked-object: streaming checkout
- - chunked-object: fallback checkout codepaths
- - bulk-checkin: support chunked-object encoding
- - bulk-checkin: allow the same data to be multiply hashed
- - new representation types in the packstream
- - packfile: use varint functions
- - varint: make it available outside the context of pack
- (this branch is tangled with jc/index-v4.)
-
-Not ready.
-
-I finished the streaming checkout codepath, but as explained in
-127b177 (bulk-checkin: support chunked-object encoding, 2011-11-30),
-these are still early steps of a long and painful journey. At least
-pack-objects and fsck need to learn the new encoding for the series
-to be usable locally, and then index-pack/unpack-objects needs to
-learn it to be used remotely.
-
-Given that I heard a lot of noise that people want large files, and
-that I was asked by somebody at GitTogether'11 privately for an
-advice on how to pay developers (not me) to help adding necessary
-support, I am somewhat dissapointed that the original patch series
-that was sent almost two months ago still remains here without much
-comments and updates from the developer community. I even made the
-interface to the logic that decides where to split chunks easily
-replaceable, and I deliberately made the logic in the original patch
-extremely stupid to entice others, especially the "bup" fanboys, to
-come up with a better logic, thinking that giving people an easy
-target to shoot for, they may be encouraged to help out. The plan is
-not working :-(.
-
---------------------------------------------------
-[Cooking]
-
-* bw/spawn-via-shell-path (2012-04-03) 1 commit
- - Use SHELL_PATH from build system in run_command.c:prepare_shell_cmd
-
-"sh" on the user's PATH may be utterly broken on some systems;
-consistently use SHELL_PATH even from inside run-command API.
-
-* jc/commit-unedited-template (2012-04-03) 5 commits
- - Documentation/git-commit: rephrase the "initial-ness" of templates
- - git-commit.txt: clarify -t requires editing message
- - commit: rephrase the error when user did not touch templated log mes=
-sage
- - commit: do not trigger bogus "has templated message edited" check
- - t7501: test the right kind of breakage
-
-When "git commit --template F" errors out because the user did not touc=
-h
-the message, it claimed that it aborts due to "empty message", which wa=
-s
-utterly wrong.
-
-* jc/push-upstream-sanity (2012-04-03) 2 commits
- - [fixup] remove misguided "try to see if URLs are the same"
- - push: detect nonsense "upstream" check more carefully
-
-"git push $there" without refspec, when the current branch is set to pu=
-sh
-to a remote different from $there, used to push to $there using the
-upstream information to a remote unreleated to $there.
-
-This is necessary if we were to switch the push.default to 'current'.
-
-* jk/http-backend-keep-committer-ident-env (2012-03-30) 1 commit
- - http-backend: respect existing GIT_COMMITTER_* variables
-
-The smart-http backend used to always override GIT_COMMITTER_* variable=
-s
-with REMOTE_USER and REMOTE_ADDR.
-
-* mk/gitweb-diff-hl (2012-04-04) 8 commits
- - gitweb: Refinement highlightning in combined diffs
- - gitweb: Highlight interesting parts of diff
- - gitweb: Push formatting diff lines to print_diff_chunk()
- - gitweb: Use print_diff_chunk() for both side-by-side and inline diff=
-s
- - gitweb: Extract print_sidebyside_diff_lines()
- - gitweb: Pass esc_html_hl_regions() options to esc_html()
- - gitweb: esc_html_hl_regions(): Don't create empty <span> elements
- - gitweb: Use descriptive names in esc_html_hl_regions()
-
-* it/fetch-pack-many-refs (2012-04-02) 5 commits
- - remote-curl: main test case for the OS command line overflow
- - fetch-pack: test cases for the new --stdin option
- - fixup? no longer need flex argv[]
- - remote-curl: send the refs to fetch-pack on stdin
- - fetch-pack: new --stdin option to read refs from stdin
-
-Will squash the fix-up one and then requeue.
-
-* jn/debian-customizes-default-editor (2012-03-31) 3 commits
- - fixup? do not hide the "usual" default from readers
- - var doc: advertise current DEFAULT_PAGER and DEFAULT_EDITOR settings
- - var doc: default editor and pager are configurable at build time
-
-Haven't heard anything back for the fix-up suggestion, but otherwise
-looked sane.
-
-* rs/commit-list-sort-in-batch (2012-04-02) 3 commits
- - revision: insert unsorted, then sort in prepare_revision_walk()
- - commit: use mergesort() in commit_list_sort_by_date()
- - add mergesort() for linked lists
-
-* hv/submodule-recurse-push (2012-03-30) 3 commits
- - push: teach --recurse-submodules the on-demand option
- - Refactor submodule push check to use string list instead of integer
- - Teach revision walking machinery to walk multiple times sequencially
-
-* dg/subtree (2012-03-25) 112 commits
- - Add 'contrib/subtree/' from commit '2e63f75b8f49abe220ef55ec4e978e7a=
-3b8dc351'
- - Add Subtree Test Makefile
- - Build Subtree
- - Use Project Config Files
- - Remove Unneeded Files
- - ...
-
-A test merge of the 'subtree'.
-
-* jk/branch-quiet (2012-03-26) 2 commits
- - teach "git branch" a --quiet option
- - checkout: suppress tracking message with "-q"
-
-Even with "-q"uiet option, "checkout" used to report setting up trackin=
-g.
-Also "branch" learns "-q"uiet option to squelch informational message.
-
-* jk/run-command-eacces (2012-04-03) 1 commit
- - run-command: treat inaccessible directories as ENOENT
-
-When PATH contains an unreadable directory, alias expansion code did no=
-t
-kick in, and failed with an error that said "git-subcmd" was not found.
-
-* jb/am-include (2012-03-28) 1 commit
- - am: support --include option
-
-* jc/am-report-3way (2012-03-28) 1 commit
- - am -3: list the paths that needed 3-way fallback
-
-* rs/combine-diff-zero-context-at-the-beginning (2012-03-25) 1 commit
- - combine-diff: fix loop index underflow
-
-=46ixes an age old corner case bug in combine diff (only triggered with=
- -U0
-and the hunk at the beginning of the file needs to be shown).
-
-* sl/autoconf (2012-03-26) 3 commits
- - configure: be more idiomatic
- - configure: avoid some code repetitions thanks to m4_{push,pop}def
- - configure: move definitions of private m4 macros before AC_INIT invo=
-cation
-
-Updates our configure.ac to follow a better "autoconf" style.
-
-* wk/gitweb-snapshot-use-if-modified-since (2012-03-30) 3 commits
- - gitweb: add If-Modified-Since handling to git_snapshot().
- - gitweb: refactor If-Modified-Since handling
- - gitweb: add `status` headers to git_feed() responses.
-
-Makes 'snapshot' request to "gitweb" honor If-Modified-Since: header,
-based on the commit date.
-
-* jk/diff-no-rename-empty (2012-03-23) 4 commits
- - merge-recursive: don't detect renames of empty files
- - teach diffcore-rename to optionally ignore empty content
- - make is_empty_blob_sha1 available everywhere
- - drop casts from users EMPTY_TREE_SHA1_BIN
-
-=46orbids rename detection logic from matching two empty files as renam=
-es
-during merge-recursive to prevent mismerges.
-
-* th/difftool-diffall (2012-04-04) 8 commits
- - difftool: print list of valid tools with '--tool-help'
- - difftool: teach difftool to handle directory diffs
- - difftool: eliminate setup_environment function
- - difftool: stop appending '.exe' to git
- - difftool: remove explicit change of PATH
- - difftool: exit(0) when usage is printed
- - difftool: add '--no-gui' option
- - difftool: parse options using Getopt::Long
-
-Rolls the two-directory-diff logic from diffall script (in contrib/) in=
-to
-"git difftool" framework.=20
-
-* jc/maint-clean-nested-worktree-in-subdir (2012-03-15) 2 commits
-  (merged to 'next' on 2012-03-20 at fb5485e)
- + clean: preserve nested git worktree in subdirectories
- + remove_dir_recursively(): Add flag for skipping removal of toplevel =
-dir
- (this branch is tangled with jh/notes-merge-in-git-dir-worktree.)
-
-"git clean -d -f" (not "-d -f -f") is supposed to protect nested workin=
-g
-trees of independent git repositories that exist in the current project
-working tree from getting removed, but the protection applied only to s=
-uch
-working trees that are at the top-level of the current project by mista=
-ke.
-
-Not urgent.
-
-* ct/advise-push-default (2012-03-26) 2 commits
-  (merged to 'next' on 2012-03-28 at 62764ae)
- + clean up struct ref's nonfastforward field
- + push: Provide situational hints for non-fast-forward errors
-
-Breaks down the cases in which "git push" fails due to non-ff into thre=
-e
-categories, and gives separate advise messages.  This should be a good
-change regardless of mm/push-default-switch-warning topic.
-
-* nl/rebase-i-cheat-sheet (2012-03-20) 1 commit
-  (merged to 'next' on 2012-03-20 at 3092a2b)
- + rebase -i: remind that the lines are top-to-bottom
-
-Not urgent.
-
-* da/difftool-test (2012-03-19) 1 commit
-  (merged to 'next' on 2012-03-20 at 0ada7d4)
- + t7800: Test difftool passing arguments to diff
-
-Makes sure "difftool" options can be given in any order.
-
-* jh/notes-merge-in-git-dir-worktree (2012-03-15) 4 commits
-  (merged to 'next' on 2012-03-20 at 0c1b1de)
- + notes-merge: Don't remove .git/NOTES_MERGE_WORKTREE; it may be the u=
-ser's cwd
- + notes-merge: use opendir/readdir instead of using read_directory()
- + t3310: illustrate failure to "notes merge --commit" inside $GIT_DIR/
- + remove_dir_recursively(): Add flag for skipping removal of toplevel =
-dir
- (this branch is tangled with jc/maint-clean-nested-worktree-in-subdir.=
-)
-
-Running "notes merge --commit" failed to perform correctly when run
-from any directory inside $GIT_DIR/.  When "notes merge" stops with
-conflicts, $GIT_DIR/NOTES_MERGE_WORKTREE is the place a user edits
-to resolve it.
-
-Not urgent.
-
-* jn/diffstat-tests (2012-03-13) 7 commits
-  (merged to 'next' on 2012-03-20 at 8791b2f)
- + diffstat summary line varies by locale: miscellany
- + test: use numstat instead of diffstat in binary-diff test
- + test: use --numstat instead of --stat in "git stash show" tests
- + test: test cherry-pick functionality and output separately
- + test: modernize funny-names test style
- + test: use numstat instead of diffstat in funny-names test
- + test: use test_i18ncmp when checking --stat output
-
-Some tests checked the "diff --stat" output when they do not have to,
-which unnecessarily made things harder to verify under GETTEXT_POISON.
-
-Not urgent.
-
-* tr/maint-word-diff-regex-sticky (2012-03-14) 3 commits
-  (merged to 'next' on 2012-03-20 at b3f67cd)
- + diff: tweak a _copy_ of diff_options with word-diff
- + diff: refactor the word-diff setup from builtin_diff_cmd
- + t4034: diff.*.wordregex should not be "sticky" in --word-diff
-
-The regexp configured with wordregex was incorrectly reused across
-files.
-Not urgent.
-
-* zj/test-cred-helper-nicer-prove (2012-03-15) 2 commits
-  (merged to 'next' on 2012-03-20 at b675ec1)
- + t0303: resurrect commit message as test documentation
- + t0303: immediately bail out w/o GIT_TEST_CREDENTIAL_HELPER
-
-Minor improvement to t0303.
-Not urgent.
-
-* jc/commit-hook-authorship (2012-03-11) 3 commits
-  (merged to 'next' on 2012-03-12 at 05ca7f8)
- + commit: pass author/committer info to hooks
- + t7503: does pre-commit-hook learn authorship?
- + ident.c: add split_ident_line() to parse formatted ident line
- (this branch is tangled with jc/run-hook-env-1.)
-
-"git commit --author=3D$name" did not tell the name that was being
-recorded in the resulting commit to hooks, even though it does do so
-when the end user overrode the authorship via the "GIT_AUTHOR_NAME"
-environment variable.  This is a simpler of the two approaches.
-
-Will defer til 1.7.10.
-
-* jc/run-hook-env-1 (2012-03-11) 3 commits
- - run_hook(): enhance the interface to pass arbitrary environment
- + t7503: does pre-commit-hook learn authorship?
- + ident.c: add split_ident_line() to parse formatted ident line
- (this branch is tangled with jc/commit-hook-authorship.)
-
-Not urgent.
-
-Updates run_hook() API to be much less specific to "commit".  It would
-only be useful if people start doing more interesting things with hooks=
-=2E
-
-* jc/diff-algo-cleanup (2012-02-19) 2 commits
-  (merged to 'next' on 2012-03-15 at cca0032)
- + xdiff: PATIENCE/HISTOGRAM are not independent option bits
- + xdiff: remove XDL_PATCH_* macros
-
-Resurrects the preparatory clean-up patches from another topic that was
-discarded, as this would give a saner foundation to build on diff.algo
-configuration option series.
-
-Not urgent.
-
-* rs/unpack-trees-leakfix (2012-03-06) 1 commit
-  (merged to 'next' on 2012-03-07 at 69a69cd)
- + unpack-trees: plug minor memory leak
-
-Will defer til 1.7.10.
-
-* mm/push-default-switch-warning (2012-03-09) 1 commit
-  (merged to 'next' on 2012-03-28 at 074b16b)
- + push: start warning upcoming default change for push.default
-
-Not urgent.
-
-This resurrects an ancient patch I wrote during a discussion we had in =
-the
-1.6.3-1.6.4 era.  This should probably come after ct/advise-push-defaul=
-t
-topic and at that point the advise messages need to be rephrased, takin=
-g
-the future default change into account.
-
-* jc/fmt-merge-msg-people (2012-03-13) 1 commit
- - fmt-merge-msg: show those involved in a merged series
-
-The "fmt-merge-msg" command learns to list the primary contributors
-involved in the side topic you are merging.
-
-Will defer til 1.7.10.
-
-* nl/http-proxy-more (2012-03-15) 5 commits
-  (merged to 'next' on 2012-03-20 at c004001)
- + http: rename HTTP_REAUTH to HTTP_AUTH_RETRY
- + http: Avoid limit of retrying request only twice
- + http: handle proxy authentication failure (error 407)
- + http: handle proxy proactive authentication
- + http: try http_proxy env var when http.proxy config option is not se=
-t
-
-The code to talk to http proxies learn to use the same credential
-API used to talk to the final http destinations.
-
-Will defer til 1.7.10.
-
-* nd/stream-more (2012-03-07) 7 commits
-  (merged to 'next' on 2012-03-07 at 7325922)
- + update-server-info: respect core.bigfilethreshold
- + fsck: use streaming API for writing lost-found blobs
- + show: use streaming API for showing blobs
- + parse_object: avoid putting whole blob in core
- + cat-file: use streaming API to print blobs
- + Add more large blob test cases
- + streaming: make streaming-write-entry to be more reusable
-
-Use API to read blob data in smaller chunks in more places to
-reduce the memory footprint.  In general, looked fairly good.
-
-Will defer til 1.7.10.
-
---------------------------------------------------
-[Discarded]
-
-* tb/maint-remove-irrelevant-i18n-test (2012-03-06) 1 commit
-  (merged to 'next' on 2012-03-07 at 23f2dd1)
- + t0204: remove a test that checks undefined behaviour
-
-I tentatively parked this in 'next' but later reverted the merge.
-
-* dg/test-from-elsewhere (2012-03-04) 2 commits
- . Support out-of-tree Valgrind tests
- . Allow overriding GIT_BUILD_DIR
-
-No immediate need; dropped.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194756>
+
+The syntax for the use of mark references in fast-import
+demands either a SP (space) or LF (end-of-line) after
+a mark reference.  Fast-import does not complain when garbage
+appears after a mark reference in some cases.
+
+Factor out parsing of mark references and complain if
+errant characters are found.
+
+Buggy input can cause fast-import to produce the wrong output,
+silently, without error.  This makes it difficult to track
+down buggy generators of fast-import streams.  An example is
+seen in the last line of this commit command:
+
+    commit refs/heads/S2
+    committer Name <name@example.com> 1112912893 -0400
+    data <<COMMIT
+    commit message
+    COMMIT
+    from :1M 100644 :103 hello.c
+
+It is missing a newline and should be:
+
+    [...]
+    from :1
+    M 100644 :103 hello.c
+
+What fast-import does is to produce a commit with the same
+contents for hello.c as in refs/heads/S2^.  What the buggy
+program was expecting was the contents of blob :103.  While
+the resulting commit graph looked correct, the contents in
+some commits were wrong.
+---
+
+This addresses all of Jonathan's comments, in particular:
+
+  - give tests descriptive names
+
+  - add asserts for trailing space for filemodify, notemodify
+    to protect against flaws in future dataref implementions
+
+  - compactify end pointer return and update, so:
+
+      oe = find_mark(parse_mark_ref_space(&p));
+
+  - replace "grep -q" with "test_i18ngrep"
+
+  - drop first word in failure messages, so no "Missing"
+    or "Garbage", resp., in:
+
+      test_i18ngrep "space after SHA1" err
+      test_i18ngrep "after mark" err
+
+  - Erroneous datarefs "inlineX" and "no-such-dataref" should
+    behave the same, in particular, they now complain "Invalid SHA1"
+    rather than guessing an attempt at "inline ".
+
+  - Revert change parse_treeish_dataref() API in case other
+    changes are inflight.  Verify space handling in caller.
+
+I did not refactor the 15 or so common lines in filemodify and
+notemodify dataref handling.
+
+I'll resend once 1.7.11 opens up.
+
+Thanks all for the careful review.
+
+		-- Pete
+
+ fast-import.c          |  102 +++++++++++++-----
+ t/t9300-fast-import.sh |  276 ++++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 349 insertions(+), 29 deletions(-)
+
+diff --git a/fast-import.c b/fast-import.c
+index a85275d..0525e12 100644
+--- a/fast-import.c
++++ b/fast-import.c
+@@ -2207,6 +2207,59 @@ static uintmax_t change_note_fanout(struct tree_entry *root,
+ 	return do_change_note_fanout(root, root, hex_sha1, 0, path, 0, fanout);
+ }
+ 
++/*
++ * Given a pointer into a string, parse a mark reference:
++ *
++ *   idnum ::= ':' bigint;
++ *
++ * Return the first character after the value in *endptr.
++ *
++ * Complain if the following character is not what is expected,
++ * either a space or end of the string.
++ */
++static uintmax_t parse_mark_ref(const char *p, char **endptr)
++{
++	uintmax_t mark;
++
++	assert(*p == ':');
++	++p;
++	mark = strtoumax(p, endptr, 10);
++	if (*endptr == p)
++		die("No value after ':' in mark: %s", command_buf.buf);
++	return mark;
++}
++
++/*
++ * Parse the mark reference, and complain if this is not the end of
++ * the string.
++ */
++static uintmax_t parse_mark_ref_eol(const char *p)
++{
++	char *end;
++	uintmax_t mark;
++
++	mark = parse_mark_ref(p, &end);
++	if (*end != '\0')
++		die("Garbage after mark: %s", command_buf.buf);
++	return mark;
++}
++
++/*
++ * Parse the mark reference, demanding a trailing space.  Return a
++ * pointer to the space.
++ */
++static uintmax_t parse_mark_ref_space(const char **p)
++{
++	uintmax_t mark;
++	char *end;
++
++	mark = parse_mark_ref(*p, &end);
++	if (*end != ' ')
++		die("Missing space after mark: %s", command_buf.buf);
++	*p = end;
++	return mark;
++}
++
+ static void file_change_m(struct branch *b)
+ {
+ 	const char *p = command_buf.buf + 2;
+@@ -2235,21 +2288,21 @@ static void file_change_m(struct branch *b)
+ 	}
+ 
+ 	if (*p == ':') {
+-		char *x;
+-		oe = find_mark(strtoumax(p + 1, &x, 10));
++		oe = find_mark(parse_mark_ref_space(&p));
+ 		hashcpy(sha1, oe->idx.sha1);
+-		p = x;
+-	} else if (!prefixcmp(p, "inline")) {
++	} else if (!prefixcmp(p, "inline ")) {
+ 		inline_data = 1;
+-		p += 6;
++		p += strlen("inline");  /* advance to space */
+ 	} else {
+ 		if (get_sha1_hex(p, sha1))
+ 			die("Invalid SHA1: %s", command_buf.buf);
+ 		oe = find_object(sha1);
+ 		p += 40;
++		if (*p != ' ')
++			die("Missing space after SHA1: %s", command_buf.buf);
+ 	}
+-	if (*p++ != ' ')
+-		die("Missing space after SHA1: %s", command_buf.buf);
++	assert(*p == ' ');
++	++p;  /* skip space */
+ 
+ 	strbuf_reset(&uq);
+ 	if (!unquote_c_style(&uq, p, &endp)) {
+@@ -2407,21 +2460,21 @@ static void note_change_n(struct branch *b, unsigned char *old_fanout)
+ 	/* Now parse the notemodify command. */
+ 	/* <dataref> or 'inline' */
+ 	if (*p == ':') {
+-		char *x;
+-		oe = find_mark(strtoumax(p + 1, &x, 10));
++		oe = find_mark(parse_mark_ref_space(&p));
+ 		hashcpy(sha1, oe->idx.sha1);
+-		p = x;
+-	} else if (!prefixcmp(p, "inline")) {
++	} else if (!prefixcmp(p, "inline ")) {
+ 		inline_data = 1;
+-		p += 6;
++		p += strlen("inline");  /* advance to space */
+ 	} else {
+ 		if (get_sha1_hex(p, sha1))
+ 			die("Invalid SHA1: %s", command_buf.buf);
+ 		oe = find_object(sha1);
+ 		p += 40;
++		if (*p != ' ')
++			die("Missing space after SHA1: %s", command_buf.buf);
+ 	}
+-	if (*p++ != ' ')
+-		die("Missing space after SHA1: %s", command_buf.buf);
++	assert(*p == ' ');
++	++p;  /* skip space */
+ 
+ 	/* <committish> */
+ 	s = lookup_branch(p);
+@@ -2430,7 +2483,7 @@ static void note_change_n(struct branch *b, unsigned char *old_fanout)
+ 			die("Can't add a note on empty branch.");
+ 		hashcpy(commit_sha1, s->sha1);
+ 	} else if (*p == ':') {
+-		uintmax_t commit_mark = strtoumax(p + 1, NULL, 10);
++		uintmax_t commit_mark = parse_mark_ref_eol(p);
+ 		struct object_entry *commit_oe = find_mark(commit_mark);
+ 		if (commit_oe->type != OBJ_COMMIT)
+ 			die("Mark :%" PRIuMAX " not a commit", commit_mark);
+@@ -2537,7 +2590,7 @@ static int parse_from(struct branch *b)
+ 		hashcpy(b->branch_tree.versions[0].sha1, t);
+ 		hashcpy(b->branch_tree.versions[1].sha1, t);
+ 	} else if (*from == ':') {
+-		uintmax_t idnum = strtoumax(from + 1, NULL, 10);
++		uintmax_t idnum = parse_mark_ref_eol(from);
+ 		struct object_entry *oe = find_mark(idnum);
+ 		if (oe->type != OBJ_COMMIT)
+ 			die("Mark :%" PRIuMAX " not a commit", idnum);
+@@ -2572,7 +2625,7 @@ static struct hash_list *parse_merge(unsigned int *count)
+ 		if (s)
+ 			hashcpy(n->sha1, s->sha1);
+ 		else if (*from == ':') {
+-			uintmax_t idnum = strtoumax(from + 1, NULL, 10);
++			uintmax_t idnum = parse_mark_ref_eol(from);
+ 			struct object_entry *oe = find_mark(idnum);
+ 			if (oe->type != OBJ_COMMIT)
+ 				die("Mark :%" PRIuMAX " not a commit", idnum);
+@@ -2735,7 +2788,7 @@ static void parse_new_tag(void)
+ 		type = OBJ_COMMIT;
+ 	} else if (*from == ':') {
+ 		struct object_entry *oe;
+-		from_mark = strtoumax(from + 1, NULL, 10);
++		from_mark = parse_mark_ref_eol(from);
+ 		oe = find_mark(from_mark);
+ 		type = oe->type;
+ 		hashcpy(sha1, oe->idx.sha1);
+@@ -2867,14 +2920,9 @@ static void parse_cat_blob(void)
+ 	/* cat-blob SP <object> LF */
+ 	p = command_buf.buf + strlen("cat-blob ");
+ 	if (*p == ':') {
+-		char *x;
+-		oe = find_mark(strtoumax(p + 1, &x, 10));
+-		if (x == p + 1)
+-			die("Invalid mark: %s", command_buf.buf);
++		oe = find_mark(parse_mark_ref_eol(p));
+ 		if (!oe)
+ 			die("Unknown mark: %s", command_buf.buf);
+-		if (*x)
+-			die("Garbage after mark: %s", command_buf.buf);
+ 		hashcpy(sha1, oe->idx.sha1);
+ 	} else {
+ 		if (get_sha1_hex(p, sha1))
+@@ -2944,13 +2992,9 @@ static struct object_entry *parse_treeish_dataref(const char **p)
+ 	struct object_entry *e;
+ 
+ 	if (**p == ':') {	/* <mark> */
+-		char *endptr;
+-		e = find_mark(strtoumax(*p + 1, &endptr, 10));
+-		if (endptr == *p + 1)
+-			die("Invalid mark: %s", command_buf.buf);
++		e = find_mark(parse_mark_ref_space(p));
+ 		if (!e)
+ 			die("Unknown mark: %s", command_buf.buf);
+-		*p = endptr;
+ 		hashcpy(sha1, e->idx.sha1);
+ 	} else {	/* <sha1> */
+ 		if (get_sha1_hex(*p, sha1))
+diff --git a/t/t9300-fast-import.sh b/t/t9300-fast-import.sh
+index 0f5b5e5..cbc0e81 100755
+--- a/t/t9300-fast-import.sh
++++ b/t/t9300-fast-import.sh
+@@ -2635,4 +2635,280 @@ test_expect_success \
+ 	'n=$(grep $a verify | wc -l) &&
+ 	 test 1 = $n'
+ 
++###
++### series S
++###
++#
++# Setup is roughly this.  Commits marked 1,2,3,4.  Blobs
++# marked 100 + commit.  Notes 200 +.  Make sure missing spaces
++# and EOLs after mark references cause errors.
++#
++# The error message looks like either:
++#   Missing space after ..
++# or
++#   Garbage after ..
++#
++# 1--2--4
++#  \   /
++#   -3-
++#
++test_tick
++
++cat >input <<INPUT_END
++commit refs/heads/S
++mark :1
++committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
++data <<COMMIT
++commit 1
++COMMIT
++M 100644 inline hello.c
++data <<BLOB
++blob 1
++BLOB
++
++commit refs/heads/S
++mark :2
++committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
++data <<COMMIT
++commit 2
++COMMIT
++from :1
++M 100644 inline hello.c
++data <<BLOB
++blob 2
++BLOB
++
++blob
++mark :103
++data <<BLOB
++blob 3
++BLOB
++
++blob
++mark :202
++data <<BLOB
++note 2
++BLOB
++INPUT_END
++
++test_expect_success 'S: initialize for S tests' '
++	git fast-import --export-marks=marks <input
++'
++
++#
++# filemodify, three datarefs
++#
++test_expect_success 'S: filemodify with garbage after mark must fail' '
++	test_must_fail git fast-import --import-marks=marks <<-EOF 2>err &&
++	commit refs/heads/S
++	committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
++	data <<COMMIT
++	commit N
++	COMMIT
++	M 100644 :103x hello.c
++	EOF
++	cat err &&
++	test_i18ngrep "space after mark" err
++'
++
++# inline is misspelled; fast-import thinks it is some unknown dataref
++# and complains "Invalid SHA1"
++test_expect_success 'S: filemodify with garbage after inline must fail' '
++	test_must_fail git fast-import --import-marks=marks <<-EOF 2>err &&
++	commit refs/heads/S
++	committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
++	data <<COMMIT
++	commit N
++	COMMIT
++	M 100644 inlineX hello.c
++	data <<BLOB
++	inline
++	BLOB
++	EOF
++	cat err &&
++	test_i18ngrep "nvalid SHA1" err
++'
++
++test_expect_success 'S: filemodify with garbage after sha1 must fail' '
++	sha1=$(grep -w :103 marks | cut -d\  -f2) &&
++	test_must_fail git fast-import --import-marks=marks <<-EOF 2>err &&
++	commit refs/heads/S
++	committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
++	data <<COMMIT
++	commit N
++	COMMIT
++	M 100644 ${sha1}x hello.c
++	EOF
++	cat err &&
++	test_i18ngrep "space after SHA1" err
++'
++
++#
++# notemodify, three ways to say dataref
++#
++test_expect_success 'S: notemodify with garabge after mark dataref must fail' '
++	test_must_fail git fast-import --import-marks=marks <<-EOF 2>err &&
++	commit refs/heads/S
++	committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
++	data <<COMMIT
++	commit S note dataref markref
++	COMMIT
++	N :103x :2
++	EOF
++	cat err &&
++	test_i18ngrep "space after mark" err
++'
++
++# inline is misspelled; fast-import thinks it is some unknown dataref
++# and complains "Invalid SHA1"
++test_expect_success 'S: notemodify with garbage after inline dataref must fail' '
++	test_must_fail git fast-import --import-marks=marks <<-EOF 2>err &&
++	commit refs/heads/S
++	committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
++	data <<COMMIT
++	commit S note dataref inline
++	COMMIT
++	N inlineX :2
++	data <<BLOB
++	note blob
++	BLOB
++	EOF
++	cat err &&
++	test_i18ngrep "nvalid SHA1" err
++'
++
++test_expect_success 'S: notemodify with garbage after sha1 dataref must fail' '
++	sha1=$(grep -w :2 marks | cut -d\  -f2) &&
++	test_must_fail git fast-import --import-marks=marks <<-EOF 2>err &&
++	commit refs/heads/S
++	committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
++	data <<COMMIT
++	commit S note dataref sha1
++	COMMIT
++	N ${sha1}x :2
++	EOF
++	cat err &&
++	test_i18ngrep "space after SHA1" err
++'
++
++#
++# notemodify, mark in committish
++#
++test_expect_success 'S: notemodify with garbarge after mark committish must fail' '
++	test_must_fail git fast-import --import-marks=marks <<-EOF 2>err &&
++	commit refs/heads/Snotes
++	committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
++	data <<COMMIT
++	commit S note committish
++	COMMIT
++	N :202 :2x
++	EOF
++	cat err &&
++	test_i18ngrep "after mark" err
++'
++
++#
++# from
++#
++test_expect_success 'S: from with garbage after mark must fail' '
++	# no &&
++	git fast-import --import-marks=marks --export-marks=marks <<-EOF 2>err
++	commit refs/heads/S2
++	mark :3
++	committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
++	data <<COMMIT
++	commit 3
++	COMMIT
++	from :1x
++	M 100644 :103 hello.c
++	EOF
++
++	ret=$? &&
++	echo returned $ret &&
++	test $ret -ne 0 && # failed, but it created the commit
++
++	# go create the commit, need it for merge test
++	git fast-import --import-marks=marks --export-marks=marks <<-EOF &&
++	commit refs/heads/S2
++	mark :3
++	committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
++	data <<COMMIT
++	commit 3
++	COMMIT
++	from :1
++	M 100644 :103 hello.c
++	EOF
++
++	# now evaluate the error
++	cat err &&
++	test_i18ngrep "after mark" err
++'
++
++
++#
++# merge
++#
++test_expect_success 'S: merge with garbage after mark must fail' '
++	test_must_fail git fast-import --import-marks=marks <<-EOF 2>err &&
++	commit refs/heads/S
++	mark :4
++	committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
++	data <<COMMIT
++	commit 3
++	COMMIT
++	from :2
++	merge :3x
++	M 100644 :103 hello.c
++	EOF
++	cat err &&
++	test_i18ngrep "after mark" err
++'
++
++#
++# tag, from markref
++#
++test_expect_success 'S: tag with garbage after mark must fail' '
++	test_must_fail git fast-import --import-marks=marks <<-EOF 2>err &&
++	tag refs/tags/Stag
++	from :2x
++	tagger $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
++	data <<TAG
++	tag S
++	TAG
++	EOF
++	cat err &&
++	test_i18ngrep "after mark" err
++'
++
++#
++# cat-blob markref
++#
++test_expect_success 'S: cat-blob with garbage after mark must fail' '
++	test_must_fail git fast-import --import-marks=marks <<-EOF 2>err &&
++	cat-blob :2x
++	EOF
++	cat err &&
++	test_i18ngrep "after mark" err
++'
++
++#
++# ls markref
++#
++test_expect_success 'S: ls with garbage after mark must fail' '
++	test_must_fail git fast-import --import-marks=marks <<-EOF 2>err &&
++	ls :2x hello.c
++	EOF
++	cat err &&
++	test_i18ngrep "space after mark" err
++'
++
++test_expect_success 'S: ls with garbage after sha1 must fail' '
++	sha1=$(grep -w :2 marks | cut -d\  -f2) &&
++	test_must_fail git fast-import --import-marks=marks <<-EOF 2>err &&
++	ls ${sha1}x hello.c
++	EOF
++	cat err &&
++	test_i18ngrep "space after tree-ish" err
++'
++
+ test_done
+-- 
+1.7.10.rc2.62.gac32b.dirty
