@@ -1,83 +1,100 @@
-From: Thomas Rast <trast@inf.ethz.ch>
-Subject: Re: [GSoC] Designing a faster index format
-Date: Thu, 5 Apr 2012 23:49:57 +0200
-Message-ID: <87r4w1vofu.fsf@thomas.inf.ethz.ch>
-References: <F9D452C3-B11E-4915-A0F2-B248F92CE5DE@gmail.com>
-	<CACsJy8CKqv2P2Co9MKpePfOTwe4fu-wxAYiigbYt3YHTxZ6wWQ@mail.gmail.com>
-	<8D287169-1AD9-4586-BDBC-F820220328FC@gmail.com>
-	<CACsJy8D2RwG-Nr5btcQj0f9=JACvH6mf7LNi=Jnb_y+j4_2u0A@mail.gmail.com>
-	<871uomrubl.fsf@thomas.inf.ethz.ch>
-	<8901F6B5-7396-44E1-9687-20BF95114728@gmail.com>
-	<871uomq64c.fsf@thomas.inf.ethz.ch>
-	<BDFA27C9-C999-4C95-8804-5E7B3B3D1BFD@gmail.com>
-	<878virfx11.fsf@thomas.inf.ethz.ch>
-	<2A61C352-5C71-4EDF-9DBE-01CC09AE03A5@gmail.com>
-	<87r4we9sfo.fsf@thomas.inf.ethz.ch>
-	<5CE5AEC7-22C8-4911-A79E-11F2F3D902A2@gmail.com>
-	<7vk423qfps.fsf@alter.siamese.dyndns.org>
-	<CACsJy8Ag9yvGwKE_oiW8T+hR2hN_fzXvGCdOJ_H44DCOm9RF0Q@mail.gmail.com>
-	<1604FE70-8B77-4EC1-823A-DC1F0334CD3A@gmail.com>
-	<4F7ABA19.7040408@alum.mit.edu>
-	<C15BAB9A-EAFA-4EA4-85B2-0E0C5FF473E9@gmail.com>
-	<alpine.DEB.2.02.1204031313170.10782@asgard.lang.hm>
-	<D97085E6-2B9F-42C5-A06D-B53422034071@gmail.com>
+From: Hilco Wijbenga <hilco.wijbenga@gmail.com>
+Subject: Re: Linear history *and* share a branch?
+Date: Thu, 5 Apr 2012 14:57:36 -0700
+Message-ID: <CAE1pOi3Xmv-P4FN-eDkauT2becvdj9rVyFh-hEmVKnnB_pu2ug@mail.gmail.com>
+References: <CAE1pOi0-uSaQwgJHMTkw3nqp=idxZxMbyfKtLni0=Xwu-L-_hA@mail.gmail.com>
+	<7vfwch51nn.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Cc: <david@lang.hm>, Michael Haggerty <mhagger@alum.mit.edu>,
-	"Nguyen Thai Ngoc Duy" <pclouds@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Thomas Rast <trast@student.ethz.ch>, <git@vger.kernel.org>
-To: Thomas Gummerer <italyhockeyfeed@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Apr 05 23:50:12 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Users <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Apr 05 23:57:42 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SFuZH-0005es-QQ
-	for gcvg-git-2@plane.gmane.org; Thu, 05 Apr 2012 23:50:12 +0200
+	id 1SFugY-0001qI-9o
+	for gcvg-git-2@plane.gmane.org; Thu, 05 Apr 2012 23:57:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755495Ab2DEVuE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Apr 2012 17:50:04 -0400
-Received: from edge10.ethz.ch ([82.130.75.186]:12921 "EHLO edge10.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755489Ab2DEVuD (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Apr 2012 17:50:03 -0400
-Received: from CAS21.d.ethz.ch (172.31.51.111) by edge10.ethz.ch
- (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.2.283.3; Thu, 5 Apr
- 2012 23:49:57 +0200
-Received: from thomas.inf.ethz.ch.ethz.ch (188.155.176.28) by CAS21.d.ethz.ch
- (172.31.51.111) with Microsoft SMTP Server (TLS) id 14.1.355.2; Thu, 5 Apr
- 2012 23:49:59 +0200
-In-Reply-To: <D97085E6-2B9F-42C5-A06D-B53422034071@gmail.com> (Thomas
-	Gummerer's message of "Wed, 4 Apr 2012 22:05:49 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Originating-IP: [188.155.176.28]
+	id S1756040Ab2DEV5h convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 5 Apr 2012 17:57:37 -0400
+Received: from mail-yw0-f46.google.com ([209.85.213.46]:63172 "EHLO
+	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754483Ab2DEV5h convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 5 Apr 2012 17:57:37 -0400
+Received: by yhmm54 with SMTP id m54so1032583yhm.19
+        for <git@vger.kernel.org>; Thu, 05 Apr 2012 14:57:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=0DTI2XU6klCTpH1N0biTFLdIIZ3dP6KRHLkY29a8XtU=;
+        b=PCttIMMUOMC99SHigrNA2xs6TrmcnQoytlnfbo5zFKb32eMehlC/xPyVZoL0zWQQYX
+         L+jT19KJnkAjCxFjyt1kFEWS2CX5uRdFkIlH0gI9ER3PnCgBPRcchSdcj3IPNu80zBYq
+         yfClngXo5NpZvjD5+PO10BpUtEk3fphGtR0n9/KJzxnjJStpjbCt4f3SpKAawKWr9TwJ
+         cQZT316goyhKlmgBzzhjMbZpzz64ayjwwVy3X2SIbAnuuwQew9rK1vCpctNz7fj9TxN8
+         70mhQNmA3zckJtWZIi3B+9p5JB6GezGxoXqRYqkPFtm4GgIBYYjYZ4PZR+UqLy8tRFxd
+         6Mqw==
+Received: by 10.236.184.129 with SMTP id s1mr4334782yhm.21.1333663056550; Thu,
+ 05 Apr 2012 14:57:36 -0700 (PDT)
+Received: by 10.236.154.104 with HTTP; Thu, 5 Apr 2012 14:57:36 -0700 (PDT)
+In-Reply-To: <7vfwch51nn.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194814>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194815>
 
-Thomas Gummerer <italyhockeyfeed@gmail.com> writes:
+On 5 April 2012 14:06, Junio C Hamano <gitster@pobox.com> wrote:
+> Hilco Wijbenga <hilco.wijbenga@gmail.com> writes:
+>> Hi all,
+>>
+>> We have been using Git for about a year now in a very small team. So
+>> far, everyone has worked on their own local branches and been doing
+>> "git rebase master" to make sure their local branches stay in synch.
+>> This way we have a nice linear history in master.
+>>
+>> Recently, it has become useful to share one of these local branches
+>> between two devs. Of course, when one of the devs does his usual "gi=
+t
+>> rebase master", he screws up the other dev's environment. Our soluti=
+on
+>> has been to keep rebasing the shared branch but to actually work on =
+a
+>> local branch that is rebased on the shared branch. By judiciously
+>> using "git reset" and "git pull" on the shared branch the two devs c=
+an
+>> keep the shared branch in synch and then use "git rebase
+>> shared-branch" on their local branch to keep it in synch to. While
+>> this works, there is probably a better/simpler solution.
+>>
+>> Should we simply do "git merge master" instead of "git rebase master=
+"?
+>
+> That certainly is a sensible thing to do.
+>
+> But if your people are used to rebasing their own 'master' on top of
+> shared 'master', I would imagine that it wouldn't be hard at all for =
+these
+> two people that work on a topic branch to do the same for their 'topi=
+c'
+> branch, no? =C2=A0Just like rebasing their 'master' on shared 'master=
+', they
+> would rebase their own 'topic' on shared 'topic'.
 
-> -- Proposed solution --
-> The proposed solution is to redesign the index to a B-tree based format. This
-> allows changes to the index in O(log(n)) time, with n being the number of
-> entries in the index. 
+I'm not sure I'm following you here. I agree with what you say but I'm
+not clear on exactly how it applies to what I asked. :-/
 
-> -- Solutions that were also considered --
-> - Append-only data structure
-> - Database format
-> - Padded structure
+Rebasing the 'local-topic' on 'shared-topic' branch is certainly
+possible but that would not help with linear history with regards to
+'master', right? And rebasing 'shared-topic' on 'master' (to get its
+updates) would "break" one of the dev's environments. Unless you mean
+they should both do that separately? I suppose that's possible. I'm
+not clear on the consequences.
 
-This is quite complete already, which I think is great, but it's still
-missing one "obvious" approach: a directory-tree based layout that uses
-"flat" storage.  That is, the entries grouped by directory and thus
-arranged into the "natural" tree, so as to allow parsing only part of
-it.  But not pulling any tricks to make it easy to change; a nontrivial
-change would mean a rewrite.  How good do you think that could be?
-
--- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+It seems that (as Aevar said) we should simply ignore linear history
+while 'shared-topic' exists and only rebase on master when integrating
+it back into master. But I get the impression that you might have a
+slightly different approach in mind?
