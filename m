@@ -1,95 +1,67 @@
-From: Adam Monsen <haircut@gmail.com>
-Subject: Re: [PATCH 0/3] "commit --template" fixes
-Date: Thu, 05 Apr 2012 07:29:53 -0700
-Message-ID: <4F7DAC61.3000104@gmail.com>
-References: <7vaa2ylzrm.fsf@alter.siamese.dyndns.org> <1333136719-12657-1-git-send-email-gitster@pobox.com> <4F775ACF.50007@gmail.com> <7vaa2vhyso.fsf@alter.siamese.dyndns.org> <4F7B2F35.40807@gmail.com> <7v1uo4cwg7.fsf@alter.siamese.dyndns.org>
+From: Noel Grandin <noelgrandin@gmail.com>
+Subject: Re: [GSoC] Designing a faster index format
+Date: Thu, 05 Apr 2012 16:39:46 +0200
+Message-ID: <4F7DAEB2.8080006@gmail.com>
+References: <F9D452C3-B11E-4915-A0F2-B248F92CE5DE@gmail.com> <CACsJy8CKqv2P2Co9MKpePfOTwe4fu-wxAYiigbYt3YHTxZ6wWQ@mail.gmail.com> <8D287169-1AD9-4586-BDBC-F820220328FC@gmail.com> <CACsJy8D2RwG-Nr5btcQj0f9=JACvH6mf7LNi=Jnb_y+j4_2u0A@mail.gmail.com> <871uomrubl.fsf@thomas.inf.ethz.ch> <8901F6B5-7396-44E1-9687-20BF95114728@gmail.com> <871uomq64c.fsf@thomas.inf.ethz.ch> <BDFA27C9-C999-4C95-8804-5E7B3B3D1BFD@gmail.com> <878virfx11.fsf@thomas.inf.ethz.ch> <2A61C352-5C71-4EDF-9DBE-01CC09AE03A5@gmail.com> <87r4we9sfo.fsf@thomas.inf.ethz.ch> <5CE5AEC7-22C8-4911-A79E-11F2F3D902A2@gmail.com> <7vk423qfps.fsf@alter.siamese.dyndns.org> <CACsJy8Ag9yvGwKE_oiW8T+hR2hN_fzXvGCdOJ_H44DCOm9RF0Q@mail.gmail.com> <1604FE70-8B77-4EC1-823A-DC1F0334CD3A@gmail.com> <4F7ABA19.7040408@alum.mit.edu> <C15BAB9A-EAFA-4EA4-
+ 85B2-0E0C5FF473E9@gmail.com> <alpine.DEB.2.02.1204031313170.10782@asgard.lang.hm> <D97085E6-2B9F-42C5-A06D-B53422034071@gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature";
- boundary="------------enig845A5989EAD5B80082DB039D"
-Cc: git@vger.kernel.org, Ivan Heffner <iheffner@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Apr 05 16:30:11 2012
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: david@lang.hm, Michael Haggerty <mhagger@alum.mit.edu>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org
+To: Thomas Gummerer <italyhockeyfeed@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Apr 05 16:40:02 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SFnhL-0007Jg-RJ
-	for gcvg-git-2@plane.gmane.org; Thu, 05 Apr 2012 16:30:04 +0200
+	id 1SFnqy-0005Cl-R6
+	for gcvg-git-2@plane.gmane.org; Thu, 05 Apr 2012 16:40:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753214Ab2DEO36 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Apr 2012 10:29:58 -0400
-Received: from mail-qa0-f42.google.com ([209.85.216.42]:49937 "EHLO
-	mail-qa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752779Ab2DEO35 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Apr 2012 10:29:57 -0400
-Received: by qafi31 with SMTP id i31so1752973qaf.1
-        for <git@vger.kernel.org>; Thu, 05 Apr 2012 07:29:57 -0700 (PDT)
+	id S1753068Ab2DEOj4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Apr 2012 10:39:56 -0400
+Received: from mail-wi0-f172.google.com ([209.85.212.172]:34903 "EHLO
+	mail-wi0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752846Ab2DEOjz (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Apr 2012 10:39:55 -0400
+Received: by wibhj6 with SMTP id hj6so1705298wib.1
+        for <git@vger.kernel.org>; Thu, 05 Apr 2012 07:39:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:x-enigmail-version:content-type;
-        bh=JtikYZrcjqFQ2oyKOocSv85hW6v/VLLbmxBs4a9dX1Y=;
-        b=xebvCA67TbeuIzB8gy2aK8Qc1rxOsjd7MpdgoPAFnQL3Z8LS26ZnouWy1MdibtwbMP
-         VipCWNMG2q/7zc1p325LCiwESUyx7zYFDoiLG+25sAKLuwy8rOPMgzW6sI5O4ZB8KoH7
-         mP9NH6Tw8m/gOCiwfGolUIWKG80k7Fjs+5wNRrMdZL3CYa9riezZMY9wpUftQHyH3TfM
-         kmreEvCZLxOGb55d6c7X4ov8sV1ScoNCHXx9cqLYuhHM/WOYHZWZM0q2oowImb0iVsAH
-         yZRFlVUqsszUJXf05fP78Lofbbvj+4gYUik0DMMyq7vkiLlBZDYyfP9PbDYcXYkNwm41
-         vP6A==
-Received: by 10.224.185.82 with SMTP id cn18mr4155770qab.97.1333636196994;
-        Thu, 05 Apr 2012 07:29:56 -0700 (PDT)
-Received: from [192.168.13.92] (c-67-183-137-177.hsd1.wa.comcast.net. [67.183.137.177])
-        by mx.google.com with ESMTPS id i8sm6347670qah.4.2012.04.05.07.29.54
-        (version=SSLv3 cipher=OTHER);
-        Thu, 05 Apr 2012 07:29:55 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:11.0) Gecko/20120329 Thunderbird/11.0.1
-In-Reply-To: <7v1uo4cwg7.fsf@alter.siamese.dyndns.org>
-X-Enigmail-Version: 1.4
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=yugo+EOz+CeNsaTuioVyLrsC9E8sAAoq8hVBPslBBPc=;
+        b=a0hVZBKmD46wjbeaRJZWzCj7y4kTs8EOAjJ5koyN1WxwaVPP/sW9nESVw5mBrBkaze
+         aZN+AkS1gCd65E38k9zGcXnxV2a431QFNGnhGqqaMNboWKQAzGQC4BzEs1iN4UVV47Rz
+         nvCTihq0LmaaxuD5kfziNpCB+WyexIaBS+L6f3XCkGIHJTXtofB+ObQrvd5uJsvke6iM
+         KHx0wcAfC5tCoSe2w4u1r3uPkOl2zkSh2aCedIYpyTlqjAny01Er905G/PHudvWOK66F
+         WyOHkUW1PB//89ykbSE48LOpn1qDNtvkizYOn9sCbK3g88GkBbpgrqLo970Cqhn3SXGj
+         SwOg==
+Received: by 10.180.80.9 with SMTP id n9mr5486985wix.4.1333636794200;
+        Thu, 05 Apr 2012 07:39:54 -0700 (PDT)
+Received: from [192.168.1.200] ([41.164.8.42])
+        by mx.google.com with ESMTPS id n8sm17787904wix.10.2012.04.05.07.39.47
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 05 Apr 2012 07:39:52 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:11.0) Gecko/20120327 Thunderbird/11.0.1
+In-Reply-To: <D97085E6-2B9F-42C5-A06D-B53422034071@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194775>
-
-This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
---------------enig845A5989EAD5B80082DB039D
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-
-On 04/03/2012 02:55 PM, Junio C Hamano wrote:
-> When editing the commit message, start the editor with the contents in =
-the
-> given file.  The `commit.template` configuration variable is often used=
- to
-> give this option implicitly to the command.  This mechanism can be used=
- by
-> projects that want to guide participants with some hints on what to wri=
-te
-> in the message in what order.  If the user exits the editor without edi=
-ting
-> the message, the commit is aborted.  This has no effect when a message =
-is
-> given by other means, e.g. with the `-m` or `-F` options.
-
-I like it!
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194779>
 
 
---------------enig845A5989EAD5B80082DB039D
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (GNU/Linux)
-
-iQEcBAEBAgAGBQJPfaxhAAoJEJtdmT+DbynAesEIAMtvD7IlqoIr+ckd2yv+xdGc
-jhZov78OXcguXCIU3x1FonzH8fq863EFe3K5uQyeG9V2mhCQ+JDA+E1xhWbMcbRj
-UApvst+O1uZlQAWDlBWXxvMJ/G+RYf8wpl32dSlBsZSgaehRSH5n0btQrxZZd/iL
-TIBqqrr5pTzl6tbno3LF8i1y7zAG1S25/Vk/1d7hI7qrS/5bHWmVvYwpoe6wd4GJ
-ScDtg/CMxaF/etug0v13ooV/1BLq1HBqp0GWibg7vHse4as7lgch89QFp0xe4lkt
-rwxxr62TAmb33lb7X/nedh7fdAS0i3UTnJqTPSzxWg92rgEU5PNdpyNjzHVxMzU=
-=x8Iv
------END PGP SIGNATURE-----
-
---------------enig845A5989EAD5B80082DB039D--
+On 2012-04-04 22:05, Thomas Gummerer wrote:
+> -- Proposed solution --
+> The proposed solution is to redesign the index to a B-tree based format. This
+> allows changes to the index in O(log(n)) time, with n being the number of
+> entries in the index.
+>
+Sounds like you're re-inventing one of these:
+http://code.google.com/p/leveldb/
+http://code.google.com/p/high-concurrency-btree/
