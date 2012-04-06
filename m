@@ -1,110 +1,68 @@
-From: Pushkar <pushkarkolhe@gmail.com>
-Subject: GSOC proposal: Improving parallelism
-Date: Thu, 5 Apr 2012 22:24:28 -0400
-Message-ID: <CAMv=a95J2jg8of8nS7CYQdttQ52Z0pHa07HDnsU7kZ2MFnN6ZA@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: Bad Man Page URLs
+Date: Thu, 5 Apr 2012 22:32:23 -0400
+Message-ID: <20120406023223.GB16264@sigill.intra.peff.net>
+References: <2AC038A1-3D8D-425E-92B3-DADFD027761A@justatheory.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 06 04:24:55 2012
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: "David E. Wheeler" <david@justatheory.com>
+X-From: git-owner@vger.kernel.org Fri Apr 06 04:33:02 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SFyr9-0001mY-3d
-	for gcvg-git-2@plane.gmane.org; Fri, 06 Apr 2012 04:24:55 +0200
+	id 1SFyyy-0006ND-OM
+	for gcvg-git-2@plane.gmane.org; Fri, 06 Apr 2012 04:33:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757107Ab2DFCYu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Apr 2012 22:24:50 -0400
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:54961 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757087Ab2DFCYt (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Apr 2012 22:24:49 -0400
-Received: by ghrr11 with SMTP id r11so1117459ghr.19
-        for <git@vger.kernel.org>; Thu, 05 Apr 2012 19:24:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to:content-type;
-        bh=paNGol6CsWKQKGpstGg2KEdNgFBgStaIZOsvuWGOLiA=;
-        b=DrjSWCIacr19U6hzInQ4yZblFfDOHBlup2ukMVToSWgWq0tUQUTscY8v15eYjkEhxR
-         QGnB5JQNEyVOpUcXGQwzGBzmiLjCH3GYzV7dngwhH5/7S9pU+caB/dc1HMa+fmBrTtAn
-         kU2u8VQXh+l3NIbozXgkmyWeFHqU7hY1BoHvfezytFhPMrOWD7twBW4PYNkwjkttjxnM
-         sI2ww2TwFobmKim5ed5iM+R4NebQzZReAPms5J+gBhRo1rtXg6nTH90wqQOzkmq/Zb6s
-         TWQF/WSnoPiAFHS3+gMY/ZVXVurfbyWaxVWigIhQl05DrHF//98GoPsNqTLajf08hPtf
-         eD9Q==
-Received: by 10.236.170.41 with SMTP id o29mr5075393yhl.83.1333679088762; Thu,
- 05 Apr 2012 19:24:48 -0700 (PDT)
-Received: by 10.220.117.5 with HTTP; Thu, 5 Apr 2012 19:24:28 -0700 (PDT)
+	id S1757119Ab2DFCc1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Apr 2012 22:32:27 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:49507
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754241Ab2DFCc0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Apr 2012 22:32:26 -0400
+Received: (qmail 30497 invoked by uid 107); 6 Apr 2012 02:32:29 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 05 Apr 2012 22:32:29 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 05 Apr 2012 22:32:23 -0400
+Content-Disposition: inline
+In-Reply-To: <2AC038A1-3D8D-425E-92B3-DADFD027761A@justatheory.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194836>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194837>
 
-Goal:
----------
-Improving parallelism in various git commands.
+On Thu, Apr 05, 2012 at 06:48:19PM -0700, David E. Wheeler wrote:
 
-As the idea page says, only git grep seems to be using threads and
-there are a lot of commands that can use threads.
+> I noticed this in 1.7.7.3, but just rebuilt 1.7.9.6 from source on OS
+> X Lion and am still seeing it. These are the links at the end of `man
+> git`:
+> [...]
+> >         1. Everyday Git
+> >            file:///home/junio/share/doc/git-doc/everyday.html
 
-It does seem from the codebase that grep uses pthreads and some
-interface for using threads (for pack-objects) was started in
-thread-utils. To achieve this goal, I will have to mess around with
-the core git functionality. I think there are 2 ways to go ahead with
-this project: 1. Adding pthread mutex's specific to each and every
-functionality within its current implementation (much like what grep
-does), or 2. Write a pthread interface (like thread-utils),
-consolidate the main data structures that would need to have mutex's
-around them and restructuring some of the code base.
+The problem is that you are not really rebuilding the manpages at all,
+but rather just untarring prebuilt copies. If you built them yourself,
+they would have the proper prefix for your system.
 
-I think 2 is a better option, but I would like to see the codebase a
-little longer to understand how much time it would involve. As far as
-the timeline for gsoc is concerned, I would start of with 2/3 simple
-commands which could be easily modified. I would some help from my
-mentor and this list to help me identify them. After I have this
-working, I can proceed to parallelize other git functionalities.
+That being said, it would be nice for the prebuilt manpages to have
+something more location-agnostic in them. These links are generated by
+asciidoc's "link:" directive. The HTML versions properly use relative
+links, but the links are expanded into full URLs for the manpages. Which
+makes sense, since there's no concept of a relative link here.
 
-Week 1-2: Getting familiar with the git codebase
-Week 2-6: Work on adding basic functionality to thread-utils and
-messing with git diff/log
-Week 6-10: Recognizing additional parts of git which can be parallelized
-Week 10-12: Documentation/Finalizing or just keep continuing with
-additional git commands if everything is going fine
+So we can tweak it by using a custom link macro (we already have
+"linkgit" for linking to actual commands). But what should the agnostic
+version say? Just saying "look at everday.html in the git documentation"
+is not as nice as a real URL, but we really don't have any more
+information than that. Maybe they should be pointing to some canonical
+version on the web?
 
-Success Criteria:
-----------------------
-I would identify commands whose efficiency can be improved by using
-threads. And then measuring time metric for each of those commands on
-several git repo datasets.
+> Is there a bug reporting system I should report this to?
 
-About Me:
--------------
-I am a second year CS PhD student at Georgia Tech. I have previously
-worked with OpenCV as a gsoc student. I wrote a tracking algorithm for
-them. I mostly work with robots (like a huge-a** humanoid called Golem
-Krang as you can see on my website). My experience with pthreads and
-writing multi-threaded programs comes from developing IPC interfaces
-for robots, because robot control has to be real time and it can be
-unsafe to run robot control programs in a single process. I learnt
-multithreaded programming from my systems courses at Georgia Tech like
-Operating Systems and High Performance Computing.
+This list, and you just did. :)
 
-I have used git for over 2 years now, as you can see from the github
-account. I had ever looked into the git codebase only to mess with
-gitweb while setting up gitolite on a server. But I am interested to
-work with git because previous to this the most complex open source
-project I had to work with was OpenCV. I realized they were more
-interested in developing algorithms, and I want to dirty my hands in
-systems programming now.
-
-You can hit up the links below to find more about me. I would like to
-hear from you if you think my approach is correct or could be
-different.
-
-Web: http://www.pushkar.name/
-Github: https://github.com/pushkar (look at cshm, cshm-net projects,
-shared mem ipc using circular buffers)
-Resume: http://pushkar.name/resume.pdf
-
-Pushkar Kolhe
+-Peff
