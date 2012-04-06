@@ -1,103 +1,62 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/5] argv-array: Add argv_array_pop function [v2]
-Date: Fri, 06 Apr 2012 09:49:19 -0700
-Message-ID: <7vvclc24c0.fsf@alter.siamese.dyndns.org>
-References: <1333136922-12872-1-git-send-email-nhorman@tuxdriver.com>
- <1333654745-7898-1-git-send-email-nhorman@tuxdriver.com>
- <1333654745-7898-2-git-send-email-nhorman@tuxdriver.com>
- <7vd37m5458.fsf@alter.siamese.dyndns.org>
- <20120405232429.GA8654@hmsreliant.think-freely.org>
- <7vobr53bbe.fsf@alter.siamese.dyndns.org>
- <20120406022058.GA16264@sigill.intra.peff.net>
- <7v4nsx2vu1.fsf@alter.siamese.dyndns.org>
- <20120406073314.GB27115@sigill.intra.peff.net>
+From: Tuomas <tuomasvaherkoski@gmail.com>
+Subject: [GSOC] Git-instaweb push and pull support
+Date: Fri, 6 Apr 2012 19:52:08 +0300
+Message-ID: <CANc-V+nDPZPmnoPT_feLupjmgaXOusC-k9Dv6S_QOra1Bd13jQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Neil Horman <nhorman@tuxdriver.com>, git@vger.kernel.org,
-	Phil Hord <phil.hord@gmail.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Apr 06 18:49:31 2012
+Content-Type: text/plain; charset=UTF-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Apr 06 18:52:20 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SGCLo-0005uM-Nm
-	for gcvg-git-2@plane.gmane.org; Fri, 06 Apr 2012 18:49:29 +0200
+	id 1SGCOW-0007l6-E6
+	for gcvg-git-2@plane.gmane.org; Fri, 06 Apr 2012 18:52:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755110Ab2DFQtX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 Apr 2012 12:49:23 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39258 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754882Ab2DFQtW (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Apr 2012 12:49:22 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 02E9B7308;
-	Fri,  6 Apr 2012 12:49:22 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=rvN+8oGuh1g0vxOVi+hpQJEBR10=; b=AIXoKF
-	IeDJkLiySi+uTbIG9VfC9b7e1mMtpkvm0LK3h90VLbnwNFexnAPMJVNwUMXlflBP
-	4ABpfQCrNkM09gUTaIb8F9wKlFhb1e4djZFgdEnSdap+L/TVtT86FcKbVleexdCw
-	zJsH027MmQWZ65BDfd0Q+aJT04hHeQ523Ufd8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=is6UpqiL8kPlv03L6c7aEVBW3D3YvQVi
-	SO6Qm3Ukn04/VSnAQy4sFH2pRyAau3RU2hMdHwZ/EHoN1BLsgX/ip//5sgsuJ9JR
-	vYJdTGVBC7J+BD64Q18uCp7nAFArSope4gEL8v6qdHC5Q4TqPRsVqnPSxYllHfy5
-	yz1r5KI2Ufg=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E64897307;
-	Fri,  6 Apr 2012 12:49:21 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4F8087306; Fri,  6 Apr 2012
- 12:49:21 -0400 (EDT)
-In-Reply-To: <20120406073314.GB27115@sigill.intra.peff.net> (Jeff King's
- message of "Fri, 6 Apr 2012 03:33:14 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 7544ED9C-8008-11E1-A066-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755100Ab2DFQwJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 Apr 2012 12:52:09 -0400
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:46064 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754241Ab2DFQwI (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Apr 2012 12:52:08 -0400
+Received: by iagz16 with SMTP id z16so3308647iag.19
+        for <git@vger.kernel.org>; Fri, 06 Apr 2012 09:52:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=AIWXpB7l7uuyr44qmvT4rRCe/Br0t/VK2PGdA5kP6RU=;
+        b=SnNf2CSAY2EbGBgb2wtBPdGHlwFVWnAGDdrRlh0smqmnrHGoaf2n6IPhatUsViz6/c
+         IXwR3rhhAH96eoE0WfbAC1wska+NocoGlj14uwqa2/lWW4A2c2BfkggrtGgFw30gw0EB
+         fAUUCgqhlvpxzy9TdkoOgv41OD4xtAt675ssIrvA4Q/1/v2SzbigzEbqLK2/QB33mECT
+         ZotcCq4W/f6QI6lSTCe7CuiLwwpfGezgV88QrZ73hSg5phgF1ytljlz/N/KFoAu3J0k4
+         fg/GWKDmt7LAUe4NkODXDddQpQVpTFFqij4fg3Jqxsvi4f3kGP3pkQJauEQWpe+hlXFv
+         aKIg==
+Received: by 10.50.45.229 with SMTP id q5mr5458806igm.62.1333731128391; Fri,
+ 06 Apr 2012 09:52:08 -0700 (PDT)
+Received: by 10.50.76.168 with HTTP; Fri, 6 Apr 2012 09:52:08 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194880>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194881>
 
-Jeff King <peff@peff.net> writes:
+Hi,
 
-> On Thu, Apr 05, 2012 at 11:55:18PM -0700, Junio C Hamano wrote:
-> ...
-> I've played with that workflow before. While it's a neat trick, note
-> that something like "format-patch -s" will put the signoff at the end,
-> like:
->
->   commit subject
->
->   commit body
->   ---
->   Cc: whomever
->   Signed-off-by: you
->
-> which is not what you want.
+My name is Tuomas Vaherkoski, new here on git mailing list. I'm
+undergraduate student from Finland and I posted proposal to GSoC with
+idea to implement push and pull support for git-instaweb.
+Christian Couder suggested me to discuss about it here on mailing
+list, so I could get some feedback about it.
+Here is link to my proposal
+http://www.google-melange.com/gsoc/proposal/review/google/gsoc2012/tuopppi/1
 
-Well, then "don't do it then".  The reason the Cc: was abused in this
-thread originally is about recording the people who reviewed, so you are
-doing an amend of an existing commit in an editor.  Why wouldn't the
-commit that was already reviewed at least once didn't have S-o-b in the
-first place?  In other words, isn't the "-s" option in "format-patch" a
-useless feature creep that would only help those with broken workflows?
+You can read original idea from Git GSoC-2012-Ideas page [title: git
+instaweb --serve]
+https://github.com/peff/git/wiki/SoC-2012-Ideas
 
-> About a year ago I had an RFC series to let "git commit" parse off the
-> "---" bit and turn it into a git-note ...
-> ... Ultimately I didn't follow up because
-> I've found that I just don't end up keeping a lot of notes. I tend to do
-> the re-roll and then send it out pretty soon afterward, so I just write
-> any notes in the emails as they go out.
->
-> For complex "cc" lists and the like, I have a (fairly hacky) script that
-> takes an existing message as input and generates a format-patch series
-> with the to, cc, and in-reply-to fields filled in (and then I ship the
-> result out via my regular MUA after proof-reading and tweaking).
-> Potentially git-send-email could do the same thing.
+Any feedback and advice according to proposal would be great. I'm
+really exited about getting into git development.
 
-Perhaps.
+Thanking you,
+Tuomas Vaherkoski
