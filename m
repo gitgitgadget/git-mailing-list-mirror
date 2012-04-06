@@ -1,93 +1,71 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH RESEND] send-email: add 'specify-author' option
-Date: Fri, 06 Apr 2012 13:22:39 -0700
-Message-ID: <7vbon41ugg.fsf@alter.siamese.dyndns.org>
-References: <1333714876-21895-1-git-send-email-felipe.contreras@gmail.com>
- <7vobr4236g.fsf@alter.siamese.dyndns.org>
- <CAMP44s1b=HfhPNkmiEjPnQpupd0FPBNgVyp5Sw=zFVTdqmJXEg@mail.gmail.com>
+Subject: Re: [RFC/PATCH] tests: add initial bash completion tests
+Date: Fri, 06 Apr 2012 13:24:39 -0700
+Message-ID: <7v7gxs1ud4.fsf@alter.siamese.dyndns.org>
+References: <1333740519-3792-1-git-send-email-felipe.contreras@gmail.com>
+ <20120406201926.GA1677@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Thomas Rast <trast@student.ethz.ch>,
-	Pierre Habouzit <madcoder@debian.org>,
-	Pascal Obry <pascal@obry.net>,
-	Jay Soffian <jaysoffian@gmail.com>,
-	David Brown <git@davidb.org>, Matthew Wilcox <matthew@wil.cx>,
-	"Robin H. Johnson" <robbat2@gentoo.org>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Apr 06 22:22:47 2012
+Cc: Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Apr 06 22:24:47 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SGFgF-0002ag-A6
-	for gcvg-git-2@plane.gmane.org; Fri, 06 Apr 2012 22:22:47 +0200
+	id 1SGFiA-0003mP-DE
+	for gcvg-git-2@plane.gmane.org; Fri, 06 Apr 2012 22:24:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757923Ab2DFUWn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 Apr 2012 16:22:43 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:37852 "EHLO
+	id S932078Ab2DFUYm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 Apr 2012 16:24:42 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:38706 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755238Ab2DFUWm (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Apr 2012 16:22:42 -0400
+	id S1757903Ab2DFUYl (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Apr 2012 16:24:41 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 57FF87B41;
-	Fri,  6 Apr 2012 16:22:41 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D5DB27B93;
+	Fri,  6 Apr 2012 16:24:40 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=D/gSiVFWCb8pG4pgi4l2R8FbBdQ=; b=bMTSbm
-	RRL57j2WkMNA33tW57i5iCSVg5Q9+zdNpmDQSMj85RbLT40iyxpXYrnr987az8K6
-	dWaVGWjzTfO51N0hrlNAak2JzrZ3LjhgzYWR54E4ScW6Of/LrnscUlscrouXDPLK
-	69XLA+FKn73zagdo9OyjQk5jTjENGEb0mOfJg=
+	:content-type; s=sasl; bh=yIM/b9Ri5BkANBv2qPGwHLQQmX8=; b=DN+MNJ
+	mvFkMqgQlGTfFZZvYInPxqGiXmi36JjoFjSRz2fby8DW2fzhGKQaMneGomjSNxBm
+	ZXd8FkMGVG8z5ilbWhQOO9kYaf1T30jArzsths+1S9ezafzyLF52+4wQce/nkLX2
+	3IUtQOe8qrXq8ItHF8GZHWHZlCnyRpztJS1oE=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=v5uqvzsvXsfi1IzKfmHQFIJ5QlQC0gnC
-	77XWXWodwXwbvX7KIDWuQxEzBSrYL/VQegNyYAPE3PcRAoTlI29pwOd5min2WkV/
-	W6sRq9kequ7LnNWIIzV8l8qkz3S+G4ObVhSNyHEK9H/8FzQcM+A1wzRnjmTeaZTU
-	eS70+T8sqhU=
+	:content-type; q=dns; s=sasl; b=BM27EvIs/o4sncyk2ryEynVJvDpjclMO
+	sdymEy1PXnBkEqSsfrLRllW3HV8jZ5AwgwqVWre2V34TvNhP57O0CDmB9r8hnhxm
+	/8ELd7s+tUWIKIguUDsTHpeQK7KEOurfyGmXsHZyaKPZ70smHwfOWpv5Qbobnr/j
+	HUPWDt6CNuI=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4D5237B3F;
-	Fri,  6 Apr 2012 16:22:41 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CE05F7B91;
+	Fri,  6 Apr 2012 16:24:40 -0400 (EDT)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C290B7B3E; Fri,  6 Apr 2012
- 16:22:40 -0400 (EDT)
-In-Reply-To: <CAMP44s1b=HfhPNkmiEjPnQpupd0FPBNgVyp5Sw=zFVTdqmJXEg@mail.gmail.com> (Felipe
- Contreras's message of "Fri, 6 Apr 2012 22:42:16 +0300")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 66C187B90; Fri,  6 Apr 2012
+ 16:24:40 -0400 (EDT)
+In-Reply-To: <20120406201926.GA1677@sigill.intra.peff.net> (Jeff King's
+ message of "Fri, 6 Apr 2012 16:19:26 -0400")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 4263A8F0-8026-11E1-ABD5-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 89A63520-8026-11E1-85C6-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194903>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194904>
 
-Felipe Contreras <felipe.contreras@gmail.com> writes:
+Jeff King <peff@peff.net> writes:
 
-> On Fri, Apr 6, 2012 at 8:14 PM, Junio C Hamano <gitster@pobox.com> wrote:
->> Felipe Contreras <felipe.contreras@gmail.com> writes:
->>
->>> Some mail servers (Microsoft Exchange) mangle the 'From' header, so
->>> while applying the patches, the author has to be fixed manually.
->> ...
->> I wouldn't say that the existing option names to send-email are great, but
->> I have to say that the one added by this is simply horrible ;-)
->>
->> The first paragraph of the proposed commit log message states the problem
->> it tries to address very clearly, which is good, but is "From: " the only
->> thing that needs this?  I am wondering if this should be named and behave
->> more like "--duplicate-header" or "--in-body-header".
+> On Fri, Apr 06, 2012 at 10:28:39PM +0300, Felipe Contreras wrote:
 >
-> I have never seen any other 'in-body-header' other than From, and I
-> don't see how that would be useful. Anybody else?
+>> Something is better than nothing.
+>
+> Yes, but...
 
-The "Subject:" is very often used in the wild, when responding to an
-existing discussion thread with a patch, without changing the topic of the
-thread (I would say it is used more than "From: " override).
+;-)
 
-When using send-email to start a thread anew, this use case is much less
-of a problem, but I wouldn't be surprised if a broken MSA/MTA mangled the
-subject (especially imagine a non-ASCII ones) incorrectly which would be
-helped with exactly the same in-body-header mechanism.
+This is a good example that sometimes something is worse than nothing,
+unless watched carefully by a competent reviewer.
 
-You probably meant "I do not want to hear from Junio" by your last
-half-sentence, but I replied anyway ;-).
+Your suggestion makes sense to me.
