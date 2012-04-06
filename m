@@ -1,102 +1,103 @@
-From: Michael Schubert <schu@schu.io>
-Subject: [GSoC] Proposal - Finishing network support for libgit2
-Date: Fri, 06 Apr 2012 18:36:22 +0200
-Message-ID: <4F7F1B86.10102@schu.io>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/5] argv-array: Add argv_array_pop function [v2]
+Date: Fri, 06 Apr 2012 09:49:19 -0700
+Message-ID: <7vvclc24c0.fsf@alter.siamese.dyndns.org>
+References: <1333136922-12872-1-git-send-email-nhorman@tuxdriver.com>
+ <1333654745-7898-1-git-send-email-nhorman@tuxdriver.com>
+ <1333654745-7898-2-git-send-email-nhorman@tuxdriver.com>
+ <7vd37m5458.fsf@alter.siamese.dyndns.org>
+ <20120405232429.GA8654@hmsreliant.think-freely.org>
+ <7vobr53bbe.fsf@alter.siamese.dyndns.org>
+ <20120406022058.GA16264@sigill.intra.peff.net>
+ <7v4nsx2vu1.fsf@alter.siamese.dyndns.org>
+ <20120406073314.GB27115@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git <git@vger.kernel.org>
-To: libgit2@librelist.org
-X-From: git-owner@vger.kernel.org Fri Apr 06 18:38:30 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Neil Horman <nhorman@tuxdriver.com>, git@vger.kernel.org,
+	Phil Hord <phil.hord@gmail.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Apr 06 18:49:31 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SGCB9-00072Q-Br
-	for gcvg-git-2@plane.gmane.org; Fri, 06 Apr 2012 18:38:27 +0200
+	id 1SGCLo-0005uM-Nm
+	for gcvg-git-2@plane.gmane.org; Fri, 06 Apr 2012 18:49:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754753Ab2DFQiB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 Apr 2012 12:38:01 -0400
-Received: from schu.io ([178.77.73.177]:36003 "EHLO
-	lvps178-77-73-177.dedicated.hosteurope.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754717Ab2DFQh4 (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 6 Apr 2012 12:37:56 -0400
-Received: from [10.0.1.2] (f052148220.adsl.alicedsl.de [78.52.148.220])
-	by lvps178-77-73-177.dedicated.hosteurope.de (Postfix) with ESMTPSA id 6851E14954005;
-	Fri,  6 Apr 2012 18:37:49 +0200 (CEST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:11.0) Gecko/20120328 Thunderbird/11.0.1
-X-Enigmail-Version: 1.4
+	id S1755110Ab2DFQtX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 Apr 2012 12:49:23 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39258 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754882Ab2DFQtW (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Apr 2012 12:49:22 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 02E9B7308;
+	Fri,  6 Apr 2012 12:49:22 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=rvN+8oGuh1g0vxOVi+hpQJEBR10=; b=AIXoKF
+	IeDJkLiySi+uTbIG9VfC9b7e1mMtpkvm0LK3h90VLbnwNFexnAPMJVNwUMXlflBP
+	4ABpfQCrNkM09gUTaIb8F9wKlFhb1e4djZFgdEnSdap+L/TVtT86FcKbVleexdCw
+	zJsH027MmQWZ65BDfd0Q+aJT04hHeQ523Ufd8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=is6UpqiL8kPlv03L6c7aEVBW3D3YvQVi
+	SO6Qm3Ukn04/VSnAQy4sFH2pRyAau3RU2hMdHwZ/EHoN1BLsgX/ip//5sgsuJ9JR
+	vYJdTGVBC7J+BD64Q18uCp7nAFArSope4gEL8v6qdHC5Q4TqPRsVqnPSxYllHfy5
+	yz1r5KI2Ufg=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E64897307;
+	Fri,  6 Apr 2012 12:49:21 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4F8087306; Fri,  6 Apr 2012
+ 12:49:21 -0400 (EDT)
+In-Reply-To: <20120406073314.GB27115@sigill.intra.peff.net> (Jeff King's
+ message of "Fri, 6 Apr 2012 03:33:14 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 7544ED9C-8008-11E1-A066-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194879>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194880>
 
-Finishing network support for libgit2
-=====================================
+Jeff King <peff@peff.net> writes:
 
-Introduction
-------------
+> On Thu, Apr 05, 2012 at 11:55:18PM -0700, Junio C Hamano wrote:
+> ...
+> I've played with that workflow before. While it's a neat trick, note
+> that something like "format-patch -s" will put the signoff at the end,
+> like:
+>
+>   commit subject
+>
+>   commit body
+>   ---
+>   Cc: whomever
+>   Signed-off-by: you
+>
+> which is not what you want.
 
-So far, libgit2 supports fetching objects over http://, git:// and
-file://. This year's GSoC task is to finish network support for
-libgit2, namely
+Well, then "don't do it then".  The reason the Cc: was abused in this
+thread originally is about recording the people who reviewed, so you are
+doing an amend of an existing commit in an editor.  Why wouldn't the
+commit that was already reviewed at least once didn't have S-o-b in the
+first place?  In other words, isn't the "-s" option in "format-patch" a
+useless feature creep that would only help those with broken workflows?
 
-* fetch over ssh (including an API for SSH key management),
-* support for packing objects (indispensable for push),
-* push over http, git and ssh.
+> About a year ago I had an RFC series to let "git commit" parse off the
+> "---" bit and turn it into a git-note ...
+> ... Ultimately I didn't follow up because
+> I've found that I just don't end up keeping a lot of notes. I tend to do
+> the re-roll and then send it out pretty soon afterward, so I just write
+> any notes in the emails as they go out.
+>
+> For complex "cc" lists and the like, I have a (fairly hacky) script that
+> takes an existing message as input and generates a format-patch series
+> with the to, cc, and in-reply-to fields filled in (and then I ship the
+> result out via my regular MUA after proof-reading and tweaking).
+> Potentially git-send-email could do the same thing.
 
-The existing network code is written in a modular manner and allows to
-be reused (regarding socket handling for example).
-
-
-Outline
--------
-
-1. Fetch over SSH: Evaluate existing SSH libraries regarding their
-usability (licence compliant, small, platform independent) with
-libgit2. Implement a transport module for SSH.
-
-1.1 SSH key managment API: Implement an easy-to-use API for the
-management of SSH keys. Example: managed keys could be stored within
-the object database, addressable through special purpose references
-or config options.
-
-2. Support for packing objects: fully implement (port, where possible)
-the required code to create packs. This is expected to be both the most
-challenging and time-consuming part.
-
-3. Push over all four transports: Implement push for libgit2.
-
-For all code parts, tests should be written.
-
-
-Timeline
---------
-
-04/24 - 04/30: Discuss implementation details with the mentor(s), finish
-planning.
-
-05/01 - 05/20: Implement first version of SSH transport and key
-management, refactor existing network code for future use where needed.
-
-05/21 - 05/31: Start working on the pack-objects part, read / discuss
-pack details etc.
-
-06/01 - 06/30: Implement pack-objects.
-
-07/01 - 07/31: Implement push over all four transports.
-
-08/01 - 08/13: Finish and polish code where needed, write more tests.
-
-
-About me
---------
-
-I study Computer Science at FU Berlin, besides I do a Git-related part
-time job for a SCM company. As a regular contributor to libgit2 , I'm
-rather familiar with the community and the bigger part of the code
-base. GSoC would allow me to both gain experience with "Git's network
-stack" and to add an important yet missing core part to libgit2. This
-is the first time I apply for GSoC.
+Perhaps.
