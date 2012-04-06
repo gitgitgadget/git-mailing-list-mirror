@@ -1,95 +1,137 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC/PATCH] tests: add initial bash completion tests
-Date: Fri, 06 Apr 2012 14:42:58 -0700
-Message-ID: <7vsjggzgd9.fsf@alter.siamese.dyndns.org>
-References: <1333740519-3792-1-git-send-email-felipe.contreras@gmail.com>
- <20120406201926.GA1677@sigill.intra.peff.net>
- <7v7gxs1ud4.fsf@alter.siamese.dyndns.org>
- <CAMP44s0xAvc9aTeBP81tXhX6Q67+7cQ-51C1AWrKPN7bc7=JXQ@mail.gmail.com>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH RESEND] send-email: add 'specify-author' option
+Date: Sat, 7 Apr 2012 00:48:26 +0300
+Message-ID: <CAMP44s1m2exUVRTzcBJrY8hnWxF+uEt58AQOP5vKiA3tfeRXRQ@mail.gmail.com>
+References: <1333714876-21895-1-git-send-email-felipe.contreras@gmail.com>
+	<7vobr4236g.fsf@alter.siamese.dyndns.org>
+	<CAMP44s1b=HfhPNkmiEjPnQpupd0FPBNgVyp5Sw=zFVTdqmJXEg@mail.gmail.com>
+	<7vbon41ugg.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	git@vger.kernel.org
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Apr 06 23:43:10 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Thomas Rast <trast@student.ethz.ch>,
+	Pierre Habouzit <madcoder@debian.org>,
+	Pascal Obry <pascal@obry.net>,
+	Jay Soffian <jaysoffian@gmail.com>,
+	David Brown <git@davidb.org>, Matthew Wilcox <matthew@wil.cx>,
+	"Robin H. Johnson" <robbat2@gentoo.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Apr 06 23:48:35 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SGGw0-0002NU-73
-	for gcvg-git-2@plane.gmane.org; Fri, 06 Apr 2012 23:43:08 +0200
+	id 1SGH1G-0005r8-8w
+	for gcvg-git-2@plane.gmane.org; Fri, 06 Apr 2012 23:48:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757545Ab2DFVnD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 Apr 2012 17:43:03 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:36792 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754247Ab2DFVnB (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Apr 2012 17:43:01 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 678B269EF;
-	Fri,  6 Apr 2012 17:43:00 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=kp0LiPM2viKJ0gtG5R8QRv/Fkfc=; b=wnNNjZ
-	xTfgmqLAadML3mjw2jt0L0wt0W/x6zhq3RBD1ZYP7CvgvtIOqOrRsqdfCFn06UIT
-	qxy0sXzb8C0aW1pm5nuOtLMMJz3wCYXugWrXrplgrXZpmmhBhU2cR9N23iFBeh6X
-	mu3qK1TMsyDzGTnKjgaOjrB/4MK6ZTfJrYTUU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=FmoAqSazyCa5f8HXd9L2ZBYmm9cjEOBO
-	MuQTZv4yvbTQ+sKO5hJMUnzuFWA2MPfZx4+is2tOp8bx8GmQJpM2S6CQRh+pBm4y
-	4pkG+fK1CK9xB6SSTcUJXrDsqQ4dmQVAQWZyOAg4ao7I72al+Lnm+zT11gbfBaiO
-	oz36rNuAWG8=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5E7D969EE;
-	Fri,  6 Apr 2012 17:43:00 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E243369ED; Fri,  6 Apr 2012
- 17:42:59 -0400 (EDT)
-In-Reply-To: <CAMP44s0xAvc9aTeBP81tXhX6Q67+7cQ-51C1AWrKPN7bc7=JXQ@mail.gmail.com> (Felipe
- Contreras's message of "Sat, 7 Apr 2012 00:28:05 +0300")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 7AC613B2-8031-11E1-B1FD-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1758157Ab2DFVs2 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 6 Apr 2012 17:48:28 -0400
+Received: from mail-wi0-f172.google.com ([209.85.212.172]:48560 "EHLO
+	mail-wi0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754247Ab2DFVs2 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 6 Apr 2012 17:48:28 -0400
+Received: by wibhj6 with SMTP id hj6so836770wib.1
+        for <git@vger.kernel.org>; Fri, 06 Apr 2012 14:48:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=tIWV+l3JR425PfSPYv/O5hFDIFTl5X/yZd3Izv2VZyU=;
+        b=vD/k9jNFl6gDQImkOE+QYVfTWDoMslsRMC2EnTZHiC32MnDmtRUOxYV+XhF93ULdkn
+         wcwpYDSv6GUa9+J6aUq50sKMU7mq8cdqkRd7o46NlWvpOofGPVQljKIcXL6MJlIP2sMn
+         mO1MDsgyUPO2ehLVCbPxOy7D+kGXDlWJERX5FshiijwBo308OQiaN0gJ3Ga2N4QU+W0n
+         18ILLGBlHYLXYbPGeOiOc6hzF7RQBegjfZBqXf9zFD++n9BuTeBmy5jegGaErV1VdSPP
+         HRKek+KxDMf6AN6D6pk7+MhKzkdF4fJehcDYX312hCIQ2FwcB1fRZ38cJOsUdOHsKzn5
+         fT1Q==
+Received: by 10.216.53.200 with SMTP id g50mr506303wec.2.1333748906750; Fri,
+ 06 Apr 2012 14:48:26 -0700 (PDT)
+Received: by 10.216.70.4 with HTTP; Fri, 6 Apr 2012 14:48:26 -0700 (PDT)
+In-Reply-To: <7vbon41ugg.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194913>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194914>
 
-Felipe Contreras <felipe.contreras@gmail.com> writes:
-
-> On Fri, Apr 6, 2012 at 11:24 PM, Junio C Hamano <gitster@pobox.com> wrote:
->> Jeff King <peff@peff.net> writes:
->>
->>> On Fri, Apr 06, 2012 at 10:28:39PM +0300, Felipe Contreras wrote:
->>>
->>>> Something is better than nothing.
->>>
->>> Yes, but...
->>
->> ;-)
->>
->> This is a good example that sometimes something is worse than nothing,
->> unless watched carefully by a competent reviewer.
+On Fri, Apr 6, 2012 at 11:22 PM, Junio C Hamano <gitster@pobox.com> wro=
+te:
+> Felipe Contreras <felipe.contreras@gmail.com> writes:
 >
-> And this is a good example of why you shouldn't blindly trust what a
-> 'competent reviewer' says, as I'm pretty sure the comment is wrong.
+>> On Fri, Apr 6, 2012 at 8:14 PM, Junio C Hamano <gitster@pobox.com> w=
+rote:
+>>> Felipe Contreras <felipe.contreras@gmail.com> writes:
+>>>
+>>>> Some mail servers (Microsoft Exchange) mangle the 'From' header, s=
+o
+>>>> while applying the patches, the author has to be fixed manually.
+>>> ...
+>>> I wouldn't say that the existing option names to send-email are gre=
+at, but
+>>> I have to say that the one added by this is simply horrible ;-)
+>>>
+>>> The first paragraph of the proposed commit log message states the p=
+roblem
+>>> it tries to address very clearly, which is good, but is "From: " th=
+e only
+>>> thing that needs this? =C2=A0I am wondering if this should be named=
+ and behave
+>>> more like "--duplicate-header" or "--in-body-header".
+>>
+>> I have never seen any other 'in-body-header' other than From, and I
+>> don't see how that would be useful. Anybody else?
+>
+> The "Subject:" is very often used in the wild, when responding to an
+> existing discussion thread with a patch, without changing the topic o=
+f the
+> thread (I would say it is used more than "From: " override).
 
-We run the tests under whatever is configured as SHELL_PATH, so whatever
-you have on #! line does not matter much (except as a documentation).
+Hmm, but that is different, isn't it?
 
-But it would not make any sense to running the bash completion tests if
-the shell that is running the test script is *not* bash, would it?  That
-is the point Peff made---the primary thing his message cared about is not
-to cause "make test" fail when your build does not use bash to run tests.
+AFAIK people use this format:
 
-And that seems to have escaped you.
+---
+$headers
 
-> But hey, if you prefer nothing, fine, drop this patch;...
+Message
 
-Adding a test for bash completion is a good thing, and blindly modifying
-the completion script without having good tests is a bad idea.
+Patch (format-patch output: headers, commit message, diff)
+---
 
-Just add the tests in the right way. Don't break tests for non-bash users.
+In this case 'git am' would ignore the patch headers. The only way
+'git am' would override $headers, is if the first part of the body has
+new headers:
+
+---
+$headers
+
+$patch_headers
+
+$patch_commit_message
+
+$patch_diff
+---
+
+IOW; if there's no message at the beginning of the body.
+
+> When using send-email to start a thread anew, this use case is much l=
+ess
+> of a problem, but I wouldn't be surprised if a broken MSA/MTA mangled=
+ the
+> subject (especially imagine a non-ASCII ones) incorrectly which would=
+ be
+> helped with exactly the same in-body-header mechanism.
+
+I can't foresee that, but I guess we can do it anyway. So which would
+be the fields to repeat? From, Date, and Subject?
+
+> You probably meant "I do not want to hear from Junio" by your last
+> half-sentence, but I replied anyway ;-).
+
+I meant I wanted to know which fields would be useful to put in the bod=
+y.
+
+Cheers.
+
+--=20
+=46elipe Contreras
