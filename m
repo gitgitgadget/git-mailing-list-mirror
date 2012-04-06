@@ -1,151 +1,115 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: push.default: current vs upstream
-Date: Fri, 6 Apr 2012 03:15:20 -0400
-Message-ID: <20120406071520.GD25301@sigill.intra.peff.net>
-References: <7vd37wv77j.fsf@alter.siamese.dyndns.org>
- <20120329095236.GA11911@sigill.intra.peff.net>
- <7vbonfqezs.fsf@alter.siamese.dyndns.org>
- <20120329221154.GA1413@sigill.intra.peff.net>
- <7vfwcqq2dw.fsf@alter.siamese.dyndns.org>
- <20120330071358.GB30656@sigill.intra.peff.net>
- <7vty15ltuo.fsf@alter.siamese.dyndns.org>
- <vpqty12h995.fsf@bauges.imag.fr>
- <20120405131301.GB10293@sigill.intra.peff.net>
- <vpqwr5uceis.fsf@bauges.imag.fr>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Bad Man Page URLs
+Date: Fri, 06 Apr 2012 00:15:07 -0700
+Message-ID: <7vzkap1gck.fsf@alter.siamese.dyndns.org>
+References: <2AC038A1-3D8D-425E-92B3-DADFD027761A@justatheory.com>
+ <20120406023223.GB16264@sigill.intra.peff.net>
+ <20120406025457.GA23997@sigill.intra.peff.net>
+ <20120406042215.GA3938@burratino>
+ <20120406054637.GA25301@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Fri Apr 06 09:18:19 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	"David E. Wheeler" <david@justatheory.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Apr 06 09:19:35 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SG3R4-0001TS-Nq
-	for gcvg-git-2@plane.gmane.org; Fri, 06 Apr 2012 09:18:19 +0200
+	id 1SG3SI-0002Eq-3O
+	for gcvg-git-2@plane.gmane.org; Fri, 06 Apr 2012 09:19:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754539Ab2DFHSM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 Apr 2012 03:18:12 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:49744
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754742Ab2DFHPZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Apr 2012 03:15:25 -0400
-Received: (qmail 32691 invoked by uid 107); 6 Apr 2012 07:15:27 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 06 Apr 2012 03:15:27 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 06 Apr 2012 03:15:20 -0400
-Content-Disposition: inline
-In-Reply-To: <vpqwr5uceis.fsf@bauges.imag.fr>
+	id S1754395Ab2DFHPM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 Apr 2012 03:15:12 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:51902 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754245Ab2DFHPL (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Apr 2012 03:15:11 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 713497558;
+	Fri,  6 Apr 2012 03:15:10 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=uC06/qkI/KT/dLxyGoXxYdC9MFg=; b=UbM7mG
+	vNjQtr++Ht7ISezzNj7HuerV8GpEgo+4F9NIYDuySEw6xpCOzpsJeZuj12TZR6Jh
+	a3KVBNMs8BEs30praIJZ08CWvwhUqHIcjRzYd9jIsWRzZBnNWO6XiToMcwwOgfFL
+	rxXhv1fiJELjQVNSmD/JLJuuV9e2SKYU0u854=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Jogbe97qRcmEbkzoLicO3NQs1agpO4ai
+	aDJ9ZDQsr8K2mXl1LJZb+A045Qnnt0NfHupEVURU6XbhLK9pUugMeAV66gXHYdQy
+	p70h1fu0X6HaesBN98TDgMwDSvMthglbOSkUHHY5ADTHfzpCjufEyqUK98QsCs6T
+	NBuQI4wj9QM=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5DC967557;
+	Fri,  6 Apr 2012 03:15:10 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C7EAA7556; Fri,  6 Apr 2012
+ 03:15:08 -0400 (EDT)
+In-Reply-To: <20120406054637.GA25301@sigill.intra.peff.net> (Jeff King's
+ message of "Fri, 6 Apr 2012 01:46:37 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 3DF9B08E-7FB8-11E1-AEBB-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194853>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194854>
 
-On Thu, Apr 05, 2012 at 06:46:51PM +0200, Matthieu Moy wrote:
+Jeff King <peff@peff.net> writes:
 
-> It seems rather natural to me to have "asymetric workflow, asymetric
-> commands" by default. So, if one wants to push to a place other than
-> upstream, say "git push public-repo branch", or set your upstream to
-> where you want to push (simple with "git push -u"), and say explicitely
-> "git pull repo branch".
+> Junio, what do you think of building the git-manpages-* tarballs (and
+> the git-manpages repo) with MAN_BASE_URL set to "http://some-official-place/"?
+> As of now, they mention "file:///home/junio/...".
 
-That makes sense _if_ the user is thinking about pull and push as
-symmetric commands. That may be immediately obvious for some people's
-mental models. But I suspect it is not for others (it is not for mine,
-though I obviously do not count as a beginner).
+I think git-manpages repo already sets the base to the old k.org location
+(see dodoc.sh in the 'todo' branch), but I forgot about that setting when
+I cobbled together the tarball releasing script to be run on my home box
+in a hurry. The releases used to be cut on a k.org machine and I initially
+planned to stop generating the manpage/html tarballs when we lost shell
+access to it, but some distro people demanded it, so...
 
-> I can hardly imagine someone knowing what "git pull" does, and
-> _surprised_ to see that "git push" sends commits to the same place. I
-> agree that sending commits to upstream may be a mistake, but I don't
-> think it can happen "by surprise".
+I do not know how well things would behave if we set it to "git-htmldocs/"
+as Jonathan suggests, but we will see what happens.
 
-You are asking the new user to make a logical inference about the
-relationship between push and pull. That inference may seem obvious to
-you, and it may even be obvious to a large portion of new users. But
-keep in mind that we are not debating whether "upstream" is a reasonable
-thing for git to have, but rather whether it is a good default.  My
-concern is that upstream as a default would have negligible benefit for
-people who do make the inference, but be dangerous for the group who do
-not. We don't know the size of the latter, but my feeling is that it is
-non-trivial.
+I think there is no need to patch any Makefile; the make variable is
+designed to be overridable by the callers of make, so patches should go to
+either 'dodoc.sh' or the tarball release scripts, which are not checked in
+to the 'todo' branch yet, but I will do so if I remember ;-).
 
-> There are also ways to shoot yourself in the foot with when setting
-> upstream to something other that where you usually push. For example,
-> run "git rebase -i" without argument, and it will offer you to rewrite
-> some published history.
+FWIW, here is the (updated) 'RelBuild' script.
 
-Yes, although that is often what you want in such a setup (e.g., you are
-rebasing on top of the upstream branch, but publishing your work in
-progress).  However, I do agree that it can potentially be dangerous.
-Two helpful saving graces are:
+-- >8 --
+#!/bin/sh
 
-  1. The first thing you see upon "git rebase -i" is a giant list of the
-     commits from your upstream branch. It is usually quite obvious that
-     you are rebasing more than you want in this case, and you can abort
-     before doing anything.
+version=$(git describe --exact) &&
+label=$(echo "$version" | sed -e 's|^v||') &&
+version=$(echo "$label" | sed -e 's|-|.|g') || exit
 
-  2. Even if you do rebase, you have made a _local_ error. You are not
-     hurting anyone until you push, at which point you will get a
-     non-fast-forward error, and you have a chance to fix things before
-     disrupting other people.
+make clean && make dist &&
 
-> And I still have my concern with real beginners: what advice would you
-> give to a user whose "git push" is denied because of non-fast forward. I
-> raised this concern already:
-> 
->   http://thread.gmane.org/gmane.comp.version-control.git/192547/focus=193196
-> 
-> and I essentially had the answer "telling the user to pull is wrong"
-> (with which I disagree), but no one managed to give another advice.
+ASCIIDOC_NO_ROFF=YesPlease \
+ASCIIDOC8=YesPlease \
+MAN_BASE_URL="git-htmldocs/" \
+make dist-doc || exit
 
-It _is_ wrong unless the destination branch is also the configured
-upstream. Which yes, it probably is if push.default is "upstream".
-Unless you actually specified a push destination, in which case it may
-not be. Or if you were pushing something besides HEAD.
+# The above used to be
+# MAN_BASE_URL="http://www.kernel.org/pub/software/scm/git/docs/"
 
-If the push destination was $remote:$branch, it seems the only correct
-thing is to suggest "git pull $remote $branch" in the general case, and
-possibly simplify that to "git pull" if $remote:$branch is the
-configured upstream. And if the source was HEAD, of course; otherwise
-you would need to checkout.
+files="
+	git-$version.tar.gz
+	git-htmldocs-$version.tar.gz
+	git-manpages-$version.tar.gz
+"
 
-So shouldn't the advice for a non-fast-forward push be:
+for file in $files
+do
+	test -f $file || exit
+done
 
-   if $source_ref is currently checked out
-           advise "git checkout $source_ref, and then..."
-   fi
-   if $dest_remote == branch.$source_ref.remote &&
-      $dest_ref == branch.$source_ref.merge
-           advise "git pull"
-   else
-           advise "git pull $dest_remote $dest_ref"
-   fi
+sha1sum $files | gpg --clearsign >git-$version.sign
 
-That handles only one ref, of course. If you get multiple non-ff
-failures, I'm not sure what we should advise.
-
-> >> The discussion seems to focuse on 'let's make "git push" easy to
-> >> explain', but I think the right thing to do is to make _Git_ easy to
-> >> explain. With "push.default = current", we'll have a hard time
-> >> explaining how "git pull" works.
-> >
-> > Do we have a hard time explaining how "git pull" works now?
-> 
-> I don't think so, but Junio's argument is that explaining what push
-> would do with 'upstream' would be too complex, and that 'current' is
-> easier to explain. If 'git pull' is simple, then 'git -c
-> push.current=upstream push' is equally simple.
-
-You wrote above that we'll have a hard time explaining how "git pull"
-works. But I don't think so; if it hasn't been a problem with
-"matching", then why would it with "current"?
-
-I agree that your symmetry explanation is reasonably simple for
-explaining what "git push" will do for new users (though I also think
-"current" is quite easy to explain). I'm less concerned with explaining
-and more concerned about safe defaults.
-
--Peff
+ls -l git-$version.sign $files
