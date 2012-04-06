@@ -1,85 +1,113 @@
-From: David Barr <davidbarr@google.com>
-Subject: Re: [PATCH 0/9] Prefix-compress on-disk index entries
-Date: Fri, 6 Apr 2012 18:41:46 +1000
-Message-ID: <CAFfmPPNHkK3SB8cGjfJiVoQoSg2OLL8B5--mwH8HShhJ1WGy2g@mail.gmail.com>
-References: <1333493596-14202-1-git-send-email-gitster@pobox.com>
-	<CACsJy8A+cJtzKdqJSWbmjT1LgP10LB69-NHfOv8S6BusGcMeFw@mail.gmail.com>
-	<7vpqbn8hgr.fsf@alter.siamese.dyndns.org>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: Linear history *and* share a branch?
+Date: Fri, 6 Apr 2012 12:04:21 +0200
+Message-ID: <CACBZZX7+cp6CwsnWmc8P1i9SabiTOJZXO9w-3E_m1A83gZKA6w@mail.gmail.com>
+References: <CAE1pOi0-uSaQwgJHMTkw3nqp=idxZxMbyfKtLni0=Xwu-L-_hA@mail.gmail.com>
+ <CACBZZX6za0+MXi4nPiV5ZuCKa91cPz0aye6FZG4gGAdqj0GqcA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Apr 06 10:42:44 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Users <git@vger.kernel.org>
+To: Hilco Wijbenga <hilco.wijbenga@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Apr 06 12:04:55 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SG4kk-00042v-Fu
-	for gcvg-git-2@plane.gmane.org; Fri, 06 Apr 2012 10:42:42 +0200
+	id 1SG62H-0006jA-V7
+	for gcvg-git-2@plane.gmane.org; Fri, 06 Apr 2012 12:04:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754922Ab2DFImI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 Apr 2012 04:42:08 -0400
-Received: from mail-gx0-f174.google.com ([209.85.161.174]:42049 "EHLO
-	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752026Ab2DFIls (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Apr 2012 04:41:48 -0400
-Received: by gghe5 with SMTP id e5so1203171ggh.19
-        for <git@vger.kernel.org>; Fri, 06 Apr 2012 01:41:47 -0700 (PDT)
+	id S1755893Ab2DFKEo convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 6 Apr 2012 06:04:44 -0400
+Received: from mail-ee0-f46.google.com ([74.125.83.46]:38447 "EHLO
+	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755820Ab2DFKEm convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 6 Apr 2012 06:04:42 -0400
+Received: by eekc41 with SMTP id c41so654477eek.19
+        for <git@vger.kernel.org>; Fri, 06 Apr 2012 03:04:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:x-system-of-record;
-        bh=P0hNYWArPKgFZGP2+OlhQxKofStPqqP0/cKJ5KOojt8=;
-        b=NJPpaxuqiWHfeVKtuRetz6hmvUcGSH52kil+CD2Wfe4DdueCgypSnRwKEDCEZBye/9
-         Scg2GucLX2fiwp7vERZ43oIAMqPwcInd7byWNZuG1whnDH1FBflxVFmsqXBPXGlRg7C1
-         03iKtY8RfFjU3COokyNM/aKIUb8PjBM05F11m9QNbxiR71O9lql5rkRu5/rd/LAJH01F
-         JZfG4tmv+c+0KO839z65AGf5okTXurx54fSo/gaj8y4kY+5ulg+EHhj1NhhcmoarM5Nn
-         B0E7HUwmOsIpn/BxAyG7CLvJK/6FB5B/0LmkI/Scp5+v2+hguNgFoWqvt/xF+VFiFCL3
-         2mWA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:x-system-of-record:x-gm-message-state;
-        bh=P0hNYWArPKgFZGP2+OlhQxKofStPqqP0/cKJ5KOojt8=;
-        b=JIDvaA1HeQDw22eeMqExMdKHhKIkPeXA7GzzmfD+eJhFlJ6tOWAf8i8rm2lQ4NhvUv
-         U3q8ldMF33oK0gbwuVyF7xP2nK7EWp87MOsoShCayArdwB9JqxbMpr6cxNgLubUcjDa/
-         41zSy+gcU2jFdqwo9jZGmS2jTgHnEMNEQYBU6lBHr2n3/ebiOd6CfBxhnocTnuOCuFFg
-         l/dSAmvW7dJquW14atGB1INZC3G7iTJQxoWOHBWlPVGwtdb/w3TmEcI/vBCqv4vb5u8D
-         WwpzTw07K6kM8JrRQbQjsmGUb5qv22xeYsbTZL/2k0mLzDe23s0aA0DNN1I5TRD0Gp26
-         CYoQ==
-Received: by 10.236.170.198 with SMTP id p46mr6183041yhl.63.1333701707406;
-        Fri, 06 Apr 2012 01:41:47 -0700 (PDT)
-Received: by 10.236.170.198 with SMTP id p46mr6183015yhl.63.1333701706862;
- Fri, 06 Apr 2012 01:41:46 -0700 (PDT)
-Received: by 10.101.83.5 with HTTP; Fri, 6 Apr 2012 01:41:46 -0700 (PDT)
-In-Reply-To: <7vpqbn8hgr.fsf@alter.siamese.dyndns.org>
-X-System-Of-Record: true
-X-Gm-Message-State: ALoCoQmiDfe7/XqYrMh0V2+OsnrMN7cvATU5jW3KjosI7y8tRDPaqhgVRT0D7bw/vjwE/q5TS3uZEIpBB4s1nNK9IFAjbSycw8X745f8n895QNI0qT0RlKjY8CIPcuT/PIuyRnoqucwmKKb+SSvrxkSV4GHLFdYW2Q==
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=/9FNGrWIqjGf149jswDtdzB6IqkLMRzYvtwU7s590eY=;
+        b=c1KcHqwTudB/2QYpcR9+UJHUgsboaD0q8S/7OBdOPtAA39P2mhBEUtjl3rLJ+5pDM5
+         Ip+y/XxWvHF1ZlqDGH4ofYovAqiddxeMxRIQS57ZSjK7hbPJjGdEgwpfCKrIL3p6uf01
+         QgF83aMX/LutSoJPXZyGekgaZ+wkcZuhYxshf1VbPMNUlvKTS352ptVkh9UcGxyrLT+7
+         w7Df54PpQJr54aVd/C1GnhwRQIdK6Xj31DUptM3AoIO6TjEmGZnpTEQ0vJheR14IZvoE
+         EqJlETKC9xV1RyCOWNzQJHfrdaaxTLKaKc1nzECkvDThqidoOPXqBbI1d173ZE/dMcuB
+         Qqzg==
+Received: by 10.14.99.10 with SMTP id w10mr1223319eef.51.1333706681550; Fri,
+ 06 Apr 2012 03:04:41 -0700 (PDT)
+Received: by 10.213.103.1 with HTTP; Fri, 6 Apr 2012 03:04:21 -0700 (PDT)
+In-Reply-To: <CACBZZX6za0+MXi4nPiV5ZuCKa91cPz0aye6FZG4gGAdqj0GqcA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194862>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194863>
 
-On Thu, Apr 5, 2012 at 4:44 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
+On Thu, Apr 5, 2012 at 22:56, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <a=
+varab@gmail.com> wrote:
+> On Thu, Apr 5, 2012 at 22:48, Hilco Wijbenga <hilco.wijbenga@gmail.co=
+m> wrote:
+>> Should we simply do "git merge master" instead of "git rebase master=
+"?
+>> And then do something at the end when we are about to merge the shar=
+ed
+>> branch back into master to guarantee linear history? Your thoughts a=
+nd
+>> ideas would be greatly appreciated.
 >
->> On Wed, Apr 4, 2012 at 5:53 AM, Junio C Hamano <gitster@pobox.com> wrote:
->> ...
->> I wonder what causes user time drop from .29s to .13s here. I think
->> the main patch should increase computation, even only slightly, not
->> less.
+> Yes, that's the most sensible workflow to have. You create a topic
+> branch, push/pull it back and forth, do merge commits and never rebas=
+e
+> it, then when you decide if it's finished you can either merge it int=
+o
+> the mainline (with non-linear history), or have someone rebase it and
+> push it to the mainline.
 >
-> The main patch reduced the amount of the data needs to be sent to the
-> machinery to checksum and write to disk by about 45%, saving both I/O
-> and computation.
+> I use the latter workflow extensively in my work e.g. when peer
+> programming. We'll both have the same branch set up as a tracking
+> branch, make a bunch of WIP commits with crappy commit messages for a
+> day or so, then at the end of the day interactively rebase the branch=
+,
+> and push it with linear history to the mainline.
 
-I hacked together a quick patch to try predictive coding the other
-fields of the index. I got a further 34% improvement in size over
-this series. Patches to come. I just used the previous cache entry as
-the predictor and reused varint.h together with zigzag encoding[1].
+To elaborate, this is how to do the workflow I'm talking about, with a
+git set to push.default=3Dtracking.
 
-That's a total improvement in size over v2 of 62%.
+The person setting up the topic branch does this, "origin" is our
+shared upstream server. This creates a new topic and pushes it:
 
-[1] https://developers.google.com/protocol-buffers/docs/encoding#types
+    git checkout -b team-whatever/some-topic
+    git push origin -u team-whatever/some-topic
+
+Everyone else does this:
+
+    git fetch origin
+    git checkout -t team-whatever/some-topic
+
+Then everyone hacks, and does a "git pull --no-rebase && git push" to
+push work. When you're pair programming and switching between
+computers this'll often be:
+
+    git commit -a -m"wip"
+    git push
+
+=46ollowed by, on the other box:
+
+    git pull --no-rebase
+
+Then when the topic is ready and you want to push it to the mainline
+someone does:
+
+    git fetch origin
+    git rebase -i origin/master
+
+and rewords/squashes/fixes up the various commits, followed by:
+
+    # Now fixed up, push to the mainline
+    git push origin team-whatever/some-topic:master
+    # Nuke the now-redundant topic branch
+    git push origin --delete team-whatever/some-topic
