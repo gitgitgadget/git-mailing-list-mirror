@@ -1,78 +1,102 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: [GSoC] Git to SVN bridge
-Date: Fri, 6 Apr 2012 21:37:07 +0530
-Message-ID: <CALkWK0=Mqo=PMv7+_sr22Dnm6xxzxzaXL=Zh+2LsvT=usC7csw@mail.gmail.com>
+From: Michael Schubert <schu@schu.io>
+Subject: [GSoC] Proposal - Finishing network support for libgit2
+Date: Fri, 06 Apr 2012 18:36:22 +0200
+Message-ID: <4F7F1B86.10102@schu.io>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Jonathan Nieder <jrnieder@gmail.com>
-To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Apr 06 18:07:39 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git <git@vger.kernel.org>
+To: libgit2@librelist.org
+X-From: git-owner@vger.kernel.org Fri Apr 06 18:38:30 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SGBhK-0003s0-8r
-	for gcvg-git-2@plane.gmane.org; Fri, 06 Apr 2012 18:07:38 +0200
+	id 1SGCB9-00072Q-Br
+	for gcvg-git-2@plane.gmane.org; Fri, 06 Apr 2012 18:38:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757580Ab2DFQHb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 Apr 2012 12:07:31 -0400
-Received: from mail-wi0-f178.google.com ([209.85.212.178]:53626 "EHLO
-	mail-wi0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757550Ab2DFQH3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Apr 2012 12:07:29 -0400
-Received: by wibhq7 with SMTP id hq7so668761wib.1
-        for <git@vger.kernel.org>; Fri, 06 Apr 2012 09:07:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to:cc:content-type;
-        bh=FeEhtDakz52sWm0v99jSp2atqPqfl+UJsKKzCdU3xJI=;
-        b=F4axFJssHM2QIEBMDVtv5MsH50VrgWRwAHfFjpbhWkjr45CQmzTcv/fYkqtZXki+Hl
-         C3R+0a9dAfVIaTk9ZyMKzbt2z0Ypdc4ksFA/fA16om+2TMSL0q4ig07aRzHlaw9kWtBK
-         5hYGQSyiXGWcT+fLqJ1VbTQoFWoPxA4QmQ3cPzImC+EtrECHyuII2XaIsz69fnNp1T7n
-         AjNbfK7/KXeESm+dYu6aZc87mIU4jWrZeCjLAuwNeToLuTH5mYBOa3pvQxlEzkNtl+8f
-         JXALI4kTUt8+n/t17Z//Ap6YyKlC5qTbOUnfajBHyLKg9iGsywJKl9otdlUIGad8N380
-         F4vQ==
-Received: by 10.180.92.71 with SMTP id ck7mr12927658wib.21.1333728448018; Fri,
- 06 Apr 2012 09:07:28 -0700 (PDT)
-Received: by 10.216.11.199 with HTTP; Fri, 6 Apr 2012 09:07:07 -0700 (PDT)
+	id S1754753Ab2DFQiB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 Apr 2012 12:38:01 -0400
+Received: from schu.io ([178.77.73.177]:36003 "EHLO
+	lvps178-77-73-177.dedicated.hosteurope.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754717Ab2DFQh4 (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 6 Apr 2012 12:37:56 -0400
+Received: from [10.0.1.2] (f052148220.adsl.alicedsl.de [78.52.148.220])
+	by lvps178-77-73-177.dedicated.hosteurope.de (Postfix) with ESMTPSA id 6851E14954005;
+	Fri,  6 Apr 2012 18:37:49 +0200 (CEST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:11.0) Gecko/20120328 Thunderbird/11.0.1
+X-Enigmail-Version: 1.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194878>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194879>
 
-Hi,
+Finishing network support for libgit2
+=====================================
 
-Continuing the git-remote-svn effort from two summers ago, I want to
-complete the Git -> SVN bridge.
+Introduction
+------------
 
-Note: This is intended to be a very short proposal because I'm already
-a regular Git contributor, and I have an incomplete version of what I
-intend to build [0].  This is not a good example of a proposal that
-the Git community expects from a new student.
+So far, libgit2 supports fetching objects over http://, git:// and
+file://. This year's GSoC task is to finish network support for
+libgit2, namely
 
--- 8< --
-# The project
+* fetch over ssh (including an API for SSH key management),
+* support for packing objects (indispensable for push),
+* push over http, git and ssh.
 
-There's another prospective student handling the SVN -> Git side of
-things.  I want to invest time in doing the reverse: Git -> SVN
-conversion.  There's unmerged code from back then [1] [2] to get
-things started.  This plus svnrdump (a tool that I wrote merged into
-the Subversion tree) can help complete the Git -> SVN bridge and the
-remote helper.
+The existing network code is written in a modular manner and allows to
+be reused (regarding socket handling for example).
 
-# About me
 
-I was a Summer of Code student with Git the last two summers.  In
-2010, I worked on a remote helper for Subversion, and in 2011, I
-worked on building a sequencer.  Both of them are successful projects
-and code has been merged into upstream.
+Outline
+-------
 
-Pick me only if you're sure that I'm not getting in the way of other
-prospective student; I intend to work with Git this summer anyway, and
-I don't want the community to lose new students.
+1. Fetch over SSH: Evaluate existing SSH libraries regarding their
+usability (licence compliant, small, platform independent) with
+libgit2. Implement a transport module for SSH.
 
-[0]: https://github.com/artagnon/git/tree/svn-fi
-[1]: http://thread.gmane.org/gmane.comp.version-control.git/170290
-[2]: http://thread.gmane.org/gmane.comp.version-control.git/170551
+1.1 SSH key managment API: Implement an easy-to-use API for the
+management of SSH keys. Example: managed keys could be stored within
+the object database, addressable through special purpose references
+or config options.
+
+2. Support for packing objects: fully implement (port, where possible)
+the required code to create packs. This is expected to be both the most
+challenging and time-consuming part.
+
+3. Push over all four transports: Implement push for libgit2.
+
+For all code parts, tests should be written.
+
+
+Timeline
+--------
+
+04/24 - 04/30: Discuss implementation details with the mentor(s), finish
+planning.
+
+05/01 - 05/20: Implement first version of SSH transport and key
+management, refactor existing network code for future use where needed.
+
+05/21 - 05/31: Start working on the pack-objects part, read / discuss
+pack details etc.
+
+06/01 - 06/30: Implement pack-objects.
+
+07/01 - 07/31: Implement push over all four transports.
+
+08/01 - 08/13: Finish and polish code where needed, write more tests.
+
+
+About me
+--------
+
+I study Computer Science at FU Berlin, besides I do a Git-related part
+time job for a SCM company. As a regular contributor to libgit2 , I'm
+rather familiar with the community and the bigger part of the code
+base. GSoC would allow me to both gain experience with "Git's network
+stack" and to add an important yet missing core part to libgit2. This
+is the first time I apply for GSoC.
