@@ -1,91 +1,91 @@
-From: "David E. Wheeler" <david@justatheory.com>
-Subject: Bad Man Page URLs
-Date: Thu, 5 Apr 2012 18:48:19 -0700
-Message-ID: <2AC038A1-3D8D-425E-92B3-DADFD027761A@justatheory.com>
-Mime-Version: 1.0 (Apple Message framework v1257)
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 06 03:48:59 2012
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 1/5] argv-array: Add argv_array_pop function [v2]
+Date: Thu, 5 Apr 2012 22:20:58 -0400
+Message-ID: <20120406022058.GA16264@sigill.intra.peff.net>
+References: <1333136922-12872-1-git-send-email-nhorman@tuxdriver.com>
+ <1333654745-7898-1-git-send-email-nhorman@tuxdriver.com>
+ <1333654745-7898-2-git-send-email-nhorman@tuxdriver.com>
+ <7vd37m5458.fsf@alter.siamese.dyndns.org>
+ <20120405232429.GA8654@hmsreliant.think-freely.org>
+ <7vobr53bbe.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Cc: Neil Horman <nhorman@tuxdriver.com>, git@vger.kernel.org,
+	Phil Hord <phil.hord@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Apr 06 04:21:09 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SFyIN-0007H5-1B
-	for gcvg-git-2@plane.gmane.org; Fri, 06 Apr 2012 03:48:59 +0200
+	id 1SFynV-00086m-9v
+	for gcvg-git-2@plane.gmane.org; Fri, 06 Apr 2012 04:21:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756864Ab2DFBsY convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 5 Apr 2012 21:48:24 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:41867 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752188Ab2DFBsX convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 5 Apr 2012 21:48:23 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5D91B6D25
-	for <git@vger.kernel.org>; Thu,  5 Apr 2012 21:48:20 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from
-	:content-type:content-transfer-encoding:subject:date:message-id
-	:to:mime-version; s=sasl; bh=3hlvWzQPWUduBFpGFkQRPih0vc4=; b=fFm
-	IAfIt3fUcqzZL/dAQu+3gL7IUc2nsq/4vnj8rgSMfh7DRNdzMFMzzU8z2gNWpwYK
-	ZN0CNGVTdyPiJY3v5No8NlufhUHiXzc7lL/n3lk+lXVvGlTokaC20RosJ5aPXaEm
-	wuLi+kOe7olP90oDhSzSDrDHSbDQqGOOq77rbWCU=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 549D06D21
-	for <git@vger.kernel.org>; Thu,  5 Apr 2012 21:48:20 -0400 (EDT)
-Received: from [10.0.1.19] (unknown [50.137.40.254]) (using TLSv1 with cipher
- AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id F10D26D20 for
- <git@vger.kernel.org>; Thu,  5 Apr 2012 21:48:19 -0400 (EDT)
-X-Mailer: Apple Mail (2.1257)
-X-Pobox-Relay-ID: 963FE78C-7F8A-11E1-8283-9DB42E706CDE-76319746!b-pb-sasl-quonix.pobox.com
+	id S1757048Ab2DFCVD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Apr 2012 22:21:03 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:49493
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754086Ab2DFCVC (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Apr 2012 22:21:02 -0400
+Received: (qmail 30344 invoked by uid 107); 6 Apr 2012 02:21:04 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 05 Apr 2012 22:21:04 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 05 Apr 2012 22:20:58 -0400
+Content-Disposition: inline
+In-Reply-To: <7vobr53bbe.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194834>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194835>
 
-Hello,
+On Thu, Apr 05, 2012 at 06:20:53PM -0700, Junio C Hamano wrote:
 
-I noticed this in 1.7.7.3, but just rebuilt 1.7.9.6 from source on OS X=
- Lion and am still seeing it. These are the links at the end of `man gi=
-t`:
+> >> > CC: Jeff King <peff@peff.net>
+> >> > CC: Phil Hord <phil.hord@gmail.com>
+> >> > CC: Junio C Hamano <gitster@pobox.com>
+> >> > ---
+> >> 
+> >> Please don't do "Cc:" here; they belong to your e-mail header.
+> >> 
+> > You mean place them below the snip line?  I can do that.
+> 
+> No.  When you review and fix typo in format-patch output, you can add
+> these to the e-mail header part and git-send-email will pick them up just
+> fine.
 
-> NOTES
->         1. Everyday Git
->            file:///home/junio/share/doc/git-doc/everyday.html
->=20
->         2. Git User's Manual
->            file:///home/junio/share/doc/git-doc/user-manual.html
->=20
->         3. git concepts chapter of the user-manual
->            file:///home/junio/share/doc/git-doc/user-manual.html#git-=
-concepts
->=20
->         4. howto
->            file:///home/junio/share/doc/git-doc/howto-index.html
->=20
->         5. GIT API documentation
->            file:///home/junio/share/doc/git-doc/technical/api-index.h=
-tml
->=20
->         6. git@vger.kernel.org
->            mailto:git@vger.kernel.org
+I think there is a legitimate conflict of interest here.
 
-Those URLs are sadly not useful. :-( FYI, here=92s the script I use to =
-build Git:
+It's not clear exactly what "cc" tags in a commit message mean, because
+it is really a per-project thing. I don't work on the kernel, but I
+always took their cc tag to mean "these are people interested in this
+topic area". Send-email helpfully picks up that hint and cc's them on
+the emailed patch. And when the patch is applied, those cc lines remain,
+because people reading "git log" much later may find a bug in the patch,
+and it is helpful to tell them the people interested in the area.
 
-  https://github.com/theory/my-cap/blob/master/bin/git.sh
+In git.git, though, we don't typically use such cc tags. Perhaps because
+we are a much smaller project than the kernel, or perhaps for other
+logistical reasons. And even if we did, the cc list above does not
+really meet the guideline I gave. They are people who happened to review
+your patch or comment on the list, not people who are interested forever
+in a particular subsystem.
 
-Note that the man pages are installed with these two lines:
+So from the maintainer's and the project's perspective, those cc lines
+are useless noise.
 
-    curl -O http://git-core.googlecode.com/files/git-manpages-$VERSION.=
-tar.gz
-    sudo tar xzv -C /usr/local/share/man -f git-manpages-$VERSION.tar.g=
-z
+But from the submitter's point of view, it may be convenient to tell git
+"these are people who have reviewed _this_ patch series", and have it
+automatically cc them on each iteration of the series without re-typing
+their addresses.  And because of the send-email behavior I mentioned
+above, the "cc" tags are a convenient place to put it.
 
-Is there a bug reporting system I should report this to?
+So it is a piece of information that is useful to the submitter, but not
+to the maintainer. Where can the submitter put it that will help
+themselves, but not bother the maintainer?  I wonder if the right
+solution would be an option for send-email to respect cc lines, but
+strip them out of the body of the sent patch.
 
-Thanks,
-
-David
+-Peff
