@@ -1,91 +1,110 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 1/5] argv-array: Add argv_array_pop function [v2]
-Date: Thu, 5 Apr 2012 22:20:58 -0400
-Message-ID: <20120406022058.GA16264@sigill.intra.peff.net>
-References: <1333136922-12872-1-git-send-email-nhorman@tuxdriver.com>
- <1333654745-7898-1-git-send-email-nhorman@tuxdriver.com>
- <1333654745-7898-2-git-send-email-nhorman@tuxdriver.com>
- <7vd37m5458.fsf@alter.siamese.dyndns.org>
- <20120405232429.GA8654@hmsreliant.think-freely.org>
- <7vobr53bbe.fsf@alter.siamese.dyndns.org>
+From: Pushkar <pushkarkolhe@gmail.com>
+Subject: GSOC proposal: Improving parallelism
+Date: Thu, 5 Apr 2012 22:24:28 -0400
+Message-ID: <CAMv=a95J2jg8of8nS7CYQdttQ52Z0pHa07HDnsU7kZ2MFnN6ZA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Neil Horman <nhorman@tuxdriver.com>, git@vger.kernel.org,
-	Phil Hord <phil.hord@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Apr 06 04:21:09 2012
+Content-Type: text/plain; charset=UTF-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Apr 06 04:24:55 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SFynV-00086m-9v
-	for gcvg-git-2@plane.gmane.org; Fri, 06 Apr 2012 04:21:09 +0200
+	id 1SFyr9-0001mY-3d
+	for gcvg-git-2@plane.gmane.org; Fri, 06 Apr 2012 04:24:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757048Ab2DFCVD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Apr 2012 22:21:03 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:49493
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754086Ab2DFCVC (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Apr 2012 22:21:02 -0400
-Received: (qmail 30344 invoked by uid 107); 6 Apr 2012 02:21:04 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 05 Apr 2012 22:21:04 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 05 Apr 2012 22:20:58 -0400
-Content-Disposition: inline
-In-Reply-To: <7vobr53bbe.fsf@alter.siamese.dyndns.org>
+	id S1757107Ab2DFCYu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Apr 2012 22:24:50 -0400
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:54961 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757087Ab2DFCYt (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Apr 2012 22:24:49 -0400
+Received: by ghrr11 with SMTP id r11so1117459ghr.19
+        for <git@vger.kernel.org>; Thu, 05 Apr 2012 19:24:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to:content-type;
+        bh=paNGol6CsWKQKGpstGg2KEdNgFBgStaIZOsvuWGOLiA=;
+        b=DrjSWCIacr19U6hzInQ4yZblFfDOHBlup2ukMVToSWgWq0tUQUTscY8v15eYjkEhxR
+         QGnB5JQNEyVOpUcXGQwzGBzmiLjCH3GYzV7dngwhH5/7S9pU+caB/dc1HMa+fmBrTtAn
+         kU2u8VQXh+l3NIbozXgkmyWeFHqU7hY1BoHvfezytFhPMrOWD7twBW4PYNkwjkttjxnM
+         sI2ww2TwFobmKim5ed5iM+R4NebQzZReAPms5J+gBhRo1rtXg6nTH90wqQOzkmq/Zb6s
+         TWQF/WSnoPiAFHS3+gMY/ZVXVurfbyWaxVWigIhQl05DrHF//98GoPsNqTLajf08hPtf
+         eD9Q==
+Received: by 10.236.170.41 with SMTP id o29mr5075393yhl.83.1333679088762; Thu,
+ 05 Apr 2012 19:24:48 -0700 (PDT)
+Received: by 10.220.117.5 with HTTP; Thu, 5 Apr 2012 19:24:28 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194835>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194836>
 
-On Thu, Apr 05, 2012 at 06:20:53PM -0700, Junio C Hamano wrote:
+Goal:
+---------
+Improving parallelism in various git commands.
 
-> >> > CC: Jeff King <peff@peff.net>
-> >> > CC: Phil Hord <phil.hord@gmail.com>
-> >> > CC: Junio C Hamano <gitster@pobox.com>
-> >> > ---
-> >> 
-> >> Please don't do "Cc:" here; they belong to your e-mail header.
-> >> 
-> > You mean place them below the snip line?  I can do that.
-> 
-> No.  When you review and fix typo in format-patch output, you can add
-> these to the e-mail header part and git-send-email will pick them up just
-> fine.
+As the idea page says, only git grep seems to be using threads and
+there are a lot of commands that can use threads.
 
-I think there is a legitimate conflict of interest here.
+It does seem from the codebase that grep uses pthreads and some
+interface for using threads (for pack-objects) was started in
+thread-utils. To achieve this goal, I will have to mess around with
+the core git functionality. I think there are 2 ways to go ahead with
+this project: 1. Adding pthread mutex's specific to each and every
+functionality within its current implementation (much like what grep
+does), or 2. Write a pthread interface (like thread-utils),
+consolidate the main data structures that would need to have mutex's
+around them and restructuring some of the code base.
 
-It's not clear exactly what "cc" tags in a commit message mean, because
-it is really a per-project thing. I don't work on the kernel, but I
-always took their cc tag to mean "these are people interested in this
-topic area". Send-email helpfully picks up that hint and cc's them on
-the emailed patch. And when the patch is applied, those cc lines remain,
-because people reading "git log" much later may find a bug in the patch,
-and it is helpful to tell them the people interested in the area.
+I think 2 is a better option, but I would like to see the codebase a
+little longer to understand how much time it would involve. As far as
+the timeline for gsoc is concerned, I would start of with 2/3 simple
+commands which could be easily modified. I would some help from my
+mentor and this list to help me identify them. After I have this
+working, I can proceed to parallelize other git functionalities.
 
-In git.git, though, we don't typically use such cc tags. Perhaps because
-we are a much smaller project than the kernel, or perhaps for other
-logistical reasons. And even if we did, the cc list above does not
-really meet the guideline I gave. They are people who happened to review
-your patch or comment on the list, not people who are interested forever
-in a particular subsystem.
+Week 1-2: Getting familiar with the git codebase
+Week 2-6: Work on adding basic functionality to thread-utils and
+messing with git diff/log
+Week 6-10: Recognizing additional parts of git which can be parallelized
+Week 10-12: Documentation/Finalizing or just keep continuing with
+additional git commands if everything is going fine
 
-So from the maintainer's and the project's perspective, those cc lines
-are useless noise.
+Success Criteria:
+----------------------
+I would identify commands whose efficiency can be improved by using
+threads. And then measuring time metric for each of those commands on
+several git repo datasets.
 
-But from the submitter's point of view, it may be convenient to tell git
-"these are people who have reviewed _this_ patch series", and have it
-automatically cc them on each iteration of the series without re-typing
-their addresses.  And because of the send-email behavior I mentioned
-above, the "cc" tags are a convenient place to put it.
+About Me:
+-------------
+I am a second year CS PhD student at Georgia Tech. I have previously
+worked with OpenCV as a gsoc student. I wrote a tracking algorithm for
+them. I mostly work with robots (like a huge-a** humanoid called Golem
+Krang as you can see on my website). My experience with pthreads and
+writing multi-threaded programs comes from developing IPC interfaces
+for robots, because robot control has to be real time and it can be
+unsafe to run robot control programs in a single process. I learnt
+multithreaded programming from my systems courses at Georgia Tech like
+Operating Systems and High Performance Computing.
 
-So it is a piece of information that is useful to the submitter, but not
-to the maintainer. Where can the submitter put it that will help
-themselves, but not bother the maintainer?  I wonder if the right
-solution would be an option for send-email to respect cc lines, but
-strip them out of the body of the sent patch.
+I have used git for over 2 years now, as you can see from the github
+account. I had ever looked into the git codebase only to mess with
+gitweb while setting up gitolite on a server. But I am interested to
+work with git because previous to this the most complex open source
+project I had to work with was OpenCV. I realized they were more
+interested in developing algorithms, and I want to dirty my hands in
+systems programming now.
 
--Peff
+You can hit up the links below to find more about me. I would like to
+hear from you if you think my approach is correct or could be
+different.
+
+Web: http://www.pushkar.name/
+Github: https://github.com/pushkar (look at cshm, cshm-net projects,
+shared mem ipc using circular buffers)
+Resume: http://pushkar.name/resume.pdf
+
+Pushkar Kolhe
