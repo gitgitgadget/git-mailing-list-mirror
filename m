@@ -1,88 +1,131 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 1/5] argv-array: Add argv_array_pop function [v2]
-Date: Fri, 6 Apr 2012 03:33:14 -0400
-Message-ID: <20120406073314.GB27115@sigill.intra.peff.net>
-References: <1333136922-12872-1-git-send-email-nhorman@tuxdriver.com>
- <1333654745-7898-1-git-send-email-nhorman@tuxdriver.com>
- <1333654745-7898-2-git-send-email-nhorman@tuxdriver.com>
- <7vd37m5458.fsf@alter.siamese.dyndns.org>
- <20120405232429.GA8654@hmsreliant.think-freely.org>
- <7vobr53bbe.fsf@alter.siamese.dyndns.org>
- <20120406022058.GA16264@sigill.intra.peff.net>
- <7v4nsx2vu1.fsf@alter.siamese.dyndns.org>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: push.default: current vs upstream
+Date: Fri, 06 Apr 2012 09:44:48 +0200
+Message-ID: <vpqr4w12tjj.fsf@bauges.imag.fr>
+References: <7vd37wv77j.fsf@alter.siamese.dyndns.org>
+	<20120329095236.GA11911@sigill.intra.peff.net>
+	<7vbonfqezs.fsf@alter.siamese.dyndns.org>
+	<20120329221154.GA1413@sigill.intra.peff.net>
+	<7vfwcqq2dw.fsf@alter.siamese.dyndns.org>
+	<20120330071358.GB30656@sigill.intra.peff.net>
+	<7vty15ltuo.fsf@alter.siamese.dyndns.org>
+	<vpqty12h995.fsf@bauges.imag.fr>
+	<20120405131301.GB10293@sigill.intra.peff.net>
+	<vpqwr5uceis.fsf@bauges.imag.fr>
+	<20120406071520.GD25301@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Neil Horman <nhorman@tuxdriver.com>, git@vger.kernel.org,
-	Phil Hord <phil.hord@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Apr 06 09:33:29 2012
+Content-Type: text/plain
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Apr 06 09:45:12 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SG3fg-0002cp-Du
-	for gcvg-git-2@plane.gmane.org; Fri, 06 Apr 2012 09:33:24 +0200
+	id 1SG3r5-0001jj-IY
+	for gcvg-git-2@plane.gmane.org; Fri, 06 Apr 2012 09:45:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753955Ab2DFHdU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 Apr 2012 03:33:20 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:49773
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752008Ab2DFHdT (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Apr 2012 03:33:19 -0400
-Received: (qmail 491 invoked by uid 107); 6 Apr 2012 07:33:21 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 06 Apr 2012 03:33:21 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 06 Apr 2012 03:33:14 -0400
-Content-Disposition: inline
-In-Reply-To: <7v4nsx2vu1.fsf@alter.siamese.dyndns.org>
+	id S1754048Ab2DFHpC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 Apr 2012 03:45:02 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:42886 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752543Ab2DFHpB (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Apr 2012 03:45:01 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id q367dEqZ013361
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Fri, 6 Apr 2012 09:39:14 +0200
+Received: from bauges.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1SG3qj-0003vz-Ea; Fri, 06 Apr 2012 09:44:49 +0200
+In-Reply-To: <20120406071520.GD25301@sigill.intra.peff.net> (Jeff King's
+	message of "Fri, 6 Apr 2012 03:15:20 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.93 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Fri, 06 Apr 2012 09:39:15 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: q367dEqZ013361
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1334302756.75996@AkWelEfZI4veERKt3N9Bbw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194856>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194857>
 
-On Thu, Apr 05, 2012 at 11:55:18PM -0700, Junio C Hamano wrote:
+Jeff King <peff@peff.net> writes:
 
-> I agree that submitters would benefit from an automated way to propagate
-> these addresses from reroll to reroll, and in a larger workflow "tweak and
-> record while amending a commit for reroll" would be a natural place to do
-> so, so I can see why it is tempting to abuse Cc: in the body of the
-> message, but not knowing other ways is not a good excuse for such an
-> abuse.  A workable solution is already available [*1*]: commit with a
-> "---" line followed by Cc: and whatever extra junk while amending.
+> On Thu, Apr 05, 2012 at 06:46:51PM +0200, Matthieu Moy wrote:
+>
+>> It seems rather natural to me to have "asymetric workflow, asymetric
+>> commands" by default. So, if one wants to push to a place other than
+>> upstream, say "git push public-repo branch", or set your upstream to
+>> where you want to push (simple with "git push -u"), and say explicitely
+>> "git pull repo branch".
+>
+> That makes sense _if_ the user is thinking about pull and push as
+> symmetric commands. That may be immediately obvious for some people's
+> mental models. But I suspect it is not for others (it is not for mine,
+> though I obviously do not count as a beginner).
 
-I've played with that workflow before. While it's a neat trick, note
-that something like "format-patch -s" will put the signoff at the end,
-like:
+I think exactly the opposite. Once you learnt about remote-tracking
+branches, about "git fetch" Vs "git pull", you understand why "git pull"
+and "git push" are not strictly speaking symmetrical operations.
 
-  commit subject
+But just from the wording, it should be obvious that the commands are
+doing something somehow symmetrical.
 
-  commit body
-  ---
-  Cc: whomever
-  Signed-off-by: you
+> So shouldn't the advice for a non-fast-forward push be:
+>
+>    if $source_ref is currently checked out
+>            advise "git checkout $source_ref, and then..."
+>    fi
+>    if $dest_remote == branch.$source_ref.remote &&
+>       $dest_ref == branch.$source_ref.merge
+>            advise "git pull"
+>    else
+>            advise "git pull $dest_remote $dest_ref"
+>    fi
+>
+> That handles only one ref, of course. If you get multiple non-ff
+> failures, I'm not sure what we should advise.
 
-which is not what you want. We could perhaps teach it to be smarter
-about finding a "---", though I worry about hurting people who do not
-use an email-based workflow, since they otherwise don't have to care
-about "---".
+The topic ct/advise-push-default does essentially that indeed.
 
-About a year ago I had an RFC series to let "git commit" parse off the
-"---" bit and turn it into a git-note (mostly for keeping track of
-changes to the series between versions). It does solve that problem, and
-response was reasonably positive. It does make things more complicated,
-though, because IIRC you have to turn on note-rewriting manually to keep
-the notes attached as you rebase.  Ultimately I didn't follow up because
-I've found that I just don't end up keeping a lot of notes. I tend to do
-the re-roll and then send it out pretty soon afterward, so I just write
-any notes in the emails as they go out.
+> You wrote above that we'll have a hard time explaining how "git pull"
+> works. But I don't think so; if it hasn't been a problem with
+> "matching", then why would it with "current"?
 
-For complex "cc" lists and the like, I have a (fairly hacky) script that
-takes an existing message as input and generates a format-patch series
-with the to, cc, and in-reply-to fields filled in (and then I ship the
-result out via my regular MUA after proof-reading and tweaking).
-Potentially git-send-email could do the same thing.
+I mis-spoke. I think I meant something like "if the assumption that
+explaining push -c push.current=upstream is hard, then we'll have a hard
+time explaining git pull".
 
--Peff
+> I'm less concerned with explaining and more concerned about safe
+> defaults.
+
+Yes, my rant about simplicity was a reply to Junio, who was arguing
+about simplicity:
+
+Junio C Hamano writes:
+
+| Obviously the former ["current"] is much simpler to explain and understand, as
+| people do not have to learn upstream tracking before doing their first
+| "push".
+
+Your arguments about safety are valid (we don't agree on the relative
+importance), but I think the argument of simplicity simply doesn't hold.
+
+About safety, I don't think we can tell in general which bad push is the
+most serious. push.default=current may create branches unexpectedly,
+while push.default=upstream would ask you to "push --set-upstream" when
+creating the remote branch. push.default=upstream may push to the master
+when you wanted to create a remote topic branch. My feeling is that both
+are equally bad, but maybe I'm wrong here.
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
