@@ -1,119 +1,156 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: [GSoC] Designing a faster index format
-Date: Fri, 6 Apr 2012 17:24:26 +0200
-Message-ID: <878vi8sx1x.fsf@thomas.inf.ethz.ch>
-References: <F9D452C3-B11E-4915-A0F2-B248F92CE5DE@gmail.com>
-	<8D287169-1AD9-4586-BDBC-F820220328FC@gmail.com>
-	<CACsJy8D2RwG-Nr5btcQj0f9=JACvH6mf7LNi=Jnb_y+j4_2u0A@mail.gmail.com>
-	<871uomrubl.fsf@thomas.inf.ethz.ch>
-	<8901F6B5-7396-44E1-9687-20BF95114728@gmail.com>
-	<871uomq64c.fsf@thomas.inf.ethz.ch>
-	<BDFA27C9-C999-4C95-8804-5E7B3B3D1BFD@gmail.com>
-	<878virfx11.fsf@thomas.inf.ethz.ch>
-	<2A61C352-5C71-4EDF-9DBE-01CC09AE03A5@gmail.com>
-	<87r4we9sfo.fsf@thomas.inf.ethz.ch>
-	<5CE5AEC7-22C8-4911-A79E-11F2F3D902A2@gmail.com>
-	<7vk423qfps.fsf@alter.siamese.dyndns.org>
-	<CACsJy8Ag9yvGwKE_oiW8T+hR2hN_fzXvGCdOJ_H44DCOm9RF0Q@mail.gmail.com>
-	<1604FE70-8B77-4EC1-823A-DC1F0334CD3A@gmail.com>
-	<4F7ABA19.7040408@alum.mit.edu>
-	<C15BAB9A-EAFA-4EA4-85B2-0E0C5FF473E9@gmail.com>
-	<alpine.DEB.2.02.1204031313170.10782@asgard.lang.hm>
-	<D97085E6-2B9F-42C5-A06D-B53422034071@gmail.com>
-	<87r4w1vofu.fsf@thomas.inf.ethz.ch>
-	<CAJo=hJssfTvGqzQtaAj+Dk_R2oU5BwY=sQQuH3=SFTf+Zcp=3A@mail.gmail.com>
-	<CACsJy8DaBxCtU7UQcc510J71zk95DMMsWdr9S3eYTupdRLjWBg@mail.gmail.com>
+From: shi roger <rogershijicheng@gmail.com>
+Subject: GSOC proposal: Parallel Git Commands
+Date: Fri, 6 Apr 2012 23:37:00 +0800
+Message-ID: <CAL8K7nJskxFwC+iyWiYPoXGWwOY3f2sjX9wjfBx31cgDdOTsHw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Shawn Pearce <spearce@spearce.org>,
-	Thomas Gummerer <italyhockeyfeed@gmail.com>, <david@lang.hm>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	Junio C Hamano <gitster@pobox.com>,
-	Thomas Rast <trast@student.ethz.ch>, <git@vger.kernel.org>
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Apr 06 17:24:37 2012
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Apr 06 17:37:12 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SGB1f-00015a-BI
-	for gcvg-git-2@plane.gmane.org; Fri, 06 Apr 2012 17:24:35 +0200
+	id 1SGBDq-00011t-3T
+	for gcvg-git-2@plane.gmane.org; Fri, 06 Apr 2012 17:37:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757358Ab2DFPYa convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 6 Apr 2012 11:24:30 -0400
-Received: from edge10.ethz.ch ([82.130.75.186]:55714 "EHLO edge10.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754317Ab2DFPY3 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 6 Apr 2012 11:24:29 -0400
-Received: from CAS20.d.ethz.ch (172.31.51.110) by edge10.ethz.ch
- (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.2.283.3; Fri, 6 Apr
- 2012 17:24:24 +0200
-Received: from thomas.inf.ethz.ch.ethz.ch (129.132.153.233) by CAS20.d.ethz.ch
- (172.31.51.110) with Microsoft SMTP Server (TLS) id 14.1.355.2; Fri, 6 Apr
- 2012 17:24:27 +0200
-In-Reply-To: <CACsJy8DaBxCtU7UQcc510J71zk95DMMsWdr9S3eYTupdRLjWBg@mail.gmail.com>
-	(Nguyen Thai Ngoc Duy's message of "Fri, 6 Apr 2012 22:11:49 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Originating-IP: [129.132.153.233]
+	id S1757460Ab2DFPhD convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 6 Apr 2012 11:37:03 -0400
+Received: from mail-ob0-f174.google.com ([209.85.214.174]:57286 "EHLO
+	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754458Ab2DFPhB convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 6 Apr 2012 11:37:01 -0400
+Received: by obbtb18 with SMTP id tb18so3216780obb.19
+        for <git@vger.kernel.org>; Fri, 06 Apr 2012 08:37:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        bh=XNSawmkjc72OsuFo4Usd9U/C7FPb6h+L3DLh/r6nmY4=;
+        b=cnmogTT36aotFAHG91B9nE8NHR8pN76L6jGPVXXjepGHnczGUNVQ58SO3IELlLPzxL
+         1PO/9wPcSLSIjERZjZ426TIaum8EGftfDdcppSSQKW5yxBJN2OKmENexxcfFPfntuE6T
+         n1rUlUrdEWeC2bjv86LUhinzUYX6pLyuUqtQPI3Cro0r116fDVQXv50U0hpP1B4h5UZi
+         qhsJDKUthqtEWPY175LCeDiSbY7sjc6qE1Xgvs6Tt433Mu/bS5rXseiB8lLriqrWYs3C
+         sr4v24X6//juO1zRRLMhpEONdWH2QJne/TZW834Y70gmkpKeWuIrSzDHFEqIpLldLUT3
+         GLwQ==
+Received: by 10.182.36.3 with SMTP id m3mr9871543obj.8.1333726620922; Fri, 06
+ Apr 2012 08:37:00 -0700 (PDT)
+Received: by 10.182.115.73 with HTTP; Fri, 6 Apr 2012 08:37:00 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194874>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194875>
 
-Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
+Goals and Steps:
 
-> On Fri, Apr 6, 2012 at 10:22 AM, Shawn Pearce <spearce@spearce.org> w=
-rote:
->> On Thu, Apr 5, 2012 at 14:49, Thomas Rast <trast@inf.ethz.ch> wrote:
->>> This is quite complete already, which I think is great, but it's st=
-ill
->>> missing one "obvious" approach: a directory-tree based layout that =
-uses
->>> "flat" storage. =C2=A0That is, the entries grouped by directory and=
- thus
->>> arranged into the "natural" tree, so as to allow parsing only part =
-of
->>> it. =C2=A0But not pulling any tricks to make it easy to change; a n=
-ontrivial
->>> change would mean a rewrite. =C2=A0How good do you think that could=
- be?
->>
->> I have been wondering this myself. Aren't most updates to the index
->> just updating the stat information of an existing entry?
->>
->> If so we could structure the index as flat lists for each directory
->> similar to a canonical tree, but with a wider field to hold not just
->> the SHA-1 but also the stat information of each file. If the entry i=
-s
->> just the component name ("foo.c" and not "src/foo.c") and the SHA-1
->> and stat data, you can probably protect the entire entry with a CRC-=
-32
->> for each entry. Updates can be performed in place by taking the writ=
+This project is supposed to improve=C2=A0the parallelization and
+scalability of Git command. Though=C2=A0the=C2=A0current version of Git=
+ does
+take parallel programming into consideration=C2=A0(such as git grep
+command), there are a lot of=C2=A0aspects to improve. For instance,=C2=A0=
+git
+grep --cache=C2=A0and=C2=A0git diff=C2=A0haven=E2=80=99t adopted multi-=
+thread programming
+model.=C2=A0Therefore, I supposesome=C2=A0other commands=C2=A0shouldals=
+o=C2=A0be
+paralleled.
+
+The project can be finished by the following steps:
+
+1.=C2=A0=C2=A0Week 1 ~ 2:=C2=A0Profile the Git commands in=C2=A0an=C2=A0=
+extremely tough
+environment, such as a very big repository or a long time lasting
+project. This is used to distinguish which command takes much more
+time to accomplish as the repository grows more complexity.
+
+2.=C2=A0=C2=A0Week 3 ~ 4:=C2=A0Profile the commands, which are selected=
+ from the
+first step in more detail to tell what=E2=80=99s the bottleneck and whe=
+ther it
+can be fixed in parallel manner. The profile tools can be oprofile,
+dtrace or some other proper tools.
+
+3.=C2=A0=C2=A0Week 5 ~ 12:=C2=A0Redesign the data structure and data pr=
+ocess logic to
+parallel the git commands.
+
+4.=C2=A0=C2=A0Week 5=C2=A0~=C2=A012:=C2=A0Redo the profiling and testin=
+g to confirm that these
+changes really improve the scalability and parallelization of Git
+commands.
+
+5.=C2=A0=C2=A0Step 3 and Step 4 may loop several times to fix the error=
+s and new
+performance bottlenecks introduced by new design.
+
+Success criteria:
+
+=C2=A0 =C2=A0 After the project, git should scale well as the CPU core =
+number
+grows or at least have a better performance than the current version.
+
+Interfaces:
+
+This project doesn=E2=80=99t deal with extending git, but redesigning t=
+he
+internal data structure and process logic to parallel it. For
+instance, there may be some data structures sharing between the loop
+iterations which=C2=A0maybring difficulty to parallel it. So far, I hav=
 e
->> lock with index.lock as an empty file, then overwriting the SHA-1 an=
-d
->> stat field followed, by updating the CRC-32. Readers that see the
->> wrong CRC-32 for an entry can sleep for a short period, retry the
->> read, and fail after some number of attempts if they cannot get a
->> valid read of that entry.
->
-> But does that mean the reader can have some old entries (because the
-> writer has not updated them yet by the time of reading) mixed with ne=
-w
-> ones, i.e. inconsistent data?
+checked the=C2=A0git grep=C2=A0and=C2=A0git diff=C2=A0commands and the =
+related filesare
+supposed tobe=C2=A0modified, such as=C2=A0diff.c=C2=A0and=C2=A0grep.c. =
+However, as the
+project goes on, more problems may be revealed and more files will
+need to be changed.
 
-That can be fixed with another CRC or hash covering the CRCs for the
-entries, so that a reader can notice a partial update.
 
-But even so: do we make any promises that (say) git-add is atomic in th=
-e
-sense that a reader always gets the before-update results or the
-after-update results?  Non-builtins (e.g. git add -p) may make small
-incremental updates to the index, so they wouldn't be atomic anyway.
+About Me:
 
---=20
-Thomas Rast
-trast@{inf,student}.ethz.ch
+Jicheng Shi(=E6=96=BD=E7=BB=A7=E6=88=90)
+
+
+
+=46irst Year Graduate Student
+
+Parallel Processing Institute
+=46udan University
+RM 320, Software Building, 825 Zhangheng Road, Shanghai
+P.R. China, 201203
+Email:=C2=A0jcshi@fudan.edu.cn
+
+Education
+
+Sep. 2011 - Now. Software School, Fudan University
+
+Sep. 2007 - July. 2011. Software School, Fudan University
+
+Publication
+
+Xiang Song, Jicheng Shi, Haibo Chen and Binyu Zang. Revisiting
+Software Zero-Copy forWeb-caching Applications with Twin Allocators.
+Proceedings of 2012 Usenix Annual Technical Conference (Usenix ATC
+2012, short paper, to appear). Boston, Massachusetts USA, June, 2012.
+
+Jicheng Shi, Xiang Song, Haibo Chen, Binyu Zang. Limiting Cache-based
+Side-Channel in Multi-tenant Cloud using Dynamic Page Coloring. the
+7th Workshop on Hot Topics in System Dependability (HotDep'11)
+
+
+
+Research Projects
+
+Paralleling VM Migration. =C2=A0Dec.2011 - Now
+
+TCP/UDP Stack Buffer Zero-Copy. =C2=A0May.2011 - Nov.2011
+
+Defending Side Channel Attack in Cloud. =C2=A0Nov.2009 - Apr.2011
+
+Skills
+
+Languages: C(4 years), Java(4 years), C++, Python (2 years), Common
+Lisp, Javascript
+
+System: Linux(Operation System), Xen(Virtualization System)
