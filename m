@@ -1,76 +1,134 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH] send-email: make annotate configurable
-Date: Sat, 07 Apr 2012 12:34:14 +0200
-Message-ID: <vpqaa2n7rvd.fsf@bauges.imag.fr>
-References: <1333758550-9187-1-git-send-email-felipe.contreras@gmail.com>
-	<7vy5q8xhkb.fsf@alter.siamese.dyndns.org>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH RESEND] send-email: add 'specify-author' option
+Date: Sat, 7 Apr 2012 14:46:29 +0300
+Message-ID: <CAMP44s0D1RXteHvCrsmaKVcfaK4SRArXf_nF7by2jJkgatkG-A@mail.gmail.com>
+References: <1333714876-21895-1-git-send-email-felipe.contreras@gmail.com>
+	<7vobr4236g.fsf@alter.siamese.dyndns.org>
+	<CAMP44s1b=HfhPNkmiEjPnQpupd0FPBNgVyp5Sw=zFVTdqmJXEg@mail.gmail.com>
+	<7vbon41ugg.fsf@alter.siamese.dyndns.org>
+	<CAMP44s1m2exUVRTzcBJrY8hnWxF+uEt58AQOP5vKiA3tfeRXRQ@mail.gmail.com>
+	<7vobr4ze5z.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org,
-	"Yann Dirson" <ydirson@altern.org>,
-	"Michael Witten" <mfwitten@MIT.EDU>,
-	"Ryan Anderson" <ryan@michonline.com>,
-	"Michael Witten" <mfwitten@gmail.com>,
-	"Adam Roben" <aroben@apple.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Thomas Rast <trast@student.ethz.ch>,
+	Pierre Habouzit <madcoder@debian.org>,
+	Pascal Obry <pascal@obry.net>,
+	Jay Soffian <jaysoffian@gmail.com>,
+	David Brown <git@davidb.org>, Matthew Wilcox <matthew@wil.cx>,
+	"Robin H. Johnson" <robbat2@gentoo.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Apr 07 12:34:48 2012
+X-From: git-owner@vger.kernel.org Sat Apr 07 13:46:54 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SGSyk-0003Cy-CD
-	for gcvg-git-2@plane.gmane.org; Sat, 07 Apr 2012 12:34:46 +0200
+	id 1SGU6S-0000zh-E9
+	for gcvg-git-2@plane.gmane.org; Sat, 07 Apr 2012 13:46:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753157Ab2DGKel (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 7 Apr 2012 06:34:41 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:50777 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752846Ab2DGKek (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 7 Apr 2012 06:34:40 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id q37ASbVj009067
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Sat, 7 Apr 2012 12:28:38 +0200
-Received: from bauges.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1SGSyF-0005ms-S0; Sat, 07 Apr 2012 12:34:15 +0200
-In-Reply-To: <7vy5q8xhkb.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Fri, 06 Apr 2012 22:00:04 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.93 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Sat, 07 Apr 2012 12:28:39 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: q37ASbVj009067
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1334399322.04662@r73632JxGW8c4wny9vabJQ
+	id S1753164Ab2DGLqc convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 7 Apr 2012 07:46:32 -0400
+Received: from mail-ee0-f46.google.com ([74.125.83.46]:38376 "EHLO
+	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751764Ab2DGLqb convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 7 Apr 2012 07:46:31 -0400
+Received: by eekc41 with SMTP id c41so838376eek.19
+        for <git@vger.kernel.org>; Sat, 07 Apr 2012 04:46:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=yxKoFNoDywLCzIkPL1C9YlIeldCgr3LlrP0/o8Q5UTw=;
+        b=yQHXmlWSEWP6SEhoFQRyXgiyTAwdT3jeZ+VtnYjbmrtkOD/dCvyKHJtjczs0cuoP8m
+         BNsBBwMNuUg7rIQKl4J0NodBOUJyxWXVt+RG7JawQMjTWqcnAm33nQsxXt8pH4yDgOgA
+         d2ANcHF2yRyB7+NEiL3tMZhkHdl9xr5H0OYV6TeYyCmLk5s515GeDXFcC17k/GwXWAAB
+         9wXZjYKq84edVdU/+6B1ckFywR2iZ1IDdvTFMga2fXrq0Uw8VKcy0BNRyjmy1fu7Sn2U
+         Nts9/ZZI7fBThT8LhmRc8spTEvgIpFT2ghK1uAxDw8koWYNobSCV3hCGSbpr+FF7i4x9
+         ZibQ==
+Received: by 10.213.20.201 with SMTP id g9mr68769ebb.105.1333799189983; Sat,
+ 07 Apr 2012 04:46:29 -0700 (PDT)
+Received: by 10.213.19.67 with HTTP; Sat, 7 Apr 2012 04:46:29 -0700 (PDT)
+In-Reply-To: <7vobr4ze5z.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194946>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194947>
 
-Junio C Hamano <gitster@pobox.com> writes:
-
+On Sat, Apr 7, 2012 at 1:30 AM, Junio C Hamano <gitster@pobox.com> wrot=
+e:
 > Felipe Contreras <felipe.contreras@gmail.com> writes:
 >
->> Some people always do --annotate, lets not force them to always type
->> that.
+>>> The "Subject:" is very often used in the wild, when responding to a=
+n
+>>> existing discussion thread with a patch, without changing the topic=
+ of the
+>>> thread (I would say it is used more than "From: " override).
+>>
+>> Hmm, but that is different, isn't it?
+>>
+>> AFAIK people use this format:
+>>
+>> ---
+>> $headers
+>>
+>> Message
+>>
+>> Patch (format-patch output: headers, commit message, diff)
+>> ---
+>>
+>> In this case 'git am' would ignore the patch headers. The only way
+>> 'git am' would override $headers, is if the first part of the body h=
+as
+>> new headers:
+>>
+>> ---
+>> $headers
+>>
+>> $patch_headers
+>>
+>> $patch_commit_message
+>>
+>> $patch_diff
+>> ---
+>>
+>> IOW; if there's no message at the beginning of the body.
 >
-> Thanks.
+> Your notation is a bit unclear to me, but I take that $headers mean t=
+he
+> e-mail headers, and $patch_headers mean what we often call "in-body"
+> headers; in other words, your patch is "duplicate my authorship in
+> $patch_headers because my MSA/MTA mangles my name in $headers." =C2=A0=
+Am I
+> following you well so far?
+
+Yes, but 'git send-email' already does that; when the author and
+sender are not the same.
+
+> What I meant to say was that perhaps the approach can help the same c=
+lass
+> of issues where other fields in $headers can be corrupted and the use=
+r
+> wants duplicate in "in-body", assuming that it is less likely to be e=
+aten,
+> and non-ASCII subject was one example that immediately came to my min=
+d.
 >
-> As long as there is --no-annotate to cancel a configured value for
-> one-shot invocation (I didn't check, but it should be added if there isn't
-> already one), I think this change makes sense (I admit that I do not use
-> the --annotate option myself, though).
+> So in that sense, it is not much a different issue.
 
-I almost always use --annotate, so this option definitely makes sense
-for me (I usually call send-email through an alias that adds --annotate
-anyway).
+No, but it requires new code, whereas my patch only exercises existing =
+code.
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+>> I can't foresee that, but I guess we can do it anyway. So which woul=
+d
+>> be the fields to repeat? From, Date, and Subject?
+>
+> I would say From and Subject are equally worth considering.
+
+So only From and Subject? Not Date?
+
+Cheers.
+
+--=20
+=46elipe Contreras
