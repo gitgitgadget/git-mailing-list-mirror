@@ -1,87 +1,72 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: bash-completion now loads completions
- dynamically, so __git_ps1 is not defined when you open a shell
-Date: Sat, 7 Apr 2012 16:01:55 +0300
-Message-ID: <CAMP44s0rYpVhPpaf=C_aPoLUxy=EsiSxYNf04+B0_-MxzCftFw@mail.gmail.com>
-References: <CANaWP3wu3260uFNzCLJ=YSG1BWFr=ge_6CmMGrG6zLThvFnjcQ@mail.gmail.com>
-	<20120328230642.GA16925@burratino>
-	<CANaWP3w9KDu57aHquRRYt8td_haSWTBKs7zUHy-xu0B61gmr9A@mail.gmail.com>
+Subject: Re: [PATCH v2] Fix git-completion.bash for use in zsh
+Date: Sat, 7 Apr 2012 16:09:35 +0300
+Message-ID: <CAMP44s1H74_2pewqLrkz9cmiguxH1=Ayz-5fn5_HgUCqbbB9rw@mail.gmail.com>
+References: <1332327960-5208-1-git-send-email-dev@randomguy3.me.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	bash-completion-devel@lists.alioth.debian.org,
-	git@vger.kernel.org, gitster@pobox.com
-To: Kerrick Staley <mail@kerrickstaley.com>
-X-From: bash-completion-devel-bounces+gcsbc-bash-completion-devel=m.gmane.org@lists.alioth.debian.org Sat Apr 07 15:02:08 2012
-Return-path: <bash-completion-devel-bounces+gcsbc-bash-completion-devel=m.gmane.org@lists.alioth.debian.org>
-Envelope-to: gcsbc-bash-completion-devel@m.gmane.org
-Received: from wagner.debian.org ([217.196.43.132])
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Alex Merry <dev@randomguy3.me.uk>
+X-From: git-owner@vger.kernel.org Sat Apr 07 15:10:16 2012
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <bash-completion-devel-bounces+gcsbc-bash-completion-devel=m.gmane.org@lists.alioth.debian.org>)
-	id 1SGVHL-0007mK-NQ
-	for gcsbc-bash-completion-devel@m.gmane.org; Sat, 07 Apr 2012 15:02:07 +0200
-Received: from localhost ([::1] helo=wagner.debian.org)
-	by wagner.debian.org with esmtp (Exim 4.72)
-	(envelope-from <bash-completion-devel-bounces+gcsbc-bash-completion-devel=m.gmane.org@lists.alioth.debian.org>)
-	id 1SGVHL-0003hm-Hc
-	for gcsbc-bash-completion-devel@m.gmane.org; Sat, 07 Apr 2012 13:02:07 +0000
-Received: from mail-ee0-f47.google.com ([74.125.83.47])
-	by wagner.debian.org with esmtp (Exim 4.72)
-	(envelope-from <felipe.contreras@gmail.com>) id 1SGVHG-0002xw-EG
-	for bash-completion-devel@lists.alioth.debian.org;
-	Sat, 07 Apr 2012 13:02:03 +0000
-Received: by eekc1 with SMTP id c1so696619eek.6
-	for <bash-completion-devel@lists.alioth.debian.org>;
-	Sat, 07 Apr 2012 06:01:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20120113;
-	h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-	:cc:content-type;
-	bh=p+tOD5NtXeuelioEBHW+zbkQyHx406DZWVcjKQvGXQk=;
-	b=jZ+SWizPO1YUF0fH/w4GxB8yse7kw/xbV2tuQ+fWV9+R5El+B6hpdYjJbgv0O4d06Z
-	JdDMCy8QYXMsEO9O+8fyFl4jbIneM7EML93oET37muVLrBmELyPiu0uudARixdZWLmo8
-	krVbkV2amAD25kS2VpTrICnZc2zFTslYfVkUVquK5kwTCF5BIoytRGFRajBwm0woqCu5
-	6v7d+3cYeqYgrKQf7hePEw0cqdUOKIlx2rZLFig72IyFgYIRRc+7lK7cZyqM9NBAFEkO
-	dxEDrxU1sGtTaQaf4pDDVys2o/26vPjAOooTV30Lj3NV3y8UUAHz/21tJR4uzWmiiWvI
-	M5yg==
-Received: by 10.14.97.12 with SMTP id s12mr164698eef.8.1333803715474; Sat, 07
-	Apr 2012 06:01:55 -0700 (PDT)
-Received: by 10.213.19.67 with HTTP; Sat, 7 Apr 2012 06:01:55 -0700 (PDT)
-In-Reply-To: <CANaWP3w9KDu57aHquRRYt8td_haSWTBKs7zUHy-xu0B61gmr9A@mail.gmail.com>
-X-policyd-weight: using cached result; rate: -8.4
-X-Spam-Checker-Version: SpamAssassin 3.3.1 (2010-03-16) on wagner.debian.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.6 required=5.0 tests=BAYES_00,FREEMAIL_FROM,
-	RCVD_IN_DNSWL_LOW,SPF_PASS autolearn=ham version=3.3.1
-X-BeenThere: bash-completion-devel@lists.alioth.debian.org
-X-Mailman-Version: 2.1.13
-Precedence: list
-List-Id: Coordination of bash-completion's development
-	<bash-completion-devel.lists.alioth.debian.org>
-List-Unsubscribe: <http://lists.alioth.debian.org/cgi-bin/mailman/options/bash-completion-devel>,
-	<mailto:bash-completion-devel-request@lists.alioth.debian.org?subject=unsubscribe>
-List-Archive: <http://lists.alioth.debian.org/pipermail/bash-completion-devel>
-List-Post: <mailto:bash-completion-devel@lists.alioth.debian.org>
-List-Help: <mailto:bash-completion-devel-request@lists.alioth.debian.org?subject=help>
-List-Subscribe: <http://lists.alioth.debian.org/cgi-bin/mailman/listinfo/bash-completion-devel>,
-	<mailto:bash-completion-devel-request@lists.alioth.debian.org?subject=subscribe>
-Sender: bash-completion-devel-bounces+gcsbc-bash-completion-devel=m.gmane.org@lists.alioth.debian.org
-Errors-To: bash-completion-devel-bounces+gcsbc-bash-completion-devel=m.gmane.org@lists.alioth.debian.org
-X-SA-Exim-Connect-IP: ::1
-X-SA-Exim-Mail-From: bash-completion-devel-bounces+gcsbc-bash-completion-devel=m.gmane.org@lists.alioth.debian.org
-X-SA-Exim-Scanned: No (on wagner.debian.org); SAEximRunCond expanded to false
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194948>
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1SGVPD-0004Pu-QT
+	for gcvg-git-2@plane.gmane.org; Sat, 07 Apr 2012 15:10:16 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1754060Ab2DGNJi convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 7 Apr 2012 09:09:38 -0400
+Received: from mail-ey0-f174.google.com ([209.85.215.174]:59711 "EHLO
+	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753952Ab2DGNJh convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 7 Apr 2012 09:09:37 -0400
+Received: by eaaq12 with SMTP id q12so830039eaa.19
+        for <git@vger.kernel.org>; Sat, 07 Apr 2012 06:09:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=YwwPRBJXYKW83h0D+7hM6c0MYh1Yu6GOu3ZezpjC7h0=;
+        b=kXvRRBtNS6x/AsHH/2YSR0suYAkYmOFPlXDyDLXMVhTYjgMS7+5bOJJ/IhQnacXIee
+         zOwoBopxhxN6KQCs/tT94o5VIbw6R3PGcyl4KGHW4rHwnock25fsX9fkVXS+axUlWT0L
+         QWGX3VEIs9aRyZUSHtuVIGcGvWqka6nsKzwJK3b+79rYrlOOLZ13QyVP/Ic77Rcw9lxU
+         t4nogekGL7uD3klLwuZCWebjv2YnJ/1mwpHKIUkz+VLF6NbTK2HSoLi9DR5HU49S5He+
+         3ixXjxUDuJFm0VMXv1pAMh0qO4E9fKUug7UJ4jyCNRUJx0aLODCVu4OyXQj0aeMNCOZA
+         2hhA==
+Received: by 10.213.35.196 with SMTP id q4mr83613ebd.29.1333804175966; Sat, 07
+ Apr 2012 06:09:35 -0700 (PDT)
+Received: by 10.213.19.67 with HTTP; Sat, 7 Apr 2012 06:09:35 -0700 (PDT)
+In-Reply-To: <1332327960-5208-1-git-send-email-dev@randomguy3.me.uk>
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194949>
 
-On Thu, Mar 29, 2012 at 3:00 AM, Kerrick Staley <mail@kerrickstaley.com> wrote:
-> 1) define __git_ps1 (and friends) in a different script, which will
-> get installed in /etc/profile.d (this is the "proper way")
+On Wed, Mar 21, 2012 at 1:06 PM, Alex Merry <dev@randomguy3.me.uk> wrot=
+e:
 
-I prefer this because it's useful for zsh as well; not everybody uses
-the bash completion in zsh. I believe somebody already proposed this
-because of this reason. FWIW I named the script git-prompt.sh on my
-side.
+> =C2=A0__git_ps1_show_upstream ()
+> =C2=A0{
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0local key value
+> - =C2=A0 =C2=A0 =C2=A0 local svn_remote=3D() svn_url_pattern count n
+> + =C2=A0 =C2=A0 =C2=A0 local svn_remote svn_url_pattern count n
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0local upstream=3Dgit legacy=3D"" verbose=3D=
+""
+> + =C2=A0 =C2=A0 =C2=A0 svn_remote=3D()
+>
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0# get some config options from git-config
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0local output=3D"$(git config -z --get-rege=
+xp '^(svn-remote\..*\.url|bash\.showupstream)$' 2>/dev/null | tr '\0\n'=
+ '\n ')"
+> --
+
+Actually, a more proper way to do this is 'local -a svn_remote'.
 
 Cheers.
 
--- 
-Felipe Contreras
+--=20
+=46elipe Contreras
