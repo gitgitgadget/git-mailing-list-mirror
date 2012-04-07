@@ -1,76 +1,91 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] send-email: make annotate configurable
-Date: Fri, 06 Apr 2012 22:00:04 -0700
-Message-ID: <7vy5q8xhkb.fsf@alter.siamese.dyndns.org>
-References: <1333758550-9187-1-git-send-email-felipe.contreras@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] credential: do not store credentials received from
+ helpers
+Date: Sat, 7 Apr 2012 01:09:13 -0400
+Message-ID: <20120407050913.GA4211@sigill.intra.peff.net>
+References: <20120407033417.GA13914@sigill.intra.peff.net>
+ <CAJo=hJvqQ0CgCga4va3ZX+XV5DWc1kWS5v4vYWkEzRYT5+p+cg@mail.gmail.com>
+ <7v398gywb1.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, "Yann Dirson" <ydirson@altern.org>,
-	"Michael Witten" <mfwitten@MIT.EDU>,
-	"Ryan Anderson" <ryan@michonline.com>,
-	"Michael Witten" <mfwitten@gmail.com>,
-	"Matthieu Moy" <Matthieu.Moy@imag.fr>,
-	"Adam Roben" <aroben@apple.com>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Apr 07 07:00:19 2012
+Content-Type: text/plain; charset=utf-8
+Cc: Shawn Pearce <spearce@spearce.org>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Apr 07 07:09:53 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SGNl5-0003MT-7N
-	for gcvg-git-2@plane.gmane.org; Sat, 07 Apr 2012 07:00:19 +0200
+	id 1SGNuJ-0000A2-QW
+	for gcvg-git-2@plane.gmane.org; Sat, 07 Apr 2012 07:09:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750988Ab2DGFAM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 7 Apr 2012 01:00:12 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:45106 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750820Ab2DGFAL (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 7 Apr 2012 01:00:11 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5CDF342C4;
-	Sat,  7 Apr 2012 01:00:10 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=bnk4D1zVVf68/xGqEHTWB/eTEX4=; b=uRjxJm
-	sdy1DBVgzRyfavq2/YfORhNOoKf82H0MC7wD92fTA6pf3WSbAUo4NhSz0TbZGy6H
-	zhTr8hcJNn3RRN4zDvZsrrwJX1iXguv6XgdKGU9zz70KVDTvyqMDCOGGW7uC2xUy
-	0dG3no0YEHXNHbD5I5SoL5K/3IaDL+ivfLric=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=nfVMe67rKDx3n8XIldlrRjN7aKbGEyTW
-	izGaV0qkTSnu2VuHESTw56Ruv3JA2yplGswd9AtJLRUp9JWSBH5tLiAT8+xurBQe
-	oPkSuJa9n/5W0QjTo+2GE35Dto14Ei5FUbOXRtEvOkWfJT9FIdRwyBvTY0I53Xve
-	ImvMVlDcjjE=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3BE3542C2;
-	Sat,  7 Apr 2012 01:00:10 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0022342B9; Sat,  7 Apr 2012
- 01:00:05 -0400 (EDT)
-In-Reply-To: <1333758550-9187-1-git-send-email-felipe.contreras@gmail.com>
- (Felipe Contreras's message of "Sat, 7 Apr 2012 03:29:09 +0300")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 8ABBE8D6-806E-11E1-B6D4-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751156Ab2DGFJQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 7 Apr 2012 01:09:16 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:53121
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751100Ab2DGFJQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 7 Apr 2012 01:09:16 -0400
+Received: (qmail 19362 invoked by uid 107); 7 Apr 2012 05:09:19 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Sat, 07 Apr 2012 01:09:19 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 07 Apr 2012 01:09:13 -0400
+Content-Disposition: inline
+In-Reply-To: <7v398gywb1.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194935>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194936>
 
-Felipe Contreras <felipe.contreras@gmail.com> writes:
+On Fri, Apr 06, 2012 at 09:56:18PM -0700, Junio C Hamano wrote:
 
-> Some people always do --annotate, lets not force them to always type
-> that.
+> I am afraid that "do not trigger the cache helper" might be throwing the
+> baby with bathwater to solve the real problem the patch tries to address,
+> which is:
+> 
+> Peff>   2. If you use a time-based storage helper like
+> Peff>      "git-credential-cache", every time you run a git
+> Peff>      command which uses the credential, it will also
+> Peff>      re-insert the credential after use, freshening the
+> Peff>      cache timestamp. So the cache will eventually expire N
+> Peff>      time units after the last _use_, not after the time the
+> Peff>      user actually typed the password. This is probably not
 
-Thanks.
+Actually, that was not the real problem. The real problem I had was the
+leakage between helpers. I just noticed this one while thinking about
+it. So the very thing that is useful to Shawn is also potentially
+dangerous to people who are doing something less clever.
 
-As long as there is --no-annotate to cancel a configured value for
-one-shot invocation (I didn't check, but it should be added if there isn't
-already one), I think this change makes sense (I admit that I do not use
-the --annotate option myself, though).
+> Shouldn't the memory cache based helper already have enough clue to tell
+> when a new entry is first inserted vs when the existing entry it supplied
+> came back from the network layer after use?  If there is not enough clue
+> with the current network-layer-to-helper protocol, then wouldn't it be a
+> better approach to add that, so that the memory cache helper can make more
+> intelligent management of its timer?
 
-Are there any other bool-ish command line option that deserves to have
-corresponding configuration variable?  Is this the only one that is
-missing the configuration counterpart?
+You can approximate it. The daemon sees that somebody is inserting the
+same thing that it already there, and can guess that it probably came
+from the daemon in the first place. There are some corner cases with
+expiration boundaries (we get the credential, the daemon expires it,
+then the http request succeeds, and we tell the daemon "hey, store
+this").
+
+> Once that is fixed, I would imagine that you can tell your users to use 
+> two helpers (yours and generic caching one) and configure them so that (1)
+> the caching one is asked first and then fall back to ask yours, and (2)
+> the expiration time of the caching one is set close to $X.
+
+Yeah, in my other response to Shawn, I mentioned that we could add a
+flag to do the "leaking" behavior if that's what the user wants. But it
+would have the side effect of refreshing his timestamp on each use, so
+his $X would not expire (although that is also the case now, and he
+hasn't complained).
+
+So I actually do think he would be better to implement the caching
+inside his helper, even if it is by calling out to git-credential-cache.
+And as a bonus, it makes configuration easier on the users (they don't
+have to configure the cache helper separately, and they don't have to
+set the timeout on it manually).
+
+-Peff
