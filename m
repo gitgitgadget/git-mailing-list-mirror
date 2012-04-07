@@ -1,130 +1,131 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCH 3/3] revision: insert unsorted, then sort in prepare_revision_walk()
-Date: Sat, 7 Apr 2012 11:20:59 +0700
-Message-ID: <CACsJy8Bj6jHypqk5OEuCmRm4YVf4ttnv5LL=9jukWDyY6H__4Q@mail.gmail.com>
-References: <201203291818.49933.mfick@codeaurora.org> <201204021024.49706.mfick@codeaurora.org>
- <CAJo=hJshOBg4pT8nuWZ=eZvj=E9x+4b9M_EANa=02x=NFW2OfQ@mail.gmail.com>
- <201204021049.04901.mfick@codeaurora.org> <CAJo=hJsprQtjDChtrSMcne+OCeUx=NVxLHs3k_qnYLzO=aQWuw@mail.gmail.com>
- <20120402203728.GB26503@sigill.intra.peff.net> <CACsJy8DGaFg=oEwLWWo33cJa=SDuuZshW4=cZpifCWLp5gGcTA@mail.gmail.com>
- <CACsJy8BbNEJBn5i0Rntv21d8qvhPwkrNBdaj+sGh2W-aN9jYGg@mail.gmail.com> <CAJo=hJusnnaMomQzb90ed9=HHpamVTktN0Qrw8MsaY+addF=rw@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] credential: do not store credentials received from
+ helpers
+Date: Sat, 7 Apr 2012 00:56:12 -0400
+Message-ID: <20120407045612.GA965@sigill.intra.peff.net>
+References: <20120407033417.GA13914@sigill.intra.peff.net>
+ <CAJo=hJvqQ0CgCga4va3ZX+XV5DWc1kWS5v4vYWkEzRYT5+p+cg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Jeff King <peff@peff.net>, Martin Fick <mfick@codeaurora.org>,
-	=?UTF-8?Q?Ren=C3=A9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Colby Ranger <cranger@google.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
 To: Shawn Pearce <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Sat Apr 07 06:22:07 2012
+X-From: git-owner@vger.kernel.org Sat Apr 07 06:56:59 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SGNA7-0007Dh-8D
-	for gcvg-git-2@plane.gmane.org; Sat, 07 Apr 2012 06:22:07 +0200
+	id 1SGNhl-0001TO-R6
+	for gcvg-git-2@plane.gmane.org; Sat, 07 Apr 2012 06:56:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750780Ab2DGEVb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 7 Apr 2012 00:21:31 -0400
-Received: from mail-wg0-f44.google.com ([74.125.82.44]:57170 "EHLO
-	mail-wg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750766Ab2DGEVa (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 7 Apr 2012 00:21:30 -0400
-Received: by wgbdr13 with SMTP id dr13so2633521wgb.1
-        for <git@vger.kernel.org>; Fri, 06 Apr 2012 21:21:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=DbbXQCjBlG5KS7pbipDvpl8p/KgqkEORJplleslGRLM=;
-        b=ts/OhqLH+dcr6FpaCJemuCsSQ6ZUfYrqG7e4eq7AV4+/wG+Ualq1/F4jZOPtkvJUVN
-         VvqsxLl4jrYPsa9mVWHGipTahqOieeLB8DQ+O3JXOlXlgwP1uC+/7JoYYPn5pbQ8svzn
-         00FzAXoCCQwdgXocBfZQJk92ysuA1Li3k+Tt0RZrN7/P7taKF8kcVH9a/BsSSI4PpqtC
-         k8ZPEHemEOfldDVghqB3cD06QDL2mABggaxBfRVFUeaadPh1XxwskP7d+Z+UgqxAR9zN
-         /93Zk1gml6PvwrvpfnVexgUUc128HI9eWxP3om6V3QtBgaiUxSuE2SQn5wt3d+aZI8Kz
-         u77A==
-Received: by 10.216.134.226 with SMTP id s76mr139149wei.115.1333772489439;
- Fri, 06 Apr 2012 21:21:29 -0700 (PDT)
-Received: by 10.223.109.144 with HTTP; Fri, 6 Apr 2012 21:20:59 -0700 (PDT)
-In-Reply-To: <CAJo=hJusnnaMomQzb90ed9=HHpamVTktN0Qrw8MsaY+addF=rw@mail.gmail.com>
+	id S1750831Ab2DGE4R convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 7 Apr 2012 00:56:17 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:53088
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750771Ab2DGE4Q (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 7 Apr 2012 00:56:16 -0400
+Received: (qmail 19070 invoked by uid 107); 7 Apr 2012 04:56:18 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Sat, 07 Apr 2012 00:56:18 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 07 Apr 2012 00:56:12 -0400
+Content-Disposition: inline
+In-Reply-To: <CAJo=hJvqQ0CgCga4va3ZX+XV5DWc1kWS5v4vYWkEzRYT5+p+cg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194932>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194933>
 
-Hi,
+On Fri, Apr 06, 2012 at 09:12:39PM -0700, Shawn O. Pearce wrote:
 
-Very insightful write-up. I'll need more time to read through again,
-just some initial opinions.
+> On Fri, Apr 6, 2012 at 20:34, Jeff King <peff@peff.net> wrote:
+> > =C2=A02. If you use a time-based storage helper like
+> > =C2=A0 =C2=A0 "git-credential-cache", every time you run a git
+> > =C2=A0 =C2=A0 command which uses the credential, it will also
+> > =C2=A0 =C2=A0 re-insert the credential after use, freshening the
+> > =C2=A0 =C2=A0 cache timestamp. So the cache will eventually expire =
+N
+> > =C2=A0 =C2=A0 time units after the last _use_, not after the time t=
+he
+> > =C2=A0 =C2=A0 user actually typed the password. This is probably no=
+t
+> > =C2=A0 =C2=A0 what most users expect or want (and if they do, we
+> > =C2=A0 =C2=A0 should do it explicitly by providing an option to
+> > =C2=A0 =C2=A0 refresh the timestamp on use).
+>=20
+> So if I use the cache helper, and its set to expire at the default of
+> 15 minutes, I have to type my password in every 15 minutes, even if I
+> am doing a Git operation roughly every 8 minutes during a work day?
 
-On Sat, Apr 7, 2012 at 2:21 AM, Shawn Pearce <spearce@spearce.org> wrote:
-> My officemate Colby and I came up with a better solution a few weeks
-> ago, but haven't really had a chance to discuss it in on the list. I
-> guess I should try to do that now. Like anything else, we went into
-> this work with some assumptions.
->
-> There are two operations we really wanted to improve the performance
-> of, `git rev-list --objects` for the two commonly used cases from
-> pack-objects, notably `rev-list --objects $WANT` and `rev-list
-> --objects $WANT --not $HAVE`. That is, clone and incrementally
-> fetching something when you have a common ancestor. I'm currently
-> ignoring shallow clone in this work as it tends to be a bit less
-> expensive on the object enumeration part.
->
-> Working from the linux repository, with roughly 2.2M objects, we can
-> assume the vast majority of these objects are stored in a pack file.
-> If we further assume these are mostly in a single pack file, we can
-> easily assign every packed object a unique integer. We do this by
-> assigning the N-th object in the pack integer N. You can already do
-> this by taking the pack index and computing the reverse index, sorted
-> by offset in pack. Finding the integer value for any SHA-1 is then a
-> matter of locating its offset in the normal index, and locating the
-> position of it in the reverse index... a O(2 log N) operation.
->
-> With all of the packed objects named by an integer [0, N) we can build
-> a series of bitmaps representing reachability. Given a commit, its
-> bitmap has every bit set for every object that `git rev-list --objects
-> $COMMIT_SHA1` would output. If the pack is built from a single branch
-> (e.g. a repository with no tags and only a master branch), that tip
-> commit would have every bit set in its bitmap, as all objects in the
-> pack are contained in the bitmap.
->
-> ...
->
-> Having multiple packs is common, and does complicate this algorithm.
-> There are known ways to combine different bitmap indexes together to
-> create a single larger bitmap, mostly by applying a unique "base
-> prefix" to each bitmap's values. Its very common in the full text
-> search community to do this when incrementally updating a full text
-> index.
+Yes. It's less convenient, but safer and more predictable (you put your
+password in at 2:30, it's gone at 2:45). Keep in mind that you can also
+bump the cache time. And like I said, if we do want have it behave the
+other way, that's OK, but it should be explicit (and it can be optional=
+,
+even if it defaults to auto-refresh on use).
 
-Common repos usually have a big pack as a result of clone and several
-smaller packs. How about we create the bitmap for the largest pack
-only and fall back to normal rev walking for the rest? We need to deal
-with loose objects anyway. I wonder if we could also mark the boundary
-objects for a given commits (i.e. another bitmap) so we can start
-walking from there to get to other packs and loose objects.
+Or you could even do something more complex. gpg-agent will refresh the
+timestamp on use, but still has a "max ttl" that drops a credential N
+seconds after it was input, even if it was used recently. But making an=
+y
+decision like that means that the daemon needs to actually know whether
+the timestamp came from the user, or whether it was simply accessed and
+regurgitated to us.
 
-The second bitmap hopefully compresses well. Not sure how it
-complicates the want-have bitmap operations you describe above though.
+> This breaks one of my credential helpers.
+>=20
+> I have a helper that generates a password by asking a remote system t=
+o
+> generate a short lived password based on other authentication systems
+> that I can't describe. Once I have that password, its good for $X
+> time.
+>=20
+> The helper just dumps it out to Git, and Git turns around and stores
+> it into the cache for me. This means later requests will keep that
+> credential in the cache, and avoid making that remote system call
+> every time I do a Git network command.
 
-> A process can assign each pack it observes a unique base prefix, and
-> then join together bitmaps across those packs to get a more complete
-> picture. Its not entirely that simple though because a commit in a
-> newer pack probably still references a parent in an older pack, and so
-> that commit in the newer pack doesn't have a complete bitmap.
->
-> One way out of this is to only produce bitmaps on a full GC, where the
-> entire repository is rewritten. If every 10k commits worth of history
-> costs about 100ms additional processing time to do object enumeration,
-> we only really have to do a major repack about every 100k commits when
-> processing is starting to come close to 1.2 seconds of CPU time. The
-> linux history has done ~220k commits in ~5 years, or 44k commits/year.
-> Asking a repository to do a full GC at least once per year so that
-> there only needs to be one set of bitmaps might be acceptable. :-)
+I considered your use case when writing the patch and thought "no,
+that's too insane. Nobody would want that." But leave it to you to prov=
+e
+me wrong. :)
 
-I'd be happy for it to run, even once a month, as long as it is not
-run automatically, unexpectedly and stops me from doing whatever I'm
-doing, like "gc --auto".
--- 
-Duy
+I'm torn. What you are doing is totally reasonable for your case. At th=
+e
+same time, having it happen without the user's knowledge could have
+surprising security implications, because you're leaking passwords from
+one helper to the other (in the example in the commit message, I
+mentioned a high-security helper followed by "cache". Which is probably
+not that bad. But imagine if it were "store").
+
+> I guess I now need to change my helper to cache git credential-cache
+> itself and store the password into the cache if it wants to use the
+> cache?
+
+That's one option, though it is a little bit of a pain to implement (no=
+t
+hard, but not one line of code). It would be very easy to add a
+"credential.storeHelperCredentials" option that defaulted to off (that
+name is horrible, but you get the point).
+
+> Should we update the credential helper documentation at the same time
+> as this change to make it clear Git won't cache passwords returned
+> from helpers, but a helper could call the credential-cache itself if
+> it wanted to reuse the existing cache service?
+
+Yeah, I'll add a documentation update when I re-roll; but we first need
+to figure out what the recommended course of action is.
+
+One thing I don't like about having your helper call credential-cache i=
+s
+that it is a layering violation; it is only guessing that putting the
+data into credential-cache will be useful in the first place. But that
+depends on the user's config. It could have be using an alternative
+caching helper (or none at all).
+
+So I think an explicit "it's OK to leak credentials between helpers"
+flag is our best bet. And it's dirt simple to code.
+
+-Peff
