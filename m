@@ -1,128 +1,105 @@
 From: Steven Michalske <smichalske@gmail.com>
 Subject: Re: [RFD] Rewriting safety - warn before/when rewriting published history
-Date: Sat, 7 Apr 2012 22:49:04 +0800
-Message-ID: <DA8EB64A-CF66-47B2-A860-0B22F92B7301@gmail.com>
-References: <201202042045.54114.jnareb@gmail.com> <201202061814.58346.jnareb@gmail.com> <CALKQrgcUdigB5zB_bqgpW8=o-TuGChs+q2nYoXu5YdyWu+oWZw@mail.gmail.com> <201202071531.08385.jnareb@gmail.com> <CALKQrge821x7OoSekkWw7vUjP642jhbE0D9oWPcCxuuTXOqQHA@mail.gmail.com>
+Date: Sat, 7 Apr 2012 23:01:31 +0800
+Message-ID: <6C977F5E-0C26-4165-AF2E-C032FA64F78B@gmail.com>
+References: <201202042045.54114.jnareb@gmail.com> <201202071531.08385.jnareb@gmail.com> <CALKQrge821x7OoSekkWw7vUjP642jhbE0D9oWPcCxuuTXOqQHA@mail.gmail.com> <201202102038.55710.jnareb@gmail.com> <CALKQrgdWOgG3y2HzM694zDykGJWa4QDetsEVXf0AGpf=FNFaVg@mail.gmail.com>
 Mime-Version: 1.0 (Apple Message framework v1251.1)
 Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 8BIT
 Cc: Jakub Narebski <jnareb@gmail.com>,
 	Philip Oakley <philipoakley@iee.org>, git@vger.kernel.org
 To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Sat Apr 07 16:54:35 2012
+X-From: git-owner@vger.kernel.org Sat Apr 07 17:01:47 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SGX26-00072p-H0
-	for gcvg-git-2@plane.gmane.org; Sat, 07 Apr 2012 16:54:30 +0200
+	id 1SGX98-0002WO-Gn
+	for gcvg-git-2@plane.gmane.org; Sat, 07 Apr 2012 17:01:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752681Ab2DGOy0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 7 Apr 2012 10:54:26 -0400
-Received: from mail-pz0-f52.google.com ([209.85.210.52]:47080 "EHLO
-	mail-pz0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751890Ab2DGOyZ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 7 Apr 2012 10:54:25 -0400
-Received: by dake40 with SMTP id e40so3720622dak.11
-        for <git@vger.kernel.org>; Sat, 07 Apr 2012 07:54:25 -0700 (PDT)
+	id S1754510Ab2DGPBl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 7 Apr 2012 11:01:41 -0400
+Received: from mail-ob0-f174.google.com ([209.85.214.174]:65177 "EHLO
+	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753096Ab2DGPBk convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 7 Apr 2012 11:01:40 -0400
+Received: by obbtb18 with SMTP id tb18so4185588obb.19
+        for <git@vger.kernel.org>; Sat, 07 Apr 2012 08:01:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=subject:mime-version:content-type:from:in-reply-to:date:cc
          :content-transfer-encoding:message-id:references:to:x-mailer;
-        bh=CmzuS708xoMzx0EIsUs8rqHd8OFMm477O+K4/i1cRRQ=;
-        b=aYeSEeb3n0UDniH8Un70/kgM3tAR4eY6PAqzF/VFhA0Pb05rKDOmNWf8zB11p9FFEM
-         AVzznOuD9y6MAc/dSz0S8OCaxrUxCva7aakHtlWLhpsGMlsB73jPPHuOQ2LnTPcldSrU
-         sKDmL1Y2XtGpxAkc7aqfKnPCMX6SwdXw6Or6v+JW74mTBfGKpnixCK1qL/5p3XR9fyMF
-         Z3EzhHhJH2uPKAhNbcw6aFl7FBpQfP9iGCVhLJS5KQbfDgn6dgslpIKyXzS5FsNZ34fr
-         LqV7ZUUqCKsD2yHm0Ut2qPgmyV/LDS/4fc+emoe4IFWvh0TNqEtaU2td8VEvhJnJdRWk
-         A1vA==
-Received: by 10.68.239.233 with SMTP id vv9mr4482656pbc.75.1333810464751;
-        Sat, 07 Apr 2012 07:54:24 -0700 (PDT)
+        bh=jFIZkEehgOmbwUwj26y+W0QV9immbo1sGdwL967vxwU=;
+        b=HIxkhrK+dHFLw0s0ZA+UcfPtkaZoFNprHsk2xhz90Qu9c2mx+ssuedaoJ1qOAzhb4c
+         SgbECVErM5UsUqbk8I1P/XpvYVvIPxIScPG8irSNN1AvmC1TUS/7MJnl3XK/BGzU7mT+
+         itXIqLUOSQAI72hfFbUBhYjHBFbqG7AGiQ5oUyL+mlkB4kGfz3rjrSrDCdxYzyibq06K
+         izTn+9Vr52zsS0x9yDFSQ/HyzEm3ac5OWF6c3qTRAeuQiUWfQHDHTXazPjanQH0YvGn7
+         RD515tDRj0GbZ7/gpcozG3CF4let34x+N+BhTpPmZVUrJEcKGGGyVee8b0LqduqfwZON
+         9p7Q==
+Received: by 10.182.8.37 with SMTP id o5mr2244787oba.28.1333810899991;
+        Sat, 07 Apr 2012 08:01:39 -0700 (PDT)
 Received: from [10.0.1.2] ([222.66.106.162])
-        by mx.google.com with ESMTPS id ns1sm301790pbc.29.2012.04.07.07.54.18
+        by mx.google.com with ESMTPS id hh2sm2931310obb.1.2012.04.07.08.01.35
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Sat, 07 Apr 2012 07:54:23 -0700 (PDT)
-In-Reply-To: <CALKQrge821x7OoSekkWw7vUjP642jhbE0D9oWPcCxuuTXOqQHA@mail.gmail.com>
+        Sat, 07 Apr 2012 08:01:39 -0700 (PDT)
+In-Reply-To: <CALKQrgdWOgG3y2HzM694zDykGJWa4QDetsEVXf0AGpf=FNFaVg@mail.gmail.com>
 X-Mailer: Apple Mail (2.1251.1)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194953>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194954>
 
 
-On Feb 7, 2012, at 11:09 PM, Johan Herland wrote:
+On Feb 11, 2012, at 9:10 PM, Johan Herland wrote:
 
-> (we are pretty much in violent agreement, so I will only comment where
-> I find it necessary)
-> 
-> On Tue, Feb 7, 2012 at 15:31, Jakub Narebski <jnareb@gmail.com> wrote:
->> Also, when thinking about different scenarios of why one would like to
->> mark commit as 'secret', we might want to be able to mark commit as
->> secret / unpublishable with respect to _subset_ of remotes, so e.g.
->> I am prevented from accidentally publishing commits marked as 'secret'
->> to public repository, or to CI/QA repository, but I can push (perhaps
->> with warning) to group repository, together with 'secret'-ness state
->> of said commit...
+> On Fri, Feb 10, 2012 at 20:38, Jakub Narebski <jnareb@gmail.com> wrote:
+>> On Tue, 7 Feb 2012, Johan Herland wrote:
+>>> On Tue, Feb 7, 2012 at 15:31, Jakub Narebski <jnareb@gmail.com> wrote:
+>>> I am unsure whether the 'secret'-ness of a commit should follow across
+>>> the push, but if you do (assuming we store the 'secret' flag using
+>>> git-notes) this is simply a matter of synchronizing the
+>>> refs/notes/secret to the same remote.
 >> 
->> ... though it wouldn't be as much 'secret' as 'confidential' ;-)
+>> I think it should, so that 'secret' commit would not escape by accident
+>> via a group secret repository.
+>> 
+>> What makes it hard (I think) is that we would prefer to transfer
+>> 'secret'-ness only for pushed commits.  That might be problem for notes
+>> based implementation of 'secret' annotation and 'secret'-ness transfer...
+>> though I guess knowing that there exist 'secret' commit with given SHA1
+>> which we do not have and should not have is not much breach of
+>> confidentiality.  Still...
 > 
-> Another way to achieve this would be to have a config flag to control
-> whether Git checks for the 'secret' flag before pushing. This config
-> flag could be set at the system/user level (to enable/disable the
-> feature as a whole), at the repo level (to enable/disable it in a
-> given repo), at the remote level (to enable/disable it on a given
-> repo), and finally at the branch level (to enable-disable it for a
-> given branch (and its upstream)). Thus you could have a .git/config
-> that looked like this:
-> 
->  [core]
->  refusePushSecret = true
-> 
->  [remote "foo"]
->  refusePushSecret = false
->  url = ...
->  fetch = ...
-> 
->  [branch "baz"]
->  remote = foo
->  merge = refs/heads/baz
->  refusePushSecret = true
-> 
-> This config would:
-> 
-> - refuse to push 'secret' commits from branch 'baz'
-> (branch.baz.refusePushSecret == true)
-> 
-> - but allow to push other branches with 'secret' commits to remote
-> 'foo' (remote.foo.refusePushSecret == false)
-> 
-> - but refuse to push 'secret' commits to other remotes
-> (core.refusePushSecret == true)
-> 
-> (The order of precedence would be: branch config > remote config >
-> repo config > user config > system config > default when unset)
-> 
-> I am unsure whether the 'secret'-ness of a commit should follow across
-> the push, but if you do (assuming we store the 'secret' flag using
-> git-notes) this is simply a matter of synchronizing the
-> refs/notes/secret to the same remote.
-> 
-I think this would allow teamwork on selected remotes!
+> If you don't want to transfer all of refs/notes/secret, you would
+> probably have to extend the git protocol with a per-commit 'secret'
+> flag (which would then be applied to the receiving repo's
+> refs/notes/secret).
 
-Though after reading all the discussion on this thread I now feel that there are some different forms of secret.
+Implementing these as bi-directional transfer of flag attributes might be a good working concept.
+This way we could implement the public flag and later add the secret flag, and later add the foo flag.
 
-Stuff you want to only exist on your repository, hacks, junk and stuff.
-or
-Material that should not go to your public facing repository.
-or
-A commit containing a file that is not for public consumption, but something you want tracked in the same repo.
-This might be an incompatible concept; I cope with this by using a git submodule called internal in the code base, it works well.
+I say bidirectional because if Tom and mary are working on a group project.  Mary publishes a commit to the public repo.
+When Tom pulls from Mary he should get the update for the flags that Mary published.  If Mary pushes to Tom's repo it should update Tom's flags as well.
 
 > 
-> Have fun! :)
+> Still, this is all specific to the 'secret' feature, which IMHO is
+> much less important then the 'public' feature. Implementing the
+> barebones 'public' feature (i.e. refuse rewrite of commits reachable
+> from upstream) is much less work, and would be enough for 90% of git
+> users, I believe.
 > 
+> 
+
+There are two kinds of pushes.  Those to public facing repositories and those to a private working repository.  Like a build bot repo.  Pushes to that repo might not want to mark a commit as public.
+
+Steve
+
+
+
+
+
 > ...Johan
 > 
 > -- 
