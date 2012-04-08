@@ -1,52 +1,101 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Phillip Susi <psusi@cfl.rr.com>
-Subject: Re: clone breaks replace
-Date: Tue, 11 Jan 2011 19:59:54 -0500
-Message-ID: <4D2CFD0A.1060901@cfl.rr.com>
-References: <4D262D68.2050804@cfl.rr.com> <201101112048.57326.j6t@kdbg.org> <20110111195107.GA18714@sigill.intra.peff.net> <201101112100.32083.j6t@kdbg.org> <4D2CBC1A.9000302@cfl.rr.com> <20110111205043.GA19928@burratino>
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH 02/12] completion: simplify __gitcomp
+Date: Sun, 8 Apr 2012 17:11:31 +0300
+Message-ID: <CAMP44s2vdEzn8_N=sauq-6OvqA+4tDtM9+yYYWuiQHgkZ2DyYA@mail.gmail.com>
+References: <1333854479-23260-1-git-send-email-felipe.contreras@gmail.com>
+	<1333854479-23260-3-git-send-email-felipe.contreras@gmail.com>
+	<20120408124652.GN2289@goldbirke>
+	<CAMP44s0nSH7ZjC4T=7pXS2MyAkZ133hOXa_tn3q4er+FbcOc_w@mail.gmail.com>
+	<20120408132704.GB4103@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Wed, 12 Jan 2011 01:00:25 +0000 (UTC)
-Cc: Johannes Sixt <j6t@kdbg.org>, Jeff King <peff@peff.net>,
-	git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>,
-	Stephen Bash <bash@genarts.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+NNTP-Posting-Date: Sun, 8 Apr 2012 14:11:42 +0000 (UTC)
+Cc: =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder@ira.uka.de>,
+	git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Thomas Rast <trast@student.ethz.ch>
 To: Jonathan Nieder <jrnieder@gmail.com>
 Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@lo.gmane.org
-X-Authority-Analysis: v=1.1 cv=uESSSoDEku2quKX/oFXS2Smn5+55LTFcWFr5T5T8nFs= c=1 sm=0 a=8nJEP1OIZ-IA:10 a=JmtI77n5PKyEllQSDapvNg==:17 a=hUQfzj0zOGuIpjcWwgkA:9 a=JHCIHP7ozoucK-i4ZYpMhqDkrHYA:4 a=wPNLvfGTeEIA:10 a=JmtI77n5PKyEllQSDapvNg==:117
-X-Cloudmark-Score: 0
-X-Originating-IP: 184.91.189.177
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.13) Gecko/20101208 Thunderbird/3.1.7
-In-Reply-To: <20110111205043.GA19928@burratino>
+Envelope-to: gcvg-git-2@plane.gmane.org
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=SDL4K7NR9JjO0luHprnVaT43g51FTd/4fulztm3CLRg=;
+        b=Zmhds/TETJT/tu1V2aXWhX7dh0mVFQHxJVfAUk1NsRgbOL+YAlgUxrH2r7CD4yJ/7F
+         VR/CRCiKQQawtdl9j+UMOacoTU5rh6k0TBCMJ8UiIZxgUNFUEo0sBTDYQL439iYHsLmM
+         a6qkZNyZwckvVPfTVoIEY5VK0+w17XpnlmlKc56WvgIn2N1U8V+GTC/HPGfu9+GKHEpB
+         +ahlCKNKBRKspfwL2YBRDGO6oC0+iNqyY60wfDB6nlvf1e45fcUhdz5DoH3MtjROpShf
+         GCyd8oNE5FsUjgrDME5MCo3xnxDf1JUhJE70+s4pf5LQBqslQv6ozPVvPE7YLnP89GI2
+         Ii4w==
+In-Reply-To: <20120408132704.GB4103@burratino>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165000>
-Received: from vger.kernel.org ([209.132.180.67]) by lo.gmane.org with esmtp
- (Exim 4.69) (envelope-from <git-owner@vger.kernel.org>) id 1Pcp4H-00008i-M4
- for gcvg-git-2@lo.gmane.org; Wed, 12 Jan 2011 02:00:06 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195000>
+Received: from vger.kernel.org ([209.132.180.67]) by plane.gmane.org with
+ esmtp (Exim 4.69) (envelope-from <git-owner@vger.kernel.org>) id
+ 1SGsqB-0000p8-90 for gcvg-git-2@plane.gmane.org; Sun, 08 Apr 2012 16:11:39
+ +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S932615Ab1ALA76 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>); Tue, 11 Jan 2011
- 19:59:58 -0500
-Received: from cdptpa-omtalb.mail.rr.com ([75.180.132.121]:38160 "EHLO
- cdptpa-omtalb.mail.rr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
- ESMTP id S932846Ab1ALA75 (ORCPT <rfc822;git@vger.kernel.org>); Tue, 11 Jan
- 2011 19:59:57 -0500
-Received: from [184.91.189.177] ([184.91.189.177:50499] helo=[192.168.1.3])
- by cdptpa-oedge01.mail.rr.com (envelope-from <psusi@cfl.rr.com>) (ecelerity
- 2.2.3.46 r()) with ESMTP id 98/EE-07087-B0DFC2D4; Wed, 12 Jan 2011 00:59:56
- +0000
+ S1755529Ab2DHOLd convert rfc822-to-quoted-printable (ORCPT
+ <rfc822;gcvg-git-2@m.gmane.org>); Sun, 8 Apr 2012 10:11:33 -0400
+Received: from mail-ee0-f46.google.com ([74.125.83.46]:41843 "EHLO
+ mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
+ ESMTP id S1755421Ab2DHOLd convert rfc822-to-8bit (ORCPT
+ <rfc822;git@vger.kernel.org>); Sun, 8 Apr 2012 10:11:33 -0400
+Received: by eekc41 with SMTP id c41so960356eek.19 for <git@vger.kernel.org>;
+ Sun, 08 Apr 2012 07:11:31 -0700 (PDT)
+Received: by 10.213.19.207 with SMTP id c15mr261010ebb.67.1333894291807; Sun,
+ 08 Apr 2012 07:11:31 -0700 (PDT)
+Received: by 10.213.19.67 with HTTP; Sun, 8 Apr 2012 07:11:31 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 
-On 01/11/2011 03:50 PM, Jonathan Nieder wrote:
-> Yes, except for "Using filter-branch is bad".  Using filter-branch is
-> not bad.
+Hi,
 
-It is bad because it breaks people tracking your branch, and violates 
-the immutability of history.
+I've looked at the history of __gitcomp and __gitcomp_nl, now I think
+it makes sense to keep their arguments similar, at least for the time
+being.
+
+So I suggest this patch to be dropped.
+
+On Sun, Apr 8, 2012 at 4:27 PM, Jonathan Nieder <jrnieder@gmail.com> wr=
+ote:
+> Felipe Contreras wrote:
+>
+>> So we should never make any cleanups because some custom completion
+>> functions might theoretically break?
+>
+> No, tasteful cleanups that don't break custom completion functions ar=
+e
+> very welcome.
+>
+> Also if you have evidence that this is definitely (not just possibly)
+> only a theoretical problem, then it would not be a regression. =C2=A0=
+But I
+> actually find it likely that custom completion code would have
+> imitated the old completion code in git that used the suffix argument=
+,
+> so...
+>
+> Can you remind me what the benefit that the user is getting from this
+> patch in exchange for us breaking their tab completion? =C2=A0The tit=
+le
+> ("simplify __gitcomp") tells me exactly nothing about its impact
+> except that it is perhaps supposed to result in no behavior change.
+>
+> Sorry for the fuss and hope that helps,
+> Jonathan
+
+
+
+--=20
