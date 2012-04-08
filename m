@@ -1,8 +1,8 @@
 From: Jeff King <peff@peff.net>
 Subject: Re: [PATCH] credential: do not store credentials received from
  helpers
-Date: Sun, 8 Apr 2012 03:07:51 -0400
-Message-ID: <20120408070751.GA13662@sigill.intra.peff.net>
+Date: Sun, 8 Apr 2012 03:13:00 -0400
+Message-ID: <20120408071300.GB13662@sigill.intra.peff.net>
 References: <20120407033417.GA13914@sigill.intra.peff.net>
  <CAJo=hJvqQ0CgCga4va3ZX+XV5DWc1kWS5v4vYWkEzRYT5+p+cg@mail.gmail.com>
  <7v398gywb1.fsf@alter.siamese.dyndns.org>
@@ -13,152 +13,126 @@ Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: Shawn Pearce <spearce@spearce.org>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Apr 08 09:08:35 2012
+X-From: git-owner@vger.kernel.org Sun Apr 08 09:13:43 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SGmEk-0000TF-Sq
-	for gcvg-git-2@plane.gmane.org; Sun, 08 Apr 2012 09:08:35 +0200
+	id 1SGmJj-0002uU-DQ
+	for gcvg-git-2@plane.gmane.org; Sun, 08 Apr 2012 09:13:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751937Ab2DHHH5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 8 Apr 2012 03:07:57 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:54288
+	id S1752350Ab2DHHNF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 8 Apr 2012 03:13:05 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:54307
 	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751747Ab2DHHH4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 8 Apr 2012 03:07:56 -0400
-Received: (qmail 384 invoked by uid 107); 8 Apr 2012 07:07:59 -0000
+	id S1751747Ab2DHHNE (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 8 Apr 2012 03:13:04 -0400
+Received: (qmail 475 invoked by uid 107); 8 Apr 2012 07:13:08 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Sun, 08 Apr 2012 03:07:59 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 08 Apr 2012 03:07:51 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Sun, 08 Apr 2012 03:13:08 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 08 Apr 2012 03:13:00 -0400
 Content-Disposition: inline
 In-Reply-To: <20120408064059.GA6727@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194982>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194983>
 
 On Sun, Apr 08, 2012 at 02:40:59AM -0400, Jeff King wrote:
 
-> One way to implement that is by just wrapping the real helper inside a
-> caching layer. That can even be generic.
+> The second issue is that of communicating the ttl or expiration between
+> helpers. That's easy enough. The protocol allows arbitrary key/value
+> pairs. We typically just drop ones we don't care about, but we could
+> retain them and pass them along.
 
-Here's a C implementation of the shell sketch I posted earlier.
-Obviously missing documentation, and only lightly tested, but just to
-give a sense of what it would look like. You can exercise it manually
-with:
-
-  {
-    # simulate git's input
-    echo protocol=https
-    echo host=example.com
-  } |
-  git credential-wrap cache '!f() {
-    # note whether we ran or not
-    echo >&2 Generating...
-    # and simulate output
-    echo username=fake.username
-    echo password=fake.password
-  }; f' get
-
-or configure it with:
-
-  git config credential.helper 'wrap cache your-real-helper'
+And here's a rough patch for that. This is just to get an idea of the
+scale, and which parts of the code need changed. I'd probably use a
+key/value store instead of a string_list. On top of this,
+credential-cache would have to learn to respect a TTL variable in the
+input (actually, it does already respect "timeout" which is added on the
+way from the cache client to the cache daemon, but the parsing around
+that would have to be cleaned up a bit).
 
 ---
- Makefile          |    1 +
- credential-wrap.c |   32 ++++++++++++++++++++++++++++++++
- credential.c      |    4 ++--
- credential.h      |    3 +++
- 4 files changed, 38 insertions(+), 2 deletions(-)
- create mode 100644 credential-wrap.c
+ credential.c |   14 +++++++++++---
+ credential.h |    3 ++-
+ 2 files changed, 13 insertions(+), 4 deletions(-)
 
-diff --git a/Makefile b/Makefile
-index be1957a..c91bb23 100644
---- a/Makefile
-+++ b/Makefile
-@@ -463,6 +463,7 @@ PROGRAM_OBJS += upload-pack.o
- PROGRAM_OBJS += http-backend.o
- PROGRAM_OBJS += sh-i18n--envsubst.o
- PROGRAM_OBJS += credential-store.o
-+PROGRAM_OBJS += credential-wrap.o
- 
- # Binary suffix, set to .exe for Windows builds
- X =
-diff --git a/credential-wrap.c b/credential-wrap.c
-new file mode 100644
-index 0000000..f4aadc4
---- /dev/null
-+++ b/credential-wrap.c
-@@ -0,0 +1,32 @@
-+#include "cache.h"
-+#include "credential.h"
-+
-+int main(int argc, const char **argv)
-+{
-+	struct credential c = CREDENTIAL_INIT;
-+	const char *storage, *source, *action;
-+
-+	if (argc != 4)
-+		usage("git credential-wrap <storage> <source> <action>");
-+	storage = argv[1];
-+	source = argv[2];
-+	action = argv[3];
-+
-+	if (credential_read(&c, stdin) < 0)
-+		die("unable to read input credential");
-+
-+	if (!strcmp(action, "get")) {
-+		credential_do(&c, storage, "get");
-+		if (!c.username || !c.password) {
-+			credential_do(&c, source, "get");
-+			if (!c.username || !c.password)
-+				return 0;
-+			credential_do(&c, storage, "store");
-+		}
-+		credential_write(&c, stdout);
-+	}
-+	else
-+		credential_do(&c, storage, action);
-+
-+	return 0;
-+}
 diff --git a/credential.c b/credential.c
-index 813e77a..13409e1 100644
+index 13409e1..2237e7e 100644
 --- a/credential.c
 +++ b/credential.c
-@@ -191,7 +191,7 @@ static void credential_write_item(FILE *fp, const char *key, const char *value)
- 	fprintf(fp, "%s=%s\n", key, value);
+@@ -9,6 +9,7 @@ void credential_init(struct credential *c)
+ {
+ 	memset(c, 0, sizeof(*c));
+ 	c->helpers.strdup_strings = 1;
++	c->extra.strdup_strings = 1;
  }
  
--static void credential_write(const struct credential *c, FILE *fp)
-+void credential_write(const struct credential *c, FILE *fp)
+ void credential_clear(struct credential *c)
+@@ -19,6 +20,7 @@ void credential_clear(struct credential *c)
+ 	free(c->username);
+ 	free(c->password);
+ 	string_list_clear(&c->helpers, 0);
++	string_list_clear(&c->extra, 0);
+ 
+ 	credential_init(c);
+ }
+@@ -174,10 +176,11 @@ int credential_read(struct credential *c, FILE *fp)
+ 			c->path = xstrdup(value);
+ 		}
+ 		/*
+-		 * Ignore other lines; we don't know what they mean, but
+-		 * this future-proofs us when later versions of git do
+-		 * learn new lines, and the helpers are updated to match.
++		 * Save other lines so they can be fed back to the helper or
++		 * transported to other helpers.
+ 		 */
++		*(value-1) = '=';
++		string_list_append(&c->extra, line.buf);
+ 	}
+ 
+ 	strbuf_release(&line);
+@@ -193,11 +196,16 @@ static void credential_write_item(FILE *fp, const char *key, const char *value)
+ 
+ void credential_write(const struct credential *c, FILE *fp)
  {
++	int i;
++
  	credential_write_item(fp, "protocol", c->protocol);
  	credential_write_item(fp, "host", c->host);
-@@ -241,7 +241,7 @@ static int run_credential_helper(struct credential *c,
- 	return 0;
+ 	credential_write_item(fp, "path", c->path);
+ 	credential_write_item(fp, "username", c->username);
+ 	credential_write_item(fp, "password", c->password);
++
++	for (i = 0; i < c->extra.nr; i++)
++		fprintf(fp, "%s\n", c->extra.items[i].string);
  }
  
--static int credential_do(struct credential *c, const char *helper,
-+int credential_do(struct credential *c, const char *helper,
- 			 const char *operation)
- {
- 	struct strbuf cmd = STRBUF_INIT;
+ static int run_credential_helper(struct credential *c,
 diff --git a/credential.h b/credential.h
-index 96ea41b..daf3e81 100644
+index daf3e81..5f98527 100644
 --- a/credential.h
 +++ b/credential.h
-@@ -30,4 +30,7 @@ void credential_from_url(struct credential *, const char *url);
- int credential_match(const struct credential *have,
- 		     const struct credential *want);
+@@ -5,6 +5,7 @@
  
-+int credential_do(struct credential *, const char *helper, const char *action);
-+void credential_write(const struct credential *, FILE *);
-+
- #endif /* CREDENTIAL_H */
+ struct credential {
+ 	struct string_list helpers;
++	struct string_list extra;
+ 	unsigned approved:1,
+ 		 configured:1,
+ 		 use_http_path:1;
+@@ -16,7 +17,7 @@ struct credential {
+ 	char *path;
+ };
+ 
+-#define CREDENTIAL_INIT { STRING_LIST_INIT_DUP }
++#define CREDENTIAL_INIT { STRING_LIST_INIT_DUP, STRING_LIST_INIT_DUP }
+ 
+ void credential_init(struct credential *);
+ void credential_clear(struct credential *);
 -- 
 1.7.10.11.g901cee
