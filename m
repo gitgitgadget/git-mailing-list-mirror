@@ -1,7 +1,7 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH 08/12] completion: simplify _git_bundle
-Date: Sun,  8 Apr 2012 06:07:55 +0300
-Message-ID: <1333854479-23260-9-git-send-email-felipe.contreras@gmail.com>
+Subject: [PATCH 12/12] completion: rename _git and _gitk
+Date: Sun,  8 Apr 2012 06:07:59 +0300
+Message-ID: <1333854479-23260-13-git-send-email-felipe.contreras@gmail.com>
 References: <1333854479-23260-1-git-send-email-felipe.contreras@gmail.com>
 Cc: "Shawn O. Pearce" <spearce@spearce.org>,
 	Jonathan Nieder <jrnieder@gmail.com>,
@@ -16,71 +16,100 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SGiV9-0007HT-QM
-	for gcvg-git-2@plane.gmane.org; Sun, 08 Apr 2012 05:09:16 +0200
+	id 1SGiV9-0007HT-A3
+	for gcvg-git-2@plane.gmane.org; Sun, 08 Apr 2012 05:09:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754490Ab2DHDI4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 7 Apr 2012 23:08:56 -0400
-Received: from mail-lb0-f174.google.com ([209.85.217.174]:54731 "EHLO
-	mail-lb0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754270Ab2DHDId (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 7 Apr 2012 23:08:33 -0400
-Received: by mail-lb0-f174.google.com with SMTP id gg6so1342002lbb.19
-        for <git@vger.kernel.org>; Sat, 07 Apr 2012 20:08:32 -0700 (PDT)
+	id S1754649Ab2DHDI6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 7 Apr 2012 23:08:58 -0400
+Received: from mail-lpp01m010-f46.google.com ([209.85.215.46]:53218 "EHLO
+	mail-lpp01m010-f46.google.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754377Ab2DHDIm (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 7 Apr 2012 23:08:42 -0400
+Received: by mail-lpp01m010-f46.google.com with SMTP id j13so2813271lah.19
+        for <git@vger.kernel.org>; Sat, 07 Apr 2012 20:08:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=wF7VSesmeymKOZ9a1vjhjRNI/r5BRAsrq0ugRPqJZkY=;
-        b=BYPMPBskaRVkPsQuq5REGb9oBKNc75FMUoueGlEUfIFc7415ZNzIW1tKhhvI7L3+rv
-         5L+N//7qqe2u6o6M4jdeeGo1+vv/gb1T5ODH71n5oZ4g/VCiFDrqxf2aa9Wf4Bk9BZqJ
-         WXK+ROKZGxiDuE+GeQNtNTpgqv1yilTW50HwydZ0RPkKuPeydi+jCvvlqo/SattqEAx+
-         ojFYi1Bao0h+/b89J7Uf81wx6BlLpOZfVFtxkXtEwqbt4f7KP4GJTfFCMJy+6fpZf8HE
-         jtL4zxfvNLF7p30HF2FWGSOGU+s4ugFu5Hc95a9GGV2Q6pOSaA5/X+zi48mahuEiK2MY
-         BgvQ==
-Received: by 10.152.114.35 with SMTP id jd3mr4765750lab.18.1333854512930;
-        Sat, 07 Apr 2012 20:08:32 -0700 (PDT)
+        bh=ntRt8BWthz1qxzWsgO+BC1Xr1CanIlf+FG8JSjkr9HQ=;
+        b=TUFO3aHViOFG3hUvFCzWoDAsUkmMl4JG33DQZC3aynL4W/6kTd2O6APfRJmAQJ7uaY
+         S/NMTv8BdGPIGcxO6Q67K3ODChP9WRV/QloX2SRxBDe9TI5Zwr0qQj/bL+7eIqvA9G+q
+         feZCX7ehEdarBhhOfImO6sJglhlBBjkJas82YXlKUfCew4ne9AUP0rIlLUeFIeTLkKKU
+         07G4pg7Re6xtm5ajXfQyELWz1eaaiO2wF6CKzTG1Lf+V78OfDJllSUtl4tVCcWkm0zCR
+         N+ab1Q5C6Do3x/CYg3WvI5iKt6OvTbiZgVgmfagz6Tml3t+EPf6U4i2bqAbOlfRv9H5n
+         Hp0g==
+Received: by 10.152.132.166 with SMTP id ov6mr4861721lab.35.1333854522098;
+        Sat, 07 Apr 2012 20:08:42 -0700 (PDT)
 Received: from localhost (84-231-195-184.elisa-mobile.fi. [84.231.195.184])
-        by mx.google.com with ESMTPS id uc6sm15519594lbb.3.2012.04.07.20.08.31
+        by mx.google.com with ESMTPS id fe6sm5313550lbb.9.2012.04.07.20.08.40
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Sat, 07 Apr 2012 20:08:32 -0700 (PDT)
+        Sat, 07 Apr 2012 20:08:41 -0700 (PDT)
 X-Mailer: git-send-email 1.7.10.3.g5a738d
 In-Reply-To: <1333854479-23260-1-git-send-email-felipe.contreras@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194961>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194962>
+
+Would be helpful to reuse these for zsh completion; it uses _git, and it
+cannot be changed.
 
 Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
- contrib/completion/git-completion.bash |    8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ contrib/completion/git-completion.bash |    8 ++++----
+ t/t9902-completion.sh                  |    2 +-
+ 2 files changed, 5 insertions(+), 5 deletions(-)
 
 diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 1fe11f4..c26f96c 100755
+index 6cf1d98..7d663f7 100755
 --- a/contrib/completion/git-completion.bash
 +++ b/contrib/completion/git-completion.bash
-@@ -1140,16 +1140,18 @@ _git_branch ()
+@@ -2612,7 +2612,7 @@ _git_whatchanged ()
+ 	_git_log
+ }
  
- _git_bundle ()
+-_git ()
++_main_git ()
  {
--	local cmd="${words[2]}"
-+	local subcommands='create list-heads verify unbundle'
-+	local subcommand="$(__git_find_on_cmdline "$subcommands")"
-+
- 	case "$cword" in
- 	2)
--		__gitcomp "create list-heads verify unbundle"
-+		__gitcomp "$subcommands"
- 		;;
- 	3)
- 		# looking for a file
- 		;;
- 	*)
--		case "$cmd" in
-+		case "$subcommand" in
- 			create)
- 				__git_complete_revlist
- 			;;
+ 	local i c=1 cmd cmd_pos __git_dir
+ 
+@@ -2666,7 +2666,7 @@ _git ()
+ 	fi
+ }
+ 
+-_gitk ()
++_main_gitk ()
+ {
+ 	__git_has_doubledash && return
+ 
+@@ -2710,7 +2710,7 @@ foo_wrap ()
+ 
+ git_complete ()
+ {
+-	local name="${2-$1}"
++	local name="${2-main_$1}"
+ 	local cmd="${name#git_}"
+ 	eval "$(typeset -f foo_wrap | sed -e "s/foo_cmd/$cmd/" -e "s/foo/_$name/")"
+ 	complete -o bashdefault -o default -o nospace -F _${name}_wrap $1 2>/dev/null \
+@@ -2725,5 +2725,5 @@ git_complete gitk
+ # included the '.exe' suffix.
+ #
+ if [ Cygwin = "$(uname -o 2>/dev/null)" ]; then
+-git_complete git.exe git
++git_complete git.exe main_git
+ fi
+diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
+index 6c61e7a..ef1323f 100755
+--- a/t/t9902-completion.sh
++++ b/t/t9902-completion.sh
+@@ -57,7 +57,7 @@ test_completion ()
+ 	local _cword wrap
+ 	_words=( $1 )
+ 	test $# -gt 1 && echo "$2" > expected
+-	wrap="${3-_git_wrap}"
++	wrap="${3-_main_git_wrap}"
+ 	(( _cword = ${#_words[@]} - 1 ))
+ 	$wrap && print_comp &&
+ 	test_cmp expected out
 -- 
 1.7.10.3.g5a738d
