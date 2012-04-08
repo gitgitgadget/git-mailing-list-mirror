@@ -1,131 +1,175 @@
-From: "Yi, EungJun" <semtlenori@gmail.com>
-Subject: Re: In tree object, Must the
-Date: Mon, 9 Apr 2012 00:22:59 +0900
-Message-ID: <CAFT+Tg8K9H4hnjJcXBtM931MpeRDC8V1OV-uns1F9+sAWwf8VQ@mail.gmail.com>
-References: <CAFT+Tg-+s5=pFNwY7ZMxem4z6YHu53kyOs0B_rkmphq=mEtpTg@mail.gmail.com>
-	<1333891217.7419.5.camel@centaur.lab.cmartin.tk>
-Reply-To: semtlenori@gmail.com
+From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <rene.scharfe@lsrfire.ath.cx>
+Subject: Re: [PATCH 1/3] add mergesort() for linked lists
+Date: Sun, 08 Apr 2012 22:32:38 +0200
+Message-ID: <4F81F5E6.2070609@lsrfire.ath.cx>
+References: <201203291818.49933.mfick@codeaurora.org> <7v7gy2q1kq.fsf@alter.siamese.dyndns.org> <60bff12d-544c-4fbd-b48a-0fdf44efaded@email.android.com> <20120330093207.GA12298@sigill.intra.peff.net> <20120330094052.GB12298@sigill.intra.peff.net> <4F7780C3.2050408@lsrfire.ath.cx> <7vpqbm56pf.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?ISO-8859-1?Q?Carlos_Mart=EDn_Nieto?= <cmn@elego.de>
-X-From: git-owner@vger.kernel.org Sun Apr 08 17:23:08 2012
+Content-Transfer-Encoding: 7bit
+Cc: Jeff King <peff@peff.net>, Martin Fick <mfick@codeaurora.org>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Apr 08 22:33:01 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SGtxL-0002NW-Nn
-	for gcvg-git-2@plane.gmane.org; Sun, 08 Apr 2012 17:23:08 +0200
+	id 1SGynE-0008Ss-Qz
+	for gcvg-git-2@plane.gmane.org; Sun, 08 Apr 2012 22:33:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755644Ab2DHPXA convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 8 Apr 2012 11:23:00 -0400
-Received: from mail-ob0-f174.google.com ([209.85.214.174]:50890 "EHLO
-	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755561Ab2DHPW7 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 8 Apr 2012 11:22:59 -0400
-Received: by obbtb18 with SMTP id tb18so4911823obb.19
-        for <git@vger.kernel.org>; Sun, 08 Apr 2012 08:22:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:reply-to:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type:content-transfer-encoding;
-        bh=bzQtppojN1Z6d55oTnCQsV2xAMdj0K9aNY8GiTaba10=;
-        b=Mwd6tAqlMbikBC3lDVc5oH0QqcF0GF1MSle7tGRibeRqn2PeRZi9HT+Sp4dyn0Y23o
-         WrnzLdwB9s1ZghXISc6FMdyvhymrwhSZiguoBrb0FxG6BEiL7TqFKW5MvKUrLZkx9U9a
-         NFTHudqIWWBJTE5GzvzCSOx0A42yPadwZZICLbKmB+G491xN08K6BhDE+WUlasQbFPwN
-         u4h+tE4vcnaBFH2ENdVBQMudg3AsBhvHS9IK+Zd/8Xcgch9Om4EAP5+uHuc/0nH3i007
-         HSP7YY6J+rOS8QCIjSKfWA3OVryL2aEltHXThYdOME0JrWoWCPhm9QgGZ/zENYkcoNk5
-         ihew==
-Received: by 10.60.32.210 with SMTP id l18mr6137709oei.1.1333898579230; Sun,
- 08 Apr 2012 08:22:59 -0700 (PDT)
-Received: by 10.182.53.98 with HTTP; Sun, 8 Apr 2012 08:22:59 -0700 (PDT)
-In-Reply-To: <1333891217.7419.5.camel@centaur.lab.cmartin.tk>
+	id S1755558Ab2DHUcp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 8 Apr 2012 16:32:45 -0400
+Received: from india601.server4you.de ([85.25.151.105]:34594 "EHLO
+	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754976Ab2DHUco (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 8 Apr 2012 16:32:44 -0400
+Received: from [192.168.2.105] (p4FFDBD03.dip.t-dialin.net [79.253.189.3])
+	by india601.server4you.de (Postfix) with ESMTPSA id EDCA42F8094;
+	Sun,  8 Apr 2012 22:32:41 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:11.0) Gecko/20120327 Thunderbird/11.0.1
+In-Reply-To: <7vpqbm56pf.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195004>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195005>
 
-You are right. I tried to clone a repository which has a unordered
-tree object and all you said happened, as below.
+Am 05.04.2012 21:17, schrieb Junio C Hamano:
+> After seeing "I wrote it myself due to NIH", it strikes me a bit odd that
+> you still used "start from bunch of singleton sublist, elongating twice
+> per round as we go" structure from the original.
 
-$ git ls-tree HEAD
-100644 blob a6ccb8dec6b21e9d3e0b716d3a0915262a8c4474	b
-100644 blob a3df8f3749f855a2d905d92f11590a9c18a1bcbb	a
-100644 blob 424907d3fe9f1fa4b2e3a0bb65ab99780d9acfba	c
-$ git show -- b
-$ git show -- a
-$ git fsck
-error in tree 3f5a56e992a01f2e500bed57360f3961323b9d6e: not properly so=
-rted
-error in tree a94e7dc2820eb4d0ef308fac1a32b3715e82dc76: not properly so=
-rted
+It's just becasue the dumb bottom-up approach is the most simple way to
+implement merge sort.
 
-I want to allow users to clone the git repository created by my impleme=
-ntation,
-but before I have to sort tree objects. Thanks to you, I know that now.
+> I wonder if it would be an improvement if you structured the loop so that:
+> 
+>   (1) the first sublist 'p' grabs as many elements in the ascending order
+>       as you find;
+> 
+>   (2) the second sublist 'q' begins at the end of the first sublist and
+>       grabs as many elements in the ascending order;
+> 
+>   (3) 'p' and 'q' are merge-sorted into the result list;
+> 
+>   (4) if your two sublists did not cover "list" in its entirety, process
+>       the remainder (i.e. where the second sublist stopped because of an
+>       unordered element) by going back to step (1); and
+> 
+>   (5) if you did not need to jump back to step (1) from step (4), then you
+>       had only two sublists (or less), so the result is sorted.  Otherwise,
+>       the result now has fewer ascending sublists than the original, so go
+>       back to (1) and iterate.
+> 
+> If the input is in a random order, this may end up doing the same number
+> of iterations as the original, but if the input is mostly sorted, wouldn't
+> it allow us to take advantage of the fact by starting with a longer
+> sublist in the earlier rounds?
 
-And your suggestion to use node-gitteh is also thankful,
-but I want pure js implementation without libgit2.
+This optimization speeds up the pre-sorted case but slows down the case of
+a reversed pre-sorted list because we have to determine the length of the
+sublists each time, while the dumb implementation already knows it.  I
+didn't measure a significant difference for Jeff's test case.  Here's my
+attempt at an implementation, for reference.
 
-2012=EB=85=84 4=EC=9B=94 8=EC=9D=BC =EC=98=A4=ED=9B=84 10:20, Carlos Ma=
-rt=C3=ADn Nieto <cmn@elego.de>=EB=8B=98=EC=9D=98 =EB=A7=90:
-> On Sun, 2012-04-08 at 12:43 +0900, Yi, EungJun wrote:
->> Hello,
->>
->> I'm implementing Git using node.js, and I have a question while I
->> write some code to store tree object.
->>
->> Tree object looks a table consists of three fields: blob's mode, nam=
-e
->> and id, as below.
->>
->> e.g.)
->> $ git cat-file -p 45799547
->> 100644 blob cd242b1e5bb403500feb49a1aa656c21c6c0be69 =C2=A0Makefile
->> 100644 blob bf382321749577d52bd2fbf2281df0510b4bad31 =C2=A0README.md
->> 100644 blob 5441bb48428611a3cb140d8192d39484fcf3b742 =C2=A0fsutil.js
->> 100644 blob 0af680a5c0dd4482b09aa7f8e837234bed0b7cfa =C2=A0package.j=
-son
->> 040000 tree 39a4d45669addfb1e8f0a499deebc5b97b4edfa0 =C2=A0test
->>
->> It seems that the table is stored in order by blob's name.
->
-> Yes, the entries in the tree are alpha-sorted. The exception are tree=
-s,
-> where you have to pretend that there is a trailing slash. In other
-> words, the order is the same as you'd see in the index (as there, the
-> test/ directory in your example would be stored with a slash and the
-> name of the subdirs and files in it.
->
->>
->> If it is true, what happens if it is not ordered?
->
-> fsck complains for one.
->
->>
->> Does that cause any troubles to users to use a git repository create=
-d
->> and managed by my Git implementation?
->
-> How does your implementation store things? You haven't said (maybe
-> hinted that you may be writing trees with the wrong order). Depending=
- on
-> the particular implementation of whatever is reading the git reposito=
-ry,
-> it might not be able to find an entry in your tree, as it's wrongly
-> sorted, but that depends on the exact implementation and possibly luc=
-k.
->
-> Do you need to write this in pure js? There are some bindings for
-> node.js[0] already for libgit2 so you don't need to redo the low-leve=
-l
-> work.
->
-> Cheers,
-> =C2=A0 cmn
->
-> [0] https://github.com/libgit2/node-gitteh
->
+---
+ mergesort.c |   61 +++++++++++++++++++++++++++++++++++++++--------------------
+ 1 file changed, 41 insertions(+), 20 deletions(-)
+
+diff --git a/mergesort.c b/mergesort.c
+index c0f1874..3a61b9b 100644
+--- a/mergesort.c
++++ b/mergesort.c
+@@ -8,12 +8,37 @@ struct mergesort_sublist {
+ 	unsigned long len;
+ };
+ 
+-static void *get_nth_next(void *list, unsigned long n,
+-			  void *(*get_next_fn)(const void *))
++static unsigned long run_length(const void *list,
++				struct mergesort_sublist *next_list,
++				void *(*get_next_fn)(const void *),
++				int (*compare_fn)(const void *, const void *))
+ {
+-	while (n-- && list)
+-		list = get_next_fn(list);
+-	return list;
++	unsigned long len = 1;
++
++	if (!list)
++		return 0;
++	for (;;) {
++		void *next = get_next_fn(list);
++
++		if (!next || compare_fn(list, next) > 0) {
++			if (next_list)
++				next_list->ptr = next;
++			break;
++		}
++		list = next;
++		len++;
++	}
++	return len;
++}
++
++static void set_next_pair(struct mergesort_sublist *p,
++			  struct mergesort_sublist *q, void *list,
++			  void *(*get_next_fn)(const void *),
++			  int (*compare_fn)(const void *, const void *))
++{
++	p->ptr = list;
++	p->len = run_length(p->ptr, q, get_next_fn, compare_fn);
++	q->len = q->ptr ? run_length(q->ptr, NULL, get_next_fn, compare_fn) : 0;
+ }
+ 
+ static void *pop_item(struct mergesort_sublist *l,
+@@ -30,24 +55,16 @@ void *mergesort(void *list,
+ 		void (*set_next_fn)(void *, void *),
+ 		int (*compare_fn)(const void *, const void *))
+ {
+-	unsigned long l;
+-
+ 	if (!list)
+ 		return NULL;
+-	for (l = 1; ; l *= 2) {
++	for (;;) {
+ 		void *curr;
+ 		struct mergesort_sublist p, q;
+ 
+-		p.ptr = list;
+-		q.ptr = get_nth_next(p.ptr, l, get_next_fn);
++		set_next_pair(&p, &q, list, get_next_fn, compare_fn);
+ 		if (!q.ptr)
+ 			break;
+-		p.len = q.len = l;
+-
+-		if (compare_fn(p.ptr, q.ptr) > 0)
+-			list = curr = pop_item(&q, get_next_fn);
+-		else
+-			list = curr = pop_item(&p, get_next_fn);
++		list = curr = pop_item(&q, get_next_fn);
+ 
+ 		while (p.ptr) {
+ 			while (p.len || q.len) {
+@@ -63,10 +80,14 @@ void *mergesort(void *list,
+ 					curr = pop_item(&p, get_next_fn);
+ 				set_next_fn(prev, curr);
+ 			}
+-			p.ptr = q.ptr;
+-			p.len = l;
+-			q.ptr = get_nth_next(p.ptr, l, get_next_fn);
+-			q.len = q.ptr ? l : 0;
++
++			set_next_pair(&p, &q, q.ptr, get_next_fn, compare_fn);
++			if (q.ptr) {
++				void *prev = curr;
++
++				curr = pop_item(&q, get_next_fn);
++				set_next_fn(prev, curr);
++			}
+ 
+ 		}
+ 		set_next_fn(curr, NULL);
+-- 
+1.7.10
