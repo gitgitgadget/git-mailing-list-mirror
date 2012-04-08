@@ -1,109 +1,79 @@
-From: Carlos =?ISO-8859-1?Q?Mart=EDn?= Nieto <cmn@elego.de>
-Subject: Re: In tree object, Must the
-Date: Sun, 08 Apr 2012 15:20:17 +0200
-Message-ID: <1333891217.7419.5.camel@centaur.lab.cmartin.tk>
-References: <CAFT+Tg-+s5=pFNwY7ZMxem4z6YHu53kyOs0B_rkmphq=mEtpTg@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 02/12] completion: simplify __gitcomp
+Date: Sun, 8 Apr 2012 08:27:04 -0500
+Message-ID: <20120408132704.GB4103@burratino>
+References: <1333854479-23260-1-git-send-email-felipe.contreras@gmail.com>
+ <1333854479-23260-3-git-send-email-felipe.contreras@gmail.com>
+ <20120408124652.GN2289@goldbirke>
+ <CAMP44s0nSH7ZjC4T=7pXS2MyAkZ133hOXa_tn3q4er+FbcOc_w@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg="pgp-sha1"; protocol="application/pgp-signature";
-	boundary="=-V913WP3gFpNnM55Ise7y"
-Cc: git@vger.kernel.org
-To: semtlenori@gmail.com
-X-From: git-owner@vger.kernel.org Sun Apr 08 15:20:34 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: SZEDER =?utf-8?B?R8OhYm9y?= <szeder@ira.uka.de>,
+	git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Thomas Rast <trast@student.ethz.ch>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Apr 08 15:27:22 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SGs2g-0003vC-8D
-	for gcvg-git-2@plane.gmane.org; Sun, 08 Apr 2012 15:20:30 +0200
+	id 1SGs9F-0007wv-67
+	for gcvg-git-2@plane.gmane.org; Sun, 08 Apr 2012 15:27:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755440Ab2DHNUX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 8 Apr 2012 09:20:23 -0400
-Received: from kimmy.cmartin.tk ([91.121.65.165]:47808 "EHLO kimmy.cmartin.tk"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753233Ab2DHNUW (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 8 Apr 2012 09:20:22 -0400
-Received: from [192.168.1.17] (brln-4db9cec9.pool.mediaWays.net [77.185.206.201])
-	by kimmy.cmartin.tk (Postfix) with ESMTPSA id 8017146057;
-	Sun,  8 Apr 2012 15:20:03 +0200 (CEST)
-In-Reply-To: <CAFT+Tg-+s5=pFNwY7ZMxem4z6YHu53kyOs0B_rkmphq=mEtpTg@mail.gmail.com>
-X-Mailer: Evolution 3.2.2-1 
+	id S1755524Ab2DHN1K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 8 Apr 2012 09:27:10 -0400
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:51065 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755350Ab2DHN1J (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 8 Apr 2012 09:27:09 -0400
+Received: by iagz16 with SMTP id z16so4887030iag.19
+        for <git@vger.kernel.org>; Sun, 08 Apr 2012 06:27:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=ZzaFXNzKnsbIBfYYhwZivmqMdsTPdQOwdl/01HdgAts=;
+        b=zKRjKYmNY7KJspPpKOlY+zjyA5bf++zToROuShsCaKg4txG7l8ERuVK72cnAgZBPaY
+         8Fm+myYgqGCuLYn6kJaf8or/eHOtPoQDPR5hFHYlcP6Eo3URSnsq8fo7phs7o9Kc9fnY
+         Pkh+X7uKFhAkb2e71HM0muBte3CSrrq3uCZI9E6gv9rMev9EWVTBm/a5OpY9K4kMlxcP
+         4CQV3i86Lkh65JqLvdVd4t80xRRc16WuJ6e+gXyLIjtbrp2+cFBqpTm1Qv/GIds/KD/K
+         /7paOpbZrRz5+gwtV70PrljJvxjMe9DZmehXspznJogM5sjtUoMv4sozXD8Sl80Oy6qb
+         JnPA==
+Received: by 10.50.163.69 with SMTP id yg5mr2794020igb.56.1333891628931;
+        Sun, 08 Apr 2012 06:27:08 -0700 (PDT)
+Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
+        by mx.google.com with ESMTPS id gr1sm11579137igc.1.2012.04.08.06.27.07
+        (version=SSLv3 cipher=OTHER);
+        Sun, 08 Apr 2012 06:27:08 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <CAMP44s0nSH7ZjC4T=7pXS2MyAkZ133hOXa_tn3q4er+FbcOc_w@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194997>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/194998>
 
+Felipe Contreras wrote:
 
---=-V913WP3gFpNnM55Ise7y
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+> So we should never make any cleanups because some custom completion
+> functions might theoretically break?
 
-On Sun, 2012-04-08 at 12:43 +0900, Yi, EungJun wrote:
-> Hello,
->=20
-> I'm implementing Git using node.js, and I have a question while I
-> write some code to store tree object.
->=20
-> Tree object looks a table consists of three fields: blob's mode, name
-> and id, as below.
->=20
-> e.g.)
-> $ git cat-file -p 45799547
-> 100644 blob cd242b1e5bb403500feb49a1aa656c21c6c0be69	Makefile
-> 100644 blob bf382321749577d52bd2fbf2281df0510b4bad31	README.md
-> 100644 blob 5441bb48428611a3cb140d8192d39484fcf3b742	fsutil.js
-> 100644 blob 0af680a5c0dd4482b09aa7f8e837234bed0b7cfa	package.json
-> 040000 tree 39a4d45669addfb1e8f0a499deebc5b97b4edfa0	test
->=20
-> It seems that the table is stored in order by blob's name.
+No, tasteful cleanups that don't break custom completion functions are
+very welcome.
 
-Yes, the entries in the tree are alpha-sorted. The exception are trees,
-where you have to pretend that there is a trailing slash. In other
-words, the order is the same as you'd see in the index (as there, the
-test/ directory in your example would be stored with a slash and the
-name of the subdirs and files in it.
+Also if you have evidence that this is definitely (not just possibly)
+only a theoretical problem, then it would not be a regression.  But I
+actually find it likely that custom completion code would have
+imitated the old completion code in git that used the suffix argument,
+so...
 
->=20
-> If it is true, what happens if it is not ordered?
+Can you remind me what the benefit that the user is getting from this
+patch in exchange for us breaking their tab completion?  The title
+("simplify __gitcomp") tells me exactly nothing about its impact
+except that it is perhaps supposed to result in no behavior change.
 
-fsck complains for one.
-
->=20
-> Does that cause any troubles to users to use a git repository created
-> and managed by my Git implementation?
-
-How does your implementation store things? You haven't said (maybe
-hinted that you may be writing trees with the wrong order). Depending on
-the particular implementation of whatever is reading the git repository,
-it might not be able to find an entry in your tree, as it's wrongly
-sorted, but that depends on the exact implementation and possibly luck.
-
-Do you need to write this in pure js? There are some bindings for
-node.js[0] already for libgit2 so you don't need to redo the low-level
-work.
-
-Cheers,
-   cmn
-
-[0] https://github.com/libgit2/node-gitteh
-
-
---=-V913WP3gFpNnM55Ise7y
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part
-Content-Transfer-Encoding: 7bit
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iQEcBAABAgAGBQJPgZCRAAoJEHKRP1jG7ZzTejYIAKFRDZk1pn4YqcekROhM8wN8
-kEBcFnrA7k44I7CRo8J0mISUkyogfTqTDn91/oaTJXcTb24vEROtQajaBxaCZapF
-jRq5MLrUcNMR9YAsnmamsWMHRLpbg9RBoRigPsvpN6uKj37M4DGndkV6wyOkMHW+
-Vyvejc6NhfsvwuFwAw0NQLqm/lL2h80/GLr6cCM6ssXs7NSUq4GZUFpCPoPbX+ha
-1i9l29qLjvAwcynGAhRok62XbNWIY6hTx8Yt6K1I7L4R6+tbgk9lt/G/7HaKqbVL
-d74G5rEo9yntL7HZXY98IuHaDZoj7gU3NfVB1UUW7tJG28uDgLKygWqmkH0NZC8=
-=5Z1l
------END PGP SIGNATURE-----
-
---=-V913WP3gFpNnM55Ise7y--
+Sorry for the fuss and hope that helps,
+Jonathan
