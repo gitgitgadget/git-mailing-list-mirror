@@ -1,76 +1,86 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: rs/commit-list-sort-in-batch
-Date: Mon, 09 Apr 2012 12:46:50 -0700
-Message-ID: <7vty0svgb9.fsf@alter.siamese.dyndns.org>
-References: <7vwr5szi7z.fsf@alter.siamese.dyndns.org>
- <20120407072724.GA818@sigill.intra.peff.net>
- <20120407073232.GA13076@sigill.intra.peff.net>
+Subject: Re: [PATCH 01/12] tests: add initial bash completion tests
+Date: Mon, 09 Apr 2012 12:58:13 -0700
+Message-ID: <7vpqbgvfsa.fsf@alter.siamese.dyndns.org>
+References: <1333854479-23260-1-git-send-email-felipe.contreras@gmail.com>
+ <1333854479-23260-2-git-send-email-felipe.contreras@gmail.com>
+ <20120408050140.GA5862@sigill.intra.peff.net>
+ <20120408103002.GA3177@burratino>
+ <20120408110642.GB21217@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: =?utf-8?Q?Ren=C3=A9?= Scharfe <rene.scharfe@lsrfire.ath.cx>,
-	git@vger.kernel.org
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Felipe Contreras <felipe.contreras@gmail.com>,
+	git@vger.kernel.org,
+	SZEDER =?utf-8?Q?G?= =?utf-8?Q?=C3=A1bor?= <szeder@ira.uka.de>,
+	Junio C Hamano <gitster@pobox.com>,
+	Thomas Rast <trast@student.ethz.ch>
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Apr 09 21:47:10 2012
+X-From: git-owner@vger.kernel.org Mon Apr 09 21:58:46 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SHKYN-0005VU-SF
-	for gcvg-git-2@plane.gmane.org; Mon, 09 Apr 2012 21:47:08 +0200
+	id 1SHKjW-0002Hp-Jq
+	for gcvg-git-2@plane.gmane.org; Mon, 09 Apr 2012 21:58:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754447Ab2DITqy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Apr 2012 15:46:54 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48781 "EHLO
+	id S1754001Ab2DIT6R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Apr 2012 15:58:17 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:53043 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753081Ab2DITqx (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Apr 2012 15:46:53 -0400
+	id S1752324Ab2DIT6Q (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Apr 2012 15:58:16 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 044CD6A47;
-	Mon,  9 Apr 2012 15:46:52 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EAFA76D22;
+	Mon,  9 Apr 2012 15:58:15 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=V/X+QV8Pm4SmIltV7sq4J4Pv2s0=; b=xuIMAc
-	KmlpzBOmrj/7ikV/eAbsuG8tkJrskF1JYzFRdx/tJdfUjAUwN9Z8a1ZqQICjj6lX
-	6eGCswpiBVAUu8SSnSQ+6upQVEalm6t22ydB8tnnmD3bbb0taDDxrfVcA29VRENL
-	bqBQk1iSsXhyPCtJY4iGCPanjmO+QAdP90XqM=
+	:content-type; s=sasl; bh=vjeKPu2Z1mClpVNx5ULlCIKo2L0=; b=fT0OsP
+	YvAxe756uJ24shM2n7POpb7sNrz3YGO9D8EWnYBkAvWA80Il4G2ChwV3KBoFWRCz
+	yTNXFZDX62tMofhceEzOHa1GktQEGbEpcjnNSIX2QKaGxegGsgw5aAhdTQlEXoba
+	7pUp1QsRyNob03cNBenkHpGqt+6KqiqUeb3BU=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ArHsk/zWPVB6PO/8GKS18bqTZxZ7Yu5T
-	/enLQvI56r+0kyPbj8x3wOIbH4jB0k6AdyycDe3ilSJv1pAdB9cboB9HdZn+BFl8
-	/NIzJEMCtyZItOQGLra1FcPbbff479ly3PQoL4Aq0cBNh8d27C4tVJ9WiazsPFIx
-	7K2VKikoaNw=
+	:content-type; q=dns; s=sasl; b=SQLvFC43n8xAJ5zC5wcpdBovlt0v8CpH
+	mCwIo2PxGXjCZZjqRxAnlx+YV+OIJATk/A93JiiXFbKpuBG5cu+hDPSAFkSyrT1o
+	lJQ/ZcNmvGDBv5wU31HbJoqBGYjLC2OmQizhdPo+tE1+0bNTKp8iaon8auZyQcxw
+	y5YQ1Mw7zYU=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EFDCD6A45;
-	Mon,  9 Apr 2012 15:46:51 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E265A6D21;
+	Mon,  9 Apr 2012 15:58:15 -0400 (EDT)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 854916A44; Mon,  9 Apr 2012
- 15:46:51 -0400 (EDT)
-In-Reply-To: <20120407073232.GA13076@sigill.intra.peff.net> (Jeff King's
- message of "Sat, 7 Apr 2012 03:32:32 -0400")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 516356D1F; Mon,  9 Apr 2012
+ 15:58:15 -0400 (EDT)
+In-Reply-To: <20120408110642.GB21217@sigill.intra.peff.net> (Jeff King's
+ message of "Sun, 8 Apr 2012 07:06:42 -0400")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: C088A9E4-827C-11E1-A255-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 581AA270-827E-11E1-A465-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195033>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195034>
 
 Jeff King <peff@peff.net> writes:
 
-> I'm not sure if that vindicates the patches, or implies that these
-> things are lurking everywhere and that we should really move to a better
-> data structure so we don't have to fix them all manually. :)
+> On Sun, Apr 08, 2012 at 05:30:02AM -0500, Jonathan Nieder wrote:
+>
+>> > This test fails for me. The problem is that I have other git-f* programs
+>> > in my PATH
+>> [...]
+>> Is there some reason we care about the exact list of completions for
+>> "git f"?
+>> [...]
+>> Maybe it would make sense to check a few representative items.
+>> 
+>> 	# builtin
+>> 	grep "^fetch\$" out &&
+>
+> I think your approach (to stop worrying about stopping pollution from
+> the environment, and start being more specific in what the tests care
+> about) is much saner than the snippet I posted.
 
-;-).
-
-I do not know offhand how widespread the assumption of "list"-ness of the
-commit_list is in the codebase.  The last time I looked at it was when I
-was wondering if we could give a custom allocator to "struct commit_list",
-as we seemed to liberally malloc()/free() quite many of them, with the
-hope to reduce memory footprint, but I didn't finish it, so...
-
-But at least inside revision walking machinery, your earlier heap based
-implementation to optimize for time based priority queue access pattern
-looked a very sensible approach to me.
+I have to agree with that; it might give unexpeceted results if the user
+has a $HOME/bin/git-update-index or something, though.
