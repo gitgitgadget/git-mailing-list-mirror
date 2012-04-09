@@ -1,120 +1,193 @@
 From: Pete Wyckoff <pw@padd.com>
-Subject: [PATCH 0/3] git-p4: move to toplevel
-Date: Sun,  8 Apr 2012 20:17:59 -0400
-Message-ID: <1333930682-31670-1-git-send-email-pw@padd.com>
+Subject: [PATCH 1/3] git-p4: move to toplevel
+Date: Sun,  8 Apr 2012 20:18:00 -0400
+Message-ID: <1333930682-31670-2-git-send-email-pw@padd.com>
+References: <1333930682-31670-1-git-send-email-pw@padd.com>
 Cc: Luke Diamand <luke@diamand.org>, Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Apr 09 02:18:15 2012
+X-From: git-owner@vger.kernel.org Mon Apr 09 02:18:32 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SH2JB-0004Rs-Am
-	for gcvg-git-2@plane.gmane.org; Mon, 09 Apr 2012 02:18:13 +0200
+	id 1SH2JT-0004d8-Ix
+	for gcvg-git-2@plane.gmane.org; Mon, 09 Apr 2012 02:18:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755985Ab2DIASI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 8 Apr 2012 20:18:08 -0400
-Received: from honk.padd.com ([74.3.171.149]:45566 "EHLO honk.padd.com"
+	id S1753906Ab2DIAS0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 8 Apr 2012 20:18:26 -0400
+Received: from honk.padd.com ([74.3.171.149]:45568 "EHLO honk.padd.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752425Ab2DIASH (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 8 Apr 2012 20:18:07 -0400
+	id S1752625Ab2DIASZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 8 Apr 2012 20:18:25 -0400
 Received: from arf.padd.com (unknown [50.55.145.32])
-	by honk.padd.com (Postfix) with ESMTPSA id B3D812CBE;
-	Sun,  8 Apr 2012 17:18:04 -0700 (PDT)
+	by honk.padd.com (Postfix) with ESMTPSA id A3FC02CBE;
+	Sun,  8 Apr 2012 17:18:24 -0700 (PDT)
 Received: by arf.padd.com (Postfix, from userid 7770)
-	id 51CE9313D3; Sun,  8 Apr 2012 20:18:02 -0400 (EDT)
+	id 55821313D3; Sun,  8 Apr 2012 20:18:22 -0400 (EDT)
 X-Mailer: git-send-email 1.7.10.56.gfc226
+In-Reply-To: <1333930682-31670-1-git-send-email-pw@padd.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195006>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195007>
 
-Users install git-p4 currently by copying the git-p4 script from
-contrib/fast-import into a local or personal bin directory.  If
-it is part of the install, the command will be available
-automatically.  Also, distributions may be more likely to pick it
-up either as part of a core git package, or as a separate add-on.
+Move git-p4 out of contrib/fast-import into the main code base,
+aside other foreign SCM tools.
 
-
-This series appeared as an RFC two months ago:
-
-    http://thread.gmane.org/gmane.comp.version-control.git/190584
-
-The git-p4 code is in a single python script down in
-contrib/fast-import now.  I'd like to move it up to the top-level
-source directory of git to make it easier to build and
-distribute.  Git-p4 already takes advantage of the git
-infrastructure for documentation and testing, as well as the
-community support (Junio, many reviewers).
-
-The only observation from the RFC series was that git-p4 is
-useful only in the non-open-source world.  While you can download
-p4 for testing, a production environment is not free.  No one
-particularly complained about that though.
-
-Changes since then:
-
-    - Fix bug in name in Documentation/git-p4.txt.
-
-    - Add to command-list.txt.
-
-    - Adapt to other git-p4 changes.
-
-    - I tested git-p4 on msysgit and cygwin, making sure it passes
-      all the tests.  Getting installers for git-p4 in those
-      environments should be possible soon.  Fixes for windows
-      will appear as a separate series.
-
-
-Developer note:  Like all scripts in git, the source file has
-an extension, git-p4.py, which is built with "make" to git-p4.
-Be sure to edit the source file, and to build before running tests.
-
-Installer note: git-p4 uses the existing python dependencies in
-the Makefile.  Be sure _not_ to set NO_PYTHON; build and install
-as usual.  If your python (2.6 or 2.7) is not in /usr/bin/python,
-set PYTHON_PATH accordingly.  Git-p4 does not require the
-git_remote_helpers that are also installed.
-
-
-It would be good to have this in next early in the 1.7.11 series
-so we can send the rest of the patches on top of this.  It
-conflicts fairly heavily with other changes, obviously.  I think
-there are 4-5 other outstanding git-p4 series.
-
-		-- Pete
-
-Pete Wyckoff (3):
-  git-p4: move to toplevel
-  git p4: update name in script
-  git p4: use "git p4" directly in tests
-
+Signed-off-by: Pete Wyckoff <pw@padd.com>
+---
  .gitignore                              |    1 +
- Documentation/git-p4.txt                |   19 +++----
- INSTALL                                 |    3 ++
+ Documentation/git-p4.txt                |   19 ++++++-------------
+ INSTALL                                 |    3 +++
  Makefile                                |    1 +
  command-list.txt                        |    1 +
- contrib/fast-import/git-p4.README       |   13 +++++
+ contrib/fast-import/git-p4.README       |   13 +++++++++++++
  contrib/fast-import/git-p4.bat          |    1 -
- contrib/fast-import/git-p4 => git-p4.py |   14 ++---
- t/lib-git-p4.sh                         |    8 ++-
- t/t9800-git-p4-basic.sh                 |   84 ++++++++++++++---------------
- t/t9801-git-p4-branch.sh                |   32 +++++------
- t/t9802-git-p4-filetype.sh              |   10 ++--
- t/t9803-git-p4-shell-metachars.sh       |   12 ++---
- t/t9804-git-p4-label.sh                 |    6 +--
- t/t9805-git-p4-skip-submit-edit.sh      |   22 ++++----
- t/t9806-git-p4-options.sh               |   28 +++++-----
- t/t9807-git-p4-submit.sh                |   22 ++++----
- t/t9808-git-p4-chdir.sh                 |    6 +--
- t/t9809-git-p4-client-view.sh           |   88 +++++++++++++++----------------
- t/t9810-git-p4-rcs.sh                   |   48 ++++++++---------
- 20 files changed, 214 insertions(+), 205 deletions(-)
+ contrib/fast-import/git-p4 => git-p4.py |    0
+ t/lib-git-p4.sh                         |    2 +-
+ 9 files changed, 26 insertions(+), 15 deletions(-)
  create mode 100644 contrib/fast-import/git-p4.README
  delete mode 100644 contrib/fast-import/git-p4.bat
- rename contrib/fast-import/git-p4 => git-p4.py (99%)
+ rename contrib/fast-import/git-p4 => git-p4.py (100%)
 
+diff --git a/.gitignore b/.gitignore
+index 87fcc5f..5a0782f 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -92,6 +92,7 @@
+ /git-name-rev
+ /git-mv
+ /git-notes
++/git-p4
+ /git-pack-redundant
+ /git-pack-objects
+ /git-pack-refs
+diff --git a/Documentation/git-p4.txt b/Documentation/git-p4.txt
+index b7c7929..3fac413 100644
+--- a/Documentation/git-p4.txt
++++ b/Documentation/git-p4.txt
+@@ -31,13 +31,6 @@ the updated p4 remote branch.
+ 
+ EXAMPLE
+ -------
+-* Create an alias for 'git p4', using the full path to the 'git-p4'
+-  script if needed:
+-+
+-------------
+-$ git config --global alias.p4 '!git-p4'
+-------------
+-
+ * Clone a repository:
+ +
+ ------------
+@@ -311,19 +304,19 @@ configuration file.  This allows future 'git p4 submit' commands to
+ work properly; the submit command looks only at the variable and does
+ not have a command-line option.
+ 
+-The full syntax for a p4 view is documented in 'p4 help views'.  Git-p4
++The full syntax for a p4 view is documented in 'p4 help views'.  'Git p4'
+ knows only a subset of the view syntax.  It understands multi-line
+ mappings, overlays with '+', exclusions with '-' and double-quotes
+-around whitespace.  Of the possible wildcards, git-p4 only handles
+-'...', and only when it is at the end of the path.  Git-p4 will complain
++around whitespace.  Of the possible wildcards, 'git p4' only handles
++'...', and only when it is at the end of the path.  'Git p4' will complain
+ if it encounters an unhandled wildcard.
+ 
+ Bugs in the implementation of overlap mappings exist.  If multiple depot
+ paths map through overlays to the same location in the repository,
+-git-p4 can choose the wrong one.  This is hard to solve without
+-dedicating a client spec just for git-p4.
++'git p4' can choose the wrong one.  This is hard to solve without
++dedicating a client spec just for 'git p4'.
+ 
+-The name of the client can be given to git-p4 in multiple ways.  The
++The name of the client can be given to 'git p4' in multiple ways.  The
+ variable 'git-p4.client' takes precedence if it exists.  Otherwise,
+ normal p4 mechanisms of determining the client are used:  environment
+ variable P4CLIENT, a file referenced by P4CONFIG, or the local host name.
+diff --git a/INSTALL b/INSTALL
+index 58b2b86..87e03bb 100644
+--- a/INSTALL
++++ b/INSTALL
+@@ -131,6 +131,9 @@ Issues of note:
+ 	  use English. Under autoconf the configure script will do this
+ 	  automatically if it can't find libintl on the system.
+ 
++	- Python version 2.6 or later is needed to use the git-p4
++	  interface to Perforce.
++
+  - Some platform specific issues are dealt with Makefile rules,
+    but depending on your specific installation, you may not
+    have all the libraries/tools needed, or you may have
+diff --git a/Makefile b/Makefile
+index be1957a..df86f2f 100644
+--- a/Makefile
++++ b/Makefile
+@@ -440,6 +440,7 @@ SCRIPT_PERL += git-send-email.perl
+ SCRIPT_PERL += git-svn.perl
+ 
+ SCRIPT_PYTHON += git-remote-testgit.py
++SCRIPT_PYTHON += git-p4.py
+ 
+ SCRIPTS = $(patsubst %.sh,%,$(SCRIPT_SH)) \
+ 	  $(patsubst %.perl,%,$(SCRIPT_PERL)) \
+diff --git a/command-list.txt b/command-list.txt
+index a36ee9b..38ec5f7 100644
+--- a/command-list.txt
++++ b/command-list.txt
+@@ -76,6 +76,7 @@ git-mktree                              plumbingmanipulators
+ git-mv                                  mainporcelain common
+ git-name-rev                            plumbinginterrogators
+ git-notes                               mainporcelain
++git-p4                                  foreignscminterface
+ git-pack-objects                        plumbingmanipulators
+ git-pack-redundant                      plumbinginterrogators
+ git-pack-refs                           ancillarymanipulators
+diff --git a/contrib/fast-import/git-p4.README b/contrib/fast-import/git-p4.README
+new file mode 100644
+index 0000000..d9a7684
+--- /dev/null
++++ b/contrib/fast-import/git-p4.README
+@@ -0,0 +1,13 @@
++The git-p4 script moved to the top-level of the git source directory.
++
++Invoke it as any other git command, like "git p4 clone", for instance.
++
++Note that the top-level git-p4.py script is now the source.  It is
++built using make to git-p4, which will be installed.
++
++Windows users can copy the git-p4.py source script directly, possibly
++invoking it through a batch file called "git-p4.bat" in the same folder.
++It should contain just one line:
++
++    @python "%~d0%~p0git-p4.py" %*
++
+diff --git a/contrib/fast-import/git-p4.bat b/contrib/fast-import/git-p4.bat
+deleted file mode 100644
+index 9f97e88..0000000
+--- a/contrib/fast-import/git-p4.bat
++++ /dev/null
+@@ -1 +0,0 @@
+-@python "%~d0%~p0git-p4" %*
+diff --git a/contrib/fast-import/git-p4 b/git-p4.py
+similarity index 100%
+rename from contrib/fast-import/git-p4
+rename to git-p4.py
+diff --git a/t/lib-git-p4.sh b/t/lib-git-p4.sh
+index a870f9a..49edaae 100644
+--- a/t/lib-git-p4.sh
++++ b/t/lib-git-p4.sh
+@@ -13,7 +13,7 @@ fi
+ 	test_done
+ }
+ 
+-GITP4="$GIT_BUILD_DIR/contrib/fast-import/git-p4"
++GITP4="$GIT_BUILD_DIR/git-p4"
+ 
+ # Try to pick a unique port: guess a large number, then hope
+ # no more than one of each test is running.
 -- 
 1.7.10.4.gb369
