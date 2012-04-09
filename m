@@ -1,70 +1,104 @@
-From: Stephen Bash <bash@genarts.com>
-Subject: Re: GSOC Proposal draft: git-remote-svn
-Date: Mon, 09 Apr 2012 14:59:41 -0400 (EDT)
-Message-ID: <c1cc5fc7-ba1b-447a-9676-53956c5e9dae@mail>
-References: <1421035.yALBSXSHGd@flomedio>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] rev-parse --show-prefix: add in trailing newline
+Date: Mon, 09 Apr 2012 12:07:44 -0700
+Message-ID: <7v1unwwwov.fsf@alter.siamese.dyndns.org>
+References: <1333978076-29968-1-git-send-email-rosslagerwall@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
-	David Barr <davidbarr@google.com>,
-	Andrew Sayers <andrew-git@pileofstuff.org>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Dmitry Ivankov <divanorama@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Florian Achleitner <florian.achleitner2.6.31@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Apr 09 20:59:58 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>
+To: Ross Lagerwall <rosslagerwall@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Apr 09 21:07:54 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SHJoh-00026B-Lr
-	for gcvg-git-2@plane.gmane.org; Mon, 09 Apr 2012 20:59:56 +0200
+	id 1SHJwP-0005Z7-T4
+	for gcvg-git-2@plane.gmane.org; Mon, 09 Apr 2012 21:07:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757739Ab2DIS7v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Apr 2012 14:59:51 -0400
-Received: from hq.genarts.com ([173.9.65.1]:48621 "HELO mail.hq.genarts.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1757685Ab2DIS7u (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Apr 2012 14:59:50 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by mail.hq.genarts.com (Postfix) with ESMTP id 1F026BE9E98;
-	Mon,  9 Apr 2012 14:59:47 -0400 (EDT)
-X-Virus-Scanned: amavisd-new at mail.hq.genarts.com
-Received: from mail.hq.genarts.com ([127.0.0.1])
-	by localhost (mail.hq.genarts.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id fzP4zofINVjs; Mon,  9 Apr 2012 14:59:41 -0400 (EDT)
-Received: from mail.hq.genarts.com (localhost [127.0.0.1])
-	by mail.hq.genarts.com (Postfix) with ESMTP id 18616BE9E9A;
-	Mon,  9 Apr 2012 14:59:41 -0400 (EDT)
-In-Reply-To: <1421035.yALBSXSHGd@flomedio>
-X-Mailer: Zimbra 7.1.3_GA_3346 (ZimbraWebClient - GC18 (Mac)/7.1.3_GA_3346)
+	id S1757868Ab2DITHs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Apr 2012 15:07:48 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:65005 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757858Ab2DITHr (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Apr 2012 15:07:47 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 91DBF7E4E;
+	Mon,  9 Apr 2012 15:07:46 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=l/zCJx84kHpVodiClFFgoY5uuRU=; b=GKeMuz
+	tDrjvRaRpdlbKhFDi0+7EGqD2uUHMW6yGx/HFcnpXwx688RpaapbjiuKqtAyqAED
+	C86z8S12WUk7o1vbcg/3Pv2Y3eDLcmxNO6fUCG2lw4KtNKqh3iDIaD7jJanC5gCV
+	ej0nanVjGZJh23A11oVPPXSfmABKrVMR6ROfY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=WNh5N165lF24MnLN0Su2BSVOxLTDmNWq
+	/jn5ThbAIvhwpega+Vb2SKa28oGg90VnsGLklFWrTV45AgHV7UGwdj9JSZcpLc2w
+	GuGEGhDrgl0ANvZXjMWquiVqRDPQbDnBbI+UyOwpj7JcclIOdALLTvaaiCQGujdV
+	z2W4dR4+dgI=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8624C7E4D;
+	Mon,  9 Apr 2012 15:07:46 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 16AAE7E4C; Mon,  9 Apr 2012
+ 15:07:45 -0400 (EDT)
+In-Reply-To: <1333978076-29968-1-git-send-email-rosslagerwall@gmail.com>
+ (Ross Lagerwall's message of "Mon, 9 Apr 2012 15:27:56 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 4A89089C-8277-11E1-8989-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195030>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195031>
 
------ Original Message -----
-> From: "Florian Achleitner" <florian.achleitner2.6.31@gmail.com>
-> Sent: Thursday, April 5, 2012 9:36:40 AM
-> Subject: Re: GSOC Proposal draft: git-remote-svn
-> 
-> Thanks for your inputs. I've now submitted a slightly updated version
-> of my proposal to google. Additionally it's on github [1].
-> 
-> Summary of diffs:
-> I'll concentrate on the fetching from svn, writing a remote helper
-> without branch detection (like svn-fe) first, and then creating the
-> branch mapper.
-> 
-> [1] https://github.com/flyingflo/git/wiki/
+Ross Lagerwall <rosslagerwall@gmail.com> writes:
 
-Florian - I just skimmed the github page since I've been away for a week.  Not to toot my own horn to much, there's a lot of good discussion about svn-isms in my thread from 2010 (starts at [1], but most of the good stuff is the discussion that follows).  I didn't see it in the references, and it probably doesn't need to be there, but if you haven't seen it yet, take a look at it (and cringe at my horrible abuse of git in my early days... ugh!).
+> diff --git a/t/t1501-worktree.sh b/t/t1501-worktree.sh
+> index e661147..8f36aa9 100755
+> --- a/t/t1501-worktree.sh
+> +++ b/t/t1501-worktree.sh
+> @@ -68,7 +68,7 @@ test_expect_success 'inside work tree' '
+>  	)
+>  '
+>  
+> -test_expect_failure 'empty prefix is actually written out' '
+> +test_expect_success 'empty prefix is actually written out' '
+>  	echo >expected &&
+>  	(
+>  		cd work &&
 
-[1] http://article.gmane.org/gmane.comp.version-control.git/159054
+fc68875 (t1501 (rev-parse): clarify, 2010-07-24) says it is a "possible
+bug", but I do not think the expectation of the new test added by that
+commit is entirely correct.
 
-Thanks,
-Stephen
+Because the assignment will strip the trailing LF away adding an extra
+newline at the end would not matter in practice in many scripts, e.g.
+
+	a=$(git rev-parse --show-prefix)
+        if test -z "$a"
+        then
+		echo we are at toplevel
+	fi
+
+or
+
+	pfx=$(git rev-parse --show-prefix)
+	cd_to_toplevel
+	for arg
+        do
+		case "$arg" in
+                /*)
+                       	user refers to "$arg" that is a full path ;;
+		*)
+			user refers to "$pfx$arg" ;;
+		esac
+	done
+
+But it will break existing scripts if they expect the following to work:
+
+	file="$(git rev-parse --show-prefix)/$1"
+        cd_to_toplevel
+        test -f "$file"
