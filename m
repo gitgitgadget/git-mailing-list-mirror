@@ -1,106 +1,75 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] remote: update builtin usage
-Date: Mon, 09 Apr 2012 15:06:32 -0700
-Message-ID: <7vty0stv9z.fsf@alter.siamese.dyndns.org>
-References: <4F804E70.2020106@elegosoft.com>
+Subject: Re: [PATCH] rebase -i continue: Don't skip submodule only commits
+Date: Mon, 09 Apr 2012 15:09:46 -0700
+Message-ID: <7vpqbgtv4l.fsf@alter.siamese.dyndns.org>
+References: <1333794053-22226-1-git-send-email-john@keeping.me.uk>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git <git@vger.kernel.org>
-To: Michael Schubert <mschub@elegosoft.com>
-X-From: git-owner@vger.kernel.org Tue Apr 10 00:06:43 2012
+Cc: git@vger.kernel.org, Jens Lehmann <Jens.Lehmann@web.de>
+To: John Keeping <john@keeping.me.uk>
+X-From: git-owner@vger.kernel.org Tue Apr 10 00:09:55 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SHMjQ-00046E-HZ
-	for gcvg-git-2@plane.gmane.org; Tue, 10 Apr 2012 00:06:40 +0200
+	id 1SHMmY-0005Jy-PX
+	for gcvg-git-2@plane.gmane.org; Tue, 10 Apr 2012 00:09:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757609Ab2DIWGf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Apr 2012 18:06:35 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:37519 "EHLO
+	id S1757063Ab2DIWJt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Apr 2012 18:09:49 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:38813 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757515Ab2DIWGe (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Apr 2012 18:06:34 -0400
+	id S1751565Ab2DIWJs (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Apr 2012 18:09:48 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5E52A6973;
-	Mon,  9 Apr 2012 18:06:34 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2CD416A45;
+	Mon,  9 Apr 2012 18:09:48 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=2LNeCs7ofWxvvTx+MXzNfuWR/8Q=; b=WZcXnf
-	OCSraLbUQHVPoGpQUaksQ7myF/gyZpvr3qy5xFTK/+bUWw21wM/FDwKeH5keHPcJ
-	CjgdJmnYaSuNKiGZEY8rsxmouGjKyJFW6MtHNq/Fonwj9sQnHD1bLgjdkKp2vv57
-	YIpcqbjUqaXcCikXOV7DOvQL4tN8fRUm7d7Ck=
+	:content-type; s=sasl; bh=8shOQKPai/iUP/qGy5B/SX/j/rY=; b=SqC39W
+	qC41VQJSPDJxXs2YQmwUsw3EJZ6ydDdNW5bkSvQZYWOQiKBgSLTmp8ZScBtm8uGA
+	qwuKtqS8ZWpFyKLj0eRo+KckasfBcVMq70vxRLv9Lq+UTsRVqD5GadtarrsJledC
+	7Ps1+Sw3yl/9pmZuHKjq/A8C5Z5ZOO5UahWVY=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=qVweWHYJrmwqVOwdjO1e4JT1TZzaG3s0
-	cQUxvLYBRZ5yw7I09vizbGiFeuPm/dMQM1xQduW8e7fIyxn3lqFOxe2cwKyPVNXn
-	2az6bIrDiEViiQ7CrsrdZmiASoveTUx1+JjKuEJvwNXdvD2Ralfxd9djkRqc3FF0
-	SEr5HwQ5A0w=
+	:content-type; q=dns; s=sasl; b=GMcddazjw5HbrTlM3kDYOVEiD44tYn0H
+	YjboV+yqvQUKh4v7DM2zQT1/FrKAwlmxCFf2NGNYQmbbKX3GfhvFl9S3qp3FUoYg
+	/72jEqLHFeswDbf69CDG+58jOpXJppLkQ3qDnlXPs0ClnQnB+HRDoU4HQK7nwFGH
+	BHJhKup7lrs=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 559566972;
-	Mon,  9 Apr 2012 18:06:34 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 244ED6A44;
+	Mon,  9 Apr 2012 18:09:48 -0400 (EDT)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B02B46971; Mon,  9 Apr 2012
- 18:06:33 -0400 (EDT)
-In-Reply-To: <4F804E70.2020106@elegosoft.com> (Michael Schubert's message of
- "Sat, 07 Apr 2012 16:25:52 +0200")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 95C0F6A43; Mon,  9 Apr 2012
+ 18:09:47 -0400 (EDT)
+In-Reply-To: <1333794053-22226-1-git-send-email-john@keeping.me.uk> (John
+ Keeping's message of "Sat, 7 Apr 2012 11:20:53 +0100")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 44B33A64-8290-11E1-8FC2-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: B844BCB4-8290-11E1-8DF3-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195043>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195044>
 
-Michael Schubert <mschub@elegosoft.com> writes:
+John Keeping <john@keeping.me.uk> writes:
 
-> Add missing options "--tags|--no-tags" and "--push".
+> When git-rebase--interactive stops due to a conflict and the only change
+> to be committed is in a submodule, the test for whether there is
+> anything to be committed ignores the staged submodule change.  This
+> leads rebase to skip creating the commit for the change.
 >
-> Signed-off-by: Michael Schubert <mschub@elegosoft.com>
+> While unstaged submodule changes should be ignored to avoid needing to
+> update submodules during a rebase, it is safe to remove the
+> --ignore-submodules option to diff-index because --cached ensures that
+> it is only checking the index.  This was discussed in [1] and a test is
+> included to ensure that unstaged changes are still ignored correctly.
+>
+> [1] http://thread.gmane.org/gmane.comp.version-control.git/188713
+>
+> Signed-off-by: John Keeping <john@keeping.me.uk>
 > ---
->  builtin/remote.c |    4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
->
-> diff --git a/builtin/remote.c b/builtin/remote.c
-> index fec92bc..b5645fe 100644
-> --- a/builtin/remote.c
-> +++ b/builtin/remote.c
-> @@ -9,7 +9,7 @@
->  
->  static const char * const builtin_remote_usage[] = {
->  	"git remote [-v | --verbose]",
-> -	"git remote add [-t <branch>] [-m <master>] [-f] [--mirror=<fetch|push>] <name> <url>",
-> +	"git remote add [-t <branch>] [-m <master>] [-f] [--tags|--no-tags] [--mirror=<fetch|push>] <name> <url>",
->  	"git remote rename <old> <new>",
->  	"git remote rm <name>",
->  	"git remote set-head <name> (-a | -d | <branch>)",
-> @@ -17,7 +17,7 @@ static const char * const builtin_remote_usage[] = {
->  	"git remote prune [-n | --dry-run] <name>",
->  	"git remote [-v | --verbose] update [-p | --prune] [(<group> | <remote>)...]",
->  	"git remote set-branches [--add] <name> <branch>...",
-> -	"git remote set-url <name> <newurl> [<oldurl>]",
-> +	"git remote set-url [--push] <name> <newurl> [<oldurl>]",
->  	"git remote set-url --add <name> <newurl>",
->  	"git remote set-url --delete <name> <url>",
->  	NULL
 
-
-Hrm.  While this may not be _wrong_ per-se, it strikes me odd that
-builtin_remote_usage[] is more or less a superset of the subcommand
-specific usage text, e.g. builtin_remote_seturl_usage[], etc., but still
-need to be manually defined like this.  That always leaves a risk that the
-descriptions would drift apart between the two places.
-
-For example, builtin_remote_setbranches_usage[] has these two:
-
-static const char * const builtin_remote_setbranches_usage[] = {
-        "git remote set-branches <name> <branch>...",
-        "git remote set-branches --add <name> <branch>...",
-	NULL
-};
-
-where the above has only one, with an optional "[--add]".
-
-There must be a better way to do this.
+Very well explained and sensible.
