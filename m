@@ -1,74 +1,56 @@
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: In tree object, Must the
-Date: Mon, 9 Apr 2012 14:03:06 -0700
-Message-ID: <CAJo=hJsh6DyUA3gV1Yiho5bwCdi99aMkBHepy-VVnFwJPeWYOg@mail.gmail.com>
-References: <CAFT+Tg-+s5=pFNwY7ZMxem4z6YHu53kyOs0B_rkmphq=mEtpTg@mail.gmail.com>
- <7vobr0wyml.fsf@alter.siamese.dyndns.org> <CAJo=hJv==GrxLH6U9MAwckcEXiYtKeMEpEMNVTJLcSKro2QV_w@mail.gmail.com>
- <7vhawsvffn.fsf@alter.siamese.dyndns.org>
+From: Andreas Schwab <schwab@linux-m68k.org>
+Subject: Re: [PATCH] Avoid bug in Solaris xpg4/sed as used in submodule
+Date: Mon, 09 Apr 2012 23:07:11 +0200
+Message-ID: <m2vcl8bon4.fsf@igel.home>
+References: <1333997276-sup-2760@pinkfloyd.chass.utoronto.ca>
+	<1334002082-5375-1-git-send-email-bwalton@artsci.utoronto.ca>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: semtlenori@gmail.com, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Apr 09 23:03:35 2012
+Content-Type: text/plain
+Cc: gitster@pobox.com, git@vger.kernel.org
+To: Ben Walton <bwalton@artsci.utoronto.ca>
+X-From: git-owner@vger.kernel.org Mon Apr 09 23:07:26 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SHLkM-000584-JC
-	for gcvg-git-2@plane.gmane.org; Mon, 09 Apr 2012 23:03:34 +0200
+	id 1SHLo6-0006Vy-4L
+	for gcvg-git-2@plane.gmane.org; Mon, 09 Apr 2012 23:07:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757413Ab2DIVD3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Apr 2012 17:03:29 -0400
-Received: from mail-pz0-f52.google.com ([209.85.210.52]:41722 "EHLO
-	mail-pz0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751789Ab2DIVD2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Apr 2012 17:03:28 -0400
-Received: by dake40 with SMTP id e40so5704821dak.11
-        for <git@vger.kernel.org>; Mon, 09 Apr 2012 14:03:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=spearce.org; s=google;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=PkFZ4UCF08WdEft7pLBlBt0xF4JdQZZo/ey0LfvCmvE=;
-        b=V+xftGxTANbGdAZjO4AWiwxypSOxs7ueNo1RBEPE3SjjVJfhOI9n9tNjpHMwNnvcHB
-         7iJL1EfB+7LYgYHsxlaRRZ1ly1YpB70GFKvXJl55Gsitu3grntJboUthKFHVIXg5pGnG
-         puSEaxc+plpVW0SJmt/pEfpo7DxSJg4sHIj4o=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:x-gm-message-state;
-        bh=PkFZ4UCF08WdEft7pLBlBt0xF4JdQZZo/ey0LfvCmvE=;
-        b=H6oXRFBDeIA0sF6JeleD2C6r4hrXcXdr5TWLWTCcNBOq/I83TLsQSsJow4FHaMrUUg
-         8vspfITztAWG3QY3BQ1LHHW4UElkuoLYgZHbKIJRbadQmXxOgZlEMeY8o2x/8Aa6DO6R
-         ym8iUc5Da0NJmf9ZHOT+a87fz1NyP0W2D43RNkwMP8/RRizX8LvsQnP4ajDMK99GURfv
-         RwjnHBC2k4n+q7XxbxxweMbifdfT6SUESI9YZ8X/9wWsDawxuLMg7rvq1WcOrRYCC/yG
-         hem7RYteZgeblDJp7gYMZug6WXCJ3tKZn2Rgx3ndmGLzC2fWjvjMlEPSaMqXqMwL7wd6
-         /JqQ==
-Received: by 10.68.222.7 with SMTP id qi7mr1701883pbc.2.1334005407863; Mon, 09
- Apr 2012 14:03:27 -0700 (PDT)
-Received: by 10.68.55.68 with HTTP; Mon, 9 Apr 2012 14:03:06 -0700 (PDT)
-In-Reply-To: <7vhawsvffn.fsf@alter.siamese.dyndns.org>
-X-Gm-Message-State: ALoCoQnVE97x6EUyWsSg9+CLrKGUSZ4ncJrAxyaGvKLBtZpAdKWBSg/BEc46xoR5BqOBax8DjwmV
+	id S1756104Ab2DIVHT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Apr 2012 17:07:19 -0400
+Received: from mail-out.m-online.net ([212.18.0.10]:38776 "EHLO
+	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752044Ab2DIVHR (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Apr 2012 17:07:17 -0400
+Received: from frontend1.mail.m-online.net (frontend1.mail.intern.m-online.net [192.168.8.180])
+	by mail-out.m-online.net (Postfix) with ESMTP id 3VRPGS0GDVz3hhZk;
+	Mon,  9 Apr 2012 23:07:11 +0200 (CEST)
+Received: from igel.home (ppp-93-104-153-14.dynamic.mnet-online.de [93.104.153.14])
+	by mail.mnet-online.de (Postfix) with ESMTPA id 3VRPGR51Sxz4KK3Y;
+	Mon,  9 Apr 2012 23:07:11 +0200 (CEST)
+Received: by igel.home (Postfix, from userid 501)
+	id 57C2BCA29F; Mon,  9 Apr 2012 23:07:11 +0200 (CEST)
+X-Yow: YOW!  I can see 1987!!  PRESIDENT FORD is doing the REMAKE of "PAGAN
+ LOVE SONG"...he's playing ESTHER WILLIAMS!!
+In-Reply-To: <1334002082-5375-1-git-send-email-bwalton@artsci.utoronto.ca>
+	(Ben Walton's message of "Mon, 9 Apr 2012 16:08:02 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.95 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195039>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195040>
 
-On Mon, Apr 9, 2012 at 13:05, Junio C Hamano <gitster@pobox.com> wrote:
-> Shawn Pearce <spearce@spearce.org> writes:
->
->> ... And that niggly bit about subtrees sorting as
->> though their names end in '/' even though they don't really matters.
->
-> Yeah, in older and buggier unpack-trees it might have made the code
-> simpler while walking the index and the tree in parallel, but when we have
-> to deal with D/F conflicts, we have to find a entry with matching name
-> anyway, so it turned out not to be a win at all.
+Ben Walton <bwalton@artsci.utoronto.ca> writes:
 
-JGit still waks the trees in parallel. We handle the D/F conflict
-stuff using a small amount of look-ahead and sometimes rescan back
-from the start. In practice that works out really well, it catches
-most forms of D/F conflict with little overhead, and almost no
-overhead when there is no D/F conflict, which is common.
+> +	# Note: The extra [^/] is to work around a bug in Solairs'
+
+s/Solairs/Solaris/
+
+Andreas.
+
+-- 
+Andreas Schwab, schwab@linux-m68k.org
+GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
+"And now for something completely different."
