@@ -1,84 +1,72 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/3] add mergesort() for linked lists
-Date: Mon, 09 Apr 2012 11:26:34 -0700
-Message-ID: <7vk41owylh.fsf@alter.siamese.dyndns.org>
-References: <201203291818.49933.mfick@codeaurora.org>
- <7v7gy2q1kq.fsf@alter.siamese.dyndns.org>
- <60bff12d-544c-4fbd-b48a-0fdf44efaded@email.android.com>
- <20120330093207.GA12298@sigill.intra.peff.net>
- <20120330094052.GB12298@sigill.intra.peff.net>
- <4F7780C3.2050408@lsrfire.ath.cx> <7vpqbm56pf.fsf@alter.siamese.dyndns.org>
- <4F81F5E6.2070609@lsrfire.ath.cx>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: In tree object, Must the
+Date: Mon, 9 Apr 2012 11:29:46 -0700
+Message-ID: <CAJo=hJv==GrxLH6U9MAwckcEXiYtKeMEpEMNVTJLcSKro2QV_w@mail.gmail.com>
+References: <CAFT+Tg-+s5=pFNwY7ZMxem4z6YHu53kyOs0B_rkmphq=mEtpTg@mail.gmail.com>
+ <7vobr0wyml.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jeff King <peff@peff.net>, Martin Fick <mfick@codeaurora.org>,
-	git@vger.kernel.org
-To: =?utf-8?Q?Ren=C3=A9?= Scharfe <rene.scharfe@lsrfire.ath.cx>
-X-From: git-owner@vger.kernel.org Mon Apr 09 20:26:56 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: semtlenori@gmail.com
+X-From: git-owner@vger.kernel.org Mon Apr 09 20:30:16 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SHJIi-0003V5-Ak
-	for gcvg-git-2@plane.gmane.org; Mon, 09 Apr 2012 20:26:52 +0200
+	id 1SHJLz-0004xG-7J
+	for gcvg-git-2@plane.gmane.org; Mon, 09 Apr 2012 20:30:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757676Ab2DIS0j convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 9 Apr 2012 14:26:39 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:44432 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757666Ab2DIS0g convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 9 Apr 2012 14:26:36 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6D0C4736E;
-	Mon,  9 Apr 2012 14:26:36 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=YVmGMQVYfiTl
-	TDp0Nb1AaGgQmFk=; b=DeGOn1OBgPJ3T/BFZsJ+KwwsWj1B8mPKp5rG0wfaL+Pr
-	59zAAv4B/H8xMT/IuJpQxPVcb7BgcumoMDJpKMbQv95Pwp3wS3MQdWnIcgmTMyzn
-	TDuL6C47vRpK+U13zXA7STjNX1oNJysFi8I4jMmhdIvbb2wWzdHTK1MJK5j1vn8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=EbxwY/
-	dBqke570ou6IN/ZvUbjvtZW/kRE0cA9fol/3+YVYMQgcfPNEgOK6xTM1hxp3xZ/O
-	ttsmhgjVRuxU65rpsYkfoc0gIEdvTnnPGqWfPUOa9hMtMrM7nsFLAQWmlWXgf2AT
-	28pS/dNrX/fNDbLjTOY5qNKNXDU8MFdhPZPM4=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 63388736D;
-	Mon,  9 Apr 2012 14:26:36 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id EC1C1736B; Mon,  9 Apr 2012
- 14:26:35 -0400 (EDT)
-In-Reply-To: <4F81F5E6.2070609@lsrfire.ath.cx> (=?utf-8?Q?=22Ren=C3=A9?=
- Scharfe"'s message of "Sun, 08 Apr 2012 22:32:38 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 8A39C4AA-8271-11E1-9F42-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755093Ab2DISaI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Apr 2012 14:30:08 -0400
+Received: from mail-pb0-f46.google.com ([209.85.160.46]:36940 "EHLO
+	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752103Ab2DISaH (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Apr 2012 14:30:07 -0400
+Received: by pbcun15 with SMTP id un15so5290661pbc.19
+        for <git@vger.kernel.org>; Mon, 09 Apr 2012 11:30:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=spearce.org; s=google;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=/ZFN0CNwAh7zPgaic1FT1mjrtIfWFFgxCdwh002mURg=;
+        b=OXmVV1WrvppqwhGvVRHvxNMnMC7JNX3EKsQj69fH449WXpp8HlbMJAqki7giIEsReQ
+         yLLYVUOUvZ/RLr4riz3H8GZXxKSBA4PlySo4TovsOU5YE1jmaKsbMIaxvttZ3+uLKz7f
+         S64PRIg8XMPKKE6AUJ7UZZ+MIvIoMhwNitzvM=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:x-gm-message-state;
+        bh=/ZFN0CNwAh7zPgaic1FT1mjrtIfWFFgxCdwh002mURg=;
+        b=pJCwgTOVf0rkBiP/hqEjAycvqua65Uv8YGF6X9awSoGccX5h5n5s6C9oyI361IOEwl
+         614libV4oWJ4HkCPZd8qrptFouUwluxJIdu2YxPr6kDWpzI8pO4P2B6U5QTa+EJODkjr
+         +bGZ7GPbLMu6vsyLGS0uXPF5zJBfFCaB4RLNCooiJI5NPsZuDCoyLf32+JCBvlvueNk9
+         YTLAa2RTCpGf9bFRJ48mI5naGOoXhmMcGIMdc7PdTYLaOXA9jehfHdxyoTUDlH/lR9qa
+         PTJ6XQBD+HjhiX4RTyJbHbYCIOaTT6YmFUVurVR/aZds5bo1BLofMty/soYxs7gPlUiX
+         akvg==
+Received: by 10.68.220.134 with SMTP id pw6mr21332521pbc.149.1333996206930;
+ Mon, 09 Apr 2012 11:30:06 -0700 (PDT)
+Received: by 10.68.55.68 with HTTP; Mon, 9 Apr 2012 11:29:46 -0700 (PDT)
+In-Reply-To: <7vobr0wyml.fsf@alter.siamese.dyndns.org>
+X-Gm-Message-State: ALoCoQkj+T/p2TakwzEBrEle/qFxpB+hBFvseGnAolB/wutKnD1qxPN7+tH4VKt3p4t4BMLgn7nQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195023>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195024>
 
-Ren=C3=A9 Scharfe <rene.scharfe@lsrfire.ath.cx> writes:
-
-> Am 05.04.2012 21:17, schrieb Junio C Hamano:
->> After seeing "I wrote it myself due to NIH", it strikes me a bit odd=
- that
->> you still used "start from bunch of singleton sublist, elongating tw=
-ice
->> per round as we go" structure from the original.
+On Mon, Apr 9, 2012 at 11:25, Junio C Hamano <gitster@pobox.com> wrote:
+> "Yi, EungJun" <semtlenori@gmail.com> writes:
 >
-> It's just becasue the dumb bottom-up approach is the most simple way =
-to
-> implement merge sort.
-> ...
-> This optimization speeds up the pre-sorted case but slows down the ca=
-se of
-> a reversed pre-sorted list because we have to determine the length of=
- the
-> sublists each time,...
+>> If it is true, what happens if it is not ordered?
+>
+> "git diff-tree" and "git diff-index" (hence "git diff" frontend when it
+> walks the tree for comparison) will fail.
 
-Ah, I somehow missed that point.  Thanks.
+And JGit and any JGit derived tool (e.g. EGit, Gerrit Code Review)
+will fail horribly and refuse to process that tree, or worse, will
+produce incorrect results when fed garbage like an unsorted or
+incorrectly sorted tree.
+
+Tree ordering matters. And that niggly bit about subtrees sorting as
+though their names end in '/' even though they don't really matters.
