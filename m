@@ -1,98 +1,84 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 8/9 v11] difftool: teach difftool to handle directory
- diffs
-Date: Mon, 09 Apr 2012 11:02:24 -0700
-Message-ID: <7v1unwyea7.fsf@alter.siamese.dyndns.org>
-References: <1333567265-23986-1-git-send-email-tim.henigan@gmail.com>
- <CAJDDKr76eMiA4rOHQhar3aToVThDfbc8Ki5tr2PGU_UpDMAVeA@mail.gmail.com>
+Subject: Re: [PATCH] send-email: make annotate configurable
+Date: Mon, 09 Apr 2012 11:07:40 -0700
+Message-ID: <7vwr5owzgz.fsf@alter.siamese.dyndns.org>
+References: <1333758550-9187-1-git-send-email-felipe.contreras@gmail.com>
+ <7vy5q8xhkb.fsf@alter.siamese.dyndns.org> <vpqaa2n7rvd.fsf@bauges.imag.fr>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Tim Henigan <tim.henigan@gmail.com>, git@vger.kernel.org,
-	ramsay@ramsay1.demon.co.uk
-To: David Aguilar <davvid@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Apr 09 20:02:45 2012
+Cc: Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org,
+	"Yann Dirson" <ydirson@altern.org>,
+	"Michael Witten" <mfwitten@MIT.EDU>,
+	"Ryan Anderson" <ryan@michonline.com>,
+	"Michael Witten" <mfwitten@gmail.com>,
+	"Adam Roben" <aroben@apple.com>
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Mon Apr 09 20:08:01 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SHIvL-0000y6-Nw
-	for gcvg-git-2@plane.gmane.org; Mon, 09 Apr 2012 20:02:44 +0200
+	id 1SHJ0N-0003K4-LK
+	for gcvg-git-2@plane.gmane.org; Mon, 09 Apr 2012 20:07:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757493Ab2DISCe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Apr 2012 14:02:34 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64100 "EHLO
+	id S1757644Ab2DISHo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Apr 2012 14:07:44 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:33933 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756702Ab2DISCc (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Apr 2012 14:02:32 -0400
+	id S1757587Ab2DISHm (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Apr 2012 14:07:42 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B40E26C16;
-	Mon,  9 Apr 2012 14:02:26 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 420566D60;
+	Mon,  9 Apr 2012 14:07:42 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=1GHQnpbWJ61lDq1u+kcsvv32+eA=; b=wLwNfm
-	+Q8FCbViDygX9gqbSRgeqMxK3mPSzWYF+A1W/Ag+qojxpVsp3fmRO4xVd9AUgf+P
-	G87SwyRjEYd3yS2YhgULMIRbfKeRYAQqkPBi55DYrg/JDBxla4+2OyJLSreMsWha
-	GkfcwJCzvZneBcpxuD/rKPCj/hgB7I6KNtD2M=
+	:content-type; s=sasl; bh=YaInHyHY8aElaAq4xKS9k+qv0UU=; b=rJQ4q5
+	wZorntRF3jJt7uNxDjoTBvEW1Du85vatsAfO/xm/Jy0YPJJ7Wwg2fb/AT8GRX98l
+	Ro9Z6QMcYZBtm6vXkIn9vC24FcbvC9uZR2xWca3x98nRiKQZg0bGAC2p/VnpMN1J
+	yarynkBJahi/P7cFN1Fwe8dZLxuc/kz/oi89c=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=FiY1G/GKbtWBJggUljm/P8T2TCMKMJZ2
-	WvqvzgcdtsDHXGRDu99kDUrXkjPHTe4DJQTdzFgchMCGEpQI11jFVsc5H02hS/+j
-	rJIWceQhZuPzNO5VTuqNbThIOHqf2r7SoZeg9DPbz+Wr92VhUvbK3fkpfulXfffl
-	UpLNVTiiLuc=
+	:content-type; q=dns; s=sasl; b=ujk33oMPpwOGyz5u5uqSRV999k5u+CxM
+	kwfpT7tQnniNHV+bnM+7AMhFkfutJD7H1eEzwhopF54oUQ/qNS3tn3dJhA/+lbZP
+	D9TfLEY0ZwShLCO0ws0S66seOmEeqYyun+1FdRzvureEpraN7ieLQ01cECU6xWXB
+	nyNQJsRxDIg=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AB1996C15;
-	Mon,  9 Apr 2012 14:02:26 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 386A36D5F;
+	Mon,  9 Apr 2012 14:07:42 -0400 (EDT)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 33D636C14; Mon,  9 Apr 2012
- 14:02:26 -0400 (EDT)
-In-Reply-To: <CAJDDKr76eMiA4rOHQhar3aToVThDfbc8Ki5tr2PGU_UpDMAVeA@mail.gmail.com> (David
- Aguilar's message of "Mon, 9 Apr 2012 05:14:49 -0700")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A394E6D5E; Mon,  9 Apr 2012
+ 14:07:41 -0400 (EDT)
+In-Reply-To: <vpqaa2n7rvd.fsf@bauges.imag.fr> (Matthieu Moy's message of
+ "Sat, 07 Apr 2012 12:34:14 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 2A1F4F7A-826E-11E1-8B89-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: E626FC2C-826E-11E1-A758-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195019>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195020>
 
-David Aguilar <davvid@gmail.com> writes:
+Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
 
-> On Wed, Apr 4, 2012 at 12:21 PM, Tim Henigan <tim.henigan@gmail.com> wrote:
->> diff --git a/git-difftool.perl b/git-difftool.perl
->> index d4fe998..5bb01e1 100755
->> --- a/git-difftool.perl
->> +++ b/git-difftool.perl
->> @@ -1,21 +1,29 @@
->>  #!/usr/bin/env perl
+> Junio C Hamano <gitster@pobox.com> writes:
 > ...
-> I also think we should change the shebang line to #!/usr/bin/perl.
-
-Good point; it would not make a difference in the end result, but
-consistency is good.
-
->> -# ActiveState Perl for Win32 does not implement POSIX semantics of
->> -# exec* system call. It just spawns the given executable and finishes
->> -# the starting program, exiting with code 0.
->> -# system will at least catch the errors returned by git diff,
->> -# allowing the caller of git difftool better handling of failures.
->> -my $rc = system(@command);
->> -exit($rc | ($rc >> 8));
->> +       $ENV{GIT_PAGER} = '';
->> +       $ENV{GIT_EXTERNAL_DIFF} = 'git-difftool--helper';
->> +       my $rc = system(('git', 'diff', @ARGV));
->> +       exit($rc | ($rc >> 8));
->> +}
+>> As long as there is --no-annotate to cancel a configured value for
+>> one-shot invocation (I didn't check, but it should be added if there isn't
+>> already one), I think this change makes sense (I admit that I do not use
+>> the --annotate option myself, though).
 >
-> 
-> We went back and forth a few times on this section,
-> eventually landing back on using system().
->
-> Should we retain this comment to help future readers from
-> having to re-learn it the hard way again?
+> I almost always use --annotate, so this option definitely makes sense
+> for me (I usually call send-email through an alias that adds --annotate
+> anyway).
 
-Well, I kept typing "good point" but ended up agreeing with everything you
-said in your message, and removed all "Me too"s ;-).
+I do not doubt the usefulness of it, but if there is no --no-annotate, it
+would make the new variable unusable for those who would never run it
+without --annotate option; while you said "almost always", you didn't give
+us any useful information, so I had to check ;-)  It turns out that
 
-Thanks for a thorough review.
+    $ git send-email --no-annotate </dev/null
+
+errors out with "unrecognized argument: --no-annotate", which first needs
+to be addressed before the configuration variable can become useful.
