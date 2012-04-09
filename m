@@ -1,63 +1,70 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH 02/12] completion: simplify __gitcomp
-Date: Mon, 09 Apr 2012 20:57:31 +0200
-Message-ID: <4F83311B.50901@kdbg.org>
-References: <1333854479-23260-1-git-send-email-felipe.contreras@gmail.com>	<1333854479-23260-3-git-send-email-felipe.contreras@gmail.com>	<20120408124652.GN2289@goldbirke>	<CAMP44s0nSH7ZjC4T=7pXS2MyAkZ133hOXa_tn3q4er+FbcOc_w@mail.gmail.com>	<20120408132704.GB4103@burratino>	<CAMP44s3c2SNSh=TGhYv=JKGu4QJfPB_xoBip5wwLoDh3dLHYNw@mail.gmail.com>	<20120408143621.GA2631@burratino> <CAMP44s1hmG_xMjeB_Wv8pU=aPt=QK27R1OsePeeH5TK9w2GCqg@mail.gmail.com>
+From: Stephen Bash <bash@genarts.com>
+Subject: Re: GSOC Proposal draft: git-remote-svn
+Date: Mon, 09 Apr 2012 14:59:41 -0400 (EDT)
+Message-ID: <c1cc5fc7-ba1b-447a-9676-53956c5e9dae@mail>
+References: <1421035.yALBSXSHGd@flomedio>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 7bit
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	=?UTF-8?B?U1pFREVSIEfDoWJvcg==?= <szeder@ira.uka.de>,
-	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Thomas Rast <trast@student.ethz.ch>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Apr 09 20:57:43 2012
+Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
+	David Barr <davidbarr@google.com>,
+	Andrew Sayers <andrew-git@pileofstuff.org>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Dmitry Ivankov <divanorama@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Florian Achleitner <florian.achleitner2.6.31@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Apr 09 20:59:58 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SHJmW-0001BK-JH
-	for gcvg-git-2@plane.gmane.org; Mon, 09 Apr 2012 20:57:40 +0200
+	id 1SHJoh-00026B-Lr
+	for gcvg-git-2@plane.gmane.org; Mon, 09 Apr 2012 20:59:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757560Ab2DIS5g (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Apr 2012 14:57:36 -0400
-Received: from bsmtp.bon.at ([213.33.87.14]:23124 "EHLO bsmtp.bon.at"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755044Ab2DIS5f (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Apr 2012 14:57:35 -0400
-Received: from dx.sixt.local (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTP id 8E9F8130049;
-	Mon,  9 Apr 2012 20:54:08 +0200 (CEST)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-	by dx.sixt.local (Postfix) with ESMTP id 4FA9519F6A1;
-	Mon,  9 Apr 2012 20:57:31 +0200 (CEST)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; de; rv:1.9.2.28) Gecko/20120306 SUSE/3.1.20 Thunderbird/3.1.20
-In-Reply-To: <CAMP44s1hmG_xMjeB_Wv8pU=aPt=QK27R1OsePeeH5TK9w2GCqg@mail.gmail.com>
+	id S1757739Ab2DIS7v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Apr 2012 14:59:51 -0400
+Received: from hq.genarts.com ([173.9.65.1]:48621 "HELO mail.hq.genarts.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1757685Ab2DIS7u (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Apr 2012 14:59:50 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by mail.hq.genarts.com (Postfix) with ESMTP id 1F026BE9E98;
+	Mon,  9 Apr 2012 14:59:47 -0400 (EDT)
+X-Virus-Scanned: amavisd-new at mail.hq.genarts.com
+Received: from mail.hq.genarts.com ([127.0.0.1])
+	by localhost (mail.hq.genarts.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id fzP4zofINVjs; Mon,  9 Apr 2012 14:59:41 -0400 (EDT)
+Received: from mail.hq.genarts.com (localhost [127.0.0.1])
+	by mail.hq.genarts.com (Postfix) with ESMTP id 18616BE9E9A;
+	Mon,  9 Apr 2012 14:59:41 -0400 (EDT)
+In-Reply-To: <1421035.yALBSXSHGd@flomedio>
+X-Mailer: Zimbra 7.1.3_GA_3346 (ZimbraWebClient - GC18 (Mac)/7.1.3_GA_3346)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195029>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195030>
 
-Am 08.04.2012 16:58, schrieb Felipe Contreras:
-> On Sun, Apr 8, 2012 at 5:36 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
->> (dropping Shawn from cc since I'm not under the impression he works
->>  on the completion script these days)
->> Felipe Contreras wrote:
->>
->>> Whoa! Breaking their tab completion? Where? Can you show me some evidence?
->>
->> If you weren't listening before, I'm not sure what I can add now[*].
+----- Original Message -----
+> From: "Florian Achleitner" <florian.achleitner2.6.31@gmail.com>
+> Sent: Thursday, April 5, 2012 9:36:40 AM
+> Subject: Re: GSOC Proposal draft: git-remote-svn
 > 
-> This is what you said; "in exchange for us breaking their tab
-> completion". There's a big difference between "breaking", and
-> "*potentially* breaking". I have never seen any evidence of tab
-> completion actually being broken.
+> Thanks for your inputs. I've now submitted a slightly updated version
+> of my proposal to google. Additionally it's on github [1].
+> 
+> Summary of diffs:
+> I'll concentrate on the fetching from svn, writing a remote helper
+> without branch detection (like svn-fe) first, and then creating the
+> branch mapper.
+> 
+> [1] https://github.com/flyingflo/git/wiki/
 
-I have:
+Florian - I just skimmed the github page since I've been away for a week.  Not to toot my own horn to much, there's a lot of good discussion about svn-isms in my thread from 2010 (starts at [1], but most of the good stuff is the discussion that follows).  I didn't see it in the references, and it probably doesn't need to be there, but if you haven't seen it yet, take a look at it (and cringe at my horrible abuse of git in my early days... ugh!).
 
-http://thread.gmane.org/gmane.comp.version-control.msysgit/13310/focus=13335
-http://thread.gmane.org/gmane.comp.version-control.git/185184/focus=185189
+[1] http://article.gmane.org/gmane.comp.version-control.git/159054
 
--- Hannes
+Thanks,
+Stephen
