@@ -1,131 +1,100 @@
-From: Nick Douma <n.douma@nekoconeko.nl>
-Subject: Migrating SVN to Git, and preserve merge information
-Date: Tue, 10 Apr 2012 17:18:11 +0200
-Message-ID: <4F844F33.5000004@nekoconeko.nl>
-Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature";
- boundary="------------enig7F477C31AFC0C148AD9C0126"
+From: Neil Horman <nhorman@tuxdriver.com>
+Subject: [PATCH v3 0/4] Enhance git-rebases flexibiilty in handling empty commits
+Date: Tue, 10 Apr 2012 11:47:44 -0400
+Message-ID: <1334072868-9435-1-git-send-email-nhorman@tuxdriver.com>
+References: <1333136922-12872-1-git-send-email-nhorman@tuxdriver.com>
+Cc: Jeff King <peff@peff.net>, Phil Hord <phil.hord@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Neil Horman <nhorman@tuxdriver.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 10 17:28:31 2012
+X-From: git-owner@vger.kernel.org Tue Apr 10 17:48:18 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SHczd-0000q9-VF
-	for gcvg-git-2@plane.gmane.org; Tue, 10 Apr 2012 17:28:30 +0200
+	id 1SHdIm-0004Fu-AD
+	for gcvg-git-2@plane.gmane.org; Tue, 10 Apr 2012 17:48:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754791Ab2DJP2Z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Apr 2012 11:28:25 -0400
-Received: from genome.nekoconeko.nl ([93.94.224.72]:59045 "EHLO
-	genome.nekoconeko.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754415Ab2DJP2Y (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Apr 2012 11:28:24 -0400
-X-Greylist: delayed 609 seconds by postgrey-1.27 at vger.kernel.org; Tue, 10 Apr 2012 11:28:24 EDT
-Received: from localhost (localhost [127.0.0.1])
-	by genome.nekoconeko.nl (Postfix) with ESMTP id 2C0AA22179
-	for <git@vger.kernel.org>; Tue, 10 Apr 2012 17:20:21 +0200 (CEST)
-X-Virus-Scanned: Debian amavisd-new at genome.nekoconeko.nl
-Received: from genome.nekoconeko.nl ([127.0.0.1])
-	by localhost (genome.nekoconeko.nl [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id JyY8tHwDO3Qp for <git@vger.kernel.org>;
-	Tue, 10 Apr 2012 17:20:19 +0200 (CEST)
-Received: from [IPv6:2001:838:300:41e::2] (cl-1055.ams-01.nl.sixxs.net [IPv6:2001:838:300:41e::2])
-	by genome.nekoconeko.nl (Postfix) with ESMTPSA id A3EF122138
-	for <git@vger.kernel.org>; Tue, 10 Apr 2012 17:20:19 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=nekoconeko.nl;
-	s=genome; t=1334071219;
-	bh=7gqagroPSHFr/TKfAIRqMNrjShWL4uydcKG6mkRoOYs=;
-	h=Message-ID:Date:From:MIME-Version:To:Subject:Content-Type;
-	b=jr1JSsjOXMTJySUcoUwd2rbbDndXnDpiM+cdFfdsXOHhx0SSWi9d/Lvk/3QnOlLTX
-	 fPVMH4uK5SQqP/rWbQtzTwyPlG8/BcZAZF487myQcylf0a1PgH1eNQb1nxGZ68p58f
-	 JF8LBgeIjDQ4GSPNW/uix/BfTz0BHXJexu2Wg/Ag=
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:11.0) Gecko/20120329 Thunderbird/11.0.1
-X-Enigmail-Version: 1.4
-OpenPGP: id=AB001628;
-	url=http://nekoconeko.nl/pub_0xAB001628.asc
+	id S1758954Ab2DJPsL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Apr 2012 11:48:11 -0400
+Received: from charlotte.tuxdriver.com ([70.61.120.58]:49313 "EHLO
+	smtp.tuxdriver.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752465Ab2DJPsK (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Apr 2012 11:48:10 -0400
+Received: from hmsreliant.think-freely.org ([2001:470:8:a08:7aac:c0ff:fec2:933b] helo=localhost)
+	by smtp.tuxdriver.com with esmtpsa (TLSv1:AES128-SHA:128)
+	(Exim 4.63)
+	(envelope-from <nhorman@tuxdriver.com>)
+	id 1SHdIT-0005Wo-Rw; Tue, 10 Apr 2012 11:48:04 -0400
+X-Mailer: git-send-email 1.7.7.6
+In-Reply-To: <1333136922-12872-1-git-send-email-nhorman@tuxdriver.com>
+X-Spam-Score: -2.9 (--)
+X-Spam-Status: No
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195094>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195095>
 
-This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
---------------enig7F477C31AFC0C148AD9C0126
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: quoted-printable
+git's ability to handle empty commits is somewhat lacking, especially when
+preforming a rebase.  Nominally empty commits are undesireable entries, the 
+result of commits that are made empty by prior commits covering the same changs.
+But occasionally, empty commits are useful to developers (e.g. inserting notes 
+into the development history without changing any code along the way).  In these
+cases its desireable to easily preserve empty commits during operations like 
+rebases.
 
-Hi,
+This patch series enhances git to do just that.  It adds two options to the 
+git-cherry-pick command, --allow-empty, which allows git cherry-pick to preserve
+an empty commit, even if the fast forward logic isn't applicable during the 
+operation, and --keep-redundant-commits, which allows the user to also keep
+commits that were made empty via conflict resolution.  It also enhances
+git-rebase to add a --keep-empty option which enables rebases to preserve empty
+commits. 
 
-I currently have two SVN repositories I'm looking to convert to Git.
-While the process itself isn't all that hard (following this guide[1]),
-I'm looking to do a bit more than just convert raw commits.
+I've tested these operations out myself here and they work well for me
 
-The repositories basically have two main branches at a time, for example:=
+Signed-off-by: Neil Horman <nhorman@tuxdriver.com>
 
+---
+Change notes:
 
-* trunk
-* current version, for example 3.5
+Based on version 1 feedback from this list, the following changes have been made
 
-Our SVN workflow consisted of working on trunk, and then manually
-merging single commits from trunk to the other branch. We quite
-consistently mentioned the merged commits in the SVN commit message, and
-I'm looking to use this information to generate a more accurate tree in
-Git. The commit messages are for example:
+V2)
+	* Changed --keep-empty to --allow-empty in the git cherry-pick command
 
-trunk  rev 100: Fixed important bug
-branch rev 101: Merged r100 from trunk
+	* Converted run_git_commit to use argv_array
 
-Or more elaborate:
+	* Updated cherry-pick --allow-empty description in man page
+	
+	* added ignore-if-made-empty option to git-cherry-pick
 
-branch rev 200: Merged r100,r101,r.... from trunk
+	* Added test to test suite to validate the new cherry-pick options
 
-In these examples, tools like gitk or git log should show a line from
-rev 100 to rev 101 in the first example, and lines from r100, r101,rn to
-rev 200 in example two.
+	* Updated git-rebase man page to be less verbose and more accurate in the
+	description of the keep-empty option
 
-I have tried to create a custom grafts file to create the parent-child
-relations above, and basically finds all merge commits and converts them
-into graft lines like so:
+	* squashed the addition of the keep-empty flag in git-rebase down to one
+	commit from 3
 
-<merge commit sha hash> <original git parent sha hash> <sha hash of
-merged rev 1> ... <sha hash of merged rev n>
+	* fixed up coding style in git-rebase script
 
-This all works to a certain extent, but the problem arises when trying
-to view older history in these repositories. If I use the grafts file,
-and do `gitk --all`, gitk freezes. Gitg doesn't show commits before a
-certain point. tig and `git log --graph` all show a huge amount of
-parentless commits near the bottom. All of this leads me to the
-conclusion that something is wrong with the method of using grafts,
-rather than problems in the individual tools.
+	* Optimized detection of empty commits
 
+	* Only augmented git-rebase-editor message if empty commits are
+	possible
+	
+V3)
+	* reversed the --ignore-if-empty-logic to by default only keep initially
+	empty commits
 
-Can someone find something obvious that I'm missing in the above
-approach? Or alternatively suggest another more appropriate method of
-achieving the same results in Git?
+	* replaced --ignore-if-empty with --keep-redundant-commits, to allow
+	empty commits that are made empty via conflict resolution, in addition
+	to commits that were created as empty
 
-Kind regards,
+	* reworked is_original_commit_empty to be more efficient and portable
 
-Nick Douma
+	* Misc sylistic and spelling cleanups
 
-
-
-[1]: http://john.albin.net/git/convert-subversion-to-git
-
-
---------------enig7F477C31AFC0C148AD9C0126
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
-
-iEYEARECAAYFAk+ETzQACgkQkPq5zKsAFij/RgCfapjTSRd2mIyKWArFARfsh3uS
-rmkAoItN4vWN0XKVgWd7Kv6VrYtLZJfB
-=uon5
------END PGP SIGNATURE-----
-
---------------enig7F477C31AFC0C148AD9C0126--
