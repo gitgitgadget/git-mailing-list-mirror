@@ -1,99 +1,95 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] list-objects: perform NULL check before the variable is
- dereferenced
-Date: Mon, 09 Apr 2012 17:09:12 -0700
-Message-ID: <7vaa2ktplj.fsf@alter.siamese.dyndns.org>
-References: <1333968311-29889-1-git-send-email-pclouds@gmail.com>
- <7v7gxowxfh.fsf@alter.siamese.dyndns.org>
- <CACsJy8ASo8j+hmJ7Kw2uLcD9cS8SXc6yOoc5GDUcFHYk9W9a_g@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 10 02:09:23 2012
+From: Ben Walton <bwalton@artsci.utoronto.ca>
+Subject: [PATCH] Avoid bug in Solaris xpg4/sed as used in submodule
+Date: Mon,  9 Apr 2012 20:13:20 -0400
+Message-ID: <1334016800-11574-1-git-send-email-bwalton@artsci.utoronto.ca>
+References: <7vy5q4tw3i.fsf@alter.siamese.dyndns.org>
+Cc: git@vger.kernel.org, Ben Walton <bwalton@artsci.utoronto.ca>
+To: gitster@pobox.com, schwab@linux-m68k.org
+X-From: git-owner@vger.kernel.org Tue Apr 10 02:13:38 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SHOeA-0004uZ-KM
-	for gcvg-git-2@plane.gmane.org; Tue, 10 Apr 2012 02:09:22 +0200
+	id 1SHOiC-0006O6-5F
+	for gcvg-git-2@plane.gmane.org; Tue, 10 Apr 2012 02:13:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758222Ab2DJAJR convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 9 Apr 2012 20:09:17 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47477 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752984Ab2DJAJQ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 9 Apr 2012 20:09:16 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3288E615C;
-	Mon,  9 Apr 2012 20:09:16 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=wD3+JC9s+t/s
-	TtV/DeRZwOQ579o=; b=jR5ZSSHcMOMPTpiVJ2QKzSIk0MaSeGeVMvjQ3uS0ixrL
-	dn/qh9cbE49sriMvZu5G3ylAeDn9MDkbFyBI4V3HuM8Nd9NA9U4ogUB4mPiZbNsp
-	sI4y18jlDpHJBj3A6iJKfUVCTN80FSu0ppdA2/u6/+AO3NQoXKzUIT0ZSFU4RZw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=AbolIT
-	JvZwLOXPRKC1NQEgDf8znoPv9yUYS4RBvtwBX29pRyw5ugVVCqeHLDJyjV7GjSJn
-	VUOTrZbbrss+QJKgLZ5lDfKy9PuPIVT7DiaTb3AgFFNNjczsy9lWk/nrt6/Qugxc
-	+ydY6c4fOowpTOdWN7kdlH6hZXlKRTlMUkt+k=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2986A615B;
-	Mon,  9 Apr 2012 20:09:16 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A3F836159; Mon,  9 Apr 2012
- 20:09:14 -0400 (EDT)
-In-Reply-To: <CACsJy8ASo8j+hmJ7Kw2uLcD9cS8SXc6yOoc5GDUcFHYk9W9a_g@mail.gmail.com> (Nguyen
- Thai Ngoc Duy's message of "Tue, 10 Apr 2012 06:47:17 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 682ACF00-82A1-11E1-9FB1-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1758246Ab2DJAN1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Apr 2012 20:13:27 -0400
+Received: from garcia.cquest.utoronto.ca ([192.82.128.9]:56356 "EHLO
+	garcia.cquest.utoronto.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753687Ab2DJAN0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Apr 2012 20:13:26 -0400
+Received: from pinkfloyd.chass.utoronto.ca ([128.100.160.254]:49317 ident=93)
+	by garcia.cquest.utoronto.ca with esmtp (Exim 4.63)
+	(envelope-from <bwalton@cquest.utoronto.ca>)
+	id 1SHOi4-0003VE-Jp; Mon, 09 Apr 2012 20:13:24 -0400
+Received: from bwalton by pinkfloyd.chass.utoronto.ca with local (Exim 4.72)
+	(envelope-from <bwalton@cquest.utoronto.ca>)
+	id 1SHOi4-00031A-Io; Mon, 09 Apr 2012 20:13:24 -0400
+X-Mailer: git-send-email 1.7.4.1
+In-Reply-To: <7vy5q4tw3i.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195048>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195049>
 
-Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
+The sed provided by Solaris in /usr/xpg4/bin has a bug whereby an
+unanchored regex using * for zero or more repetitions sees two
+separate matches fed to the substitution engine in some cases.
 
-> 2012/4/10 Junio C Hamano <gitster@pobox.com>:
->> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy =C2=A0<pclouds@gmail.com> =
-writes:
->>
->>> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@g=
-mail.com>
->>> ---
->>> =C2=A0list-objects.c | =C2=A0 10 ++++++----
->>> =C2=A01 files changed, 6 insertions(+), 4 deletions(-)
->>
->> Please explain why this is needed?
->>
->> I can see that process_blob() is called from process_tree() which pa=
-sses
->> the return value from lookup_blob(entry.sha1) directly without looki=
-ng at
->> it. =C2=A0lookup_blob() can issue an error message and return NULL i=
-f there is
->> a SHA-1 collision with an object that is not a blob.
->
-> to avoid segmentation fault in that case, if "blob" is NULL, it dies
-> at blob->object anyway and the check "if (!obj)" is useless.
+This is evidenced by:
 
-Well, I didn't mean that you should explain whatever to _me_ as a
-response; I meant that the log message should explain that to future
-readers. I thought you have been here long enough to know that ;-)
+$ for sed in /usr/xpg4/bin/sed /usr/bin/sed /opt/csw/gnu/sed; do \
+echo 'ab' | $sed -e 's|[a]*|X|g'; \
+done
+XXbX
+XbX
+XbX
 
-Also "check NULL before dereferencing" means "avoid segmentation fault"=
-,
-so that is not the primary thing that needs to be explained.  The point=
- is
-to explain why and how a NULL could come into the codepath in the first
-place.
+This bug was triggered during a git submodule clone operation as
+exercised in the setup stage of t5526-fetch-submodules when using the
+default SANE_TOOL_PATH for Solaris.  It led to paths such as
+..../.. being used in the submodule .git gitdir reference.
 
-Please try again when the post-1.7.10 cycle opens.
+As we do not need to handle fully qualfied paths we can make the
+regex match 1 or more instead of 0 or more non-/ characters so use
+'s|[^/]\{1,\}|..|g' instead, which is correctly handled by all tested
+sed implementations.  This expression is semantically different than
+the original one.  It will not place leading '..' on a fully qualified
+path as the original expression did.  None of the paths passed to the
+regex relied on this behaviour so changing it shouldn't have negative
+impact.
 
-Thanks.
+Signed-off-by: Ben Walton <bwalton@artsci.utoronto.ca>
+---
+
+For some reason, I thought that using {x,y} range notation wasn't
+valid in this scenario, but I think I was mistaken.  It seems to be
+widely used elsewhere throughout the code.  I prefer that to the
+[^/][^/]* notation and as they're equivalent, I switched to it.
+
+ git-submodule.sh |    5 +++--
+ 1 files changed, 3 insertions(+), 2 deletions(-)
+
+diff --git a/git-submodule.sh b/git-submodule.sh
+index efc86ad..2c18e0c 100755
+--- a/git-submodule.sh
++++ b/git-submodule.sh
+@@ -167,10 +167,11 @@ module_clone()
+ 	a=${a%/}
+ 	b=${b%/}
+ 
+-	rel=$(echo $b | sed -e 's|[^/]*|..|g')
++	# Turn path components into .. 
++	rel=$(echo $b | sed -e 's|[^/]\{1,\}|..|g')
+ 	echo "gitdir: $rel/$a" >"$path/.git"
+ 
+-	rel=$(echo $a | sed -e 's|[^/]*|..|g')
++	rel=$(echo $a | sed -e 's|[^/]\{1,\}|..|g')
+ 	(clear_local_git_env; cd "$path" && GIT_WORK_TREE=. git config core.worktree "$rel/$b")
+ }
+ 
+-- 
+1.7.9
