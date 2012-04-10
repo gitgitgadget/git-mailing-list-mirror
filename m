@@ -1,64 +1,75 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: git status: small difference between stating whole repository
- and small subdirectory
-Date: Tue, 10 Apr 2012 14:00:44 -0400
-Message-ID: <20120410180044.GA23758@sigill.intra.peff.net>
-References: <7vaa4hrtbe.fsf@alter.siamese.dyndns.org>
- <20120217222912.GC31830@sigill.intra.peff.net>
- <CAA01CsozANwtox06iihKBL8iii175FHAhChmNhG1B0ofGKWcEA@mail.gmail.com>
- <20120220140653.GC5131@sigill.intra.peff.net>
- <87ty2l38ay.fsf@thomas.inf.ethz.ch>
- <20120220143644.GA13938@do>
- <CACsJy8DE86qzA1=GiKZFRCt5aH8X4iMyDvfrhnqwmbq52szhHg@mail.gmail.com>
- <7vvcmzczku.fsf@alter.siamese.dyndns.org>
- <CAA01Cso0bjN5d40p0jRKdWt_vJ06C+X+Q1PJqtEsAheYfHBiSw@mail.gmail.com>
- <7vbomzqzuc.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: stash refuses to pop
+Date: Tue, 10 Apr 2012 11:05:57 -0700
+Message-ID: <7vpqbfpim2.fsf@alter.siamese.dyndns.org>
+References: <4F847350.3000409@ubuntu.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Piotr Krukowiecki <piotr.krukowiecki@gmail.com>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Thomas Rast <trast@inf.ethz.ch>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Apr 10 20:00:55 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Phillip Susi <psusi@ubuntu.com>
+X-From: git-owner@vger.kernel.org Tue Apr 10 20:06:10 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SHfN7-00045J-PX
-	for gcvg-git-2@plane.gmane.org; Tue, 10 Apr 2012 20:00:54 +0200
+	id 1SHfSB-0006io-45
+	for gcvg-git-2@plane.gmane.org; Tue, 10 Apr 2012 20:06:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755000Ab2DJSAr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Apr 2012 14:00:47 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:56097
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753438Ab2DJSAq (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Apr 2012 14:00:46 -0400
-Received: (qmail 31496 invoked by uid 107); 10 Apr 2012 18:00:51 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 10 Apr 2012 14:00:51 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 10 Apr 2012 14:00:44 -0400
-Content-Disposition: inline
-In-Reply-To: <7vbomzqzuc.fsf@alter.siamese.dyndns.org>
+	id S1755331Ab2DJSGA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Apr 2012 14:06:00 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:41680 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754629Ab2DJSGA (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Apr 2012 14:06:00 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 904266194;
+	Tue, 10 Apr 2012 14:05:59 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=byLD4IXshrM5Ce4oeeU8QCSSYVY=; b=IrilSI
+	O7gwGGcZeeyf6jurI0JSiMXTM7a7gdF6q6fMDgezGUkqYXf7lnQCPwNvalgFFXI3
+	FikKuBgw4vcTrbAortiQvZL2M49cTYy77lcuBPz8nib3N9vKrpC85VZo33hbM31n
+	SVV2iboawI0Wm9OGHkreU4N8ZaPdIcuDHxu/E=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=XAsBKKKO+Kdp3CKI7iVXmucVE3BVntQM
+	fkMK3BI4oscYrNDRF+SBicyk6mBr6W24YZdLAqpQ8SUel8/EOqSqhVLZ7AQ4rjFG
+	1ZXXPUftrG3TSfUysNC5i7UjOhcEc/J+hGAQU1KHC+LJEC+K0vFL53O10gDS18+r
+	wJfTBhg6mH8=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8777C6193;
+	Tue, 10 Apr 2012 14:05:59 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1B7526191; Tue, 10 Apr 2012
+ 14:05:59 -0400 (EDT)
+In-Reply-To: <4F847350.3000409@ubuntu.com> (Phillip Susi's message of "Tue,
+ 10 Apr 2012 13:52:16 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: D36A69C4-8337-11E1-822D-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195112>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195113>
 
-On Tue, Apr 10, 2012 at 09:23:59AM -0700, Junio C Hamano wrote:
+Phillip Susi <psusi@ubuntu.com> writes:
 
-> > could I ask what is the status of this? There were some patches
-> > posted, but I think nothing final?
-> 
-> I do not think you meant to address your inquiry to me, but I think these
-> patches tried out some ideas, got issues discovered in them and then got
-> abandoned before resulting in a working code that is ready for testing.
+> git stash refuses to apply a stash if it touches files that are
+> modified.  Using stash -p to selectively stash some hunks of a file
+> and then immediately trying to pop that stash causes this failure
+> every time.
 
-Yes. I think we decided that we needed some pretty good testing to add
-the cache_tree handling back into unpack_trees. I'd still like to do
-that testing, but haven't done it yet.
+I think that is by design.
 
--Peff
+I do not use "stash -p" and personally, but I think its broken from the UI
+point of view.  The point of "stash" is to clear your workspace to a
+pristine state, do random things, and after you are done and cleared your
+workspace again, apply it to come back to the original state or a state as
+if you started your WIP from the updated clean-slate.
+
+So probably the right way to use "stash -p" (if there were such a thing)
+would be to stash away the remainder in a separate stash with another
+"stash" without "-p" (which will clear your workspace to a pristine state)
+and then pop the one you created with "stash -p", I think.
