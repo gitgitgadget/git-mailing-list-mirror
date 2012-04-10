@@ -1,83 +1,83 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [ANNOUNCE] Git 1.7.10
-Date: Tue, 10 Apr 2012 11:43:46 -0700 (PDT)
-Message-ID: <m3398bbf7y.fsf@localhost.localdomain>
-References: <7v1uo01ta1.fsf@alter.siamese.dyndns.org>
+From: =?ISO-8859-1?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
+Subject: Re: Post 1.7.10 cycle
+Date: Tue, 10 Apr 2012 20:55:58 +0200
+Message-ID: <4F84823E.6030308@lsrfire.ath.cx>
+References: <7v1unwtp02.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Linux Kernel <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: linux-kernel-owner@vger.kernel.org Tue Apr 10 20:44:15 2012
-Return-path: <linux-kernel-owner@vger.kernel.org>
-Envelope-to: glk-linux-kernel-3@plane.gmane.org
+X-From: git-owner@vger.kernel.org Tue Apr 10 20:56:19 2012
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <linux-kernel-owner@vger.kernel.org>)
-	id 1SHg33-00025r-Vu
-	for glk-linux-kernel-3@plane.gmane.org; Tue, 10 Apr 2012 20:44:14 +0200
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1SHgEd-0000Ik-Kq
+	for gcvg-git-2@plane.gmane.org; Tue, 10 Apr 2012 20:56:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758668Ab2DJSoB (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
-	Tue, 10 Apr 2012 14:44:01 -0400
-Received: from mail-wi0-f172.google.com ([209.85.212.172]:60480 "EHLO
-	mail-wi0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758562Ab2DJSns (ORCPT
-	<rfc822;linux-kernel@vger.kernel.org>);
-	Tue, 10 Apr 2012 14:43:48 -0400
-Received: by wibhj6 with SMTP id hj6so3645832wib.1
-        for <multiple recipients>; Tue, 10 Apr 2012 11:43:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        bh=2Z+EpLTSo+iprYESXQ2YkX2md/w4DAkrc7980iW3D7M=;
-        b=rHuluPhlLbykECqlf7TtYTQBx+7BaloUIvHdO6+LtAEARIrYb7jpRNcbP58y6VTYeZ
-         ZqHFpdcvqP4Yir0FMasPPPf1UMUgqVEg2P9vos5MFQ0Zy+MF3SvZZlb48d+vQ6kX4fgy
-         U9HaUfkCdKeDBzaiJqG8Cnzq8uV7KWOlHqFot+Evy6RyalzmZTvyutig/B975mYyblgx
-         6TApWCrcdkfBiJNQkwLpn6c8FheH+hO9m7xHjKhdIysaYctNU1eb71eKVWr9W1aO8JDn
-         0VfU5gq6992xdRgZhx7XmGpnqeDzTK7ROJdpzANyrkruci3ANnkHL625mo2o/zu5WpYg
-         pD8g==
-Received: by 10.216.131.78 with SMTP id l56mr6787637wei.94.1334083426944;
-        Tue, 10 Apr 2012 11:43:46 -0700 (PDT)
-Received: from localhost.localdomain (acxe73.neoplus.adsl.tpnet.pl. [83.11.162.73])
-        by mx.google.com with ESMTPS id ff2sm475475wib.9.2012.04.10.11.43.45
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 10 Apr 2012 11:43:46 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id q3AIhF6h009884;
-	Tue, 10 Apr 2012 20:43:25 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id q3AIgvJN009874;
-	Tue, 10 Apr 2012 20:42:57 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <7v1uo01ta1.fsf@alter.siamese.dyndns.org>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
-Sender: linux-kernel-owner@vger.kernel.org
+	id S1758357Ab2DJS4G (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Apr 2012 14:56:06 -0400
+Received: from india601.server4you.de ([85.25.151.105]:34925 "EHLO
+	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753678Ab2DJS4F (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Apr 2012 14:56:05 -0400
+Received: from [192.168.2.105] (p4FFD8505.dip.t-dialin.net [79.253.133.5])
+	by india601.server4you.de (Postfix) with ESMTPSA id 5566F2F806E;
+	Tue, 10 Apr 2012 20:56:02 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:11.0) Gecko/20120327 Thunderbird/11.0.1
+In-Reply-To: <7v1unwtp02.fsf@alter.siamese.dyndns.org>
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <linux-kernel.vger.kernel.org>
-X-Mailing-List: linux-kernel@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195118>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195119>
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> Git v1.7.10 Release Notes
-> =========================
+Am 10.04.2012 02:22, schrieb Junio C Hamano:
+> It's now time to pick among the topics that have been cooking in 'next'
+> and 'pu' which ones to start moving to 'master' in what order.
 > 
-> Compatibility Notes
-> -------------------
-[...]
->  * The "--binary/-b" options to "git am" have been a no-op for quite a
->    while and were deprecated in mid 2008 (v1.6.0).  When you give these
->    options to "git am", it will now warn and ask you not to use them.
-[...]
-> Updates since v1.7.9
-> --------------------
-[...]
->  * "git am" learned to pass "-b" option to underlying "git mailinfo", so
->    that a bracketed string other than "PATCH" at the beginning can be kept.
+> I've already kicked one topic out of 'next' as it regresses the http proxy
+> support, but I haven't spent enough time to look at the other topics again
+> closely enough to decide.  I was hoping that we could feed a handful of
+> topics every few days to 'master'.
+> 
+> I think the following topics (in 'next') are more or less ready:
 
-So how it is in 1.7.10?  Is "git am -b ..." a no-op, now showing
-deprecation notice, or does it pass "-b" to "git mailinfo" to limit
-stripping of bracketed strings to those containing the word "PATCH"?
+> rs/unpack-trees-leakfix
 
+Please apply the following patch before this one.  It makes sure that it
+is a pure leak fix.  Without the added check, it'd change the behaviour
+slightly: with o->merge == 0, we'd call mark_ce_used() on src[0]; before
+it would point to the leaked version, but after the patch it points to
+the version that has been added using do_add_entry().  Not sure if this
+can lead to any user-visible consequences, but this is cleaner.
+
+-- >8 --
+Subject: unpack-trees: don't perform any index operation if we're not merging
+
+src[0] points to the index entry in the merge case and to the first
+tree to unpack in the non-merge case.  We only want to mark the index
+entry, so check first if we're merging.
+
+Signed-off-by: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
+---
+ unpack-trees.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/unpack-trees.c b/unpack-trees.c
+index 7c9ecf6..60b728e 100644
+--- a/unpack-trees.c
++++ b/unpack-trees.c
+@@ -772,7 +772,7 @@ static int unpack_callback(int n, unsigned long mask, unsigned long dirmask, str
+ 	if (unpack_nondirectories(n, mask, dirmask, src, names, info) < 0)
+ 		return -1;
+ 
+-	if (src[0]) {
++	if (o->merge && src[0]) {
+ 		if (ce_stage(src[0]))
+ 			mark_ce_used_same_name(src[0], o);
+ 		else
 -- 
-Jakub Narebski
+1.7.10
