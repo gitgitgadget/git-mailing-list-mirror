@@ -1,94 +1,74 @@
-From: Tim Henigan <tim.henigan@gmail.com>
-Subject: Re: [PATCH 8/9 v11] difftool: teach difftool to handle directory diffs
-Date: Tue, 10 Apr 2012 13:24:52 -0400
-Message-ID: <CAFouetijF5vt9r1GfbntJ0BEqoo0FpztkeqrmeN=-6DK1Q_XRA@mail.gmail.com>
-References: <1333567265-23986-1-git-send-email-tim.henigan@gmail.com>
-	<CAJDDKr76eMiA4rOHQhar3aToVThDfbc8Ki5tr2PGU_UpDMAVeA@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH] rev-parse --show-prefix: add in trailing newline
+Date: Tue, 10 Apr 2012 12:36:16 -0500
+Message-ID: <20120410173616.GA4300@burratino>
+References: <1333978076-29968-1-git-send-email-rosslagerwall@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, ramsay@ramsay1.demon.co.uk
-To: gitster@pobox.com, David Aguilar <davvid@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 10 19:24:59 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org,
+	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+To: Ross Lagerwall <rosslagerwall@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Apr 10 19:36:58 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SHeoM-0000s4-HI
-	for gcvg-git-2@plane.gmane.org; Tue, 10 Apr 2012 19:24:58 +0200
+	id 1SHezt-0007hh-0v
+	for gcvg-git-2@plane.gmane.org; Tue, 10 Apr 2012 19:36:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753068Ab2DJRYx convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 10 Apr 2012 13:24:53 -0400
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:61607 "EHLO
+	id S1758123Ab2DJRg3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Apr 2012 13:36:29 -0400
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:62586 "EHLO
 	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751913Ab2DJRYw convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 10 Apr 2012 13:24:52 -0400
-Received: by iagz16 with SMTP id z16so39427iag.19
-        for <git@vger.kernel.org>; Tue, 10 Apr 2012 10:24:52 -0700 (PDT)
+	with ESMTP id S1758114Ab2DJRg1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Apr 2012 13:36:27 -0400
+Received: by iagz16 with SMTP id z16so51376iag.19
+        for <git@vger.kernel.org>; Tue, 10 Apr 2012 10:36:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=yqVosiMbLtQP2xmQDBXyXX4Enovg46KKU+VNQzfYzoI=;
-        b=M+Do3Tvm+76XAx0HCvPj6roWbH7Kztca065wdSg8A0CsOwpNZZMtwIrynxKBeJB51q
-         UeTjeJKkngbXY04dnM2qpbGojc1IItbXE223mlzoOGxVZBhfdkmFfnpLJgQjeMi0pHXF
-         jMvx0v3P6DWWX/CwqbTMPTjye6t2Pc4313tLJELMh1r5IiisVpaWJQc3Ur4vG0/n/5Wj
-         iYYbRhC27/d/o7SyuiBnzOI0qHhcC/255zFV/LN4o1ZC4Hkhoq+Yq3N2cxY5ncbwbgPS
-         nvEVdB+SDRPgKjitUBToUKkTxu6BfohxotrlqTSgB1t3O4CkO6Wi9+BIMst2Mxi9/dEn
-         FRLA==
-Received: by 10.50.149.131 with SMTP id ua3mr3289210igb.41.1334078692380; Tue,
- 10 Apr 2012 10:24:52 -0700 (PDT)
-Received: by 10.42.225.193 with HTTP; Tue, 10 Apr 2012 10:24:52 -0700 (PDT)
-In-Reply-To: <CAJDDKr76eMiA4rOHQhar3aToVThDfbc8Ki5tr2PGU_UpDMAVeA@mail.gmail.com>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=WYqeoFGsfE254n3besDNRyifcLzI5HUgx6JNTQ1GJQc=;
+        b=iyAqlw743a+NKNJYZR82ZbWDVoERCdBd+SM4k9WBanFoir7beevgzWpfz/6x098GFl
+         c+hxkf2NhZkFtXx1I3u5Nt3SlTZ36be/YjLmhJceZPF/p8pfW5xKcvNIBx2CYWOv9QUs
+         8dTlBf7EqpvqfGfhLHu2tZASGSYblsStyafdONWnUIiWgGeaiQo5pJonTML3CVUp2ITq
+         YNLiWNz8RKU62B503ScJ3wljKURdS1zSlpf/a5VVkW304P70MGmpwxCT1UtPq1djSzkd
+         P/RGAhMxnXCpi5O0mD0yExRX3/0uAmwd/MJiuK0zwUhvkROoNQwp6dGDHJkZV0ptj/b3
+         JFUQ==
+Received: by 10.50.47.230 with SMTP id g6mr3716334ign.74.1334079386865;
+        Tue, 10 Apr 2012 10:36:26 -0700 (PDT)
+Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
+        by mx.google.com with ESMTPS id m4sm42481151igw.1.2012.04.10.10.36.21
+        (version=SSLv3 cipher=OTHER);
+        Tue, 10 Apr 2012 10:36:22 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <1333978076-29968-1-git-send-email-rosslagerwall@gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195108>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195109>
 
-On Mon, Apr 9, 2012 at 8:14 AM, David Aguilar <davvid@gmail.com> wrote:
-> On Wed, Apr 4, 2012 at 12:21 PM, Tim Henigan <tim.henigan@gmail.com> =
-wrote:
->> diff --git a/git-difftool.perl b/git-difftool.perl
->> index d4fe998..5bb01e1 100755
->> --- a/git-difftool.perl
->> +++ b/git-difftool.perl
->> @@ -1,21 +1,29 @@
+(cc-ing Duy)
+Hi,
 
-=2E..snip...
+Ross Lagerwall wrote:
 
->> + =C2=A0 =C2=A0 =C2=A0 $ENV{GIT_DIR} =3D $repo->repo_path();
->> + =C2=A0 =C2=A0 =C2=A0 $ENV{GIT_INDEX_FILE} =3D "$tmpdir/lindex";
->> + =C2=A0 =C2=A0 =C2=A0 ($inpipe, $ctx) =3D $repo->command_input_pipe=
-(qw/update-index -z --index-info/);
->> + =C2=A0 =C2=A0 =C2=A0 print($inpipe $lindex);
->> + =C2=A0 =C2=A0 =C2=A0 $repo->command_close_pipe($inpipe, $ctx);
->> + =C2=A0 =C2=A0 =C2=A0 system(('git', 'checkout-index', '--all', "--=
-prefix=3D$ldir/"));
+> --- a/builtin/rev-parse.c
+> +++ b/builtin/rev-parse.c
+> @@ -634,6 +634,8 @@ int cmd_rev_parse(int argc, const char **argv, const char *prefix)
+>  			if (!strcmp(arg, "--show-prefix")) {
+>  				if (prefix)
+>  					puts(prefix);
+> +				else
+> +					putchar('\n');
+>  				continue;
 
-=2E..snip...
+This makes the output more consistent but it is a little puzzling how
+it does that.  Why is prefix NULL instead of "" when we are at the
+toplevel of the worktree?
 
->> + =C2=A0 =C2=A0 =C2=A0 # If the diff including working copy files an=
-d those
->> + =C2=A0 =C2=A0 =C2=A0 # files were modified during the diff, then t=
-he changes
->> + =C2=A0 =C2=A0 =C2=A0 # should be copied back to the working tree
->> + =C2=A0 =C2=A0 =C2=A0 my $repo =3D Git->repository();
->> + =C2=A0 =C2=A0 =C2=A0 my $workdir =3D $repo->repo_path() . "/..";
->
-> Does this work when $GIT_WORK_TREE / core.worktree are defined?
-
-Should I also be concerned that the existing code always overrides $GIT=
-_DIR?
-
-=46or example, should I squash in the following before calling 'git upd=
-ate-index'?
-
-- =C2=A0 =C2=A0 =C2=A0 $ENV{GIT_DIR} =3D $repo->repo_path();
-+      if (not defined($ENV{GIT_DIR})) {
-+              $ENV{GIT_DIR} =3D $repo->repo_path();
-+      }
-
-This seems like the right thing to do, but again I have not used
-$GIT_DIR except for the implementation of this script.
+Thanks,
+Jonathan
