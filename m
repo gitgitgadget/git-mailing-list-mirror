@@ -1,88 +1,66 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCH] rev-parse --show-prefix: add in trailing newline
-Date: Wed, 11 Apr 2012 05:51:44 +0700
-Message-ID: <CACsJy8Dc9xi=z7x4OfeAWHSeuUOFFVFf93GFOfauVB7c=_cZ1Q@mail.gmail.com>
-References: <1333978076-29968-1-git-send-email-rosslagerwall@gmail.com> <20120410173616.GA4300@burratino>
+From: Andrew Sayers <andrew-git@pileofstuff.org>
+Subject: Re: Migrating SVN to Git, and preserve merge information
+Date: Tue, 10 Apr 2012 23:57:38 +0100
+Message-ID: <4F84BAE2.5090803@pileofstuff.org>
+References: <4F844F33.5000004@nekoconeko.nl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Ross Lagerwall <rosslagerwall@gmail.com>, git@vger.kernel.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 11 00:52:28 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Nick Douma <n.douma@nekoconeko.nl>
+X-From: git-owner@vger.kernel.org Wed Apr 11 00:57:52 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SHjvC-0004Zu-9Q
-	for gcvg-git-2@plane.gmane.org; Wed, 11 Apr 2012 00:52:22 +0200
+	id 1SHk0T-00074e-CW
+	for gcvg-git-2@plane.gmane.org; Wed, 11 Apr 2012 00:57:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759573Ab2DJWwR convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 10 Apr 2012 18:52:17 -0400
-Received: from mail-we0-f174.google.com ([74.125.82.174]:53058 "EHLO
-	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757013Ab2DJWwR convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 10 Apr 2012 18:52:17 -0400
-Received: by wejx9 with SMTP id x9so192337wej.19
-        for <git@vger.kernel.org>; Tue, 10 Apr 2012 15:52:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=RoLHwm/VlyKugB+ZUdTeWUHcInKZalLM9xrCObNVXi0=;
-        b=r9oO0Xb8KVJ/UnJzLhZmBQpqj4MNuNMk7szPbmDeWNCXNAeFRZT3IzLl2PY1hD2MQ8
-         8vRe5cF7HbI7ZM07QWPQMl6dH5z8mxVEkucYXbyMWt/AoiyMoBUzcAuhuLL09gOCmREG
-         EjYld8Wdh+LWTjFZY6FeUIaBMfgEW4jTAkLhZUOGMV4aNJukTkEah1lqcM4fGaSj979b
-         GzV8bodT2LBOr/hgDKGImSnsWiojZ8k+L/L8djM+qfMFPdzZMMV95vPllABVxV/3/7WG
-         Cu/cukl2Ujk6xC22Wsv4Vy/sgRdhPWZo4NpJkRfvyOMB8DOuPuAUU9tV3UCfrPvv4lux
-         pHKQ==
-Received: by 10.180.102.3 with SMTP id fk3mr10894862wib.9.1334098335812; Tue,
- 10 Apr 2012 15:52:15 -0700 (PDT)
-Received: by 10.223.109.144 with HTTP; Tue, 10 Apr 2012 15:51:44 -0700 (PDT)
-In-Reply-To: <20120410173616.GA4300@burratino>
+	id S1755600Ab2DJW5p (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Apr 2012 18:57:45 -0400
+Received: from mtaout03-winn.ispmail.ntl.com ([81.103.221.49]:60196 "EHLO
+	mtaout03-winn.ispmail.ntl.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753125Ab2DJW5o (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 10 Apr 2012 18:57:44 -0400
+Received: from aamtaout03-winn.ispmail.ntl.com ([81.103.221.35])
+          by mtaout03-winn.ispmail.ntl.com
+          (InterMail vM.7.08.04.00 201-2186-134-20080326) with ESMTP
+          id <20120410225741.HNBH21612.mtaout03-winn.ispmail.ntl.com@aamtaout03-winn.ispmail.ntl.com>;
+          Tue, 10 Apr 2012 23:57:41 +0100
+Received: from [192.168.0.3] (really [94.170.150.126])
+          by aamtaout03-winn.ispmail.ntl.com
+          (InterMail vG.3.00.04.00 201-2196-133-20080908) with ESMTP
+          id <20120410225741.RKGV13318.aamtaout03-winn.ispmail.ntl.com@[192.168.0.3]>;
+          Tue, 10 Apr 2012 23:57:41 +0100
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.28) Gecko/20120313 Thunderbird/3.1.20
+In-Reply-To: <4F844F33.5000004@nekoconeko.nl>
+X-Cloudmark-Analysis: v=1.1 cv=R50lirqlHffDPPkwUlkuVa99MrvKdVWo//yz83qex8g= c=1 sm=0 a=yXtjXN6ItgYA:10 a=5phNfFoJZtEA:10 a=u4BGzq-dJbcA:10 a=8nJEP1OIZ-IA:10 a=1zXWHiOROls77X4DgrIA:9 a=wPNLvfGTeEIA:10 a=HpAAvcLHHh0Zw7uRqdWCyQ==:117
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195135>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195136>
 
-2012/4/11 Jonathan Nieder <jrnieder@gmail.com>:
-> (cc-ing Duy)
-> Hi,
->
-> Ross Lagerwall wrote:
->
->> --- a/builtin/rev-parse.c
->> +++ b/builtin/rev-parse.c
->> @@ -634,6 +634,8 @@ int cmd_rev_parse(int argc, const char **argv, c=
-onst char *prefix)
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 if (!strcmp(arg, "--show-prefix")) {
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (prefix)
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 puts(pr=
-efix);
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 else
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 putchar('\n=
-');
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 continue;
->
-> This makes the output more consistent but it is a little puzzling how
-> it does that. =C2=A0Why is prefix NULL instead of "" when we are at t=
-he
-> toplevel of the worktree?
+Hi Nick,
 
-It dates back to the first version of setup_git_directory() in d288a70
-([PATCH] Make "git diff" work inside relative subdirectories -
-2005-08-16). If we get "", setup_git_.. converts it to NULL. Although
-I think Linus made a mistake in the first version of "rev-parse
---git-dir" doing "puts(prefix);" unconditionally in the same commit.
-Junio fixed --git-dir in 4866ccf (Rationalize output selection in
-rev-parse. - 2005-08-24) with the "if (prefix)" clause and should have
-added the "else putchar('\n');" there too, I think.
---=20
-Duy
+Would I be right in thinking that a commit like "Merged r100,r101,r102
+from trunk" will create three grafts?  If so, that might be the problem.
+
+Git differentiates between "merges" (which include every commit up to
+and including the specified one) and "cherry-picks" (which just include
+the specified commit), whereas SVN calls both of these "merges".  Grafts
+are a way of creating "merges" rather than "cherry-picks" (which git
+doesn't have any metadata for), and it's not at all easy to get "merge"
+data out of SVN in the general case.  Having said that, it's often a
+good enough heuristic to pick the highest revision number mentioned in
+the commit message and pretend it's a merge.
+
+Incidentally, I'm planning to work on this area of SVN->git conversion
+in the coming months.  I don't have anything you could use yet, but I
+don't suppose the scripts you used are available somewhere?  Getting
+revision information out of log files is particularly tricky, and
+everyone stumbles over a different set of issues.  I'd be really
+interested to pick any nuggets of wisdom out of the approach you took.
+
+	- Andrew
