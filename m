@@ -1,7 +1,7 @@
 From: mhagger@alum.mit.edu
-Subject: [PATCH 04/15] do_for_each_ref_in_arrays(): new function
-Date: Tue, 10 Apr 2012 07:30:16 +0200
-Message-ID: <1334035827-20331-5-git-send-email-mhagger@alum.mit.edu>
+Subject: [PATCH 05/15] repack_without_ref(): reimplement using do_for_each_ref_in_array()
+Date: Tue, 10 Apr 2012 07:30:17 +0200
+Message-ID: <1334035827-20331-6-git-send-email-mhagger@alum.mit.edu>
 References: <1334035827-20331-1-git-send-email-mhagger@alum.mit.edu>
 Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
 	Jakub Narebski <jnareb@gmail.com>,
@@ -9,25 +9,25 @@ Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
 	Johan Herland <johan@herland.net>,
 	Michael Haggerty <mhagger@alum.mit.edu>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Apr 10 07:31:14 2012
+X-From: git-owner@vger.kernel.org Tue Apr 10 07:31:15 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SHTfd-0002Gn-GO
-	for gcvg-git-2@plane.gmane.org; Tue, 10 Apr 2012 07:31:13 +0200
+	id 1SHTfe-0002Gn-IF
+	for gcvg-git-2@plane.gmane.org; Tue, 10 Apr 2012 07:31:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753069Ab2DJFa4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Apr 2012 01:30:56 -0400
-Received: from einhorn.in-berlin.de ([192.109.42.8]:59196 "EHLO
+	id S1753281Ab2DJFbD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Apr 2012 01:31:03 -0400
+Received: from einhorn.in-berlin.de ([192.109.42.8]:59203 "EHLO
 	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752638Ab2DJFav (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Apr 2012 01:30:51 -0400
+	with ESMTP id S1752613Ab2DJFax (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Apr 2012 01:30:53 -0400
 X-Envelope-From: mhagger@alum.mit.edu
 Received: from michael.fritz.box (p4FC0B8CA.dip.t-dialin.net [79.192.184.202])
-	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id q3A5UXdv000870;
-	Tue, 10 Apr 2012 07:30:43 +0200
+	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id q3A5UXdw000870;
+	Tue, 10 Apr 2012 07:30:45 +0200
 X-Mailer: git-send-email 1.7.10
 In-Reply-To: <1334035827-20331-1-git-send-email-mhagger@alum.mit.edu>
 X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
@@ -35,119 +35,88 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195061>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195062>
 
 From: Michael Haggerty <mhagger@alum.mit.edu>
 
-Extract function do_for_each_ref_in_arrays() from do_for_each_ref().
-The new function will be a useful building block for storing refs
-hierarchically.
+It costs a bit of boilerplate, but it means that the function can be
+ignorant of how cached refs are stored.
 
 Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 ---
- refs.c |   82 +++++++++++++++++++++++++++++++++++++++++-----------------------
- 1 file changed, 53 insertions(+), 29 deletions(-)
+ refs.c |   51 ++++++++++++++++++++++++++++++---------------------
+ 1 file changed, 30 insertions(+), 21 deletions(-)
 
 diff --git a/refs.c b/refs.c
-index 263bd81..f9a1b57 100644
+index f9a1b57..78dbda6 100644
 --- a/refs.c
 +++ b/refs.c
-@@ -288,6 +288,52 @@ static int do_for_each_ref_in_array(struct ref_array *array, int offset,
+@@ -1333,36 +1333,45 @@ struct ref_lock *lock_any_ref_for_update(const char *refname,
+ 	return lock_ref_sha1_basic(refname, old_sha1, flags, NULL);
  }
  
- /*
-+ * Call fn for each reference in the union of array1 and array2, in
-+ * order by refname.  If an entry appears in both array1 and array2,
-+ * then only process the version that is in array2.  The input arrays
-+ * must already be sorted.
-+ */
-+static int do_for_each_ref_in_arrays(struct ref_array *array1,
-+				     struct ref_array *array2,
-+				     const char *base, each_ref_fn fn, int trim,
-+				     int flags, void *cb_data)
-+{
-+	int retval;
-+	int i1 = 0, i2 = 0;
++struct repack_without_ref_sb {
++	const char *refname;
++	int fd;
++};
 +
-+	assert(array1->sorted == array1->nr);
-+	assert(array2->sorted == array2->nr);
-+	while (i1 < array1->nr && i2 < array2->nr) {
-+		struct ref_entry *e1 = array1->refs[i1];
-+		struct ref_entry *e2 = array2->refs[i2];
-+		int cmp = strcmp(e1->name, e2->name);
-+		if (cmp < 0) {
-+			retval = do_one_ref(base, fn, trim, flags, cb_data, e1);
-+			i1++;
-+		} else {
-+			retval = do_one_ref(base, fn, trim, flags, cb_data, e2);
-+			i2++;
-+			if (cmp == 0) {
-+				/*
-+				 * There was a ref in array1 with the
-+				 * same name; ignore it.
-+				 */
-+				i1++;
-+			}
-+		}
-+		if (retval)
-+			return retval;
-+	}
-+	if (i1 < array1->nr)
-+		return do_for_each_ref_in_array(array1, i1,
-+						base, fn, trim, flags, cb_data);
-+	if (i2 < array2->nr)
-+		return do_for_each_ref_in_array(array2, i2,
-+						base, fn, trim, flags, cb_data);
++static int repack_without_ref_fn(const char *refname, const unsigned char *sha1,
++				 int flags, void *cb_data)
++{
++	struct repack_without_ref_sb *data = cb_data;
++	char line[PATH_MAX + 100];
++	int len;
++
++	if (!strcmp(data->refname, refname))
++		return 0;
++	len = snprintf(line, sizeof(line), "%s %s\n",
++		       sha1_to_hex(sha1), refname);
++	/* this should not happen but just being defensive */
++	if (len > sizeof(line))
++		die("too long a refname '%s'", refname);
++	write_or_die(data->fd, line, len);
 +	return 0;
 +}
 +
-+/*
-  * Return true iff a reference named refname could be created without
-  * conflicting with the name of an existing reference.  If oldrefname
-  * is non-NULL, ignore potential conflicts with oldrefname (e.g.,
-@@ -873,36 +919,14 @@ void warn_dangling_symref(FILE *fp, const char *msg_fmt, const char *refname)
- static int do_for_each_ref(const char *submodule, const char *base, each_ref_fn fn,
- 			   int trim, int flags, void *cb_data)
+ static struct lock_file packlock;
+ 
+ static int repack_without_ref(const char *refname)
  {
--	int retval = 0, p = 0, l = 0;
- 	struct ref_cache *refs = get_ref_cache(submodule);
--	struct ref_array *packed = get_packed_refs(refs);
--	struct ref_array *loose = get_loose_refs(refs);
+-	struct ref_array *packed;
+-	int fd, i;
 -
--	sort_ref_array(packed);
--	sort_ref_array(loose);
--	while (p < packed->nr && l < loose->nr) {
--		struct ref_entry *entry;
--		int cmp = strcmp(packed->refs[p]->name, loose->refs[l]->name);
--		if (!cmp) {
--			p++;
+-	packed = get_packed_refs(get_ref_cache(NULL));
++	struct repack_without_ref_sb data;
++	struct ref_array *packed = get_packed_refs(get_ref_cache(NULL));
++	sort_ref_array(packed);
+ 	if (search_ref_array(packed, refname) == NULL)
+ 		return 0;
+-	fd = hold_lock_file_for_update(&packlock, git_path("packed-refs"), 0);
+-	if (fd < 0) {
++	data.refname = refname;
++	data.fd = hold_lock_file_for_update(&packlock, git_path("packed-refs"), 0);
++	if (data.fd < 0) {
+ 		unable_to_lock_error(git_path("packed-refs"), errno);
+ 		return error("cannot delete '%s' from packed refs", refname);
+ 	}
+-
+-	for (i = 0; i < packed->nr; i++) {
+-		char line[PATH_MAX + 100];
+-		int len;
+-		struct ref_entry *ref = packed->refs[i];
+-
+-		if (!strcmp(refname, ref->name))
 -			continue;
--		}
--		if (cmp > 0) {
--			entry = loose->refs[l++];
--		} else {
--			entry = packed->refs[p++];
--		}
--		retval = do_one_ref(base, fn, trim, flags, cb_data, entry);
--		if (retval)
--			return retval;
+-		len = snprintf(line, sizeof(line), "%s %s\n",
+-			       sha1_to_hex(ref->sha1), ref->name);
+-		/* this should not happen but just being defensive */
+-		if (len > sizeof(line))
+-			die("too long a refname '%s'", ref->name);
+-		write_or_die(fd, line, len);
 -	}
--
--	if (l < loose->nr)
--		return do_for_each_ref_in_array(loose, l, base, fn, trim, flags, cb_data);
--	if (p < packed->nr)
--		return do_for_each_ref_in_array(packed, p, base, fn, trim, flags, cb_data);
--
--	return 0;
-+	struct ref_array *packed_refs = get_packed_refs(refs);
-+	struct ref_array *loose_refs = get_loose_refs(refs);
-+	sort_ref_array(packed_refs);
-+	sort_ref_array(loose_refs);
-+	return do_for_each_ref_in_arrays(packed_refs,
-+					 loose_refs,
-+					 base, fn, trim, flags, cb_data);
++	do_for_each_ref_in_array(packed, 0, "", repack_without_ref_fn, 0, 0, &data);
+ 	return commit_lock_file(&packlock);
  }
  
- static int do_head_ref(const char *submodule, each_ref_fn fn, void *cb_data)
 -- 
 1.7.10
