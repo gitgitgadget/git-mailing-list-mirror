@@ -1,64 +1,79 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Git for Windows released
-Date: Mon, 9 Apr 2012 22:28:27 -0500 (CDT)
-Message-ID: <alpine.DEB.1.00.1204092219410.3340@s15462909.onlinehome-server.info>
+From: greened@obbligato.org
+Subject: Re: git-subtree Next Round Ready
+Date: Mon, 09 Apr 2012 22:34:50 -0500
+Message-ID: <87bon01cpx.fsf@smith.obbligato.org>
+References: <87398we3ox.fsf@smith.obbligato.org>
+	<7vobrgs5tb.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="1784107012-1676485270-1334028507=:3340"
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: msysgit@googlegroups.com
-X-From: git-owner@vger.kernel.org Tue Apr 10 05:28:35 2012
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Apr 10 05:39:55 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SHRkw-0002Vo-RO
-	for gcvg-git-2@plane.gmane.org; Tue, 10 Apr 2012 05:28:35 +0200
+	id 1SHRvs-00064s-Rz
+	for gcvg-git-2@plane.gmane.org; Tue, 10 Apr 2012 05:39:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755134Ab2DJD2a (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Apr 2012 23:28:30 -0400
-Received: from mailout-de.gmx.net ([213.165.64.22]:42677 "HELO
-	mailout-de.gmx.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with SMTP id S1751642Ab2DJD23 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Apr 2012 23:28:29 -0400
-Received: (qmail invoked by alias); 10 Apr 2012 03:28:27 -0000
-Received: from s15462909.onlinehome-server.info (EHLO s15462909.onlinehome-server.info) [87.106.4.80]
-  by mail.gmx.net (mp030) with SMTP; 10 Apr 2012 05:28:27 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18KGjROtl4KgmVKwOHr6M+zS74uzN2qAQ2ttyupoT
-	xAbWMN+o+YWkj3
-X-X-Sender: schindelin@s15462909.onlinehome-server.info
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1758495Ab2DJDja (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Apr 2012 23:39:30 -0400
+Received: from li209-253.members.linode.com ([173.255.199.253]:41259 "EHLO
+	johnson.obbligato.org" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1758446Ab2DJDiz (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Apr 2012 23:38:55 -0400
+Received: from c-75-73-20-8.hsd1.mn.comcast.net ([75.73.20.8] helo=smith.obbligato.org)
+	by johnson.obbligato.org with esmtpsa (TLS1.2:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.77)
+	(envelope-from <greened@obbligato.org>)
+	id 1SHOCi-0005zC-JU; Mon, 09 Apr 2012 18:41:00 -0500
+In-Reply-To: <7vobrgs5tb.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Wed, 28 Mar 2012 15:45:36 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Filter-Spam-Score: ()
+X-Filter-Spam-Report: Spam detection software, running on the system "johnson.obbligato.org", has
+ identified this incoming email as possible spam.  The original message
+ has been attached to this so you can view it (if it isn't spam) or label
+ similar future email.  If you have any questions, see
+ @@CONTACT_ADDRESS@@ for details.
+ Content preview:  Junio C Hamano <gitster@pobox.com> writes: > I think it would
+    make more sense, from the history viewpoint, to: > > - Stop the history of
+    the "subtree" branch at commit d3a04e0 (Use Test > Harness, 2012-01-29);
+   > > - Create "for-upstream" branch that is a fork of 1.7.10 (when tagged);
+    > > - On "for-upstream" branch, add all the files from d3a04e0 (Use Test
+   > Harness, 2012-01-29) to contrib/subtree, and record it as a merge > between
+    1.7.10 and d3a04e0 (you can use subtree merge for this); and > finally >
+   > - Replay the 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195055>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195056>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Junio C Hamano <gitster@pobox.com> writes:
 
---1784107012-1676485270-1334028507=:3340
-Content-Type: TEXT/PLAIN; charset=ISO-8859-1
-Content-Transfer-Encoding: 8BIT
+> I think it would make more sense, from the history viewpoint, to:
+>
+>  - Stop the history of the "subtree" branch at commit d3a04e0 (Use Test
+>    Harness, 2012-01-29);
+>
+>  - Create "for-upstream" branch that is a fork of 1.7.10 (when tagged);
+>
+>  - On "for-upstream" branch, add all the files from d3a04e0 (Use Test
+>    Harness, 2012-01-29) to contrib/subtree, and record it as a merge
+>    between 1.7.10 and d3a04e0 (you can use subtree merge for this); and
+>    finally
+>
+>  - Replay the commits between d3a04e0 and the tip of your current
+>    "subtree" branch on top of "for-upstream".
 
-Hi all,
+All right, this should be ready to go.
 
-this is the big "Karsten Blees" release. It features the long-awaited
-Unicode support that Karsten Blees worked so hard on. It can be downloaded
-via http://msysgit.github.com/.
+git clone git://sources.obbligato.org/git/git.git
 
-I also cannot thank enough Erik 'kusma' Faye-Lund for reviewing the
-massive amount of work and not tiring before everything was done, after a
-whopping 15 revisions of the patch series.
+Branch is "for-upstream."
 
-As all Git for Windows releases, this one, too, is dedicated to all the
-people who contributed to make it better!
+Also accessible via gitweb.
 
-Ciao,
-Johannes
-
-P.S.: After Git for Windows 1.7.9 was downloaded 2¾ million times, maybe
-this time we break the 4 million barrier... who nose?
---1784107012-1676485270-1334028507=:3340--
+                           -Dave
