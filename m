@@ -1,58 +1,73 @@
-From: Martin Fick <mfick@codeaurora.org>
-Subject: Re: [PATCH 0/5] multithread traverse_commit_list (aka rev-list)
-Date: Tue, 10 Apr 2012 10:51:55 -0600
-Organization: CAF
-Message-ID: <201204101051.56288.mfick@codeaurora.org>
-References: <1334068771-32725-1-git-send-email-pclouds@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Avoid bug in Solaris xpg4/sed as used in submodule
+Date: Tue, 10 Apr 2012 09:10:22 -0700
+Message-ID: <7vhawrqzue.fsf@alter.siamese.dyndns.org>
+References: <7vy5q4tw3i.fsf@alter.siamese.dyndns.org>
+ <1334016800-11574-1-git-send-email-bwalton@artsci.utoronto.ca>
+ <7vwr5os9zr.fsf@alter.siamese.dyndns.org>
+ <1334018233-sup-7389@pinkfloyd.chass.utoronto.ca>
+ <7vobr0s8ej.fsf@alter.siamese.dyndns.org> <m262d8j8dv.fsf@igel.home>
 Mime-Version: 1.0
-Content-Type: Text/Plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Thomas Rast <trast@inf.ethz.ch>
-To: =?utf-8?q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc_Duy?= 
-	<pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 10 18:52:04 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Ben Walton <bwalton@artsci.utoronto.ca>, git <git@vger.kernel.org>
+To: Andreas Schwab <schwab@linux-m68k.org>
+X-From: git-owner@vger.kernel.org Tue Apr 10 19:08:39 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SHeIW-0007ed-8v
-	for gcvg-git-2@plane.gmane.org; Tue, 10 Apr 2012 18:52:04 +0200
+	id 1SHeYT-00086a-PD
+	for gcvg-git-2@plane.gmane.org; Tue, 10 Apr 2012 19:08:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752347Ab2DJQv7 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 10 Apr 2012 12:51:59 -0400
-Received: from wolverine02.qualcomm.com ([199.106.114.251]:54356 "EHLO
-	wolverine02.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751837Ab2DJQv6 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 10 Apr 2012 12:51:58 -0400
-X-IronPort-AV: E=McAfee;i="5400,1158,6675"; a="178069113"
-Received: from pdmz-css-vrrp.qualcomm.com (HELO mostmsg01.qualcomm.com) ([199.106.114.130])
-  by wolverine02.qualcomm.com with ESMTP/TLS/ADH-AES256-SHA; 10 Apr 2012 09:51:57 -0700
-Received: from mfick-lnx.localnet (pdmz-snip-v218.qualcomm.com [192.168.218.1])
-	by mostmsg01.qualcomm.com (Postfix) with ESMTPA id 2CDAB10004A9;
-	Tue, 10 Apr 2012 09:51:57 -0700 (PDT)
-User-Agent: KMail/1.13.5 (Linux/2.6.32-37-generic; KDE/4.4.5; x86_64; ; )
-In-Reply-To: <1334068771-32725-1-git-send-email-pclouds@gmail.com>
+	id S1754662Ab2DJRI2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Apr 2012 13:08:28 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:42328 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751913Ab2DJRI1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Apr 2012 13:08:27 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5F9BB7009;
+	Tue, 10 Apr 2012 13:08:27 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:date:references:message-id:mime-version:content-type;
+	 s=sasl; bh=gVE1zlvjMm/r4Ec+jHErVFGP+4s=; b=n2hbC2owcIyHeIblSgUj
+	+W8M4AbZwUQveF1WiUwjmlj3I2Dc6NFSsYQZFW5+/ccdf/xeb6lHCYPqAQwfKod3
+	YgZLAh1x6Sb/wfGYld/zRPdibQBHtPL73a3rDE6KrmQj+kx1N2pl/OaWYLQT/RCo
+	gSCBbLLDrda8D8OVcEK5TEs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:date:references:message-id:mime-version:content-type;
+	 q=dns; s=sasl; b=RIdbOyJSis95Jmn/SJfk+2mmNNbUcKpwFiULt2PvOPnqlZ
+	EBL+eRyhLalFwxf/npea1fpK+tOxRzwMHBNc1LHV9vpVAD6UiSfpKVVyS8mXvxfe
+	MfXngCGtA+j/R0V2BPwMBMk32aOwtRK/3GmBq4NuWdQVs5ch6n2m0EVjh8QzE=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 577777008;
+	Tue, 10 Apr 2012 13:08:27 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id CB2026FFB; Tue, 10 Apr 2012
+ 13:08:26 -0400 (EDT)
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: C9B238BA-832F-11E1-B687-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195101>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195102>
 
-On Tuesday, April 10, 2012 08:39:26 am Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=
-=8Dc Duy=20
-wrote:
-> While this series does not break rev-list (but breaks all
-> external commands, I don't care anyway), and it proves
-> lock-free pack access works, it does not improve
-> rev-list performance. I suspect extensive locking around
-> "struct object *" may be the culprit. =20
+Andreas Schwab <schwab@linux-m68k.org> writes:
 
-Or if it is memory contention and your threads share the=20
-same cache, it won't help much either,
+> Junio C Hamano <gitster@pobox.com> writes:
+>
+>> FWIW, it bothers me a lot more that expression does not anchor
+>> matches against path elements with explicit '/' than the issue your patch
+>> addresses, i.e.
+>>
+>> 	sed -e 's|[^/][^/]*/|../|g'
+>
+> Note that this requires readding a trailing slash to the path, which
+> complicates the whole thing a bit.
 
--Martin
-
---=20
-Employee of Qualcomm Innovation Center, Inc. which is a=20
-member of Code Aurora Forum
+Or simply swapping order of the stripping and sed invocation, which is not
+a big deal.  I personally find the pattern with trailing '/' easier to grok
+but it is also not a big deal.
