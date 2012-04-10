@@ -1,63 +1,58 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] rev-parse --show-prefix: add in trailing newline
-Date: Tue, 10 Apr 2012 09:14:11 -0700
-Message-ID: <7v8vi3sgx8.fsf@alter.siamese.dyndns.org>
-References: <1333978076-29968-1-git-send-email-rosslagerwall@gmail.com>
- <7v1unwwwov.fsf@alter.siamese.dyndns.org> <m2vcl7ir86.fsf@igel.home>
+From: Martin Fick <mfick@codeaurora.org>
+Subject: Re: [PATCH 0/5] multithread traverse_commit_list (aka rev-list)
+Date: Tue, 10 Apr 2012 10:51:55 -0600
+Organization: CAF
+Message-ID: <201204101051.56288.mfick@codeaurora.org>
+References: <1334068771-32725-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Ross Lagerwall <rosslagerwall@gmail.com>, git@vger.kernel.org,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Andreas Schwab <schwab@linux-m68k.org>
-X-From: git-owner@vger.kernel.org Tue Apr 10 18:14:25 2012
+Content-Type: Text/Plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Thomas Rast <trast@inf.ethz.ch>
+To: =?utf-8?q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc_Duy?= 
+	<pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Apr 10 18:52:04 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SHdi0-0003K9-Ol
-	for gcvg-git-2@plane.gmane.org; Tue, 10 Apr 2012 18:14:21 +0200
+	id 1SHeIW-0007ed-8v
+	for gcvg-git-2@plane.gmane.org; Tue, 10 Apr 2012 18:52:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753482Ab2DJQOP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Apr 2012 12:14:15 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:38927 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753036Ab2DJQOO (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Apr 2012 12:14:14 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 625A173A4;
-	Tue, 10 Apr 2012 12:14:13 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=uzmlANw5qAQqEcOBFCdSMIAZAnE=; b=NhINNS
-	k5Eu8yWMVB8/pD57DQsOpbw1wn/7RacdNS/+wjWNz8OJERwSgtd9WkEa4E+UdHSa
-	g/9seBCmZTUzxQ2oI9XPm26MQx7uktzvaLSH1MDfQNjMkPDatyd9fNHE1Q5JNKnp
-	a96AuVaS0PZzHj5217B/FmyJDqRTjQWIu0L/k=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Wxp6kDnbt2rbLuUBYAVe/fTX6O4LbvU8
-	QkpmXRHCB9hImwmgIITqlZWkLVYo5WKL9NMcU0fzA1fsFZZalvXRhIWE56en4dtg
-	bKc9lwk4sUxWY+axCMa0ixhiJgODrx9CGlWyDI9XjwNA+jOixiIav3WFQil4cgpT
-	lG5qXwQYBZo=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5875D73A3;
-	Tue, 10 Apr 2012 12:14:13 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id CAAEE73A2; Tue, 10 Apr 2012
- 12:14:12 -0400 (EDT)
-In-Reply-To: <m2vcl7ir86.fsf@igel.home> (Andreas Schwab's message of "Tue, 10
- Apr 2012 16:41:45 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 36291E26-8328-11E1-B8E2-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752347Ab2DJQv7 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 10 Apr 2012 12:51:59 -0400
+Received: from wolverine02.qualcomm.com ([199.106.114.251]:54356 "EHLO
+	wolverine02.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751837Ab2DJQv6 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 10 Apr 2012 12:51:58 -0400
+X-IronPort-AV: E=McAfee;i="5400,1158,6675"; a="178069113"
+Received: from pdmz-css-vrrp.qualcomm.com (HELO mostmsg01.qualcomm.com) ([199.106.114.130])
+  by wolverine02.qualcomm.com with ESMTP/TLS/ADH-AES256-SHA; 10 Apr 2012 09:51:57 -0700
+Received: from mfick-lnx.localnet (pdmz-snip-v218.qualcomm.com [192.168.218.1])
+	by mostmsg01.qualcomm.com (Postfix) with ESMTPA id 2CDAB10004A9;
+	Tue, 10 Apr 2012 09:51:57 -0700 (PDT)
+User-Agent: KMail/1.13.5 (Linux/2.6.32-37-generic; KDE/4.4.5; x86_64; ; )
+In-Reply-To: <1334068771-32725-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195100>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195101>
 
-Andreas Schwab <schwab@linux-m68k.org> writes:
+On Tuesday, April 10, 2012 08:39:26 am Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=
+=8Dc Duy=20
+wrote:
+> While this series does not break rev-list (but breaks all
+> external commands, I don't care anyway), and it proves
+> lock-free pack access works, it does not improve
+> rev-list performance. I suspect extensive locking around
+> "struct object *" may be the culprit. =20
 
-> This is already broken because of the extra slash.
+Or if it is memory contention and your threads share the=20
+same cache, it won't help much either,
 
-Yeah, you are right.
+-Martin
+
+--=20
+Employee of Qualcomm Innovation Center, Inc. which is a=20
+member of Code Aurora Forum
