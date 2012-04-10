@@ -1,219 +1,63 @@
-From: Neil Horman <nhorman@tuxdriver.com>
-Subject: [PATCH v3 4/4] git-rebase: add keep_empty flag
-Date: Tue, 10 Apr 2012 11:47:48 -0400
-Message-ID: <1334072868-9435-5-git-send-email-nhorman@tuxdriver.com>
-References: <1333136922-12872-1-git-send-email-nhorman@tuxdriver.com>
- <1334072868-9435-1-git-send-email-nhorman@tuxdriver.com>
-Cc: Jeff King <peff@peff.net>, Phil Hord <phil.hord@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Neil Horman <nhorman@tuxdriver.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 10 17:48:48 2012
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] rev-parse --show-prefix: add in trailing newline
+Date: Tue, 10 Apr 2012 09:14:11 -0700
+Message-ID: <7v8vi3sgx8.fsf@alter.siamese.dyndns.org>
+References: <1333978076-29968-1-git-send-email-rosslagerwall@gmail.com>
+ <7v1unwwwov.fsf@alter.siamese.dyndns.org> <m2vcl7ir86.fsf@igel.home>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Ross Lagerwall <rosslagerwall@gmail.com>, git@vger.kernel.org,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: Andreas Schwab <schwab@linux-m68k.org>
+X-From: git-owner@vger.kernel.org Tue Apr 10 18:14:25 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SHdJG-0004cA-4H
-	for gcvg-git-2@plane.gmane.org; Tue, 10 Apr 2012 17:48:46 +0200
+	id 1SHdi0-0003K9-Ol
+	for gcvg-git-2@plane.gmane.org; Tue, 10 Apr 2012 18:14:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759199Ab2DJPsl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Apr 2012 11:48:41 -0400
-Received: from charlotte.tuxdriver.com ([70.61.120.58]:49356 "EHLO
-	smtp.tuxdriver.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759164Ab2DJPsk (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Apr 2012 11:48:40 -0400
-Received: from hmsreliant.think-freely.org ([2001:470:8:a08:7aac:c0ff:fec2:933b] helo=localhost)
-	by smtp.tuxdriver.com with esmtpsa (TLSv1:AES128-SHA:128)
-	(Exim 4.63)
-	(envelope-from <nhorman@tuxdriver.com>)
-	id 1SHdJ0-0005XO-QT; Tue, 10 Apr 2012 11:48:37 -0400
-X-Mailer: git-send-email 1.7.7.6
-In-Reply-To: <1334072868-9435-1-git-send-email-nhorman@tuxdriver.com>
-X-Spam-Score: -2.9 (--)
-X-Spam-Status: No
+	id S1753482Ab2DJQOP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Apr 2012 12:14:15 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:38927 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753036Ab2DJQOO (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Apr 2012 12:14:14 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 625A173A4;
+	Tue, 10 Apr 2012 12:14:13 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=uzmlANw5qAQqEcOBFCdSMIAZAnE=; b=NhINNS
+	k5Eu8yWMVB8/pD57DQsOpbw1wn/7RacdNS/+wjWNz8OJERwSgtd9WkEa4E+UdHSa
+	g/9seBCmZTUzxQ2oI9XPm26MQx7uktzvaLSH1MDfQNjMkPDatyd9fNHE1Q5JNKnp
+	a96AuVaS0PZzHj5217B/FmyJDqRTjQWIu0L/k=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Wxp6kDnbt2rbLuUBYAVe/fTX6O4LbvU8
+	QkpmXRHCB9hImwmgIITqlZWkLVYo5WKL9NMcU0fzA1fsFZZalvXRhIWE56en4dtg
+	bKc9lwk4sUxWY+axCMa0ixhiJgODrx9CGlWyDI9XjwNA+jOixiIav3WFQil4cgpT
+	lG5qXwQYBZo=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5875D73A3;
+	Tue, 10 Apr 2012 12:14:13 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id CAAEE73A2; Tue, 10 Apr 2012
+ 12:14:12 -0400 (EDT)
+In-Reply-To: <m2vcl7ir86.fsf@igel.home> (Andreas Schwab's message of "Tue, 10
+ Apr 2012 16:41:45 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 36291E26-8328-11E1-B8E2-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195099>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195100>
 
-Add a command line switch to git-rebase to allow a user the ability to specify
-that they want to keep any commits in a series that are empty.
+Andreas Schwab <schwab@linux-m68k.org> writes:
 
-When git-rebase's type is am, then this option will automatically keep any
-commit that has a tree object identical to its parent.
+> This is already broken because of the extra slash.
 
-This patch changes the default behavior of interactive rebases as well.  With
-this patch, git-rebase -i will produce a revision set passed to
-git-revision-editor, in which empty commits are commented out.  Empty commits
-may be kept manually by uncommenting them.  If the new --keep-empty option is
-used in an interactive rebase the empty commits will automatically all be
-uncommented in the editor.
-
-Signed-off-by: Neil Horman <nhorman@tuxdriver.com>
----
- Documentation/git-rebase.txt |    4 ++++
- git-rebase--am.sh            |   19 ++++++++++++++-----
- git-rebase--interactive.sh   |   35 ++++++++++++++++++++++++++++++++---
- git-rebase.sh                |    5 +++++
- 4 files changed, 55 insertions(+), 8 deletions(-)
-
-diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
-index 504945c..131c35d 100644
---- a/Documentation/git-rebase.txt
-+++ b/Documentation/git-rebase.txt
-@@ -238,6 +238,10 @@ leave out at most one of A and B, in which case it defaults to HEAD.
- 	will be reset to where it was when the rebase operation was
- 	started.
- 
-+--keep-empty::
-+	Keep the commits that do not change anything from its
-+	parents in the result.
-+
- --skip::
- 	Restart the rebasing process by skipping the current patch.
- 
-diff --git a/git-rebase--am.sh b/git-rebase--am.sh
-index c815a24..040289c 100644
---- a/git-rebase--am.sh
-+++ b/git-rebase--am.sh
-@@ -20,11 +20,20 @@ esac
- 
- test -n "$rebase_root" && root_flag=--root
- 
--git format-patch -k --stdout --full-index --ignore-if-in-upstream \
--	--src-prefix=a/ --dst-prefix=b/ \
--	--no-renames $root_flag "$revisions" |
--git am $git_am_opt --rebasing --resolvemsg="$resolvemsg" &&
--move_to_original_branch
-+if test -n "$keep_empty" 
-+then
-+	# we have to do this the hard way.  git format-patch completely squashes
-+	# empty commits and even if it didn't the format doesn't really lend
-+	# itself well to recording empty patches.  fortunately, cherry-pick
-+	# makes this easy
-+	git cherry-pick --allow-empty "$revisions"
-+else
-+	git format-patch -k --stdout --full-index --ignore-if-in-upstream \
-+		--src-prefix=a/ --dst-prefix=b/ \
-+		--no-renames $root_flag "$revisions" |
-+	git am $git_am_opt --rebasing --resolvemsg="$resolvemsg"
-+fi && move_to_original_branch
-+
- ret=$?
- test 0 != $ret -a -d "$state_dir" && write_basic_state
- exit $ret
-diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-index 5812222..597d60a 100644
---- a/git-rebase--interactive.sh
-+++ b/git-rebase--interactive.sh
-@@ -167,6 +167,12 @@ has_action () {
- 	sane_grep '^[^#]' "$1" >/dev/null
- }
- 
-+is_empty_commit() {
-+	ptree=$(git rev-parse "$1"^{tree})
-+	pptree=$(git rev-parse "$1"^^{tree})
-+	return $(test "$ptree" = "$pptree")
-+}
-+
- # Run command with GIT_AUTHOR_NAME, GIT_AUTHOR_EMAIL, and
- # GIT_AUTHOR_DATE exported from the current environment.
- do_with_author () {
-@@ -191,12 +197,18 @@ git_sequence_editor () {
- 
- pick_one () {
- 	ff=--ff
-+
-+	if is_empty_commit $@ 
-+	then
-+		empty_args="--allow-empty"
-+	fi
-+
- 	case "$1" in -n) sha1=$2; ff= ;; *) sha1=$1 ;; esac
- 	case "$force_rebase" in '') ;; ?*) ff= ;; esac
- 	output git rev-parse --verify $sha1 || die "Invalid commit name: $sha1"
- 	test -d "$rewritten" &&
- 		pick_one_preserving_merges "$@" && return
--	output git cherry-pick $ff "$@"
-+	output git cherry-pick $empty_args $ff "$@"
- }
- 
- pick_one_preserving_merges () {
-@@ -780,9 +792,17 @@ git rev-list $merges_option --pretty=oneline --abbrev-commit \
- 	sed -n "s/^>//p" |
- while read -r shortsha1 rest
- do
-+
-+	if test -z "$keep_empty" && is_empty_commit $shortsha1
-+	then
-+		comment_out="# pick"
-+	else
-+		comment_out="pick"
-+	fi
-+
- 	if test t != "$preserve_merges"
- 	then
--		printf '%s\n' "pick $shortsha1 $rest" >> "$todo"
-+		printf '%s\n' "$comment_out $shortsha1 $rest" >> "$todo"
- 	else
- 		sha1=$(git rev-parse $shortsha1)
- 		if test -z "$rebase_root"
-@@ -801,7 +821,7 @@ do
- 		if test f = "$preserve"
- 		then
- 			touch "$rewritten"/$sha1
--			printf '%s\n' "pick $shortsha1 $rest" >> "$todo"
-+			printf '%s\n' "$comment_out $shortsha1 $rest" >> "$todo"
- 		fi
- 	fi
- done
-@@ -851,6 +871,15 @@ cat >> "$todo" << EOF
- #
- EOF
- 
-+if test -z "$keep_empty"
-+then
-+	cat >> "$todo" << EOF
-+	# Note that commits which are empty at the time of rebasing are 
-+	# commented out. 
-+EOF
-+fi
-+
-+
- has_action "$todo" ||
- 	die_abort "Nothing to do"
- 
-diff --git a/git-rebase.sh b/git-rebase.sh
-index 69c1374..24a2840 100755
---- a/git-rebase.sh
-+++ b/git-rebase.sh
-@@ -43,6 +43,7 @@ s,strategy=!       use the given merge strategy
- no-ff!             cherry-pick all commits, even if unchanged
- m,merge!           use merging strategies to rebase
- i,interactive!     let the user edit the list of commits to rebase
-+k,keep-empty	   preserve empty commits during rebase
- f,force-rebase!    force rebase even if branch is up to date
- X,strategy-option=! pass the argument through to the merge strategy
- stat!              display a diffstat of what changed upstream
-@@ -97,6 +98,7 @@ state_dir=
- action=
- preserve_merges=
- autosquash=
-+keep_empty=
- test "$(git config --bool rebase.autosquash)" = "true" && autosquash=t
- 
- read_basic_state () {
-@@ -220,6 +222,9 @@ do
- 	-i)
- 		interactive_rebase=explicit
- 		;;
-+	-k)
-+		keep_empty=yes
-+		;;
- 	-p)
- 		preserve_merges=t
- 		test -z "$interactive_rebase" && interactive_rebase=implied
--- 
-1.7.7.6
+Yeah, you are right.
