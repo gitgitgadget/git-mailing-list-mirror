@@ -1,95 +1,108 @@
-From: Ben Walton <bwalton@artsci.utoronto.ca>
-Subject: [PATCH] Avoid bug in Solaris xpg4/sed as used in submodule
-Date: Mon,  9 Apr 2012 20:13:20 -0400
-Message-ID: <1334016800-11574-1-git-send-email-bwalton@artsci.utoronto.ca>
-References: <7vy5q4tw3i.fsf@alter.siamese.dyndns.org>
-Cc: git@vger.kernel.org, Ben Walton <bwalton@artsci.utoronto.ca>
-To: gitster@pobox.com, schwab@linux-m68k.org
-X-From: git-owner@vger.kernel.org Tue Apr 10 02:13:38 2012
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Post 1.7.10 cycle
+Date: Mon, 09 Apr 2012 17:22:05 -0700
+Message-ID: <7v1unwtp02.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Apr 10 02:22:22 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SHOiC-0006O6-5F
-	for gcvg-git-2@plane.gmane.org; Tue, 10 Apr 2012 02:13:32 +0200
+	id 1SHOqi-0000qR-36
+	for gcvg-git-2@plane.gmane.org; Tue, 10 Apr 2012 02:22:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758246Ab2DJAN1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Apr 2012 20:13:27 -0400
-Received: from garcia.cquest.utoronto.ca ([192.82.128.9]:56356 "EHLO
-	garcia.cquest.utoronto.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753687Ab2DJAN0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Apr 2012 20:13:26 -0400
-Received: from pinkfloyd.chass.utoronto.ca ([128.100.160.254]:49317 ident=93)
-	by garcia.cquest.utoronto.ca with esmtp (Exim 4.63)
-	(envelope-from <bwalton@cquest.utoronto.ca>)
-	id 1SHOi4-0003VE-Jp; Mon, 09 Apr 2012 20:13:24 -0400
-Received: from bwalton by pinkfloyd.chass.utoronto.ca with local (Exim 4.72)
-	(envelope-from <bwalton@cquest.utoronto.ca>)
-	id 1SHOi4-00031A-Io; Mon, 09 Apr 2012 20:13:24 -0400
-X-Mailer: git-send-email 1.7.4.1
-In-Reply-To: <7vy5q4tw3i.fsf@alter.siamese.dyndns.org>
+	id S1758250Ab2DJAWJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Apr 2012 20:22:09 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:52223 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754287Ab2DJAWH (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Apr 2012 20:22:07 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 66B876470;
+	Mon,  9 Apr 2012 20:22:07 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
+	:subject:date:message-id:mime-version:content-type; s=sasl; bh=8
+	8p9tVrS98czh6+BvMz6JsxOLNA=; b=qBFz7D2Knv1I4UZ1i6YvBfh/DcJiEjbHn
+	W0zmh61GP8+7SdyCkeGjwSudeoPVHbVfHi5WoWaYcVyhoQHfmWAQBbqbOkkyfbno
+	u7Tyywhmnb+RUe5xQDaCOPWetN0brg1Nl0cAq9P7zvkrWcVuwV/cmGHoNRoDH5s+
+	SWPeJQGqAI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
+	:date:message-id:mime-version:content-type; q=dns; s=sasl; b=XuR
+	P1TkBxCBvypBZUdBZeVMl0cICTBRLeuYF2kQWZharlj8YBwKbVAkCwEv91XzQ9qQ
+	DbICap0TyEvcuk1wlbT1I7APB2p835dO3G+8mNPniES/ToDTPfgc4f3grpw0x7cI
+	IIRFMNA6hhNJd8rK+GQZKFu8/zVLNi4LYuDSpi0o=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 58370646F;
+	Mon,  9 Apr 2012 20:22:07 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E131B646E; Mon,  9 Apr 2012
+ 20:22:06 -0400 (EDT)
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 347716F8-82A3-11E1-B70A-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195049>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195050>
 
-The sed provided by Solaris in /usr/xpg4/bin has a bug whereby an
-unanchored regex using * for zero or more repetitions sees two
-separate matches fed to the substitution engine in some cases.
+It's now time to pick among the topics that have been cooking in 'next'
+and 'pu' which ones to start moving to 'master' in what order.
 
-This is evidenced by:
+I've already kicked one topic out of 'next' as it regresses the http proxy
+support, but I haven't spent enough time to look at the other topics again
+closely enough to decide.  I was hoping that we could feed a handful of
+topics every few days to 'master'.
 
-$ for sed in /usr/xpg4/bin/sed /usr/bin/sed /opt/csw/gnu/sed; do \
-echo 'ab' | $sed -e 's|[a]*|X|g'; \
-done
-XXbX
-XbX
-XbX
+I think the following topics (in 'next') are more or less ready:
 
-This bug was triggered during a git submodule clone operation as
-exercised in the setup stage of t5526-fetch-submodules when using the
-default SANE_TOOL_PATH for Solaris.  It led to paths such as
-..../.. being used in the submodule .git gitdir reference.
+da/difftool-test
+jn/diffstat-tests
+jc/commit-hook-authorship
+tr/maint-word-diff-regex-sticky
+rs/unpack-trees-leakfix
+jc/diff-algo-cleanup
+nd/stream-more
+zj/test-cred-helper-nicer-prove
+nl/rebase-i-cheat-sheet
+jc/maint-clean-nested-worktree-in-subdir
+jh/notes-merge-in-git-dir-worktree
 
-As we do not need to handle fully qualfied paths we can make the
-regex match 1 or more instead of 0 or more non-/ characters so use
-'s|[^/]\{1,\}|..|g' instead, which is correctly handled by all tested
-sed implementations.  This expression is semantically different than
-the original one.  It will not place leading '..' on a fully qualified
-path as the original expression did.  None of the paths passed to the
-regex relied on this behaviour so changing it shouldn't have negative
-impact.
+These (in 'next') are "ready" code-wise, but we would need to see the end
+of the "upstream", "current" or "beginner" discussion:
 
-Signed-off-by: Ben Walton <bwalton@artsci.utoronto.ca>
----
+ct/advise-push-default
+mm/push-default-switch-warning
 
-For some reason, I thought that using {x,y} range notation wasn't
-valid in this scenario, but I think I was mistaken.  It seems to be
-widely used elsewhere throughout the code.  I prefer that to the
-[^/][^/]* notation and as they're equivalent, I switched to it.
 
- git-submodule.sh |    5 +++--
- 1 files changed, 3 insertions(+), 2 deletions(-)
+And I think these in 'pu' are ready for 'next':
 
-diff --git a/git-submodule.sh b/git-submodule.sh
-index efc86ad..2c18e0c 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -167,10 +167,11 @@ module_clone()
- 	a=${a%/}
- 	b=${b%/}
- 
--	rel=$(echo $b | sed -e 's|[^/]*|..|g')
-+	# Turn path components into .. 
-+	rel=$(echo $b | sed -e 's|[^/]\{1,\}|..|g')
- 	echo "gitdir: $rel/$a" >"$path/.git"
- 
--	rel=$(echo $a | sed -e 's|[^/]*|..|g')
-+	rel=$(echo $a | sed -e 's|[^/]\{1,\}|..|g')
- 	(clear_local_git_env; cd "$path" && GIT_WORK_TREE=. git config core.worktree "$rel/$b")
- }
- 
--- 
-1.7.9
+jk/diff-no-rename-empty
+rs/combine-diff-zero-context-at-the-beginning
+jc/commit-unedited-template
+jk/http-backend-keep-committer-ident-env
+jc/push-upstream-sanity
+jk/branch-quiet
+jc/run-hook-env-1
+sl/autoconf
+jb/am-include
+jc/am-report-3way
+jc/fmt-merge-msg-people
+wk/gitweb-snapshot-use-if-modified-since
+bw/spawn-via-shell-path
+it/fetch-pack-many-refs
+jn/debian-customizes-default-editor
+jk/add-p-skip-conflicts
+
+
+Others not listed here fall into one of the following categories:
+
+ (1) known to be incomplete;
+ (2) stalled;
+ (3) I simply haven't stared at them long enough; or
+ (4) I don't have strong opinion in the area in general.
+
+I'll do a proper "What's cooking" later tonight or tomorrow.
