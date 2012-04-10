@@ -1,128 +1,131 @@
-From: Piotr Krukowiecki <piotr.krukowiecki@gmail.com>
-Subject: Re: git status: small difference between stating whole repository and
- small subdirectory
-Date: Tue, 10 Apr 2012 17:16:34 +0200
-Message-ID: <CAA01Cso0bjN5d40p0jRKdWt_vJ06C+X+Q1PJqtEsAheYfHBiSw@mail.gmail.com>
-References: <20120215190318.GA5992@sigill.intra.peff.net>
-	<CAA01Cso5y23UMguEe0vwOc6kR3-DjuC8-LTMDsMeeOKU4rVGvg@mail.gmail.com>
-	<20120216192001.GB4348@sigill.intra.peff.net>
-	<CAA01Csq6vSekW=Fa236bB0H3LVtN43Gb2aLMVE+A1wVyUqYJ7A@mail.gmail.com>
-	<20120217203755.GA30114@sigill.intra.peff.net>
-	<7vaa4hrtbe.fsf@alter.siamese.dyndns.org>
-	<20120217222912.GC31830@sigill.intra.peff.net>
-	<CAA01CsozANwtox06iihKBL8iii175FHAhChmNhG1B0ofGKWcEA@mail.gmail.com>
-	<20120220140653.GC5131@sigill.intra.peff.net>
-	<87ty2l38ay.fsf@thomas.inf.ethz.ch>
-	<20120220143644.GA13938@do>
-	<CACsJy8DE86qzA1=GiKZFRCt5aH8X4iMyDvfrhnqwmbq52szhHg@mail.gmail.com>
-	<7vvcmzczku.fsf@alter.siamese.dyndns.org>
+From: Nick Douma <n.douma@nekoconeko.nl>
+Subject: Migrating SVN to Git, and preserve merge information
+Date: Tue, 10 Apr 2012 17:18:11 +0200
+Message-ID: <4F844F33.5000004@nekoconeko.nl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Thomas Rast <trast@inf.ethz.ch>, Jeff King <peff@peff.net>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Apr 10 17:17:03 2012
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature";
+ boundary="------------enig7F477C31AFC0C148AD9C0126"
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Apr 10 17:28:31 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SHcoW-0002B9-4r
-	for gcvg-git-2@plane.gmane.org; Tue, 10 Apr 2012 17:17:00 +0200
+	id 1SHczd-0000q9-VF
+	for gcvg-git-2@plane.gmane.org; Tue, 10 Apr 2012 17:28:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759362Ab2DJPQh convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 10 Apr 2012 11:16:37 -0400
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:36983 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759356Ab2DJPQf convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 10 Apr 2012 11:16:35 -0400
-Received: by iagz16 with SMTP id z16so7469793iag.19
-        for <git@vger.kernel.org>; Tue, 10 Apr 2012 08:16:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=zlBHcaR8hy7CONbuOfQ0A+a9J5tqva55DPdxUEPDTxM=;
-        b=UATDJ2xuJQMuEeeRF75vAygTViD68gbMcQOwjQAPv8geBEoaql7J5cZCFZuW46OV+1
-         Lq5gK/o3gYbfvLtB5j2Hb1xzkimGGzbrLIllM4IGliVC4f4cb7Kx06NBmtMHUGMQ+Yj5
-         oiwZMQAawSqWTe2aQUrk9hExM5wPm3H1jrBlrSDsKSC6RLWmxJkqmKmmzvtYo/nkeZb+
-         knbP1ZkiF9y3o8n0zAR6hT/s00xLIajCpivFfFNdSnDAIUpd7ZE9/nXcS4YyAvsyu102
-         A1rL0U1goi3I/rBejcVJhLBf2gmWiGgyuCKqNQIQK0BJjgFCg8LGAwZds0TtH4TT1Crm
-         rXuQ==
-Received: by 10.43.68.132 with SMTP id xy4mr7109103icb.54.1334070994623; Tue,
- 10 Apr 2012 08:16:34 -0700 (PDT)
-Received: by 10.50.128.198 with HTTP; Tue, 10 Apr 2012 08:16:34 -0700 (PDT)
-In-Reply-To: <7vvcmzczku.fsf@alter.siamese.dyndns.org>
+	id S1754791Ab2DJP2Z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Apr 2012 11:28:25 -0400
+Received: from genome.nekoconeko.nl ([93.94.224.72]:59045 "EHLO
+	genome.nekoconeko.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754415Ab2DJP2Y (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Apr 2012 11:28:24 -0400
+X-Greylist: delayed 609 seconds by postgrey-1.27 at vger.kernel.org; Tue, 10 Apr 2012 11:28:24 EDT
+Received: from localhost (localhost [127.0.0.1])
+	by genome.nekoconeko.nl (Postfix) with ESMTP id 2C0AA22179
+	for <git@vger.kernel.org>; Tue, 10 Apr 2012 17:20:21 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at genome.nekoconeko.nl
+Received: from genome.nekoconeko.nl ([127.0.0.1])
+	by localhost (genome.nekoconeko.nl [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id JyY8tHwDO3Qp for <git@vger.kernel.org>;
+	Tue, 10 Apr 2012 17:20:19 +0200 (CEST)
+Received: from [IPv6:2001:838:300:41e::2] (cl-1055.ams-01.nl.sixxs.net [IPv6:2001:838:300:41e::2])
+	by genome.nekoconeko.nl (Postfix) with ESMTPSA id A3EF122138
+	for <git@vger.kernel.org>; Tue, 10 Apr 2012 17:20:19 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=nekoconeko.nl;
+	s=genome; t=1334071219;
+	bh=7gqagroPSHFr/TKfAIRqMNrjShWL4uydcKG6mkRoOYs=;
+	h=Message-ID:Date:From:MIME-Version:To:Subject:Content-Type;
+	b=jr1JSsjOXMTJySUcoUwd2rbbDndXnDpiM+cdFfdsXOHhx0SSWi9d/Lvk/3QnOlLTX
+	 fPVMH4uK5SQqP/rWbQtzTwyPlG8/BcZAZF487myQcylf0a1PgH1eNQb1nxGZ68p58f
+	 JF8LBgeIjDQ4GSPNW/uix/BfTz0BHXJexu2Wg/Ag=
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:11.0) Gecko/20120329 Thunderbird/11.0.1
+X-Enigmail-Version: 1.4
+OpenPGP: id=AB001628;
+	url=http://nekoconeko.nl/pub_0xAB001628.asc
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195093>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195094>
 
-On Wed, Feb 22, 2012 at 4:32 AM, Junio C Hamano <gitster@pobox.com> wro=
-te:
-> Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
->
->>> diff --git a/builtin/checkout.c b/builtin/checkout.c
->>> index 5bf96ba..c06287a 100644
->>> --- a/builtin/checkout.c
->>> +++ b/builtin/checkout.c
->>> @@ -319,6 +319,10 @@ static void show_local_changes(struct object *=
-head, struct diff_options *opts)
->>> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0die(_("diff_setup_done failed"));
->>> =A0 =A0 =A0 =A0add_pending_object(&rev, head, NULL);
->>> =A0 =A0 =A0 =A0run_diff_index(&rev, 0);
->>> + =A0 =A0 =A0 if (!DIFF_OPT_TST(&rev.diffopt, HAS_CHANGES)) {
->>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 struct tree *tree =3D parse_tree_indi=
-rect(head->sha1);
->>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 prime_cache_tree(&active_cache_tree, =
-tree);
->>> + =A0 =A0 =A0 }
->>> =A0}
->
-> I think this patch is wrong on at least two counts.
->
-> =A0* The run_diff_index(&rev, 0) you reused is doing "diff HEAD" and =
-not
-> =A0 "diff --cached HEAD". =A0The added check does not say anything ab=
-out the
-> =A0 comparison between the index and the tree at the HEAD.
->
-> =A0* Even if we added an extra run_diff_index(&rev, 1) there, or adde=
-d a
-> =A0 call to index_differs_from() to run "diff --cached HEAD" to check=
- what
-> =A0 needs to be checked, it is still not quite right.
->
-> On the latter point, imagine what happens in the two invocations of
-> checkout in the following sequence:
->
-> =A0 $ git reset --hard master
-> =A0 $ git checkout master
-> =A0 $ git checkout master
->
-> The second one should notice that the cache tree is fully valid, so t=
-he
-> internal "diff --cached" it runs should only open the top-level tree
-> and scan entries in it, without recursing into any of the subtrees, a=
-nd
-> realize that the index is in sync with "HEAD", which should be a very
-> cheap operation (that is the whole point of the current topic of our
-> discussion looking at the cache-tree). =A0Then the new code calls
-> prime_cache_tree() to read _everything_?
->
-> Probably cache_tree_fully_valid() should be called before deciding th=
-at we
-> need to re-populate the cache tree from "HEAD".
+This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
+--------------enig7F477C31AFC0C148AD9C0126
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: quoted-printable
 
 Hi,
 
-could I ask what is the status of this? There were some patches
-posted, but I think nothing final?
+I currently have two SVN repositories I'm looking to convert to Git.
+While the process itself isn't all that hard (following this guide[1]),
+I'm looking to do a bit more than just convert raw commits.
 
-Thanks,
+The repositories basically have two main branches at a time, for example:=
 
---=20
-Piotr Krukowiecki
+
+* trunk
+* current version, for example 3.5
+
+Our SVN workflow consisted of working on trunk, and then manually
+merging single commits from trunk to the other branch. We quite
+consistently mentioned the merged commits in the SVN commit message, and
+I'm looking to use this information to generate a more accurate tree in
+Git. The commit messages are for example:
+
+trunk  rev 100: Fixed important bug
+branch rev 101: Merged r100 from trunk
+
+Or more elaborate:
+
+branch rev 200: Merged r100,r101,r.... from trunk
+
+In these examples, tools like gitk or git log should show a line from
+rev 100 to rev 101 in the first example, and lines from r100, r101,rn to
+rev 200 in example two.
+
+I have tried to create a custom grafts file to create the parent-child
+relations above, and basically finds all merge commits and converts them
+into graft lines like so:
+
+<merge commit sha hash> <original git parent sha hash> <sha hash of
+merged rev 1> ... <sha hash of merged rev n>
+
+This all works to a certain extent, but the problem arises when trying
+to view older history in these repositories. If I use the grafts file,
+and do `gitk --all`, gitk freezes. Gitg doesn't show commits before a
+certain point. tig and `git log --graph` all show a huge amount of
+parentless commits near the bottom. All of this leads me to the
+conclusion that something is wrong with the method of using grafts,
+rather than problems in the individual tools.
+
+
+Can someone find something obvious that I'm missing in the above
+approach? Or alternatively suggest another more appropriate method of
+achieving the same results in Git?
+
+Kind regards,
+
+Nick Douma
+
+
+
+[1]: http://john.albin.net/git/convert-subversion-to-git
+
+
+--------------enig7F477C31AFC0C148AD9C0126
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+
+iEYEARECAAYFAk+ETzQACgkQkPq5zKsAFij/RgCfapjTSRd2mIyKWArFARfsh3uS
+rmkAoItN4vWN0XKVgWd7Kv6VrYtLZJfB
+=uon5
+-----END PGP SIGNATURE-----
+
+--------------enig7F477C31AFC0C148AD9C0126--
