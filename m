@@ -1,97 +1,128 @@
-From: Tim Henigan <tim.henigan@gmail.com>
-Subject: Re: [PATCH 8/9 v11] difftool: teach difftool to handle directory diffs
-Date: Tue, 10 Apr 2012 11:01:22 -0400
-Message-ID: <CAFouetiBMK+WWU9yOLaO5SLyUO1K_S-YW0LTt5tE5UTcMM8K=w@mail.gmail.com>
-References: <1333567265-23986-1-git-send-email-tim.henigan@gmail.com>
-	<CAJDDKr76eMiA4rOHQhar3aToVThDfbc8Ki5tr2PGU_UpDMAVeA@mail.gmail.com>
+From: Piotr Krukowiecki <piotr.krukowiecki@gmail.com>
+Subject: Re: git status: small difference between stating whole repository and
+ small subdirectory
+Date: Tue, 10 Apr 2012 17:16:34 +0200
+Message-ID: <CAA01Cso0bjN5d40p0jRKdWt_vJ06C+X+Q1PJqtEsAheYfHBiSw@mail.gmail.com>
+References: <20120215190318.GA5992@sigill.intra.peff.net>
+	<CAA01Cso5y23UMguEe0vwOc6kR3-DjuC8-LTMDsMeeOKU4rVGvg@mail.gmail.com>
+	<20120216192001.GB4348@sigill.intra.peff.net>
+	<CAA01Csq6vSekW=Fa236bB0H3LVtN43Gb2aLMVE+A1wVyUqYJ7A@mail.gmail.com>
+	<20120217203755.GA30114@sigill.intra.peff.net>
+	<7vaa4hrtbe.fsf@alter.siamese.dyndns.org>
+	<20120217222912.GC31830@sigill.intra.peff.net>
+	<CAA01CsozANwtox06iihKBL8iii175FHAhChmNhG1B0ofGKWcEA@mail.gmail.com>
+	<20120220140653.GC5131@sigill.intra.peff.net>
+	<87ty2l38ay.fsf@thomas.inf.ethz.ch>
+	<20120220143644.GA13938@do>
+	<CACsJy8DE86qzA1=GiKZFRCt5aH8X4iMyDvfrhnqwmbq52szhHg@mail.gmail.com>
+	<7vvcmzczku.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, ramsay@ramsay1.demon.co.uk
-To: David Aguilar <davvid@gmail.com>, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Tue Apr 10 17:01:30 2012
+Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Thomas Rast <trast@inf.ethz.ch>, Jeff King <peff@peff.net>,
+	Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Apr 10 17:17:03 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SHcZT-0000y4-UT
-	for gcvg-git-2@plane.gmane.org; Tue, 10 Apr 2012 17:01:28 +0200
+	id 1SHcoW-0002B9-4r
+	for gcvg-git-2@plane.gmane.org; Tue, 10 Apr 2012 17:17:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758942Ab2DJPBX convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 10 Apr 2012 11:01:23 -0400
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:53106 "EHLO
+	id S1759362Ab2DJPQh convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 10 Apr 2012 11:16:37 -0400
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:36983 "EHLO
 	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758931Ab2DJPBW convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 10 Apr 2012 11:01:22 -0400
-Received: by iagz16 with SMTP id z16so7453854iag.19
-        for <git@vger.kernel.org>; Tue, 10 Apr 2012 08:01:22 -0700 (PDT)
+	with ESMTP id S1759356Ab2DJPQf convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 10 Apr 2012 11:16:35 -0400
+Received: by iagz16 with SMTP id z16so7469793iag.19
+        for <git@vger.kernel.org>; Tue, 10 Apr 2012 08:16:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type:content-transfer-encoding;
-        bh=kJJQ/jzFgbFuywDjZfopPwxHJKJwoTB0uHR93B6+MdM=;
-        b=VIRPcoaThWO65Mv54FJ/oRrnqQWdYFcAzp+LBsfpEVs8pwbxqUeGwEcvh0s4pSRpqi
-         a5lS1JVmge0Os6gwOXl5EBJbreHcZLpaK0s5xPs1LJ6bYGd+8hL6Ifn/ad5pRistiU7S
-         RzUP59OXee01UZXbKFWU+tbN/UmjBhurO9r2LZw7S8MpVC+ZShQkX9pcCatoakc+jSIw
-         uHip5SuLpvF1fOqRi6TawJJj/WFYlWh2YcUGuGCvnpJzOxN67kpdjlbkGLbOZXZxBgtp
-         e/H/RSl2Mem5Rbq5MHFnTPbg8JEB3kcTelROgvOWryp48FBYE3n5aq71mAnMqmfytj/I
-         qLEw==
-Received: by 10.50.207.5 with SMTP id ls5mr2717780igc.51.1334070082315; Tue,
- 10 Apr 2012 08:01:22 -0700 (PDT)
-Received: by 10.42.225.193 with HTTP; Tue, 10 Apr 2012 08:01:22 -0700 (PDT)
-In-Reply-To: <CAJDDKr76eMiA4rOHQhar3aToVThDfbc8Ki5tr2PGU_UpDMAVeA@mail.gmail.com>
+        bh=zlBHcaR8hy7CONbuOfQ0A+a9J5tqva55DPdxUEPDTxM=;
+        b=UATDJ2xuJQMuEeeRF75vAygTViD68gbMcQOwjQAPv8geBEoaql7J5cZCFZuW46OV+1
+         Lq5gK/o3gYbfvLtB5j2Hb1xzkimGGzbrLIllM4IGliVC4f4cb7Kx06NBmtMHUGMQ+Yj5
+         oiwZMQAawSqWTe2aQUrk9hExM5wPm3H1jrBlrSDsKSC6RLWmxJkqmKmmzvtYo/nkeZb+
+         knbP1ZkiF9y3o8n0zAR6hT/s00xLIajCpivFfFNdSnDAIUpd7ZE9/nXcS4YyAvsyu102
+         A1rL0U1goi3I/rBejcVJhLBf2gmWiGgyuCKqNQIQK0BJjgFCg8LGAwZds0TtH4TT1Crm
+         rXuQ==
+Received: by 10.43.68.132 with SMTP id xy4mr7109103icb.54.1334070994623; Tue,
+ 10 Apr 2012 08:16:34 -0700 (PDT)
+Received: by 10.50.128.198 with HTTP; Tue, 10 Apr 2012 08:16:34 -0700 (PDT)
+In-Reply-To: <7vvcmzczku.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195092>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195093>
 
-Hi David,
-
-Thank you for the review.  I am working on the changes you suggested,
-but want to discuss one of them:
-
-On Mon, Apr 9, 2012 at 8:14 AM, David Aguilar <davvid@gmail.com> wrote:
-> On Wed, Apr 4, 2012 at 12:21 PM, Tim Henigan <tim.henigan@gmail.com> =
-wrote:
->> +
->> + =C2=A0 =C2=A0 =C2=A0 # If the diff including working copy files an=
-d those
->> + =C2=A0 =C2=A0 =C2=A0 # files were modified during the diff, then t=
-he changes
->> + =C2=A0 =C2=A0 =C2=A0 # should be copied back to the working tree
->> + =C2=A0 =C2=A0 =C2=A0 my $repo =3D Git->repository();
->> + =C2=A0 =C2=A0 =C2=A0 my $workdir =3D $repo->repo_path() . "/..";
+On Wed, Feb 22, 2012 at 4:32 AM, Junio C Hamano <gitster@pobox.com> wro=
+te:
+> Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
 >
-> Does this work when $GIT_WORK_TREE / core.worktree are defined?
+>>> diff --git a/builtin/checkout.c b/builtin/checkout.c
+>>> index 5bf96ba..c06287a 100644
+>>> --- a/builtin/checkout.c
+>>> +++ b/builtin/checkout.c
+>>> @@ -319,6 +319,10 @@ static void show_local_changes(struct object *=
+head, struct diff_options *opts)
+>>> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0die(_("diff_setup_done failed"));
+>>> =A0 =A0 =A0 =A0add_pending_object(&rev, head, NULL);
+>>> =A0 =A0 =A0 =A0run_diff_index(&rev, 0);
+>>> + =A0 =A0 =A0 if (!DIFF_OPT_TST(&rev.diffopt, HAS_CHANGES)) {
+>>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 struct tree *tree =3D parse_tree_indi=
+rect(head->sha1);
+>>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 prime_cache_tree(&active_cache_tree, =
+tree);
+>>> + =A0 =A0 =A0 }
+>>> =A0}
+>
+> I think this patch is wrong on at least two counts.
+>
+> =A0* The run_diff_index(&rev, 0) you reused is doing "diff HEAD" and =
+not
+> =A0 "diff --cached HEAD". =A0The added check does not say anything ab=
+out the
+> =A0 comparison between the index and the tree at the HEAD.
+>
+> =A0* Even if we added an extra run_diff_index(&rev, 1) there, or adde=
+d a
+> =A0 call to index_differs_from() to run "diff --cached HEAD" to check=
+ what
+> =A0 needs to be checked, it is still not quite right.
+>
+> On the latter point, imagine what happens in the two invocations of
+> checkout in the following sequence:
+>
+> =A0 $ git reset --hard master
+> =A0 $ git checkout master
+> =A0 $ git checkout master
+>
+> The second one should notice that the cache tree is fully valid, so t=
+he
+> internal "diff --cached" it runs should only open the top-level tree
+> and scan entries in it, without recursing into any of the subtrees, a=
+nd
+> realize that the index is in sync with "HEAD", which should be a very
+> cheap operation (that is the whole point of the current topic of our
+> discussion looking at the cache-tree). =A0Then the new code calls
+> prime_cache_tree() to read _everything_?
+>
+> Probably cache_tree_fully_valid() should be called before deciding th=
+at we
+> need to re-populate the cache tree from "HEAD".
 
-I had not considered this case and the existing code will certainly
-ignore alternate work tree locations.  To fix the problem, I plan to
-add something like this:
+Hi,
 
-+sub find_worktree
-+{
-+       my $worktree;
-+       my $env_worktree =3D $ENV{GIT_WORK_TREE};
-+       my $core_worktree =3D Git::config('core.worktree');
-+
-+       if (length($env_worktree) > 0) {
-+               $worktree =3D $env_worktree;
-+       } elsif (length($core_worktree) > 0) {
-+               $worktree =3D $core_worktree;
-+       } else {
-+               my $repo =3D Git->repository();
-+               $worktree =3D $repo->repo_path() . "/..";
-+       }
-+
-+       return $worktree;
-+}
-
-Does this look like a reasonable solution?  I don't typically use
-'$GIT_WORK_TREE' or 'core.worktree'.  The above function works for me,
-but I would appreciate some feedback before I send the next revision
-of the patch (v12!).
+could I ask what is the status of this? There were some patches
+posted, but I think nothing final?
 
 Thanks,
-Tim
+
+--=20
+Piotr Krukowiecki
