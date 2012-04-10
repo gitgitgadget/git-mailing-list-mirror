@@ -1,59 +1,102 @@
-From: Ben Walton <bwalton@artsci.utoronto.ca>
-Subject: Re: [PATCH] Avoid bug in Solaris xpg4/sed as used in submodule
-Date: Mon, 09 Apr 2012 20:40:57 -0400
-Message-ID: <1334018233-sup-7389@pinkfloyd.chass.utoronto.ca>
-References: <7vy5q4tw3i.fsf@alter.siamese.dyndns.org> <1334016800-11574-1-git-send-email-bwalton@artsci.utoronto.ca> <7vwr5os9zr.fsf@alter.siamese.dyndns.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Cc: schwab <schwab@linux-m68k.org>, git <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Apr 10 02:41:04 2012
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v5 2/5] http: handle proxy proactive authentication
+Date: Mon, 09 Apr 2012 17:59:13 -0700
+Message-ID: <7vsjgcs8pq.fsf@alter.siamese.dyndns.org>
+References: <4F5F53CA.7090003@seap.minhap.es>
+ <7v398cvb30.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, peff@peff.net, sam@vilain.net,
+	spearce@spearce.org
+To: Nelson Benitez Leon <nelsonjesus.benitez@seap.minhap.es>
+X-From: git-owner@vger.kernel.org Tue Apr 10 02:59:23 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SHP8p-00078a-L3
-	for gcvg-git-2@plane.gmane.org; Tue, 10 Apr 2012 02:41:03 +0200
+	id 1SHPQX-0004fR-LV
+	for gcvg-git-2@plane.gmane.org; Tue, 10 Apr 2012 02:59:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932074Ab2DJAk7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Apr 2012 20:40:59 -0400
-Received: from garcia.cquest.utoronto.ca ([192.82.128.9]:56406 "EHLO
-	garcia.cquest.utoronto.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754643Ab2DJAk6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Apr 2012 20:40:58 -0400
-Received: from pinkfloyd.chass.utoronto.ca ([128.100.160.254]:49324 ident=93)
-	by garcia.cquest.utoronto.ca with esmtp (Exim 4.63)
-	(envelope-from <bwalton@cquest.utoronto.ca>)
-	id 1SHP8j-0003iu-83; Mon, 09 Apr 2012 20:40:57 -0400
-Received: from bwalton by pinkfloyd.chass.utoronto.ca with local (Exim 4.72)
-	(envelope-from <bwalton@cquest.utoronto.ca>)
-	id 1SHP8j-0003Ct-6w; Mon, 09 Apr 2012 20:40:57 -0400
-In-reply-to: <7vwr5os9zr.fsf@alter.siamese.dyndns.org>
-User-Agent: Sup/git
+	id S932146Ab2DJA7R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Apr 2012 20:59:17 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64882 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932124Ab2DJA7Q (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Apr 2012 20:59:16 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 665C06C61;
+	Mon,  9 Apr 2012 20:59:15 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=s5o1vZ+EjSEpK2Pl18CgRvb3I0Q=; b=MXMnf7
+	97toh2LaQC9xuG0DcuEvBq/UtuCXLJNsXD6H7diYhLxi90yN5zcLxJUmYjEwsmKD
+	U0cKSE1yPRDxOlDun9ZRC9g/ankCM2Cthhylb80qywPpfTycfI+CM8ehiqpEsNGd
+	0DMpWWdWqfqtsws+S8Wuo6w/I9diJN6U3ofvQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=McEg/x69oUgrvHcUVMPqgB+N2N9dNwya
+	mBtUH0PaIr5anRCJu5cJnpV2Z7T8LrKR/Cy/0LJH6mWz+RS/CCXG+OdcQ1BBN8Sk
+	N0q72M0/rnKXoc9hVbhoqEzbq3PM0cGB+5G/d7qEpibWvSJH8Pz2hrt5pawa256I
+	3FXMELwD2so=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5C3D36C60;
+	Mon,  9 Apr 2012 20:59:15 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D734B6C5E; Mon,  9 Apr 2012
+ 20:59:14 -0400 (EDT)
+In-Reply-To: <7v398cvb30.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Mon, 09 Apr 2012 14:39:47 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 646EDD50-82A8-11E1-B885-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195052>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195053>
 
-Excerpts from Junio C Hamano's message of Mon Apr 09 20:31:36 -0400 2012:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> > For some reason, I thought that using {x,y} range notation wasn't
-> > valid in this scenario, but I think I was mistaken.  It seems to be
-> > widely used elsewhere throughout the code.
-> 
-> Where?  Only two test scripts seem to use it and worse yet, one of them
-> uses it doubly incorrectly.
+> I haven't formed an opinion on what the proper solution should be, but
+> either the credential_from_url() function needs to be updated to accept
+> the scp style [user@]<host>:<port> argument, or this specific caller
+> should take the responsibility to do special case the syntax.
 
-I guess widely wasn't a good choice...My search wasn't narrow enough
-earlier.  Was I correct in my original thinking that the range
-notation isn't to be used then?
+Well, calling the above "scp" style is a mistake (it is not scp style at
+all), but the patch to teach the credentail_from_url() to handle the proxy
+specification may look like this:
 
-Thanks
--Ben
---
-Ben Walton
-Systems Programmer - CHASS
-University of Toronto
-C:416.407.5610 | W:416.978.4302
+ credential.c |   10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
+
+diff --git a/credential.c b/credential.c
+index 62d1c56..482ae88 100644
+--- a/credential.c
++++ b/credential.c
+@@ -324,11 +324,13 @@ void credential_from_url(struct credential *c, const char *url)
+ 	 *   (1) proto://<host>/...
+ 	 *   (2) proto://<user>@<host>/...
+ 	 *   (3) proto://<user>:<pass>@<host>/...
++	 * or "proto://"-less variants of the above for *_proxy variables.
+ 	 */
+ 	proto_end = strstr(url, "://");
+-	if (!proto_end)
+-		return;
+-	cp = proto_end + 3;
++	if (proto_end)
++		cp = proto_end + 3;
++	else
++		cp = url;
+ 	at = strchr(cp, '@');
+ 	colon = strchr(cp, ':');
+ 	slash = strchrnul(cp, '/');
+@@ -348,7 +350,7 @@ void credential_from_url(struct credential *c, const char *url)
+ 		host = at + 1;
+ 	}
+ 
+-	if (proto_end - url > 0)
++	if (proto_end && proto_end != url)
+ 		c->protocol = xmemdupz(url, proto_end - url);
+ 	if (slash - host > 0)
+ 		c->host = url_decode_mem(host, slash - host);
