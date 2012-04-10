@@ -1,66 +1,76 @@
-From: Andrew Sayers <andrew-git@pileofstuff.org>
-Subject: Re: Migrating SVN to Git, and preserve merge information
-Date: Tue, 10 Apr 2012 23:57:38 +0100
-Message-ID: <4F84BAE2.5090803@pileofstuff.org>
-References: <4F844F33.5000004@nekoconeko.nl>
+From: Matt McClure <matthewlmcclure@gmail.com>
+Subject: Re: [PATCH v2] contrib: added git-diffall
+Date: Tue, 10 Apr 2012 23:06:43 +0000 (UTC)
+Message-ID: <loom.20120411T010200-132@post.gmane.org>
+References: <1329948749-5908-1-git-send-email-tim.henigan@gmail.com> <7vipiy8m5q.fsf@alter.siamese.dyndns.org> <CAFouetiSpsZGtLt2tG4ou-H18zigNx5xWQH4cy8GrL1eDxbjJw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Nick Douma <n.douma@nekoconeko.nl>
-X-From: git-owner@vger.kernel.org Wed Apr 11 00:57:52 2012
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Apr 11 01:07:09 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SHk0T-00074e-CW
-	for gcvg-git-2@plane.gmane.org; Wed, 11 Apr 2012 00:57:49 +0200
+	id 1SHk9S-0003Ig-8m
+	for gcvg-git-2@plane.gmane.org; Wed, 11 Apr 2012 01:07:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755600Ab2DJW5p (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Apr 2012 18:57:45 -0400
-Received: from mtaout03-winn.ispmail.ntl.com ([81.103.221.49]:60196 "EHLO
-	mtaout03-winn.ispmail.ntl.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753125Ab2DJW5o (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 10 Apr 2012 18:57:44 -0400
-Received: from aamtaout03-winn.ispmail.ntl.com ([81.103.221.35])
-          by mtaout03-winn.ispmail.ntl.com
-          (InterMail vM.7.08.04.00 201-2186-134-20080326) with ESMTP
-          id <20120410225741.HNBH21612.mtaout03-winn.ispmail.ntl.com@aamtaout03-winn.ispmail.ntl.com>;
-          Tue, 10 Apr 2012 23:57:41 +0100
-Received: from [192.168.0.3] (really [94.170.150.126])
-          by aamtaout03-winn.ispmail.ntl.com
-          (InterMail vG.3.00.04.00 201-2196-133-20080908) with ESMTP
-          id <20120410225741.RKGV13318.aamtaout03-winn.ispmail.ntl.com@[192.168.0.3]>;
-          Tue, 10 Apr 2012 23:57:41 +0100
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.28) Gecko/20120313 Thunderbird/3.1.20
-In-Reply-To: <4F844F33.5000004@nekoconeko.nl>
-X-Cloudmark-Analysis: v=1.1 cv=R50lirqlHffDPPkwUlkuVa99MrvKdVWo//yz83qex8g= c=1 sm=0 a=yXtjXN6ItgYA:10 a=5phNfFoJZtEA:10 a=u4BGzq-dJbcA:10 a=8nJEP1OIZ-IA:10 a=1zXWHiOROls77X4DgrIA:9 a=wPNLvfGTeEIA:10 a=HpAAvcLHHh0Zw7uRqdWCyQ==:117
+	id S1755847Ab2DJXHA convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 10 Apr 2012 19:07:00 -0400
+Received: from plane.gmane.org ([80.91.229.3]:52530 "EHLO plane.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755241Ab2DJXHA (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Apr 2012 19:07:00 -0400
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1SHk9H-0003Bx-Cp
+	for git@vger.kernel.org; Wed, 11 Apr 2012 01:06:55 +0200
+Received: from c-24-91-16-82.hsd1.ma.comcast.net ([24.91.16.82])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 11 Apr 2012 01:06:55 +0200
+Received: from matthewlmcclure by c-24-91-16-82.hsd1.ma.comcast.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 11 Apr 2012 01:06:55 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 24.91.16.82 (Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_3) AppleWebKit/535.19 (KHTML, like Gecko) Chrome/18.0.1025.151 Safari/535.19)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195136>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195137>
 
-Hi Nick,
+Tim Henigan <tim.henigan <at> gmail.com> writes:
 
-Would I be right in thinking that a commit like "Merged r100,r101,r102
-from trunk" will create three grafts?  If so, that might be the problem.
+> >> + =C2=A0 =C2=A0 do
+> >> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 cp "$file" "$git_top_d=
+ir/${file#$tmp/$right_dir/}"
+> >> + =C2=A0 =C2=A0 done
+> >> +fi
+> >
+> > This will copy new files created in $right_dir. =C2=A0Is that inten=
+ded?
+>=20
+> hmmm...that was not intended.  If would be odd for the user to create
+> new files in this tmp directory, but if the diff tool automatically
+> generates any files then this could result in unwanted files.
 
-Git differentiates between "merges" (which include every commit up to
-and including the specified one) and "cherry-picks" (which just include
-the specified commit), whereas SVN calls both of these "merges".  Grafts
-are a way of creating "merges" rather than "cherry-picks" (which git
-doesn't have any metadata for), and it's not at all easy to get "merge"
-data out of SVN in the general case.  Having said that, it's often a
-good enough heuristic to pick the highest revision number mentioned in
-the commit message and pretend it's a merge.
+I think more generally, I would prefer if either side of the comparison=
+ is the
+working copy that the temp directory on that side be populated with sym=
+links.
 
-Incidentally, I'm planning to work on this area of SVN->git conversion
-in the coming months.  I don't have anything you could use yet, but I
-don't suppose the scripts you used are available somewhere?  Getting
-revision information out of log files is particularly tricky, and
-everyone stumbles over a different set of issues.  I'd be really
-interested to pick any nuggets of wisdom out of the approach you took.
+A particularly bad failure mode of the copy-back approach is:
 
-	- Andrew
+git diffall --copy-back
+# while my diffall tool is running, I edit the file somewhere else.
+# quit my diffall tool
+# --> my edits in the other tool are overwritten by diffall
+
+Editing the files in place via symlinks would resolve that.
+
+Matt
