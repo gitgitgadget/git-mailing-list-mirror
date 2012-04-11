@@ -1,61 +1,101 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v4 4/4] git-rebase: add keep_empty flag
-Date: Wed, 11 Apr 2012 14:08:54 -0700
-Message-ID: <7vsjgaht7d.fsf@alter.siamese.dyndns.org>
-References: <1334175716-11391-1-git-send-email-nhorman@tuxdriver.com>
- <1334175716-11391-5-git-send-email-nhorman@tuxdriver.com>
+From: =?UTF-8?q?Micha=C5=82=20Kiedrowicz?= <michal.kiedrowicz@gmail.com>
+Subject: [PATCH v4 0/8] Highlight interesting parts of diff
+Date: Wed, 11 Apr 2012 23:18:36 +0200
+Message-ID: <1334179124-14258-1-git-send-email-michal.kiedrowicz@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Phil Hord <phil.hord@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: Neil Horman <nhorman@tuxdriver.com>
-X-From: git-owner@vger.kernel.org Wed Apr 11 23:09:09 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jakub Narebski <jnareb@gmail.com>
+To: git@vger.kernel.org, michal.kiedrowicz@gmail.com
+X-From: git-owner@vger.kernel.org Wed Apr 11 23:18:58 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SI4mr-0007LI-5N
-	for gcvg-git-2@plane.gmane.org; Wed, 11 Apr 2012 23:09:09 +0200
+	id 1SI4wL-0004y6-BC
+	for gcvg-git-2@plane.gmane.org; Wed, 11 Apr 2012 23:18:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933362Ab2DKVJB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Apr 2012 17:09:01 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:37200 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933341Ab2DKVI5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Apr 2012 17:08:57 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id ECD446614;
-	Wed, 11 Apr 2012 17:08:56 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=dDnKAO10/kD0N2JhTzJEEdVRB40=; b=CpYpcF
-	C4Kv2DQFtBWua0eCwOGpxEQIlVIwKilLT/f2BMe7bhZ4V3jNJkU8t3w8ENBc4/BR
-	VAXtzYPLfI5+2+bqW8fsY4GVi/JivTRThbtvu8wk19Dukw1deSiH0DRuhJMGNiEa
-	AHvPqHZs97QsSg7cHi5atpPFo1QcPT8KlWQ9g=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=eneEVRdVKbGUcXOs7MC9a+eoyZ9kU7B0
-	kkuu+389MsyfdrlTRhXBr2R+LMkbqU3dR7HjxRWW4hvNjjJRSnZ381mWXAXYVsW/
-	Xq+j8+bvH34WBKCgyYPOMfy9zUXZKBxzY/B0NGrI2wTX6sWLg2AGba4/7m8RHIVJ
-	6a37P9zSV5k=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E460D6613;
-	Wed, 11 Apr 2012 17:08:56 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 419A16612; Wed, 11 Apr 2012
- 17:08:56 -0400 (EDT)
-In-Reply-To: <1334175716-11391-5-git-send-email-nhorman@tuxdriver.com> (Neil
- Horman's message of "Wed, 11 Apr 2012 16:21:56 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 8CB95FD8-841A-11E1-80E7-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S933321Ab2DKVSw convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 11 Apr 2012 17:18:52 -0400
+Received: from mail-wi0-f172.google.com ([209.85.212.172]:43287 "EHLO
+	mail-wi0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754677Ab2DKVSv (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Apr 2012 17:18:51 -0400
+Received: by wibhj6 with SMTP id hj6so4824587wib.1
+        for <git@vger.kernel.org>; Wed, 11 Apr 2012 14:18:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
+         :content-type:content-transfer-encoding;
+        bh=IYIF26R+IskQ/dbi5jgk1FVSIrX40iOs6rftxq8Gc60=;
+        b=cAq0HjRZu4ni/cWm8rAQc9ilQqpHI5NmGB3NVwZGCuAa4wt9lmPYEt3F9jVRYUNTaS
+         b9moBJ6VD0V0nJ4RaUc3huWELy4swYz/+CF+ueFKSntCs89ZXkS72cgyQStnXkIfVp8S
+         DRMMamen4eeGsqM/Pk/4DPtPzktU3vWvFqfpXWdC64XxtHJ581pjEtw6XwR9419lAgUz
+         eMCMwP6pvwu5mV0XSBds6Mgcmt59e1+PqCTffdP6zSsIsNx9XCoY4zvJ3MMdv6GwpUtw
+         TUgeYzLWMISDWb1wskGd7FLfGoBBOXo4hEg3o2nzKKBpXXNsdpT4pSwVtLEk9oWMCmNm
+         6rIQ==
+Received: by 10.180.104.231 with SMTP id gh7mr1910wib.10.1334179129831;
+        Wed, 11 Apr 2012 14:18:49 -0700 (PDT)
+Received: from localhost (77-177-78-94.net.stream.pl. [94.78.177.77])
+        by mx.google.com with ESMTPS id ff2sm13725781wib.9.2012.04.11.14.18.48
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 11 Apr 2012 14:18:49 -0700 (PDT)
+X-Mailer: git-send-email 1.7.8.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195255>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195256>
 
-This looks quite nice, but it seems that the change breaks at least t3416
-and t3404.  Has this series been tested?
+Reading diff output is sometimes very hard, even if it's colored, espec=
+ially if
+lines differ only in few characters. This is often true when a commit f=
+ixes a
+typo or renames some variables or functions.
+
+This patch series teaches gitweb to highlight fragments that are differ=
+ent
+between old and new line. This should mimic the same feature in Trac or=
+ GitHub.
+
+Changes since v3:
+
+1) gitweb: Use descriptive names in esc_html_hl_regions()
+
+    * Renamed $beg in $begin
+
+2) gitweb: Extract print_sidebyside_diff_lines()
+
+    * Reordered check for !$class
+
+    * Reworded commit message to better (I hope) explain why the condit=
+ions
+      were changed
+
+    * Dropped a comment '# assume that it is change'
+
+3) gitweb: Use print_diff_chunk() for both side-by-side and inline diff=
+s
+
+    * Added ', and at the end of hunk.' to the commit message
+
+Jakub Nar=C4=99bski (1):
+  gitweb: Pass esc_html_hl_regions() options to esc_html()
+
+Micha=C5=82 Kiedrowicz (7):
+  gitweb: Use descriptive names in esc_html_hl_regions()
+  gitweb: esc_html_hl_regions(): Don't create empty <span> elements
+  gitweb: Extract print_sidebyside_diff_lines()
+  gitweb: Use print_diff_chunk() for both side-by-side and inline diffs
+  gitweb: Push formatting diff lines to print_diff_chunk()
+  gitweb: Highlight interesting parts of diff
+  gitweb: Refinement highlightning in combined diffs
+
+ gitweb/gitweb.perl       |  323 +++++++++++++++++++++++++++++++++-----=
+--------
+ gitweb/static/gitweb.css |    8 +
+ 2 files changed, 244 insertions(+), 87 deletions(-)
+
+--=20
+1.7.8.4
