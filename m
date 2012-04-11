@@ -1,74 +1,52 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH (bugfix)] gitweb: Fix unintended "--no-merges" for
- regular Atom feed
-Date: Wed, 11 Apr 2012 09:48:48 -0700
-Message-ID: <7vd37emcy7.fsf@alter.siamese.dyndns.org>
-References: <4F79D76D.80805@pipping.org>
- <7v62df9yo5.fsf@alter.siamese.dyndns.org>
- <201204042058.32549.jnareb@gmail.com> <201204111739.07765.jnareb@gmail.com>
+From: Michael Witten <mfwitten@gmail.com>
+Subject: Re: Parallel refactoring and git merge nightmare
+Date: Wed, 11 Apr 2012 16:49:20 +0000
+Message-ID: <CAMOZ1Bs4TwL8XD-N8wkkfzEUBHX_s6eh+Y+Ve=O1QN+Ja+XP5w@mail.gmail.com>
+References: <1334160803.74554.YahooMailNeo@web160603.mail.bf1.yahoo.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Sebastian Pipping <sebastian@pipping.org>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 11 18:48:58 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: =?UTF-8?Q?Pap_L=C3=B4rinc?= <paplorinc@yahoo.com>
+X-From: git-owner@vger.kernel.org Wed Apr 11 18:50:00 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SI0j1-0003Ds-SQ
-	for gcvg-git-2@plane.gmane.org; Wed, 11 Apr 2012 18:48:56 +0200
+	id 1SI0k0-0003vI-NI
+	for gcvg-git-2@plane.gmane.org; Wed, 11 Apr 2012 18:49:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760682Ab2DKQsv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Apr 2012 12:48:51 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:58674 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1760593Ab2DKQsu (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Apr 2012 12:48:50 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2848064DA;
-	Wed, 11 Apr 2012 12:48:50 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=XZwCvK6AXzgONctCMWl3nnpuNus=; b=VsNslL
-	KcUsrGFVlnHIjQs9SnmGd8S944EV2Vxe8fdd3tUG1DquLkIvFHHHA240AdHL7KAH
-	0KQadZKi8ykONx7lFJz/rrYYXqbe0u/WiGz09QlhWwN8We39YzYZdmh27kVh15Kt
-	kE+wq0Kk/6U5vNGVn6lrJjkGcyPATnKIdj2UE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=YZ6yo3rGlB7/VX3GEyvdrDd9Gr3E1wDr
-	eGmrnKCMpAwBD8exP9XdQnrBRpf3OTT1sSbo2uyngYn/P64uZ6UZjBEcdop81qFY
-	ysbcB+eEPQNWgFXZtnKcO9ETSetIoECHyu5DB13dgDLAYuiRY6RNboj0Xa3Qxegf
-	uCn6h9NEAHI=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1FC1B64D9;
-	Wed, 11 Apr 2012 12:48:50 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id AD6B964D8; Wed, 11 Apr 2012
- 12:48:49 -0400 (EDT)
-In-Reply-To: <201204111739.07765.jnareb@gmail.com> (Jakub Narebski's message
- of "Wed, 11 Apr 2012 17:39:06 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 367D6C8C-83F6-11E1-8481-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1760705Ab2DKQtw convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 11 Apr 2012 12:49:52 -0400
+Received: from mail-yw0-f46.google.com ([209.85.213.46]:38935 "EHLO
+	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760593Ab2DKQtv convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 11 Apr 2012 12:49:51 -0400
+Received: by yhmm54 with SMTP id m54so565653yhm.19
+        for <git@vger.kernel.org>; Wed, 11 Apr 2012 09:49:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=4CtlntXjr92k7wMT0cqoEf38UdSNejeF1kB3gzooKDM=;
+        b=bpW4eSHqSkR2wnNVTZ4mZRdG8JkjvgCTdVZfBhpucsRAYydmCpfRPVMkobBTxb9idp
+         g+WOfW6SOpesZ/RThILt6JNx8Dgv6EUXFXld2QusRvKwwMo9Hc+yBE5jiit4yc27HXSn
+         dPt+mzUu2111IICghAdV+9cXTvjqH6xhk19KBuLmbIRDup80e6wWWoPHQHqqg5jCTzPV
+         s4BJGkWQ/dFGoyP3CfVZFGuhXP/EI+keyF6k2Ax8qxOuhZH8HIuskt9JXO8GP1yJWFKt
+         s0TJ820sSf1g1Mlp2vEq1VY9OnEXSqYOQEoyhWF2aWZ9Xn0zkE+EDXz97NWzxQBpig57
+         vfUw==
+Received: by 10.50.57.199 with SMTP id k7mr6443522igq.25.1334162990687; Wed,
+ 11 Apr 2012 09:49:50 -0700 (PDT)
+Received: by 10.231.60.130 with HTTP; Wed, 11 Apr 2012 09:49:20 -0700 (PDT)
+In-Reply-To: <1334160803.74554.YahooMailNeo@web160603.mail.bf1.yahoo.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195213>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195214>
 
-Jakub Narebski <jnareb@gmail.com> writes:
+2012/4/11 Pap L=C3=B4rinc <paplorinc@yahoo.com>:
+> What am I doing wrong
 
->> So 1.7.10.1 it is...
->
-> Ping!
-
-You are part of my distributed memory and the system is nicely
-working ;-)
-
-> I don't see this trivial fix (admittedly for obscure bug) in "What's
-> cooking", and it is not present in 'master'.
-
-Of course not.  Now you reminded me, it will.
-
-Thanks.
+Probably a lot.
