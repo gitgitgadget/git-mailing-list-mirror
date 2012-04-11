@@ -1,95 +1,132 @@
-From: Victor Engmark <victor.engmark@gmail.com>
-Subject: Re: stash refuses to pop
-Date: Wed, 11 Apr 2012 09:15:57 +0200
-Message-ID: <CAA5Ydx9CTKdm-3OPM1s424d=PAi18MtpfhNXxdDw=44VQBXtGQ@mail.gmail.com>
-References: <4F847350.3000409@ubuntu.com>
-	<7vpqbfpim2.fsf@alter.siamese.dyndns.org>
-	<4F84827B.80104@ubuntu.com>
-	<CAH5451=0KvUPB77hKyjFVXRwPfEZ8+45b20SimBPmuF-gq_A3w@mail.gmail.com>
+From: Nick Douma <n.douma@nekoconeko.nl>
+Subject: Re: Migrating SVN to Git, and preserve merge information
+Date: Wed, 11 Apr 2012 09:24:35 +0200
+Message-ID: <4F8531B3.9030501@nekoconeko.nl>
+References: <4F844F33.5000004@nekoconeko.nl> <4F84BAE2.5090803@pileofstuff.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Phillip Susi <psusi@ubuntu.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Andrew Ardill <andrew.ardill@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 11 09:16:07 2012
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature";
+ boundary="------------enig59600FFC2FEDD7778001BFF8"
+Cc: git@vger.kernel.org
+To: Andrew Sayers <andrew-git@pileofstuff.org>
+X-From: git-owner@vger.kernel.org Wed Apr 11 09:24:58 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SHrmf-00061B-4O
-	for gcvg-git-2@plane.gmane.org; Wed, 11 Apr 2012 09:16:05 +0200
+	id 1SHrvD-0002lW-MA
+	for gcvg-git-2@plane.gmane.org; Wed, 11 Apr 2012 09:24:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753133Ab2DKHP7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Apr 2012 03:15:59 -0400
-Received: from mail-ee0-f46.google.com ([74.125.83.46]:41628 "EHLO
-	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752799Ab2DKHP6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Apr 2012 03:15:58 -0400
-Received: by eekc41 with SMTP id c41so118535eek.19
-        for <git@vger.kernel.org>; Wed, 11 Apr 2012 00:15:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=KqhWBQgFppM9C0LWp5eQl6laZe8JMTI+yVM+iLqC6Bc=;
-        b=szW+V/+qxre58eNMME/5JCD+DvqX4rtLuEONFcL6/bjLDha08AVXxiSgbYU0UunDZ+
-         v29/kg/vnHGFF3PrTqwc5fQZADdMJBRG0mbs6TgKCVDJfmqCc/f4Cvd/CM2saXtVZYDX
-         3Jpgj9SUzqTAGyPvPD08FjQYJ6LADjITcnVqZegSgUI/BVnsHXzxyw+/NfOm02ahEUXi
-         O93nI1xCK1aa4+we6rIrSeVME2ZR0pptWLdCSCp5LEYFKQBtk0IAfLUf+M6yTiMcGwCw
-         JcHbW4zaXve08qZF60vQtSxOBO/jKt7LdYqW2FH617i7iR5/djWDBVIMR/0OtZ9DNQCb
-         QfsA==
-Received: by 10.14.51.207 with SMTP id b55mr1747725eec.53.1334128557239; Wed,
- 11 Apr 2012 00:15:57 -0700 (PDT)
-Received: by 10.213.3.136 with HTTP; Wed, 11 Apr 2012 00:15:57 -0700 (PDT)
-In-Reply-To: <CAH5451=0KvUPB77hKyjFVXRwPfEZ8+45b20SimBPmuF-gq_A3w@mail.gmail.com>
+	id S1754117Ab2DKHYq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Apr 2012 03:24:46 -0400
+Received: from genome.nekoconeko.nl ([93.94.224.72]:35236 "EHLO
+	genome.nekoconeko.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750775Ab2DKHYo (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Apr 2012 03:24:44 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by genome.nekoconeko.nl (Postfix) with ESMTP id A78F02217A;
+	Wed, 11 Apr 2012 09:26:52 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at genome.nekoconeko.nl
+Received: from genome.nekoconeko.nl ([127.0.0.1])
+	by localhost (genome.nekoconeko.nl [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id xwsIZbyE7qpQ; Wed, 11 Apr 2012 09:26:50 +0200 (CEST)
+Received: from [IPv6:2001:838:300:41e::2] (cl-1055.ams-01.nl.sixxs.net [IPv6:2001:838:300:41e::2])
+	by genome.nekoconeko.nl (Postfix) with ESMTPSA id 62EDD22138;
+	Wed, 11 Apr 2012 09:26:50 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=nekoconeko.nl;
+	s=genome; t=1334129210;
+	bh=ctggNDctJsIQxsHI1Zi5JaOjqKwLsvHAA1zkB3bO8GI=;
+	h=Message-ID:Date:From:MIME-Version:To:CC:Subject:References:
+	 In-Reply-To:Content-Type;
+	b=VwFGjQceYkEGzom+whg/kBjqV9DsjXOkbZybFmf2637WBeV+fFBsU2Yh3BcyiF1Ba
+	 e9jsS0fCKfhDp+yJRb1dDpYOzHCYsEv8qL3ZHOkky0kvcjGVb+RMlUnlr7d/Vm1PrE
+	 aSie/hWCKI1Ep+IuqHef3gz0aHuBke6Xdqbp+GRg=
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:11.0) Gecko/20120329 Thunderbird/11.0.1
+In-Reply-To: <4F84BAE2.5090803@pileofstuff.org>
+X-Enigmail-Version: 1.4
+OpenPGP: id=AB001628;
+	url=http://nekoconeko.nl/pub_0xAB001628.asc
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195153>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195154>
 
-On Wed, Apr 11, 2012 at 4:47 AM, Andrew Ardill <andrew.ardill@gmail.com> wrote:
->
-> On 11 April 2012 04:56, Phillip Susi <psusi@ubuntu.com> wrote:
-> > On 4/10/2012 2:05 PM, Junio C Hamano wrote:
-> >> So probably the right way to use "stash -p" (if there were such a thing)
-> >> would be to stash away the remainder in a separate stash with another
-> >> "stash" without "-p" (which will clear your workspace to a pristine state)
-> >> and then pop the one you created with "stash -p", I think.
-> >
-> > That would not get you back to the state you were in when you first stashed,
-> > but instead to a state where you have the first set of changes, but not the
-> > second ( which you then also can not pop due to the first changes being
-> > there ).
->
-> The first question, it would seem, is what should git do when there
-> are modified files present, and the user tries to pop a stash which
-> touches those files. The current behaviour is to reject the pop,
-> reasonable enough, though for what exact reason I am not sure
-> (potential merge issues, I assume).
->
-> The method you have described is just one way of coming on this
-> situation. The user could have
-> * stashed their work, modified some files and tried to pop
-> * partially stashed their work, and tried to pop
-> * partially stashed their work, modified some files and then tried to pop.
->
-> The options for dealing with this situation seem to be
-> 1. Reject the pop outright
-> 2. put the affected files into a merge conflict state
-> 3. revert the file to the state they were at at the time of stash
-> 4. reject those files that do not apply cleanly (but apply all others)
-> 5. reject those hunks which do not apply cleanly (but apply all others)
-> 6. provide an interactive pop session for choosing what to apply
+This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
+--------------enig59600FFC2FEDD7778001BFF8
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: quoted-printable
 
-#2 seems like the most natural option, for the reason Phillip Susi
-mentioned. But how about
-7. Apply all hunks iff all of them can be applied cleanly
-? That way pop would be an atomic operation. It might be easier to do
-than 2, and even if 2 is implemented it would be nice to have a
---atomic or --dry-run option when you want to make sure not to end up
-in a messy merge.
+Hi Andrew,
 
-Cheers,
-V
+On 11-04-12 00:57, Andrew Sayers wrote:
+> Would I be right in thinking that a commit like "Merged r100,r101,r102
+> from trunk" will create three grafts?  If so, that might be the problem=
+=2E
+
+One SVN 'merge' commit will generate one graft. The graft itself will
+contain all revisions mentioned in the merge commit, and whatever the
+original git parent was before the graft.
+
+> Git differentiates between "merges" (which include every commit up to
+> and including the specified one) and "cherry-picks" (which just include=
+
+> the specified commit), whereas SVN calls both of these "merges".  Graft=
+s
+> are a way of creating "merges" rather than "cherry-picks" (which git
+> doesn't have any metadata for), and it's not at all easy to get "merge"=
+
+> data out of SVN in the general case.  Having said that, it's often a
+> good enough heuristic to pick the highest revision number mentioned in
+> the commit message and pretend it's a merge.
+
+The way we 'merged' in SVN was indeed more like cherry-picking, but I'm
+looking to display this information as a merge in Git. I also would like
+to include all revisions if possible.
+
+The real problem I seem to be having is not completely understanding how
+Git grafts work, because I think I'm hitting some kind of limitation or
+bug, or just not using it right.
+
+> Incidentally, I'm planning to work on this area of SVN->git conversion
+> in the coming months.  I don't have anything you could use yet, but I
+> don't suppose the scripts you used are available somewhere?  Getting
+> revision information out of log files is particularly tricky, and
+> everyone stumbles over a different set of issues.  I'd be really
+> interested to pick any nuggets of wisdom out of the approach you took.
+
+I don't really have any useful script for you at the moment, but the
+main approach is this:
+
+* I first tag all SVN Git commits with the original SVN revision, like:
+"svn/1234"
+* Then I retrieve all commits with "merge" in the message, but not "unmer=
+ge"
+* Now I filter all revisions from the commit message using a regex or two=
+=2E
+* Using all relevant revisions, I retrieve the corresponding SHA hashes
+using the tag names I created in step 1.
+* Finally, I write a graft file in format:
+<merge commit> <original git parent> <merge rev 1> ... <merge rev n>
+
+Kind regards,
+
+Nick Douma
+
+
+--------------enig59600FFC2FEDD7778001BFF8
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+
+iEYEARECAAYFAk+FMbgACgkQkPq5zKsAFijvzACdEw4QcccjE/gMOPNTd7jvWBlV
+JCAAn34I3UihD0/MBYzde9ESi7wFLQ1J
+=FuFV
+-----END PGP SIGNATURE-----
+
+--------------enig59600FFC2FEDD7778001BFF8--
