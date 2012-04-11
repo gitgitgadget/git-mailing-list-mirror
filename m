@@ -1,132 +1,103 @@
-From: Nick Douma <n.douma@nekoconeko.nl>
-Subject: Re: Migrating SVN to Git, and preserve merge information
-Date: Wed, 11 Apr 2012 09:24:35 +0200
-Message-ID: <4F8531B3.9030501@nekoconeko.nl>
-References: <4F844F33.5000004@nekoconeko.nl> <4F84BAE2.5090803@pileofstuff.org>
+From: David Aguilar <davvid@gmail.com>
+Subject: Re: [PATCH v2] contrib: added git-diffall
+Date: Wed, 11 Apr 2012 01:38:21 -0700
+Message-ID: <CAJDDKr47BZ=QE_nUqAoFJTRTBUxMHD2QwmqpGYrXb3q1hfyAHA@mail.gmail.com>
+References: <1329948749-5908-1-git-send-email-tim.henigan@gmail.com>
+	<7vipiy8m5q.fsf@alter.siamese.dyndns.org>
+	<CAFouetiSpsZGtLt2tG4ou-H18zigNx5xWQH4cy8GrL1eDxbjJw@mail.gmail.com>
+	<loom.20120411T010200-132@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature";
- boundary="------------enig59600FFC2FEDD7778001BFF8"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Andrew Sayers <andrew-git@pileofstuff.org>
-X-From: git-owner@vger.kernel.org Wed Apr 11 09:24:58 2012
+To: Matt McClure <matthewlmcclure@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 11 10:38:29 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SHrvD-0002lW-MA
-	for gcvg-git-2@plane.gmane.org; Wed, 11 Apr 2012 09:24:56 +0200
+	id 1SHt4O-0003qK-Vj
+	for gcvg-git-2@plane.gmane.org; Wed, 11 Apr 2012 10:38:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754117Ab2DKHYq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Apr 2012 03:24:46 -0400
-Received: from genome.nekoconeko.nl ([93.94.224.72]:35236 "EHLO
-	genome.nekoconeko.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750775Ab2DKHYo (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Apr 2012 03:24:44 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by genome.nekoconeko.nl (Postfix) with ESMTP id A78F02217A;
-	Wed, 11 Apr 2012 09:26:52 +0200 (CEST)
-X-Virus-Scanned: Debian amavisd-new at genome.nekoconeko.nl
-Received: from genome.nekoconeko.nl ([127.0.0.1])
-	by localhost (genome.nekoconeko.nl [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id xwsIZbyE7qpQ; Wed, 11 Apr 2012 09:26:50 +0200 (CEST)
-Received: from [IPv6:2001:838:300:41e::2] (cl-1055.ams-01.nl.sixxs.net [IPv6:2001:838:300:41e::2])
-	by genome.nekoconeko.nl (Postfix) with ESMTPSA id 62EDD22138;
-	Wed, 11 Apr 2012 09:26:50 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=nekoconeko.nl;
-	s=genome; t=1334129210;
-	bh=ctggNDctJsIQxsHI1Zi5JaOjqKwLsvHAA1zkB3bO8GI=;
-	h=Message-ID:Date:From:MIME-Version:To:CC:Subject:References:
-	 In-Reply-To:Content-Type;
-	b=VwFGjQceYkEGzom+whg/kBjqV9DsjXOkbZybFmf2637WBeV+fFBsU2Yh3BcyiF1Ba
-	 e9jsS0fCKfhDp+yJRb1dDpYOzHCYsEv8qL3ZHOkky0kvcjGVb+RMlUnlr7d/Vm1PrE
-	 aSie/hWCKI1Ep+IuqHef3gz0aHuBke6Xdqbp+GRg=
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:11.0) Gecko/20120329 Thunderbird/11.0.1
-In-Reply-To: <4F84BAE2.5090803@pileofstuff.org>
-X-Enigmail-Version: 1.4
-OpenPGP: id=AB001628;
-	url=http://nekoconeko.nl/pub_0xAB001628.asc
+	id S1753123Ab2DKIiY convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 11 Apr 2012 04:38:24 -0400
+Received: from mail-gx0-f174.google.com ([209.85.161.174]:49618 "EHLO
+	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751821Ab2DKIiW convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 11 Apr 2012 04:38:22 -0400
+Received: by gghe5 with SMTP id e5so312501ggh.19
+        for <git@vger.kernel.org>; Wed, 11 Apr 2012 01:38:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=JuBsU8/eq3nrM9Mo055DWmE5AcMbKnM3rGemh3Qtrck=;
+        b=Odas4bFS4gf1ixeM6TwMQkY5VyaLKn/LjLwcKfT5NmnJ9x09QoJ7OmPge2ST0F5GRb
+         8X0OmJxYvXX74U8nPEKB0SG+jkYLjoWeB3J1/xWgtZIoJcBL5a452rTiN2vG9tQrJ8A7
+         Y1VmcItnhgU2PY5v/fD3U2fqW8p35xr7Pw95Iyx3aWoRd8s5aaX+GK9oUDcHUdnp6jLr
+         /WX+5bsYgCIok/d3XAiRTZF2kIn8GjOKp4NGVdFyR2r3D6IomBijDuxDTtIy9VKOWeen
+         RTxITOEAliPD4q6wynMzOQwB4zg2M8/Idj/iV9k8woASV15WDin+L0MMBQttCQiKnyZH
+         +jpQ==
+Received: by 10.236.185.10 with SMTP id t10mr12208758yhm.112.1334133501740;
+ Wed, 11 Apr 2012 01:38:21 -0700 (PDT)
+Received: by 10.147.128.8 with HTTP; Wed, 11 Apr 2012 01:38:21 -0700 (PDT)
+In-Reply-To: <loom.20120411T010200-132@post.gmane.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195154>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195155>
 
-This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
---------------enig59600FFC2FEDD7778001BFF8
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: quoted-printable
+On Tue, Apr 10, 2012 at 4:06 PM, Matt McClure <matthewlmcclure@gmail.co=
+m> wrote:
+> Tim Henigan <tim.henigan <at> gmail.com> writes:
+>
+>> >> + =C2=A0 =C2=A0 do
+>> >> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 cp "$file" "$git_top_=
+dir/${file#$tmp/$right_dir/}"
+>> >> + =C2=A0 =C2=A0 done
+>> >> +fi
+>> >
+>> > This will copy new files created in $right_dir. =C2=A0Is that inte=
+nded?
+>>
+>> hmmm...that was not intended. =C2=A0If would be odd for the user to =
+create
+>> new files in this tmp directory, but if the diff tool automatically
+>> generates any files then this could result in unwanted files.
+>
+> I think more generally, I would prefer if either side of the comparis=
+on is the
+> working copy that the temp directory on that side be populated with s=
+ymlinks.
+>
+> A particularly bad failure mode of the copy-back approach is:
+>
+> git diffall --copy-back
+> # while my diffall tool is running, I edit the file somewhere else.
+> # quit my diffall tool
+> # --> my edits in the other tool are overwritten by diffall
+>
+> Editing the files in place via symlinks would resolve that.
 
-Hi Andrew,
+I had a similar idea but didn't mention it because Windows came to
+mind.  I always want to say, "darn it, this code would be so much
+easier if we could just ignore Windows", but that's not very helpful.
 
-On 11-04-12 00:57, Andrew Sayers wrote:
-> Would I be right in thinking that a commit like "Merged r100,r101,r102
-> from trunk" will create three grafts?  If so, that might be the problem=
-=2E
+I'd be happy with a runtime platform check where the copy back is only
+done on Windows.  Everyone else can enjoy symlinks.
 
-One SVN 'merge' commit will generate one graft. The graft itself will
-contain all revisions mentioned in the merge commit, and whatever the
-original git parent was before the graft.
+Reading between the lines that could be interpreted as, "well, that
+copy back code is no good and *we* don't want to use it, but it's okay
+for Windows users", which is slightly dangerous because we'd always be
+running the symlink code path and wouldn't hit problems with the other
+path.
 
-> Git differentiates between "merges" (which include every commit up to
-> and including the specified one) and "cherry-picks" (which just include=
-
-> the specified commit), whereas SVN calls both of these "merges".  Graft=
-s
-> are a way of creating "merges" rather than "cherry-picks" (which git
-> doesn't have any metadata for), and it's not at all easy to get "merge"=
-
-> data out of SVN in the general case.  Having said that, it's often a
-> good enough heuristic to pick the highest revision number mentioned in
-> the commit message and pretend it's a merge.
-
-The way we 'merged' in SVN was indeed more like cherry-picking, but I'm
-looking to display this information as a merge in Git. I also would like
-to include all revisions if possible.
-
-The real problem I seem to be having is not completely understanding how
-Git grafts work, because I think I'm hitting some kind of limitation or
-bug, or just not using it right.
-
-> Incidentally, I'm planning to work on this area of SVN->git conversion
-> in the coming months.  I don't have anything you could use yet, but I
-> don't suppose the scripts you used are available somewhere?  Getting
-> revision information out of log files is particularly tricky, and
-> everyone stumbles over a different set of issues.  I'd be really
-> interested to pick any nuggets of wisdom out of the approach you took.
-
-I don't really have any useful script for you at the moment, but the
-main approach is this:
-
-* I first tag all SVN Git commits with the original SVN revision, like:
-"svn/1234"
-* Then I retrieve all commits with "merge" in the message, but not "unmer=
-ge"
-* Now I filter all revisions from the commit message using a regex or two=
-=2E
-* Using all relevant revisions, I retrieve the corresponding SHA hashes
-using the tag names I created in step 1.
-* Finally, I write a graft file in format:
-<merge commit> <original git parent> <merge rev 1> ... <merge rev n>
-
-Kind regards,
-
-Nick Douma
-
-
---------------enig59600FFC2FEDD7778001BFF8
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
-
-iEYEARECAAYFAk+FMbgACgkQkPq5zKsAFijvzACdEw4QcccjE/gMOPNTd7jvWBlV
-JCAAn34I3UihD0/MBYzde9ESi7wFLQ1J
-=FuFV
------END PGP SIGNATURE-----
-
---------------enig59600FFC2FEDD7778001BFF8--
+So I'm torn.  I think symlinks are a great idea, but Windows drives us
+towards the less-than-ideal solution.  I want the best solution
+possible.  Do we just accept that the copy-back code is simply the
+cost of supporting Windows and keep both code paths around?  I would
+not be opposed to that if the result is a more robust user experience.
+--=20
+David
