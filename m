@@ -1,103 +1,108 @@
 From: David Aguilar <davvid@gmail.com>
-Subject: Re: [PATCH v2] contrib: added git-diffall
-Date: Wed, 11 Apr 2012 01:38:21 -0700
-Message-ID: <CAJDDKr47BZ=QE_nUqAoFJTRTBUxMHD2QwmqpGYrXb3q1hfyAHA@mail.gmail.com>
-References: <1329948749-5908-1-git-send-email-tim.henigan@gmail.com>
-	<7vipiy8m5q.fsf@alter.siamese.dyndns.org>
-	<CAFouetiSpsZGtLt2tG4ou-H18zigNx5xWQH4cy8GrL1eDxbjJw@mail.gmail.com>
-	<loom.20120411T010200-132@post.gmane.org>
+Subject: Re: [PATCH 8/9 v11] difftool: teach difftool to handle directory diffs
+Date: Wed, 11 Apr 2012 02:02:26 -0700
+Message-ID: <CAJDDKr7XXqWBRVXhEenWVcE+7526sYVV821Ytty0xbZBvshd-w@mail.gmail.com>
+References: <1333567265-23986-1-git-send-email-tim.henigan@gmail.com>
+	<CAJDDKr76eMiA4rOHQhar3aToVThDfbc8Ki5tr2PGU_UpDMAVeA@mail.gmail.com>
+	<CAFouetijF5vt9r1GfbntJ0BEqoo0FpztkeqrmeN=-6DK1Q_XRA@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Matt McClure <matthewlmcclure@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 11 10:38:29 2012
+Cc: gitster@pobox.com, git@vger.kernel.org, ramsay@ramsay1.demon.co.uk
+To: Tim Henigan <tim.henigan@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 11 11:02:37 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SHt4O-0003qK-Vj
-	for gcvg-git-2@plane.gmane.org; Wed, 11 Apr 2012 10:38:29 +0200
+	id 1SHtRk-0001kJ-Re
+	for gcvg-git-2@plane.gmane.org; Wed, 11 Apr 2012 11:02:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753123Ab2DKIiY convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 11 Apr 2012 04:38:24 -0400
-Received: from mail-gx0-f174.google.com ([209.85.161.174]:49618 "EHLO
-	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751821Ab2DKIiW convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 11 Apr 2012 04:38:22 -0400
-Received: by gghe5 with SMTP id e5so312501ggh.19
-        for <git@vger.kernel.org>; Wed, 11 Apr 2012 01:38:21 -0700 (PDT)
+	id S1752305Ab2DKJC2 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 11 Apr 2012 05:02:28 -0400
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:62206 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751450Ab2DKJC1 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 11 Apr 2012 05:02:27 -0400
+Received: by yenl12 with SMTP id l12so317160yen.19
+        for <git@vger.kernel.org>; Wed, 11 Apr 2012 02:02:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type:content-transfer-encoding;
-        bh=JuBsU8/eq3nrM9Mo055DWmE5AcMbKnM3rGemh3Qtrck=;
-        b=Odas4bFS4gf1ixeM6TwMQkY5VyaLKn/LjLwcKfT5NmnJ9x09QoJ7OmPge2ST0F5GRb
-         8X0OmJxYvXX74U8nPEKB0SG+jkYLjoWeB3J1/xWgtZIoJcBL5a452rTiN2vG9tQrJ8A7
-         Y1VmcItnhgU2PY5v/fD3U2fqW8p35xr7Pw95Iyx3aWoRd8s5aaX+GK9oUDcHUdnp6jLr
-         /WX+5bsYgCIok/d3XAiRTZF2kIn8GjOKp4NGVdFyR2r3D6IomBijDuxDTtIy9VKOWeen
-         RTxITOEAliPD4q6wynMzOQwB4zg2M8/Idj/iV9k8woASV15WDin+L0MMBQttCQiKnyZH
-         +jpQ==
-Received: by 10.236.185.10 with SMTP id t10mr12208758yhm.112.1334133501740;
- Wed, 11 Apr 2012 01:38:21 -0700 (PDT)
-Received: by 10.147.128.8 with HTTP; Wed, 11 Apr 2012 01:38:21 -0700 (PDT)
-In-Reply-To: <loom.20120411T010200-132@post.gmane.org>
+        bh=vowUgqtCW6+L/1ap4cnx3HbOebYPrnnH8a0e000mxLw=;
+        b=AqLzw7ZyLUBQok9SZSt6cfPI/km/ujvel/uIHYUmkXMS9UvRNM89JJTyrxpconPhVE
+         LJiLlbztopTUdQM6MskQB6e1JhMXHNH0LeyULDrh4hc/Thqqbfw8FaNQrj+9VwIMq6iP
+         T9NWlwDFmrO+beGVBsZnV2+7phy3wawVcF7kceD7PXXca9t0Bi/Ado5OwKys6B7bhAsV
+         H4Nyq3NqAs2sB+Yy8iA7jsJD6SIoegktS4u7SEpKM0RTz+q9eJag3QFG/mQs0l9p/etr
+         egmBBW5YQC/Fis4bYU6T/3zDGCmSaudBXzfe/QQNrkclBxcbU9tKNF6s3uYSyjYuHsXK
+         Ve7w==
+Received: by 10.236.185.10 with SMTP id t10mr12252060yhm.112.1334134946684;
+ Wed, 11 Apr 2012 02:02:26 -0700 (PDT)
+Received: by 10.147.128.8 with HTTP; Wed, 11 Apr 2012 02:02:26 -0700 (PDT)
+In-Reply-To: <CAFouetijF5vt9r1GfbntJ0BEqoo0FpztkeqrmeN=-6DK1Q_XRA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195155>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195156>
 
-On Tue, Apr 10, 2012 at 4:06 PM, Matt McClure <matthewlmcclure@gmail.co=
-m> wrote:
-> Tim Henigan <tim.henigan <at> gmail.com> writes:
+On Tue, Apr 10, 2012 at 10:24 AM, Tim Henigan <tim.henigan@gmail.com> w=
+rote:
+> On Mon, Apr 9, 2012 at 8:14 AM, David Aguilar <davvid@gmail.com> wrot=
+e:
+>> On Wed, Apr 4, 2012 at 12:21 PM, Tim Henigan <tim.henigan@gmail.com>=
+ wrote:
+>>> diff --git a/git-difftool.perl b/git-difftool.perl
+>>> index d4fe998..5bb01e1 100755
+>>> --- a/git-difftool.perl
+>>> +++ b/git-difftool.perl
+>>> @@ -1,21 +1,29 @@
 >
->> >> + =C2=A0 =C2=A0 do
->> >> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 cp "$file" "$git_top_=
-dir/${file#$tmp/$right_dir/}"
->> >> + =C2=A0 =C2=A0 done
->> >> +fi
->> >
->> > This will copy new files created in $right_dir. =C2=A0Is that inte=
-nded?
+> ...snip...
+>
+>>> + =C2=A0 =C2=A0 =C2=A0 $ENV{GIT_DIR} =3D $repo->repo_path();
+>>> + =C2=A0 =C2=A0 =C2=A0 $ENV{GIT_INDEX_FILE} =3D "$tmpdir/lindex";
+>>> + =C2=A0 =C2=A0 =C2=A0 ($inpipe, $ctx) =3D $repo->command_input_pip=
+e(qw/update-index -z --index-info/);
+>>> + =C2=A0 =C2=A0 =C2=A0 print($inpipe $lindex);
+>>> + =C2=A0 =C2=A0 =C2=A0 $repo->command_close_pipe($inpipe, $ctx);
+>>> + =C2=A0 =C2=A0 =C2=A0 system(('git', 'checkout-index', '--all', "-=
+-prefix=3D$ldir/"));
+>
+> ...snip...
+>
+>>> + =C2=A0 =C2=A0 =C2=A0 # If the diff including working copy files a=
+nd those
+>>> + =C2=A0 =C2=A0 =C2=A0 # files were modified during the diff, then =
+the changes
+>>> + =C2=A0 =C2=A0 =C2=A0 # should be copied back to the working tree
+>>> + =C2=A0 =C2=A0 =C2=A0 my $repo =3D Git->repository();
+>>> + =C2=A0 =C2=A0 =C2=A0 my $workdir =3D $repo->repo_path() . "/..";
 >>
->> hmmm...that was not intended. =C2=A0If would be odd for the user to =
-create
->> new files in this tmp directory, but if the diff tool automatically
->> generates any files then this could result in unwanted files.
+>> Does this work when $GIT_WORK_TREE / core.worktree are defined?
 >
-> I think more generally, I would prefer if either side of the comparis=
-on is the
-> working copy that the temp directory on that side be populated with s=
-ymlinks.
+> Should I also be concerned that the existing code always overrides $G=
+IT_DIR?
+> For example, should I squash in the following before calling 'git upd=
+ate-index'?
 >
-> A particularly bad failure mode of the copy-back approach is:
->
-> git diffall --copy-back
-> # while my diffall tool is running, I edit the file somewhere else.
-> # quit my diffall tool
-> # --> my edits in the other tool are overwritten by diffall
->
-> Editing the files in place via symlinks would resolve that.
+> - =C2=A0 =C2=A0 =C2=A0 $ENV{GIT_DIR} =3D $repo->repo_path();
+> + =C2=A0 =C2=A0 =C2=A0if (not defined($ENV{GIT_DIR})) {
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0$ENV{GIT_DIR} =3D $=
+repo->repo_path();
+> + =C2=A0 =C2=A0 =C2=A0}
 
-I had a similar idea but didn't mention it because Windows came to
-mind.  I always want to say, "darn it, this code would be so much
-easier if we could just ignore Windows", but that's not very helpful.
+I think the right thing to do would be to not override GIT_DIR at all.
+ I haven't read it deeply enough to know whether it was being
+overridden for a specific reason, but I think it should be safe to
+leave it as-is.
 
-I'd be happy with a runtime platform check where the copy back is only
-done on Windows.  Everyone else can enjoy symlinks.
+Git.pm ends up overriding these variables itself anyways when calling c=
+ommands.
 
-Reading between the lines that could be interpreted as, "well, that
-copy back code is no good and *we* don't want to use it, but it's okay
-for Windows users", which is slightly dangerous because we'd always be
-running the symlink code path and wouldn't hit problems with the other
-path.
-
-So I'm torn.  I think symlinks are a great idea, but Windows drives us
-towards the less-than-ideal solution.  I want the best solution
-possible.  Do we just accept that the copy-back code is simply the
-cost of supporting Windows and keep both code paths around?  I would
-not be opposed to that if the result is a more robust user experience.
+The GIT_WORK_TREE check should use $repo->wc_path().  Git.pm's already
+done all the hard work ;-)
 --=20
 David
