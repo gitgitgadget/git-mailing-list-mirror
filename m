@@ -1,81 +1,94 @@
-From: Neal Kreitzinger <nkreitzinger@gmail.com>
-Subject: Re: GSoC - Some questions on the idea of
-Date: Wed, 11 Apr 2012 11:44:23 -0500
-Message-ID: <4F85B4E7.7090603@gmail.com>
-References: <CA+M5ThS2iS-NMNDosk2oR25N=PMJJVTi1D=zg7MnMCUiRoX4BQ@mail.gmail.com> <CACsJy8APtMsMJ=FrZjOP=DbzuFoemSLJTmkjaiK5Wkq9XtA4rg@mail.gmail.com> <loom.20120328T131530-717@post.gmane.org> <CA+M5ThTPyic=RhFL2SvuNB0xBWOHxNTaUZrYMB144UjpjCiLoQ@mail.gmail.com> <20120330203430.GB20376@sigill.intra.peff.net> <CA+M5ThR6jtxqs0-Kz-8fcRuOFRbLr-GvsJcTmrOQ7_geNspDLg@mail.gmail.com> <4F76E430.6020605@gmail.com> <4F772E48.3030708@gmail.com> <20120402210708.GA28926@sigill.intra.peff.net> <4F84DD60.20903@gmail.com> <20120411060357.GA15805@burratino>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: push.default: current vs upstream
+Date: Wed, 11 Apr 2012 09:44:23 -0700
+Message-ID: <7vpqbemd5k.fsf@alter.siamese.dyndns.org>
+References: <7vfwcqq2dw.fsf@alter.siamese.dyndns.org>
+ <20120330071358.GB30656@sigill.intra.peff.net>
+ <7vty15ltuo.fsf@alter.siamese.dyndns.org> <vpqty12h995.fsf@bauges.imag.fr>
+ <20120405131301.GB10293@sigill.intra.peff.net>
+ <vpqwr5uceis.fsf@bauges.imag.fr>
+ <20120406071520.GD25301@sigill.intra.peff.net>
+ <vpqr4w12tjj.fsf@bauges.imag.fr>
+ <20120406080004.GA27940@sigill.intra.peff.net>
+ <4F7FF19B.1060407@alum.mit.edu>
+ <20120407075150.GA18168@sigill.intra.peff.net>
+ <7viphaygsg.fsf@alter.siamese.dyndns.org> <vpq62d6dyzr.fsf@bauges.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>,
-	Sergio Callegari <sergio.callegari@gmail.com>,
-	Bo Chen <chen@chenirvine.org>, git@vger.kernel.org
-To: Jonathan Nieder <jrnieder@gmail.com>
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	Michael Haggerty <mhagger@alum.mit.edu>, git@vger.kernel.org
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
 X-From: git-owner@vger.kernel.org Wed Apr 11 18:44:36 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SI0en-0000RZ-Bc
+	id 1SI0em-0000RZ-Pt
 	for gcvg-git-2@plane.gmane.org; Wed, 11 Apr 2012 18:44:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760651Ab2DKQo0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	id S932469Ab2DKQo1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Apr 2012 12:44:27 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:56926 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755950Ab2DKQo0 (ORCPT <rfc822;git@vger.kernel.org>);
 	Wed, 11 Apr 2012 12:44:26 -0400
-Received: from mail-ob0-f174.google.com ([209.85.214.174]:50449 "EHLO
-	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755781Ab2DKQoZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Apr 2012 12:44:25 -0400
-Received: by obbtb18 with SMTP id tb18so1432325obb.19
-        for <git@vger.kernel.org>; Wed, 11 Apr 2012 09:44:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=9s/gKdjA2CThsQb+XeGaUhI/q3zL6GUjO9E32PdRqic=;
-        b=OucH0uYwSvF+/RLJOtcEiTY5E/19pQ9/T/t0K0rV9D/He5gb98BeYjqpLGf9COZXrU
-         I8ASgVi64pzZ9R+5iR5OOeXYBUQsrQO0RWE3ic3X7Ci1T1/Y2/qlb5357kojcvZeOJqd
-         2MS4OJ5bj62B3d2jdKKz0nEkfIfqapjUJ54B7PMy+e2rJwQg5fx2hy4ROsX6FB6wQb9D
-         XzqNDjcdVxJNWAbaR7XuGSnfa7xg/8scMFlfdFnEOeUfTM/5rHpBc/ujmaY0kkNI+7v2
-         3U5PlmVzuNDj+qZO59C6/LrQEkd/ExOln9lwWMmiZgXwMsoba7Y5CWLDEZkpNplb738b
-         y9vw==
-Received: by 10.182.177.99 with SMTP id cp3mr9510791obc.28.1334162665201;
-        Wed, 11 Apr 2012 09:44:25 -0700 (PDT)
-Received: from [172.25.2.210] ([67.63.162.200])
-        by mx.google.com with ESMTPS id r8sm2738298oer.6.2012.04.11.09.44.24
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 11 Apr 2012 09:44:24 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:11.0) Gecko/20120327 Thunderbird/11.0.1
-In-Reply-To: <20120411060357.GA15805@burratino>
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id F0B486380;
+	Wed, 11 Apr 2012 12:44:24 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=45ywAeNbAHx6XoKVl3ThqXcS4zE=; b=N97iek
+	ayHwMpplAuy5LmPf7dueQLHvJjJPvMSHImS1Ua3/+mvp1r7g4tuGZOBamYGeP0BI
+	fijr7t6ggo4pzOx7YjBHfCtT7tTxmRAL0Ye1ifun8xFk+Zpu2ln4xNTJ9OU1xh+r
+	OSUdCRejx43r6KFnLWAWBLPLr9yzD3GEDNYIY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=sdR1S7Ov7s2PkO1cdU0KZ1P3gtEKL1JO
+	yl2OzEhl1ScpMiEjLDqvfHckw/6ZPPAT79tgNv4G46SAuVlQxvCzx4sklEWwemu5
+	CXuwZ8XPL2BwpfridVfCzt/HCPJp6Go2CKrVIjLNm0K+MMGGFIqozAXas83Wg730
+	F99jdnV5Je4=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E71DD637F;
+	Wed, 11 Apr 2012 12:44:24 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 6A73E637D; Wed, 11 Apr 2012
+ 12:44:24 -0400 (EDT)
+In-Reply-To: <vpq62d6dyzr.fsf@bauges.imag.fr> (Matthieu Moy's message of
+ "Wed, 11 Apr 2012 18:17:28 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 985FF8E4-83F5-11E1-8CD3-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195208>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195209>
 
-On 4/11/2012 1:04 AM, Jonathan Nieder wrote:
-> Neal Kreitzinger wrote:
->
->> Maybe small binaries do xdelta well and the above is a moot point.
->
-> If I am reading it correctly, diff-delta copes fine with smallish
-> binary files that have not changed much.
->
-> I would suggest tracking source code instead of binaries if
-> possible, though.
->
-I suppose the original "source" in git (linux kernel) was so low level
-that it had no graphics files.  However, most projects are end-user
-projects and have graphics so I would think that tracking them is a
-normal expected use of git to version your software.  If you're going to 
-do that then there shouldn't be a problem tracking other binaries that 
-are static constants across all servers (as opposed to user edited 
-content like databases).  I would consider this subset of "binaries" to 
-be the expected domain of git revision control for software, ie, gui 
-software.  Graphics files for your app are "source".  The binary is all 
-you have.  It's the "source" that you edit to make changes.
+Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
 
-Maybe I'm missing something here.  Maybe graphics files are "container" 
-files and that makes them a problem.
+> Junio C Hamano <gitster@pobox.com> writes:
+>
+>> Jeff King <peff@peff.net> writes:
+>>
+>>> On Sat, Apr 07, 2012 at 09:49:47AM +0200, Michael Haggerty wrote:
+>>> ...
+>>>> If "push.default" is not set, then have it default to "beginner" mode.
+>>>
+>>> I would be fine with that (I've suggested it elsewhere in the thread,
+>>> though I think I stole the idea originally from you. Speaking of going
+>>> in circles. :) ).
+>>
+>> This makes the first priority for 1.7.10 cycle to come up with a solid
+>> implementation of the "beginner" mode, I guess.
+>
+> I guess so. I found the idea relevant the first time it came in the
+> discussion, and I'm starting to get really convinced that this is the
+> way to go. And if we're wrong, it will be much easier to migrate to
+> either "current" or "upstream" later.
+>
+> No time to code this right now, but I may come up with a patch in a few
+> days. Any idea on the real name? I'd call it "safeUpstream" or
+> "safeCurrent", but that's probably by lack of a better name.
 
-v/r,
-neal
+I'd say "simple" ;-)
