@@ -1,70 +1,74 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH/RFC v2] fast-import doc: cat-blob and ls responses need
- to be consumed quickly
-Date: Wed, 11 Apr 2012 16:46:48 -0500
-Message-ID: <20120411214648.GI4248@burratino>
-References: <20120411143249.GA4140@burratino>
- <7v1ununtb2.fsf@alter.siamese.dyndns.org>
- <20120411171707.GD4248@burratino>
- <7vlim2kwcv.fsf@alter.siamese.dyndns.org>
- <20120411212501.GH4248@burratino>
- <7vobqyhs43.fsf@alter.siamese.dyndns.org>
+From: =?UTF-8?B?WmJpZ25pZXcgSsSZZHJ6ZWpld3NraS1Tem1law==?= 
+	<zbyszek@in.waw.pl>
+Subject: Re: [PATCH 1/5] t1507: add additional tests for @{upstream}
+Date: Wed, 11 Apr 2012 23:51:27 +0200
+Message-ID: <4F85FCDF.9040207@in.waw.pl>
+References: <1334161035-26355-1-git-send-email-zbyszek@in.waw.pl> <1334161035-26355-2-git-send-email-zbyszek@in.waw.pl> <7vfwcakvfw.fsf@alter.siamese.dyndns.org> <7vbomykv6x.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Dmitry Ivankov <divanorama@gmail.com>,
-	Jeff King <peff@peff.net>,
-	Sverre Rabbelier <srabbelier@gmail.com>
+Content-Type: text/plain; charset=UTF-8;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Apr 11 23:47:05 2012
+X-From: git-owner@vger.kernel.org Wed Apr 11 23:51:40 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SI5NY-0004j4-W8
-	for gcvg-git-2@plane.gmane.org; Wed, 11 Apr 2012 23:47:05 +0200
+	id 1SI5Rz-0007Oz-3k
+	for gcvg-git-2@plane.gmane.org; Wed, 11 Apr 2012 23:51:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933320Ab2DKVq7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Apr 2012 17:46:59 -0400
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:47367 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933291Ab2DKVq7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Apr 2012 17:46:59 -0400
-Received: by iagz16 with SMTP id z16so1816238iag.19
-        for <git@vger.kernel.org>; Wed, 11 Apr 2012 14:46:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=ERSN1C9xEMNrZ+iRLuzJ3BPSBMPwP1hIPWLlQixlIMI=;
-        b=e7eBYOlT7J2Q1yQNFR/DpElMv/lSafOYHsREe5n99mJpdcymF4TNRnQ4aHX1uvbR1B
-         ZLDnYwqd9WfB9mCDfKldfm1hXSaFsaAKucCmuiwjhuy8wTtlNnGLZmJ3hNmcNkaUn61h
-         MUyBWqqHcgSwyjjqHfAgR2VPytPIAIswr4xf+/AwZVwjg3tmOtF/pbEEhi3Rej2z+9gJ
-         mSTxyw/of4UQKE7DyQNKVtMo8UOSzlGmRw5jEVS27b7oVTb5+KoWeMfAJImh0/3uKDVT
-         /9duojo9Bau+SO1L6SKJkvdcxy0hd+sPup88O2SgEeaHVoHlM0AG0UYuiAWPsJWP57oO
-         gD6A==
-Received: by 10.50.192.228 with SMTP id hj4mr7081864igc.65.1334180817668;
-        Wed, 11 Apr 2012 14:46:57 -0700 (PDT)
-Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
-        by mx.google.com with ESMTPS id xt2sm26637931igb.6.2012.04.11.14.46.56
-        (version=SSLv3 cipher=OTHER);
-        Wed, 11 Apr 2012 14:46:56 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <7vobqyhs43.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1761177Ab2DKVve convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 11 Apr 2012 17:51:34 -0400
+Received: from kawka.in.waw.pl ([178.63.212.103]:34700 "EHLO kawka.in.waw.pl"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756217Ab2DKVvd (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Apr 2012 17:51:33 -0400
+Received: from 89-78-221-60.dynamic.chello.pl ([89.78.221.60] helo=[192.168.0.12])
+	by kawka.in.waw.pl with esmtpsa (TLS1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.72)
+	(envelope-from <zbyszek@in.waw.pl>)
+	id 1SI5Rs-0007s4-JH; Wed, 11 Apr 2012 23:51:32 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:10.0.3) Gecko/20120324 Icedove/10.0.3
+In-Reply-To: <7vbomykv6x.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195269>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195270>
 
-Junio C Hamano wrote:
+On 04/11/2012 07:57 PM, Junio C Hamano wrote:
+> Junio C Hamano<gitster@pobox.com>  writes:
+>
+>> Zbigniew J=C4=99drzejewski-Szmek<zbyszek@in.waw.pl>  writes:
+>>
+>>> +error_message () {
+>>> +	(cd clone&&
+>>> +	 test_must_fail git rev-parse --verify "$@")
+>>> +}
+>>> ...
+>>> +test_expect_success 'branch@{u} error message when no upstream' '
+>>> +	cat>expect<<-EOF&&
+>>> +	error: No upstream branch found for ${sq}non-tracking${sq}
+>>> +	fatal: Needed a single revision
+>>> +	EOF
+>>> +	(cd clone&&
+>>> +	 test_must_fail git rev-parse --verify non-tracking@{u}) 2>actual=
+&&
+>>
+>> Why not use "error_message" as other new tests?
+There _was_ some reason, in some earlier version of the patch, but now =
+it
+is gone. Will use error_message.
 
-> Looks good.  Do you want me to queue it, or would it be of not much use
-> outside the context of the other patch that actually does create the
-> loop-back?
+> I think the remainder of the message should be ignored.  Will comment=
+ on
+> individual steps.
+>
+> Thanks.
+I'll try to improve the description in first patch to not confuse peopl=
+e :)
 
-Thanks.  It's useful for git versions v1.7.9.5~1^2~2 ("fast-import:
-add 'ls' command") and newer.  I've pushed a copy of the patch to
-
-  git://repo.or.cz/git/jrn.git fast-import
+Thanks,
+Zbyszek
