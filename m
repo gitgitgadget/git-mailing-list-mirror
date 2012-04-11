@@ -1,70 +1,83 @@
-From: Hadmut Danisch <hadmut@danisch.de>
-Subject: Re: Why can't git open empty branches ?
-Date: Wed, 11 Apr 2012 13:47:51 +0200
-Message-ID: <4F856F67.4000609@danisch.de>
-References: <4F855E6B.4010504@danisch.de> <20120411105906.GA19823@burratino> <4F8565BC.1070701@danisch.de> <vpq7gxmzf75.fsf@bauges.imag.fr>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: [PATCH/RFC v2 0/4] Re: fast-import: use struct hash_table
+Date: Wed, 11 Apr 2012 07:11:16 -0500
+Message-ID: <20120411121116.GA19568@burratino>
+References: <1301572798-9973-1-git-send-email-david.barr@cordelta.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Wed Apr 11 13:47:59 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Git List <git@vger.kernel.org>,
+	Thomas Rast <trast@student.ethz.ch>,
+	Dmitry Ivankov <divanorama@gmail.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>
+To: David Barr <david.barr@cordelta.com>
+X-From: git-owner@vger.kernel.org Wed Apr 11 14:11:33 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SHw1m-0000Tu-Qp
-	for gcvg-git-2@plane.gmane.org; Wed, 11 Apr 2012 13:47:59 +0200
+	id 1SHwOa-0006do-OJ
+	for gcvg-git-2@plane.gmane.org; Wed, 11 Apr 2012 14:11:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756188Ab2DKLry (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Apr 2012 07:47:54 -0400
-Received: from mail.rackland.de ([212.86.200.188]:50662 "EHLO mail.rackland.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752291Ab2DKLrx (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Apr 2012 07:47:53 -0400
-Received: from [192.168.160.116] (178-26-58-165-dynip.superkabel.de [178.26.58.165])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client did not present a certificate)
-	by mail.rackland.de (Postfix) with ESMTPSA id D1A482C0CF;
-	Wed, 11 Apr 2012 13:47:50 +0200 (CEST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:11.0) Gecko/20120329 Thunderbird/11.0.1
-In-Reply-To: <vpq7gxmzf75.fsf@bauges.imag.fr>
-X-Enigmail-Version: 1.4
+	id S1757451Ab2DKML2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Apr 2012 08:11:28 -0400
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:52546 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751667Ab2DKML1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Apr 2012 08:11:27 -0400
+Received: by iagz16 with SMTP id z16so1194994iag.19
+        for <git@vger.kernel.org>; Wed, 11 Apr 2012 05:11:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=6nSxshzhKJEKF1Y1df4awZ0jFlDnEyuCPpVWWUJvfQ8=;
+        b=KrfYKDVfQ1yY3lpb9HktdDxhn5q0am8RSmHQtv8R/Szj3hZNDyK+Et9fLNRjfqihfU
+         ZUVdSX70J95gEkRIYA+tmd+GbGQaNKvc9dCqis7vJcd9xUvwyORFAvbgAxFtYKeGl0MB
+         aIAo6TUAXNU1w4RL22vc2hQjXefuO5/HTChHoLrI8bltbs1rXyELrX87RR7er5LRpXBC
+         gB4603Ioin1WxAmBnUF6OfY+ywy/MoA5LUpXwRYVWoyCMh2FnTI8J3yibtX2pnGWJPmY
+         sF8uXXUw4Ghvy5WQ9Nl0yS+RfQqjvsvXd4iA8syjhbLUnzbYTeJOItcJEG5jfZc7e+eo
+         L/bg==
+Received: by 10.50.106.132 with SMTP id gu4mr1703958igb.59.1334146287159;
+        Wed, 11 Apr 2012 05:11:27 -0700 (PDT)
+Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
+        by mx.google.com with ESMTPS id gf4sm24852708igb.14.2012.04.11.05.11.25
+        (version=SSLv3 cipher=OTHER);
+        Wed, 11 Apr 2012 05:11:26 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <1301572798-9973-1-git-send-email-david.barr@cordelta.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195169>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195170>
 
-Am 11.04.2012 13:21, schrieb Matthieu Moy:
-> BTW, it is rarely good practice to create an empty branch in an existing
-> repository. You'll have different branches that do not share any
-> history, and they would likely be better in separate repositories (or at
-> least, be in separate local repositories, pushed to the same remote bare
-> repository, in which case you don't need anything special, just "git
-> init" and "git push"). That doesn't mean you shouldn't do it, but just
-> that you may want to think twice before doing it ;-).
+Hi David,
 
-That's a pretty good point for discussion.
+David Barr wrote:
 
+> The current custom hash tables in fast-import.c do not grow.
+> This causes poor performance for very large imports.
+> Fortunately, we have struct hash_table and friends so there's
+> no need to write cumbersome hash table growth code.
 
-Sometimes people are working on different sorts of information, that are
-nevertheless closely related, e.g. open source software and the web
-pages describing it (like in git hub), or a web server tree and the
-software generating it. They are related, but do not logically share a
-history.
+Thanks for these patches.  I've tentatively queued the following
+patches at
 
+  git://repo.or.cz/git/jrn.git fast-import-pu
 
-Creating independent branches by pushing two separates into a single
-remote bare is a nice idea, but if I understood git correctly, the very
-first commit in a repos is always to the master branch, where you have
-two masters trying to push into the shared remote bare. This is
-obviously solvable if you use the correct commands and maybe delete and
-re-clone the repos, but this is all overcomplicated and non-trivial.
-Nothing I could do without reading manuals.
+and would be happy to ask Junio to pull them if they look sane to you.
 
-So your proposal might work perfectly, but in my eyes it is error prone
-and not user friendly.
+Sorry for the long delay.
 
-regards
+David Barr (2):
+  fast-import: allow object_table to grow dynamically
+  fast-import: allow atom_table to grow dynamically
+
+Jonathan Nieder (2):
+  fast-import: allow branch_table to grow dynamically
+  fast-import: use DIV_ROUND_UP
+
+ fast-import.c |  153 ++++++++++++++++++++++++++++++++++++++-------------------
+ 1 file changed, 102 insertions(+), 51 deletions(-)
