@@ -1,83 +1,130 @@
-From: =?UTF-8?B?WmJpZ25pZXcgSsSZZHJ6ZWpld3NraS1Tem1law==?= 
-	<zbyszek@in.waw.pl>
-Subject: Re: [PATCH 2/5] Provide branch name in error message when using @{u}
-Date: Thu, 12 Apr 2012 00:13:36 +0200
-Message-ID: <4F860210.5030409@in.waw.pl>
-References: <1334161035-26355-1-git-send-email-zbyszek@in.waw.pl> <1334161035-26355-3-git-send-email-zbyszek@in.waw.pl> <7v7gxmkv1m.fsf@alter.siamese.dyndns.org>
+From: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
+Subject: Re: [PATCH 07/12] completion: simplify command stuff
+Date: Thu, 12 Apr 2012 00:14:30 +0200
+Message-ID: <20120411221430.GT2289@goldbirke>
+References: <1333854479-23260-1-git-send-email-felipe.contreras@gmail.com>
+	<1333854479-23260-8-git-send-email-felipe.contreras@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
-	format=flowed
+Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Apr 12 00:13:53 2012
+Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Thomas Rast <trast@student.ethz.ch>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Apr 12 00:14:48 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SI5nU-0002w2-0O
-	for gcvg-git-2@plane.gmane.org; Thu, 12 Apr 2012 00:13:52 +0200
+	id 1SI5oN-0003TA-Bx
+	for gcvg-git-2@plane.gmane.org; Thu, 12 Apr 2012 00:14:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933450Ab2DKWNr convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 11 Apr 2012 18:13:47 -0400
-Received: from kawka.in.waw.pl ([178.63.212.103]:34707 "EHLO kawka.in.waw.pl"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753943Ab2DKWNr (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Apr 2012 18:13:47 -0400
-Received: from 89-78-221-60.dynamic.chello.pl ([89.78.221.60] helo=[192.168.0.12])
-	by kawka.in.waw.pl with esmtpsa (TLS1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.72)
-	(envelope-from <zbyszek@in.waw.pl>)
-	id 1SI5nK-0007yW-As; Thu, 12 Apr 2012 00:13:43 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:10.0.3) Gecko/20120324 Icedove/10.0.3
-In-Reply-To: <7v7gxmkv1m.fsf@alter.siamese.dyndns.org>
+	id S933499Ab2DKWOg convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 11 Apr 2012 18:14:36 -0400
+Received: from moutng.kundenserver.de ([212.227.17.9]:59694 "EHLO
+	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933495Ab2DKWOe (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Apr 2012 18:14:34 -0400
+Received: from localhost6.localdomain6 (p5B130C22.dip0.t-ipconnect.de [91.19.12.34])
+	by mrelayeu.kundenserver.de (node=mreu3) with ESMTP (Nemesis)
+	id 0MbF3n-1Sbgze0Ump-00KhFP; Thu, 12 Apr 2012 00:14:29 +0200
+Content-Disposition: inline
+In-Reply-To: <1333854479-23260-8-git-send-email-felipe.contreras@gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Provags-ID: V02:K0:WhvglbE64nptyHV2bjx1J0uf/ulNaJPB1z8wNNtw+kx
+ rezmEo5zHlRIQrV2cI0VDsvEC6m2j7BGouSmMPUjvilv8sv5VR
+ 4SQJmzqmk8B3SUc/g5NZRjAd04gB1w12z6jQqe9yUB5B/CPgAc
+ p88i57FNAgr8HRcBNQzNYNgSWX2HLo96/3VCxCcIU9EvwkwEB3
+ LJGKjhDO/hcnZtSdQOsNm/f5aMb1IShQu0fyG/0tRb992ELO8R
+ WnEzFOEQlOuvLlpXsfp3ZRUx1SGwEoOTckRWSylOmoccOKSKay
+ KI0aP1jRbr/QEDVF3eARjkMKz4wmmfks436KrT23IP4VWwyAFS
+ 4P9BI3+4H6zc0dBA33ak=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195275>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195276>
 
-On 04/11/2012 08:00 PM, Junio C Hamano wrote:
-> Zbigniew J=C4=99drzejewski-Szmek<zbyszek@in.waw.pl>  writes:
->
->> diff --git a/t/t1507-rev-parse-upstream.sh b/t/t1507-rev-parse-upstr=
-eam.sh
->> index 1342915..a00b689 100755
->> --- a/t/t1507-rev-parse-upstream.sh
->> +++ b/t/t1507-rev-parse-upstream.sh
->> @@ -135,7 +135,7 @@ test_expect_success 'branch@{u} error message wh=
-en no upstream' '
->>
->>   test_expect_success '@{u} error message when no upstream' '
->>   	cat>expect<<-EOF&&
->> -	error: No upstream branch found for ${sq}${sq}
->> +	error: No upstream branch found for ${sq}master${sq}
->>   	fatal: Needed a single revision
->>   	EOF
->>   	test_must_fail git rev-parse --verify @{u} 2>actual&&
->
-> I am not sure if saying "... for 'master'" is better or "... for the
-> current branch" is better.  Using different wording reflects the fact=
- that
-> the user gave "@{u}" and not "master@{u}".
 Hi,
 
-I think that explicitly providing the name of the branch is useless whe=
+
+On Sun, Apr 08, 2012 at 06:07:54AM +0300, Felipe Contreras wrote:
+> No need to recalculate it.
+
+Based on this short description I would expect that this "command
+stuff" is calculated somewhere, and a helper function is changed to
+use the already calculated value ...
+
+> diff --git a/contrib/completion/git-completion.bash b/contrib/complet=
+ion/git-completion.bash
+> index c9672b2..1fe11f4 100755
+> --- a/contrib/completion/git-completion.bash
+> +++ b/contrib/completion/git-completion.bash
+> @@ -721,7 +721,7 @@ __git_complete_revlist ()
+> =20
+>  __git_complete_remote_or_refspec ()
+>  {
+> -	local cur_=3D"$cur" cmd=3D"${words[1]}"
+> +	local cur_=3D"$cur"
+>  	local i c=3D2 remote=3D"" pfx=3D"" lhs=3D1 no_complete_refspec=3D0
+>  	if [ "$cmd" =3D "remote" ]; then
+>  		((c++))
+> @@ -2599,7 +2599,7 @@ _git_whatchanged ()
+> =20
+>  _git ()
+>  {
+> -	local i c=3D1 command __git_dir
+> +	local i c=3D1 cmd __git_dir
+> =20
+>  	if [[ -n ${ZSH_VERSION-} ]]; then
+>  		emulate -L bash
+> @@ -2625,13 +2625,13 @@ _git ()
+>  		-p|--paginate|--no-pager) ;;
+>  		--exec-path=3D*|--html-path|--info-path) ;;
+>  		--work-tree=3D*|--namespace=3D*|--no-replace-objects) ;;
+> -		--help) command=3D"help"; break ;;
+> -		*) command=3D"$i"; break ;;
+> +		--help) cmd=3D"help"; break ;;
+> +		*) cmd=3D"$i"; break ;;
+>  		esac
+>  		((c++))
+>  	done
+> =20
+> -	if [ -z "$command" ]; then
+> +	if [ -z "$cmd" ]; then
+>  		case "$cur" in
+>  		--*)   __gitcomp "
+>  			--paginate
+> @@ -2654,10 +2654,10 @@ _git ()
+>  		return
+>  	fi
+> =20
+> -	local completion_func=3D"_git_${command//-/_}"
+> +	local completion_func=3D"_git_${cmd//-/_}"
+>  	declare -f $completion_func >/dev/null && $completion_func && retur=
 n
-the user has a properly configured git prompt which always shows the=20
-current branch. But not everybody does that, and for such people=20
-providing the name in the error message could be useful.
+> =20
+> -	local expansion=3D$(__git_aliased_command "$command")
+> +	local expansion=3D$(__git_aliased_command "$cmd")
+>  	if [ -n "$expansion" ]; then
+>  		completion_func=3D"_git_${expansion//-/_}"
+>  		declare -f $completion_func >/dev/null && $completion_func
+> --=20
+> 1.7.10.3.g5a738d
+>=20
 
-> But I do not care too deeply.
-I don't either. I'll wait to see if other people chime in.
+=2E.. but the bulk of this change is in the top-level _git() function,
+as it renames a variable there to match the variable name in the
+helper function.  Perhaps it should be the other way around.
 
- > Either way, it is a vast improvement over
- > the current "... for ''" output.
-> And the "detached" case is definitely better.
-Thanks!
+However, this change "promotes" the command (or cmd) variable from
+being just a variable in _git() to a variable that is used in other
+completion functions, too.  Why not go one more step further, and
+denote this by adding a __git prefix (i.e. renaming the variable to
+__git_command)?
 
-Thank you for the review. I'll send a reroll taking into account your=20
-and Matthieu's comments in a day or two if nobody else comments.
 
-Zbyszek
+Best,
+G=E1bor
