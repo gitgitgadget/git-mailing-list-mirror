@@ -1,95 +1,144 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCHv2 1/2] git p4: Fixing script editor checks
-Date: Wed, 11 Apr 2012 10:14:10 -0700
-Message-ID: <7vpqbekx7h.fsf@alter.siamese.dyndns.org>
-References: <1334157684-31402-1-git-send-email-luke@diamand.org>
- <1334157684-31402-2-git-send-email-luke@diamand.org>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: [PATCH/RFC] fast-import doc: deadlock avoidance in bidirectional mode
+Date: Wed, 11 Apr 2012 12:17:07 -0500
+Message-ID: <20120411171707.GD4248@burratino>
+References: <20120411143249.GA4140@burratino>
+ <7v1ununtb2.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Pete Wyckoff <pw@padd.com>,
-	Vitor Antunes <vitor.hda@gmail.com>
-To: Luke Diamand <luke@diamand.org>
-X-From: git-owner@vger.kernel.org Wed Apr 11 19:14:21 2012
+Cc: git@vger.kernel.org, Dmitry Ivankov <divanorama@gmail.com>,
+	Jeff King <peff@peff.net>,
+	Sverre Rabbelier <srabbelier@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Apr 11 19:17:30 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SI17Z-0002wY-OV
-	for gcvg-git-2@plane.gmane.org; Wed, 11 Apr 2012 19:14:18 +0200
+	id 1SI1Ae-0004tw-10
+	for gcvg-git-2@plane.gmane.org; Wed, 11 Apr 2012 19:17:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932633Ab2DKRON (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Apr 2012 13:14:13 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:37523 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932592Ab2DKROM (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Apr 2012 13:14:12 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5C62F6B88;
-	Wed, 11 Apr 2012 13:14:12 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Ta/RB/4+VIbG8vKCGhlRxzR5Rck=; b=q+JEWl
-	3HSyrm0TOAuTCmVK97tulxEAmlVDaHlVa8lEIddqjhdVrZn0MC0zZ4/zvsyknXvo
-	xcpZrTt/oIgDOCQUc8CJpeOaAwLcO5NHhQzwdzIBdencg5Q8wD/Q7w8CZlwlicDG
-	8xpYzLdtNRW5BDPEKzPQOm5u0OTY+HKiq/B0U=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=KcunxTmrdO6G+tF2uPUVKHWJLNSqeLhK
-	9oZ+IHX/iTOshuPsQzRcsVwyYW3Cs106TyKQs4I7aTJ2ObgJtEHVbBlAg8izohNU
-	JoC6fhFU7IhabG/TWJYGqAtGnFuLS/GwDQjV5/SDZNR27nUKK6KAYbaj9cH9B616
-	L8ZS5vMQLx0=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 538176B87;
-	Wed, 11 Apr 2012 13:14:12 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7A0DD6B86; Wed, 11 Apr 2012
- 13:14:11 -0400 (EDT)
-In-Reply-To: <1334157684-31402-2-git-send-email-luke@diamand.org> (Luke
- Diamand's message of "Wed, 11 Apr 2012 17:21:23 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: C18C403E-83F9-11E1-A6B7-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S932714Ab2DKRRX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Apr 2012 13:17:23 -0400
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:47172 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756020Ab2DKRRW (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Apr 2012 13:17:22 -0400
+Received: by iagz16 with SMTP id z16so1522237iag.19
+        for <git@vger.kernel.org>; Wed, 11 Apr 2012 10:17:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=ZMm0JreudX7MnWuasKFOYeQPh4AAK4PrhmrvR2Tlojs=;
+        b=aIiAtthL7C8wz8WRB/2sFZljEr5GTFIXnceKzOluotHTUNTlznEv+wM5Kka6SlItoc
+         fYjqQW5SHQ6Ykm7cLwuq2HaNBFI4BdkeJ29aIbWHBumdUoeEX0EBhMxXeGAo254W5gJp
+         4nuMwvLHA+kIOKVnf5nqyg3LL97mCtNafvKgTW8y+ObxqRKJFOd+PYZCYHjs/cyqGH33
+         UB6NVfbauRIrje0Z9Ub7AUIdNr5Owc7QDbHnE7cB1DodQ0ytUp/PEEDJpdAlfJrLTuT8
+         T3IAeNpz4gVAL/JHgi8QTnB67uOepreSr4z4GYfWxU+z7Q1nNENUv+bun8Tx4qAiuDJw
+         0NSw==
+Received: by 10.50.197.132 with SMTP id iu4mr6714069igc.4.1334164641918;
+        Wed, 11 Apr 2012 10:17:21 -0700 (PDT)
+Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
+        by mx.google.com with ESMTPS id en3sm9215050igc.2.2012.04.11.10.17.09
+        (version=SSLv3 cipher=OTHER);
+        Wed, 11 Apr 2012 10:17:11 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <7v1ununtb2.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195218>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195219>
 
-Luke Diamand <luke@diamand.org> writes:
+If fast-import's command pipe and the frontend's cat-blob/ls response
+pipe are both filled, there can be a deadlock.  Luckily all existing
+frontends consume any pending cat-blob/ls responses completely before
+writing the next command.
 
-> If P4EDITOR is defined, the tests will fail when "git p4" starts an
-> editor.
+Document the requirements so future frontend authors and users can be
+spared from the problem, too.  It is not always easy to catch that
+kind of bug by testing.
 
-Is that a problem specific to tests, or should "git p4" itself unset that
-environment?  If it is a problem specific to tests, would it be a better
-fix to add "P4EDITOR=:" like we do for EDITOR in t/test-lib.sh?
+Reported-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+---
+Junio C Hamano wrote:
 
->
-> Signed-off-by: Luke Diamand <luke@diamand.org>
-> ---
->  t/t9800-git-p4-basic.sh |    4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
->
-> diff --git a/t/t9800-git-p4-basic.sh b/t/t9800-git-p4-basic.sh
-> index 13be144..b2f0869 100755
-> --- a/t/t9800-git-p4-basic.sh
-> +++ b/t/t9800-git-p4-basic.sh
-> @@ -335,7 +335,7 @@ test_expect_success 'detect renames' '
->  	test_when_finished cleanup_git &&
->  	(
->  		cd "$git" &&
-> -		git config git-p4.skipSubmitEditCheck true &&
-> +		git config git-p4.skipSubmitEdit true &&
->  
->  		git mv file1 file4 &&
->  		git commit -a -m "Rename file1 to file4" &&
-> @@ -394,7 +394,7 @@ test_expect_success 'detect copies' '
->  	test_when_finished cleanup_git &&
->  	(
->  		cd "$git" &&
-> -		git config git-p4.skipSubmitEditCheck true &&
-> +		git config git-p4.skipSubmitEdit true &&
->  
->  		cp file2 file8 &&
->  		git add file8 &&
+> Does this essentially connect the frontend and fast-import via
+> bidirectional pipes?  How is the flow control and deadlock avoidance
+> supposed to happen
+
+fast-import never asks the frontend for information, which makes life a
+little simpler.
+
+Typically the interaction works just as you described:
+
+ 1. Frontend sends "ls" or "cat-blob" request and flushes it, and then
+    blocks waiting for the response.
+
+ 2. Once fast-import catches up with pending commands, it sends its
+    response to the "cat-blob response" pipe.
+
+    (If the pipe does not have enough room, it fills the pipe and then
+    blocks until some more room is available.  If the reader has
+    closed the pipe, it assumes the import was botched and just exits.)
+
+ 3. Only once the frontend has received its response, it moves on and
+    starts to send new commands.
+
+A frontend can be more clever than that and use slack to queue some
+extra commands, as long as the author understands:
+
+ i.  fast-import is not guaranteed to make any progress in consuming
+     its input until the "cat-blob response" pipe has been drained.
+
+ ii. the command pipe is not guaranteed to be able to hold extra
+     commands when fast-import is not consuming its input.  Probably
+     512 bytes (_POSIX_PIPE_BUF) will fit but I don't know how
+     portable that is to other fast-import backends so let's say the
+     limit is 1 byte.
+
+In other words, in practice it's best not to rely on the extra space
+at all.
+
+How about this?
+
+ Documentation/git-fast-import.txt |   13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
+
+diff --git a/Documentation/git-fast-import.txt b/Documentation/git-fast-import.txt
+index ec6ef311..0ea649f4 100644
+--- a/Documentation/git-fast-import.txt
++++ b/Documentation/git-fast-import.txt
+@@ -942,6 +942,12 @@ This command can be used anywhere in the stream that comments are
+ accepted.  In particular, the `cat-blob` command can be used in the
+ middle of a commit but not in the middle of a `data` command.
+ 
++While in some cases the 'cat-blob' result will fit in the pipe buffer,
++allowing fast-import to continue processing additional commands, this
++is not guaranteed.  Frontends must consume the cat-blob response
++completely before performing any writes to fast-import that might
++block.
++
+ `ls`
+ ~~~~
+ Prints information about the object at a path to a file descriptor
+@@ -975,7 +981,12 @@ Reading from a named tree::
+ 
+ See `filemodify` above for a detailed description of `<path>`.
+ 
+-Output uses the same format as `git ls-tree <tree> {litdd} <path>`:
++While in some cases the 'ls' response will fit in the pipe buffer,
++allowing fast-import to continue processing additional commands, this
++is not guaranteed.  Frontends must consume the ls response completely
++before performing any writes to fast-import that might block.
++
++The 'ls' response uses the same format as `git ls-tree <tree> {litdd} <path>`:
+ 
+ ====
+ 	<mode> SP ('blob' | 'tree' | 'commit') SP <dataref> HT <path> LF
+-- 
+1.7.10
