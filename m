@@ -1,89 +1,83 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: GSoC - Some questions on the idea of
-Date: Wed, 11 Apr 2012 18:09:55 -0400
-Message-ID: <20120411220955.GB28199@sigill.intra.peff.net>
-References: <loom.20120328T131530-717@post.gmane.org>
- <CA+M5ThTPyic=RhFL2SvuNB0xBWOHxNTaUZrYMB144UjpjCiLoQ@mail.gmail.com>
- <20120330203430.GB20376@sigill.intra.peff.net>
- <CA+M5ThR6jtxqs0-Kz-8fcRuOFRbLr-GvsJcTmrOQ7_geNspDLg@mail.gmail.com>
- <4F76E430.6020605@gmail.com>
- <4F772E48.3030708@gmail.com>
- <20120402210708.GA28926@sigill.intra.peff.net>
- <4F84DD60.20903@gmail.com>
- <20120411060357.GA15805@burratino>
- <4F85B17E.4080005@gmail.com>
+From: =?UTF-8?B?WmJpZ25pZXcgSsSZZHJ6ZWpld3NraS1Tem1law==?= 
+	<zbyszek@in.waw.pl>
+Subject: Re: [PATCH 2/5] Provide branch name in error message when using @{u}
+Date: Thu, 12 Apr 2012 00:13:36 +0200
+Message-ID: <4F860210.5030409@in.waw.pl>
+References: <1334161035-26355-1-git-send-email-zbyszek@in.waw.pl> <1334161035-26355-3-git-send-email-zbyszek@in.waw.pl> <7v7gxmkv1m.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Sergio Callegari <sergio.callegari@gmail.com>,
-	Bo Chen <chen@chenirvine.org>, git@vger.kernel.org
-To: Neal Kreitzinger <nkreitzinger@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Apr 12 00:10:07 2012
+Content-Type: text/plain; charset=UTF-8;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Apr 12 00:13:53 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SI5jn-0000yR-BU
-	for gcvg-git-2@plane.gmane.org; Thu, 12 Apr 2012 00:10:03 +0200
+	id 1SI5nU-0002w2-0O
+	for gcvg-git-2@plane.gmane.org; Thu, 12 Apr 2012 00:13:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761346Ab2DKWJ6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Apr 2012 18:09:58 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:57012
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1761289Ab2DKWJ5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Apr 2012 18:09:57 -0400
-Received: (qmail 18678 invoked by uid 107); 11 Apr 2012 22:10:03 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 11 Apr 2012 18:10:03 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 11 Apr 2012 18:09:55 -0400
-Content-Disposition: inline
-In-Reply-To: <4F85B17E.4080005@gmail.com>
+	id S933450Ab2DKWNr convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 11 Apr 2012 18:13:47 -0400
+Received: from kawka.in.waw.pl ([178.63.212.103]:34707 "EHLO kawka.in.waw.pl"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753943Ab2DKWNr (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Apr 2012 18:13:47 -0400
+Received: from 89-78-221-60.dynamic.chello.pl ([89.78.221.60] helo=[192.168.0.12])
+	by kawka.in.waw.pl with esmtpsa (TLS1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.72)
+	(envelope-from <zbyszek@in.waw.pl>)
+	id 1SI5nK-0007yW-As; Thu, 12 Apr 2012 00:13:43 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:10.0.3) Gecko/20120324 Icedove/10.0.3
+In-Reply-To: <7v7gxmkv1m.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195274>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195275>
 
-On Wed, Apr 11, 2012 at 11:29:50AM -0500, Neal Kreitzinger wrote:
+On 04/11/2012 08:00 PM, Junio C Hamano wrote:
+> Zbigniew J=C4=99drzejewski-Szmek<zbyszek@in.waw.pl>  writes:
+>
+>> diff --git a/t/t1507-rev-parse-upstream.sh b/t/t1507-rev-parse-upstr=
+eam.sh
+>> index 1342915..a00b689 100755
+>> --- a/t/t1507-rev-parse-upstream.sh
+>> +++ b/t/t1507-rev-parse-upstream.sh
+>> @@ -135,7 +135,7 @@ test_expect_success 'branch@{u} error message wh=
+en no upstream' '
+>>
+>>   test_expect_success '@{u} error message when no upstream' '
+>>   	cat>expect<<-EOF&&
+>> -	error: No upstream branch found for ${sq}${sq}
+>> +	error: No upstream branch found for ${sq}master${sq}
+>>   	fatal: Needed a single revision
+>>   	EOF
+>>   	test_must_fail git rev-parse --verify @{u} 2>actual&&
+>
+> I am not sure if saying "... for 'master'" is better or "... for the
+> current branch" is better.  Using different wording reflects the fact=
+ that
+> the user gave "@{u}" and not "master@{u}".
+Hi,
 
-> How do I check the history size of a binary?  IOW, how to I check the
-> size of the sum of all the delta-compressions and root blob of a binary?
->  That way I can sample different binary types to get a symptomatic idea
-> of how well they are delta compressing.  I suspect that compiled
-> binaries will compress well (efficient history) and graphics files may
-> not compress well (large history).
+I think that explicitly providing the name of the branch is useless whe=
+n
+the user has a properly configured git prompt which always shows the=20
+current branch. But not everybody does that, and for such people=20
+providing the name in the error message could be useful.
 
-I don't think there is a simple command to do it. You have to correlate
-blobs at a given path with objects in the packs yourself. You can script
-it like:
+> But I do not care too deeply.
+I don't either. I'll wait to see if other people chime in.
 
-  # get the delta stats from every pack; you only need to do this part
-  # once for a given history state. And obviously you would want to
-  # repack before doing it.
-  for i in .git/objects/pack/*.pack; do
-    git verify-pack -v $i;
-  done |
-  perl -lne '
-    # format is: sha1 type size size-in-pack offset; pick out only the
-    # thing we care about: size in pack
-    /^([0-9a-f]{40}) \S+\s+\d+ (\d+)/ and print "$1 $2";
-  ' |
-  sort >delta-stats
+ > Either way, it is a vast improvement over
+ > the current "... for ''" output.
+> And the "detached" case is definitely better.
+Thanks!
 
+Thank you for the review. I'll send a reroll taking into account your=20
+and Matthieu's comments in a day or two if nobody else comments.
 
-  # then you can do this for every path you are interested in.
-
-  # First, get the list of blobs at that path (and follow renames, too).
-  # The second line is picking the "after" sha1 from the --raw output.
-  git log --follow --raw --no-abbrev $path |
-  perl -lne '/:\S+ \S+ \S{40} (\S{40})/ and print $1' |
-  sort -u >blobs
-
-  # Then find the delta stats for those blobs
-  join blobs delta-stats
-
-which should give you the stored size of each version of a file.
-
--Peff
+Zbyszek
