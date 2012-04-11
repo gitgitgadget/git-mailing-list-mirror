@@ -1,69 +1,75 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: stash refuses to pop
-Date: Wed, 11 Apr 2012 07:58:34 +0200
-Message-ID: <4F851D8A.4000501@viscovery.net>
-References: <4F847350.3000409@ubuntu.com> <7vpqbfpim2.fsf@alter.siamese.dyndns.org> <4F84827B.80104@ubuntu.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: GSoC - Some questions on the idea of
+Date: Wed, 11 Apr 2012 01:04:04 -0500
+Message-ID: <20120411060357.GA15805@burratino>
+References: <CA+M5ThS2iS-NMNDosk2oR25N=PMJJVTi1D=zg7MnMCUiRoX4BQ@mail.gmail.com>
+ <CACsJy8APtMsMJ=FrZjOP=DbzuFoemSLJTmkjaiK5Wkq9XtA4rg@mail.gmail.com>
+ <loom.20120328T131530-717@post.gmane.org>
+ <CA+M5ThTPyic=RhFL2SvuNB0xBWOHxNTaUZrYMB144UjpjCiLoQ@mail.gmail.com>
+ <20120330203430.GB20376@sigill.intra.peff.net>
+ <CA+M5ThR6jtxqs0-Kz-8fcRuOFRbLr-GvsJcTmrOQ7_geNspDLg@mail.gmail.com>
+ <4F76E430.6020605@gmail.com>
+ <4F772E48.3030708@gmail.com>
+ <20120402210708.GA28926@sigill.intra.peff.net>
+ <4F84DD60.20903@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Phillip Susi <psusi@ubuntu.com>
-X-From: git-owner@vger.kernel.org Wed Apr 11 07:58:51 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeff King <peff@peff.net>,
+	Sergio Callegari <sergio.callegari@gmail.com>,
+	Bo Chen <chen@chenirvine.org>, git@vger.kernel.org
+To: Neal Kreitzinger <nkreitzinger@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 11 08:04:22 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SHqZu-0008I5-Fv
-	for gcvg-git-2@plane.gmane.org; Wed, 11 Apr 2012 07:58:50 +0200
+	id 1SHqfG-0002Tl-0K
+	for gcvg-git-2@plane.gmane.org; Wed, 11 Apr 2012 08:04:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752974Ab2DKF6m (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Apr 2012 01:58:42 -0400
-Received: from lilzmailso02.liwest.at ([212.33.55.13]:21717 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752956Ab2DKF6l (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Apr 2012 01:58:41 -0400
-Received: from cpe228-254-static.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.76)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1SHqZf-0001G8-Mi; Wed, 11 Apr 2012 07:58:35 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id 67EF71660F;
-	Wed, 11 Apr 2012 07:58:35 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:11.0) Gecko/20120327 Thunderbird/11.0.1
-In-Reply-To: <4F84827B.80104@ubuntu.com>
-X-Spam-Score: -1.4 (-)
+	id S1753306Ab2DKGER (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Apr 2012 02:04:17 -0400
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:52172 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753005Ab2DKGEQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Apr 2012 02:04:16 -0400
+Received: by iagz16 with SMTP id z16so820307iag.19
+        for <git@vger.kernel.org>; Tue, 10 Apr 2012 23:04:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=dL/ax61mI0GjrSgihs+sX+a/G1Rc7Wzr30aemfDYjiA=;
+        b=H71IviOEMhsLIOU9um4pW6hM4xPbBV8+txjPj/bfX57FWqhnWQ0Y5fjhJ98XcgW2hk
+         8W3/900nb9ca6O9KHeAaqAX0hb2WlKonz2qKOHuZ1xPoovfWKfvqFGstezrpfGnANJJo
+         kvKAx2eoIbBSTIWSgYnAVfn7MHLCudkU12H0HJOLSbtYEdbMexrbnXms4hlvcC9aPk/2
+         J/uV5XESKEcWBTsQC/qiKrUZzHhh3UK9ify89s2bKoHuE7+nbwRMCkSkdQmU6Wm+No1s
+         EBTiLOXBANBQdlLdAG9/nLZZkNdsZY8VtTnjIXWmVLJvhS9ddoa/UzNBxzm4CwD4KbzQ
+         od/g==
+Received: by 10.50.37.236 with SMTP id b12mr4620087igk.36.1334124256198;
+        Tue, 10 Apr 2012 23:04:16 -0700 (PDT)
+Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
+        by mx.google.com with ESMTPS id kn3sm23694875igc.15.2012.04.10.23.04.15
+        (version=SSLv3 cipher=OTHER);
+        Tue, 10 Apr 2012 23:04:15 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <4F84DD60.20903@gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195150>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195151>
 
-Am 4/10/2012 20:56, schrieb Phillip Susi:
-> On 4/10/2012 2:05 PM, Junio C Hamano wrote:
->> Phillip Susi<psusi@ubuntu.com>  writes:
->>
->>> git stash refuses to apply a stash if it touches files that are
->>> modified.  Using stash -p to selectively stash some hunks of a file
->>> and then immediately trying to pop that stash causes this failure
->>> every time.
->>
->> I think that is by design.
-> 
-> Being able to push something that you can not pop seems to be broken
-> design...
+Neal Kreitzinger wrote:
 
-You are trying to abuse git-stash, but it does not cooperate because it
-was not designed to be abused ;-) git-stash is not intended as a generic
-push-and-pop-my-changes work horse.
+> Maybe small binaries do xdelta well and the above is a moot point.
 
-The purpose of git-stash is that you can "move away"
+If I am reading it correctly, diff-delta copes fine with smallish
+binary files that have not changed much.  Converting to hex would only
+hurt.
 
-- all of your changes to have a clean worktree or
-- part of your changes to _create a clean worktree from the remaining
-changes_.
+I would suggest tracking source code instead of binaries if possible,
+though.
 
-That is, before you can think of applying a stash, you are expected to
-have cleaned out your worktree.
-
--- Hannes
+Jonathan
