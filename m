@@ -1,58 +1,183 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v4 0/8] Highlight interesting parts of diff
-Date: Wed, 11 Apr 2012 14:32:48 -0700
-Message-ID: <7vk41mhs3j.fsf@alter.siamese.dyndns.org>
-References: <1334179124-14258-1-git-send-email-michal.kiedrowicz@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: GSoC - Some questions on the idea of
+Date: Wed, 11 Apr 2012 17:35:22 -0400
+Message-ID: <20120411213522.GA28199@sigill.intra.peff.net>
+References: <CA+M5ThS2iS-NMNDosk2oR25N=PMJJVTi1D=zg7MnMCUiRoX4BQ@mail.gmail.com>
+ <CACsJy8APtMsMJ=FrZjOP=DbzuFoemSLJTmkjaiK5Wkq9XtA4rg@mail.gmail.com>
+ <loom.20120328T131530-717@post.gmane.org>
+ <CA+M5ThTPyic=RhFL2SvuNB0xBWOHxNTaUZrYMB144UjpjCiLoQ@mail.gmail.com>
+ <20120330203430.GB20376@sigill.intra.peff.net>
+ <CA+M5ThR6jtxqs0-Kz-8fcRuOFRbLr-GvsJcTmrOQ7_geNspDLg@mail.gmail.com>
+ <4F76E430.6020605@gmail.com>
+ <4F772E48.3030708@gmail.com>
+ <20120402210708.GA28926@sigill.intra.peff.net>
+ <4F84DD60.20903@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jakub Narebski <jnareb@gmail.com>
-To: =?utf-8?Q?Micha=C5=82?= Kiedrowicz <michal.kiedrowicz@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 11 23:33:06 2012
+Content-Type: text/plain; charset=utf-8
+Cc: Sergio Callegari <sergio.callegari@gmail.com>,
+	Bo Chen <chen@chenirvine.org>, git@vger.kernel.org
+To: Neal Kreitzinger <nkreitzinger@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 11 23:35:36 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SI5A2-0004vh-66
-	for gcvg-git-2@plane.gmane.org; Wed, 11 Apr 2012 23:33:06 +0200
+	id 1SI5CN-0006SF-9X
+	for gcvg-git-2@plane.gmane.org; Wed, 11 Apr 2012 23:35:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932935Ab2DKVcw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Apr 2012 17:32:52 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:46400 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1761324Ab2DKVcu (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Apr 2012 17:32:50 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8081D6C09;
-	Wed, 11 Apr 2012 17:32:50 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=z39PFn5dW5Nhrrj2YjeNAi8IYAE=; b=qN+6tu
-	tS1JKbcum+cYmARdd78msfLNaoAypqd7fBfjzCSv2+qQZDKDxT6dnR18LkXY/Ev7
-	MN2q+ADowitQ/03tFKKOgJsvyW+zg/hPbiRTzEVmoalp9jHmbq85vVOAcXNGySf+
-	sLTkbuLKEfsTH2Fv8hsFWQBAv1j2oCa3P4FhE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=AMGml0lGXjHLcjxDbfa1wjoOLICQcTM8
-	4xsxCTwKLF4yFyedmBM3o6b8RY753dpavIy4XlKqcuoiYxAJ0hPEN4YBSaantdTU
-	cSTA2hr7kJkXBg+Y08bH9SG4xVN4lMMOwuc1Naxho92tAk6h+zxJEwd7q6f/OWyE
-	h4sCtYJQYro=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 78A166C08;
-	Wed, 11 Apr 2012 17:32:50 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 12ACB6C07; Wed, 11 Apr 2012
- 17:32:49 -0400 (EDT)
-In-Reply-To: <1334179124-14258-1-git-send-email-michal.kiedrowicz@gmail.com>
- (=?utf-8?Q?=22Micha=C5=82?= Kiedrowicz"'s message of "Wed, 11 Apr 2012
- 23:18:36 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: E356EA06-841D-11E1-85BC-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1759118Ab2DKVf0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Apr 2012 17:35:26 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:56989
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753593Ab2DKVfY (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Apr 2012 17:35:24 -0400
+Received: (qmail 18076 invoked by uid 107); 11 Apr 2012 21:35:30 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 11 Apr 2012 17:35:30 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 11 Apr 2012 17:35:22 -0400
+Content-Disposition: inline
+In-Reply-To: <4F84DD60.20903@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195267>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195268>
 
-Thanks; will queue.
+On Tue, Apr 10, 2012 at 08:24:48PM -0500, Neal Kreitzinger wrote:
+
+> (I read bup DESIGN doc to see what bup-style splitting is.) When you
+> use bup delta technology in git.git I take it that you will use it
+> for big-worktree-files *and* big-history-files
+
+I'm not sure what those terms mean. We are talking about files at the
+blob level. So they are either big or not big. We don't know how they
+will delta, or what their histories will be like.
+
+> (not-big-worktree-files that are not xdelta delta-friendly)?
+> IOW, all binaries plus big-text-worktree-files.  Otherwise, small
+> binaries will become large histories.
+
+Files that don't delta won't be helped by splitting, as it is just
+another form of finding deltas (in fact, it should produce worse results
+than xdelta, because it works with larger granularity; its advantage is
+that it is not as memory or CPU-hungry as something like xdelta).
+
+So you really only want to use this for files that are too big to
+practically run through the regular delta algorithm. And if you can
+avoid it on files that will never delta well, you are better off
+(because it adds storage overhead over a straight blob).
+
+The first part is easy: only do it for files that are so big that you
+can't run the regular delta algorithm. So since your only alternative is
+doing nothing, you only have to perform better than nothing. :)
+
+The second part is harder. We generally don't know that a file doesn't
+delta well until we have two versions of it to try[1]. And that's where
+some domain-specific knowledge can come in (e.g., knowing that a file is
+compressed video, and that future versions are likely to differ in the
+video content). But sometimes the results can be surprising. I keep a
+repository of photos and videos, carefully annotated via exif tags. If
+the media content changes, the results won't delta well. But if I change
+the exif tags, they _do_ delta very well. So whether something like
+bupsplit is a win depends on the exact update patterns.
+
+[1] I wonder if you could do some statistical analysis on the randomness
+    of the file content to determine this. That is, things which look
+    very random are probably already heavily compressed, and are not
+    going to compress further. You might guess that to mean that they
+    will not delta well, either. And sometimes that is true. But the
+    example I gave above violates it (most of the file is random, but
+    the _changes_ from version to version will not be random, and that
+    is what the delta is compressing).
+
+> If small binaries are not going to be bup-delta-compressed, then what
+> about using xxd to convert the binary to text and then xdelta
+> compressing the hex dump to achieve efficient delta compression in
+> the pack file?  You could convert the hexdump back to binary with xxd
+> for checkout and such.
+
+That wouldn't help. You are only trading the binary representation for a
+less efficient one. But the data patterns will not change. The
+redundancy you introduced in the first step may mostly come out via
+compression, but it will never be a net win. I'm sure if I were a better
+computer scientist I could write you some proof involving Shannon
+entropy. But here's a fun experiment:
+
+  # create two files, one very compressible and one not very
+  # compressible
+  dd if=/dev/zero of=boring.bin bs=1M count=1
+  dd if=/dev/urandom of=rand.bin bs=1M count=1
+
+  # now make hex dumps of each, and compress the original and the hex
+  # dump
+  for i in boring rand; do
+    xxd <$i.bin >$i.hex
+    for j in bin hex; do
+      gzip -c <$i.$j >$i.$j.gz
+    done
+  done
+
+  # and look at the results
+  du {boring,rand}.*
+
+I get:
+
+  1024    boring.bin
+  4       boring.bin.gz
+  4288    boring.hex
+  188     boring.hex.gz
+  1024    rand.bin
+  1028    rand.bin.gz
+  4288    rand.hex
+  2324    rand.hex.gz
+
+So you can see that the thing that compresses well will do so in
+either representation, but the end result is a net loss with the less
+efficient representation. Whereas the thing that does not compress well
+will achieve a better compression ratio in its text form, but will still
+be a net loss. The reason is that you are just compressing out all of
+the redundant bits.
+
+You might observe that this is using gzip, not xdelta. But I think from
+an information theory standpoint, they are two sides of the same coin
+(e.g., you could consider a delta between two things to be equivalent to
+concatenating them and compressing the result). You should be able to
+design a similar experiment with xdelta.
+
+> Maybe small binaries do xdelta well and the above is a moot point.
+
+Some will and some will not. But it has nothing to do with whether they
+are binary, and everything to do with the type of content they store (or
+if binariness does matter, then our delta algorithms should be
+improved).
+
+> This is all theory to me, but the reality is looming over my head
+> since most of the components I should be tracking are binaries small
+> (large history?) and big (but am not yet because of "big-file"
+> concerns -- I don't want to have to refactor my vast git ecosystem
+> with filter branch later because I slammed binaries into the main
+> project or superproject without proper systems programming (I'm not
+> sure what the c/linux term is for 'systems programming', but in the
+> mainframe world it meant making sure everything was configured for
+> efficient performance)).
+
+One of the things that makes bup not usable as-is for git is that it
+fundamentally changes the object identities. It would be very easy for
+"git add" to bupsplit a file into a tree, and store that tree using git
+(in fact, that is more or less how bup works).  But that means that the
+resulting object sha1 is going to depend on the splitting choices made.
+Instead, we want to consider the split version of an object to be simply
+an on-disk representation detail. Just as it is a representation detail
+that some objects are stored in delta-encoding inside packs, versus as
+loose objects; the sha1 of the object is the same, and we can
+reconstruct it byte-for-byte when we want to.
+
+So properly implemented, no, you would not have to ever filter-branch to
+tweak these settings. You might have to do a repack to see the gains
+(because you want to delete the old non-split representation you have in
+your pack and replace it with a split representation), but that is
+transparent to git's abstract data model.
+
+-Peff
