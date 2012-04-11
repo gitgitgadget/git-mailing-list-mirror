@@ -1,74 +1,80 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH 1/5] t1507: add additional tests for @{upstream}
-Date: Wed, 11 Apr 2012 19:59:23 +0200
-Message-ID: <vpqk41m40as.fsf@bauges.imag.fr>
-References: <1334161035-26355-1-git-send-email-zbyszek@in.waw.pl>
-	<1334161035-26355-2-git-send-email-zbyszek@in.waw.pl>
-	<7vfwcakvfw.fsf@alter.siamese.dyndns.org>
+From: Joe Angell <joe.d.angell@gmail.com>
+Subject: git bug: moved file with local unstaged changes are lost during merge
+Date: Wed, 11 Apr 2012 12:20:34 -0600
+Message-ID: <CAAZnV3Einocd4TJ0iqcxPJNsr44j3RwhczS9OhyURX0faGWgBQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Zbigniew =?utf-8?Q?J=C4=99drzejewski-Szmek?= <zbyszek@in.waw.pl>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Apr 11 20:01:32 2012
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Apr 11 20:20:42 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SI1rC-0007mL-Sk
-	for gcvg-git-2@plane.gmane.org; Wed, 11 Apr 2012 20:01:27 +0200
+	id 1SI29p-00030k-0X
+	for gcvg-git-2@plane.gmane.org; Wed, 11 Apr 2012 20:20:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932819Ab2DKSBF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Apr 2012 14:01:05 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:45116 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932781Ab2DKSBB (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Apr 2012 14:01:01 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id q3BHrXF9015075
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Wed, 11 Apr 2012 19:53:33 +0200
-Received: from bauges.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1SI1pE-0000hC-6C; Wed, 11 Apr 2012 19:59:24 +0200
-In-Reply-To: <7vfwcakvfw.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Wed, 11 Apr 2012 10:52:19 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.93 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Wed, 11 Apr 2012 19:53:33 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: q3BHrXF9015075
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1334771613.59883@ZKs9KGEJ67QVI1EQ1WFQgA
+	id S1760861Ab2DKSUg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Apr 2012 14:20:36 -0400
+Received: from mail-yw0-f46.google.com ([209.85.213.46]:60165 "EHLO
+	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756911Ab2DKSUf (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Apr 2012 14:20:35 -0400
+Received: by yhmm54 with SMTP id m54so633850yhm.19
+        for <git@vger.kernel.org>; Wed, 11 Apr 2012 11:20:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=37rV8cpoaKUTeprIuHMQ6emwS0W3XcAyEkZtAnHOAqo=;
+        b=UZ6UEFxF0ksTPU5zLTlixExRJU2jD0rerhi702VL+t/cAoDqph1cNmsMkmy6mug3Ct
+         zTjZ0RwQBEH/05oE2z9B39KWX9NNyWFrqXMpSEtf1dekBUxZKGtZEsEAGESLSTZDHB8k
+         P+K0aSj52z8naXmfCkrE6WlUn5DELjWpZMgXSUq2xY5n5QOmwNWl9PglVDwY15R+bxvf
+         O+l3m0veR5OPRij+xH55Tni1GrMDLCOAE66tVXoRakCv6dlMKIV7Gkad1u+/ScQd+rQD
+         3NH8d4vvdRDsxhFeqOwr279lQO8abZqXkM+o0v2sHUtGLZ2cUKooyJg+jJpDOAKNaVkm
+         nbBQ==
+Received: by 10.50.40.166 with SMTP id y6mr6656585igk.69.1334168434647; Wed,
+ 11 Apr 2012 11:20:34 -0700 (PDT)
+Received: by 10.231.132.196 with HTTP; Wed, 11 Apr 2012 11:20:34 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195228>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195229>
 
-Junio C Hamano <gitster@pobox.com> writes:
+What steps will reproduce the problem?
+git init
+echo "initial checkin" >> readme
+git add readme
+git commit -m "inital checkin"
+git branch b1
+git checkout b1
+echo "b1" >> readme
+git add readme
+git commit -m "b1 readme"
+git checkout master
+git mv readme readme_master
+git ci -m "moved readme"
+echo "master" >> readme_master
+git merge b1
 
-> We may want to update the error message for "@{u}" when the current one is
-> not tracked, instead of saying ''.  Perhaps
->
-> 	error: No upstream branch found for the current branch.
->
-> or something?
->
-> Likewise for the detached HEAD case.
+What is the expected output? What do you see instead?
+I expect to have git prevent the merge due to local changes to the
+file.  Instead it overwrites the file (erasing the local modification
+"master") and you end up with:
+cat readme_master
+initial readme
+b1
 
-This is indeed the point of the patch serie, and I like how it first
-shows how bad the error messages can be, and then illustrate the fix
-with patch hunks in the newly added testcases in further patches.
+What version of the product are you using? On what operating system?
+Reproduced on 1.7.9.6 and from the git-core repo 1.7.10.128.g7945c.
+This is on ubuntu 10.04.
 
-But the commit message for this patch could probably be improved: we
-usually do not give a list of _what_ is done, since the code already
-says that, but we insist on _why_ it is done.
+Please provide any additional information below.
+
+This problem only seems to occur after you check in the move, then
+make local modifications, then do the merge.
 
 -- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+---------------
+Joe Angell
+cell: (720) 260-2190
