@@ -1,98 +1,77 @@
-From: Neil Horman <nhorman@tuxdriver.com>
-Subject: [PATCH v4 3/4] git-cherry-pick: Add test to validate new options
-Date: Wed, 11 Apr 2012 16:21:55 -0400
-Message-ID: <1334175716-11391-4-git-send-email-nhorman@tuxdriver.com>
-References: <Enhance git-rebases flexibiilty in handling empty commits>
- <1334175716-11391-1-git-send-email-nhorman@tuxdriver.com>
-Cc: Jeff King <peff@peff.net>, Phil Hord <phil.hord@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Neil Horman <nhorman@tuxdriver.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 11 22:22:50 2012
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v4 2/4] git-cherry-pick: Add keep-redundant-commits
+ option
+Date: Wed, 11 Apr 2012 13:47:48 -0700
+Message-ID: <7v62d6j8qz.fsf@alter.siamese.dyndns.org>
+References: <1334175716-11391-1-git-send-email-nhorman@tuxdriver.com>
+ <1334175716-11391-3-git-send-email-nhorman@tuxdriver.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Phil Hord <phil.hord@gmail.com>
+To: Neil Horman <nhorman@tuxdriver.com>
+X-From: git-owner@vger.kernel.org Wed Apr 11 22:47:58 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SI440-0003pL-QD
-	for gcvg-git-2@plane.gmane.org; Wed, 11 Apr 2012 22:22:49 +0200
+	id 1SI4SL-0002qu-6u
+	for gcvg-git-2@plane.gmane.org; Wed, 11 Apr 2012 22:47:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933172Ab2DKUWi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Apr 2012 16:22:38 -0400
-Received: from charlotte.tuxdriver.com ([70.61.120.58]:37773 "EHLO
-	smtp.tuxdriver.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932962Ab2DKUWh (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Apr 2012 16:22:37 -0400
-Received: from hmsreliant.think-freely.org ([2001:470:8:a08:7aac:c0ff:fec2:933b] helo=localhost)
-	by smtp.tuxdriver.com with esmtpsa (TLSv1:AES128-SHA:128)
-	(Exim 4.63)
-	(envelope-from <nhorman@tuxdriver.com>)
-	id 1SI43k-0004ci-IX; Wed, 11 Apr 2012 16:22:34 -0400
-X-Mailer: git-send-email 1.7.7.6
-In-Reply-To: <1334175716-11391-1-git-send-email-nhorman@tuxdriver.com>
-X-Spam-Score: -2.9 (--)
-X-Spam-Status: No
+	id S1761172Ab2DKUrw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Apr 2012 16:47:52 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:60885 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753671Ab2DKUrv (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Apr 2012 16:47:51 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B3AE360C1;
+	Wed, 11 Apr 2012 16:47:50 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Fqatr/mrcgHa9jgiGrz2uz1AXbc=; b=v/M4+e
+	3H5uDYnK73b+GPlUmtUXnYRp4jwGMxjIdTNYGBvPSegKjDKndVb8nNvT6Hl+Fqd9
+	aXrZGYZv0Qz7dgUQGeZBoqX4D9ebAItCU6w/6xcLrBw2JROKBFGwhTyRAtu1bRjv
+	PqqTEq5ZcyV1bKfqkDqSmA9QDfLd8y8LteOig=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=YKicwWe38A6+ox8gRekyTPPmLAewfcsv
+	B/4y/OxrSZ9K/M90m3ehvz8RiKLPEG4sCpKa7JXlVQ9EcTSEJtpcoeNMlJ/wzP3K
+	1FsdIgj2eQ3Mu1wTf60Qg8SdWVyKJPXzlf+PLV0UlMFH257tt9t/gZvbHTtk3KLf
+	z1NMmS9OuGg=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AB40460C0;
+	Wed, 11 Apr 2012 16:47:50 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3F09E60BF; Wed, 11 Apr 2012
+ 16:47:50 -0400 (EDT)
+In-Reply-To: <1334175716-11391-3-git-send-email-nhorman@tuxdriver.com> (Neil
+ Horman's message of "Wed, 11 Apr 2012 16:21:54 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 9A1F71EC-8417-11E1-AE74-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195251>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195252>
 
-Since we've added the --allow-empty and --keep-redundant-commits
-options to git cherry-pick we should also add a test to ensure that its working
-properly
+You inherited the following from your previous round.
 
-Signed-off-by: Neil Horman <nhorman@tuxdriver.com>
----
- t/t3505-cherry-pick-empty.sh |   31 ++++++++++++++++++++++++++++++-
- 1 files changed, 30 insertions(+), 1 deletions(-)
-
-diff --git a/t/t3505-cherry-pick-empty.sh b/t/t3505-cherry-pick-empty.sh
-index c10b28c..9d419ae 100755
---- a/t/t3505-cherry-pick-empty.sh
-+++ b/t/t3505-cherry-pick-empty.sh
-@@ -18,7 +18,12 @@ test_expect_success setup '
- 	echo third >> file1 &&
- 	git add file1 &&
- 	test_tick &&
--	git commit --allow-empty-message -m ""
-+	git commit --allow-empty-message -m "" &&
-+
-+	git checkout master &&
-+	git checkout -b empty-branch2 &&
-+	test_tick &&
-+	git commit --allow-empty -m "empty"
- 
- '
- 
-@@ -48,4 +53,28 @@ test_expect_success 'index lockfile was removed' '
- 
- '
- 
-+test_expect_success 'cherry pick an empty non-ff commit without --allow-empty' '
-+	git checkout master &&
-+	echo fourth >> file2 &&
-+	git add file2 &&
-+	git commit -m "fourth" && {
-+		git cherry-pick empty-branch2
-+		test "$?" = 1 
-+	}
-+'
-+
-+test_expect_success 'cherry pick an empty non-ff commit with --allow-empty' '
-+	git checkout master && {
-+		git cherry-pick --allow-empty empty-branch2
-+		test "$?" = 0
-+	}
-+'
-+
-+test_expect_success 'cherry pick with --keep-redundant-commits' '
-+	git checkout master && {
-+		git cherry-pick --keep-redundant-commits HEAD^
-+		test "$?" = 0
-+	}
-+'
-+
- test_done
--- 
-1.7.7.6
+Applying: git-cherry-pick: Add keep-redundant-commits option
+/srv/project/git/git.git/.git/rebase-apply/patch:115: space before tab in indent.
+ 			 * The head tree and the parent tree match
+/srv/project/git/git.git/.git/rebase-apply/patch:116: space before tab in indent.
+ 			 * meaning the commit is empty.  Since it wasn't created
+/srv/project/git/git.git/.git/rebase-apply/patch:117: space before tab in indent.
+ 			 * empty (based on the previous test), we can conclude
+/srv/project/git/git.git/.git/rebase-apply/patch:118: space before tab in indent.
+ 			 * the commit has been made redundant.  Since we don't
+/srv/project/git/git.git/.git/rebase-apply/patch:119: space before tab in indent.
+ 			 * want to keep redundant commits, just skip this one
+warning: squelched 3 whitespace errors
+fatal: 8 lines add whitespace errors.
+Repository lacks necessary blobs to fall back on 3-way merge.
+Cannot fall back to three-way merge.
+Patch failed at 0001 git-cherry-pick: Add keep-redundant-commits option
