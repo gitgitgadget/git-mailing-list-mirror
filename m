@@ -1,80 +1,98 @@
-From: Joe Angell <joe.d.angell@gmail.com>
-Subject: git bug: moved file with local unstaged changes are lost during merge
-Date: Wed, 11 Apr 2012 12:20:34 -0600
-Message-ID: <CAAZnV3Einocd4TJ0iqcxPJNsr44j3RwhczS9OhyURX0faGWgBQ@mail.gmail.com>
+From: Neal Kreitzinger <nkreitzinger@gmail.com>
+Subject: Re: GSoC - Some questions on the idea of
+Date: Wed, 11 Apr 2012 13:23:06 -0500
+Message-ID: <4F85CC0A.1020602@gmail.com>
+References: <CA+M5ThS2iS-NMNDosk2oR25N=PMJJVTi1D=zg7MnMCUiRoX4BQ@mail.gmail.com> <CACsJy8APtMsMJ=FrZjOP=DbzuFoemSLJTmkjaiK5Wkq9XtA4rg@mail.gmail.com> <loom.20120328T131530-717@post.gmane.org> <CA+M5ThTPyic=RhFL2SvuNB0xBWOHxNTaUZrYMB144UjpjCiLoQ@mail.gmail.com> <20120330203430.GB20376@sigill.intra.peff.net> <CA+M5ThR6jtxqs0-Kz-8fcRuOFRbLr-GvsJcTmrOQ7_geNspDLg@mail.gmail.com> <4F76E430.6020605@gmail.com> <4F772E48.3030708@gmail.com> <20120402210708.GA28926@sigill.intra.peff.net> <4F84DD60.20903@gmail.com> <20120411060357.GA15805@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 11 20:20:42 2012
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Jeff King <peff@peff.net>,
+	Sergio Callegari <sergio.callegari@gmail.com>,
+	Bo Chen <chen@chenirvine.org>, git@vger.kernel.org
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 11 20:23:18 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SI29p-00030k-0X
-	for gcvg-git-2@plane.gmane.org; Wed, 11 Apr 2012 20:20:41 +0200
+	id 1SI2CI-0004e5-Ij
+	for gcvg-git-2@plane.gmane.org; Wed, 11 Apr 2012 20:23:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760861Ab2DKSUg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Apr 2012 14:20:36 -0400
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:60165 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756911Ab2DKSUf (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Apr 2012 14:20:35 -0400
-Received: by yhmm54 with SMTP id m54so633850yhm.19
-        for <git@vger.kernel.org>; Wed, 11 Apr 2012 11:20:34 -0700 (PDT)
+	id S932621Ab2DKSXJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Apr 2012 14:23:09 -0400
+Received: from mail-ob0-f174.google.com ([209.85.214.174]:53656 "EHLO
+	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753695Ab2DKSXI (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Apr 2012 14:23:08 -0400
+Received: by obbtb18 with SMTP id tb18so1542030obb.19
+        for <git@vger.kernel.org>; Wed, 11 Apr 2012 11:23:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=37rV8cpoaKUTeprIuHMQ6emwS0W3XcAyEkZtAnHOAqo=;
-        b=UZ6UEFxF0ksTPU5zLTlixExRJU2jD0rerhi702VL+t/cAoDqph1cNmsMkmy6mug3Ct
-         zTjZ0RwQBEH/05oE2z9B39KWX9NNyWFrqXMpSEtf1dekBUxZKGtZEsEAGESLSTZDHB8k
-         P+K0aSj52z8naXmfCkrE6WlUn5DELjWpZMgXSUq2xY5n5QOmwNWl9PglVDwY15R+bxvf
-         O+l3m0veR5OPRij+xH55Tni1GrMDLCOAE66tVXoRakCv6dlMKIV7Gkad1u+/ScQd+rQD
-         3NH8d4vvdRDsxhFeqOwr279lQO8abZqXkM+o0v2sHUtGLZ2cUKooyJg+jJpDOAKNaVkm
-         nbBQ==
-Received: by 10.50.40.166 with SMTP id y6mr6656585igk.69.1334168434647; Wed,
- 11 Apr 2012 11:20:34 -0700 (PDT)
-Received: by 10.231.132.196 with HTTP; Wed, 11 Apr 2012 11:20:34 -0700 (PDT)
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=DdIwfSHqC/jslEC5k9kdLzFLH1466dCwglNFhIaSeqM=;
+        b=eh44NVGGIuomLpzK2a0h9H+yHGCkYTl00noSGBzcmASIielYgptiD3Dk6YbHQh/9t7
+         Gz1BId/WdnFDVe/vsTqPhZSFhmfzZoMZl953CiNcFgFph6OU+/r6gdgIYrj6SMa2s1po
+         0fRQ+wVVhZkUWmmdIckH51A4Hodgf5RwB4Y1pYk6AWTr79jEdNorTTGDe0o9m82z9JHx
+         IGZz6vMSCGWFZTSB6aF1wGy3TT+DoJcO3WZenEXyklu+CGSSE3gtimFYJdWaWTTdBcnN
+         69M+XWuwUev7JUCai6DGgLKYdOisVmFvKc84ZM+VG+ZlRW4kva4jTxrduZmH+ub0njAK
+         Xd9w==
+Received: by 10.182.7.4 with SMTP id f4mr21464096oba.57.1334168587905;
+        Wed, 11 Apr 2012 11:23:07 -0700 (PDT)
+Received: from [172.25.2.210] ([67.63.162.200])
+        by mx.google.com with ESMTPS id yv3sm3648612obb.3.2012.04.11.11.23.06
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 11 Apr 2012 11:23:07 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:11.0) Gecko/20120327 Thunderbird/11.0.1
+In-Reply-To: <20120411060357.GA15805@burratino>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195229>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195230>
 
-What steps will reproduce the problem?
-git init
-echo "initial checkin" >> readme
-git add readme
-git commit -m "inital checkin"
-git branch b1
-git checkout b1
-echo "b1" >> readme
-git add readme
-git commit -m "b1 readme"
-git checkout master
-git mv readme readme_master
-git ci -m "moved readme"
-echo "master" >> readme_master
-git merge b1
+On 4/11/2012 1:04 AM, Jonathan Nieder wrote:
+>
+> I would suggest tracking source code instead of binaries if
+> possible, though.
+>
+Reasons why we want to track binaries:
+(1) Standard Targets: Our deployment is assembly line style because our
+target servers are under our control.
+(2) Copy vs. Recompile:  We run certain "supported" linux distro
+versions on our target servers so we can just put our binaries on them
+instead of recompiling.
+(3) In-house-Source Compiled Binaries:  For our particular proprietary
+(third-party) source language the binaries run on top of a runtime that
+runs on top of the O/S so that makes the need to recompile on a server a
+non-issue.  We use xxd and compile listings to "diff" our compiled
+binaries to detect missing copybook and data dictionary dependencies 
+(missed recompiles), unnecessary recompiles (you didn't really change 
+what you thought you changed), and miscompiles.  We do this compiled 
+binary validation in git branches and then diff the branches to detect 
+the discrepancies.
+(4) Proprietary-Third-Party Binaries (no source) Versioning:  For our
+third party binaries we don't have the source.  The are distributed as
+self-extracting-executables.  Changes to third party binaries are
+relatively infrequent but frequent enough to cause confusion and
+therefore need to be tracked.
+(5) Graphics "Source" Versioning:  Our graphics files are part of our
+software and changes need to be tracked.
+(6) O/S Versioning:  Our linux distro is tracked in a bazaar repo so
+I'm thinking we should be able to track it in a git repo instead.  The
+assembly line just deploys the payload to a new server instead of doing
+manual install.
+(7) Superproject tracking of "Super-release":  The above subsystems are
+related in varying degrees (dependent).  A superproject can associate
+all the versions that comprise a "super" release of the various
+subsystem version dependencies.
 
-What is the expected output? What do you see instead?
-I expect to have git prevent the merge due to local changes to the
-file.  Instead it overwrites the file (erasing the local modification
-"master") and you end up with:
-cat readme_master
-initial readme
-b1
+While some of the reasons above may be non-normative for some git-users,
+I think that a large portion (if not the majority) of git-users will
+find some subset of the above reasons normative for their use-cases
+(namely reasons 5 and 4) therefore making the necessity for binary
+tracking normative for git-users in general.
 
-What version of the product are you using? On what operating system?
-Reproduced on 1.7.9.6 and from the git-core repo 1.7.10.128.g7945c.
-This is on ubuntu 10.04.
-
-Please provide any additional information below.
-
-This problem only seems to occur after you check in the move, then
-make local modifications, then do the merge.
-
--- 
----------------
-Joe Angell
-cell: (720) 260-2190
+v/r,
+neal
