@@ -1,99 +1,74 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/5] Provide branch name in error message when using @{u}
-Date: Wed, 11 Apr 2012 11:00:53 -0700
-Message-ID: <7v7gxmkv1m.fsf@alter.siamese.dyndns.org>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH 1/5] t1507: add additional tests for @{upstream}
+Date: Wed, 11 Apr 2012 19:59:23 +0200
+Message-ID: <vpqk41m40as.fsf@bauges.imag.fr>
 References: <1334161035-26355-1-git-send-email-zbyszek@in.waw.pl>
- <1334161035-26355-3-git-send-email-zbyszek@in.waw.pl>
+	<1334161035-26355-2-git-send-email-zbyszek@in.waw.pl>
+	<7vfwcakvfw.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Zbigniew =?utf-8?Q?J=C4=99drzejewski-Szmek?= <zbyszek@in.waw.pl>
-X-From: git-owner@vger.kernel.org Wed Apr 11 20:01:10 2012
+Content-Type: text/plain
+Cc: Zbigniew =?utf-8?Q?J=C4=99drzejewski-Szmek?= <zbyszek@in.waw.pl>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Apr 11 20:01:32 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SI1qr-0007Uo-GP
-	for gcvg-git-2@plane.gmane.org; Wed, 11 Apr 2012 20:01:05 +0200
+	id 1SI1rC-0007mL-Sk
+	for gcvg-git-2@plane.gmane.org; Wed, 11 Apr 2012 20:01:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932779Ab2DKSA7 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 11 Apr 2012 14:00:59 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:57526 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756881Ab2DKSA6 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 11 Apr 2012 14:00:58 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3967C7734;
-	Wed, 11 Apr 2012 14:00:58 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=reQ88yEpYE4e
-	KLRax+QJtp81T64=; b=gL/ub86kEImwIwRU7YB7hbtCjHlzX8hKCoPoH1Zae3Rn
-	FPKbV5675d4jGnLMlXGjw340koCegefvrKeJCnMA/NYIGS9DPasn3EBIR4MB1qvU
-	bYtXkAZrBvkc5D/QXnEeyJgUw/7oFFZJ+gWmLC7qIr3u0QrSZLmY1FIZTPg0gDk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=O/Bk/X
-	08LBwu6fEvHSTglY4fv8SIGM0T2602aW7X4z0S1gMuRKXc1YHePNW+s70cyGiDmd
-	JSNBtuJepoEftWwU5yFIe8jd+3YLiuDaaMZ44uscfnnlFIIcW6VOamb35eaVROiv
-	a+mh5xr9IgAP9ESp/StyebM0pU9elA680/Nqk=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2F32A7732;
-	Wed, 11 Apr 2012 14:00:58 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id AB9407730; Wed, 11 Apr 2012
- 14:00:57 -0400 (EDT)
-In-Reply-To: <1334161035-26355-3-git-send-email-zbyszek@in.waw.pl> ("Zbigniew
- =?utf-8?Q?J=C4=99drzejewski-Szmek=22's?= message of "Wed, 11 Apr 2012
- 18:17:12 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 4A2CB256-8400-11E1-88C1-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S932819Ab2DKSBF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Apr 2012 14:01:05 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:45116 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932781Ab2DKSBB (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Apr 2012 14:01:01 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id q3BHrXF9015075
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Wed, 11 Apr 2012 19:53:33 +0200
+Received: from bauges.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1SI1pE-0000hC-6C; Wed, 11 Apr 2012 19:59:24 +0200
+In-Reply-To: <7vfwcakvfw.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Wed, 11 Apr 2012 10:52:19 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.93 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Wed, 11 Apr 2012 19:53:33 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: q3BHrXF9015075
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1334771613.59883@ZKs9KGEJ67QVI1EQ1WFQgA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195227>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195228>
 
-Zbigniew J=C4=99drzejewski-Szmek <zbyszek@in.waw.pl> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> diff --git a/t/t1507-rev-parse-upstream.sh b/t/t1507-rev-parse-upstre=
-am.sh
-> index 1342915..a00b689 100755
-> --- a/t/t1507-rev-parse-upstream.sh
-> +++ b/t/t1507-rev-parse-upstream.sh
-> @@ -135,7 +135,7 @@ test_expect_success 'branch@{u} error message whe=
-n no upstream' '
-> =20
->  test_expect_success '@{u} error message when no upstream' '
->  	cat >expect <<-EOF &&
-> -	error: No upstream branch found for ${sq}${sq}
-> +	error: No upstream branch found for ${sq}master${sq}
->  	fatal: Needed a single revision
->  	EOF
->  	test_must_fail git rev-parse --verify @{u} 2>actual &&
+> We may want to update the error message for "@{u}" when the current one is
+> not tracked, instead of saying ''.  Perhaps
+>
+> 	error: No upstream branch found for the current branch.
+>
+> or something?
+>
+> Likewise for the detached HEAD case.
 
-I am not sure if saying "... for 'master'" is better or "... for the
-current branch" is better.  Using different wording reflects the fact t=
-hat
-the user gave "@{u}" and not "master@{u}".
+This is indeed the point of the patch serie, and I like how it first
+shows how bad the error messages can be, and then illustrate the fix
+with patch hunks in the newly added testcases in further patches.
 
-But I do not care too deeply.  Either way, it is a vast improvement ove=
-r
-the current "... for ''" output.
+But the commit message for this patch could probably be improved: we
+usually do not give a list of _what_ is done, since the code already
+says that, but we insist on _why_ it is done.
 
-And the "detached" case is definitely better.
-
-> @@ -153,7 +153,7 @@ test_expect_success 'branch@{u} error message wit=
-h misspelt branch' '
-> =20
->  test_expect_success '@{u} error message when not on a branch' '
->  	cat >expect <<-EOF &&
-> -	error: No upstream branch found for ${sq}${sq}
-> +	error: HEAD does not point to a branch
->  	fatal: Needed a single revision
->  	EOF
-
-Thanks.
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
