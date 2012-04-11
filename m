@@ -1,7 +1,7 @@
 From: Neil Horman <nhorman@tuxdriver.com>
-Subject: [PATCH v4 1/4] git-cherry-pick: add allow-empty option
-Date: Wed, 11 Apr 2012 16:21:53 -0400
-Message-ID: <1334175716-11391-2-git-send-email-nhorman@tuxdriver.com>
+Subject: [PATCH v4 2/4] git-cherry-pick: Add keep-redundant-commits option
+Date: Wed, 11 Apr 2012 16:21:54 -0400
+Message-ID: <1334175716-11391-3-git-send-email-nhorman@tuxdriver.com>
 References: <Enhance git-rebases flexibiilty in handling empty commits>
  <1334175716-11391-1-git-send-email-nhorman@tuxdriver.com>
 Cc: Jeff King <peff@peff.net>, Phil Hord <phil.hord@gmail.com>,
@@ -14,20 +14,20 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SI43r-0003j0-L0
+	id 1SI43s-0003j0-6s
 	for gcvg-git-2@plane.gmane.org; Wed, 11 Apr 2012 22:22:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761166Ab2DKUWd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Apr 2012 16:22:33 -0400
-Received: from charlotte.tuxdriver.com ([70.61.120.58]:37750 "EHLO
+	id S933057Ab2DKUWf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Apr 2012 16:22:35 -0400
+Received: from charlotte.tuxdriver.com ([70.61.120.58]:37762 "EHLO
 	smtp.tuxdriver.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760961Ab2DKUW3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Apr 2012 16:22:29 -0400
+	with ESMTP id S932962Ab2DKUWe (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Apr 2012 16:22:34 -0400
 Received: from hmsreliant.think-freely.org ([2001:470:8:a08:7aac:c0ff:fec2:933b] helo=localhost)
 	by smtp.tuxdriver.com with esmtpsa (TLSv1:AES128-SHA:128)
 	(Exim 4.63)
 	(envelope-from <nhorman@tuxdriver.com>)
-	id 1SI43c-0004cN-6d; Wed, 11 Apr 2012 16:22:26 -0400
+	id 1SI43f-0004cX-PX; Wed, 11 Apr 2012 16:22:31 -0400
 X-Mailer: git-send-email 1.7.7.6
 In-Reply-To: <1334175716-11391-1-git-send-email-nhorman@tuxdriver.com>
 X-Spam-Score: -2.9 (--)
@@ -36,47 +36,51 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195248>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195249>
 
-git cherry-pick fails when picking a non-ff commit that is empty.  The advice
-given with the failure is that a git-commit --allow-empty should be issued to
-explicitly add the empty commit during the cherry pick.  This option allows a
-user to specify before hand that they want to keep the empty commit.  This
-eliminates the need to issue both a cherry pick and a commit operation.
+The git-cherry-pick --allow-empty command by default only preserves empty
+commits that were originally empty, i.e only those commits for which
+<commit>^{tree} and <commit>^^{tree} are equal.  By default commits which are
+non-empty, but were made empty by the inclusion of a prior commit on the current
+history are filtered out.  This option allows us to override that behavior and
+include redundant commits as empty commits in the change history.
 
 Signed-off-by: Neil Horman <nhorman@tuxdriver.com>
 ---
- Documentation/git-cherry-pick.txt |    9 +++++++++
- builtin/revert.c                  |    2 ++
- sequencer.c                       |    7 +++++--
+ Documentation/git-cherry-pick.txt |   12 +++++-
+ builtin/revert.c                  |    8 +++-
+ sequencer.c                       |   91 +++++++++++++++++++++++++++++++-----
  sequencer.h                       |    1 +
- 4 files changed, 17 insertions(+), 2 deletions(-)
+ 4 files changed, 97 insertions(+), 15 deletions(-)
 
 diff --git a/Documentation/git-cherry-pick.txt b/Documentation/git-cherry-pick.txt
-index fed5097..730237a 100644
+index 730237a..f96b8c5 100644
 --- a/Documentation/git-cherry-pick.txt
 +++ b/Documentation/git-cherry-pick.txt
-@@ -103,6 +103,15 @@ effect to your index in a row.
- 	cherry-pick'ed commit, then a fast forward to this commit will
- 	be performed.
- 
-+--allow-empty::
-+	By default, cherry-picking an empty commit will fail,
-+	indicating that an explicit invocation of `git commit
-+	--allow-empty` is required. This option overrides that
-+	behavior, allowing empty commits to be preserved automatically
-+	in a cherry-pick. Note that when "--ff" is in effect, empty
-+	commits that meet the "fast-forward" requirement will be kept
-+	even without this option.
+@@ -110,7 +110,17 @@ effect to your index in a row.
+ 	behavior, allowing empty commits to be preserved automatically
+ 	in a cherry-pick. Note that when "--ff" is in effect, empty
+ 	commits that meet the "fast-forward" requirement will be kept
+-	even without this option.
++	even without this option.  Note also, that use of this option only
++	keeps commits that were initially empty (i.e. where for commit C
++	C^{tree} and C^^{tree} are equal).  Commits which are made empty due to
++	a previous commit are ignored.  To force the inclusion of those commits
++	use `--keep-redundant-commits`
 +
++--keep-redundant-commits::
++	If a commit being cherry picked duplicates a commit already in the
++	current history, it will result in an empty changeset.  By default these
++	redundant commits are ignored.  This option overrides that behavior and
++	creates an empty commit object.  Implies `--allow-empty`
+ 
  --strategy=<strategy>::
  	Use the given merge strategy.  Should only be used once.
- 	See the MERGE STRATEGIES section in linkgit:git-merge[1]
 diff --git a/builtin/revert.c b/builtin/revert.c
-index e6840f2..06b00e6 100644
+index 06b00e6..4f0d979 100644
 --- a/builtin/revert.c
 +++ b/builtin/revert.c
-@@ -114,12 +114,14 @@ static void parse_args(int argc, const char **argv, struct replay_opts *opts)
+@@ -115,13 +115,15 @@ static void parse_args(int argc, const char **argv, struct replay_opts *opts)
  		OPT_END(),
  		OPT_END(),
  		OPT_END(),
@@ -87,44 +91,170 @@ index e6840f2..06b00e6 100644
  		struct option cp_extra[] = {
  			OPT_BOOLEAN('x', NULL, &opts->record_origin, "append commit name"),
  			OPT_BOOLEAN(0, "ff", &opts->allow_ff, "allow fast-forward"),
-+			OPT_BOOLEAN(0, "allow-empty", &opts->allow_empty, "preserve empty commits"),
+-			OPT_BOOLEAN(0, "allow-empty", &opts->allow_empty, "preserve empty commits"),
++			OPT_BOOLEAN(0, "allow-empty", &opts->allow_empty, "preserve initially empty commits"),
++			OPT_BOOLEAN(0, "keep-redundant-commits", &opts->keep_if_made_empty, "keep redundant, empty commits"),
  			OPT_END(),
  		};
  		if (parse_options_concat(options, ARRAY_SIZE(options), cp_extra))
+@@ -139,6 +141,10 @@ static void parse_args(int argc, const char **argv, struct replay_opts *opts)
+ 				"--abort", rollback,
+ 				NULL);
+ 
++	/* keep_if_made_empty implies allow_empty */
++	if (opts->keep_if_made_empty)
++		opts->allow_empty = 1;
++
+ 	/* Set the subcommand */
+ 	if (remove_state)
+ 		opts->subcommand = REPLAY_REMOVE_STATE;
 diff --git a/sequencer.c b/sequencer.c
-index a37846a..71929ba 100644
+index 71929ba..442f364 100644
 --- a/sequencer.c
 +++ b/sequencer.c
-@@ -260,8 +260,8 @@ static int do_recursive_merge(struct commit *base, struct commit *next,
+@@ -13,6 +13,7 @@
+ #include "rerere.h"
+ #include "merge-recursive.h"
+ #include "refs.h"
++#include "argv-array.h"
+ 
+ #define GIT_REFLOG_ACTION "GIT_REFLOG_ACTION"
+ 
+@@ -258,26 +259,85 @@ static int do_recursive_merge(struct commit *base, struct commit *next,
+  * If we are revert, or if our cherry-pick results in a hand merge,
+  * we had better say that the current user is responsible for that.
   */
- static int run_git_commit(const char *defmsg, struct replay_opts *opts)
+-static int run_git_commit(const char *defmsg, struct replay_opts *opts)
++int run_git_commit(const char *defmsg, struct replay_opts *opts, int empty)
  {
--	/* 6 is max possible length of our args array including NULL */
--	const char *args[6];
-+	/* 7 is max possible length of our args array including NULL */
-+	const char *args[7];
- 	int i = 0;
- 
- 	args[i++] = "commit";
-@@ -272,6 +272,9 @@ static int run_git_commit(const char *defmsg, struct replay_opts *opts)
- 		args[i++] = "-F";
- 		args[i++] = defmsg;
- 	}
-+	if (opts->allow_empty)
-+		args[i++] = "--allow-empty";
+-	/* 7 is max possible length of our args array including NULL */
+-	const char *args[7];
+-	int i = 0;
++	struct argv_array array;
++	int rc;
 +
- 	args[i] = NULL;
++	if (!empty && !opts->keep_if_made_empty) {
++		unsigned char head_sha1[20];
++		struct commit *head_commit;
++		int need_free = 0;
++
++		resolve_ref_unsafe("HEAD", head_sha1, 1, NULL);
++		head_commit = lookup_commit(head_sha1);
++		if (parse_commit(head_commit) < 0)
++			return error(_("could not parse commit %s\n"),
++				     sha1_to_hex(head_commit->object.sha1));
++
++		if (!active_cache_tree) {
++			active_cache_tree = cache_tree();
++			need_free = 1;
++		}
++
++		if (!cache_tree_fully_valid(active_cache_tree))
++			cache_tree_update(active_cache_tree, active_cache,
++					  active_nr, 0);
++
++		rc = !hashcmp(active_cache_tree->sha1, head_commit->tree->object.sha1);
++
++		if (need_free)
++			cache_tree_free(&active_cache_tree);
++
++		if (rc)
++			/*
++ 			 * The head tree and the parent tree match
++ 			 * meaning the commit is empty.  Since it wasn't created
++ 			 * empty (based on the previous test), we can conclude
++ 			 * the commit has been made redundant.  Since we don't
++ 			 * want to keep redundant commits, just skip this one
++ 			 */
++			return 0;
++	}
++
++	argv_array_init(&array);
++	argv_array_push(&array, "commit");
++	argv_array_push(&array, "-n");
  
- 	return run_command_v_opt(args, RUN_GIT_CMD);
+-	args[i++] = "commit";
+-	args[i++] = "-n";
+ 	if (opts->signoff)
+-		args[i++] = "-s";
++		argv_array_push(&array, "-s");
+ 	if (!opts->edit) {
+-		args[i++] = "-F";
+-		args[i++] = defmsg;
++		argv_array_push(&array, "-F");
++		argv_array_push(&array, defmsg);
+ 	}
++	
+ 	if (opts->allow_empty)
+-		args[i++] = "--allow-empty";
++		argv_array_push(&array, "--allow-empty");
++
++
++	rc = run_command_v_opt(array.argv, RUN_GIT_CMD);
++	argv_array_clear(&array);
++	return rc;
++}
+ 
+-	args[i] = NULL;
++static int is_original_commit_empty(struct commit *commit)
++{
++	const unsigned char *ptree_sha1;
++	
++	if (parse_commit(commit))
++		return error(_("Could not parse commit %s\n"),
++			     sha1_to_hex(commit->object.sha1));
++	if (commit->parents) {
++		struct commit *parent = commit->parents->item;
++		if (parse_commit(parent))
++			return error(_("Could not parse parent commit %s\n"),
++				sha1_to_hex(parent->object.sha1));
++		ptree_sha1 = parent->tree->object.sha1;
++	} else {
++		ptree_sha1 = EMPTY_TREE_SHA1_BIN; /* commit is root */
++	}
+ 
+-	return run_command_v_opt(args, RUN_GIT_CMD);
++	return !hashcmp(ptree_sha1, commit->tree->object.sha1);
+ }
+ 
+ static int do_pick_commit(struct commit *commit, struct replay_opts *opts)
+@@ -289,6 +349,7 @@ static int do_pick_commit(struct commit *commit, struct replay_opts *opts)
+ 	char *defmsg = NULL;
+ 	struct strbuf msgbuf = STRBUF_INIT;
+ 	int res;
++	int empty_commit;
+ 
+ 	if (opts->no_commit) {
+ 		/*
+@@ -414,6 +475,10 @@ static int do_pick_commit(struct commit *commit, struct replay_opts *opts)
+ 		free_commit_list(remotes);
+ 	}
+ 
++	empty_commit = is_original_commit_empty(commit);
++	if (empty_commit < 0)
++		return empty_commit;
++
+ 	/*
+ 	 * If the merge was clean or if it failed due to conflict, we write
+ 	 * CHERRY_PICK_HEAD for the subsequent invocation of commit to use.
+@@ -435,7 +500,7 @@ static int do_pick_commit(struct commit *commit, struct replay_opts *opts)
+ 		rerere(opts->allow_rerere_auto);
+ 	} else {
+ 		if (!opts->no_commit)
+-			res = run_git_commit(defmsg, opts);
++			res = run_git_commit(defmsg, opts, empty_commit);
+ 	}
+ 
+ 	free_message(&msg);
 diff --git a/sequencer.h b/sequencer.h
-index bb4b138..e2cd725 100644
+index e2cd725..862a79a 100644
 --- a/sequencer.h
 +++ b/sequencer.h
-@@ -29,6 +29,7 @@ struct replay_opts {
- 	int signoff;
+@@ -30,6 +30,7 @@ struct replay_opts {
  	int allow_ff;
  	int allow_rerere_auto;
-+	int allow_empty;
+ 	int allow_empty;
++	int keep_if_made_empty;
  
  	int mainline;
  
