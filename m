@@ -1,178 +1,69 @@
-From: Stepan Koltsov <Stepan.Koltsov@jetbrains.com>
-Subject: [PATCH] stg delete --empty
-Date: Wed, 11 Apr 2012 18:12:36 +0400
-Message-ID: <B940726E-2CFA-45CB-8B81-A8F4268D51A6@jetbrains.com>
-Mime-Version: 1.0 (Apple Message framework v1257)
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-Cc: catalin.marinas@gmail.com
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 11 16:19:26 2012
+From: Phillip Susi <psusi@ubuntu.com>
+Subject: Re: stash refuses to pop
+Date: Wed, 11 Apr 2012 10:21:07 -0400
+Message-ID: <4F859353.4070700@ubuntu.com>
+References: <4F847350.3000409@ubuntu.com> <7vpqbfpim2.fsf@alter.siamese.dyndns.org> <4F84827B.80104@ubuntu.com> <4F851D8A.4000501@viscovery.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Wed Apr 11 16:21:27 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SHyOL-0003p7-JK
-	for gcvg-git-2@plane.gmane.org; Wed, 11 Apr 2012 16:19:25 +0200
+	id 1SHyQH-00058a-7h
+	for gcvg-git-2@plane.gmane.org; Wed, 11 Apr 2012 16:21:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760314Ab2DKOTV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Apr 2012 10:19:21 -0400
-Received: from mail1.intellij.net ([46.137.178.215]:44134 "EHLO
-	mail1.intellij.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760288Ab2DKOTU convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 11 Apr 2012 10:19:20 -0400
-X-Greylist: delayed 401 seconds by postgrey-1.27 at vger.kernel.org; Wed, 11 Apr 2012 10:19:20 EDT
-Received: (qmail 31915 invoked by uid 89); 11 Apr 2012 14:12:37 -0000
-Received: by simscan 1.1.0 ppid: 31835, pid: 31901, t: 0.1116s
-         scanners: regex: 1.1.0 clamav: 0.97/m:53/d:13443
-Received: from unknown (HELO ?192.168.15.182?) (stepan.koltsov@jetbrains.com@81.211.18.86)
-  by ip-10-48-137-145.eu-west-1.compute.internal with ESMTPA; 11 Apr 2012 14:12:36 -0000
-X-Mailer: Apple Mail (2.1257)
+	id S1760338Ab2DKOVK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Apr 2012 10:21:10 -0400
+Received: from cdptpa-omtalb.mail.rr.com ([75.180.132.120]:6921 "EHLO
+	cdptpa-omtalb.mail.rr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760295Ab2DKOVJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Apr 2012 10:21:09 -0400
+X-Authority-Analysis: v=2.0 cv=FOSZNpUs c=1 sm=0 a=/DbS/tiKggfTkRRHPZEB4g==:17 a=Qsx_du5GiBkA:10 a=vnNYxAp2wzwA:10 a=S1A5HrydsesA:10 a=8nJEP1OIZ-IA:10 a=gIQW62ysuaBU9Oec-P8A:9 a=RAIl4_oo4fszboTSlyoA:7 a=wPNLvfGTeEIA:10 a=/DbS/tiKggfTkRRHPZEB4g==:117
+X-Cloudmark-Score: 0
+X-Originating-IP: 67.78.168.186
+Received: from [67.78.168.186] ([67.78.168.186:49464] helo=[10.1.1.230])
+	by cdptpa-oedge02.mail.rr.com (envelope-from <psusi@ubuntu.com>)
+	(ecelerity 2.2.3.46 r()) with ESMTP
+	id 1A/B3-21438-353958F4; Wed, 11 Apr 2012 14:21:07 +0000
+User-Agent: Mozilla/5.0 (Windows NT 6.1; rv:11.0) Gecko/20120327 Thunderbird/11.0.1
+In-Reply-To: <4F851D8A.4000501@viscovery.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195183>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195184>
 
-`stg delete --empty` deletes all empty patches in series. Command
-does nothing and exits with zero code if all patches are not empty.
+On 4/11/2012 1:58 AM, Johannes Sixt wrote:
+> You are trying to abuse git-stash, but it does not cooperate because it
+> was not designed to be abused ;-) git-stash is not intended as a generic
+> push-and-pop-my-changes work horse.
 
---empty option can be useful in this workflow:
+In what way is using the documented -p switch abuse?
 
-* you work on the patches
-* you send patches to upstream (using stg export or stg mail)
-* patches are committed to upstream after a while
-* you do `git fetch && stg rebase origin`
-* `stg rebase origin` makes applied to upstrem local patches empty
-* now you can use stg delete --empty to cleanup
+> The purpose of git-stash is that you can "move away"
 
-Signed-off-by: Stepan Koltsov <stepan.koltsov@jetbrains.com>
----
-stgit/commands/delete.py |   30 ++++++++++++++++++++++++--
-t/t1603-delete-empty.sh  |   51 ++++++++++++++++++++++++++++++++++++++++++++++
-2 files changed, 78 insertions(+), 3 deletions(-)
-create mode 100755 t/t1603-delete-empty.sh
+Yes, and then move back.  That is why it is broken that you can not 
+immediately move back after a stash -p.
 
-diff --git a/stgit/commands/delete.py b/stgit/commands/delete.py
-index 84a057e..414f456 100644
---- a/stgit/commands/delete.py
-+++ b/stgit/commands/delete.py
-@@ -1,3 +1,4 @@
-+from stgit.out import MessagePrinter
+> - all of your changes to have a clean worktree or
+> - part of your changes to _create a clean worktree from the remaining
+> changes_.
+>
+> That is, before you can think of applying a stash, you are expected to
+> have cleaned out your worktree.
 
-__copyright__ = """
-Copyright (C) 2005, Catalin Marinas <catalin.marinas@gmail.com>
-@@ -40,7 +41,9 @@ options = [
-    opt('-b', '--branch', args = [argparse.stg_branches],
-        short = 'Use BRANCH instead of the default branch'),
-    opt('-t', '--top', action = 'store_true',
--        short = 'Delete top patch'),]
-+        short = 'Delete top patch'),
-+    opt('-e', '--empty', action = 'store_true',
-+        short = 'Delete empty patches')]
+It is obvious that is the assumption that stash was originally made 
+with, and it might make some sense if it always left the tree in a clean 
+state, but it no longer makes sense given -p and how it can leave the 
+tree in a not clean state.
 
-directory = common.DirectoryHasRepositoryLib()
-
-@@ -51,8 +54,17 @@ def func(parser, options, args):
-        iw = None # can't use index/workdir to manipulate another branch
-    else:
-        iw = stack.repository.default_iw
--    if args and options.top:
--        parser.error('Either --top or patches must be specified')
-+        
-+    mode_count = 0
-+    if args:
-+        mode_count += 1
-+    if options.top:
-+        mode_count += 1
-+    if options.empty:
-+        mode_count += 1
-+        
-+    if mode_count > 1:
-+        parser.error('Either --top or --empty or patches must be specified')
-    elif args:
-        patches = set(common.parse_patches(args, list(stack.patchorder.all),
-                                           len(stack.patchorder.applied)))
-@@ -62,6 +74,16 @@ def func(parser, options, args):
-            patches = set([applied[-1]])
-        else:
-            raise common.CmdException, 'No patches applied'
-+
-+    elif options.empty:
-+        patches_list = []
-+        for p in stack.patchorder.all:
-+            if stack.patches.get(p).is_empty():
-+                patches_list.append(p)
-+        if not patches_list:
-+            out.info('No empty patches')
-+            return 0
-+        patches = set(patches_list)
-    else:
-        parser.error('No patches specified')
-
-@@ -86,3 +108,5 @@ def func(parser, options, args):
-    except transaction.TransactionHalted:
-        pass
-    return trans.run(iw)
-+
-+out = MessagePrinter()
-diff --git a/t/t1603-delete-empty.sh b/t/t1603-delete-empty.sh
-new file mode 100755
-index 0000000..8a5630a
---- /dev/null
-+++ b/t/t1603-delete-empty.sh
-@@ -0,0 +1,51 @@
-+#!/bin/sh -e
-+# Copyright (c) 2012 Stepan Koltsov
-+test_description='Test the delete --empty command.'
-+
-+. ./test-lib.sh
-+
-+test_expect_success \
-+    'Initialize the StGIT repository' \
-+    'stg init'
-+
-+test_expect_success \
-+    'Create first real patch' \
-+    '
-+    stg new foo -m foo &&
-+    echo foo > foo.txt &&
-+    stg add foo.txt &&
-+    stg refresh
-+    '
-+
-+test_expect_success \
-+    'Create second empty patch' \
-+    'stg new bar -m bar'
-+
-+test_expect_success \
-+    'Create third real patch' \
-+    '
-+    stg new baz -m foo &&
-+    echo baz > baz.txt &&
-+    stg add baz.txt &&
-+    stg refresh
-+    '
-+
-+test_expect_success \
-+    'Create forth empty patch' \
-+    'stg new qux -m qux'
-+
-+test_expect_success \
-+    'Delete empty patches' \
-+    '
-+    stg delete --empty &&
-+    [ "$(echo $(stg series --noprefix))" = "foo baz" ]
-+    '
-+
-+test_expect_success \
-+    'Delete empty patches again (i. e. delete nothing)' \
-+    '
-+    stg delete --empty &&
-+    [ "$(echo $(stg series --noprefix))" = "foo baz" ]
-+    '
-+
-+test_done
--- 
-1.7.9.1
+This is clearly a case of the initial implementation being a bit lazy. 
+pop already performs a type of merge, just on a whole file basis.  In 
+other words, the pop leaves you with some files from before the pop, and 
+some files that were modified by the pop.  It should do a proper merge 
+instead of a lazy whole file merge.
