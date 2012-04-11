@@ -1,129 +1,79 @@
-From: =?UTF-8?q?Zbigniew=20J=C4=99drzejewski-Szmek?= <zbyszek@in.waw.pl>
-Subject: [PATCH 5/5] i18n: mark @{upstream} error messages for translation
-Date: Wed, 11 Apr 2012 18:17:15 +0200
-Message-ID: <1334161035-26355-6-git-send-email-zbyszek@in.waw.pl>
-References: <1334161035-26355-1-git-send-email-zbyszek@in.waw.pl>
+From: Luke Diamand <luke@diamand.org>
+Subject: git p4: any way to avoid rebasing all the time?
+Date: Wed, 11 Apr 2012 18:27:59 +0200
+Message-ID: <CAE5ih7_Fh0XA-XNNvtHnXhYwUvwmmg-Z+y-Mb5Wvra3Y83eFsw@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?q?Zbigniew=20J=C4=99drzejewski-Szmek?= <zbyszek@in.waw.pl>
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Wed Apr 11 18:18:34 2012
+Cc: Pete Wyckoff <pw@padd.com>, Vitor Antunes <vitor.hda@gmail.com>
+To: Git Users <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Apr 11 18:28:14 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SI0Fc-0008Nq-TV
-	for gcvg-git-2@plane.gmane.org; Wed, 11 Apr 2012 18:18:33 +0200
+	id 1SI0Ou-0006ap-Tf
+	for gcvg-git-2@plane.gmane.org; Wed, 11 Apr 2012 18:28:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932353Ab2DKQS2 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 11 Apr 2012 12:18:28 -0400
-Received: from kawka.in.waw.pl ([178.63.212.103]:34685 "EHLO kawka.in.waw.pl"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756719Ab2DKQS1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Apr 2012 12:18:27 -0400
-Received: from optyk25.fuw.edu.pl ([193.0.81.79] helo=ameba.fuw.edu.pl)
-	by kawka.in.waw.pl with esmtpsa (TLS1.0:DHE_RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.72)
-	(envelope-from <zbyszek@in.waw.pl>)
-	id 1SI0FW-00065L-Dc; Wed, 11 Apr 2012 18:18:26 +0200
-X-Mailer: git-send-email 1.7.10.344.g387ed
-In-Reply-To: <1334161035-26355-1-git-send-email-zbyszek@in.waw.pl>
+	id S1760654Ab2DKQ2D (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Apr 2012 12:28:03 -0400
+Received: from mail-we0-f174.google.com ([74.125.82.174]:46540 "EHLO
+	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760651Ab2DKQ2B (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Apr 2012 12:28:01 -0400
+Received: by wejx9 with SMTP id x9so671163wej.19
+        for <git@vger.kernel.org>; Wed, 11 Apr 2012 09:27:59 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:cc:content-type
+         :x-gm-message-state;
+        bh=TipH0DiOJhe3HXaLHIfxYv/CENDR/h4jRdQWXfhzhJI=;
+        b=EACmIoOeeV6IZYDHv8Vqz9f3JR3/+f63ZeNZXTrQjLbMlDOUbhoE5M6sGN1dbMTI1v
+         tY5Vbd6dtERySdTyBvMex7erGnNO42sg+IuY6RMk/V2FOs/9pyobKKu8wqTPrrU50E8l
+         BV5J9K6BtH04TV4kt6ywBryNZo67ptyM4IygYEBpBpqirFwEtiW/SkgZvB7OY4gp0HTJ
+         8mdBbhz4CSFXPerF2nHdOhWe7UCxOOWolAyz4yPF6wG/Q+KMKqpWJ2K6p3QYRl1/DOJR
+         ioZkfqZfLXy0v3PNsWRjM+h4jEIniLBlZj7JKzDI3U/c3l+vIP/DkqzmeWsHwsxy8Dyd
+         DrHA==
+Received: by 10.216.137.30 with SMTP id x30mr8621523wei.34.1334161679662; Wed,
+ 11 Apr 2012 09:27:59 -0700 (PDT)
+Received: by 10.216.204.27 with HTTP; Wed, 11 Apr 2012 09:27:59 -0700 (PDT)
+X-Gm-Message-State: ALoCoQm6XsimEpNM+oQu0cWDb2JffJflHY9ku8RF61TIACx3Sa9mhEHflFBmX++ifPXTwXsDCo6s
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195204>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195205>
 
-Signed-off-by: Zbigniew J=C4=99drzejewski-Szmek <zbyszek@in.waw.pl>
----
- sha1_name.c                   | 11 ++++++-----
- t/t1507-rev-parse-upstream.sh | 10 +++++-----
- 2 files changed, 11 insertions(+), 10 deletions(-)
+Is there a way to get "git p4" to not rebase all the time?
 
-diff --git a/sha1_name.c b/sha1_name.c
-index 5b1b0f9..bd1769e 100644
---- a/sha1_name.c
-+++ b/sha1_name.c
-@@ -861,15 +861,16 @@ int interpret_branch_name(const char *name, struc=
-t strbuf *buf)
- 	 * points to something different than a branch.
- 	 */
- 	if (!upstream)
--		return error("HEAD does not point to a branch");
-+		return error(_("HEAD does not point to a branch"));
- 	if (!upstream->merge || !upstream->merge[0]->dst) {
- 		if (!ref_exists(upstream->refname))
--			return error("No such branch: '%s'", cp);
-+			return error(_("No such branch: '%s'"), cp);
- 		if (!upstream->merge)
--			return error("No upstream configured for branch '%s'",
-+			return error(_("No upstream configured for branch '%s'"),
- 				     upstream->name);
--		return error("Upstream branch '%s' not fetched from remote '%s'",
--			     upstream->merge[0]->src, upstream->remote_name);
-+		return error(
-+			_("Upstream branch '%s' not fetched from remote '%s'"),
-+			upstream->merge[0]->src, upstream->remote_name);
- 	}
- 	free(cp);
- 	cp =3D shorten_unambiguous_ref(upstream->merge[0]->dst, 0);
-diff --git a/t/t1507-rev-parse-upstream.sh b/t/t1507-rev-parse-upstream=
-=2Esh
-index 112025f..a827f98 100755
---- a/t/t1507-rev-parse-upstream.sh
-+++ b/t/t1507-rev-parse-upstream.sh
-@@ -130,7 +130,7 @@ test_expect_success 'branch@{u} error message when =
-no upstream' '
- 	EOF
- 	(cd clone &&
- 	 test_must_fail git rev-parse --verify non-tracking@{u}) 2>actual &&
--	test_cmp expect actual
-+	test_i18ncmp expect actual
- '
-=20
- test_expect_success '@{u} error message when no upstream' '
-@@ -139,7 +139,7 @@ test_expect_success '@{u} error message when no ups=
-tream' '
- 	fatal: Needed a single revision
- 	EOF
- 	test_must_fail git rev-parse --verify @{u} 2>actual &&
--	test_cmp expect actual
-+	test_i18ncmp expect actual
- '
-=20
- test_expect_success 'branch@{u} error message with misspelt branch' '
-@@ -148,7 +148,7 @@ test_expect_success 'branch@{u} error message with =
-misspelt branch' '
- 	fatal: Needed a single revision
- 	EOF
- 	error_message no-such-branch@{u} 2>actual &&
--	test_cmp expect actual
-+	test_i18ncmp expect actual
- '
-=20
- test_expect_success '@{u} error message when not on a branch' '
-@@ -158,7 +158,7 @@ test_expect_success '@{u} error message when not on=
- a branch' '
- 	EOF
- 	git checkout HEAD^0 &&
- 	test_must_fail git rev-parse --verify @{u} 2>actual &&
--	test_cmp expect actual
-+	test_i18ncmp expect actual
- '
-=20
- test_expect_success 'branch@{u} error message if upstream branch not f=
-etched' '
-@@ -167,7 +167,7 @@ test_expect_success 'branch@{u} error message if up=
-stream branch not fetched' '
- 	fatal: Needed a single revision
- 	EOF
- 	error_message bad-upstream@{u} 2>actual &&
--	test_cmp expect actual
-+	test_i18ncmp expect actual
- '
-=20
- test_expect_success 'pull works when tracking a local branch' '
---=20
-1.7.10.344.g387ed
+Right now, git commits get discarded and replaced with new ones with
+the same contents and extra git-p4 metadata embedded in the comment.
+
+If we put this git-p4 metadata into a git note then we would not need
+to rewrite the commits, and so could perhaps avoid rebasing quite so
+much.
+
+However, if "git p4" won't rewrite commits, then it can't reorder them
+to match the ordering seen from p4.
+
+So you could end up with git users seeing OLDHEAD,G,P and p4 users
+seeing OLDHEAD,P,G, as there's a race to see who submits against
+OLDHEAD first, which p4 always wins.
+
+Would this matter (assuming the git and p4 commits are all reasonably
+independent) or is there a way to avoid it?
+
+Perhaps hook into the pre-receive hook? If the newest p4 changelist is
+not the same as the HEAD of the branch being pushed to, then reject
+the push, just as would happen if the branch could not be
+fast-forwarded in a normal git repo? (Even with this there is still a
+small window of opportunity).
+
+At that point, the "git p4 rebase" command would still be used, but
+would normally be a no-op.
+
+Or would that result in something far too complicated to have any
+chance of working?
+
+Thanks,
+Luke
