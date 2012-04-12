@@ -1,118 +1,91 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v5 2/5] http: handle proxy proactive authentication
-Date: Thu, 12 Apr 2012 18:05:16 -0400
-Message-ID: <20120412220516.GG21018@sigill.intra.peff.net>
-References: <4F5F53CA.7090003@seap.minhap.es>
- <7v398cvb30.fsf@alter.siamese.dyndns.org>
- <7vsjgcs8pq.fsf@alter.siamese.dyndns.org>
- <7vwr5leyj5.fsf@alter.siamese.dyndns.org>
- <20120412205836.GB21018@sigill.intra.peff.net>
- <7vpqbc4p8n.fsf@alter.siamese.dyndns.org>
+Subject: Re: push.default: current vs upstream
+Date: Thu, 12 Apr 2012 18:11:10 -0400
+Message-ID: <20120412221110.GA22426@sigill.intra.peff.net>
+References: <vpqwr5uceis.fsf@bauges.imag.fr>
+ <20120406071520.GD25301@sigill.intra.peff.net>
+ <vpqr4w12tjj.fsf@bauges.imag.fr>
+ <20120406080004.GA27940@sigill.intra.peff.net>
+ <4F7FF19B.1060407@alum.mit.edu>
+ <20120407075150.GA18168@sigill.intra.peff.net>
+ <4F7FFD7A.80104@pileofstuff.org>
+ <20120412071150.GB31122@sigill.intra.peff.net>
+ <4F874639.5090207@pileofstuff.org>
+ <7vlim04ou1.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Nelson Benitez Leon <nelsonjesus.benitez@seap.minhap.es>,
-	git@vger.kernel.org, sam@vilain.net, spearce@spearce.org
+Cc: Andrew Sayers <andrew-git@pileofstuff.org>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Apr 13 00:05:30 2012
+X-From: git-owner@vger.kernel.org Fri Apr 13 00:11:19 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SIS8s-0000A8-73
-	for gcvg-git-2@plane.gmane.org; Fri, 13 Apr 2012 00:05:26 +0200
+	id 1SISEZ-0003Sc-8X
+	for gcvg-git-2@plane.gmane.org; Fri, 13 Apr 2012 00:11:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934799Ab2DLWFV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Apr 2012 18:05:21 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:60422
+	id S1757361Ab2DLWLN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Apr 2012 18:11:13 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:60429
 	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S934761Ab2DLWFT (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Apr 2012 18:05:19 -0400
-Received: (qmail 32037 invoked by uid 107); 12 Apr 2012 22:05:24 -0000
+	id S1751049Ab2DLWLM (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Apr 2012 18:11:12 -0400
+Received: (qmail 32189 invoked by uid 107); 12 Apr 2012 22:11:18 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 12 Apr 2012 18:05:24 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 12 Apr 2012 18:05:16 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 12 Apr 2012 18:11:18 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 12 Apr 2012 18:11:10 -0400
 Content-Disposition: inline
-In-Reply-To: <7vpqbc4p8n.fsf@alter.siamese.dyndns.org>
+In-Reply-To: <7vlim04ou1.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195377>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195378>
 
-On Thu, Apr 12, 2012 at 02:25:12PM -0700, Junio C Hamano wrote:
+On Thu, Apr 12, 2012 at 02:33:58PM -0700, Junio C Hamano wrote:
 
-> Outside git, these actually come from things like these:
+> Andrew Sayers <andrew-git@pileofstuff.org> writes:
 > 
-> 	http_proxy=127.0.0.1:1080
-> 	HTTPS_PROXY=127.0.0.1:1080
+> > So if the problem is that the documentation cues the reader to think
+> > about upstreams but not to think about downstreams, the solution is to
+> > find excuses to talk more about downstreams.  As far as I'm concerned
+> > @{upstream} means "the place that commits come from when I `git pull`",
+> > so it makes perfect sense to me that @{downstream} would mean "the place
+> > commits go to when I `git push`".
 > 
-> And http.proxy configuration variable we have is a substitute for
-> http_proxy.  So if we want to keep the credentials for destination servers
-> and the credentials for proxies, "http.proxy" codepath should be asking
-> you with "http".  If we are looking at HTTPS_PROXY, you should get "https".
-> The patch that broke the unauthenticated proxy access does neither.
+> In a separate message I completely misunderstood what you meant by
+> "downstream".
 
-Hmm. Does the distinction between http and https actually matter to
-curl? My reading of the code and documentation is that only "http" is
-meaningful (actually, anything besides socks*:// gets converted to
-http).
+Yeah, I also took it to mean that the "downstream" of your "upstream"
+would be where you started (though as you mentioned, it is not 1-to-1,
+so that would not work anyway).
 
-So as far as I can tell, these are equivalent:
+But this:
 
-  http_proxy=http://127.0.0.1:1080
-  http_proxy=https://127.0.0.1:1080
-  http_proxy=foobar://127.0.0.1:1080
-
-And furthermore, the decision to use http_proxy versus https_proxy is
-about what the _target_ connection wants to do. So if you see this:
-
-  HTTPS_PROXY=127.0.0.1:1080
-
-it is still an http proxy; it is just that it is used for requests going
-to https:// servers, and it will ask to tunnel via CONNECT instead of
-GET. But in either case, the conversation with the proxy is over
-straight http.
-
-So the value should always be "http" in that case. This is a credential
-we are handing to the proxy, not to the target server, and it is done
-over http, not https.
-
-I can't see that there is a way to tell curl to speak SSL to the proxy
-itself.  Maybe I am missing it, but I couldn't find anything in the
-code, nor make it work with "curl -x" to an "openssl s_server" instance.
-
-> That is something we may want to think carefully about.
+> If you had something like this:
 > 
-> If it is better to separate them, then we can easily invent "http-proxy",
-> "https-proxy" etc. for them, e.g.
+> 	[remote "origin"]
+>         	url = ...
+>         [remote "destination"]
+>                 pushURL = ...
 > 
-> 	HTTPS_PROXY=http://127.0.0.1:1080
-> 	git fetch https://over.there.xz/repo/sito/ry.git
+> 	[branch "topic"]
+>         	remote = origin
+>                 merge = refs/heads/master
+> 		pushRemote = destination # new
+>                 push = refs/heads/topic # new
 > 
-> would ask you for a credential to access 127.0.0.1:1080 in "https-proxy"
-> domain, and another to access over.there.xz in "https" domain.
+> you could express that asymmetric layout in a natural way.  When you say
+> "git push" while on your "topic" branch, it will go to "destination"
+> remote to update their "topic" branch.
 
-No, it should ask for the credential for 127.0.0.1:1080 in the "http"
-domain, per the above discussion.
-
-Not splitting "http" and "http-proxy" does have a slight confusion, as
-the default proxy port is "1080". So a proxy of "http://127.0.0.1" would
-mean "http://127.0.0.1:1080", whereas a regular request would mean
-"http://127.0.0.1:80". The credential code includes the port as part of
-the unique hostname, but since the default-port magic happens inside
-curl, we have no access to it (short of re-implementing it ourselves).
-
-In practice, I doubt it matters much; do people really have different
-credentials for proxies and regular servers on the same host? And if so,
-there is already a workaround by using the port number in the proxy
-specification.
-
-I really wish curl's credential-handling was implemented as a callback;
-this would be much simpler if could let curl decipher the request and
-come to us with the complete request (protocol, host, port, path, etc).
-But even if we got such a feature in curl, we are stuck supporting the
-old way for a while anyway.
+is much more useful (and I already complained about the lack of
+something like pushRemote recently). I just think it should not be
+called "downstream", as it is not the reverse of upstream.
 
 -Peff
