@@ -1,93 +1,155 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 4/5] Be more specific if upstream branch is not fetched
-Date: Thu, 12 Apr 2012 08:15:52 -0700
-Message-ID: <7vd37dgevr.fsf@alter.siamese.dyndns.org>
-References: <1334161035-26355-1-git-send-email-zbyszek@in.waw.pl>
- <1334161035-26355-5-git-send-email-zbyszek@in.waw.pl>
- <20120412053017.GA27369@sigill.intra.peff.net> <4F869D37.1050508@in.waw.pl>
+From: Florian Achleitner <florian.achleitner2.6.31@gmail.com>
+Subject: Re: GSOC Proposal draft: git-remote-svn
+Date: Thu, 12 Apr 2012 17:28:03 +0200
+Message-ID: <2104868.dCxFQtJHdU@flomedio>
+References: <11292500.AVmZFUUvNi@flobuntu> <1421035.yALBSXSHGd@flomedio> <20120410171707.GA3869@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Zbigniew =?utf-8?Q?J=C4=99drzejewski-Szmek?= <zbyszek@in.waw.pl>
-X-From: git-owner@vger.kernel.org Thu Apr 12 17:16:31 2012
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7Bit
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	David Barr <davidbarr@google.com>,
+	Andrew Sayers <andrew-git@pileofstuff.org>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Dmitry Ivankov <divanorama@gmail.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Apr 12 17:28:35 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SILl6-0007yd-Jr
-	for gcvg-git-2@plane.gmane.org; Thu, 12 Apr 2012 17:16:28 +0200
+	id 1SILwn-0007tS-2j
+	for gcvg-git-2@plane.gmane.org; Thu, 12 Apr 2012 17:28:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757503Ab2DLPPz convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 12 Apr 2012 11:15:55 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:32794 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753220Ab2DLPPz convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 12 Apr 2012 11:15:55 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B19F0628D;
-	Thu, 12 Apr 2012 11:15:54 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=f8paLXyaF9n4
-	BwiHwL5NTRGTMJQ=; b=sGt6GWgzW9mp1H9DyqzYTKuKtRqveqPo2Hcl9r4kFjM7
-	C2aXrowgUcoNuVwC3OTO9Bk8gJ8YIyFzep0+sYCjravIySNdSbaM6cQyu9ft8BUP
-	ozuUarP7LKe4T3rW5wXbF0tWLPT+DILzWZRN8o/D7JZoE6u2Vic8owjDVIKTVBQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=vmiihU
-	ccee29mEpIcffwYbUcast9MQfLJqI9zV5MPhAmOBdJzrLeKeM3BFdkO4QQzX5hwj
-	4TQ66mdNKqBWIXEIyp75Z+yxA1jPbx0Mv+rVtaXUFEhOvwkm/LtuCNWVCycszVqU
-	kmWSxL9i2qQcDT3wqv0SRnOs/769oas5j+ts4=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A8F3F628C;
-	Thu, 12 Apr 2012 11:15:54 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3DE616289; Thu, 12 Apr 2012
- 11:15:54 -0400 (EDT)
-In-Reply-To: <4F869D37.1050508@in.waw.pl> ("Zbigniew =?utf-8?Q?J=C4=99drze?=
- =?utf-8?Q?jewski-Szmek=22's?= message of "Thu, 12 Apr 2012 11:15:35 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 65AC0F10-84B2-11E1-80E1-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S965454Ab2DLP22 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Apr 2012 11:28:28 -0400
+Received: from mailrelay.tu-graz.ac.at ([129.27.2.202]:53546 "EHLO
+	mailrelay.tugraz.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965273Ab2DLP20 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Apr 2012 11:28:26 -0400
+Received: from flomedio.localnet (93-82-159-250.adsl.highway.telekom.at [93.82.159.250])
+	(authenticated bits=0)
+	by mailrelay2.tugraz.at (8.14.4/8.14.4) with ESMTP id q3CFS2Su007261
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Thu, 12 Apr 2012 17:28:02 +0200 (CEST)
+User-Agent: KMail/4.7.3 (Linux/3.0.0-17-generic; KDE/4.7.4; x86_64; ; )
+In-Reply-To: <20120410171707.GA3869@burratino>
+X-TUG-Backscatter-control: qyH/vN2riZ/masrHmZoJqQ
+X-Spam-Scanner: SpamAssassin 3.003000 
+X-Spam-Score-relay: 0.6
+X-Scanned-By: MIMEDefang 2.70 on 129.27.10.19
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195334>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195335>
 
-Zbigniew J=C4=99drzejewski-Szmek <zbyszek@in.waw.pl> writes:
+Hi!
 
-> maybe I'm missing something, but I think that git will not fetch bran=
-ches
-> (or commits) which are not part of remote's refspecs.
+Let's discuss the details as suggested by Jonathan! I will collect them in the 
+wiki, leading to a more elaborated project plan at the end.
+It's rather hard to keep an overview over all the issues and pitfalls that may 
+exist, and over all the existing discussions, and whether there was an 
+solution or the issue is still unsolved.
+So I want to create some collection of information with your support.
 
-A remote's refspec does not have to "store" a tracking branch.  The bra=
-nch
-is still fetched, but not stored anywhere locally.
+On Tuesday 10 April 2012 12:17:07 Jonathan Nieder wrote:
+> Given the goal described here of an import with support for
+> automatically detecting branches, here are some rough steps I imagine
+> would be involved:
+> 
+>  . baseline: remote helper in C
+> 
+>  . option to import starting with a particular numbered revision.
+>    This would be good practice for seeing how options passed to
+>    "git clone -c" can be read from the config file.
 
-> % cd clone
-> % git config remote.origin.fetch refs/heads/master:refs/remotes/maste=
-r
+Really -c? My installed git doesn't have that switch. Should it pass arguments 
+to the remote-helper?
 
-In other words, the fetch refspec could be without colon.  With
+> 
+>  . option or URL schema to import a single project from a large
+>    Subversion repository that houses several projects.  This would
+>    already be useful in practice since importing the entire Apache
+>    Software Foundation repository takes a while which is a waste
+>    when one only wants the history of the Subversion project.
+> 
+>    How should the importer handle Subversion copy commands that
+>    refer to other projects in this case?
 
-	[remote "origin"]
-		url =3D ...
-        	fetch =3D refs/heads/master
-	[branch "master"]
-        	remote =3D origin
-                merge =3D refs/heads/master
+Jonathan tried that, it's handled by svnrdump nicely.
 
-you can still say "git pull" without any other argument while on your
-"master" and it will do the right thing.  Actually, you do not even hav=
-e
-to have remote.origin.fetch at all (branch.master.merge will be added t=
-o
-the set of refs to be fetched).
+> 
+>  . automatically detecting trunk when importing a project with the
+>    standard layout.  The trunk usually is not branched from elsewhere
+>    so this does not require copyfrom info.  Some design questions
+>    come up here: should the remote helper import the entire project
+>    tree, too?  (I think "yes", since copy commands that copy from
+>    other branches are very common and that would ensure the relevant
+>    info is available to git.)  What should the mapping of git commit
+>    names to Subversion revision numbers that is stored in notes say
+>    in this case?
 
-In such a case "master@{upstream}" does not (and should not) resolve to
-anything, and the reason is not because it is not "fetched", but as Pef=
-f
-said, because it is not "stored".
+What does it mean, "import the entire project tree"? Importing other 
+directories than "trunk"?
+About the mapping of git commits to svn refs .. I've seen the thread about the 
+marks-to-notes converter.
+But can somebody please explain what it's for? There is this mark file 
+mentioned in the git-fast-import help page ..
+
+Do we create two commits from one revision if it's some special case, like 
+modifying two branches at once?
+
+> 
+>  . detecting trunk and branches and exposing them as different remote
+>    branches.  This is a small step that just involves understanding
+>    how remote helpers expose branches.
+> 
+>  . storing path properties and copyfrom information in the commits
+>    produced by the vcs-svn/ library.  How should these be stored?
+>    For example, there could be a parallel directory structure
+>    in the tree:
+> 
+>         foo/
+>                 bar.c
+>         baz/
+>                 qux.c
+>         .properties/
+>                 foo.properties
+>                 foo/
+>                         bar.c.properties
+>                 baz/
+>                         qux.c.properties
+> 
+>    with properites for <path> stored at .properties/<path>.properties.
+>    This strawman scheme doesn't work if the repository being imported
+>    has any paths ending with ".properties", though.  Ideas?
+
+This includes collecting which metadata we actually need to store? We could 
+probably collect a list of important svn properties.
+
+Is there a general policy how to store additional metadata for git's helpers? 
+I guess it would live somewhere in the .git dir. (.git/info/ ?)
+Dmitry mentioned the case where a git repository that fetched from svn is 
+cloned, and the cloned repo should be able to fetch from svn too. Is there an 
+exisiting concept about metadata in this case?
+
+I'm not sure if storing this in a seperate directory tree makes sense, mostly 
+looking at performance. All these files will only contain some bytes, I guess.
+Andrew, why did you choose JSON?
+
+> 
+>  . tracing history past branch creation events, using the now-saved
+>    copyfrom information.
+> 
+>  . tracing second-parent history using svn:mergeinfo properties.
+
+This is about detection when to create a git merge-commit, right?
+
+> 
+> In other words, in the above list the strategy is:
+
+.. still to come..
+
+Florian
