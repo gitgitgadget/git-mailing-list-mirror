@@ -1,71 +1,118 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Fix httpd tests that broke when non-ff push advice
- changed
-Date: Thu, 12 Apr 2012 14:51:47 -0700
-Message-ID: <7vhawo4o0c.fsf@alter.siamese.dyndns.org>
-References: <9F768A58-DEB0-43E1-8AE4-B2A5C4E6CDE9@silverinsanity.com>
- <20120412133701.GA367@gmail.com> <20120412140049.GB367@gmail.com>
- <7v8vi1gdzk.fsf@alter.siamese.dyndns.org> <20120412175628.GH367@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH v5 2/5] http: handle proxy proactive authentication
+Date: Thu, 12 Apr 2012 18:05:16 -0400
+Message-ID: <20120412220516.GG21018@sigill.intra.peff.net>
+References: <4F5F53CA.7090003@seap.minhap.es>
+ <7v398cvb30.fsf@alter.siamese.dyndns.org>
+ <7vsjgcs8pq.fsf@alter.siamese.dyndns.org>
+ <7vwr5leyj5.fsf@alter.siamese.dyndns.org>
+ <20120412205836.GB21018@sigill.intra.peff.net>
+ <7vpqbc4p8n.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Brian Gernhardt <brian@silverinsanity.com>,
-	Git List <git@vger.kernel.org>
-To: Christopher Tiwald <christiwald@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Apr 12 23:52:01 2012
+Content-Type: text/plain; charset=utf-8
+Cc: Nelson Benitez Leon <nelsonjesus.benitez@seap.minhap.es>,
+	git@vger.kernel.org, sam@vilain.net, spearce@spearce.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Apr 13 00:05:30 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SIRvr-00016X-Uc
-	for gcvg-git-2@plane.gmane.org; Thu, 12 Apr 2012 23:52:00 +0200
+	id 1SIS8s-0000A8-73
+	for gcvg-git-2@plane.gmane.org; Fri, 13 Apr 2012 00:05:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S966052Ab2DLVvw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Apr 2012 17:51:52 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:49539 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S966031Ab2DLVvu (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Apr 2012 17:51:50 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 68C8267BF;
-	Thu, 12 Apr 2012 17:51:49 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=KNdD+/HH/30fkiZp8BtadRnMeLE=; b=FI7a3e
-	qrWLz4E6K5dzkuRrIPYFe0gHrVj+q/WKnm2ppKYZYbUF98dWobNUS+qOEgORGcEl
-	Zaky/yET2nIIBUXyY+5KzZn94nb2rrtvrpYNli8v1jJhv1L4aEr0lfAQpXvq5PLT
-	nOK6YUazm12+UaNN/niLN3gf1+PiVj/R7AU8s=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=wWAugwIboOSeByGPNdgTz9skUuqRqRSg
-	4j//TfolmfS1WnnX2CRmFR6idZIaiMzkayk87SVaSvNd+tGzZhYN0HMKyyOZJzCM
-	5uKNc1oKGIDE99SkOsRh/bMvDw+EBbGDWM9XSuQeaoZIx+2RjK1YivkWIJwn8ebP
-	8ZVwu7NMrks=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5E2D267BE;
-	Thu, 12 Apr 2012 17:51:49 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D5ED467BA; Thu, 12 Apr 2012
- 17:51:48 -0400 (EDT)
-In-Reply-To: <20120412175628.GH367@gmail.com> (Christopher Tiwald's message
- of "Thu, 12 Apr 2012 13:56:28 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: B4884D38-84E9-11E1-984A-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S934799Ab2DLWFV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Apr 2012 18:05:21 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:60422
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S934761Ab2DLWFT (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Apr 2012 18:05:19 -0400
+Received: (qmail 32037 invoked by uid 107); 12 Apr 2012 22:05:24 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 12 Apr 2012 18:05:24 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 12 Apr 2012 18:05:16 -0400
+Content-Disposition: inline
+In-Reply-To: <7vpqbc4p8n.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195376>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195377>
 
-Christopher Tiwald <christiwald@gmail.com> writes:
+On Thu, Apr 12, 2012 at 02:25:12PM -0700, Junio C Hamano wrote:
 
-> On Thu, Apr 12, 2012 at 08:35:11AM -0700, Junio C Hamano wrote:
->> Please do so.  I assume that the test vectors were expecting specific
->> error/advice messages that need to be updated?
->
-> Looks to be the case. The below fixes the tests on my machine. It might
-> be worth adding tests to check the specific advice messages, but that's a
-> different topic and regardless wouldn't belong in the http-push series.
+> Outside git, these actually come from things like these:
+> 
+> 	http_proxy=127.0.0.1:1080
+> 	HTTPS_PROXY=127.0.0.1:1080
+> 
+> And http.proxy configuration variable we have is a substitute for
+> http_proxy.  So if we want to keep the credentials for destination servers
+> and the credentials for proxies, "http.proxy" codepath should be asking
+> you with "http".  If we are looking at HTTPS_PROXY, you should get "https".
+> The patch that broke the unauthenticated proxy access does neither.
 
-Thanks.
+Hmm. Does the distinction between http and https actually matter to
+curl? My reading of the code and documentation is that only "http" is
+meaningful (actually, anything besides socks*:// gets converted to
+http).
+
+So as far as I can tell, these are equivalent:
+
+  http_proxy=http://127.0.0.1:1080
+  http_proxy=https://127.0.0.1:1080
+  http_proxy=foobar://127.0.0.1:1080
+
+And furthermore, the decision to use http_proxy versus https_proxy is
+about what the _target_ connection wants to do. So if you see this:
+
+  HTTPS_PROXY=127.0.0.1:1080
+
+it is still an http proxy; it is just that it is used for requests going
+to https:// servers, and it will ask to tunnel via CONNECT instead of
+GET. But in either case, the conversation with the proxy is over
+straight http.
+
+So the value should always be "http" in that case. This is a credential
+we are handing to the proxy, not to the target server, and it is done
+over http, not https.
+
+I can't see that there is a way to tell curl to speak SSL to the proxy
+itself.  Maybe I am missing it, but I couldn't find anything in the
+code, nor make it work with "curl -x" to an "openssl s_server" instance.
+
+> That is something we may want to think carefully about.
+> 
+> If it is better to separate them, then we can easily invent "http-proxy",
+> "https-proxy" etc. for them, e.g.
+> 
+> 	HTTPS_PROXY=http://127.0.0.1:1080
+> 	git fetch https://over.there.xz/repo/sito/ry.git
+> 
+> would ask you for a credential to access 127.0.0.1:1080 in "https-proxy"
+> domain, and another to access over.there.xz in "https" domain.
+
+No, it should ask for the credential for 127.0.0.1:1080 in the "http"
+domain, per the above discussion.
+
+Not splitting "http" and "http-proxy" does have a slight confusion, as
+the default proxy port is "1080". So a proxy of "http://127.0.0.1" would
+mean "http://127.0.0.1:1080", whereas a regular request would mean
+"http://127.0.0.1:80". The credential code includes the port as part of
+the unique hostname, but since the default-port magic happens inside
+curl, we have no access to it (short of re-implementing it ourselves).
+
+In practice, I doubt it matters much; do people really have different
+credentials for proxies and regular servers on the same host? And if so,
+there is already a workaround by using the port number in the proxy
+specification.
+
+I really wish curl's credential-handling was implemented as a callback;
+this would be much simpler if could let curl decipher the request and
+come to us with the complete request (protocol, host, port, path, etc).
+But even if we got such a feature in curl, we are stuck supporting the
+old way for a while anyway.
+
+-Peff
