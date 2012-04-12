@@ -1,79 +1,90 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 00/15] Hierarchical reference cache (once again)
-Date: Thu, 12 Apr 2012 08:36:12 -0700
-Message-ID: <7v4nspgdxv.fsf@alter.siamese.dyndns.org>
-References: <1334035827-20331-1-git-send-email-mhagger@alum.mit.edu>
- <20120412064459.GD27369@sigill.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: mhagger@alum.mit.edu, Junio C Hamano <gitster@pobox.com>,
-	git@vger.kernel.org, Jakub Narebski <jnareb@gmail.com>,
-	Heiko Voigt <hvoigt@hvoigt.net>,
-	Johan Herland <johan@herland.net>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Apr 12 17:36:22 2012
+From: Michael Witten <mfwitten@gmail.com>
+Subject: Re: [PATCH RESEND] send-email: add 'specify-author' option
+Date: Thu, 12 Apr 2012 15:41:06 -0000
+Message-ID: <fd7f09d9f7ad4ce2a32e850c0f21cc4c-mfwitten@gmail.com>
+References: <1333714876-21895-1-git-send-email-felipe.contreras@gmail.com>
+            <7vobr4236g.fsf@alter.siamese.dyndns.org>
+            <CAMP44s1b=HfhPNkmiEjPnQpupd0FPBNgVyp5Sw=zFVTdqmJXEg@mail.gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Thomas Rast <trast@student.ethz.ch>,
+	Pierre Habouzit <madcoder@debian.org>,
+	Pascal Obry <pascal@obry.net>,
+	Jay Soffian <jaysoffian@gmail.com>,
+	David Brown <git@davidb.org>, Matthew Wilcox <matthew@wil.cx>,
+	"Robin H. Johnson" <robbat2@gentoo.org>, git@vger.kernel.org
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Apr 12 17:42:08 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SIM4K-0004ph-D3
-	for gcvg-git-2@plane.gmane.org; Thu, 12 Apr 2012 17:36:20 +0200
+	id 1SIM9r-0000Wn-Df
+	for gcvg-git-2@plane.gmane.org; Thu, 12 Apr 2012 17:42:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934457Ab2DLPgQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Apr 2012 11:36:16 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:41162 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S934385Ab2DLPgP (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Apr 2012 11:36:15 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A67B267BE;
-	Thu, 12 Apr 2012 11:36:14 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=7ZkjB892bTHtiOnG4mcUsMYxMVY=; b=dILEXT
-	+WfB0/EEH2bu7VyVu9IbrLy1hfzVMo0J8xvWLX8K+GrCq9AO/Mb3CbhSmgRXDfxv
-	iUb6iEhI67X2R5fmZk9kB4bQMxcjP6kchzku+iYu2GP+Rx4VVQZYyKzzpWQdilxh
-	f4h6H1W2e7wTUayNRDTxrGKGzH/wgyzhaJAa0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=V4aJitQypwJ74mH9SifRbC3spSYXaAbd
-	MCXHBFpANTa2K1/ykPmNa22bHXBrXFnv1X1eA2dz6kpLSUv2ckVSuBwU7rFJZPCD
-	SRllSTN6BckPspr5SbSebRlEgpW6HjCtkD4aEiSHFHCsfpClpSo2/RPce5AoCzlc
-	6j2BrkZX5OE=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9C8E867BD;
-	Thu, 12 Apr 2012 11:36:14 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3027667BC; Thu, 12 Apr 2012
- 11:36:14 -0400 (EDT)
-In-Reply-To: <20120412064459.GD27369@sigill.intra.peff.net> (Jeff King's
- message of "Thu, 12 Apr 2012 02:44:59 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 3CD4B80A-84B5-11E1-8E6C-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S933796Ab2DLPl6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Apr 2012 11:41:58 -0400
+Received: from mail-ee0-f46.google.com ([74.125.83.46]:58033 "EHLO
+	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932120Ab2DLPl6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Apr 2012 11:41:58 -0400
+Received: by eekc41 with SMTP id c41so547868eek.19
+        for <git@vger.kernel.org>; Thu, 12 Apr 2012 08:41:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=subject:date:from:to:cc:message-id:in-reply-to:references;
+        bh=YSk4bJJ/un05emJnt2r2e0YxY6LjGf2JrgNeaP+b+bM=;
+        b=ZWNyNbsUSTCYuQ6GCG9j+QaZOFiDFezXkQqknB+TlQb5I6nJfHQ9DgX5XmCVHwilyV
+         RGPoJMu/ZZF66gZ9T4Nf/xnnc+6gfGbvCeKHVhQ4pMtW82iKvDFm78THoQ4Xvt7yq3Jq
+         rfbQJTPdvrIsLxORvSJ8C+bOT/3b+aI2BjkBYoZHDCrNN7SzGeatsFWdTsONc5XxA7gK
+         0CaGUAs65X6QTU7MjfamjZ5hzGUijKHOGYJKSWD+6Lwmz9UDj/MbJjaSMWQRt0Kd21Ce
+         yMWKEBxKkMUhng2QROyaLYE6FRIugx0hE9cU7Q22aNaXGS1hHBZv3tQJUrugzNdHUEqs
+         CrMA==
+Received: by 10.14.50.74 with SMTP id y50mr425865eeb.107.1334245316837;
+        Thu, 12 Apr 2012 08:41:56 -0700 (PDT)
+Received: from gmail.com (rainbowwarrior.torservers.net. [77.247.181.164])
+        by mx.google.com with ESMTPS id q45sm29361989eem.7.2012.04.12.08.41.53
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 12 Apr 2012 08:41:55 -0700 (PDT)
+In-Reply-To: <CAMP44s1b=HfhPNkmiEjPnQpupd0FPBNgVyp5Sw=zFVTdqmJXEg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195337>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195338>
 
-Jeff King <peff@peff.net> writes:
+On Fri, 6 Apr 2012 22:42:16 +0300, Felipe Contreras wrote:
 
-> On Tue, Apr 10, 2012 at 07:30:12AM +0200, mhagger@alum.mit.edu wrote:
+> On Fri, Apr 6, 2012 at 8:14 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>> Felipe Contreras <felipe.contreras@gmail.com> writes:
+>>
+>>> Some mail servers (Microsoft Exchange) mangle the 'From' header, so
+>>> while applying the patches, the author has to be fixed manually.
+>>>
+>>> This option allows to always specify the author of the commit in the
+>>> body of the message, even if the committer is the author.
+>>>
+>>> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+>>> ---
+>>
+>> I wouldn't say that the existing option names to send-email are great, but
+>> I have to say that the one added by this is simply horrible ;-)
+>>
+>> The first paragraph of the proposed commit log message states the problem
+>> it tries to address very clearly, which is good, but is "From: " the only
+>> thing that needs this? I am wondering if this should be named and behave
+>> more like "--duplicate-header" or "--in-body-header".
 >
->> Michael Haggerty (15):
->>   refs.c: reorder definitions more logically
->> ...
->
-> I read through the whole series and didn't find anything noticeably
-> wrong.  Overall, it was quite readable for such a large series. Thanks
-> for breaking it up as you did.
+> I have never seen any other 'in-body-header' other than From, and I
+> don't see how that would be useful. Anybody else?
 
-I hate myself doing this, but...
+I sometimes like to set an explicit in-body `Date' header. However, Junio
+has disagreed vocally about this practice:
 
-	<aol> me too! </aol>
+  Subject: Dates in Commits and other issues of style
+           (Re: [RFC 2/5] Pretty Print: show tz when using DATE_LOCAL)
+  Message-ID: <811b01a9-f10e-4444-9e5e-581adaf059c2-mfwitten@gmail.com>
+  http://article.gmane.org/gmane.comp.version-control.git/171936
 
-The series looked very readable, unlike the previous huge rounds.
-
-Thanks.
+Sincerely,
+Michael Witten
