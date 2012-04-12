@@ -1,120 +1,75 @@
-From: David Barr <davidbarr@google.com>
-Subject: Re: Parallel refactoring and git merge nightmare
-Date: Thu, 12 Apr 2012 15:49:25 +1000
-Message-ID: <CAFfmPPMbr-db+OnTwK-ry+wGQSEeunsD+QrmAVS2fzDH+hGnbg@mail.gmail.com>
-References: <1334160803.74554.YahooMailNeo@web160603.mail.bf1.yahoo.com>
-	<CAJDDKr6v6uPLoAQ96fP7JM5F0_WHqfbaD=QKyfrWPWd2St7tKQ@mail.gmail.com>
-	<1334208237.82681.YahooMailNeo@web160606.mail.bf1.yahoo.com>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: stash refuses to pop
+Date: Thu, 12 Apr 2012 07:50:05 +0200
+Message-ID: <4F866D0D.7070904@viscovery.net>
+References: <4F847350.3000409@ubuntu.com> <7vpqbfpim2.fsf@alter.siamese.dyndns.org> <4F84827B.80104@ubuntu.com> <4F851D8A.4000501@viscovery.net> <4F859353.4070700@ubuntu.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: David Aguilar <davvid@gmail.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: =?ISO-8859-1?Q?Pap_L=F4rinc?= <paplorinc@yahoo.com>
-X-From: git-owner@vger.kernel.org Thu Apr 12 07:50:10 2012
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Phillip Susi <psusi@ubuntu.com>
+X-From: git-owner@vger.kernel.org Thu Apr 12 07:50:22 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SICv3-0008DI-6t
-	for gcvg-git-2@plane.gmane.org; Thu, 12 Apr 2012 07:50:09 +0200
+	id 1SICvE-0008Jl-W9
+	for gcvg-git-2@plane.gmane.org; Thu, 12 Apr 2012 07:50:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756639Ab2DLFt0 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 12 Apr 2012 01:49:26 -0400
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:48795 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756612Ab2DLFt0 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 12 Apr 2012 01:49:26 -0400
-Received: by yhmm54 with SMTP id m54so892899yhm.19
-        for <git@vger.kernel.org>; Wed, 11 Apr 2012 22:49:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding:x-system-of-record;
-        bh=gUY143ga9BY5BUmph4rAtBU58XtG9QdsPJrIW39aye4=;
-        b=cHIHUmXYLKjHAGHE8S4E8U4mz93ZiP908gGR8u+5cPa5Q9HkeFsagfRE/SXPcE6tf2
-         XYbM0n2rKKp48zXt0i0sjztQkkscf0U1zVH4Z9+USeF3WaMlC0/JVu0Eh1Un4d/Lqnbf
-         8h8BvXGhszCiOsRd24ocH4J9/pCUtvbuyf+HRJbMv127lwN5iBZD5LtGfiyRRe4WM2aM
-         sMhL65CoqZ/k8rH6DMxiSfeZ+PZwfUKIwzrqk8FM4aS6Ra3XTp7a9cx/3LmrOcYv42mq
-         +yMIFTD2YMNo5ppjnM4m2y4mdVrpDtZEXW3Zq3o8yUa1UNrfOEfQIT6Sk2I59b2hNIW7
-         CW/A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding:x-system-of-record
-         :x-gm-message-state;
-        bh=gUY143ga9BY5BUmph4rAtBU58XtG9QdsPJrIW39aye4=;
-        b=RNAvgm+rSdjpHMk6idrqBIxCMp8PHpSGQs4mzSTjKue7PgkWp2DofXIetGE8Ki1DkM
-         69iR8R61xTZlUh048Xd4S5GlC0rgXJ5YiNBOqSAls3Pb7id56D1jkhoZ/Idh2uJjw6Tk
-         yBk9tnvBSF0a4izTG0xTJuDza3ppcWDIzRhWTr9Ua17nLM/JLN68koUyLaNXRVMUHNeI
-         tKox2EoVUs1uLVxq6ReG6Ubh4t+SqNhtAwwILIrsiv2ty2J5RiXLBdfDajy7oRMDUl1U
-         wDeobqVrBFf/Lnv5p6HD8oJy6waiLjBQikM5OqTDTFY/RbjpKK1v2NzPxErh2KPy2Ydp
-         1cng==
-Received: by 10.100.246.16 with SMTP id t16mr323021anh.3.1334209765440;
-        Wed, 11 Apr 2012 22:49:25 -0700 (PDT)
-Received: by 10.100.246.16 with SMTP id t16mr323012anh.3.1334209765296; Wed,
- 11 Apr 2012 22:49:25 -0700 (PDT)
-Received: by 10.101.83.5 with HTTP; Wed, 11 Apr 2012 22:49:25 -0700 (PDT)
-In-Reply-To: <1334208237.82681.YahooMailNeo@web160606.mail.bf1.yahoo.com>
-X-System-Of-Record: true
-X-Gm-Message-State: ALoCoQmilyytW2I6g2hK56eEYnYKufZ4hrJ46s32/1oeXjUu08oNWJ7Cc5UPBXVw6zCh85dHmeLBTC0UAG8GKJrG667hRWmNhv/wsR9LJgABIREqa/tROKJxY7gqn25gl8X8/9PNSM+hDK6wh4Tcsopc7r0zUzH+3Q==
+	id S1756689Ab2DLFuN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Apr 2012 01:50:13 -0400
+Received: from lilzmailso02.liwest.at ([212.33.55.13]:38756 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756616Ab2DLFuL (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Apr 2012 01:50:11 -0400
+Received: from cpe228-254-static.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.76)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1SICvE-0004OM-GO; Thu, 12 Apr 2012 07:50:20 +0200
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id 008581660F;
+	Thu, 12 Apr 2012 07:50:05 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:11.0) Gecko/20120327 Thunderbird/11.0.1
+In-Reply-To: <4F859353.4070700@ubuntu.com>
+X-Enigmail-Version: 1.4
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195296>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195297>
 
-On Thu, Apr 12, 2012 at 3:23 PM, Pap L=F4rinc <paplorinc@yahoo.com> wro=
-te:
->>> Hello! :)
->>>
->>> We are working in parallel on the refactoring of a
->>> small project. The team uses SVN and I decided to give GIT a chance=
- to
->>> demonstrate it's merging capabilities I've read so much good about =
-:).
->>>
->>> However
->>> =A0- I must be doing something VERY wrong - every time I try to mer=
-ge from
->>> =A0the remote svn (git svn fetch and git merge remotebranch) into m=
-y
->>> branch, I get hundreds of conflicts, mostly because of moved folder=
-s.
->>
->>Google is your friend
->>
->>https://wiki.kuali.org/display/KULRICE/git-svn+how+to
->>
->>http://flavio.castelli.name/howto_use_git_with_svn
->>
->>http://viget.com/extend/effectively-using-git-with-subversion
->>
->>http://java.dzone.com/articles/how-start-using-git-svn-based
->>--
->>David
->
-> I have no idea why you guys think I'm an idiot.
-> I have read every link I could find (most of the Pro Git book and wat=
-ched several hours of git video tutorials). The problem is not with GIT=
--SVN, it's with the GIT merge, more specifically with a simultaneous mo=
-dify and move, which conflicts probably because it is detected as a mod=
-ify and delete.
-> Could someone please be a little more friendly, I need advice on how =
-to solve hundreds of git merge conflicts (eg. parallel move and modify,=
- which should have been merged automatically).
+Am 4/11/2012 16:21, schrieb Phillip Susi:
+> On 4/11/2012 1:58 AM, Johannes Sixt wrote:
+>> You are trying to abuse git-stash, but it does not cooperate because it
+>> was not designed to be abused ;-) git-stash is not intended as a generic
+>> push-and-pop-my-changes work horse.
+> 
+> In what way is using the documented -p switch abuse?
 
-Hi Pap,
+It isn't.
 
-I think I understand the issue you are facing.
-I assume that your collaborators are following the practice of
-one-commit-per-factor-operation.
-My experience with this has been that synchronizing work best if
-changes are "bubbled up".
-I did this by progressively rebasing my branch against each upstream co=
-mmit.
-I hope this helps a little.
+>> The purpose of git-stash is that you can "move away"
+> 
+> Yes, and then move back.
 
---
-David Barr
+This is abuse, if you haven't cleaned your worktree.
+
+>> That is, before you can think of applying a stash, you are expected to
+>> have cleaned out your worktree.
+> 
+> It is obvious that is the assumption that stash was originally made with,
+> and it might make some sense if it always left the tree in a clean state,
+> but it no longer makes sense given -p and how it can leave the tree in a
+> not clean state.
+
+You are misunderstanding. The intended workflow is:
+
+  stash -p
+  # ... test the remaining changes in isolation ...
+  commit -a
+  # now the worktree is clean
+  stash pop
+
+-- Hannes
