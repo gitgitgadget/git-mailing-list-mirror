@@ -1,135 +1,145 @@
-From: "Philip Oakley" <philipoakley@iee.org>
-Subject: Re: push.default: current vs upstream
-Date: Thu, 12 Apr 2012 23:59:58 +0100
-Organization: OPDS
-Message-ID: <A13E3113738743C6B002BB6B076E1FEE@PhilipOakley>
-References: <vpqwr5uceis.fsf@bauges.imag.fr> <20120406071520.GD25301@sigill.intra.peff.net> <vpqr4w12tjj.fsf@bauges.imag.fr> <20120406080004.GA27940@sigill.intra.peff.net> <4F7FF19B.1060407@alum.mit.edu> <20120407075150.GA18168@sigill.intra.peff.net> <4F7FFD7A.80104@pileofstuff.org> <20120412071150.GB31122@sigill.intra.peff.net> <4F874639.5090207@pileofstuff.org> <7vlim04ou1.fsf@alter.siamese.dyndns.org> <20120412221110.GA22426@sigill.intra.peff.net>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From: Clemens Buchacher <drizzd@aon.at>
+Subject: [PATCH] properly keep track of current working directory
+Date: Fri, 13 Apr 2012 01:11:36 +0200
+Message-ID: <20120412231136.GA17585@ecki>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="UTF-8";
-	reply-type=original
-Content-Transfer-Encoding: 7bit
-Cc: "Andrew Sayers" <andrew-git@pileofstuff.org>,
-	"Michael Haggerty" <mhagger@alum.mit.edu>,
-	"Matthieu Moy" <Matthieu.Moy@grenoble-inp.fr>,
-	"Git List" <git@vger.kernel.org>
-To: "Jeff King" <peff@peff.net>, "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Apr 13 01:09:43 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Apr 13 01:12:59 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SIT93-0000Zj-VV
-	for gcvg-git-2@plane.gmane.org; Fri, 13 Apr 2012 01:09:42 +0200
+	id 1SITCE-0002Lt-LV
+	for gcvg-git-2@plane.gmane.org; Fri, 13 Apr 2012 01:12:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934210Ab2DLXJd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Apr 2012 19:09:33 -0400
-Received: from out1.ip04ir2.opaltelecom.net ([62.24.128.240]:3033 "EHLO
-	out1.ip04ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S934179Ab2DLXJc (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 12 Apr 2012 19:09:32 -0400
-X-Greylist: delayed 589 seconds by postgrey-1.27 at vger.kernel.org; Thu, 12 Apr 2012 19:09:32 EDT
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: AhYKABReh09cHI01/2dsb2JhbABFhWaFSK1FA4EDgQiCBAUBAQQBCAEBGRUeAQETDgUGAgMFAgEDDgcBAgICBSECAhQBBBoGBxcGARIIAgECAwEKh24JB6cZkneBL4o5hH41YwSNb4kOjyWCaA
-X-IronPort-AV: E=Sophos;i="4.75,414,1330905600"; 
-   d="scan'208";a="368444915"
-Received: from host-92-28-141-53.as13285.net (HELO PhilipOakley) ([92.28.141.53])
-  by out1.ip04ir2.opaltelecom.net with SMTP; 12 Apr 2012 23:59:40 +0100
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+	id S1757648Ab2DLXMy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Apr 2012 19:12:54 -0400
+Received: from smtpout15.highway.telekom.at ([195.3.96.90]:55046 "EHLO
+	email.aon.at" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1750916Ab2DLXMx (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Apr 2012 19:12:53 -0400
+Received: (qmail 3529 invoked from network); 12 Apr 2012 23:12:50 -0000
+X-Spam-Checker-Version: SpamAssassin 3.2.0 (2007-05-01) on
+	WARSBL506.highway.telekom.at
+X-Spam-Level: 
+Received: from p5b22dab5.dip.t-dialin.net (HELO [127.0.0.1]) (aon.912301525.1@aon.at@[91.34.218.181])
+          (envelope-sender <drizzd@aon.at>)
+          by smarthub80.res.a1.net (qmail-ldap-1.03) with AES128-SHA encrypted SMTP
+          for <gitster@pobox.com>; 12 Apr 2012 23:12:49 -0000
+Content-Disposition: inline
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195385>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195386>
 
-From: "Jeff King" <peff@peff.net> Sent: Thursday, April 12, 2012 11:11 PM
-> On Thu, Apr 12, 2012 at 02:33:58PM -0700, Junio C Hamano wrote:
->
->> Andrew Sayers <andrew-git@pileofstuff.org> writes:
->>
->> > So if the problem is that the documentation cues the reader to think
->> > about upstreams but not to think about downstreams, the solution is to
->> > find excuses to talk more about downstreams.  As far as I'm concerned
->> > @{upstream} means "the place that commits come from when I `git pull`",
->> > so it makes perfect sense to me that @{downstream} would mean "the
->> > place
->> > commits go to when I `git push`".
+Various failure modes in the repository detection code path currently
+quote the wrong directory in their error message. The working directory
+is changed iteratively to the parent directory until a git repository is
+found. If the working directory cannot be changed to the parent
+directory for some reason, the detection gives up and prints an error
+message. THe error message should report the current working directory.
 
->> In a separate message I completely misunderstood what you meant by
->> "downstream".
->
+Instead of continually updating the 'cwd' variable, which is actually
+used to remember the original working directory, the 'offset' variable
+is used to keep track of the current working directory. At the point
+where the affected error handling code is called, 'offset' already
+points to the end of the parent of the working directory, rather than
+the current working directory.
 
-It would be useful to have "upstream" and "downstream" clarified in the 
-documentation, say the Workflows man pages or some suitable place. Upstream 
-is used often but isn't well defined (no obvious link anyway) - it's more of 
-concept than a place (hence Andrew's option), while downstream is hardly 
-mentioned at all.
+Fix this by explicitly using a variable 'offset_parent' and update
+'offset' concurrently with the call to chdir.
 
-For the push.default option can I suggest a different approach focused on
-the beginner? If both current and upstream are potentially problematic, then
-surely the default initially should be unset, so that a beginner's push is
-refused with a pleasant message, e.g.
-"  git push.default is unset,
-   please use 'git push <remote> <branch>', or see its man page;
-  or set the push.default to match your work style."
+In a similar fashion, the function get_device_or_die() would print the
+original working directory in case of a failure, rather than the current
+working directory. Fix this as well by making use of the 'offset'
+variable.
 
-This offers the beginner a cause, an immediate solution, and guidance for
-the long term. I deliberately called it a work style rather than workflow.
+Lastly, replace the phrase 'mount parent' with 'mount point'. The former
+appears to be a typo.
 
-One work style for push.default could be "beginner" which would reduce the
-message to:
--  git push.default is unset, use 'git push <remote> <branch>'
+Signed-off-by: Clemens Buchacher <drizzd@aon.at>
+---
+ setup.c |   22 +++++++++++++---------
+ 1 file changed, 13 insertions(+), 9 deletions(-)
 
-This gives the beginner time to learn their workflow, and gives a friendly 
-version of the command.
-
-While the expert user's regression would be to select _their_
-current/upstream work style.
-
-This approach does take the opposite route to most of the default settings
-as it is about stopping beginners making major mistakes, rather than helping
-them become productive.
-
-One issue I had with the 'git push' man page is that 'refspec's are a fairly 
-advanced (at least intermediate) concept that would confuse the beginner who 
-is still getting to grips with their branches and remotes, so using the 'git 
-push <remote> <branch>' version [*1*] will be friendlier to those beginners.
-
-Philip
-
-> Yeah, I also took it to mean that the "downstream" of your "upstream"
-> would be where you started (though as you mentioned, it is not 1-to-1,
-> so that would not work anyway).
->
-> But this:
->
->> If you had something like this:
->>
->> [remote "origin"]
->>         url = ...
->>         [remote "destination"]
->>                 pushURL = ...
->>
->> [branch "topic"]
->>         remote = origin
->>                 merge = refs/heads/master
->> pushRemote = destination # new
->>                 push = refs/heads/topic # new
->>
->> you could express that asymmetric layout in a natural way.  When you say
->> "git push" while on your "topic" branch, it will go to "destination"
->> remote to update their "topic" branch.
->
-> is much more useful (and I already complained about the lack of
-> something like pushRemote recently). I just think it should not be
-> called "downstream", as it is not the reverse of upstream.
->
-> -Peff
-> --
-[1] http://gitready.com/beginner/2009/01/21/pushing-and-pulling.html 
+diff --git a/setup.c b/setup.c
+index 7a3618f..731851a 100644
+--- a/setup.c
++++ b/setup.c
+@@ -569,13 +569,15 @@ static const char *setup_nongit(const char *cwd, int *nongit_ok)
+ 	return NULL;
+ }
+ 
+-static dev_t get_device_or_die(const char *path, const char *prefix)
++static dev_t get_device_or_die(const char *path, const char *prefix, int prefix_len)
+ {
+ 	struct stat buf;
+-	if (stat(path, &buf))
+-		die_errno("failed to stat '%s%s%s'",
++	if (stat(path, &buf)) {
++		die_errno("failed to stat '%*s%s%s'",
++				prefix_len,
+ 				prefix ? prefix : "",
+ 				prefix ? "/" : "", path);
++	}
+ 	return buf.st_dev;
+ }
+ 
+@@ -589,7 +591,7 @@ static const char *setup_git_directory_gently_1(int *nongit_ok)
+ 	static char cwd[PATH_MAX+1];
+ 	const char *gitdirenv, *ret;
+ 	char *gitfile;
+-	int len, offset, ceil_offset;
++	int len, offset, offset_parent, ceil_offset;
+ 	dev_t current_device = 0;
+ 	int one_filesystem = 1;
+ 
+@@ -631,7 +633,7 @@ static const char *setup_git_directory_gently_1(int *nongit_ok)
+ 	 */
+ 	one_filesystem = !git_env_bool("GIT_DISCOVERY_ACROSS_FILESYSTEM", 0);
+ 	if (one_filesystem)
+-		current_device = get_device_or_die(".", NULL);
++		current_device = get_device_or_die(".", NULL, 0);
+ 	for (;;) {
+ 		gitfile = (char*)read_gitfile(DEFAULT_GIT_DIR_ENVIRONMENT);
+ 		if (gitfile)
+@@ -653,11 +655,12 @@ static const char *setup_git_directory_gently_1(int *nongit_ok)
+ 		if (is_git_directory("."))
+ 			return setup_bare_git_dir(cwd, offset, len, nongit_ok);
+ 
+-		while (--offset > ceil_offset && cwd[offset] != '/');
+-		if (offset <= ceil_offset)
++		offset_parent = offset;
++		while (--offset_parent > ceil_offset && cwd[offset_parent] != '/');
++		if (offset_parent <= ceil_offset)
+ 			return setup_nongit(cwd, nongit_ok);
+ 		if (one_filesystem) {
+-			dev_t parent_device = get_device_or_die("..", cwd);
++			dev_t parent_device = get_device_or_die("..", cwd, offset);
+ 			if (parent_device != current_device) {
+ 				if (nongit_ok) {
+ 					if (chdir(cwd))
+@@ -666,7 +669,7 @@ static const char *setup_git_directory_gently_1(int *nongit_ok)
+ 					return NULL;
+ 				}
+ 				cwd[offset] = '\0';
+-				die("Not a git repository (or any parent up to mount parent %s)\n"
++				die("Not a git repository (or any parent up to mount point %s)\n"
+ 				"Stopping at filesystem boundary (GIT_DISCOVERY_ACROSS_FILESYSTEM not set).", cwd);
+ 			}
+ 		}
+@@ -674,6 +677,7 @@ static const char *setup_git_directory_gently_1(int *nongit_ok)
+ 			cwd[offset] = '\0';
+ 			die_errno("Cannot change to '%s/..'", cwd);
+ 		}
++		offset = offset_parent;
+ 	}
+ }
+ 
+-- 
+1.7.9.6
