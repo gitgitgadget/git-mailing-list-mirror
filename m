@@ -1,87 +1,97 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v5 2/5] http: handle proxy proactive authentication
-Date: Thu, 12 Apr 2012 18:42:30 -0400
-Message-ID: <20120412224230.GA22988@sigill.intra.peff.net>
-References: <4F5F53CA.7090003@seap.minhap.es>
- <7v398cvb30.fsf@alter.siamese.dyndns.org>
- <7vsjgcs8pq.fsf@alter.siamese.dyndns.org>
- <7vwr5leyj5.fsf@alter.siamese.dyndns.org>
- <20120412205836.GB21018@sigill.intra.peff.net>
- <7vpqbc4p8n.fsf@alter.siamese.dyndns.org>
- <20120412220516.GG21018@sigill.intra.peff.net>
- <7vd37c4msm.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/2] fix http auth with multiple curl handles
+Date: Thu, 12 Apr 2012 15:50:08 -0700
+Message-ID: <7v4nso4lb3.fsf@alter.siamese.dyndns.org>
+References: <20120402083115.GA2235@sigill.intra.peff.net>
+ <1334051620-18044-1-git-send-email-drizzd@aon.at>
+ <1334051620-18044-3-git-send-email-drizzd@aon.at>
+ <20120412070910.GA31122@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Nelson Benitez Leon <nelsonjesus.benitez@seap.minhap.es>,
-	git@vger.kernel.org, sam@vilain.net, spearce@spearce.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Apr 13 00:42:44 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Clemens Buchacher <drizzd@aon.at>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Apr 13 00:50:19 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SISir-0003Ht-QY
-	for gcvg-git-2@plane.gmane.org; Fri, 13 Apr 2012 00:42:38 +0200
+	id 1SISqI-0007AY-SB
+	for gcvg-git-2@plane.gmane.org; Fri, 13 Apr 2012 00:50:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S966140Ab2DLWmd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Apr 2012 18:42:33 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:60453
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S966131Ab2DLWmc (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Apr 2012 18:42:32 -0400
-Received: (qmail 32662 invoked by uid 107); 12 Apr 2012 22:42:38 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 12 Apr 2012 18:42:38 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 12 Apr 2012 18:42:30 -0400
-Content-Disposition: inline
-In-Reply-To: <7vd37c4msm.fsf@alter.siamese.dyndns.org>
+	id S966131Ab2DLWuM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Apr 2012 18:50:12 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:45209 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757869Ab2DLWuL (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Apr 2012 18:50:11 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A998775E0;
+	Thu, 12 Apr 2012 18:50:10 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=bG3aDWJrcO0I5xkoGxP+sys3Ea4=; b=YcKMg6
+	xZe7TRB/zRbuSp4KyAG02FPuXKz2IIjCE6KXx+fliBakKYoNuVBfI5NigJzmSeHy
+	F3ONjBuon09fuTvgPmvvDriGtOcBb4NgFJE2ZK7CiA12h7xJw+9JJP86R0Xrv6Rn
+	7PCxIy6GyChyD1WhvV3xFa/TubavvNxhnpKjQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=gtht9HqAQsfsLkQ8BqIEwsT/9Qo49l+K
+	A7gTlVBysYkfgDCemj4+FN+OUWj1fIwItV0pUdYP38rG3efgv9NFgPgh7+/te+qN
+	SvDQU1CtmArHqAZelRTHrJBsuBMKB0K3PzqqeaAMivuqrDEqd5LppjqfgTqL8Hn6
+	S1GroIRPio4=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9FCEB75DF;
+	Thu, 12 Apr 2012 18:50:10 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 05BC775DD; Thu, 12 Apr 2012
+ 18:50:09 -0400 (EDT)
+In-Reply-To: <20120412070910.GA31122@sigill.intra.peff.net> (Jeff King's
+ message of "Thu, 12 Apr 2012 03:09:10 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: DB60A1AA-84F1-11E1-A4CE-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195382>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195383>
 
-On Thu, Apr 12, 2012 at 03:18:01PM -0700, Junio C Hamano wrote:
+Jeff King <peff@peff.net> writes:
 
-> > So as far as I can tell, these are equivalent:
-> >
-> >   http_proxy=http://127.0.0.1:1080
-> >   http_proxy=https://127.0.0.1:1080
-> >   http_proxy=foobar://127.0.0.1:1080
-> 
-> Yes, that is exactly what I was trying to say.  The foobar:// part does
-> not matter; "http" in "http_proxy" is what matters, as it is how you can
-> specify two separate proxies depending on what destination you are going
-> via what protocol.
+> ...
+> I think the best we can do is to put the auth data in a static buffer
+> and feed that to curl. We end up rewriting the auth data into our buffer
+> over and over, but at least we don't re-malloc it. Like this:
+>
+> diff --git a/http.c b/http.c
+> index f3f83d7..374c3bb 100644
+> --- a/http.c
+> +++ b/http.c
+> @@ -211,12 +211,12 @@ static int http_options(const char *var, const char *value, void *cb)
+>  static void init_curl_http_auth(CURL *result)
+>  {
+>  	if (http_auth.username) {
+> -		struct strbuf up = STRBUF_INIT;
+> +		static struct strbuf up = STRBUF_INIT;
+>  		credential_fill(&http_auth);
+> +		strbuf_reset(&up);
+>  		strbuf_addf(&up, "%s:%s",
+>  			    http_auth.username, http_auth.password);
+> -		curl_easy_setopt(result, CURLOPT_USERPWD,
+> -				 strbuf_detach(&up, NULL));
+> +		curl_easy_setopt(result, CURLOPT_USERPWD, up.buf);
+>  	}
+>  }
 
-But you snipped the later part of my message, which is that the "http"
-in "http_proxy" does _not_ matter. It is about which destinations to
-apply the proxy to, not how you talk to the proxy (and the latter is what
-should matter for the credentials).
+Yeah, that's sad but I agree that is probably the best we could do.  Do
+you want me to squash it in?
 
-> > Not splitting "http" and "http-proxy" does have a slight confusion, as
-> > the default proxy port is "1080". So a proxy of "http://127.0.0.1" would
-> > mean "http://127.0.0.1:1080", whereas a regular request would mean
-> > "http://127.0.0.1:80". The credential code includes the port as part of
-> > the unique hostname, but since the default-port magic happens inside
-> > curl, we have no access to it (short of re-implementing it ourselves).
-> 
-> Ok, so how about this as a replacement patch for what I have had for the
-> past few days?
+> By the way, this touches on an area that I noticed while refactoring the
+> http auth code a while ago, but decided not to tackle at the time. We
+> fill in the auth information early, and then never bother to revisit it
+> as URLs change. So for example, if I got a redirect from host A to host
+> B, we would continue to use the credential for host A and host B. Which
+> is maybe convenient, and maybe a security issue.
 
-My other message argued "the http-proxy distinction might be important,
-but probably isn't". But I didn't talk about "the http-proxy distinction
-might break helpers". The stock helpers will be fine; they are totally
-clueless about what the protocol means, and just treat it as a string to
-be matched. But for something like osxkeychain, where it is converting
-the protocol string into some OS-specific magic value, it does matter,
-and http-proxy would cause it to exit in confusion.
-
-It looks like OS X defines a SOCKS type and an HTTPProxy type for its
-keychain API. So in either case, it should probably be updated to handle
-these new types. And I guess that argues for making the distinction,
-since at least one helper does want to care about it.
-
--Peff
+Good point.  Do we follow redirects, though?
