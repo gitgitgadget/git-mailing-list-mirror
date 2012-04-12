@@ -1,61 +1,90 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: push.default: current vs upstream
-Date: Thu, 12 Apr 2012 03:11:51 -0400
-Message-ID: <20120412071150.GB31122@sigill.intra.peff.net>
-References: <7vty15ltuo.fsf@alter.siamese.dyndns.org>
- <vpqty12h995.fsf@bauges.imag.fr>
- <20120405131301.GB10293@sigill.intra.peff.net>
- <vpqwr5uceis.fsf@bauges.imag.fr>
- <20120406071520.GD25301@sigill.intra.peff.net>
- <vpqr4w12tjj.fsf@bauges.imag.fr>
- <20120406080004.GA27940@sigill.intra.peff.net>
- <4F7FF19B.1060407@alum.mit.edu>
- <20120407075150.GA18168@sigill.intra.peff.net>
- <4F7FFD7A.80104@pileofstuff.org>
+From: Stephen Boyd <bebarino@gmail.com>
+Subject: Re: [PATCH 1/2] parse-options: Add support for dumping out long options
+Date: Thu, 12 Apr 2012 00:12:32 -0700
+Message-ID: <4F868060.1000709@gmail.com>
+References: <1334140165-24958-1-git-send-email-bebarino@gmail.com> <1334140165-24958-2-git-send-email-bebarino@gmail.com> <20120411140651.GR2289@goldbirke>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Michael Haggerty <mhagger@alum.mit.edu>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Andrew Sayers <andrew-git@pileofstuff.org>
-X-From: git-owner@vger.kernel.org Thu Apr 12 09:12:02 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, spearce@spearce.org,
+	felipe.contreras@gmail.com, jrnieder@gmail.com
+To: =?ISO-8859-1?Q?SZEDER_G=E1bor?= <szeder@ira.uka.de>
+X-From: git-owner@vger.kernel.org Thu Apr 12 09:12:40 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SIECD-0008RD-TV
-	for gcvg-git-2@plane.gmane.org; Thu, 12 Apr 2012 09:11:58 +0200
+	id 1SIECt-0000NO-Un
+	for gcvg-git-2@plane.gmane.org; Thu, 12 Apr 2012 09:12:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762078Ab2DLHLx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Apr 2012 03:11:53 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:58374
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757468Ab2DLHLx (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Apr 2012 03:11:53 -0400
-Received: (qmail 24115 invoked by uid 107); 12 Apr 2012 07:11:58 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 12 Apr 2012 03:11:58 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 12 Apr 2012 03:11:51 -0400
-Content-Disposition: inline
-In-Reply-To: <4F7FFD7A.80104@pileofstuff.org>
+	id S1762063Ab2DLHMf convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 12 Apr 2012 03:12:35 -0400
+Received: from mail-ob0-f174.google.com ([209.85.214.174]:50923 "EHLO
+	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757468Ab2DLHMe (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Apr 2012 03:12:34 -0400
+Received: by obbtb18 with SMTP id tb18so2348253obb.19
+        for <git@vger.kernel.org>; Thu, 12 Apr 2012 00:12:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=urZqIrYHUwP3emGY7EXWXY6PFTfaAvrhVCHB/cE66Do=;
+        b=CCbAoX6/TvU5jXH+TsHYoiwE2BDcEtAM9VSwYH3w6qWMFgHHcspo7SS0LmlpoYmtKA
+         QsFA3akQytQ+UzZFDR1UGvoDwCytayjCzsKx9Xxwcg5g+2w6BUPmjp0TsPOvNT5ky4VN
+         LGyxVDCA2ZkQ1uOCQsT0TmyvF22TBz5BpJcOqMtUtlcBZugfSjGnnmdpm1eaSb2a6ZhC
+         cA6wk7Dk1FdNjfw0wItkrCihJjxLh2YOiNWZkyJwsOSy1jzIr19aUQUzNtLaLPII87tW
+         d/6yDNqfl3MUrpskygs5K4hYII7JAB91sc46EpecXfhsg3ekVOYdV3DV+f/9Ond4ZpPJ
+         /+Gw==
+Received: by 10.182.51.9 with SMTP id g9mr1593535obo.56.1334214754233;
+        Thu, 12 Apr 2012 00:12:34 -0700 (PDT)
+Received: from [192.168.2.10] (ip68-105-100-241.sd.sd.cox.net. [68.105.100.241])
+        by mx.google.com with ESMTPS id k7sm4988260oei.0.2012.04.12.00.12.33
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 12 Apr 2012 00:12:33 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:6.0) Gecko/20110911 Thunderbird/6.0
+In-Reply-To: <20120411140651.GR2289@goldbirke>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195306>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195307>
 
-On Sat, Apr 07, 2012 at 09:40:26AM +0100, Andrew Sayers wrote:
+On 04/11/2012 07:06 AM, SZEDER G=E1bor wrote:
+> On Wed, Apr 11, 2012 at 03:29:24AM -0700, Stephen Boyd wrote:
+>> The bash completion script wants to know what the long options are f=
+or a
+>> certain command at runtime. Add a magical long option that nobody co=
+uld
+>> possibly ever use (--dump-raw-long-options) to get this information.
+>>
+>> Some example output:
+>>
+>>  $ git clone --dump-raw-long-options
+>>  --no-verbose --no-quiet --progress --no-progress --no-checkout
+>>  --checkout --bare --no-bare --mirror --no-mirror --local --no-local
+>>  --no-hardlinks --hardlinks --shared --no-shared --recursive
+>>  --no-recursive --recurse-submodules --no-recurse-submodules --templ=
+ate=3D
+>>  --no-template --reference=3D --no-reference --origin=3D --no-origin
+>>  --branch=3D --no-branch --upload-pack=3D --no-upload-pack --depth=3D
+>>  --no-depth --single-branch --no-single-branch --separate-git-dir=3D
+>>  --no-separate-git-dir --config=3D --no-config
+>>
+>=20
+> I think this is a good idea; there are many completion functions that
+> fell behind and lack an option or two.
+>=20
+> However, in the completion script we deliberately miss options like
+> '--force', but with your series such options will be offered, too.
+>=20
 
-> On a slight aside, should we add @{downstream} to describe the opposite
-> of @{upstream}?  Seeing that around the place would give intermediate
-> users a clue about why pull and push aren't as related as they think,
-> and would be useful here and there in code (e.g. __git_ps1 could show a
-> better bash prompt with GIT_PS1_SHOWUPSTREAM).
+Hm.. I meant to say something about that in the commit text. I'm willin=
+g
+to live with wading through some more options when I tab complete if it
+means the script never falls out of date with my git installation.
 
-Maybe. I don't really see how it is useful, but maybe you want to flesh
-our your proposal with some examples? I do not use __git_ps1, so I'm not
-sure what you want to improve there.
-
--Peff
+I can envision us putting more smarts into the parse options code to
+hide certain options from the raw dump but I'm not sure how useful that
+is. Do we need that?
