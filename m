@@ -1,101 +1,101 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] tests: add initial bash completion tests
-Date: Thu, 12 Apr 2012 10:43:33 -0700
-Message-ID: <7vmx6g6e2i.fsf@alter.siamese.dyndns.org>
-References: <1334181423-4391-1-git-send-email-felipe.contreras@gmail.com>
- <CAMP44s2Ug91_sQ-XR3ck2k+x+eQRt9PNRRBOUnkrnNRhY6fEpw@mail.gmail.com>
+From: Christopher Tiwald <christiwald@gmail.com>
+Subject: [PATCH] Fix httpd tests that broke when non-ff push advice changed
+Date: Thu, 12 Apr 2012 13:56:28 -0400
+Message-ID: <20120412175628.GH367@gmail.com>
+References: <9F768A58-DEB0-43E1-8AE4-B2A5C4E6CDE9@silverinsanity.com>
+ <20120412133701.GA367@gmail.com>
+ <20120412140049.GB367@gmail.com>
+ <7v8vi1gdzk.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>,
-	SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder@ira.uka.de>,
-	Junio C Hamano <gitster@pobox.com>,
-	Thomas Rast <trast@student.ethz.ch>, Jeff King <peff@peff.net>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Apr 12 19:43:44 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Brian Gernhardt <brian@silverinsanity.com>,
+	Git List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Apr 12 19:56:38 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SIO3c-00079Z-0y
-	for gcvg-git-2@plane.gmane.org; Thu, 12 Apr 2012 19:43:44 +0200
+	id 1SIOG6-0007Qj-4L
+	for gcvg-git-2@plane.gmane.org; Thu, 12 Apr 2012 19:56:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932089Ab2DLRnj convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 12 Apr 2012 13:43:39 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35113 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757896Ab2DLRnh convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 12 Apr 2012 13:43:37 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 81F88665D;
-	Thu, 12 Apr 2012 13:43:37 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=a0WlMPrZle8A
-	pEZanl2akHXy6Fo=; b=Q6uB2O2onFNZEqKZWcb3LZHBEK/4hSCuT7zW4ctrBJGf
-	7+56jiyvhlIZUY+sZRpPXV8lGd+Y9GaJRGDh72Q/LGE9FEF8KwtZG35CYYTSkgAg
-	DnMfnBxop3wzET3mrRFo/7D3btzjqJ3pP8ukm4Yfw+RYpsNaHHHN4U7Vq5uVr+g=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=Wvdafq
-	myCyRDjREO1m83x6hJ2VjYH8OaVGYl/12vX/DMd+n7qYUsEs6fGqmXiXOHduCyB/
-	IrJnPA2hrLj/KBTd2a9zxmtxoP/eRwcmniReG9EmE1V73tct6DoL3giyU0bydRKy
-	L29YvsliSmRctzFa9jzfHZABFmNNWvraiRAhg=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 796AD665C;
-	Thu, 12 Apr 2012 13:43:37 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 01BF3665B; Thu, 12 Apr 2012
- 13:43:36 -0400 (EDT)
-In-Reply-To: <CAMP44s2Ug91_sQ-XR3ck2k+x+eQRt9PNRRBOUnkrnNRhY6fEpw@mail.gmail.com> (Felipe
- Contreras's message of "Thu, 12 Apr 2012 19:15:40 +0300")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 084D6278-84C7-11E1-9389-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S933008Ab2DLR4d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Apr 2012 13:56:33 -0400
+Received: from mail-qc0-f174.google.com ([209.85.216.174]:50469 "EHLO
+	mail-qc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932108Ab2DLR4c (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Apr 2012 13:56:32 -0400
+Received: by qcro28 with SMTP id o28so1394496qcr.19
+        for <git@vger.kernel.org>; Thu, 12 Apr 2012 10:56:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=Iw0pgmiRwR9G/I+hJ3j6YOcu3NiYxX65BmNSBJX7E+0=;
+        b=HqkYc3iqdEIV3WIxxwKlvZx1+1E3KRznwrHveo1IwYQL/czIBjLg0mZIjExvxaIaz0
+         Rufua7Nv3NaQ0BWiUHt21xDxVmtyvbCMY3HKO7nTGu2K3LmFyyke6iwafVYcTFPOJzms
+         il/9dZNkPcKVom05h0EqiCgxvKrnpBoJ5uC3b+2H8ArVCc2zj3qghzYPpbl2xebQ9BjA
+         SHU/YhZmlKmXVYXQs47LKe543hWpbDvys50wvNf0l1QxVKsH29EJGeEzaoNoNC6qifvL
+         pu3fuBRe48qt0psocYdK+AGexCYx+cDRCwA0uDbzBRr9IC1JRFPhBN4LhmrbUiyRdi3K
+         CXLg==
+Received: by 10.224.105.65 with SMTP id s1mr5175460qao.75.1334253391748;
+        Thu, 12 Apr 2012 10:56:31 -0700 (PDT)
+Received: from gmail.com ([216.55.38.246])
+        by mx.google.com with ESMTPS id 1sm12910061qac.3.2012.04.12.10.56.30
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 12 Apr 2012 10:56:31 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <7v8vi1gdzk.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195350>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195351>
 
-=46elipe Contreras <felipe.contreras@gmail.com> writes:
+On Thu, Apr 12, 2012 at 08:35:11AM -0700, Junio C Hamano wrote:
+> Please do so.  I assume that the test vectors were expecting specific
+> error/advice messages that need to be updated?
 
-> On Thu, Apr 12, 2012 at 12:57 AM, Felipe Contreras
-> <felipe.contreras@gmail.com> wrote:
->
->> +test_expect_success 'double dash' '
->> + =C2=A0 =C2=A0 =C2=A0 cat >expected <<-\EOF &&
->> + =C2=A0 =C2=A0 =C2=A0 --paginate
->> + =C2=A0 =C2=A0 =C2=A0 --no-pager
->> + =C2=A0 =C2=A0 =C2=A0 --git-dir=3D
->> + =C2=A0 =C2=A0 =C2=A0 --bare
->> + =C2=A0 =C2=A0 =C2=A0 --version
->> + =C2=A0 =C2=A0 =C2=A0 --exec-path
->> + =C2=A0 =C2=A0 =C2=A0 --html-path
->> + =C2=A0 =C2=A0 =C2=A0 --work-tree=3D
->> + =C2=A0 =C2=A0 =C2=A0 --namespace=3D
->> + =C2=A0 =C2=A0 =C2=A0 --help
->> + =C2=A0 =C2=A0 =C2=A0 EOF
->> + =C2=A0 =C2=A0 =C2=A0 test_completion "git --"
->
-> There's a mistake here ^.
+Looks to be the case. The below fixes the tests on my machine. It might
+be worth adding tests to check the specific advice messages, but that's a
+different topic and regardless wouldn't belong in the http-push series.
 
-Yeah, good eyes!  ... ah, wait, it is your bug ;-)
+---- >8 ----
+Signed-off-by: Christopher Tiwald <christiwald@gmail.com>
+---
+ t/lib-httpd.sh       |    2 +-
+ t/t5541-http-push.sh |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-Thanks.
+diff --git a/t/lib-httpd.sh b/t/lib-httpd.sh
+index f7dc078..094d490 100644
+--- a/t/lib-httpd.sh
++++ b/t/lib-httpd.sh
+@@ -160,6 +160,6 @@ test_http_push_nonff() {
+ 	'
+ 
+ 	test_expect_success 'non-fast-forward push shows help message' '
+-		test_i18ngrep "To prevent you from losing history, non-fast-forward updates were rejected" output
++		test_i18ngrep "Updates were rejected because" output
+ 	'
+ }
+diff --git a/t/t5541-http-push.sh b/t/t5541-http-push.sh
+index cc6f081..57c3e48 100755
+--- a/t/t5541-http-push.sh
++++ b/t/t5541-http-push.sh
+@@ -167,7 +167,7 @@ test_expect_success 'push fails for non-fast-forward refs unmatched by remote he
+ '
+ 
+ test_expect_success 'push fails for non-fast-forward refs unmatched by remote helper: our output' '
+-	test_i18ngrep "To prevent you from losing history, non-fast-forward updates were rejected" \
++	test_i18ngrep "Updates were rejected because" \
+ 		output
+ '
+ 
+-- 
+1.7.10.167.gf245c
 
-I wonder if it may make more sense to have this as two separate tests,
-though...
-
-> --- b/t/t9902-completion.sh
-> +++ a/t/t9902-completion.sh
-> @@ -96,7 +96,7 @@ test_expect_success 'double dash' '
->         --namespace=3D
->         --help Z
->         EOF
-> -       test_completion "git --"
-> +       test_completion "git --" &&
->
->         sed -e "s/Z$//" >expected <<-\EOF &&
->         --quiet Z
+--
+Christopher Tiwald
