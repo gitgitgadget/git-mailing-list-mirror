@@ -1,80 +1,50 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] fetch: Only call a new ref a "branch" if it's under
- refs/heads/.
-Date: Thu, 12 Apr 2012 01:52:17 -0400
-Message-ID: <20120412055216.GC27369@sigill.intra.peff.net>
-References: <1334154569-26124-1-git-send-email-marcnarc@xiplink.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Jens Lehmann <Jens.Lehmann@web.de>, git@vger.kernel.org
-To: marcnarc@xiplink.com
-X-From: git-owner@vger.kernel.org Thu Apr 12 07:52:25 2012
+From: Brian Gernhardt <brian@silverinsanity.com>
+Subject: non-fast-forward advice breaks tests on OS X
+Date: Thu, 12 Apr 2012 01:49:14 -0400
+Message-ID: <9F768A58-DEB0-43E1-8AE4-B2A5C4E6CDE9@silverinsanity.com>
+Mime-Version: 1.0 (Apple Message framework v1257)
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 8BIT
+To: Git List <git@vger.kernel.org>,
+	Christopher Tiwald <christiwald@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Apr 12 07:56:54 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SICxE-00010n-Va
-	for gcvg-git-2@plane.gmane.org; Thu, 12 Apr 2012 07:52:25 +0200
+	id 1SID1V-0003Eh-A5
+	for gcvg-git-2@plane.gmane.org; Thu, 12 Apr 2012 07:56:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756807Ab2DLFwU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Apr 2012 01:52:20 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:58292
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756773Ab2DLFwT (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Apr 2012 01:52:19 -0400
-Received: (qmail 22802 invoked by uid 107); 12 Apr 2012 05:52:25 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 12 Apr 2012 01:52:25 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 12 Apr 2012 01:52:17 -0400
-Content-Disposition: inline
-In-Reply-To: <1334154569-26124-1-git-send-email-marcnarc@xiplink.com>
+	id S1756812Ab2DLF4o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Apr 2012 01:56:44 -0400
+Received: from vs072.rosehosting.com ([216.114.78.72]:49396 "EHLO
+	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756616Ab2DLF4o convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 12 Apr 2012 01:56:44 -0400
+X-Greylist: delayed 448 seconds by postgrey-1.27 at vger.kernel.org; Thu, 12 Apr 2012 01:56:44 EDT
+Received: by silverinsanity.com (Postfix, from userid 5001)
+	id 127D91FFC008; Thu, 12 Apr 2012 05:49:04 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on silverinsanity.com
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.0 required=3.5 tests=ALL_TRUSTED,AWL,BAYES_00
+	autolearn=ham version=3.2.5
+Received: from [10.10.10.141] (cpe-74-65-60-43.rochester.res.rr.com [74.65.60.43])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by silverinsanity.com (Postfix) with ESMTPSA id 492871FFC008;
+	Thu, 12 Apr 2012 05:49:03 +0000 (UTC)
+X-Mailer: Apple Mail (2.1257)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195298>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195299>
 
-On Wed, Apr 11, 2012 at 10:29:29AM -0400, marcnarc@xiplink.com wrote:
+After a break in regularly compiling git on my Mac 10.7.3 laptop, I had a few tests fail:  t5540.15, t5541.{12,15}.  All of these tests use test_i18ngrep to test the output of git-push for the string "To prevent you from losing history, non-fast-forward updates were rejected".
 
->  builtin/fetch.c |    9 +++++++--
->  1 file changed, 7 insertions(+), 2 deletions(-)
-> 
-> diff --git a/builtin/fetch.c b/builtin/fetch.c
-> index 65f5f9b..57be58a 100644
-> --- a/builtin/fetch.c
-> +++ b/builtin/fetch.c
-> @@ -298,8 +298,13 @@ static int update_local_ref(struct ref *ref,
->  			what = _("[new tag]");
->  		}
->  		else {
-> -			msg = "storing head";
-> -			what = _("[new branch]");
-> +			if (!prefixcmp(ref->name, "refs/heads/")) {
-> +				msg = "storing head";
-> +				what = _("[new branch]");
-> +			} else {
-> +				msg = "storing ref";
-> +				what = _("[new ref]");
-> +			}
->  			if ((recurse_submodules != RECURSE_SUBMODULES_OFF) &&
->  			    (recurse_submodules != RECURSE_SUBMODULES_ON))
->  				check_for_new_submodule_commits(ref->new_sha1);
+Bisecting traced it back to f25950f: "push: Provide situational hints for non-fast-forward errors".
 
-It looks like you kept the behavior the same with respect to
-recurse_submodules, which will continue to run for everything except
-tags. Which is probably a good choice, since your patch only wanted to
-deal with the status message, but I am left to wonder: if submodules
-were intended to be recursed for branches but not tags, what should
-happen for other types of refs? Was it intentional that they fell into
-the "branch" category here, or were they following the same failure to
-distinguish that the message-writing code had?
+I'm sending this off to the list in case someone else has some idea of the root cause.  I'll get back to this problem myself sometime tomorrow.
 
-This code block handles only new refs.  If you look at the code below,
-updates of existing refs (forced or not) will happen for all refs,
-including tags.
-
-Jens, can you double-check the intended logic?
-
--Peff
+~~ Brian Gernhardt
