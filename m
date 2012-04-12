@@ -1,96 +1,90 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: prevent push of irrelevant tags
-Date: Thu, 12 Apr 2012 13:07:11 -0700
-Message-ID: <7v1uns67f4.fsf@alter.siamese.dyndns.org>
-References: <4F873153.9060004@rolf.leggewie.biz>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: [PATCH] fetch: Only call a new ref a "branch" if it's under refs/heads/.
+Date: Thu, 12 Apr 2012 22:15:04 +0200
+Message-ID: <4F8737C8.1020501@web.de>
+References: <1334154569-26124-1-git-send-email-marcnarc@xiplink.com> <20120412055216.GC27369@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Rolf Leggewie <foss@rolf.leggewie.biz>
-X-From: git-owner@vger.kernel.org Thu Apr 12 22:07:29 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: marcnarc@xiplink.com, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Apr 12 22:15:19 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SIQIi-00061j-4l
-	for gcvg-git-2@plane.gmane.org; Thu, 12 Apr 2012 22:07:28 +0200
+	id 1SIQQH-0002E3-Vu
+	for gcvg-git-2@plane.gmane.org; Thu, 12 Apr 2012 22:15:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965959Ab2DLUHQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Apr 2012 16:07:16 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:62508 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S965971Ab2DLUHO (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Apr 2012 16:07:14 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id F270D6993;
-	Thu, 12 Apr 2012 16:07:12 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=x1pfYlRtkp9q6ViY7zivqLSKCxo=; b=KVq41S
-	L+mHiZc3hmknLnxrT74hrO7tFgVtvqz1WqLyfpH66WiOPU6DJPOOtGXBppbVWEe8
-	cYChs2lYM0w/NpRXaowexo1VcI327HBNDypmCavieKLcz/P+SCKoJMyPShr3c80T
-	tVQvFskGDlUWuLRKsyXj6YSzaW9+s7RUNJn3o=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=DnPyGCOARMkKh3WP09mw/SwHon45DaQN
-	9Rw25K3sxHpu+MCRVSZEMewM2YF1B3jz99qnnFcrpOAtKu0ccXuNeUZ50NAa9qz6
-	MbqGH/TmFAZSwvg/4el+6C89uyCqDzvEOXtGEsAe2WS3r8j00pzsjZmtpFxoCVXA
-	QKmlGEwVQic=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E903C6992;
-	Thu, 12 Apr 2012 16:07:12 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8031D6991; Thu, 12 Apr 2012
- 16:07:12 -0400 (EDT)
-In-Reply-To: <4F873153.9060004@rolf.leggewie.biz> (Rolf Leggewie's message of
- "Fri, 13 Apr 2012 03:47:31 +0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 17889622-84DB-11E1-9BBB-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S934539Ab2DLUPL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Apr 2012 16:15:11 -0400
+Received: from fmmailgate04.web.de ([217.72.192.242]:57789 "EHLO
+	fmmailgate04.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757150Ab2DLUPK (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Apr 2012 16:15:10 -0400
+Received: from moweb001.kundenserver.de (moweb001.kundenserver.de [172.19.20.114])
+	by fmmailgate04.web.de (Postfix) with ESMTP id 825A875D4C60
+	for <git@vger.kernel.org>; Thu, 12 Apr 2012 22:15:08 +0200 (CEST)
+Received: from [192.168.178.48] ([91.3.165.27]) by smtp.web.de (mrweb001) with
+ ESMTPA (Nemesis) id 0LrKEG-1SAtvj2BO0-013ACW; Thu, 12 Apr 2012 22:15:07 +0200
+User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:11.0) Gecko/20120327 Thunderbird/11.0.1
+In-Reply-To: <20120412055216.GC27369@sigill.intra.peff.net>
+X-Provags-ID: V02:K0:9FYZBgbo0LKxYVGeQ8XHt8FH2pYNFpYCQIEwzfWd8+6
+ X6ND2GoQu1PP5JUNAtZE+a1bxiiwZdMtYETCw5gC8e+OapPd4F
+ W1J82q1sBCbZ2Ss10oyqdvmYHx0v/3dAFNPK8UBGmbg0BBRFXL
+ DlfT5RR5ReGT1mv8KtyO9R7iCHNewVu1+5mYkKmAwWZv073xMc
+ BnaMS2U2efk1BTQ9LsSLQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195361>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195362>
 
-Rolf Leggewie <foss@rolf.leggewie.biz> writes:
+Am 12.04.2012 07:52, schrieb Jeff King:
+> On Wed, Apr 11, 2012 at 10:29:29AM -0400, marcnarc@xiplink.com wrote:
+> 
+>>  builtin/fetch.c |    9 +++++++--
+>>  1 file changed, 7 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/builtin/fetch.c b/builtin/fetch.c
+>> index 65f5f9b..57be58a 100644
+>> --- a/builtin/fetch.c
+>> +++ b/builtin/fetch.c
+>> @@ -298,8 +298,13 @@ static int update_local_ref(struct ref *ref,
+>>  			what = _("[new tag]");
+>>  		}
+>>  		else {
+>> -			msg = "storing head";
+>> -			what = _("[new branch]");
+>> +			if (!prefixcmp(ref->name, "refs/heads/")) {
+>> +				msg = "storing head";
+>> +				what = _("[new branch]");
+>> +			} else {
+>> +				msg = "storing ref";
+>> +				what = _("[new ref]");
+>> +			}
+>>  			if ((recurse_submodules != RECURSE_SUBMODULES_OFF) &&
+>>  			    (recurse_submodules != RECURSE_SUBMODULES_ON))
+>>  				check_for_new_submodule_commits(ref->new_sha1);
+> 
+> It looks like you kept the behavior the same with respect to
+> recurse_submodules, which will continue to run for everything except
+> tags. Which is probably a good choice, since your patch only wanted to
+> deal with the status message, but I am left to wonder: if submodules
+> were intended to be recursed for branches but not tags, what should
+> happen for other types of refs? Was it intentional that they fell into
+> the "branch" category here, or were they following the same failure to
+> distinguish that the message-writing code had?
+> 
+> This code block handles only new refs.  If you look at the code below,
+> updates of existing refs (forced or not) will happen for all refs,
+> including tags.
+> 
+> Jens, can you double-check the intended logic?
 
-> I just ran into the situation that "git push --tags" pushed tags to the
-> remote repo that point to commits that do not exist there.  How can this
-> happen?
-
-The "--tags" option is to request to push every ref under refs/tags/
-hierarchy, so the answer is "because the user asked to".
-
-> Git has the information to know...
-
-No, it doesn't.  
-
->  that tag X will be useless in repo Y
-> because the commit Z it points to does not exist in Y.
-
-Think of a case where:
-
- 1. You have cloned from your origin.
-
- 2. You built history on top of your 'master' branch, and pushed the
-    result. The 'master' at your origin now points at this commit.
-
- 3. Somebody working on the project cloned from the same origin, built
-    some history, and pushed the result.  The 'master' at your origin is
-    again updated to point at this commit (which is a descendant of the
-    commit you made in #2).
-
- 4. You tagged the tip of your 'master' as v1.0.
-
- 5. You give the magic "--relevant-tags-only" option to your "git push".
-
-Now what happens?
-
-The only two things your "git push" knows are that your origin does not
-have v1.0 tag, and that its 'master' branch points at the commit created
-by somebody else at #3.  Most importantly, it does not have the history
-leading to this commit ("push" never fetches); it does not have a way to
-tell if it is a descendant of commit you created in #2.  In other words,
-the magic "--relevant-tags-only" is fundamentally flawed as a concept.
+Thanks for spotting this inconsistency. I think it makes sense to
+check for new submodule commits no matter if we fetched a new tag,
+branch or other ref. I can't remember a reason why I put that code
+into the refs & branches part instead of doing that for every new
+ref. Patch following ...
