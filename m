@@ -1,90 +1,94 @@
 From: Stephen Boyd <bebarino@gmail.com>
 Subject: Re: [PATCH 1/2] parse-options: Add support for dumping out long options
-Date: Thu, 12 Apr 2012 00:12:32 -0700
-Message-ID: <4F868060.1000709@gmail.com>
-References: <1334140165-24958-1-git-send-email-bebarino@gmail.com> <1334140165-24958-2-git-send-email-bebarino@gmail.com> <20120411140651.GR2289@goldbirke>
+Date: Thu, 12 Apr 2012 00:42:50 -0700
+Message-ID: <4F86877A.9020703@gmail.com>
+References: <1334140165-24958-1-git-send-email-bebarino@gmail.com> <1334140165-24958-2-git-send-email-bebarino@gmail.com> <CAMP44s37wm2G0vSmtND83ghrjHHfbyCbsKEoaUew-YxE73T=6A@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, spearce@spearce.org,
-	felipe.contreras@gmail.com, jrnieder@gmail.com
-To: =?ISO-8859-1?Q?SZEDER_G=E1bor?= <szeder@ira.uka.de>
-X-From: git-owner@vger.kernel.org Thu Apr 12 09:12:40 2012
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, spearce@spearce.org, szeder@ira.uka.de,
+	jrnieder@gmail.com
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Apr 12 09:43:02 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SIECt-0000NO-Un
-	for gcvg-git-2@plane.gmane.org; Thu, 12 Apr 2012 09:12:40 +0200
+	id 1SIEgG-0006yS-0Y
+	for gcvg-git-2@plane.gmane.org; Thu, 12 Apr 2012 09:43:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762063Ab2DLHMf convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 12 Apr 2012 03:12:35 -0400
-Received: from mail-ob0-f174.google.com ([209.85.214.174]:50923 "EHLO
+	id S1761700Ab2DLHmy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Apr 2012 03:42:54 -0400
+Received: from mail-ob0-f174.google.com ([209.85.214.174]:40781 "EHLO
 	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757468Ab2DLHMe (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Apr 2012 03:12:34 -0400
-Received: by obbtb18 with SMTP id tb18so2348253obb.19
-        for <git@vger.kernel.org>; Thu, 12 Apr 2012 00:12:34 -0700 (PDT)
+	with ESMTP id S1751803Ab2DLHmw (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Apr 2012 03:42:52 -0400
+Received: by obbtb18 with SMTP id tb18so2378893obb.19
+        for <git@vger.kernel.org>; Thu, 12 Apr 2012 00:42:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=message-id:date:from:user-agent:mime-version:to:cc:subject
          :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=urZqIrYHUwP3emGY7EXWXY6PFTfaAvrhVCHB/cE66Do=;
-        b=CCbAoX6/TvU5jXH+TsHYoiwE2BDcEtAM9VSwYH3w6qWMFgHHcspo7SS0LmlpoYmtKA
-         QsFA3akQytQ+UzZFDR1UGvoDwCytayjCzsKx9Xxwcg5g+2w6BUPmjp0TsPOvNT5ky4VN
-         LGyxVDCA2ZkQ1uOCQsT0TmyvF22TBz5BpJcOqMtUtlcBZugfSjGnnmdpm1eaSb2a6ZhC
-         cA6wk7Dk1FdNjfw0wItkrCihJjxLh2YOiNWZkyJwsOSy1jzIr19aUQUzNtLaLPII87tW
-         d/6yDNqfl3MUrpskygs5K4hYII7JAB91sc46EpecXfhsg3ekVOYdV3DV+f/9Ond4ZpPJ
-         /+Gw==
-Received: by 10.182.51.9 with SMTP id g9mr1593535obo.56.1334214754233;
-        Thu, 12 Apr 2012 00:12:34 -0700 (PDT)
+        bh=E611Rpc4luiMFyRWxD6PXWBDUKhz8Ljn4UWgxcfdm2k=;
+        b=pg3S6LBHoQivgtCalZvLW8QaYMtkL5ZusMM5lDNGWbla7b5F/QvJMEkZWKUkfZeVl+
+         +uKnSeM8ifrSy3f8FBmLO8jh7cfXP0lU+DTfSe7WAshQQ0cRtpuVOJ7AmR3c94ArrLFb
+         BjcVZ8dn1ImBrnMOL5qTYEzwBLqnTgnIrGjstqWa0RDX2iCYhf7t/QegEzAX6vvGa8Bc
+         l/mnD+ULCqjU450pWPbpKw6J/2TpEilFJX9fH/a9kCgV5U3l1vME+NKSBQihECGJSVhW
+         oQUhxm+aG/YyUB8SINVwzhLs++LT9g2Lxzy9Sa7jlZ0TSfyUGn92NY+jrx5W6J2BB7Ic
+         AnbA==
+Received: by 10.60.20.10 with SMTP id j10mr1841935oee.33.1334216572248;
+        Thu, 12 Apr 2012 00:42:52 -0700 (PDT)
 Received: from [192.168.2.10] (ip68-105-100-241.sd.sd.cox.net. [68.105.100.241])
-        by mx.google.com with ESMTPS id k7sm4988260oei.0.2012.04.12.00.12.33
+        by mx.google.com with ESMTPS id aj16sm5022801oec.4.2012.04.12.00.42.50
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 12 Apr 2012 00:12:33 -0700 (PDT)
+        Thu, 12 Apr 2012 00:42:51 -0700 (PDT)
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:6.0) Gecko/20110911 Thunderbird/6.0
-In-Reply-To: <20120411140651.GR2289@goldbirke>
+In-Reply-To: <CAMP44s37wm2G0vSmtND83ghrjHHfbyCbsKEoaUew-YxE73T=6A@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195307>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195308>
 
-On 04/11/2012 07:06 AM, SZEDER G=E1bor wrote:
-> On Wed, Apr 11, 2012 at 03:29:24AM -0700, Stephen Boyd wrote:
->> The bash completion script wants to know what the long options are f=
-or a
->> certain command at runtime. Add a magical long option that nobody co=
-uld
+On 04/11/2012 03:51 AM, Felipe Contreras wrote:
+> On Wed, Apr 11, 2012 at 1:29 PM, Stephen Boyd <bebarino@gmail.com> wrote:
+>> The bash completion script wants to know what the long options are for a
+>> certain command at runtime. Add a magical long option that nobody could
 >> possibly ever use (--dump-raw-long-options) to get this information.
->>
->> Some example output:
->>
->>  $ git clone --dump-raw-long-options
->>  --no-verbose --no-quiet --progress --no-progress --no-checkout
->>  --checkout --bare --no-bare --mirror --no-mirror --local --no-local
->>  --no-hardlinks --hardlinks --shared --no-shared --recursive
->>  --no-recursive --recurse-submodules --no-recurse-submodules --templ=
-ate=3D
->>  --no-template --reference=3D --no-reference --origin=3D --no-origin
->>  --branch=3D --no-branch --upload-pack=3D --no-upload-pack --depth=3D
->>  --no-depth --single-branch --no-single-branch --separate-git-dir=3D
->>  --no-separate-git-dir --config=3D --no-config
->>
->=20
-> I think this is a good idea; there are many completion functions that
-> fell behind and lack an option or two.
->=20
-> However, in the completion script we deliberately miss options like
-> '--force', but with your series such options will be offered, too.
->=20
+> 
+> I thought about doing this, but I would like more than just dumping
+> the options. In zsh one can show more than just the options; each
+> option can have a description.
 
-Hm.. I meant to say something about that in the commit text. I'm willin=
-g
-to live with wading through some more options when I tab complete if it
-means the script never falls out of date with my git installation.
+Cool. I don't use zsh but it sounds interesting. Perhaps the magical
+long option should grow an optional argument? i.e.
 
-I can envision us putting more smarts into the parse options code to
-hide certain options from the raw dump but I'm not sure how useful that
-is. Do we need that?
+	--dump-raw-long-option=zsh
+
+which would dump the options in a format that zsh would like?
+
+Alternatively, we can make a tiny option description grammar that's
+easily parsed. I probably won't have time for this any time soon though.
+
+> 
+> I was thinking on something like 'git help --raw'. We also need
+> something like that to list all the plumbing commands, and options for
+> certain options, like merge strategies, and so on. Perhaps it would
+> even make sense to have a new 'git raw-help' command.
+> 
+
+I'd like to avoid tying the long option stuff to git help so that other
+users of parse-options besides git (perhaps perf?) get the dumping
+support for free. Actually it works well for 'git notes <subcommand>'
+right now so it probably has to stay tied to each git command. Plus I
+think we've covered merge strategies and command lists already so I
+don't know how useful 'git help --raw' would be.
+
+I have been pondering ways to get all the possible config keys
+dynamically. That would remove a huge list (~2000 lines) in the
+completion script that always needs updating. Doing that would probably
+require some sort of grep over all the source files and a special key
+comparison function to look for (#define CONFIG_MATCH strcmp might
+work). Even then I don't know how we would handle color.branch.* and
+similar things. Maybe we would just do those by hand.
