@@ -1,73 +1,69 @@
-From: cvalusek <clintv2@gmail.com>
-Subject: GIT pull
-Date: Thu, 12 Apr 2012 07:47:57 -0700 (PDT)
-Message-ID: <1334242077960-7459655.post@n2.nabble.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: GIT pull
+Date: Thu, 12 Apr 2012 17:03:58 +0200
+Message-ID: <vpqiph5m1pd.fsf@bauges.imag.fr>
+References: <1334242077960-7459655.post@n2.nabble.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Apr 12 16:48:05 2012
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: cvalusek <clintv2@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Apr 12 17:04:15 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SILJc-0005Qk-Jg
-	for gcvg-git-2@plane.gmane.org; Thu, 12 Apr 2012 16:48:05 +0200
+	id 1SILZG-0007y2-7B
+	for gcvg-git-2@plane.gmane.org; Thu, 12 Apr 2012 17:04:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964887Ab2DLOr7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Apr 2012 10:47:59 -0400
-Received: from sam.nabble.com ([216.139.236.26]:57757 "EHLO sam.nabble.com"
+	id S934325Ab2DLPEI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Apr 2012 11:04:08 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:44973 "EHLO shiva.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757703Ab2DLOr6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Apr 2012 10:47:58 -0400
-Received: from jim.nabble.com ([192.168.236.80])
-	by sam.nabble.com with esmtp (Exim 4.72)
-	(envelope-from <clintv2@gmail.com>)
-	id 1SILJV-0005u5-VM
-	for git@vger.kernel.org; Thu, 12 Apr 2012 07:47:57 -0700
+	id S1757552Ab2DLPEG (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Apr 2012 11:04:06 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id q3CEw5iw012376
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Thu, 12 Apr 2012 16:58:05 +0200
+Received: from bauges.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1SILZ1-0001jM-7k; Thu, 12 Apr 2012 17:03:59 +0200
+In-Reply-To: <1334242077960-7459655.post@n2.nabble.com> (cvalusek's message of
+	"Thu, 12 Apr 2012 07:47:57 -0700 (PDT)")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.93 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Thu, 12 Apr 2012 16:58:06 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: q3CEw5iw012376
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1334847489.49547@TWVnxI8WN37zywQ6QctUXw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195330>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195331>
 
-My apologies if this isn't the appropriate place to post this. We are using
-the windows port msysgit so I understand if I need to post over there first.
+cvalusek <clintv2@gmail.com> writes:
 
-I have also posted this on stackoverflow. Here is a link to the question
-there:
+> If a user has local modifications not on the index and does a pull, I have
+> seen git attempt to start applying the merge to master and abort. The whole
+> checkout is then left in a terrible state that is nearly
+> unrecoverable.
 
-http://stackoverflow.com/questions/10110401/why-doesnt-git-clean-up-when-aborting-a-merge-triggered-from-pulling-in-changes
+What do you mean by "terrible state"? What does "git status" say?
 
-My team has had a lot of trouble with GIT lately because of aborted pull
-commands.
+> In the past, I thought GIT would run some sort of check to identify
+> these problems before it attempts the merge.
 
-If a user has local modifications not on the index and does a pull, I have
-seen git attempt to start applying the merge to master and abort. The whole
-checkout is then left in a terrible state that is nearly unrecoverable. In
-the past, I thought GIT would run some sort of check to identify these
-problems before it attempts the merge.
+Git does check uncommited changes before merging. It allows the merge if
+the changes touch different files (i.e. if the merge is guaranteed not
+to touch the same files as the one for which you have uncommited
+changes).
 
-Even with a clean state (nothing to commit), I have seen the same thing
-randomly happen at least once. I understand that without rebasing, you may
-be forced to resolve merge conflicts when you pull, but this is not what is
-happening though.
-
-We are using gitolite. I am mainly using command line and have yet to run
-into these issues. The rest of the team is using the git-gui or in 1 case
-TortoiseGit.
-
-git-gui version 0.13.GITGUI
-git version 1.7.8.msysgit.0
-Tcl/Tk version 8.5.1
-TortoiseGit 1.7.6.0
-
-We are not working with branches as much as we could, but feel like this
-should be working.
-Why does GIT allow you to try to pull when it is going to train-wreck?
-Why does GIT not abort cleanly?
-
---
-View this message in context: http://git.661346.n2.nabble.com/GIT-pull-tp7459655p7459655.html
-Sent from the git mailing list archive at Nabble.com.
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
