@@ -1,71 +1,81 @@
-From: Neal Kreitzinger <nkreitzinger@gmail.com>
-Subject: Re: How to always use --merge option in git rebase?
-Date: Thu, 12 Apr 2012 18:33:58 -0500
-Message-ID: <4F876666.7080501@gmail.com>
-References: <CAGAhT3k4Hztbn8139LBuRFxTJgKxDzZcJR=L2A5o9rQBVuVMEw@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Git List <git@vger.kernel.org>
-To: Alexander Kostikov <alex.kostikov@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Apr 13 01:34:10 2012
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: [PATCH v2 1/4] completion: simplify __gitcomp_1
+Date: Fri, 13 Apr 2012 02:50:00 +0300
+Message-ID: <1334274603-3277-2-git-send-email-felipe.contreras@gmail.com>
+References: <1334274603-3277-1-git-send-email-felipe.contreras@gmail.com>
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	=?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>,
+	Junio C Hamano <gitster@pobox.com>,
+	Thomas Rast <trast@student.ethz.ch>, Jeff King <peff@peff.net>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Apr 13 01:50:36 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SITWi-0004wI-Ed
-	for gcvg-git-2@plane.gmane.org; Fri, 13 Apr 2012 01:34:08 +0200
+	id 1SITmd-00051j-Ij
+	for gcvg-git-2@plane.gmane.org; Fri, 13 Apr 2012 01:50:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964902Ab2DLXeD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Apr 2012 19:34:03 -0400
-Received: from mail-ob0-f174.google.com ([209.85.214.174]:57012 "EHLO
-	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S934233Ab2DLXeB (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Apr 2012 19:34:01 -0400
-Received: by obbtb18 with SMTP id tb18so3370561obb.19
-        for <git@vger.kernel.org>; Thu, 12 Apr 2012 16:34:00 -0700 (PDT)
+	id S1758228Ab2DLXub (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Apr 2012 19:50:31 -0400
+Received: from mail-lb0-f174.google.com ([209.85.217.174]:56331 "EHLO
+	mail-lb0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753197Ab2DLXua (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Apr 2012 19:50:30 -0400
+Received: by mail-lb0-f174.google.com with SMTP id gm6so2046018lbb.19
+        for <git@vger.kernel.org>; Thu, 12 Apr 2012 16:50:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=uwUH2+Yrja0DJyJEPpTGYEof8wwxtJJrhzZzr3tDyag=;
-        b=e5QP5v083nyGvt7HshLkRzL+4Sn2w+3CvX00DOPJvOG3vh/wAm5JV8ma6msFuPwZx/
-         glRwpTJVYxBZv9/3zLXWHi6ABqdN0UWPDFx/LCwsNiCGDclNM3/WAR2hZuBaLpRdNiFs
-         ygG+Uv8P1i8+HGlxM9QF+3DTS5r/HK44cECsAJvndUcUQNNqCSOBmLmQET2oalJtsoq1
-         3tpufY8s+2M2V9VxNFRc6AJbLRw/k6hAXLRM9MeX9mbCGMnMQS4BccUTLjROigRBvi9Z
-         mJx5v/cqyfbMI8PGt4JnzyxyHaL3LhcYbhsIZAfkSVXK0ZcwZ26prOa40fhk881BUaST
-         u+Dw==
-Received: by 10.60.5.231 with SMTP id v7mr45834oev.61.1334273640792;
-        Thu, 12 Apr 2012 16:34:00 -0700 (PDT)
-Received: from [172.25.2.210] ([67.63.162.200])
-        by mx.google.com with ESMTPS id j10sm8411375oba.4.2012.04.12.16.33.59
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        bh=NoL9oscvV6IFf7xH6mJeYSywOHKMtlKeKt3qxIS8Z9o=;
+        b=v5RRmlAuZGg/VaH/TZ1kpehI4UFqKzkkgCYvZK0/G7Bbjq/qCqfG2POcwZ8u0SzA+B
+         nZND0CSM2ghufA9UE026VuPwq3RB68Uxk7eSN0hGa5UmlP5T8PO+Fnl7UX7rWHEsFlwP
+         GkLULuqCvrdw8MoY71l9qlCV6cTAfaT35VmDhupe2uE3jUwDCC11TlxZn5lI0SseeJ4h
+         5QzEOJPMaxxcSVwdBcmz6R5nuZZ6/M1MeFDQz/3f74TQ3b0aOawCypJ76cHht4CyoPD8
+         +VyaYZ9fY9QmgIeySTXV7oDWBKPRXVW5y8/jHt/uT4qwRtF05OWno1VAIzIRsojZRiQJ
+         KHeQ==
+Received: by 10.112.47.69 with SMTP id b5mr70344lbn.17.1334274629427;
+        Thu, 12 Apr 2012 16:50:29 -0700 (PDT)
+Received: from localhost (84-231-136-182.elisa-mobile.fi. [84.231.136.182])
+        by mx.google.com with ESMTPS id te8sm7677273lab.3.2012.04.12.16.50.27
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 12 Apr 2012 16:34:00 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:11.0) Gecko/20120327 Thunderbird/11.0.1
-In-Reply-To: <CAGAhT3k4Hztbn8139LBuRFxTJgKxDzZcJR=L2A5o9rQBVuVMEw@mail.gmail.com>
+        Thu, 12 Apr 2012 16:50:28 -0700 (PDT)
+X-Mailer: git-send-email 1.7.10.1.g1f19b8.dirty
+In-Reply-To: <1334274603-3277-1-git-send-email-felipe.contreras@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195389>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195390>
 
-On 4/12/2012 3:31 PM, Alexander Kostikov wrote:
-> Hi,
->
-> We have a huge repository ~10 GB. After some integrations the following happens:
->
->> git rebase master
-> First, rewinding head to replay your work on top of it...
-> fatal: Out of memory, malloc failed (tried to allocate 55012353 bytes)
->
-> There is a workaround to use 'git rebase --merge' instead. But I
-> couldn't find a way to make the merge-based rebase the default one. Is
-> it possible?
-> git version 1.7.10.msysgit.1
->
-You could make a git alias like "git rebaser" that does 'git rebase 
---merge'.
+Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+---
+ contrib/completion/git-completion.bash |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-v/r,
-neal
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index 31f714d..13be9a7 100755
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -307,13 +307,13 @@ __git_ps1 ()
+ # __gitcomp_1 requires 2 arguments
+ __gitcomp_1 ()
+ {
+-	local c IFS=' '$'\t'$'\n'
++	local c s IFS=' '$'\t'$'\n'
+ 	for c in $1; do
+ 		case "$c$2" in
+-		--*=*) printf %s$'\n' "$c$2" ;;
+-		*.)    printf %s$'\n' "$c$2" ;;
+-		*)     printf %s$'\n' "$c$2 " ;;
++		--*=* | *.) s="" ;;
++		*)          s=" " ;;
+ 		esac
++		echo "$c$2$s"
+ 	done
+ }
+ 
+-- 
+1.7.10.1.g1f19b8.dirty
