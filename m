@@ -1,80 +1,80 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Unexpected empty directory removal
-Date: Thu, 12 Apr 2012 11:32:26 -0700
-Message-ID: <7vehrs6bt1.fsf@alter.siamese.dyndns.org>
-References: <4F870C04.9060304@of-networks.co.uk>
+From: Tim Henigan <tim.henigan@gmail.com>
+Subject: Re: [PATCH 8/9 v12] difftool: teach difftool to handle directory diffs
+Date: Thu, 12 Apr 2012 15:10:45 -0400
+Message-ID: <CAFouetg6Ot8sKiNi45A0QRv6YYdL3Mwrb3tkVkajQQuZukSp3g@mail.gmail.com>
+References: <1334236726-18393-1-git-send-email-tim.henigan@gmail.com>
+	<7viph46c1t.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Gary Wilson <gary.wilson@of-networks.co.uk>
-X-From: git-owner@vger.kernel.org Thu Apr 12 20:32:43 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, davvid@gmail.com, ramsay@ramsay1.demon.co.uk
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Apr 12 21:10:52 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SIOoy-0006H6-5c
-	for gcvg-git-2@plane.gmane.org; Thu, 12 Apr 2012 20:32:40 +0200
+	id 1SIPPv-00063p-B5
+	for gcvg-git-2@plane.gmane.org; Thu, 12 Apr 2012 21:10:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757847Ab2DLScf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Apr 2012 14:32:35 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:55909 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756503Ab2DLSce (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Apr 2012 14:32:34 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 371E672E1;
-	Thu, 12 Apr 2012 14:32:29 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=5VNGFBH7jPzU5RDf7Naj0L3JthY=; b=rCVBcg
-	ICM0mYtWZK205zreb6ascQ7mc9tnv6bFAeKzUo+JTRL0baMpwIS9DYcrGvMGPNpL
-	40qzdtmfywhHXs7xl9FJkPZr0KeCuNhhMuoO/FQpnBVc/KXXWYs5MPADsO72WiFe
-	2JtBOavzy2ZY0QG2WZMc49rk3upekCVgT7ri4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=CQXkC1rXQbD0SxeWkdopbqQ7dbiHsSm7
-	R3EXGXVCRNKd88lXFk1IDA2F7UNR3JRFyax5zm27Lj6977HixtTVWewqoJIXYoPP
-	xXre7K5x6LWrfkhgts6jMxIv+mC4YNmwqc3YS3+SNFL2vJDVZklQapAzTBW+vF6T
-	S9+tXegcWHM=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2E9D472E0;
-	Thu, 12 Apr 2012 14:32:29 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B53D672DC; Thu, 12 Apr 2012
- 14:32:28 -0400 (EDT)
-In-Reply-To: <4F870C04.9060304@of-networks.co.uk> (Gary Wilson's message of
- "Thu, 12 Apr 2012 18:08:20 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: DBBC3872-84CD-11E1-9A7C-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1761193Ab2DLTKq convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 12 Apr 2012 15:10:46 -0400
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:60197 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754456Ab2DLTKq convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 12 Apr 2012 15:10:46 -0400
+Received: by iagz16 with SMTP id z16so3170990iag.19
+        for <git@vger.kernel.org>; Thu, 12 Apr 2012 12:10:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=Mf1vW6X8CFZh4SUg8vNnfwko9ArqUStNTtIgfRRO6K4=;
+        b=wWgoGagOOYHks3NDQkg89ARC92cwHqCOpi/mDZ9ef7L+z2SDfq2GLratmqTV/nxXXu
+         OnNy0/I6VqNjKDTNAURn8M+D8YtvfuRdsyZ6wHjDFnapjNOV7jmNSMM3v36wgTRFlZkf
+         MyIEcEEKuGvxIaXoGPEDwiiOkeVHFT4cJ2mUrZkHABHbljzg26q6v0ou7R1XAVvFiXfq
+         3YrHrwcFfIaoMDdis3AX6MF0gi3gTbZ00H+kdFcTwLmHssPpNLtLMYzN2Xy3n7Jdq/9w
+         jz81xBdGFQwMb2oFU06ATvwQWRAI6FFIF1vpKNjVTY9ZHqQ2fXXwNRvYRJ7qrXU78LTU
+         FcBg==
+Received: by 10.42.97.194 with SMTP id p2mr3086354icn.36.1334257845661; Thu,
+ 12 Apr 2012 12:10:45 -0700 (PDT)
+Received: by 10.42.225.193 with HTTP; Thu, 12 Apr 2012 12:10:45 -0700 (PDT)
+In-Reply-To: <7viph46c1t.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195354>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195355>
 
-Gary Wilson <gary.wilson@of-networks.co.uk> writes:
-
-> Use case to replicate:
+On Thu, Apr 12, 2012 at 2:27 PM, Junio C Hamano <gitster@pobox.com> wro=
+te:
+> Tim Henigan <tim.henigan@gmail.com> writes:
 >
-> 1. Have path/files/a.file exists (and/or path/files/*) on client A and
-> client B
-> 2. Remove the physical files from the path/files/ directory on client A,
-> so that the directory is empty
-> 3. git commit
-> 4. git pull on client B
-> 5. On client A an empty path/files/ directory exists on client B it has
-> been removed, meaning path/files/ no longer exists.
+>> +sub setup_dir_diff
+>> +{
+>> + =C2=A0 =C2=A0 # Run the diff; exit immediately if no diff found
+>> + =C2=A0 =C2=A0 my $cmd =3D "git diff --raw --no-abbrev -z " . join(=
+" ", @ARGV);
+>> + =C2=A0 =C2=A0 my $diffrtn =3D `$cmd` or die $!;
 >
-> Is this the expected behaviour?
+> Why this change? =C2=A0It looks like a rather unpleasant regression c=
+ompared to
+> the previous one that used "command_oneline", so that each element of
+> @ARGV was given as a single argument to the command. =C2=A0Now, you a=
+re
+> splitting any argument that has $IFS in it.
 
-As Git does not track directories at all, but merely uses directories as a
-means to instantiate files (which it tracks), when the last file is
-removed as the result of a merge in repository B, it notices that the
-directory is no longer needed to hold anything it cares about, and removes
-it.
+The 'Git->repository->command*' functions all override the
+$GIT_WORK_TREE set by the user on the command line with 'pwd'.  They
+also override the 'core.worktree' setting, if it is used.
 
-If you ran "git rm path/files/a.file" in repository A to remove the last
-file in the directory may also remove the now-empty directory (I do not
-remember offhand if it does), which is also expected.
+So without this change, the following fails:
+
+  $ GIT_DIR=3D<dir> GIT_WORK_TREE=3D<dir> git difftool -d
+
+Would the following change be better?
+
+- =C2=A0 =C2=A0 my $cmd =3D "git diff --raw --no-abbrev -z " . join(" "=
+, @ARGV);
++ =C2=A0 =C2=A0 my $cmd =3D "git diff --raw --no-abbrev -z @ARGV";
