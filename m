@@ -1,150 +1,122 @@
-From: =?UTF-8?B?WmJpZ25pZXcgSsSZZHJ6ZWpld3NraS1Tem1law==?= 
-	<zbyszek@in.waw.pl>
-Subject: Re: [PATCH 4/5] Be more specific if upstream branch is not fetched
-Date: Thu, 12 Apr 2012 11:15:35 +0200
-Message-ID: <4F869D37.1050508@in.waw.pl>
-References: <1334161035-26355-1-git-send-email-zbyszek@in.waw.pl> <1334161035-26355-5-git-send-email-zbyszek@in.waw.pl> <20120412053017.GA27369@sigill.intra.peff.net>
+From: Daniel Wagner <wagi@monom.org>
+Subject: Re: 'git log' numbering commits?
+Date: Thu, 12 Apr 2012 11:15:56 +0200
+Message-ID: <4F869D4C.8090108@monom.org>
+References: <4F868A24.9090004@monom.org> <20120412084122.GG31122@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, gitster@pobox.com
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Apr 12 11:15:57 2012
+X-From: git-owner@vger.kernel.org Thu Apr 12 11:16:06 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SIG8C-0004zG-Fx
-	for gcvg-git-2@plane.gmane.org; Thu, 12 Apr 2012 11:15:56 +0200
+	id 1SIG8J-00053i-Pf
+	for gcvg-git-2@plane.gmane.org; Thu, 12 Apr 2012 11:16:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755827Ab2DLJPw convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 12 Apr 2012 05:15:52 -0400
-Received: from kawka.in.waw.pl ([178.63.212.103]:34724 "EHLO kawka.in.waw.pl"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752866Ab2DLJPv (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Apr 2012 05:15:51 -0400
-Received: from [193.0.104.94]
-	by kawka.in.waw.pl with esmtpsa (TLS1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.72)
-	(envelope-from <zbyszek@in.waw.pl>)
-	id 1SIG7y-0006EZ-0a; Thu, 12 Apr 2012 11:15:42 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:10.0.3) Gecko/20120324 Icedove/10.0.3
-In-Reply-To: <20120412053017.GA27369@sigill.intra.peff.net>
+	id S1762207Ab2DLJP6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Apr 2012 05:15:58 -0400
+Received: from hotel311.server4you.de ([85.25.146.15]:37651 "EHLO
+	hotel311.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752866Ab2DLJP5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Apr 2012 05:15:57 -0400
+Received: from candlejack.bmw-carit.intra (mail.bmw-carit.de [62.245.222.98])
+	(Authenticated sender: wagi)
+	by hotel311.server4you.de (Postfix) with ESMTPSA id 6A510CBE0A8;
+	Thu, 12 Apr 2012 11:15:55 +0200 (CEST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:10.0) Gecko/20120131 Thunderbird/10.0
+In-Reply-To: <20120412084122.GG31122@sigill.intra.peff.net>
+X-Enigmail-Version: 1.3.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195322>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195323>
 
-On 04/12/2012 07:30 AM, Jeff King wrote:
-> On Wed, Apr 11, 2012 at 06:17:14PM +0200, Zbigniew J=C4=99drzejewski-=
-Szmek wrote:
->=20
->> If the branch configured as upstream was missing from
->> remote.<remote>.fetch, git said "Upstream branch not found".
->> We can be more helpful, and separate the cases when upstream
->> is not configured, and when it is configured, but specific
->> branch is not fetched.
->=20
-> I very much like the direction of this series, but I found this one a
-> little confusing. If you have upstream config, but the configured mer=
-ge
-> branch is not part of the remote's refspecs, what does it mean? You
-> would be able to "git pull", but you would not have a remote tracking
-> branch representing what the remote has. So this message:
->=20
->> -		return error("No upstream branch found for '%s'", upstream->name)=
-;
->> +		if (!upstream->merge)
->> +			return error("No upstream configured for branch '%s'",
->> +				     upstream->name);
->> +		return error("Upstream branch '%s' not fetched from remote '%s'",
->> +			     upstream->merge[0]->src, upstream->remote_name);
->=20
-> doesn't seem right to me. The upstream branch can be fetched just fin=
-e;
-> it is simply that we do not maintain a tracking branch for it.
-Hi,
+Hi Jeff,
 
-maybe I'm missing something, but I think that git will not fetch branch=
-es
-(or commits) which are not part of remote's refspecs. The fact that we =
-do
-not have a remote-tracking branch would be secondary.
+On 12.04.2012 10:41, Jeff King wrote:
+> On Thu, Apr 12, 2012 at 09:54:12AM +0200, Daniel Wagner wrote:
+> 
+>> My workflow involves a lot of "git rebase -i". For figuring out which
+>> commit id to use I do first a 'git log --oneline'. Then I do copy past
+>> the id to the 'git rebase -i'. The reason why I don't use relative
+>> id such as HEAD~4, because I keep miscounting the commits.
+>>
+>> So my question is there a magic option to have git log to enumerate the
+>> commits, e.g.
+>>
+>> 1: 2fcd2b3 network: Remove unused function
+>> 2: b376b2a session: Fix introspection for Change()
+>> 3: 15c9cd0 wifi: Refactor desctruction of network object
+>> 4: a9c699f network: Remove device pointer in network_remove()
+> 
+> No, there is no such feature. You can do this:
+> 
+>   git log --oneline | nl "-s: "
 
-% git init repo6
-Initialized empty Git repository in /var/tmp/repo6/.git/
-% cd repo6
-% git commit -m init --allow-empty
-[master (root-commit) 46c16de] init
-% git checkout -b side
-% git commit -m side --allow-empty
-[side 6a0f0e9] side
-% git clone . clone
-Cloning into 'clone'...
-done.
-% cd clone
-% git config remote.origin.fetch refs/heads/master:refs/remotes/master
-% git fetch -v
-=46rom /var/tmp/repo6/.
- * [new branch]      master     -> master
-% git show 6a0f0e9
-fatal: ambiguous argument '6a0f0e9': unknown revision or path not in th=
-e working tree.
-Use '--' to separate paths from revisions
+Obviously, I tend to forget the power of the pipes :)
 
-The scenario leading to this error message would be:
-1. user clones
-2. user sets remote's refspec to avoid fetching too much stuff
-3. user creates a side branch
-4. user edits .git/config by hand to create [branch "side"]
-based on [branch "master]. (I think that this is a pretty common thing =
-to do.)
-5. side@{u} is not fetched
+> but that will just give you the count of commits shown. If the history
+> is not a single line of development, then those numbers will become
+> meaningless quickly. Also note that there is an off-by-one in this
+> scheme; HEAD~2 will be numbered as "3".
+> 
+> If you wanted to simply decorate each commit with a more readable name,
+> you could do this:
+> 
+>   git log --format='%H: %s' |
+>   git name-rev --stdin --name-only
+> 
+> though for simplicity, you may find that you prefer to name only based on
+> the current tip. You can do that like this:
+> 
+>   git log --format='%H: %s' |
+>   git name-rev --stdin --name-only \
+>     --refs `git symbolic-ref HEAD`
+> 
+> which yields output like:
+> 
+>   your-topic: network: Remove unused function
+>   your-topic~1: session: Fix introspection for Change()
+>   your-topic~2: wifi: Refactor desctruction of network object
+>   your-topic~3: network: Remove device pointer in network_remove()
 
-A second scenario:
+Didn't know about name-ref. Very cool :)
 
-Actually, the fact that we have a remote tracking branch is ignored, if=
- it is
-missing from the remote's refspec. (Such situation will arise if the re=
-mote's
-refspec is set after the remote branch was fetched.)
+> However, if you really just want this to make "rebase -i" easier, have
+> you considered setting the upstream branch config for your branches?
+> When I create a topic branch, I do:
 
-% git branch -a
-  master
-* side
-  remotes/origin/HEAD -> origin/master
-  remotes/origin/master
-  remotes/origin/side
-% git show side@{u}
-error: Upstream branch 'refs/heads/origin/side' not fetched from remote=
- 'origin'
-error: Upstream branch 'refs/heads/origin/side' not fetched from remote=
- 'origin'
-fatal: ambiguous argument 'side@{u}': unknown revision or path not in t=
-he working tree.
-Use '--' to separate paths from revisions
-% git config remote.origin.fetch
-refs/heads/master:refs/remotes/master
-% tail -3 .git/config
-[branch "side"]
-        remote =3D origin
-        merge =3D refs/heads/origin/side
+Maybe I should have mentioned that on those project I am mostly working,
+we don't have branches (ConnMan, BlueZ, oFono). So we have a very simple
+history.
 
-So I think that the proposed error message is OK.
+>   git checkout -b topic origin/master
+> 
+> And then "git rebase -i @{upstream}" rebases everything up to my
+> upstream branch (origin/master). That may be slightly more than I want,
+> but it lets me see the whole series in the "rebase -i" sequencer. Recent
+> versions of git even default to "@{upstream}", so you can just say "git rebase
+> -i".
 
-Zbyszek
+The main reason I avoided branches is that I have several topics at the
+same time and having a single branch and maintaining them by hand was so
+far easier.
 
-> Having worked it out in my head, I think that is maybe even what you
-> meant, but reading the message the first time left me very confused.
-> I'm not sure what a better wording would be, though. I was thinking
-> something like:
->=20
->    Upstream branch '%s' is not stored as a remote-tracking branch.
->=20
-> or something, but I know we have had trouble with the term "tracking
-> branch" in the past. Maybe there is a less loaded term.
->=20
-> -Peff
->=20
+> How do you usually create your branches? What version of git are you
+> using (the "@{upstream}" default is in v1.7.6 and later)?
+
+Normally I only have for big changes branches but for a few independent
+fixed I just use the master branch and fix the patches. But I see, I
+should over think my workflow here :)
+
+I am using git trunk :) I'll try the @{upstream} trick.
+
+Thanks a lot for this elaborate answer.
+
+cheers,
+daniel
