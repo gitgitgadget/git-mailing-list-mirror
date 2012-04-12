@@ -1,99 +1,69 @@
-From: Andrew Ardill <andrew.ardill@gmail.com>
+From: Jeff King <peff@peff.net>
 Subject: Re: Parallel refactoring and git merge nightmare
-Date: Thu, 12 Apr 2012 15:41:24 +1000
-Message-ID: <CAH5451myTL94j5T01vLkfRzf_bh2B_YPehvberr05uMdFyZdPw@mail.gmail.com>
+Date: Thu, 12 Apr 2012 01:41:55 -0400
+Message-ID: <20120412054155.GB27369@sigill.intra.peff.net>
 References: <1334160803.74554.YahooMailNeo@web160603.mail.bf1.yahoo.com>
- <CAJDDKr6v6uPLoAQ96fP7JM5F0_WHqfbaD=QKyfrWPWd2St7tKQ@mail.gmail.com> <1334208237.82681.YahooMailNeo@web160606.mail.bf1.yahoo.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: David Aguilar <davvid@gmail.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: =?UTF-8?Q?Pap_L=C3=B4rinc?= <paplorinc@yahoo.com>
-X-From: git-owner@vger.kernel.org Thu Apr 12 07:41:57 2012
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Pap =?utf-8?Q?L=C3=B4rinc?= <paplorinc@yahoo.com>
+X-From: git-owner@vger.kernel.org Thu Apr 12 07:42:06 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SICn4-0003pT-5I
-	for gcvg-git-2@plane.gmane.org; Thu, 12 Apr 2012 07:41:54 +0200
+	id 1SICnD-0003w3-9C
+	for gcvg-git-2@plane.gmane.org; Thu, 12 Apr 2012 07:42:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756571Ab2DLFlr convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 12 Apr 2012 01:41:47 -0400
-Received: from mail-wi0-f178.google.com ([209.85.212.178]:39337 "EHLO
-	mail-wi0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756539Ab2DLFlq convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 12 Apr 2012 01:41:46 -0400
-Received: by wibhq7 with SMTP id hq7so1567677wib.1
-        for <git@vger.kernel.org>; Wed, 11 Apr 2012 22:41:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=kAZvzenUfBxeOrQvUHSdWH+e5zQ+zwB4L5wAgxLtxYs=;
-        b=SCNU/GnFgUC/MZ4rWjG/Eqw9TlWpUJNxcPqOdY3FvwqL1Yl7vC5CcJNSM86eUW+FbB
-         TnS/LHtCOwcv9L6iXtnhWPCsO1hQvBYNuO+JSJElaIhkWjdtQmwqTx3jOwFS9E1BJt6f
-         LYDCxZr1lGepKq2/RL9+1bPm/YBHLunmfppUgC/jh0uA0e4gBzQnTrWGD+ht5mrttptr
-         JSQ8hy5P66u7Kce63ydK79k1C0hT3kpx5RnTrwCEV8AGZOvcvAnvRZ91pw6h/bZBJNdN
-         3hw/HALNK3CL1BzQOM5JcfZnoBoE6TeABHPUe5DYmJXC9O8sULelJy9mUTm4NM+zmUJN
-         dvxw==
-Received: by 10.180.102.101 with SMTP id fn5mr2637462wib.6.1334209304956; Wed,
- 11 Apr 2012 22:41:44 -0700 (PDT)
-Received: by 10.223.159.72 with HTTP; Wed, 11 Apr 2012 22:41:24 -0700 (PDT)
-In-Reply-To: <1334208237.82681.YahooMailNeo@web160606.mail.bf1.yahoo.com>
+	id S1756586Ab2DLFl7 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 12 Apr 2012 01:41:59 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:58280
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756522Ab2DLFl6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Apr 2012 01:41:58 -0400
+Received: (qmail 22678 invoked by uid 107); 12 Apr 2012 05:42:04 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 12 Apr 2012 01:42:04 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 12 Apr 2012 01:41:55 -0400
+Content-Disposition: inline
+In-Reply-To: <1334160803.74554.YahooMailNeo@web160603.mail.bf1.yahoo.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195294>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195295>
 
-2012/4/12 Pap L=C3=B4rinc <paplorinc@yahoo.com>:
->>> Hello! :)
->>>
->>> We are working in parallel on the refactoring of a
->>> small project. The team uses SVN and I decided to give GIT a chance=
- to
->>> demonstrate it's merging capabilities I've read so much good about =
-:).
->>>
->>> However
->>> =C2=A0- I must be doing something VERY wrong - every time I try to =
-merge from
->>> =C2=A0the remote svn (git svn fetch and git merge remotebranch) int=
-o my
->>> branch, I get hundreds of conflicts, mostly because of moved folder=
-s.
->>
->>Google is your friend
->>
->>https://wiki.kuali.org/display/KULRICE/git-svn+how+to
->>
->>http://flavio.castelli.name/howto_use_git_with_svn
->>
->>http://viget.com/extend/effectively-using-git-with-subversion
->>
->>http://java.dzone.com/articles/how-start-using-git-svn-based
->>--
->>David
->
-> I have no idea why you guys think I'm an idiot.
-> I have read every link I could find (most of the Pro Git book and wat=
-ched several hours of git video tutorials). The problem is not with GIT=
--SVN, it's with the GIT merge, more specifically with a simultaneous mo=
-dify and move, which conflicts probably because it is detected as a mod=
-ify and delete.
-> Could someone please be a little more friendly, I need advice on how =
-to solve hundreds of git merge conflicts (eg. parallel move and modify,=
- which should have been merged automatically).
->
-> Thanks,
-> L=C5=91rinc
->
+On Wed, Apr 11, 2012 at 09:13:23AM -0700, Pap L=C3=B4rinc wrote:
 
-Could you perhaps show us what commands you have tried, and what the
-conflicts look like?
+> I think the=20
+> problem arises because git doesn't track
+>  moves, therefore I constantly get conflicts of type "local modified,=
+=20
+> remote deleted" (or even both deleted) when in fact it was only modif=
+ied
+>  and moved, it could have been merged without conflicts (-> apply my=20
+> changes and move the file to the new location).
 
-Regards,
+Git does rename detection at the time of merge, and will apply changes
+to the destination file. I'm not sure why this isn't working for you.
+Some theories:
 
-Andrew Ardill
+  1. Git may give up on finding renames if it is very computationally
+     expensive. It will print a warning in that case, but you may miss
+     it in the output. You might try:
+
+        git config merge.renamelimit 0
+
+     to turn off the limiting.
+
+  2. Do your files actually look like renames? Git's inexact rename
+     detection looks at the file content, and correlates removed and
+     added files that have a high percentage of similar content. If mos=
+t
+     of the file ended up changed, then the pair is not considered a
+     rename.
+
+-Peff
