@@ -1,80 +1,84 @@
-From: Tim Henigan <tim.henigan@gmail.com>
-Subject: Re: [PATCH 8/9 v12] difftool: teach difftool to handle directory diffs
-Date: Thu, 12 Apr 2012 15:10:45 -0400
-Message-ID: <CAFouetg6Ot8sKiNi45A0QRv6YYdL3Mwrb3tkVkajQQuZukSp3g@mail.gmail.com>
-References: <1334236726-18393-1-git-send-email-tim.henigan@gmail.com>
-	<7viph46c1t.fsf@alter.siamese.dyndns.org>
+From: Gary Wilson <gary.wilson@of-networks.co.uk>
+Subject: Re: Unexpected empty directory removal
+Date: Thu, 12 Apr 2012 20:11:07 +0100
+Message-ID: <4F8728CB.2030201@of-networks.co.uk>
+References: <4F870C04.9060304@of-networks.co.uk> <7vehrs6bt1.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, davvid@gmail.com, ramsay@ramsay1.demon.co.uk
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Apr 12 21:10:52 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Apr 12 21:11:27 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SIPPv-00063p-B5
-	for gcvg-git-2@plane.gmane.org; Thu, 12 Apr 2012 21:10:51 +0200
+	id 1SIPQM-0006TR-Qv
+	for gcvg-git-2@plane.gmane.org; Thu, 12 Apr 2012 21:11:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761193Ab2DLTKq convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 12 Apr 2012 15:10:46 -0400
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:60197 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754456Ab2DLTKq convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 12 Apr 2012 15:10:46 -0400
-Received: by iagz16 with SMTP id z16so3170990iag.19
-        for <git@vger.kernel.org>; Thu, 12 Apr 2012 12:10:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=Mf1vW6X8CFZh4SUg8vNnfwko9ArqUStNTtIgfRRO6K4=;
-        b=wWgoGagOOYHks3NDQkg89ARC92cwHqCOpi/mDZ9ef7L+z2SDfq2GLratmqTV/nxXXu
-         OnNy0/I6VqNjKDTNAURn8M+D8YtvfuRdsyZ6wHjDFnapjNOV7jmNSMM3v36wgTRFlZkf
-         MyIEcEEKuGvxIaXoGPEDwiiOkeVHFT4cJ2mUrZkHABHbljzg26q6v0ou7R1XAVvFiXfq
-         3YrHrwcFfIaoMDdis3AX6MF0gi3gTbZ00H+kdFcTwLmHssPpNLtLMYzN2Xy3n7Jdq/9w
-         jz81xBdGFQwMb2oFU06ATvwQWRAI6FFIF1vpKNjVTY9ZHqQ2fXXwNRvYRJ7qrXU78LTU
-         FcBg==
-Received: by 10.42.97.194 with SMTP id p2mr3086354icn.36.1334257845661; Thu,
- 12 Apr 2012 12:10:45 -0700 (PDT)
-Received: by 10.42.225.193 with HTTP; Thu, 12 Apr 2012 12:10:45 -0700 (PDT)
-In-Reply-To: <7viph46c1t.fsf@alter.siamese.dyndns.org>
+	id S933917Ab2DLTLO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Apr 2012 15:11:14 -0400
+Received: from mail-ey0-f174.google.com ([209.85.215.174]:56022 "EHLO
+	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1761417Ab2DLTLN (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Apr 2012 15:11:13 -0400
+Received: by eaaq12 with SMTP id q12so587078eaa.19
+        for <git@vger.kernel.org>; Thu, 12 Apr 2012 12:11:12 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:subject:references
+         :in-reply-to:content-type:content-transfer-encoding
+         :x-gm-message-state;
+        bh=/PKQ3mHBw6FSL5Sx3LbLbMs8dnu6C63uGqnxbCLJ9To=;
+        b=VKrGX4m1dLQaCsc4U17T6X6QqM/50Q5Wa/oJLTN6K9t/3fEwOY8zBvXWr1arvHLE1h
+         w8+8m3FLJ3fq44wCs3iUyrVgi27wLE7Wab03Pl/5o1Ztj3MKT2eHX/hKuPIj9pcn/7JE
+         Jlk5kqfSP3hi5kBhy98ZIRaKDCbHzoLwsCENl9BaJRbVQU1TAtV1QDMpJe+VJCRCeXF/
+         QY5tulETMp7CD6kGKlre3BAUBmSf29pYj01IQEEU7VYvw9wDu7Hu0+RCXsYKrs+bpGru
+         lxYLAGx6yt+Legrs/EXMd/m4f69BKdbW6eAjKATuALeq3Pgcsioq4tLwF4yC6Q/OpiZi
+         VkoA==
+Received: by 10.213.20.220 with SMTP id g28mr308610ebb.122.1334257872167;
+        Thu, 12 Apr 2012 12:11:12 -0700 (PDT)
+Received: from [192.168.1.31] (88.Red-88-7-10.staticIP.rima-tde.net. [88.7.10.88])
+        by mx.google.com with ESMTPS id d54sm31763436eei.9.2012.04.12.12.11.09
+        (version=SSLv3 cipher=OTHER);
+        Thu, 12 Apr 2012 12:11:10 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.28) Gecko/20120313 Thunderbird/3.1.20
+In-Reply-To: <7vehrs6bt1.fsf@alter.siamese.dyndns.org>
+X-Gm-Message-State: ALoCoQlfOf4mILJisRv0XsVGzlf+n3Hcx0x8Emsj2BZG5ioNW2AuK+V4Tg9yLrsNO47cOO5JDEi4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195355>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195356>
 
-On Thu, Apr 12, 2012 at 2:27 PM, Junio C Hamano <gitster@pobox.com> wro=
-te:
-> Tim Henigan <tim.henigan@gmail.com> writes:
+Thanks for the clarification and verification of that expected behaviour
+Junio.  I shall keep this in mind.
+
+Regards
+Gary
+
+On 12/04/12 19:32, Junio C Hamano wrote:
+> Gary Wilson <gary.wilson@of-networks.co.uk> writes:
 >
->> +sub setup_dir_diff
->> +{
->> + =C2=A0 =C2=A0 # Run the diff; exit immediately if no diff found
->> + =C2=A0 =C2=A0 my $cmd =3D "git diff --raw --no-abbrev -z " . join(=
-" ", @ARGV);
->> + =C2=A0 =C2=A0 my $diffrtn =3D `$cmd` or die $!;
+>> Use case to replicate:
+>>
+>> 1. Have path/files/a.file exists (and/or path/files/*) on client A and
+>> client B
+>> 2. Remove the physical files from the path/files/ directory on client A,
+>> so that the directory is empty
+>> 3. git commit
+>> 4. git pull on client B
+>> 5. On client A an empty path/files/ directory exists on client B it has
+>> been removed, meaning path/files/ no longer exists.
+>>
+>> Is this the expected behaviour?
+> As Git does not track directories at all, but merely uses directories as a
+> means to instantiate files (which it tracks), when the last file is
+> removed as the result of a merge in repository B, it notices that the
+> directory is no longer needed to hold anything it cares about, and removes
+> it.
 >
-> Why this change? =C2=A0It looks like a rather unpleasant regression c=
-ompared to
-> the previous one that used "command_oneline", so that each element of
-> @ARGV was given as a single argument to the command. =C2=A0Now, you a=
-re
-> splitting any argument that has $IFS in it.
-
-The 'Git->repository->command*' functions all override the
-$GIT_WORK_TREE set by the user on the command line with 'pwd'.  They
-also override the 'core.worktree' setting, if it is used.
-
-So without this change, the following fails:
-
-  $ GIT_DIR=3D<dir> GIT_WORK_TREE=3D<dir> git difftool -d
-
-Would the following change be better?
-
-- =C2=A0 =C2=A0 my $cmd =3D "git diff --raw --no-abbrev -z " . join(" "=
-, @ARGV);
-+ =C2=A0 =C2=A0 my $cmd =3D "git diff --raw --no-abbrev -z @ARGV";
+> If you ran "git rm path/files/a.file" in repository A to remove the last
+> file in the directory may also remove the now-empty directory (I do not
+> remember offhand if it does), which is also expected.
+>
