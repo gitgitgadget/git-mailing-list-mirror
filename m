@@ -1,64 +1,80 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 00/15] Hierarchical reference cache (once again)
-Date: Thu, 12 Apr 2012 02:44:59 -0400
-Message-ID: <20120412064459.GD27369@sigill.intra.peff.net>
-References: <1334035827-20331-1-git-send-email-mhagger@alum.mit.edu>
+From: Stephen Boyd <bebarino@gmail.com>
+Subject: Re: [PATCH 1/2] parse-options: Add support for dumping out long options
+Date: Thu, 12 Apr 2012 00:02:28 -0700
+Message-ID: <4F867E04.8000501@gmail.com>
+References: <1334140165-24958-1-git-send-email-bebarino@gmail.com> <1334140165-24958-2-git-send-email-bebarino@gmail.com> <20120411125921.GC3161@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Jakub Narebski <jnareb@gmail.com>,
-	Heiko Voigt <hvoigt@hvoigt.net>,
-	Johan Herland <johan@herland.net>
-To: mhagger@alum.mit.edu
-X-From: git-owner@vger.kernel.org Thu Apr 12 08:45:08 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, spearce@spearce.org, szeder@ira.uka.de,
+	felipe.contreras@gmail.com
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Apr 12 09:02:39 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SIDmG-0003RN-B4
-	for gcvg-git-2@plane.gmane.org; Thu, 12 Apr 2012 08:45:08 +0200
+	id 1SIE3B-0003wZ-LV
+	for gcvg-git-2@plane.gmane.org; Thu, 12 Apr 2012 09:02:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762002Ab2DLGpC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Apr 2012 02:45:02 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:58330
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1761996Ab2DLGpB (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Apr 2012 02:45:01 -0400
-Received: (qmail 23871 invoked by uid 107); 12 Apr 2012 06:45:07 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 12 Apr 2012 02:45:07 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 12 Apr 2012 02:44:59 -0400
-Content-Disposition: inline
-In-Reply-To: <1334035827-20331-1-git-send-email-mhagger@alum.mit.edu>
+	id S1762005Ab2DLHCd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Apr 2012 03:02:33 -0400
+Received: from mail-ob0-f174.google.com ([209.85.214.174]:47541 "EHLO
+	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756945Ab2DLHCc (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Apr 2012 03:02:32 -0400
+Received: by obbtb18 with SMTP id tb18so2338581obb.19
+        for <git@vger.kernel.org>; Thu, 12 Apr 2012 00:02:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=gAyvMsUsFL63IYWJLubP+2Ldzd2cBehJdukCjO1KBt0=;
+        b=ddmrgcdgbMRNV0w+KZO5KlBpyyMYqVi2SaLbBZbn7mSzc8rUPDU7rFuSCEa2QgHClJ
+         7qMo17PrAP725ZXRjOn8i1nXB4NYYa3pl4AXve3WVuGLU6Qv3nhF71+JNU9rCM95Sk/5
+         HcvL3MHReSHIQEJkJw3Ln/ozMai/EiahqbEjJSselKPopkertRIOPHILXf5EH0RJ4APT
+         VljthZwu8u5DST9yHEqWsDz8kNk1kU9n701F8oIoPfoMCSdhVVxAkTfjLjalUDjWnOwO
+         QG/ngdSzGUXjM5mJDZRbiO8pAGQG1zyz6y41EfQx+YS2Yzu797gwgUNy6jeNqs3ngCWZ
+         NLxQ==
+Received: by 10.182.119.101 with SMTP id kt5mr1525314obb.70.1334214151648;
+        Thu, 12 Apr 2012 00:02:31 -0700 (PDT)
+Received: from [192.168.2.10] (ip68-105-100-241.sd.sd.cox.net. [68.105.100.241])
+        by mx.google.com with ESMTPS id w4sm4958197oeg.12.2012.04.12.00.02.29
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 12 Apr 2012 00:02:30 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:6.0) Gecko/20110911 Thunderbird/6.0
+In-Reply-To: <20120411125921.GC3161@burratino>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195303>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195304>
 
-On Tue, Apr 10, 2012 at 07:30:12AM +0200, mhagger@alum.mit.edu wrote:
+On 04/11/2012 05:59 AM, Jonathan Nieder wrote:
+> Stephen Boyd wrote:
+> 
+>> The bash completion script wants to know what the long options are for a
+>> certain command at runtime. Add a magical long option that nobody could
+>> possibly ever use (--dump-raw-long-options) to get this information.
+> 
+> Neat.  Probably should be documented:
+> 
+> diff --git i/Documentation/gitcli.txt w/Documentation/gitcli.txt
+> index f734f97b..0de074ec 100644
+> --- i/Documentation/gitcli.txt
+> +++ w/Documentation/gitcli.txt
+> @@ -96,6 +96,11 @@ usage: git describe [options] <committish>*
+>  	are deprecated, and such options are hidden from the default usage. This
+>  	option gives the full list of options.
+>  
+> +--dump-raw-long-options::
+> +	prints a space-separated list of supported options, including
+> +	negated `--no-<foo>` forms.  Long options taking an argument are
+> +	printed with a trailing equal sign, as in "`--depth=`".
+> +
+>  
+>  Negating options
+>  ~~~~~~~~~~~~~~~~
 
-> Michael Haggerty (15):
->   refs.c: reorder definitions more logically
->   refs: manage current_ref within do_one_ref()
->   do_for_each_ref_in_array(): new function
->   do_for_each_ref_in_arrays(): new function
->   repack_without_ref(): reimplement using do_for_each_ref_in_array()
->   names_conflict(): new function, extracted from is_refname_available()
->   names_conflict(): simplify implementation
->   is_refname_available(): reimplement using do_for_each_ref_in_array()
->   free_ref_entry(): new function
->   check_refname_component(): return 0 for zero-length components
->   struct ref_entry: nest the value part in a union
->   refs.c: rename ref_array -> ref_dir
->   sort_ref_dir(): simplify logic
->   refs: store references hierarchically
->   do_for_each_ref(): only iterate over the subtree that was requested
-
-I read through the whole series and didn't find anything noticeably
-wrong.  Overall, it was quite readable for such a large series. Thanks
-for breaking it up as you did.
-
--Peff
+Thanks. Squashed in.
