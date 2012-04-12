@@ -1,63 +1,72 @@
-From: Christopher Tiwald <christiwald@gmail.com>
-Subject: Re: non-fast-forward advice breaks tests on OS X
-Date: Thu, 12 Apr 2012 09:37:01 -0400
-Message-ID: <20120412133701.GA367@gmail.com>
-References: <9F768A58-DEB0-43E1-8AE4-B2A5C4E6CDE9@silverinsanity.com>
+From: =?utf-8?B?UGFwIEzDtHJpbmM=?= <paplorinc@yahoo.com>
+Subject: Re: Parallel refactoring and git merge nightmare
+Date: Thu, 12 Apr 2012 06:52:48 -0700 (PDT)
+Message-ID: <1334238768.18499.YahooMailNeo@web160601.mail.bf1.yahoo.com>
+References: <1334160803.74554.YahooMailNeo@web160603.mail.bf1.yahoo.com> <CAJDDKr6v6uPLoAQ96fP7JM5F0_WHqfbaD=QKyfrWPWd2St7tKQ@mail.gmail.com> <1334208237.82681.YahooMailNeo@web160606.mail.bf1.yahoo.com> <CAFfmPPMbr-db+OnTwK-ry+wGQSEeunsD+QrmAVS2fzDH+hGnbg@mail.gmail.com>
+Reply-To: =?utf-8?B?UGFwIEzDtHJpbmM=?= <paplorinc@yahoo.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git List <git@vger.kernel.org>
-To: Brian Gernhardt <brian@silverinsanity.com>
-X-From: git-owner@vger.kernel.org Thu Apr 12 15:37:15 2012
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: David Aguilar <davvid@gmail.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: David Barr <davidbarr@google.com>
+X-From: git-owner@vger.kernel.org Thu Apr 12 15:52:55 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SIKD5-0000Nj-7N
-	for gcvg-git-2@plane.gmane.org; Thu, 12 Apr 2012 15:37:15 +0200
+	id 1SIKSE-0001wR-LY
+	for gcvg-git-2@plane.gmane.org; Thu, 12 Apr 2012 15:52:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934277Ab2DLNhH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Apr 2012 09:37:07 -0400
-Received: from mail-qc0-f174.google.com ([209.85.216.174]:47106 "EHLO
-	mail-qc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S934206Ab2DLNhG (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Apr 2012 09:37:06 -0400
-Received: by qcro28 with SMTP id o28so1213598qcr.19
-        for <git@vger.kernel.org>; Thu, 12 Apr 2012 06:37:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=b3HB7mURToeFpIN5HuwJYMJrTwcvxdzoYOb6hDlMVMU=;
-        b=Io1ynn6MpvJvXMrcvrMvImdJM2emtEANchuaq2amov5121TpdFNKvrqT0qB5nYSU/Z
-         u41S3eBRqgX1iTIO4bPbnvyIAb04e9+PhQ6e6FHt1mjxQ1KeObVWcSe/K0M80mXC2TR6
-         z4yN20ldjtkue8IzO/CBhLE3efaCiYnFSTslQF1+FVc68/Nub+wKa7EPPCd2A0UBNQQI
-         uhU3h8cFGjDqX0Oz64LwcA6Yf+baLSDr5JC1kdBMe3/ACLQCnG9VKl/N7FuWWqs4TkbW
-         tXRGWKYe0YBokBFZO9nf9+NBwhT05j07v8J9iHesMz/m7o8t/eACCE7QYAOnKKATup7V
-         9cPg==
-Received: by 10.229.135.16 with SMTP id l16mr1011702qct.28.1334237825293;
-        Thu, 12 Apr 2012 06:37:05 -0700 (PDT)
-Received: from gmail.com ([216.55.38.246])
-        by mx.google.com with ESMTPS id ew2sm11752012qab.11.2012.04.12.06.37.03
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 12 Apr 2012 06:37:04 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <9F768A58-DEB0-43E1-8AE4-B2A5C4E6CDE9@silverinsanity.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S933741Ab2DLNwu convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 12 Apr 2012 09:52:50 -0400
+Received: from nm25-vm0.bullet.mail.bf1.yahoo.com ([98.139.213.156]:34893 "HELO
+	nm25-vm0.bullet.mail.bf1.yahoo.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S1756656Ab2DLNwt convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Apr 2012 09:52:49 -0400
+Received: from [98.139.214.32] by nm25.bullet.mail.bf1.yahoo.com with NNFMP; 12 Apr 2012 13:52:48 -0000
+Received: from [98.139.212.239] by tm15.bullet.mail.bf1.yahoo.com with NNFMP; 12 Apr 2012 13:52:48 -0000
+Received: from [127.0.0.1] by omp1048.mail.bf1.yahoo.com with NNFMP; 12 Apr 2012 13:52:48 -0000
+X-Yahoo-Newman-Property: ymail-3
+X-Yahoo-Newman-Id: 278382.81466.bm@omp1048.mail.bf1.yahoo.com
+Received: (qmail 44872 invoked by uid 60001); 12 Apr 2012 13:52:48 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s1024; t=1334238768; bh=AXp7ePvaJvpDpJtQPIBSFxzkKjqQogTyf1k9RjialAA=; h=X-YMail-OSG:Received:X-Mailer:References:Message-ID:Date:From:Reply-To:Subject:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding; b=4ucA3/58/htAAiV9A8/uZx4wH20IYwl4PpqYBiO3SWJnRHCGn6PWpbRD2nADGAgixe9jKIzzXHtLja/HepPzXbGRJMFKQVBkh0y1rzTPaxPUeqn24KRYl3Z4s2iU4nS6pEES6qrfy5F00o7b9X+Qt+Rc6EL/G/BOzoIuMI8a5C8=
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.com;
+  h=X-YMail-OSG:Received:X-Mailer:References:Message-ID:Date:From:Reply-To:Subject:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding;
+  b=u7ocCuYGsdo8IysrGX17kUAlQXb/uSTZA6a+I+I18l1+iF7Jr98UupRccLoVqzUb2R5rvLMGzp2VVQ725kAxKwaFzqaW6X3TzSJ5B+YgZiHTU2QzI7P23nJk35TPlSVJibrgTwKYbYVm5IYXhr120+OOXpXJ1gW1o/BC0hdZW1g=;
+X-YMail-OSG: tK1XRYoVM1mFtRL8cjGWpMD2IeTcbbLdRIgoZ_QaE.yuGVN
+ KJhutUi4xCanYM8Yk4Frz4gZlKJN6nIIWjqPA_If437iSZ9cCg66.J_LlvcI
+ uY.1vTV5Lo2wBveF8XHMvjccnp9RE7RhpIrlmCrzTOaOgK1bScoYVJlvQHeY
+ beBA3qt19DwvMFHLUEaPTNjXv7cCy6sNbOGKY20D9D_sTTrUcRI4una0T4M0
+ 0.t38CdZu8wrX5DdQnBrdUFWhZicRb.erPQsWtIdF.KGj1H5xxVQLpVh.1R7
+ u.n7Lxux1W9waTyAO14ZLFEcHLxhMEbsbQvb_SQ1xCSRaoIGDJ3w2BzYWXgc
+ rs4yvK1bPxoGie8JD2_FqWlcEu7.tzNmVQja.iqG_FPdzK9A.8qqL1_TosxP
+ xU6MCND7Gk3_8.H.YaZQgjDcgBHy6_m6eWqkGLpsJCHFuvYs5gs_IatsmcmV
+ 7MALer1eHqfbhPs68hFHstWI-
+Received: from [82.79.70.220] by web160601.mail.bf1.yahoo.com via HTTP; Thu, 12 Apr 2012 06:52:48 PDT
+X-Mailer: YahooMailWebService/0.8.117.340979
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195327>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195328>
 
-On Thu, Apr 12, 2012 at 01:49:14AM -0400, Brian Gernhardt wrote:
-> After a break in regularly compiling git on my Mac 10.7.3 laptop, I had a few tests fail:  t5540.15, t5541.{12,15}.  All of these tests use test_i18ngrep to test the output of git-push for the string "To prevent you from losing history, non-fast-forward updates were rejected".
-> 
-> Bisecting traced it back to f25950f: "push: Provide situational hints for non-fast-forward errors".
+Thank you all for the answers! :)
 
-I also run 10.7.3 on a MacBook Pro. I will investigate this now and see
-if I can get tests to break. I know the original patch passed the test
-suite on this machine.
 
---
-Christopher Tiwald
+I have already set the rename limit to 0, and upon committing and fetch=
+ing the renames are calculated and found.
+
+
+The commands are (I use tortoise git now, but tried the console and oth=
+er GUIs, as I said in my first post) "git svn fetch" and "git merge rem=
+oteBranch".
+I figured now, that this was the problem, I should have used rebase ins=
+tead of merge (I still don't understand why merge doesn't work, but reb=
+ase and conflict resolution with a GUI (where I can resolve more files =
+at once) seems acceptable). Thanks David! :)
+
+L=C5=91rinc
