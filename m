@@ -1,97 +1,93 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: 'git log' numbering commits?
-Date: Thu, 12 Apr 2012 04:41:23 -0400
-Message-ID: <20120412084122.GG31122@sigill.intra.peff.net>
-References: <4F868A24.9090004@monom.org>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: push.default: current vs upstream
+Date: Thu, 12 Apr 2012 10:59:06 +0200
+Message-ID: <vpqfwc9wckl.fsf@bauges.imag.fr>
+References: <vpqwr5uceis.fsf@bauges.imag.fr>
+	<20120406071520.GD25301@sigill.intra.peff.net>
+	<vpqr4w12tjj.fsf@bauges.imag.fr>
+	<20120406080004.GA27940@sigill.intra.peff.net>
+	<4F7FF19B.1060407@alum.mit.edu>
+	<20120407075150.GA18168@sigill.intra.peff.net>
+	<7viphaygsg.fsf@alter.siamese.dyndns.org>
+	<vpq62d6dyzr.fsf@bauges.imag.fr>
+	<20120412075535.GC31122@sigill.intra.peff.net>
+	<vpqhawp2wxs.fsf@bauges.imag.fr>
+	<20120412081407.GE31122@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Daniel Wagner <wagi@monom.org>
-X-From: git-owner@vger.kernel.org Thu Apr 12 10:41:49 2012
+Content-Type: text/plain
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Michael Haggerty <mhagger@alum.mit.edu>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Apr 12 10:59:33 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SIFb8-0003V2-Ee
-	for gcvg-git-2@plane.gmane.org; Thu, 12 Apr 2012 10:41:46 +0200
+	id 1SIFsL-0004Rw-Bd
+	for gcvg-git-2@plane.gmane.org; Thu, 12 Apr 2012 10:59:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762178Ab2DLIlj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Apr 2012 04:41:39 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:58450
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753849Ab2DLIlf (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Apr 2012 04:41:35 -0400
-Received: (qmail 24709 invoked by uid 107); 12 Apr 2012 08:41:39 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 12 Apr 2012 04:41:38 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 12 Apr 2012 04:41:23 -0400
-Content-Disposition: inline
-In-Reply-To: <4F868A24.9090004@monom.org>
+	id S1762192Ab2DLI71 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Apr 2012 04:59:27 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:35438 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754125Ab2DLI7X (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Apr 2012 04:59:23 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id q3C8rQBY021493
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Thu, 12 Apr 2012 10:53:26 +0200
+Received: from bauges.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1SIFrv-0003Ck-Ho; Thu, 12 Apr 2012 10:59:07 +0200
+In-Reply-To: <20120412081407.GE31122@sigill.intra.peff.net> (Jeff King's
+	message of "Thu, 12 Apr 2012 04:14:07 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.93 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Thu, 12 Apr 2012 10:53:27 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: q3C8rQBY021493
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1334825611.29266@D9wgyi6olImujc0U5ylNjw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195315>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195316>
 
-On Thu, Apr 12, 2012 at 09:54:12AM +0200, Daniel Wagner wrote:
+Jeff King <peff@peff.net> writes:
 
-> My workflow involves a lot of "git rebase -i". For figuring out which
-> commit id to use I do first a 'git log --oneline'. Then I do copy past
-> the id to the 'git rebase -i'. The reason why I don't use relative
-> id such as HEAD~4, because I keep miscounting the commits.
-> 
-> So my question is there a magic option to have git log to enumerate the
-> commits, e.g.
-> 
-> 1: 2fcd2b3 network: Remove unused function
-> 2: b376b2a session: Fix introspection for Change()
-> 3: 15c9cd0 wifi: Refactor desctruction of network object
-> 4: a9c699f network: Remove device pointer in network_remove()
+> Then the rule is not really "act only if upstream and current would do
+> the same thing".
 
-No, there is no such feature. You can do this:
+Right. That would be closer to "fail with explicit error when where to
+push is not clear enough".
 
-  git log --oneline | nl "-s: "
+> On the one hand, I think what you are suggesting is reasonable in most
+> cases. On the other hand, what if the lack of upstream is because the
+> user failed to configure it properly? Then it could be surprising.
+>
+> I don't have a strong opinion either way.
 
-but that will just give you the count of commits shown. If the history
-is not a single line of development, then those numbers will become
-meaningless quickly. Also note that there is an off-by-one in this
-scheme; HEAD~2 will be numbered as "3".
+No strong opinion either, but I wanted to raise the point to make sure
+we agree.
 
-If you wanted to simply decorate each commit with a more readable name,
-you could do this:
+With your patch, "git push" fails with
 
-  git log --format='%H: %s' |
-  git name-rev --stdin --name-only
+  fatal: The current branch branch-name has no upstream branch.
+  To push the current branch and set the remote as upstream, use
+  
+      git push --set-upstream origin branch-name
 
-though for simplicity, you may find that you prefer to name only based on
-the current tip. You can do that like this:
+so it's not really bad: the suggestion guides the user to a situation
+where the next "git push" will succeed unambiguously. As a side effect,
+the next "git pull" will fetch from the same branch, which is probably
+what the user wants if he hasn't explicitely configured an upstream
+branch yet.
 
-  git log --format='%H: %s' |
-  git name-rev --stdin --name-only \
-    --refs `git symbolic-ref HEAD`
-
-which yields output like:
-
-  your-topic: network: Remove unused function
-  your-topic~1: session: Fix introspection for Change()
-  your-topic~2: wifi: Refactor desctruction of network object
-  your-topic~3: network: Remove device pointer in network_remove()
-
-However, if you really just want this to make "rebase -i" easier, have
-you considered setting the upstream branch config for your branches?
-When I create a topic branch, I do:
-
-  git checkout -b topic origin/master
-
-And then "git rebase -i @{upstream}" rebases everything up to my
-upstream branch (origin/master). That may be slightly more than I want,
-but it lets me see the whole series in the "rebase -i" sequencer. Recent
-versions of git even default to "@{upstream}", so you can just say "git rebase
--i".
-
-How do you usually create your branches? What version of git are you
-using (the "@{upstream}" default is in v1.7.6 and later)?
-
--Peff
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
