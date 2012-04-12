@@ -1,118 +1,102 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v5 2/5] http: handle proxy proactive authentication
-Date: Thu, 12 Apr 2012 08:54:22 -0700
-Message-ID: <7vwr5leyj5.fsf@alter.siamese.dyndns.org>
-References: <4F5F53CA.7090003@seap.minhap.es>
- <7v398cvb30.fsf@alter.siamese.dyndns.org>
- <7vsjgcs8pq.fsf@alter.siamese.dyndns.org>
+Subject: Re: push.default: current vs upstream
+Date: Thu, 12 Apr 2012 08:56:34 -0700
+Message-ID: <7vpqbdeyfh.fsf@alter.siamese.dyndns.org>
+References: <vpqwr5uceis.fsf@bauges.imag.fr>
+ <20120406071520.GD25301@sigill.intra.peff.net>
+ <vpqr4w12tjj.fsf@bauges.imag.fr>
+ <20120406080004.GA27940@sigill.intra.peff.net>
+ <4F7FF19B.1060407@alum.mit.edu>
+ <20120407075150.GA18168@sigill.intra.peff.net>
+ <7viphaygsg.fsf@alter.siamese.dyndns.org> <vpq62d6dyzr.fsf@bauges.imag.fr>
+ <20120412075535.GC31122@sigill.intra.peff.net>
+ <vpqhawp2wxs.fsf@bauges.imag.fr>
+ <20120412081407.GE31122@sigill.intra.peff.net>
+ <vpqfwc9wckl.fsf@bauges.imag.fr>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Nelson Benitez Leon <nelsonjesus.benitez@seap.minhap.es>,
-	git@vger.kernel.org, sam@vilain.net, spearce@spearce.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Apr 12 17:54:31 2012
+Cc: Jeff King <peff@peff.net>, Michael Haggerty <mhagger@alum.mit.edu>,
+	git@vger.kernel.org
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Thu Apr 12 17:56:47 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SIMLu-0001m1-RA
-	for gcvg-git-2@plane.gmane.org; Thu, 12 Apr 2012 17:54:31 +0200
+	id 1SIMO2-0003df-9N
+	for gcvg-git-2@plane.gmane.org; Thu, 12 Apr 2012 17:56:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965169Ab2DLPy0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Apr 2012 11:54:26 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48913 "EHLO
+	id S934467Ab2DLP4i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Apr 2012 11:56:38 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:49879 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S934441Ab2DLPyZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Apr 2012 11:54:25 -0400
+	id S934420Ab2DLP4h (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Apr 2012 11:56:37 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 861306C4B;
-	Thu, 12 Apr 2012 11:54:24 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D1C8C6CD9;
+	Thu, 12 Apr 2012 11:56:36 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=TOxpUUsc0jYzjYdwCvksvqGaV4c=; b=qR5QOT
-	XM36gZbRaWhMZysC0Cx1OyTwo1BxqWEaA+QLhVOcH8uRN/7Kt60bGtukxBOB0msi
-	3U/gsKLIo7UE9a1lroo8MHTh+w1fiCvguY57sv3J9zip+GTJXxDWgR2vB3hTsHzj
-	7S2QRgN0ZWmG2tju2oKMdXudNVOGVTordYGjg=
+	:content-type; s=sasl; bh=h4gvacJbfT8nIU1Yt9d9JkUCLEI=; b=mQjf4o
+	Xixj9LdJwNbAkAw464vRlZImQ4FlmqdOfOfflquvoh2jE/nZB5giTRRkkJYu7Sat
+	x4cNKlk23gX97T8ZRBkIOP4YSkQsZkSVQc8nq+IggWtxPNY26nc3DzJNihozjIML
+	7SrdmYKeZiMnkpQCvqnl/oAdeq5jRiOnZDklM=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=QlNOTS/o0oRW5AyB8DeWmeVuzFSRkpVH
-	vgGmfwXNTlO3YpTpG+o5Fpi9UN+EmqevAN4W9sL+Fl+UjvyZk4j0j8qLGz2Eco1U
-	7+u7LU6z3VMJvJdbctndM4axp91xPJVTN2XBCjxevH8XvSC559aJXk/VwiZhQce+
-	78HIdFSbkd8=
+	:content-type; q=dns; s=sasl; b=d8RxIvhqbM8sKNgDG9wkMlfnzajUvljG
+	Pjw+GK/SmExTvDW60yJYxwZmFsTDwtRwlSmgLq2/5JdUpoSWYOm+/i8GBjnF98EG
+	0cXLxZnNW+jx8No4R9FC/OHrfrfB7K4CeNy+5MrY5UCVoNaZf6rw31R0PBveSQcl
+	3AawD/NMGX4=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7C29C6C4A;
-	Thu, 12 Apr 2012 11:54:24 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C8BEE6CD8;
+	Thu, 12 Apr 2012 11:56:36 -0400 (EDT)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 08EFD6C49; Thu, 12 Apr 2012
- 11:54:23 -0400 (EDT)
-In-Reply-To: <7vsjgcs8pq.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Mon, 09 Apr 2012 17:59:13 -0700")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5B2AF6CD7; Thu, 12 Apr 2012
+ 11:56:36 -0400 (EDT)
+In-Reply-To: <vpqfwc9wckl.fsf@bauges.imag.fr> (Matthieu Moy's message of
+ "Thu, 12 Apr 2012 10:59:06 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: C66D16C8-84B7-11E1-950A-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 1549EF14-84B8-11E1-9523-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195339>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195340>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
 
-> Junio C Hamano <gitster@pobox.com> writes:
+> Jeff King <peff@peff.net> writes:
 >
->> I haven't formed an opinion on what the proper solution should be, but
->> either the credential_from_url() function needs to be updated to accept
->> the scp style [user@]<host>:<port> argument, or this specific caller
->> should take the responsibility to do special case the syntax.
+>> Then the rule is not really "act only if upstream and current would do
+>> the same thing".
 >
-> Well, calling the above "scp" style is a mistake (it is not scp style at
-> all), but the patch to teach the credentail_from_url() to handle the proxy
-> specification may look like this:
+> Right. That would be closer to "fail with explicit error when where to
+> push is not clear enough".
 
-Jeff, do you have an opinion on this?  I briefly wondered if we also want
-to teach the traditional [user@]host:/path/to/repo to this function (it is
-not a URL in RFC1738 sense, but it is in the remote.$name.url sense), but
-because SSH does its own thing interacting with agents, perhaps it may not
-help to teach our credential layer to store and supply cached passphrases
-(or passwords, if the authentication is done by merely sending password
-over the encrypted channel).
+I think that is a good explanation.
 
-A safer approach might be to keep externally visible API to this function
-as before, but add another function only for the use of http_proxy and
-friends (whose kosher format is "host:address" without the "<scheme>://"
-part), and call it from the codepath broken by the patch.
-
->  credential.c |   10 ++++++----
->  1 file changed, 6 insertions(+), 4 deletions(-)
+>> On the one hand, I think what you are suggesting is reasonable in most
+>> cases. On the other hand, what if the lack of upstream is because the
+>> user failed to configure it properly? Then it could be surprising.
+>>
+>> I don't have a strong opinion either way.
 >
-> diff --git a/credential.c b/credential.c
-> index 62d1c56..482ae88 100644
-> --- a/credential.c
-> +++ b/credential.c
-> @@ -324,11 +324,13 @@ void credential_from_url(struct credential *c, const char *url)
->  	 *   (1) proto://<host>/...
->  	 *   (2) proto://<user>@<host>/...
->  	 *   (3) proto://<user>:<pass>@<host>/...
-> +	 * or "proto://"-less variants of the above for *_proxy variables.
->  	 */
->  	proto_end = strstr(url, "://");
-> -	if (!proto_end)
-> -		return;
-> -	cp = proto_end + 3;
-> +	if (proto_end)
-> +		cp = proto_end + 3;
-> +	else
-> +		cp = url;
->  	at = strchr(cp, '@');
->  	colon = strchr(cp, ':');
->  	slash = strchrnul(cp, '/');
-> @@ -348,7 +350,7 @@ void credential_from_url(struct credential *c, const char *url)
->  		host = at + 1;
->  	}
->  
-> -	if (proto_end - url > 0)
-> +	if (proto_end && proto_end != url)
->  		c->protocol = xmemdupz(url, proto_end - url);
->  	if (slash - host > 0)
->  		c->host = url_decode_mem(host, slash - host);
+> No strong opinion either, but I wanted to raise the point to make sure
+> we agree.
+>
+> With your patch, "git push" fails with
+>
+>   fatal: The current branch branch-name has no upstream branch.
+>   To push the current branch and set the remote as upstream, use
+>   
+>       git push --set-upstream origin branch-name
+>
+> so it's not really bad: the suggestion guides the user to a situation
+> where the next "git push" will succeed unambiguously. As a side effect,
+> the next "git pull" will fetch from the same branch, which is probably
+> what the user wants if he hasn't explicitely configured an upstream
+> branch yet.
+
+Sounds sensible.
