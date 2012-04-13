@@ -1,237 +1,131 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: GSOC Proposal draft: git-remote-svn
-Date: Fri, 13 Apr 2012 14:19:08 -0500
-Message-ID: <20120413191908.GC2387@burratino>
-References: <11292500.AVmZFUUvNi@flobuntu>
- <1421035.yALBSXSHGd@flomedio>
- <20120410171707.GA3869@burratino>
- <2104868.dCxFQtJHdU@flomedio>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: push.default: current vs upstream
+Date: Fri, 13 Apr 2012 12:31:58 -0700
+Message-ID: <7vmx6f2ztd.fsf@alter.siamese.dyndns.org>
+References: <vpqwr5uceis.fsf@bauges.imag.fr>
+ <20120406071520.GD25301@sigill.intra.peff.net>
+ <vpqr4w12tjj.fsf@bauges.imag.fr>
+ <20120406080004.GA27940@sigill.intra.peff.net>
+ <4F7FF19B.1060407@alum.mit.edu>
+ <20120407075150.GA18168@sigill.intra.peff.net>
+ <4F7FFD7A.80104@pileofstuff.org>
+ <20120412071150.GB31122@sigill.intra.peff.net>
+ <4F874639.5090207@pileofstuff.org> <7vlim04ou1.fsf@alter.siamese.dyndns.org>
+ <20120412221110.GA22426@sigill.intra.peff.net>
+ <A13E3113738743C6B002BB6B076E1FEE@PhilipOakley>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	David Barr <davidbarr@google.com>,
-	Andrew Sayers <andrew-git@pileofstuff.org>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Dmitry Ivankov <divanorama@gmail.com>,
-	Tomas Carnecky <tom@dbservice.com>
-To: Florian Achleitner <florian.achleitner2.6.31@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Apr 13 21:19:25 2012
+Cc: "Jeff King" <peff@peff.net>,
+	"Andrew Sayers" <andrew-git@pileofstuff.org>,
+	"Michael Haggerty" <mhagger@alum.mit.edu>,
+	"Matthieu Moy" <Matthieu.Moy@grenoble-inp.fr>,
+	"Git List" <git@vger.kernel.org>
+To: "Philip Oakley" <philipoakley@iee.org>
+X-From: git-owner@vger.kernel.org Fri Apr 13 21:32:17 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SIm1h-0000bE-2u
-	for gcvg-git-2@plane.gmane.org; Fri, 13 Apr 2012 21:19:21 +0200
+	id 1SImEA-0001rJ-Pm
+	for gcvg-git-2@plane.gmane.org; Fri, 13 Apr 2012 21:32:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755890Ab2DMTTP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Apr 2012 15:19:15 -0400
-Received: from mail-gx0-f174.google.com ([209.85.161.174]:34773 "EHLO
-	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755879Ab2DMTTO (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Apr 2012 15:19:14 -0400
-Received: by gghe5 with SMTP id e5so1836971ggh.19
-        for <git@vger.kernel.org>; Fri, 13 Apr 2012 12:19:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=0awf+ImvCwyS78tyoioZ2DQBGEvQw4M/yclOXFpxVFE=;
-        b=KOwbEqp75BFvL5+3ME8mOEdsGDNn6Mcij0O1VDLuPGfUNzbDoUtlrlHrIUE4P5wDWI
-         opPZDl/Vvql1pWUHausgUb1N+yuF/kgIU0fVCoWn5cVq4lsYHxNC8r1g6gz9YIOL9IOY
-         QR25hxOyXqI6MsDrgR3tbmLooWE74DB2rfyUG/5QbVonlWLX7UbI6WUiauvkWwZa0JrY
-         hmt9eXyU0jGTyJnHXC97hOl+69gyw98B08BTQcpeIIUj33eS08zSanMh3XvZsHizY52T
-         /SV13sibxbmNkjgODTAUpgSMK3HFwKnE/kao3UJwRGgTsJZyix2DrwbgxuG8HUzb6Kp1
-         wZGw==
-Received: by 10.50.159.194 with SMTP id xe2mr2732524igb.5.1334344753491;
-        Fri, 13 Apr 2012 12:19:13 -0700 (PDT)
-Received: from burratino (adsl-99-24-202-99.dsl.chcgil.sbcglobal.net. [99.24.202.99])
-        by mx.google.com with ESMTPS id us6sm4235773igc.9.2012.04.13.12.19.10
-        (version=SSLv3 cipher=OTHER);
-        Fri, 13 Apr 2012 12:19:11 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <2104868.dCxFQtJHdU@flomedio>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1755956Ab2DMTcJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Apr 2012 15:32:09 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:52644 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751970Ab2DMTcH (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Apr 2012 15:32:07 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 105307BA8;
+	Fri, 13 Apr 2012 15:32:01 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=b9FMMbZSbwHYjPne9Wp1Hc+IL5c=; b=QD/8Qc
+	zaA1SU39NtxekYZc532D3kiWwjMMHTlOaiZOsX8s+rnkJRuHEtRs/r/GMGv4Pp05
+	b6rUq2DG1JmPM44EUjmd5n9asFKF++l8jPwfvFtjrUNP1HbANBTiGcFazRYu1+1B
+	/5tzcSv4vo8URijtSv+x4la/hE6X2ZkEFWo7s=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=wtJuyux1FDIFQPh57PT2akiqOfk+pD7z
+	wiE3VrhIHGYMqU+OZdn9aTRDJxXrqLGbCvAsV8wXN9w1hHxsz4OelcV/JT43pRSO
+	Q1NwwllUIjsX4thD9uoJqiOUuKTcU8sp9RMlW8vYpu/kMLlMiJVu078gjbo4s/le
+	kUxlvp34jrQ=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 039B07BA7;
+	Fri, 13 Apr 2012 15:32:01 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5A2AA7BA5; Fri, 13 Apr 2012
+ 15:32:00 -0400 (EDT)
+In-Reply-To: <A13E3113738743C6B002BB6B076E1FEE@PhilipOakley> (Philip Oakley's
+ message of "Thu, 12 Apr 2012 23:59:58 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 57015086-859F-11E1-821D-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195436>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195437>
 
-Hi again,
+"Philip Oakley" <philipoakley@iee.org> writes:
 
-Florian Achleitner wrote:
-
-> So I want to create some collection of information with your support.
-
-Sounds like a plan.  Thanks, Florian.
-
-[...]
-> Really -c? My installed git doesn't have that switch. Should it pass arguments 
-> to the remote-helper?
-
-What git version do you use?  "man git clone" tells me that -c is an
-abbreviation for --config and "grep -e --config Documentation/RelNotes/*"
-tells me it was introduced in v1.7.7.
-
-[...]
-> On Tuesday 10 April 2012 12:17:07 Jonathan Nieder wrote:
-
->>    How should the importer handle Subversion copy commands that
->>    refer to other projects in this case?
->
-> Jonathan tried that, it's handled by svnrdump nicely.
-
-Yes, except that it does not follow the history of the copy source.
-So if your project was renamed, then "svnrdump <new SVN URL for the
-project>" will dump a fictional history in which the first rev under
-the new name created the project out of thin air.
-
-That is not ideal, but it seems tolerable in the short term.
-
->>                                             Some design questions
->>    come up here: should the remote helper import the entire project
->>    tree, too?  (I think "yes", since copy commands that copy from
->>    other branches are very common and that would ensure the relevant
->>    info is available to git.)  What should the mapping of git commit
->>    names to Subversion revision numbers that is stored in notes say
->>    in this case?
->
-> What does it mean, "import the entire project tree"? Importing other 
-> directories than "trunk"?
-
-Yes.  For an import that is going to be dumping the subdirectories of
-tags/ and branches/ anyway, it seems sensible to ask svnrdump to dump
-the entire {trunk,tags,branches} hierarchy and sort it out on the git
-side.  The question is then: for each rev, in addition to making
-commits for each branch that changed, should we keep a commit
-representing the state of the combined whole-project tree for internal
-use?  A person trying to check out this commit would get to see the
-enormous
-
-	trunk/
-	tags/
-	branches/
-
-directories.  My rough answer was "yes, it's convenient to keep that
-information around, especially given that with git's repository model
-it doesn't waste a lot of space and makes debugging easier".
-
-> About the mapping of git commits to svn refs .. I've seen the thread about the 
-> marks-to-notes converter.
-> But can somebody please explain what it's for? There is this mark file 
-> mentioned in the git-fast-import help page ..
-
-There are two operations that need to be very fast:
-
- 1. Given a Subversion revision number, what is the corresponding git
-    commit?  svn-fe uses this to get the preimage data when executing
-    an "svn copy" operation that refers to an old rev.  For example:
-
-	svn copy some/path@a-long-time-ago another/path
-
-    Code tracking branches would use this same map to find the
-    appropriate parent commit for a new branch.  For example:
-
-	svn copy trunk@a-long-time-ago branches/new-branch
-
-    becomes:
-
-	parent f572d396fae9206628714fb2ce00f72e94f2258f
-
- 2. Given a git commit, what is the corresponding Subversion revision
-    number?  For example, "git fetch" needs this information in order
-    to get a first unfetched revision number when updating an existing
-    clone of a Subversion repository.
-
-"git notes" is a mechanism for efficiently storing a mapping from git
-commit names to arbitrary data.  For example, it can be used to cache
-the compiled form of some slow-to-compile source code, or it can be
-used to store reminders to a human that has reviewed these commits and
-wanted to scribble a little in the margin.  A patch (in Dmitry's tree,
-not in git.git yet) teaches svn-fe to use the notes facility to store
-the mapping from git commit names to Subversion revision numbers,
-addressing problem (2) above.  Tomas's human-friendly importer used
-the same trick.
-
-As you noticed, "git fast-import" has a facility that fits well for
-mapping in the other direction: a marks file can store an arbitrary
-mapping from numbers to objects (usually objects that were part of the
-import).  svn-fe writes a mark for each Subversion revision it imports
-to address problem (1) above.
-
-Because "git notes" are stored in the git object db as native objects,
-they can be shared using the usual "git fetch" / "git push" commands
-as long as you specify the appropriate source and destination refs on
-the command line or in git's configuration file.  Commands like "git
-rebase" that modify history also have some support for carrying notes
-along.  By contrast, a marks file is just a flat text file and there
-is no standard facility for updating it when commit names change or
-sharing it using ordinary git transport.
-
-The marks-to-notes converter I wrote was a toy to show how the notes
-and marks can easily be kept in sync.  If I remember correctly the
-last time this was discussed there was some feeling that when the two
-tables fall out of synch the notes should be considered authoritative
-and marks can be recomputed from them.
-
-> Do we create two commits from one revision if it's some special case, like 
-> modifying two branches at once?
-
-remote-svn-alpha and svn-fe do not currently split by branch at all so
-the problem doesn't come up.
-
-Yes, I think the only sane way to represent a Subversion revision that
-modifies multiple branches is with a git commit on each branch.
-
-[...]
->>    For example, there could be a parallel directory structure
->>    in the tree:
+> From: "Jeff King" <peff@peff.net> Sent: Thursday, April 12, 2012 11:11 PM
+>> On Thu, Apr 12, 2012 at 02:33:58PM -0700, Junio C Hamano wrote:
 >>
->>         foo/
->>                 bar.c
->>         baz/
->>                 qux.c
->>         .properties/
->>                 foo.properties
->>                 foo/
->>                         bar.c.properties
->>                 baz/
->>                         qux.c.properties
->>
->>    with properites for <path> stored at .properties/<path>.properties.
->>    This strawman scheme doesn't work if the repository being imported
->>    has any paths ending with ".properties", though.  Ideas?
+>>> Andrew Sayers <andrew-git@pileofstuff.org> writes:
+>>>
+>>> > So if the problem is that the documentation cues the reader to think
+>>> > about upstreams but not to think about downstreams, the solution is to
+>>> > find excuses to talk more about downstreams.  As far as I'm concerned
+>>> > @{upstream} means "the place that commits come from when I `git pull`",
+>>> > so it makes perfect sense to me that @{downstream} would mean "the
+>>> > place
+>>> > commits go to when I `git push`".
 >
-> This includes collecting which metadata we actually need to store? We could 
-> probably collect a list of important svn properties.
-
-I imagined the importer just collecting all path properties, like "git
-svn" does in its .git/svn/refs/remotes/git-svn/unhandled.log.  They're
-easy to iterate through on the svn side.
-
-> Is there a general policy how to store additional metadata for git's helpers? 
-> I guess it would live somewhere in the .git dir. (.git/info/ ?)
-
-One simple design would be to keep properties in the "entire project"
-commit objects for internal use, since that's easy to share.
-
-I think David had a few other ideas. ;-)
-
-[...]
->>  . tracing second-parent history using svn:mergeinfo properties.
+>>> In a separate message I completely misunderstood what you meant by
+>>> "downstream".
 >
-> This is about detection when to create a git merge-commit, right?
+> It would be useful to have "upstream" and "downstream" clarified in
+> the documentation, say the Workflows man pages or some suitable
+> place.
 
-Yep.  A goal would be to allow a person would be able to push a git
-merge to an svn repository, fetch from another machine, and get the
-same commit back.
+Perhaps, but I am not convinced.  I am not convinced that it is a bad idea
+either, so I'll think aloud for several paragraphs, and probably will not
+reach a conclusion in this message. Just a food for thought...
 
->> In other words, in the above list the strategy is:
->
-> .. still to come..
+I think the word "downstream" has rarely been used in the context of Git,
+but because it is a natural opposite for the word "upstream", I've seen it
+used when people talk about others who fork from them, e.g. Linus can call
+his lieutenants his downstream.
 
-Thanks for your thoughtfulness.
+The word "upstream" almost always refers to "the place the updates from
+others come to me from".  Linus is the upstream for his lieutenants---the
+lieutenants pull from Linus.  In the shared repository "everybody pulls
+from there to get updates from others, and everybody pushes there to
+propagate their own work to others" setting, the shared repository is the
+upstream for the project participants---again, they pull from there.
 
-Jonathan
+Notice however that the word "upstream" is meaningless for the integrator
+with the above definition of the word.  "The place the updates from others
+come to Linus from" ought to be his "upstream", but the workflow does not
+go like so. Linus does not have a fixed "upstream" he pulls from before
+he starts his day. For that matter, the lieutenants are not supposed to
+pull from Linus every day before they start their work, either, but when
+they need to synchronize with the upstream, they pull from Linus, so in
+that sense, the word "upstream" means something to them.
+
+I suspect that using the word "downstream" to mean "the place the result
+of my work is pushed to" will only add to the confusion.
+
+In a distributed "kernel-like" workflow, the lieutenants obviously do not
+push to Linus's repository. If we raise the level of discussion to talk
+about the flows of data, ignoring the difference of mechanism used
+(i.e. "push" vs "format-patch | send-email"), the work by lieutenants is
+still fed back to their "upstream".  They "upstream" (verb) the result of
+their work.
+
+Perhaps it was a mistake to use the word "upstream" in a shared repository
+workflow, which invites the confusing word "downstream". In that context,
+there is not really an "up" vs "down" relationship.  "shared" vs "mine"
+relationship is all that exists in that context.
