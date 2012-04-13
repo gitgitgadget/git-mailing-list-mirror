@@ -1,81 +1,84 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
+From: Felipe Contreras <felipe.contreras@gmail.com>
 Subject: Re: [PATCH v2 4/4] completion: improve 'git --exec-path' completion
-Date: Fri, 13 Apr 2012 18:37:06 -0500
-Message-ID: <20120413233706.GD13995@burratino>
+Date: Sat, 14 Apr 2012 02:43:00 +0300
+Message-ID: <CAMP44s1C8HS2bo-dZOQKcFES8gt3=KK0h7c8uUJCeFX22ihLRg@mail.gmail.com>
 References: <1334274603-3277-1-git-send-email-felipe.contreras@gmail.com>
- <1334274603-3277-5-git-send-email-felipe.contreras@gmail.com>
- <20120413060845.GA15610@burratino>
- <20120413180436.GA2387@burratino>
- <20120413183048.GB2387@burratino>
- <CAMP44s0R7imiem4uoBggkjjJ4z5+MXVYUroe_23JE8McMCk2sQ@mail.gmail.com>
+	<1334274603-3277-5-git-send-email-felipe.contreras@gmail.com>
+	<20120413060845.GA15610@burratino>
+	<20120413180436.GA2387@burratino>
+	<20120413183048.GB2387@burratino>
+	<CAMP44s0R7imiem4uoBggkjjJ4z5+MXVYUroe_23JE8McMCk2sQ@mail.gmail.com>
+	<20120413233706.GD13995@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org,
-	SZEDER =?utf-8?B?R8OhYm9y?= <szeder@ira.uka.de>,
+	=?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder@ira.uka.de>,
 	Junio C Hamano <gitster@pobox.com>,
 	Thomas Rast <trast@student.ethz.ch>, Jeff King <peff@peff.net>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Apr 14 01:37:21 2012
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Apr 14 01:43:22 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SIq3L-0000Zj-AU
-	for gcvg-git-2@plane.gmane.org; Sat, 14 Apr 2012 01:37:19 +0200
+	id 1SIq98-00048z-Sp
+	for gcvg-git-2@plane.gmane.org; Sat, 14 Apr 2012 01:43:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757329Ab2DMXhM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Apr 2012 19:37:12 -0400
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:45277 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757263Ab2DMXhL (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Apr 2012 19:37:11 -0400
-Received: by iagz16 with SMTP id z16so4899725iag.19
-        for <git@vger.kernel.org>; Fri, 13 Apr 2012 16:37:10 -0700 (PDT)
+	id S932453Ab2DMXnD convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 13 Apr 2012 19:43:03 -0400
+Received: from mail-ee0-f46.google.com ([74.125.83.46]:43066 "EHLO
+	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932125Ab2DMXnC convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 13 Apr 2012 19:43:02 -0400
+Received: by eekc41 with SMTP id c41so902641eek.19
+        for <git@vger.kernel.org>; Fri, 13 Apr 2012 16:43:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=D0LdLMlteG4g7x8e8/7+Z732yNdKVASNgUw2DSsvUSk=;
-        b=u82nQql8q/rbkXDaA+PO6YiMZVg0V7c37vjh2j0nbjj/QCF/iWA7i697cv+PwRbSlM
-         hqziFa4zfXJRHu+A4DY4Gy6fygLk0zhMd9ut6hxz5AQoFjOQlsD2PjQX5SHpmAnTy5Jc
-         AcmkerZj/j5OObSHPTjAJndzEG11jDWCVCtdyLqf7RLLhFyqhynJ+lWeL7iJO+DV+tbB
-         0a/LYLl5G1UjKZUD6HHdIiin0zpvnWGKkJ4Ly4DydZCWHEvLpCGFcRa01mlIMfUbkthD
-         Z0Ht7KayHK3kfm17LJAEPVxdrI3i9KJQEvv/6XBz/GleZK7eWgjNorISK4kuXrQr9YZm
-         y3DA==
-Received: by 10.50.192.168 with SMTP id hh8mr56421igc.13.1334360230610;
-        Fri, 13 Apr 2012 16:37:10 -0700 (PDT)
-Received: from burratino (adsl-99-24-202-99.dsl.chcgil.sbcglobal.net. [99.24.202.99])
-        by mx.google.com with ESMTPS id i7sm148406igq.11.2012.04.13.16.37.09
-        (version=SSLv3 cipher=OTHER);
-        Fri, 13 Apr 2012 16:37:10 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <CAMP44s0R7imiem4uoBggkjjJ4z5+MXVYUroe_23JE8McMCk2sQ@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=C6FhUvFOVl5tNnFtudT/T6DsgChcTNTGM4JXiSzxnOw=;
+        b=rtp2zonAWDgVFm0wcmJ3oRCsgIARZinzf2QWpaA2o+1Klxva6kX7OmpOHXFReiFrgQ
+         reibJa1NRvBwXqyOI9hQB3qJSi7NI/YIoP64o/izQbv4VyZ+mBYKvuMXijJD4X5vVNQ9
+         dvKfxBbhBO/OAt9a2IJpOkPofhhU4Rp5UfZBf7fA6SbbSswgruUO76FCnCDowdJKDKPi
+         lA7W6F1yPB5X1g3nbRUVE9e0Jqd4XMP4CxMk/ok+EY8YpLRCceOxhY6FKS1/vb5FC5jg
+         Ijow8Tx/QSoFR2bKO0uNju52qzptIfx0ZbCBgl7Fos0CTYl01wNyzk5GSLR70yAE+CJF
+         uorA==
+Received: by 10.213.32.2 with SMTP id a2mr269467ebd.39.1334360580271; Fri, 13
+ Apr 2012 16:43:00 -0700 (PDT)
+Received: by 10.213.19.67 with HTTP; Fri, 13 Apr 2012 16:43:00 -0700 (PDT)
+In-Reply-To: <20120413233706.GD13995@burratino>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195457>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195458>
 
-Felipe Contreras wrote:
+On Sat, Apr 14, 2012 at 2:37 AM, Jonathan Nieder <jrnieder@gmail.com> w=
+rote:
+> Felipe Contreras wrote:
+>
+>> I don't understand, the commit message doesn't match what the patch
+>> actually does.
+>
+> Try it, I guess? =C2=A0At least for me,
+>
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0git --exec-p<TAB>
+>
+> completes to
+>
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0git --exec-path <cursor here>
+>
+> before the patch, and to
+>
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0git --exec-path<cursor here>
+>
+> after the patch. =C2=A0Which is different from your original patch.
 
-> I don't understand, the commit message doesn't match what the patch
-> actually does.
+Ah, it doesn't remove the current line, it just adds a new one. I'm
+not sure how the completion results show up, but I guess it's better
+than the alternatives.
 
-Try it, I guess?  At least for me,
-
-	git --exec-p<TAB>
-
-completes to
-
-	git --exec-path <cursor here>
-
-before the patch, and to
-
-	git --exec-path<cursor here>
-
-after the patch.  Which is different from your original patch.
-
-Cheers,
-Jonathan
+--=20
+=46elipe Contreras
