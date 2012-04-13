@@ -1,115 +1,124 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCHv2] fetch: Only call a new ref a "branch" if it's under
- refs/heads/.
-Date: Fri, 13 Apr 2012 15:39:59 -0700
-Message-ID: <7vy5pz1cjk.fsf@alter.siamese.dyndns.org>
-References: <1334336904-18649-1-git-send-email-marcnarc@xiplink.com>
- <20120413211350.GD7919@sigill.intra.peff.net>
- <20120413215316.GA19826@burratino>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: [PATCH] i18n: use test_i18ncmp in t2020 (checkout --detach)
+Date: Fri, 13 Apr 2012 17:59:01 -0500
+Message-ID: <20120413225901.GA13220@burratino>
+References: <20110320090111.GA15641@sigill.intra.peff.net>
+ <20110320090918.GB15948@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, marcnarc@xiplink.com,
-	git@vger.kernel.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Apr 14 00:40:25 2012
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Piotr Krukowiecki <piotr.krukowiecki@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sat Apr 14 00:59:49 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SIpAE-0007OO-Te
-	for gcvg-git-2@plane.gmane.org; Sat, 14 Apr 2012 00:40:23 +0200
+	id 1SIpSz-0002gQ-Ee
+	for gcvg-git-2@plane.gmane.org; Sat, 14 Apr 2012 00:59:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932449Ab2DMWkK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Apr 2012 18:40:10 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64785 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932443Ab2DMWkI (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Apr 2012 18:40:08 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C8A827086;
-	Fri, 13 Apr 2012 18:40:04 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=ax77Wu7NZADPnfTgDU6S7cwLZEI=; b=KcSVcv
-	Q3RoxnJ9oSRFhjW9GWCgN5Q0dW4GlLm0gqvzXfncYMf5KkSoG7YOz0dpS/SNtJIn
-	A+H9uGBvrr573mF0XN8hno9h/oURpyTP0MtpiEFwNlrtYsijDAUh/06DBxCNwBSr
-	yy3SsOj/n4AEd/HXmGrlzUWeY1GeIQmrLrRz4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=pUMYHG/lXIR7+lqXINdn3AySE7p/+W2H
-	bTVZ1iVnBf/WG81R7tA6b/NxFKmhBLB8mLtx6o7Pu8FKWPtHwaM/AReAqDYkArfJ
-	X559EOlQ8wZWoohR15sJPjqg0wBg5cxUA34NSQfnK+wX3rdZPumyTMhMTHa2BlJ+
-	Rdrn1AFyMbU=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B20737085;
-	Fri, 13 Apr 2012 18:40:04 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 53F2C7083; Fri, 13 Apr 2012
- 18:40:01 -0400 (EDT)
-In-Reply-To: <20120413215316.GA19826@burratino> (Jonathan Nieder's message of
- "Fri, 13 Apr 2012 16:53:16 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 9AFD1FC6-85B9-11E1-8527-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1756116Ab2DMW7M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Apr 2012 18:59:12 -0400
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:54939 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754586Ab2DMW7K (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Apr 2012 18:59:10 -0400
+Received: by iagz16 with SMTP id z16so4867434iag.19
+        for <git@vger.kernel.org>; Fri, 13 Apr 2012 15:59:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=jVBE2xdOKkVel8M4BKlY7W4YTSl0uEqcuIQSILFjl0k=;
+        b=y61NqZaqDJ8XEZ64OWtNznraVuQHlXFEDQ8MrK57kk+3vlFbXwGTr+xSRV93dbax3j
+         y6g+yhJjyCNN9BBUjtE/J90jZFJubKq19pAdZ8xA6RhJRhQyoFf07f/vimjAMTcOO9Zr
+         OzBItuL+pwTmy7BSlECHr/h9vHEBdfDePWwm1qzoDM+kmzWle26NfEMPqNAbHZolPkEs
+         td2hUQVkEZJHjAY58czoWgBVP2eK0lDhMT9jS4IAfris3IT2655OBtf9zldpobafzakD
+         7/Xig5OIIyNbo82W/svhRLGrKkTGgsKps+dInfkWOYOPol5DXmszPsH943SW+GdXklg5
+         Ip3g==
+Received: by 10.50.179.104 with SMTP id df8mr4609igc.11.1334357949053;
+        Fri, 13 Apr 2012 15:59:09 -0700 (PDT)
+Received: from burratino (adsl-99-24-202-99.dsl.chcgil.sbcglobal.net. [99.24.202.99])
+        by mx.google.com with ESMTPS id m4sm168732igw.1.2012.04.13.15.59.07
+        (version=SSLv3 cipher=OTHER);
+        Fri, 13 Apr 2012 15:59:08 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <20110320090918.GB15948@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195451>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195452>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+When v1.7.5-rc0~19^2~1 (checkout: clear commit marks after detached-orphan
+check, 2011-03-20) added a check that the human-readable message
 
-> Jeff King wrote:
+	Your branch is behind 'master' by 1 commit, and can be fast-forwarded.
+
+is not suppressed by a previous commit walk, it forgot that the
+message might be different when git is configured to write output in
+another language.  Skip the output check in that case.
+
+With this patch applied, the test passes with GETTEXT_POISON=true again.
+
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+---
+Hi,
+
+Jeff King wrote:
+
+> When leaving a detached HEAD, we do a revision walk to make
+> sure the commit we are leaving isn't being orphaned.
+> However, this leaves crufty marks in the commit objects
+> which can confuse later walkers, like the one in
+> stat_tracking_info.
 >
->> Hmm. The ref->name we are comparing here is the local side. So if I am
->> fetching a new branch "foo" from the remote into a local
->> "refs/remotes/origin/foo" tracking ref, it used to say:
->>
->>     From ../parent
->>      * [new branch]      master     -> origin/master
->>
->> Now it says:
->>
->>     From ../parent
->>      * [new ref]         master     -> origin/master
->>
->> while refs/remotes/* are not technically branches in our side, I think
->> from the user's perspective, it is true that we have fetched a branch.
->> Should we be calling refs/remotes/* branches, too? Should we be checking
->> the remote's name for the item instead of the local one?
+> Let's clean up after ourselves to prevent this conflict.
+
+Very nice thing to do.  Thanks.
+
+[...]
+> --- a/t/t2020-checkout-detach.sh
+> +++ b/t/t2020-checkout-detach.sh
+> @@ -126,4 +126,17 @@ test_expect_success 'checkout does not warn leaving reachable commit' '
+>  	check_no_orphan_warning stderr
+>  '
 >
-> The former sounds sensible.  Then once the default refspec learns to
-> fetch into separate refs/remotes/origin/heads/* and
-> refs/remotes/origin/notes/* namespaces the logic could be updated to
-> write [new branch] or [new note collection] according to the
-> situation.
+> +cat >expect <<'EOF'
+> +Your branch is behind 'master' by 1 commit, and can be fast-forwarded.
+> +EOF
+> +test_expect_success 'tracking count is accurate after orphan check' '
+> +	reset &&
+> +	git branch child master^ &&
+> +	git config branch.child.remote . &&
+> +	git config branch.child.merge refs/heads/master &&
+> +	git checkout child^ &&
+> +	git checkout child >stdout &&
+> +	test_cmp expect stdout
 
-If we give 'new branch' label for this case because we store it in our
-'refs/remotes/*', a natural extension of it would be to redefine the rule
-to narrow it to 'refs/remotes/*/heads/*' for using 'branch' when we
-introduce 'new notes collection' label to give refs we are going to store
-in 'refs/remotes/origin/notes/*'.  That is consistent with the former.
+Should use test_i18ncmp to handle people who force tests to run in
+other locales (like the fake GETTEXT_POISON locale).  Quick patch
+follows.
 
-If we give 'new branch' label because refs/heads/master on the originating
-end is what is shown on the line, a natural extension would be to use 'new
-notes collection' label when we are fetching from refs/notes/* on the
-originating end, and it does not matter where we store it, either our own
-refs/notes/* or refs/remotes/origin/notes/*.  That is consistent with the
-latter.
+ t/t2020-checkout-detach.sh |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-There is no concensus if refs/remotes/origin/notes/* hierarchy is a good
-idea or not, but your argument does not support either side between the
-former or the latter anyway, so I think it is irrelevant point to raise in
-this discussion.
-
-The choice between the two really depends on what information we are
-trying to convey with this label.  Are we saying "Hey, we now have a new
-'branch' on our side"?  Or are we saying "We found a new 'branch' over
-there"?  It is unclear and you can argue both ways. Although I personally
-think it is the latter, I do not have a strong opinion either way.
-
-I am actually fine with just saying '[new]' without indicating what kind
-at all, because the label is there only to fill the space where old..new
-object names are usually shown.  We don't even say "[rejected branch]",
-just "[rejected]" in the same place.
+diff --git a/t/t2020-checkout-detach.sh b/t/t2020-checkout-detach.sh
+index 068fba4c..b37ce25c 100755
+--- a/t/t2020-checkout-detach.sh
++++ b/t/t2020-checkout-detach.sh
+@@ -148,7 +148,7 @@ test_expect_success 'tracking count is accurate after orphan check' '
+ 	git config branch.child.merge refs/heads/master &&
+ 	git checkout child^ &&
+ 	git checkout child >stdout &&
+-	test_cmp expect stdout
++	test_i18ncmp expect stdout
+ '
+ 
+ test_done
+-- 
+1.7.10
