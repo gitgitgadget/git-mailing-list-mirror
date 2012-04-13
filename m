@@ -1,91 +1,98 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH 2/2] http: use newer curl options for setting credentials
-Date: Fri, 13 Apr 2012 02:19:25 -0400
-Message-ID: <20120413061925.GB13690@sigill.intra.peff.net>
-References: <20120413061622.GA27591@sigill.intra.peff.net>
+Subject: Re: git bug: moved file with local unstaged changes are lost during
+ merge
+Date: Fri, 13 Apr 2012 02:49:41 -0400
+Message-ID: <20120413064941.GC27214@sigill.intra.peff.net>
+References: <CAAZnV3Einocd4TJ0iqcxPJNsr44j3RwhczS9OhyURX0faGWgBQ@mail.gmail.com>
+ <CAAZnV3EwZ6kminW7D3ssn_Rtj2SsMHd++VCx7w14K5rQKba4_g@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Clemens Buchacher <drizzd@aon.at>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Apr 13 08:19:33 2012
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Elijah Newren <newren@gmail.com>, git@vger.kernel.org
+To: Joe Angell <joe.d.angell@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Apr 13 08:50:17 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SIZr2-00032k-Ok
-	for gcvg-git-2@plane.gmane.org; Fri, 13 Apr 2012 08:19:33 +0200
+	id 1SIaKk-0005VD-EV
+	for gcvg-git-2@plane.gmane.org; Fri, 13 Apr 2012 08:50:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754472Ab2DMGT2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Apr 2012 02:19:28 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:32981
+	id S1755313Ab2DMGuI convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 13 Apr 2012 02:50:08 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:33013
 	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754375Ab2DMGT2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Apr 2012 02:19:28 -0400
-Received: (qmail 4683 invoked by uid 107); 13 Apr 2012 06:19:34 -0000
+	id S1752044Ab2DMGuG (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Apr 2012 02:50:06 -0400
+Received: (qmail 5034 invoked by uid 107); 13 Apr 2012 06:49:50 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 13 Apr 2012 02:19:34 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 13 Apr 2012 02:19:25 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 13 Apr 2012 02:49:50 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 13 Apr 2012 02:49:41 -0400
 Content-Disposition: inline
-In-Reply-To: <20120413061622.GA27591@sigill.intra.peff.net>
+In-Reply-To: <CAAZnV3EwZ6kminW7D3ssn_Rtj2SsMHd++VCx7w14K5rQKba4_g@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195402>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195403>
 
-We give the username and password to curl by sticking them
-in a buffer of the form "user:pass" and handing the result
-to CURLOPT_USERPWD. Since curl 7.19.1, there is a split
-mechanism, where you can specify each element individually.
+On Thu, Apr 12, 2012 at 10:13:04AM -0600, Joe Angell wrote:
 
-This has the advantage that a username can contain a ":"
-character. It also is less code for us, since we can hand
-our strings over to curl directly. And since curl 7.17.0 and
-higher promise to copy the strings for us, we we don't even
-have to worry about memory ownership issues.
+> Is this the right place to post bug reports?
 
-Unfortunately, we have to keep the ugly code for old curl
-around, but as it is now nicely #if'd out, we can easily get
-rid of it when we decide that 7.19.1 is "old enough".
+It is. Thanks for including a concise test case with your bug report.
 
-Signed-off-by: Jeff King <peff@peff.net>
----
-For reference, 7.19.1 is from late 2008.
+Unfortunately, the merge-recursive code is a mess, and has several know=
+n
+buggy corner cases with renames. Elijah (cc'd) spent a lot of time
+trying to sort these out a while ago, but there still some known
+failures. t6042 and t6036 detect some of them. But I thought we managed
+to clean up all of the overwriting bugs.
 
- http.c |   13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+Original bug report is below.
 
-diff --git a/http.c b/http.c
-index eaf7f40..2ec3789 100644
---- a/http.c
-+++ b/http.c
-@@ -210,14 +210,23 @@ static int http_options(const char *var, const char *value, void *cb)
- 
- static void init_curl_http_auth(CURL *result)
- {
--	if (http_auth.username) {
-+	if (!http_auth.username)
-+		return;
-+
-+	credential_fill(&http_auth);
-+
-+#if LIBCURL_VERSION_NUM >= 0x071301
-+	curl_easy_setopt(result, CURLOPT_USERNAME, http_auth.username);
-+	curl_easy_setopt(result, CURLOPT_PASSWORD, http_auth.password);
-+#else
-+	{
- 		static struct strbuf up = STRBUF_INIT;
--		credential_fill(&http_auth);
- 		strbuf_reset(&up);
- 		strbuf_addf(&up, "%s:%s",
- 			    http_auth.username, http_auth.password);
- 		curl_easy_setopt(result, CURLOPT_USERPWD, up.buf);
- 	}
-+#endif
- }
- 
- static int has_cert_password(void)
--- 
-1.7.9.6.6.g6b3b56
+-Peff
+
+> On Wed, Apr 11, 2012 at 12:20 PM, Joe Angell <joe.d.angell@gmail.com>=
+ wrote:
+> > What steps will reproduce the problem?
+> > git init
+> > echo "initial checkin" >> readme
+> > git add readme
+> > git commit -m "inital checkin"
+> > git branch b1
+> > git checkout b1
+> > echo "b1" >> readme
+> > git add readme
+> > git commit -m "b1 readme"
+> > git checkout master
+> > git mv readme readme_master
+> > git ci -m "moved readme"
+> > echo "master" >> readme_master
+> > git merge b1
+> >
+> > What is the expected output? What do you see instead?
+> > I expect to have git prevent the merge due to local changes to the
+> > file. =C2=A0Instead it overwrites the file (erasing the local modif=
+ication
+> > "master") and you end up with:
+> > cat readme_master
+> > initial readme
+> > b1
+> >
+> > What version of the product are you using? On what operating system=
+?
+> > Reproduced on 1.7.9.6 and from the git-core repo 1.7.10.128.g7945c.
+> > This is on ubuntu 10.04.
+> >
+> > Please provide any additional information below.
+> >
+> > This problem only seems to occur after you check in the move, then
+> > make local modifications, then do the merge.
+> >
+> > --
+> > ---------------
+> > Joe Angell
+> > cell: (720) 260-2190
