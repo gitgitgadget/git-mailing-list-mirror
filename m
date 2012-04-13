@@ -1,56 +1,126 @@
-From: <oldb0t@ro.ru>
-Subject: Re: Git stops forever while cloning remote repo
-Date: Fri, 13 Apr 2012 22:35:52 +0400
-Message-ID: <1050185255.1334342152.89018696.94536@mperl102.rambler.ru>
-References: <805073108.1332078446.170729064.12423@mcgi-wr-20.rambler.ru> <20120404210707.GA5054@sigill.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-Content-Transfer-Encoding: 7bit
-Cc: Tomas Carnecky <tomas.carnecky@gmail.com>, <git@vger.kernel.org>,
-	<oldb0t@ro.ru>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Apr 13 20:36:03 2012
+From: Neil Horman <nhorman@tuxdriver.com>
+Subject: [PATCH v5 0/4]Enhance git-rebases flexibiilty in handling empty commits
+Date: Fri, 13 Apr 2012 14:45:03 -0400
+Message-ID: <1334342707-3326-1-git-send-email-nhorman@tuxdriver.com>
+References: <1333136922-12872-1-git-send-email-nhorman@tuxdriver.com>
+Cc: Jeff King <peff@peff.net>, Phil Hord <phil.hord@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Neil Horman <nhorman@tuxdriver.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Apr 13 20:45:32 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SIlLl-0002fu-DD
-	for gcvg-git-2@plane.gmane.org; Fri, 13 Apr 2012 20:36:01 +0200
+	id 1SIlUw-0001M3-78
+	for gcvg-git-2@plane.gmane.org; Fri, 13 Apr 2012 20:45:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755931Ab2DMSf4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Apr 2012 14:35:56 -0400
-Received: from mx-out-wr-2.rambler.ru ([81.19.92.41]:37972 "EHLO
-	mx-out-wr-2.rambler.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755404Ab2DMSfz (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Apr 2012 14:35:55 -0400
-Received: from mperl102.rambler.ru (mperl102.rambler.ru [10.32.5.102])
-	by mx-out-wr-2.rambler.ru (Postfix) with ESMTP id AFD5E7E2DD9;
-	Fri, 13 Apr 2012 22:35:53 +0400 (MSK)
-Received: from mperl102.rambler.ru (localhost [127.0.0.1])
-	by mperl102.rambler.ru (Postfix) with ESMTP id 945CB4B33012;
-	Fri, 13 Apr 2012 22:35:53 +0400 (MSK)
-Received: from [93.74.202.53] by mperl102.rambler.ru with HTTP (mailimap); Fri, 13 Apr 2012 22:35:52 +0400
-Content-Disposition: inline
-X-Mailer: Ramail 3u, (chameleon), http://mail.rambler.ru
+	id S1756043Ab2DMSpX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Apr 2012 14:45:23 -0400
+Received: from charlotte.tuxdriver.com ([70.61.120.58]:39035 "EHLO
+	smtp.tuxdriver.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752745Ab2DMSpV (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Apr 2012 14:45:21 -0400
+Received: from hmsreliant.think-freely.org ([2001:470:8:a08:7aac:c0ff:fec2:933b] helo=localhost)
+	by smtp.tuxdriver.com with esmtpsa (TLSv1:AES128-SHA:128)
+	(Exim 4.63)
+	(envelope-from <nhorman@tuxdriver.com>)
+	id 1SIlUf-0001LU-Je; Fri, 13 Apr 2012 14:45:16 -0400
+X-Mailer: git-send-email 1.7.7.6
+In-Reply-To: <1333136922-12872-1-git-send-email-nhorman@tuxdriver.com>
+X-Spam-Score: -2.9 (--)
+X-Spam-Status: No
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195430>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195431>
 
-* Jeff King <peff@peff.net> [Wed, 4 Apr 2012 17:07:07 -0400]:
-> I tried to reproduce this here, but it works fine for me. Have you 
-tried> cloning from git://github.com/angband/angband.git instead? If 
-that works
-> better, that would give us a data point about where the problem is.
-I retried it a few days later, and all worked fine. Sorry for silence, 
-just didn't have access to this mailbox at the moment.
+git's ability to handle empty commits is somewhat lacking, especially when
+preforming a rebase.  Nominally empty commits are undesireable entries, the 
+result of commits that are made empty by prior commits covering the same changs.
+But occasionally, empty commits are useful to developers (e.g. inserting notes 
+into the development history without changing any code along the way).  In these
+cases its desireable to easily preserve empty commits during operations like 
+rebases.
 
-> One solution is to create static "bundles" that are
-> resumable, but not every service (nor most, really) does that[1].
-> However, you can try Tomas's bundler service, which will generate a
-> resumable bundle for you:
->   https://bundler.caurea.org/
-Thanks a lot. Should be a good workaround for this kind of problem. I'll 
-try it next time on similar occassion.
+This patch series enhances git to do just that.  It adds two options to the 
+git-cherry-pick command, --allow-empty, which allows git cherry-pick to preserve
+an empty commit, even if the fast forward logic isn't applicable during the 
+operation, and --keep-redundant-commits, which allows the user to also keep
+commits that were made empty via conflict resolution.  It also enhances
+git-rebase to add a --keep-empty option which enables rebases to preserve empty
+commits. 
+
+I've tested these operations out myself here and they work well for me
+
+Signed-off-by: Neil Horman <nhorman@tuxdriver.com>
+
+---
+Change notes:
+
+Based on version 1 feedback from this list, the following changes have been made
+
+V2)
+	* Changed --keep-empty to --allow-empty in the git cherry-pick command
+
+	* Converted run_git_commit to use argv_array
+
+	* Updated cherry-pick --allow-empty description in man page
+	
+	* added ignore-if-made-empty option to git-cherry-pick
+
+	* Added test to test suite to validate the new cherry-pick options
+
+	* Updated git-rebase man page to be less verbose and more accurate in the
+	description of the keep-empty option
+
+	* squashed the addition of the keep-empty flag in git-rebase down to one
+	commit from 3
+
+	* fixed up coding style in git-rebase script
+
+	* Optimized detection of empty commits
+
+	* Only augmented git-rebase-editor message if empty commits are
+	possible
+	
+V3)
+	* reversed the --ignore-if-empty-logic to by default only keep initially
+	empty commits
+
+	* replaced --ignore-if-empty with --keep-redundant-commits, to allow
+	empty commits that are made empty via conflict resolution, in addition
+	to commits that were created as empty
+
+	* reworked is_original_commit_empty to be more efficient and portable
+
+	* Misc sylistic and spelling cleanups
+
+V4)
+	* Reverted the cherry-pick advice changes in V3 based on in-thread
+	discussion
+
+	* Rewrote my changes to is_original_commit_empty and run_git_commit to
+	not have to fork, making them more efficient.
+
+v5)
+	* Additional help text clean up
+	* Additional error checking added to run_git_commit code
+	* Whitespace cleanup
+	* Removed needed cache_tree freeing
+	* Test case cleanup
+	* Fixed regression in t3404 and t3416 - this turned out to be 
+        a problem with the note that git rebase -i adds at the bottom
+	of the rebase text.  It was inadvertently indented and caused the
+	test fake editor to misread the commit template.  The indentation 
+	has been corrected, and these two tests, as well as all the other
+	expected tests pass now
+
+--
+To unsubscribe from this list: send the line "unsubscribe git" in
+the body of a message to majordomo@vger.kernel.org
+More majordomo info at  http://vger.kernel.org/majordomo-info.html
+
+
