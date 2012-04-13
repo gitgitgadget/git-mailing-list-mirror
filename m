@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH v9 3/9] column: add columnar layout
-Date: Fri, 13 Apr 2012 17:54:35 +0700
-Message-ID: <1334314481-14470-4-git-send-email-pclouds@gmail.com>
+Subject: [PATCH v9 4/9] column: add dense layout support
+Date: Fri, 13 Apr 2012 17:54:36 +0700
+Message-ID: <1334314481-14470-5-git-send-email-pclouds@gmail.com>
 References: <1334314481-14470-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -11,291 +11,268 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 13 12:56:09 2012
+X-From: git-owner@vger.kernel.org Fri Apr 13 12:56:20 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SIeAg-0006wN-Ka
-	for gcvg-git-2@plane.gmane.org; Fri, 13 Apr 2012 12:56:07 +0200
+	id 1SIeAq-00073K-Mf
+	for gcvg-git-2@plane.gmane.org; Fri, 13 Apr 2012 12:56:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935243Ab2DMK4A convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 13 Apr 2012 06:56:00 -0400
+	id S935245Ab2DMK4L convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 13 Apr 2012 06:56:11 -0400
 Received: from mail-pz0-f52.google.com ([209.85.210.52]:37934 "EHLO
 	mail-pz0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S935209Ab2DMKz7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Apr 2012 06:55:59 -0400
-Received: by dake40 with SMTP id e40so3768806dak.11
-        for <git@vger.kernel.org>; Fri, 13 Apr 2012 03:55:59 -0700 (PDT)
+	with ESMTP id S935209Ab2DMK4J (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Apr 2012 06:56:09 -0400
+Received: by mail-pz0-f52.google.com with SMTP id e40so3768806dak.11
+        for <git@vger.kernel.org>; Fri, 13 Apr 2012 03:56:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=ImPWz6Bchuz0QgDpNEyLPl9sMgXFC7ptNNOs3OsGTXI=;
-        b=v/6PtRh1c5uEcjeHEy2YIQRwf0Copt8Qb0h4GKb2Lbp8PCztE4z4yVVwpgdZKNQcp4
-         YSKs/vRcOlkewUmNjnlsXb1jD4F+28ZSsdCWjN0rEjntss0CWOP+0jgbHaLU7uSwjDAx
-         VcnQG15yBJ70KAiqV/tDYqmhDA+l9o9yhP5uhek1qNGyLIzzfynZFQ407OsWBGHEKXhK
-         g1vc/DM/8hyyNOchLSlwxktaoYi4ipWLyQZziRZ8wNEFgALmDYn03rZx49kZBAIjSO8/
-         3r5adnuX9HZAJqXzvTCsQKxtT02LEFb4ozWbkNmbh92han8iMI5L9RsOKlKso7OXYhtJ
-         Ux3g==
-Received: by 10.68.134.8 with SMTP id pg8mr3748002pbb.152.1334314559168;
-        Fri, 13 Apr 2012 03:55:59 -0700 (PDT)
+        bh=qyVsK9Q3cb8oBn2z7a2/QzB222ig8sZnROaeALk1hNo=;
+        b=Y+8qM7js1PPj+0Dzvwas5OG+1OPGY1c+1xFXUjATBznVIO/BHjM9C/7zmWFGXfrwDb
+         amxyPExJMEjWyDCKybNvV3U+VXA2nEDWEirUuh1GY4BDjQ87/1fS+amVeqDIMrU+O9yW
+         CE12IPn3g6GR1s6bolBqsgQ5ll5zeTP4mRkuReLz21uYZDNU/8lf/B7QUT6butWEVwmM
+         RSKOaKUTfCpyhqHI1kZwUeIaOGupkdhCBIVDch6PPnrDzt1qeMuRCAAhpaYKNe2jGLwa
+         +oPbSA61QaniKGNJ138+G9leUHVI6DCo4pDEkCfZ582q7GK7ROX6bZF61cJEmTL68Zvv
+         lxCg==
+Received: by 10.68.202.163 with SMTP id kj3mr3721522pbc.165.1334314569259;
+        Fri, 13 Apr 2012 03:56:09 -0700 (PDT)
 Received: from pclouds@gmail.com ([113.161.77.29])
-        by mx.google.com with ESMTPS id vh10sm8436862pbc.29.2012.04.13.03.55.54
+        by mx.google.com with ESMTPS id i1sm8416051pbj.70.2012.04.13.03.56.04
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 13 Apr 2012 03:55:58 -0700 (PDT)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Fri, 13 Apr 2012 17:55:10 +0700
+        Fri, 13 Apr 2012 03:56:08 -0700 (PDT)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Fri, 13 Apr 2012 17:55:20 +0700
 X-Mailer: git-send-email 1.7.3.1.256.g2539c.dirty
 In-Reply-To: <1334314481-14470-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195413>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195414>
 
-COL_COLUMN and COL_ROW fill column by column (or row by row
-respectively), given the terminal width and how many space between
-columns. All cells have equal width.
+Normally all cells (and in turn columns) share the same width. This
+layout mode can waste space because one long item can stretch our all
+columns.
 
-Strings are supposed to be in UTF-8. Valid ANSI escape strings are OK.
+With COL_DENSE enabled, column width is calculated indepdendently. All
+columns are shrunk to minimum, then it attempts to push cells of the
+last row over to the next column with hope that everything still fits
+even there's one row less. The process is repeated until the new layout
+cannot fit in given width any more, or there's only one row left
+(perfect!).
 
+Apparently, this mode consumes more cpu than the old one, but it makes
+better use of terminal space. For layouting one or two screens, cpu
+usage should not be detectable.
+
+This patch introduces option handling code besides layout modes and
+enable/disable to expose this feature as "dense". The feature can be
+turned off by specifying "nodense".
+
+Thanks-to: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
  Documentation/config.txt |    4 ++
- column.c                 |  114 ++++++++++++++++++++++++++++++++++++++=
-++++++++
+ column.c                 |   84 ++++++++++++++++++++++++++++++++++++++=
++++++++-
  column.h                 |    2 +
- t/t9002-column.sh        |   86 ++++++++++++++++++++++++++++++++++
- 4 files changed, 206 insertions(+), 0 deletions(-)
+ t/t9002-column.sh        |   48 ++++++++++++++++++++++++++
+ 4 files changed, 137 insertions(+), 1 deletions(-)
 
 diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 9aabef1..ab6ae3d 100644
+index ab6ae3d..01905a7 100644
 --- a/Documentation/config.txt
 +++ b/Documentation/config.txt
-@@ -848,6 +848,10 @@ column.ui::
- 	never show in columns
- `auto`;;
- 	show in columns if the output is to the terminal
-+`column`;;
-+	fill columns before rows (default)
-+`row`;;
-+	fill rows before columns
+@@ -854,6 +854,10 @@ column.ui::
+ 	fill rows before columns
  `plain`;;
  	show in one column
++`dense`;;
++	make unequal size columns to utilize more space
++`nodense`;;
++	make equal size columns
  --
+ +
+ 	This option defaults to 'never'.
 diff --git a/column.c b/column.c
-index b297037..e44e2e9 100644
+index e44e2e9..0fb7582 100644
 --- a/column.c
 +++ b/column.c
-@@ -2,6 +2,59 @@
- #include "column.h"
- #include "string-list.h"
- #include "parse-options.h"
-+#include "utf8.h"
-+
-+#define XY2LINEAR(d, x, y) (COL_LAYOUT((d)->colopts) =3D=3D COL_COLUMN=
- ? \
-+			    (x) * (d)->rows + (y) : \
-+			    (y) * (d)->cols + (x))
-+
-+struct column_data {
-+	const struct string_list *list;
-+	unsigned int colopts;
-+	struct column_options opts;
-+
-+	int rows, cols;
-+	int *len;		/* cell length */
-+};
-+
-+/* return length of 's' in letters, ANSI escapes stripped */
-+static int item_length(unsigned int colopts, const char *s)
+@@ -15,6 +15,7 @@ struct column_data {
+=20
+ 	int rows, cols;
+ 	int *len;		/* cell length */
++	int *width;	      /* index to the longest row in column */
+ };
+=20
+ /* return length of 's' in letters, ANSI escapes stripped */
+@@ -56,6 +57,57 @@ static void layout(struct column_data *data, int *wi=
+dth)
+ 	data->rows =3D DIV_ROUND_UP(data->list->nr, data->cols);
+ }
+=20
++static void compute_column_width(struct column_data *data)
 +{
-+	int len, i =3D 0;
-+	struct strbuf str =3D STRBUF_INIT;
-+
-+	strbuf_addstr(&str, s);
-+	while ((s =3D strstr(str.buf + i, "\033[")) !=3D NULL) {
-+		int len =3D strspn(s + 2, "0123456789;");
-+		i =3D s - str.buf;
-+		strbuf_remove(&str, i, len + 3); /* \033[<len><func char> */
++	int i, x, y;
++	for (x =3D 0; x < data->cols; x++) {
++		data->width[x] =3D XY2LINEAR(data, x, 0);
++		for (y =3D 0; y < data->rows; y++) {
++			i =3D XY2LINEAR(data, x, y);
++			if (i < data->list->nr &&
++			    data->len[data->width[x]] < data->len[i])
++				data->width[x] =3D i;
++		}
 +	}
-+	len =3D utf8_strwidth(str.buf);
-+	strbuf_release(&str);
-+	return len;
 +}
 +
 +/*
-+ * Calculate cell width, rows and cols for a table of equal cells, giv=
-en
-+ * table width and how many spaces between cells.
++ * Shrink all columns by shortening them one row each time (and adding
++ * more columns along the way). Hopefully the longest cell will be
++ * moved to the next column, column is shrunk so we have more space
++ * for new columns. The process ends when the whole thing no longer
++ * fits in data->total_width.
 + */
-+static void layout(struct column_data *data, int *width)
++static void shrink_columns(struct column_data *data)
 +{
-+	int i;
++	data->width =3D xrealloc(data->width,
++			       sizeof(*data->width) * data->cols);
++	while (data->rows > 1) {
++		int x, total_width, cols, rows;
++		rows =3D data->rows;
++		cols =3D data->cols;
 +
-+	*width =3D 0;
-+	for (i =3D 0; i < data->list->nr; i++)
-+		if (*width < data->len[i])
-+			*width =3D data->len[i];
++		data->rows--;
++		data->cols =3D DIV_ROUND_UP(data->list->nr, data->rows);
++		if (data->cols !=3D cols)
++			data->width =3D xrealloc(data->width,
++					       sizeof(*data->width) * data->cols);
++		compute_column_width(data);
 +
-+	*width +=3D data->opts.padding;
-+
-+	data->cols =3D (data->opts.width - strlen(data->opts.indent)) / *widt=
-h;
-+	if (data->cols =3D=3D 0)
-+		data->cols =3D 1;
-+
-+	data->rows =3D DIV_ROUND_UP(data->list->nr, data->cols);
++		total_width =3D strlen(data->opts.indent);
++		for (x =3D 0; x < data->cols; x++) {
++			total_width +=3D data->len[data->width[x]];
++			total_width +=3D data->opts.padding;
++		}
++		if (total_width > data->opts.width) {
++			data->rows =3D rows;
++			data->cols =3D cols;
++			break;
++		}
++	}
++	compute_column_width(data);
 +}
-=20
++
  /* Display without layout when not enabled */
  static void display_plain(const struct string_list *list,
-@@ -13,6 +66,61 @@ static void display_plain(const struct string_list *=
-list,
- 		printf("%s%s%s", indent, list->items[i].string, nl);
- }
-=20
-+/* Print a cell to stdout with all necessary leading/traling space */
-+static int display_cell(struct column_data *data, int initial_width,
-+			const char *empty_cell, int x, int y)
-+{
-+	int i, len, newline;
+ 			  const char *indent, const char *nl)
+@@ -75,7 +127,18 @@ static int display_cell(struct column_data *data, i=
+nt initial_width,
+ 	i =3D XY2LINEAR(data, x, y);
+ 	if (i >=3D data->list->nr)
+ 		return -1;
 +
-+	i =3D XY2LINEAR(data, x, y);
-+	if (i >=3D data->list->nr)
-+		return -1;
-+	len =3D data->len[i];
-+	if (COL_LAYOUT(data->colopts) =3D=3D COL_COLUMN)
-+		newline =3D i + data->rows >=3D data->list->nr;
-+	else
-+		newline =3D x =3D=3D data->cols - 1 || i =3D=3D data->list->nr - 1;
-+
-+	printf("%s%s%s",
-+	       x =3D=3D 0 ? data->opts.indent : "",
-+	       data->list->items[i].string,
-+	       newline ? data->opts.nl : empty_cell + len);
-+	return 0;
-+}
-+
-+/* Display COL_COLUMN or COL_ROW */
-+static void display_table(const struct string_list *list,
-+			  unsigned int colopts,
-+			  const struct column_options *opts)
-+{
-+	struct column_data data;
-+	int x, y, i, initial_width;
-+	char *empty_cell;
-+
-+	memset(&data, 0, sizeof(data));
-+	data.list =3D list;
-+	data.colopts =3D colopts;
-+	data.opts =3D *opts;
-+
-+	data.len =3D xmalloc(sizeof(*data.len) * list->nr);
-+	for (i =3D 0; i < list->nr; i++)
-+		data.len[i] =3D item_length(colopts, list->items[i].string);
-+
-+	layout(&data, &initial_width);
-+
-+	empty_cell =3D xmalloc(initial_width + 1);
-+	memset(empty_cell, ' ', initial_width);
-+	empty_cell[initial_width] =3D '\0';
-+	for (y =3D 0; y < data.rows; y++) {
-+		for (x =3D 0; x < data.cols; x++)
-+			if (display_cell(&data, initial_width, empty_cell, x, y))
-+				break;
+ 	len =3D data->len[i];
++	if (data->width && data->len[data->width[x]] < initial_width) {
++		/*
++		 * empty_cell has initial_width chars, if real column
++		 * is narrower, increase len a bit so we fill less
++		 * space.
++		 */
++		len +=3D initial_width - data->len[data->width[x]];
++		len -=3D data->opts.padding;
 +	}
 +
-+	free(data.len);
-+	free(empty_cell);
-+}
+ 	if (COL_LAYOUT(data->colopts) =3D=3D COL_COLUMN)
+ 		newline =3D i + data->rows >=3D data->list->nr;
+ 	else
+@@ -108,6 +171,9 @@ static void display_table(const struct string_list =
+*list,
+=20
+ 	layout(&data, &initial_width);
+=20
++	if (colopts & COL_DENSE)
++		shrink_columns(&data);
 +
- void print_columns(const struct string_list *list, unsigned int colopt=
-s,
- 		   const struct column_options *opts)
- {
-@@ -35,6 +143,10 @@ void print_columns(const struct string_list *list, =
-unsigned int colopts,
- 	case COL_PLAIN:
- 		display_plain(list, nopts.indent, nopts.nl);
- 		break;
-+	case COL_ROW:
-+	case COL_COLUMN:
-+		display_table(list, colopts, &nopts);
-+		break;
- 	default:
- 		die("BUG: invalid layout mode %d", COL_LAYOUT(colopts));
+ 	empty_cell =3D xmalloc(initial_width + 1);
+ 	memset(empty_cell, ' ', initial_width);
+ 	empty_cell[initial_width] =3D '\0';
+@@ -118,6 +184,7 @@ static void display_table(const struct string_list =
+*list,
  	}
-@@ -69,6 +181,8 @@ static int parse_option(const char *arg, int len, un=
-signed int *colopts,
- 		{ "never",  COL_DISABLED, COL_ENABLE_MASK },
- 		{ "auto",   COL_AUTO,     COL_ENABLE_MASK },
+=20
+ 	free(data.len);
++	free(data.width);
+ 	free(empty_cell);
+ }
+=20
+@@ -183,13 +250,22 @@ static int parse_option(const char *arg, int len,=
+ unsigned int *colopts,
  		{ "plain",  COL_PLAIN,    COL_LAYOUT_MASK },
-+		{ "column", COL_COLUMN,   COL_LAYOUT_MASK },
-+		{ "row",    COL_ROW,      COL_LAYOUT_MASK },
+ 		{ "column", COL_COLUMN,   COL_LAYOUT_MASK },
+ 		{ "row",    COL_ROW,      COL_LAYOUT_MASK },
++		{ "dense",  COL_DENSE,    0 },
  	};
  	int i;
 =20
+ 	for (i =3D 0; i < ARRAY_SIZE(opts); i++) {
+-		int arg_len =3D len, name_len;
++		int set =3D 1, arg_len =3D len, name_len;
+ 		const char *arg_str =3D arg;
+=20
++		if (!opts[i].mask) {
++			if (arg_len > 2 && !strncmp(arg_str, "no", 2)) {
++				arg_str +=3D 2;
++				arg_len -=3D 2;
++				set =3D 0;
++			}
++		}
++
+ 		name_len =3D strlen(opts[i].name);
+ 		if (arg_len !=3D name_len ||
+ 		    strncmp(arg_str, opts[i].name, name_len))
+@@ -206,6 +282,12 @@ static int parse_option(const char *arg, int len, =
+unsigned int *colopts,
+=20
+ 		if (opts[i].mask)
+ 			*colopts =3D (*colopts & ~opts[i].mask) | opts[i].value;
++		else {
++			if (set)
++				*colopts |=3D opts[i].value;
++			else
++				*colopts &=3D ~opts[i].value;
++		}
+ 		return 0;
+ 	}
+=20
 diff --git a/column.h b/column.h
-index b8719b3..ec7e1d2 100644
+index ec7e1d2..4f178d8 100644
 --- a/column.h
 +++ b/column.h
-@@ -10,6 +10,8 @@
- #define COL_AUTO          0x0020
+@@ -4,6 +4,8 @@
+ #define COL_LAYOUT_MASK   0x000F
+ #define COL_ENABLE_MASK   0x0030   /* always, never or auto */
+ #define COL_PARSEOPT      0x0040   /* --column is given from cmdline *=
+/
++#define COL_DENSE         0x0080   /* Shrink columns when possible,
++				      making space for more columns */
 =20
- #define COL_LAYOUT(c) ((c) & COL_LAYOUT_MASK)
-+#define COL_COLUMN             0   /* Fill columns before rows */
-+#define COL_ROW                1   /* Fill rows before columns */
- #define COL_PLAIN             15   /* one column */
-=20
- #define explicitly_enable_column(c) \
+ #define COL_DISABLED      0x0000   /* must be zero */
+ #define COL_ENABLED       0x0010
 diff --git a/t/t9002-column.sh b/t/t9002-column.sh
-index a7f3cd9..ec288ae 100755
+index ec288ae..c7d7a65 100755
 --- a/t/t9002-column.sh
 +++ b/t/t9002-column.sh
-@@ -42,4 +42,90 @@ EOF
+@@ -89,6 +89,30 @@ EOF
  	test_cmp expected actual
  '
 =20
-+test_expect_success '80 columns' '
-+	cat >expected <<\EOF &&
-+one    two    three  four   five   six    seven  eight  nine   ten    =
-eleven
-+EOF
-+	COLUMNS=3D80 git column --mode=3Dcolumn <lista >actual &&
-+	test_cmp expected actual
-+'
-+
-+test_expect_success 'COLUMNS =3D 1' '
-+	cat >expected <<\EOF &&
-+one
-+two
-+three
-+four
-+five
-+six
-+seven
-+eight
-+nine
-+ten
-+eleven
-+EOF
-+	COLUMNS=3D1 git column --mode=3Dcolumn <lista >actual &&
-+	test_cmp expected actual
-+'
-+
-+test_expect_success 'width =3D 1' '
-+	git column --mode=3Dcolumn --width=3D1 <lista >actual &&
-+	test_cmp expected actual
-+'
-+
-+COLUMNS=3D20
-+export COLUMNS
-+
-+test_expect_success '20 columns' '
++test_expect_success '20 columns, nodense' '
 +	cat >expected <<\EOF &&
 +one    seven
 +two    eight
@@ -304,37 +281,29 @@ eleven
 +five   eleven
 +six
 +EOF
-+	git column --mode=3Dcolumn <lista >actual &&
++	git column --mode=3Dcolumn,nodense < lista > actual &&
 +	test_cmp expected actual
 +'
 +
-+test_expect_success '20 columns, padding 2' '
++test_expect_success '20 columns, dense' '
 +	cat >expected <<\EOF &&
-+one     seven
-+two     eight
-+three   nine
-+four    ten
-+five    eleven
-+six
++one   five  nine
++two   six   ten
++three seven eleven
++four  eight
 +EOF
-+	git column --mode=3Dcolumn --padding 2 <lista >actual &&
++	git column --mode=3Dcolumn,dense < lista > actual &&
 +	test_cmp expected actual
 +'
 +
-+test_expect_success '20 columns, indented' '
-+	cat >expected <<\EOF &&
-+  one    seven
-+  two    eight
-+  three  nine
-+  four   ten
-+  five   eleven
-+  six
-+EOF
-+	git column --mode=3Dcolumn --indent=3D"  " <lista >actual &&
-+	test_cmp expected actual
-+'
-+
-+test_expect_success '20 columns, row first' '
+ test_expect_success '20 columns, padding 2' '
+ 	cat >expected <<\EOF &&
+ one     seven
+@@ -128,4 +152,28 @@ EOF
+ 	test_cmp expected actual
+ '
+=20
++test_expect_success '20 columns, row first, nodense' '
 +	cat >expected <<\EOF &&
 +one    two
 +three  four
@@ -343,7 +312,18 @@ eleven
 +nine   ten
 +eleven
 +EOF
-+	git column --mode=3Drow <lista >actual &&
++	git column --mode=3Drow,nodense <lista >actual &&
++	test_cmp expected actual
++'
++
++test_expect_success '20 columns, row first, dense' '
++	cat >expected <<\EOF &&
++one   two    three
++four  five   six
++seven eight  nine
++ten   eleven
++EOF
++	git column --mode=3Drow,dense <lista >actual &&
 +	test_cmp expected actual
 +'
 +
