@@ -1,106 +1,83 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] tests: add initial bash completion tests
-Date: Fri, 13 Apr 2012 12:48:49 -0700
-Message-ID: <7v62d32z1a.fsf@alter.siamese.dyndns.org>
-References: <1334181423-4391-1-git-send-email-felipe.contreras@gmail.com>
- <20120413091236.GC2164@goldbirke>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCHv2] fetch: Only call a new ref a "branch" if it's under
+ refs/heads/.
+Date: Fri, 13 Apr 2012 15:07:21 -0500
+Message-ID: <20120413200721.GA3549@burratino>
+References: <1334336904-18649-1-git-send-email-marcnarc@xiplink.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Thomas Rast <trast@student.ethz.ch>, Jeff King <peff@peff.net>
-To: SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder@ira.uka.de>
-X-From: git-owner@vger.kernel.org Fri Apr 13 21:49:00 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: marcnarc@xiplink.com
+X-From: git-owner@vger.kernel.org Fri Apr 13 22:07:43 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SImUL-00058D-HV
-	for gcvg-git-2@plane.gmane.org; Fri, 13 Apr 2012 21:48:57 +0200
+	id 1SImmO-0000VK-1D
+	for gcvg-git-2@plane.gmane.org; Fri, 13 Apr 2012 22:07:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756575Ab2DMTsw convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 13 Apr 2012 15:48:52 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:58977 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756025Ab2DMTsv convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 13 Apr 2012 15:48:51 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6A42B7FAC;
-	Fri, 13 Apr 2012 15:48:51 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=vHHGaQJ0nJ0p
-	12Y7WnoC87frhls=; b=ZKqLzcjowphGIU20YJa3FlIJbFnevwVNUCfPQ2nlm9+Q
-	0+i8AdDt7cdgrVwFUMAfYZ0kJvuYu7crZiA3/8XtUIgsGCkQHmoBQcU4Bu4KX2fu
-	wwFU1GpsxPQAOgeefZK+/cYuLLW0IPYBZuo82dsxaq3pBOa8Gin3rS3NlK88+L4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=qLjQ8k
-	w14QARiW+91BxbQBmibc75KP632vx6+dj8NnomIfKwsoUR4kmu6Rd22WjrdfjI8v
-	mfkWkacq9cdE76WQTL/iRCQvpO/XpYLRsfylZjnHkk8wUjyU2NIN3A/FiPgTd30W
-	NQUVtYVZRfUyzBhrMFxt72OaNZ7onZYoQ9B7o=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5F1837FAB;
-	Fri, 13 Apr 2012 15:48:51 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id DEAC67FAA; Fri, 13 Apr 2012
- 15:48:50 -0400 (EDT)
-In-Reply-To: <20120413091236.GC2164@goldbirke> ("SZEDER =?utf-8?Q?G=C3=A1b?=
- =?utf-8?Q?or=22's?= message of "Fri, 13 Apr 2012 11:12:36 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: B158FCBC-85A1-11E1-A6E4-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1756614Ab2DMUHb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Apr 2012 16:07:31 -0400
+Received: from mail-gx0-f174.google.com ([209.85.161.174]:59230 "EHLO
+	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756243Ab2DMUHa (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Apr 2012 16:07:30 -0400
+Received: by gghe5 with SMTP id e5so1863114ggh.19
+        for <git@vger.kernel.org>; Fri, 13 Apr 2012 13:07:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=SaVNRcQrg37oE10mYA8LMe+m0f4k9foir3CQc478cng=;
+        b=yr7XhIEmjjP6PE1N8T4T/it1vBvVEF9S2nKDB5laHwLnPAKP2RFb6Xoe8O28CCSnYn
+         DF1zX2NlfvCJ/baSe5PR6+9EED02+564qXKjLJpjzJvSV6cjFG6pgnUI/N52hYjI4ACz
+         iIvrY9xqb0SaQLRsXaef4+B4xnNpIFolaz78z6814o+aHnJM5PTsMXOPWVDFose5QcMG
+         CU8YN/uHqCiq42d8QXsgWUsozFdGjup08hgLCgRym44KWZYHw1j3dCGT/juK4iBH9eSe
+         ufmmYjWTcGgT0wPDMFFxHJd4Kh5B9BKGXWdUzeFq4SHgQa5/gHiCgRyH5soS+i5caCrQ
+         T8Eg==
+Received: by 10.50.156.130 with SMTP id we2mr2737216igb.26.1334347649635;
+        Fri, 13 Apr 2012 13:07:29 -0700 (PDT)
+Received: from burratino (adsl-99-24-202-99.dsl.chcgil.sbcglobal.net. [99.24.202.99])
+        by mx.google.com with ESMTPS id df1sm4383827igb.12.2012.04.13.13.07.26
+        (version=SSLv3 cipher=OTHER);
+        Fri, 13 Apr 2012 13:07:28 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <1334336904-18649-1-git-send-email-marcnarc@xiplink.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195440>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195441>
 
-SZEDER G=C3=A1bor <szeder@ira.uka.de> writes:
+marcnarc@xiplink.com wrote:
 
->> +_get_comp_words_by_ref ()
->> +{
->> +	while [ $# -gt 0 ]; do
->> +		case "$1" in
->> +		cur)
->> +			cur=3D${_words[_cword]}
->> +			;;
->> +		prev)
->> +			prev=3D${_words[_cword-1]}
->> +			;;
->> +		words)
->> +			words=3D("${_words[@]}")
->> +			;;
->> +		cword)
->> +			cword=3D$_cword
->> +			;;
->> +		esac
->> +		shift
->> +	done
->> +}
->
-> Git's completion script already implements this function.  Why
-> override it here?
+> --- a/builtin/fetch.c
+> +++ b/builtin/fetch.c
+> @@ -293,14 +293,18 @@ static int update_local_ref(struct ref *ref,
+>  		const char *msg;
+>  		const char *what;
+>  		int r;
+> -		if (!strncmp(ref->name, "refs/tags/", 10)) {
+> +		if (!prefixcmp(ref->name, "refs/tags/")) {
 
-It is not "already implements" that I am worried about, but it implemen=
-ts
-it differently without explaining why, which is worrying.  I agree it
-needs to be explained before the function.
->> +	# plumbing
->> +	! grep -q "^ls-files \$" out
->
-> The && is missing here at the end of the line.
+This part is just a clean-up, right?
 
-True.
+>  			msg = "storing tag";
+>  			what = _("[new tag]");
+>  		}
+> -		else {
+> +		else if (!prefixcmp(ref->name, "refs/heads/")) {
+>  			msg = "storing head";
+>  			what = _("[new branch]");
+>  		}
+> +		else {
+> +			msg = "storing ref";
+> +			what = _("[new ref]");
+> +		}
 
->> +	run_completion "git f" &&
->> +	! grep -q -v "^f" out
->
-> grep is not a git command, so I'm not sure, but shouldn't these use
-> 'test_must_fail grep' instead of '! grep'?
+Neat.  I like it, for what it's worth.
 
-"! grep" is fine.  We are not trying to catch the case where we break t=
-he
-implementation of "grep" to cause it to segfault.
+Sincerely,
+Jonathan
