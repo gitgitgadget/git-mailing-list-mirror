@@ -1,92 +1,91 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH 1/2] http: clean up leak in init_curl_http_auth
-Date: Fri, 13 Apr 2012 02:18:35 -0400
-Message-ID: <20120413061835.GA13690@sigill.intra.peff.net>
+Subject: [PATCH 2/2] http: use newer curl options for setting credentials
+Date: Fri, 13 Apr 2012 02:19:25 -0400
+Message-ID: <20120413061925.GB13690@sigill.intra.peff.net>
 References: <20120413061622.GA27591@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: Clemens Buchacher <drizzd@aon.at>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Apr 13 08:18:43 2012
+X-From: git-owner@vger.kernel.org Fri Apr 13 08:19:33 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SIZqF-0002ZV-6l
-	for gcvg-git-2@plane.gmane.org; Fri, 13 Apr 2012 08:18:43 +0200
+	id 1SIZr2-00032k-Ok
+	for gcvg-git-2@plane.gmane.org; Fri, 13 Apr 2012 08:19:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754239Ab2DMGSj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Apr 2012 02:18:39 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:32977
+	id S1754472Ab2DMGT2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Apr 2012 02:19:28 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:32981
 	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752768Ab2DMGSi (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Apr 2012 02:18:38 -0400
-Received: (qmail 4652 invoked by uid 107); 13 Apr 2012 06:18:44 -0000
+	id S1754375Ab2DMGT2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Apr 2012 02:19:28 -0400
+Received: (qmail 4683 invoked by uid 107); 13 Apr 2012 06:19:34 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 13 Apr 2012 02:18:44 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 13 Apr 2012 02:18:35 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 13 Apr 2012 02:19:34 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 13 Apr 2012 02:19:25 -0400
 Content-Disposition: inline
 In-Reply-To: <20120413061622.GA27591@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195401>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195402>
 
-When we have a credential to give to curl, we must copy it
-into a "user:pass" buffer and then hand the buffer to curl.
-Old versions of curl did not copy the buffer, and we were
-expected to keep it valid. Newer versions of curl will copy
-the buffer.
+We give the username and password to curl by sticking them
+in a buffer of the form "user:pass" and handing the result
+to CURLOPT_USERPWD. Since curl 7.19.1, there is a split
+mechanism, where you can specify each element individually.
 
-Our solution was to use a strbuf and detach it, giving
-ownership of the resulting buffer to curl. However, this
-meant that we were leaking the buffer on newer versions of
-curl, since curl was just copying it and throwing away the
-string we passed. Furthermore, when we replaced a
-credential (e.g., because our original one was rejected), we
-were also leaking on both old and new versions of curl.
+This has the advantage that a username can contain a ":"
+character. It also is less code for us, since we can hand
+our strings over to curl directly. And since curl 7.17.0 and
+higher promise to copy the strings for us, we we don't even
+have to worry about memory ownership issues.
 
-This got even worse in the last patch, which started
-replacing the credential (and thus leaking) on every http
-request.
-
-Instead, let's use a static buffer to make the ownership
-more clear and less leaky.  We already keep a static "struct
-credential", so we are only handling a single credential at
-a time, anyway.
+Unfortunately, we have to keep the ugly code for old curl
+around, but as it is now nicely #if'd out, we can easily get
+rid of it when we decide that 7.19.1 is "old enough".
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
-The "old" version was prior to 7.17.0, from 2007. That is probably still
-new enough to care about. But at some point we should probably make a
-sweep through http.c and get rid of conditional blocks for really old
-cruft.
+For reference, 7.19.1 is from late 2008.
 
- http.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ http.c |   13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
 
 diff --git a/http.c b/http.c
-index c6dc9b7..eaf7f40 100644
+index eaf7f40..2ec3789 100644
 --- a/http.c
 +++ b/http.c
-@@ -211,12 +211,12 @@ static int http_options(const char *var, const char *value, void *cb)
+@@ -210,14 +210,23 @@ static int http_options(const char *var, const char *value, void *cb)
+ 
  static void init_curl_http_auth(CURL *result)
  {
- 	if (http_auth.username) {
--		struct strbuf up = STRBUF_INIT;
-+		static struct strbuf up = STRBUF_INIT;
- 		credential_fill(&http_auth);
-+		strbuf_reset(&up);
+-	if (http_auth.username) {
++	if (!http_auth.username)
++		return;
++
++	credential_fill(&http_auth);
++
++#if LIBCURL_VERSION_NUM >= 0x071301
++	curl_easy_setopt(result, CURLOPT_USERNAME, http_auth.username);
++	curl_easy_setopt(result, CURLOPT_PASSWORD, http_auth.password);
++#else
++	{
+ 		static struct strbuf up = STRBUF_INIT;
+-		credential_fill(&http_auth);
+ 		strbuf_reset(&up);
  		strbuf_addf(&up, "%s:%s",
  			    http_auth.username, http_auth.password);
--		curl_easy_setopt(result, CURLOPT_USERPWD,
--				 strbuf_detach(&up, NULL));
-+		curl_easy_setopt(result, CURLOPT_USERPWD, up.buf);
+ 		curl_easy_setopt(result, CURLOPT_USERPWD, up.buf);
  	}
++#endif
  }
  
+ static int has_cert_password(void)
 -- 
 1.7.9.6.6.g6b3b56
