@@ -1,84 +1,99 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH v2 4/4] completion: improve 'git --exec-path' completion
-Date: Sat, 14 Apr 2012 02:43:00 +0300
-Message-ID: <CAMP44s1C8HS2bo-dZOQKcFES8gt3=KK0h7c8uUJCeFX22ihLRg@mail.gmail.com>
-References: <1334274603-3277-1-git-send-email-felipe.contreras@gmail.com>
-	<1334274603-3277-5-git-send-email-felipe.contreras@gmail.com>
-	<20120413060845.GA15610@burratino>
-	<20120413180436.GA2387@burratino>
-	<20120413183048.GB2387@burratino>
-	<CAMP44s0R7imiem4uoBggkjjJ4z5+MXVYUroe_23JE8McMCk2sQ@mail.gmail.com>
-	<20120413233706.GD13995@burratino>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH] i18n: use test_i18ncmp in t2020 (checkout --detach)
+Date: Fri, 13 Apr 2012 18:46:07 -0500
+Message-ID: <20120413234607.GE13995@burratino>
+References: <20110320090111.GA15641@sigill.intra.peff.net>
+ <20110320090918.GB15948@sigill.intra.peff.net>
+ <20120413225901.GA13220@burratino>
+ <20120413233010.GA16663@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org,
-	=?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder@ira.uka.de>,
-	Junio C Hamano <gitster@pobox.com>,
-	Thomas Rast <trast@student.ethz.ch>, Jeff King <peff@peff.net>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Apr 14 01:43:22 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Piotr Krukowiecki <piotr.krukowiecki@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+	Jiang Xin <worldhello.net@gmail.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sat Apr 14 01:46:18 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SIq98-00048z-Sp
-	for gcvg-git-2@plane.gmane.org; Sat, 14 Apr 2012 01:43:19 +0200
+	id 1SIqC1-0005x1-KV
+	for gcvg-git-2@plane.gmane.org; Sat, 14 Apr 2012 01:46:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932453Ab2DMXnD convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 13 Apr 2012 19:43:03 -0400
-Received: from mail-ee0-f46.google.com ([74.125.83.46]:43066 "EHLO
-	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932125Ab2DMXnC convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 13 Apr 2012 19:43:02 -0400
-Received: by eekc41 with SMTP id c41so902641eek.19
-        for <git@vger.kernel.org>; Fri, 13 Apr 2012 16:43:00 -0700 (PDT)
+	id S1757319Ab2DMXqN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Apr 2012 19:46:13 -0400
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:44391 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757263Ab2DMXqM (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Apr 2012 19:46:12 -0400
+Received: by iagz16 with SMTP id z16so4907064iag.19
+        for <git@vger.kernel.org>; Fri, 13 Apr 2012 16:46:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=C6FhUvFOVl5tNnFtudT/T6DsgChcTNTGM4JXiSzxnOw=;
-        b=rtp2zonAWDgVFm0wcmJ3oRCsgIARZinzf2QWpaA2o+1Klxva6kX7OmpOHXFReiFrgQ
-         reibJa1NRvBwXqyOI9hQB3qJSi7NI/YIoP64o/izQbv4VyZ+mBYKvuMXijJD4X5vVNQ9
-         dvKfxBbhBO/OAt9a2IJpOkPofhhU4Rp5UfZBf7fA6SbbSswgruUO76FCnCDowdJKDKPi
-         lA7W6F1yPB5X1g3nbRUVE9e0Jqd4XMP4CxMk/ok+EY8YpLRCceOxhY6FKS1/vb5FC5jg
-         Ijow8Tx/QSoFR2bKO0uNju52qzptIfx0ZbCBgl7Fos0CTYl01wNyzk5GSLR70yAE+CJF
-         uorA==
-Received: by 10.213.32.2 with SMTP id a2mr269467ebd.39.1334360580271; Fri, 13
- Apr 2012 16:43:00 -0700 (PDT)
-Received: by 10.213.19.67 with HTTP; Fri, 13 Apr 2012 16:43:00 -0700 (PDT)
-In-Reply-To: <20120413233706.GD13995@burratino>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=kutQXJANtCVSTa/WCBGpRWFu3R8sVWyABCtczGT0T4A=;
+        b=s9rcdQIL4eYuwdH1m+LiTyKh/YC2QpBJOnZu73pWJZiKQQ4cBHbmV6mm5vnTJjRWnV
+         Tioanx3S4/YQEIaa99woKPehyD3+9YP39vTE+5gWNDw1XrWh0l/jZTcnk4umuWTTgzY5
+         yep/JeD13nKnR+k8iZO1oWQ7ikYdO00kJoIBVr/RMDSmvzz7kr8TSBDvdTBvLvZHu+HJ
+         iWjml+R7xWt8BoKkLH9P+Ku0SeR/dnvhyLcW1XwFfp9Y2g/xskxNdpujk+ez4dhKJEGk
+         DhoaJNwtDiWVxPGntGEKU18rsWDPjrXuzzo4Igsayb3rc8DPWTcjVS0BwuwRz3fuv2zs
+         M13w==
+Received: by 10.50.220.129 with SMTP id pw1mr49601igc.29.1334360771844;
+        Fri, 13 Apr 2012 16:46:11 -0700 (PDT)
+Received: from burratino (adsl-99-24-202-99.dsl.chcgil.sbcglobal.net. [99.24.202.99])
+        by mx.google.com with ESMTPS id wf10sm180712igb.8.2012.04.13.16.46.10
+        (version=SSLv3 cipher=OTHER);
+        Fri, 13 Apr 2012 16:46:11 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <20120413233010.GA16663@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195458>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195459>
 
-On Sat, Apr 14, 2012 at 2:37 AM, Jonathan Nieder <jrnieder@gmail.com> w=
-rote:
-> Felipe Contreras wrote:
->
->> I don't understand, the commit message doesn't match what the patch
->> actually does.
->
-> Try it, I guess? =C2=A0At least for me,
->
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0git --exec-p<TAB>
->
-> completes to
->
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0git --exec-path <cursor here>
->
-> before the patch, and to
->
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0git --exec-path<cursor here>
->
-> after the patch. =C2=A0Which is different from your original patch.
+Jeff King wrote:
 
-Ah, it doesn't remove the current line, it just adds a new one. I'm
-not sure how the completion results show up, but I guess it's better
-than the alternatives.
+> I think it is not "forgot" but "predates" in this case. The commit
+> introducing the problem is 8a5b749 (i18n: format_tracking_info "Your
+> branch is behind" message, 2012-02-02). But obviously your fix is
+> correct either way.
 
---=20
-=46elipe Contreras
+Oh, that makes sense.  I wonder why we didn't notice this before.
+GETTEXT_POISON support hit "master" in 2011-05-23.
+
+>> Jeff King wrote:
+
+>>> When leaving a detached HEAD, we do a revision walk to make
+>>> sure the commit we are leaving isn't being orphaned.
+>>> However, this leaves crufty marks in the commit objects
+>>> which can confuse later walkers, like the one in
+>>> stat_tracking_info.
+>>>
+>>> Let's clean up after ourselves to prevent this conflict.
+>>
+>> Very nice thing to do.  Thanks.
+>
+> A minor complaint, but the format of your email left me confused for
+> several minutes, as I didn't remember writing that or working in this
+> area recently. It turns out that it is because this commit was from over
+> a year ago.
+
+Yeah, I should have paid attention to the date.  A better diagnosis
+would be
+
+	When v1.7.9.2~28^2 (2012-02-02) marked the "Your branch is behind
+	message for translation, it forgot to adjust tests to stop checking
+	for that message when tests are being run with git configured to write
+	its output in another language.
+
+	With this patch applied, tests pass with GETTEXT_POISON=YesPlease
+	again.
+
+	Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+	Explained-by: Jeff King <peff@peff.net>
