@@ -1,216 +1,237 @@
-From: Neil Horman <nhorman@tuxdriver.com>
-Subject: [PATCH v5 4/4] git-rebase: add keep_empty flag
-Date: Fri, 13 Apr 2012 14:45:07 -0400
-Message-ID: <1334342707-3326-5-git-send-email-nhorman@tuxdriver.com>
-References: <1333136922-12872-1-git-send-email-nhorman@tuxdriver.com>
- <1334342707-3326-1-git-send-email-nhorman@tuxdriver.com>
-Cc: Jeff King <peff@peff.net>, Phil Hord <phil.hord@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Neil Horman <nhorman@tuxdriver.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 13 20:45:55 2012
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: GSOC Proposal draft: git-remote-svn
+Date: Fri, 13 Apr 2012 14:19:08 -0500
+Message-ID: <20120413191908.GC2387@burratino>
+References: <11292500.AVmZFUUvNi@flobuntu>
+ <1421035.yALBSXSHGd@flomedio>
+ <20120410171707.GA3869@burratino>
+ <2104868.dCxFQtJHdU@flomedio>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	David Barr <davidbarr@google.com>,
+	Andrew Sayers <andrew-git@pileofstuff.org>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Dmitry Ivankov <divanorama@gmail.com>,
+	Tomas Carnecky <tom@dbservice.com>
+To: Florian Achleitner <florian.achleitner2.6.31@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Apr 13 21:19:25 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SIlVJ-0001h6-84
-	for gcvg-git-2@plane.gmane.org; Fri, 13 Apr 2012 20:45:53 +0200
+	id 1SIm1h-0000bE-2u
+	for gcvg-git-2@plane.gmane.org; Fri, 13 Apr 2012 21:19:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756087Ab2DMSpp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Apr 2012 14:45:45 -0400
-Received: from charlotte.tuxdriver.com ([70.61.120.58]:39113 "EHLO
-	smtp.tuxdriver.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755976Ab2DMSpo (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Apr 2012 14:45:44 -0400
-Received: from hmsreliant.think-freely.org ([2001:470:8:a08:7aac:c0ff:fec2:933b] helo=localhost)
-	by smtp.tuxdriver.com with esmtpsa (TLSv1:AES128-SHA:128)
-	(Exim 4.63)
-	(envelope-from <nhorman@tuxdriver.com>)
-	id 1SIlV5-0001MV-9T; Fri, 13 Apr 2012 14:45:42 -0400
-X-Mailer: git-send-email 1.7.7.6
-In-Reply-To: <1334342707-3326-1-git-send-email-nhorman@tuxdriver.com>
-X-Spam-Score: -2.9 (--)
-X-Spam-Status: No
+	id S1755890Ab2DMTTP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Apr 2012 15:19:15 -0400
+Received: from mail-gx0-f174.google.com ([209.85.161.174]:34773 "EHLO
+	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755879Ab2DMTTO (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Apr 2012 15:19:14 -0400
+Received: by gghe5 with SMTP id e5so1836971ggh.19
+        for <git@vger.kernel.org>; Fri, 13 Apr 2012 12:19:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=0awf+ImvCwyS78tyoioZ2DQBGEvQw4M/yclOXFpxVFE=;
+        b=KOwbEqp75BFvL5+3ME8mOEdsGDNn6Mcij0O1VDLuPGfUNzbDoUtlrlHrIUE4P5wDWI
+         opPZDl/Vvql1pWUHausgUb1N+yuF/kgIU0fVCoWn5cVq4lsYHxNC8r1g6gz9YIOL9IOY
+         QR25hxOyXqI6MsDrgR3tbmLooWE74DB2rfyUG/5QbVonlWLX7UbI6WUiauvkWwZa0JrY
+         hmt9eXyU0jGTyJnHXC97hOl+69gyw98B08BTQcpeIIUj33eS08zSanMh3XvZsHizY52T
+         /SV13sibxbmNkjgODTAUpgSMK3HFwKnE/kao3UJwRGgTsJZyix2DrwbgxuG8HUzb6Kp1
+         wZGw==
+Received: by 10.50.159.194 with SMTP id xe2mr2732524igb.5.1334344753491;
+        Fri, 13 Apr 2012 12:19:13 -0700 (PDT)
+Received: from burratino (adsl-99-24-202-99.dsl.chcgil.sbcglobal.net. [99.24.202.99])
+        by mx.google.com with ESMTPS id us6sm4235773igc.9.2012.04.13.12.19.10
+        (version=SSLv3 cipher=OTHER);
+        Fri, 13 Apr 2012 12:19:11 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <2104868.dCxFQtJHdU@flomedio>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195435>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195436>
 
-Add a command line switch to git-rebase to allow a user the ability to specify
-that they want to keep any commits in a series that are empty.
+Hi again,
 
-When git-rebase's type is am, then this option will automatically keep any
-commit that has a tree object identical to its parent.
+Florian Achleitner wrote:
 
-This patch changes the default behavior of interactive rebases as well.  With
-this patch, git-rebase -i will produce a revision set passed to
-git-revision-editor, in which empty commits are commented out.  Empty commits
-may be kept manually by uncommenting them.  If the new --keep-empty option is
-used in an interactive rebase the empty commits will automatically all be
-uncommented in the editor.
+> So I want to create some collection of information with your support.
 
-Signed-off-by: Neil Horman <nhorman@tuxdriver.com>
----
- Documentation/git-rebase.txt |    4 ++++
- git-rebase--am.sh            |   19 ++++++++++++++-----
- git-rebase--interactive.sh   |   32 +++++++++++++++++++++++++++++---
- git-rebase.sh                |    5 +++++
- 4 files changed, 52 insertions(+), 8 deletions(-)
+Sounds like a plan.  Thanks, Florian.
 
-diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
-index 504945c..131c35d 100644
---- a/Documentation/git-rebase.txt
-+++ b/Documentation/git-rebase.txt
-@@ -238,6 +238,10 @@ leave out at most one of A and B, in which case it defaults to HEAD.
- 	will be reset to where it was when the rebase operation was
- 	started.
- 
-+--keep-empty::
-+	Keep the commits that do not change anything from its
-+	parents in the result.
-+
- --skip::
- 	Restart the rebasing process by skipping the current patch.
- 
-diff --git a/git-rebase--am.sh b/git-rebase--am.sh
-index c815a24..04d8941 100644
---- a/git-rebase--am.sh
-+++ b/git-rebase--am.sh
-@@ -20,11 +20,20 @@ esac
- 
- test -n "$rebase_root" && root_flag=--root
- 
--git format-patch -k --stdout --full-index --ignore-if-in-upstream \
--	--src-prefix=a/ --dst-prefix=b/ \
--	--no-renames $root_flag "$revisions" |
--git am $git_am_opt --rebasing --resolvemsg="$resolvemsg" &&
--move_to_original_branch
-+if test -n "$keep_empty"
-+then
-+	# we have to do this the hard way.  git format-patch completely squashes
-+	# empty commits and even if it didn't the format doesn't really lend
-+	# itself well to recording empty patches.  fortunately, cherry-pick
-+	# makes this easy
-+	git cherry-pick --allow-empty "$revisions"
-+else
-+	git format-patch -k --stdout --full-index --ignore-if-in-upstream \
-+		--src-prefix=a/ --dst-prefix=b/ \
-+		--no-renames $root_flag "$revisions" |
-+	git am $git_am_opt --rebasing --resolvemsg="$resolvemsg"
-+fi && move_to_original_branch
-+
- ret=$?
- test 0 != $ret -a -d "$state_dir" && write_basic_state
- exit $ret
-diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-index 5812222..e3940be 100644
---- a/git-rebase--interactive.sh
-+++ b/git-rebase--interactive.sh
-@@ -167,6 +167,12 @@ has_action () {
- 	sane_grep '^[^#]' "$1" >/dev/null
- }
- 
-+is_empty_commit() {
-+	ptree=$(git rev-parse "$1"^{tree})
-+	pptree=$(git rev-parse "$1"^^{tree})
-+	return $(test "$ptree" = "$pptree")
-+}
-+
- # Run command with GIT_AUTHOR_NAME, GIT_AUTHOR_EMAIL, and
- # GIT_AUTHOR_DATE exported from the current environment.
- do_with_author () {
-@@ -191,12 +197,18 @@ git_sequence_editor () {
- 
- pick_one () {
- 	ff=--ff
-+
-+	if is_empty_commit $@
-+	then
-+		empty_args="--allow-empty"
-+	fi
-+
- 	case "$1" in -n) sha1=$2; ff= ;; *) sha1=$1 ;; esac
- 	case "$force_rebase" in '') ;; ?*) ff= ;; esac
- 	output git rev-parse --verify $sha1 || die "Invalid commit name: $sha1"
- 	test -d "$rewritten" &&
- 		pick_one_preserving_merges "$@" && return
--	output git cherry-pick $ff "$@"
-+	output git cherry-pick $empty_args $ff "$@"
- }
- 
- pick_one_preserving_merges () {
-@@ -780,9 +792,17 @@ git rev-list $merges_option --pretty=oneline --abbrev-commit \
- 	sed -n "s/^>//p" |
- while read -r shortsha1 rest
- do
-+
-+	if test -z "$keep_empty" && is_empty_commit $shortsha1
-+	then
-+		comment_out="# pick"
-+	else
-+		comment_out="pick"
-+	fi
-+
- 	if test t != "$preserve_merges"
- 	then
--		printf '%s\n' "pick $shortsha1 $rest" >> "$todo"
-+		printf '%s\n' "$comment_out $shortsha1 $rest" >> "$todo"
- 	else
- 		sha1=$(git rev-parse $shortsha1)
- 		if test -z "$rebase_root"
-@@ -801,7 +821,7 @@ do
- 		if test f = "$preserve"
- 		then
- 			touch "$rewritten"/$sha1
--			printf '%s\n' "pick $shortsha1 $rest" >> "$todo"
-+			printf '%s\n' "$comment_out $shortsha1 $rest" >> "$todo"
- 		fi
- 	fi
- done
-@@ -851,6 +871,12 @@ cat >> "$todo" << EOF
- #
- EOF
- 
-+if test -z "$keep_empty"
-+then
-+	echo "# Note that empty commits are commented out" >> "$todo"
-+fi
-+
-+
- has_action "$todo" ||
- 	die_abort "Nothing to do"
- 
-diff --git a/git-rebase.sh b/git-rebase.sh
-index 69c1374..24a2840 100755
---- a/git-rebase.sh
-+++ b/git-rebase.sh
-@@ -43,6 +43,7 @@ s,strategy=!       use the given merge strategy
- no-ff!             cherry-pick all commits, even if unchanged
- m,merge!           use merging strategies to rebase
- i,interactive!     let the user edit the list of commits to rebase
-+k,keep-empty	   preserve empty commits during rebase
- f,force-rebase!    force rebase even if branch is up to date
- X,strategy-option=! pass the argument through to the merge strategy
- stat!              display a diffstat of what changed upstream
-@@ -97,6 +98,7 @@ state_dir=
- action=
- preserve_merges=
- autosquash=
-+keep_empty=
- test "$(git config --bool rebase.autosquash)" = "true" && autosquash=t
- 
- read_basic_state () {
-@@ -220,6 +222,9 @@ do
- 	-i)
- 		interactive_rebase=explicit
- 		;;
-+	-k)
-+		keep_empty=yes
-+		;;
- 	-p)
- 		preserve_merges=t
- 		test -z "$interactive_rebase" && interactive_rebase=implied
--- 
-1.7.7.6
+[...]
+> Really -c? My installed git doesn't have that switch. Should it pass arguments 
+> to the remote-helper?
+
+What git version do you use?  "man git clone" tells me that -c is an
+abbreviation for --config and "grep -e --config Documentation/RelNotes/*"
+tells me it was introduced in v1.7.7.
+
+[...]
+> On Tuesday 10 April 2012 12:17:07 Jonathan Nieder wrote:
+
+>>    How should the importer handle Subversion copy commands that
+>>    refer to other projects in this case?
+>
+> Jonathan tried that, it's handled by svnrdump nicely.
+
+Yes, except that it does not follow the history of the copy source.
+So if your project was renamed, then "svnrdump <new SVN URL for the
+project>" will dump a fictional history in which the first rev under
+the new name created the project out of thin air.
+
+That is not ideal, but it seems tolerable in the short term.
+
+>>                                             Some design questions
+>>    come up here: should the remote helper import the entire project
+>>    tree, too?  (I think "yes", since copy commands that copy from
+>>    other branches are very common and that would ensure the relevant
+>>    info is available to git.)  What should the mapping of git commit
+>>    names to Subversion revision numbers that is stored in notes say
+>>    in this case?
+>
+> What does it mean, "import the entire project tree"? Importing other 
+> directories than "trunk"?
+
+Yes.  For an import that is going to be dumping the subdirectories of
+tags/ and branches/ anyway, it seems sensible to ask svnrdump to dump
+the entire {trunk,tags,branches} hierarchy and sort it out on the git
+side.  The question is then: for each rev, in addition to making
+commits for each branch that changed, should we keep a commit
+representing the state of the combined whole-project tree for internal
+use?  A person trying to check out this commit would get to see the
+enormous
+
+	trunk/
+	tags/
+	branches/
+
+directories.  My rough answer was "yes, it's convenient to keep that
+information around, especially given that with git's repository model
+it doesn't waste a lot of space and makes debugging easier".
+
+> About the mapping of git commits to svn refs .. I've seen the thread about the 
+> marks-to-notes converter.
+> But can somebody please explain what it's for? There is this mark file 
+> mentioned in the git-fast-import help page ..
+
+There are two operations that need to be very fast:
+
+ 1. Given a Subversion revision number, what is the corresponding git
+    commit?  svn-fe uses this to get the preimage data when executing
+    an "svn copy" operation that refers to an old rev.  For example:
+
+	svn copy some/path@a-long-time-ago another/path
+
+    Code tracking branches would use this same map to find the
+    appropriate parent commit for a new branch.  For example:
+
+	svn copy trunk@a-long-time-ago branches/new-branch
+
+    becomes:
+
+	parent f572d396fae9206628714fb2ce00f72e94f2258f
+
+ 2. Given a git commit, what is the corresponding Subversion revision
+    number?  For example, "git fetch" needs this information in order
+    to get a first unfetched revision number when updating an existing
+    clone of a Subversion repository.
+
+"git notes" is a mechanism for efficiently storing a mapping from git
+commit names to arbitrary data.  For example, it can be used to cache
+the compiled form of some slow-to-compile source code, or it can be
+used to store reminders to a human that has reviewed these commits and
+wanted to scribble a little in the margin.  A patch (in Dmitry's tree,
+not in git.git yet) teaches svn-fe to use the notes facility to store
+the mapping from git commit names to Subversion revision numbers,
+addressing problem (2) above.  Tomas's human-friendly importer used
+the same trick.
+
+As you noticed, "git fast-import" has a facility that fits well for
+mapping in the other direction: a marks file can store an arbitrary
+mapping from numbers to objects (usually objects that were part of the
+import).  svn-fe writes a mark for each Subversion revision it imports
+to address problem (1) above.
+
+Because "git notes" are stored in the git object db as native objects,
+they can be shared using the usual "git fetch" / "git push" commands
+as long as you specify the appropriate source and destination refs on
+the command line or in git's configuration file.  Commands like "git
+rebase" that modify history also have some support for carrying notes
+along.  By contrast, a marks file is just a flat text file and there
+is no standard facility for updating it when commit names change or
+sharing it using ordinary git transport.
+
+The marks-to-notes converter I wrote was a toy to show how the notes
+and marks can easily be kept in sync.  If I remember correctly the
+last time this was discussed there was some feeling that when the two
+tables fall out of synch the notes should be considered authoritative
+and marks can be recomputed from them.
+
+> Do we create two commits from one revision if it's some special case, like 
+> modifying two branches at once?
+
+remote-svn-alpha and svn-fe do not currently split by branch at all so
+the problem doesn't come up.
+
+Yes, I think the only sane way to represent a Subversion revision that
+modifies multiple branches is with a git commit on each branch.
+
+[...]
+>>    For example, there could be a parallel directory structure
+>>    in the tree:
+>>
+>>         foo/
+>>                 bar.c
+>>         baz/
+>>                 qux.c
+>>         .properties/
+>>                 foo.properties
+>>                 foo/
+>>                         bar.c.properties
+>>                 baz/
+>>                         qux.c.properties
+>>
+>>    with properites for <path> stored at .properties/<path>.properties.
+>>    This strawman scheme doesn't work if the repository being imported
+>>    has any paths ending with ".properties", though.  Ideas?
+>
+> This includes collecting which metadata we actually need to store? We could 
+> probably collect a list of important svn properties.
+
+I imagined the importer just collecting all path properties, like "git
+svn" does in its .git/svn/refs/remotes/git-svn/unhandled.log.  They're
+easy to iterate through on the svn side.
+
+> Is there a general policy how to store additional metadata for git's helpers? 
+> I guess it would live somewhere in the .git dir. (.git/info/ ?)
+
+One simple design would be to keep properties in the "entire project"
+commit objects for internal use, since that's easy to share.
+
+I think David had a few other ideas. ;-)
+
+[...]
+>>  . tracing second-parent history using svn:mergeinfo properties.
+>
+> This is about detection when to create a git merge-commit, right?
+
+Yep.  A goal would be to allow a person would be able to push a git
+merge to an svn repository, fetch from another machine, and get the
+same commit back.
+
+>> In other words, in the above list the strategy is:
+>
+> .. still to come..
+
+Thanks for your thoughtfulness.
+
+Jonathan
