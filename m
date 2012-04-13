@@ -1,66 +1,110 @@
-From: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
-Subject: Re: [PATCH v2] tests: add initial bash completion tests
-Date: Fri, 13 Apr 2012 12:52:38 +0200
-Message-ID: <20120413105238.GE2164@goldbirke>
-References: <1334181423-4391-1-git-send-email-felipe.contreras@gmail.com>
-	<20120413091236.GC2164@goldbirke>
-	<CAMP44s0_WQNpkVi0yMfaDgzBaUWOhRiS-2qxLtCHFzx71yKrSw@mail.gmail.com>
+From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [PATCH v9 0/9] Column display
+Date: Fri, 13 Apr 2012 17:54:32 +0700
+Message-ID: <1334314481-14470-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Thomas Rast <trast@student.ethz.ch>, Jeff King <peff@peff.net>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Apr 13 12:52:56 2012
+Cc: Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Apr 13 12:55:36 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SIe7Y-0004hv-BH
-	for gcvg-git-2@plane.gmane.org; Fri, 13 Apr 2012 12:52:52 +0200
+	id 1SIeAB-0006YN-PJ
+	for gcvg-git-2@plane.gmane.org; Fri, 13 Apr 2012 12:55:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932961Ab2DMKws convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 13 Apr 2012 06:52:48 -0400
-Received: from moutng.kundenserver.de ([212.227.17.9]:63053 "EHLO
-	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751201Ab2DMKwr (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Apr 2012 06:52:47 -0400
-Received: from localhost6.localdomain6 (p5B130584.dip0.t-ipconnect.de [91.19.5.132])
-	by mrelayeu.kundenserver.de (node=mreu4) with ESMTP (Nemesis)
-	id 0M0oJP-1S0z4j2EJD-00udTz; Fri, 13 Apr 2012 12:52:39 +0200
-Content-Disposition: inline
-In-Reply-To: <CAMP44s0_WQNpkVi0yMfaDgzBaUWOhRiS-2qxLtCHFzx71yKrSw@mail.gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
-X-Provags-ID: V02:K0:oOBNrSYfsX8ZMjn143v/4rMC40TDHqEsPKnAigkD9im
- XxWDuvyyaGWSRJjGibC3DzzOQb/nyd/gzo0qydvEWH9n9q3XJp
- PPxbyPrDtvyfq7jPS074088rs+yVhQoEYPRrWAOBZrJeL4fya6
- BaQb/3nYEWWFKyxQ082rcym1/2N2gvsV1NsRhcI/9fFTxNs3fB
- LdZeBDdWV/K5fYCLr3GIq2gCpIJMk0xfqlBviS9xMeCLvktovW
- iCzCUSOgdcCT4SfoDkT3CY9IYdKJaiRqlvlXxQQl04MCVfgoRm
- 6xs8jx09aIwqehygsENVjt12kkpnkRYOOYiy9EluTh+fnPqw+g
- fGYs7bXn2OARN7rDpslc=
+	id S935131Ab2DMKzb convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 13 Apr 2012 06:55:31 -0400
+Received: from mail-pb0-f46.google.com ([209.85.160.46]:35185 "EHLO
+	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758513Ab2DMKza (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Apr 2012 06:55:30 -0400
+Received: by pbcun15 with SMTP id un15so3501433pbc.19
+        for <git@vger.kernel.org>; Fri, 13 Apr 2012 03:55:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
+         :content-type:content-transfer-encoding;
+        bh=5XnLZgPqEH7yAPWCcvYTYN9J7Mv9JFKk9CIjZCwV+dk=;
+        b=oJcKVQpptGmgAVcEtvvzXPcwQD/JGxqQJErIzsUwti1iep72p1f02NgA9qk0QDFKud
+         gBK+uKshJmUTRneyDt1gJpua/2+irLx/DutNDy3CcOQ6ItHBAfEp4cEBASuwq49IivVF
+         X20n/mYKAHx0ge0fK9LXLg6nPpsul/qXRgVa96tm3UZhNHZpKKd/mqn+g+le+nVRIlso
+         kjOzOAyWmLmTkd4sndNfuYk9V2y/AdIPGkk3z32PM8H1rW+GfkXrvPKsELmuZakCunxp
+         9J13ei/+gkU/5QRE+vkMvEZ3Zks+9WEWOY30M5bTYajqDG+cAUJuIlOQ9/UO6h+c5muJ
+         kL6w==
+Received: by 10.68.231.233 with SMTP id tj9mr4029370pbc.49.1334314530061;
+        Fri, 13 Apr 2012 03:55:30 -0700 (PDT)
+Received: from pclouds@gmail.com ([113.161.77.29])
+        by mx.google.com with ESMTPS id gh7sm8443835pbc.8.2012.04.13.03.55.25
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 13 Apr 2012 03:55:28 -0700 (PDT)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Fri, 13 Apr 2012 17:54:42 +0700
+X-Mailer: git-send-email 1.7.3.1.256.g2539c.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195409>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195410>
 
-On Fri, Apr 13, 2012 at 01:34:46PM +0300, Felipe Contreras wrote:
-> >> + =A0 =A0 run_completion "git f" &&
-> >> + =A0 =A0 ! grep -q -v "^f" out
-> >
-> > grep is not a git command, so I'm not sure, but shouldn't these use
-> > 'test_must_fail grep' instead of '! grep'?
->=20
-> I'm not sure. Junio has already queued this, maybe you should send a
-> patch on top of that.
+Compared to v8 [1], the only change is "COL_ENABLE(c) =3D=3D COL_ENABLE=
+D"
+becomes column_active(c). Oh the the experimental modes are dropped,
+obviously they are not ready.
 
-It seems that both are used in the test suite, but '! grep' is more
-common, so perhaps it's good as it is.
+[1] http://thread.gmane.org/gmane.comp.version-control.git/191522/focus=
+=3D192997
 
-$ git grep '! grep' -- t |wc -l
-136
-$ git grep 'test_must_fail grep' -- t |wc -l
-17
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy (9):
+  Add column layout skeleton and git-column
+  Stop starting pager recursively
+  column: add columnar layout
+  column: add dense layout support
+  help: reuse print_columns() for help -a
+  branch: add --column
+  status: add --column
+  column: support piping stdout to external git-column process
+  tag: add --column
+
+ .gitignore                   |    1 +
+ Documentation/config.txt     |   38 ++++
+ Documentation/git-branch.txt |    9 +
+ Documentation/git-column.txt |   53 +++++
+ Documentation/git-status.txt |    7 +
+ Documentation/git-tag.txt    |    9 +
+ Makefile                     |    3 +
+ builtin.h                    |    1 +
+ builtin/branch.c             |   32 +++-
+ builtin/column.c             |   59 ++++++
+ builtin/commit.c             |    7 +
+ builtin/help.c               |    7 +-
+ builtin/tag.c                |   27 +++-
+ column.c                     |  435 ++++++++++++++++++++++++++++++++++=
+++++++++
+ column.h                     |   45 +++++
+ command-list.txt             |    1 +
+ git.c                        |    1 +
+ help.c                       |   59 +++----
+ help.h                       |    2 +-
+ pager.c                      |    2 +-
+ parse-options.h              |    2 +
+ t/t3200-branch.sh            |   77 ++++++++
+ t/t7004-tag.sh               |   44 +++++
+ t/t7508-status.sh            |   24 +++
+ t/t9002-column.sh            |  179 +++++++++++++++++
+ wt-status.c                  |   28 +++-
+ wt-status.h                  |    1 +
+ 27 files changed, 1105 insertions(+), 48 deletions(-)
+ create mode 100644 Documentation/git-column.txt
+ create mode 100644 builtin/column.c
+ create mode 100644 column.c
+ create mode 100644 column.h
+ create mode 100755 t/t9002-column.sh
+
+--=20
+1.7.3.1.256.g2539c.dirty
