@@ -1,257 +1,169 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH v9 9/9] tag: add --column
-Date: Fri, 13 Apr 2012 17:54:41 +0700
-Message-ID: <1334314481-14470-10-git-send-email-pclouds@gmail.com>
-References: <1334314481-14470-1-git-send-email-pclouds@gmail.com>
+From: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
+Subject: Re: [PATCH v2] tests: add initial bash completion tests
+Date: Fri, 13 Apr 2012 13:14:37 +0200
+Message-ID: <20120413111437.GF2164@goldbirke>
+References: <1334181423-4391-1-git-send-email-felipe.contreras@gmail.com>
+	<20120413091236.GC2164@goldbirke> <20120413094500.GD2164@goldbirke>
+	<CAMP44s3g8acV4fjaSvnUo_jnhj40-TWR0az6zOwRNfv9_Qa23g@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 13 12:57:08 2012
+Cc: git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Thomas Rast <trast@student.ethz.ch>, Jeff King <peff@peff.net>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Apr 13 13:14:46 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SIeBd-0007eb-So
-	for gcvg-git-2@plane.gmane.org; Fri, 13 Apr 2012 12:57:07 +0200
+	id 1SIeSj-00047y-Sn
+	for gcvg-git-2@plane.gmane.org; Fri, 13 Apr 2012 13:14:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761256Ab2DMK47 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 13 Apr 2012 06:56:59 -0400
-Received: from mail-pz0-f52.google.com ([209.85.210.52]:37934 "EHLO
-	mail-pz0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758521Ab2DMK46 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Apr 2012 06:56:58 -0400
-Received: by mail-pz0-f52.google.com with SMTP id e40so3768806dak.11
-        for <git@vger.kernel.org>; Fri, 13 Apr 2012 03:56:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        bh=95dwO2RPs3bOijiKq9tvAn7w9zd2hAzmzZaBRlVsxno=;
-        b=jy04eyWrTn4317EzleSSByUhVeR3/sFhn7HZugygtPf+bvbXEaQi67jaIlFC61HRx7
-         l0iJ0dlD9QrOUieUQ15PGEuqvj4wWnzuD7H6INsF0ysZ0CayTYNrtLFjYvS1E3v9tPgc
-         O3xyWKN+lioNVFZuxKM8KcsqZYt9s520EJQDaVKJP+KUygw3V3AiXWCzjJhF/TRS/AJE
-         JqNbub3hcfEquVHFCMHHg7J6vryDinrIiMD8sdXHSRQvAS+R0e/QHwbXdFgjWkDJAAIQ
-         dDXeW0eYubmoY1/4/ft3sKcgv0TzKuGJOgHFzeypPhaC0P52ei3HIU8sBDBENv+4diSS
-         8PAw==
-Received: by 10.68.232.231 with SMTP id tr7mr3929566pbc.63.1334314618514;
-        Fri, 13 Apr 2012 03:56:58 -0700 (PDT)
-Received: from pclouds@gmail.com ([113.161.77.29])
-        by mx.google.com with ESMTPS id g8sm8432495pbo.25.2012.04.13.03.56.53
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 13 Apr 2012 03:56:57 -0700 (PDT)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Fri, 13 Apr 2012 17:56:10 +0700
-X-Mailer: git-send-email 1.7.3.1.256.g2539c.dirty
-In-Reply-To: <1334314481-14470-1-git-send-email-pclouds@gmail.com>
+	id S932725Ab2DMLOk convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 13 Apr 2012 07:14:40 -0400
+Received: from moutng.kundenserver.de ([212.227.17.10]:51285 "EHLO
+	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760966Ab2DMLOj (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Apr 2012 07:14:39 -0400
+Received: from localhost6.localdomain6 (p5B130584.dip0.t-ipconnect.de [91.19.5.132])
+	by mrelayeu.kundenserver.de (node=mreu2) with ESMTP (Nemesis)
+	id 0MErMM-1SUF313UWQ-00G185; Fri, 13 Apr 2012 13:14:38 +0200
+Content-Disposition: inline
+In-Reply-To: <CAMP44s3g8acV4fjaSvnUo_jnhj40-TWR0az6zOwRNfv9_Qa23g@mail.gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Provags-ID: V02:K0:nrFe98jzkBaIEfvChWWTXuki5Llkq1PyYD6lFzw7qEM
+ 0i2+R1cQQqayJZtHkWHq/J3v6sxQRtRpn+r4/EzgOUHQUfUW4O
+ FWsNNiZ/REL93Ae1i51aGoshf13tdqJclFRc6CRo5LyzowJHRl
+ bocNnAb36qZR1S72koXMvEo8cgIjrF1K+UG5EN5VhQLVG6/wGB
+ KF0gZ8k755mK31o1ZPZYoniaIRSBV46n8OkPTVIlDaAdYUyV58
+ OadSRKPic/3flLVA+D43xX+o/E/R1ZeO9v44MJbPl7JFPHa/xJ
+ 9H+3BpiR0yrnCQpPYQI2Sn7QVZMTSirAagNku7u6X7xErkaTV4
+ kqOylhGBkb62NYYBHZw0=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195419>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195420>
 
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- Documentation/config.txt  |    4 ++++
- Documentation/git-tag.txt |    9 +++++++++
- Makefile                  |    2 +-
- builtin/tag.c             |   27 ++++++++++++++++++++++++---
- t/t7004-tag.sh            |   44 +++++++++++++++++++++++++++++++++++++=
-+++++++
- 5 files changed, 82 insertions(+), 4 deletions(-)
+On Fri, Apr 13, 2012 at 01:48:51PM +0300, Felipe Contreras wrote:
+> 2012/4/13 SZEDER G=E1bor <szeder@ira.uka.de>:
+> > On Fri, Apr 13, 2012 at 11:12:36AM +0200, SZEDER G=E1bor wrote:
+> >> On Thu, Apr 12, 2012 at 12:57:03AM +0300, Felipe Contreras wrote:
+> >> > +. "$GIT_BUILD_DIR/contrib/completion/git-completion.bash"
+> >> > +
+> >> > +_get_comp_words_by_ref ()
+> >> > +{
+> >> > + =A0 while [ $# -gt 0 ]; do
+> >> > + =A0 =A0 =A0 =A0 =A0 case "$1" in
+> >> > + =A0 =A0 =A0 =A0 =A0 cur)
+> >> > + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 cur=3D${_words[_cword]}
+> >> > + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 ;;
+> >> > + =A0 =A0 =A0 =A0 =A0 prev)
+> >> > + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 prev=3D${_words[_cword-1]}
+> >> > + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 ;;
+> >> > + =A0 =A0 =A0 =A0 =A0 words)
+> >> > + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 words=3D("${_words[@]}")
+> >> > + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 ;;
+> >> > + =A0 =A0 =A0 =A0 =A0 cword)
+> >> > + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 cword=3D$_cword
+> >> > + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 ;;
+> >> > + =A0 =A0 =A0 =A0 =A0 esac
+> >> > + =A0 =A0 =A0 =A0 =A0 shift
+> >> > + =A0 done
+> >> > +}
+> >>
+> >> Git's completion script already implements this function. =A0Why
+> >> override it here?
+> >
+> > Ah, ok, I think I got it.
+> >
+> > Of course, the words on the command line must be specified somehow =
+to
+> > test completion functions. =A0But the two implementations of
+> > _get_comp_words_by_ref() for bash and zsh in the completion script
+> > take the words on the command line from different variables, so we
+> > need a common implementation to test completion functions both on b=
+ash
+> > and zsh. =A0Hence the _get_comp_words_by_ref() above, which takes t=
+he
+> > words on the command line and their count from $_words and $_cword,
+> > respectively, and run_completion() below, which fills those variabl=
+es
+> > with its arguments.
+>=20
+> Well, yeah, that's one reason, but also I don't see the point in
+> trying to fill the internal bash completion variables, maybe there
+> would be some conflicts? Plus, the bash version of
+> _get_comp_words_by_ref is rather complicated, so I decided to start
+> with something simple that I could understand and see exactly what's
+> going on. And for zsh I would definitely prefer to override
+> _get_comp_words_by_ref than to mess with the internal variables,
+> although I haven't found a way to test completion for zsh.
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 2158f0c..75ecf36 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -870,6 +870,10 @@ column.status::
- 	Specify whether to output untracked files in `git status` in columns.
- 	See `column.ui` for details.
+The tests are run in a non-interactive shell, which by default doesn't
+load bash completion with its complicated _get_comp_words_by_ref().
+So these tests use _get_comp_words_by_ref() from git's completion
+script.
+
+
+Anyway, out of curiosity I quickly tried this on top of b8574ba7 (i.e.
+your patch from today's pu):
+
+diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
+index 3bbec79b..6c1ea956 100755
+--- a/t/t9902-completion.sh
++++ b/t/t9902-completion.sh
+@@ -27,27 +27,6 @@ complete ()
 =20
-+column.tag::
-+	Specify whether to output tag listing in `git tag` in columns.
-+	See `column.ui` for details.
-+
- commit.status::
- 	A boolean to enable/disable inclusion of status information in the
- 	commit message template when using an editor to prepare the commit
-diff --git a/Documentation/git-tag.txt b/Documentation/git-tag.txt
-index 8d32b9a..e36a7c3 100644
---- a/Documentation/git-tag.txt
-+++ b/Documentation/git-tag.txt
-@@ -13,6 +13,7 @@ SYNOPSIS
- 	<tagname> [<commit> | <object>]
- 'git tag' -d <tagname>...
- 'git tag' [-n[<num>]] -l [--contains <commit>] [--points-at <object>]
-+	[--column[=3D<options>] | --no-column] [<pattern>...]
- 	[<pattern>...]
- 'git tag' -v <tagname>...
+ . "$GIT_BUILD_DIR/contrib/completion/git-completion.bash"
 =20
-@@ -84,6 +85,14 @@ OPTIONS
- 	using fnmatch(3)).  Multiple patterns may be given; if any of
- 	them matches, the tag is shown.
-=20
-+--column[=3D<options>]::
-+--no-column::
-+	Display tag listing in columns. See configuration variable
-+	column.tag for option syntax.`--column` and `--no-column`
-+	without options are equivalent to 'always' and 'never' respectively.
-++
-+This option is only applicable when listing tags without annotation li=
-nes.
-+
- --contains <commit>::
- 	Only list tags which contain the specified commit.
-=20
-diff --git a/Makefile b/Makefile
-index 297e830..53e27cc 100644
---- a/Makefile
-+++ b/Makefile
-@@ -2168,7 +2168,7 @@ builtin/prune.o builtin/reflog.o reachable.o: rea=
-chable.h
- builtin/commit.o builtin/revert.o wt-status.o: wt-status.h
- builtin/tar-tree.o archive-tar.o: tar.h
- connect.o transport.o url.o http-backend.o: url.h
--builtin/branch.o builtin/commit.o column.o help.o pager.o: column.h
-+builtin/branch.o builtin/commit.o builtin/tag.o column.o help.o pager.=
-o: column.h
- http-fetch.o http-walker.o remote-curl.o transport.o walker.o: walker.=
-h
- http.o http-walker.o http-push.o http-fetch.o remote-curl.o: http.h ur=
-l.h
-=20
-diff --git a/builtin/tag.c b/builtin/tag.c
-index fe7e5e5..4fb6bd7 100644
---- a/builtin/tag.c
-+++ b/builtin/tag.c
-@@ -16,6 +16,7 @@
- #include "revision.h"
- #include "gpg-interface.h"
- #include "sha1-array.h"
-+#include "column.h"
-=20
- static const char * const git_tag_usage[] =3D {
- 	"git tag [-a|-s|-u <key-id>] [-f] [-m <msg>|-F <file>] <tagname> [<he=
-ad>]",
-@@ -33,6 +34,7 @@ struct tag_filter {
- };
-=20
- static struct sha1_array points_at;
-+static unsigned int colopts;
-=20
- static int match_pattern(const char **patterns, const char *ref)
+-_get_comp_words_by_ref ()
+-{
+-	while [ $# -gt 0 ]; do
+-		case "$1" in
+-		cur)
+-			cur=3D${_words[_cword]}
+-			;;
+-		prev)
+-			prev=3D${_words[_cword-1]}
+-			;;
+-		words)
+-			words=3D("${_words[@]}")
+-			;;
+-		cword)
+-			cword=3D$_cword
+-			;;
+-		esac
+-		shift
+-	done
+-}
+-
+ print_comp ()
  {
-@@ -263,6 +265,8 @@ static int git_tag_config(const char *var, const ch=
-ar *value, void *cb)
- 	int status =3D git_gpg_config(var, value, cb);
- 	if (status)
- 		return status;
-+	if (!prefixcmp(var, "column."))
-+		return git_column_config(var, value, "tag", &colopts);
- 	return git_default_config(var, value, cb);
+ 	local IFS=3D$'\n'
+@@ -56,10 +35,10 @@ print_comp ()
+=20
+ run_completion ()
+ {
+-	local -a COMPREPLY _words
+-	local _cword
+-	_words=3D( $1 )
+-	(( _cword =3D ${#_words[@]} - 1 ))
++	local -a COMPREPLY COMP_WORDS
++	local COMP_CWORD
++	COMP_WORDS=3D( $1 )
++	(( COMP_CWORD =3D ${#COMP_WORDS[@]} - 1 ))
+ 	_git && print_comp
  }
-=20
-@@ -459,6 +463,7 @@ int cmd_tag(int argc, const char **argv, const char=
- *prefix)
- 		OPT_STRING('u', "local-user", &keyid, "key-id",
- 					"use another key to sign the tag"),
- 		OPT__FORCE(&force, "replace the tag if exists"),
-+		OPT_COLUMN(0, "column", &colopts, "show tag list in columns"),
-=20
- 		OPT_GROUP("Tag listing options"),
- 		{
-@@ -495,9 +500,25 @@ int cmd_tag(int argc, const char **argv, const cha=
-r *prefix)
-=20
- 	if (list + delete + verify > 1)
- 		usage_with_options(git_tag_usage, options);
--	if (list)
--		return list_tags(argv, lines =3D=3D -1 ? 0 : lines,
--				 with_commit);
-+	finalize_colopts(&colopts, -1);
-+	if (list && lines !=3D -1) {
-+		if (explicitly_enable_column(colopts))
-+			die(_("--column and -n are incompatible"));
-+		colopts =3D 0;
-+	}
-+	if (list) {
-+		int ret;
-+		if (column_active(colopts)) {
-+			struct column_options copts;
-+			memset(&copts, 0, sizeof(copts));
-+			copts.padding =3D 2;
-+			run_column_filter(colopts, &copts);
-+		}
-+		ret =3D list_tags(argv, lines =3D=3D -1 ? 0 : lines, with_commit);
-+		if (column_active(colopts))
-+			stop_column_filter();
-+		return ret;
-+	}
- 	if (lines !=3D -1)
- 		die(_("-n option is only allowed with -l."));
- 	if (with_commit)
-diff --git a/t/t7004-tag.sh b/t/t7004-tag.sh
-index f8c247a..5189446 100755
---- a/t/t7004-tag.sh
-+++ b/t/t7004-tag.sh
-@@ -263,6 +263,50 @@ test_expect_success 'tag -l can accept multiple pa=
-tterns' '
- 	test_cmp expect actual
- '
-=20
-+test_expect_success 'listing tags in column' '
-+	COLUMNS=3D40 git tag -l --column=3Drow >actual &&
-+	cat >expected <<\EOF &&
-+a1      aa1     cba     t210    t211
-+v0.2.1  v1.0    v1.0.1  v1.1.3
-+EOF
-+	test_cmp expected actual
-+'
-+
-+test_expect_success 'listing tags in column with column.*' '
-+	git config column.tag row &&
-+	git config column.ui dense &&
-+	COLUMNS=3D40 git tag -l >actual &&
-+	git config --unset column.ui &&
-+	git config --unset column.tag &&
-+	cat >expected <<\EOF &&
-+a1      aa1   cba     t210    t211
-+v0.2.1  v1.0  v1.0.1  v1.1.3
-+EOF
-+	test_cmp expected actual
-+'
-+
-+test_expect_success 'listing tag with -n --column should fail' '
-+	test_must_fail git tag --column -n
-+'
-+
-+test_expect_success 'listing tags -n in column with column.ui ignored'=
- '
-+	git config column.ui "row dense" &&
-+	COLUMNS=3D40 git tag -l -n >actual &&
-+	git config --unset column.ui &&
-+	cat >expected <<\EOF &&
-+a1              Foo
-+aa1             Foo
-+cba             Foo
-+t210            Foo
-+t211            Foo
-+v0.2.1          Foo
-+v1.0            Foo
-+v1.0.1          Foo
-+v1.1.3          Foo
-+EOF
-+	test_cmp expected actual
-+'
-+
- # creating and verifying lightweight tags:
-=20
- test_expect_success \
---=20
-1.7.3.1.256.g2539c.dirty
+
+i.e. to set COMP_WORDS and COMP_CWORD in run_completion() and it
+worked.  However, I agree that it feels iffy to mess with a
+shell-specific variable, and I'm afraid that this just happened to
+work on my system, but it might be broken in previous or future bash
+versions.
+
+
+Best,
+G=E1bor
