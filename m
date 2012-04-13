@@ -1,74 +1,115 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [BUG] svn-fe: incorrect handling of files with newlines in them
-Date: Fri, 13 Apr 2012 17:22:01 -0500
-Message-ID: <20120413222201.GA20197@burratino>
-References: <4F88A502.9080207@pileofstuff.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCHv2] fetch: Only call a new ref a "branch" if it's under
+ refs/heads/.
+Date: Fri, 13 Apr 2012 15:39:59 -0700
+Message-ID: <7vy5pz1cjk.fsf@alter.siamese.dyndns.org>
+References: <1334336904-18649-1-git-send-email-marcnarc@xiplink.com>
+ <20120413211350.GD7919@sigill.intra.peff.net>
+ <20120413215316.GA19826@burratino>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>,
-	David Barr <davidbarr@google.com>,
-	Ramkumar Ramachandra <artagnon@gmail.com>
-To: Andrew Sayers <andrew-git@pileofstuff.org>
-X-From: git-owner@vger.kernel.org Sat Apr 14 00:22:19 2012
+Cc: Jeff King <peff@peff.net>, marcnarc@xiplink.com,
+	git@vger.kernel.org
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Apr 14 00:40:25 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SIosh-0004Yf-G6
-	for gcvg-git-2@plane.gmane.org; Sat, 14 Apr 2012 00:22:15 +0200
+	id 1SIpAE-0007OO-Te
+	for gcvg-git-2@plane.gmane.org; Sat, 14 Apr 2012 00:40:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753199Ab2DMWWK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Apr 2012 18:22:10 -0400
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:56527 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752334Ab2DMWWI (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Apr 2012 18:22:08 -0400
-Received: by iagz16 with SMTP id z16so4825727iag.19
-        for <git@vger.kernel.org>; Fri, 13 Apr 2012 15:22:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=jpgbtXTuuTIGWU2vx6pvYsv1A78Z9VnHL1ME0UuEd0w=;
-        b=B51TJZ9pBB2jKy6kVUUDn8NonnVIo6e0O/+lwZAYl49bZ/4rEpIUXtVx2A84StTF5b
-         ACmp1lupDQmCvEltM+3rLRgahV8Wpz10QVJxAaRrMfHUBOtsygVaLyciarOkivVxDN9R
-         cIDoKptFM+7EExAAw8eHIyDydK+Af5J/tZkGS/JXZCe8u/1drn6/m1ebVl/tX/dFVdAp
-         4dN9gunFPXJFdLhKPSWWPclYy+j53TIUzRphQ5SVGja5Fv0H8vb685VI4i4wmmrvclEV
-         71Spi4qYe+ou3/v5cs7pI3+jF79eRi8xn/lHUNUUyc/R1TzyX5KpG+MFCE64PC68C2j3
-         5zOw==
-Received: by 10.50.45.138 with SMTP id n10mr2917087igm.70.1334355728255;
-        Fri, 13 Apr 2012 15:22:08 -0700 (PDT)
-Received: from burratino (adsl-99-24-202-99.dsl.chcgil.sbcglobal.net. [99.24.202.99])
-        by mx.google.com with ESMTPS id kn3sm4824889igc.15.2012.04.13.15.22.07
-        (version=SSLv3 cipher=OTHER);
-        Fri, 13 Apr 2012 15:22:07 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <4F88A502.9080207@pileofstuff.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S932449Ab2DMWkK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Apr 2012 18:40:10 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64785 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932443Ab2DMWkI (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Apr 2012 18:40:08 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C8A827086;
+	Fri, 13 Apr 2012 18:40:04 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=ax77Wu7NZADPnfTgDU6S7cwLZEI=; b=KcSVcv
+	Q3RoxnJ9oSRFhjW9GWCgN5Q0dW4GlLm0gqvzXfncYMf5KkSoG7YOz0dpS/SNtJIn
+	A+H9uGBvrr573mF0XN8hno9h/oURpyTP0MtpiEFwNlrtYsijDAUh/06DBxCNwBSr
+	yy3SsOj/n4AEd/HXmGrlzUWeY1GeIQmrLrRz4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=pUMYHG/lXIR7+lqXINdn3AySE7p/+W2H
+	bTVZ1iVnBf/WG81R7tA6b/NxFKmhBLB8mLtx6o7Pu8FKWPtHwaM/AReAqDYkArfJ
+	X559EOlQ8wZWoohR15sJPjqg0wBg5cxUA34NSQfnK+wX3rdZPumyTMhMTHa2BlJ+
+	Rdrn1AFyMbU=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B20737085;
+	Fri, 13 Apr 2012 18:40:04 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 53F2C7083; Fri, 13 Apr 2012
+ 18:40:01 -0400 (EDT)
+In-Reply-To: <20120413215316.GA19826@burratino> (Jonathan Nieder's message of
+ "Fri, 13 Apr 2012 16:53:16 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 9AFD1FC6-85B9-11E1-8527-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195450>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195451>
 
-(+cc: Ram)
-Hey,
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-Andrew Sayers wrote:
+> Jeff King wrote:
+>
+>> Hmm. The ref->name we are comparing here is the local side. So if I am
+>> fetching a new branch "foo" from the remote into a local
+>> "refs/remotes/origin/foo" tracking ref, it used to say:
+>>
+>>     From ../parent
+>>      * [new branch]      master     -> origin/master
+>>
+>> Now it says:
+>>
+>>     From ../parent
+>>      * [new ref]         master     -> origin/master
+>>
+>> while refs/remotes/* are not technically branches in our side, I think
+>> from the user's perspective, it is true that we have fetched a branch.
+>> Should we be calling refs/remotes/* branches, too? Should we be checking
+>> the remote's name for the item instead of the local one?
+>
+> The former sounds sensible.  Then once the default refspec learns to
+> fetch into separate refs/remotes/origin/heads/* and
+> refs/remotes/origin/notes/* namespaces the logic could be updated to
+> write [new branch] or [new note collection] according to the
+> situation.
 
-> Note that I've used the intentionally provocative filename
-> $'readme.txt\nNode-kind: dir', but svn-fe doesn't fall for the trick.
-> The dump format doesn't escape the filename at all, so it would probably
-> fall for something cleverer like a 'copyfrom' line.  To be honest I'm
-> not sure how you'd even detect such a filename.
+If we give 'new branch' label for this case because we store it in our
+'refs/remotes/*', a natural extension of it would be to redefine the rule
+to narrow it to 'refs/remotes/*/heads/*' for using 'branch' when we
+introduce 'new notes collection' label to give refs we are going to store
+in 'refs/remotes/origin/notes/*'.  That is consistent with the former.
 
-Yep, sounds like a dump-load-format design bug.
+If we give 'new branch' label because refs/heads/master on the originating
+end is what is shown on the line, a natural extension would be to use 'new
+notes collection' label when we are fetching from refs/notes/* on the
+originating end, and it does not matter where we store it, either our own
+refs/notes/* or refs/remotes/origin/notes/*.  That is consistent with the
+latter.
 
-> If the consensus is that this bug isn't fixable, I'd recommend putting a
-> note to that effect in "contrib/svn-fe/svn-fe.txt".
+There is no concensus if refs/remotes/origin/notes/* hierarchy is a good
+idea or not, but your argument does not support either side between the
+former or the latter anyway, so I think it is irrelevant point to raise in
+this discussion.
 
-Makes sense.  Please make it so.
+The choice between the two really depends on what information we are
+trying to convey with this label.  Are we saying "Hey, we now have a new
+'branch' on our side"?  Or are we saying "We found a new 'branch' over
+there"?  It is unclear and you can argue both ways. Although I personally
+think it is the latter, I do not have a strong opinion either way.
 
-Thanks much,
-Jonathan
+I am actually fine with just saying '[new]' without indicating what kind
+at all, because the label is there only to fill the space where old..new
+object names are usually shown.  We don't even say "[rejected branch]",
+just "[rejected]" in the same place.
