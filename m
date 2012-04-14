@@ -1,177 +1,84 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Static gitweb content when using pathinfo
-Date: Sat, 14 Apr 2012 19:19:18 +0200
-Message-ID: <201204141919.19285.jnareb@gmail.com>
-References: <4F7DA413.2020502@gmail.com> <201204052314.10606.jnareb@gmail.com>
+From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+Subject: [PATCH] sequencer.c: Fix a sparse warning
+Date: Sat, 14 Apr 2012 18:26:35 +0100
+Message-ID: <4F89B34B.70907@ramsay1.demon.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?iso-8859-1?q?Jos=E9_Mar=EDa_Escart=EDn_Esteban?= 
-	<ripero84@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Apr 14 19:20:01 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	GIT Mailing-list <git@vger.kernel.org>
+To: nhorman@tuxdriver.com
+X-From: git-owner@vger.kernel.org Sat Apr 14 19:28:45 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SJ6df-0003jy-3w
-	for gcvg-git-2@plane.gmane.org; Sat, 14 Apr 2012 19:19:55 +0200
+	id 1SJ6mD-0000fy-9N
+	for gcvg-git-2@plane.gmane.org; Sat, 14 Apr 2012 19:28:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755629Ab2DNRTW convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 14 Apr 2012 13:19:22 -0400
-Received: from mail-we0-f174.google.com ([74.125.82.174]:47504 "EHLO
-	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752059Ab2DNRTV (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 14 Apr 2012 13:19:21 -0400
-Received: by wejx9 with SMTP id x9so2536666wej.19
-        for <git@vger.kernel.org>; Sat, 14 Apr 2012 10:19:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        bh=WZZKSqrYsbS0WTZK1iy2S3H0fAuRIzwfMX2ax5aFHAI=;
-        b=I2mL4X+EF5HgOUQWbtMZz3GBjWHU4iFGaebLynhf5HwtAvgaJZ1ZUmOhPK1Zo173kl
-         sMoJxviNx+UM9GCt/2ej1ZLa0//364Po6l5GkUvW3cDbh37/flN8SyURdawOKNGdsPQM
-         hRTx2HFNf2ShwSklQLCirF6QYayiohV1ANki2Jfqe7iYEveLYSZorVkwfsFiEGVqm/3Q
-         53wXfRxV6//MdvSPtG4PUjFX8HYCm+dRiQqoztbXRT+bw6rK909VX4/N3OAxUOGtVJks
-         YWL83WPz39/bQSSYQs0aEWWi0ujMRWUQP4G1Cej2Ae6NAYcBZk627riNbGF+4f9HWxgE
-         pi0g==
-Received: by 10.180.8.231 with SMTP id u7mr5379015wia.9.1334423960760;
-        Sat, 14 Apr 2012 10:19:20 -0700 (PDT)
-Received: from [192.168.1.13] (addh222.neoplus.adsl.tpnet.pl. [79.184.59.222])
-        by mx.google.com with ESMTPS id b3sm5860360wib.4.2012.04.14.10.19.19
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sat, 14 Apr 2012 10:19:19 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <201204052314.10606.jnareb@gmail.com>
-Content-Disposition: inline
+	id S1753478Ab2DNR2k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 14 Apr 2012 13:28:40 -0400
+Received: from lon1-post-2.mail.demon.net ([195.173.77.149]:50394 "EHLO
+	lon1-post-2.mail.demon.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753321Ab2DNR2j (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 14 Apr 2012 13:28:39 -0400
+Received: from ramsay1.demon.co.uk ([193.237.126.196])
+	by lon1-post-2.mail.demon.net with esmtp (Exim 4.69)
+	id 1SJ6m5-0006j5-c9; Sat, 14 Apr 2012 17:28:38 +0000
+User-Agent: Thunderbird 1.5.0.2 (Windows/20060308)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195495>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195496>
 
-On Thu, 5 Apr 2012, Jakub Narebski wrote:
-> On Thu, 5 Apr 2012, Jos=E9 Mar=EDa Escart=EDn Esteban wrote:
-> > Hi,
-> >=20
-> > I'm running gitweb in a server.example.com/gitweb/ scenario.  If I =
-don't enable
-> > pathinfo everything works fine, but when I enable pathinfo the stat=
-ic content
-> > stops showing up in the browser.
-> >=20
-> > I'm not an HTML or perl expert, but I think that this may be due to=
- a missing
-> > slash in the construction of the base tag:  Using the upstream scri=
-pt I am getting
-> >=20
-> > <base href=3D"http://server.example.com/gitweb" />
-> >=20
-> > and no static content.  Once I tune the script to add a final slash=
- to the url
-> >=20
-> > <base href=3D"http://server.example.com/gitweb/" />
-> >=20
-> > the static content shows up again.
->
-> How do you deploy gitweb, what is your web server configuration, and
-> what is the URL of main gitweb page (using placeholders like 'example=
-=2Ecom'
-> or 'foo')?
 
-Ping?
+In particular, sparse complains as follows:
 
-[...]
+        SP sequencer.c
+    sequencer.c:262:5: warning: symbol 'run_git_commit' was not \
+        declared. Should it be static?
 
-> There might be problem if you configured your web server to serve git=
-web
-> using it as a handler for subdirectory, so the script name does not n=
-eed
-> to appear in URL, e.g.
->=20
->   http://localhost/cgi-bin/gitweb
->=20
-> which would require the following base element
->=20
->   <base href=3D"http://localhost/cgi-bin/gitweb/" />
+In order to suppress the warning, since the run_git_commit() function
+does not need to be a global symbol, we simply add the static modifier
+to the function definition.
 
-[...]
-
-> > Once I tune the script to add a final slash to the url
-> >=20
-> > <base href=3D"http://server.example.com/gitweb/" />
-> >=20
-> > the static content shows up again.
->=20
-> By "tune the script" do you mean editing gitweb.cgi, or adding settin=
-g
-> $base_url to gitweb configuration file, see gitweb.conf(5):
->=20
->   $base_url
->      Base  URL  for  relative  URLs  in  pages generated by gitweb, (=
-e.g.
->      $logo, $favicon, @stylesheets if they are relative URLs), needed=
- and
->      used  <base href=3D"$base_url"> only for URLs with nonempty PATH=
-_INFO.
->      Usually gitweb sets its value correctly, and there is no need to=
- set
->      this  variable,  e.g.  to $my_uri or "/". See $per_request_confi=
-g if
->      you need to override it anyway.
->=20
-> You can e.g. put
->=20
->   $base_url .=3D '/' unless ($base_url =3D~ m!/$!);
->=20
-> in the gitweb configuration file to ensure that it ends with '/', wha=
-tever
-> it is.
-
-By the way, would the following proposed addition to gitweb.conf(5)
-manpage would help your situation?
-
--------- >8 ---------- >8 ---------
-Subject: [PATCH/RFC] gitweb.conf(5): When to set $base_url
-
-Add a paragraph to description of $base_url variable in gitweb.conf(5)
-manpage explaining when and why one might need to set it.
-
-Based-on-report-by: Jos=E9 Mar=EDa Escart=EDn Esteban <ripero84@gmail.c=
-om>
-Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+Signed-off-by: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
 ---
- Documentation/gitweb.conf.txt |   14 ++++++++++++++
- 1 files changed, 14 insertions(+), 0 deletions(-)
 
-diff --git a/Documentation/gitweb.conf.txt b/Documentation/gitweb.conf.=
-txt
-index 7aba497..a2a6ddf 100644
---- a/Documentation/gitweb.conf.txt
-+++ b/Documentation/gitweb.conf.txt
-@@ -559,6 +559,20 @@ $base_url::
- 	PATH_INFO.  Usually gitweb sets its value correctly,
- 	and there is no need to set this variable, e.g. to $my_uri or "/".
- 	See `$per_request_config` if you need to override it anyway.
-++
-+You would need to set this variable when using gitweb as a directory
-+handler and using path_info-based URLs.  For example if your web
-+server is set up in such way that full path to browse repositories is
-+`http://git.example.com/gitweb` and static files are served from
-+'/gitweb/static' directory with default values (e.g. `$logo` is
-+`static/git-logo.png`), then you would need to set `$base_url` to
-+(for example):
-++
-+----------------------------------------------------------------------
-+our $base_url =3D "http://git.example.com/gitweb/";
-+----------------------------------------------------------------------
-++
-+The trailing slash is required!
-=20
-=20
- CONFIGURING GITWEB FEATURES
---=20
-1.7.9
+Hi Neil,
+
+In commit 85b2713d ("git-cherry-pick: add --keep-redundant-commits option",
+11-04-2012), you removed the static modifier from run_git_commit() without
+adding an extern declaration to the sequencer.h header file. This causes
+sparse to bark, as above. However, since that function is not called outside
+of sequencer.c, it seems best to simply add it back ... :-)
+
+[Note that, despite remove_sequencer_state() being declared extern in the
+header file, it is also not used outside sequencer.c, so ... ]
+
+So, if you need to re-submit this patch, could you please squash this patch
+into your commit. Thanks!
+
+ATB,
+Ramsay Jones
+
+ sequencer.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/sequencer.c b/sequencer.c
+index d4262cf..6f28430 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -259,7 +259,7 @@ static int do_recursive_merge(struct commit *base, struct commit *next,
+  * If we are revert, or if our cherry-pick results in a hand merge,
+  * we had better say that the current user is responsible for that.
+  */
+-int run_git_commit(const char *defmsg, struct replay_opts *opts, int empty)
++static int run_git_commit(const char *defmsg, struct replay_opts *opts, int empty)
+ {
+ 	struct argv_array array;
+ 	int rc;
+-- 
+1.7.10
