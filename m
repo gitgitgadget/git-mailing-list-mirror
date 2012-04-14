@@ -1,142 +1,152 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] t5570: use explicit push refspec
-Date: Sat, 14 Apr 2012 16:40:01 -0700
-Message-ID: <7viph1288e.fsf@alter.siamese.dyndns.org>
-References: <20120414182907.GA3915@ecki> <20120414183225.GB3915@ecki>
+Subject: Re: [PATCH] cherry-pick: do not expect file arguments
+Date: Sat, 14 Apr 2012 16:48:56 -0700
+Message-ID: <7vehrp27tj.fsf@alter.siamese.dyndns.org>
+References: <20120414190448.GA26209@ecki>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Zbigniew =?utf-8?Q?J?= =?utf-8?Q?=C4=99drzejewski-Szmek?= 
-	<zbyszek@in.waw.pl>
+Cc: git@vger.kernel.org
 To: Clemens Buchacher <drizzd@aon.at>
-X-From: git-owner@vger.kernel.org Sun Apr 15 01:41:01 2012
+X-From: git-owner@vger.kernel.org Sun Apr 15 01:49:08 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SJCaL-0001n5-1K
-	for gcvg-git-2@plane.gmane.org; Sun, 15 Apr 2012 01:40:53 +0200
+	id 1SJCiF-0005y1-Lw
+	for gcvg-git-2@plane.gmane.org; Sun, 15 Apr 2012 01:49:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755343Ab2DNXkG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 14 Apr 2012 19:40:06 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:42431 "EHLO
+	id S1755494Ab2DNXs7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 14 Apr 2012 19:48:59 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:44934 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754925Ab2DNXkF (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 14 Apr 2012 19:40:05 -0400
+	id S1751672Ab2DNXs6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 14 Apr 2012 19:48:58 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BC77963AD;
-	Sat, 14 Apr 2012 19:40:04 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 275366517;
+	Sat, 14 Apr 2012 19:48:58 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=h92q7z0l3PRWJgsI82sPZ4HIHxg=; b=IiwZX8
-	nt57KQxPao0M9F6ITmN0+4IbthkuYMHm4w6jtLm1v+IjSh1ZzzM/miYl7dC6ftqm
-	ZWJV6lLnfaiSiKgNDwIgVjDdZWr9uQGc6jJ0X2tk3kExcVmDhYBVZJdCbsTEFV1X
-	8L8dbOTh7UJurRDAM2c54xLmoWfeEoIGrAgsE=
+	:content-type; s=sasl; bh=dLYvGuJ0J5Nvj8YHE2o0Gqq7/c0=; b=qZ/Ls7
+	EYK6tS1sMRl3nBIkDddd/QNN7q2Fn9oLCzRlIgk4pM9Yuu5lomUVbmP/2s0F+3O1
+	wrYz6PGJrtvDuJsU4aZrcgX3CaSI4J/+mhDCewpXl2sXWQh+MCkJt9c/cGHsQtbO
+	g8CMijZFIL/34aNVOHAjY6y71yfjw9kAHI1eA=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=nPbtMRY1ZcDMtBPRaKSNquqZk+y2wMft
-	dqEPBpI5J6kLydUHtSRzkZLS2vYonPt+7HoDT5+mzh0/whJFpcK3+mv/Oj8aIR8Y
-	6XUFbFfupGPDji/SkvJ2Zs5NPnMdWEiCi0HSdmguSz4PvvlU0J0DD2FSDCmDzJ+k
-	q2xAWeVlOGo=
+	:content-type; q=dns; s=sasl; b=lfEO+yd6m8lrK2z6i3/QgHoDSXuc925j
+	PGA75h1cqIKibe7jRvz99gH4fvV7VBOSWMQ4gH8yV+QPYLF+0PbTa8wW4y+nlkcV
+	VD1Wk5ppRrcbM3UeLALaGtLk38yd1Yx4HPYa3fvOE3szDODxBm29PU6paaqFywUQ
+	DZ+UzCQbE8c=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AF89063AC;
-	Sat, 14 Apr 2012 19:40:04 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1CE056516;
+	Sat, 14 Apr 2012 19:48:58 -0400 (EDT)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D2DFE63A8; Sat, 14 Apr 2012
- 19:40:02 -0400 (EDT)
-In-Reply-To: <20120414183225.GB3915@ecki> (Clemens Buchacher's message of
- "Sat, 14 Apr 2012 20:32:25 +0200")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 839BA6515; Sat, 14 Apr 2012
+ 19:48:57 -0400 (EDT)
+In-Reply-To: <20120414190448.GA26209@ecki> (Clemens Buchacher's message of
+ "Sat, 14 Apr 2012 21:04:48 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 28133D38-868B-11E1-9EC8-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 66C41420-868C-11E1-B4AF-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195535>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195536>
 
 Clemens Buchacher <drizzd@aon.at> writes:
 
-> The default mode for push without arguments will change. Some warnings
-> are about to be enabled for such use, which causes some t5570 tests to
-> fail because they do not expect this output. Fix this by passing an
-> explicit refspec to git push.
+> If a commit-ish passed to cherry-pick or revert happens to have a file
+> of the same name, git complains that the argument is ambiguous and
+> advises to use '--'. To make things worse, the '--' argument is removed
+> by parse_options, und so passing '--' has no effect.
 
-I wonder if a better fix is to configure "push.default = matching" in the
-test repository.  Otherwise wouldn't the result of the push change once
-the default changes?
+Thanks.
 
+I can see how this patch is one way to solve it, but if the command knows
+that it is feedling only revs and no pathspecs, isn't the caller the one
+that is responsible for adding "--" to the argv_array it is passing to
+setup_revisions()?
+
+With s/assume_dashdash/no_pathspecs/, the damage to the revision traversal
+machinery does not look _too_ bad, but I am not convinced (yet) that this
+patch is the best way to solve the issue.
+
+> Instead, always interpret cherry-pick/revert arguments as revisions.
+>
 > Signed-off-by: Clemens Buchacher <drizzd@aon.at>
 > ---
+>  builtin/revert.c |    5 ++++-
+>  revision.c       |   24 ++++++++++++++----------
+>  revision.h       |    1 +
+>  3 files changed, 19 insertions(+), 11 deletions(-)
 >
-> On Sat, Apr 14, 2012 at 08:29:07PM +0200, Clemens Buchacher wrote:
->> 
->> Note that t5570 fails on current pu, because of the push.default
->> warnings. I am sending an independent patch for that.
->
-> Here we go.
->
->  t/t5570-git-daemon.sh |   30 ++++++++++++++----------------
->  1 file changed, 14 insertions(+), 16 deletions(-)
->
-> diff --git a/t/t5570-git-daemon.sh b/t/t5570-git-daemon.sh
-> index 7cbc999..a3a4e47 100755
-> --- a/t/t5570-git-daemon.sh
-> +++ b/t/t5570-git-daemon.sh
-> @@ -103,14 +103,12 @@ test_remote_error()
->  		esac
->  	done
+> diff --git a/builtin/revert.c b/builtin/revert.c
+> index e6840f2..92f3fa5 100644
+> --- a/builtin/revert.c
+> +++ b/builtin/revert.c
+> @@ -181,12 +181,15 @@ static void parse_args(int argc, const char **argv, struct replay_opts *opts)
+>  	if (opts->subcommand != REPLAY_NONE) {
+>  		opts->revs = NULL;
+>  	} else {
+> +		struct setup_revision_opt s_r_opt;
+>  		opts->revs = xmalloc(sizeof(*opts->revs));
+>  		init_revisions(opts->revs, NULL);
+>  		opts->revs->no_walk = 1;
+>  		if (argc < 2)
+>  			usage_with_options(usage_str, options);
+> -		argc = setup_revisions(argc, argv, opts->revs, NULL);
+> +		memset(&s_r_opt, 0, sizeof(s_r_opt));
+> +		s_r_opt.assume_dashdash = 1;
+> +		argc = setup_revisions(argc, argv, opts->revs, &s_r_opt);
+>  	}
 >  
-> -	if test $# -ne 3
-> -	then
-> -		error "invalid number of arguments"
-> -	fi
-> -
-> +	msg=$1
-> +	shift
->  	cmd=$1
-> -	repo=$2
-> -	msg=$3
-> +	shift
-> +	repo=$1
-> +	shift || error "invalid number of arguments"
+>  	if (argc > 1)
+> diff --git a/revision.c b/revision.c
+> index b3554ed..9a0d9c7 100644
+> --- a/revision.c
+> +++ b/revision.c
+> @@ -1715,17 +1715,21 @@ int setup_revisions(int argc, const char **argv, struct rev_info *revs, struct s
+>  		submodule = opt->submodule;
 >  
->  	if test -x "$GIT_DAEMON_DOCUMENT_ROOT_PATH/$repo"
->  	then
-> @@ -122,7 +120,7 @@ test_remote_error()
->  		fi
->  	fi
+>  	/* First, search for "--" */
+> -	seen_dashdash = 0;
+> -	for (i = 1; i < argc; i++) {
+> -		const char *arg = argv[i];
+> -		if (strcmp(arg, "--"))
+> -			continue;
+> -		argv[i] = NULL;
+> -		argc = i;
+> -		if (argv[i + 1])
+> -			append_prune_data(&prune_data, argv + i + 1);
+> +	if (opt && opt->assume_dashdash) {
+>  		seen_dashdash = 1;
+> -		break;
+> +	} else {
+> +		seen_dashdash = 0;
+> +		for (i = 1; i < argc; i++) {
+> +			const char *arg = argv[i];
+> +			if (strcmp(arg, "--"))
+> +				continue;
+> +			argv[i] = NULL;
+> +			argc = i;
+> +			if (argv[i + 1])
+> +				append_prune_data(&prune_data, argv + i + 1);
+> +			seen_dashdash = 1;
+> +			break;
+> +		}
+>  	}
 >  
-> -	test_must_fail git "$cmd" "$GIT_DAEMON_URL/$repo" 2>output &&
-> +	test_must_fail git "$cmd" "$GIT_DAEMON_URL/$repo" "$@" 2>output &&
->  	echo "fatal: remote error: $msg: /$repo" >expect &&
->  	test_cmp expect output
->  	ret=$?
-> @@ -131,18 +129,18 @@ test_remote_error()
->  }
+>  	/* Second, deal with arguments and options */
+> diff --git a/revision.h b/revision.h
+> index b8e9223..1a08384 100644
+> --- a/revision.h
+> +++ b/revision.h
+> @@ -183,6 +183,7 @@ struct setup_revision_opt {
+>  	const char *def;
+>  	void (*tweak)(struct rev_info *, struct setup_revision_opt *);
+>  	const char *submodule;
+> +	int assume_dashdash;
+>  };
 >  
->  msg="access denied or repository not exported"
-> -test_expect_success 'clone non-existent' "test_remote_error    clone nowhere.git '$msg'"
-> -test_expect_success 'push disabled'      "test_remote_error    push  repo.git    '$msg'"
-> -test_expect_success 'read access denied' "test_remote_error -x fetch repo.git    '$msg'"
-> -test_expect_success 'not exported'       "test_remote_error -n fetch repo.git    '$msg'"
-> +test_expect_success 'clone non-existent' "test_remote_error    '$msg' clone nowhere.git    "
-> +test_expect_success 'push disabled'      "test_remote_error    '$msg' push  repo.git master"
-> +test_expect_success 'read access denied' "test_remote_error -x '$msg' fetch repo.git       "
-> +test_expect_success 'not exported'       "test_remote_error -n '$msg' fetch repo.git       "
->  
->  stop_git_daemon
->  start_git_daemon --informative-errors
->  
-> -test_expect_success 'clone non-existent' "test_remote_error    clone nowhere.git 'no such repository'"
-> -test_expect_success 'push disabled'      "test_remote_error    push  repo.git    'service not enabled'"
-> -test_expect_success 'read access denied' "test_remote_error -x fetch repo.git    'no such repository'"
-> -test_expect_success 'not exported'       "test_remote_error -n fetch repo.git    'repository not exported'"
-> +test_expect_success 'clone non-existent' "test_remote_error    'no such repository'      clone nowhere.git    "
-> +test_expect_success 'push disabled'      "test_remote_error    'service not enabled'     push  repo.git master"
-> +test_expect_success 'read access denied' "test_remote_error -x 'no such repository'      fetch repo.git       "
-> +test_expect_success 'not exported'       "test_remote_error -n 'repository not exported' fetch repo.git       "
->  
->  stop_git_daemon
->  test_done
+>  extern void init_revisions(struct rev_info *revs, const char *prefix);
