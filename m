@@ -1,100 +1,157 @@
-From: Thomas Adam <thomas.adam22@gmail.com>
-Subject: Merging changes from branches where file paths have changed
-Date: Sat, 14 Apr 2012 14:15:38 +0100
-Message-ID: <CA+39Oz7m1hGrTEdpSAjBP3EDFSVyKdc6T9CORcwQkjuEbvD4Ug@mail.gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] gitweb: Option to omit column with time of the last change
+Date: Sat, 14 Apr 2012 15:16:01 +0200
+Message-ID: <201204141516.02719.jnareb@gmail.com>
+References: <20120403132735.GA12389@camk.edu.pl> <201204041631.42905.jnareb@gmail.com> <20120404162208.GN10461@camk.edu.pl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: git list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Apr 14 15:16:02 2012
+Content-Type: text/plain;
+  charset="iso-8859-2"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Kacper Kornet <draenog@pld-linux.org>
+X-From: git-owner@vger.kernel.org Sat Apr 14 15:16:17 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SJ2pc-0006PP-KA
-	for gcvg-git-2@plane.gmane.org; Sat, 14 Apr 2012 15:16:00 +0200
+	id 1SJ2pq-0006bl-UU
+	for gcvg-git-2@plane.gmane.org; Sat, 14 Apr 2012 15:16:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752804Ab2DNNPz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 14 Apr 2012 09:15:55 -0400
-Received: from mail-ob0-f174.google.com ([209.85.214.174]:43877 "EHLO
-	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752653Ab2DNNPy (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 14 Apr 2012 09:15:54 -0400
-Received: by obbta14 with SMTP id ta14so1701924obb.19
-        for <git@vger.kernel.org>; Sat, 14 Apr 2012 06:15:54 -0700 (PDT)
+	id S1752930Ab2DNNQJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 14 Apr 2012 09:16:09 -0400
+Received: from mail-wi0-f172.google.com ([209.85.212.172]:63562 "EHLO
+	mail-wi0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752653Ab2DNNQG (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 14 Apr 2012 09:16:06 -0400
+Received: by wibhj6 with SMTP id hj6so7299498wib.1
+        for <git@vger.kernel.org>; Sat, 14 Apr 2012 06:16:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to:content-type;
-        bh=uhnEKsPqC+N8F2yJo2EJra1h7tCx/MBYc+RSOhQ+/Ps=;
-        b=rLTX1eA1TuI91jS1nCDWIuZOlVHHYB49AC8IXcZn7maSoY4/GGzcMk9PPSpN2MBlgh
-         dGoczaHwUiDJnZHPR0JvbF0ezYiS5KABIa705+7/pOg1W3YaYMUX1jZl+PKu8qFhjBwz
-         rLPS62gpuk4hMqPJdEkm+0gFNR2nqd0EKxmkrOq/7OFP6Btf4izlOcgAVIChKLzUIojW
-         ESq3B6Sg0oXiadvh3vFq3X3l6DD9eFN8ey/EDae71QA56wfSBtClwNOlT/1QDNdEXEzI
-         UstdgEtUMF/K4IA8NpaVYFakHLBMoUZWPdQh3wRPQOFlZD8hatRwl8hYQc0lq+Qen5RQ
-         0BeA==
-Received: by 10.60.24.164 with SMTP id v4mr6986444oef.51.1334409354300; Sat,
- 14 Apr 2012 06:15:54 -0700 (PDT)
-Received: by 10.182.33.41 with HTTP; Sat, 14 Apr 2012 06:15:38 -0700 (PDT)
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        bh=f07eKXIkqCDEzG53fspeqJIHVaKUvRqiMUKx5RZipBs=;
+        b=Hp0EzjkOxMqNpObQrP+kXMPXSg47uSm/1SJ6ywL6Wgde9CNhw0jQFRuGLv7RVW5pOJ
+         RPgiWUaci1dMWbMhpnMDGz+eS7kwnOpK1vlJZmYLzkCEsy/qRzezt2YstAOf2z1QxWOQ
+         VTwSuuyN/5jhopl8NAOJ1RfBg6tNCHeT+SvGwy/s7uXPVcGu+CVF7+XTGlZSJC/6Ku7N
+         m8yTEj/QzSinm76zKMUBvlekvVIUCPf6YtDnFrrz46hzVIcbMbx7G2YWDRnSadiA7y8S
+         ZXgm6S6W7t6gDQJAB7UzFRW/h2RALHF+X44zACsaG0IslZQtT8uUxyrub5EEe31GF7iN
+         yhPw==
+Received: by 10.180.88.67 with SMTP id be3mr4091592wib.20.1334409365367;
+        Sat, 14 Apr 2012 06:16:05 -0700 (PDT)
+Received: from [192.168.1.13] (addh222.neoplus.adsl.tpnet.pl. [79.184.59.222])
+        by mx.google.com with ESMTPS id ca3sm4331086wib.6.2012.04.14.06.16.04
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sat, 14 Apr 2012 06:16:04 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <20120404162208.GN10461@camk.edu.pl>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195490>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195491>
 
-Hi all,
+I'm sorry for the delay answering.
 
-I've got two git repositories -- for the purposes of illustration,
-I'll call them RepoA, and RepoB.  RepoA is a large repository
-originally from a CVS conversion.  Repo B is a repository which has
-been formed from git-filter-branch (should it matter) from RepoA.
+On Wed, 4 Apr 2012, Kacper Kornet wrote:
+> On Wed, Apr 04, 2012 at 04:31:42PM +0200, Jakub Narebski wrote:
+>> On Wed, 4 April 2012, Kacper Kornet wrote:
+>>> On Wed, Apr 04, 2012 at 01:12:01AM +0200, Jakub Narebski wrote:
+>>>> On Tue, 3 Apr 2012, Kacper Kornet wrote:
+ 
+>> Perhaps it would be better to say it like this:
+>> 
+>>   $no_list_age::
+>>   	If true, omit the column with date of the most current commit on the
+>>   	projects list page. [...]
+>> 
+>> It is true that it can save a bit of I/O: the git_get_last_activity()
+>> examines all branches (some of which are usually loose), and must hit
+>> the object database, unpacking/getting commit objects to get at commit
+>> date.
+>> 
+>> But the fact that it also saves a fork (a git command call) per repository
+>> reminds me of something which I missed in first round of review, namely
+>> that generating 'age' and 'age_string' fields serve also as a check if
+>> repository really exist.
+>> 
+>> So either we document this fact, or use some other way to verify that
+>> git repository is valid.
+> 
+> I think that git_project_list_body always works with the list returned
+> by git_get_projects_list. And git_get_projects_list validates if the
+> path is a git repository. So it should not be a problem. Please correct
+> me, if I am wrong.
+ 
+If $projects_list points to plain file, git_get_projects_list() just
+gets list of projects (and project owners) from $projects_list file
+by reading and parsing this file.  No verification that repository
+exists is done.
 
-In doing the conversion -- RepoB contains the same history as in
-RepoA, except that RepoB is now a limited subset in terms of its files
-that RepoA has (repoB contains commits out of repoA for a specific
-subdirectory).   However, the problem I'm wanting to solve now, which
-is causing me to scratch my head and go "hmm", is how I go about
-merging commits from RepoA and have them in RepoB -- where the commits
-from repoA are in the same *directory* as the one which formed RepoB.
+If $projects_list points to directory (which is the default), then
+git_get_projects_list() scans starting from $projects_list directory
+for somtehing that _looks like_ git repository with check_head_link()
+via check_export_ok().  But you still can encounter something that
+looks like git repository (has "HEAD" file in it), but isn't.
 
-In RepoA, for the directory (and all its sub-directories) which is
-contained in RepoB, I've got a list of commits -- roughly like the
-following:
 
-% cd ./distrib/build/sources/coretree/tree
-% git log --oneline master..my/topic/branch -- .
+So we would probably want to have said variable or set of variables
+describe three states:
 
-Now in RepoB, I've got all of the directories and files from
-./distrib/build/sources/coretree/tree/ in the root, having obtained
-this from git-filter-branch from RepoA.  Despite the change of file
-locations, the history of the files between the two repositories are
-the same.
+* find date of last change in repository with git-for-each-ref called
+  by git_get_last_activity(), which as a side effect verifies that
+  repository actually exist.  
 
-The commits though coming from "git log" in RepoA touch files in
-distrib/build/sources/coretree/tree, yet the files to which I want the
-changes for in RepoB are not in "distrib/build/sources/coretree/tree"
--- there all in "./" at the top-level directory for RepoB.  The files
-in both once shared the same history -- it's just that now the
-locations of those files in RepoB which have changed.
+  git_get_last_activity() returns empty list in list context if repo
+  does not exist, hence
 
-I want to cherry-pick the commits I obtained from the "git log"
-command in RepoA, and have them contained in RepoB.  So I thought
-something like this would work:
+  	my (@activity) = git_get_last_activity($pr->{'path'});
+  	unless (@activity) {
+  		next PROJECT;
+  	}
 
-[ In RepoB.... ]:
-% git remote add repoA file:///path/to/repoA/
-% git fetch repoA
-% git checkout specific/branch
-% git cherry-pick $SOME_COMMIT_FROM_REPOA
+* verify that repository exists with "git rev-parse --git-dir" or
+  "git rev-parse --verify HEAD", or "git symbolic-ref HEAD", redirecting
+  stderr to /dev/null (we would probably want to save output of the
+  latter two somewhere to use it later).
+  
+  That saves I/O, but not fork.
 
-However, this won't work, and doesn't.  Not only do the two
-repositories not have any common ancestry, but even if they did, the
-file paths from RepoA and RepoB do not match for the commit(s) I would
-want to cherry-pick.  As far as I can tell, were I able to convince
-Git the file paths did work, then I could cherry-pick them.
+* don't verify that repository exists.
 
-Can anyone suggest a good way round this?  I hope I've managed to
-explain this adequately; just ask if not.
 
-Thanks in Advance.
+Though perhaps the last possibility isn't a good idea, so it would be
+left two-state, as in your patch. 
 
--- Thomas Adam
+>>> [...]. Especially that I would like also to introduce
+>>> option to prevent printing repository owner everywhere.
+>>> 
+>> Well, because this patch affects gitweb configuration, and because we
+>> need to preserve (as far as possible) the backward compatibility with
+>> existing gitweb configuration files we need to be careful with changes.
+>> 
+>> Perhaps instead of $no_age_column that can be single configuration
+>> variable like @excluded_project_list_fields instead of one variable
+>> per column.  Somebody might want to omit project description as well
+>> (though then project search must be limited to project names only).
+>> Though this approach will have problem that some of columns simply
+>> have to be present... maybe one variable per column (perhaps hidden
+>> in a hash) is a better solution.
+> 
+> I thought about two different variables as that would have a slightly
+> different functionality. While I want to get rid off Last Change from
+> the projects list page, I still want to get this information on pages of
+> single repositories. On the other hand I don't want repository owner to
+> be shown anywhere.
+
+Ah, in this case we want to keep $dont_show_repo_age / $no_age_column
+(or something like that) separate from $no_owner... and in this case
+these features can be controlled by separate scalar configuration
+variables.
+
+
+-- 
+Jakub Narebski
+Poland
