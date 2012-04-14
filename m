@@ -1,95 +1,61 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH 3/3] test: am of empty patch should not succeed
-Date: Fri, 13 Apr 2012 23:48:13 -0500
-Message-ID: <20120414044813.GD1791@burratino>
-References: <20110320090111.GA15641@sigill.intra.peff.net>
- <20110320090918.GB15948@sigill.intra.peff.net>
- <20120413225901.GA13220@burratino>
- <20120413233010.GA16663@sigill.intra.peff.net>
- <20120413234607.GE13995@burratino>
- <20120414022452.GA17535@sigill.intra.peff.net>
- <20120414044413.GA1791@burratino>
+From: Andreas Krey <a.krey@gmx.de>
+Subject: Re: stash refuses to pop
+Date: Sat, 14 Apr 2012 06:27:13 +0200
+Message-ID: <20120414042713.GA13889@inner.h.iocl.org>
+References: <4F847350.3000409@ubuntu.com> <7vpqbfpim2.fsf@alter.siamese.dyndns.org> <4F84827B.80104@ubuntu.com> <CAH5451=0KvUPB77hKyjFVXRwPfEZ8+45b20SimBPmuF-gq_A3w@mail.gmail.com> <4F84F39B.6070907@ubuntu.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Piotr Krukowiecki <piotr.krukowiecki@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-	Jiang Xin <worldhello.net@gmail.com>,
-	Jim Meyering <jim@meyering.net>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Apr 14 06:48:30 2012
+Cc: Andrew Ardill <andrew.ardill@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Phillip Susi <psusi@ubuntu.com>
+X-From: git-owner@vger.kernel.org Sat Apr 14 07:01:07 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SIuuP-0004uQ-7w
-	for gcvg-git-2@plane.gmane.org; Sat, 14 Apr 2012 06:48:25 +0200
+	id 1SIv6h-0003fF-4h
+	for gcvg-git-2@plane.gmane.org; Sat, 14 Apr 2012 07:01:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751378Ab2DNEsU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 14 Apr 2012 00:48:20 -0400
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:47968 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751302Ab2DNEsU (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 14 Apr 2012 00:48:20 -0400
-Received: by iagz16 with SMTP id z16so5108054iag.19
-        for <git@vger.kernel.org>; Fri, 13 Apr 2012 21:48:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=AQCpm0K4D9MrCytf1xaEg9gNrowpUd5V5hZIX3a4ahk=;
-        b=0sEFwP1Zf/oF5c2m6/rnPhheh/Dhf292MXG5NGE7SvWGyXPi607rVmYpub9QAuzddP
-         HT1NqErSsaRFIJl1UfGmuG1TBM5ALLuFX4Tq5SfBUkqk4ZJ7Vfy3cBvPVovZ238VAYZz
-         sW1LjwYvvDUCc5ZhE5rYA1gyiNN4M+SuMLxm/chpeWdOVEjB6pbw0AoGI6ut/lJCxJUw
-         j7+sebIQ23UMb6xzoIenCs8IGz9CfFUO3nxuQ/fKoDPdVaNFbBanXbdxEh8FI38fyJJD
-         /mZ7kJSf5RMofLyAJ+UvUFgpUwbvQm+E0KC6Ls/fN3Dxt3iQ3gidc/+fXyqHYpFqIueq
-         bVyA==
-Received: by 10.50.190.163 with SMTP id gr3mr441821igc.24.1334378899592;
-        Fri, 13 Apr 2012 21:48:19 -0700 (PDT)
-Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
-        by mx.google.com with ESMTPS id fa7sm2428311igb.12.2012.04.13.21.48.18
-        (version=SSLv3 cipher=OTHER);
-        Fri, 13 Apr 2012 21:48:19 -0700 (PDT)
+	id S1751995Ab2DNFAy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 14 Apr 2012 01:00:54 -0400
+Received: from continuum.iocl.org ([217.140.74.2]:44624 "EHLO
+	continuum.iocl.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751920Ab2DNFAS (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 14 Apr 2012 01:00:18 -0400
+X-Greylist: delayed 1977 seconds by postgrey-1.27 at vger.kernel.org; Sat, 14 Apr 2012 01:00:17 EDT
+Received: (from krey@localhost)
+	by continuum.iocl.org (8.11.3/8.9.3) id q3E4RDO14455;
+	Sat, 14 Apr 2012 06:27:13 +0200
 Content-Disposition: inline
-In-Reply-To: <20120414044413.GA1791@burratino>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <4F84F39B.6070907@ubuntu.com>
+User-Agent: Mutt/1.4.2.1i
+X-message-flag: What did you expect to see here?
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195468>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195469>
 
-The "git am empty" test uses the construct
+On Tue, 10 Apr 2012 22:59:39 +0000, Phillip Susi wrote:
+...
+> Yes, there are a number of ways you can get to the situation where you can not pop the stash.  How to resolve this is unclear from the results of the failed pop.  I finally ended up resolving it by committing the remaining changes, then popping the stash ( which performed the merge successfully ), and finally doing a git reset HEAD~1 to remove the temporary commit, but preserve the merged results.  This seemed like a good deal of unnecessary trouble.
 
-	git am empty-file && false || :
+(Late to the game.) Actually, this is exactly what I would have proposed
+to do. Git is a bit shy on performing a merge into a locally modified
+file. I assumed so far that is because there is no way of aborting
+such a merge (resetting to the state of local modifications before the
+attempt). With the temporary commit you have a way of retrying the pop
+merge if you lost your way in it.
 
-which unconditionally returns true.  Use test_must_fail instead, which
-also has the benefit of noticing if "git am" has segfaulted.
+And I think that is a good idea; I never liked the way in which a cvs/svn
+update merged into locally modified files without a way to undo, and
+thus forcing you to clean up the potential mess manually. (Ok, they leave
+the old files lying arond, but that doesn't help rewinding the state.)
 
-While at it, tighten the test to check that the diagnostic appears on
-stderr and not stdout.
+Andreas
 
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
----
-Tested this time.  Thanks for reading.
-
- t/t4150-am.sh |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/t/t4150-am.sh b/t/t4150-am.sh
-index ebb4a26a..cdafd7e7 100755
---- a/t/t4150-am.sh
-+++ b/t/t4150-am.sh
-@@ -525,7 +525,7 @@ test_expect_success 'am empty-file does not infloop' '
- 	git reset --hard &&
- 	touch empty-file &&
- 	test_tick &&
--	{ git am empty-file > actual 2>&1 && false || :; } &&
-+	test_must_fail git am empty-file 2>actual &&
- 	echo Patch format detection failed. >expected &&
- 	test_i18ncmp expected actual
- '
 -- 
-1.7.10
+"Totally trivial. Famous last words."
+From: Linus Torvalds <torvalds@*.org>
+Date: Fri, 22 Jan 2010 07:29:21 -0800
