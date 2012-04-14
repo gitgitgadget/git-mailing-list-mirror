@@ -1,136 +1,234 @@
 From: Florian Achleitner <florian.achleitner2.6.31@gmail.com>
 Subject: Re: GSOC Proposal draft: git-remote-svn
-Date: Sat, 14 Apr 2012 22:09:39 +0200
-Message-ID: <1472353.TRfidGPc01@flomedio>
-References: <11292500.AVmZFUUvNi@flobuntu> <2104868.dCxFQtJHdU@flomedio> <4F875785.6040103@pileofstuff.org>
+Date: Sat, 14 Apr 2012 22:15:53 +0200
+Message-ID: <2407098.F5IbgLFxk2@flomedio>
+References: <11292500.AVmZFUUvNi@flobuntu> <2104868.dCxFQtJHdU@flomedio> <20120413191908.GC2387@burratino>
 Mime-Version: 1.0
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7Bit
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
+Cc: Git Mailing List <git@vger.kernel.org>,
 	Ramkumar Ramachandra <artagnon@gmail.com>,
 	David Barr <davidbarr@google.com>,
+	Andrew Sayers <andrew-git@pileofstuff.org>,
 	Sverre Rabbelier <srabbelier@gmail.com>,
-	Dmitry Ivankov <divanorama@gmail.com>
-To: Andrew Sayers <andrew-git@pileofstuff.org>
-X-From: git-owner@vger.kernel.org Sat Apr 14 22:17:50 2012
+	Dmitry Ivankov <divanorama@gmail.com>,
+	Tomas Carnecky <tom@dbservice.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Apr 14 22:17:55 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SJ9Po-0000B7-82
-	for gcvg-git-2@plane.gmane.org; Sat, 14 Apr 2012 22:17:48 +0200
+	id 1SJ9Pu-0000DD-Ss
+	for gcvg-git-2@plane.gmane.org; Sat, 14 Apr 2012 22:17:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755865Ab2DNURn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 14 Apr 2012 16:17:43 -0400
-Received: from mailrelay.tu-graz.ac.at ([129.27.2.202]:25914 "EHLO
+	id S1755948Ab2DNURt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 14 Apr 2012 16:17:49 -0400
+Received: from mailrelay.tu-graz.ac.at ([129.27.2.202]:10449 "EHLO
 	mailrelay.tugraz.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752609Ab2DNURm (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 14 Apr 2012 16:17:42 -0400
+	with ESMTP id S1755896Ab2DNURs (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 14 Apr 2012 16:17:48 -0400
 Received: from flomedio.localnet (cm56-227-93.liwest.at [86.56.227.93])
 	(authenticated bits=0)
-	by mailrelay1.tugraz.at (8.14.4/8.14.4) with ESMTP id q3EKH8q2018515
+	by mailrelay2.tugraz.at (8.14.4/8.14.4) with ESMTP id q3EKH3g0008960
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Sat, 14 Apr 2012 22:17:09 +0200 (CEST)
+	Sat, 14 Apr 2012 22:17:04 +0200 (CEST)
 User-Agent: KMail/4.7.3 (Linux/3.0.0-17-generic; KDE/4.7.4; x86_64; ; )
-In-Reply-To: <4F875785.6040103@pileofstuff.org>
+In-Reply-To: <20120413191908.GC2387@burratino>
 X-TUG-Backscatter-control: qyH/vN2riZ/masrHmZoJqQ
 X-Spam-Scanner: SpamAssassin 3.003000 
 X-Spam-Score-relay: 0.6
-X-Scanned-By: MIMEDefang 2.70 on 129.27.10.18
+X-Scanned-By: MIMEDefang 2.70 on 129.27.10.19
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195515>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195516>
 
 Hi!
 
-Thanks for your explainations.
+Thanks for your help.
+I updated the wiki page.
 
-On Thursday 12 April 2012 23:30:29 Andrew Sayers wrote:
-> On 12/04/12 16:28, Florian Achleitner wrote:
-> > I'm not sure if storing this in a seperate directory tree makes sense,
-> > mostly looking at performance. All these files will only contain some
-> > bytes, I guess. Andrew, why did you choose JSON?
-> 
-> JSON has become my default storage format in recent years, so it seemed
-> like the natural thing to use for a format I wanted to chuck in and get
-> on with my work :)
-> 
-> JSON is my default format because it's reasonably space-efficient,
-> human-readable, widely supported and can represent everything I care
-> about except recursive data structures (which I didn't need for this
-> job).  You can do cleverer things if you don't mind being
-> language-specific (e.g. Perl's "Storable" module supports recursive data
-> structures but can't be used with other languages) or if you don't mind
-> needing special tools (e.g. git's index is highly efficient but can't be
-> debugged with `less`).  I've found you won't go far wrong if you start
-> with JSON and pick something else when the requirements become more obvious.
-> 
-> I gzipped the file because JSON isn't *that* space-efficient, and
-> because very large repositories are likely to produce enough JSON that
-> people will notice.  I found that gzipping the file significantly
-> reduced its size without having too much effect on run time.
-> 
-> I've attached a sample file representing the first few commits from the
-> GNU R repository.  The problem I referred to obliquely before isn't with
-> JSON, but with gzip - how would you add more revisions to the end of the
-> file without gunzipping it, adding one line, then gzipping it again?
-> One very nice feature of a directory structure is that you could store
-> it in git and get all that stuff for free.
-> 
-> To be clear, I'm not pushing any particular solution to this problem,
-> just offering some anecdotal evidence.  I'm pretty sure that SVN branch
-> export is an I/O bound problem - David Barr has said much the same about
-> svn-fe, but I was surprised to see it was still the bottleneck with a
-> problem that stripped out almost all the data from the dump and pushed
-> it through not-particularly-optimised Perl.  Having said that, the
-> initial import problem (potentially hundreds of thousands of revisions
-> needing manual attention) doesn't necessarily want the same solution as
-> update (tens of revisions that can almost always be read automatically).
+On Friday 13 April 2012 14:19:08 Jonathan Nieder wrote:
 
-JSON seems to be a good initial choice..
+> > Really -c? My installed git doesn't have that switch. Should it pass
+> > arguments to the remote-helper?
+> 
+> What git version do you use?  "man git clone" tells me that -c is an
+> abbreviation for --config and "grep -e --config Documentation/RelNotes/*"
+> tells me it was introduced in v1.7.7.
+
+Sorry, that was clumsy, I should use build and search the docs of the current 
+version, not the one my distro ships!
+
+> > 
+> > What does it mean, "import the entire project tree"? Importing other
+> > directories than "trunk"?
+> 
+> Yes.  For an import that is going to be dumping the subdirectories of
+> tags/ and branches/ anyway, it seems sensible to ask svnrdump to dump
+> the entire {trunk,tags,branches} hierarchy and sort it out on the git
+> side.  The question is then: for each rev, in addition to making
+> commits for each branch that changed, should we keep a commit
+> representing the state of the combined whole-project tree for internal
+> use?  A person trying to check out this commit would get to see the
+> enormous
+> 
+> 	trunk/
+> 	tags/
+> 	branches/
+> 
+> directories.  My rough answer was "yes, it's convenient to keep that
+> information around, especially given that with git's repository model
+> it doesn't waste a lot of space and makes debugging easier".
+
+Sounds reasonable.
 
 > 
-> >>  . tracing history past branch creation events, using the now-saved
-> >>  
-> >>    copyfrom information.
-> >>  
+> > About the mapping of git commits to svn refs .. I've seen the thread
+> > about the marks-to-notes converter.
+> > But can somebody please explain what it's for? There is this mark file
+> > mentioned in the git-fast-import help page ..
+> 
+> There are two operations that need to be very fast:
+> 
+>  1. Given a Subversion revision number, what is the corresponding git
+>     commit?  svn-fe uses this to get the preimage data when executing
+>     an "svn copy" operation that refers to an old rev.  For example:
+> 
+> 	svn copy some/path@a-long-time-ago another/path
+> 
+>     Code tracking branches would use this same map to find the
+>     appropriate parent commit for a new branch.  For example:
+> 
+> 	svn copy trunk@a-long-time-ago branches/new-branch
+> 
+>     becomes:
+> 
+> 	parent f572d396fae9206628714fb2ce00f72e94f2258f
+> 
+>  2. Given a git commit, what is the corresponding Subversion revision
+>     number?  For example, "git fetch" needs this information in order
+>     to get a first unfetched revision number when updating an existing
+>     clone of a Subversion repository.
+> 
+> "git notes" is a mechanism for efficiently storing a mapping from git
+> commit names to arbitrary data.  For example, it can be used to cache
+> the compiled form of some slow-to-compile source code, or it can be
+> used to store reminders to a human that has reviewed these commits and
+> wanted to scribble a little in the margin.  A patch (in Dmitry's tree,
+> not in git.git yet) teaches svn-fe to use the notes facility to store
+> the mapping from git commit names to Subversion revision numbers,
+> addressing problem (2) above.  Tomas's human-friendly importer used
+> the same trick.
+> 
+> As you noticed, "git fast-import" has a facility that fits well for
+> mapping in the other direction: a marks file can store an arbitrary
+> mapping from numbers to objects (usually objects that were part of the
+> import).  svn-fe writes a mark for each Subversion revision it imports
+> to address problem (1) above.
+> 
+> Because "git notes" are stored in the git object db as native objects,
+> they can be shared using the usual "git fetch" / "git push" commands
+> as long as you specify the appropriate source and destination refs on
+> the command line or in git's configuration file.  Commands like "git
+> rebase" that modify history also have some support for carrying notes
+> along.  By contrast, a marks file is just a flat text file and there
+> is no standard facility for updating it when commit names change or
+> sharing it using ordinary git transport.
+> 
+> The marks-to-notes converter I wrote was a toy to show how the notes
+> and marks can easily be kept in sync.  If I remember correctly the
+> last time this was discussed there was some feeling that when the two
+> tables fall out of synch the notes should be considered authoritative
+> and marks can be recomputed from them.
+
+Oh, thats intersting, I haven't heard of git notes yet. (I should have greped 
+the Documentation ..). 
+Because of the possibility that one revision is  transformed into two commits, 
+the bi-directional mapping has to support 1-to-n or probably n-to-n mappings, 
+I think. But this should be possible with these mechanisms.
+
+> 
+> > Do we create two commits from one revision if it's some special case,
+> > like modifying two branches at once?
+> 
+> remote-svn-alpha and svn-fe do not currently split by branch at all so
+> the problem doesn't come up.
+> 
+> Yes, I think the only sane way to represent a Subversion revision that
+> modifies multiple branches is with a git commit on each branch.
+> 
+> [...]
+> 
+> >>    For example, there could be a parallel directory structure
+> >>    
+> >>    in the tree:
+> >>         foo/
+> >>         
+> >>                 bar.c
+> >>         
+> >>         baz/
+> >>         
+> >>                 qux.c
+> >>         
+> >>         .properties/
+> >>         
+> >>                 foo.properties
+> >>                 foo/
+> >>                 
+> >>                         bar.c.properties
+> >>                 
+> >>                 baz/
+> >>                 
+> >>                         qux.c.properties
+> >>    
+> >>    with properites for <path> stored at
+> >>    .properties/<path>.properties.
+> >>    This strawman scheme doesn't work if the repository being
+> >>    imported
+> >>    has any paths ending with ".properties", though.  Ideas?
+> > 
+> > This includes collecting which metadata we actually need to store? We
+> > could probably collect a list of important svn properties.
+> 
+> I imagined the importer just collecting all path properties, like "git
+> svn" does in its .git/svn/refs/remotes/git-svn/unhandled.log.  They're
+> easy to iterate through on the svn side.
+
+Ok, and it will be useful for pushing to svn in the future.
+
+> 
+> > Is there a general policy how to store additional metadata for git's
+> > helpers? I guess it would live somewhere in the .git dir. (.git/info/
+> > ?)
+> 
+> One simple design would be to keep properties in the "entire project"
+> commit objects for internal use, since that's easy to share.
+> 
+> I think David had a few other ideas. ;-)
+
+Commit objects that are actually not commits but store metadata?
+
+
+> 
+> [...]
+> 
 > >>  . tracing second-parent history using svn:mergeinfo properties.
 > > 
 > > This is about detection when to create a git merge-commit, right?
 > 
-> Yes - SVN has always stored metadata about where a directory was copied
-> from (unlike git, which prefers to detect it automatically), and since
-> version 1.0.5, SVN has added "svn:mergeinfo" metadata to files and
-> directories specifying which revisions of which other files or
-> directories have been cherry-picked in to them.
+> Yep.  A goal would be to allow a person would be able to push a git
+> merge to an svn repository, fetch from another machine, and get the
+> same commit back.
 > 
-> If you know a directory is a branch, "copyfrom" metadata is a very
-> useful signal for detecting branches created from it.  Unfortunately,
-> "svn:mergeinfo" is not as useful - aside from anything else, older
-> repositories often exhibit a period where there's no metadata at all,
-> then a gradual migration through SVN's early experiments with merge
-> tracking (like svnmerge.py), before everyone gradually standardises on
-> svn:mergeinfo and leaves the other tools behind.  Oh, and the interface
-> doesn't tell you about unmerged revisions, so if anybody ever forgets to
-> merge a revision then you'll probably never notice.
-
-This doesn't look very straight forward. In the svn docs they say there is a 
-command that outputs which changesets are eligible to merge.
-http://svnbook.red-
-bean.com/en/1.7/svn.branchmerge.basicmerging.html#svn.branchmerge.basicmerging.mergeinfo
-
-But I don't know if that helps.
->
-> I'm planning to tackle this stuff in the work I'm doing, but I expect
-> people will be reporting edge cases until the day the last SVN
-> repository shuts down.  You shouldn't need to worry about it much on the
-> git side of SBL, which is probably best for your sanity ;)
-
-:)
-
+> >> In other words, in the above list the strategy is:
+> > .. still to come..
 > 
-> 	- Andrew
+> Thanks for your thoughtfulness.
+> 
+> Jonathan
+
+Florian
