@@ -1,90 +1,122 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: Re: Merging changes from branches where file paths have changed
-Date: Sat, 14 Apr 2012 21:49:46 +0200
-Message-ID: <4F89D4DA.8010407@kdbg.org>
-References: <CA+39Oz7m1hGrTEdpSAjBP3EDFSVyKdc6T9CORcwQkjuEbvD4Ug@mail.gmail.com> <4F89CE36.4000607@kdbg.org> <CA+39Oz5Jc8Tj6WX+836h_fA6qHDYp6guaoniF6LX027MFHhP0A@mail.gmail.com>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH] pretty: add '*' modifier to add LF after non-empty
+Date: Sat, 14 Apr 2012 23:01:26 +0300
+Message-ID: <CAMP44s0E21sBMPMNGd7GZQbPHeEan+AK2MdGm+8FkWgWHi7sSA@mail.gmail.com>
+References: <1330002637-9347-1-git-send-email-pionchon.luc@gmail.com>
+	<7v7gzd498r.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git list <git@vger.kernel.org>
-To: Thomas Adam <thomas.adam22@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Apr 14 21:49:56 2012
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Luc Pionchon <pionchon.luc@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Apr 14 22:01:34 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SJ8yo-0002h8-Qd
-	for gcvg-git-2@plane.gmane.org; Sat, 14 Apr 2012 21:49:55 +0200
+	id 1SJ9A5-0000F0-Ez
+	for gcvg-git-2@plane.gmane.org; Sat, 14 Apr 2012 22:01:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755785Ab2DNTtt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 14 Apr 2012 15:49:49 -0400
-Received: from bsmtp.bon.at ([213.33.87.14]:36033 "EHLO bsmtp.bon.at"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754857Ab2DNTts (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 14 Apr 2012 15:49:48 -0400
-Received: from dx.sixt.local (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTP id F210F2C4002;
-	Sat, 14 Apr 2012 21:50:25 +0200 (CEST)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-	by dx.sixt.local (Postfix) with ESMTP id F276119F69F;
-	Sat, 14 Apr 2012 21:49:46 +0200 (CEST)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; de; rv:1.9.2.28) Gecko/20120306 SUSE/3.1.20 Thunderbird/3.1.20
-In-Reply-To: <CA+39Oz5Jc8Tj6WX+836h_fA6qHDYp6guaoniF6LX027MFHhP0A@mail.gmail.com>
+	id S1754995Ab2DNUB2 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 14 Apr 2012 16:01:28 -0400
+Received: from mail-ee0-f46.google.com ([74.125.83.46]:40977 "EHLO
+	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753859Ab2DNUB2 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 14 Apr 2012 16:01:28 -0400
+Received: by eekc41 with SMTP id c41so1015179eek.19
+        for <git@vger.kernel.org>; Sat, 14 Apr 2012 13:01:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=iq8AVxEW0to8KikOJqDr80B2cNp2KWTdaC45q3i0qJ0=;
+        b=xi09mNByhxkxBzVYlDQ3RZX5zjLNQlrgIL4T6ePb/EiIV0Ii63piHtREsL+lxM6riF
+         2gWSJ3HwzkWxeKRK3DkPpMY44wXl6+hYIZ2UCMK+12L9JeeKmSR0wOaQdxjTBZZj0VWH
+         MzguWRt4dlBELl3FlV1V8YsRBdgakBEQeWI+Z36pktG+eqZuVyVtVDYC6chua8r7eyEY
+         xUAWzzetchnh+bvuepneEeIOIkw1RKv+gFVsDcqeonMxw1B9YPRI7FM7T5wR5omDii13
+         5nkEC1KW75n5KU03X4jal6YT8D7jXVjeiSYpMxmo6BwSvyrcLGda8bBqmgtxZtctSxm6
+         MVdQ==
+Received: by 10.213.104.132 with SMTP id p4mr418365ebo.101.1334433686915; Sat,
+ 14 Apr 2012 13:01:26 -0700 (PDT)
+Received: by 10.213.19.67 with HTTP; Sat, 14 Apr 2012 13:01:26 -0700 (PDT)
+In-Reply-To: <7v7gzd498r.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195512>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195513>
 
-Am 14.04.2012 21:36, schrieb Thomas Adam:
-> Hello,
-> 
-> On 14 April 2012 20:21, Johannes Sixt <j6t@kdbg.org> wrote:
->> You have these histories
->>
->>
->>  A--o--B--C--o--o--D--o--E   <- RepoA
->>
->>  A'----B'-C'                 <- RepoB
->>
->> and you want to cherry-pick D and E to RepoB. Right?
-> 
-> Yes, that's about right.
-> 
->> I suggest that you install a graft in RepoB, then cherry-pick D and E:
->>
->>  echo $(git rev-parse C' C) >> .git/info/grafts
-> 
-> Can you elaborate on this a little more please?  Or point me towards
-> some documentation.  Note that due to the way git-filter-branch works,
-> although the history between RepoA and RepoB are common, the commit
-> IDs between the two are completely different; presumably
-> git-filter-branch uses patch-id at some level to reform commits.
-> Nevertheless, if I'm understanding superficially what this graft is
-> supposed to do, I do not see how getting a list of commits from C' to
-> C is going to help in repoB when neither RepoA or RepoB have any
-> ancestry in common?
+On Thu, Feb 23, 2012 at 9:53 PM, Junio C Hamano <gitster@pobox.com> wro=
+te:
+> Luc Pionchon <pionchon.luc@gmail.com> writes:
+>
+>> Add the '*' modifier, similar to the '+' modifier,
+>> to add a line-feed after a non-empty placeholder.
+>
+> Hrm, I thought I designed the plus and minus fairly carefully so that
+> nobody needs to add this later.
+>
+> Wouldn't it be sufficient to write
+>
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0Foo%n%-d
+>
+> that says "We usually have LF after Foo, and write %d after that, but=
+ we
+> might not have anything interesting in %d at all, in which case we do=
+n't
+> add that %n"?
+>
+>> +test_expect_success 'add LF after non-empty (1) (empty)' '
+>> + =C2=A0 =C2=A0 git show -s --pretty=3Dformat:"%*d%s%nfoo%n" HEAD^^ =
+>actual &&
+>
+> Shouldn't this be equivalent to "%n%-d%s%nfoo%n", which in turn is co=
+vered
+> by one of the previous tests (del LF before empty)?
 
-There is no "list of commits from C' to C". Look carefully: it's
-rev-parse, not rev-list. The command above only states that the (only)
-parent of C' is C, i.e., it fakes this history:
+Nope.
 
-  A--o--B--C--o--o--D--o--E   <- RepoA
-            \
-             C'               <- RepoB
+Try this:
 
-and then the two repositories have history in common.
+--- a/t/t6006-rev-list-format.sh
++++ b/t/t6006-rev-list-format.sh
+@@ -208,6 +208,25 @@ test_expect_success 'add LF before non-empty (2)' =
+'
+        grep "^$" actual
+ '
 
-And BTW:
++test_expect_success 'add LF after non-empty (1) (empty)' '
++       git show -s --pretty=3Dformat:"%n%-d%s%nfoo%n" HEAD^^ >actual &=
+&
++       cat >expect <<-EOF &&
++       added foo
++       foo
++       EOF
++       test_cmp expect actual
++'
++
++test_expect_success 'add LF after non-empty (2) (non empty)' '
++       git show -s --pretty=3Dformat:"%n%-d%s%nfoo%n" HEAD >actual &&
++       cat >expect <<-EOF &&
++        (HEAD, master)
++       Test printing of complex bodies
++       foo
++       EOF
++       test_cmp expect actual
++'
++
+ test_expect_success 'add SP before non-empty (1)' '
+        git show -s --pretty=3Dformat:"%s% bThanks" HEAD^^ >actual &&
+        test $(wc -w <actual) =3D 2
 
-1. C' must be the top-most commit that was derived from RepoA.
+Luc's patch makes these tests work.
 
-2. If D or E add new paths, they will not be moved to the root by the
-cherry-pick. Be sure to check the result.
+I don't know if there's any way to have a format string that works
+with the current code, but your suggestion doesn't seem to do the
+trick.
 
-3. If you have additional commits in RepoB that were not derived from
-RepoA, it may not work out as smoothly, if the changes are so large that
-rename detection does not kick in anymore.
+Cheers.
 
--- Hannes
+--=20
+=46elipe Contreras
