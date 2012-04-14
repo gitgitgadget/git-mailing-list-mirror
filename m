@@ -1,122 +1,67 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH] pretty: add '*' modifier to add LF after non-empty
-Date: Sat, 14 Apr 2012 23:01:26 +0300
-Message-ID: <CAMP44s0E21sBMPMNGd7GZQbPHeEan+AK2MdGm+8FkWgWHi7sSA@mail.gmail.com>
-References: <1330002637-9347-1-git-send-email-pionchon.luc@gmail.com>
-	<7v7gzd498r.fsf@alter.siamese.dyndns.org>
+From: Clemens Buchacher <drizzd@aon.at>
+Subject: Re: master: t5800-remote-helpers.sh hangs on test "pulling from
+ remote remote"
+Date: Sat, 14 Apr 2012 22:14:48 +0200
+Message-ID: <20120414201446.GB29999@ecki>
+References: <4F893CD8.5020700@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Luc Pionchon <pionchon.luc@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Apr 14 22:01:34 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Stefano Lattarini <stefano.lattarini@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Apr 14 22:16:47 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SJ9A5-0000F0-Ez
-	for gcvg-git-2@plane.gmane.org; Sat, 14 Apr 2012 22:01:33 +0200
+	id 1SJ9On-00086K-RJ
+	for gcvg-git-2@plane.gmane.org; Sat, 14 Apr 2012 22:16:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754995Ab2DNUB2 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 14 Apr 2012 16:01:28 -0400
-Received: from mail-ee0-f46.google.com ([74.125.83.46]:40977 "EHLO
-	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753859Ab2DNUB2 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 14 Apr 2012 16:01:28 -0400
-Received: by eekc41 with SMTP id c41so1015179eek.19
-        for <git@vger.kernel.org>; Sat, 14 Apr 2012 13:01:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=iq8AVxEW0to8KikOJqDr80B2cNp2KWTdaC45q3i0qJ0=;
-        b=xi09mNByhxkxBzVYlDQ3RZX5zjLNQlrgIL4T6ePb/EiIV0Ii63piHtREsL+lxM6riF
-         2gWSJ3HwzkWxeKRK3DkPpMY44wXl6+hYIZ2UCMK+12L9JeeKmSR0wOaQdxjTBZZj0VWH
-         MzguWRt4dlBELl3FlV1V8YsRBdgakBEQeWI+Z36pktG+eqZuVyVtVDYC6chua8r7eyEY
-         xUAWzzetchnh+bvuepneEeIOIkw1RKv+gFVsDcqeonMxw1B9YPRI7FM7T5wR5omDii13
-         5nkEC1KW75n5KU03X4jal6YT8D7jXVjeiSYpMxmo6BwSvyrcLGda8bBqmgtxZtctSxm6
-         MVdQ==
-Received: by 10.213.104.132 with SMTP id p4mr418365ebo.101.1334433686915; Sat,
- 14 Apr 2012 13:01:26 -0700 (PDT)
-Received: by 10.213.19.67 with HTTP; Sat, 14 Apr 2012 13:01:26 -0700 (PDT)
-In-Reply-To: <7v7gzd498r.fsf@alter.siamese.dyndns.org>
+	id S1754979Ab2DNUQG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 14 Apr 2012 16:16:06 -0400
+Received: from smtpout15.highway.telekom.at ([195.3.96.90]:43024 "EHLO
+	email.aon.at" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1753859Ab2DNUQF (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 14 Apr 2012 16:16:05 -0400
+Received: (qmail 25856 invoked from network); 14 Apr 2012 20:16:01 -0000
+X-Spam-Checker-Version: SpamAssassin 3.2.0 (2007-05-01) on
+	WARSBL606.highway.telekom.at
+X-Spam-Level: ****
+Received: from p5b22d2b0.dip.t-dialin.net (HELO [127.0.0.1]) (aon.912301525.1@aon.at@[91.34.210.176])
+          (envelope-sender <drizzd@aon.at>)
+          by smarthub81.res.a1.net (qmail-ldap-1.03) with AES128-SHA encrypted SMTP
+          for <stefano.lattarini@gmail.com>; 14 Apr 2012 20:16:00 -0000
+Content-Disposition: inline
+In-Reply-To: <4F893CD8.5020700@gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195513>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195514>
 
-On Thu, Feb 23, 2012 at 9:53 PM, Junio C Hamano <gitster@pobox.com> wro=
-te:
-> Luc Pionchon <pionchon.luc@gmail.com> writes:
+On Sat, Apr 14, 2012 at 11:01:12AM +0200, Stefano Lattarini wrote:
 >
->> Add the '*' modifier, similar to the '+' modifier,
->> to add a line-feed after a non-empty placeholder.
->
-> Hrm, I thought I designed the plus and minus fairly carefully so that
-> nobody needs to add this later.
->
-> Wouldn't it be sufficient to write
->
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0Foo%n%-d
->
-> that says "We usually have LF after Foo, and write %d after that, but=
- we
-> might not have anything interesting in %d at all, in which case we do=
-n't
-> add that %n"?
->
->> +test_expect_success 'add LF after non-empty (1) (empty)' '
->> + =C2=A0 =C2=A0 git show -s --pretty=3Dformat:"%*d%s%nfoo%n" HEAD^^ =
->actual &&
->
-> Shouldn't this be equivalent to "%n%-d%s%nfoo%n", which in turn is co=
-vered
-> by one of the previous tests (del LF before empty)?
+> The test 't5800-remote-helpers.sh' hangs on my Linux desktop (where I have
+> installed a custom simple-minded firewall based on iptables).  This does
+> not happen on remote systems I use for testing, so I guess the problem
+> lies with my machine.
 
-Nope.
+I don't think this particular test is related to networking. Could you
+please run the test again with the following change and paste the
+output? (You cannot set the variables on the command line, because
+test-lib.sh would unset them.)
 
-Try this:
-
---- a/t/t6006-rev-list-format.sh
-+++ b/t/t6006-rev-list-format.sh
-@@ -208,6 +208,25 @@ test_expect_success 'add LF before non-empty (2)' =
-'
-        grep "^$" actual
+diff --git a/t/t5800-remote-helpers.sh b/t/t5800-remote-helpers.sh
+index 1c62001..4cebd63 100755
+--- a/t/t5800-remote-helpers.sh
++++ b/t/t5800-remote-helpers.sh
+@@ -68,7 +68,7 @@ test_expect_success 'pushing to local repo' '
+ 	(cd localclone &&
+ 	echo content >>file &&
+ 	git commit -a -m three &&
+-	git push) &&
++	GIT_TRANSPORT_HELPER_DEBUG=1 GIT_DEBUG_TESTGIT=1 git push) &&
+ 	compare_refs localclone HEAD server HEAD
  '
-
-+test_expect_success 'add LF after non-empty (1) (empty)' '
-+       git show -s --pretty=3Dformat:"%n%-d%s%nfoo%n" HEAD^^ >actual &=
-&
-+       cat >expect <<-EOF &&
-+       added foo
-+       foo
-+       EOF
-+       test_cmp expect actual
-+'
-+
-+test_expect_success 'add LF after non-empty (2) (non empty)' '
-+       git show -s --pretty=3Dformat:"%n%-d%s%nfoo%n" HEAD >actual &&
-+       cat >expect <<-EOF &&
-+        (HEAD, master)
-+       Test printing of complex bodies
-+       foo
-+       EOF
-+       test_cmp expect actual
-+'
-+
- test_expect_success 'add SP before non-empty (1)' '
-        git show -s --pretty=3Dformat:"%s% bThanks" HEAD^^ >actual &&
-        test $(wc -w <actual) =3D 2
-
-Luc's patch makes these tests work.
-
-I don't know if there's any way to have a format string that works
-with the current code, but your suggestion doesn't seem to do the
-trick.
-
-Cheers.
-
---=20
-=46elipe Contreras
+ 
