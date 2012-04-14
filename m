@@ -1,106 +1,127 @@
-From: Thomas Rast <trast@inf.ethz.ch>
+From: Felipe Contreras <felipe.contreras@gmail.com>
 Subject: Re: [PATCH v3 1/5] completion: simplify __gitcomp_1
-Date: Sun, 15 Apr 2012 00:36:11 +0200
-Message-ID: <87obqueyas.fsf@thomas.inf.ethz.ch>
+Date: Sun, 15 Apr 2012 01:54:56 +0300
+Message-ID: <CAMP44s3qXnONLh_=gO4_9DK2=bx0tLBTTAb4WenYh5k2QPQL-g@mail.gmail.com>
 References: <1334439784-6460-1-git-send-email-felipe.contreras@gmail.com>
 	<1334439784-6460-2-git-send-email-felipe.contreras@gmail.com>
+	<87obqueyas.fsf@thomas.inf.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Cc: <git@vger.kernel.org>, Jonathan Nieder <jrnieder@gmail.com>,
-	SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder@ira.uka.de>,
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>,
+	=?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder@ira.uka.de>,
 	Junio C Hamano <gitster@pobox.com>,
 	Thomas Rast <trast@student.ethz.ch>, Jeff King <peff@peff.net>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Apr 15 00:36:33 2012
+To: Thomas Rast <trast@inf.ethz.ch>
+X-From: git-owner@vger.kernel.org Sun Apr 15 00:55:04 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SJBa0-00035v-SS
-	for gcvg-git-2@plane.gmane.org; Sun, 15 Apr 2012 00:36:29 +0200
+	id 1SJBs0-0004II-8H
+	for gcvg-git-2@plane.gmane.org; Sun, 15 Apr 2012 00:55:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756514Ab2DNWgX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 14 Apr 2012 18:36:23 -0400
-Received: from edge10.ethz.ch ([82.130.75.186]:45583 "EHLO edge10.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756481Ab2DNWgW (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 14 Apr 2012 18:36:22 -0400
-Received: from CAS20.d.ethz.ch (172.31.51.110) by edge10.ethz.ch
- (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.2.283.3; Sun, 15 Apr
- 2012 00:36:17 +0200
-Received: from thomas.inf.ethz.ch.ethz.ch (213.55.184.208) by CAS20.d.ethz.ch
- (172.31.51.110) with Microsoft SMTP Server (TLS) id 14.1.355.2; Sun, 15 Apr
- 2012 00:36:18 +0200
-In-Reply-To: <1334439784-6460-2-git-send-email-felipe.contreras@gmail.com>
-	(Felipe Contreras's message of "Sun, 15 Apr 2012 00:43:00 +0300")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Originating-IP: [213.55.184.208]
+	id S1752417Ab2DNWy6 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 14 Apr 2012 18:54:58 -0400
+Received: from mail-ee0-f46.google.com ([74.125.83.46]:45991 "EHLO
+	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751992Ab2DNWy5 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 14 Apr 2012 18:54:57 -0400
+Received: by eekc41 with SMTP id c41so1027424eek.19
+        for <git@vger.kernel.org>; Sat, 14 Apr 2012 15:54:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=qTsilh+DzAbb6wb7fB5Eu9H8Umiit4EzY80aFUUiVJ4=;
+        b=hqDKddRaFLCNosimBlRKF8szPAnC+WyUCiCWYwg7xxAJcS3QcofVRNdVurB+WLWQZy
+         BqCND/EQ6h6ElxYYM8qq0XPvqrO87LKOQie3+kEdrUvt4HIbj/ppw1nuHl/ST8yN7KnB
+         wZ0t/m+zQBXbAi6nQ8ZY6RRZ2NmFKW1qqUOBe6XP13BQgubDXFfxz3lW/jNoSKYiHzbB
+         SMfSCBP04MnNd1ttBps2nsKOcTbNEjmbdA2bl2OF8DJAWLT+PSjGTVxplJFNINJpK/8+
+         UkhwToYcFBzfGb7QZRulwwbK8G15OPGFaBrC40LiJJV4L+3fvX7J1XmIK6dsZHMA4/1c
+         8amg==
+Received: by 10.14.182.194 with SMTP id o42mr910742eem.50.1334444096188; Sat,
+ 14 Apr 2012 15:54:56 -0700 (PDT)
+Received: by 10.213.19.67 with HTTP; Sat, 14 Apr 2012 15:54:56 -0700 (PDT)
+In-Reply-To: <87obqueyas.fsf@thomas.inf.ethz.ch>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195527>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195528>
 
-Felipe Contreras <felipe.contreras@gmail.com> writes:
+On Sun, Apr 15, 2012 at 1:36 AM, Thomas Rast <trast@inf.ethz.ch> wrote:
+> Felipe Contreras <felipe.contreras@gmail.com> writes:
+>
+>> =C2=A0# __gitcomp_1 requires 2 arguments
+>> =C2=A0__gitcomp_1 ()
+>> =C2=A0{
+>> - =C2=A0 =C2=A0 local c IFS=3D' '$'\t'$'\n'
+>> + =C2=A0 =C2=A0 local c s IFS=3D' '$'\t'$'\n'
+>> =C2=A0 =C2=A0 =C2=A0 for c in $1; do
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 case "$c$2" in
+>> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 --*=3D*) printf %s$'\n' =
+"$c$2" ;;
+>> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 *.) =C2=A0 =C2=A0printf =
+%s$'\n' "$c$2" ;;
+>> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 *) =C2=A0 =C2=A0 printf =
+%s$'\n' "$c$2 " ;;
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 --*=3D* | *.) s=3D"" ;;
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 *) =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0s=3D" " ;;
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 esac
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 echo "$c$2$s"
+>> =C2=A0 =C2=A0 =C2=A0 done
+>> =C2=A0}
+>
+> Sorry for not noticing earlier, but...
+>
+> I did a double take at the change to 'echo'. =C2=A0I'm guessing from =
+the
+> patch that $c$2$s is never just '-e' or some other option taken by th=
+e
+> bash version[1] of echo. =C2=A0But can you be sure? =C2=A0Do you know=
+ off hand
+> whether '-nbogus' complains, treats the -n as usual and prints 'bogus=
+',
+> or echoes '-nbogus'[2]? =C2=A0Are you sure future bash versions won't=
+ break
+> this?
 
->  # __gitcomp_1 requires 2 arguments
->  __gitcomp_1 ()
->  {
-> -	local c IFS=' '$'\t'$'\n'
-> +	local c s IFS=' '$'\t'$'\n'
->  	for c in $1; do
->  		case "$c$2" in
-> -		--*=*) printf %s$'\n' "$c$2" ;;
-> -		*.)    printf %s$'\n' "$c$2" ;;
-> -		*)     printf %s$'\n' "$c$2 " ;;
-> +		--*=* | *.) s="" ;;
-> +		*)          s=" " ;;
->  		esac
-> +		echo "$c$2$s"
->  	done
->  }
+That doesn't make any sense to me. If you want that, you should do
+'eval "echo $foo"', and even if you do 'eval "echo \"$foo\""', that
+would be avoided.
 
-Sorry for not noticing earlier, but...
+> Also, I can't help but complain about your commit messages (again).
 
-I did a double take at the change to 'echo'.  I'm guessing from the
-patch that $c$2$s is never just '-e' or some other option taken by the
-bash version[1] of echo.  But can you be sure?  Do you know off hand
-whether '-nbogus' complains, treats the -n as usual and prints 'bogus',
-or echoes '-nbogus'[2]?  Are you sure future bash versions won't break
-this?
+Well, we can start a discussion about how "simplify __gitcomp_1" does
+not explain sufficiently that this is indeed a simplification of
+__gitcomp_1, but from previous experiences you don't really want to
+discuss, you just want to be right, and me to follow orders.
 
+Personally, I don't see why every modified line needs an ode.
 
-Also, I can't help but complain about your commit messages (again).
-Compare with Jonathan's in 4/5.  His patch is all of a one-line(!)
-change
+> 1. the refactoring of the partial command: printf %s$'\n' "$c$2
+> 2. the change to echo
 
- 			--exec-path
-+			--exec-path=
+Or
 
-yet his commit message is two paragraphs worth of explanations why the
-changed behavior is more helpful than what we had before.
+1. simplifying __gitcomp_1
 
-On the other hand, your commit message for the above says only
+> Footnotes:
+> [1] =C2=A0POSIX states that echo "shall not support any options" and =
+"shall
+> not recognize the -- argument", but we have printfs all over the code
+> base because option support is extremely inconsistent
 
-  completion: simplify __gitcomp_1
+This is a *bash* completion script.
 
-However, your patch is actually two different changes:
+If you *need* an essay for a commit message for a patch that
+essentially does nothing but simplify some code, I'll just drop it;
+it's not worth my effort.
 
-1. the refactoring of the partial command: printf %s$'\n' "$c$2
-2. the change to echo
+Cheers.
 
-The latter is not in any way explained or justified by your (total
-absence of a) commit message.
-
-
-Footnotes: 
-[1]  POSIX states that echo "shall not support any options" and "shall
-not recognize the -- argument", but we have printfs all over the code
-base because option support is extremely inconsistent
-
-[2]  Spoiler: it prints -nbogus literally
-
--- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+--=20
+=46elipe Contreras
