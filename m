@@ -1,50 +1,106 @@
-From: Brian Cardarella <brian@dockyard.com>
-Subject: Pushing to a remote repo from a remote repo?
-Date: Sat, 14 Apr 2012 18:08:59 -0400
-Message-ID: <CAAnwhhWTcfOi+qqXPnGNXSKHbFh5L=+6eSKaaex5mq6VTwSxEw@mail.gmail.com>
+From: Thomas Rast <trast@inf.ethz.ch>
+Subject: Re: [PATCH v3 1/5] completion: simplify __gitcomp_1
+Date: Sun, 15 Apr 2012 00:36:11 +0200
+Message-ID: <87obqueyas.fsf@thomas.inf.ethz.ch>
+References: <1334439784-6460-1-git-send-email-felipe.contreras@gmail.com>
+	<1334439784-6460-2-git-send-email-felipe.contreras@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Apr 15 00:09:14 2012
+Content-Type: text/plain; charset="us-ascii"
+Cc: <git@vger.kernel.org>, Jonathan Nieder <jrnieder@gmail.com>,
+	SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder@ira.uka.de>,
+	Junio C Hamano <gitster@pobox.com>,
+	Thomas Rast <trast@student.ethz.ch>, Jeff King <peff@peff.net>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Apr 15 00:36:33 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SJB9Y-0006ee-9l
-	for gcvg-git-2@plane.gmane.org; Sun, 15 Apr 2012 00:09:08 +0200
+	id 1SJBa0-00035v-SS
+	for gcvg-git-2@plane.gmane.org; Sun, 15 Apr 2012 00:36:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756363Ab2DNWJD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 14 Apr 2012 18:09:03 -0400
-Received: from mail-lb0-f174.google.com ([209.85.217.174]:40259 "EHLO
-	mail-lb0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756232Ab2DNWJA (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 14 Apr 2012 18:09:00 -0400
-Received: by lbbgm6 with SMTP id gm6so3225879lbb.19
-        for <git@vger.kernel.org>; Sat, 14 Apr 2012 15:08:59 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:x-originating-ip:date:message-id:subject:from:to
-         :content-type:x-gm-message-state;
-        bh=McTo6LSNBu/dZHt6mNhxmYdZ/epqFEo+vdC1kOU5ihA=;
-        b=bfgn5O36IrUbIuyzB9/mJCAU6Ca/zozda1jL/4waE9PXyhUv2A4Xonu3jrsbi0WuJV
-         QoBZk0BNiC/G0HNdpmfs72BZhDhU9N0dVz1PPmsC8pxbe0KsRCdqMWzxBOb3SOmnluNO
-         VA4y+XudrkwxNTolZFsXJ8i5GI1YwS+dyA6OCTVMLnAQvoxAGRy1IEoK/bK9+nYSEol7
-         Otpd9zOEapLP7zXruwaWl/9N2OmHHP0nqkqGqPf3v85dmMzS2BrhYn9NDGRog45q9FnY
-         lvdSHolHcFBWjhTkSLxcMe817GtUaSmG9Fa7/9vQDn7E3GuA+Vy/886W0gjWadB8Xodh
-         0m+Q==
-Received: by 10.152.147.202 with SMTP id tm10mr6099112lab.49.1334441339389;
- Sat, 14 Apr 2012 15:08:59 -0700 (PDT)
-Received: by 10.112.102.197 with HTTP; Sat, 14 Apr 2012 15:08:59 -0700 (PDT)
-X-Originating-IP: [108.49.61.94]
-X-Gm-Message-State: ALoCoQn0lXp6piNSqxTMsD2PQRdnKmS6o0JOdFC8SrfXqRBtJ4CBHWK0sswx1LRi21TM7+9tn2Qj
+	id S1756514Ab2DNWgX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 14 Apr 2012 18:36:23 -0400
+Received: from edge10.ethz.ch ([82.130.75.186]:45583 "EHLO edge10.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756481Ab2DNWgW (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 14 Apr 2012 18:36:22 -0400
+Received: from CAS20.d.ethz.ch (172.31.51.110) by edge10.ethz.ch
+ (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.2.283.3; Sun, 15 Apr
+ 2012 00:36:17 +0200
+Received: from thomas.inf.ethz.ch.ethz.ch (213.55.184.208) by CAS20.d.ethz.ch
+ (172.31.51.110) with Microsoft SMTP Server (TLS) id 14.1.355.2; Sun, 15 Apr
+ 2012 00:36:18 +0200
+In-Reply-To: <1334439784-6460-2-git-send-email-felipe.contreras@gmail.com>
+	(Felipe Contreras's message of "Sun, 15 Apr 2012 00:43:00 +0300")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Originating-IP: [213.55.184.208]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195526>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195527>
 
-So I have a destination repo that is remote. And I have a source repo
-that is also remote. I would like my local machine to act as a proxy
-to allow me to push to the destination from the source without ever
-download the repo to my machine. Is this possible?
+Felipe Contreras <felipe.contreras@gmail.com> writes:
+
+>  # __gitcomp_1 requires 2 arguments
+>  __gitcomp_1 ()
+>  {
+> -	local c IFS=' '$'\t'$'\n'
+> +	local c s IFS=' '$'\t'$'\n'
+>  	for c in $1; do
+>  		case "$c$2" in
+> -		--*=*) printf %s$'\n' "$c$2" ;;
+> -		*.)    printf %s$'\n' "$c$2" ;;
+> -		*)     printf %s$'\n' "$c$2 " ;;
+> +		--*=* | *.) s="" ;;
+> +		*)          s=" " ;;
+>  		esac
+> +		echo "$c$2$s"
+>  	done
+>  }
+
+Sorry for not noticing earlier, but...
+
+I did a double take at the change to 'echo'.  I'm guessing from the
+patch that $c$2$s is never just '-e' or some other option taken by the
+bash version[1] of echo.  But can you be sure?  Do you know off hand
+whether '-nbogus' complains, treats the -n as usual and prints 'bogus',
+or echoes '-nbogus'[2]?  Are you sure future bash versions won't break
+this?
+
+
+Also, I can't help but complain about your commit messages (again).
+Compare with Jonathan's in 4/5.  His patch is all of a one-line(!)
+change
+
+ 			--exec-path
++			--exec-path=
+
+yet his commit message is two paragraphs worth of explanations why the
+changed behavior is more helpful than what we had before.
+
+On the other hand, your commit message for the above says only
+
+  completion: simplify __gitcomp_1
+
+However, your patch is actually two different changes:
+
+1. the refactoring of the partial command: printf %s$'\n' "$c$2
+2. the change to echo
+
+The latter is not in any way explained or justified by your (total
+absence of a) commit message.
+
+
+Footnotes: 
+[1]  POSIX states that echo "shall not support any options" and "shall
+not recognize the -- argument", but we have printfs all over the code
+base because option support is extremely inconsistent
+
+[2]  Spoiler: it prints -nbogus literally
+
+-- 
+Thomas Rast
+trast@{inf,student}.ethz.ch
