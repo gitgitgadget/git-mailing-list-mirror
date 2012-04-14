@@ -1,54 +1,59 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH] git-daemon wrapper to wait until daemon is ready
-Date: Sat, 14 Apr 2012 21:36:38 +0200
-Message-ID: <4F89D1C6.8090705@kdbg.org>
-References: <20120414182907.GA3915@ecki>
+From: Clemens Buchacher <drizzd@aon.at>
+Subject: Re: [PATCH] clean: add --null option
+Date: Sat, 14 Apr 2012 21:38:35 +0200
+Message-ID: <20120414193833.GA29999@ecki>
+References: <1334426158-13607-1-git-send-email-rosslagerwall@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: =?UTF-8?B?WmJpZ25pZXcgSsSZZHJ6ZWpld3NraS1Tem1law==?= 
-	<zbyszek@in.waw.pl>, git@vger.kernel.org, gitster@pobox.com,
-	Jeff King <peff@peff.net>
-To: Clemens Buchacher <drizzd@aon.at>
-X-From: git-owner@vger.kernel.org Sat Apr 14 21:36:49 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Ross Lagerwall <rosslagerwall@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Apr 14 21:40:04 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SJ8m8-0004WN-PE
-	for gcvg-git-2@plane.gmane.org; Sat, 14 Apr 2012 21:36:49 +0200
+	id 1SJ8pA-00068q-Ph
+	for gcvg-git-2@plane.gmane.org; Sat, 14 Apr 2012 21:39:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755949Ab2DNTgo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 14 Apr 2012 15:36:44 -0400
-Received: from bsmtp.bon.at ([213.33.87.14]:60619 "EHLO bsmtp.bon.at"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755785Ab2DNTgn (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 14 Apr 2012 15:36:43 -0400
-Received: from dx.sixt.local (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTP id A0560130045;
-	Sat, 14 Apr 2012 21:33:06 +0200 (CEST)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-	by dx.sixt.local (Postfix) with ESMTP id 016AA19F69F;
-	Sat, 14 Apr 2012 21:36:38 +0200 (CEST)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; de; rv:1.9.2.28) Gecko/20120306 SUSE/3.1.20 Thunderbird/3.1.20
-In-Reply-To: <20120414182907.GA3915@ecki>
+	id S1755954Ab2DNTjv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 14 Apr 2012 15:39:51 -0400
+Received: from smtpout12.highway.telekom.at ([195.3.96.74]:6443 "EHLO
+	email.aon.at" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1754857Ab2DNTjv (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 14 Apr 2012 15:39:51 -0400
+Received: (qmail 13420 invoked from network); 14 Apr 2012 19:39:48 -0000
+X-Spam-Checker-Version: SpamAssassin 3.2.0 (2007-05-01) on
+	WARSBL607.highway.telekom.at
+X-Spam-Level: ****
+Received: from p5b22d2b0.dip.t-dialin.net (HELO [127.0.0.1]) (aon.912301525.1@aon.at@[91.34.210.176])
+          (envelope-sender <drizzd@aon.at>)
+          by smarthub83.res.a1.net (qmail-ldap-1.03) with AES128-SHA encrypted SMTP
+          for <rosslagerwall@gmail.com>; 14 Apr 2012 19:39:47 -0000
+Content-Disposition: inline
+In-Reply-To: <1334426158-13607-1-git-send-email-rosslagerwall@gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195510>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195511>
 
-Am 14.04.2012 20:29, schrieb Clemens Buchacher:
-> +	r = read_line(proc.err, buf, sizeof(buf));
+On Sat, Apr 14, 2012 at 07:55:58PM +0200, Ross Lagerwall wrote:
+>
+> Add a --null (-z) option to git-clean which prints out the files
+> and directories separated with a NUL character rather than '\n'.
+> This makes it useful in conjunction with xargs -0.
 
-We have strbuf_getwholeline_fd().
+Thanks. Looks sensible to me.
 
-> +	memset(&cat, 0, sizeof(cat));
-> +	cat.argv = (const char **)cat_argv;
-> +	cat.in = proc.err;
-> +	cat.out = 2;
+> -					printf(_("Removing %s\n"), qname);
+> +					print_path(_("Removing %s\n"), qname,
+> +						   use_nul);
 
-Useless use of cat?
+Although exceeding the 80 column boundary, I think this would be more
+readable without line break. If we want to stay within 80 columns, I
+don't think you can use 5 levels of indentation at the same time.
 
--- Hannes
+You could also make use_nul a static global, although it probably does
+not improve the situation much.
