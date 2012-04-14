@@ -1,83 +1,80 @@
-From: Clemens Buchacher <drizzd@aon.at>
-Subject: Re: git bug: moved file with local unstaged changes are lost during
- merge
-Date: Sun, 15 Apr 2012 01:15:17 +0200
-Message-ID: <20120414231515.GB18137@ecki>
-References: <CAAZnV3Einocd4TJ0iqcxPJNsr44j3RwhczS9OhyURX0faGWgBQ@mail.gmail.com>
- <CAAZnV3EwZ6kminW7D3ssn_Rtj2SsMHd++VCx7w14K5rQKba4_g@mail.gmail.com>
- <20120413064941.GC27214@sigill.intra.peff.net>
+From: Brian Cardarella <brian@dockyard.com>
+Subject: Re: Pushing to a remote repo from a remote repo?
+Date: Sat, 14 Apr 2012 19:16:36 -0400
+Message-ID: <CAAnwhhXPs0+GPExMu8TP0jbctMamg6FZW2ndcQMJbtqGetfyZw@mail.gmail.com>
+References: <CAAnwhhWTcfOi+qqXPnGNXSKHbFh5L=+6eSKaaex5mq6VTwSxEw@mail.gmail.com>
+	<1334444541.7825.1.camel@beez.lab.cmartin.tk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Joe Angell <joe.d.angell@gmail.com>,
-	Elijah Newren <newren@gmail.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sun Apr 15 01:16:44 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?ISO-8859-1?Q?Carlos_Mart=EDn_Nieto?= <cmn@elego.de>
+X-From: git-owner@vger.kernel.org Sun Apr 15 01:16:47 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SJCCt-0006eU-U1
-	for gcvg-git-2@plane.gmane.org; Sun, 15 Apr 2012 01:16:40 +0200
+	id 1SJCD0-0006fx-Ss
+	for gcvg-git-2@plane.gmane.org; Sun, 15 Apr 2012 01:16:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755417Ab2DNXQe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 14 Apr 2012 19:16:34 -0400
-Received: from smtpout14.highway.telekom.at ([195.3.96.79]:6179 "EHLO
-	email.aon.at" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1754925Ab2DNXQd (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 14 Apr 2012 19:16:33 -0400
-Received: (qmail 14579 invoked from network); 14 Apr 2012 23:16:30 -0000
-X-Spam-Checker-Version: SpamAssassin 3.2.0 (2007-05-01) on
-	WARSBL605.highway.telekom.at
-X-Spam-Level: ****
-Received: from p5b22d2b0.dip.t-dialin.net (HELO [127.0.0.1]) (aon.912301525.1@aon.at@[91.34.210.176])
-          (envelope-sender <drizzd@aon.at>)
-          by smarthub79.res.a1.net (qmail-ldap-1.03) with AES128-SHA encrypted SMTP
-          for <peff@peff.net>; 14 Apr 2012 23:16:30 -0000
-Content-Disposition: inline
-In-Reply-To: <20120413064941.GC27214@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1756148Ab2DNXQj convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 14 Apr 2012 19:16:39 -0400
+Received: from mail-lpp01m010-f46.google.com ([209.85.215.46]:43222 "EHLO
+	mail-lpp01m010-f46.google.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754925Ab2DNXQi convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 14 Apr 2012 19:16:38 -0400
+Received: by lahj13 with SMTP id j13so3167348lah.19
+        for <git@vger.kernel.org>; Sat, 14 Apr 2012 16:16:36 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:x-originating-ip:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding:x-gm-message-state;
+        bh=f9bNCiX43W0O+8xVoyvmhKO5Bx91mAFyLY85JxSeBY4=;
+        b=pAWWFjUCKPe6Qvvh17jriR6Lcy2/uXc+iQgi9rvskL9Dq72lyCK20rTb9i5A87+URM
+         qh59Yf/pfUjQOwl88poSZ1oTfa1Tlt9F9irItFa8H8+s1NzlJsCxCkG5CYwoD1Ku30/Z
+         L9Blu4tdOL5ihW7w4exJoAGe8w5yWXKSEH5wQ2sB7Q3hWQsIlaZ4Ms1Rll6+EWXg9PZx
+         RZFq7RFeqjCex1FVnp3L7IrSLkVW5zdkGoEztgxxkSb1gl75EbOKd8O/aIWPePWa+m+d
+         xBl4mnhKroJG1UGQSxSDv+ydK6awCZFbCrB7T7mo097zeKi+r8w/wYMeGE8iW4ArQkYS
+         rP+Q==
+Received: by 10.152.132.166 with SMTP id ov6mr6298725lab.35.1334445396847;
+ Sat, 14 Apr 2012 16:16:36 -0700 (PDT)
+Received: by 10.112.102.197 with HTTP; Sat, 14 Apr 2012 16:16:36 -0700 (PDT)
+X-Originating-IP: [108.49.61.94]
+In-Reply-To: <1334444541.7825.1.camel@beez.lab.cmartin.tk>
+X-Gm-Message-State: ALoCoQn3G7KiQ/TWxUWlRDk+C0TnSfz1J28ze62vs1mn7u/N4yxyKyH7k/s1i2CEm2gjYCITi4We
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195531>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195532>
 
-On Fri, Apr 13, 2012 at 02:49:41AM -0400, Jeff King wrote:
-> 
-> t6042 and t6036 detect some of them. But I thought we managed to clean
-> up all of the overwriting bugs.
+Yes, I assumed the bits need to come through my system. I want to
+avoid cloning, pushing, then removing the repo. But it seems that is
+not possible. Thank you.
 
-I could not find an existing test for this.
+- Brian
 
--->o--
-Subject: [PATCH] merge overwrites unstaged changes in renamed file
-
-
-Signed-off-by: Clemens Buchacher <drizzd@aon.at>
----
- t/t7607-merge-overwrite.sh |    9 +++++++++
- 1 file changed, 9 insertions(+)
-
-diff --git a/t/t7607-merge-overwrite.sh b/t/t7607-merge-overwrite.sh
-index aa74184..6547eb8 100755
---- a/t/t7607-merge-overwrite.sh
-+++ b/t/t7607-merge-overwrite.sh
-@@ -92,6 +92,15 @@ test_expect_success 'will not overwrite removed file with staged changes' '
- 	test_cmp important c1.c
- '
- 
-+test_expect_failure 'will not overwrite unstaged changes in renamed file' '
-+	git reset --hard c1 &&
-+	git mv c1.c other.c &&
-+	git commit -m rename &&
-+	cp important other.c &&
-+	git merge c1a &&
-+	test_cmp important other.c
-+'
-+
- test_expect_success 'will not overwrite untracked subtree' '
- 	git reset --hard c0 &&
- 	rm -rf sub &&
--- 
-1.7.9.6
+On Sat, Apr 14, 2012 at 7:02 PM, Carlos Mart=EDn Nieto <cmn@elego.de> w=
+rote:
+> On Sat, 2012-04-14 at 18:08 -0400, Brian Cardarella wrote:
+>> So I have a destination repo that is remote. And I have a source rep=
+o
+>> that is also remote. I would like my local machine to act as a proxy
+>> to allow me to push to the destination from the source without ever
+>> download the repo to my machine. Is this possible?
+>
+> Using your computer as a proxy and avoiding downloading the informati=
+on
+> to your computer are mutually exclusive goals.
+>
+> At any rate, git doesn't support this kind of operation. If you want =
+to
+> move data from A to B, you need to push from A or fetch from B (or fe=
+tch
+> from A to C and then push from C to A).
+>
+> =A0 cmn
+>
