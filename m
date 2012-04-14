@@ -1,71 +1,100 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] i18n: use test_i18ncmp in t2020 (checkout --detach)
-Date: Sat, 14 Apr 2012 07:47:17 -0500
-Message-ID: <20120414124716.GB20076@burratino>
-References: <20110320090111.GA15641@sigill.intra.peff.net>
- <20110320090918.GB15948@sigill.intra.peff.net>
- <20120413225901.GA13220@burratino>
- <20120413233010.GA16663@sigill.intra.peff.net>
- <20120413234607.GE13995@burratino>
- <20120414022452.GA17535@sigill.intra.peff.net>
- <20120414050234.GE1791@burratino>
- <20120414082213.GC11124@sigill.intra.peff.net>
+From: Thomas Adam <thomas.adam22@gmail.com>
+Subject: Merging changes from branches where file paths have changed
+Date: Sat, 14 Apr 2012 14:15:38 +0100
+Message-ID: <CA+39Oz7m1hGrTEdpSAjBP3EDFSVyKdc6T9CORcwQkjuEbvD4Ug@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Piotr Krukowiecki <piotr.krukowiecki@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-	Jiang Xin <worldhello.net@gmail.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Apr 14 14:47:29 2012
+Content-Type: text/plain; charset=UTF-8
+To: git list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Apr 14 15:16:02 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SJ2O0-0004OU-Lb
-	for gcvg-git-2@plane.gmane.org; Sat, 14 Apr 2012 14:47:28 +0200
+	id 1SJ2pc-0006PP-KA
+	for gcvg-git-2@plane.gmane.org; Sat, 14 Apr 2012 15:16:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751621Ab2DNMrY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 14 Apr 2012 08:47:24 -0400
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:59229 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751302Ab2DNMrX (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 14 Apr 2012 08:47:23 -0400
-Received: by iagz16 with SMTP id z16so5375062iag.19
-        for <git@vger.kernel.org>; Sat, 14 Apr 2012 05:47:22 -0700 (PDT)
+	id S1752804Ab2DNNPz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 14 Apr 2012 09:15:55 -0400
+Received: from mail-ob0-f174.google.com ([209.85.214.174]:43877 "EHLO
+	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752653Ab2DNNPy (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 14 Apr 2012 09:15:54 -0400
+Received: by obbta14 with SMTP id ta14so1701924obb.19
+        for <git@vger.kernel.org>; Sat, 14 Apr 2012 06:15:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=qB616PKa58JX9kbsUIQN6GcUEG/ONNqhyOae81hcIgs=;
-        b=Ai02vlmXH1S41HD10C8ZW6RB4Uk5+joM1EbFeVHSFBNcbVGXxJ9dhb8EXcXstaRiUD
-         j5SZQPNk+bN8TVjRQ3hdhMKC12eiJGi04T4R/Iv6l3IwkFrA6h1zHB2Iz4id/YolV+6N
-         eCWEolwB9GDaGyyfyV8//Aqd9nxITOv9u1SDDp/UkPwQsAfKuFT11iSx7996NauW7Nlj
-         s/Fh7YaS2CzcKCOIcrxOdve38E80B3jtoxub3BP/RS8gyPrUT5ilswPwYw7OsA7FxyFs
-         HfU/Kv8IPpVwDvXsbogpefZhrmN9qzlvgctBFZnbK+sK4t27ZTQnI23jWtFgU5dyKD9D
-         bqXA==
-Received: by 10.50.17.166 with SMTP id p6mr1107792igd.53.1334407642027;
-        Sat, 14 Apr 2012 05:47:22 -0700 (PDT)
-Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
-        by mx.google.com with ESMTPS id de2sm2281326igc.4.2012.04.14.05.47.21
-        (version=SSLv3 cipher=OTHER);
-        Sat, 14 Apr 2012 05:47:21 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <20120414082213.GC11124@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=mime-version:from:date:message-id:subject:to:content-type;
+        bh=uhnEKsPqC+N8F2yJo2EJra1h7tCx/MBYc+RSOhQ+/Ps=;
+        b=rLTX1eA1TuI91jS1nCDWIuZOlVHHYB49AC8IXcZn7maSoY4/GGzcMk9PPSpN2MBlgh
+         dGoczaHwUiDJnZHPR0JvbF0ezYiS5KABIa705+7/pOg1W3YaYMUX1jZl+PKu8qFhjBwz
+         rLPS62gpuk4hMqPJdEkm+0gFNR2nqd0EKxmkrOq/7OFP6Btf4izlOcgAVIChKLzUIojW
+         ESq3B6Sg0oXiadvh3vFq3X3l6DD9eFN8ey/EDae71QA56wfSBtClwNOlT/1QDNdEXEzI
+         UstdgEtUMF/K4IA8NpaVYFakHLBMoUZWPdQh3wRPQOFlZD8hatRwl8hYQc0lq+Qen5RQ
+         0BeA==
+Received: by 10.60.24.164 with SMTP id v4mr6986444oef.51.1334409354300; Sat,
+ 14 Apr 2012 06:15:54 -0700 (PDT)
+Received: by 10.182.33.41 with HTTP; Sat, 14 Apr 2012 06:15:38 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195489>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195490>
 
-Jeff King wrote:
+Hi all,
 
->                         I suspect you'd have to actually make a poison
-> locale (though you could probably generate one via script without too
-> much effort).
+I've got two git repositories -- for the purposes of illustration,
+I'll call them RepoA, and RepoB.  RepoA is a large repository
+originally from a CVS conversion.  Repo B is a repository which has
+been formed from git-filter-branch (should it matter) from RepoA.
 
-Yes, that's the easy part.  The hard part is convincing gettext to use
-it.
+In doing the conversion -- RepoB contains the same history as in
+RepoA, except that RepoB is now a limited subset in terms of its files
+that RepoA has (repoB contains commits out of repoA for a specific
+subdirectory).   However, the problem I'm wanting to solve now, which
+is causing me to scratch my head and go "hmm", is how I go about
+merging commits from RepoA and have them in RepoB -- where the commits
+from repoA are in the same *directory* as the one which formed RepoB.
+
+In RepoA, for the directory (and all its sub-directories) which is
+contained in RepoB, I've got a list of commits -- roughly like the
+following:
+
+% cd ./distrib/build/sources/coretree/tree
+% git log --oneline master..my/topic/branch -- .
+
+Now in RepoB, I've got all of the directories and files from
+./distrib/build/sources/coretree/tree/ in the root, having obtained
+this from git-filter-branch from RepoA.  Despite the change of file
+locations, the history of the files between the two repositories are
+the same.
+
+The commits though coming from "git log" in RepoA touch files in
+distrib/build/sources/coretree/tree, yet the files to which I want the
+changes for in RepoB are not in "distrib/build/sources/coretree/tree"
+-- there all in "./" at the top-level directory for RepoB.  The files
+in both once shared the same history -- it's just that now the
+locations of those files in RepoB which have changed.
+
+I want to cherry-pick the commits I obtained from the "git log"
+command in RepoA, and have them contained in RepoB.  So I thought
+something like this would work:
+
+[ In RepoB.... ]:
+% git remote add repoA file:///path/to/repoA/
+% git fetch repoA
+% git checkout specific/branch
+% git cherry-pick $SOME_COMMIT_FROM_REPOA
+
+However, this won't work, and doesn't.  Not only do the two
+repositories not have any common ancestry, but even if they did, the
+file paths from RepoA and RepoB do not match for the commit(s) I would
+want to cherry-pick.  As far as I can tell, were I able to convince
+Git the file paths did work, then I could cherry-pick them.
+
+Can anyone suggest a good way round this?  I hope I've managed to
+explain this adequately; just ask if not.
+
+Thanks in Advance.
+
+-- Thomas Adam
