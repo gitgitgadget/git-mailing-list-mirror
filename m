@@ -1,103 +1,126 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: stash refuses to pop
-Date: Sat, 14 Apr 2012 03:12:43 -0700 (PDT)
-Message-ID: <m3pqbaaaga.fsf@localhost.localdomain>
-References: <4F847350.3000409@ubuntu.com>
-	<7vpqbfpim2.fsf@alter.siamese.dyndns.org> <4F84827B.80104@ubuntu.com>
-	<CAH5451=0KvUPB77hKyjFVXRwPfEZ8+45b20SimBPmuF-gq_A3w@mail.gmail.com>
-	<4F84F39B.6070907@ubuntu.com>
-	<20120414042713.GA13889@inner.h.iocl.org>
+From: Clemens Buchacher <drizzd@aon.at>
+Subject: Re: [PATCH] t5570: forward git-daemon messages in a different way
+Date: Sat, 14 Apr 2012 14:13:58 +0200
+Message-ID: <20120414121358.GA26372@ecki>
+References: <1334393070-7123-1-git-send-email-zbyszek@in.waw.pl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Phillip Susi <psusi@ubuntu.com>,
-	Andrew Ardill <andrew.ardill@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Andreas Krey <a.krey@gmx.de>
-X-From: git-owner@vger.kernel.org Sat Apr 14 12:12:57 2012
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, gitster@pobox.com, Jeff King <peff@peff.net>
+To: Zbigniew =?utf-8?Q?J=C4=99drzejewski-Szmek?= <zbyszek@in.waw.pl>
+X-From: git-owner@vger.kernel.org Sat Apr 14 14:15:56 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SIzyN-0003UO-46
-	for gcvg-git-2@plane.gmane.org; Sat, 14 Apr 2012 12:12:51 +0200
+	id 1SJ1tS-00009A-24
+	for gcvg-git-2@plane.gmane.org; Sat, 14 Apr 2012 14:15:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753621Ab2DNKMq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 14 Apr 2012 06:12:46 -0400
-Received: from mail-wg0-f44.google.com ([74.125.82.44]:57200 "EHLO
-	mail-wg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751011Ab2DNKMp (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 14 Apr 2012 06:12:45 -0400
-Received: by wgbdr13 with SMTP id dr13so3743497wgb.1
-        for <git@vger.kernel.org>; Sat, 14 Apr 2012 03:12:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        bh=scmcs+HOWYoNtWaisnQXHZZzLjlO+BgC+h9Lf+uLxwM=;
-        b=DTXY2i0us7hxPH+CcQbcN8Zuf4yq/m2mhFehxwws/Dn9jOiKbjaMBON5Qho/zTepW7
-         LA6x6EQeBoVp+Gbfquw0YFYRtpjt2H0KQ8fclRmupymruvb2jhG+tQ5ELQgBLL8VT2ng
-         MoYaQO20rzRPOSubaVM47QyaEED+UAKhsL1rWR3zOEmM3+O60rLza+tukCqGy4pQwLZ9
-         fT05KjlFsVaHolSIoXWtaNRu4e8Z5cKlhmSysQN+pskEPZ57Xq4qInJq0CbcyIhb9KBc
-         n0ZeIGaGyGGrlUCNrO26GkQOEN1tVKAmOd0KI+6us/YEkW/bd62EtAFrt9/Hc9LaW3Yo
-         OOfQ==
-Received: by 10.216.137.22 with SMTP id x22mr3253436wei.69.1334398364235;
-        Sat, 14 Apr 2012 03:12:44 -0700 (PDT)
-Received: from localhost.localdomain (addh222.neoplus.adsl.tpnet.pl. [79.184.59.222])
-        by mx.google.com with ESMTPS id h8sm5565097wix.4.2012.04.14.03.12.42
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sat, 14 Apr 2012 03:12:43 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id q3EACdJm002007;
-	Sat, 14 Apr 2012 12:12:40 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id q3EACcbn002004;
-	Sat, 14 Apr 2012 12:12:38 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <20120414042713.GA13889@inner.h.iocl.org>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1755495Ab2DNMPR convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 14 Apr 2012 08:15:17 -0400
+Received: from smtpout11.highway.telekom.at ([195.3.96.69]:4659 "EHLO
+	email.aon.at" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1755480Ab2DNMPR (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 14 Apr 2012 08:15:17 -0400
+Received: (qmail 20970 invoked from network); 14 Apr 2012 12:15:12 -0000
+X-Spam-Checker-Version: SpamAssassin 3.2.0 (2007-05-01) on
+	WARSBL605.highway.telekom.at
+X-Spam-Level: 
+Received: from p5b22caa4.dip.t-dialin.net (HELO [127.0.0.1]) (aon.912301525.1@aon.at@[91.34.202.164])
+          (envelope-sender <drizzd@aon.at>)
+          by smarthub79.res.a1.net (qmail-ldap-1.03) with AES128-SHA encrypted SMTP
+          for <zbyszek@in.waw.pl>; 14 Apr 2012 12:15:11 -0000
+Content-Disposition: inline
+In-Reply-To: <1334393070-7123-1-git-send-email-zbyszek@in.waw.pl>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195484>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195486>
 
-Andreas Krey <a.krey@gmx.de> writes:
-> On Tue, 10 Apr 2012 22:59:39 +0000, Phillip Susi wrote:
+On Sat, Apr 14, 2012 at 10:44:30AM +0200, Zbigniew J=C4=99drzejewski-Sz=
+mek wrote:
+> git-daemon is not launched properly in t5570:
+>=20
+> $ GIT_TEST_GIT_DAEMON=3Dt ./t5570-git-daemon.sh
+> ok 1 - setup repository
+> ok 2 - create git-accessible bare repository
+> not ok - 3 clone git repository
+> not ok - 4 fetch changes via git protocol
 > ...
-> > Yes, there are a number of ways you can get to the situation where
-> > you can not pop the stash.  How to resolve this is unclear from
-> > the results of the failed pop.  I finally ended up resolving it by
-> > committing the remaining changes, then popping the stash ( which
-> > performed the merge successfully ), and finally doing a git reset
-> > HEAD~1 to remove the temporary commit, but preserve the merged
-> > results.  This seemed like a good deal of unnecessary trouble.
-> 
-> (Late to the game.) Actually, this is exactly what I would have proposed
-> to do. Git is a bit shy on performing a merge into a locally modified
-> file. I assumed so far that is because there is no way of aborting
-> such a merge (resetting to the state of local modifications before the
-> attempt). With the temporary commit you have a way of retrying the pop
-> merge if you lost your way in it.
+>=20
+> Current setup code to spawn git daemon (start_git_daemon() in
+> lib-git-daemon.sh) redirects daemon output to a pipe, and then
+> redirects input from this pipe to a different fd, which is in turn
+> connected to a terminal:
+>   mkfifo git_daemon_output
+>   git daemon ... >&3 2>git_daemon_output
+>   {
+>       ...
+>       cat >&4
+>   } <git_daemon_output
+>=20
+> Unfortunately, it seems that the shell (at least bash 4.1-3 from
+> debian) closes the pipe and cat doesn't really copy any messages. Thi=
+s
+> causes git-daemon to die.
 
-It would be nice if a.) git gave this advice when unable to "git stash pop"
-(or "git stash apply") for newbie users, and b.) this solution was put
-in documentation including git-stash(1) manpage.
- 
-> And I think that is a good idea; I never liked the way in which a cvs/svn
-> update merged into locally modified files without a way to undo, and
-> thus forcing you to clean up the potential mess manually. (Ok, they leave
-> the old files lying arond, but that doesn't help rewinding the state.)
+And as a consequence, t5570 tests fail for you? I cannot reproduce with
+bash 4.2.24(2). Which git version are you seeing this with?
 
-BTW. I sometimes wonder if Mercurial's transaction-based approach
-isn't a superior solution...
+> Running 'strace -o log cat' instead of just 'cat' shows that no input
+> is read:
+>   execve("/bin/cat", ...)   =3D 0
+>   ...
+>   read(0, "", 8192)         =3D 0
+>   close(0)                  =3D 0
+>   close(1)                  =3D 0
+>   close(2)                  =3D 0
+>   exit_group(0)             =3D ?
 
-> Andreas
-> 
-> -- 
-> "Totally trivial. Famous last words."
-> From: Linus Torvalds <torvalds@*.org>
-> Date: Fri, 22 Jan 2010 07:29:21 -0800
+What do you expect it to read? If git-daemon exits without error, it
+does not output anything.
 
--- 
-Jakub Narebski
+> I guess that the shell closes the redirection when exiting the
+> {}-delimited part.
+
+I am not sure about that part myself, but it seems to work for me in al=
+l
+cases.
+
+> It seems easiest to move the cat invocation outside of the
+> {}-delimited part and provide a separate redirection which will not b=
+e
+> closed.
+
+With your patch, only the first line of output will be read from
+git-daemon, because the pipe is broken as soon as you close the fifo fo=
+r
+the first time. You can check this by passing an invalid argument to
+git-daemon. Only the first line of the usage string will be printed.
+
+In order to better understand the problem on your side, can you execute
+this script and tell me what it does for you?
+
+#!/bin/sh
+
+mkfifo fd
+yes >fd &
+pid=3D$!
+{
+	read line
+	echo $line
+} <fd
+cat <fd &
+sleep 1
+kill $pid
+wait $pid
+rm -f fd
+
+If we cannot find a reliable solution using shell script, we should
+probably write a test-git-daemon wrapper which implements the expected
+output checking part in C.
+
+Clemens
