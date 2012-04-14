@@ -1,127 +1,81 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH v3 1/5] completion: simplify __gitcomp_1
-Date: Sun, 15 Apr 2012 01:54:56 +0300
-Message-ID: <CAMP44s3qXnONLh_=gO4_9DK2=bx0tLBTTAb4WenYh5k2QPQL-g@mail.gmail.com>
-References: <1334439784-6460-1-git-send-email-felipe.contreras@gmail.com>
-	<1334439784-6460-2-git-send-email-felipe.contreras@gmail.com>
-	<87obqueyas.fsf@thomas.inf.ethz.ch>
+From: Andrew Sayers <andrew-git@pileofstuff.org>
+Subject: Re: GSOC Proposal draft: git-remote-svn
+Date: Sat, 14 Apr 2012 23:57:02 +0100
+Message-ID: <4F8A00BE.6020409@pileofstuff.org>
+References: <11292500.AVmZFUUvNi@flobuntu> <20120410171707.GA3869@burratino> <4F84B47D.1080301@pileofstuff.org> <1533147.bdVc1SQHSj@flomedio>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>,
-	=?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder@ira.uka.de>,
-	Junio C Hamano <gitster@pobox.com>,
-	Thomas Rast <trast@student.ethz.ch>, Jeff King <peff@peff.net>
-To: Thomas Rast <trast@inf.ethz.ch>
-X-From: git-owner@vger.kernel.org Sun Apr 15 00:55:04 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	David Barr <davidbarr@google.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Dmitry Ivankov <divanorama@gmail.com>
+To: Florian Achleitner <florian.achleitner2.6.31@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Apr 15 00:57:17 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SJBs0-0004II-8H
-	for gcvg-git-2@plane.gmane.org; Sun, 15 Apr 2012 00:55:04 +0200
+	id 1SJBu4-0005IH-QC
+	for gcvg-git-2@plane.gmane.org; Sun, 15 Apr 2012 00:57:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752417Ab2DNWy6 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 14 Apr 2012 18:54:58 -0400
-Received: from mail-ee0-f46.google.com ([74.125.83.46]:45991 "EHLO
-	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751992Ab2DNWy5 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 14 Apr 2012 18:54:57 -0400
-Received: by eekc41 with SMTP id c41so1027424eek.19
-        for <git@vger.kernel.org>; Sat, 14 Apr 2012 15:54:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=qTsilh+DzAbb6wb7fB5Eu9H8Umiit4EzY80aFUUiVJ4=;
-        b=hqDKddRaFLCNosimBlRKF8szPAnC+WyUCiCWYwg7xxAJcS3QcofVRNdVurB+WLWQZy
-         BqCND/EQ6h6ElxYYM8qq0XPvqrO87LKOQie3+kEdrUvt4HIbj/ppw1nuHl/ST8yN7KnB
-         wZ0t/m+zQBXbAi6nQ8ZY6RRZ2NmFKW1qqUOBe6XP13BQgubDXFfxz3lW/jNoSKYiHzbB
-         SMfSCBP04MnNd1ttBps2nsKOcTbNEjmbdA2bl2OF8DJAWLT+PSjGTVxplJFNINJpK/8+
-         UkhwToYcFBzfGb7QZRulwwbK8G15OPGFaBrC40LiJJV4L+3fvX7J1XmIK6dsZHMA4/1c
-         8amg==
-Received: by 10.14.182.194 with SMTP id o42mr910742eem.50.1334444096188; Sat,
- 14 Apr 2012 15:54:56 -0700 (PDT)
-Received: by 10.213.19.67 with HTTP; Sat, 14 Apr 2012 15:54:56 -0700 (PDT)
-In-Reply-To: <87obqueyas.fsf@thomas.inf.ethz.ch>
+	id S1754261Ab2DNW5I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 14 Apr 2012 18:57:08 -0400
+Received: from mtaout02-winn.ispmail.ntl.com ([81.103.221.48]:38923 "EHLO
+	mtaout02-winn.ispmail.ntl.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755417Ab2DNW5G (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 14 Apr 2012 18:57:06 -0400
+Received: from aamtaout01-winn.ispmail.ntl.com ([81.103.221.35])
+          by mtaout02-winn.ispmail.ntl.com
+          (InterMail vM.7.08.04.00 201-2186-134-20080326) with ESMTP
+          id <20120414225704.YIJS23305.mtaout02-winn.ispmail.ntl.com@aamtaout01-winn.ispmail.ntl.com>;
+          Sat, 14 Apr 2012 23:57:04 +0100
+Received: from [192.168.0.2] (really [94.170.150.126])
+          by aamtaout01-winn.ispmail.ntl.com
+          (InterMail vG.3.00.04.00 201-2196-133-20080908) with ESMTP
+          id <20120414225704.CVMN10211.aamtaout01-winn.ispmail.ntl.com@[192.168.0.2]>;
+          Sat, 14 Apr 2012 23:57:04 +0100
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.28) Gecko/20120313 Thunderbird/3.1.20
+In-Reply-To: <1533147.bdVc1SQHSj@flomedio>
+X-Cloudmark-Analysis: v=1.1 cv=R50lirqlHffDPPkwUlkuVa99MrvKdVWo//yz83qex8g= c=1 sm=0 a=yXtjXN6ItgYA:10 a=Hd5Tmzg1rDkA:10 a=u4BGzq-dJbcA:10 a=8nJEP1OIZ-IA:10 a=TSbVqHtbAAAA:8 a=LJAMluM5aSseCL8-2msA:9 a=TVpr4iA2dod3dHT_adsA:7 a=wPNLvfGTeEIA:10 a=HpAAvcLHHh0Zw7uRqdWCyQ==:117
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195528>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195529>
 
-On Sun, Apr 15, 2012 at 1:36 AM, Thomas Rast <trast@inf.ethz.ch> wrote:
-> Felipe Contreras <felipe.contreras@gmail.com> writes:
->
->> =C2=A0# __gitcomp_1 requires 2 arguments
->> =C2=A0__gitcomp_1 ()
->> =C2=A0{
->> - =C2=A0 =C2=A0 local c IFS=3D' '$'\t'$'\n'
->> + =C2=A0 =C2=A0 local c s IFS=3D' '$'\t'$'\n'
->> =C2=A0 =C2=A0 =C2=A0 for c in $1; do
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 case "$c$2" in
->> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 --*=3D*) printf %s$'\n' =
-"$c$2" ;;
->> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 *.) =C2=A0 =C2=A0printf =
-%s$'\n' "$c$2" ;;
->> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 *) =C2=A0 =C2=A0 printf =
-%s$'\n' "$c$2 " ;;
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 --*=3D* | *.) s=3D"" ;;
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 *) =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0s=3D" " ;;
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 esac
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 echo "$c$2$s"
->> =C2=A0 =C2=A0 =C2=A0 done
->> =C2=A0}
->
-> Sorry for not noticing earlier, but...
->
-> I did a double take at the change to 'echo'. =C2=A0I'm guessing from =
-the
-> patch that $c$2$s is never just '-e' or some other option taken by th=
-e
-> bash version[1] of echo. =C2=A0But can you be sure? =C2=A0Do you know=
- off hand
-> whether '-nbogus' complains, treats the -n as usual and prints 'bogus=
-',
-> or echoes '-nbogus'[2]? =C2=A0Are you sure future bash versions won't=
- break
-> this?
+On 11/04/12 20:09, Florian Achleitner wrote:
+> Furthermore the remote-helper has no way of asking the user something, right?
+> So it can only fail if something is ambigous in the svn repository layout. So 
+> I thought the SBL is exactly to describe these cases, and that's what I need.
 
-That doesn't make any sense to me. If you want that, you should do
-'eval "echo $foo"', and even if you do 'eval "echo \"$foo\""', that
-would be avoided.
+Sorry, I missed this when it was first posted.
 
-> Also, I can't help but complain about your commit messages (again).
+I'm not sure whether the remote helper is allowed to ask the user
+things, but there can be times when that would be helpful.  The one that
+jumps to mind is tag handling.
 
-Well, we can start a discussion about how "simplify __gitcomp_1" does
-not explain sufficiently that this is indeed a simplification of
-__gitcomp_1, but from previous experiences you don't really want to
-discuss, you just want to be right, and me to follow orders.
+SVN considers tags and branches to be functionally identical, whereas
+git likes to create "annotated tags" (commits with a special tag message
+on top of the normal commit message) that can't be changed once they've
+been created.  So if e.g. a tag is created then later committed to
+again, what do you do?  Do you refuse to make annotated tags in case you
+need to change them later?  Do you ignore later commits so that
+annotated tags work nicely?
 
-Personally, I don't see why every modified line needs an ode.
+SBL can't provide much help here, as a tag could be created in one
+update, then committed to again in another update.  Last time this was
+discussed[1], the consensus seemed to be that there any clever solution
+would drive straight past "it just works" into "why did it do that?"
+territory, so the only sensible solution would be to ask what to do.
 
-> 1. the refactoring of the partial command: printf %s$'\n' "$c$2
-> 2. the change to echo
+As I say, I don't really know anything about remote helpers, but I'd be
+very surprised if you weren't allowed to at least fail with a message
+like "Please set svn.tagStrategy, see `man git-config` for details".
 
-Or
+	- Andrew
 
-1. simplifying __gitcomp_1
-
-> Footnotes:
-> [1] =C2=A0POSIX states that echo "shall not support any options" and =
-"shall
-> not recognize the -- argument", but we have printfs all over the code
-> base because option support is extremely inconsistent
-
-This is a *bash* completion script.
-
-If you *need* an essay for a commit message for a patch that
-essentially does nothing but simplify some code, I'll just drop it;
-it's not worth my effort.
-
-Cheers.
-
---=20
-=46elipe Contreras
+[1]http://thread.gmane.org/gmane.comp.version-control.git/192106/focus=192286
