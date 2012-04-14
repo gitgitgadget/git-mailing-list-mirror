@@ -1,95 +1,177 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] Explain how svn-fe parses filenames in SVN dumps
-Date: Sat, 14 Apr 2012 12:14:31 -0500
-Message-ID: <20120414171431.GA4161@burratino>
-References: <4F89ADCD.6000109@pileofstuff.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Static gitweb content when using pathinfo
+Date: Sat, 14 Apr 2012 19:19:18 +0200
+Message-ID: <201204141919.19285.jnareb@gmail.com>
+References: <4F7DA413.2020502@gmail.com> <201204052314.10606.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>,
-	David Barr <davidbarr@google.com>,
-	Ramkumar Ramachandra <artagnon@gmail.com>
-To: Andrew Sayers <andrew-git@pileofstuff.org>
-X-From: git-owner@vger.kernel.org Sat Apr 14 19:14:49 2012
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?iso-8859-1?q?Jos=E9_Mar=EDa_Escart=EDn_Esteban?= 
+	<ripero84@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Apr 14 19:20:01 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SJ6Yf-00009U-S4
-	for gcvg-git-2@plane.gmane.org; Sat, 14 Apr 2012 19:14:46 +0200
+	id 1SJ6df-0003jy-3w
+	for gcvg-git-2@plane.gmane.org; Sat, 14 Apr 2012 19:19:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755418Ab2DNROk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 14 Apr 2012 13:14:40 -0400
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:37041 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752059Ab2DNROj (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 14 Apr 2012 13:14:39 -0400
-Received: by iagz16 with SMTP id z16so5589438iag.19
-        for <git@vger.kernel.org>; Sat, 14 Apr 2012 10:14:38 -0700 (PDT)
+	id S1755629Ab2DNRTW convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 14 Apr 2012 13:19:22 -0400
+Received: from mail-we0-f174.google.com ([74.125.82.174]:47504 "EHLO
+	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752059Ab2DNRTV (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 14 Apr 2012 13:19:21 -0400
+Received: by wejx9 with SMTP id x9so2536666wej.19
+        for <git@vger.kernel.org>; Sat, 14 Apr 2012 10:19:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=NJj3yDbAKnIhheeRFRBRkMWrjdBIHdPlCb7Zr7f9fBE=;
-        b=W1F234JsPqlvuhXWW/+tX4Xa832peduUl9f2tMkPaeRVInrpzpzKNjLrJ6zzANPA+z
-         THH+ZSIu0zTyQPrU6J8Wa/FQm8QJBfO+4R4lw7Yc7s3jsWCv8Ty4QZo4qShgDyE4vHKc
-         k6jiQ1kQrpPClgu0wRSwAg+CsUgo1cTMSIFgqzkFYXZ5kC2GiXtkGCTo9O55EN7y41F1
-         jAcEqlMkTY3jNSL8/ENTHKd+j3Lla8IP1TMoktqCIcf71jJkAFpbkP8cY+XBsL0jYsLV
-         N5/Q9yFVPJDry/LfScaRM2Qoxy5gSaMoFfGKShvC+HHJLJGIoZRUQkGaZibSKquv9h2E
-         pGpg==
-Received: by 10.50.106.161 with SMTP id gv1mr1530700igb.67.1334423678748;
-        Sat, 14 Apr 2012 10:14:38 -0700 (PDT)
-Received: from burratino (remote.soliantconsulting.com. [67.109.75.130])
-        by mx.google.com with ESMTPS id cg9sm7419959igb.17.2012.04.14.10.14.36
-        (version=SSLv3 cipher=OTHER);
-        Sat, 14 Apr 2012 10:14:37 -0700 (PDT)
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        bh=WZZKSqrYsbS0WTZK1iy2S3H0fAuRIzwfMX2ax5aFHAI=;
+        b=I2mL4X+EF5HgOUQWbtMZz3GBjWHU4iFGaebLynhf5HwtAvgaJZ1ZUmOhPK1Zo173kl
+         sMoJxviNx+UM9GCt/2ej1ZLa0//364Po6l5GkUvW3cDbh37/flN8SyURdawOKNGdsPQM
+         hRTx2HFNf2ShwSklQLCirF6QYayiohV1ANki2Jfqe7iYEveLYSZorVkwfsFiEGVqm/3Q
+         53wXfRxV6//MdvSPtG4PUjFX8HYCm+dRiQqoztbXRT+bw6rK909VX4/N3OAxUOGtVJks
+         YWL83WPz39/bQSSYQs0aEWWi0ujMRWUQP4G1Cej2Ae6NAYcBZk627riNbGF+4f9HWxgE
+         pi0g==
+Received: by 10.180.8.231 with SMTP id u7mr5379015wia.9.1334423960760;
+        Sat, 14 Apr 2012 10:19:20 -0700 (PDT)
+Received: from [192.168.1.13] (addh222.neoplus.adsl.tpnet.pl. [79.184.59.222])
+        by mx.google.com with ESMTPS id b3sm5860360wib.4.2012.04.14.10.19.19
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sat, 14 Apr 2012 10:19:19 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <201204052314.10606.jnareb@gmail.com>
 Content-Disposition: inline
-In-Reply-To: <4F89ADCD.6000109@pileofstuff.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195494>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195495>
 
-Hi,
+On Thu, 5 Apr 2012, Jakub Narebski wrote:
+> On Thu, 5 Apr 2012, Jos=E9 Mar=EDa Escart=EDn Esteban wrote:
+> > Hi,
+> >=20
+> > I'm running gitweb in a server.example.com/gitweb/ scenario.  If I =
+don't enable
+> > pathinfo everything works fine, but when I enable pathinfo the stat=
+ic content
+> > stops showing up in the browser.
+> >=20
+> > I'm not an HTML or perl expert, but I think that this may be due to=
+ a missing
+> > slash in the construction of the base tag:  Using the upstream scri=
+pt I am getting
+> >=20
+> > <base href=3D"http://server.example.com/gitweb" />
+> >=20
+> > and no static content.  Once I tune the script to add a final slash=
+ to the url
+> >=20
+> > <base href=3D"http://server.example.com/gitweb/" />
+> >=20
+> > the static content shows up again.
+>
+> How do you deploy gitweb, what is your web server configuration, and
+> what is the URL of main gitweb page (using placeholders like 'example=
+=2Ecom'
+> or 'foo')?
 
-Andrew Sayers wrote:
-
-> Before version 1.2.0, `svn add` supported files containing characters in the
-> range 0x01-0x1F, and Subversion still supports existing files that contain
-> those characters.
-
-Because of the above,
+Ping?
 
 [...]
-> +++ b/contrib/svn-fe/svn-fe.txt
-> @@ -59,6 +59,14 @@ to put each project in its own repository and to separate the history
->  of each branch.  The 'git filter-branch --subdirectory-filter' command
->  may be useful for this purpose.
->  
-> +Filenames are interpreted by svn-fe as binary data, and may contain
-> +any character except NUL (0x00) and newline (0x0A).  The NUL
-> +character is not valid in git paths, and the newline character is
-> +reserved for use by the (line-based) Subversion dumpfile format.
-> +This differs from Subversion, which requires filenames to contain
-> +only legal XML characters and disallows tabs characters, carriage
-> +returns and newlines.
-> +
->  BUGS
 
-this description and the location of this description seem quite
-misleading.  Isn't what the reader needs to know something like the
-following?
+> There might be problem if you configured your web server to serve git=
+web
+> using it as a handler for subdirectory, so the script name does not n=
+eed
+> to appear in URL, e.g.
+>=20
+>   http://localhost/cgi-bin/gitweb
+>=20
+> which would require the following base element
+>=20
+>   <base href=3D"http://localhost/cgi-bin/gitweb/" />
 
-	BUGS
-	----
-	Due to limitations in the Subversion dumpfile format, svn-fe
-	does not support filenames with newlines.  Since version 1.2.0,
-	"svn add" forbids adding such filenames but some historical
-	repositories contain them.  An import can appear to succeed and
-	produce incorrect results when such pathological filenames are
-	present.
+[...]
 
-Thanks,
-Jonathan
+> > Once I tune the script to add a final slash to the url
+> >=20
+> > <base href=3D"http://server.example.com/gitweb/" />
+> >=20
+> > the static content shows up again.
+>=20
+> By "tune the script" do you mean editing gitweb.cgi, or adding settin=
+g
+> $base_url to gitweb configuration file, see gitweb.conf(5):
+>=20
+>   $base_url
+>      Base  URL  for  relative  URLs  in  pages generated by gitweb, (=
+e.g.
+>      $logo, $favicon, @stylesheets if they are relative URLs), needed=
+ and
+>      used  <base href=3D"$base_url"> only for URLs with nonempty PATH=
+_INFO.
+>      Usually gitweb sets its value correctly, and there is no need to=
+ set
+>      this  variable,  e.g.  to $my_uri or "/". See $per_request_confi=
+g if
+>      you need to override it anyway.
+>=20
+> You can e.g. put
+>=20
+>   $base_url .=3D '/' unless ($base_url =3D~ m!/$!);
+>=20
+> in the gitweb configuration file to ensure that it ends with '/', wha=
+tever
+> it is.
+
+By the way, would the following proposed addition to gitweb.conf(5)
+manpage would help your situation?
+
+-------- >8 ---------- >8 ---------
+Subject: [PATCH/RFC] gitweb.conf(5): When to set $base_url
+
+Add a paragraph to description of $base_url variable in gitweb.conf(5)
+manpage explaining when and why one might need to set it.
+
+Based-on-report-by: Jos=E9 Mar=EDa Escart=EDn Esteban <ripero84@gmail.c=
+om>
+Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+---
+ Documentation/gitweb.conf.txt |   14 ++++++++++++++
+ 1 files changed, 14 insertions(+), 0 deletions(-)
+
+diff --git a/Documentation/gitweb.conf.txt b/Documentation/gitweb.conf.=
+txt
+index 7aba497..a2a6ddf 100644
+--- a/Documentation/gitweb.conf.txt
++++ b/Documentation/gitweb.conf.txt
+@@ -559,6 +559,20 @@ $base_url::
+ 	PATH_INFO.  Usually gitweb sets its value correctly,
+ 	and there is no need to set this variable, e.g. to $my_uri or "/".
+ 	See `$per_request_config` if you need to override it anyway.
+++
++You would need to set this variable when using gitweb as a directory
++handler and using path_info-based URLs.  For example if your web
++server is set up in such way that full path to browse repositories is
++`http://git.example.com/gitweb` and static files are served from
++'/gitweb/static' directory with default values (e.g. `$logo` is
++`static/git-logo.png`), then you would need to set `$base_url` to
++(for example):
+++
++----------------------------------------------------------------------
++our $base_url =3D "http://git.example.com/gitweb/";
++----------------------------------------------------------------------
+++
++The trailing slash is required!
+=20
+=20
+ CONFIGURING GITWEB FEATURES
+--=20
+1.7.9
