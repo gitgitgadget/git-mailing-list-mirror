@@ -1,82 +1,129 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Pushing to a remote repo from a remote repo?
-Date: Sun, 15 Apr 2012 03:09:55 -0700 (PDT)
-Message-ID: <m3lilx9uhf.fsf@localhost.localdomain>
-References: <CAAnwhhWTcfOi+qqXPnGNXSKHbFh5L=+6eSKaaex5mq6VTwSxEw@mail.gmail.com>
+From: Clemens Buchacher <drizzd@aon.at>
+Subject: Re: [PATCH v5 2/4] git-cherry-pick: Add keep-redundant-commits option
+Date: Sun, 15 Apr 2012 12:42:12 +0200
+Message-ID: <20120415104212.GC6263@ecki>
+References: <1333136922-12872-1-git-send-email-nhorman@tuxdriver.com>
+ <1334342707-3326-1-git-send-email-nhorman@tuxdriver.com>
+ <1334342707-3326-3-git-send-email-nhorman@tuxdriver.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Brian Cardarella <brian@dockyard.com>
-X-From: git-owner@vger.kernel.org Sun Apr 15 12:10:03 2012
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Phil Hord <phil.hord@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: Neil Horman <nhorman@tuxdriver.com>
+X-From: git-owner@vger.kernel.org Sun Apr 15 12:43:39 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SJMPC-00059C-Ue
-	for gcvg-git-2@plane.gmane.org; Sun, 15 Apr 2012 12:10:03 +0200
+	id 1SJMvf-0005gX-8T
+	for gcvg-git-2@plane.gmane.org; Sun, 15 Apr 2012 12:43:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751917Ab2DOKJ6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 15 Apr 2012 06:09:58 -0400
-Received: from mail-wg0-f44.google.com ([74.125.82.44]:64267 "EHLO
-	mail-wg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750963Ab2DOKJ5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 Apr 2012 06:09:57 -0400
-Received: by wgbdr13 with SMTP id dr13so4307004wgb.1
-        for <git@vger.kernel.org>; Sun, 15 Apr 2012 03:09:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        bh=ILNrU2DKPiy195IvsNvcgF37lHHlLmx9fSzqNb033rY=;
-        b=UyEQyU/GizxtqYiuVl5ZDrjXrXhxvfIyXkBBT5MH+lAv/D00+Hj/ij76ld9txBgETN
-         pQsXCvYOIC3e/QEXK3PPVr32N7U/MY/xI+We1/KiSDZY5MjsRNH38eAxqAPQfJiPqg2m
-         TZEd2t7heo0O+ILxKwB5BIEp09ogJKcch/ABJjBt+J9mEwhlrD2AaB47HUVZyqIFuK/t
-         cfVU3btQp4z9V6pSWEDNHqcOUMvTjWwLg5slFC7vN1JEHkZrlcQ8gdaQ4hZSIe1LDYub
-         oEDAYYBFQtm3e1+5r5tHPdeY3TSFsFf12V6HCTOoJnH2lLzP7YkapgUCUeqizIsz7AbI
-         aIFg==
-Received: by 10.180.101.136 with SMTP id fg8mr9811798wib.4.1334484596340;
-        Sun, 15 Apr 2012 03:09:56 -0700 (PDT)
-Received: from localhost.localdomain (acxb239.neoplus.adsl.tpnet.pl. [83.11.159.239])
-        by mx.google.com with ESMTPS id n8sm17888023wix.10.2012.04.15.03.09.54
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sun, 15 Apr 2012 03:09:55 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id q3FA9o1X003342;
-	Sun, 15 Apr 2012 12:09:51 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id q3FA9nJ1003339;
-	Sun, 15 Apr 2012 12:09:49 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <CAAnwhhWTcfOi+qqXPnGNXSKHbFh5L=+6eSKaaex5mq6VTwSxEw@mail.gmail.com>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1753025Ab2DOKna (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 15 Apr 2012 06:43:30 -0400
+Received: from smtpout15.highway.telekom.at ([195.3.96.90]:58729 "EHLO
+	email.aon.at" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1752366Ab2DOKn3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 Apr 2012 06:43:29 -0400
+Received: (qmail 28037 invoked from network); 15 Apr 2012 10:43:26 -0000
+X-Spam-Checker-Version: SpamAssassin 3.2.0 (2007-05-01) on
+	WARSBL506.highway.telekom.at
+X-Spam-Level: ****
+Received: from p5b22d2b0.dip.t-dialin.net (HELO [127.0.0.1]) (aon.912301525.1@aon.at@[91.34.210.176])
+          (envelope-sender <drizzd@aon.at>)
+          by smarthub80.res.a1.net (qmail-ldap-1.03) with AES128-SHA encrypted SMTP
+          for <nhorman@tuxdriver.com>; 15 Apr 2012 10:43:25 -0000
+Content-Disposition: inline
+In-Reply-To: <1334342707-3326-3-git-send-email-nhorman@tuxdriver.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195555>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195556>
 
-Brian Cardarella <brian@dockyard.com> writes:
+On Fri, Apr 13, 2012 at 02:45:05PM -0400, Neil Horman wrote:
+>
+> +                     OPT_BOOLEAN(0, "keep-redundant-commits", &opts->keep_if_made_empty, "keep redundant, empty commits"),
 
-> So I have a destination repo that is remote. And I have a source repo
-> that is also remote. I would like my local machine to act as a proxy
-> to allow me to push to the destination from the source without ever
-> download the repo to my machine. Is this possible?
+For consistency, I'd prefer if the variable name were the same as the
+option. Then I wouldn't have to keep the option<->variable translation
+in mind.
 
-First, you can set up either SSH tunnel (for SSH transport), or HTTP
-proxy (`http_proxy`[1] environment variable or `http.proxy` config
-variable[2] for HTTP transport, both smart and dumb), or git proxy
-(`core.gitproxy`, e.g. netcat or ssh, for git:// protocol)
+>
+> +     if (!empty && !opts->keep_if_made_empty) {
+[...]
+> +                     return 0;
+[...]
+>       if (opts->allow_empty)
+> +             argv_array_push(&array, "--allow-empty");
+> +
+> +     rc = run_command_v_opt(array.argv, RUN_GIT_CMD);
 
-Second, you can configure repository using hooks so that pushing to
-said intermediate repository would push to destination repository.  In
-this solution you would have repository on disk on intermediate
-machine, but you can avoid manual transfer to and from intermediate
-machine.
+I find it a bit strange, that if we cherry-pick a commit that was
+already empty, we _do_ call git commit (and error out), but if we find a
+commit that is made empty, we do _not_ call git commit and quietly
+succeed (in not doing anything). But I suppose that is the legacy
+behavior?
 
-[1] curl(1) manpage, the "Environment" section
-[2] git-config(1) manpage
+> +
+> +		rc = !hashcmp(active_cache_tree->sha1, head_commit->tree->object.sha1);
+> +
+> +		if (rc)
 
-HTH
--- 
-Jakub Narebski
+rc is short for run_command, for which it stores the return value, no?
+Let's not abuse the variable like this and instead use the result
+directly:
+
+ if (!hashcmp(active_cache_tree->sha1, head_commit->tree->object.sha1))
+
+If you make the entire paragraph leading up to this a separate function,
+say index_is_empty(), then the above would read more naturally like
+this:
+
+ if (!opts->keep_if_made_empty && !empty && index_is_empty())
+
+> +			/*
+> +			 * The head tree and the parent tree match
+> +			 * meaning the commit is empty.  Since it wasn't created
+
+Don't you mean the head tree and the index?
+
+> +			 * empty (based on the previous test), we can conclude
+> +			 * the commit has been made redundant.  Since we don't
+> +			 * want to keep redundant commits, just skip this one
+> +			 */
+> +			return 0;
+> +	}
+> +
+> +	argv_array_init(&array);
+> +	argv_array_push(&array, "commit");
+> +	argv_array_push(&array, "-n");
+>  
+> -	args[i++] = "commit";
+> -	args[i++] = "-n";
+>  	if (opts->signoff)
+> -		args[i++] = "-s";
+> +		argv_array_push(&array, "-s");
+>  	if (!opts->edit) {
+> -		args[i++] = "-F";
+> -		args[i++] = defmsg;
+> +		argv_array_push(&array, "-F");
+> +		argv_array_push(&array, defmsg);
+>  	}
+> +
+>  	if (opts->allow_empty)
+> -		args[i++] = "--allow-empty";
+> +		argv_array_push(&array, "--allow-empty");
+> +
+> +
+
+Why two newlines?
+
+> +	rc = run_command_v_opt(array.argv, RUN_GIT_CMD);
+> +	argv_array_clear(&array);
+> +	return rc;
+> +}
+
+Looks good to me otherwise.
