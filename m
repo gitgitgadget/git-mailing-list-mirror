@@ -1,111 +1,75 @@
-From: Clemens Buchacher <drizzd@aon.at>
-Subject: Re: master: t5800-remote-helpers.sh hangs on test "pulling from
- remote remote"
-Date: Sun, 15 Apr 2012 03:11:20 +0200
-Message-ID: <20120415011118.GA4123@ecki>
-References: <4F893CD8.5020700@gmail.com>
- <20120414201446.GB29999@ecki>
- <4F8A0F96.5060408@gmail.com>
-Mime-Version: 1.0
+From: Chris Hiestand <chiestand@salk.edu>
+Subject: [PATCH] Add Auto-Submitted header to post-receive-email
+Date: Sat, 14 Apr 2012 18:15:10 -0700
+Message-ID: <E4715C92-2BE5-484E-A55B-273CAB5EB6B4@salk.edu>
+Mime-Version: 1.0 (Apple Message framework v1257)
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Stefano Lattarini <stefano.lattarini@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Apr 15 03:13:21 2012
+Content-Transfer-Encoding: 8BIT
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Sun Apr 15 03:22:27 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SJE1k-0006Ms-6a
-	for gcvg-git-2@plane.gmane.org; Sun, 15 Apr 2012 03:13:16 +0200
+	id 1SJEAV-0002Zt-Qc
+	for gcvg-git-2@plane.gmane.org; Sun, 15 Apr 2012 03:22:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756653Ab2DOBMi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 14 Apr 2012 21:12:38 -0400
-Received: from smtpout15.highway.telekom.at ([195.3.96.90]:58274 "EHLO
-	email.aon.at" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1756558Ab2DOBMh (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 14 Apr 2012 21:12:37 -0400
-Received: (qmail 19536 invoked from network); 15 Apr 2012 01:12:33 -0000
-X-Spam-Checker-Version: SpamAssassin 3.2.0 (2007-05-01) on
-	WARSBL504.highway.telekom.at
-X-Spam-Level: ****
-Received: from p5b22d2b0.dip.t-dialin.net (HELO [127.0.0.1]) (aon.912301525.1@aon.at@[91.34.210.176])
-          (envelope-sender <drizzd@aon.at>)
-          by smarthub76.res.a1.net (qmail-ldap-1.03) with AES128-SHA encrypted SMTP
-          for <stefano.lattarini@gmail.com>; 15 Apr 2012 01:12:32 -0000
-Content-Disposition: inline
-In-Reply-To: <4F8A0F96.5060408@gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1756690Ab2DOBWD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 14 Apr 2012 21:22:03 -0400
+Received: from riis.snl.salk.edu ([198.202.70.55]:47917 "EHLO
+	riis.snl.salk.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752888Ab2DOBWC convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 14 Apr 2012 21:22:02 -0400
+X-Greylist: delayed 411 seconds by postgrey-1.27 at vger.kernel.org; Sat, 14 Apr 2012 21:22:02 EDT
+Received: from [172.18.0.7] (wsip-68-15-20-133.sd.sd.cox.net [68.15.20.133])
+	(Authenticated sender: chiestand)
+	by riis.snl.salk.edu (Postfix) with ESMTPSA id 82280EE0C8;
+	Sat, 14 Apr 2012 18:15:10 -0700 (PDT)
+X-Mailer: Apple Mail (2.1257)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195540>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195541>
 
-On Sun, Apr 15, 2012 at 02:00:22AM +0200, Stefano Lattarini wrote:
->
-> Debug: Remote helper: -> export
-> Got command 'export' with args ''
-> Debug: Remote helper: Waiting...
+Hi,
 
-Hmm. Looks like fast-import and fast-export are in a deadlock. It's
-probably time to let the experts take over. But if you want to indulge
-me further, you could try again with GIT_TRACE=1.  That should give you
-the arguments to use for the fast-export and fast-import commands right
-before it hangs. Then run ./t5800-remote-helpers.sh -i with the
-following change to make it abort right before git push:
+I think the Auto-Submitted header is a useful hook mail header to include by default.
 
-diff --git a/t/t5800-remote-helpers.sh b/t/t5800-remote-helpers.sh
-index 1c62001..c4855e9 100755
---- a/t/t5800-remote-helpers.sh
-+++ b/t/t5800-remote-helpers.sh
-@@ -68,7 +68,8 @@ test_expect_success 'pushing to local repo' '
-        (cd localclone &&
-        echo content >>file &&
-        git commit -a -m three &&
--       git push) &&
-+       false &&
-+       GIT_TRACE=1 GIT_TRANSPORT_HELPER_DEBUG=1 GIT_DEBUG_TESTGIT=1 git push) &&
-        compare_refs localclone HEAD server HEAD
- '
+This conforms to RFC3834 and is useful in preventing e.g. vacation auto-responders
+from replying by default.
+
+Perhaps you have already considered this and decided not to include it, but I found
+no record of such a conversation on this list.
+
+Thanks,
+Chris Hiestand
+
+
+>From 358fc3ae1ebfd7723d54e4033d3e9a9a0322c873 Mon Sep 17 00:00:00 2001
+From: Chris Hiestand <chiestand@salk.edu>
+Date: Sat, 14 Apr 2012 17:58:39 -0700
+Subject: [PATCH] Add Auto-Submitted header to post-receive-email
+
+Adds Auto-Submitted: auto-generated to post-receive-email header
+This conforms to RFC3834 and is useful in preventing eg
+vacation auto-responders from replying by default
+---
+ contrib/hooks/post-receive-email |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+
+diff --git a/contrib/hooks/post-receive-email b/contrib/hooks/post-receive-email
+index 01af9df..282507c 100755
+--- a/contrib/hooks/post-receive-email
++++ b/contrib/hooks/post-receive-email
+@@ -237,6 +237,7 @@ generate_email_header()
+ 	X-Git-Reftype: $refname_type
+ 	X-Git-Oldrev: $oldrev
+ 	X-Git-Newrev: $newrev
++	Auto-Submitted: auto-generated
  
-
-You can manually now run fast-export using the arguments from the first
-run, for example in my case:
-
- cd trash\ directory.t5800-remote-helpers
- (cd localclone; git 'fast-export' '--use-done-feature' '--export-marks=.git/info/fast-import/cbf054fee258a261ee43ebdc835f0da71b3d1562/testgit.marks' '--import-marks=.git/info/fast-import/cbf054fee258a261ee43ebdc835f0da71b3d1562/testgit.marks' '^refs/testgit/origin/master' 'refs/heads/master') |
-
-That should output:
-
-feature done
-blob
-mark :5
-data 24
-content
-content
-content
-
-commit refs/heads/master
-mark :6
-author A U Thor <author@example.com> 1334451823 +0000
-committer C O Mitter <committer@example.com> 1334451823 +0000
-data 6
-three
-from :4
-M 100644 :5 file
-
-done
-
-
-Finally, you can manually pipe fast-export to fast-import, again using
-the arguments from the first run:
-
- cd trash\ directory.t5800-remote-helpers
- (cd localclone; git 'fast-export' '--use-done-feature' '--export-marks=.git/info/fast-import/cbf054fee258a261ee43ebdc835f0da71b3d1562/testgit.marks' '--import-marks=.git/info/fast-import/cbf054fee258a261ee43ebdc835f0da71b3d1562/testgit.marks' '^refs/testgit/origin/master' 'refs/heads/master') |
- (cd server; git fast-import '--quiet' '--export-marks=/home/drizzd/src/git/t/trash directory.t5800-remote-helpers/localclone/.git/info/fast-import/cbf054fee258a261ee43ebdc835f0da71b3d1562/git.marks' '--import-marks=/home/drizzd/src/git/t/trash directory.t5800-remote-helpers/localclone/.git/info/fast-import/cbf054fee258a261ee43ebdc835f0da71b3d1562/git.marks')
-
-If the fast-export output is the same, and if the last command also
-hangs for you, then we can start debugging fast-import.
-
-Clemens
+ 	This is an automated email from the git hooks/post-receive script. It was
+ 	generated because a ref change was pushed to the repository containing
+-- 
+1.7.9
