@@ -1,88 +1,82 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH v3 0/5] completion: trivial cleanups and fixes
-Date: Sun, 15 Apr 2012 08:20:02 -0500
-Message-ID: <20120415132002.GB2544@burratino>
-References: <1334439784-6460-1-git-send-email-felipe.contreras@gmail.com>
+From: Christian Engwer <christian.engwer@wwu.de>
+Subject: Re: [PATCH] prohibit "svn dcommit" on remote-tracking-branches
+Date: Sun, 15 Apr 2012 15:40:51 +0200
+Message-ID: <20120415134051.GA16786@mathe-macht-spass.de>
+References: <handler.667488.B.133354466019267.ack@bugs.debian.org>
+ <20120410211732.GB27555@dcvr.yhbt.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org,
-	SZEDER =?utf-8?B?R8OhYm9y?= <szeder@ira.uka.de>,
-	Junio C Hamano <gitster@pobox.com>,
-	Thomas Rast <trast@student.ethz.ch>, Jeff King <peff@peff.net>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Apr 15 15:20:14 2012
+Content-Type: text/plain; charset=iso-8859-1
+Cc: git@vger.kernel.org
+To: Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Sun Apr 15 15:40:25 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SJPNF-0006Pg-JE
-	for gcvg-git-2@plane.gmane.org; Sun, 15 Apr 2012 15:20:13 +0200
+	id 1SJPgm-0005kA-NK
+	for gcvg-git-2@plane.gmane.org; Sun, 15 Apr 2012 15:40:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753336Ab2DONUH convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 15 Apr 2012 09:20:07 -0400
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:44232 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752845Ab2DONUG convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 15 Apr 2012 09:20:06 -0400
-Received: by iagz16 with SMTP id z16so6235132iag.19
-        for <git@vger.kernel.org>; Sun, 15 Apr 2012 06:20:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=Z31GAm96av7xkAWtR6OiIqCOYzoLQtY7/2KdQrov3dU=;
-        b=IXUlDMSsVZVr8QUno4nvDJeLmZIb3BRTyTQC+h9MZFEm0ZcPTo+mTNQNVOnaX4lm1P
-         Dutf7yv+3QKXqe0O+89+crvb+HIxYNatPNmfS6Gfno0diSHOHKgo1tO0gl0U8QF6uMS+
-         d3TDbGXHh6JYXfmPbJgTBdj8/tCLeB5SafJ9vkhO6k60EvY/e1Cr9tSZ1XS/BHB0zPMt
-         8wm5dj9FmrLs1oie007P19HoooZNGCdzPzRLghqGdhCTnAJl3n6xq/LxdLGaj2fCdmtS
-         dXzuZXBfbqOCd1djtqRnjp9+OOByJYYilGZ/U4tyUpAsWH7RR5mKYNgI5uVDIWueLdzE
-         2nxg==
-Received: by 10.50.40.166 with SMTP id y6mr3023602igk.69.1334496005828;
-        Sun, 15 Apr 2012 06:20:05 -0700 (PDT)
-Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
-        by mx.google.com with ESMTPS id en3sm15612921igc.2.2012.04.15.06.20.04
-        (version=SSLv3 cipher=OTHER);
-        Sun, 15 Apr 2012 06:20:04 -0700 (PDT)
+	id S1753847Ab2DONjj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 15 Apr 2012 09:39:39 -0400
+Received: from marnach.net ([87.230.94.153]:33010 "EHLO
+	lvps87-230-94-153.dedicated.hosteurope.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753607Ab2DONjj (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 15 Apr 2012 09:39:39 -0400
+Received: from dslb-084-060-028-065.pools.arcor-ip.net ([84.60.28.65] helo=sansibar)
+	by lvps87-230-94-153.dedicated.hosteurope.de with esmtpsa (TLS1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.69)
+	(envelope-from <christi@mathe-macht-spass.de>)
+	id 1SJPfv-0001qb-Nh; Sun, 15 Apr 2012 15:39:31 +0200
+Received: from christi by sansibar with local (Exim 4.77)
+	(envelope-from <christi@mathe-macht-spass.de>)
+	id 1SJPhD-0000LM-Lv; Sun, 15 Apr 2012 15:40:51 +0200
 Content-Disposition: inline
-In-Reply-To: <1334439784-6460-1-git-send-email-felipe.contreras@gmail.com>
+In-Reply-To: <20120410211732.GB27555@dcvr.yhbt.net>
 User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195568>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195569>
 
-=46elipe Contreras wrote:
+Hi,
 
-> Just a few simpliciations, improvements, and add some missing options=
-=2E
+we had a litte discussion on this topic in the debian bug-tracker:
 
-I generally like this.  Quick comments:
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=667488
 
-> Felipe Contreras (3):
->   completion: simplify __gitcomp_1
+> > A branch should either be a local copy of an svn branch, or a remote
+> > tracking branch. After a "git svn dcommit" a remote tracking branch
+> > could not be synced with the git remote due to the rebase that occured
+> > during the dcommit. Thus we check for a remote entry in the git config
+> > for the current branch and prohibit the "dcommit" if such an entry
+> > exists.
+> 
+> Should there be an option to force/override this?
 
-Thomas and G=C3=A1bor seem to have this one covered, with some improvem=
-ents
-to it under discussion.
+The suggestion was implement this as a hook, instead of being the
+default behavior. An other option is to use the proposed syntax and
+allow an explicit overwrite by setting the commiturl, or to add a
+completely new option, in order to avoid confusion.
 
->   completion: trivial simplification
+Opinions?
 
-Improves consistency.  The changelog line isn't precise enough to
-remind me which change is being mentioned when reading it in the
-shortlog, so I guess I'd prefer something like
+> git-svn predates remote tracking branches, and I've never gotten in the
+> habit using remote tracking branches.  I'll wait for others to chime
+> in...
+> 
+> > +        if (s/^\* +//)
+> > +        {
+> 
+> style, opening brace should be on the same line as the if/while/for:
+> 
+> 	if (...) {
+> 
+> Also, indentation should be with hard tabs.  (Basically follow existing
+> style conventions when you see them).  Thanks.
 
-	completion: simplify by using $prev variable
+I'll update the patch.
 
->   completion: add missing general options
-
-Likewise, a subject line like the following would work better for
-me.
-
-	completion: --info-path and --no-replace-objects options for git
-
-Hope that helps,
-Jonathan
+Cheers
+Christian
