@@ -1,73 +1,68 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH v2] completion: add new git_complete helper
-Date: Sun, 15 Apr 2012 16:37:18 -0500
-Message-ID: <20120415213718.GB5813@burratino>
-References: <1334524814-13581-1-git-send-email-felipe.contreras@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v4 0/5] completion: trivial cleanups and fixes
+Date: Sun, 15 Apr 2012 14:45:46 -0700
+Message-ID: <7vfwc4zn1x.fsf@alter.siamese.dyndns.org>
+References: <1334519060-2348-1-git-send-email-felipe.contreras@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org,
-	SZEDER =?utf-8?B?R8OhYm9y?= <szeder@ira.uka.de>,
-	Junio C Hamano <gitster@pobox.com>,
-	Thomas Rast <trast@student.ethz.ch>
+Cc: git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>,
+	SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder@ira.uka.de>,
+	Thomas Rast <trast@student.ethz.ch>, Jeff King <peff@peff.net>
 To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Apr 15 23:37:30 2012
+X-From: git-owner@vger.kernel.org Sun Apr 15 23:46:06 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SJX8S-0008Us-5E
-	for gcvg-git-2@plane.gmane.org; Sun, 15 Apr 2012 23:37:28 +0200
+	id 1SJXGi-000646-Bd
+	for gcvg-git-2@plane.gmane.org; Sun, 15 Apr 2012 23:46:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751756Ab2DOVhX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 15 Apr 2012 17:37:23 -0400
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:38260 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751655Ab2DOVhX (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 Apr 2012 17:37:23 -0400
-Received: by iagz16 with SMTP id z16so6591444iag.19
-        for <git@vger.kernel.org>; Sun, 15 Apr 2012 14:37:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=WUFXNy25NhpYngRd/4thAUaOmGLAFT+2rP6v9y14Hi8=;
-        b=g3+Ya6VGnJkaNxgXGpFzIhSaK79mn/9G+BDnFVw6JjdyUYrF6lrtsNthYoOK4bsZhX
-         bCrUrPAtzCwauf7STl4a5qayIP7qMXOiWACwHDTJRlnDMicA4YzW4NBfWD4v2rK4DTd/
-         uomz8DZamQHPlvLVp/n9MYw3QdHGxgw3b/esV4vRX20BUhkhmh0INKNzw3zf8PtcKFCL
-         uk0IOJky5/R+XQU6/gWbEPXP1oV3jcFdLcJctjEtnTCIZpMztOzUXxFRjgFXy+oTe6XW
-         Nc0B5uz4LvZ1MCE05OP3gQVpZCNbeUA0g22HhmK9+jYYXNRUdBPK0pCHF9Pmu14NJhEf
-         EB8g==
-Received: by 10.50.216.136 with SMTP id oq8mr3797709igc.63.1334525842719;
-        Sun, 15 Apr 2012 14:37:22 -0700 (PDT)
-Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
-        by mx.google.com with ESMTPS id gr1sm7830244igc.1.2012.04.15.14.37.21
-        (version=SSLv3 cipher=OTHER);
-        Sun, 15 Apr 2012 14:37:22 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <1334524814-13581-1-git-send-email-felipe.contreras@gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1752018Ab2DOVpw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 15 Apr 2012 17:45:52 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:46046 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751773Ab2DOVpt (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 Apr 2012 17:45:49 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8843D67C6;
+	Sun, 15 Apr 2012 17:45:48 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=LXycNAF/arHz06rNfOAEgDsIcJk=; b=n45Esb
+	wYGbzF9aUhdxThWz7Axy95/18LR0GlLCanhe/ZGENwAJQmJiIIHcakTf53zwKGif
+	W1BL1459Xst75i/ZtgsLGzajQC1TGAMThHGkQqd1CYz3NvStmdFHWOPxZyXX/Pp3
+	6qOq5//MSkqDGxIKgQQeH/bD9l6XQvQ37pLQs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=O+H4BqEIGirFi1WJyvL65+6VInl6u+JU
+	riPgM2gbtvXG15tz/hd7ISC/BA9l3PEWLPvvAXEcvxQkjfF/EXF8BrR+ah/ZDfim
+	ajuvChdjTXFCESQuCh4a5onsF4M2TOLrvGysod8a1G++nFwpFSUskiJb1et6IWfn
+	3jc27c54+xs=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7ED7867C5;
+	Sun, 15 Apr 2012 17:45:48 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1506867C4; Sun, 15 Apr 2012
+ 17:45:48 -0400 (EDT)
+In-Reply-To: <1334519060-2348-1-git-send-email-felipe.contreras@gmail.com>
+ (Felipe Contreras's message of "Sun, 15 Apr 2012 22:44:15 +0300")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 5CBBE22E-8744-11E1-B6A8-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195592>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195593>
 
-Felipe Contreras wrote:
+Felipe Contreras <felipe.contreras@gmail.com> writes:
 
-> This simplifies the completions, and makes it easier to define aliases:
+> Just a few simpliciations, improvements, and add some missing options.
 >
->  git_complete gf git_fetch
+> This series depends on the bash completion tests patch.
 
-Sounds neat.  Unfortunately users could already be using a function
-with some other purpose named git_complete in their .profile and this
-would override it.  The completion script has so far stuck to a
-limited namespace:
+It looks like it addresses more or less all the issues raised
+in earlier rounds.  Will queue.
 
-	_git_*	(completion functions)
-	__git_*	(everything else, including public interfaces like __git_ps1)
-
-A name like __git_complete should work, presumably.
-
-Hope that helps,
-Jonathan
+Thanks all.
