@@ -1,176 +1,99 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v2] completion: add new git_complete helper
-Date: Mon, 16 Apr 2012 00:20:14 +0300
-Message-ID: <1334524814-13581-1-git-send-email-felipe.contreras@gmail.com>
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	=?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>,
-	Junio C Hamano <gitster@pobox.com>,
-	Thomas Rast <trast@student.ethz.ch>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Apr 15 23:20:45 2012
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH] prohibit "svn dcommit" on remote-tracking-branches
+Date: Sun, 15 Apr 2012 16:23:58 -0500
+Message-ID: <20120415212358.GA5813@burratino>
+References: <handler.667488.B.133354466019267.ack@bugs.debian.org>
+ <20120410211732.GB27555@dcvr.yhbt.net>
+ <20120415185535.GA9150@mathe-macht-spass.de>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Eric Wong <normalperson@yhbt.net>, git@vger.kernel.org
+To: Christian Engwer <christian.engwer@wwu.de>
+X-From: git-owner@vger.kernel.org Sun Apr 15 23:24:16 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SJWsG-0004ps-Il
-	for gcvg-git-2@plane.gmane.org; Sun, 15 Apr 2012 23:20:44 +0200
+	id 1SJWvd-0007QL-Fh
+	for gcvg-git-2@plane.gmane.org; Sun, 15 Apr 2012 23:24:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751645Ab2DOVUj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 15 Apr 2012 17:20:39 -0400
-Received: from mail-lb0-f174.google.com ([209.85.217.174]:65295 "EHLO
-	mail-lb0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751350Ab2DOVUj (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 Apr 2012 17:20:39 -0400
-Received: by lbom4 with SMTP id m4so8941lbo.19
-        for <git@vger.kernel.org>; Sun, 15 Apr 2012 14:20:37 -0700 (PDT)
+	id S1751682Ab2DOVYI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 15 Apr 2012 17:24:08 -0400
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:42492 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751651Ab2DOVYG (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 Apr 2012 17:24:06 -0400
+Received: by iagz16 with SMTP id z16so6582020iag.19
+        for <git@vger.kernel.org>; Sun, 15 Apr 2012 14:24:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        bh=X+5mlgo5A9dxo2lTO12Ha0+9ZSUJZuCFQwbT42Qj2gs=;
-        b=DBGGCyMegQfN9Z91Ik+DtNFoP5Ccc4hUX6TuduUNEgN/8r13o1C2VSaFFGgmCeA3yd
-         6VtmPLHhTVcih+y1rj+8Ds0MMV2ZPg1N99us7yBX8zLsb/MK/CkD4n80Atg0kSbbeufZ
-         qRs977peRTTuowh6GaXIo/CiNKX9anl2gC4rm9oQEgFALwpXIVXNaRTVK1j1huBS1LeE
-         uJ3EJMh+cP/22R2z6s+zUc8UY3HKRkIwyBo8isB/3ExyeolXsVo6B1HMmmYNZYVMeq2D
-         6+IXW0I8p1UnYyhRFowdzhi2sUBmD7C09dheYhny3ZxDSHjC8/Qj7g1edxuaWjcH11ow
-         AmZw==
-Received: by 10.112.86.229 with SMTP id s5mr4122460lbz.0.1334524837658;
-        Sun, 15 Apr 2012 14:20:37 -0700 (PDT)
-Received: from localhost (84-231-107-120.elisa-mobile.fi. [84.231.107.120])
-        by mx.google.com with ESMTPS id p2sm21836494lbj.0.2012.04.15.14.20.35
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sun, 15 Apr 2012 14:20:37 -0700 (PDT)
-X-Mailer: git-send-email 1.7.10
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=BAL/2IVe0/cvcTAKXhj5PeKl4ThkY7nruV/9GnwpyNA=;
+        b=pyZNiDbMrzYf9c0SsBelKmIytOOcq68cuYY7IfFKqOaWspBGgDWLJGRYj3QJbZhAix
+         bEenX3CQ2sbgKeTjfEa8k4XziiBf26n+QxzosiwfYbXL3HCXp5S0Jpm8RGqiR9m0kxQd
+         41L5rB4QHs6mq28ua1O+AQz9BqwWbyMWSmjVXLY1fycW8EiFyyDILKqYPImnjXx5bT5N
+         /5ULooe2XZS7RkE6LvzNvU+FCKw2ywKbqe185NxrFOUHiDlOij9+R9nDgz4ITYhqB2i/
+         8iUaBIBVbTB+DnJHN1IQocQKiTrvNnaHLE3AqiG3wNplslV2RVp2SiCWJDxvFh6zDIX1
+         EZmA==
+Received: by 10.50.160.225 with SMTP id xn1mr3756751igb.3.1334525045981;
+        Sun, 15 Apr 2012 14:24:05 -0700 (PDT)
+Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
+        by mx.google.com with ESMTPS id ew6sm5847236igc.6.2012.04.15.14.24.05
+        (version=SSLv3 cipher=OTHER);
+        Sun, 15 Apr 2012 14:24:05 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <20120415185535.GA9150@mathe-macht-spass.de>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195590>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195591>
 
-This simplifies the completions, and makes it easier to define aliases:
+(dropping cc to debian bug)
+Hi Christian,
 
- git_complete gf git_fetch
+Christian Engwer wrote:
 
-Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
----
+> a) prohibit commit if a remote-tracking branch is used
+> b) allow commit if --commit-url is used
+> c) allow commit if the allow-dcommit flag is true in .git/config
 
-Since v2:
+As I mentioned before, I really do want to be able to dcommit from my
+current branch, even if it is not called "master" and is set up,
+intentionally or not, to pull from a remote git repository.  I would
+be a bit bewildered if git required me to say "yes, please do perform
+the action I already requested of you" in order to do that, and I do
+not think I am the only one.
 
- * Remove stuff related to aliases fixes; should work on top of master
+On the other hand, I believe it would be useful to be able to prevent
+_all_ rebasing on some branches to avoid fat-finger accidents.  It
+would be especially useful for new users who do not know how to
+recover.  This includes the rebasing performed using "git rebase" or
+"git reset" by "git svn rebase".
 
- contrib/completion/git-completion.bash |   68 +++++++++++++++-----------------
- t/t9902-completion.sh                  |    2 +-
- 2 files changed, 32 insertions(+), 38 deletions(-)
+Therefore I would be much happier to see git svn learn a pre-dcommit
+hook (see githooks(5)) that can handle multiple situations than the
+check that follows the particular policy you have specified above.
 
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 31f714d..abb4ccb 100755
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -2603,21 +2603,6 @@ _git ()
- {
- 	local i c=1 command __git_dir
- 
--	if [[ -n ${ZSH_VERSION-} ]]; then
--		emulate -L bash
--		setopt KSH_TYPESET
--
--		# workaround zsh's bug that leaves 'words' as a special
--		# variable in versions < 4.3.12
--		typeset -h words
--
--		# workaround zsh's bug that quotes spaces in the COMPREPLY
--		# array if IFS doesn't contain spaces.
--		typeset -h IFS
--	fi
--
--	local cur words cword prev
--	_get_comp_words_by_ref -n =: cur words cword prev
- 	while [ $c -lt $cword ]; do
- 		i="${words[c]}"
- 		case "$i" in
-@@ -2663,22 +2648,6 @@ _git ()
- 
- _gitk ()
- {
--	if [[ -n ${ZSH_VERSION-} ]]; then
--		emulate -L bash
--		setopt KSH_TYPESET
--
--		# workaround zsh's bug that leaves 'words' as a special
--		# variable in versions < 4.3.12
--		typeset -h words
--
--		# workaround zsh's bug that quotes spaces in the COMPREPLY
--		# array if IFS doesn't contain spaces.
--		typeset -h IFS
--	fi
--
--	local cur words cword prev
--	_get_comp_words_by_ref -n =: cur words cword prev
--
- 	__git_has_doubledash && return
- 
- 	local g="$(__gitdir)"
-@@ -2699,16 +2668,41 @@ _gitk ()
- 	__git_complete_revlist
- }
- 
--complete -o bashdefault -o default -o nospace -F _git git 2>/dev/null \
--	|| complete -o default -o nospace -F _git git
--complete -o bashdefault -o default -o nospace -F _gitk gitk 2>/dev/null \
--	|| complete -o default -o nospace -F _gitk gitk
-+foo_wrap ()
-+{
-+	if [[ -n ${ZSH_VERSION-} ]]; then
-+		emulate -L bash
-+		setopt KSH_TYPESET
-+
-+		# workaround zsh's bug that leaves 'words' as a special
-+		# variable in versions < 4.3.12
-+		typeset -h words
-+
-+		# workaround zsh's bug that quotes spaces in the COMPREPLY
-+		# array if IFS doesn't contain spaces.
-+		typeset -h IFS
-+	fi
-+	local cur words cword prev
-+	_get_comp_words_by_ref -n =: cur words cword prev
-+	foo "$@"
-+}
-+
-+git_complete ()
-+{
-+	local name="${2-$1}"
-+	eval "$(typeset -f foo_wrap | sed -e "s/foo/_$name/")"
-+	complete -o bashdefault -o default -o nospace -F _${name}_wrap $1 2>/dev/null \
-+		|| complete -o default -o nospace -F _${name}_wrap $1
-+}
-+
-+git_complete git
-+git_complete gitk
- 
- # The following are necessary only for Cygwin, and only are needed
- # when the user has tab-completed the executable name and consequently
- # included the '.exe' suffix.
- #
- if [ Cygwin = "$(uname -o 2>/dev/null)" ]; then
--complete -o bashdefault -o default -o nospace -F _git git.exe 2>/dev/null \
--	|| complete -o default -o nospace -F _git git.exe
-+git_complete git.exe git
- fi
-diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
-index 7bd37f5..0f1a9ec 100755
---- a/t/t9902-completion.sh
-+++ b/t/t9902-completion.sh
-@@ -63,7 +63,7 @@ run_completion ()
- 	local _cword
- 	_words=( $1 )
- 	(( _cword = ${#_words[@]} - 1 ))
--	_git && print_comp
-+	_git_wrap && print_comp
- }
- 
- test_completion ()
--- 
-1.7.10
+That said.  I am reluctant to make the following comment because
+I really would love to have that pre-dcommit hook and I do not want to
+take away a use case for it. ;-)
+
+Until some interested person introduces a pre-dcommit hook, would it
+make sense in your deployment to add a wrapper around "git svn
+dcommit" (let's call it git-commit-to-svn) on the $PATH that performs
+the check itself, so the user experience would be as follows?
+
+    $ git commit-to-svn
+    fatal: this branch is set up to push to git, not to svn
+    hint: switch to a new branch before pushing
+    hint: or use "git commit-to-svn --force" to override this check
+
+That already works.  It does not require any change to git.  What do
+you think?
+
+Just my two cents,
+Jonathan
