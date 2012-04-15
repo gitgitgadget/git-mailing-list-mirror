@@ -1,89 +1,101 @@
-From: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
-Subject: Re: [PATCH v3 1/5] completion: simplify __gitcomp_1
-Date: Sun, 15 Apr 2012 11:33:34 +0200
-Message-ID: <20120415093334.GB2900@goldbirke>
-References: <1334439784-6460-1-git-send-email-felipe.contreras@gmail.com>
-	<1334439784-6460-2-git-send-email-felipe.contreras@gmail.com>
-	<87obqueyas.fsf@thomas.inf.ethz.ch>
-	<CAMP44s3qXnONLh_=gO4_9DK2=bx0tLBTTAb4WenYh5k2QPQL-g@mail.gmail.com>
-	<CAMP44s05KsZFAW=i7TvN0jDNPyFZ4OHkOTwVp2+04CR-jsz-nA@mail.gmail.com>
-	<m2ehrpcs9u.fsf@linux-m68k.org>
+From: Clemens Buchacher <drizzd@aon.at>
+Subject: Re: [PATCH v5 4/4] git-rebase: add keep_empty flag
+Date: Sun, 15 Apr 2012 11:33:03 +0200
+Message-ID: <20120415093302.GA6263@ecki>
+References: <1333136922-12872-1-git-send-email-nhorman@tuxdriver.com>
+ <1334342707-3326-1-git-send-email-nhorman@tuxdriver.com>
+ <1334342707-3326-5-git-send-email-nhorman@tuxdriver.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Felipe Contreras <felipe.contreras@gmail.com>,
-	Thomas Rast <trast@inf.ethz.ch>, git@vger.kernel.org,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Thomas Rast <trast@student.ethz.ch>, Jeff King <peff@peff.net>
-To: Andreas Schwab <schwab@linux-m68k.org>
-X-From: git-owner@vger.kernel.org Sun Apr 15 11:33:59 2012
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Phil Hord <phil.hord@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: Neil Horman <nhorman@tuxdriver.com>
+X-From: git-owner@vger.kernel.org Sun Apr 15 11:34:32 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SJLqD-0002oY-6Q
-	for gcvg-git-2@plane.gmane.org; Sun, 15 Apr 2012 11:33:53 +0200
+	id 1SJLqk-0003Iq-2G
+	for gcvg-git-2@plane.gmane.org; Sun, 15 Apr 2012 11:34:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754294Ab2DOJdn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 15 Apr 2012 05:33:43 -0400
-Received: from moutng.kundenserver.de ([212.227.126.171]:56113 "EHLO
-	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751142Ab2DOJdm (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 Apr 2012 05:33:42 -0400
-Received: from localhost6.localdomain6 (p5B13091B.dip0.t-ipconnect.de [91.19.9.27])
-	by mrelayeu.kundenserver.de (node=mreu4) with ESMTP (Nemesis)
-	id 0MCk6A-1SRdYj1Quo-008pNK; Sun, 15 Apr 2012 11:33:36 +0200
+	id S1753533Ab2DOJeV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 15 Apr 2012 05:34:21 -0400
+Received: from smtpout14.highway.telekom.at ([195.3.96.79]:6603 "EHLO
+	email.aon.at" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1752916Ab2DOJeU (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 Apr 2012 05:34:20 -0400
+Received: (qmail 2215 invoked from network); 15 Apr 2012 09:34:17 -0000
+X-Spam-Checker-Version: SpamAssassin 3.2.0 (2007-05-01) on
+	WARSBL605.highway.telekom.at
+X-Spam-Level: ****
+Received: from p5b22d2b0.dip.t-dialin.net (HELO [127.0.0.1]) (aon.912301525.1@aon.at@[91.34.210.176])
+          (envelope-sender <drizzd@aon.at>)
+          by smarthub79.res.a1.net (qmail-ldap-1.03) with AES128-SHA encrypted SMTP
+          for <nhorman@tuxdriver.com>; 15 Apr 2012 09:34:16 -0000
 Content-Disposition: inline
-In-Reply-To: <m2ehrpcs9u.fsf@linux-m68k.org>
-User-Agent: Mutt/1.5.20 (2009-06-14)
-X-Provags-ID: V02:K0:yhVn5SyTkvE0vyuGLN1x+I2ZwJoBK/8FPQC4i8xjoQi
- XRehLI9Si4uG5UGEkUBq/afLvMhsybjqtjLvMj6NacO8cNKeQ6
- My0iW9mfqIOppzJDOj+vDk+3CDW6HRNirPsn3L5LcEWE972rp1
- plmt7OtD5NN8s7MQ8ARayFS1VnOEiTtaCyaP38UEMtttfhanM9
- IQ8fBu0+wokapGZ0iPr/63oEP0eaJMSbBP2O4JMstIwW4446RL
- 1D0q5RFlxYnARszvmJWx+9dqyJSN3aUNINp4jHJ7VgzpSHx+yQ
- ghVx6Mthm7Hb2EYdrpOK7jqXDI9DR+Dizxzeu7VHHmzwWcxGtP
- hFD8pVzSKOgKl3ZeiNIg=
+In-Reply-To: <1334342707-3326-5-git-send-email-nhorman@tuxdriver.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195550>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195551>
 
-On Sun, Apr 15, 2012 at 10:29:17AM +0200, Andreas Schwab wrote:
-> Felipe Contreras <felipe.contreras@gmail.com> writes:
-> 
-> > However, I would like to simplify it even more:
-> >
-> > __gitcomp_1 ()
-> > {
-> > 	local c w s IFS=' '$'\t'$'\n'
-> > 	for c in $1; do
-> > 		w="$c$2"
-> > 		case "$w" in
-> > 		--*=*|*.) s="" ;;
-> > 		*)        s=" " ;;
-> > 		esac
-> > 		printf "%s$s\n" "$w"
-> > 	done
-> > }
-> 
-> Or even:
-> 
-> __gitcomp_1 ()
-> {
-> 	local c IFS=$' \t\n'
-> 	for c in $1; do
-> 		c=$c$2
-> 		case $c in
-> 		--*=*|*.) ;;
-> 		*)        c="$c " ;;
-> 		esac
-> 		printf '%s\n' "$c"
-> 	done
-> }
+On Fri, Apr 13, 2012 at 02:45:07PM -0400, Neil Horman wrote:
+>
+> Add a command line switch to git-rebase to allow a user the ability to specify
+> that they want to keep any commits in a series that are empty.
 
-We can even get rid of the %s with
+Thanks. That should be useful.
 
-  printf -- "$c\n"
+> +is_empty_commit() {
+> +     ptree=$(git rev-parse "$1"^{tree})
+> +     pptree=$(git rev-parse "$1"^^{tree})
+> +     return $(test "$ptree" = "$pptree")
+> +}
+> +
+
+What's the extra leading 'p' for? Any reason not to use 'tree' and
+'ptree'?
+
+>  pick_one () {
+>  	ff=--ff
+> +
+> +	if is_empty_commit $@
+> +	then
+> +		empty_args="--allow-empty"
+> +	fi
+> +
+>  	case "$1" in -n) sha1=$2; ff= ;; *) sha1=$1 ;; esac
+
+You do not handle the case where pick_one is called with -n. I think you
+need to move the case statement in front and then call is_empty_commit
+$sha1.
+
+Not that it matters after this change, but in general using $@ without
+quotes looks wrong to my eyes.
+
+> @@ -780,9 +792,17 @@ git rev-list $merges_option --pretty=oneline --abbrev-commit \
+>  	sed -n "s/^>//p" |
+>  while read -r shortsha1 rest
+>  do
+> +
+> +	if test -z "$keep_empty" && is_empty_commit $shortsha1
+> +	then
+> +		comment_out="# pick"
+> +	else
+> +		comment_out="pick"
+> +	fi
+> +
+>  	if test t != "$preserve_merges"
+>  	then
+> -		printf '%s\n' "pick $shortsha1 $rest" >> "$todo"
+> +		printf '%s\n' "$comment_out $shortsha1 $rest" >> "$todo"
+
+How about setting comment_out="# " or comment_out="" instead and then
+
+ printf '%s%s\n' "$comment_out" "pick $shortsha1 $rest" >> "$todo"
+
+That would read more natural to me.
