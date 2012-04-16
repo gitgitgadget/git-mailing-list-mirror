@@ -1,117 +1,109 @@
-From: Marc Branchaud <marcnarc@xiplink.com>
-Subject: Re: [PATCHv2] fetch: Only call a new ref a "branch" if it's under
- refs/heads/.
-Date: Mon, 16 Apr 2012 10:58:21 -0400
-Message-ID: <4F8C338D.1050805@xiplink.com>
-References: <1334336904-18649-1-git-send-email-marcnarc@xiplink.com> <20120413211350.GD7919@sigill.intra.peff.net> <20120413215316.GA19826@burratino> <7vy5pz1cjk.fsf@alter.siamese.dyndns.org>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: What's cooking in git.git (Apr 2012, #05; Thu, 12)
+Date: Mon, 16 Apr 2012 07:57:59 -0700
+Message-ID: <CA+55aFwkf2bOLmUCU+_pSg0OzGyfQ1x-Cy_CiczpJN3zsThNWg@mail.gmail.com>
+References: <20120416082641.5d239ef6@mkiedrowicz.ivo.pl>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Jonathan Nieder <jrnieder@gmail.com>, Jeff King <peff@peff.net>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Apr 16 16:57:50 2012
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Michal Kiedrowicz <michal.kiedrowicz@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Apr 16 16:58:27 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SJnNF-00035v-IJ
-	for gcvg-git-2@plane.gmane.org; Mon, 16 Apr 2012 16:57:49 +0200
+	id 1SJnNp-0003Uq-PI
+	for gcvg-git-2@plane.gmane.org; Mon, 16 Apr 2012 16:58:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753597Ab2DPO5p (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Apr 2012 10:57:45 -0400
-Received: from smtp154.ord.emailsrvr.com ([173.203.6.154]:48349 "EHLO
-	smtp154.ord.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753457Ab2DPO5o (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Apr 2012 10:57:44 -0400
-X-Greylist: delayed 1901 seconds by postgrey-1.27 at vger.kernel.org; Mon, 16 Apr 2012 10:57:44 EDT
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by smtp17.relay.ord1a.emailsrvr.com (SMTP Server) with ESMTP id B7EF619047C;
-	Mon, 16 Apr 2012 10:57:43 -0400 (EDT)
-X-Virus-Scanned: OK
-Received: by smtp17.relay.ord1a.emailsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id 5D89B19037A;
-	Mon, 16 Apr 2012 10:57:43 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:11.0) Gecko/20120329 Thunderbird/11.0.1
-In-Reply-To: <7vy5pz1cjk.fsf@alter.siamese.dyndns.org>
+	id S1753824Ab2DPO6V convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 16 Apr 2012 10:58:21 -0400
+Received: from mail-we0-f174.google.com ([74.125.82.174]:55568 "EHLO
+	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753511Ab2DPO6U convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 16 Apr 2012 10:58:20 -0400
+Received: by wejx9 with SMTP id x9so3401746wej.19
+        for <git@vger.kernel.org>; Mon, 16 Apr 2012 07:58:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:from:date
+         :x-google-sender-auth:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=1G+5HL8emjifAGVxd3S3Ko3SDB4g7Q5H68yaW0D0EaU=;
+        b=LsSmD+JofmLxdqM0KKQPYsdZmuSPXGw/xqxYNPMcSfDUcrYKl8V41t8Ca60eutc3RX
+         h1zrDtuvhc2z9hKFbxX2/eG4mt+YWw6+PZSE+Cc5xTyE1odF1cFv2qpFvoltYIhqp1o1
+         mOisZoSB+Fe7XVAKM9kNWIp3Wq154Z6F8pejfh6ujexFR+5Qg6/F9yDSflng0gU72edL
+         cBcDzyrO5ww1W83Ej8jJ5iCOCD2d+LAC46ZVExOI3P/pz1PXdwW8foheH7HM8iLtt9Yl
+         vLT+GX87NvEAWrjx3thLTuwNX8twN0mL2tP6E25cVg62wPH4dSW6FJLiMb3gdZdspKB0
+         wSdg==
+Received: by 10.180.80.9 with SMTP id n9mr19588141wix.4.1334588299519; Mon, 16
+ Apr 2012 07:58:19 -0700 (PDT)
+Received: by 10.216.221.167 with HTTP; Mon, 16 Apr 2012 07:57:59 -0700 (PDT)
+In-Reply-To: <20120416082641.5d239ef6@mkiedrowicz.ivo.pl>
+X-Google-Sender-Auth: sOywrVRaI8rS1j1lkeNgaibwevE
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195640>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195641>
 
-On 12-04-13 06:39 PM, Junio C Hamano wrote:
-> Jonathan Nieder <jrnieder@gmail.com> writes:
-> 
->> Jeff King wrote:
->>
->>> Hmm. The ref->name we are comparing here is the local side. So if I am
->>> fetching a new branch "foo" from the remote into a local
->>> "refs/remotes/origin/foo" tracking ref, it used to say:
->>>
->>>     From ../parent
->>>      * [new branch]      master     -> origin/master
->>>
->>> Now it says:
->>>
->>>     From ../parent
->>>      * [new ref]         master     -> origin/master
->>>
->>> while refs/remotes/* are not technically branches in our side, I think
->>> from the user's perspective, it is true that we have fetched a branch.
->>> Should we be calling refs/remotes/* branches, too? Should we be checking
->>> the remote's name for the item instead of the local one?
->>
->> The former sounds sensible.  Then once the default refspec learns to
->> fetch into separate refs/remotes/origin/heads/* and
->> refs/remotes/origin/notes/* namespaces the logic could be updated to
->> write [new branch] or [new note collection] according to the
->> situation.
-> 
-> If we give 'new branch' label for this case because we store it in our
-> 'refs/remotes/*', a natural extension of it would be to redefine the rule
-> to narrow it to 'refs/remotes/*/heads/*' for using 'branch' when we
-> introduce 'new notes collection' label to give refs we are going to store
-> in 'refs/remotes/origin/notes/*'.  That is consistent with the former.
-> 
-> If we give 'new branch' label because refs/heads/master on the originating
-> end is what is shown on the line, a natural extension would be to use 'new
-> notes collection' label when we are fetching from refs/notes/* on the
-> originating end, and it does not matter where we store it, either our own
-> refs/notes/* or refs/remotes/origin/notes/*.  That is consistent with the
-> latter.
-> 
-> There is no concensus if refs/remotes/origin/notes/* hierarchy is a good
-> idea or not, but your argument does not support either side between the
-> former or the latter anyway, so I think it is irrelevant point to raise in
-> this discussion.
-> 
-> The choice between the two really depends on what information we are
-> trying to convey with this label.  Are we saying "Hey, we now have a new
-> 'branch' on our side"?  Or are we saying "We found a new 'branch' over
-> there"?  It is unclear and you can argue both ways. Although I personally
-> think it is the latter, I do not have a strong opinion either way.
+On Sun, Apr 15, 2012 at 11:26 PM, Michal Kiedrowicz
+<michal.kiedrowicz@gmail.com> wrote:
+>
+> Heh, this seems to fix the issue I reported in [1], except... it
+> doesn't work for the testcase I posted :). =A0The problem is that thi=
+s
+> commit makes Git 'fast-forward' to the first commit from remoteheads,
+> not from the reduced heads.
 
-I think git should describe what it finds in the remote repo, because as a
-published repo it's refs are more likely to follow the standard layout.
+Ack, good catch.
 
-The local repo is more likely to be configured with a fetch refspec like
-	+refs/heads/*:refs/crazy/*
-In such a case there's no point in keying off of the local names.
+Thinking some more about this thing, I think we have a similar issue
+with the "Already up-to-date." thing.
 
-Git is better off describing what's appeared in the remote repo, and not
-worrying about describing how the user might've mapped those things to local
-refs.
+It too had the "only one remote-head" test, which is wrong - what if
+you try to do a octopus merge with *two* commits that are different,
+and are both in the past? It will fail the "Already up-to-date" test,
+and then do a "fast-forward" to the first remote parent, if I read the
+code right..
 
-(That said, patching fetch.c to do that is a bit beyond me at the moment.
-Where would I find the remote's name for the ref?)
+So I think the "Already up-to-date" case should also be fixed, and in
+fact it becomes much more natural now that we have finalized the
+parents: we just check whether the one remaining parent is the same as
+HEAD.
 
-> I am actually fine with just saying '[new]' without indicating what kind
-> at all, because the label is there only to fill the space where old..new
-> object names are usually shown.  We don't even say "[rejected branch]",
-> just "[rejected]" in the same place.
+So  Ack on Michal's patch, but I think we also should do the appended
+equivalent thing for the fast-forward test on top of it (it's
+white-space damaged, sorry).
 
-I'd be disappointed if git didn't take the extra step to tell me a bit more
-about what's going on.  I like to see what kinds of new refs the remote has.
+Trivially tested with
 
-		M.
+    git merge HEAD^ HEAD^^
+
+which did the wrong thing before, and now works.
+
+                       Linus
+
+---
+ builtin/merge.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
+
+diff --git a/builtin/merge.c b/builtin/merge.c
+index 016a4dbee3b5..28fb5c9d6ada 100644
+--- a/builtin/merge.c
++++ b/builtin/merge.c
+@@ -1370,8 +1370,7 @@ int cmd_merge(int argc, const char **argv, const
+char *prefix)
+
+        if (!common)
+                ; /* No common ancestors found. We need a real merge. *=
+/
+-       else if (!remoteheads->next && !common->next &&
+-                       common->item =3D=3D remoteheads->item) {
++       else if (!parents->next && parents->item =3D=3D head_commit) {
+                /*
+                 * If head can reach all the merge then we are up to da=
+te.
+                 * but first the most common case of merging one remote=
+=2E
