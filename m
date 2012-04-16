@@ -1,115 +1,194 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCHv2] Add details about svn-fe's dumpfile parsing
-Date: Mon, 16 Apr 2012 13:06:16 -0700
-Message-ID: <7vipgztpaf.fsf@alter.siamese.dyndns.org>
-References: <4F8AF306.8070804@pileofstuff.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] gitweb: Option to omit column with time of the last change
+Date: Mon, 16 Apr 2012 22:06:49 +0200
+Message-ID: <201204162206.50631.jnareb@gmail.com>
+References: <20120403132735.GA12389@camk.edu.pl> <201204141516.02719.jnareb@gmail.com> <20120416101242.GK17753@camk.edu.pl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>,
-	David Barr <davidbarr@google.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Ramkumar Ramachandra <artagnon@gmail.com>
-To: Andrew Sayers <andrew-git@pileofstuff.org>
-X-From: git-owner@vger.kernel.org Mon Apr 16 22:06:30 2012
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Kacper Kornet <draenog@pld-linux.org>
+X-From: git-owner@vger.kernel.org Mon Apr 16 22:07:01 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SJsBt-0000If-8R
-	for gcvg-git-2@plane.gmane.org; Mon, 16 Apr 2012 22:06:25 +0200
+	id 1SJsCQ-0000gb-IW
+	for gcvg-git-2@plane.gmane.org; Mon, 16 Apr 2012 22:06:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753747Ab2DPUGU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Apr 2012 16:06:20 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:43954 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752179Ab2DPUGT (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Apr 2012 16:06:19 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8087B76E0;
-	Mon, 16 Apr 2012 16:06:18 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=JyRC3TciT0pUpr/kriS0nECA2ak=; b=LdkJv/
-	k9pY0TKvM5nMwRvUAoPRzln37XU03acQDmZNl4U1KXV9fL1RTPuKn5ym7g+rIg08
-	Wzah0dBjtEf+lpyBX19GKmT0wfDDXsWiDrWFaW+9FOgBtYujqwvDgcygHy0otj1J
-	tMbI9VEXeIM41BBclCSj1xbf8hFxv2ZU4bcKQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=CCXEqBWtV7geHboQVkUMQRyLTObff3iy
-	ApPRYnsxmr33otO3J+xdEtPLcUwbYZXoxEhpv2+JvRKbxWLd3P50srlnR8gpO8uk
-	H/+QsKNQhjUlGvtTlHoV05Td699EKBjp2PkvTi0CEJCutKwCwKI0ddLiEXiKa4LY
-	Hf8BhIwLRaI=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 77A0076DF;
-	Mon, 16 Apr 2012 16:06:18 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0A36676D9; Mon, 16 Apr 2012
- 16:06:17 -0400 (EDT)
-In-Reply-To: <4F8AF306.8070804@pileofstuff.org> (Andrew Sayers's message of
- "Sun, 15 Apr 2012 17:10:46 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: A0B646DE-87FF-11E1-A7BB-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754314Ab2DPUGy convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 16 Apr 2012 16:06:54 -0400
+Received: from mail-wg0-f44.google.com ([74.125.82.44]:56286 "EHLO
+	mail-wg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752000Ab2DPUGx (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Apr 2012 16:06:53 -0400
+Received: by wgbdr13 with SMTP id dr13so5630022wgb.1
+        for <git@vger.kernel.org>; Mon, 16 Apr 2012 13:06:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        bh=YTZtZnGNH0RiNYwlNnxkjjAMqFqIaDY4fvkPDIW2aiA=;
+        b=Sn2dMCwvICkYHrZMjrcd52zrENfHc1VvXU1yinHwIfaIlArgzQtnozAqgM+oDF3fXT
+         LefOS45ZDl5488nsPOxhqG6CR4FM4lk2LunPP3Jkc5h9OcCFgZXvaOlP59suCone3AOh
+         XY1ZWos63LK8a5PYyttnvg7s0bv1vnEbbIJDmX0hH1Hew7peBx1fkOaHaj8fy/VNhcxJ
+         TY95oTKyKKJz+rw4HisC+ISL76yNgcTB3YubaS8aWKL9AWgRit5pS0Nq31Dxr+FHUIU6
+         EWFfJpBRaSeQ5rz3Hni6AGaacwtgd8Ghm4gN6udbruCE+8gsm2vT4KvgYhlyY0UaEp8D
+         o1tA==
+Received: by 10.180.89.98 with SMTP id bn2mr391198wib.22.1334606811701;
+        Mon, 16 Apr 2012 13:06:51 -0700 (PDT)
+Received: from [192.168.1.13] (aedx242.neoplus.adsl.tpnet.pl. [79.186.101.242])
+        by mx.google.com with ESMTPS id ca3sm21810387wib.6.2012.04.16.13.06.50
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Mon, 16 Apr 2012 13:06:50 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <20120416101242.GK17753@camk.edu.pl>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195682>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195683>
 
-Andrew Sayers <andrew-git@pileofstuff.org> writes:
+On Mon, 16 Apr 2012, Kacper Kornet wrote:
+> On Sat, Apr 14, 2012 at 03:16:01PM +0200, Jakub Narebski wrote:
+>> On Wed, 4 Apr 2012, Kacper Kornet wrote:
+>>> On Wed, Apr 04, 2012 at 04:31:42PM +0200, Jakub Narebski wrote:
+>>>> On Wed, 4 April 2012, Kacper Kornet wrote:
+>>>>> On Wed, Apr 04, 2012 at 01:12:01AM +0200, Jakub Narebski wrote:
+>>>>>> On Tue, 3 Apr 2012, Kacper Kornet wrote:
+[...]=20
+>>>> But the fact that it also saves a fork (a git command call) per re=
+pository
+>>>> reminds me of something which I missed in first round of review, n=
+amely
+>>>> that generating 'age' and 'age_string' fields serve also as a chec=
+k if
+>>>> repository really exist.
+>>>>=20
+>>>> So either we document this fact, or use some other way to verify t=
+hat
+>>>> git repository is valid.
+>>>=20
+>>> I think that git_project_list_body always works with the list retur=
+ned
+>>> by git_get_projects_list. And git_get_projects_list validates if th=
+e
+>>> path is a git repository. So it should not be a problem. Please cor=
+rect
+>>> me, if I am wrong.
+>=20
+>> If $projects_list points to plain file, git_get_projects_list() just
+>> gets list of projects (and project owners) from $projects_list file
+>> by reading and parsing this file.  No verification that repository
+>> exists is done.
+>=20
+> I think that even in this case check_export_ok is called. But there i=
+s
+> still the problem you have mentioned below.
 
-> The documentation for the SVN dumpfile format says that "property key/value
-> pairs may be interpreted as binary data in any encoding by client tools".
-> Documenting svn-fe's interpretation helps authors of related tools, while
-> explaining limitations helps ordinary users import their SVN repositories.
->
-> The "INPUT FORMAT" section is aimed at authors of tools that interact with
-> svn-fe, so it particularly addresses assumptions that authors might make after
-> dealing with svn itself.
->
-> The "BUGS" section is aimed at ordinary users, so it only explains what readers
-> need to know when importing a repository.  In particular, users don't need to
-> know that other characters in the range 0x01-0x1F are imported correctly, even
-> though they were all disabled in Subversion 1.2.0.  The text in this section is
-> based largely on an example sent by Jonathan Nieder, with minor changes to suit
-> the surrounding style.
->
-> Signed-off-by: Andrew Sayers <andrew-git@pileofstuff.org>
-> ---
+True, somehow I missed the fact that check_export_ok() is called to
+check if it looks like repository and if it is to be exported in both
+cases ($projects_list a directory or a file).
 
-OK, so is this ready for 'master' already?
+>> If $projects_list points to directory (which is the default), then
+>> git_get_projects_list() scans starting from $projects_list directory
+>> for somtehing that _looks like_ git repository with check_head_link(=
+)
+>> via check_export_ok().  But you still can encounter something that
+>> looks like git repository (has "HEAD" file in it), but isn't.
+>>=20
+>> So we would probably want to have said variable or set of variables
+>> describe three states:
+>=20
+>> * find date of last change in repository with git-for-each-ref calle=
+d
+>>   by git_get_last_activity(), which as a side effect verifies that
+>>   repository actually exist. =20
+>>=20
+>>   git_get_last_activity() returns empty list in list context if repo
+>>   does not exist, hence
+>>=20
+>>   	my (@activity) =3D git_get_last_activity($pr->{'path'});
+>>   	unless (@activity) {
+>>   		next PROJECT;
+>>   	}
+>>=20
+>> * verify that repository exists with "git rev-parse --git-dir" or
+>>   "git rev-parse --verify HEAD", or "git symbolic-ref HEAD", redirec=
+ting
+>>   stderr to /dev/null (we would probably want to save output of the
+>>   latter two somewhere to use it later).
+>>=20
+>>   That saves I/O, but not fork.
 
->  contrib/svn-fe/svn-fe.txt |   13 +++++++++++++
->  1 files changed, 13 insertions(+), 0 deletions(-)
->
-> diff --git a/contrib/svn-fe/svn-fe.txt b/contrib/svn-fe/svn-fe.txt
-> index 1128ab2..3872b9d 100644
-> --- a/contrib/svn-fe/svn-fe.txt
-> +++ b/contrib/svn-fe/svn-fe.txt
-> @@ -32,6 +32,13 @@ Subversion's repository dump format is documented in full in
->  Files in this format can be generated using the 'svnadmin dump' or
->  'svk admin dump' command.
->  
-> +Unlike Subversion, 'svn-fe' interprets property key/value pairs as
-> +null-terminated binary strings.  This means it will accept content
-> +that Subversion normally wouldn't produce (such as filenames
-> +containing tab characters) or would refuse to parse (such as usernames
-> +containing Latin-1 characters).  However, like Subversion it will
-> +handle newlines incorrectly in filenames (see BUGS below).
-> +
+Actually if you look at the footer of projects list page with 'timed'
+feature enable you see that for N projects on list, gitweb uses 2*N+1
+git commands.  The "+1" part is from "git version", the "2*N" are from
+git-for-each-ref to get last activity (and verify repository as a
+side-effect)...
 
-Do the first two sentences in the above paragraph claim that it a bug that
-'svn-fe' does not mimick what Subversion does?  I am not sure what lessons
-the authors of tools, whose output is meant to feed svn-fe, are expected
-to learn here.  For example, is the purpose of the above paragraph to make
-tool authors realize that "NUL terminates key and value, so I have to
-refrain from using a key or a value that contains a NUL byte?" [*1*]  Even
-in that case, it is unclear to me what I (as an author of such a tool that
-reads data from somewhere and format it to plesae svn-fe) could do with
-that knowledge.
+=2E..and from call to "git config" to get owner (unconditional check fo=
+r
+`gitweb.owner` override), description (if '.git/description' file got
+deleted), if applicable category (file then config), if applicable ctag=
+s
+(file(s) then config).
 
-[Footnote]
+So we can rely on "git config" being called, no need for separate
+verification.  My mistake.  (Though it might be hard to use this fact.)
 
-*1* By the way, NULL is a pointer that does not point anywhere.  The name
-of a byte whose value is 0x00 is NUL.
+
+Well, with proposed option to remove 'owner' field we would have someti=
+mes
+to verify repository with an extra git command...
+
+>> * don't verify that repository exists.
+>=20
+>> Though perhaps the last possibility isn't a good idea, so it would b=
+e
+>> left two-state, as in your patch.=20
+>=20
+> My tests show that forks are also a bottleneck in my setup.
+
+What do you mean by "my tests" here?  Is it benchmark (perhaps just usi=
+ng
+'timed' feature) with and without custom change removing fork(s)?  Or d=
+id
+you used profiler (e.g. wondefull Devel::NYTProf) for that?
+
+>                                                             On the ot=
+her=20
+> hand I think that I can trust that my projects.list contains only val=
+id
+> repositories. So I would prefer to have a don't verify option. Or the=
+re
+> is a possibility to write perl function with the same functionality a=
+s
+> is_git_directory() from setup.c and use it to verify if the directory=
+ is a
+> valid git repo.
+
+Well, we can add those checks to check_export_ok()... well to function
+it would call.
+
+is_git_repository from setup.c checks that "/objects" and "/refs"
+have executable permissions, and that "/HEAD" is valid via validate_hea=
+dref
+which does slightly more than (now slightly misnamed) check_head_link()
+from gitweb...
+
+=2E..or that DB_ENVIRONMENT i.e. GIT_OBJECT_DIRECTORY environment varia=
+ble
+is set, and path that it points to has executable permissions.  I don't
+think we have to worry about this for gitweb.
+
+
+I'll try to come up with a patch to gitweb that improves repository
+verification, and perhaps a patch that uses the fact that "git config"
+succeeded to verify repository.
+
+--=20
+Jakub Nar=C4=99bski
