@@ -1,60 +1,64 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCHv2] fetch: Only call a new ref a "branch" if it's under
- refs/heads/.
-Date: Mon, 16 Apr 2012 11:00:36 -0400
-Message-ID: <20120416150036.GA15009@sigill.intra.peff.net>
-References: <1334336904-18649-1-git-send-email-marcnarc@xiplink.com>
- <20120413211350.GD7919@sigill.intra.peff.net>
- <20120413215316.GA19826@burratino>
- <7vy5pz1cjk.fsf@alter.siamese.dyndns.org>
- <4F8C338D.1050805@xiplink.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: What's cooking in git.git (Apr 2012, #06; Sun, 15)
+Date: Mon, 16 Apr 2012 08:03:40 -0700
+Message-ID: <7vehrnyb03.fsf@alter.siamese.dyndns.org>
+References: <7vpqb8xjj9.fsf@alter.siamese.dyndns.org>
+ <4F8BE14D.7090501@seap.minhap.es> <7vlilwxf3w.fsf@alter.siamese.dyndns.org>
+ <4F8C0171.6090203@seap.minhap.es>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
-To: Marc Branchaud <marcnarc@xiplink.com>
-X-From: git-owner@vger.kernel.org Mon Apr 16 17:00:48 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Nelson Benitez Leon <nelsonjesus.benitez@seap.minhap.es>
+X-From: git-owner@vger.kernel.org Mon Apr 16 17:03:51 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SJnQ4-0005Mh-Te
-	for gcvg-git-2@plane.gmane.org; Mon, 16 Apr 2012 17:00:45 +0200
+	id 1SJnT4-0007oS-FV
+	for gcvg-git-2@plane.gmane.org; Mon, 16 Apr 2012 17:03:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754232Ab2DPPAk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Apr 2012 11:00:40 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:36239
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753500Ab2DPPAk (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Apr 2012 11:00:40 -0400
-Received: (qmail 24182 invoked by uid 107); 16 Apr 2012 15:00:47 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 16 Apr 2012 11:00:47 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 16 Apr 2012 11:00:36 -0400
-Content-Disposition: inline
-In-Reply-To: <4F8C338D.1050805@xiplink.com>
+	id S1754694Ab2DPPDq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Apr 2012 11:03:46 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:52459 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753761Ab2DPPDo (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Apr 2012 11:03:44 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6B759681A;
+	Mon, 16 Apr 2012 11:03:43 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=2h9aBZd0cJvJRsDbbtxje36Anso=; b=KyX/tN
+	CEUq3oGi+8RtazVzboatUHT9J7LJQk+J4diR2g8DocERXpicqMeW0iSjrLcVHe4C
+	Zdl8fhiF8o+JBu/mBU+okCRnKx7QrYcx4e4tMjVNbJueayiH6X6LHuQT4xugyz1Z
+	JPmpxXPqKOlx/UrXurGCMkR31hT35EDaY6NOM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=xEyk8a3+ds72BJuGstCW4Qa1PiOOVrWu
+	boJyEb4TYzWw47LUNU0mFdqxhX/DJW2r3/KabegvSD+TcFXvXRfY6Z3oeG1MOExp
+	fCMBFXgehZdBiImaVch32sa4E7uN6HlQdtZNK89eAE4sGNr5j69Ksia84zmlSxU3
+	1Aul3U7VHV8=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 621756819;
+	Mon, 16 Apr 2012 11:03:43 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 693026815; Mon, 16 Apr 2012
+ 11:03:42 -0400 (EDT)
+In-Reply-To: <4F8C0171.6090203@seap.minhap.es> (Nelson Benitez Leon's message
+ of "Mon, 16 Apr 2012 13:24:33 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 5B1FBB02-87D5-11E1-9BE7-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195642>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195643>
 
-On Mon, Apr 16, 2012 at 10:58:21AM -0400, Marc Branchaud wrote:
+Nelson Benitez Leon <nelsonjesus.benitez@seap.minhap.es> writes:
 
-> Git is better off describing what's appeared in the remote repo, and not
-> worrying about describing how the user might've mapped those things to local
-> refs.
+> Ok, I've been offline for a week, I already found the thread and I'm
+> going through it.
 
-That's my preference, as well, so it sounds like you, Junio, and I are
-all in agreement.
-
-> (That said, patching fetch.c to do that is a bit beyond me at the moment.
-> Where would I find the remote's name for the ref?)
-
-During transfer operations, the remote side of the pair is generally
-pointed to by the peer_ref member of "struct ref" (so just use
-"ref->peer_ref->name" instead of "ref->name").
-
--Peff
+Thanks.
