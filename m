@@ -1,99 +1,68 @@
-From: Neil Horman <nhorman@tuxdriver.com>
-Subject: Re: [PATCH v5 3/4] git-cherry-pick: Add test to validate new options
-Date: Mon, 16 Apr 2012 12:14:31 -0400
-Message-ID: <20120416161431.GD13366@hmsreliant.think-freely.org>
-References: <1333136922-12872-1-git-send-email-nhorman@tuxdriver.com>
- <1334342707-3326-1-git-send-email-nhorman@tuxdriver.com>
- <1334342707-3326-4-git-send-email-nhorman@tuxdriver.com>
- <20120415093933.GB6263@ecki>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2] completion: add new git_complete helper
+Date: Mon, 16 Apr 2012 09:32:56 -0700
+Message-ID: <7vzkabwsav.fsf@alter.siamese.dyndns.org>
+References: <1334524814-13581-1-git-send-email-felipe.contreras@gmail.com>
+ <20120415213718.GB5813@burratino>
+ <CAMP44s0PWAV=nD1xnAFMx8OPby88W2jKwDGtiUFY4LA93D-gAw@mail.gmail.com>
+ <7vaa2by8nj.fsf@alter.siamese.dyndns.org> <20120416160729.GM5813@burratino>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Phil Hord <phil.hord@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: Clemens Buchacher <drizzd@aon.at>
-X-From: git-owner@vger.kernel.org Mon Apr 16 18:15:18 2012
+Cc: Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org,
+	SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder@ira.uka.de>,
+	Thomas Rast <trast@student.ethz.ch>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Apr 16 18:33:10 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SJoa7-0007FE-01
-	for gcvg-git-2@plane.gmane.org; Mon, 16 Apr 2012 18:15:11 +0200
+	id 1SJorQ-0004aY-Om
+	for gcvg-git-2@plane.gmane.org; Mon, 16 Apr 2012 18:33:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753060Ab2DPQOo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Apr 2012 12:14:44 -0400
-Received: from charlotte.tuxdriver.com ([70.61.120.58]:36484 "EHLO
-	smtp.tuxdriver.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753010Ab2DPQOl (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Apr 2012 12:14:41 -0400
-Received: from hmsreliant.think-freely.org ([2001:470:8:a08:7aac:c0ff:fec2:933b] helo=localhost)
-	by smtp.tuxdriver.com with esmtpsa (TLSv1:AES128-SHA:128)
-	(Exim 4.63)
-	(envelope-from <nhorman@tuxdriver.com>)
-	id 1SJoZU-0000oI-La; Mon, 16 Apr 2012 12:14:37 -0400
-Content-Disposition: inline
-In-Reply-To: <20120415093933.GB6263@ecki>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-X-Spam-Score: -2.9 (--)
-X-Spam-Status: No
+	id S1754167Ab2DPQdA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Apr 2012 12:33:00 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:56358 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752807Ab2DPQc7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Apr 2012 12:32:59 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4D4A57F4D;
+	Mon, 16 Apr 2012 12:32:58 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=dqlkuhdKY07mYqpArwUAeOp7WZU=; b=FwivRX
+	aPc/zMjDAjGBxjGl4+RSvvPZ0bxQYx6K5VOUUChgRv1XZ8vWAMONpIdmIxE/gjH1
+	zX/0itDKWuWTMHSkL5HOdmb5Q0MupxaQObAxksHl7oI1OsjkYxB6gVqHVMQRHHXO
+	fTHkkwAf6A92Lk2SNytTKmei8NC5Bp8TmqAyQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=jKeVUjJnV34RNGjP0ULE5TbN7d5fVcYv
+	893t6zEnWBCxi62PhauaDn92LztLFgPB4rxHtyoHe+d0SwiWnMMa0EDgUb2K4XgK
+	ySgTXfTs5F49XnFHf4nE6u0PWQCEeEue9tpmsqjwvFUKOsoDCfSKmTmYboPW9CSS
+	x69bMqgCZP4=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 43DC17F4C;
+	Mon, 16 Apr 2012 12:32:58 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D18FE7F47; Mon, 16 Apr 2012
+ 12:32:57 -0400 (EDT)
+In-Reply-To: <20120416160729.GM5813@burratino> (Jonathan Nieder's message of
+ "Mon, 16 Apr 2012 11:07:29 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: D3354C2C-87E1-11E1-AF92-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195660>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195661>
 
-On Sun, Apr 15, 2012 at 11:39:35AM +0200, Clemens Buchacher wrote:
-> On Fri, Apr 13, 2012 at 02:45:06PM -0400, Neil Horman wrote:
-> >  
-> > +test_expect_success 'cherry pick an empty non-ff commit without --allow-empty' '
-> > +	git checkout master &&
-> > +	echo fourth >> file2 &&
-> > +	git add file2 &&
-> > +	git commit -m "fourth" && {
-> > +		test_must_fail git cherry-pick empty-branch2
-> > +	}
-> > +'
-> 
-> You don't need the braces. The same below.
-> 
-Ack
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-> > +
-> > +test_expect_success 'cherry pick an empty non-ff commit with --allow-empty' '
-> > +	git checkout master && {
-> > +		git cherry-pick --allow-empty empty-branch2
-> > +	}
-> > +'
-> > +
-> > +test_expect_success 'cherry pick with --keep-redundant-commits' '
-> > +	git checkout master && {
-> > +		git cherry-pick --keep-redundant-commits HEAD^
-> > +	}
-> > +'
-> 
-> And the expected result is that the HEAD commit is not removed, right?
-> You should check for that as well.
-> 
-> Also, please checkout empty-branch2^0 first, in order to make the test
-> independent of its predecessor.
-> 
+> Because of these considerations, the convention is that every
+> identifier provided by a completion script, including public ones,
+> starts with an underscore.
 
-Not sure I follow what your saying here.  The expected result with both of these
-tests is that a new commit is created, referencing the current HEAD as the new
-HEAD's parent.  We could check that the current HEAD is note removed (ostensibly
-by recoding the value of the current head and comparing it to HEAD^ after the
-cherry pick, but that seems like expected behavior for any command that creates
-a new commit, yet we don't check that anywhere else.  Why is here different?  Or
-do you mean something else?
-
-As for the checkout of empty-branch2^0, whats the purpose?  I'm just going to
-checkout master right after that, making it moot.  The purpose of the test is to
-apply a commit that is already in the working tree's history, ensuring that it
-resolves to an empty commit.  Theres nothing really dependent on the prior test
-there.  If we edit the tests significantly, the contents of what that commit is
-may change, but thats not overly relevant, as the result will still be the same
-(an empty commit).
-
-Neil
- 
+OK.
