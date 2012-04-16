@@ -1,84 +1,250 @@
 From: Lucian Poston <lucian.poston@gmail.com>
-Subject: [PATCH v3 0/7] diff stat calculation adjustments
-Date: Mon, 16 Apr 2012 03:44:48 -0700
-Message-ID: <1334573095-32286-1-git-send-email-lucian.poston@gmail.com>
+Subject: [PATCH v3 1/7] t4052: test --stat output with --graph
+Date: Mon, 16 Apr 2012 03:44:49 -0700
+Message-ID: <1334573095-32286-2-git-send-email-lucian.poston@gmail.com>
+References: <1334573095-32286-1-git-send-email-lucian.poston@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Lucian Poston <lucian.poston@gmail.com>
+Cc: =?UTF-8?q?Zbigniew=20J=C4=99drzejewski-Szmek?= <zbyszek@in.waw.pl>,
+	Lucian Poston <lucian.poston@gmail.com>,
+	"Junio C Hamano" <gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Apr 16 12:46:22 2012
+X-From: git-owner@vger.kernel.org Mon Apr 16 12:46:50 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SJjRr-0008Cj-0S
-	for gcvg-git-2@plane.gmane.org; Mon, 16 Apr 2012 12:46:19 +0200
+	id 1SJjSL-00006F-L7
+	for gcvg-git-2@plane.gmane.org; Mon, 16 Apr 2012 12:46:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753275Ab2DPKqM convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 16 Apr 2012 06:46:12 -0400
+	id S1753308Ab2DPKqe convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 16 Apr 2012 06:46:34 -0400
 Received: from mail-pz0-f52.google.com ([209.85.210.52]:58989 "EHLO
 	mail-pz0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753145Ab2DPKqJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Apr 2012 06:46:09 -0400
-Received: by dake40 with SMTP id e40so6754418dak.11
-        for <git@vger.kernel.org>; Mon, 16 Apr 2012 03:46:05 -0700 (PDT)
+	with ESMTP id S1753248Ab2DPKqd (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Apr 2012 06:46:33 -0400
+Received: by mail-pz0-f52.google.com with SMTP id e40so6754418dak.11
+        for <git@vger.kernel.org>; Mon, 16 Apr 2012 03:46:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
-         :content-type:content-transfer-encoding;
-        bh=brB9jKRGh7Wdul/lqqrO1W1GkvEtFguMXHkDeXoB8dY=;
-        b=WLfBajJeIh3c7HECPa6julVFq7YIz1HLRMvLil9RCS9qLeDrg7oECxFYxpaFyHcalt
-         2laiWaVlYjTFyAlwfYbdZCgIG+pm/Xt7rVfh5WA76d87xL4zi5wCr0yiRtdrgcYxa0o4
-         0Jt5S0crquuj4eWn1f2sEP1VcM0+HpYRvmpZHjhKLVSV0fttCaVTihB0V27vRlAMUD/M
-         3r7s9jcXl4nKTLX/PKwtkXTfcCUlPm/kdOCDoVucJQDceshsw8JGeeb20eyKeYWZhIWc
-         LPg69nd4kAXCRZAZXjkEqR/nzTCiyhtN4uHA5HBu78Aic8G0t+SYJ6d0bWdN5JfvO7f2
-         G8RQ==
-Received: by 10.68.220.65 with SMTP id pu1mr27711497pbc.32.1334573165540;
-        Mon, 16 Apr 2012 03:46:05 -0700 (PDT)
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding;
+        bh=pH2bxoAxBm3BVSbffikbxC0inwCbIqH4fPuuw8cZqso=;
+        b=TvKEvBrpBmQlPcwhJe4+/awve4GPmW+vFlgFlbukxrziYsGqVFGzW7BbPsSFmhFqkS
+         EmEoHJcDqXtBSezi+rM7YtSkqluIaygyjpFsCdlIH6q56+sUQwMDbs21FvvJI8Rp/ipw
+         rpdS/6Gh3o51H6j+29d25jfb4mB65SVOQpB70XyasAZ3whCZmuF3Zmn86cn/Fz6NkxLb
+         OPlNp3gascnWCrXrU7W2kNsmtrEUfhMzMW6Y/uJWvyzcmL+6qWgTxVIz7AdfBPJ4oqCS
+         DT8qoDDAXWXKvSieuTZT0WO3leXL6MPqlFXkAhs9xrOgvpqQGFRzU22ZADgM7ynbO6W6
+         qrfQ==
+Received: by 10.68.195.38 with SMTP id ib6mr27007816pbc.28.1334573192829;
+        Mon, 16 Apr 2012 03:46:32 -0700 (PDT)
 Received: from localhost.localdomain (c-76-121-54-246.hsd1.wa.comcast.net. [76.121.54.246])
-        by mx.google.com with ESMTPS id oh2sm10793051pbb.45.2012.04.16.03.46.04
+        by mx.google.com with ESMTPS id oh2sm10793051pbb.45.2012.04.16.03.46.32
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 16 Apr 2012 03:46:04 -0700 (PDT)
+        Mon, 16 Apr 2012 03:46:32 -0700 (PDT)
 X-Mailer: git-send-email 1.7.3.4
+In-Reply-To: <1334573095-32286-1-git-send-email-lucian.poston@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195611>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195612>
 
-I broke the patch series up into smaller patches. Hopefully this makes =
-the
-intent of the changes easier to follow.
+=46rom: Zbigniew J=C4=99drzejewski-Szmek <zbyszek@in.waw.pl>
 
-Zbigniew's tests were added as PATCH 1/7.
+Add tests which show that the width of the --prefix added by --graph
+is not taken into consideration when the diff stat output width is
+calculated.
 
-The order of the options->stat_graph_width test was reverted back to th=
-e
-original order as per Zbigniew's feedback. There remains an issue where
-name_width (or graph_width) could be set to a value greater than
-stat_name_width (or stat_graph_width). This patch doesn't address the i=
-ssue --
-v2 had a partial fix, but it resulted in other problems anyway.
+Signed-off-by: Zbigniew J=C4=99drzejewski-Szmek <zbyszek@in.waw.pl>
+Signed-off-by: Lucian Poston <lucian.poston@gmail.com>
+---
+ t/t4052-stat-output.sh |   78 ++++++++++++++++++++++++++++++++++++++++=
++++++--
+ 1 files changed, 74 insertions(+), 4 deletions(-)
 
-Lucian Poston (6):
-  Add output_prefix_length to diff_options
-  Adjust stat width calculations to take --graph output into account
-  t4052: Adjust --graph --stat output for prefixes
-  t4052: Add tests to illustrate issues with restrictive COLUMNS
-  Prevent graph_width of stat width from falling below min
-  t4052: Adjust --stat output for minimum graph_width
-
-Zbigniew J=C4=99drzejewski-Szmek (1):
-  t4052: test --stat output with --graph
-
- diff.c                 |    8 ++-
- diff.h                 |    1 +
- graph.c                |    3 +
- t/t4052-stat-output.sh |  122 ++++++++++++++++++++++++++++++++++++++++=
-++++++--
- 4 files changed, 128 insertions(+), 6 deletions(-)
-
+diff --git a/t/t4052-stat-output.sh b/t/t4052-stat-output.sh
+index 328aa8f..da14984 100755
+--- a/t/t4052-stat-output.sh
++++ b/t/t4052-stat-output.sh
+@@ -82,11 +82,15 @@ test_expect_success 'preparation for big change tes=
+ts' '
+ cat >expect80 <<'EOF'
+  abcd | 1000 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++=
++++++++++
+ EOF
+-
++cat >expect80-graph <<'EOF'
++|  abcd | 1000 +++++++++++++++++++++++++++++++++++++++++++++++++++++++=
++++++++++++
++EOF
+ cat >expect200 <<'EOF'
+  abcd | 1000 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++=
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++=
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ EOF
+-
++cat >expect200-graph <<'EOF'
++|  abcd | 1000 +++++++++++++++++++++++++++++++++++++++++++++++++++++++=
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++=
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++EOF
+ while read verb expect cmd args
+ do
+ 	test_expect_success "$cmd $verb COLUMNS (big change)" '
+@@ -94,6 +98,14 @@ do
+ 		grep " | " output >actual &&
+ 		test_cmp "$expect" actual
+ 	'
++
++	test "$cmd" !=3D diff || continue
++
++	test_expect_success "$cmd --graph $verb COLUMNS (big change)" '
++		COLUMNS=3D200 git $cmd $args --graph >output
++		grep " | " output >actual &&
++		test_cmp "$expect-graph" actual
++	'
+ done <<\EOF
+ ignores expect80 format-patch -1 --stdout
+ respects expect200 diff HEAD^ HEAD --stat
+@@ -104,7 +116,9 @@ EOF
+ cat >expect40 <<'EOF'
+  abcd | 1000 ++++++++++++++++++++++++++
+ EOF
+-
++cat >expect40-graph <<'EOF'
++|  abcd | 1000 ++++++++++++++++++++++++++
++EOF
+ while read verb expect cmd args
+ do
+ 	test_expect_success "$cmd $verb not enough COLUMNS (big change)" '
+@@ -118,6 +132,20 @@ do
+ 		grep " | " output >actual &&
+ 		test_cmp "$expect" actual
+ 	'
++
++	test "$cmd" !=3D diff || continue
++
++	test_expect_success "$cmd --graph $verb not enough COLUMNS (big chang=
+e)" '
++		COLUMNS=3D40 git $cmd $args --graph >output
++		grep " | " output >actual &&
++		test_cmp "$expect-graph" actual
++	'
++
++	test_expect_success "$cmd --graph $verb statGraphWidth config" '
++		git -c diff.statGraphWidth=3D26 $cmd $args --graph >output
++		grep " | " output >actual &&
++		test_cmp "$expect-graph" actual
++	'
+ done <<\EOF
+ ignores expect80 format-patch -1 --stdout
+ respects expect40 diff HEAD^ HEAD --stat
+@@ -129,6 +157,9 @@ EOF
+ cat >expect <<'EOF'
+  abcd | 1000 ++++++++++++++++++++++++++
+ EOF
++cat >expect-graph <<'EOF'
++|  abcd | 1000 ++++++++++++++++++++++++++
++EOF
+ while read cmd args
+ do
+ 	test_expect_success "$cmd --stat=3Dwidth with big change" '
+@@ -143,11 +174,25 @@ do
+ 		test_cmp expect actual
+ 	'
+=20
+-	test_expect_success "$cmd --stat-graph--width with big change" '
++	test_expect_success "$cmd --stat-graph-width with big change" '
+ 		git $cmd $args --stat-graph-width=3D26 >output
+ 		grep " | " output >actual &&
+ 		test_cmp expect actual
+ 	'
++
++	test "$cmd" !=3D diff || continue
++
++	test_expect_success "$cmd --stat-width=3Dwidth --graph with big chang=
+e" '
++		git $cmd $args --stat-width=3D40 --graph >output
++		grep " | " output >actual &&
++		test_cmp expect-graph actual
++	'
++
++	test_expect_success "$cmd --stat-graph-width --graph with big change"=
+ '
++		git $cmd $args --stat-graph-width=3D26 --graph >output
++		grep " | " output >actual &&
++		test_cmp expect-graph actual
++	'
+ done <<\EOF
+ format-patch -1 --stdout
+ diff HEAD^ HEAD --stat
+@@ -164,6 +209,9 @@ test_expect_success 'preparation for long filename =
+tests' '
+ cat >expect <<'EOF'
+  ...aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa | 1000 ++++++++++++
+ EOF
++cat >expect-graph <<'EOF'
++|  ...aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa | 1000 ++++++++++++
++EOF
+ while read cmd args
+ do
+ 	test_expect_success "$cmd --stat=3Dwidth with big change is more bala=
+nced" '
+@@ -171,6 +219,14 @@ do
+ 		grep " | " output >actual &&
+ 		test_cmp expect actual
+ 	'
++
++	test "$cmd" !=3D diff || continue
++
++	test_expect_success "$cmd --stat=3Dwidth --graph with big change is b=
+alanced" '
++		git $cmd $args --stat-width=3D60 --graph >output &&
++		grep " | " output >actual &&
++		test_cmp expect-graph actual
++	'
+ done <<\EOF
+ format-patch -1 --stdout
+ diff HEAD^ HEAD --stat
+@@ -181,9 +237,15 @@ EOF
+ cat >expect80 <<'EOF'
+  ...aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa | 1000 +++++++++++=
++++++++++
+ EOF
++cat >expect80-graph <<'EOF'
++|  ...aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa | 1000 +++++++++=
++++++++++++
++EOF
+ cat >expect200 <<'EOF'
+  aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa | 1000 ++++++++++=
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++=
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ EOF
++cat >expect200-graph <<'EOF'
++|  aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa | 1000 ++++++++=
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++=
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++EOF
+ while read verb expect cmd args
+ do
+ 	test_expect_success "$cmd $verb COLUMNS (long filename)" '
+@@ -191,6 +253,14 @@ do
+ 		grep " | " output >actual &&
+ 		test_cmp "$expect" actual
+ 	'
++
++	test "$cmd" !=3D diff || continue
++
++	test_expect_success "$cmd --graph $verb COLUMNS (long filename)" '
++		COLUMNS=3D200 git $cmd $args --graph >output
++		grep " | " output >actual &&
++		test_cmp "$expect-graph" actual
++	'
+ done <<\EOF
+ ignores expect80 format-patch -1 --stdout
+ respects expect200 diff HEAD^ HEAD --stat
 --=20
 1.7.3.4
