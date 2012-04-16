@@ -1,110 +1,107 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 4/7] t4052: Adjust --graph --stat output for prefixes
-Date: Mon, 16 Apr 2012 11:48:22 -0700
-Message-ID: <7vzkabtsw9.fsf@alter.siamese.dyndns.org>
+Subject: Re: [PATCH v3 2/7] Add output_prefix_length to diff_options
+Date: Mon, 16 Apr 2012 11:48:36 -0700
+Message-ID: <7vsjg3tsvv.fsf@alter.siamese.dyndns.org>
 References: <1334573095-32286-1-git-send-email-lucian.poston@gmail.com>
- <1334573095-32286-5-git-send-email-lucian.poston@gmail.com>
+ <1334573095-32286-3-git-send-email-lucian.poston@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org,
-	Zbigniew =?utf-8?Q?J=C4=99drzejewski-Szmek?= <zbyszek@in.waw.pl>,
-	"Junio C Hamano" <gitster@pobox.com>
+Cc: git@vger.kernel.org
 To: Lucian Poston <lucian.poston@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Apr 16 20:48:32 2012
+X-From: git-owner@vger.kernel.org Mon Apr 16 20:48:44 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SJqyU-0001TG-Tw
-	for gcvg-git-2@plane.gmane.org; Mon, 16 Apr 2012 20:48:31 +0200
+	id 1SJqyi-0001ef-B4
+	for gcvg-git-2@plane.gmane.org; Mon, 16 Apr 2012 20:48:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753822Ab2DPSsZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Apr 2012 14:48:25 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:46395 "EHLO
+	id S1755027Ab2DPSsj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Apr 2012 14:48:39 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:46454 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752675Ab2DPSsZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Apr 2012 14:48:25 -0400
+	id S1752869Ab2DPSsi (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Apr 2012 14:48:38 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A376962A5;
-	Mon, 16 Apr 2012 14:48:24 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 505BF62AE;
+	Mon, 16 Apr 2012 14:48:38 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:message-id:mime-version:content-type;
-	 s=sasl; bh=atKFfEMxtggk2rkRtBmtDjHeqm8=; b=UaoP++bxPL9uQ1FoqudI
-	6OFP3dXafPOiKqDWOa1tvM4J89m92l+Owhl2FnliR5sPYUZK6yl8XiSKqMExL2Gv
-	pYSUgmhBVbJtpweMdX5blZjuyh9N8M24ViV13S2Vyzae7MpyoaaE6+xoI3hEEonY
-	b9Vl4rUIhsrjxHJgFdMMHKw=
+	 s=sasl; bh=R6q1FtvEuv8UxzZ92tGVtwQcTnc=; b=UOp5B6xvQUM4g0pvicJA
+	MMBim6A6KCQ9vIadOl0buPQTMHa+hnoz2QriOIhiEjbUZsQAhaoSrIAGTmKq4fXQ
+	FUS3zXUOSjG9c6Wu3pVWiyg59n+jcSYemiMCUfOCEvDnn+eFmn0Ixn937pAKkG44
+	MsC/rIw0qNdBKhK+3BA9YUc=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:message-id:mime-version:content-type;
-	 q=dns; s=sasl; b=kYoxIVw2eYlozaP2bHOnS+cFqTHi44LGyDjXej9ZxxL60n
-	HKisIQPiCOhxQu01dF5FkaVGMEellULhvecMHhxa0MhwK+PFw5ae9LWFk/wXInnG
-	YLzbVKoS7q8RAJc1+4X/I4DYgtCypBWPrmEmRMMt2yO1+gGteCkg3XeugLzE0=
+	 q=dns; s=sasl; b=ea4cG2gPHmCvmY0IXPIoaDk6FqNVF9mAx0Sq2Hb4rc4QDc
+	1sJdhdgpkd8zyKfLWN8hU48qyGM2VYdYGMHT5NWHAETvgKmRla/zKsRSUSAlRSnm
+	XSylVe0zTcRXJxgtR//NWLXUdNksanqwhNIlCTeEI6vJ7tELIhmbTUFbpiVVk=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9B25E62A4;
-	Mon, 16 Apr 2012 14:48:24 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 47DF262AC;
+	Mon, 16 Apr 2012 14:48:38 -0400 (EDT)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2AF5B62A3; Mon, 16 Apr 2012
- 14:48:24 -0400 (EDT)
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id CB21862AB; Mon, 16 Apr 2012
+ 14:48:37 -0400 (EDT)
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: BEDEB28C-87F4-11E1-A43A-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: C7026CC4-87F4-11E1-BFE4-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195678>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195679>
 
 Lucian Poston <lucian.poston@gmail.com> writes:
 
-> Adjust tests to verify that the commit history graph tree is taken into
-> consideration when the diff stat output width is calculated.
+> Add output_prefix_length to diff_options. Initialize the value to 0 and only
+> set it when graph.c:diff_output_prefix_callback() is called.
 >
 > Signed-off-by: Lucian Poston <lucian.poston@gmail.com>
 > ---
->  t/t4052-stat-output.sh |   34 +++++++++++++++++++++++++---------
->  1 files changed, 25 insertions(+), 9 deletions(-)
->
-> diff --git a/t/t4052-stat-output.sh b/t/t4052-stat-output.sh
-> index da14984..d748e5e 100755
-> --- a/t/t4052-stat-output.sh
-> +++ b/t/t4052-stat-output.sh
-> @@ -89,7 +89,7 @@ cat >expect200 <<'EOF'
->   abcd | 1000 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
->  EOF
->  cat >expect200-graph <<'EOF'
-> -|  abcd | 1000 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-> +|  abcd | 1000 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
->  EOF
+>  diff.h  |    1 +
+>  graph.c |    3 +++
+>  2 files changed, 4 insertions(+), 0 deletions(-)
 
-This change is easily explainable.  Earlier, the code did not take the "|
-" part at the very left end (i.e. ancestry graph) and drew the --stat
-output too wide by two columns, but now the code is updated to compensate
-for that, because "200" is coming from COLUMNS to clip the whole width,
-not just the stat-width part.
+This patch is a no-op, as nobody pays attention to the value this field
+contains.  I think it is better to squash this with 3/7 where you
+introduce the only user of this field.
 
->  while read verb expect cmd args
->  do
-> @@ -117,7 +117,7 @@ cat >expect40 <<'EOF'
->   abcd | 1000 ++++++++++++++++++++++++++
->  EOF
->  cat >expect40-graph <<'EOF'
-> -|  abcd | 1000 ++++++++++++++++++++++++++
-> +|  abcd | 1000 ++++++++++++++++++++++++
->  EOF
+Also when that happens, you would need to adjust the test vector, which
+may mean that you need to squash the result with 4/7 as well.
 
-Likewise.
-
->  while read verb expect cmd args
->  do
-> @@ -127,12 +127,6 @@ do
->  		test_cmp "$expect" actual
->  	'
+> diff --git a/diff.h b/diff.h
+> index cb68743..19d762f 100644
+> --- a/diff.h
+> +++ b/diff.h
+> @@ -150,6 +150,7 @@ struct diff_options {
+>  	diff_format_fn_t format_callback;
+>  	void *format_callback_data;
+>  	diff_prefix_fn_t output_prefix;
+> +	int output_prefix_length;
+>  	void *output_prefix_data;
+>  };
 >  
-> -	test_expect_success "$cmd $verb statGraphWidth config" '
-> -		git -c diff.statGraphWidth=26 $cmd $args >output
-> -		grep " | " output >actual &&
-> -		test_cmp "$expect" actual
-> -	'
-> -
-
-This is unclear.  Why does this need to be removed?
+> diff --git a/graph.c b/graph.c
+> index 7358416..7e0a099 100644
+> --- a/graph.c
+> +++ b/graph.c
+> @@ -194,8 +194,10 @@ static struct strbuf *diff_output_prefix_callback(struct diff_options *opt, void
+>  	struct git_graph *graph = data;
+>  	static struct strbuf msgbuf = STRBUF_INIT;
+>  
+> +	assert(opt);
+>  	assert(graph);
+>  
+> +	opt->output_prefix_length = graph->width;
+>  	strbuf_reset(&msgbuf);
+>  	graph_padding_line(graph, &msgbuf);
+>  	return &msgbuf;
+> @@ -245,6 +247,7 @@ struct git_graph *graph_init(struct rev_info *opt)
+>  	 */
+>  	opt->diffopt.output_prefix = diff_output_prefix_callback;
+>  	opt->diffopt.output_prefix_data = graph;
+> +	opt->diffopt.output_prefix_length = 0;
+>  
+>  	return graph;
+>  }
