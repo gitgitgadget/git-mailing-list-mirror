@@ -1,131 +1,79 @@
-From: Kacper Kornet <draenog@pld-linux.org>
-Subject: Re: [PATCH] gitweb: Option to omit column with time of the last
- change
-Date: Mon, 16 Apr 2012 12:12:42 +0200
-Message-ID: <20120416101242.GK17753@camk.edu.pl>
-References: <20120403132735.GA12389@camk.edu.pl>
- <201204041631.42905.jnareb@gmail.com>
- <20120404162208.GN10461@camk.edu.pl>
- <201204141516.02719.jnareb@gmail.com>
+From: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
+Subject: Re: [PATCH] tests: add tests for the bash prompt functions in the
+	completion script
+Date: Mon, 16 Apr 2012 12:20:14 +0200
+Message-ID: <20120416102014.GF2900@goldbirke>
+References: <1334521909-32581-1-git-send-email-szeder@ira.uka.de>
+	<CAMP44s3LJO_Ryc-ONjF+rEHCb1hB8+4Muar6pzjD3zrazYqK+A@mail.gmail.com>
+	<20120416094938.GE2900@goldbirke>
+	<CAMP44s0vkH9iE4MoV7HgGwOXna40pAL=h6be13qdreexp5_14w@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-2
-Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Apr 16 12:13:01 2012
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Thomas Rast <trast@student.ethz.ch>, Jeff King <peff@peff.net>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Apr 16 12:20:29 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SJivc-0001H4-Ev
-	for gcvg-git-2@plane.gmane.org; Mon, 16 Apr 2012 12:13:00 +0200
+	id 1SJj2q-0006wb-Ho
+	for gcvg-git-2@plane.gmane.org; Mon, 16 Apr 2012 12:20:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752656Ab2DPKM4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Apr 2012 06:12:56 -0400
-Received: from moat.camk.edu.pl ([148.81.175.50]:45498 "EHLO moat.camk.edu.pl"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752170Ab2DPKMz (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Apr 2012 06:12:55 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by moat.camk.edu.pl (Postfix) with ESMTP id 2F5C95F0049;
-	Mon, 16 Apr 2012 12:13:48 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at camk.edu.pl
-Received: from moat.camk.edu.pl ([127.0.0.1])
-	by localhost (liam.camk.edu.pl [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id WirOPUpSkRbn; Mon, 16 Apr 2012 12:13:36 +0200 (CEST)
-Received: from gatekeeper2.camk.edu.pl (gatekeeper.camk.edu.pl [192.168.1.23])
-	by moat.camk.edu.pl (Postfix) with ESMTP id 88C625F0047;
-	Mon, 16 Apr 2012 12:13:36 +0200 (CEST)
-Received: by gatekeeper2.camk.edu.pl (Postfix, from userid 1293)
-	id 5A63D4669F; Mon, 16 Apr 2012 12:12:42 +0200 (CEST)
+	id S1752662Ab2DPKUT convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 16 Apr 2012 06:20:19 -0400
+Received: from moutng.kundenserver.de ([212.227.17.10]:59393 "EHLO
+	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752415Ab2DPKUS (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Apr 2012 06:20:18 -0400
+Received: from localhost6.localdomain6 (p5B130635.dip0.t-ipconnect.de [91.19.6.53])
+	by mrelayeu.kundenserver.de (node=mreu1) with ESMTP (Nemesis)
+	id 0LehOU-1RvtoX0kGc-00prXa; Mon, 16 Apr 2012 12:20:15 +0200
 Content-Disposition: inline
-In-Reply-To: <201204141516.02719.jnareb@gmail.com>
+In-Reply-To: <CAMP44s0vkH9iE4MoV7HgGwOXna40pAL=h6be13qdreexp5_14w@mail.gmail.com>
 User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Provags-ID: V02:K0:3+gAPi+SEtIOdUP9fy+uhqjGDENHQhWfoongqyGVear
+ ZoXIu7rhWgYAHEOCRCQhsUsKhqzp0eEjk1fZechw2YY9z+aI+R
+ Pggm1+AeKjg+lv4Rrj4mQM2i397zf5cYyo/QY0pbj8aMiWGbZp
+ HO3bkBl6seU9pzqny93dLL78Lle9V9xmGYC723ovQ4TvmdQxAH
+ QucmqB1bE/6zm8Q+vuM4jZtZ2lV5R1o64t0a/yV6AZrCpafQKv
+ iVp+I7uH5/5JxAq1FQh1b6LEaW5EbnQDWpfETfcZTXHJ7iQIi9
+ r32pyPdIgRH1JntaY1g0O9qxr/m1g8wNrRjjTtwApzVepPlivz
+ YK8m/dhVySkrG4rz8e30=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195607>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195608>
 
-On Sat, Apr 14, 2012 at 03:16:01PM +0200, Jakub Narebski wrote:
-> On Wed, 4 Apr 2012, Kacper Kornet wrote:
-> > On Wed, Apr 04, 2012 at 04:31:42PM +0200, Jakub Narebski wrote:
-> >> On Wed, 4 April 2012, Kacper Kornet wrote:
-> >>> On Wed, Apr 04, 2012 at 01:12:01AM +0200, Jakub Narebski wrote:
-> >>>> On Tue, 3 Apr 2012, Kacper Kornet wrote:
+On Mon, Apr 16, 2012 at 01:04:41PM +0300, Felipe Contreras wrote:
+> >> specially since there's the plan of splitting the prompt stuff to =
+a
+> >> separate file.
+> >
+> > Oh, I was not aware of such a plan. =A0What would be the benefits o=
+f
+> > such a move, why is it necessary? =A0Where would you split it up? =A0=
+In
+> > particular, what would happen with __gitdir(), which is used in man=
+y
+> > completion functions and in __git_ps1() as well?
+>=20
+> I guess __gitdir() would be duplicated, I don't think that has been d=
+iscussed.
+>=20
+> http://thread.gmane.org/gmane.comp.version-control.git/194188
+>=20
+> Basically splitting helps for systems that use bash-completion, and
+> also helps for zsh users who don't want the bash completion, but stil=
+l
+> want __git_ps1(). I split the file myself for this reason.
 
-> >> Perhaps it would be better to say it like this:
-
-> >>   $no_list_age::
-> >>   	If true, omit the column with date of the most current commit on the
-> >>   	projects list page. [...]
-
-> >> It is true that it can save a bit of I/O: the git_get_last_activity()
-> >> examines all branches (some of which are usually loose), and must hit
-> >> the object database, unpacking/getting commit objects to get at commit
-> >> date.
-
-> >> But the fact that it also saves a fork (a git command call) per repository
-> >> reminds me of something which I missed in first round of review, namely
-> >> that generating 'age' and 'age_string' fields serve also as a check if
-> >> repository really exist.
-
-> >> So either we document this fact, or use some other way to verify that
-> >> git repository is valid.
-
-> > I think that git_project_list_body always works with the list returned
-> > by git_get_projects_list. And git_get_projects_list validates if the
-> > path is a git repository. So it should not be a problem. Please correct
-> > me, if I am wrong.
-
-> If $projects_list points to plain file, git_get_projects_list() just
-> gets list of projects (and project owners) from $projects_list file
-> by reading and parsing this file.  No verification that repository
-> exists is done.
-
-I think that even in this case check_export_ok is called. But there is
-still the problem you have mentioned below.
-
-> If $projects_list points to directory (which is the default), then
-> git_get_projects_list() scans starting from $projects_list directory
-> for somtehing that _looks like_ git repository with check_head_link()
-> via check_export_ok().  But you still can encounter something that
-> looks like git repository (has "HEAD" file in it), but isn't.
+Thanks for the pointer, those are valid reasons.  I'll wait a day or
+two for feedback, then resubmit as a different test script.
 
 
-> So we would probably want to have said variable or set of variables
-> describe three states:
-
-> * find date of last change in repository with git-for-each-ref called
->   by git_get_last_activity(), which as a side effect verifies that
->   repository actually exist.  
-
->   git_get_last_activity() returns empty list in list context if repo
->   does not exist, hence
-
->   	my (@activity) = git_get_last_activity($pr->{'path'});
->   	unless (@activity) {
->   		next PROJECT;
->   	}
-
-> * verify that repository exists with "git rev-parse --git-dir" or
->   "git rev-parse --verify HEAD", or "git symbolic-ref HEAD", redirecting
->   stderr to /dev/null (we would probably want to save output of the
->   latter two somewhere to use it later).
-
->   That saves I/O, but not fork.
-
-> * don't verify that repository exists.
-
-> Though perhaps the last possibility isn't a good idea, so it would be
-> left two-state, as in your patch. 
-
-My tests show that forks are also a bottleneck in my setup. On the other
-hand I think that I can trust that my projects.list contains only valid
-repositories. So I would prefer to have a don't verify option. Or there
-is a possibility to write perl function with the same functionality as
-is_git_directory() from setup.c and use it to verify if the directory is a
-valid git repo.
-
--- 
-  Kacper Kornet
+G=E1bor
