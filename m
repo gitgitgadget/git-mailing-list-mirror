@@ -1,81 +1,117 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: GSoC - Some questions on the idea of
-Date: Mon, 16 Apr 2012 10:54:50 -0400
-Message-ID: <20120416145450.GA14724@sigill.intra.peff.net>
-References: <4F76E430.6020605@gmail.com>
- <4F772E48.3030708@gmail.com>
- <20120402210708.GA28926@sigill.intra.peff.net>
- <4F84DD60.20903@gmail.com>
- <20120411213522.GA28199@sigill.intra.peff.net>
- <4F872D24.8010609@gmail.com>
- <20120412210315.GC21018@sigill.intra.peff.net>
- <4F8A2EBD.1070407@gmail.com>
- <20120415021550.GA24102@sigill.intra.peff.net>
- <4F8A3381.803@gmail.com>
+From: Marc Branchaud <marcnarc@xiplink.com>
+Subject: Re: [PATCHv2] fetch: Only call a new ref a "branch" if it's under
+ refs/heads/.
+Date: Mon, 16 Apr 2012 10:58:21 -0400
+Message-ID: <4F8C338D.1050805@xiplink.com>
+References: <1334336904-18649-1-git-send-email-marcnarc@xiplink.com> <20120413211350.GD7919@sigill.intra.peff.net> <20120413215316.GA19826@burratino> <7vy5pz1cjk.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Neal Kreitzinger <nkreitzinger@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Apr 16 16:55:01 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Jonathan Nieder <jrnieder@gmail.com>, Jeff King <peff@peff.net>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Apr 16 16:57:50 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SJnKV-0000yn-86
-	for gcvg-git-2@plane.gmane.org; Mon, 16 Apr 2012 16:54:59 +0200
+	id 1SJnNF-00035v-IJ
+	for gcvg-git-2@plane.gmane.org; Mon, 16 Apr 2012 16:57:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754432Ab2DPOyy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Apr 2012 10:54:54 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:36231
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753431Ab2DPOyx (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Apr 2012 10:54:53 -0400
-Received: (qmail 23998 invoked by uid 107); 16 Apr 2012 14:55:01 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 16 Apr 2012 10:55:01 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 16 Apr 2012 10:54:50 -0400
-Content-Disposition: inline
-In-Reply-To: <4F8A3381.803@gmail.com>
+	id S1753597Ab2DPO5p (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Apr 2012 10:57:45 -0400
+Received: from smtp154.ord.emailsrvr.com ([173.203.6.154]:48349 "EHLO
+	smtp154.ord.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753457Ab2DPO5o (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Apr 2012 10:57:44 -0400
+X-Greylist: delayed 1901 seconds by postgrey-1.27 at vger.kernel.org; Mon, 16 Apr 2012 10:57:44 EDT
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by smtp17.relay.ord1a.emailsrvr.com (SMTP Server) with ESMTP id B7EF619047C;
+	Mon, 16 Apr 2012 10:57:43 -0400 (EDT)
+X-Virus-Scanned: OK
+Received: by smtp17.relay.ord1a.emailsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id 5D89B19037A;
+	Mon, 16 Apr 2012 10:57:43 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:11.0) Gecko/20120329 Thunderbird/11.0.1
+In-Reply-To: <7vy5pz1cjk.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195639>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195640>
 
-On Sat, Apr 14, 2012 at 09:33:37PM -0500, Neal Kreitzinger wrote:
+On 12-04-13 06:39 PM, Junio C Hamano wrote:
+> Jonathan Nieder <jrnieder@gmail.com> writes:
+> 
+>> Jeff King wrote:
+>>
+>>> Hmm. The ref->name we are comparing here is the local side. So if I am
+>>> fetching a new branch "foo" from the remote into a local
+>>> "refs/remotes/origin/foo" tracking ref, it used to say:
+>>>
+>>>     From ../parent
+>>>      * [new branch]      master     -> origin/master
+>>>
+>>> Now it says:
+>>>
+>>>     From ../parent
+>>>      * [new ref]         master     -> origin/master
+>>>
+>>> while refs/remotes/* are not technically branches in our side, I think
+>>> from the user's perspective, it is true that we have fetched a branch.
+>>> Should we be calling refs/remotes/* branches, too? Should we be checking
+>>> the remote's name for the item instead of the local one?
+>>
+>> The former sounds sensible.  Then once the default refspec learns to
+>> fetch into separate refs/remotes/origin/heads/* and
+>> refs/remotes/origin/notes/* namespaces the logic could be updated to
+>> write [new branch] or [new note collection] according to the
+>> situation.
+> 
+> If we give 'new branch' label for this case because we store it in our
+> 'refs/remotes/*', a natural extension of it would be to redefine the rule
+> to narrow it to 'refs/remotes/*/heads/*' for using 'branch' when we
+> introduce 'new notes collection' label to give refs we are going to store
+> in 'refs/remotes/origin/notes/*'.  That is consistent with the former.
+> 
+> If we give 'new branch' label because refs/heads/master on the originating
+> end is what is shown on the line, a natural extension would be to use 'new
+> notes collection' label when we are fetching from refs/notes/* on the
+> originating end, and it does not matter where we store it, either our own
+> refs/notes/* or refs/remotes/origin/notes/*.  That is consistent with the
+> latter.
+> 
+> There is no concensus if refs/remotes/origin/notes/* hierarchy is a good
+> idea or not, but your argument does not support either side between the
+> former or the latter anyway, so I think it is irrelevant point to raise in
+> this discussion.
+> 
+> The choice between the two really depends on what information we are
+> trying to convey with this label.  Are we saying "Hey, we now have a new
+> 'branch' on our side"?  Or are we saying "We found a new 'branch' over
+> there"?  It is unclear and you can argue both ways. Although I personally
+> think it is the latter, I do not have a strong opinion either way.
 
-> We use git to transfer database files from the dev server to
-> qa-servers.  Sometimes these barf for some reason and I get called to
-> remediate.  I assumed the user closed their session prematurely
-> because it was "taking too long".  However, now I'm wondering if the
-> git-pull --ff-only is dying on its own due to the big-files.  It
-> could be that on a qa-server that hasn't updated database files in
-> awhile they are pulling way more than another qa-server that does
-> their git-pull more requently.  How would I go about troubleshooting
-> this?  Is there some log files I would look at?  (I'm using git 1.7.1
-> compiled with git makefile on rhel6.)
+I think git should describe what it finds in the remote repo, because as a
+published repo it's refs are more likely to follow the standard layout.
 
-No, git doesn't keep logfiles. Errors go to stderr. So look wherever the
-stderr for your git sessions is going (if you are doing this via cron
-job or something, then that is outside the scope of git).
+The local repo is more likely to be configured with a fetch refspec like
+	+refs/heads/*:refs/crazy/*
+In such a case there's no point in keying off of the local names.
 
-> When I go to remediate do git-reset --hard to clear out the barfed
-> worktree/index and then run git-pull --ff-only manually and it always
-> works.  I'm not sure if that proves it wasn't git that barfed the
-> first time.  Maybe the first time git brought some stuff over and
-> barfed because it bit off more than it could chew, but the second time
-> its really having to chew less food because it already chewed some of
-> it the first time and therefore works the second time.
+Git is better off describing what's appeared in the remote repo, and not
+worrying about describing how the user might've mapped those things to local
+refs.
 
-Try "git pull --no-progress" and see if it still works. If the server
-has a very long delta-compression phase, there will be no output
-generated for a while, which could cause intermediate servers to hang up
-(git won't do this, but if, for example, you are pulling over
-git-over-http and there is a reverse proxy in the middle, it may hit a
-timeout). If the automated pulls are happening from a cron job, then
-they won't have a terminal and progress-reporting will be off by
-default.
+(That said, patching fetch.c to do that is a bit beyond me at the moment.
+Where would I find the remote's name for the ref?)
 
--Peff
+> I am actually fine with just saying '[new]' without indicating what kind
+> at all, because the label is there only to fill the space where old..new
+> object names are usually shown.  We don't even say "[rejected branch]",
+> just "[rejected]" in the same place.
+
+I'd be disappointed if git didn't take the extra step to tell me a bit more
+about what's going on.  I like to see what kinds of new refs the remote has.
+
+		M.
