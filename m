@@ -1,101 +1,80 @@
 From: Jeff King <peff@peff.net>
-Subject: [RFC/PATCH 1/2] update-index: add --clear option
-Date: Mon, 16 Apr 2012 12:02:32 -0400
-Message-ID: <20120416160232.GA1350@sigill.intra.peff.net>
+Subject: [RFC/PATCH 2/2] docs/filter-branch: clean up newsubdir example
+Date: Mon, 16 Apr 2012 12:03:00 -0400
+Message-ID: <20120416160300.GB1350@sigill.intra.peff.net>
 References: <20120416152737.GB14724@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: Christopher Tiwald <christiwald@gmail.com>, git@vger.kernel.org
 To: Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Mon Apr 16 18:02:51 2012
+X-From: git-owner@vger.kernel.org Mon Apr 16 18:03:15 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SJoO8-0005sm-7A
-	for gcvg-git-2@plane.gmane.org; Mon, 16 Apr 2012 18:02:48 +0200
+	id 1SJoOX-0006C8-Ll
+	for gcvg-git-2@plane.gmane.org; Mon, 16 Apr 2012 18:03:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751397Ab2DPQCh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Apr 2012 12:02:37 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:36321
+	id S1751526Ab2DPQDG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Apr 2012 12:03:06 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:36326
 	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750890Ab2DPQCg (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Apr 2012 12:02:36 -0400
-Received: (qmail 25304 invoked by uid 107); 16 Apr 2012 16:02:44 -0000
+	id S1751513Ab2DPQDD (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Apr 2012 12:03:03 -0400
+Received: (qmail 25334 invoked by uid 107); 16 Apr 2012 16:03:11 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 16 Apr 2012 12:02:44 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 16 Apr 2012 12:02:32 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 16 Apr 2012 12:03:11 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 16 Apr 2012 12:03:00 -0400
 Content-Disposition: inline
 In-Reply-To: <20120416152737.GB14724@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195654>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195655>
 
-This just discards existing entries from the index, which
-can be useful if you are rewriting all entries with
-"--index-info" or similar.
+Over the years, this simple example has ended up quite hard
+to read because of the number of special cases that must be
+handled. Let's simplify it a bit:
+
+  1. Use the new "index-info --clear" to avoid the need for
+     a temporary index.
+
+  2. Use "-z" and "perl -0" to avoid dealing with quoting
+     issues. As a bonus, using perl means that "\t" will
+     work consistently in regexps (the previous example
+     using sed was reported to fail on OS X).
+
+  3. Change the indentation to keep one logical unit per
+     line and avoid extra backslash-escaping.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
-I tried to make something like:
+ Documentation/git-filter-branch.txt |   10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-  git update-index --from-scratch --index-info
-
-work by avoiding reading all entries in the first place. However,
-update-index actually processes its arguments sequentially, so we _must_
-read the index before we start processing arguments. But because it's
-sequential, a "clear" operation makes sense, since you clear, then add
-new entries.
-
- Documentation/git-update-index.txt |    3 +++
- builtin/update-index.c             |   10 ++++++++++
- 2 files changed, 13 insertions(+)
-
-diff --git a/Documentation/git-update-index.txt b/Documentation/git-update-index.txt
-index a3081f4..47f0ae6 100644
---- a/Documentation/git-update-index.txt
-+++ b/Documentation/git-update-index.txt
-@@ -71,6 +71,9 @@ OPTIONS
- --cacheinfo <mode> <object> <path>::
- 	Directly insert the specified info into the index.
+diff --git a/Documentation/git-filter-branch.txt b/Documentation/git-filter-branch.txt
+index 0f2f117..3df138f 100644
+--- a/Documentation/git-filter-branch.txt
++++ b/Documentation/git-filter-branch.txt
+@@ -358,11 +358,11 @@ git filter-branch ... D..H --not C
+ To move the whole tree into a subdirectory, or remove it from there:
  
-+--clear::
-+	Discard all existing entries from the index.
-+
- --index-info::
-         Read index information from stdin.
+ ---------------------------------------------------------------
+-git filter-branch --index-filter \
+-	'git ls-files -s | sed "s-\t\"*-&newsubdir/-" |
+-		GIT_INDEX_FILE=$GIT_INDEX_FILE.new \
+-			git update-index --index-info &&
+-	 mv "$GIT_INDEX_FILE.new" "$GIT_INDEX_FILE"' HEAD
++git filter-branch --index-filter '
++	git ls-files -sz |
++	perl -0pe "s{\t}{\tnewsubdir/}" |
++	git update-index -z --clear --index-info
++' HEAD
+ ---------------------------------------------------------------
  
-diff --git a/builtin/update-index.c b/builtin/update-index.c
-index a6a23fa..559dfae 100644
---- a/builtin/update-index.c
-+++ b/builtin/update-index.c
-@@ -645,6 +645,13 @@ static int cacheinfo_callback(struct parse_opt_ctx_t *ctx,
- 	return 0;
- }
  
-+static int clear_callback(const struct option *opt,
-+			  const char *arg, int unset)
-+{
-+	discard_cache();
-+	return 0;
-+}
-+
- static int stdin_cacheinfo_callback(struct parse_opt_ctx_t *ctx,
- 			      const struct option *opt, int unset)
- {
-@@ -774,6 +781,9 @@ int cmd_update_index(int argc, const char **argv, const char *prefix)
- 			"add entries from standard input to the index",
- 			PARSE_OPT_NONEG | PARSE_OPT_NOARG,
- 			(parse_opt_cb *) stdin_cacheinfo_callback},
-+		{OPTION_CALLBACK, 0, "clear", NULL, NULL,
-+			"drop all index entries", PARSE_OPT_NONEG | PARSE_OPT_NOARG,
-+			clear_callback},
- 		{OPTION_LOWLEVEL_CALLBACK, 0, "unresolve", &has_errors, NULL,
- 			"repopulate stages #2 and #3 for the listed paths",
- 			PARSE_OPT_NONEG | PARSE_OPT_NOARG,
 -- 
 1.7.9.6.8.g992e5
