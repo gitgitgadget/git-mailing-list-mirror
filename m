@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH i18n 07/11] i18n: remote: mark strings for translation
-Date: Mon, 16 Apr 2012 19:49:59 +0700
-Message-ID: <1334580603-11577-8-git-send-email-pclouds@gmail.com>
+Subject: [PATCH i18n 08/11] i18n: apply: mark strings for translation
+Date: Mon, 16 Apr 2012 19:50:00 +0700
+Message-ID: <1334580603-11577-9-git-send-email-pclouds@gmail.com>
 References: <1334580603-11577-1-git-send-email-pclouds@gmail.com>
 Cc: =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0?= <avarab@gmail.com>,
 	Jiang Xin <worldhello.net@gmail.com>,
@@ -10,708 +10,716 @@ Cc: =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0?= <avarab@gmail.com>,
 	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Apr 16 14:52:19 2012
+X-From: git-owner@vger.kernel.org Mon Apr 16 14:52:30 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SJlPl-0007ET-U6
-	for gcvg-git-2@plane.gmane.org; Mon, 16 Apr 2012 14:52:18 +0200
+	id 1SJlPw-0007LD-BY
+	for gcvg-git-2@plane.gmane.org; Mon, 16 Apr 2012 14:52:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753980Ab2DPMwM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Apr 2012 08:52:12 -0400
-Received: from mail-pz0-f52.google.com ([209.85.210.52]:62670 "EHLO
-	mail-pz0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753774Ab2DPMwK (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Apr 2012 08:52:10 -0400
-Received: by dake40 with SMTP id e40so6882057dak.11
-        for <git@vger.kernel.org>; Mon, 16 Apr 2012 05:52:10 -0700 (PDT)
+	id S1753996Ab2DPMwX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Apr 2012 08:52:23 -0400
+Received: from mail-pb0-f46.google.com ([209.85.160.46]:52864 "EHLO
+	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753619Ab2DPMwV (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Apr 2012 08:52:21 -0400
+Received: by mail-pb0-f46.google.com with SMTP id un15so6309124pbc.19
+        for <git@vger.kernel.org>; Mon, 16 Apr 2012 05:52:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=wbL6feV3g//kGolt5D9SNNKKbK12GuAeULN6CDvdwSY=;
-        b=uWq9slsu+XzrKg6T3p4d2Ih+Ud0U0pbLiucz6qpZVfFMrlM9wsnwtd7155chB8TVd1
-         kpO/+umW/SE7h4w0di4H1XBOlZSp6NIltaNS5Aq0U8Jmty+BSQxwQJFaF/9uDSr/m5yO
-         VopJWVOBUoL1n9HFtTe5OFxGpikjTprw8b74nkni+yrQ6nPQDLOytupx/xgoJd0HeFfN
-         y1zjDJmOUOavuKm+6ljVGVFMDubzfPAIWl0JgYU7LDupCFZN5Uk+IpXQH9Bn/MzXMvkv
-         I+9MrLfzrv38pLH+5kcPaqt8zG/TtVfOSevebD7jzfe8mXch6vgfYRdD4G1PAdwwbnFq
-         6zig==
-Received: by 10.68.225.195 with SMTP id rm3mr27605480pbc.96.1334580730257;
-        Mon, 16 Apr 2012 05:52:10 -0700 (PDT)
+        bh=+GOPlBkI/saXHZ6jOM8/GQw2rzOirqX6TPg4Xy31R/8=;
+        b=ko02BhyRnbX6R9+z2lGXAO786k4ulL7Mu6QlE6jMh+iWyZmSb9Z7WCeJZaF7a1gpGI
+         MK8dgasjVYtgPjkDw4AFYruMJD6dgKcGYrb6OMyhqGNA7FmbEO5+jx6JHmQPyUH4RZsf
+         MyDM7ZZJKiMvB9yu/+mPxIFCRSAfePZojGpBWqVkub18nlergIH1UVKrvDe9PEAx4iyX
+         +w5y/Wu235VQlfsw5M5M/gf6RJ6ZQUyOnauenudPEac2W7A21ZAxgaQGmebRUNyO7PVI
+         0KssSNaEo4xSGc0oA1+qQUzjCw35LjgNKFQTov76L5yxW+kNpYGBo4xPwRECG5Es/Oro
+         BgGQ==
+Received: by 10.68.72.138 with SMTP id d10mr28111166pbv.15.1334580741268;
+        Mon, 16 Apr 2012 05:52:21 -0700 (PDT)
 Received: from pclouds@gmail.com ([113.161.77.29])
-        by mx.google.com with ESMTPS id vr9sm3092483pbc.38.2012.04.16.05.52.04
+        by mx.google.com with ESMTPS id va9sm11529546pbc.66.2012.04.16.05.52.15
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 16 Apr 2012 05:52:09 -0700 (PDT)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Mon, 16 Apr 2012 19:51:17 +0700
+        Mon, 16 Apr 2012 05:52:20 -0700 (PDT)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Mon, 16 Apr 2012 19:51:29 +0700
 X-Mailer: git-send-email 1.7.3.1.256.g2539c.dirty
 In-Reply-To: <1334580603-11577-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195630>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195631>
 
 ---
- builtin/remote.c |  252 ++++++++++++++++++++++++++++-------------------------
- 1 files changed, 133 insertions(+), 119 deletions(-)
+ builtin/apply.c |  226 ++++++++++++++++++++++++++++---------------------------
+ 1 files changed, 114 insertions(+), 112 deletions(-)
 
-diff --git a/builtin/remote.c b/builtin/remote.c
-index 1b03473..db28750 100644
---- a/builtin/remote.c
-+++ b/builtin/remote.c
-@@ -8,18 +8,18 @@
- #include "refs.h"
- 
- static const char * const builtin_remote_usage[] = {
--	"git remote [-v | --verbose]",
--	"git remote add [-t <branch>] [-m <master>] [-f] [--mirror=<fetch|push>] <name> <url>",
--	"git remote rename <old> <new>",
--	"git remote rm <name>",
--	"git remote set-head <name> (-a | -d | <branch>)",
--	"git remote [-v | --verbose] show [-n] <name>",
--	"git remote prune [-n | --dry-run] <name>",
--	"git remote [-v | --verbose] update [-p | --prune] [(<group> | <remote>)...]",
--	"git remote set-branches [--add] <name> <branch>...",
--	"git remote set-url <name> <newurl> [<oldurl>]",
--	"git remote set-url --add <name> <newurl>",
--	"git remote set-url --delete <name> <url>",
-+	N_("git remote [-v | --verbose]"),
-+	N_("git remote add [-t <branch>] [-m <master>] [-f] [--mirror=<fetch|push>] <name> <url>"),
-+	N_("git remote rename <old> <new>"),
-+	N_("git remote rm <name>"),
-+	N_("git remote set-head <name> (-a | -d | <branch>)"),
-+	N_("git remote [-v | --verbose] show [-n] <name>"),
-+	N_("git remote prune [-n | --dry-run] <name>"),
-+	N_("git remote [-v | --verbose] update [-p | --prune] [(<group> | <remote>)...]"),
-+	N_("git remote set-branches [--add] <name> <branch>..."),
-+	N_("git remote set-url <name> <newurl> [<oldurl>]"),
-+	N_("git remote set-url --add <name> <newurl>"),
-+	N_("git remote set-url --delete <name> <url>"),
+diff --git a/builtin/apply.c b/builtin/apply.c
+index 389898f..6e9a02e 100644
+--- a/builtin/apply.c
++++ b/builtin/apply.c
+@@ -50,7 +50,7 @@ static const char *fake_ancestor;
+ static int line_termination = '\n';
+ static unsigned int p_context = UINT_MAX;
+ static const char * const apply_usage[] = {
+-	"git apply [options] [<patch>...]",
++	N_("git apply [options] [<patch>...]"),
  	NULL
  };
  
-@@ -95,9 +95,9 @@ static int fetch_remote(const char *name)
- 		argv[1] = "-v";
- 		argv[2] = name;
+@@ -103,7 +103,7 @@ static void parse_whitespace_option(const char *option)
+ 		ws_error_action = correct_ws_error;
+ 		return;
  	}
--	printf("Updating %s\n", name);
-+	printf_ln(_("Updating %s"), name);
- 	if (run_command_v_opt(argv, RUN_GIT_CMD))
--		return error("Could not fetch %s", name);
-+		return error(_("Could not fetch %s"), name);
- 	return 0;
+-	die("unrecognized whitespace option '%s'", option);
++	die(_("unrecognized whitespace option '%s'"), option);
  }
  
-@@ -127,8 +127,8 @@ static int add_branch(const char *key, const char *branchname,
+ static void parse_ignorewhitespace_option(const char *option)
+@@ -118,7 +118,7 @@ static void parse_ignorewhitespace_option(const char *option)
+ 		ws_ignore_action = ignore_ws_change;
+ 		return;
+ 	}
+-	die("unrecognized whitespace ignore option '%s'", option);
++	die(_("unrecognized whitespace ignore option '%s'"), option);
  }
  
- static const char mirror_advice[] =
--"--mirror is dangerous and deprecated; please\n"
--"\t use --mirror=fetch or --mirror=push instead";
-+N_("--mirror is dangerous and deprecated; please\n"
-+   "\t use --mirror=fetch or --mirror=push instead");
- 
- static int parse_mirror_opt(const struct option *opt, const char *arg, int not)
- {
-@@ -136,7 +136,7 @@ static int parse_mirror_opt(const struct option *opt, const char *arg, int not)
- 	if (not)
- 		*mirror = MIRROR_NONE;
- 	else if (!arg) {
--		warning("%s", mirror_advice);
-+		warning("%s", _(mirror_advice));
- 		*mirror = MIRROR_BOTH;
+ static void set_default_whitespace_mode(const char *whitespace_option)
+@@ -770,7 +770,7 @@ static int has_epoch_timestamp(const char *nameline)
+ 	if (!stamp) {
+ 		stamp = xmalloc(sizeof(*stamp));
+ 		if (regcomp(stamp, stamp_regexp, REG_EXTENDED)) {
+-			warning("Cannot prepare timestamp regexp %s",
++			warning(_("Cannot prepare timestamp regexp %s"),
+ 				stamp_regexp);
+ 			return 0;
+ 		}
+@@ -779,7 +779,7 @@ static int has_epoch_timestamp(const char *nameline)
+ 	status = regexec(stamp, timestamp, ARRAY_SIZE(m), m, 0);
+ 	if (status) {
+ 		if (status != REG_NOMATCH)
+-			warning("regexec returned %d for input: %s",
++			warning(_("regexec returned %d for input: %s"),
+ 				status, timestamp);
+ 		return 0;
  	}
- 	else if (!strcmp(arg, "fetch"))
-@@ -144,7 +144,7 @@ static int parse_mirror_opt(const struct option *opt, const char *arg, int not)
- 	else if (!strcmp(arg, "push"))
- 		*mirror = MIRROR_PUSH;
- 	else
--		return error("unknown mirror argument: %s", arg);
-+		return error(_("unknown mirror argument: %s"), arg);
- 	return 0;
- }
- 
-@@ -182,9 +182,9 @@ static int add(int argc, const char **argv)
- 		usage_with_options(builtin_remote_add_usage, options);
- 
- 	if (mirror && master)
--		die("specifying a master branch makes no sense with --mirror");
-+		die(_("specifying a master branch makes no sense with --mirror"));
- 	if (mirror && !(mirror & MIRROR_FETCH) && track.nr)
--		die("specifying branches to track makes sense only with fetch mirrors");
-+		die(_("specifying branches to track makes sense only with fetch mirrors"));
- 
- 	name = argv[0];
- 	url = argv[1];
-@@ -192,11 +192,11 @@ static int add(int argc, const char **argv)
- 	remote = remote_get(name);
- 	if (remote && (remote->url_nr > 1 || strcmp(name, remote->url[0]) ||
- 			remote->fetch_refspec_nr))
--		die("remote %s already exists.", name);
-+		die(_("remote %s already exists."), name);
- 
- 	strbuf_addf(&buf2, "refs/heads/test:refs/remotes/%s/test", name);
- 	if (!valid_fetch_refspec(buf2.buf))
--		die("'%s' is not a valid remote name", name);
-+		die(_("'%s' is not a valid remote name"), name);
- 
- 	strbuf_addf(&buf, "remote.%s.url", name);
- 	if (git_config_set(buf.buf, url))
-@@ -240,7 +240,7 @@ static int add(int argc, const char **argv)
- 		strbuf_addf(&buf2, "refs/remotes/%s/%s", name, master);
- 
- 		if (create_symref(buf.buf, buf2.buf, "remote add"))
--			return error("Could not setup master '%s'", master);
-+			return error(_("Could not setup master '%s'"), master);
- 	}
- 
- 	strbuf_release(&buf);
-@@ -296,7 +296,7 @@ static int config_read_branches(const char *key, const char *value, void *cb)
- 		info = item->util;
- 		if (type == REMOTE) {
- 			if (info->remote_name)
--				warning("more than one %s", orig_key);
-+				warning(_("more than one %s"), orig_key);
- 			info->remote_name = xstrdup(value);
- 		} else if (type == MERGE) {
- 			char *space = strchr(value, ' ');
-@@ -336,7 +336,7 @@ static int get_ref_states(const struct ref *remote_refs, struct ref_states *stat
- 
- 	for (i = 0; i < states->remote->fetch_refspec_nr; i++)
- 		if (get_fetch_map(remote_refs, states->remote->fetch + i, &tail, 1))
--			die("Could not get fetch map for refspec %s",
-+			die(_("Could not get fetch map for refspec %s"),
- 				states->remote->fetch_refspec[i]);
- 
- 	states->new.strdup_strings = 1;
-@@ -437,7 +437,7 @@ static int get_push_ref_states_noquery(struct ref_states *states)
- 
- 	states->push.strdup_strings = 1;
- 	if (!remote->push_refspec_nr) {
--		item = string_list_append(&states->push, "(matching)");
-+		item = string_list_append(&states->push, _("(matching)"));
- 		info = item->util = xcalloc(sizeof(struct push_info), 1);
- 		info->status = PUSH_STATUS_NOTQUERIED;
- 		info->dest = xstrdup(item->string);
-@@ -445,11 +445,11 @@ static int get_push_ref_states_noquery(struct ref_states *states)
- 	for (i = 0; i < remote->push_refspec_nr; i++) {
- 		struct refspec *spec = remote->push + i;
- 		if (spec->matching)
--			item = string_list_append(&states->push, "(matching)");
-+			item = string_list_append(&states->push, _("(matching)"));
- 		else if (strlen(spec->src))
- 			item = string_list_append(&states->push, spec->src);
- 		else
--			item = string_list_append(&states->push, "(delete)");
-+			item = string_list_append(&states->push, _("(delete)"));
- 
- 		info = item->util = xcalloc(sizeof(struct push_info), 1);
- 		info->forced = spec->force;
-@@ -592,19 +592,19 @@ static int migrate_file(struct remote *remote)
- 	strbuf_addf(&buf, "remote.%s.url", remote->name);
- 	for (i = 0; i < remote->url_nr; i++)
- 		if (git_config_set_multivar(buf.buf, remote->url[i], "^$", 0))
--			return error("Could not append '%s' to '%s'",
-+			return error(_("Could not append '%s' to '%s'"),
- 					remote->url[i], buf.buf);
- 	strbuf_reset(&buf);
- 	strbuf_addf(&buf, "remote.%s.push", remote->name);
- 	for (i = 0; i < remote->push_refspec_nr; i++)
- 		if (git_config_set_multivar(buf.buf, remote->push_refspec[i], "^$", 0))
--			return error("Could not append '%s' to '%s'",
-+			return error(_("Could not append '%s' to '%s'"),
- 					remote->push_refspec[i], buf.buf);
- 	strbuf_reset(&buf);
- 	strbuf_addf(&buf, "remote.%s.fetch", remote->name);
- 	for (i = 0; i < remote->fetch_refspec_nr; i++)
- 		if (git_config_set_multivar(buf.buf, remote->fetch_refspec[i], "^$", 0))
--			return error("Could not append '%s' to '%s'",
-+			return error(_("Could not append '%s' to '%s'"),
- 					remote->fetch_refspec[i], buf.buf);
- 	if (remote->origin == REMOTE_REMOTES)
- 		path = git_path("remotes/%s", remote->name);
-@@ -636,30 +636,30 @@ static int mv(int argc, const char **argv)
- 
- 	oldremote = remote_get(rename.old);
- 	if (!oldremote)
--		die("No such remote: %s", rename.old);
-+		die(_("No such remote: %s"), rename.old);
- 
- 	if (!strcmp(rename.old, rename.new) && oldremote->origin != REMOTE_CONFIG)
- 		return migrate_file(oldremote);
- 
- 	newremote = remote_get(rename.new);
- 	if (newremote && (newremote->url_nr > 1 || newremote->fetch_refspec_nr))
--		die("remote %s already exists.", rename.new);
-+		die(_("remote %s already exists."), rename.new);
- 
- 	strbuf_addf(&buf, "refs/heads/test:refs/remotes/%s/test", rename.new);
- 	if (!valid_fetch_refspec(buf.buf))
--		die("'%s' is not a valid remote name", rename.new);
-+		die(_("'%s' is not a valid remote name"), rename.new);
- 
- 	strbuf_reset(&buf);
- 	strbuf_addf(&buf, "remote.%s", rename.old);
- 	strbuf_addf(&buf2, "remote.%s", rename.new);
- 	if (git_config_rename_section(buf.buf, buf2.buf) < 1)
--		return error("Could not rename config section '%s' to '%s'",
-+		return error(_("Could not rename config section '%s' to '%s'"),
- 				buf.buf, buf2.buf);
- 
- 	strbuf_reset(&buf);
- 	strbuf_addf(&buf, "remote.%s.fetch", rename.new);
- 	if (git_config_set_multivar(buf.buf, NULL, NULL, 1))
--		return error("Could not remove config section '%s'", buf.buf);
-+		return error(_("Could not remove config section '%s'"), buf.buf);
- 	strbuf_addf(&old_remote_context, ":refs/remotes/%s/", rename.old);
- 	for (i = 0; i < oldremote->fetch_refspec_nr; i++) {
- 		char *ptr;
-@@ -674,13 +674,13 @@ static int mv(int argc, const char **argv)
- 				      strlen(rename.old), rename.new,
- 				      strlen(rename.new));
- 		} else
--			warning("Not updating non-default fetch respec\n"
--				"\t%s\n"
--				"\tPlease update the configuration manually if necessary.",
-+			warning(_("Not updating non-default fetch respec\n"
-+				  "\t%s\n"
-+				  "\tPlease update the configuration manually if necessary."),
- 				buf2.buf);
- 
- 		if (git_config_set_multivar(buf.buf, buf2.buf, "^$", 0))
--			return error("Could not append '%s'", buf.buf);
-+			return error(_("Could not append '%s'"), buf.buf);
- 	}
- 
- 	read_branches();
-@@ -691,7 +691,7 @@ static int mv(int argc, const char **argv)
- 			strbuf_reset(&buf);
- 			strbuf_addf(&buf, "branch.%s.remote", item->string);
- 			if (git_config_set(buf.buf, rename.new)) {
--				return error("Could not set '%s'", buf.buf);
-+				return error(_("Could not set '%s'"), buf.buf);
- 			}
+@@ -857,7 +857,7 @@ static void parse_traditional_patch(const char *first, const char *second, struc
  		}
  	}
-@@ -713,7 +713,7 @@ static int mv(int argc, const char **argv)
- 		if (!(flag & REF_ISSYMREF))
- 			continue;
- 		if (delete_ref(item->string, NULL, REF_NODEREF))
--			die("deleting '%s' failed", item->string);
-+			die(_("deleting '%s' failed"), item->string);
- 	}
- 	for (i = 0; i < remote_branches.nr; i++) {
- 		struct string_list_item *item = remote_branches.items + i;
-@@ -728,7 +728,7 @@ static int mv(int argc, const char **argv)
- 		strbuf_addf(&buf2, "remote: renamed %s to %s",
- 				item->string, buf.buf);
- 		if (rename_ref(item->string, buf.buf, buf2.buf))
--			die("renaming '%s' failed", item->string);
-+			die(_("renaming '%s' failed"), item->string);
- 	}
- 	for (i = 0; i < remote_branches.nr; i++) {
- 		struct string_list_item *item = remote_branches.items + i;
-@@ -747,7 +747,7 @@ static int mv(int argc, const char **argv)
- 		strbuf_addf(&buf3, "remote: renamed %s to %s",
- 				item->string, buf.buf);
- 		if (create_symref(buf.buf, buf2.buf, buf3.buf))
--			die("creating '%s' failed", buf.buf);
-+			die(_("creating '%s' failed"), buf.buf);
- 	}
- 	return 0;
+ 	if (!name)
+-		die("unable to find filename in patch at line %d", linenr);
++		die(_("unable to find filename in patch at line %d"), linenr);
  }
-@@ -761,7 +761,7 @@ static int remove_branches(struct string_list *branches)
- 		unsigned char *sha1 = item->util;
  
- 		if (delete_ref(refname, sha1, 0))
--			result |= error("Could not remove branch %s", refname);
-+			result |= error(_("Could not remove branch %s"), refname);
+ static int gitdiff_hdrend(const char *line, struct patch *patch)
+@@ -886,17 +886,17 @@ static char *gitdiff_verify_name(const char *line, int isnull, char *orig_name,
+ 		name = orig_name;
+ 		len = strlen(name);
+ 		if (isnull)
+-			die("git apply: bad git-diff - expected /dev/null, got %s on line %d", name, linenr);
++			die(_("git apply: bad git-diff - expected /dev/null, got %s on line %d"), name, linenr);
+ 		another = find_name(line, NULL, p_value, TERM_TAB);
+ 		if (!another || memcmp(another, name, len + 1))
+-			die("git apply: bad git-diff - inconsistent %s filename on line %d", oldnew, linenr);
++			die(_("git apply: bad git-diff - inconsistent %s filename on line %d"), oldnew, linenr);
+ 		free(another);
+ 		return orig_name;
  	}
- 	return result;
+ 	else {
+ 		/* expect "/dev/null" */
+ 		if (memcmp("/dev/null", line, 9) || line[9] != '\n')
+-			die("git apply: bad git-diff - expected /dev/null on line %d", linenr);
++			die(_("git apply: bad git-diff - expected /dev/null on line %d"), linenr);
+ 		return NULL;
+ 	}
  }
-@@ -789,14 +789,14 @@ static int rm(int argc, const char **argv)
+@@ -1327,7 +1327,7 @@ static void recount_diff(char *line, int size, struct fragment *fragment)
+ 			break;
+ 		}
+ 		if (ret) {
+-			warning("recount: unexpected line: %.*s",
++			warning(_("recount: unexpected line: %.*s"),
+ 				(int)linelen(line, size), line);
+ 			return;
+ 		}
+@@ -1384,7 +1384,7 @@ static int find_header(char *line, unsigned long size, int *hdrsize, struct patc
+ 			struct fragment dummy;
+ 			if (parse_fragment_header(line, len, &dummy) < 0)
+ 				continue;
+-			die("patch fragment without header at line %d: %.*s",
++			die(_("patch fragment without header at line %d: %.*s"),
+ 			    linenr, (int)len-1, line);
+ 		}
  
- 	remote = remote_get(argv[1]);
- 	if (!remote)
--		die("No such remote: %s", argv[1]);
-+		die(_("No such remote: %s"), argv[1]);
+@@ -1556,9 +1556,9 @@ static int parse_fragment(char *line, unsigned long size,
+ 	patch->lines_deleted += deleted;
  
- 	known_remotes.to_delete = remote;
- 	for_each_remote(add_known_remote, &known_remotes);
+ 	if (0 < patch->is_new && oldlines)
+-		return error("new file depends on old contents");
++		return error(_("new file depends on old contents"));
+ 	if (0 < patch->is_delete && newlines)
+-		return error("deleted file still has contents");
++		return error(_("deleted file still has contents"));
+ 	return offset;
+ }
  
- 	strbuf_addf(&buf, "remote.%s", remote->name);
- 	if (git_config_rename_section(buf.buf, NULL) < 1)
--		return error("Could not remove config section '%s'", buf.buf);
-+		return error(_("Could not remove config section '%s'"), buf.buf);
+@@ -1576,7 +1576,7 @@ static int parse_single_patch(char *line, unsigned long size, struct patch *patc
+ 		fragment->linenr = linenr;
+ 		len = parse_fragment(line, size, patch, fragment);
+ 		if (len <= 0)
+-			die("corrupt patch at line %d", linenr);
++			die(_("corrupt patch at line %d"), linenr);
+ 		fragment->patch = line;
+ 		fragment->size = len;
+ 		oldlines += fragment->oldlines;
+@@ -1612,12 +1612,14 @@ static int parse_single_patch(char *line, unsigned long size, struct patch *patc
+ 		patch->is_delete = 0;
  
- 	read_branches();
- 	for (i = 0; i < branch_list.nr; i++) {
-@@ -830,11 +830,11 @@ static int rm(int argc, const char **argv)
- 	string_list_clear(&branches, 1);
+ 	if (0 < patch->is_new && oldlines)
+-		die("new file %s depends on old contents", patch->new_name);
++		die(_("new file %s depends on old contents"), patch->new_name);
+ 	if (0 < patch->is_delete && newlines)
+-		die("deleted file %s still has contents", patch->old_name);
++		die(_("deleted file %s still has contents"), patch->old_name);
+ 	if (!patch->is_delete && !newlines && context)
+-		fprintf(stderr, "** warning: file %s becomes empty but "
+-			"is not deleted\n", patch->new_name);
++		fprintf_ln(stderr,
++			   _("** warning: "
++			     "file %s becomes empty but is not deleted"),
++			   patch->new_name);
  
- 	if (skipped.nr) {
--		fprintf(stderr, skipped.nr == 1 ?
--			"Note: A branch outside the refs/remotes/ hierarchy was not removed;\n"
--			"to delete it, use:\n" :
--			"Note: Some branches outside the refs/remotes/ hierarchy were not removed;\n"
--			"to delete them, use:\n");
-+		fprintf_ln(stderr, skipped.nr == 1 ?
-+			   _("Note: A branch outside the refs/remotes/ hierarchy was not removed;\n"
-+			     "to delete it, use:") :
-+			   _("Note: Some branches outside the refs/remotes/ hierarchy were not removed;\n"
-+			     "to delete them, use:"));
- 		for (i = 0; i < skipped.nr; i++)
- 			fprintf(stderr, "  git branch -d %s\n",
- 				skipped.items[i].string);
-@@ -886,7 +886,7 @@ static int get_remote_ref_states(const char *name,
- 
- 	states->remote = remote_get(name);
- 	if (!states->remote)
--		return error("No such remote: %s", name);
-+		return error(_("No such remote: %s"), name);
- 
- 	read_branches();
- 
-@@ -939,14 +939,14 @@ static int show_remote_info_item(struct string_list_item *item, void *cb_data)
- 		const char *fmt = "%s";
- 		const char *arg = "";
- 		if (string_list_has_string(&states->new, name)) {
--			fmt = " new (next fetch will store in remotes/%s)";
-+			fmt = _(" new (next fetch will store in remotes/%s)");
- 			arg = states->remote->name;
- 		} else if (string_list_has_string(&states->tracked, name))
--			arg = " tracked";
-+			arg = _(" tracked");
- 		else if (string_list_has_string(&states->stale, name))
--			arg = " stale (use 'git remote prune' to remove)";
-+			arg = _(" stale (use 'git remote prune' to remove)");
- 		else
--			arg = " ???";
-+			arg = _(" ???");
- 		printf("    %-*s", info->width, name);
- 		printf(fmt, arg);
- 		printf("\n");
-@@ -987,21 +987,21 @@ static int show_local_info_item(struct string_list_item *item, void *cb_data)
- 	int i;
- 
- 	if (branch_info->rebase && branch_info->merge.nr > 1) {
--		error("invalid branch.%s.merge; cannot rebase onto > 1 branch",
-+		error(_("invalid branch.%s.merge; cannot rebase onto > 1 branch"),
- 			item->string);
- 		return 0;
+ 	return offset;
+ }
+@@ -1755,7 +1757,7 @@ static struct fragment *parse_binary_hunk(char **buf_p,
+  corrupt:
+ 	free(data);
+ 	*status_p = -1;
+-	error("corrupt binary patch at line %d: %.*s",
++	error(_("corrupt binary patch at line %d: %.*s"),
+ 	      linenr-1, llen-1, buffer);
+ 	return NULL;
+ }
+@@ -1784,7 +1786,7 @@ static int parse_binary(char *buffer, unsigned long size, struct patch *patch)
+ 	forward = parse_binary_hunk(&buffer, &size, &status, &used);
+ 	if (!forward && !status)
+ 		/* there has to be one hunk (forward hunk) */
+-		return error("unrecognized binary patch at line %d", linenr-1);
++		return error(_("unrecognized binary patch at line %d"), linenr-1);
+ 	if (status)
+ 		/* otherwise we already gave an error message */
+ 		return status;
+@@ -1863,7 +1865,7 @@ static int parse_chunk(char *buffer, unsigned long size, struct patch *patch)
+ 		 */
+ 		if ((apply || check) &&
+ 		    (!patch->is_binary && !metadata_changes(patch)))
+-			die("patch with only garbage at line %d", linenr);
++			die(_("patch with only garbage at line %d"), linenr);
  	}
  
- 	printf("    %-*s ", show_info->width, item->string);
- 	if (branch_info->rebase) {
--		printf("rebases onto remote %s\n", merge->items[0].string);
-+		printf_ln(_("rebases onto remote %s"), merge->items[0].string);
+ 	return offset + hdrsize + patchsize;
+@@ -1953,11 +1955,11 @@ static int read_old_data(struct stat *st, const char *path, struct strbuf *buf)
+ 	switch (st->st_mode & S_IFMT) {
+ 	case S_IFLNK:
+ 		if (strbuf_readlink(buf, path, st->st_size) < 0)
+-			return error("unable to read symlink %s", path);
++			return error(_("unable to read symlink %s"), path);
  		return 0;
- 	} else if (show_info->any_rebase) {
--		printf(" merges with remote %s\n", merge->items[0].string);
--		also = "    and with remote";
-+		printf_ln(_(" merges with remote %s"), merge->items[0].string);
-+		also = _("    and with remote");
+ 	case S_IFREG:
+ 		if (strbuf_read_file(buf, path, st->st_size) != st->st_size)
+-			return error("unable to open or read %s", path);
++			return error(_("unable to open or read %s"), path);
+ 		convert_to_git(path, buf->buf, buf->len, buf, 0);
+ 		return 0;
+ 	default:
+@@ -2028,7 +2030,7 @@ static void update_pre_post_images(struct image *preimage,
+ 			ctx++;
+ 		}
+ 		if (preimage->nr <= ctx)
+-			die("oops");
++			die(_("oops"));
+ 
+ 		/* and copy it in, while fixing the line length */
+ 		len = preimage->line[ctx].len;
+@@ -2540,7 +2542,7 @@ static int apply_one_fragment(struct image *img, struct fragment *frag,
+ 			break;
+ 		default:
+ 			if (apply_verbosely)
+-				error("invalid start of line: '%c'", first);
++				error(_("invalid start of line: '%c'"), first);
+ 			return -1;
+ 		}
+ 		if (added_blank_line) {
+@@ -2657,9 +2659,9 @@ static int apply_one_fragment(struct image *img, struct fragment *frag,
+ 			int offset = applied_pos - pos;
+ 			if (apply_in_reverse)
+ 				offset = 0 - offset;
+-			fprintf(stderr,
+-				"Hunk #%d succeeded at %d (offset %d lines).\n",
+-				nth_fragment, applied_pos + 1, offset);
++			fprintf_ln(stderr,
++				   _("Hunk #%d succeeded at %d (offset %d lines)."),
++				   nth_fragment, applied_pos + 1, offset);
+ 		}
+ 
+ 		/*
+@@ -2668,13 +2670,13 @@ static int apply_one_fragment(struct image *img, struct fragment *frag,
+ 		 */
+ 		if ((leading != frag->leading) ||
+ 		    (trailing != frag->trailing))
+-			fprintf(stderr, "Context reduced to (%ld/%ld)"
+-				" to apply fragment at %d\n",
+-				leading, trailing, applied_pos+1);
++			fprintf_ln(stderr, _("Context reduced to (%ld/%ld)"
++					     " to apply fragment at %d"),
++				   leading, trailing, applied_pos+1);
+ 		update_image(img, applied_pos, &preimage, &postimage);
  	} else {
--		printf("merges with remote %s\n", merge->items[0].string);
--		also = "   and with remote";
-+		printf_ln(_("merges with remote %s"), merge->items[0].string);
-+		also = _("   and with remote");
+ 		if (apply_verbosely)
+-			error("while searching for:\n%.*s",
++			error(_("while searching for:\n%.*s"),
+ 			      (int)(old - oldlines), oldlines);
  	}
- 	for (i = 1; i < merge->nr; i++)
- 		printf("    %-*s %s %s\n", show_info->width, "", also,
-@@ -1043,36 +1043,43 @@ static int show_push_info_item(struct string_list_item *item, void *cb_data)
- {
- 	struct show_info *show_info = cb_data;
- 	struct push_info *push_info = item->util;
--	char *src = item->string, *status = NULL;
-+	const char *src = item->string, *status = NULL;
  
- 	switch (push_info->status) {
- 	case PUSH_STATUS_CREATE:
--		status = "create";
-+		status = _("create");
- 		break;
- 	case PUSH_STATUS_DELETE:
--		status = "delete";
--		src = "(none)";
-+		status = _("delete");
-+		src = _("(none)");
- 		break;
- 	case PUSH_STATUS_UPTODATE:
--		status = "up to date";
-+		status = _("up to date");
- 		break;
- 	case PUSH_STATUS_FASTFORWARD:
--		status = "fast-forwardable";
-+		status = _("fast-forwardable");
- 		break;
- 	case PUSH_STATUS_OUTOFDATE:
--		status = "local out of date";
-+		status = _("local out of date");
- 		break;
- 	case PUSH_STATUS_NOTQUERIED:
- 		break;
+@@ -2693,7 +2695,7 @@ static int apply_binary_fragment(struct image *img, struct patch *patch)
+ 	void *dst;
+ 
+ 	if (!fragment)
+-		return error("missing binary patch data for '%s'",
++		return error(_("missing binary patch data for '%s'"),
+ 			     patch->new_name ?
+ 			     patch->new_name :
+ 			     patch->old_name);
+@@ -2790,13 +2792,13 @@ static int apply_binary(struct image *img, struct patch *patch)
+ 		 * in the patch->fragments->{patch,size}.
+ 		 */
+ 		if (apply_binary_fragment(img, patch))
+-			return error("binary patch does not apply to '%s'",
++			return error(_("binary patch does not apply to '%s'"),
+ 				     name);
+ 
+ 		/* verify that the result matches */
+ 		hash_sha1_file(img->buf, img->len, blob_type, sha1);
+ 		if (strcmp(sha1_to_hex(sha1), patch->new_sha1_prefix))
+-			return error("binary patch to '%s' creates incorrect result (expecting %s, got %s)",
++			return error(_("binary patch to '%s' creates incorrect result (expecting %s, got %s)"),
+ 				name, patch->new_sha1_prefix, sha1_to_hex(sha1));
  	}
--	if (status)
--		printf("    %-*s %s to %-*s (%s)\n", show_info->width, src,
--			push_info->forced ? "forces" : "pushes",
--			show_info->width2, push_info->dest, status);
--	else
--		printf("    %-*s %s to %s\n", show_info->width, src,
--			push_info->forced ? "forces" : "pushes",
--			push_info->dest);
-+	if (status) {
-+		if (push_info->forced)
-+			printf_ln(_("    %-*s forces to %-*s (%s)"), show_info->width, src,
-+			       show_info->width2, push_info->dest, status);
-+		else
-+			printf_ln(_("    %-*s pushes to %-*s (%s)"), show_info->width, src,
-+			       show_info->width2, push_info->dest, status);
-+	} else {
-+		if (push_info->forced)
-+			printf_ln(_("    %-*s forces to %s"), show_info->width, src,
-+			       push_info->dest);
-+		else
-+			printf_ln(_("    %-*s pushes to %s"), show_info->width, src,
-+			       push_info->dest);
-+	}
+ 
+@@ -2817,7 +2819,7 @@ static int apply_fragments(struct image *img, struct patch *patch)
+ 	while (frag) {
+ 		nth++;
+ 		if (apply_one_fragment(img, frag, inaccurate_eof, ws_rule, nth)) {
+-			error("patch failed: %s:%ld", name, frag->oldpos);
++			error(_("patch failed: %s:%ld"), name, frag->oldpos);
+ 			if (!apply_with_reject)
+ 				return -1;
+ 			frag->rejected = 1;
+@@ -2932,14 +2934,14 @@ static int apply_data(struct patch *patch, struct stat *st, struct cache_entry *
+ 	if (!(patch->is_copy || patch->is_rename) &&
+ 	    (tpatch = in_fn_table(patch->old_name)) != NULL && !to_be_deleted(tpatch)) {
+ 		if (was_deleted(tpatch)) {
+-			return error("patch %s has been renamed/deleted",
++			return error(_("patch %s has been renamed/deleted"),
+ 				patch->old_name);
+ 		}
+ 		/* We have a patched copy in memory use that */
+ 		strbuf_add(&buf, tpatch->result, tpatch->resultsize);
+ 	} else if (cached) {
+ 		if (read_file_or_gitlink(ce, &buf))
+-			return error("read of %s failed", patch->old_name);
++			return error(_("read of %s failed"), patch->old_name);
+ 	} else if (patch->old_name) {
+ 		if (S_ISGITLINK(patch->old_mode)) {
+ 			if (ce) {
+@@ -2953,7 +2955,7 @@ static int apply_data(struct patch *patch, struct stat *st, struct cache_entry *
+ 			}
+ 		} else {
+ 			if (read_old_data(st, patch->old_name, &buf))
+-				return error("read of %s failed", patch->old_name);
++				return error(_("read of %s failed"), patch->old_name);
+ 		}
+ 	}
+ 
+@@ -2968,7 +2970,7 @@ static int apply_data(struct patch *patch, struct stat *st, struct cache_entry *
+ 	free(image.line_allocated);
+ 
+ 	if (0 < patch->is_delete && patch->resultsize)
+-		return error("removal patch leaves file contents");
++		return error(_("removal patch leaves file contents"));
+ 
+ 	return 0;
+ }
+@@ -2989,7 +2991,7 @@ static int check_to_create_blob(const char *new_name, int ok_if_exists)
+ 		if (has_symlink_leading_path(new_name, strlen(new_name)))
+ 			return 0;
+ 
+-		return error("%s: already exists in working directory", new_name);
++		return error(_("%s: already exists in working directory"), new_name);
+ 	}
+ 	else if ((errno != ENOENT) && (errno != ENOTDIR))
+ 		return error("%s: %s", new_name, strerror(errno));
+@@ -3027,12 +3029,12 @@ static int check_preimage(struct patch *patch, struct cache_entry **ce, struct s
+ 	if (!(patch->is_copy || patch->is_rename) &&
+ 	    (tpatch = in_fn_table(old_name)) != NULL && !to_be_deleted(tpatch)) {
+ 		if (was_deleted(tpatch))
+-			return error("%s: has been deleted/renamed", old_name);
++			return error(_("%s: has been deleted/renamed"), old_name);
+ 		st_mode = tpatch->new_mode;
+ 	} else if (!cached) {
+ 		stat_ret = lstat(old_name, st);
+ 		if (stat_ret && errno != ENOENT)
+-			return error("%s: %s", old_name, strerror(errno));
++			return error(_("%s: %s"), old_name, strerror(errno));
+ 	}
+ 
+ 	if (to_be_deleted(tpatch))
+@@ -3043,7 +3045,7 @@ static int check_preimage(struct patch *patch, struct cache_entry **ce, struct s
+ 		if (pos < 0) {
+ 			if (patch->is_new < 0)
+ 				goto is_new;
+-			return error("%s: does not exist in index", old_name);
++			return error(_("%s: does not exist in index"), old_name);
+ 		}
+ 		*ce = active_cache[pos];
+ 		if (stat_ret < 0) {
+@@ -3057,13 +3059,13 @@ static int check_preimage(struct patch *patch, struct cache_entry **ce, struct s
+ 				return -1;
+ 		}
+ 		if (!cached && verify_index_match(*ce, st))
+-			return error("%s: does not match index", old_name);
++			return error(_("%s: does not match index"), old_name);
+ 		if (cached)
+ 			st_mode = (*ce)->ce_mode;
+ 	} else if (stat_ret < 0) {
+ 		if (patch->is_new < 0)
+ 			goto is_new;
+-		return error("%s: %s", old_name, strerror(errno));
++		return error(_("%s: %s"), old_name, strerror(errno));
+ 	}
+ 
+ 	if (!cached && !tpatch)
+@@ -3074,9 +3076,9 @@ static int check_preimage(struct patch *patch, struct cache_entry **ce, struct s
+ 	if (!patch->old_mode)
+ 		patch->old_mode = st_mode;
+ 	if ((st_mode ^ patch->old_mode) & S_IFMT)
+-		return error("%s: wrong type", old_name);
++		return error(_("%s: wrong type"), old_name);
+ 	if (st_mode != patch->old_mode)
+-		warning("%s has type %o, expected %o",
++		warning(_("%s has type %o, expected %o"),
+ 			old_name, st_mode, patch->old_mode);
+ 	if (!patch->new_mode && !patch->is_delete)
+ 		patch->new_mode = st_mode;
+@@ -3126,7 +3128,7 @@ static int check_patch(struct patch *patch)
+ 		if (check_index &&
+ 		    cache_name_pos(new_name, strlen(new_name)) >= 0 &&
+ 		    !ok_if_exists)
+-			return error("%s: already exists in index", new_name);
++			return error(_("%s: already exists in index"), new_name);
+ 		if (!cached) {
+ 			int err = check_to_create_blob(new_name, ok_if_exists);
+ 			if (err)
+@@ -3145,13 +3147,13 @@ static int check_patch(struct patch *patch)
+ 		if (!patch->new_mode)
+ 			patch->new_mode = patch->old_mode;
+ 		if ((patch->old_mode ^ patch->new_mode) & S_IFMT)
+-			return error("new mode (%o) of %s does not match old mode (%o)%s%s",
++			return error(_("new mode (%o) of %s does not match old mode (%o)%s%s"),
+ 				patch->new_mode, new_name, patch->old_mode,
+ 				same ? "" : " of ", same ? "" : old_name);
+ 	}
+ 
+ 	if (apply_data(patch, &st, ce) < 0)
+-		return error("%s: patch does not apply", name);
++		return error(_("%s: patch does not apply"), name);
+ 	patch->rejected = 0;
+ 	return 0;
+ }
+@@ -3219,7 +3221,7 @@ static void build_fake_ancestor(struct patch *list, const char *filename)
+ 
+ 		ce = make_cache_entry(patch->old_mode, sha1_ptr, name, 0, 0);
+ 		if (!ce)
+-			die("make_cache_entry failed for path '%s'", name);
++			die(_("make_cache_entry failed for path '%s'"), name);
+ 		if (add_index_entry(&result, ce, ADD_CACHE_OK_TO_ADD))
+ 			die ("Could not add %s to temporary index", name);
+ 	}
+@@ -3362,7 +3364,7 @@ static void remove_file(struct patch *patch, int rmdir_empty)
+ {
+ 	if (update_index) {
+ 		if (remove_file_from_cache(patch->old_name) < 0)
+-			die("unable to remove %s from index", patch->old_name);
++			die(_("unable to remove %s from index"), patch->old_name);
+ 	}
+ 	if (!cached) {
+ 		if (!remove_or_warn(patch->old_mode, patch->old_name) && rmdir_empty) {
+@@ -3389,19 +3391,19 @@ static void add_index_file(const char *path, unsigned mode, void *buf, unsigned
+ 		const char *s = buf;
+ 
+ 		if (get_sha1_hex(s + strlen("Subproject commit "), ce->sha1))
+-			die("corrupt patch for subproject %s", path);
++			die(_("corrupt patch for subproject %s"), path);
+ 	} else {
+ 		if (!cached) {
+ 			if (lstat(path, &st) < 0)
+-				die_errno("unable to stat newly created file '%s'",
++				die_errno(_("unable to stat newly created file '%s'"),
+ 					  path);
+ 			fill_stat_cache_info(ce, &st);
+ 		}
+ 		if (write_sha1_file(buf, size, blob_type, ce->sha1) < 0)
+-			die("unable to create backing store for newly created file %s", path);
++			die(_("unable to create backing store for newly created file %s"), path);
+ 	}
+ 	if (add_cache_entry(ce, ADD_CACHE_OK_TO_ADD) < 0)
+-		die("unable to add cache entry for %s", path);
++		die(_("unable to add cache entry for %s"), path);
+ }
+ 
+ static int try_create_file(const char *path, unsigned int mode, const char *buf, unsigned long size)
+@@ -3434,7 +3436,7 @@ static int try_create_file(const char *path, unsigned int mode, const char *buf,
+ 	strbuf_release(&nbuf);
+ 
+ 	if (close(fd) < 0)
+-		die_errno("closing file '%s'", path);
++		die_errno(_("closing file '%s'"), path);
  	return 0;
  }
  
-@@ -1107,9 +1114,9 @@ static int show(int argc, const char **argv)
- 
- 		get_remote_ref_states(*argv, &states, query_flag);
- 
--		printf("* remote %s\n", *argv);
--		printf("  Fetch URL: %s\n", states.remote->url_nr > 0 ?
--			states.remote->url[0] : "(no URL)");
-+		printf_ln(_("* remote %s"), *argv);
-+		printf_ln(_("  Fetch URL: %s"), states.remote->url_nr > 0 ?
-+		       states.remote->url[0] : _("(no URL)"));
- 		if (states.remote->pushurl_nr) {
- 			url = states.remote->pushurl;
- 			url_nr = states.remote->pushurl_nr;
-@@ -1118,18 +1125,18 @@ static int show(int argc, const char **argv)
- 			url_nr = states.remote->url_nr;
+@@ -3483,7 +3485,7 @@ static void create_one_file(char *path, unsigned mode, const char *buf, unsigned
+ 			++nr;
  		}
- 		for (i = 0; i < url_nr; i++)
--			printf("  Push  URL: %s\n", url[i]);
-+			printf_ln(_("  Push  URL: %s"), url[i]);
- 		if (!i)
--			printf("  Push  URL: %s\n", "(no URL)");
-+			printf_ln(_("  Push  URL: %s"), "(no URL)");
- 		if (no_query)
--			printf("  HEAD branch: (not queried)\n");
-+			printf_ln(_("  HEAD branch: %s"), "(not queried)");
- 		else if (!states.heads.nr)
--			printf("  HEAD branch: (unknown)\n");
-+			printf_ln(_("  HEAD branch: %s"), "(unknown)");
- 		else if (states.heads.nr == 1)
--			printf("  HEAD branch: %s\n", states.heads.items[0].string);
-+			printf_ln(_("  HEAD branch: %s"), states.heads.items[0].string);
- 		else {
--			printf("  HEAD branch (remote HEAD is ambiguous,"
--			       " may be one of the following):\n");
-+			printf(_("  HEAD branch (remote HEAD is ambiguous,"
-+				 " may be one of the following):\n"));
- 			for (i = 0; i < states.heads.nr; i++)
- 				printf("    %s\n", states.heads.items[i].string);
+ 	}
+-	die_errno("unable to write file '%s' mode %o", path, mode);
++	die_errno(_("unable to write file '%s' mode %o"), path, mode);
+ }
+ 
+ static void create_file(struct patch *patch)
+@@ -3546,7 +3548,7 @@ static int write_out_one_reject(struct patch *patch)
+ 	 * contents are marked "rejected" at the patch level.
+ 	 */
+ 	if (!patch->new_name)
+-		die("internal error");
++		die(_("internal error"));
+ 
+ 	/* Say this even without --verbose */
+ 	say_patch_name(stderr, "Applying patch ", patch, " with");
+@@ -3555,7 +3557,7 @@ static int write_out_one_reject(struct patch *patch)
+ 	cnt = strlen(patch->new_name);
+ 	if (ARRAY_SIZE(namebuf) <= cnt + 5) {
+ 		cnt = ARRAY_SIZE(namebuf) - 5;
+-		warning("truncating .rej filename to %.*s.rej",
++		warning(_("truncating .rej filename to %.*s.rej"),
+ 			cnt - 1, patch->new_name);
+ 	}
+ 	memcpy(namebuf, patch->new_name, cnt);
+@@ -3563,7 +3565,7 @@ static int write_out_one_reject(struct patch *patch)
+ 
+ 	rej = fopen(namebuf, "w");
+ 	if (!rej)
+-		return error("cannot open %s: %s", namebuf, strerror(errno));
++		return error(_("cannot open %s: %s"), namebuf, strerror(errno));
+ 
+ 	/* Normal git tools never deal with .rej, so do not pretend
+ 	 * this is a git patch by saying --git nor give extended
+@@ -3576,10 +3578,10 @@ static int write_out_one_reject(struct patch *patch)
+ 	     frag;
+ 	     cnt++, frag = frag->next) {
+ 		if (!frag->rejected) {
+-			fprintf(stderr, "Hunk #%d applied cleanly.\n", cnt);
++			fprintf_ln(stderr, _("Hunk #%d applied cleanly."), cnt);
+ 			continue;
  		}
-@@ -1140,9 +1147,10 @@ static int show(int argc, const char **argv)
- 		for_each_string_list(&states.tracked, add_remote_to_show_info, &info);
- 		for_each_string_list(&states.stale, add_remote_to_show_info, &info);
- 		if (info.list->nr)
--			printf("  Remote branch%s:%s\n",
--			       info.list->nr > 1 ? "es" : "",
--				no_query ? " (status not queried)" : "");
-+			printf_ln(Q_("  Remote branch:%s",
-+				     "  Remote branches:%s",
-+				     info.list->nr),
-+				  no_query ? _(" (status not queried)") : "");
- 		for_each_string_list(info.list, show_remote_info_item, &info);
- 		string_list_clear(info.list, 0);
- 
-@@ -1151,23 +1159,25 @@ static int show(int argc, const char **argv)
- 		info.any_rebase = 0;
- 		for_each_string_list(&branch_list, add_local_to_show_info, &info);
- 		if (info.list->nr)
--			printf("  Local branch%s configured for 'git pull':\n",
--			       info.list->nr > 1 ? "es" : "");
-+			printf_ln(Q_("  Local branch configured for 'git pull':",
-+				     "  Local branches configured for 'git pull':",
-+				     info.list->nr));
- 		for_each_string_list(info.list, show_local_info_item, &info);
- 		string_list_clear(info.list, 0);
- 
- 		/* git push info */
- 		if (states.remote->mirror)
--			printf("  Local refs will be mirrored by 'git push'\n");
-+			printf_ln(_("  Local refs will be mirrored by 'git push'"));
- 
- 		info.width = info.width2 = 0;
- 		for_each_string_list(&states.push, add_push_to_show_info, &info);
- 		qsort(info.list->items, info.list->nr,
- 			sizeof(*info.list->items), cmp_string_with_push);
- 		if (info.list->nr)
--			printf("  Local ref%s configured for 'git push'%s:\n",
--				info.list->nr > 1 ? "s" : "",
--				no_query ? " (status not queried)" : "");
-+			printf_ln(Q_("  Local ref configured for 'git push'%s:",
-+				     "  Local refs configured for 'git push'%s:",
-+				     info.list->nr),
-+				  no_query ? _(" (status not queried)") : "");
- 		for_each_string_list(info.list, show_push_info_item, &info);
- 		string_list_clear(info.list, 0);
- 
-@@ -1202,10 +1212,10 @@ static int set_head(int argc, const char **argv)
- 		memset(&states, 0, sizeof(states));
- 		get_remote_ref_states(argv[0], &states, GET_HEAD_NAMES);
- 		if (!states.heads.nr)
--			result |= error("Cannot determine remote HEAD");
-+			result |= error(_("Cannot determine remote HEAD"));
- 		else if (states.heads.nr > 1) {
--			result |= error("Multiple remote HEAD branches. "
--					"Please choose one explicitly with:");
-+			result |= error(_("Multiple remote HEAD branches. "
-+					  "Please choose one explicitly with:"));
- 			for (i = 0; i < states.heads.nr; i++)
- 				fprintf(stderr, "  git remote set-head %s %s\n",
- 					argv[0], states.heads.items[i].string);
-@@ -1214,7 +1224,7 @@ static int set_head(int argc, const char **argv)
- 		free_remote_ref_states(&states);
- 	} else if (opt_d && !opt_a && argc == 1) {
- 		if (delete_ref(buf.buf, NULL, REF_NODEREF))
--			result |= error("Could not delete %s", buf.buf);
-+			result |= error(_("Could not delete %s"), buf.buf);
- 	} else
- 		usage_with_options(builtin_remote_sethead_usage, options);
- 
-@@ -1222,9 +1232,9 @@ static int set_head(int argc, const char **argv)
- 		strbuf_addf(&buf2, "refs/remotes/%s/%s", argv[0], head_name);
- 		/* make sure it's valid */
- 		if (!ref_exists(buf2.buf))
--			result |= error("Not a valid ref: %s", buf2.buf);
-+			result |= error(_("Not a valid ref: %s"), buf2.buf);
- 		else if (create_symref(buf.buf, buf2.buf, "remote set-head"))
--			result |= error("Could not setup %s", buf.buf);
-+			result |= error(_("Could not setup %s"), buf.buf);
- 		if (opt_a)
- 			printf("%s/HEAD set to %s\n", argv[0], head_name);
- 		free(head_name);
-@@ -1260,18 +1270,18 @@ static int prune_remote(const char *remote, int dry_run)
- 	int result = 0, i;
- 	struct ref_states states;
- 	const char *dangling_msg = dry_run
--		? " %s will become dangling!"
--		: " %s has become dangling!";
-+		? _(" %s will become dangling!")
-+		: _(" %s has become dangling!");
- 
- 	memset(&states, 0, sizeof(states));
- 	get_remote_ref_states(remote, &states, GET_REF_STATES);
- 
- 	if (states.stale.nr) {
--		printf("Pruning %s\n", remote);
--		printf("URL: %s\n",
-+		printf_ln(_("Pruning %s"), remote);
-+		printf_ln(_("URL: %s"),
- 		       states.remote->url_nr
- 		       ? states.remote->url[0]
--		       : "(no URL)");
-+		       : _("(no URL)"));
+-		fprintf(stderr, "Rejected hunk #%d.\n", cnt);
++		fprintf_ln(stderr, _("Rejected hunk #%d."), cnt);
+ 		fprintf(rej, "%.*s", frag->size, frag->patch);
+ 		if (frag->patch[frag->size-1] != '\n')
+ 			fputc('\n', rej);
+@@ -3720,7 +3722,7 @@ static int apply_patch(int fd, const char *filename, int options)
  	}
  
- 	for (i = 0; i < states.stale.nr; i++) {
-@@ -1280,8 +1290,12 @@ static int prune_remote(const char *remote, int dry_run)
- 		if (!dry_run)
- 			result |= delete_ref(refname, NULL, 0);
+ 	if (!list && !skipped_patch)
+-		die("unrecognized input");
++		die(_("unrecognized input"));
  
--		printf(" * [%s] %s\n", dry_run ? "would prune" : "pruned",
--		       abbrev_ref(refname, "refs/remotes/"));
-+		if (dry_run)
-+			printf_ln(_(" * [would prune] %s"),
-+			       abbrev_ref(refname, "refs/remotes/"));
-+		else
-+			printf_ln(_(" * [pruned] %s"),
-+			       abbrev_ref(refname, "refs/remotes/"));
- 		warn_dangling_symref(stdout, dangling_msg, refname);
+ 	if (whitespace_error && (ws_error_action == die_on_ws_error))
+ 		apply = 0;
+@@ -3731,7 +3733,7 @@ static int apply_patch(int fd, const char *filename, int options)
+ 
+ 	if (check_index) {
+ 		if (read_cache() < 0)
+-			die("unable to read index file");
++			die(_("unable to read index file"));
  	}
  
-@@ -1369,7 +1383,7 @@ static int set_remote_branches(const char *remotename, const char **branches,
- 	strbuf_addf(&key, "remote.%s.fetch", remotename);
+ 	if ((check || apply) &&
+@@ -3844,66 +3846,66 @@ int cmd_apply(int argc, const char **argv, const char *prefix_)
+ 	const char *whitespace_option = NULL;
  
- 	if (!remote_is_configured(remotename))
--		die("No such remote '%s'", remotename);
-+		die(_("No such remote '%s'"), remotename);
- 	remote = remote_get(remotename);
- 
- 	if (!add_mode && remove_all_fetch_refspecs(remotename, key.buf)) {
-@@ -1396,7 +1410,7 @@ static int set_branches(int argc, const char **argv)
- 	argc = parse_options(argc, argv, NULL, options,
- 			     builtin_remote_setbranches_usage, 0);
- 	if (argc == 0) {
--		error("no remote specified");
-+		error(_("no remote specified"));
- 		usage_with_options(builtin_remote_setbranches_usage, options);
- 	}
- 	argv[argc] = NULL;
-@@ -1429,7 +1443,7 @@ static int set_url(int argc, const char **argv)
- 			     PARSE_OPT_KEEP_ARGV0);
- 
- 	if (add_mode && delete_mode)
--		die("--add --delete doesn't make sense");
-+		die(_("--add --delete doesn't make sense"));
- 
- 	if (argc < 3 || argc > 4 || ((add_mode || delete_mode) && argc != 3))
- 		usage_with_options(builtin_remote_seturl_usage, options);
-@@ -1443,7 +1457,7 @@ static int set_url(int argc, const char **argv)
- 		oldurl = newurl;
- 
- 	if (!remote_is_configured(remotename))
--		die("No such remote '%s'", remotename);
-+		die(_("No such remote '%s'"), remotename);
- 	remote = remote_get(remotename);
- 
- 	if (push_mode) {
-@@ -1469,7 +1483,7 @@ static int set_url(int argc, const char **argv)
- 
- 	/* Old URL specified. Demand that one matches. */
- 	if (regcomp(&old_regex, oldurl, REG_EXTENDED))
--		die("Invalid old URL pattern: %s", oldurl);
-+		die(_("Invalid old URL pattern: %s"), oldurl);
- 
- 	for (i = 0; i < urlset_nr; i++)
- 		if (!regexec(&old_regex, urlset[i], 0, NULL, 0))
-@@ -1477,9 +1491,9 @@ static int set_url(int argc, const char **argv)
- 		else
- 			negative_matches++;
- 	if (!delete_mode && !matches)
--		die("No such URL found: %s", oldurl);
-+		die(_("No such URL found: %s"), oldurl);
- 	if (delete_mode && !negative_matches && !push_mode)
--		die("Will not delete all non-push URLs");
-+		die(_("Will not delete all non-push URLs"));
- 
- 	regfree(&old_regex);
- 
-@@ -1551,7 +1565,7 @@ static int show_all(void)
- int cmd_remote(int argc, const char **argv, const char *prefix)
- {
- 	struct option options[] = {
--		OPT__VERBOSE(&verbose, "be verbose; must be placed before a subcommand"),
-+		OPT__VERBOSE(&verbose, N_("be verbose; must be placed before a subcommand")),
+ 	struct option builtin_apply_options[] = {
+-		{ OPTION_CALLBACK, 0, "exclude", NULL, "path",
+-			"don't apply changes matching the given path",
++		{ OPTION_CALLBACK, 0, "exclude", NULL, N_("path"),
++			N_("don't apply changes matching the given path"),
+ 			0, option_parse_exclude },
+-		{ OPTION_CALLBACK, 0, "include", NULL, "path",
+-			"apply changes matching the given path",
++		{ OPTION_CALLBACK, 0, "include", NULL, N_("path"),
++			N_("apply changes matching the given path"),
+ 			0, option_parse_include },
+-		{ OPTION_CALLBACK, 'p', NULL, NULL, "num",
+-			"remove <num> leading slashes from traditional diff paths",
++		{ OPTION_CALLBACK, 'p', NULL, NULL, N_("num"),
++			N_("remove <num> leading slashes from traditional diff paths"),
+ 			0, option_parse_p },
+ 		OPT_BOOLEAN(0, "no-add", &no_add,
+-			"ignore additions made by the patch"),
++			N_("ignore additions made by the patch")),
+ 		OPT_BOOLEAN(0, "stat", &diffstat,
+-			"instead of applying the patch, output diffstat for the input"),
++			N_("instead of applying the patch, output diffstat for the input")),
+ 		OPT_NOOP_NOARG(0, "allow-binary-replacement"),
+ 		OPT_NOOP_NOARG(0, "binary"),
+ 		OPT_BOOLEAN(0, "numstat", &numstat,
+-			"shows number of added and deleted lines in decimal notation"),
++			N_("shows number of added and deleted lines in decimal notation")),
+ 		OPT_BOOLEAN(0, "summary", &summary,
+-			"instead of applying the patch, output a summary for the input"),
++			N_("instead of applying the patch, output a summary for the input")),
+ 		OPT_BOOLEAN(0, "check", &check,
+-			"instead of applying the patch, see if the patch is applicable"),
++			N_("instead of applying the patch, see if the patch is applicable")),
+ 		OPT_BOOLEAN(0, "index", &check_index,
+-			"make sure the patch is applicable to the current index"),
++			N_("make sure the patch is applicable to the current index")),
+ 		OPT_BOOLEAN(0, "cached", &cached,
+-			"apply a patch without touching the working tree"),
++			N_("apply a patch without touching the working tree")),
+ 		OPT_BOOLEAN(0, "apply", &force_apply,
+-			"also apply the patch (use with --stat/--summary/--check)"),
++			N_("also apply the patch (use with --stat/--summary/--check)")),
+ 		OPT_FILENAME(0, "build-fake-ancestor", &fake_ancestor,
+-			"build a temporary index based on embedded index information"),
++			N_("build a temporary index based on embedded index information")),
+ 		{ OPTION_CALLBACK, 'z', NULL, NULL, NULL,
+-			"paths are separated with NUL character",
++			N_("paths are separated with NUL character"),
+ 			PARSE_OPT_NOARG, option_parse_z },
+ 		OPT_INTEGER('C', NULL, &p_context,
+-				"ensure at least <n> lines of context match"),
+-		{ OPTION_CALLBACK, 0, "whitespace", &whitespace_option, "action",
+-			"detect new or modified lines that have whitespace errors",
++				N_("ensure at least <n> lines of context match")),
++		{ OPTION_CALLBACK, 0, "whitespace", &whitespace_option, N_("action"),
++			N_("detect new or modified lines that have whitespace errors"),
+ 			0, option_parse_whitespace },
+ 		{ OPTION_CALLBACK, 0, "ignore-space-change", NULL, NULL,
+-			"ignore changes in whitespace when finding context",
++			N_("ignore changes in whitespace when finding context"),
+ 			PARSE_OPT_NOARG, option_parse_space_change },
+ 		{ OPTION_CALLBACK, 0, "ignore-whitespace", NULL, NULL,
+-			"ignore changes in whitespace when finding context",
++			N_("ignore changes in whitespace when finding context"),
+ 			PARSE_OPT_NOARG, option_parse_space_change },
+ 		OPT_BOOLEAN('R', "reverse", &apply_in_reverse,
+-			"apply the patch in reverse"),
++			N_("apply the patch in reverse")),
+ 		OPT_BOOLEAN(0, "unidiff-zero", &unidiff_zero,
+-			"don't expect at least one line of context"),
++			N_("don't expect at least one line of context")),
+ 		OPT_BOOLEAN(0, "reject", &apply_with_reject,
+-			"leave the rejected hunks in corresponding *.rej files"),
++			N_("leave the rejected hunks in corresponding *.rej files")),
+ 		OPT_BOOLEAN(0, "allow-overlap", &allow_overlap,
+-			"allow overlapping hunks"),
+-		OPT__VERBOSE(&apply_verbosely, "be verbose"),
++			N_("allow overlapping hunks")),
++		OPT__VERBOSE(&apply_verbosely, N_("be verbose")),
+ 		OPT_BIT(0, "inaccurate-eof", &options,
+-			"tolerate incorrectly detected missing new-line at the end of file",
++			N_("tolerate incorrectly detected missing new-line at the end of file"),
+ 			INACCURATE_EOF),
+ 		OPT_BIT(0, "recount", &options,
+-			"do not trust the line counts in the hunk headers",
++			N_("do not trust the line counts in the hunk headers"),
+ 			RECOUNT),
+-		{ OPTION_CALLBACK, 0, "directory", NULL, "root",
+-			"prepend <root> to all filenames",
++		{ OPTION_CALLBACK, 0, "directory", NULL, N_("root"),
++			N_("prepend <root> to all filenames"),
+ 			0, option_parse_directory },
  		OPT_END()
  	};
- 	int result;
-@@ -1580,7 +1594,7 @@ int cmd_remote(int argc, const char **argv, const char *prefix)
- 	else if (!strcmp(argv[0], "update"))
- 		result = update(argc, argv);
- 	else {
--		error("Unknown subcommand: %s", argv[0]);
-+		error(_("Unknown subcommand: %s"), argv[0]);
- 		usage_with_options(builtin_remote_usage, options);
+@@ -3924,10 +3926,10 @@ int cmd_apply(int argc, const char **argv, const char *prefix_)
+ 	if (!force_apply && (diffstat || numstat || summary || check || fake_ancestor))
+ 		apply = 0;
+ 	if (check_index && is_not_gitdir)
+-		die("--index outside a repository");
++		die(_("--index outside a repository"));
+ 	if (cached) {
+ 		if (is_not_gitdir)
+-			die("--cached outside a repository");
++			die(_("--cached outside a repository"));
+ 		check_index = 1;
+ 	}
+ 	for (i = 0; i < argc; i++) {
+@@ -3943,7 +3945,7 @@ int cmd_apply(int argc, const char **argv, const char *prefix_)
+ 
+ 		fd = open(arg, O_RDONLY);
+ 		if (fd < 0)
+-			die_errno("can't open patch '%s'", arg);
++			die_errno(_("can't open patch '%s'"), arg);
+ 		read_stdin = 0;
+ 		set_default_whitespace_mode(whitespace_option);
+ 		errs |= apply_patch(fd, arg, options);
+@@ -3957,32 +3959,32 @@ int cmd_apply(int argc, const char **argv, const char *prefix_)
+ 		    squelch_whitespace_errors < whitespace_error) {
+ 			int squelched =
+ 				whitespace_error - squelch_whitespace_errors;
+-			warning("squelched %d "
+-				"whitespace error%s",
+-				squelched,
+-				squelched == 1 ? "" : "s");
++			warning(Q_("squelched %d whitespace error",
++				   "squelched %d whitespace errors",
++				   squelched),
++				squelched);
+ 		}
+ 		if (ws_error_action == die_on_ws_error)
+-			die("%d line%s add%s whitespace errors.",
+-			    whitespace_error,
+-			    whitespace_error == 1 ? "" : "s",
+-			    whitespace_error == 1 ? "s" : "");
++			die(Q_("%d line adds whitespace errors.",
++			       "%d lines add whitespace errors.",
++			       whitespace_error),
++			    whitespace_error);
+ 		if (applied_after_fixing_ws && apply)
+ 			warning("%d line%s applied after"
+ 				" fixing whitespace errors.",
+ 				applied_after_fixing_ws,
+ 				applied_after_fixing_ws == 1 ? "" : "s");
+ 		else if (whitespace_error)
+-			warning("%d line%s add%s whitespace errors.",
+-				whitespace_error,
+-				whitespace_error == 1 ? "" : "s",
+-				whitespace_error == 1 ? "s" : "");
++			warning(Q_("%d line adds whitespace errors.",
++				   "%d lines add whitespace errors.",
++				   whitespace_error),
++				whitespace_error);
  	}
  
+ 	if (update_index) {
+ 		if (write_cache(newfd, active_cache, active_nr) ||
+ 		    commit_locked_index(&lock_file))
+-			die("Unable to write new index file");
++			die(_("Unable to write new index file"));
+ 	}
+ 
+ 	return !!errs;
 -- 
 1.7.3.1.256.g2539c.dirty
