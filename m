@@ -1,119 +1,73 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Add column layout skeleton and git-column
-Date: Mon, 16 Apr 2012 09:05:04 -0700
-Message-ID: <7v4nsjy85r.fsf@alter.siamese.dyndns.org>
-References: <7v3984z16m.fsf@alter.siamese.dyndns.org>
- <1334582784-25723-1-git-send-email-pclouds@gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH v2] completion: add new git_complete helper
+Date: Mon, 16 Apr 2012 11:07:29 -0500
+Message-ID: <20120416160729.GM5813@burratino>
+References: <1334524814-13581-1-git-send-email-felipe.contreras@gmail.com>
+ <20120415213718.GB5813@burratino>
+ <CAMP44s0PWAV=nD1xnAFMx8OPby88W2jKwDGtiUFY4LA93D-gAw@mail.gmail.com>
+ <7vaa2by8nj.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Apr 16 18:05:17 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org,
+	SZEDER =?utf-8?B?R8OhYm9y?= <szeder@ira.uka.de>,
+	Thomas Rast <trast@student.ethz.ch>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Apr 16 18:07:46 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SJoQV-0007wR-Tn
-	for gcvg-git-2@plane.gmane.org; Mon, 16 Apr 2012 18:05:16 +0200
+	id 1SJoSs-0001Z0-MC
+	for gcvg-git-2@plane.gmane.org; Mon, 16 Apr 2012 18:07:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751171Ab2DPQFJ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 16 Apr 2012 12:05:09 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:45514 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750734Ab2DPQFI convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 16 Apr 2012 12:05:08 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A3BD3783E;
-	Mon, 16 Apr 2012 12:05:07 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=iQhi0+CYRxq1
-	xOP5YFznjWPbQTM=; b=MM71H4Ebg+HGRCaM0a0W12aBW2m17rl5b3ihETSzmTNQ
-	Uk3t98MlBv+Eg5QgGCgOTAQOfcQCR2r7L+C8QrQWoK/bmAT/WUj4TZFMQKYiF9P+
-	L4uUPNAseVPJGqvLsjVDknuHMwSnR5cqjBwsbr+4hnYnOWszwPPwKeqEwlIQzNE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=jHHXRR
-	rsOo/yJgNb9j1NCx6Mg8BP1zGUPKarz+vGySl3UgnszhpDGsUOsWUETOyoEesgcD
-	E8xhbrATdeVTjWgyCOFRomnkLE0FNCFRFoqJuXDNbwRr5xjT8zWrzk8xdx178+pt
-	cWbERqS9WX+qXCxZ4VLOQ0GcH+Mhw92K+WHOc=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9B613783D;
-	Mon, 16 Apr 2012 12:05:07 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1873F783B; Mon, 16 Apr 2012
- 12:05:05 -0400 (EDT)
-In-Reply-To: <1334582784-25723-1-git-send-email-pclouds@gmail.com>
- (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Mon, 16 Apr
- 2012 20:26:24 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: EEC30A0A-87DD-11E1-A7E8-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751471Ab2DPQHi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Apr 2012 12:07:38 -0400
+Received: from mail-ob0-f174.google.com ([209.85.214.174]:37460 "EHLO
+	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751189Ab2DPQHh (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Apr 2012 12:07:37 -0400
+Received: by obbta14 with SMTP id ta14so3800442obb.19
+        for <git@vger.kernel.org>; Mon, 16 Apr 2012 09:07:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=dm/0WjevWmUxrTI40ZbkzWb40w9YbH+1DtOuX7AKWq4=;
+        b=xbidUoMAwHjyldh77VX2evcmXqv8mpGgGmiMMlLR1XR5z6+WDSRdvEYTqz6y4cgC3T
+         axfdsf/WbwbsLjMSwzhmxZcn8OJPooWBDxcIadbNqbNjuwkxpcIobNhio8xIS2GVheYm
+         furRsX2v/Y8jSN+QBJxgRoujJurxdJabtPrNswaDHiIKUdyCImJTf8pWUavITFlJJuLA
+         2q7hV4H6+XEAhPzaSRxX6AOKP+TgNM15N5tgXMouclOIiklYSlz56CSO02EmBWVN4CrA
+         sBjJ6MHHtLNPqncGCeBZPp3uaz/EmDytNAs9NEc/7/idte3iN1u0ENgFmTj5R4ERjvRI
+         YHYQ==
+Received: by 10.182.26.15 with SMTP id h15mr17006891obg.27.1334592456901;
+        Mon, 16 Apr 2012 09:07:36 -0700 (PDT)
+Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
+        by mx.google.com with ESMTPS id n9sm15830205oen.2.2012.04.16.09.07.35
+        (version=SSLv3 cipher=OTHER);
+        Mon, 16 Apr 2012 09:07:36 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <7vaa2by8nj.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195656>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195657>
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com> writes:
+Junio C Hamano wrote:
 
-> +static int parse_config(unsigned int *colopts, const char *value)
-> +{
-> +	const char *sep =3D " ,";
-> +	int group_set =3D 0;
-> +
-> +	while (*value) {
-> +		int len =3D strcspn(value, sep);
-> +		if (len) {
-> +			if (parse_option(value, len, colopts, &group_set))
-> +				return -1;
-> +
-> +			value +=3D len;
-> +		}
-> +		value +=3D strspn(value, sep);
-> +	}
-> +	/*
-> +	 * Setting layout implies "always" if neither always, never
-> +	 * nor auto is specified.
-> +	 *
-> +	 * Current COL_ENABLE() value is disregarded. This means if
-> +	 * you set column.ui =3D auto and pass --column=3Drow, then "auto"
-> +	 * will become "always".
-> +	 */
-> +	if ((group_set & LAYOUT_SET) && !(group_set & ENABLE_SET))
-> +		*colopts =3D (*colopts & ~COL_ENABLE_MASK) | COL_ENABLED;
-> +	return 0;
-> +}
-> +
-> +static int column_config(const char *var, const char *value,
-> +			 const char *key, unsigned int *colopts)
-> +{
-> +	if (value && parse_config(colopts, value))
-> +		return error("invalid column.%s mode %s", key, value);
+> I am OK with introducing git_ps1 while keeping __git_ps1 as an equivalent
+> and declare that git_$anything will be the surface interface for end users
+> to *use* the machinery we provide, though.
 
-If column.* can never be a boolean, this code shouldn't silently ignore
+The problem is that completion scripts are often included implicitly
+in .profile through the bash completion machinery.  Users do not have
+to explicitly ask for them, so there is no reason for users to expect
+that the function name "more_cowbell" is dangerous to use in .profile
+because some day the completion script for the "more" command will
+start using it.
 
-	[column]
-        	ui
-
-but explicitly error out.  See git_config_string() for an example if yo=
-u
-want to go this route.
-
-On the other hand, it might make sense to equate a "true" with "a sane
-default" (i.e. the user declares that s/he trusts whatever default the =
-Git
-implementation deems sane), in which case
-
-	if (!value)
-		value =3D "auto,whatever,column,default,mode";
-	if (parse_config(colopts, value))
-        	return error("invalid column.%s mode...", ...);
-
-might be a better way to go.  If you take this route, a single-token
-column.* becomes a variable that takes boolean and more, so the existin=
-g
-`never` has to gain `no`, `false`, etc. as synonyms, and `true`, `1`,
-etc. needs to be interpreted the same as `auto` for consistency.
+Because of these considerations, the convention is that every
+identifier provided by a completion script, including public ones,
+starts with an underscore.
