@@ -1,81 +1,91 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 0/7] diff stat calculation adjustments
-Date: Mon, 16 Apr 2012 12:30:48 -0700
-Message-ID: <7vobqrtqxj.fsf@alter.siamese.dyndns.org>
-References: <1334573095-32286-1-git-send-email-lucian.poston@gmail.com>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH v2] completion: add new git_complete helper
+Date: Mon, 16 Apr 2012 23:04:52 +0300
+Message-ID: <CAMP44s2_VYNFeBi9GPa9CeqT=oRmSq1J1XaSP+aKgC6bJ55Lfg@mail.gmail.com>
+References: <1334524814-13581-1-git-send-email-felipe.contreras@gmail.com>
+	<20120415213718.GB5813@burratino>
+	<CAMP44s0PWAV=nD1xnAFMx8OPby88W2jKwDGtiUFY4LA93D-gAw@mail.gmail.com>
+	<7vaa2by8nj.fsf@alter.siamese.dyndns.org>
+	<20120416160729.GM5813@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Lucian Poston <lucian.poston@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Apr 16 21:31:02 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	=?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder@ira.uka.de>,
+	Thomas Rast <trast@student.ethz.ch>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Apr 16 22:05:03 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SJrdY-0007ME-Nw
-	for gcvg-git-2@plane.gmane.org; Mon, 16 Apr 2012 21:30:57 +0200
+	id 1SJsAW-0007fj-Nv
+	for gcvg-git-2@plane.gmane.org; Mon, 16 Apr 2012 22:05:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752275Ab2DPTaw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Apr 2012 15:30:52 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:62893 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751633Ab2DPTav (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Apr 2012 15:30:51 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6272B6DBC;
-	Mon, 16 Apr 2012 15:30:50 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=R09LRlw5RbJcle6CM5lmM3jpQr8=; b=ElyU6j
-	HJf/MU+TiHUYPpUhBE6NgMJgjznatK+Ta8LhhmhstNsP7jEqfXmdAexchZriOFDM
-	Bq27ljRUz84ZuwBrQfF+OCqffNFNjiDbKRYP3kG5H+KRnKwZZJMtf3VhxQQi9EKo
-	HLxXC555LS3Q+mc1zDNOUG47SABprV14KQ9b8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=xsLEJ7aOKhxPN+lzZAMgMeW/JNHQ0JQk
-	4hVwGXMv79nuJKPKOhK1Od31ShVmPXCkUwL5laIGoD3HUjtaj5uJ85VvAHNaBIk0
-	qqADHUJODBt1FdYOoPxDEUf6MWL0T/6hVqC+ucC2zKPv9BJeSfC77OUnJsGBGdAF
-	vxyDgaoRs7U=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5A1296DBB;
-	Mon, 16 Apr 2012 15:30:50 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E31736DBA; Mon, 16 Apr 2012
- 15:30:49 -0400 (EDT)
-In-Reply-To: <1334573095-32286-1-git-send-email-lucian.poston@gmail.com>
- (Lucian Poston's message of "Mon, 16 Apr 2012 03:44:48 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: AC423526-87FA-11E1-BB7B-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754137Ab2DPUEy convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 16 Apr 2012 16:04:54 -0400
+Received: from mail-ey0-f174.google.com ([209.85.215.174]:41124 "EHLO
+	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753229Ab2DPUEx convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 16 Apr 2012 16:04:53 -0400
+Received: by eaaq12 with SMTP id q12so1392968eaa.19
+        for <git@vger.kernel.org>; Mon, 16 Apr 2012 13:04:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=6wC0cSIVbpVL6Te6RLsYZoUnHyzbs2JhVuUi787qR4o=;
+        b=U/VpjqWctkYZyNSrjHhwfgpiRkhBkZbbO79W0srNHW8tcMnWRpqD73R4aYZSSkqssi
+         OMK0sNkyHKf1EM6XCdfagMPLTUq/8sHg4oN2cSCkdxvGKTrl5cx4VRfWFyk8MpmkVM4u
+         DGTw1lZ6yHZUiF0aMM5IwrZ6/ZF19A8ka+bBPOhXIcSx1mOjeQEWuB3koLgUZe+hf74A
+         2WQ4JqalTJMrlIAIpFAiesf7aKrhUJBCkqRL56Zc4ZTPDC2LOf33T42cr/8W13uLPYUq
+         g2h+LZiMmMkBuMSc2qHMAPVdPYkwl9QTX6IpxKoS3i4vaarAaN82a/zrtfiC7UES5UGy
+         4zzg==
+Received: by 10.14.96.6 with SMTP id q6mr1838873eef.6.1334606692175; Mon, 16
+ Apr 2012 13:04:52 -0700 (PDT)
+Received: by 10.213.19.67 with HTTP; Mon, 16 Apr 2012 13:04:52 -0700 (PDT)
+In-Reply-To: <20120416160729.GM5813@burratino>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195680>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195681>
 
-Lucian Poston <lucian.poston@gmail.com> writes:
-
-> I broke the patch series up into smaller patches. Hopefully this makes the
-> intent of the changes easier to follow.
+On Mon, Apr 16, 2012 at 7:07 PM, Jonathan Nieder <jrnieder@gmail.com> w=
+rote:
+> Junio C Hamano wrote:
 >
-> Zbigniew's tests were added as PATCH 1/7.
+>> I am OK with introducing git_ps1 while keeping __git_ps1 as an equiv=
+alent
+>> and declare that git_$anything will be the surface interface for end=
+ users
+>> to *use* the machinery we provide, though.
+>
+> The problem is that completion scripts are often included implicitly
+> in .profile through the bash completion machinery. =C2=A0Users do not=
+ have
+> to explicitly ask for them, so there is no reason for users to expect
+> that the function name "more_cowbell" is dangerous to use in .profile
+> because some day the completion script for the "more" command will
+> start using it.
 
-Thanks.  Overall it looks nicely done, except that the structure of the
-series may want a few squashing, moving and use of test_expect_failure
-that later turns into test_expect_success.
+Sure, that's why we would have _git_cowbell instead, so for *most* of
+functions the user would have no trouble, it would *only* be
+git_completion the one without prefix, and I think the name is quite
+safe. There's quite likely few, probably nobody, actually using that
+function name in their profiles.
 
-When I learned from you that you will be rerolling, I was expecting to see
-the other series, i.e.
+Also, the script would now be loaded only *after*, the user types 'git
+<TAB>'. And there's already a bunch of functions that are already
+exported by just having bash completion: have(), quote(), dequote(),
+quote_readline(). And there's at least one script that uses a function
+without a prefix: ri_get_methods()
 
- * lp/maint-diff-three-dash-with-graph (2012-03-20) 3 commits
-  - t4202: add test for "log --graph --stat -p" separator lines
-  - log --graph: fix break in graph lines
-  - log --graph --stat: three-dash separator should come after graph lines
+I would like to see a completion script that actually has a function
+supposed to be exported and that still uses the _ prefix anyway.
 
-but I think this was $gmane/193490 split into three and didn't have
-anything controversial.
+Cheers.
 
-I'll merge it to 'next'.
-
-Thanks.
+--=20
+=46elipe Contreras
