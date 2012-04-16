@@ -1,79 +1,127 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: What's cooking in git.git (Apr 2012, #05; Thu, 12)
-Date: Mon, 16 Apr 2012 11:33:54 -0700
-Message-ID: <CA+55aFyAsF4jNvNMKC6divzAfyVmgrHvxJtnX0fjkpp_bLHkPQ@mail.gmail.com>
-References: <20120416082641.5d239ef6@mkiedrowicz.ivo.pl> <CA+55aFwkf2bOLmUCU+_pSg0OzGyfQ1x-Cy_CiczpJN3zsThNWg@mail.gmail.com>
- <7v7gxfwpc8.fsf@alter.siamese.dyndns.org> <CA+55aFwPrjtAttsH75tTGHO=14g_2GbyOtUt4eY9LPHbtcXvcQ@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3 5/7] t4052: Add tests to illustrate issues with
+ restrictive COLUMNS
+Date: Mon, 16 Apr 2012 11:48:06 -0700
+Message-ID: <7v7gxfv7h5.fsf@alter.siamese.dyndns.org>
+References: <1334573095-32286-1-git-send-email-lucian.poston@gmail.com>
+ <1334573095-32286-6-git-send-email-lucian.poston@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Michal Kiedrowicz <michal.kiedrowicz@gmail.com>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Apr 16 20:34:28 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org,
+	Zbigniew =?utf-8?Q?J=C4=99drzejewski-Szmek?= <zbyszek@in.waw.pl>
+To: Lucian Poston <lucian.poston@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Apr 16 20:48:21 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SJqkt-0007eL-2Y
-	for gcvg-git-2@plane.gmane.org; Mon, 16 Apr 2012 20:34:27 +0200
+	id 1SJqyI-0001MI-QT
+	for gcvg-git-2@plane.gmane.org; Mon, 16 Apr 2012 20:48:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755234Ab2DPSeS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Apr 2012 14:34:18 -0400
-Received: from mail-we0-f174.google.com ([74.125.82.174]:40792 "EHLO
-	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753028Ab2DPSeQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Apr 2012 14:34:16 -0400
-Received: by wejx9 with SMTP id x9so3534354wej.19
-        for <git@vger.kernel.org>; Mon, 16 Apr 2012 11:34:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:from:date
-         :x-google-sender-auth:message-id:subject:to:cc:content-type;
-        bh=QoKpAnO2cm7Skld1w0uiBpSA03hEE1DDZjf/gIPAvWw=;
-        b=J2PHB6ThoUbXiAeeP0fdaTrY2qFVpKQVo/P8DXYKLYYlHVFO3TIRYkIIyYbBLDTgGx
-         wRIMvyJrBzwB/Fva9ppsfdTq6n1/hV2mYURawJ9WhZpQi/fPU65Y02YQFQ0QC+yVh6/j
-         XKvrZBkh/abxky69ao41rU+ILg3qGCDxxLa/HrfSuu8MpOgRK9kRKF55yz7UroEQEVIx
-         LT0CcG5cLfSSdItyhBCBmuqbyTOf4SQMowON6hp0h+dpXiZXbp3t2NXg3WqWIUQEc11j
-         EM6oaysgyg3dUsjleLTa4QzlCfu3hhWgD7lRKhPyuG4gO1lJesHuKbWQUklAFYitSAWS
-         NP8w==
-Received: by 10.216.200.90 with SMTP id y68mr7326499wen.49.1334601254968; Mon,
- 16 Apr 2012 11:34:14 -0700 (PDT)
-Received: by 10.216.221.167 with HTTP; Mon, 16 Apr 2012 11:33:54 -0700 (PDT)
-In-Reply-To: <CA+55aFwPrjtAttsH75tTGHO=14g_2GbyOtUt4eY9LPHbtcXvcQ@mail.gmail.com>
-X-Google-Sender-Auth: bFYJf_pXp31_harV2tjUP84_m_0
+	id S1753740Ab2DPSsN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Apr 2012 14:48:13 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:46306 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750963Ab2DPSsM (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Apr 2012 14:48:12 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C8A25628C;
+	Mon, 16 Apr 2012 14:48:08 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:message-id:mime-version:content-type;
+	 s=sasl; bh=gLOyI4/yJLobjHClexRh2YeTCkA=; b=LF4yZuRXdrf8m43pSAgg
+	7ScecxgCEVsoE10Szqq1XJcCuOEnKT8T+jei/GDjeckmc/ltHxGchUy/5PQzSrqp
+	08kngi+iS8IyOLXRDmHRMBrA5INCfcZNOj8+jXt4CxKGlWA6/fESS2BHp4PRJzM9
+	cWZQF8IC9U0ZMWcKMo5Fzyg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:message-id:mime-version:content-type;
+	 q=dns; s=sasl; b=NzCx1+a9AS4BieMbrBQXiK1Q35aUFCNZoB9ohLFTMBpAJo
+	/Qe9YjC8RrkUQmKOjhGjurwunvLzFt6eNVfEt/O4PFMihk9GKIWjAe87BHx181c8
+	pvYCYMs0MZyh0Fvu+NDDVacv/e8o4DJIZ/t/BnA0xAV8MBnxJjaOO2jiSmr00=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C1182628B;
+	Mon, 16 Apr 2012 14:48:08 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id AA5D8628A; Mon, 16 Apr 2012
+ 14:48:07 -0400 (EDT)
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: B50C8626-87F4-11E1-A7CF-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195676>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195677>
 
-On Mon, Apr 16, 2012 at 11:02 AM, Linus Torvalds
-<torvalds@linux-foundation.org> wrote:
+Lucian Poston <lucian.poston@gmail.com> writes:
+
+> Signed-off-by: Lucian Poston <lucian.poston@gmail.com>
+> ---
+
+Sorry, the patch text itself does not tell me what it wants to "illustate"
+at all.
+
+I _guess_ that you are saying that the output for expect1 and
+expect1-graph should be limited to very narrow width, not like the
+humongous output like we see in the added test vector, and it will be
+fixed with your patch 6/7.
+
+If that is the case, please structure this part of the series like this:
+
+	5/7: add test vector to illustrate what the correct output should
+	     be, but mark the test with "test_expect_failure".
+
+        6/7: update the code to fix it, and flip the "test_expect_failure"
+             in 5/7 to "test_expect_success".
+
+And 7/7 will become unneeded.
+
+Thanks.
+
+>  t/t4052-stat-output.sh |   28 ++++++++++++++++++++++++++++
+>  1 files changed, 28 insertions(+), 0 deletions(-)
 >
-> Oddly, running that test in verbose mode seems to imply that it's the
-> *rebase* that succeeds, not the merges in that test. Maybe I'm reading
-> the test results wrong, I didn't really try to understand the test
-> itself ;(
-
-Yes, it's the rebase that succeeds. "git log -g" in the trash
-directory shows that we ended up successfully rebasing J2:
-
-  commit 5fc34ec1a8ed96664198fefc74121cd052b10861
-  Reflog: HEAD@{1} (C O Mitter <committer@example.com>)
-  Reflog message: rebase -i (pick): Merge made by the 'recursive' strategy.
-  Author: A U Thor <author@example.com>
-  Date:   Thu Apr 7 15:28:13 2005 -0700
-
-      J2
-
-while a successful test will fail that.
-
-However, I don't actually see what changed.
-
-Oh - one thing to note is that the *patch* of that successful rebase
-is empty. That may be the big clue: we successfully finish the merge
-without noticing that it didn't change any state, and we should have
-failed it as an empty commit. Hmm?
-
-                   Linus
+> diff --git a/t/t4052-stat-output.sh b/t/t4052-stat-output.sh
+> index d748e5e..6cac95b 100755
+> --- a/t/t4052-stat-output.sh
+> +++ b/t/t4052-stat-output.sh
+> @@ -284,6 +284,34 @@ respects expect200 show --stat
+>  respects expect200 log -1 --stat
+>  EOF
+>  
+> +cat >expect1 <<'EOF'
+> + ...aaaaaaaaaaaaaa | 1000 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ ++
+>  +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+> +EOF
+> +cat >expect1-graph <<'EOF'
+> +|  ...aaaaaaaaaaaaaa | 1000 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ ++
+>  +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+> +EOF
+> +while read verb expect cmd args
+> +do
+> +	test_expect_success "$cmd $verb prefix greater than COLUMNS (big change)" '
+> +		COLUMNS=1 git $cmd $args >output
+> +		grep " | " output >actual &&
+> +		test_cmp "$expect" actual
+> +	'
+> +
+> +	test "$cmd" != diff || continue
+> +
+> +	test_expect_success "$cmd --graph $verb prefix greater than COLUMNS (big change)" '
+> +		COLUMNS=1 git $cmd $args --graph >output
+> +		grep " | " output >actual &&
+> +		test_cmp "$expect-graph" actual
+> +	'
+> +done <<\EOF
+> +ignores expect80 format-patch -1 --stdout
+> +respects expect1 diff HEAD^ HEAD --stat
+> +respects expect1 show --stat
+> +respects expect1 log -1 --stat
+> +EOF
+> +
+>  cat >expect <<'EOF'
+>   abcd | 1000 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+>  EOF
