@@ -1,82 +1,83 @@
-From: Neil Horman <nhorman@tuxdriver.com>
-Subject: Re: [PATCH v5 3/4] git-cherry-pick: Add test to validate new options
-Date: Mon, 16 Apr 2012 12:50:24 -0400
-Message-ID: <20120416165024.GF13366@hmsreliant.think-freely.org>
-References: <1333136922-12872-1-git-send-email-nhorman@tuxdriver.com>
- <1334342707-3326-1-git-send-email-nhorman@tuxdriver.com>
- <1334342707-3326-4-git-send-email-nhorman@tuxdriver.com>
- <20120415093933.GB6263@ecki>
- <20120416161431.GD13366@hmsreliant.think-freely.org>
- <7vvckzws73.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Filter-branch's "move tree to subdirectory" example fails with
+ BSD sed?
+Date: Mon, 16 Apr 2012 10:03:03 -0700
+Message-ID: <7vr4vnwqwo.fsf@alter.siamese.dyndns.org>
+References: <20120414160028.GD1012@gmail.com> <4F89CF11.7060309@kdbg.org>
+ <20120416152737.GB14724@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Clemens Buchacher <drizzd@aon.at>, git@vger.kernel.org,
-	Jeff King <peff@peff.net>, Phil Hord <phil.hord@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Apr 16 18:50:42 2012
+Cc: Johannes Sixt <j6t@kdbg.org>,
+	Christopher Tiwald <christiwald@gmail.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Apr 16 19:03:22 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SJp8S-0001sw-Ef
-	for gcvg-git-2@plane.gmane.org; Mon, 16 Apr 2012 18:50:40 +0200
+	id 1SJpKj-00045U-A3
+	for gcvg-git-2@plane.gmane.org; Mon, 16 Apr 2012 19:03:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753650Ab2DPQuc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Apr 2012 12:50:32 -0400
-Received: from charlotte.tuxdriver.com ([70.61.120.58]:37165 "EHLO
-	smtp.tuxdriver.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751651Ab2DPQub (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Apr 2012 12:50:31 -0400
-Received: from hmsreliant.think-freely.org ([2001:470:8:a08:7aac:c0ff:fec2:933b] helo=localhost)
-	by smtp.tuxdriver.com with esmtpsa (TLSv1:AES128-SHA:128)
-	(Exim 4.63)
-	(envelope-from <nhorman@tuxdriver.com>)
-	id 1SJp8D-00012I-NG; Mon, 16 Apr 2012 12:50:27 -0400
-Content-Disposition: inline
-In-Reply-To: <7vvckzws73.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-X-Spam-Score: -2.9 (--)
-X-Spam-Status: No
+	id S1754285Ab2DPRDL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Apr 2012 13:03:11 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:36690 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752902Ab2DPRDI (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Apr 2012 13:03:08 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 64B3067DD;
+	Mon, 16 Apr 2012 13:03:05 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=LJT4SS3jcdJtfnEGvCn4Bo1MkUs=; b=w/jX1W
+	rmbF4G/mGDk5VKrLcNxuc4Q2okCIe91DieRY2yv9wd7hn9SFKM2q91VQmG6sCw4o
+	2xGrFE/iQRiDJGSbNMVI9VDFaMT+cfbX6Jw5PzjPISYxTkI8y+jbGcruXJrv3gPf
+	8lvLxNGW5K+8aaNu+Hvymm08FL+bnOkEltwCY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=ayobjbe1qz3v/lbmYLNroKQZUW6aHdco
+	E7i5rGGnF63JvlqQAAqsbmAj/CAh9vvSIbBbryfEAYdyveNOoYsdlw3On4NJaodw
+	N66WlQPtHHfZgR7UsCQfFWcO6p6zOnL8Z+UBXRbgk2Uzfm+ej34M7jrUciBKPgKV
+	2wMenw0jYoI=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 448AF67DC;
+	Mon, 16 Apr 2012 13:03:05 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id CF16C67DA; Mon, 16 Apr 2012
+ 13:03:04 -0400 (EDT)
+In-Reply-To: <20120416152737.GB14724@sigill.intra.peff.net> (Jeff King's
+ message of "Mon, 16 Apr 2012 11:27:38 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 08422698-87E6-11E1-83ED-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195664>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195665>
 
-On Mon, Apr 16, 2012 at 09:35:12AM -0700, Junio C Hamano wrote:
-> Neil Horman <nhorman@tuxdriver.com> writes:
-> 
-> > On Sun, Apr 15, 2012 at 11:39:35AM +0200, Clemens Buchacher wrote:
-> > ...
-> >> > +test_expect_success 'cherry pick an empty non-ff commit with --allow-empty' '
-> >> > +	git checkout master && {
-> >> > +		git cherry-pick --allow-empty empty-branch2
-> >> > +	}
-> >> > +'
-> >> > +
-> >> > +test_expect_success 'cherry pick with --keep-redundant-commits' '
-> >> > +	git checkout master && {
-> >> > +		git cherry-pick --keep-redundant-commits HEAD^
-> >> > +	}
-> >> > +'
-> >> 
-> >> And the expected result is that the HEAD commit is not removed, right?
-> >> You should check for that as well.
-> >> 
-> >> Also, please checkout empty-branch2^0 first, in order to make the test
-> >> independent of its predecessor.
-> >
-> > Not sure I follow what your saying here.  The expected result with both of these
-> > tests is that a new commit is created, referencing the current HEAD as the new
-> > HEAD's parent.
-> 
-> If the request were "checkout master^0 first" I would understand.  The
-> precondition for the second test will be different depending on the first
-> one succeeds or not.  Perhaps that is what Clemens meant?
-> 
-Perhaps, but if so, I'm still not sure how a checkout of empty-branch2^0 affects
-these tests at all, nor do I grok the relevance to ensuring that the HEAD commit
-wasn't removed (as AIUI, cherry pick never does that anyway).  Clement, can you
-clarify your thoughts here please?
-Neil
+Jeff King <peff@peff.net> writes:
+
+> I wish we could also get rid of the temporary index. It exists solely
+> for the side effect of removing the existing entries (otherwise, you get
+> both "foo" and "newsubdir/foo" in the resulting history). It would be
+> nice if there was some flag to update-index to say "before you do
+> anything, clear the existing index" (or I guess, "don't bother reading
+> the existing index"). And then result could look like:
+>
+>   git filter-branch --index-filter '
+>     git ls-files -sz |
+>     perl -0pe "s{\t}{\tnewsubdir/}" |
+>     git update-index --from-scratch -z --index-info
+>   ' HEAD
+>
+> which is IMHO much easier to read and understand.
+
+Wouldn't "git read-tree --prefix=newsubdir/" suffice without the pipeline?
+I.e.
+
+        git filter-branch --index-filter '
+		rm -f "$GIT_INDEX_FILE"
+                git read-tree --prefix=newsubdir/ "$GIT_COMMIT"
+	' HEAD
