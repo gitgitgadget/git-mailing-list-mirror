@@ -1,73 +1,105 @@
-From: Phillip Susi <psusi@ubuntu.com>
-Subject: Re: stash refuses to pop
-Date: Sun, 15 Apr 2012 21:29:49 -0400
-Message-ID: <4F8B760D.6030207@ubuntu.com>
-References: <4F847350.3000409@ubuntu.com> <7vpqbfpim2.fsf@alter.siamese.dyndns.org> <4F84827B.80104@ubuntu.com> <CAH5451=0KvUPB77hKyjFVXRwPfEZ8+45b20SimBPmuF-gq_A3w@mail.gmail.com> <4F84F39B.6070907@ubuntu.com> <20120414042713.GA13889@inner.h.iocl.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v9 1/9] Add column layout skeleton and git-column
+Date: Sun, 15 Apr 2012 22:38:09 -0700
+Message-ID: <7v3984z16m.fsf@alter.siamese.dyndns.org>
+References: <1334314481-14470-1-git-send-email-pclouds@gmail.com>
+ <1334314481-14470-2-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Andrew Ardill <andrew.ardill@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Andreas Krey <a.krey@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Apr 16 03:29:56 2012
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Apr 16 07:38:22 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SJalP-00052V-Bs
-	for gcvg-git-2@plane.gmane.org; Mon, 16 Apr 2012 03:29:55 +0200
+	id 1SJedm-0007CJ-7q
+	for gcvg-git-2@plane.gmane.org; Mon, 16 Apr 2012 07:38:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752579Ab2DPB3w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 15 Apr 2012 21:29:52 -0400
-Received: from cdptpa-omtalb.mail.rr.com ([75.180.132.120]:19138 "EHLO
-	cdptpa-omtalb.mail.rr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752545Ab2DPB3v (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 Apr 2012 21:29:51 -0400
-X-Authority-Analysis: v=2.0 cv=ReYS+iRv c=1 sm=0 a=QETZmXXmyubuBiJjAgCHWw==:17 a=zF0nvurNEAYA:10 a=2TzjGJVPWd4A:10 a=S1A5HrydsesA:10 a=8nJEP1OIZ-IA:10 a=xe8BsctaAAAA:8 a=eSXQjH11rlzfZ4NsrEIA:9 a=wPNLvfGTeEIA:10 a=QETZmXXmyubuBiJjAgCHWw==:117
-X-Cloudmark-Score: 0
-X-Originating-IP: 97.103.252.48
-Received: from [97.103.252.48] ([97.103.252.48:33351] helo=[192.168.1.4])
-	by cdptpa-oedge01.mail.rr.com (envelope-from <psusi@ubuntu.com>)
-	(ecelerity 2.2.3.46 r()) with ESMTP
-	id 8D/CE-07741-D067B8F4; Mon, 16 Apr 2012 01:29:50 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:11.0) Gecko/20120402 Thunderbird/11.0.1
-In-Reply-To: <20120414042713.GA13889@inner.h.iocl.org>
-X-Enigmail-Version: 1.4
+	id S1750945Ab2DPFiN convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 16 Apr 2012 01:38:13 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:33395 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750852Ab2DPFiM convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 16 Apr 2012 01:38:12 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A15AC7816;
+	Mon, 16 Apr 2012 01:38:11 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=P2+OlZf0Ywkt
+	w8w7XWkky1xY9z8=; b=h9rnm7mVwWRaanbuNVF3CvH819uCQGDyW7OGKQ6ZxdST
+	hc/+0jVIdkHEbn0w7i1mjzyCS3aiQmge0PgetSpXiOFoZXldYf6nf52gP5tCvbag
+	iuNDOxyfgEDl5WcPDazCYCAMHZqFY1/Z9qJPy184M9VI0LEp+CW+usMKz9YgrRQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=jpVc54
+	eKSIYNlK1V2zQztksHo5mDib4Vi3HDBLD3rvv7jWd0SFBXeaq8wnS2qmoHXV/ekH
+	ORGdKAdaHtDZJsYIMHSF/3otrfCz0i562BX8nfK8q91xiIHnM1Zf0j8PRnk8G8b5
+	kBeBaLjVFLAydNi7mecPDXQuI3Icr8wQbLUuA=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9A3657815;
+	Mon, 16 Apr 2012 01:38:11 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E925E7814; Mon, 16 Apr 2012
+ 01:38:10 -0400 (EDT)
+In-Reply-To: <1334314481-14470-2-git-send-email-pclouds@gmail.com>
+ (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Fri, 13 Apr
+ 2012 17:54:33 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 5A636C4E-8786-11E1-8F92-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195597>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195598>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
 
-On 04/14/2012 12:27 AM, Andreas Krey wrote:
-> (Late to the game.) Actually, this is exactly what I would have proposed
-> to do. Git is a bit shy on performing a merge into a locally modified
-> file. I assumed so far that is because there is no way of aborting
-> such a merge (resetting to the state of local modifications before the
-> attempt). With the temporary commit you have a way of retrying the pop
-> merge if you lost your way in it.
-> 
-> And I think that is a good idea; I never liked the way in which a cvs/svn
-> update merged into locally modified files without a way to undo, and
-> thus forcing you to clean up the potential mess manually. (Ok, they leave
-> the old files lying arond, but that doesn't help rewinding the state.)
+> +static int column_config(const char *var, const char *value,
+> +			 const char *key, unsigned int *colopts)
+> +{
+> +	if (parse_config(colopts, value))
+> +		return error("invalid %s mode %s", key, value);
+> +	return 0;
+> +}
+> +
+> +int git_column_config(const char *var, const char *value,
+> +		      const char *command, unsigned int *colopts)
+> +{
+> +	if (!strcmp(var, "column.ui"))
+> +		return column_config(var, value, "column.ui", colopts);
 
-That makes sense for the default behavior, but there should be a way to override.  Or maybe git could automatically stash the current state to a temporary commit before applying the requested stash and print the sha1 of that commit ( or save it as ORIG_HEAD ) so you could undo the stash pop/apply.
+I do not think there is anything that reads column.ui from a configurat=
+ion
+file (or "git -c column.ui") in this step, but later patches seem to us=
+e
+it from their configuration callback (e.g. git_branch_config()) and at
+that point you will segfault because you ignore the case where value is
+NULL.
 
+> +	if (command) {
+> +		struct strbuf sb =3D STRBUF_INIT;
+> +		int ret =3D 0;
+> +		strbuf_addf(&sb, "column.%s", command);
+> +		if (!strcmp(var, sb.buf))
+> +			ret =3D column_config(var, value, sb.buf, colopts);
+> +		strbuf_release(&sb);
+> +		return ret;
+> +	}
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+This whole thing looks overly wasteful.  How about doing it this way?
 
-iQEcBAEBAgAGBQJPi3YKAAoJEJrBOlT6nu75OXAH+gK4pfFomFgblw1sLb9Bpgud
-0O88dtWWOr9/bNR6NIiIWj76x+xMiRMxuq2YP3/6vkuhGAtVxYqoHc/BkWUmzop/
-oma30g244H17Oa0r9H0yf6n6v824xv3tVx166cQ0pVeBnnFs1GINxjODuD0QGTnH
-VewepnyaYkPRSjgzrJShOadaxRZFZWUBNlncLbHMLBNJl+n4cMXsg9uasEv3rG73
-Mw+zAKcMMf4zCfxE0T2dpbf0hOOde8PWtJY12RAYWvhn7YTVP9Uj+t3a9flb2UyB
-zuo84Xv49meMB9ce4DDtANXeH8uKamBGk94NH6Khv6LewuG5SOS7DukDEJxA+B0=
-=xaNu
------END PGP SIGNATURE-----
+	const char *it =3D skip_prefix(var, "column.");
+        if (!it)
+		return 0;
+	if (!strcmp(it, "ui"))
+		parse "ui";
+	else if (!strcmp(it, command))
+		parse "command";
+
+and make the third parameter to column_config() be without the constant
+prefix "column."?
