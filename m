@@ -1,91 +1,87 @@
-From: Marc Branchaud <marcnarc@xiplink.com>
-Subject: Re: [PATCHv2] fetch: Only call a new ref a "branch" if it's under
- refs/heads/.
-Date: Mon, 16 Apr 2012 10:26:40 -0400
-Message-ID: <4F8C2C20.6080300@xiplink.com>
-References: <1334336904-18649-1-git-send-email-marcnarc@xiplink.com> <20120413200721.GA3549@burratino>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: organizing multiple repositories with dependencies
+Date: Mon, 16 Apr 2012 07:30:17 -0700 (PDT)
+Message-ID: <m3hawjagw9.fsf@localhost.localdomain>
+References: <1334568432.53977.YahooMailNeo@web65906.mail.ac4.yahoo.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Apr 16 16:26:50 2012
+Content-Type: text/plain; charset=iso-8859-15
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Namit Bhalla <namitbhalla@yahoo.com>
+X-From: git-owner@vger.kernel.org Mon Apr 16 16:30:26 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SJmtC-00041x-UI
-	for gcvg-git-2@plane.gmane.org; Mon, 16 Apr 2012 16:26:47 +0200
+	id 1SJmwi-0006th-Np
+	for gcvg-git-2@plane.gmane.org; Mon, 16 Apr 2012 16:30:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754588Ab2DPO0k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Apr 2012 10:26:40 -0400
-Received: from smtp142.dfw.emailsrvr.com ([67.192.241.142]:46911 "EHLO
-	smtp142.dfw.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753803Ab2DPO0j (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Apr 2012 10:26:39 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by smtp4.relay.dfw1a.emailsrvr.com (SMTP Server) with ESMTP id 5990A3A06D9
-	for <git@vger.kernel.org>; Mon, 16 Apr 2012 10:26:38 -0400 (EDT)
-X-Virus-Scanned: OK
-Received: from smtp154.ord.emailsrvr.com (smtp154.ord.emailsrvr.com [173.203.6.154])
-	by smtp4.relay.dfw1a.emailsrvr.com (SMTP Server) with ESMTPS id 3D5963A06D2
-	for <git@vger.kernel.org>; Mon, 16 Apr 2012 10:26:38 -0400 (EDT)
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by smtp17.relay.ord1a.emailsrvr.com (SMTP Server) with ESMTP id D846E190301;
-	Mon, 16 Apr 2012 10:26:02 -0400 (EDT)
-X-Virus-Scanned: OK
-Received: by smtp17.relay.ord1a.emailsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id 814F619030E;
-	Mon, 16 Apr 2012 10:26:02 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:11.0) Gecko/20120329 Thunderbird/11.0.1
-In-Reply-To: <20120413200721.GA3549@burratino>
+	id S1753989Ab2DPOaU convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 16 Apr 2012 10:30:20 -0400
+Received: from mail-wg0-f42.google.com ([74.125.82.42]:46678 "EHLO
+	mail-wg0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753512Ab2DPOaT convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 16 Apr 2012 10:30:19 -0400
+Received: by wgbds11 with SMTP id ds11so7756462wgb.1
+        for <git@vger.kernel.org>; Mon, 16 Apr 2012 07:30:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type
+         :content-transfer-encoding;
+        bh=uZVEzLKJUzNErWpyRBJzPfw2j9A0IYl67qyTNF+hNWs=;
+        b=BLtcgjOJDcg9BxqBvM02OCmmgHnjq+9kRCl+zjSd+ibWaccKzi8JmQrtAXsN8uDBoy
+         2oBnD+/iIPvYlQvnDpPZkS2sg3a28o+jssbdos9DHLSNz2GCUBoyNYp06yAQFo9X0d1L
+         xgwSOfR5G4LGgqmDBQASua98DkphW6Cz+EBGv0+pEMxMwh6Yioxtr230eMP1lTwxz1GJ
+         AzehCXOsq9h8cywTPYHg+J/fp/dxEG7Bp/jJ1LpMMWu6/swoIFLEc7C8wy1h7SBdp2NR
+         66hALxxPVBZCmY8lJqnOV42DxZu1Gg85v7/9dYrvBBdbntAkoP7oRROuNyJgavfB9uA7
+         hGnw==
+Received: by 10.180.104.230 with SMTP id gh6mr19137397wib.22.1334586618428;
+        Mon, 16 Apr 2012 07:30:18 -0700 (PDT)
+Received: from localhost.localdomain (aedx242.neoplus.adsl.tpnet.pl. [79.186.101.242])
+        by mx.google.com with ESMTPS id k6sm20007670wiy.7.2012.04.16.07.30.16
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Mon, 16 Apr 2012 07:30:17 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id q3GEUFQZ021948;
+	Mon, 16 Apr 2012 16:30:16 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id q3GEUFKk021945;
+	Mon, 16 Apr 2012 16:30:15 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <1334568432.53977.YahooMailNeo@web65906.mail.ac4.yahoo.com>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195636>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195637>
 
-On 12-04-13 04:07 PM, Jonathan Nieder wrote:
-> marcnarc@xiplink.com wrote:
-> 
->> --- a/builtin/fetch.c
->> +++ b/builtin/fetch.c
->> @@ -293,14 +293,18 @@ static int update_local_ref(struct ref *ref,
->>  		const char *msg;
->>  		const char *what;
->>  		int r;
->> -		if (!strncmp(ref->name, "refs/tags/", 10)) {
->> +		if (!prefixcmp(ref->name, "refs/tags/")) {
-> 
-> This part is just a clean-up, right?
+Namit Bhalla <namitbhalla@yahoo.com> writes:
 
-Yes.
+> I am looking to track some projects using Git with each project as a=20
+> separate repository.
+> Even after reading the documentation, I am still wondering if there i=
+s a=20
+> way to organize things as described below.
+>=20
+> Consider 2 projects, Project-a and Project-b, which are housed in=20
+> repositories Repo-a and Repo-b respectively.=A0
+> Project-a develops reusable libraries which are needed by Project-b=20
+> (otherwise Project-b will not compile).
+> When a new stable version of Project-a libraries has to be delivered,=
+ they=20
+> are "checked into" a path in Repo-a.
+> Now, I would like to setup Repo-b so that when someone starts working=
+ on=20
+> Project-b, he should be able to retrieve the code from Repo-b as well=
+ as the libraries from Repo-a. Is there any way to achieve that in=20
+> Git?
 
-It seems most of the code in fetch.c uses prefixcmp(), so I thought I'd use
-it for my patch.  But then I thought it looked weird for one check to use
-strncmp() and the other to use prefixcmp().
+Put reusable library in its own repository, and use submodules to link
+it up to project-a and project-b repositories.
 
-After a cursory search for strncmp() and strcmp() in fetch.c, I think this is
-the only place where prefixcmp() should've been used but wasn't.
-
-It didn't seem worth making an extra patch for this change, but I've happy to
-break it out if that's what folks want.
-
->>  			msg = "storing tag";
->>  			what = _("[new tag]");
->>  		}
->> -		else {
->> +		else if (!prefixcmp(ref->name, "refs/heads/")) {
->>  			msg = "storing head";
->>  			what = _("[new branch]");
->>  		}
->> +		else {
->> +			msg = "storing ref";
->> +			what = _("[new ref]");
->> +		}
-> 
-> Neat.  I like it, for what it's worth.
-
-Thanks!
-
-		M.
+HTH
+--=20
+Jakub Narebski
