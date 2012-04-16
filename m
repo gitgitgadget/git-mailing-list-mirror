@@ -1,85 +1,92 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH i18n 01/11] Add three convenient format printing
- functions with \n automatically appended
-Date: Mon, 16 Apr 2012 12:26:54 -0500
-Message-ID: <20120416172654.GU5813@burratino>
-References: <1334580603-11577-1-git-send-email-pclouds@gmail.com>
- <1334580603-11577-2-git-send-email-pclouds@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: What's cooking in git.git (Apr 2012, #05; Thu, 12)
+Date: Mon, 16 Apr 2012 10:29:33 -0700
+Message-ID: <7vehrnwpoi.fsf@alter.siamese.dyndns.org>
+References: <20120416082641.5d239ef6@mkiedrowicz.ivo.pl>
+ <CA+55aFwkf2bOLmUCU+_pSg0OzGyfQ1x-Cy_CiczpJN3zsThNWg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org,
-	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
-	Jiang Xin <worldhello.net@gmail.com>
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Apr 16 19:27:32 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Michal Kiedrowicz <michal.kiedrowicz@gmail.com>,
+	git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Mon Apr 16 19:29:42 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SJpi3-0006JG-Tw
-	for gcvg-git-2@plane.gmane.org; Mon, 16 Apr 2012 19:27:28 +0200
+	id 1SJpkD-00082h-E0
+	for gcvg-git-2@plane.gmane.org; Mon, 16 Apr 2012 19:29:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754400Ab2DPR1E convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 16 Apr 2012 13:27:04 -0400
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:59865 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751378Ab2DPR1C convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 16 Apr 2012 13:27:02 -0400
-Received: by yhmm54 with SMTP id m54so2592487yhm.19
-        for <git@vger.kernel.org>; Mon, 16 Apr 2012 10:27:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=QOPhmduQcaPSVtJkFquxTPw+azBrvDH3DpQXJWhPhK8=;
-        b=I9ns5oADQoAD6F/ymZ2MJz5/UV2mV2eGtNfa3fVukR+9y2hEs3ROvO4Zt26KLYE4wM
-         t3pmB8CIfNqYqNOffW6NvMZV52zZiFT1dzx8IfiOPt9fWRWggp8D464t/Nw2gIiD0uBl
-         fEqtM0gWdscubp0budvsOjaFgwyLSYUPzKwbvKGwTazWuY7El5O37ap+w0LwWkQJLOgW
-         m5/ELmM8c+7UjHYiY9k+9KD2eUvTqfkwt/XEXuNEoYsSata1Ez19dYe1BbPZG5oJVkwp
-         tPnX+TAeFo7Dbupat0vVEFLVJTAh7FVKOyoz4/4fkIw1RhYiEmh645TvU2NVTs6iZsLN
-         yFKQ==
-Received: by 10.50.194.228 with SMTP id hz4mr6690968igc.35.1334597221775;
-        Mon, 16 Apr 2012 10:27:01 -0700 (PDT)
-Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
-        by mx.google.com with ESMTPS id n1sm11635759igm.7.2012.04.16.10.27.01
-        (version=SSLv3 cipher=OTHER);
-        Mon, 16 Apr 2012 10:27:01 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <1334580603-11577-2-git-send-email-pclouds@gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1754430Ab2DPR3g (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Apr 2012 13:29:36 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47036 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751441Ab2DPR3f (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Apr 2012 13:29:35 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 420A86E23;
+	Mon, 16 Apr 2012 13:29:35 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=H1a7SUGm4QEactcC0FVX7DTyJZ0=; b=G+NyFE
+	Ro2ZGVB/otXFa4n1B3FCVl6qXA/odUsGINkNPFBN+HHVKXW6fFDB3LYLTLRDoPci
+	tvDp1wjvAQhqmUFpssNVvVkpr4/Kj0S3LeCuiioNyhxTs0RkomRrvgvB/0HtXHMC
+	2Pa+h1mMRDOkMX4K9SzdCy97aUWuyZQB0y0wU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=CuZEGMUjkZi/1BFCipkne9BmTnSp4w8n
+	7cchJhfLYUuUcvQNNNDUt5k8196LWhwN3L8M3ZKN/qF5CNRcLe8kLKdi4wVCAjpM
+	tR8BQyL6BwJrd9NVjAzN8BIzNC2p7Vzxoi8tPlU/xMWnLMVyKL+tOti2EjkAPAyc
+	mxyosVd64M8=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 393346E21;
+	Mon, 16 Apr 2012 13:29:35 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C3AD26E20; Mon, 16 Apr 2012
+ 13:29:34 -0400 (EDT)
+In-Reply-To: <CA+55aFwkf2bOLmUCU+_pSg0OzGyfQ1x-Cy_CiczpJN3zsThNWg@mail.gmail.com> (Linus
+ Torvalds's message of "Mon, 16 Apr 2012 07:57:59 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: BBF18BD6-87E9-11E1-A8D3-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195668>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195669>
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
+Linus Torvalds <torvalds@linux-foundation.org> writes:
 
->     printf("hello world\n");
+> Trivially tested with
 >
-> can be converted to
+>     git merge HEAD^ HEAD^^
 >
->     printf_ln(_("hello world"));
+> which did the wrong thing before, and now works.
+>
+>                        Linus
+>
+> ---
+>  builtin/merge.c |    3 +--
+>  1 file changed, 1 insertion(+), 2 deletions(-)
+>
+> diff --git a/builtin/merge.c b/builtin/merge.c
+> index 016a4dbee3b5..28fb5c9d6ada 100644
+> --- a/builtin/merge.c
+> +++ b/builtin/merge.c
+> @@ -1370,8 +1370,7 @@ int cmd_merge(int argc, const char **argv, const
+> char *prefix)
+>
+>         if (!common)
+>                 ; /* No common ancestors found. We need a real merge. */
+> -       else if (!remoteheads->next && !common->next &&
+> -                       common->item == remoteheads->item) {
+> +       else if (!parents->next && parents->item == head_commit) {
 
-=46un.
+When everybody in remote_heads is an ancestor of the current HEAD,
+finalize_parents() would have reduced parents to a single element list
+with HEAD on it, and we are "already up-to-date".  Ok.
 
-[...]
-> --- a/strbuf.c
-> +++ b/strbuf.c
-> @@ -464,3 +464,36 @@ void strbuf_addstr_urlencode(struct strbuf *sb, =
-const char *s,
-[...]
-> +int printf_ln(const char *fmt, ...)
-> +{
-> +	int ret;
-> +	va_list ap;
-> +	va_start(ap, fmt);
-> +	ret =3D vprintf(fmt, ap);
-> +	va_end(ap);
-> +	if (ret >=3D 0)
-> +		ret +=3D printf("\n");
-
-What happens if the second printf fails?
+I wonder if use of remoteheads later in the same function are correct,
+though.  We equate "!remoteheads->next" and "We are not doing octopus",
+for example.
