@@ -1,61 +1,99 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCHv3] fetch: Use the remote's ref name to decide how to
- describe new refs.
-Date: Mon, 16 Apr 2012 11:10:48 -0500
-Message-ID: <20120416161048.GO5813@burratino>
-References: <20120416150036.GA15009@sigill.intra.peff.net>
- <1334591542-25136-1-git-send-email-marcnarc@xiplink.com>
+From: Neil Horman <nhorman@tuxdriver.com>
+Subject: Re: [PATCH v5 3/4] git-cherry-pick: Add test to validate new options
+Date: Mon, 16 Apr 2012 12:14:31 -0400
+Message-ID: <20120416161431.GD13366@hmsreliant.think-freely.org>
+References: <1333136922-12872-1-git-send-email-nhorman@tuxdriver.com>
+ <1334342707-3326-1-git-send-email-nhorman@tuxdriver.com>
+ <1334342707-3326-4-git-send-email-nhorman@tuxdriver.com>
+ <20120415093933.GB6263@ecki>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>
-To: marcnarc@xiplink.com
-X-From: git-owner@vger.kernel.org Mon Apr 16 18:11:04 2012
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Phil Hord <phil.hord@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: Clemens Buchacher <drizzd@aon.at>
+X-From: git-owner@vger.kernel.org Mon Apr 16 18:15:18 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SJoW5-000421-5i
-	for gcvg-git-2@plane.gmane.org; Mon, 16 Apr 2012 18:11:01 +0200
+	id 1SJoa7-0007FE-01
+	for gcvg-git-2@plane.gmane.org; Mon, 16 Apr 2012 18:15:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751355Ab2DPQK4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Apr 2012 12:10:56 -0400
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:62707 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750890Ab2DPQK4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Apr 2012 12:10:56 -0400
-Received: by ghrr11 with SMTP id r11so2539203ghr.19
-        for <git@vger.kernel.org>; Mon, 16 Apr 2012 09:10:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=m9r/UVWNoiq8Do8xFDFgYgRV8cD8G3GWUpnd7dd2Zdk=;
-        b=L/8ioZzwdjda7ysezMam1WGhqMQg4XCj9IqQgzPPiHobNJ5Jkuk4wnQneKxfdJY3fl
-         r91nI8ZYZ76aoBRlRK4+x574L68l9A+/x7ASAYrGY2xoskl1BxXSMNPXhkZMfLjW9DUw
-         uN+gl5wEvVglPwS8zAwQ/px/6n1ibCQB1YwB/8NFxYP7nntfwhggcIfUHPrjKh4JswAr
-         /JkBS4PFb9ilFC4S9+k26EeHe7yQ7XJiv/smUmP2kvqM8928Ch61P3HAlettYPA3ZPrk
-         TBdhu+UbWswxRat7VJJsoppi8toP9kXxSWkurG+suQRrOyOBXaNUoVDlRvf0HY9pVqd+
-         Wi2A==
-Received: by 10.60.20.10 with SMTP id j10mr17554687oee.33.1334592655428;
-        Mon, 16 Apr 2012 09:10:55 -0700 (PDT)
-Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
-        by mx.google.com with ESMTPS id aj16sm15836280oec.4.2012.04.16.09.10.54
-        (version=SSLv3 cipher=OTHER);
-        Mon, 16 Apr 2012 09:10:55 -0700 (PDT)
+	id S1753060Ab2DPQOo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Apr 2012 12:14:44 -0400
+Received: from charlotte.tuxdriver.com ([70.61.120.58]:36484 "EHLO
+	smtp.tuxdriver.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753010Ab2DPQOl (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Apr 2012 12:14:41 -0400
+Received: from hmsreliant.think-freely.org ([2001:470:8:a08:7aac:c0ff:fec2:933b] helo=localhost)
+	by smtp.tuxdriver.com with esmtpsa (TLSv1:AES128-SHA:128)
+	(Exim 4.63)
+	(envelope-from <nhorman@tuxdriver.com>)
+	id 1SJoZU-0000oI-La; Mon, 16 Apr 2012 12:14:37 -0400
 Content-Disposition: inline
-In-Reply-To: <1334591542-25136-1-git-send-email-marcnarc@xiplink.com>
+In-Reply-To: <20120415093933.GB6263@ecki>
 User-Agent: Mutt/1.5.21 (2010-09-15)
+X-Spam-Score: -2.9 (--)
+X-Spam-Status: No
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195659>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195660>
 
-marcnarc@xiplink.com wrote:
+On Sun, Apr 15, 2012 at 11:39:35AM +0200, Clemens Buchacher wrote:
+> On Fri, Apr 13, 2012 at 02:45:06PM -0400, Neil Horman wrote:
+> >  
+> > +test_expect_success 'cherry pick an empty non-ff commit without --allow-empty' '
+> > +	git checkout master &&
+> > +	echo fourth >> file2 &&
+> > +	git add file2 &&
+> > +	git commit -m "fourth" && {
+> > +		test_must_fail git cherry-pick empty-branch2
+> > +	}
+> > +'
+> 
+> You don't need the braces. The same below.
+> 
+Ack
 
-> Also, only call a new ref a "branch" if it's under refs/heads/.
+> > +
+> > +test_expect_success 'cherry pick an empty non-ff commit with --allow-empty' '
+> > +	git checkout master && {
+> > +		git cherry-pick --allow-empty empty-branch2
+> > +	}
+> > +'
+> > +
+> > +test_expect_success 'cherry pick with --keep-redundant-commits' '
+> > +	git checkout master && {
+> > +		git cherry-pick --keep-redundant-commits HEAD^
+> > +	}
+> > +'
+> 
+> And the expected result is that the HEAD commit is not removed, right?
+> You should check for that as well.
+> 
+> Also, please checkout empty-branch2^0 first, in order to make the test
+> independent of its predecessor.
+> 
 
-Looks good (though I haven't tested it).  Perhaps some new tests would
-help make sure this doesn't get broken in the future.
+Not sure I follow what your saying here.  The expected result with both of these
+tests is that a new commit is created, referencing the current HEAD as the new
+HEAD's parent.  We could check that the current HEAD is note removed (ostensibly
+by recoding the value of the current head and comparing it to HEAD^ after the
+cherry pick, but that seems like expected behavior for any command that creates
+a new commit, yet we don't check that anywhere else.  Why is here different?  Or
+do you mean something else?
+
+As for the checkout of empty-branch2^0, whats the purpose?  I'm just going to
+checkout master right after that, making it moot.  The purpose of the test is to
+apply a commit that is already in the working tree's history, ensuring that it
+resolves to an empty commit.  Theres nothing really dependent on the prior test
+there.  If we edit the tests significantly, the contents of what that commit is
+may change, but thats not overly relevant, as the result will still be the same
+(an empty commit).
+
+Neil
+ 
