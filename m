@@ -1,79 +1,112 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] clean: add --null option
-Date: Mon, 16 Apr 2012 13:14:39 -0700
-Message-ID: <7vehrntowg.fsf@alter.siamese.dyndns.org>
-References: <1334480962-18778-1-git-send-email-rosslagerwall@gmail.com>
+From: Marc Branchaud <marcnarc@xiplink.com>
+Subject: Re: [PATCHv3] fetch: Use the remote's ref name to decide how to describe
+ new refs.
+Date: Mon, 16 Apr 2012 16:21:14 -0400
+Message-ID: <4F8C7F3A.9070801@xiplink.com>
+References: <1334591542-25136-1-git-send-email-marcnarc@xiplink.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Clemens Buchacher <drizzd@aon.at>
-To: Ross Lagerwall <rosslagerwall@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Apr 16 22:14:54 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Jonathan Nieder <jrnieder@gmail.com>, Jeff King <peff@peff.net>
+To: marcnarc@xiplink.com
+X-From: git-owner@vger.kernel.org Mon Apr 16 22:21:19 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SJsK2-0006mN-HN
-	for gcvg-git-2@plane.gmane.org; Mon, 16 Apr 2012 22:14:50 +0200
+	id 1SJsQI-0003Vs-II
+	for gcvg-git-2@plane.gmane.org; Mon, 16 Apr 2012 22:21:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755048Ab2DPUOp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Apr 2012 16:14:45 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47466 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753761Ab2DPUOn (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Apr 2012 16:14:43 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C98A1797F;
-	Mon, 16 Apr 2012 16:14:42 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=RRs8syDBFY979neU3vBhuuceUhI=; b=C1OGo2
-	f3luB9/moKUmRvoh5Gl6hVUPOewLULj1JAKDP/cybpnF6nnzO77vUfk1FKb5cIOv
-	KzNcTT1akJcb6XxhaPwgyWA9yNELQqbrrAsH/w3RJOp7CJcrvb46SCStRG8mW+Dn
-	ow5a8C3t4sUIiKB0tZcA4kbdXteI6mhYHFQ5M=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=xAAWPCt7o5XL7DhL40VqBjghM/MFNua/
-	SN4u27BKhPj1Dg737keyt1C8Xgc36pGRikRT4BuCOKgisj4vgVhL6We+wsSyXgzy
-	5HOJkv4O67GwXN2m/Z4sta1VXqcJkvpEueEaiF+9VjSjOciAOAItk34Yqh8CD7Pd
-	Mq/+WHHkPOc=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B0620797A;
-	Mon, 16 Apr 2012 16:14:41 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2C6977975; Mon, 16 Apr 2012
- 16:14:41 -0400 (EDT)
-In-Reply-To: <1334480962-18778-1-git-send-email-rosslagerwall@gmail.com>
- (Ross Lagerwall's message of "Sun, 15 Apr 2012 11:09:22 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: CC9B44F6-8800-11E1-AE2C-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752970Ab2DPUVM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Apr 2012 16:21:12 -0400
+Received: from smtp142.dfw.emailsrvr.com ([67.192.241.142]:52700 "EHLO
+	smtp142.dfw.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752168Ab2DPUVL (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Apr 2012 16:21:11 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by smtp4.relay.dfw1a.emailsrvr.com (SMTP Server) with ESMTP id A5A2EB0DA0
+	for <git@vger.kernel.org>; Mon, 16 Apr 2012 16:21:10 -0400 (EDT)
+X-Virus-Scanned: OK
+Received: from smtp146.ord.emailsrvr.com (smtp146.ord.emailsrvr.com [173.203.6.146])
+	by smtp4.relay.dfw1a.emailsrvr.com (SMTP Server) with ESMTPS id 69B8DB1000
+	for <git@vger.kernel.org>; Mon, 16 Apr 2012 16:21:10 -0400 (EDT)
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by smtp16.relay.ord1a.emailsrvr.com (SMTP Server) with ESMTP id 26B9D3B80ED;
+	Mon, 16 Apr 2012 16:20:36 -0400 (EDT)
+X-Virus-Scanned: OK
+Received: by smtp16.relay.ord1a.emailsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id AA2B23B8110;
+	Mon, 16 Apr 2012 16:20:35 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:11.0) Gecko/20120329 Thunderbird/11.0.1
+In-Reply-To: <1334591542-25136-1-git-send-email-marcnarc@xiplink.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195686>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195687>
 
-Ross Lagerwall <rosslagerwall@gmail.com> writes:
+Apologies - this breaks quite a few tests!
 
-> Add a --null (-z) option to git-clean which prints out the files
-> and directories separated with a NUL character rather than '\n'.
-> This makes it useful in conjunction with xargs -0.
+For example, t1507-rev-parse-upstream.sh test 5 segfaults.
 
-Hrm, I do not like this at all.
+I'll take another stab at it...
 
-The parameters to print_path() are all _("l10n-ready string"). Isn't it a
-clue already that they are not meant for machine consumption?  Why are we
-moving to cast the output from an end-user facing Porcelain command in
-stone?
+		M.
 
-I suspect that older days "git clean" was a scripted Porcelain around a
-plumbing (perhaps ls-files?---I didn't bother digging its history as I do
-not care too deeply about "git clean" which I do not use myself).  If we
-have piled so many features into "git clean" after the rewrite-to-C to
-make it impossible to express what "git clean" _would_ do in terms of
-"ls-files", perhaps that is what needs to be fixed, so that we can express
-"git clean --some-set-of-options" as:
 
-    git ls-files -z --set-of-options-equivalent-to-what-is-given-to-clean |
-    xargs -0 rm -fr
+On 12-04-16 11:52 AM, marcnarc@xiplink.com wrote:
+> From: Marc Branchaud <marcnarc@xiplink.com>
+> 
+> Also, only call a new ref a "branch" if it's under refs/heads/.
+> 
+> Signed-off-by: Marc Branchaud <marcnarc@xiplink.com>
+> ---
+> 
+> Re-rolled to work with the remote's ref names.
+> 
+> As before, this is atop of Jens's submodule-recursion fix.
+> 
+> Technically there are now 3 different changes in this patch:
+> 	1. Switch to using remote ref names.
+> 	2. Use prefixcomp() consistently.
+> 	3. Only call a new ref a "branch" if its' under refs/heads.
+> 
+> Should I split this up?
+> 
+> 		M.
+> 
+> 
+>  builtin/fetch.c |   13 +++++++++++--
+>  1 file changed, 11 insertions(+), 2 deletions(-)
+> 
+> diff --git a/builtin/fetch.c b/builtin/fetch.c
+> index cfb43df..063c63b 100644
+> --- a/builtin/fetch.c
+> +++ b/builtin/fetch.c
+> @@ -293,14 +293,23 @@ static int update_local_ref(struct ref *ref,
+>  		const char *msg;
+>  		const char *what;
+>  		int r;
+> -		if (!strncmp(ref->name, "refs/tags/", 10)) {
+> +		/*
+> +		 * Nicely describe what we're fetching.
+> +		 * Base this on the remote's ref names, as they're
+> +		 * more likely to follow a standard layout.
+> +		 */
+> +		if (!prefixcmp(ref->peer_ref->name, "refs/tags/")) {
+>  			msg = "storing tag";
+>  			what = _("[new tag]");
+>  		}
+> -		else {
+> +		else if (!prefixcmp(ref->peer_ref->name, "refs/heads/")) {
+>  			msg = "storing head";
+>  			what = _("[new branch]");
+>  		}
+> +		else {
+> +			msg = "storing ref";
+> +			what = _("[new ref]");
+> +		}
+>  
+>  		if ((recurse_submodules != RECURSE_SUBMODULES_OFF) &&
+>  		    (recurse_submodules != RECURSE_SUBMODULES_ON))
