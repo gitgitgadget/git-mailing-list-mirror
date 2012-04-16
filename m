@@ -1,69 +1,65 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCHv3] fetch: Use the remote's ref name to decide how to
- describe new refs.
-Date: Mon, 16 Apr 2012 10:59:35 -0700
-Message-ID: <7vy5pvv9q0.fsf@alter.siamese.dyndns.org>
-References: <20120416150036.GA15009@sigill.intra.peff.net>
- <1334591542-25136-1-git-send-email-marcnarc@xiplink.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: What's cooking in git.git (Apr 2012, #05; Thu, 12)
+Date: Mon, 16 Apr 2012 11:02:32 -0700
+Message-ID: <CA+55aFwPrjtAttsH75tTGHO=14g_2GbyOtUt4eY9LPHbtcXvcQ@mail.gmail.com>
+References: <20120416082641.5d239ef6@mkiedrowicz.ivo.pl> <CA+55aFwkf2bOLmUCU+_pSg0OzGyfQ1x-Cy_CiczpJN3zsThNWg@mail.gmail.com>
+ <7v7gxfwpc8.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>,
-	Jeff King <peff@peff.net>
-To: marcnarc@xiplink.com
-X-From: git-owner@vger.kernel.org Mon Apr 16 19:59:43 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Michal Kiedrowicz <michal.kiedrowicz@gmail.com>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Apr 16 20:03:07 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SJqDH-0005yA-4L
-	for gcvg-git-2@plane.gmane.org; Mon, 16 Apr 2012 19:59:43 +0200
+	id 1SJqGT-00009N-Gr
+	for gcvg-git-2@plane.gmane.org; Mon, 16 Apr 2012 20:03:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751719Ab2DPR7i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Apr 2012 13:59:38 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59326 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751209Ab2DPR7h (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Apr 2012 13:59:37 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3238075A1;
-	Mon, 16 Apr 2012 13:59:37 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=M1UD1gjLkfB6a3ECBbtvOR0d3j0=; b=HImKQo
-	pws3Jo5ZMJI/mOyE3DaPJzujNaFQyDHMxNld7BkPq4QLSLrIVjw5d6PxCCZ/egn1
-	b6S0fmZKsPnz99QBkHtHHLTVHC8bwkw4e8Ai5Rz126RRrwD/JHZI5TaR3Rrktxdy
-	E/Ewd07b+Ug6QL6Df5w5+srwXmten8MWTi0TY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=rhbwd1eEbKqY2ABCCcBNaGLpjIuXWMdP
-	j7ayO3OZeJRygIIalWOc1i00Ududo8AvQAppXRGmoyuHITddzmMUSKKq45zBiVP2
-	dpbSEisDVzWZPJUoHSNOs1PJdInYlsOhenarRyUt5EQHO6Kv+HD7B1nHHR4SUjJd
-	Xbz+ZoxKy70=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2800875A0;
-	Mon, 16 Apr 2012 13:59:37 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B4585759F; Mon, 16 Apr 2012
- 13:59:36 -0400 (EDT)
-In-Reply-To: <1334591542-25136-1-git-send-email-marcnarc@xiplink.com>
- (marcnarc@xiplink.com's message of "Mon, 16 Apr 2012 11:52:22 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: EDFB564E-87ED-11E1-B2A4-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752073Ab2DPSC4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Apr 2012 14:02:56 -0400
+Received: from mail-wi0-f172.google.com ([209.85.212.172]:35130 "EHLO
+	mail-wi0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751398Ab2DPSCz (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Apr 2012 14:02:55 -0400
+Received: by wibhj6 with SMTP id hj6so8935040wib.1
+        for <git@vger.kernel.org>; Mon, 16 Apr 2012 11:02:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:from:date
+         :x-google-sender-auth:message-id:subject:to:cc:content-type;
+        bh=/F1Hk73ZT8B38fSD4xvc+V7PBFTz1eRCK0pUourQFJU=;
+        b=CnSHwZD8EB9nFhxJhQkdufdKuFxx0f6iM7kS+pMRA4SOUl9/prjcbNtc1qi9CaJ+42
+         19mmHdjpHWgiq49FD2hf/CGBOaaRY16krtkiVLI+5SgoEBn7BNwFlegJnmTM/rObk2Mr
+         P7qXtgwJU761/0DgAoef3CQ8F+J6/PdB2cl0iEtMqfJOxN63EhUTQIdvHbfhsKDJlsXx
+         71zJevYCeYCpaO13DnDcp73uU+wXlsL43tbn4qj+bc/EXsSJX6D9m42/InMX0SMIZsTv
+         qX0S2X0GAL9e2OVWuT1JK/CUIbFlPgFcNJldtc20voy+aLpz2MJ04kfWhX0LlXonyOFv
+         8Rrw==
+Received: by 10.180.79.72 with SMTP id h8mr21204714wix.1.1334599374541; Mon,
+ 16 Apr 2012 11:02:54 -0700 (PDT)
+Received: by 10.216.221.167 with HTTP; Mon, 16 Apr 2012 11:02:32 -0700 (PDT)
+In-Reply-To: <7v7gxfwpc8.fsf@alter.siamese.dyndns.org>
+X-Google-Sender-Auth: nozTCR0W5L235ZL0FXjXfHE8-4A
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195674>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195675>
 
-marcnarc@xiplink.com writes:
-
-> Re-rolled to work with the remote's ref names.
+On Mon, Apr 16, 2012 at 10:36 AM, Junio C Hamano <gitster@pobox.com> wrote:
 >
-> As before, this is atop of Jens's submodule-recursion fix.
+> And it seems to break 6028 ("merge -s ours" and "merge -s subtree"
+> up-to-date) X-<....
 
-Thanks; will queue.
+Ugh. I don't even get that far - I get to t3410, which breaks.
 
-As Jonathan mentioned, it would probably be a good idea to protect this
-with a new test or two, but I am fine if it is done as a separate patch.
+(This is with both Michal's and my patch applied)
+
+Oddly, running that test in verbose mode seems to imply that it's the
+*rebase* that succeeds, not the merges in that test. Maybe I'm reading
+the test results wrong, I didn't really try to understand the test
+itself ;(
+
+                        Linus
