@@ -1,78 +1,74 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: What's cooking in git.git (Apr 2012, #06; Sun, 15)
-Date: Mon, 16 Apr 2012 01:20:19 -0700
-Message-ID: <7vlilwxf3w.fsf@alter.siamese.dyndns.org>
-References: <7vpqb8xjj9.fsf@alter.siamese.dyndns.org>
- <4F8BE14D.7090501@seap.minhap.es>
+From: Namit Bhalla <namitbhalla@yahoo.com>
+Subject: organizing multiple repositories with dependencies
+Date: Mon, 16 Apr 2012 02:27:12 -0700 (PDT)
+Message-ID: <1334568432.53977.YahooMailNeo@web65906.mail.ac4.yahoo.com>
+Reply-To: Namit Bhalla <namitbhalla@yahoo.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Nelson Benitez Leon <nelsonjesus.benitez@seap.minhap.es>
-X-From: git-owner@vger.kernel.org Mon Apr 16 10:20:31 2012
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Apr 16 11:34:01 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SJhAi-0000D5-O9
-	for gcvg-git-2@plane.gmane.org; Mon, 16 Apr 2012 10:20:29 +0200
+	id 1SJiJl-0007L9-NI
+	for gcvg-git-2@plane.gmane.org; Mon, 16 Apr 2012 11:33:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750909Ab2DPIUY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Apr 2012 04:20:24 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:45861 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750833Ab2DPIUX (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Apr 2012 04:20:23 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4D00F4E63;
-	Mon, 16 Apr 2012 04:20:22 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=lJjXBRlyZ+8/uM0fZGg/iGXK+qc=; b=pTu1TI
-	H/XBnLI7SUU8XviI1YHqbwxdxFWkV2tnmSCqGuEzcYGLoOovV9IJ4rArsiKz61Vw
-	I5UN6SDRmCtE9wAZ/5vmgkthP540Nudl+QGt1BihXATykB5aREV9Ttya9kEGRJtt
-	mlRN/7UXX8DtQRo/p/QlhuZgwGOtr5IT1sNwA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=uHP/6C+O3Z9EaNj0T3cAy7yBs2fgajw3
-	h/MZVs++JrnMTAv7FaZV+cQYGbfbkzUeaZCwThTP1e41DWa1V+3ZUpoi/XJM5ETa
-	2Xd0BkUJFo6useKdlewTDl7igNoD1xmK7G1HOJ2YSLvJ1VnPPrZ/DZNle4oRpNIc
-	uOGBveSsc7o=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 428B94E62;
-	Mon, 16 Apr 2012 04:20:22 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D86714E61; Mon, 16 Apr 2012
- 04:20:20 -0400 (EDT)
-In-Reply-To: <4F8BE14D.7090501@seap.minhap.es> (Nelson Benitez Leon's message
- of "Mon, 16 Apr 2012 11:07:25 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 01E120EA-879D-11E1-BF02-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752464Ab2DPJds convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 16 Apr 2012 05:33:48 -0400
+Received: from nm8.bullet.mail.ac4.yahoo.com ([98.139.52.205]:38601 "HELO
+	nm8.bullet.mail.ac4.yahoo.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S1751360Ab2DPJds convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Apr 2012 05:33:48 -0400
+X-Greylist: delayed 394 seconds by postgrey-1.27 at vger.kernel.org; Mon, 16 Apr 2012 05:33:47 EDT
+Received: from [98.139.52.195] by nm8.bullet.mail.ac4.yahoo.com with NNFMP; 16 Apr 2012 09:27:12 -0000
+Received: from [98.139.52.130] by tm8.bullet.mail.ac4.yahoo.com with NNFMP; 16 Apr 2012 09:27:12 -0000
+Received: from [127.0.0.1] by omp1013.mail.ac4.yahoo.com with NNFMP; 16 Apr 2012 09:27:12 -0000
+X-Yahoo-Newman-Property: ymail-3
+X-Yahoo-Newman-Id: 712371.50100.bm@omp1013.mail.ac4.yahoo.com
+Received: (qmail 64564 invoked by uid 60001); 16 Apr 2012 09:27:12 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s1024; t=1334568432; bh=44ROhOErlrKzWyaoAY0M/xGa+ta+c0+bzDz/29v4nFg=; h=X-YMail-OSG:Received:X-Mailer:Message-ID:Date:From:Reply-To:Subject:To:MIME-Version:Content-Type:Content-Transfer-Encoding; b=mtpArnc7N8xAB3bHP9QMmuClhia6LoT64c7HyoqjoJcZ7j+OkZbGO4M6dcJHJvlKgb+veuNYCi4YZOuBSw5RAzAgh3J0tBl/0w/G9ElmwmcUyrsNbYCr6ko9N69UP4HY4E/iHjUChtIW/XLm1yxB4erm7ulT+WeohmjyEEA8+KM=
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.com;
+  h=X-YMail-OSG:Received:X-Mailer:Message-ID:Date:From:Reply-To:Subject:To:MIME-Version:Content-Type:Content-Transfer-Encoding;
+  b=1kA9lO2nY734PrYZY4IKHd3IQVqfuA/81cxCxe9SB4JEhbc30vEJpGM5c3lt1lBzd8KVF+FzCwCpyVO/N5cgbTyejOXnuJ0JoD29kaIIUbKkQDx5nLPuAot3F2W1T0x9E64eSBOCsQQGJ/0lIpamdlSGa++M8ZCLAgOa29aGyNQ=;
+X-YMail-OSG: 7grkEMMVM1l1DRHVZ40WCpHJWK2Nc8YPVnTRq01ZfMbwxX3
+ gDQyQ.1eVwuwmO_OIOge9Qv_.TDUM7ZaH1l2bEcJale61HzzQFru5dRNYU0R
+ SMofcr1SMz1MEh.tQO92CFfXskND_dRdjHr_FO4KHAFyfk6DfkB1A0IDc2zR
+ B7wxX0f7gKylfrlW0pQ9Oo41SJg_110ljONk.s2v5QAVk3XDK0NYC9M7uTqo
+ zPLyku5W3hQQ5Jqf5DEipv6Extq_lZn3ho6Y1hzs51S1BrgjMcxddM77ZBcD
+ n9OujkhO1rVhFUYHN99AR3ts5EpL4JbMCME0ht9VL9D7.gyT7cXhcE7ocl0h
+ 40nrEuVx2JQ_25C1lfX6Uo8_E8Fi_Pdd4r8iDPVaEeBiHXesG.2kfYHF1Zwz
+ DQPoJMkvLRMMNmSZ7CsBrzuSqdGxKNazjTsb6Yvab.EUXGxUdhfduzFn_edR
+ uEA--
+Received: from [194.121.90.163] by web65906.mail.ac4.yahoo.com via HTTP; Mon, 16 Apr 2012 02:27:12 PDT
+X-Mailer: YahooMailWebService/0.8.117.340979
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195603>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195604>
 
-Nelson Benitez Leon <nelsonjesus.benitez@seap.minhap.es> writes:
+I am looking to track some projects using Git with each project as a=20
+separate repository.
+Even after reading the documentation, I am still wondering if there is =
+a=20
+way to organize things as described below.
 
-> On 04/16/2012 08:44 AM, Junio C Hamano wrote:
->>
->> * nl/http-proxy-more (2012-04-14) 6 commits
->>  - http: fix proxy authentication
->>  - http: rename HTTP_REAUTH to HTTP_AUTH_RETRY
->>  - http: Avoid limit of retrying request only twice
->>  - http: handle proxy authentication failure (error 407)
->>  - http: handle proxy proactive authentication
->>  - http: try http_proxy env var when http.proxy config option is not set
->> 
->> The code to talk to http proxies learn to use the same credential
->> API used to talk to the final http destinations.  This still needs
->> to peek into $ENV{HTTPS_PROXY}.
->
-> Hi Junio, so this needs some more work, but I don't recall the thread 
-> about it, could you point it to me or explain me what is still lacking.
+Consider 2 projects, Project-a and Project-b, which are housed in=20
+repositories Repo-a and Repo-b respectively.=A0
+Project-a develops reusable libraries which are needed by Project-b=20
+(otherwise Project-b will not compile).
+When a new stable version of Project-a libraries has to be delivered, t=
+hey=20
+are "checked into" a path in Repo-a.
+Now, I would like to setup Repo-b so that when someone starts working o=
+n=20
+Project-b, he should be able to retrieve the code from Repo-b as well a=
+s the libraries from Repo-a. Is there any way to achieve that in=20
+Git?
 
-I am reasonably sure that all the messages on the thread Peff and I worked
-out the fix-up at the tip of the series shown above were Cc'ed to you.
+Thanks for any pointers!
