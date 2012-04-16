@@ -1,68 +1,101 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] tests: add tests for the bash prompt functions in the
- completion script
-Date: Mon, 16 Apr 2012 11:01:24 -0500
-Message-ID: <20120416160124.GL5813@burratino>
-References: <1334521909-32581-1-git-send-email-szeder@ira.uka.de>
- <CAMP44s3LJO_Ryc-ONjF+rEHCb1hB8+4Muar6pzjD3zrazYqK+A@mail.gmail.com>
- <20120416094938.GE2900@goldbirke>
+From: Jeff King <peff@peff.net>
+Subject: [RFC/PATCH 1/2] update-index: add --clear option
+Date: Mon, 16 Apr 2012 12:02:32 -0400
+Message-ID: <20120416160232.GA1350@sigill.intra.peff.net>
+References: <20120416152737.GB14724@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>,
-	Thomas Rast <trast@student.ethz.ch>, Jeff King <peff@peff.net>
-To: SZEDER =?utf-8?B?R8OhYm9y?= <szeder@ira.uka.de>
-X-From: git-owner@vger.kernel.org Mon Apr 16 18:01:41 2012
+Cc: Christopher Tiwald <christiwald@gmail.com>, git@vger.kernel.org
+To: Johannes Sixt <j6t@kdbg.org>
+X-From: git-owner@vger.kernel.org Mon Apr 16 18:02:51 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SJoMz-0004we-Tx
-	for gcvg-git-2@plane.gmane.org; Mon, 16 Apr 2012 18:01:38 +0200
+	id 1SJoO8-0005sm-7A
+	for gcvg-git-2@plane.gmane.org; Mon, 16 Apr 2012 18:02:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751078Ab2DPQBd convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 16 Apr 2012 12:01:33 -0400
-Received: from mail-gx0-f174.google.com ([209.85.161.174]:35189 "EHLO
-	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751002Ab2DPQBc convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 16 Apr 2012 12:01:32 -0400
-Received: by gghe5 with SMTP id e5so2531549ggh.19
-        for <git@vger.kernel.org>; Mon, 16 Apr 2012 09:01:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=LgH+ze0+6MuJtWpGDTckMjYjdyBn4xYCoJhTQffmRqo=;
-        b=pJ7NHmPw9enFdO/7EiLzp9qNAwkSuGiZRoBxDwaFKlzEMn6H3EG4jj/CqfoK5O1J/t
-         H75+pu0jvs4WBcCi/FKgsAJ0tPCTKCrDNtMAkpkkl5LGv2dhBwoNApg+tHjuMbZPdybO
-         wJ3y8CkpPxW87Cyjln3VgcrjnmGrL8zzbTiLA4xh2LrVl05q3nVHItIq/tisoDpNc11x
-         ZWd6Yw3nkuXwDJUcaE1l4/rlydAO+JfOx70sV97HrVyvb5ajfnQY/Wj+aIg3U3TMbfTu
-         hOOxa7OM9ZIt+9i5DulB/ltduP8Wm1XSB2jBFt4TqAgYbwiMCzYyGbp6llITeoQIujoX
-         /cew==
-Received: by 10.182.44.97 with SMTP id d1mr10405006obm.28.1334592092241;
-        Mon, 16 Apr 2012 09:01:32 -0700 (PDT)
-Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
-        by mx.google.com with ESMTPS id h5sm19767247oba.17.2012.04.16.09.01.30
-        (version=SSLv3 cipher=OTHER);
-        Mon, 16 Apr 2012 09:01:31 -0700 (PDT)
+	id S1751397Ab2DPQCh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Apr 2012 12:02:37 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:36321
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750890Ab2DPQCg (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Apr 2012 12:02:36 -0400
+Received: (qmail 25304 invoked by uid 107); 16 Apr 2012 16:02:44 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 16 Apr 2012 12:02:44 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 16 Apr 2012 12:02:32 -0400
 Content-Disposition: inline
-In-Reply-To: <20120416094938.GE2900@goldbirke>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <20120416152737.GB14724@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195653>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195654>
 
-SZEDER G=C3=A1bor wrote:
+This just discards existing entries from the index, which
+can be useful if you are rewriting all entries with
+"--index-info" or similar.
 
-> I thought about that briefly but decided against it to avoid
-> duplicating the bash-specific checks at the beginning, but I don't
-> care that much either way.
+Signed-off-by: Jeff King <peff@peff.net>
+---
+I tried to make something like:
 
-Maybe a t/lib-completion.sh would take care of that.  FWIW a clean
-split in the test script so it doesn't grow into something like the
-current fast-import tests sounds like a good idea to me. :)
+  git update-index --from-scratch --index-info
+
+work by avoiding reading all entries in the first place. However,
+update-index actually processes its arguments sequentially, so we _must_
+read the index before we start processing arguments. But because it's
+sequential, a "clear" operation makes sense, since you clear, then add
+new entries.
+
+ Documentation/git-update-index.txt |    3 +++
+ builtin/update-index.c             |   10 ++++++++++
+ 2 files changed, 13 insertions(+)
+
+diff --git a/Documentation/git-update-index.txt b/Documentation/git-update-index.txt
+index a3081f4..47f0ae6 100644
+--- a/Documentation/git-update-index.txt
++++ b/Documentation/git-update-index.txt
+@@ -71,6 +71,9 @@ OPTIONS
+ --cacheinfo <mode> <object> <path>::
+ 	Directly insert the specified info into the index.
+ 
++--clear::
++	Discard all existing entries from the index.
++
+ --index-info::
+         Read index information from stdin.
+ 
+diff --git a/builtin/update-index.c b/builtin/update-index.c
+index a6a23fa..559dfae 100644
+--- a/builtin/update-index.c
++++ b/builtin/update-index.c
+@@ -645,6 +645,13 @@ static int cacheinfo_callback(struct parse_opt_ctx_t *ctx,
+ 	return 0;
+ }
+ 
++static int clear_callback(const struct option *opt,
++			  const char *arg, int unset)
++{
++	discard_cache();
++	return 0;
++}
++
+ static int stdin_cacheinfo_callback(struct parse_opt_ctx_t *ctx,
+ 			      const struct option *opt, int unset)
+ {
+@@ -774,6 +781,9 @@ int cmd_update_index(int argc, const char **argv, const char *prefix)
+ 			"add entries from standard input to the index",
+ 			PARSE_OPT_NONEG | PARSE_OPT_NOARG,
+ 			(parse_opt_cb *) stdin_cacheinfo_callback},
++		{OPTION_CALLBACK, 0, "clear", NULL, NULL,
++			"drop all index entries", PARSE_OPT_NONEG | PARSE_OPT_NOARG,
++			clear_callback},
+ 		{OPTION_LOWLEVEL_CALLBACK, 0, "unresolve", &has_errors, NULL,
+ 			"repopulate stages #2 and #3 for the listed paths",
+ 			PARSE_OPT_NONEG | PARSE_OPT_NOARG,
+-- 
+1.7.9.6.8.g992e5
