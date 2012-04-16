@@ -1,64 +1,316 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: What's cooking in git.git (Apr 2012, #06; Sun, 15)
-Date: Mon, 16 Apr 2012 08:03:40 -0700
-Message-ID: <7vehrnyb03.fsf@alter.siamese.dyndns.org>
-References: <7vpqb8xjj9.fsf@alter.siamese.dyndns.org>
- <4F8BE14D.7090501@seap.minhap.es> <7vlilwxf3w.fsf@alter.siamese.dyndns.org>
- <4F8C0171.6090203@seap.minhap.es>
+From: =?ISO-8859-1?Q?Jos=E9_Mar=EDa_Escart=EDn_Esteban?= 
+	<ripero84@gmail.com>
+Subject: Re: Static gitweb content when using pathinfo
+Date: Mon, 16 Apr 2012 17:18:36 +0200
+Message-ID: <4F8C384C.2040109@gmail.com>
+References: <4F7DA413.2020502@gmail.com> <201204052314.10606.jnareb@gmail.com> <201204141919.19285.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Nelson Benitez Leon <nelsonjesus.benitez@seap.minhap.es>
-X-From: git-owner@vger.kernel.org Mon Apr 16 17:03:51 2012
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Apr 16 17:18:54 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SJnT4-0007oS-FV
-	for gcvg-git-2@plane.gmane.org; Mon, 16 Apr 2012 17:03:50 +0200
+	id 1SJnhX-0003HL-Qb
+	for gcvg-git-2@plane.gmane.org; Mon, 16 Apr 2012 17:18:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754694Ab2DPPDq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Apr 2012 11:03:46 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:52459 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753761Ab2DPPDo (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Apr 2012 11:03:44 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6B759681A;
-	Mon, 16 Apr 2012 11:03:43 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=2h9aBZd0cJvJRsDbbtxje36Anso=; b=KyX/tN
-	CEUq3oGi+8RtazVzboatUHT9J7LJQk+J4diR2g8DocERXpicqMeW0iSjrLcVHe4C
-	Zdl8fhiF8o+JBu/mBU+okCRnKx7QrYcx4e4tMjVNbJueayiH6X6LHuQT4xugyz1Z
-	JPmpxXPqKOlx/UrXurGCMkR31hT35EDaY6NOM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=xEyk8a3+ds72BJuGstCW4Qa1PiOOVrWu
-	boJyEb4TYzWw47LUNU0mFdqxhX/DJW2r3/KabegvSD+TcFXvXRfY6Z3oeG1MOExp
-	fCMBFXgehZdBiImaVch32sa4E7uN6HlQdtZNK89eAE4sGNr5j69Ksia84zmlSxU3
-	1Aul3U7VHV8=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 621756819;
-	Mon, 16 Apr 2012 11:03:43 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 693026815; Mon, 16 Apr 2012
- 11:03:42 -0400 (EDT)
-In-Reply-To: <4F8C0171.6090203@seap.minhap.es> (Nelson Benitez Leon's message
- of "Mon, 16 Apr 2012 13:24:33 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 5B1FBB02-87D5-11E1-9BE7-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754156Ab2DPPSn convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 16 Apr 2012 11:18:43 -0400
+Received: from mail-we0-f174.google.com ([74.125.82.174]:49664 "EHLO
+	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753616Ab2DPPSm (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Apr 2012 11:18:42 -0400
+Received: by wejx9 with SMTP id x9so3415465wej.19
+        for <git@vger.kernel.org>; Mon, 16 Apr 2012 08:18:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:x-enigmail-version:content-type
+         :content-transfer-encoding;
+        bh=8LoJ4Ccp4XepwqX5Ga3C2o3GsUbB682fA87nCjcdIBE=;
+        b=pAj57c3YxEcEMPM4VoxN7aZJdlDEcsTz7k0DpY/XM+3lDpSgmXQ+e+x6Nrj9GGWg1M
+         a0BWyiynCCCAw6I+oyQjRbzjTRLfCwJpPx6e0aI4wGFhZ0qKYIcGkT2+gG8yxsQkKGLt
+         M5l2Dy/AjhSOX9+6KVIjugfJFqiDvs1ZJcfD9cyYnpcEK03ObWeR5bt84H4Ub5HJgebY
+         z++hsM7BJvQtQ+4F0t/Nii8YXUFBw4wSGFkKPkQNVzr5W+WCIPRhePzaMM+1jkVtPReK
+         pPo3n98h7K5XnE4aX5Ly/CUuWAVmqAxW1AQwPWqRpv/PBhspMFoMKWvS3xzMbW1wEpPF
+         guSg==
+Received: by 10.180.91.168 with SMTP id cf8mr12147936wib.0.1334589520965;
+        Mon, 16 Apr 2012 08:18:40 -0700 (PDT)
+Received: from [192.168.3.8] (AToulouse-552-1-175-24.w109-214.abo.wanadoo.fr. [109.214.110.24])
+        by mx.google.com with ESMTPS id j3sm32636650wiw.1.2012.04.16.08.18.38
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Mon, 16 Apr 2012 08:18:39 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.24) Gecko/20111114 Icedove/3.1.16
+In-Reply-To: <201204141919.19285.jnareb@gmail.com>
+X-Enigmail-Version: 1.1.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195643>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195644>
 
-Nelson Benitez Leon <nelsonjesus.benitez@seap.minhap.es> writes:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> Ok, I've been offline for a week, I already found the thread and I'm
-> going through it.
+Hi,
 
-Thanks.
+Thank you for your detailed answers, and sorry for the delay in my repl=
+y.
+
+On 14/04/12 19:19, Jakub Narebski wrote:
+> On Thu, 5 Apr 2012, Jakub Narebski wrote:
+>> On Thu, 5 Apr 2012, Jos=E9 Mar=EDa Escart=EDn Esteban wrote:
+>>> Hi,
+>>>
+>>> I'm running gitweb in a server.example.com/gitweb/ scenario.  If I =
+don't enable
+>>> pathinfo everything works fine, but when I enable pathinfo the stat=
+ic content
+>>> stops showing up in the browser.
+>>>
+>>> I'm not an HTML or perl expert, but I think that this may be due to=
+ a missing
+>>> slash in the construction of the base tag:  Using the upstream scri=
+pt I am getting
+>>>
+>>> <base href=3D"http://server.example.com/gitweb" />
+>>>
+>>> and no static content.  Once I tune the script to add a final slash=
+ to the url
+>>>
+>>> <base href=3D"http://server.example.com/gitweb/" />
+>>>
+>>> the static content shows up again.
+>>
+>> How do you deploy gitweb, what is your web server configuration, and
+>> what is the URL of main gitweb page (using placeholders like 'exampl=
+e.com'
+>> or 'foo')?
+>=20
+> Ping?
+>=20
+> [...]
+>=20
+
+I'll describe the setup at the end of my email, but you already provide=
+d the
+solution!
+
+>> There might be problem if you configured your web server to serve gi=
+tweb
+>> using it as a handler for subdirectory, so the script name does not =
+need
+>> to appear in URL, e.g.
+>>
+>>   http://localhost/cgi-bin/gitweb
+>>
+>> which would require the following base element
+>>
+>>   <base href=3D"http://localhost/cgi-bin/gitweb/" />
+>=20
+> [...]
+>=20
+
+Yes, that was precisely the problem.
+
+>>> Once I tune the script to add a final slash to the url
+>>>
+>>> <base href=3D"http://server.example.com/gitweb/" />
+>>>
+>>> the static content shows up again.
+>>
+>> By "tune the script" do you mean editing gitweb.cgi, or adding setti=
+ng
+>> $base_url to gitweb configuration file, see gitweb.conf(5):
+>>
+>>   $base_url
+>>      Base  URL  for  relative  URLs  in  pages generated by gitweb, =
+(e.g.
+>>      $logo, $favicon, @stylesheets if they are relative URLs), neede=
+d and
+>>      used  <base href=3D"$base_url"> only for URLs with nonempty PAT=
+H_INFO.
+>>      Usually gitweb sets its value correctly, and there is no need t=
+o set
+>>      this  variable,  e.g.  to $my_uri or "/". See $per_request_conf=
+ig if
+>>      you need to override it anyway.
+>>
+>> You can e.g. put
+>>
+>>   $base_url .=3D '/' unless ($base_url =3D~ m!/$!);
+>>
+>> in the gitweb configuration file to ensure that it ends with '/', wh=
+atever
+>> it is.
+>=20
+
+I was editing manually the gitweb.cgi script to add (always!) the slash=
+=2E  Your
+solution is of course better, and completely solves my problem.
+
+> By the way, would the following proposed addition to gitweb.conf(5)
+> manpage would help your situation?
+>=20
+> -------- >8 ---------- >8 ---------
+> Subject: [PATCH/RFC] gitweb.conf(5): When to set $base_url
+>=20
+> Add a paragraph to description of $base_url variable in gitweb.conf(5=
+)
+> manpage explaining when and why one might need to set it.
+>=20
+> Based-on-report-by: Jos=E9 Mar=EDa Escart=EDn Esteban <ripero84@gmail=
+=2Ecom>
+> Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+> ---
+>  Documentation/gitweb.conf.txt |   14 ++++++++++++++
+>  1 files changed, 14 insertions(+), 0 deletions(-)
+>=20
+> diff --git a/Documentation/gitweb.conf.txt b/Documentation/gitweb.con=
+f.txt
+> index 7aba497..a2a6ddf 100644
+> --- a/Documentation/gitweb.conf.txt
+> +++ b/Documentation/gitweb.conf.txt
+> @@ -559,6 +559,20 @@ $base_url::
+>  	PATH_INFO.  Usually gitweb sets its value correctly,
+>  	and there is no need to set this variable, e.g. to $my_uri or "/".
+>  	See `$per_request_config` if you need to override it anyway.
+> ++
+> +You would need to set this variable when using gitweb as a directory
+> +handler and using path_info-based URLs.  For example if your web
+> +server is set up in such way that full path to browse repositories i=
+s
+> +`http://git.example.com/gitweb` and static files are served from
+> +'/gitweb/static' directory with default values (e.g. `$logo` is
+> +`static/git-logo.png`), then you would need to set `$base_url` to
+> +(for example):
+> ++
+> +--------------------------------------------------------------------=
+--
+> +our $base_url =3D "http://git.example.com/gitweb/";
+> +--------------------------------------------------------------------=
+--
+> ++
+> +The trailing slash is required!
+> =20
+> =20
+>  CONFIGURING GITWEB FEATURES
+
+This addition to the man page would of course have been useful, since i=
+t took me
+a while to detect that the problem was a missing slash in the base url.
+However, it would not have solved completely my problem, and for me the=
+ best has
+been to add the line of code you proposed in the previous email.
+
+
+I am running a Debian testing (wheezy) server, so the distro gitweb fil=
+es are:
+
+	/etc/apache2/conf.d/gitweb
+	/etc/gitweb.conf
+	/usr/share/gitweb/gitweb.cgi
+	/usr/share/gitweb/index.cgi -> /usr/share/gitweb/gitweb.cgi
+	/usr/share/gitweb/static/*
+
+I am using two sets of git repositories, and each of the sets works thr=
+ough a
+particular gitolite user:
+
+	user     home
+	----------------------
+	git      /srv/project
+	mygit    /srv/mygit
+
+I wanted that different groups of people were able to browse the 'proje=
+ct' repos
+(in fact it is a mirror from the main project server) from
+	http://server.example.com/project/ ,
+and the 'mygit' repos from
+	http://server.example.com/mygit/ .
+And I wanted to keep urls as short and easy as possible, and to avoid
+proliferation of configs as much as possible.
+
+The setup I came up with was to link
+
+	/srv/www/project -> /usr/share/gitweb
+	/srv/www/mygit -> /usr/share/gitweb
+
+and to use the following configuration files:
+
+######### /etc/apache2/conf.d/gitweb ##################
+<Directory /srv/www/project>
+        SetEnv  GITWEB_PROJECTROOT      /srv/git/
+        SetEnv  GITWEB_CONFIG           /etc/gitweb.conf
+        <IfModule mod_authn_file.c>
+                AuthType Basic
+                AuthName "Project gitweb"
+                AuthUserFile /srv/htpwd/git-htpasswd
+        </IfModule>
+        Require valid-user
+        Order allow,deny
+        Allow from 123.123.123.123
+        Satisfy Any
+        Options FollowSymLinks +ExecCGI
+        AddHandler cgi-script .cgi
+        RewriteEngine On
+        RewriteBase /project/
+        RewriteCond %{REQUEST_FILENAME} !-f
+        RewriteCond %{REQUEST_FILENAME} !-d
+        RewriteRule ^.* /project/index.cgi/$0 [L,PT]
+</Directory>
+
+<Directory /srv/www/mygit>
+        SetEnv  GITWEB_PROJECTROOT      /srv/mygit/
+        SetEnv  GITWEB_CONFIG           /etc/gitweb.conf
+        <IfModule mod_authn_file.c>
+                AuthType Basic
+                AuthName "My gitweb"
+                AuthUserFile /srv/htpwd/mygit-htpasswd
+        </IfModule>
+        Require valid-user
+        Order allow,deny
+        Allow from 213.213.213.213
+        Satisfy Any
+        Options FollowSymLinks +ExecCGI
+        AddHandler cgi-script .cgi
+        RewriteEngine On
+        RewriteBase /mygit/
+        RewriteCond %{REQUEST_FILENAME} !-f
+        RewriteCond %{REQUEST_FILENAME} !-d
+        RewriteRule ^.* /mygit/index.cgi/$0 [L,PT]
+</Directory>
+#######################################################
+
+######### /etc/gitweb.conf ############################
+$projectroot =3D $ENV{'GITWEB_PROJECTROOT'}."repositories";
+$git_temp =3D "/tmp";
+$projects_list =3D $ENV{'GITWEB_PROJECTROOT'}."projects.list";
+@diff_opts =3D ();
+$feature{'pathinfo'}{'default'} =3D [1];
+$feature{'highlight'}{'default'} =3D [1];
+$projects_list_description_width =3D 50;
+#######################################################
+
+Probably there are better ways to implement this, but at least this see=
+ms to
+work, once I have added
+
+	$base_url .=3D '/' unless ($base_url =3D~ m!/$!);
+
+to /etc/gitweb.conf .
+
+Greetings, and thanks again,
+
+	E.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (GNU/Linux)
+
+iEYEARECAAYFAk+MOEsACgkQY+7weQMem3w4NwCfYHyX+vtap/HvV7/8CTYu42W2
+AbEAoLi2868tD6LGoFdisiplWf9vSdRx
+=3DRAme
+-----END PGP SIGNATURE-----
