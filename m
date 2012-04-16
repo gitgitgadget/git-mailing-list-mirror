@@ -1,93 +1,90 @@
-From: Clemens Buchacher <drizzd@aon.at>
-Subject: Re: [PATCH v5 3/4] git-cherry-pick: Add test to validate new options
-Date: Mon, 16 Apr 2012 23:42:49 +0200
-Message-ID: <20120416214247.GA5606@ecki>
-References: <1333136922-12872-1-git-send-email-nhorman@tuxdriver.com>
- <1334342707-3326-1-git-send-email-nhorman@tuxdriver.com>
- <1334342707-3326-4-git-send-email-nhorman@tuxdriver.com>
- <20120415093933.GB6263@ecki>
- <20120416161431.GD13366@hmsreliant.think-freely.org>
- <7vvckzws73.fsf@alter.siamese.dyndns.org>
- <20120416165024.GF13366@hmsreliant.think-freely.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: What's cooking in git.git (Apr 2012, #05; Thu, 12)
+Date: Mon, 16 Apr 2012 15:03:47 -0700
+Message-ID: <7vwr5fs5a4.fsf@alter.siamese.dyndns.org>
+References: <20120416082641.5d239ef6@mkiedrowicz.ivo.pl>
+ <CA+55aFwkf2bOLmUCU+_pSg0OzGyfQ1x-Cy_CiczpJN3zsThNWg@mail.gmail.com>
+ <7vehrnwpoi.fsf@alter.siamese.dyndns.org>
+ <CA+55aFyZYnAxJc8YT=GEnq-fdXbHCXyx937KNBngn69Zuxmcgg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Jeff King <peff@peff.net>, Phil Hord <phil.hord@gmail.com>
-To: Neil Horman <nhorman@tuxdriver.com>
-X-From: git-owner@vger.kernel.org Tue Apr 17 00:02:50 2012
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Michal Kiedrowicz <michal.kiedrowicz@gmail.com>,
+	git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Tue Apr 17 00:03:58 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SJu0W-0002RM-Ks
-	for gcvg-git-2@plane.gmane.org; Tue, 17 Apr 2012 00:02:49 +0200
+	id 1SJu1c-0003C7-0N
+	for gcvg-git-2@plane.gmane.org; Tue, 17 Apr 2012 00:03:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755794Ab2DPWCk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Apr 2012 18:02:40 -0400
-Received: from bsmtp.bon.at ([213.33.87.14]:46026 "EHLO bsmtp.bon.at"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755697Ab2DPWCi (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Apr 2012 18:02:38 -0400
-Received: from [127.0.0.1] (p5B22C2B7.dip.t-dialin.net [91.34.194.183])
-	by bsmtp.bon.at (Postfix) with ESMTP id 458F9130044;
-	Tue, 17 Apr 2012 00:02:35 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <20120416165024.GF13366@hmsreliant.think-freely.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1755412Ab2DPWDv convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 16 Apr 2012 18:03:51 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:58398 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751958Ab2DPWDu convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 16 Apr 2012 18:03:50 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7EC5E750B;
+	Mon, 16 Apr 2012 18:03:49 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=uokiF2bg/BAe
+	U+6TBTjXkGmECW0=; b=jMOWZneuag2+KOKTT4v0bHAkhHnCZcuhpVEkfN5CJdT1
+	hVLpkueMoMz9mBoLKNBX0qMpyWaee6jsE7fvNWkus7GTCTXjWYK1ZRd5lkEkGdKa
+	jIg98J3LTHYedqKSoHVhwQvAYFCYzWqy89rAXRMaV7315TraVL5xciEoMfdv1vc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=qkcskj
+	gJB35t7W1xl8l1jnCmpuv2OsJXQCGUwwxlZYN3XukuhHJEzXGp9yKTKAadQ7W1d0
+	UJn5FyrlfcgvpT6W6T2GzNdMXggk8xw9macXd/sp9W8QQNXciH3bz7B079a2478f
+	fGPwAjciA+UHC3XXZZlEA3Iy+8WBr04fj0Gn4=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 75EE2750A;
+	Mon, 16 Apr 2012 18:03:49 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0962D7509; Mon, 16 Apr 2012
+ 18:03:48 -0400 (EDT)
+In-Reply-To: <CA+55aFyZYnAxJc8YT=GEnq-fdXbHCXyx937KNBngn69Zuxmcgg@mail.gmail.com> (Linus
+ Torvalds's message of "Mon, 16 Apr 2012 10:50:55 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 0B6EDBF2-8810-11E1-8EC8-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195703>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195704>
 
-On Mon, Apr 16, 2012 at 12:50:24PM -0400, Neil Horman wrote:
-> On Mon, Apr 16, 2012 at 09:35:12AM -0700, Junio C Hamano wrote:
-> > Neil Horman <nhorman@tuxdriver.com> writes:
-> > 
-> > > On Sun, Apr 15, 2012 at 11:39:35AM +0200, Clemens Buchacher wrote:
-> > > ...
-> > >> > +test_expect_success 'cherry pick an empty non-ff commit with --allow-empty' '
-> > >> > +	git checkout master && {
-> > >> > +		git cherry-pick --allow-empty empty-branch2
-> > >> > +	}
-> > >> > +'
-> > >> > +
-> > >> > +test_expect_success 'cherry pick with --keep-redundant-commits' '
-> > >> > +	git checkout master && {
-> > >> > +		git cherry-pick --keep-redundant-commits HEAD^
-> > >> > +	}
-> > >> > +'
-> > >> 
-> > >> And the expected result is that the HEAD commit is not removed, right?
-> > >> You should check for that as well.
-> > >> 
-> > >> Also, please checkout empty-branch2^0 first, in order to make the test
-> > >> independent of its predecessor.
-> > >
-> > > Not sure I follow what your saying here.  The expected result with both of these
-> > > tests is that a new commit is created, referencing the current HEAD as the new
-> > > HEAD's parent.
-> > 
-> > If the request were "checkout master^0 first" I would understand.  The
-> > precondition for the second test will be different depending on the first
-> > one succeeds or not.  Perhaps that is what Clemens meant?
-> > 
-> Perhaps, but if so, I'm still not sure how a checkout of empty-branch2^0 affects
-> these tests at all, nor do I grok the relevance to ensuring that the HEAD commit
-> wasn't removed (as AIUI, cherry pick never does that anyway).  Clement, can you
-> clarify your thoughts here please?
+Linus Torvalds <torvalds@linux-foundation.org> writes:
 
-It seems that I was implying a lot more than I realized. What I meant
-was that master and empty-branch2 are equivalent for the purposes of
-that test (empty-branch2^ also is a non-empty commit [*1*]), but while
-master is a moving target, empty-branch2 is untouched. 
+> On Mon, Apr 16, 2012 at 10:29 AM, Junio C Hamano <gitster@pobox.com> =
+wrote:
+>>
+>> I wonder if use of remoteheads later in the same function are correc=
+t,
+>> though. =C2=A0We equate "!remoteheads->next" and "We are not doing o=
+ctopus",
+>> for example.
+>
+> I do think it would generally be a great idea to never use
+> "remoteheads" at all. An octopus merge that has been simplified to
+> just two parents isn't really an octopus merge any more.
+>
+> So I think you're probably right - we should try to avoid using
+> remoteheads entirely, and any use is suspect
 
-However, I just notice that empty-branch2 is also the root commit, so
-maybe this will not work after all. But that should be easy to fix.
+I am still looking at the codepaths involved.  It looks feasible, but
+would affect quite a lot of them to deal with many corner cases, I am
+afraid.
 
-And now I am also wondering why we have two tests for cherry picking an
-empty commit without --allow-empty (the one that you added and the one
-that was there before). Is the non-ff part significant and if so, how?
-And why don't we need to test fast-forward cherry-pick with
---allow-empty?
+One of the worst is the "traditional merge format" where format-merge-m=
+sg
+is called outside "git merge" to prepare the merge message created by "=
+git
+pull".  We haven't reduced heads at that stage yet, so the message fed =
+to
+us will list what happened on the redundant branches.
