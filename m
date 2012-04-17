@@ -1,81 +1,85 @@
-From: Neil Horman <nhorman@tuxdriver.com>
-Subject: Re: [PATCH v5 2/4] git-cherry-pick: Add keep-redundant-commits option
-Date: Tue, 17 Apr 2012 06:43:40 -0400
-Message-ID: <20120417104340.GA11462@hmsreliant.think-freely.org>
-References: <1333136922-12872-1-git-send-email-nhorman@tuxdriver.com>
- <1334342707-3326-1-git-send-email-nhorman@tuxdriver.com>
- <1334342707-3326-3-git-send-email-nhorman@tuxdriver.com>
- <20120415104212.GC6263@ecki>
- <20120416153827.GC13366@hmsreliant.think-freely.org>
- <20120416221018.GB5606@ecki>
+From: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
+Subject: Re: [PATCH 2/2] completion: Use parse-options raw output for
+	simple long options
+Date: Tue, 17 Apr 2012 12:44:48 +0200
+Message-ID: <20120417104448.GE2299@goldbirke>
+References: <1334140165-24958-1-git-send-email-bebarino@gmail.com>
+	<1334140165-24958-3-git-send-email-bebarino@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Phil Hord <phil.hord@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: Clemens Buchacher <drizzd@aon.at>
-X-From: git-owner@vger.kernel.org Tue Apr 17 12:44:02 2012
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, spearce@spearce.org,
+	felipe.contreras@gmail.com, jrnieder@gmail.com
+To: Stephen Boyd <bebarino@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Apr 17 12:45:03 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SK5tB-0007LQ-Gu
-	for gcvg-git-2@plane.gmane.org; Tue, 17 Apr 2012 12:44:01 +0200
+	id 1SK5u3-00084K-J8
+	for gcvg-git-2@plane.gmane.org; Tue, 17 Apr 2012 12:44:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753340Ab2DQKny (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Apr 2012 06:43:54 -0400
-Received: from charlotte.tuxdriver.com ([70.61.120.58]:47988 "EHLO
-	smtp.tuxdriver.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752520Ab2DQKny (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Apr 2012 06:43:54 -0400
-Received: from hmsreliant.think-freely.org ([2001:470:8:a08:7aac:c0ff:fec2:933b] helo=localhost)
-	by smtp.tuxdriver.com with esmtpsa (TLSv1:AES128-SHA:128)
-	(Exim 4.63)
-	(envelope-from <nhorman@tuxdriver.com>)
-	id 1SK5sr-00067i-2m; Tue, 17 Apr 2012 06:43:46 -0400
+	id S1753794Ab2DQKov convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 17 Apr 2012 06:44:51 -0400
+Received: from moutng.kundenserver.de ([212.227.126.186]:63414 "EHLO
+	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753580Ab2DQKou (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Apr 2012 06:44:50 -0400
+Received: from localhost6.localdomain6 (p5B1306D0.dip0.t-ipconnect.de [91.19.6.208])
+	by mrelayeu.kundenserver.de (node=mreu4) with ESMTP (Nemesis)
+	id 0McLz9-1SanyR1Zqh-00J5zw; Tue, 17 Apr 2012 12:44:49 +0200
 Content-Disposition: inline
-In-Reply-To: <20120416221018.GB5606@ecki>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-X-Spam-Score: -2.9 (--)
-X-Spam-Status: No
+In-Reply-To: <1334140165-24958-3-git-send-email-bebarino@gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Provags-ID: V02:K0:Znwqt+IustDWNWXvgr0QfE+DQd7LGSCXuYwwp57AtZY
+ bsvB5UBXxmOnQU0AZsIlQJPG2rWYxrPWTlSRzgL0psGkv/HfMf
+ f7pH9e787Q8alqeoW5obRoj/Gh3FI9xPZFSu8Yo5wCofC2BiEs
+ BrIYB1xShn/GjCnZFq3xdpZ55dABAl72873vBmJ4riYNR4mPIs
+ eDRIgmgVwrZTdYmSpBgwR0KEv1vZPOpUJPcQkJP0fg4aAqdxy+
+ 30fbCwY13U5fS+K8n22a0ALIRws2BFaqC1r8z6QsJT8QS6CbL/
+ 9U9qR9KPSMXhER8FS3VodSCH90EPX0GHOGo1U1xuWT0AOftT5b
+ yEuxqcvs12h4L5mpIOm4=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195752>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195753>
 
-On Tue, Apr 17, 2012 at 12:10:18AM +0200, Clemens Buchacher wrote:
-> On Mon, Apr 16, 2012 at 11:38:27AM -0400, Neil Horman wrote:
-> > > 
-> > > I find it a bit strange, that if we cherry-pick a commit that was
-> > > already empty, we _do_ call git commit (and error out), but if we find a
-> > > commit that is made empty, we do _not_ call git commit and quietly
-> > > succeed (in not doing anything). But I suppose that is the legacy
-> > > behavior?
-> >
-> > Correct, more or less.  The legacy behavior is to call git commit unilaterally.
-> > [...] The only change is that if we do not specify
-> > keep-redundant-commits, we check to see if the commit is made empty in
-> > git-cherry-pick and skip it if it is.  We could, instead of returning prior to
-> > calling git-commit, use that test to override the keep_empty option below, so
-> > that we don't pass --allow-empty to git-commit instead.  That would preserve the
-> > prior code path, but for no real advatage, as the outcome is the same, and this
-> > way saves us having to fork the git-commit command, which I think is
-> > adventageous.
-> 
-> Except that the outcome is not the same. With and without your changes,
-> git cherry-pick <empty-commit> fails. But with your changes, git
-> cherry-pick <commit-will-become-empty> will succeed and do nothing,
-> while before it would have failed exactly like git cherry-pick
-> <empty-commit>.
-> 
-> So I am not arguing whether failing or skipping is the better default
-> behavior. But the legacy behavior is consistent between the empty-commit
-> and commit-will-become-empty cases.  And if we change the behavior for
-> one, why not also for the other?
-> 
+Hi Stephen,
 
-Ah, I see what you're saying.  Yes, hadn't thought of that, Ok, I'll change the
-logic to just toggle the addition of the --allow-empty flag to git commit.
-Neil
+On Wed, Apr 11, 2012 at 03:29:25AM -0700, Stephen Boyd wrote:
+> Now that parse-options supports generating lists of long options for =
+any
+> parse-optified git program we can remove the hand-coded lists in the
+> completion script. Replace these lists with code to generate the list=
+s
+> lazily when a user tab completes that specific command.
+
+> +__git_list_command_options ()
+> +{
+> +	git $@ --dump-raw-long-options
+> +}
+
+Attempting option completion for the first time for commands requiring
+a repository to work (e.g. 'add', 'branch', 'checkout', etc.) outside
+of a git repository produces a 'fatal: not a git repository' error.
+These commands require a repository for '--dump-raw-long-options',
+too, otherwise they error out in __git_list_command_options().  So at
+least we'll need
+
+  git $@ --dump-raw-long-options 2> /dev/null
+
+to silence that error, but even then the user won't get any options.
+Now, I don't think that getting a list of options is that useful at
+that point, because the command will error out anyway (except when the
+user explicitly specifies the paths to the repo and work tree), but
+it's a side effect nonetheless, because it worked before.
+
+Computing the long options for commands not requiring a repository
+(e.g. 'clone', 'archive', 'help', etc.) works properly even for the
+first time and outside of a repository.
+
+
+Best,
+G=E1bor
