@@ -1,71 +1,95 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: gc --aggressive
-Date: Tue, 17 Apr 2012 22:52:03 +0200
-Message-ID: <vpqbomqqdxo.fsf@bauges.imag.fr>
-References: <CAG+J_DzO=UZ56PjnSCRaTdj8pBSYc5PFofw1QHy42c5pHMK_HQ@mail.gmail.com>
-	<CAG+J_DyqvCxwd6+gzixQEk6SxMZF0qsXKcJPaU6imsJdFQ-64g@mail.gmail.com>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH v2] completion: add new git_complete helper
+Date: Tue, 17 Apr 2012 23:53:08 +0300
+Message-ID: <CAMP44s0w40ViecQsF8AeQLLxAEShC54TTyvcPVMabpOZ+DYDqQ@mail.gmail.com>
+References: <1334524814-13581-1-git-send-email-felipe.contreras@gmail.com>
+	<20120415213718.GB5813@burratino>
+	<20120416221531.GA2299@goldbirke>
+	<CAMP44s2N9wFg5kx7jw2w6G6BQ1riX-W9cKt8kBPaofugm0OV1g@mail.gmail.com>
+	<7vty0inys6.fsf@alter.siamese.dyndns.org>
+	<CAMP44s1sj27U_s3Y3nLL6pkMrPMVvTo982c85x-hH5szvprK0g@mail.gmail.com>
+	<7v4nsins1j.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-	Shawn Pearce <spearce@spearce.org>, Jeff King <peff@peff.net>
-To: Jay Soffian <jaysoffian@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 17 22:52:29 2012
+Content-Type: text/plain; charset=UTF-8
+Cc: =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder@ira.uka.de>,
+	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
+	Thomas Rast <trast@student.ethz.ch>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Apr 17 22:53:17 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SKFO1-0003s7-92
-	for gcvg-git-2@plane.gmane.org; Tue, 17 Apr 2012 22:52:29 +0200
+	id 1SKFOn-0004Ve-1W
+	for gcvg-git-2@plane.gmane.org; Tue, 17 Apr 2012 22:53:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752828Ab2DQUwY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Apr 2012 16:52:24 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:59583 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752162Ab2DQUwX (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Apr 2012 16:52:23 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id q3HKk4tc024550
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Tue, 17 Apr 2012 22:46:04 +0200
-Received: from bauges.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1SKFNc-0005us-Ho; Tue, 17 Apr 2012 22:52:04 +0200
-In-Reply-To: <CAG+J_DyqvCxwd6+gzixQEk6SxMZF0qsXKcJPaU6imsJdFQ-64g@mail.gmail.com>
-	(Jay Soffian's message of "Tue, 17 Apr 2012 13:53:37 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.93 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Tue, 17 Apr 2012 22:46:04 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: q3HKk4tc024550
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1335300366.65269@wd1QYX3AB9moZ1p8swp7Ng
+	id S1751680Ab2DQUxN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Apr 2012 16:53:13 -0400
+Received: from mail-ey0-f174.google.com ([209.85.215.174]:53562 "EHLO
+	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751211Ab2DQUxK (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Apr 2012 16:53:10 -0400
+Received: by eaaq12 with SMTP id q12so1700056eaa.19
+        for <git@vger.kernel.org>; Tue, 17 Apr 2012 13:53:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=NidKMvQsBNs6WH4qiCqaPJx+VpvWc3Pm5OdARXDM8rA=;
+        b=JIMO80/ypcx9rHaQwZjdkQqZIvBQjvswXk2KhgFBh/t2g3RLY3D6FrgJDgf6R40XrE
+         1csDHEXYssxlM5lSVNpVgBenyoyazLLn9bxWeEuiDHAgHBrBU/8OoJ4KGWutuMCsYKyz
+         bFvmUXte2Oo0I/92UspkPE8jyf5GuNHfpscNywUlR+Aa6JiM5Pn4R2jWTB/4ydDhBjik
+         zsoUyQD1uQW/UK8p1c7o/DNhqQy6KmdolAtM1wwcKLTQyHYq9b2oBVYHqR17yqRSEO2c
+         3cuBltrdlpx8uay0u++6FghIqRhHfmfr43NzK2LVp6DbQEyBPrrRxRKedsrb3RwszObv
+         tF1w==
+Received: by 10.14.39.197 with SMTP id d45mr2438753eeb.89.1334695988748; Tue,
+ 17 Apr 2012 13:53:08 -0700 (PDT)
+Received: by 10.213.19.67 with HTTP; Tue, 17 Apr 2012 13:53:08 -0700 (PDT)
+In-Reply-To: <7v4nsins1j.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195806>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195807>
 
-Jay Soffian <jaysoffian@gmail.com> writes:
+On Tue, Apr 17, 2012 at 9:15 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Felipe Contreras <felipe.contreras@gmail.com> writes:
+>
+>> On Tue, Apr 17, 2012 at 6:50 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>>> Felipe Contreras <felipe.contreras@gmail.com> writes:
+>> ...
+>>>>> And foo_wrap() should also fit into those namespaces.
+>>>>
+>>>> Yeah, I don't have a problem with that, just forgot about it.
+>>>>
+>>>> But git_complete I think is different.
+>>>
+>>> Is git_complete something the user types interactively, or is it meant to
+>>> be used in their .bashrc to help them complete arguments to their custom
+>>> scripts that take arguments similar to Git Porcelains?
+>>
+>> It's meant for their .bashrc, but can be used interactively, exactly
+>> like 'complete'. You can type 'complete -o bashdefault -o default -o
+>> nospace -F _git git' in the command like, but that would rarely
+>> happen.
+>
+> OK, then I do not think "as a public interface it looks somewhat ugly"
+> (which I happen to think, and I am guessing that you agree with) matters.
+> It looks to me that it would be sane to follow the convention
 
-> + 3. `git gc --aggressive`; this is often much slower than (2) because git
-> +    throws out all of the existing deltas and recomputes them from
-> +    scratch. It uses a higher window parameter meaning it will spend
-> +    more time computing, and it may end up with a smaller pack. However,
-> +    unless the repository is known to have initially been poorly packed,
-> +    this option is not needed and will just cause git to perform
-> +    extra work.
+But that convention is for *private* functions.
 
-I like your patch.
+> to avoid
+> accidental name clashes with userspace names by naming it "__git_complete"
+> in that case.
 
-Maybe you should elaborate on "unless the repository is known to have
-initially been poorly packed". My understanding is that --aggressive was
-implemented to be called after an import from another VCS that would
-have computed very poor deltas, but I'm not sure about the details.
+What if there are no clashes?
+
+Are you saying that even if there are no real clashes, only
+hypothetical ones, you would still prefer __git_complete?
+
+How are people going to distinguish between public and private functions?
 
 -- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Felipe Contreras
