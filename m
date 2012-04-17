@@ -1,80 +1,114 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] completion: add new git_complete helper
-Date: Tue, 17 Apr 2012 08:50:01 -0700
-Message-ID: <7vty0inys6.fsf@alter.siamese.dyndns.org>
-References: <1334524814-13581-1-git-send-email-felipe.contreras@gmail.com>
- <20120415213718.GB5813@burratino> <20120416221531.GA2299@goldbirke>
- <CAMP44s2N9wFg5kx7jw2w6G6BQ1riX-W9cKt8kBPaofugm0OV1g@mail.gmail.com>
+From: Andreas Gruenbacher <agruen-mXXj517/zsQ@public.gmane.org>
+Subject: GNU patch close to next stable release
+Date: Tue, 17 Apr 2012 18:07:53 +0200
+Message-ID: <201204171807.54771.agruen@gnu.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder@ira.uka.de>,
-	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
-	Thomas Rast <trast@student.ethz.ch>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 17 17:50:21 2012
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: Text/Plain;
+  charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Cc: git-u79uwXL29TY76Z2rM5mHXA@public.gmane.org
+To: bug-patch-mXXj517/zsQ@public.gmane.org
+X-From: bug-patch-bounces+gcgpb-bug-patch=m.gmane.org-mXXj517/zsQ@public.gmane.org Tue Apr 17 18:08:15 2012
+Return-path: <bug-patch-bounces+gcgpb-bug-patch=m.gmane.org-mXXj517/zsQ@public.gmane.org>
+Envelope-to: gcgpb-bug-patch@m.gmane.org
+Received: from lists.gnu.org ([208.118.235.17])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SKAfc-0001S3-2y
-	for gcvg-git-2@plane.gmane.org; Tue, 17 Apr 2012 17:50:20 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932229Ab2DQPuG convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 17 Apr 2012 11:50:06 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:45241 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932213Ab2DQPuF convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 17 Apr 2012 11:50:05 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AB30D5619;
-	Tue, 17 Apr 2012 11:50:04 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=Xo7q443GIAcT
-	x5rZvjV5A+pzLEs=; b=tuPUmb+DZSU3wQSN06XGqc54pCANVeTkaAAWTyP8fwJR
-	ysEpcVmmSrJPCFsJ9FifUR3s+BbRkS5ehbw8mw/fDVUCl1QdOeTJfkH3cTlaRduy
-	TSuiIietLQSSSnXtqBSU+Hg3KOChfbeBtrtXrm/j4lNXJqXC3F3HVN0EbHrho1s=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=PrEDTh
-	k1a9hU4hrWHlF/D7mmMZtekj3qvvzIHo0sPsz8bci6+hCcOlw9mxLoAaAFnzOmv5
-	2SwUCBSs5i3vMFTGWgzFwzj+Ip/taM69dYofisN1VBAHqseis4zfFLlSOAaU8OeM
-	COW+whwrA2Cs7FGGw1sbGzuXV6MRvob5epg3k=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8D5F35617;
-	Tue, 17 Apr 2012 11:50:04 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0F8845614; Tue, 17 Apr 2012
- 11:50:03 -0400 (EDT)
-In-Reply-To: <CAMP44s2N9wFg5kx7jw2w6G6BQ1riX-W9cKt8kBPaofugm0OV1g@mail.gmail.com> (Felipe
- Contreras's message of "Tue, 17 Apr 2012 01:33:25 +0300")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: FEF47CAC-88A4-11E1-BA01-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195767>
+	(envelope-from <bug-patch-bounces+gcgpb-bug-patch=m.gmane.org-mXXj517/zsQ@public.gmane.org>)
+	id 1SKAwr-00006Q-Gn
+	for gcgpb-bug-patch@m.gmane.org; Tue, 17 Apr 2012 18:08:09 +0200
+Received: from localhost ([::1]:40097 helo=lists.gnu.org)
+	by lists.gnu.org with esmtp (Exim 4.71)
+	(envelope-from <bug-patch-bounces+gcgpb-bug-patch=m.gmane.org-mXXj517/zsQ@public.gmane.org>)
+	id 1SKAwq-0001Os-Pr
+	for gcgpb-bug-patch@m.gmane.org; Tue, 17 Apr 2012 12:08:08 -0400
+Received: from eggs.gnu.org ([208.118.235.92]:38573)
+	by lists.gnu.org with esmtp (Exim 4.71)
+	(envelope-from <agruen-mXXj517/zsQ@public.gmane.org>) id 1SKAwl-0001OD-H3
+	for bug-patch-mXXj517/zsQ@public.gmane.org; Tue, 17 Apr 2012 12:08:07 -0400
+Received: from Debian-exim by eggs.gnu.org with spam-scanned (Exim 4.71)
+	(envelope-from <agruen-mXXj517/zsQ@public.gmane.org>) id 1SKAwf-00060u-6D
+	for bug-patch-mXXj517/zsQ@public.gmane.org; Tue, 17 Apr 2012 12:08:03 -0400
+Received: from zimbra.linbit.com ([212.69.161.123]:52542)
+	by eggs.gnu.org with esmtp (Exim 4.71)
+	(envelope-from <agruen-mXXj517/zsQ@public.gmane.org>) id 1SKAwe-0005zz-Sh
+	for bug-patch-mXXj517/zsQ@public.gmane.org; Tue, 17 Apr 2012 12:07:57 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by zimbra.linbit.com (Postfix) with ESMTP id 723741B4354;
+	Tue, 17 Apr 2012 18:07:55 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at zimbra.linbit.com
+Received: from zimbra.linbit.com ([127.0.0.1])
+	by localhost (zimbra.linbit.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id CKprqg9XtP0m; Tue, 17 Apr 2012 18:07:55 +0200 (CEST)
+Received: from murkel.localnet (unknown [86.59.100.100])
+	by zimbra.linbit.com (Postfix) with ESMTPSA id 5C04A1B4350;
+	Tue, 17 Apr 2012 18:07:55 +0200 (CEST)
+User-Agent: KMail/1.12.4 (Linux/2.6.36-rc7+; KDE/4.3.5; i686; ; )
+X-detected-operating-system: by eggs.gnu.org: GNU/Linux 2.6 (newer, 3)
+X-Received-From: 212.69.161.123
+X-BeenThere: bug-patch-mXXj517/zsQ@public.gmane.org
+X-Mailman-Version: 2.1.14
+Precedence: list
+List-Id: "Bug reports, suggestions,
+	general discussion for GNU patch." <bug-patch.gnu.org>
+List-Unsubscribe: <https://lists.gnu.org/mailman/options/bug-patch>,
+	<mailto:bug-patch-request-mXXj517/zsQ@public.gmane.org?subject=unsubscribe>
+List-Archive: <http://lists.gnu.org/archive/html/bug-patch>
+List-Post: <mailto:bug-patch-mXXj517/zsQ@public.gmane.org>
+List-Help: <mailto:bug-patch-request-mXXj517/zsQ@public.gmane.org?subject=help>
+List-Subscribe: <https://lists.gnu.org/mailman/listinfo/bug-patch>,
+	<mailto:bug-patch-request-mXXj517/zsQ@public.gmane.org?subject=subscribe>
+Errors-To: bug-patch-bounces+gcgpb-bug-patch=m.gmane.org-mXXj517/zsQ@public.gmane.org
+Sender: bug-patch-bounces+gcgpb-bug-patch=m.gmane.org-mXXj517/zsQ@public.gmane.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195768>
 
-=46elipe Contreras <felipe.contreras@gmail.com> writes:
+I'm glad to announce that finally, support for git-style diffs is working well 
+enough, and no more major issues seem to be in our way before the next stable 
+release of GNU patch.
 
-> 2012/4/17 SZEDER G=C3=A1bor <szeder@ira.uka.de>:
->> On Sun, Apr 15, 2012 at 04:37:18PM -0500, Jonathan Nieder wrote:
->>> Felipe Contreras wrote:
->
->>> A name like __git_complete should work, presumably.
->>
->> And foo_wrap() should also fit into those namespaces.
->
-> Yeah, I don't have a problem with that, just forgot about it.
->
-> But git_complete I think is different.
+Some things have changed significantly recently in order to get the code 
+release ready, so now would be a really great time for an extra round of 
+testing.
 
-Is git_complete something the user types interactively, or is it meant =
-to
-be used in their .bashrc to help them complete arguments to their custo=
-m
-scripts that take arguments similar to Git Porcelains?
+You can find the latest snapshot here:
+
+  ftp://alpha.gnu.org/gnu/patch/
+
+The last stable release dates back to December 2009 with version 2.6.1.  The 
+following significant changes have happened since then:
+
+* Support for most features of the "diff --git" format, including renames and
+  copies, permission changes, and symlink diffs.  Binary diffs are not
+  supported yet; patch will complain and skip them.
+
+* Support for double-quoted filenames in the "diff --git" format: when a
+  filename starts with a double quote, it is interpreted as a C string
+  literal.  The escape sequences \\, \", \a, \b, \f, \n, \r, \t, \v, and \ooo
+  (a three-digit octal number between 0 and 255) are recognized.
+
+* Patch now ignores destination file names that are absolute or that contain
+  a component of "..".  This addresses CVE-2010-4651.
+
+* Refuse to apply a normal patch to a symlink.  (Previous versions of patch
+  were replacing the symlink with a regular file.)
+
+* When trying to modify a read-only file, warn about the potential problem
+  by default.  The --read-only command line option allows to change this
+  behavior.
+
+* Files that should be deleted are now deleted once the entire patch file has
+  been read.  This fixes a bug with numbered backup files.
+
+* When a timestamp specifies a time zone, honor that instead of assuming the
+  local time zone (--set-date) or Universal Coordinated Time (--set-utc).
+
+* Support for nanosecond precision timestamps.
+
+* Many portability and bug fixes.
+
+Please report bugs or suggestions on the <bug-patch-mXXj517/zsQ@public.gmane.org> mailing list, or 
+in the project's bug tracker on Savannah:
+
+  http://savannah.gnu.org/projects/patch
+
+Thanks,
+Andreas
