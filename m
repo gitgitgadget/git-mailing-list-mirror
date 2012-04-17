@@ -1,100 +1,54 @@
-From: Jay Soffian <jaysoffian@gmail.com>
-Subject: gc --aggressive
-Date: Tue, 17 Apr 2012 12:16:15 -0400
-Message-ID: <CAG+J_DzO=UZ56PjnSCRaTdj8pBSYc5PFofw1QHy42c5pHMK_HQ@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Shawn Pearce <spearce@spearce.org>
-To: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Apr 17 18:16:22 2012
+From: Mark Jason Dominus <mjd@plover.com>
+Subject: git-push sent too many objects
+Date: Tue, 17 Apr 2012 12:53:27 -0400
+Organization: P.D.Q. Bernoulli Institute of Lower Mathematics
+Message-ID: <30586.1334681607@plover.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Apr 17 18:53:47 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SKB4n-0007I2-Fw
-	for gcvg-git-2@plane.gmane.org; Tue, 17 Apr 2012 18:16:21 +0200
+	id 1SKBf0-0006Hj-9L
+	for gcvg-git-2@plane.gmane.org; Tue, 17 Apr 2012 18:53:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932071Ab2DQQQR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Apr 2012 12:16:17 -0400
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:62054 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755293Ab2DQQQQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Apr 2012 12:16:16 -0400
-Received: by yhmm54 with SMTP id m54so3157358yhm.19
-        for <git@vger.kernel.org>; Tue, 17 Apr 2012 09:16:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:cc:content-type;
-        bh=TOKHIlKDJHosvKtVF8PcIkRxEJDF6oWAywMzrmjpOwQ=;
-        b=pJgODnt8UrLm1B5couh/WkjhSeX4zwFtRfdLcdbLzibZfBk2hI7UVZqnZvPqqvuDAl
-         Ug5GUBu08YGaTAn4DFHV9O2QX4+oCyTS9yTBxc6GZ3htc91SLRhdlQ+joIpcdrBUawEd
-         cfqn07r8adNE96BrgHQIb1gIFjfFuQo9639r4Q3WjYsE2UZ4qjjHvfPlhZayHUzKWkaS
-         F3VvpYhTsaGC8vH2pyqXbgtMJvI8Ob8bUgRbizOwdmaSlJYwLpnETquqvJ2Gz9C/R0XP
-         Ydv5TxO0p2tkdARl03qOLS27BzxJYP08pei1LmB/Yxt6HwW3qnhFI6+kyrSUr+KcQnP+
-         odBw==
-Received: by 10.236.79.234 with SMTP id i70mr15815184yhe.88.1334679375786;
- Tue, 17 Apr 2012 09:16:15 -0700 (PDT)
-Received: by 10.147.47.19 with HTTP; Tue, 17 Apr 2012 09:16:15 -0700 (PDT)
+	id S1754261Ab2DQQxl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Apr 2012 12:53:41 -0400
+Received: from vms173021pub.verizon.net ([206.46.173.21]:29097 "EHLO
+	vms173021pub.verizon.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752815Ab2DQQxl (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Apr 2012 12:53:41 -0400
+Received: from plover.com ([unknown] [72.92.0.95]) by vms173021.mailsrvcs.net
+ (Sun Java(tm) System Messaging Server 7u2-7.02 32bit (built Apr 16 2009))
+ with ESMTPA id <0M2M000G8UX3J180@vms173021.mailsrvcs.net> for
+ git@vger.kernel.org; Tue, 17 Apr 2012 11:53:28 -0500 (CDT)
+Received: (qmail 30588 invoked by uid 1000); Tue, 17 Apr 2012 16:53:27 +0000
+Received: from localhost (HELO plover.com) (sendmail-bs@127.0.0.1)
+ by localhost with SMTP; Tue, 17 Apr 2012 16:53:27 +0000
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195770>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195771>
 
-For a couple years now I've had a maintenance script which repacks all
-the repos at @dayjob thusly:
 
-  git config repack.usedeltabaseoffset true
-  git config pack.compression 9
-  git config pack.indexversion 2
-  git config gc.autopacklimit 4
-  git config gc.packrefs true
-  git config gc.reflogexpire never
-  git config gc.reflogexpireunreachable never
-  git gc --auto --aggressive --prune
+I had a master ref, pointing to commit 231e284, which I branched to
+make a "coupon" ref.  My remote, "origin" had a copy of commit 
+231e284.
 
-This has worked fine on repos large and small. However, starting a
-couple days ago git started running out of memory on a relatively
-modest repo[*] while repacking on a Linux box with 12GB memory (+ 12GB
-swap). I am able to gc the repo by either removing --aggressive or
-.keep'ing the oldest pack.
+I modified one file and committed it on "coupon", yielding commit
+03b6489. Then I pushed coupon to origin.  I expected that git-push
+would send about five objects, but instead it reported sending 1,315.
 
-[*] Stats:
+Command output is pasted at http://nopaste.info/a866bb00e0.html .
+You can verify that:
 
-  du -hs objects
-  141M	objects
+1. I pushed only coupon, not any other ref.
+2. origin already had a copy of coupon's predecessor commit, 231e284.
+3. 03b6489 was identical to 231e284 except for changes in one file.
+4. I was not doing anything obviously strange.
 
-  git count-objects -v
-  count: 0
-  size: 0
-  in-pack: 57656
-  packs: 37
-  size-pack: 143811
-  prune-packable: 0
-  garbage: 0
+What happened here?  Why did git-push send 1,315 objects instead of 5?
 
-  git version 1.7.10
-
-I've since found a message from Shawn recommending against using --aggressive:
-
-  http://groups.google.com/group/repo-discuss/msg/d2462eed67813571
-
-> Junio Hamano and I looked at things a few weeks ago; it turns out the
-> --aggressive flag doesn't generally provide a benefit like we thought
-> it would. It would be safe to remove from your GC script, and will
-> speed things up considerably.
-
-A couple questions:
-
-1) If --aggressive does not generally provide a benefit, should it be
-made a no-op?
-
-2) Is it expected that gc --aggressive would run out of memory on this repo?
-
-I've posted the repo in case anyone wants to take a look:
-
-  http://dl.dropbox.com/u/2138120/WebKit-trimmed.git.zip
-
-j.
+Mark Jason Dominus 	  			                 mjd@plover.com
