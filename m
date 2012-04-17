@@ -1,90 +1,79 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: gc --aggressive
-Date: Tue, 17 Apr 2012 15:34:42 -0700
-Message-ID: <7vmx6am1h9.fsf@alter.siamese.dyndns.org>
-References: <CAG+J_DzO=UZ56PjnSCRaTdj8pBSYc5PFofw1QHy42c5pHMK_HQ@mail.gmail.com>
- <20120417220838.GB10797@sigill.intra.peff.net>
- <7vr4vmm29z.fsf@alter.siamese.dyndns.org>
- <20120417221849.GA11936@sigill.intra.peff.net>
+From: Hilco Wijbenga <hilco.wijbenga@gmail.com>
+Subject: Re: organizing multiple repositories with dependencies
+Date: Tue, 17 Apr 2012 15:49:59 -0700
+Message-ID: <CAE1pOi2FQtyahcJUJ+CZRLLYN7vxGaOmUiBJ-_AfC-T-ZEY_Sg@mail.gmail.com>
+References: <1334568432.53977.YahooMailNeo@web65906.mail.ac4.yahoo.com>
+	<m3hawjagw9.fsf@localhost.localdomain>
+	<nng3983phhc.fsf@transit.us.cray.com>
+	<CAE1pOi1KnvRk4yxK8OQHi9h_ueNnh5Ar3tbKFBKTA69=Aje0TQ@mail.gmail.com>
+	<201204171837.q3HIbbcW013784@no.baka.org>
+	<CAE1pOi29dKd2LHW7MJ+TTN4HzFkOPFEyf7Sf2emSsBYm93uYUA@mail.gmail.com>
+	<nng1unmnksx.fsf@transit.us.cray.com>
+	<CAE1pOi38krwXZuiYxtpLwm92N=NvWkP30V_=6cnHw=sdyk6QhA@mail.gmail.com>
+	<CAJsNXTmfRZvpO=ooB8yKUqGqbU4g5A78=dzt2vPPrs1q+J4ZrA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jay Soffian <jaysoffian@gmail.com>, git <git@vger.kernel.org>,
-	Shawn Pearce <spearce@spearce.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Apr 18 00:34:52 2012
+Content-Type: text/plain; charset=UTF-8
+Cc: dag@cray.com, Git Users <git@vger.kernel.org>
+To: PJ Weisberg <pj@irregularexpressions.net>
+X-From: git-owner@vger.kernel.org Wed Apr 18 00:50:11 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SKGz4-00070K-Ad
-	for gcvg-git-2@plane.gmane.org; Wed, 18 Apr 2012 00:34:50 +0200
+	id 1SKHDu-0001lk-8N
+	for gcvg-git-2@plane.gmane.org; Wed, 18 Apr 2012 00:50:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752018Ab2DQWep (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Apr 2012 18:34:45 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:53427 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751152Ab2DQWep (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Apr 2012 18:34:45 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 77C457EEB;
-	Tue, 17 Apr 2012 18:34:44 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=eon9xyLZ41YOivkoY+8UrpLrH5Q=; b=ZGr44z
-	5oz+GjUHBSJznax5NJfMUrPqshYwbR1Lxm34e4Ki68WPETUCtZGnzL3YGvExcFUQ
-	Og8AGz7Kk19Khp/1nlusY2i6BMyuWNOK+/wUDSJ8h59Lp1qoHcCsWuHfVRdQXAb4
-	o6VBsu6qFxVYn1l2nQdy7qK1OQCfDrL81nIUo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=xxFWLp/aMe/dsapVncsOrdchviyKhE8y
-	GrXy/KaQnZHvXH0tq9lZrUdah3p17k/vSCDI14Aoc3CTJZ+KH2GXC59gd1FHJiQO
-	wNclRXLmL/JQcIrHhDRJWNvOtw/MC6xJn1r+9u0pOvau+3phcEjThybfMEVDfKyB
-	EFdEefjaocE=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6ED397EEA;
-	Tue, 17 Apr 2012 18:34:44 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0166A7EE9; Tue, 17 Apr 2012
- 18:34:43 -0400 (EDT)
-In-Reply-To: <20120417221849.GA11936@sigill.intra.peff.net> (Jeff King's
- message of "Tue, 17 Apr 2012 15:18:49 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 877E56C8-88DD-11E1-B5CB-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751657Ab2DQWuB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Apr 2012 18:50:01 -0400
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:56874 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751469Ab2DQWuA (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Apr 2012 18:50:00 -0400
+Received: by ghrr11 with SMTP id r11so3414648ghr.19
+        for <git@vger.kernel.org>; Tue, 17 Apr 2012 15:50:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=dhqbXf6kt6KqjDQMPjfmZ4a4jitSoXfxcmC7MXASias=;
+        b=EnUpwaOBPF+yOYWT/FPE3n1QdiamSZ1LQ39Q6DdjwBU+0R28j/BG+wG3vM0BDv8818
+         bxDa1ciPTxDHrCubOYFn8Kre7UfoMChYokKzpMMX+HX2heQSMUSGV6gK3J3y2WIWc1Rc
+         6QC9GDZWKfycNFK1sLs2jwZQoIQHwAJHAWX6ULaVbDwoo4b9wKj9IXycSlzzz54LO4Bx
+         A7ctO275PyOdpVAoai2TLfTSrb0q9LZWL3J7d0za0hWBmpsWIfjEelEJ502BRqIz5yQb
+         1H2EGNhTD5QbpbaWjwDjdft0k4luDpIxTMpYBzctgq7K0LHy3ipsW1+j/4Wmat87N7fy
+         +QGw==
+Received: by 10.236.136.99 with SMTP id v63mr32565yhi.27.1334702999924; Tue,
+ 17 Apr 2012 15:49:59 -0700 (PDT)
+Received: by 10.236.79.98 with HTTP; Tue, 17 Apr 2012 15:49:59 -0700 (PDT)
+In-Reply-To: <CAJsNXTmfRZvpO=ooB8yKUqGqbU4g5A78=dzt2vPPrs1q+J4ZrA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195823>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195824>
 
-Jeff King <peff@peff.net> writes:
-
-> On Tue, Apr 17, 2012 at 03:17:28PM -0700, Junio C Hamano wrote:
+On 17 April 2012 15:25, PJ Weisberg <pj@irregularexpressions.net> wrote:
+> On Tue, Apr 17, 2012 at 2:43 PM, Hilco Wijbenga
+> <hilco.wijbenga@gmail.com> wrote:
 >
->> > How many cores are there on this box? Have you tried setting
->> > pack.windowMemory to (12 / # of cores) or thereabouts?
->> 
->> Hrm, from the end-user's point of view, it appears that pack.windowMemory
->> ought to mean the total without having to worry about the division of it
->> across threads (which the implementation should be responsible for).
+>> I'm assuming that if you have subproject S in umbrella project U and a
+>> branch "topic" in U then that same branch should exist in S. Any
+>> changes in S's topic should show up in U's topic (probably after some
+>> sort of update command like git fetch/pull). This should be unusual,
+>> though, you should be working in U, not S. If you want to work on
+>> something in S that you don't want to see in U, then you should not be
+>> working in S's topic.
 >
-> Agreed. I had to look in the code to check which it meant. I'm not sure
-> we can change it without regressing existing users, though.
+> This paragraph makes me wonder why you want to use submodules at all.
+> Wouldn't a sparse checkout be a better fit for what you're trying to
+> accomplish?
 
-This is a tangent, but I noticed that the canned settings for "aggressive"
-use an arbitrarily hardcoded value of depth=250 and window=250 (tweakable
-with gc.aggressiveWindow).
+No, I don't think so but I could be wrong. I want to be able to easily
+build and release the individual projects separately (manually and on
+the build server). I believe that with a sparse checkout I still get
+the entire directory tree. This just doesn't work well. I can make it
+work but then I lose other nice features (unrelated to Git).
 
-Even though a shallower depth does cause base candidates with too long a
-chain hanging to be evicted prematurely while it is still in window and
-will lead to smaller memory consumption, I do not think the value of
-"depth" affects the pack-time memory consumption too much.  But the
-runtime performance of the resulting pack may not be great (in the worst
-case you would have to undelta 249 times to get to the object data).  We
-may want to loosen it a bit.
-
-Also it might make sense to make the window size a bit more flexible
-depending on the nature of your history (you would get bigger benefit with
-larger window when your history has fine grained commits; if there are not
-many few-liner commits, larger window may not help you that much).
+Basically, I want things separate for release management but together
+for development.
