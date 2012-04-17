@@ -1,85 +1,70 @@
-From: Clemens Buchacher <drizzd@aon.at>
-Subject: Re: [PATCH v5 2/4] git-cherry-pick: Add keep-redundant-commits option
-Date: Tue, 17 Apr 2012 23:37:23 +0200
-Message-ID: <20120417213723.GA19908@ecki>
-References: <1333136922-12872-1-git-send-email-nhorman@tuxdriver.com>
- <1334342707-3326-1-git-send-email-nhorman@tuxdriver.com>
- <1334342707-3326-3-git-send-email-nhorman@tuxdriver.com>
- <20120415104212.GC6263@ecki>
- <20120416153827.GC13366@hmsreliant.think-freely.org>
- <20120416221018.GB5606@ecki>
- <7v3982pdoj.fsf@alter.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: gc --aggressive
+Date: Tue, 17 Apr 2012 14:58:01 -0700
+Message-ID: <20120417215801.GA10797@sigill.intra.peff.net>
+References: <CAG+J_DzO=UZ56PjnSCRaTdj8pBSYc5PFofw1QHy42c5pHMK_HQ@mail.gmail.com>
+ <CAG+J_DyqvCxwd6+gzixQEk6SxMZF0qsXKcJPaU6imsJdFQ-64g@mail.gmail.com>
+ <vpqbomqqdxo.fsf@bauges.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Neil Horman <nhorman@tuxdriver.com>, git@vger.kernel.org,
-	Jeff King <peff@peff.net>, Phil Hord <phil.hord@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Apr 17 23:57:26 2012
+Content-Type: text/plain; charset=utf-8
+Cc: Jay Soffian <jaysoffian@gmail.com>, git <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Shawn Pearce <spearce@spearce.org>
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Tue Apr 17 23:58:12 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SKGOp-0003Qo-N5
-	for gcvg-git-2@plane.gmane.org; Tue, 17 Apr 2012 23:57:24 +0200
+	id 1SKGPb-0003w3-9m
+	for gcvg-git-2@plane.gmane.org; Tue, 17 Apr 2012 23:58:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751968Ab2DQV5S (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Apr 2012 17:57:18 -0400
-Received: from bsmtp.bon.at ([213.33.87.14]:12194 "EHLO bsmtp.bon.at"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751683Ab2DQV5R (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Apr 2012 17:57:17 -0400
-Received: from [127.0.0.1] (p5B22CC82.dip.t-dialin.net [91.34.204.130])
-	by bsmtp.bon.at (Postfix) with ESMTP id 230A913004F;
-	Tue, 17 Apr 2012 23:57:09 +0200 (CEST)
+	id S1751624Ab2DQV6G (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Apr 2012 17:58:06 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:37378
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750795Ab2DQV6F (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Apr 2012 17:58:05 -0400
+Received: (qmail 8832 invoked by uid 107); 17 Apr 2012 21:58:13 -0000
+Received: from c-67-169-43-61.hsd1.ca.comcast.net (HELO sigill.intra.peff.net) (67.169.43.61)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 17 Apr 2012 17:58:13 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 17 Apr 2012 14:58:01 -0700
 Content-Disposition: inline
-In-Reply-To: <7v3982pdoj.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <vpqbomqqdxo.fsf@bauges.imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195810>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195811>
 
-On Tue, Apr 17, 2012 at 08:42:52AM -0700, Junio C Hamano wrote:
-> Clemens Buchacher <drizzd@aon.at> writes:
+On Tue, Apr 17, 2012 at 10:52:03PM +0200, Matthieu Moy wrote:
+
+> Jay Soffian <jaysoffian@gmail.com> writes:
 > 
-> > On Mon, Apr 16, 2012 at 11:38:27AM -0400, Neil Horman wrote:
-> > ...
-> > Except that the outcome is not the same. With and without your changes,
-> > git cherry-pick <empty-commit> fails. But with your changes, git
-> > cherry-pick <commit-will-become-empty> will succeed and do nothing,
-> > while before it would have failed exactly like git cherry-pick
-> > <empty-commit>.
-> >
-> > So I am not arguing whether failing or skipping is the better default
-> > behavior. But the legacy behavior is consistent between the empty-commit
-> > and commit-will-become-empty cases.
+> > + 3. `git gc --aggressive`; this is often much slower than (2) because git
+> > +    throws out all of the existing deltas and recomputes them from
+> > +    scratch. It uses a higher window parameter meaning it will spend
+> > +    more time computing, and it may end up with a smaller pack. However,
+> > +    unless the repository is known to have initially been poorly packed,
+> > +    this option is not needed and will just cause git to perform
+> > +    extra work.
 > 
-> Is that particular "consistency" a good one, though?  If you had an empty
-> commit in the original range, it is a lot more likely that it was an error
-> that you would want to know about.  You may be the kind of person who
-> value an empty commit in your history, using it as some kind of a mark in
-> the history, and in that case you would want to know that it is being
-> discarded.  On the other hand, if a commit that did something in the
-> original context turns out to be unnecessary in the replayed context, that
-> is not something you would ever want to keep in the replayed context, and
-> erroring out and forcing you to say "yeah, I admit I do not want it" would
-> just be annoying.
+> I like your patch.
 
-Yeah, that makes sense.
+Me too. I guess it is not surprising since I wrote the initial draft. ;)
 
-> So "consistency" between the two would actually be a mistake that we may
-> want to "break", I would think.
+> Maybe you should elaborate on "unless the repository is known to have
+> initially been poorly packed". My understanding is that --aggressive was
+> implemented to be called after an import from another VCS that would
+> have computed very poor deltas, but I'm not sure about the details.
 
-Agreed. But we should document the change in the commit message and
-maybe add a comment, because it is really strange to read
+Yes, that's exactly it. fast-import will generate packs, but they are
+often not optimal. So if you have done a big import, you should
+definitely "git gc --aggressive" as the final step. I don't know how
+something like a remote-helper would work, where it is fast-importing
+little bits at a time. Probably a regular repack would be fine, since it
+will be considering deltas between objects in different packs anyway.
 
- if (!empty && index_empty)
- 	return "it's all good"
-
- if (empty)
- 	return "oh noes!"
-
-without an explanation as to why empty and index_empty are so different.
-Neil, what do you think?
+-Peff
