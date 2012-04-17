@@ -1,69 +1,79 @@
-From: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
-Subject: Re: [PATCH v2] completion: add new git_complete helper
-Date: Wed, 18 Apr 2012 00:14:44 +0200
-Message-ID: <20120417221444.GD10081@goldbirke>
-References: <1334524814-13581-1-git-send-email-felipe.contreras@gmail.com>
-	<20120415213718.GB5813@burratino> <20120416221531.GA2299@goldbirke>
-	<CAMP44s2N9wFg5kx7jw2w6G6BQ1riX-W9cKt8kBPaofugm0OV1g@mail.gmail.com>
-	<7vty0inys6.fsf@alter.siamese.dyndns.org>
-	<CAMP44s1sj27U_s3Y3nLL6pkMrPMVvTo982c85x-hH5szvprK0g@mail.gmail.com>
-	<7v4nsins1j.fsf@alter.siamese.dyndns.org>
-	<CAMP44s0w40ViecQsF8AeQLLxAEShC54TTyvcPVMabpOZ+DYDqQ@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: gc --aggressive
+Date: Tue, 17 Apr 2012 15:17:28 -0700
+Message-ID: <7vr4vmm29z.fsf@alter.siamese.dyndns.org>
+References: <CAG+J_DzO=UZ56PjnSCRaTdj8pBSYc5PFofw1QHy42c5pHMK_HQ@mail.gmail.com>
+ <20120417220838.GB10797@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
-	Thomas Rast <trast@student.ethz.ch>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 18 00:15:00 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Jay Soffian <jaysoffian@gmail.com>, git <git@vger.kernel.org>,
+	Shawn Pearce <spearce@spearce.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Apr 18 00:18:01 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SKGfo-0008VV-PV
-	for gcvg-git-2@plane.gmane.org; Wed, 18 Apr 2012 00:14:57 +0200
+	id 1SKGim-0002QL-6y
+	for gcvg-git-2@plane.gmane.org; Wed, 18 Apr 2012 00:18:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752896Ab2DQWOw convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 17 Apr 2012 18:14:52 -0400
-Received: from moutng.kundenserver.de ([212.227.17.10]:51426 "EHLO
-	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752246Ab2DQWOv (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Apr 2012 18:14:51 -0400
-Received: from localhost6.localdomain6 (p5B1306D0.dip0.t-ipconnect.de [91.19.6.208])
-	by mrelayeu.kundenserver.de (node=mrbap1) with ESMTP (Nemesis)
-	id 0MELbk-1SVF2C3WBc-00FSbe; Wed, 18 Apr 2012 00:14:45 +0200
-Content-Disposition: inline
-In-Reply-To: <CAMP44s0w40ViecQsF8AeQLLxAEShC54TTyvcPVMabpOZ+DYDqQ@mail.gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
-X-Provags-ID: V02:K0:jCSCxyP1NMlIwk8lySTVodlYaR7cQs3tZBFO9IWdyHD
- xwgCN+LFwPuZDeO79fDYU2HVtYBoRLYYAf3JP1AV7FnJrREPLw
- AfYY+BcW2S5gxI9S7f2XF6p4h5wZdyoiywqOYyBp2qOWGQVO4w
- NEiFKiBirVNPIyLcnwxtNT0EizVtOU5rpIDKxyZvjGBL9qgGta
- pyYKgdO/1Zasy/exfaAkYYmByW6tIbHRpYtRzlnE7yTUjZMrTS
- Wz0DZUeZ+ohlOoJPRBWMWRcakssYiMB0J/R7M8GqTmUtycpoq7
- puw6wIwY2J1iJaqMz49WWZw6yIjCz+tsGB0jIm0ByHpL+u/dI3
- 8SSTsADdpFpvmUyEMnwZHAso++mvUQ96XwdUSHdge
+	id S1753729Ab2DQWRc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Apr 2012 18:17:32 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:45789 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753697Ab2DQWRb (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Apr 2012 18:17:31 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0ED227B5E;
+	Tue, 17 Apr 2012 18:17:30 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=qeD3TbCu9Zu6ENJaINMsID+yWpI=; b=WJxp0Z
+	KI9gaKJuD2FKm7jj9T36Nkm+8W4eCREH4DVLXer2tiAzm/yRF/X2qVJvgrOjbETu
+	JV2+lw3xMSxcLxgHo43vnR5MYyD2P7bk6lRUIVmZHnVguBpTNeLPbkPF1W/ZsxXv
+	roLILDhp+SNQq7WM39QumfwifAWvMDqvoCR9k=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=ZdBjCmyXbSCZ8ilQq//evZ4LrbndxvlG
+	WvL2Vo6KfmX0DZAHtbtsT+SnKIBsAxcIxMiOILbuo8ZnSbO0tt3YSlkAjQsgVqNQ
+	z9D0zbaYizCFI/Ope7xUJW7ByZ+fD3dTgxZZ6LGYs9UOHFfAvk43CQ9dus3jZl8p
+	QJH9P2t9eKU=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 05DD97B5C;
+	Tue, 17 Apr 2012 18:17:30 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8E7067B5B; Tue, 17 Apr 2012
+ 18:17:29 -0400 (EDT)
+In-Reply-To: <20120417220838.GB10797@sigill.intra.peff.net> (Jeff King's
+ message of "Tue, 17 Apr 2012 15:08:38 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 1EEDED1E-88DB-11E1-AED5-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195817>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195818>
 
-On Tue, Apr 17, 2012 at 11:53:08PM +0300, Felipe Contreras wrote:
-> Are you saying that even if there are no real clashes, only
-> hypothetical ones, you would still prefer __git_complete?
+Jeff King <peff@peff.net> writes:
 
-Can you ascertain that there are no real clashes?
+> ...
+> I wonder where the memory is going. In theory, the memory consumption
+> for packing comes from keeping all of the objects for a given window in
+> memory (so we are looking for a delta for object X, and we have a window
+> of Y[0]..Y[$window] objects that we will consider). And for a
+> multi-threaded pack, that's per-thread.
+>
+> How many cores are there on this box? Have you tried setting
+> pack.windowMemory to (12 / # of cores) or thereabouts?
 
-> How are people going to distinguish between public and private functi=
-ons?
+Hrm, from the end-user's point of view, it appears that pack.windowMemory
+ought to mean the total without having to worry about the division of it
+across threads (which the implementation should be responsible for).
 
-By reading the documentation, perhaps?  It was not a problem for
-__git_ps1(), so I guess it won't be a problem for __git_complete()
-either.  Assuming that it will be documented eventually, of course.
+> ... But it seems lame that git _can't_
+> do a full repack on such a beefy machine. You don't want to do it all
+> the time, but you might want to do it at least once.
 
-
-Best,
-G=E1bor
+True.
