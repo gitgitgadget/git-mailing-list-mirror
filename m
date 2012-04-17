@@ -1,90 +1,59 @@
-From: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@fzi.de>
-Subject: Re: [PATCH v2] tests: add initial bash completion tests
-Date: Tue, 17 Apr 2012 02:31:00 +0200
-Message-ID: <20120417003100.GB2299@goldbirke>
-References: <1334181423-4391-1-git-send-email-felipe.contreras@gmail.com>
+From: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
+Subject: Re: [PATCH v2 2/2] tests: add tests for the bash prompt functions
+	in the completion script
+Date: Tue, 17 Apr 2012 02:33:31 +0200
+Message-ID: <20120417003331.GC2299@goldbirke>
+References: <20120416160124.GL5813@burratino>
+	<1334614176-2963-1-git-send-email-szeder@ira.uka.de>
+	<1334614176-2963-2-git-send-email-szeder@ira.uka.de>
+	<20120416235026.GA12613@burratino>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>,
-	SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>,
+Cc: git@vger.kernel.org, Felipe Contreras <felipe.contreras@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>,
 	Thomas Rast <trast@student.ethz.ch>, Jeff King <peff@peff.net>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 17 02:31:15 2012
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Apr 17 02:33:52 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SJwKA-0005zW-Mv
-	for gcvg-git-2@plane.gmane.org; Tue, 17 Apr 2012 02:31:15 +0200
+	id 1SJwMe-0007cz-JI
+	for gcvg-git-2@plane.gmane.org; Tue, 17 Apr 2012 02:33:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754918Ab2DQAbJ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 16 Apr 2012 20:31:09 -0400
-Received: from moutng.kundenserver.de ([212.227.17.10]:57980 "EHLO
+	id S1754957Ab2DQAdo convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 16 Apr 2012 20:33:44 -0400
+Received: from moutng.kundenserver.de ([212.227.126.187]:52655 "EHLO
 	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754654Ab2DQAbH (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Apr 2012 20:31:07 -0400
+	with ESMTP id S1754755Ab2DQAdn (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Apr 2012 20:33:43 -0400
 Received: from localhost6.localdomain6 (p5B130635.dip0.t-ipconnect.de [91.19.6.53])
-	by mrelayeu.kundenserver.de (node=mreu3) with ESMTP (Nemesis)
-	id 0MSTdP-1SizQl3Qs7-00TYU0; Tue, 17 Apr 2012 02:31:01 +0200
+	by mrelayeu.kundenserver.de (node=mreu1) with ESMTP (Nemesis)
+	id 0MAysS-1SRbsE47D2-00ARsN; Tue, 17 Apr 2012 02:33:31 +0200
 Content-Disposition: inline
-In-Reply-To: <1334181423-4391-1-git-send-email-felipe.contreras@gmail.com>
+In-Reply-To: <20120416235026.GA12613@burratino>
 User-Agent: Mutt/1.5.20 (2009-06-14)
-X-Provags-ID: V02:K0:fpgmZ6YYue3QitDVBAqguhKEtxc6IKy9Sgci2XHXT6o
- 970H0B5FjNIVB+eO2Zzi+O1S6mJ6vZqjwEFPt4F7/CjNC3+G8i
- sm22pVwaVRUlPDQbCqkw79tCX9CFH5VDBLymmkgSz5+qI/XGtS
- PNWZmnxLFoaxPfxCNaZgrtjMMS3COkSiyalrY7SGNpa4hwDyMF
- LJhCNplmnbWto14FnGscQcxqNLGJHjD7rqvF083GInaN1/jBqp
- p2j5FnsVyiKHfHDjNAvKFI0acrVRqNgEiTrhu77b3OyJGVptmK
- //Lnw6qtNioQeVjqM764Gi/zKkspH+F3bgravYMD/C1tjeBq7I
- FGDrF0Ymt5HhDXVlBN08=
+X-Provags-ID: V02:K0:USGIdJg15SBoqHNzTrlmt7u101rJji7LPon3YneYske
+ e4T0cjJa7knKs2XWQ0TitkttrwKKyppw3Gyq7gIfUIeCtCA/0a
+ c0PQfoLBRJPM5NyajT4hW9FMRQB9HiqIkUvmoETzTavogYf+94
+ hyCVtKxTnhZ+tpM0xlUxWfip2QZyV7dTN/gM9G7WJWCzcZDKW9
+ YwRbtF1RA6D3f69bi6mWOskgSPXVxvi+flI0sZmLnExFyNlcVV
+ HopR0w/9npf6G8QR68kRtRGLOryuNREMCt12ZhvYD69ITOr1RF
+ lQrBKC4EdPWKM4UU0X3YDKPv38J9ovNV7+SAyKppm3uf+enilx
+ 74FQue9yTK/rH1DuhDyk=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195727>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195728>
 
-Hi,
+On Mon, Apr 16, 2012 at 06:50:26PM -0500, Jonathan Nieder wrote:
+> SZEDER G=E1bor wrote:
+>=20
+> >  create mode 100644 t/t9903-bash-prompt.sh
+>=20
+> Should be 100755, no?
 
-
-I picked up Stephen Boyd's two-patch series[1] to use parse-options to
-generate options for git commands, and the following test promply
-failed (taken from 5c293a6b (tests: add initial bash completion tests,
-2012-04-12)):
-
-test_expect_success 'double dash "git checkout"' '
-        sed -e "s/Z$//" >expected <<-\EOF &&
-        --quiet Z
-        --ours Z
-        --theirs Z
-        --track Z
-        --no-track Z
-        --merge Z
-        --conflict=3D
-        --orphan Z
-        --patch Z
-        EOF
-        test_completion "git checkout --"
-'
-
-Not surprising, the completion script doesn't know about many 'git
-checkout' long options.  So whenever 'git checkout' learns a new long
-option, this list must be updated.  This won't be more work than the
-update of the completion script, so this is probably OK.
-
-But it got me thinking about what do we actually want to test here?
-Whether the completion script returns the right long options in a
-specific order upon 'git checkout --<TAB>'?  Or whether _git() works
-properly and invokes the right command-specific completion function?
-Or whether regular options get a trailing space while options
-expecting an argument don't?  Or is this sort of an integration test
-and basically all of the above?
-
-
-[1] - http://thread.gmane.org/gmane.comp.version-control.git/195158/foc=
-us=3D195158
-
-Best,
-G=E1bor
+Yes, of course.  Forgot to re-format-patch after amend.
