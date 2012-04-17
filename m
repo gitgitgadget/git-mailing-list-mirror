@@ -1,74 +1,80 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] t5570: forward git-daemon messages in a different way
-Date: Tue, 17 Apr 2012 08:43:30 -0700
-Message-ID: <7vy5punz31.fsf@alter.siamese.dyndns.org>
-References: <1334393070-7123-1-git-send-email-zbyszek@in.waw.pl>
- <20120414121358.GA26372@ecki> <20120414122127.GA31220@ecki>
- <4F8C3E0F.2040300@in.waw.pl> <7vmx6bwqmj.fsf@alter.siamese.dyndns.org>
- <20120416212215.GA5351@ecki> <4F8C9801.9030607@in.waw.pl>
+Subject: Re: [PATCH v2] completion: add new git_complete helper
+Date: Tue, 17 Apr 2012 08:50:01 -0700
+Message-ID: <7vty0inys6.fsf@alter.siamese.dyndns.org>
+References: <1334524814-13581-1-git-send-email-felipe.contreras@gmail.com>
+ <20120415213718.GB5813@burratino> <20120416221531.GA2299@goldbirke>
+ <CAMP44s2N9wFg5kx7jw2w6G6BQ1riX-W9cKt8kBPaofugm0OV1g@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Clemens Buchacher <drizzd@aon.at>, git@vger.kernel.org,
-	Jeff King <peff@peff.net>
-To: Zbigniew =?utf-8?Q?J=C4=99drzejewski-Szmek?= <zbyszek@in.waw.pl>
-X-From: git-owner@vger.kernel.org Tue Apr 17 17:43:43 2012
+Cc: SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder@ira.uka.de>,
+	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
+	Thomas Rast <trast@student.ethz.ch>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Apr 17 17:50:21 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SKAZ8-0004Gc-Cu
-	for gcvg-git-2@plane.gmane.org; Tue, 17 Apr 2012 17:43:38 +0200
+	id 1SKAfc-0001S3-2y
+	for gcvg-git-2@plane.gmane.org; Tue, 17 Apr 2012 17:50:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755324Ab2DQPnf convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 17 Apr 2012 11:43:35 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:41838 "EHLO
+	id S932229Ab2DQPuG convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 17 Apr 2012 11:50:06 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:45241 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755194Ab2DQPnd convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 17 Apr 2012 11:43:33 -0400
+	id S932213Ab2DQPuF convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 17 Apr 2012 11:50:05 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D8B5F546A;
-	Tue, 17 Apr 2012 11:43:32 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AB30D5619;
+	Tue, 17 Apr 2012 11:50:04 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=NmWM6OnmYpEq
-	0rM6o+9DWmyuJMo=; b=IlFoxsrZm4AZvX1NPknkDc1Ke8gdj30e2caN4IgjKaB+
-	NiiZFimZilr/qy/MbAnD9CfgE+vnBO+kpeNnKiaMdkMbXPKyu5MXGiZAqItTxy/4
-	qdggqKknGCENJO+lHjtj8IHpxvHuL6O0N/jOY8yGX0lPtX7CFNhklFcn0KVZYcI=
+	:content-type:content-transfer-encoding; s=sasl; bh=Xo7q443GIAcT
+	x5rZvjV5A+pzLEs=; b=tuPUmb+DZSU3wQSN06XGqc54pCANVeTkaAAWTyP8fwJR
+	ysEpcVmmSrJPCFsJ9FifUR3s+BbRkS5ehbw8mw/fDVUCl1QdOeTJfkH3cTlaRduy
+	TSuiIietLQSSSnXtqBSU+Hg3KOChfbeBtrtXrm/j4lNXJqXC3F3HVN0EbHrho1s=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=iAK8tn
-	09XU/V4eQIWfCwkjNlbYI2GDIUq73T9xLF4CgTTk1jVVOos2Uav0RK3u0Zj3qZkN
-	ZjM9LYsOtwodrm4G7/GsCA4w1OCX04/LtZPZvPGrbWulw4IMfXFhN8mai+JmlWfN
-	0wuIy+sf6NQB5HpSZmebeC35PaOBpaOy2/R+Y=
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=PrEDTh
+	k1a9hU4hrWHlF/D7mmMZtekj3qvvzIHo0sPsz8bci6+hCcOlw9mxLoAaAFnzOmv5
+	2SwUCBSs5i3vMFTGWgzFwzj+Ip/taM69dYofisN1VBAHqseis4zfFLlSOAaU8OeM
+	COW+whwrA2Cs7FGGw1sbGzuXV6MRvob5epg3k=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CFA915469;
-	Tue, 17 Apr 2012 11:43:32 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8D5F35617;
+	Tue, 17 Apr 2012 11:50:04 -0400 (EDT)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5EFFE5468; Tue, 17 Apr 2012
- 11:43:32 -0400 (EDT)
-In-Reply-To: <4F8C9801.9030607@in.waw.pl> ("Zbigniew =?utf-8?Q?J=C4=99drze?=
- =?utf-8?Q?jewski-Szmek=22's?= message of "Tue, 17 Apr 2012 00:06:57 +0200")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0F8845614; Tue, 17 Apr 2012
+ 11:50:03 -0400 (EDT)
+In-Reply-To: <CAMP44s2N9wFg5kx7jw2w6G6BQ1riX-W9cKt8kBPaofugm0OV1g@mail.gmail.com> (Felipe
+ Contreras's message of "Tue, 17 Apr 2012 01:33:25 +0300")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 161042DC-88A4-11E1-BCA3-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: FEF47CAC-88A4-11E1-BA01-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195766>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195767>
 
-Zbigniew J=C4=99drzejewski-Szmek <zbyszek@in.waw.pl> writes:
+=46elipe Contreras <felipe.contreras@gmail.com> writes:
 
->>> Sorry, I think one of the "both" you mean is 7122c9e (git-daemon wr=
-apper
->>> to wait until daemon is ready, 2012-04-15), but which one is "the o=
-ther
->>> one" (which I should discard)?
+> 2012/4/17 SZEDER G=C3=A1bor <szeder@ira.uka.de>:
+>> On Sun, Apr 15, 2012 at 04:37:18PM -0500, Jonathan Nieder wrote:
+>>> Felipe Contreras wrote:
+>
+>>> A name like __git_complete should work, presumably.
 >>
->> I believe he is referring to 1bcb0ab4 (t5570: use explicit push
->> refspec), which is also necessary to run the tests on pu.
-> Exactly.
+>> And foo_wrap() should also fit into those namespaces.
+>
+> Yeah, I don't have a problem with that, just forgot about it.
+>
+> But git_complete I think is different.
 
-Thanks both for clarifications..
+Is git_complete something the user types interactively, or is it meant =
+to
+be used in their .bashrc to help them complete arguments to their custo=
+m
+scripts that take arguments similar to Git Porcelains?
