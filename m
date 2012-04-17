@@ -1,76 +1,86 @@
-From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-Subject: Test results for v1.7.10 on cygwin
-Date: Mon, 16 Apr 2012 20:08:28 +0100
-Message-ID: <4F8C6E2C.5000101@ramsay1.demon.co.uk>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] git-merge: Reduce heads before trying to merge them
+Date: Tue, 17 Apr 2012 11:52:37 -0700
+Message-ID: <7vzkaambre.fsf@alter.siamese.dyndns.org>
+References: <CA+55aFzGwPYNn2baFhEr4msBTV7__nkTSUqAZ7=PRVoYrchV5w@mail.gmail.com>
+ <1334687118-5386-1-git-send-email-michal.kiedrowicz@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: GIT Mailing-list <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Apr 17 20:52:02 2012
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Linus Torvalds <torvalds@linux-foundation.org>, git@vger.kernel.org
+To: =?utf-8?Q?Micha=C5=82?= Kiedrowicz <michal.kiedrowicz@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Apr 17 20:52:56 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SKDVR-0006Fa-55
-	for gcvg-git-2@plane.gmane.org; Tue, 17 Apr 2012 20:52:01 +0200
+	id 1SKDWG-0006xi-38
+	for gcvg-git-2@plane.gmane.org; Tue, 17 Apr 2012 20:52:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753176Ab2DQSvo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Apr 2012 14:51:44 -0400
-Received: from anchor-post-1.mail.demon.net ([195.173.77.132]:37829 "EHLO
-	anchor-post-1.mail.demon.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750763Ab2DQSvV (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 17 Apr 2012 14:51:21 -0400
-Received: from ramsay1.demon.co.uk ([193.237.126.196])
-	by anchor-post-1.mail.demon.net with esmtp (Exim 4.69)
-	id 1SKDUl-0007W4-hK; Tue, 17 Apr 2012 18:51:20 +0000
-User-Agent: Thunderbird 1.5.0.2 (Windows/20060308)
+	id S1753293Ab2DQSwl convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 17 Apr 2012 14:52:41 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:55104 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753272Ab2DQSwk convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 17 Apr 2012 14:52:40 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AF83764AC;
+	Tue, 17 Apr 2012 14:52:39 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=wHhIiiMcz5G3
+	MlT07TZDAsnjPi4=; b=dnkMdhqCMAcSsvpVI1esPOHMdQ4CVkP2Hi6ybAh4pE3q
+	1GK4nt+9w38eW9FxeXc2tZXG/PLnqUyeK0W0wQo16JN0fd2T/1vJ1mmrGM+itVyD
+	rts+jymrHNKD6yQdNoi4FAs3wpCQCR13AnXsYhnDLykf5lBATVMW6JQoUHkPvOc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=OdqA7N
+	x73GCqfYU33B7hgaxFj+eVNf/E+Ttwqhv8I9ry81dFr0a/GL+Iqpipmm91160NVW
+	/HzPKda0d3w2ijiOXtYoT2hOQuqwBmqoUcV0uqSwUpo1a3kF8iadqX/XRyyI+DbO
+	Xm8QXqDjczn9u1wEDYT47WeMF3fw26pa7GpoI=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A7BCE64AB;
+	Tue, 17 Apr 2012 14:52:39 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3E71764AA; Tue, 17 Apr 2012
+ 14:52:39 -0400 (EDT)
+In-Reply-To: <1334687118-5386-1-git-send-email-michal.kiedrowicz@gmail.com>
+ (=?utf-8?Q?=22Micha=C5=82?= Kiedrowicz"'s message of "Tue, 17 Apr 2012
+ 20:25:18 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 8152A1EC-88BE-11E1-8314-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195793>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195794>
 
-Hi Junio,
+Micha=C5=82 Kiedrowicz <michal.kiedrowicz@gmail.com> writes:
 
-I had intended to run the complete test suite on cygwin before v1.7.10 was
-released, but just didn't find the time. (I don't run all the tests very
-often because it simply takes too long!)
+> diff --git a/builtin/merge.c b/builtin/merge.c
+> index 08e01e8..2d5930f 100644
+> --- a/builtin/merge.c
+> +++ b/builtin/merge.c
+> @@ -1346,6 +1346,9 @@ int cmd_merge(int argc, const char **argv, cons=
+t char *prefix)
+>  			allow_trivial =3D 0;
+>  	}
+> =20
+> +	if (remoteheads->next)
+> +		remoteheads =3D reduce_heads(remoteheads);
+> +
 
-Having found a spare evening, the results look like this:
+If your current HEAD is an ancestor of one of the commit on that list, =
+the
+above does not omit it from the parent list of the resulting merge comm=
+it,
+but if you performed the same merge while on one of the commit being
+merged, your current HEAD will be excluded with reduce_heads(), which
+would mean that you will end up recording a different history even thou=
+gh
+a merge is supposed to be symmetrical.
 
-    $ time $(GIT_SKIP_TESTS='t0061.3 t0070.3 t4130 t7400 t7406 t7407 t9010
-    t9300' make test >test-out 2>&1)
-
-    real    149m46.437s
-    user    104m16.540s
-    sys     50m52.053s
-    $ 
-
-Note that t9010 and t9300 have been added to the skipped test list since I last
-ran the full test on v1.7.8-rc2. These tests have passed before, but on this
-occasion they caused a hang (process deadlock). However, when running them from
-the command line they (mostly) complete successfully. I guess I'm not too
-surprised, given the unusual process plumbing used with svn-fe/fast-import.
-
-[Note the time! :( This is 10m slower than v1.7.8-rc2. v1.6.0 was 47m. On Linux
-the time is about 13m and that includes all the svn and cvs tests (which the
-above does not)!]
-
-The test failures in t7400, t7406 and t7407 are due to the use of $path in the
-i18n functions used in git-submodule.sh. I sent an RFC patch to fix this during
-the v1.7.8 rc period. I didn't get any comments at the time. I will be sending
-an updated version soon, without the RFC, since it also fixes t7400 on MinGW
-for me.
-
-I have been including t4130 in the skipped test list for a couple of years.
-The test fails intermittently, due to a 'racy-git' issue. I haven't found time
-to fix this up, but it's not a big problem in practice.
-
-[I don't remember what the remaining skipped tests are about, but again I have
-been skipping them for ages! Hmm, I remember that one of them should have the
-SANITY prerequisite applied because it fails on Linux if you run it as root.]
-
-ATB,
-Ramsay Jones
+In other words, isn't any solution that calls reduce_heads() only on
+remoteheads fundamentally wrong and merely papering over the problem?
