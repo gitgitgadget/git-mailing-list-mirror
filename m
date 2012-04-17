@@ -1,86 +1,100 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [PATCH] git-merge: Reduce heads before trying to merge them
-Date: Tue, 17 Apr 2012 13:09:09 -0700
-Message-ID: <CA+55aFzLFA535CtjLJe1p62H=nunQ=vrL_mPYsYJB0e8U7mpdg@mail.gmail.com>
-References: <CA+55aFzGwPYNn2baFhEr4msBTV7__nkTSUqAZ7=PRVoYrchV5w@mail.gmail.com>
- <1334687118-5386-1-git-send-email-michal.kiedrowicz@gmail.com> <7vzkaambre.fsf@alter.siamese.dyndns.org>
+From: Andrew Sayers <andrew-git@pileofstuff.org>
+Subject: Re: push.default: current vs upstream
+Date: Tue, 17 Apr 2012 21:13:58 +0100
+Message-ID: <4F8DCF06.5010505@pileofstuff.org>
+References: <7vty15ltuo.fsf@alter.siamese.dyndns.org> <vpqty12h995.fsf@bauges.imag.fr> <20120405131301.GB10293@sigill.intra.peff.net> <vpqwr5uceis.fsf@bauges.imag.fr> <20120406071520.GD25301@sigill.intra.peff.net> <vpqr4w12tjj.fsf@bauges.imag.fr> <20120406080004.GA27940@sigill.intra.peff.net> <4F7FF19B.1060407@alum.mit.edu> <20120407075150.GA18168@sigill.intra.peff.net> <4F7FFD7A.80104@pileofstuff.org> <20120412071150.GB31122@sigill.intra.peff.net> <4F874639.5090207@pileofstuff.org> <7vlim04ou1.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?ISO-8859-2?Q?Micha=B3_Kiedrowicz?= <michal.kiedrowicz@gmail.com>,
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Jeff King <peff@peff.net>, Michael Haggerty <mhagger@alum.mit.edu>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
 	git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Apr 17 22:10:23 2012
+X-From: git-owner@vger.kernel.org Tue Apr 17 22:14:12 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SKEjG-00041b-2p
-	for gcvg-git-2@plane.gmane.org; Tue, 17 Apr 2012 22:10:22 +0200
+	id 1SKEmw-00077T-9Q
+	for gcvg-git-2@plane.gmane.org; Tue, 17 Apr 2012 22:14:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752520Ab2DQUJ6 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 17 Apr 2012 16:09:58 -0400
-Received: from mail-wi0-f178.google.com ([209.85.212.178]:49741 "EHLO
-	mail-wi0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750763Ab2DQUJb convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 17 Apr 2012 16:09:31 -0400
-Received: by wibhq7 with SMTP id hq7so1015932wib.1
-        for <git@vger.kernel.org>; Tue, 17 Apr 2012 13:09:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:from:date
-         :x-google-sender-auth:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=lZM7Xafd+p7R/Fcha7nkCt/+LOWLSUCLC/W5LMg/aVE=;
-        b=sozGkY43rvK3y1qhnSGRYU5kGpdEKrBwOtru03IGBNKW4MTyGhYOVAxPwKDBdQsckz
-         WIFFFijmiSLbMIi/ZZU1Izap58PDtCP5k4UdYC4zJIxa/Sc0BHAkrcpFRhSG8RrpAHfC
-         oH/mkE/9Xm2QKZQw23VE7OwfeBxcYtPNERVtGNvciIsSzfkT6jZE2mK9q7y4WbIIVCkX
-         mKlPKX3EdNPwGuT64mCmSCYx7go31AcalcfewFjU83piTV5nobP7l5yZva5AQ2iHDng2
-         U8g720r61kqblrOf+eSq3O80fBDGQpvh6ag4EP2bBg73AGFjLe4uq3LozzqPOscDF97d
-         HBzQ==
-Received: by 10.180.102.100 with SMTP id fn4mr31648338wib.1.1334693369593;
- Tue, 17 Apr 2012 13:09:29 -0700 (PDT)
-Received: by 10.216.221.167 with HTTP; Tue, 17 Apr 2012 13:09:09 -0700 (PDT)
-In-Reply-To: <7vzkaambre.fsf@alter.siamese.dyndns.org>
-X-Google-Sender-Auth: 9nmLCannUmLjbPKzSNKoXekaRJE
+	id S1751350Ab2DQUOF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Apr 2012 16:14:05 -0400
+Received: from mtaout02-winn.ispmail.ntl.com ([81.103.221.48]:51825 "EHLO
+	mtaout02-winn.ispmail.ntl.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750763Ab2DQUOE (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 17 Apr 2012 16:14:04 -0400
+Received: from aamtaout02-winn.ispmail.ntl.com ([81.103.221.35])
+          by mtaout02-winn.ispmail.ntl.com
+          (InterMail vM.7.08.04.00 201-2186-134-20080326) with ESMTP
+          id <20120417201400.QEI28064.mtaout02-winn.ispmail.ntl.com@aamtaout02-winn.ispmail.ntl.com>;
+          Tue, 17 Apr 2012 21:14:00 +0100
+Received: from [192.168.0.3] (really [94.170.150.126])
+          by aamtaout02-winn.ispmail.ntl.com
+          (InterMail vG.3.00.04.00 201-2196-133-20080908) with ESMTP
+          id <20120417201400.XEAP3795.aamtaout02-winn.ispmail.ntl.com@[192.168.0.3]>;
+          Tue, 17 Apr 2012 21:14:00 +0100
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.28) Gecko/20120313 Thunderbird/3.1.20
+In-Reply-To: <7vlim04ou1.fsf@alter.siamese.dyndns.org>
+X-Cloudmark-Analysis: v=1.1 cv=JvdXmxIgLJv2/GthKqHpGJEEHukvLcvELVXUanXFreg= c=1 sm=0 a=yXtjXN6ItgYA:10 a=-PimNzO8mcAA:10 a=u4BGzq-dJbcA:10 a=8nJEP1OIZ-IA:10 a=qOz2pZ_4AAAA:8 a=f2el1u5E4MLN0RL0XxgA:9 a=wPNLvfGTeEIA:10 a=7qzHkXPk5l4A:10 a=HpAAvcLHHh0Zw7uRqdWCyQ==:117
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195797>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195798>
 
-2012/4/17 Junio C Hamano <gitster@pobox.com>:
->
-> If your current HEAD is an ancestor of one of the commit on that list=
-, the
-> above does not omit it from the parent list of the resulting merge co=
-mmit,
-> but if you performed the same merge while on one of the commit being
-> merged, your current HEAD will be excluded with reduce_heads(), which
-> would mean that you will end up recording a different history even th=
-ough
-> a merge is supposed to be symmetrical.
->
-> In other words, isn't any solution that calls reduce_heads() only on
-> remoteheads fundamentally wrong and merely papering over the problem?
+On 12/04/12 22:33, Junio C Hamano wrote:
+> Andrew Sayers <andrew-git@pileofstuff.org> writes:
+> 
+>> So if the problem is that the documentation cues the reader to think
+>> about upstreams but not to think about downstreams, the solution is to
+>> find excuses to talk more about downstreams.  As far as I'm concerned
+>> @{upstream} means "the place that commits come from when I `git pull`",
+>> so it makes perfect sense to me that @{downstream} would mean "the place
+>> commits go to when I `git push`".
+> 
+> In a separate message I completely misunderstood what you meant by
+> "downstream".
+> 
+> If you had something like this:
+> 
+> 	[remote "origin"]
+>         	url = ...
+>         [remote "destination"]
+>                 pushURL = ...
+> 
+> 	[branch "topic"]
+>         	remote = origin
+>                 merge = refs/heads/master
+> 		pushRemote = destination # new
+>                 push = refs/heads/topic # new
+> 
+> you could express that asymmetric layout in a natural way.  When you say
+> "git push" while on your "topic" branch, it will go to "destination"
+> remote to update their "topic" branch.
+> 
+> Interesting...
+> 
 
-I think Micha=C5=82's patch, together with my original one (but not the
-fixups later) is actually the right thing to do.
+If "upstream" and "downstream" are ambiguous, it makes sense to avoid
+the words altogether - you can't reduce ambiguity by adding more
+definitions.  I'm replying to the above instead of your most recent
+message because it might provide a fresh angle on the problem.
 
-Micha=C5=82's patch fixes the "log shown multiple times" problem. It al=
-so
-turns a certain class of octopus merges into trivial common merges,
-which is good.
+We already have language to describe "upstream" unambiguously, and an
+intuitive way of describing the opposite of it, so specifying revisions
+with the same language would help tie some things together and make git
+easier to learn.  The only problem  is that we currently use two words
+instead of one.
 
-So I'd suggest:
- - undo the two top commits from lt/octopus-simplify
- - apply Micha=C5=82's patch on top of the remaining one commit
+We could talk about @{remote}/@{pushRemote}, which I'd expect to be
+intuitive to a beginner despite the inaccuracy - we already talk about
+"remote repositories" and "remote tracking branches", so @{remote} would
+be easy to guess.  Alternatively, @{merge}/@{push} would a bit more
+accurate but a bit less obvious to people that don't really understand
+merging yet (or are figuring out merge vs. rebase).  Or we could make up
+some similar-but-distinct terms like @{mergeSource} and @{pushSink} that
+reinforce the language above without overlapping.
 
-It's not perfect, and I really think we could simplify things a bit
-more here, but I think the two commits together fix the problems in
-practice.
-
-Hmm?
-
-                     Linus
+	- Andrew
