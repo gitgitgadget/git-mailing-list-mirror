@@ -1,64 +1,85 @@
-From: Christopher Tiwald <christiwald@gmail.com>
-Subject: Re: [RFC/PATCH 1/2] update-index: add --clear option
-Date: Tue, 17 Apr 2012 14:36:49 -0400
-Message-ID: <CAHiigudcsEqaZwv7MpRVEw-5V60VJ7zemuh4u902vvhrAsRJGQ@mail.gmail.com>
-References: <20120416152737.GB14724@sigill.intra.peff.net>
-	<20120416160232.GA1350@sigill.intra.peff.net>
-	<20120416214855.GM12860@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Apr 17 20:37:00 2012
+From: Seth Robertson <in-gitvger@baka.org>
+Subject: Re: organizing multiple repositories with dependencies
+Date: Tue, 17 Apr 2012 14:37:37 -0400
+Message-ID: <201204171837.q3HIbbcW013784@no.baka.org>
+References: <1334568432.53977.YahooMailNeo@web65906.mail.ac4.yahoo.com> <m3hawjagw9.fsf@localhost.localdomain> <nng3983phhc.fsf@transit.us.cray.com>
+        <CAE1pOi1KnvRk4yxK8OQHi9h_ueNnh5Ar3tbKFBKTA69=Aje0TQ@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+Cc: Git Users <git@vger.kernel.org>, Jakub Narebski <jnareb@gmail.com>,
+	Namit Bhalla <namitbhalla@yahoo.com>, Dave <dag@cray.com>
+To: Hilco Wijbenga <hilco.wijbenga@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Apr 17 20:37:51 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SKDGp-0001wg-UF
-	for gcvg-git-2@plane.gmane.org; Tue, 17 Apr 2012 20:36:56 +0200
+	id 1SKDHe-0002fW-7j
+	for gcvg-git-2@plane.gmane.org; Tue, 17 Apr 2012 20:37:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752009Ab2DQSgv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Apr 2012 14:36:51 -0400
-Received: from mail-bk0-f46.google.com ([209.85.214.46]:64475 "EHLO
-	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751949Ab2DQSgu (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Apr 2012 14:36:50 -0400
-Received: by bkcik5 with SMTP id ik5so4832316bkc.19
-        for <git@vger.kernel.org>; Tue, 17 Apr 2012 11:36:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=pSfQUjLxPmRW8oyEhnjFanzaa/iHozJK61yIi397MEY=;
-        b=wMtLoGCFIZs4uOHGExEGkNGqHREOkwCnd1ALUSFA/8OJHhm5wL8ocCulaAaU1YH4uk
-         GKI1BWIQ/PZ6E5ot1NctbBKWzuLNM7BRT6FtljacE1QXBHX96RgXgIxVCQLqL3A4OKq4
-         YIZXyLsAfe3/r/mUJwGMuveUk/ZMVOHruk0LIrEERdjK4p4/ZDKNMPTjmP4GuIijSR7e
-         1TTETa7ZrSp4OHiFwngRWRma7IE3gtt/kCESQ4kKtgkyLGGrV5Gk+xfqtKtKkfWw/95r
-         XvbVozV6wxG+WCQAv9YPejGIq1ePYEt33ZhnMbwviMbfsF2rj2jP/oSROzl03nG4UZR4
-         ueYg==
-Received: by 10.205.135.132 with SMTP id ig4mr5207962bkc.20.1334687809490;
- Tue, 17 Apr 2012 11:36:49 -0700 (PDT)
-Received: by 10.205.35.81 with HTTP; Tue, 17 Apr 2012 11:36:49 -0700 (PDT)
-In-Reply-To: <20120416214855.GM12860@gmail.com>
+	id S1752809Ab2DQSho (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Apr 2012 14:37:44 -0400
+Received: from tsutomu.baka.org ([66.114.72.182]:43277 "EHLO tsutomu.baka.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752808Ab2DQShn (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Apr 2012 14:37:43 -0400
+Received: from no.baka.org (no.baka.org [IPv6:2001:470:88bb::2])
+	by tsutomu.baka.org (8.14.4/8.14.4) with ESMTP id q3HIbcM2005430
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Tue, 17 Apr 2012 14:37:38 -0400
+Received: from no.baka.org (localhost [127.0.0.1])
+	by no.baka.org (8.14.4/8.14.0) with ESMTP id q3HIbbcW013784;
+	Tue, 17 Apr 2012 14:37:37 -0400
+In-reply-to: <CAE1pOi1KnvRk4yxK8OQHi9h_ueNnh5Ar3tbKFBKTA69=Aje0TQ@mail.gmail.com>
+Comments: In reply to a message from "Hilco Wijbenga <hilco.wijbenga@gmail.com>" dated "Tue, 17 Apr 2012 10:29:56 -0700."
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195788>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195789>
 
-On Mon, Apr 16, 2012 at 5:48 PM, Christopher Tiwald
-<christiwald@gmail.com> wrote:
-> At the very least I can give this patch series a go this evening. I'm in
-> the process of combining 40 highly-intertwined, nested repositories into
-> one, and should be able to test it under the conditions outlined in the
-> updated example.
 
-This worked great for me, at least in the case of adding trees to
-subdirectories.
-Fwiw, I found the newer, patched example a little easier to parse, but
-I also had
-spent a while figuring out what the original version did.
+In message <CAE1pOi1KnvRk4yxK8OQHi9h_ueNnh5Ar3tbKFBKTA69=Aje0TQ@mail.gmail.com>, Hilco Wijbenga writes:
 
---
-Christopher Tiwald
+    On 16 April 2012 13:08,  <dag@cray.com> wrote:
+    > Jakub Narebski <jnareb@gmail.com> writes:
+    >> Put reusable library in its own repository, and use submodules to link
+    >> it up to project-a and project-b repositories.
+
+    If you really have only one or two libraries then submodules will work
+    just fine but if you have quite a few (we had around 50 when we moved
+    away from submodules) you will find it pretty much unworkable. [...]
+    Branches are per submodule but you want them for all
+    submodules. You might want to look into git-slave if you want to
+    go this route.
+
+    In general, I do not think the blanket statement "one repo per
+    project" is good advice. If projects depend on each other they should
+    be in the same repo. At least with the current support in GIt for
+    including separate projects. Please note that I'm not disagreeing with
+    the notion "one repo per project" itself. It's just not supported well
+    enough to be feasible if you have a fairly large group of projects
+    that depend on each other.
+
+As you mentioned, this is exactly the environment that gitslave was
+designed for.  It provides the flexibility to work on the subprojects
+as if they were standalone independent git repositories (which of
+course they are) or treat the entire superproject as one giant git
+repository (with only a few cracks showing through).  All gitslave
+commands are just git commands (s/^git\s/gits /) so training to use it is
+rather easy.
+
+Unlike with git-submodules there is no strict binding between the
+parent repo's commits and the sub-project's commits except at tag
+boundaries.  This gives you the flexibility of person A saying that A
+is master and B is underneath it while person B says that B is master
+and A is underneath it (or alternatively you can also say that A
+include B plus whatever B includes).  However, I would in general
+recommend that the common library be factored out and be a child of A
+and B.  gitslave makes it trivial to work with federated git
+repositories, if you can handle only having binding between
+repositories at tag boundaries.
+
+
+					-Seth Robertson
