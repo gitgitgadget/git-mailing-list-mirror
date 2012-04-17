@@ -1,155 +1,90 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCHv4 0/3] fetch: Only call a new ref a "branch" if it's
- under refs/heads/.
-Date: Tue, 17 Apr 2012 08:28:34 -0700
-Message-ID: <7v7gxepecd.fsf@alter.siamese.dyndns.org>
-References: <1334591542-25136-1-git-send-email-marcnarc@xiplink.com>
- <1334614130-31826-1-git-send-email-marcnarc@xiplink.com>
- <7vbomqpef1.fsf@alter.siamese.dyndns.org>
+Subject: Re: [PATCH v5 2/4] git-cherry-pick: Add keep-redundant-commits
+ option
+Date: Tue, 17 Apr 2012 08:42:52 -0700
+Message-ID: <7v3982pdoj.fsf@alter.siamese.dyndns.org>
+References: <1333136922-12872-1-git-send-email-nhorman@tuxdriver.com>
+ <1334342707-3326-1-git-send-email-nhorman@tuxdriver.com>
+ <1334342707-3326-3-git-send-email-nhorman@tuxdriver.com>
+ <20120415104212.GC6263@ecki>
+ <20120416153827.GC13366@hmsreliant.think-freely.org>
+ <20120416221018.GB5606@ecki>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: marcnarc@xiplink.com
-X-From: git-owner@vger.kernel.org Tue Apr 17 17:28:47 2012
+Cc: Neil Horman <nhorman@tuxdriver.com>, git@vger.kernel.org,
+	Jeff King <peff@peff.net>, Phil Hord <phil.hord@gmail.com>
+To: Clemens Buchacher <drizzd@aon.at>
+X-From: git-owner@vger.kernel.org Tue Apr 17 17:43:01 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SKAKg-0008TD-77
-	for gcvg-git-2@plane.gmane.org; Tue, 17 Apr 2012 17:28:42 +0200
+	id 1SKAYW-0003m5-HJ
+	for gcvg-git-2@plane.gmane.org; Tue, 17 Apr 2012 17:43:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756220Ab2DQP2h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Apr 2012 11:28:37 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:33764 "EHLO
+	id S1752874Ab2DQPmz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Apr 2012 11:42:55 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:41624 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753996Ab2DQP2g (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Apr 2012 11:28:36 -0400
+	id S1752022Ab2DQPmz (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Apr 2012 11:42:55 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 80B4A5080;
-	Tue, 17 Apr 2012 11:28:36 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 93FCC543B;
+	Tue, 17 Apr 2012 11:42:54 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=MUeDBCRbG5B0N17ZIHuDbHPBtdE=; b=yFR1LX
-	k6LPanq9L2JM96mZ1bUzDfY384yGxbmLVk6zbierr6MRgrYDSk+N0AlHs/h+fdOs
-	Uj6d3JO60AsmICUqIIdrDV+WXCWyoXqVT9Zw40kWKTmiZCEq7xASd8okxx3bR3MU
-	VfIv9Uc4wJLkdXgJjyBrZiWY2sYUbcCN7lfc8=
+	:content-type; s=sasl; bh=GKPxw1mWEaQoLvuUQRtVPW940Og=; b=RK1o+L
+	zbRXo+Kow+tNxAW3YR1r1ML7zWwwBlJnATjF2jzDr1DDBpbPlLUgdrBVj+A8cxX+
+	fo8pI1S4g6HeCKVzsjKvg0bPXzdIFX2g6ZWQzswaQghlKhk/vBP6edUNsLbBU9f9
+	PBQGFfyGABt6duOYYjMzr5AHzgGginwkDo0aU=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=P1r2vB6Yt2Ie1TNKVnwsfsP467RP6G/b
-	+X2D5ocGu3Cy4ZKAsZmjfouVGxUzcA6xPkxbOR+3LR5+H43wviQu99ZX4+G6DgVr
-	5XpBIl5X8+Sa1H5gg757rbBFgbe2tHGSm4qjXYDIqihTbQbH/ysWqZz3/Gj5HG3q
-	cm2cPRGKGvk=
+	:content-type; q=dns; s=sasl; b=hnT/Veia/m5HoFYarKQTcQWJSWsm7rlO
+	Wpigc8bcjQwfOLcsV8IYJQClwxugGLKWOPAEuX8mAFHoTK9xXEqFGpfTmft+Gw9y
+	3ASjyhi48KXTjH6NsdTlsUZ5R2xbUKcEEW2u0Ya8a0iHwPw6bdVpZWCFAGDzLgtH
+	yPFugWyiy8Q=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 77666507F;
-	Tue, 17 Apr 2012 11:28:36 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8BF99543A;
+	Tue, 17 Apr 2012 11:42:54 -0400 (EDT)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E23545075; Tue, 17 Apr 2012
- 11:28:35 -0400 (EDT)
-In-Reply-To: <7vbomqpef1.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Tue, 17 Apr 2012 08:26:58 -0700")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 234835439; Tue, 17 Apr 2012
+ 11:42:54 -0400 (EDT)
+In-Reply-To: <20120416221018.GB5606@ecki> (Clemens Buchacher's message of
+ "Tue, 17 Apr 2012 00:10:18 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: FFBAD968-88A1-11E1-9A40-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: FF44AD22-88A3-11E1-91E5-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195764>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195765>
 
-From: Marc Branchaud <marcnarc@xiplink.com>
-Date: Mon, 16 Apr 2012 18:08:50 -0400
-Subject: [PATCH 2/2] fetch: describe new refs based on where it came from
+Clemens Buchacher <drizzd@aon.at> writes:
 
-update_local_ref() used to say "[new branch]" when we stored a new ref
-outside refs/tags/ hierarchy, but the message is more about what we
-fetched, so use the refname at the origin to make that decision.
+> On Mon, Apr 16, 2012 at 11:38:27AM -0400, Neil Horman wrote:
+> ...
+> Except that the outcome is not the same. With and without your changes,
+> git cherry-pick <empty-commit> fails. But with your changes, git
+> cherry-pick <commit-will-become-empty> will succeed and do nothing,
+> while before it would have failed exactly like git cherry-pick
+> <empty-commit>.
+>
+> So I am not arguing whether failing or skipping is the better default
+> behavior. But the legacy behavior is consistent between the empty-commit
+> and commit-will-become-empty cases.
 
-Also, only call a new ref a "branch" if it's under refs/heads/.
+Is that particular "consistency" a good one, though?  If you had an empty
+commit in the original range, it is a lot more likely that it was an error
+that you would want to know about.  You may be the kind of person who
+value an empty commit in your history, using it as some kind of a mark in
+the history, and in that case you would want to know that it is being
+discarded.  On the other hand, if a commit that did something in the
+original context turns out to be unnecessary in the replayed context, that
+is not something you would ever want to keep in the replayed context, and
+erroring out and forcing you to say "yeah, I admit I do not want it" would
+just be annoying.
 
-Signed-off-by: Marc Branchaud <marcnarc@xiplink.com>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
-
- * And this is a re-roll of yours on top of the updated 1/2; I also
-   fixed the new test here and there.
-
- builtin/fetch.c  |   14 +++++++++++---
- t/t5510-fetch.sh |   30 ++++++++++++++++++++++++++++++
- 2 files changed, 41 insertions(+), 3 deletions(-)
-
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index 06d71e4..0f80cf8 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -294,16 +294,24 @@ static int update_local_ref(struct ref *ref,
- 		const char *msg;
- 		const char *what;
- 		int r;
--		if (!strncmp(ref->name, "refs/tags/", 10)) {
-+		/*
-+		 * Nicely describe the new ref we're fetching.
-+		 * Base this on the remote's ref name, as it's
-+		 * more likely to follow a standard layout.
-+		 */
-+		const char *name = remote_ref ? remote_ref->name : "";
-+		if (!prefixcmp(name, "refs/tags/")) {
- 			msg = "storing tag";
- 			what = _("[new tag]");
--		}
--		else {
-+		} else if (!prefixcmp(name, "refs/heads/")) {
- 			msg = "storing head";
- 			what = _("[new branch]");
- 			if ((recurse_submodules != RECURSE_SUBMODULES_OFF) &&
- 			    (recurse_submodules != RECURSE_SUBMODULES_ON))
- 				check_for_new_submodule_commits(ref->new_sha1);
-+		} else {
-+			msg = "storing ref";
-+			what = _("[new ref]");
- 		}
- 
- 		r = s_update_ref(msg, ref, 0);
-diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
-index 308c02e..d7a19a1 100755
---- a/t/t5510-fetch.sh
-+++ b/t/t5510-fetch.sh
-@@ -162,6 +162,36 @@ test_expect_success 'fetch following tags' '
- 
- '
- 
-+test_expect_success 'fetch uses remote ref names to describe new refs' '
-+	cd "$D" &&
-+	git init descriptive &&
-+	(
-+		cd descriptive &&
-+		git config remote.o.url .. &&
-+		git config remote.o.fetch "refs/heads/*:refs/crazyheads/*" &&
-+		git config --add remote.o.fetch "refs/others/*:refs/heads/*" &&
-+		git fetch o
-+	) &&
-+	git tag -a -m "Descriptive tag" descriptive-tag &&
-+	git branch descriptive-branch &&
-+	git checkout descriptive-branch &&
-+	echo "Nuts" >crazy &&
-+	git add crazy &&
-+	git commit -a -m "descriptive commit" &&
-+	git update-ref refs/others/crazy HEAD &&
-+	(
-+		cd descriptive &&
-+		git fetch o 2>actual &&
-+		grep " -> refs/crazyheads/descriptive-branch$" actual |
-+		test_i18ngrep "new branch" &&
-+		grep " -> descriptive-tag$" actual |
-+		test_i18ngrep "new tag" &&
-+		grep " -> crazy$" actual |
-+		test_i18ngrep "new ref"
-+	) &&
-+	git checkout master
-+'
-+
- test_expect_success 'fetch must not resolve short tag name' '
- 
- 	cd "$D" &&
--- 
-1.7.10.332.g1863c
+So "consistency" between the two would actually be a mistake that we may
+want to "break", I would think.
