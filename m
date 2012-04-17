@@ -1,142 +1,132 @@
 From: Neil Horman <nhorman@tuxdriver.com>
-Subject: [PATCH v6 0/4] Enhance git-rebases flexibiilty in handling empty commits
-Date: Tue, 17 Apr 2012 14:20:05 -0400
-Message-ID: <1334686809-17634-1-git-send-email-nhorman@tuxdriver.com>
+Subject: [PATCH v6 1/4] git-cherry-pick: add allow-empty option
+Date: Tue, 17 Apr 2012 14:20:06 -0400
+Message-ID: <1334686809-17634-2-git-send-email-nhorman@tuxdriver.com>
 References: <1333136922-12872-1-git-send-email-nhorman@tuxdriver.com>
+ <1334686809-17634-1-git-send-email-nhorman@tuxdriver.com>
 Cc: Clemens Buchacher <drizzd@aon.at>, Phil Hord <phil.hord@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>,
 	Neil Horman <nhorman@tuxdriver.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 17 20:20:45 2012
+X-From: git-owner@vger.kernel.org Tue Apr 17 20:20:46 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SKD1B-0005M9-6v
+	id 1SKD1A-0005M9-Ll
 	for gcvg-git-2@plane.gmane.org; Tue, 17 Apr 2012 20:20:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750891Ab2DQSUj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Apr 2012 14:20:39 -0400
-Received: from charlotte.tuxdriver.com ([70.61.120.58]:53727 "EHLO
+	id S1750956Ab2DQSUk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Apr 2012 14:20:40 -0400
+Received: from charlotte.tuxdriver.com ([70.61.120.58]:53737 "EHLO
 	smtp.tuxdriver.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750725Ab2DQSUi (ORCPT <rfc822;git@vger.kernel.org>);
+	with ESMTP id S1750848Ab2DQSUi (ORCPT <rfc822;git@vger.kernel.org>);
 	Tue, 17 Apr 2012 14:20:38 -0400
 Received: from hmsreliant.think-freely.org ([2001:470:8:a08:7aac:c0ff:fec2:933b] helo=localhost)
 	by smtp.tuxdriver.com with esmtpsa (TLSv1:AES128-SHA:128)
 	(Exim 4.63)
 	(envelope-from <nhorman@tuxdriver.com>)
-	id 1SKD0q-00007P-0A; Tue, 17 Apr 2012 14:20:29 -0400
+	id 1SKD0w-00007T-UH; Tue, 17 Apr 2012 14:20:36 -0400
 X-Mailer: git-send-email 1.7.7.6
-In-Reply-To: <1333136922-12872-1-git-send-email-nhorman@tuxdriver.com>
+In-Reply-To: <1334686809-17634-1-git-send-email-nhorman@tuxdriver.com>
 X-Spam-Score: -2.9 (--)
 X-Spam-Status: No
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195782>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195783>
 
-git's ability to handle empty commits is somewhat lacking, especially when
-preforming a rebase.  Nominally empty commits are undesireable entries, the 
-result of commits that are made empty by prior commits covering the same changs.
-But occasionally, empty commits are useful to developers (e.g. inserting notes 
-into the development history without changing any code along the way).  In these
-cases its desireable to easily preserve empty commits during operations like 
-rebases.
-
-This patch series enhances git to do just that.  It adds two options to the 
-git-cherry-pick command, --allow-empty, which allows git cherry-pick to preserve
-an empty commit, even if the fast forward logic isn't applicable during the 
-operation, and --keep-redundant-commits, which allows the user to also keep
-commits that were made empty via conflict resolution.  It also enhances
-git-rebase to add a --keep-empty option which enables rebases to preserve empty
-commits. 
-
-I've tested these operations out myself here and they work well for me
+git cherry-pick fails when picking a non-ff commit that is empty.  The advice
+given with the failure is that a git-commit --allow-empty should be issued to
+explicitly add the empty commit during the cherry pick.  This option allows a
+user to specify before hand that they want to keep the empty commit.  This
+eliminates the need to issue both a cherry pick and a commit operation.
 
 Signed-off-by: Neil Horman <nhorman@tuxdriver.com>
-
 ---
-Change notes:
+ Documentation/git-cherry-pick.txt |    9 +++++++++
+ builtin/revert.c                  |    2 ++
+ sequencer.c                       |    7 +++++--
+ sequencer.h                       |    1 +
+ 4 files changed, 17 insertions(+), 2 deletions(-)
 
-Based on version 1 feedback from this list, the following changes have been made
-
-V2)
-	* Changed --keep-empty to --allow-empty in the git cherry-pick command
-
-	* Converted run_git_commit to use argv_array
-
-	* Updated cherry-pick --allow-empty description in man page
-	
-	* added ignore-if-made-empty option to git-cherry-pick
-
-	* Added test to test suite to validate the new cherry-pick options
-
-	* Updated git-rebase man page to be less verbose and more accurate in the
-	description of the keep-empty option
-
-	* squashed the addition of the keep-empty flag in git-rebase down to one
-	commit from 3
-
-	* fixed up coding style in git-rebase script
-
-	* Optimized detection of empty commits
-
-	* Only augmented git-rebase-editor message if empty commits are
-	possible
-	
-V3)
-	* reversed the --ignore-if-empty-logic to by default only keep initially
-	empty commits
-
-	* replaced --ignore-if-empty with --keep-redundant-commits, to allow
-	empty commits that are made empty via conflict resolution, in addition
-	to commits that were created as empty
-
-	* reworked is_original_commit_empty to be more efficient and portable
-
-	* Misc sylistic and spelling cleanups
-
-V4)
-	* Reverted the cherry-pick advice changes in V3 based on in-thread
-	discussion
-
-	* Rewrote my changes to is_original_commit_empty and run_git_commit to
-	not have to fork, making them more efficient.
-
-v5)
-	* Additional help text clean up
-	* Additional error checking added to run_git_commit code
-	* Whitespace cleanup
-	* Removed needed cache_tree freeing
-	* Test case cleanup
-	* Fixed regression in t3404 and t3416 - this turned out to be 
-        a problem with the note that git rebase -i adds at the bottom
-	of the rebase text.  It was inadvertently indented and caused the
-	test fake editor to misread the commit template.  The indentation 
-	has been corrected, and these two tests, as well as all the other
-	expected tests pass now
-
-v6)
-	* synced keeep-redundant-commits option and variable name
-	* fixed up some comment terminology
-	* minor newline cleanup
-	* Removed some unneeded braces from test code
-	* minor syntatic cleanup in rebase scripts
-
-	* Refactored empty index checking to make run_git_commit more readable
-	I was also going to change the logic so that it operated more like git
-	cherry-pick did before the patchset, but Junio's comments made me think
-	the new logic was preferable.
---
-To unsubscribe from this list: send the line "unsubscribe git" in
-the body of a message to majordomo@vger.kernel.org
-More majordomo info at  http://vger.kernel.org/majordomo-info.html
-
-
---
-To unsubscribe from this list: send the line "unsubscribe git" in
-the body of a message to majordomo@vger.kernel.org
-More majordomo info at  http://vger.kernel.org/majordomo-info.html
-
+diff --git a/Documentation/git-cherry-pick.txt b/Documentation/git-cherry-pick.txt
+index fed5097..730237a 100644
+--- a/Documentation/git-cherry-pick.txt
++++ b/Documentation/git-cherry-pick.txt
+@@ -103,6 +103,15 @@ effect to your index in a row.
+ 	cherry-pick'ed commit, then a fast forward to this commit will
+ 	be performed.
+ 
++--allow-empty::
++	By default, cherry-picking an empty commit will fail,
++	indicating that an explicit invocation of `git commit
++	--allow-empty` is required. This option overrides that
++	behavior, allowing empty commits to be preserved automatically
++	in a cherry-pick. Note that when "--ff" is in effect, empty
++	commits that meet the "fast-forward" requirement will be kept
++	even without this option.
++
+ --strategy=<strategy>::
+ 	Use the given merge strategy.  Should only be used once.
+ 	See the MERGE STRATEGIES section in linkgit:git-merge[1]
+diff --git a/builtin/revert.c b/builtin/revert.c
+index e6840f2..06b00e6 100644
+--- a/builtin/revert.c
++++ b/builtin/revert.c
+@@ -114,12 +114,14 @@ static void parse_args(int argc, const char **argv, struct replay_opts *opts)
+ 		OPT_END(),
+ 		OPT_END(),
+ 		OPT_END(),
++		OPT_END(),
+ 	};
+ 
+ 	if (opts->action == REPLAY_PICK) {
+ 		struct option cp_extra[] = {
+ 			OPT_BOOLEAN('x', NULL, &opts->record_origin, "append commit name"),
+ 			OPT_BOOLEAN(0, "ff", &opts->allow_ff, "allow fast-forward"),
++			OPT_BOOLEAN(0, "allow-empty", &opts->allow_empty, "preserve empty commits"),
+ 			OPT_END(),
+ 		};
+ 		if (parse_options_concat(options, ARRAY_SIZE(options), cp_extra))
+diff --git a/sequencer.c b/sequencer.c
+index a37846a..71929ba 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -260,8 +260,8 @@ static int do_recursive_merge(struct commit *base, struct commit *next,
+  */
+ static int run_git_commit(const char *defmsg, struct replay_opts *opts)
+ {
+-	/* 6 is max possible length of our args array including NULL */
+-	const char *args[6];
++	/* 7 is max possible length of our args array including NULL */
++	const char *args[7];
+ 	int i = 0;
+ 
+ 	args[i++] = "commit";
+@@ -272,6 +272,9 @@ static int run_git_commit(const char *defmsg, struct replay_opts *opts)
+ 		args[i++] = "-F";
+ 		args[i++] = defmsg;
+ 	}
++	if (opts->allow_empty)
++		args[i++] = "--allow-empty";
++
+ 	args[i] = NULL;
+ 
+ 	return run_command_v_opt(args, RUN_GIT_CMD);
+diff --git a/sequencer.h b/sequencer.h
+index bb4b138..e2cd725 100644
+--- a/sequencer.h
++++ b/sequencer.h
+@@ -29,6 +29,7 @@ struct replay_opts {
+ 	int signoff;
+ 	int allow_ff;
+ 	int allow_rerere_auto;
++	int allow_empty;
+ 
+ 	int mainline;
+ 
+-- 
+1.7.7.6
