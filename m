@@ -1,70 +1,79 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: gc --aggressive
-Date: Tue, 17 Apr 2012 14:58:01 -0700
-Message-ID: <20120417215801.GA10797@sigill.intra.peff.net>
-References: <CAG+J_DzO=UZ56PjnSCRaTdj8pBSYc5PFofw1QHy42c5pHMK_HQ@mail.gmail.com>
- <CAG+J_DyqvCxwd6+gzixQEk6SxMZF0qsXKcJPaU6imsJdFQ-64g@mail.gmail.com>
- <vpqbomqqdxo.fsf@bauges.imag.fr>
+From: Clemens Buchacher <drizzd@aon.at>
+Subject: Re: [PATCH v5 3/4] git-cherry-pick: Add test to validate new options
+Date: Tue, 17 Apr 2012 23:38:52 +0200
+Message-ID: <20120417213851.GA20082@ecki>
+References: <1333136922-12872-1-git-send-email-nhorman@tuxdriver.com>
+ <1334342707-3326-1-git-send-email-nhorman@tuxdriver.com>
+ <1334342707-3326-4-git-send-email-nhorman@tuxdriver.com>
+ <20120415093933.GB6263@ecki>
+ <20120416161431.GD13366@hmsreliant.think-freely.org>
+ <7vvckzws73.fsf@alter.siamese.dyndns.org>
+ <20120416165024.GF13366@hmsreliant.think-freely.org>
+ <20120416214247.GA5606@ecki>
+ <20120417105604.GB11462@hmsreliant.think-freely.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Jay Soffian <jaysoffian@gmail.com>, git <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Shawn Pearce <spearce@spearce.org>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Tue Apr 17 23:58:12 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Jeff King <peff@peff.net>, Phil Hord <phil.hord@gmail.com>
+To: Neil Horman <nhorman@tuxdriver.com>
+X-From: git-owner@vger.kernel.org Tue Apr 17 23:58:47 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SKGPb-0003w3-9m
-	for gcvg-git-2@plane.gmane.org; Tue, 17 Apr 2012 23:58:11 +0200
+	id 1SKGQA-0004J3-8K
+	for gcvg-git-2@plane.gmane.org; Tue, 17 Apr 2012 23:58:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751624Ab2DQV6G (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Apr 2012 17:58:06 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:37378
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750795Ab2DQV6F (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Apr 2012 17:58:05 -0400
-Received: (qmail 8832 invoked by uid 107); 17 Apr 2012 21:58:13 -0000
-Received: from c-67-169-43-61.hsd1.ca.comcast.net (HELO sigill.intra.peff.net) (67.169.43.61)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 17 Apr 2012 17:58:13 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 17 Apr 2012 14:58:01 -0700
+	id S1752073Ab2DQV6m (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Apr 2012 17:58:42 -0400
+Received: from bsmtp.bon.at ([213.33.87.14]:48647 "EHLO bsmtp.bon.at"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751683Ab2DQV6l (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Apr 2012 17:58:41 -0400
+Received: from [127.0.0.1] (p5B22CC82.dip.t-dialin.net [91.34.204.130])
+	by bsmtp.bon.at (Postfix) with ESMTP id 7AD9BCDF88;
+	Tue, 17 Apr 2012 23:59:18 +0200 (CEST)
 Content-Disposition: inline
-In-Reply-To: <vpqbomqqdxo.fsf@bauges.imag.fr>
+In-Reply-To: <20120417105604.GB11462@hmsreliant.think-freely.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195811>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195812>
 
-On Tue, Apr 17, 2012 at 10:52:03PM +0200, Matthieu Moy wrote:
+On Tue, Apr 17, 2012 at 06:56:04AM -0400, Neil Horman wrote:
+> On Mon, Apr 16, 2012 at 11:42:49PM +0200, Clemens Buchacher wrote:
+> > 
+> > It seems that I was implying a lot more than I realized. What I meant
+> > was that master and empty-branch2 are equivalent for the purposes of
+> > that test (empty-branch2^ also is a non-empty commit [*1*]), but while
+> > master is a moving target, empty-branch2 is untouched. 
+> > 
+> for the purposes of the --keep-redundant-commits however, the target is
+> irrelevant.  The only requirement is that we cherry-pick a commit that is
+> guaranteed to become empty when applied.
 
-> Jay Soffian <jaysoffian@gmail.com> writes:
-> 
-> > + 3. `git gc --aggressive`; this is often much slower than (2) because git
-> > +    throws out all of the existing deltas and recomputes them from
-> > +    scratch. It uses a higher window parameter meaning it will spend
-> > +    more time computing, and it may end up with a smaller pack. However,
-> > +    unless the repository is known to have initially been poorly packed,
-> > +    this option is not needed and will just cause git to perform
-> > +    extra work.
-> 
-> I like your patch.
+That we agree on.
 
-Me too. I guess it is not surprising since I wrote the initial draft. ;)
+> We certainly could do that on empty branch2, but theres no advantage
+> to doing so,
 
-> Maybe you should elaborate on "unless the repository is known to have
-> initially been poorly packed". My understanding is that --aggressive was
-> implemented to be called after an import from another VCS that would
-> have computed very poor deltas, but I'm not sure about the details.
+The advantage is that I do not have to read the other tests in order to
+understand what this test does, because contrary to the master branch,
+they do not modify empty-branch2.
 
-Yes, that's exactly it. fast-import will generate packs, but they are
-often not optimal. So if you have done a big import, you should
-definitely "git gc --aggressive" as the final step. I don't know how
-something like a remote-helper would work, where it is fast-importing
-little bits at a time. Probably a regular repack would be fine, since it
-will be considering deltas between objects in different packs anyway.
+> and given that every other test attempts to cherry-pick to master, I
+> rather like the consistency.
 
--Peff
+We could also consistently not use the master branch.
+
+> > However, I just notice that empty-branch2 is also the root commit, so
+> > maybe this will not work after all. But that should be easy to fix.
+>
+> It is easy to fix, given your clarified description above, its just that IMO,
+> its not broken.
+
+Well, I don't mind too badly if this doesn't go may way. But I hope that
+I managed at least to explain my point.
