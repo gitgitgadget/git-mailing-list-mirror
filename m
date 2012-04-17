@@ -1,217 +1,118 @@
-From: Neil Horman <nhorman@tuxdriver.com>
-Subject: [PATCH v6 4/4] git-rebase: add keep_empty flag
-Date: Tue, 17 Apr 2012 14:20:09 -0400
-Message-ID: <1334686809-17634-5-git-send-email-nhorman@tuxdriver.com>
-References: <1333136922-12872-1-git-send-email-nhorman@tuxdriver.com>
- <1334686809-17634-1-git-send-email-nhorman@tuxdriver.com>
-Cc: Clemens Buchacher <drizzd@aon.at>, Phil Hord <phil.hord@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Neil Horman <nhorman@tuxdriver.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 17 20:21:11 2012
+From: =?UTF-8?q?Micha=C5=82=20Kiedrowicz?= <michal.kiedrowicz@gmail.com>
+Subject: [PATCH] git-merge: Reduce heads before trying to merge them
+Date: Tue, 17 Apr 2012 20:25:18 +0200
+Message-ID: <1334687118-5386-1-git-send-email-michal.kiedrowicz@gmail.com>
+References: <CA+55aFzGwPYNn2baFhEr4msBTV7__nkTSUqAZ7=PRVoYrchV5w@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	=?UTF-8?q?Micha=C5=82=20Kiedrowicz?= <michal.kiedrowicz@gmail.com>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Tue Apr 17 20:26:15 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SKD1Z-0005iG-VT
-	for gcvg-git-2@plane.gmane.org; Tue, 17 Apr 2012 20:21:10 +0200
+	id 1SKD6T-0001Mt-56
+	for gcvg-git-2@plane.gmane.org; Tue, 17 Apr 2012 20:26:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751166Ab2DQSVE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Apr 2012 14:21:04 -0400
-Received: from charlotte.tuxdriver.com ([70.61.120.58]:53788 "EHLO
-	smtp.tuxdriver.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751087Ab2DQSVC (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Apr 2012 14:21:02 -0400
-Received: from hmsreliant.think-freely.org ([2001:470:8:a08:7aac:c0ff:fec2:933b] helo=localhost)
-	by smtp.tuxdriver.com with esmtpsa (TLSv1:AES128-SHA:128)
-	(Exim 4.63)
-	(envelope-from <nhorman@tuxdriver.com>)
-	id 1SKD1J-000081-9o; Tue, 17 Apr 2012 14:20:59 -0400
-X-Mailer: git-send-email 1.7.7.6
-In-Reply-To: <1334686809-17634-1-git-send-email-nhorman@tuxdriver.com>
-X-Spam-Score: -2.9 (--)
-X-Spam-Status: No
+	id S1751181Ab2DQS0H convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 17 Apr 2012 14:26:07 -0400
+Received: from mail-we0-f174.google.com ([74.125.82.174]:53400 "EHLO
+	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750725Ab2DQS0F (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Apr 2012 14:26:05 -0400
+Received: by wejx9 with SMTP id x9so4218443wej.19
+        for <git@vger.kernel.org>; Tue, 17 Apr 2012 11:26:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding;
+        bh=rCVeFaO0pwXHVICQI5fyeO/gdpH9NbSp7Gecb+bIheo=;
+        b=ii1WpazjjpAiTFUe6RW6aGAJSUbwJ4x3bfNKwntJeRp1GawaHEr7cMCv1Wg+8M3kIq
+         aXioQjjXL82/OyK090SoQJZtbhAzeMimBkQBihQmpw1peIL2il8h4nWCmd5yXG/5CjN6
+         20eYibKldp5MnjJLfIWUn5E8OptrUZ/is9JyRnswjHVSmbMqAO4/o1T7GPwWqJ6SOxDu
+         anX1AMykHeLngqoi/omflPX03mvnvQzwl0LXk8/ucZs7V7tOJlaA2Ca+jyVUisoAA/d9
+         5CQWfu0R1vRZiaEBl+u/9zz5rl7QF/73uszDQ5p1qV6HgqY7feUWhXH3L/xaZW/aqwBU
+         r6JA==
+Received: by 10.216.135.206 with SMTP id u56mr10119952wei.29.1334687164044;
+        Tue, 17 Apr 2012 11:26:04 -0700 (PDT)
+Received: from localhost (77-177-78-94.net.stream.pl. [94.78.177.77])
+        by mx.google.com with ESMTPS id fl2sm45891620wib.2.2012.04.17.11.26.02
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Tue, 17 Apr 2012 11:26:03 -0700 (PDT)
+X-Mailer: git-send-email 1.7.8.4
+In-Reply-To: <CA+55aFzGwPYNn2baFhEr4msBTV7__nkTSUqAZ7=PRVoYrchV5w@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195786>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195787>
 
-Add a command line switch to git-rebase to allow a user the ability to specify
-that they want to keep any commits in a series that are empty.
+This makes us do proper fast-forward merges even for octopus merges,
+which could otherwise result in "merge commit" that only had one actual
+parent, and should have been a fast-forward.
 
-When git-rebase's type is am, then this option will automatically keep any
-commit that has a tree object identical to its parent.
-
-This patch changes the default behavior of interactive rebases as well.  With
-this patch, git-rebase -i will produce a revision set passed to
-git-revision-editor, in which empty commits are commented out.  Empty commits
-may be kept manually by uncommenting them.  If the new --keep-empty option is
-used in an interactive rebase the empty commits will automatically all be
-uncommented in the editor.
-
-Signed-off-by: Neil Horman <nhorman@tuxdriver.com>
+Odd-case-triggered-by: James Morris <jmorris@namei.org>
+Signed-off-by: Micha=C5=82 Kiedrowicz <michal.kiedrowicz@gmail.com>
 ---
- Documentation/git-rebase.txt |    4 ++++
- git-rebase--am.sh            |   19 ++++++++++++++-----
- git-rebase--interactive.sh   |   33 ++++++++++++++++++++++++++++++---
- git-rebase.sh                |    5 +++++
- 4 files changed, 53 insertions(+), 8 deletions(-)
 
-diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
-index 504945c..131c35d 100644
---- a/Documentation/git-rebase.txt
-+++ b/Documentation/git-rebase.txt
-@@ -238,6 +238,10 @@ leave out at most one of A and B, in which case it defaults to HEAD.
- 	will be reset to where it was when the rebase operation was
- 	started.
- 
-+--keep-empty::
-+	Keep the commits that do not change anything from its
-+	parents in the result.
+This is the proposed fix sent as a proper patch with commit message
+stolen from Linus and testcases.
+
+I'm not sure if I don't introduce a memleak with the call to
+reduce_heads() but other callers seem to not care, just like whole
+cmd_merge().
+
+ builtin/merge.c               |    3 +++
+ t/t7603-merge-reduce-heads.sh |   19 +++++++++++++++++++
+ 2 files changed, 22 insertions(+), 0 deletions(-)
+
+diff --git a/builtin/merge.c b/builtin/merge.c
+index 08e01e8..2d5930f 100644
+--- a/builtin/merge.c
++++ b/builtin/merge.c
+@@ -1346,6 +1346,9 @@ int cmd_merge(int argc, const char **argv, const =
+char *prefix)
+ 			allow_trivial =3D 0;
+ 	}
+=20
++	if (remoteheads->next)
++		remoteheads =3D reduce_heads(remoteheads);
 +
- --skip::
- 	Restart the rebasing process by skipping the current patch.
- 
-diff --git a/git-rebase--am.sh b/git-rebase--am.sh
-index c815a24..04d8941 100644
---- a/git-rebase--am.sh
-+++ b/git-rebase--am.sh
-@@ -20,11 +20,20 @@ esac
- 
- test -n "$rebase_root" && root_flag=--root
- 
--git format-patch -k --stdout --full-index --ignore-if-in-upstream \
--	--src-prefix=a/ --dst-prefix=b/ \
--	--no-renames $root_flag "$revisions" |
--git am $git_am_opt --rebasing --resolvemsg="$resolvemsg" &&
--move_to_original_branch
-+if test -n "$keep_empty"
-+then
-+	# we have to do this the hard way.  git format-patch completely squashes
-+	# empty commits and even if it didn't the format doesn't really lend
-+	# itself well to recording empty patches.  fortunately, cherry-pick
-+	# makes this easy
-+	git cherry-pick --allow-empty "$revisions"
-+else
-+	git format-patch -k --stdout --full-index --ignore-if-in-upstream \
-+		--src-prefix=a/ --dst-prefix=b/ \
-+		--no-renames $root_flag "$revisions" |
-+	git am $git_am_opt --rebasing --resolvemsg="$resolvemsg"
-+fi && move_to_original_branch
+ 	if (!remoteheads->next)
+ 		common =3D get_merge_bases(head_commit, remoteheads->item, 1);
+ 	else {
+diff --git a/t/t7603-merge-reduce-heads.sh b/t/t7603-merge-reduce-heads=
+=2Esh
+index 7e17eb4..a3b08a6 100755
+--- a/t/t7603-merge-reduce-heads.sh
++++ b/t/t7603-merge-reduce-heads.sh
+@@ -113,4 +113,23 @@ test_expect_success 'verify merge result' '
+ 	test $(git rev-parse HEAD^1) =3D $(git rev-parse E2) &&
+ 	test $(git rev-parse HEAD^2) =3D $(git rev-parse I2)
+ '
 +
- ret=$?
- test 0 != $ret -a -d "$state_dir" && write_basic_state
- exit $ret
-diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-index 5812222..cef290b 100644
---- a/git-rebase--interactive.sh
-+++ b/git-rebase--interactive.sh
-@@ -167,6 +167,12 @@ has_action () {
- 	sane_grep '^[^#]' "$1" >/dev/null
- }
- 
-+is_empty_commit() {
-+	tree=$(git rev-parse "$1"^{tree})
-+	ptree=$(git rev-parse "$1"^^{tree})
-+	return $(test "$tree" = "$ptree")
-+}
++test_expect_success 'fast-forward to redundant refs' '
++	git reset --hard c0 &&
++	git merge c4 c5
++'
 +
- # Run command with GIT_AUTHOR_NAME, GIT_AUTHOR_EMAIL, and
- # GIT_AUTHOR_DATE exported from the current environment.
- do_with_author () {
-@@ -191,12 +197,19 @@ git_sequence_editor () {
- 
- pick_one () {
- 	ff=--ff
++test_expect_success 'verify merge result' '
++	test $(git rev-parse HEAD) =3D $(git rev-parse c5)
++'
 +
- 	case "$1" in -n) sha1=$2; ff= ;; *) sha1=$1 ;; esac
- 	case "$force_rebase" in '') ;; ?*) ff= ;; esac
- 	output git rev-parse --verify $sha1 || die "Invalid commit name: $sha1"
++test_expect_success 'merge up-to-date redundant refs' '
++	git reset --hard c5 &&
++	git merge c0 c4
++'
 +
-+	if is_empty_commit "$sha1"
-+	then
-+		empty_args="--allow-empty"
-+	fi
++test_expect_success 'verify merge result' '
++	test $(git rev-parse HEAD) =3D $(git rev-parse c5)
++'
 +
- 	test -d "$rewritten" &&
- 		pick_one_preserving_merges "$@" && return
--	output git cherry-pick $ff "$@"
-+	output git cherry-pick $empty_args $ff "$@"
- }
- 
- pick_one_preserving_merges () {
-@@ -780,9 +793,17 @@ git rev-list $merges_option --pretty=oneline --abbrev-commit \
- 	sed -n "s/^>//p" |
- while read -r shortsha1 rest
- do
-+
-+	if test -z "$keep_empty" && is_empty_commit $shortsha1
-+	then
-+		comment_out="# pick"
-+	else
-+		comment_out="pick"
-+	fi
-+
- 	if test t != "$preserve_merges"
- 	then
--		printf '%s\n' "pick $shortsha1 $rest" >> "$todo"
-+		printf '%s\n' "$comment_out $shortsha1 $rest" >> "$todo"
- 	else
- 		sha1=$(git rev-parse $shortsha1)
- 		if test -z "$rebase_root"
-@@ -801,7 +822,7 @@ do
- 		if test f = "$preserve"
- 		then
- 			touch "$rewritten"/$sha1
--			printf '%s\n' "pick $shortsha1 $rest" >> "$todo"
-+			printf '%s\n' "$comment_out $shortsha1 $rest" >> "$todo"
- 		fi
- 	fi
- done
-@@ -851,6 +872,12 @@ cat >> "$todo" << EOF
- #
- EOF
- 
-+if test -z "$keep_empty"
-+then
-+	echo "# Note that empty commits are commented out" >> "$todo"
-+fi
-+
-+
- has_action "$todo" ||
- 	die_abort "Nothing to do"
- 
-diff --git a/git-rebase.sh b/git-rebase.sh
-index 69c1374..24a2840 100755
---- a/git-rebase.sh
-+++ b/git-rebase.sh
-@@ -43,6 +43,7 @@ s,strategy=!       use the given merge strategy
- no-ff!             cherry-pick all commits, even if unchanged
- m,merge!           use merging strategies to rebase
- i,interactive!     let the user edit the list of commits to rebase
-+k,keep-empty	   preserve empty commits during rebase
- f,force-rebase!    force rebase even if branch is up to date
- X,strategy-option=! pass the argument through to the merge strategy
- stat!              display a diffstat of what changed upstream
-@@ -97,6 +98,7 @@ state_dir=
- action=
- preserve_merges=
- autosquash=
-+keep_empty=
- test "$(git config --bool rebase.autosquash)" = "true" && autosquash=t
- 
- read_basic_state () {
-@@ -220,6 +222,9 @@ do
- 	-i)
- 		interactive_rebase=explicit
- 		;;
-+	-k)
-+		keep_empty=yes
-+		;;
- 	-p)
- 		preserve_merges=t
- 		test -z "$interactive_rebase" && interactive_rebase=implied
--- 
-1.7.7.6
+ test_done
+--=20
+1.7.8.4
