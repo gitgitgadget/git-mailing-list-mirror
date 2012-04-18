@@ -1,83 +1,48 @@
-From: Per Cederqvist <cederp@opera.com>
-Subject: Re: git clone fails intermittently if source repo is updated
-Date: Wed, 18 Apr 2012 10:37:04 +0200
-Message-ID: <4F8E7D30.2010906@opera.com>
-References: <87vckyldrj.fsf@opera.com>
+From: =?UTF-8?B?WmJpZ25pZXcgSsSZZHJ6ZWpld3NraS1Tem1law==?= 
+	<zbyszek@in.waw.pl>
+Subject: Re: [PATCH v4 1/4] t4052: test --stat output with --graph
+Date: Wed, 18 Apr 2012 10:47:25 +0200
+Message-ID: <4F8E7F9D.8080207@in.waw.pl>
+References: <1334716196-9870-1-git-send-email-lucian.poston@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: ceder@lysator.liu.se
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 18 10:37:25 2012
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Lucian Poston <lucian.poston@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 18 10:47:44 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SKQOD-0004AW-Ce
-	for gcvg-git-2@plane.gmane.org; Wed, 18 Apr 2012 10:37:25 +0200
+	id 1SKQYB-0003tJ-I8
+	for gcvg-git-2@plane.gmane.org; Wed, 18 Apr 2012 10:47:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752287Ab2DRIhN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Apr 2012 04:37:13 -0400
-Received: from smtp.opera.com ([213.236.208.81]:49111 "EHLO smtp.opera.com"
+	id S1751676Ab2DRIri (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Apr 2012 04:47:38 -0400
+Received: from kawka.in.waw.pl ([178.63.212.103]:35076 "EHLO kawka.in.waw.pl"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752226Ab2DRIhK (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Apr 2012 04:37:10 -0400
-Received: from [10.30.1.61] (oslo.jvpn.opera.com [213.236.208.46])
-	(authenticated bits=0)
-	by smtp.opera.com (8.14.3/8.14.3/Debian-5+lenny1) with ESMTP id q3I8b54p011683
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Wed, 18 Apr 2012 08:37:07 GMT
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.28) Gecko/20120313 Thunderbird/3.1.20
-In-Reply-To: <87vckyldrj.fsf@opera.com>
+	id S1751293Ab2DRIrg (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Apr 2012 04:47:36 -0400
+Received: from 89-78-221-60.dynamic.chello.pl ([89.78.221.60] helo=[192.168.0.12])
+	by kawka.in.waw.pl with esmtpsa (TLS1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.72)
+	(envelope-from <zbyszek@in.waw.pl>)
+	id 1SKQXy-0001BH-Im; Wed, 18 Apr 2012 10:47:30 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:10.0.3) Gecko/20120324 Icedove/10.0.3
+In-Reply-To: <1334716196-9870-1-git-send-email-lucian.poston@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195846>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195847>
 
-On 04/17/2012 02:54 PM, Per Cederqvist wrote:
+On 04/18/2012 04:29 AM, Lucian Poston wrote:
+> 1/4 Prevent graph_width of stat width from falling below min
+> 2/4 t4052: Test diff-stat output with minimum columns
+> 3/4 Adjust stat width calculations to take --graph output into account
+> 4/4 t4052: test --stat output with --graph
 
-> Running "git clone master.git copy" sometimes fails if changes are being
-> pushed to master.git.  Likewise, running "git clone mirror.git copy"
-> sometimes fails if the mirror is currently fetching changes from
-> master.git.
->
-> In git 1.7.9 I sometimes get one of two fatal error messages.  In one of
-> the cases, git still exits with exit code 0, but the working directory
-> of "copy" is not updated with the proper files.  (See below for the
-> exact error messages.)
->
-> In git 1.7.10 the mirror sometimes ends up in "detached HEAD" state.
-> Sometimes it prints a warning message.  (See below for the messages.)
->
-> The following shell scripts can reproduce the problem.  I've been using
-> a 4-core CPU on Ubuntu 11.04.  I've compiled Git from source.
->
-> The first script, test-git-setup.sh, creates the directory "test-git"
-> and three git repositories in it: master.git, mirror.git, and committer:
->
- > [...four shellscripts omitted...]
+Looks nice.
 
-For your convenience, I have now set up a Git repository where you can
-get slightly updated versions of the above scripts.  The Gitorious web
-page is here:
-
-http://git.lysator.liu.se/ceder/git-clone-fail-demo
-
-You can clone it like this:
-
-git clone git://git.lysator.liu.se/ceder/git-clone-fail-demo.git
-
-I have been able to reproduce the problem on Git 1.6.0 as well, so
-this is apparently not a recent regression.
-
-The problem can also be reproduces when you clone, push and fetch via
-ssh, but it happens a lot less frequently then.  See the README file in
-the git-clone-fail-demo repository for info on how to reproduce it.
-
-> [...]
->
->      /ceder
-
-     /ceder
+Zbyszek
