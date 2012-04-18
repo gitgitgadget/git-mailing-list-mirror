@@ -1,84 +1,84 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 8/9 v13] difftool: teach difftool to handle directory
- diffs
-Date: Wed, 18 Apr 2012 12:38:04 -0700
-Message-ID: <7v8vhsltk3.fsf@alter.siamese.dyndns.org>
-References: <1334335002-30806-1-git-send-email-tim.henigan@gmail.com>
- <CAJDDKr7Uw3Nwg4p7F2zaY8f82j3_tRf3WiiO+YSN+nA6a9wY6w@mail.gmail.com>
- <CAJDDKr78T1HNFXPPnvMUxBoJhAHP8XGdk9ZbpQCS1sZEQJfR8w@mail.gmail.com>
- <CAFoueth37aeHMorh-r2w_mwSp+uSgeF+PYbUfHNPy9-HVvL01w@mail.gmail.com>
- <CAJDDKr6djdBvUbV6qZZu75iR2UbFHt8_D0+V+K_C+-Dgx8BfVA@mail.gmail.com>
- <CAFouetjbHewYzQXZr33xGKgwk0k7D8R0XfoP7k2qAV6Nq_d+Ow@mail.gmail.com>
- <7vsjg1knwr.fsf@alter.siamese.dyndns.org>
- <CAFouetgWpyUC9SPo_QwpESrbfib7ct111WesKPP14HQ+SqpFaQ@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH i18n 00/11] Mark more strings for translation
+Date: Wed, 18 Apr 2012 14:40:21 -0500
+Message-ID: <20120418194021.GB30361@burratino>
+References: <1334580603-11577-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: David Aguilar <davvid@gmail.com>, git@vger.kernel.org,
-	ramsay@ramsay1.demon.co.uk
-To: Tim Henigan <tim.henigan@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 18 21:38:17 2012
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org,
+	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+	Jiang Xin <worldhello.net@gmail.com>
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 18 21:40:33 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SKahl-0005wJ-GL
-	for gcvg-git-2@plane.gmane.org; Wed, 18 Apr 2012 21:38:17 +0200
+	id 1SKajw-0007nk-QO
+	for gcvg-git-2@plane.gmane.org; Wed, 18 Apr 2012 21:40:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754819Ab2DRTiK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Apr 2012 15:38:10 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50752 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754768Ab2DRTiG (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Apr 2012 15:38:06 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8268379A4;
-	Wed, 18 Apr 2012 15:38:06 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=YQ0NgBTc3jjxE/sAfUf++fJUBwg=; b=YuE+OY
-	xOA1z9uUn1yKHgNnosP070Tg/GqJbE2Lb9IAkoW+f98xs07jIoqBa1CISUHRmOUP
-	i5Ukqr3Ee2PO9Bf4iGgC1heJ/4AuizvzzuIdRTaA7ypowvZMES7YghluabGlXnoj
-	xjwVbf2icpDq/gnBohLCApb3zW1J++cEJbVLo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=n+NlVWyzb2ZuiEx53+qTt7GWhK3S2hij
-	Pe1E56Pa6yGwZlL14tspGEDm8+P+FS9DrYi0XNqmQmu4tCid0FdOvjfKZdJH49O0
-	DPmzq9iWbATtLa/jKAttAHiDo2A221pq5LeHmMiM+05DlfiEgSTJsV/NcUQN/XyV
-	ccsGXtY4/So=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 792EC79A3;
-	Wed, 18 Apr 2012 15:38:06 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0B22279A1; Wed, 18 Apr 2012
- 15:38:05 -0400 (EDT)
-In-Reply-To: <CAFouetgWpyUC9SPo_QwpESrbfib7ct111WesKPP14HQ+SqpFaQ@mail.gmail.com> (Tim
- Henigan's message of "Wed, 18 Apr 2012 14:28:18 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 0507AE22-898E-11E1-8683-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754188Ab2DRTk2 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 18 Apr 2012 15:40:28 -0400
+Received: from mail-ob0-f174.google.com ([209.85.214.174]:54505 "EHLO
+	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753855Ab2DRTk1 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 18 Apr 2012 15:40:27 -0400
+Received: by obbta14 with SMTP id ta14so7006431obb.19
+        for <git@vger.kernel.org>; Wed, 18 Apr 2012 12:40:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=ZR5/XICJuGJal0zA4geguCLEd9Li3mxchMsRGY5kWXo=;
+        b=egEFspi0qfyPgOwRl8/bUgBWiJ+Pki8l822vIcKymvn3XUDblcgfKw7ZSQpj3llU9s
+         ERyecYjUfJL2ksVWl4b7qmRzpfolRRd6cbNlWvJ0i+nIvtEVNzl0KziKNhqo/cVscw3D
+         O6s870ERH9TIHdu3Zbd7Ila4N+g095T4gqTaaj2s0vzv/gLFj+KsooVx2koVv65qG0BU
+         tZowmPpvnmXPOgDC8HUrae8HTgqvBPR8asjVdBzB3GoK9UinpzyypK6PZMqVLhDgqHvB
+         1/eokfjVrFUotPWnngPGKGjI+GDLr8GCSh8N32asX57cYdZH61sZqWzVD4S2YLA0yuFY
+         Kjzw==
+Received: by 10.182.190.6 with SMTP id gm6mr4031398obc.6.1334778027363;
+        Wed, 18 Apr 2012 12:40:27 -0700 (PDT)
+Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
+        by mx.google.com with ESMTPS id b2sm27917077obo.22.2012.04.18.12.40.24
+        (version=SSLv3 cipher=OTHER);
+        Wed, 18 Apr 2012 12:40:25 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <1334580603-11577-1-git-send-email-pclouds@gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195889>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195890>
 
-Tim Henigan <tim.henigan@gmail.com> writes:
+Hi,
 
-> Looking back on it now, I agree that it would have been better to use
-> the plumbing commands from the beginning.  Changing from the porcelain
-> to the plumbing commands will require new logic to parse the diff
-> options to figure out which of 'diff-index', 'diff-files' or
-> 'diff-tree' should be called.  We may also want to add support for
-> some specific standard diff options (like '-R').
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
 
-Yeah, didn't I already suggest that it is the only sane avenue in the long
-term to move the whole "populate the two temporary trees" thing down to C
-level?
+> This series marks the following for translations
+>
+>  - relative dates
+>  - git-help (and provide support for translating parseopt)
+>  - git-remote
+>  - git-index-pack
+>  - git-apply
+>  - git-bundle
+>
+> Except git-help, other commands are chosen because they handle plural
+> form and I'd like to reuse gettext for that. There are a few conflict=
+s
+> with topics on pu, but seem easy to resolve.
 
-> For now, would you object to an updated patch that simply detects and
-> ignores options that change the output of 'git diff --raw'?
+My main reaction is that it would be nice to find a way to check that
+parseopt users correctly mark their messages for translation while we
+remember.  But that doesn't need to block the series.  Ideas about
+mechanism from gettext wizards welcome.
 
-As a script that uses 'git diff' is a short-term hack anyway, I think the
-most cost effective thing to do is to add '--no-renames' at the end and be
-done with it.
+Other comments inline.  I expect that there will be at least one
+reroll before this is ready.
+
+Thanks,
+Jonathan
