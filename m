@@ -1,66 +1,71 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Do not use SHELL_PATH from build system in
- prepare_shell_cmd on Windows
-Date: Wed, 18 Apr 2012 00:27:50 -0700
-Message-ID: <20120418072615.GA2217@sigill.intra.peff.net>
-References: <7vvclmoit6.fsf@alter.siamese.dyndns.org>
- <1333157601-6458-1-git-send-email-bwalton@artsci.utoronto.ca>
- <4F8D15B9.70803@viscovery.net>
- <20120417221449.GC10797@sigill.intra.peff.net>
- <4F8E539F.7030902@viscovery.net>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: Tags/Branches missing in GIT
+Date: Wed, 18 Apr 2012 09:34:12 +0200
+Message-ID: <4F8E6E74.7020403@alum.mit.edu>
+References: <1334728490216-7475869.post@n2.nabble.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Ben Walton <bwalton@artsci.utoronto.ca>, jrnieder@gmail.com,
-	gitster@pobox.com, git@vger.kernel.org
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Wed Apr 18 09:28:05 2012
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: supadhyay <supadhyay@imany.com>
+X-From: git-owner@vger.kernel.org Wed Apr 18 09:34:25 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SKPJ7-0000aN-9i
-	for gcvg-git-2@plane.gmane.org; Wed, 18 Apr 2012 09:28:05 +0200
+	id 1SKPPC-0005XD-Dl
+	for gcvg-git-2@plane.gmane.org; Wed, 18 Apr 2012 09:34:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751251Ab2DRH16 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Apr 2012 03:27:58 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:37628
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750830Ab2DRH15 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Apr 2012 03:27:57 -0400
-Received: (qmail 13386 invoked by uid 107); 18 Apr 2012 07:28:05 -0000
-Received: from me14036d0.tmodns.net (HELO sigill.intra.peff.net) (208.54.64.225)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 18 Apr 2012 03:28:05 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 18 Apr 2012 00:27:50 -0700
-Content-Disposition: inline
-In-Reply-To: <4F8E539F.7030902@viscovery.net>
+	id S1751272Ab2DRHeS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Apr 2012 03:34:18 -0400
+Received: from einhorn.in-berlin.de ([192.109.42.8]:46448 "EHLO
+	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751188Ab2DRHeR (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Apr 2012 03:34:17 -0400
+X-Envelope-From: mhagger@alum.mit.edu
+Received: from [192.168.101.152] (ssh.berlin.jpk.com [212.222.128.135])
+	(authenticated bits=0)
+	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id q3I7YCAE008288
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Wed, 18 Apr 2012 09:34:12 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:11.0) Gecko/20120410 Thunderbird/11.0.1
+In-Reply-To: <1334728490216-7475869.post@n2.nabble.com>
+X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195842>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195843>
 
-On Wed, Apr 18, 2012 at 07:39:43AM +0200, Johannes Sixt wrote:
+On 04/18/2012 07:54 AM, supadhyay wrote:
+> I have migrated our version control from CVS to Git (with the help of this
+> link  http://cvs2svn.tigris.org/cvs2git.html) and from git I do clone to
+> gitolite on the same server.
+>
+> Now when end user verify their code in GIT (using Tortoisegit/Egit) they
+> found differences in number of tags and brances. Some of CVS tags/brances
+> are not exists in GIT and some of the new tags created by GIT which is not
+> in CVS.
+>
+>
+> Can any one please update me this is known issue or not and how to resolve
+> this ?
 
-> > It sounds like the real problem is not the use of a configurable shell,
-> > but rather the use of an absolute path. Should you maybe try to pass the
-> > basename of SHELL_PATH? Or maybe that is not even worth worrying about,
-> > as somebody on Windows is not going to ever set SHELL_PATH, since it is
-> > not like they are working around a non-POSIX "sh" included with the
-> > operating system (which is why people on Solaris typically set
-> > SHELL_PATH).
-> 
-> I thought about offering a customization point, but decided that it is not
-> worth the hassle: Most people download an installer, then the installer
-> can set up the PATH so that "sh" is not broken or something entirely
-> unrelated. And those who build git themselves know sufficiently well what
-> they are doing.
+Questions about cvs2svn/cvs2git belong on the cvs2svn mailing list [1] 
+(as I have told you twice before).
 
-OK. I'll defer your judgement on what Windows users prefer. I just
-wanted to make sure it was a conscious decision.
+It is of course the mission of cvs2git to convert all CVS history 
+including all branches and tags.  So if you think you have found a 
+problem, you need to provide more detail about how you ran cvs2git and 
+what makes you think that the results are incorrect.  Please see the 
+cvs2svn FAQ [2] for information about reporting suspected bugs in 
+cvs2svn/cvs2git.
 
-Other than that, the patch looks obviously correct to me. Thanks, and
-sorry for inadvertently breaking git on windows (again). :)
+[1] users@cvs2svn.tigris.org
+[2] http://cvs2svn.tigris.org/faq.html#gettinghelp
 
--Peff
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
