@@ -1,48 +1,83 @@
-From: supadhyay <supadhyay@imany.com>
-Subject: Re: Tags/Branches missing in GIT
-Date: Wed, 18 Apr 2012 01:27:04 -0700 (PDT)
-Message-ID: <1334737624705-7476181.post@n2.nabble.com>
-References: <1334728490216-7475869.post@n2.nabble.com> <4F8E6E74.7020403@alum.mit.edu>
+From: Per Cederqvist <cederp@opera.com>
+Subject: Re: git clone fails intermittently if source repo is updated
+Date: Wed, 18 Apr 2012 10:37:04 +0200
+Message-ID: <4F8E7D30.2010906@opera.com>
+References: <87vckyldrj.fsf@opera.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
+Cc: ceder@lysator.liu.se
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 18 10:27:14 2012
+X-From: git-owner@vger.kernel.org Wed Apr 18 10:37:25 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SKQEM-0004j4-1c
-	for gcvg-git-2@plane.gmane.org; Wed, 18 Apr 2012 10:27:14 +0200
+	id 1SKQOD-0004AW-Ce
+	for gcvg-git-2@plane.gmane.org; Wed, 18 Apr 2012 10:37:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751639Ab2DRI1H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Apr 2012 04:27:07 -0400
-Received: from sam.nabble.com ([216.139.236.26]:55945 "EHLO sam.nabble.com"
+	id S1752287Ab2DRIhN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Apr 2012 04:37:13 -0400
+Received: from smtp.opera.com ([213.236.208.81]:49111 "EHLO smtp.opera.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751181Ab2DRI1F (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Apr 2012 04:27:05 -0400
-Received: from jim.nabble.com ([192.168.236.80])
-	by sam.nabble.com with esmtp (Exim 4.72)
-	(envelope-from <supadhyay@imany.com>)
-	id 1SKQEC-0008Fc-N2
-	for git@vger.kernel.org; Wed, 18 Apr 2012 01:27:04 -0700
-In-Reply-To: <4F8E6E74.7020403@alum.mit.edu>
+	id S1752226Ab2DRIhK (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Apr 2012 04:37:10 -0400
+Received: from [10.30.1.61] (oslo.jvpn.opera.com [213.236.208.46])
+	(authenticated bits=0)
+	by smtp.opera.com (8.14.3/8.14.3/Debian-5+lenny1) with ESMTP id q3I8b54p011683
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Wed, 18 Apr 2012 08:37:07 GMT
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.28) Gecko/20120313 Thunderbird/3.1.20
+In-Reply-To: <87vckyldrj.fsf@opera.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195845>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195846>
 
-Hi Michael,
+On 04/17/2012 02:54 PM, Per Cederqvist wrote:
 
-My apologize. I have edit my subscription for  users,issues and announce but
-not able to post any query or new topic . On their webpage I can not see any
-link/button for post new topic or etc. If you can guide me how ot post new
-topic there then it would be great help for me.
+> Running "git clone master.git copy" sometimes fails if changes are being
+> pushed to master.git.  Likewise, running "git clone mirror.git copy"
+> sometimes fails if the mirror is currently fetching changes from
+> master.git.
+>
+> In git 1.7.9 I sometimes get one of two fatal error messages.  In one of
+> the cases, git still exits with exit code 0, but the working directory
+> of "copy" is not updated with the proper files.  (See below for the
+> exact error messages.)
+>
+> In git 1.7.10 the mirror sometimes ends up in "detached HEAD" state.
+> Sometimes it prints a warning message.  (See below for the messages.)
+>
+> The following shell scripts can reproduce the problem.  I've been using
+> a 4-core CPU on Ubuntu 11.04.  I've compiled Git from source.
+>
+> The first script, test-git-setup.sh, creates the directory "test-git"
+> and three git repositories in it: master.git, mirror.git, and committer:
+>
+ > [...four shellscripts omitted...]
 
-Thanks...
+For your convenience, I have now set up a Git repository where you can
+get slightly updated versions of the above scripts.  The Gitorious web
+page is here:
 
---
-View this message in context: http://git.661346.n2.nabble.com/Tags-Branches-missing-in-GIT-tp7475869p7476181.html
-Sent from the git mailing list archive at Nabble.com.
+http://git.lysator.liu.se/ceder/git-clone-fail-demo
+
+You can clone it like this:
+
+git clone git://git.lysator.liu.se/ceder/git-clone-fail-demo.git
+
+I have been able to reproduce the problem on Git 1.6.0 as well, so
+this is apparently not a recent regression.
+
+The problem can also be reproduces when you clone, push and fetch via
+ssh, but it happens a lot less frequently then.  See the README file in
+the git-clone-fail-demo repository for info on how to reproduce it.
+
+> [...]
+>
+>      /ceder
+
+     /ceder
