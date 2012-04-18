@@ -1,54 +1,97 @@
-From: Namit Bhalla <namitbhalla@yahoo.com>
-Subject: Re: organizing multiple repositories with dependencies
-Date: Wed, 18 Apr 2012 10:15:01 +0000 (UTC)
-Message-ID: <loom.20120418T115454-63@post.gmane.org>
-References: <1334568432.53977.YahooMailNeo@web65906.mail.ac4.yahoo.com> <m3hawjagw9.fsf@localhost.localdomain> <nng3983phhc.fsf@transit.us.cray.com> <CAE1pOi1KnvRk4yxK8OQHi9h_ueNnh5Ar3tbKFBKTA69=Aje0TQ@mail.gmail.com> <201204171837.q3HIbbcW013784@no.baka.org> <CAE1pOi29dKd2LHW7MJ+TTN4HzFkOPFEyf7Sf2emSsBYm93uYUA@mail.gmail.com> <nng1unmnksx.fsf@transit.us.cray.com> <CAE1pOi38krwXZuiYxtpLwm92N=NvWkP30V_=6cnHw=sdyk6QhA@mail.gmail.com> <CAJsNXTmfRZvpO=ooB8yKUqGqbU4g5A78=dzt2vPPrs1q+J4ZrA@mail.gmail.com> <CAE1pOi2FQtyahcJUJ+CZRLLYN7vxGaOmUiBJ-_AfC-T-ZEY_Sg@mail.gmail.com>
+From: Neil Horman <nhorman@tuxdriver.com>
+Subject: Re: [PATCH v5 2/4] git-cherry-pick: Add keep-redundant-commits option
+Date: Wed, 18 Apr 2012 06:41:50 -0400
+Message-ID: <20120418104150.GA22172@hmsreliant.think-freely.org>
+References: <1333136922-12872-1-git-send-email-nhorman@tuxdriver.com>
+ <1334342707-3326-1-git-send-email-nhorman@tuxdriver.com>
+ <1334342707-3326-3-git-send-email-nhorman@tuxdriver.com>
+ <20120415104212.GC6263@ecki>
+ <20120416153827.GC13366@hmsreliant.think-freely.org>
+ <20120416221018.GB5606@ecki>
+ <7v3982pdoj.fsf@alter.siamese.dyndns.org>
+ <20120417213723.GA19908@ecki>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 18 12:30:18 2012
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Jeff King <peff@peff.net>, Phil Hord <phil.hord@gmail.com>
+To: Clemens Buchacher <drizzd@aon.at>
+X-From: git-owner@vger.kernel.org Wed Apr 18 12:42:17 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SKS9R-0002wO-MA
-	for gcvg-git-2@plane.gmane.org; Wed, 18 Apr 2012 12:30:18 +0200
+	id 1SKSL0-0004v5-K6
+	for gcvg-git-2@plane.gmane.org; Wed, 18 Apr 2012 12:42:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752248Ab2DRKaJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Apr 2012 06:30:09 -0400
-Received: from plane.gmane.org ([80.91.229.3]:59033 "EHLO plane.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751968Ab2DRKaI (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Apr 2012 06:30:08 -0400
-Received: from list by plane.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1SKS9F-0002ny-NE
-	for git@vger.kernel.org; Wed, 18 Apr 2012 12:30:05 +0200
-Received: from out-gate01.becker.de ([194.121.90.163])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 18 Apr 2012 12:30:05 +0200
-Received: from namitbhalla by out-gate01.becker.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 18 Apr 2012 12:30:05 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: sea.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 194.121.90.163 (Mozilla/5.0 (Windows NT 5.1; rv:11.0) Gecko/20100101 Firefox/11.0)
+	id S1752199Ab2DRKmJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Apr 2012 06:42:09 -0400
+Received: from charlotte.tuxdriver.com ([70.61.120.58]:34897 "EHLO
+	smtp.tuxdriver.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751406Ab2DRKmH (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Apr 2012 06:42:07 -0400
+Received: from hmsreliant.think-freely.org ([2001:470:8:a08:7aac:c0ff:fec2:933b] helo=localhost)
+	by smtp.tuxdriver.com with esmtpsa (TLSv1:AES128-SHA:128)
+	(Exim 4.63)
+	(envelope-from <nhorman@tuxdriver.com>)
+	id 1SKSKd-0004Sa-7R; Wed, 18 Apr 2012 06:41:57 -0400
+Content-Disposition: inline
+In-Reply-To: <20120417213723.GA19908@ecki>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+X-Spam-Score: -2.9 (--)
+X-Spam-Status: No
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195850>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195851>
 
-Hilco Wijbenga <hilco.wijbenga <at> gmail.com> writes:
+On Tue, Apr 17, 2012 at 11:37:23PM +0200, Clemens Buchacher wrote:
+> On Tue, Apr 17, 2012 at 08:42:52AM -0700, Junio C Hamano wrote:
+> > Clemens Buchacher <drizzd@aon.at> writes:
+> > 
+> > > On Mon, Apr 16, 2012 at 11:38:27AM -0400, Neil Horman wrote:
+> > > ...
+> > > Except that the outcome is not the same. With and without your changes,
+> > > git cherry-pick <empty-commit> fails. But with your changes, git
+> > > cherry-pick <commit-will-become-empty> will succeed and do nothing,
+> > > while before it would have failed exactly like git cherry-pick
+> > > <empty-commit>.
+> > >
+> > > So I am not arguing whether failing or skipping is the better default
+> > > behavior. But the legacy behavior is consistent between the empty-commit
+> > > and commit-will-become-empty cases.
+> > 
+> > Is that particular "consistency" a good one, though?  If you had an empty
+> > commit in the original range, it is a lot more likely that it was an error
+> > that you would want to know about.  You may be the kind of person who
+> > value an empty commit in your history, using it as some kind of a mark in
+> > the history, and in that case you would want to know that it is being
+> > discarded.  On the other hand, if a commit that did something in the
+> > original context turns out to be unnecessary in the replayed context, that
+> > is not something you would ever want to keep in the replayed context, and
+> > erroring out and forcing you to say "yeah, I admit I do not want it" would
+> > just be annoying.
 > 
-> Basically, I want things separate for release management but together
-> for development.
+> Yeah, that makes sense.
 > 
-
-Thank you all for this very informative discussion.
-I will give these different approaches a try in the next few days.
+> > So "consistency" between the two would actually be a mistake that we may
+> > want to "break", I would think.
+> 
+> Agreed. But we should document the change in the commit message and
+> maybe add a comment, because it is really strange to read
+> 
+>  if (!empty && index_empty)
+>  	return "it's all good"
+> 
+>  if (empty)
+>  	return "oh noes!"
+> 
+> without an explanation as to why empty and index_empty are so different.
+> Neil, what do you think?
+> 
+Well, I've got the comment in the code indicating what were doing, but sure,
+I can be more vebose in the commit message about whats going on.  I can probably
+rename the empty variable to indicate its meaning a bit more clearly and make
+that code more readable.
+Neil
