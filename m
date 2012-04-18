@@ -1,90 +1,84 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] gc: fix off-by-one in append_option
-Date: Wed, 18 Apr 2012 12:34:14 -0700
-Message-ID: <7vd374ltqh.fsf@alter.siamese.dyndns.org>
-References: <20120417233255.GA24626@sigill.intra.peff.net>
- <20120418191849.GA12619@sigill.intra.peff.net>
+Subject: Re: [PATCH 8/9 v13] difftool: teach difftool to handle directory
+ diffs
+Date: Wed, 18 Apr 2012 12:38:04 -0700
+Message-ID: <7v8vhsltk3.fsf@alter.siamese.dyndns.org>
+References: <1334335002-30806-1-git-send-email-tim.henigan@gmail.com>
+ <CAJDDKr7Uw3Nwg4p7F2zaY8f82j3_tRf3WiiO+YSN+nA6a9wY6w@mail.gmail.com>
+ <CAJDDKr78T1HNFXPPnvMUxBoJhAHP8XGdk9ZbpQCS1sZEQJfR8w@mail.gmail.com>
+ <CAFoueth37aeHMorh-r2w_mwSp+uSgeF+PYbUfHNPy9-HVvL01w@mail.gmail.com>
+ <CAJDDKr6djdBvUbV6qZZu75iR2UbFHt8_D0+V+K_C+-Dgx8BfVA@mail.gmail.com>
+ <CAFouetjbHewYzQXZr33xGKgwk0k7D8R0XfoP7k2qAV6Nq_d+Ow@mail.gmail.com>
+ <7vsjg1knwr.fsf@alter.siamese.dyndns.org>
+ <CAFouetgWpyUC9SPo_QwpESrbfib7ct111WesKPP14HQ+SqpFaQ@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Apr 18 21:34:36 2012
+Cc: David Aguilar <davvid@gmail.com>, git@vger.kernel.org,
+	ramsay@ramsay1.demon.co.uk
+To: Tim Henigan <tim.henigan@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 18 21:38:17 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SKae3-0002md-BZ
-	for gcvg-git-2@plane.gmane.org; Wed, 18 Apr 2012 21:34:27 +0200
+	id 1SKahl-0005wJ-GL
+	for gcvg-git-2@plane.gmane.org; Wed, 18 Apr 2012 21:38:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754792Ab2DRTeT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Apr 2012 15:34:19 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48787 "EHLO
+	id S1754819Ab2DRTiK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Apr 2012 15:38:10 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50752 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754156Ab2DRTeS (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Apr 2012 15:34:18 -0400
+	id S1754768Ab2DRTiG (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Apr 2012 15:38:06 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1710678D9;
-	Wed, 18 Apr 2012 15:34:17 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8268379A4;
+	Wed, 18 Apr 2012 15:38:06 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=X5Ix3+RgmdLMfOwFvBXmIdVQvxI=; b=rAoI4g
-	iTqchpJcEnPpqGn1sM7GzxP7l3X2gTXcPalqpcgT4BZMQgxETH9LckIgaCPv3ruf
-	ymJDV3e18ybEwAR+8YwtOeGaEHjjYCrGUH+dAGNYm9ovU8Rsi1JhINMHLWtDbEL+
-	Td24QeGlVRHuXDCMNN75lnHz9+sD6xyDsnt8k=
+	:content-type; s=sasl; bh=YQ0NgBTc3jjxE/sAfUf++fJUBwg=; b=YuE+OY
+	xOA1z9uUn1yKHgNnosP070Tg/GqJbE2Lb9IAkoW+f98xs07jIoqBa1CISUHRmOUP
+	i5Ukqr3Ee2PO9Bf4iGgC1heJ/4AuizvzzuIdRTaA7ypowvZMES7YghluabGlXnoj
+	xjwVbf2icpDq/gnBohLCApb3zW1J++cEJbVLo=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=yGNKMlnGwA5hNB5kMiJNvcC55c+0RwoM
-	vywqL68kEnIT0Au30Ya4fGbmQczxBM6O5d8P9UxTE/xVlgWP0PpFr5GL9K+Df3V+
-	aYGNZBQCYG7FQUyqxDzw55vcMf9/Jr7IXavwpDyb+YYTlhRhnDXyIv2O7C1MXKr5
-	Jt2pF7P7jws=
+	:content-type; q=dns; s=sasl; b=n+NlVWyzb2ZuiEx53+qTt7GWhK3S2hij
+	Pe1E56Pa6yGwZlL14tspGEDm8+P+FS9DrYi0XNqmQmu4tCid0FdOvjfKZdJH49O0
+	DPmzq9iWbATtLa/jKAttAHiDo2A221pq5LeHmMiM+05DlfiEgSTJsV/NcUQN/XyV
+	ccsGXtY4/So=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0E46078D8;
-	Wed, 18 Apr 2012 15:34:17 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 792EC79A3;
+	Wed, 18 Apr 2012 15:38:06 -0400 (EDT)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5351878D6; Wed, 18 Apr 2012
- 15:34:16 -0400 (EDT)
-In-Reply-To: <20120418191849.GA12619@sigill.intra.peff.net> (Jeff King's
- message of "Wed, 18 Apr 2012 12:18:50 -0700")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0B22279A1; Wed, 18 Apr 2012
+ 15:38:05 -0400 (EDT)
+In-Reply-To: <CAFouetgWpyUC9SPo_QwpESrbfib7ct111WesKPP14HQ+SqpFaQ@mail.gmail.com> (Tim
+ Henigan's message of "Wed, 18 Apr 2012 14:28:18 -0400")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 7C1D7ECA-898D-11E1-8E9B-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 0507AE22-898E-11E1-8683-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195888>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195889>
 
-Jeff King <peff@peff.net> writes:
+Tim Henigan <tim.henigan@gmail.com> writes:
 
-> I've included a patch below that makes this look like:
->
->   static const char repack_cmd[] = {"repack", "-d", "-l", NULL };
->   static struct argv_array repack = ARGV_ARRAY_INIT_DEFAULT(repack_cmd);
->
-> which is way less nice than I would prefer, but I think may be the best
-> we can do with static initialization.
->
->> What do you think of just:
->> 
->>   static struct argv_array argv_repack;
->>   [...]
->>   argv_init_from_string(&argv_repack, "repack -d -l");
->
-> I looked into this, but it seems our sq_dequote_* functions insist that
-> it be spelled "'repack' '-d' '-l'", so I would have to teach them to be
-> more liberal first.
->
-> Thoughts?
+> Looking back on it now, I agree that it would have been better to use
+> the plumbing commands from the beginning.  Changing from the porcelain
+> to the plumbing commands will require new logic to parse the diff
+> options to figure out which of 'diff-index', 'diff-files' or
+> 'diff-tree' should be called.  We may also want to add support for
+> some specific standard diff options (like '-R').
 
-I do not know it is worth it to try to be too fancy.
+Yeah, didn't I already suggest that it is the only sane avenue in the long
+term to move the whole "populate the two temporary trees" thing down to C
+level?
 
-I was about to suggest, immediately after seeing the first one I quoted
-above, to omit NULL and instead use ARRAY_SIZE(), but I do not think that
-is even worth it, as some (possibly future) caller may have only "char **"
-as a usual NULL terminated array at hand.
+> For now, would you object to an updated patch that simply detects and
+> ignores options that change the output of 'git diff --raw'?
 
-I am perfectly OK with even without initializers, like this:
-
-	struct argv_array repack = ARGV_ARRAY_INIT;
-	argv_array_push_strings(&repack, "repack", "-d", "-l", NULL);
+As a script that uses 'git diff' is a short-term hack anyway, I think the
+most cost effective thing to do is to add '--no-renames' at the end and be
+done with it.
