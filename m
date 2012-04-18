@@ -1,88 +1,48 @@
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: git-push sent too many objects
-Date: Wed, 18 Apr 2012 00:59:14 -0700
-Message-ID: <CAJo=hJuGHymJtZL14mAq0gBZE+za5URoon=rMzPA=tTQC14ftQ@mail.gmail.com>
-References: <30586.1334681607@plover.com>
+From: supadhyay <supadhyay@imany.com>
+Subject: Re: Tags/Branches missing in GIT
+Date: Wed, 18 Apr 2012 01:27:04 -0700 (PDT)
+Message-ID: <1334737624705-7476181.post@n2.nabble.com>
+References: <1334728490216-7475869.post@n2.nabble.com> <4F8E6E74.7020403@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Mark Jason Dominus <mjd@plover.com>
-X-From: git-owner@vger.kernel.org Wed Apr 18 09:59:46 2012
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Apr 18 10:27:14 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SKPnf-0000Bd-VT
-	for gcvg-git-2@plane.gmane.org; Wed, 18 Apr 2012 09:59:40 +0200
+	id 1SKQEM-0004j4-1c
+	for gcvg-git-2@plane.gmane.org; Wed, 18 Apr 2012 10:27:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751518Ab2DRH7g convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 18 Apr 2012 03:59:36 -0400
-Received: from mail-pz0-f52.google.com ([209.85.210.52]:50404 "EHLO
-	mail-pz0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751252Ab2DRH7f convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 18 Apr 2012 03:59:35 -0400
-Received: by dake40 with SMTP id e40so9506824dak.11
-        for <git@vger.kernel.org>; Wed, 18 Apr 2012 00:59:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=spearce.org; s=google;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=iVCaIXpjkSuv4ZfvkX1Asvc57v12rrOMXEoQxMnokLw=;
-        b=SUt6awg80xZA8st6Gw0smIAhqgbEop31Pu66DbLLJ4wtCAsJiRRTE6sohvFqOyEUdY
-         8sf/EyuUaF5iyv7L/4h34cXcJsYMNC5LfkouwJx+WYvV1SZ3/+iC1LGeEYmujPJid9WS
-         xVVQLcs4zeKwRuvXL1WzA6sZs5fC0QSLt9w+Q=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding:x-gm-message-state;
-        bh=iVCaIXpjkSuv4ZfvkX1Asvc57v12rrOMXEoQxMnokLw=;
-        b=GxnQC5/ovsyjeaEHCDLDykBwIpXBGf2ygfJf98jkVcLcK/yakk4HlEbQpLOSU+XKjR
-         3oMW6RZzb3/f1kSVFpJtZdaIe56IVuqP/K8/Nqe0a1S5pM74tr5+HhiVXooqBnr0babF
-         m53D6X1rFocHJkS9lPaZcEdXHrHQ8YXaZWhgIDXpvRr+LpLeoQSLUYpMoC+DqOQGoNyq
-         JpQdW8l+iy1m24/Ry9ozBJF4nM/2wqq0M0TftYLZJIsS5OYMU2NEdZ6unKr14QGUyDw6
-         5wVMkwkTd+EgJo8sgORFKZeWkgZt6mdJUunN4+Yw4iIyfod5mbg1KdLo/onmVP19j/Ir
-         mZTQ==
-Received: by 10.68.131.69 with SMTP id ok5mr4588077pbb.2.1334735974889; Wed,
- 18 Apr 2012 00:59:34 -0700 (PDT)
-Received: by 10.68.55.68 with HTTP; Wed, 18 Apr 2012 00:59:14 -0700 (PDT)
-In-Reply-To: <30586.1334681607@plover.com>
-X-Gm-Message-State: ALoCoQnaVCzG0ldv8iZGm0er9csqVXEXlhs7cz2i0G4L2XQsXIJbCOYE51so6m0HOBDWG+tzEvNw
+	id S1751639Ab2DRI1H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Apr 2012 04:27:07 -0400
+Received: from sam.nabble.com ([216.139.236.26]:55945 "EHLO sam.nabble.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751181Ab2DRI1F (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Apr 2012 04:27:05 -0400
+Received: from jim.nabble.com ([192.168.236.80])
+	by sam.nabble.com with esmtp (Exim 4.72)
+	(envelope-from <supadhyay@imany.com>)
+	id 1SKQEC-0008Fc-N2
+	for git@vger.kernel.org; Wed, 18 Apr 2012 01:27:04 -0700
+In-Reply-To: <4F8E6E74.7020403@alum.mit.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195844>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195845>
 
-On Tue, Apr 17, 2012 at 09:53, Mark Jason Dominus <mjd@plover.com> wrot=
-e:
->
-> I had a master ref, pointing to commit 231e284, which I branched to
-> make a "coupon" ref. =A0My remote, "origin" had a copy of commit
-> 231e284.
->
-> I modified one file and committed it on "coupon", yielding commit
-> 03b6489. Then I pushed coupon to origin. =A0I expected that git-push
-> would send about five objects, but instead it reported sending 1,315.
->
-> Command output is pasted at http://nopaste.info/a866bb00e0.html .
-> You can verify that:
->
-> 1. I pushed only coupon, not any other ref.
-> 2. origin already had a copy of coupon's predecessor commit, 231e284.
-> 3. 03b6489 was identical to 231e284 except for changes in one file.
-> 4. I was not doing anything obviously strange.
->
-> What happened here? =A0Why did git-push send 1,315 objects instead of=
- 5?
+Hi Michael,
 
-Is it possible someone else modified the repository at the same time?
+My apologize. I have edit my subscription for  users,issues and announce but
+not able to post any query or new topic . On their webpage I can not see any
+link/button for post new topic or etc. If you can guide me how ot post new
+topic there then it would be great help for me.
 
-We see this happen when the remote no longer has a branch pointing
-exactly at commit 231e284, because another user (or you in another
-shell?) had pushed a new commit to that branch before you pushed this
-new coupon branch. In these sorts of cases your Git client can't
-accurately determine what the server has and does not have, so it errs
-on the conservative side and sends a lot more than it probably needed
-to.
+Thanks...
+
+--
+View this message in context: http://git.661346.n2.nabble.com/Tags-Branches-missing-in-GIT-tp7475869p7476181.html
+Sent from the git mailing list archive at Nabble.com.
