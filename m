@@ -1,59 +1,55 @@
-From: Jon Seymour <jon.seymour@gmail.com>
-Subject: git-svn: a interesting difference in performance as compared to
- Tortoise SVN
-Date: Wed, 18 Apr 2012 15:56:09 +1000
-Message-ID: <CAH3AnrrY2F9rfTTFpTuBaRQmT4jHsS=WPTNTcWZGA8Oqz_UtQg@mail.gmail.com>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: What's cooking in git.git (Apr 2012, #06; Sun, 15)
+Date: Wed, 18 Apr 2012 09:15:30 +0200
+Message-ID: <4F8E6A12.9090708@viscovery.net>
+References: <7vpqb8xjj9.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Apr 18 07:56:17 2012
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+	<pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 18 09:15:46 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SKNsF-0004As-Hi
-	for gcvg-git-2@plane.gmane.org; Wed, 18 Apr 2012 07:56:15 +0200
+	id 1SKP77-0007QE-EY
+	for gcvg-git-2@plane.gmane.org; Wed, 18 Apr 2012 09:15:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751125Ab2DRF4L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Apr 2012 01:56:11 -0400
-Received: from mail-wi0-f172.google.com ([209.85.212.172]:42637 "EHLO
-	mail-wi0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750792Ab2DRF4K (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Apr 2012 01:56:10 -0400
-Received: by wibhj6 with SMTP id hj6so300323wib.1
-        for <git@vger.kernel.org>; Tue, 17 Apr 2012 22:56:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=7ZbWQ0aD52VLj/RJs9edvU1NrtB6kfoJb07QOxbqnZw=;
-        b=L4MGsaf7l/p4DBvi66+gShGWHhxf33KOWNmAijUiG27eNU0+y1Y9vT1q6Sq4stVP7M
-         wo6zB3Rk6ehIHvZyw9TQfNhYnaTOiIdkRnQuyMTexoJ8KuiFAwgr4WCapt63pUMi3Cna
-         ZxI7M9cZ31Q42axqNEluHXhGcWDZJkN5Mht26kcnDrFRLulgH/B1r20sljJhB1+POgPe
-         NJga2QDJmRZIagVWfXZiPY8q4PGMuwEXu2EvSfQbpQOy2rneYd3YsamyG5JlNVJTGBgz
-         1tCSnsv4IpvwVMSAi4FdGUr2iVyrmuRxenn17lVPnUwOkhrA+/Ct5jYqZ5/T6wu8FNpR
-         VnTQ==
-Received: by 10.216.134.27 with SMTP id r27mr582037wei.107.1334728569228; Tue,
- 17 Apr 2012 22:56:09 -0700 (PDT)
-Received: by 10.180.82.35 with HTTP; Tue, 17 Apr 2012 22:56:09 -0700 (PDT)
+	id S1751406Ab2DRHPf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Apr 2012 03:15:35 -0400
+Received: from lilzmailso02.liwest.at ([212.33.55.13]:20915 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751086Ab2DRHPf (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Apr 2012 03:15:35 -0400
+Received: from cpe228-254-static.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.76)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1SKP7G-0006wN-GA; Wed, 18 Apr 2012 09:15:50 +0200
+Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id 946781660F;
+	Wed, 18 Apr 2012 09:15:30 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:11.0) Gecko/20120327 Thunderbird/11.0.1
+In-Reply-To: <7vpqb8xjj9.fsf@alter.siamese.dyndns.org>
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195840>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195841>
 
-I thought others might be interested in this slightly
-counter-intuitive performance of git-svn as opposed to Tortoise SVN.
+Am 4/16/2012 8:44, schrieb Junio C Hamano:
+> * nd/threaded-index-pack (2012-04-11) 3 commits
+>  - index-pack: support multithreaded delta resolving
+>  - index-pack: split second pass obj handling into own function
+>  - compat/win32/pthread.h: Add an pthread_key_delete() implementation
 
-The SVN repo is exposed via HTTP. The current tree is about 8500 files
-and consumes 300MB of disk, checked out. The git repo is 200MB. There
-are around 231 commits in the history.
+With this series, t9300.92 (fast-import, Q: verify pack) consistently
+fails for me on Windows.
 
-The initially slightly counter-intuitive aspect is that given the
-current state of the repo, git-svn is 4 times faster when it pulls the
-entire history than TortoiseSVN is when it checks out just the current
-head. It seems that the extra network cost of the extra git-svn
-retrieval is dwarfed by the local processing costs of the TortoiseSVN
-client.
+I'll have to see when I can dig deeper into this topic...
 
-jon.
+-- Hannes
