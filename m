@@ -1,63 +1,64 @@
-From: Catalin Marinas <catalin.marinas@gmail.com>
-Subject: Re: [StGit] Mostly-Emacs-mode merge request
-Date: Wed, 18 Apr 2012 11:49:30 +0100
-Message-ID: <CAHkRjk7ZU2WhiYarcYLPYZUA_grib22d75YcRMO4rLGMB1wR0g@mail.gmail.com>
-References: <CAFBaKAzbYt4S8mK=yatCACBgyEDM3vuwjaM+KFXKT3fhvA2m1w@mail.gmail.com>
- <CAFBaKAxKnDmNh1BPT1sfFA8k+-zyE9aRuV_5yV6zi62ieOGiew@mail.gmail.com>
+From: Neil Horman <nhorman@tuxdriver.com>
+Subject: Re: [PATCH v6 4/4] git-rebase: add keep_empty flag
+Date: Wed, 18 Apr 2012 06:50:09 -0400
+Message-ID: <20120418105009.GD22172@hmsreliant.think-freely.org>
+References: <1333136922-12872-1-git-send-email-nhorman@tuxdriver.com>
+ <1334686809-17634-1-git-send-email-nhorman@tuxdriver.com>
+ <1334686809-17634-5-git-send-email-nhorman@tuxdriver.com>
+ <20120417214659.GC19908@ecki>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?ISO-8859-1?Q?Gustav_H=E5llberg?= <gustav@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 18 12:49:57 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Phil Hord <phil.hord@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: Clemens Buchacher <drizzd@aon.at>
+X-From: git-owner@vger.kernel.org Wed Apr 18 12:50:22 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SKSSS-00039i-IH
-	for gcvg-git-2@plane.gmane.org; Wed, 18 Apr 2012 12:49:56 +0200
+	id 1SKSSr-0003V9-Jo
+	for gcvg-git-2@plane.gmane.org; Wed, 18 Apr 2012 12:50:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752612Ab2DRKtw convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 18 Apr 2012 06:49:52 -0400
-Received: from mail-qc0-f174.google.com ([209.85.216.174]:44058 "EHLO
-	mail-qc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752566Ab2DRKtv convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 18 Apr 2012 06:49:51 -0400
-Received: by qcro28 with SMTP id o28so4404356qcr.19
-        for <git@vger.kernel.org>; Wed, 18 Apr 2012 03:49:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=uLCZAQ2rtxiToH3rZtYYE+ArGsgDyNbee5YHYK14Ofg=;
-        b=G3BBc65RUh0GtO98aWDgX51JGYAvz0cN2Aub5Npl+yNS5PMpW6JSJqlvf9hnVZ5sVg
-         /R/YiTCLU3oX9IWN5NhNYXN2XHj5LWP4b3a/Uqb3AXepbb99gPEZu5taNTRKp1LUhJ5I
-         vcxiqcBWRvwlPoe5QnrmJQ4/jPU/KaJXI3KiTR3reYDN/I0g4RXhDthTt5ChIpcH7Pgu
-         eVI2apjQdBv6/aKuh/RLGZ2sVMQzd9uhQdfdufJtpyLgVqzfFpB3lde9v0WWgtUCSog+
-         pibmeGPbPdnTtRIl7soQ6GvLKKgkbh8cJ+tHeiFfwz5LlUDUiDKDkpJmUUf6wlodhaNM
-         8GHA==
-Received: by 10.224.35.130 with SMTP id p2mr2795864qad.32.1334746190388; Wed,
- 18 Apr 2012 03:49:50 -0700 (PDT)
-Received: by 10.229.75.20 with HTTP; Wed, 18 Apr 2012 03:49:30 -0700 (PDT)
-In-Reply-To: <CAFBaKAxKnDmNh1BPT1sfFA8k+-zyE9aRuV_5yV6zi62ieOGiew@mail.gmail.com>
+	id S1751830Ab2DRKuP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Apr 2012 06:50:15 -0400
+Received: from charlotte.tuxdriver.com ([70.61.120.58]:35033 "EHLO
+	smtp.tuxdriver.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751362Ab2DRKuO (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Apr 2012 06:50:14 -0400
+Received: from hmsreliant.think-freely.org ([2001:470:8:a08:7aac:c0ff:fec2:933b] helo=localhost)
+	by smtp.tuxdriver.com with esmtpsa (TLSv1:AES128-SHA:128)
+	(Exim 4.63)
+	(envelope-from <nhorman@tuxdriver.com>)
+	id 1SKSSg-0004VW-DF; Wed, 18 Apr 2012 06:50:12 -0400
+Content-Disposition: inline
+In-Reply-To: <20120417214659.GC19908@ecki>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+X-Spam-Score: -2.9 (--)
+X-Spam-Status: No
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195854>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195855>
 
-2012/4/10 Gustav H=E5llberg <gustav@gmail.com>:
-> Catalin, can you please merge the following series from the
-> git://github.com/gustavh/stgit.git "proposed" branch.
+On Tue, Apr 17, 2012 at 11:47:01PM +0200, Clemens Buchacher wrote:
+> On Tue, Apr 17, 2012 at 02:20:09PM -0400, Neil Horman wrote:
+> >
+> > @@ -780,9 +793,17 @@ git rev-list $merges_option --pretty=oneline --abbrev-commit \
+> >  	sed -n "s/^>//p" |
+> >  while read -r shortsha1 rest
+> >  do
+> > +
+> > +	if test -z "$keep_empty" && is_empty_commit $shortsha1
+> > +	then
+> > +		comment_out="# pick"
+> > +	else
+> > +		comment_out="pick"
+> > +	fi
+> 
+> You forgot to change this to comment_out="# " and comment_out="".
+> 
 
-Thanks. I merged them.
-
-> PS. The documentation in=A0http://www.procode.org/stgit/doc/ needs to=
- be
-> updated to 0.16.
-
-They seem to be quite old. I'll update them.
-
---=20
-Catalin
+Thanks, I'll fix that up when I modify the keep-redundant-commits commit message
+Neil
