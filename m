@@ -1,84 +1,71 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-merge: Reduce heads before trying to merge them
-Date: Wed, 18 Apr 2012 13:20:05 -0700
-Message-ID: <7vzka8kd1m.fsf@alter.siamese.dyndns.org>
-References: <CA+55aFzGwPYNn2baFhEr4msBTV7__nkTSUqAZ7=PRVoYrchV5w@mail.gmail.com>
- <1334687118-5386-1-git-send-email-michal.kiedrowicz@gmail.com>
- <7vzkaambre.fsf@alter.siamese.dyndns.org>
- <CA+55aFzLFA535CtjLJe1p62H=nunQ=vrL_mPYsYJB0e8U7mpdg@mail.gmail.com>
- <7vvckym6ec.fsf@alter.siamese.dyndns.org> <20120418201426.7070315f@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] gc: fix off-by-one in append_option
+Date: Wed, 18 Apr 2012 13:21:16 -0700
+Message-ID: <20120418202116.GA12964@sigill.intra.peff.net>
+References: <20120417233255.GA24626@sigill.intra.peff.net>
+ <20120418191849.GA12619@sigill.intra.peff.net>
+ <7vd374ltqh.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Linus Torvalds <torvalds@linux-foundation.org>, git@vger.kernel.org
-To: =?utf-8?Q?Micha=C5=82?= Kiedrowicz <michal.kiedrowicz@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 18 22:20:21 2012
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Apr 18 22:21:28 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SKbMO-0006Ft-Su
-	for gcvg-git-2@plane.gmane.org; Wed, 18 Apr 2012 22:20:17 +0200
+	id 1SKbNW-0007CD-54
+	for gcvg-git-2@plane.gmane.org; Wed, 18 Apr 2012 22:21:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755068Ab2DRUUL convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 18 Apr 2012 16:20:11 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:40931 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753422Ab2DRUUI convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 18 Apr 2012 16:20:08 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6B26D649B;
-	Wed, 18 Apr 2012 16:20:08 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=zG5SqluXIgQN
-	JAkRkHA/t9dhDCU=; b=W7tTFpUX2M+K27vDe0kfWpaRBqkoJySCRM0KGrC7kcD5
-	GOrM0QVD7VZueom7uYX++9WBIoC4wnlQT1LkI0T6ENhKOzzkiKX0d1/oVt3Dtj0g
-	seCa1OThNkG5NaEfx8Ikw11DXrkjLWU6bnEH/b6madAjFxBH07xYTitgFYwb7lU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=IX+GGa
-	OdK62YUENIYIuklm/QW8Ei2PelMjbvq3z/VaXP4MYztpcKvaoGkiQM+gL3JOgErI
-	/kMedvGFlsLlm680qtwtnOJthwEy7hB+OGYlfUbpp5wkEwVI8UHZYdBVFlbThxu9
-	WwBRc0mKlnJd5O2a7c5OPs3s9gIQpMlMHobwM=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 61C98649A;
-	Wed, 18 Apr 2012 16:20:08 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id CCE2C6495; Wed, 18 Apr 2012
- 16:20:06 -0400 (EDT)
-In-Reply-To: <20120418201426.7070315f@gmail.com> (=?utf-8?Q?=22Micha=C5=82?=
- Kiedrowicz"'s message of "Wed, 18 Apr 2012 20:14:26 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: E38A3AF2-8993-11E1-BB96-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754277Ab2DRUVV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Apr 2012 16:21:21 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:37977
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753801Ab2DRUVU (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Apr 2012 16:21:20 -0400
+Received: (qmail 20233 invoked by uid 107); 18 Apr 2012 20:21:28 -0000
+Received: from c-67-169-43-61.hsd1.ca.comcast.net (HELO sigill.intra.peff.net) (67.169.43.61)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 18 Apr 2012 16:21:28 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 18 Apr 2012 13:21:16 -0700
+Content-Disposition: inline
+In-Reply-To: <7vd374ltqh.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195898>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195899>
 
-Micha=C5=82 Kiedrowicz <michal.kiedrowicz@gmail.com> writes:
+On Wed, Apr 18, 2012 at 12:34:14PM -0700, Junio C Hamano wrote:
 
-> Junio C Hamano <gitster@pobox.com> wrote:
-> =20
->> I was cooking a fix on-and-off since yesterday evening, and sent it =
-out a
->> few minutes ago. I think the spirit is almost the same as Micha=C5=82=
-'s updated
->> patch, but it reduces the heads even earlier to catch cases where Mi=
-cha=C5=82's
->> updated patch may misdiagnose arity of the resulting merge due to it=
-s use
->> of remoteheads->next before the list is reduced (namely, the choice =
-of the
->> default strategy based on how many we are merging).
+> > I've included a patch below that makes this look like:
+> >
+> >   static const char repack_cmd[] = {"repack", "-d", "-l", NULL };
+> >   static struct argv_array repack = ARGV_ARRAY_INIT_DEFAULT(repack_cmd);
 >
-> I like your patches, especially how reducing heads is now done in
-> collect_parents() instead of doing it twice (before merging and in
-> finish_automerge()).  And that you got rid of global remoteheads too.
+> I do not know it is worth it to try to be too fancy.
+> 
+> I was about to suggest, immediately after seeing the first one I quoted
+> above, to omit NULL and instead use ARRAY_SIZE(), but I do not think that
+> is even worth it, as some (possibly future) caller may have only "char **"
+> as a usual NULL terminated array at hand.
 
-Thanks.  Linus also said "Yes, that sounds right (on the road with just=
- my
-phone, sorry for the html)" off-list to the series.
+Actually, that is broken already, because the initializer uses
+ARRAY_SIZE to set argc properly. Omitting NULL wouldn't work anyway,
+though, because then the state before any push violates the invariant
+(that the value is NUL-terminated).
+
+I think it really is impossible to make it nice, because we can't count
+on running _any_ code before somebody peeks at array.argv (we don't even
+have an accessor, but just let people look at that directly).
+
+> I am perfectly OK with even without initializers, like this:
+> 
+> 	struct argv_array repack = ARGV_ARRAY_INIT;
+> 	argv_array_push_strings(&repack, "repack", "-d", "-l", NULL);
+
+I think that is sane, and certainly the simplest. I'll send a patch in a
+moment.
+
+-Peff
