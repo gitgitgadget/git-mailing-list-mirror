@@ -1,115 +1,83 @@
-From: Pete Wyckoff <pw@padd.com>
-Subject: Re: git p4: any way to avoid rebasing all the time?
-Date: Wed, 18 Apr 2012 07:53:01 -0400
-Message-ID: <20120418115301.GA24716@padd.com>
-References: <CAE5ih7_Fh0XA-XNNvtHnXhYwUvwmmg-Z+y-Mb5Wvra3Y83eFsw@mail.gmail.com>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: organizing multiple repositories with dependencies
+Date: Wed, 18 Apr 2012 14:09:24 +0200
+Message-ID: <4F8EAEF4.8030706@web.de>
+References: <1334568432.53977.YahooMailNeo@web65906.mail.ac4.yahoo.com> <m3hawjagw9.fsf@localhost.localdomain> <nng3983phhc.fsf@transit.us.cray.com> <CAE1pOi1KnvRk4yxK8OQHi9h_ueNnh5Ar3tbKFBKTA69=Aje0TQ@mail.gmail.com> <201204171837.q3HIbbcW013784@no.baka.org> <CAE1pOi29dKd2LHW7MJ+TTN4HzFkOPFEyf7Sf2emSsBYm93uYUA@mail.gmail.com> <nng1unmnksx.fsf@transit.us.cray.com> <CAE1pOi38krwXZuiYxtpLwm92N=NvWkP30V_=6cnHw=sdyk6QhA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Users <git@vger.kernel.org>,
-	Vitor Antunes <vitor.hda@gmail.com>
-To: Luke Diamand <luke@diamand.org>
-X-From: git-owner@vger.kernel.org Wed Apr 18 13:53:16 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: dag@cray.com, Git Users <git@vger.kernel.org>
+To: Hilco Wijbenga <hilco.wijbenga@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 18 14:09:40 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SKTRf-0006zP-Mt
-	for gcvg-git-2@plane.gmane.org; Wed, 18 Apr 2012 13:53:12 +0200
+	id 1SKTha-0003hW-NB
+	for gcvg-git-2@plane.gmane.org; Wed, 18 Apr 2012 14:09:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753009Ab2DRLxG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Apr 2012 07:53:06 -0400
-Received: from honk.padd.com ([74.3.171.149]:59105 "EHLO honk.padd.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752524Ab2DRLxF (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Apr 2012 07:53:05 -0400
-Received: from arf.padd.com (unknown [50.55.145.32])
-	by honk.padd.com (Postfix) with ESMTPSA id 3988820CE;
-	Wed, 18 Apr 2012 04:53:04 -0700 (PDT)
-Received: by arf.padd.com (Postfix, from userid 7770)
-	id 5EAE85E917; Wed, 18 Apr 2012 07:53:01 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <CAE5ih7_Fh0XA-XNNvtHnXhYwUvwmmg-Z+y-Mb5Wvra3Y83eFsw@mail.gmail.com>
+	id S1753253Ab2DRMJd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Apr 2012 08:09:33 -0400
+Received: from fmmailgate04.web.de ([217.72.192.242]:32979 "EHLO
+	fmmailgate04.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753252Ab2DRMJb (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Apr 2012 08:09:31 -0400
+Received: from moweb002.kundenserver.de (moweb002.kundenserver.de [172.19.20.108])
+	by fmmailgate04.web.de (Postfix) with ESMTP id 779FC7632F57
+	for <git@vger.kernel.org>; Wed, 18 Apr 2012 14:09:25 +0200 (CEST)
+Received: from [192.168.178.48] ([91.3.175.87]) by smtp.web.de (mrweb001) with
+ ESMTPA (Nemesis) id 0LrsC6-1S7i4A4302-013gcg; Wed, 18 Apr 2012 14:09:25 +0200
+User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:11.0) Gecko/20120327 Thunderbird/11.0.1
+In-Reply-To: <CAE1pOi38krwXZuiYxtpLwm92N=NvWkP30V_=6cnHw=sdyk6QhA@mail.gmail.com>
+X-Provags-ID: V02:K0:gFlCBlbDYUPgC2tuBuO6LeoTyCQded//sAOFuHj1Aua
+ M9rOvBj8kVaCsquUi5ZgfVAtW3VSx8T8ynK+y/iEJtX+uN7Zf/
+ /+A8BE3QaQCnNBjpRrPpMDXoBBWGEtBiocORBkanl9x7UJ2A8F
+ QKgM+pPQxSuFWaF2Ue5e+uiP/x0l7NQ/dDZGYkiZXaoMc0ca/Q
+ +z11vy/tXqnIoLq5AUZpw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195860>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195861>
 
-luke@diamand.org wrote on Wed, 11 Apr 2012 18:27 +0200:
-> Is there a way to get "git p4" to not rebase all the time?
+Am 17.04.2012 23:43, schrieb Hilco Wijbenga:
+> The main problem with the current submodule support is that there is
+> so much manual work needed. It is too easy to forget a step. Moreover,
+> it's not easy to determine *that* you forgot a step or which step you
+> forgot.
+
+Looks like you are talking about the submodule support how it was a
+few years ago. Since 1.7.0 you cannot forget to commit changes in the
+submodule anymore, and since 1.7.5 all referenced submodule commits
+are fetched when you fetch the superproject. The only thing missing
+(with some work done towards that in last years GSoc) is supporting
+the pushing of submodule changes and the transparent update of
+submodule content when the superproject is updated, both of which are
+currently being worked on.
+
+What else was bothering you so much you dumped submodules?
+
+>> Of course, this is entirely driven by git-subtree's model of actually
+>> incorporating subproject history into one big umbrella repository.
+>> There is no separation between the subprojects and umbrella projects.
+>> It's one giant history.  Therefore, push/pull to/from subprojects are
+>> explicit operations.  That's probably not the best model for every
+>> situation but I find it very nice.
 > 
-> Right now, git commits get discarded and replaced with new ones with
-> the same contents and extra git-p4 metadata embedded in the comment.
-> 
-> If we put this git-p4 metadata into a git note then we would not need
-> to rewrite the commits, and so could perhaps avoid rebasing quite so
-> much.
+> I do not have enough (okay, any) experience with subtree to comment on
+> that. The first part seems just what I want. I'm not sure about the
+> explicit pushing/pulling part. That sounds too much like asking for
+> the sort of problems that scared us away from submodules. Hopefully,
+> I'm dead wrong. :-)
 
-I don't know if it is always true that the change that went from
-git to p4 and back is identical to the original git commit.
-Things like timestamp and maybe author name?  We have evil
-systems that rewrite p4 change descriptions post submit, worse
-yet.
-
-You can do funny merges to make it look like you're not rebasing:
-
-  o--o--o   p4/master
-         \
-          A--B   top
-
-submit:
-
-  o--o--o--A'--B'  p4/master
-         \
-          A--B   top
-
-merge -s ours, so that M == B' == B.
-
-  o--o--o--A'--B'  p4/master
-         \      \
-          A--B---M  top
-
-The merge changes nothing, but avoids a rebase for anything that
-depended on the original A and B.
-
-> However, if "git p4" won't rewrite commits, then it can't reorder them
-> to match the ordering seen from p4.
-> 
-> So you could end up with git users seeing OLDHEAD,G,P and p4 users
-> seeing OLDHEAD,P,G, as there's a race to see who submits against
-> OLDHEAD first, which p4 always wins.
-> 
-> Would this matter (assuming the git and p4 commits are all reasonably
-> independent) or is there a way to avoid it?
-> 
-> Perhaps hook into the pre-receive hook? If the newest p4 changelist is
-> not the same as the HEAD of the branch being pushed to, then reject
-> the push, just as would happen if the branch could not be
-> fast-forwarded in a normal git repo? (Even with this there is still a
-> small window of opportunity).
-
-Yes, the race issues are tough.  There is no way in p4 to ensure
-a given existing ancestor when submitting.  Closest you can come
-is with locking, which is sometimes annoying to other users:
-
-    p4 lock //depot/path/...
-    <verify same change number>
-    p4 submit
-    p4 unlock //depot/path/...
-
-You can lock just the files being submitted, but that doesn't
-prevent other non-intersecting changes from sneaking in.
-
-If there is a series of git commits, they can be checked in
-atomically on a side branch in p4, and merged.  That doesn't help
-your rebase issue, but is a way to keep a series of changes from
-being broken up by races at p4.
-
-                -- Pete
-
-> At that point, the "git p4 rebase" command would still be used, but
-> would normally be a no-op.
-> 
-> Or would that result in something far too complicated to have any
-> chance of working?
+As I understand subtree the pushing and pulling of the subprojects
+is needed pretty much at the same points in time it is needed when
+using submodules (to share the subproject work between different
+superprojects via their upstream). The difference is you import all
+subproject changes into a single repo when using subtree, while they
+stay separate when using submodules (and additionally you have to
+record the updated subprojects in the superproject in an extra
+commit there). Submodules enforce the distinction between submodules
+and the superproject while subtree doesn't, which may or may not be
+just what you want ;-)
