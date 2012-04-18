@@ -1,224 +1,79 @@
-From: Kent Fredric <kentfredric@gmail.com>
-Subject: IRC discussion re: submodules & missing refs/heads/master
-Date: Thu, 19 Apr 2012 07:56:11 +1200
-Message-ID: <CAATnKFDM5a9diHPg5QtS-jqEC1oYWL3a1dYnpwFLZK1UktgJAA@mail.gmail.com>
-References: <CAATnKFCAAwJYTx42iX5ZQ5-HrygFwUCWnKDNj0GDydwPYs-Nvg@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 2/2] var doc: advertise current DEFAULT_PAGER and
+ DEFAULT_EDITOR settings
+Date: Wed, 18 Apr 2012 15:02:15 -0500
+Message-ID: <20120418200215.GB30558@burratino>
+References: <20120330002543.2138.91961.reportbug@localhost6.localdomain6>
+ <20120330005523.GA28519@burratino>
+ <7v398qq1ei.fsf@alter.siamese.dyndns.org>
+ <20120331084015.GC4119@burratino>
+ <20120331084453.GE4119@burratino>
+ <7v1uo8k64l.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 18 21:56:18 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: "Rodrigo Silva (MestreLion)" <linux@rodrigosilva.com>,
+	git@vger.kernel.org, Ben Walton <bwalton@artsci.utoronto.ca>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Apr 18 22:02:49 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SKazB-0004Bc-8e
-	for gcvg-git-2@plane.gmane.org; Wed, 18 Apr 2012 21:56:17 +0200
+	id 1SKb5O-0000sC-Dl
+	for gcvg-git-2@plane.gmane.org; Wed, 18 Apr 2012 22:02:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754186Ab2DRT4N convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 18 Apr 2012 15:56:13 -0400
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:45124 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752637Ab2DRT4M convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 18 Apr 2012 15:56:12 -0400
-Received: by iagz16 with SMTP id z16so10853527iag.19
-        for <git@vger.kernel.org>; Wed, 18 Apr 2012 12:56:11 -0700 (PDT)
+	id S1755007Ab2DRUCX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Apr 2012 16:02:23 -0400
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:35325 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754215Ab2DRUCV (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Apr 2012 16:02:21 -0400
+Received: by yenl12 with SMTP id l12so3972045yen.19
+        for <git@vger.kernel.org>; Wed, 18 Apr 2012 13:02:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :content-type:content-transfer-encoding;
-        bh=FuNRlUkD+pGT4KMX6mPbRugt4LZVEWlevU9RzIicoqQ=;
-        b=lFU/zgsk+FsMwraX4kJoNktGvCtT86FXfai5dDHqcyqBt6t2Rd94IylUnBwvcH8ngf
-         kYpL+nAvxQPlu6OqDMikbCjWYbD/4T3lJFIGIbF86ogUmGeX9GBDoukeVszCJ6g48MWh
-         vObqT2n0ug5FBkDKc05/Ha1C6aiR+22cOdYegwQcLNQhteeQDevXuWulxkxLHU1Wnmbj
-         GrWjFyJ6dlHD00mk+nwpKVJa6r5yztxxTk3NgnlL5vWrZamb+VfqZxnXuZJZOE9djoJV
-         5O0ZHs4d3LsP6PHtj/HSCvEetiynoiFefNQxGwWFpiCCgshwZS29EITDYqV9tKq6FI4M
-         ySoA==
-Received: by 10.50.153.201 with SMTP id vi9mr14509609igb.46.1334778971409;
- Wed, 18 Apr 2012 12:56:11 -0700 (PDT)
-Received: by 10.42.138.74 with HTTP; Wed, 18 Apr 2012 12:56:11 -0700 (PDT)
-In-Reply-To: <CAATnKFCAAwJYTx42iX5ZQ5-HrygFwUCWnKDNj0GDydwPYs-Nvg@mail.gmail.com>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=Y6a26wsQZMAmQsRn0LuvGZSnhGu+sJUca40kLwamy5M=;
+        b=gN7+jH4t5LX4H6gBbXt6mGbHzlKY2oxGrcHn8K8IWkFbNzS26yB0CbWFACdU5eNbxe
+         7geY/ymtodOgrjVFD/5gqzfi4p/4GVL4VQsyBvZQ2hJ6nVNjWp3YEKzvhn+1hhq/jx56
+         Zuny01S4vdrmuJJZEG7OaCEzhVH5zUxaghR6qtyByJ98t8RBCBNI/cWejS+V4StcEQ9X
+         uZXgqZ9qjqRpyP7im7a/XMz2A2G4TtGxxyw03gNqzxnxMDBpI/aRpp7Obztuv5WJzjZY
+         nA3paQd9nnLT1kgsI/9LlqQIeEksfuJevrdmY8oTdvy0xKbgQ6iVBxCpZqa2XNDPS4/T
+         RzfA==
+Received: by 10.60.4.170 with SMTP id l10mr4851623oel.67.1334779341012;
+        Wed, 18 Apr 2012 13:02:21 -0700 (PDT)
+Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
+        by mx.google.com with ESMTPS id b6sm27997783obe.12.2012.04.18.13.02.19
+        (version=SSLv3 cipher=OTHER);
+        Wed, 18 Apr 2012 13:02:20 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <7v1uo8k64l.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195891>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195892>
 
-Relevant transcript from IRC with jrnieder
+Hi Junio,
 
----
-06:47:09 < kent\n> I have a fun problem, somethings gone wrong with a
-submodule somehow, now "git status" and friends just go "Fatal: Oops!"
-06:47:39 < kent\n> Ok, no !, but thats basically what I get :/
-06:48:29 < cbreak> kent\n: GIT_TRACE=3D1 git status ?
-06:48:47 < FauxFaux> strace $(git --exec-dir)/git-status
-06:50:01 < kent\n> cbreak: trace: built-in: git 'status'=C2=A0 , fatal:=
- Oops
-06:50:26 < kent\n> FauxFaux: doesn't work, status is a builtin, not a
-command.
-06:50:45 < jrnieder> kent\n: do you mean literally "fatal: Oops"?
-06:50:50 < kent\n> yes. Literally.
-06:50:54 < FauxFaux> kent\n: ...that's what the purpose of the $() bit =
-is.
-06:51:16 < kent\n> FauxFaux: git --exec-dir dies anyway because it does=
-n't
-know what I'm asking it to do
-06:51:17 < jrnieder> kent\n: I don't see that error message anywhere in=
- the
-source code
-06:51:21 < jrnieder> what version of git are you using?
-06:51:24 < FauxFaux> kent\n: Uh, --exec-path
-06:51:47 < FauxFaux> Also --version, yeah.
-06:51:58 < jrnieder> ah, you didn't mean literally "fatal: Oops"
-06:52:02 < jrnieder> you meant "fatal: oops"
-06:52:11 < FauxFaux> Yay paraphrasing.
-06:52:23 < kent\n> no, it has an upper-case O for me.
-06:53:02 < jrnieder> kent\n: ok, git version then?
-06:53:22 < kent\n> 1.7.8.5
-06:54:04 < kent\n> strace seems to tell me the problem is its looking f=
-or
-the ref "head" on the submodule, but for some reason, the path when sta=
-t()
-'d returns not found
-06:54:06 < jrnieder> kent\n: thanks
-06:55:04 < jrnieder> this code changed a bit in v1.7.9-rc1~10^2~7 (Pass=
- a
-(ref_cache *) to the resolve_gitlink_*() helper functions, 2011-12-12)
-06:55:13 < kent\n> for some reason, my 'refs/heads' directory for my
-submodule is empty :/
-07:03:14=C2=A0 * kent\n looks around in his .git/refs dir and finds a b=
-unch of
-empty directories not seeming to correspond to anything
+Junio C Hamano wrote:
 
+> something like:
+>
+> 	... then the default chosen at compile time, which is usually 'vi'.
+> ifdef::git-default-editor[]
+> 	The build you are using chose '{git-default-editor}' as the default.
+> endif::git-default-editor[]
+>
+> may be less confusing.
 
-07:13:52 < kent\n> yay. managed to fix it. blew away module/${modname}/=
-refs
-, checked out a new branch in the module, deleted master, rechecked out
-master, problem solved. ( wtf )
-07:15:52=C2=A0 * kent\n has no idea why
-=2Egit/modules/${modpathtingythere}/refs/heads/master=C2=A0 vanished.
-07:16:02 < jrnieder> kent\n: hmm
-07:16:16 < jrnieder> do you have a backup of the problematic state, or =
-can
-you make it happen again?
-07:16:29 < kent\n> I'm going to try, should be as easy as rm
-refs/heads/master
-07:16:37 < jrnieder> ok
-07:17:28 < kent\n> yep, that causes the problem to return.
-07:17:34 < jrnieder> excellent
-07:17:55 < jrnieder> if you use git 1.7.9 or newer, are the symptoms th=
-e
-same?
-07:18:13 < kent\n> will give it a whirl, fortunately, have 2 boxen with
-different gits =3D)
-07:19:12 < jrnieder> (another way if you don't want to upgrade your sys=
-tem
-copy of git is to do: "git clone git://repo.or.cz/git.git; cd git; make=
- -j4"
-and then use bin-wrappers/git from the source tree in place)
-07:20:42 < jrnieder> kent\n: I have to head out now but anyway, this se=
-ems
-interesting
-07:20:59 < jrnieder> whether 1.7.9 fixes it or not, if you get a chance=
- to
-email git@vger.kernel.org about it, that would be useful
-07:21:17 < kent\n> kk. will do.
-07:21:21 < jrnieder> thanks much
+I was not sure if this text would interrupt the flow of reading
+before, but I couldn't think of a good alternative so I didn't say
+anything.  Sorry about that.  Now I've looked at the built result and
+think the new text is good. :)
 
-Digging tells me that either Git gc or git prune is stripping the
-"master" file, causing the issue:
-
-cd $ROOT/metadata/perl/
-
-md5sum $( find ../../.git/modules/metadata/perl/ -type f ) > /tmp/pregc
-git gc
-md5sum $( find ../../.git/modules/metadata/perl/ -type f ) > /tmp/postg=
-c
-git prune
-md5sum $( find ../../.git/modules/metadata/perl/ -type f ) > /tmp/postp=
-rune
-
-diff3 /tmp/pregc /tmp/postgc /tmp/postprune
-=3D=3D=3D=3D1
-1:4c
-  4800e0911d51d4829e5650c487931108
-=2E./../.git/modules/metadata/perl/refs/heads/master
-2:3a
-3:3a
-
-So it seems 1.7.8.5 is removing that file for some unknown reason.
-
-cd $ROOT/metadata/perl
-git status
-
-# On branch master
-nothing to commit (working directory clean)
-
-cd $ROOT/
-
-git status
-
-fatal: Oops
-
-
-Rsyncing that to a box with 1.7.9.4  , and giving it  a little path cle=
-anup :
-
-  sed -i 's!/var/paludis/repositories/perl-git/!/tmp/mirrorbox/!' $(
-grep 'var/paludis/repositories' -R -l .  )
-
-cd $ROOT
-
- git status
-# On branch master
-# Changes not staged for commit:
-#   (use "git add <file>..." to update what will be committed)
-#   (use "git checkout -- <file>..." to discard changes in working dire=
-ctory)
-#
-#	modified:   metadata/perl (new commits)
-#
-# Untracked files:
-#   (use "git add <file>..." to include in what will be committed)
-#
-#	.mailmap
-#	Todo.txt
-#	dists.txt
-#	filterchange.pl
-#	fixme.pl
-#	itemise_diff.pl
-#	rebase.sh
-#	rebase2.sh
-#	rebash.sh
-#	rebash2.pl
-#	rebash2.pl.bak
-#	scripts/gen_metadata.pl
-#	ts
-#	update-index.sh
-no changes added to commit (use "git add" and/or "git commit -a")
-[master *%] kent@katipo: /tmp/mirrorbox
-
-
-( ALL GOOD )
-
-cd $ROOT/metadata/perl
-
-git status
-
-git status
-# On branch master
-nothing to commit (working directory clean)
-
-( ALL GOOD )
-
-=46rankly, thats just .... weird.
-
---
-Kent
-
-perl -e=C2=A0 "print substr( \"edrgmaM=C2=A0 SPA NOcomil.ic\\@tfrken\",=
- \$_ * 3, 3 )
-for ( 9,8,0,7,1,6,5,4,3,2 );"
-
-http://kent-fredric.fox.geek.nz
+Thanks,
+Jonathan
