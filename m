@@ -1,71 +1,97 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] gc: fix off-by-one in append_option
-Date: Wed, 18 Apr 2012 13:21:16 -0700
-Message-ID: <20120418202116.GA12964@sigill.intra.peff.net>
-References: <20120417233255.GA24626@sigill.intra.peff.net>
- <20120418191849.GA12619@sigill.intra.peff.net>
- <7vd374ltqh.fsf@alter.siamese.dyndns.org>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH] compat/mingw.h: Set S_ISUID to prevent a fast-import
+ test failure
+Date: Wed, 18 Apr 2012 22:22:00 +0200
+Message-ID: <4F8F2268.8020803@kdbg.org>
+References: <4F8DAFA4.2050502@ramsay1.demon.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Apr 18 22:21:28 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	GIT Mailing-list <git@vger.kernel.org>
+To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+X-From: git-owner@vger.kernel.org Wed Apr 18 22:22:12 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SKbNW-0007CD-54
-	for gcvg-git-2@plane.gmane.org; Wed, 18 Apr 2012 22:21:26 +0200
+	id 1SKbOF-0007ug-8e
+	for gcvg-git-2@plane.gmane.org; Wed, 18 Apr 2012 22:22:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754277Ab2DRUVV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Apr 2012 16:21:21 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:37977
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753801Ab2DRUVU (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Apr 2012 16:21:20 -0400
-Received: (qmail 20233 invoked by uid 107); 18 Apr 2012 20:21:28 -0000
-Received: from c-67-169-43-61.hsd1.ca.comcast.net (HELO sigill.intra.peff.net) (67.169.43.61)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 18 Apr 2012 16:21:28 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 18 Apr 2012 13:21:16 -0700
-Content-Disposition: inline
-In-Reply-To: <7vd374ltqh.fsf@alter.siamese.dyndns.org>
+	id S1752557Ab2DRUWF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Apr 2012 16:22:05 -0400
+Received: from bsmtp.bon.at ([213.33.87.14]:42443 "EHLO bsmtp.bon.at"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751790Ab2DRUWE (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Apr 2012 16:22:04 -0400
+Received: from dx.sixt.local (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTP id B129713004C;
+	Wed, 18 Apr 2012 22:22:00 +0200 (CEST)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+	by dx.sixt.local (Postfix) with ESMTP id AA3B519F6C0;
+	Wed, 18 Apr 2012 22:22:00 +0200 (CEST)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; de; rv:1.9.2.28) Gecko/20120306 SUSE/3.1.20 Thunderbird/3.1.20
+In-Reply-To: <4F8DAFA4.2050502@ramsay1.demon.co.uk>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195899>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195900>
 
-On Wed, Apr 18, 2012 at 12:34:14PM -0700, Junio C Hamano wrote:
-
-> > I've included a patch below that makes this look like:
-> >
-> >   static const char repack_cmd[] = {"repack", "-d", "-l", NULL };
-> >   static struct argv_array repack = ARGV_ARRAY_INIT_DEFAULT(repack_cmd);
->
-> I do not know it is worth it to try to be too fancy.
+Am 17.04.2012 20:00, schrieb Ramsay Jones:
 > 
-> I was about to suggest, immediately after seeing the first one I quoted
-> above, to omit NULL and instead use ARRAY_SIZE(), but I do not think that
-> is even worth it, as some (possibly future) caller may have only "char **"
-> as a usual NULL terminated array at hand.
-
-Actually, that is broken already, because the initializer uses
-ARRAY_SIZE to set argc properly. Omitting NULL wouldn't work anyway,
-though, because then the state before any push violates the invariant
-(that the value is NUL-terminated).
-
-I think it really is impossible to make it nice, because we can't count
-on running _any_ code before somebody peeks at array.argv (we don't even
-have an accessor, but just let people look at that directly).
-
-> I am perfectly OK with even without initializers, like this:
+> The current t9300-fast-import.sh test number 62 ("L: nested tree
+> copy does not corrupt deltas") was introduced in commit 9a0edb79
+> ("fast-import: add a test for tree delta base corruption",
+> 15-08-2011). A fix for the demonstrated problem was introduced
+> by commit 8fb3ad76 ("fast-import: prevent producing bad delta",
+> 15-08-2011). However, this fix didn't work on MinGW and so this
+> test has always failed on MinGW.
 > 
-> 	struct argv_array repack = ARGV_ARRAY_INIT;
-> 	argv_array_push_strings(&repack, "repack", "-d", "-l", NULL);
+> Part of the solution in commit 8fb3ad76 was to add an NO_DELTA
+> preprocessor constant which was defined as follows:
+> 
+>   +/*
+>   + * We abuse the setuid bit on directories to mean "do not delta".
+>   + */
+>   +#define NO_DELTA S_ISUID
+>   +
+> 
+> Unfortunately, the S_ISUID constant on MinGW is defined as zero.
+> 
+> In order to fix the problem, we simply alter the definition of
+> S_ISUID in the mingw header file to a more appropriate value.
+> Also, we take the opportunity to similarly define S_ISGID and
+> S_ISVTX.
+> 
+> Signed-off-by: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+> ---
+>  compat/mingw.h |    7 ++++---
+>  1 file changed, 4 insertions(+), 3 deletions(-)
+> 
+> diff --git a/compat/mingw.h b/compat/mingw.h
+> index ef5b150..61a6521 100644
+> --- a/compat/mingw.h
+> +++ b/compat/mingw.h
+> @@ -22,9 +22,10 @@ typedef int socklen_t;
+>  #define S_IWOTH 0
+>  #define S_IXOTH 0
+>  #define S_IRWXO (S_IROTH | S_IWOTH | S_IXOTH)
+> -#define S_ISUID 0
+> -#define S_ISGID 0
+> -#define S_ISVTX 0
+> +
+> +#define S_ISUID 0004000
+> +#define S_ISGID 0002000
+> +#define S_ISVTX 0001000
+>  
+>  #define WIFEXITED(x) 1
+>  #define WIFSIGNALED(x) 0
 
-I think that is sane, and certainly the simplest. I'll send a patch in a
-moment.
+I've submitted a similar patch, but it was suggested to solve the
+inherent problem in a cleaner way, but no patch came forward.
 
--Peff
+-- Hannes
+
+See http://thread.gmane.org/gmane.comp.version-control.git/181817
