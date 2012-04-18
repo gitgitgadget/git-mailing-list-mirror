@@ -1,79 +1,97 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 2/2] var doc: advertise current DEFAULT_PAGER and
- DEFAULT_EDITOR settings
-Date: Wed, 18 Apr 2012 15:02:15 -0500
-Message-ID: <20120418200215.GB30558@burratino>
-References: <20120330002543.2138.91961.reportbug@localhost6.localdomain6>
- <20120330005523.GA28519@burratino>
- <7v398qq1ei.fsf@alter.siamese.dyndns.org>
- <20120331084015.GC4119@burratino>
- <20120331084453.GE4119@burratino>
- <7v1uo8k64l.fsf@alter.siamese.dyndns.org>
+From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+Subject: Re: What's cooking in git.git (Apr 2012, #06; Sun, 15)
+Date: Wed, 18 Apr 2012 20:53:37 +0100
+Message-ID: <4F8F1BC1.3030607@ramsay1.demon.co.uk>
+References: <7vpqb8xjj9.fsf@alter.siamese.dyndns.org> <4F8E6A12.9090708@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Rodrigo Silva (MestreLion)" <linux@rodrigosilva.com>,
-	git@vger.kernel.org, Ben Walton <bwalton@artsci.utoronto.ca>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Apr 18 22:02:49 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+	<pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Wed Apr 18 22:07:41 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SKb5O-0000sC-Dl
-	for gcvg-git-2@plane.gmane.org; Wed, 18 Apr 2012 22:02:42 +0200
+	id 1SKbA8-0004Wn-Q6
+	for gcvg-git-2@plane.gmane.org; Wed, 18 Apr 2012 22:07:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755007Ab2DRUCX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Apr 2012 16:02:23 -0400
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:35325 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754215Ab2DRUCV (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Apr 2012 16:02:21 -0400
-Received: by yenl12 with SMTP id l12so3972045yen.19
-        for <git@vger.kernel.org>; Wed, 18 Apr 2012 13:02:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=Y6a26wsQZMAmQsRn0LuvGZSnhGu+sJUca40kLwamy5M=;
-        b=gN7+jH4t5LX4H6gBbXt6mGbHzlKY2oxGrcHn8K8IWkFbNzS26yB0CbWFACdU5eNbxe
-         7geY/ymtodOgrjVFD/5gqzfi4p/4GVL4VQsyBvZQ2hJ6nVNjWp3YEKzvhn+1hhq/jx56
-         Zuny01S4vdrmuJJZEG7OaCEzhVH5zUxaghR6qtyByJ98t8RBCBNI/cWejS+V4StcEQ9X
-         uZXgqZ9qjqRpyP7im7a/XMz2A2G4TtGxxyw03gNqzxnxMDBpI/aRpp7Obztuv5WJzjZY
-         nA3paQd9nnLT1kgsI/9LlqQIeEksfuJevrdmY8oTdvy0xKbgQ6iVBxCpZqa2XNDPS4/T
-         RzfA==
-Received: by 10.60.4.170 with SMTP id l10mr4851623oel.67.1334779341012;
-        Wed, 18 Apr 2012 13:02:21 -0700 (PDT)
-Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
-        by mx.google.com with ESMTPS id b6sm27997783obe.12.2012.04.18.13.02.19
-        (version=SSLv3 cipher=OTHER);
-        Wed, 18 Apr 2012 13:02:20 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <7v1uo8k64l.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1754443Ab2DRUHb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Apr 2012 16:07:31 -0400
+Received: from anchor-post-1.mail.demon.net ([195.173.77.132]:59448 "EHLO
+	anchor-post-1.mail.demon.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754278Ab2DRUHa (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 18 Apr 2012 16:07:30 -0400
+Received: from ramsay1.demon.co.uk ([193.237.126.196])
+	by anchor-post-1.mail.demon.net with esmtp (Exim 4.69)
+	id 1SKbA0-0005mZ-hl; Wed, 18 Apr 2012 20:07:29 +0000
+User-Agent: Thunderbird 1.5.0.2 (Windows/20060308)
+In-Reply-To: <4F8E6A12.9090708@viscovery.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195892>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195893>
 
-Hi Junio,
+Johannes Sixt wrote:
+> Am 4/16/2012 8:44, schrieb Junio C Hamano:
+>> * nd/threaded-index-pack (2012-04-11) 3 commits
+>>  - index-pack: support multithreaded delta resolving
+>>  - index-pack: split second pass obj handling into own function
+>>  - compat/win32/pthread.h: Add an pthread_key_delete() implementation
+> 
+> With this series, t9300.92 (fast-import, Q: verify pack) consistently
+> fails for me on Windows.
+> 
+> I'll have to see when I can dig deeper into this topic...
 
-Junio C Hamano wrote:
+Hmm, this works just fine for me.
 
-> something like:
->
-> 	... then the default chosen at compile time, which is usually 'vi'.
-> ifdef::git-default-editor[]
-> 	The build you are using chose '{git-default-editor}' as the default.
-> endif::git-default-editor[]
->
-> may be less confusing.
+[I know that doesn't help you much :(, but it at least provides another
+data-point.]
 
-I was not sure if this text would interrupt the flow of reading
-before, but I couldn't think of a good alternative so I didn't say
-anything.  Sorry about that.  Now I've looked at the built result and
-think the new text is good. :)
+With the exception of t9300.62 (a fix for which I have already sent to
+the list), all of the following tests pass:
 
-Thanks,
-Jonathan
+    t/t5300-pack-object.sh
+    t/t5301-sliding-window.sh
+    t/t5302-pack-index.sh
+    t/t5303-pack-corruption-resilience.sh
+    t/t5510-fetch.sh
+    t/t6050-replace.sh
+    t/t7700-repack.sh
+    t/t7701-repack-unpack-unreachable.sh
+    t/t9300-fast-import.sh
+
+Just to be clear, I have to apply a patch (given below) to pu in order to
+do any meaningful testing. This patch is the one I had ready to send to the
+list to fix the SHELL_PATH breakage, but you beat me to the punch! :-P
+(Also, your commit message was *much* better than mine!)
+
+[my MinGW was installed from msysGit-fullinstall-1.7.4-preview20110204.exe
+on Windows XP SP3]
+
+ATB,
+Ramsay Jones
+
+--- >8 ---
+diff --git a/run-command.c b/run-command.c
+index 5be1b4b..53a081b 100644
+--- a/run-command.c
++++ b/run-command.c
+@@ -4,7 +4,10 @@
+ #include "sigchain.h"
+ #include "argv-array.h"
+ 
+-#ifndef SHELL_PATH
++#if defined(WIN32)
++# undef SHELL_PATH
++# define SHELL_PATH "sh"
++#elif !defined(SHELL_PATH)
+ # define SHELL_PATH "/bin/sh"
+ #endif
+ 
+--- 8< ---
