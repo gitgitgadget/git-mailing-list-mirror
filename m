@@ -1,84 +1,87 @@
-From: Ralf Thielow <ralf.thielow@googlemail.com>
-Subject: [PATCH] sequencer: remove additional blank line
-Date: Wed, 18 Apr 2012 23:07:25 +0200
-Message-ID: <1334783245-8733-1-git-send-email-ralf.thielow@googlemail.com>
-Cc: Ralf Thielow <ralf.thielow@googlemail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 18 23:08:13 2012
+From: Jeff King <peff@peff.net>
+Subject: [PATCH 1/3] argv-array: refactor empty_argv initialization
+Date: Wed, 18 Apr 2012 14:08:49 -0700
+Message-ID: <20120418210848.GA21301@sigill.intra.peff.net>
+References: <20120418210740.GA21214@sigill.intra.peff.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Apr 18 23:09:05 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SKc6j-00039m-59
-	for gcvg-git-2@plane.gmane.org; Wed, 18 Apr 2012 23:08:09 +0200
+	id 1SKc7X-0003sY-DE
+	for gcvg-git-2@plane.gmane.org; Wed, 18 Apr 2012 23:08:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752226Ab2DRVHf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Apr 2012 17:07:35 -0400
-Received: from mail-we0-f174.google.com ([74.125.82.174]:63973 "EHLO
-	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751342Ab2DRVHe (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Apr 2012 17:07:34 -0400
-Received: by wejx9 with SMTP id x9so4993656wej.19
-        for <git@vger.kernel.org>; Wed, 18 Apr 2012 14:07:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        bh=2HV9ojmYKmV2ZntMtlaV4jliTiFWdPc3ko7SlnSjVm4=;
-        b=ZxG+NsNvIvNFiurfGDjNdFsSAR9tDfdcn2R45AHYlIMDMXu8qh5lnyRvVAvO40PySD
-         jneRIVJEFgtG5Fm9FYFUvDgiePuj2kgg/xuARAW5yJy/Vcfn4DNjtqclsWZMgljCyKFL
-         02F1EceC8Rb0VqKC2BZu58Uusohry6YHmm2j9g+J/9cstEUYhxI/mggGgLJvn11ZcaHQ
-         jT8vy/D3AIWNGAhtfMqLi9z28Cv+HlZcX62NgzfsZlIDCLhMtUuFzlXhnw5xFCLVO1Tw
-         Y+wrxWoZeJaIAWbzzES6Mk0DU9hmtFqiCJxVH7KDZ/6+XlWa0BR+W5WG6IYxn3Ppjw5U
-         3M8g==
-Received: by 10.216.29.197 with SMTP id i47mr2310220wea.45.1334783252813;
-        Wed, 18 Apr 2012 14:07:32 -0700 (PDT)
-Received: from localhost.localdomain (dslb-094-223-205-117.pools.arcor-ip.net. [94.223.205.117])
-        by mx.google.com with ESMTPS id j3sm266489wiw.1.2012.04.18.14.07.31
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 18 Apr 2012 14:07:32 -0700 (PDT)
-X-Mailer: git-send-email 1.7.10.170.gac579
+	id S1753586Ab2DRVIx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Apr 2012 17:08:53 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:38001
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752841Ab2DRVIw (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Apr 2012 17:08:52 -0400
+Received: (qmail 20742 invoked by uid 107); 18 Apr 2012 21:09:01 -0000
+Received: from c-67-169-43-61.hsd1.ca.comcast.net (HELO sigill.intra.peff.net) (67.169.43.61)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 18 Apr 2012 17:09:01 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 18 Apr 2012 14:08:49 -0700
+Content-Disposition: inline
+In-Reply-To: <20120418210740.GA21214@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195903>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195904>
 
-Remove an additional blank line between the
-headline and the list of conflicted files after
-doing a recursive merge.
+An empty argv-array is initialized to point to a static
+empty NULL-terminated array.  The original implementation
+separates the actual storage of the NULL-terminator from the
+pointer to the list.  This makes the exposed type a "const
+char **", which nicely matches the type stored by the
+argv-array.
 
-Signed-off-by: Ralf Thielow <ralf.thielow@googlemail.com>
+However, this indirection means that one cannot use
+empty_argv to initialize a static variable, since it is
+not a constant.
+
+Instead, we can expose empty_argv directly, as an array of
+pointers. The only place we use it is in the ARGV_ARRAY_INIT
+initializer, and it decays to a pointer appropriately there.
+
+Signed-off-by: Jeff King <peff@peff.net>
 ---
-Normally, the list of conflicted files come directly after
-the headline like this
+ argv-array.c |    3 +--
+ argv-array.h |    2 +-
+ 2 files changed, 2 insertions(+), 3 deletions(-)
 
-    Conflicts:
-        folder/file
-	...
-
-Without this patch it would looks like this:
-
-    Conflicts:
-
-        folder/file
-	...
-
- sequencer.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/sequencer.c b/sequencer.c
-index a37846a..f6e44b8 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -234,7 +234,7 @@ static int do_recursive_merge(struct commit *base, struct commit *next,
+diff --git a/argv-array.c b/argv-array.c
+index a4e0420..110a61b 100644
+--- a/argv-array.c
++++ b/argv-array.c
+@@ -2,8 +2,7 @@
+ #include "argv-array.h"
+ #include "strbuf.h"
  
- 	if (!clean) {
- 		int i;
--		strbuf_addstr(msgbuf, "\nConflicts:\n\n");
-+		strbuf_addstr(msgbuf, "\nConflicts:\n");
- 		for (i = 0; i < active_nr;) {
- 			struct cache_entry *ce = active_cache[i++];
- 			if (ce_stage(ce)) {
+-static const char *empty_argv_storage = NULL;
+-const char **empty_argv = &empty_argv_storage;
++const char *empty_argv[] = { NULL };
+ 
+ void argv_array_init(struct argv_array *array)
+ {
+diff --git a/argv-array.h b/argv-array.h
+index 74dd2b1..c45c698 100644
+--- a/argv-array.h
++++ b/argv-array.h
+@@ -1,7 +1,7 @@
+ #ifndef ARGV_ARRAY_H
+ #define ARGV_ARRAY_H
+ 
+-extern const char **empty_argv;
++extern const char *empty_argv[];
+ 
+ struct argv_array {
+ 	const char **argv;
 -- 
-1.7.10.170.gac579
+1.7.9.6.8.g992e5
