@@ -1,79 +1,76 @@
-From: =?UTF-8?B?QW5kcsOpIENhcm9u?= <andre.l.caron@gmail.com>
-Subject: git-archive and submodules
-Date: Thu, 19 Apr 2012 16:10:52 -0400
-Message-ID: <CALKBF2gwVr0rPn0y8=cvwqOsUb7eQPH7EdK5U+gfZMzh=RpiKw@mail.gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: push.default: current vs upstream
+Date: Thu, 19 Apr 2012 22:38:32 +0200
+Message-ID: <vpqaa27bgon.fsf@bauges.imag.fr>
+References: <vpqwr5uceis.fsf@bauges.imag.fr>
+	<20120406071520.GD25301@sigill.intra.peff.net>
+	<vpqr4w12tjj.fsf@bauges.imag.fr>
+	<20120406080004.GA27940@sigill.intra.peff.net>
+	<4F7FF19B.1060407@alum.mit.edu>
+	<20120407075150.GA18168@sigill.intra.peff.net>
+	<7viphaygsg.fsf@alter.siamese.dyndns.org>
+	<vpq62d6dyzr.fsf@bauges.imag.fr>
+	<20120412075535.GC31122@sigill.intra.peff.net>
+	<vpqhawp2wxs.fsf@bauges.imag.fr>
+	<20120412081407.GE31122@sigill.intra.peff.net>
+	<vpqfwc9wckl.fsf@bauges.imag.fr>
+	<7vpqbdeyfh.fsf@alter.siamese.dyndns.org>
+	<xmqqzka7so2p.fsf@junio.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Apr 19 22:11:04 2012
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Apr 19 22:39:49 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SKxgw-0001Uu-EW
-	for gcvg-git-2@plane.gmane.org; Thu, 19 Apr 2012 22:10:58 +0200
+	id 1SKy8q-0003tG-Vd
+	for gcvg-git-2@plane.gmane.org; Thu, 19 Apr 2012 22:39:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751623Ab2DSUKy convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 19 Apr 2012 16:10:54 -0400
-Received: from mail-pb0-f46.google.com ([209.85.160.46]:48615 "EHLO
-	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751347Ab2DSUKx convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 19 Apr 2012 16:10:53 -0400
-Received: by pbcun15 with SMTP id un15so189311pbc.19
-        for <git@vger.kernel.org>; Thu, 19 Apr 2012 13:10:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        bh=FqnyakMJcTbGV5oyoF5ps043Ec/lXimP2uyl9nrZ5BI=;
-        b=GccR+Jlxwps79GP60TwHHjfslJoHr6WR7JS8NdhANGUld8ayVYRmliKZnjESkjzMtD
-         EUZqcA5HPdqwvfcEA/nFBXHnZcWmH5cRGf6f+6QVAQfPcGZP+mw8vNMxcW5eiEr2QnwP
-         LjZlvm2a08scXuln/FU5hLrss6buftFKSkvNSCaxYubI83eg+ZZNetWMoMngILppiKST
-         P1PO7ZOUxGEqZFFlSJPh+OIV1hTLmU+u+0nUv0YrfSuD38KT4nPXMlg1dXMoo11UiBqx
-         4SC0GcsU792td8BU6m5krwAEt45KjJP3LRl8s3IFS/I2woOJOjI+ryeL2OEBmqF81xnP
-         PkBg==
-Received: by 10.68.219.34 with SMTP id pl2mr1071763pbc.56.1334866252705; Thu,
- 19 Apr 2012 13:10:52 -0700 (PDT)
-Received: by 10.68.194.34 with HTTP; Thu, 19 Apr 2012 13:10:52 -0700 (PDT)
+	id S932550Ab2DSUjh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Apr 2012 16:39:37 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:48001 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932523Ab2DSUjg (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Apr 2012 16:39:36 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id q3JKWQdt019680
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Thu, 19 Apr 2012 22:32:26 +0200
+Received: from bauges.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1SKy7d-0000o4-12; Thu, 19 Apr 2012 22:38:33 +0200
+In-Reply-To: <xmqqzka7so2p.fsf@junio.mtv.corp.google.com> (Junio C. Hamano's
+	message of "Thu, 19 Apr 2012 09:06:54 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.93 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Thu, 19 Apr 2012 22:32:27 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: q3JKWQdt019680
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1335472350.8187@tG58UjT3NXODNKkZpSPGGQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195967>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195968>
 
-Hi,
+Junio C Hamano <gitster@pobox.com> writes:
 
-I've recently needed to create a source code archive as part of a
-custom build target.  This repository uses submodules and I need to
-include the submodlule's source code in the archives too.  However,
-git-archive does not have any option to do so.
+> So what happened to this discussion?  
 
-I've taken a quick look at the GMANE mailing list archives and it
-seems this provoked quite a discussion in 2009 and that Lars Hjemli
-even wrote a patch (in several flavors) for archive.c to include
-submodule-aware processing.  The lastest source code at
-`git.kernel.org` does not contain any traces of this patch (or
-submodule aware logic for that matter).  The mailing list archives are
-not very convenient to browse and I can't figure out what the status
-on this submodule-aware git-archive idea is.  Has this idea been
-completely rejected, or is it still work in progress?
+I've been busy, so did nothing, and my procrastination didn't pay ;-).
 
-In case you're wondering, I don't seem to be the only one needing to
-do this.  I found at least two scripts on GitHub that implement this
-logic with various levels of accuracy/completeness[1][2] and I've
-hacked an icky Windows batch file version [3] for minimal Windows
-support until this feature can be implemented in Git itself.  I don't
-mind putting in some time into a real patch if I need to, but I'm
-curious about the fact that this has been requested before, a patch
-was proposed and yet this is still not merged 4 years later.
+> Does anybody want to roll the "simple" default based on Peff's patch?
 
-So, what's the status on a submodule-aware git-archive command?
+I was about to, actually. I'll go for Peff's semantics at least for now,
+and just add tests.
 
-Thanks,
-Andr=C3=A9
-
-[1]: https://github.com/meitar/git-archive-all.sh
-[2]: https://github.com/Kentzo/git-archive-all
-[3]: https://github.com/AndreLouisCaron/git-archive-all.bat
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
