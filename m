@@ -1,160 +1,124 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: [PATCH] gitweb: Improve repository verification
-Date: Thu, 19 Apr 2012 18:07:31 +0200
-Message-ID: <201204191807.32410.jnareb@gmail.com>
-References: <20120403132735.GA12389@camk.edu.pl> <20120416213938.GB22574@camk.edu.pl> <201204180136.08570.jnareb@gmail.com>
+From: Junio C Hamano <jch@google.com>
+Subject: Re: [PATCH] Avoid problem with xpg4 grep in Solaris that broke t9400
+Date: Thu, 19 Apr 2012 09:55:53 -0700
+Message-ID: <xmqqfwbzslt2.fsf@junio.mtv.corp.google.com>
+References: <1334002409-5708-1-git-send-email-bwalton@artsci.utoronto.ca>
+	<1334445524-sup-1455@pinkfloyd.chass.utoronto.ca>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-2"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Kacper Kornet <draenog@pld-linux.org>
-X-From: git-owner@vger.kernel.org Thu Apr 19 18:08:01 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: gitster <gitster@pobox.com>, git <git@vger.kernel.org>
+To: Ben Walton <bwalton@artsci.utoronto.ca>
+X-From: git-owner@vger.kernel.org Thu Apr 19 18:56:03 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SKttm-0006Vp-Tg
-	for gcvg-git-2@plane.gmane.org; Thu, 19 Apr 2012 18:07:59 +0200
+	id 1SKueH-0004vU-6v
+	for gcvg-git-2@plane.gmane.org; Thu, 19 Apr 2012 18:56:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755922Ab2DSQHi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Apr 2012 12:07:38 -0400
-Received: from mail-wi0-f172.google.com ([209.85.212.172]:38212 "EHLO
-	mail-wi0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754343Ab2DSQHg (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Apr 2012 12:07:36 -0400
-Received: by wibhj6 with SMTP id hj6so1940452wib.1
-        for <git@vger.kernel.org>; Thu, 19 Apr 2012 09:07:34 -0700 (PDT)
+	id S1755948Ab2DSQz4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Apr 2012 12:55:56 -0400
+Received: from mail-gy0-f202.google.com ([209.85.160.202]:35671 "EHLO
+	mail-gy0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754379Ab2DSQzz (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Apr 2012 12:55:55 -0400
+Received: by ghbz15 with SMTP id z15so993730ghb.1
+        for <git@vger.kernel.org>; Thu, 19 Apr 2012 09:55:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        bh=P3S2LMjwFc+FqGjdnfEVAqNy1DCTBmZzEhJh6LyJBLY=;
-        b=S5XMQ69EnmFr9z/UIO+hHur+uUfp+A4NOAmC4DmTpfOGxYU8FnT3NgntZ4n+bIMF9V
-         p3NZX2E2lX2DBuoSgvJf7T1AynC4Wejnw8AkmufHU4yJLmrg4ZxMUKKDvnK6YpnejgI7
-         Bcrpa+Yj/ENmFVwqCEzM9Lb72TwpFMhsMLrHUFrLElqQQvK6VqwYalAh75kQX/KpNxFu
-         ZSTJ4zxfz5EgdIFqugs/bZrbOdvFayjXUB06AXi5rb4Q96CSEvqHWcoOhYYuGbnVf/f0
-         PbVXq0ZMc0gD3wSVBq8Eppe4JZABySq0QTUodBt2vYWou48XBakMJFRb1XPQDEFfZUH4
-         OZ5Q==
-Received: by 10.180.95.34 with SMTP id dh2mr6592107wib.15.1334851654720;
-        Thu, 19 Apr 2012 09:07:34 -0700 (PDT)
-Received: from [192.168.1.13] (epp52.neoplus.adsl.tpnet.pl. [83.20.57.52])
-        by mx.google.com with ESMTPS id 6sm43122598wiz.1.2012.04.19.09.07.33
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 19 Apr 2012 09:07:34 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <201204180136.08570.jnareb@gmail.com>
-Content-Disposition: inline
+        d=google.com; s=20120113;
+        h=from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=V49kn8ORkqBCL42BAeRV6zGlYUUvNgGDT24PHt2Jsrw=;
+        b=M7ndb+quFgPqz5/6gzeoH7XsFR+6PujPmIy9qVcMASdu8w4n2J+MVcU1AcN6FdhtPf
+         OYkOos1kl1IT/T25Pw/xs/5qsj5NNOfXzq8Pgq5vNsIsSgHbJ9PtH5cqTCtFwsUgaYbP
+         YvQGZzbpl27KJBJIKS0ZJ6ILcey131Zm2fVo29ZRhfPPJCfjqiXVryb6kkc/Jo6FzJZ5
+         lCzAbMLhTSCeJp9uSihpaW2naxVVnja6ilkEswAlVQDX8oACvrTOWqmqkwU7nXHM9FFE
+         ojWTl3ylGdSShS/fLv+tYRQz+RQ4BaU3CyA8IW4YkGHvLDK2uiAw1Ohn0H/sX+77BCcQ
+         nk+Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type:x-gm-message-state;
+        bh=V49kn8ORkqBCL42BAeRV6zGlYUUvNgGDT24PHt2Jsrw=;
+        b=XgcnBHxZrZ5EBJn4WwGqiBYKrApt26NzY4xGlSskIOKA2O1/PiaqnjpucFOoTaPOy7
+         HORdAYDCWxI422n64ForUo02O33+P8X18NqILkJ+JINCyXRzEwycFPvw42qIi+9qj/no
+         XbDuyqAmrZ+HRZZUvX85Vc4sqY9SMDAVuJTYvhdKTKip4ZupfgVB3+09hW5RSDflVJOh
+         0+2xOMZGZBXl9tVBkfHLpmuOSuq0ZyoX7/NbRoPsImZwlEq86bVjkiiF/kd/3pCZSRI2
+         X2wLv9vM2y3vFh1CRpKlTgH1BZ7aa9W8UzYOoy9Mv2KJuz+pQ+Ul46G96PEm52UlDB0N
+         HmYA==
+Received: by 10.101.151.23 with SMTP id d23mr1014505ano.11.1334854554735;
+        Thu, 19 Apr 2012 09:55:54 -0700 (PDT)
+Received: by 10.101.151.23 with SMTP id d23mr1014491ano.11.1334854554629;
+        Thu, 19 Apr 2012 09:55:54 -0700 (PDT)
+Received: from wpzn3.hot.corp.google.com (216-239-44-65.google.com [216.239.44.65])
+        by gmr-mx.google.com with ESMTPS id g49si2654594yhe.6.2012.04.19.09.55.54
+        (version=TLSv1/SSLv3 cipher=AES128-SHA);
+        Thu, 19 Apr 2012 09:55:54 -0700 (PDT)
+Received: from junio.mtv.corp.google.com (junio.mtv.corp.google.com [172.27.69.24])
+	by wpzn3.hot.corp.google.com (Postfix) with ESMTP id 8379110004D;
+	Thu, 19 Apr 2012 09:55:54 -0700 (PDT)
+Received: by junio.mtv.corp.google.com (Postfix, from userid 110493)
+	id 0D9B6E554F; Thu, 19 Apr 2012 09:55:53 -0700 (PDT)
+In-Reply-To: <1334445524-sup-1455@pinkfloyd.chass.utoronto.ca> (Ben Walton's
+	message of "Sat, 14 Apr 2012 19:19:29 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1 (gnu/linux)
+X-Gm-Message-State: ALoCoQlB+pF08XzwgRGRWVvctNT74K1IVviy7uj9U9ihDUNxQlK2W70anhNrulI/2QzLnu7kwyND3v8pIezx2S8AOli/X8NvpPq6Dh/qgoGryTVpQMdh7LzCsaA+YBlIHVqWemWdDWHywkic1gCkIAmLuaCjhtEWUow6gLYeiX3webKN7tzHyMM=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195951>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195952>
 
-Bring repository verification in check_export_ok() to standards of
-is_git_directory function from setup.c (core git), and validate_headref()
-to standards of the same function in path.c,... and a bit more.
+Ben Walton <bwalton@artsci.utoronto.ca> writes:
 
-validate_headref() replaces check_head_link(); note that the former
-requires path to HEAD file, while the late latter path to repository.
+> Excerpts from Ben Walton's message of Mon Apr 09 16:13:29 -0400 2012:
+>
+> Bump?
+> ...
+>> It's possible that the specific pair of grep statements is required.
+>> It's looking for tab or space, so maybe we get either character in
+>> some cases, depending on cvs version?
 
-Issues of note:
-* is_git_directory() in gitweb is a bit stricter: it checks that
-  "/objects" and "/refs" are directories, and not only 'executable'
-  permission,
-* validate_headref() in gitweb is a bit stricter: it checks that
-  reference symlink or symref points to starts with "refs/heads/",
-  and not only with "refs/",
-* calls to check_head_link(), all of which were meant to check if
-  given directory can be a git repository, were replaced by newly
-  introduced is_git_directory().
+Bump, anybody, on this point?
 
-This change is preparation for removing "Last change" column from list
-of projects, which is currently used also for validating repository.
+>> If there is a reason for the original construction, I'll find a more
+>> creative work around for this problem.
+>> 
+>>  t/t9400-git-cvsserver-server.sh |    4 ++--
+>>  1 files changed, 2 insertions(+), 2 deletions(-)
+>> 
+>> diff --git a/t/t9400-git-cvsserver-server.sh b/t/t9400-git-cvsserver-server.sh
+>> index 9199550..df1405f 100755
+>> --- a/t/t9400-git-cvsserver-server.sh
+>> +++ b/t/t9400-git-cvsserver-server.sh
+>> @@ -500,8 +500,8 @@ test_expect_success 'cvs status (no subdirs in header)' '
+>>  cd "$WORKDIR"
+>>  test_expect_success 'cvs co -c (shows module database)' '
+>>      GIT_CONFIG="$git_config" cvs co -c > out &&
+>> -    grep "^master[     ]\+master$" < out &&
+>> -    ! grep -v "^master[     ]\+master$" < out
 
-Suggested-by: Kacper Kornet <draenog@pld-linux.org>
-Signed-off-by: Jakub Narebski <jnareb@gmail.com>
----
-Here is how such first step could look like...
+Is it really the character class, or is it the GNUism "\+", that breaks
+this?
 
- gitweb/gitweb.perl |   52 ++++++++++++++++++++++++++++++++++++++++++----------
- 1 files changed, 42 insertions(+), 10 deletions(-)
+In other words, does it work if you patch it like this instead?
 
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 098e527..767d7a5 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -621,19 +621,51 @@ sub feature_avatar {
- 	return @val ? @val : @_;
- }
+ t/t9400-git-cvsserver-server.sh |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/t/t9400-git-cvsserver-server.sh b/t/t9400-git-cvsserver-server.sh
+index 9199550..173bf3d 100755
+--- a/t/t9400-git-cvsserver-server.sh
++++ b/t/t9400-git-cvsserver-server.sh
+@@ -500,8 +500,8 @@ test_expect_success 'cvs status (no subdirs in header)' '
+ cd "$WORKDIR"
+ test_expect_success 'cvs co -c (shows module database)' '
+     GIT_CONFIG="$git_config" cvs co -c > out &&
+-    grep "^master[	 ]\+master$" < out &&
+-    ! grep -v "^master[	 ]\+master$" < out
++    grep "^master[	 ][ 	]*master$" <out &&
++    ! grep -v "^master[	 ][ 	]*master$" <out
+ '
  
--# checking HEAD file with -e is fragile if the repository was
--# initialized long time ago (i.e. symlink HEAD) and was pack-ref'ed
--# and then pruned.
--sub check_head_link {
--	my ($dir) = @_;
--	my $headfile = "$dir/HEAD";
--	return ((-e $headfile) ||
--		(-l $headfile && readlink($headfile) =~ /^refs\/heads\//));
-+# Test if it looks like we're at a git directory.
-+# We want to see:
-+#
-+#  - an objects/ directory,
-+#  - a refs/ directory,
-+#  - either a HEAD symlink or a HEAD file that is formatted as
-+#    a proper "ref:", or a regular file HEAD that has a properly
-+#    formatted sha1 object name.
-+#
-+# See is_git_directory() in setup.c
-+sub is_git_directory {
-+	my $dir = shift;
-+	return
-+		-x "$dir/objects" && -d _ &&
-+		-x "$dir/refs"    && -d _ &&
-+		validate_headref("$dir/HEAD");
-+}
-+
-+# Check HEAD file, that it is either
-+#
-+#  - a "refs/heads/.." symlink, or
-+#  - a symbolic ref to "refs/heads/..", or
-+#  - a detached HEAD.
-+#
-+# See validate_headref() in path.c
-+sub validate_headref {
-+	my $headfile = shift;
-+	if (-l $headfile) {
-+		return readlink($headfile) =~ m!^refs/heads/!;
-+
-+	} elsif (-e _) {
-+		open my $fh, '<', $headfile or return;
-+		my $line = <$fh>;
-+		close $fh or return;
-+
-+		return
-+			$line =~ m!^ref:\s*refs/heads/! ||  # symref
-+			$line =~ m!^[0-9a-z]{40}$!i;        # detached HEAD
-+	}
-+	return;
- }
- 
- sub check_export_ok {
- 	my ($dir) = @_;
--	return (check_head_link($dir) &&
-+	return (is_git_directory($dir) &&
- 		(!$export_ok || -e "$dir/$export_ok") &&
- 		(!$export_auth_hook || $export_auth_hook->($dir)));
- }
-@@ -842,7 +874,7 @@ sub evaluate_path_info {
- 	# find which part of PATH_INFO is project
- 	my $project = $path_info;
- 	$project =~ s,/+$,,;
--	while ($project && !check_head_link("$projectroot/$project")) {
-+	while ($project && !is_git_directory("$projectroot/$project")) {
- 		$project =~ s,/*[^/]*$,,;
- 	}
- 	return unless $project;
--- 
-1.7.9
+ #------------
