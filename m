@@ -1,86 +1,67 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH nd/threaded-index-pack] index-pack: disable threading if NO_PREAD is defined
-Date: Thu, 19 Apr 2012 21:05:29 +0700
-Message-ID: <1334844329-24557-1-git-send-email-pclouds@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3] git-daemon wrapper to wait until daemon is ready
+Date: Thu, 19 Apr 2012 08:00:04 -0700
+Message-ID: <CAPc5daX7aQhuez+Q28s5jMcZzofxDvA-g1nnnEA_9tZFCJm-gw@mail.gmail.com>
+References: <20120414182907.GA3915@ecki>
+	<4F89D1C6.8090705@kdbg.org>
+	<20120414220606.GA18137@ecki>
+	<20120415115322.GA11786@ecki>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: kusmabite@gmail.com, Johannes Sixt <j.sixt@viscovery.net>,
-	Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
-	Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Apr 19 16:08:56 2012
+Cc: Johannes Sixt <j6t@kdbg.org>,
+	=?UTF-8?Q?Zbigniew_J=C4=99drzejewski=2DSzmek?= <zbyszek@in.waw.pl>,
+	git@vger.kernel.org, Jeff King <peff@peff.net>
+To: Clemens Buchacher <drizzd@aon.at>
+X-From: git-owner@vger.kernel.org Thu Apr 19 17:00:25 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SKs2Z-0002mC-MI
-	for gcvg-git-2@plane.gmane.org; Thu, 19 Apr 2012 16:08:56 +0200
+	id 1SKsqK-00033X-EQ
+	for gcvg-git-2@plane.gmane.org; Thu, 19 Apr 2012 17:00:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755481Ab2DSOIv convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 19 Apr 2012 10:08:51 -0400
-Received: from mail-pz0-f52.google.com ([209.85.210.52]:36118 "EHLO
-	mail-pz0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753017Ab2DSOIv (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Apr 2012 10:08:51 -0400
-Received: by dake40 with SMTP id e40so11428274dak.11
-        for <git@vger.kernel.org>; Thu, 19 Apr 2012 07:08:50 -0700 (PDT)
+	id S1755441Ab2DSPAJ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 19 Apr 2012 11:00:09 -0400
+Received: from mail-we0-f174.google.com ([74.125.82.174]:50316 "EHLO
+	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755333Ab2DSPAG convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 19 Apr 2012 11:00:06 -0400
+Received: by wejx9 with SMTP id x9so5457112wej.19
+        for <git@vger.kernel.org>; Thu, 19 Apr 2012 08:00:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
-         :content-type:content-transfer-encoding;
-        bh=/mWYffq97asfg1iymWKN8uMoUs99atrXkEA0edywL7o=;
-        b=bERwbaKNvkGChESa0iwJdM7rCY2fPCrgushgbburtWkNx9vb5WAdeTO8P8x+/x9wtJ
-         jz45PKDuF5RJM8sPOR8umDnCgXyzG992jOMHl8pr7aPnK7ZkKCzDnYY7kbbZBtAovUX7
-         ByAM3+n6zmoKMrGX18pNKu5zaLbUAF7xcJLESrhLp3EdExb43IDlEXa4lpMpTwjxJhyr
-         zsxpNwITvxQK3tT8GnctP8OcxLD9+vFUGi3wYQcPkVfn3axCQieiG5mPPrME0Cd/B6MC
-         izyB0ZjrdbcvD2EwJ0Ux7Ij5OadwV39t8l8bD9/+eX6gs6hJ2RKz300Fhfu0np7GGG8h
-         mzmw==
-Received: by 10.68.201.73 with SMTP id jy9mr5025862pbc.35.1334844530635;
-        Thu, 19 Apr 2012 07:08:50 -0700 (PDT)
-Received: from pclouds@gmail.com ([115.74.39.247])
-        by mx.google.com with ESMTPS id i5sm2358288pbf.19.2012.04.19.07.08.43
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 19 Apr 2012 07:08:49 -0700 (PDT)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Thu, 19 Apr 2012 21:05:36 +0700
-X-Mailer: git-send-email 1.7.8.36.g69ee2
+        h=mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=xo3C6ZUJzDHshSFZAxrRziKyku0LUDb259fTcswleW0=;
+        b=BUvZuP7q2MsJLpUV9Zc0htp0gCFOBnZTs0YdSO91Rh2dUol1YYKDG7JmpJxmyby8er
+         LgJATHZxd0BhzZuVQzwDw2i1/9ZR6x06yjfJV5JkDXPcqMdnbOUvqIMsB95vG54Ki9sZ
+         llt4fBMRSpGTO1h+8n6sawBSXkAv/sbcTlZ2sWO/L1KYUEsKWMTZlBSQC1ysxi6d/og3
+         vWQLI0q/8ayJxgPav+bz6QwKBJlSuit4HETcP0xLSagYVirM5mdnwqjqYlwsbAsAUuxR
+         Oucwvl3JkN2L+wOJS5ejdFcGHWuh7LaO2rj2wf7yJHvv6Bme0rtqWp+Czw6n7vzgM1xz
+         fQBA==
+Received: by 10.180.106.9 with SMTP id gq9mr6053222wib.17.1334847605228; Thu,
+ 19 Apr 2012 08:00:05 -0700 (PDT)
+Received: by 10.216.216.16 with HTTP; Thu, 19 Apr 2012 08:00:04 -0700 (PDT)
+In-Reply-To: <20120415115322.GA11786@ecki>
+X-Google-Sender-Auth: eYt4AwFWLGrAUptxIbC_RalyG90
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195947>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195948>
 
-NO_PREAD simulates pread() as a sequence of seek, read, seek in
-compat/pread.c. The simulation is not thread-safe because another
-thread could move the file offset away in the middle of pread
-operation. Do not allow threading in that case.
+2012/4/15 Clemens Buchacher <drizzd@aon.at>
+>
+> The shell script which is currently used to parse git daemon output d=
+oes
+> not seem to work reliably. In order to work around such issues,
+> re-implement the same procedure in C and write the daemon pid to a fi=
+le.
+> ...
+> + =C2=A0 =C2=A0 =C2=A0 strbuf_getwholeline_fd(&line, proc.err, '\n');
+> + =C2=A0 =C2=A0 =C2=A0 fprintf(stderr, line.buf);
 
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
----
- builtin/index-pack.c |    5 +++++
- 1 files changed, 5 insertions(+), 0 deletions(-)
-
-diff --git a/builtin/index-pack.c b/builtin/index-pack.c
-index 847dbb3..c1c3c81 100644
---- a/builtin/index-pack.c
-+++ b/builtin/index-pack.c
-@@ -39,6 +39,11 @@ struct base_data {
- 	int ofs_first, ofs_last;
- };
-=20
-+#if !defined(NO_PTHREADS) && defined(NO_PREAD)
-+/* NO_PREAD uses compat/pread.c, which is not thread-safe. Disable thr=
-eading. */
-+#define NO_PTHREADS
-+#endif
-+
- struct thread_local {
- #ifndef NO_PTHREADS
- 	pthread_t thread;
---=20
-1.7.8.36.g69ee2
+Just a note. I'll update this part with "fputs(line.buf, stderr)".
