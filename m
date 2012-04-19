@@ -1,497 +1,98 @@
-From: Erik Faye-Lund <kusmabite@gmail.com>
-Subject: [PATCH v2] contrib: add win32 credential-helper
-Date: Thu, 19 Apr 2012 20:45:22 +0200
-Message-ID: <1334861122-3144-1-git-send-email-kusmabite@gmail.com>
+From: Junio C Hamano <jch@google.com>
+Subject: Re: [PATCH 8/9 v13] difftool: teach difftool to handle directory diffs
+Date: Thu, 19 Apr 2012 11:49:30 -0700
+Message-ID: <xmqqy5prv9ol.fsf@junio.mtv.corp.google.com>
+References: <1334335002-30806-1-git-send-email-tim.henigan@gmail.com>
+	<CAJDDKr7Uw3Nwg4p7F2zaY8f82j3_tRf3WiiO+YSN+nA6a9wY6w@mail.gmail.com>
+	<CAJDDKr78T1HNFXPPnvMUxBoJhAHP8XGdk9ZbpQCS1sZEQJfR8w@mail.gmail.com>
+	<CAFoueth37aeHMorh-r2w_mwSp+uSgeF+PYbUfHNPy9-HVvL01w@mail.gmail.com>
+	<CAJDDKr6djdBvUbV6qZZu75iR2UbFHt8_D0+V+K_C+-Dgx8BfVA@mail.gmail.com>
+	<CAFouetjbHewYzQXZr33xGKgwk0k7D8R0XfoP7k2qAV6Nq_d+Ow@mail.gmail.com>
+	<7vsjg1knwr.fsf@alter.siamese.dyndns.org>
+	<CAFouetgWpyUC9SPo_QwpESrbfib7ct111WesKPP14HQ+SqpFaQ@mail.gmail.com>
+	<7v8vhsltk3.fsf@alter.siamese.dyndns.org>
+	<CAFouetg6T1pgAiTfyAeSxseR-k_omsZDfqv8X8AifekwPLoE2g@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: msysgit@googlegroups.com,
-	peff@peff.net
-To: git@vger.kernel.org
-X-From: msysgit+bncCOPdven-DxDQusH8BBoEWpdOOg@googlegroups.com Thu Apr 19 20:45:38 2012
-Return-path: <msysgit+bncCOPdven-DxDQusH8BBoEWpdOOg@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-lb0-f186.google.com ([209.85.217.186])
+Content-Type: text/plain; charset=us-ascii
+Cc: David Aguilar <davvid@gmail.com>, git@vger.kernel.org,
+	ramsay@ramsay1.demon.co.uk
+To: Tim Henigan <tim.henigan@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Apr 19 20:49:40 2012
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncCOPdven-DxDQusH8BBoEWpdOOg@googlegroups.com>)
-	id 1SKwMK-0002hQ-IL
-	for gcvm-msysgit@m.gmane.org; Thu, 19 Apr 2012 20:45:36 +0200
-Received: by lbbgn12 with SMTP id gn12sf2027077lbb.3
-        for <gcvm-msysgit@m.gmane.org>; Thu, 19 Apr 2012 11:45:36 -0700 (PDT)
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1SKwQE-0005KC-3i
+	for gcvg-git-2@plane.gmane.org; Thu, 19 Apr 2012 20:49:38 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S932152Ab2DSSte (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Apr 2012 14:49:34 -0400
+Received: from mail-ey0-f202.google.com ([209.85.215.202]:50163 "EHLO
+	mail-ey0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756280Ab2DSStd (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Apr 2012 14:49:33 -0400
+Received: by eaaq10 with SMTP id q10so426415eaa.1
+        for <git@vger.kernel.org>; Thu, 19 Apr 2012 11:49:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=beta;
-        h=mime-version:x-beenthere:received-spf:from:to:cc:subject:date
-         :message-id:x-mailer:x-original-sender
-         :x-original-authentication-results:precedence:mailing-list:list-id
-         :x-google-group-id:list-post:list-help:list-archive:sender
-         :list-subscribe:list-unsubscribe:content-type;
-        bh=AsOirSTluW0+voq37SEAKI2qIHO3WsE5iXql5Nzqzq0=;
-        b=ZMvw+9hgCldK5MuqlmgiyqWoMWk19RbWxHGjOuGBkCYPrXt+Kg5gK/gSBeCbURRSK3
-         oSAumhsVy1dem/ad7kWjDve1ppUf+xoSq4FB9WLe/O7kHj7NNZg8/MW7tQc0Gq1zHzbp
-         o0xpbwiPvS3CZ8cHqdcQWgURHY8H1lf17u7pk=
-Received: by 10.205.136.196 with SMTP id il4mr279671bkc.9.1334861136120;
-        Thu, 19 Apr 2012 11:45:36 -0700 (PDT)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.205.128.6 with SMTP id hc6ls2595091bkc.3.gmail; Thu, 19 Apr
- 2012 11:45:34 -0700 (PDT)
-Received: by 10.204.143.143 with SMTP id v15mr389991bku.8.1334861134529;
-        Thu, 19 Apr 2012 11:45:34 -0700 (PDT)
-Received: by 10.204.143.143 with SMTP id v15mr389990bku.8.1334861134509;
-        Thu, 19 Apr 2012 11:45:34 -0700 (PDT)
-Received: from mail-lpp01m010-f52.google.com (mail-lpp01m010-f52.google.com [209.85.215.52])
-        by gmr-mx.google.com with ESMTPS id cs9si3635091bkb.3.2012.04.19.11.45.34
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 19 Apr 2012 11:45:34 -0700 (PDT)
-Received-SPF: pass (google.com: domain of kusmabite@gmail.com designates 209.85.215.52 as permitted sender) client-ip=209.85.215.52;
-Received: by mail-lpp01m010-f52.google.com with SMTP id i5so10688180lah.39
-        for <msysgit@googlegroups.com>; Thu, 19 Apr 2012 11:45:34 -0700 (PDT)
-Received: by 10.152.145.169 with SMTP id sv9mr728736lab.12.1334861134229;
-        Thu, 19 Apr 2012 11:45:34 -0700 (PDT)
-Received: from localhost (cm-84.215.107.111.getinternet.no. [84.215.107.111])
-        by mx.google.com with ESMTPS id mm11sm3157945lab.2.2012.04.19.11.45.32
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 19 Apr 2012 11:45:33 -0700 (PDT)
-X-Mailer: git-send-email 1.7.9
-X-Original-Sender: kusmabite@gmail.com
-X-Original-Authentication-Results: gmr-mx.google.com; spf=pass (google.com:
- domain of kusmabite@gmail.com designates 209.85.215.52 as permitted sender)
- smtp.mail=kusmabite@gmail.com; dkim=pass header.i=@gmail.com
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post?hl=en_US>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/?hl=en_US>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit?hl=en_US>
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en_US>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en_US>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195961>
+        d=google.com; s=20120113;
+        h=from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=dzpbUZCrrjaATRzPQ2Lxy20CuNtg9VbF88DxxhAUgIA=;
+        b=Ey2ckpEjK6X9OzxE8nEj5OsLDnznTNeB1xLs6YBmLbmjsXZaRWcABE6oCcRH8XddfU
+         n7tDRKEC0JF9dha8/ZSF0go4ZFf8RJKvxPwr1Z32BZOO9PiPEx9j07ru8SKzrJLcFFuj
+         DzABv074KFpxzlT2ZzUFdDN/krdaPPSPpRj8NcvCvVZrQs08MCo7XBOL1DoutLlahA/n
+         11JTTrMg3d9uXE2+7I6g96nver57mBLCa/YSe8w9TxXZOVwFN5ZKvcKEClZyEIbO1Q/w
+         TGrzOoajnizSmUzbFtXwVv9JFkNU2mWJI13nTuX4Baa8ZF/ExG6bS62I1UQOXEN/VH/o
+         8T1A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type:x-gm-message-state;
+        bh=dzpbUZCrrjaATRzPQ2Lxy20CuNtg9VbF88DxxhAUgIA=;
+        b=VzzPFKcg83bEUf2rzJFSlI6S1jJm8zjhaAo+4v0BPe0oEozu8gEqmmcPM2ivckfVok
+         +VegLP5X9CBq3RSMO5qoHc/UzKr+9CEv6BIopthaW8X+gisXtSfubIz9dZ9sa8/iq6l3
+         /akOwMRclPct1FL5lqm9yLTHaz3NfqtNc+lqZK4RdoZ3Xqnnlnznnj+o5NgqRLOWksBf
+         LMd8JwII0GpwCQhdGvX1EANBe7nNq8zNr4Mw/5ApeqMG4B9p9AyVNsv+QigmPLrJ2kP1
+         43PVMD5QqEi2hwG/Ue5DcgHRD8s7b5BAr8agOCYkTMQtu/OH29fglZiNwhkdup8rHHXX
+         OQIQ==
+Received: by 10.213.22.197 with SMTP id o5mr300244ebb.8.1334861371957;
+        Thu, 19 Apr 2012 11:49:31 -0700 (PDT)
+Received: by 10.213.22.197 with SMTP id o5mr300232ebb.8.1334861371816;
+        Thu, 19 Apr 2012 11:49:31 -0700 (PDT)
+Received: from hpza10.eem.corp.google.com ([74.125.121.33])
+        by gmr-mx.google.com with ESMTPS id a14si2897352een.0.2012.04.19.11.49.31
+        (version=TLSv1/SSLv3 cipher=AES128-SHA);
+        Thu, 19 Apr 2012 11:49:31 -0700 (PDT)
+Received: from junio.mtv.corp.google.com (junio.mtv.corp.google.com [172.27.69.24])
+	by hpza10.eem.corp.google.com (Postfix) with ESMTP id 9C5A820004E;
+	Thu, 19 Apr 2012 11:49:31 -0700 (PDT)
+Received: by junio.mtv.corp.google.com (Postfix, from userid 110493)
+	id E7DD9E1209; Thu, 19 Apr 2012 11:49:30 -0700 (PDT)
+In-Reply-To: <CAFouetg6T1pgAiTfyAeSxseR-k_omsZDfqv8X8AifekwPLoE2g@mail.gmail.com>
+	(Tim Henigan's message of "Thu, 19 Apr 2012 13:11:00 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1 (gnu/linux)
+X-Gm-Message-State: ALoCoQmWpCyQxuPXLA8RFQoO0L34zmhIg+tKL2DNiNsTtuGYrYj7ZD6rEGu8RbCxzmkftHiHOrZ3bt7kkubUCzhme57kQYMntMAh3Xu/I+gFlkNRhlvxuzLcFZdIYFMUDsQgdOcGnifj6xsBcWYXAX2fSJbGUWzD7n5UukQ556aHFtjz5KfsT5Y=
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195962>
 
-Since the Windows port of Git expects binary pipes, we need to make
-sure the helper-end also sets up binary pipes.
+Tim Henigan <tim.henigan@gmail.com> writes:
 
-Side-step CRLF-issue in test to make it pass.
+> I have a revised patch that prunes out all of the above and warns the
+> user when it does so [1].
 
-Signed-off-by: Erik Faye-Lund <kusmabite@gmail.com>
----
+Thanks.
 
-Here's an updated version of my Windows credential-helper.
+As long as it works when the user uses "two temporary trees" mode
+without -M/-C, and it keeps working as well as before the change when
+the user uses "one invocation per matched path" mode with -M/-C, I do
+not care too deeply about how it is implemented in the script.
 
-The most important difference is that it doesn't suck as much as
-it used to ;)
+> However, it also prunes them when difftool is called in serial diff
+> mode (i.e. non --dir-diff).
 
-Basically, I'm now using the attribute-system to store the meta-data
-for the credentials.
-
-This passes the test for me, and seems to work OK.
-
- contrib/credential/wincred/Makefile                |    8 +
- .../credential/wincred/git-credential-wincred.c    |  352 ++++++++++++++++++++
- t/lib-credential.sh                                |    4 +
- 3 files changed, 364 insertions(+), 0 deletions(-)
- create mode 100644 contrib/credential/wincred/Makefile
- create mode 100644 contrib/credential/wincred/git-credential-wincred.c
-
-diff --git a/contrib/credential/wincred/Makefile b/contrib/credential/wincred/Makefile
-new file mode 100644
-index 0000000..b4f098f
---- /dev/null
-+++ b/contrib/credential/wincred/Makefile
-@@ -0,0 +1,8 @@
-+all: git-credential-wincred.exe
-+
-+CC = gcc
-+RM = rm -f
-+CFLAGS = -O2 -Wall
-+
-+git-credential-wincred.exe : git-credential-wincred.c
-+	$(LINK.c) $^ $(LOADLIBES) $(LDLIBS) -o $@
-diff --git a/contrib/credential/wincred/git-credential-wincred.c b/contrib/credential/wincred/git-credential-wincred.c
-new file mode 100644
-index 0000000..e63575f
---- /dev/null
-+++ b/contrib/credential/wincred/git-credential-wincred.c
-@@ -0,0 +1,352 @@
-+/*
-+ * A git credential helper that interface with Windows' Credential Manager
-+ *
-+ */
-+#include <windows.h>
-+#include <stdio.h>
-+#include <io.h>
-+#include <fcntl.h>
-+
-+/* common helpers */
-+
-+static void die(const char *err, ...)
-+{
-+	char msg[4096];
-+	va_list params;
-+	va_start(params, err);
-+	vsnprintf(msg, sizeof(msg), err, params);
-+	fprintf(stderr, "%s\n", msg);
-+	va_end(params);
-+	exit(1);
-+}
-+
-+static void *xmalloc(size_t size)
-+{
-+	void *ret = malloc(size);
-+	if (!ret && !size)
-+		ret = malloc(1);
-+	if (!ret)
-+		 die("Out of memory");
-+	return ret;
-+}
-+
-+static char *xstrdup(const char *str)
-+{
-+	char *ret = strdup(str);
-+	if (!ret)
-+		die("Out of memory");
-+	return ret;
-+}
-+
-+/* MinGW doesn't have wincred.h, so we need to define stuff */
-+
-+typedef struct _CREDENTIAL_ATTRIBUTEW {
-+	LPWSTR Keyword;
-+	DWORD  Flags;
-+	DWORD  ValueSize;
-+	LPBYTE Value;
-+} CREDENTIAL_ATTRIBUTEW, *PCREDENTIAL_ATTRIBUTEW;
-+
-+typedef struct _CREDENTIALW {
-+	DWORD                  Flags;
-+	DWORD                  Type;
-+	LPWSTR                 TargetName;
-+	LPWSTR                 Comment;
-+	FILETIME               LastWritten;
-+	DWORD                  CredentialBlobSize;
-+	LPBYTE                 CredentialBlob;
-+	DWORD                  Persist;
-+	DWORD                  AttributeCount;
-+	PCREDENTIAL_ATTRIBUTEW Attributes;
-+	LPWSTR                 TargetAlias;
-+	LPWSTR                 UserName;
-+} CREDENTIALW, *PCREDENTIALW;
-+
-+#define CRED_TYPE_GENERIC 1
-+#define CRED_PERSIST_LOCAL_MACHINE 2
-+#define CRED_MAX_ATTRIBUTES 64
-+
-+typedef BOOL (WINAPI *CredWriteWT)(PCREDENTIALW, DWORD);
-+typedef BOOL (WINAPI *CredUnPackAuthenticationBufferWT)(DWORD, PVOID, DWORD,
-+    LPWSTR, DWORD *, LPWSTR, DWORD *, LPWSTR, DWORD *);
-+typedef BOOL (WINAPI *CredEnumerateWT)(LPCWSTR, DWORD, DWORD *,
-+    PCREDENTIALW **);
-+typedef BOOL (WINAPI *CredPackAuthenticationBufferWT)(DWORD, LPWSTR, LPWSTR,
-+    PBYTE, DWORD *);
-+typedef VOID (WINAPI *CredFreeT)(PVOID);
-+typedef BOOL (WINAPI *CredDeleteWT)(LPCWSTR, DWORD, DWORD);
-+
-+static HMODULE advapi, credui;
-+static CredWriteWT CredWriteW;
-+static CredUnPackAuthenticationBufferWT CredUnPackAuthenticationBufferW;
-+static CredEnumerateWT CredEnumerateW;
-+static CredPackAuthenticationBufferWT CredPackAuthenticationBufferW;
-+static CredFreeT CredFree;
-+static CredDeleteWT CredDeleteW;
-+
-+static void load_cred_funcs(void)
-+{
-+	/* load DLLs */
-+	advapi = LoadLibrary("advapi32.dll");
-+	credui = LoadLibrary("credui.dll");
-+	if (!advapi || !credui)
-+		die("failed to load DLLs");
-+
-+	/* get function pointers */
-+	CredWriteW = (CredWriteWT)GetProcAddress(advapi, "CredWriteW");
-+	CredUnPackAuthenticationBufferW = (CredUnPackAuthenticationBufferWT)
-+	    GetProcAddress(credui, "CredUnPackAuthenticationBufferW");
-+	CredEnumerateW = (CredEnumerateWT)GetProcAddress(advapi,
-+	    "CredEnumerateW");
-+	CredPackAuthenticationBufferW = (CredPackAuthenticationBufferWT)
-+	    GetProcAddress(credui, "CredPackAuthenticationBufferW");
-+	CredFree = (CredFreeT)GetProcAddress(advapi, "CredFree");
-+	CredDeleteW = (CredDeleteWT)GetProcAddress(advapi, "CredDeleteW");
-+	if (!CredWriteW || !CredUnPackAuthenticationBufferW ||
-+	    !CredEnumerateW || !CredPackAuthenticationBufferW || !CredFree ||
-+	    !CredDeleteW)
-+		die("failed to load functions");
-+}
-+
-+static char target_buf[1024];
-+static char *protocol, *host, *path, *username;
-+static WCHAR *wusername, *password, *target;
-+
-+static void write_item(const char *what, WCHAR *wbuf)
-+{
-+	char *buf;
-+	int len = WideCharToMultiByte(CP_UTF8, 0, wbuf, -1, NULL, 0, NULL,
-+	    FALSE);
-+	buf = xmalloc(len);
-+
-+	if (!WideCharToMultiByte(CP_UTF8, 0, wbuf, -1, buf, len, NULL, FALSE))
-+		die("WideCharToMultiByte failed!");
-+
-+	printf("%s=", what);
-+	fwrite(buf, 1, len - 1, stdout);
-+	putchar('\n');
-+	free(buf);
-+}
-+
-+static int match_attr(const CREDENTIALW *cred, const WCHAR *keyword,
-+    const char *want)
-+{
-+	int i;
-+	if (!want)
-+		return 1;
-+
-+	for (i = 0; i < cred->AttributeCount; ++i)
-+		if (!wcscmp(cred->Attributes[i].Keyword, keyword))
-+			return !strcmp((const char *)cred->Attributes[i].Value,
-+			    want);
-+
-+	return 0; /* not found */
-+}
-+
-+static int match_cred(const CREDENTIALW *cred)
-+{
-+	return (!wusername || !wcscmp(wusername, cred->UserName)) &&
-+	    match_attr(cred, L"git_protocol", protocol) &&
-+	    match_attr(cred, L"git_host", host) &&
-+	    match_attr(cred, L"git_path", path);
-+}
-+
-+static void get_credential(void)
-+{
-+	WCHAR *user_buf, *pass_buf;
-+	DWORD user_buf_size = 0, pass_buf_size = 0;
-+	CREDENTIALW **creds, *cred = NULL;
-+	DWORD num_creds;
-+	int i;
-+
-+	if (!CredEnumerateW(L"git:*", 0, &num_creds, &creds))
-+		return;
-+
-+	/* search for the first credential that matches username */
-+	for (i = 0; i < num_creds; ++i)
-+		if (match_cred(creds[i])) {
-+			cred = creds[i];
-+			break;
-+		}
-+	if (!cred)
-+		return;
-+
-+	CredUnPackAuthenticationBufferW(0, cred->CredentialBlob,
-+	    cred->CredentialBlobSize, NULL, &user_buf_size, NULL, NULL,
-+	    NULL, &pass_buf_size);
-+
-+	user_buf = xmalloc(user_buf_size * sizeof(WCHAR));
-+	pass_buf = xmalloc(pass_buf_size * sizeof(WCHAR));
-+
-+	if (!CredUnPackAuthenticationBufferW(0, cred->CredentialBlob,
-+	    cred->CredentialBlobSize, user_buf, &user_buf_size, NULL, NULL,
-+	    pass_buf, &pass_buf_size))
-+		die("CredUnPackAuthenticationBuffer failed");
-+
-+	CredFree(creds);
-+
-+	/* zero-terminate (sizes include zero-termination) */
-+	user_buf[user_buf_size - 1] = L'\0';
-+	pass_buf[pass_buf_size - 1] = L'\0';
-+
-+	write_item("username", user_buf);
-+	write_item("password", pass_buf);
-+
-+	free(user_buf);
-+	free(pass_buf);
-+}
-+
-+static void write_attr(CREDENTIAL_ATTRIBUTEW *attr, const WCHAR *keyword,
-+    const char *value)
-+{
-+	attr->Keyword = (LPWSTR)keyword;
-+	attr->Flags = 0;
-+	attr->ValueSize = strlen(value) + 1; /* store zero-termination */
-+	attr->Value = (LPBYTE)value;
-+}
-+
-+static void store_credential(void)
-+{
-+	CREDENTIALW cred;
-+	BYTE *auth_buf;
-+	DWORD auth_buf_size = 0;
-+	CREDENTIAL_ATTRIBUTEW attrs[CRED_MAX_ATTRIBUTES];
-+
-+	if (!wusername || !password)
-+		return;
-+
-+	/* query buffer size */
-+	CredPackAuthenticationBufferW(0, wusername, password,
-+	    NULL, &auth_buf_size);
-+
-+	auth_buf = xmalloc(auth_buf_size);
-+
-+	if (!CredPackAuthenticationBufferW(0, wusername, password,
-+	    auth_buf, &auth_buf_size))
-+		die("CredPackAuthenticationBuffer failed");
-+
-+	cred.Flags = 0;
-+	cred.Type = CRED_TYPE_GENERIC;
-+	cred.TargetName = target;
-+	cred.Comment = L"saved by git-credential-wincred";
-+	cred.CredentialBlobSize = auth_buf_size;
-+	cred.CredentialBlob = auth_buf;
-+	cred.Persist = CRED_PERSIST_LOCAL_MACHINE;
-+	cred.AttributeCount = 2;
-+	cred.Attributes = attrs;
-+	cred.TargetAlias = NULL;
-+	cred.UserName = wusername;
-+
-+	write_attr(attrs, L"git_protocol", protocol);
-+	write_attr(attrs + 1, L"git_host", host);
-+
-+	if (path) {
-+		write_attr(attrs + 2, L"git_path", path);
-+		cred.AttributeCount++;
-+	}
-+
-+	if (!CredWriteW(&cred, 0))
-+		die("CredWrite failed");
-+}
-+
-+static void erase_credential(void)
-+{
-+	CREDENTIALW **creds;
-+	DWORD num_creds;
-+	int i;
-+
-+	if (!CredEnumerateW(L"git:*", 0, &num_creds, &creds))
-+		return;
-+
-+	for (i = 0; i < num_creds; ++i) {
-+		if (match_cred(creds[i]))
-+			CredDeleteW(creds[i]->TargetName, creds[i]->Type, 0);
-+	}
-+
-+	CredFree(creds);
-+}
-+
-+static WCHAR *utf8_to_utf16_dup(const char *str)
-+{
-+	int wlen = MultiByteToWideChar(CP_UTF8, 0, str, -1, NULL, 0);
-+	WCHAR *wstr = xmalloc(sizeof(WCHAR) * wlen);
-+	MultiByteToWideChar(CP_UTF8, 0, str, -1, wstr, wlen);
-+	return wstr;
-+}
-+
-+static void read_credential(void)
-+{
-+	char buf[1024];
-+
-+	while (fgets(buf, sizeof(buf), stdin)) {
-+		char *v;
-+
-+		if (!strcmp(buf, "\n"))
-+			break;
-+		buf[strlen(buf)-1] = '\0';
-+
-+		v = strchr(buf, '=');
-+		if (!v)
-+			die("bad input: %s", buf);
-+		*v++ = '\0';
-+
-+		if (!strcmp(buf, "protocol"))
-+			protocol = xstrdup(v);
-+		else if (!strcmp(buf, "host"))
-+			host = xstrdup(v);
-+		else if (!strcmp(buf, "path"))
-+			path = xstrdup(v);
-+		else if (!strcmp(buf, "username")) {
-+			username = xstrdup(v);
-+			wusername = utf8_to_utf16_dup(v);
-+		} else if (!strcmp(buf, "password"))
-+			password = utf8_to_utf16_dup(v);
-+		else
-+			die("unrecognized input");
-+	}
-+}
-+
-+int main(int argc, char *argv[])
-+{
-+	const char *usage =
-+	    "Usage: git credential-wincred <get|store|erase>\n";
-+
-+	if (!argv[1])
-+		die(usage);
-+
-+	/* git use binary pipes to avoid CRLF-issues */
-+	_setmode(_fileno(stdin), _O_BINARY);
-+	_setmode(_fileno(stdout), _O_BINARY);
-+
-+	read_credential();
-+
-+	load_cred_funcs();
-+
-+	if (!protocol || !host)
-+		return 0;
-+
-+	/* prepare 'target', the unique key for the credential */
-+	strncat(target_buf, "git:", sizeof(target_buf));
-+	strncat(target_buf, protocol, sizeof(target_buf));
-+	strncat(target_buf, "://", sizeof(target_buf));
-+	if (username) {
-+		strncat(target_buf, username, sizeof(target_buf));
-+		strncat(target_buf, "@", sizeof(target_buf));
-+	}
-+	strncat(target_buf, host, sizeof(target_buf));
-+	if (path) {
-+		strncat(target_buf, "/", sizeof(target_buf));
-+		strncat(target_buf, path, sizeof(target_buf));
-+	}
-+
-+	target = utf8_to_utf16_dup(target_buf);
-+
-+	if (!strcmp(argv[1], "get"))
-+		get_credential();
-+	else if (!strcmp(argv[1], "store"))
-+		store_credential();
-+	else if (!strcmp(argv[1], "erase"))
-+		erase_credential();
-+	/* otherwise, ignore unknown action */
-+	return 0;
-+}
-diff --git a/t/lib-credential.sh b/t/lib-credential.sh
-index 4a37cd7..d30ae8a 100755
---- a/t/lib-credential.sh
-+++ b/t/lib-credential.sh
-@@ -8,6 +8,10 @@ check() {
- 	read_chunk >expect-stdout &&
- 	read_chunk >expect-stderr &&
- 	test-credential "$@" <stdin >stdout 2>stderr &&
-+	if test_have_prereq MINGW
-+	then
-+		dos2unix -q stderr
-+	fi &&
- 	test_cmp expect-stdout stdout &&
- 	test_cmp expect-stderr stderr
- }
--- 
-1.7.9
-
--- 
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-
-*** Please avoid top-posting. ***
-
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, visit this group at
-http://groups.google.com/group/msysgit?hl=en_US?hl=en
+I do not use difftool myself, but I would imagine that it is a grave
+regression, no?
