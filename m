@@ -1,96 +1,105 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 1/3] push: introduce new push.default mode "simple"
-Date: Thu, 19 Apr 2012 16:46:09 -0700
-Message-ID: <20120419234609.GA6020@sigill.intra.peff.net>
-References: <vpqaa27bgon.fsf@bauges.imag.fr>
- <1334876234-20077-1-git-send-email-Matthieu.Moy@imag.fr>
- <1334876234-20077-2-git-send-email-Matthieu.Moy@imag.fr>
+From: Andrew Ardill <andrew.ardill@gmail.com>
+Subject: Re: Help with repo management.
+Date: Fri, 20 Apr 2012 09:49:39 +1000
+Message-ID: <CAH5451nL+BiZPo-cWHwYC4GkA=pT3zgBXi_M-TB-qgDfmy7yow@mail.gmail.com>
+References: <4F902294.10302@abemblem.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, gitster@pobox.com,
-	Michael Haggerty <mhagger@alum.mit.edu>
-To: Matthieu Moy <Matthieu.Moy@imag.fr>
-X-From: git-owner@vger.kernel.org Fri Apr 20 01:46:22 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Mark Haney <markh@abemblem.com>
+X-From: git-owner@vger.kernel.org Fri Apr 20 01:50:13 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SL13N-0005X7-Gm
-	for gcvg-git-2@plane.gmane.org; Fri, 20 Apr 2012 01:46:21 +0200
+	id 1SL174-0007nn-LV
+	for gcvg-git-2@plane.gmane.org; Fri, 20 Apr 2012 01:50:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755934Ab2DSXqQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Apr 2012 19:46:16 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:38754
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753860Ab2DSXqP (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Apr 2012 19:46:15 -0400
-Received: (qmail 2237 invoked by uid 107); 19 Apr 2012 23:46:22 -0000
-Received: from c-67-169-43-61.hsd1.ca.comcast.net (HELO sigill.intra.peff.net) (67.169.43.61)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 19 Apr 2012 19:46:22 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 19 Apr 2012 16:46:09 -0700
-Content-Disposition: inline
-In-Reply-To: <1334876234-20077-2-git-send-email-Matthieu.Moy@imag.fr>
+	id S1756855Ab2DSXuE convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 19 Apr 2012 19:50:04 -0400
+Received: from mail-wi0-f172.google.com ([209.85.212.172]:42651 "EHLO
+	mail-wi0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754151Ab2DSXuB convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 19 Apr 2012 19:50:01 -0400
+Received: by wibhj6 with SMTP id hj6so122307wib.1
+        for <git@vger.kernel.org>; Thu, 19 Apr 2012 16:50:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=AKXcSMcDVeI9vB8pgCXuGKNJ0+RDFVRlZbgB6tS6Byk=;
+        b=P+KBxj1Jo2GTarValr5DLelvxVJdHjDBaxL7r6+hrzh2QeYX1Hj54wmi2NQ/nXj9IN
+         402rQFZQjIOCSr9J9ee5NZT5GPkmZfLfSMwyY4vw5NuuwOxLY3HnVOrMkCODR46LXqmj
+         WJjnQYuszD48+/4mTcoBqscxP7Ar5LfRnnpBJ16PCCrld4U0lkldPXCkSsDUa0St5evS
+         QqHTNbSYbObXGES9r+xeFg3zUXUibovaagY+XFcqOcAFL0whq8BfxmglP6mzuemUTrcI
+         k+dxDLDRvRHlEC4ximpA9jx2WoQcoMdr7miA5NVotuG+eiLRiWhJ3PNQzDX3EfkADhCe
+         UUAQ==
+Received: by 10.180.102.3 with SMTP id fk3mr4416897wib.9.1334879399987; Thu,
+ 19 Apr 2012 16:49:59 -0700 (PDT)
+Received: by 10.223.158.69 with HTTP; Thu, 19 Apr 2012 16:49:39 -0700 (PDT)
+In-Reply-To: <4F902294.10302@abemblem.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195978>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195979>
 
-On Fri, Apr 20, 2012 at 12:57:12AM +0200, Matthieu Moy wrote:
+On 20 April 2012 00:35, Mark Haney <markh@abemblem.com> wrote:
+> I'm new to git and repo management and I have an issue that I can't q=
+uite
+> figure out. =C2=A0Here's my problem.
+>
+> I have a server (SERVER) with a repo on it. =C2=A0It has all my code =
+and
+> documentation. =C2=A0I pulled that repo onto my workstation for a loc=
+al copy so I
+> could work at home or wherever with needing server access. My problem=
+ is I
+> can /pull/ from the repo on SERVER, but I can't /push/ any local chan=
+ges
+> back to the server. =C2=A0I get an error message about master being c=
+hecked out.
+>
+> I know a little about bare repos, but my understanding is that the ba=
+re repo
+> doesn't actually have the actual files in it, just the changes, which=
+ is not
+> what I want. =C2=A0I would like to have the copy on SERVER to work fr=
+om if I
+> want, and also be able to pull/push changes from my local copy as wel=
+l.
+> =C2=A0That way I have 2 copies of the data handy (not to mention the =
+disc
+> backups.
+>
+> I'm fairly sure this can be setup, but I just don't know enough to fi=
+gure it
+> out. =C2=A0Can someone point me in the right direction?
+>
 
-> diff --git a/builtin/push.c b/builtin/push.c
-> index d315475..4602cd8 100644
-> --- a/builtin/push.c
-> +++ b/builtin/push.c
-> @@ -65,7 +65,17 @@ static void set_refspecs(const char **refs, int nr)
->  	}
->  }
->  
-> -static void setup_push_upstream(struct remote *remote)
-> +static int push_url_of_remote(struct remote *remote, const char ***url_p)
-> +{
-> +	if (remote->pushurl_nr) {
-> +		*url_p = remote->pushurl;
-> +		return remote->pushurl_nr;
-> +	}
-> +	*url_p = remote->url;
-> +	return remote->url_nr;
-> +}
-> +
+=46irst things first, don't think that just because a bare repository
+does not have a working copy that it doesn't have all the data. Having
+a local working copy and a bare repository on a server _is_ keeping
+two separate copies of your data handy, just one is not immediately
+accessible (you have to check it out first). This may be your
+understanding, but it was unclear so I thought I would clarify.
 
-Eh, what's this? This wasn't part of my patch. It was part of Junio's
-patch which mine was based on (and it provokes a "defined but not used"
-warning when your patch is applied on top of master).
+In terms of pushing to a remote, it is best practice to NOT push to a
+repository that has a checked out working copy. The main reason for
+this is that it becomes much easier to lose data, which is bad.
 
-> @@ -87,6 +97,35 @@ static void setup_push_upstream(struct remote *remote)
->  	if (branch->merge_nr != 1)
->  		die(_("The current branch %s has multiple upstream branches, "
->  		    "refusing to push."), branch->name);
-> +	if (strcmp(branch->remote_name, remote->name))
-> +		die(_("You are pushing to remote '%s', which is not the upstream of\n"
-> +		      "your current branch '%s', without telling me what to push\n"
-> +		      "to update which remote branch."),
-> +		    remote->name, branch->name);
+Instead, if you want to work on SERVER as well as some other machine,
+it is safer to checkout the bare repository to another repository on
+SERVER, pulling and pushing to the bare repository in the same fashion
+as you would from a remote machine.
 
-And this was from Junio's patch, which is really a separate topic (that
-"git push foo" should not respect an upstream branch name when the
-upstream remote is not "foo").
+Some more explanation can be found at
+http://gitready.com/advanced/2009/02/01/push-to-only-bare-repositories.=
+html
+for example.
 
-So I think your rebase turned out a little funny. We probably want to
-pull in Junio's patch from the tip of jc/push-upstream-sanity (135dade).
-Though even that can be pared down a little. The push_url_of_remote
-refactoring was part of an early iteration and does not have to be part
-of the final version (though I think it is a fine refactoring on its
-own).
+Regards,
 
-> diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
-> index b5417cc..f4f9d06 100755
-> --- a/t/t5516-fetch-push.sh
-> +++ b/t/t5516-fetch-push.sh
-
-135dade creates a new t5528 for testing push.default settings, so tests
-could go there.
-
--Peff
+Andrew Ardill
