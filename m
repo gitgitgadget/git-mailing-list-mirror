@@ -1,121 +1,86 @@
-From: Erik Faye-Lund <kusmabite@gmail.com>
-Subject: Re: What's cooking in git.git (Apr 2012, #06; Sun, 15)
-Date: Thu, 19 Apr 2012 15:52:44 +0200
-Message-ID: <CABPQNSa7NiK=baYbDBENt-An0mFGn1i+GPnN_=LpqAVScXrG2w@mail.gmail.com>
-References: <7vpqb8xjj9.fsf@alter.siamese.dyndns.org> <4F8E6A12.9090708@viscovery.net>
- <4F8F1BC1.3030607@ramsay1.demon.co.uk> <4F8FADCF.5000006@viscovery.net>
- <4F8FB4A0.7090403@viscovery.net> <20120419093608.GA19391@duynguyen-vnpc.dek-tpc.internal>
- <CABPQNSZ6VdyoLcVUUJ4z5A2A7KGP8qBZAkzdx8zAtAs2mZN25w@mail.gmail.com>
- <CACsJy8DDLmKkBMW_P8RyGTRw=i6OKWZNf-SHoGkVWnJgfK7cVQ@mail.gmail.com>
- <CABPQNSb9BSfmGu2bYtZUndgkTom=r+Ho_CKsDr7wo=jfxiXEjA@mail.gmail.com> <4F9017BF.90702@viscovery.net>
-Reply-To: kusmabite@gmail.com
+From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [PATCH nd/threaded-index-pack] index-pack: disable threading if NO_PREAD is defined
+Date: Thu, 19 Apr 2012 21:05:29 +0700
+Message-ID: <1334844329-24557-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+Cc: kusmabite@gmail.com, Johannes Sixt <j.sixt@viscovery.net>,
 	Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
 	Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Thu Apr 19 15:53:33 2012
+	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Apr 19 16:08:56 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SKrne-0001aF-A1
-	for gcvg-git-2@plane.gmane.org; Thu, 19 Apr 2012 15:53:30 +0200
+	id 1SKs2Z-0002mC-MI
+	for gcvg-git-2@plane.gmane.org; Thu, 19 Apr 2012 16:08:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755468Ab2DSNxZ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 19 Apr 2012 09:53:25 -0400
-Received: from mail-pb0-f46.google.com ([209.85.160.46]:63259 "EHLO
-	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754244Ab2DSNxZ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 19 Apr 2012 09:53:25 -0400
-Received: by pbcun15 with SMTP id un15so10266642pbc.19
-        for <git@vger.kernel.org>; Thu, 19 Apr 2012 06:53:24 -0700 (PDT)
+	id S1755481Ab2DSOIv convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 19 Apr 2012 10:08:51 -0400
+Received: from mail-pz0-f52.google.com ([209.85.210.52]:36118 "EHLO
+	mail-pz0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753017Ab2DSOIv (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Apr 2012 10:08:51 -0400
+Received: by dake40 with SMTP id e40so11428274dak.11
+        for <git@vger.kernel.org>; Thu, 19 Apr 2012 07:08:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type:content-transfer-encoding;
-        bh=CkrbDg1oLo46oUMswPKR/bjqkIU94eViuOv1XU8j+D0=;
-        b=DTGT9WeNV8qxUDfoawqk7nh0I3F2546Gr0x/jdoWCPhRbjjCsr+BT+NS5dXtSWiy1S
-         JTLGw/qhICrgd+owFXZbNlKi9ulAZlbimM0z4PA0AoHSNGXPREMZgtLaUDBlmX1a1/C9
-         sxQhbmztvvPDTgD96UFfyf5xJVRX1llPXDcw1NQVyenrjsaTNLKPLM6MAbni/9I22Cst
-         32Nk9XjT8Umc/8WxbUDzXWFPyn0BEXbSw0c6UUtyl8ijXGrMgbCZUPDagj75GF7q4YCa
-         w6zfgBIKos4OZ1Bye9YLFDPzJhOk/V+PhOLEp0m08vKZEF4Awnv2rw9Uj/nXgBSrprM2
-         Hrdw==
-Received: by 10.68.138.196 with SMTP id qs4mr4445572pbb.159.1334843604597;
- Thu, 19 Apr 2012 06:53:24 -0700 (PDT)
-Received: by 10.68.236.105 with HTTP; Thu, 19 Apr 2012 06:52:44 -0700 (PDT)
-In-Reply-To: <4F9017BF.90702@viscovery.net>
+        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
+         :content-type:content-transfer-encoding;
+        bh=/mWYffq97asfg1iymWKN8uMoUs99atrXkEA0edywL7o=;
+        b=bERwbaKNvkGChESa0iwJdM7rCY2fPCrgushgbburtWkNx9vb5WAdeTO8P8x+/x9wtJ
+         jz45PKDuF5RJM8sPOR8umDnCgXyzG992jOMHl8pr7aPnK7ZkKCzDnYY7kbbZBtAovUX7
+         ByAM3+n6zmoKMrGX18pNKu5zaLbUAF7xcJLESrhLp3EdExb43IDlEXa4lpMpTwjxJhyr
+         zsxpNwITvxQK3tT8GnctP8OcxLD9+vFUGi3wYQcPkVfn3axCQieiG5mPPrME0Cd/B6MC
+         izyB0ZjrdbcvD2EwJ0Ux7Ij5OadwV39t8l8bD9/+eX6gs6hJ2RKz300Fhfu0np7GGG8h
+         mzmw==
+Received: by 10.68.201.73 with SMTP id jy9mr5025862pbc.35.1334844530635;
+        Thu, 19 Apr 2012 07:08:50 -0700 (PDT)
+Received: from pclouds@gmail.com ([115.74.39.247])
+        by mx.google.com with ESMTPS id i5sm2358288pbf.19.2012.04.19.07.08.43
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 19 Apr 2012 07:08:49 -0700 (PDT)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Thu, 19 Apr 2012 21:05:36 +0700
+X-Mailer: git-send-email 1.7.8.36.g69ee2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195946>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195947>
 
-On Thu, Apr 19, 2012 at 3:48 PM, Johannes Sixt <j.sixt@viscovery.net> w=
-rote:
-> Am 4/19/2012 15:31, schrieb Erik Faye-Lund:
->> int main(int argc, const char *argv[])
->> {
->> =A0 =A0 =A0 =A0 int i, fd =3D open(__FILE__, O_RDONLY);
->> =A0 =A0 =A0 =A0 for (i =3D 0; i < 2; ++i) {
->> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 char buf[11] =3D {0};
->> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 mingw_pread(fd, buf, 10, 0);
->> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 printf("buf =3D '%10s'\n", buf);
->> =A0 =A0 =A0 =A0 }
->> =A0 =A0 =A0 =A0 return 0;
->> }
->
-> The test is flawed. It shows only that pread can read twice the same =
-file
-> location.
+NO_PREAD simulates pread() as a sequence of seek, read, seek in
+compat/pread.c. The simulation is not thread-safe because another
+thread could move the file offset away in the middle of pread
+operation. Do not allow threading in that case.
 
-Oh, you are of course right. *slaps forehead*
+Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+=2Ecom>
+---
+ builtin/index-pack.c |    5 +++++
+ 1 files changed, 5 insertions(+), 0 deletions(-)
 
-> But it must not update the file pointer, whereas the
-> documentation of ReadFile says (quoting the paragraph that is relevan=
-t for
-> us):
->
-> =A0If hFile is not opened with FILE_FLAG_OVERLAPPED and lpOverlapped =
-is
-> =A0not NULL, the read operation starts at the offset that is specifie=
-d in
-> =A0the OVERLAPPED structure. ReadFile does not return until the read
-> =A0operation is complete, and then the system updates the file pointe=
-r.
-
-Indeed. Correcting the test to first do pread and then read reveals
-that the file pointer does indeed get updated. Grrr...
-
-> Hence, your mingw_pread() looks like a workable solution for our purp=
-oses,
-> but is still not a 100% correct emulation of pread(). (Testing all th=
-is
-> will have to wait for another 18 hours or so.)
->
-
-I don't know our use-cases, but I'd be a lot happier if I could find a
-safe way to have it not update the file-pointer. Just reading it and
-setting it back again would be racy.
-
->> Yeah. Other platforms are still an issue. You didn't address those
->> either in your patch, even though it would be possible to modify it =
-to
->> deal with them by checking the NO_PREAD and NO_PTHREADS defines.
->>
->> But they would still have the problem with the file-pointer racing f=
-or
->> non-pread operations. Perhaps simply disabling threading is the bett=
-er
->> choice for these?
->
-> I think it is better to keep threading on in general, but only disabl=
-e it
-> for index-pack. Why should existing users take a performance hit?
->
-
-Good point.
+diff --git a/builtin/index-pack.c b/builtin/index-pack.c
+index 847dbb3..c1c3c81 100644
+--- a/builtin/index-pack.c
++++ b/builtin/index-pack.c
+@@ -39,6 +39,11 @@ struct base_data {
+ 	int ofs_first, ofs_last;
+ };
+=20
++#if !defined(NO_PTHREADS) && defined(NO_PREAD)
++/* NO_PREAD uses compat/pread.c, which is not thread-safe. Disable thr=
+eading. */
++#define NO_PTHREADS
++#endif
++
+ struct thread_local {
+ #ifndef NO_PTHREADS
+ 	pthread_t thread;
+--=20
+1.7.8.36.g69ee2
