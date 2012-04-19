@@ -1,64 +1,82 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH] Do not use SHELL_PATH from build system in prepare_shell_cmd
- on Windows
-Date: Thu, 19 Apr 2012 07:36:19 +0200
-Message-ID: <4F8FA453.8050807@viscovery.net>
-References: <7vvclmoit6.fsf@alter.siamese.dyndns.org> <1333157601-6458-1-git-send-email-bwalton@artsci.utoronto.ca> <4F8D15B9.70803@viscovery.net> <20120417221449.GC10797@sigill.intra.peff.net> <4F8E539F.7030902@viscovery.net> <7vobqpknoq.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Do not use SHELL_PATH from build system in
+ prepare_shell_cmd on Windows
+Date: Wed, 18 Apr 2012 22:49:43 -0700
+Message-ID: <7v8vhsi83s.fsf@alter.siamese.dyndns.org>
+References: <7vvclmoit6.fsf@alter.siamese.dyndns.org>
+ <1333157601-6458-1-git-send-email-bwalton@artsci.utoronto.ca>
+ <4F8D15B9.70803@viscovery.net> <20120417221449.GC10797@sigill.intra.peff.net>
+ <4F8E539F.7030902@viscovery.net> <7vobqpknoq.fsf@alter.siamese.dyndns.org>
+ <4F8FA453.8050807@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: Jeff King <peff@peff.net>, Ben Walton <bwalton@artsci.utoronto.ca>,
 	jrnieder@gmail.com, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Apr 19 07:36:35 2012
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Thu Apr 19 07:49:52 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SKk2j-0001Zl-2o
-	for gcvg-git-2@plane.gmane.org; Thu, 19 Apr 2012 07:36:33 +0200
+	id 1SKkFb-0003zf-Jx
+	for gcvg-git-2@plane.gmane.org; Thu, 19 Apr 2012 07:49:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752603Ab2DSFg1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Apr 2012 01:36:27 -0400
-Received: from lilzmailso02.liwest.at ([212.33.55.13]:59784 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752562Ab2DSFg0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Apr 2012 01:36:26 -0400
-Received: from cpe228-254-static.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.76)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1SKk2W-0000Ec-8o; Thu, 19 Apr 2012 07:36:20 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id C96401660F;
-	Thu, 19 Apr 2012 07:36:19 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:11.0) Gecko/20120327 Thunderbird/11.0.1
-In-Reply-To: <7vobqpknoq.fsf@alter.siamese.dyndns.org>
-X-Enigmail-Version: 1.4
-X-Spam-Score: -1.4 (-)
+	id S1752739Ab2DSFtq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Apr 2012 01:49:46 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:57818 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752089Ab2DSFtp (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Apr 2012 01:49:45 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0106B77A1;
+	Thu, 19 Apr 2012 01:49:45 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=sN4OISotSuFt5ckN72oVu0F+Vzc=; b=HP8657
+	Y+er074B+/upq1Aye9uz/Wy7M6oiH7CPOVuCNot17BG0IdiXfINNFp46QuIKi2M+
+	UBWricFkvr73L2heb+jluBN/fGaLATLwTN2g0xiXfW4k7ygY9kHcUmmRWfzQBq1I
+	7lxmOMzcCqIYSGDzW+efhRzLB0IdGIsryzWkU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=lDiMQVgdMou12lKS3u3RxFBqQIm0zsM7
+	Am+FcOdtznCzJq9yA0rcDXmQZMaT0kYTIxEcQ+34zo3UG45UcL1ZktTcPGkXDxvu
+	U3EsHOzBceiBdk0+2woxHjEu0HV0VhDwIWuhTDYqdU+6AaCVOX8FsEFX1CKprdnA
+	5mcgD9NPCAY=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id ED29577A0;
+	Thu, 19 Apr 2012 01:49:44 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7A8FE779E; Thu, 19 Apr 2012
+ 01:49:44 -0400 (EDT)
+In-Reply-To: <4F8FA453.8050807@viscovery.net> (Johannes Sixt's message of
+ "Thu, 19 Apr 2012 07:36:19 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 7703A83C-89E3-11E1-85D1-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195922>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195923>
 
-Am 4/18/2012 18:30, schrieb Junio C Hamano:
-> There is one thing I am confused about your response, though.  I thought
-> the suggestion by Peff was to build your binary with "make SHELL_PATH=sh"
-> (not "make SHELL_PATH=/bin/sh").  I do not know if that works or does not
-> work (I do not see why not, though), but in either case offering a new
-> customization point sounds like a separate issue.
+Johannes Sixt <j.sixt@viscovery.net> writes:
 
-I tried this, and it does not work. (Shell scripts' shbang line would end
-up as '#!sh', and at least bash does not like to run such scripts.)
+> Am 4/18/2012 18:30, schrieb Junio C Hamano:
+>> There is one thing I am confused about your response, though.  I thought
+>> the suggestion by Peff was to build your binary with "make SHELL_PATH=sh"
+>> (not "make SHELL_PATH=/bin/sh").  I do not know if that works or does not
+>> work (I do not see why not, though), but in either case offering a new
+>> customization point sounds like a separate issue.
+>
+> I tried this, and it does not work. (Shell scripts' shbang line would end
+> up as '#!sh', and at least bash does not like to run such scripts.)
 
-The alternative is to customize the -DSHELL_PATH=... compiler option for
-Windows, and that is primarily what I don't like: It would mean that
-either the name "SHELL_PATH" has different meaning in C code and the
-Makefile, or we need a new name for the C macro. (The latter would be "a
-new customization point".)
+Ahh, sorry for missing the obvious.  I should have realized about that
+one, as customizing that one was the very original motivation of the make
+variable.
 
-I learn from this conversation that I should note failed alternatives more
-frequently in the commit message to save reviewers' time.
+In any case, as I wrote in the "What's cooking", I'll fast-track the fix
+to 'master' shortly, so that Windows port does not have to carry it.
 
--- Hannes
+Thanks.
