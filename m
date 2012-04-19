@@ -1,47 +1,135 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: Delete gitlink entry but keep .gitmodules file unmodified
-Date: Thu, 19 Apr 2012 11:10:58 +0200
-Message-ID: <4F8FD6A2.5090605@web.de>
-References: <4F8EBF5D.5070301@tmatesoft.com> <4F8EC4E2.6070507@web.de> <4F8ED0F6.5070106@tmatesoft.com>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: What's cooking in git.git (Apr 2012, #06; Sun, 15)
+Date: Thu, 19 Apr 2012 16:36:08 +0700
+Message-ID: <20120419093608.GA19391@duynguyen-vnpc.dek-tpc.internal>
+References: <7vpqb8xjj9.fsf@alter.siamese.dyndns.org>
+ <4F8E6A12.9090708@viscovery.net>
+ <4F8F1BC1.3030607@ramsay1.demon.co.uk>
+ <4F8FADCF.5000006@viscovery.net>
+ <4F8FB4A0.7090403@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Semen Vadishev <semen.vadishev@tmatesoft.com>
-X-From: git-owner@vger.kernel.org Thu Apr 19 11:12:03 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
+	Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Thu Apr 19 11:37:10 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SKnPG-00053H-Lv
-	for gcvg-git-2@plane.gmane.org; Thu, 19 Apr 2012 11:12:03 +0200
+	id 1SKnnY-0003qp-5L
+	for gcvg-git-2@plane.gmane.org; Thu, 19 Apr 2012 11:37:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752594Ab2DSJL5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Apr 2012 05:11:57 -0400
-Received: from fmmailgate05.web.de ([217.72.192.243]:58207 "EHLO
-	fmmailgate05.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751433Ab2DSJL4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Apr 2012 05:11:56 -0400
-Received: from moweb001.kundenserver.de (moweb001.kundenserver.de [172.19.20.114])
-	by fmmailgate05.web.de (Postfix) with ESMTP id D9FA36DD1CA6
-	for <git@vger.kernel.org>; Thu, 19 Apr 2012 11:11:01 +0200 (CEST)
-Received: from [192.168.178.48] ([91.3.175.87]) by smtp.web.de (mrweb002) with
- ESMTPA (Nemesis) id 0M5fhI-1S5BK11JZQ-00xbMi; Thu, 19 Apr 2012 11:11:01 +0200
-User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:11.0) Gecko/20120327 Thunderbird/11.0.1
-In-Reply-To: <4F8ED0F6.5070106@tmatesoft.com>
-X-Provags-ID: V02:K0:Nw2sWh4K2EysdPe4k4BCF6xVKTxNfcErQLejuh5E3sm
- ra2tiAEeWWxJUwWogFyt/MksDAAJRQ6Z0yzO1XOdecxkDZgSWw
- 7BfVkbm6M4LaeI2Dcy+xgYzMSa3UnkJw0NXpRTXpIC6QNBPCt9
- IswwXT6pm4lGQVvGlvyGmEp0GU66EFOb+Xrp1Bk/YduJW7w591
- 8UIeKfi6SZ810ZXV7Kf7w==
+	id S1752524Ab2DSJhD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Apr 2012 05:37:03 -0400
+Received: from mail-pz0-f52.google.com ([209.85.210.52]:61195 "EHLO
+	mail-pz0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751108Ab2DSJhB (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Apr 2012 05:37:01 -0400
+Received: by dake40 with SMTP id e40so11138921dak.11
+        for <git@vger.kernel.org>; Thu, 19 Apr 2012 02:37:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=Rk/ocsjeFZdn+jQtlbvD5lD3O5RntTk05jx/QqdoYIA=;
+        b=Ut4RnUk6nZQLltVk2djswOytam0XHTPo+WA9JBa4wVw9DTTTr+re+wL+tEYrn09v2X
+         6cuwDJx+u4jGSbXi1nYXDjUelFJ2YVQNcGXG7pjuXF+fcQBKKOzHmP5UIBPMUY8985Ie
+         Ij5XvtzwKPZqJ46hI+MFq1gQEnV+tnpgHGKZrXVxfgHQKyEnrRhDQ5xQ/ftntEf7j3fy
+         id2lEtPbrj6+Kp5zEJuGbjTHr+oF4qM8Hqhq1yfx7MlSEr3ShcIlEOO9NQQTc/xbviaP
+         xY09t4EI1PGCF9H3GvWI2NmxYqeCRhYtYR9Dw6QoRiUAUakAHiB0HqiS/j8qr2LxGRMa
+         1Lzw==
+Received: by 10.68.191.166 with SMTP id gz6mr3615969pbc.164.1334828221473;
+        Thu, 19 Apr 2012 02:37:01 -0700 (PDT)
+Received: from pclouds@gmail.com ([113.161.77.29])
+        by mx.google.com with ESMTPS id k9sm1758001pbf.65.2012.04.19.02.36.57
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 19 Apr 2012 02:37:00 -0700 (PDT)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Thu, 19 Apr 2012 16:36:08 +0700
+Content-Disposition: inline
+In-Reply-To: <4F8FB4A0.7090403@viscovery.net>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195931>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195932>
 
-Am 18.04.2012 16:34, schrieb Semen Vadishev:
-> And what about these obsolete [submodule "foo"] sections left in .gitmodules and .git/config files? Do they bring any problems? Maybe for some older git versions?
+On Thu, Apr 19, 2012 at 08:45:52AM +0200, Johannes Sixt wrote:
+> I don't see any mutual exclusion happening in this chain. Perhaps it is
+> not needed, provided that the pread() call in get_data_from_pack is
+> atomic. But our git_pread() from compat/pread.c, which we use on Windows,
+> is not atomic.
 
-None that I'm aware of, that should work just fine.
+OK assume it's Windows' pread thread-safe problem (it does look like
+so given how pread.c implements it), maybe this patch will help:
+
+-- 8< --
+diff --git a/builtin/index-pack.c b/builtin/index-pack.c
+index 847dbb3..5d539cd 100644
+--- a/builtin/index-pack.c
++++ b/builtin/index-pack.c
+@@ -102,6 +102,10 @@ static pthread_mutex_t work_mutex;
+ #define work_lock()		lock_mutex(&work_mutex)
+ #define work_unlock()		unlock_mutex(&work_mutex)
+ 
++#ifdef WIN32
++static pthread_mutex_t pread_mutex;
++#endif
++
+ static pthread_key_t key;
+ 
+ static inline void lock_mutex(pthread_mutex_t *mutex)
+@@ -124,6 +128,9 @@ static void init_thread(void)
+ 	init_recursive_mutex(&read_mutex);
+ 	pthread_mutex_init(&counter_mutex, NULL);
+ 	pthread_mutex_init(&work_mutex, NULL);
++#ifdef WIN32
++	pthread_mutex_init(&pread_mutex, NULL);
++#endif
+ 	pthread_key_create(&key, NULL);
+ 	thread_data = xcalloc(nr_threads, sizeof(*thread_data));
+ 	threads_active = 1;
+@@ -137,6 +144,9 @@ static void cleanup_thread(void)
+ 	pthread_mutex_destroy(&read_mutex);
+ 	pthread_mutex_destroy(&counter_mutex);
+ 	pthread_mutex_destroy(&work_mutex);
++#ifdef WIN32
++	pthread_mutex_destroy(&pread_mutex);
++#endif
+ 	pthread_key_delete(key);
+ 	free(thread_data);
+ }
+@@ -456,6 +466,20 @@ static void *unpack_raw_entry(struct object_entry *obj, union delta_base *delta_
+ 	return data;
+ }
+ 
++#ifdef WIN32
++/* pread is reimplemented in compat/pread.c and is not thread-safe */
++static ssize_t pread_threadsafe(int fd, void *buf, size_t count, off_t from)
++{
++	ssize_t n;
++	lock_mutex(&pread_mutex);
++	n = pread(fd, buf, count, from);
++	unlock_mutex(&pread_mutex);
++	return n;
++}
++#else
++#define pread_threadsafe(fd,buf,count,from) pread(fd, buf, count, from)
++#endif
++
+ static void *get_data_from_pack(struct object_entry *obj)
+ {
+ 	off_t from = obj[0].idx.offset + obj[0].hdr_size;
+@@ -474,7 +498,7 @@ static void *get_data_from_pack(struct object_entry *obj)
+ 
+ 	do {
+ 		ssize_t n = (len < 64*1024) ? len : 64*1024;
+-		n = pread(pack_fd, inbuf, n, from);
++		n = pread_threadsafe(pack_fd, inbuf, n, from);
+ 		if (n < 0)
+ 			die_errno("cannot pread pack file");
+ 		if (!n)
+-- 8< --
