@@ -1,61 +1,79 @@
-From: Mark Haney <markh@abemblem.com>
-Subject: Help with repo management.
-Date: Thu, 19 Apr 2012 10:35:00 -0400
-Message-ID: <4F902294.10302@abemblem.com>
+From: Junio C Hamano <gitster-vger@pobox.com>
+Subject: Re: [GUILT] Preventing "git push" when guilt patches are applied
+Date: Thu, 19 Apr 2012 08:19:58 -0700
+Message-ID: <CAPc5daV4mK7aLRAm4Ow9TBPf5Tj3B=Qpf0=cRXjbeZoOuoYMKQ@mail.gmail.com>
+References: <4F8FBD63.9050507@opera.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Apr 19 17:06:39 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, ceder@lysator.liu.se
+To: Per Cederqvist <cederp@opera.com>
+X-From: git-owner@vger.kernel.org Thu Apr 19 17:20:15 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SKswR-0007IK-1z
-	for gcvg-git-2@plane.gmane.org; Thu, 19 Apr 2012 17:06:39 +0200
+	id 1SKt9a-0007qp-NT
+	for gcvg-git-2@plane.gmane.org; Thu, 19 Apr 2012 17:20:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753737Ab2DSPGd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Apr 2012 11:06:33 -0400
-Received: from mail.abemblem.com ([68.115.173.66]:64814 "EHLO marius.homelinux"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1751839Ab2DSPGd (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Apr 2012 11:06:33 -0400
-X-Greylist: delayed 1891 seconds by postgrey-1.27 at vger.kernel.org; Thu, 19 Apr 2012 11:06:33 EDT
-Received: from marius.homelinux (localhost.localdomain [127.0.0.1])
-	by marius.homelinux (8.14.5/8.14.5) with ESMTP id q3JEZ01B004603
-	for <git@vger.kernel.org>; Thu, 19 Apr 2012 10:35:01 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:11.0) Gecko/20120329 Thunderbird/11.0.1
+	id S1754332Ab2DSPUF convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 19 Apr 2012 11:20:05 -0400
+Received: from mail-wg0-f42.google.com ([74.125.82.42]:60299 "EHLO
+	mail-wg0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754533Ab2DSPUD convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 19 Apr 2012 11:20:03 -0400
+Received: by wgbds11 with SMTP id ds11so1633414wgb.1
+        for <git@vger.kernel.org>; Thu, 19 Apr 2012 08:19:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=rNLY2kE/CfqRTjz5j9WRlUyFfDfNRxT5/LOta9rJ0jw=;
+        b=nksruADHYfWZDulQX4eLZ6SFQ9E748XKach/PaJoY/G/PAWnoZxQmO9j5tRQ5dC1Va
+         GKY41hscnhb13ckQtuCgO+8Y1vW3jlHJSpuMKGNDsjCVi78z8p6KfzxYh3uGv0Zz782W
+         VMqiRAl58dtyYvVHov8JsaYhww4zziToJS2AvJqbbws9zbpcRUxeTKYvnQcemiO0QGZ4
+         AalkF6ERn80YdvDlEsF0qT4fvn0hEbRKhcuEfghmCvTLXK0Sn6k+wMsPtF0GZUSPrEPk
+         //nXsSlcIDA0FBiLlKTts/SpybYvRu0JVMyHUaCU1C8BCzDJOfXLxGsOqLB7LeWv60l3
+         8aXw==
+Received: by 10.180.98.8 with SMTP id ee8mr6273184wib.14.1334848798145; Thu,
+ 19 Apr 2012 08:19:58 -0700 (PDT)
+Received: by 10.216.216.16 with HTTP; Thu, 19 Apr 2012 08:19:58 -0700 (PDT)
+In-Reply-To: <4F8FBD63.9050507@opera.com>
+X-Google-Sender-Auth: Wu6eTNRPhzeaGFMBKCS7v9pW8Ho
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195949>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195950>
 
-I'm new to git and repo management and I have an issue that I can't 
-quite figure out.  Here's my problem.
+On Thu, Apr 19, 2012 at 12:23 AM, Per Cederqvist <cederp@opera.com> wro=
+te:
+> I have by accident done "git push" when I intended to write "guilt
+> push" a couple of times. =C2=A0If there are guilt patches applied whe=
+n I do
+> this the result is that (part of) my half-finished patch series is
+> pushed to the master branch. =C2=A0That is of course not good.
+>
+> TopGit avoids this issue since I'm on a separate branch when patches
+> are applied.
+> ...
+> I'd like to add something similar to Guilt, to avoid making this
+> mistake ever again. =C2=A0(It is quite embarrassing to clean up after=
+ you
+> push a couple of half-baked patches.) =C2=A0But I don't know how the
+> feature should be designed. =C2=A0Some ideas:
+> ...
 
-I have a server (SERVER) with a repo on it.  It has all my code and 
-documentation.  I pulled that repo onto my workstation for a local copy 
-so I could work at home or wherever with needing server access. My 
-problem is I can /pull/ from the repo on SERVER, but I can't /push/ any 
-local changes back to the server.  I get an error message about master 
-being checked out.
+Isn't the most obvious one (somehow missing from your list) from your
+observation you
+described earlier to have guilt apply patches on a separate branch?
 
-I know a little about bare repos, but my understanding is that the bare 
-repo doesn't actually have the actual files in it, just the changes, 
-which is not what I want.  I would like to have the copy on SERVER to 
-work from if I want, and also be able to pull/push changes from my local 
-copy as well.  That way I have 2 copies of the data handy (not to 
-mention the disc backups.
-
-I'm fairly sure this can be setup, but I just don't know enough to 
-figure it out.  Can someone point me in the right direction?
-
--- 
-
-Mark Haney
-Software Developer/Consultant
-AB Emblem
-markh@abemblem.com
-Linux marius.homelinux 3.3.1-5.fc16.x86_64 GNU/Linux
+Would it also work to set "[push] default =3D none"?  Then "git push"
+typed by mistake for
+"guilt push" (I am assuming that "$whichever push" does not take any
+other argument,
+and that is the root cause of your fat-finger-embarrassment issue)
+would not push anything
+out.
