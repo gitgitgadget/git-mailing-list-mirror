@@ -1,87 +1,75 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [GSoC] Git to SVN bridge
-Date: Thu, 19 Apr 2012 17:56:59 -0500
-Message-ID: <20120419225659.GA4971@burratino>
-References: <CALkWK0=Mqo=PMv7+_sr22Dnm6xxzxzaXL=Zh+2LsvT=usC7csw@mail.gmail.com>
- <20120418201050.GB30625@burratino>
- <CALkWK0=7SPR-4Km5TUwg+rHm30aC7Uru9GJkkfYnL3OORV7nfg@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git List <git@vger.kernel.org>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Apr 20 00:57:19 2012
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: [RFC/PATCH 0/3] push.default upcomming change
+Date: Fri, 20 Apr 2012 00:57:11 +0200
+Message-ID: <1334876234-20077-1-git-send-email-Matthieu.Moy@imag.fr>
+References: <vpqaa27bgon.fsf@bauges.imag.fr>
+Cc: Jeff King <peff@peff.net>, Michael Haggerty <mhagger@alum.mit.edu>,
+	Matthieu Moy <Matthieu.Moy@imag.fr>
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Fri Apr 20 01:27:57 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SL0Hu-0000eu-VM
-	for gcvg-git-2@plane.gmane.org; Fri, 20 Apr 2012 00:57:19 +0200
+	id 1SL0lX-0002mX-OH
+	for gcvg-git-2@plane.gmane.org; Fri, 20 Apr 2012 01:27:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756826Ab2DSW5N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Apr 2012 18:57:13 -0400
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:41426 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754710Ab2DSW5M (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Apr 2012 18:57:12 -0400
-Received: by iagz16 with SMTP id z16so12522394iag.19
-        for <git@vger.kernel.org>; Thu, 19 Apr 2012 15:57:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=58B92dTcRhb8Uoa5rVnRe+twT/TrHS6yCBcHHWaWm3k=;
-        b=he7NsIzyJ6knsw2IFVQIvOl7hfswz8mk5mt2e05NEKp/Ni4mGPRnnRKwCxtzxl8Yv1
-         NLHkkqm5J2pgjrRgo7+2A8OR7PuSmVGdvxTY813LgY+Y26ApMPoaYZhi04/RMRk2FiCg
-         NHa3RetWd04QB+ZOnhx7qKr9R4+7UvcWnCK1IDq4IBaVDhwfWC3Gpzva36sRlJTJPs76
-         OMjuWNYPb7xe6BU473HRQqcERo1DXWECdTw8CPVqHqh7aVnXkoSxXVQRrdHukxf4mOAA
-         JnWB0k8DD9I1St1Tj11KlixpVKf+goJVw6m3VLiS/hSx+cQ1UNqBIe/c5kjNoKolQt/M
-         SkYA==
-Received: by 10.50.216.232 with SMTP id ot8mr8553265igc.22.1334876232144;
-        Thu, 19 Apr 2012 15:57:12 -0700 (PDT)
-Received: from burratino ([64.134.171.237])
-        by mx.google.com with ESMTPS id i6sm1130125igq.3.2012.04.19.15.57.07
-        (version=SSLv3 cipher=OTHER);
-        Thu, 19 Apr 2012 15:57:10 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <CALkWK0=7SPR-4Km5TUwg+rHm30aC7Uru9GJkkfYnL3OORV7nfg@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1755412Ab2DSX1u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Apr 2012 19:27:50 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:44765 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753314Ab2DSX1t (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Apr 2012 19:27:49 -0400
+X-Greylist: delayed 1814 seconds by postgrey-1.27 at vger.kernel.org; Thu, 19 Apr 2012 19:27:48 EDT
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id q3JMp2Bh023916
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Fri, 20 Apr 2012 00:51:02 +0200
+Received: from bauges.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.72)
+	(envelope-from <moy@imag.fr>)
+	id 1SL0Hu-0001ly-Hr; Fri, 20 Apr 2012 00:57:18 +0200
+Received: from moy by bauges.imag.fr with local (Exim 4.72)
+	(envelope-from <moy@imag.fr>)
+	id 1SL0Hu-0005Ew-EK; Fri, 20 Apr 2012 00:57:18 +0200
+X-Mailer: git-send-email 1.7.10.140.g8c333
+In-Reply-To: <vpqaa27bgon.fsf@bauges.imag.fr>
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Fri, 20 Apr 2012 00:51:03 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: q3JMp2Bh023916
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
+MailScanner-NULL-Check: 1335480666.567@UAKTBJKXSjybKm/J4Ltl9g
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195972>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195973>
 
-Ramkumar Ramachandra wrote:
+So, here's my first re-roll of Peff's patch. I've included the warning
+change in the same patch serie because topics are related and to avoid
+conflicts.
 
-> Give 'vcs-svn/' the ability to spit out a Subversion dumpfile.  If you
-> remember, we hit a brick wall last time when we needed a way to
-> persist mark-referenced-blobs in the fast-import stream.
+Compared to Peff's version, I've added testcases, but the 'simple'
+mode still lacks doc (I will do soon).
 
-Yeah.  Ok, let's start there.
+Clemens Buchacher (1):
+  t5570: use explicit push refspec
 
-If I remember correctly, before we had this idea that svn-fi would be
-a generic fast-import backend, so we could get support for pushing to
-Subversion from other version control systems like Mercurial and RCS
-for free.  An earlier idea was to use a very minimal subset of the
-fast-import format.  You started with a patch that taught fast-export
-a switch to produce that minimal subset, which was rejected because it
-seemed like too much of a niche use case to be worth the cost to
-compatibility.
+Matthieu Moy (2):
+  push: introduce new push.default mode "simple"
+  push: start warning upcoming default change for push.default
 
-However, that leaves whole swaths of the design space unexplored.  For
-example, maybe "git fast-export" doesn't need to write the restricted
-format but there would be a filter that takes an arbitrary fast-import
-stream and converts it to the restricted thing.  Or maybe it would be
-easiest to get something off the ground using that restricted
-"fast-import lite" format and only afterwards expand svn-fi to handle
-more commands so it can talk to the rest of the world.
+ builtin/push.c        |   72 +++++++++++++++++++++++++++++++++++++++++++++++--
+ cache.h               |    4 ++-
+ config.c              |    4 ++-
+ environment.c         |    2 +-
+ t/t5516-fetch-push.sh |   33 +++++++++++++++++++++++
+ t/t5570-git-daemon.sh |   30 ++++++++++-----------
+ 6 files changed, 124 insertions(+), 21 deletions(-)
 
-In other words, if you are hitting a wall with that part which doesn't
-seem to have much to do with differences between git and Subversion
-anyway, I imagine there are easier places to start.  Alternatively, if
-you prefer to work on making it easy for an importer to handle "ls"
-and "cat" commands and mark references, I think our previous attempts
-were misguided and we can do better. :)  What do you think?
-
-Jonathan
+-- 
+1.7.10.140.g8c333
