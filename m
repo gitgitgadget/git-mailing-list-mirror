@@ -1,82 +1,130 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Do not use SHELL_PATH from build system in
- prepare_shell_cmd on Windows
-Date: Wed, 18 Apr 2012 22:49:43 -0700
-Message-ID: <7v8vhsi83s.fsf@alter.siamese.dyndns.org>
-References: <7vvclmoit6.fsf@alter.siamese.dyndns.org>
- <1333157601-6458-1-git-send-email-bwalton@artsci.utoronto.ca>
- <4F8D15B9.70803@viscovery.net> <20120417221449.GC10797@sigill.intra.peff.net>
- <4F8E539F.7030902@viscovery.net> <7vobqpknoq.fsf@alter.siamese.dyndns.org>
- <4F8FA453.8050807@viscovery.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] t5570: forward git-daemon messages in a different way
+Date: Wed, 18 Apr 2012 23:03:26 -0700
+Message-ID: <20120419060326.GA13982@sigill.intra.peff.net>
+References: <1334393070-7123-1-git-send-email-zbyszek@in.waw.pl>
+ <20120414121358.GA26372@ecki>
+ <20120414122127.GA31220@ecki>
+ <4F8C3E0F.2040300@in.waw.pl>
+ <20120416174230.GA19226@sigill.intra.peff.net>
+ <20120416224424.GA10314@ecki>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, Ben Walton <bwalton@artsci.utoronto.ca>,
-	jrnieder@gmail.com, git@vger.kernel.org
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Thu Apr 19 07:49:52 2012
+Content-Type: text/plain; charset=utf-8
+Cc: Zbigniew =?utf-8?Q?J=C4=99drzejewski-Szmek?= <zbyszek@in.waw.pl>,
+	git@vger.kernel.org, gitster@pobox.com
+To: Clemens Buchacher <drizzd@aon.at>
+X-From: git-owner@vger.kernel.org Thu Apr 19 08:03:41 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SKkFb-0003zf-Jx
-	for gcvg-git-2@plane.gmane.org; Thu, 19 Apr 2012 07:49:51 +0200
+	id 1SKkSw-0006gd-GC
+	for gcvg-git-2@plane.gmane.org; Thu, 19 Apr 2012 08:03:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752739Ab2DSFtq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Apr 2012 01:49:46 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:57818 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752089Ab2DSFtp (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Apr 2012 01:49:45 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0106B77A1;
-	Thu, 19 Apr 2012 01:49:45 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=sN4OISotSuFt5ckN72oVu0F+Vzc=; b=HP8657
-	Y+er074B+/upq1Aye9uz/Wy7M6oiH7CPOVuCNot17BG0IdiXfINNFp46QuIKi2M+
-	UBWricFkvr73L2heb+jluBN/fGaLATLwTN2g0xiXfW4k7ygY9kHcUmmRWfzQBq1I
-	7lxmOMzcCqIYSGDzW+efhRzLB0IdGIsryzWkU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=lDiMQVgdMou12lKS3u3RxFBqQIm0zsM7
-	Am+FcOdtznCzJq9yA0rcDXmQZMaT0kYTIxEcQ+34zo3UG45UcL1ZktTcPGkXDxvu
-	U3EsHOzBceiBdk0+2woxHjEu0HV0VhDwIWuhTDYqdU+6AaCVOX8FsEFX1CKprdnA
-	5mcgD9NPCAY=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id ED29577A0;
-	Thu, 19 Apr 2012 01:49:44 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7A8FE779E; Thu, 19 Apr 2012
- 01:49:44 -0400 (EDT)
-In-Reply-To: <4F8FA453.8050807@viscovery.net> (Johannes Sixt's message of
- "Thu, 19 Apr 2012 07:36:19 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 7703A83C-89E3-11E1-85D1-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751512Ab2DSGDb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Apr 2012 02:03:31 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:38236
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751242Ab2DSGDa (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Apr 2012 02:03:30 -0400
+Received: (qmail 25232 invoked by uid 107); 19 Apr 2012 06:03:39 -0000
+Received: from c-67-169-43-61.hsd1.ca.comcast.net (HELO sigill.intra.peff.net) (67.169.43.61)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 19 Apr 2012 02:03:39 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 18 Apr 2012 23:03:26 -0700
+Content-Disposition: inline
+In-Reply-To: <20120416224424.GA10314@ecki>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195923>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195924>
 
-Johannes Sixt <j.sixt@viscovery.net> writes:
+On Tue, Apr 17, 2012 at 12:44:25AM +0200, Clemens Buchacher wrote:
 
-> Am 4/18/2012 18:30, schrieb Junio C Hamano:
->> There is one thing I am confused about your response, though.  I thought
->> the suggestion by Peff was to build your binary with "make SHELL_PATH=sh"
->> (not "make SHELL_PATH=/bin/sh").  I do not know if that works or does not
->> work (I do not see why not, though), but in either case offering a new
->> customization point sounds like a separate issue.
->
-> I tried this, and it does not work. (Shell scripts' shbang line would end
-> up as '#!sh', and at least bash does not like to run such scripts.)
+> On Mon, Apr 16, 2012 at 01:42:30PM -0400, Jeff King wrote:
+> > 
+> > Hmm. t5570 seems to pass reliably on dash for me with:
+> > 
+> > diff --git a/t/lib-git-daemon.sh b/t/lib-git-daemon.sh
+> > index ef2d01f..9f52cb6 100644
+> > --- a/t/lib-git-daemon.sh
+> > +++ b/t/lib-git-daemon.sh
+> > @@ -33,7 +33,7 @@ start_git_daemon() {
+> >  	{
+> >  		read line
+> >  		echo >&4 "$line"
+> > -		cat >&4 &
+> > +		cat >&4 <git_daemon_output &
+> >  
+> >  		# Check expected output
+> >  		if test x"$(expr "$line" : "\[[0-9]*\] \(.*\)")" != x"Ready to rumble"
+> 
+> Yes, me too. I can reproduce reliably with dash and the above fixes it
+> reliably.
+> 
+> > But the test above does fail.
+> 
+> Which one do you mean? The output check works for me.
 
-Ahh, sorry for missing the obvious.  I should have realized about that
-one, as customizing that one was the very original motivation of the make
-variable.
+Sorry, I meant the test you posted with "yes":
 
-In any case, as I wrote in the "What's cooking", I'll fast-track the fix
-to 'master' shortly, so that Windows port does not have to carry it.
+mkfifo fd
+yes >fd &
+pid=$!
+{
+        read line
+        echo $line
+        cat <fd &
+} <fd
+sleep 1
+kill $pid
+wait $pid
+rm -f fd
 
-Thanks.
+It sometimes succeeds and sometimes fails for me. So I think we are
+perhaps just winning a race every time in the actual git-daemon run
+(because it is not writing nearly as quickly as "yes").
+
+> > Is it purely luck of the timing that git-daemon never gets SIGPIPE? I
+> > guess the problem is that the {}-section can finish before "cat
+> > <git_daemon_output" has actually opened the pipe?
+> 
+> No clue. But shouldn't the fork return only after the fd's have been
+> opened successfully? If I change cat to "(echo di; cat; echo do); sleep
+> 1; pgrep yes", then one can see that cat terminates right away, even
+> though yes is still running. It's as if cat never gets to read from the
+> pipe, but from /dev/null instead. A bug in dash?
+
+Hmm. Yeah, if you strace the cat, it gets an immediate EOF. And even
+weirder, I notice this in the strace output:
+
+  clone(...)
+  close(0)                                = 0
+  open("/dev/null", O_RDONLY)             = 0
+  ...
+  execve("/bin/cat", ["cat"], [/* 50 vars */]) = 0
+
+What? The shell is literally redirecting the cat process's stdin from
+/dev/null. I'm totally confused. If you do "cat <foo", it will still
+close stdin momentarily before reopening it (which means that the "yes"
+process can get SIGPIPE in that instant).
+
+Looking in the dash source code, this is very deliberate:
+
+  $ sed -n 838,840p jobs.c
+   * When job control is turned off, background processes have their standard
+   * input redirected to /dev/null (except for the second and later processes
+   * in a pipeline).
+
+I can't find anything relevant in POSIX. But I don't really see a way to
+work around this. The cat _has_ to be a background job. So I think we
+are stuck with a solution like your custom C wrapper.
+
+As an aside, though, does it really make sense for git-daemon to respect
+SIGPIPE? Under what circumstance would that actually be useful? So we
+should perhaps fix that, too. But even if we do so, it's nice for our
+test script to robustly report the actual stderr.
+
+-Peff
