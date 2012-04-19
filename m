@@ -1,99 +1,79 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Avoid problem with xpg4 grep in Solaris that broke t9400
-Date: Thu, 19 Apr 2012 13:06:53 -0700
-Message-ID: <xmqqlilrv63m.fsf@junio.mtv.corp.google.com>
-References: <1334002409-5708-1-git-send-email-bwalton@artsci.utoronto.ca>
-	<1334445524-sup-1455@pinkfloyd.chass.utoronto.ca>
-	<xmqqfwbzslt2.fsf@junio.mtv.corp.google.com>
-	<1334857109-sup-7979@pinkfloyd.chass.utoronto.ca>
+From: =?UTF-8?B?QW5kcsOpIENhcm9u?= <andre.l.caron@gmail.com>
+Subject: git-archive and submodules
+Date: Thu, 19 Apr 2012 16:10:52 -0400
+Message-ID: <CALKBF2gwVr0rPn0y8=cvwqOsUb7eQPH7EdK5U+gfZMzh=RpiKw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, GIT List <git@vger.kernel.org>
-To: Ben Walton <bwalton@artsci.utoronto.ca>
-X-From: git-owner@vger.kernel.org Thu Apr 19 22:07:07 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Apr 19 22:11:04 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SKxdB-0007NR-QW
-	for gcvg-git-2@plane.gmane.org; Thu, 19 Apr 2012 22:07:06 +0200
+	id 1SKxgw-0001Uu-EW
+	for gcvg-git-2@plane.gmane.org; Thu, 19 Apr 2012 22:10:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932374Ab2DSUG6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Apr 2012 16:06:58 -0400
-Received: from mail-wg0-f74.google.com ([74.125.82.74]:40839 "EHLO
-	mail-wg0-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932327Ab2DSUG4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Apr 2012 16:06:56 -0400
-Received: by wgbdt11 with SMTP id dt11so479194wgb.1
-        for <git@vger.kernel.org>; Thu, 19 Apr 2012 13:06:55 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type:x-gm-message-state;
-        bh=Khlui/O/8/cu6nRgQMoFDVb1hLsZ7KAL5TYSPBKF1hY=;
-        b=gdI5mFLQN+95a/ptfIgnL127DE56dBK3au+lyDWS5hMUi/R8tx3U1p3iQI2off52CY
-         1tMP0vx12xbc2iHezOr8n5FX9popVopQsfy4GKxIRIbe95qtDLbTyHS+ivG8Ckcux5I+
-         K76pUGhJ5z7mAcO8AaKtIskWmZy757DZdeXQenD0s7AqLZl3LVUHdJWYU6cJFG/UZ3KM
-         UzOX03BmiLneCyjnUMXKcfugy8eMLIWxGXDY1l/77aitFWCvEsMJftNwsoRtlbW2QlDo
-         amByKUg+pe/LGN/dQl092a0awxpudazkSyWUu9ig8dNI/eYpgd9jatN9LFCaODLdPmWH
-         XNWw==
-Received: by 10.213.14.146 with SMTP id g18mr335818eba.0.1334866015697;
-        Thu, 19 Apr 2012 13:06:55 -0700 (PDT)
-Received: by 10.213.14.146 with SMTP id g18mr335809eba.0.1334866015572;
-        Thu, 19 Apr 2012 13:06:55 -0700 (PDT)
-Received: from hpza10.eem.corp.google.com ([74.125.121.33])
-        by gmr-mx.google.com with ESMTPS id z52si3065774eeb.1.2012.04.19.13.06.55
-        (version=TLSv1/SSLv3 cipher=AES128-SHA);
-        Thu, 19 Apr 2012 13:06:55 -0700 (PDT)
-Received: from junio.mtv.corp.google.com (junio.mtv.corp.google.com [172.27.69.24])
-	by hpza10.eem.corp.google.com (Postfix) with ESMTP id 5FF7820004E;
-	Thu, 19 Apr 2012 13:06:55 -0700 (PDT)
-Received: by junio.mtv.corp.google.com (Postfix, from userid 110493)
-	id 72EB9E1209; Thu, 19 Apr 2012 13:06:54 -0700 (PDT)
-In-Reply-To: <1334857109-sup-7979@pinkfloyd.chass.utoronto.ca> (Ben Walton's
-	message of "Thu, 19 Apr 2012 13:39:06 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1 (gnu/linux)
-X-Gm-Message-State: ALoCoQmC8T/3/enanl8ROanRE5bQyETJES9jN+LMGk1QYHD6BYlJtHHC+rKpDgConOuZup/+rO+KEAsYpQSbM+TNqyFfQou97BgXV3iZ8XxG2AXdnNYsR9f2+UpyOx5Avfn8Nqh2HKgfxjpkMvfg5gvphnvDRiNZGkhvFkaIHejuj7YobdCEzUk=
+	id S1751623Ab2DSUKy convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 19 Apr 2012 16:10:54 -0400
+Received: from mail-pb0-f46.google.com ([209.85.160.46]:48615 "EHLO
+	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751347Ab2DSUKx convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 19 Apr 2012 16:10:53 -0400
+Received: by pbcun15 with SMTP id un15so189311pbc.19
+        for <git@vger.kernel.org>; Thu, 19 Apr 2012 13:10:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        bh=FqnyakMJcTbGV5oyoF5ps043Ec/lXimP2uyl9nrZ5BI=;
+        b=GccR+Jlxwps79GP60TwHHjfslJoHr6WR7JS8NdhANGUld8ayVYRmliKZnjESkjzMtD
+         EUZqcA5HPdqwvfcEA/nFBXHnZcWmH5cRGf6f+6QVAQfPcGZP+mw8vNMxcW5eiEr2QnwP
+         LjZlvm2a08scXuln/FU5hLrss6buftFKSkvNSCaxYubI83eg+ZZNetWMoMngILppiKST
+         P1PO7ZOUxGEqZFFlSJPh+OIV1hTLmU+u+0nUv0YrfSuD38KT4nPXMlg1dXMoo11UiBqx
+         4SC0GcsU792td8BU6m5krwAEt45KjJP3LRl8s3IFS/I2woOJOjI+ryeL2OEBmqF81xnP
+         PkBg==
+Received: by 10.68.219.34 with SMTP id pl2mr1071763pbc.56.1334866252705; Thu,
+ 19 Apr 2012 13:10:52 -0700 (PDT)
+Received: by 10.68.194.34 with HTTP; Thu, 19 Apr 2012 13:10:52 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195966>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195967>
 
-Ben Walton <bwalton@artsci.utoronto.ca> writes:
+Hi,
 
-> This does work and if there is some significance to the space or tab
-> then it's a better patch.
+I've recently needed to create a source code archive as part of a
+custom build target.  This repository uses submodules and I need to
+include the submodlule's source code in the archives too.  However,
+git-archive does not have any option to do so.
 
-Ok, I'll queue this:
+I've taken a quick look at the GMANE mailing list archives and it
+seems this provoked quite a discussion in 2009 and that Lars Hjemli
+even wrote a patch (in several flavors) for archive.c to include
+submodule-aware processing.  The lastest source code at
+`git.kernel.org` does not contain any traces of this patch (or
+submodule aware logic for that matter).  The mailing list archives are
+not very convenient to browse and I can't figure out what the status
+on this submodule-aware git-archive idea is.  Has this idea been
+completely rejected, or is it still work in progress?
 
--- >8 --
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH] t9400: fix gnuism in grep
+In case you're wondering, I don't seem to be the only one needing to
+do this.  I found at least two scripts on GitHub that implement this
+logic with various levels of accuracy/completeness[1][2] and I've
+hacked an icky Windows batch file version [3] for minimal Windows
+support until this feature can be implemented in Git itself.  I don't
+mind putting in some time into a real patch if I need to, but I'm
+curious about the fact that this has been requested before, a patch
+was proposed and yet this is still not merged 4 years later.
 
-Using "\+" in "grep" and expecting that it means one or more
-is a GNUism.  Spell it in a dumb and portable way.
+So, what's the status on a submodule-aware git-archive command?
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- t/t9400-git-cvsserver-server.sh |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+Thanks,
+Andr=C3=A9
 
-diff --git a/t/t9400-git-cvsserver-server.sh b/t/t9400-git-cvsserver-server.sh
-index 9199550..173bf3d 100755
---- a/t/t9400-git-cvsserver-server.sh
-+++ b/t/t9400-git-cvsserver-server.sh
-@@ -500,8 +500,8 @@ test_expect_success 'cvs status (no subdirs in header)' '
- cd "$WORKDIR"
- test_expect_success 'cvs co -c (shows module database)' '
-     GIT_CONFIG="$git_config" cvs co -c > out &&
--    grep "^master[	 ]\+master$" < out &&
--    ! grep -v "^master[	 ]\+master$" < out
-+    grep "^master[	 ][ 	]*master$" <out &&
-+    ! grep -v "^master[	 ][ 	]*master$" <out
- '
- 
- #------------
--- 
-1.7.10.282.g21208e
+[1]: https://github.com/meitar/git-archive-all.sh
+[2]: https://github.com/Kentzo/git-archive-all
+[3]: https://github.com/AndreLouisCaron/git-archive-all.bat
