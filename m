@@ -1,135 +1,122 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: What's cooking in git.git (Apr 2012, #06; Sun, 15)
-Date: Thu, 19 Apr 2012 16:36:08 +0700
-Message-ID: <20120419093608.GA19391@duynguyen-vnpc.dek-tpc.internal>
-References: <7vpqb8xjj9.fsf@alter.siamese.dyndns.org>
- <4F8E6A12.9090708@viscovery.net>
- <4F8F1BC1.3030607@ramsay1.demon.co.uk>
- <4F8FADCF.5000006@viscovery.net>
- <4F8FB4A0.7090403@viscovery.net>
+From: =?UTF-8?B?WmJpZ25pZXcgSsSZZHJ6ZWpld3NraS1Tem1law==?= 
+	<zbyszek@in.waw.pl>
+Subject: Re: [PATCH v7 4/4] git-rebase: add keep_empty flag
+Date: Thu, 19 Apr 2012 12:02:53 +0200
+Message-ID: <4F8FE2CD.3070300@in.waw.pl>
+References: <1333136922-12872-1-git-send-email-nhorman@tuxdriver.com> <1334776680-23460-1-git-send-email-nhorman@tuxdriver.com> <1334776680-23460-5-git-send-email-nhorman@tuxdriver.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
-	Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Thu Apr 19 11:37:10 2012
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Clemens Buchacher <drizzd@aon.at>,
+	Phil Hord <phil.hord@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: Neil Horman <nhorman@tuxdriver.com>
+X-From: git-owner@vger.kernel.org Thu Apr 19 12:03:22 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SKnnY-0003qp-5L
-	for gcvg-git-2@plane.gmane.org; Thu, 19 Apr 2012 11:37:08 +0200
+	id 1SKoCv-0003KC-68
+	for gcvg-git-2@plane.gmane.org; Thu, 19 Apr 2012 12:03:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752524Ab2DSJhD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Apr 2012 05:37:03 -0400
-Received: from mail-pz0-f52.google.com ([209.85.210.52]:61195 "EHLO
-	mail-pz0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751108Ab2DSJhB (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Apr 2012 05:37:01 -0400
-Received: by dake40 with SMTP id e40so11138921dak.11
-        for <git@vger.kernel.org>; Thu, 19 Apr 2012 02:37:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=Rk/ocsjeFZdn+jQtlbvD5lD3O5RntTk05jx/QqdoYIA=;
-        b=Ut4RnUk6nZQLltVk2djswOytam0XHTPo+WA9JBa4wVw9DTTTr+re+wL+tEYrn09v2X
-         6cuwDJx+u4jGSbXi1nYXDjUelFJ2YVQNcGXG7pjuXF+fcQBKKOzHmP5UIBPMUY8985Ie
-         Ij5XvtzwKPZqJ46hI+MFq1gQEnV+tnpgHGKZrXVxfgHQKyEnrRhDQ5xQ/ftntEf7j3fy
-         id2lEtPbrj6+Kp5zEJuGbjTHr+oF4qM8Hqhq1yfx7MlSEr3ShcIlEOO9NQQTc/xbviaP
-         xY09t4EI1PGCF9H3GvWI2NmxYqeCRhYtYR9Dw6QoRiUAUakAHiB0HqiS/j8qr2LxGRMa
-         1Lzw==
-Received: by 10.68.191.166 with SMTP id gz6mr3615969pbc.164.1334828221473;
-        Thu, 19 Apr 2012 02:37:01 -0700 (PDT)
-Received: from pclouds@gmail.com ([113.161.77.29])
-        by mx.google.com with ESMTPS id k9sm1758001pbf.65.2012.04.19.02.36.57
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 19 Apr 2012 02:37:00 -0700 (PDT)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Thu, 19 Apr 2012 16:36:08 +0700
-Content-Disposition: inline
-In-Reply-To: <4F8FB4A0.7090403@viscovery.net>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1754603Ab2DSKDN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Apr 2012 06:03:13 -0400
+Received: from kawka.in.waw.pl ([178.63.212.103]:35148 "EHLO kawka.in.waw.pl"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754355Ab2DSKDN (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Apr 2012 06:03:13 -0400
+Received: from [193.0.104.36]
+	by kawka.in.waw.pl with esmtpsa (TLS1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.72)
+	(envelope-from <zbyszek@in.waw.pl>)
+	id 1SKoCc-0003eG-Kg; Thu, 19 Apr 2012 12:03:02 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:10.0.3) Gecko/20120324 Icedove/10.0.3
+In-Reply-To: <1334776680-23460-5-git-send-email-nhorman@tuxdriver.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195932>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195933>
 
-On Thu, Apr 19, 2012 at 08:45:52AM +0200, Johannes Sixt wrote:
-> I don't see any mutual exclusion happening in this chain. Perhaps it is
-> not needed, provided that the pread() call in get_data_from_pack is
-> atomic. But our git_pread() from compat/pread.c, which we use on Windows,
-> is not atomic.
+On 04/18/2012 09:18 PM, Neil Horman wrote:
+> Add a command line switch to git-rebase to allow a user the ability to specify
+> that they want to keep any commits in a series that are empty.
+>
+> When git-rebase's type is am, then this option will automatically keep any
+> commit that has a tree object identical to its parent.
+>
+> This patch changes the default behavior of interactive rebases as well.  With
+> this patch, git-rebase -i will produce a revision set passed to
+> git-revision-editor, in which empty commits are commented out.  Empty commits
+> may be kept manually by uncommenting them.  If the new --keep-empty option is
+> used in an interactive rebase the empty commits will automatically all be
+> uncommented in the editor.
+>
+> Signed-off-by: Neil Horman<nhorman@tuxdriver.com>
 
-OK assume it's Windows' pread thread-safe problem (it does look like
-so given how pread.c implements it), maybe this patch will help:
+Hi,
+this one seems to breaks many tests when /bin/sh=dash. (Both v6 in pu 
+and this v7).
 
--- 8< --
-diff --git a/builtin/index-pack.c b/builtin/index-pack.c
-index 847dbb3..5d539cd 100644
---- a/builtin/index-pack.c
-+++ b/builtin/index-pack.c
-@@ -102,6 +102,10 @@ static pthread_mutex_t work_mutex;
- #define work_lock()		lock_mutex(&work_mutex)
- #define work_unlock()		unlock_mutex(&work_mutex)
- 
-+#ifdef WIN32
-+static pthread_mutex_t pread_mutex;
-+#endif
-+
- static pthread_key_t key;
- 
- static inline void lock_mutex(pthread_mutex_t *mutex)
-@@ -124,6 +128,9 @@ static void init_thread(void)
- 	init_recursive_mutex(&read_mutex);
- 	pthread_mutex_init(&counter_mutex, NULL);
- 	pthread_mutex_init(&work_mutex, NULL);
-+#ifdef WIN32
-+	pthread_mutex_init(&pread_mutex, NULL);
-+#endif
- 	pthread_key_create(&key, NULL);
- 	thread_data = xcalloc(nr_threads, sizeof(*thread_data));
- 	threads_active = 1;
-@@ -137,6 +144,9 @@ static void cleanup_thread(void)
- 	pthread_mutex_destroy(&read_mutex);
- 	pthread_mutex_destroy(&counter_mutex);
- 	pthread_mutex_destroy(&work_mutex);
-+#ifdef WIN32
-+	pthread_mutex_destroy(&pread_mutex);
-+#endif
- 	pthread_key_delete(key);
- 	free(thread_data);
- }
-@@ -456,6 +466,20 @@ static void *unpack_raw_entry(struct object_entry *obj, union delta_base *delta_
- 	return data;
- }
- 
-+#ifdef WIN32
-+/* pread is reimplemented in compat/pread.c and is not thread-safe */
-+static ssize_t pread_threadsafe(int fd, void *buf, size_t count, off_t from)
-+{
-+	ssize_t n;
-+	lock_mutex(&pread_mutex);
-+	n = pread(fd, buf, count, from);
-+	unlock_mutex(&pread_mutex);
-+	return n;
-+}
-+#else
-+#define pread_threadsafe(fd,buf,count,from) pread(fd, buf, count, from)
-+#endif
-+
- static void *get_data_from_pack(struct object_entry *obj)
- {
- 	off_t from = obj[0].idx.offset + obj[0].hdr_size;
-@@ -474,7 +498,7 @@ static void *get_data_from_pack(struct object_entry *obj)
- 
- 	do {
- 		ssize_t n = (len < 64*1024) ? len : 64*1024;
--		n = pread(pack_fd, inbuf, n, from);
-+		n = pread_threadsafe(pack_fd, inbuf, n, from);
- 		if (n < 0)
- 			die_errno("cannot pread pack file");
- 		if (!n)
--- 8< --
+E.g. ./t3404-rebase-interactive.sh:
+
+ok 1 - setup
+not ok - 2 rebase -i with the exec command
+not ok - 3 rebase -i with the exec command runs from tree root
+not ok - 4 rebase -i with the exec command checks tree cleanness
+not ok - 5 no changes are a nop
+not ok - 6 test the [branch] option
+not ok - 7 test --onto <branch>
+not ok - 8 rebase on top of a non-conflicting commit
+not ok - 9 reflog for the branch shows state before rebase
+not ok - 10 exchange two commits
+not ok - 11 stop on conflicting pick
+not ok - 12 abort
+not ok - 13 abort with error when new base cannot be checked out
+not ok - 14 retain authorship
+not ok - 15 squash
+not ok - 16 retain authorship when squashing
+not ok - 17 -p handles "no changes" gracefully
+not ok 18 - exchange two commits with -p # TODO known breakage
+not ok - 19 preserve merges with -p
+not ok - 20 edit ancestor with -p
+not ok - 21 --continue tries to commit
+not ok - 22 verbose flag is heeded, even after --continue
+not ok - 23 multi-squash only fires up editor once
+not ok - 24 multi-fixup does not fire up editor
+not ok - 25 commit message used after conflict
+not ok - 26 commit message retained after conflict
+not ok - 27 squash and fixup generate correct log messages
+not ok - 28 squash ignores comments
+not ok - 29 squash ignores blank lines
+not ok - 30 squash works as expected
+not ok - 31 interrupted squash works as expected
+not ok - 32 interrupted squash works as expected (case 2)
+not ok - 33 ignore patch if in upstream
+not ok - 34 --continue tries to commit, even for "edit"
+not ok - 35 aborted --continue does not squash commits after "edit"
+not ok - 36 auto-amend only edited commits after "edit"
+not ok - 37 clean error after failed "exec"
+not ok - 38 rebase a detached HEAD
+not ok - 39 rebase a commit violating pre-commit
+not ok - 40 rebase with a file named HEAD in worktree
+ok 41 - do "noop" when there is nothing to cherry-pick
+ok 42 - submodule rebase setup
+not ok - 43 submodule rebase -i
+ok 44 - submodule conflict setup
+not ok - 45 rebase -i continue with only submodule staged
+not ok - 46 rebase -i continue with unstaged submodule
+not ok - 47 avoid unnecessary reset
+not ok - 48 reword
+ok 49 - rebase -i can copy notes
+not ok - 50 rebase -i can copy notes over a fixup
+not ok - 51 rebase while detaching HEAD
+not ok - 52 always cherry-pick with --no-ff
+ok 53 - set up commits with funny messages
+not ok - 54 rebase-i history with funny messages
+
+The problem seems to be that git-rebase says "Nothing to do" and returns 1.
+
+-
+Zbyszek
