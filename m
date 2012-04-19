@@ -1,75 +1,72 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH] t5570: forward git-daemon messages in a different way
-Date: Thu, 19 Apr 2012 08:58:01 +0200
-Message-ID: <4F8FB779.60004@viscovery.net>
-References: <1334393070-7123-1-git-send-email-zbyszek@in.waw.pl> <20120414121358.GA26372@ecki> <20120414122127.GA31220@ecki> <4F8C3E0F.2040300@in.waw.pl> <20120416174230.GA19226@sigill.intra.peff.net> <20120416224424.GA10314@ecki> <20120419060326.GA13982@sigill.intra.peff.net>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: What's cooking in git.git (Apr 2012, #06; Sun, 15)
+Date: Thu, 19 Apr 2012 14:02:30 +0700
+Message-ID: <CACsJy8A6iLzW8ZtV97Fvat_e=Totzuh-hQ8mDyf9c5a=JC3u9Q@mail.gmail.com>
+References: <7vpqb8xjj9.fsf@alter.siamese.dyndns.org> <4F8E6A12.9090708@viscovery.net>
+ <4F8F1BC1.3030607@ramsay1.demon.co.uk> <4F8FADCF.5000006@viscovery.net> <4F8FB4A0.7090403@viscovery.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Clemens Buchacher <drizzd@aon.at>,
-	=?UTF-8?B?WmJpZ25pZXcgSsSZZHJ6ZWpl?= =?UTF-8?B?d3NraS1Tem1law==?= 
-	<zbyszek@in.waw.pl>, git@vger.kernel.org, gitster@pobox.com
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Apr 19 08:58:20 2012
+Cc: Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
+	Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Thu Apr 19 09:03:08 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SKlJq-0000MD-J4
-	for gcvg-git-2@plane.gmane.org; Thu, 19 Apr 2012 08:58:18 +0200
+	id 1SKlOW-00037J-HJ
+	for gcvg-git-2@plane.gmane.org; Thu, 19 Apr 2012 09:03:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751437Ab2DSG6L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Apr 2012 02:58:11 -0400
-Received: from lilzmailso02.liwest.at ([212.33.55.13]:14311 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751046Ab2DSG6K (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Apr 2012 02:58:10 -0400
-Received: from cpe228-254-static.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.76)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1SKlJv-0006MF-0z; Thu, 19 Apr 2012 08:58:27 +0200
-Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id 375921660F;
-	Thu, 19 Apr 2012 08:58:02 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:11.0) Gecko/20120327 Thunderbird/11.0.1
-Newsgroups: gmane.comp.version-control.git
-In-Reply-To: <20120419060326.GA13982@sigill.intra.peff.net>
-X-Spam-Score: -1.4 (-)
+	id S1752416Ab2DSHDE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Apr 2012 03:03:04 -0400
+Received: from mail-lpp01m010-f46.google.com ([209.85.215.46]:54112 "EHLO
+	mail-lpp01m010-f46.google.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751087Ab2DSHDB (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 19 Apr 2012 03:03:01 -0400
+Received: by lahj13 with SMTP id j13so6356135lah.19
+        for <git@vger.kernel.org>; Thu, 19 Apr 2012 00:03:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=I2/Ac0+RSeXx6rJftCLbvl70rCCTqmaVoW0xlcj8qmo=;
+        b=NiCeyAGjz/8nNBXSrljAOuQaUrVTEYDRh++Qv5NjP/zu/1Cg8Yt86P7jyPbShodskU
+         c60MYRofuEtxogfAKnIUVdb+HmpA/z0doNLjQetwmVgIhA/sSW4RVI6t/QEM06whBzdo
+         O48GxbHGbHCcr127HYR8lir7vslGul1RSK5hBYXokbexjcs3ayHaKaG1Pfpp07fiK4FS
+         1BGx2PVXwJMrMCDtHJjfx0nSoNwVMmCoPtXdwkJYIPl5sBCgk4AJvdxDCmq69kbnj6HC
+         i2pEMzOLmE85IkeFN+TEwBi4LRfSJcYKz1M4qI2VamRoL1llu+IFJ30DOfwYrNpqEi5j
+         1hrg==
+Received: by 10.112.49.35 with SMTP id r3mr407249lbn.71.1334818980204; Thu, 19
+ Apr 2012 00:03:00 -0700 (PDT)
+Received: by 10.112.97.148 with HTTP; Thu, 19 Apr 2012 00:02:30 -0700 (PDT)
+In-Reply-To: <4F8FB4A0.7090403@viscovery.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195928>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195929>
 
-Am 4/19/2012 8:03, schrieb Jeff King:
-> mkfifo fd
-> yes >fd &
-> pid=$!
-> {
->         read line
->         echo $line
->         cat <fd &
-> } <fd
-> sleep 1
-> kill $pid
-> wait $pid
-> rm -f fd
-...
-> Hmm. Yeah, if you strace the cat, it gets an immediate EOF. And even
-> weirder, I notice this in the strace output:
-> 
->   clone(...)
->   close(0)                                = 0
->   open("/dev/null", O_RDONLY)             = 0
->   ...
->   execve("/bin/cat", ["cat"], [/* 50 vars */]) = 0
-> 
-> What? The shell is literally redirecting the cat process's stdin from
-> /dev/null. I'm totally confused.
+Hi,
 
-You don't have to be; it's mandated by POSIX:
+I've been busy and have not had time to look into this yet...
 
-http://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_09_03_02
+2012/4/19 Johannes Sixt <j.sixt@viscovery.net>:
+> I don't see any mutual exclusion happening in this chain. Perhaps it is
+> not needed, provided that the pread() call in get_data_from_pack is
+> atomic. But our git_pread() from compat/pread.c, which we use on Windows,
+> is not atomic.
+>
+> :-(
+>
+> I don't think that it is possible to make git_pread() atomic because it
+> would have to be protected against all file accesses that can modify the
+> file position.
+>
+> Is get_data_from_pack() the only function that accesses the pack data?
+> Then we could add some mutual exclusion there.
 
--- Hannes
+I believe so. And index-pack only accesses the pack via pread, no other means.
+-- 
+Duy
