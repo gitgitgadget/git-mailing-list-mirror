@@ -1,63 +1,71 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Adding a new option to git-push: --(no-)create-branch
-Date: Wed, 18 Apr 2012 17:46:53 -0700
-Message-ID: <7vk41cim4i.fsf@alter.siamese.dyndns.org>
-References: <4F8F3A25.1080407@hoelz.ro>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [GSoC] Git to SVN bridge
+Date: Thu, 19 Apr 2012 09:25:21 +0530
+Message-ID: <CALkWK0=7SPR-4Km5TUwg+rHm30aC7Uru9GJkkfYnL3OORV7nfg@mail.gmail.com>
+References: <CALkWK0=Mqo=PMv7+_sr22Dnm6xxzxzaXL=Zh+2LsvT=usC7csw@mail.gmail.com>
+ <20120418201050.GB30625@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Rob Hoelz <rob@hoelz.ro>
-X-From: git-owner@vger.kernel.org Thu Apr 19 02:47:05 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git List <git@vger.kernel.org>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Apr 19 05:55:56 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SKfWX-0000Hb-Oo
-	for gcvg-git-2@plane.gmane.org; Thu, 19 Apr 2012 02:47:02 +0200
+	id 1SKiTF-0004g4-0X
+	for gcvg-git-2@plane.gmane.org; Thu, 19 Apr 2012 05:55:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752958Ab2DSAq5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Apr 2012 20:46:57 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:51458 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751375Ab2DSAq4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Apr 2012 20:46:56 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EC76E6120;
-	Wed, 18 Apr 2012 20:46:55 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=wsU960N1NtuD935lpe3COjBVngk=; b=e1Lehp
-	737E8ER1sojkSMLQYXyfTSyyaR7Ou1qgvwNthtLe5RaMM+ovQOSX1jo4n4Z5NNV3
-	xBFjoxfGNFSxdaIqdZ3vtwOHMmOuLlBREMOwvZ+xG5fczNP16yur+rjg9IRWlMbh
-	SP5p8scPPMdgjAft7ZploTctoArlh7f+tUIHk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=KFYdCYkPfVD2FyRJXcQzU4e0BsVrbpOd
-	g/EInpQtsoko6TsfVHvmpWu3NZbUH1qO7h3JoADTY3yZiw1qebAEyfswL4UtZ7YI
-	r57wMEqq3v5HRPrY/O1TpMGZiaiUdxZSXqwQJg29Ls5YTTOy5WItMqUArwBXPrM2
-	Mue1fCawN4I=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E4362611F;
-	Wed, 18 Apr 2012 20:46:55 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2187C611D; Wed, 18 Apr 2012
- 20:46:55 -0400 (EDT)
-In-Reply-To: <4F8F3A25.1080407@hoelz.ro> (Rob Hoelz's message of "Thu, 19 Apr
- 2012 00:03:17 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 293A716E-89B9-11E1-98CE-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753108Ab2DSDzn convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 18 Apr 2012 23:55:43 -0400
+Received: from mail-wi0-f170.google.com ([209.85.212.170]:34432 "EHLO
+	mail-wi0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752020Ab2DSDzn convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 18 Apr 2012 23:55:43 -0400
+Received: by wibhr17 with SMTP id hr17so1158289wib.1
+        for <git@vger.kernel.org>; Wed, 18 Apr 2012 20:55:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=gS1RExf3Poa8A8wj0Q4FiAix8lXojV33M3z3ctexQ80=;
+        b=JLaZwPMm3dnsmqKQ4uGtVj0XtCVPq8YkZnROe0sTwWIT8+eU4FhFpvS8X5a7MQhJiH
+         Rbb0keR8qo9VwKGzAMVdNYHTW3ZbVueDimALM46GNlvRjZjgPwEMgtoqWhIPbz8Kr2bj
+         OV22cNPGVqtRidJLy6Ze62wYELxel/u1SR620UiqbeAsyFZ1o6G6G4bL00M06yzboH60
+         UJ3/MfymhMUBy9425KDgbC71fE1FHMrn+heYP+ZhXTRBwI7mx3BzxDK5Wlkx4EkqHXM1
+         05ggfl8w50B4yibnfuc5Koc5SxkN0HQxpy7EAF2soXNFi0GSwJsb+2ZlsxZB0o+3n/uq
+         NBEw==
+Received: by 10.180.103.35 with SMTP id ft3mr1381600wib.0.1334807742036; Wed,
+ 18 Apr 2012 20:55:42 -0700 (PDT)
+Received: by 10.216.53.136 with HTTP; Wed, 18 Apr 2012 20:55:21 -0700 (PDT)
+In-Reply-To: <20120418201050.GB30625@burratino>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195919>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195920>
 
-Rob Hoelz <rob@hoelz.ro> writes:
+Hi Jonathan,
 
-> However, I will often make a typo like this:
->
-> git push origin master:msater
+Jonathan Nieder wrote:
+> For what it's worth, if you'd like to propose a plan for getting push
+> support in the svn remote helper to work (what the architecture would
+> be like, what milestones would be involved along the way, and so on),
+> then I would be happy to help flesh it out. =C2=A0Even forgetting abo=
+ut the
+> summer of code and setting a good example, I imagine such design
+> documents could be useful for developers and reviewers working on the
+> project to avoid getting lost.
 
-Why isn't "git push origin master" explicit enough?
+Sure.  Briefly:
+Give 'vcs-svn/' the ability to spit out a Subversion dumpfile.  If you
+remember, we hit a brick wall last time when we needed a way to
+persist mark-referenced-blobs in the fast-import stream.  Once we get
+svn-fi (the reverse of svn-fe) merged, the next step is in getting a
+reverse-branch-mapper to work.  The mapper will have to sit between
+the repository and svn-fi, because we can't really do much with the
+history on the svn end.
+
+    Ram
