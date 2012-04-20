@@ -1,61 +1,59 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 1/4] Documentation: explain push.default option a bit more
-Date: Fri, 20 Apr 2012 13:13:57 -0700
-Message-ID: <20120420201357.GA13103@sigill.intra.peff.net>
-References: <vpqfwbye9re.fsf@bauges.imag.fr>
- <1334933944-13446-1-git-send-email-Matthieu.Moy@imag.fr>
- <1334933944-13446-2-git-send-email-Matthieu.Moy@imag.fr>
+From: Antonin Hildebrand <antonin@hildebrand.cz>
+Subject: contrib/workdir/git-new-workdir broken in 1.7.10 after introducing gitfiles
+Date: Fri, 20 Apr 2012 13:16:31 -0700
+Message-ID: <CAHsq6J6JOTYfEtK0Z=_qfMFf9N1DWQ4zx46YhBbNu-1gEMyfog@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, gitster@pobox.com,
-	Michael Haggerty <mhagger@alum.mit.edu>
-To: Matthieu Moy <Matthieu.Moy@imag.fr>
-X-From: git-owner@vger.kernel.org Fri Apr 20 22:14:12 2012
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Apr 20 22:16:40 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SLKDY-0002wZ-9m
-	for gcvg-git-2@plane.gmane.org; Fri, 20 Apr 2012 22:14:08 +0200
+	id 1SLKFx-0004De-Bp
+	for gcvg-git-2@plane.gmane.org; Fri, 20 Apr 2012 22:16:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751420Ab2DTUOD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Apr 2012 16:14:03 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:39337
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750724Ab2DTUOB (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Apr 2012 16:14:01 -0400
-Received: (qmail 14168 invoked by uid 107); 20 Apr 2012 20:14:11 -0000
-Received: from c-67-169-43-61.hsd1.ca.comcast.net (HELO sigill.intra.peff.net) (67.169.43.61)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 20 Apr 2012 16:14:11 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 20 Apr 2012 13:13:57 -0700
-Content-Disposition: inline
-In-Reply-To: <1334933944-13446-2-git-send-email-Matthieu.Moy@imag.fr>
+	id S1751645Ab2DTUQd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Apr 2012 16:16:33 -0400
+Received: from mail-ob0-f174.google.com ([209.85.214.174]:39082 "EHLO
+	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750724Ab2DTUQc (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Apr 2012 16:16:32 -0400
+Received: by obbta14 with SMTP id ta14so9989892obb.19
+        for <git@vger.kernel.org>; Fri, 20 Apr 2012 13:16:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:date:x-google-sender-auth:message-id:subject
+         :from:to:content-type;
+        bh=qK98OETXc4FNOwhVljWgK6rK9fh+WJ+lxJ3x3mP3o1w=;
+        b=RFcB8PGwZg4fFj+el9Quo59NK9tjv4NiBJpKgveyN1u5oM30PKtdb5e+7hsmSdJvqf
+         ygGMmI/6m673cZevo3wsULWg+IuTv2/a9FEceQaXGD8Il73b/WMx0ZvCwJd7jnoE3guE
+         EOpt+qvXu6G1xrfevoBzP3nRE4ear9GW2eBQK8T2M7WpQre7IBJTbFE9wTfOinvnNlPY
+         bw1c4L+Uoa3zF3t2DfUSES7on2CSqD58mCwoLBhF5aQxnRDnPWXEOV6bCtcKtrf0sfhy
+         FINfjIodEhYPL9UdAKmHCJ4v6MAMzSt2LDR78MjY6b9zvcjIMUbakaroreiFWY/03tlh
+         DWWg==
+Received: by 10.182.202.104 with SMTP id kh8mr11018990obc.1.1334952991750;
+ Fri, 20 Apr 2012 13:16:31 -0700 (PDT)
+Received: by 10.182.48.98 with HTTP; Fri, 20 Apr 2012 13:16:31 -0700 (PDT)
+X-Google-Sender-Auth: RMxK8TSM58PHFiXJFi7B5sKxI9c
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196018>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196019>
 
-On Fri, Apr 20, 2012 at 04:59:01PM +0200, Matthieu Moy wrote:
+Hi there,
 
-> The previous documentation was explaining _what_ the options were doing,
-> but were of little help explaining _why_ a user should set his default to
-> either of the options.
+I'm just solving same problem as described here in the question:
+http://stackoverflow.com/questions/4115817/duplicate-submodules-with-git
 
-I think your explanations are a definite improvement.
+I wanted to try proposed solution, but git-new-workdir does not work
+in latest release 1.7.10.
 
-> diff --git a/Documentation/config.txt b/Documentation/config.txt
-> index fb386ab..368a770 100644
-> --- a/Documentation/config.txt
-> +++ b/Documentation/config.txt
->[...]
->  * `tracking` - deprecated synonym for `upstream`.
+The problem are plaintext .git files pointing to the root
+"superproject" .git directory. The script has not been updated to deal
+with this new situation.
 
-This is not directly related to your patch, but maybe it is worth
-removing this (from the documentation) for the sake of simplicity. We
-will still support the synonym (it has only been deprecated for a year),
-but new users don't need to see it in the already-large list of options.
-
--Peff
+thanks,
+Antonin
