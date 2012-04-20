@@ -1,73 +1,163 @@
-From: Carlos =?ISO-8859-1?Q?Mart=EDn?= Nieto <cmn@elego.de>
-Subject: Re: error: could not lock config file %C:\Users\Hen%/.gitconfig:
- Invalid argument
-Date: Fri, 20 Apr 2012 15:10:26 +0200
-Message-ID: <1334927426.20138.8.camel@centaur.lab.cmartin.tk>
-References: <4F915C26.5010403@gmail.com>
-Mime-Version: 1.0
-Content-Type: multipart/signed; micalg="pgp-sha1"; protocol="application/pgp-signature";
-	boundary="=-i1l9r/UXhKWyLyaBcZsD"
-Cc: git@vger.kernel.org
-To: hen vertis <henvertis@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Apr 20 15:10:41 2012
+From: Neil Horman <nhorman@tuxdriver.com>
+Subject: [PATCH v8 0/4] Enhance git-rebases flexibiilty in handling empty commits
+Date: Fri, 20 Apr 2012 10:36:13 -0400
+Message-ID: <1334932577-31232-1-git-send-email-nhorman@tuxdriver.com>
+References: <1333136922-12872-1-git-send-email-nhorman@tuxdriver.com>
+Cc: =?UTF-8?q?Zbigniew=20J=C4=99drzejewski-Szmek?= <zbyszek@in.waw.pl>,
+	Clemens Buchacher <drizzd@aon.at>,
+	Phil Hord <phil.hord@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Neil Horman <nhorman@tuxdriver.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Apr 20 16:37:31 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SLDbi-0007Lg-Jq
-	for gcvg-git-2@plane.gmane.org; Fri, 20 Apr 2012 15:10:38 +0200
+	id 1SLExm-0001eB-4r
+	for gcvg-git-2@plane.gmane.org; Fri, 20 Apr 2012 16:37:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754321Ab2DTNKd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Apr 2012 09:10:33 -0400
-Received: from kimmy.cmartin.tk ([91.121.65.165]:60380 "EHLO kimmy.cmartin.tk"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753673Ab2DTNK3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Apr 2012 09:10:29 -0400
-Received: from [192.168.1.17] (brln-4db9d760.pool.mediaWays.net [77.185.215.96])
-	by kimmy.cmartin.tk (Postfix) with ESMTPSA id B16AC46057;
-	Fri, 20 Apr 2012 15:10:25 +0200 (CEST)
-In-Reply-To: <4F915C26.5010403@gmail.com>
-X-Mailer: Evolution 3.2.2-1 
+	id S1756579Ab2DTOgu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Apr 2012 10:36:50 -0400
+Received: from charlotte.tuxdriver.com ([70.61.120.58]:40329 "EHLO
+	smtp.tuxdriver.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754603Ab2DTOgt (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Apr 2012 10:36:49 -0400
+Received: from hmsreliant.think-freely.org ([2001:470:8:a08:7aac:c0ff:fec2:933b] helo=localhost)
+	by smtp.tuxdriver.com with esmtpsa (TLSv1:AES128-SHA:128)
+	(Exim 4.63)
+	(envelope-from <nhorman@tuxdriver.com>)
+	id 1SLEwz-00020Z-5R; Fri, 20 Apr 2012 10:36:44 -0400
+X-Mailer: git-send-email 1.7.7.6
+In-Reply-To: <1333136922-12872-1-git-send-email-nhorman@tuxdriver.com>
+X-Spam-Score: -2.9 (--)
+X-Spam-Status: No
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195990>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195991>
+
+git's ability to handle empty commits is somewhat lacking, especially when
+preforming a rebase.  Nominally empty commits are undesireable entries, the 
+result of commits that are made empty by prior commits covering the same changs.
+But occasionally, empty commits are useful to developers (e.g. inserting notes 
+into the development history without changing any code along the way).  In these
+cases its desireable to easily preserve empty commits during operations like 
+rebases.
+
+This patch series enhances git to do just that.  It adds two options to the 
+git-cherry-pick command, --allow-empty, which allows git cherry-pick to preserve
+an empty commit, even if the fast forward logic isn't applicable during the 
+operation, and --keep-redundant-commits, which allows the user to also keep
+commits that were made empty via conflict resolution.  It also enhances
+git-rebase to add a --keep-empty option which enables rebases to preserve empty
+commits. 
+
+I've tested these operations out myself here and they work well for me
+
+Signed-off-by: Neil Horman <nhorman@tuxdriver.com>
+
+---
+Change notes:
+
+Based on version 1 feedback from this list, the following changes have been made
+
+V2)
+	* Changed --keep-empty to --allow-empty in the git cherry-pick command
+
+	* Converted run_git_commit to use argv_array
+
+	* Updated cherry-pick --allow-empty description in man page
+	
+	* added ignore-if-made-empty option to git-cherry-pick
+
+	* Added test to test suite to validate the new cherry-pick options
+
+	* Updated git-rebase man page to be less verbose and more accurate in the
+	description of the keep-empty option
+
+	* squashed the addition of the keep-empty flag in git-rebase down to one
+	commit from 3
+
+	* fixed up coding style in git-rebase script
+
+	* Optimized detection of empty commits
+
+	* Only augmented git-rebase-editor message if empty commits are
+	possible
+	
+V3)
+	* reversed the --ignore-if-empty-logic to by default only keep initially
+	empty commits
+
+	* replaced --ignore-if-empty with --keep-redundant-commits, to allow
+	empty commits that are made empty via conflict resolution, in addition
+	to commits that were created as empty
+
+	* reworked is_original_commit_empty to be more efficient and portable
+
+	* Misc sylistic and spelling cleanups
+
+V4)
+	* Reverted the cherry-pick advice changes in V3 based on in-thread
+	discussion
+
+	* Rewrote my changes to is_original_commit_empty and run_git_commit to
+	not have to fork, making them more efficient.
+
+v5)
+	* Additional help text clean up
+	* Additional error checking added to run_git_commit code
+	* Whitespace cleanup
+	* Removed needed cache_tree freeing
+	* Test case cleanup
+	* Fixed regression in t3404 and t3416 - this turned out to be 
+        a problem with the note that git rebase -i adds at the bottom
+	of the rebase text.  It was inadvertently indented and caused the
+	test fake editor to misread the commit template.  The indentation 
+	has been corrected, and these two tests, as well as all the other
+	expected tests pass now
+
+v6)
+	* synced keeep-redundant-commits option and variable name
+	* fixed up some comment terminology
+	* minor newline cleanup
+	* Removed some unneeded braces from test code
+	* minor syntatic cleanup in rebase scripts
+
+	* Refactored empty index checking to make run_git_commit more readable
+	I was also going to change the logic so that it operated more like git
+	cherry-pick did before the patchset, but Junio's comments made me think
+	the new logic was preferable.
+
+v7)
+	* Fixed up forgotten comment_out changes requested in
+	git-rebase--interactive
+
+	* Made changelog comment for keep-redundant-commits patch more verbose
+	so that it was clear that default behavior was changing
+
+	* further refinement of detection of redundant commits, making
+	do_pick_commit and run_git_commit more readable
+
+v8)
+	* Fixed git-rebase--interactive so that is_empty_commit doesn't choke on
+	root commit
+
+	* Minor stylistic change to is_index_unchanged
+
+	* Fixed is_empty_commit to test tree and ptree such that it works with
+	shells other than bash
+--
+To unsubscribe from this list: send the line "unsubscribe git" in
+the body of a message to majordomo@vger.kernel.org
+More majordomo info at  http://vger.kernel.org/majordomo-info.html
 
 
---=-i1l9r/UXhKWyLyaBcZsD
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+--
+To unsubscribe from this list: send the line "unsubscribe git" in
+the body of a message to majordomo@vger.kernel.org
+More majordomo info at  http://vger.kernel.org/majordomo-info.html
 
-On Fri, 2012-04-20 at 15:52 +0300, hen vertis wrote:
-> hi
-> i run as administrator git-gui and i get for every action that i make=20
-> this error please help me
-
-It looks like Windows parameter expansion gone awry. Your HOME setting
-seems get set to %%HOMEPATH%% instead of %HOMEPATH% or similar.
-
-   cmn
-
-
-
-
---=-i1l9r/UXhKWyLyaBcZsD
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part
-Content-Transfer-Encoding: 7bit
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iQEcBAABAgAGBQJPkWBCAAoJEHKRP1jG7ZzTEfYH/jqvek3xDqsVY+JUQS4yKeiC
-BuxBl2bMUC2SBASWMM01AeWcmMa8a8TB6dvc+pKFy++szs9WkeW098XpYqLREYxM
-mpZCZF/ATN59g/KmuputocZTB1U3ZUNrqlL6wKQtx/UW89tGW/wg0YehF3Oq0isO
-c/lZaNYzBbKy2Yps9Rix1QsKxXt+jDIXBamAIpaKfaKlGOaBV6bmj1wN4yaI/9nh
-hXl59YVyMnEi31Dv3cmAK/x74fkCG3GrXNuWChTflLkx0vcbkOKKe4asD07il6qa
-Pmd+C9LIcR4gbTvQwQ08mAgOS7OgPmd5tyY4ryFB3qe3xDoxYVpq9ZE8+hZ2lP8=
-=fKjr
------END PGP SIGNATURE-----
-
---=-i1l9r/UXhKWyLyaBcZsD--
