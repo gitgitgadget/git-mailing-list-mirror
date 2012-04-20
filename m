@@ -1,75 +1,105 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] rebase -i: avoid checking out $branch when possible
-Date: Fri, 20 Apr 2012 08:52:06 -0700
-Message-ID: <xmqqwr5atn89.fsf@junio.mtv.corp.google.com>
-References: <fee3225e29915e1b61e29a5d2fe37db20fa4b596.1334933837.git.trast@student.ethz.ch>
+From: Louis Kruger <louisk@gmail.com>
+Subject: [PATCH] Support --threads arg for git-repack.
+Date: Fri, 20 Apr 2012 11:56:52 -0400
+Message-ID: <CAK65ue8OCVvdBcqX3W54ZcBzCte+=9o_LqGSDipJBX9aaKvNJw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-	Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>,
-	Shezan Baig <shezbaig.wk@gmail.com>
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Fri Apr 20 17:52:18 2012
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Apr 20 17:57:00 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SLG89-0005D5-2t
-	for gcvg-git-2@plane.gmane.org; Fri, 20 Apr 2012 17:52:17 +0200
+	id 1SLGCg-00088N-EI
+	for gcvg-git-2@plane.gmane.org; Fri, 20 Apr 2012 17:56:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932110Ab2DTPwK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Apr 2012 11:52:10 -0400
-Received: from mail-bk0-f74.google.com ([209.85.214.74]:33908 "EHLO
-	mail-bk0-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753686Ab2DTPwJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Apr 2012 11:52:09 -0400
-Received: by bkcjm19 with SMTP id jm19so468585bkc.1
-        for <git@vger.kernel.org>; Fri, 20 Apr 2012 08:52:07 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type:x-gm-message-state;
-        bh=T1rr1Xv8gXkuBGwh0I/J66xgDPogpTM36grVJeUBbGE=;
-        b=ne2HYue3BNnaBOhlv2jV9GqQIA2v6Rg8jRRWsPwX/sLIXu5pqpS9fFUOzsr2L2Ra18
-         ewq69topemioVHnMbXB/cJlvnfpycORhAbatea+OffxC3UOwX7yJcwapxf/nvjJPVEPo
-         kTUo2VdWkvEqPVQSzhLgsrAG5rhBaEIxoRU24vMg7Nmvskpe3hZaKKjHtnf+xbCV/Vn3
-         IWmYS9GKT5jsBGt0X+Ec0JYPPzDRNRUbCgB/H9PyrpI+7l9ovTcw8UnydcWpUV/pinPg
-         JGEq7N2rz+KjQKzWNZXmiaak2MF09a3uqum6wJjFvbSFrD2irFeCCkbQ6TNOYeYy9Ddb
-         Kmlw==
-Received: by 10.213.108.146 with SMTP id f18mr635391ebp.13.1334937127499;
-        Fri, 20 Apr 2012 08:52:07 -0700 (PDT)
-Received: by 10.213.108.146 with SMTP id f18mr635378ebp.13.1334937127365;
-        Fri, 20 Apr 2012 08:52:07 -0700 (PDT)
-Received: from hpza10.eem.corp.google.com ([74.125.121.33])
-        by gmr-mx.google.com with ESMTPS id s9si5652602eei.3.2012.04.20.08.52.07
-        (version=TLSv1/SSLv3 cipher=AES128-SHA);
-        Fri, 20 Apr 2012 08:52:07 -0700 (PDT)
-Received: from junio.mtv.corp.google.com (junio.mtv.corp.google.com [172.27.69.24])
-	by hpza10.eem.corp.google.com (Postfix) with ESMTP id 2D9F4200057;
-	Fri, 20 Apr 2012 08:52:07 -0700 (PDT)
-Received: by junio.mtv.corp.google.com (Postfix, from userid 110493)
-	id 6A35FE120A; Fri, 20 Apr 2012 08:52:06 -0700 (PDT)
-In-Reply-To: <fee3225e29915e1b61e29a5d2fe37db20fa4b596.1334933837.git.trast@student.ethz.ch>
-	(Thomas Rast's message of "Fri, 20 Apr 2012 17:05:10 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1 (gnu/linux)
-X-Gm-Message-State: ALoCoQmLXgGeGB4Adb23FjuzPqWrdJp2ohFF7edF8QVFbTfSsuRyJg87BzcFacPzfqrO415jyf+xiHoluh6936M5iPuXpgCeMal+gPpSDy7Zu9883h/nQAjNd0XjaMUTokVAQGz9VOm25yPK1afnAmYbZA3P/uBiM+KnnBmRcIUjTOo5MyeOzp4=
+	id S1757241Ab2DTP4y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Apr 2012 11:56:54 -0400
+Received: from mail-vx0-f174.google.com ([209.85.220.174]:46904 "EHLO
+	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754987Ab2DTP4x (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Apr 2012 11:56:53 -0400
+Received: by vcqp1 with SMTP id p1so6486241vcq.19
+        for <git@vger.kernel.org>; Fri, 20 Apr 2012 08:56:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=1ou8MhdbG+gwPuxXdiaBQe8ZLCjy2e4tfnPq29KX0yU=;
+        b=q+32oG7TPi6zX9/pQlQMRWEQrGnY8hEQ1dJHui9uqLyjgmpRXaX5zSZDPctgDB3oKg
+         nLvwP7orsrodqH6R6C30fEhbgfLRKsXWP0zc1uxWxqf8uvthB9miz9x3Q//u6k7nqpWS
+         tci1tSO/9UBKwD//mdJ+N7crX8Q3h7VGejLJ4UQBMKfgBQqTqVhjI/BKlIV+r6ugD0NS
+         /ippHiQ4FXWJCHS5Q9yYNhVu/iKpGnSNdE7LqcSddiFuWTjMaw2Z0f6/91y9hCkFWkmi
+         xPyUhve6LyKsCBPv65ELMaKyXiDt4zfPkK1yDuyrQ4JpEin4k1A1KYiZVBfmSNM+Ye4X
+         Qpsg==
+Received: by 10.220.198.135 with SMTP id eo7mr2103395vcb.35.1334937412567;
+ Fri, 20 Apr 2012 08:56:52 -0700 (PDT)
+Received: by 10.220.140.203 with HTTP; Fri, 20 Apr 2012 08:56:52 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196004>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196005>
 
-Thomas Rast <trast@student.ethz.ch> writes:
+This very simple patch adds a --threads argument for git-repack.  It
+simply forwards the argument to git-pack-objects.
 
-> I was a bit torn on whether I should abort with checkout, or without
-> it.  The manual clearly states that rebase "will perform an automatic
-> git checkout <branch> before doing anything else", which mandates at
-> least *trying* the checkout in the error path, hence this version.
->
-> However, in contrived cases this can lead to strange behavior.  For
-> example, a checkout conflict with a file in the worktree may prevent
-> the abort path from working correctly, even though going through with
-> the rebase itself may succeed.
+---
+ Documentation/git-repack.txt |   11 +++++++++++
+ git-repack.sh                |    3 ++-
+ 2 files changed, 13 insertions(+), 1 deletions(-)
 
-Given all that contortion, is it even worth doing this?
+diff --git a/Documentation/git-repack.txt b/Documentation/git-repack.txt
+index 4c1aff6..be52789 100644
+--- a/Documentation/git-repack.txt
++++ b/Documentation/git-repack.txt
+@@ -10,6 +10,7 @@ SYNOPSIS
+ --------
+ [verse]
+ 'git repack' [-a] [-A] [-d] [-f] [-F] [-l] [-n] [-q] [--window=<n>]
+[--depth=<n>]
++        [--threads=<n>]
+
+ DESCRIPTION
+ -----------
+@@ -92,6 +93,16 @@ other objects in that pack they already have locally.
+ 	to be applied that many times to get to the necessary object.
+ 	The default value for --window is 10 and --depth is 50.
+
++--threads=<n>::
++        Specifies the number of threads to spawn when searching for best
++        delta matches. This requires that pack-objects be compiled with
++        pthreads otherwise this option is ignored with a warning. This is
++        meant to reduce packing time on multiprocessor machines. The required
++        amount of memory for the delta search window is however multiplied
++        by the number of threads. Specifying 0 will cause git to auto-detect
++	`--threads=0` makes git auto-detect the number of threads to use,
++        which is the default.
++
+ --window-memory=<n>::
+ 	This option provides an additional limit on top of `--window`;
+ 	the window size will dynamically scale down so as to not take
+diff --git a/git-repack.sh b/git-repack.sh
+index 624feec..c8cf5cc 100755
+--- a/git-repack.sh
++++ b/git-repack.sh
+@@ -20,6 +20,7 @@ window=         size of the window used for delta compression
+ window-memory=  same as the above, but limit memory size instead of
+entries count
+ depth=          limits the maximum delta depth
+ max-pack-size=  maximum size of each packfile
++threads=        maximum number of threads
+ "
+ SUBDIRECTORY_OK='Yes'
+ . git-sh-setup
+@@ -38,7 +39,7 @@ do
+ 	-f)	no_reuse=--no-reuse-delta ;;
+ 	-F)	no_reuse=--no-reuse-object ;;
+ 	-l)	local=--local ;;
+-	--max-pack-size|--window|--window-memory|--depth)
++	--max-pack-size|--window|--window-memory|--depth|--threads)
+ 		extra="$extra $1=$2"; shift ;;
+ 	--) shift; break;;
+ 	*)	usage ;;
+-- 
+1.7.7.3
