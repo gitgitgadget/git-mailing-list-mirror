@@ -1,55 +1,91 @@
-From: hen vertis <henvertis@gmail.com>
-Subject: error: could not lock config file %C:\Users\Hen%/.gitconfig: Invalid
- argument
-Date: Fri, 20 Apr 2012 15:52:54 +0300
-Message-ID: <4F915C26.5010403@gmail.com>
+From: Mark Haney <markh@abemblem.com>
+Subject: Re: Help with repo management.
+Date: Fri, 20 Apr 2012 08:39:47 -0400
+Message-ID: <4F915913.10908@abemblem.com>
+References: <4F902294.10302@abemblem.com> <CAH5451nL+BiZPo-cWHwYC4GkA=pT3zgBXi_M-TB-qgDfmy7yow@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 20 14:53:01 2012
+X-From: git-owner@vger.kernel.org Fri Apr 20 15:05:30 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SLDKe-0003af-Rm
-	for gcvg-git-2@plane.gmane.org; Fri, 20 Apr 2012 14:53:01 +0200
+	id 1SLDWg-0003k6-5o
+	for gcvg-git-2@plane.gmane.org; Fri, 20 Apr 2012 15:05:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750971Ab2DTMw4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Apr 2012 08:52:56 -0400
-Received: from mail-bk0-f46.google.com ([209.85.214.46]:54621 "EHLO
-	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750758Ab2DTMwz (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Apr 2012 08:52:55 -0400
-Received: by bkcik5 with SMTP id ik5so7158950bkc.19
-        for <git@vger.kernel.org>; Fri, 20 Apr 2012 05:52:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:subject
-         :content-type:content-transfer-encoding;
-        bh=eMrd7QHweJ3tiM6qvSeP8FDyc2Igt/jCfBYXzNriiss=;
-        b=lKX55cnQbF0TYXgt8iNuycALyPup+gfjeXrS3r80ZkMETAKu7eOQ75oKoxsPjfYiKL
-         8/O9sUZo+sxJNhIjg6SacUt/q13Np4euk+vVUf7la6eDAs7fsSgtPouvmBRuZyid63Mr
-         FikbTTuQTQ0D+UXNU0whlwO/j1FqWMh4v3h0rNBnLoZLn/lxDGXjrlUdup41pQWTSfH/
-         obgxH4ySNEMrbmHux6hrcdUhcdeCfEaj25xYYgiwCjgOELKsz0VXCVbYENWQldyf+Zn5
-         LL6va0YMY/Vryyld7IeCstK3uHnYB/BQgDR2dtkDJlAt/tB6dyhPXGUctb6Mtp82+stv
-         d/gg==
-Received: by 10.204.154.201 with SMTP id p9mr1914147bkw.125.1334926374353;
-        Fri, 20 Apr 2012 05:52:54 -0700 (PDT)
-Received: from [192.168.0.197] (bzq-84-109-50-207.red.bezeqint.net. [84.109.50.207])
-        by mx.google.com with ESMTPS id jr13sm9857543bkb.14.2012.04.20.05.52.51
-        (version=SSLv3 cipher=OTHER);
-        Fri, 20 Apr 2012 05:52:53 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:8.0) Gecko/20111105 Thunderbird/8.0
+	id S1751947Ab2DTNFW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Apr 2012 09:05:22 -0400
+Received: from [50.55.33.242] ([50.55.33.242]:45936 "EHLO marius.homelinux"
+	rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1751323Ab2DTNFV (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Apr 2012 09:05:21 -0400
+X-Greylist: delayed 1521 seconds by postgrey-1.27 at vger.kernel.org; Fri, 20 Apr 2012 09:05:20 EDT
+Received: from marius.homelinux (localhost.localdomain [127.0.0.1])
+	by marius.homelinux (8.14.5/8.14.5) with ESMTP id q3KCdl7x002548
+	for <git@vger.kernel.org>; Fri, 20 Apr 2012 08:39:48 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:11.0) Gecko/20120329 Thunderbird/11.0.1
+In-Reply-To: <CAH5451nL+BiZPo-cWHwYC4GkA=pT3zgBXi_M-TB-qgDfmy7yow@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195988>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195989>
 
-hi
-i run as administrator git-gui and i get for every action that i make 
-this error please help me
-best regards
-hen
+On 04/19/2012 07:49 PM, Andrew Ardill wrote:
+
+>
+> First things first, don't think that just because a bare repository
+> does not have a working copy that it doesn't have all the data. Having
+> a local working copy and a bare repository on a server _is_ keeping
+> two separate copies of your data handy, just one is not immediately
+> accessible (you have to check it out first). This may be your
+> understanding, but it was unclear so I thought I would clarify.
+>
+> In terms of pushing to a remote, it is best practice to NOT push to a
+> repository that has a checked out working copy. The main reason for
+> this is that it becomes much easier to lose data, which is bad.
+>
+> Instead, if you want to work on SERVER as well as some other machine,
+> it is safer to checkout the bare repository to another repository on
+> SERVER, pulling and pushing to the bare repository in the same fashion
+> as you would from a remote machine.
+>
+> Some more explanation can be found at
+> http://gitready.com/advanced/2009/02/01/push-to-only-bare-repositories.html
+> for example.
+>
+
+
+Well, that's originally what I thought, that the bare repository carries 
+all the data.  But (and I'm not sure how this came about), the more I 
+was reading on using git the more it read like the bare repository ONLY 
+housed the changes made.  For example, I have a technical document on 
+how the structure of the database I'm designing.  If I edit the document 
+and then push it to the bare repo, the ONLY thing in the bare repo is 
+the delta of that document, not the delta AND the original document. 
+Does that make sense?
+
+In essence, it sounded to me like the bare repo required a copy of the 
+original data in order for it to be used, since it only housed the 
+deltas of the original, not the originals themselves.
+
+In retrospect, it sounds a bit silly now, I suppose since it would be 
+impossible to for someone new to pull a copy of the data down from the 
+bare repo and have it be useful.  But, that's how I read the docs I had 
+googled when first getting started with this project.
+
+I hope that makes it a little easier to understand why I had the problem 
+I was having.  Thanks a lot for the informative reply, and the patience 
+to do so.
+
+
+-- 
+
+Mark Haney
+Software Developer/Consultant
+AB Emblem
+markh@abemblem.com
+Linux marius.homelinux 3.3.1-5.fc16.x86_64 GNU/Linux
