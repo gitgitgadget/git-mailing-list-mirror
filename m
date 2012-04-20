@@ -1,271 +1,112 @@
-From: Junio C Hamano <jch@google.com>
-Subject: Re: [PATCH v14 8/9] difftool: teach difftool to handle directory diffs
-Date: Fri, 20 Apr 2012 13:54:22 -0700
-Message-ID: <xmqqipgum8e9.fsf@junio.mtv.corp.google.com>
-References: <1334940988-8940-1-git-send-email-tim.henigan@gmail.com>
+From: Sven Strickroth <sven.strickroth@tu-clausthal.de>
+Subject: Re: [PATCH] Fixed compilation with Visual Studio by including poll.h
+Date: Fri, 20 Apr 2012 23:26:33 +0200
+Message-ID: <4F91D489.8050402@tu-clausthal.de>
+References: <4F91C8FF.7070402@tu-clausthal.de> <20120420204722.GD13103@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: gitster@pobox.com, git@vger.kernel.org, davvid@gmail.com,
-	ramsay@ramsay1.demon.co.uk
-To: Tim Henigan <tim.henigan@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Apr 20 22:54:30 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Apr 20 23:26:38 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SLKqb-00080t-Ag
-	for gcvg-git-2@plane.gmane.org; Fri, 20 Apr 2012 22:54:29 +0200
+	id 1SLLLi-00081w-9x
+	for gcvg-git-2@plane.gmane.org; Fri, 20 Apr 2012 23:26:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751754Ab2DTUyY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Apr 2012 16:54:24 -0400
-Received: from mail-yw0-f74.google.com ([209.85.213.74]:59426 "EHLO
-	mail-yw0-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751300Ab2DTUyX (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Apr 2012 16:54:23 -0400
-Received: by yhgm50 with SMTP id m50so1146973yhg.1
-        for <git@vger.kernel.org>; Fri, 20 Apr 2012 13:54:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=ZD30NFYd6CHMsuVI6WB73/BOe8XnQzkP0RwfDZKM5Go=;
-        b=QXoL8zjuDIJb4zAkqTa69S/VXoyrfb71xCmZHaEtTSjbLngDFcF++fp0uBmboP2u4H
-         wrInUGMG3d5zTOOEckcOuKBBFlTXpaoE4pF+JPcQX+MLgjYIewMfJkkW1gxcb9OkarI2
-         zJukhybMdx6oW1wxrdz3BkpQboRvVMZpK/bWIJMMh1IukZAO1el230qh17FXLv5cvKci
-         S06NYRab+rUrmBiR8dQEN3wjV35LQe9bXZ6cB1uCDDPfp47Q2Rk5XZkUNaXD5cHcblny
-         U533VBdGIKIvknn29ZgPV4zjtgmiSn9NLxHFTDKz7nZ/anF6hTs8dcya+YcKcB0oT0dq
-         uMxQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type:x-gm-message-state;
-        bh=ZD30NFYd6CHMsuVI6WB73/BOe8XnQzkP0RwfDZKM5Go=;
-        b=fz9m8VjdQ05Jsas3qTZsKksz1x+TJ+B+Z52ujAasX95rG2hzgv0hw9M1QuxFSE9D38
-         wkzUF1QE6yqcBM0vM3AYcuBE2WJSczliMrhtcuuOpqoALW9+AfhiEVj7cpiSDqsBaRKL
-         xJaYykSFFtyryCfrorfGUDpDs/N8S0gJwPhB4HygzVtlLXdft7mW9AimbUwU/Tf3bRwK
-         /kX3C9iBkVo+6SFQ/V8y18tk+HPkn0DBKZTR7d6exYsECyYrCp5KmaKR5wuIGhvJMspC
-         TZ6Oh2NCltxCR/AVWvWY6fO6gN59u0KxhMy8tfv9m2oh+J3D7+aJG3BGPOSo0BAXSV3A
-         Nw9w==
-Received: by 10.236.125.170 with SMTP id z30mr9004609yhh.4.1334955262971;
-        Fri, 20 Apr 2012 13:54:22 -0700 (PDT)
-Received: by 10.236.125.170 with SMTP id z30mr9004583yhh.4.1334955262873;
-        Fri, 20 Apr 2012 13:54:22 -0700 (PDT)
-Received: from wpzn4.hot.corp.google.com (216-239-44-65.google.com [216.239.44.65])
-        by gmr-mx.google.com with ESMTPS id i36si1095827anp.0.2012.04.20.13.54.22
-        (version=TLSv1/SSLv3 cipher=AES128-SHA);
-        Fri, 20 Apr 2012 13:54:22 -0700 (PDT)
-Received: from junio.mtv.corp.google.com (junio.mtv.corp.google.com [172.27.69.24])
-	by wpzn4.hot.corp.google.com (Postfix) with ESMTP id AF76D1E0119;
-	Fri, 20 Apr 2012 13:54:22 -0700 (PDT)
-Received: by junio.mtv.corp.google.com (Postfix, from userid 110493)
-	id 42BA4E120A; Fri, 20 Apr 2012 13:54:22 -0700 (PDT)
-In-Reply-To: <1334940988-8940-1-git-send-email-tim.henigan@gmail.com> (Tim
-	Henigan's message of "Fri, 20 Apr 2012 12:56:28 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1 (gnu/linux)
-X-Gm-Message-State: ALoCoQn4kkLUQF2imO/KVSRl5PXjp2vl85t+Ez6g+FQaCE0qkGch+yWoFIcJ0eGoSA/8OvOuYeYhiuOZ+OkbLUmLxytP6zmGuvf528BrIDySKW6PsEWkg6KkLDndNVycXMB/aDM8+AxEOZtKPvEgpsKtJSXVqumJBJrU2lzWMA8ALCkCeYl9sY0=
+	id S1753895Ab2DTV0d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Apr 2012 17:26:33 -0400
+Received: from mailrelay1.rz.tu-clausthal.de ([139.174.2.42]:20389 "EHLO
+	mailrelay1.rz.tu-clausthal.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753593Ab2DTV0c (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 20 Apr 2012 17:26:32 -0400
+Received: from hades.rz.tu-clausthal.de (mailrelay1.rz.tu-clausthal.de [139.174.2.42])
+	by mailrelay1.rz.tu-clausthal.de (Postfix) with ESMTP id 0F5814305C1;
+	Fri, 20 Apr 2012 23:26:30 +0200 (CEST)
+Received: from hades.rz.tu-clausthal.de (localhost [127.0.0.1])
+	by localhost (Postfix) with SMTP id DD27F422136;
+	Fri, 20 Apr 2012 23:26:29 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=tu-clausthal.de; h=
+	message-id:date:from:mime-version:to:cc:subject:references
+	:in-reply-to:content-type:content-transfer-encoding; s=dkim1;
+	 bh=sKeQEJqdZSR4Tih4vzoY23IhNqM=; b=gzPDbUnUiOgR7Y+9A2xFm37eL6II
+	DKMFHCyMVKaV3SETGejDU6lpll/1MWYFEzJbcctOQ9AFUhGtO7MTf6e2qVJMh7ev
+	xo6x+pTOE7FF3zsaDg1TBt3ak85wjBu+tZl0lD8KZh3O5TAVDsA7kpVsVWpSNq0O
+	C6uFOY+FrmDpm4E=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=tu-clausthal.de; h=
+	message-id:date:from:mime-version:to:cc:subject:references
+	:in-reply-to:content-type:content-transfer-encoding; q=dns; s=
+	dkim1; b=VesvPLc8rENycS4Q3ramx1+hxzoJycA9aVEdiUkl8+BkbBf1wBP9out
+	Oj0m+VgRyNikSIYrc/e7r/ch4be/BKwZNjuJbNl2/tSF+u9hqjlMBDmThz2b4WMT
+	3GfovibCj7dnc3QT6jZhR4n8Nz332cOYWre+tgfx7VfGkAB62CWk=
+Received: from tu-clausthal.de (hathor.rz.tu-clausthal.de [139.174.2.1])
+	by hades.rz.tu-clausthal.de (Postfix) with ESMTP id 647324220BF;
+	Fri, 20 Apr 2012 23:26:29 +0200 (CEST)
+Received: from [91.3.185.188] (account sstri@tu-clausthal.de HELO [192.168.178.20])
+  by tu-clausthal.de (CommuniGate Pro SMTP 5.4.3)
+  with ESMTPSA id 31005577; Fri, 20 Apr 2012 23:26:29 +0200
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:11.0) Gecko/20120327 Thunderbird/11.0.1
+In-Reply-To: <20120420204722.GD13103@sigill.intra.peff.net>
+X-Enigmail-Version: 1.4
+X-Virus-Scanned: by Sophos PureMessage V5.6 at tu-clausthal.de
+X-Spam-Level: (8%, '
+ HTML_00_01 0.05, HTML_00_10 0.05, BODYTEXTP_SIZE_3000_LESS 0, BODY_SIZE_1100_1199 0, BODY_SIZE_2000_LESS 0, BODY_SIZE_5000_LESS 0, BODY_SIZE_7000_LESS 0, CT_TEXT_PLAIN_UTF8_CAPS 0, __ANY_URI 0, __BOUNCE_CHALLENGE_SUBJ 0, __BOUNCE_NDR_SUBJ_EXEMPT 0, __CP_URI_IN_BODY 0, __CT 0, __CTE 0, __CT_TEXT_PLAIN 0, __HAS_MSGID 0, __MIME_TEXT_ONLY 0, __MIME_VERSION 0, __MOZILLA_MSGID 0, __SANE_MSGID 0, __TO_MALFORMED_2 0, __URI_NO_MAILTO 0, __URI_NO_PATH 0, __URI_NS , __USER_AGENT 0')
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196024>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196025>
 
-Tim Henigan <tim.henigan@gmail.com> writes:
+Windows does not have sys/poll.h. I have to use the one from compat/win32.
 
-> When 'difftool' is called to compare a range of commits that modify
-> more than one file, it opens a separate instance of the diff tool for
-> each file that changed.
->
-> The new '--dir-diff' option copies all the modified files to a temporary
-> location and runs a directory diff on them in a single instance of the
-> diff tool.
->
-> Signed-off-by: Tim Henigan <tim.henigan@gmail.com>
-> ---
->
-> This replaces 7fbdc6c on the th/difftool-diffall branch [1].
->
-> Changes in v14:
->
->   - Fixed use of unitialized vars in the find_worktree function. A warning
->     was seen when run on msysgit, but not other platforms.
->
->   - Added a helper function (write_to_file) to replace repeated logic.
->
->   - Fixed handling of symbolic links. The diff shown in the external tool
->     now matches what is seen in the output of 'git diff'.
->
->   - Added support for the diff format used for renames and copies. In the
->     external tool, these will still appear as delete/add pairs.
->
->   - Added logic to detect and abort if a combined diff ('--cc' or '-c')
->     is commanded at the same time as directory diff ('--dir-diff').
->
-> [1]: https://github.com/gitster/git/tree/th/difftool-diffall
->
->
->  Documentation/git-difftool.txt |    6 +
->  git-difftool--helper.sh        |   19 ++-
->  git-difftool.perl              |  261 +++++++++++++++++++++++++++++++++++++---
->  t/t7800-difftool.sh            |   39 ++++++
->  4 files changed, 299 insertions(+), 26 deletions(-)
->
-> diff --git a/Documentation/git-difftool.txt b/Documentation/git-difftool.txt
-> index fe38f66..aba5e76 100644
-> --- a/Documentation/git-difftool.txt
-> +++ b/Documentation/git-difftool.txt
-> @@ -19,6 +19,12 @@ linkgit:git-diff[1].
->  
->  OPTIONS
->  -------
-> +-d::
-> +--dir-diff::
-> +	Copy the modified files to a temporary location and perform
-> +	a directory diff on them. This mode never prompts before
-> +	launching the diff tool.
-> +
->  -y::
->  --no-prompt::
->  	Do not prompt before launching a diff tool.
-> diff --git a/git-difftool--helper.sh b/git-difftool--helper.sh
-> index e6558d1..3d0fe0c 100755
-> --- a/git-difftool--helper.sh
-> +++ b/git-difftool--helper.sh
-> @@ -73,9 +73,16 @@ then
->  	fi
->  fi
->  
-> -# Launch the merge tool on each path provided by 'git diff'
-> -while test $# -gt 6
-> -do
-> -	launch_merge_tool "$1" "$2" "$5"
-> -	shift 7
-> -done
-> +if test -n "$GIT_DIFFTOOL_DIRDIFF"
-> +then
-> +	LOCAL="$1"
-> +	REMOTE="$2"
-> +	run_merge_tool "$merge_tool" false
-> +else
-> +	# Launch the merge tool on each path provided by 'git diff'
-> +	while test $# -gt 6
-> +	do
-> +		launch_merge_tool "$1" "$2" "$5"
-> +		shift 7
-> +	done
-> +fi
-> diff --git a/git-difftool.perl b/git-difftool.perl
-> index aba3d2f..7211f1e 100755
-> --- a/git-difftool.perl
-> +++ b/git-difftool.perl
-> @@ -1,21 +1,31 @@
-> -#!/usr/bin/env perl
-> +#!/usr/bin/perl
->  # Copyright (c) 2009, 2010 David Aguilar
-> +# Copyright (c) 2012 Tim Henigan
->  #
->  # This is a wrapper around the GIT_EXTERNAL_DIFF-compatible
->  # git-difftool--helper script.
->  #
->  # This script exports GIT_EXTERNAL_DIFF and GIT_PAGER for use by git.
-> -# GIT_DIFFTOOL_NO_PROMPT, GIT_DIFFTOOL_PROMPT, and GIT_DIFF_TOOL
-> -# are exported for use by git-difftool--helper.
-> +# The GIT_DIFF* variables are exported for use by git-difftool--helper.
->  #
->  # Any arguments that are unknown to this script are forwarded to 'git diff'.
->  
->  use 5.008;
->  use strict;
->  use warnings;
-> +use File::Basename qw(dirname);
-> +use File::Copy;
-> +use File::stat;
-> +use File::Path qw(mkpath);
-> +use File::Temp qw(tempdir);
->  use Getopt::Long qw(:config pass_through);
->  use Git;
->  
-> +my @working_tree;
-> +my $rc;
-> +my $repo = Git->repository();
-> +my $repo_path = $repo->repo_path();
-> +
->  sub usage
->  {
->  	my $exitcode = shift;
-> @@ -24,15 +34,202 @@ usage: git difftool [-t|--tool=<tool>]
->                      [-x|--extcmd=<cmd>]
->                      [-g|--gui] [--no-gui]
->                      [--prompt] [-y|--no-prompt]
-> +                    [-d|--dir-diff]
->                      ['git diff' options]
->  USAGE
->  	exit($exitcode);
->  }
->  
-> +sub find_worktree
-> +{
-> +	# Git->repository->wc_path() does not honor changes to the working
-> +	# tree location made by $ENV{GIT_WORK_TREE} or the 'core.worktree'
-> +	# config variable.
-> +	my $worktree;
-> +	my $env_worktree = $ENV{GIT_WORK_TREE};
-> +	my $core_worktree = Git::config('core.worktree');
-> +
-> +	if (defined($env_worktree) and (length($env_worktree) > 0)) {
-> +		$worktree = $env_worktree;
-> +	} elsif (defined($core_worktree) and (length($core_worktree) > 0)) {
-> +		$worktree = $core_worktree;
-> +	} else {
-> +		$worktree = $repo->wc_path();
-> +	}
-> +
-> +	return $worktree;
-> +}
-> +
-> +my $workdir = find_worktree();
-> +
-> +sub setup_dir_diff
-> +{
-> +	# Run the diff; exit immediately if no diff found
-> +	# 'Repository' and 'WorkingCopy' must be explicitly set to insure that
-> +	# if $GIT_DIR and $GIT_WORK_TREE are set in ENV, they are actually used
-> +	# by Git->repository->command*.
-> +	my $diffrepo = Git->repository(Repository => $repo_path, WorkingCopy => $workdir);
-> +	my $diffrtn = $diffrepo->command_oneline('diff', '--raw', '--no-abbrev', '-z', @ARGV);
-> +	exit(0) if (length($diffrtn) == 0);
-> +
-> +	if ($diffrtn =~ /::/) {
-> +		print "Combined diff formats ('-c' and '--cc') are not supported in directory diff mode.\n";
+The problem is that
+    NO_SYS_POLL_H
+is defined in compat/msvc.h in my environment.
+And in git-compat-util.h
+    #ifndef NO_SYS_POLL_H
+    #include <sys/poll.h>
+    #else
+    #include <poll.h>
+    #endif
+is before
+    #elif defined(_MSC_VER)
+    #include "compat/msvc.h"
+. Moving it down, solves the issue for me. (Suppose this is a fix for my
+scenario only).
 
-Can't a pathname happen to have these two-letter sequence?  /^::/ perhaps?
-Also what does "command_oneline()" return, when there is a file with LF
-in their pathname?
+diff --git a/git-compat-util.h b/git-compat-util.h
+index ed11ad8..a96849c 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -111,11 +111,6 @@
+ #include <regex.h>
+ #include <utime.h>
+ #include <syslog.h>
+-#ifndef NO_SYS_POLL_H
+-#include <sys/poll.h>
+-#else
+-#include <poll.h>
+-#endif
+ #if defined(__MINGW32__)
+ /* pull in Windows compatibility stuff */
+ #include "compat/mingw.h"
+@@ -152,6 +147,11 @@
+ #define _ALL_SOURCE 1
+ #endif
+ #endif
++#ifndef NO_SYS_POLL_H
++#include <sys/poll.h>
++#else
++#include <poll.h>
++#endif
 
-> +		exit(1);
-> +	}
-> +
-> +	# Setup temp directories
-> +	my $tmpdir = tempdir('git-diffall.XXXXX', CLEANUP => 1, TMPDIR => 1);
-> +	my $ldir = "$tmpdir/left";
-> +	my $rdir = "$tmpdir/right";
-> +	mkpath($ldir) or die $!;
-> +	mkpath($rdir) or die $!;
-> +
-> +	# Build index info for left and right sides of the diff
-> +	my $submodule_mode = "160000";
-> +	my $symlink_mode = "120000";
-> +	my $null_mode = "0" x 6;
-> +	my $null_sha1 = "0" x 40;
-> +	my $lindex = "";
-> +	my $rindex = "";
-> +	my %submodule;
-> +	my %symlink;
-> +	my @rawdiff = split(':', $diffrtn);
-> +	for (my $i=1; $i<@rawdiff; $i++) {
-
-Huh?  Can't a pathname happen to have ':' in it?  This really is not the
-way to parse --raw -z format.  Cut them into tokens at '\0' boundary
-first, and decide how many paths there are when interpreting the status
-field, to collect one record worth of NUL-delimited tokens, and then
-process.
+ #ifndef NO_LIBGEN_H
+ #include <libgen.h>
+-- 
+Best regards,
+ Sven Strickroth
+ ClamAV, a GPL anti-virus toolkit   http://www.clamav.net
+ PGP key id F5A9D4C4 @ any key-server
