@@ -1,161 +1,254 @@
-From: Junio C Hamano <junio@pobox.com>
-Subject: Incremental updates to "What's cooking"
-Date: Thu, 19 Apr 2012 22:52:31 -0700
-Message-ID: <7vzka7osps.fsf@pobox.com>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH nd/threaded-index-pack] index-pack: disable threading
+ if NO_PREAD is defined
+Date: Fri, 20 Apr 2012 08:25:09 +0200
+Message-ID: <4F910145.5030102@viscovery.net>
+References: <1334844329-24557-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 20 07:53:05 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, kusmabite@gmail.com,
+	Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
+	Junio C Hamano <gitster@pobox.com>
+To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+	<pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Apr 20 08:25:50 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SL6mF-0003Bx-Rq
-	for gcvg-git-2@plane.gmane.org; Fri, 20 Apr 2012 07:53:04 +0200
+	id 1SL7Hw-0007Tg-Gi
+	for gcvg-git-2@plane.gmane.org; Fri, 20 Apr 2012 08:25:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752495Ab2DTFwm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Apr 2012 01:52:42 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39609 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752483Ab2DTFwg (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Apr 2012 01:52:36 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AC30444BF;
-	Fri, 20 Apr 2012 01:52:33 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:mime-version:content-type; s=sasl; bh=L
-	phLh0DsXVlCaCTncvxBeJEQlxc=; b=WsLnI8oizcvGIdR/OkpZERpFIDwoahgvY
-	NEHU7HDuVQNVkEoAMtHyq5M7ZDg8xAhwWfYp8QG7dQ0A2N6F8o2/H/7TRsusvPcG
-	d4C7Ps0f5EmppZPjitrrRJUHWKs2dVg48opluAPr0EMP/xrEglBFflqOX0XmAOQA
-	G2PzEWCbpg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:mime-version:content-type; q=dns; s=sasl; b=tiJ
-	Jbx9ffxd5P1MPnFyCwj2I102TdTfNyUuV4L8xZs6Q0mYEgVKJ9nsQDJdeY3UlX8G
-	sFxGAU9MEEddXVsBqDXcOOOen2Vw+oAozHKdYFOSLPMa+mB0l2JLhDLDx6WPWBno
-	4OiLvca/w6UfnPvKCKcQZHVJMAruLlmwq9BQ4HsA=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A312544BE;
-	Fri, 20 Apr 2012 01:52:33 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id F2E6D44BC; Fri, 20 Apr 2012
- 01:52:32 -0400 (EDT)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1 (gnu/linux)
-X-Pobox-Relay-ID: 05DB306A-8AAD-11E1-85C0-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752243Ab2DTGZR convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 20 Apr 2012 02:25:17 -0400
+Received: from lilzmailso02.liwest.at ([212.33.55.13]:15877 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751046Ab2DTGZQ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 20 Apr 2012 02:25:16 -0400
+Received: from cpe228-254-static.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.76)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1SL7Hf-0002hg-VD; Fri, 20 Apr 2012 08:25:32 +0200
+Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id 41EAB1660F;
+	Fri, 20 Apr 2012 08:25:10 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:11.0) Gecko/20120327 Thunderbird/11.0.1
+In-Reply-To: <1334844329-24557-1-git-send-email-pclouds@gmail.com>
+X-Enigmail-Version: 1.4
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195981>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195982>
 
-I was planning to have a handful of topics graduate to 'master'
-today but there was a bit of accident, and I felt it would be safer
-to postpone it for a few days.  Also I expect to be slower than
-usual for several days.
+Am 4/19/2012 16:05, schrieb Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy:
+> NO_PREAD simulates pread() as a sequence of seek, read, seek in
+> compat/pread.c. The simulation is not thread-safe because another
+> thread could move the file offset away in the middle of pread
+> operation. Do not allow threading in that case.
 
-Here is an incremental updates to "What's cooking", relative to the
-issue #07 that was posted yesterday.
+Unsurprisingly, this fixes the breakage for me.
 
-[New Topics]
+I used the attached patch to keep t9300 running when the breakage
+was detected.
 
-* bw/test-fix-grep-gnuism (2012-04-19) 1 commit
- - t9400: fix gnuism in grep
+--- 8< ---
+=46rom: Johannes Sixt <j6t@kdbg.org>
+Subject: [PATCH] t9300-fast-import: avoid 'exit' in test_expect_success=
+ snippets
 
-Fix two places that were the only place in the test suite that gave "a\+"
-to platform grep and expected it to mean one or more "a", which is a
-blatant GNUism.
+Exiting from a for-loop early using '|| break' does not propagate the
+failure code, and for this reason, the tests used just 'exit'. But this
+ends the test script with 'FATAL: Unexpected exit code 1' in the case o=
+f
+a failed test.
 
-Will merge to 'next'.
+=46ix this by moving the loop into a shell function, from which we can
+simply return early.
 
-* rt/cherry-revert-conflict-summary (2012-04-19) 1 commit
- - sequencer: remove additional blank line
+While at it, modernize the style of the affected test cases.
 
-In the older days, the header "Conflicts:" in "cherry-pick" and
-"merge" was separated by a blank line from the list of paths that
-follow for readability, but when "merge" was rewritten in C, we lost
-it by mistake. Remove the newline from "cherry-pick" to make them
-match again.
+Signed-off-by: Johannes Sixt <j6t@kdbg.org>
+---
+ t/t9300-fast-import.sh |   88 +++++++++++++++++++++++++++++-----------=
+--------
+ 1 file changed, 54 insertions(+), 34 deletions(-)
 
---------------------------------------------------
-Moved from [New Topics] to [Cooking]
-
-* js/spawn-via-shell-path-fix (2012-04-17) 1 commit
-  (merged to 'next' on 2012-04-19 at 3e04ef6)
- + Do not use SHELL_PATH from build system in prepare_shell_cmd on Windows
-
-Merged to 'next' to fast-track the fix for Windows.
-
-* jc/merge-reduce-parents-early (2012-04-18) 5 commits
- - fmt-merge-msg: discard needless merge parents
- - builtin/merge.c: reduce parents early
- - builtin/merge.c: collect other parents early
- - builtin/merge.c: remove "remoteheads" global variable
- - merge tests: octopus with redundant parents
- (this branch is tangled with lt/octopus-simplify.)
-
-I based this and Linus's on top of the same test script, but it
-turns out that this is more correct way to deal with the issue, so
-I'll drop the other one.
-
-[Cooking]
-
-* cb/daemon-test-race-fix (2012-04-19) 1 commit
- - git-daemon wrapper to wait until daemon is ready
-
-Fix race condition between starting and waiting for git-daemon in the
-test.
-
-Re-queued with a fix.
-
-* nl/http-proxy-more (2012-04-19) 7 commits
- - http: fix proxy password passing
- - http: fix proxy authentication
- - http: rename HTTP_REAUTH to HTTP_AUTH_RETRY
- - http: Avoid limit of retrying request only twice
- - http: handle proxy authentication failure (error 407)
- - http: handle proxy proactive authentication
- - http: try http_proxy env var when http.proxy config option is not set
- 
-Another microfix.  It is starting to look like this may have to be
-moved to Stalled.
-
-* nh/empty-rebase (2012-04-19) 5 commits
- - fixup! git-rebase: add keep_empty flag
- - git-rebase: add keep_empty flag
- - git-cherry-pick: add test to validate new options
- - git-cherry-pick: add "--keep-redundant-commits" option
- - git-cherry-pick: add allow-empty option
-
-Added a fix-up.
-
-* nd/threaded-index-pack (2012-04-19) 4 commits
- - index-pack: disable threading if NO_PREAD is defined
- - index-pack: support multithreaded delta resolving
- - index-pack: split second pass obj handling into own function
- - compat/win32/pthread.h: Add an pthread_key_delete() implementation
-
-Added a fix-up.
-
- * jc/index-v4 (2012-04-04) 10 commits
-+  (merged to 'next' on 2012-04-19 at 5e4b029)
-+ + update-index: upgrade/downgrade on-disk index version
-+ + read-cache.c: write prefix-compressed names in the index
-+ + read-cache.c: read prefix-compressed names in index on-disk version v4
-+ + read-cache.c: move code to copy incore to ondisk cache to a helper function
-+ + read-cache.c: move code to copy ondisk to incore cache to a helper function
-+ + read-cache.c: report the header version we do not understand
-+ + read-cache.c: make create_from_disk() report number of bytes it consumed
-+ + read-cache.c: allow unaligned mapping of the index file
-+ + cache.h: hide on-disk index details
-+ + varint: make it available outside the context of pack
-  (this branch is tangled with jc/split-blob.)
- 
-Trivially shrinks the on-disk size of the index file to save both I/O and
-checksum overhead.  The "v4" format represented here may not be what we
-eventually want to have, but the preparatory refactoring steps and the way
-how backward compatibility is retained should give plenty to learn to GSoC
-student-hopefuls.
- 
-The bottom one makes use of "varint" encoding from the stalled
-jc/split-blob topic.  Merged to 'next' as warned.
+diff --git a/t/t9300-fast-import.sh b/t/t9300-fast-import.sh
+index 0f5b5e5..8d7be67 100755
+--- a/t/t9300-fast-import.sh
++++ b/t/t9300-fast-import.sh
+@@ -24,6 +24,13 @@ head_c () {
+ 	' - "$1"
+ }
+=20
++verify_packs () {
++	for p in .git/objects/pack/*.pack
++	do
++		git verify-pack "$@" "$p" || return
++	done
++}
++
+ file2_data=3D'file2
+ second line of EOF'
+=20
+@@ -105,9 +112,10 @@ test_expect_success \
+     'A: create pack from stdin' \
+     'git fast-import --export-marks=3Dmarks.out <input &&
+ 	 git whatchanged master'
+-test_expect_success \
+-	'A: verify pack' \
+-	'for p in .git/objects/pack/*.pack;do git verify-pack $p||exit;done'
++
++test_expect_success 'A: verify pack' '
++	verify_packs
++'
+=20
+ cat >expect <<EOF
+ author $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
+@@ -252,9 +260,11 @@ test_expect_success \
+ 	'A: verify marks import does not crash' \
+ 	'git fast-import --import-marks=3Dmarks.out <input &&
+ 	 git whatchanged verify--import-marks'
+-test_expect_success \
+-	'A: verify pack' \
+-	'for p in .git/objects/pack/*.pack;do git verify-pack $p||exit;done'
++
++test_expect_success 'A: verify pack' '
++	verify_packs
++'
++
+ cat >expect <<EOF
+ :000000 100755 0000000000000000000000000000000000000000 7123f7f44e39be=
+127c5eb701e5968176ee9d78b1 A	copy-of-file2
+ EOF
+@@ -514,9 +524,11 @@ test_expect_success \
+     'C: incremental import create pack from stdin' \
+     'git fast-import <input &&
+ 	 git whatchanged branch'
+-test_expect_success \
+-	'C: verify pack' \
+-	'for p in .git/objects/pack/*.pack;do git verify-pack $p||exit;done'
++
++test_expect_success 'C: verify pack' '
++	verify_packs
++'
++
+ test_expect_success \
+ 	'C: validate reuse existing blob' \
+ 	'test $newf =3D `git rev-parse --verify branch:file2/newf` &&
+@@ -572,9 +584,10 @@ test_expect_success \
+     'D: inline data in commit' \
+     'git fast-import <input &&
+ 	 git whatchanged branch'
+-test_expect_success \
+-	'D: verify pack' \
+-	'for p in .git/objects/pack/*.pack;do git verify-pack $p||exit;done'
++
++test_expect_success 'D: verify pack' '
++	verify_packs
++'
+=20
+ cat >expect <<EOF
+ :000000 100755 0000000000000000000000000000000000000000 35a59026a33bea=
+c1569b1c7f66f3090ce9c09afc A	newdir/exec.sh
+@@ -618,9 +631,10 @@ test_expect_success 'E: rfc2822 date, --date-forma=
+t=3Draw' '
+ test_expect_success \
+     'E: rfc2822 date, --date-format=3Drfc2822' \
+     'git fast-import --date-format=3Drfc2822 <input'
+-test_expect_success \
+-	'E: verify pack' \
+-	'for p in .git/objects/pack/*.pack;do git verify-pack $p||exit;done'
++
++test_expect_success 'E: verify pack' '
++	verify_packs
++'
+=20
+ cat >expect <<EOF
+ author $GIT_AUTHOR_NAME <$GIT_AUTHOR_EMAIL> 1170778938 -0500
+@@ -669,9 +683,10 @@ test_expect_success \
+ 		fi
+ 	 fi
+ 	'
+-test_expect_success \
+-	'F: verify pack' \
+-	'for p in .git/objects/pack/*.pack;do git verify-pack $p||exit;done'
++
++test_expect_success 'F: verify pack' '
++	verify_packs
++'
+=20
+ cat >expect <<EOF
+ tree `git rev-parse branch~1^{tree}`
+@@ -705,9 +720,11 @@ INPUT_END
+ test_expect_success \
+     'G: non-fast-forward update forced' \
+     'git fast-import --force <input'
+-test_expect_success \
+-	'G: verify pack' \
+-	'for p in .git/objects/pack/*.pack;do git verify-pack $p||exit;done'
++
++test_expect_success 'G: verify pack' '
++	verify_packs
++'
++
+ test_expect_success \
+ 	'G: branch changed, but logged' \
+ 	'test $old_branch !=3D `git rev-parse --verify branch^0` &&
+@@ -742,9 +759,10 @@ test_expect_success \
+     'H: deletall, add 1' \
+     'git fast-import <input &&
+ 	 git whatchanged H'
+-test_expect_success \
+-	'H: verify pack' \
+-	'for p in .git/objects/pack/*.pack;do git verify-pack $p||exit;done'
++
++test_expect_success 'H: verify pack' '
++	verify_packs
++'
+=20
+ cat >expect <<EOF
+ :100755 000000 f1fb5da718392694d0076d677d6d0e364c79b0bc 00000000000000=
+00000000000000000000000000 D	file2/newf
+@@ -1857,9 +1875,10 @@ test_expect_success \
+ 	'Q: commit notes' \
+ 	'git fast-import <input &&
+ 	 git whatchanged notes-test'
+-test_expect_success \
+-	'Q: verify pack' \
+-	'for p in .git/objects/pack/*.pack;do git verify-pack $p||exit;done'
++
++test_expect_success 'Q: verify pack' '
++	verify_packs
++'
+=20
+ commit1=3D$(git rev-parse notes-test~2)
+ commit2=3D$(git rev-parse notes-test^)
+@@ -2616,13 +2635,14 @@ test_expect_success \
+ 	'R: blob bigger than threshold' \
+ 	'test_create_repo R &&
+ 	 git --git-dir=3DR/.git fast-import --big-file-threshold=3D1 <input'
+-test_expect_success \
+-	'R: verify created pack' \
+-	': >verify &&
+-	 for p in R/.git/objects/pack/*.pack;
+-	 do
+-	   git verify-pack -v $p >>verify || exit;
+-	 done'
++
++test_expect_success 'R: verify created pack' '
++	(
++		cd R &&
++		verify_packs -v > ../verify
++	)
++'
++
+ test_expect_success \
+ 	'R: verify written objects' \
+ 	'git --git-dir=3DR/.git cat-file blob big-file:big1 >actual &&
+--=20
+1.7.10.1386.g7bd022
