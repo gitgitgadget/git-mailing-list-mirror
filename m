@@ -1,88 +1,55 @@
-From: Frans Klaver <fransklaver@gmail.com>
-Subject: Re: git windows
-Date: Fri, 20 Apr 2012 13:13:02 +0200
-Message-ID: <CAH6sp9OqNR50S-36ByGqA9WROVBtYHuMn5SEk_r9EbmO4iWm6Q@mail.gmail.com>
-References: <CAN9Ei9wZrrwfqdOVmhbDccw5XWNHwLvG5qWFE47wvHA083Ve6A@mail.gmail.com>
+From: hen vertis <henvertis@gmail.com>
+Subject: error: could not lock config file %C:\Users\Hen%/.gitconfig: Invalid
+ argument
+Date: Fri, 20 Apr 2012 15:52:54 +0300
+Message-ID: <4F915C26.5010403@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Alok Sati <alok.sati@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Apr 20 13:13:15 2012
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Apr 20 14:53:01 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SLBm3-00033f-FW
-	for gcvg-git-2@plane.gmane.org; Fri, 20 Apr 2012 13:13:11 +0200
+	id 1SLDKe-0003af-Rm
+	for gcvg-git-2@plane.gmane.org; Fri, 20 Apr 2012 14:53:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755308Ab2DTLNF convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 20 Apr 2012 07:13:05 -0400
-Received: from mail-qa0-f42.google.com ([209.85.216.42]:45486 "EHLO
-	mail-qa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753586Ab2DTLNE convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 20 Apr 2012 07:13:04 -0400
-Received: by qafi31 with SMTP id i31so537380qaf.1
-        for <git@vger.kernel.org>; Fri, 20 Apr 2012 04:13:02 -0700 (PDT)
+	id S1750971Ab2DTMw4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Apr 2012 08:52:56 -0400
+Received: from mail-bk0-f46.google.com ([209.85.214.46]:54621 "EHLO
+	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750758Ab2DTMwz (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Apr 2012 08:52:55 -0400
+Received: by bkcik5 with SMTP id ik5so7158950bkc.19
+        for <git@vger.kernel.org>; Fri, 20 Apr 2012 05:52:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=l2qAlZ85CukkOH92P+RhZxA7G7WqC67MjZGX3FPLnhk=;
-        b=dM00SztJIdAQYHzdeF+fPQyrPmfTysDRfnF1MYnf6zxy01zv9EbemS9qOU+yTBC474
-         Ku79zWw3bn7bOjt13ItcYlvJryqkGegZThGg2RK1XckgZsAEKG507ArQ1bmWnEVI8Qkp
-         D/z+erFoaINm8HdUIqKDrMKrY3BorNagbvzOJqANg6FDwWSfPZWzWD3CA3435Zfcb5Jg
-         T48ZAifj0cYFXjhSv0K5mfRKoRlsrkF6yQ8tDrUQ3rq2qTVIrdXI9pQusMT4b28APsd0
-         X0Q83iijRh1hfRpxav4uaF25BoQwofxM6liqhRdeoXrDF5AFz9KnTkJbMLepvyye4s9z
-         ExOA==
-Received: by 10.224.32.193 with SMTP id e1mr1498074qad.44.1334920382545; Fri,
- 20 Apr 2012 04:13:02 -0700 (PDT)
-Received: by 10.224.32.19 with HTTP; Fri, 20 Apr 2012 04:13:02 -0700 (PDT)
-In-Reply-To: <CAN9Ei9wZrrwfqdOVmhbDccw5XWNHwLvG5qWFE47wvHA083Ve6A@mail.gmail.com>
+        h=message-id:date:from:user-agent:mime-version:to:subject
+         :content-type:content-transfer-encoding;
+        bh=eMrd7QHweJ3tiM6qvSeP8FDyc2Igt/jCfBYXzNriiss=;
+        b=lKX55cnQbF0TYXgt8iNuycALyPup+gfjeXrS3r80ZkMETAKu7eOQ75oKoxsPjfYiKL
+         8/O9sUZo+sxJNhIjg6SacUt/q13Np4euk+vVUf7la6eDAs7fsSgtPouvmBRuZyid63Mr
+         FikbTTuQTQ0D+UXNU0whlwO/j1FqWMh4v3h0rNBnLoZLn/lxDGXjrlUdup41pQWTSfH/
+         obgxH4ySNEMrbmHux6hrcdUhcdeCfEaj25xYYgiwCjgOELKsz0VXCVbYENWQldyf+Zn5
+         LL6va0YMY/Vryyld7IeCstK3uHnYB/BQgDR2dtkDJlAt/tB6dyhPXGUctb6Mtp82+stv
+         d/gg==
+Received: by 10.204.154.201 with SMTP id p9mr1914147bkw.125.1334926374353;
+        Fri, 20 Apr 2012 05:52:54 -0700 (PDT)
+Received: from [192.168.0.197] (bzq-84-109-50-207.red.bezeqint.net. [84.109.50.207])
+        by mx.google.com with ESMTPS id jr13sm9857543bkb.14.2012.04.20.05.52.51
+        (version=SSLv3 cipher=OTHER);
+        Fri, 20 Apr 2012 05:52:53 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:8.0) Gecko/20111105 Thunderbird/8.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195987>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195988>
 
-Hi,
-
-On Fri, Apr 20, 2012 at 1:05 PM, Alok Sati <alok.sati@gmail.com> wrote:
-> Hi Git Team,
->
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 I downloaded git windows version =C2=A0and i am
-> able to create repository.
-> kindly help me with below queries.
->
-> 1 . =C2=A0how do i create users
-> 2 . what would be the url for other team mambers to access the reposi=
-tory.
-
-Your questions aren't specifically relevant for git. Git does not do
-user management, nor does it specifically start a server for other
-people to access it when you create a repository. Of course there are
-ways to access a repository over a network, and there are ways to do
-user management. For that you might be interested in reading something
-like the Pro Git book, specifically the chapter covering setting up a
-git server[1].
-
-=46rans
-
-
-[1] http://progit.org/book/ch4-0.html
-
-
-
-
->
-> kindly help
->
-> Thanks
-> Alok Sati
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at =C2=A0http://vger.kernel.org/majordomo-info.ht=
-ml
+hi
+i run as administrator git-gui and i get for every action that i make 
+this error please help me
+best regards
+hen
