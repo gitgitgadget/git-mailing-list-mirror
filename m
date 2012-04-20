@@ -1,65 +1,90 @@
-From: Neil Horman <nhorman@tuxdriver.com>
-Subject: Re: [PATCH v8 2/4] git-cherry-pick: Add keep-redundant-commits option
-Date: Fri, 20 Apr 2012 15:56:34 -0400
-Message-ID: <20120420195634.GE15966@hmsreliant.think-freely.org>
-References: <1333136922-12872-1-git-send-email-nhorman@tuxdriver.com>
- <1334932577-31232-1-git-send-email-nhorman@tuxdriver.com>
- <1334932577-31232-3-git-send-email-nhorman@tuxdriver.com>
- <xmqqvckumcoq.fsf@junio.mtv.corp.google.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [GSoC] Designing a faster index format
+Date: Fri, 20 Apr 2012 13:02:43 -0700
+Message-ID: <20120420200243.GA12578@sigill.intra.peff.net>
+References: <1604FE70-8B77-4EC1-823A-DC1F0334CD3A@gmail.com>
+ <4F7ABA19.7040408@alum.mit.edu>
+ <C15BAB9A-EAFA-4EA4-85B2-0E0C5FF473E9@gmail.com>
+ <alpine.DEB.2.02.1204031313170.10782@asgard.lang.hm>
+ <D97085E6-2B9F-42C5-A06D-B53422034071@gmail.com>
+ <87r4w1vofu.fsf@thomas.inf.ethz.ch>
+ <878vi18eqd.fsf@thomas.inf.ethz.ch>
+ <83571955-9256-4032-9182-FA9062D28B9D@gmail.com>
+ <8D2805A4-9C5F-43A9-B3ED-0DB77341A03C@gmail.com>
+ <877gxcoron.fsf@thomas.inf.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org,
-	Zbigniew =?utf-8?Q?J=C4=99drzejewski-Szmek?= <zbyszek@in.waw.pl>,
-	Clemens Buchacher <drizzd@aon.at>,
-	Phil Hord <phil.hord@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Apr 20 21:56:50 2012
+Content-Type: text/plain; charset=utf-8
+Cc: Thomas Gummerer <t.gummerer@gmail.com>,
+	Thomas Rast <trast@student.ethz.ch>, david@lang.hm,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	"Shawn O.Pearce" <spearce@spearce.org>,
+	David Barr <davidbarr@google.com>
+To: Thomas Rast <trast@inf.ethz.ch>
+X-From: git-owner@vger.kernel.org Fri Apr 20 22:02:55 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SLJwo-0002Jh-8U
-	for gcvg-git-2@plane.gmane.org; Fri, 20 Apr 2012 21:56:50 +0200
+	id 1SLK2f-0005T0-EW
+	for gcvg-git-2@plane.gmane.org; Fri, 20 Apr 2012 22:02:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752605Ab2DTT4p (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Apr 2012 15:56:45 -0400
-Received: from charlotte.tuxdriver.com ([70.61.120.58]:44581 "EHLO
-	smtp.tuxdriver.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752277Ab2DTT4o (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Apr 2012 15:56:44 -0400
-Received: from hmsreliant.think-freely.org ([2001:470:8:a08:7aac:c0ff:fec2:933b] helo=localhost)
-	by smtp.tuxdriver.com with esmtpsa (TLSv1:AES128-SHA:128)
-	(Exim 4.63)
-	(envelope-from <nhorman@tuxdriver.com>)
-	id 1SLJwa-0003YS-46; Fri, 20 Apr 2012 15:56:38 -0400
+	id S1751022Ab2DTUCt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Apr 2012 16:02:49 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:39320
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750770Ab2DTUCs (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Apr 2012 16:02:48 -0400
+Received: (qmail 14020 invoked by uid 107); 20 Apr 2012 20:02:57 -0000
+Received: from c-67-169-43-61.hsd1.ca.comcast.net (HELO sigill.intra.peff.net) (67.169.43.61)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 20 Apr 2012 16:02:57 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 20 Apr 2012 13:02:43 -0700
 Content-Disposition: inline
-In-Reply-To: <xmqqvckumcoq.fsf@junio.mtv.corp.google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-X-Spam-Score: -2.9 (--)
-X-Spam-Status: No
+In-Reply-To: <877gxcoron.fsf@thomas.inf.ethz.ch>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196015>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196016>
 
-On Fri, Apr 20, 2012 at 12:21:41PM -0700, Junio C Hamano wrote:
-> Looks good, modulo perhaps these fixes on top.
-> 
->  - It would be better to say "dropped" to stress that we inspect and
->    actively discard, instead of saying "ignored".
-> 
->  - There is no need to use "changeset", the term glossary even
->    discourages, to make sense of the sentence.
-> 
->  - There was still a stray keep_if_made_empty.
-> 
->  - s/Add keep/add keep/ on the title as well.
-> 
-> No need to resend, unless you have fixes other than the following does.
-> 
-Nope I'm good, if you can work those changes in.  Thanks!
-Neil
+On Thu, Apr 19, 2012 at 02:02:32PM +0200, Thomas Rast wrote:
 
+> > At the midterm, there will be a python prototype for the conversion of the old
+> > index format to the new "future-proof" index format and a faster reader for the
+> > new format. The native write part will be completed in the second part of the
+> > Summer of Code.
 > 
+> I think this is the most important bit, and I'm curious if there are any
+> objections/concerns on this.
+> 
+> It basically splits the project into
+> 
+> - first half: design, reader, raciness/locking issues
+> - second half: writer, changes to take advantage of partial writing
+
+I am OK with prototyping, and I'm OK with doing a throw-away prototype
+in a different language. But doing a throw-away prototype that lasts
+through the whole first half of the project makes me a little nervous.
+I'm worried that the conversion from a python prototype to actual git
+code in the second half is going to go badly and end up in either:
+
+  1. A half-finished implementation, because the integration means we
+     have to go back and re-visit assumptions made in the prototype that
+     aren't valid in git itself.
+
+  2. A conversion from python to C that is rushed and ends up doing
+     things in a way that makes the conversion easier, but long term
+     maintenance hard. Merge-recursive was originally written in python
+     and converted to C, and it shows in the code. It's brittle, buggy,
+     and hard to maintain (though that is just one data point; maybe it
+     was just poorly written in the first place).
+
+So I'd be more comfortable with the prototype being just for the design
+phase, and developing the real reader and writer simultaneously in C.
+Those implementations will also start as prototypes, but they can be
+iterated on, rather than being throw-aways.
+
+-Peff
