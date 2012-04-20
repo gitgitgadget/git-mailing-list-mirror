@@ -1,163 +1,222 @@
 From: Neil Horman <nhorman@tuxdriver.com>
-Subject: [PATCH v8 0/4] Enhance git-rebases flexibiilty in handling empty commits
-Date: Fri, 20 Apr 2012 10:36:13 -0400
-Message-ID: <1334932577-31232-1-git-send-email-nhorman@tuxdriver.com>
+Subject: [PATCH v8 4/4] git-rebase: add keep_empty flag
+Date: Fri, 20 Apr 2012 10:36:17 -0400
+Message-ID: <1334932577-31232-5-git-send-email-nhorman@tuxdriver.com>
 References: <1333136922-12872-1-git-send-email-nhorman@tuxdriver.com>
+ <1334932577-31232-1-git-send-email-nhorman@tuxdriver.com>
 Cc: =?UTF-8?q?Zbigniew=20J=C4=99drzejewski-Szmek?= <zbyszek@in.waw.pl>,
 	Clemens Buchacher <drizzd@aon.at>,
 	Phil Hord <phil.hord@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>,
 	Neil Horman <nhorman@tuxdriver.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 20 16:37:31 2012
+X-From: git-owner@vger.kernel.org Fri Apr 20 16:37:41 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SLExm-0001eB-4r
-	for gcvg-git-2@plane.gmane.org; Fri, 20 Apr 2012 16:37:30 +0200
+	id 1SLExt-0001lK-E9
+	for gcvg-git-2@plane.gmane.org; Fri, 20 Apr 2012 16:37:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756579Ab2DTOgu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Apr 2012 10:36:50 -0400
-Received: from charlotte.tuxdriver.com ([70.61.120.58]:40329 "EHLO
+	id S1756765Ab2DTOh3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Apr 2012 10:37:29 -0400
+Received: from charlotte.tuxdriver.com ([70.61.120.58]:40367 "EHLO
 	smtp.tuxdriver.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754603Ab2DTOgt (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Apr 2012 10:36:49 -0400
+	with ESMTP id S1756691Ab2DTOhO (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Apr 2012 10:37:14 -0400
 Received: from hmsreliant.think-freely.org ([2001:470:8:a08:7aac:c0ff:fec2:933b] helo=localhost)
 	by smtp.tuxdriver.com with esmtpsa (TLSv1:AES128-SHA:128)
 	(Exim 4.63)
 	(envelope-from <nhorman@tuxdriver.com>)
-	id 1SLEwz-00020Z-5R; Fri, 20 Apr 2012 10:36:44 -0400
+	id 1SLExM-00021B-1V; Fri, 20 Apr 2012 10:37:11 -0400
 X-Mailer: git-send-email 1.7.7.6
-In-Reply-To: <1333136922-12872-1-git-send-email-nhorman@tuxdriver.com>
+In-Reply-To: <1334932577-31232-1-git-send-email-nhorman@tuxdriver.com>
 X-Spam-Score: -2.9 (--)
 X-Spam-Status: No
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195991>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/195992>
 
-git's ability to handle empty commits is somewhat lacking, especially when
-preforming a rebase.  Nominally empty commits are undesireable entries, the 
-result of commits that are made empty by prior commits covering the same changs.
-But occasionally, empty commits are useful to developers (e.g. inserting notes 
-into the development history without changing any code along the way).  In these
-cases its desireable to easily preserve empty commits during operations like 
-rebases.
+Add a command line switch to git-rebase to allow a user the ability to specify
+that they want to keep any commits in a series that are empty.
 
-This patch series enhances git to do just that.  It adds two options to the 
-git-cherry-pick command, --allow-empty, which allows git cherry-pick to preserve
-an empty commit, even if the fast forward logic isn't applicable during the 
-operation, and --keep-redundant-commits, which allows the user to also keep
-commits that were made empty via conflict resolution.  It also enhances
-git-rebase to add a --keep-empty option which enables rebases to preserve empty
-commits. 
+When git-rebase's type is am, then this option will automatically keep any
+commit that has a tree object identical to its parent.
 
-I've tested these operations out myself here and they work well for me
+This patch changes the default behavior of interactive rebases as well.  With
+this patch, git-rebase -i will produce a revision set passed to
+git-revision-editor, in which empty commits are commented out.  Empty commits
+may be kept manually by uncommenting them.  If the new --keep-empty option is
+used in an interactive rebase the empty commits will automatically all be
+uncommented in the editor.
 
 Signed-off-by: Neil Horman <nhorman@tuxdriver.com>
-
 ---
-Change notes:
+ Documentation/git-rebase.txt |    4 ++++
+ git-rebase--am.sh            |   19 ++++++++++++++-----
+ git-rebase--interactive.sh   |   36 +++++++++++++++++++++++++++++++++---
+ git-rebase.sh                |    5 +++++
+ 4 files changed, 56 insertions(+), 8 deletions(-)
 
-Based on version 1 feedback from this list, the following changes have been made
-
-V2)
-	* Changed --keep-empty to --allow-empty in the git cherry-pick command
-
-	* Converted run_git_commit to use argv_array
-
-	* Updated cherry-pick --allow-empty description in man page
-	
-	* added ignore-if-made-empty option to git-cherry-pick
-
-	* Added test to test suite to validate the new cherry-pick options
-
-	* Updated git-rebase man page to be less verbose and more accurate in the
-	description of the keep-empty option
-
-	* squashed the addition of the keep-empty flag in git-rebase down to one
-	commit from 3
-
-	* fixed up coding style in git-rebase script
-
-	* Optimized detection of empty commits
-
-	* Only augmented git-rebase-editor message if empty commits are
-	possible
-	
-V3)
-	* reversed the --ignore-if-empty-logic to by default only keep initially
-	empty commits
-
-	* replaced --ignore-if-empty with --keep-redundant-commits, to allow
-	empty commits that are made empty via conflict resolution, in addition
-	to commits that were created as empty
-
-	* reworked is_original_commit_empty to be more efficient and portable
-
-	* Misc sylistic and spelling cleanups
-
-V4)
-	* Reverted the cherry-pick advice changes in V3 based on in-thread
-	discussion
-
-	* Rewrote my changes to is_original_commit_empty and run_git_commit to
-	not have to fork, making them more efficient.
-
-v5)
-	* Additional help text clean up
-	* Additional error checking added to run_git_commit code
-	* Whitespace cleanup
-	* Removed needed cache_tree freeing
-	* Test case cleanup
-	* Fixed regression in t3404 and t3416 - this turned out to be 
-        a problem with the note that git rebase -i adds at the bottom
-	of the rebase text.  It was inadvertently indented and caused the
-	test fake editor to misread the commit template.  The indentation 
-	has been corrected, and these two tests, as well as all the other
-	expected tests pass now
-
-v6)
-	* synced keeep-redundant-commits option and variable name
-	* fixed up some comment terminology
-	* minor newline cleanup
-	* Removed some unneeded braces from test code
-	* minor syntatic cleanup in rebase scripts
-
-	* Refactored empty index checking to make run_git_commit more readable
-	I was also going to change the logic so that it operated more like git
-	cherry-pick did before the patchset, but Junio's comments made me think
-	the new logic was preferable.
-
-v7)
-	* Fixed up forgotten comment_out changes requested in
-	git-rebase--interactive
-
-	* Made changelog comment for keep-redundant-commits patch more verbose
-	so that it was clear that default behavior was changing
-
-	* further refinement of detection of redundant commits, making
-	do_pick_commit and run_git_commit more readable
-
-v8)
-	* Fixed git-rebase--interactive so that is_empty_commit doesn't choke on
-	root commit
-
-	* Minor stylistic change to is_index_unchanged
-
-	* Fixed is_empty_commit to test tree and ptree such that it works with
-	shells other than bash
---
-To unsubscribe from this list: send the line "unsubscribe git" in
-the body of a message to majordomo@vger.kernel.org
-More majordomo info at  http://vger.kernel.org/majordomo-info.html
-
-
---
-To unsubscribe from this list: send the line "unsubscribe git" in
-the body of a message to majordomo@vger.kernel.org
-More majordomo info at  http://vger.kernel.org/majordomo-info.html
-
+diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
+index 504945c..131c35d 100644
+--- a/Documentation/git-rebase.txt
++++ b/Documentation/git-rebase.txt
+@@ -238,6 +238,10 @@ leave out at most one of A and B, in which case it defaults to HEAD.
+ 	will be reset to where it was when the rebase operation was
+ 	started.
+ 
++--keep-empty::
++	Keep the commits that do not change anything from its
++	parents in the result.
++
+ --skip::
+ 	Restart the rebasing process by skipping the current patch.
+ 
+diff --git a/git-rebase--am.sh b/git-rebase--am.sh
+index c815a24..04d8941 100644
+--- a/git-rebase--am.sh
++++ b/git-rebase--am.sh
+@@ -20,11 +20,20 @@ esac
+ 
+ test -n "$rebase_root" && root_flag=--root
+ 
+-git format-patch -k --stdout --full-index --ignore-if-in-upstream \
+-	--src-prefix=a/ --dst-prefix=b/ \
+-	--no-renames $root_flag "$revisions" |
+-git am $git_am_opt --rebasing --resolvemsg="$resolvemsg" &&
+-move_to_original_branch
++if test -n "$keep_empty"
++then
++	# we have to do this the hard way.  git format-patch completely squashes
++	# empty commits and even if it didn't the format doesn't really lend
++	# itself well to recording empty patches.  fortunately, cherry-pick
++	# makes this easy
++	git cherry-pick --allow-empty "$revisions"
++else
++	git format-patch -k --stdout --full-index --ignore-if-in-upstream \
++		--src-prefix=a/ --dst-prefix=b/ \
++		--no-renames $root_flag "$revisions" |
++	git am $git_am_opt --rebasing --resolvemsg="$resolvemsg"
++fi && move_to_original_branch
++
+ ret=$?
+ test 0 != $ret -a -d "$state_dir" && write_basic_state
+ exit $ret
+diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
+index 5812222..ef263e0 100644
+--- a/git-rebase--interactive.sh
++++ b/git-rebase--interactive.sh
+@@ -167,6 +167,15 @@ has_action () {
+ 	sane_grep '^[^#]' "$1" >/dev/null
+ }
+ 
++is_empty_commit() {
++	tree=$(git rev-parse -q --verify "$1"^{tree} 2>/dev/null ||
++		die "$1: not a commit that can be picked")
++	ptree=$(git rev-parse -q --verify "$1"^^{tree} 2>/dev/null ||
++		ptree=4b825dc642cb6eb9a060e54bf8d69288fbee4904)
++
++	return test "$tree" = "$ptree"
++}
++
+ # Run command with GIT_AUTHOR_NAME, GIT_AUTHOR_EMAIL, and
+ # GIT_AUTHOR_DATE exported from the current environment.
+ do_with_author () {
+@@ -191,12 +200,19 @@ git_sequence_editor () {
+ 
+ pick_one () {
+ 	ff=--ff
++
+ 	case "$1" in -n) sha1=$2; ff= ;; *) sha1=$1 ;; esac
+ 	case "$force_rebase" in '') ;; ?*) ff= ;; esac
+ 	output git rev-parse --verify $sha1 || die "Invalid commit name: $sha1"
++
++	if is_empty_commit "$sha1"
++	then
++		empty_args="--allow-empty"
++	fi
++
+ 	test -d "$rewritten" &&
+ 		pick_one_preserving_merges "$@" && return
+-	output git cherry-pick $ff "$@"
++	output git cherry-pick $empty_args $ff "$@"
+ }
+ 
+ pick_one_preserving_merges () {
+@@ -780,9 +796,17 @@ git rev-list $merges_option --pretty=oneline --abbrev-commit \
+ 	sed -n "s/^>//p" |
+ while read -r shortsha1 rest
+ do
++
++	if test -z "$keep_empty" && is_empty_commit $shortsha1
++	then
++		comment_out="#"
++	else
++		comment_out=""
++	fi
++
+ 	if test t != "$preserve_merges"
+ 	then
+-		printf '%s\n' "pick $shortsha1 $rest" >> "$todo"
++		printf '%s%s\n' "$comment_out" "pick $shortsha1 $rest" >> "$todo"
+ 	else
+ 		sha1=$(git rev-parse $shortsha1)
+ 		if test -z "$rebase_root"
+@@ -801,7 +825,7 @@ do
+ 		if test f = "$preserve"
+ 		then
+ 			touch "$rewritten"/$sha1
+-			printf '%s\n' "pick $shortsha1 $rest" >> "$todo"
++			printf '%s%s\n' "$comment_out" "pick $shortsha1 $rest" >> "$todo"
+ 		fi
+ 	fi
+ done
+@@ -851,6 +875,12 @@ cat >> "$todo" << EOF
+ #
+ EOF
+ 
++if test -z "$keep_empty"
++then
++	echo "# Note that empty commits are commented out" >> "$todo"
++fi
++
++
+ has_action "$todo" ||
+ 	die_abort "Nothing to do"
+ 
+diff --git a/git-rebase.sh b/git-rebase.sh
+index 69c1374..24a2840 100755
+--- a/git-rebase.sh
++++ b/git-rebase.sh
+@@ -43,6 +43,7 @@ s,strategy=!       use the given merge strategy
+ no-ff!             cherry-pick all commits, even if unchanged
+ m,merge!           use merging strategies to rebase
+ i,interactive!     let the user edit the list of commits to rebase
++k,keep-empty	   preserve empty commits during rebase
+ f,force-rebase!    force rebase even if branch is up to date
+ X,strategy-option=! pass the argument through to the merge strategy
+ stat!              display a diffstat of what changed upstream
+@@ -97,6 +98,7 @@ state_dir=
+ action=
+ preserve_merges=
+ autosquash=
++keep_empty=
+ test "$(git config --bool rebase.autosquash)" = "true" && autosquash=t
+ 
+ read_basic_state () {
+@@ -220,6 +222,9 @@ do
+ 	-i)
+ 		interactive_rebase=explicit
+ 		;;
++	-k)
++		keep_empty=yes
++		;;
+ 	-p)
+ 		preserve_merges=t
+ 		test -z "$interactive_rebase" && interactive_rebase=implied
+-- 
+1.7.7.6
