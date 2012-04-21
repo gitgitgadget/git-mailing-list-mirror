@@ -1,85 +1,68 @@
-From: bigbear <urs.rau@gmail.com>
-Subject: Re: Transparently encrypt repository contents with GPG
-Date: Sat, 21 Apr 2012 10:25:10 -0700 (PDT)
-Message-ID: <1335029110871-7487506.post@n2.nabble.com>
-References: <978bdee00903121419o61cd7a87rb55809796bd257d7@mail.gmail.com>
+From: =?UTF-8?B?VmlsbGUgU2t5dHTDpA==?= <ville.skytta@iki.fi>
+Subject: Re: [Bash-completion-devel] [PATCH v2] completion: add new git_complete
+ helper
+Date: Sat, 21 Apr 2012 20:39:30 +0300
+Message-ID: <4F92F0D2.1090609@iki.fi>
+References: <CAMP44s0PWAV=nD1xnAFMx8OPby88W2jKwDGtiUFY4LA93D-gAw@mail.gmail.com> <7vaa2by8nj.fsf@alter.siamese.dyndns.org> <20120416160729.GM5813@burratino> <CAMP44s2_VYNFeBi9GPa9CeqT=oRmSq1J1XaSP+aKgC6bJ55Lfg@mail.gmail.com> <20120416200941.GD12613@burratino> <CAMP44s0CVsmHw4jQqHvZMi342V8-Yh2zYYcAE_5EHu5OAiktcw@mail.gmail.com> <20120416203320.GF12613@burratino> <CAMP44s0Q2A_oKJx27ct9W__KVQkQxzst3H7gq6sZDhrCLDQaag@mail.gmail.com> <20120416204641.GH12613@burratino> <CAMP44s23_Qx3R9TX4frM-JYNv7XT3eVbcZ_D45nEdh0rq-O8kA@mail.gmail.com> <20120416205952.GJ12613@burratino> <4F925FBC.2030406@iki.fi> <CAMP44s1dNqokGuLg3ReLAreNBM++0NxOMUUk-=AgFBUy3n=E9w@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Apr 21 19:25:23 2012
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	bash-completion-devel@lists.alioth.debian.org, git@vger.kernel.org
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Apr 21 19:39:43 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SLe3k-0002uQ-Lj
-	for gcvg-git-2@plane.gmane.org; Sat, 21 Apr 2012 19:25:21 +0200
+	id 1SLeHe-0001F0-Fg
+	for gcvg-git-2@plane.gmane.org; Sat, 21 Apr 2012 19:39:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751375Ab2DURZM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 21 Apr 2012 13:25:12 -0400
-Received: from sam.nabble.com ([216.139.236.26]:55230 "EHLO sam.nabble.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751022Ab2DURZM (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 21 Apr 2012 13:25:12 -0400
-Received: from jim.nabble.com ([192.168.236.80])
-	by sam.nabble.com with esmtp (Exim 4.72)
-	(envelope-from <urs.rau@gmail.com>)
-	id 1SLe3b-0005IJ-Fl
-	for git@vger.kernel.org; Sat, 21 Apr 2012 10:25:11 -0700
-In-Reply-To: <978bdee00903121419o61cd7a87rb55809796bd257d7@mail.gmail.com>
+	id S1751376Ab2DURjg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 21 Apr 2012 13:39:36 -0400
+Received: from mail-lpp01m010-f46.google.com ([209.85.215.46]:60234 "EHLO
+	mail-lpp01m010-f46.google.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751147Ab2DURjg (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 21 Apr 2012 13:39:36 -0400
+Received: by lahj13 with SMTP id j13so8178138lah.19
+        for <git@vger.kernel.org>; Sat, 21 Apr 2012 10:39:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:x-enigmail-version:content-type
+         :content-transfer-encoding;
+        bh=kCtDI++Lm0hIb1amFvJQ7UFehPFNB4XegOVT7DBN/Uw=;
+        b=Mn1HtmgkjefkE7iTK4oqW60cLfngVqaBrwzj7R6MkbkAWJbDjLtP32czRdg39cwZwM
+         qxbkL2k/POY28LkcTpGnu/edZv0lruhECL8CcegUtFuBgyIH1WKIfYMLOA0F5/LuwR2o
+         AADhV5EUSmxono/z1+/knJprC3voQ4b6rOdyhuzc60lUaLmSSLf3lhI2sUnqsId6Vpi+
+         H8I5eemF4OXDe72djPLzXRSjXrAUVljYSUngEIPSCnoK/qEyJbIOIMB43thdJ+t550TH
+         mWk1Sr839sP6aqbMEo8qwhkfynr/Q6pM2Wid2PMFqa+Wt0ioZAP7CAXEpY+i7mwxn4/d
+         QtWw==
+Received: by 10.112.86.231 with SMTP id s7mr4878608lbz.11.1335029974326;
+        Sat, 21 Apr 2012 10:39:34 -0700 (PDT)
+Received: from michael.steam.fi (cs78200229.pp.htv.fi. [62.78.200.229])
+        by mx.google.com with ESMTPS id pj20sm9616097lab.13.2012.04.21.10.39.31
+        (version=SSLv3 cipher=OTHER);
+        Sat, 21 Apr 2012 10:39:32 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:11.0) Gecko/20120329 Thunderbird/11.0.1
+In-Reply-To: <CAMP44s1dNqokGuLg3ReLAreNBM++0NxOMUUk-=AgFBUy3n=E9w@mail.gmail.com>
+X-Enigmail-Version: 1.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196053>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196054>
 
+On 2012-04-21 18:41, Felipe Contreras wrote:
 
-Matthias Nothhaft wrote
-> 
-> Hi,
-> 
-> I'm new to Git but I really already love it. ;-)
-> 
-> I would like to have repository that transparently encrypts and
-> decrypts all files using GPG.
-> 
-> What I need is a way to automatically modify each file
-> 
-> a) before it is written in the repository
-> b) after it is read from the repository
-> 
-> Is there a way to get this work somehow? Can someone give me some
-> hints where I need to begin?
-> 
-> regards,
-> Matthias
-> 
-> 
+> Still, I don't see the point in avoiding 'git_complete' and making our
+> lifes more difficult.
 
-Have come across this on my own search for an encrypted git repo. Matthias
-it looks as if somebody has come up with a "working" system that uses the
-'smudge & clean' filter features of git. 
-Seems to me that to use it for storing the repo on a non trusted or possibly
-public git repo with some private content in the files this seems to be a
-workable solution.
-
-Transparent Git Encryption
-https://gist.github.com/873637
-and/or possibly 
-https://github.com/shadowhand/git-encrypt
-
-The way to do this is to use git's "smudge" and "clean" filters, but it's
-not necessarily recommended for reasons that are explained here by Junio C
-Hamano, the maintainer of git:
-
-    http://article.gmane.org/gmane.comp.version-control.git/113221
-
-
-
-
-
-
---
-View this message in context: http://git.661346.n2.nabble.com/Transparently-encrypt-repository-contents-with-GPG-tp2470145p7487506.html
-Sent from the git mailing list archive at Nabble.com.
+I'm not aware of ways it'd make people's lifes more difficult, but if
+git_complete is a function intended for completion purposes, I'd
+personally not name it git* because it'd interfere for example with
+completing git<TAB> by being included in the suggested completions even
+though it's never meant to be used that way.  Prefixing for example with
+underscore doesn't avoid the problem completely, but makes it less
+likely to happen.
