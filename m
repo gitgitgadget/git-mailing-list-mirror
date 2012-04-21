@@ -1,86 +1,96 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/4] Documentation: explain push.default option a bit more
-Date: Fri, 20 Apr 2012 22:42:37 -0700
-Message-ID: <xmqqbomlzlma.fsf@junio.mtv.corp.google.com>
-References: <vpqfwbye9re.fsf@bauges.imag.fr>
-	<1334933944-13446-1-git-send-email-Matthieu.Moy@imag.fr>
-	<1334933944-13446-2-git-send-email-Matthieu.Moy@imag.fr>
-	<20120420201357.GA13103@sigill.intra.peff.net>
-	<xmqq62cum6tf.fsf@junio.mtv.corp.google.com>
-	<4F922ECC.4040103@alum.mit.edu>
-	<xmqqpqb1zpzz.fsf@junio.mtv.corp.google.com>
-	<4F923F3A.7050701@alum.mit.edu>
+From: =?UTF-8?B?VmlsbGUgU2t5dHTDpA==?= <ville.skytta@iki.fi>
+Subject: Re: [PATCH v2] completion: add new
+ git_complete helper
+Date: Sat, 21 Apr 2012 10:20:28 +0300
+Message-ID: <4F925FBC.2030406@iki.fi>
+References: <CAMP44s0PWAV=nD1xnAFMx8OPby88W2jKwDGtiUFY4LA93D-gAw@mail.gmail.com>
+	<7vaa2by8nj.fsf@alter.siamese.dyndns.org>
+	<20120416160729.GM5813@burratino>
+	<CAMP44s2_VYNFeBi9GPa9CeqT=oRmSq1J1XaSP+aKgC6bJ55Lfg@mail.gmail.com>
+	<20120416200941.GD12613@burratino>
+	<CAMP44s0CVsmHw4jQqHvZMi342V8-Yh2zYYcAE_5EHu5OAiktcw@mail.gmail.com>
+	<20120416203320.GF12613@burratino>
+	<CAMP44s0Q2A_oKJx27ct9W__KVQkQxzst3H7gq6sZDhrCLDQaag@mail.gmail.com>
+	<20120416204641.GH12613@burratino>
+	<CAMP44s23_Qx3R9TX4frM-JYNv7XT3eVbcZ_D45nEdh0rq-O8kA@mail.gmail.com>
+	<20120416205952.GJ12613@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, Matthieu Moy <Matthieu.Moy@imag.fr>,
-	git@vger.kernel.org
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Sat Apr 21 07:51:07 2012
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Cc: bash-completion-devel@lists.alioth.debian.org, git@vger.kernel.org
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: bash-completion-devel-bounces+gcsbc-bash-completion-devel=m.gmane.org@lists.alioth.debian.org Sat Apr 21 09:20:46 2012
+Return-path: <bash-completion-devel-bounces+gcsbc-bash-completion-devel=m.gmane.org@lists.alioth.debian.org>
+Envelope-to: gcsbc-bash-completion-devel@m.gmane.org
+Received: from wagner.debian.org ([217.196.43.132])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SLTDu-0004sz-Nz
-	for gcvg-git-2@plane.gmane.org; Sat, 21 Apr 2012 07:51:07 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752593Ab2DUFu7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 21 Apr 2012 01:50:59 -0400
-Received: from mail-qc0-f202.google.com ([209.85.216.202]:43234 "EHLO
-	mail-qc0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751425Ab2DUFu6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 21 Apr 2012 01:50:58 -0400
-Received: by qcsp5 with SMTP id p5so1181887qcs.1
-        for <git@vger.kernel.org>; Fri, 20 Apr 2012 22:50:57 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type:x-gm-message-state;
-        bh=4gx71l/g2tOhA4fZdo1f5BnYYCw1iIJpD3RHk0mS8i0=;
-        b=gBsLRQJKniqM4OpTLZDRQS815D65ifeopWP0D2S1C0w0IHsG8sQfIJ5xB6nkGSKkjq
-         lEzPuCejxIgIfy9yS4rEb1OinkuznfVwzIT7QjtMe07F6+qW2HUG4rLfFaHaMAd4Rb6u
-         5UdwyMXyLe9Ovx7Day5meFlL0Qr4qV0NeDZPiPW2/QozaK0CvP+bQ7jDc4n/kCp/v9cD
-         J7jetceHS3ckLSf7Ph8FieCga1zmJHHxxgoCUJdDYqE4ErVCMcQUoJG+jW/kZnGTPH96
-         9Or+ZLgSPOhWJXzAjieGLosTC5e2Rgjd0ZYZlmWK1Y0o/v8Xf+wYXOnYHqWBj+qhOUaO
-         P3wg==
-Received: by 10.101.179.5 with SMTP id g5mr3217267anp.12.1334986958367;
-        Fri, 20 Apr 2012 22:42:38 -0700 (PDT)
-Received: by 10.101.179.5 with SMTP id g5mr3217246anp.12.1334986958213;
-        Fri, 20 Apr 2012 22:42:38 -0700 (PDT)
-Received: from wpzn4.hot.corp.google.com (216-239-44-65.google.com [216.239.44.65])
-        by gmr-mx.google.com with ESMTPS id y36si7588061yhg.2.2012.04.20.22.42.38
-        (version=TLSv1/SSLv3 cipher=AES128-SHA);
-        Fri, 20 Apr 2012 22:42:38 -0700 (PDT)
-Received: from junio.mtv.corp.google.com (junio.mtv.corp.google.com [172.27.69.24])
-	by wpzn4.hot.corp.google.com (Postfix) with ESMTP id 1FDF01E004D;
-	Fri, 20 Apr 2012 22:42:38 -0700 (PDT)
-Received: by junio.mtv.corp.google.com (Postfix, from userid 110493)
-	id BBFFCE120A; Fri, 20 Apr 2012 22:42:37 -0700 (PDT)
-In-Reply-To: <4F923F3A.7050701@alum.mit.edu> (Michael Haggerty's message of
-	"Sat, 21 Apr 2012 07:01:46 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1 (gnu/linux)
-X-Gm-Message-State: ALoCoQngBKhqeA+nGNBwxdkXmI9A/1zXFEr//7jtrkUYXK7TIs0ko67stF5468az9m6+QYdobnZLQce+mjfMBrZWylZbLSL7eIHz8b14e0DvlFllkhsmGFXvCKS1C+TNvE6875fkq0sKU3ABmQMP5gl/9nqLtgwGLjd84xbmVR/xPmRuOy3H5CU=
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196043>
+	(envelope-from <bash-completion-devel-bounces+gcsbc-bash-completion-devel=m.gmane.org@lists.alioth.debian.org>)
+	id 1SLUcf-0007rb-55
+	for gcsbc-bash-completion-devel@m.gmane.org; Sat, 21 Apr 2012 09:20:45 +0200
+Received: from localhost ([::1] helo=alioth.debian.org)
+	by wagner.debian.org with esmtp (Exim 4.72)
+	(envelope-from <bash-completion-devel-bounces+gcsbc-bash-completion-devel=m.gmane.org@lists.alioth.debian.org>)
+	id 1SLUce-0006hJ-J8
+	for gcsbc-bash-completion-devel@m.gmane.org; Sat, 21 Apr 2012 07:20:44 +0000
+Received: from mail-lb0-f175.google.com ([209.85.217.175])
+	by wagner.debian.org with esmtp (Exim 4.72)
+	(envelope-from <vskytta@gmail.com>) id 1SLUcY-0006gh-Ls
+	for bash-completion-devel@lists.alioth.debian.org;
+	Sat, 21 Apr 2012 07:20:42 +0000
+Received: by lbjn8 with SMTP id n8so4364428lbj.6
+	for <bash-completion-devel@lists.alioth.debian.org>;
+	Sat, 21 Apr 2012 00:20:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20120113;
+	h=sender:message-id:date:from:user-agent:mime-version:to:cc:subject
+	:references:in-reply-to:x-enigmail-version:content-type
+	:content-transfer-encoding;
+	bh=PO1Bz9oPXu0OyLT6vS9Nol5v/3/O2mnDme8bos247zM=;
+	b=vpXOpXu8q8nXQ7RmcQxOrXDMD9oUIp8lrkTzhPuXskIqF0BeRv+A1sClcRHFVxoaya
+	egq+41T1PyO8TUsGyxy8NYiNs2FILFwuiBqCPzecfaHreIZl1xuV3oSkhndsdlZxRywb
+	G1HRav4Rnh80n03xVEupLysbYtqztE8DeNukYjTkLpFqwF6dUP5x73+PBbMMOZ1E0h4Y
+	eOXGEnAnmw3fB5QcX9+Y3nrqlaFI7OpBZOqNWtFpRbxbKa/NWe30bzxSzqUM0S1CmDLH
+	i37vn8sKRPool8JeUiWCM9YQBysbzU2mHlPG2sgsWkzHOVeno7Gr3pw1J1owGf/f6M4V
+	0saA==
+Received: by 10.112.47.66 with SMTP id b2mr4315777lbn.35.1334992831669;
+	Sat, 21 Apr 2012 00:20:31 -0700 (PDT)
+Received: from michael.steam.fi (cs78200229.pp.htv.fi. [62.78.200.229])
+	by mx.google.com with ESMTPS id gw17sm8183009lab.11.2012.04.21.00.20.28
+	(version=SSLv3 cipher=OTHER); Sat, 21 Apr 2012 00:20:29 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64;
+	rv:11.0) Gecko/20120329 Thunderbird/11.0.1
+In-Reply-To: <20120416205952.GJ12613@burratino>
+X-Enigmail-Version: 1.4
+X-policyd-weight: using cached result; rate: -8.4
+X-Spam-Checker-Version: SpamAssassin 3.3.1 (2010-03-16) on wagner.debian.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.6 required=5.0 tests=BAYES_00,FREEMAIL_FROM,
+	RCVD_IN_DNSWL_LOW,SPF_PASS autolearn=ham version=3.3.1
+X-BeenThere: bash-completion-devel@lists.alioth.debian.org
+X-Mailman-Version: 2.1.13
+Precedence: list
+List-Id: Coordination of bash-completion's development
+	<bash-completion-devel.lists.alioth.debian.org>
+List-Unsubscribe: <http://lists.alioth.debian.org/cgi-bin/mailman/options/bash-completion-devel>,
+	<mailto:bash-completion-devel-request@lists.alioth.debian.org?subject=unsubscribe>
+List-Archive: <http://lists.alioth.debian.org/pipermail/bash-completion-devel>
+List-Post: <mailto:bash-completion-devel@lists.alioth.debian.org>
+List-Help: <mailto:bash-completion-devel-request@lists.alioth.debian.org?subject=help>
+List-Subscribe: <http://lists.alioth.debian.org/cgi-bin/mailman/listinfo/bash-completion-devel>,
+	<mailto:bash-completion-devel-request@lists.alioth.debian.org?subject=subscribe>
+Sender: bash-completion-devel-bounces+gcsbc-bash-completion-devel=m.gmane.org@lists.alioth.debian.org
+Errors-To: bash-completion-devel-bounces+gcsbc-bash-completion-devel=m.gmane.org@lists.alioth.debian.org
+X-SA-Exim-Connect-IP: ::1
+X-SA-Exim-Mail-From: bash-completion-devel-bounces+gcsbc-bash-completion-devel=m.gmane.org@lists.alioth.debian.org
+X-SA-Exim-Scanned: No (on wagner.debian.org); SAEximRunCond expanded to false
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196044>
 
-Michael Haggerty <mhagger@alum.mit.edu> writes:
+On 2012-04-16 23:59, Jonathan Nieder wrote:
 
-> only means "nuclear", I suggest that the word be avoided in this
-> explanation.  Perhaps
->
->>      * `matching` - push all branches having the same name in both ends.
->>        This is for those who prepare all the branches into a publishable
->>        shape and push them out atomically, and suitable when pushing to a
->>        non-shared repository. [...]
->
-> could be changed to
->
->>      * `matching` - push all branches having the same name in both ends.
->>        This allows those who prepare all the branches into a publishable
->>        shape to push them out to a non-shared repository with a single
->>        command. [...]
+> Hopefully this information helps clarify to what extent the leading
+> underscores in functions exposed by completion scripts are meant or
+> are not meant as a convention.
 
-Sounds good.
+We've discussed what a real "API" or "namespace" of bash-completion
+would look like, but so far nothing concrete has come out of it.
+
+http://thread.gmane.org/gmane.comp.shells.bash.completion.scm/2013/focus=3135
