@@ -1,98 +1,78 @@
-From: David Aguilar <davvid@gmail.com>
-Subject: Re: [PATCH v14 8/9] difftool: teach difftool to handle directory diffs
-Date: Sat, 21 Apr 2012 16:07:36 -0700
-Message-ID: <CAJDDKr4AuTHX2LSFuw4g2fWsE3M+A2EcX9bXx6yDRebvAMx_1g@mail.gmail.com>
-References: <1334940988-8940-1-git-send-email-tim.henigan@gmail.com>
+From: Chris Packham <judge.packham@gmail.com>
+Subject: Re: Git push stuck
+Date: Sun, 22 Apr 2012 11:41:22 +1200
+Message-ID: <4F9345A2.3050702@gmail.com>
+References: <4F929200.4010406@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: gitster@pobox.com, git@vger.kernel.org, ramsay@ramsay1.demon.co.uk
-To: Tim Henigan <tim.henigan@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Apr 22 01:07:44 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: hen vertis <henvertis@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Apr 22 01:41:11 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SLjP4-00043e-B7
-	for gcvg-git-2@plane.gmane.org; Sun, 22 Apr 2012 01:07:42 +0200
+	id 1SLjvS-000478-F9
+	for gcvg-git-2@plane.gmane.org; Sun, 22 Apr 2012 01:41:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752569Ab2DUXHh convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 21 Apr 2012 19:07:37 -0400
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:56471 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751814Ab2DUXHh convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 21 Apr 2012 19:07:37 -0400
-Received: by yhmm54 with SMTP id m54so5675216yhm.19
-        for <git@vger.kernel.org>; Sat, 21 Apr 2012 16:07:36 -0700 (PDT)
+	id S1752323Ab2DUXlF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 21 Apr 2012 19:41:05 -0400
+Received: from mail-pb0-f46.google.com ([209.85.160.46]:34972 "EHLO
+	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751827Ab2DUXlE (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 21 Apr 2012 19:41:04 -0400
+Received: by pbcun15 with SMTP id un15so2437126pbc.19
+        for <git@vger.kernel.org>; Sat, 21 Apr 2012 16:41:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=NMwVYhtRnNBB8VJ/Zq+pdAV/j/llvalsL8z/QpP9804=;
-        b=Jjkp0mqjRb/I1TiEgohWk+CnjXmcW90NCfGGaX5nPG8thUvQdtnANfeSDO+qz0o3rL
-         lgMvrELWTSP1CpL+7ncokVeMgtkujYb/GAB6DuLtKIrV4KvyBuGvI8E158MB/8iFyh9b
-         CzkT2LPEcdZtfVV9l9NybU6tz8240i6rQFMOBNEbtFcJC+n6zdlyfPYdX9hU8017FV2L
-         IPFZ/FyyBurnLtSP9EUAswY9vGTx3wtlPwBlRf/g6fdnQs6eMSZpUfzu0u82tM34Iigf
-         nIrnQp2VdKC/Ol4SPxtX5qgEpLeOwCjaqJXthi2YSFIlhsSld0fAV4A+Cw5CQ2vy7QM5
-         PQVw==
-Received: by 10.236.161.3 with SMTP id v3mr4520708yhk.128.1335049656418; Sat,
- 21 Apr 2012 16:07:36 -0700 (PDT)
-Received: by 10.147.128.8 with HTTP; Sat, 21 Apr 2012 16:07:36 -0700 (PDT)
-In-Reply-To: <1334940988-8940-1-git-send-email-tim.henigan@gmail.com>
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=Kzn532S25MB7hxa3/xCAk/0vmQQqJjM0MeupjQC1vAA=;
+        b=Jh3ujI4YFjEpKDjpU6sueGs8ZcGGyczciVBS7zFsPMvGa2lezOyg6lYnLi6YvZ5J1k
+         CJN2HB1y+YhX0OaS3nmD7H7sqBrMMzeTPt2aEuz1BSMsT87XAJsYjD5627Ynn2IL/klR
+         LixH66/j4uNSftt9TZDfGCmKacd+16UaNwu/sFOLaVUEmAs2ZjJKcbxZnfkByvvXvOur
+         vwVw7MYecZIwdWcRSFJ020lcPQiuKyd2K406nVaz5fxeSHCXVqCpxQA8rL61oVOH3asi
+         pdTMIVflhmErhSNzGmOF805tcYtzQq8ibUcknIoDQehJKV6OjISBiU1QUUCyjaJ/iLhL
+         l9OQ==
+Received: by 10.68.189.231 with SMTP id gl7mr24249401pbc.151.1335051662723;
+        Sat, 21 Apr 2012 16:41:02 -0700 (PDT)
+Received: from [192.168.1.65] (222-153-35-210.jetstream.xtra.co.nz. [222.153.35.210])
+        by mx.google.com with ESMTPS id s7sm9685189pbl.31.2012.04.21.16.40.55
+        (version=SSLv3 cipher=OTHER);
+        Sat, 21 Apr 2012 16:41:01 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:11.0) Gecko/20120312 Thunderbird/11.0
+In-Reply-To: <4F929200.4010406@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196062>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196063>
 
-On Fri, Apr 20, 2012 at 9:56 AM, Tim Henigan <tim.henigan@gmail.com> wr=
-ote:
-> [snip]
-> +
-> +sub setup_dir_diff
-> +{
-> + =C2=A0 =C2=A0 =C2=A0 # Run the diff; exit immediately if no diff fo=
-und
-> + =C2=A0 =C2=A0 =C2=A0 # 'Repository' and 'WorkingCopy' must be expli=
-citly set to insure that
-> + =C2=A0 =C2=A0 =C2=A0 # if $GIT_DIR and $GIT_WORK_TREE are set in EN=
-V, they are actually used
-> + =C2=A0 =C2=A0 =C2=A0 # by Git->repository->command*.
-> + =C2=A0 =C2=A0 =C2=A0 my $diffrepo =3D Git->repository(Repository =3D=
-> $repo_path, WorkingCopy =3D> $workdir);
-> + =C2=A0 =C2=A0 =C2=A0 my $diffrtn =3D $diffrepo->command_oneline('di=
-ff', '--raw', '--no-abbrev', '-z', @ARGV);
-> + =C2=A0 =C2=A0 =C2=A0 exit(0) if (length($diffrtn) =3D=3D 0);
-> +
-> + =C2=A0 =C2=A0 =C2=A0 if ($diffrtn =3D~ /::/) {
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 print "Combined di=
-ff formats ('-c' and '--cc') are not supported in directory diff mode.\=
-n";
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 exit(1);
-> + =C2=A0 =C2=A0 =C2=A0 }
-> +
-> + =C2=A0 =C2=A0 =C2=A0 # Setup temp directories
-> + =C2=A0 =C2=A0 =C2=A0 my $tmpdir =3D tempdir('git-diffall.XXXXX', CL=
-EANUP =3D> 1, TMPDIR =3D> 1);
-> + =C2=A0 =C2=A0 =C2=A0 my $ldir =3D "$tmpdir/left";
-> + =C2=A0 =C2=A0 =C2=A0 my $rdir =3D "$tmpdir/right";
-> + =C2=A0 =C2=A0 =C2=A0 mkpath($ldir) or die $!;
-> + =C2=A0 =C2=A0 =C2=A0 mkpath($rdir) or die $!;
-> +
-> + =C2=A0 =C2=A0 =C2=A0 # Build index info for left and right sides of=
- the diff
-> + =C2=A0 =C2=A0 =C2=A0 my $submodule_mode =3D "160000";
-> + =C2=A0 =C2=A0 =C2=A0 my $symlink_mode =3D "120000";
-> + =C2=A0 =C2=A0 =C2=A0 my $null_mode =3D "0" x 6;
-> + =C2=A0 =C2=A0 =C2=A0 my $null_sha1 =3D "0" x 40;
-> + =C2=A0 =C2=A0 =C2=A0 my $lindex =3D "";
-> + =C2=A0 =C2=A0 =C2=A0 my $rindex =3D "";
+On 04/21/2012 10:54 PM, hen vertis wrote:
+> hi
+> i working with git version 1.7.10.msysgit.1 on windows 7.
+> my repository is on Ubuntu.
+> i can make fetch and merge.
+> but when i trying to push is not working.
+> any idea will be welcomed.
+> 
+> best regards
+> hen
+> -- 
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
 
-Super super tiny nit....
 
-When reading Perl I expect to see DQ used only when $variable
-interpolation is used.  Can we use ' instead of " for these strings in
-the re-roll to address Junio's notes?
---=20
-David
+To help diagnose your problem could you please provide the output of
+
+  git remote show origin
+
+Also try running you push command like this
+
+  GIT_TRACE=1 git push
+
+This will provide more debugging info that might tell us where git push
+is getting stuck.
