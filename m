@@ -1,85 +1,92 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: git clone submodules recursive and reference
-Date: Sat, 21 Apr 2012 15:45:48 +0200
-Message-ID: <4F92BA0C.4030009@web.de>
-References: <CAFj+z055ZZc-Am+pEMgjRvHgoxKSRBjnHhABCseC45+8YswKWg@mail.gmail.com> <4F91B22A.9000507@web.de> <CAFj+z04A5v7Cz=Wbqn_TBJQG88rPSfrs4T1=22x1N+v77ZXgYA@mail.gmail.com>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [Bash-completion-devel] [PATCH v2] completion: add new
+ git_complete helper
+Date: Sat, 21 Apr 2012 18:41:32 +0300
+Message-ID: <CAMP44s1dNqokGuLg3ReLAreNBM++0NxOMUUk-=AgFBUy3n=E9w@mail.gmail.com>
+References: <CAMP44s0PWAV=nD1xnAFMx8OPby88W2jKwDGtiUFY4LA93D-gAw@mail.gmail.com>
+	<7vaa2by8nj.fsf@alter.siamese.dyndns.org>
+	<20120416160729.GM5813@burratino>
+	<CAMP44s2_VYNFeBi9GPa9CeqT=oRmSq1J1XaSP+aKgC6bJ55Lfg@mail.gmail.com>
+	<20120416200941.GD12613@burratino>
+	<CAMP44s0CVsmHw4jQqHvZMi342V8-Yh2zYYcAE_5EHu5OAiktcw@mail.gmail.com>
+	<20120416203320.GF12613@burratino>
+	<CAMP44s0Q2A_oKJx27ct9W__KVQkQxzst3H7gq6sZDhrCLDQaag@mail.gmail.com>
+	<20120416204641.GH12613@burratino>
+	<CAMP44s23_Qx3R9TX4frM-JYNv7XT3eVbcZ_D45nEdh0rq-O8kA@mail.gmail.com>
+	<20120416205952.GJ12613@burratino>
+	<4F925FBC.2030406@iki.fi>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git <git@vger.kernel.org>
-To: Samuel Maftoul <samuel.maftoul@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Apr 21 15:46:00 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	bash-completion-devel@lists.alioth.debian.org, git@vger.kernel.org
+To: =?UTF-8?Q?Ville_Skytt=C3=A4?= <ville.skytta@iki.fi>
+X-From: git-owner@vger.kernel.org Sat Apr 21 17:41:40 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SLadS-0004jM-1b
-	for gcvg-git-2@plane.gmane.org; Sat, 21 Apr 2012 15:45:58 +0200
+	id 1SLcRP-0002kO-GY
+	for gcvg-git-2@plane.gmane.org; Sat, 21 Apr 2012 17:41:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752705Ab2DUNpx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 21 Apr 2012 09:45:53 -0400
-Received: from fmmailgate07.web.de ([217.72.192.248]:49192 "EHLO
-	fmmailgate07.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751791Ab2DUNpw (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 21 Apr 2012 09:45:52 -0400
-Received: from moweb001.kundenserver.de (moweb001.kundenserver.de [172.19.20.114])
-	by fmmailgate07.web.de (Postfix) with ESMTP id 6660211F8E01
-	for <git@vger.kernel.org>; Sat, 21 Apr 2012 15:45:51 +0200 (CEST)
-Received: from [192.168.178.48] ([91.3.156.147]) by smtp.web.de (mrweb002)
- with ESMTPA (Nemesis) id 0MbQbk-1SeMVH07k4-00Inhx; Sat, 21 Apr 2012 15:45:51
- +0200
-User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:11.0) Gecko/20120327 Thunderbird/11.0.1
-In-Reply-To: <CAFj+z04A5v7Cz=Wbqn_TBJQG88rPSfrs4T1=22x1N+v77ZXgYA@mail.gmail.com>
-X-Provags-ID: V02:K0:hNyzpne51x+aPceTGFFnQJSKOcHVSw+Vu1C3E8z/1bv
- wQR1bIMpenVc38pm6a+2ysG9nW2y1E1Uc99NiYjTrFUZ4BVYLD
- qfEB40QbCtnliP9nffeoMDirwQROt0LsCmo7jJ792OU9EpTfO4
- hJ6SxyyD9nSjn5BG6ZwlFLfPoT5ObivJ4hGi59mZMuwrQBYhn+
- 3wJrleQFrzYffgQJp9GoQ==
+	id S1751188Ab2DUPle convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 21 Apr 2012 11:41:34 -0400
+Received: from mail-ey0-f174.google.com ([209.85.215.174]:50662 "EHLO
+	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750967Ab2DUPle convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 21 Apr 2012 11:41:34 -0400
+Received: by eaaq12 with SMTP id q12so2717917eaa.19
+        for <git@vger.kernel.org>; Sat, 21 Apr 2012 08:41:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=/B5jkIvsCvlZ5DXK8V6bKhgDApRbmbW6l8yG+3QI080=;
+        b=b1++Ob4OSguFkEMyy3coICubum8Mxji3BDr8knpHeHv6mI0TOHeowWB8tXs9pxQPxg
+         v6P6ILY9v4bChf+r1RRiCFCmzHIzEYQQtAG/LXfM40mtMIjnSSE53JyIYWCJ/r2z2Dqp
+         CwPT8SVSJT/jtO1hPQ9m2pwA1cKPFDrXn+9JVP1YC8K96dnuDr3VAwwSsTVoj+MkGwOs
+         u/SP701rdBf84iRQE7+njaaPiFOhKArZDCd6ttLJlke7SZOiacIYdcmGFYpiZ6YNn6QY
+         gb6InjSeslgiLYufpWb8rhn9YSpRPg1bEJhnoXsG6CVb1seL/8RBfJyQTyi+dgO+L850
+         n11Q==
+Received: by 10.14.50.74 with SMTP id y50mr1610589eeb.107.1335022892569; Sat,
+ 21 Apr 2012 08:41:32 -0700 (PDT)
+Received: by 10.213.103.18 with HTTP; Sat, 21 Apr 2012 08:41:32 -0700 (PDT)
+In-Reply-To: <4F925FBC.2030406@iki.fi>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196050>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196052>
 
-Am 20.04.2012 21:26, schrieb Samuel Maftoul:
->> Hmm, to me it looks like passing the --reference option to the clone
->> run in the submodules doesn't make much sense, as that would make
->> all submodules and the superproject use the same alternates. And as
->> far as I know sharing objects between different repositories is not
->> supported.
+On Sat, Apr 21, 2012 at 10:20 AM, Ville Skytt=C3=A4 <ville.skytta@iki.f=
+i> wrote:
+> On 2012-04-16 23:59, Jonathan Nieder wrote:
+>
+>> Hopefully this information helps clarify to what extent the leading
+>> underscores in functions exposed by completion scripts are meant or
+>> are not meant as a convention.
+>
+> We've discussed what a real "API" or "namespace" of bash-completion
+> would look like, but so far nothing concrete has come out of it.
+>
+> http://thread.gmane.org/gmane.comp.shells.bash.completion.scm/2013/fo=
+cus=3D3135
 
-I take that back, I was thinking about the idea to store the objects
-of all submodules in the superproject's object store and then access
-them via alternates which was discussed some time ago. That won't
-work out of the box because the submodule commits would be dangling
-in the superprojects repo.
+Thank you for pointing this out. This means I was correct; there
+was/is no convention for public APIs.
 
-> I'm sharing objects between repositories by creating a bare
-> repository, adding the remotes for the repositories and fetch them in
-> this bare repo.
+According to that thread, the closest there is to a convention would
+be to name it _GIT_complete. That would certainly avoid conflicts with
+any current namespace, so I feel it's much better than __git_complete.
 
-This sounds like a cool way to reduce the disk footprint of the
-repos on our Jenkins server.
+Still, I don't see the point in avoiding 'git_complete' and making our
+lifes more difficult. Bash public functions, like *complete*, don't
+have any special namespace, they just snatch them, and that's the end
+of it. In the particular case of git, where would have only a couple
+(currently 2) public functions, I don't see what's the big deal.
 
-> So for me, it makes sense to pass the "--reference" to the submodules
-> clone, if submodules remotes are added to this reference bare repo and
-> objects are already fetched (and I'm in this case, as I use a lot of
-> different projects that shares the same set of submodules).
+Cheers.
 
-How do you fetch then, do you fetch into the referenced repo first
-and then do a fetch in the clones afterwards to just update the refs
-there? Or is the bare repo just a starting point for the initial
-clone?
-
->>> How can I force the clones for submodules to be executed with the
->>> --reference option ?
->>
->> You'd have to use "git clone" without the --recursive option and
->> then do a "git submodule update --init --reference ...".
-> 
-> Yes, this should make it, but I would have been more happy with a
-> single command !
-
-Hmm, me thinks we'd have to add a new option for that, and I'm not
-sure it is worth it.
+--=20
+=46elipe Contreras
