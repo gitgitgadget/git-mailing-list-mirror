@@ -1,175 +1,85 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] gitweb: Improve repository verification
-Date: Sat, 21 Apr 2012 13:28:24 +0200
-Message-ID: <201204211328.25162.jnareb@gmail.com>
-References: <20120403132735.GA12389@camk.edu.pl> <xmqq397zwp4c.fsf@junio.mtv.corp.google.com> <201204192146.09853.jnareb@gmail.com>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: git clone submodules recursive and reference
+Date: Sat, 21 Apr 2012 15:45:48 +0200
+Message-ID: <4F92BA0C.4030009@web.de>
+References: <CAFj+z055ZZc-Am+pEMgjRvHgoxKSRBjnHhABCseC45+8YswKWg@mail.gmail.com> <4F91B22A.9000507@web.de> <CAFj+z04A5v7Cz=Wbqn_TBJQG88rPSfrs4T1=22x1N+v77ZXgYA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Kacper Kornet <draenog@pld-linux.org>, git@vger.kernel.org
-To: Junio C Hamano <jch@google.com>
-X-From: git-owner@vger.kernel.org Sat Apr 21 13:28:37 2012
+Cc: git <git@vger.kernel.org>
+To: Samuel Maftoul <samuel.maftoul@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Apr 21 15:46:00 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SLYUV-0004mS-Ot
-	for gcvg-git-2@plane.gmane.org; Sat, 21 Apr 2012 13:28:36 +0200
+	id 1SLadS-0004jM-1b
+	for gcvg-git-2@plane.gmane.org; Sat, 21 Apr 2012 15:45:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751052Ab2DUL2a (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 21 Apr 2012 07:28:30 -0400
-Received: from mail-wi0-f178.google.com ([209.85.212.178]:52698 "EHLO
-	mail-wi0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750702Ab2DUL23 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 21 Apr 2012 07:28:29 -0400
-Received: by wibhq7 with SMTP id hq7so1456702wib.1
-        for <git@vger.kernel.org>; Sat, 21 Apr 2012 04:28:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        bh=qcFaOq5MX+wger4DLjW4fRQG5iilHXRKpVPYLv1G0uY=;
-        b=SVDRyCp9g2GHE42B5rNz6HZt9pQJrbCClprw2ysROzzLA0+Xp01AYm17v8O4XVztCD
-         85gp8dN9TrAyq/s+qZgMdzjRtlEqF5Yb6fZaJKYBWiiynY9IlxjjO7Fav+8kMD44HO4P
-         tKS7LsKfN6jezRhkYlWurBv05zbtTSluDaHCua/7bbE+widaxTCVP1JNoHduCzHS99qK
-         ZFTvTYvcsJvU37zDsMhQIl87lF8KR0GKP0e7CgO2XNYTLDaZ7bubR7MTKr0tqYdR5Y/5
-         awHPnjmC2t2oBrC7S4y0CIKv0rH9gb9LX6Oz2royVuVXB0XmMtN6YBWCae+myIrctS5M
-         WcZw==
-Received: by 10.180.105.194 with SMTP id go2mr903892wib.22.1335007708339;
-        Sat, 21 Apr 2012 04:28:28 -0700 (PDT)
-Received: from [192.168.1.13] (addg45.neoplus.adsl.tpnet.pl. [79.184.58.45])
-        by mx.google.com with ESMTPS id ff9sm4996524wib.2.2012.04.21.04.28.26
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sat, 21 Apr 2012 04:28:27 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <201204192146.09853.jnareb@gmail.com>
-Content-Disposition: inline
+	id S1752705Ab2DUNpx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 21 Apr 2012 09:45:53 -0400
+Received: from fmmailgate07.web.de ([217.72.192.248]:49192 "EHLO
+	fmmailgate07.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751791Ab2DUNpw (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 21 Apr 2012 09:45:52 -0400
+Received: from moweb001.kundenserver.de (moweb001.kundenserver.de [172.19.20.114])
+	by fmmailgate07.web.de (Postfix) with ESMTP id 6660211F8E01
+	for <git@vger.kernel.org>; Sat, 21 Apr 2012 15:45:51 +0200 (CEST)
+Received: from [192.168.178.48] ([91.3.156.147]) by smtp.web.de (mrweb002)
+ with ESMTPA (Nemesis) id 0MbQbk-1SeMVH07k4-00Inhx; Sat, 21 Apr 2012 15:45:51
+ +0200
+User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:11.0) Gecko/20120327 Thunderbird/11.0.1
+In-Reply-To: <CAFj+z04A5v7Cz=Wbqn_TBJQG88rPSfrs4T1=22x1N+v77ZXgYA@mail.gmail.com>
+X-Provags-ID: V02:K0:hNyzpne51x+aPceTGFFnQJSKOcHVSw+Vu1C3E8z/1bv
+ wQR1bIMpenVc38pm6a+2ysG9nW2y1E1Uc99NiYjTrFUZ4BVYLD
+ qfEB40QbCtnliP9nffeoMDirwQROt0LsCmo7jJ792OU9EpTfO4
+ hJ6SxyyD9nSjn5BG6ZwlFLfPoT5ObivJ4hGi59mZMuwrQBYhn+
+ 3wJrleQFrzYffgQJp9GoQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196048>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196050>
 
-On Thu, 19 April 2012, Jakub Narebski wrote:
-> On Thu, 19 April 2012, Junio C Hamano wrote:
+Am 20.04.2012 21:26, schrieb Samuel Maftoul:
+>> Hmm, to me it looks like passing the --reference option to the clone
+>> run in the submodules doesn't make much sense, as that would make
+>> all submodules and the superproject use the same alternates. And as
+>> far as I know sharing objects between different repositories is not
+>> supported.
 
-> > By the way, I wonder (1) if it is worth adding support for the textual
-> > ".git" file that contains "gitdir: $path", and (2) if so how big a
-> > change would we need to do so.
+I take that back, I was thinking about the idea to store the objects
+of all submodules in the superproject's object store and then access
+them via alternates which was discussed some time ago. That won't
+work out of the box because the submodule commits would be dangling
+in the superprojects repo.
+
+> I'm sharing objects between repositories by creating a bare
+> repository, adding the remotes for the repositories and fetch them in
+> this bare repo.
+
+This sounds like a cool way to reduce the disk footprint of the
+repos on our Jenkins server.
+
+> So for me, it makes sense to pass the "--reference" to the submodules
+> clone, if submodules remotes are added to this reference bare repo and
+> objects are already fetched (and I'm in this case, as I use a lot of
+> different projects that shares the same set of submodules).
+
+How do you fetch then, do you fetch into the referenced repo first
+and then do a fetch in the clones afterwards to just update the refs
+there? Or is the bare repo just a starting point for the initial
+clone?
+
+>>> How can I force the clones for submodules to be executed with the
+>>> --reference option ?
+>>
+>> You'd have to use "git clone" without the --recursive option and
+>> then do a "git submodule update --init --reference ...".
 > 
-> I don't think that it would be big change to add support for "gitlink"
-> files, assuming that 'git --git-dir=<gitlink file> ...' works correctly.
-> I would put that addition in a separate commit, though.
+> Yes, this should make it, but I would have been more happy with a
+> single command !
 
-Well, I actually tried to write such commit, adding support for
-'gitlink' files, and it turned out to be harder than I thought.
-The problem that stumped me for now is that gitweb tries to read
-many files inside git repository ('export-ok', 'description',
-'cloneurl', 'category', etc.), allof which must be redirected to
-real git directory.
-
-I still think it is doable, but I wonder if it is worth it...
-
-Below there is work in progress patch, which doesn't use resolve_gitdir
-yet, and without any tests.
-
--- >8 ---------- >8 --
-Subject: [PATCH] gitweb: Add support for "gitdir: <path>" gitfile
-
-Suggested-by: Junio C Hamano <gitster@pobox.com>
-Signed-off-by: Jakub Narebski <jnareb@gmail.com>
----
- gitweb/gitweb.perl |   54 ++++++++++++++++++++++++++++++++++++++++++++++++---
- 1 files changed, 50 insertions(+), 4 deletions(-)
-
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 767d7a5..8d70a0a 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -639,6 +639,52 @@ sub is_git_directory {
- 		validate_headref("$dir/HEAD");
- }
- 
-+# Try to read the location of the git directory from the .git file,
-+# return path to git directory if found.
-+#
-+# See read_gitfile in setup.c
-+sub read_gitfile {
-+	my $path = shift;
-+	# note: the "basename eq '.git'" check isn't in setup.c version
-+	return unless ($path =~ m!(?:^|/)\.git/*$! && -f $path);
-+
-+	open my $fh, '<', $path or return;
-+	my $contents = do { local $/ = undef; <$fh> };
-+	close $fh or return;
-+	return unless defined $contents;
-+	chomp($contents);
-+
-+	return unless ($contents =~ s!^gitdir: !!);
-+
-+	if (!File::Spec->file_name_is_absolute($contents)) {
-+		$contents = File::Spec->catfile(File::Basename::dirname($path), $contents);
-+	}
-+
-+	return unless is_git_directory($contents);
-+	return $contents;
-+}
-+
-+# Test if it looks like we're at a git repository
-+#
-+#  - a '.git' file containing "gitdir: <path>",
-+#  - a git directory.
-+sub is_git_repository {
-+	my $path = shift;
-+	return defined(read_gitfile($path)) || is_git_directory($path);
-+}
-+
-+# Return directory of a git repository, resolving '.git' files
-+# (file containing "gitdir: <path>") if any
-+#
-+# See resolve_gitdir in setup.c
-+sub resolve_gitdir {
-+	my $suspect = shift;
-+	if (is_git_directory($suspect)) {
-+		return $suspect;
-+	}
-+	return read_gitfile($suspect);
-+}
-+
- # Check HEAD file, that it is either
- #
- #  - a "refs/heads/.." symlink, or
-@@ -665,7 +711,7 @@ sub validate_headref {
- 
- sub check_export_ok {
- 	my ($dir) = @_;
--	return (is_git_directory($dir) &&
-+	return (is_git_repository($dir) &&
- 		(!$export_ok || -e "$dir/$export_ok") &&
- 		(!$export_auth_hook || $export_auth_hook->($dir)));
- }
-@@ -874,7 +920,7 @@ sub evaluate_path_info {
- 	# find which part of PATH_INFO is project
- 	my $project = $path_info;
- 	$project =~ s,/+$,,;
--	while ($project && !is_git_directory("$projectroot/$project")) {
-+	while ($project && !is_git_repository("$projectroot/$project")) {
- 		$project =~ s,/*[^/]*$,,;
- 	}
- 	return unless $project;
-@@ -3094,8 +3140,8 @@ sub git_get_projects_list {
- 				our $projectroot;
- 				# skip project-list toplevel, if we get it.
- 				return if (m!^[/.]$!);
--				# only directories can be git repositories
--				return unless (-d $_);
-+				# only directories or gitlink files can be git repositories
-+				return unless (-d $_ || (-f _ && $File::Find::name =~ m!(?:^|/)\.git!));
- 				# don't traverse too deep (Find is super slow on os x)
- 				# $project_maxdepth excludes depth of $projectroot
- 				if (($File::Find::name =~ tr!/!!) - $pfxdepth > $project_maxdepth) {
--- 
-1.7.9
+Hmm, me thinks we'd have to add a new option for that, and I'm not
+sure it is worth it.
