@@ -1,102 +1,106 @@
-From: Mark Levedahl <mlevedahl@gmail.com>
-Subject: Re: contrib/workdir/git-new-workdir broken in 1.7.10 after introducing
- gitfiles
-Date: Sun, 22 Apr 2012 14:58:56 -0400
-Message-ID: <jn1kdh$6he$1@dough.gmane.org>
-References: <CAHsq6J6JOTYfEtK0Z=_qfMFf9N1DWQ4zx46YhBbNu-1gEMyfog@mail.gmail.com> <4F930043.1080506@web.de> <xmqq397wzwwd.fsf@junio.mtv.corp.google.com> <xmqqy5poxtsc.fsf@junio.mtv.corp.google.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Apr 22 20:59:24 2012
+From: Robert Quattlebaum <darco@deepdarc.com>
+Subject: Re: git-archive and submodules
+Date: Sun, 22 Apr 2012 14:47:29 -0400
+Message-ID: <49D85565-3932-4B03-9568-E5CB75F39B9E@deepdarc.com>
+References: <CALKBF2gwVr0rPn0y8=cvwqOsUb7eQPH7EdK5U+gfZMzh=RpiKw@mail.gmail.com> <4F911A2C.4070306@web.de> <CALKBF2jzL5-mHaVi1erA=EiF_DALF1Rvwv7yB5CfdEdQa2ZhBg@mail.gmail.com>
+Mime-Version: 1.0 (1.0)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: =?utf-8?Q?Andr=C3=A9_Caron?= <andre.l.caron@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Apr 22 22:02:45 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SM20F-000880-KK
-	for gcvg-git-2@plane.gmane.org; Sun, 22 Apr 2012 20:59:19 +0200
+	id 1SM2zV-0005gX-GI
+	for gcvg-git-2@plane.gmane.org; Sun, 22 Apr 2012 22:02:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752208Ab2DVS7P (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 22 Apr 2012 14:59:15 -0400
-Received: from plane.gmane.org ([80.91.229.3]:34494 "EHLO plane.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752146Ab2DVS7O (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 22 Apr 2012 14:59:14 -0400
-Received: from list by plane.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1SM205-00081m-Rh
-	for git@vger.kernel.org; Sun, 22 Apr 2012 20:59:09 +0200
-Received: from pool-173-79-109-71.washdc.fios.verizon.net ([173.79.109.71])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 22 Apr 2012 20:59:09 +0200
-Received: from mlevedahl by pool-173-79-109-71.washdc.fios.verizon.net with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 22 Apr 2012 20:59:09 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: pool-173-79-109-71.washdc.fios.verizon.net
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:11.0) Gecko/20120329 Thunderbird/11.0.1
-In-Reply-To: <xmqqy5poxtsc.fsf@junio.mtv.corp.google.com>
+	id S1751997Ab2DVUCb convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 22 Apr 2012 16:02:31 -0400
+Received: from spider.nocdirect.com ([69.73.181.158]:37822 "EHLO
+	spider.nocdirect.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751643Ab2DVUCa convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 22 Apr 2012 16:02:30 -0400
+X-Greylist: delayed 4499 seconds by postgrey-1.27 at vger.kernel.org; Sun, 22 Apr 2012 16:02:30 EDT
+Received: from mobile-166-147-109-141.mycingular.net ([166.147.109.141]:53503 helo=[10.15.63.128])
+	by spider.nocdirect.com with esmtpsa (TLSv1:AES128-SHA:128)
+	(Exim 4.77)
+	(envelope-from <darco@deepdarc.com>)
+	id 1SM1oo-00014k-47; Sun, 22 Apr 2012 14:47:30 -0400
+In-Reply-To: <CALKBF2jzL5-mHaVi1erA=EiF_DALF1Rvwv7yB5CfdEdQa2ZhBg@mail.gmail.com>
+X-Mailer: iPad Mail (9B176)
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - spider.nocdirect.com
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - deepdarc.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196088>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196089>
 
-On 04/22/2012 12:41 AM, Junio C Hamano wrote:
-> Junio C Hamano<gitster@pobox.com>  writes:
->
->> As you analyzed correctly, core.worktree lets a GIT_DIR to declare that
->> there is a single working tree associated with it. It fundamentally is
->> incompatible with new-workdir, which is a hack to let more than one
->> working tree associated with a single GIT_DIR.
->>
->> I however do not think a simplistic "unset core.worktree" is a good
->> suggestion, though, as we do not know why the original repository has
->> that variable set pointing at somewhere.  Blindly removing it will break
->> the use of the original repository.  If somebody _really_ wants to use
->> new-workdir for whatever reason in such a setting, I would imagine that
->> doing something like this:
->> ...
->> may work.
->
-> I am too lazy to try it out myself, but a hack something along the line
-> of the attached patch _might_ turn out to work well.
->
-> At least, it gives an incentive to people to update to more recent
-> versions of git ;-)  I dunno.
->
-> -- >8 --
-> Subject: new-workdir: use its own config file
->
-> Instead of letting a new workdir share the same config, we simply
-> include the original config and override core.worktree in it.  This
-> obviously changes the behaviour from the traditional workdir, by making
-> any update to the config in a workdir private to that workdir and not
-> reflected back to the original repository.  Because a workdir is
-> supposed to be just a peek only window to check out a branch that is
-> different from the main working tree, and you are not expected to modify
-> the config file in any way (e.g. you do not create a new branch with
-> remote configuration in a workdir), it may not be a huge issue.
->
+I got too busy to continue working to get it included. Please feel free=
+ to pick up where I left off.=20
 
-This change will break my use of new-workdir, which is maintaining 
-multiple checked out branches in separate directories, some with 
-embedded modules, and being able to share changes and remote branches 
-between them. These directories are time-consuming to set up, so the 
-usually suggested approach of "git-checkout $other_branch" is not very 
-useful. All of the workdirs are set up off of a common set of bare repos 
-kept elsewhere.
+Sent from my iPad
 
-There are other ways to share between multiple independent repositories 
-on the same machine, but new-workdir is the simplest as there is no push 
-/ pull / patch / am involved.
+On Apr 20, 2012, at 2:32 PM, Andr=C3=A9 Caron <andre.l.caron@gmail.com>=
+ wrote:
 
-I think the "peek-only" use case is better supported by clone, which on 
-a local machine does not copy the object store, and is of course 
-well-documented and in core-git. Perhaps a better patch is to just 
-suggest "clone" to the user who has core.worktree and/or submodules in use?
-
-Mark
+> Hi Robert,
+>=20
+> I've recently raised the same submodule issue with git-archive you an=
+d
+> Lars have in the past.
+>=20
+> What's the status on your application of the git-archive submodule
+> patch?  Have you applied the changes suggested by Lens Lehmann[1]?
+> Your Git fork on GitHub[2] seems to have only applied Lars' patch and
+> an unrelated SVN glob fix...
+>=20
+> Since you've touched this only last year, I'd like to know where you
+> were at and I can see if I can pick up where you left off (unless you
+> want to finish yourself).
+>=20
+> Thanks,
+> Andr=C3=A9
+>=20
+> [1]: http://comments.gmane.org/gmane.comp.version-control.git/172851
+> [2]: https://github.com/darconeous/git
+>=20
+>=20
+> ---------- Forwarded message ----------
+> From: Jens Lehmann <Jens.Lehmann@web.de>
+> Date: Fri, Apr 20, 2012 at 4:11 AM
+> Subject: Re: git-archive and submodules
+> To: Andr=C3=A9 Caron <andre.l.caron@gmail.com>
+> Cc: git@vger.kernel.org
+>=20
+>=20
+> Am 19.04.2012 22:10, schrieb Andr=C3=A9 Caron:
+>> Hi,
+>>=20
+>> I've recently needed to create a source code archive as part of a
+>> custom build target.  This repository uses submodules and I need to
+>> include the submodlule's source code in the archives too.  However,
+>> git-archive does not have any option to do so.
+>>=20
+>> I've taken a quick look at the GMANE mailing list archives and it
+>> seems this provoked quite a discussion in 2009 and that Lars Hjemli
+>> even wrote a patch (in several flavors) for archive.c to include
+>> submodule-aware processing.  The lastest source code at
+>> `git.kernel.org` does not contain any traces of this patch (or
+>> submodule aware logic for that matter).  The mailing list archives a=
+re
+>> not very convenient to browse and I can't figure out what the status
+>> on this submodule-aware git-archive idea is.  Has this idea been
+>> completely rejected, or is it still work in progress?
+>=20
+> The idea is not rejected, this would be a worthwhile addition. It has
+> been brought up again last May, but as far as I know it is stalled
+> since then:
+> http://comments.gmane.org/gmane.comp.version-control.git/172851
+>=20
