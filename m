@@ -1,118 +1,127 @@
-From: Antonin Hildebrand <antonin@hildebrand.cz>
-Subject: Re: contrib/workdir/git-new-workdir broken in 1.7.10 after
- introducing gitfiles
-Date: Sat, 21 Apr 2012 20:56:16 -0700
-Message-ID: <CAHsq6J6MK4x7WZ=aox3hX11hFAng7Tp-XpR0ADs=UgUMwf20Ow@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: contrib/workdir/git-new-workdir broken in 1.7.10 after introducing gitfiles
+Date: Sat, 21 Apr 2012 21:41:23 -0700
+Message-ID: <xmqqy5poxtsc.fsf@junio.mtv.corp.google.com>
 References: <CAHsq6J6JOTYfEtK0Z=_qfMFf9N1DWQ4zx46YhBbNu-1gEMyfog@mail.gmail.com>
-	<4F930043.1080506@web.de>
-	<xmqq397wzwwd.fsf@junio.mtv.corp.google.com>
+	<4F930043.1080506@web.de> <xmqq397wzwwd.fsf@junio.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jens Lehmann <Jens.Lehmann@web.de>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Apr 22 05:56:56 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Antonin Hildebrand <antonin@hildebrand.cz>, git@vger.kernel.org
+To: Jens Lehmann <Jens.Lehmann@web.de>
+X-From: git-owner@vger.kernel.org Sun Apr 22 06:42:04 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SLnux-0002et-EF
-	for gcvg-git-2@plane.gmane.org; Sun, 22 Apr 2012 05:56:55 +0200
+	id 1SLocd-0000wf-So
+	for gcvg-git-2@plane.gmane.org; Sun, 22 Apr 2012 06:42:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752800Ab2DVD4S convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 21 Apr 2012 23:56:18 -0400
-Received: from mail-ob0-f174.google.com ([209.85.214.174]:64396 "EHLO
-	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752628Ab2DVD4R convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 21 Apr 2012 23:56:17 -0400
-Received: by obbta14 with SMTP id ta14so11238244obb.19
-        for <git@vger.kernel.org>; Sat, 21 Apr 2012 20:56:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=+jw6kxdEJfUqusu8C/bOBsTuZt26zN/UPNv/OgjBcKQ=;
-        b=EM86b1vmQWkeXgxZRmoMAzkW/biEmPS3iOXOwZ2euUYI02TUJsFfLWUTiLXZtQNlCv
-         V25i+T0YLjHyoPrr+gR3wwqrSJ8c9ZS7ZBlTRY7LmB7rJP1EMEaMjWp4Wotjn3QAz3dr
-         DElpr+oH0qTEyhhRoFFYZpzMMc+tp7GV2XB8OE7j0kEh8QAClEviwhUpdOoZKOrFX0Ub
-         4qFqtKluqeHGqziCTYOuIriK246ISis0hJ6IBNEgu5Xdbo8tergiyuLXwPYtHWRgsQHP
-         3qZrgwyWMTpLVaDPq2465J31nEv7lmFmgDNrzFnH77RgPiHqUJpftmLvntPw9Bu9KRlO
-         GxeA==
-Received: by 10.182.16.1 with SMTP id b1mr4474082obd.31.1335066976942; Sat, 21
- Apr 2012 20:56:16 -0700 (PDT)
-Received: by 10.182.17.163 with HTTP; Sat, 21 Apr 2012 20:56:16 -0700 (PDT)
-In-Reply-To: <xmqq397wzwwd.fsf@junio.mtv.corp.google.com>
-X-Google-Sender-Auth: Yg7AW_RDdhWzqQ180h7oZRPfo94
+	id S1750908Ab2DVEl0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 22 Apr 2012 00:41:26 -0400
+Received: from mail-bk0-f74.google.com ([209.85.214.74]:35230 "EHLO
+	mail-bk0-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750756Ab2DVEl0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 22 Apr 2012 00:41:26 -0400
+Received: by bkcjk7 with SMTP id jk7so11925bkc.1
+        for <git@vger.kernel.org>; Sat, 21 Apr 2012 21:41:24 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type:x-gm-message-state;
+        bh=NFfxRfiLZ9YiizxhpMBT9bc3PG3Y85YOiGmH1eP+VkU=;
+        b=Pq27RJi9Pn4G6U7FE2CpOfN2xsU1cB3358auNnfcpf2P3JLx7QyUNNtHjRXCA8wBu/
+         K4oQlZXDZvs+NF2QiLMxNEZxNBVvhls74qvZdQLeoXd2KWZwTK+gCmg0YrH55uxCexXt
+         0RmCL8jxBPZDjO0x+fSaz3ihxjPmWrrGY1F7qmcYE2Eo7aJjnya5Ca+hHYYv0o9W1+v9
+         /p9QsC/vuw6p6+E+qc95PUzgnbezk0lQWdNAsEXVRixfNkwL2ZIjSpOHe2fsDACiwzKm
+         vqAmMX+04f5ulaD+qrusiZdYRfeZ3cJgvbHPzDc2xQvzGlFTq64pi/yJM06wd/yyaPLl
+         9/rw==
+Received: by 10.14.127.10 with SMTP id c10mr2992830eei.2.1335069684591;
+        Sat, 21 Apr 2012 21:41:24 -0700 (PDT)
+Received: by 10.14.127.10 with SMTP id c10mr2992814eei.2.1335069684475;
+        Sat, 21 Apr 2012 21:41:24 -0700 (PDT)
+Received: from hpza10.eem.corp.google.com ([74.125.121.33])
+        by gmr-mx.google.com with ESMTPS id y52si10435757eef.2.2012.04.21.21.41.24
+        (version=TLSv1/SSLv3 cipher=AES128-SHA);
+        Sat, 21 Apr 2012 21:41:24 -0700 (PDT)
+Received: from junio.mtv.corp.google.com (junio.mtv.corp.google.com [172.27.69.24])
+	by hpza10.eem.corp.google.com (Postfix) with ESMTP id 4A74420004E;
+	Sat, 21 Apr 2012 21:41:24 -0700 (PDT)
+Received: by junio.mtv.corp.google.com (Postfix, from userid 110493)
+	id 9B9A0E120A; Sat, 21 Apr 2012 21:41:23 -0700 (PDT)
+In-Reply-To: <xmqq397wzwwd.fsf@junio.mtv.corp.google.com> (Junio C. Hamano's
+	message of "Sat, 21 Apr 2012 12:51:14 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1 (gnu/linux)
+X-Gm-Message-State: ALoCoQlS817xSvw3xSVetpJ/SINoPsO5fCwXWWCPCEVNB4+mzl1ENKEcm81E8obqul3/qSiDmStXhpoUqChQEkcuIS6LgmDuRS4cGCf5a5pRM2Du0N6yhmIzf/hvObnnH8a7XNMFAk10wfGW6O4UoyBUcnms0Fhv8rmSAJQsKFP3yFPA5vhvp3c=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196072>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196073>
 
-Quite frankly, the discussion got pretty technical for me and I don't f=
-ollow it.
+Junio C Hamano <gitster@pobox.com> writes:
 
-I have just posted my current solution involving hard links instead
-new-workdir script:
-http://stackoverflow.com/a/10265084/84283
-
-Also it links this discussion as a warning that new-workdir may not be
-the right solution.
-
-Anyways, thanks for your great job on git! Much appreciated.
-
-On Sat, Apr 21, 2012 at 12:51 PM, Junio C Hamano <gitster@pobox.com> wr=
-ote:
-> Jens Lehmann <Jens.Lehmann@web.de> writes:
->
->> Opinions?
->>
->> ----8<-----
->> Subject: [PATCH] git-new-workdir: Suggest unsetting the core.worktre=
-e setting
->>
->> Linking to a repository that has the core.worktree option set can on=
-ly
->> work when that core.worktree setting already points to the new-workd=
-ir.
->> In all other cases strange things will happen, as new-workdir will b=
-e
->> overridden by that setting.
->
-> As you analyzed correctly, core.worktree lets a GIT_DIR to declare th=
-at
-> there is a single working tree associated with it. It fundamentally i=
-s
+> As you analyzed correctly, core.worktree lets a GIT_DIR to declare that
+> there is a single working tree associated with it. It fundamentally is
 > incompatible with new-workdir, which is a hack to let more than one
 > working tree associated with a single GIT_DIR.
 >
 > I however do not think a simplistic "unset core.worktree" is a good
 > suggestion, though, as we do not know why the original repository has
-> that variable set pointing at somewhere. =A0Blindly removing it will =
-break
-> the use of the original repository. =A0If somebody _really_ wants to =
-use
-> new-workdir for whatever reason in such a setting, I would imagine th=
-at
+> that variable set pointing at somewhere.  Blindly removing it will break
+> the use of the original repository.  If somebody _really_ wants to use
+> new-workdir for whatever reason in such a setting, I would imagine that
 > doing something like this:
->
-> =A0- Create a new repository somewhere that is an identical copy of t=
-he
-> =A0 original repository's GIT_DIR, except for core.worktree dropped;
->
-> =A0- Turn the working tree original repository pointed with core.work=
-tree
-> =A0 into a "new-workdir" off of that new repository; and
->
-> =A0- When you want more "new-workdir"s, create them off of that new c=
-opy.
->
-> may work. =A0But honestly speaking, "Do not use this hack---having mo=
-re
-> than one working tree is fundamentally incompatible with it", may be =
-a
-> more sensible message.
->
->
+> ...
+> may work.
+
+I am too lazy to try it out myself, but a hack something along the line
+of the attached patch _might_ turn out to work well.
+
+At least, it gives an incentive to people to update to more recent
+versions of git ;-)  I dunno.
+
+-- >8 --
+Subject: new-workdir: use its own config file
+
+Instead of letting a new workdir share the same config, we simply
+include the original config and override core.worktree in it.  This
+obviously changes the behaviour from the traditional workdir, by making
+any update to the config in a workdir private to that workdir and not
+reflected back to the original repository.  Because a workdir is
+supposed to be just a peek only window to check out a branch that is
+different from the main working tree, and you are not expected to modify
+the config file in any way (e.g. you do not create a new branch with
+remote configuration in a workdir), it may not be a huge issue.
+
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ contrib/workdir/git-new-workdir |    8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
+
+diff --git a/contrib/workdir/git-new-workdir b/contrib/workdir/git-new-workdir
+index 75e8b25..1d49258 100755
+--- a/contrib/workdir/git-new-workdir
++++ b/contrib/workdir/git-new-workdir
+@@ -63,7 +63,7 @@ mkdir -p "$new_workdir/.git" || die "unable to create \"$new_workdir\"!"
+ # create the links to the original repo.  explicitly exclude index, HEAD and
+ # logs/HEAD from the list since they are purely related to the current working
+ # directory, and should not be shared.
+-for x in config refs logs/refs objects info hooks packed-refs remotes rr-cache svn
++for x in refs logs/refs objects info hooks packed-refs remotes rr-cache svn
+ do
+ 	case $x in
+ 	*/*)
+@@ -77,6 +77,12 @@ done
+ cd "$new_workdir"
+ # copy the HEAD from the original repository as a default branch
+ cp "$git_dir/HEAD" .git/HEAD
++cat >".git/config" <<EOF
++[include]
++	path = "$git_dir/config"
++[core]
++	worktree = "$(pwd)"
++EOF
+ # checkout the branch (either the same as HEAD from the original repository, or
+ # the one that was asked for)
+ git checkout -f $branch
