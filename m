@@ -1,68 +1,85 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: Re: What's cooking in git.git (Apr 2012, #08; Fri, 20)
-Date: Sun, 22 Apr 2012 17:07:15 +0200
-Message-ID: <4F941EA3.7080200@kdbg.org>
-References: <xmqqobqmkkxv.fsf@junio.mtv.corp.google.com>
+From: =?UTF-8?B?WmJpZ25pZXcgSsSZZHJ6ZWpld3NraS1Tem1law==?= 
+	<zbyszek@in.waw.pl>
+Subject: Re: [PATCH 2/4] push: introduce new push.default mode "simple"
+Date: Sun, 22 Apr 2012 18:24:58 +0200
+Message-ID: <4F9430DA.4030304@in.waw.pl>
+References: <vpqfwbye9re.fsf@bauges.imag.fr> <1334933944-13446-1-git-send-email-Matthieu.Moy@imag.fr> <1334933944-13446-3-git-send-email-Matthieu.Moy@imag.fr> <20120420203324.GB13103@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Tim Henigan <tim.henigan@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Apr 22 17:07:27 2012
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org, gitster@pobox.com,
+	Michael Haggerty <mhagger@alum.mit.edu>
+To: Matthieu Moy <Matthieu.Moy@imag.fr>
+X-From: git-owner@vger.kernel.org Sun Apr 22 18:25:27 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SLyNl-0000yR-N0
-	for gcvg-git-2@plane.gmane.org; Sun, 22 Apr 2012 17:07:22 +0200
+	id 1SLzbK-00049x-QU
+	for gcvg-git-2@plane.gmane.org; Sun, 22 Apr 2012 18:25:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752073Ab2DVPHP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 22 Apr 2012 11:07:15 -0400
-Received: from bsmtp.bon.at ([213.33.87.14]:22917 "EHLO bsmtp.bon.at"
+	id S1752126Ab2DVQZO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 22 Apr 2012 12:25:14 -0400
+Received: from kawka.in.waw.pl ([178.63.212.103]:35345 "EHLO kawka.in.waw.pl"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751504Ab2DVPHO (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 22 Apr 2012 11:07:14 -0400
-Received: from [192.168.0.201] (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTP id 3C2CC1000F;
-	Sun, 22 Apr 2012 17:03:09 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:11.0) Gecko/20120327 Thunderbird/11.0.1
-In-Reply-To: <xmqqobqmkkxv.fsf@junio.mtv.corp.google.com>
+	id S1751122Ab2DVQZM (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 22 Apr 2012 12:25:12 -0400
+Received: from 213-238-114-173.adsl.inetia.pl ([213.238.114.173] helo=[192.168.2.4])
+	by kawka.in.waw.pl with esmtpsa (TLS1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.72)
+	(envelope-from <zbyszek@in.waw.pl>)
+	id 1SLzay-0002hC-8z; Sun, 22 Apr 2012 18:25:04 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:10.0.3) Gecko/20120329 Icedove/10.0.3
+In-Reply-To: <20120420203324.GB13103@sigill.intra.peff.net>
+X-Enigmail-Version: 1.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196081>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196082>
 
-Am 21.04.2012 02:06, schrieb Junio C Hamano:
-> * th/difftool-diffall (2012-04-14) 8 commits
->   - difftool: print list of valid tools with '--tool-help'
->   - difftool: teach difftool to handle directory diffs
->   - difftool: eliminate setup_environment function
->   - difftool: stop appending '.exe' to git
->   - difftool: remove explicit change of PATH
->   - difftool: exit(0) when usage is printed
->   - difftool: add '--no-gui' option
->   - difftool: parse options using Getopt::Long
+Some minor spelling fixes:
+
+> When calling "git push" without argument, we want to allow Git to do
+> something simple to explain and safe. push.default=matching is unsafe
+> when use to push to shared repositories, and hard to explain to beginners
+       used
+> in some context. It is debatable whether 'upstream' or 'current' is the
+       contexts
+> safest or the easiest to explain, so introduce a new mode called 'simple'
+> that is the intersection of them: push the upstream branch, but only if
+                                    push to the
+> it has the same name remotely. If not, give an error that suggest the
+> right command to push explicitely to 'upstream' or 'current'.
+
+
+On 04/20/2012 10:33 PM, Jeff King wrote:
+> On Fri, Apr 20, 2012 at 04:59:02PM +0200, Matthieu Moy wrote:
 > 
-> Rolls the two-directory-diff logic from diffall script (in contrib/) into
-> "git difftool" framework.
+>> it has the same name remotely. If not, give an error that suggest the
+>> right command to push explicitely to 'upstream' or 'current'.
+> 
+> s/suggest/&s/
+> 
+>> beneficial on the next pull. Lacking better argument, we chose to deny
+>> the push, because it will be easier to change in the future is someone
+>> shows us wrong.
+> 
+> s/is/if/
+> 
+>> Original-patch-by: Jeff King <peff@peff.net>
+>> Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+>> ---
+>> Except for the broken-ness, this adds the last line in the warning message:
+>>
+>> "To chose either option permanently, read about push.default in git-config(1)"
+       choose
 
-This does not pass test 33 (the last one) on Windows:
+> I don't think that makes sense if I have set "push.default" to "simple"
+> myself. IOW, shouldn't that get added later, when it eventually becomes
+> the default (and then, only when it was chosen because it is the
+> default, not because somebody explicitly said they wanted it)?
 
-+++ git difftool --dir-diff --extcmd ls branch
-Use of uninitialized value in length at d:/Src/mingw-git/git-difftool line 55.
-Use of uninitialized value in length at d:/Src/mingw-git/git-difftool line 55.
-exiting now at d:/Src/mingw-git/git-difftool line 120.
-usage: git diff [--no-index] <path> <path>
-diff --raw --no-abbrev -z branch: command returned error: 129
-
-("exiting now" is a debugging "warn" call that I inserted)
-
-I don't know what's going on. One possibility is that an old Git.pm is
-being used, because I haven't 'make install' yet.
-
-I'm not going to look into this, but I can run tests if you tell me what
-to do.
-
--- Hannes
+-
+Zbyszek
