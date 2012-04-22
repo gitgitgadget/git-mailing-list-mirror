@@ -1,95 +1,128 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2] contrib: add win32 credential-helper
-Date: Sun, 22 Apr 2012 11:07:17 -0700
-Message-ID: <20120422180716.GA27339@sigill.intra.peff.net>
-References: <1334861122-3144-1-git-send-email-kusmabite@gmail.com>
+From: "Philippe Martens" <philippe.martens@metrum.lu>
+Subject: bug: git fast-import should ignore configuration variable core.ignorecase (plain text format)
+Date: Sun, 22 Apr 2012 20:12:12 +0200
+Message-ID: <001e01cd20b3$70b72ce0$522586a0$@metrum.lu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org, msysgit@googlegroups.com
-To: Erik Faye-Lund <kusmabite@gmail.com>
-X-From: msysgit+bncCN2hpKqZChDakdH8BBoEgirMGA@googlegroups.com Sun Apr 22 20:07:26 2012
-Return-path: <msysgit+bncCN2hpKqZChDakdH8BBoEgirMGA@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-vb0-f58.google.com ([209.85.212.58])
+Content-Type: multipart/mixed;
+	boundary="----=_NextPart_000_001F_01CD20C4.34413560"
+To: <git@vger.kernel.org>, <msysgit@googlegroups.com>
+X-From: git-owner@vger.kernel.org Sun Apr 22 20:12:19 2012
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncCN2hpKqZChDakdH8BBoEgirMGA@googlegroups.com>)
-	id 1SM1By-0006cH-Jk
-	for gcvm-msysgit@m.gmane.org; Sun, 22 Apr 2012 20:07:22 +0200
-Received: by mail-vb0-f58.google.com with SMTP id l1sf11400269vba.3
-        for <gcvm-msysgit@m.gmane.org>; Sun, 22 Apr 2012 11:07:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=beta;
-        h=x-beenthere:received-spf:date:from:to:cc:subject:message-id
-         :references:mime-version:in-reply-to:x-original-sender
-         :x-original-authentication-results:precedence:mailing-list:list-id
-         :x-google-group-id:list-post:list-help:list-archive:sender
-         :list-subscribe:list-unsubscribe:content-type:content-disposition;
-        bh=y16JN3tRQ8NOYXDcgLRM2lKi0LFzqOLk8QZraunfUxk=;
-        b=ah6raYsXLbsOLB3QZj4hJqahmgnd6DA7shEfn2utFqepX7W3HDDtIF7hpJhu1kGkdp
-         OJ88JnsDQe810Gcefqop9SXqzfYq8TSLJO+OFJzZZdagg9OborkC6GBrxPlf7vRoEDSS
-         pm0+mUN8FIfi6NXHd2SN0OTueALZxKirBDqck=
-Received: by 10.50.154.130 with SMTP id vo2mr2265277igb.1.1335118042045;
-        Sun, 22 Apr 2012 11:07:22 -0700 (PDT)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.50.151.199 with SMTP id us7ls4412115igb.1.canary; Sun, 22 Apr
- 2012 11:07:20 -0700 (PDT)
-Received: by 10.50.183.167 with SMTP id en7mr3818379igc.3.1335118040888;
-        Sun, 22 Apr 2012 11:07:20 -0700 (PDT)
-Received: by 10.50.183.167 with SMTP id en7mr3818378igc.3.1335118040879;
-        Sun, 22 Apr 2012 11:07:20 -0700 (PDT)
-Received: from peff.net (99-108-226-0.lightspeed.iplsin.sbcglobal.net. [99.108.226.0])
-        by gmr-mx.google.com with ESMTPS id wf3si3486995igb.3.2012.04.22.11.07.20
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sun, 22 Apr 2012 11:07:20 -0700 (PDT)
-Received-SPF: pass (google.com: domain of peff@peff.net designates 99.108.226.0 as permitted sender) client-ip=99.108.226.0;
-Received: (qmail 30922 invoked by uid 107); 22 Apr 2012 18:07:31 -0000
-Received: from 99-189-169-83.lightspeed.snjsca.sbcglobal.net (HELO sigill.intra.peff.net) (99.189.169.83)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Sun, 22 Apr 2012 14:07:31 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 22 Apr 2012 11:07:17 -0700
-In-Reply-To: <1334861122-3144-1-git-send-email-kusmabite@gmail.com>
-X-Original-Sender: peff@peff.net
-X-Original-Authentication-Results: gmr-mx.google.com; spf=pass (google.com:
- domain of peff@peff.net designates 99.108.226.0 as permitted sender) smtp.mail=peff@peff.net
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post?hl=en_US>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/?hl=en_US>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit?hl=en_US>
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en_US>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en_US>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
-Content-Disposition: inline
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196085>
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1SM1Gj-0000qu-R3
+	for gcvg-git-2@plane.gmane.org; Sun, 22 Apr 2012 20:12:18 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1751881Ab2DVSMN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 22 Apr 2012 14:12:13 -0400
+Received: from mirapoint3.brutele.be ([212.68.199.148]:37375 "EHLO
+	mirapoint3.brutele.be" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751782Ab2DVSMN (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 22 Apr 2012 14:12:13 -0400
+Received: from METRUMPHM (62-197-93-206.teledisnet.be [62.197.93.206])
+	by mirapoint3.brutele.be (MOS 4.2.3-GA)
+	with ESMTP id BHL51875;
+	Sun, 22 Apr 2012 20:12:11 +0200
+X-Mailer: Microsoft Outlook 14.0
+Thread-Index: Ac0gs22P/Lz5VCVPTzycvVnKHKm4Ag==
+Content-Language: fr-be
+X-Junkmail-Status: score=10/50, host=mirapoint3.brutele.be
+X-Junkmail-Signature-Raw: score=unknown,
+	refid=str=0001.0A0B0203.4F9449FB.00C8,ss=1,fgs=0,
+	ip=0.0.0.0,
+	so=2010-12-23 16:51:53,
+	dmn=2009-09-10 00:05:08,
+	mode=single engine
+X-Junkmail-IWF: false
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196086>
 
-On Thu, Apr 19, 2012 at 08:45:22PM +0200, Erik Faye-Lund wrote:
+This is a multipart message in MIME format.
 
-> Here's an updated version of my Windows credential-helper.
+------=_NextPart_000_001F_01CD20C4.34413560
+Content-Type: text/plain;
+	charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
 
-Sorry, I've been traveling and haven't had a chance to look at this
-in-depth yet. I'll do so next week. In the meantime, I wanted to point
-out this similar project:
+Hello,
 
-  https://github.com/anurse/git-credential-winstore
+I=92m not quite sure if this is to be considered a Windows specific bug. =
+I=92m
+using Git-1.7.10-preview20120409 on Windows, but the problem exists in
+previous versions.
 
-which somebody else pointed me to a few days ago. I don't know yet if
-your approaches are the same, or if it would be worth combining efforts
-or not.
+When fast-exporting | fast-importing on Windows a repository with case =
+only
+renames, the resulting repository isn=92t a copy of the initial =
+repository.
+This is because Windows repositories are created with core.ignorecase =
+=3D true
+by default.
 
--Peff
+The included script shows the problem: it creates a repository with
+SomeFile.txt renamed to SOMEFILE.txt, then fast-export it and =
+fast-import it
+in two different repositories, with core.ignorecase=3Dfalse and
+core.ignorecase=3Dtrue. The sha-1 of the second commit in the repository =
+with
+core.ignorecase=3Dtrue is different from the initial repository because =
+the
+rename is ignored.
+The situation is worse without rename detection on fast-export : the =
+rename
+becomes a delete.
 
--- 
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
+I think the configuration variable core.ignorecase should be ignored by
+fast-import, and case always taken into account in that case.
 
-*** Please avoid top-posting. ***
+Kind regards,
 
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, visit this group at
-http://groups.google.com/group/msysgit?hl=en_US?hl=en
+Philippe Martens
+Lead Architect
+
+METRUM
+Rue du Kiem, 163
+L-8030 Strassen
+T=E9l : +352 26 00 87 01
+Fax : +352 26 00 87 02
+GSM : +352 661 26 00 37
+Email : philippe.martens@metrum.lu
+Web : www.metrum.lu
+
+------=_NextPart_000_001F_01CD20C4.34413560
+Content-Type: application/octet-stream;
+	name="test-fast-import.sh"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: attachment;
+	filename="test-fast-import.sh"
+
+git init export=0A=
+cd export=0A=
+git config core.ignorecase true=0A=
+echo "With some content in it..." > SomeFile.txt=0A=
+git add .=0A=
+git commit -m "Add some file"=0A=
+git mv -f SomeFile.txt SOMEFILE.txt=0A=
+git commit -m "Rename it (case only)"=0A=
+git fast-export --all -M -C > ../git.fast-export=0A=
+git log --oneline=0A=
+=0A=
+git init ../ignorecase.false=0A=
+cd ../ignorecase.false=0A=
+git config core.ignorecase false=0A=
+git fast-import --quiet < ../git.fast-export=0A=
+git log --oneline=0A=
+=0A=
+git init ../ignorecase.true=0A=
+cd ../ignorecase.true=0A=
+git config core.ignorecase true=0A=
+git fast-import --quiet < ../git.fast-export=0A=
+git log --oneline=0A=
+cd ..=0A=
+
+------=_NextPart_000_001F_01CD20C4.34413560--
