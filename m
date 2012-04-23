@@ -1,8 +1,9 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH 00/10] i18n relative dates, help, remote, apply, index-pack and bundle
-Date: Mon, 23 Apr 2012 19:30:20 +0700
-Message-ID: <1335184230-8870-1-git-send-email-pclouds@gmail.com>
+Subject: [PATCH 01/10] Makefile: feed all header files to xgettext
+Date: Mon, 23 Apr 2012 19:30:21 +0700
+Message-ID: <1335184230-8870-2-git-send-email-pclouds@gmail.com>
+References: <1335184230-8870-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
@@ -14,95 +15,145 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Apr 23 14:34:05 2012
+X-From: git-owner@vger.kernel.org Mon Apr 23 14:34:17 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SMISu-0005Bw-Bk
-	for gcvg-git-2@plane.gmane.org; Mon, 23 Apr 2012 14:34:00 +0200
+	id 1SMIT5-0005J3-BQ
+	for gcvg-git-2@plane.gmane.org; Mon, 23 Apr 2012 14:34:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754229Ab2DWMd4 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 23 Apr 2012 08:33:56 -0400
-Received: from mail-pb0-f46.google.com ([209.85.160.46]:56844 "EHLO
-	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754126Ab2DWMdz (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Apr 2012 08:33:55 -0400
-Received: by pbcun15 with SMTP id un15so3836495pbc.19
-        for <git@vger.kernel.org>; Mon, 23 Apr 2012 05:33:54 -0700 (PDT)
+	id S1755161Ab2DWMeG convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 23 Apr 2012 08:34:06 -0400
+Received: from mail-pz0-f51.google.com ([209.85.210.51]:33527 "EHLO
+	mail-pz0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754314Ab2DWMeE (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Apr 2012 08:34:04 -0400
+Received: by dadz8 with SMTP id z8so15499270dad.10
+        for <git@vger.kernel.org>; Mon, 23 Apr 2012 05:34:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
-         :content-type:content-transfer-encoding;
-        bh=pFJi6ndp+NL2JyWhWTkBrKjh2iQ1Z2sf7UYeZh3poIg=;
-        b=JvkdckePRI7sChRwNu4PKejFYO72d3bSMZGCe7rM1F94uUmw6mxZ7ZZNTcSDQ6UOsE
-         5sEvFHfPyJwtT5rImiaRd4fi9iSkJXQ68smLfgh7GdQdPPTRt5OyFG/yHx5mE+p6YgBc
-         EHWCAFP4o2X8JG80omuB2NlDfTCCBP9s+ifzaUPKQB8gYxzIRe2EPts7IH4vB4Pf6LQR
-         Q9TTRD7Ehzv8F1DTtff/o9NeOCpxq2vFoLlYmAHph86oM2jWX09wLJeyG8WQZLbO9/Y8
-         dvjxnvckuL2Z/6j/8Doglgu2c9bcdH3IxAlnyNarqa83bs/g+Snk+E318C7VrPWdUUtc
-         tAmg==
-Received: by 10.68.132.36 with SMTP id or4mr29617792pbb.115.1335184434520;
-        Mon, 23 Apr 2012 05:33:54 -0700 (PDT)
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding;
+        bh=mLtT9/ofIjc3vVivc2degaM7j5SpDUywSNxcNMcMTsA=;
+        b=DiPH/aZhQsri1ocQtfJ7hQUzLQHqV77gZP7A0thGG1RlF+nkCIBMfCbVq2DVSesv6w
+         HnbkFzjxlVe52+SDUV+Jkn6RrBLphmwRZBaKLr4gPZPLsv8/PxwBQSaZXwPPEAW13Mym
+         W6GsXFT1mGHzykJunG62aHnyELnuF92VSLPNsvwqZx5vwNN9RJkOPVStt9dM+haa6Oyp
+         9Sv2cUPcwcMdB1RFCgKbHvab4TEDuSGqA22QReD8VU4cfCBED09DXWpfbVt0rT5huEo+
+         iocNKqRIZ9BPtklExKuOQQ/WrYXqPMtbmVYSL9953Q1u07GPt8WULhGuCqYWqslzzA0Y
+         ZUgw==
+Received: by 10.68.189.231 with SMTP id gl7mr36455673pbc.151.1335184443171;
+        Mon, 23 Apr 2012 05:34:03 -0700 (PDT)
 Received: from pclouds@gmail.com ([115.74.59.47])
-        by mx.google.com with ESMTPS id 2sm14285053pbw.57.2012.04.23.05.33.49
+        by mx.google.com with ESMTPS id ih3sm18807pbc.10.2012.04.23.05.33.58
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 23 Apr 2012 05:33:53 -0700 (PDT)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Mon, 23 Apr 2012 19:30:37 +0700
+        Mon, 23 Apr 2012 05:34:02 -0700 (PDT)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Mon, 23 Apr 2012 19:30:45 +0700
 X-Mailer: git-send-email 1.7.8.36.g69ee2
+In-Reply-To: <1335184230-8870-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196114>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196115>
 
-Compared to v1 [1], parseopt patch is taken out. I attempted to
-convert all struct option, and it turned into a huge series [2]. Not
-sure how to submit that series yet.
+Translation markers may be present in header files too. Make sure we
+don't miss any.
 
-Apart from that, Makefile is updated to make sure xgettext scan all
-files, including header files. fprintf_ln() now uses fputc (so do a
-few other places). About 4 more sentences in plural forms are detected
-and converted to Q_().
-
-[1] http://thread.gmane.org/gmane.comp.version-control.git/195623
-[2] https://github.com/pclouds/git/tree/parseopt-i18n
-
-Jonathan Nieder (1):
-  i18n: mark relative dates for translation
-
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy (9):
-  Makefile: feed all header files to xgettext
-  Add three convenient format printing functions with \n automatically
-    appended
-  i18n: help: mark strings for translation
-  i18n: make warn_dangling_symref() automatically append \n
-  i18n: remote: mark strings for translation
-  i18n: apply: mark strings for translation
-  i18n: apply: update say_patch_name to give translators complete
-    sentence
-  i18n: index-pack: mark strings for translation
-  i18n: bundle: mark strings for translation
-
- Makefile             |   49 +++++++----
- builtin/apply.c      |  206 ++++++++++++++++++++++++------------------=
+Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+=2Ecom>
 ---
- builtin/fetch.c      |    4 +-
- builtin/help.c       |   48 +++++-----
- builtin/index-pack.c |  125 +++++++++++++++-------------
- builtin/remote.c     |  227 +++++++++++++++++++++++++++---------------=
---------
- bundle.c             |   38 +++++----
- cache.h              |    6 +-
- date.c               |   95 ++++++++++++---------
- generate-cmdlist.sh  |    2 +-
- git.c                |    2 +-
- help.c               |   32 +++++---
- refs.c               |    1 +
- strbuf.c             |   33 +++++++
- strbuf.h             |    7 ++
- test-date.c          |    7 +-
- 16 files changed, 504 insertions(+), 378 deletions(-)
+ Makefile |   48 +++++++++++++++++++++++++++++++-----------------
+ 1 files changed, 31 insertions(+), 17 deletions(-)
 
+diff --git a/Makefile b/Makefile
+index be1957a..dab7362 100644
+--- a/Makefile
++++ b/Makefile
+@@ -386,6 +386,7 @@ XDIFF_OBJS =3D
+ VCSSVN_H =3D
+ VCSSVN_OBJS =3D
+ VCSSVN_TEST_OBJS =3D
++MISC_H =3D
+ EXTRA_CPPFLAGS =3D
+ LIB_H =3D
+ LIB_OBJS =3D
+@@ -543,6 +544,35 @@ LIB_FILE=3Dlibgit.a
+ XDIFF_LIB=3Dxdiff/lib.a
+ VCSSVN_LIB=3Dvcs-svn/lib.a
+=20
++XDIFF_H +=3D xdiff/xinclude.h
++XDIFF_H +=3D xdiff/xmacros.h
++XDIFF_H +=3D xdiff/xdiff.h
++XDIFF_H +=3D xdiff/xtypes.h
++XDIFF_H +=3D xdiff/xutils.h
++XDIFF_H +=3D xdiff/xprepare.h
++XDIFF_H +=3D xdiff/xdiffi.h
++XDIFF_H +=3D xdiff/xemit.h
++
++VCSSVN_H +=3D vcs-svn/line_buffer.h
++VCSSVN_H +=3D vcs-svn/sliding_window.h
++VCSSVN_H +=3D vcs-svn/repo_tree.h
++VCSSVN_H +=3D vcs-svn/fast_export.h
++VCSSVN_H +=3D vcs-svn/svndiff.h
++VCSSVN_H +=3D vcs-svn/svndump.h
++
++MISC_H +=3D branch.h
++MISC_H +=3D bundle.h
++MISC_H +=3D bisect.h
++MISC_H +=3D fetch-pack.h
++MISC_H +=3D thread-utils.h
++MISC_H +=3D send-pack.h
++MISC_H +=3D shortlog.h
++MISC_H +=3D reachable.h
++MISC_H +=3D wt-status.h
++MISC_H +=3D tar.h
++MISC_H +=3D url.h
++MISC_H +=3D walker.h
++
+ LIB_H +=3D advice.h
+ LIB_H +=3D archive.h
+ LIB_H +=3D argv-array.h
+@@ -2170,24 +2200,8 @@ connect.o transport.o url.o http-backend.o: url.=
+h
+ http-fetch.o http-walker.o remote-curl.o transport.o walker.o: walker.=
+h
+ http.o http-walker.o http-push.o http-fetch.o remote-curl.o: http.h ur=
+l.h
+=20
+-XDIFF_H +=3D xdiff/xinclude.h
+-XDIFF_H +=3D xdiff/xmacros.h
+-XDIFF_H +=3D xdiff/xdiff.h
+-XDIFF_H +=3D xdiff/xtypes.h
+-XDIFF_H +=3D xdiff/xutils.h
+-XDIFF_H +=3D xdiff/xprepare.h
+-XDIFF_H +=3D xdiff/xdiffi.h
+-XDIFF_H +=3D xdiff/xemit.h
+-
+ xdiff-interface.o $(XDIFF_OBJS): $(XDIFF_H)
+=20
+-VCSSVN_H +=3D vcs-svn/line_buffer.h
+-VCSSVN_H +=3D vcs-svn/sliding_window.h
+-VCSSVN_H +=3D vcs-svn/repo_tree.h
+-VCSSVN_H +=3D vcs-svn/fast_export.h
+-VCSSVN_H +=3D vcs-svn/svndiff.h
+-VCSSVN_H +=3D vcs-svn/svndump.h
+-
+ $(VCSSVN_OBJS) $(VCSSVN_TEST_OBJS): $(LIB_H) $(VCSSVN_H)
+ endif
+=20
+@@ -2282,7 +2296,7 @@ XGETTEXT_FLAGS_C =3D $(XGETTEXT_FLAGS) --language=
+=3DC \
+ 	--keyword=3D_ --keyword=3DN_ --keyword=3D"Q_:1,2"
+ XGETTEXT_FLAGS_SH =3D $(XGETTEXT_FLAGS) --language=3DShell
+ XGETTEXT_FLAGS_PERL =3D $(XGETTEXT_FLAGS) --keyword=3D__ --language=3D=
+Perl
+-LOCALIZED_C :=3D $(C_OBJ:o=3Dc)
++LOCALIZED_C :=3D $(C_OBJ:o=3Dc) $(LIB_H) $(XDIFF_H) $(VCSSVN_H) $(MISC=
+_H)
+ LOCALIZED_SH :=3D $(SCRIPT_SH)
+ LOCALIZED_PERL :=3D $(SCRIPT_PERL)
+=20
 --=20
 1.7.8.36.g69ee2
