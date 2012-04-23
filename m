@@ -1,87 +1,100 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/7] Documentation: explain push.default option a bit more
-Date: Mon, 23 Apr 2012 12:11:15 -0700
-Message-ID: <xmqqwr56i7qk.fsf@junio.mtv.corp.google.com>
-References: <1334933944-13446-1-git-send-email-Matthieu.Moy@imag.fr>
-	<1335170284-30768-1-git-send-email-Matthieu.Moy@imag.fr>
-	<1335170284-30768-2-git-send-email-Matthieu.Moy@imag.fr>
-	<CB914FF3899C496F9E85E83B9532E055@PhilipOakley>
+Subject: Re: tags not present in bare clone
+Date: Mon, 23 Apr 2012 12:17:12 -0700
+Message-ID: <xmqqsjfui7gn.fsf@junio.mtv.corp.google.com>
+References: <0BE9553B-C799-43D5-BA9A-28FC83CA0773@linea.gov.br>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: "Matthieu Moy" <Matthieu.Moy@imag.fr>, <git@vger.kernel.org>,
-	"Jeff King" <peff@peff.net>,
-	"Michael Haggerty" <mhagger@alum.mit.edu>
-To: "Philip Oakley" <philipoakley@iee.org>
-X-From: git-owner@vger.kernel.org Mon Apr 23 21:11:29 2012
+Cc: git@vger.kernel.org
+To: Patricia Bittencourt Egeland <pbegeland@linea.gov.br>
+X-From: git-owner@vger.kernel.org Mon Apr 23 21:17:20 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SMOfW-0007lh-6g
-	for gcvg-git-2@plane.gmane.org; Mon, 23 Apr 2012 21:11:26 +0200
+	id 1SMOlD-0002dm-F0
+	for gcvg-git-2@plane.gmane.org; Mon, 23 Apr 2012 21:17:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755179Ab2DWTLV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 Apr 2012 15:11:21 -0400
-Received: from mail-ee0-f74.google.com ([74.125.83.74]:40101 "EHLO
-	mail-ee0-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755167Ab2DWTLU (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Apr 2012 15:11:20 -0400
-Received: by eekc41 with SMTP id c41so586964eek.1
-        for <git@vger.kernel.org>; Mon, 23 Apr 2012 12:11:16 -0700 (PDT)
+	id S1752821Ab2DWTRO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 Apr 2012 15:17:14 -0400
+Received: from mail-gy0-f202.google.com ([209.85.160.202]:61719 "EHLO
+	mail-gy0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752248Ab2DWTRN (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Apr 2012 15:17:13 -0400
+Received: by ghbz15 with SMTP id z15so1369868ghb.1
+        for <git@vger.kernel.org>; Mon, 23 Apr 2012 12:17:12 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version:content-type:x-gm-message-state;
-        bh=bPsyIHH2JwDjQNj3UrRdEvzww6rdSI6OSVfofbC/nRw=;
-        b=LbynCeiwB9qiTOPLfuHAJuJ+qPuoz742sAwu4AEjZm0uhDgij6B46JqwV76GmtZpwT
-         3ZIGObIlJDRREjduORpzb+fulBT2F/2JcoDjl/awTFrdLwaLvpKbzCL28sIJmS1NlsKd
-         nEdwBK8exnb29+g4JUZXw2BeJHtq8jdbYhiturjRHjcgRbi9jH7UrpVFw9yWarorINxh
-         dtLDWXHgqPcDKwb58zv5WVPZbK315FJIX4JTCxkZTYUqEWjxqkujNC1Cy9kmVLlew6b6
-         hv2V25x7IIBnQZh+3unxvKU12aLhm3uieCjSX8P2xJ/DP5NrCz03xJ0JfHmdaaEGJHZz
-         RoPw==
-Received: by 10.14.96.134 with SMTP id r6mr4069322eef.1.1335208276411;
-        Mon, 23 Apr 2012 12:11:16 -0700 (PDT)
-Received: by 10.14.96.134 with SMTP id r6mr4069299eef.1.1335208276278;
-        Mon, 23 Apr 2012 12:11:16 -0700 (PDT)
-Received: from hpza10.eem.corp.google.com ([74.125.121.33])
-        by gmr-mx.google.com with ESMTPS id s9si15446731eei.3.2012.04.23.12.11.16
+        bh=bDyv1SwYR1i0IFHZAJyrf7wLlmCCoxuYfPkZRMwpuro=;
+        b=NSnr7res05TUWgrdOsU1olJwYDvP6WkK1B2lYsGqNrPaoUlInFNY91yRkbxokbpXpi
+         4CfIYuRFYIMFc67Nm1Wu+VJ7KKXUTtjxL1XUQr4HRWffnE4Mk0EhOtzw5euWa6sfeP9A
+         vNSOSrvQEoaz2p7YjsbwXuytoBqL0AYeYmtiV6aJ7umXrcfROsFsqxBLZj+n4RmLKwBR
+         xnczUyTyTbuop38kgW/VeZHstgXMN8ogDYS9/tMwK4DWljjgvKOWPNJSoIX1Wm8OaNDj
+         JlI377iT8ry1Y8Ef0qRhNQHkwg5ZJcMjoyDOQlNGy9HVn/Q3HjdCb2UR+8BxQjqyMBPN
+         6Qrg==
+Received: by 10.101.11.36 with SMTP id o36mr6318801ani.2.1335208632919;
+        Mon, 23 Apr 2012 12:17:12 -0700 (PDT)
+Received: by 10.101.11.36 with SMTP id o36mr6318787ani.2.1335208632806;
+        Mon, 23 Apr 2012 12:17:12 -0700 (PDT)
+Received: from wpzn4.hot.corp.google.com (216-239-44-65.google.com [216.239.44.65])
+        by gmr-mx.google.com with ESMTPS id b69si15740898yhe.0.2012.04.23.12.17.12
         (version=TLSv1/SSLv3 cipher=AES128-SHA);
-        Mon, 23 Apr 2012 12:11:16 -0700 (PDT)
+        Mon, 23 Apr 2012 12:17:12 -0700 (PDT)
 Received: from junio.mtv.corp.google.com (junio.mtv.corp.google.com [172.27.69.24])
-	by hpza10.eem.corp.google.com (Postfix) with ESMTP id 18FB5200057;
-	Mon, 23 Apr 2012 12:11:16 -0700 (PDT)
+	by wpzn4.hot.corp.google.com (Postfix) with ESMTP id B09D81E004D;
+	Mon, 23 Apr 2012 12:17:12 -0700 (PDT)
 Received: by junio.mtv.corp.google.com (Postfix, from userid 110493)
-	id 5AE7BE120A; Mon, 23 Apr 2012 12:11:15 -0700 (PDT)
-In-Reply-To: <CB914FF3899C496F9E85E83B9532E055@PhilipOakley> (Philip Oakley's
-	message of "Mon, 23 Apr 2012 20:00:25 +0100")
+	id 5A6E1E120A; Mon, 23 Apr 2012 12:17:12 -0700 (PDT)
+In-Reply-To: <0BE9553B-C799-43D5-BA9A-28FC83CA0773@linea.gov.br> (Patricia
+	Bittencourt Egeland's message of "Mon, 23 Apr 2012 11:28:32 -0600")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1 (gnu/linux)
-X-Gm-Message-State: ALoCoQmx14Dzm8UdeFmLcVK4CsEokwG6ukgXfrDueSU1TrUkNgENSaP5xCv+va5x7W0Z9ofAL+bv3FqjoJ0ILK0sNNLKxfXr+IaKD+/Xv923ZuMAHTjAkH63mk7zks7z1xcx+TIQ44Epi19zA6DuKpEXe6cNswd4/YbRBDUnBw99+CS+uXqu1IE=
+X-Gm-Message-State: ALoCoQmx/u1jtjgnfm26XxMz6GwfO+0JByhoO9FGZE3/gkpCkk/cgJAtjexO+ZSls1UNSdW7bdPCzxRYXjeHmczhlky7WzU9FGK6HqmuuCxVyLIs0+M/gkBv7pUWe41eeYF0WvWhSRCXB9BEErUHp7cthryFnajTprJfJ/pVmCOurZLOl3bM54w=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196160>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196161>
 
-"Philip Oakley" <philipoakley@iee.org> writes:
+Patricia Bittencourt Egeland <pbegeland@linea.gov.br> writes:
 
-> From: "Matthieu Moy" <Matthieu.Moy@imag.fr> Sent: Monday, April 23,
-> 2012 9:37 AM
->> The previous documentation was explaining _what_ the options were doing,
->> but were of little help explaining _why_ a user should set his default to
->> either of the options.
->>
->> Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
->> ...
->> +* `matching` - push all branches having the same name in both ends.
->> + ...
->> +  updated the branch remotely. This is the default.
->
-> Given the expected future change to 'simple' as the default, surely
-> "This is currently the default." give the hint toward that change.
+>        I'm trying to create a bare clone from a regular repo (all
+>        locally; in the same machine). However a tag created in the
+>        regular repo can't be found in the fresh bare clone.  I
+>        expected that the tags would also be present just like anything
+>        from "refs". Am I wrong about that?
 
-Correct, and that is exactly why this patch does not say "currently".
+Reproduction recipe???
 
-As the proposed commit log message explains, this change is about
-clarifying what these options are and unrelated to "future" default
-change at all at this step.
+A simple and straightforward attempt to reproduce what you said you did
+in your message does not exhibit any problem.
+
+    $ mkdir -p /var/tmp/junk && cd /var/tmp/junk
+    $ git init src && cd src
+    Initialized empty Git repository in /var/tmp/junk/src/.git/
+    $ echo frotz >xyzzy && git add xyzzy && git commit -m initial
+    [master (root-commit) b9c684a] initial
+     1 file changed, 1 insertion(+)
+     create mode 100644 xyzzy
+    $ echo nitfol >xyzzy && git commit -a -m second
+    [master 6982d52] second
+     1 file changed, 1 insertion(+), 1 deletion(-)
+    $ git tag -a -m 'First revision' v1.0 HEAD^
+    $ git tag -a -m 'Second revision' v2.0 HEAD
+    $ git for-each-ref
+    6982d523f08b93dc6862ae80e80065b208d0ba85 commit	refs/heads/master
+    33a6b315ffb461cba32d84ecd1692525a0846f5a tag	refs/tags/v1.0
+    0d3f9dce20e28c6898423eb4a2c2010908e46a6c tag	refs/tags/v2.0
+    $ cd ../ ;# back at /var/tmp/junk
+    $ git clone src dst
+    Cloning into 'dst'...
+    done.
+    $ cd dst
+    $ git for-each-ref
+    6982d523f08b93dc6862ae80e80065b208d0ba85 commit	refs/heads/master
+    6982d523f08b93dc6862ae80e80065b208d0ba85 commit	refs/remotes/origin/HEAD
+    6982d523f08b93dc6862ae80e80065b208d0ba85 commit	refs/remotes/origin/master
+    33a6b315ffb461cba32d84ecd1692525a0846f5a tag	refs/tags/v1.0
+    0d3f9dce20e28c6898423eb4a2c2010908e46a6c tag	refs/tags/v2.0
