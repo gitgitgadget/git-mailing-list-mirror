@@ -1,106 +1,90 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH 4/7] push: introduce new push.default mode "simple"
-Date: Mon, 23 Apr 2012 18:09:42 +0200
-Message-ID: <vpqbomil9a1.fsf@bauges.imag.fr>
-References: <1334933944-13446-1-git-send-email-Matthieu.Moy@imag.fr>
-	<1335170284-30768-1-git-send-email-Matthieu.Moy@imag.fr>
-	<1335170284-30768-5-git-send-email-Matthieu.Moy@imag.fr>
-	<xmqqehrela20.fsf@junio.mtv.corp.google.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 02/10] Add three convenient format printing functions
+ with \n automatically appended
+Date: Mon, 23 Apr 2012 11:15:36 -0500
+Message-ID: <20120423161536.GE4832@burratino>
+References: <1335184230-8870-1-git-send-email-pclouds@gmail.com>
+ <1335184230-8870-3-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Apr 23 18:10:26 2012
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+	Jiang Xin <worldhello.net@gmail.com>,
+	Zbigniew =?utf-8?Q?J=C4=99drzejewski-Szmek?= <zbyszek@in.waw.pl>
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Apr 23 18:15:54 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SMLqH-0004J6-J0
-	for gcvg-git-2@plane.gmane.org; Mon, 23 Apr 2012 18:10:21 +0200
+	id 1SMLvZ-0007j4-Ee
+	for gcvg-git-2@plane.gmane.org; Mon, 23 Apr 2012 18:15:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753027Ab2DWQKO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 Apr 2012 12:10:14 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:40420 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751950Ab2DWQKN (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Apr 2012 12:10:13 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id q3NG3G0S017383
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Mon, 23 Apr 2012 18:03:16 +0200
-Received: from bauges.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1SMLpf-0005rc-6i; Mon, 23 Apr 2012 18:09:43 +0200
-In-Reply-To: <xmqqehrela20.fsf@junio.mtv.corp.google.com> (Junio C. Hamano's
-	message of "Mon, 23 Apr 2012 08:52:55 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.93 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Mon, 23 Apr 2012 18:03:18 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: q3NG3G0S017383
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1335801801.30584@v/zkND9sfFV9oEjTMUyoUw
+	id S1753206Ab2DWQPp convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 23 Apr 2012 12:15:45 -0400
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:55283 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753123Ab2DWQPo convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 23 Apr 2012 12:15:44 -0400
+Received: by yenl12 with SMTP id l12so6232980yen.19
+        for <git@vger.kernel.org>; Mon, 23 Apr 2012 09:15:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=Oqk2GkY8weNTFgcBKar+4iw74IdyiUeBQJEg88BIkTI=;
+        b=s/C1mD+F02RYUWOoQgEmNJEE/uNuyLTk/H91vQyiZDZ+7rlRdyu6oSq+4YHLGz6O/A
+         f2Ea1bpIC+b3N+t8sHGppS9De8P9wmeFUlXJi1Z1nPK1F6OvwpP9suwAuxGCGi5YivAH
+         XK6fYFC4xKPmcmg7aNh+8t/c+cX4BZvrfibadzoyrTEh9HqcMQNjI4I70lqd/8tJxwJd
+         6lHp+CECE+NFJnLtkKjpM4zoIDgX/AgExFb3/8gYClws6XgBY+9NAWBtX/zt9ODxGYL7
+         WXVTGXmpxxE2jV8vlCeR3ciY8yGGOTtqr32I9SAqr0FMT70+CqHI0oLMNh+YMMiHreTY
+         HaWg==
+Received: by 10.60.1.7 with SMTP id 7mr23324005oei.71.1335197743555;
+        Mon, 23 Apr 2012 09:15:43 -0700 (PDT)
+Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
+        by mx.google.com with ESMTPS id i6sm16557565obv.5.2012.04.23.09.15.40
+        (version=SSLv3 cipher=OTHER);
+        Mon, 23 Apr 2012 09:15:41 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <1335184230-8870-3-git-send-email-pclouds@gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196136>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196137>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
 
->> -static void setup_push_upstream(struct remote *remote)
->> +NORETURN die_push_simple(struct branch *branch, struct remote *remote) {
->
-> Not static?
+> --- a/strbuf.c
+> +++ b/strbuf.c
+> @@ -464,3 +464,36 @@ void strbuf_addstr_urlencode(struct strbuf *sb, =
+const char *s,
+[...]
+> +int printf_ln(const char *fmt, ...)
+> +{
+> +	int ret;
+> +	va_list ap;
+> +	va_start(ap, fmt);
+> +	ret =3D vprintf(fmt, ap);
+> +	va_end(ap);
+> +	if (ret >=3D 0)
+> +		ret +=3D printf("\n");
 
-fixed.
+Missed a spot.  I'd do
 
-> Unless you change behaviour depending on NULL-ness of this variable
-> later in this code (and I do not think you do---this is only for a
-> message string as far as I can see), I'd prefer to see that ?: you have
-> at the use site here instead, i.e.
->
-> 	if (!short_up)
-> 		short_up = branch->merge[0]->src;
+	if (ret < 0 || putchar('\n') =3D=3D EOF)
+		return -1;
+	return ret + 1;
 
-applied.
+And likewise, for the fprintf version:
 
-> perhaps with s/short_up/dest_branch/ or something.
+	if (ret < 0 || putc('\n', fp) =3D=3D EOF)
+		return -1;
+	return ret + 1;
 
-Hmm, not really. It's a candidate destination branch, but we'll use the
-variable only if the push fails because there is another candidate.
-
-I did s/short_up/short_upstream/ to make it clearer.
-
->> +	if (simple && strcmp(branch->refname, branch->merge[0]->src)) {
->> +		die_push_simple(branch, remote);
->> +	}
->
-> Lose unnecessary {} pair, perhaps?
-
-Yes, removed.
-
->> +	git --git-dir=repo1 log -1 --format="%h %s" "other-name" >expect-other-name &&
->> +	test_push_success current master &&
->> +	git --git-dir=repo1 log -1 --format="%h %s" "other-name" >actual-other-name &&
->> +	test_cmp expect-other-name actual-other-name
->
-> Hrm.
->
-> There is nothing wrong in the above part, but it shows taht it would be
-> very nice if test_push_success helper also encapsulated the "make sure
-> others did not change" logic.
-
-The issue is that one has to define "others", and it is different for
-current and upstream so we'd have to add arguments to specify that to
-test_push_success. I'd rather keep the helpers API simple, and
-special-case when needed as we did here.
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Hope that helps,
+Jonathan
