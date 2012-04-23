@@ -1,97 +1,100 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 3/7] t5528-push-default.sh: add helper functions
-Date: Mon, 23 Apr 2012 10:09:37 -0700
-Message-ID: <xmqqmx62jrxq.fsf@junio.mtv.corp.google.com>
-References: <1334933944-13446-1-git-send-email-Matthieu.Moy@imag.fr>
-	<1335170284-30768-1-git-send-email-Matthieu.Moy@imag.fr>
-	<1335170284-30768-4-git-send-email-Matthieu.Moy@imag.fr>
-	<xmqqipgqlass.fsf@junio.mtv.corp.google.com>
-	<vpqobqil9ml.fsf@bauges.imag.fr>
-	<xmqq8vhml8z7.fsf@junio.mtv.corp.google.com>
-	<vpqfwbuju8a.fsf@bauges.imag.fr> <vpqobqigzcx.fsf@bauges.imag.fr>
+From: Junio C Hamano <junio@pobox.com>
+Subject: Re: [PATCH 1/3] git-svn: use POSIX::sigprocmask to block signals
+Date: Mon, 23 Apr 2012 10:33:43 -0700
+Message-ID: <xmqqipgqjqtk.fsf@junio.mtv.corp.google.com>
+References: <cover.1335198921.git.rkagan@mail.ru>
+	<d21d7433574e8ea7628320dbe1a5fc0dc9d94e64.1335198921.git.rkagan@mail.ru>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Mon Apr 23 19:09:47 2012
+Cc: git@vger.kernel.org, Eric Wong <normalperson@yhbt.net>
+To: Roman Kagan <rkagan@mail.ru>
+X-From: git-owner@vger.kernel.org Mon Apr 23 19:33:57 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SMMlk-0006Nf-UF
-	for gcvg-git-2@plane.gmane.org; Mon, 23 Apr 2012 19:09:45 +0200
+	id 1SMN9A-0003XK-Qg
+	for gcvg-git-2@plane.gmane.org; Mon, 23 Apr 2012 19:33:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754448Ab2DWRJm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 Apr 2012 13:09:42 -0400
-Received: from mail-fa0-f74.google.com ([209.85.161.74]:63079 "EHLO
-	mail-fa0-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754243Ab2DWRJj (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Apr 2012 13:09:39 -0400
-Received: by faaa19 with SMTP id a19so156294faa.1
-        for <git@vger.kernel.org>; Mon, 23 Apr 2012 10:09:38 -0700 (PDT)
+	id S1753518Ab2DWRdr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 Apr 2012 13:33:47 -0400
+Received: from mail-lpp01m010-f74.google.com ([209.85.215.74]:33789 "EHLO
+	mail-lpp01m010-f74.google.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753421Ab2DWRdq (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 23 Apr 2012 13:33:46 -0400
+Received: by laai8 with SMTP id i8so580452laa.1
+        for <git@vger.kernel.org>; Mon, 23 Apr 2012 10:33:44 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version:content-type:x-gm-message-state;
-        bh=H9iCgx3yIclmW6FmrzO8KXGzWhyyn3TXkLA6IvdTHXc=;
-        b=SJYT7sGbSxr4rkFgwyHGq+hXuQWWDeO4FLqc5y+rqRR5AlWT7d+tAAOOQUzv57xN0t
-         y2nPxk83gIYEalT0Q9YWi4NZI1gyG5PXznDwAMnq7O3NeLjNeBXUDvpWHYpoZ/5ed7vi
-         6L2GWbCgCF4+vVXU/3KkGK0WoJMKwcSSlON6cmcenzD4eDAQXo+yaYOPld1amOBLEGUW
-         KIjOLbXsLLbcfewfsSumy73rwnjqabxBmdVNXA5ivAh7zvdTwrYfsisH1Sw49DRbu8t6
-         W6DL7qMHwkNgNbvr8aDq/eP2FC4K09LaiqKJRY9KYvvq3FxiIThfvftV0iFgBT/GLX6T
-         Bm2w==
-Received: by 10.14.188.12 with SMTP id z12mr3967014eem.8.1335200978285;
-        Mon, 23 Apr 2012 10:09:38 -0700 (PDT)
-Received: by 10.14.188.12 with SMTP id z12mr3966997eem.8.1335200978166;
-        Mon, 23 Apr 2012 10:09:38 -0700 (PDT)
-Received: from hpza9.eem.corp.google.com ([74.125.121.33])
-        by gmr-mx.google.com with ESMTPS id t8si10390906eef.1.2012.04.23.10.09.38
+        bh=aoAB2yLYXZ704gLBt58Y6WzV6LwiDD+03t5QhmOnAtM=;
+        b=S74DicoIKnXS3nWtO8Nb2tEYaSvPFHmTI/73eGMs4C5chFuy8y/Fr3sxQ5/tarkNoM
+         IjKWxWptI8BRgynkrBVxbc05c6r//Ub63JTedapWKAKHxA1kMAs3B2S8IhhD+C/GTRt+
+         j94sb0Pqj0NtrQIo9hJBzWp6BDE9mwg3HwUbsVu6PaYiCycEtXhklPfDSt8vl3QfYalE
+         dGS1fH/YK8Hx90zW5qHJotD9GCkIrVAJRj3uxAcYfzWRm3uBTt2GHt8dpiaivT/Tzinr
+         S0zC0tJwv96l7kWh0+WVxWhsHZL5+ekZTLLCEKp0sftAyxWMU6ZR4r4S0VM8oAIhFcW3
+         c9Rg==
+Received: by 10.14.100.207 with SMTP id z55mr3986900eef.4.1335202424652;
+        Mon, 23 Apr 2012 10:33:44 -0700 (PDT)
+Received: by 10.14.100.207 with SMTP id z55mr3986883eef.4.1335202424524;
+        Mon, 23 Apr 2012 10:33:44 -0700 (PDT)
+Received: from hpza10.eem.corp.google.com ([74.125.121.33])
+        by gmr-mx.google.com with ESMTPS id s9si15233394eei.3.2012.04.23.10.33.44
         (version=TLSv1/SSLv3 cipher=AES128-SHA);
-        Mon, 23 Apr 2012 10:09:38 -0700 (PDT)
+        Mon, 23 Apr 2012 10:33:44 -0700 (PDT)
 Received: from junio.mtv.corp.google.com (junio.mtv.corp.google.com [172.27.69.24])
-	by hpza9.eem.corp.google.com (Postfix) with ESMTP id F11E75C0050;
-	Mon, 23 Apr 2012 10:09:37 -0700 (PDT)
+	by hpza10.eem.corp.google.com (Postfix) with ESMTP id 556ED20004E;
+	Mon, 23 Apr 2012 10:33:44 -0700 (PDT)
 Received: by junio.mtv.corp.google.com (Postfix, from userid 110493)
-	id 4CF49E120A; Mon, 23 Apr 2012 10:09:37 -0700 (PDT)
-In-Reply-To: <vpqobqigzcx.fsf@bauges.imag.fr> (Matthieu Moy's message of "Mon,
-	23 Apr 2012 18:57:34 +0200")
+	id 9B04FE120A; Mon, 23 Apr 2012 10:33:43 -0700 (PDT)
+In-Reply-To: <d21d7433574e8ea7628320dbe1a5fc0dc9d94e64.1335198921.git.rkagan@mail.ru>
+	(Roman Kagan's message of "Mon, 2 Apr 2012 17:29:32 +0400")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1 (gnu/linux)
-X-Gm-Message-State: ALoCoQl52Ls59qNfcCHOUG9+OZVXHylkailCmtMxHhjkj9Wu5zQiWdG/WJ8WD+AYqwkx0k4/hrIGOkOEpPyzejlZW+g/SbY1e+Dt9UsoSlW1XKqVCVEfB3TC+SWmaa1vCMJ6c7RfexxsxX5F9oE0qg9nEf+Mf7yceKPHVAWWITo29gj4AUPqJ/s=
+X-Gm-Message-State: ALoCoQnSCnPgDzu5gCgAwPv1MI7yCgjJu5b7fpxxkLaR1sn34XbWA03hf5mwtsDcy0iezOIJxe189AdPjIvmIynZ2TzqgpV7lvARMh82Y03mgf5UBSIvIo9BsPT1WC67DtTVG0d6yVbhV4EnMQhbB0Mu3zN+noi6oVa+XS5bqadXb8MzcUD5kgQ=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196150>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196151>
 
-Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+Roman Kagan <rkagan@mail.ru> writes:
 
-> Actually, there's a much stronger argument: we're talking about
-> test_push_failure (not success), so whatever the mode is, no branch
-> should be updated.
+> rev_map_set() tries to avoid being interrupted by signals.
 
-Not really.  When you have 'master' and 'side' (two branches), have
-updated both but the remote side has only updated 'master', a push with
-'matching' behaves like this:
+The wording "tries to avoid" was unclear and I had to read the code
+twice.  The code defers the signal processing but still wants to get the
+signal after it is done what it is doing, which is different from simply
+"ignoring", which is another way to "try to avoid".
 
-$ git -c push.default=matching push
-Counting objects: 8, done.
-Delta compression using up to 12 threads.
-Compressing objects: 100% (2/2), done.
-Writing objects: 100% (6/6), 399 bytes, done.
-Total 6 (delta 1), reused 0 (delta 0)
-Unpacking objects: 100% (6/6), done.
-To /var/tmp/j/src
-   9e1359e..4d3f497  side -> side
- ! [rejected]        master -> master (non-fast-forward)
-error: failed to push some refs to '/var/tmp/j/src'
-hint: Updates were rejected because a pushed branch tip is behind its remote
-hint: counterpart. Check out this branch and merge the remote changes
-hint: (e.g. 'git pull') before pushing again.
-hint: See the 'Note about fast-forwards' in 'git push --help' for details.
-$ echo $?
-1
+> The conventional way to achieve this is through sigprocmask(), which is
+> available in the standard POSIX module.
+>
+> This is implemented by this patch.  One important consequence of it is
+> that the signal handlers won't be unconditionally set to SIG_DFL anymore
+> upon the first invocation of rev_map_set() as they used to.
 
-Notice the mention of "some refs" on the "error:" line.  'side' branch
-successfully fast-forwards.
+That may be the first degree consequence (another is what happens when
+you received signals of different kinds while in the blocked section),
+but how would that difference affect the overall program execution?
+
+> [That said, I'm not convinced that messing with signals is necessary
+> (and sufficient) here at all, but my perl-foo is too weak for a more
+> intrusive change.]
+
+Everything you discussed above in the log message before "That said"
+part made sense.  Instead of catching and setting a single $sig and
+replaying that later, potentially losing accumulated signals that are of
+different kinds, blocking before entering the part you do not want to
+get interrupted and unblocking after you are done is better done using
+sigprocmask.
+
+If the problem to solve is to implement deferral and delayed signal
+processing correctly, I think your patch did the right thing, but your
+"necessary/sufficient" comment implies that the problem you were trying
+to address is _different_ from that.  But it is not clear what it is.
+
+Could you elaborate on it a bit more here, or if it will become clear in
+the later patch, then please drop that parenthesized part out of the log
+message.
