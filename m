@@ -1,82 +1,77 @@
-From: Samuel Maftoul <samuel.maftoul@gmail.com>
-Subject: Re: git clone submodules recursive and reference
-Date: Mon, 23 Apr 2012 10:06:41 +0200
-Message-ID: <CAFj+z05G_LLLc=OqZiqKCJPpTZ21Y4W6HTJ6ZitraVZXEQ50-A@mail.gmail.com>
-References: <CAFj+z055ZZc-Am+pEMgjRvHgoxKSRBjnHhABCseC45+8YswKWg@mail.gmail.com>
-	<4F91B22A.9000507@web.de>
-	<CAFj+z04A5v7Cz=Wbqn_TBJQG88rPSfrs4T1=22x1N+v77ZXgYA@mail.gmail.com>
-	<4F92BA0C.4030009@web.de>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git <git@vger.kernel.org>
-To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Mon Apr 23 10:06:55 2012
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: [PATCH 2/7] Undocument deprecated alias 'push.default=tracking'
+Date: Mon, 23 Apr 2012 10:37:59 +0200
+Message-ID: <1335170284-30768-3-git-send-email-Matthieu.Moy@imag.fr>
+References: <1334933944-13446-1-git-send-email-Matthieu.Moy@imag.fr>
+ <1335170284-30768-1-git-send-email-Matthieu.Moy@imag.fr>
+Cc: Jeff King <peff@peff.net>, Michael Haggerty <mhagger@alum.mit.edu>,
+	Matthieu Moy <Matthieu.Moy@imag.fr>
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Mon Apr 23 10:38:37 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SMEIR-0000vV-F5
-	for gcvg-git-2@plane.gmane.org; Mon, 23 Apr 2012 10:06:55 +0200
+	id 1SMEn4-0002uh-9X
+	for gcvg-git-2@plane.gmane.org; Mon, 23 Apr 2012 10:38:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752281Ab2DWIGn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 Apr 2012 04:06:43 -0400
-Received: from mail-qc0-f174.google.com ([209.85.216.174]:59998 "EHLO
-	mail-qc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751577Ab2DWIGm (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Apr 2012 04:06:42 -0400
-Received: by qcro28 with SMTP id o28so6732010qcr.19
-        for <git@vger.kernel.org>; Mon, 23 Apr 2012 01:06:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=2BUBP12uCig4W6yTQAkj33XSmfRpQUk2SK40X5mvSas=;
-        b=0dk8yhN3p/Fnd+JtCIE9yUMazitfm5wUo4teVNwxhdyv3jHJM0lnVx9g2MMwXKxIcc
-         f7++GmRxXBGd0k9jPEDg1A3TP/z/ItN1BkOY3Con5LCAPY/uqiI35L1Q4+W2qQS9z6uE
-         SJc54XDkh2FI32LMfBAKlLLbBVaXuu+pfMj4IfvfnxPPeALhQCNk7lTfMpclT/B+zRdc
-         /kuP9Qg3hPVNsN4WOYNmKa7Jd/yKwLiXsei6KActFDY6O9IbT6WlfjlaDXCD2vpeTJXf
-         42saDUbH4rBFqL0kN0Sv6HK6QLEyKxK8g9jX+yhoTkylKZ6/oRrxvMLag941Rh/0lYkJ
-         16ZA==
-Received: by 10.224.31.202 with SMTP id z10mr12769230qac.31.1335168401207;
- Mon, 23 Apr 2012 01:06:41 -0700 (PDT)
-Received: by 10.229.131.210 with HTTP; Mon, 23 Apr 2012 01:06:41 -0700 (PDT)
-In-Reply-To: <4F92BA0C.4030009@web.de>
+	id S1754322Ab2DWIi2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 Apr 2012 04:38:28 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:58248 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754273Ab2DWIi0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Apr 2012 04:38:26 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id q3N8Vf8J025761
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Mon, 23 Apr 2012 10:31:42 +0200
+Received: from bauges.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.72)
+	(envelope-from <moy@imag.fr>)
+	id 1SMEmd-0004mp-O6; Mon, 23 Apr 2012 10:38:07 +0200
+Received: from moy by bauges.imag.fr with local (Exim 4.72)
+	(envelope-from <moy@imag.fr>)
+	id 1SMEmd-00081S-Md; Mon, 23 Apr 2012 10:38:07 +0200
+X-Mailer: git-send-email 1.7.10.234.ge65dd.dirty
+In-Reply-To: <1335170284-30768-1-git-send-email-Matthieu.Moy@imag.fr>
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Mon, 23 Apr 2012 10:31:45 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: q3N8Vf8J025761
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
+MailScanner-NULL-Check: 1335774707.45201@Mbtm/48oGGYx8KS9ZWXHEQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196098>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196099>
 
->> I'm sharing objects between repositories by creating a bare
->> repository, adding the remotes for the repositories and fetch them in
->> this bare repo.
->
-> This sounds like a cool way to reduce the disk footprint of the
-> repos on our Jenkins server.
+It's been deprecated since 53c4031 (Johan Herland, Wed Feb 16 2011,
+push.default: Rename 'tracking' to 'upstream'), so it's OK to remove it
+from documentation (even though it's still supported) to make the
+explanations more readable.
 
-I'm not using --reference for reducing disk footprint, but rather for
-caching git repos and reducing the impact of slow networks !
-Why would it reduce the disk footprint ?
+Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+---
+Feel free to squash into previous one if needed.
 
->
->> So for me, it makes sense to pass the "--reference" to the submodules
->> clone, if submodules remotes are added to this reference bare repo and
->> objects are already fetched (and I'm in this case, as I use a lot of
->> different projects that shares the same set of submodules).
->
-> How do you fetch then, do you fetch into the referenced repo first
-> and then do a fetch in the clones afterwards to just update the refs
-> there? Or is the bare repo just a starting point for the initial
-> clone?
+ Documentation/config.txt |    1 -
+ 1 file changed, 1 deletion(-)
 
-You need to fetch first in the bare repo, than in your clones. When
-you use --reference, the reference leaves untouched, it's your job to
-update the reference (would be nice to have options that allows to
-update the reference at the same time that the clone updates, so no
-need to connect twice to the remote repository).
-
-> Hmm, me thinks we'd have to add a new option for that, and I'm not
-> sure it is worth it.
-
-Maybe it's not worth ...
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index e38fab1..ddf6043 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -1693,7 +1693,6 @@ push.default::
+   makes `git push` and `git pull` symmetrical in the sense that `push`
+   will update the same remote ref as the one which is merged by
+   `git pull`.
+-* `tracking` - deprecated synonym for `upstream`.
+ * `current` - push the current branch to a branch of the same name.
+   +
+   The `current` and `upstream` modes are for those who want to
+-- 
+1.7.10.234.ge65dd.dirty
