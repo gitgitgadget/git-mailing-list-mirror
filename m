@@ -1,69 +1,108 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 00/10] i18n relative dates, help, remote, apply,
- index-pack and bundle
-Date: Mon, 23 Apr 2012 11:41:18 -0500
-Message-ID: <20120423164118.GG4832@burratino>
-References: <1335184230-8870-1-git-send-email-pclouds@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 3/7] t5528-push-default.sh: add helper functions
+Date: Mon, 23 Apr 2012 09:42:59 -0700
+Message-ID: <xmqqzka2jt64.fsf@junio.mtv.corp.google.com>
+References: <1334933944-13446-1-git-send-email-Matthieu.Moy@imag.fr>
+	<1335170284-30768-1-git-send-email-Matthieu.Moy@imag.fr>
+	<1335170284-30768-4-git-send-email-Matthieu.Moy@imag.fr>
+	<xmqqipgqlass.fsf@junio.mtv.corp.google.com>
+	<vpqobqil9ml.fsf@bauges.imag.fr>
+	<xmqq8vhml8z7.fsf@junio.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-	Jiang Xin <worldhello.net@gmail.com>,
-	Zbigniew =?utf-8?Q?J=C4=99drzejewski-Szmek?= <zbyszek@in.waw.pl>
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Apr 23 18:41:40 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Michael Haggerty <mhagger@alum.mit.edu>
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Mon Apr 23 18:43:09 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SMMKT-0006jz-0T
-	for gcvg-git-2@plane.gmane.org; Mon, 23 Apr 2012 18:41:33 +0200
+	id 1SMMM0-0007hj-5Z
+	for gcvg-git-2@plane.gmane.org; Mon, 23 Apr 2012 18:43:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754275Ab2DWQl2 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 23 Apr 2012 12:41:28 -0400
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:57273 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754266Ab2DWQl1 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 23 Apr 2012 12:41:27 -0400
-Received: by yenl12 with SMTP id l12so6259114yen.19
-        for <git@vger.kernel.org>; Mon, 23 Apr 2012 09:41:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=iFkiBvv0nJC920mvyGXO9k7rsu+vWgJCjfnMDpbC2g0=;
-        b=t3MS46tBvmPdvNdEEhKm4wAlmfdf46DoACMD3IqMWJUXFRYPb9JB9fD88HF33JcCyQ
-         sH/mLtxJFMks2TlAsdbNYY2NQm7d4AE3XkVVhYNqVFvS3Z2B+KZ/o9wtaKJkgUL283Wh
-         1TLwmSERN6TJ/ooWZXtC05nXC5NM3f/PWhclksAEzDNiXhCDsWf2l6hWyjdPgneOwGF9
-         B9DRe/ESD2dpOE+ZyH7PbriV7zbbLoeKQE3XTY8vU8/JjqeFVW6Vldzs4Lr0IHbkCqBj
-         TTPjFmph1YoyFg9I3hvsecG92s+WiqEVtL8odZ/KBhPhxSigW2zMSTtZsBqx71ADvsXG
-         ivEg==
-Received: by 10.50.219.194 with SMTP id pq2mr7268257igc.18.1335199286347;
-        Mon, 23 Apr 2012 09:41:26 -0700 (PDT)
-Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
-        by mx.google.com with ESMTPS id em4sm11870969igc.16.2012.04.23.09.41.22
-        (version=SSLv3 cipher=OTHER);
-        Mon, 23 Apr 2012 09:41:23 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <1335184230-8870-1-git-send-email-pclouds@gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1753802Ab2DWQnB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 Apr 2012 12:43:01 -0400
+Received: from mail-yx0-f202.google.com ([209.85.213.202]:64387 "EHLO
+	mail-yx0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752534Ab2DWQnA (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Apr 2012 12:43:00 -0400
+Received: by yenq2 with SMTP id q2so1353038yen.1
+        for <git@vger.kernel.org>; Mon, 23 Apr 2012 09:43:00 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type:x-gm-message-state;
+        bh=+FUxhshwvePuFUnZ4fYXl9IEyzp4FIaJ/eOUfU42E+k=;
+        b=L11gIkAcjbNCEaAY3F1WW+RdYtntFhFaFfbp948VTrA33J9PQGRbcPH7MSFDlUgpMH
+         cMO8Gz6aI71gZ8yfZJ6CVI0TtIVXxQYxRO3FUCb6WGTPp57AtNX0G0yUaHnJqj3RscfS
+         Jc4wcgwBaOrI3i1gRgUwxMv2D92727WRidu8qnW+dfGoqj2fNLa4KwV9mTEAtKUzDg14
+         p8ie0Kf1N4FcsQKJPEuY4pX2HG88hlAUHG/6jIbvaKJqw2QgqHdELT/JyerIoF9dm999
+         coWrPMTPl3JkxjvgoAVI4ZbWW91ZLAci5jNp0FfX4jWFAWPtv49/X1vaYDDIsaQceWj2
+         zV/A==
+Received: by 10.236.155.102 with SMTP id i66mr20337234yhk.9.1335199380290;
+        Mon, 23 Apr 2012 09:43:00 -0700 (PDT)
+Received: by 10.236.155.102 with SMTP id i66mr20337213yhk.9.1335199380203;
+        Mon, 23 Apr 2012 09:43:00 -0700 (PDT)
+Received: from wpzn3.hot.corp.google.com (216-239-44-65.google.com [216.239.44.65])
+        by gmr-mx.google.com with ESMTPS id y36si76205yhg.2.2012.04.23.09.43.00
+        (version=TLSv1/SSLv3 cipher=AES128-SHA);
+        Mon, 23 Apr 2012 09:43:00 -0700 (PDT)
+Received: from junio.mtv.corp.google.com (junio.mtv.corp.google.com [172.27.69.24])
+	by wpzn3.hot.corp.google.com (Postfix) with ESMTP id 1CDFB10004D;
+	Mon, 23 Apr 2012 09:43:00 -0700 (PDT)
+Received: by junio.mtv.corp.google.com (Postfix, from userid 110493)
+	id BEADBE120A; Mon, 23 Apr 2012 09:42:59 -0700 (PDT)
+In-Reply-To: <xmqq8vhml8z7.fsf@junio.mtv.corp.google.com> (Junio C. Hamano's
+	message of "Mon, 23 Apr 2012 09:16:12 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1 (gnu/linux)
+X-Gm-Message-State: ALoCoQlxEb4HjLFFFHHhTv8OZVNsYCjJG9ESeOFRoVlZveuHUL2TzsqSI/u2Lsa/Ehp544VqjLI1xBJ7gyVUeBJMwx7ZRCCx4r3tVN1+eynM0S7a4E5tkvAt0iuZHmSzQeun5cO4wLsecwokC3xxn1zwb/C6jTa9yt797YKQ5QOAoMK0Z++LwVo=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196145>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196146>
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> Compared to v1 [1], parseopt patch is taken out. I attempted to
-> convert all struct option, and it turned into a huge series [2]. Not
-> sure how to submit that series yet.
+> Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+>
+>>> ... and we can use --all not master here, right?
+>>
+>> Actually, we can even use --all everywhere. And then, we don't even need
+>> the second argument, and we can simplify greatly the function:
+>
+> That did cross my mind but I suspected that the reason to have the
+> argument was because you would want to use the helper also to test
+> 'matching' case where you want to make sure ones that the pusher does
+> not have are left alone.
 
-With the exception of the two nits mentioned, looks good.  I haven't
-tested yet with GETTEXT_POISON=3DYes, though.  Thanks for your
-perseverance.
+In any case, here is the summary of my comments in patch form (I am not
+squashing them myself).
 
-Jonathan
+-- >8 --
+Subject: [PATCH 1/3] fixup! push: introduce new push.default mode "simple"
+
+compilation fix; this should be static and needs type.
+
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ builtin/push.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/builtin/push.c b/builtin/push.c
+index 7a845a8..913ac7a 100644
+--- a/builtin/push.c
++++ b/builtin/push.c
+@@ -76,7 +76,7 @@ static int push_url_of_remote(struct remote *remote, const char ***url_p)
+ 	return remote->url_nr;
+ }
+ 
+-NORETURN die_push_simple(struct branch *branch, struct remote *remote) {
++static NORETURN int die_push_simple(struct branch *branch, struct remote *remote) {
+ 	/*
+ 	 * There's no point in using shorten_unambiguous_ref here,
+ 	 * as the ambiguity would be on the remote side, not what
+-- 
+1.7.10.376.g4eb25
