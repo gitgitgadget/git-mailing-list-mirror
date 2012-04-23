@@ -1,115 +1,86 @@
-From: vamsi <vamsineelam@gmail.com>
-Subject: How to merge the diff file in the git repositry
-Date: Sun, 22 Apr 2012 18:38:52 -0700 (PDT)
-Message-ID: <1335145132814-7490516.post@n2.nabble.com>
+From: Junio C Hamano <junio@pobox.com>
+Subject: Re: [PATCHv2] git-remote-testgit: fix race when spawning fast-import
+Date: Sun, 22 Apr 2012 19:40:59 -0700
+Message-ID: <xmqq4nsbmapw.fsf@junio.mtv.corp.google.com>
+References: <20120415105943.GD6263@ecki> <4F8AAE7C.1020507@gmail.com>
+	<20120415114518.GB9338@ecki> <4F8AB7F1.1020705@gmail.com>
+	<20120415125140.GA15933@ecki> <20120419233445.GA20790@padd.com>
+	<4F9145A1.6020201@gmail.com> <20120421201524.GA18419@padd.com>
+	<20120421234555.GA11808@padd.com>
+	<xmqqty0cxtcd.fsf@junio.mtv.corp.google.com>
+	<20120422203058.GA17290@padd.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Apr 23 03:39:39 2012
+Cc: Stefano Lattarini <stefano.lattarini@gmail.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>, git@vger.kernel.org,
+	Clemens Buchacher <drizzd@aon.at>
+To: Pete Wyckoff <pw@padd.com>
+X-From: git-owner@vger.kernel.org Mon Apr 23 04:41:20 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SM8Fa-0001sk-H8
-	for gcvg-git-2@plane.gmane.org; Mon, 23 Apr 2012 03:39:34 +0200
+	id 1SM9DH-0002pI-3y
+	for gcvg-git-2@plane.gmane.org; Mon, 23 Apr 2012 04:41:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753088Ab2DWBiy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 22 Apr 2012 21:38:54 -0400
-Received: from sam.nabble.com ([216.139.236.26]:48249 "EHLO sam.nabble.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753062Ab2DWBix (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 22 Apr 2012 21:38:53 -0400
-Received: from jim.nabble.com ([192.168.236.80])
-	by sam.nabble.com with esmtp (Exim 4.72)
-	(envelope-from <vamsineelam@gmail.com>)
-	id 1SM8Eu-0000Q5-Rg
-	for git@vger.kernel.org; Sun, 22 Apr 2012 18:38:52 -0700
+	id S1753425Ab2DWClD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 22 Apr 2012 22:41:03 -0400
+Received: from mail-wi0-f202.google.com ([209.85.212.202]:32791 "EHLO
+	mail-wi0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753399Ab2DWClB (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 22 Apr 2012 22:41:01 -0400
+Received: by wibhj13 with SMTP id hj13so119033wib.1
+        for <git@vger.kernel.org>; Sun, 22 Apr 2012 19:41:00 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type:x-gm-message-state;
+        bh=zf/ReDKyTnyen76IhpEGHFDZLBltiCs5acWaKNI55vo=;
+        b=DvKv/0Aft/2Fl9uVfBLK08YApxtDbwzKKi7/+tf2ymoVYrcbTC/eQI2pYk72Ws+F6y
+         RTJHrmT/jQNlJCl7NFkC9L2uVeppdkkjIDfW02gZhmTLdEiS7VpY7FTnQT7k/5gM5ApU
+         k2SsUf0OSsUvvRuZnibNfnOHj8jZeEhjimtp6QDTs/NIWDQA7Mr6SmgTFzKuDH4Axx1I
+         DsOQba7MF6d1NZbtOGi8XgL00CRGdEy1cHk0y8GcLvFxBxPw7PckJdwbnh6Nk9PfrCVl
+         2SLoo+n2GfmzHaoq7N5++7lycctx6Pbvv1+ADl998ooUmeYAjVwOkMuDhray/9tP3pGt
+         8z3w==
+Received: by 10.14.199.133 with SMTP id x5mr3415482een.7.1335148860084;
+        Sun, 22 Apr 2012 19:41:00 -0700 (PDT)
+Received: by 10.14.199.133 with SMTP id x5mr3415468een.7.1335148860011;
+        Sun, 22 Apr 2012 19:41:00 -0700 (PDT)
+Received: from hpza10.eem.corp.google.com ([74.125.121.33])
+        by gmr-mx.google.com with ESMTPS id y52si13281086eef.2.2012.04.22.19.41.00
+        (version=TLSv1/SSLv3 cipher=AES128-SHA);
+        Sun, 22 Apr 2012 19:41:00 -0700 (PDT)
+Received: from junio.mtv.corp.google.com (junio.mtv.corp.google.com [172.27.69.24])
+	by hpza10.eem.corp.google.com (Postfix) with ESMTP id CC21420004E;
+	Sun, 22 Apr 2012 19:40:59 -0700 (PDT)
+Received: by junio.mtv.corp.google.com (Postfix, from userid 110493)
+	id 1C152E120A; Sun, 22 Apr 2012 19:40:59 -0700 (PDT)
+In-Reply-To: <20120422203058.GA17290@padd.com> (Pete Wyckoff's message of
+	"Sun, 22 Apr 2012 16:30:58 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1 (gnu/linux)
+X-Gm-Message-State: ALoCoQmJXZYe+CNBQQB6FGDvGTffI1sxJrBru4LcK6TWrkuyV1l1A++8L3jdsyVi8FpSQwG+fwdZh8v77nQ6JsFHEfy/ldU8Q+57n7Oh17i/SwRLnHH2VjxFCveh6UietyaAN5HBcYtcru+cbFZsDD5sq1ZmDxaCGZJXNrfLGn0OlBZdHXx040s=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196093>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196095>
 
-hii ,
+Pete Wyckoff <pw@padd.com> writes:
 
-i have a diff file.how to add these modifications to the git repositry
+> Clemens suggested disabling the test by default, as I've done
+> here.  I think it would be okay to remove it entirely, too.
 
+Ok.
 
+> +# Generally, skip this test.  It demonstrates a now-fixed
+> +# race in git-remote-testgit, but is too slow to leave in
+> +# for general use.
+> +test_expect_success DEBUG_TESTGIT_RACE 'racily pushing to local repo' '
+> +	cp -a server server2 &&
+> +	git clone "testgit::${PWD}/server2" localclone2 &&
+> +	test_when_finished "rm -rf server2 localclone2" &&
 
-diff --git a/board/Maxim/maximasp_eek/board_init.S
-
-b/board/Maxim/maximasp_eek/board_init.S
-
-index ec57078..bd55877 100644
-
---- a/board/Maxim/maximasp_eek/board_init.S
-
-+++ b/board/Maxim/maximasp_eek/board_init.S
-
-@@ -13,7 +13,7 @@
-
-#define ENABLE_DLL
-
- 
-
-#define GCR_SETUP      /* Modify GCR register */
-
--#define GCR_UBP                /* UCI bypass */
-
-+#undef  GCR_UBP                /* UCI bypass */
-
-#undef  GCR_PBEN       /* Enable pass bridge */
-
-#undef  GCR_PBFB       /* Enable burst in pass bridge */
-
-#undef  GCR_ADK                /* Use ADK bridge */
-
-diff --git a/include/configs/maximasp-eek.h b/include/configs/maximasp-eek.h
-index 897f4ab..c9e3965 100644
-
---- a/include/configs/maximasp-eek.h
-
-+++ b/include/configs/maximasp-eek.h
-
-@@ -23,13 +23,13 @@
-
-#define __CONFIG_H
-
- 
-
-#define CONFIG_SYS_USE_DDR     /* Use DDR instead of PSRAM */
-
--#define CONFIG_SYS_SYNC_MEM    /* Synchronous memory */
-
-+//#define CONFIG_SYS_SYNC_MEM  /* Synchronous memory */
-
- 
-
-/*
-
-  * CPU Clock - 16x crystal (20 MHz -> 320 MHz, 24 MHz -> 384 MHz)
-
-  */
-
--//#define CONFIG_SYS_CPU_CLOCK         384000000
-
--#define CONFIG_SYS_CPU_CLOCK           320000000
-
-+#define CONFIG_SYS_CPU_CLOCK           384000000
-
-+//#define CONFIG_SYS_CPU_CLOCK         320000000
-
- 
-/*
-
-  * Physical Memory Map
-
-regards
-
-Git newbie
-
---
-View this message in context: http://git.661346.n2.nabble.com/How-to-merge-the-diff-file-in-the-git-repositry-tp7490516p7490516.html
-Sent from the git mailing list archive at Nabble.com.
+Shouldn't test_when_finished come before these two commands?  Otherwise
+server2 or localclone2 directories will be left behind when they fail
+before control reaches it...
