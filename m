@@ -1,102 +1,63 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 04/10] i18n: help: mark strings for translation
-Date: Mon, 23 Apr 2012 11:30:32 -0500
-Message-ID: <20120423163032.GF4832@burratino>
-References: <1335184230-8870-1-git-send-email-pclouds@gmail.com>
- <1335184230-8870-5-git-send-email-pclouds@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
-	Jiang Xin <worldhello.net@gmail.com>,
-	Zbigniew =?utf-8?Q?J=C4=99drzejewski-Szmek?= <zbyszek@in.waw.pl>
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Apr 23 18:30:48 2012
+From: Roman Kagan <rkagan@mail.ru>
+Subject: [PATCH 0/3] git-svn: fixes for intermittent SIGPIPE
+Date: Mon, 23 Apr 2012 20:35:21 +0400
+Message-ID: <cover.1335198921.git.rkagan@mail.ru>
+Cc: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org, Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Mon Apr 23 18:39:20 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SMMA3-00009z-5R
-	for gcvg-git-2@plane.gmane.org; Mon, 23 Apr 2012 18:30:47 +0200
+	id 1SMMIJ-0005HC-R4
+	for gcvg-git-2@plane.gmane.org; Mon, 23 Apr 2012 18:39:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753479Ab2DWQam convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 23 Apr 2012 12:30:42 -0400
-Received: from mail-ob0-f174.google.com ([209.85.214.174]:62803 "EHLO
-	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752824Ab2DWQal convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 23 Apr 2012 12:30:41 -0400
-Received: by obbta14 with SMTP id ta14so12876441obb.19
-        for <git@vger.kernel.org>; Mon, 23 Apr 2012 09:30:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=wWmTt/NEBMEI7wPNLQLdOwrCoeNfeuC1YoPqGgMpvtY=;
-        b=N1vYV8Vf5hiw/FNI7zGXuno3I5KG5q+/LTTEvfRukOiFi+L5bABX0T7QlrdHChrNj7
-         RLfNa+LSz1cV73Mv6PfPJa2XyFvchAKJqDmjo9iil3VIoaS1DnY0nZ3iNnnY7+ZB9MbR
-         fpnMx/RfR4Gttpu98tTZ73GvFP7ovowljK0PgQ3KHVV2t1djAsRU6+MKMAqhZ6555zgU
-         gH3EPXGHphWH1ZA/vdL8a5ASLHxgNPFgBSjEnABlbRVnaBLjBHnX/fl7AXnkB/sakinf
-         vBgtTyecXRBoHiyhCGj3DUEJz566K71fboZtBdCe48Yt9eyQ+vW/wktM/phPD+2cx27C
-         N0hg==
-Received: by 10.182.183.73 with SMTP id ek9mr15888725obc.15.1335198641011;
-        Mon, 23 Apr 2012 09:30:41 -0700 (PDT)
-Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
-        by mx.google.com with ESMTPS id gf8sm7212005obc.3.2012.04.23.09.30.36
-        (version=SSLv3 cipher=OTHER);
-        Mon, 23 Apr 2012 09:30:37 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <1335184230-8870-5-git-send-email-pclouds@gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1754129Ab2DWQjO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 Apr 2012 12:39:14 -0400
+Received: from mailhub.sw.ru ([195.214.232.25]:1665 "EHLO relay.sw.ru"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753566Ab2DWQjM (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Apr 2012 12:39:12 -0400
+Received: from localhost ([10.30.3.95])
+	by relay.sw.ru (8.13.4/8.13.4) with ESMTP id q3NGctvc000367;
+	Mon, 23 Apr 2012 20:38:55 +0400 (MSK)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196140>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196141>
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
+In my work environment subversion is still being used as the main
+revision control system.  Therefore many people who prefer to work with
+git have to resort to git-svn.
 
-> --- a/help.c
-> +++ b/help.c
-> @@ -217,8 +217,9 @@ void list_commands(const char *title, struct cmdn=
-ames *main_cmds,
-> =20
->  	if (main_cmds->cnt) {
->  		const char *exec_path =3D git_exec_path();
-> -		printf("available %s in '%s'\n", title, exec_path);
-> -		printf("----------------");
-> +		printf_ln(_("available %s in '%s'"), title, exec_path);
-> +		/* TRANSLATORS: this must align with "available %s in '%s'" */
-> +		printf(_("----------------"));
->  		mput_char('-', strlen(title) + strlen(exec_path));
+However, in many configurations it used to suffer from the notorious
+"git-svn died of signal 13" problem (see e.g.
+http://thread.gmane.org/gmane.comp.version-control.git/134936 and the
+links therein).
 
-Yuck. :)
+I believe to have tracked down the issue to the connection being closed
+by the server when http keep-alive is in use, and the client dying on
+SIGPIPE because its handler is left at SIG_DFL when a new request is
+being made.
 
-I would be tempted to do:
+The patches have been tested on
 
-	static int strbuf_utf8_width(const struct strbuf *sb)
-	{
-		char char *p =3D sb->buf;
-		size_t remainder =3D sb->len;
-		int width;
+- Linux Fedora 16 x86_64, git 1.7.7.6, perl v5.14.2, svn 1.6.17
+- Windows 7 x64 + Cygwin, git 1.7.9, perl v5.10.1, svn 1.7.4,
+- Windows 7 x64 + MsysGit, git 1.7.9.msysgit.0, perl v5.8.8, svn 1.4.6
 
-		width =3D utf8_width(&p, &remainder);
-		if (!p || remainder)
-			return sb->len;
-		return width;
-	}
-	...
+This is the second version of the series; it only differs from the first
+submission in that it includes the third patch with a cosmetic cleanup.
 
-		struct strbuf sb =3D STRBUF_INIT;
-		const char *p;
+Roman Kagan (3):
+  git-svn: use POSIX::sigprocmask to block signals
+  git-svn: ignore SIGPIPE
+  git-svn: drop redundant blocking of SIGPIPE
 
-		strbuf_addf(&sb, _("available %s in '%s'"), title, exec_path);
-		fwrite(sb.buf, sb.len, 1, stdout);
-		putchar('\n');
+ git-svn.perl |   20 ++++++++++++++------
+ 1 files changed, 14 insertions(+), 6 deletions(-)
 
-		/* NEEDSWORK: handle non-UTF8 locales? */
-		mput_char('-', strbuf_utf8_width(&sb));
-
-		strbuf_release(&sb);
+-- 
+1.7.7.6
