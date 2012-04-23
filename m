@@ -1,98 +1,114 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH 3/7] t5528-push-default.sh: add helper functions
-Date: Mon, 23 Apr 2012 18:02:10 +0200
-Message-ID: <vpqobqil9ml.fsf@bauges.imag.fr>
-References: <1334933944-13446-1-git-send-email-Matthieu.Moy@imag.fr>
-	<1335170284-30768-1-git-send-email-Matthieu.Moy@imag.fr>
-	<1335170284-30768-4-git-send-email-Matthieu.Moy@imag.fr>
-	<xmqqipgqlass.fsf@junio.mtv.corp.google.com>
+From: Erik Faye-Lund <kusmabite@gmail.com>
+Subject: Re: [PATCH v2] contrib: add win32 credential-helper
+Date: Mon, 23 Apr 2012 18:05:57 +0200
+Message-ID: <CABPQNSawsoheM6Qoxs-iQ-KYxYFs-s60oFLzdyRDFT0o=KXt1w@mail.gmail.com>
+References: <1334861122-3144-1-git-send-email-kusmabite@gmail.com> <20120422180716.GA27339@sigill.intra.peff.net>
+Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Apr 23 18:02:45 2012
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: quoted-printable
+Cc: git@vger.kernel.org, msysgit@googlegroups.com
+To: Jeff King <peff@peff.net>
+X-From: msysgit+bncCOPdven-DxCQ_NX8BBoECDu7Ig@googlegroups.com Mon Apr 23 18:06:42 2012
+Return-path: <msysgit+bncCOPdven-DxCQ_NX8BBoECDu7Ig@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-qc0-f186.google.com ([209.85.216.186])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SMLit-0008Q5-63
-	for gcvg-git-2@plane.gmane.org; Mon, 23 Apr 2012 18:02:43 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752910Ab2DWQCi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 Apr 2012 12:02:38 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:48160 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752276Ab2DWQCi (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Apr 2012 12:02:38 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id q3NFtpjt012736
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Mon, 23 Apr 2012 17:55:51 +0200
-Received: from bauges.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1SMLiN-0005iz-2i; Mon, 23 Apr 2012 18:02:11 +0200
-In-Reply-To: <xmqqipgqlass.fsf@junio.mtv.corp.google.com> (Junio C. Hamano's
-	message of "Mon, 23 Apr 2012 08:36:51 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.93 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Mon, 23 Apr 2012 17:55:52 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: q3NFtpjt012736
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1335801353.44083@+0Or4nXgw9YjttCICci8KA
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196134>
+	(envelope-from <msysgit+bncCOPdven-DxCQ_NX8BBoECDu7Ig@googlegroups.com>)
+	id 1SMLmj-0002E0-9G
+	for gcvm-msysgit@m.gmane.org; Mon, 23 Apr 2012 18:06:41 +0200
+Received: by qcsc2 with SMTP id c2sf12501664qcs.3
+        for <gcvm-msysgit@m.gmane.org>; Mon, 23 Apr 2012 09:06:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=beta;
+        h=x-beenthere:received-spf:mime-version:reply-to:in-reply-to
+         :references:from:date:message-id:subject:to:cc:x-original-sender
+         :x-original-authentication-results:precedence:mailing-list:list-id
+         :x-google-group-id:list-post:list-help:list-archive:sender
+         :list-subscribe:list-unsubscribe:content-type
+         :content-transfer-encoding;
+        bh=dNOBo9h/anp4W+3BBLmjLhffh7vRdaPFy8+GYCQt4ic=;
+        b=ctuezMyNpdRdraxHNnq2MliM3uvOUYvvzRicaokw2cstmNpEZRPU66MRf/EIe1Kr4u
+         pVPgD9MCjTb1P6otlYjuxC5PHPgbZcJpJ0JOlBT+ebvhVUZjLLn8fMQzefWTIXqpUQyL
+         pdEm5Q+udwks0uOycFBweyhB9SXXZkfemQ/IY=
+Received: by 10.52.68.206 with SMTP id y14mr1465976vdt.1.1335197200296;
+        Mon, 23 Apr 2012 09:06:40 -0700 (PDT)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.52.185.71 with SMTP id fa7ls3647887vdc.5.gmail; Mon, 23 Apr
+ 2012 09:06:39 -0700 (PDT)
+Received: by 10.52.88.201 with SMTP id bi9mr3567918vdb.6.1335197199356;
+        Mon, 23 Apr 2012 09:06:39 -0700 (PDT)
+Received: by 10.52.88.201 with SMTP id bi9mr3567916vdb.6.1335197199348;
+        Mon, 23 Apr 2012 09:06:39 -0700 (PDT)
+Received: from mail-vx0-f169.google.com (mail-vx0-f169.google.com [209.85.220.169])
+        by gmr-mx.google.com with ESMTPS id cl2si8262789vdc.3.2012.04.23.09.06.39
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Mon, 23 Apr 2012 09:06:39 -0700 (PDT)
+Received-SPF: pass (google.com: domain of kusmabite@gmail.com designates 209.85.220.169 as permitted sender) client-ip=209.85.220.169;
+Received: by vcbfy7 with SMTP id fy7so4258355vcb.14
+        for <msysgit@googlegroups.com>; Mon, 23 Apr 2012 09:06:39 -0700 (PDT)
+Received: by 10.220.147.198 with SMTP id m6mr5753668vcv.49.1335197199060; Mon,
+ 23 Apr 2012 09:06:39 -0700 (PDT)
+Received: by 10.220.192.8 with HTTP; Mon, 23 Apr 2012 09:05:57 -0700 (PDT)
+In-Reply-To: <20120422180716.GA27339@sigill.intra.peff.net>
+X-Original-Sender: kusmabite@gmail.com
+X-Original-Authentication-Results: gmr-mx.google.com; spf=pass (google.com:
+ domain of kusmabite@gmail.com designates 209.85.220.169 as permitted sender)
+ smtp.mail=kusmabite@gmail.com; dkim=pass header.i=@gmail.com
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post?hl=en_US>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/?hl=en_US>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit?hl=en_US>
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en_US>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en_US>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196135>
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> Hmph.  How is $1 used in the above to make it compare between local and
-> remote?  Does the first one need to have "$1" before " >expect"?
-
-Yes, good catch.
-
->> +	test_must_fail git -c push.default="$1" &&
+On Sun, Apr 22, 2012 at 8:07 PM, Jeff King <peff@peff.net> wrote:
+> On Thu, Apr 19, 2012 at 08:45:22PM +0200, Erik Faye-Lund wrote:
 >
-> What subcommand does this run with one-shot override configuration?  Do
-> we need " push" before " &&"?
-
-Right.
-
-Plus the "$1" should have been "$push_default" since we just did a
-shift.
-
-*sigh* this was supposed not to be a draft :-(.
-
->>  test_expect_success '"upstream" does not push on unconfigured remote' '
->> @@ -30,7 +61,7 @@ test_expect_success '"upstream" does not push on unconfigured remote' '
->>  	test_unconfig branch.master.remote &&
->>  	test_config push.default upstream &&
->>  	test_commit three &&
->> -	test_must_fail git push
->> +	test_push_failure upstream master
->>  '
+>> Here's an updated version of my Windows credential-helper.
 >
-> ... and we can use --all not master here, right?
+> Sorry, I've been traveling and haven't had a chance to look at this
+> in-depth yet. I'll do so next week. In the meantime, I wanted to point
+> out this similar project:
+>
+> =A0https://github.com/anurse/git-credential-winstore
+>
+> which somebody else pointed me to a few days ago. I don't know yet if
+> your approaches are the same, or if it would be worth combining efforts
+> or not.
 
-Actually, we can even use --all everywhere. And then, we don't even need
-the second argument, and we can simplify greatly the function:
+Yeah, I saw that one a couple of days ago myself.
 
-# $1 = push.default value
-# check that push fails and does not modify any remote branch
-test_push_failure () {
-	git --git-dir=repo1 log --no-walk --format='%h %s' --all >expect &&
-	test_must_fail git -c push.default="$1" push &&
-	git --git-dir=repo1 log --no-walk --format='%h %s' --all >actual &&
-	test_cmp expect actual
-}
+They use the same credential store, and I actually tried to make sure
+they can use the same data.
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+But apart from that, they work quite differently. My credential-helper
+only does storage, and passes the test-suite. The one you linked to
+seems to ignore any password being sent to it, and instead prompts the
+user if it doesn't already have a credential. It also does not seem to
+support storing credentials for multiple users for a domain/path.
+
+But probably the biggest problem for Git for Windows is that it's
+written in C#, and we don't have a C# compiler in our tool-chain.
+
+So I don't think there's much I can use from that helper, and I think
+my helper is in a healthier state. But I'm obviously biased.
+
+--=20
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+
+*** Please avoid top-posting. ***
+
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, visit this group at
+http://groups.google.com/group/msysgit?hl=3Den_US?hl=3Den
