@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH 06/10] i18n: remote: mark strings for translation
-Date: Mon, 23 Apr 2012 19:30:26 +0700
-Message-ID: <1335184230-8870-7-git-send-email-pclouds@gmail.com>
+Subject: [PATCH 07/10] i18n: apply: mark strings for translation
+Date: Mon, 23 Apr 2012 19:30:27 +0700
+Message-ID: <1335184230-8870-8-git-send-email-pclouds@gmail.com>
 References: <1335184230-8870-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -15,705 +15,698 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Apr 23 14:34:59 2012
+X-From: git-owner@vger.kernel.org Mon Apr 23 14:35:12 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SMITp-0005gz-Tc
-	for gcvg-git-2@plane.gmane.org; Mon, 23 Apr 2012 14:34:58 +0200
+	id 1SMIU1-0005mi-3Q
+	for gcvg-git-2@plane.gmane.org; Mon, 23 Apr 2012 14:35:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755367Ab2DWMew convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 23 Apr 2012 08:34:52 -0400
-Received: from mail-pz0-f51.google.com ([209.85.210.51]:48603 "EHLO
-	mail-pz0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754565Ab2DWMev (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Apr 2012 08:34:51 -0400
-Received: by dadz8 with SMTP id z8so15500024dad.10
-        for <git@vger.kernel.org>; Mon, 23 Apr 2012 05:34:51 -0700 (PDT)
+	id S1755371Ab2DWMfC convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 23 Apr 2012 08:35:02 -0400
+Received: from mail-pb0-f46.google.com ([209.85.160.46]:55597 "EHLO
+	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754565Ab2DWMfA (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Apr 2012 08:35:00 -0400
+Received: by mail-pb0-f46.google.com with SMTP id un15so3837007pbc.19
+        for <git@vger.kernel.org>; Mon, 23 Apr 2012 05:35:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=WopjrB4WFOiaehzvsjZGaBojbv+IS0rSeJuU2SDO1ic=;
-        b=Nlt2NUn62sc+mSB3Xp8ABFlCocaToBCv/tB3eIibNHUrzn1at33kz3wkzcZ7X4cGG8
-         LSNvbXGIqlWUJybr2r1MHxq4hKuZTgSWhyrDX/OdUOaC1i71/G1s3ZRiwtAgcAjR3KEa
-         OaXQW1m3dFiFp3ANxLVOQBU7FoLND/5IJd2rumSXV12Uc2KuKQxP7oTx7AO30l0irgXI
-         PMmQ5+n4/tO4aq2Vtr2PobI/EZEwAQT4cAOFKO068VSmqc55wguM+L3LHYlFkOVPGeOg
-         42H3ozWw8xwmhI8itklyFQTwNDP3D02SSy7FdEzh6rKVZvbZ6bpkKsJu4IEJH4QLsVQt
-         33MA==
-Received: by 10.68.129.65 with SMTP id nu1mr11512381pbb.18.1335184491129;
-        Mon, 23 Apr 2012 05:34:51 -0700 (PDT)
+        bh=CrQrDk/e9CNTN1dJosjOQuXasa8KTGmtLS9Ms3VXvUc=;
+        b=EEgBdek0Rc8siZTqVmMCA9LjFFgj/qKPFJNKJuU5sth8tyMCHvUXbu0bkRTzU7NIAl
+         mqazKjeVfVW45fYXBg1ZcHCMUVEasxifvZhIs1Isaauy/W6pZKUXgv/mREDgiZns//0U
+         PGO0A+I5W6XsVOiU1fpyD510p8CoPIiENo8Bb5nBv0vgzJHdrwvqqjNrYFuvFW/jveos
+         fPrzxNpKLbpsBGLe57pQXQT50BHIOi2XNvHZWOeLEmXbsKWRQX+asexZ39Zal7wIuYOv
+         hTukvgkRBb1R1M0crGJ0f9qvpwQEgeEUPND2dvX4k2StVP3q8bSopjNI+uBkN/LVPUcs
+         qQ/g==
+Received: by 10.68.221.74 with SMTP id qc10mr36084457pbc.80.1335184499970;
+        Mon, 23 Apr 2012 05:34:59 -0700 (PDT)
 Received: from pclouds@gmail.com ([115.74.59.47])
-        by mx.google.com with ESMTPS id i5sm14294758pbf.19.2012.04.23.05.34.46
+        by mx.google.com with ESMTPS id pv9sm4906849pbc.37.2012.04.23.05.34.55
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 23 Apr 2012 05:34:50 -0700 (PDT)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Mon, 23 Apr 2012 19:31:33 +0700
+        Mon, 23 Apr 2012 05:34:58 -0700 (PDT)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Mon, 23 Apr 2012 19:31:42 +0700
 X-Mailer: git-send-email 1.7.8.36.g69ee2
 In-Reply-To: <1335184230-8870-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196120>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196121>
 
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- builtin/remote.c |  227 +++++++++++++++++++++++++++++-----------------=
+ builtin/apply.c |  174 +++++++++++++++++++++++++++++------------------=
 --------
- 1 files changed, 121 insertions(+), 106 deletions(-)
+ 1 files changed, 91 insertions(+), 83 deletions(-)
 
-diff --git a/builtin/remote.c b/builtin/remote.c
-index 1b03473..51434fa 100644
---- a/builtin/remote.c
-+++ b/builtin/remote.c
-@@ -95,9 +95,9 @@ static int fetch_remote(const char *name)
- 		argv[1] =3D "-v";
- 		argv[2] =3D name;
+diff --git a/builtin/apply.c b/builtin/apply.c
+index 389898f..4bb6354 100644
+--- a/builtin/apply.c
++++ b/builtin/apply.c
+@@ -103,7 +103,7 @@ static void parse_whitespace_option(const char *opt=
+ion)
+ 		ws_error_action =3D correct_ws_error;
+ 		return;
  	}
--	printf("Updating %s\n", name);
-+	printf_ln(_("Updating %s"), name);
- 	if (run_command_v_opt(argv, RUN_GIT_CMD))
--		return error("Could not fetch %s", name);
-+		return error(_("Could not fetch %s"), name);
- 	return 0;
+-	die("unrecognized whitespace option '%s'", option);
++	die(_("unrecognized whitespace option '%s'"), option);
  }
 =20
-@@ -127,8 +127,8 @@ static int add_branch(const char *key, const char *=
-branchname,
+ static void parse_ignorewhitespace_option(const char *option)
+@@ -118,7 +118,7 @@ static void parse_ignorewhitespace_option(const cha=
+r *option)
+ 		ws_ignore_action =3D ignore_ws_change;
+ 		return;
+ 	}
+-	die("unrecognized whitespace ignore option '%s'", option);
++	die(_("unrecognized whitespace ignore option '%s'"), option);
  }
 =20
- static const char mirror_advice[] =3D
--"--mirror is dangerous and deprecated; please\n"
--"\t use --mirror=3Dfetch or --mirror=3Dpush instead";
-+N_("--mirror is dangerous and deprecated; please\n"
-+   "\t use --mirror=3Dfetch or --mirror=3Dpush instead");
-=20
- static int parse_mirror_opt(const struct option *opt, const char *arg,=
- int not)
- {
-@@ -136,7 +136,7 @@ static int parse_mirror_opt(const struct option *op=
-t, const char *arg, int not)
- 	if (not)
- 		*mirror =3D MIRROR_NONE;
- 	else if (!arg) {
--		warning("%s", mirror_advice);
-+		warning("%s", _(mirror_advice));
- 		*mirror =3D MIRROR_BOTH;
- 	}
- 	else if (!strcmp(arg, "fetch"))
-@@ -144,7 +144,7 @@ static int parse_mirror_opt(const struct option *op=
-t, const char *arg, int not)
- 	else if (!strcmp(arg, "push"))
- 		*mirror =3D MIRROR_PUSH;
- 	else
--		return error("unknown mirror argument: %s", arg);
-+		return error(_("unknown mirror argument: %s"), arg);
- 	return 0;
- }
-=20
-@@ -182,9 +182,9 @@ static int add(int argc, const char **argv)
- 		usage_with_options(builtin_remote_add_usage, options);
-=20
- 	if (mirror && master)
--		die("specifying a master branch makes no sense with --mirror");
-+		die(_("specifying a master branch makes no sense with --mirror"));
- 	if (mirror && !(mirror & MIRROR_FETCH) && track.nr)
--		die("specifying branches to track makes sense only with fetch mirror=
-s");
-+		die(_("specifying branches to track makes sense only with fetch mirr=
-ors"));
-=20
- 	name =3D argv[0];
- 	url =3D argv[1];
-@@ -192,11 +192,11 @@ static int add(int argc, const char **argv)
- 	remote =3D remote_get(name);
- 	if (remote && (remote->url_nr > 1 || strcmp(name, remote->url[0]) ||
- 			remote->fetch_refspec_nr))
--		die("remote %s already exists.", name);
-+		die(_("remote %s already exists."), name);
-=20
- 	strbuf_addf(&buf2, "refs/heads/test:refs/remotes/%s/test", name);
- 	if (!valid_fetch_refspec(buf2.buf))
--		die("'%s' is not a valid remote name", name);
-+		die(_("'%s' is not a valid remote name"), name);
-=20
- 	strbuf_addf(&buf, "remote.%s.url", name);
- 	if (git_config_set(buf.buf, url))
-@@ -240,7 +240,7 @@ static int add(int argc, const char **argv)
- 		strbuf_addf(&buf2, "refs/remotes/%s/%s", name, master);
-=20
- 		if (create_symref(buf.buf, buf2.buf, "remote add"))
--			return error("Could not setup master '%s'", master);
-+			return error(_("Could not setup master '%s'"), master);
- 	}
-=20
- 	strbuf_release(&buf);
-@@ -296,7 +296,7 @@ static int config_read_branches(const char *key, co=
-nst char *value, void *cb)
- 		info =3D item->util;
- 		if (type =3D=3D REMOTE) {
- 			if (info->remote_name)
--				warning("more than one %s", orig_key);
-+				warning(_("more than one %s"), orig_key);
- 			info->remote_name =3D xstrdup(value);
- 		} else if (type =3D=3D MERGE) {
- 			char *space =3D strchr(value, ' ');
-@@ -336,7 +336,7 @@ static int get_ref_states(const struct ref *remote_=
-refs, struct ref_states *stat
-=20
- 	for (i =3D 0; i < states->remote->fetch_refspec_nr; i++)
- 		if (get_fetch_map(remote_refs, states->remote->fetch + i, &tail, 1))
--			die("Could not get fetch map for refspec %s",
-+			die(_("Could not get fetch map for refspec %s"),
- 				states->remote->fetch_refspec[i]);
-=20
- 	states->new.strdup_strings =3D 1;
-@@ -437,7 +437,7 @@ static int get_push_ref_states_noquery(struct ref_s=
-tates *states)
-=20
- 	states->push.strdup_strings =3D 1;
- 	if (!remote->push_refspec_nr) {
--		item =3D string_list_append(&states->push, "(matching)");
-+		item =3D string_list_append(&states->push, _("(matching)"));
- 		info =3D item->util =3D xcalloc(sizeof(struct push_info), 1);
- 		info->status =3D PUSH_STATUS_NOTQUERIED;
- 		info->dest =3D xstrdup(item->string);
-@@ -445,11 +445,11 @@ static int get_push_ref_states_noquery(struct ref=
-_states *states)
- 	for (i =3D 0; i < remote->push_refspec_nr; i++) {
- 		struct refspec *spec =3D remote->push + i;
- 		if (spec->matching)
--			item =3D string_list_append(&states->push, "(matching)");
-+			item =3D string_list_append(&states->push, _("(matching)"));
- 		else if (strlen(spec->src))
- 			item =3D string_list_append(&states->push, spec->src);
- 		else
--			item =3D string_list_append(&states->push, "(delete)");
-+			item =3D string_list_append(&states->push, _("(delete)"));
-=20
- 		info =3D item->util =3D xcalloc(sizeof(struct push_info), 1);
- 		info->forced =3D spec->force;
-@@ -592,19 +592,19 @@ static int migrate_file(struct remote *remote)
- 	strbuf_addf(&buf, "remote.%s.url", remote->name);
- 	for (i =3D 0; i < remote->url_nr; i++)
- 		if (git_config_set_multivar(buf.buf, remote->url[i], "^$", 0))
--			return error("Could not append '%s' to '%s'",
-+			return error(_("Could not append '%s' to '%s'"),
- 					remote->url[i], buf.buf);
- 	strbuf_reset(&buf);
- 	strbuf_addf(&buf, "remote.%s.push", remote->name);
- 	for (i =3D 0; i < remote->push_refspec_nr; i++)
- 		if (git_config_set_multivar(buf.buf, remote->push_refspec[i], "^$", =
-0))
--			return error("Could not append '%s' to '%s'",
-+			return error(_("Could not append '%s' to '%s'"),
- 					remote->push_refspec[i], buf.buf);
- 	strbuf_reset(&buf);
- 	strbuf_addf(&buf, "remote.%s.fetch", remote->name);
- 	for (i =3D 0; i < remote->fetch_refspec_nr; i++)
- 		if (git_config_set_multivar(buf.buf, remote->fetch_refspec[i], "^$",=
- 0))
--			return error("Could not append '%s' to '%s'",
-+			return error(_("Could not append '%s' to '%s'"),
- 					remote->fetch_refspec[i], buf.buf);
- 	if (remote->origin =3D=3D REMOTE_REMOTES)
- 		path =3D git_path("remotes/%s", remote->name);
-@@ -636,30 +636,30 @@ static int mv(int argc, const char **argv)
-=20
- 	oldremote =3D remote_get(rename.old);
- 	if (!oldremote)
--		die("No such remote: %s", rename.old);
-+		die(_("No such remote: %s"), rename.old);
-=20
- 	if (!strcmp(rename.old, rename.new) && oldremote->origin !=3D REMOTE_=
-CONFIG)
- 		return migrate_file(oldremote);
-=20
- 	newremote =3D remote_get(rename.new);
- 	if (newremote && (newremote->url_nr > 1 || newremote->fetch_refspec_n=
-r))
--		die("remote %s already exists.", rename.new);
-+		die(_("remote %s already exists."), rename.new);
-=20
- 	strbuf_addf(&buf, "refs/heads/test:refs/remotes/%s/test", rename.new)=
-;
- 	if (!valid_fetch_refspec(buf.buf))
--		die("'%s' is not a valid remote name", rename.new);
-+		die(_("'%s' is not a valid remote name"), rename.new);
-=20
- 	strbuf_reset(&buf);
- 	strbuf_addf(&buf, "remote.%s", rename.old);
- 	strbuf_addf(&buf2, "remote.%s", rename.new);
- 	if (git_config_rename_section(buf.buf, buf2.buf) < 1)
--		return error("Could not rename config section '%s' to '%s'",
-+		return error(_("Could not rename config section '%s' to '%s'"),
- 				buf.buf, buf2.buf);
-=20
- 	strbuf_reset(&buf);
- 	strbuf_addf(&buf, "remote.%s.fetch", rename.new);
- 	if (git_config_set_multivar(buf.buf, NULL, NULL, 1))
--		return error("Could not remove config section '%s'", buf.buf);
-+		return error(_("Could not remove config section '%s'"), buf.buf);
- 	strbuf_addf(&old_remote_context, ":refs/remotes/%s/", rename.old);
- 	for (i =3D 0; i < oldremote->fetch_refspec_nr; i++) {
- 		char *ptr;
-@@ -674,13 +674,13 @@ static int mv(int argc, const char **argv)
- 				      strlen(rename.old), rename.new,
- 				      strlen(rename.new));
- 		} else
--			warning("Not updating non-default fetch respec\n"
--				"\t%s\n"
--				"\tPlease update the configuration manually if necessary.",
-+			warning(_("Not updating non-default fetch respec\n"
-+				  "\t%s\n"
-+				  "\tPlease update the configuration manually if necessary."),
- 				buf2.buf);
-=20
- 		if (git_config_set_multivar(buf.buf, buf2.buf, "^$", 0))
--			return error("Could not append '%s'", buf.buf);
-+			return error(_("Could not append '%s'"), buf.buf);
- 	}
-=20
- 	read_branches();
-@@ -691,7 +691,7 @@ static int mv(int argc, const char **argv)
- 			strbuf_reset(&buf);
- 			strbuf_addf(&buf, "branch.%s.remote", item->string);
- 			if (git_config_set(buf.buf, rename.new)) {
--				return error("Could not set '%s'", buf.buf);
-+				return error(_("Could not set '%s'"), buf.buf);
- 			}
- 		}
- 	}
-@@ -713,7 +713,7 @@ static int mv(int argc, const char **argv)
- 		if (!(flag & REF_ISSYMREF))
- 			continue;
- 		if (delete_ref(item->string, NULL, REF_NODEREF))
--			die("deleting '%s' failed", item->string);
-+			die(_("deleting '%s' failed"), item->string);
- 	}
- 	for (i =3D 0; i < remote_branches.nr; i++) {
- 		struct string_list_item *item =3D remote_branches.items + i;
-@@ -728,7 +728,7 @@ static int mv(int argc, const char **argv)
- 		strbuf_addf(&buf2, "remote: renamed %s to %s",
- 				item->string, buf.buf);
- 		if (rename_ref(item->string, buf.buf, buf2.buf))
--			die("renaming '%s' failed", item->string);
-+			die(_("renaming '%s' failed"), item->string);
- 	}
- 	for (i =3D 0; i < remote_branches.nr; i++) {
- 		struct string_list_item *item =3D remote_branches.items + i;
-@@ -747,7 +747,7 @@ static int mv(int argc, const char **argv)
- 		strbuf_addf(&buf3, "remote: renamed %s to %s",
- 				item->string, buf.buf);
- 		if (create_symref(buf.buf, buf2.buf, buf3.buf))
--			die("creating '%s' failed", buf.buf);
-+			die(_("creating '%s' failed"), buf.buf);
- 	}
- 	return 0;
- }
-@@ -761,7 +761,7 @@ static int remove_branches(struct string_list *bran=
-ches)
- 		unsigned char *sha1 =3D item->util;
-=20
- 		if (delete_ref(refname, sha1, 0))
--			result |=3D error("Could not remove branch %s", refname);
-+			result |=3D error(_("Could not remove branch %s"), refname);
- 	}
- 	return result;
- }
-@@ -789,14 +789,14 @@ static int rm(int argc, const char **argv)
-=20
- 	remote =3D remote_get(argv[1]);
- 	if (!remote)
--		die("No such remote: %s", argv[1]);
-+		die(_("No such remote: %s"), argv[1]);
-=20
- 	known_remotes.to_delete =3D remote;
- 	for_each_remote(add_known_remote, &known_remotes);
-=20
- 	strbuf_addf(&buf, "remote.%s", remote->name);
- 	if (git_config_rename_section(buf.buf, NULL) < 1)
--		return error("Could not remove config section '%s'", buf.buf);
-+		return error(_("Could not remove config section '%s'"), buf.buf);
-=20
- 	read_branches();
- 	for (i =3D 0; i < branch_list.nr; i++) {
-@@ -830,11 +830,12 @@ static int rm(int argc, const char **argv)
- 	string_list_clear(&branches, 1);
-=20
- 	if (skipped.nr) {
--		fprintf(stderr, skipped.nr =3D=3D 1 ?
--			"Note: A branch outside the refs/remotes/ hierarchy was not removed=
-;\n"
--			"to delete it, use:\n" :
--			"Note: Some branches outside the refs/remotes/ hierarchy were not r=
-emoved;\n"
--			"to delete them, use:\n");
-+		fprintf_ln(stderr,
-+			   Q_("Note: A branch outside the refs/remotes/ hierarchy was not r=
-emoved;\n"
-+			      "to delete it, use:",
-+			      "Note: Some branches outside the refs/remotes/ hierarchy were=
- not removed;\n"
-+			      "to delete them, use:",
-+			      skipped.nr));
- 		for (i =3D 0; i < skipped.nr; i++)
- 			fprintf(stderr, "  git branch -d %s\n",
- 				skipped.items[i].string);
-@@ -886,7 +887,7 @@ static int get_remote_ref_states(const char *name,
-=20
- 	states->remote =3D remote_get(name);
- 	if (!states->remote)
--		return error("No such remote: %s", name);
-+		return error(_("No such remote: %s"), name);
-=20
- 	read_branches();
-=20
-@@ -939,14 +940,14 @@ static int show_remote_info_item(struct string_li=
-st_item *item, void *cb_data)
- 		const char *fmt =3D "%s";
- 		const char *arg =3D "";
- 		if (string_list_has_string(&states->new, name)) {
--			fmt =3D " new (next fetch will store in remotes/%s)";
-+			fmt =3D _(" new (next fetch will store in remotes/%s)");
- 			arg =3D states->remote->name;
- 		} else if (string_list_has_string(&states->tracked, name))
--			arg =3D " tracked";
-+			arg =3D _(" tracked");
- 		else if (string_list_has_string(&states->stale, name))
--			arg =3D " stale (use 'git remote prune' to remove)";
-+			arg =3D _(" stale (use 'git remote prune' to remove)");
- 		else
--			arg =3D " ???";
-+			arg =3D _(" ???");
- 		printf("    %-*s", info->width, name);
- 		printf(fmt, arg);
- 		printf("\n");
-@@ -987,21 +988,21 @@ static int show_local_info_item(struct string_lis=
-t_item *item, void *cb_data)
- 	int i;
-=20
- 	if (branch_info->rebase && branch_info->merge.nr > 1) {
--		error("invalid branch.%s.merge; cannot rebase onto > 1 branch",
-+		error(_("invalid branch.%s.merge; cannot rebase onto > 1 branch"),
- 			item->string);
- 		return 0;
- 	}
-=20
- 	printf("    %-*s ", show_info->width, item->string);
- 	if (branch_info->rebase) {
--		printf("rebases onto remote %s\n", merge->items[0].string);
-+		printf_ln(_("rebases onto remote %s"), merge->items[0].string);
- 		return 0;
- 	} else if (show_info->any_rebase) {
--		printf(" merges with remote %s\n", merge->items[0].string);
--		also =3D "    and with remote";
-+		printf_ln(_(" merges with remote %s"), merge->items[0].string);
-+		also =3D _("    and with remote");
- 	} else {
--		printf("merges with remote %s\n", merge->items[0].string);
--		also =3D "   and with remote";
-+		printf_ln(_("merges with remote %s"), merge->items[0].string);
-+		also =3D _("   and with remote");
- 	}
- 	for (i =3D 1; i < merge->nr; i++)
- 		printf("    %-*s %s %s\n", show_info->width, "", also,
-@@ -1043,36 +1044,43 @@ static int show_push_info_item(struct string_li=
-st_item *item, void *cb_data)
- {
- 	struct show_info *show_info =3D cb_data;
- 	struct push_info *push_info =3D item->util;
--	char *src =3D item->string, *status =3D NULL;
-+	const char *src =3D item->string, *status =3D NULL;
-=20
- 	switch (push_info->status) {
- 	case PUSH_STATUS_CREATE:
--		status =3D "create";
-+		status =3D _("create");
- 		break;
- 	case PUSH_STATUS_DELETE:
--		status =3D "delete";
--		src =3D "(none)";
-+		status =3D _("delete");
-+		src =3D _("(none)");
- 		break;
- 	case PUSH_STATUS_UPTODATE:
--		status =3D "up to date";
-+		status =3D _("up to date");
- 		break;
- 	case PUSH_STATUS_FASTFORWARD:
--		status =3D "fast-forwardable";
-+		status =3D _("fast-forwardable");
- 		break;
- 	case PUSH_STATUS_OUTOFDATE:
--		status =3D "local out of date";
-+		status =3D _("local out of date");
- 		break;
- 	case PUSH_STATUS_NOTQUERIED:
- 		break;
- 	}
--	if (status)
--		printf("    %-*s %s to %-*s (%s)\n", show_info->width, src,
--			push_info->forced ? "forces" : "pushes",
--			show_info->width2, push_info->dest, status);
--	else
--		printf("    %-*s %s to %s\n", show_info->width, src,
--			push_info->forced ? "forces" : "pushes",
--			push_info->dest);
-+	if (status) {
-+		if (push_info->forced)
-+			printf_ln(_("    %-*s forces to %-*s (%s)"), show_info->width, src,
-+			       show_info->width2, push_info->dest, status);
-+		else
-+			printf_ln(_("    %-*s pushes to %-*s (%s)"), show_info->width, src,
-+			       show_info->width2, push_info->dest, status);
-+	} else {
-+		if (push_info->forced)
-+			printf_ln(_("    %-*s forces to %s"), show_info->width, src,
-+			       push_info->dest);
-+		else
-+			printf_ln(_("    %-*s pushes to %s"), show_info->width, src,
-+			       push_info->dest);
-+	}
- 	return 0;
- }
-=20
-@@ -1107,9 +1115,9 @@ static int show(int argc, const char **argv)
-=20
- 		get_remote_ref_states(*argv, &states, query_flag);
-=20
--		printf("* remote %s\n", *argv);
--		printf("  Fetch URL: %s\n", states.remote->url_nr > 0 ?
--			states.remote->url[0] : "(no URL)");
-+		printf_ln(_("* remote %s"), *argv);
-+		printf_ln(_("  Fetch URL: %s"), states.remote->url_nr > 0 ?
-+		       states.remote->url[0] : _("(no URL)"));
- 		if (states.remote->pushurl_nr) {
- 			url =3D states.remote->pushurl;
- 			url_nr =3D states.remote->pushurl_nr;
-@@ -1118,18 +1126,18 @@ static int show(int argc, const char **argv)
- 			url_nr =3D states.remote->url_nr;
- 		}
- 		for (i =3D 0; i < url_nr; i++)
--			printf("  Push  URL: %s\n", url[i]);
-+			printf_ln(_("  Push  URL: %s"), url[i]);
- 		if (!i)
--			printf("  Push  URL: %s\n", "(no URL)");
-+			printf_ln(_("  Push  URL: %s"), "(no URL)");
- 		if (no_query)
--			printf("  HEAD branch: (not queried)\n");
-+			printf_ln(_("  HEAD branch: %s"), "(not queried)");
- 		else if (!states.heads.nr)
--			printf("  HEAD branch: (unknown)\n");
-+			printf_ln(_("  HEAD branch: %s"), "(unknown)");
- 		else if (states.heads.nr =3D=3D 1)
--			printf("  HEAD branch: %s\n", states.heads.items[0].string);
-+			printf_ln(_("  HEAD branch: %s"), states.heads.items[0].string);
- 		else {
--			printf("  HEAD branch (remote HEAD is ambiguous,"
--			       " may be one of the following):\n");
-+			printf(_("  HEAD branch (remote HEAD is ambiguous,"
-+				 " may be one of the following):\n"));
- 			for (i =3D 0; i < states.heads.nr; i++)
- 				printf("    %s\n", states.heads.items[i].string);
- 		}
-@@ -1140,9 +1148,10 @@ static int show(int argc, const char **argv)
- 		for_each_string_list(&states.tracked, add_remote_to_show_info, &info=
-);
- 		for_each_string_list(&states.stale, add_remote_to_show_info, &info);
- 		if (info.list->nr)
--			printf("  Remote branch%s:%s\n",
--			       info.list->nr > 1 ? "es" : "",
--				no_query ? " (status not queried)" : "");
-+			printf_ln(Q_("  Remote branch:%s",
-+				     "  Remote branches:%s",
-+				     info.list->nr),
-+				  no_query ? _(" (status not queried)") : "");
- 		for_each_string_list(info.list, show_remote_info_item, &info);
- 		string_list_clear(info.list, 0);
-=20
-@@ -1151,23 +1160,25 @@ static int show(int argc, const char **argv)
- 		info.any_rebase =3D 0;
- 		for_each_string_list(&branch_list, add_local_to_show_info, &info);
- 		if (info.list->nr)
--			printf("  Local branch%s configured for 'git pull':\n",
--			       info.list->nr > 1 ? "es" : "");
-+			printf_ln(Q_("  Local branch configured for 'git pull':",
-+				     "  Local branches configured for 'git pull':",
-+				     info.list->nr));
- 		for_each_string_list(info.list, show_local_info_item, &info);
- 		string_list_clear(info.list, 0);
-=20
- 		/* git push info */
- 		if (states.remote->mirror)
--			printf("  Local refs will be mirrored by 'git push'\n");
-+			printf_ln(_("  Local refs will be mirrored by 'git push'"));
-=20
- 		info.width =3D info.width2 =3D 0;
- 		for_each_string_list(&states.push, add_push_to_show_info, &info);
- 		qsort(info.list->items, info.list->nr,
- 			sizeof(*info.list->items), cmp_string_with_push);
- 		if (info.list->nr)
--			printf("  Local ref%s configured for 'git push'%s:\n",
--				info.list->nr > 1 ? "s" : "",
--				no_query ? " (status not queried)" : "");
-+			printf_ln(Q_("  Local ref configured for 'git push'%s:",
-+				     "  Local refs configured for 'git push'%s:",
-+				     info.list->nr),
-+				  no_query ? _(" (status not queried)") : "");
- 		for_each_string_list(info.list, show_push_info_item, &info);
- 		string_list_clear(info.list, 0);
-=20
-@@ -1202,10 +1213,10 @@ static int set_head(int argc, const char **argv=
+ static void set_default_whitespace_mode(const char *whitespace_option)
+@@ -770,7 +770,7 @@ static int has_epoch_timestamp(const char *nameline=
 )
- 		memset(&states, 0, sizeof(states));
- 		get_remote_ref_states(argv[0], &states, GET_HEAD_NAMES);
- 		if (!states.heads.nr)
--			result |=3D error("Cannot determine remote HEAD");
-+			result |=3D error(_("Cannot determine remote HEAD"));
- 		else if (states.heads.nr > 1) {
--			result |=3D error("Multiple remote HEAD branches. "
--					"Please choose one explicitly with:");
-+			result |=3D error(_("Multiple remote HEAD branches. "
-+					  "Please choose one explicitly with:"));
- 			for (i =3D 0; i < states.heads.nr; i++)
- 				fprintf(stderr, "  git remote set-head %s %s\n",
- 					argv[0], states.heads.items[i].string);
-@@ -1214,7 +1225,7 @@ static int set_head(int argc, const char **argv)
- 		free_remote_ref_states(&states);
- 	} else if (opt_d && !opt_a && argc =3D=3D 1) {
- 		if (delete_ref(buf.buf, NULL, REF_NODEREF))
--			result |=3D error("Could not delete %s", buf.buf);
-+			result |=3D error(_("Could not delete %s"), buf.buf);
- 	} else
- 		usage_with_options(builtin_remote_sethead_usage, options);
-=20
-@@ -1222,9 +1233,9 @@ static int set_head(int argc, const char **argv)
- 		strbuf_addf(&buf2, "refs/remotes/%s/%s", argv[0], head_name);
- 		/* make sure it's valid */
- 		if (!ref_exists(buf2.buf))
--			result |=3D error("Not a valid ref: %s", buf2.buf);
-+			result |=3D error(_("Not a valid ref: %s"), buf2.buf);
- 		else if (create_symref(buf.buf, buf2.buf, "remote set-head"))
--			result |=3D error("Could not setup %s", buf.buf);
-+			result |=3D error(_("Could not setup %s"), buf.buf);
- 		if (opt_a)
- 			printf("%s/HEAD set to %s\n", argv[0], head_name);
- 		free(head_name);
-@@ -1260,18 +1271,18 @@ static int prune_remote(const char *remote, int=
- dry_run)
- 	int result =3D 0, i;
- 	struct ref_states states;
- 	const char *dangling_msg =3D dry_run
--		? " %s will become dangling!"
--		: " %s has become dangling!";
-+		? _(" %s will become dangling!")
-+		: _(" %s has become dangling!");
-=20
- 	memset(&states, 0, sizeof(states));
- 	get_remote_ref_states(remote, &states, GET_REF_STATES);
-=20
- 	if (states.stale.nr) {
--		printf("Pruning %s\n", remote);
--		printf("URL: %s\n",
-+		printf_ln(_("Pruning %s"), remote);
-+		printf_ln(_("URL: %s"),
- 		       states.remote->url_nr
- 		       ? states.remote->url[0]
--		       : "(no URL)");
-+		       : _("(no URL)"));
+ 	if (!stamp) {
+ 		stamp =3D xmalloc(sizeof(*stamp));
+ 		if (regcomp(stamp, stamp_regexp, REG_EXTENDED)) {
+-			warning("Cannot prepare timestamp regexp %s",
++			warning(_("Cannot prepare timestamp regexp %s"),
+ 				stamp_regexp);
+ 			return 0;
+ 		}
+@@ -779,7 +779,7 @@ static int has_epoch_timestamp(const char *nameline=
+)
+ 	status =3D regexec(stamp, timestamp, ARRAY_SIZE(m), m, 0);
+ 	if (status) {
+ 		if (status !=3D REG_NOMATCH)
+-			warning("regexec returned %d for input: %s",
++			warning(_("regexec returned %d for input: %s"),
+ 				status, timestamp);
+ 		return 0;
  	}
-=20
- 	for (i =3D 0; i < states.stale.nr; i++) {
-@@ -1280,8 +1291,12 @@ static int prune_remote(const char *remote, int =
-dry_run)
- 		if (!dry_run)
- 			result |=3D delete_ref(refname, NULL, 0);
-=20
--		printf(" * [%s] %s\n", dry_run ? "would prune" : "pruned",
--		       abbrev_ref(refname, "refs/remotes/"));
-+		if (dry_run)
-+			printf_ln(_(" * [would prune] %s"),
-+			       abbrev_ref(refname, "refs/remotes/"));
-+		else
-+			printf_ln(_(" * [pruned] %s"),
-+			       abbrev_ref(refname, "refs/remotes/"));
- 		warn_dangling_symref(stdout, dangling_msg, refname);
+@@ -857,7 +857,7 @@ static void parse_traditional_patch(const char *fir=
+st, const char *second, struc
+ 		}
  	}
+ 	if (!name)
+-		die("unable to find filename in patch at line %d", linenr);
++		die(_("unable to find filename in patch at line %d"), linenr);
+ }
 =20
-@@ -1369,7 +1384,7 @@ static int set_remote_branches(const char *remote=
-name, const char **branches,
- 	strbuf_addf(&key, "remote.%s.fetch", remotename);
-=20
- 	if (!remote_is_configured(remotename))
--		die("No such remote '%s'", remotename);
-+		die(_("No such remote '%s'"), remotename);
- 	remote =3D remote_get(remotename);
-=20
- 	if (!add_mode && remove_all_fetch_refspecs(remotename, key.buf)) {
-@@ -1396,7 +1411,7 @@ static int set_branches(int argc, const char **ar=
-gv)
- 	argc =3D parse_options(argc, argv, NULL, options,
- 			     builtin_remote_setbranches_usage, 0);
- 	if (argc =3D=3D 0) {
--		error("no remote specified");
-+		error(_("no remote specified"));
- 		usage_with_options(builtin_remote_setbranches_usage, options);
+ static int gitdiff_hdrend(const char *line, struct patch *patch)
+@@ -886,17 +886,17 @@ static char *gitdiff_verify_name(const char *line=
+, int isnull, char *orig_name,
+ 		name =3D orig_name;
+ 		len =3D strlen(name);
+ 		if (isnull)
+-			die("git apply: bad git-diff - expected /dev/null, got %s on line %=
+d", name, linenr);
++			die(_("git apply: bad git-diff - expected /dev/null, got %s on line=
+ %d"), name, linenr);
+ 		another =3D find_name(line, NULL, p_value, TERM_TAB);
+ 		if (!another || memcmp(another, name, len + 1))
+-			die("git apply: bad git-diff - inconsistent %s filename on line %d"=
+, oldnew, linenr);
++			die(_("git apply: bad git-diff - inconsistent %s filename on line %=
+d"), oldnew, linenr);
+ 		free(another);
+ 		return orig_name;
  	}
- 	argv[argc] =3D NULL;
-@@ -1429,7 +1444,7 @@ static int set_url(int argc, const char **argv)
- 			     PARSE_OPT_KEEP_ARGV0);
-=20
- 	if (add_mode && delete_mode)
--		die("--add --delete doesn't make sense");
-+		die(_("--add --delete doesn't make sense"));
-=20
- 	if (argc < 3 || argc > 4 || ((add_mode || delete_mode) && argc !=3D 3=
-))
- 		usage_with_options(builtin_remote_seturl_usage, options);
-@@ -1443,7 +1458,7 @@ static int set_url(int argc, const char **argv)
- 		oldurl =3D newurl;
-=20
- 	if (!remote_is_configured(remotename))
--		die("No such remote '%s'", remotename);
-+		die(_("No such remote '%s'"), remotename);
- 	remote =3D remote_get(remotename);
-=20
- 	if (push_mode) {
-@@ -1469,7 +1484,7 @@ static int set_url(int argc, const char **argv)
-=20
- 	/* Old URL specified. Demand that one matches. */
- 	if (regcomp(&old_regex, oldurl, REG_EXTENDED))
--		die("Invalid old URL pattern: %s", oldurl);
-+		die(_("Invalid old URL pattern: %s"), oldurl);
-=20
- 	for (i =3D 0; i < urlset_nr; i++)
- 		if (!regexec(&old_regex, urlset[i], 0, NULL, 0))
-@@ -1477,9 +1492,9 @@ static int set_url(int argc, const char **argv)
- 		else
- 			negative_matches++;
- 	if (!delete_mode && !matches)
--		die("No such URL found: %s", oldurl);
-+		die(_("No such URL found: %s"), oldurl);
- 	if (delete_mode && !negative_matches && !push_mode)
--		die("Will not delete all non-push URLs");
-+		die(_("Will not delete all non-push URLs"));
-=20
- 	regfree(&old_regex);
-=20
-@@ -1580,7 +1595,7 @@ int cmd_remote(int argc, const char **argv, const=
- char *prefix)
- 	else if (!strcmp(argv[0], "update"))
- 		result =3D update(argc, argv);
  	else {
--		error("Unknown subcommand: %s", argv[0]);
-+		error(_("Unknown subcommand: %s"), argv[0]);
- 		usage_with_options(builtin_remote_usage, options);
+ 		/* expect "/dev/null" */
+ 		if (memcmp("/dev/null", line, 9) || line[9] !=3D '\n')
+-			die("git apply: bad git-diff - expected /dev/null on line %d", line=
+nr);
++			die(_("git apply: bad git-diff - expected /dev/null on line %d"), l=
+inenr);
+ 		return NULL;
+ 	}
+ }
+@@ -1327,7 +1327,7 @@ static void recount_diff(char *line, int size, st=
+ruct fragment *fragment)
+ 			break;
+ 		}
+ 		if (ret) {
+-			warning("recount: unexpected line: %.*s",
++			warning(_("recount: unexpected line: %.*s"),
+ 				(int)linelen(line, size), line);
+ 			return;
+ 		}
+@@ -1384,7 +1384,7 @@ static int find_header(char *line, unsigned long =
+size, int *hdrsize, struct patc
+ 			struct fragment dummy;
+ 			if (parse_fragment_header(line, len, &dummy) < 0)
+ 				continue;
+-			die("patch fragment without header at line %d: %.*s",
++			die(_("patch fragment without header at line %d: %.*s"),
+ 			    linenr, (int)len-1, line);
+ 		}
+=20
+@@ -1401,8 +1401,12 @@ static int find_header(char *line, unsigned long=
+ size, int *hdrsize, struct patc
+ 				continue;
+ 			if (!patch->old_name && !patch->new_name) {
+ 				if (!patch->def_name)
+-					die("git diff header lacks filename information when removing "
+-					    "%d leading pathname components (line %d)" , p_value, linenr)=
+;
++					die(Q_("git diff header lacks filename information when removing =
+"
++					       "%d leading pathname component (line %d)",
++					       "git diff header lacks filename information when removing =
+"
++					       "%d leading pathname components (line %d)",
++					       p_value),
++					    p_value, linenr);
+ 				patch->old_name =3D patch->new_name =3D patch->def_name;
+ 			}
+ 			if (!patch->is_delete && !patch->new_name)
+@@ -1556,9 +1560,9 @@ static int parse_fragment(char *line, unsigned lo=
+ng size,
+ 	patch->lines_deleted +=3D deleted;
+=20
+ 	if (0 < patch->is_new && oldlines)
+-		return error("new file depends on old contents");
++		return error(_("new file depends on old contents"));
+ 	if (0 < patch->is_delete && newlines)
+-		return error("deleted file still has contents");
++		return error(_("deleted file still has contents"));
+ 	return offset;
+ }
+=20
+@@ -1576,7 +1580,7 @@ static int parse_single_patch(char *line, unsigne=
+d long size, struct patch *patc
+ 		fragment->linenr =3D linenr;
+ 		len =3D parse_fragment(line, size, patch, fragment);
+ 		if (len <=3D 0)
+-			die("corrupt patch at line %d", linenr);
++			die(_("corrupt patch at line %d"), linenr);
+ 		fragment->patch =3D line;
+ 		fragment->size =3D len;
+ 		oldlines +=3D fragment->oldlines;
+@@ -1612,12 +1616,14 @@ static int parse_single_patch(char *line, unsig=
+ned long size, struct patch *patc
+ 		patch->is_delete =3D 0;
+=20
+ 	if (0 < patch->is_new && oldlines)
+-		die("new file %s depends on old contents", patch->new_name);
++		die(_("new file %s depends on old contents"), patch->new_name);
+ 	if (0 < patch->is_delete && newlines)
+-		die("deleted file %s still has contents", patch->old_name);
++		die(_("deleted file %s still has contents"), patch->old_name);
+ 	if (!patch->is_delete && !newlines && context)
+-		fprintf(stderr, "** warning: file %s becomes empty but "
+-			"is not deleted\n", patch->new_name);
++		fprintf_ln(stderr,
++			   _("** warning: "
++			     "file %s becomes empty but is not deleted"),
++			   patch->new_name);
+=20
+ 	return offset;
+ }
+@@ -1755,7 +1761,7 @@ static struct fragment *parse_binary_hunk(char **=
+buf_p,
+  corrupt:
+ 	free(data);
+ 	*status_p =3D -1;
+-	error("corrupt binary patch at line %d: %.*s",
++	error(_("corrupt binary patch at line %d: %.*s"),
+ 	      linenr-1, llen-1, buffer);
+ 	return NULL;
+ }
+@@ -1784,7 +1790,7 @@ static int parse_binary(char *buffer, unsigned lo=
+ng size, struct patch *patch)
+ 	forward =3D parse_binary_hunk(&buffer, &size, &status, &used);
+ 	if (!forward && !status)
+ 		/* there has to be one hunk (forward hunk) */
+-		return error("unrecognized binary patch at line %d", linenr-1);
++		return error(_("unrecognized binary patch at line %d"), linenr-1);
+ 	if (status)
+ 		/* otherwise we already gave an error message */
+ 		return status;
+@@ -1863,7 +1869,7 @@ static int parse_chunk(char *buffer, unsigned lon=
+g size, struct patch *patch)
+ 		 */
+ 		if ((apply || check) &&
+ 		    (!patch->is_binary && !metadata_changes(patch)))
+-			die("patch with only garbage at line %d", linenr);
++			die(_("patch with only garbage at line %d"), linenr);
  	}
 =20
+ 	return offset + hdrsize + patchsize;
+@@ -1953,11 +1959,11 @@ static int read_old_data(struct stat *st, const=
+ char *path, struct strbuf *buf)
+ 	switch (st->st_mode & S_IFMT) {
+ 	case S_IFLNK:
+ 		if (strbuf_readlink(buf, path, st->st_size) < 0)
+-			return error("unable to read symlink %s", path);
++			return error(_("unable to read symlink %s"), path);
+ 		return 0;
+ 	case S_IFREG:
+ 		if (strbuf_read_file(buf, path, st->st_size) !=3D st->st_size)
+-			return error("unable to open or read %s", path);
++			return error(_("unable to open or read %s"), path);
+ 		convert_to_git(path, buf->buf, buf->len, buf, 0);
+ 		return 0;
+ 	default:
+@@ -2028,7 +2034,7 @@ static void update_pre_post_images(struct image *=
+preimage,
+ 			ctx++;
+ 		}
+ 		if (preimage->nr <=3D ctx)
+-			die("oops");
++			die(_("oops"));
+=20
+ 		/* and copy it in, while fixing the line length */
+ 		len =3D preimage->line[ctx].len;
+@@ -2540,7 +2546,7 @@ static int apply_one_fragment(struct image *img, =
+struct fragment *frag,
+ 			break;
+ 		default:
+ 			if (apply_verbosely)
+-				error("invalid start of line: '%c'", first);
++				error(_("invalid start of line: '%c'"), first);
+ 			return -1;
+ 		}
+ 		if (added_blank_line) {
+@@ -2657,9 +2663,11 @@ static int apply_one_fragment(struct image *img,=
+ struct fragment *frag,
+ 			int offset =3D applied_pos - pos;
+ 			if (apply_in_reverse)
+ 				offset =3D 0 - offset;
+-			fprintf(stderr,
+-				"Hunk #%d succeeded at %d (offset %d lines).\n",
+-				nth_fragment, applied_pos + 1, offset);
++			fprintf_ln(stderr,
++				   Q_("Hunk #%d succeeded at %d (offset %d line).",
++				      "Hunk #%d succeeded at %d (offset %d lines).",
++				      offset),
++				   nth_fragment, applied_pos + 1, offset);
+ 		}
+=20
+ 		/*
+@@ -2668,13 +2676,13 @@ static int apply_one_fragment(struct image *img=
+, struct fragment *frag,
+ 		 */
+ 		if ((leading !=3D frag->leading) ||
+ 		    (trailing !=3D frag->trailing))
+-			fprintf(stderr, "Context reduced to (%ld/%ld)"
+-				" to apply fragment at %d\n",
+-				leading, trailing, applied_pos+1);
++			fprintf_ln(stderr, _("Context reduced to (%ld/%ld)"
++					     " to apply fragment at %d"),
++				   leading, trailing, applied_pos+1);
+ 		update_image(img, applied_pos, &preimage, &postimage);
+ 	} else {
+ 		if (apply_verbosely)
+-			error("while searching for:\n%.*s",
++			error(_("while searching for:\n%.*s"),
+ 			      (int)(old - oldlines), oldlines);
+ 	}
+=20
+@@ -2693,7 +2701,7 @@ static int apply_binary_fragment(struct image *im=
+g, struct patch *patch)
+ 	void *dst;
+=20
+ 	if (!fragment)
+-		return error("missing binary patch data for '%s'",
++		return error(_("missing binary patch data for '%s'"),
+ 			     patch->new_name ?
+ 			     patch->new_name :
+ 			     patch->old_name);
+@@ -2790,13 +2798,13 @@ static int apply_binary(struct image *img, stru=
+ct patch *patch)
+ 		 * in the patch->fragments->{patch,size}.
+ 		 */
+ 		if (apply_binary_fragment(img, patch))
+-			return error("binary patch does not apply to '%s'",
++			return error(_("binary patch does not apply to '%s'"),
+ 				     name);
+=20
+ 		/* verify that the result matches */
+ 		hash_sha1_file(img->buf, img->len, blob_type, sha1);
+ 		if (strcmp(sha1_to_hex(sha1), patch->new_sha1_prefix))
+-			return error("binary patch to '%s' creates incorrect result (expect=
+ing %s, got %s)",
++			return error(_("binary patch to '%s' creates incorrect result (expe=
+cting %s, got %s)"),
+ 				name, patch->new_sha1_prefix, sha1_to_hex(sha1));
+ 	}
+=20
+@@ -2817,7 +2825,7 @@ static int apply_fragments(struct image *img, str=
+uct patch *patch)
+ 	while (frag) {
+ 		nth++;
+ 		if (apply_one_fragment(img, frag, inaccurate_eof, ws_rule, nth)) {
+-			error("patch failed: %s:%ld", name, frag->oldpos);
++			error(_("patch failed: %s:%ld"), name, frag->oldpos);
+ 			if (!apply_with_reject)
+ 				return -1;
+ 			frag->rejected =3D 1;
+@@ -2932,14 +2940,14 @@ static int apply_data(struct patch *patch, stru=
+ct stat *st, struct cache_entry *
+ 	if (!(patch->is_copy || patch->is_rename) &&
+ 	    (tpatch =3D in_fn_table(patch->old_name)) !=3D NULL && !to_be_del=
+eted(tpatch)) {
+ 		if (was_deleted(tpatch)) {
+-			return error("patch %s has been renamed/deleted",
++			return error(_("patch %s has been renamed/deleted"),
+ 				patch->old_name);
+ 		}
+ 		/* We have a patched copy in memory use that */
+ 		strbuf_add(&buf, tpatch->result, tpatch->resultsize);
+ 	} else if (cached) {
+ 		if (read_file_or_gitlink(ce, &buf))
+-			return error("read of %s failed", patch->old_name);
++			return error(_("read of %s failed"), patch->old_name);
+ 	} else if (patch->old_name) {
+ 		if (S_ISGITLINK(patch->old_mode)) {
+ 			if (ce) {
+@@ -2953,7 +2961,7 @@ static int apply_data(struct patch *patch, struct=
+ stat *st, struct cache_entry *
+ 			}
+ 		} else {
+ 			if (read_old_data(st, patch->old_name, &buf))
+-				return error("read of %s failed", patch->old_name);
++				return error(_("read of %s failed"), patch->old_name);
+ 		}
+ 	}
+=20
+@@ -2968,7 +2976,7 @@ static int apply_data(struct patch *patch, struct=
+ stat *st, struct cache_entry *
+ 	free(image.line_allocated);
+=20
+ 	if (0 < patch->is_delete && patch->resultsize)
+-		return error("removal patch leaves file contents");
++		return error(_("removal patch leaves file contents"));
+=20
+ 	return 0;
+ }
+@@ -2989,7 +2997,7 @@ static int check_to_create_blob(const char *new_n=
+ame, int ok_if_exists)
+ 		if (has_symlink_leading_path(new_name, strlen(new_name)))
+ 			return 0;
+=20
+-		return error("%s: already exists in working directory", new_name);
++		return error(_("%s: already exists in working directory"), new_name)=
+;
+ 	}
+ 	else if ((errno !=3D ENOENT) && (errno !=3D ENOTDIR))
+ 		return error("%s: %s", new_name, strerror(errno));
+@@ -3027,12 +3035,12 @@ static int check_preimage(struct patch *patch, =
+struct cache_entry **ce, struct s
+ 	if (!(patch->is_copy || patch->is_rename) &&
+ 	    (tpatch =3D in_fn_table(old_name)) !=3D NULL && !to_be_deleted(tp=
+atch)) {
+ 		if (was_deleted(tpatch))
+-			return error("%s: has been deleted/renamed", old_name);
++			return error(_("%s: has been deleted/renamed"), old_name);
+ 		st_mode =3D tpatch->new_mode;
+ 	} else if (!cached) {
+ 		stat_ret =3D lstat(old_name, st);
+ 		if (stat_ret && errno !=3D ENOENT)
+-			return error("%s: %s", old_name, strerror(errno));
++			return error(_("%s: %s"), old_name, strerror(errno));
+ 	}
+=20
+ 	if (to_be_deleted(tpatch))
+@@ -3043,7 +3051,7 @@ static int check_preimage(struct patch *patch, st=
+ruct cache_entry **ce, struct s
+ 		if (pos < 0) {
+ 			if (patch->is_new < 0)
+ 				goto is_new;
+-			return error("%s: does not exist in index", old_name);
++			return error(_("%s: does not exist in index"), old_name);
+ 		}
+ 		*ce =3D active_cache[pos];
+ 		if (stat_ret < 0) {
+@@ -3057,13 +3065,13 @@ static int check_preimage(struct patch *patch, =
+struct cache_entry **ce, struct s
+ 				return -1;
+ 		}
+ 		if (!cached && verify_index_match(*ce, st))
+-			return error("%s: does not match index", old_name);
++			return error(_("%s: does not match index"), old_name);
+ 		if (cached)
+ 			st_mode =3D (*ce)->ce_mode;
+ 	} else if (stat_ret < 0) {
+ 		if (patch->is_new < 0)
+ 			goto is_new;
+-		return error("%s: %s", old_name, strerror(errno));
++		return error(_("%s: %s"), old_name, strerror(errno));
+ 	}
+=20
+ 	if (!cached && !tpatch)
+@@ -3074,9 +3082,9 @@ static int check_preimage(struct patch *patch, st=
+ruct cache_entry **ce, struct s
+ 	if (!patch->old_mode)
+ 		patch->old_mode =3D st_mode;
+ 	if ((st_mode ^ patch->old_mode) & S_IFMT)
+-		return error("%s: wrong type", old_name);
++		return error(_("%s: wrong type"), old_name);
+ 	if (st_mode !=3D patch->old_mode)
+-		warning("%s has type %o, expected %o",
++		warning(_("%s has type %o, expected %o"),
+ 			old_name, st_mode, patch->old_mode);
+ 	if (!patch->new_mode && !patch->is_delete)
+ 		patch->new_mode =3D st_mode;
+@@ -3126,7 +3134,7 @@ static int check_patch(struct patch *patch)
+ 		if (check_index &&
+ 		    cache_name_pos(new_name, strlen(new_name)) >=3D 0 &&
+ 		    !ok_if_exists)
+-			return error("%s: already exists in index", new_name);
++			return error(_("%s: already exists in index"), new_name);
+ 		if (!cached) {
+ 			int err =3D check_to_create_blob(new_name, ok_if_exists);
+ 			if (err)
+@@ -3145,13 +3153,13 @@ static int check_patch(struct patch *patch)
+ 		if (!patch->new_mode)
+ 			patch->new_mode =3D patch->old_mode;
+ 		if ((patch->old_mode ^ patch->new_mode) & S_IFMT)
+-			return error("new mode (%o) of %s does not match old mode (%o)%s%s"=
+,
++			return error(_("new mode (%o) of %s does not match old mode (%o)%s%=
+s"),
+ 				patch->new_mode, new_name, patch->old_mode,
+ 				same ? "" : " of ", same ? "" : old_name);
+ 	}
+=20
+ 	if (apply_data(patch, &st, ce) < 0)
+-		return error("%s: patch does not apply", name);
++		return error(_("%s: patch does not apply"), name);
+ 	patch->rejected =3D 0;
+ 	return 0;
+ }
+@@ -3219,7 +3227,7 @@ static void build_fake_ancestor(struct patch *lis=
+t, const char *filename)
+=20
+ 		ce =3D make_cache_entry(patch->old_mode, sha1_ptr, name, 0, 0);
+ 		if (!ce)
+-			die("make_cache_entry failed for path '%s'", name);
++			die(_("make_cache_entry failed for path '%s'"), name);
+ 		if (add_index_entry(&result, ce, ADD_CACHE_OK_TO_ADD))
+ 			die ("Could not add %s to temporary index", name);
+ 	}
+@@ -3362,7 +3370,7 @@ static void remove_file(struct patch *patch, int =
+rmdir_empty)
+ {
+ 	if (update_index) {
+ 		if (remove_file_from_cache(patch->old_name) < 0)
+-			die("unable to remove %s from index", patch->old_name);
++			die(_("unable to remove %s from index"), patch->old_name);
+ 	}
+ 	if (!cached) {
+ 		if (!remove_or_warn(patch->old_mode, patch->old_name) && rmdir_empty=
+) {
+@@ -3389,19 +3397,19 @@ static void add_index_file(const char *path, un=
+signed mode, void *buf, unsigned
+ 		const char *s =3D buf;
+=20
+ 		if (get_sha1_hex(s + strlen("Subproject commit "), ce->sha1))
+-			die("corrupt patch for subproject %s", path);
++			die(_("corrupt patch for subproject %s"), path);
+ 	} else {
+ 		if (!cached) {
+ 			if (lstat(path, &st) < 0)
+-				die_errno("unable to stat newly created file '%s'",
++				die_errno(_("unable to stat newly created file '%s'"),
+ 					  path);
+ 			fill_stat_cache_info(ce, &st);
+ 		}
+ 		if (write_sha1_file(buf, size, blob_type, ce->sha1) < 0)
+-			die("unable to create backing store for newly created file %s", pat=
+h);
++			die(_("unable to create backing store for newly created file %s"), =
+path);
+ 	}
+ 	if (add_cache_entry(ce, ADD_CACHE_OK_TO_ADD) < 0)
+-		die("unable to add cache entry for %s", path);
++		die(_("unable to add cache entry for %s"), path);
+ }
+=20
+ static int try_create_file(const char *path, unsigned int mode, const =
+char *buf, unsigned long size)
+@@ -3434,7 +3442,7 @@ static int try_create_file(const char *path, unsi=
+gned int mode, const char *buf,
+ 	strbuf_release(&nbuf);
+=20
+ 	if (close(fd) < 0)
+-		die_errno("closing file '%s'", path);
++		die_errno(_("closing file '%s'"), path);
+ 	return 0;
+ }
+=20
+@@ -3483,7 +3491,7 @@ static void create_one_file(char *path, unsigned =
+mode, const char *buf, unsigned
+ 			++nr;
+ 		}
+ 	}
+-	die_errno("unable to write file '%s' mode %o", path, mode);
++	die_errno(_("unable to write file '%s' mode %o"), path, mode);
+ }
+=20
+ static void create_file(struct patch *patch)
+@@ -3546,7 +3554,7 @@ static int write_out_one_reject(struct patch *pat=
+ch)
+ 	 * contents are marked "rejected" at the patch level.
+ 	 */
+ 	if (!patch->new_name)
+-		die("internal error");
++		die(_("internal error"));
+=20
+ 	/* Say this even without --verbose */
+ 	say_patch_name(stderr, "Applying patch ", patch, " with");
+@@ -3555,7 +3563,7 @@ static int write_out_one_reject(struct patch *pat=
+ch)
+ 	cnt =3D strlen(patch->new_name);
+ 	if (ARRAY_SIZE(namebuf) <=3D cnt + 5) {
+ 		cnt =3D ARRAY_SIZE(namebuf) - 5;
+-		warning("truncating .rej filename to %.*s.rej",
++		warning(_("truncating .rej filename to %.*s.rej"),
+ 			cnt - 1, patch->new_name);
+ 	}
+ 	memcpy(namebuf, patch->new_name, cnt);
+@@ -3563,7 +3571,7 @@ static int write_out_one_reject(struct patch *pat=
+ch)
+=20
+ 	rej =3D fopen(namebuf, "w");
+ 	if (!rej)
+-		return error("cannot open %s: %s", namebuf, strerror(errno));
++		return error(_("cannot open %s: %s"), namebuf, strerror(errno));
+=20
+ 	/* Normal git tools never deal with .rej, so do not pretend
+ 	 * this is a git patch by saying --git nor give extended
+@@ -3576,10 +3584,10 @@ static int write_out_one_reject(struct patch *p=
+atch)
+ 	     frag;
+ 	     cnt++, frag =3D frag->next) {
+ 		if (!frag->rejected) {
+-			fprintf(stderr, "Hunk #%d applied cleanly.\n", cnt);
++			fprintf_ln(stderr, _("Hunk #%d applied cleanly."), cnt);
+ 			continue;
+ 		}
+-		fprintf(stderr, "Rejected hunk #%d.\n", cnt);
++		fprintf_ln(stderr, _("Rejected hunk #%d."), cnt);
+ 		fprintf(rej, "%.*s", frag->size, frag->patch);
+ 		if (frag->patch[frag->size-1] !=3D '\n')
+ 			fputc('\n', rej);
+@@ -3720,7 +3728,7 @@ static int apply_patch(int fd, const char *filena=
+me, int options)
+ 	}
+=20
+ 	if (!list && !skipped_patch)
+-		die("unrecognized input");
++		die(_("unrecognized input"));
+=20
+ 	if (whitespace_error && (ws_error_action =3D=3D die_on_ws_error))
+ 		apply =3D 0;
+@@ -3731,7 +3739,7 @@ static int apply_patch(int fd, const char *filena=
+me, int options)
+=20
+ 	if (check_index) {
+ 		if (read_cache() < 0)
+-			die("unable to read index file");
++			die(_("unable to read index file"));
+ 	}
+=20
+ 	if ((check || apply) &&
+@@ -3924,10 +3932,10 @@ int cmd_apply(int argc, const char **argv, cons=
+t char *prefix_)
+ 	if (!force_apply && (diffstat || numstat || summary || check || fake_=
+ancestor))
+ 		apply =3D 0;
+ 	if (check_index && is_not_gitdir)
+-		die("--index outside a repository");
++		die(_("--index outside a repository"));
+ 	if (cached) {
+ 		if (is_not_gitdir)
+-			die("--cached outside a repository");
++			die(_("--cached outside a repository"));
+ 		check_index =3D 1;
+ 	}
+ 	for (i =3D 0; i < argc; i++) {
+@@ -3943,7 +3951,7 @@ int cmd_apply(int argc, const char **argv, const =
+char *prefix_)
+=20
+ 		fd =3D open(arg, O_RDONLY);
+ 		if (fd < 0)
+-			die_errno("can't open patch '%s'", arg);
++			die_errno(_("can't open patch '%s'"), arg);
+ 		read_stdin =3D 0;
+ 		set_default_whitespace_mode(whitespace_option);
+ 		errs |=3D apply_patch(fd, arg, options);
+@@ -3957,32 +3965,32 @@ int cmd_apply(int argc, const char **argv, cons=
+t char *prefix_)
+ 		    squelch_whitespace_errors < whitespace_error) {
+ 			int squelched =3D
+ 				whitespace_error - squelch_whitespace_errors;
+-			warning("squelched %d "
+-				"whitespace error%s",
+-				squelched,
+-				squelched =3D=3D 1 ? "" : "s");
++			warning(Q_("squelched %d whitespace error",
++				   "squelched %d whitespace errors",
++				   squelched),
++				squelched);
+ 		}
+ 		if (ws_error_action =3D=3D die_on_ws_error)
+-			die("%d line%s add%s whitespace errors.",
+-			    whitespace_error,
+-			    whitespace_error =3D=3D 1 ? "" : "s",
+-			    whitespace_error =3D=3D 1 ? "s" : "");
++			die(Q_("%d line adds whitespace errors.",
++			       "%d lines add whitespace errors.",
++			       whitespace_error),
++			    whitespace_error);
+ 		if (applied_after_fixing_ws && apply)
+ 			warning("%d line%s applied after"
+ 				" fixing whitespace errors.",
+ 				applied_after_fixing_ws,
+ 				applied_after_fixing_ws =3D=3D 1 ? "" : "s");
+ 		else if (whitespace_error)
+-			warning("%d line%s add%s whitespace errors.",
+-				whitespace_error,
+-				whitespace_error =3D=3D 1 ? "" : "s",
+-				whitespace_error =3D=3D 1 ? "s" : "");
++			warning(Q_("%d line adds whitespace errors.",
++				   "%d lines add whitespace errors.",
++				   whitespace_error),
++				whitespace_error);
+ 	}
+=20
+ 	if (update_index) {
+ 		if (write_cache(newfd, active_cache, active_nr) ||
+ 		    commit_locked_index(&lock_file))
+-			die("Unable to write new index file");
++			die(_("Unable to write new index file"));
+ 	}
+=20
+ 	return !!errs;
 --=20
 1.7.8.36.g69ee2
