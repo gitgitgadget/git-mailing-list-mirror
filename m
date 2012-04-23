@@ -1,69 +1,113 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 00/10] i18n relative dates, help, remote, apply, index-pack and bundle
-Date: Mon, 23 Apr 2012 11:56:00 -0700
-Message-ID: <xmqq62cqjn0f.fsf@junio.mtv.corp.google.com>
-References: <1335184230-8870-1-git-send-email-pclouds@gmail.com>
+From: "Philip Oakley" <philipoakley@iee.org>
+Subject: Re: [PATCH 1/7] Documentation: explain push.default option a bit more
+Date: Mon, 23 Apr 2012 20:00:25 +0100
+Organization: OPDS
+Message-ID: <CB914FF3899C496F9E85E83B9532E055@PhilipOakley>
+References: <1334933944-13446-1-git-send-email-Matthieu.Moy@imag.fr> <1335170284-30768-1-git-send-email-Matthieu.Moy@imag.fr> <1335170284-30768-2-git-send-email-Matthieu.Moy@imag.fr>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org,
-	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
-	Jiang Xin <worldhello.net@gmail.com>,
-	Zbigniew =?utf-8?Q?J=C4=99drzejewski-Szmek?= <zbyszek@in.waw.pl>
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-	Jonathan Niedier <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Apr 23 20:56:19 2012
+Content-Type: text/plain;
+	format=flowed;
+	charset="iso-8859-1";
+	reply-type=original
+Content-Transfer-Encoding: 7bit
+Cc: "Jeff King" <peff@peff.net>,
+	"Michael Haggerty" <mhagger@alum.mit.edu>,
+	"Matthieu Moy" <Matthieu.Moy@imag.fr>
+To: "Matthieu Moy" <Matthieu.Moy@imag.fr>, <git@vger.kernel.org>,
+	<gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Apr 23 20:59:22 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SMOQk-0007jf-D6
-	for gcvg-git-2@plane.gmane.org; Mon, 23 Apr 2012 20:56:10 +0200
+	id 1SMOTp-00019E-Rz
+	for gcvg-git-2@plane.gmane.org; Mon, 23 Apr 2012 20:59:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754812Ab2DWS4E (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 Apr 2012 14:56:04 -0400
-Received: from mail-qa0-f74.google.com ([209.85.216.74]:35739 "EHLO
-	mail-qa0-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754520Ab2DWS4D (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Apr 2012 14:56:03 -0400
-Received: by qabg24 with SMTP id g24so330553qab.1
-        for <git@vger.kernel.org>; Mon, 23 Apr 2012 11:56:01 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type:x-gm-message-state;
-        bh=Qfi8XDle2sfsBRX/iDTefYuBfvj/Lp4E/mJexNKf3II=;
-        b=VLvafpRllOcbXVTAql1F3Vidfy/zxbRFzUCS2oot+OiVZ9IQ/LjCEsG2WKSZnqbZ1w
-         kfT+Cpzf6qTvdcqDSdUYD9iO/9x+YztCPVEYSU1MiHEotboy1xbPuak4QLHRhjx/8/+z
-         W1lnVeUBmRWAQp8Cvif4mVbEuOLYO00yAf+FtuJcrjCwlHSAStc5XkxLGNF+/zjn40jd
-         /ZQbrjVW3kPM329WH6s2R9wbeU+q9R7kofyf1xfojNF09O9FFQcE5fmWsJ+kZlIXQ9rm
-         TSUriMJBpc4N3506QgWNcAcN9q6P6py67ji0hCbSxMaCcPXX9OGyY9i8QiLB+eIBigW7
-         C00Q==
-Received: by 10.101.137.21 with SMTP id p21mr6243758ann.26.1335207361800;
-        Mon, 23 Apr 2012 11:56:01 -0700 (PDT)
-Received: by 10.101.137.21 with SMTP id p21mr6243728ann.26.1335207361614;
-        Mon, 23 Apr 2012 11:56:01 -0700 (PDT)
-Received: from wpzn4.hot.corp.google.com (216-239-44-65.google.com [216.239.44.65])
-        by gmr-mx.google.com with ESMTPS id k54si15683227yhh.5.2012.04.23.11.56.01
-        (version=TLSv1/SSLv3 cipher=AES128-SHA);
-        Mon, 23 Apr 2012 11:56:01 -0700 (PDT)
-Received: from junio.mtv.corp.google.com (junio.mtv.corp.google.com [172.27.69.24])
-	by wpzn4.hot.corp.google.com (Postfix) with ESMTP id 808F41E005B;
-	Mon, 23 Apr 2012 11:56:01 -0700 (PDT)
-Received: by junio.mtv.corp.google.com (Postfix, from userid 110493)
-	id EDB44E120A; Mon, 23 Apr 2012 11:56:00 -0700 (PDT)
-In-Reply-To: <1335184230-8870-1-git-send-email-pclouds@gmail.com>
- (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Mon, 23
- Apr 2012 19:30:20 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1 (gnu/linux)
-X-Gm-Message-State: ALoCoQm7Er115wY91KTWpINj0JRl2NjG8/ywIV8s0SMY/I98jkSFhiMtQXdOSGAVEHIQOxeS9df+KqutxElKNcCYAT9yO4RDntl+yW2w+OOJbiROSTQ92EJhEO+B9Y+lT299xQtpjjEOquLeeN2a6V4CjzLcyyu60NWTe70PV/gWwv6WSEnSiCQ=
+	id S1754520Ab2DWS7R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 Apr 2012 14:59:17 -0400
+Received: from out1.ip08ir2.opaltelecom.net ([62.24.128.244]:15378 "EHLO
+	out1.ip08ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754965Ab2DWS7Q (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 23 Apr 2012 14:59:16 -0400
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: Ar8LAM+llU9cHIEm/2dsb2JhbABEizClGQICgQ+BCIIEAQQBAQUIAQEuEQUIAQEhCwIDBQIBAxQBAQslFAEEGAIGBxcGAQcLCAIBAgMBDASFJwcBgikaB7pcixYIgV6DcGMEiC+FSYkTjy2Cag
+X-IronPort-AV: E=Sophos;i="4.75,469,1330905600"; 
+   d="scan'208";a="525593226"
+Received: from host-92-28-129-38.as13285.net (HELO PhilipOakley) ([92.28.129.38])
+  by out1.ip08ir2.opaltelecom.net with SMTP; 23 Apr 2012 19:59:13 +0100
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196157>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196158>
 
-This series looked sensible overall, so I'll queue but please eyeball my
-conflict resolutions after I push it out on 'pu' in several hours.
+From: "Matthieu Moy" <Matthieu.Moy@imag.fr> Sent: Monday, April 23, 2012 
+9:37 AM
+> The previous documentation was explaining _what_ the options were doing,
+> but were of little help explaining _why_ a user should set his default to
+> either of the options.
+>
+> Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+> ---
+> Documentation/config.txt |   22 ++++++++++++++++++----
+> 1 file changed, 18 insertions(+), 4 deletions(-)
+>
+> diff --git a/Documentation/config.txt b/Documentation/config.txt
+> index fb386ab..e38fab1 100644
+> --- a/Documentation/config.txt
+> +++ b/Documentation/config.txt
+> @@ -1680,12 +1680,26 @@ push.default::
+>  line. Possible values are:
+> +
+> * `nothing` - do not push anything.
+> -* `matching` - push all matching branches.
+> -  All branches having the same name in both ends are considered to be
+> -  matching. This is the default.
+> -* `upstream` - push the current branch to its upstream branch.
+> +* `matching` - push all branches having the same name in both ends.
+> +  This allows those who prepare all the branches into a publishable
+> +  shape to push them out to a non-shared repository with a single
+> +  command. This is well suited when pushing to a non-shared
+> +  repository, but may give surprising results when used on a
+> +  repository shared by multiple users, since locally stalled
+> +  branches will attempt a non-fast forward push if other users
+> +  updated the branch remotely. This is the default.
 
-Thanks, both.
+Given the expected future change to 'simple' as the default, surely "This is 
+currently the default." give the hint toward that change.
+
+> +* `upstream` - push the current branch to its upstream branch. See
+> +  "branch.<name>.merge" for how to configure the upstream branch. This
+> +  makes `git push` and `git pull` symmetrical in the sense that `push`
+> +  will update the same remote ref as the one which is merged by
+> +  `git pull`.
+> * `tracking` - deprecated synonym for `upstream`.
+> * `current` - push the current branch to a branch of the same name.
+> +  +
+> +  The `current` and `upstream` modes are for those who want to
+> +  push out a single branch after finishing work, even when the other
+> +  branches are not yet ready to be pushed out. They are safe when
+> +  pushing to a shared repository.
+>
+> rebase.stat::
+>  Whether to show a diffstat of what changed upstream since the last
+> -- 
+> 1.7.10.234.ge65dd.dirty
+>
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+>
+>
+> -----
+> No virus found in this message.
+> Checked by AVG - www.avg.com
+> Version: 2012.0.1913 / Virus Database: 2411/4953 - Release Date: 04/22/12
+> 
