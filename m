@@ -1,7 +1,7 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 2/3] fixup! t5528-push-default.sh: add helper functions
-Date: Mon, 23 Apr 2012 09:45:37 -0700
-Message-ID: <xmqqvckqjt1q.fsf_-_@junio.mtv.corp.google.com>
+Subject: [PATCH 3/3] push: suggested updates to push configuration documentation
+Date: Mon, 23 Apr 2012 09:48:06 -0700
+Message-ID: <xmqqr4vejsxl.fsf_-_@junio.mtv.corp.google.com>
 References: <1334933944-13446-1-git-send-email-Matthieu.Moy@imag.fr>
 	<1335170284-30768-1-git-send-email-Matthieu.Moy@imag.fr>
 	<1335170284-30768-4-git-send-email-Matthieu.Moy@imag.fr>
@@ -14,110 +14,114 @@ Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
 	Michael Haggerty <mhagger@alum.mit.edu>
 To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Mon Apr 23 18:45:50 2012
+X-From: git-owner@vger.kernel.org Mon Apr 23 18:48:17 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SMMOX-0000t2-2U
-	for gcvg-git-2@plane.gmane.org; Mon, 23 Apr 2012 18:45:45 +0200
+	id 1SMMQw-0002MF-FF
+	for gcvg-git-2@plane.gmane.org; Mon, 23 Apr 2012 18:48:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753032Ab2DWQpk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 Apr 2012 12:45:40 -0400
-Received: from mail-fa0-f74.google.com ([209.85.161.74]:61253 "EHLO
-	mail-fa0-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752513Ab2DWQpj (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Apr 2012 12:45:39 -0400
-Received: by faaa19 with SMTP id a19so155162faa.1
-        for <git@vger.kernel.org>; Mon, 23 Apr 2012 09:45:38 -0700 (PDT)
+	id S1752534Ab2DWQsJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 Apr 2012 12:48:09 -0400
+Received: from mail-qc0-f202.google.com ([209.85.216.202]:46942 "EHLO
+	mail-qc0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751637Ab2DWQsI (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Apr 2012 12:48:08 -0400
+Received: by qcsp5 with SMTP id p5so1356962qcs.1
+        for <git@vger.kernel.org>; Mon, 23 Apr 2012 09:48:07 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version:content-type:x-gm-message-state;
-        bh=9NzJ3gTAbwSYjyzsswmlyedKw0A3yyBcashvlL7oIpY=;
-        b=cLDD/2re2BoDDg2UnJjBRaehQapj4LicppItMZYZC6+EXJLJh6kXIq4CkeYXj7x4va
-         C1tSIw5RD86YvMAESk1jdvjiY/PCc/HmviT/pXw7fmK7w0Bk5AWwutH1ow6ZlDj9EM6S
-         IkK2rMKiI1a+XRY3qUoqM3bSXFoWBMwpfvn9EsTrQwoe5MeGbbEyUV9tRFyOU5SjFSOP
-         k+FVnjmIblVupHnlJ08IkPWXXLNmFCr3mHqhae4nnWUOSZ9pzA5gzKZ1CV6PhGR4i0uk
-         XYE25/hAOGbZUVUmomcQS+qlUqy6cO1rI7DoYSi7yEysmOhtKEFhnbFwCNBs92JMnhv0
-         l95w==
-Received: by 10.14.188.12 with SMTP id z12mr3946903eem.8.1335199538451;
-        Mon, 23 Apr 2012 09:45:38 -0700 (PDT)
-Received: by 10.14.188.12 with SMTP id z12mr3946882eem.8.1335199538310;
-        Mon, 23 Apr 2012 09:45:38 -0700 (PDT)
-Received: from hpza9.eem.corp.google.com ([74.125.121.33])
-        by gmr-mx.google.com with ESMTPS id t8si10338470eef.1.2012.04.23.09.45.38
+        bh=Lo9l5KIOmRLm4R8yzJI2sl1YKOqwEn7GyFf7d/UJXzE=;
+        b=lSNPNgM4DV+xuiwTw8Gyb9LoNrBs7k3C9eANlsJNvnkUGafUoeusSpumqYqq3Ax7xI
+         5iNslCthLw0kgnxqNd6em9J8Ls6dEAThAPxPT7X9shh5pHuB7b3xdiYymv5HBvXXs5An
+         6qVBgXNAXnuWlKyELb581RV4Gy4HbpfunkroWsEI4TWm9BEWfo2omcPbbpZk3i0J+0vn
+         M4IniczNUp04wOCbcRA+ldxWTVoTNKbkSdvWxS9QMsLFDdgaJczJE4j+95gdBtz5qYtN
+         GX/8A+dd/68ipyt3W8Tvj5l/87D5yS4uGjnqdE373r4qKeSjeAlHyu8Dl4l3wgFkqS2R
+         hrhg==
+Received: by 10.101.129.33 with SMTP id g33mr6138692ann.25.1335199687258;
+        Mon, 23 Apr 2012 09:48:07 -0700 (PDT)
+Received: by 10.101.129.33 with SMTP id g33mr6138673ann.25.1335199687135;
+        Mon, 23 Apr 2012 09:48:07 -0700 (PDT)
+Received: from wpzn4.hot.corp.google.com (216-239-44-65.google.com [216.239.44.65])
+        by gmr-mx.google.com with ESMTPS id v39si2376363anp.3.2012.04.23.09.48.07
         (version=TLSv1/SSLv3 cipher=AES128-SHA);
-        Mon, 23 Apr 2012 09:45:38 -0700 (PDT)
+        Mon, 23 Apr 2012 09:48:07 -0700 (PDT)
 Received: from junio.mtv.corp.google.com (junio.mtv.corp.google.com [172.27.69.24])
-	by hpza9.eem.corp.google.com (Postfix) with ESMTP id 2003C5C0050;
-	Mon, 23 Apr 2012 09:45:38 -0700 (PDT)
+	by wpzn4.hot.corp.google.com (Postfix) with ESMTP id E47301E004D;
+	Mon, 23 Apr 2012 09:48:06 -0700 (PDT)
 Received: by junio.mtv.corp.google.com (Postfix, from userid 110493)
-	id 695D8E120A; Mon, 23 Apr 2012 09:45:37 -0700 (PDT)
+	id 8D6E2E120A; Mon, 23 Apr 2012 09:48:06 -0700 (PDT)
 In-Reply-To: <xmqqzka2jt64.fsf@junio.mtv.corp.google.com> (Junio C. Hamano's
 	message of "Mon, 23 Apr 2012 09:42:59 -0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1 (gnu/linux)
-X-Gm-Message-State: ALoCoQkfF1k61f5H08dkgAsx0p8aN30tOcLgGNDA4lI8n/iJOnAK3kThc838kQjyPuSowRartcFnvGKQ2zR7kYiA0NtGxk3koBXuyNsmwCrBK/AAQq2cNN7WVotyAFAzdV4X0OrEv6Psbz15ATsQRPNHPUNBiqDRf5eRL6lre7qQ7lC00CIjkEQ=
+X-Gm-Message-State: ALoCoQmyTGgSme8Nl5406je8hVTqBLbdQlJpq9ifkh/SW03uMAkhl2ISN+/7x4G1ETbS1yGrVExZehVIvbahWJKiCwcwPc8jQjF/fTZ9cK4nOxwxQnEIm/iGvukDWaPkwG6iEFdEDkOt9txdC7JmW+TSL4zWO9rFifp7dtEamnM2SoksVlO/A00=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196147>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196148>
 
-Please eyeball the change to test_push_failure(); I think it is correct
-to use the same "log --no-walk" to prepare expect and actual, but I may
-have missed something.
+This is only to show how the wording suggested in my review comment will
+read on top of the endpoint of your series, primarily for reviewing the
+counterproposal (I didn't split this apart to apply in steps).
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- t/t5528-push-default.sh |   10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ Documentation/config.txt |   30 +++++++++++++++---------------
+ 1 file changed, 15 insertions(+), 15 deletions(-)
 
-diff --git a/t/t5528-push-default.sh b/t/t5528-push-default.sh
-index 43dec43..4a7d7fe 100755
---- a/t/t5528-push-default.sh
-+++ b/t/t5528-push-default.sh
-@@ -16,7 +16,7 @@ test_expect_success 'setup bare remotes' '
- # $1 = local revision
- # $2 = remote revision (tested to be equal to the local one)
- check_pushed_commit () {
--	git log -1 --format='%h %s' >expect &&
-+	git log -1 --format='%h %s' "$1" >expect &&
- 	git --git-dir=repo1 log -1 --format='%h %s' "$2" >actual &&
- 	test_cmp expect actual
- }
-@@ -39,11 +39,11 @@ test_push_failure () {
- 		test_might_fail git --git-dir=repo1 \
- 			log --no-walk --format='%h %s' "$@" >expect
- 	fi &&
--	test_must_fail git -c push.default="$1" &&
-+	test_must_fail git -c push.default="$push_default" push &&
- 	if test $# -gt 0
- 	then
- 		test_might_fail git --git-dir=repo1 \
--			log -1 --format='%h %s' "$@" >actual
-+			log --no-walk --format='%h %s' "$@" >actual
- 	fi &&
- 	test_cmp expect actual
- }
-@@ -61,7 +61,7 @@ test_expect_success '"upstream" does not push on unconfigured remote' '
- 	test_unconfig branch.master.remote &&
- 	test_config push.default upstream &&
- 	test_commit three &&
--	test_push_failure upstream master
-+	test_push_failure upstream --all
- '
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 696544e..f724fc6 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -1681,29 +1681,29 @@ push.default::
+ +
+ * `nothing` - do not push anything.
+ * `matching` - push all branches having the same name in both ends.
+-  This allows those who prepare all the branches into a publishable
+-  shape to push them out to a non-shared repository with a single
+-  command. This is well suited when pushing to a non-shared
+-  repository, but may give surprising results when used on a
+-  repository shared by multiple users, since locally stalled
+-  branches will attempt a non-fast forward push if other users
+-  updated the branch remotely. This is currently the default, but Git
+-  2.0 will change the default to `simple`.
++  This is for those who prepare all the branches into a publishable
++  shape and then push them out with a single command.  It is not
++  appropriate for pushing into a repository shared by multiple users,
++  since locally stalled branches will attempt a non-fast forward push
++  if other users updated the branch.
++  +
++  This is currently the default, but Git 2.0 will change the default
++  to `simple`.
+ * `simple` - like `upstream`, but refuses to push if the upstream
+   branch's name is different from the local one. This is the safest
+   option and is well-suited for beginners. It will become the default
+   in Git 2.0.
+-* `upstream` - push the current branch to its upstream branch. See
+-  "branch.<name>.merge" for how to configure the upstream branch. This
+-  makes `git push` and `git pull` symmetrical in the sense that `push`
+-  will update the same remote ref as the one which is merged by
+-  `git pull`.
++* `upstream` - push the current branch to its upstream branch.
++  With this, `git push` will update the same remote ref as the one which
++  is merged by `git pull`, making `push` and `pull` symmetrical.
++  See "branch.<name>.merge" for how to configure the upstream branch.
+ * `current` - push the current branch to a branch of the same name.
+   +
+   The `simple`, `current` and `upstream` modes are for those who want to
+   push out a single branch after finishing work, even when the other
+-  branches are not yet ready to be pushed out. They are safe when
+-  pushing to a shared repository.
++  branches are not yet ready to be pushed out. If you are working with
++  other people to push into the same shared repository, you would want
++  to use one of these.
  
- test_expect_success '"upstream" does not push on unconfigured branch' '
-@@ -70,7 +70,7 @@ test_expect_success '"upstream" does not push on unconfigured branch' '
- 	test_unconfig branch.master.merge &&
- 	test_config push.default upstream
- 	test_commit four &&
--	test_push_failure upstream master
-+	test_push_failure upstream --all
- '
- 
- test_expect_success '"upstream" does not push when remotes do not match' '
+ rebase.stat::
+ 	Whether to show a diffstat of what changed upstream since the last
 -- 
 1.7.10.376.g4eb25
