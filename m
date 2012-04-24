@@ -1,99 +1,69 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: Build without BUILT_INS
-Date: Tue, 24 Apr 2012 10:32:14 +0200
-Message-ID: <4F96650E.7040900@op5.se>
-References: <CAAXzdLVbqp-_9A+BwcOuiHi3A39gAJb7_NqANfhAfuK9-+iZ0g@mail.gmail.com> <xmqqmx61hmtu.fsf@junio.mtv.corp.google.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: Steven Penny <svnpenn@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Apr 24 10:32:30 2012
+From: Luke Diamand <luke@diamand.org>
+Subject: [PATCHv4 0/5] git p4: label import/export: documentation fix
+Date: Tue, 24 Apr 2012 09:33:18 +0100
+Message-ID: <1335256403-22162-1-git-send-email-luke@diamand.org>
+Cc: Pete Wyckoff <pw@padd.com>, Junio C Hamano <gitster@pobox.com>,
+	Vitor Antunes <vitor.hda@gmail.com>,
+	Luke Diamand <luke@diamand.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Apr 24 10:33:40 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SMbAh-00079l-Cs
-	for gcvg-git-2@plane.gmane.org; Tue, 24 Apr 2012 10:32:27 +0200
+	id 1SMbBr-00083G-Vc
+	for gcvg-git-2@plane.gmane.org; Tue, 24 Apr 2012 10:33:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755697Ab2DXIcU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Apr 2012 04:32:20 -0400
-Received: from mail-lb0-f174.google.com ([209.85.217.174]:49787 "EHLO
-	mail-lb0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754838Ab2DXIcR (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Apr 2012 04:32:17 -0400
-Received: by lbbgf7 with SMTP id gf7so379233lbb.19
-        for <git@vger.kernel.org>; Tue, 24 Apr 2012 01:32:16 -0700 (PDT)
+	id S1756240Ab2DXIdd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Apr 2012 04:33:33 -0400
+Received: from mail-we0-f174.google.com ([74.125.82.174]:53086 "EHLO
+	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755810Ab2DXIdb (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Apr 2012 04:33:31 -0400
+Received: by wejx9 with SMTP id x9so243064wej.19
+        for <git@vger.kernel.org>; Tue, 24 Apr 2012 01:33:30 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding
-         :x-gm-message-state;
-        bh=UOR+gqqEh58ExUp7dN2TBIb/voZocoi9oYElJBkCvAU=;
-        b=oF37GeYJSSfj7TP4Ejj2EgNN/xmf5JO4Tmx1/JAAD7jthvBI6nA3OLQGvA++A1q5H5
-         8nUNA8FvIKV8yfp62NSIV9w64X10pDETOKdGLqrqXB9p+5zm8pFdEz4fnfZ/TbEy34jS
-         O1QZMeshU/X7nTFAGofSKV43DNsd3GSpK9N4arza2gOn48FZtYQj3gRB5k3axjwm3xLZ
-         8PiYdRxU8FpxoTL1UW0056tmh5GT/SdMp2Flb+asCGX57M7cTft7KmW0pwoKvI4hQZbd
-         y5PucrsjkAKjdNAaKo/zOjp8a4rkjfzmaTAF4ws0qETTSJWBzXN0HAmXS+jiLQac2R/G
-         Z1sQ==
-Received: by 10.112.100.8 with SMTP id eu8mr9393768lbb.16.1335256336390;
-        Tue, 24 Apr 2012 01:32:16 -0700 (PDT)
-Received: from vix.int.op5.se (sth-vpn1.op5.com. [193.201.96.49])
-        by mx.google.com with ESMTPS id os6sm12636128lab.6.2012.04.24.01.32.14
+        h=from:to:cc:subject:date:message-id:x-mailer:x-gm-message-state;
+        bh=A3Zx+21UUv3cB8zUVLchYrmd0paHD4+4Qp2JeDQiFI8=;
+        b=Bgqibol190PoQR84m3O/5/PezqyNTf3vtBB9Hmo3kgqPdSnpCj4PhVcbbmIWIwDWGb
+         J6+IeRKc5gCtKyUqbUC43NelXte5TTF2zCgfjFEcMdwk4lHa+bLTEUUrUyx7ljctQUwW
+         9/lGCvjS2LTc1CQ9uhBTpnzNcsktyT5jDan+HitOqRcyGxESjgEfI3qAlf4sBDX/mlqB
+         8wgzGtmbebWF6wtfq7ANjMt4+qDfPNfgmWy+aMjxkR/npzKoWGgRnBDuxeyOkCu2+9wC
+         AFmQHEhWQomFiCn6+VEQT/CAIZe2aDkVp+XuHny7n4aF2hl/YeoNXfOpE/aol+YFAcdl
+         +/0g==
+Received: by 10.216.131.206 with SMTP id m56mr11290658wei.92.1335256410674;
+        Tue, 24 Apr 2012 01:33:30 -0700 (PDT)
+Received: from ethel.diamand (cpc19-cmbg14-2-0-cust6.5-4.cable.virginmedia.com. [86.6.30.7])
+        by mx.google.com with ESMTPS id fz9sm28534467wib.3.2012.04.24.01.33.29
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 24 Apr 2012 01:32:14 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:11.0) Gecko/20120329 Thunderbird/11.0.1
-In-Reply-To: <xmqqmx61hmtu.fsf@junio.mtv.corp.google.com>
-X-Gm-Message-State: ALoCoQmlmqaKKrWicSEVqlFKzxHAoOhY4GfZcd9m8cRJ7jTtFdgkWAJ20VdH1E7CRZoQsT27vEkB
+        Tue, 24 Apr 2012 01:33:30 -0700 (PDT)
+X-Mailer: git-send-email 1.7.10.8.g12781
+X-Gm-Message-State: ALoCoQmPphO7Nvu5yDxoE/6JYyIT1tnQomjcv56XDzJAbYv7fwrEKENHrrRzD5Gkk6iv8UN49skO
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196209>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196210>
 
-On 04/24/2012 04:42 AM, Junio C Hamano wrote:
-> Steven Penny<svnpenn@gmail.com>  writes:
-> 
->> I would like to build Git for Windows without the hard links in libexec/git-core
->>
->> I tried doing
->>
->> make install prefix=/c/git BUILT_INS=
->>
->> and I get this error
-> 
-> Unsurprising.
-> 
-> What are you trying to do?  Are you trying to build a git that does not
-> know any of the built-in commands like "checkout", "commit", etc?  Or do
-> you still want a full-featured git, but because you know the code to
-> perform "git foo" for any builtin command "foo" is contained in git
-> executable itself, you want to "rm -f git-foo" from the filesystem?
-> 
-> The latter is a bad idea to begin with, as it will break older scripts
-> that trust the promise that by having git --exec-path early on the $PATH
-> older forms "git-foo" will always work.
-> 
-> If you really want to do so, the right way is not by mucking BUILT_INS
-> to empty.  I do not know how GfW is built, but if it uses our usual
-> Makefile, find the place where it installs the git-foo forms of links
-> after it installs the main git executable, and comment it out.
-> 
-> And no, it will *not* be a compilation option, as the resulting
-> installation will break the age-old promise we made to script writers.
-> 
+Sorry, the previous patch series contained an error in the "git p4"
+documentation. Everything else is as before.
 
-Otoh, we did warn that we were going to deprecate the 'git-foo' form back
-in 2005 when the git wrapper was rewritten in C, so perhaps we should
-consider marking it as deprecated now so we can get rid of them altogether
-altogether in another seven years. ;)
+Luke Diamand (5):
+  git p4: Fixing script editor checks
+  git p4: Squash P4EDITOR in test harness
+  git p4: Ignore P4EDITOR if it is empty
+  git p4: import/export of labels to/from p4
+  git p4: move verbose to base class
+
+ Documentation/git-p4.txt       |   54 ++++++--
+ git-p4.py                      |  289 ++++++++++++++++++++++++++++++++--------
+ t/lib-git-p4.sh                |    1 +
+ t/t9800-git-p4-basic.sh        |    4 +-
+ t/t9811-git-p4-label-import.sh |  202 ++++++++++++++++++++++++++++
+ 5 files changed, 482 insertions(+), 68 deletions(-)
+ create mode 100755 t/t9811-git-p4-label-import.sh
 
 -- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
-
-Considering the successes of the wars on alcohol, poverty, drugs and
-terror, I think we should give some serious thought to declaring war
-on peace.
+1.7.10.8.g12781
