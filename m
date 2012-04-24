@@ -1,81 +1,134 @@
-From: Nick Bowler <nbowler@elliptictech.com>
-Subject: Reverting a swath of commits consumes all memory and dies.
-Date: Tue, 24 Apr 2012 12:14:03 -0400
-Organization: Elliptic Technologies Inc.
-Message-ID: <20120424161403.GA24738@elliptictech.com>
+From: <dag@cray.com>
+Subject: Re: organizing multiple repositories with dependencies
+Date: Tue, 24 Apr 2012 12:17:12 -0500
+Message-ID: <nnghaw93v8n.fsf@transit.us.cray.com>
+References: <1334568432.53977.YahooMailNeo@web65906.mail.ac4.yahoo.com>
+	<m3hawjagw9.fsf@localhost.localdomain>
+	<nng3983phhc.fsf@transit.us.cray.com>
+	<CAE1pOi1KnvRk4yxK8OQHi9h_ueNnh5Ar3tbKFBKTA69=Aje0TQ@mail.gmail.com>
+	<201204171837.q3HIbbcW013784@no.baka.org>
+	<CAE1pOi29dKd2LHW7MJ+TTN4HzFkOPFEyf7Sf2emSsBYm93uYUA@mail.gmail.com>
+	<nng1unmnksx.fsf@transit.us.cray.com>
+	<CAE1pOi38krwXZuiYxtpLwm92N=NvWkP30V_=6cnHw=sdyk6QhA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 24 18:14:17 2012
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Users <git@vger.kernel.org>
+To: Hilco Wijbenga <hilco.wijbenga@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Apr 24 19:20:41 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SMiNZ-0004Et-O7
-	for gcvg-git-2@plane.gmane.org; Tue, 24 Apr 2012 18:14:14 +0200
+	id 1SMjPq-0005gZ-Dm
+	for gcvg-git-2@plane.gmane.org; Tue, 24 Apr 2012 19:20:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756101Ab2DXQOI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Apr 2012 12:14:08 -0400
-Received: from mx.scalarmail.ca ([98.158.95.75]:36969 "EHLO
-	ironport-01.sms.scalar.ca" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1756075Ab2DXQOG (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 24 Apr 2012 12:14:06 -0400
-Received: from unknown (HELO sms-zimbra-mta-02.sms.scalar.ca) ([192.168.32.56])
-  by ironport-01.sms.scalar.ca with ESMTP; 24 Apr 2012 12:14:05 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by sms-zimbra-mta-02.sms.scalar.ca (Postfix) with ESMTP id CBB6B4C06E
-	for <git@vger.kernel.org>; Tue, 24 Apr 2012 12:14:04 -0400 (EDT)
-Received: from sms-zimbra-mta-02.sms.scalar.ca ([127.0.0.1])
-	by localhost (sms-zimbra-mta-02.sms.scalar.ca [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id GEjpNJBHmBAE for <git@vger.kernel.org>;
-	Tue, 24 Apr 2012 12:14:04 -0400 (EDT)
-Received: from mail.ellipticsemi.com (dsl-67-204-24-19.acanac.net [67.204.24.19])
-	(Authenticated sender: nbowler@elliptictech.com)
-	by sms-zimbra-mta-02.sms.scalar.ca (Postfix) with ESMTPSA id CDB2287BFE
-	for <git@vger.kernel.org>; Tue, 24 Apr 2012 12:14:03 -0400 (EDT)
-Received: by mail.ellipticsemi.com (nbSMTP-1.00) for uid 550
-	(using TLSv1/SSLv3 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	nbowler@mail.ellipticsemi.com; Tue, 24 Apr 2012 12:14:03 -0400 (EDT)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1756753Ab2DXRUd convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 24 Apr 2012 13:20:33 -0400
+Received: from exprod6og111.obsmtp.com ([64.18.1.27]:37588 "EHLO
+	exprod6og111.obsmtp.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755771Ab2DXRUd convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 24 Apr 2012 13:20:33 -0400
+Received: from CFWEX01.americas.cray.com ([136.162.34.11]) (using TLSv1) by exprod6ob111.postini.com ([64.18.5.12]) with SMTP
+	ID DSNKT5bg3/fS0fkycZRTsZADNNZCbZ2TL2TQ@postini.com; Tue, 24 Apr 2012 10:20:32 PDT
+Received: from transit.us.cray.com (172.31.17.53) by CFWEX01.americas.cray.com
+ (172.30.88.25) with Microsoft SMTP Server (TLS) id 14.1.355.2; Tue, 24 Apr
+ 2012 12:17:16 -0500
+In-Reply-To: <CAE1pOi38krwXZuiYxtpLwm92N=NvWkP30V_=6cnHw=sdyk6QhA@mail.gmail.com>
+	(Hilco Wijbenga's message of "Tue, 17 Apr 2012 14:43:37 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196225>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196226>
 
-Hi folks,
+Hilco Wijbenga <hilco.wijbenga@gmail.com> writes:
 
-I just noticed that git-revert when given a large batch of commits will
-consume more and more memory as commits are reverted.  Eventually, git's
-usage exceeds about half of the available memory and dies because fork
-fails with -ENOMEM.  This appears to be gratuitous, because after git
-dies you can simply run
+> I'm assuming that if you have subproject S in umbrella project U and =
+a
+> branch "topic" in U then that same branch should exist in S.=20
 
-  git reset --hard
-  git revert --continue
+No, I think that is actually very rare.  If topic branches really shoul=
+d
+be mirrored then U and S should be one repository.  They are too closel=
+y
+coupled to be separated.  But see the but about git-subtree and topic
+branches below.
 
-and the revert will pick up right where it left off.  Reverting commits
-one at a time also works.  I can reproduce it (for example) with the
-following example, using current master git:
+=46or release tags, etc. I agree that this kind of mirrored tag/branch
+behavior is the common case.
 
-  % git clone git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git
-  % cd linux
-  % git revert --no-merges --no-edit HEAD~50..
+>> If you want the behavior you describe, a post-receive hook on the
+>> component repositories is easy to implement.
+>
+> [1] Would such a post-receive hook be something that the user has to
+> set up? Or would that be automatically set up after git clone?
 
-watch git's memory usage increase indefinitely with "top", until...
+The user/admin would have to set this up, at least for now.
 
-  error: cannot fork() for commit: Cannot allocate memory
-  fatal: revert failed
+> The main problem with the current submodule support is that there is
+> so much manual work needed. It is too easy to forget a step. Moreover=
+,
+> it's not easy to determine *that* you forgot a step or which step you
+> forgot.
 
-  % git reset --hard
-  % git revert --no-edit --continue
+I agree.  We can certainly make things more user-friendly.
 
-repeat as needed until eventually there's few enough commits left that
-the revert completes without running out of memory (or git-revert fails
-for some other reason).
+>> Of course, this is entirely driven by git-subtree's model of actuall=
+y
+>> incorporating subproject history into one big umbrella repository.
+>> There is no separation between the subprojects and umbrella projects=
+=2E
+>> It's one giant history. =C2=A0Therefore, push/pull to/from subprojec=
+ts are
+>> explicit operations. =C2=A0That's probably not the best model for ev=
+ery
+>> situation but I find it very nice.
+>
+> I do not have enough (okay, any) experience with subtree to comment o=
+n
+> that. The first part seems just what I want. I'm not sure about the
+> explicit pushing/pulling part. That sounds too much like asking for
+> the sort of problems that scared us away from submodules. Hopefully,
+> I'm dead wrong. :-)
 
-Cheers,
--- 
-Nick Bowler, Elliptic Technologies (http://www.elliptictech.com/)
+With subtrees, a topic branch in the umbrella project WILL be reflected
+in the subproject because it is really one big repository.  It's a
+little inconvenient to subtree push a new tag at the moment.  You have
+to do a subtree split to a new branch and then push the branch to the
+original component repository.  That's one thing I want to improve in
+the short term.  I have found a need for then when creating release
+tags.
+
+But still, it seems odd to me that you'd create a topic branch in U and
+then want to push it to a separate S repository.  Topic branches are by
+nature ephemeral and I have never had a need to do something like that.
+It just seems to go against the grain of what a topic branch is.  As I
+said above, release tags and such are in a different category and that
+is the main target of the subtree push enhancements I want to make.
+
+>> But I don't agree
+>> that we'll be able to design one model that works for everyone. =C2=A0=
+svn
+>> externals are just one model to aggregate projects but it is not the
+>> only one. =C2=A0It just happens that no one working on Subversion bo=
+thered to
+>> implement anything else.
+>
+> :-) I think I made it pretty clear that I was listing what *I* want.
+> What *I* am looking for is something that is as invisible and
+> automatic as possible.
+
+Absolutely.
+
+> That all sounds good. As long as the hooks are automatic (I'm hopeful
+> you said "no" and "yes" to [1] above). If so, then I can promise you
+> I'll be taking a look at subtree. :-)
+
+I think at the very least we can provide setup scripts in contrib.  To
+be honest I haven't thought deeply enough about this to determine if
+there's a way to make it more convenient.
+
+                                      -Dave
