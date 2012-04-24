@@ -1,93 +1,77 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: [PATCH] config: allow ~/ and ~user/ in include.path value
-Date: Tue, 24 Apr 2012 13:08:09 +0200
-Message-ID: <1335265689-2270-1-git-send-email-Matthieu.Moy@imag.fr>
-Cc: Matthieu Moy <Matthieu.Moy@imag.fr>
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Tue Apr 24 13:08:44 2012
+From: Christopher Tiwald <christiwald@gmail.com>
+Subject: Re: [PATCH] Give better 'pull' advice when pushing non-ff updates to
+ current branch
+Date: Tue, 24 Apr 2012 08:21:49 -0400
+Message-ID: <20120424122149.GB41274@gmail.com>
+References: <1335221121-36664-1-git-send-email-christiwald@gmail.com>
+ <vpqipgpehlk.fsf@bauges.imag.fr>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, peff@peff.net
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Tue Apr 24 14:22:06 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SMdbv-0004gi-5I
-	for gcvg-git-2@plane.gmane.org; Tue, 24 Apr 2012 13:08:43 +0200
+	id 1SMekq-0000Dn-Dc
+	for gcvg-git-2@plane.gmane.org; Tue, 24 Apr 2012 14:22:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753154Ab2DXLIa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Apr 2012 07:08:30 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:42906 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751787Ab2DXLI3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Apr 2012 07:08:29 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id q3OB1fUv008927
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Tue, 24 Apr 2012 13:01:42 +0200
-Received: from bauges.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.72)
-	(envelope-from <moy@imag.fr>)
-	id 1SMdbO-00035R-Um; Tue, 24 Apr 2012 13:08:10 +0200
-Received: from moy by bauges.imag.fr with local (Exim 4.72)
-	(envelope-from <moy@imag.fr>)
-	id 1SMdbO-0000bZ-Qr; Tue, 24 Apr 2012 13:08:10 +0200
-X-Mailer: git-send-email 1.7.10.235.gb2edec
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Tue, 24 Apr 2012 13:01:42 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: q3OB1fUv008927
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
-MailScanner-NULL-Check: 1335870104.0034@HZaAAoPhXgQUU3PlXRAwbQ
+	id S1752995Ab2DXMVz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Apr 2012 08:21:55 -0400
+Received: from mail-qa0-f46.google.com ([209.85.216.46]:62453 "EHLO
+	mail-qa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752985Ab2DXMVy (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Apr 2012 08:21:54 -0400
+Received: by qatm19 with SMTP id m19so2750261qat.19
+        for <git@vger.kernel.org>; Tue, 24 Apr 2012 05:21:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=Z4JA8kNqIM2tdTidxvHQIGJlKZEQAm6LeXIlQs7ZvhI=;
+        b=0jEpSl4Mn5rkhZjYTL5m7oGcZAoUgU4KAcwQV+R3Eg+r16L+EspnrWm9TxLYCIxU/o
+         ZAjs3Z8mjvcH2vMsaMN6UAdVl0kmfBo+gUq/L2bS/zIK+yMqTWFxNDV6cm06G6VpTpSQ
+         Em6FstGzgzYo/kEvO90k8kfZyn/y5RmW7RicC1BMUiYeUB9QIGBVfB1CqleII50wnIWZ
+         9Ywa9WMnN9o07/Mcd0PoLsWBTmxFAyb//ZnfENzKD/drnrxMJXnRHLK4Vdv8W2Ph4it+
+         h55OXnIz8TfYehp51n6d5vWVrHQe7yoI1U/6p18ND4NufYHbntwAC4/Tz5TPhp/62+gW
+         ywpw==
+Received: by 10.224.180.212 with SMTP id bv20mr5977863qab.4.1335270114018;
+        Tue, 24 Apr 2012 05:21:54 -0700 (PDT)
+Received: from gmail.com (cpe-74-66-248-47.nyc.res.rr.com. [74.66.248.47])
+        by mx.google.com with ESMTPS id s20sm1044994qap.16.2012.04.24.05.21.51
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Tue, 24 Apr 2012 05:21:52 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <vpqipgpehlk.fsf@bauges.imag.fr>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196218>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196220>
 
+On Tue, Apr 24, 2012 at 09:04:07AM +0200, Matthieu Moy wrote:
+> > +		if (branch->remote_name &&
+> > +		    branch->merge &&
+> > +		    branch->merge_nr == 1 &&
+> > +		    !strcmp(transport->remote->name, branch->remote_name) &&
+> > +		    !strcmp(strbuf_detach(&buf, NULL),
+> > +			    prettify_refname(branch->merge[0]->dst))) {
+> > +			advise_tracked_pull_before_push();
+> > +		}
+> > +		else
+> > +			advise_untracked_pull_before_push();
+> 
+> Isn't this doing the opposite of what the comment is saying about
+> octopus merge, i.e. if branch->merge_nr > 1, call
+> advise_untracked_pull_before_push() which will advise 'git pull <remote>
+> <branch>'?
 
-Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
----
- config.c |   10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+Ah yes. The logic is wrong for the octopus case. That's easy to fix, but
+I'm considering ditching the matching entirely per my response to
+Junio's concerns. I think it might do more harm then good.
 
-diff --git a/config.c b/config.c
-index bfe0c79..dd8b9bf 100644
---- a/config.c
-+++ b/config.c
-@@ -33,11 +33,14 @@ static const char include_depth_advice[] =
- "from\n"
- "	%s\n"
- "Do you have circular includes?";
--static int handle_path_include(const char *path, struct config_include_data *inc)
-+static int handle_path_include(const char *raw_path, struct config_include_data *inc)
- {
- 	int ret = 0;
- 	struct strbuf buf = STRBUF_INIT;
--
-+	int must_free_path = 1;
-+	char *path = expand_user_path(raw_path);
-+	if (!path)
-+		return error("Could not expand include path '%s'.", raw_path);
- 	/*
- 	 * Use an absolute path as-is, but interpret relative paths
- 	 * based on the including config file.
-@@ -52,6 +55,7 @@ static int handle_path_include(const char *path, struct config_include_data *inc
- 		if (slash)
- 			strbuf_add(&buf, cf->name, slash - cf->name + 1);
- 		strbuf_addstr(&buf, path);
-+		must_free_path = 0;
- 		path = buf.buf;
- 	}
- 
-@@ -63,6 +67,8 @@ static int handle_path_include(const char *path, struct config_include_data *inc
- 		inc->depth--;
- 	}
- 	strbuf_release(&buf);
-+	if (must_free_path)
-+		free(path);
- 	return ret;
- }
- 
--- 
-1.7.10.235.gb2edec
+--
+Christopher Tiwald
