@@ -1,75 +1,65 @@
-From: Luke Diamand <luke@diamand.org>
-Subject: [PATCHv4 3/5] git p4: Ignore P4EDITOR if it is empty
-Date: Tue, 24 Apr 2012 09:33:21 +0100
-Message-ID: <1335256403-22162-4-git-send-email-luke@diamand.org>
-References: <1335256403-22162-1-git-send-email-luke@diamand.org>
-Cc: Pete Wyckoff <pw@padd.com>, Junio C Hamano <gitster@pobox.com>,
-	Vitor Antunes <vitor.hda@gmail.com>,
-	Luke Diamand <luke@diamand.org>
+From: Kirill Likhodedov <Kirill.Likhodedov@jetbrains.com>
+Subject: git add --ignore-errors doesn't ignore .gitignore errors
+Date: Tue, 24 Apr 2012 13:13:24 +0400
+Message-ID: <8A31466D-A791-4FF9-BFDC-029C4644ABE7@jetbrains.com>
+Mime-Version: 1.0 (Apple Message framework v1257)
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 8BIT
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 24 10:34:00 2012
+X-From: git-owner@vger.kernel.org Tue Apr 24 11:13:44 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SMbC9-0008GQ-Tw
-	for gcvg-git-2@plane.gmane.org; Tue, 24 Apr 2012 10:33:58 +0200
+	id 1SMboT-0001Oy-Kp
+	for gcvg-git-2@plane.gmane.org; Tue, 24 Apr 2012 11:13:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756341Ab2DXIdn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Apr 2012 04:33:43 -0400
-Received: from mail-wi0-f178.google.com ([209.85.212.178]:55972 "EHLO
-	mail-wi0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756302Ab2DXIdi (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Apr 2012 04:33:38 -0400
-Received: by wibhq7 with SMTP id hq7so410436wib.1
-        for <git@vger.kernel.org>; Tue, 24 Apr 2012 01:33:37 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
-         :x-gm-message-state;
-        bh=cz5qExkqDIcAKuJSjAtymgZ70yWCcWBoMQzJexfYiRs=;
-        b=m+fY5GSx/22prXA1DOjUJCVkvYrDzXArNweLeFb3iHSFQS5CT2VGvU/3TaZZW8n5sN
-         iMcYjWebhz5mg01yk+8SiZsb5fvpX5VkHKtXIsrEH9eAg0+xRWizp3LmJh94Vgy3B8Cm
-         nmGzl7PssHg1cNirZ8mMOp9SbrhqvC6Lzej5fB8Whl71EhitZ6ckyNOwcIBctFQ8m5pc
-         bfqA0ZRn8TQ19qfSfn8n09+qpdsuIVRGcYhqNh2bs7TvE8xARD7KVRHigLNnb6ORdgyY
-         4VBf0/4FYwH/Zlr2graZkZh9ZtCdNRzfMxYfVw+sUOYuAEIYGvhgcFYg/DdS6ILXG0ls
-         NEBA==
-Received: by 10.180.104.230 with SMTP id gh6mr28806456wib.22.1335256413755;
-        Tue, 24 Apr 2012 01:33:33 -0700 (PDT)
-Received: from ethel.diamand (cpc19-cmbg14-2-0-cust6.5-4.cable.virginmedia.com. [86.6.30.7])
-        by mx.google.com with ESMTPS id fz9sm28534467wib.3.2012.04.24.01.33.32
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 24 Apr 2012 01:33:33 -0700 (PDT)
-X-Mailer: git-send-email 1.7.10.8.g12781
-In-Reply-To: <1335256403-22162-1-git-send-email-luke@diamand.org>
-X-Gm-Message-State: ALoCoQnIiM2NKv86FzMWtPqODZG+PdFPRNL+XB4Oxc24zbBNslEsoC69yvm1/RzmPnkoLvpz1rbN
+	id S932095Ab2DXJN2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Apr 2012 05:13:28 -0400
+Received: from mail1.intellij.net ([46.137.178.215]:37523 "EHLO
+	mail1.intellij.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756479Ab2DXJN2 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 24 Apr 2012 05:13:28 -0400
+Received: (qmail 18758 invoked by uid 89); 24 Apr 2012 09:13:25 -0000
+Received: by simscan 1.1.0 ppid: 18720, pid: 18748, t: 0.0978s
+         scanners: regex: 1.1.0 clamav: 0.97/m:53/d:13443
+Received: from unknown (HELO loki.labs.intellij.net) (Kirill.Likhodedov@jetbrains.com@195.5.138.42)
+  by ip-10-48-137-145.eu-west-1.compute.internal with ESMTPA; 24 Apr 2012 09:13:25 -0000
+X-Mailer: Apple Mail (2.1257)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196215>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196216>
 
-p4 itself treats an empty value for P4EDITOR as the same as
-having P4EDITOR unset. Do the same for "git p4".
 
-Signed-off-by: Luke Diamand <luke@diamand.org>
----
- git-p4.py |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Hi,
 
-diff --git a/git-p4.py b/git-p4.py
-index f910d5a..ead0c44 100755
---- a/git-p4.py
-+++ b/git-p4.py
-@@ -970,7 +970,7 @@ class P4Submit(Command, P4UserMap):
-         mtime = os.stat(template_file).st_mtime
- 
-         # invoke the editor
--        if os.environ.has_key("P4EDITOR"):
-+        if os.environ.has_key("P4EDITOR") and (os.environ.get("P4EDITOR") != ""):
-             editor = os.environ.get("P4EDITOR")
-         else:
-             editor = read_pipe("git var GIT_EDITOR").strip()
--- 
-1.7.10.8.g12781
+git add has '--ignore-errors' parameter which, according to the man entry, allows to continue adding even if one of the files failed to add:
+
+ --ignore-errors
+           If some files could not be added because of errors indexing them, do not abort the
+           operation, but continue adding the others. The command shall still exit with non-zero
+           status. The configuration variable add.ignoreErrors can be set to true to make this
+           the default behaviour.
+
+However, if the error happens because a file is ignored by Git, git-add aborts, even if "--ignore-errors" is given:
+
+	# git add --ignore-errors .t test2.txt
+	The following paths are ignored by one of your .gitignore files:
+	.t
+	Use -f if you really want to add them.
+	fatal: no files added
+
+(in this example '.t' is ignored while 'test2.txt' is not)
+
+Is it a bug or a lack of documentation?
+
+Thanks.
+
+----------------------------------
+Kirill Likhodedov
+JetBrains, Inc
+http://www.jetbrains.com
+"Develop with pleasure!"
