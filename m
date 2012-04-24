@@ -1,74 +1,84 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Potential problem in git-add may corrupt the index file
-Date: Mon, 23 Apr 2012 18:51:48 -0700
-Message-ID: <xmqq4ns9j3rf.fsf@junio.mtv.corp.google.com>
-References: <CAEJt7hYYJh5dT1Tk99Oze6Hg4QaOqX5ERi0faWjyifQ6dr-pWw@mail.gmail.com>
+Subject: Re: what is a 'sequencer'
+Date: Mon, 23 Apr 2012 18:59:40 -0700
+Message-ID: <xmqqzka1hotv.fsf@junio.mtv.corp.google.com>
+References: <jn4vrk$98c$1@dough.gmane.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Junfeng Yang <junfeng@cs.columbia.edu>,
-	Heming Cui <heming@cs.columbia.edu>
-To: Gang Hu <ganghu@cs.columbia.edu>
-X-From: git-owner@vger.kernel.org Tue Apr 24 03:51:56 2012
+Cc: git@vger.kernel.org
+To: Neal Kreitzinger <nkreitzinger@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Apr 24 03:59:51 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SMUv6-0002Fk-DM
-	for gcvg-git-2@plane.gmane.org; Tue, 24 Apr 2012 03:51:56 +0200
+	id 1SMV2i-0007Z9-J9
+	for gcvg-git-2@plane.gmane.org; Tue, 24 Apr 2012 03:59:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756158Ab2DXBvw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 Apr 2012 21:51:52 -0400
-Received: from mail-fa0-f74.google.com ([209.85.161.74]:37249 "EHLO
-	mail-fa0-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756121Ab2DXBvv (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Apr 2012 21:51:51 -0400
-Received: by faaa19 with SMTP id a19so168351faa.1
-        for <git@vger.kernel.org>; Mon, 23 Apr 2012 18:51:50 -0700 (PDT)
+	id S1756246Ab2DXB7n (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 Apr 2012 21:59:43 -0400
+Received: from mail-lpp01m010-f74.google.com ([209.85.215.74]:54332 "EHLO
+	mail-lpp01m010-f74.google.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755080Ab2DXB7m (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 23 Apr 2012 21:59:42 -0400
+Received: by laai8 with SMTP id i8so4919laa.1
+        for <git@vger.kernel.org>; Mon, 23 Apr 2012 18:59:41 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version:content-type:x-gm-message-state;
-        bh=+ddEmX9O6Zh+inV13UqaGCPtifrNU3cHCvqQHgP/gAY=;
-        b=KYzHOHBxZotg6sMrLmuiDk4w8k5FiVkdNu2Jmsv04ldv6iTcFm0EZhapGJmxGi7i+E
-         BB9xr1GhdjGvyDl7nGfJNp7nG4+7OPI0k9L28H3LwZYYySex/x5GG3R4q2SFygqikZSY
-         PM5YLcmu4j0QtGhgfsXDGD32lXkzS5aaEYBSvnRkfVdb50WKP0xp2el3Kr7q3a3VmeBg
-         hLnfC0fd3tZ18nno/2dnkrWjRfD1Wxhop1VwpGgClOLNP2n+8TN8knJZ3GH5+yeXX+Ms
-         5Fcqnexx9usTZACu2i26qxkSk+tBAZngMy6ETgggWi9eoZrn/uhpvGLhqdr20T0vAOPT
-         04MA==
-Received: by 10.213.2.70 with SMTP id 6mr1454042ebi.18.1335232309965;
-        Mon, 23 Apr 2012 18:51:49 -0700 (PDT)
-Received: by 10.213.2.70 with SMTP id 6mr1454024ebi.18.1335232309806;
-        Mon, 23 Apr 2012 18:51:49 -0700 (PDT)
-Received: from hpza10.eem.corp.google.com ([74.125.121.33])
-        by gmr-mx.google.com with ESMTPS id t8si11528480eef.1.2012.04.23.18.51.49
+        bh=TMmAVkewDmWFkMlUPG1fPeXaXMDlDtItWOeDDndgYew=;
+        b=bk2NRdIbTHyuicxJgRkNVO7RGJARKnrCBX725fqEZAR1Cj3Sq4EhaanMpGj6kIUfuE
+         Ed8nI4YIGrd79pOsaBz7cYNekZVGrWNJgorKgLr7wr0G31dtU3KphBnXC0+kPxmAvM3i
+         b0yKhc3ckdvYUrDUQmYd0w1c+T17Q95LZ12oPor8qHIYKfCujSG74vcBwPh6y0TtDAjN
+         8uZdeko9JoF0Vihgj6rYJOf7KFdkQ4TwbSylz4Ndy4KCMbT7ak5tH+V4NLTlZQKmAVWe
+         dzmCQa2KAL7G/3joOwLtne6uWW9u2TpLtrtbPHNrFKdi/N+snNAUZqG5r2aqWudH+YNG
+         /GMA==
+Received: by 10.14.95.199 with SMTP id p47mr4196900eef.3.1335232781260;
+        Mon, 23 Apr 2012 18:59:41 -0700 (PDT)
+Received: by 10.14.95.199 with SMTP id p47mr4196891eef.3.1335232781158;
+        Mon, 23 Apr 2012 18:59:41 -0700 (PDT)
+Received: from hpza9.eem.corp.google.com ([74.125.121.33])
+        by gmr-mx.google.com with ESMTPS id a14si16336365een.0.2012.04.23.18.59.41
         (version=TLSv1/SSLv3 cipher=AES128-SHA);
-        Mon, 23 Apr 2012 18:51:49 -0700 (PDT)
+        Mon, 23 Apr 2012 18:59:41 -0700 (PDT)
 Received: from junio.mtv.corp.google.com (junio.mtv.corp.google.com [172.27.69.24])
-	by hpza10.eem.corp.google.com (Postfix) with ESMTP id 99D9A20004E;
-	Mon, 23 Apr 2012 18:51:49 -0700 (PDT)
+	by hpza9.eem.corp.google.com (Postfix) with ESMTP id F07AA5C0050;
+	Mon, 23 Apr 2012 18:59:40 -0700 (PDT)
 Received: by junio.mtv.corp.google.com (Postfix, from userid 110493)
-	id E40BCE120A; Mon, 23 Apr 2012 18:51:48 -0700 (PDT)
-In-Reply-To: <CAEJt7hYYJh5dT1Tk99Oze6Hg4QaOqX5ERi0faWjyifQ6dr-pWw@mail.gmail.com>
-	(Gang Hu's message of "Mon, 23 Apr 2012 19:30:05 -0400")
+	id 4C07AE120A; Mon, 23 Apr 2012 18:59:40 -0700 (PDT)
+In-Reply-To: <jn4vrk$98c$1@dough.gmane.org> (Neal Kreitzinger's message of
+	"Mon, 23 Apr 2012 20:32:35 -0500")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1 (gnu/linux)
-X-Gm-Message-State: ALoCoQmVrAlrbtf7Lf6yp6sKkxeceNewPI5Z5coDTwqDph5rZ7XVjLv1emAOpLmZ8LARkt1+c0tJc70HxItUNV0y13iAzo94TihxijLJYhhMW+E7OfrJ4Le9N1717vUklHnssD05kTjRd/TCpIt43i2vdvZNqfuPMTq+WZop+0IcZEoTa85bIAA=
+X-Gm-Message-State: ALoCoQkZPFuBvt2qisk/e8c4OLf/ts7Xi4YwZ+dQDcanGvLXn3MXfdbUWzsmJxDzMbKbAJLViIa46fHlhV424sOftV16gpVWvNKOIssZLl4wL1l52iGizIUYVP5deF2vz3FRPH/W7IWJUo1z7l8A27LztmfFsfWf1OcApjLBtcanrAJrdIulxtQ=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196175>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196176>
 
-Gang Hu <ganghu@cs.columbia.edu> writes:
+Neal Kreitzinger <nkreitzinger@gmail.com> writes:
 
-> If a crash happens after the rename(), the data may have not been
-> completely flushed into the index file, so the user may face an empty
-> or corrupted index file.
+> All the talk about git 'sequencer' sounds interesting, but I don't
+> know what it is.  (web search didn't help.)  Is there an explanation
+> somewhere on what its supposed to do?
 
-Yeah, probably we should add fsync_or_die() at the end of write_index()
-in read-cache.c, possibly protect it with fsync_object_files just like
-we do in close_sha1_file() in sha1_file.c for loose object files.
+The sequencer is what sequences a sequence of operations ;-).
 
-I think the real fix would be to update the write_index() codepath to
-use the csum-file API, though.  Then sha1close() will give us the fsync
-behaviour for free.
+As an end user, stare at the instruction sheet "rebase -i" lets you
+edit, and imagine different possibilities other than those offered by
+"rebase -i" (e.g. "build on top of the history by cherry picking this
+commit", "cherry pick this commit without committing, and amend the top
+of of the history").
+
+For example, wouldn't it be nice if you could say "here is a mbox---run
+am to slurp the patches into commit and build history", or "merge the
+history leading to this commit"?  "mark this point as :1, checkout this
+other commit and continue operation"?  "now merge the commit we marked
+earlier as :1 to the history"?  What other vocabularies can you imagine
+to enrich your git life?
+
+Recent additions to let "cherry-pick" and "revert" replay and revert
+multiple commits are indeed built on the nascent version of this
+infrastructure.
