@@ -1,7 +1,7 @@
 From: mhagger@alum.mit.edu
-Subject: [PATCH 08/30] do_for_each_reflog(): use a strbuf to hold logfile name
-Date: Wed, 25 Apr 2012 00:45:14 +0200
-Message-ID: <1335307536-26914-9-git-send-email-mhagger@alum.mit.edu>
+Subject: [PATCH 28/30] read_loose_refs(): access ref_cache via the ref_dir field
+Date: Wed, 25 Apr 2012 00:45:34 +0200
+Message-ID: <1335307536-26914-29-git-send-email-mhagger@alum.mit.edu>
 References: <1335307536-26914-1-git-send-email-mhagger@alum.mit.edu>
 Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
 	Jakub Narebski <jnareb@gmail.com>,
@@ -15,107 +15,80 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SMofh-00005X-Ug
-	for gcvg-git-2@plane.gmane.org; Wed, 25 Apr 2012 00:57:22 +0200
+	id 1SMofj-00005X-NJ
+	for gcvg-git-2@plane.gmane.org; Wed, 25 Apr 2012 00:57:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758481Ab2DXW5G (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Apr 2012 18:57:06 -0400
-Received: from ssh.berlin.jpk.com ([212.222.128.135]:60979 "EHLO
+	id S1758496Ab2DXW5U (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Apr 2012 18:57:20 -0400
+Received: from ssh.berlin.jpk.com ([212.222.128.135]:60976 "EHLO
 	eddie.berlin.jpk.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1758470Ab2DXW5A (ORCPT <rfc822;git@vger.kernel.org>);
+	with ESMTP id S1758463Ab2DXW5A (ORCPT <rfc822;git@vger.kernel.org>);
 	Tue, 24 Apr 2012 18:57:00 -0400
 Received: from michael.berlin.jpk.com (unknown [192.168.101.152])
-	by eddie.berlin.jpk.com (Postfix) with ESMTP id 4A9B624814A;
-	Wed, 25 Apr 2012 00:46:01 +0200 (CEST)
+	by eddie.berlin.jpk.com (Postfix) with ESMTP id F0DEB24817A;
+	Wed, 25 Apr 2012 00:46:26 +0200 (CEST)
 X-Mailer: git-send-email 1.7.10
 In-Reply-To: <1335307536-26914-1-git-send-email-mhagger@alum.mit.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196267>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196268>
 
 From: Michael Haggerty <mhagger@alum.mit.edu>
 
-This simplifies the bookkeeping and allows an (artificial) restriction
-on refname component length to be removed.
+This means that all we need to read loose references is the ref_entry
+that will receive them.
 
 Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 ---
- refs.c |   45 +++++++++++++++++++++++----------------------
- 1 file changed, 23 insertions(+), 22 deletions(-)
+ refs.c |   10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
 diff --git a/refs.c b/refs.c
-index 1d25151..f43c255 100644
+index 0f5aab2..4eca965 100644
 --- a/refs.c
 +++ b/refs.c
-@@ -2248,44 +2248,45 @@ static int do_for_each_reflog(const char *base, each_ref_fn fn, void *cb_data)
- 	int retval = 0;
- 	struct dirent *de;
- 	int baselen;
--	char *log;
-+	struct strbuf log;
+@@ -791,7 +791,7 @@ void add_packed_ref(const char *refname, const unsigned char *sha1)
+ /*
+  * Read the loose references for direntry in refs.
+  */
+-static void read_loose_refs(struct ref_cache *refs, struct ref_entry *direntry)
++static void read_loose_refs(struct ref_entry *direntry)
+ {
+ 	DIR *d;
+ 	const char *path;
+@@ -799,9 +799,11 @@ static void read_loose_refs(struct ref_cache *refs, struct ref_entry *direntry)
+ 	const char *dirname = direntry->name;
+ 	int dirnamelen = strlen(dirname);
+ 	struct strbuf refname;
++	struct ref_cache *refs;
  
- 	if (!d)
- 		return *base ? errno : 0;
+ 	assert(direntry->flag & REF_DIR);
  
- 	baselen = strlen(base);
--	log = xmalloc(baselen + 257);
--	memcpy(log, base, baselen);
--	if (baselen && base[baselen-1] != '/')
--		log[baselen++] = '/';
-+	strbuf_init(&log, baselen + 257);
-+	strbuf_add(&log, base, baselen);
-+	if (log.len && log.buf[log.len-1] != '/') {
-+		strbuf_addch(&log, '/');
-+		baselen++;
-+	}
- 
- 	while ((de = readdir(d)) != NULL) {
- 		struct stat st;
--		int namelen;
- 
- 		if (de->d_name[0] == '.')
- 			continue;
--		namelen = strlen(de->d_name);
--		if (namelen > 255)
--			continue;
- 		if (has_extension(de->d_name, ".lock"))
- 			continue;
--		memcpy(log + baselen, de->d_name, namelen+1);
--		if (stat(git_path("logs/%s", log), &st) < 0)
--			continue;
--		if (S_ISDIR(st.st_mode)) {
--			retval = do_for_each_reflog(log, fn, cb_data);
-+		strbuf_addstr(&log, de->d_name);
-+		if (stat(git_path("logs/%s", log.buf), &st) < 0) {
-+			/* Silently ignore. */
++	refs = direntry->u.subdir.ref_cache;
+ 	if (*refs->name)
+ 		path = git_path_submodule(refs->name, "%s", dirname);
+ 	else
+@@ -832,8 +834,7 @@ static void read_loose_refs(struct ref_cache *refs, struct ref_entry *direntry)
+ 			/* Silently ignore. */
+ 		} else if (S_ISDIR(st.st_mode)) {
+ 			strbuf_addch(&refname, '/');
+-			read_loose_refs(refs,
+-					search_for_subdir(direntry,
++			read_loose_refs(search_for_subdir(direntry,
+ 							  refname.buf, 1));
  		} else {
--			unsigned char sha1[20];
--			if (read_ref_full(log, sha1, 0, NULL))
--				retval = error("bad ref for %s", log);
--			else
--				retval = fn(log, sha1, 0, cb_data);
-+			if (S_ISDIR(st.st_mode)) {
-+				retval = do_for_each_reflog(log.buf, fn, cb_data);
-+			} else {
-+				unsigned char sha1[20];
-+				if (read_ref_full(log.buf, sha1, 0, NULL))
-+					retval = error("bad ref for %s", log.buf);
-+				else
-+					retval = fn(log.buf, sha1, 0, cb_data);
-+			}
-+			if (retval)
-+				break;
- 		}
--		if (retval)
--			break;
-+		strbuf_setlen(&log, baselen);
+ 			if (*refs->name) {
+@@ -860,8 +861,7 @@ static struct ref_entry *get_loose_refs(struct ref_cache *refs)
+ {
+ 	if (!refs->loose) {
+ 		refs->loose = create_dir_entry(refs, "");
+-		read_loose_refs(refs,
+-				search_for_subdir(refs->loose, "refs/", 1));
++		read_loose_refs(search_for_subdir(refs->loose, "refs/", 1));
  	}
--	free(log);
-+	strbuf_release(&log);
- 	closedir(d);
- 	return retval;
+ 	return refs->loose;
  }
 -- 
 1.7.10
