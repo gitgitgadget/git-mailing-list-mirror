@@ -1,127 +1,81 @@
-From: Jim Meyering <jim@meyering.net>
-Subject: Re: [PATCH] diff: avoid stack-buffer-read-overrun for very long name
-Date: Tue, 24 Apr 2012 18:09:35 +0200
-Message-ID: <87397t862o.fsf@rho.meyering.net>
-References: <87ty0jbt5p.fsf@rho.meyering.net> <20120416222713.GA2396@moj>
+From: Nick Bowler <nbowler@elliptictech.com>
+Subject: Reverting a swath of commits consumes all memory and dies.
+Date: Tue, 24 Apr 2012 12:14:03 -0400
+Organization: Elliptic Technologies Inc.
+Message-ID: <20120424161403.GA24738@elliptictech.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git list <git@vger.kernel.org>
-To: Marcus Karlsson <mk@acc.umu.se>
-X-From: git-owner@vger.kernel.org Tue Apr 24 18:09:51 2012
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Apr 24 18:14:17 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SMiJJ-0000de-Je
-	for gcvg-git-2@plane.gmane.org; Tue, 24 Apr 2012 18:09:49 +0200
+	id 1SMiNZ-0004Et-O7
+	for gcvg-git-2@plane.gmane.org; Tue, 24 Apr 2012 18:14:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755977Ab2DXQJp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Apr 2012 12:09:45 -0400
-Received: from smtp5-g21.free.fr ([212.27.42.5]:51740 "EHLO smtp5-g21.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755503Ab2DXQJo (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Apr 2012 12:09:44 -0400
-Received: from mx.meyering.net (unknown [88.168.87.75])
-	by smtp5-g21.free.fr (Postfix) with ESMTP id 80ABAD4813B
-	for <git@vger.kernel.org>; Tue, 24 Apr 2012 18:09:37 +0200 (CEST)
-Received: from rho.meyering.net (localhost.localdomain [127.0.0.1])
-	by rho.meyering.net (Acme Bit-Twister) with ESMTP id CD6CA60146;
-	Tue, 24 Apr 2012 18:09:35 +0200 (CEST)
-In-Reply-To: <20120416222713.GA2396@moj> (Marcus Karlsson's message of "Tue,
-	17 Apr 2012 00:27:17 +0200")
+	id S1756101Ab2DXQOI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Apr 2012 12:14:08 -0400
+Received: from mx.scalarmail.ca ([98.158.95.75]:36969 "EHLO
+	ironport-01.sms.scalar.ca" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1756075Ab2DXQOG (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 24 Apr 2012 12:14:06 -0400
+Received: from unknown (HELO sms-zimbra-mta-02.sms.scalar.ca) ([192.168.32.56])
+  by ironport-01.sms.scalar.ca with ESMTP; 24 Apr 2012 12:14:05 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by sms-zimbra-mta-02.sms.scalar.ca (Postfix) with ESMTP id CBB6B4C06E
+	for <git@vger.kernel.org>; Tue, 24 Apr 2012 12:14:04 -0400 (EDT)
+Received: from sms-zimbra-mta-02.sms.scalar.ca ([127.0.0.1])
+	by localhost (sms-zimbra-mta-02.sms.scalar.ca [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id GEjpNJBHmBAE for <git@vger.kernel.org>;
+	Tue, 24 Apr 2012 12:14:04 -0400 (EDT)
+Received: from mail.ellipticsemi.com (dsl-67-204-24-19.acanac.net [67.204.24.19])
+	(Authenticated sender: nbowler@elliptictech.com)
+	by sms-zimbra-mta-02.sms.scalar.ca (Postfix) with ESMTPSA id CDB2287BFE
+	for <git@vger.kernel.org>; Tue, 24 Apr 2012 12:14:03 -0400 (EDT)
+Received: by mail.ellipticsemi.com (nbSMTP-1.00) for uid 550
+	(using TLSv1/SSLv3 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	nbowler@mail.ellipticsemi.com; Tue, 24 Apr 2012 12:14:03 -0400 (EDT)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196224>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196225>
 
-Marcus Karlsson wrote:
-> On Mon, Apr 16, 2012 at 05:20:02PM +0200, Jim Meyering wrote:
->>
->> Due to the use of strncpy without explicit NUL termination,
->> we could end up passing names n1 or n2 that are not NUL-terminated
->> to queue_diff, which requires NUL-terminated strings.
->> Ensure that each is NUL terminated.
->>
->> Signed-off-by: Jim Meyering <meyering@redhat.com>
->> ---
->> After finding strncpy problems in other projects, I audited
->> git for the same and found only these two.
->>
->>  diff-no-index.c |    2 ++
->>  1 file changed, 2 insertions(+)
->>
->> diff --git a/diff-no-index.c b/diff-no-index.c
->> index 3a36144..5cd3ff5 100644
->> --- a/diff-no-index.c
->> +++ b/diff-no-index.c
->> @@ -109,6 +109,7 @@ static int queue_diff(struct diff_options *o,
->>  				n1 = buffer1;
->>  				strncpy(buffer1 + len1, p1.items[i1++].string,
->>  						PATH_MAX - len1);
->> +				buffer1[PATH_MAX-1] = 0;
->>  			}
->>
->>  			if (comp < 0)
->> @@ -117,6 +118,7 @@ static int queue_diff(struct diff_options *o,
->>  				n2 = buffer2;
->>  				strncpy(buffer2 + len2, p2.items[i2++].string,
->>  						PATH_MAX - len2);
->> +				buffer2[PATH_MAX-1] = 0;
->>  			}
->>
->>  			ret = queue_diff(o, n1, n2);
->> --
->> 1.7.10.169.g146fe
->
-> Are there any guarantees that len1 and len2 does not exceed PATH_MAX?
-> Because if there aren't any then that function looks like it could need
-> even more improvements.
+Hi folks,
 
-Hi Marcus,
+I just noticed that git-revert when given a large batch of commits will
+consume more and more memory as commits are reverted.  Eventually, git's
+usage exceeds about half of the available memory and dies because fork
+fails with -ENOMEM.  This appears to be gratuitous, because after git
+dies you can simply run
 
-You're right to ask.
-I've just confirmed that there is such a guarantee.  The question
-is whether either of queue_diff's name1 or name2 parameters may have
-strlen larger than PATH_MAX, in which case, this code would misbehave,
-passing a negative length to strncpy:
+  git reset --hard
+  git revert --continue
 
-				strncpy(buffer1 + len1, p1.items[i1++].string,
-						PATH_MAX - len1);
-				buffer1[PATH_MAX-1] = 0;
+and the revert will pick up right where it left off.  Reverting commits
+one at a time also works.  I can reproduce it (for example) with the
+following example, using current master git:
 
-queue_diff is called from only two places:
+  % git clone git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git
+  % cd linux
+  % git revert --no-merges --no-edit HEAD~50..
 
-  - from itself, recursively
-  - from diff_no_index
+watch git's memory usage increase indefinitely with "top", until...
 
-The latter looks fine, since it's called with already-vetted names:
+  error: cannot fork() for commit: Cannot allocate memory
+  fatal: revert failed
 
-	if (queue_diff(&revs->diffopt, revs->diffopt.pathspec.raw[0],
-		       revs->diffopt.pathspec.raw[1]))
+  % git reset --hard
+  % git revert --no-edit --continue
 
-The recursive call is reachable only when both name1 and name2 are lstat'able.
-If they're not (assuming they're non-trivial), this get_mode call fails:
+repeat as needed until eventually there's few enough commits left that
+the revert completes without running out of memory (or git-revert fails
+for some other reason).
 
-    static int queue_diff(struct diff_options *o,
-                    const char *name1, const char *name2)
-    {
-            int mode1 = 0, mode2 = 0;
-
-            if (get_mode(name1, &mode1) || get_mode(name2, &mode2))
-                    return -1;
-
-Thus, as long as a file with name longer than PATH_MAX is not
-lstat'able (what about hurd?), we're ok.
-
-However, a further improvement is possible if you care what happens
-when a very long newly-formed name is truncated by that use of strncpy.
-When that happens, in a pathological case in which the truncated
-name exists as well as the original, queue_diff could print totally
-bogus results.
-
-I.e., if dir/.../.../some-name is 5 bytes too long,
-and the truncated "n1" formed in queue_diff, "dir/.../.../some"
-refers to a file that actually exists, queue_diff will mistakenly
-use the truncated file name.
+Cheers,
+-- 
+Nick Bowler, Elliptic Technologies (http://www.elliptictech.com/)
