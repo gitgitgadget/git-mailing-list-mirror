@@ -1,88 +1,127 @@
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: git-fetch fetches blobs that are already in the local repository
- if no history is shared?
-Date: Tue, 24 Apr 2012 07:23:47 -0700
-Message-ID: <CAJo=hJsgk-5ByMoOJ-RSce+TUFLm43_SYHf1eHWsqE+xs6QNEA@mail.gmail.com>
-References: <D7CFF7BD2A9545148AC2553870AA3A15@gmail.com>
+From: Jim Meyering <jim@meyering.net>
+Subject: Re: [PATCH] diff: avoid stack-buffer-read-overrun for very long name
+Date: Tue, 24 Apr 2012 18:09:35 +0200
+Message-ID: <87397t862o.fsf@rho.meyering.net>
+References: <87ty0jbt5p.fsf@rho.meyering.net> <20120416222713.GA2396@moj>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org,
-	=?ISO-8859-1?Q?Tor_Arne_Vestb=F8?= <tor.arne.vestbo@nokia.com>
-To: Adam Roben <adam@roben.org>
-X-From: git-owner@vger.kernel.org Tue Apr 24 16:24:18 2012
+Content-Type: text/plain
+Cc: git list <git@vger.kernel.org>
+To: Marcus Karlsson <mk@acc.umu.se>
+X-From: git-owner@vger.kernel.org Tue Apr 24 18:09:51 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SMgf9-0001D2-T6
-	for gcvg-git-2@plane.gmane.org; Tue, 24 Apr 2012 16:24:16 +0200
+	id 1SMiJJ-0000de-Je
+	for gcvg-git-2@plane.gmane.org; Tue, 24 Apr 2012 18:09:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754480Ab2DXOYK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Apr 2012 10:24:10 -0400
-Received: from mail-pz0-f51.google.com ([209.85.210.51]:48096 "EHLO
-	mail-pz0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753911Ab2DXOYI convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 24 Apr 2012 10:24:08 -0400
-Received: by dadz8 with SMTP id z8so986610dad.10
-        for <git@vger.kernel.org>; Tue, 24 Apr 2012 07:24:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=spearce.org; s=google;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=haEsXJuey7RhFeZmxVM1pdzIypCbh6B3SuTu8qSySh4=;
-        b=aLnXWBiUjg4U6J8wAFQ2gA0LtELkEczz3h3bQuJ/2RfqRm3bJ+4NLK14DghyePL7gq
-         5xt3MmCtCpPYKtIQa4YCNulFYLoK42zFAe0n122m3/mKu0+tdqoyIJXZStTFFYdQ1QfL
-         9i+u63MqEBqAgiUGHPuj3bEbpnDzBK+FXdigM=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding:x-gm-message-state;
-        bh=haEsXJuey7RhFeZmxVM1pdzIypCbh6B3SuTu8qSySh4=;
-        b=c/d/e7j79i0c3+F6jJsSOytXmiFu5Z3g0/N9RLGntKkyqDmyb7sqvHU7/RreQzQAJZ
-         5iBWckpEwgEuan1jfE6tpgRgL0YgStR81bgS77NI+e+5GbVsC0O/pxmmNynkDt2Piuiq
-         yaMOI2savyt2rjAuCy9M+uv9R/vJhYMKAYFcC/chffvBGrIBkK1Q3rI3OJGxRIMhtW80
-         972As+GWq2BAA/luNpEBxduxlbZV1FJBLQwdkknPyWGR1HXkKux84xZYSUjm+e1TXyGP
-         wD7BjuoD6M+txMfzyd2vjrD0tpZ7Yr1QpzbB7iwMEaKuzN7xmY0VM2w3+v9qNr3MR5B9
-         bLBQ==
-Received: by 10.68.226.170 with SMTP id rt10mr4152379pbc.2.1335277447948; Tue,
- 24 Apr 2012 07:24:07 -0700 (PDT)
-Received: by 10.68.211.74 with HTTP; Tue, 24 Apr 2012 07:23:47 -0700 (PDT)
-In-Reply-To: <D7CFF7BD2A9545148AC2553870AA3A15@gmail.com>
-X-Gm-Message-State: ALoCoQnCEKA18OAhqUHaeO2RfVYlNgRnxewr61keWfZIDb1r5EDag+sItpa9G/hfHc+4i7AAxXhD
+	id S1755977Ab2DXQJp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Apr 2012 12:09:45 -0400
+Received: from smtp5-g21.free.fr ([212.27.42.5]:51740 "EHLO smtp5-g21.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755503Ab2DXQJo (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Apr 2012 12:09:44 -0400
+Received: from mx.meyering.net (unknown [88.168.87.75])
+	by smtp5-g21.free.fr (Postfix) with ESMTP id 80ABAD4813B
+	for <git@vger.kernel.org>; Tue, 24 Apr 2012 18:09:37 +0200 (CEST)
+Received: from rho.meyering.net (localhost.localdomain [127.0.0.1])
+	by rho.meyering.net (Acme Bit-Twister) with ESMTP id CD6CA60146;
+	Tue, 24 Apr 2012 18:09:35 +0200 (CEST)
+In-Reply-To: <20120416222713.GA2396@moj> (Marcus Karlsson's message of "Tue,
+	17 Apr 2012 00:27:17 +0200")
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196223>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196224>
 
-On Tue, Apr 24, 2012 at 07:19, Adam Roben <adam@roben.org> wrote:
-> There are two main git mirrors of the WebKit Subversion repository: <git://git.webkit.org/WebKit.git> and <https://github.com/WebKit/webkit>. These repositories have the exact same trees/blobs, but have entirely different commits due to the GitHub mirror using a custom --authors-prog with git-svn.
+Marcus Karlsson wrote:
+> On Mon, Apr 16, 2012 at 05:20:02PM +0200, Jim Meyering wrote:
+>>
+>> Due to the use of strncpy without explicit NUL termination,
+>> we could end up passing names n1 or n2 that are not NUL-terminated
+>> to queue_diff, which requires NUL-terminated strings.
+>> Ensure that each is NUL terminated.
+>>
+>> Signed-off-by: Jim Meyering <meyering@redhat.com>
+>> ---
+>> After finding strncpy problems in other projects, I audited
+>> git for the same and found only these two.
+>>
+>>  diff-no-index.c |    2 ++
+>>  1 file changed, 2 insertions(+)
+>>
+>> diff --git a/diff-no-index.c b/diff-no-index.c
+>> index 3a36144..5cd3ff5 100644
+>> --- a/diff-no-index.c
+>> +++ b/diff-no-index.c
+>> @@ -109,6 +109,7 @@ static int queue_diff(struct diff_options *o,
+>>  				n1 = buffer1;
+>>  				strncpy(buffer1 + len1, p1.items[i1++].string,
+>>  						PATH_MAX - len1);
+>> +				buffer1[PATH_MAX-1] = 0;
+>>  			}
+>>
+>>  			if (comp < 0)
+>> @@ -117,6 +118,7 @@ static int queue_diff(struct diff_options *o,
+>>  				n2 = buffer2;
+>>  				strncpy(buffer2 + len2, p2.items[i2++].string,
+>>  						PATH_MAX - len2);
+>> +				buffer2[PATH_MAX-1] = 0;
+>>  			}
+>>
+>>  			ret = queue_diff(o, n1, n2);
+>> --
+>> 1.7.10.169.g146fe
 >
-> Tor Arne (CCed) noticed something interesting today:
->
-> If you clone one of these repositories, then add the other as a remote and fetch it, all the trees/blobs seem to get pulled down again, even though they're already in the local repository. It seems like only the commit objects should be fetched, since they're the only difference between the two remotes.
->
-> Is this a bug in git?
+> Are there any guarantees that len1 and len2 does not exceed PATH_MAX?
+> Because if there aren't any then that function looks like it could need
+> even more improvements.
 
-No. Its the way the Git protocol was designed to function. Git only
-negotiates over the commit history, as trying to include the blob and
-tree information into the negotiation protocol would make the payloads
-unreasonable in size. Granted in this case sending the 100M or
-whatever it takes to enumerate all SHA-1s is smaller than the 4G or
-whatever that WebKit actually is, but the protocol assumes nobody
-would be this crazy to establish a huge project with two different
-competing commit histories and then think they could fetch them
-together into one repository with a small network delta.
+Hi Marcus,
 
-Basically... Don't do this, and don't expect Git to save you.
+You're right to ask.
+I've just confirmed that there is such a guarantee.  The question
+is whether either of queue_diff's name1 or name2 parameters may have
+strlen larger than PATH_MAX, in which case, this code would misbehave,
+passing a negative length to strncpy:
 
-There should be only one version of the WebKit history imported into
-Git that everyone agrees on as being the canonical version of that
-import. And everyone else who mirrors or works with WebKit in Git
-should base off that version.
+				strncpy(buffer1 + len1, p1.items[i1++].string,
+						PATH_MAX - len1);
+				buffer1[PATH_MAX-1] = 0;
 
-WebKit is a big enough project with enough users that you would think
-you could trust the git.webkit.org conversion. Which suggests the
-github.com one should be done over.
+queue_diff is called from only two places:
+
+  - from itself, recursively
+  - from diff_no_index
+
+The latter looks fine, since it's called with already-vetted names:
+
+	if (queue_diff(&revs->diffopt, revs->diffopt.pathspec.raw[0],
+		       revs->diffopt.pathspec.raw[1]))
+
+The recursive call is reachable only when both name1 and name2 are lstat'able.
+If they're not (assuming they're non-trivial), this get_mode call fails:
+
+    static int queue_diff(struct diff_options *o,
+                    const char *name1, const char *name2)
+    {
+            int mode1 = 0, mode2 = 0;
+
+            if (get_mode(name1, &mode1) || get_mode(name2, &mode2))
+                    return -1;
+
+Thus, as long as a file with name longer than PATH_MAX is not
+lstat'able (what about hurd?), we're ok.
+
+However, a further improvement is possible if you care what happens
+when a very long newly-formed name is truncated by that use of strncpy.
+When that happens, in a pathological case in which the truncated
+name exists as well as the original, queue_diff could print totally
+bogus results.
+
+I.e., if dir/.../.../some-name is 5 bytes too long,
+and the truncated "n1" formed in queue_diff, "dir/.../.../some"
+refers to a file that actually exists, queue_diff will mistakenly
+use the truncated file name.
