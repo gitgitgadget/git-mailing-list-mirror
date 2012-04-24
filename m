@@ -1,95 +1,92 @@
-From: Rich Felker <dalias@aerifal.cx>
-Subject: [PATCH] Ensure sufficient stack space for async threads
-Date: Mon, 23 Apr 2012 21:55:23 -0400
-Message-ID: <20120424015523.GA15287@brightrain.aerifal.cx>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Give better 'pull' advice when pushing non-ff updates to current branch
+Date: Mon, 23 Apr 2012 19:17:25 -0700
+Message-ID: <xmqqvckpho0a.fsf@junio.mtv.corp.google.com>
+References: <1335221121-36664-1-git-send-email-christiwald@gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary="tThc/1wpZn/ma/RB"
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 24 04:07:40 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Matthieu.Moy@grenoble-inp.fr, peff@peff.net
+To: Christopher Tiwald <christiwald@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Apr 24 04:17:34 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SMVAJ-0004AX-Eq
-	for gcvg-git-2@plane.gmane.org; Tue, 24 Apr 2012 04:07:39 +0200
+	id 1SMVJt-0002jO-Rj
+	for gcvg-git-2@plane.gmane.org; Tue, 24 Apr 2012 04:17:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756322Ab2DXCHf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 Apr 2012 22:07:35 -0400
-Received: from 216-12-86-13.cv.mvl.ntelos.net ([216.12.86.13]:48881 "EHLO
-	brightrain.aerifal.cx" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756315Ab2DXCHe (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Apr 2012 22:07:34 -0400
-X-Greylist: delayed 908 seconds by postgrey-1.27 at vger.kernel.org; Mon, 23 Apr 2012 22:07:34 EDT
-Received: from dalias by brightrain.aerifal.cx with local (Exim 3.15 #2)
-	id 1SMUyR-0004BK-00
-	for git@vger.kernel.org; Tue, 24 Apr 2012 01:55:23 +0000
-Content-Disposition: inline
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1756338Ab2DXCR2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 Apr 2012 22:17:28 -0400
+Received: from mail-we0-f202.google.com ([74.125.82.202]:44333 "EHLO
+	mail-we0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756290Ab2DXCR1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Apr 2012 22:17:27 -0400
+Received: by wejx9 with SMTP id x9so5286wej.1
+        for <git@vger.kernel.org>; Mon, 23 Apr 2012 19:17:26 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type:x-gm-message-state;
+        bh=yLqTEgeTKmoGb7IydLGFeRAoahK8on1Jo1sVMoLCkiU=;
+        b=jRmznvumRIMhldQPQuA009/bqlCEi3lGqefN63iYfzgh+U0NHboyObk7RisKwv4hXB
+         3ftBG9HbMp3AJdFTr/tCnSE+imuAaQ3MQbxriQ91WxzuOf4Qjz+63zKHbDDFt02NcqDF
+         nKCxLwni1oSdXDrB+u4pb0YEfNpydsvHA6Y0N+8v3Gt09cxaUykizE6SJ46JJtU15pG5
+         pNzM8heVO6f0DPMnHQUSCXQKER9mMJyT+5QOekg9L7v2Kwm5pgIiMjT7gBGksuDMBhiN
+         r9UckFkVh181l7SnhWfd3MiZhSAGst8Q9Y59/T+YcEWc1Of5T49XLth7PJQNk1kqXNMV
+         6TWA==
+Received: by 10.14.127.10 with SMTP id c10mr4255401eei.2.1335233846398;
+        Mon, 23 Apr 2012 19:17:26 -0700 (PDT)
+Received: by 10.14.127.10 with SMTP id c10mr4255386eei.2.1335233846292;
+        Mon, 23 Apr 2012 19:17:26 -0700 (PDT)
+Received: from hpza10.eem.corp.google.com ([74.125.121.33])
+        by gmr-mx.google.com with ESMTPS id a14si16374462een.0.2012.04.23.19.17.26
+        (version=TLSv1/SSLv3 cipher=AES128-SHA);
+        Mon, 23 Apr 2012 19:17:26 -0700 (PDT)
+Received: from junio.mtv.corp.google.com (junio.mtv.corp.google.com [172.27.69.24])
+	by hpza10.eem.corp.google.com (Postfix) with ESMTP id 1B48120004E;
+	Mon, 23 Apr 2012 19:17:26 -0700 (PDT)
+Received: by junio.mtv.corp.google.com (Postfix, from userid 110493)
+	id 651CEE120A; Mon, 23 Apr 2012 19:17:25 -0700 (PDT)
+In-Reply-To: <1335221121-36664-1-git-send-email-christiwald@gmail.com>
+	(Christopher Tiwald's message of "Mon, 23 Apr 2012 18:45:21 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1 (gnu/linux)
+X-Gm-Message-State: ALoCoQk+QolVz6IBemNLZ7fdh/HhDFJSEskpL/8nbuGUD9JRNO9zYbQist44srhshfMxBPP8MInR+0XZ3Clf/VbDnQYtbq9au/slhL1AfkSuTGMshWk8T3rmf6mAu3pfGOCEFMXZAi/8Tm2bQbjg/ht5tpnRYePnemYEwkhCH6T+WNOcl0oEFb0=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196177>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196178>
 
+Christopher Tiwald <christiwald@gmail.com> writes:
 
---tThc/1wpZn/ma/RB
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+> Suppose a user configured a local branch to track an upstream branch by
+> a different name or didn't set an upstream branch at all. In these
+> cases, issuing 'git pull' without specifying a remote repository or
+> refspec can be dangerous. In the first case, 'git pull --rebase' could
+> rewrite published history. In the second, 'git pull' without argument
+> will fail.
 
-The recv_sideband function, which runs in a non-main thread, makes use
-of a 64k buffer on the stack. While Linux/glibc systems default to
-huge thread stack size (typically 2-10 MB), it's not portable to
-assume that the stack for a newly created thread will be able to
-support large automatic buffers unless you specifically request space
-when creating the thread. The attached patch ensures that at least
-128k of stack space is available; certainly that could be increased if
-it's deemed safer.
+The latter case of stopping without causing damage is hardly dangerous,
+so I'll ignore that for now, but I am not sure what you mean by the
+former.  A "devel" branch has "master" from "origin" (or whatever
+branch.devel.remote is set) as its upstream (i.e. "devel" and "master"
+are different strings).  "git pull" will then fetch "master" from the
+other side, and either merge that into "devel" or rebuild "devel" on top
+of it if you gave "--rebase".
 
-Does this actually matter? Well, the default build of git crashes on
-musl libc (www.etalabs.net/musl), where the default stack size is 16k.
-We're presently in the process of evaluating what's a good default
-stack size for musl to give applications that don't request one
-(aiming for a balance that avoids breaking programs like git but also
-avoids excess memory usage on tiny embedded systems, a major target
-for us) and we'll almost certainly increase the default enough that
-the current version of git works without explicitly requesting a stack
-size. Nonetheless, this could be an issue again in the future when
-running/using git on mobile/embedded-type targets (anybody know
-Bionic's default?), and since the patch is simple and has essentially
-no cost, I think it's worthwhile to include.
+But if you used "master", not "devel", as the name of your local branch,
+I do not see anything changes.  You may have published the tip of
+"master" to a third repository before doing "pull --rebase", and you may
+be rebasing the history leading to that commit.  Even if there is no
+third repository, your "master" may be pushed to some other branch of
+"origin", so the story is the same.  If your counter-argument is "but
+but but I will never ever push my 'master' to names other than 'master'
+at 'origin'", then in your original settings where your local branch is
+called "devel", you will never ever push you 'devel' to branches other
+than 'master' at 'origin', exactly because its upstream is set to
+'master'.
 
-If you have questions please include me in the Cc as I'm not
-subscribed.
-
-Rich
-
---tThc/1wpZn/ma/RB
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: attachment; filename="git_pthread_stacksize.diff"
-
---- run-command.c.orig
-+++ run-command.c
-@@ -637,11 +637,19 @@
- 	async->proc_in = proc_in;
- 	async->proc_out = proc_out;
- 	{
--		int err = pthread_create(&async->tid, NULL, run_thread, async);
-+		int err;
-+		pthread_attr_t attr;
-+		size_t stacksize;
-+		pthread_attr_init(&attr);
-+		pthread_attr_getstacksize(&attr, &stacksize);
-+		if (stacksize < 131072) stacksize = 131072;
-+		pthread_attr_setstacksize(&attr, stacksize);
-+		err = pthread_create(&async->tid, &attr, run_thread, async);
- 		if (err) {
- 			error("cannot create thread: %s", strerror(err));
- 			goto error;
- 		}
-+		pthread_attr_destroy(&attr);
- 	}
- #endif
- 	return 0;
-
---tThc/1wpZn/ma/RB--
+So what makes it dangerous is the use of "--rebase", if anything, isn't
+it?  It does not seem to have much to do with how the local branches are
+named.
