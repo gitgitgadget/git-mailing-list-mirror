@@ -1,141 +1,100 @@
-From: M Yep <myep01@yahoo.com>
-Subject: Detached HEAD problem
-Date: Tue, 24 Apr 2012 13:10:50 -0700 (PDT)
-Message-ID: <1335298250.31016.YahooMailClassic@web125404.mail.ne1.yahoo.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2] contrib: add win32 credential-helper
+Date: Tue, 24 Apr 2012 16:21:08 -0400
+Message-ID: <20120424202108.GB21904@sigill.intra.peff.net>
+References: <1334861122-3144-1-git-send-email-kusmabite@gmail.com>
+ <20120422180716.GA27339@sigill.intra.peff.net>
+ <CABPQNSawsoheM6Qoxs-iQ-KYxYFs-s60oFLzdyRDFT0o=KXt1w@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 24 22:18:16 2012
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: quoted-printable
+Cc: git@vger.kernel.org, msysgit@googlegroups.com
+To: Erik Faye-Lund <kusmabite@gmail.com>
+X-From: msysgit+bncCN2hpKqZChC4ltz8BBoE0AIHUw@googlegroups.com Tue Apr 24 22:21:14 2012
+Return-path: <msysgit+bncCN2hpKqZChC4ltz8BBoE0AIHUw@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-qa0-f58.google.com ([209.85.216.58])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SMmBf-0002Xw-Ld
-	for gcvg-git-2@plane.gmane.org; Tue, 24 Apr 2012 22:18:12 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757171Ab2DXURp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Apr 2012 16:17:45 -0400
-Received: from nm18.bullet.mail.ne1.yahoo.com ([98.138.90.81]:38791 "HELO
-	nm18.bullet.mail.ne1.yahoo.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S1755503Ab2DXURo (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 24 Apr 2012 16:17:44 -0400
-X-Greylist: delayed 413 seconds by postgrey-1.27 at vger.kernel.org; Tue, 24 Apr 2012 16:17:44 EDT
-Received: from [98.138.90.56] by nm18.bullet.mail.ne1.yahoo.com with NNFMP; 24 Apr 2012 20:10:50 -0000
-Received: from [98.138.89.248] by tm9.bullet.mail.ne1.yahoo.com with NNFMP; 24 Apr 2012 20:10:50 -0000
-Received: from [127.0.0.1] by omp1040.mail.ne1.yahoo.com with NNFMP; 24 Apr 2012 20:10:50 -0000
-X-Yahoo-Newman-Property: ymail-3
-X-Yahoo-Newman-Id: 491592.24904.bm@omp1040.mail.ne1.yahoo.com
-Received: (qmail 31198 invoked by uid 60001); 24 Apr 2012 20:10:50 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s1024; t=1335298250; bh=eGClKaoHjFcb0itH8QHWVYdZuFuFlBXJq39eMULqFM4=; h=X-YMail-OSG:Received:X-Mailer:Message-ID:Date:From:Subject:To:MIME-Version:Content-Type; b=vkdEpFEQO76D9Kz5AjUTSq+l9t3BJJ7HAtRFVU6G2cL89XFGmraZWPnPhrBDmtnF0WPOaQa9IQ0tcB34MDom1AR62xCjmuOlR5gjqm+ZrIQVuDaD5l/a7Ee5NnahYoEbMACkhF+0bf5HHeKibKohn18vrAvcBS4ZJXqf7Ll975g=
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.com;
-  h=X-YMail-OSG:Received:X-Mailer:Message-ID:Date:From:Subject:To:MIME-Version:Content-Type;
-  b=c+biKSjje77EbyzjrRyicrd301mZj29yu+PvvbmVJkGBq3qxATr3c/wIdf9RTiYjxaT8IasRg/raYk9f0osohHoXFDmMh70dcNkLjWGHi6x57wIx2N0IomahcsMtjC3AeC1iiqxg/+7dcUykHTmwch/PmN0Pe/A19KK+8IYPQzo=;
-X-YMail-OSG: tajw2j0VM1ligmtsYvJSezAxp9L2W902K_d4M_cccxrinFp
- _N.w5tKCjxRE8ZEBu.Nkyl2V7gAf07amfVZ4P_N0Omo7PKggrnD.AwBFubYK
- BTxMH5bNhed_Z693LDkQxKflK4s031O..5TvicXDgSVy9wr7hixf8F4bxWel
- SYGwBrYuTNP1OqsSDHILAdZ8ZbT3TPT.9foHUhdMr2hDIASTZdoY6wa2Sxhl
- YK_e1cin_uSVhGol3VPdwyWRLhmsXqfIZvA4jFKQp_C4HJLAcsHiDqM7StB9
- CBAY3Xu3NV0IYR1O.HEYRBXIN8n0YiBa08KcE1bd6mzdTIsmkrHlwzzcMO.2
- yuUCO7nxvHdOIwjMBcrNtQpaN5sw.70e9DvaJkhjzU9qC4dMWgSSJRwJ0Wc1
- N9TNVFW.Gzzf6Mw.uzYQi8rMdJfdvrrCzb6XD4b.9Q8mwbXqxGOiE_asQnDF
- Vlw--
-Received: from [216.152.50.10] by web125404.mail.ne1.yahoo.com via HTTP; Tue, 24 Apr 2012 13:10:50 PDT
-X-Mailer: YahooMailClassic/15.0.6 YahooMailWebService/0.8.117.340979
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196246>
+	(envelope-from <msysgit+bncCN2hpKqZChC4ltz8BBoE0AIHUw@googlegroups.com>)
+	id 1SMmEb-0004yt-FC
+	for gcvm-msysgit@m.gmane.org; Tue, 24 Apr 2012 22:21:13 +0200
+Received: by qadb17 with SMTP id b17sf385715qad.3
+        for <gcvm-msysgit@m.gmane.org>; Tue, 24 Apr 2012 13:21:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=beta;
+        h=x-beenthere:received-spf:date:from:to:cc:subject:message-id
+         :references:mime-version:in-reply-to:x-original-sender
+         :x-original-authentication-results:precedence:mailing-list:list-id
+         :x-google-group-id:list-post:list-help:list-archive:sender
+         :list-subscribe:list-unsubscribe:content-type:content-disposition
+         :content-transfer-encoding;
+        bh=6ptDw6XAjxHRO96U7Nk/0PAhYz/8BS8nii4d3s2WAiQ=;
+        b=PmO7ZBF1ucMuwDs7EZIDKdZ85YShAGYVaNECCUFkusnu5DOWFD7yReWoKCFvEe5Z2G
+         Kdbwip3U0e94/5X72WU5KV8/81YyAfuGVdD4YSXT73yDt45S06lRMGZom6Q7Bxk1mPGU
+         aJ9iM31OrBJcjw5VP+70HpxpzUFt3AY8fC62s=
+Received: by 10.50.36.230 with SMTP id t6mr4836617igj.5.1335298872224;
+        Tue, 24 Apr 2012 13:21:12 -0700 (PDT)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.50.188.136 with SMTP id ga8ls8397517igc.0.canary; Tue, 24 Apr
+ 2012 13:21:11 -0700 (PDT)
+Received: by 10.50.47.201 with SMTP id f9mr9464400ign.5.1335298871222;
+        Tue, 24 Apr 2012 13:21:11 -0700 (PDT)
+Received: by 10.50.47.201 with SMTP id f9mr9464398ign.5.1335298871212;
+        Tue, 24 Apr 2012 13:21:11 -0700 (PDT)
+Received: from peff.net (99-108-226-0.lightspeed.iplsin.sbcglobal.net. [99.108.226.0])
+        by gmr-mx.google.com with ESMTPS id hq2si7441897igc.3.2012.04.24.13.21.10
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Tue, 24 Apr 2012 13:21:11 -0700 (PDT)
+Received-SPF: pass (google.com: domain of peff@peff.net designates 99.108.226.0 as permitted sender) client-ip=99.108.226.0;
+Received: (qmail 18945 invoked by uid 107); 24 Apr 2012 20:21:23 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 24 Apr 2012 16:21:23 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 24 Apr 2012 16:21:08 -0400
+In-Reply-To: <CABPQNSawsoheM6Qoxs-iQ-KYxYFs-s60oFLzdyRDFT0o=KXt1w@mail.gmail.com>
+X-Original-Sender: peff@peff.net
+X-Original-Authentication-Results: gmr-mx.google.com; spf=pass (google.com:
+ domain of peff@peff.net designates 99.108.226.0 as permitted sender) smtp.mail=peff@peff.net
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post?hl=en_US>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/?hl=en_US>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit?hl=en_US>
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en_US>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en_US>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
+Content-Disposition: inline
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196247>
 
-Hello
+On Mon, Apr 23, 2012 at 06:05:57PM +0200, Erik Faye-Lund wrote:
 
-I have been working on a project and I realized somewhere I introduced a
-bug.
+> > Sorry, I've been traveling and haven't had a chance to look at this
+> > in-depth yet. I'll do so next week. In the meantime, I wanted to point
+> > out this similar project:
+> >
+> > =A0https://github.com/anurse/git-credential-winstore
+> [...]
+> But probably the biggest problem for Git for Windows is that it's
+> written in C#, and we don't have a C# compiler in our tool-chain.
 
-I found the closest save point to where i was, i believe it was HEAD -2,
-and checked it out.
+Yeah, that seems like a big one. I think it would be awesome if msysgit
+could eventually ship with a credential helper, without people needing
+to grab something externally.
 
-I then laid in several commits, and now i cant push
+-Peff
 
-here is a view of my history, and the commands i executed to get into this
-state
+--=20
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
 
-HISTORY (time flows up)
+*** Please avoid top-posting. ***
 
-* 1bc1ffb current state
-* 735d64f
-* 07dd73d Project working again
-* c70627c
-* 4c6a8ea
-* 2828db4
-* c38ef0b
-| * 1815aac
-| | * fe6e0ac Version bump
-| | * 32de1e5 BROKE
-| | * 528cb37 Bug introduced?
-| |/
-| * ef4ff7e
-|/
-| * ef4ff7e
-|/
-* 8238b14 GOOD
-.
-.
-.
-
-
-COMMANDS (time flows down)
-
-PUSH 8238b14 GOOD
-PUSH ef4ff7e
-PUSH 528cb37 Bug introduced?
-PUSH 32de1e5 BROKE
-PUSH fe6e0ac BROKE Version bump
-CHECKOUT master -> ef4ff7e
-CHECKOUT ef4ff7e -> dev
-COMMIT 1815aac
-CHECKOUT dev -> 8238b14
-COMMIT c38ef0b
-COMMIT 2828db4
-COMMIT 4cba8e9
-COMMIT c70627c
-COMMIT 07dd73d  Project OK again
-CHECKOUT 07dd73d -> mvp1
-CHECKOUT mvp1 -> master
-COMMIT 735d64f
-COMMIT 1bc1ffb    current state
-
-now when i try to push:
-
-user@host:~/workspace/project$ git push
-To git@github.com:xxxxxxxxxxxxx.git
- ! [rejected]        master -> master (non-fast-forward)
-error: failed to push some refs to 'git@github.com:xxxxxxxxxxxxxxxxxxx.git'
-To prevent you from losing history, non-fast-forward updates were rejected
-Merge the remote changes before pushing again.  See the 'Note about
-fast-forwards' section of 'git push --help' for details.
-
-
-user@host:~/workspace/project$ git status
-# On branch master
-# Your branch and 'origin/master' have diverged,
-# and have 7 and 4 different commit(s) each, respectively.
-#
-nothing to commit (working directory clean)
-
-
-user@host:~/workspace/project$ git branch
- dev
-* master
- mvp1
- noopt
- temp
-
-
-Any help would be great.
-
-Thanks
-
-Mike
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, visit this group at
+http://groups.google.com/group/msysgit?hl=3Den_US?hl=3Den
