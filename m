@@ -1,7 +1,7 @@
 From: mhagger@alum.mit.edu
-Subject: [PATCH 28/30] read_loose_refs(): access ref_cache via the ref_dir field
-Date: Wed, 25 Apr 2012 00:45:34 +0200
-Message-ID: <1335307536-26914-29-git-send-email-mhagger@alum.mit.edu>
+Subject: [PATCH 10/30] refs: wrap top-level ref_dirs in ref_entries
+Date: Wed, 25 Apr 2012 00:45:16 +0200
+Message-ID: <1335307536-26914-11-git-send-email-mhagger@alum.mit.edu>
 References: <1335307536-26914-1-git-send-email-mhagger@alum.mit.edu>
 Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
 	Jakub Narebski <jnareb@gmail.com>,
@@ -15,80 +15,130 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SMofj-00005X-NJ
-	for gcvg-git-2@plane.gmane.org; Wed, 25 Apr 2012 00:57:24 +0200
+	id 1SMofj-00005X-5z
+	for gcvg-git-2@plane.gmane.org; Wed, 25 Apr 2012 00:57:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758496Ab2DXW5U (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Apr 2012 18:57:20 -0400
-Received: from ssh.berlin.jpk.com ([212.222.128.135]:60976 "EHLO
+	id S1758485Ab2DXW5J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Apr 2012 18:57:09 -0400
+Received: from ssh.berlin.jpk.com ([212.222.128.135]:60977 "EHLO
 	eddie.berlin.jpk.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1758463Ab2DXW5A (ORCPT <rfc822;git@vger.kernel.org>);
+	with ESMTP id S1758467Ab2DXW5A (ORCPT <rfc822;git@vger.kernel.org>);
 	Tue, 24 Apr 2012 18:57:00 -0400
 Received: from michael.berlin.jpk.com (unknown [192.168.101.152])
-	by eddie.berlin.jpk.com (Postfix) with ESMTP id F0DEB24817A;
-	Wed, 25 Apr 2012 00:46:26 +0200 (CEST)
+	by eddie.berlin.jpk.com (Postfix) with ESMTP id A086E248154;
+	Wed, 25 Apr 2012 00:46:03 +0200 (CEST)
 X-Mailer: git-send-email 1.7.10
 In-Reply-To: <1335307536-26914-1-git-send-email-mhagger@alum.mit.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196268>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196269>
 
 From: Michael Haggerty <mhagger@alum.mit.edu>
 
-This means that all we need to read loose references is the ref_entry
-that will receive them.
+Wrap the top-level ref_dirs in REF_DIR style ref_entries so that we
+have the flag and name available when dealing with them.  This
+affects:
+
+* cache_ref::loose
+* cache_ref::packed
+* extra_refs
+
+The next several commits will expand the use of ref_entry as opposed
+to ref_dir, culminating in the ability of a ref_entry representing a
+directory of loose references to load itself only when used.
 
 Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 ---
- refs.c |   10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ refs.c |   37 +++++++++++++++++++------------------
+ 1 file changed, 19 insertions(+), 18 deletions(-)
 
 diff --git a/refs.c b/refs.c
-index 0f5aab2..4eca965 100644
+index 989c10d..4c92dc9 100644
 --- a/refs.c
 +++ b/refs.c
-@@ -791,7 +791,7 @@ void add_packed_ref(const char *refname, const unsigned char *sha1)
- /*
-  * Read the loose references for direntry in refs.
+@@ -606,26 +606,26 @@ static int is_refname_available(const char *refname, const char *oldrefname,
   */
--static void read_loose_refs(struct ref_cache *refs, struct ref_entry *direntry)
-+static void read_loose_refs(struct ref_entry *direntry)
- {
- 	DIR *d;
- 	const char *path;
-@@ -799,9 +799,11 @@ static void read_loose_refs(struct ref_cache *refs, struct ref_entry *direntry)
- 	const char *dirname = direntry->name;
- 	int dirnamelen = strlen(dirname);
- 	struct strbuf refname;
-+	struct ref_cache *refs;
+ static struct ref_cache {
+ 	struct ref_cache *next;
+-	char did_loose;
+-	char did_packed;
+-	struct ref_dir loose;
+-	struct ref_dir packed;
++	struct ref_entry *loose;
++	struct ref_entry *packed;
+ 	/* The submodule name, or "" for the main repo. */
+ 	char name[FLEX_ARRAY];
+ } *ref_cache;
  
- 	assert(direntry->flag & REF_DIR);
- 
-+	refs = direntry->u.subdir.ref_cache;
- 	if (*refs->name)
- 		path = git_path_submodule(refs->name, "%s", dirname);
- 	else
-@@ -832,8 +834,7 @@ static void read_loose_refs(struct ref_cache *refs, struct ref_entry *direntry)
- 			/* Silently ignore. */
- 		} else if (S_ISDIR(st.st_mode)) {
- 			strbuf_addch(&refname, '/');
--			read_loose_refs(refs,
--					search_for_subdir(direntry,
-+			read_loose_refs(search_for_subdir(direntry,
- 							  refname.buf, 1));
- 		} else {
- 			if (*refs->name) {
-@@ -860,8 +861,7 @@ static struct ref_entry *get_loose_refs(struct ref_cache *refs)
+ static void clear_packed_ref_cache(struct ref_cache *refs)
  {
- 	if (!refs->loose) {
- 		refs->loose = create_dir_entry(refs, "");
--		read_loose_refs(refs,
--				search_for_subdir(refs->loose, "refs/", 1));
-+		read_loose_refs(search_for_subdir(refs->loose, "refs/", 1));
- 	}
- 	return refs->loose;
+-	if (refs->did_packed)
+-		clear_ref_dir(&refs->packed);
+-	refs->did_packed = 0;
++	if (refs->packed) {
++		free_ref_entry(refs->packed);
++		refs->packed = NULL;
++	}
  }
+ 
+ static void clear_loose_ref_cache(struct ref_cache *refs)
+ {
+-	if (refs->did_loose)
+-		clear_ref_dir(&refs->loose);
+-	refs->did_loose = 0;
++	if (refs->loose) {
++		free_ref_entry(refs->loose);
++		refs->loose = NULL;
++	}
+ }
+ 
+ static struct ref_cache *create_ref_cache(const char *submodule)
+@@ -739,22 +739,22 @@ static void read_packed_refs(FILE *f, struct ref_dir *dir)
+ 
+ static struct ref_dir *get_packed_refs(struct ref_cache *refs)
+ {
+-	if (!refs->did_packed) {
++	if (!refs->packed) {
+ 		const char *packed_refs_file;
+ 		FILE *f;
+ 
++		refs->packed = create_dir_entry("");
+ 		if (*refs->name)
+ 			packed_refs_file = git_path_submodule(refs->name, "packed-refs");
+ 		else
+ 			packed_refs_file = git_path("packed-refs");
+ 		f = fopen(packed_refs_file, "r");
+ 		if (f) {
+-			read_packed_refs(f, &refs->packed);
++			read_packed_refs(f, &refs->packed->u.subdir);
+ 			fclose(f);
+ 		}
+-		refs->did_packed = 1;
+ 	}
+-	return &refs->packed;
++	return &refs->packed->u.subdir;
+ }
+ 
+ void add_packed_ref(const char *refname, const unsigned char *sha1)
+@@ -832,12 +832,13 @@ static void get_ref_dir(struct ref_cache *refs, const char *dirname,
+ 
+ static struct ref_dir *get_loose_refs(struct ref_cache *refs)
+ {
+-	if (!refs->did_loose) {
++	if (!refs->loose) {
++		refs->loose = create_dir_entry("");
+ 		get_ref_dir(refs, "refs/",
+-			    &search_for_subdir(&refs->loose, "refs/", 1)->u.subdir);
+-		refs->did_loose = 1;
++			    &search_for_subdir(&refs->loose->u.subdir,
++					       "refs/", 1)->u.subdir);
+ 	}
+-	return &refs->loose;
++	return &refs->loose->u.subdir;
+ }
+ 
+ /* We allow "recursive" symbolic refs. Only within reason, though */
 -- 
 1.7.10
