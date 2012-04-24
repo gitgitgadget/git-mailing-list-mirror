@@ -1,91 +1,68 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Build without BUILT_INS
-Date: Mon, 23 Apr 2012 19:42:53 -0700
-Message-ID: <xmqqmx61hmtu.fsf@junio.mtv.corp.google.com>
-References: <CAAXzdLVbqp-_9A+BwcOuiHi3A39gAJb7_NqANfhAfuK9-+iZ0g@mail.gmail.com>
-Mime-Version: 1.0
+From: "David E. Wheeler" <david@justatheory.com>
+Subject: Use git-config to Break your Config File
+Date: Mon, 23 Apr 2012 19:57:19 -0700
+Message-ID: <9E01F5E2-FB51-418D-B50C-EB6DC63A4F84@justatheory.com>
+Mime-Version: 1.0 (Apple Message framework v1257)
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Steven Penny <svnpenn@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 24 04:43:04 2012
+Content-Transfer-Encoding: 8BIT
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Apr 24 04:57:30 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SMViY-0001Q3-2E
-	for gcvg-git-2@plane.gmane.org; Tue, 24 Apr 2012 04:43:02 +0200
+	id 1SMVwV-0001af-Qn
+	for gcvg-git-2@plane.gmane.org; Tue, 24 Apr 2012 04:57:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756414Ab2DXCm5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 Apr 2012 22:42:57 -0400
-Received: from mail-ey0-f202.google.com ([209.85.215.202]:60032 "EHLO
-	mail-ey0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756385Ab2DXCm4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Apr 2012 22:42:56 -0400
-Received: by eaaq10 with SMTP id q10so5759eaa.1
-        for <git@vger.kernel.org>; Mon, 23 Apr 2012 19:42:54 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type:x-gm-message-state;
-        bh=WRVuJ8Djc96JEqyKf2cRV0zgFptorHgZ3fOwXWFfzOk=;
-        b=kNNpw4HfmF5nKzDGTujRTn6PVYgY2woeQ+97fAs1FcoCkHKL2VW2qrtjXiuV5xu48r
-         nqaZ1mW/T48YE/tAVkZKtfEYibgVBZhoG/OSsWC4gikkqBLJLyUlmDj8YP3D7N5pbiRo
-         6ECJFipnbUFsi27FA3TZsmwiXxiF7FI+tl1cYe/LyCiNvQzOwuDMhgdz/t/eU5nUi/ya
-         chT5dF9nHhZYlPwpDCdGY2/Yie9AUaTiKdH9FkZjyxdz6G0k4+SXVLEv6OtG7x/JRGuY
-         nxLjPm4D1103nO+SZlQd/aLZTXVtw2Ih6Ot0BK2UMRpgk08C6A0kt4MPjVSURukfwmlE
-         sDpQ==
-Received: by 10.213.19.197 with SMTP id c5mr1411714ebb.20.1335235374949;
-        Mon, 23 Apr 2012 19:42:54 -0700 (PDT)
-Received: by 10.213.19.197 with SMTP id c5mr1411705ebb.20.1335235374769;
-        Mon, 23 Apr 2012 19:42:54 -0700 (PDT)
-Received: from hpza9.eem.corp.google.com ([74.125.121.33])
-        by gmr-mx.google.com with ESMTPS id t8si11638270eef.1.2012.04.23.19.42.54
-        (version=TLSv1/SSLv3 cipher=AES128-SHA);
-        Mon, 23 Apr 2012 19:42:54 -0700 (PDT)
-Received: from junio.mtv.corp.google.com (junio.mtv.corp.google.com [172.27.69.24])
-	by hpza9.eem.corp.google.com (Postfix) with ESMTP id 90E6C5C0050;
-	Mon, 23 Apr 2012 19:42:54 -0700 (PDT)
-Received: by junio.mtv.corp.google.com (Postfix, from userid 110493)
-	id DFE7EE120A; Mon, 23 Apr 2012 19:42:53 -0700 (PDT)
-In-Reply-To: <CAAXzdLVbqp-_9A+BwcOuiHi3A39gAJb7_NqANfhAfuK9-+iZ0g@mail.gmail.com>
-	(Steven Penny's message of "Mon, 23 Apr 2012 21:19:44 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1 (gnu/linux)
-X-Gm-Message-State: ALoCoQkHPze291axPYzBFYFG9fYuTWi5w4/U2/a2zugtc26fhW0j34fjMDGRSVFfT0gPClLFG+l8bxjGcWQSwZbnHoRgXd+shRrWwxCFvyvcLVmTdgWmnqLJCnb/QbamZpbs400kLDT94CezlkzdD7bw/NMnnqCh+YaBlIpvF9M0CUbBQFHYfvw=
+	id S1756491Ab2DXC5X (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 Apr 2012 22:57:23 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47447 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756317Ab2DXC5W convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 23 Apr 2012 22:57:22 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id ADBDB7CE8
+	for <git@vger.kernel.org>; Mon, 23 Apr 2012 22:57:21 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from
+	:content-type:content-transfer-encoding:subject:date:message-id
+	:to:mime-version; s=sasl; bh=yIGsWpuKV3HCVOrEkzrDvr0CXKM=; b=Sw4
+	+f7VGBcoZuqqd8/Lwcj3CMpiFdWeCpV3thDmOMXaiBOFeHy5R/KtlsVNywyJHV9j
+	kYd/MzsbjseOPalckNOdIZ8iljNexKqwJuNWs71l1HQLicGB3XsGnYH5Iqelgxq9
+	f3vEXsla/5hUXgD4tME4V4GWJC+49X3pRjssZWv4=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A5BD67CE7
+	for <git@vger.kernel.org>; Mon, 23 Apr 2012 22:57:21 -0400 (EDT)
+Received: from [10.0.1.19] (unknown [50.137.40.254]) (using TLSv1 with cipher
+ AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 657A07CE5 for
+ <git@vger.kernel.org>; Mon, 23 Apr 2012 22:57:20 -0400 (EDT)
+X-Mailer: Apple Mail (2.1257)
+X-Pobox-Relay-ID: 3592985C-8DB9-11E1-BAF7-FC762E706CDE-76319746!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196182>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196183>
 
-Steven Penny <svnpenn@gmail.com> writes:
+Gitsters,
 
-> I would like to build Git for Windows without the hard links in libexec/git-core
->
-> I tried doing
->
-> make install prefix=/c/git BUILT_INS=
->
-> and I get this error
+I was fooling around and realized that I could assign an empty string as the name of a config section, like so:
 
-Unsurprising.
+    $ git config --rename-section my ''
 
-What are you trying to do?  Are you trying to build a git that does not
-know any of the built-in commands like "checkout", "commit", etc?  Or do
-you still want a full-featured git, but because you know the code to
-perform "git foo" for any builtin command "foo" is contained in git
-executable itself, you want to "rm -f git-foo" from the filesystem?
+This leaves the config file looking like this:
 
-The latter is a bad idea to begin with, as it will break older scripts
-that trust the promise that by having git --exec-path early on the $PATH
-older forms "git-foo" will always work.
+    []
+        foo = goodbye
 
-If you really want to do so, the right way is not by mucking BUILT_INS
-to empty.  I do not know how GfW is built, but if it uses our usual
-Makefile, find the place where it installs the git-foo forms of links
-after it installs the main git executable, and comment it out.
+Which does not appear to be valid:
 
-And no, it will *not* be a compilation option, as the resulting
-installation will break the age-old promise we made to script writers.
+    $ git config --get '.foo'          
+    fatal: bad config file line 13 in .git/config
 
-Good luck, and have fun.
+So maybe git-config should disallow setting a section to an empty string?
+
+Best,
+
+David
