@@ -1,101 +1,89 @@
-From: Eugene Sajine <euguess@gmail.com>
-Subject: Re: organizing multiple repositories with dependencies
-Date: Tue, 24 Apr 2012 15:48:54 -0400
-Message-ID: <CAPZPVFbHseYHdPOXmbyGxncZmmzSHwY_fJkNRRQAMVtGZBA0CQ@mail.gmail.com>
-References: <1334568432.53977.YahooMailNeo@web65906.mail.ac4.yahoo.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 00/10] i18n relative dates, help, remote, apply, index-pack and bundle
+Date: Tue, 24 Apr 2012 12:50:57 -0700
+Message-ID: <xmqqobqggb8e.fsf@junio.mtv.corp.google.com>
+References: <1335184230-8870-1-git-send-email-pclouds@gmail.com>
+	<20120424121953.GA25944@do>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Namit Bhalla <namitbhalla@yahoo.com>
-X-From: git-owner@vger.kernel.org Tue Apr 24 21:49:02 2012
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Jonathan Niedier <jrnieder@gmail.com>,
+	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
+	Jiang Xin <worldhello.net@gmail.com>,
+	Zbigniew =?utf-8?Q?J=C4=99drzejewski-Szmek?= <zbyszek@in.waw.pl>
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Apr 24 21:51:04 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SMljR-0005uN-5A
-	for gcvg-git-2@plane.gmane.org; Tue, 24 Apr 2012 21:49:01 +0200
+	id 1SMllP-0007YJ-QU
+	for gcvg-git-2@plane.gmane.org; Tue, 24 Apr 2012 21:51:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757349Ab2DXTs5 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 24 Apr 2012 15:48:57 -0400
-Received: from mail-lpp01m010-f46.google.com ([209.85.215.46]:50529 "EHLO
-	mail-lpp01m010-f46.google.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1757112Ab2DXTs4 convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Apr 2012 15:48:56 -0400
-Received: by lahj13 with SMTP id j13so946559lah.19
-        for <git@vger.kernel.org>; Tue, 24 Apr 2012 12:48:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=uWB30dtjqFxOvvaUTWX2SzVxV43z0RBn8r5z9dG6hbw=;
-        b=0sQFEFnngKt7V6LohevYVNWYqrf1aHFV2B5sv7IzFEx0yIGV6mwtVV+x2uF+cjKJlk
-         KCaOPVvy3+QSCOTGGsf2c3H9H6TNZ2OUcbplLht2ryHleHHizPgH+lMgkQBb2aJZNIP+
-         4mXB7aTPue/3XqIxzhlzX8y2bVGQqfaGNxQt4Ms39+Y9j3i+HlT7m1mPuxortU7BcBoa
-         P4NzaCJnVWNtWHaDvwe6IAqWxacfWaBBr17h39vlMatEeooUeY+9emEGAoL9OCQPsrlc
-         AmhJo1llZfCqfRjRH1/GCU/8yxk5YEUYI2wE9+sGPbCl0Y8r6EvM1QsPttvWN7tYkNRX
-         i+Gg==
-Received: by 10.112.24.161 with SMTP id v1mr10719473lbf.12.1335296934923; Tue,
- 24 Apr 2012 12:48:54 -0700 (PDT)
-Received: by 10.112.17.166 with HTTP; Tue, 24 Apr 2012 12:48:54 -0700 (PDT)
-In-Reply-To: <1334568432.53977.YahooMailNeo@web65906.mail.ac4.yahoo.com>
+	id S1757397Ab2DXTu7 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 24 Apr 2012 15:50:59 -0400
+Received: from mail-yw0-f74.google.com ([209.85.213.74]:61152 "EHLO
+	mail-yw0-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757121Ab2DXTu6 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 24 Apr 2012 15:50:58 -0400
+Received: by yhgm50 with SMTP id m50so122833yhg.1
+        for <git@vger.kernel.org>; Tue, 24 Apr 2012 12:50:58 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type:content-transfer-encoding
+         :x-gm-message-state;
+        bh=h+50olxKcrCi8RKcHfXMbs+vcFt87vKhJWtzZ8pXxDA=;
+        b=dzNAcTHYWN3IRY8fwx1ywF0m/2wsollEAhdih0sptUqvp1sEyOjr7riOi9dxDHd9uW
+         zim8RpNXayj/O11gM5ClN7SGHTG50dkm5IzdzGD4dqSFSeOQZQFTG+NwyNu/7YQa2Kxo
+         NqZGhh4mKw8vu98+AFN5tUOVtk7Y4qBI4ws1GttNwMIEkMpdmonRCJ5BX7wxaGjttK3N
+         kGuIPM3H1/36fa1D793hEKUKvvUdswgeRUq4iKF4tiGSoKjhZxy6V0bhItWOLlHGUtfx
+         VEh2yVIf3e5BPnnjF28U62ZABSvrIKXCLkJppKrSQBieL5iYd5MpVooN7/i6dBXUcbOa
+         AOyQ==
+Received: by 10.236.125.170 with SMTP id z30mr26227686yhh.4.1335297058385;
+        Tue, 24 Apr 2012 12:50:58 -0700 (PDT)
+Received: by 10.236.125.170 with SMTP id z30mr26227657yhh.4.1335297058244;
+        Tue, 24 Apr 2012 12:50:58 -0700 (PDT)
+Received: from wpzn3.hot.corp.google.com (216-239-44-65.google.com [216.239.44.65])
+        by gmr-mx.google.com with ESMTPS id v39si2886085anp.3.2012.04.24.12.50.58
+        (version=TLSv1/SSLv3 cipher=AES128-SHA);
+        Tue, 24 Apr 2012 12:50:58 -0700 (PDT)
+Received: from junio.mtv.corp.google.com (junio.mtv.corp.google.com [172.27.69.24])
+	by wpzn3.hot.corp.google.com (Postfix) with ESMTP id 172F910004D;
+	Tue, 24 Apr 2012 12:50:58 -0700 (PDT)
+Received: by junio.mtv.corp.google.com (Postfix, from userid 110493)
+	id B704CE125C; Tue, 24 Apr 2012 12:50:57 -0700 (PDT)
+In-Reply-To: <20120424121953.GA25944@do> (Nguyen Thai Ngoc Duy's message of
+	"Tue, 24 Apr 2012 19:19:53 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1 (gnu/linux)
+X-Gm-Message-State: ALoCoQmYEJBosb9/MVtSu7TI7rz4QnrduvenKVUMve5uT3rWgQqDQStUgTuAFGveF94gBhtl8lU+e0PdfJAF80iRyJjjdQfR/APz1PhUrB8lRL3fo+hCqdWfNuxeIXIWyFUnKeatPfKY9uVS8RzBn4hBD424FmhFyRjOlwxmsdVYjEwGPOUXXTo=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196242>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196243>
 
-On Mon, Apr 16, 2012 at 5:27 AM, Namit Bhalla <namitbhalla@yahoo.com> w=
-rote:
-> I am looking to track some projects using Git with each project as a
-> separate repository.
-> Even after reading the documentation, I am still wondering if there i=
-s a
-> way to organize things as described below.
+Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
+
+> On Mon, Apr 23, 2012 at 07:30:20PM +0700, Nguy=E1=BB=85n Th=C3=A1i Ng=
+=E1=BB=8Dc Duy wrote:
+>> I attempted to
+>> convert all struct option, and it turned into a huge series [2]. Not
+>> sure how to submit that series yet.
+>>
+>> [2] https://github.com/pclouds/git/tree/parseopt-i18n
 >
-> Consider 2 projects, Project-a and Project-b, which are housed in
-> repositories Repo-a and Repo-b respectively.
-> Project-a develops reusable libraries which are needed by Project-b
-> (otherwise Project-b will not compile).
-> When a new stable version of Project-a libraries has to be delivered,=
- they
-> are "checked into" a path in Repo-a.
-> Now, I would like to setup Repo-b so that when someone starts working=
- on
-> Project-b, he should be able to retrieve the code from Repo-b as well=
- as the libraries from Repo-a. Is there any way to achieve that in
-> Git?
+> The 62 patch series looks lame compared to this approach, but cross
+> compile guys, including myself, will hate me in principle.
 >
-> Thanks for any pointers!
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at =C2=A0http://vger.kernel.org/majordomo-info.ht=
-ml
+> The idea is modify all git commands and output all marked strings in
+> "struct option" and usage strings, instead of manually marking them
+> one by one. The marked strings will be collected by xgettext just lik=
+e
+> another source file.
 
-We are working in the environment where we have hundreds (700 + and
-counting) or projects with many of them reused by others.
-We are following strictly one project =3D one repo rule without any
-subtrees or submodules.
-What you are asking about is "integration" and IMHO has nothing to do
-with git - i.e. should be VCS independent.
-We are using integration on the artifact level and it works amazingly w=
-ell.
-But we also use pretty strict naming and location convention that
-allows us to script around the whole setup very easily.
+Gaah, my eyes, my eyes.
 
-In order to track dependencies between projects we use Ivy.
-The project can be compiled locally using local copies of the upstream
-project artifacts built by developer on the same machine or if not
-present, the current production artifacts are used.
-We also have Jenkins CI server that helps with integration. It is very
-simple and straight forward set up without any unnecessary
-complications IMHO.
-=46eel free to contact me if you need more info about such set up.
-
-Just my 2 cents.
-
-Thanks,
-Eugene
+No thanks.
