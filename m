@@ -1,80 +1,82 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: git clone submodules recursive and reference
-Date: Mon, 23 Apr 2012 23:20:06 +0200
-Message-ID: <4F95C786.40901@web.de>
-References: <CAFj+z055ZZc-Am+pEMgjRvHgoxKSRBjnHhABCseC45+8YswKWg@mail.gmail.com> <4F91B22A.9000507@web.de> <CAFj+z04A5v7Cz=Wbqn_TBJQG88rPSfrs4T1=22x1N+v77ZXgYA@mail.gmail.com> <4F92BA0C.4030009@web.de> <CAFj+z05G_LLLc=OqZiqKCJPpTZ21Y4W6HTJ6ZitraVZXEQ50-A@mail.gmail.com>
+From: Christopher Tiwald <christiwald@gmail.com>
+Subject: Re: [PATCH] Give better 'pull' advice when pushing non-ff updates to
+ current branch
+Date: Tue, 24 Apr 2012 00:58:44 -0400
+Message-ID: <20120424045844.GA41274@gmail.com>
+References: <1335221121-36664-1-git-send-email-christiwald@gmail.com>
+ <xmqqvckpho0a.fsf@junio.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git <git@vger.kernel.org>
-To: Samuel Maftoul <samuel.maftoul@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 24 05:12:24 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Matthieu.Moy@grenoble-inp.fr, peff@peff.net
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Apr 24 06:58:57 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SMWAx-0001WP-Tc
-	for gcvg-git-2@plane.gmane.org; Tue, 24 Apr 2012 05:12:24 +0200
+	id 1SMXq4-0008G1-O2
+	for gcvg-git-2@plane.gmane.org; Tue, 24 Apr 2012 06:58:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756500Ab2DXDMS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 Apr 2012 23:12:18 -0400
-Received: from fmmailgate06.web.de ([217.72.192.247]:60422 "EHLO
-	fmmailgate06.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756361Ab2DXDMR (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Apr 2012 23:12:17 -0400
-Received: from moweb002.kundenserver.de (moweb002.kundenserver.de [172.19.20.108])
-	by fmmailgate06.web.de (Postfix) with ESMTP id C4D67131E163
-	for <git@vger.kernel.org>; Tue, 24 Apr 2012 02:01:03 +0200 (CEST)
-Received: from [192.168.178.48] ([91.3.174.224]) by smtp.web.de (mrweb002)
- with ESMTPA (Nemesis) id 0LhNWS-1RrXqp0GYq-00mYDv; Mon, 23 Apr 2012 23:20:07
- +0200
-User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:11.0) Gecko/20120327 Thunderbird/11.0.1
-In-Reply-To: <CAFj+z05G_LLLc=OqZiqKCJPpTZ21Y4W6HTJ6ZitraVZXEQ50-A@mail.gmail.com>
-X-Provags-ID: V02:K0:zKjQ553iEWwGjk6lDra/3pV/Y9KgMLSqqzMb7GoxCBY
- vY80+GXoHQygNuKX57koYY8scKqGkTdm5PEYRle6h9RMg9CDhs
- TEuf8jGJx6Y/YF8zrQ8OHn+75fcgYWEnsIpise/92wpi3dVM0s
- YjdQoaDp8LPyitr9wkPBlbiWxuKx588ApL1AvRX+8Ey6atckAT
- /n0E2nGDZxsjfbo/24rpQ==
+	id S1751506Ab2DXE6v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Apr 2012 00:58:51 -0400
+Received: from mail-vb0-f46.google.com ([209.85.212.46]:52131 "EHLO
+	mail-vb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750889Ab2DXE6u (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Apr 2012 00:58:50 -0400
+Received: by vbbff1 with SMTP id ff1so222739vbb.19
+        for <git@vger.kernel.org>; Mon, 23 Apr 2012 21:58:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=sS5TUjZ6wVhMGKPafKbtCkkfLGpZFSE9hdI5DQ7Gd4k=;
+        b=Pfmt/pALfG9ObPxjn+PVgLGSXOuRYfDOLSvm2fi1abVqPAAwFXbH4OxaCfrpU4B9yE
+         gzODfd7sAhmTRrNnFFXoUfUNoojKoQBR9I7Zzsgw5Gz7hwPsVs2Uep94ZBZhCmoM6Dyq
+         pYAeYZPGDB7gHK7gaTmKuNnqf8wubD6Mrg6MZhBhG66fSc5CvmFo+3dGj3Nm7zmNRIrd
+         q02gd8XOnLaxcmB0Ka+TKvyH0v24ddGsoh8M4ABNupf7YrwNnnQKhN7FIwJG2i/Ky9l0
+         dEkciQuKWHjxWsxKwFE2Lu8Wc5SyfwwpddWFzQQ2P8zvYVxUuPQn/bDiT7miUu5cSKsd
+         TlyQ==
+Received: by 10.52.178.98 with SMTP id cx2mr15614815vdc.112.1335243529685;
+        Mon, 23 Apr 2012 21:58:49 -0700 (PDT)
+Received: from gmail.com (cpe-74-66-248-47.nyc.res.rr.com. [74.66.248.47])
+        by mx.google.com with ESMTPS id iz3sm29541094vdb.11.2012.04.23.21.58.47
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Mon, 23 Apr 2012 21:58:48 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <xmqqvckpho0a.fsf@junio.mtv.corp.google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196184>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196185>
 
-Am 23.04.2012 10:06, schrieb Samuel Maftoul:
->>> I'm sharing objects between repositories by creating a bare
->>> repository, adding the remotes for the repositories and fetch them in
->>> this bare repo.
->>
->> This sounds like a cool way to reduce the disk footprint of the
->> repos on our Jenkins server.
-> 
-> I'm not using --reference for reducing disk footprint, but rather for
-> caching git repos and reducing the impact of slow networks !
-> Why would it reduce the disk footprint ?
+On Mon, Apr 23, 2012 at 07:17:25PM -0700, Junio C Hamano wrote:
+> So what makes it dangerous is the use of "--rebase", if anything, isn't
+> it?  It does not seem to have much to do with how the local branches are
+> named.
 
-Because the object store of the referenced repo is reused, the cloned
-.git directory takes up less space (I think that is why the man page
-talks about "reducing network and local storage costs").
+After thinking about this argument, there might be a deeper problem with
+my reasoning. Take the workflow you describe. In the "devel tracks to origin
+master" workflow, this patch would advise 'git pull <repository> <refspec>'.
+The advice misses the point of setting the upstream branch. Worse, the
+advice is broken if the user issues 'git pull origin devel' and no 'devel'
+branch exists on origin or the 'devel' branch is simply out of date (as
+might occur if the user pushes between a personal remote clone of a
+shared repo and the shared repo itself with different frequency).
 
->>> So for me, it makes sense to pass the "--reference" to the submodules
->>> clone, if submodules remotes are added to this reference bare repo and
->>> objects are already fetched (and I'm in this case, as I use a lot of
->>> different projects that shares the same set of submodules).
->>
->> How do you fetch then, do you fetch into the referenced repo first
->> and then do a fetch in the clones afterwards to just update the refs
->> there? Or is the bare repo just a starting point for the initial
->> clone?
-> 
-> You need to fetch first in the bare repo, than in your clones. When
-> you use --reference, the reference leaves untouched, it's your job to
-> update the reference (would be nice to have options that allows to
-> update the reference at the same time that the clone updates, so no
-> need to connect twice to the remote repository).
+Maybe the solution here is to ditch the $dest_ref and $dest_remote
+matching entirely and just touch the one case I _know_ the advice could
+do better: git should advise 'git pull <repo> <refspec>' or something
+like "consider setting an upstream branch and pulling before pushing
+again" when branch->merge doesn't exist at all. I like the former
+because it's simpler as an end user and doesn't require enforcing a
+setting he or she may not understand.
 
-I think you could also just fetch in the cloned repos, but then you'll
-have to download the objects over the network for each clone and also
-won't share the new objects. So I think your approach makes lots of
-sense, now I'll just have to tune our Jenkins scripts a bit. ;-)
+I think that might be the way to go. I approached this from a specific
+workflow assumption. In retrospect, I can't divine the motivation of
+merge configurations well enough to avoid bad advice.
+
+--
+Christopher Tiwald
