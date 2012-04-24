@@ -1,71 +1,100 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Is there a way to fetch commits that are detached
-Date: Tue, 24 Apr 2012 15:15:48 -0700
-Message-ID: <xmqq62cog4iz.fsf@junio.mtv.corp.google.com>
-References: <CA+jCPNcmcxQcSN_BNvigQa2uRiaw-c2PK5T-y1yacYNs6Ws4WA@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Allan Caffee <allan.caffee@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 25 00:16:04 2012
+From: mhagger@alum.mit.edu
+Subject: [PATCH 03/30] get_ref_dir(): rename "base" parameter to "dirname"
+Date: Wed, 25 Apr 2012 00:45:09 +0200
+Message-ID: <1335307536-26914-4-git-send-email-mhagger@alum.mit.edu>
+References: <1335307536-26914-1-git-send-email-mhagger@alum.mit.edu>
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Jakub Narebski <jnareb@gmail.com>,
+	Heiko Voigt <hvoigt@hvoigt.net>,
+	Johan Herland <johan@herland.net>,
+	Michael Haggerty <mhagger@alum.mit.edu>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Apr 25 00:52:04 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SMo1b-0004zl-PB
-	for gcvg-git-2@plane.gmane.org; Wed, 25 Apr 2012 00:15:56 +0200
+	id 1SMoaZ-0004vl-JN
+	for gcvg-git-2@plane.gmane.org; Wed, 25 Apr 2012 00:52:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757995Ab2DXWPu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Apr 2012 18:15:50 -0400
-Received: from mail-qc0-f202.google.com ([209.85.216.202]:62838 "EHLO
-	mail-qc0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757146Ab2DXWPt (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Apr 2012 18:15:49 -0400
-Received: by qcsp5 with SMTP id p5so142258qcs.1
-        for <git@vger.kernel.org>; Tue, 24 Apr 2012 15:15:49 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type:x-gm-message-state;
-        bh=Fd376JqdYL25z1rPElnWR6J3HrJrhr9JpKcZsU2B31Q=;
-        b=QR1VQ64pDGKnter9rmFjVMftxpJpHa547/6SkchTSJRJBsrhg3kUPjLO50aOvjw+zD
-         KFL6OVD8GJDByVrK5BbEOe4XVN+PYQiOslsjRH0i2EhFByD3I5kZzAWPTSooKAku7Dt1
-         NDB/9UdH23peeuK3Us9EeGBC0wHfQpEyBzxcLu5tYQWxVqilrJYvN5+tSbNb17PKWXNA
-         dCmbqXPSoxEY0OCRX5fNzbAIenGH5lBUPa3p1jcSwBRUh0nv+s7bz7HM8yVNCbr01W6K
-         l7MGgAL7FC7TqXpwwSneYUBAt3wDZpL92mKIt0ucryjB6UN1iuwOj9kNeYPhDTUPqmg8
-         mVTw==
-Received: by 10.101.176.19 with SMTP id d19mr102406anp.20.1335305749050;
-        Tue, 24 Apr 2012 15:15:49 -0700 (PDT)
-Received: by 10.101.176.19 with SMTP id d19mr102393anp.20.1335305748929;
-        Tue, 24 Apr 2012 15:15:48 -0700 (PDT)
-Received: from wpzn4.hot.corp.google.com (216-239-44-65.google.com [216.239.44.65])
-        by gmr-mx.google.com with ESMTPS id i36si2928453anp.0.2012.04.24.15.15.48
-        (version=TLSv1/SSLv3 cipher=AES128-SHA);
-        Tue, 24 Apr 2012 15:15:48 -0700 (PDT)
-Received: from junio.mtv.corp.google.com (junio.mtv.corp.google.com [172.27.69.24])
-	by wpzn4.hot.corp.google.com (Postfix) with ESMTP id CD4811E004D;
-	Tue, 24 Apr 2012 15:15:48 -0700 (PDT)
-Received: by junio.mtv.corp.google.com (Postfix, from userid 110493)
-	id 75588E125C; Tue, 24 Apr 2012 15:15:48 -0700 (PDT)
-In-Reply-To: <CA+jCPNcmcxQcSN_BNvigQa2uRiaw-c2PK5T-y1yacYNs6Ws4WA@mail.gmail.com>
-	(Allan Caffee's message of "Tue, 24 Apr 2012 14:49:28 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1 (gnu/linux)
-X-Gm-Message-State: ALoCoQmYHAxvlokz6674Aw9+Dt2XxhaQbhUHt1F83nbK35XWaGNVF6i0GTdntratX3tiJVs14xnIjJdCAhJCONs8sGdGKiHazPJlFY/9LfoZ5hBW7d8WmKvEyNVXm4TFWz4hcU0csU1t+AkhT0v93WYFIttUPy4907xpdec1Xm0E4QeJTJGeVMs=
+	id S1758186Ab2DXWwB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Apr 2012 18:52:01 -0400
+Received: from ssh.berlin.jpk.com ([212.222.128.135]:48853 "EHLO
+	eddie.berlin.jpk.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1758083Ab2DXWv5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Apr 2012 18:51:57 -0400
+Received: from michael.berlin.jpk.com (unknown [192.168.101.152])
+	by eddie.berlin.jpk.com (Postfix) with ESMTP id A6637248142;
+	Wed, 25 Apr 2012 00:45:53 +0200 (CEST)
+X-Mailer: git-send-email 1.7.10
+In-Reply-To: <1335307536-26914-1-git-send-email-mhagger@alum.mit.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196256>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196257>
 
-Allan Caffee <allan.caffee@gmail.com> writes:
+From: Michael Haggerty <mhagger@alum.mit.edu>
 
-> Is there a way to explicitly fetch whatever objects are necessary to checkout
-> the commit?
 
-One security principle built into git is that any object that is
-unreachable from refs/* is not to be exposed to outside world.  If the
-commit is not on any ref, you shouldn't be able to obtain it remotely.
+Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
+---
+ refs.c |   20 ++++++++++----------
+ 1 file changed, 10 insertions(+), 10 deletions(-)
 
-So you need to know which branch (or it could be a tag) the commit you
-want is on, fetch that branch or tag and then check the commit out.
+diff --git a/refs.c b/refs.c
+index df98622..dc2b4df 100644
+--- a/refs.c
++++ b/refs.c
+@@ -749,30 +749,30 @@ void add_packed_ref(const char *refname, const unsigned char *sha1)
+ 			create_ref_entry(refname, sha1, REF_ISPACKED, 1));
+ }
+ 
+-static void get_ref_dir(struct ref_cache *refs, const char *base,
++static void get_ref_dir(struct ref_cache *refs, const char *dirname,
+ 			struct ref_dir *dir)
+ {
+ 	DIR *d;
+ 	const char *path;
+ 	struct dirent *de;
+-	int baselen;
++	int dirnamelen;
+ 	struct strbuf refname;
+ 
+ 	if (*refs->name)
+-		path = git_path_submodule(refs->name, "%s", base);
++		path = git_path_submodule(refs->name, "%s", dirname);
+ 	else
+-		path = git_path("%s", base);
++		path = git_path("%s", dirname);
+ 
+ 	d = opendir(path);
+ 	if (!d)
+ 		return;
+ 
+-	baselen = strlen(base);
+-	strbuf_init(&refname, baselen + 257);
+-	strbuf_add(&refname, base, baselen);
+-	if (baselen && base[baselen-1] != '/') {
++	dirnamelen = strlen(dirname);
++	strbuf_init(&refname, dirnamelen + 257);
++	strbuf_add(&refname, dirname, dirnamelen);
++	if (dirnamelen && dirname[dirnamelen-1] != '/') {
+ 		strbuf_addch(&refname, '/');
+-		baselen++;
++		dirnamelen++;
+ 	}
+ 
+ 	while ((de = readdir(d)) != NULL) {
+@@ -807,7 +807,7 @@ static void get_ref_dir(struct ref_cache *refs, const char *base,
+ 			}
+ 			add_ref(dir, create_ref_entry(refname.buf, sha1, flag, 1));
+ 		}
+-		strbuf_setlen(&refname, baselen);
++		strbuf_setlen(&refname, dirnamelen);
+ 	}
+ 	strbuf_release(&refname);
+ 	closedir(d);
+-- 
+1.7.10
