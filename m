@@ -1,118 +1,77 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/7 v4] push.default upcomming change
-Date: Tue, 24 Apr 2012 12:28:10 -0700
-Message-ID: <xmqq1undgcad.fsf@junio.mtv.corp.google.com>
-References: <1335170284-30768-1-git-send-email-Matthieu.Moy@imag.fr>
-	<1335253806-9059-1-git-send-email-Matthieu.Moy@imag.fr>
+Subject: Re: Build without BUILT_INS
+Date: Tue, 24 Apr 2012 12:41:35 -0700
+Message-ID: <xmqqwr54gbo0.fsf@junio.mtv.corp.google.com>
+References: <CAAXzdLVbqp-_9A+BwcOuiHi3A39gAJb7_NqANfhAfuK9-+iZ0g@mail.gmail.com>
+	<xmqqmx61hmtu.fsf@junio.mtv.corp.google.com> <4F96650E.7040900@op5.se>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-To: Matthieu Moy <Matthieu.Moy@imag.fr>
-X-From: git-owner@vger.kernel.org Tue Apr 24 21:28:26 2012
+Cc: Steven Penny <svnpenn@gmail.com>, git@vger.kernel.org
+To: Andreas Ericsson <ae@op5.se>
+X-From: git-owner@vger.kernel.org Tue Apr 24 21:41:43 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SMlPO-0007fj-Jt
-	for gcvg-git-2@plane.gmane.org; Tue, 24 Apr 2012 21:28:18 +0200
+	id 1SMlcM-0000dD-Oa
+	for gcvg-git-2@plane.gmane.org; Tue, 24 Apr 2012 21:41:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757111Ab2DXT2O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Apr 2012 15:28:14 -0400
-Received: from mail-bk0-f74.google.com ([209.85.214.74]:50338 "EHLO
-	mail-bk0-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757006Ab2DXT2N (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Apr 2012 15:28:13 -0400
-Received: by bkcjk7 with SMTP id jk7so53416bkc.1
-        for <git@vger.kernel.org>; Tue, 24 Apr 2012 12:28:12 -0700 (PDT)
+	id S1757160Ab2DXTli (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Apr 2012 15:41:38 -0400
+Received: from mail-wi0-f202.google.com ([209.85.212.202]:58583 "EHLO
+	mail-wi0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757012Ab2DXTlh (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Apr 2012 15:41:37 -0400
+Received: by wibhj13 with SMTP id hj13so60167wib.1
+        for <git@vger.kernel.org>; Tue, 24 Apr 2012 12:41:36 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version:content-type:x-gm-message-state;
-        bh=DFr4XF2CWHz5SZ3IDMKgOQV3mC+nhoPvcJDsliCg/Wc=;
-        b=H3goMghBSCKTyBJUfnYqmcWPckMjU/ZxR7egkmt2jfViaJP1lM6ivSrjI7wkoQH1TA
-         ZhsLypDpCgBPRDphKoh4ras4L/X6oBwBu5zX/KoKfhu+1XZKBA6mCPbc1887twGpwf7K
-         4tclNUfNCm1FqFxqNpuq8qzB/h9Hs+o8uBDpaUIraIx6kzLoihEjHPSEqYwzdncHPC5Z
-         GmwB5LX8njS3Y0XCDf7CJRirbds4Rv/YmSelhKBPLJ4GxlUmcMqSsvF5syvHskArcaUv
-         9uoBvcEW+31sDC0YExOpFwi+GmNbZ886UvCM44/zPNaAAqnT8N/L+OVabYeulaksHuXx
-         7gow==
-Received: by 10.213.21.203 with SMTP id k11mr19955ebb.24.1335295692085;
-        Tue, 24 Apr 2012 12:28:12 -0700 (PDT)
-Received: by 10.213.21.203 with SMTP id k11mr19937ebb.24.1335295691908;
-        Tue, 24 Apr 2012 12:28:11 -0700 (PDT)
+        bh=xwqk2OhE8Uv76Snn7+ZfKJrOkAGofaKckXmjn4NfCvA=;
+        b=DH+hOOMoKDYBI4mz0k59IHuUs5EBFVaD9wdL45xV9QQM6gEQiSsPWzqHMKuNrIcgtm
+         5Qg+F/RYF3YV7YUcRcdJKp05iNfX4GcQzC4sip3rACG0YGNPOSn0ne3gP52SmsTCdfjQ
+         qasFNf1WGCSbx605Sgf2TjTHqbCVmRjUXMABPLAu0LxM4fyFOLd7Mvtcv53ZEVl6Q6hR
+         L+eCQnQcnX380iZZo+GRFxNxzsDnTLaJoC9XN6OuDgoxGIS89f6neyTL5uIbpU2bKXY4
+         ZmRedSWm7wp4POB3n4FNyie8eS6zMnfXFTimGqJf+f5DvLsjtkB2OMErLtPYSkr2/1lE
+         8nTg==
+Received: by 10.14.101.16 with SMTP id a16mr5148578eeg.0.1335296496459;
+        Tue, 24 Apr 2012 12:41:36 -0700 (PDT)
+Received: by 10.14.101.16 with SMTP id a16mr5148560eeg.0.1335296496343;
+        Tue, 24 Apr 2012 12:41:36 -0700 (PDT)
 Received: from hpza10.eem.corp.google.com ([74.125.121.33])
-        by gmr-mx.google.com with ESMTPS id y52si18639090eef.2.2012.04.24.12.28.11
+        by gmr-mx.google.com with ESMTPS id a14si18669493een.0.2012.04.24.12.41.36
         (version=TLSv1/SSLv3 cipher=AES128-SHA);
-        Tue, 24 Apr 2012 12:28:11 -0700 (PDT)
+        Tue, 24 Apr 2012 12:41:36 -0700 (PDT)
 Received: from junio.mtv.corp.google.com (junio.mtv.corp.google.com [172.27.69.24])
-	by hpza10.eem.corp.google.com (Postfix) with ESMTP id B435420004E;
-	Tue, 24 Apr 2012 12:28:11 -0700 (PDT)
+	by hpza10.eem.corp.google.com (Postfix) with ESMTP id 28067200057;
+	Tue, 24 Apr 2012 12:41:36 -0700 (PDT)
 Received: by junio.mtv.corp.google.com (Postfix, from userid 110493)
-	id 0DD68E125C; Tue, 24 Apr 2012 12:28:10 -0700 (PDT)
-In-Reply-To: <1335253806-9059-1-git-send-email-Matthieu.Moy@imag.fr> (Matthieu
-	Moy's message of "Tue, 24 Apr 2012 09:49:59 +0200")
+	id 76171E125C; Tue, 24 Apr 2012 12:41:35 -0700 (PDT)
+In-Reply-To: <4F96650E.7040900@op5.se> (Andreas Ericsson's message of "Tue, 24
+	Apr 2012 10:32:14 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1 (gnu/linux)
-X-Gm-Message-State: ALoCoQkCaeYJvSOtMvcI9gXfrvpj/JT0xk12OXMdBXcBWsBJBitBjdRvQ08zvRTgnAf8wNl55ivnHOl9ioiLkTtF1FWtSmeErPRE6xqZKDdUnA0WogUmXmEhYvg5JaJ/Wge6JCwpLEXveWB8hwcjD0aTy+pa4LozhJVkpnpMSv1WS9iQ07xSlcU=
+X-Gm-Message-State: ALoCoQnXMgJ7mFTNuUNMf0SdCqPp44NDuDl15ovVAjNDnXrEHCft34iC1UFXCSV94um+e2PbzMhzCuxAc3gu3y8taWfwSD9e2kh9FGOR0kySMCKy5AZ32s8/MjhE6Wse2pOWm7q755w1mw/mvU7uLBk8nsIrU3/rIe4BrHjNf6hmmusxa/rPih8=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196239>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196240>
 
-Matthieu Moy <Matthieu.Moy@imag.fr> writes:
+Andreas Ericsson <ae@op5.se> writes:
 
-> This version should address all the comments from Junio, except that I
-> went for my simple one-argument test_push_failure (we don't need the
-> complex one for now, and I'm not sure the complex one will be good
-> enough when we want to test 'matching'---for example, we may want to
-> parse the output of 'git push').
+> On 04/24/2012 04:42 AM, Junio C Hamano wrote:
+>>  ...
+>> And no, it will *not* be a compilation option, as the resulting
+>> installation will break the age-old promise we made to script writers.
+>
+> Otoh, we did warn that we were going to deprecate the 'git-foo' form back
+> in 2005 when the git wrapper was rewritten in C, so perhaps we should
+> consider...
 
-Fine by me, and the result looks good.
+We already discussed it and shot it down soon after 1.6.0 fiasco.
 
-I'll queue everything before the final one, with a single readability
-update (attached below) on top, on mm/simple-push topic. And then the
-final one will be queued on a separate mm/push/default-switch-warning
-topic that is forked from the former.
+    http://thread.gmane.org/gmane.comp.version-control.git/93511
 
-Thanks for working on this.  With acks from others I'm hoping that we
-can merge the "simple" to 'next' soonish.
-
--- >8 --
-Subject: [PATCH] push.default doc: explain simple after upstream
-
-As the "simple" mode is described in terms of what "upstream" does,
-swap the order of these two entries so that the reader sees "upstream"
-first and then reads "simple" with the knowledge of what "upstream"
-does.
-
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- Documentation/config.txt |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
-
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index f724fc6..6a4c130 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -1689,14 +1689,14 @@ push.default::
-   +
-   This is currently the default, but Git 2.0 will change the default
-   to `simple`.
--* `simple` - like `upstream`, but refuses to push if the upstream
--  branch's name is different from the local one. This is the safest
--  option and is well-suited for beginners. It will become the default
--  in Git 2.0.
- * `upstream` - push the current branch to its upstream branch.
-   With this, `git push` will update the same remote ref as the one which
-   is merged by `git pull`, making `push` and `pull` symmetrical.
-   See "branch.<name>.merge" for how to configure the upstream branch.
-+* `simple` - like `upstream`, but refuses to push if the upstream
-+  branch's name is different from the local one. This is the safest
-+  option and is well-suited for beginners. It will become the default
-+  in Git 2.0.
- * `current` - push the current branch to a branch of the same name.
-   +
-   The `simple`, `current` and `upstream` modes are for those who want to
--- 
-1.7.10.433.g8de07
+Please do not drag me into that mess again.
