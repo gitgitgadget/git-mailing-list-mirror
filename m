@@ -1,7 +1,7 @@
 From: mhagger@alum.mit.edu
-Subject: [PATCH 01/30] get_ref_dir(): return early if directory cannot be read
-Date: Wed, 25 Apr 2012 00:45:07 +0200
-Message-ID: <1335307536-26914-2-git-send-email-mhagger@alum.mit.edu>
+Subject: [PATCH 02/30] get_ref_dir(): use a strbuf to hold refname
+Date: Wed, 25 Apr 2012 00:45:08 +0200
+Message-ID: <1335307536-26914-3-git-send-email-mhagger@alum.mit.edu>
 References: <1335307536-26914-1-git-send-email-mhagger@alum.mit.edu>
 Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
 	Jakub Narebski <jnareb@gmail.com>,
@@ -15,144 +15,124 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SMoau-00059D-0z
-	for gcvg-git-2@plane.gmane.org; Wed, 25 Apr 2012 00:52:24 +0200
+	id 1SMoas-00059D-BZ
+	for gcvg-git-2@plane.gmane.org; Wed, 25 Apr 2012 00:52:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758134Ab2DXWwA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Apr 2012 18:52:00 -0400
-Received: from ssh.berlin.jpk.com ([212.222.128.135]:48854 "EHLO
+	id S1758117Ab2DXWv7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Apr 2012 18:51:59 -0400
+Received: from ssh.berlin.jpk.com ([212.222.128.135]:48852 "EHLO
 	eddie.berlin.jpk.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1758087Ab2DXWv5 (ORCPT <rfc822;git@vger.kernel.org>);
+	with ESMTP id S1758099Ab2DXWv5 (ORCPT <rfc822;git@vger.kernel.org>);
 	Tue, 24 Apr 2012 18:51:57 -0400
 Received: from michael.berlin.jpk.com (unknown [192.168.101.152])
-	by eddie.berlin.jpk.com (Postfix) with ESMTP id 44B9324813F;
-	Wed, 25 Apr 2012 00:45:50 +0200 (CEST)
+	by eddie.berlin.jpk.com (Postfix) with ESMTP id EAC5E248140;
+	Wed, 25 Apr 2012 00:45:51 +0200 (CEST)
 X-Mailer: git-send-email 1.7.10
 In-Reply-To: <1335307536-26914-1-git-send-email-mhagger@alum.mit.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196260>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196261>
 
 From: Michael Haggerty <mhagger@alum.mit.edu>
 
+This simplifies the bookkeeping and allows an (artificial) restriction
+on refname component length to be removed.
 
 Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 ---
- refs.c |   85 +++++++++++++++++++++++++++++++++-------------------------------
- 1 file changed, 44 insertions(+), 41 deletions(-)
+ refs.c |   54 ++++++++++++++++++++++++++----------------------------
+ 1 file changed, 26 insertions(+), 28 deletions(-)
 
 diff --git a/refs.c b/refs.c
-index 09322fe..d539241 100644
+index d539241..df98622 100644
 --- a/refs.c
 +++ b/refs.c
-@@ -754,6 +754,9 @@ static void get_ref_dir(struct ref_cache *refs, const char *base,
- {
- 	DIR *d;
+@@ -756,7 +756,7 @@ static void get_ref_dir(struct ref_cache *refs, const char *base,
  	const char *path;
-+	struct dirent *de;
-+	int baselen;
-+	char *refname;
+ 	struct dirent *de;
+ 	int baselen;
+-	char *refname;
++	struct strbuf refname;
  
  	if (*refs->name)
  		path = git_path_submodule(refs->name, "%s", base);
-@@ -761,55 +764,55 @@ static void get_ref_dir(struct ref_cache *refs, const char *base,
- 		path = git_path("%s", base);
+@@ -768,50 +768,48 @@ static void get_ref_dir(struct ref_cache *refs, const char *base,
+ 		return;
  
- 	d = opendir(path);
--	if (d) {
--		struct dirent *de;
--		int baselen = strlen(base);
--		char *refname = xmalloc(baselen + 257);
-+	if (!d)
-+		return;
+ 	baselen = strlen(base);
+-	refname = xmalloc(baselen + 257);
+-
+-	memcpy(refname, base, baselen);
+-	if (baselen && base[baselen-1] != '/')
+-		refname[baselen++] = '/';
++	strbuf_init(&refname, baselen + 257);
++	strbuf_add(&refname, base, baselen);
++	if (baselen && base[baselen-1] != '/') {
++		strbuf_addch(&refname, '/');
++		baselen++;
++	}
  
--		memcpy(refname, base, baselen);
--		if (baselen && base[baselen-1] != '/')
--			refname[baselen++] = '/';
-+	baselen = strlen(base);
-+	refname = xmalloc(baselen + 257);
+ 	while ((de = readdir(d)) != NULL) {
+ 		unsigned char sha1[20];
+ 		struct stat st;
+ 		int flag;
+-		int namelen;
+ 		const char *refdir;
  
--		while ((de = readdir(d)) != NULL) {
--			unsigned char sha1[20];
--			struct stat st;
--			int flag;
--			int namelen;
--			const char *refdir;
-+	memcpy(refname, base, baselen);
-+	if (baselen && base[baselen-1] != '/')
-+		refname[baselen++] = '/';
- 
--			if (de->d_name[0] == '.')
--				continue;
--			namelen = strlen(de->d_name);
--			if (namelen > 255)
--				continue;
--			if (has_extension(de->d_name, ".lock"))
--				continue;
--			memcpy(refname + baselen, de->d_name, namelen+1);
--			refdir = *refs->name
--				? git_path_submodule(refs->name, "%s", refname)
--				: git_path("%s", refname);
--			if (stat(refdir, &st) < 0)
--				continue;
--			if (S_ISDIR(st.st_mode)) {
--				get_ref_dir(refs, refname, dir);
--				continue;
--			}
--			if (*refs->name) {
--				hashclr(sha1);
--				flag = 0;
--				if (resolve_gitlink_ref(refs->name, refname, sha1) < 0) {
--					hashclr(sha1);
--					flag |= REF_ISBROKEN;
--				}
--			} else if (read_ref_full(refname, sha1, 1, &flag)) {
-+	while ((de = readdir(d)) != NULL) {
-+		unsigned char sha1[20];
-+		struct stat st;
-+		int flag;
-+		int namelen;
-+		const char *refdir;
-+
-+		if (de->d_name[0] == '.')
-+			continue;
-+		namelen = strlen(de->d_name);
-+		if (namelen > 255)
-+			continue;
-+		if (has_extension(de->d_name, ".lock"))
-+			continue;
-+		memcpy(refname + baselen, de->d_name, namelen+1);
-+		refdir = *refs->name
-+			? git_path_submodule(refs->name, "%s", refname)
-+			: git_path("%s", refname);
-+		if (stat(refdir, &st) < 0)
-+			continue;
-+		if (S_ISDIR(st.st_mode)) {
-+			get_ref_dir(refs, refname, dir);
-+			continue;
-+		}
-+		if (*refs->name) {
-+			hashclr(sha1);
-+			flag = 0;
-+			if (resolve_gitlink_ref(refs->name, refname, sha1) < 0) {
+ 		if (de->d_name[0] == '.')
+ 			continue;
+-		namelen = strlen(de->d_name);
+-		if (namelen > 255)
+-			continue;
+ 		if (has_extension(de->d_name, ".lock"))
+ 			continue;
+-		memcpy(refname + baselen, de->d_name, namelen+1);
++		strbuf_addstr(&refname, de->d_name);
+ 		refdir = *refs->name
+-			? git_path_submodule(refs->name, "%s", refname)
+-			: git_path("%s", refname);
+-		if (stat(refdir, &st) < 0)
+-			continue;
+-		if (S_ISDIR(st.st_mode)) {
+-			get_ref_dir(refs, refname, dir);
+-			continue;
+-		}
+-		if (*refs->name) {
+-			hashclr(sha1);
+-			flag = 0;
+-			if (resolve_gitlink_ref(refs->name, refname, sha1) < 0) {
++			? git_path_submodule(refs->name, "%s", refname.buf)
++			: git_path("%s", refname.buf);
++		if (stat(refdir, &st) < 0) {
++			/* Silently ignore. */
++		} else if (S_ISDIR(st.st_mode)) {
++			get_ref_dir(refs, refname.buf, dir);
++		} else {
++			if (*refs->name) {
++				hashclr(sha1);
++				flag = 0;
++				if (resolve_gitlink_ref(refs->name, refname.buf, sha1) < 0) {
++					hashclr(sha1);
++					flag |= REF_ISBROKEN;
++				}
++			} else if (read_ref_full(refname.buf, sha1, 1, &flag)) {
  				hashclr(sha1);
  				flag |= REF_ISBROKEN;
  			}
--			add_ref(dir, create_ref_entry(refname, sha1, flag, 1));
-+		} else if (read_ref_full(refname, sha1, 1, &flag)) {
-+			hashclr(sha1);
-+			flag |= REF_ISBROKEN;
+-		} else if (read_ref_full(refname, sha1, 1, &flag)) {
+-			hashclr(sha1);
+-			flag |= REF_ISBROKEN;
++			add_ref(dir, create_ref_entry(refname.buf, sha1, flag, 1));
  		}
--		free(refname);
--		closedir(d);
-+		add_ref(dir, create_ref_entry(refname, sha1, flag, 1));
+-		add_ref(dir, create_ref_entry(refname, sha1, flag, 1));
++		strbuf_setlen(&refname, baselen);
  	}
-+	free(refname);
-+	closedir(d);
+-	free(refname);
++	strbuf_release(&refname);
+ 	closedir(d);
  }
  
- static struct ref_dir *get_loose_refs(struct ref_cache *refs)
 -- 
 1.7.10
