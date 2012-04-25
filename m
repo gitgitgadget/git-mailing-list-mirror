@@ -1,102 +1,96 @@
-From: Tim Henigan <tim.henigan@gmail.com>
-Subject: Re: What's cooking in git.git (Apr 2012, #08; Fri, 20)
-Date: Wed, 25 Apr 2012 14:14:32 -0400
-Message-ID: <CAFouetg1L3qsUQfNNnNKE43AkKGBQcypTw=w8dZKRJBM7LkQoA@mail.gmail.com>
-References: <xmqqobqmkkxv.fsf@junio.mtv.corp.google.com>
-	<4F941EA3.7080200@kdbg.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 29/30] create_dir_entry(): allow the flag value to be passed as an argument
+Date: Wed, 25 Apr 2012 11:31:45 -0700
+Message-ID: <xmqqfwbrd5ny.fsf@junio.mtv.corp.google.com>
+References: <1335307536-26914-1-git-send-email-mhagger@alum.mit.edu>
+	<1335307536-26914-30-git-send-email-mhagger@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-To: Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Wed Apr 25 20:14:50 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Jakub Narebski <jnareb@gmail.com>,
+	Heiko Voigt <hvoigt@hvoigt.net>,
+	Johan Herland <johan@herland.net>
+To: mhagger@alum.mit.edu
+X-From: git-owner@vger.kernel.org Wed Apr 25 20:31:57 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SN6jn-0008LE-Cn
-	for gcvg-git-2@plane.gmane.org; Wed, 25 Apr 2012 20:14:47 +0200
+	id 1SN70O-0006aD-CU
+	for gcvg-git-2@plane.gmane.org; Wed, 25 Apr 2012 20:31:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757412Ab2DYSOo convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 25 Apr 2012 14:14:44 -0400
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:35353 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752946Ab2DYSOd convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 25 Apr 2012 14:14:33 -0400
-Received: by iadi9 with SMTP id i9so385750iad.19
-        for <git@vger.kernel.org>; Wed, 25 Apr 2012 11:14:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=qtQZLcMcZ2aGJp9Hvs7DhuZnjWTFpX7zbj9iRAJQ7wM=;
-        b=ZflIWGa8cSXUUVAKhlxMMzakUGQtOx8yC6O6b/XSFgXtG5SKGskAql1srsWL4LCw8R
-         rKTR/mGswug+pmdFPVbJH5oy1lcuFCgKkJ2E7j8JFVNBEuB0Dx8lwFNsH+NuH62BvQ/t
-         t53zehkYG6N0DSC1On2EzTKXF643JpIgSyM17xLwlSJlctZ/H6kRo3q4Dyqpnct637Ix
-         dINvObqFN+c2+AvqCzy7nitqfrXLTLv98KOjTNYLowP0MaQq7G2qMDH1L9n8x3zQlOwR
-         DvjnD8ql663rKtdpgzoBrxtUo8yDFvuQFw6cCsitwKxnggoydvnHAqCQjPo5JWDBNc+k
-         9Kfw==
-Received: by 10.50.104.133 with SMTP id ge5mr3755876igb.21.1335377672946; Wed,
- 25 Apr 2012 11:14:32 -0700 (PDT)
-Received: by 10.42.225.193 with HTTP; Wed, 25 Apr 2012 11:14:32 -0700 (PDT)
-In-Reply-To: <4F941EA3.7080200@kdbg.org>
+	id S1757450Ab2DYSbs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Apr 2012 14:31:48 -0400
+Received: from mail-qc0-f202.google.com ([209.85.216.202]:51889 "EHLO
+	mail-qc0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756398Ab2DYSbr (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Apr 2012 14:31:47 -0400
+Received: by qcsp5 with SMTP id p5so50870qcs.1
+        for <git@vger.kernel.org>; Wed, 25 Apr 2012 11:31:46 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type:x-gm-message-state;
+        bh=gp9o+1u9IDweoHDqa0bWtwDTsBOXKQQSjxlu+pNF7rM=;
+        b=fEC2aSBVnjYwyvEYnNoO/XJfvkZanrbx3OKvIPt79H2Ln9r1QWH0GAC86qkZgo5xjh
+         SNL8siiUnmj/mMvOe1Mnr5obVlnWZ9hKRd5J9+u30b+5fT8abwBHQpcOd26KdJc5EBiR
+         SYqlaR10S4FJTTWg6x3BQt+7U9Qsg67EeXS4e7IX9vgF++5F/eTJ34R8TZr7/3kJsMSN
+         mandcGRLrBIYEYxyixT6vdVBO2LT3U7NozDPkfblVSJmZsZlIJ/S0Xm3aq8PHP9esabl
+         9PKEvKTTvJ3Y3afJVyhXqBcYjFVdkq//UWUyxEQ28zaQ000JBXAXfEdeGQLfDLhU702N
+         wbBg==
+Received: by 10.236.125.170 with SMTP id z30mr4445470yhh.4.1335378706781;
+        Wed, 25 Apr 2012 11:31:46 -0700 (PDT)
+Received: by 10.236.125.170 with SMTP id z30mr4445441yhh.4.1335378706614;
+        Wed, 25 Apr 2012 11:31:46 -0700 (PDT)
+Received: from wpzn4.hot.corp.google.com (216-239-44-65.google.com [216.239.44.65])
+        by gmr-mx.google.com with ESMTPS id b69si453832yhe.0.2012.04.25.11.31.46
+        (version=TLSv1/SSLv3 cipher=AES128-SHA);
+        Wed, 25 Apr 2012 11:31:46 -0700 (PDT)
+Received: from junio.mtv.corp.google.com (junio.mtv.corp.google.com [172.27.69.24])
+	by wpzn4.hot.corp.google.com (Postfix) with ESMTP id 7F7961E004D;
+	Wed, 25 Apr 2012 11:31:46 -0700 (PDT)
+Received: by junio.mtv.corp.google.com (Postfix, from userid 110493)
+	id 12A59E125C; Wed, 25 Apr 2012 11:31:45 -0700 (PDT)
+In-Reply-To: <1335307536-26914-30-git-send-email-mhagger@alum.mit.edu>
+	(mhagger@alum.mit.edu's message of "Wed, 25 Apr 2012 00:45:35 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1 (gnu/linux)
+X-Gm-Message-State: ALoCoQn8czDBlBqesPqD/cS51OBaDPohJ5BLqDoVRr4B4Zpi7a5TNMKcQRUndrnbQGcHuvHHAX+y3+TAgrLV0aU44oDENFGbR4iRMjoyM0XPdQavVXvB3bH9jcKP7BzSt6pmIz0Y/E/E+mxG4/uqS52fTUvVZTY168uJ3J0LdWICJnQkEHvww4E=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196327>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196328>
 
-On Sun, Apr 22, 2012 at 11:07 AM, Johannes Sixt <j6t@kdbg.org> wrote:
-> Am 21.04.2012 02:06, schrieb Junio C Hamano:
->> * th/difftool-diffall (2012-04-14) 8 commits
->> =C2=A0 - difftool: print list of valid tools with '--tool-help'
->> =C2=A0 - difftool: teach difftool to handle directory diffs
->> =C2=A0 - difftool: eliminate setup_environment function
->> =C2=A0 - difftool: stop appending '.exe' to git
->> =C2=A0 - difftool: remove explicit change of PATH
->> =C2=A0 - difftool: exit(0) when usage is printed
->> =C2=A0 - difftool: add '--no-gui' option
->> =C2=A0 - difftool: parse options using Getopt::Long
->>
->> Rolls the two-directory-diff logic from diffall script (in contrib/)=
- into
->> "git difftool" framework.
->
-> This does not pass test 33 (the last one) on Windows:
+mhagger@alum.mit.edu writes:
 
-I now have a working test environment using msysgit on Windows 7
-32-bit.  I updated to the tip of 'pu' (on my clone this is commit
-5224ba8) and was able to run all 33 tests in t7800 without error.
+> diff --git a/refs.c b/refs.c
+> index 4eca965..869c9a7 100644
+> --- a/refs.c
+> +++ b/refs.c
+> @@ -231,18 +231,18 @@ static void clear_ref_dir(struct ref_dir *dir)
+>  }
+>  
+>  /*
+> + * Create a struct ref_entry object for the specified dirname and flag.
+>   * dirname is the name of the directory with a trailing slash (e.g.,
+>   * "refs/heads/") or "" for the top-level directory.
+>   */
+>  static struct ref_entry *create_dir_entry(struct ref_cache *ref_cache,
+> -					  const char *dirname)
+> +					  const char *dirname, int flag)
+>  {
+>  	struct ref_entry *direntry;
+>  	int len = strlen(dirname);
+>  	direntry = xcalloc(1, sizeof(struct ref_entry) + len + 1);
+>  	memcpy(direntry->name, dirname, len + 1);
+> -	direntry->flag = REF_DIR;
+> +	direntry->flag = flag;
+>  	direntry->u.subdir.ref_cache = ref_cache;
 
+As the returned structure will always represent a subdirectory and not a
+leaf node, i.e. you use u.subdir, I do not think it makes any sense to
+make it responsibility for the caller of this function to include
+REF_DIR in the value of the flag.
 
-> +++ git difftool --dir-diff --extcmd ls branch
-> Use of uninitialized value in length at d:/Src/mingw-git/git-difftool=
- line 55.
-> Use of uninitialized value in length at d:/Src/mingw-git/git-difftool=
- line 55.
-
-The above 2 warnings were fixed in a later version of patch series.
-
-
-> exiting now at d:/Src/mingw-git/git-difftool line 120.
-> usage: git diff [--no-index] <path> <path>
-> diff --raw --no-abbrev -z branch: command returned error: 129
->
-> ("exiting now" is a debugging "warn" call that I inserted)
->
-> I don't know what's going on. One possibility is that an old Git.pm i=
-s
-> being used, because I haven't 'make install' yet.
->
-> I'm not going to look into this, but I can run tests if you tell me w=
-hat
-> to do.
-
-I have run into issues in the past on Linux where testing without
-running 'make install' causes trouble, but never had time to track it
-down.
-
-Would it be possible for you to update to the latest tip of 'pu' and
-then 'make install && (cd t && sh t7800-difftool.sh)'?
+Also shouldn't flag be of type "unsigned", not "int"?
