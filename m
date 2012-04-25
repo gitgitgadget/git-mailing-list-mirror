@@ -1,71 +1,84 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCHv1] git p4: fix for submit/edit unit test
-Date: Wed, 25 Apr 2012 08:18:58 -0700
-Message-ID: <xmqq4ns7et5p.fsf@junio.mtv.corp.google.com>
-References: <1335341814-1598-1-git-send-email-luke@diamand.org>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 03/10] i18n: mark relative dates for translation
+Date: Wed, 25 Apr 2012 10:25:58 -0500
+Message-ID: <20120425152558.GC31026@burratino>
+References: <1335184230-8870-1-git-send-email-pclouds@gmail.com>
+ <1335184230-8870-4-git-send-email-pclouds@gmail.com>
+ <xmqqd36wgam5.fsf@junio.mtv.corp.google.com>
+ <CACsJy8Ae_9wEoNmP81Gqu5kOMGrEKSN9PMvoRXbKh8TnwGVt0A@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Pete Wyckoff <pw@padd.com>
-To: Luke Diamand <luke@diamand.org>
-X-From: git-owner@vger.kernel.org Wed Apr 25 17:19:06 2012
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
+	Jiang Xin <worldhello.net@gmail.com>,
+	Zbigniew =?utf-8?Q?J=C4=99drzejewski-Szmek?= <zbyszek@in.waw.pl>
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 25 17:26:35 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SN3zm-00081Q-3J
-	for gcvg-git-2@plane.gmane.org; Wed, 25 Apr 2012 17:19:06 +0200
+	id 1SN46x-0006Pi-0z
+	for gcvg-git-2@plane.gmane.org; Wed, 25 Apr 2012 17:26:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753968Ab2DYPTA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Apr 2012 11:19:00 -0400
-Received: from mail-vx0-f202.google.com ([209.85.220.202]:47427 "EHLO
-	mail-vx0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752513Ab2DYPS7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Apr 2012 11:18:59 -0400
-Received: by vcbfk26 with SMTP id fk26so23192vcb.1
-        for <git@vger.kernel.org>; Wed, 25 Apr 2012 08:18:59 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type:x-gm-message-state;
-        bh=fyYppAGHE/bTYX8vBFoYBlOBklRAhtmgraVGE202Y10=;
-        b=hsPvvov8UBOIgoSetb3Ge69vWdwbGmf2JHHAii5aQGX05xnckTDXdl68GSqoI1/LZr
-         16PG3Se5B/pEQRXUtCA6zKVLczGaI6T7OHKl1W5+sGUJv1TJTO+mmEag4DhSa3RQ5jMk
-         0jxpfCx4cCi2SRHc7iGlqzm3Po9VOxpxiVgf+bSoiXQ0xqmPdGtzYKft4KX7OfVLUyUU
-         X8NTkRFvhLRu1pSclecELiClokohPqVBXXxPgXMmFVXA0f9k5iwr9hNoVt2pyg60ydNh
-         hfdFUbl9WrK6Orq6N2hspax8qjHwETIkWJZ67kEN2tbUJ95M3k7iQqStkhr/IRQSiBcz
-         pcKA==
-Received: by 10.236.189.9 with SMTP id b9mr3633855yhn.8.1335367138966;
-        Wed, 25 Apr 2012 08:18:58 -0700 (PDT)
-Received: by 10.236.189.9 with SMTP id b9mr3633832yhn.8.1335367138873;
-        Wed, 25 Apr 2012 08:18:58 -0700 (PDT)
-Received: from wpzn4.hot.corp.google.com (216-239-44-65.google.com [216.239.44.65])
-        by gmr-mx.google.com with ESMTPS id j51si21917789yhi.1.2012.04.25.08.18.58
-        (version=TLSv1/SSLv3 cipher=AES128-SHA);
-        Wed, 25 Apr 2012 08:18:58 -0700 (PDT)
-Received: from junio.mtv.corp.google.com (junio.mtv.corp.google.com [172.27.69.24])
-	by wpzn4.hot.corp.google.com (Postfix) with ESMTP id BF9711E005A;
-	Wed, 25 Apr 2012 08:18:58 -0700 (PDT)
-Received: by junio.mtv.corp.google.com (Postfix, from userid 110493)
-	id 7FD95E125C; Wed, 25 Apr 2012 08:18:58 -0700 (PDT)
-In-Reply-To: <1335341814-1598-1-git-send-email-luke@diamand.org> (Luke
-	Diamand's message of "Wed, 25 Apr 2012 09:16:53 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1 (gnu/linux)
-X-Gm-Message-State: ALoCoQkTpiG05wpMkGXNLZNrD//aD3n/F/Futyewnp4npEocM/MXJVGvViwuH04CaQDbZCEjhJKf/O4/pjBHhUbc4AFBIKy7xiniBrwQzXiA3htCEu5TQrn8sO9QZIz8+o7TH1vwP2yQ7aIcqx5Qf4ZoPo8PQN45VcPO109L2M3dB5VFJ3jNWGE=
+	id S1754098Ab2DYP0Z convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 25 Apr 2012 11:26:25 -0400
+Received: from mail-yw0-f46.google.com ([209.85.213.46]:34681 "EHLO
+	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753938Ab2DYP0Y convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 25 Apr 2012 11:26:24 -0400
+Received: by yhmm54 with SMTP id m54so200921yhm.19
+        for <git@vger.kernel.org>; Wed, 25 Apr 2012 08:26:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=NDMHfTMB87f4olUvmyq4dQNJ6Cs1prg1RPXG238YNwE=;
+        b=y0KKzybor2xZltKTyKnlIHWBxcvSDKvWKjvWbeeCBzBemnPok7TfkEmyZX1dmJZJAV
+         bw+twD6ZMwbRDD9+knGsw11q3tjlRTz7kQcndbiDB3segxd63w97J/WVKsRMGc5KjTZ5
+         1rj4c4SEisS+ktVcTcvgb81keQZTtKS+++ZzVUwEswoqjZENVMAAnZV75KHFU5KB0TlL
+         N+Crcjp4Wnq9epRDOm7uvxDQA13q1rLom3yPrDl0UZ5uO+rubYLXOUEVW3rXhE/P3c0p
+         mQibOwMMD6+O0ebrpiNstm6S1+Dy0HvPl+q0YK3YOZfrOy8FNHnYDCe/0u1K+bas5hCz
+         OwtQ==
+Received: by 10.60.4.170 with SMTP id l10mr3869051oel.67.1335367584045;
+        Wed, 25 Apr 2012 08:26:24 -0700 (PDT)
+Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
+        by mx.google.com with ESMTPS id w4sm19810803oeg.12.2012.04.25.08.26.03
+        (version=SSLv3 cipher=OTHER);
+        Wed, 25 Apr 2012 08:26:03 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <CACsJy8Ae_9wEoNmP81Gqu5kOMGrEKSN9PMvoRXbKh8TnwGVt0A@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196317>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196318>
 
-Luke Diamand <luke@diamand.org> writes:
+Nguyen Thai Ngoc Duy wrote:
+> 2012/4/25 Junio C Hamano <gitster@pobox.com>:
 
-> My P4EDITOR changes broke the submit/edit "git p4" unit test.
-> This fixes it.
+>>> + =C2=A0 =C2=A0 strbuf_addf(timebuf,
+>>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0Q_("%lu year ago"=
+, "%lu years ago", (diff + 183) / 365),
+>>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0(diff + 183) / 36=
+5);
+>>> =C2=A0}
+>>
+>> This is just a tangent, but could we possibly come here and say "1 y=
+ear
+>> ago"?
 >
-> Junio - would you prefer me to resubmit the entire series?
+> Nice catch. Singular form here is unnecessary.
 
-It is too late for replacement, as the series is in 'next'.  Incremental
-updates like you did is good.
+I think Junio meant
 
-Thanks.
+			Q_("1 year ago", "%lu years ago", ...)
+
+That sound reasonable to me.  My only worry is a small one: what
+happens if we want to change the %lu to some other format specifier
+some day?  Will xgettext be smart enough to let translators know
+without the msgid changing?
