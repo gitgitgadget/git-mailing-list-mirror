@@ -1,90 +1,71 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: What's cooking (incremental)
-Date: Wed, 25 Apr 2012 08:17:30 -0700
-Message-ID: <xmqq8vhjet85.fsf@junio.mtv.corp.google.com>
-References: <xmqq8vhmhzpk.fsf@junio.mtv.corp.google.com>
-	<xmqqobqgeex1.fsf@junio.mtv.corp.google.com>
-	<87r4vcqiy8.fsf@thomas.inf.ethz.ch>
+Subject: Re: [PATCHv1] git p4: fix for submit/edit unit test
+Date: Wed, 25 Apr 2012 08:18:58 -0700
+Message-ID: <xmqq4ns7et5p.fsf@junio.mtv.corp.google.com>
+References: <1335341814-1598-1-git-send-email-luke@diamand.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: <git@vger.kernel.org>
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Wed Apr 25 17:17:46 2012
+Cc: git@vger.kernel.org, Pete Wyckoff <pw@padd.com>
+To: Luke Diamand <luke@diamand.org>
+X-From: git-owner@vger.kernel.org Wed Apr 25 17:19:06 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SN3yM-0006i1-JA
-	for gcvg-git-2@plane.gmane.org; Wed, 25 Apr 2012 17:17:38 +0200
+	id 1SN3zm-00081Q-3J
+	for gcvg-git-2@plane.gmane.org; Wed, 25 Apr 2012 17:19:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752216Ab2DYPRe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Apr 2012 11:17:34 -0400
-Received: from mail-we0-f202.google.com ([74.125.82.202]:39081 "EHLO
-	mail-we0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751978Ab2DYPRd (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Apr 2012 11:17:33 -0400
-Received: by wejx9 with SMTP id x9so10597wej.1
-        for <git@vger.kernel.org>; Wed, 25 Apr 2012 08:17:31 -0700 (PDT)
+	id S1753968Ab2DYPTA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Apr 2012 11:19:00 -0400
+Received: from mail-vx0-f202.google.com ([209.85.220.202]:47427 "EHLO
+	mail-vx0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752513Ab2DYPS7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Apr 2012 11:18:59 -0400
+Received: by vcbfk26 with SMTP id fk26so23192vcb.1
+        for <git@vger.kernel.org>; Wed, 25 Apr 2012 08:18:59 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version:content-type:x-gm-message-state;
-        bh=SD9S+dIcbEYYEV+G5RMQoUhqyH+AFvtSkP+Xo4GTXxw=;
-        b=RKFzDp36jhOB6SP3xwNLnonKBVZ+B2Ion22fGjaoy/5hGfHCFIsY6OrOenmYZiPoVG
-         iZsm+sganCeewluREczApEo5ycbm2KBj+W4sO1XHqU7L2w9WBn8S0TISTiXoXIC9T79S
-         35cabd8Bux1E7T8nmHKTHmMYj/llZm9rQ1jWxVuxNAe3uMMtU+DV7EAW/xHsXARpSu1P
-         64TbCPQUukCf4R49c7v8xWqcd5rmTdYl7U+4kxbaezmVLr+rr/F/hEzPY67H0CXWFWUl
-         Un/yZVOEGL4mEomY1vx+ZP1hLOQT2jtx1yp6Zj7G2UIEBpRqxuwoadhhIRxh0+Xyn/wb
-         Bgxw==
-Received: by 10.213.26.20 with SMTP id b20mr345798ebc.12.1335367051767;
-        Wed, 25 Apr 2012 08:17:31 -0700 (PDT)
-Received: by 10.213.26.20 with SMTP id b20mr345786ebc.12.1335367051413;
-        Wed, 25 Apr 2012 08:17:31 -0700 (PDT)
-Received: from hpza9.eem.corp.google.com ([74.125.121.33])
-        by gmr-mx.google.com with ESMTPS id t8si16471321eef.1.2012.04.25.08.17.31
+        bh=fyYppAGHE/bTYX8vBFoYBlOBklRAhtmgraVGE202Y10=;
+        b=hsPvvov8UBOIgoSetb3Ge69vWdwbGmf2JHHAii5aQGX05xnckTDXdl68GSqoI1/LZr
+         16PG3Se5B/pEQRXUtCA6zKVLczGaI6T7OHKl1W5+sGUJv1TJTO+mmEag4DhSa3RQ5jMk
+         0jxpfCx4cCi2SRHc7iGlqzm3Po9VOxpxiVgf+bSoiXQ0xqmPdGtzYKft4KX7OfVLUyUU
+         X8NTkRFvhLRu1pSclecELiClokohPqVBXXxPgXMmFVXA0f9k5iwr9hNoVt2pyg60ydNh
+         hfdFUbl9WrK6Orq6N2hspax8qjHwETIkWJZ67kEN2tbUJ95M3k7iQqStkhr/IRQSiBcz
+         pcKA==
+Received: by 10.236.189.9 with SMTP id b9mr3633855yhn.8.1335367138966;
+        Wed, 25 Apr 2012 08:18:58 -0700 (PDT)
+Received: by 10.236.189.9 with SMTP id b9mr3633832yhn.8.1335367138873;
+        Wed, 25 Apr 2012 08:18:58 -0700 (PDT)
+Received: from wpzn4.hot.corp.google.com (216-239-44-65.google.com [216.239.44.65])
+        by gmr-mx.google.com with ESMTPS id j51si21917789yhi.1.2012.04.25.08.18.58
         (version=TLSv1/SSLv3 cipher=AES128-SHA);
-        Wed, 25 Apr 2012 08:17:31 -0700 (PDT)
+        Wed, 25 Apr 2012 08:18:58 -0700 (PDT)
 Received: from junio.mtv.corp.google.com (junio.mtv.corp.google.com [172.27.69.24])
-	by hpza9.eem.corp.google.com (Postfix) with ESMTP id 37C3F5C0050;
-	Wed, 25 Apr 2012 08:17:31 -0700 (PDT)
+	by wpzn4.hot.corp.google.com (Postfix) with ESMTP id BF9711E005A;
+	Wed, 25 Apr 2012 08:18:58 -0700 (PDT)
 Received: by junio.mtv.corp.google.com (Postfix, from userid 110493)
-	id 76637E125C; Wed, 25 Apr 2012 08:17:30 -0700 (PDT)
-In-Reply-To: <87r4vcqiy8.fsf@thomas.inf.ethz.ch> (Thomas Rast's message of
-	"Wed, 25 Apr 2012 11:06:23 +0200")
+	id 7FD95E125C; Wed, 25 Apr 2012 08:18:58 -0700 (PDT)
+In-Reply-To: <1335341814-1598-1-git-send-email-luke@diamand.org> (Luke
+	Diamand's message of "Wed, 25 Apr 2012 09:16:53 +0100")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1 (gnu/linux)
-X-Gm-Message-State: ALoCoQlc/q9tPmREtWOyeB1yBLCwPjhR/cUH6kMRrGbti7h7Am8BQRgNPeuwDScoS1UvFL1jS2mvKHdbwYpyTE89hXVnRqkkWSM9Fu7WMJD9yKgJxkzItVuaTuuF9c2OdWE7d8H4DdPADkD4iLRItPmBa0n4I3waa5YwO5yqD78TG3H7C7uT3OM=
+X-Gm-Message-State: ALoCoQkTpiG05wpMkGXNLZNrD//aD3n/F/Futyewnp4npEocM/MXJVGvViwuH04CaQDbZCEjhJKf/O4/pjBHhUbc4AFBIKy7xiniBrwQzXiA3htCEu5TQrn8sO9QZIz8+o7TH1vwP2yQ7aIcqx5Qf4ZoPo8PQN45VcPO109L2M3dB5VFJ3jNWGE=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196316>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196317>
 
-Thomas Rast <trast@student.ethz.ch> writes:
+Luke Diamand <luke@diamand.org> writes:
 
-> Junio C Hamano <gitster@pobox.com> writes:
+> My P4EDITOR changes broke the submit/edit "git p4" unit test.
+> This fixes it.
 >
->> I've merged the following topics to 'next':
->>
->>   * tr/xdiff-fast-hash (2012-04-09) 1 commit
->>   * cb/daemon-test-race-fix (2012-04-19) 1 commit
->>   * ld/git-p4-tags-and-labels (2012-04-24) 6 commits
->>   * nh/empty-rebase (2012-04-24) 4 commits
->>   * pw/t5800-import-race-fix (2012-04-24) 1 commit
->>   * nd/i18n (2012-04-24) 10 commits
->>
->> Some of them are scary and somewhat iffy (I had to apply a last minute
->> fix and rebuild 'next' to one of them), so please test them throughly to
->> help us avoid breakages on 'master'.
->
-> Umm, which one?
->
-> As the author of the first, I'm kind of curious whether I need to
-> scramble to fix (or at least further test) something :-)
+> Junio - would you prefer me to resubmit the entire series?
 
-Authors do not need to "scramble"; they are trusted to have done as good
-a job as they can possibly do before submitting anyway.
+It is too late for replacement, as the series is in 'next'.  Incremental
+updates like you did is good.
 
-It is sufficient to just use the resulting Git in your daily work, but
-paying extra attention to notice if there is any behaviour that feels
-strange.
+Thanks.
