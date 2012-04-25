@@ -1,91 +1,67 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v8 4/4] git-rebase: add keep_empty flag
-Date: Tue, 24 Apr 2012 18:50:26 -0700
-Message-ID: <xmqqipgoeewl.fsf@junio.mtv.corp.google.com>
-References: <1333136922-12872-1-git-send-email-nhorman@tuxdriver.com>
-	<1334932577-31232-1-git-send-email-nhorman@tuxdriver.com>
-	<1334932577-31232-5-git-send-email-nhorman@tuxdriver.com>
+From: Steven Penny <svnpenn@gmail.com>
+Subject: Re: Build without BUILT_INS
+Date: Tue, 24 Apr 2012 22:11:09 -0500
+Message-ID: <CAAXzdLXa_s4yDzV4HJk3dV1hYU1cekMXqcvEvoPcDrTm0tAyXQ@mail.gmail.com>
+References: <CAAXzdLVbqp-_9A+BwcOuiHi3A39gAJb7_NqANfhAfuK9-+iZ0g@mail.gmail.com>
+	<xmqqmx61hmtu.fsf@junio.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org,
-	Zbigniew =?utf-8?Q?J=C4=99drzejewski-Szmek?= <zbyszek@in.waw.pl>,
-	Clemens Buchacher <drizzd@aon.at>,
-	Phil Hord <phil.hord@gmail.com>
-To: Neil Horman <nhorman@tuxdriver.com>
-X-From: git-owner@vger.kernel.org Wed Apr 25 04:14:43 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Apr 25 05:11:17 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SMrkg-0001dp-JN
-	for gcvg-git-2@plane.gmane.org; Wed, 25 Apr 2012 04:14:42 +0200
+	id 1SMsdQ-0003SK-L5
+	for gcvg-git-2@plane.gmane.org; Wed, 25 Apr 2012 05:11:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757953Ab2DYCOi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Apr 2012 22:14:38 -0400
-Received: from mail-lb0-f202.google.com ([209.85.217.202]:51884 "EHLO
-	mail-lb0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757919Ab2DYCOh (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Apr 2012 22:14:37 -0400
-Received: by lbbge1 with SMTP id ge1so5773lbb.1
-        for <git@vger.kernel.org>; Tue, 24 Apr 2012 19:14:36 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=from:to:cc:subject:date:references:message-id:user-agent
-         :mime-version:content-type:x-gm-message-state;
-        bh=obM5xrZKAs9zjgJHSAPz7RdvZkljgDKOBbB6S2DoK2Q=;
-        b=OTg7o287DNNCyzQtvWRRE4wAwO6S1S7fVC22e0uK5+1d1xyp6ErWQTiI+UTovcevwk
-         WmgxG+Kna5aUV/aTuVoR0nK1jiBP9A999FVaCrPUV8vN8BWLG373JO8M7I1ALOGESvF0
-         JWLxjByvgkHpXbBe+vTMw9M4JrxeMjJH0yZvPYsFuTpfXQHWfP1AkLCVKR3N41OVtd55
-         GWHj4A6QcmAXPewmhlhYv0LstXrZezJ9Dvz1s5aQaaaiYYnfZr3vbwfUTcHZ/3nYG+nc
-         8Qu8JUnwItGK4XpKbOWmen1O0O6UcLJlR6PdXYhjSUvhwuynh7mckIEUrL7QHPuNd3W3
-         HLFQ==
-Received: by 10.213.27.20 with SMTP id g20mr132350ebc.17.1335320076022;
-        Tue, 24 Apr 2012 19:14:36 -0700 (PDT)
-Received: by 10.213.27.20 with SMTP id g20mr132326ebc.17.1335320075846;
-        Tue, 24 Apr 2012 19:14:35 -0700 (PDT)
-Received: from hpza10.eem.corp.google.com ([74.125.121.33])
-        by gmr-mx.google.com with ESMTPS id t8si14735467eef.1.2012.04.24.19.14.35
-        (version=TLSv1/SSLv3 cipher=AES128-SHA);
-        Tue, 24 Apr 2012 19:14:35 -0700 (PDT)
-Received: from junio.mtv.corp.google.com (junio.mtv.corp.google.com [172.27.69.24])
-	by hpza10.eem.corp.google.com (Postfix) with ESMTP id A1F3720004E;
-	Tue, 24 Apr 2012 19:14:35 -0700 (PDT)
-Received: by junio.mtv.corp.google.com (Postfix, from userid 110493)
-	id 0726AE125C; Tue, 24 Apr 2012 19:14:34 -0700 (PDT)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1 (gnu/linux)
-X-Gm-Message-State: ALoCoQn82CFauKA1JUGfB6D8+53yvhDd5rTgn8vGw9DJk5Pg/u3nALPUmF/1jjmKeEZ+CGuVUI9MUksmN32xqUrZw0sab6a4DTyT5OlQjLVbYJAN2jqkQILHMTGdF4hn84fu17l3xLAf116dyeE9+9kIZKxDnMEON/PTUbuMxYt71A8wwTTVvWE=
+	id S1758454Ab2DYDLK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Apr 2012 23:11:10 -0400
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:41423 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757390Ab2DYDLJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Apr 2012 23:11:09 -0400
+Received: by iadi9 with SMTP id i9so1864491iad.19
+        for <git@vger.kernel.org>; Tue, 24 Apr 2012 20:11:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=3vof2a0uEB0MAcUG3Ngh3aJA2HW7hg1Wq/9Qfot9hRQ=;
+        b=HLuVPu+Pzm/k5guvgOJOSEfZ9fGkqfjuRWS+R/Y136cSlpYEUzr9hmvVoiYOvygx+K
+         9GP0hvDKPUje/1ZVj+vZFzZkdB9sZguS3yrNBFxWsCG4geanREwDrVMeezRWrMoD1DfJ
+         cCHt9EvFzfWI568oJg3dscLZ7LVXeo7POgAdBaJPuPUygckTd+dzqx0mgU/TYuPJ7QMx
+         hya/evZp2yYR26MfoHsFxsIoxVPk52skmZQiTrdEVo6QPvpQ4ovqE+KZ4xphjV/LBgep
+         CXRNBahIAe9Y9EYUAVtZy5pe3R63uRlLRmbhupxtdATAQbuK2C+jAlBOXeC/wI6uJ12i
+         B7ig==
+Received: by 10.50.45.234 with SMTP id q10mr582920igm.54.1335323469077; Tue,
+ 24 Apr 2012 20:11:09 -0700 (PDT)
+Received: by 10.231.80.147 with HTTP; Tue, 24 Apr 2012 20:11:09 -0700 (PDT)
+In-Reply-To: <xmqqmx61hmtu.fsf@junio.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196297>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196298>
 
-Neil Horman <nhorman@tuxdriver.com> writes:
+Junio C Hamano wrote:
+> And no, it will *not* be a compilation option, as the resulting
+> installation will break the age-old promise we made to script writers.
 
-> Add a command line switch to git-rebase to allow a user the ability to specify
-> that they want to keep any commits in a series that are empty.
-> ...
-> diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-> index 5812222..ef263e0 100644
-> --- a/git-rebase--interactive.sh
-> +++ b/git-rebase--interactive.sh
-> @@ -167,6 +167,15 @@ has_action () {
->  	sane_grep '^[^#]' "$1" >/dev/null
->  }
->  
-> +is_empty_commit() {
-> +	tree=$(git rev-parse -q --verify "$1"^{tree} 2>/dev/null ||
-> +		die "$1: not a commit that can be picked")
-> +	ptree=$(git rev-parse -q --verify "$1"^^{tree} 2>/dev/null ||
-> +		ptree=4b825dc642cb6eb9a060e54bf8d69288fbee4904)
-> +
-> +	return test "$tree" = "$ptree"
-> +}
+A compilation option, does not break any promise to script writers.
 
-I've amended the above and removed "return " from the last line.
+The default build still has hard links.
 
-The series is now in 'next', so if we need further enhancement or fixup,
-they need to come as incremental updates, not as replacements.
+A compilation option, such as "make NO_BUILTINS=1" would merely give
+users the choice to build without the hard links; an option they do
+_not_ have currently.
 
-Thanks.
+Seeing how there already is
+
+NO_GETTEXT
+NO_OPENSSL
+NO_TCLTK
+
+and so on, I dont see this as being a big issue to add.
