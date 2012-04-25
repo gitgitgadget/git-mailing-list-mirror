@@ -1,78 +1,137 @@
 From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <rene.scharfe@lsrfire.ath.cx>
-Subject: Re: Possible segfault introduced in commit.c
-Date: Wed, 25 Apr 2012 22:22:34 +0200
-Message-ID: <4F985D0A.9020100@lsrfire.ath.cx>
-References: <CANV9Rr_ev+34Wd030cps0UbgjRYD0=L2DQhbrCOkBVWG-2xaug@mail.gmail.com> <20120425111435.GA21579@sigill.intra.peff.net>
+Subject: [PATCH 1/3] sequencer: export commit_list_append()
+Date: Wed, 25 Apr 2012 22:35:27 +0200
+Message-ID: <4F98600F.6000404@lsrfire.ath.cx>
+References: <CANV9Rr_ev+34Wd030cps0UbgjRYD0=L2DQhbrCOkBVWG-2xaug@mail.gmail.com> <20120425111435.GA21579@sigill.intra.peff.net> <4F985D0A.9020100@lsrfire.ath.cx>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Michael Mueller <mmueller@vigilantsw.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Apr 25 22:23:10 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Jeff King <peff@peff.net>,
+	Michael Mueller <mmueller@vigilantsw.com>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Apr 25 22:35:54 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SN8jx-0007ow-Pe
-	for gcvg-git-2@plane.gmane.org; Wed, 25 Apr 2012 22:23:06 +0200
+	id 1SN8wL-0001mh-1T
+	for gcvg-git-2@plane.gmane.org; Wed, 25 Apr 2012 22:35:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758756Ab2DYUW7 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 25 Apr 2012 16:22:59 -0400
-Received: from india601.server4you.de ([85.25.151.105]:57244 "EHLO
+	id S1758844Ab2DYUfs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Apr 2012 16:35:48 -0400
+Received: from india601.server4you.de ([85.25.151.105]:57249 "EHLO
 	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758558Ab2DYUW7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Apr 2012 16:22:59 -0400
+	with ESMTP id S1758815Ab2DYUfs (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Apr 2012 16:35:48 -0400
 Received: from [192.168.2.105] (p4FFDBB95.dip.t-dialin.net [79.253.187.149])
-	by india601.server4you.de (Postfix) with ESMTPSA id CA7F82F8047;
-	Wed, 25 Apr 2012 22:22:56 +0200 (CEST)
+	by india601.server4you.de (Postfix) with ESMTPSA id F1DE12F8047;
+	Wed, 25 Apr 2012 22:35:45 +0200 (CEST)
 User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:12.0) Gecko/20120420 Thunderbird/12.0
-In-Reply-To: <20120425111435.GA21579@sigill.intra.peff.net>
+In-Reply-To: <4F985D0A.9020100@lsrfire.ath.cx>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196334>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196335>
 
-Am 25.04.2012 13:14, schrieb Jeff King:
-> On Wed, Apr 25, 2012 at 12:59:28AM -0700, Michael Mueller wrote:
->
->> As you might already know, we analyze git regularly with Sentry (our
->> static analysis tool).  Today it picked up a new NULL pointer
->> dereference in commit.c:366:
->>
->>      void commit_list_reverse(struct commit_list **list_p)
->>      {
->>          struct commit_list *prev =3D NULL, *curr =3D *list_p, *next=
-;
->>
->>          if (!list_p)
->>              return;
->>          /* function continues... */
->>      }
->>
->> list_p is dereferenced on the first line, then tested for NULL on
->> the very next statement.  If it's possible that list_p is NULL, this
->> will be a segfault.  If it can't be NULL, then the check is
->> unnecessary (and probably misleading).
->
-> Yes, you're right. There is only one caller currently, and it can nev=
-er
-> be NULL (it passes the address-of a pointer variable). I think droppi=
-ng
-> the NULL-check is the right thing; even an empty list will still have=
- a
-> pointer to its NULL head.
+This function can be used in other parts of git.  Give it a new home
+in commit.c.
 
-More often then not, a mistake like that is surrounded by other issues.=
-=20
-  No, I didn't put it there intentionally to prove this point. ;-)
+Signed-off-by: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
+---
+ commit.c    |   27 +++++++++++++++++++++++++++
+ commit.h    |    2 ++
+ sequencer.c |   27 ---------------------------
+ 3 files changed, 29 insertions(+), 27 deletions(-)
 
-Having to reverse the list at all is unfortunate and I only did that=20
-because I thought appending would be more complicated and because we ar=
-e=20
-going to replace the linked list with a different data structure soon=20
-anyway.  Turns out appending is easy.  Patches to follow.
-
-Ren=C3=A9
+diff --git a/commit.c b/commit.c
+index b80a452..8361acb 100644
+--- a/commit.c
++++ b/commit.c
+@@ -1214,3 +1214,30 @@ struct commit *get_merge_parent(const char *name)
+ 	}
+ 	return commit;
+ }
++
++/*
++ * Append a commit to the end of the commit_list.
++ *
++ * next starts by pointing to the variable that holds the head of an
++ * empty commit_list, and is updated to point to the "next" field of
++ * the last item on the list as new commits are appended.
++ *
++ * Usage example:
++ *
++ *     struct commit_list *list;
++ *     struct commit_list **next = &list;
++ *
++ *     next = commit_list_append(c1, next);
++ *     next = commit_list_append(c2, next);
++ *     assert(commit_list_count(list) == 2);
++ *     return list;
++ */
++struct commit_list **commit_list_append(struct commit *commit,
++					struct commit_list **next)
++{
++	struct commit_list *new = xmalloc(sizeof(struct commit_list));
++	new->item = commit;
++	*next = new;
++	new->next = NULL;
++	return &new->next;
++}
+diff --git a/commit.h b/commit.h
+index f8d250d..bd17770 100644
+--- a/commit.h
++++ b/commit.h
+@@ -53,6 +53,8 @@ int find_commit_subject(const char *commit_buffer, const char **subject);
+ 
+ struct commit_list *commit_list_insert(struct commit *item,
+ 					struct commit_list **list);
++struct commit_list **commit_list_append(struct commit *commit,
++					struct commit_list **next);
+ unsigned commit_list_count(const struct commit_list *l);
+ struct commit_list *commit_list_insert_by_date(struct commit *item,
+ 				    struct commit_list **list);
+diff --git a/sequencer.c b/sequencer.c
+index 4307364..ac6c823 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -468,33 +468,6 @@ static void read_and_refresh_cache(struct replay_opts *opts)
+ 	rollback_lock_file(&index_lock);
+ }
+ 
+-/*
+- * Append a commit to the end of the commit_list.
+- *
+- * next starts by pointing to the variable that holds the head of an
+- * empty commit_list, and is updated to point to the "next" field of
+- * the last item on the list as new commits are appended.
+- *
+- * Usage example:
+- *
+- *     struct commit_list *list;
+- *     struct commit_list **next = &list;
+- *
+- *     next = commit_list_append(c1, next);
+- *     next = commit_list_append(c2, next);
+- *     assert(commit_list_count(list) == 2);
+- *     return list;
+- */
+-static struct commit_list **commit_list_append(struct commit *commit,
+-					       struct commit_list **next)
+-{
+-	struct commit_list *new = xmalloc(sizeof(struct commit_list));
+-	new->item = commit;
+-	*next = new;
+-	new->next = NULL;
+-	return &new->next;
+-}
+-
+ static int format_todo(struct strbuf *buf, struct commit_list *todo_list,
+ 		struct replay_opts *opts)
+ {
+-- 
+1.7.10
