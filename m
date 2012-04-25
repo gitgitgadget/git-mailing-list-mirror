@@ -1,65 +1,64 @@
-From: Luke Diamand <luke@diamand.org>
-Subject: [PATCHv1] git p4: fix for submit/edit unit test
-Date: Wed, 25 Apr 2012 09:16:53 +0100
-Message-ID: <1335341814-1598-1-git-send-email-luke@diamand.org>
-Cc: Junio C Hamano <gitster@pobox.com>, Pete Wyckoff <pw@padd.com>,
-	Luke Diamand <luke@diamand.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 25 10:17:32 2012
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: What's cooking (incremental)
+Date: Wed, 25 Apr 2012 11:06:23 +0200
+Message-ID: <87r4vcqiy8.fsf@thomas.inf.ethz.ch>
+References: <xmqq8vhmhzpk.fsf@junio.mtv.corp.google.com>
+	<xmqqobqgeex1.fsf@junio.mtv.corp.google.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset="us-ascii"
+Cc: <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Apr 25 11:06:38 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SMxPj-0000kB-52
-	for gcvg-git-2@plane.gmane.org; Wed, 25 Apr 2012 10:17:27 +0200
+	id 1SMyBG-0002T9-2Z
+	for gcvg-git-2@plane.gmane.org; Wed, 25 Apr 2012 11:06:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753800Ab2DYIRF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Apr 2012 04:17:05 -0400
-Received: from mail-wi0-f170.google.com ([209.85.212.170]:32905 "EHLO
-	mail-wi0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753448Ab2DYIRC (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Apr 2012 04:17:02 -0400
-Received: by wibhr17 with SMTP id hr17so4214083wib.1
-        for <git@vger.kernel.org>; Wed, 25 Apr 2012 01:17:01 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer:x-gm-message-state;
-        bh=vmqE1hJ5uRTwF6bQ25Bmwavi6JZrfWsI5N/5u24LRlE=;
-        b=FqLJSbzMuaO4wiWtjmnBVu0+oAdpcuKBwNVJUUGnpvrwtqxRirm53qt/H8sSmd2m6O
-         bp31jgpktz5FSWqa0QLvBf7kae26nIAUIeKmMhQe6xg4rW7nxPMXcBY/lkcuezCI0v6D
-         uHyBTeX8SbOcyJQswzmpOcrJVJLjZG5yiQnYsecGMl93y6h1nah6xxXKhp/0PTNF657b
-         P3teboNM++k3nyy1EEMCRdcuinKVGL1pAAdwoTxOte4C3JgLCZfqtWovtOpqQkPazBoc
-         kWZP1t9cwP/ohgxUfOP/riOGzJR8X+L7avxtGZZnK4NsWstotCXBjbnUtKzWQdVWsTKQ
-         v6fA==
-Received: by 10.180.78.9 with SMTP id x9mr4193125wiw.18.1335341821056;
-        Wed, 25 Apr 2012 01:17:01 -0700 (PDT)
-Received: from ethel.diamand (cpc19-cmbg14-2-0-cust6.5-4.cable.virginmedia.com. [86.6.30.7])
-        by mx.google.com with ESMTPS id fz9sm35739849wib.3.2012.04.25.01.16.59
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 25 Apr 2012 01:17:00 -0700 (PDT)
-X-Mailer: git-send-email 1.7.10.473.g0796
-X-Gm-Message-State: ALoCoQnfuVqMwq6RYmL67iSUOHh4wRgl0d4khpVj248Vf5GTX/si/6mPNJjpyDFbcVPdJcGwlopz
+	id S1756430Ab2DYJG2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Apr 2012 05:06:28 -0400
+Received: from edge20.ethz.ch ([82.130.99.26]:34289 "EHLO edge20.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755113Ab2DYJG1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Apr 2012 05:06:27 -0400
+Received: from CAS21.d.ethz.ch (172.31.51.111) by edge20.ethz.ch
+ (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.2.283.3; Wed, 25 Apr
+ 2012 11:06:24 +0200
+Received: from thomas.inf.ethz.ch.ethz.ch (129.132.153.233) by CAS21.d.ethz.ch
+ (172.31.51.111) with Microsoft SMTP Server (TLS) id 14.1.355.2; Wed, 25 Apr
+ 2012 11:06:24 +0200
+In-Reply-To: <xmqqobqgeex1.fsf@junio.mtv.corp.google.com> (Junio C. Hamano's
+	message of "Tue, 24 Apr 2012 19:14:18 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Originating-IP: [129.132.153.233]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196302>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196303>
 
-My P4EDITOR changes broke the submit/edit "git p4" unit test.
-This fixes it.
+Junio C Hamano <gitster@pobox.com> writes:
 
-Junio - would you prefer me to resubmit the entire series?
+> I've merged the following topics to 'next':
+>
+>   * tr/xdiff-fast-hash (2012-04-09) 1 commit
+>   * cb/daemon-test-race-fix (2012-04-19) 1 commit
+>   * ld/git-p4-tags-and-labels (2012-04-24) 6 commits
+>   * nh/empty-rebase (2012-04-24) 4 commits
+>   * pw/t5800-import-race-fix (2012-04-24) 1 commit
+>   * nd/i18n (2012-04-24) 10 commits
+>
+> Some of them are scary and somewhat iffy (I had to apply a last minute
+> fix and rebuild 'next' to one of them), so please test them throughly to
+> help us avoid breakages on 'master'.
 
-Thanks
-Luke
+Umm, which one?
 
-
-Luke Diamand (1):
-  git p4: fix unit tests
-
- t/t9805-git-p4-skip-submit-edit.sh |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+As the author of the first, I'm kind of curious whether I need to
+scramble to fix (or at least further test) something :-)
 
 -- 
-1.7.10.473.g0796
+Thomas Rast
+trast@{inf,student}.ethz.ch
