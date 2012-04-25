@@ -1,84 +1,97 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: What's cooking (incremental)
-Date: Tue, 24 Apr 2012 19:14:18 -0700
-Message-ID: <xmqqobqgeex1.fsf@junio.mtv.corp.google.com>
-References: <xmqq8vhmhzpk.fsf@junio.mtv.corp.google.com>
+Subject: Re: [PATCH 4/7] push: introduce new push.default mode "simple"
+Date: Tue, 24 Apr 2012 18:53:14 -0700
+Message-ID: <xmqqd36weewk.fsf@junio.mtv.corp.google.com>
+References: <1335170284-30768-1-git-send-email-Matthieu.Moy@imag.fr>
+	<1335253806-9059-1-git-send-email-Matthieu.Moy@imag.fr>
+	<1335253806-9059-5-git-send-email-Matthieu.Moy@imag.fr>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 25 04:14:27 2012
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Michael Haggerty <mhagger@alum.mit.edu>
+To: Matthieu Moy <Matthieu.Moy@imag.fr>
+X-From: git-owner@vger.kernel.org Wed Apr 25 04:14:44 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SMrkQ-0001UZ-DV
-	for gcvg-git-2@plane.gmane.org; Wed, 25 Apr 2012 04:14:26 +0200
+	id 1SMrkg-0001dp-1k
+	for gcvg-git-2@plane.gmane.org; Wed, 25 Apr 2012 04:14:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757793Ab2DYCOU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Apr 2012 22:14:20 -0400
-Received: from mail-yx0-f202.google.com ([209.85.213.202]:39013 "EHLO
-	mail-yx0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757115Ab2DYCOT (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Apr 2012 22:14:19 -0400
-Received: by yenq2 with SMTP id q2so162091yen.1
-        for <git@vger.kernel.org>; Tue, 24 Apr 2012 19:14:19 -0700 (PDT)
+	id S1757941Ab2DYCOh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Apr 2012 22:14:37 -0400
+Received: from mail-qc0-f202.google.com ([209.85.216.202]:60316 "EHLO
+	mail-qc0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757805Ab2DYCOg (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Apr 2012 22:14:36 -0400
+Received: by qcsp5 with SMTP id p5so162827qcs.1
+        for <git@vger.kernel.org>; Tue, 24 Apr 2012 19:14:35 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
-        h=from:to:subject:references:date:in-reply-to:message-id:user-agent
+        h=from:to:cc:subject:date:references:message-id:user-agent
          :mime-version:content-type:x-gm-message-state;
-        bh=FEWQPdbHGTg8ctag/T4R02s9raxKuWqN+WF0fgFkZhw=;
-        b=Qeof6SncVcYWMgHqAgA0Kt/W5eefjMz8kSRvl0brTaPuSFul2oBqiSEkWKPjoRTxev
-         5iAIydi9tNHPZqmZYB9t6IenLIHTuIkCVTNAWY72WGFQiRMIyfxle1eVsBxieCYIkXRh
-         C6AGG51nxQwwwbCJMYKlZMqSaj+R048QJDADWeXZK0/wnxDDnKYEP3mYtjfigAbvWF0n
-         R+GHUBKz20jp33bhWllA/zlQndkdu5ImkHglVcwJk2krZKYjT5T5jZ75MEZMkeXGBeII
-         EeWpr7fWPseKFrYZQt+URH7TIMFFTevHqVCPepkzrfBM1g+y0Iq0syJGPE9fAUo+3on6
-         e5Vw==
-Received: by 10.100.245.33 with SMTP id s33mr380517anh.4.1335320059251;
-        Tue, 24 Apr 2012 19:14:19 -0700 (PDT)
-Received: by 10.100.245.33 with SMTP id s33mr380507anh.4.1335320059147;
-        Tue, 24 Apr 2012 19:14:19 -0700 (PDT)
+        bh=zb3LuSO6MMzu+xHmpWxnfowLA1iGfTHuWGLvP9gR/iU=;
+        b=i8R3W2tsTs7M7wkAwX0CVewBL6GVnw0tHqd1Uao2ygvdC7lTFOqB5DeKt6Uo36wnFu
+         kxRP9ikAdij8rGkd0yrps0G8t0Tjs/VBaejx7GzfFcPNwRDxFryXhFOci2NYyd2ftRej
+         YsqjQgnQFGQRN8VCYhw+tQKXCFaFiAQuAgcUTNM+k/fTaetk71+abwy0iQQkLzrJ8lg+
+         auv0cKguTxf8E5YupBJq+//KqEFl32TG0hTQaFkYcMD3gvAW4N9hmLR/xXSVSFta/o2k
+         ins1ZFrRjuFcsEEsYdpyV+W3O8DrpLp69/r6LM8hMyUgAITES0AIlIw1+3YsFZ0OfxVv
+         mYFQ==
+Received: by 10.100.245.28 with SMTP id s28mr377414anh.6.1335320075717;
+        Tue, 24 Apr 2012 19:14:35 -0700 (PDT)
+Received: by 10.100.245.28 with SMTP id s28mr377395anh.6.1335320075571;
+        Tue, 24 Apr 2012 19:14:35 -0700 (PDT)
 Received: from wpzn3.hot.corp.google.com (216-239-44-65.google.com [216.239.44.65])
-        by gmr-mx.google.com with ESMTPS id z48si20054235yhn.7.2012.04.24.19.14.19
+        by gmr-mx.google.com with ESMTPS id j51si20066428yhi.1.2012.04.24.19.14.35
         (version=TLSv1/SSLv3 cipher=AES128-SHA);
-        Tue, 24 Apr 2012 19:14:19 -0700 (PDT)
+        Tue, 24 Apr 2012 19:14:35 -0700 (PDT)
 Received: from junio.mtv.corp.google.com (junio.mtv.corp.google.com [172.27.69.24])
-	by wpzn3.hot.corp.google.com (Postfix) with ESMTP id 0F93C10005D;
-	Tue, 24 Apr 2012 19:14:19 -0700 (PDT)
+	by wpzn3.hot.corp.google.com (Postfix) with ESMTP id 76A3010005D;
+	Tue, 24 Apr 2012 19:14:35 -0700 (PDT)
 Received: by junio.mtv.corp.google.com (Postfix, from userid 110493)
-	id AD3CBE125C; Tue, 24 Apr 2012 19:14:18 -0700 (PDT)
-In-Reply-To: <xmqq8vhmhzpk.fsf@junio.mtv.corp.google.com> (Junio C. Hamano's
-	message of "Mon, 23 Apr 2012 15:04:39 -0700")
+	id 2A1F7E1756; Tue, 24 Apr 2012 19:14:35 -0700 (PDT)
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1 (gnu/linux)
-X-Gm-Message-State: ALoCoQkxTXfutztrWnGggSQkahjoGPGoZQvBP3d1JWqKR2BlxCP5A3Ly0dOPFpwkt3XIMwSJRGW97/VuzPa18ho5xuIbUNSgKdi7Su3viNOS3pVUiCv2RvCj3NawNHPsODPMJg6BabWTljv+9dt8CaUUu7GwHjQPhgkNayI5oG3ne01X1/ObkP4=
+X-Gm-Message-State: ALoCoQnwEh9nHn8duupK5rcCXXmX+IYqOOMT/gcaeSYXT4e5ydNx6Ox7qoLaBcHFU/M8yQl/DZRO2mqTzwNEjHh7ivirAbMGXuQgUKYwTz63yI4LZD3d2TD/Z+VY09iGzDCB5QDcKdGDAobHX9ypx45LBL3P1NqU+FgatwcnkD46CWeR30hYc1Y=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196295>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196296>
 
-I've merged the following topics to 'next':
+Matthieu Moy <Matthieu.Moy@imag.fr> writes:
 
-  * tr/xdiff-fast-hash (2012-04-09) 1 commit
-  * cb/daemon-test-race-fix (2012-04-19) 1 commit
-  * ld/git-p4-tags-and-labels (2012-04-24) 6 commits
-  * nh/empty-rebase (2012-04-24) 4 commits
-  * pw/t5800-import-race-fix (2012-04-24) 1 commit
-  * nd/i18n (2012-04-24) 10 commits
+> diff --git a/builtin/push.c b/builtin/push.c
+> index 6936713..8e663db 100644
+> --- a/builtin/push.c
+> +++ b/builtin/push.c
+> @@ -76,7 +76,43 @@ static int push_url_of_remote(struct remote *remote, const char ***url_p)
+>  	return remote->url_nr;
+>  }
+>  
+> -static void setup_push_upstream(struct remote *remote)
+> +static NORETURN int die_push_simple(struct branch *branch, struct remote *remote) {
+> +	/*
+> +	 * There's no point in using shorten_unambiguous_ref here,
+> +	 * as the ambiguity would be on the remote side, not what
+> +	 * we have locally. Plus, this is supposed to be the simple
+> +	 * mode. If the user is doing something crazy like setting
+> +	 * upstream to a non-branch, we should probably be showing
+> +	 * them the big ugly fully qualified ref.
+> +	 */
+> +	const char *short_upstream =
+> +		skip_prefix(branch->merge[0]->src, "refs/heads/");
+> +	if (!short_upstream)
+> +		short_upstream = branch->merge[0]->src;
+> +	/*
+> +	 * Don't show advice for people who explicitely set
+> +	 * push.default.
+> +	 */
+> +	const char *advice_maybe = "";
 
-Some of them are scary and somewhat iffy (I had to apply a last minute
-fix and rebuild 'next' to one of them), so please test them throughly to
-help us avoid breakages on 'master'.
+I've amended this to avoid decl-after-stmt.
 
-On the 'master' front, these have graduated:
-
-  * cc/fix-missing-va-end-in-revert (2012-04-21) 1 commit
-  * fc/completion-tests (2012-04-21) 7 commits
-  * hv/submodule-recurse-push (2012-03-30) 3 commits
-  * it/fetch-pack-many-refs (2012-04-10) 4 commits
-  * mh/ref-api (2012-04-10) 13 commits
-  * mk/gitweb-diff-hl (2012-04-11) 8 commits
-  * pw/fast-import-dataref-parsing (2012-04-10) 1 commit
-  * zj/upstream-error-message (2012-04-15) 5 commits
+I think the series is ready for 'next' but I'll wait for a few days or
+until I see acks from trusted others, whichever comes sooner.
 
 Thanks.
