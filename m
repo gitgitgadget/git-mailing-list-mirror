@@ -1,72 +1,64 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH 03/10] i18n: mark relative dates for translation
-Date: Wed, 25 Apr 2012 13:07:16 +0200
-Message-ID: <4F97DAE4.4070706@viscovery.net>
-References: <1335184230-8870-1-git-send-email-pclouds@gmail.com> <1335184230-8870-4-git-send-email-pclouds@gmail.com> <xmqqd36wgam5.fsf@junio.mtv.corp.google.com> <CACsJy8Ae_9wEoNmP81Gqu5kOMGrEKSN9PMvoRXbKh8TnwGVt0A@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: Possible segfault introduced in commit.c
+Date: Wed, 25 Apr 2012 07:14:35 -0400
+Message-ID: <20120425111435.GA21579@sigill.intra.peff.net>
+References: <CANV9Rr_ev+34Wd030cps0UbgjRYD0=L2DQhbrCOkBVWG-2xaug@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Jonathan Niedier <jrnieder@gmail.com>,
-	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
-	Jiang Xin <worldhello.net@gmail.com>,
-	=?UTF-8?B?WmJpZ25pZXcgSsSZZHJ6ZWpld3NraS1Tem1law==?= 
-	<zbyszek@in.waw.pl>
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 25 13:07:27 2012
+Content-Type: text/plain; charset=utf-8
+Cc: =?utf-8?B?UmVuw6k=?= Scharfe <rene.scharfe@lsrfire.ath.cx>,
+	git@vger.kernel.org
+To: Michael Mueller <mmueller@vigilantsw.com>
+X-From: git-owner@vger.kernel.org Wed Apr 25 13:14:49 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SN04F-0006j4-B6
-	for gcvg-git-2@plane.gmane.org; Wed, 25 Apr 2012 13:07:27 +0200
+	id 1SN0BN-0004n9-6p
+	for gcvg-git-2@plane.gmane.org; Wed, 25 Apr 2012 13:14:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758296Ab2DYLHW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Apr 2012 07:07:22 -0400
-Received: from lilzmailso02.liwest.at ([212.33.55.13]:46534 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1758172Ab2DYLHW (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Apr 2012 07:07:22 -0400
-Received: from cpe228-254-static.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.76)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1SN045-0003RS-IL; Wed, 25 Apr 2012 13:07:17 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id 1A2FC1660F;
-	Wed, 25 Apr 2012 13:07:16 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:11.0) Gecko/20120327 Thunderbird/11.0.1
-In-Reply-To: <CACsJy8Ae_9wEoNmP81Gqu5kOMGrEKSN9PMvoRXbKh8TnwGVt0A@mail.gmail.com>
-X-Spam-Score: -1.4 (-)
+	id S1758150Ab2DYLOo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Apr 2012 07:14:44 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:44536
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754596Ab2DYLOn (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Apr 2012 07:14:43 -0400
+Received: (qmail 32671 invoked by uid 107); 25 Apr 2012 11:14:55 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 25 Apr 2012 07:14:55 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 25 Apr 2012 07:14:35 -0400
+Content-Disposition: inline
+In-Reply-To: <CANV9Rr_ev+34Wd030cps0UbgjRYD0=L2DQhbrCOkBVWG-2xaug@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196306>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196307>
 
-Am 4/25/2012 12:46, schrieb Nguyen Thai Ngoc Duy:
-> 2012/4/25 Junio C Hamano <gitster@pobox.com>:
->>>       /* Give years and months for 5 years or so */
->>>       if (diff < 1825) {
->>> ...
->>>       }
->>>       /* Otherwise, just years. Centuries is probably overkill. */
->>> -     snprintf(timebuf, timebuf_size, "%lu years ago", (diff + 183) / 365);
->>> -     return timebuf;
->>> +     strbuf_addf(timebuf,
->>> +              Q_("%lu year ago", "%lu years ago", (diff + 183) / 365),
->>> +              (diff + 183) / 365);
->>>  }
->>
->> This is just a tangent, but could we possibly come here and say "1 year
->> ago"?
+On Wed, Apr 25, 2012 at 12:59:28AM -0700, Michael Mueller wrote:
+
+> As you might already know, we analyze git regularly with Sentry (our
+> static analysis tool).  Today it picked up a new NULL pointer
+> dereference in commit.c:366:
 > 
-> Nice catch. Singular form here is unnecessary. If you plan to revert
-> that, please put a comment so nobody will attempt to convert it to
-> Q_() again next time while searching for possible candidates.
+>     void commit_list_reverse(struct commit_list **list_p)
+>     {
+>         struct commit_list *prev = NULL, *curr = *list_p, *next;
+> 
+>         if (!list_p)
+>             return;
+>         /* function continues... */
+>     }
+> 
+> list_p is dereferenced on the first line, then tested for NULL on
+> the very next statement.  If it's possible that list_p is NULL, this
+> will be a segfault.  If it can't be NULL, then the check is
+> unnecessary (and probably misleading).
 
-I am sure that there are languages (Russian? Polish?) where a variation is
-needed not only for the singular, but also for plural depending on the
-number, so we still want to have this wrapped in Q_().
+Yes, you're right. There is only one caller currently, and it can never
+be NULL (it passes the address-of a pointer variable). I think dropping
+the NULL-check is the right thing; even an empty list will still have a
+pointer to its NULL head.
 
--- Hannes
+-Peff
