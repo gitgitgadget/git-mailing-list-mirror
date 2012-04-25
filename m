@@ -1,84 +1,85 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 03/10] i18n: mark relative dates for translation
-Date: Wed, 25 Apr 2012 10:25:58 -0500
-Message-ID: <20120425152558.GC31026@burratino>
-References: <1335184230-8870-1-git-send-email-pclouds@gmail.com>
- <1335184230-8870-4-git-send-email-pclouds@gmail.com>
- <xmqqd36wgam5.fsf@junio.mtv.corp.google.com>
- <CACsJy8Ae_9wEoNmP81Gqu5kOMGrEKSN9PMvoRXbKh8TnwGVt0A@mail.gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH v2] config: allow ~/ and ~user/ in include.path value
+Date: Wed, 25 Apr 2012 17:53:47 +0200
+Message-ID: <vpqehrbolis.fsf@bauges.imag.fr>
+References: <1335265689-2270-1-git-send-email-Matthieu.Moy@imag.fr>
+	<1335292396-8502-1-git-send-email-Matthieu.Moy@imag.fr>
+	<20120425120036.GB21579@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
-	Jiang Xin <worldhello.net@gmail.com>,
-	Zbigniew =?utf-8?Q?J=C4=99drzejewski-Szmek?= <zbyszek@in.waw.pl>
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 25 17:26:35 2012
+Content-Type: text/plain
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Apr 25 17:56:09 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SN46x-0006Pi-0z
-	for gcvg-git-2@plane.gmane.org; Wed, 25 Apr 2012 17:26:31 +0200
+	id 1SN4Za-0000EU-Kg
+	for gcvg-git-2@plane.gmane.org; Wed, 25 Apr 2012 17:56:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754098Ab2DYP0Z convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 25 Apr 2012 11:26:25 -0400
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:34681 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753938Ab2DYP0Y convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 25 Apr 2012 11:26:24 -0400
-Received: by yhmm54 with SMTP id m54so200921yhm.19
-        for <git@vger.kernel.org>; Wed, 25 Apr 2012 08:26:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=NDMHfTMB87f4olUvmyq4dQNJ6Cs1prg1RPXG238YNwE=;
-        b=y0KKzybor2xZltKTyKnlIHWBxcvSDKvWKjvWbeeCBzBemnPok7TfkEmyZX1dmJZJAV
-         bw+twD6ZMwbRDD9+knGsw11q3tjlRTz7kQcndbiDB3segxd63w97J/WVKsRMGc5KjTZ5
-         1rj4c4SEisS+ktVcTcvgb81keQZTtKS+++ZzVUwEswoqjZENVMAAnZV75KHFU5KB0TlL
-         N+Crcjp4Wnq9epRDOm7uvxDQA13q1rLom3yPrDl0UZ5uO+rubYLXOUEVW3rXhE/P3c0p
-         mQibOwMMD6+O0ebrpiNstm6S1+Dy0HvPl+q0YK3YOZfrOy8FNHnYDCe/0u1K+bas5hCz
-         OwtQ==
-Received: by 10.60.4.170 with SMTP id l10mr3869051oel.67.1335367584045;
-        Wed, 25 Apr 2012 08:26:24 -0700 (PDT)
-Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
-        by mx.google.com with ESMTPS id w4sm19810803oeg.12.2012.04.25.08.26.03
-        (version=SSLv3 cipher=OTHER);
-        Wed, 25 Apr 2012 08:26:03 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <CACsJy8Ae_9wEoNmP81Gqu5kOMGrEKSN9PMvoRXbKh8TnwGVt0A@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1755569Ab2DYP4B (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Apr 2012 11:56:01 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:36285 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755117Ab2DYP4A (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Apr 2012 11:56:00 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id q3PFlGGq019956
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Wed, 25 Apr 2012 17:47:17 +0200
+Received: from bauges.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1SN4XM-00062X-NE; Wed, 25 Apr 2012 17:53:48 +0200
+In-Reply-To: <20120425120036.GB21579@sigill.intra.peff.net> (Jeff King's
+	message of "Wed, 25 Apr 2012 08:00:36 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.93 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Wed, 25 Apr 2012 17:47:20 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: q3PFlGGq019956
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1335973640.99454@olLkIJK+Bzy0G4Cvb3PAUQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196318>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196319>
 
-Nguyen Thai Ngoc Duy wrote:
-> 2012/4/25 Junio C Hamano <gitster@pobox.com>:
+Jeff King <peff@peff.net> writes:
 
->>> + =C2=A0 =C2=A0 strbuf_addf(timebuf,
->>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0Q_("%lu year ago"=
-, "%lu years ago", (diff + 183) / 365),
->>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0(diff + 183) / 36=
-5);
->>> =C2=A0}
->>
->> This is just a tangent, but could we possibly come here and say "1 y=
-ear
->> ago"?
->
-> Nice catch. Singular form here is unnecessary.
+>  Documentation/config.txt  |    5 ++++-
+>  t/t1305-config-include.sh |    8 ++++++++
 
-I think Junio meant
+Nice, thanks.
 
-			Q_("1 year ago", "%lu years ago", ...)
+> --- a/config.c
+> +++ b/config.c
+> @@ -37,6 +37,11 @@ static int handle_path_include(const char *path, struct config_include_data *inc
+>  {
+>  	int ret = 0;
+>  	struct strbuf buf = STRBUF_INIT;
+> +	char *expanded = expand_user_path(path);
+> +
+> +	if (!expanded)
+> +		return error("Could not expand include path '%s'", path);
+> +	path = expanded;
+>  
+>  	/*
+>  	 * Use an absolute path as-is, but interpret relative paths
+> @@ -63,6 +68,7 @@ static int handle_path_include(const char *path, struct config_include_data *inc
+>  		inc->depth--;
+>  	}
+>  	strbuf_release(&buf);
+> +	free(expanded);
 
-That sound reasonable to me.  My only worry is a small one: what
-happens if we want to change the %lu to some other format specifier
-some day?  Will xgettext be smart enough to let translators know
-without the msgid changing?
+Clearly better than my version.
+
+Acked-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
