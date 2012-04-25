@@ -1,86 +1,72 @@
-From: Mathieu Boespflug <mboes@tweag.net>
-Subject: git rebase interactive does not respect merge options
-Date: Wed, 25 Apr 2012 12:53:10 -0400
-Message-ID: <20120425165310.GA4806@santiago>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 03/10] i18n: mark relative dates for translation
+Date: Wed, 25 Apr 2012 12:26:05 -0500
+Message-ID: <20120425172605.GA2578@burratino>
+References: <1335184230-8870-1-git-send-email-pclouds@gmail.com>
+ <1335184230-8870-4-git-send-email-pclouds@gmail.com>
+ <xmqqd36wgam5.fsf@junio.mtv.corp.google.com>
+ <CACsJy8Ae_9wEoNmP81Gqu5kOMGrEKSN9PMvoRXbKh8TnwGVt0A@mail.gmail.com>
+ <20120425152558.GC31026@burratino>
+ <xmqqzk9zdbf7.fsf@junio.mtv.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 25 18:54:04 2012
+Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>, git@vger.kernel.org,
+	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+	Jiang Xin <worldhello.net@gmail.com>,
+	Zbigniew =?utf-8?Q?J=C4=99drzejewski-Szmek?= <zbyszek@in.waw.pl>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Apr 25 19:26:36 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SN5Ta-0003BN-FW
-	for gcvg-git-2@plane.gmane.org; Wed, 25 Apr 2012 18:53:58 +0200
+	id 1SN5z8-0006jy-54
+	for gcvg-git-2@plane.gmane.org; Wed, 25 Apr 2012 19:26:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755647Ab2DYQxx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Apr 2012 12:53:53 -0400
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:60843 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755564Ab2DYQxw (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Apr 2012 12:53:52 -0400
-Received: by yhmm54 with SMTP id m54so293109yhm.19
-        for <git@vger.kernel.org>; Wed, 25 Apr 2012 09:53:52 -0700 (PDT)
-Received: by 10.50.45.133 with SMTP id n5mr3503037igm.34.1335372832144;
-        Wed, 25 Apr 2012 09:53:52 -0700 (PDT)
-Received: from santiago ([216.252.87.5])
-        by mx.google.com with ESMTPS id i7sm20707471igq.11.2012.04.25.09.53.49
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 25 Apr 2012 09:53:50 -0700 (PDT)
+	id S1755487Ab2DYR02 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Apr 2012 13:26:28 -0400
+Received: from mail-ob0-f174.google.com ([209.85.214.174]:33357 "EHLO
+	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752620Ab2DYR01 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Apr 2012 13:26:27 -0400
+Received: by obbta14 with SMTP id ta14so345080obb.19
+        for <git@vger.kernel.org>; Wed, 25 Apr 2012 10:26:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=WPfEJREdYxiUS/RjXhiCioOcmU0h20AaO5xdnl3I2/o=;
+        b=sx0/LDRTWJRRbLHnUvshZH1/LwBffjLxCTajA74lNIsxI2fdm7LeF5GW3ugmxSjSLF
+         UFyvgAm284LuMmaXX0/bhOzetswmWdZ8z9f6woVMITlYaZSM1kXMYqU6xDMzMW4ECEIM
+         R2/EXT3ozHKaDiPvavMBoeUXt5iaSJtFiRmH0yLSfibsP1ZOgeci+fbUhQprZvDgIirg
+         FwKED0MvvmtCk6PstfD6gknk1G05udBrGIjEW1h0+N9d9Lm4vC3Dx6dahXNmb7Xki4y4
+         HovCX+ebfTpJF457VR8iwkDhs+J+UUEqianwvdItBpLi3KMxz1FCM8yLd7uBElAqDdZY
+         8RIg==
+Received: by 10.182.113.106 with SMTP id ix10mr4376712obb.26.1335374786585;
+        Wed, 25 Apr 2012 10:26:26 -0700 (PDT)
+Received: from burratino ([64.107.3.126])
+        by mx.google.com with ESMTPS id w4sm321652oeg.12.2012.04.25.10.26.14
+        (version=SSLv3 cipher=OTHER);
+        Wed, 25 Apr 2012 10:26:16 -0700 (PDT)
 Content-Disposition: inline
+In-Reply-To: <xmqqzk9zdbf7.fsf@junio.mtv.corp.google.com>
 User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196322>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196323>
 
-Hi,
+Junio C Hamano wrote:
 
-I have the following issue with git rebase -i: it does not seem to
-respect any merge options that I pass it.
+>                               what I meant was that diff will be so
+> large that this will always be feeding more than 1 to %lu, so the first
+> template string will never be used.
+>
+> But it cannot be N_("%lu years ago", number), as others correctly
+> pointed out.  We want to use ngettext() here, because it is not enough
+> to know that number is always greater than 1 to correctly phrase this in
+> some languages.
 
-Say I'm in the following scenario. I made a bunch of commits in master,
-and I would like to interactively rebase these commits on top of
-origin/master. Say I want to drop a few commits that introduced only
-whitespace changes. Dropping these commits might cause conflicts during
-rebasing of later commits, because these later commits might affect the
-same lines than the ones that were affected by the whitespace change.
-Now, to avoid having to resolve these conflicts by hand, I would expect
-to be able to
-
-$ git rebase -X ignore-space-change -i origin/master
-
-According to git-rebase(1), passing -X implies --merge and
---strategy=recursive. But these flags seem to be ignored, even if
-passed explicitly. Likewise, if I specify
-
-$ git rebase -X ours -i origin/master
-
-or
-
-$ git rebase -X theirs -i origin/master
-
-I still get conflicts, which I have to resolve by hand. Passing -p makes
-no difference either.
-
-A cursory look through the source of /usr/lib/git-core/git-rebase
-suggests to me git-rebase forks to either git-rebase--merge or
-git-rebase--interactive to do much of the work, the two being mutually
-exclusive. If this is the case, shouldn't the documentation at least
-reflect that one has to pass either --interactive or --merge on the
-command line, but the two together won't work?
-
-I submit, however, that being able to specify a merge strategy during
-interactive rebasing is terribly useful. Not being able to do means that
-to drop commits without having to resolve conflicts by hand I have to do
-split my rebasing into chunks of non-interactive
-
-$ git rebase -s <strategy> -X <strategy-option> --onto <newbase> <upstream>
-
-... which is significantly more cumbersome.
-
-Thanks,
-
--- Mathieu
+Ah, I see now.  Thanks for a patient explanation.
