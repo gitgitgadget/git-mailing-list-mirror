@@ -1,75 +1,85 @@
-From: Pete Wyckoff <pw@padd.com>
-Subject: Re: [PATCHv3 0/4] git p4: label import/export
-Date: Wed, 25 Apr 2012 18:22:05 -0400
-Message-ID: <20120425222205.GA1753@padd.com>
-References: <1335254897-15242-1-git-send-email-luke@diamand.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 10/10] i18n: bundle: mark strings for translation
+Date: Wed, 25 Apr 2012 15:43:41 -0700
+Message-ID: <xmqqipgnbffm.fsf@junio.mtv.corp.google.com>
+References: <1335184230-8870-1-git-send-email-pclouds@gmail.com>
+	<1335184230-8870-11-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Vitor Antunes <vitor.hda@gmail.com>
-To: Luke Diamand <luke@diamand.org>
-X-From: git-owner@vger.kernel.org Thu Apr 26 00:22:21 2012
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Jonathan Niedier <jrnieder@gmail.com>,
+	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
+	Jiang Xin <worldhello.net@gmail.com>,
+	Zbigniew =?utf-8?Q?J=C4=99drzejewski-Szmek?= <zbyszek@in.waw.pl>
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Apr 26 00:43:53 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SNAbK-0006L1-Er
-	for gcvg-git-2@plane.gmane.org; Thu, 26 Apr 2012 00:22:18 +0200
+	id 1SNAw8-0006es-Cy
+	for gcvg-git-2@plane.gmane.org; Thu, 26 Apr 2012 00:43:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759259Ab2DYWWK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Apr 2012 18:22:10 -0400
-Received: from honk.padd.com ([74.3.171.149]:59019 "EHLO honk.padd.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1759097Ab2DYWWJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Apr 2012 18:22:09 -0400
-Received: from arf.padd.com (unknown [50.55.155.59])
-	by honk.padd.com (Postfix) with ESMTPSA id 5F68B1F80;
-	Wed, 25 Apr 2012 15:22:08 -0700 (PDT)
-Received: by arf.padd.com (Postfix, from userid 7770)
-	id D5FC65A9BF; Wed, 25 Apr 2012 18:22:05 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <1335254897-15242-1-git-send-email-luke@diamand.org>
+	id S932354Ab2DYWnn convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 25 Apr 2012 18:43:43 -0400
+Received: from mail-qc0-f202.google.com ([209.85.216.202]:60832 "EHLO
+	mail-qc0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932274Ab2DYWnn convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 25 Apr 2012 18:43:43 -0400
+Received: by qcsp5 with SMTP id p5so83894qcs.1
+        for <git@vger.kernel.org>; Wed, 25 Apr 2012 15:43:42 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type:content-transfer-encoding
+         :x-gm-message-state;
+        bh=J8VVukRyppvpfgl/gfaVKGQcfqKPNMy39fsviCA+aD4=;
+        b=EtgvEI3fiIAq/1SEigS2PSYHAbOfxUMGFjLJyXFI5VIPqTrPbO/FO6Wa99SZSwzXaE
+         AmvBIRzy+WOXTwLqyyfZlxuSGLgYnU+gp8XedD2RS2n20/o3ESEkGkWNcc0ah7Y6XtSz
+         cTEb2HanOg8eyi8ewOXAbofZEPSjZEWqZbZspoVGQdQid4DvhaKI4DYK+LQmo5usEBFL
+         1J6Lim4EPNOjp5TxAwR6ChXnQLWsMOCorck1yBB/jlB4tBYPFkQ4zFPFLEJ8IBlG+g15
+         TbcigDPvPMZgEyfA08tiT7EIkcGNzXp6B2+C4d509TX2Kv3kQWV+Xjou8rTINxwq+SEW
+         kGaA==
+Received: by 10.236.153.5 with SMTP id e5mr5524937yhk.5.1335393822251;
+        Wed, 25 Apr 2012 15:43:42 -0700 (PDT)
+Received: by 10.236.153.5 with SMTP id e5mr5524907yhk.5.1335393822164;
+        Wed, 25 Apr 2012 15:43:42 -0700 (PDT)
+Received: from wpzn4.hot.corp.google.com (216-239-44-65.google.com [216.239.44.65])
+        by gmr-mx.google.com with ESMTPS id b69si1056336yhe.0.2012.04.25.15.43.42
+        (version=TLSv1/SSLv3 cipher=AES128-SHA);
+        Wed, 25 Apr 2012 15:43:42 -0700 (PDT)
+Received: from junio.mtv.corp.google.com (junio.mtv.corp.google.com [172.27.69.24])
+	by wpzn4.hot.corp.google.com (Postfix) with ESMTP id 12BE21E077E;
+	Wed, 25 Apr 2012 15:43:42 -0700 (PDT)
+Received: by junio.mtv.corp.google.com (Postfix, from userid 110493)
+	id B5C93E125C; Wed, 25 Apr 2012 15:43:41 -0700 (PDT)
+In-Reply-To: <1335184230-8870-11-git-send-email-pclouds@gmail.com>
+ (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Mon, 23
+ Apr 2012 19:30:30 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1 (gnu/linux)
+X-Gm-Message-State: ALoCoQn9AkAmyJvpSqTnYmFYb372ZigQEPYXiobp7qYGvPfBN9Kez2/32fIFDJrFCiyW1c+/oz2L+HxAhcFBtwxYrmhXds4uanFb/DUqw1gyYanUnNXu3F8+lf3RVt5OYhqwLf4jRd339RN/dwCaQ7B9AMuf21kEtBF20FOCCUhSl67oDFovVrs=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196342>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196343>
 
-luke@diamand.org wrote on Tue, 24 Apr 2012 09:08 +0100:
-> This is a reworked version of my earlier patches for adding
-> improved label import/export support to "git p4", and
-> incorporates comments from Pete Wyckoff and Junio:
-> 
-> Comments from Pete:
-> 
-> * The verbose flag has been hoisted to the Command class.
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
 
-Thanks, this looks great.
+> @@ -283,13 +287,13 @@ int create_bundle(struct bundle_header *header,=
+ const char *path,
+>  	strbuf_release(&buf);
+>  	fclose(rls_fout);
+>  	if (finish_command(&rls))
+> -		return error("rev-list died");
+> +		return error(_("rev-list died"));
+> =20
+>  	/* write references */
+>  	argc =3D setup_revisions(argc, argv, &revs, NULL);
+> =20
+>  	if (argc > 1)
+> -		return error("unrecognized argument: %s'", argv[1]);
+> +		return error(_("unrecognized argument: %s'"), argv[1]);
 
-> * Uses the existing functions to fish out p4 changelist numbers.
-> * Config options renamed to be self-consistent, and regexp
->   now includes lower-case characters.
-> 
-> I have left the tests in t9811 where they are, so that the t9804
-> script can be used solely for "--detect-labels".
-
-Oh, okay.  9804 is about --detect-labels, which still has the
-two-labels-on-same-changelist problem.  9811 is the new stuff,
-and the similar test there works.
-
-Anyway, ack your v4 that is this plus your doc fix.  Thanks,
-
-		-- Pete
-
-> Comments from Junio:
-> 
-> * P4EDITOR is set to the always-true value in the test harness
-> * Treat an empty P4EDITOR the same as an unset P4EDITOR.
-> 
-> There was a discussion about having "git p4" fall back to a default in
-> the same way that "p4" does, but this would change the existing behavior
-> (use git var GIT_EDITOR) and confuse users.
-> 
-> This patch series was reworked against ld/git-p4-tags-and-labels and
-> also has a very small documentation fix.
+This is a problem in the original but we see an unmatched sq here.
