@@ -1,85 +1,70 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH v2] config: allow ~/ and ~user/ in include.path value
-Date: Wed, 25 Apr 2012 17:53:47 +0200
-Message-ID: <vpqehrbolis.fsf@bauges.imag.fr>
-References: <1335265689-2270-1-git-send-email-Matthieu.Moy@imag.fr>
-	<1335292396-8502-1-git-send-email-Matthieu.Moy@imag.fr>
-	<20120425120036.GB21579@sigill.intra.peff.net>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 00/10] i18n relative dates, help, remote, apply,
+ index-pack and bundle
+Date: Wed, 25 Apr 2012 11:11:14 -0500
+Message-ID: <20120425161114.GA32019@burratino>
+References: <1335184230-8870-1-git-send-email-pclouds@gmail.com>
+ <20120424121953.GA25944@do>
+ <xmqqobqggb8e.fsf@junio.mtv.corp.google.com>
+ <CACsJy8AsmvfTLhAKWfijNcuz868L+KvdJuw5CPUj7KDBVKrL8A@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Apr 25 17:56:09 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+	Jiang Xin <worldhello.net@gmail.com>,
+	Zbigniew =?utf-8?Q?J=C4=99drzejewski-Szmek?= <zbyszek@in.waw.pl>
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 25 18:11:36 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SN4Za-0000EU-Kg
-	for gcvg-git-2@plane.gmane.org; Wed, 25 Apr 2012 17:56:07 +0200
+	id 1SN4oY-00065V-Vh
+	for gcvg-git-2@plane.gmane.org; Wed, 25 Apr 2012 18:11:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755569Ab2DYP4B (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Apr 2012 11:56:01 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:36285 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755117Ab2DYP4A (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Apr 2012 11:56:00 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id q3PFlGGq019956
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Wed, 25 Apr 2012 17:47:17 +0200
-Received: from bauges.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1SN4XM-00062X-NE; Wed, 25 Apr 2012 17:53:48 +0200
-In-Reply-To: <20120425120036.GB21579@sigill.intra.peff.net> (Jeff King's
-	message of "Wed, 25 Apr 2012 08:00:36 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.93 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Wed, 25 Apr 2012 17:47:20 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: q3PFlGGq019956
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1335973640.99454@olLkIJK+Bzy0G4Cvb3PAUQ
+	id S1752703Ab2DYQLa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Apr 2012 12:11:30 -0400
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:41498 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752073Ab2DYQL3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Apr 2012 12:11:29 -0400
+Received: by iadi9 with SMTP id i9so255758iad.19
+        for <git@vger.kernel.org>; Wed, 25 Apr 2012 09:11:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=FuGIa99gBwcf8qPHj6/inepi3AqzA8Fc0WPAIgHSEyE=;
+        b=M71tDr5p8IRXANqzyK6oU6u0rHbbfEfnujucXAplWSNi0Gse8QKfH85UoQfx3n898A
+         wEFufCoI80BJUCWk9CueTtgqK+6F7NMZpRvrkRPqpe9/gzXrS4KnPS+DZrMlxJ+MviBy
+         YE2Ui4vKznwt22i/71tRC6BMm1UQrwhF/dqZOWldGxKnFt+a3X0jgEPMz9ADb+P4E0me
+         Q+V5QHPG7MTB5LIuE65nrnExtNZhKzaNYbm1ajwjBa3zPFg0oTLxJvvdjt8kGs0jSBg/
+         yJpqT+9nwELb2DHX9pXEw1evkjjuGqK+MqP/ZWeAoXeQvRqFEGoEeVM72OfMy9linoBK
+         dOTA==
+Received: by 10.43.131.201 with SMTP id hr9mr2984982icc.8.1335370289095;
+        Wed, 25 Apr 2012 09:11:29 -0700 (PDT)
+Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
+        by mx.google.com with ESMTPS id gs4sm259485igc.8.2012.04.25.09.11.21
+        (version=SSLv3 cipher=OTHER);
+        Wed, 25 Apr 2012 09:11:22 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <CACsJy8AsmvfTLhAKWfijNcuz868L+KvdJuw5CPUj7KDBVKrL8A@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196319>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196320>
 
-Jeff King <peff@peff.net> writes:
+Nguyen Thai Ngoc Duy wrote:
 
->  Documentation/config.txt  |    5 ++++-
->  t/t1305-config-include.sh |    8 ++++++++
+> Good. What burned your eyes though? Are you ok with an approach that
+> does not change source code (much) and still marks strings using an
+> external tool?
 
-Nice, thanks.
+I'd like the translated messages to be marked in the source code if
+possible so future coders know to be careful when changing them.
 
-> --- a/config.c
-> +++ b/config.c
-> @@ -37,6 +37,11 @@ static int handle_path_include(const char *path, struct config_include_data *inc
->  {
->  	int ret = 0;
->  	struct strbuf buf = STRBUF_INIT;
-> +	char *expanded = expand_user_path(path);
-> +
-> +	if (!expanded)
-> +		return error("Could not expand include path '%s'", path);
-> +	path = expanded;
->  
->  	/*
->  	 * Use an absolute path as-is, but interpret relative paths
-> @@ -63,6 +68,7 @@ static int handle_path_include(const char *path, struct config_include_data *inc
->  		inc->depth--;
->  	}
->  	strbuf_release(&buf);
-> +	free(expanded);
-
-Clearly better than my version.
-
-Acked-by: Matthieu Moy <Matthieu.Moy@imag.fr>
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+If the change can be made and checked by an automated process, that
+would be great, of course.
