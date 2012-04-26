@@ -1,66 +1,64 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+From: Jeff King <peff@peff.net>
 Subject: Re: [PATCH] docs: stop using asciidoc no-inline-literal
-Date: Thu, 26 Apr 2012 11:09:11 +0200
-Message-ID: <vpqehra97wo.fsf@bauges.imag.fr>
+Date: Thu, 26 Apr 2012 05:13:43 -0400
+Message-ID: <20120426091343.GA16663@sigill.intra.peff.net>
 References: <20120426085156.GB22819@sigill.intra.peff.net>
+ <vpqehra97wo.fsf@bauges.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
 Cc: Junio C Hamano <gitster@pobox.com>,
 	Thomas Rast <trast@student.ethz.ch>,
-	Carlos =?iso-8859-1?Q?Mart=EDn?= Nieto <cmn@elego.de>,
+	Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto <cmn@elego.de>,
 	git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Apr 26 11:10:18 2012
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Thu Apr 26 11:13:59 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SNKiH-000256-4K
-	for gcvg-git-2@plane.gmane.org; Thu, 26 Apr 2012 11:10:09 +0200
+	id 1SNKly-0005iR-HX
+	for gcvg-git-2@plane.gmane.org; Thu, 26 Apr 2012 11:13:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754362Ab2DZJJc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Apr 2012 05:09:32 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:58003 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751827Ab2DZJJb (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Apr 2012 05:09:31 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id q3Q92hIm010617
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Thu, 26 Apr 2012 11:02:43 +0200
-Received: from bauges.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1SNKhM-0002OE-8m; Thu, 26 Apr 2012 11:09:12 +0200
-In-Reply-To: <20120426085156.GB22819@sigill.intra.peff.net> (Jeff King's
-	message of "Thu, 26 Apr 2012 04:51:57 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.93 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Thu, 26 Apr 2012 11:02:44 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: q3Q92hIm010617
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1336035768.58534@xvC9/uxw9bYK71bgAg5F6g
+	id S1754282Ab2DZJNr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Apr 2012 05:13:47 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:45112
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754160Ab2DZJNq (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Apr 2012 05:13:46 -0400
+Received: (qmail 12621 invoked by uid 107); 26 Apr 2012 09:13:59 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 26 Apr 2012 05:13:59 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 26 Apr 2012 05:13:43 -0400
+Content-Disposition: inline
+In-Reply-To: <vpqehra97wo.fsf@bauges.imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196360>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196361>
 
-Jeff King <peff@peff.net> writes:
+On Thu, Apr 26, 2012 at 11:09:11AM +0200, Matthieu Moy wrote:
 
-> The patch is below. I'm slightly nervous because it means topics in
-> flight will need to have their documentation tweaked, too.
+> Jeff King <peff@peff.net> writes:
+> 
+> > The patch is below. I'm slightly nervous because it means topics in
+> > flight will need to have their documentation tweaked, too.
+> 
+> ... or, at worse, they will be broken for a while, and we can grep again
+> the tip of pu after a few weeks to fix them.
 
-... or, at worse, they will be broken for a while, and we can grep again
-the tip of pu after a few weeks to fix them. Plus, the possible breakage
-due to your patch are compensated by the existing breakage you
-fixed ;-). So, I'd say this is a valid concern, but the benefit seem
-clearly greater than the drawbacks.
+Yes. Though having just done that grep, it is quite tedious.  You will
+get many false positives in the existing documentation that do not need
+changed (e.g., stash@{0}, or a literal backslash that is meant to be in
+the output). So I think it will be simpler to just diff Documentation/
+for the new topics and scan them manually (or grep the diff output).
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+> Plus, the possible breakage due to your patch are compensated by the
+> existing breakage you fixed ;-). So, I'd say this is a valid concern,
+> but the benefit seem clearly greater than the drawbacks.
+
+Yeah, that was my conclusion, too.
+
+-Peff
