@@ -1,77 +1,114 @@
-From: Jim Meyering <jim@meyering.net>
-Subject: Re: [PATCH] diff: avoid stack-buffer-read-overrun for very long name
-Date: Thu, 26 Apr 2012 19:26:33 +0200
-Message-ID: <87ehrawgja.fsf@rho.meyering.net>
-References: <87ty0jbt5p.fsf@rho.meyering.net> <20120416222713.GA2396@moj>
-	<87397t862o.fsf@rho.meyering.net>
-	<xmqq1unbd2m5.fsf@junio.mtv.corp.google.com>
-	<87d36uxzfw.fsf@rho.meyering.net>
-	<xmqq62cma2uo.fsf@junio.mtv.corp.google.com>
-	<CAKPyHN1mFGiZd7dDH-stUmr3H1JHwxcP1DkjCYNXZd6Bt-P7+w@mail.gmail.com>
-	<87y5piwjay.fsf@rho.meyering.net>
-	<CAKPyHN2VkBo6OKgbhTNSu-LFwabGkFFKAF595rJuXbhWwdte+g@mail.gmail.com>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH] t5570: forward git-daemon messages in a different way
+Date: Thu, 26 Apr 2012 20:16:37 +0200
+Message-ID: <4F999105.200@kdbg.org>
+References: <1334393070-7123-1-git-send-email-zbyszek@in.waw.pl> <20120414121358.GA26372@ecki> <20120414122127.GA31220@ecki> <4F8C3E0F.2040300@in.waw.pl> <20120416174230.GA19226@sigill.intra.peff.net> <20120416224424.GA10314@ecki> <20120419060326.GA13982@sigill.intra.peff.net> <4F8FB779.60004@viscovery.net> <20120426130129.GA27785@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Marcus Karlsson <mk@acc.umu.se>, git list <git@vger.kernel.org>
-To: Bert Wesarg <bert.wesarg@googlemail.com>
-X-From: git-owner@vger.kernel.org Thu Apr 26 19:27:02 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Clemens Buchacher <drizzd@aon.at>,
+	=?UTF-8?B?WmJpZ25pZXcgSsSZZHJ6ZWpl?= =?UTF-8?B?d3NraS1Tem1law==?= 
+	<zbyszek@in.waw.pl>, git@vger.kernel.org, gitster@pobox.com
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Apr 26 20:16:49 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SNST4-0002JI-K4
-	for gcvg-git-2@plane.gmane.org; Thu, 26 Apr 2012 19:26:58 +0200
+	id 1SNTFI-0004MI-8W
+	for gcvg-git-2@plane.gmane.org; Thu, 26 Apr 2012 20:16:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753850Ab2DZR0o convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 26 Apr 2012 13:26:44 -0400
-Received: from smtp5-g21.free.fr ([212.27.42.5]:50692 "EHLO smtp5-g21.free.fr"
+	id S1758295Ab2DZSQn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Apr 2012 14:16:43 -0400
+Received: from bsmtp.bon.at ([213.33.87.14]:53155 "EHLO bsmtp.bon.at"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752161Ab2DZR0m convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 26 Apr 2012 13:26:42 -0400
-Received: from mx.meyering.net (unknown [88.168.87.75])
-	by smtp5-g21.free.fr (Postfix) with ESMTP id 47405D480BB
-	for <git@vger.kernel.org>; Thu, 26 Apr 2012 19:26:34 +0200 (CEST)
-Received: from rho.meyering.net (localhost.localdomain [127.0.0.1])
-	by rho.meyering.net (Acme Bit-Twister) with ESMTP id AB3D16009F;
-	Thu, 26 Apr 2012 19:26:33 +0200 (CEST)
-In-Reply-To: <CAKPyHN2VkBo6OKgbhTNSu-LFwabGkFFKAF595rJuXbhWwdte+g@mail.gmail.com>
-	(Bert Wesarg's message of "Thu, 26 Apr 2012 18:53:07 +0200")
+	id S1757952Ab2DZSQm (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Apr 2012 14:16:42 -0400
+Received: from dx.sixt.local (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTP id D66CC10010;
+	Thu, 26 Apr 2012 20:12:32 +0200 (CEST)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+	by dx.sixt.local (Postfix) with ESMTP id 6FA6619F6CA;
+	Thu, 26 Apr 2012 20:16:38 +0200 (CEST)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; de; rv:1.9.2.28) Gecko/20120306 SUSE/3.1.20 Thunderbird/3.1.20
+In-Reply-To: <20120426130129.GA27785@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196384>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196385>
 
-Bert Wesarg wrote:
-> On Thu, Apr 26, 2012 at 18:26, Jim Meyering <jim@meyering.net> wrote:
->> Bert Wesarg wrote:
->>> On Thu, Apr 26, 2012 at 18:13, Junio C Hamano <gitster@pobox.com> w=
-rote:
->>>> Jim Meyering <jim@meyering.net> writes:
->>> strbuf_ensure_terminator(struct strbuf* buf, int term, int always)?
+Am 26.04.2012 15:01, schrieb Jeff King:
+> On Thu, Apr 19, 2012 at 08:58:01AM +0200, Johannes Sixt wrote:
+> 
+>>> What? The shell is literally redirecting the cat process's stdin from
+>>> /dev/null. I'm totally confused.
 >>
->> Nice! =A0So far, that's the name I prefer.
->> But why the third parameter?
->
-> See the second part of my reply:
-
-Oh.  I missed that.
-
->>>> ------------------------------------
->>>> builtin/branch.c-     if (!buf.len || buf.buf[buf.len-1] !=3D '\n'=
-)
->>>> builtin/branch.c:             strbuf_addch(&buf, '\n');
->>>> --
->>>> strbuf.h-     if (sb->len && sb->buf[sb->len - 1] !=3D '\n')
->>>> strbuf.h:             strbuf_addch(sb, '\n');
+>> You don't have to be; it's mandated by POSIX:
 >>
->> Please note, that while they are checking the .len, they both behave
->> differently if .len =3D=3D 0 or not.
->> The first always append a '\n', the latter only, if the string isn't=
- empty.
+>> http://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_09_03_02
+> 
+> Sorry for the delayed response.
+> 
+> Thanks for the pointer; I looked in POSIX but couldn't find that
+> passage. It does say "In all cases, explicit redirection of standard
+> input shall override this activity". It looks like dash interprets that
+> as "open /dev/null, then open the redirected stdin". Which leaves a race
+> condition.
 
-Glad you noticed the difference.
-However, is one exception worth complicating the interface?
+I don't see a race condition. The specs are clear: First redirect stdin
+to /dev/null, and if there are other redirections, apply them later.
+But in our code we have only:
+
+	cat >&4 &
+
+i.e., there are no other redirections. It does not matter that the
+whole block where this command occurs is redirected from
+git_daemon_output; that redirection was applied before the command was
+executed, and it was already overridden by the implicit /dev/null
+redirection.
+
+>  So I think a custom wrapper like the one posted by Clemens
+> is our only portable option.
+
+I don't think so. How about this?
+
+diff --git a/t/lib-git-daemon.sh b/t/lib-git-daemon.sh
+index ef2d01f..7245ab3 100644
+--- a/t/lib-git-daemon.sh
++++ b/t/lib-git-daemon.sh
+@@ -30,10 +30,10 @@ start_git_daemon() {
+ 		"$@" "$GIT_DAEMON_DOCUMENT_ROOT_PATH" \
+ 		>&3 2>git_daemon_output &
+ 	GIT_DAEMON_PID=$!
++	exec 7<git_daemon_output &&
+ 	{
+-		read line
++		read line <&7
+ 		echo >&4 "$line"
+-		cat >&4 &
+ 
+ 		# Check expected output
+ 		if test x"$(expr "$line" : "\[[0-9]*\] \(.*\)")" != x"Ready to rumble"
+@@ -43,7 +43,9 @@ start_git_daemon() {
+ 			trap 'die' EXIT
+ 			error "git daemon failed to start"
+ 		fi
+-	} <git_daemon_output
++		cat <&7 >&4 &
++		exec 7<&-
++	}
+ }
+ 
+ stop_git_daemon() {
+
+
+i.e., we open the readable end of the pipe in the shell, and dup
+it from there to 'read' and later to 'cat'. Finally, we can
+close it, because 'cat' has it still open in the background.
+
+This works with dash, bash, and (half-way through) ksh. (The failure
+with ksh is an unrelated problem.)
+
+-- Hannes
