@@ -1,77 +1,80 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Git.pm
-Date: Thu, 26 Apr 2012 12:17:50 -0700
-Message-ID: <xmqqy5pi8fq9.fsf@junio.mtv.corp.google.com>
-References: <CAB3zAY3-Bn86bCr7Rxqi4vxbYFxUesLwm8gddxyMSexov2tOhw@mail.gmail.com>
+Subject: Re: Why aren't tag refs namespaced?
+Date: Thu, 26 Apr 2012 12:24:22 -0700
+Message-ID: <xmqqty068ffd.fsf@junio.mtv.corp.google.com>
+References: <CA+7g9Jxc6eaCUR8aVhqKH--sOrvQVrZn+se7wtFJsOiKNjz9Pg@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git <git@vger.kernel.org>
-To: Subho Banerjee <subs.zero@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Apr 26 21:17:58 2012
+Cc: git@vger.kernel.org
+To: Nathan Gray <n8gray@n8gray.org>
+X-From: git-owner@vger.kernel.org Thu Apr 26 21:24:40 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SNUCU-0007gh-51
-	for gcvg-git-2@plane.gmane.org; Thu, 26 Apr 2012 21:17:58 +0200
+	id 1SNUIo-0005DA-Uh
+	for gcvg-git-2@plane.gmane.org; Thu, 26 Apr 2012 21:24:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754915Ab2DZTRx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Apr 2012 15:17:53 -0400
-Received: from mail-fa0-f74.google.com ([209.85.161.74]:51377 "EHLO
-	mail-fa0-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754230Ab2DZTRw (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Apr 2012 15:17:52 -0400
-Received: by faaa25 with SMTP id a25so1989faa.1
-        for <git@vger.kernel.org>; Thu, 26 Apr 2012 12:17:51 -0700 (PDT)
+	id S1757493Ab2DZTY0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Apr 2012 15:24:26 -0400
+Received: from mail-ey0-f202.google.com ([209.85.215.202]:63588 "EHLO
+	mail-ey0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753007Ab2DZTYZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Apr 2012 15:24:25 -0400
+Received: by eaaq10 with SMTP id q10so74971eaa.1
+        for <git@vger.kernel.org>; Thu, 26 Apr 2012 12:24:23 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version:content-type:x-gm-message-state;
-        bh=qwF++Z13KUMSKLnwA3UgLGc2hy07KLBJ0/8H19rZBHE=;
-        b=LFfah2tgGriKXhvEXZlujHS1yMY+LyqGO6O65kR/v3RlaPhrK0RdBThy9OUlRNeNu8
-         jW+aNFo3WzgxjXzL9ph/mTTlhPUiwec75NVQMHWYaNVyx6T0u5GPP5D9HzGcCd/xH0KT
-         zPBxOVbJFd5Xd8u3/QPxoSQtIdIJ7acxO/t/dI9tTxR9e+lFs3NXNn834MSjEKQH+IkH
-         0lPif3DSMYHDPjApoX8Q8n+aPlz3h4xJSc6xUVeWSwheAUmQEM+LZmphiXGJqvTQKfws
-         1fp91xnc2L87nPd9YL++V0AwevtvgnNW3usqVbmko0KqfKvOUquuzgGL1PFgUSK52Ed2
-         bdPQ==
-Received: by 10.14.127.10 with SMTP id c10mr2413933eei.2.1335467871224;
-        Thu, 26 Apr 2012 12:17:51 -0700 (PDT)
-Received: by 10.14.127.10 with SMTP id c10mr2413922eei.2.1335467871108;
-        Thu, 26 Apr 2012 12:17:51 -0700 (PDT)
+        bh=0MY6dqeYZ1GnQHNw4go0OiOJ38de5TBrs288iXDAQK4=;
+        b=TrLtMZlbI4q5ilUHb6ReGEigcWREkYQfq3V+Hb7t9N8NGbcCnXKSmWQ6Y32dSxupnM
+         y6FnvSQyrfyyzwLVAdRLnp/Y+b4578BkGP9COG+86QHhvTnq+ZC8WJ0Kj/siiy3+jCap
+         FpdRqYL52VvwgWJUEKIA86lpAe3g1g+zwpKKdWEdHtG6I9vlPhAS8Yp8Uw40s8bpJVoQ
+         0D2q1oA0/tRLspFRrT8PdGJyMWJQysHeK8iNe+P8aNE6D4G29TP1Q/uHltR+5DS6zagv
+         f0U7Qobn+lFXf8DGbsRhGmC75yQSo41+44IhadJEE2HFQAOY9BkJQkHuQ04OqZKOjb6F
+         ZRpA==
+Received: by 10.14.29.2 with SMTP id h2mr2418121eea.5.1335468263879;
+        Thu, 26 Apr 2012 12:24:23 -0700 (PDT)
+Received: by 10.14.29.2 with SMTP id h2mr2418108eea.5.1335468263756;
+        Thu, 26 Apr 2012 12:24:23 -0700 (PDT)
 Received: from hpza10.eem.corp.google.com ([74.125.121.33])
-        by gmr-mx.google.com with ESMTPS id y52si3681092eef.2.2012.04.26.12.17.51
+        by gmr-mx.google.com with ESMTPS id t8si3697005eef.1.2012.04.26.12.24.23
         (version=TLSv1/SSLv3 cipher=AES128-SHA);
-        Thu, 26 Apr 2012 12:17:51 -0700 (PDT)
+        Thu, 26 Apr 2012 12:24:23 -0700 (PDT)
 Received: from junio.mtv.corp.google.com (junio.mtv.corp.google.com [172.27.69.24])
-	by hpza10.eem.corp.google.com (Postfix) with ESMTP id E1E9E20004E;
-	Thu, 26 Apr 2012 12:17:50 -0700 (PDT)
+	by hpza10.eem.corp.google.com (Postfix) with ESMTP id 8D56D20004E;
+	Thu, 26 Apr 2012 12:24:23 -0700 (PDT)
 Received: by junio.mtv.corp.google.com (Postfix, from userid 110493)
-	id 31787E125C; Thu, 26 Apr 2012 12:17:50 -0700 (PDT)
-In-Reply-To: <CAB3zAY3-Bn86bCr7Rxqi4vxbYFxUesLwm8gddxyMSexov2tOhw@mail.gmail.com>
-	(Subho Banerjee's message of "Thu, 26 Apr 2012 09:45:09 +0530")
+	id DDC61E125C; Thu, 26 Apr 2012 12:24:22 -0700 (PDT)
+In-Reply-To: <CA+7g9Jxc6eaCUR8aVhqKH--sOrvQVrZn+se7wtFJsOiKNjz9Pg@mail.gmail.com>
+	(Nathan Gray's message of "Thu, 26 Apr 2012 11:40:54 -0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1 (gnu/linux)
-X-Gm-Message-State: ALoCoQmD463IzlxD0OobIQgyjqe49kYfZ+fwLJspUgPs+6pDQWycGnpVTR2uOX9UgXzuis1rYdZV0pRJpPK0PsRrbxjpk9OfMvWnPbT75nke+T3TdxkEecd/qIk+o6yi2stoxVEIavlh6obW5kgc5M2gbkIrd6+Sn2HMnF3WkkfMw0MsZgKaR/0=
+X-Gm-Message-State: ALoCoQlE2E+I86vrQYlAA2YbmTw2ID8Uy+vDEloUz23db7Ba9pi5NYwrUTTpxgaOSoC+8LwrHWMPaWQjoUBeHrvQ5wVaklaRy9XHqjWFIbV5SDMKV8m0Zl2Vtblc4dZYwJzP8+TN36mqOKwwySaxVlHYMmWV1oXQRT3vTL8bYtvn3LUdVkmmp4w=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196394>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196395>
 
-Subho Banerjee <subs.zero@gmail.com> writes:
+Nathan Gray <n8gray@n8gray.org> writes:
 
-> ... If some of you could give
-> me some of your time in terms of advice on what exactly is needed for
-> the module, I am willing to work over the summer to get this module
-> production-ready.
+> So why is it that tag refs don't follow this model?
 
-Well, that sounds as if the module is currently not production ready,
-but it has been used in the wild for quite a long time.
+Because the assumed development model for "people work inside their
+private world (i.e. "branch"), but integration happens in common
+namespace (i.e. somebody eventually pushes to "master branch" of the
+repository that every project participant considers authoritative) and
+the end product of the project is tagged there for everybody's
+consumption.  When something is called "version 1.0", it only invites
+confusion if _my_ Git version 1.0 is different from _your_ Git version
+1.0, and it makes no sense for tags used in this manner not to be in a
+global single namespace.  People need to qualify such "version 1.0" as
+"Junio's version 1.0" vs "Nathan's version 1.0" if they want to avoid
+confusion anyway, and at that point you would not be talking about
+refs/tags/v1.0, but refs/tags/jc/v1.0 vs refs/tags/ng/v1.0 or something.
 
-> I see in the code that it says that the API is experimental. Is
-> there any absolute need for backward compatibility, or can I try to
-> redesign the API somewhat extensively?
-
-Being experimental merely means that we do not support out of tree
-users; it does not mean you are allowed to break it in any way for the
-in-tree users.
+Other workflows that use private tags are possible and they might
+benefit from having separate namespaces; it is just that they are not
+the workflow Git was originally designed to support.
