@@ -1,8 +1,9 @@
 From: Matthijs Kooijman <matthijs@stdin.nl>
-Subject: [PATCH 1/2] git-svn: use platform specific auth providers
-Date: Thu, 26 Apr 2012 21:34:02 +0200
-Message-ID: <1335468843-24653-1-git-send-email-matthijs@stdin.nl>
+Subject: [PATCH 2/2] git-svn: Configure a prompt callback for gnome_keyring.
+Date: Thu, 26 Apr 2012 21:34:03 +0200
+Message-ID: <1335468843-24653-2-git-send-email-matthijs@stdin.nl>
 References: <20120426183634.GA4023@login.drsnuggles.stderr.nl>
+ <1335468843-24653-1-git-send-email-matthijs@stdin.nl>
 Cc: Gustav Munkby <grddev@gmail.com>,
 	Edward Rudd <urkle@outoforder.cc>,
 	Carsten Bormann <cabo@tzi.org>, git@vger.kernel.org,
@@ -14,71 +15,73 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SNV34-0000Ko-QU
+	id 1SNV35-0000Ko-CQ
 	for gcvg-git-2@plane.gmane.org; Thu, 26 Apr 2012 22:12:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758247Ab2DZUML (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Apr 2012 16:12:11 -0400
-Received: from 84-245-11-97.dsl.cambrium.nl ([84.245.11.97]:49353 "EHLO
+	id S1758381Ab2DZUMN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Apr 2012 16:12:13 -0400
+Received: from 84-245-11-97.dsl.cambrium.nl ([84.245.11.97]:49354 "EHLO
 	grubby.stderr.nl" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1758046Ab2DZUMJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Apr 2012 16:12:09 -0400
-X-Greylist: delayed 2254 seconds by postgrey-1.27 at vger.kernel.org; Thu, 26 Apr 2012 16:12:09 EDT
+	with ESMTP id S1758046Ab2DZUML (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Apr 2012 16:12:11 -0400
 Received: from matthijs by grubby.stderr.nl with local (Exim 4.77)
 	(envelope-from <matthijs@stdin.nl>)
-	id 1SNUSQ-0006Q9-ED; Thu, 26 Apr 2012 21:34:26 +0200
+	id 1SNUSR-0006QB-BQ; Thu, 26 Apr 2012 21:34:27 +0200
 X-Mailer: git-send-email 1.7.10
-In-Reply-To: <20120426183634.GA4023@login.drsnuggles.stderr.nl>
+In-Reply-To: <1335468843-24653-1-git-send-email-matthijs@stdin.nl>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196403>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196404>
 
-On Linux, this makes authentication using passwords from gnome-keyring
-and kwallet work (only the former was tested). On Mac OS X, this allows
-using the OS X Keychain.
+This allows git-svn to prompt for a keyring unlock password, when a
+the needed gnome keyring is locked.
+
+This requires changes in the subversion perl bindings which have been
+committed to trunk (1241554 and some followup commits) and should be
+available with the (as of yet unreleased) 1.8.0 release.
 ---
- git-svn.perl |   20 ++++++++++++++++++--
- 1 file changed, 18 insertions(+), 2 deletions(-)
+ git-svn.perl |   20 ++++++++++++++++++++
+ 1 file changed, 20 insertions(+)
 
 diff --git a/git-svn.perl b/git-svn.perl
-index 4334b95..1790d10 100755
+index 1790d10..6565f4a 100755
 --- a/git-svn.perl
 +++ b/git-svn.perl
-@@ -5436,7 +5436,7 @@ BEGIN {
+@@ -4420,6 +4420,11 @@ sub username {
+ 	$SVN::_Core::SVN_NO_ERROR;
  }
  
- sub _auth_providers () {
--	[
-+	my @rv = (
- 	  SVN::Client::get_simple_provider(),
- 	  SVN::Client::get_ssl_server_trust_file_provider(),
- 	  SVN::Client::get_simple_prompt_provider(
-@@ -5452,7 +5452,23 @@ sub _auth_providers () {
- 	    \&Git::SVN::Prompt::ssl_server_trust),
- 	  SVN::Client::get_username_prompt_provider(
- 	    \&Git::SVN::Prompt::username, 2)
--	]
-+	);
++sub gnome_keyring_unlock {
++	my ($keyring, $pool) = @_;
++	_read_password("Password for '$keyring' GNOME keyring: ", undef);
++}
 +
-+	# earlier 1.6.x versions would segfault, and <= 1.5.x didn't have
-+	# this function
-+	if ($SVN::Core::VERSION gt '1.6.12') {
-+		my $config = SVN::Core::config_get_config($config_dir);
-+		my ($p, @a);
-+		# config_get_config returns all config files from
-+		# ~/.subversion, auth_get_platform_specific_client_providers
-+		# just wants the config "file".
-+		@a = ($config->{'config'}, undef);
-+		$p = SVN::Core::auth_get_platform_specific_client_providers(@a);
-+		# Insert the return value from
-+		# auth_get_platform_specific_providers
-+		unshift @rv, @$p;
+ sub _read_password {
+ 	my ($prompt, $realm) = @_;
+ 	my $password = '';
+@@ -5524,6 +5529,21 @@ sub new {
+ 			$Git::SVN::Prompt::_no_auth_cache = 1;
+ 		}
+ 	} # no warnings 'once'
++
++
++	# Allow git-svn to show a prompt for opening up a gnome-keyring, if needed.
++	if (defined(&SVN::Core::auth_set_gnome_keyring_unlock_prompt_func)) {
++		my $keyring_callback = SVN::Core::auth_set_gnome_keyring_unlock_prompt_func(
++			$baton,
++			\&Git::SVN::Prompt::gnome_keyring_unlock
++		);
++		# Keep a reference to this callback, to prevent the function
++		# (reference) from being garbage collected.  We just add it to
++		# the callbacks value, which are also used only to prevent the
++		# garbage collector from eating stuff.
++		$callbacks = [$callbacks, $keyring_callback]
 +	}
-+	\@rv;
- }
- 
- sub escape_uri_only {
++
+ 	my $self = SVN::Ra->new(url => escape_url($url), auth => $baton,
+ 	                      config => $config,
+ 			      pool => SVN::Pool->new,
 -- 
 1.7.10
