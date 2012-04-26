@@ -1,65 +1,72 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2] config: allow ~/ and ~user/ in include.path value
-Date: Thu, 26 Apr 2012 02:19:23 -0400
-Message-ID: <20120426061923.GA22819@sigill.intra.peff.net>
-References: <1335265689-2270-1-git-send-email-Matthieu.Moy@imag.fr>
- <1335292396-8502-1-git-send-email-Matthieu.Moy@imag.fr>
- <20120425120036.GB21579@sigill.intra.peff.net>
- <xmqqwr53bmc7.fsf@junio.mtv.corp.google.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH] t5541: warning message is given even with --quiet
+Date: Thu, 26 Apr 2012 08:31:11 +0200
+Message-ID: <vpqpqavf1hs.fsf@bauges.imag.fr>
+References: <vpqaa27bgon.fsf@bauges.imag.fr>
+	<1334876234-20077-1-git-send-email-Matthieu.Moy@imag.fr>
+	<1334876234-20077-4-git-send-email-Matthieu.Moy@imag.fr>
+	<xmqqpqav9hdl.fsf_-_@junio.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Matthieu Moy <Matthieu.Moy@imag.fr>, git@vger.kernel.org
+Content-Type: text/plain
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Michael Haggerty <mhagger@alum.mit.edu>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Apr 26 08:19:54 2012
+X-From: git-owner@vger.kernel.org Thu Apr 26 08:31:41 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SNI3T-0000y1-M0
-	for gcvg-git-2@plane.gmane.org; Thu, 26 Apr 2012 08:19:52 +0200
+	id 1SNIEn-0001xr-Hi
+	for gcvg-git-2@plane.gmane.org; Thu, 26 Apr 2012 08:31:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752473Ab2DZGTq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Apr 2012 02:19:46 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:45013
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751740Ab2DZGTp (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Apr 2012 02:19:45 -0400
-Received: (qmail 11108 invoked by uid 107); 26 Apr 2012 06:19:38 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 26 Apr 2012 02:19:38 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 26 Apr 2012 02:19:23 -0400
-Content-Disposition: inline
-In-Reply-To: <xmqqwr53bmc7.fsf@junio.mtv.corp.google.com>
+	id S1753848Ab2DZGb2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Apr 2012 02:31:28 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:34515 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753750Ab2DZGb2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Apr 2012 02:31:28 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id q3Q6Oiav014809
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Thu, 26 Apr 2012 08:24:44 +0200
+Received: from bauges.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1SNIES-0005R8-Eq; Thu, 26 Apr 2012 08:31:12 +0200
+In-Reply-To: <xmqqpqav9hdl.fsf_-_@junio.mtv.corp.google.com> (Junio C.
+	Hamano's message of "Wed, 25 Apr 2012 22:44:38 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.93 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Thu, 26 Apr 2012 08:24:45 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: q3Q6Oiav014809
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1336026289.16325@WS9yPIsr5N7FGUxy+zlHkQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196354>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196355>
 
-On Wed, Apr 25, 2012 at 01:14:32PM -0700, Junio C Hamano wrote:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> > +found. The value of `include.path` is subject to tilde expansion: `~/`
-> > +is expanded to the value of `$HOME`, and `~user/` to the specified
-> > +user's home directory. See below for examples.
-> >  
-> >  Example
-> >  ~~~~~~~
-> > @@ -122,6 +124,7 @@ Example
-> >  	[include]
-> >  		path = /path/to/foo.inc ; include by absolute path
-> >  		path = foo ; expand "foo" relative to the current file
-> > +		path = ~/foo ; expand "foo" in your $HOME directory
-> 
-> Modulo s/~/{tilde}/ in the body text (but not in the displayed example),
-> looked good to me, so I queued with two amends.
+> On one hand, --quiet is a request to be "quiet", but on the other hand,
+> this warning is meant to be shown in the face in large flashing red
+> letters no matter what the user says, so...
 
-Thanks, I forgot about that.
+I'd say it's OK to show the warning with --quiet. Users will normally
+set the config option in ~/.gitconfig and forget about it, both in
+interactive use and in scripts.
 
-I'd like to eventually stop building the documentation with
-no-inline-literal. It was an asciidoc7 compatibility thing, but we can
-probably drop that now. However, I suspect that would require us to
-simultaneously convert all of the `{tilde}` uses back into `~`.
+So,
 
--Peff
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+
+Acked-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
