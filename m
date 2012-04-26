@@ -1,60 +1,57 @@
-From: Marc Branchaud <marcnarc@xiplink.com>
-Subject: Re: Why aren't tag refs namespaced?
-Date: Thu, 26 Apr 2012 16:06:36 -0400
-Message-ID: <4F99AACC.2050409@xiplink.com>
-References: <CA+7g9Jxc6eaCUR8aVhqKH--sOrvQVrZn+se7wtFJsOiKNjz9Pg@mail.gmail.com>
+From: Sam Vilain <sam@vilain.net>
+Subject: Re: Git.pm
+Date: Thu, 26 Apr 2012 12:59:27 -0700
+Message-ID: <4F99A91F.3050307@vilain.net>
+References: <CAB3zAY3-Bn86bCr7Rxqi4vxbYFxUesLwm8gddxyMSexov2tOhw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Nathan Gray <n8gray@n8gray.org>
-X-From: git-owner@vger.kernel.org Thu Apr 26 22:05:42 2012
+Cc: git <git@vger.kernel.org>
+To: Subho Banerjee <subs.zero@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Apr 26 22:07:47 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SNUwY-0002Jw-UB
-	for gcvg-git-2@plane.gmane.org; Thu, 26 Apr 2012 22:05:35 +0200
+	id 1SNUyg-0004Qy-Oq
+	for gcvg-git-2@plane.gmane.org; Thu, 26 Apr 2012 22:07:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759111Ab2DZUF3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Apr 2012 16:05:29 -0400
-Received: from smtp130.ord.emailsrvr.com ([173.203.6.130]:51902 "EHLO
-	smtp130.ord.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754165Ab2DZUF3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Apr 2012 16:05:29 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by smtp25.relay.ord1a.emailsrvr.com (SMTP Server) with ESMTP id 672553F0176;
-	Thu, 26 Apr 2012 16:05:28 -0400 (EDT)
-X-Virus-Scanned: OK
-Received: by smtp25.relay.ord1a.emailsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id 1D8E43F0160;
-	Thu, 26 Apr 2012 16:05:28 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:11.0) Gecko/20120329 Thunderbird/11.0.1
-In-Reply-To: <CA+7g9Jxc6eaCUR8aVhqKH--sOrvQVrZn+se7wtFJsOiKNjz9Pg@mail.gmail.com>
+	id S1759186Ab2DZUHo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Apr 2012 16:07:44 -0400
+Received: from uk.vilain.net ([92.48.122.123]:43183 "EHLO uk.vilain.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1759140Ab2DZUHn (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Apr 2012 16:07:43 -0400
+X-Greylist: delayed 493 seconds by postgrey-1.27 at vger.kernel.org; Thu, 26 Apr 2012 16:07:43 EDT
+Received: by uk.vilain.net (Postfix, from userid 1001)
+	id 2DEE18283; Thu, 26 Apr 2012 20:59:29 +0100 (BST)
+X-Spam-Checker-Version: SpamAssassin 3.3.1 (2010-03-16) on uk.vilain.net
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=5.0 tests=ALL_TRUSTED,BAYES_00
+	autolearn=unavailable version=3.3.1
+Received: from [IPv6:::1] (localhost [127.0.0.1])
+	by uk.vilain.net (Postfix) with ESMTP id EC9E6823E;
+	Thu, 26 Apr 2012 20:59:27 +0100 (BST)
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.7; rv:11.0) Gecko/20120327 Thunderbird/11.0.1
+In-Reply-To: <CAB3zAY3-Bn86bCr7Rxqi4vxbYFxUesLwm8gddxyMSexov2tOhw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196400>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196401>
 
-On 12-04-26 02:40 PM, Nathan Gray wrote:
-> Hey guys,
-> 
-> Namespacing works really well for branch refs.  I know that
-> remotes/origin/master is origin's master branch.  I may or may not
-> have a master branch, and it may or may not have anything in common
-> with origin's.  Our repositories are independent, after all, so it
-> makes sense that our refs would live in different namespaces.
-> 
-> So why is it that tag refs don't follow this model?  Why is my
-> "best-commit-ever" tag assumed to be the same as origin's?  Given a
-> ref in refs/tags it's unclear if the ref is public, private, on origin
-> or not on origin.  Will pushing my tags create anything new or not?
-> Who knows?  Compare this to branches, where the same questions are
-> easy to answer thanks to namespacing.
+On 4/25/12 9:15 PM, Subho Banerjee wrote:
+> --->  I see in the code that it says that the API is experimental. Is
+> there any absolute need for backward compatibility, or can I try to
+> redesign the API somewhat extensively?
 
-There was lengthy, but inconclusive, discussion about this a year ago:
+If you stick to putting new APIs under different namespaces, or new 
+functions, then you should be able to preserve API compatibility.  I 
+think Git.pm is now too widely used for breaking compatibility to be an 
+option.
 
-http://thread.gmane.org/gmane.comp.version-control.git/165799/focus=166290
+I think I submitted a Git::Config to this list some time ago; did you 
+find that?
 
-		M.
+Sam
