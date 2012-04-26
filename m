@@ -1,84 +1,84 @@
-From: Subho Banerjee <subs.zero@gmail.com>
-Subject: Re: Git.pm
-Date: Fri, 27 Apr 2012 01:40:07 +0530
-Message-ID: <CAB3zAY0NeXuH-wXyYkbim5U74eANY4hq5D6SsVLu3KeUqHFqzQ@mail.gmail.com>
-References: <CAB3zAY3-Bn86bCr7Rxqi4vxbYFxUesLwm8gddxyMSexov2tOhw@mail.gmail.com>
- <CAFouetgwRpB1GFJOC8PTVryVY-94S3xa5ZiSaWQWoz070qQ-6g@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git <git@vger.kernel.org>
-To: Tim Henigan <tim.henigan@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Apr 26 22:10:40 2012
+From: Matthijs Kooijman <matthijs@stdin.nl>
+Subject: [PATCH 1/2] git-svn: use platform specific auth providers
+Date: Thu, 26 Apr 2012 21:34:02 +0200
+Message-ID: <1335468843-24653-1-git-send-email-matthijs@stdin.nl>
+References: <20120426183634.GA4023@login.drsnuggles.stderr.nl>
+Cc: Gustav Munkby <grddev@gmail.com>,
+	Edward Rudd <urkle@outoforder.cc>,
+	Carsten Bormann <cabo@tzi.org>, git@vger.kernel.org,
+	Matthijs Kooijman <matthijs@stdin.nl>
+To: Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Thu Apr 26 22:12:23 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SNV1O-00077W-7X
-	for gcvg-git-2@plane.gmane.org; Thu, 26 Apr 2012 22:10:34 +0200
+	id 1SNV34-0000Ko-QU
+	for gcvg-git-2@plane.gmane.org; Thu, 26 Apr 2012 22:12:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757540Ab2DZUK3 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 26 Apr 2012 16:10:29 -0400
-Received: from mail-vb0-f46.google.com ([209.85.212.46]:63316 "EHLO
-	mail-vb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752473Ab2DZUK2 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 26 Apr 2012 16:10:28 -0400
-Received: by vbbff1 with SMTP id ff1so2834vbb.19
-        for <git@vger.kernel.org>; Thu, 26 Apr 2012 13:10:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=ifaYKf0FPMfg5/9smET6q95g0+ncNNxdvMHhmIZJYWc=;
-        b=ttzLTuNGj1+PtZ5YYPp7uJT0/F9q69I6Ln8FFWKh1T96VApDxKWcGkhcQyWYZpB0JR
-         PvNtsMEYXgMYal5Czi9qbXobN3ewr5xUf+KYmfPhU6z6+vDuIsoz8vR0nwBQ2syT7v2R
-         /IikwInO3gkKGen6zvBNHHkSJ6aoOBbplPTun4vxI/8OU9wbiHo6Q1CVZUvMtGIZ2zag
-         sWHVvyFGDQtUH4r918zTjzRo0SxsmzXnUaGhwCCOUtOJyeLaP7XMk8eu8i+5euyh9yDy
-         e+VaalgYbA2T+uu8KcUUmBJQCx+Fpi3th17+zu+OlYRjI/KpfWIkaFbJTyjVyKkvswxY
-         O+uw==
-Received: by 10.52.100.228 with SMTP id fb4mr7473928vdb.62.1335471027867; Thu,
- 26 Apr 2012 13:10:27 -0700 (PDT)
-Received: by 10.220.189.137 with HTTP; Thu, 26 Apr 2012 13:10:07 -0700 (PDT)
-In-Reply-To: <CAFouetgwRpB1GFJOC8PTVryVY-94S3xa5ZiSaWQWoz070qQ-6g@mail.gmail.com>
+	id S1758247Ab2DZUML (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Apr 2012 16:12:11 -0400
+Received: from 84-245-11-97.dsl.cambrium.nl ([84.245.11.97]:49353 "EHLO
+	grubby.stderr.nl" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1758046Ab2DZUMJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Apr 2012 16:12:09 -0400
+X-Greylist: delayed 2254 seconds by postgrey-1.27 at vger.kernel.org; Thu, 26 Apr 2012 16:12:09 EDT
+Received: from matthijs by grubby.stderr.nl with local (Exim 4.77)
+	(envelope-from <matthijs@stdin.nl>)
+	id 1SNUSQ-0006Q9-ED; Thu, 26 Apr 2012 21:34:26 +0200
+X-Mailer: git-send-email 1.7.10
+In-Reply-To: <20120426183634.GA4023@login.drsnuggles.stderr.nl>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196402>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196403>
 
-Hello,
-I will take care that I dont break those. Should the tests in the t/
-folder of the codebase be enough to make sure everything is working as
-it should be even in the Git perl module? Also is there anything like
-a public build server which actually catalogs which tests are
-currently failing so that I know what has gone wrong after my changes,
-or are all commits supposed to pass every test?
+On Linux, this makes authentication using passwords from gnome-keyring
+and kwallet work (only the former was tested). On Mac OS X, this allows
+using the OS X Keychain.
+---
+ git-svn.perl |   20 ++++++++++++++++++--
+ 1 file changed, 18 insertions(+), 2 deletions(-)
 
-Cheers,
-Subho.
-
-On Fri, Apr 27, 2012 at 12:28 AM, Tim Henigan <tim.henigan@gmail.com> w=
-rote:
-> On Thu, Apr 26, 2012 at 12:15 AM, Subho Banerjee <subs.zero@gmail.com=
-> wrote:
->>
->> ---> I see in the code that it says that the API is experimental. Is
->> there any absolute need for backward compatibility, or can I try to
->> redesign the API somewhat extensively?
->
-> A quick grep of the code in 'master' shows Git.pm used in the followi=
-ng:
->
-> =A0 =A0- contrib/examples/git-remote.perl
-> =A0 =A0- git-add--interactive.perl
-> =A0 =A0- git-cvsexportcommit.perl
-> =A0 =A0- git-send-email.perl
-> =A0 =A0- git-svn.perl
-> =A0 =A0- t/perf/aggregate.perl
->
-> There is also work in progress on 'pu' that relies on Git.pm.
->
-> Breaking any of these scripts would be bad. =A0You may be able to
-> refactor them at the same time Git.pm is modified, but it would be
-> wise to contact the authors before making any major changes.
+diff --git a/git-svn.perl b/git-svn.perl
+index 4334b95..1790d10 100755
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -5436,7 +5436,7 @@ BEGIN {
+ }
+ 
+ sub _auth_providers () {
+-	[
++	my @rv = (
+ 	  SVN::Client::get_simple_provider(),
+ 	  SVN::Client::get_ssl_server_trust_file_provider(),
+ 	  SVN::Client::get_simple_prompt_provider(
+@@ -5452,7 +5452,23 @@ sub _auth_providers () {
+ 	    \&Git::SVN::Prompt::ssl_server_trust),
+ 	  SVN::Client::get_username_prompt_provider(
+ 	    \&Git::SVN::Prompt::username, 2)
+-	]
++	);
++
++	# earlier 1.6.x versions would segfault, and <= 1.5.x didn't have
++	# this function
++	if ($SVN::Core::VERSION gt '1.6.12') {
++		my $config = SVN::Core::config_get_config($config_dir);
++		my ($p, @a);
++		# config_get_config returns all config files from
++		# ~/.subversion, auth_get_platform_specific_client_providers
++		# just wants the config "file".
++		@a = ($config->{'config'}, undef);
++		$p = SVN::Core::auth_get_platform_specific_client_providers(@a);
++		# Insert the return value from
++		# auth_get_platform_specific_providers
++		unshift @rv, @$p;
++	}
++	\@rv;
+ }
+ 
+ sub escape_uri_only {
+-- 
+1.7.10
