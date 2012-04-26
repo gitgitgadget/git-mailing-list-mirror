@@ -1,65 +1,71 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Bad Man Page URLs
-Date: Thu, 26 Apr 2012 17:02:51 -0400
-Message-ID: <20120426210251.GA31589@sigill.intra.peff.net>
-References: <2AC038A1-3D8D-425E-92B3-DADFD027761A@justatheory.com>
- <20120406023223.GB16264@sigill.intra.peff.net>
- <20120406025457.GA23997@sigill.intra.peff.net>
- <20120406042215.GA3938@burratino>
- <20120406054637.GA25301@sigill.intra.peff.net>
- <7vzkap1gck.fsf@alter.siamese.dyndns.org>
- <BCD7B631-8C73-4F3F-AB37-9B5CF02655D5@justatheory.com>
- <20120426201921.GA15026@burratino>
+From: =?UTF-8?B?WmJpZ25pZXcgSsSZZHJ6ZWpld3NraS1Tem1law==?= 
+	<zbyszek@in.waw.pl>
+Subject: Re: [PATCH] t5570: fix forwarding of git-daemon messages via cat
+Date: Thu, 26 Apr 2012 23:10:26 +0200
+Message-ID: <4F99B9C2.7090805@in.waw.pl>
+References: <1334393070-7123-1-git-send-email-zbyszek@in.waw.pl> <20120414121358.GA26372@ecki> <20120414122127.GA31220@ecki> <4F8C3E0F.2040300@in.waw.pl> <20120416174230.GA19226@sigill.intra.peff.net> <20120416224424.GA10314@ecki> <20120419060326.GA13982@sigill.intra.peff.net> <4F8FB779.60004@viscovery.net> <20120426130129.GA27785@sigill.intra.peff.net> <4F999105.200@kdbg.org> <20120426195503.GA29526@ecki> <4F99B777.4020103@kdbg.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Scott Chacon <schacon@gmail.com>,
-	"David E. Wheeler" <david@justatheory.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Apr 26 23:03:00 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Clemens Buchacher <drizzd@aon.at>, Jeff King <peff@peff.net>,
+	git@vger.kernel.org, gitster@pobox.com
+To: Johannes Sixt <j6t@kdbg.org>
+X-From: git-owner@vger.kernel.org Thu Apr 26 23:11:10 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SNVq7-0005Sn-30
-	for gcvg-git-2@plane.gmane.org; Thu, 26 Apr 2012 23:02:59 +0200
+	id 1SNVxy-0004ie-Rk
+	for gcvg-git-2@plane.gmane.org; Thu, 26 Apr 2012 23:11:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759418Ab2DZVCy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Apr 2012 17:02:54 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:47403
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757344Ab2DZVCy (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Apr 2012 17:02:54 -0400
-Received: (qmail 20039 invoked by uid 107); 26 Apr 2012 21:03:07 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 26 Apr 2012 17:03:07 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 26 Apr 2012 17:02:51 -0400
-Content-Disposition: inline
-In-Reply-To: <20120426201921.GA15026@burratino>
+	id S1755041Ab2DZVKy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Apr 2012 17:10:54 -0400
+Received: from kawka.in.waw.pl ([178.63.212.103]:35574 "EHLO kawka.in.waw.pl"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754910Ab2DZVKx (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Apr 2012 17:10:53 -0400
+Received: from 89-78-221-60.dynamic.chello.pl ([89.78.221.60] helo=[192.168.0.12])
+	by kawka.in.waw.pl with esmtpsa (TLS1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.72)
+	(envelope-from <zbyszek@in.waw.pl>)
+	id 1SNVxh-0003S8-3G; Thu, 26 Apr 2012 23:10:50 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:10.0.3) Gecko/20120329 Icedove/10.0.3
+In-Reply-To: <4F99B777.4020103@kdbg.org>
+X-Enigmail-Version: 1.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196414>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196415>
 
-On Thu, Apr 26, 2012 at 03:19:22PM -0500, Jonathan Nieder wrote:
-
-> David E. Wheeler wrote:
+On 04/26/2012 11:00 PM, Johannes Sixt wrote:
+> The shell function that starts git-daemon wants to read the first line of
+> the daemon's stderr to ensure that it started correctly. Subsequent daemon
+> errors should be redirected to fd 4 (which is the terminal in verbose mode
+> or /dev/null in quiet mode). To that end the shell script used 'read' to
+> get the first line of output, and then 'cat &' to forward everything else
+> in a background process.
 > 
-> >         5. GIT API documentation
-> >            git-htmldocs/technical/api-index.html
-> >
-> > Which also aren't very useful. :-(
+> The problem is, that 'cat >&4 &' does not produce any output because the
+> shell redirects a background process's stdin to /dev/null. To have this
+> command invocation do anything useful, we have to redirect its stdin
+> explicitly (which overrides the /dev/null redirection).
 > 
-> Sure they are --- they tell you where in the git-htmldocs tarball
-> from [1] to find the relevant pages.
+> The shell function connects the daemon's stderr to its consumers via a
+> FIFO. We cannot just do this:
 > 
-> Do you know of a public webpage we can count on to continue to serve
-> the docs?  I agree that that would be even better.
+>    read line <git_daemon_output
+>    cat <git_daemon_output >&4 &
+> 
+> because after the first redirection the pipe is closed and the daemon
+> could receive SIGPIPE if it writes at the wrong moment. Therefore, we open
+> the readable end of the FIFO only once on fd 7 in the shell and dup from
+> there to the stdin of the two consumers.
+> 
+> Signed-off-by: Johannes Sixt <j6t@kdbg.org>
+Beautiful explanation. Thanks!
+I can confirm that this fix works for me.
 
-I think http://git-scm.com/ would be the ideal place. My understanding
-is that the re-work of the site is nearing completion. Scott, ETA?
-
--Peff
+-
+Zbyszek
