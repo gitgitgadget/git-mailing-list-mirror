@@ -1,95 +1,92 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH 00/30] Read loose references lazily
-Date: Thu, 26 Apr 2012 23:33:58 +0200
-Message-ID: <4F99BF46.9050501@alum.mit.edu>
-References: <1335307536-26914-1-git-send-email-mhagger@alum.mit.edu> <xmqqbomfd5bt.fsf@junio.mtv.corp.google.com>
+From: Scott Chacon <schacon@gmail.com>
+Subject: Re: Bad Man Page URLs
+Date: Thu, 26 Apr 2012 14:58:47 -0700
+Message-ID: <CAP2yMa+mjvFmVwXjrB7FRaD2=iMCCPENWAOoCG5TCsqFdsCDxQ@mail.gmail.com>
+References: <2AC038A1-3D8D-425E-92B3-DADFD027761A@justatheory.com>
+ <20120406023223.GB16264@sigill.intra.peff.net> <20120406025457.GA23997@sigill.intra.peff.net>
+ <20120406042215.GA3938@burratino> <20120406054637.GA25301@sigill.intra.peff.net>
+ <7vzkap1gck.fsf@alter.siamese.dyndns.org> <BCD7B631-8C73-4F3F-AB37-9B5CF02655D5@justatheory.com>
+ <20120426201921.GA15026@burratino> <20120426210251.GA31589@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Jakub Narebski <jnareb@gmail.com>,
-	Heiko Voigt <hvoigt@hvoigt.net>,
-	Johan Herland <johan@herland.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Apr 26 23:34:16 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	"David E. Wheeler" <david@justatheory.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Apr 26 23:59:20 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SNWKK-0002Ei-Uo
-	for gcvg-git-2@plane.gmane.org; Thu, 26 Apr 2012 23:34:13 +0200
+	id 1SNWia-00043f-NK
+	for gcvg-git-2@plane.gmane.org; Thu, 26 Apr 2012 23:59:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758898Ab2DZVeH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Apr 2012 17:34:07 -0400
-Received: from einhorn.in-berlin.de ([192.109.42.8]:44056 "EHLO
-	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758738Ab2DZVeG (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Apr 2012 17:34:06 -0400
-X-Envelope-From: mhagger@alum.mit.edu
-Received: from [192.168.101.152] (ssh.berlin.jpk.com [212.222.128.135])
-	(authenticated bits=0)
-	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id q3QLXwpW018370
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Thu, 26 Apr 2012 23:33:58 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:11.0) Gecko/20120410 Thunderbird/11.0.1
-In-Reply-To: <xmqqbomfd5bt.fsf@junio.mtv.corp.google.com>
-X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
+	id S1755801Ab2DZV7K convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 26 Apr 2012 17:59:10 -0400
+Received: from mail-qa0-f46.google.com ([209.85.216.46]:34332 "EHLO
+	mail-qa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754032Ab2DZV7J convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 26 Apr 2012 17:59:09 -0400
+Received: by qatm19 with SMTP id m19so4487681qat.19
+        for <git@vger.kernel.org>; Thu, 26 Apr 2012 14:59:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=ZKRjhGLEsRer6ghyr9NVMn6Pn5U65fnl+19zxQRAQFc=;
+        b=RPvqlhOUFElJ8EBd/9kHFdg+8bq3JT+CK7K2uINYp5atnnKUvtyeVSaRpSA5OeV+xA
+         aqmFXT32UDMHFit4zplRVTOGr7ukjuzttXoW7fmR9OSicPG8dtf5FqAKdUb0Lv7sJ+sV
+         tWI2+V8D5O1bfQ0whMSHCXSmxhpNtmDhTFUf3BsIWdYY7j1mrTl4lpih21nj1bd7eQlj
+         RvwypJXxndHgSMg3R19F+esSlYkHYxhS8XsQ/rLufxI76gQT4xFTwe/FBVTOsppFc9Vj
+         kqNsrAT6uLYdakz5a7sFjH2mbFlh0GSzKzhC80DnQ9cop40i05nf77vkHdDHi5kXR/Z/
+         5g2g==
+Received: by 10.229.136.203 with SMTP id s11mr1944302qct.38.1335477548492;
+ Thu, 26 Apr 2012 14:59:08 -0700 (PDT)
+Received: by 10.229.163.210 with HTTP; Thu, 26 Apr 2012 14:58:47 -0700 (PDT)
+In-Reply-To: <20120426210251.GA31589@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196417>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196418>
 
-On 04/25/2012 08:39 PM, Junio C Hamano wrote:
-> mhagger@alum.mit.edu writes:
->
->> From: Michael Haggerty<mhagger@alum.mit.edu>
+Hey,
+
+On Thu, Apr 26, 2012 at 2:02 PM, Jeff King <peff@peff.net> wrote:
 >>
->> Patches 10 - 25 mostly switch a lot of code from using ref_dir
->> pointers to using ref_entry pointers as arguments and return values.
->> This is important, because ...
+>> Do you know of a public webpage we can count on to continue to serve
+>> the docs? =C2=A0I agree that that would be even better.
 >
-> The earlier parts looked sane, but the ref_dir set of patches looked
-> like merely working around the fact that "struct ref_dir" does not have
-> the name field and you had to upcast it to ref_entry to access the full
-> name.
+> I think http://git-scm.com/ would be the ideal place. My understandin=
+g
+> is that the re-work of the site is nearing completion. Scott, ETA?
 
-Yes, that plus the fact that the ref_entry::flag field is needed in 
-ref_entry (to distinguish between value and directory entries) but also 
-to interpret the contents of the ref_value / ref_dir.
+Yes, we are very close to launching a big redesign of git-scm.com.
+The manpages will be automatically updated on that site, you can
+certainly link to them there.
 
-> All the places that used to take ref_dir never wanted to get an entry
-> that represents a leaf node (i.e. ref_value kind of ref_entry), but now
-> because you made everybody to take ref_entry, the resulting code is much
-> more error prone and the static type checking done by the compiler helps
-> us much less when updating the code.  It can already be seen that you
-> had to sprinkle a lot of assert(flag&  REF_DIR), but at runtime in
-> non-debug build that will become no-op and it is not a substitute for
-> the static type checking we used to have.
+If you want to preview what it's going to look like and the URL
+structure, you can check out the current working version here:
+
+http://git-scm.herokuapp.com/docs/git-fetch
+
+There are a number of known bugs and I want to make it much faster
+before I officially launch it and redirect DNS, but you can get an
+idea of how it will be structured and what it will look like.  If you
+want to start generating docs with static urls for man pages, they can
+be of the form: http://git-scm.com/docs/git-command
+
+You can also put a version number after them to permalink them at a
+certain version:
+
+http://git-scm.herokuapp.com/docs/git-fetch/1.7.3.2
+
+When it's close to what I think is ready, I'll do a post to this list
+looking for feedback and bugs, etc.
+
+Scott
+
 >
-> Can't we approach this differently so that we can keep the type safety?
-
-Thanks for this comment.  I've obviously been ruined by OO languages, in 
-which [name + flag + struct ref_value] and [name + flag + struct 
-ref_dir] (which *are* useful combinations of data) would be subclasses, 
-and the downcasting from ref_entry would only have to occur in only one 
-place, while the compiler could guarantee consistency everywhere else.
-
-In C, I don't see a way to implement the equivalent semantics that is 
-less annoying than the code that I submitted.
-
-But since [name + flag + struct ref_value] and [name + flag + struct 
-ref_dir] never leave the library as structs, it is indeed possible to 
-write the code in a different way that leaves most functions working 
-with ref_dir instead of having to use ref_entry everywhere.  I have 
-implemented this and will submit it shortly.
-
-Thanks again for your suggestion; the resulting code is indeed simpler.
-
-Michael
-
--- 
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
+> -Peff
