@@ -1,143 +1,79 @@
-From: Kacper Kornet <draenog@pld-linux.org>
-Subject: [PATCH v2 2/2] gitweb: Option to not display information about
- owner
-Date: Thu, 26 Apr 2012 18:45:44 +0200
-Message-ID: <20120426164544.GI16489@camk.edu.pl>
-References: <20120403132735.GA12389@camk.edu.pl>
- <20120416213938.GB22574@camk.edu.pl>
- <201204180136.08570.jnareb@gmail.com>
- <201204191807.32410.jnareb@gmail.com>
- <20120424174114.GC15600@camk.edu.pl>
- <xmqqy5pj9kew.fsf@junio.mtv.corp.google.com>
- <20120426150721.GG16489@camk.edu.pl>
- <xmqqaa1ya3rh.fsf@junio.mtv.corp.google.com>
- <20120426163502.GH16489@camk.edu.pl>
+From: Bert Wesarg <bert.wesarg@googlemail.com>
+Subject: Re: [PATCH] diff: avoid stack-buffer-read-overrun for very long name
+Date: Thu, 26 Apr 2012 18:53:07 +0200
+Message-ID: <CAKPyHN2VkBo6OKgbhTNSu-LFwabGkFFKAF595rJuXbhWwdte+g@mail.gmail.com>
+References: <87ty0jbt5p.fsf@rho.meyering.net>
+	<20120416222713.GA2396@moj>
+	<87397t862o.fsf@rho.meyering.net>
+	<xmqq1unbd2m5.fsf@junio.mtv.corp.google.com>
+	<87d36uxzfw.fsf@rho.meyering.net>
+	<xmqq62cma2uo.fsf@junio.mtv.corp.google.com>
+	<CAKPyHN1mFGiZd7dDH-stUmr3H1JHwxcP1DkjCYNXZd6Bt-P7+w@mail.gmail.com>
+	<87y5piwjay.fsf@rho.meyering.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-2
-Cc: git@vger.kernel.org, Jakub Narebski <jnareb@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Apr 26 18:46:04 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Marcus Karlsson <mk@acc.umu.se>, git list <git@vger.kernel.org>
+To: Jim Meyering <jim@meyering.net>
+X-From: git-owner@vger.kernel.org Thu Apr 26 18:53:15 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SNRpT-0007pU-1y
-	for gcvg-git-2@plane.gmane.org; Thu, 26 Apr 2012 18:46:03 +0200
+	id 1SNRwQ-0005wu-Np
+	for gcvg-git-2@plane.gmane.org; Thu, 26 Apr 2012 18:53:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757872Ab2DZQp6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Apr 2012 12:45:58 -0400
-Received: from moat.camk.edu.pl ([148.81.175.50]:39695 "EHLO moat.camk.edu.pl"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757906Ab2DZQp5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Apr 2012 12:45:57 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by moat.camk.edu.pl (Postfix) with ESMTP id AF5665F004A;
-	Thu, 26 Apr 2012 18:46:49 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at camk.edu.pl
-Received: from moat.camk.edu.pl ([127.0.0.1])
-	by localhost (liam.camk.edu.pl [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id 12abTNP1HMju; Thu, 26 Apr 2012 18:46:38 +0200 (CEST)
-Received: from gatekeeper2.camk.edu.pl (gatekeeper.camk.edu.pl [192.168.1.23])
-	by moat.camk.edu.pl (Postfix) with ESMTP id 08FA95F0049;
-	Thu, 26 Apr 2012 18:46:38 +0200 (CEST)
-Received: by gatekeeper2.camk.edu.pl (Postfix, from userid 1293)
-	id 6016D4671C; Thu, 26 Apr 2012 18:45:44 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <20120426163502.GH16489@camk.edu.pl>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1758401Ab2DZQxJ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 26 Apr 2012 12:53:09 -0400
+Received: from mail-vb0-f46.google.com ([209.85.212.46]:43734 "EHLO
+	mail-vb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756540Ab2DZQxI convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 26 Apr 2012 12:53:08 -0400
+Received: by vbbff1 with SMTP id ff1so1086992vbb.19
+        for <git@vger.kernel.org>; Thu, 26 Apr 2012 09:53:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=9TUpv8947+IC2CXL7mNLnveYz7BJXfPn2NYzVbVa9cw=;
+        b=0DL6btLPy/Uai13RkgVSSZHDnoUGQYqscDme4p9e/NfE2mJVdcnkuQKzRtEehhN+ii
+         5GXBT2VDBfMiT8xP0CwosFlWy/SwnTehxfzM9EU+xINy14tsBDU0jAv3IRFZ2x5Cbc4P
+         Q3P8nO/eJwRyo6AaN1m1/9clGjMBvrFKuIuwGqCB+bHS/1w7GUFu4ZPcgEX5todH7kpQ
+         d+Ki9KrZNaJHKP0cmZD1DJmoFNZq31UJlQ7yGuwMmu3n0d7e+tvauv+aXZ5PgCmYRhid
+         TXB0pNsabLtQQsFcu1ziViiM0cmNFDeLIF5SxaNoba9E51YGwaCPU52V7OiSlzGY6S0N
+         /iPg==
+Received: by 10.52.69.69 with SMTP id c5mr6608969vdu.43.1335459187411; Thu, 26
+ Apr 2012 09:53:07 -0700 (PDT)
+Received: by 10.52.185.33 with HTTP; Thu, 26 Apr 2012 09:53:07 -0700 (PDT)
+In-Reply-To: <87y5piwjay.fsf@rho.meyering.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196382>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196383>
 
-In some setups the repository owner is not a well defined concept
-and administrator can prefer it to be not shown. This commit add
-and an option that enable to reach this effect.
+On Thu, Apr 26, 2012 at 18:26, Jim Meyering <jim@meyering.net> wrote:
+> Bert Wesarg wrote:
+>> On Thu, Apr 26, 2012 at 18:13, Junio C Hamano <gitster@pobox.com> wr=
+ote:
+>>> Jim Meyering <jim@meyering.net> writes:
+>> strbuf_ensure_terminator(struct strbuf* buf, int term, int always)?
+>
+> Nice! =C2=A0So far, that's the name I prefer.
+> But why the third parameter?
 
-Signed-off-by: Kacper Kornet <draenog@pld-linux.org>
----
- Documentation/gitweb.conf.txt |    3 +++
- gitweb/gitweb.perl            |   21 +++++++++++++++------
- 2 files changed, 18 insertions(+), 6 deletions(-)
+See the second part of my reply:
 
-diff --git a/Documentation/gitweb.conf.txt b/Documentation/gitweb.conf.txt
-index d240a2f..4b8d1b1 100644
---- a/Documentation/gitweb.conf.txt
-+++ b/Documentation/gitweb.conf.txt
-@@ -503,6 +503,9 @@ $omit_age_column::
- 	If true, omit the column with date of the most current commit on the
- 	projects list page. It can save a bit of I/O and a fork per repository.
- 
-+$omit_owner::
-+	If true prevents displaying information about repository owner.
-+
- $per_request_config::
- 	If this is set to code reference, it will be run once for each request.
- 	You can	set parts of configuration that change per session this way.
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 6bddbff..6dbeb2f 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -136,6 +136,9 @@ our $export_ok = "++GITWEB_EXPORT_OK++";
- # don't generate age column on the projects list page
- our $omit_age_column = 0;
- 
-+# don't generate information about owners of repositories
-+our $omit_owner=0;
-+
- # show repository only if this subroutine returns true
- # when given the path to the project, for example:
- #    sub { return -e "$_[0]/git-daemon-export-ok"; }
-@@ -5495,8 +5498,10 @@ sub git_project_list_rows {
- 		                        ? esc_html_match_hl_chopped($pr->{'descr_long'},
- 		                                                    $pr->{'descr'}, $search_regexp)
- 		                        : esc_html($pr->{'descr'})) .
--		      "</td>\n" .
--		      "<td><i>" . chop_and_escape_str($pr->{'owner'}, 15) . "</i></td>\n";
-+		      "</td>\n";
-+		unless ($omit_owner) {
-+		        print "<td><i>" . chop_and_escape_str($pr->{'owner'}, 15) . "</i></td>\n";
-+		}
- 		unless ($omit_age_column) {
- 		        print "<td class=\"". age_class($pr->{'age'}) . "\">" .
- 		            (defined $pr->{'age_string'} ? $pr->{'age_string'} : "No commits") . "</td>\n";
-@@ -5532,7 +5537,9 @@ sub git_project_list_body {
- 	                                 'tagfilter'  => $tagfilter)
- 		if ($tagfilter || $search_regexp);
- 	# fill the rest
--	my @all_fields = $omit_age_column ? ('descr', 'descr_long', 'owner', 'ctags', 'category') : ();
-+	my @all_fields = ('descr', 'descr_long', 'ctags', 'category');
-+	push @all_fields, ('age', 'age_string') unless($omit_age_column);
-+	push @all_fields, 'owner' unless($omit_owner);
- 	@projects = fill_project_list_info(\@projects, @all_fields);
- 
- 	$order ||= $default_projects_order;
-@@ -5564,7 +5571,7 @@ sub git_project_list_body {
- 		}
- 		print_sort_th('project', $order, 'Project');
- 		print_sort_th('descr', $order, 'Description');
--		print_sort_th('owner', $order, 'Owner');
-+		print_sort_th('owner', $order, 'Owner') unless $omit_owner;
- 		print_sort_th('age', $order, 'Last Change') unless $omit_age_column;
- 		print "<th></th>\n" . # for links
- 		      "</tr>\n";
-@@ -6318,8 +6325,10 @@ sub git_summary {
- 
- 	print "<div class=\"title\">&nbsp;</div>\n";
- 	print "<table class=\"projects_list\">\n" .
--	      "<tr id=\"metadata_desc\"><td>description</td><td>" . esc_html($descr) . "</td></tr>\n" .
--	      "<tr id=\"metadata_owner\"><td>owner</td><td>" . esc_html($owner) . "</td></tr>\n";
-+	      "<tr id=\"metadata_desc\"><td>description</td><td>" . esc_html($descr) . "</td></tr>\n";
-+        unless ($omit_owner) {
-+	        print  "<tr id=\"metadata_owner\"><td>owner</td><td>" . esc_html($owner) . "</td></tr>\n";
-+        }
- 	if (defined $cd{'rfc2822'}) {
- 		print "<tr id=\"metadata_lchange\"><td>last change</td>" .
- 		      "<td>".format_timestamp_html(\%cd)."</td></tr>\n";
--- 
-1.7.10
-
--- 
-  Kacper Kornet
+>>> ------------------------------------
+>>> builtin/branch.c-     if (!buf.len || buf.buf[buf.len-1] !=3D '\n')
+>>> builtin/branch.c:             strbuf_addch(&buf, '\n');
+>>> --
+>>> strbuf.h-     if (sb->len && sb->buf[sb->len - 1] !=3D '\n')
+>>> strbuf.h:             strbuf_addch(sb, '\n');
+>
+> Please note, that while they are checking the .len, they both behave
+> differently if .len =3D=3D 0 or not.
+> The first always append a '\n', the latter only, if the string isn't =
+empty.
