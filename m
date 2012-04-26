@@ -1,7 +1,8 @@
 From: mhagger@alum.mit.edu
-Subject: [PATCH v2 00/18] Read loose references lazily
-Date: Fri, 27 Apr 2012 00:26:49 +0200
-Message-ID: <1335479227-7877-1-git-send-email-mhagger@alum.mit.edu>
+Subject: [PATCH v2 04/18] get_ref_dir(): require that the dirname argument ends in '/'
+Date: Fri, 27 Apr 2012 00:26:53 +0200
+Message-ID: <1335479227-7877-5-git-send-email-mhagger@alum.mit.edu>
+References: <1335479227-7877-1-git-send-email-mhagger@alum.mit.edu>
 Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
 	Jakub Narebski <jnareb@gmail.com>,
 	Heiko Voigt <hvoigt@hvoigt.net>,
@@ -9,99 +10,97 @@ Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
 	Christian Couder <chriscool@tuxfamily.org>,
 	Michael Haggerty <mhagger@alum.mit.edu>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Apr 27 00:27:25 2012
+X-From: git-owner@vger.kernel.org Fri Apr 27 00:27:38 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SNX9l-0007ew-9B
-	for gcvg-git-2@plane.gmane.org; Fri, 27 Apr 2012 00:27:21 +0200
+	id 1SNX9z-0007z0-Gh
+	for gcvg-git-2@plane.gmane.org; Fri, 27 Apr 2012 00:27:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759410Ab2DZW1P (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Apr 2012 18:27:15 -0400
-Received: from ssh.berlin.jpk.com ([212.222.128.135]:37036 "EHLO
+	id S1759458Ab2DZW1V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Apr 2012 18:27:21 -0400
+Received: from ssh.berlin.jpk.com ([212.222.128.135]:37065 "EHLO
 	eddie.berlin.jpk.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1755500Ab2DZW1O (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Apr 2012 18:27:14 -0400
+	with ESMTP id S1755544Ab2DZW1T (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Apr 2012 18:27:19 -0400
 Received: from michael.berlin.jpk.com (michael2.berlin.jpk.com [192.168.101.152])
-	by eddie.berlin.jpk.com (Postfix) with ESMTP id D49DE2480F8;
-	Fri, 27 Apr 2012 00:27:11 +0200 (CEST)
+	by eddie.berlin.jpk.com (Postfix) with ESMTP id 6088D24813F;
+	Fri, 27 Apr 2012 00:27:18 +0200 (CEST)
 X-Mailer: git-send-email 1.7.10
+In-Reply-To: <1335479227-7877-1-git-send-email-mhagger@alum.mit.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196425>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196426>
 
 From: Michael Haggerty <mhagger@alum.mit.edu>
 
-This is the next installment of the ref-api saga.  The main result of
-this patch series is to teach git to read loose references one
-directory at a time, only when they are needed.
+This removes some conditional code and makes it consistent with the
+way that direntry names are stored.  Please note that this function is
+never used on the top-level .git directory; it is always called for
+directories at level .git/refs or deeper.
 
-This version of the patch series differs from v1 by avoiding the
-conversion of code from using (struct ref_dir *) to (struct ref_entry
-*).  As Junio rightly pointed out, the use of ref_entry as the data
-type for dealing with directory entries was awkward and error-prone.
+Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
+---
+ refs.c |   14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-This version also changes how bits in ref_entry::flag are assigned,
-also at Junio's suggestion.
-
-The first nine patches are unchanged from v1 except for a trivial
-change to a commit message.  These patches convert get_ref_dir() and
-do_for_each_reflog() to use strbufs and to tighten up their
-specifications.
-
-Patch 10 fixes a git_path() related bug in bisect.c.  A filename
-obtained from git_path() was being used long after it was created.
-With the changes later in this patch series, the
-lazy-loose-reference-reading code will be activated while
-check_good_are_ancestors_of_bad() is still holding on to the filename.
-Therefore, this fix is a prerequisite to the later patches.
-
-[I am nervous that there might be analogous bugs elsewhere in the
-code.  Since the lazy-loose-reference-reading code can now spring to
-life in many situations where references are used, it might flush out
-problems in sloppy code elsewhere.  But what can we do, short of
-getting rid of get_pathname() once and for all?]
-
-Patch 11 Converts find_containing_dir() to use a strbuf.  It makes the
-code a bit more straightforward but is otherwise not very interesting.
-
-The rest of the patches teach the code to read loose references
-lazily.  This is done by setting a REF_INCOMPLETE bit in
-ref_entry::flag for loose directory entries that haven't been read
-yet.  The entries are read when they are accessed, namely when
-get_ref_dir() is called to extract a ref_dir from a directory
-ref_entry.
-
-This patch series depends on mh/ref-api, which just recently made it
-to master.  It passes all tests.
-
-Michael Haggerty (18):
-  get_ref_dir(): return early if directory cannot be read
-  get_ref_dir(): use a strbuf to hold refname
-  get_ref_dir(): rename "base" parameter to "dirname"
-  get_ref_dir(): require that the dirname argument ends in '/'
-  refs.c: extract function search_for_subdir()
-  get_ref_dir(): take the containing directory as argument
-  do_for_each_reflog(): return early on error
-  do_for_each_reflog(): use a strbuf to hold logfile name
-  do_for_each_reflog(): reuse strbuf across recursive function calls
-  bisect: copy filename string obtained from git_path()
-  find_containing_dir(): use strbuf in implementation of this function
-  refs: wrap top-level ref_dirs in ref_entries
-  read_loose_refs(): rename function from get_ref_dir()
-  get_ref_dir(): add function for getting a ref_dir from a ref_entry
-  search_for_subdir(): return (ref_dir *) instead of (ref_entry *)
-  struct ref_dir: store a reference to the enclosing ref_cache
-  read_loose_refs(): eliminate ref_cache argument
-  refs: read loose references lazily
-
- bisect.c |    8 +-
- refs.c   |  378 ++++++++++++++++++++++++++++++++++++++++----------------------
- 2 files changed, 247 insertions(+), 139 deletions(-)
-
+diff --git a/refs.c b/refs.c
+index dc2b4df..01fcdc7 100644
+--- a/refs.c
++++ b/refs.c
+@@ -749,13 +749,17 @@ void add_packed_ref(const char *refname, const unsigned char *sha1)
+ 			create_ref_entry(refname, sha1, REF_ISPACKED, 1));
+ }
+ 
++/*
++ * Read the loose references for refs from the namespace dirname.
++ * dirname must end with '/'.
++ */
+ static void get_ref_dir(struct ref_cache *refs, const char *dirname,
+ 			struct ref_dir *dir)
+ {
+ 	DIR *d;
+ 	const char *path;
+ 	struct dirent *de;
+-	int dirnamelen;
++	int dirnamelen = strlen(dirname);
+ 	struct strbuf refname;
+ 
+ 	if (*refs->name)
+@@ -767,13 +771,8 @@ static void get_ref_dir(struct ref_cache *refs, const char *dirname,
+ 	if (!d)
+ 		return;
+ 
+-	dirnamelen = strlen(dirname);
+ 	strbuf_init(&refname, dirnamelen + 257);
+ 	strbuf_add(&refname, dirname, dirnamelen);
+-	if (dirnamelen && dirname[dirnamelen-1] != '/') {
+-		strbuf_addch(&refname, '/');
+-		dirnamelen++;
+-	}
+ 
+ 	while ((de = readdir(d)) != NULL) {
+ 		unsigned char sha1[20];
+@@ -792,6 +791,7 @@ static void get_ref_dir(struct ref_cache *refs, const char *dirname,
+ 		if (stat(refdir, &st) < 0) {
+ 			/* Silently ignore. */
+ 		} else if (S_ISDIR(st.st_mode)) {
++			strbuf_addch(&refname, '/');
+ 			get_ref_dir(refs, refname.buf, dir);
+ 		} else {
+ 			if (*refs->name) {
+@@ -816,7 +816,7 @@ static void get_ref_dir(struct ref_cache *refs, const char *dirname,
+ static struct ref_dir *get_loose_refs(struct ref_cache *refs)
+ {
+ 	if (!refs->did_loose) {
+-		get_ref_dir(refs, "refs", &refs->loose);
++		get_ref_dir(refs, "refs/", &refs->loose);
+ 		refs->did_loose = 1;
+ 	}
+ 	return &refs->loose;
 -- 
 1.7.10
