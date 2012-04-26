@@ -1,83 +1,105 @@
-From: Kacper Kornet <draenog@pld-linux.org>
-Subject: Re: [PATCH 2/2] gitweb: Option to not display information about
- owner
-Date: Thu, 26 Apr 2012 17:07:21 +0200
-Message-ID: <20120426150721.GG16489@camk.edu.pl>
-References: <20120403132735.GA12389@camk.edu.pl>
- <20120416213938.GB22574@camk.edu.pl>
- <201204180136.08570.jnareb@gmail.com>
- <201204191807.32410.jnareb@gmail.com>
- <20120424174114.GC15600@camk.edu.pl>
- <xmqqy5pj9kew.fsf@junio.mtv.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Try an uppercase version of $prot_proxy env var
+Date: Thu, 26 Apr 2012 08:18:58 -0700
+Message-ID: <xmqqehraa5ct.fsf@junio.mtv.corp.google.com>
+References: <xmqq8vhmhzpk.fsf@junio.mtv.corp.google.com>
+	<4F966F0C.6090504@seap.minhap.es>
+	<xmqqipgpgdpl.fsf@junio.mtv.corp.google.com>
+	<4F994AC3.2070708@seap.minhap.es>
+	<20120426130854.GC27785@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-2
-Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Apr 26 17:13:34 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Nelson Benitez Leon <nelsonjesus.benitez@seap.minhap.es>,
+	Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Apr 26 17:19:09 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SNQNt-0006QL-8T
-	for gcvg-git-2@plane.gmane.org; Thu, 26 Apr 2012 17:13:29 +0200
+	id 1SNQTL-0003Um-7q
+	for gcvg-git-2@plane.gmane.org; Thu, 26 Apr 2012 17:19:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757271Ab2DZPHg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Apr 2012 11:07:36 -0400
-Received: from moat.camk.edu.pl ([148.81.175.50]:55054 "EHLO moat.camk.edu.pl"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757199Ab2DZPHe (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Apr 2012 11:07:34 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by moat.camk.edu.pl (Postfix) with ESMTP id B6E505F004A;
-	Thu, 26 Apr 2012 17:08:26 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at camk.edu.pl
-Received: from moat.camk.edu.pl ([127.0.0.1])
-	by localhost (liam.camk.edu.pl [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id g7aDUqj5d9IE; Thu, 26 Apr 2012 17:08:14 +0200 (CEST)
-Received: from gatekeeper2.camk.edu.pl (gatekeeper.camk.edu.pl [192.168.1.23])
-	by moat.camk.edu.pl (Postfix) with ESMTP id CDD8D5F0049;
-	Thu, 26 Apr 2012 17:08:14 +0200 (CEST)
-Received: by gatekeeper2.camk.edu.pl (Postfix, from userid 1293)
-	id 35A534671C; Thu, 26 Apr 2012 17:07:21 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <xmqqy5pj9kew.fsf@junio.mtv.corp.google.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1756981Ab2DZPTB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Apr 2012 11:19:01 -0400
+Received: from mail-bk0-f74.google.com ([209.85.214.74]:47523 "EHLO
+	mail-bk0-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756261Ab2DZPTA (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Apr 2012 11:19:00 -0400
+Received: by bkwj5 with SMTP id j5so45681bkw.1
+        for <git@vger.kernel.org>; Thu, 26 Apr 2012 08:18:59 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type:x-gm-message-state;
+        bh=LY5bpOMhVYF9NXBUjjd2OY3lX12BcnAGt8FJVgbv46I=;
+        b=aUxQqVffucEq4TnS0++1oIAqQujCf0bV/OdWBQz+1AnO947ZvUKh9FI7CMtxVmHqSl
+         LR3RpZL22pcZFIiWP5pEH7PDZkGU3Rz0/tmXz6Y8zFee9At6/xI6IucnjgPW1a8dkExE
+         KdPvNC8JOnxWLmesuafFuFHB10KRyO1KEThDwl+YhIZ41xARONeSaEJnZb0qY66HPtzi
+         OfDf6j6kSpJy0tzaNZYhA2G+8KCMnAk8IDIMs16xKXgTxV+BrM4rGYfzMnqIs5Bj399I
+         u4JYyL/Hld2KtgxQBlvleEUr/MFbo5itYvl+FzF/ZAILr0Msh/+062qDQqgJyymU0yk6
+         NqJg==
+Received: by 10.14.100.207 with SMTP id z55mr2091444eef.4.1335453539227;
+        Thu, 26 Apr 2012 08:18:59 -0700 (PDT)
+Received: by 10.14.100.207 with SMTP id z55mr2091429eef.4.1335453539098;
+        Thu, 26 Apr 2012 08:18:59 -0700 (PDT)
+Received: from hpza9.eem.corp.google.com ([74.125.121.33])
+        by gmr-mx.google.com with ESMTPS id s9si3154227eei.3.2012.04.26.08.18.59
+        (version=TLSv1/SSLv3 cipher=AES128-SHA);
+        Thu, 26 Apr 2012 08:18:59 -0700 (PDT)
+Received: from junio.mtv.corp.google.com (junio.mtv.corp.google.com [172.27.69.24])
+	by hpza9.eem.corp.google.com (Postfix) with ESMTP id E219A5C0050;
+	Thu, 26 Apr 2012 08:18:58 -0700 (PDT)
+Received: by junio.mtv.corp.google.com (Postfix, from userid 110493)
+	id 3DD96E125C; Thu, 26 Apr 2012 08:18:58 -0700 (PDT)
+In-Reply-To: <20120426130854.GC27785@sigill.intra.peff.net> (Jeff King's
+	message of "Thu, 26 Apr 2012 09:08:54 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1 (gnu/linux)
+X-Gm-Message-State: ALoCoQk9ADGEZFfFIFDG5R8G1U2JTHVmolbLF/ybJWj0yudmdGrVrxXGKwMtbIpKJcA22YuXSGg1FuldOpWhuiF3MKj5LU8TSrVx/+gfbNyDnQ3AAyFhhlWIhC3xRoIiAkOajclQQ27ZtP8BQRL+m5QZQAtMXaFaSONT3JEl/TJ3FeBuWVE5tuI=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196372>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196373>
 
-On Wed, Apr 25, 2012 at 09:39:03PM -0700, Junio C Hamano wrote:
-> Kacper Kornet <draenog@pld-linux.org> writes:
+Jeff King <peff@peff.net> writes:
 
-> > In some setups the repository owner is not a well defined concept
-> > and administrator can prefer it to be not shown. This commit add
-> > and an option that enable to reach this effect.
+> Don't we explicitly not want to do this when the protocol is http? Curl
+> doesn't respect HTTP_PROXY.
 
-> > Signed-off-by: Kacper Kornet <draenog@pld-linux.org>
+Yes.  Here is what I'll queue.
 
-> Among your recent three patches, this one seems to break t9500; has it
-> been tested?
+-- >8 --
+From: Nelson Benitez Leon <nelsonjesus.benitez@seap.minhap.es>
+Date: Thu, 26 Apr 2012 15:16:51 +0200
+Subject: [PATCH] http: try an uppercase version of $proto_proxy
 
-> [Thu Apr 26 04:32:36 2012] gitweb.perl: Use of uninitialized value in string comparison (cmp) at /srv/git/t/../gitweb/gitweb.perl line 5551.
-> [Thu Apr 26 04:32:36 2012] gitweb.perl: Use of uninitialized value in string comparison (cmp) at /srv/git/t/../gitweb/gitweb.perl line 5551.
-> [Thu Apr 26 04:32:36 2012] gitweb.perl: Use of uninitialized value in hash element at /srv/git/t/../gitweb/gitweb.perl line 5401.
-> [Thu Apr 26 04:32:36 2012] gitweb.perl: Use of uninitialized value in hash element at /srv/git/t/../gitweb/gitweb.perl line 5401.
+Fall back to an uppercase version of $prot_proxy environment variable
+when the lowercase version is not found (but do not do that for http).
 
-> I am guessing both #5401 and #5551 are $it->{'category'} of @projects[]
-> elements.
+Signed-off-by: Nelson Benitez Leon <nbenitezl@gmail.com>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ http.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
-Yes, I have tested the tree with:
-
-gitweb: Improve repository verification
-gitweb: Option to omit column with time of the last change
-gitweb: Option to not display information about owner
-
-applied on top of v1.7.10. And all tests except 't91??' are passed.
-Could you write on top of which revision have you applied these three
-patches?
-
+diff --git a/http.c b/http.c
+index ad2dc36..262778b 100644
+--- a/http.c
++++ b/http.c
+@@ -320,6 +320,12 @@ static CURL *get_curl_handle(const char *url)
+ 		strbuf_addf(&buf, "%s_proxy", cre_url.protocol);
+ 		env_proxy_var = strbuf_detach(&buf, NULL);
+ 		env_proxy = getenv(env_proxy_var);
++		if (!env_proxy && strcmp("http_proxy", env_proxy_var)) {
++			char *p;
++			for (p = env_proxy_var; *p; p++)
++				*p = toupper(*p);
++			env_proxy = getenv(env_proxy_var);
++		}
+ 		if (env_proxy) {
+ 			read_http_proxy = 1;
+ 			no_proxy = getenv("no_proxy");
 -- 
-  Kacper Kornet
+1.7.10.475.g8b959
