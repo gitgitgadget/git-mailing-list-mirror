@@ -1,71 +1,110 @@
-From: =?UTF-8?B?WmJpZ25pZXcgSsSZZHJ6ZWpld3NraS1Tem1law==?= 
-	<zbyszek@in.waw.pl>
-Subject: Re: [PATCH] t5570: fix forwarding of git-daemon messages via cat
-Date: Thu, 26 Apr 2012 23:10:26 +0200
-Message-ID: <4F99B9C2.7090805@in.waw.pl>
-References: <1334393070-7123-1-git-send-email-zbyszek@in.waw.pl> <20120414121358.GA26372@ecki> <20120414122127.GA31220@ecki> <4F8C3E0F.2040300@in.waw.pl> <20120416174230.GA19226@sigill.intra.peff.net> <20120416224424.GA10314@ecki> <20120419060326.GA13982@sigill.intra.peff.net> <4F8FB779.60004@viscovery.net> <20120426130129.GA27785@sigill.intra.peff.net> <4F999105.200@kdbg.org> <20120426195503.GA29526@ecki> <4F99B777.4020103@kdbg.org>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH 29/30] create_dir_entry(): allow the flag value to be
+ passed as an argument
+Date: Thu, 26 Apr 2012 23:12:22 +0200
+Message-ID: <4F99BA36.5070803@alum.mit.edu>
+References: <1335307536-26914-1-git-send-email-mhagger@alum.mit.edu> <1335307536-26914-30-git-send-email-mhagger@alum.mit.edu> <xmqqfwbrd5ny.fsf@junio.mtv.corp.google.com> <xmqq62cnd4pv.fsf@junio.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Clemens Buchacher <drizzd@aon.at>, Jeff King <peff@peff.net>,
-	git@vger.kernel.org, gitster@pobox.com
-To: Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Thu Apr 26 23:11:10 2012
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Jakub Narebski <jnareb@gmail.com>,
+	Heiko Voigt <hvoigt@hvoigt.net>,
+	Johan Herland <johan@herland.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Apr 26 23:12:55 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SNVxy-0004ie-Rk
-	for gcvg-git-2@plane.gmane.org; Thu, 26 Apr 2012 23:11:07 +0200
+	id 1SNVzc-0006fR-Sb
+	for gcvg-git-2@plane.gmane.org; Thu, 26 Apr 2012 23:12:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755041Ab2DZVKy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Apr 2012 17:10:54 -0400
-Received: from kawka.in.waw.pl ([178.63.212.103]:35574 "EHLO kawka.in.waw.pl"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754910Ab2DZVKx (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Apr 2012 17:10:53 -0400
-Received: from 89-78-221-60.dynamic.chello.pl ([89.78.221.60] helo=[192.168.0.12])
-	by kawka.in.waw.pl with esmtpsa (TLS1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.72)
-	(envelope-from <zbyszek@in.waw.pl>)
-	id 1SNVxh-0003S8-3G; Thu, 26 Apr 2012 23:10:50 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:10.0.3) Gecko/20120329 Icedove/10.0.3
-In-Reply-To: <4F99B777.4020103@kdbg.org>
-X-Enigmail-Version: 1.4
+	id S1755219Ab2DZVMi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Apr 2012 17:12:38 -0400
+Received: from einhorn.in-berlin.de ([192.109.42.8]:43839 "EHLO
+	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755142Ab2DZVMg (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Apr 2012 17:12:36 -0400
+X-Envelope-From: mhagger@alum.mit.edu
+Received: from [192.168.101.152] (ssh.berlin.jpk.com [212.222.128.135])
+	(authenticated bits=0)
+	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id q3QLCMLO017101
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Thu, 26 Apr 2012 23:12:22 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:11.0) Gecko/20120410 Thunderbird/11.0.1
+In-Reply-To: <xmqq62cnd4pv.fsf@junio.mtv.corp.google.com>
+X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196415>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196416>
 
-On 04/26/2012 11:00 PM, Johannes Sixt wrote:
-> The shell function that starts git-daemon wants to read the first line of
-> the daemon's stderr to ensure that it started correctly. Subsequent daemon
-> errors should be redirected to fd 4 (which is the terminal in verbose mode
-> or /dev/null in quiet mode). To that end the shell script used 'read' to
-> get the first line of output, and then 'cat &' to forward everything else
-> in a background process.
-> 
-> The problem is, that 'cat >&4 &' does not produce any output because the
-> shell redirects a background process's stdin to /dev/null. To have this
-> command invocation do anything useful, we have to redirect its stdin
-> explicitly (which overrides the /dev/null redirection).
-> 
-> The shell function connects the daemon's stderr to its consumers via a
-> FIFO. We cannot just do this:
-> 
->    read line <git_daemon_output
->    cat <git_daemon_output >&4 &
-> 
-> because after the first redirection the pipe is closed and the daemon
-> could receive SIGPIPE if it writes at the wrong moment. Therefore, we open
-> the readable end of the FIFO only once on fd 7 in the shell and dup from
-> there to the stdin of the two consumers.
-> 
-> Signed-off-by: Johannes Sixt <j6t@kdbg.org>
-Beautiful explanation. Thanks!
-I can confirm that this fix works for me.
+On 04/25/2012 08:52 PM, Junio C Hamano wrote:
+> Junio C Hamano<gitster@pobox.com>  writes:
+>
+>> mhagger@alum.mit.edu writes:
+>>
+>>> diff --git a/refs.c b/refs.c
+>>> index 4eca965..869c9a7 100644
+>>> --- a/refs.c
+>>> +++ b/refs.c
+>>> @@ -231,18 +231,18 @@ static void clear_ref_dir(struct ref_dir *dir)
+>>>   }
+>>>
+>>>   /*
+>>> + * Create a struct ref_entry object for the specified dirname and flag.
+>>>    * dirname is the name of the directory with a trailing slash (e.g.,
+>>>    * "refs/heads/") or "" for the top-level directory.
+>>>    */
+>>>   static struct ref_entry *create_dir_entry(struct ref_cache *ref_cache,
+>>> -					  const char *dirname)
+>>> +					  const char *dirname, int flag)
+>>>   {
+>>>   	struct ref_entry *direntry;
+>>>   	int len = strlen(dirname);
+>>>   	direntry = xcalloc(1, sizeof(struct ref_entry) + len + 1);
+>>>   	memcpy(direntry->name, dirname, len + 1);
+>>> -	direntry->flag = REF_DIR;
+>>> +	direntry->flag = flag;
+>>>   	direntry->u.subdir.ref_cache = ref_cache;
+>>
+>> As the returned structure will always represent a subdirectory and not a
+>> leaf node, i.e. you use u.subdir, I do not think it makes any sense to
+>> make it responsibility for the caller of this function to include
+>> REF_DIR in the value of the flag.
+>
+> Forseeing a response "But but but REF_DIR will become OR of two
+> variants", my complaint is still valid ;-) and it is the bit assignment
+> you did in the final patch that is wrong.  If you make REF_DIR (or not)
+> to differenticate between ref_dir vs ref_value, and use another bit
+> REF_INCOMPLETE to remember that you still need to find out the actual
+> value of it, the the above can still be
 
--
-Zbyszek
+In an earlier design, there were three types of REF_DIR: packed, 
+loose(read), and loose(unread), which could all be packed (along with 
+dir/non-dir) into two bits.  The current bit assignment was left over 
+from that design, plus a latent expectation that it would sometime be 
+necessary to distinguish between packed and loose(read) references.
+
+But so far I haven't found a reason to distinguish between packed and 
+loose(read), so your suggested bit assignment is simpler.  I will 
+include it in the next version of the patch series.
+
+> The suggested bit assignment would also allow you to create ref_value
+> leaf nodes, whose presence you know about (by iterating over readdir()
+> results) but not their values yet (because you haven't opened and read
+> them), by marking them with REF_INCOMPLETE to be extra lazy in the
+> future, if necessary.  I do not know if that much laziness buys us a
+> lot, though ;-).
+
+This would be pretty easy to implement.  Maybe I'll try it someday.
+
+Michael
+
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
