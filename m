@@ -1,132 +1,121 @@
-From: Junio C Hamano <junio@pobox.com>
-Subject: Re: [PATCH v2 08/18] do_for_each_reflog(): use a strbuf to hold logfile name
-Date: Thu, 26 Apr 2012 16:25:41 -0700
-Message-ID: <xmqqaa1y6poq.fsf@junio.mtv.corp.google.com>
-References: <1335479227-7877-1-git-send-email-mhagger@alum.mit.edu>
-	<1335479227-7877-9-git-send-email-mhagger@alum.mit.edu>
+From: Nathan Gray <n8gray@n8gray.org>
+Subject: Re: Why aren't tag refs namespaced?
+Date: Thu, 26 Apr 2012 16:33:07 -0700
+Message-ID: <CA+7g9JzpLkNHT_o1QyJ_r=4DrauWOPFr5XR_CPeAHGcLpLoD+w@mail.gmail.com>
+References: <CA+7g9Jxc6eaCUR8aVhqKH--sOrvQVrZn+se7wtFJsOiKNjz9Pg@mail.gmail.com>
+	<xmqqty068ffd.fsf@junio.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Jakub Narebski <jnareb@gmail.com>,
-	Heiko Voigt <hvoigt@hvoigt.net>,
-	Johan Herland <johan@herland.net>,
-	Christian Couder <chriscool@tuxfamily.org>
-To: mhagger@alum.mit.edu
-X-From: git-owner@vger.kernel.org Fri Apr 27 01:25:51 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Apr 27 01:34:14 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SNY4M-00075C-B9
-	for gcvg-git-2@plane.gmane.org; Fri, 27 Apr 2012 01:25:50 +0200
+	id 1SNYBa-0005SU-6x
+	for gcvg-git-2@plane.gmane.org; Fri, 27 Apr 2012 01:33:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759385Ab2DZXZp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Apr 2012 19:25:45 -0400
-Received: from mail-lpp01m010-f74.google.com ([209.85.215.74]:60626 "EHLO
-	mail-lpp01m010-f74.google.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754123Ab2DZXZo (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 26 Apr 2012 19:25:44 -0400
-Received: by laai8 with SMTP id i8so4704laa.1
-        for <git@vger.kernel.org>; Thu, 26 Apr 2012 16:25:43 -0700 (PDT)
+	id S1759185Ab2DZXdK convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 26 Apr 2012 19:33:10 -0400
+Received: from mail-bk0-f46.google.com ([209.85.214.46]:52771 "EHLO
+	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750864Ab2DZXdJ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 26 Apr 2012 19:33:09 -0400
+Received: by bkuw12 with SMTP id w12so101552bku.19
+        for <git@vger.kernel.org>; Thu, 26 Apr 2012 16:33:08 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
-        h=from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type:x-gm-message-state;
-        bh=lliAKUtzvRXJy9GmZSclAVGLZ0m1QOdl17qOk5hpl30=;
-        b=j8MXR32ZLLtu7v7B3KAb4Fo9NfVkh/HfYO5j05204OpSurL1Vp5FqhqmzVTuCYVMJI
-         IhdxLBuOtkpLJgpA7vmWjm7ud7cQBXf0FDlCRXACqAxPz53GkQZxwgUyL453PIG5Att1
-         riLBx8ogxbznsqvjYQm/8uv9qry3hCFHj9/fuQdybaYaNOkCJTdTt4CPCH25/99aVEmp
-         pTAbYqhGyCD6K+ZH2R6Uv469vnWEdZebtf1bUdv8znrDIr4vSMwIwg7zmmRVpo0NpB0D
-         4uirv6z+37+6kBTIXwxgV2++jSSkmZgyvYW1Q6uZrFKA+TpPXJ1riV47utfrb0ErBIpm
-         AN9A==
-Received: by 10.14.29.2 with SMTP id h2mr2687373eea.5.1335482742855;
-        Thu, 26 Apr 2012 16:25:42 -0700 (PDT)
-Received: by 10.14.29.2 with SMTP id h2mr2687343eea.5.1335482742721;
-        Thu, 26 Apr 2012 16:25:42 -0700 (PDT)
-Received: from hpza9.eem.corp.google.com ([74.125.121.33])
-        by gmr-mx.google.com with ESMTPS id s9si4217229eei.3.2012.04.26.16.25.42
-        (version=TLSv1/SSLv3 cipher=AES128-SHA);
-        Thu, 26 Apr 2012 16:25:42 -0700 (PDT)
-Received: from junio.mtv.corp.google.com (junio.mtv.corp.google.com [172.27.69.24])
-	by hpza9.eem.corp.google.com (Postfix) with ESMTP id 8180C5C0050;
-	Thu, 26 Apr 2012 16:25:42 -0700 (PDT)
-Received: by junio.mtv.corp.google.com (Postfix, from userid 110493)
-	id CB087E125C; Thu, 26 Apr 2012 16:25:41 -0700 (PDT)
-In-Reply-To: <1335479227-7877-9-git-send-email-mhagger@alum.mit.edu>
-	(mhagger@alum.mit.edu's message of "Fri, 27 Apr 2012 00:26:57 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1 (gnu/linux)
-X-Gm-Message-State: ALoCoQkDzZKQoZktVjALuUZlED5ibQT6f94PqCj3DtOeLzRr6xVtKQRSNlyuELq4AEPSH4zV0ju9D4wROXFOEX+Hq8ViQfdDDxlsdR2Egf3rmXfbge2J6jsRCxHkdosyUg6C+xKuRZqMnT7tGdJ3SpF5ANJt/iPBshpWn3CtSxgzy97kSI1yMqE=
+        h=mime-version:x-originating-ip:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding:x-gm-message-state;
+        bh=1fuMYyavOcCbxaDZsBF2Rqw+pzKjX+tya11TgWcPJe0=;
+        b=dUhtY/6vlX2GDtf8AYdgDoGN885Cv10sZu5yVgtbF92SMEqcR3b9fz9sS7noh7d440
+         WOq3kV9EcqlZtPEWaZ0RhDzxHj9M5EblIV+QKjIGsNoXjvrcWitpq0V38crtcIFFQpeL
+         bBJBAiiMS7+dbKaI9snBRIpQgN56tnvuYO1nG4zr3wQhFOCW4bboqXuHHSXXyYlSviDr
+         m7YFCnd4uaz9DPAsmLT2SW+bq0RQ68+GdymUu8AEWQrLe6se55yk2uPFcQ/KabkKaD/g
+         5gd96LcMOUn8g1PysgfgBxb+vZ5+yGZ8+Pgxx8jwsnE5vjyfX1ShYrmr8AA8JVTUvYoB
+         1r4g==
+Received: by 10.204.128.75 with SMTP id j11mr2914616bks.2.1335483187725; Thu,
+ 26 Apr 2012 16:33:07 -0700 (PDT)
+Received: by 10.205.119.8 with HTTP; Thu, 26 Apr 2012 16:33:07 -0700 (PDT)
+X-Originating-IP: [184.182.186.242]
+In-Reply-To: <xmqqty068ffd.fsf@junio.mtv.corp.google.com>
+X-Gm-Message-State: ALoCoQnpIAbN/uEuMDW98oVgTrskNu9tsh4it8Ms6D2I+9M4yKTf1VvSTrQ9SaGGQR7lRwLQtWtn
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196444>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196445>
 
-mhagger@alum.mit.edu writes:
-
-> From: Michael Haggerty <mhagger@alum.mit.edu>
+On Thu, Apr 26, 2012 at 12:24 PM, Junio C Hamano <gitster@pobox.com> wr=
+ote:
+> Nathan Gray <n8gray@n8gray.org> writes:
 >
-> This simplifies the bookkeeping and allows an (artificial) restriction
-> on refname component length to be removed.
+>> So why is it that tag refs don't follow this model?
 >
-> Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
-> ---
->  refs.c |   45 +++++++++++++++++++++++----------------------
->  1 file changed, 23 insertions(+), 22 deletions(-)
->
-> diff --git a/refs.c b/refs.c
-> index 1d25151..f43c255 100644
-> --- a/refs.c
-> +++ b/refs.c
-> @@ -2248,44 +2248,45 @@ static int do_for_each_reflog(const char *base, each_ref_fn fn, void *cb_data)
->  	int retval = 0;
->  	struct dirent *de;
->  	int baselen;
-> -	char *log;
-> +	struct strbuf log;
->  
->  	if (!d)
->  		return *base ? errno : 0;
->  
->  	baselen = strlen(base);
-> -	log = xmalloc(baselen + 257);
-> -	memcpy(log, base, baselen);
-> -	if (baselen && base[baselen-1] != '/')
-> -		log[baselen++] = '/';
-> +	strbuf_init(&log, baselen + 257);
-> +	strbuf_add(&log, base, baselen);
-> +	if (log.len && log.buf[log.len-1] != '/') {
-> +		strbuf_addch(&log, '/');
-> +		baselen++;
-> +	}
->  
->  	while ((de = readdir(d)) != NULL) {
->  		struct stat st;
-> -		int namelen;
->  
->  		if (de->d_name[0] == '.')
->  			continue;
-> -		namelen = strlen(de->d_name);
-> -		if (namelen > 255)
-> -			continue;
->  		if (has_extension(de->d_name, ".lock"))
->  			continue;
-> -		memcpy(log + baselen, de->d_name, namelen+1);
-> -		if (stat(git_path("logs/%s", log), &st) < 0)
-> -			continue;
-> -		if (S_ISDIR(st.st_mode)) {
-> -			retval = do_for_each_reflog(log, fn, cb_data);
-> +		strbuf_addstr(&log, de->d_name);
-> +		if (stat(git_path("logs/%s", log.buf), &st) < 0) {
-> +			/* Silently ignore. */
->  		} else {
+> Because the assumed development model for "people work inside their
+> private world (i.e. "branch"), but integration happens in common
+> namespace (i.e. somebody eventually pushes to "master branch" of the
+> repository that every project participant considers authoritative) an=
+d
+> the end product of the project is tagged there for everybody's
+> consumption. =A0When something is called "version 1.0", it only invit=
+es
+> confusion if _my_ Git version 1.0 is different from _your_ Git versio=
+n
+> 1.0, and it makes no sense for tags used in this manner not to be in =
+a
+> global single namespace. =A0People need to qualify such "version 1.0"=
+ as
+> "Junio's version 1.0" vs "Nathan's version 1.0" if they want to avoid
+> confusion anyway, and at that point you would not be talking about
+> refs/tags/v1.0, but refs/tags/jc/v1.0 vs refs/tags/ng/v1.0 or somethi=
+ng.
 
-Please write this like this:
+I see your point, but the assumption that there is some global tagging
+authority is quite surprising to me, considering the distributed
+nature of git.  And honestly, I don't think it would be so confusing.
+Imagine:
 
-		if (...) {
-			; /* silently ignore */
-		}
+[~/src/git]$ git tag
+my-tag
+my-other-tag
 
-to make the "emptyness" stand out (I amended the previous round when I
-queued them to 'pu', but I forgot to point it out in my review message).
+[~/src/git]$ git tag -a
+my-tag
+my-other-tag
+remotes/joeShmoe/v1.0
+remotes/junio/v1.0
+
+I think people would know which v1.0 to trust, in the same way that
+they know which is the authoritative branch when dealing with multiple
+remotes.
+
+I actually think this model is less confusing, in the sense that it
+helps unify the concept of "remote".  There's this thing called a
+remote that represents the last-known state of a remote repository.
+That state includes branches, tags, etc.  You can choose to
+incorporate that state into your own or ignore it, but it
+fundamentally belongs to the other repo and you can't change it except
+by pushing.  Right now that's the way that branches work, but tags
+have their own rules for you to learn.
+
+> Other workflows that use private tags are possible and they might
+> benefit from having separate namespaces; it is just that they are not
+> the workflow Git was originally designed to support.
+
+That makes sense.
+
+Cheers,
+-n8
+
+--=20
+HexaLex: A New Angle on Crossword Games for iPhone and iPod Touch
+http://hexalex.com
+On The App Store: http://bit.ly/8Mj1CU
+On Facebook: http://bit.ly/9MIJiV
+On Twitter: http://twitter.com/hexalexgame
+http://n8gray.org
