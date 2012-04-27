@@ -1,88 +1,133 @@
-From: =?UTF-8?B?WmJpZ25pZXcgSsSZZHJ6ZWpld3NraS1Tem1law==?= 
-	<zbyszek@in.waw.pl>
-Subject: Re: [RFC/PATCH] Reduce cost of deletion in levenstein distance (4
- -> 3)
-Date: Fri, 27 Apr 2012 11:43:42 +0200
-Message-ID: <4F9A6A4E.2070808@in.waw.pl>
-References: <1335517082-29325-1-git-send-email-Matthieu.Moy@imag.fr>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Compiling git with -Werror
+Date: Fri, 27 Apr 2012 11:45:20 +0200
+Message-ID: <4F9A6AB0.1050504@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@imag.fr>
-X-From: git-owner@vger.kernel.org Fri Apr 27 11:43:57 2012
+To: git discussion list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Apr 27 11:45:27 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SNhiV-00006I-9U
-	for gcvg-git-2@plane.gmane.org; Fri, 27 Apr 2012 11:43:55 +0200
+	id 1SNhjy-0001oF-Pl
+	for gcvg-git-2@plane.gmane.org; Fri, 27 Apr 2012 11:45:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760001Ab2D0Jnv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 Apr 2012 05:43:51 -0400
-Received: from kawka.in.waw.pl ([178.63.212.103]:35608 "EHLO kawka.in.waw.pl"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753913Ab2D0Jnu (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Apr 2012 05:43:50 -0400
-Received: from zopt1.fuw.edu.pl ([193.0.81.24] helo=[10.33.8.79])
-	by kawka.in.waw.pl with esmtpsa (TLS1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.72)
-	(envelope-from <zbyszek@in.waw.pl>)
-	id 1SNhiO-0002Aj-Ez; Fri, 27 Apr 2012 11:43:48 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:10.0.3) Gecko/20120329 Icedove/10.0.3
-In-Reply-To: <1335517082-29325-1-git-send-email-Matthieu.Moy@imag.fr>
-X-Enigmail-Version: 1.4
+	id S1757599Ab2D0JpW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 Apr 2012 05:45:22 -0400
+Received: from einhorn.in-berlin.de ([192.109.42.8]:51368 "EHLO
+	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753188Ab2D0JpV (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Apr 2012 05:45:21 -0400
+X-Envelope-From: mhagger@alum.mit.edu
+Received: from [192.168.101.152] (ssh.berlin.jpk.com [212.222.128.135])
+	(authenticated bits=0)
+	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id q3R9jKSG031213
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT)
+	for <git@vger.kernel.org>; Fri, 27 Apr 2012 11:45:20 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:11.0) Gecko/20120410 Thunderbird/11.0.1
+X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196461>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196462>
 
-On 04/27/2012 10:58 AM, Matthieu Moy wrote:
-> Before this patch, a character deletion has the same cost as 2 swaps, or
-> 4 additions, so Git prefers suggesting a completely scrambled command
-> name to removing a character. For example, "git tags" suggests "stage",
-> but not "tag".
-> 
-> By setting the deletion cost to 3, we keep it higher than swaps or
-> additions, but prefer 1 deletion to 2 swaps. "git tags" now suggests
-> "tag" in addition to staged.
+I like to develop with errors and warnings turned up as strict as 
+possible.  For example, I would like to use
 
-Hi,
-looks sensible, but I wonder if the algorithm shouldn't be tweaked even
-further. I understand why 'tags' and 'stage' are similar,
-but if I say 'tagz', git proposes (with your change), both 'stage' and
-'tag'. 'tag' is one deletion away, but 'stage' requires a deletion and a
-replacement, so should loose to 'tag', I think.
+     CFLAGS="-g -O2 -Wall -Werror -Wdeclaration-after-statement"
 
-Zbyszek
+I thought this would be as simple as
 
-> Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
-> ---
-> The funny thing is: A while ago, I reported that the typo "git tags"
-> was not suggesting "git tag" as alternative "did you mean this?". A
-> patch was posted and merged:
-> 
->   http://thread.gmane.org/gmane.comp.version-control.git/101278
-> 
-> According to the discussion, I it worked for me. But I can't reproduce
-> this "works for me" even going back to the version right after the fix
-> above.
-> 
->  help.c |    2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/help.c b/help.c
-> index 14eefc9..fdaa90d 100644
-> --- a/help.c
-> +++ b/help.c
-> @@ -334,7 +334,7 @@ const char *help_unknown_cmd(const char *cmd)
->  		}
->  
->  		main_cmds.names[i]->len =
-> -			levenshtein(cmd, candidate, 0, 2, 1, 4) + 1;
-> +			levenshtein(cmd, candidate, 0, 2, 1, 3) + 1;
->  	}
->  
->  	qsort(main_cmds.names, main_cmds.cnt,
+     git clean -fdx
+     make configure
+     ./configure CFLAGS="-g -O2 -Wall -Werror -Wdeclaration-after-statement"
+     make
+     # hack
+     make
+     # hack
+     # etc.
+
+but the "make" step results in an error:
+
+> $ make
+>     * new build flags or prefix
+>     CC daemon.o
+> In file included from cache.h:4:0,
+>                  from daemon.c:1:
+> git-compat-util.h:359:0: error: "strtok_r" redefined [-Werror]
+> /usr/include/x86_64-linux-gnu/bits/string2.h:1196:0: note: this is the location of the previous definition
+> cc1: all warnings being treated as errors
+> make: *** [daemon.o] Error 1
+
+The cause of the problem is that the CFLAGS variable is used by 
+./configure when it is running its tests, and some of the tests don't 
+work correctly (they produce results that are not correct for the 
+platform) when run with the strict CFLAGS.  For example, in the broken 
+case config.log contains
+
+> configure:4592: cc -o conftest -g -O2 -Wall -Werror -Wdeclaration-after-statement   conftest.c -lc   >&5
+> conftest.c:16:6: error: conflicting types for built-in function 'gettext' [-Werror]
+> cc1: all warnings being treated as errors
+> configure:4592: $? = 1
+> configure: failed program was:
+> | /* confdefs.h */
+> | #define PACKAGE_NAME "git"
+> | #define PACKAGE_TARNAME "git"
+> | #define PACKAGE_VERSION "1.7.10.362.g010b2"
+> | #define PACKAGE_STRING "git 1.7.10.362.g010b2"
+> | #define PACKAGE_BUGREPORT "git@vger.kernel.org"
+> | #define PACKAGE_URL ""
+> | /* end confdefs.h.  */
+> |
+> | /* Override any GCC internal prototype to avoid an error.
+> |    Use char because int might match the return type of a GCC
+> |    builtin and then its argument prototype would still apply.  */
+> | #ifdef __cplusplus
+> | extern "C"
+> | #endif
+> | char gettext ();
+> | int
+> | main ()
+> | {
+> | return gettext ();
+> |   ;
+> |   return 0;
+> | }
+> configure:4601: result: no
+
+It is possible to work around this problem by passing the CFLAGS value 
+to make rather than configure:
+
+     git clean -fdx
+     make configure
+     ./configure
+     make CFLAGS="-g -O2 -Wall -Werror -Wdeclaration-after-statement"
+     # hack
+     make CFLAGS="-g -O2 -Wall -Werror -Wdeclaration-after-statement"
+     # hack
+     # etc.
+
+but it is annoying to need such a long command line for "make" (not to 
+mention that I run make from the command line, from emacs, etc. and 
+would have to adjust the command line everywhere).  Or the CFLAGS could 
+be put into an environment variable, but this again would have to be set 
+up separately (and consistently!) for every terminal and emacs sessions 
+that is in use.
+
+Is there some other mechanism to set strict CFLAGS parameters for the 
+build without confusing ./configure?
+
+Is this a bug in how the git project is using autoconf?
+
+Is it a bug in autoconf itself?
+
+Thanks,
+Michael
+
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
