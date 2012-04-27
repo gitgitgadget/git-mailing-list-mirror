@@ -1,67 +1,54 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Try an uppercase version of $prot_proxy env var
-Date: Fri, 27 Apr 2012 04:12:20 -0400
-Message-ID: <20120427081220.GC12092@sigill.intra.peff.net>
-References: <xmqq8vhmhzpk.fsf@junio.mtv.corp.google.com>
- <4F966F0C.6090504@seap.minhap.es>
- <xmqqipgpgdpl.fsf@junio.mtv.corp.google.com>
- <4F994AC3.2070708@seap.minhap.es>
- <20120426130854.GC27785@sigill.intra.peff.net>
- <xmqqehraa5ct.fsf@junio.mtv.corp.google.com>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: [PATCH 1/2] git-svn: use platform specific auth providers
+Date: Fri, 27 Apr 2012 08:21:18 +0000
+Message-ID: <20120427082118.GA7257@dcvr.yhbt.net>
+References: <20120426183634.GA4023@login.drsnuggles.stderr.nl>
+ <1335468843-24653-1-git-send-email-matthijs@stdin.nl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Nelson Benitez Leon <nelsonjesus.benitez@seap.minhap.es>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Apr 27 10:12:32 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Gustav Munkby <grddev@gmail.com>,
+	Edward Rudd <urkle@outoforder.cc>,
+	Carsten Bormann <cabo@tzi.org>, git@vger.kernel.org
+To: Matthijs Kooijman <matthijs@stdin.nl>
+X-From: git-owner@vger.kernel.org Fri Apr 27 10:21:31 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SNgI3-00042l-Cd
-	for gcvg-git-2@plane.gmane.org; Fri, 27 Apr 2012 10:12:32 +0200
+	id 1SNgQk-00064M-DN
+	for gcvg-git-2@plane.gmane.org; Fri, 27 Apr 2012 10:21:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759185Ab2D0IMZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 Apr 2012 04:12:25 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:47779
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756968Ab2D0IMW (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Apr 2012 04:12:22 -0400
-Received: (qmail 25853 invoked by uid 107); 27 Apr 2012 08:12:35 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 27 Apr 2012 04:12:35 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 27 Apr 2012 04:12:20 -0400
+	id S1759783Ab2D0IVV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 Apr 2012 04:21:21 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:44809 "EHLO dcvr.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1759546Ab2D0IVT (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Apr 2012 04:21:19 -0400
+Received: from localhost (dcvr.yhbt.net [127.0.0.1])
+	by dcvr.yhbt.net (Postfix) with ESMTP id 087781F449;
+	Fri, 27 Apr 2012 08:21:18 +0000 (UTC)
 Content-Disposition: inline
-In-Reply-To: <xmqqehraa5ct.fsf@junio.mtv.corp.google.com>
+In-Reply-To: <1335468843-24653-1-git-send-email-matthijs@stdin.nl>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196452>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196453>
 
-On Thu, Apr 26, 2012 at 08:18:58AM -0700, Junio C Hamano wrote:
+Matthijs Kooijman <matthijs@stdin.nl> wrote:
+> On Linux, this makes authentication using passwords from gnome-keyring
+> and kwallet work (only the former was tested). On Mac OS X, this allows
+> using the OS X Keychain.
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > Don't we explicitly not want to do this when the protocol is http? Curl
-> > doesn't respect HTTP_PROXY.
-> 
-> Yes.  Here is what I'll queue.
+Thanks, this looks good.  Can you add a Signed-off-by? (you can just
+reply here and I'll add it to the commit message when pushing.
 
-I had raised several other points in my (admittedly belated) review[1].
-So I was kind of expecting a re-roll rather than a patch on top. It was
-mostly readability issues, but there is also a potential segfault when
-the url has no protocol. I'm not sure it can happen in normal git use,
-but:
+Otherwise, consider this Acked-by: Eric Wong <normalperson@yhbt.net>
 
-  git remote-https url-without-protocol
+> +	# earlier 1.6.x versions would segfault, and <= 1.5.x didn't have
+> +	# this function
+> +	if ($SVN::Core::VERSION gt '1.6.12') {
 
-may dereference null (it's via snprintf, so on my system glibc magically
-rewrites this as "(null)_proxy", but other systems will segfault).
-
--Peff
-
-[1] http://article.gmane.org/gmane.comp.version-control.git/195443
-    http://article.gmane.org/gmane.comp.version-control.git/195445
+Thank you for documenting this segfault, btw.
