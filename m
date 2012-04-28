@@ -1,125 +1,152 @@
 From: Nicolas Pitre <nico@fluxnic.net>
 Subject: Re: gc --aggressive
-Date: Sat, 28 Apr 2012 12:42:26 -0400 (EDT)
-Message-ID: <alpine.LFD.2.02.1204281151290.21030@xanadu.home>
+Date: Sat, 28 Apr 2012 12:56:23 -0400 (EDT)
+Message-ID: <alpine.LFD.2.02.1204281243370.21030@xanadu.home>
 References: <CAG+J_DzO=UZ56PjnSCRaTdj8pBSYc5PFofw1QHy42c5pHMK_HQ@mail.gmail.com>
- <20120417220838.GB10797@sigill.intra.peff.net>
- <7vr4vmm29z.fsf@alter.siamese.dyndns.org>
- <20120417221849.GA11936@sigill.intra.peff.net>
- <7vmx6am1h9.fsf@alter.siamese.dyndns.org>
+ <CAG+J_DyqvCxwd6+gzixQEk6SxMZF0qsXKcJPaU6imsJdFQ-64g@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; CHARSET=US-ASCII
 Content-Transfer-Encoding: 7BIT
-Cc: Jeff King <peff@peff.net>, Jay Soffian <jaysoffian@gmail.com>,
-	git <git@vger.kernel.org>, Shawn Pearce <spearce@spearce.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Apr 28 18:42:39 2012
+Cc: git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	Shawn Pearce <spearce@spearce.org>, Jeff King <peff@peff.net>
+To: Jay Soffian <jaysoffian@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Apr 28 18:56:31 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SOAjB-0007sf-J2
-	for gcvg-git-2@plane.gmane.org; Sat, 28 Apr 2012 18:42:33 +0200
+	id 1SOAwf-00030Y-TX
+	for gcvg-git-2@plane.gmane.org; Sat, 28 Apr 2012 18:56:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753766Ab2D1Qm3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 28 Apr 2012 12:42:29 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:62905 "EHLO
+	id S1753625Ab2D1Q4Z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 28 Apr 2012 12:56:25 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:11897 "EHLO
 	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753127Ab2D1Qm2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 28 Apr 2012 12:42:28 -0400
-Received: from xanadu.home ([66.130.28.92]) by VL-VM-MR003.ip.videotron.ca
+	with ESMTP id S1752976Ab2D1Q4Y (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 28 Apr 2012 12:56:24 -0400
+Received: from xanadu.home ([66.130.28.92]) by VL-VM-MR006.ip.videotron.ca
  (Oracle Communications Messaging Exchange Server 7u4-22.01 64bit (built Apr 21
- 2011)) with ESMTP id <0M3700IIU7QQZI40@VL-VM-MR003.ip.videotron.ca> for
- git@vger.kernel.org; Sat, 28 Apr 2012 12:42:27 -0400 (EDT)
-In-reply-to: <7vmx6am1h9.fsf@alter.siamese.dyndns.org>
+ 2011)) with ESMTP id <0M370070W8DZUZ70@VL-VM-MR006.ip.videotron.ca> for
+ git@vger.kernel.org; Sat, 28 Apr 2012 12:56:24 -0400 (EDT)
+In-reply-to: <CAG+J_DyqvCxwd6+gzixQEk6SxMZF0qsXKcJPaU6imsJdFQ-64g@mail.gmail.com>
 User-Agent: Alpine 2.02 (LFD 1266 2009-07-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196496>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196497>
 
-[ coming late to this thread -- thanks to peff who pulled my attention ]
+On Tue, 17 Apr 2012, Jay Soffian wrote:
 
-On Tue, 17 Apr 2012, Junio C Hamano wrote:
-
-> Jeff King <peff@peff.net> writes:
+> On Tue, Apr 17, 2012 at 12:16 PM, Jay Soffian <jaysoffian@gmail.com> wrote:
+> > This has worked fine on repos large and small. However, starting a
+> > couple days ago git started running out of memory on a relatively
+> > modest repo[*] while repacking on a Linux box with 12GB memory (+ 12GB
+> > swap). I am able to gc the repo by either removing --aggressive or
+> > .keep'ing the oldest pack.
 > 
-> > On Tue, Apr 17, 2012 at 03:17:28PM -0700, Junio C Hamano wrote:
-> >
-> >> > How many cores are there on this box? Have you tried setting
-> >> > pack.windowMemory to (12 / # of cores) or thereabouts?
-> >> 
-> >> Hrm, from the end-user's point of view, it appears that pack.windowMemory
-> >> ought to mean the total without having to worry about the division of it
-> >> across threads (which the implementation should be responsible for).
-> >
-> > Agreed. I had to look in the code to check which it meant. I'm not sure
-> > we can change it without regressing existing users, though.
+> Experimentally, setting pack.windowMemory = 256m keeps git memory
+> usage < 4.5 GB during an aggressive repack.
+
+How many threads are used?  As mentioned elsewhere, the memory usage 
+parameter should probably be made global rather than per thread, 
+especially with the ever growing number of CPU cores in a system.  But 
+this also pauses a balancing problem for optimally distributing memory 
+between threads.
+
+> Ironically I end up with a slightly worse pack (63115590 bytes vs
+> 61518628 bytes) than not using --aggressive. I assume this is because
+> pack-objects found a better delta chain during the previous aggressive
+> repack when windowMemory was not set.
+
+Exact.  When reusing delta data, you inherit the quality of the repack 
+run that created them in the first place.
+
+> > 1) If --aggressive does not generally provide a benefit, should it be
+> > made a no-op?
+
+Absolutely not.  It does provide benefits, but it comes with a cost in 
+resources.  If you don't pay that cost then results won't be there.
+
+> I guess I'll revise this question: perhaps --aggressive should be
+> better explained/discouraged. I found a message from Jeff last month
+> and stole his words for this patch:
 > 
-> This is a tangent, but I noticed that the canned settings for "aggressive"
-> use an arbitrarily hardcoded value of depth=250 and window=250 (tweakable
-> with gc.aggressiveWindow).
+> <snip>
+> diff --git i/Documentation/git-gc.txt w/Documentation/git-gc.txt
+> index 815afcb922..ca5bf8b51e 100644
+> --- i/Documentation/git-gc.txt
+> +++ w/Documentation/git-gc.txt
+> @@ -37,9 +37,8 @@ OPTIONS
+>  	Usually 'git gc' runs very quickly while providing good disk
+>  	space utilization and performance.  This option will cause
+>  	'git gc' to more aggressively optimize the repository at the expense
+> -	of taking much more time.  The effects of this optimization are
+> -	persistent, so this option only needs to be used occasionally; every
+> -	few hundred changesets or so.
+> +	of taking much more time and potentially using greater memory. This
+
+Scratch "potentially" here. It definitely uses more memory.
+
+> +	option is rarely needed. See Repacking below.
 > 
-> Even though a shallower depth does cause base candidates with too long a
-> chain hanging to be evicted prematurely while it is still in window and
-> will lead to smaller memory consumption, I do not think the value of
-> "depth" affects the pack-time memory consumption too much.  But the
-> runtime performance of the resulting pack may not be great (in the worst
-> case you would have to undelta 249 times to get to the object data).  We
-> may want to loosen it a bit.
+>  --auto::
+>  	With this option, 'git gc' checks whether any housekeeping is
+> @@ -138,6 +137,39 @@ If you are expecting some objects to be collected
+> and they aren't, check
+>  all of those locations and decide whether it makes sense in your case to
+>  remove those references.
+> 
+> +Repacking
+> +---------
+> +
+> +Under the covers 'git gc' calls several commands to optimize the repository.
+> +The most significant of these with respect to repository size and general
+> +performance is linkgit:git-repack[1]. There are basically three levels of
+> +'gc' with respect to repacking:
+> +
+> + 1. `git gc --auto`; if there are too many loose objects (`gc.auto`), they
+> +    all go into a new incremental pack. If there are already too many
+> +    packs (`gc.autopacklimit`), all of the existing packs are re-packed
+> +    together.
+> +
+> +    Making an incremental pack is by far the fastest because the speed is
+> +    independent of the existing repository history. If git packs
+> +    everything together, it should be more or less the same as (2).
+> +
+> + 2. `git gc`; this packs everything into a single pack. It uses default
+> +    window and depth parameters, but importantly, it reuses existing
+> +    deltas. Doing so makes the delta compression phase much faster, and it
+> +    often makes the writing phase faster (because for older objects, git
+> +    is primarily streaming them right out of the existing pack). On a big
+> +    repository though, this does do a lot of I/O, because git has to
+> +    rewrite the whole pack.
+> +
+> + 3. `git gc --aggressive`; this is often much slower than (2) because git
+> +    throws out all of the existing deltas and recomputes them from
+> +    scratch. It uses a higher window parameter meaning it will spend
+> +    more time computing, and it may end up with a smaller pack. However,
+> +    unless the repository is known to have initially been poorly packed,
+> +    this option is not needed and will just cause git to perform
+> +    extra work.
+> +
+>  HOOKS
+>  -----
+> 
+> @@ -147,6 +179,7 @@ linkgit:githooks[5] for more information.
+> 
+>  SEE ALSO
+>  --------
+> +linkgit:git-pack-refs[1]
+>  linkgit:git-prune[1]
+>  linkgit:git-reflog[1]
+>  linkgit:git-repack[1]
+> </snip>
+> 
+> Thoughts?
 
-I think people are having misconceptions about the definition of the 
-word "aggressive".
-
-This option is, well, aggressive.  By definition this is not meant to be 
-"nice".  This is not meant to be fast, or light on memory usage, etc.  
-This means "achieve as much damage you can" to reduce the pack size.
-
-If people are using it every night then they must be masochists, or 
-attracted by violence, or getting a bit too casual with word 
-definitions.
-
-So if being --aggressive hurts, then don't do it.
-
-If people want a loosened version, it would be more appropriate to 
-introduce a --mild, or --bold, or --disruptive option.  In the same 
-vain, an --insane option could even be introduced to go even further 
-than --aggressive.
-
-This being said, this is no excuse for regressions though.  If git is 
-eating up much more memory than it used to, provided with the same 
-repository and repacking parameters than before, then this certainly 
-needs fixing.  But making --aggressive less so is not a fix.
-
-> Also it might make sense to make the window size a bit more flexible
-> depending on the nature of your history (you would get bigger benefit with
-> larger window when your history has fine grained commits; if there are not
-> many few-liner commits, larger window may not help you that much).
-
-How do you detect the history nature of a repository?  That's the hard 
-part.  Because it should be auto detected as most users won't make a good 
-guess for the best parameter value to use.
-
-Anyway, I think that the window size in terms of objects is a bad 
-parameter.  Historically that is the first thing we implemented. But the 
-window _memory_ usage is probably a better setting to use.  The delta 
-search cost is directly proportional to the amount of data to process 
-and that can be controlled with --window-memory, with the ability to 
-scale up and down the number of objects in the window.  Keeping the 
-number of objects constant makes memory usage totally random since this 
-depends on the repository content, and the computing cost to process it 
-is highly unpredictable. This is very counter-intuitive for users.
-
-Right now the window is limited by default to 10 objects, and window 
-memory usage is unlimited.  This could be reworked so object number, 
-while still being limited to avoid pathological cases, could be much 
-higher, and the window memory usage always limited by default.  That 
-default memory usage could be scaled according to the available 
-resources on the system.  But if the user wants to play with this, then 
-using a memory usage parameter is much easier to understand with more 
-directly observable system load influence.
+FWIW, Acked-by: Nicolas Pitre <nico@fluxnic.net>
 
 
 Nicolas
