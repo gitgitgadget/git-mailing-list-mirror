@@ -1,78 +1,80 @@
-From: username localhost <username.localhost@gmail.com>
-Subject: Re: organizing multiple repositories with dependencies
-Date: Sat, 28 Apr 2012 17:31:54 +0000 (UTC)
-Message-ID: <loom.20120428T191337-86@post.gmane.org>
-References: <1334568432.53977.YahooMailNeo@web65906.mail.ac4.yahoo.com> <m3hawjagw9.fsf@localhost.localdomain> <nng3983phhc.fsf@transit.us.cray.com> <CAE1pOi1KnvRk4yxK8OQHi9h_ueNnh5Ar3tbKFBKTA69=Aje0TQ@mail.gmail.com> <201204171837.q3HIbbcW013784@no.baka.org> <CAE1pOi29dKd2LHW7MJ+TTN4HzFkOPFEyf7Sf2emSsBYm93uYUA@mail.gmail.com> <nng1unmnksx.fsf@transit.us.cray.com> <4F8EB157.5060707@web.de> <nngbomh3uz0.fsf@transit.us.cray.com> <201204241759.q3OHxSbH017287@no.baka.org> <4F970C92.3030704@web.de> <nngobqg1ztl.fsf@transit.us.cray.com>
+From: Yann Hodique <yann.hodique@gmail.com>
+Subject: Re: Bug in git-stash(.sh) ?
+Date: Sat, 28 Apr 2012 22:23:24 +0200
+Message-ID: <87wr4za9mr.fsf@gmail.com>
+References: <20379.9312.943088.350379@winooski.ccs.neu.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+Cc: magit@googlegroups.com
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Apr 28 19:35:56 2012
+X-From: git-owner@vger.kernel.org Sat Apr 28 22:35:46 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SOBYi-0003Mj-DP
-	for gcvg-git-2@plane.gmane.org; Sat, 28 Apr 2012 19:35:48 +0200
+	id 1SOEMr-0004nH-Qd
+	for gcvg-git-2@plane.gmane.org; Sat, 28 Apr 2012 22:35:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753127Ab2D1RfP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 28 Apr 2012 13:35:15 -0400
-Received: from plane.gmane.org ([80.91.229.3]:58673 "EHLO plane.gmane.org"
+	id S1753456Ab2D1UfL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 28 Apr 2012 16:35:11 -0400
+Received: from plane.gmane.org ([80.91.229.3]:52200 "EHLO plane.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752656Ab2D1RfO (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 28 Apr 2012 13:35:14 -0400
+	id S1753065Ab2D1UfJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 28 Apr 2012 16:35:09 -0400
 Received: from list by plane.gmane.org with local (Exim 4.69)
 	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1SOBY0-0002k5-H8
-	for git@vger.kernel.org; Sat, 28 Apr 2012 19:35:06 +0200
-Received: from 76-243-42-111.lightspeed.cntmoh.sbcglobal.net ([76.243.42.111])
+	id 1SOEMC-0004Ea-FP
+	for git@vger.kernel.org; Sat, 28 Apr 2012 22:35:04 +0200
+Received: from aannecy-552-1-169-161.w83-201.abo.wanadoo.fr ([83.201.185.161])
         by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
         id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 28 Apr 2012 19:35:04 +0200
-Received: from username.localhost by 76-243-42-111.lightspeed.cntmoh.sbcglobal.net with local (Gmexim 0.1 (Debian))
+        for <git@vger.kernel.org>; Sat, 28 Apr 2012 22:35:04 +0200
+Received: from yann.hodique by aannecy-552-1-169-161.w83-201.abo.wanadoo.fr with local (Gmexim 0.1 (Debian))
         id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 28 Apr 2012 19:35:04 +0200
+        for <git@vger.kernel.org>; Sat, 28 Apr 2012 22:35:04 +0200
 X-Injected-Via-Gmane: http://gmane.org/
 X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: sea.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 76.243.42.111 (Mozilla/5.0 (Windows NT 6.1; WOW64; rv:12.0) Gecko/20100101 Firefox/12.0)
+X-Gmane-NNTP-Posting-Host: aannecy-552-1-169-161.w83-201.abo.wanadoo.fr
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.1.50 (gnu/linux)
+Face: iVBORw0KGgoAAAANSUhEUgAAADAAAAAwBAMAAAClLOS0AAAAJ1BMVEUEBgMUFBEnIR07MStT
+ QjlvWkyEbl2ccWaVe2mpi3qxj3bDoIz+//wlCgCYAAACWUlEQVQ4EQXBQXIVVRQA0HNvGPNvJ45J
+ 98epQhIdK6ALsNyA63EPLsEtWFQ5FlLFVDodHVr8fh0dQj/PSQAAgAQAAEgAGG4mEKoSAKyGgerV
+ WgIIxKBoWkgAh2GwRmwjqkuAyPNpsNYh0UQCVMXFNA3DVCNVPQFy+PH6qxfD0CJCaxKgIr97+er5
+ 2u56VyUBhouxb49evZjqSNsiAdrBEu2/r6/H+6L3BITMQdX556+UEAmo0nvheP3DpFdPwOAqCvrZ
+ TbBFAnHgMiCclRjGBOLhAmBzpM4T6Mfr8w3othGJc+J63AuwX+qn94kr8sgJQNNa4jSaWNdf30At
+ 9w1JXhzHYoirT7fwpDNI8ubm6TlWw4r+184aSX/08urKsa+vpyv++eWPFT0Jj4JlOv4UXX/d17eU
+ 5BNTa2MeLfppev6i2CT9dqcW8njb3np32+iSmpM2whft2cPoDJL2D2D/eHF/64mgKvFhsZvJsw/d
+ ZdautpboP9+GxKd3z+JwcNK6hLkF+L0P9e+73lRI6F0H4qkvd7ZeCYzgG/PdaBW9WgLLwjzfXX7Y
+ vL+rbosExb6vYluet7ulqd4TMLZFU/Xbx1NTm0ro3HN1mudhX060Q7WEmE5jrfk03ebdAlsl+LuW
+ bpm+NY19URWHLSHGsbdZm4fH86nQVQLn+5ytnR2tc9O2h23NKtR0ue7z3v+cTwt1eaghI4ZhaDn1
+ u97Wpc2Ndt9aS8TAxXn/8P5Nv1uJDFUZnMba43pa53UN9H2vLjufPX/IiJtjnZYJojqp9zEek2c3
+ 399MhRAR/gfpVBU4QWr2iwAAAABJRU5ErkJggg==
+Cancel-Lock: sha1:kbpZL/5g6oNYFFs/V+dWileIjzI=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196499>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196500>
 
-dag writes:
-> 
-> Should gitslave be covered in this document if gitslave is not in the
-> upstream git repository?  I'm not knocking gitslave, in fact I think
-> it's cool technology and probably _should_ be contributed upstream.  I'm
-> just asking the question about whether stuff in Documentation/ is or
-> should be limited to things in the upstream repository.
+>>>>> "Eli" == Eli Barzilay writes:
 
-I think that it would be better to be inclusive while initially writing such a
-document. The work of helping to distinguish gitslave from the others should
-also help to flesh out the differences between submodules and git-subtree.
+> [Note: cross-posted to the magit list to see if anyone else has
+> this problem.]
 
-Once the document is in good enough shape that it can be merged, it would be
-easy enough to strip gitslave out if it were decided that it should not be
-included. 
+> For a while now I had a problem when I try to do stash operations via
+> magit -- for example, it shows this in the process buffer:
 
+>   $ git --no-pager stash apply stash@{2012-04-27 08:53:30 -0400}
+>   Too many revisions specified: stash@{2012-04-27 08:53:30 -0400}
 
-> 
-> How about creating a topic branch for this and publishing it so several
-> of us can collaborate?  I think that would make things a bit easier
-> moving forward.
+How exactly do you make magit generate these calls?
+AFAICT, Magit should operate on whatever "git stash list" outputs,
+meaning stash@{N}. So I guess I'm missing something.
 
-I second that. As a git user, I would love to see a document that described
-these systems, explaining how they differ, showing how various "common" actions
-are done in each, and describing the workflows each is best in, and what
-workflows each does poorly with.
+Yann.
 
-If somebody does not create a branch and post a starting point, I'm afraid this
-idea will simply die out.
+-- 
+The strictest limits are self-imposed.
 
---
-username@localhost
+  -- FRIEDRE GINAZ, Philosophy of the Swordmaster
