@@ -1,102 +1,138 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Pulling without any local commits deletes stages files without warning.
-Date: Sat, 28 Apr 2012 21:21:29 -0700
-Message-ID: <xmqqk40z88xi.fsf@junio.mtv.corp.google.com>
-References: <CAHzj05Uy-zofirgnhqK_t+jdD41J8yG5OJk-QCHmQ+OZLWfMqw@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jem <jem.mawson@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Apr 29 06:21:49 2012
+From: mhagger@alum.mit.edu
+Subject: [PATCH] create_ref_entry(): move check_refname_format() call to callers
+Date: Sun, 29 Apr 2012 08:18:08 +0200
+Message-ID: <1335680288-5128-1-git-send-email-mhagger@alum.mit.edu>
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Michael Haggerty <mhagger@alum.mit.edu>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Apr 29 08:18:32 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SOLdt-000338-Bs
-	for gcvg-git-2@plane.gmane.org; Sun, 29 Apr 2012 06:21:49 +0200
+	id 1SONSp-0003B4-CQ
+	for gcvg-git-2@plane.gmane.org; Sun, 29 Apr 2012 08:18:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751384Ab2D2EVj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 29 Apr 2012 00:21:39 -0400
-Received: from mail-ey0-f202.google.com ([209.85.215.202]:55952 "EHLO
-	mail-ey0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751270Ab2D2EVb (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 29 Apr 2012 00:21:31 -0400
-Received: by eaaq10 with SMTP id q10so99535eaa.1
-        for <git@vger.kernel.org>; Sat, 28 Apr 2012 21:21:30 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type:x-gm-message-state;
-        bh=LPPDTExVvsX0pxOXKiI1J1dJYy2itVUfxd8K42jcBWI=;
-        b=hQY3EYshb9sIHsW1fR+WpDN6latPdI5TsTr0ls1orjUIfxwKp4QzgHm0REdbGFg9ag
-         nxAnYqUyKSFHRj0OMS2j7OvOWLXIgYU8EU9Qk9kBfxaXBkL4ixJSg7EFXyMuqPR+fUGE
-         z/Rxi3x/ujPPRf0QEksP9kClJO4GfsrMGgM0zx9PcRm+QNyMhppdca2ppZsy40spKrLH
-         7i2W973M8iWaDXpy+kiCgDFQwkyjNVJ4ZxO/Ep1aUow2Jj6wTXJWTezq9ywywf3DOwp9
-         JeEMkUEbTCGi+OWhap3dGinyxnORyd8VAlDusEY7H7xATGGi7yMQ2Szg0SBeWX10XDpx
-         vvpg==
-Received: by 10.213.26.206 with SMTP id f14mr872621ebc.15.1335673290578;
-        Sat, 28 Apr 2012 21:21:30 -0700 (PDT)
-Received: by 10.213.26.206 with SMTP id f14mr872609ebc.15.1335673290442;
-        Sat, 28 Apr 2012 21:21:30 -0700 (PDT)
-Received: from hpza10.eem.corp.google.com ([74.125.121.33])
-        by gmr-mx.google.com with ESMTPS id y52si11421990eef.2.2012.04.28.21.21.30
-        (version=TLSv1/SSLv3 cipher=AES128-SHA);
-        Sat, 28 Apr 2012 21:21:30 -0700 (PDT)
-Received: from junio.mtv.corp.google.com (junio.mtv.corp.google.com [172.27.69.24])
-	by hpza10.eem.corp.google.com (Postfix) with ESMTP id 4006420004E;
-	Sat, 28 Apr 2012 21:21:30 -0700 (PDT)
-Received: by junio.mtv.corp.google.com (Postfix, from userid 110493)
-	id 832B8E175F; Sat, 28 Apr 2012 21:21:29 -0700 (PDT)
-In-Reply-To: <CAHzj05Uy-zofirgnhqK_t+jdD41J8yG5OJk-QCHmQ+OZLWfMqw@mail.gmail.com>
-	(Jem's message of "Sun, 29 Apr 2012 10:29:09 +1000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1 (gnu/linux)
-X-Gm-Message-State: ALoCoQlkbqDzRU00oK0zJanEoKKzspBFFEzwgpsatA+RDndSXbIgwTwt80Qgxx0mEUrr2wsU57qU0Bqky//OEwZsPQE/96a4l4ss9W2QcEiPBMCvuL/WS/RKuldXke4TfW0ZkK90deGsaJ+y2jN5KPkhQhJcn2ucv09M0Fy1M53rtccT1U2fu90=
+	id S1751831Ab2D2GS0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 29 Apr 2012 02:18:26 -0400
+Received: from einhorn.in-berlin.de ([192.109.42.8]:47990 "EHLO
+	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751810Ab2D2GS0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 29 Apr 2012 02:18:26 -0400
+X-Envelope-From: mhagger@alum.mit.edu
+Received: from michael.fritz.box (p4FC0BD1D.dip.t-dialin.net [79.192.189.29])
+	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id q3T6IH6h014222;
+	Sun, 29 Apr 2012 08:18:17 +0200
+X-Mailer: git-send-email 1.7.10
+X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196503>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196504>
 
-Jem <jem.mawson@gmail.com> writes:
+From: Michael Haggerty <mhagger@alum.mit.edu>
 
-> Pulling without any local commits deletes staged files without
-> warning. Is this intended behaviour?
+This allows the caller to decide what flags to use for
+check_refname_format().
 
-It is an unanticipated corner case interfering our attempt to be too
-nice that backfired.
+Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
+---
 
-For a long time, having no history and asking to pull was forbidden,
-because "git pull" is is about combining two (or more) histories
-together and pulling when you have no history is a nonsense --- you only
-have one history (the history from the other side) and there is nothing
-to combine.
+On 04/27/2012 05:06 PM, Junio C Hamano wrote:
+> Jeff King<peff@peff.net>  writes:
+> 
+>> I upgraded git on a machine recently, and it created problems for a repo
+>> with a bogus character in a ref name.  Older versions of git never
+>> complained about it. Newer ones, containing your dce4bab ("add_ref():
+>> verify that the refname is formatted correctly") do. That's fine; it's
+>> bogus and git _should_ complain about it.
+>>
+>> However, recovering from the situation is unnecessarily hard, ...
+>> ...
+>> I seem to recall discussing this format-tightening and trying to be sure
+>> that users were left with a way forward for fixing their repos. But I
+>> can't find the discussion, and I don't recall any conclusion we came to.
+> 
+> I haven't dug the archive but I do recall pointing many issues out
+> around the theme "be liberal in what you accept and strict in what you
+> produce" on this topic, and loosening one or two showstoppers during the
+> review cycle, but obviously we did not catch all of them.
+> 
+> Michael?
 
-Later we tried to be nicer, as some new users triggered an error when
-doing "git init" in an empty directory followed by "git pull", by
-redefining "merge" into no history to mean resetting to the other
-history.
+I will work on providing more infrastructure for checking refnames at
+varying levels of strictness, but I don't know enough about the code
+paths to be able to find the places where the strictness levels need
+tweaking.
 
-This solved "git init && git pull", but we did not anticipate anybody
-would do a "git init && git add && git pull" sequence, to which there is
-no sane outcome other than just erroring out.
+For this to work, the various callers of check_refname_format() will
+have to be able to influence the level of strictness that they want to
+enforce.  This patch is one trivial step in that direction.
 
-A patch to give that only sane outcome may look like this.
+ refs.c |   23 +++++++++++++++--------
+ 1 file changed, 15 insertions(+), 8 deletions(-)
 
- git-pull.sh |    3 +++
- 1 file changed, 3 insertions(+)
-
-diff --git a/git-pull.sh b/git-pull.sh
-index 2a10047..da102d0 100755
---- a/git-pull.sh
-+++ b/git-pull.sh
-@@ -261,6 +261,9 @@ esac
+diff --git a/refs.c b/refs.c
+index 09322fe..bc735e7 100644
+--- a/refs.c
++++ b/refs.c
+@@ -172,15 +172,11 @@ struct ref_entry {
+ };
  
- if test -z "$orig_head"
- then
-+	test $(git ls-files | wc -l) = 0 ||
-+	die "$(gettext "Uncommitted changes in the index")"
-+
- 	git update-ref -m "initial pull" HEAD $merge_head "$curr_head" &&
- 	git read-tree -m -u HEAD || exit 1
- 	exit
+ static struct ref_entry *create_ref_entry(const char *refname,
+-					  const unsigned char *sha1, int flag,
+-					  int check_name)
++					  const unsigned char *sha1, int flag)
+ {
+ 	int len;
+ 	struct ref_entry *ref;
+ 
+-	if (check_name &&
+-	    check_refname_format(refname, REFNAME_ALLOW_ONELEVEL|REFNAME_DOT_COMPONENT))
+-		die("Reference has invalid format: '%s'", refname);
+ 	len = strlen(refname) + 1;
+ 	ref = xmalloc(sizeof(struct ref_entry) + len);
+ 	hashcpy(ref->u.value.sha1, sha1);
+@@ -710,7 +706,11 @@ static void read_packed_refs(FILE *f, struct ref_dir *dir)
+ 
+ 		refname = parse_ref_line(refline, sha1);
+ 		if (refname) {
+-			last = create_ref_entry(refname, sha1, flag, 1);
++			if (check_refname_format(refname,
++						 REFNAME_ALLOW_ONELEVEL|
++						 REFNAME_DOT_COMPONENT))
++				die("Packed reference has invalid format: '%s'", refname);
++			last = create_ref_entry(refname, sha1, flag);
+ 			add_ref(dir, last);
+ 			continue;
+ 		}
+@@ -745,8 +745,11 @@ static struct ref_dir *get_packed_refs(struct ref_cache *refs)
+ 
+ void add_packed_ref(const char *refname, const unsigned char *sha1)
+ {
++	if (check_refname_format(refname,
++				 REFNAME_ALLOW_ONELEVEL|REFNAME_DOT_COMPONENT))
++		die("Reference has invalid format: '%s'", refname);
+ 	add_ref(get_packed_refs(get_ref_cache(NULL)),
+-			create_ref_entry(refname, sha1, REF_ISPACKED, 1));
++			create_ref_entry(refname, sha1, REF_ISPACKED));
+ }
+ 
+ static void get_ref_dir(struct ref_cache *refs, const char *base,
+@@ -805,7 +808,11 @@ static void get_ref_dir(struct ref_cache *refs, const char *base,
+ 				hashclr(sha1);
+ 				flag |= REF_ISBROKEN;
+ 			}
+-			add_ref(dir, create_ref_entry(refname, sha1, flag, 1));
++			if (check_refname_format(refname,
++						 REFNAME_ALLOW_ONELEVEL|
++						 REFNAME_DOT_COMPONENT))
++				die("Loose reference has invalid format: '%s'", refname);
++			add_ref(dir, create_ref_entry(refname, sha1, flag));
+ 		}
+ 		free(refname);
+ 		closedir(d);
+-- 
+1.7.10
