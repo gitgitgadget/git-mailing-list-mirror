@@ -1,67 +1,103 @@
-From: jaseem abid <jaseemabid@gmail.com>
-Subject: Working on a rejected GSoC project
-Date: Sun, 29 Apr 2012 17:16:28 +0530
-Message-ID: <CAH-tXsAHAcWh7WWZxfhVaaqM384eVh394QULVdw98N1f_C_7CQ@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] create_ref_entry(): move check_refname_format() call to
+ callers
+Date: Sun, 29 Apr 2012 07:58:31 -0400
+Message-ID: <20120429115831.GC24254@sigill.intra.peff.net>
+References: <1335680288-5128-1-git-send-email-mhagger@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>,
-	artagnon@gmail.com
-To: git mailing list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Apr 29 13:47:35 2012
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: mhagger@alum.mit.edu
+X-From: git-owner@vger.kernel.org Sun Apr 29 13:58:43 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SOSbB-0001sg-Ae
-	for gcvg-git-2@plane.gmane.org; Sun, 29 Apr 2012 13:47:29 +0200
+	id 1SOSm0-0001cL-IA
+	for gcvg-git-2@plane.gmane.org; Sun, 29 Apr 2012 13:58:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753084Ab2D2LrL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 29 Apr 2012 07:47:11 -0400
-Received: from mail-wi0-f172.google.com ([209.85.212.172]:43138 "EHLO
-	mail-wi0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752637Ab2D2LrJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 29 Apr 2012 07:47:09 -0400
-Received: by wibhj6 with SMTP id hj6so2008368wib.1
-        for <git@vger.kernel.org>; Sun, 29 Apr 2012 04:47:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to:cc:content-type;
-        bh=REtM/nUJlKgDVrZDORo45V+MfTyD5itD5MQma5WxcVU=;
-        b=kf7s2arW+o4qn7RuJ3RVucZYWvTmIGDJNv20gCm2TXFI7aPfk8tTHZV1zRccTmYTG9
-         69jCmGyg4vTlBtVCNY7+lPcOnaofVfTXcRolkzm5GQAUZfmgd8fJ5jiX4GdxvEPQDYCl
-         gUVpSOmwyKVNxTDgwzzEGxJNx06LZ1PDwjTiQ5kKPNNPkw5/Xs7qSt32Cbd4z6AeFV3Z
-         q3de1m+hO76YQnpa8tbPYJE+enZzlrNj+WoGrgaq3xXHVDzC7awdXCNK39zbDUpdnxJ4
-         wXmlvwB27iWsYPWnxJqzQoWAIpU2aguHFrgUqeKsEwixqqF/9hc5ECCnm0O6knzd97Vy
-         OTbg==
-Received: by 10.180.80.104 with SMTP id q8mr517054wix.14.1335700028597; Sun,
- 29 Apr 2012 04:47:08 -0700 (PDT)
-Received: by 10.227.39.96 with HTTP; Sun, 29 Apr 2012 04:46:28 -0700 (PDT)
+	id S1753292Ab2D2L6e (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 29 Apr 2012 07:58:34 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:50752
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752803Ab2D2L6e (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 29 Apr 2012 07:58:34 -0400
+Received: (qmail 14160 invoked by uid 107); 29 Apr 2012 11:58:48 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Sun, 29 Apr 2012 07:58:48 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 29 Apr 2012 07:58:31 -0400
+Content-Disposition: inline
+In-Reply-To: <1335680288-5128-1-git-send-email-mhagger@alum.mit.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196507>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196508>
 
-Hello everyone,
+On Sun, Apr 29, 2012 at 08:18:08AM +0200, mhagger@alum.mit.edu wrote:
 
-I applied for the project "Use JavaScript library / framework in
-gitweb" which sadly didn't get a slot this year's GSoC. I would love
-to work on this project in my summer vacation as nobody else got the
-project and is working on it now. It would be great if someone among
-you can spare some of your time for me and be a mentor to help me out
-in this task. I am planning to stick to the GSoC schedule and finish
-it as early as possible in a good manner.
+> I will work on providing more infrastructure for checking refnames at
+> varying levels of strictness, but I don't know enough about the code
+> paths to be able to find the places where the strictness levels need
+> tweaking.
+> 
+> For this to work, the various callers of check_refname_format() will
+> have to be able to influence the level of strictness that they want to
+> enforce.  This patch is one trivial step in that direction.
 
-I have my university break coming soon and will be able to work on
-this from 2nd May to 20th July investing as much as time this
-requires. Its quite sad that I have to do this without the GSoC tag or
-money, but I really want to finish something I started already. I hear
-by see this as an opportunity to   contribute back to a tool which I
-heavily use on a day to day basis.
+It seems like the create_ref_entry code paths should _always_ just be
+issuing warnings, as they are about reading existing refs, no? The die()
+side should only come when we are writing refs.
 
-Any sort of help would be greatly valued.
+So something like this patch:
 
--- 
-Jaseem Abid
-http://jaseemabid.github.com
+diff --git a/refs.c b/refs.c
+index a5802e1..3dba205 100644
+--- a/refs.c
++++ b/refs.c
+@@ -180,7 +180,7 @@ static struct ref_entry *create_ref_entry(const char *refname,
+ 
+ 	if (check_name &&
+ 	    check_refname_format(refname, REFNAME_ALLOW_ONELEVEL|REFNAME_DOT_COMPONENT))
+-		die("Reference has invalid format: '%s'", refname);
++		warning("Reference has invalid format: '%s'", refname);
+ 	len = strlen(refname) + 1;
+ 	ref = xmalloc(sizeof(struct ref_entry) + len);
+ 	hashcpy(ref->u.value.sha1, sha1);
+@@ -926,7 +926,7 @@ const char *resolve_ref_unsafe(const char *refname, unsigned char *sha1, int rea
+ 	if (flag)
+ 		*flag = 0;
+ 
+-	if (check_refname_format(refname, REFNAME_ALLOW_ONELEVEL))
++	if (!reading && check_refname_format(refname, REFNAME_ALLOW_ONELEVEL))
+ 		return NULL;
+ 
+ 	for (;;) {
+
+which gives me the following behavior on the snippet I posted earlier:
+
+  $ git fsck
+  warning: Reference has invalid format: 'refs/tags/foo^?bar'
+
+  $ git rev-parse --verify "$evil"
+  711078d8c4c0d26b02afee9f385a64455fe4cccd
+
+  $ git for-each-ref
+  warning: Reference has invalid format: 'refs/tags/foo^?bar'
+  711078d8c4c0d26b02afee9f385a64455fe4cccd commit refs/heads/master
+  711078d8c4c0d26b02afee9f385a64455fe4cccd commit refs/tags/foobar
+
+  $ git tag -l
+  warning: Reference has invalid format: 'refs/tags/foo^?bar'
+  foo^?bar
+
+  $ git tag fixed "$evil"
+  warning: Reference has invalid format: 'refs/tags/foo^?bar'
+  $ git rev-parse fixed
+  711078d8c4c0d26b02afee9f385a64455fe4cccd
+  $ git tag -d "$evil"
+  Deleted tag 'foo^?bar' (was 711078d)
+
+-Peff
