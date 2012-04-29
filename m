@@ -1,71 +1,106 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] test: skip test with COLUMNS=1 under mksh
-Date: Sun, 29 Apr 2012 14:28:34 -0700
-Message-ID: <7vsjfmxm65.fsf@alter.siamese.dyndns.org>
-References: <20120426223422.GC22261@camk.edu.pl>
- <1335518725-19728-1-git-send-email-zbyszek@in.waw.pl>
- <xmqqaa1x9mdi.fsf@junio.mtv.corp.google.com> <4F9B1F38.8040406@gmail.com>
- <4F9BCFD9.8020005@in.waw.pl>
+From: Jeff King <peff@peff.net>
+Subject: Re: Bug in git-stash(.sh) ?
+Date: Sun, 29 Apr 2012 18:01:32 -0400
+Message-ID: <20120429220132.GB4491@sigill.intra.peff.net>
+References: <20379.9312.943088.350379@winooski.ccs.neu.edu>
+ <87wr4za9mr.fsf@gmail.com>
+ <m2pqasb8mr.fsf@linux-m68k.org>
+ <xmqqvckk93ta.fsf@junio.mtv.corp.google.com>
+ <CALO-gut4csy5wef4iGPGD5jVPc1f0iFBfS3MUWrOwc2yczdviw@mail.gmail.com>
+ <20380.33897.666338.766096@winooski.ccs.neu.edu>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Stefano Lattarini <stefano.lattarini@gmail.com>,
-	Kacper Kornet <draenog@pld-linux.org>, git@vger.kernel.org,
-	Lucian Poston <lucian.poston@gmail.com>
-To: Zbigniew =?utf-8?Q?J=C4=99drzejewski-Szmek?= <zbyszek@in.waw.pl>
-X-From: git-owner@vger.kernel.org Sun Apr 29 23:28:51 2012
+Cc: Yann Hodique <yann.hodique@gmail.com>,
+	Andreas Schwab <schwab@linux-m68k.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Eli Barzilay <public-eli-oSK4jVRJLyZg9hUCZPvPmw@plane.gmane.org>,
+	git@vger.kernel.org,
+	Eli Barzilay <public-eli-oSK4jVRJLyZg9hUCZPvPmw@plane.gmane.org>,
+	magit@googlegroups.com
+To: Eli Barzilay <eli@barzilay.org>
+X-From: git-owner@vger.kernel.org Mon Apr 30 00:01:45 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SObfl-0000QR-Pb
-	for gcvg-git-2@plane.gmane.org; Sun, 29 Apr 2012 23:28:50 +0200
+	id 1SOcBa-0007M4-Nf
+	for gcvg-git-2@plane.gmane.org; Mon, 30 Apr 2012 00:01:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754096Ab2D2V2i convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 29 Apr 2012 17:28:38 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:53771 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753615Ab2D2V2h convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 29 Apr 2012 17:28:37 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id ED1827F5E;
-	Sun, 29 Apr 2012 17:28:36 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=aqQgZOm7G37k
-	N9ElMAYRgtbOBv4=; b=ADiPBXdGNfWLG4z/OpQvvSTj1QgLfLjSBXZhNKtqaCna
-	vy8sG7HUlsR9VTuC3jciBun4TtdOd0N4flv0/2102kdQwihG8o1PoGIJ77tz0uyJ
-	qk7tDgFgW43m1r7PZYqc2lm0S6dEn1EejqVTgj6aG2sZB7cITb58L857CiTMqJ8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=HCdOYN
-	3cMR2a9DpcoNDr2lnK/tyviGvpqKd+9VM4EFWGkmJRUq4INaqQFnyj7bxcry8QTI
-	QCfuWgZaHG9smyNGBDDzXsaXa/c6uLBK1LkGNMXWNURiHsINW9GkyogQHFBRoCoH
-	tgaYNRlgz+YDl6aupNwAIDQoHz4Tb1Hf9hW28=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E1F687F5D;
-	Sun, 29 Apr 2012 17:28:36 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 6F8CA7F5C; Sun, 29 Apr 2012
- 17:28:36 -0400 (EDT)
-In-Reply-To: <4F9BCFD9.8020005@in.waw.pl> ("Zbigniew =?utf-8?Q?J=C4=99drze?=
- =?utf-8?Q?jewski-Szmek=22's?= message of "Sat, 28 Apr 2012 13:09:13 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 479B4AA2-9242-11E1-A320-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754218Ab2D2WBg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 29 Apr 2012 18:01:36 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:51176
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754002Ab2D2WBf (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 29 Apr 2012 18:01:35 -0400
+Received: (qmail 17478 invoked by uid 107); 29 Apr 2012 22:01:50 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Sun, 29 Apr 2012 18:01:50 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 29 Apr 2012 18:01:32 -0400
+Content-Disposition: inline
+In-Reply-To: <20380.33897.666338.766096@winooski.ccs.neu.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196515>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196516>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196516>
 
-Zbigniew J=C4=99drzejewski-Szmek <zbyszek@in.waw.pl> writes:
+On Sat, Apr 28, 2012 at 07:59:37PM -0400, Eli Barzilay wrote:
 
-> This approach with 'env COLUMNS=3D1 git ...' looks nicer, and works w=
-hen
-> invoked directly, but doesn't work when run under the test harness,
-> because bin-wrappers/git uses !/bin/sh, which resets COLUMNS. So this
-> simpler approach doesn't look feasible.
+> > How exactly do you make magit generate these calls?  AFAICT, Magit
+> > should operate on whatever "git stash list" outputs, meaning
+> > stash@{N}. So I guess I'm missing something.
+> 
+> ... right: the offending configuration I had was log.date = iso.  This
+> calls for a simple chane for git-stash.sh to use `--date default':
+> 
+> 	git log --date default --format="%gd: %gs" -g "$@" $ref_stash --
 
-Sigh... That shell seem to be infinitely broken X-<.
+I seem to remember dealing with this once a long time ago. And while
+"--date=default" works, it is papering over the symptom of a larger
+problem, which is that "log" should not use a non-commandline date to
+make the stash selector decision. Searching turned up this discussion:
+
+  http://thread.gmane.org/gmane.comp.version-control.git/128569
+
+which led to f4ea32f (improve reflog date/number heuristic, 2009-09-24).
+That fixed the case of:
+
+  git config log.date iso
+  git log -g --oneline
+
+But later, 8f8f547 (Introduce new pretty formats %g[sdD] for reflog
+information, 2009-10-19) added another way to show selectors, and it did
+not respect the date_mode_explicit flag from f4ea32f. Which I think is a
+bug.
+
+So the right solution is to pass the date_mode_explicit flag through to
+the pretty-print --format code, and then pass it along to the reflog
+code.
+
+> Another point is being able to see these dates, eg, make "stash list"
+> show the stash{N} and also show the dates.
+
+You can do so with:
+
+  git stash list --date=iso
+
+but there is no way to do it automatically via config (and indeed, you
+can see that it creates problems for scripts when you do so. :) ).
+
+> It looks to me like the date code in get_reflog_selector() should be
+> *removed* since it can be printed with "%cd" or "%ad" in the log line.
+
+No, all three are distinct dates. For example, from my git.git reflog:
+
+  $ git log -g --format='%gd / %cd / %ad' --date=short
+  HEAD@{2012-04-29} / 2009-09-29 / 2009-09-24
+
+That's a commit (which happens to be f4ea32f) that was written on
+2009-09-24 (author date), sent as a patch to the list and applied
+upstream on 2009-09-29 (committer date), and reached my HEAD reflog via
+"git checkout f4ea32f" three years later.
+
+-Peff
