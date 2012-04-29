@@ -1,103 +1,141 @@
-From: Eli Barzilay <eli-oSK4jVRJLyZg9hUCZPvPmw@public.gmane.org>
-Subject: Re: Bug in git-stash(.sh) ?
-Date: Sun, 29 Apr 2012 18:37:06 -0400
-Message-ID: <20381.49810.943013.33117@winooski.ccs.neu.edu>
-References: <20379.9312.943088.350379@winooski.ccs.neu.edu>
-	<87wr4za9mr.fsf@gmail.com>
-	<m2pqasb8mr.fsf@linux-m68k.org>
-	<xmqqvckk93ta.fsf@junio.mtv.corp.google.com>
-	<CALO-gut4csy5wef4iGPGD5jVPc1f0iFBfS3MUWrOwc2yczdviw@mail.gmail.com>
-	<20380.33897.666338.766096@winooski.ccs.neu.edu>
-	<7vlilexkcq.fsf@alter.siamese.dyndns.org>
+From: Gang Hu <ganghu@cs.columbia.edu>
+Subject: Re: Potential problem in git-add may corrupt the index file
+Date: Sun, 29 Apr 2012 18:39:23 -0400
+Message-ID: <CAEJt7hbKFKN8J5jjX9Z_Apnco+YiN0kYn=wrHTYjE9P9M=jjaw@mail.gmail.com>
+References: <CAEJt7hYYJh5dT1Tk99Oze6Hg4QaOqX5ERi0faWjyifQ6dr-pWw@mail.gmail.com>
+ <xmqq4ns9j3rf.fsf@junio.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: Thomas Rast <trast-oe7qfRrRQfdfcPYw/2PL0g@public.gmane.org>, Yann Hodique <yann.hodique-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>,
-        Andreas Schwab  <schwab-Td1EMuHUCqxL1ZNQvxDV9g@public.gmane.org>, git-u79uwXL29TY76Z2rM5mHXA@public.gmane.org,
-        magit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
-To: Junio C Hamano <gitster-e+AXbWqSrlAAvxtiuMwx3w@public.gmane.org>
-X-From: magit+bncCOHCzKWgHRCVhff8BBoE1C2aIw-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org Mon Apr 30 00:37:13 2012
-Return-path: <magit+bncCOHCzKWgHRCVhff8BBoE1C2aIw-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-Envelope-to: gcvgm-magit-3@m.gmane.org
-Received: from mail-vx0-f186.google.com ([209.85.220.186])
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Junfeng Yang <junfeng@cs.columbia.edu>,
+	Heming Cui <heming@cs.columbia.edu>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Apr 30 00:39:50 2012
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <magit+bncCOHCzKWgHRCVhff8BBoE1C2aIw-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>)
-	id 1SOcju-0007x7-WE
-	for gcvgm-magit-3@m.gmane.org; Mon, 30 Apr 2012 00:37:11 +0200
-Received: by vcbfo14 with SMTP id fo14sf2688223vcb.3
-        for <gcvgm-magit-3@m.gmane.org>; Sun, 29 Apr 2012 15:37:10 -0700 (PDT)
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1SOcmT-0001Ts-5a
+	for gcvg-git-2@plane.gmane.org; Mon, 30 Apr 2012 00:39:49 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1754534Ab2D2Wjp convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 29 Apr 2012 18:39:45 -0400
+Received: from mail-pz0-f51.google.com ([209.85.210.51]:57869 "EHLO
+	mail-pz0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754442Ab2D2Wjo convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 29 Apr 2012 18:39:44 -0400
+Received: by dadz8 with SMTP id z8so3284662dad.10
+        for <git@vger.kernel.org>; Sun, 29 Apr 2012 15:39:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=beta;
-        h=x-beenthere:received-spf:from:mime-version:message-id:date:to:cc
-         :subject:in-reply-to:references:x-mailer:x-original-sender
-         :x-original-authentication-results:precedence:mailing-list:list-id
-         :x-google-group-id:list-post:list-help:list-archive:sender
-         :list-subscribe:list-unsubscribe:content-type
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:from:date
+         :x-google-sender-auth:message-id:subject:to:cc:content-type
          :content-transfer-encoding;
-        bh=CuuNLZB2pUZB35dBoe6BvvajZGg5eZYrHhpF1jykezk=;
-        b=q1VjcqQcs9Z8l0zk/9GYpI95REyw6h68AyfmLKoNrhRvZsQl7SK5T+8nsNFvvr3Kql
-         baJNt1MuKKW5YRbsyWufhGTThvLThGuYoUzdx88s4fDW5JDdntXovvOJ1iafVafTVic/
-         pQqvucLLNamCvruuqN2o2et3iSdFB37Z8RjJI=
-Received: by 10.50.220.194 with SMTP id py2mr883519igc.4.1335739029959;
-        Sun, 29 Apr 2012 15:37:09 -0700 (PDT)
-X-BeenThere: magit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
-Received: by 10.50.181.201 with SMTP id dy9ls1925289igc.1.gmail; Sun, 29 Apr
- 2012 15:37:09 -0700 (PDT)
-Received: by 10.43.53.73 with SMTP id vp9mr15031352icb.0.1335739029585;
-        Sun, 29 Apr 2012 15:37:09 -0700 (PDT)
-Received: by 10.43.53.73 with SMTP id vp9mr15031351icb.0.1335739029575;
-        Sun, 29 Apr 2012 15:37:09 -0700 (PDT)
-Received: from winooski.ccs.neu.edu (winooski.ccs.neu.edu. [129.10.115.117])
-        by gmr-mx.google.com with ESMTPS id md3si5229829igc.1.2012.04.29.15.37.09
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sun, 29 Apr 2012 15:37:09 -0700 (PDT)
-Received-SPF: pass (google.com: best guess record for domain of eli-a5nvgYPMCZcx/1z6v04GWfZ8FUJU4vz8@public.gmane.org designates 129.10.115.117 as permitted sender) client-ip=129.10.115.117;
-Received: from winooski.ccs.neu.edu (localhost.localdomain [127.0.0.1])
-	by winooski.ccs.neu.edu (8.14.4/8.14.4) with ESMTP id q3TMb80g032568;
-	Sun, 29 Apr 2012 18:37:08 -0400
-Received: (from eli@localhost)
-	by winooski.ccs.neu.edu (8.14.4/8.14.4/Submit) id q3TMb765032565;
-	Sun, 29 Apr 2012 18:37:07 -0400
-In-Reply-To: <7vlilexkcq.fsf-s2KvWo2KEQL18tm6hw+yZpy9Z0UEorGK@public.gmane.org>
-X-Mailer: VM 8.2.0a under 23.2.1 (x86_64-redhat-linux-gnu)
-X-Original-Sender: eli-oSK4jVRJLyZg9hUCZPvPmw@public.gmane.org
-X-Original-Authentication-Results: gmr-mx.google.com; spf=pass (google.com:
- best guess record for domain of eli-a5nvgYPMCZcx/1z6v04GWfZ8FUJU4vz8@public.gmane.org designates
- 129.10.115.117 as permitted sender) smtp.mail=eli-a5nvgYPMCZcx/1z6v04GWfZ8FUJU4vz8@public.gmane.org
-Precedence: list
-Mailing-list: list magit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org; contact magit+owners-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
-List-ID: <magit.googlegroups.com>
-X-Google-Group-Id: 752745291123
-List-Post: <http://groups.google.com/group/magit/post?hl=en_US>, <mailto:magit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-List-Help: <http://groups.google.com/support/?hl=en_US>, <mailto:magit+help-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-List-Archive: <http://groups.google.com/group/magit?hl=en_US>
-Sender: magit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
-List-Subscribe: <http://groups.google.com/group/magit/subscribe?hl=en_US>, <mailto:magit+subscribe-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-List-Unsubscribe: <http://groups.google.com/group/magit/subscribe?hl=en_US>, <mailto:googlegroups-manage+752745291123+unsubscribe-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196519>
+        bh=SF5CzVlz83hNJWAntzrNqnv9hoFRxg0cA3PhgkaBi1o=;
+        b=kVF3GUGIbJtLw/1PK0q74pCBJ+2837LbVg27FBUtiIxVvQYa/Iuv6VKLIL9satPoY6
+         1spBYF5meM1ttbugzGtTu6wgiRDvEnyoNIaNd3Yj04szxZYqRZ/av3Dmr1KfvOhxNa1B
+         zHTQpnIE24osGZXK5TB68gKRzik/QxIGIpw1qKcRUC/orqpDN3sP7DHLA9Dsf4ZOsy4v
+         EwiGaNklVbR19+mWqtQzAZdIywUYzimfI7X1HCf9xPM4lWeDh21AVLXyLH7BuK142C7K
+         7gv3zD0bA5J4gJva2L/fOl76rP1O+AIXJ5MCkepq++UpfAXYY5fZvY9b4Y5U/6WeOmbj
+         ePkw==
+Received: by 10.68.225.227 with SMTP id rn3mr3825994pbc.22.1335739183732; Sun,
+ 29 Apr 2012 15:39:43 -0700 (PDT)
+Received: by 10.68.40.5 with HTTP; Sun, 29 Apr 2012 15:39:23 -0700 (PDT)
+In-Reply-To: <xmqq4ns9j3rf.fsf@junio.mtv.corp.google.com>
+X-Google-Sender-Auth: Y4QYVYNfzS7_-qIDT4MKMf_Qzeo
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196520>
 
-30 minutes ago, Junio C Hamano wrote:
-> 
-> I think the root cause of the bug is that there are three cases:
-> 
->  - If we ask for "log -g ref@{0}", we should show them counted no
->    matter what.
-> 
->  - If we ask for "log -g ref@{now}", we should show them timed no
->    matter what.
-> 
->  - If we ask for "log -g ref" without specifier, we show them
->    counted by default, but we try to be nice and show them timed
->    when we can infer from other context that the user wanted to see
->    them timed.
+Hi Junio,
 
-Ah, I was unaware (unsurprisingly) that *that's* how an explict date
-format is (supposed to?) requested -- but then what happens with
+Thanks for the fast reply!  We've also discovered other similar
+programs in git, enclosed below so you may want to fix them in one
+patch.
 
-  git log --date iso -g "ref@{0}"
+Here is one example in refs.c:
+1710:  lockpath =3D mkpath("%s.lock", git_HEAD);
+        fd =3D open(lockpath, O_CREAT | O_EXCL | O_WRONLY, 0666);
+=2E...
+      written =3D write_in_full(fd, ref, len);
+// We may add
+// fsync_or_die(fd, ...);
+// here
+      if (close(fd) !=3D 0 || written !=3D len) {
+              error("Unable to write to %s", lockpath);
+              goto error_unlink_return;
+      }
+      if (rename(lockpath, git_HEAD) < 0) {
+=2E..
 
-?
+So there is a problem here, and the head file may be corrupted.
 
--- 
-          ((lambda (x) (x x)) (lambda (x) (x x)))          Eli Barzilay:
-                    http://barzilay.org/                   Maze is Life!
+In server-info.c, there is a similar problem:
+216:   namelen =3D sprintf(infofile, "%s/info/packs", get_object_direct=
+ory());
+         strcpy(name, infofile);
+         strcpy(name + namelen, "+");
+
+         init_pack_info(infofile, force);
+
+         safe_create_leading_directories(name);
+         fp =3D fopen(name, "w");
+         if (!fp)
+                 return error("cannot open %s", name);
+         write_pack_info_file(fp);
+// We may add
+// fsync_or_die(fileno(fp), ...);
+// here
+         fclose(fp);
+         adjust_shared_perm(name);
+         rename(name, infofile);
+Here, the packs file in the objects/info directory may be corrupted.
+
+In the same file, the info/refs file may also be corrupted:
+28:  char *path0 =3D git_pathdup("info/refs");
+      int len =3D strlen(path0);
+      char *path1 =3D xmalloc(len + 2);
+
+      strcpy(path1, path0);
+      strcpy(path1 + len, "+");
+
+      safe_create_leading_directories(path0);
+      info_ref_fp =3D fopen(path1, "w");
+      if (!info_ref_fp)
+              return error("unable to update %s", path1);
+      for_each_ref(add_info_ref, NULL);
+// We may add
+// fsync_or_die(fileno(info_ref_fp), ...);
+// here
+      fclose(info_ref_fp);
+      adjust_shared_perm(path1);
+      rename(path1, path0);
+
+On Mon, Apr 23, 2012 at 9:51 PM, Junio C Hamano <gitster@pobox.com> wro=
+te:
+> Gang Hu <ganghu@cs.columbia.edu> writes:
+>
+>> If a crash happens after the rename(), the data may have not been
+>> completely flushed into the index file, so the user may face an empt=
+y
+>> or corrupted index file.
+>
+> Yeah, probably we should add fsync_or_die() at the end of write_index=
+()
+> in read-cache.c, possibly protect it with fsync_object_files just lik=
+e
+> we do in close_sha1_file() in sha1_file.c for loose object files.
+>
+> I think the real fix would be to update the write_index() codepath to
+> use the csum-file API, though. =A0Then sha1close() will give us the f=
+sync
+> behaviour for free.
+
+
+
+--=20
+Cheers,
+Gang
