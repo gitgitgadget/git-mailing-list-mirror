@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH 4/5] archive-tar: stream large blobs to tar file
-Date: Mon, 30 Apr 2012 11:57:16 +0700
-Message-ID: <1335761837-12482-5-git-send-email-pclouds@gmail.com>
+Subject: [PATCH 5/5] archive-zip: stream large blobs into zip file
+Date: Mon, 30 Apr 2012 11:57:17 +0700
+Message-ID: <1335761837-12482-6-git-send-email-pclouds@gmail.com>
 References: <1335761837-12482-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -12,75 +12,105 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Apr 30 07:01:28 2012
+X-From: git-owner@vger.kernel.org Mon Apr 30 07:01:37 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SOijo-0000Ih-1q
-	for gcvg-git-2@plane.gmane.org; Mon, 30 Apr 2012 07:01:28 +0200
+	id 1SOijv-0000Nu-5s
+	for gcvg-git-2@plane.gmane.org; Mon, 30 Apr 2012 07:01:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755231Ab2D3FBX convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 30 Apr 2012 01:01:23 -0400
+	id S1755282Ab2D3FBa convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 30 Apr 2012 01:01:30 -0400
 Received: from mail-pb0-f46.google.com ([209.85.160.46]:57671 "EHLO
 	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755078Ab2D3FBW (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Apr 2012 01:01:22 -0400
-Received: by pbbrp8 with SMTP id rp8so2872602pbb.19
-        for <git@vger.kernel.org>; Sun, 29 Apr 2012 22:01:22 -0700 (PDT)
+	with ESMTP id S1755078Ab2D3FB3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Apr 2012 01:01:29 -0400
+Received: by mail-pb0-f46.google.com with SMTP id rp8so2872602pbb.19
+        for <git@vger.kernel.org>; Sun, 29 Apr 2012 22:01:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=dtA/rFuMm/wHQEZA3r9gXcJcVWPdpZ3mg3EDC6ocjn4=;
-        b=N3u9ZO00+i8yrXtsVEpPS3104ovEn7Q5rWeFrzUR8Ep7hNHy/Jyd/mpbccCk/+HnoZ
-         +hvCF44kdkQjeY26AI/VO+AofRrORA1f0gwp0LNsFsWNgUw0xs2MINeutxejQgr4lDV7
-         WWh/BwKQS+sjw4taAx1LrPmqWjdllu4r9IFPuFLflFPEO6PZFLtKIjSnnH9sa1MulIgn
-         Byu/d/JNb/wwpIS2zl9c0X1bvpZ1mz1DfGkYDu6+sWBxXq69VSx7TpOGFyJxB31fr+PL
-         KfIiGMQwgBeTzR4y4X5AYUSYf1XYa+5YP6qn0fxjzdwTOD+auAo1R2OLgpfK37gzMQlx
-         u+2w==
-Received: by 10.68.240.135 with SMTP id wa7mr44827146pbc.7.1335762082420;
-        Sun, 29 Apr 2012 22:01:22 -0700 (PDT)
+        bh=FdG0MtUwBTYUSxApZ54XupXHRkAee4GanFWMqrMGIzQ=;
+        b=S5kc0a902Bz8HgNZ1nj9oGnEkJyAUdDBTWhMngOmaOPGN0YdxUp+gVkiLO9AInpTGi
+         8iUztzMWlw509UGhNQDEjuZ420Jui2vWCbh7CGZv73mcd24lvF/R2hpHwya51ym/etQY
+         9vPP3oeiK61rzlu9R461uJMTD3AQ6GXoivLVwMLyS+DF0TbhQYt8W8CkPoG+TCqUQ4sO
+         L+CVLleWELBDGx1BDxdO7rFVObk9Oue+ZLhOWV08y6LqSUeRmuSlMAuakQDXrgQV8sdN
+         QuZ/nbE2pvBP730EMmQOvKpokP96ZBA81TyXj+dPfOxb3UGmgTHR+pEmDUtoU/kRrtd6
+         T+9w==
+Received: by 10.68.212.7 with SMTP id ng7mr4351014pbc.71.1335762089763;
+        Sun, 29 Apr 2012 22:01:29 -0700 (PDT)
 Received: from pclouds@gmail.com ([115.74.34.118])
-        by mx.google.com with ESMTPS id tx9sm4286675pbc.10.2012.04.29.22.01.18
+        by mx.google.com with ESMTPS id pi10sm13910049pbc.9.2012.04.29.22.01.26
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Sun, 29 Apr 2012 22:01:21 -0700 (PDT)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Mon, 30 Apr 2012 11:57:57 +0700
+        Sun, 29 Apr 2012 22:01:28 -0700 (PDT)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Mon, 30 Apr 2012 11:58:04 +0700
 X-Mailer: git-send-email 1.7.8.36.g69ee2
 In-Reply-To: <1335761837-12482-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196539>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196540>
 
+A large blob will be read twice. One for calculating crc32, one for
+actual writing. Large blobs are written uncompressed for simplicity.
+
+Writing compressed large blobs is possible. But a naive implementation
+would need to decompress/compress the blob twice: one to calculate
+compressed size, one for actual writing, assuming compressed blobs are
+still over large file limit.
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- archive-tar.c    |   38 +++++++++++++++++++++++++++++++++++---
- t/t1050-large.sh |    4 ++++
- 2 files changed, 39 insertions(+), 3 deletions(-)
+ I think we could extract compressed size from pack index, then stream
+ the compressed blob directly from pack to zip file. But that makes
+ git-archive sensitive to pack format. And to be honest I don't care
+ that much about large file support to do it. This patch is good
+ enough for me.
 
-diff --git a/archive-tar.c b/archive-tar.c
-index 61821f4..865ef6d 100644
---- a/archive-tar.c
-+++ b/archive-tar.c
-@@ -4,6 +4,7 @@
+ Documentation/git-archive.txt |    3 ++
+ archive-zip.c                 |   42 +++++++++++++++++++++++++++++++++=
++++++++-
+ t/t1050-large.sh              |    4 +++
+ 3 files changed, 48 insertions(+), 1 deletions(-)
+
+diff --git a/Documentation/git-archive.txt b/Documentation/git-archive.=
+txt
+index ac7006e..6df85a6 100644
+--- a/Documentation/git-archive.txt
++++ b/Documentation/git-archive.txt
+@@ -120,6 +120,9 @@ tar.<format>.remote::
+ 	user-defined formats, but true for the "tar.gz" and "tgz"
+ 	formats.
+=20
++core.bigFileThreshold::
++	Files larger than this size are stored uncompressed in zip format.
++
+ ATTRIBUTES
+ ----------
+=20
+diff --git a/archive-zip.c b/archive-zip.c
+index f8039ba..ee58bda 100644
+--- a/archive-zip.c
++++ b/archive-zip.c
+@@ -3,6 +3,7 @@
+  */
  #include "cache.h"
- #include "tar.h"
  #include "archive.h"
 +#include "streaming.h"
- #include "run-command.h"
 =20
- #define RECORDSIZE	(512)
-@@ -62,6 +63,29 @@ static void write_blocked(const void *data, unsigned=
- long size)
- 	write_if_needed();
+ static int zip_date;
+ static int zip_time;
+@@ -120,6 +121,29 @@ static void *zlib_deflate(void *data, unsigned lon=
+g size,
+ 	return buffer;
  }
 =20
-+static int stream_blob_to_file(const unsigned char *sha1)
++static int crc32_stream(const unsigned char *sha1, unsigned long *crc)
 +{
 +	struct git_istream *st;
 +	enum object_type type;
@@ -90,63 +120,67 @@ index 61821f4..865ef6d 100644
 +	if (!st)
 +		return error("cannot stream blob %s", sha1_to_hex(sha1));
 +	for (;;) {
-+		char buf[BLOCKSIZE];
++		char buf[1024];
 +		ssize_t readlen;
 +
 +		readlen =3D read_istream(st, buf, sizeof(buf));
 +
 +		if (readlen <=3D 0)
 +			return readlen;
-+		write_blocked(buf, readlen);
++		*crc =3D crc32(*crc, (unsigned char*)buf, readlen);
 +	}
 +	close_istream(st);
 +	return 0;
 +}
 +
- /*
-  * The end of tar archives is marked by 2*512 nul bytes and after that
-  * follows the rest of the block (if any).
-@@ -203,7 +227,11 @@ static int write_tar_entry(struct archiver_args *a=
+ static int write_zip_entry(struct archiver_args *args,
+ 			   const unsigned char *sha1,
+ 			   const char *path, size_t pathlen,
+@@ -153,6 +177,19 @@ static int write_zip_entry(struct archiver_args *a=
 rgs,
- 	} else
- 		memcpy(header.name, path, pathlen);
-=20
--	if (S_ISLNK(mode) || S_ISREG(mode)) {
-+	if (S_ISREG(mode) && !args->convert &&
-+	    sha1_object_info(sha1, &size) =3D=3D OBJ_BLOB &&
-+	    size > big_file_threshold)
+ 		compressed_size =3D 0;
+ 		buffer =3D NULL;
+ 		size =3D 0;
++	} else if (!args->convert && S_ISREG(mode) &&
++		      sha1_object_info(sha1, &size) =3D=3D OBJ_BLOB &&
++		      size > big_file_threshold) {
 +		buffer =3D NULL;
-+	else if (S_ISLNK(mode) || S_ISREG(mode)) {
++		method =3D 0;
++		attr2 =3D S_ISLNK(mode) ? ((mode | 0777) << 16) :
++			(mode & 0111) ? ((mode) << 16) : 0;
++		if (crc32_stream(sha1, &crc) < 0)
++			return error("failed to calculate crc32 from blob %s, SHA1 %s",
++				     path, sha1_to_hex(sha1));
++		out =3D buffer;
++		uncompressed_size =3D size;
++		compressed_size =3D size;
+ 	} else if (S_ISREG(mode) || S_ISLNK(mode)) {
  		enum object_type type;
- 		buffer =3D sha1_file_to_archive(args, path, sha1, old_mode, &type, &=
-size);
- 		if (!buffer)
-@@ -233,8 +261,12 @@ static int write_tar_entry(struct archiver_args *a=
+ 		buffer =3D sha1_file_to_archive(args, path, sha1, mode, &type, &size=
+);
+@@ -234,7 +271,10 @@ static int write_zip_entry(struct archiver_args *a=
 rgs,
- 	}
- 	strbuf_release(&ext_header);
- 	write_blocked(&header, sizeof(header));
--	if (S_ISREG(mode) && buffer && size > 0)
--		write_blocked(buffer, size);
-+	if (S_ISREG(mode) && size > 0) {
-+		if (buffer)
-+			write_blocked(buffer, size);
+ 	write_or_die(1, path, pathlen);
+ 	zip_offset +=3D pathlen;
+ 	if (compressed_size > 0) {
+-		write_or_die(1, out, compressed_size);
++		if (out)
++			write_or_die(1, out, compressed_size);
 +		else
-+			err =3D stream_blob_to_file(sha1);
-+	}
- 	return err;
- }
++			stream_blob_to_fd(1, sha1, NULL, 0);
+ 		zip_offset +=3D compressed_size;
+ 	}
 =20
 diff --git a/t/t1050-large.sh b/t/t1050-large.sh
-index 4d127f1..fe47554 100755
+index fe47554..458fdde 100755
 --- a/t/t1050-large.sh
 +++ b/t/t1050-large.sh
-@@ -134,4 +134,8 @@ test_expect_success 'repack' '
- 	git repack -ad
+@@ -138,4 +138,8 @@ test_expect_success 'tar achiving' '
+ 	git archive --format=3Dtar HEAD >/dev/null
  '
 =20
-+test_expect_success 'tar achiving' '
-+	git archive --format=3Dtar HEAD >/dev/null
++test_expect_success 'zip achiving' '
++	git archive --format=3Dzip HEAD >/dev/null
 +'
 +
  test_done
