@@ -1,85 +1,96 @@
-From: Pete Wyckoff <pw@padd.com>
-Subject: Re: [PATCH 1/4] git p4: bring back files in deleted client directory
-Date: Mon, 30 Apr 2012 08:36:50 -0400
-Message-ID: <20120430123650.GB25045@padd.com>
-References: <1335747437-24034-1-git-send-email-pw@padd.com>
- <1335747437-24034-2-git-send-email-pw@padd.com>
- <4F9E376B.1000107@diamand.org>
+From: Jiang Xin <worldhello.net@gmail.com>
+Subject: Re: Glossary for bootstrapping Git translations
+Date: Mon, 30 Apr 2012 21:17:34 +0800
+Message-ID: <CANYiYbH7g5JRvEQ_b9sEP72zR+yrAj+cQbemi_nsFTSa+QRgEw@mail.gmail.com>
+References: <CACBZZX7H8qB05qc+ovaeFJ_qR3bF7=uWq6bjOHq8+_YNDLTu2g@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Gary Gibbons <ggibbons@perforce.com>
-To: Luke Diamand <luke@diamand.org>
-X-From: git-owner@vger.kernel.org Mon Apr 30 14:37:07 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Byrial Jensen <byrial@vip.cybercity.dk>,
+	Ralf Thielow <ralf.thielow@googlemail.com>,
+	=?ISO-8859-1?Q?Hinrik_=D6rn_Sigur=F0sson?= <hinrik.sig@gmail.com>,
+	Vincent van Ravesteijn <vfr@lyx.org>,
+	Marco Sousa <marcomsousa@gmail.com>,
+	Peter Krefting <peter@softwolves.pp.se>,
+	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+	<pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>
+To: =?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Apr 30 15:17:52 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SOpqe-0004dq-Bb
-	for gcvg-git-2@plane.gmane.org; Mon, 30 Apr 2012 14:37:00 +0200
+	id 1SOqUB-0000VI-Vb
+	for gcvg-git-2@plane.gmane.org; Mon, 30 Apr 2012 15:17:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755682Ab2D3Mgz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 Apr 2012 08:36:55 -0400
-Received: from honk.padd.com ([74.3.171.149]:54999 "EHLO honk.padd.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755354Ab2D3Mgy (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Apr 2012 08:36:54 -0400
-Received: from arf.padd.com (unknown [50.55.155.59])
-	by honk.padd.com (Postfix) with ESMTPSA id A0A9025F9;
-	Mon, 30 Apr 2012 05:36:53 -0700 (PDT)
-Received: by arf.padd.com (Postfix, from userid 7770)
-	id AF094313F8; Mon, 30 Apr 2012 08:36:50 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <4F9E376B.1000107@diamand.org>
+	id S1754327Ab2D3NRs convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 30 Apr 2012 09:17:48 -0400
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:59371 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755425Ab2D3NRf convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 30 Apr 2012 09:17:35 -0400
+Received: by ghrr11 with SMTP id r11so1339368ghr.19
+        for <git@vger.kernel.org>; Mon, 30 Apr 2012 06:17:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=+RcvFSjqzIoiLQ82XWgUGLMuxWv7XMmyP+3LYX6felQ=;
+        b=Dj58sCugdtWCsEqHSpCkoza9rUlX9j0fFKPJO1HGoigU2K6nEZkGZieEEvliwKzgkI
+         gFrOsuN2S6nvLwL2WBZGR40caMvPRz7qIST4fvUPEjUu05yMbAxIdjXt4Aesz1AOyVVz
+         uyhsex88ZrVizlpSN99acgRK5xSFcNVrSJGx6G9xQ/3e2lDL6VUAqwRCijC7ECMygSLh
+         M0zwnvwd1tcIfIM59cWLFjWn16+YzDq10P6NG/PgJ7BFmI+f5HkRPJYFSVskDmy9ppvk
+         gxKdiHR7wj5xT89k7tm0nCGdtMKlIoBmXXhNBgbVTIFR8NF91wwVWEUnPQAt2LVhNgk8
+         qcvg==
+Received: by 10.50.36.195 with SMTP id s3mr10366444igj.27.1335791855221; Mon,
+ 30 Apr 2012 06:17:35 -0700 (PDT)
+Received: by 10.50.207.40 with HTTP; Mon, 30 Apr 2012 06:17:34 -0700 (PDT)
+In-Reply-To: <CACBZZX7H8qB05qc+ovaeFJ_qR3bF7=uWq6bjOHq8+_YNDLTu2g@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196558>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196559>
 
-luke@diamand.org wrote on Mon, 30 Apr 2012 07:55 +0100:
-> On 30/04/12 01:57, Pete Wyckoff wrote:
-> >The code to auto-create the client directory, added in 0591cfa
-> >(git-p4: ensure submit clientPath exists before chdir,
-> >2011-12-09), works when the client directory never existed.
-> >
-> >But if the directory is summarily removed without telling p4,
-> >the sync operation will not bring back all the files.  Always
-> >do "sync -f" if the client directory is newly created.
-> 
-> I'm possibly missing something obvious here, but
-> ./t9807-git-p4-submit.sh fails with this change.
-> 
-> Rebasing the current branch onto remotes/p4/master
-> First, rewinding head to replay your work on top of it...
-> File file1 doesn't exist. file1
-> not ok - 3 submit with no client dir
+2012/4/30 =C6var Arnfj=F6r=F0 Bjarmason <avarab@gmail.com>:
+> Over the weekend I started the Icelandic translation of Git beyond th=
+e
+> current test messages that are there in po/is.po already.
 
-I can't figure it out.  Will you help debug a bit?  Something
-like this maybe.
+I just created new branch 'maint' in git-po repository on GitHub,
+and generated two different 'git.pot' files yesterday. The
+recommended workflow for a new language:
 
-diff --git a/t/t9807-git-p4-submit.sh b/t/t9807-git-p4-submit.sh
-index f23b4c3..e98cc5e 100755
---- a/t/t9807-git-p4-submit.sh
-+++ b/t/t9807-git-p4-submit.sh
-@@ -31,6 +31,7 @@ test_expect_success 'submit with no client dir' '
- 	) &&
- 	(
- 		cd "$cli" &&
-+		pwd && ls -la && p4 sync && ls -la &&
- 		test_path_is_file file1 &&
- 		test_path_is_file file2
- 	)
+1. After fork the git-l10n/git-po on GitHub, checkout the 'maint'
+    branch, or create a new tracking branch based on it.
 
-And if the other "submit modify" etc. tests don't work, it
-could be fallout from this one.  Deleting "$cli" is perhaps
-at fault:  permissions, ... ?
+2. Create your initial XX.po file, tranlate, commit, and push to
+    your own fork.
 
-Or somehow I completely broke things.
+3. Send a GitHub pull request to the 'maint' branch of git-l10n/git-po.
 
-I'll try with a newer version of p4, to see if there's a
-dependency there.
+4. The l10n coordinator merge your commit to the 'maint' branch,
+    so your translation may appear in git next maintainence version,
+    i. e. 1.7.10.1.
 
-Thanks for checking!
+5. The l10n coordinator will do a second merge, so new commit in
+    'maint' branch will merge back to the 'master' branch.
 
-		-- Pete
+6. Update your XX.po in 'master' branch, translate, commit, and
+     send new pull request.
+
+7. The l10n coordinator will merge your updates to 'master' branch,
+     and your translations will come with git 1.7.11.
+
+L10N team leaders may already noticed these changes, as I @ all
+team leaders in the commit comments.
+
+* https://github.com/git-l10n/git-po/commit/cd1e74874049c8ba8e510f2fae0=
+64e510cccd32b#commitcomment-1271645
+* https://github.com/git-l10n/git-po/commit/df3ef6fb98a276fa62bbcf129d4=
+0307b00253588#commitcomment-1271639
+
+--
+Jiang Xin
