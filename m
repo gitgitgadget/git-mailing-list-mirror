@@ -1,102 +1,111 @@
-From: Matthijs Kooijman <matthijs@stdin.nl>
-Subject: Re: [PATCH 1/2] git-svn: use platform specific auth providers
-Date: Mon, 30 Apr 2012 21:20:16 +0200
-Message-ID: <20120430192016.GQ4023@login.drsnuggles.stderr.nl>
-References: <1335468843-24653-1-git-send-email-matthijs@stdin.nl> <20120427082118.GA7257@dcvr.yhbt.net> <20120427082559.GC4023@login.drsnuggles.stderr.nl> <20120429082341.GA32664@dcvr.yhbt.net> <7vvckihyqm.fsf@alter.siamese.dyndns.org> <7vk40yhv5q.fsf@alter.siamese.dyndns.org> <20120430081939.GA27715@dcvr.yhbt.net> <7vipghgq9a.fsf@alter.siamese.dyndns.org> <20120430165315.GO4023@login.drsnuggles.stderr.nl> <20120430190200.GA27108@dcvr.yhbt.net>
+From: Phil Hord <phil.hord@gmail.com>
+Subject: Re: organizing multiple repositories with dependencies
+Date: Mon, 30 Apr 2012 15:25:54 -0400
+Message-ID: <CABURp0pHcZfUw8p5F=7W3BipGHdc2Q0QQ7WuaPPVWOYdG1S=BQ@mail.gmail.com>
+References: <1334568432.53977.YahooMailNeo@web65906.mail.ac4.yahoo.com>
+ <m3hawjagw9.fsf@localhost.localdomain> <nng3983phhc.fsf@transit.us.cray.com>
+ <CAE1pOi1KnvRk4yxK8OQHi9h_ueNnh5Ar3tbKFBKTA69=Aje0TQ@mail.gmail.com>
+ <201204171837.q3HIbbcW013784@no.baka.org> <CAE1pOi29dKd2LHW7MJ+TTN4HzFkOPFEyf7Sf2emSsBYm93uYUA@mail.gmail.com>
+ <nng1unmnksx.fsf@transit.us.cray.com> <CAE1pOi38krwXZuiYxtpLwm92N=NvWkP30V_=6cnHw=sdyk6QhA@mail.gmail.com>
+ <nnghaw93v8n.fsf@transit.us.cray.com> <CAE1pOi2KgeLPg7UVRP7dbqLFJErsKUx22Mi5aSkphy7KMJhoUQ@mail.gmail.com>
+ <nngd36w1z9n.fsf@transit.us.cray.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="2XdB133IMUbxuUPz"
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Gustav Munkby <grddev@gmail.com>,
-	Edward Rudd <urkle@outoforder.cc>,
-	Carsten Bormann <cabo@tzi.org>
-To: Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Mon Apr 30 21:20:30 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Hilco Wijbenga <hilco.wijbenga@gmail.com>,
+	Git Users <git@vger.kernel.org>
+To: dag@cray.com
+X-From: git-owner@vger.kernel.org Mon Apr 30 21:26:26 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SOw97-00047c-Se
-	for gcvg-git-2@plane.gmane.org; Mon, 30 Apr 2012 21:20:30 +0200
+	id 1SOwEo-0007wp-Eu
+	for gcvg-git-2@plane.gmane.org; Mon, 30 Apr 2012 21:26:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756415Ab2D3TUZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 Apr 2012 15:20:25 -0400
-Received: from drsnuggles.stderr.nl ([94.142.244.14]:36289 "EHLO
-	drsnuggles.stderr.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755999Ab2D3TUY (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Apr 2012 15:20:24 -0400
-Received: from login.drsnuggles.stderr.nl ([10.42.0.9] ident=mail)
-	by mail.drsnuggles.stderr.nl with smtp (Exim 4.69)
-	(envelope-from <matthijs@stdin.nl>)
-	id 1SOw8u-0003XK-I9; Mon, 30 Apr 2012 21:20:17 +0200
-Received: (nullmailer pid 13595 invoked by uid 1000);
-	Mon, 30 Apr 2012 19:20:16 -0000
-Mail-Followup-To: Eric Wong <normalperson@yhbt.net>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Gustav Munkby <grddev@gmail.com>, Edward Rudd <urkle@outoforder.cc>,
-	Carsten Bormann <cabo@tzi.org>
-Content-Disposition: inline
-In-Reply-To: <20120430190200.GA27108@dcvr.yhbt.net>
-X-PGP-Fingerprint: 7F6A 9F44 2820 18E2 18DE  24AA CF49 D0E6 8A2F AFBC
-X-PGP-Key: http://www.stderr.nl/static/files/gpg_pubkey.asc
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-Spam-Score: -2.6 (--)
-X-Spam-Report: Spamchecked on "mail.drsnuggles.stderr.nl"
-	pts  rule name              description
-	---- ---------------------- -------------------------------------------
-	-2.6 BAYES_00               BODY: Bayesian spam probability is 0 to 1%
-	[score: 0.0000]
+	id S1756574Ab2D3T0R convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 30 Apr 2012 15:26:17 -0400
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:55005 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756363Ab2D3T0Q convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 30 Apr 2012 15:26:16 -0400
+Received: by yenl12 with SMTP id l12so1646745yen.19
+        for <git@vger.kernel.org>; Mon, 30 Apr 2012 12:26:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=6oVe7Bkw3jYKgaYxyFVnaf0BgPgPlCpG4TzheU9stVY=;
+        b=xHCLSIWiGbeblc6mYWDsrigTvegiwNuTX45L/c2+XHtBUqvLZVCt8BXkzgNJUmI8Wd
+         46ELVOrUmW3NWsETo6h6IVQAzrdGoOI7SJvVmvKRekjIEc4dnspCQDzbiNLR0Tp+kFvo
+         vSoBhCC7qG/Xw5/nO/XL3qzoutIIhYLgz6YdEJkztOpSdGTW2rbi5jAGr8qXulBVcQnD
+         hPdEmIo3XAcsRPhoJGZ8fZAetwURb28pp9fNPfUynFaDnVJ5HykHf3Ito6Nk5+jPNeUd
+         fEvMAKAIJjPH/v9BJAqL+v5wWJckBin+eg1AeKxV3fJa+aRHHVr0rLuXVGKQkg/20WT4
+         TbAA==
+Received: by 10.236.79.40 with SMTP id h28mr2163253yhe.50.1335813976173; Mon,
+ 30 Apr 2012 12:26:16 -0700 (PDT)
+Received: by 10.146.122.15 with HTTP; Mon, 30 Apr 2012 12:25:54 -0700 (PDT)
+In-Reply-To: <nngd36w1z9n.fsf@transit.us.cray.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196597>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196598>
 
+On Tue, Apr 24, 2012 at 7:33 PM,  <dag@cray.com> wrote:
+> Hilco Wijbenga <hilco.wijbenga@gmail.com> writes:
+>>> No, I think that is actually very rare. =A0If topic branches really=
+ should
+>>> be mirrored then U and S should be one repository. =A0They are too =
+closely
+>>> coupled to be separated. =A0But see the but about git-subtree and t=
+opic
+>>> branches below.
+>>
+>> Too closely coupled? I do not think breaking up a project into a set
+>> of libraries makes everything tightly coupled. I would argue the
+>> opposite. :-) Anyway, you answer my concern below.
+>
+> If you need the same topic branch for each component they would indee=
+d
+> seem to be very tightly coupled, even if the code is "physically"
+> separated. =A0I can't think of a situation where I would need to impl=
+ement
+> the same or similar features in multiple components where those
+> components are not tightly coupled in some way.
 
---2XdB133IMUbxuUPz
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+I tend to agree.  However, I have a use case that I suffer on a daily b=
+asis.
 
-Hi Eric,
+We have code that runs on multiple platforms (embedded SoCs).  I have
+a superproject that has a common library and some vendor-specific code
+for each supported platform broken out into submodules.
 
-> > This does textual comparison, so 1.6.6 > 1.6.12. To do proper version
-> > comparison, I think the version numbers should be split into
-> > major/minor/revision and each be compared numerically.
->=20
-> Ah, thanks for the analysis, we were lucky in the past that all version
-> components only had a single character.
-Indeed. Note that this includes the released subversion versions. For
-example, the code contains this check:
+  super-all
+    +-- CommonAPI
+    +-- VendorA
+    +-- VendorB
+    +-- VendorC
 
-    $SVN::Core::VERSION le '1.5.4'
+The code in the Vendor submodules contains the proprietary
+implementations for specific vendor's systems of the CommonAPI
+library.  When the CommonAPI gets a new feature, it often gets
+implemented in all the vendor submodules as well.
 
-and 1.5.10 < 1.5.4. Fortunately, 1.5.9 was the last release in the 1.5
-series, and no other checks compare against 1.6.x.
+We could easily do this without submodules, of course.  But this setup
+allows us to define alternative super-projects that we can then share
+with subcontractors and original vendors without exposing proprietary
+third-party code.
 
-If subversion would ever reach the 1.10.x version number, things would
-also start breaking.
+  super-B
+    +-- CommonAPI
+    +-- VendorB
 
-> I think the former is preferable for git.  Sort::Versions isn't used
-> anywhere else in git and I don't think it's widely installed.
-I guessed as much. I'll have a look at providing a patch.
+  super-C
+    +-- CommonAPI
+    +-- VendorC
 
-Gr.
+We could still handle this with git-subtree.  But we don't.
 
-Matthijs
-
---2XdB133IMUbxuUPz
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEARECAAYFAk+e5fAACgkQz0nQ5oovr7wJYwCghcG22fuR79eGEHKq4annhKB5
-0lIAn08sAvJUT8Z/H2bnrUDgI247K3OL
-=TPyL
------END PGP SIGNATURE-----
-
---2XdB133IMUbxuUPz--
+Phil
