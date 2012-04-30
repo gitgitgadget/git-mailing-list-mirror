@@ -1,65 +1,64 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Bug (or inconsistency) in git add
-Date: Mon, 30 Apr 2012 00:02:28 -0700
-Message-ID: <7vwr4xhfcr.fsf@alter.siamese.dyndns.org>
-References: <CADJEhEWC=mMManxi9Q6W9EvVKmTV=i1ZxbdW4QS_ou_DrBEb+Q@mail.gmail.com>
- <CADJEhEVNPj_FrRatjD7Jmbd7i_FYg9BzNNP48_4VAr6fgqBT8Q@mail.gmail.com>
- <CAA5Ydx9h6o=uppRk5zc9V4z1S831KGVRBzTw9oMqDjY34-noOw@mail.gmail.com>
- <CADJEhEXtDZGav1Y5epZQ69NWptyVyPC1hmN6=YaNYrg3vYmBqg@mail.gmail.com>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: [PATCH 1/2] git-svn: use platform specific auth providers
+Date: Mon, 30 Apr 2012 08:19:39 +0000
+Message-ID: <20120430081939.GA27715@dcvr.yhbt.net>
+References: <20120426183634.GA4023@login.drsnuggles.stderr.nl>
+ <1335468843-24653-1-git-send-email-matthijs@stdin.nl>
+ <20120427082118.GA7257@dcvr.yhbt.net>
+ <20120427082559.GC4023@login.drsnuggles.stderr.nl>
+ <20120429082341.GA32664@dcvr.yhbt.net>
+ <7vvckihyqm.fsf@alter.siamese.dyndns.org>
+ <7vk40yhv5q.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Victor Engmark <victor.engmark@gmail.com>,
-	git <git@vger.kernel.org>
-To: Steve Bennett <stevage@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Apr 30 09:02:37 2012
+Cc: git@vger.kernel.org, Gustav Munkby <grddev@gmail.com>,
+	Edward Rudd <urkle@outoforder.cc>,
+	Carsten Bormann <cabo@tzi.org>
+To: Junio C Hamano <gitster@pobox.com>,
+	Matthijs Kooijman <matthijs@stdin.nl>
+X-From: git-owner@vger.kernel.org Mon Apr 30 10:19:46 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SOkd2-0002ch-Fz
-	for gcvg-git-2@plane.gmane.org; Mon, 30 Apr 2012 09:02:36 +0200
+	id 1SOlph-0007wj-GR
+	for gcvg-git-2@plane.gmane.org; Mon, 30 Apr 2012 10:19:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752472Ab2D3HCb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 Apr 2012 03:02:31 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64618 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751515Ab2D3HCb (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Apr 2012 03:02:31 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4231D3BDD;
-	Mon, 30 Apr 2012 03:02:30 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Y8mpUdQ8W+3hC/iY8qlApEDjOwM=; b=Pe6SE/
-	9jP9wgMKqxoZj+XBN5ev2nRFItROHfycsVhwhM+x3qKfRcT/4hw04qzEXbK/+S9U
-	mAqM165d8/rggTUsaH2zRZPDIuAgropi+vJeDUp8q8UPIeCxOLg+W5lzy8ByYPLy
-	2YrGnSDci8YXJgvnCxoqQpX0IDJ4uVE7h5/84=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=tGKRakDtrXal4CnmS0oRyZDDJVVk+vTu
-	w3LBYKIMc1n+Z5epsAyjR3crdjzRrhlfDrLk/LzCVNFx5hEjMFXn0oVIVeRstcdv
-	QDkCTdg/9N7o6SVfFfTUkoV/JuJTcysD3mSHl2N+BH62lbJW8X72eEkRERyIDfct
-	zZfk6LyDr6Y=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 39FEA3BDC;
-	Mon, 30 Apr 2012 03:02:30 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id BE1FC3BDB; Mon, 30 Apr 2012
- 03:02:29 -0400 (EDT)
-In-Reply-To: <CADJEhEXtDZGav1Y5epZQ69NWptyVyPC1hmN6=YaNYrg3vYmBqg@mail.gmail.com> (Steve
- Bennett's message of "Mon, 30 Apr 2012 16:46:20 +1000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 73771A02-9292-11E1-8E76-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751939Ab2D3ITk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 Apr 2012 04:19:40 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:47538 "EHLO dcvr.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751688Ab2D3ITk (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Apr 2012 04:19:40 -0400
+Received: from localhost (dcvr.yhbt.net [127.0.0.1])
+	by dcvr.yhbt.net (Postfix) with ESMTP id 775361F424;
+	Mon, 30 Apr 2012 08:19:39 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <7vk40yhv5q.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196544>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196545>
 
-Steve Bennett <stevage@gmail.com> writes:
+Junio C Hamano <gitster@pobox.com> wrote:
+> As I am already too deep into today's integration round, I will not be
+> rewinding this pull anymore, but on one of my Ubuntu 10.04 boxes, I am
+> seeing this:
+> 
+>     Initialized empty Git repository in
+>     /srv/git/t/trash directory.t9118-git-svn-funky-branch-names/project/.git/
+>     ValueError svn_auth_get_platform_specific_client_providers is not implemented yet
 
-> In any case, it looks like Git does support some ** globbing natively.
+Which version of SVN is that?  (git svn --version)
+http://packages.ubuntu.com/lucid/libsvn-perl says 1.6.6
+(+distro patches), which shouldn't be affected by this patch...
 
-No, we don't.
+Matthijs: any suggestions/ideas on what could be wrong?
+
+> So the tip of 'master' may be broken for some "git svn" users.
+
+-- 
+Eric Wong
