@@ -1,120 +1,63 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: XDL_FAST_HASH breaks git on OS X 10.7.3
-Date: Mon, 30 Apr 2012 18:38:37 +0200
-Message-ID: <87mx5tyy2a.fsf@thomas.inf.ethz.ch>
-References: <441BE38F-E081-4ED8-B587-BF72AD6368EE@gernhardtsoftware.com>
+From: Jeff Sipek <jeffpc@josefsipek.net>
+Subject: Re: [GUILT] [PATCH] Testsuite: get rid of "Broken pipe" errors from
+ yes.
+Date: Mon, 30 Apr 2012 12:46:09 -0400
+Message-ID: <20120430164604.GF20761@poseidon.cudanet.local>
+References: <87k40x346u.fsf@opera.com>
+ <20120430150655.GE20761@poseidon.cudanet.local>
+ <CAHx6-UmQbcwGiv8xEjJo48cRdQ29KurtZ6O0+yZtJmey7GdrjQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Cc: Git List <git@vger.kernel.org>, Thomas Rast <trast@student.ethz.ch>
-To: Brian Gernhardt <brian@gernhardtsoftware.com>
-X-From: git-owner@vger.kernel.org Mon Apr 30 18:38:58 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Per Cederqvist <cederp@opera.com>
+To: Per Cederqvist <ceder@lysator.liu.se>
+X-From: git-owner@vger.kernel.org Mon Apr 30 18:46:18 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SOtci-0005gx-NG
-	for gcvg-git-2@plane.gmane.org; Mon, 30 Apr 2012 18:38:53 +0200
+	id 1SOtjt-0002qG-3L
+	for gcvg-git-2@plane.gmane.org; Mon, 30 Apr 2012 18:46:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756343Ab2D3Qil (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 Apr 2012 12:38:41 -0400
-Received: from edge10.ethz.ch ([82.130.75.186]:48823 "EHLO edge10.ethz.ch"
+	id S1756202Ab2D3QqM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 Apr 2012 12:46:12 -0400
+Received: from josefsipek.net ([64.9.206.49]:58776 "EHLO josefsipek.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756192Ab2D3Qik (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Apr 2012 12:38:40 -0400
-Received: from CAS12.d.ethz.ch (172.31.38.212) by edge10.ethz.ch
- (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.2.283.3; Mon, 30 Apr
- 2012 18:38:37 +0200
-Received: from thomas.inf.ethz.ch.ethz.ch (129.132.153.233) by CAS12.d.ethz.ch
- (172.31.38.212) with Microsoft SMTP Server (TLS) id 14.1.355.2; Mon, 30 Apr
- 2012 18:38:37 +0200
-In-Reply-To: <441BE38F-E081-4ED8-B587-BF72AD6368EE@gernhardtsoftware.com>
-	(Brian Gernhardt's message of "Sun, 29 Apr 2012 16:52:51 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Originating-IP: [129.132.153.233]
+	id S1755972Ab2D3QqM (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Apr 2012 12:46:12 -0400
+Received: from poseidon.cudanet.local (unknown [12.200.95.45])
+	by josefsipek.net (Postfix) with ESMTPSA id 327CDAF8BB;
+	Mon, 30 Apr 2012 12:46:11 -0400 (EDT)
+Content-Disposition: inline
+In-Reply-To: <CAHx6-UmQbcwGiv8xEjJo48cRdQ29KurtZ6O0+yZtJmey7GdrjQ@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196575>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196576>
 
-Hi Brian
+On Mon, Apr 30, 2012 at 05:34:40PM +0200, Per Cederqvist wrote:
+> On Apr 30, 2012 5:06 PM, "Jeff Sipek" <jeffpc@josefsipek.net> wrote:
+> >
+> > On Mon, Apr 30, 2012 at 12:27:21PM +0200, Per Cederqvist wrote:
+> > >
+> >
+> > Looks good.  Interestingly, I haven't seen those errors before.  What's
+> your
+> > setup like?
+> >
+> > Jeff.
+> 
+> I'm running the tests using M-x compile inside Emacs on Ubuntu 11.04. I
+> cannot reproduce it in a plain terminal. yes might inherit some signal
+> setup that Emacs makes.
 
-I can reproduce this.  The problem is that __WORDSIZE is not defined,
-either because it's Darwin or because the GCC is too old.  It winds up
-compiling the 32-bit case, which of course doesn't work for 64-bit
-builds.
+Makes sense.
 
-Perhaps we can rewrite it in terms of sizeof(long) like this?
+Thanks,
 
-diff --git i/xdiff/xutils.c w/xdiff/xutils.c
-index e05b5c9..1b3b471 100644
---- i/xdiff/xutils.c
-+++ w/xdiff/xutils.c
-@@ -290,39 +290,33 @@ static inline unsigned long has_zero(unsigned long a)
- 	return ((a - ONEBYTES) & ~a) & HIGHBITS;
- }
- 
--#if __WORDSIZE == 64
--
--/*
-- * Jan Achrenius on G+: microoptimized version of
-- * the simpler "(mask & ONEBYTES) * ONEBYTES >> 56"
-- * that works for the bytemasks without having to
-- * mask them first.
-- */
- static inline long count_masked_bytes(unsigned long mask)
- {
--	return mask * 0x0001020304050608 >> 56;
--}
--
--#else	/* 32-bit case */
--
--/* Modified Carl Chatfield G+ version for 32-bit */
--static inline long count_masked_bytes(long mask)
--{
--	/*
--	 * (a) gives us
--	 *   -1 (0, ff), 0 (ffff) or 1 (ffffff)
--	 * (b) gives us
--	 *   0 for 0, 1 for (ff ffff ffffff)
--	 * (a+b+1) gives us
--	 *   correct 0-3 bytemask count result
--	 */
--	long a = (mask - 256) >> 23;
--	long b = mask & 1;
--	return a + b + 1;
-+	if (sizeof(long) == 8) {
-+		/*
-+		 * Jan Achrenius on G+: microoptimized version of
-+		 * the simpler "(mask & ONEBYTES) * ONEBYTES >> 56"
-+		 * that works for the bytemasks without having to
-+		 * mask them first.
-+		 */
-+		return mask * 0x0001020304050608 >> 56;
-+	} else {
-+		/*
-+		 * Modified Carl Chatfield G+ version for 32-bit *
-+		 *
-+		 * (a) gives us
-+		 *   -1 (0, ff), 0 (ffff) or 1 (ffffff)
-+		 * (b) gives us
-+		 *   0 for 0, 1 for (ff ffff ffffff)
-+		 * (a+b+1) gives us
-+		 *   correct 0-3 bytemask count result
-+		 */
-+		long a = (mask - 256) >> 23;
-+		long b = mask & 1;
-+		return a + b + 1;
-+	}
- }
- 
--#endif
--
- unsigned long xdl_hash_record(char const **data, char const *top, long flags)
- {
- 	unsigned long hash = 5381;
+Jeff.
 
 -- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+Don't drink and derive. Alcohol and algebra don't mix.
