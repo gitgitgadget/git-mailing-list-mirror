@@ -1,82 +1,88 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH] contrib/rerere-train: use installed git-sh-setup
-Date: Mon, 30 Apr 2012 12:46:30 -0700
-Message-ID: <7vwr4xdmuh.fsf@alter.siamese.dyndns.org>
+From: =?UTF-8?q?Jan=20Kr=C3=BCger?= <jk@jk.gs>
+Subject: [PATCH v2] log-tree: use custom line terminator in line termination mode
+Date: Mon, 30 Apr 2012 22:28:25 +0200
+Message-ID: <1335817705-24718-1-git-send-email-jk@jk.gs>
+References: <7vaa1tf1w8.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: nanako3@lavabit.com
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Apr 30 21:46:42 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "Randal L. Schwartz" <merlyn@stonehenge.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Apr 30 22:28:56 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SOwYP-0003wX-UV
-	for gcvg-git-2@plane.gmane.org; Mon, 30 Apr 2012 21:46:38 +0200
+	id 1SOxDF-0003t8-VO
+	for gcvg-git-2@plane.gmane.org; Mon, 30 Apr 2012 22:28:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756583Ab2D3Tqd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 Apr 2012 15:46:33 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:54025 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756470Ab2D3Tqc (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Apr 2012 15:46:32 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3DEAB7BE4;
-	Mon, 30 Apr 2012 15:46:32 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:date:message-id:mime-version:content-type; s=sasl; bh=b
-	g4xzR3a+rDXb1FhL0yT1FUcJVM=; b=fUSuQsokFz1LDT/DSh4YEo0G9bIGFZJsE
-	4hbcViQLl5So6ho/kbUqOHL1UpMSSYNiotgjua71phXyJwm2FQLtNoPl/EqBPGKc
-	zUL0KA4rsgWaDst84QERhf97dxhNO5DV31zg3B85nelvRMQx3tBoDkB3UpkPQcS9
-	aJutk7R5DY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:date:message-id:mime-version:content-type; q=dns; s=
-	sasl; b=C1EhN62+hylpOs66MfMmfCFufT30JQzXUrUtSeiW0ZzrbI9gJGP3jRuO
-	u+t2Ln5Tlrv/F1GDrsS/ko6vXbhaE0Od3N2keC+yYtlxGTXmlWwlXUT0DQu4btbp
-	MDwYF7VCROuP6bHqHHRUU4YqwjdCiOjtZediApHUF2KdGI15MHU=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 35A857BE2;
-	Mon, 30 Apr 2012 15:46:32 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C09777BDF; Mon, 30 Apr 2012
- 15:46:31 -0400 (EDT)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 2F6EB46C-92FD-11E1-B592-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1756576Ab2D3U2r convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 30 Apr 2012 16:28:47 -0400
+Received: from zoidberg.org ([88.198.6.61]:49660 "EHLO heapsort.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756582Ab2D3U2g (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Apr 2012 16:28:36 -0400
+Received: from perceptron.heapsort.bogus (xdsl-89-0-44-98.netcologne.de [::ffff:89.0.44.98])
+  (AUTH: PLAIN jast, TLS: TLSv1/SSLv3,256bits,AES256-SHA)
+  by cthulhu with esmtp; Mon, 30 Apr 2012 22:28:34 +0200
+  id 00401053.4F9EF5F2.00000914
+X-Mailer: git-send-email 1.7.10.406.g0017
+In-Reply-To: <7vaa1tf1w8.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196602>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196603>
 
-Instead of sourcing git-sh-setup from random place that is on the $PATH,
-explicitly source $(git --exec-path)/git-sh-setup.  As I do not personally
-have any libexec/git-core directory on my $PATH like many other people, the
-script will fail without this update.
+When using a custom format in line termination mode (as opposed to line
+separation mode), the configured line terminator is not used, so things
+like "git log --pretty=3Dtformat:%H -z" do not work properly.
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
+Make it use the line terminator the user ordered.
+
+Signed-off-by: Jan Kr=C3=BCger <jk@jk.gs>
 ---
+ Here are two simple tests, for both format: and tformat: with -z.
 
- * I recently was helped greatly by this old script written in Sept 2008.
-   We may want to integrate it to "git rerere" proper some day, but that
-   is a separate topic.
+ log-tree.c                    |    2 +-
+ t/t4205-log-pretty-formats.sh |   12 ++++++++++++
+ 2 files changed, 13 insertions(+), 1 deletion(-)
 
- contrib/rerere-train.sh |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/contrib/rerere-train.sh b/contrib/rerere-train.sh
-index 2cfe1b9..36b6fee 100755
---- a/contrib/rerere-train.sh
-+++ b/contrib/rerere-train.sh
-@@ -7,7 +7,7 @@ USAGE="$me rev-list-args"
- 
- SUBDIRECTORY_OK=Yes
- OPTIONS_SPEC=
--. git-sh-setup
-+. $(git --exec-path)/git-sh-setup
- require_work_tree
- cd_to_toplevel
- 
--- 
-1.7.10.479.g65462
+diff --git a/log-tree.c b/log-tree.c
+index 34c49e7..44f0268 100644
+--- a/log-tree.c
++++ b/log-tree.c
+@@ -682,7 +682,7 @@ void show_log(struct rev_info *opt)
+ 	if (opt->use_terminator) {
+ 		if (!opt->missing_newline)
+ 			graph_show_padding(opt->graph);
+-		putchar('\n');
++		putchar(opt->diffopt.line_termination);
+ 	}
+=20
+ 	strbuf_release(&msgbuf);
+diff --git a/t/t4205-log-pretty-formats.sh b/t/t4205-log-pretty-formats=
+=2Esh
+index 2ae9faa..03a73ba 100755
+--- a/t/t4205-log-pretty-formats.sh
++++ b/t/t4205-log-pretty-formats.sh
+@@ -71,4 +71,16 @@ test_expect_success 'alias loop' '
+ 	test_must_fail git log --pretty=3Dtest-foo
+ '
+=20
++printf "add bar\0initial" > expected
++test_expect_success 'NUL separation' '
++	git log -z --pretty=3D"format:%s" >actual &&
++	test_cmp expected actual
++'
++
++printf "add bar\0initial\0" > expected
++test_expect_success 'NUL termination' '
++	git log -z --pretty=3D"tformat:%s" >actual &&
++	test_cmp expected actual
++'
++
+ test_done
+--=20
+1.7.10.406.g0017
