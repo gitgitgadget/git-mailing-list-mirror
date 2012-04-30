@@ -1,85 +1,75 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/5] archive-tar: turn write_tar_entry into blob-writing
- only
-Date: Mon, 30 Apr 2012 11:15:13 -0700
-Message-ID: <7vr4v5f5n2.fsf@alter.siamese.dyndns.org>
-References: <1335761837-12482-1-git-send-email-pclouds@gmail.com>
- <1335761837-12482-2-git-send-email-pclouds@gmail.com>
+From: Luke Diamand <luke@diamand.org>
+Subject: Re: [PATCH 1/4] git p4: bring back files in deleted client directory
+Date: Mon, 30 Apr 2012 19:34:28 +0100
+Message-ID: <4F9EDB34.5090103@diamand.org>
+References: <1335747437-24034-1-git-send-email-pw@padd.com> <1335747437-24034-2-git-send-email-pw@padd.com> <4F9E376B.1000107@diamand.org> <20120430123650.GB25045@padd.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org,
-	=?utf-8?Q?Ren=C3=A9?= Scharfe <rene.scharfe@lsrfire.ath.cx>
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Apr 30 20:15:30 2012
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Gary Gibbons <ggibbons@perforce.com>
+To: Pete Wyckoff <pw@padd.com>
+X-From: git-owner@vger.kernel.org Mon Apr 30 20:34:36 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SOv87-0007pD-TA
-	for gcvg-git-2@plane.gmane.org; Mon, 30 Apr 2012 20:15:24 +0200
+	id 1SOvQi-0004v5-5f
+	for gcvg-git-2@plane.gmane.org; Mon, 30 Apr 2012 20:34:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756112Ab2D3SPS convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 30 Apr 2012 14:15:18 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47684 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754579Ab2D3SPR convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 30 Apr 2012 14:15:17 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 12DA8663E;
-	Mon, 30 Apr 2012 14:15:17 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=5UJJCKgI0HYE
-	y7nDFdNc93w6LNE=; b=ioSrFDhm4cNVRSpHEnLYTeEtOWEKsyLV0VkTxrA3Guww
-	rVJFcrbZyhOA6NODpBFB73lm+IPoYaaMqkiGmM4NClLIcUsW8hEPos2A/qbbyjp1
-	FX/HTNE2GRZTNs1ozFBLWAskyUTG6RdbshV9xbBemDbzd3M2vnEd/TlKtCwCX9I=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=ke3Ggp
-	ozJFik1OsHQkX0aRkMPJ6hKnmh3gbtIRaIkyAqbcti8xczh+l2vxmzsGAK8UpFJY
-	CUep7pO3yFpNCmZ6QutX6Aup02mOBB6JZ8HHdYENXBqcMl9ZKXwCaIVCAn3B9s7/
-	xoajKE1LmaboELafqiO6Aw8p1bNO19HVDfHBA=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0935F663D;
-	Mon, 30 Apr 2012 14:15:17 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7204A6637; Mon, 30 Apr 2012
- 14:15:15 -0400 (EDT)
-In-Reply-To: <1335761837-12482-2-git-send-email-pclouds@gmail.com>
- (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Mon, 30 Apr
- 2012 11:57:13 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 6F4A78E4-92F0-11E1-BD3C-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1756376Ab2D3Sec (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 Apr 2012 14:34:32 -0400
+Received: from mail-ey0-f174.google.com ([209.85.215.174]:59117 "EHLO
+	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756227Ab2D3Seb (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Apr 2012 14:34:31 -0400
+Received: by eaaq12 with SMTP id q12so765512eaa.19
+        for <git@vger.kernel.org>; Mon, 30 Apr 2012 11:34:30 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding
+         :x-gm-message-state;
+        bh=6S8mYStGI3IRK3WBybB9bw6fWqdedn0qzLI1tq12iaM=;
+        b=k2XXqGMvrd1SKxC1eXDduR7R+FkIop35eyI/f+sWdID+gnd6iiq33dvf7Y/uDFpqsz
+         jX9nHCp2S9qu57KS15Dwi38gkHbWK1rg5jtRGJjrRH2XICU0IvZWIu+e0M0bfCZYTCEH
+         ousTVqklV8Cq5PRddL+ZBozo18sUrJHNUyTkJqSflOaXUrs6PVh7PHtsPS562W+SycHM
+         a9qqrCf9Dp6XbOvwQOrBrMYliS1H6E94kwSNaGYQF2XfJOcE/vdw1/fhcKV1EB/sAtAK
+         Q/blYnA6lp5Wt3HTDMaunR0LALAMyaBlSmBc6xDeHxIuw/gRtMVMwqmdfaKCjQezKZkz
+         jcng==
+Received: by 10.14.28.3 with SMTP id f3mr4611570eea.16.1335810869861;
+        Mon, 30 Apr 2012 11:34:29 -0700 (PDT)
+Received: from [86.6.30.7] (cpc19-cmbg14-2-0-cust6.5-4.cable.virginmedia.com. [86.6.30.7])
+        by mx.google.com with ESMTPS id x4sm78972344eef.10.2012.04.30.11.34.28
+        (version=SSLv3 cipher=OTHER);
+        Mon, 30 Apr 2012 11:34:29 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:10.0.3) Gecko/20120324 Icedove/10.0.3
+In-Reply-To: <20120430123650.GB25045@padd.com>
+X-Gm-Message-State: ALoCoQmwfKMEXPld/61DtktAHI46tEQpizoXZtdHpEbMm/Cfo2XxfUNt8GAsv+kVpS0CuulOwh9Z
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196587>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196588>
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
+On 30/04/12 13:36, Pete Wyckoff wrote:
+> luke@diamand.org wrote on Mon, 30 Apr 2012 07:55 +0100:
+>>
+>> Rebasing the current branch onto remotes/p4/master
+>> First, rewinding head to replay your work on top of it...
+>> File file1 doesn't exist. file1
+>> not ok - 3 submit with no client dir
+>
+> I can't figure it out.  Will you help debug a bit?  Something
+> like this maybe.
 
-> Before this patch write_tar_entry() can:
->
->  - write global header
->    by write_global_extended_header() calling write_tar_entry with
->    with both sha1 and path =3D=3D NULL
->
->  - write extended header for symlinks, by write_tar_entry() calling
->    itself with sha1 !=3D NULL and path =3D=3D NULL
->
->  - write a normal blob. In this case both sha1 and path are valid.
->
-> After this patch, the first two call sites are modified to write the
-> header without calling write_tar_entry(). The function is now for
-> writing blobs only.
+User error.
 
-Nice.
+% cp git-p4.py git-p4
 
-I am kind of surprised how hacky the original code that switched on !sh=
-a1
-and !path was, especially given that it came from Ren=C3=A9 at ae64bbc
-(tar-tree: Introduce write_entry(), 2006-03-25) --- it even claims that
-these are "reasonable" magic values ;-).
+Then it works fine.
+
+Is there a way to get lib-git-p4.sh to check this?
+
+Thanks
+Luke
