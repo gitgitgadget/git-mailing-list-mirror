@@ -1,52 +1,100 @@
-From: Andrew Sayers <andrew-git@pileofstuff.org>
-Subject: Re: Working on a rejected GSoC project
-Date: Mon, 30 Apr 2012 00:20:42 +0100
-Message-ID: <4F9DCCCA.8040300@pileofstuff.org>
-References: <CAH-tXsAHAcWh7WWZxfhVaaqM384eVh394QULVdw98N1f_C_7CQ@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/2] git-svn: use platform specific auth providers
+Date: Sun, 29 Apr 2012 17:03:45 -0700
+Message-ID: <7vvckihyqm.fsf@alter.siamese.dyndns.org>
+References: <20120426183634.GA4023@login.drsnuggles.stderr.nl>
+ <1335468843-24653-1-git-send-email-matthijs@stdin.nl>
+ <20120427082118.GA7257@dcvr.yhbt.net>
+ <20120427082559.GC4023@login.drsnuggles.stderr.nl>
+ <20120429082341.GA32664@dcvr.yhbt.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git mailing list <git@vger.kernel.org>,
-	=?UTF-8?B?SmFrdWIgTmFyxJlic2tp?= <jnareb@gmail.com>,
-	artagnon@gmail.com
-To: jaseem abid <jaseemabid@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Apr 30 01:20:59 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Gustav Munkby <grddev@gmail.com>,
+	Edward Rudd <urkle@outoforder.cc>,
+	Carsten Bormann <cabo@tzi.org>, git@vger.kernel.org,
+	Matthijs Kooijman <matthijs@stdin.nl>
+To: Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Mon Apr 30 02:04:18 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SOdQE-0004Mg-1u
-	for gcvg-git-2@plane.gmane.org; Mon, 30 Apr 2012 01:20:54 +0200
+	id 1SOe6E-0008J6-4K
+	for gcvg-git-2@plane.gmane.org; Mon, 30 Apr 2012 02:04:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754559Ab2D2XUs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 29 Apr 2012 19:20:48 -0400
-Received: from mtaout01-winn.ispmail.ntl.com ([81.103.221.47]:10894 "EHLO
-	mtaout01-winn.ispmail.ntl.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754523Ab2D2XUr (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 29 Apr 2012 19:20:47 -0400
-Received: from aamtaout03-winn.ispmail.ntl.com ([81.103.221.35])
-          by mtaout01-winn.ispmail.ntl.com
-          (InterMail vM.7.08.04.00 201-2186-134-20080326) with ESMTP
-          id <20120429232045.NUYQ10903.mtaout01-winn.ispmail.ntl.com@aamtaout03-winn.ispmail.ntl.com>;
-          Mon, 30 Apr 2012 00:20:45 +0100
-Received: from [192.168.0.2] (really [94.170.150.126])
-          by aamtaout03-winn.ispmail.ntl.com
-          (InterMail vG.3.00.04.00 201-2196-133-20080908) with ESMTP
-          id <20120429232045.QOIA13318.aamtaout03-winn.ispmail.ntl.com@[192.168.0.2]>;
-          Mon, 30 Apr 2012 00:20:45 +0100
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.28) Gecko/20120313 Thunderbird/3.1.20
-In-Reply-To: <CAH-tXsAHAcWh7WWZxfhVaaqM384eVh394QULVdw98N1f_C_7CQ@mail.gmail.com>
-X-Cloudmark-Analysis: v=1.1 cv=R50lirqlHffDPPkwUlkuVa99MrvKdVWo//yz83qex8g= c=1 sm=0 a=yXtjXN6ItgYA:10 a=TkkS6wQXEBIA:10 a=u4BGzq-dJbcA:10 a=IkcTkHD0fZMA:10 a=75el6f2dt53WL-rDMRQA:9 a=L_P55PRdHdIo0LZlazoA:7 a=QEXdDO2ut3YA:10 a=HpAAvcLHHh0Zw7uRqdWCyQ==:117
+	id S1754600Ab2D3ADs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 29 Apr 2012 20:03:48 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39812 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754555Ab2D3ADr (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 29 Apr 2012 20:03:47 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E71447A09;
+	Sun, 29 Apr 2012 20:03:46 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=w0SYql2fzpKBbTOuUbiH5wKlg88=; b=uNV8U7
+	dQ7qVaBqYHPZ4yEhEDVJbXZgCgR9tY82K/vZwWwUdVxItomBC8zoKthe972we0CG
+	xGwzsljk47Y7/wHh8iyNIBUBZwtdvt0VI+DNt9ch8hXZLilAeTtLxrBsPG7uN7Om
+	9dK9INQl3xwdAsnm4YcUEQZ2fhJ99fIrA6ICY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=v7z7hZxh9iukz7Vj4ezsaERT9Dz3bArA
+	cIAPwsSBj1raa7dBAyh95yjBIk/Ybiqk9QtAAVzQvumWvnFHLrLaYbNilcr2cowN
+	55+wuNtZLW6GqCpgj8a2WcIzI5sIoi33wbUmtXjRDq0zO9s6vsphPsihO3Oqv8kr
+	wfAVE+8VYkg=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DC7E87A04;
+	Sun, 29 Apr 2012 20:03:46 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 6A5DD7A03; Sun, 29 Apr 2012
+ 20:03:46 -0400 (EDT)
+In-Reply-To: <20120429082341.GA32664@dcvr.yhbt.net> (Eric Wong's message of
+ "Sun, 29 Apr 2012 08:23:41 +0000")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: F4CCBBE2-9257-11E1-90CC-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196521>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196522>
 
-I don't know anything about gitweb specifically, but I'd be happy to
-talk about generic JS issues.  You can e-mail privately if you like, but
-you'll probably get a wider range of views if you route messages via the
-mailing list.
+Eric Wong <normalperson@yhbt.net> writes:
 
-	- Andrew
+> Matthijs Kooijman <matthijs@stdin.nl> wrote:
+>> > > On Linux, this makes authentication using passwords from gnome-keyring
+>> > > and kwallet work (only the former was tested). On Mac OS X, this allows
+>> > > using the OS X Keychain.
+>> Signed-off-by: Matthijs Kooijman <matthijs@stdin.nl>
+>
+> Thanks Matthijs, pushed to master of git://bogomips.org/git-svn for
+> Junio.
+>
+> (actually pushed the other night, but I got distracted before
+>  sending this email :x)
+
+Thanks. Pulled.
+
+Eric, if it is not too much trouble, I'd appreciate an update to RelNotes
+in pull requests.  I'll add the following to the "Foreign Interface"
+section.
+
+ Documentation/RelNotes/1.7.11.txt |    3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/Documentation/RelNotes/1.7.11.txt b/Documentation/RelNotes/1.7.11.txt
+index af73659..3609042 100644
+--- a/Documentation/RelNotes/1.7.11.txt
++++ b/Documentation/RelNotes/1.7.11.txt
+@@ -47,6 +47,9 @@ Foreign Interface
+  * "git svn" used to die with unwanted SIGPIPE when talking with HTTP
+    server that uses keep-alive.
+ 
++ * "git svn" learned to use platform specific authentication
++   providers, e.g. gnome-keyring, kwallet, etc.
++
+  * "git p4" has been moved out of contrib/ area.
+ 
+ Performance
