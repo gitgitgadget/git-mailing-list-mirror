@@ -1,101 +1,93 @@
-From: Pete Wyckoff <pw@padd.com>
-Subject: Re: [PATCH 1/4] git p4: bring back files in deleted client directory
-Date: Mon, 30 Apr 2012 17:56:09 -0400
-Message-ID: <20120430215609.GA22615@padd.com>
-References: <1335747437-24034-1-git-send-email-pw@padd.com>
- <1335747437-24034-2-git-send-email-pw@padd.com>
- <4F9E376B.1000107@diamand.org>
- <20120430123650.GB25045@padd.com>
- <4F9EDB34.5090103@diamand.org>
+From: Pierre Thierry <pierre@nothos.net>
+Subject: Re: Location-agnostic submodules
+Date: Tue, 1 May 2012 00:02:44 +0200
+Message-ID: <20120430220244.GL22827@pape.arcanes.fr.eu.org>
+References: <20120427143710.GA13953@pape.arcanes.fr.eu.org>
+ <CABURp0qA9hK1fBd3rmLG61ErpbbzrcxO=AAmFOsoxjt=ozu09Q@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Luke Diamand <luke@diamand.org>
-X-From: git-owner@vger.kernel.org Mon Apr 30 23:56:22 2012
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="YqkpBxMMfeZoT90/"
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 01 00:02:59 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SOyZx-00084e-FC
-	for gcvg-git-2@plane.gmane.org; Mon, 30 Apr 2012 23:56:21 +0200
+	id 1SOygI-0002Dl-0g
+	for gcvg-git-2@plane.gmane.org; Tue, 01 May 2012 00:02:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757263Ab2D3V4Q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 Apr 2012 17:56:16 -0400
-Received: from honk.padd.com ([74.3.171.149]:44224 "EHLO honk.padd.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757162Ab2D3V4O (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Apr 2012 17:56:14 -0400
-Received: from arf.padd.com (unknown [50.55.155.59])
-	by honk.padd.com (Postfix) with ESMTPSA id B84CF309D;
-	Mon, 30 Apr 2012 14:56:13 -0700 (PDT)
-Received: by arf.padd.com (Postfix, from userid 7770)
-	id C0D54313F8; Mon, 30 Apr 2012 17:56:09 -0400 (EDT)
+	id S1756864Ab2D3WCt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 Apr 2012 18:02:49 -0400
+Received: from smtp07.smtpout.orange.fr ([80.12.242.129]:32512 "EHLO
+	smtp.smtpout.orange.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756418Ab2D3WCt (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Apr 2012 18:02:49 -0400
+Received: from pthierry.pck.nerim.net ([81.51.1.181])
+	by mwinf5d14 with ME
+	id 4N2l1j0013uK2zV03N2lLx; Tue, 01 May 2012 00:02:46 +0200
+Received: by pthierry.pck.nerim.net (Postfix, from userid 1000)
+	id D9C0C1800FC; Tue,  1 May 2012 00:02:44 +0200 (CEST)
 Content-Disposition: inline
-In-Reply-To: <4F9EDB34.5090103@diamand.org>
+In-Reply-To: <CABURp0qA9hK1fBd3rmLG61ErpbbzrcxO=AAmFOsoxjt=ozu09Q@mail.gmail.com>
+X-Operating-System: Debian GNU/Linux
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196613>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196614>
 
-luke@diamand.org wrote on Mon, 30 Apr 2012 19:34 +0100:
-> On 30/04/12 13:36, Pete Wyckoff wrote:
-> >luke@diamand.org wrote on Mon, 30 Apr 2012 07:55 +0100:
-> >>
-> >>Rebasing the current branch onto remotes/p4/master
-> >>First, rewinding head to replay your work on top of it...
-> >>File file1 doesn't exist. file1
-> >>not ok - 3 submit with no client dir
-> >
-> >I can't figure it out.  Will you help debug a bit?  Something
-> >like this maybe.
-> 
-> User error.
-> 
-> % cp git-p4.py git-p4
-> 
-> Then it works fine.
 
-Whew.  I caught myself forgetting to build a couple
-of times too.
+--YqkpBxMMfeZoT90/
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-"make git-p4" is a bit more official.
+Scribit Phil Hord dies 30/04/2012 hora 16:39:
+> Maybe something like this:
+>     [submodule "foo"]
+>         path =3D foo-mod
+>         url =3D ../foo ../foo-alternate
+> https://someplace.com/git/foo.git  https://kernel.org/git/foo
 
-> Is there a way to get lib-git-p4.sh to check this?
+<rant>That is typically the kind of occasion when I wish every config
+file were sexprs...</rant>
 
-This does seem appealing, but I'm not sure if it will be
-attractive to everybody else.
+> But if one of them lags behind the others by a day or even an hour,
+> then you may have gitlinks in your superproject which have not made
+> it into the lagging mirror yet.  And this will cause problems.
 
-My thought pattern of what to put in lib-git-p4.sh
-went like:
+I see your point, but what if your only repository is lagging behind?
+I.e. in what way is it worse than now?
 
-    test git-p4.py -nt git-p4 && {
-	echo "You must make git-p4" >&2
-	exit 1
-    }
+> Moreover, each time you clone the repository you may get different
+> results.  This would be confusing.
 
-to
+Again, I fail to see the difference with the current state. If the
+commit is specified, you will always get the same results, now or with
+my suggested addition.
 
-    test git-p4.py -nt git-p4 && {
-	echo "Making git-p4" >&2
-	make git-p4
-    }
+> I don't think there is any need for a new 'clone' command since the
+> clone porcelain already understands submodules.
 
-to
+What do you mean? When I clone a repo with submodules, they are not
+cloned as well.
 
-    make git-p4
+--=20
+pierre@nothos.net
+OpenPGP 0xD9D50D8A
 
-to
+--YqkpBxMMfeZoT90/
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
 
-    make
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
 
-and that's when I realized that everybody else has
-the same problem too.  Somehow they've gotten used
-to rebuilding before rerunning the tests.  I suspect
-that we should get used to it too.
+iEYEARECAAYFAk+fDAQACgkQxe13INnVDYos1gCgmuwRicHpRAloHpLyXWT/KFwi
+XiQAoPL+GZnZjNM7m28Hcqbb34iGcavK
+=WNNw
+-----END PGP SIGNATURE-----
 
-That said, it would have saved me some head scratching
-on a few occasions.
-
-		-- Pete
+--YqkpBxMMfeZoT90/--
