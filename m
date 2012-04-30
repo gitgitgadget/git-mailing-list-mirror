@@ -1,85 +1,112 @@
-From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <rene.scharfe@lsrfire.ath.cx>
-Subject: Re: [PATCH 5/5] archive-zip: stream large blobs into zip file
-Date: Tue, 01 May 2012 00:54:01 +0200
-Message-ID: <4F9F1809.1060803@lsrfire.ath.cx>
-References: <1335761837-12482-1-git-send-email-pclouds@gmail.com> <1335761837-12482-6-git-send-email-pclouds@gmail.com> <7vipghf2z0.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2] log-tree: use custom line terminator in line
+ termination mode
+Date: Mon, 30 Apr 2012 15:58:00 -0700
+Message-ID: <7vd36oesjr.fsf@alter.siamese.dyndns.org>
+References: <7vaa1tf1w8.fsf@alter.siamese.dyndns.org>
+ <1335817705-24718-1-git-send-email-jk@jk.gs>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
-	format=flowed
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-	<pclouds@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue May 01 00:54:10 2012
+Cc: "Randal L. Schwartz" <merlyn@stonehenge.com>, git@vger.kernel.org
+To: Jan =?utf-8?Q?Kr=C3=BCger?= <jk@jk.gs>
+X-From: git-owner@vger.kernel.org Tue May 01 00:58:26 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SOzTt-0005Xf-Pu
-	for gcvg-git-2@plane.gmane.org; Tue, 01 May 2012 00:54:10 +0200
+	id 1SOzY1-000770-L8
+	for gcvg-git-2@plane.gmane.org; Tue, 01 May 2012 00:58:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757189Ab2D3WyE convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 30 Apr 2012 18:54:04 -0400
-Received: from india601.server4you.de ([85.25.151.105]:57811 "EHLO
-	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757033Ab2D3WyD (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Apr 2012 18:54:03 -0400
-Received: from [192.168.2.105] (p4FFDA315.dip.t-dialin.net [79.253.163.21])
-	by india601.server4you.de (Postfix) with ESMTPSA id 7E7FE2F805D;
-	Tue,  1 May 2012 00:54:01 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:12.0) Gecko/20120420 Thunderbird/12.0
-In-Reply-To: <7vipghf2z0.fsf@alter.siamese.dyndns.org>
+	id S1757385Ab2D3W6L convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 30 Apr 2012 18:58:11 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59443 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757175Ab2D3W6E convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 30 Apr 2012 18:58:04 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4F20963AD;
+	Mon, 30 Apr 2012 18:58:03 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=Qxg5JHA5mUsC
+	+UqF3Hw9seQ00Xg=; b=xhH72cxaj4x5rK2inEB9A5HLNmfZmtPFeHBG7gVFsM9Q
+	2CDZjVCXhxG8k8ryFiFojOn4d26XmQISSRT43RN8qhZz3GrGCkrw8EvSJOQVHn47
+	fhwn1mkxRZVAR10kOzhp1f2vFy4NYti8EG6jrtOAYD7O9PI1ymlKqkEpNX6UrGw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=EiBkZr
+	wdWMda+tAtNeRA/9ycsHkeDusp/Bpi/nYo4vVR8Zgtm3m4/kTjkUCbTWQdt3ZtxB
+	BYzGfBWrBkYzsVhumzT78p9+MdFiaqfSKR6FImczCcyWuZykRF9JKZ0Ums07beQ7
+	pk9vY1qI+mGyJEYP6dVcYWBP3s+RsA1hMeO10=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 42BEE63AB;
+	Mon, 30 Apr 2012 18:58:03 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9C2B963AA; Mon, 30 Apr 2012
+ 18:58:01 -0400 (EDT)
+In-Reply-To: <1335817705-24718-1-git-send-email-jk@jk.gs> ("Jan
+ =?utf-8?Q?Kr=C3=BCger=22's?= message of "Mon, 30 Apr 2012 22:28:25 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: EFEAD7F6-9317-11E1-AE5E-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196624>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196625>
 
-Am 30.04.2012 21:12, schrieb Junio C Hamano:
-> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy<pclouds@gmail.com>  writes:
+Jan Kr=C3=BCger <jk@jk.gs> writes:
+
+> When using a custom format in line termination mode (as opposed to li=
+ne
+> separation mode), the configured line terminator is not used, so thin=
+gs
+> like "git log --pretty=3Dtformat:%H -z" do not work properly.
 >
->> A large blob will be read twice. One for calculating crc32, one for
->> actual writing.
+> Make it use the line terminator the user ordered.
 >
-> Is that because you need the checksum before the payload?  That is
-> unfortunate.  It would be nice (read: not a rejection of this patch--=
--it
-> is a good first step to do it stupid but correct way before trying to
-> optimize it) to avoid it when the output is seekable, especially beca=
-use
-> we are talking about a *large* payload.
+> Signed-off-by: Jan Kr=C3=BCger <jk@jk.gs>
+> ---
+>  Here are two simple tests, for both format: and tformat: with -z.
 
-The ZIP format optionally allows writing the CRC and the sizes after th=
-e=20
-data.  This adds a data descriptor with a size of 16 bytes to each=20
-streamed entry.  Seeking back and correcting these values in an output=20
-file would avoid that.
+Thanks for being thorough. Very much appreciated.
 
->> diff --git a/t/t1050-large.sh b/t/t1050-large.sh
->> index fe47554..458fdde 100755
->> --- a/t/t1050-large.sh
->> +++ b/t/t1050-large.sh
->> @@ -138,4 +138,8 @@ test_expect_success 'tar achiving' '
->>   	git archive --format=3Dtar HEAD>/dev/null
->>   '
->>
->> +test_expect_success 'zip achiving' '
->> +	git archive --format=3Dzip HEAD>/dev/null
->> +'
->
-> Can't we do better than "we only check if it finishes without barfing=
-; we
-> cannot afford to check the correctness of the output"?  The same comm=
-ent
-> applies to all the tests you added to this file in the past 3 months.
+Having said that, are we sure that
 
-Streaming to tar can be tested by setting core.big_file_threshold big=20
-enough, creating a non-streamed version of the archive and comparing it=
-=20
-to the streamed one.  With the seek trick, this would work for ZIP as=20
-well.  For streaming with an added data descriptor we'd need to actuall=
-y=20
-unpack the ZIP file, though.
+	printf "add bar\0initial"
 
-Ren=C3=A9
+works per specification, or merely works by accident in some
+implementation?
+
+In C, we have to write this as printf("add bar%cinitial", 0), and the
+above makes my stomach feel a bit queasy.
+
+Admittedly we have "printf "\0\0" in t6024 and we haven't seen anybody
+complain for the past 6 years, so perhaps I shouldn't be worried too mu=
+ch
+about this.
+
+> diff --git a/t/t4205-log-pretty-formats.sh b/t/t4205-log-pretty-forma=
+ts.sh
+> index 2ae9faa..03a73ba 100755
+> --- a/t/t4205-log-pretty-formats.sh
+> +++ b/t/t4205-log-pretty-formats.sh
+> @@ -71,4 +71,16 @@ test_expect_success 'alias loop' '
+>  	test_must_fail git log --pretty=3Dtest-foo
+>  '
+> =20
+> +printf "add bar\0initial" > expected
+> +test_expect_success 'NUL separation' '
+> +	git log -z --pretty=3D"format:%s" >actual &&
+> +	test_cmp expected actual
+> +'
+> +
+> +printf "add bar\0initial\0" > expected
+> +test_expect_success 'NUL termination' '
+> +	git log -z --pretty=3D"tformat:%s" >actual &&
+> +	test_cmp expected actual
+> +'
+> +
+>  test_done
