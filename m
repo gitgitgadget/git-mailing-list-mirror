@@ -1,114 +1,118 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/2] git-svn: use platform specific auth providers
-Date: Mon, 30 Apr 2012 09:04:33 -0700
-Message-ID: <7vipghgq9a.fsf@alter.siamese.dyndns.org>
-References: <20120426183634.GA4023@login.drsnuggles.stderr.nl>
- <1335468843-24653-1-git-send-email-matthijs@stdin.nl>
- <20120427082118.GA7257@dcvr.yhbt.net>
- <20120427082559.GC4023@login.drsnuggles.stderr.nl>
- <20120429082341.GA32664@dcvr.yhbt.net>
- <7vvckihyqm.fsf@alter.siamese.dyndns.org>
- <7vk40yhv5q.fsf@alter.siamese.dyndns.org>
- <20120430081939.GA27715@dcvr.yhbt.net>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH] create_ref_entry(): move check_refname_format() call
+ to callers
+Date: Mon, 30 Apr 2012 18:18:53 +0200
+Message-ID: <4F9EBB6D.3090900@alum.mit.edu>
+References: <1335680288-5128-1-git-send-email-mhagger@alum.mit.edu> <20120429115831.GC24254@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Matthijs Kooijman <matthijs@stdin.nl>, git@vger.kernel.org,
-	Gustav Munkby <grddev@gmail.com>,
-	Edward Rudd <urkle@outoforder.cc>,
-	Carsten Bormann <cabo@tzi.org>
-To: Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Mon Apr 30 18:04:45 2012
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Apr 30 18:19:32 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SOt5e-0006eC-F9
-	for gcvg-git-2@plane.gmane.org; Mon, 30 Apr 2012 18:04:42 +0200
+	id 1SOtJt-00006x-Ub
+	for gcvg-git-2@plane.gmane.org; Mon, 30 Apr 2012 18:19:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756171Ab2D3QEh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 Apr 2012 12:04:37 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:54456 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755126Ab2D3QEg (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Apr 2012 12:04:36 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3C1867956;
-	Mon, 30 Apr 2012 12:04:35 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=DLE2hxrnZax/IX9TOA0uLj5rR/4=; b=j75rvy
-	ql+tphLoqjoPFe445c/V15DQJHTK0CCcpViaeUkShV0SeaaVl7938UGoLPcgOcdO
-	ZTTIktwQ09pjzm4iMsqvwRhZa0pzkXWbSLdFpsA862gAxSprhWKbdXdF6xLB0vVN
-	c4Sdi9w6fenhL4x5HKf5ycCBVYy21mOuyAzrg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=TouOILi7qJc6SolN53nY5GjOCax5pW8F
-	K5H037eLqQIwpCXmn5ROiPBNvSYO3L5wM1ajhEMrMNqVMZuOsly2vbJ2H8xXZcbV
-	tOBR6VPgLHxDfNc0iO6zXbR4jWm2PsAdY3+r4mBI2nyMtlPkvwPVC+Xc6cGqrrh7
-	Hc+HTym0Kbs=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 31F1C7955;
-	Mon, 30 Apr 2012 12:04:35 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8A2007954; Mon, 30 Apr 2012
- 12:04:34 -0400 (EDT)
-In-Reply-To: <20120430081939.GA27715@dcvr.yhbt.net> (Eric Wong's message of
- "Mon, 30 Apr 2012 08:19:39 +0000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 2DBFFBF4-92DE-11E1-A44C-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1756248Ab2D3QTT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 Apr 2012 12:19:19 -0400
+Received: from einhorn.in-berlin.de ([192.109.42.8]:38201 "EHLO
+	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752115Ab2D3QTP (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Apr 2012 12:19:15 -0400
+X-Envelope-From: mhagger@alum.mit.edu
+Received: from [192.168.69.140] (p4FC0A468.dip.t-dialin.net [79.192.164.104])
+	(authenticated bits=0)
+	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id q3UGIrEq002259
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Mon, 30 Apr 2012 18:18:54 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:11.0) Gecko/20120410 Thunderbird/11.0.1
+In-Reply-To: <20120429115831.GC24254@sigill.intra.peff.net>
+X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196573>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196574>
 
-Eric Wong <normalperson@yhbt.net> writes:
+On 04/29/2012 01:58 PM, Jeff King wrote:
+> On Sun, Apr 29, 2012 at 08:18:08AM +0200, mhagger@alum.mit.edu wrote:
+>
+>> I will work on providing more infrastructure for checking refnames at
+>> varying levels of strictness, but I don't know enough about the code
+>> paths to be able to find the places where the strictness levels need
+>> tweaking.
+>>
+>> For this to work, the various callers of check_refname_format() will
+>> have to be able to influence the level of strictness that they want to
+>> enforce.  This patch is one trivial step in that direction.
+>
+> It seems like the create_ref_entry code paths should _always_ just be
+> issuing warnings, as they are about reading existing refs, no? The die()
+> side should only come when we are writing refs.
 
-> Which version of SVN is that?  (git svn --version)
-> http://packages.ubuntu.com/lucid/libsvn-perl says 1.6.6
-> (+distro patches), which shouldn't be affected by this patch...
+There are not two but three classes of refnames:
 
-: a00 git.git/master; git version
-git version 1.7.10.405.g10d433
-: a00 git.git/master; git svn --version
-git-svn version 1.7.10.405.g10d433 (svn 1.6.6)
-: a00 git.git/master; dpkg -l libsvn-perl
-Desired=Unknown/Install/Remove/Purge/Hold
-|
-Status=Not/Inst/Cfg-files/Unpacked/Failed-cfg/Half-inst/trig-aWait/Trig-pend
-|/ Err?=(none)/Reinst-required (Status,Err: uppercase=bad)
-||/ Name              Version           Description
-+++-=================-=================-==================================================
-ii  libsvn-perl       1.6.6dfsg-2ubuntu Perl bindings for Subversion
-: a00 git.git/master; cd t
-: a00 t/master; sh t9100-git-svn-basic.sh -i -v
-Initialized empty Git repository in /scratch/buildfarm/git.git/t/trash
-directory.t9100-git-svn-basic/.git/
-define NO_SVN_TESTS to skip git svn tests
-expecting success:
-        mkdir import &&
-        (
-                cd import &&
-                echo foo >foo &&
-                ln -s foo foo.link
-                mkdir -p dir/a/b/c/d/e &&
-                echo "deep dir" >dir/a/b/c/d/e/file &&
-                mkdir bar &&
-                echo "zzz" >bar/zzz &&
-                echo "#!/bin/sh" >exec.sh &&
-                chmod +x exec.sh &&
-                svn_cmd import -m "import for git svn" . "$svnrepo"
-                >/dev/null
-        ) &&
-        rm -rf import &&
-        git svn init "$svnrepo"
-ok 1 - initialize git svn
+1. Fully legal refnames (according to the rules of check-ref-format).
 
-expecting success: git svn fetch
-ValueError svn_auth_get_platform_specific_client_providers is not
-implemented yet
+2. Refnames that might cause parsing trouble in some circumstances but 
+could otherwise be tolerated (with a warning) in the hope that the user 
+can delete them before they cause further confusion.  These include all 
+illegal refnames that aren't covered by (3).
 
-not ok - 2 import an SVN revision into git
-#       git svn fetch
+3. Refnames that are so pathological that we don't want to let them into 
+our code at all, under any circumstances.  This category, I think, 
+includes refnames that include "/../" (because they could cause our code 
+to walk up the filesystem) or LF (because if written to a packed-refs 
+file they would make it unreadable) and perhaps "//" (because they would 
+confuse the loose reference code and the hierarchical reference cache 
+code).  And depending on how much you trust shell scripts to do quoting 
+correctly, other patterns might also be risky.
+
+I would like to be able to distinguish between (2) and (3) before 
+deciding what to do in any specific cases.  References in category (2) 
+can probably be accepted (with a warning) in old data but we should not 
+allow the user to create new ones.  References in category (3) are more 
+critical; I see three options for dealing with them: die(), emit a 
+warning then drop them on the floor, or emit a warning but handle them 
+somehow (for example, by URL-encoding them).
+
+Treating category (3) the same as category (2) was more or less the 
+status quo before the changes, but I think it is dangerous, especially 
+when dealing with references that might come from remote sources (do you 
+disagree?).
+
+
+Regarding create_ref_entry(), there are three callers:
+
+* read_packed_refs(): Only used to read references from local
+   packed-refs files.  Seems uncritical in terms of security, so for now
+   I suppose we could change this caller to emit a warning but use the
+   reference anyway.  (It would not be a good idea to emit a warning but
+   *not* use the reference, because the next time the packed-refs file
+   is rewritten the reference would be lost.)
+
+* get_ref_dir(): Only used to read loose references from the local
+   filesystem.  Seems uncritical in terms of security, so for now
+   I suppose we could change this caller to emit a warning but use the
+   reference anyway.  Alternately, we could emit a warning but not use
+   the reference; this would not result in any data loss because nobody
+   would have a reason to remove the loose reference file.
+
+* add_packed_ref(): Used by write_remote_refs() to insert references
+   from a cloned repository into the local packed-refs file.  Here I
+   think we have to be paranoid about accepting refnames in category
+   (3).  For example, it might be reasonable to emit a warning
+   mentioning the illegal reference name *and the SHA1 that it referred
+   to* then to drop it on the floor.
+
+Michael
+
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
