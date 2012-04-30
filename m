@@ -1,72 +1,65 @@
-From: Luke Diamand <luke@diamand.org>
-Subject: Re: [PATCH 1/4] git p4: bring back files in deleted client directory
-Date: Mon, 30 Apr 2012 07:55:39 +0100
-Message-ID: <4F9E376B.1000107@diamand.org>
-References: <1335747437-24034-1-git-send-email-pw@padd.com> <1335747437-24034-2-git-send-email-pw@padd.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Bug (or inconsistency) in git add
+Date: Mon, 30 Apr 2012 00:02:28 -0700
+Message-ID: <7vwr4xhfcr.fsf@alter.siamese.dyndns.org>
+References: <CADJEhEWC=mMManxi9Q6W9EvVKmTV=i1ZxbdW4QS_ou_DrBEb+Q@mail.gmail.com>
+ <CADJEhEVNPj_FrRatjD7Jmbd7i_FYg9BzNNP48_4VAr6fgqBT8Q@mail.gmail.com>
+ <CAA5Ydx9h6o=uppRk5zc9V4z1S831KGVRBzTw9oMqDjY34-noOw@mail.gmail.com>
+ <CADJEhEXtDZGav1Y5epZQ69NWptyVyPC1hmN6=YaNYrg3vYmBqg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Gary Gibbons <ggibbons@perforce.com>
-To: Pete Wyckoff <pw@padd.com>
-X-From: git-owner@vger.kernel.org Mon Apr 30 08:55:48 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Victor Engmark <victor.engmark@gmail.com>,
+	git <git@vger.kernel.org>
+To: Steve Bennett <stevage@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Apr 30 09:02:37 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SOkWR-0006Aa-D3
-	for gcvg-git-2@plane.gmane.org; Mon, 30 Apr 2012 08:55:47 +0200
+	id 1SOkd2-0002ch-Fz
+	for gcvg-git-2@plane.gmane.org; Mon, 30 Apr 2012 09:02:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751875Ab2D3Gzn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 Apr 2012 02:55:43 -0400
-Received: from mail-ee0-f46.google.com ([74.125.83.46]:64216 "EHLO
-	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752619Ab2D3Gzm (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Apr 2012 02:55:42 -0400
-Received: by eekc41 with SMTP id c41so597574eek.19
-        for <git@vger.kernel.org>; Sun, 29 Apr 2012 23:55:40 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding
-         :x-gm-message-state;
-        bh=bFFKGg7l56nf+ADl6OYxTzGB8E5Weck2P63rc2zAJkU=;
-        b=K4daiu6OC5PLC9aHWDv6yBiMHzmENdTLgVpfQxFo4sMlwPo30ZT/9IlF+nq+2V7HKF
-         Nfj0J9tIABz28MatEgRIVAy/DY4h5ILbpei5RRLgUkiJ2RHWNS0iQmL5vbhL5Ugk5ipJ
-         MBiNO9XqHW+xT7rhoR05Pri1uhsgPCzuihJijDE/AXOdMc5X0wHE53KhyQUBIwEs07Vz
-         ES33q7pzbIL00jG8d8WJkCFiGSUMfl2BQsRCKjnjrjIw51S4xOoDHJXmM4GoZya7EOcq
-         PSQVxwiSo/4qU5NGpE7nksm5lyHwH08cTjkcuZTpA6kuYe7rjnYkcJawxt84+zgZsHDh
-         0iqQ==
-Received: by 10.213.113.203 with SMTP id b11mr1478988ebq.164.1335768940703;
-        Sun, 29 Apr 2012 23:55:40 -0700 (PDT)
-Received: from [86.6.30.7] (cpc19-cmbg14-2-0-cust6.5-4.cable.virginmedia.com. [86.6.30.7])
-        by mx.google.com with ESMTPS id z47sm70173169een.5.2012.04.29.23.55.39
-        (version=SSLv3 cipher=OTHER);
-        Sun, 29 Apr 2012 23:55:40 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:7.0.1) Gecko/20110929 Thunderbird/7.0.1
-In-Reply-To: <1335747437-24034-2-git-send-email-pw@padd.com>
-X-Gm-Message-State: ALoCoQluzcsRCnUtbb9hNShX3BG2FbXCQTRnrZpS1pOjb6nIqq60zo/KDKS6RZt85PXldh6+i5BB
+	id S1752472Ab2D3HCb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 Apr 2012 03:02:31 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64618 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751515Ab2D3HCb (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Apr 2012 03:02:31 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4231D3BDD;
+	Mon, 30 Apr 2012 03:02:30 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Y8mpUdQ8W+3hC/iY8qlApEDjOwM=; b=Pe6SE/
+	9jP9wgMKqxoZj+XBN5ev2nRFItROHfycsVhwhM+x3qKfRcT/4hw04qzEXbK/+S9U
+	mAqM165d8/rggTUsaH2zRZPDIuAgropi+vJeDUp8q8UPIeCxOLg+W5lzy8ByYPLy
+	2YrGnSDci8YXJgvnCxoqQpX0IDJ4uVE7h5/84=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=tGKRakDtrXal4CnmS0oRyZDDJVVk+vTu
+	w3LBYKIMc1n+Z5epsAyjR3crdjzRrhlfDrLk/LzCVNFx5hEjMFXn0oVIVeRstcdv
+	QDkCTdg/9N7o6SVfFfTUkoV/JuJTcysD3mSHl2N+BH62lbJW8X72eEkRERyIDfct
+	zZfk6LyDr6Y=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 39FEA3BDC;
+	Mon, 30 Apr 2012 03:02:30 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id BE1FC3BDB; Mon, 30 Apr 2012
+ 03:02:29 -0400 (EDT)
+In-Reply-To: <CADJEhEXtDZGav1Y5epZQ69NWptyVyPC1hmN6=YaNYrg3vYmBqg@mail.gmail.com> (Steve
+ Bennett's message of "Mon, 30 Apr 2012 16:46:20 +1000")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 73771A02-9292-11E1-8E76-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196543>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196544>
 
-On 30/04/12 01:57, Pete Wyckoff wrote:
-> The code to auto-create the client directory, added in 0591cfa
-> (git-p4: ensure submit clientPath exists before chdir,
-> 2011-12-09), works when the client directory never existed.
->
-> But if the directory is summarily removed without telling p4,
-> the sync operation will not bring back all the files.  Always
-> do "sync -f" if the client directory is newly created.
+Steve Bennett <stevage@gmail.com> writes:
 
-I'm possibly missing something obvious here, but 
-./t9807-git-p4-submit.sh fails with this change.
+> In any case, it looks like Git does support some ** globbing natively.
 
-Rebasing the current branch onto remotes/p4/master
-First, rewinding head to replay your work on top of it...
-File file1 doesn't exist. file1
-not ok - 3 submit with no client dir
-
-Luke
+No, we don't.
