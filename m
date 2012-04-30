@@ -1,84 +1,77 @@
-From: Jeff Sipek <jeffpc@josefsipek.net>
-Subject: Re: [GUILT] [PATCH] Testsuite: get rid of "Broken pipe" errors from
- yes.
-Date: Mon, 30 Apr 2012 11:06:55 -0400
-Message-ID: <20120430150655.GE20761@poseidon.cudanet.local>
-References: <87k40x346u.fsf@opera.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: What's cooking in git.git (Apr 2012, #11; Sun, 29)
+Date: Mon, 30 Apr 2012 08:22:41 -0700
+Message-ID: <7vmx5tgs72.fsf@alter.siamese.dyndns.org>
+References: <7vbomahu1h.fsf@alter.siamese.dyndns.org>
+ <20120430122440.GA25045@padd.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, ceder@lysator.liu.se
-To: Per Cederqvist <cederp@opera.com>
-X-From: git-owner@vger.kernel.org Mon Apr 30 17:14:14 2012
+Cc: git@vger.kernel.org, Luke Diamand <luke@diamand.org>
+To: Pete Wyckoff <pw@padd.com>
+X-From: git-owner@vger.kernel.org Mon Apr 30 17:22:54 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SOsIl-0003dR-Gh
-	for gcvg-git-2@plane.gmane.org; Mon, 30 Apr 2012 17:14:11 +0200
+	id 1SOsR8-0001WR-5Y
+	for gcvg-git-2@plane.gmane.org; Mon, 30 Apr 2012 17:22:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755167Ab2D3POG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 Apr 2012 11:14:06 -0400
-Received: from josefsipek.net ([64.9.206.49]:58343 "EHLO josefsipek.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752968Ab2D3POE (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Apr 2012 11:14:04 -0400
-Received: from poseidon.cudanet.local (unknown [12.200.95.45])
-	by josefsipek.net (Postfix) with ESMTPSA id 7AF80AF9E0;
-	Mon, 30 Apr 2012 11:06:57 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <87k40x346u.fsf@opera.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1756100Ab2D3PWp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 Apr 2012 11:22:45 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:37563 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753403Ab2D3PWo (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Apr 2012 11:22:44 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B62AA6F09;
+	Mon, 30 Apr 2012 11:22:43 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=nwScOm5RlAmQXESqnCSpFF6JTvY=; b=lgFmIF
+	UtK/ldJWtqRe0v5eedQwVRDHQoRAvithxnuP3diHNYb6aGRq2wYtOAK4VygLoRFL
+	Jb5pBDDtrlSARlMfdr51MnURlriXLeMjIO7iho3elEbzKE8PkmbJk+0CswhpTDOq
+	BW2TQgSiM4Vxiyt0J4d7EAkgzdKa4ptoku2Mg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=PhhhSyvMk8qVTnWClpd/qVQOY/a9HQWF
+	PIVSfgjlwJt+4OA9BArQzxr4jCjYVyLtmjhsctlPg+N8GsjFIZDiznGnLPwEsZ+D
+	Ch/zoQXh8CjQkVrWGP7vu+gemss6eFVhtMcCqqHikBL1Ll5tIj58y3WcDX+3hnvW
+	e9H2UMWa450=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id ADB166F08;
+	Mon, 30 Apr 2012 11:22:43 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 44F546F07; Mon, 30 Apr 2012
+ 11:22:43 -0400 (EDT)
+In-Reply-To: <20120430122440.GA25045@padd.com> (Pete Wyckoff's message of
+ "Mon, 30 Apr 2012 08:24:40 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 54E85E16-92D8-11E1-993E-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196563>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196564>
 
-On Mon, Apr 30, 2012 at 12:27:21PM +0200, Per Cederqvist wrote:
+Pete Wyckoff <pw@padd.com> writes:
+
+> gitster@pobox.com wrote on Sun, 29 Apr 2012 18:45 -0700:
+>> * ld/git-p4-tags-and-labels (2012-04-25) 7 commits
+>>   (merged to 'next' on 2012-04-25 at 8b959e5)
+>>  + git p4: fix unit tests
+>>   (merged to 'next' on 2012-04-24 at bf55d92)
+>>  + git p4: move verbose to base class
+>>  + git p4: Ignore P4EDITOR if it is empty
+>>  + git p4: Squash P4EDITOR in test harness
+>>  + git p4: fix-up "import/export of labels to/from p4"
+>>   (merged to 'next' on 2012-04-15 at 1b1e9a1)
+>>  + git p4: import/export of labels to/from p4
+>>  + git p4: Fixing script editor checks
+>> 
+>> What's the current status of this topic?  Pete?
 >
+> I read through these again.  It all looks good and works.
 
-Looks good.  Interestingly, I haven't seen those errors before.  What's your
-setup like?
-
-Jeff.
-
-> Signed-off-by: Per Cederqvist <cederp@opera.com>
-> ---
->  regression/t-029.sh |    6 +++---
->  1 file changed, 3 insertions(+), 3 deletions(-)
-> 
-> diff --git a/regression/t-029.sh b/regression/t-029.sh
-> index 83e1d2b..09450c6 100755
-> --- a/regression/t-029.sh
-> +++ b/regression/t-029.sh
-> @@ -21,11 +21,11 @@ echo | shouldfail guilt repair --full
->  
->  cmd list_files
->  
-> -yes n | shouldfail guilt repair --full
-> +yes n 2>/dev/null | shouldfail guilt repair --full
->  
->  cmd list_files
->  
-> -yes y | cmd guilt repair --full
-> +yes y 2>/dev/null | cmd guilt repair --full
->  
->  cmd list_files
->  
-> @@ -33,6 +33,6 @@ cmd guilt push -a
->  
->  cmd list_files
->  
-> -yes Y | cmd guilt repair --full
-> +yes Y 2>/dev/null | cmd guilt repair --full
->  
->  cmd list_files
-> -- 
-> 1.7.10
-> 
-
--- 
-You measure democracy by the freedom it gives its dissidents, not the
-freedom it gives its assimilated conformists.
-		- Abbie Hoffman
+Thanks; will merge to 'master' shortly, then.
