@@ -1,79 +1,79 @@
-From: Steve Bennett <stevage@gmail.com>
-Subject: Bug (or inconsistency) in git add
-Date: Mon, 30 Apr 2012 14:03:25 +1000
-Message-ID: <CADJEhEVNPj_FrRatjD7Jmbd7i_FYg9BzNNP48_4VAr6fgqBT8Q@mail.gmail.com>
-References: <CADJEhEWC=mMManxi9Q6W9EvVKmTV=i1ZxbdW4QS_ou_DrBEb+Q@mail.gmail.com>
+From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [PATCH 0/5] Large file support for git-archive
+Date: Mon, 30 Apr 2012 11:57:12 +0700
+Message-ID: <1335761837-12482-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Apr 30 06:04:29 2012
+Cc: Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?q?Ren=C3=A9=20Scharfe?= <rene.scharfe@lsrfire.ath.cx>,
+	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Apr 30 07:00:56 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SOhqc-0003QB-ET
-	for gcvg-git-2@plane.gmane.org; Mon, 30 Apr 2012 06:04:26 +0200
+	id 1SOijE-0008M0-92
+	for gcvg-git-2@plane.gmane.org; Mon, 30 Apr 2012 07:00:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751299Ab2D3EDr convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 30 Apr 2012 00:03:47 -0400
-Received: from mail-vb0-f46.google.com ([209.85.212.46]:33649 "EHLO
-	mail-vb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750772Ab2D3EDq convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 30 Apr 2012 00:03:46 -0400
-Received: by vbbff1 with SMTP id ff1so1802300vbb.19
-        for <git@vger.kernel.org>; Sun, 29 Apr 2012 21:03:45 -0700 (PDT)
+	id S1752494Ab2D3FAs convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 30 Apr 2012 01:00:48 -0400
+Received: from mail-pz0-f51.google.com ([209.85.210.51]:33712 "EHLO
+	mail-pz0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751309Ab2D3FAr (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Apr 2012 01:00:47 -0400
+Received: by dadz8 with SMTP id z8so3584710dad.10
+        for <git@vger.kernel.org>; Sun, 29 Apr 2012 22:00:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
          :content-type:content-transfer-encoding;
-        bh=nq+IQXuZlnl3Jho/WPfPG5Jt79p/Ad1WO3UeqYHlG8U=;
-        b=SW8yZi72VHb/aaYxoJKDihkB+LzIjwUUqdm2UYE46L4zNDh8heJINJapM1xCVB76sf
-         vPYpoB5w3TpcUwe0ePZD+tOh79Kekyj6NXpKaTthw6QfvDvs4eyuR1KfQufpZg9dp2UM
-         mhHesazf1/ZhTorM8IireGNarElZ/Fc1oIUDIA7i5XN71x1/LucXa73rFOswnsaZZu+2
-         utOdQT9NJ0o06/bYCDvUx5YR0YnNn+nHTylWAWyjWgfI5uarpT/86iTZkX2lew+fQ34k
-         q3j4MTcF4LbXY88rPQ8dSjDy1Ldi608y+dsebNtcdboN5UPEgYFhbrK2eRZLbM8ky3fB
-         8U2w==
-Received: by 10.52.28.200 with SMTP id d8mr16914563vdh.38.1335758625502; Sun,
- 29 Apr 2012 21:03:45 -0700 (PDT)
-Received: by 10.52.38.39 with HTTP; Sun, 29 Apr 2012 21:03:25 -0700 (PDT)
-In-Reply-To: <CADJEhEWC=mMManxi9Q6W9EvVKmTV=i1ZxbdW4QS_ou_DrBEb+Q@mail.gmail.com>
+        bh=Bye6CUydvUVWTufLi7i6oRDzSdByA/S/ymphhBeOxPA=;
+        b=byffB3A7/5RPV7owtLhL3P3wB81oEmxSq+W/8kzSm+XDeOTSvMPvG5/qDqMezwREXt
+         5gWhcfMUgA8LCkNAHlKonie6I5V3HG4S3imxXke1Tu5cMrgyHN8v8cYdtoRf68Dx17Vv
+         GOh7oh5viiqazCxEbdEM9ozMYiR1i/MNoN6LTgl3os3uFBEET8BbXOJe6UfGz8U9SCYc
+         eM+Gxb7//zNWvXP4QsMnCD8H/WzpnN8BcUnIw3nGNOxSzg/zyN0Uw+gQhGRsx/CzT/NG
+         0sYvZoDkIPVKsRnJjQR2xWb+fLliKAmlz0H/Ae9Uw8zAN9zdfVHQWkhK4HW44KJK3T70
+         Otpw==
+Received: by 10.68.229.37 with SMTP id sn5mr9111682pbc.29.1335762046757;
+        Sun, 29 Apr 2012 22:00:46 -0700 (PDT)
+Received: from pclouds@gmail.com ([115.74.34.118])
+        by mx.google.com with ESMTPS id k9sm14872568pbf.65.2012.04.29.22.00.42
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sun, 29 Apr 2012 22:00:45 -0700 (PDT)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Mon, 30 Apr 2012 11:57:21 +0700
+X-Mailer: git-send-email 1.7.8.36.g69ee2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196534>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196535>
 
-I couldn't find a bug tracker for Git, so here's my bug report.
+This is a spin-off from the large file support series I posted some
+time ago [1]. Both tar and zip format now support streaming large
+blobs. Although zip will store uncompressed large blobs.
 
-Given a directory containing foo/bar/baz/blah.py and
-foo/bar/baz/blem.py, this command:
-1)
-git add foo/**/*.py
+[1] http://thread.gmane.org/gmane.comp.version-control.git/191605
 
-produces no output, and adds no files.
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy (5):
+  archive-tar: turn write_tar_entry into blob-writing only
+  archive-tar: unindent write_tar_entry by one level
+  archive: delegate blob reading to backend
+  archive-tar: stream large blobs to tar file
+  archive-zip: stream large blobs into zip file
 
-This command:
-2)
-git add /**.py
+ Documentation/git-archive.txt |    3 +
+ archive-tar.c                 |  184 ++++++++++++++++++++++++++++-----=
+--------
+ archive-zip.c                 |   56 ++++++++++++-
+ archive.c                     |   28 +++----
+ archive.h                     |   10 ++-
+ t/t1050-large.sh              |    8 ++
+ 6 files changed, 209 insertions(+), 80 deletions(-)
 
-produces no output but adds all the files.
-
-This command:
-3)
-git add foo/**.py
-
-produces an error and adds no files.
-
-IMHO, "git add" should always produce an error message if no files
-matched the pathspec given. So case 1) should produce an error
-message.
-
-git version 1.7.9.4 on Snow Leopard. (There doesn't seem to be a
-1.7.10 at=A0http://code.google.com/p/git-osx-installer/downloads/list?c=
-an=3D3)
-
-If this is some weird bash shell behaviour, my apologies.
-
-Steve
+--=20
+1.7.8.36.g69ee2
