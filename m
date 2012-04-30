@@ -1,372 +1,91 @@
-From: Pete Wyckoff <pw@padd.com>
-Subject: [PATCH 4/4] git p4: submit files with wildcards
-Date: Sun, 29 Apr 2012 20:57:17 -0400
-Message-ID: <1335747437-24034-5-git-send-email-pw@padd.com>
-References: <1335747437-24034-1-git-send-email-pw@padd.com>
-Cc: Gary Gibbons <ggibbons@perforce.com>,
-	Luke Diamand <luke@diamand.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Apr 30 02:58:47 2012
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/2] git-svn: use platform specific auth providers
+Date: Sun, 29 Apr 2012 18:21:05 -0700
+Message-ID: <7vk40yhv5q.fsf@alter.siamese.dyndns.org>
+References: <20120426183634.GA4023@login.drsnuggles.stderr.nl>
+ <1335468843-24653-1-git-send-email-matthijs@stdin.nl>
+ <20120427082118.GA7257@dcvr.yhbt.net>
+ <20120427082559.GC4023@login.drsnuggles.stderr.nl>
+ <20120429082341.GA32664@dcvr.yhbt.net>
+ <7vvckihyqm.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Gustav Munkby <grddev@gmail.com>,
+	Edward Rudd <urkle@outoforder.cc>,
+	Carsten Bormann <cabo@tzi.org>,
+	Matthijs Kooijman <matthijs@stdin.nl>
+To: Eric Wong <normalperson@yhbt.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Apr 30 03:21:48 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SOewv-0003zG-F5
-	for gcvg-git-2@plane.gmane.org; Mon, 30 Apr 2012 02:58:46 +0200
+	id 1SOfJD-0002z7-IE
+	for gcvg-git-2@plane.gmane.org; Mon, 30 Apr 2012 03:21:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754927Ab2D3A6l (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 29 Apr 2012 20:58:41 -0400
-Received: from honk.padd.com ([74.3.171.149]:36595 "EHLO honk.padd.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754314Ab2D3A6k (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 29 Apr 2012 20:58:40 -0400
-Received: from arf.padd.com (unknown [50.55.155.59])
-	by honk.padd.com (Postfix) with ESMTPSA id F103B60C0;
-	Sun, 29 Apr 2012 17:58:39 -0700 (PDT)
-Received: by arf.padd.com (Postfix, from userid 7770)
-	id C0850313F8; Sun, 29 Apr 2012 20:58:37 -0400 (EDT)
-X-Mailer: git-send-email 1.7.10.572.ged86f
-In-Reply-To: <1335747437-24034-1-git-send-email-pw@padd.com>
+	id S1754916Ab2D3BVJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 29 Apr 2012 21:21:09 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:63013 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754545Ab2D3BVI (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 29 Apr 2012 21:21:08 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0460183FD;
+	Sun, 29 Apr 2012 21:21:07 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=hV1iH/+AqGvh9/Qj+JewBnRLKnw=; b=auzf5Z
+	iRnsnrFw/GQZ95hnFeuZUP4qkuq4xpo6e+u/3HgYwJ9HaFq/HDBSozpXyk2bNR+M
+	BlUQb2McwQLorw83naOQ0zzV6bsTVnT9LHIDXy+vRHMGkAOz6ZPyc9JCY/OnRAUA
+	N/LjRQ5hBp0Lpv2cJoBjNdmnLSkUp4U7a+rm0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=XqEoiI7L8geMYDOY43bDwklbs5kucHXK
+	ueb9ENr+XkT/lcjY0M8Tjt1YDU4hHbLZqUlexDV7p6tBbda/dszI/mkBVVVbBPcl
+	dNvl/n5fTp7VVt0OJtcvO2gHxKOME647Y2yjZR0acQE+LTnJ/MFo15o7m4IU1hWx
+	JsR0g2tNCqw=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EFBB583FC;
+	Sun, 29 Apr 2012 21:21:06 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 78C0E83FB; Sun, 29 Apr 2012
+ 21:21:06 -0400 (EDT)
+In-Reply-To: <7vvckihyqm.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Sun, 29 Apr 2012 17:03:45 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: C27A1DF0-9262-11E1-A03D-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196531>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196532>
 
-There are four wildcard characters in p4.  Files with these
-characters can be added to p4 repos using the "-f" option.  They
-are stored in %xx notation, and when checked out, p4 converts
-them back to normal.
+Junio C Hamano <gitster@pobox.com> writes:
 
-When adding files with wildcards in git, the submit path must
-be careful to use the encoded names in some places, and it
-must use "-f" to add them.  All other p4 commands that operate
-on the client directory expect encoded filenames as arguments.
+> Eric Wong <normalperson@yhbt.net> writes:
+>
+>> Matthijs Kooijman <matthijs@stdin.nl> wrote:
+>>> > > On Linux, this makes authentication using passwords from gnome-keyring
+>>> > > and kwallet work (only the former was tested). On Mac OS X, this allows
+>>> > > using the OS X Keychain.
+>>> Signed-off-by: Matthijs Kooijman <matthijs@stdin.nl>
+>>
+>> Thanks Matthijs, pushed to master of git://bogomips.org/git-svn for
+>> Junio.
+>>
+>> (actually pushed the other night, but I got distracted before
+>>  sending this email :x)
+>
+> Thanks. Pulled.
 
-Support for wildcards in the clone/sync path was added in
-084f630 (git-p4: decode p4 wildcard characters, 2011-02-19),
-but that change did not handle the submit path.
+As I am already too deep into today's integration round, I will not be
+rewinding this pull anymore, but on one of my Ubuntu 10.04 boxes, I am
+seeing this:
 
-There was a problem with wildcards in the sync path too.  Commit
-084f630 (git-p4: decode p4 wildcard characters, 2011-02-19)
-handled files with p4 wildcards that were added or modified in
-p4.  Do this for deleted files, and also in branch detection
-checks, too.
+    Initialized empty Git repository in
+    /srv/git/t/trash directory.t9118-git-svn-funky-branch-names/project/.git/
+    ValueError svn_auth_get_platform_specific_client_providers is not implemented yet
 
-Reported-by: Luke Diamand <luke@diamand.org>
-Signed-off-by: Pete Wyckoff <pw@padd.com>
----
- git-p4.py                     |   74 +++++++++++++++++-----------
- t/t9800-git-p4-basic.sh       |  106 +++++++++++++++++++++++++++++++++++++++++
- t/t9809-git-p4-client-view.sh |   33 +++++++++++++
- 3 files changed, 185 insertions(+), 28 deletions(-)
-
-diff --git a/git-p4.py b/git-p4.py
-index 888e3e7..5afd501 100755
---- a/git-p4.py
-+++ b/git-p4.py
-@@ -131,25 +131,29 @@ def p4_system(cmd):
-     subprocess.check_call(real_cmd, shell=expand)
- 
- def p4_integrate(src, dest):
--    p4_system(["integrate", "-Dt", src, dest])
-+    p4_system(["integrate", "-Dt", wildcard_encode(src), wildcard_encode(dest)])
- 
- def p4_sync(f, *options):
--    p4_system(["sync"] + list(options) + [f])
-+    p4_system(["sync"] + list(options) + [wildcard_encode(f)])
- 
- def p4_add(f):
--    p4_system(["add", f])
-+    # forcibly add file names with wildcards
-+    if wildcard_present(f):
-+        p4_system(["add", "-f", f])
-+    else:
-+        p4_system(["add", f])
- 
- def p4_delete(f):
--    p4_system(["delete", f])
-+    p4_system(["delete", wildcard_encode(f)])
- 
- def p4_edit(f):
--    p4_system(["edit", f])
-+    p4_system(["edit", wildcard_encode(f)])
- 
- def p4_revert(f):
--    p4_system(["revert", f])
-+    p4_system(["revert", wildcard_encode(f)])
- 
--def p4_reopen(type, file):
--    p4_system(["reopen", "-t", type, file])
-+def p4_reopen(type, f):
-+    p4_system(["reopen", "-t", type, wildcard_encode(f)])
- 
- #
- # Canonicalize the p4 type and return a tuple of the
-@@ -246,7 +250,7 @@ def setP4ExecBit(file, mode):
- def getP4OpenedType(file):
-     # Returns the perforce file type for the given file.
- 
--    result = p4_read_pipe(["opened", file])
-+    result = p4_read_pipe(["opened", wildcard_encode(file)])
-     match = re.match(".*\((.+)\)\r?$", result)
-     if match:
-         return match.group(1)
-@@ -636,6 +640,34 @@ def getClientRoot():
- 
-     return entry["Root"]
- 
-+#
-+# P4 wildcards are not allowed in filenames.  P4 complains
-+# if you simply add them, but you can force it with "-f", in
-+# which case it translates them into %xx encoding internally.
-+#
-+def wildcard_decode(path):
-+    # Search for and fix just these four characters.  Do % last so
-+    # that fixing it does not inadvertently create new %-escapes.
-+    # Cannot have * in a filename in windows; untested as to
-+    # what p4 would do in such a case.
-+    if not platform.system() == "Windows":
-+        path = path.replace("%2A", "*")
-+    path = path.replace("%23", "#") \
-+               .replace("%40", "@") \
-+               .replace("%25", "%")
-+    return path
-+
-+def wildcard_encode(path):
-+    # do % first to avoid double-encoding the %s introduced here
-+    path = path.replace("%", "%25") \
-+               .replace("*", "%2A") \
-+               .replace("#", "%23") \
-+               .replace("@", "%40")
-+    return path
-+
-+def wildcard_present(path):
-+    return path.translate(None, "*#@%") != path
-+
- class Command:
-     def __init__(self):
-         self.usage = "usage: %prog [options]"
-@@ -1170,7 +1202,8 @@ class P4Submit(Command, P4UserMap):
-                 del(os.environ["P4DIFF"])
-             diff = ""
-             for editedFile in editedFiles:
--                diff += p4_read_pipe(['diff', '-du', editedFile])
-+                diff += p4_read_pipe(['diff', '-du',
-+                                      wildcard_encode(editedFile)])
- 
-             newdiff = ""
-             for newFile in filesToAdd:
-@@ -1605,23 +1638,6 @@ class P4Sync(Command, P4UserMap):
-         if gitConfig("git-p4.syncFromOrigin") == "false":
-             self.syncWithOrigin = False
- 
--    #
--    # P4 wildcards are not allowed in filenames.  P4 complains
--    # if you simply add them, but you can force it with "-f", in
--    # which case it translates them into %xx encoding internally.
--    # Search for and fix just these four characters.  Do % last so
--    # that fixing it does not inadvertently create new %-escapes.
--    #
--    def wildcard_decode(self, path):
--        # Cannot have * in a filename in windows; untested as to
--        # what p4 would do in such a case.
--        if not self.isWindows:
--            path = path.replace("%2A", "*")
--        path = path.replace("%23", "#") \
--                   .replace("%40", "@") \
--                   .replace("%25", "%")
--        return path
--
-     # Force a checkpoint in fast-import and wait for it to finish
-     def checkpoint(self):
-         self.gitStream.write("checkpoint\n\n")
-@@ -1689,6 +1705,7 @@ class P4Sync(Command, P4UserMap):
-             fnum = fnum + 1
- 
-             relPath = self.stripRepoPath(path, self.depotPaths)
-+            relPath = wildcard_decode(relPath)
- 
-             for branch in self.knownBranches.keys():
- 
-@@ -1706,7 +1723,7 @@ class P4Sync(Command, P4UserMap):
- 
-     def streamOneP4File(self, file, contents):
-         relPath = self.stripRepoPath(file['depotFile'], self.branchPrefixes)
--        relPath = self.wildcard_decode(relPath)
-+        relPath = wildcard_decode(relPath)
-         if verbose:
-             sys.stderr.write("%s\n" % relPath)
- 
-@@ -1775,6 +1792,7 @@ class P4Sync(Command, P4UserMap):
- 
-     def streamOneP4Deletion(self, file):
-         relPath = self.stripRepoPath(file['path'], self.branchPrefixes)
-+        relPath = wildcard_decode(relPath)
-         if verbose:
-             sys.stderr.write("delete %s\n" % relPath)
-         self.gitStream.write("D %s\n" % relPath)
-diff --git a/t/t9800-git-p4-basic.sh b/t/t9800-git-p4-basic.sh
-index 13be144..0223fcf 100755
---- a/t/t9800-git-p4-basic.sh
-+++ b/t/t9800-git-p4-basic.sh
-@@ -163,6 +163,112 @@ test_expect_success 'wildcard files git p4 clone' '
- 	)
- '
- 
-+test_expect_success 'wildcard files submit back to p4, add' '
-+	test_when_finished cleanup_git &&
-+	git p4 clone --dest="$git" //depot &&
-+	(
-+		cd "$git" &&
-+		echo git-wild-hash >git-wild#hash &&
-+		echo git-wild-star >git-wild\*star &&
-+		echo git-wild-at >git-wild@at &&
-+		echo git-wild-percent >git-wild%percent &&
-+		git add git-wild* &&
-+		git commit -m "add some wildcard filenames" &&
-+		git config git-p4.skipSubmitEdit true &&
-+		git p4 submit
-+	) &&
-+	(
-+		cd "$cli" &&
-+		test_path_is_file git-wild#hash &&
-+		test_path_is_file git-wild\*star &&
-+		test_path_is_file git-wild@at &&
-+		test_path_is_file git-wild%percent
-+	)
-+'
-+
-+test_expect_success 'wildcard files submit back to p4, modify' '
-+	test_when_finished cleanup_git &&
-+	git p4 clone --dest="$git" //depot &&
-+	(
-+		cd "$git" &&
-+		echo new-line >>git-wild#hash &&
-+		echo new-line >>git-wild\*star &&
-+		echo new-line >>git-wild@at &&
-+		echo new-line >>git-wild%percent &&
-+		git add git-wild* &&
-+		git commit -m "modify the wildcard files" &&
-+		git config git-p4.skipSubmitEdit true &&
-+		git p4 submit
-+	) &&
-+	(
-+		cd "$cli" &&
-+		test_line_count = 2 git-wild#hash &&
-+		test_line_count = 2 git-wild\*star &&
-+		test_line_count = 2 git-wild@at &&
-+		test_line_count = 2 git-wild%percent
-+	)
-+'
-+
-+test_expect_success 'wildcard files submit back to p4, copy' '
-+	test_when_finished cleanup_git &&
-+	git p4 clone --dest="$git" //depot &&
-+	(
-+		cd "$git" &&
-+		cp file2 git-wild-cp#hash &&
-+		git add git-wild-cp#hash &&
-+		cp git-wild\*star file-wild-3 &&
-+		git add file-wild-3 &&
-+		git commit -m "wildcard copies" &&
-+		git config git-p4.detectCopies true &&
-+		git config git-p4.detectCopiesHarder true &&
-+		git config git-p4.skipSubmitEdit true &&
-+		git p4 submit
-+	) &&
-+	(
-+		cd "$cli" &&
-+		test_path_is_file git-wild-cp#hash &&
-+		test_path_is_file file-wild-3
-+	)
-+'
-+
-+test_expect_success 'wildcard files submit back to p4, rename' '
-+	test_when_finished cleanup_git &&
-+	git p4 clone --dest="$git" //depot &&
-+	(
-+		cd "$git" &&
-+		git mv git-wild@at file-wild-4 &&
-+		git mv file-wild-3 git-wild-cp%percent &&
-+		git commit -m "wildcard renames" &&
-+		git config git-p4.detectRenames true &&
-+		git config git-p4.skipSubmitEdit true &&
-+		git p4 submit
-+	) &&
-+	(
-+		cd "$cli" &&
-+		test_path_is_missing git-wild@at &&
-+		test_path_is_file git-wild-cp%percent
-+	)
-+'
-+
-+test_expect_success 'wildcard files submit back to p4, delete' '
-+	test_when_finished cleanup_git &&
-+	git p4 clone --dest="$git" //depot &&
-+	(
-+		cd "$git" &&
-+		git rm git-wild* &&
-+		git commit -m "delete the wildcard files" &&
-+		git config git-p4.skipSubmitEdit true &&
-+		git p4 submit
-+	) &&
-+	(
-+		cd "$cli" &&
-+		test_path_is_missing git-wild#hash &&
-+		test_path_is_missing git-wild\*star &&
-+		test_path_is_missing git-wild@at &&
-+		test_path_is_missing git-wild%percent
-+	)
-+'
-+
- test_expect_success 'clone bare' '
- 	git p4 clone --dest="$git" --bare //depot &&
- 	test_when_finished cleanup_git &&
-diff --git a/t/t9809-git-p4-client-view.sh b/t/t9809-git-p4-client-view.sh
-index 43ed1fe..7d993ef 100755
---- a/t/t9809-git-p4-client-view.sh
-+++ b/t/t9809-git-p4-client-view.sh
-@@ -374,6 +374,39 @@ test_expect_success 'subdir clone, submit rename' '
- 	)
- '
- 
-+# see t9800 for the non-client-spec case, and the rest of the wildcard tests
-+test_expect_success 'wildcard files submit back to p4, client-spec case' '
-+	client_view "//depot/... //client/..." &&
-+	test_when_finished cleanup_git &&
-+	git p4 clone --use-client-spec --dest="$git" //depot/dir1 &&
-+	(
-+		cd "$git" &&
-+		echo git-wild-hash >dir1/git-wild#hash &&
-+		echo git-wild-star >dir1/git-wild\*star &&
-+		echo git-wild-at >dir1/git-wild@at &&
-+		echo git-wild-percent >dir1/git-wild%percent &&
-+		git add dir1/git-wild* &&
-+		git commit -m "add some wildcard filenames" &&
-+		git config git-p4.skipSubmitEditCheck true &&
-+		git p4 submit
-+	) &&
-+	(
-+		cd "$cli" &&
-+		test_path_is_file dir1/git-wild#hash &&
-+		test_path_is_file dir1/git-wild\*star &&
-+		test_path_is_file dir1/git-wild@at &&
-+		test_path_is_file dir1/git-wild%percent
-+	) &&
-+	(
-+		# delete these carefully, cannot just do "p4 delete"
-+		# on files with wildcards; but git-p4 knows how
-+		cd "$git" &&
-+		git rm dir1/git-wild* &&
-+		git commit -m "clean up the wildcards" &&
-+		git p4 submit
-+	)
-+'
-+
- test_expect_success 'reinit depot' '
- 	(
- 		cd "$cli" &&
--- 
-1.7.10.366.g90ade
+So the tip of 'master' may be broken for some "git svn" users.
