@@ -1,82 +1,72 @@
-From: Steve Bennett <stevage@gmail.com>
-Subject: Re: Bug (or inconsistency) in git add
-Date: Mon, 30 Apr 2012 16:46:20 +1000
-Message-ID: <CADJEhEXtDZGav1Y5epZQ69NWptyVyPC1hmN6=YaNYrg3vYmBqg@mail.gmail.com>
-References: <CADJEhEWC=mMManxi9Q6W9EvVKmTV=i1ZxbdW4QS_ou_DrBEb+Q@mail.gmail.com>
- <CADJEhEVNPj_FrRatjD7Jmbd7i_FYg9BzNNP48_4VAr6fgqBT8Q@mail.gmail.com> <CAA5Ydx9h6o=uppRk5zc9V4z1S831KGVRBzTw9oMqDjY34-noOw@mail.gmail.com>
+From: Luke Diamand <luke@diamand.org>
+Subject: Re: [PATCH 1/4] git p4: bring back files in deleted client directory
+Date: Mon, 30 Apr 2012 07:55:39 +0100
+Message-ID: <4F9E376B.1000107@diamand.org>
+References: <1335747437-24034-1-git-send-email-pw@padd.com> <1335747437-24034-2-git-send-email-pw@padd.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git <git@vger.kernel.org>
-To: Victor Engmark <victor.engmark@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Apr 30 08:46:49 2012
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Gary Gibbons <ggibbons@perforce.com>
+To: Pete Wyckoff <pw@padd.com>
+X-From: git-owner@vger.kernel.org Mon Apr 30 08:55:48 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SOkNi-0007rp-IN
-	for gcvg-git-2@plane.gmane.org; Mon, 30 Apr 2012 08:46:46 +0200
+	id 1SOkWR-0006Aa-D3
+	for gcvg-git-2@plane.gmane.org; Mon, 30 Apr 2012 08:55:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752865Ab2D3Gqm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 Apr 2012 02:46:42 -0400
-Received: from mail-vx0-f174.google.com ([209.85.220.174]:34025 "EHLO
-	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752472Ab2D3Gql (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Apr 2012 02:46:41 -0400
-Received: by vcqp1 with SMTP id p1so1836881vcq.19
-        for <git@vger.kernel.org>; Sun, 29 Apr 2012 23:46:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=NDHe2ZYRug7MavxXywTJjrGEuneZg7VbduHleJuvKFc=;
-        b=1BHYEaB1ecI8zDhYp9TCy31ddOArQp1JXR4y+dkgvE68BtQXbBYCVVeoVKHlvqoDfw
-         9t2IT2CQVFVO5N0T+9cIauxo9TATjADwAbUxPlbsDoN67HW1fclwxuZgXFLUGG5bYuz4
-         gPpWiUVhJcRhsAg9uHhmnRbH7Y15iMDs2Gr1a7mhWpsX6Eu2YmTNmNUmtlrbje4OqQjU
-         yWCEuoQ0+ZG0hLnSChOXI5zIfxKnzR+axsChU/8aciuTABUYHX+bxP6/2jsr9gmGgneH
-         VOz5b56iQITV40VHIm9zcB+BWYBqgjbvcBZZ2fqnxCHNCwOCUnrMuvIrZEIZTbD6qtyF
-         4vQw==
-Received: by 10.52.19.193 with SMTP id h1mr5504073vde.18.1335768401081; Sun,
- 29 Apr 2012 23:46:41 -0700 (PDT)
-Received: by 10.52.38.39 with HTTP; Sun, 29 Apr 2012 23:46:20 -0700 (PDT)
-In-Reply-To: <CAA5Ydx9h6o=uppRk5zc9V4z1S831KGVRBzTw9oMqDjY34-noOw@mail.gmail.com>
+	id S1751875Ab2D3Gzn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 Apr 2012 02:55:43 -0400
+Received: from mail-ee0-f46.google.com ([74.125.83.46]:64216 "EHLO
+	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752619Ab2D3Gzm (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Apr 2012 02:55:42 -0400
+Received: by eekc41 with SMTP id c41so597574eek.19
+        for <git@vger.kernel.org>; Sun, 29 Apr 2012 23:55:40 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding
+         :x-gm-message-state;
+        bh=bFFKGg7l56nf+ADl6OYxTzGB8E5Weck2P63rc2zAJkU=;
+        b=K4daiu6OC5PLC9aHWDv6yBiMHzmENdTLgVpfQxFo4sMlwPo30ZT/9IlF+nq+2V7HKF
+         Nfj0J9tIABz28MatEgRIVAy/DY4h5ILbpei5RRLgUkiJ2RHWNS0iQmL5vbhL5Ugk5ipJ
+         MBiNO9XqHW+xT7rhoR05Pri1uhsgPCzuihJijDE/AXOdMc5X0wHE53KhyQUBIwEs07Vz
+         ES33q7pzbIL00jG8d8WJkCFiGSUMfl2BQsRCKjnjrjIw51S4xOoDHJXmM4GoZya7EOcq
+         PSQVxwiSo/4qU5NGpE7nksm5lyHwH08cTjkcuZTpA6kuYe7rjnYkcJawxt84+zgZsHDh
+         0iqQ==
+Received: by 10.213.113.203 with SMTP id b11mr1478988ebq.164.1335768940703;
+        Sun, 29 Apr 2012 23:55:40 -0700 (PDT)
+Received: from [86.6.30.7] (cpc19-cmbg14-2-0-cust6.5-4.cable.virginmedia.com. [86.6.30.7])
+        by mx.google.com with ESMTPS id z47sm70173169een.5.2012.04.29.23.55.39
+        (version=SSLv3 cipher=OTHER);
+        Sun, 29 Apr 2012 23:55:40 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:7.0.1) Gecko/20110929 Thunderbird/7.0.1
+In-Reply-To: <1335747437-24034-2-git-send-email-pw@padd.com>
+X-Gm-Message-State: ALoCoQluzcsRCnUtbb9hNShX3BG2FbXCQTRnrZpS1pOjb6nIqq60zo/KDKS6RZt85PXldh6+i5BB
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196542>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196543>
 
-On 30 April 2012 16:23, Victor Engmark <victor.engmark@gmail.com> wrote:
-> I can't answer for the absence of an error when no files are added, but
-> globbing (resolving * in paths) is done by the shell, not by git. To verify
-> a glob, just echo it:
+On 30/04/12 01:57, Pete Wyckoff wrote:
+> The code to auto-create the client directory, added in 0591cfa
+> (git-p4: ensure submit clientPath exists before chdir,
+> 2011-12-09), works when the client directory never existed.
 >
-> echo foo/**/*.py
+> But if the directory is summarily removed without telling p4,
+> the sync operation will not bring back all the files.  Always
+> do "sync -f" if the client directory is newly created.
 
-Yes, it appears that the two cases are treated differently:
-1) foo/**/*.py:  the shell expands the **, and interprets it the same
-as "*",  so foo/**/*.py means any python file exactly one directory
-deeper than foo
-2) /**.py: the shell ignores this and passes it straight to Git.
+I'm possibly missing something obvious here, but 
+./t9807-git-p4-submit.sh fails with this change.
 
-So I guess the missing error message I reported originally is
-logically correct in a kind of convoluted way: the ** is actually
-matching real files (just not the ones you expected) and they don't
-have any changes, so you don't get any output.
+Rebasing the current branch onto remotes/p4/master
+First, rewinding head to replay your work on top of it...
+File file1 doesn't exist. file1
+not ok - 3 submit with no client dir
 
-(Whether or not it makes sense for Git to produce identical output in
-the case of both adding files with changes, and doing nothing at all,
-is a debate I probably shouldn't start...)
-
-> If you want to add recursively, you'll need to enable the special behavior
-> for double stars:
->
-> shopt -s globstar
-
-Looks like I need a newer version of Bash.
-
-In any case, it looks like Git does support some ** globbing natively.
-I'm curious about the rules for that. They don't seem to be documented
-in the git man page (http://schacon.github.com/git/user-manual.html).
-
-Steve
+Luke
