@@ -1,104 +1,87 @@
-From: David Ebbo <david.ebbo@gmail.com>
-Subject: Re: [PATCH 3/3] t5541: test more combinations of --progress
-Date: Tue, 1 May 2012 10:53:19 -0700 (PDT)
-Message-ID: <12419089.206.1335894799764.JavaMail.geo-discussion-forums@pbcgj9>
-References: <20120501084048.GA21904@sigill.intra.peff.net>
- <20120501084307.GC4998@sigill.intra.peff.net>
- <20120501093501.GB22633@ecki.lan>
- <20120501093719.GA7538@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] gitweb-lib.sh: Set up PATH to use perl from /usr/bin
+Date: Tue, 01 May 2012 10:53:50 -0700
+Message-ID: <7v8vhbaitt.fsf@alter.siamese.dyndns.org>
+References: <201205011323.45190.tboegi@web.de> <4FA00E09.2090708@in.waw.pl>
+ <7vsjfjalx6.fsf@alter.siamese.dyndns.org> <4FA0176B.50300@in.waw.pl>
+ <20120501170810.GA22444@sigill.intra.peff.net> <4FA02274.6070601@web.de>
 Mime-Version: 1.0
-Content-Type: multipart/alternative; 
-	boundary="----=_Part_205_16267860.1335894799764"
-Cc: Clemens Buchacher <drizzd@aon.at>, Junio C Hamano <gitster@pobox.com>, 
-	dfowler <davidfowl@gmail.com>, git@vger.kernel.org, 
-	Paul Betts <paul@github.com>, David Ebbo <david.ebbo@gmail.com>
-To: msysgit@googlegroups.com
-X-From: msysgit+bncCIuuisXIFhCRxoD9BBoEcNyoCQ@googlegroups.com Tue May 01 19:53:23 2012
-Return-path: <msysgit+bncCIuuisXIFhCRxoD9BBoEcNyoCQ@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-qc0-f186.google.com ([209.85.216.186])
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jeff King <peff@peff.net>,
+	Zbigniew =?utf-8?Q?J=C4=99drzejewski-Szmek?= <zbyszek@in.waw.pl>,
+	Junio C Hamano <gitster@pobox.com>, jnareb@gmail.com,
+	git@vger.kernel.org
+To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Tue May 01 19:54:00 2012
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncCIuuisXIFhCRxoD9BBoEcNyoCQ@googlegroups.com>)
-	id 1SPHGM-0005nX-S1
-	for gcvm-msysgit@m.gmane.org; Tue, 01 May 2012 19:53:23 +0200
-Received: by qcsc2 with SMTP id c2sf4393811qcs.3
-        for <gcvm-msysgit@m.gmane.org>; Tue, 01 May 2012 10:53:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=beta;
-        h=x-beenthere:date:from:to:cc:message-id:in-reply-to:references
-         :subject:mime-version:x-original-sender
-         :x-original-authentication-results:precedence:mailing-list:list-id
-         :x-google-group-id:list-post:list-help:list-archive:sender
-         :list-subscribe:list-unsubscribe:content-type;
-        bh=j3ET9fAGHldZZApjN+JnBt8BIAAW2aDHQPGh8t6B2yY=;
-        b=nfK+0yc9VPe3b7dftKw52cJDVEf+bs7s5kaoEQMHPpQJ+sInFEjX08cqX3QtyjT4Ow
-         JChDI/fTlWRSWmuvhXB0B0hGOJS+fBlDWoSPuC2o/cXgTNpq7wdof1U+k6YftEIh5iWQ
-         Y2ZLukEa1FEc7Hl/lu9GFlinlKNRTNTivWyeU=
-Received: by 10.68.195.33 with SMTP id ib1mr580275pbc.18.1335894801380;
-        Tue, 01 May 2012 10:53:21 -0700 (PDT)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.68.75.45 with SMTP id z13ls12592330pbv.7.gmail; Tue, 01 May
- 2012 10:53:20 -0700 (PDT)
-Received: by 10.68.216.104 with SMTP id op8mr1138167pbc.1.1335894800507;
-        Tue, 01 May 2012 10:53:20 -0700 (PDT)
-In-Reply-To: <20120501093719.GA7538@sigill.intra.peff.net>
-X-Original-Sender: david.ebbo@gmail.com
-X-Original-Authentication-Results: ls.google.com; spf=pass (google.com: domain of
- david.ebbo@gmail.com designates internal as permitted sender)
- smtp.mail=david.ebbo@gmail.com; dkim=pass
- header.i=@gmail.com
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post?hl=en>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/?hl=en>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit?hl=en>
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196713>
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1SPHGx-00067m-2N
+	for gcvg-git-2@plane.gmane.org; Tue, 01 May 2012 19:53:59 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1758397Ab2EARxy convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 1 May 2012 13:53:54 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:56242 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758379Ab2EARxx convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 1 May 2012 13:53:53 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DE1BB6783;
+	Tue,  1 May 2012 13:53:52 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=0L32m7Tcgyv1
+	3mqnHSvCeOaXTWY=; b=YIyS4E05f5W3BtvHrjSqVlHPGn53dcuAWN15SPa63YAa
+	b1yUKsMrmjIfpzpLRDV05t9TT03Rg3soxJQqsUI7k2RJojfxYRvgRAokVjTn44W1
+	oNh8v17b2BjycGCN67knHrkKTS/e0xhIbLGyDIf8cy7jpXEs3HEVO6XdPE65g7g=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=WJXkbA
+	SHfzNEHWGJ5ORFWshC67oYOZVBVjZVXKG7zNMKgPNQKAp8mRtreMHMpKhDtbd/cU
+	I8HLTR7kQFHu8GD9oW6kubrYlaulXVGI1nIZbOY6JrOKHvQFM7vOwpqedfD67HI7
+	k6+CUqroPzeKRaurcdi325x+k0AcROtf59xck=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D46406782;
+	Tue,  1 May 2012 13:53:52 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 52AF56780; Tue,  1 May 2012
+ 13:53:52 -0400 (EDT)
+In-Reply-To: <4FA02274.6070601@web.de> ("Torsten =?utf-8?Q?B=C3=B6gershaus?=
+ =?utf-8?Q?en=22's?= message of "Tue, 01 May 2012 19:50:44 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 9CE66F26-93B6-11E1-B08C-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196714>
 
-------=_Part_205_16267860.1335894799764
-Content-Type: text/plain; charset=ISO-8859-1
+Torsten B=C3=B6gershausen <tboegi@web.de> writes:
 
-Many thanks to Jeff King and others to help track this one down! 
+> Thanks for all answers,
+>> I think the patch we want is just:
+>>=20
+>> diff --git a/t/gitweb-lib.sh b/t/gitweb-lib.sh
+>> index 21d11d6..ae2dc46 100644
+>> --- a/t/gitweb-lib.sh
+>> +++ b/t/gitweb-lib.sh
+>> @@ -69,7 +69,7 @@ gitweb_run () {
+>>  	# written to web server logs, so we are not interested in that:
+>>  	# we are interested only in properly formatted errors/warnings
+>>  	rm -f gitweb.log &&
+>> -	perl -- "$SCRIPT_NAME" \
+>> +	"$PERL_PATH" -- "$SCRIPT_NAME" \
+>>  		>gitweb.output 2>gitweb.log &&
+>>  	perl -w -e '
+>>  		open O, ">gitweb.headers";
+>>=20
+>> no? Torsten, does that fix your problem?
+> Yes, it does.
+>
+> Should we go for that solution ?
 
-David
-
--- 
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
-
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=en_US?hl=en
-
-------=_Part_205_16267860.1335894799764
-Content-Type: text/html; charset=ISO-8859-1
-
-Many thanks to Jeff King and others to help track this one down!&nbsp;<div><br></div><div>David</div>
-
-<p></p>
-
--- <br />
-*** Please reply-to-all at all times ***<br />
-*** (do not pretend to know who is subscribed and who is not) ***<br />
-*** Please avoid top-posting. ***<br />
-The msysGit Wiki is here: <a href="https://github.com/msysgit/msysgit/wiki">https://github.com/msysgit/msysgit/wiki</a> - Github accounts are free.<br />
-&nbsp;<br />
-You received this message because you are subscribed to the Google<br />
-Groups &quot;msysGit&quot; group.<br />
-To post to this group, send email to msysgit@googlegroups.com<br />
-To unsubscribe from this group, send email to<br />
-msysgit+unsubscribe@googlegroups.com<br />
-For more options, and view previous threads, visit this group at<br />
-<a href="http://groups.google.com/group/msysgit?hl=en_US?hl=en">http://groups.google.com/group/msysgit?hl=en_US?hl=en</a><br />
-
-------=_Part_205_16267860.1335894799764--
+Sounds good.
