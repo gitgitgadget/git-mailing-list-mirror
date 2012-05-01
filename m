@@ -1,82 +1,86 @@
-From: Vinnie Falco <vinnie.falco@gmail.com>
-Subject: Re: git-subtree split O(N)
-Date: Mon, 30 Apr 2012 20:10:07 -0700
-Message-ID: <CA+EzHGcxcKt=tmrscnJ1GtiBtTFhtVO7Ae9ndx61D9piFcnq3A@mail.gmail.com>
-References: <CA+EzHGfiRg+w8FsvrXEi0Yr4oVzxaZA_1JT8cmRR0YrYG7m6AQ@mail.gmail.com>
-	<86aa1sr4a9.fsf@red.stonehenge.com>
+From: Sitaram Chamarty <sitaramc@gmail.com>
+Subject: Re: Newbie grief
+Date: Tue, 1 May 2012 09:14:24 +0530
+Message-ID: <CAMK1S_jwVsyKrGoL5uVAiuRrOa8bz79-DAueBmHZE2k=PpcJ2Q@mail.gmail.com>
+References: <4F9F128C.5020304@palm.com>
+	<201204302331.q3UNVo7o032303@no.baka.org>
+	<4F9F3919.6060805@palm.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org
-To: "Randal L. Schwartz" <merlyn@stonehenge.com>
-X-From: git-owner@vger.kernel.org Tue May 01 05:10:19 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Seth Robertson <in-gitvger@baka.org>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Rich Pixley <rich.pixley@palm.com>
+X-From: git-owner@vger.kernel.org Tue May 01 05:44:33 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SP3Tn-0005hW-GW
-	for gcvg-git-2@plane.gmane.org; Tue, 01 May 2012 05:10:19 +0200
+	id 1SP40u-0000YD-Fd
+	for gcvg-git-2@plane.gmane.org; Tue, 01 May 2012 05:44:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753921Ab2EADKJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 Apr 2012 23:10:09 -0400
-Received: from mail-qc0-f174.google.com ([209.85.216.174]:58258 "EHLO
-	mail-qc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753701Ab2EADKI (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Apr 2012 23:10:08 -0400
-Received: by qcro28 with SMTP id o28so1742133qcr.19
-        for <git@vger.kernel.org>; Mon, 30 Apr 2012 20:10:07 -0700 (PDT)
+	id S1753089Ab2EADoZ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 30 Apr 2012 23:44:25 -0400
+Received: from mail-ob0-f174.google.com ([209.85.214.174]:63382 "EHLO
+	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751886Ab2EADoZ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 30 Apr 2012 23:44:25 -0400
+Received: by obbtb18 with SMTP id tb18so376717obb.19
+        for <git@vger.kernel.org>; Mon, 30 Apr 2012 20:44:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=dIQXu4u9/+CXIMonMfk5L61vF/nkwqJB0VQSKqse34A=;
-        b=Nm/JWFBpnZ8HP3VWN/CPFzGaxtV0gtiKX8++5EucG9/zBc7NaVSSQLKnakvsbuUKw3
-         PBVeCi/s8GbuG+J9KJ2ZzJ5/lc2gnCU+TIGPYjkwzmE2CKXDGp0GTGhwtzWlbgAZz5Th
-         YKTIeSJs+2oen2oXZyNWRFtwau86Q4AJ82uHsQ9g3liRCvZhJNPiBZdqegbUYP5i8Ypa
-         nlPwR7zsD6RvofbWZgmfX9FgaKtWQXF/OJJhSIZKsT5HFoFYc6thbz/Yh/gheSvq87V/
-         hekimn1SD5qqQu+DBLtzaC7RG9Uy+gB/zLop3ohPAwhdGkcTpgIBsRlZR/QO5xe7+W6S
-         BK3Q==
-Received: by 10.224.212.1 with SMTP id gq1mr15746750qab.79.1335841807621; Mon,
- 30 Apr 2012 20:10:07 -0700 (PDT)
-Received: by 10.229.74.212 with HTTP; Mon, 30 Apr 2012 20:10:07 -0700 (PDT)
-In-Reply-To: <86aa1sr4a9.fsf@red.stonehenge.com>
+         :cc:content-type:content-transfer-encoding;
+        bh=Nf0/KiI4BqHoy6vd2SvXR8yVe6U4j7Bm/XivFSaS/HU=;
+        b=XDcT2XsTsKuKlYUdz6H8Lsix+J3E8187f29JN/buY8mE+c7Kx3eVKd6h9NiY/RiMG9
+         4WJ07K5jReUHE2vVWTN/O+WgGF+KwOnhwtr+/E+4TjqRt8qgHW8WQuq3IjVF2hN6gplC
+         SBY6hPprUrRQQgXPfwKckoMZlOgeQDfeZAdDhYnqkmduzuzeX7uH/p+wjS9bKvDCjndD
+         dWnilYAhuxNdkUqPKQU8EBBGSfPM1UptGWe4+juPlvKTdzla0tIj6Q5tYsKHac9yhmpr
+         o5dOPXAfJYZdIO53CvxAdjcLf1QVuyt5JkG9yioKusZoZ3+nUopiCFQ2zlPymjm0irXK
+         nUTA==
+Received: by 10.182.44.74 with SMTP id c10mr6429974obm.43.1335843864654; Mon,
+ 30 Apr 2012 20:44:24 -0700 (PDT)
+Received: by 10.182.108.67 with HTTP; Mon, 30 Apr 2012 20:44:24 -0700 (PDT)
+In-Reply-To: <4F9F3919.6060805@palm.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196651>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196652>
 
-> Vinnie> I'm using git-subtree split to extract changes to a directory
->
-> Are you using -rejoin?
+I've been reading the thread with interest.
 
-I am not using --rejoin. Admittedly, the documentation is somewhat
-opaque on its usage:
+People who know far more than I do about git, its innards, and its
+design have been responding in this thread so consider this a git
+*user*'s point of view:
 
-"--rejoin:: This option is only valid for the split command."
+On Tue, May 1, 2012 at 6:45 AM, Rich Pixley <rich.pixley@palm.com> wrot=
+e:
 
-This is confusing. One would think that an option named "rejoin" has
-more to do with merge or pull than split. Although I guess the meaning
-is that you want your local changes to "rejoin" the upstream?
+> Multiple heads are the idea that a single commit can "branch" in the
+> repository and that both commits can be HEADS of the same branch at o=
+nce in
+> a single repository. =C2=A0This allows a potential collision to exist=
+ in the
+> repository and to be pushed and pulled through multiple repositories.=
+ =C2=A0It
 
-"...future splits can search only the part of history that has been
-added since the most recent --rejoin."
+That is bizarre; I have no other word for it.
 
-This sounds exactly like my use-case, I want to avoid starting from
-initial commit on a split, but...
+I teach git (occasionally), and if this feature existed I would
+totally ignore it in my teaching material because I wouldn't know how
+to defend or explain the need for "hydra branches".
 
-"If you do all your merges with '--squash', don't use '--rejoin' when
-you split, because you don't want the subproject's history to be part
-of your project anyway."
+It's like having two people with the same first name *and* last name
+(a situation that is not impossible in real life, but is rare and
+almost always requires special handling).
 
-I always use --squash with git-subtree pull, so I interpreted this to
-mean I should never use --rejoin.
+Does Hg do this?  That would explain why my (admittedly half-hearted)
+attempts to learn it have failed -- whatever tutorial I used must have
+been written with the idea that hydra branches are intuitive and
+logical and sane, but did not express the concept as clearly and
+succinctly as you did.
 
-"Unfortunately, using this option results in 'git log' showing an
-extra copy of every new commit that was created"
-
-This is what discouraged me from ever touching "--rejoin"
-
-I hope this helps
-
-Thanks
+Thanks for this insight; my next attempt to understand Hg, should I
+ever be forced into it, might actually succeed!
