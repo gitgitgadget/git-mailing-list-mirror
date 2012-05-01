@@ -1,94 +1,75 @@
-From: Rich Pixley <rich.pixley@palm.com>
-Subject: Re: Newbie grief
-Date: Tue, 01 May 2012 14:57:58 -0700
-Message-ID: <4FA05C66.2060608@palm.com>
-References: <4F9F128C.5020304@palm.com> <201204302331.q3UNVo7o032303@no.baka.org> <4F9F3919.6060805@palm.com> <CAMK1S_jwVsyKrGoL5uVAiuRrOa8bz79-DAueBmHZE2k=PpcJ2Q@mail.gmail.com> <20120501111415.GD5769@thunk.org> <CAMK1S_jN_WdZF4W4szzyJqLfC3FmnhKQ65XQiD-JS_jxwSm8_g@mail.gmail.com> <4FA02830.3040407@palm.com> <86havzoi8h.fsf@red.stonehenge.com> <4FA04D02.6090702@palm.com> <86mx5rmx32.fsf@red.stonehenge.com> <7v62cf8v2d.fsf@alter.siamese.dyndns.org> <4FA054BA.80601@palm.com> <86ipgfmw05.fsf@red.stonehenge.com>
+From: PJ Weisberg <pj@irregularexpressions.net>
+Subject: Re: Is there any way to make hooks part of the repository?
+Date: Tue, 1 May 2012 14:59:18 -0700
+Message-ID: <CAJsNXT=niP2Ja-pSbvj-OGi5t0x0-Zxm3CdcY0nLs9ROdCG8hg@mail.gmail.com>
+References: <CAE1pOi2hr7ewjo5WVDoW0ipYxDVTckr5M_sHNoOQ323=_k754Q@mail.gmail.com>
+	<7vipgf8wve.fsf@alter.siamese.dyndns.org>
+	<86r4v3mxf7.fsf@red.stonehenge.com>
+	<7vaa1r8vhy.fsf@alter.siamese.dyndns.org>
+	<CAE1pOi00Mr4dOj2ChTJU9XWypUAaVUDDa36-M7LA+9BixW0nKw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=ISO-8859-1
 Cc: Junio C Hamano <gitster@pobox.com>,
-	Sitaram Chamarty <sitaramc@gmail.com>,
-	"Ted Ts'o" <tytso@mit.edu>, Seth Robertson <in-gitvger@baka.org>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: "Randal L. Schwartz" <merlyn@stonehenge.com>
-X-From: git-owner@vger.kernel.org Tue May 01 23:58:41 2012
+	"Randal L. Schwartz" <merlyn@stonehenge.com>,
+	Git Users <git@vger.kernel.org>
+To: Hilco Wijbenga <hilco.wijbenga@gmail.com>
+X-From: git-owner@vger.kernel.org Tue May 01 23:59:30 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SPL5j-0001RL-T6
-	for gcvg-git-2@plane.gmane.org; Tue, 01 May 2012 23:58:40 +0200
+	id 1SPL6S-0001pG-SL
+	for gcvg-git-2@plane.gmane.org; Tue, 01 May 2012 23:59:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752163Ab2EAV6B (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 May 2012 17:58:01 -0400
-Received: from smtp-relay2.palm.com ([64.28.152.243]:63043 "EHLO
-	smtp-relay2.palm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751208Ab2EAV6A (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 May 2012 17:58:00 -0400
-X-IronPort-AV: E=Sophos;i="4.75,513,1330934400"; 
-   d="scan'208";a="13249902"
-Received: from unknown (HELO ushqusdns3.palm.com) ([148.92.223.90])
-  by smtp-relay2.palm.com with ESMTP; 01 May 2012 14:58:00 -0700
-Received: from fuji.noir.com ([10.100.2.1])
-	by ushqusdns3.palm.com (8.14.4/8.14.4) with ESMTP id q41Lvwd0032083;
-	Tue, 1 May 2012 14:57:59 -0700
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.7; rv:12.0) Gecko/20120428 Thunderbird/12.0.1
-In-Reply-To: <86ipgfmw05.fsf@red.stonehenge.com>
+	id S1753089Ab2EAV7U (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 May 2012 17:59:20 -0400
+Received: from mail-wg0-f44.google.com ([74.125.82.44]:46067 "EHLO
+	mail-wg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752759Ab2EAV7U (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 May 2012 17:59:20 -0400
+Received: by wgbdr13 with SMTP id dr13so275wgb.1
+        for <git@vger.kernel.org>; Tue, 01 May 2012 14:59:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
+        bh=He1yWO26o0Ij9brCsYEKwX1rHHohvifG1EPVe+taPnI=;
+        b=uZEw3mPmy/puBdhFM2tla6ltLVVkKrOIeiUh85PYlKD9+oUIR8FgXKh/2yoyHi8ssN
+         tGsfT4UxU7Sc4YkNttQz1uEvymsDwooJ+hyIu4OSvCrWmeVZno7wgg1dOL8RHxjreewT
+         w3Uf/cI2O4i/ZpsP66uqdFEvNWDI+ItGl024Y5DN3dRxojNvpuv5LsYBH1gX/zQh0Cet
+         9L1Ad9LTXtev7akyfBf3A6Wwm0d6DozygHNWaVlxYcRvfQ8vNxtkkh43O9AzGIccGQ0S
+         P+2qFPei2khj1ju1AU4jKEPsn7H0DxOcrn2Ged+3W9r+KNC7W/pWYfPEC+uXiMM/l+1F
+         AViQ==
+Received: by 10.216.132.202 with SMTP id o52mr4509640wei.106.1335909558688;
+ Tue, 01 May 2012 14:59:18 -0700 (PDT)
+Received: by 10.223.116.200 with HTTP; Tue, 1 May 2012 14:59:18 -0700 (PDT)
+In-Reply-To: <CAE1pOi00Mr4dOj2ChTJU9XWypUAaVUDDa36-M7LA+9BixW0nKw@mail.gmail.com>
+X-Google-Sender-Auth: ooHxBtdeBPBlZ9gr-wWu2yypTFA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196759>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196760>
 
-On 5/1/12 14:28 , Randal L. Schwartz wrote:
->>>>>> "Rich" == Rich Pixley<rich.pixley@palm.com>  writes:
+On Tue, May 1, 2012 at 2:09 PM, Hilco Wijbenga <hilco.wijbenga@gmail.com> wrote:
+
+> On 1 May 2012 14:03, Junio C Hamano <gitster@pobox.com> wrote:
 >
-> Rich>  I think we have different definitions of "easily".  This is
-> Rich>  simple, first use sorts of stuff.
+>> We've talked about something like that a few times in the past, but as far
+>> as I (am concerned / remember) the conclusion has always been that is not
+>> worth "standardizing", i.e. nothing a ./setup script in-tree or a Makefile
+>> target cannot offer the same convenience.
 >
-> Have you read the Pro Git book?
+> This would not keep things up-to-date, though, would it? It seems like
+> yet another thing developers need to remember and do. I would prefer
+> something more automatic.
 
-Yes.  The things it covers, it mostly covers well.  But it's lacking a lot.
+Once your hooks are installed, couldn't your post-checkout and
+post-merge hooks keep all the others up to date?
 
-There's nothing in it about repository networks, how to get stuff out of 
-my index, reset, and it's not very good about explaining that things 
-like rebase screw up your repository in ways that make sharing 
-impossible.  I know that because of how mercurial works and from reverse 
-engineering what must be required, not from reading git doc.
 
-And I've spent close to a week now trying to use git on this project, 
-throwing away repositories, patching by hand, and trying to sort out why 
-git was refusing to push for me.  That wasn't explained at all nor do 
-the git error messages explain what's happening.
+-PJ
 
-> Have you read the gitcore-tutorial page?
-
-Not recently.  It was pretty much impenetrable the first few times 
-through.  I was looking for how to use git, I wasn't interested in all 
-of the gory details of how it stored everything.
-
-Just skimmed again.  Will need to read it again more thoroughly, though 
-I don't see anything on the stuff we've been discussing.
-
-> Have you read the gitworkflows manpage?
-
-Yes, but not in a long time.  It seems to be more about the policies of 
-working on git source code than about usage of git.
-
-> The processes for "simple, first use" sorts of stuff never gets into
-> the complexity you are describing.  You're definitely into more advanced
-> stuff and then complain when you also need to be more advanced to set it
-> up.  Not sure what your goal is, then.
-
-This stuff isn't advanced anymore.  It's kind of standard.  My complaint 
-is that doing standard stuff like this shouldn't require advanced work.
-
-I have days, weeks into git learning curve so far, I've clearly only 
-begun, and I have a big list of things I still can't do in git, though I 
-can do them in other source code control systems.  In contrast, I was up 
-and using mercurial in about a day and a half, including all of the 
-stuff we've discussed, and all of the things I've even read about in 
-git.  Learning mq's only took about 20 minutes.
-
---rich
+Gehm's Corollary to Clark's Law: Any technology distinguishable from
+magic is insufficiently advanced.
