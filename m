@@ -1,59 +1,64 @@
-From: Hilco Wijbenga <hilco.wijbenga@gmail.com>
-Subject: Is there any way to make hooks part of the repository?
-Date: Tue, 1 May 2012 13:24:28 -0700
-Message-ID: <CAE1pOi2hr7ewjo5WVDoW0ipYxDVTckr5M_sHNoOQ323=_k754Q@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Is there any way to make hooks part of the repository?
+Date: Tue, 01 May 2012 13:33:25 -0700
+Message-ID: <7vipgf8wve.fsf@alter.siamese.dyndns.org>
+References: <CAE1pOi2hr7ewjo5WVDoW0ipYxDVTckr5M_sHNoOQ323=_k754Q@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: Git Users <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue May 01 22:24:35 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Users <git@vger.kernel.org>
+To: Hilco Wijbenga <hilco.wijbenga@gmail.com>
+X-From: git-owner@vger.kernel.org Tue May 01 22:33:39 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SPJcf-0004W9-Tm
-	for gcvg-git-2@plane.gmane.org; Tue, 01 May 2012 22:24:34 +0200
+	id 1SPJlN-0000Eg-Nz
+	for gcvg-git-2@plane.gmane.org; Tue, 01 May 2012 22:33:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752985Ab2EAUY3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 May 2012 16:24:29 -0400
-Received: from mail-qa0-f46.google.com ([209.85.216.46]:40349 "EHLO
-	mail-qa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752472Ab2EAUY2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 May 2012 16:24:28 -0400
-Received: by qadb17 with SMTP id b17so1035618qad.19
-        for <git@vger.kernel.org>; Tue, 01 May 2012 13:24:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=UFJHA1halfN2ntaZXRGmpnKfHvPQ0pGtV/g+FQP+bkw=;
-        b=cEC7byFasvy1ARPLxIZW6YpnNLfc7wHHOFkiXfVw1usZzXq+djnXvq4tXDfA41zur5
-         YnDBdakJYpyErC1+8hsNdOOugJQWsAZ4VMsFiuKuci160JBZCv84vCZq3+Y6pbKZB6cm
-         ajzsBo1hyb8bh/eUx4qctyWK9MVoDHTz1n2GZ8U9Zx7+tEfehGis6pfQszin1MlNYRTS
-         waIFfp0/RmB4js6OtFgy1p/vgeup72OEBnT7WGW2g3CAMEFcZghpqgpn10yDC2FXwFm3
-         Y/0Y5ZwxX+3TX+umkbitxVZOMBROnBxi8NtZJtD3R6ik/IRqDd+SfhE4fvlwnZ5AAbT2
-         HFkQ==
-Received: by 10.224.182.78 with SMTP id cb14mr22423522qab.56.1335903868117;
- Tue, 01 May 2012 13:24:28 -0700 (PDT)
-Received: by 10.229.228.20 with HTTP; Tue, 1 May 2012 13:24:28 -0700 (PDT)
+	id S1752122Ab2EAUd3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 May 2012 16:33:29 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:56236 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751007Ab2EAUd2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 May 2012 16:33:28 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8484C69BA;
+	Tue,  1 May 2012 16:33:27 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=r6HmD0rnGjemDgJaE119sK9wuQg=; b=v+JCbB
+	QFv0Wgtu3hpXy5RMYmVNZmTOyDbBo8+GS5K7ZZPcsmvGKFF75zx6PUevKXb2P6hb
+	+0HN7IRw6eIfg5OJxM1/qu9LBZYazc5k4jYYOAivoYjG/p8AbV3zKImQcUZjW5dM
+	xInvC82KPqZu7BZF3KdjKXg3m8fPunUTR6dJ4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=v52gm9qxSFgy7jI7V2jH8BadFhqVfbU7
+	u9FDG2ED/5OF2j2p2FRBsI8hFD13uOWEDGdeiQgyDrFrNcM9jrLnPfyCqbOozd5m
+	m2XARUeHoO38se/fMrJLGxpOMK+Iodc03SZ150IHzwpyTMNZvGgGhUVSz5Kan2P7
+	ll+dcWRHn8U=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7AADF69B9;
+	Tue,  1 May 2012 16:33:27 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id AFD1469B7; Tue,  1 May 2012
+ 16:33:26 -0400 (EDT)
+In-Reply-To: <CAE1pOi2hr7ewjo5WVDoW0ipYxDVTckr5M_sHNoOQ323=_k754Q@mail.gmail.com> (Hilco
+ Wijbenga's message of "Tue, 1 May 2012 13:24:28 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: E7ACCB66-93CC-11E1-A4EC-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196740>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196741>
 
-Hi all,
+Hilco Wijbenga <hilco.wijbenga@gmail.com> writes:
 
-There are a couple of things that keep going wrong while we are
-working on our code base. Some of them are very simple to check for in
-a Git hook. However, I get the impression that it is not possible to
-"include" the hooks with the Git repo itself (so that "git clone"
-would automatically set them up). Normally, this would not be such a
-big deal: I would simply add the hooks on the server. Unfortunately,
-this is not an option (we use Unfuddle and they do not support that).
+> Is there any way to get (some of) the Git hooks to run for everyone
+> without everyone having to install them separately? If no, is this by
+> design or simply a feature nobody has asked for (yet)?
 
-Is there any way to get (some of) the Git hooks to run for everyone
-without everyone having to install them separately? If no, is this by
-design or simply a feature nobody has asked for (yet)?
-
-Cheers,
-Hilco
+By design.  Do you want me to include "rm -fr ~hilco" in some hook of
+git.git repository?
