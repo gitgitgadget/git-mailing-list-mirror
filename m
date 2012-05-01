@@ -1,89 +1,118 @@
-From: Nicolas Pitre <nico@fluxnic.net>
-Subject: Re: gc --aggressive
-Date: Tue, 01 May 2012 13:59:08 -0400 (EDT)
-Message-ID: <alpine.LFD.2.02.1205011348090.21030@xanadu.home>
-References: <CAG+J_DzO=UZ56PjnSCRaTdj8pBSYc5PFofw1QHy42c5pHMK_HQ@mail.gmail.com>
- <CAG+J_DyqvCxwd6+gzixQEk6SxMZF0qsXKcJPaU6imsJdFQ-64g@mail.gmail.com>
- <vpqbomqqdxo.fsf@bauges.imag.fr>
- <20120428122533.GA12098@sigill.intra.peff.net>
- <alpine.LFD.2.02.1204281258050.21030@xanadu.home>
- <20120429113431.GA24254@sigill.intra.peff.net>
- <alpine.LFD.2.02.1204290917051.21030@xanadu.home>
- <20120501162806.GA15614@sigill.intra.peff.net>
- <20120501171640.GA16623@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/4] test: modernize style of t4006
+Date: Tue, 01 May 2012 11:00:17 -0700
+Message-ID: <7vzk9r93ym.fsf@alter.siamese.dyndns.org>
+References: <1335892215-21331-1-git-send-email-zbyszek@in.waw.pl>
+ <1335892215-21331-2-git-send-email-zbyszek@in.waw.pl>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; CHARSET=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org, Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Jay Soffian <jaysoffian@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Shawn Pearce <spearce@spearce.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue May 01 19:59:19 2012
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, mj@ucw.cz
+To: Zbigniew =?utf-8?Q?J=C4=99drzejewski-Szmek?= <zbyszek@in.waw.pl>
+X-From: git-owner@vger.kernel.org Tue May 01 20:00:27 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SPHM3-00005j-Oe
-	for gcvg-git-2@plane.gmane.org; Tue, 01 May 2012 19:59:16 +0200
+	id 1SPHNC-0000cc-UV
+	for gcvg-git-2@plane.gmane.org; Tue, 01 May 2012 20:00:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758382Ab2EAR7K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 May 2012 13:59:10 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:28428 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757924Ab2EAR7J (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 May 2012 13:59:09 -0400
-Received: from xanadu.home ([66.130.28.92]) by VL-VM-MR003.ip.videotron.ca
- (Oracle Communications Messaging Exchange Server 7u4-22.01 64bit (built Apr 21
- 2011)) with ESMTP id <0M3C0072WVAKS550@VL-VM-MR003.ip.videotron.ca> for
- git@vger.kernel.org; Tue, 01 May 2012 13:59:08 -0400 (EDT)
-In-reply-to: <20120501171640.GA16623@sigill.intra.peff.net>
-User-Agent: Alpine 2.02 (LFD 1266 2009-07-14)
+	id S1758434Ab2EASAW convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 1 May 2012 14:00:22 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59200 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758422Ab2EASAV convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 1 May 2012 14:00:21 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CCF92691C;
+	Tue,  1 May 2012 14:00:20 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=0B4+ra3S8RHg
+	iS+bCWCHZRzlLXs=; b=PvTGH9fqIgKEQdOXdlLl6GVLG/N4kYnnOrv9WQvaTB0q
+	bq5waybtYzKEo/T6zY42S6ZdioqlaKw93iAI8sJrK/8tPyhtp2mZYxTd3UcQ/ttE
+	xjDzvPoWAJkxodPbvTgNHyjEH+r4bSgZIoLTESTRbyxZHJ8iehdX+lSWzpVGLv0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=ZlJVm1
+	el82ev8LxUFj7neZFRqXVZDokQ/CfJlpG/UlNDUElL4vYsVi42GxYkU1aDodGsaS
+	8Y7axatI9W3SEHzaT6r+e8Kdt1VBLebsGlkjWkV2HAPINLtr7dU3V3b83OMfUAxb
+	p0ggZ4Atw7RyRyjOLR7kuvYCXBqqRIVvcLCgc=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C32EC691B;
+	Tue,  1 May 2012 14:00:20 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 475096918; Tue,  1 May 2012
+ 14:00:19 -0400 (EDT)
+In-Reply-To: <1335892215-21331-2-git-send-email-zbyszek@in.waw.pl> ("Zbigniew
+ =?utf-8?Q?J=C4=99drzejewski-Szmek=22's?= message of "Tue, 1 May 2012 19:10:12
+ +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 838ABCA2-93B7-11E1-BBCD-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196717>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196718>
 
-On Tue, 1 May 2012, Jeff King wrote:
+Zbigniew J=C4=99drzejewski-Szmek <zbyszek@in.waw.pl> writes:
 
-> On Tue, May 01, 2012 at 12:28:06PM -0400, Jeff King wrote:
-> 
-> > >  You could test this theory by commenting out the size comparisons in 
-> > > type_size_sort() and re-run the test.
-> > 
-> > I'll try this next.
-> 
-> Wow, it behaves horribly. I didn't even let the bigger tests run to
-> completion. Here is the output for git.git (the first line is from the
-> original, unmodified version of git with --window=10):
-> 
->   orig | 31.4M (100%) |   54s (100%)
->     10 | 44.0M (140%) |  169s (310%)
->     20 | 37.7M (120%) |  232s (428%)
->     40 | 33.6M (107%) |  331s (608%)
->     80 | 30.9M ( 99%) |  473s (868%)
->    160 | 29.4M ( 94%) |  696s (1279%)
-> 
-> Unless the window is increased a lot, the packs end up quite a bit
-> larger (and even still we spend a lot more CPU time).
+> Signed-off-by: Zbigniew J=C4=99drzejewski-Szmek <zbyszek@in.waw.pl>
+> ---
+>  t/t4006-diff-mode.sh |   32 +++++++++++++++-----------------
+>  1 file changed, 15 insertions(+), 17 deletions(-)
 
-Bleh.  Allright.
+Style update is welcome, but shouldn't the assignment to sed_script
+be done in the second test if it is the only user?  If you are going to
+add more tests at the end, then it should be away from the second test =
+to
+make it clear that it is not part of it.
 
-One final quick test if you feel like it: I've never been sure that 
-the last comparison in type_size_sort() is correct.  Maybe it should be 
-the other way around.  Currently it reads:
+Thanks.
 
-	return a < b ? -1 : (a > b);
-
-While keeping the size comparison commented out, you could try to 
-replace this line with:
-
-	return b < a ? -1 : (b > a);
-
-If this doesn't improve things then it would be clear that this avenue 
-should be abandoned.
-
-
-Nicolas
+> diff --git a/t/t4006-diff-mode.sh b/t/t4006-diff-mode.sh
+> index ff8c2f7..c8f5180 100755
+> --- a/t/t4006-diff-mode.sh
+> +++ b/t/t4006-diff-mode.sh
+> @@ -8,23 +8,21 @@ test_description=3D'Test mode change diffs.
+>  '
+>  . ./test-lib.sh
+> =20
+> -test_expect_success \
+> -    'setup' \
+> -    'echo frotz >rezrov &&
+> -     git update-index --add rezrov &&
+> -     tree=3D`git write-tree` &&
+> -     echo $tree'
+> -
+> -test_expect_success \
+> -    'chmod' \
+> -    'test_chmod +x rezrov &&
+> -     git diff-index $tree >current'
+> -
+> -sed -e 's/\(:100644 100755\) \('"$_x40"'\) \2 /\1 X X /' <current >c=
+heck
+> -echo ":100644 100755 X X M	rezrov" >expected
+> +test_expect_success 'setup' '
+> +	echo frotz >rezrov &&
+> +	git update-index --add rezrov &&
+> +	tree=3D`git write-tree` &&
+> +	echo $tree
+> +'
+> =20
+> -test_expect_success \
+> -    'verify' \
+> -    'test_cmp expected check'
+> +# $_x40 is defined in test-lib.sh
+> +sed_script=3D's/\(:100644 100755\) \('"$_x40"'\) \2 /\1 X X /'
+> +test_expect_success 'chmod' '
+> +	test_chmod +x rezrov &&
+> +	git diff-index $tree >current &&
+> +	sed -e "$sed_script" <current >check &&
+> +	echo ":100644 100755 X X M	rezrov" >expected &&
+> +	test_cmp expected check
+> +'
+> =20
+>  test_done
