@@ -1,130 +1,68 @@
-From: merlyn@stonehenge.com (Randal L. Schwartz)
-Subject: Re: Newbie grief
-Date: Tue, 01 May 2012 14:05:05 -0700
-Message-ID: <86mx5rmx32.fsf@red.stonehenge.com>
-References: <4F9F128C.5020304@palm.com>
-	<201204302331.q3UNVo7o032303@no.baka.org> <4F9F3919.6060805@palm.com>
-	<CAMK1S_jwVsyKrGoL5uVAiuRrOa8bz79-DAueBmHZE2k=PpcJ2Q@mail.gmail.com>
-	<20120501111415.GD5769@thunk.org>
-	<CAMK1S_jN_WdZF4W4szzyJqLfC3FmnhKQ65XQiD-JS_jxwSm8_g@mail.gmail.com>
-	<4FA02830.3040407@palm.com> <86havzoi8h.fsf@red.stonehenge.com>
-	<4FA04D02.6090702@palm.com>
+From: Hilco Wijbenga <hilco.wijbenga@gmail.com>
+Subject: Re: Is there any way to make hooks part of the repository?
+Date: Tue, 1 May 2012 14:07:21 -0700
+Message-ID: <CAE1pOi1Dpjow8mkwtPo2o1Zo9rkk6=hhpLqErG1XwTcn=un17A@mail.gmail.com>
+References: <CAE1pOi2hr7ewjo5WVDoW0ipYxDVTckr5M_sHNoOQ323=_k754Q@mail.gmail.com>
+	<7vipgf8wve.fsf@alter.siamese.dyndns.org>
+	<86r4v3mxf7.fsf@red.stonehenge.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Sitaram Chamarty <sitaramc@gmail.com>, "Ted Ts'o" <tytso@mit.edu>,
-	Seth Robertson <in-gitvger@baka.org>,
-	"git\@vger.kernel.org" <git@vger.kernel.org>
-To: Rich Pixley <rich.pixley@palm.com>
-X-From: git-owner@vger.kernel.org Tue May 01 23:05:18 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, Git Users <git@vger.kernel.org>
+To: "Randal L. Schwartz" <merlyn@stonehenge.com>
+X-From: git-owner@vger.kernel.org Tue May 01 23:07:28 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SPKG4-0005zB-Qy
-	for gcvg-git-2@plane.gmane.org; Tue, 01 May 2012 23:05:17 +0200
+	id 1SPKIB-0007P7-UK
+	for gcvg-git-2@plane.gmane.org; Tue, 01 May 2012 23:07:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755616Ab2EAVFJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 May 2012 17:05:09 -0400
-Received: from lax-gw15.mailroute.net ([199.89.0.115]:39651 "EHLO
-	gw15.lax01.mailroute.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755282Ab2EAVFI (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 May 2012 17:05:08 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by gw15.lax01.mailroute.net (Postfix) with ESMTP id 4F555E362FA;
-	Tue,  1 May 2012 21:05:08 +0000 (GMT)
-X-Virus-Scanned: by MailRoute
-Received: from gw15.lax01.mailroute.net ([199.89.0.115])
-	by localhost (gw15.lax01.mailroute.net.mailroute.net [127.0.0.1]) (mroute_mailscanner, port 10026)
-	with LMTP id 4U2J4eNwoK3k; Tue,  1 May 2012 21:05:06 +0000 (GMT)
-Received: from red.stonehenge.com (red.stonehenge.com [208.79.95.2])
-	by gw15.lax01.mailroute.net (Postfix) with ESMTP id B2BB5E36287;
-	Tue,  1 May 2012 21:05:06 +0000 (GMT)
-Received: by red.stonehenge.com (Postfix, from userid 1001)
-	id A7CD0132C; Tue,  1 May 2012 14:05:05 -0700 (PDT)
-x-mayan-date: Long count = 12.19.19.6.6; tzolkin = 4 Cimi; haab = 9 Uo
-In-Reply-To: <4FA04D02.6090702@palm.com> (Rich Pixley's message of "Tue, 01
-	May 2012 13:52:18 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.4 (berkeley-unix)
+	id S1756263Ab2EAVHX convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 1 May 2012 17:07:23 -0400
+Received: from mail-qc0-f174.google.com ([209.85.216.174]:61794 "EHLO
+	mail-qc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756109Ab2EAVHW convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 1 May 2012 17:07:22 -0400
+Received: by qcro28 with SMTP id o28so2147374qcr.19
+        for <git@vger.kernel.org>; Tue, 01 May 2012 14:07:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=D6I8UpodFNB68E2+HgYOKW+JXkhQulcrMW4l6OO9BvI=;
+        b=Ix510lbOQ/NAREw7oyEPIuHZQKKxPQ3RPGkGgfuriyQE13IQzHLpTzUc5jZTRIcyNR
+         +wokCvjEeUEae0V4KeOdmx90ThnTnk8K2JdpfATFolWUC9epHht78MFkK8TvGs/mu5zD
+         LZ37Ue6E8EiT84df6ZfnggWFw4SD1IccGdtJWqWUuaG1cjuUpc7Spyq2YtoctyfOTsZG
+         aNPLBKV531Y1Yaa9k68eELmOU7XURSQIEkkU9i2N7eQnsbUrRxs28cAkhFHV6hsvCFPT
+         u8Z7Bj1bS9UlSTgzhQTSFSOIlZjdSo9U0drGKHRw7nbWhfrDEePf8KhzJ2dmL6H9902E
+         Pmfw==
+Received: by 10.224.184.70 with SMTP id cj6mr10634483qab.77.1335906441960;
+ Tue, 01 May 2012 14:07:21 -0700 (PDT)
+Received: by 10.229.228.20 with HTTP; Tue, 1 May 2012 14:07:21 -0700 (PDT)
+In-Reply-To: <86r4v3mxf7.fsf@red.stonehenge.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196750>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196751>
 
->>>>> "Rich" == Rich Pixley <rich.pixley@palm.com> writes:
+On 1 May 2012 13:57, Randal L. Schwartz <merlyn@stonehenge.com> wrote:
+>>>>>> "Junio" =3D=3D Junio C Hamano <gitster@pobox.com> writes:
+>
+> Junio> By design. =C2=A0Do you want me to include "rm -fr ~hilco" in =
+some hook of
+> Junio> git.git repository?
+>
+> This just came up yesterday at $PRIMARY_CLIENT. =C2=A0One idea we kic=
+ked
+> around was having a convention for storing the hooks-to-be-populated =
+in
+> ".githooks" in the repository tree, and then having clone notice that
+> and offer to install them directly if from a trusted source, or at le=
+ast
+> move them into a disabled state in .git/hooks otherwise.
 
-Rich> I want to be able to fetch changes to the branch I currently have checked out.
-Rich> Git blocks this because it doesn't know how to cope with the working directory
-Rich> in that situation.
-
-It does?  I can always "git fetch origin" in my repo, and the remote
-branches are in "origin/master, origin/foo, origin/bar".  Totally
-separate from my working tree.
-
-If I want to *examine* them, I can make a WIP commit, or use "git
-stash", and then check them out headless:
-
-  git stash save
-  git checkout origin/master
-  ## examine
-  ## now go back
-  git checkout master
-  git stash pop
-
-and now I can see what the upstream looks like.  Or just diff them:
-
-  git diff ..origin/master
-
-Rich>   Merging is straightforward. Even updating, (checkout), is fairly
-Rich> straightforward.  But the insistence on a single tip means that if
-Rich> I commit directly to a non-tip commit, git doesn't know what to do
-Rich> with the branch pointer.  If it leaves it at my commit, then the
-Rich> other changes are essentially orphaned. If it leaves it at the
-Rich> other changes, then my commit is essentially orphaned.  While it's
-Rich> probably possible to force git to do this anyway, including
-Rich> orphaning one set of changes, doing so is of limited value since
-Rich> the git interface makes the assumption that branches have a single
-Rich> tip anyway.
-
-So, make a set of related names for your branches.  It's better with
-names anyway.
-
-Rich> Pushing is blocked in git.  Git simply refuses some push requests
-Rich> which have obvious and fairly straightforward semantics.
-
- git push master:from-merlyn/master
-
-And now someone can look at "from-merlyn/master", and know that it's
-from me, and related to master, and either incorporate it into the real
-master, or cherry-pick from it, or whatever.  Solved.
-
-Rich> You and I want to share a branch and we each have local,
-Rich> unattended cache/mirror repositories that we would like to use to
-Rich> pass data between us.  This doesn't work in git because the first
-Rich> time you and I make simultaneous changes, whether they collide or
-Rich> not, the unattended repositories become wedged.  They each refuse
-Rich> to talk to the other until someone manually unwedges them.
-
-No, you do it like above.  Some *person* has to sign off the merge each
-time.  But we can share the unmerged changeset through other branches.
-
-Rich> I want that if you and say, Sitaram commit conflicting changes to
-Rich> a shared branch, it's easy for me to recognize that the conflict
-Rich> exist and easy for me to resolve that conflict in my own
-Rich> repository.  I want the source code control system to keep track
-Rich> of those things, show them to me/us, and to track and show my
-Rich> resolution to you.  This stuff should all be automatic.  It
-Rich> shouldn't require explicit testing, manual pulling, nor explicit
-Rich> discussion between the three of us.  It shouldn't prohibit that
-Rich> either, but it shouldn't require it.
-
-You're asking a lot of an automated system.  I think you're trying to
-get a system to replace the communication you should be doing as a
-developer.
-
--- 
-Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 0095
-<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
-Smalltalk/Perl/Unix consulting, Technical writing, Comedy, etc. etc.
-See http://methodsandmessages.posterous.com/ for Smalltalk discussion
+I guess it would have to be more than just clone. You are quite likely
+to update/add hooks later on.
