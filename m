@@ -1,111 +1,133 @@
-From: David Aguilar <davvid@gmail.com>
-Subject: Re: XDL_FAST_HASH breaks git on OS X 10.7.3
-Date: Mon, 30 Apr 2012 22:32:50 -0700
-Message-ID: <CAJDDKr778t=CufdtitbrhB-vJ3F=xSpSJ_G8e-VK8qCy8Fcfmg@mail.gmail.com>
-References: <441BE38F-E081-4ED8-B587-BF72AD6368EE@gernhardtsoftware.com>
-	<87mx5tyy2a.fsf@thomas.inf.ethz.ch>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Brian Gernhardt <brian@gernhardtsoftware.com>,
-	Git List <git@vger.kernel.org>
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Tue May 01 07:32:56 2012
+From: Michael Witten <mfwitten@gmail.com>
+Subject: Re: Newbie grief
+Date: Tue, 01 May 2012 05:32:09 -0000
+Message-ID: <08704bd2e32343a4b9def80e4fa1efa2-mfwitten@gmail.com>
+References: <4F9F128C.5020304@palm.com>
+            <201204302331.q3UNVo7o032303@no.baka.org>
+            <4F9F28F5.2020403@palm.com>
+            <201205010137.q411bxaU002449@no.baka.org>
+            <4F9F52B9.9060508@palm.com>
+Cc: Seth Robertson <in-gitvger@baka.org>, git@vger.kernel.org
+To: Rich Pixley <rich.pixley@palm.com>
+X-From: git-owner@vger.kernel.org Tue May 01 07:44:40 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SP5ho-0004cO-AK
-	for gcvg-git-2@plane.gmane.org; Tue, 01 May 2012 07:32:56 +0200
+	id 1SP5t9-0000ec-L7
+	for gcvg-git-2@plane.gmane.org; Tue, 01 May 2012 07:44:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752829Ab2EAFcw convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 1 May 2012 01:32:52 -0400
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:62703 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752411Ab2EAFcv convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 1 May 2012 01:32:51 -0400
-Received: by yenl12 with SMTP id l12so1829175yen.19
-        for <git@vger.kernel.org>; Mon, 30 Apr 2012 22:32:51 -0700 (PDT)
+	id S1751886Ab2EAFoI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 May 2012 01:44:08 -0400
+Received: from mail-ey0-f174.google.com ([209.85.215.174]:40658 "EHLO
+	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750776Ab2EAFoH (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 May 2012 01:44:07 -0400
+Received: by eaaq12 with SMTP id q12so833974eaa.19
+        for <git@vger.kernel.org>; Mon, 30 Apr 2012 22:44:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=fu7iULciEeV8I1+QAwFf2l9Tl5OnKtrBuccK3/tV3yU=;
-        b=XtdzzLXpJGoTZTBmSTnNum1mCNGaiJOZyu7J5FRHDjR6dw1n8nODPtKyiTY4+TWsK1
-         l61NNbWCdSqqb94h9obQJYbrr27WL2wBj5pwhw3swcefYx5WnQ3lKbFPB0PnxDajUZov
-         +woLT078T5FBd9m/pd2sql4qUoHMyEEVlk7lH4v+BXNrwhps0rWdQJ4P2QELBHLUQf9V
-         tOWv3Z/RIY/oUY6qVUxSO1uN708K2OFkjgT9OtwSqW7ON7bRP0+IY/3UiZncw4RQWrPt
-         APvkAGGNXcGaUXDQvlhQDzXzRyFPMCO/y4yT7xux+9FvO/qPkfQwaS1rf4QST6mGXebs
-         VYDw==
-Received: by 10.236.144.134 with SMTP id n6mr24523876yhj.45.1335850371051;
- Mon, 30 Apr 2012 22:32:51 -0700 (PDT)
-Received: by 10.146.153.6 with HTTP; Mon, 30 Apr 2012 22:32:50 -0700 (PDT)
-In-Reply-To: <87mx5tyy2a.fsf@thomas.inf.ethz.ch>
+        h=subject:date:from:to:cc:message-id:in-reply-to:references;
+        bh=C4gqwiq2kxjKVQEXuDVQz08AcSe8kZwWd3czmMkaMcY=;
+        b=Xot3Cch0iPaBQkUEQdim+7zf4j/I9Kt43EMdYO8SbigswHUP0OTsMUS9AfhmttRjdT
+         DPBlBbescOH6BG18hsH26VjJSmj2uwcPWHE8NKcbGjxmDg5USy7KRNoBAdlnypJATdEu
+         jCXvVV3yhF0NpFd6d07PXlAL5Yo/0UEEf4T9+3H1hA8dWaNgVhN1L/eT/K4nXr9moEdU
+         Wqp28t6zTqQ4IIFBSEvVt8OP7SPmPazi6KXC4Y0UxMmt5rIKU1JHZYRSKNifLdEEJlVa
+         Zl7a2tWdMPhLBlsRM8+ah9x5fnCIro8eWdHbuQrgJKk0OWskInfcqkdOgCW8NpgPKUO2
+         ucuA==
+Received: by 10.213.9.10 with SMTP id j10mr1736288ebj.104.1335851045601;
+        Mon, 30 Apr 2012 22:44:05 -0700 (PDT)
+Received: from gmail.com (tor21.anonymizer.ccc.de. [31.172.30.4])
+        by mx.google.com with ESMTPS id x4sm85680672eef.10.2012.04.30.22.44.02
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Mon, 30 Apr 2012 22:44:03 -0700 (PDT)
+In-Reply-To: <4F9F52B9.9060508@palm.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196659>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196660>
 
-On Mon, Apr 30, 2012 at 9:38 AM, Thomas Rast <trast@student.ethz.ch> wr=
-ote:
-> Hi Brian
->
-> I can reproduce this. =C2=A0The problem is that __WORDSIZE is not def=
-ined,
-> either because it's Darwin or because the GCC is too old. =C2=A0It wi=
-nds up
-> compiling the 32-bit case, which of course doesn't work for 64-bit
-> builds.
->
-> Perhaps we can rewrite it in terms of sizeof(long) like this?
->
-> diff --git i/xdiff/xutils.c w/xdiff/xutils.c
-> index e05b5c9..1b3b471 100644
-> --- i/xdiff/xutils.c
-> +++ w/xdiff/xutils.c
-> @@ -290,39 +290,33 @@ static inline unsigned long has_zero(unsigned l=
-ong a)
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0return ((a - ONEBYTES) & ~a) & HIGHBITS;
-> =C2=A0}
->
-> -#if __WORDSIZE =3D=3D 64
-> -
-> -/*
-> - * Jan Achrenius on G+: microoptimized version of
-> - * the simpler "(mask & ONEBYTES) * ONEBYTES >> 56"
-> - * that works for the bytemasks without having to
-> - * mask them first.
-> - */
-> =C2=A0static inline long count_masked_bytes(unsigned long mask)
-> =C2=A0{
-> - =C2=A0 =C2=A0 =C2=A0 return mask * 0x0001020304050608 >> 56;
-> -}
-> -
-> -#else =C2=A0/* 32-bit case */
-> -
-> -/* Modified Carl Chatfield G+ version for 32-bit */
-> -static inline long count_masked_bytes(long mask)
-> -{
-> - =C2=A0 =C2=A0 =C2=A0 /*
-> - =C2=A0 =C2=A0 =C2=A0 =C2=A0* (a) gives us
-> - =C2=A0 =C2=A0 =C2=A0 =C2=A0* =C2=A0 -1 (0, ff), 0 (ffff) or 1 (ffff=
-ff)
-> - =C2=A0 =C2=A0 =C2=A0 =C2=A0* (b) gives us
-> - =C2=A0 =C2=A0 =C2=A0 =C2=A0* =C2=A0 0 for 0, 1 for (ff ffff ffffff)
-> - =C2=A0 =C2=A0 =C2=A0 =C2=A0* (a+b+1) gives us
-> - =C2=A0 =C2=A0 =C2=A0 =C2=A0* =C2=A0 correct 0-3 bytemask count resu=
-lt
-> - =C2=A0 =C2=A0 =C2=A0 =C2=A0*/
-> - =C2=A0 =C2=A0 =C2=A0 long a =3D (mask - 256) >> 23;
-> - =C2=A0 =C2=A0 =C2=A0 long b =3D mask & 1;
-> - =C2=A0 =C2=A0 =C2=A0 return a + b + 1;
-> + =C2=A0 =C2=A0 =C2=A0 if (sizeof(long) =3D=3D 8) {
+On Mon, 30 Apr 2012 20:04:25 -0700, Rich Pixley wrote:
+
+> I don't need separate branches for each repository.  What I really want 
+> is a common branch whose changes I can push back and forth between the 
+> various repositories, or coordinate through a central cache, without 
+> worrying about the underlying details that git is forcing me to confront.
+
+Here's a start for a more precise discussion.
+
+Sincerely,
+Michael Witten
 
 
-Isn't the whole point of this code to be fast?
+Cache server:
 
-This should be a compile-time check... conditionals hurt perf.
---=20
-David
+  $ git clone --mirror "$uri_for_central_repo"
+
+Machine A:
+
+  $ git clone "$uri_for_cache_repo"
+  $ git checkout -b feature_0 origin/feature_0
+  $ # ... do some work ...
+  $ git push --set-upstream origin HEAD:shared/feature_0
+  $ git config push.default upstream
+
+Machine B:
+
+  $ git clone "$uri_for_cache_repo"
+  $ git checkout -b feature_0 origin/feature_0
+  $ # ... do some work that conflicts with work done on Machine A...
+  $ git push --set-upstream origin HEAD:shared/feature_0
+  To $uri_for_cache_repo
+   ! [rejected]        HEAD -> shared/feature_0 (non-fast-forward)
+   error: failed to push some refs to '$uri_for_cache_repo'
+  To prevent you from losing history, non-fast-forward updates were rejected
+  Merge the remote changes (e.g. 'git pull') before pushing again.  See the
+  'Note about fast-forwards' section of 'git push --help' for details.
+  $ git pull origin shared/feature_0
+  From $uri_for_cache_repo
+   * branch            shared/feature_0 -> FETCH_HEAD
+  Auto-merging a
+  CONFLICT (add/add): Merge conflict in a
+  Recorded preimage for 'a'
+  Automatic merge failed; fix conflicts and then commit the result.
+  $ # ... resolve conflict and commit results ...
+  $ git push --set-upstream origin HEAD:shared/feature_0
+  $ git config push.default upstream
+
+Machine A:
+
+  $ git pull # pulls in origin's shared/feature_0
+  $ # ... do some work ...
+  $ git push # pushes to origin's shared/feature_0
+
+Machine B:
+
+  $ git pull # pulls in origin's shared/feature_0
+  $ # ... do some work ...
+  $ git push # pushes to origin's shared/feature_0
+
+Machine A:
+
+  $ git pull
+  $ git remote add central "$uri_for_central_repo"
+  $ git push central HEAD:feature_0 # Assume there is a conflict
+  To $uri_for_central_repo
+   ! [rejected]        HEAD -> feature_0 (non-fast-forward)
+  error: failed to push some refs to '$uri_for_central_repo'
+  To prevent you from losing history, non-fast-forward updates were rejected
+  Merge the remote changes (e.g. 'git pull') before pushing again.  See the
+  'Note about fast-forwards' section of 'git push --help' for details.
+  $ git pull central feature_0
+  $ # ... resolve conflict and commit results ...
+  $ git push central HEAD:feature_0 # Assume it succeeds this time
+  $ # Let's update the cache repo from Machine A:
+  $ git fetch central
+  $ git push origin 'refs/remotes/central/*:refs/heads/*'
+
+Machine B:
+
+  $ git pull
+  $ git pull . origin/feature_0 # Get new stuff cached from central server
