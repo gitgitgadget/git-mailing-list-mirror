@@ -1,59 +1,73 @@
-From: Brian Gernhardt <brian@gernhardtsoftware.com>
-Subject: Re: XDL_FAST_HASH breaks git on OS X 10.7.3
-Date: Mon, 30 Apr 2012 22:13:09 -0400
-Message-ID: <3BE9DFB5-81F9-40D6-A637-6C3C232394A6@gernhardtsoftware.com>
-References: <441BE38F-E081-4ED8-B587-BF72AD6368EE@gernhardtsoftware.com> <87mx5tyy2a.fsf@thomas.inf.ethz.ch>
-Mime-Version: 1.0 (Apple Message framework v1257)
+From: merlyn@stonehenge.com (Randal L. Schwartz)
+Subject: Re: [PATCH v2] log-tree: use custom line terminator in line termination mode
+Date: Mon, 30 Apr 2012 19:51:51 -0700
+Message-ID: <86ehr4r4u0.fsf@red.stonehenge.com>
+References: <7vaa1tf1w8.fsf@alter.siamese.dyndns.org>
+	<1335817705-24718-1-git-send-email-jk@jk.gs>
+	<7vd36oesjr.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-Cc: Git List <git@vger.kernel.org>
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Tue May 01 04:13:19 2012
+Cc: Jan =?utf-8?Q?Kr=C3=BCger?= <jk@jk.gs>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue May 01 04:52:36 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SP2ac-0000WU-ID
-	for gcvg-git-2@plane.gmane.org; Tue, 01 May 2012 04:13:18 +0200
+	id 1SP3Cd-0006F4-8Z
+	for gcvg-git-2@plane.gmane.org; Tue, 01 May 2012 04:52:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757463Ab2EACNN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 Apr 2012 22:13:13 -0400
-Received: from vs072.rosehosting.com ([216.114.78.72]:49508 "EHLO
-	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751881Ab2EACNM convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 30 Apr 2012 22:13:12 -0400
-Received: by silverinsanity.com (Postfix, from userid 5001)
-	id 28CB61FFC0EB; Tue,  1 May 2012 02:13:02 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on silverinsanity.com
-X-Spam-Level: 
-X-Spam-Status: No, score=-5.0 required=3.5 tests=ALL_TRUSTED,AWL,BAYES_00
-	autolearn=ham version=3.2.5
-Received: from [10.10.10.141] (cpe-74-65-60-43.rochester.res.rr.com [74.65.60.43])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by silverinsanity.com (Postfix) with ESMTPSA id 699E31FFC015;
-	Tue,  1 May 2012 02:13:01 +0000 (UTC)
-In-Reply-To: <87mx5tyy2a.fsf@thomas.inf.ethz.ch>
-X-Mailer: Apple Mail (2.1257)
+	id S1752949Ab2EACvz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 Apr 2012 22:51:55 -0400
+Received: from lax-gw18.mailroute.net ([199.89.0.118]:34327 "EHLO
+	gw18.lax01.mailroute.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752829Ab2EACvy (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Apr 2012 22:51:54 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by gw18.lax01.mailroute.net (Postfix) with ESMTP id AB9D2179A1F7;
+	Tue,  1 May 2012 02:51:53 +0000 (GMT)
+X-Virus-Scanned: by MailRoute
+Received: from gw18.lax01.mailroute.net ([199.89.0.118])
+	by localhost (gw18.lax01.mailroute.net.mailroute.net [127.0.0.1]) (mroute_mailscanner, port 10026)
+	with LMTP id xyaITa3yBQSp; Tue,  1 May 2012 02:51:52 +0000 (GMT)
+Received: from red.stonehenge.com (red.stonehenge.com [208.79.95.2])
+	by gw18.lax01.mailroute.net (Postfix) with ESMTP id 8CE3B179A204;
+	Tue,  1 May 2012 02:51:52 +0000 (GMT)
+Received: by red.stonehenge.com (Postfix, from userid 1001)
+	id 74E6C25B3; Mon, 30 Apr 2012 19:51:52 -0700 (PDT)
+x-mayan-date: Long count = 12.19.19.6.5; tzolkin = 3 Chicchan; haab = 8 Uo
+In-Reply-To: <7vd36oesjr.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Mon, 30 Apr 2012 15:58:00 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.4 (berkeley-unix)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196647>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196648>
+
+>>>>> "Junio" == Junio C Hamano <gitster@pobox.com> writes:
+
+Junio> Having said that, are we sure that
+
+Junio> 	printf "add bar\0initial"
 
 
-On Apr 30, 2012, at 12:38 PM, Thomas Rast wrote:
+Junio> works per specification, or merely works by accident in some
+Junio> implementation?
 
-> I can reproduce this.  The problem is that __WORDSIZE is not defined,
-> either because it's Darwin or because the GCC is too old.  It winds up
-> compiling the 32-bit case, which of course doesn't work for 64-bit
-> builds.
+>From the POSIX spec
+(http://pubs.opengroup.org/onlinepubs/9699919799/utilities/printf.html):
 
-Great.  I was worried about having to help you debug it via e-mail round-trips.  :-D
+    In addition to the escape sequences shown in XBD File Format Notation (
+    '\\' , '\a' , '\b' , '\f' , '\n' , '\r' , '\t' , '\v' ), "\ddd" , where
+    ddd is a one, two, or three-digit octal number, shall be written as a
+    byte with the numeric value specified by the octal number.
 
-> Perhaps we can rewrite it in terms of sizeof(long) like this?
+Looks pretty intentional to me.  \0 is a nul.
 
-It does work for me, and seems pretty valid to me since long is actually the type you're storing it in.
-
-~~ Brian G.
+-- 
+Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 0095
+<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
+Smalltalk/Perl/Unix consulting, Technical writing, Comedy, etc. etc.
+See http://methodsandmessages.posterous.com/ for Smalltalk discussion
