@@ -1,73 +1,69 @@
-From: =?UTF-8?q?Zbigniew=20J=C4=99drzejewski-Szmek?= <zbyszek@in.waw.pl>
-Subject: [PATCH 4/4] diff --stat: do not run diff on indentical files
-Date: Tue,  1 May 2012 19:10:15 +0200
-Message-ID: <1335892215-21331-5-git-send-email-zbyszek@in.waw.pl>
-References: <1335892215-21331-1-git-send-email-zbyszek@in.waw.pl>
+From: Jeff King <peff@peff.net>
+Subject: Re: gc --aggressive
+Date: Tue, 1 May 2012 13:16:40 -0400
+Message-ID: <20120501171640.GA16623@sigill.intra.peff.net>
+References: <CAG+J_DzO=UZ56PjnSCRaTdj8pBSYc5PFofw1QHy42c5pHMK_HQ@mail.gmail.com>
+ <CAG+J_DyqvCxwd6+gzixQEk6SxMZF0qsXKcJPaU6imsJdFQ-64g@mail.gmail.com>
+ <vpqbomqqdxo.fsf@bauges.imag.fr>
+ <20120428122533.GA12098@sigill.intra.peff.net>
+ <alpine.LFD.2.02.1204281258050.21030@xanadu.home>
+ <20120429113431.GA24254@sigill.intra.peff.net>
+ <alpine.LFD.2.02.1204290917051.21030@xanadu.home>
+ <20120501162806.GA15614@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: mj@ucw.cz,
-	=?UTF-8?q?Zbigniew=20J=C4=99drzejewski-Szmek?= <zbyszek@in.waw.pl>
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Tue May 01 19:11:39 2012
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Jay Soffian <jaysoffian@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Shawn Pearce <spearce@spearce.org>
+To: Nicolas Pitre <nico@fluxnic.net>
+X-From: git-owner@vger.kernel.org Tue May 01 19:16:53 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SPGbz-0003dQ-7Z
-	for gcvg-git-2@plane.gmane.org; Tue, 01 May 2012 19:11:39 +0200
+	id 1SPGh1-00068w-Pn
+	for gcvg-git-2@plane.gmane.org; Tue, 01 May 2012 19:16:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757527Ab2EARLe convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 1 May 2012 13:11:34 -0400
-Received: from kawka.in.waw.pl ([178.63.212.103]:35799 "EHLO kawka.in.waw.pl"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755877Ab2EARLe (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 May 2012 13:11:34 -0400
-Received: from ip-37-209-134-178.free.aero2.net.pl ([37.209.134.178] helo=localhost.localdomain)
-	by kawka.in.waw.pl with esmtpsa (TLS1.0:DHE_RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.72)
-	(envelope-from <zbyszek@in.waw.pl>)
-	id 1SPGbs-0003uH-Q5; Tue, 01 May 2012 19:11:33 +0200
-X-Mailer: git-send-email 1.7.10.539.g288dd
-In-Reply-To: <1335892215-21331-1-git-send-email-zbyszek@in.waw.pl>
+	id S1757593Ab2EARQq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 May 2012 13:16:46 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:53492
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755193Ab2EARQp (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 May 2012 13:16:45 -0400
+Received: (qmail 7502 invoked by uid 107); 1 May 2012 17:17:01 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 01 May 2012 13:17:01 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 01 May 2012 13:16:40 -0400
+Content-Disposition: inline
+In-Reply-To: <20120501162806.GA15614@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196702>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196703>
 
-If sha1's are equal, then there's no point in performing the diff.
+On Tue, May 01, 2012 at 12:28:06PM -0400, Jeff King wrote:
 
-In a very unscientific test:
+> >  You could test this theory by commenting out the size comparisons in 
+> > type_size_sort() and re-run the test.
+> 
+> I'll try this next.
 
-git init &&
-  dd if=3D/dev/urandom bs=3D1M count=3D30 | hexdump >file1 &&
-  git add file1 && git commit -m 'add file' &&
-  git mv file1 file1-moved && chmod +x file1-moved &&
-  command time git diff --stat
+Wow, it behaves horribly. I didn't even let the bigger tests run to
+completion. Here is the output for git.git (the first line is from the
+original, unmodified version of git with --window=10):
 
-(before) git diff --stat  2.00s user 0.31s system 99% cpu 2.323 total
-(after)  git diff --stat  0.80s user 0.10s system 98% cpu 0.913 total
+  orig | 31.4M (100%) |   54s (100%)
+    10 | 44.0M (140%) |  169s (310%)
+    20 | 37.7M (120%) |  232s (428%)
+    40 | 33.6M (107%) |  331s (608%)
+    80 | 30.9M ( 99%) |  473s (868%)
+   160 | 29.4M ( 94%) |  696s (1279%)
 
-Signed-off-by: Zbigniew J=C4=99drzejewski-Szmek <zbyszek@in.waw.pl>
----
- diff.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Unless the window is increased a lot, the packs end up quite a bit
+larger (and even still we spend a lot more CPU time).
 
-diff --git a/diff.c b/diff.c
-index 6eb2946..7cb9893 100644
---- a/diff.c
-+++ b/diff.c
-@@ -2398,7 +2398,7 @@ static void builtin_diffstat(const char *name_a, =
-const char *name_b,
- 		data->added =3D count_lines(two->data, two->size);
- 	}
-=20
--	else {
-+	else if (!data->is_unchanged) {
- 		/* Crazy xdl interfaces.. */
- 		xpparam_t xpp;
- 		xdemitconf_t xecfg;
---=20
-1.7.10.539.g288dd
+-Peff
