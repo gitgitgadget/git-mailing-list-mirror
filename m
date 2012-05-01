@@ -1,75 +1,90 @@
-From: PJ Weisberg <pj@irregularexpressions.net>
-Subject: Re: Is there any way to make hooks part of the repository?
-Date: Tue, 1 May 2012 14:59:18 -0700
-Message-ID: <CAJsNXT=niP2Ja-pSbvj-OGi5t0x0-Zxm3CdcY0nLs9ROdCG8hg@mail.gmail.com>
-References: <CAE1pOi2hr7ewjo5WVDoW0ipYxDVTckr5M_sHNoOQ323=_k754Q@mail.gmail.com>
-	<7vipgf8wve.fsf@alter.siamese.dyndns.org>
-	<86r4v3mxf7.fsf@red.stonehenge.com>
-	<7vaa1r8vhy.fsf@alter.siamese.dyndns.org>
-	<CAE1pOi00Mr4dOj2ChTJU9XWypUAaVUDDa36-M7LA+9BixW0nKw@mail.gmail.com>
+From: Rich Pixley <rich.pixley@palm.com>
+Subject: Re: Newbie grief
+Date: Tue, 01 May 2012 15:07:27 -0700
+Message-ID: <4FA05E9F.9090709@palm.com>
+References: <4F9F128C.5020304@palm.com> <201204302331.q3UNVo7o032303@no.baka.org> <4F9F3919.6060805@palm.com> <CAMK1S_jwVsyKrGoL5uVAiuRrOa8bz79-DAueBmHZE2k=PpcJ2Q@mail.gmail.com> <20120501111415.GD5769@thunk.org> <CAMK1S_jN_WdZF4W4szzyJqLfC3FmnhKQ65XQiD-JS_jxwSm8_g@mail.gmail.com> <4FA02830.3040407@palm.com> <86havzoi8h.fsf@red.stonehenge.com> <4FA04D02.6090702@palm.com> <86mx5rmx32.fsf@red.stonehenge.com> <4FA055D0.7040102@palm.com> <86aa1rmvhb.fsf@red.stonehenge.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Junio C Hamano <gitster@pobox.com>,
-	"Randal L. Schwartz" <merlyn@stonehenge.com>,
-	Git Users <git@vger.kernel.org>
-To: Hilco Wijbenga <hilco.wijbenga@gmail.com>
-X-From: git-owner@vger.kernel.org Tue May 01 23:59:30 2012
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Sitaram Chamarty <sitaramc@gmail.com>, "Ted Ts'o" <tytso@mit.edu>,
+	Seth Robertson <in-gitvger@baka.org>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: "Randal L. Schwartz" <merlyn@stonehenge.com>
+X-From: git-owner@vger.kernel.org Wed May 02 00:07:35 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SPL6S-0001pG-SL
-	for gcvg-git-2@plane.gmane.org; Tue, 01 May 2012 23:59:25 +0200
+	id 1SPLEM-0005xc-Fo
+	for gcvg-git-2@plane.gmane.org; Wed, 02 May 2012 00:07:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753089Ab2EAV7U (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 May 2012 17:59:20 -0400
-Received: from mail-wg0-f44.google.com ([74.125.82.44]:46067 "EHLO
-	mail-wg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752759Ab2EAV7U (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 May 2012 17:59:20 -0400
-Received: by wgbdr13 with SMTP id dr13so275wgb.1
-        for <git@vger.kernel.org>; Tue, 01 May 2012 14:59:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
-        bh=He1yWO26o0Ij9brCsYEKwX1rHHohvifG1EPVe+taPnI=;
-        b=uZEw3mPmy/puBdhFM2tla6ltLVVkKrOIeiUh85PYlKD9+oUIR8FgXKh/2yoyHi8ssN
-         tGsfT4UxU7Sc4YkNttQz1uEvymsDwooJ+hyIu4OSvCrWmeVZno7wgg1dOL8RHxjreewT
-         w3Uf/cI2O4i/ZpsP66uqdFEvNWDI+ItGl024Y5DN3dRxojNvpuv5LsYBH1gX/zQh0Cet
-         9L1Ad9LTXtev7akyfBf3A6Wwm0d6DozygHNWaVlxYcRvfQ8vNxtkkh43O9AzGIccGQ0S
-         P+2qFPei2khj1ju1AU4jKEPsn7H0DxOcrn2Ged+3W9r+KNC7W/pWYfPEC+uXiMM/l+1F
-         AViQ==
-Received: by 10.216.132.202 with SMTP id o52mr4509640wei.106.1335909558688;
- Tue, 01 May 2012 14:59:18 -0700 (PDT)
-Received: by 10.223.116.200 with HTTP; Tue, 1 May 2012 14:59:18 -0700 (PDT)
-In-Reply-To: <CAE1pOi00Mr4dOj2ChTJU9XWypUAaVUDDa36-M7LA+9BixW0nKw@mail.gmail.com>
-X-Google-Sender-Auth: ooHxBtdeBPBlZ9gr-wWu2yypTFA
+	id S1753084Ab2EAWH3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 May 2012 18:07:29 -0400
+Received: from smtp-relay2.palm.com ([64.28.152.243]:7800 "EHLO
+	smtp-relay2.palm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751881Ab2EAWH2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 May 2012 18:07:28 -0400
+X-IronPort-AV: E=Sophos;i="4.75,513,1330934400"; 
+   d="scan'208";a="13250105"
+Received: from unknown (HELO ushqusdns3.palm.com) ([148.92.223.90])
+  by smtp-relay2.palm.com with ESMTP; 01 May 2012 15:07:28 -0700
+Received: from fuji.noir.com ([10.100.2.1])
+	by ushqusdns3.palm.com (8.14.4/8.14.4) with ESMTP id q41M7R2G009110;
+	Tue, 1 May 2012 15:07:28 -0700
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.7; rv:12.0) Gecko/20120428 Thunderbird/12.0.1
+In-Reply-To: <86aa1rmvhb.fsf@red.stonehenge.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196760>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196761>
 
-On Tue, May 1, 2012 at 2:09 PM, Hilco Wijbenga <hilco.wijbenga@gmail.com> wrote:
-
-> On 1 May 2012 14:03, Junio C Hamano <gitster@pobox.com> wrote:
+On 5/1/12 14:39 , Randal L. Schwartz wrote:
+>>>>>> "Rich" == Rich Pixley<rich.pixley@palm.com>  writes:
 >
->> We've talked about something like that a few times in the past, but as far
->> as I (am concerned / remember) the conclusion has always been that is not
->> worth "standardizing", i.e. nothing a ./setup script in-tree or a Makefile
->> target cannot offer the same convenience.
+>>> I can always "git fetch origin" in my repo, and the remote
+>>> branches are in "origin/master, origin/foo, origin/bar".  Totally
+>>> separate from my working tree.
 >
-> This would not keep things up-to-date, though, would it? It seems like
-> yet another thing developers need to remember and do. I would prefer
-> something more automatic.
+> Rich>  Sure.  You can fetch other branches, (unless you happen to be
+> Rich>  checked out from them).  But you can't fetch to master if you're
+> Rich>  checked out from master.
+>
+> No, you are still missing it.
+>
+> "git fetch" updates the remote tracking branches, which you commonly
+> reference preceded by "origin".  So "git fetch" DOES NOT TOUCH "master".
+> It touches only "origin/master".
 
-Once your hooks are installed, couldn't your post-checkout and
-post-merge hooks keep all the others up to date?
+Yes.  I understand that that is how git typically works in a non-bare 
+repository.
 
+Do you understand what I'm saying?
 
--PJ
+> Only when you merge that remote in to your local master do you need to
+> worry about dirty trees or broken merges.
+>
+> Rich>  My particular situation is that I'm developing a "feature" and to
+> Rich>  do that, I need to be testing on multiple machines.  Tens of them.
+>
+> I think you're now confusing git with a deploy system.  That is also
+> something that will lead you to unnecessary grief.  Pick a deploy system
+> that's not git, and integrate git with it.
 
-Gehm's Corollary to Clark's Law: Any technology distinguishable from
-magic is insufficiently advanced.
+No, not a deploy system.  You use a deploy system to set up something 
+like multiple server http farms.  What I'm doing is more akin to porting 
+the same piece of software to 20 different operating system 
+distributions.  I'm not "deploying" the source code.  I'm developing it.
+
+Thank you for acknowledging that git is a poor match for this scenario, 
+though.
+
+> Rich>  I really don't want hundreds of named branches that I must
+> Rich>  manually merge from constantly.
+>
+> I don't see how you would end up with this.
+
+Yup.  I'm beginning to see that.
+
+--rich
