@@ -1,139 +1,128 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: [PATCH] Choose XDL_FAST_HASH code on sizeof(long) instead of __WORDSIZE
-Date: Tue, 1 May 2012 10:36:51 +0200
-Message-ID: <399c9a1f0dd548da3144eff3c50d04a8f343ab24.1335860033.git.trast@student.ethz.ch>
-References: <7v4ns0cy3l.fsf@alter.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: 1.7.10 doesn't show file pushstatus
+Date: Tue, 1 May 2012 04:40:49 -0400
+Message-ID: <20120501084048.GA21904@sigill.intra.peff.net>
+References: <20120501010609.GA14715@jupiter.local>
+ <20120501065832.GA17777@sigill.intra.peff.net>
+ <20120501073326.GA21087@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Brian Gernhardt <brian@gernhardtsoftware.com>,
-	<git@vger.kernel.org>, Thomas Rast <trast@student.ethz.ch>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue May 01 10:37:03 2012
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Junio C Hamano <gitster@pobox.com>, dfowler <davidfowl@gmail.com>,
+	git@vger.kernel.org, msysgit@googlegroups.com,
+	Paul Betts <paul@github.com>, David Ebbo <david.ebbo@gmail.com>
+To: Clemens Buchacher <drizzd@aon.at>
+X-From: msysgit+bncCN2hpKqZChCgw_78BBoEEp8rTQ@googlegroups.com Tue May 01 10:41:06 2012
+Return-path: <msysgit+bncCN2hpKqZChCgw_78BBoEEp8rTQ@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-ob0-f186.google.com ([209.85.214.186])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SP8Zx-0005Ox-A2
-	for gcvg-git-2@plane.gmane.org; Tue, 01 May 2012 10:37:01 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753450Ab2EAIg5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 May 2012 04:36:57 -0400
-Received: from edge10.ethz.ch ([82.130.75.186]:20123 "EHLO edge10.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752561Ab2EAIgz (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 May 2012 04:36:55 -0400
-Received: from CAS21.d.ethz.ch (172.31.51.111) by edge10.ethz.ch
- (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.2.283.3; Tue, 1 May
- 2012 10:36:51 +0200
-Received: from thomas.inf.ethz.ch (188.155.176.28) by CAS21.d.ethz.ch
- (172.31.51.111) with Microsoft SMTP Server (TLS) id 14.1.355.2; Tue, 1 May
- 2012 10:36:51 +0200
-X-Mailer: git-send-email 1.7.10.512.g5bfc6
-In-Reply-To: <7v4ns0cy3l.fsf@alter.siamese.dyndns.org>
-X-Originating-IP: [188.155.176.28]
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196668>
+	(envelope-from <msysgit+bncCN2hpKqZChCgw_78BBoEEp8rTQ@googlegroups.com>)
+	id 1SP8du-0006yz-1B
+	for gcvm-msysgit@m.gmane.org; Tue, 01 May 2012 10:41:06 +0200
+Received: by obbuo13 with SMTP id uo13sf5078080obb.3
+        for <gcvm-msysgit@m.gmane.org>; Tue, 01 May 2012 01:41:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=beta;
+        h=x-beenthere:received-spf:date:from:to:cc:subject:message-id
+         :references:mime-version:in-reply-to:x-original-sender
+         :x-original-authentication-results:precedence:mailing-list:list-id
+         :x-google-group-id:list-post:list-help:list-archive:sender
+         :list-subscribe:list-unsubscribe:content-type:content-disposition;
+        bh=sxwL7yXakf2bwROGnaPz9GQxk1+QAvXrB6gzwlysZc4=;
+        b=lhMGYSVHOtZHd1HC+S/r7YipYnWD6anhKonw8Xm+su7PxKHOWbcBuQzboQoVcnEegH
+         RpsxanBJsLcwYPlmlc/CFviLFv99MJG+XqN8G6oDsEyIa01zgOx7Y5U3Wc20jGieUkhk
+         GQaxOcZlXbkscgolchtb8gpTmQW0UNXAtQZDA=
+Received: by 10.50.88.169 with SMTP id bh9mr148636igb.1.1335861664872;
+        Tue, 01 May 2012 01:41:04 -0700 (PDT)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.50.202.5 with SMTP id ke5ls213639igc.2.gmail; Tue, 01 May 2012
+ 01:41:03 -0700 (PDT)
+Received: by 10.42.169.67 with SMTP id a3mr18387780icz.8.1335861663326;
+        Tue, 01 May 2012 01:41:03 -0700 (PDT)
+Received: by 10.42.169.67 with SMTP id a3mr18387779icz.8.1335861663317;
+        Tue, 01 May 2012 01:41:03 -0700 (PDT)
+Received: from peff.net (99-108-226-0.lightspeed.iplsin.sbcglobal.net. [99.108.226.0])
+        by gmr-mx.google.com with ESMTPS id no9si8002694igc.0.2012.05.01.01.41.03
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Tue, 01 May 2012 01:41:03 -0700 (PDT)
+Received-SPF: pass (google.com: domain of peff@peff.net designates 99.108.226.0 as permitted sender) client-ip=99.108.226.0;
+Received: (qmail 1725 invoked by uid 107); 1 May 2012 08:41:16 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 01 May 2012 04:41:15 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 01 May 2012 04:40:49 -0400
+In-Reply-To: <20120501073326.GA21087@sigill.intra.peff.net>
+X-Original-Sender: peff@peff.net
+X-Original-Authentication-Results: gmr-mx.google.com; spf=pass (google.com:
+ domain of peff@peff.net designates 99.108.226.0 as permitted sender) smtp.mail=peff@peff.net
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post?hl=en>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/?hl=en>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit?hl=en>
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
+Content-Disposition: inline
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196669>
 
-Darwin does not define __WORDSIZE, and compiles the 32-bit code path
-on 64-bit systems, resulting in a totally broken git.
+On Tue, May 01, 2012 at 03:33:26AM -0400, Jeff King wrote:
 
-I could not find an alternative -- other than the platform symbols
-(__x86_64__ etc.) -- that does the test in the preprocessor.  However,
-we can also just test for the size of a 'long', which is what really
-matters here.  Any compiler worth its salt will leave only the branch
-relevant for its platform, and indeed on Linux/GCC the numbers don't
-change:
+> In this case, send pack gets its arguments from the command-line, not
+> from the options set at the transport layer. Remote-curl will pass along
+> "--quiet" if we get that from the transport layer, but it does not
+> otherwise pass along the "progress" flag. So there are two problems:
+> 
+>   1. send-pack defaults its progress boolean to 0. Before 01fdc21, that
+>      was OK, because it meant "don't explicitly ask for progress". But
+>      after 01fdc21 that now means "explicitly ask for no progress", and
+>      the direct-transport code paths were updated without updating
+>      cmd_send_pack.
+> 
+>   2. There's no way to tell send-pack explicitly "yes, I would like
+>      progress, no matter what isatty(2) says". I doubt anybody cares
+>      much, but it probably makes sense to handle that for the sake of
+>      completeness.
 
- Test                                  tr/darwin-xdl-fast-hash   origin/next              origin/master
- ------------------------------------------------------------------------------------------------------------------
- 4000.1: log -3000 (baseline)          0.09(0.07+0.01)           0.09(0.07+0.01) -5.5%*   0.09(0.07+0.01) -4.1%
- 4000.2: log --raw -3000 (tree-only)   0.47(0.41+0.05)           0.47(0.40+0.05) -0.5%    0.45(0.38+0.06) -3.5%.
- 4000.3: log -p -3000 (Myers)          1.81(1.67+0.12)           1.81(1.67+0.13) +0.3%    1.99(1.84+0.12) +10.2%***
- 4000.4: log -p -3000 --histogram      1.79(1.66+0.11)           1.80(1.67+0.11) +0.4%    1.96(1.82+0.10) +9.2%***
- 4000.5: log -p -3000 --patience       2.17(2.02+0.13)           2.20(2.04+0.13) +1.3%.   2.33(2.18+0.13) +7.4%***
- ------------------------------------------------------------------------------------------------------------------
- Significance hints:  '.' 0.1  '*' 0.05  '**' 0.01  '***' 0.001
+The following patch series fixes this:
 
-Signed-off-by: Thomas Rast <trast@student.ethz.ch>
----
+  [1/3]: send-pack: show progress when isatty(2)
+  [2/3]: teach send-pack about --[no-]progress
+  [3/3]: t5541: test more combinations of --progress
 
-Incidentally, on the OS X machine I have access to, the difference is
-even bigger, something like 14% for 'log -p -3000'.  I'm too lazy to
-work out the exact numbers since the perf code doesn't work there.
+The first patch fixes (1) above, restoring send-pack's original behavior
+(for remote-curl as well as anybody else who happens to call it). Note
+that in doing so, it breaks "push --no-progress" for http remotes that
+01fdc21 tried to fix. But it didn't actually fix it; it only appeared to
+work because progress was _never_ on for http.  Fortunately, the
+existing test in t5541 still passes because it's poorly written (it uses
+both "--quiet" and "--no-progress", unmindful of the fact that the
+latter does absolutely nothing).
 
- xdiff/xutils.c |   52 +++++++++++++++++++++++-----------------------------
- 1 file changed, 23 insertions(+), 29 deletions(-)
+The second patch fixes it correctly by propagating the options through
+remote-curl (and as a bonus, it makes (2) above work). Other transport
+helpers that use send-pack would want to do the same thing (but I don't
+know of any that exist).
 
-diff --git a/xdiff/xutils.c b/xdiff/xutils.c
-index e05b5c9..1b3b471 100644
---- a/xdiff/xutils.c
-+++ b/xdiff/xutils.c
-@@ -290,39 +290,33 @@ static inline unsigned long has_zero(unsigned long a)
- 	return ((a - ONEBYTES) & ~a) & HIGHBITS;
- }
- 
--#if __WORDSIZE == 64
--
--/*
-- * Jan Achrenius on G+: microoptimized version of
-- * the simpler "(mask & ONEBYTES) * ONEBYTES >> 56"
-- * that works for the bytemasks without having to
-- * mask them first.
-- */
- static inline long count_masked_bytes(unsigned long mask)
- {
--	return mask * 0x0001020304050608 >> 56;
--}
--
--#else	/* 32-bit case */
--
--/* Modified Carl Chatfield G+ version for 32-bit */
--static inline long count_masked_bytes(long mask)
--{
--	/*
--	 * (a) gives us
--	 *   -1 (0, ff), 0 (ffff) or 1 (ffffff)
--	 * (b) gives us
--	 *   0 for 0, 1 for (ff ffff ffffff)
--	 * (a+b+1) gives us
--	 *   correct 0-3 bytemask count result
--	 */
--	long a = (mask - 256) >> 23;
--	long b = mask & 1;
--	return a + b + 1;
-+	if (sizeof(long) == 8) {
-+		/*
-+		 * Jan Achrenius on G+: microoptimized version of
-+		 * the simpler "(mask & ONEBYTES) * ONEBYTES >> 56"
-+		 * that works for the bytemasks without having to
-+		 * mask them first.
-+		 */
-+		return mask * 0x0001020304050608 >> 56;
-+	} else {
-+		/*
-+		 * Modified Carl Chatfield G+ version for 32-bit *
-+		 *
-+		 * (a) gives us
-+		 *   -1 (0, ff), 0 (ffff) or 1 (ffffff)
-+		 * (b) gives us
-+		 *   0 for 0, 1 for (ff ffff ffffff)
-+		 * (a+b+1) gives us
-+		 *   correct 0-3 bytemask count result
-+		 */
-+		long a = (mask - 256) >> 23;
-+		long b = mask & 1;
-+		return a + b + 1;
-+	}
- }
- 
--#endif
--
- unsigned long xdl_hash_record(char const **data, char const *top, long flags)
- {
- 	unsigned long hash = 5381;
+The third patch just expands the test coverage.
+
+These are prepared directly on top of 01fdc21, so they can go on the
+maint track.
+
+-Peff
+
 -- 
-1.7.10.512.g5bfc6
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
+
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
