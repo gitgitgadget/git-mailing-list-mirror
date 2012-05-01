@@ -1,64 +1,63 @@
-From: =?ISO-8859-1?Q?Jan_Kr=FCger?= <jk@jk.gs>
-Subject: Re: Newbie grief
-Date: Tue, 01 May 2012 01:35:20 +0200
-Message-ID: <4F9F21B8.9070506@jk.gs>
-References: <4F9F128C.5020304@palm.com>
+From: Andreas Schwab <schwab@linux-m68k.org>
+Subject: Re: [PATCH v2] log-tree: use custom line terminator in line termination mode
+Date: Tue, 01 May 2012 02:28:17 +0200
+Message-ID: <m2ehr4sq1q.fsf@igel.home>
+References: <7vaa1tf1w8.fsf@alter.siamese.dyndns.org>
+	<1335817705-24718-1-git-send-email-jk@jk.gs>
+	<7vd36oesjr.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Rich Pixley <rich.pixley@palm.com>
-X-From: git-owner@vger.kernel.org Tue May 01 01:35:38 2012
+Content-Type: text/plain
+Cc: Jan =?utf-8?Q?Kr=C3=BCger?= <jk@jk.gs>,
+	"Randal L. Schwartz" <merlyn@stonehenge.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue May 01 02:28:35 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SP07x-0003rP-5N
-	for gcvg-git-2@plane.gmane.org; Tue, 01 May 2012 01:35:33 +0200
+	id 1SP0xA-0006AC-Bl
+	for gcvg-git-2@plane.gmane.org; Tue, 01 May 2012 02:28:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757444Ab2D3Xf3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 Apr 2012 19:35:29 -0400
-Received: from zoidberg.org ([88.198.6.61]:42484 "EHLO heapsort.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756638Ab2D3Xf2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Apr 2012 19:35:28 -0400
-Received: from [IPv6:2001:4dd0:ff1a:0:21b:77ff:fe59:7168] ([2001:4dd0:ff1a:0:21b:77ff:fe59:7168])
-  (AUTH: PLAIN jast, TLS: TLSv1/SSLv3,256bits,AES256-SHA)
-  by cthulhu with esmtp; Tue, 01 May 2012 01:35:26 +0200
-  id 00400E82.4F9F21BE.00004243
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:10.0.3) Gecko/20120329 Icedove/10.0.3
-In-Reply-To: <4F9F128C.5020304@palm.com>
+	id S1757438Ab2EAA2X (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 Apr 2012 20:28:23 -0400
+Received: from mail-out.m-online.net ([212.18.0.10]:49773 "EHLO
+	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756896Ab2EAA2X (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Apr 2012 20:28:23 -0400
+Received: from frontend1.mail.m-online.net (frontend1.mail.intern.m-online.net [192.168.8.180])
+	by mail-out.m-online.net (Postfix) with ESMTP id 3VhNkn72s8z3hhXN;
+	Tue,  1 May 2012 02:28:17 +0200 (CEST)
+Received: from igel.home (ppp-88-217-104-31.dynamic.mnet-online.de [88.217.104.31])
+	by mail.mnet-online.de (Postfix) with ESMTPA id 3VhNkp0ZCTz4KK36;
+	Tue,  1 May 2012 02:28:18 +0200 (CEST)
+Received: by igel.home (Postfix, from userid 501)
+	id 9AB91CA2A9; Tue,  1 May 2012 02:28:17 +0200 (CEST)
+X-Yow: Bo Derek ruined my life!
+In-Reply-To: <7vd36oesjr.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Mon, 30 Apr 2012 15:58:00 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.96 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196637>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196638>
 
-Hi Rich,
+Junio C Hamano <gitster@pobox.com> writes:
 
-On 05/01/2012 12:30 AM, Rich Pixley wrote:
-> I'm trying to do what seems like a simple thing in darcs, monotone,
-> mecurial, gnu arch, etc, but seems nearly impossible in git.  There's a
-> central repository, a long ways away on the other side of the internet. 
-> So I want a local repository cache.  I'm going to be working on a number
-> of different features and different machines all simultaneously so I
-> really don't want them all to be pulling from the central repository.
-> 
-> In other systems, this is a simple star network.  Clone a repository,
-> use, push, pull, etc.  But with git, I can't push unless the cache
-> repository is bare, but if the cache repository is bare, then a change
-> to the central repository will cause the two to become wedged since
-> neither can push or fetch the other.
+> Having said that, are we sure that
+>
+> 	printf "add bar\0initial"
+>
+> works per specification, or merely works by accident in some
+> implementation?
 
-If the 'cache repository' is set up using "git clone --mirror" and you
-push to the primary repository only, that makes the cache repo a
-definite slave, so you can always run "git fetch" on it without any
-trouble. You can even enforce this by denying all pushes to the cache
-repo, thus eliminating any chance of accidental misuse.
+Since the backslash is not followed by $ ` " \ <newline> it is not
+special to the shell.
 
-Conveniently, git allows you to specify a different URL for fetch and
-push in your local working repositories.
+Andreas.
 
-HTH,
-Jan
+-- 
+Andreas Schwab, schwab@linux-m68k.org
+GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
+"And now for something completely different."
