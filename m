@@ -1,84 +1,117 @@
-From: Torsten =?utf-8?q?B=C3=B6gershausen?= <tboegi@web.de>
-Subject: [PATCH] gitweb-lib.sh: Set up PATH to use perl from /usr/bin
-Date: Tue, 1 May 2012 13:23:44 +0200
-Message-ID: <201205011323.45190.tboegi@web.de>
+From: Jeff King <peff@peff.net>
+Subject: Re: Bug in git-stash(.sh) ?
+Date: Tue, 1 May 2012 09:42:55 -0400
+Message-ID: <20120501134254.GA11900@sigill.intra.peff.net>
+References: <20379.9312.943088.350379@winooski.ccs.neu.edu>
+ <87wr4za9mr.fsf@gmail.com>
+ <m2pqasb8mr.fsf@linux-m68k.org>
+ <xmqqvckk93ta.fsf@junio.mtv.corp.google.com>
+ <CALO-gut4csy5wef4iGPGD5jVPc1f0iFBfS3MUWrOwc2yczdviw@mail.gmail.com>
+ <20380.33897.666338.766096@winooski.ccs.neu.edu>
+ <20120429220132.GB4491@sigill.intra.peff.net>
+ <20381.49180.329586.983166@winooski.ccs.neu.edu>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: tboegi@web.de
-To: jnareb@gmail.com, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 01 13:32:01 2012
+Cc: Yann Hodique <yann.hodique@gmail.com>,
+	Andreas Schwab <schwab@linux-m68k.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Eli Barzilay <public-eli-oSK4jVRJLyZg9hUCZPvPmw@plane.gmane.org>,
+	git@vger.kernel.org,
+	Eli Barzilay <public-eli-oSK4jVRJLyZg9hUCZPvPmw@plane.gmane.org>,
+	magit@googlegroups.com
+To: Eli Barzilay <eli@barzilay.org>
+X-From: git-owner@vger.kernel.org Tue May 01 15:43:13 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SPBJJ-0006qJ-Dl
-	for gcvg-git-2@plane.gmane.org; Tue, 01 May 2012 13:32:01 +0200
+	id 1SPDMA-0007uY-Vv
+	for gcvg-git-2@plane.gmane.org; Tue, 01 May 2012 15:43:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755325Ab2EALbf convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 1 May 2012 07:31:35 -0400
-Received: from fmmailgate01.web.de ([217.72.192.221]:36709 "EHLO
-	fmmailgate01.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754975Ab2EALbe convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 1 May 2012 07:31:34 -0400
-X-Greylist: delayed 465 seconds by postgrey-1.27 at vger.kernel.org; Tue, 01 May 2012 07:31:34 EDT
-Received: from moweb001.kundenserver.de (moweb001.kundenserver.de [172.19.20.114])
-	by fmmailgate01.web.de (Postfix) with ESMTP id A832A1AD4AAD3
-	for <git@vger.kernel.org>; Tue,  1 May 2012 13:23:48 +0200 (CEST)
-Received: from maxi.localnet ([194.22.188.61]) by smtp.web.de (mrweb002) with
- ESMTPA (Nemesis) id 0Ldmkd-1Rxqit1I5j-00j1Ts; Tue, 01 May 2012 13:23:48 +0200
-X-Provags-ID: V02:K0:xLB67C5AK9ZAe6Ajjh8fVjkGoD7H7M5pPSCbvOMhW/i
- 40osbIS5OIKDonH/Xhx14Q8fQ91dgCi/+tnL/e6rwhSYn/Y+HB
- qYinBUR7gKeLFPX++hcU3CQqlV/IBqie3T1rMjI3X6IsBxYgn3
- NOKK5UcY5A2IA6mnzD0a2BOKvniz32NIHRdj3AJ/OrQCM3ATsD
- 3PbBdv4gqSPl/dVLiws9A==
+	id S1757692Ab2EANnB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 May 2012 09:43:01 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:53058
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755661Ab2EANnA (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 May 2012 09:43:00 -0400
+Received: (qmail 4471 invoked by uid 107); 1 May 2012 13:43:15 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 01 May 2012 09:43:15 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 01 May 2012 09:42:55 -0400
+Content-Disposition: inline
+In-Reply-To: <20381.49180.329586.983166@winooski.ccs.neu.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196680>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196681>
 
-When there are different version of perl installed on the machine,
-the $PATH may point out a different version of perl than /usr/bin.
-One example is to have /opt/local/bin/perl before /usr/bin/perl.
+On Sun, Apr 29, 2012 at 06:26:36PM -0400, Eli Barzilay wrote:
 
-Sanitize the PATH by adding /usr/bin at the beginning
+> > which led to f4ea32f (improve reflog date/number heuristic,
+> > 2009-09-24).  That fixed the case of:
+> > 
+> >   git config log.date iso
+> >   git log -g --oneline
+> > 
+> > But later, 8f8f547 (Introduce new pretty formats %g[sdD] for reflog
+> > information, 2009-10-19) added another way to show selectors, and it
+> > did not respect the date_mode_explicit flag from f4ea32f. Which I
+> > think is a bug.
+> > 
+> > So the right solution is to pass the date_mode_explicit flag through
+> > to the pretty-print --format code, and then pass it along to the
+> > reflog code.
+> 
+> Assuming that I followed all of that correctly, it still seems bogus
+> to do that, given that %gd and %gD are described as producing reflog
+> selector, and given that Junio's note that stash operations are really
+> intended to be used only with these selectos.
 
-Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
----
-On my Mac OS machine t9501-gitweb-standalone-http-status.sh failed beca=
-use
-perl was found under /opt/local/bin instead of of /usr/bin.
+Keep in mind this bug is not about stash at all; it is about showing
+reflog selectors. Those are a more general mechanism, and are used for
+more than just stash. The fact that user config affects the format of
+"%gd" is a bug; it should follow the same rules as the regular reflog
+pretty-printing (and the behavior of neither should be affected by user
+config, as scripts rely on the output being consistent).
 
-/opt/local/bin is coming from Macports.
-The problem with different perl installations on the same machine
-may hit more people than just me.
+Once that is fixed, then we can consider whether something more should
+happen for stash (though I am inclined to say that is enough; it is a
+feature that you can do "git stash list --date=relative" to see the
+stash timestamps).
 
-There are different solutions, please help to find the best one:
+> What looks more sensible to me given the necessity of %gd (and the
+> fact that it's different from %cd/%ad) is to change things as follows:
+> 
+>   * %gd produces only the date, with the "default" having the same
+>     meaning as elsewhere (so it doesn't show the index numbers)
 
-a) Delete perl from /opt/local/bin
-b) Put /opt/local/bin at the end of the PATH=20
-c) Change gitweb-lib.sh to set up the PATH to /usr/bin, because that is=
- what the
-file gitweb_config.perl generated by gitweb-lib.sh expects.
+%gd is part of the public interface and will not change its semantics
+(or at least not without a long deprecation period).  It's a shame that
+"d" is taken for the selector, when it would be better to mean "date" as
+it does for author and committer. But I don't know if it's worth
+changing at this point.
 
+We could add new placeholders with different semantics, though. When I
+added reflog identity placeholders a few months ago, there was a brief
+discussion on adding a date placeholder:
 
- t/gitweb-lib.sh |    3 +++
- 1 file changed, 3 insertions(+)
+  http://article.gmane.org/gmane.comp.version-control.git/185043
 
-diff --git a/t/gitweb-lib.sh b/t/gitweb-lib.sh
-index 21d11d6..a016142 100644
---- a/t/gitweb-lib.sh
-+++ b/t/gitweb-lib.sh
-@@ -113,4 +113,7 @@ perl -MCGI -MCGI::Util -MCGI::Carp -e 0 >/dev/null =
-2>&1 || {
- 	test_done
- }
-=20
-+PATH=3D/usr/bin/:$PATH
-+export PATH
-+
- gitweb_init
---=20
-1.7.10.rc0.17.g74595.dirty
+but the related work hasn't progressed.
+
+>   * Some new %gi uses the index number: stash@{1}, and %gI produces
+>     refs/stash@{1}, unrelated to any date setting
+>   * git-stash.sh uses %gi so the output has the numbers
+>   * Some new option for "stash list" for the format string, so it's
+>     possible to show the dates if you want to with something like
+>     git stash list --format:"%gi: %gs (%gd)"
+
+I don't have a huge problem with that. But what issue is it really
+solving? Are people using "git stash list --date=iso" and then getting
+confused by the output? Or is it simply a matter of mistakenly applying
+the config when it should not be? The latter needs fixed in either case.
+
+-Peff
