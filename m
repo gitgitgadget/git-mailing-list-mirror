@@ -1,139 +1,132 @@
-From: Jeff King <peff-AdEPDUrAXsQ@public.gmane.org>
-Subject: Re: Bug in git-stash(.sh) ?
-Date: Tue, 1 May 2012 11:02:11 -0400
-Message-ID: <20120501150211.GA14185@sigill.intra.peff.net>
-References: <20379.9312.943088.350379@winooski.ccs.neu.edu>
- <87wr4za9mr.fsf@gmail.com>
- <m2pqasb8mr.fsf@linux-m68k.org>
- <xmqqvckk93ta.fsf@junio.mtv.corp.google.com>
- <CALO-gut4csy5wef4iGPGD5jVPc1f0iFBfS3MUWrOwc2yczdviw@mail.gmail.com>
- <20380.33897.666338.766096@winooski.ccs.neu.edu>
- <7vlilexkcq.fsf@alter.siamese.dyndns.org>
+From: Phil Hord <phil.hord@gmail.com>
+Subject: Re: Location-agnostic submodules
+Date: Tue, 1 May 2012 11:16:35 -0400
+Message-ID: <CABURp0rUKubfWXxX2ABG2E4dRTEQh4zA0bZFOeXGwv2m4b0YaA@mail.gmail.com>
+References: <20120427143710.GA13953@pape.arcanes.fr.eu.org>
+ <CABURp0qA9hK1fBd3rmLG61ErpbbzrcxO=AAmFOsoxjt=ozu09Q@mail.gmail.com> <20120430220244.GL22827@pape.arcanes.fr.eu.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
-Cc: Eli Barzilay <eli-oSK4jVRJLyZg9hUCZPvPmw@public.gmane.org>, Thomas Rast <trast-oe7qfRrRQfdfcPYw/2PL0g@public.gmane.org>,
-	Yann Hodique <yann.hodique-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>,
-	Andreas Schwab <schwab-Td1EMuHUCqxL1ZNQvxDV9g@public.gmane.org>, git-u79uwXL29TY76Z2rM5mHXA@public.gmane.org,
-	magit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
-To: Junio C Hamano <gitster-e+AXbWqSrlAAvxtiuMwx3w@public.gmane.org>
-X-From: magit+bncCN2hpKqZChD59f_8BBoEkKwGtw-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org Tue May 01 17:02:33 2012
-Return-path: <magit+bncCN2hpKqZChD59f_8BBoEkKwGtw-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-Envelope-to: gcvgm-magit-3@m.gmane.org
-Received: from mail-qa0-f55.google.com ([209.85.216.55])
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Jens Lehmann <Jens.Lehmann@web.de>
+To: Pierre Thierry <pierre@nothos.net>
+X-From: git-owner@vger.kernel.org Tue May 01 17:17:04 2012
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <magit+bncCN2hpKqZChD59f_8BBoEkKwGtw-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>)
-	id 1SPEax-0002K8-50
-	for gcvgm-magit-3@m.gmane.org; Tue, 01 May 2012 17:02:27 +0200
-Received: by qabg40 with SMTP id g40sf4243135qab.10
-        for <gcvgm-magit-3@m.gmane.org>; Tue, 01 May 2012 08:02:26 -0700 (PDT)
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1SPEp3-0001Bi-FE
+	for gcvg-git-2@plane.gmane.org; Tue, 01 May 2012 17:17:01 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1757213Ab2EAPQ4 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 1 May 2012 11:16:56 -0400
+Received: from mail-yw0-f46.google.com ([209.85.213.46]:46697 "EHLO
+	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752210Ab2EAPQ4 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 1 May 2012 11:16:56 -0400
+Received: by yhmm54 with SMTP id m54so2017789yhm.19
+        for <git@vger.kernel.org>; Tue, 01 May 2012 08:16:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=beta;
-        h=x-beenthere:received-spf:date:from:to:cc:subject:message-id
-         :references:mime-version:in-reply-to:x-original-sender
-         :x-original-authentication-results:precedence:mailing-list:list-id
-         :x-google-group-id:list-post:list-help:list-archive:sender
-         :list-subscribe:list-unsubscribe:content-type:content-disposition
-         :content-transfer-encoding;
-        bh=N4A7oWhBCRSZKGsUjLskHQZRoQuWxFvweW5B2dC32/w=;
-        b=mlSYSMByUJpfypmPaH/TmIb4wBfALvBL68eRp56c/ZXgRszNtV8jdPKaxQvrRCAvDd
-         7r0MEAPJSFkVMbkewCWeO2vaR+MOINud+tnbnCJFjoGsbFdWQZiYdZftPu8j4wTd4cjN
-         +/2DoWhpI0mWAHaPfDHBAc90E84dNeVyj4fus=
-Received: by 10.50.216.133 with SMTP id oq5mr242231igc.4.1335884537182;
-        Tue, 01 May 2012 08:02:17 -0700 (PDT)
-X-BeenThere: magit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
-Received: by 10.231.58.146 with SMTP id g18ls4312836ibh.3.gmail; Tue, 01 May
- 2012 08:02:16 -0700 (PDT)
-Received: by 10.50.153.168 with SMTP id vh8mr1884905igb.1.1335884536688;
-        Tue, 01 May 2012 08:02:16 -0700 (PDT)
-Received: by 10.50.153.168 with SMTP id vh8mr1884904igb.1.1335884536678;
-        Tue, 01 May 2012 08:02:16 -0700 (PDT)
-Received: from peff.net (99-108-226-0.lightspeed.iplsin.sbcglobal.net. [99.108.226.0])
-        by gmr-mx.google.com with ESMTPS id t9si8522641igb.1.2012.05.01.08.02.16
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 01 May 2012 08:02:16 -0700 (PDT)
-Received-SPF: pass (google.com: domain of peff-AdEPDUrAXsQ@public.gmane.org designates 99.108.226.0 as permitted sender) client-ip=99.108.226.0;
-Received: (qmail 5558 invoked by uid 107); 1 May 2012 15:02:32 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 01 May 2012 11:02:32 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 01 May 2012 11:02:11 -0400
-In-Reply-To: <7vlilexkcq.fsf-s2KvWo2KEQL18tm6hw+yZpy9Z0UEorGK@public.gmane.org>
-X-Original-Sender: peff-AdEPDUrAXsQ@public.gmane.org
-X-Original-Authentication-Results: gmr-mx.google.com; spf=pass (google.com:
- domain of peff-AdEPDUrAXsQ@public.gmane.org designates 99.108.226.0 as permitted sender) smtp.mail=peff-AdEPDUrAXsQ@public.gmane.org
-Precedence: list
-Mailing-list: list magit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org; contact magit+owners-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
-List-ID: <magit.googlegroups.com>
-X-Google-Group-Id: 752745291123
-List-Post: <http://groups.google.com/group/magit/post?hl=en_US>, <mailto:magit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-List-Help: <http://groups.google.com/support/?hl=en_US>, <mailto:magit+help-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-List-Archive: <http://groups.google.com/group/magit?hl=en_US>
-Sender: magit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
-List-Subscribe: <http://groups.google.com/group/magit/subscribe?hl=en_US>, <mailto:magit+subscribe-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-List-Unsubscribe: <http://groups.google.com/group/magit/subscribe?hl=en_US>, <mailto:googlegroups-manage+752745291123+unsubscribe-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-Content-Disposition: inline
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196684>
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=Mv50D2hdyvoAFZq486tQjwJnKqNu4I3kJMkVq4Pei9E=;
+        b=J84EPJb9JLz7CRvrT2f0k2ESej/pLH8H0WrSKaTSNEKjKPKDYuosvAow3AR/IVnRdS
+         AWKxfcvtZEcaOG/UWVznwPyu+A0gGdFtJu7O0rDBf+G9XVSxRTLiXPNI/RjyzCRoeJnq
+         U6ht/yG1ZOndpDPkjwW2rpiG631DpcU/ExNWBfrgHp1QTNoE9PMo8wCPK97gRal7F9Rb
+         CdQznyIraNcZCRCq7vhtVuTB0caJFQldxMfscOgWok+QaJ4otDG4d/pkEWreDQUAtbCe
+         WTNrHSoO4ug5olc9tzqggFDmaXJ8Pnui5bjTOjmTAaPdLFu2FBUMkSGTZ7alyii4C7T5
+         zxfA==
+Received: by 10.236.170.71 with SMTP id o47mr23422908yhl.104.1335885415538;
+ Tue, 01 May 2012 08:16:55 -0700 (PDT)
+Received: by 10.146.122.15 with HTTP; Tue, 1 May 2012 08:16:35 -0700 (PDT)
+In-Reply-To: <20120430220244.GL22827@pape.arcanes.fr.eu.org>
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196685>
 
-On Sun, Apr 29, 2012 at 03:07:49PM -0700, Junio C Hamano wrote:
+Adding Jens Lehmann, in case he hasn't noticed this thread yet.
 
-> Eli Barzilay <eli-oSK4jVRJLyZg9hUCZPvPmw@public.gmane.org> writes:
-> 
-> > ...  In any case,
-> > it is also questionable -- reading the documentation for %gd:
-> >
-> >            ·    %gD: reflog selector, e.g., refs/stash@{1}
-> >            ·    %gd: shortened reflog selector, e.g., stash@{1}
-> >
-> > makes it look like the problem is there -- in get_reflog_selector() --
-> > which has explicit code for showing the dates.  (This was done in
-> > 8f8f5476.)
-> 
-> I think the root cause of the bug is that there are three cases:
-> 
->  - If we ask for "log -g ref@{0}", we should show them counted no matter what.
-> 
->  - If we ask for "log -g ref@{now}", we should show them timed no matter what.
-> 
->  - If we ask for "log -g ref" without specifier, we show them counted by
->    default, but we try to be nice and show them timed when we can infer
->    from other context that the user wanted to see them timed.
+On Mon, Apr 30, 2012 at 6:02 PM, Pierre Thierry <pierre@nothos.net> wro=
+te:
+> Scribit Phil Hord dies 30/04/2012 hora 16:39:
+>> Maybe something like this:
+>> =A0 =A0 [submodule "foo"]
+>> =A0 =A0 =A0 =A0 path =3D foo-mod
+>> =A0 =A0 =A0 =A0 url =3D ../foo ../foo-alternate
+>> https://someplace.com/git/foo.git =A0https://kernel.org/git/foo
+>
+> <rant>That is typically the kind of occasion when I wish every config
+> file were sexprs...</rant>
 
-Right. My argument is that the context in your third point was always
-intended to be about command-line options. Respecting the log.date
-config there is a bug (and not just in breaking intent; it also breaks
-scriptability). It was fixed for the regular pretty-print code path, but
-was broken again when the "%gd" code path was added.
+Interesting.  But at least it's not yaml.  :-)
 
-> An ancient 4e244cb (log --reflog: honour --relative-date, 2007-02-08) was
-> what introduced the "explicit code for showing the dates", but it was done
-> somewhat poorly---it does not differentiate the first and third case.
+>> But if one of them lags behind the others by a day or even an hour,
+>> then you may have gitlinks in your superproject which have not made
+>> it into the lagging mirror yet. =A0And this will cause problems.
+>
+> I see your point, but what if your only repository is lagging behind?
+> I.e. in what way is it worse than now?
 
-If that is the case (and I haven't checked either way, but it does not
-surprise me at all), then I believe that is a separate bug. And we
-should fix that, too.
+I actually do not think it is very much worse than now.  But the
+specific way it fails in this case is as follows:
 
-> Once we fix *that* bug, to disable the "timed" codepath altogether when
-> the caller gives "ref@{0}" to explicitly ask for counted output, we can
-> fix it a lot easily.
-> [...]
-> -	git log --format="%gd: %gs" -g "$@" $ref_stash --
-> +	git log --format="%gd: %gs" -g "$@" "$ref_stash@{0}" --
+Suppose I have mirrors A and B, each containing a superproject and its
+submodule.
 
-That will solve the problem for stash, but the config bug would remain
-for every _other_ user of "git log -g --format=%gd". So that needs fixed
-either way.
+  A:super:master =3D> A:sub:master
+  B:super:master =3D> B:sub:master
 
-However, I really wonder if this is the right thing. If I do:
+A and B are coherent, meaning their superproject gitlinks point to
+commits which do exist in the submodule repositories.
 
-  git stash list --date=relative
+Now, I push new commits to A:super and A:sub, giving this:
+  A:super:new' =3D> A:sub:new
+  B:super:master =3D> B:sub:master
 
-isn't it a feature that I get to see the date at which each stash was
-made? Why are we taking it away? I can see if it were the only way to
-fix the problem with log.date, but that has another solution. Are people
-really calling "stash list" with a date on the command line and getting
-confused by the output? My understanding was that the observed problem
-was purely a bad interaction with log.date, which should not be
-respected at all.
+Now, A and B are both internally coherent, but I have a problem if I
+try to do this:
+  A:super:master' =3D> B:sub:new
 
--Peff
+This is because the sub:new commit has not made it to B yet, perhaps
+intentionally or perhaps because of latency.
+
+This problem still can occur without your change, so I do not think it
+is a fatal flaw.  It is just a scenario to consider.
+
+>> Moreover, each time you clone the repository you may get different
+>> results. =A0This would be confusing.
+>
+> Again, I fail to see the difference with the current state. If the
+> commit is specified, you will always get the same results, now or wit=
+h
+> my suggested addition.
+
+The existing implementation has some flaws, and think the multiple
+URLs option may expose the flaws further.  Again, not a fatal flaw to
+your idea; just something to keep in mind.
+
+Something else to keep in mind:  What you are proposing amounts to a
+feature which identifies mirror repositories to use for submodules
+when the primary remote repo cannot be reached.  Superprojects have no
+such feature.  Why not?
+
+Meanwhile, I really like the other feature you started off with, where
+the "embedded" submodule repos could be used as the primary origin.
+
+>> I don't think there is any need for a new 'clone' command since the
+>> clone porcelain already understands submodules.
+>
+> What do you mean? When I clone a repo with submodules, they are not
+> cloned as well.
+
+Since git v1.6.5 or so, clone has known the --recursive option.
+
+  git clone --recursive superproject
+
+Since about v1.7.3, fetch and pull also know how to recurse and can do
+so by default.
+
+Phil
