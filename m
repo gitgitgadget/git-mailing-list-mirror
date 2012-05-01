@@ -1,90 +1,132 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: Newbie grief
-Date: Wed, 02 May 2012 00:17:01 +0200
-Message-ID: <4FA060DD.9030208@op5.se>
-References: <4F9F128C.5020304@palm.com> <201204302331.q3UNVo7o032303@no.baka.org> <4F9F3919.6060805@palm.com> <CAMK1S_jwVsyKrGoL5uVAiuRrOa8bz79-DAueBmHZE2k=PpcJ2Q@mail.gmail.com> <20120501111415.GD5769@thunk.org> <CAMK1S_jN_WdZF4W4szzyJqLfC3FmnhKQ65XQiD-JS_jxwSm8_g@mail.gmail.com> <4FA02830.3040407@palm.com> <86havzoi8h.fsf@red.stonehenge.com> <4FA04D02.6090702@palm.com> <86mx5rmx32.fsf@red.stonehenge.com> <4FA055D0.7040102@palm.com> <86aa1rmvhb.fsf@red.stonehenge.com> <4FA05E9F.9090709@palm.com>
+From: Pete Wyckoff <pw@padd.com>
+Subject: Re: git p4: in-place submit
+Date: Tue, 1 May 2012 18:18:47 -0400
+Message-ID: <20120501221847.GA8357@padd.com>
+References: <20120430225848.GA2727@padd.com>
+ <4F9F7497.5050504@diamand.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: "Randal L. Schwartz" <merlyn@stonehenge.com>,
-	Sitaram Chamarty <sitaramc@gmail.com>,
-	Ted Ts'o <tytso@mit.edu>, Seth Robertson <in-gitvger@baka.org>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Rich Pixley <rich.pixley@palm.com>
-X-From: git-owner@vger.kernel.org Wed May 02 00:17:17 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Vitor Antunes <vitor.hda@gmail.com>,
+	Michael Horowitz <michael.horowitz@ieee.org>
+To: Luke Diamand <luke@diamand.org>,
+	Gary Gibbons <ggibbons@perforce.com>
+X-From: git-owner@vger.kernel.org Wed May 02 00:19:03 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SPLNh-0002ME-6V
-	for gcvg-git-2@plane.gmane.org; Wed, 02 May 2012 00:17:13 +0200
+	id 1SPLPS-0003JP-Tc
+	for gcvg-git-2@plane.gmane.org; Wed, 02 May 2012 00:19:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754096Ab2EAWRH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 May 2012 18:17:07 -0400
-Received: from mail-lb0-f174.google.com ([209.85.217.174]:59060 "EHLO
-	mail-lb0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752976Ab2EAWRG (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 May 2012 18:17:06 -0400
-Received: by lbbgm6 with SMTP id gm6so7899lbb.19
-        for <git@vger.kernel.org>; Tue, 01 May 2012 15:17:05 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding
-         :x-gm-message-state;
-        bh=zOnmuH1CF1tjXnuxfFb6+sp05fbJz8tpygBE37XAOcY=;
-        b=Duju2GrIwNvDlPwSwX2zb8xdNI8ZBmbyMKpFa0do2tJjA9hBzkkTf8deDcHkvxTIQz
-         Nlyxd3TZSRgBOTUJM7AIXsCJ2oljCVCnW4AP/+ZU8O5qQsosa84YXQ9ouXO+7dulTubW
-         5lKh1Ol/84krDRxOa4o29MAj8hvk5QE/heiNwVpGA/WqU6n0JLRhjuCXyICA5aY0i2/T
-         mKlqorylZjcj00N5ReT4YGkIfCf1H8FSWSqzA3VvjqQ2WAcl9xgqo0iHyFcFbKKdML0r
-         ziSKI+rXGM32Jc9AwUbHso1PvxdWAT7B4APPeSsHV9hVpty1zeUACQqLp7sMLEtiVyTY
-         b/tA==
-Received: by 10.152.112.97 with SMTP id ip1mr24629364lab.31.1335910624843;
-        Tue, 01 May 2012 15:17:04 -0700 (PDT)
-Received: from vix.int.op5.se (c80-217-218-226.bredband.comhem.se. [80.217.218.226])
-        by mx.google.com with ESMTPS id c3sm26254231lbg.6.2012.05.01.15.17.02
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 01 May 2012 15:17:03 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:12.0) Gecko/20120424 Thunderbird/12.0
-In-Reply-To: <4FA05E9F.9090709@palm.com>
-X-Gm-Message-State: ALoCoQnuBhxZ/bcqeicgK2z6yUf5c2KxUwy3p/ShdCZmHV36LPyaloIzlRQ4TFm8VtkT/xjyGhN2
+	id S1755347Ab2EAWSx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 May 2012 18:18:53 -0400
+Received: from honk.padd.com ([74.3.171.149]:48605 "EHLO honk.padd.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755231Ab2EAWSv (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 May 2012 18:18:51 -0400
+Received: from arf.padd.com (unknown [50.55.155.59])
+	by honk.padd.com (Postfix) with ESMTPSA id 9D7B63125;
+	Tue,  1 May 2012 15:18:50 -0700 (PDT)
+Received: by arf.padd.com (Postfix, from userid 7770)
+	id 9559E313DD; Tue,  1 May 2012 18:18:47 -0400 (EDT)
+Content-Disposition: inline
+In-Reply-To: <4F9F7497.5050504@diamand.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196762>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196763>
 
-On 05/02/2012 12:07 AM, Rich Pixley wrote:
-> On 5/1/12 14:39 , Randal L. Schwartz wrote:
->> 
->> Rich> My particular situation is that I'm developing a "feature"
->> and to do that, I need to be testing on multiple machines.
->> Tens of them.
->> 
->> I think you're now confusing git with a deploy system. That is
->> also something that will lead you to unnecessary grief. Pick a
->> deploy system that's not git, and integrate git with it.
+luke@diamand.org wrote on Tue, 01 May 2012 06:28 +0100:
+> On 30/04/12 23:58, Pete Wyckoff wrote:
+> >Tell me if you think this is a good idea.
+> >
+> >Now, submit requires a separate workspace.  You have one for git,
+> >and a separate one used just to push files back into p4.  I'd
+> >like to see if we can do the submit part from the git workspace
+> >directly.
+> >
+> >My motivation is:
+> >
+> >     - managing both a git and a p4 workspace is extra hassle
+> >
+> >     - $work repo is big, and having a separate copy just for
+> >       submits is a waste of space
+> >
+> >Setup would go something like:
+> >
+> >         # normal clone
+> >         git p4 clone --destination=/home/pw/p4/proj //depot/proj@all
+> >
+> >         # build client at same location
+> >         p4 client -i<<-EOF
+> >         Client: pw:proj
+> >         Description: pw proj client
+> >         Root: /home/pw/p4/proj
+> >         View: //depot/proj/... //pw:proj/...
+> >         EOF
+> >
+> >         # set config to tell git p4 what to do
+> >         cd /home/pw/p4/proj
+> >         git config git-p4.submit-in-place true   ;# new!
+> >         git config git-p4.client pw:proj
+> >         git config git-p4.useClientSpec true
+> >
+> >but no "p4 sync".
+> >
+> >Then use git to edit/commit, and eventually "git p4 submit" as
+> >usual.  The new submit-in-place code would:
+> >
+> >     - make sure everything is committed
+> >
+> >     - find git-p4 latest change number
+> >         - ensuring linear series of commits back to p4/master
+> >
+> >     - warn if latest change in //depot/proj/... is greater, but proceed
+> >
+> >     - p4 sync -k @change  ;# -k means don't touch my workspace
+> >
+> >     - for each commit in p4/master..branch:
+> >         - git checkout commit
+> >         - p4 edit, move, delete, -t text+x, etc to prepare tree
+> >         - p4 submit
+> >         - if any files require resolution, fail
+> >         - chmod +w affected files to undo p4 read-only changes
+> >         - git checkout --hard HEAD to destroy RCS keyword updates
+> >
+> >     - if fail
+> >         - git checkout --hard HEAD
+> >         - rebase branch onto last successful commit
+> >     - else
+> >         - git p4 sync (as usual)
+> >         - update branch to p4/master
+> >         - git checkout branch
+> >
+> >Is this a worthwhile change?  What details have I overlooked?
+> >
+> >                 -- Pete
 > 
-> No, not a deploy system. You use a deploy system to set up something
-> like multiple server http farms. What I'm doing is more akin to
-> porting the same piece of software to 20 different operating system
-> distributions. I'm not "deploying" the source code. I'm developing
-> it.
 > 
-> Thank you for acknowledging that git is a poor match for this
-> scenario, though.
+> So the trick here is the "chmod +w" - without that, you won't be
+> able to edit code via git?
+
+Gary: thanks for suggesting "allwrite".  That feels like the
+obvious better alternative for this use case.  The sprinkled
+"chmod +w" do feel a bit hacky.
+
+> I think it would be well worth doing - I've always found having two
+> trees a nuisance.
 > 
+> It's still worth keeping the existing scheme. I often find it useful
+> to checkout random bits of our p4 depot without the hassle of
+> setting up a client workspace if I just want a read-only copy.
 
-Git works well for that if you put hooks in place to trigger builds
-and test-runs on the testservers though. We do exactly that, and I
-doubt we're the only ones who do automated testing of every push.
+Good point.  I'll keep it optional.
 
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+The other possibility is to stick the git commits into a branch
+somewhere, then integrate the branch in the p4 sense.  This feels
+more complex, but makes prettier feature branches in the
+long-term history.
 
-Considering the successes of the wars on alcohol, poverty, drugs and
-terror, I think we should give some serious thought to declaring war
-on peace.
+		-- Pete
