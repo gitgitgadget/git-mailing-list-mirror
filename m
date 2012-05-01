@@ -1,147 +1,64 @@
-From: "Philip Oakley" <philipoakley@iee.org>
-Subject: Re: Location-agnostic submodules
-Date: Tue, 1 May 2012 18:19:38 +0100
-Organization: OPDS
-Message-ID: <732A8D2DB3374CD6BC12A5E7C4384313@PhilipOakley>
-References: <20120427143710.GA13953@pape.arcanes.fr.eu.org> <CABURp0qA9hK1fBd3rmLG61ErpbbzrcxO=AAmFOsoxjt=ozu09Q@mail.gmail.com> <20120430220244.GL22827@pape.arcanes.fr.eu.org> <CABURp0rUKubfWXxX2ABG2E4dRTEQh4zA0bZFOeXGwv2m4b0YaA@mail.gmail.com>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: 1.7.10 doesn't show file pushstatus
+Date: Tue, 01 May 2012 10:33:43 -0700
+Message-ID: <7vd36najrc.fsf@alter.siamese.dyndns.org>
+References: <20120501010609.GA14715@jupiter.local>
+ <20120501065832.GA17777@sigill.intra.peff.net>
+ <20120501073326.GA21087@sigill.intra.peff.net>
+ <20120501084048.GA21904@sigill.intra.peff.net>
+ <20120501093230.GA22633@ecki.lan>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="iso-8859-1";
-	reply-type=original
-Content-Transfer-Encoding: 7bit
-Cc: <git@vger.kernel.org>, "Jens Lehmann" <Jens.Lehmann@web.de>
-To: "Phil Hord" <phil.hord@gmail.com>,
-	"Pierre Thierry" <pierre@nothos.net>
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+	dfowler <davidfowl@gmail.com>, git@vger.kernel.org,
+	msysgit@googlegroups.com, Paul Betts <paul@github.com>,
+	David Ebbo <david.ebbo@gmail.com>
+To: Clemens Buchacher <drizzd@aon.at>
 X-From: git-owner@vger.kernel.org Tue May 01 19:33:54 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SPGxV-0005Jh-8w
-	for gcvg-git-2@plane.gmane.org; Tue, 01 May 2012 19:33:53 +0200
+	id 1SPGxV-0005Jh-Qj
+	for gcvg-git-2@plane.gmane.org; Tue, 01 May 2012 19:33:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758184Ab2EARds (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 May 2012 13:33:48 -0400
-Received: from out1.ip08ir2.opaltelecom.net ([62.24.128.244]:15178 "EHLO
-	out1.ip08ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1757961Ab2EARdq (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 1 May 2012 13:33:46 -0400
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: AmwGACMeoE9cHlxl/2dsb2JhbABEizGibYFPgwCBCIIEAQQBAQQBCAEBLh4BASELAgMFAgEDFQECCSUUAQQIEgYHFwYBEggCAQIDAYU3B4IoCAMGCbARDYlPBIoHhh9jBIgwhUqTQ4UDgmk
-X-IronPort-AV: E=Sophos;i="4.75,512,1330905600"; 
-   d="scan'208";a="526475182"
-Received: from host-92-30-92-101.as13285.net (HELO PhilipOakley) ([92.30.92.101])
-  by out1.ip08ir2.opaltelecom.net with SMTP; 01 May 2012 18:33:37 +0100
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+	id S1758174Ab2EARdr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 May 2012 13:33:47 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:49021 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758034Ab2EARdp (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 May 2012 13:33:45 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 208D1632C;
+	Tue,  1 May 2012 13:33:45 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=N7WuDyLeDcKHEHRrtjsCNHTD4jw=; b=llJkM4
+	gRTtGEHkeuq1bouO0s9BzkdhajuynJYNSPPO3K/uAoF7HeqZocXami2FoeLwZyik
+	Y5UHKBsEKlH9Q1EkI2ZIcLspVgELFtmbKTrAOn3OLskDMfPMhY4Kv+RLtYCBb+Sr
+	IoexLZK+PhJjvcn+7ydJDDR6gGQFvxb8lHmvc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=aOEomRsOQKORNlflRg8Scytr6YC51RG9
+	86NwH3pxKobzwMlqoNI3rf0Yyoo7AL6RdzLhXhSDWIDe2drHci/C/lQUEcihRSSl
+	sipBtBfbVe91NE/QN4LzAKfewRwzbxG+UNxnDVypIipklNSMowzbP4pxI7JPxxMb
+	/NzUpDUzJYg=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 16921632A;
+	Tue,  1 May 2012 13:33:45 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9BB866327; Tue,  1 May 2012
+ 13:33:44 -0400 (EDT)
+In-Reply-To: <20120501093230.GA22633@ecki.lan> (Clemens Buchacher's message
+ of "Tue, 1 May 2012 11:32:30 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: CD13194A-93B3-11E1-8756-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196709>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196710>
 
-From: "Phil Hord" <phil.hord@gmail.com> Sent: Tuesday, May 01, 2012 4:16 PM
-> Adding Jens Lehmann, in case he hasn't noticed this thread yet.
->
-> On Mon, Apr 30, 2012 at 6:02 PM, Pierre Thierry <pierre@nothos.net> wrote:
->> Scribit Phil Hord dies 30/04/2012 hora 16:39:
->>> Maybe something like this:
->>> [submodule "foo"]
->>> path = foo-mod
->>> url = ../foo ../foo-alternate
->>> https://someplace.com/git/foo.git https://kernel.org/git/foo
->>
->> <rant>That is typically the kind of occasion when I wish every config
->> file were sexprs...</rant>
->
-> Interesting.  But at least it's not yaml.  :-)
->
->>> But if one of them lags behind the others by a day or even an hour,
->>> then you may have gitlinks in your superproject which have not made
->>> it into the lagging mirror yet. And this will cause problems.
->>
->> I see your point, but what if your only repository is lagging behind?
->> I.e. in what way is it worse than now?
->
-> I actually do not think it is very much worse than now.  But the
-> specific way it fails in this case is as follows:
->
-> Suppose I have mirrors A and B, each containing a superproject and its
-> submodule.
->
->  A:super:master => A:sub:master
->  B:super:master => B:sub:master
->
-> A and B are coherent, meaning their superproject gitlinks point to
-> commits which do exist in the submodule repositories.
->
-> Now, I push new commits to A:super and A:sub, giving this:
->  A:super:new' => A:sub:new
->  B:super:master => B:sub:master
->
-> Now, A and B are both internally coherent, but I have a problem if I
-> try to do this:
->  A:super:master' => B:sub:new
->
-> This is because the sub:new commit has not made it to B yet, perhaps
-> intentionally or perhaps because of latency.
->
-> This problem still can occur without your change, so I do not think it
-> is a fatal flaw.  It is just a scenario to consider.
->
->>> Moreover, each time you clone the repository you may get different
->>> results. This would be confusing.
->>
->> Again, I fail to see the difference with the current state. If the
->> commit is specified, you will always get the same results, now or with
->> my suggested addition.
->
-> The existing implementation has some flaws, and think the multiple
-> URLs option may expose the flaws further.  Again, not a fatal flaw to
-> your idea; just something to keep in mind.
-
-Would an alternative be something like:
-    git submodule update <module> --from <remote>
-
-so that the user can state which of the current submodule's remotes should 
-be used for fetching the desired update.
-
-For compatibility, the update may need to use the '--reference' or something 
-similar, or perhaps a different command word
-    `git submodule fetch <module> --from <remote>`
-
-I was just stung on msysgit (submodule `git`) because its NetInstall clones 
-from the main repos, but I had forked my own copies, so the submodule URLs 
-weren't right for me (doh). Luckily I have a patch of my silenty overwritten 
-changes...
-
->
-> Something else to keep in mind:  What you are proposing amounts to a
-> feature which identifies mirror repositories to use for submodules
-> when the primary remote repo cannot be reached.  Superprojects have no
-> such feature.  Why not?
->
-> Meanwhile, I really like the other feature you started off with, where
-> the "embedded" submodule repos could be used as the primary origin.
->
->>> I don't think there is any need for a new 'clone' command since the
->>> clone porcelain already understands submodules.
->>
->> What do you mean? When I clone a repo with submodules, they are not
->> cloned as well.
->
-> Since git v1.6.5 or so, clone has known the --recursive option.
->
->  git clone --recursive superproject
->
-> Since about v1.7.3, fetch and pull also know how to recurse and can do
-> so by default.
->
-> Phil
-
-Philip 
+Thanks, both.
