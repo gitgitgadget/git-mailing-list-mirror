@@ -1,87 +1,69 @@
 From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH] gitweb-lib.sh: Set up PATH to use perl from /usr/bin
-Date: Tue, 01 May 2012 09:44:57 -0700
-Message-ID: <7vwr4vam0m.fsf@alter.siamese.dyndns.org>
-References: <201205011323.45190.tboegi@web.de>
+Date: Tue, 01 May 2012 09:47:01 -0700
+Message-ID: <7vsjfjalx6.fsf@alter.siamese.dyndns.org>
+References: <201205011323.45190.tboegi@web.de> <4FA00E09.2090708@in.waw.pl>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: jnareb@gmail.com, git@vger.kernel.org
-To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Tue May 01 18:45:14 2012
+Cc: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
+	jnareb@gmail.com, git@vger.kernel.org
+To: Zbigniew =?utf-8?Q?J=C4=99drzejewski-Szmek?= <zbyszek@in.waw.pl>
+X-From: git-owner@vger.kernel.org Tue May 01 18:47:44 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SPGCN-0008Ku-B8
-	for gcvg-git-2@plane.gmane.org; Tue, 01 May 2012 18:45:11 +0200
+	id 1SPGEk-00019O-EV
+	for gcvg-git-2@plane.gmane.org; Tue, 01 May 2012 18:47:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932228Ab2EAQpD convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 1 May 2012 12:45:03 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:63090 "EHLO
+	id S1757790Ab2EAQrH convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 1 May 2012 12:47:07 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:63876 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932170Ab2EAQpA convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 1 May 2012 12:45:00 -0400
+	id S1757128Ab2EAQrD convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 1 May 2012 12:47:03 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 87AE37754;
-	Tue,  1 May 2012 12:44:59 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4DCA67811;
+	Tue,  1 May 2012 12:47:03 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=xgIR9XVOyEgz
-	uE0lEszLAQLQjMw=; b=uxbj/vAjgukCk+G9EJ7hbKHY1AVnDBB3IAkN3PQerilt
-	hjMdLmVbekI7yzzfFE9XHbQvd86C+jSNTbRzsYXa4U0fg8nlAzjIWR2d64i84xRC
-	QsAlHtCZILuAGBnC3GGobJ/R3+QYzG1yHcl8kPwtv0YMzAI2IRzl5TA13VzosoQ=
+	:content-type:content-transfer-encoding; s=sasl; bh=lleMqq574rJo
+	eaPSUsJvL/TS/RU=; b=p97jYh+v2EpXMDoxlN4MvJi90ZZ946VMEbXZo2zJeFKG
+	zGV1xL+pUew5YDm4uh7pvKyU6Xg+oi6JGcl3zYnOi3dVmXQlF6dFNJzdjBACzk7O
+	oX6hwdILlbbh9D6YUdMEiqvoUlJYh28XzfbZZYlCwR0i4GXRgiFkdhAMmiv7pWU=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=BjD5Tb
-	1E/w/bzhgF8+8qMl5Qddr48b9CGRu7umh9koktgrjaB6Yww3RtPpE35sQT0XQIu6
-	bwRgMxOD4bEbczpiF3iu89KsPVMVLlL8YRhldVrWKsuuCBYRO2lM4D1O7NyuHak/
-	aSB8XNH30Ukyl81axwtLdEXUGhCwdzQ5X0oJk=
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=R9qTjJ
+	KSMgMCda6enT71uwlpjQz0lANm1oY3wF9DRk/6ACXgYjXz5X/M6ySqhF8p8bMhoM
+	/sqhC24ObiH8rPTqbBJutrd1kcfPQNyjqz/ZSPoDvja/Q/WzlkkQJtxO9l3eeCAa
+	uJCAoGeEyK6SExY8f6xi+Yyvi0+r7PRr40p0U=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7F4297753;
-	Tue,  1 May 2012 12:44:59 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4525F7810;
+	Tue,  1 May 2012 12:47:03 -0400 (EDT)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 14F0C7752; Tue,  1 May 2012
- 12:44:58 -0400 (EDT)
-In-Reply-To: <201205011323.45190.tboegi@web.de> ("Torsten =?utf-8?Q?B?=
- =?utf-8?Q?=C3=B6gershausen=22's?= message of "Tue, 1 May 2012 13:23:44
- +0200")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D558B780F; Tue,  1 May 2012
+ 12:47:02 -0400 (EDT)
+In-Reply-To: <4FA00E09.2090708@in.waw.pl> ("Zbigniew =?utf-8?Q?J=C4=99drze?=
+ =?utf-8?Q?jewski-Szmek=22's?= message of "Tue, 01 May 2012 18:23:37 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: FD49D8B2-93AC-11E1-84A2-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 47126630-93AD-11E1-8210-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196692>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196694>
 
-Torsten B=C3=B6gershausen <tboegi@web.de> writes:
+Zbigniew J=C4=99drzejewski-Szmek  <zbyszek@in.waw.pl> writes:
 
-> When there are different version of perl installed on the machine,
-> the $PATH may point out a different version of perl than /usr/bin.
-> One example is to have /opt/local/bin/perl before /usr/bin/perl.
-> ...
-> diff --git a/t/gitweb-lib.sh b/t/gitweb-lib.sh
-> index 21d11d6..a016142 100644
-> --- a/t/gitweb-lib.sh
-> +++ b/t/gitweb-lib.sh
-> @@ -113,4 +113,7 @@ perl -MCGI -MCGI::Util -MCGI::Carp -e 0 >/dev/nul=
-l 2>&1 || {
->  	test_done
->  }
-> =20
-> +PATH=3D/usr/bin/:$PATH
-> +export PATH
-> +
->  gitweb_init
+> Hm, I see that most scripts have #!/usr/bin/perl, and only two have
+> #!env perl [1]. So in general we usally rely on using perl in /usr/bi=
+n.
 
-This is wrong.
-
-What makes you think /usr/bin always has saner version of tools than th=
-ose
-in the directories that the user explicitly listed earlier on her $PATH=
-?
-
-If anything it should be honoring $PERL_PATH that is set in the Makefil=
-e.
+The #!/usr/bin/env variants should be eradicated.  Our Makefile rewrite=
+s
+"#!.*perl" with "#!$PERL_PATH" in scripted Porcelains before installing=
+,
+so /usr/bin/perl is the right thing to write there.
