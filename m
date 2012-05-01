@@ -1,84 +1,121 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: gc --aggressive
-Date: Tue, 1 May 2012 15:35:37 -0400
-Message-ID: <20120501193537.GA26245@sigill.intra.peff.net>
-References: <CAG+J_DzO=UZ56PjnSCRaTdj8pBSYc5PFofw1QHy42c5pHMK_HQ@mail.gmail.com>
- <CAG+J_DyqvCxwd6+gzixQEk6SxMZF0qsXKcJPaU6imsJdFQ-64g@mail.gmail.com>
- <vpqbomqqdxo.fsf@bauges.imag.fr>
- <20120428122533.GA12098@sigill.intra.peff.net>
- <alpine.LFD.2.02.1204281258050.21030@xanadu.home>
- <20120429113431.GA24254@sigill.intra.peff.net>
- <alpine.LFD.2.02.1204290917051.21030@xanadu.home>
- <20120501162806.GA15614@sigill.intra.peff.net>
- <20120501171640.GA16623@sigill.intra.peff.net>
- <alpine.LFD.2.02.1205011348090.21030@xanadu.home>
+From: =?UTF-8?B?WmJpZ25pZXcgSsSZZHJ6ZWpld3NraS1Tem1law==?= 
+	<zbyszek@in.waw.pl>
+Subject: Re: [PATCH 3/4] diff --stat: report chmoded binary files like text
+ files
+Date: Tue, 01 May 2012 21:39:14 +0200
+Message-ID: <4FA03BE2.2030107@in.waw.pl>
+References: <1335892215-21331-1-git-send-email-zbyszek@in.waw.pl> <1335892215-21331-4-git-send-email-zbyszek@in.waw.pl> <7vvckf92pp.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Jay Soffian <jaysoffian@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Shawn Pearce <spearce@spearce.org>
-To: Nicolas Pitre <nico@fluxnic.net>
-X-From: git-owner@vger.kernel.org Tue May 01 21:35:50 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, mj@ucw.cz
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue May 01 21:39:30 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SPIrS-0004qS-TC
-	for gcvg-git-2@plane.gmane.org; Tue, 01 May 2012 21:35:47 +0200
+	id 1SPIv1-0006YP-TO
+	for gcvg-git-2@plane.gmane.org; Tue, 01 May 2012 21:39:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757428Ab2EATfm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 May 2012 15:35:42 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:53655
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756038Ab2EATfl (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 May 2012 15:35:41 -0400
-Received: (qmail 9890 invoked by uid 107); 1 May 2012 19:35:57 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 01 May 2012 15:35:57 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 01 May 2012 15:35:37 -0400
-Content-Disposition: inline
-In-Reply-To: <alpine.LFD.2.02.1205011348090.21030@xanadu.home>
+	id S1754670Ab2EATjX convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 1 May 2012 15:39:23 -0400
+Received: from kawka.in.waw.pl ([178.63.212.103]:35805 "EHLO kawka.in.waw.pl"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751877Ab2EATjX (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 May 2012 15:39:23 -0400
+Received: from ip-78-30-103-51.free.aero2.net.pl ([78.30.103.51])
+	by kawka.in.waw.pl with esmtpsa (TLS1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.72)
+	(envelope-from <zbyszek@in.waw.pl>)
+	id 1SPIuv-0004dJ-JA; Tue, 01 May 2012 21:39:22 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:10.0.3) Gecko/20120329 Icedove/10.0.3
+In-Reply-To: <7vvckf92pp.fsf@alter.siamese.dyndns.org>
+X-Enigmail-Version: 1.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196730>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196731>
 
-On Tue, May 01, 2012 at 01:59:08PM -0400, Nicolas Pitre wrote:
+On 05/01/2012 08:27 PM, Junio C Hamano wrote:
+> Zbigniew J=C4=99drzejewski-Szmek <zbyszek@in.waw.pl> writes:
+>=20
+>> Binary files chmoded without content change were reported as if they
+>> were rewritten. At the same time, text files in the same situation
+>> were reported as "unchanged". Let's treat binary files like text fil=
+es
+>> here, and simply say that they are unchanged.
+>>
+>> For text files, we knew that they were unchanged if the numbers of
+>> lines added and deleted were both 0. For binary files this metric do=
+es
+>> not make sense and is not calculated, so a new way of conveying this
+>> information is needed. A new flag is_unchanged is added in struct
+>> diffstat_t that is set if the contents of both files are identical.
+>> For consistency, this new flag is used both for text files and binar=
+y
+>> files.
+>>
+>> Output of --shortstat is modified in the same way.
+>>
+>> Reported-by: Martin Mare=C5=A1 <mj@ucw.cz>
+>> Signed-off-by: Zbigniew J=C4=99drzejewski-Szmek <zbyszek@in.waw.pl>
+>> ---
+>>  diff.c               |   28 +++++++++++++++++-----------
+>>  t/t4006-diff-mode.sh |    8 +-------
+>>  2 files changed, 18 insertions(+), 18 deletions(-)
+>>
+>> diff --git a/diff.c b/diff.c
+>> index 7da16c9..6eb2946 100644
+>> --- a/diff.c
+>> +++ b/diff.c
+>> @@ -1299,6 +1299,7 @@ struct diffstat_t {
+>>  		unsigned is_unmerged:1;
+>>  		unsigned is_binary:1;
+>>  		unsigned is_renamed:1;
+>> +		unsigned is_unchanged:1;
+>=20
+> The name is somewhat misleading, as a filepair that consists of two b=
+lobs
+> with the same contents with different mode bits is still "changed", a=
+nd
+> you are trying to say that they have the same contents.
+>=20
+>> @@ -1471,7 +1472,7 @@ static void show_stats(struct diffstat_t *data=
+, struct diff_options *options)
+>>  		struct diffstat_file *file =3D data->files[i];
+>>  		uintmax_t change =3D file->added + file->deleted;
+>>  		if (!data->files[i]->is_renamed &&
+>> -			 (change =3D=3D 0)) {
+>> +		    data->files[i]->is_unchanged) {
+>=20
+> I am not sure if all these hunks are needed.  If you are going to sho=
+w
+> only "  Bin\n" for a filepair with the same binary contents, perhaps =
+it is
+> simpler to set added/deleted fields of such a filepair to 0?  Then mo=
+st of
+> the hunks in this patch can disappear, no?
+>=20
+>> @@ -2379,6 +2383,8 @@ static void builtin_diffstat(const char *name_=
+a, const char *name_b,
+>>  		return;
+>>  	}
+>> =20
+>> +	data->is_unchanged =3D hashcmp(one->sha1, two->sha1) =3D=3D 0;
+>=20
+> Please write it as "!hashcmp(a, b)", not "hashcmp(a, b) =3D=3D 0".
+>=20
+> In any case, how about doing it like this instead?
+Yeah, this is much nicer.
 
-> One final quick test if you feel like it: I've never been sure that 
-> the last comparison in type_size_sort() is correct.  Maybe it should be 
-> the other way around.  Currently it reads:
-> 
-> 	return a < b ? -1 : (a > b);
+On top of this, 4/4 becomes:
+-       else {
++       else if (hashcmp(one->sha1, two->sha1)) {
+and the time improvement is the same (0.8 vs 2.0 s).
 
-I think it is right. At least it should put recent things near the
-front of the array, just as we are putting bigger things there.
+Do you want me to resend with your replacement patch?
 
-> >   orig | 31.4M (100%) |   54s (100%)
-> >     10 | 44.0M (140%) |  169s (310%)
-> >     20 | 37.7M (120%) |  232s (428%)
-> >     40 | 33.6M (107%) |  331s (608%)
-> >     80 | 30.9M ( 99%) |  473s (868%)
-> >    160 | 29.4M ( 94%) |  696s (1279%)
-> [...]
-> While keeping the size comparison commented out, you could try to 
-> replace this line with:
-> 
-> 	return b < a ? -1 : (b > a);
-
-No, it's not better. A few of the pack sizes are better, but some of
-them are worse. And the CPU times are still quite bad. Here are the
-numbers:
-
-  orig | 31.4M (100%) |   54s (100%)
-    10 | 45.6M (145%) |  158s (292%)
-    20 | 39.2M (125%) |  205s (377%)
-    40 | 35.1M (112%) |  275s (505%)
-    80 | 32.4M (103%) |  388s (713%)
-   160 | 30.6M ( 98%) |  581s (1067%)
-
--Peff
+Zbyszek
