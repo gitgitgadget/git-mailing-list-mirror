@@ -1,93 +1,99 @@
-From: Clemens Buchacher <drizzd@aon.at>
+From: Jeff King <peff@peff.net>
 Subject: Re: [PATCH 3/3] t5541: test more combinations of --progress
-Date: Tue, 1 May 2012 11:35:01 +0200
-Message-ID: <20120501093501.GB22633@ecki.lan>
+Date: Tue, 1 May 2012 05:37:19 -0400
+Message-ID: <20120501093719.GA7538@sigill.intra.peff.net>
 References: <20120501084048.GA21904@sigill.intra.peff.net>
  <20120501084307.GC4998@sigill.intra.peff.net>
+ <20120501093501.GB22633@ecki.lan>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1
 Cc: Junio C Hamano <gitster@pobox.com>, dfowler <davidfowl@gmail.com>,
 	git@vger.kernel.org, msysgit@googlegroups.com,
 	Paul Betts <paul@github.com>, David Ebbo <david.ebbo@gmail.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue May 01 11:35:15 2012
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+To: Clemens Buchacher <drizzd@aon.at>
+X-From: msysgit+bncCN2hpKqZChDU3f78BBoEEUDExw@googlegroups.com Tue May 01 11:37:26 2012
+Return-path: <msysgit+bncCN2hpKqZChDU3f78BBoEEUDExw@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-iy0-f186.google.com ([209.85.210.186])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SP9UH-0005lR-4c
-	for gcvg-git-2@plane.gmane.org; Tue, 01 May 2012 11:35:13 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754094Ab2EAJfG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 May 2012 05:35:06 -0400
-Received: from bsmtp.bon.at ([213.33.87.14]:40513 "EHLO bsmtp.bon.at"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754002Ab2EAJfF (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 May 2012 05:35:05 -0400
-Received: from [127.0.0.1] (unknown [80.123.242.182])
-	by bsmtp.bon.at (Postfix) with ESMTP id 1E9F1CDF87;
-	Tue,  1 May 2012 11:35:51 +0200 (CEST)
+	(envelope-from <msysgit+bncCN2hpKqZChDU3f78BBoEEUDExw@googlegroups.com>)
+	id 1SP9WP-0006oa-FD
+	for gcvm-msysgit@m.gmane.org; Tue, 01 May 2012 11:37:25 +0200
+Received: by iaae16 with SMTP id e16sf5288040iaa.3
+        for <gcvm-msysgit@m.gmane.org>; Tue, 01 May 2012 02:37:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=beta;
+        h=x-beenthere:received-spf:date:from:to:cc:subject:message-id
+         :references:mime-version:in-reply-to:x-original-sender
+         :x-original-authentication-results:precedence:mailing-list:list-id
+         :x-google-group-id:list-post:list-help:list-archive:sender
+         :list-subscribe:list-unsubscribe:content-type:content-disposition;
+        bh=nOjYVQ21e0g3UJ4eq5ykU9fat662pg0Yk5MkotkN578=;
+        b=EuGiclmcxhDzataFamqaYKOgdMXfySlxM3NYUdJwhVO2Xe3FOvHI7xJrMVf0Rp1HUl
+         O3PhRWQLMUsJxMBpUyRk1kKCVlB3E/PMw7fkJxTEyUBICNc8mfve8PzFqCFtK98z25BP
+         7guIBC+HOn340v3LiKU/L39epkICq2H6Gsdi8=
+Received: by 10.50.209.98 with SMTP id ml2mr158510igc.6.1335865044481;
+        Tue, 01 May 2012 02:37:24 -0700 (PDT)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.50.217.197 with SMTP id pa5ls2911693igc.4.canary; Tue, 01 May
+ 2012 02:37:24 -0700 (PDT)
+Received: by 10.43.53.73 with SMTP id vp9mr18504381icb.0.1335865043995;
+        Tue, 01 May 2012 02:37:23 -0700 (PDT)
+Received: by 10.43.53.73 with SMTP id vp9mr18504380icb.0.1335865043985;
+        Tue, 01 May 2012 02:37:23 -0700 (PDT)
+Received: from peff.net (99-108-226-0.lightspeed.iplsin.sbcglobal.net. [99.108.226.0])
+        by gmr-mx.google.com with ESMTPS id dd7si8078226igc.0.2012.05.01.02.37.23
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Tue, 01 May 2012 02:37:23 -0700 (PDT)
+Received-SPF: pass (google.com: domain of peff@peff.net designates 99.108.226.0 as permitted sender) client-ip=99.108.226.0;
+Received: (qmail 2479 invoked by uid 107); 1 May 2012 09:37:39 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 01 May 2012 05:37:39 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 01 May 2012 05:37:19 -0400
+In-Reply-To: <20120501093501.GB22633@ecki.lan>
+X-Original-Sender: peff@peff.net
+X-Original-Authentication-Results: gmr-mx.google.com; spf=pass (google.com:
+ domain of peff@peff.net designates 99.108.226.0 as permitted sender) smtp.mail=peff@peff.net
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post?hl=en>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/?hl=en>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit?hl=en>
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
 Content-Disposition: inline
-In-Reply-To: <20120501084307.GC4998@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196675>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196676>
 
-Can we add this on top or squashed in? I regret using tee when I
-originally wrote the test.
+On Tue, May 01, 2012 at 11:35:01AM +0200, Clemens Buchacher wrote:
 
---8<--
-Subject: [PATCH] t5541: check return codes
+> Can we add this on top or squashed in? I regret using tee when I
+> originally wrote the test.
+> 
+> --8<--
+> Subject: [PATCH] t5541: check return codes
+> 
+> By piping output to tee, the return code of the command is hidden.
+> Instead, redirect output to a file directly.
 
-By piping output to tee, the return code of the command is hidden.
-Instead, redirect output to a file directly.
+Ugh, absolutely. I blindly followed the existing style without thinking
+about whether using tee was sane or not. And it's not. Thanks.
 
-Signed-off-by: Clemens Buchacher <drizzd@aon.at>
----
- t/t5541-http-push.sh |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+-Peff
 
-diff --git a/t/t5541-http-push.sh b/t/t5541-http-push.sh
-index 986210a..c07973e 100755
---- a/t/t5541-http-push.sh
-+++ b/t/t5541-http-push.sh
-@@ -218,21 +218,21 @@ test_expect_success 'push --mirror to repo with alternates' '
- test_expect_success TTY 'push shows progress when stderr is a tty' '
- 	cd "$ROOT_PATH"/test_repo_clone &&
- 	test_commit noisy &&
--	test_terminal git push 2>&1 | tee output &&
-+	test_terminal git push >output 2>&1 &&
- 	grep "^Writing objects" output
- '
- 
- test_expect_success TTY 'push --quiet silences status and progress' '
- 	cd "$ROOT_PATH"/test_repo_clone &&
- 	test_commit quiet &&
--	test_terminal git push --quiet 2>&1 | tee output &&
-+	test_terminal git push --quiet >output 2>&1 &&
- 	test_cmp /dev/null output
- '
- 
- test_expect_success TTY 'push --no-progress silences progress but not status' '
- 	cd "$ROOT_PATH"/test_repo_clone &&
- 	test_commit no-progress &&
--	test_terminal git push --no-progress 2>&1 | tee output &&
-+	test_terminal git push --no-progress >output 2>&1 &&
- 	grep "^To http" output &&
- 	! grep "^Writing objects"
- '
-@@ -240,7 +240,7 @@ test_expect_success TTY 'push --no-progress silences progress but not status' '
- test_expect_success 'push --progress shows progress to non-tty' '
- 	cd "$ROOT_PATH"/test_repo_clone &&
- 	test_commit progress &&
--	git push --progress 2>&1 | tee output &&
-+	git push --progress >output 2>&1 &&
- 	grep "^To http" output &&
- 	grep "^Writing objects" output
- '
 -- 
-1.7.10
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
+
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
