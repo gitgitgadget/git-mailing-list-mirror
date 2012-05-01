@@ -1,65 +1,62 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: gc --aggressive
-Date: Tue, 1 May 2012 13:22:01 -0400
-Message-ID: <20120501172201.GA23527@sigill.intra.peff.net>
-References: <CAG+J_DzO=UZ56PjnSCRaTdj8pBSYc5PFofw1QHy42c5pHMK_HQ@mail.gmail.com>
- <CAG+J_DyqvCxwd6+gzixQEk6SxMZF0qsXKcJPaU6imsJdFQ-64g@mail.gmail.com>
- <vpqbomqqdxo.fsf@bauges.imag.fr>
- <20120428122533.GA12098@sigill.intra.peff.net>
- <alpine.LFD.2.02.1204281258050.21030@xanadu.home>
- <20120429113431.GA24254@sigill.intra.peff.net>
- <alpine.LFD.2.02.1204290917051.21030@xanadu.home>
- <20120501162806.GA15614@sigill.intra.peff.net>
- <alpine.LFD.2.02.1205011259200.21030@xanadu.home>
+From: Rich Pixley <rich.pixley@palm.com>
+Subject: Re: Newbie grief
+Date: Tue, 01 May 2012 10:29:59 -0700
+Message-ID: <4FA01D97.6040803@palm.com>
+References: <4F9F128C.5020304@palm.com> <201204302331.q3UNVo7o032303@no.baka.org> <4F9F28F5.2020403@palm.com> <201205010137.q411bxaU002449@no.baka.org> <4F9F52B9.9060508@palm.com> <08704bd2e32343a4b9def80e4fa1efa2-mfwitten@gmail.com> <7vvckgbew5.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Jay Soffian <jaysoffian@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Shawn Pearce <spearce@spearce.org>
-To: Nicolas Pitre <nico@fluxnic.net>
-X-From: git-owner@vger.kernel.org Tue May 01 19:22:16 2012
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Michael Witten <mfwitten@gmail.com>,
+	Seth Robertson <in-gitvger@baka.org>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue May 01 19:30:10 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SPGmD-00007I-Ks
-	for gcvg-git-2@plane.gmane.org; Tue, 01 May 2012 19:22:14 +0200
+	id 1SPGts-0003fD-6I
+	for gcvg-git-2@plane.gmane.org; Tue, 01 May 2012 19:30:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757950Ab2EARWH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 May 2012 13:22:07 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:53506
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757918Ab2EARWG (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 May 2012 13:22:06 -0400
-Received: (qmail 7703 invoked by uid 107); 1 May 2012 17:22:21 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 01 May 2012 13:22:21 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 01 May 2012 13:22:01 -0400
-Content-Disposition: inline
-In-Reply-To: <alpine.LFD.2.02.1205011259200.21030@xanadu.home>
+	id S1756834Ab2EARaB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 May 2012 13:30:01 -0400
+Received: from smtp-relay2.palm.com ([64.28.152.243]:18949 "EHLO
+	smtp-relay2.palm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752700Ab2EARaA (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 May 2012 13:30:00 -0400
+X-IronPort-AV: E=Sophos;i="4.75,512,1330934400"; 
+   d="scan'208";a="13244128"
+Received: from unknown (HELO ushqusdns3.palm.com) ([148.92.223.90])
+  by smtp-relay2.palm.com with ESMTP; 01 May 2012 10:30:00 -0700
+Received: from fuji.noir.com ([10.100.2.1])
+	by ushqusdns3.palm.com (8.14.4/8.14.4) with ESMTP id q41HTx4V001971;
+	Tue, 1 May 2012 10:29:59 -0700
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.7; rv:12.0) Gecko/20120428 Thunderbird/12.0.1
+In-Reply-To: <7vvckgbew5.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196705>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196706>
 
-On Tue, May 01, 2012 at 01:17:03PM -0400, Nicolas Pitre wrote:
+On 4/30/12 23:21 , Junio C Hamano wrote:
+> Michael Witten<mfwitten@gmail.com>  writes:
+>
+>> Here's a start for a more precise discussion.
+> When does the "Cache server" updated from the "$uri_for_central_repo" in
+> this picture?  If it is after push by either from Machine A or B, somebody
+> needs to reconcile that and whatever A/B pushed.
+>
+> And between Hg style "split head" or Git style refs/remotes/* namespaces
+> there is no difference to perform that reconcilation.  Somebody needs to
+> run "merge" on the "Cache server" and at some point the result needs to be
+> pushed to the $uri_for_central_repo back.
+Untrue.  In the hg style, the reconciliation can happen at any 
+repository.  Or never.  It's completely legitimate to allow this "split 
+head" to become the beginning of a de facto branch.  The only difference 
+between a "split head" and a branch is whether the same branch pointer 
+points to both or whether they have different branch pointers.  They can 
+even have both.
 
-> However, this is possibly a good baseline to determine a default value 
-> for window-memory though.  Given your number, we clearly see that good 
-> packing can be achieved with relatively little memory and therefore it 
-> might be a good idea not to leave this parameter unbounded by default in 
-> order to catch potential pathological cases.  Maybe 64M would be a good 
-> default value?  Having a repack process eating up more than 16GB of RAM 
-> because its RAM usage is unbounded is certainly not nice.
-
-Would that preclude a 65M object from being delta'd at all? If you are
-putting a limit of 64M and it means we look at 50 delta candidates
-instead of 60, then that is probably not going to hurt our size too
-much. But if you have large objects that do happen to delta, the
-difference between looking at 0 and 1 objects could have a big impact.
-
--Peff
+--rich
