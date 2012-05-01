@@ -1,193 +1,82 @@
-From: Rich Pixley <rich.pixley@palm.com>
-Subject: Re: Newbie grief
-Date: Mon, 30 Apr 2012 20:04:25 -0700
-Message-ID: <4F9F52B9.9060508@palm.com>
-References: <4F9F128C.5020304@palm.com> <201204302331.q3UNVo7o032303@no.baka.org>        <4F9F28F5.2020403@palm.com> <201205010137.q411bxaU002449@no.baka.org>
+From: Vinnie Falco <vinnie.falco@gmail.com>
+Subject: Re: git-subtree split O(N)
+Date: Mon, 30 Apr 2012 20:10:07 -0700
+Message-ID: <CA+EzHGcxcKt=tmrscnJ1GtiBtTFhtVO7Ae9ndx61D9piFcnq3A@mail.gmail.com>
+References: <CA+EzHGfiRg+w8FsvrXEi0Yr4oVzxaZA_1JT8cmRR0YrYG7m6AQ@mail.gmail.com>
+	<86aa1sr4a9.fsf@red.stonehenge.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Seth Robertson <in-gitvger@baka.org>
-X-From: git-owner@vger.kernel.org Tue May 01 05:04:35 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org
+To: "Randal L. Schwartz" <merlyn@stonehenge.com>
+X-From: git-owner@vger.kernel.org Tue May 01 05:10:19 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SP3OC-0003Te-7Y
-	for gcvg-git-2@plane.gmane.org; Tue, 01 May 2012 05:04:32 +0200
+	id 1SP3Tn-0005hW-GW
+	for gcvg-git-2@plane.gmane.org; Tue, 01 May 2012 05:10:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757371Ab2EADE2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 Apr 2012 23:04:28 -0400
-Received: from smtp-relay2.palm.com ([64.28.152.243]:50522 "EHLO
-	smtp-relay2.palm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756939Ab2EADE1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Apr 2012 23:04:27 -0400
-X-IronPort-AV: E=Sophos;i="4.75,508,1330934400"; 
-   d="scan'208";a="13230562"
-Received: from unknown (HELO ushqusdns4.palm.com) ([148.92.223.164])
-  by smtp-relay2.palm.com with ESMTP; 30 Apr 2012 20:04:27 -0700
-Received: from fuji.noir.com ([10.100.2.13])
-	by ushqusdns4.palm.com (8.14.4/8.14.4) with ESMTP id q4134P8o020088;
-	Mon, 30 Apr 2012 20:04:26 -0700
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.7; rv:12.0) Gecko/20120420 Thunderbird/12.0
-In-Reply-To: <201205010137.q411bxaU002449@no.baka.org>
+	id S1753921Ab2EADKJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 Apr 2012 23:10:09 -0400
+Received: from mail-qc0-f174.google.com ([209.85.216.174]:58258 "EHLO
+	mail-qc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753701Ab2EADKI (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Apr 2012 23:10:08 -0400
+Received: by qcro28 with SMTP id o28so1742133qcr.19
+        for <git@vger.kernel.org>; Mon, 30 Apr 2012 20:10:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=dIQXu4u9/+CXIMonMfk5L61vF/nkwqJB0VQSKqse34A=;
+        b=Nm/JWFBpnZ8HP3VWN/CPFzGaxtV0gtiKX8++5EucG9/zBc7NaVSSQLKnakvsbuUKw3
+         PBVeCi/s8GbuG+J9KJ2ZzJ5/lc2gnCU+TIGPYjkwzmE2CKXDGp0GTGhwtzWlbgAZz5Th
+         YKTIeSJs+2oen2oXZyNWRFtwau86Q4AJ82uHsQ9g3liRCvZhJNPiBZdqegbUYP5i8Ypa
+         nlPwR7zsD6RvofbWZgmfX9FgaKtWQXF/OJJhSIZKsT5HFoFYc6thbz/Yh/gheSvq87V/
+         hekimn1SD5qqQu+DBLtzaC7RG9Uy+gB/zLop3ohPAwhdGkcTpgIBsRlZR/QO5xe7+W6S
+         BK3Q==
+Received: by 10.224.212.1 with SMTP id gq1mr15746750qab.79.1335841807621; Mon,
+ 30 Apr 2012 20:10:07 -0700 (PDT)
+Received: by 10.229.74.212 with HTTP; Mon, 30 Apr 2012 20:10:07 -0700 (PDT)
+In-Reply-To: <86aa1sr4a9.fsf@red.stonehenge.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196650>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196651>
 
-On 4/30/12 18:37 , Seth Robertson wrote:
-> For example, in the diagram http://mercurial.selenic.com/wiki/Head
-> rev2 might be your version of master and rev3 might be my version.
-> Both might exist in my repository and both might exist in your
-> repository, and both might have the symbolic name "master" associated
-> with it, and git would keep it entirely straight.
-
-But not in the same repository. And therein lies the issue.
-
->      >     What git *does* forbid
->      >  (by default) is:
->      >
->      >  1: Letting you update someone else's checked out (non-bare) repository
->      >  underneath them
->      Yeah.  That "underneath them" thing is confusing.  I don't see any
->      reason why that should necessarily be so.
+> Vinnie> I'm using git-subtree split to extract changes to a directory
 >
->      Git knows what commit is checked out.  That's HEAD, yes?  So what's
->      wrong with letting it collect other commits from other repositories
->      while your working directory sits?
->
-> It does!  It can!
+> Are you using -rejoin?
 
-To the branch you have checked out?  That's what I want!  How do I do that?
+I am not using --rejoin. Admittedly, the documentation is somewhat
+opaque on its usage:
 
-> What is forbidden is for me update what you have
-> checked out.
+"--rejoin:: This option is only valid for the split command."
 
-There's some ambiguity in your sentence here.  I don't know whether 
-you're referring to my being forbidden from modifying your working 
-directory or whether you're referring my being forbidden to modify the 
-branch from which your working directory is checked out.  I understand 
-and respect the former, but the latter seems arbitrary.
+This is confusing. One would think that an option named "rejoin" has
+more to do with merge or pull than split. Although I guess the meaning
+is that you want your local changes to "rejoin" the upstream?
 
-(I think clearcase already answered the dynamic update problem.  I liked 
-it.  And I especially liked clearmake and build avoidance.  Shame that 
-IBM killed it.  (Oh, and if you had inconsistent builds, then you 
-weren't using clearmake.  Clearmake solved that problem.))
+"...future splits can search only the part of history that has been
+added since the most recent --rejoin."
 
-I'm less concerned about whether my push changes your working directory. 
-  I'm fine with leaving your working directory as is and letting you 
-decide when and how to move forward on your own time.
+This sounds exactly like my use-case, I want to avoid starting from
+initial commit on a split, but...
 
-Perhaps part of the problem here is the unfortunate choice of the word 
-"HEAD" to refer to the thing you have checked out when that commit might 
-not be a childless commit at all.  When I say "create another head" I 
-mean, "create a childless commit on the same branch".
+"If you do all your merges with '--squash', don't use '--rejoin' when
+you split, because you don't want the subproject's history to be part
+of your project anyway."
 
->      You can always commit your change right on top of what's checked
->      out, creating a second head for that branch.
->
-> With git, you must always commit your change right on top of what's
-> checked out, though of course you may decide to change what's checked
-> out and "float" the changes you made over to the new head (trivial, as
-> long as there are not conflicts between the two heads and the changes
-> you made).  However, only the user of the repository is allowed to do
-> this.  A remote user is not allowed to change what's checked out.
+I always use --squash with git-subtree pull, so I interpreted this to
+mean I should never use --rejoin.
 
-Ok, how do I ask git to push a commit into the middle of a branch that 
-you have checked out at a tip, (there's always exactly one tip for any 
-branch in git, right?)?  I don't care to change your working directory 
-nor your index.  I just want my commits to show up in the middle of that 
-branch.
+"Unfortunately, using this option results in 'git log' showing an
+extra copy of every new commit that was created"
 
->      Yes, I've read that git-diff, etc, are all making assumptions that fail
->      in this case, but there's nothing significantly different about
->      collecting commits to other branches and collecting commits to the
->      branch you're currently checked out from.
->
-> Yes there is.  Consider this use case.  You can I both spot DIFFERENT
-> bugs.  You and I both start editing filea.  I fix my problem one way
-> which involves lines 10, 100, and 500, you fix your problem which
-> involves line 10, 100, and 200.  I'm typing faster than you so I
-> commit/push first.  If I can update your HEAD, at that point I've
-> changed the file you are editing. You save and my change is lost.
+This is what discouraged me from ever touching "--rejoin"
 
-"HEAD", being defined as the thing I have checked out, should not be 
-changed, I agree.
+I hope this helps
 
-But the nomenclature here is a bit misleading.  Really, "HEAD" could be 
-any commit.  It doesn't have to be a childless commit.  The fact that my 
-HEAD was childless at the time I checked it out doesn't necessarily mean 
-that it must remain childless forever.
-
-Let's back it up a moment.  I change file1 and you change file2.  These 
-are non-colliding changes.  They can be trivially merged and yet git 
-refuses to push between our repositories.
-
-The refusal seems arbitrary.  It could just as easily accept my change, 
-leave your HEAD pointing where it was, but move the "master" pointer to 
-point to the merged commit.  This is exactly what it does if I pull your 
-changes into my repository.  I just can't ever push them again after 
-this happens.  (I could push them previously.)
-
-> Now this is where you say, if git only supported multiple HEADs the
-> problem would go away.
-
-Right.
-
-> I could update my version of master and you
-> could update your version of master and there would be no conflict.
-
-There'd be a conflict.  But we'd be able to update anyway.  I'd be able 
-to see your changes in my repository by default.  You'd be able to see 
-mine.  And either one of us could merge, commit, and push the merge. 
-Until then, the collision could be carried and propagated by multiple 
-repositories around our repository network.  Maybe a third person would 
-integrate them for us.
-
-> And...of course you can with git.  I don't update your master, what
-> you have checked out, I update what you know is my master.  Then when
-> you are done, you get to say "merge my master with your master" or
-> "instead of committing this change on my branch, let me try this last
-> change I made on top of the changes you made" or whatever you want to
-> say.
-
-Yes.  And I have no choice.  I must say that at every repository I own, 
-every time I push or pull changes, tracking whether those have been 
-merged or not, even when 99% of my changes could have been trivially 
-merged, owned by me, in repositories I own.  And I'm forced to do manual 
-merges and extra pulls in the most common collision situation I run 
-into, which can be handled automatically by other systems like 
-mercurial, even subversion.
-
-My problem is that I must necessarily manage 10's of repositories for my 
-own work.  These extra steps mean a geometric increase in complexity and 
-in error potential over something like mercurial, which maintains the 
-"common branch" illusion automatically for me or something like 
-subversion which genuinely has a common branch.
-
-I don't need separate branches for each repository.  What I really want 
-is a common branch whose changes I can push back and forth between the 
-various repositories, or coordinate through a central cache, without 
-worrying about the underlying details that git is forcing me to confront.
-
-I think I'm beginning to understand what git does offer now.  Thank you 
-for the help with clarifications.  I just don't like it.  It's a huge 
-let down for me in my context from working with systems like mercurial 
-which make my life easier.  Quite frankly, git is a huge amount of work 
-for me by comparison to mercurial for no added benefit, or even by 
-comparison to subversion, with only minor benefits in most situations 
-over subversion.
-
-> So...what's not possible?
-
-In effect, any interesting activities involving push or any workflows 
-that require pushing.  Most of them can probably be worked around by 
-using a pull architecture instead, but that adds an unnecessary 
-explosion of complexity in many cases such as the one I'm facing.
-
-In particular, sharing a branch becomes problematic with git.
-
---rich
+Thanks
