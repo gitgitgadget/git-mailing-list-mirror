@@ -1,133 +1,71 @@
-From: Michael Witten <mfwitten@gmail.com>
-Subject: Re: Newbie grief
-Date: Tue, 01 May 2012 05:32:09 -0000
-Message-ID: <08704bd2e32343a4b9def80e4fa1efa2-mfwitten@gmail.com>
-References: <4F9F128C.5020304@palm.com>
-            <201204302331.q3UNVo7o032303@no.baka.org>
-            <4F9F28F5.2020403@palm.com>
-            <201205010137.q411bxaU002449@no.baka.org>
-            <4F9F52B9.9060508@palm.com>
-Cc: Seth Robertson <in-gitvger@baka.org>, git@vger.kernel.org
-To: Rich Pixley <rich.pixley@palm.com>
-X-From: git-owner@vger.kernel.org Tue May 01 07:44:40 2012
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: XDL_FAST_HASH breaks git on OS X 10.7.3
+Date: Mon, 30 Apr 2012 23:17:22 -0700
+Message-ID: <7vzk9sbf2l.fsf@alter.siamese.dyndns.org>
+References: <441BE38F-E081-4ED8-B587-BF72AD6368EE@gernhardtsoftware.com>
+ <87mx5tyy2a.fsf@thomas.inf.ethz.ch>
+ <CAJDDKr778t=CufdtitbrhB-vJ3F=xSpSJ_G8e-VK8qCy8Fcfmg@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Thomas Rast <trast@student.ethz.ch>,
+	Brian Gernhardt <brian@gernhardtsoftware.com>,
+	Git List <git@vger.kernel.org>
+To: David Aguilar <davvid@gmail.com>
+X-From: git-owner@vger.kernel.org Tue May 01 08:17:31 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SP5t9-0000ec-L7
-	for gcvg-git-2@plane.gmane.org; Tue, 01 May 2012 07:44:39 +0200
+	id 1SP6Ow-0003xP-H8
+	for gcvg-git-2@plane.gmane.org; Tue, 01 May 2012 08:17:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751886Ab2EAFoI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 May 2012 01:44:08 -0400
-Received: from mail-ey0-f174.google.com ([209.85.215.174]:40658 "EHLO
-	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750776Ab2EAFoH (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 May 2012 01:44:07 -0400
-Received: by eaaq12 with SMTP id q12so833974eaa.19
-        for <git@vger.kernel.org>; Mon, 30 Apr 2012 22:44:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=subject:date:from:to:cc:message-id:in-reply-to:references;
-        bh=C4gqwiq2kxjKVQEXuDVQz08AcSe8kZwWd3czmMkaMcY=;
-        b=Xot3Cch0iPaBQkUEQdim+7zf4j/I9Kt43EMdYO8SbigswHUP0OTsMUS9AfhmttRjdT
-         DPBlBbescOH6BG18hsH26VjJSmj2uwcPWHE8NKcbGjxmDg5USy7KRNoBAdlnypJATdEu
-         jCXvVV3yhF0NpFd6d07PXlAL5Yo/0UEEf4T9+3H1hA8dWaNgVhN1L/eT/K4nXr9moEdU
-         Wqp28t6zTqQ4IIFBSEvVt8OP7SPmPazi6KXC4Y0UxMmt5rIKU1JHZYRSKNifLdEEJlVa
-         Zl7a2tWdMPhLBlsRM8+ah9x5fnCIro8eWdHbuQrgJKk0OWskInfcqkdOgCW8NpgPKUO2
-         ucuA==
-Received: by 10.213.9.10 with SMTP id j10mr1736288ebj.104.1335851045601;
-        Mon, 30 Apr 2012 22:44:05 -0700 (PDT)
-Received: from gmail.com (tor21.anonymizer.ccc.de. [31.172.30.4])
-        by mx.google.com with ESMTPS id x4sm85680672eef.10.2012.04.30.22.44.02
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 30 Apr 2012 22:44:03 -0700 (PDT)
-In-Reply-To: <4F9F52B9.9060508@palm.com>
+	id S1751689Ab2EAGR0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 May 2012 02:17:26 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:49872 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751361Ab2EAGRZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 May 2012 02:17:25 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 537765F0D;
+	Tue,  1 May 2012 02:17:24 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=AJ/rqdJGd61/h3ThkLBbGWKzSDM=; b=Ukpj9Q
+	nCcMJflZ5Kws1kIqaacolh5qOCHF/0Z6zO0a55pK3Y2Zuawo7812iwUpbeor54o8
+	vvBa9A0PYE5swPv9gZq1sj6MzfhVyEZNIsbnkLjCFfUrMwGNeskBUeE00mvjjE8s
+	5CaqCxXjQPVSwmSq2LuvtONjhNrhbv5WtuL4I=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=PKoiabJSbGo+otvSKf8NM4vw+2JhFw/Y
+	Obt/bVmQHZc0V0lKfvMRYMXdcpemixvRsDqI9OVix/1Q3cnebTvT+9xq1+tp87yu
+	h2qJJPJkfL1dN2N56pJxGz0NaKIKmvOFrmS8aoGuAUnIaYHkuIa4g9TF68bFSEwo
+	016Y0Gr4H28=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4989E5F0C;
+	Tue,  1 May 2012 02:17:24 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id CA7145F0B; Tue,  1 May 2012
+ 02:17:23 -0400 (EDT)
+In-Reply-To: <CAJDDKr778t=CufdtitbrhB-vJ3F=xSpSJ_G8e-VK8qCy8Fcfmg@mail.gmail.com> (David
+ Aguilar's message of "Mon, 30 Apr 2012 22:32:50 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 5101D174-9355-11E1-AA50-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196660>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196661>
 
-On Mon, 30 Apr 2012 20:04:25 -0700, Rich Pixley wrote:
+David Aguilar <davvid@gmail.com> writes:
 
-> I don't need separate branches for each repository.  What I really want 
-> is a common branch whose changes I can push back and forth between the 
-> various repositories, or coordinate through a central cache, without 
-> worrying about the underlying details that git is forcing me to confront.
+>> +       if (sizeof(long) == 8) {
+>
+> Isn't the whole point of this code to be fast?
+>
+> This should be a compile-time check... conditionals hurt perf.
 
-Here's a start for a more precise discussion.
-
-Sincerely,
-Michael Witten
-
-
-Cache server:
-
-  $ git clone --mirror "$uri_for_central_repo"
-
-Machine A:
-
-  $ git clone "$uri_for_cache_repo"
-  $ git checkout -b feature_0 origin/feature_0
-  $ # ... do some work ...
-  $ git push --set-upstream origin HEAD:shared/feature_0
-  $ git config push.default upstream
-
-Machine B:
-
-  $ git clone "$uri_for_cache_repo"
-  $ git checkout -b feature_0 origin/feature_0
-  $ # ... do some work that conflicts with work done on Machine A...
-  $ git push --set-upstream origin HEAD:shared/feature_0
-  To $uri_for_cache_repo
-   ! [rejected]        HEAD -> shared/feature_0 (non-fast-forward)
-   error: failed to push some refs to '$uri_for_cache_repo'
-  To prevent you from losing history, non-fast-forward updates were rejected
-  Merge the remote changes (e.g. 'git pull') before pushing again.  See the
-  'Note about fast-forwards' section of 'git push --help' for details.
-  $ git pull origin shared/feature_0
-  From $uri_for_cache_repo
-   * branch            shared/feature_0 -> FETCH_HEAD
-  Auto-merging a
-  CONFLICT (add/add): Merge conflict in a
-  Recorded preimage for 'a'
-  Automatic merge failed; fix conflicts and then commit the result.
-  $ # ... resolve conflict and commit results ...
-  $ git push --set-upstream origin HEAD:shared/feature_0
-  $ git config push.default upstream
-
-Machine A:
-
-  $ git pull # pulls in origin's shared/feature_0
-  $ # ... do some work ...
-  $ git push # pushes to origin's shared/feature_0
-
-Machine B:
-
-  $ git pull # pulls in origin's shared/feature_0
-  $ # ... do some work ...
-  $ git push # pushes to origin's shared/feature_0
-
-Machine A:
-
-  $ git pull
-  $ git remote add central "$uri_for_central_repo"
-  $ git push central HEAD:feature_0 # Assume there is a conflict
-  To $uri_for_central_repo
-   ! [rejected]        HEAD -> feature_0 (non-fast-forward)
-  error: failed to push some refs to '$uri_for_central_repo'
-  To prevent you from losing history, non-fast-forward updates were rejected
-  Merge the remote changes (e.g. 'git pull') before pushing again.  See the
-  'Note about fast-forwards' section of 'git push --help' for details.
-  $ git pull central feature_0
-  $ # ... resolve conflict and commit results ...
-  $ git push central HEAD:feature_0 # Assume it succeeds this time
-  $ # Let's update the cache repo from Machine A:
-  $ git fetch central
-  $ git push origin 'refs/remotes/central/*:refs/heads/*'
-
-Machine B:
-
-  $ git pull
-  $ git pull . origin/feature_0 # Get new stuff cached from central server
+Depends on how good your compiler is, no?  The above if () selects based
+on a constant expression, so on 64-bit archs with a good compiler, there
+won't be a jump instruction nor a single opcode for the else clause.
