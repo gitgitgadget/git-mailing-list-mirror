@@ -1,115 +1,89 @@
 From: Thomas Rast <trast@student.ethz.ch>
-Subject: [PATCH de.po 2/5] =?UTF-8?q?de.po:=20translate=20"bare"=20as=20"blo=C3=9F?= =?UTF-8?q?"?=
-Date: Wed, 2 May 2012 15:49:24 +0200
-Message-ID: <53df440b95ea19567a12f4a58410cc0fe0aa43b5.1335966202.git.trast@student.ethz.ch>
-References: <cover.1335966202.git.trast@student.ethz.ch>
+Subject: Re: Please pull git-po master branch
+Date: Wed, 2 May 2012 15:58:17 +0200
+Message-ID: <87ehr2znuu.fsf@thomas.inf.ethz.ch>
+References: <CANYiYbHtKKWw9LPnr+1khC5Oms-kOtA2WEucoNoE3Njzqiahzw@mail.gmail.com>
+	<87d36n2f2r.fsf@thomas.inf.ethz.ch>
+	<CAN0XMOJ0PBA2qptw2Lm9HOq4SAkeZNAyOwPdvcb-uAcsxKnzwg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jiang Xin <worldhello.net@gmail.com>,
-	Git List <git@vger.kernel.org>,
+Cc: Thomas Rast <trast@student.ethz.ch>,
+	Jiang Xin <worldhello.net@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?q?Jan=20Kr=C3=BCger?= <jk@jk.gs>,
+	Git List <git@vger.kernel.org>,
+	Jan =?utf-8?Q?Kr=C3=BCger?= <jk@jk.gs>,
 	Christian Stimming <stimming@tuhh.de>
 To: Ralf Thielow <ralf.thielow@googlemail.com>
-X-From: git-owner@vger.kernel.org Wed May 02 15:49:54 2012
+X-From: git-owner@vger.kernel.org Wed May 02 15:58:29 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SPZwF-0004vt-Kp
-	for gcvg-git-2@plane.gmane.org; Wed, 02 May 2012 15:49:51 +0200
+	id 1SPa4X-000242-D8
+	for gcvg-git-2@plane.gmane.org; Wed, 02 May 2012 15:58:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754304Ab2EBNtl convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 2 May 2012 09:49:41 -0400
-Received: from edge10.ethz.ch ([82.130.75.186]:27485 "EHLO edge10.ethz.ch"
+	id S1754854Ab2EBN6V convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 2 May 2012 09:58:21 -0400
+Received: from edge10.ethz.ch ([82.130.75.186]:28275 "EHLO edge10.ethz.ch"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753524Ab2EBNtb (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 May 2012 09:49:31 -0400
-Received: from CAS11.d.ethz.ch (172.31.38.211) by edge10.ethz.ch
+	id S1754831Ab2EBN6T convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 2 May 2012 09:58:19 -0400
+Received: from CAS21.d.ethz.ch (172.31.51.111) by edge10.ethz.ch
  (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.2.283.3; Wed, 2 May
- 2012 15:49:27 +0200
-Received: from thomas.inf.ethz.ch (129.132.153.233) by CAS11.d.ethz.ch
- (172.31.38.211) with Microsoft SMTP Server (TLS) id 14.1.355.2; Wed, 2 May
- 2012 15:49:28 +0200
-X-Mailer: git-send-email 1.7.10.625.g300dcf
-In-Reply-To: <cover.1335966202.git.trast@student.ethz.ch>
+ 2012 15:58:16 +0200
+Received: from thomas.inf.ethz.ch.ethz.ch (129.132.153.233) by CAS21.d.ethz.ch
+ (172.31.51.111) with Microsoft SMTP Server (TLS) id 14.1.355.2; Wed, 2 May
+ 2012 15:58:18 +0200
+In-Reply-To: <CAN0XMOJ0PBA2qptw2Lm9HOq4SAkeZNAyOwPdvcb-uAcsxKnzwg@mail.gmail.com>
+	(Ralf Thielow's message of "Wed, 2 May 2012 11:13:04 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
 X-Originating-IP: [129.132.153.233]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196821>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196822>
 
-git-gui has had precedent for "leer" since ab2d3b0 (git-gui: Update
-German translation (12 new or changed strings)., 2010-01-26).
-However, that would be "empty".
+Ralf Thielow <ralf.thielow@googlemail.com> writes:
 
-Change it both in git-gui and git itself.
+> As I said I've tried to unify with the git-gui translation. Actually,=
+ I was
+> wondered why they translate terms like "Tag" or "Commit" because
+> I think they should be known by a Git user.
+>=20
+> I know German books about Git using many other terms like
+> "Staging" or "Index" as it is.
 
-Signed-off-by: Thomas Rast <trast@student.ethz.ch>
----
- git-gui/po/de.po |    4 ++--
- po/de.po         |    6 +++---
- 2 files changed, 5 insertions(+), 5 deletions(-)
+Well, this is getting into the eternal "German vs. Denglish"
+bikeshedding war.  If you can actually cite books, that would probably
+constitute a good argument in favour of changing it to the English term=
+s
+for these.  (I'd be all for it, and AFAIK so would Jan, but as I said
+this has been going on for a while.)
 
-diff --git a/git-gui/po/de.po b/git-gui/po/de.po
-index 44c5ddc..9458f6e 100644
---- a/git-gui/po/de.po
-+++ b/git-gui/po/de.po
-@@ -8,7 +8,7 @@ msgstr ""
- "Project-Id-Version: git-gui\n"
- "Report-Msgid-Bugs-To: \n"
- "POT-Creation-Date: 2010-01-26 22:22+0100\n"
--"PO-Revision-Date: 2010-01-26 22:25+0100\n"
-+"PO-Revision-Date: 2012-05-02 11:54+0200\n"
- "Last-Translator: Christian Stimming <stimming@tuhh.de>\n"
- "Language-Team: German\n"
- "MIME-Version: 1.0\n"
-@@ -72,7 +72,7 @@ msgstr ""
-=20
- #: git-gui.sh:1154
- msgid "Cannot use bare repository:"
--msgstr "Leeres Projektarchiv kann nicht benutzt werden:"
-+msgstr "Blo=C3=9Fes Projektarchiv kann nicht benutzt werden:"
-=20
- #: git-gui.sh:1162
- msgid "No working directory"
-diff --git a/po/de.po b/po/de.po
-index a43f646..a7a39ed 100644
---- a/po/de.po
-+++ b/po/de.po
-@@ -8,7 +8,7 @@ msgstr ""
- "Project-Id-Version: git 1.7.10\n"
- "Report-Msgid-Bugs-To: Git Mailing List <git@vger.kernel.org>\n"
- "POT-Creation-Date: 2012-04-28 20:17+0800\n"
--"PO-Revision-Date: 2012-03-28 18:46+0200\n"
-+"PO-Revision-Date: 2012-05-02 15:10+0200\n"
- "Last-Translator: Ralf Thielow <ralf.thielow@googlemail.com>\n"
- "Language-Team: German\n"
- "Language: de\n"
-@@ -1376,7 +1376,7 @@ msgstr "Konnte Arbeitsverzeichnis '%s' nicht erst=
-ellen."
- #: builtin/clone.c:728
- #, c-format
- msgid "Cloning into bare repository '%s'...\n"
--msgstr "Klone in leeres Projektarchiv '%s'...\n"
-+msgstr "Klone in blo=C3=9Fes Projektarchiv '%s'...\n"
-=20
- #: builtin/clone.c:730
- #, c-format
-@@ -3133,7 +3133,7 @@ msgstr "Kann keine %s Zur=C3=BCcksetzung mit Pfad=
-en machen."
- #: builtin/reset.c:325
- #, c-format
- msgid "%s reset is not allowed in a bare repository"
--msgstr "%s Zur=C3=BCcksetzung ist in einem leeren Projektarchiv nicht =
-erlaubt"
-+msgstr "'%s' Zur=C3=BCcksetzung ist in einem blo=C3=9Fen Projektarchiv=
- nicht erlaubt"
-=20
- #: builtin/reset.c:341
- #, c-format
+>> * Make a glossary of the relevant terminology first. =C2=A0Sadly
+>> =C2=A0gitglossary(7) has gotten somewhat stale, and perhaps can also=
+ benefit
+>> =C2=A0from an overhaul. =C2=A0=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason=
+ recently made a list[4] of
+>> =C2=A0the most important terms, which is a good start.
+>
+> I would be happy to work together with you on these things.
+> Tiny changes in the translation of basic terms can make
+> a big difference.
+
+Perhaps you could use the Github wiki feature to import =C3=86var's lis=
+t into
+a wiki in your git-de-po repository, which we could then edit?
+
+> I don't think that it's sooo bad that it needs to get reverted.
+
+Probably not, since that would be pointless without another minor
+release.  But I am saying it should not have been fast-tracked to maint
+in the first place.
+
 --=20
-1.7.10.625.g300dcf
+Thomas Rast
+trast@{inf,student}.ethz.ch
