@@ -1,100 +1,84 @@
 From: Jiang Xin <worldhello.net@gmail.com>
-Subject: Maintenance of the maint and master branches of git-po
-Date: Wed, 2 May 2012 10:42:33 +0800
-Message-ID: <CANYiYbHa_0ZKFwRz-FfJO4fP7E9fCqAaEQ2JfPr_UotzBOGpYQ@mail.gmail.com>
+Subject: Please pull git-po maint branch
+Date: Wed, 2 May 2012 10:44:45 +0800
+Message-ID: <CANYiYbGEkeS2_a59PTDTJ2ZvDmsG1e1a+VrsswuZM7a=SgOBOw@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Cc: Git List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>,
-	=?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>,
-	Byrial Jensen <byrial@vip.cybercity.dk>,
-	Ralf Thielow <ralf.thielow@googlemail.com>,
-	Marco Sousa <marcomsousa@gmail.com>,
-	Vincent van Ravesteijn <vfr@lyx.org>,
-	Peter Krefting <peter@softwolves.pp.se>
-X-From: git-owner@vger.kernel.org Wed May 02 04:42:41 2012
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed May 02 04:44:57 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SPPWY-0001nm-VJ
-	for gcvg-git-2@plane.gmane.org; Wed, 02 May 2012 04:42:39 +0200
+	id 1SPPYg-0002pL-VQ
+	for gcvg-git-2@plane.gmane.org; Wed, 02 May 2012 04:44:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758387Ab2EBCme (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 May 2012 22:42:34 -0400
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:50577 "EHLO
+	id S1758409Ab2EBCoq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 May 2012 22:44:46 -0400
+Received: from mail-yw0-f46.google.com ([209.85.213.46]:38907 "EHLO
 	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757586Ab2EBCmd (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 May 2012 22:42:33 -0400
-Received: by yhmm54 with SMTP id m54so174711yhm.19
-        for <git@vger.kernel.org>; Tue, 01 May 2012 19:42:33 -0700 (PDT)
+	with ESMTP id S1757388Ab2EBCop (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 May 2012 22:44:45 -0400
+Received: by yhmm54 with SMTP id m54so176060yhm.19
+        for <git@vger.kernel.org>; Tue, 01 May 2012 19:44:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:date:message-id:subject:from:to:cc:content-type;
-        bh=hj5iFIM5gkyJD7aIpR0vjLNLSdg7mRKcfxeIv7CvikE=;
-        b=Tz7UixXo71XbkQqkMB+hRsxjAvHS5ZWotx8GJJ5PInzqhVLSBeqfEKsKItnxNrBxi1
-         4ADvQgGKqoIqCx5NtJNtwyltwP2Rl5+IJcE8FBe8NIzSjdP5TAQCn2m92Mf0l4PAWSel
-         1Pd2cglO99gre9Osa6zOTJkxb6j2QlakQXMcNJ5/eIjtwfMM1ZTW/zkolRfiatqF9gk5
-         79tNq7tW7RBkuO22vfrU1QaZ95Zxxyk43rkb0de8dvkn66RuLuK3/ERAlw51SRi2vwG4
-         gOdLw/VlgbMAdqHaZEsyyk8zRtl+N55j27hxXfLVBMX5VVabzj5GK6N9/+CA0VWsuUC1
-         3d1Q==
-Received: by 10.50.36.195 with SMTP id s3mr3499336igj.27.1335926553250; Tue,
- 01 May 2012 19:42:33 -0700 (PDT)
-Received: by 10.50.207.40 with HTTP; Tue, 1 May 2012 19:42:33 -0700 (PDT)
+        bh=QmjFAK294iGakYH8NPDVS1neHDCb6YO/KjBJLhow1NU=;
+        b=dMVAhunGjMs1OTmVQ9dRIuXfuEkhcyHUROcfQ8HFdnDquQ6nDLkV4n0b3+zr54LC2J
+         opas6GMH/UWpnv+2lNn+Y2yu1SqoikVCrAT6DrYWTL8H080mmZXEe1280xj2Yv87i59+
+         UUyQM0Hm+K9rfyFrLPt2FXrRjNdOZJUsUaV8a3jlHaYw+TubFG/NjYrrwRXYe8KzVt4K
+         1wNrRJHCYaOBWE54c+0PdyTtRPcHhDr8ihdkb5D4+cDqklN+rXO2vh4lK4x0cXU4XagF
+         P8TcmLp2I9ISnApvFYhjTPAJZQPGWq224aYr1b2U/swkAByKpR79HSXiQfMWNlX8ppW4
+         LtuQ==
+Received: by 10.50.189.135 with SMTP id gi7mr3477506igc.37.1335926685107; Tue,
+ 01 May 2012 19:44:45 -0700 (PDT)
+Received: by 10.50.207.40 with HTTP; Tue, 1 May 2012 19:44:45 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196777>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196778>
 
-The git-po repository (https://github.com/git-l10n/git-po/) has two
-branches: maint and master. These two branches track the l10n
-updates for the counterparts of git.git.
+Hi, Junio
 
- * When translaters send pull requests to maint branch of git-po,
-   they want their translations go into the next maintenance
-   release of git (i. e. 1.7.10.1 for now).
+The following changes since commit 868d662399786462f87df45c3d68bd5390311a6e:
 
- * When translaters send pull requests to master branch of git-po,
-    they want their translations go into the next release of git
-    (1.7.11 for now).
+  Start preparing for 1.7.10.1 (2012-04-26 10:53:55 -0700)
 
-When I received pull request(s) to maint branch, I will not only
-merge commit(s) to maint branch, but also merge back to
-master branch. If not merge maint branch back to master
-branch of git-po before I send git-request-pull to Junio, it will
-make troubles to the maintenance of git.git:
+are available in the git repository at:
 
-1. Maint branch can not fast-forward to master branch,
-    when new release is out. (See the "Maintenance branch
-    management after a feature release" section of
-    `git help workflows`)
+  https://github.com/git-l10n/git-po/ maint
 
-        $ git checkout maint
-        $ git merge --ff-only master
+for you to fetch changes up to 720e309bf6a5d46e1a6d5ee929d24869a329b838:
 
-2. Will encounter lots of hard to resolved conflicts when
-    merge maint branch back to master branch, because
-    of the indepent location lines like "#: filename:line" in
-    the git.pot and XX.po files.
+  l10n: Initial German translation (2012-05-01 16:28:58 +0200)
 
-So when there are updates in maint branch of git-po, I
-will always generate two request-pull to Junio, one for
-maint branch, and one for master branch.
+----------------------------------------------------------------
+Byrial Jensen (2):
+      l10n: New da.po file with 0 translations
+      l10n: Add Danish team (da) to list of teams
 
-To make the merge less pain and less complication, I
-use a custom merge driver learned from TopGit.
+Jiang Xin (3):
+      Merge maint branch for tracking l10n updates of git stable version
+      l10n: Update git.pot (2 new messages)
+      l10n: Update Simplified Chinese translation
 
- * File ".git/info/attributes"
+Marco Sousa (1):
+      l10n: Updated pt_PT language
 
-        po/git.pot      merge=ours
+Ralf Thielow (2):
+      l10n: Add the German translation team and initialize de.po
+      l10n: Initial German translation
 
- * File ".git/config"
-
-        [merge "ours"]
-                name = \"always keep ours\" merge driver
-                driver = touch %A
-
--- 
-Jiang Xin
+ po/TEAMS    |    8 +
+ po/da.po    | 3503 ++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ po/de.po    | 3771 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ po/git.pot  |  179 +--
+ po/pt_PT.po |  242 ++--
+ po/zh_CN.po |  184 +--
+ 6 files changed, 7605 insertions(+), 282 deletions(-)
+ create mode 100644 po/da.po
+ create mode 100644 po/de.po
