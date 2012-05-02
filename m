@@ -1,108 +1,152 @@
-From: David Barr <davidbarr@google.com>
-Subject: Re: [PATCH 0/9] Prefix-compress on-disk index entries
-Date: Wed, 2 May 2012 14:26:15 +1000
-Message-ID: <CAFfmPPOPWkUcuWRFYGk9LHCAJAbvNYK=Xk+pvSa8fbffpRDppQ@mail.gmail.com>
-References: <1333493596-14202-1-git-send-email-gitster@pobox.com>
-	<CACsJy8A+cJtzKdqJSWbmjT1LgP10LB69-NHfOv8S6BusGcMeFw@mail.gmail.com>
-	<7vpqbn8hgr.fsf@alter.siamese.dyndns.org>
-	<CAFfmPPNHkK3SB8cGjfJiVoQoSg2OLL8B5--mwH8HShhJ1WGy2g@mail.gmail.com>
-	<CACsJy8DZ4t0f_mdDJTUZvz_pBPrPTsEBxHEkYREowWm6D1ikkw@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [ANNOUNCE] Git 1.7.10.1
+Date: Tue, 01 May 2012 22:12:46 -0700
+Message-ID: <7vk40vjhdd.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 02 06:26:57 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Linux Kernel <linux-kernel@vger.kernel.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed May 02 07:13:20 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SPR9T-0003uL-Kt
-	for gcvg-git-2@plane.gmane.org; Wed, 02 May 2012 06:26:55 +0200
+	id 1SPRsL-00088H-Og
+	for gcvg-git-2@plane.gmane.org; Wed, 02 May 2012 07:13:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751098Ab2EBE0S (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 May 2012 00:26:18 -0400
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:60084 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750822Ab2EBE0R (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 May 2012 00:26:17 -0400
-Received: by yenl12 with SMTP id l12so233643yen.19
-        for <git@vger.kernel.org>; Tue, 01 May 2012 21:26:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:x-system-of-record;
-        bh=MAQmO5247ozXRousP8ZlUMi6s/B0Skg4aiHG3RoVqJU=;
-        b=Tp3K+LXH1aPbWdj6X36rLpzZtPSKTbA44pO/lyybQL5J+Fd1KWQyu+ID3Z+iRWD8Iu
-         ZRsVphuXoQrp8LUqDZu2HfaN24DCNGUE4MRBfxgHKNRFve9RbakwAn2td0Kyh/XSI37J
-         EaukIjrzmEX3IhrgtF5uFEJ+vbCC83AiW+Ko+sJ0hhanBZFlDMyGTFbIpW3kXuwKURoT
-         Edu48pr0Mr6CEgqH074MPnfaz4A5b2Hfdsv8Ucqr26zQQ+Dq8MhMQD1t1V2rd1uEQdyL
-         xIZQ8q4BRnxu9rOO64bqkKe4PtA/mFgsJxydIFPoSupMtd4QgV+GSEhS4NpZTfKFpCfa
-         UUoQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:x-system-of-record:x-gm-message-state;
-        bh=MAQmO5247ozXRousP8ZlUMi6s/B0Skg4aiHG3RoVqJU=;
-        b=mX3C7oKpwenrJ0Po5Hb9D90fRmvW10pgrWEqIaz+2PRqPZpN6+HfKNfg8bGElNVGkx
-         pPDhdG/EAQVpcFTP6tYcGqOfwt9+5RBgjt/YWbyioY2J9TTymqP1DXBc1zsK9KzFFfP+
-         KwVFKZGlpifGvvQfbo1upG0dJWpIuWYBtaltLWi0DFoXiPFWRCjBZYI8wK/Afp3TItie
-         54e7pMEgSuo4eQoZeCHSpOkv08vIjFQyuDEAFSj/O8AGVGJRNcwmNa89033oxXFJR1kr
-         EeaN6RozLpLWF0pAy/3MG59/Ymu0A1MgT/BnoMxbYqIhiBwg7fpSsAitScYmvJ7E5PMl
-         AESg==
-Received: by 10.236.73.99 with SMTP id u63mr29151419yhd.102.1335932775666;
-        Tue, 01 May 2012 21:26:15 -0700 (PDT)
-Received: by 10.236.73.99 with SMTP id u63mr29151408yhd.102.1335932775563;
- Tue, 01 May 2012 21:26:15 -0700 (PDT)
-Received: by 10.101.83.5 with HTTP; Tue, 1 May 2012 21:26:15 -0700 (PDT)
-In-Reply-To: <CACsJy8DZ4t0f_mdDJTUZvz_pBPrPTsEBxHEkYREowWm6D1ikkw@mail.gmail.com>
-X-System-Of-Record: true
-X-Gm-Message-State: ALoCoQm0d+pnVEO+voREoHtah4icLFHeH5892TJe8XA6er4lKsxE8Ed1FJuWmj5k+pApAxPVoZRSUMG3r+/AwgBvdbYlCFV8VZDo85xMXG+vXpU8e95KVbUjb0JAAGf+mFxZZoVtCBIA900t76H9o4HCkpcGqvIf+w==
+	id S1758559Ab2EBFMw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 May 2012 01:12:52 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:63301 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756312Ab2EBFMt (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 May 2012 01:12:49 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7922D8CCE;
+	Wed,  2 May 2012 01:12:48 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
+	:subject:cc:date:message-id:mime-version:content-type; s=sasl;
+	 bh=PwoZNOmfIJTRpf+mtCb0Z5VKap0=; b=x9Fu/GUUJq8clh7ASyzHRKkNDvy5
+	fTgpwCG7j73xWc62QqlDfFJQZlf5XVQCB9VURUqnFcgc0zm0eZkNqHydBejdDEad
+	/DIlUS9PMMmLeNKbTx7qjNxwyUTi2aNgvI/mNbRgNe+f1FkaBvjaLi7vSyjAYyoq
+	fadthVyJJZ05Pj0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
+	:cc:date:message-id:mime-version:content-type; q=dns; s=sasl; b=
+	jivpGtkPNCRjDLli3O/TLcNgZizGDFgwaXMQQ7ISmnyysiYvat9bfPNXQrlYFxBO
+	28+5l6x9Vw4G5uVv6ZOWiH5hzIIa05C82GpQS5mWJ+081Jax9mxIhBFw6C6iM63+
+	2JQLVcmoldQ890idBPtvMIt6PR1sGCgIu6dkX/JKcvs=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6F2578CCD;
+	Wed,  2 May 2012 01:12:48 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id CA4B78CCC; Wed,  2 May 2012
+ 01:12:47 -0400 (EDT)
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 7524A7D2-9415-11E1-9FCE-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196783>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196784>
 
-On Wed, May 2, 2012 at 11:58 AM, Nguyen Thai Ngoc Duy <pclouds@gmail.com> wrote:
-> On Fri, Apr 6, 2012 at 3:41 PM, David Barr <davidbarr@google.com> wrote:
->> On Thu, Apr 5, 2012 at 4:44 AM, Junio C Hamano <gitster@pobox.com> wrote:
->>> Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
->>>
->>>> On Wed, Apr 4, 2012 at 5:53 AM, Junio C Hamano <gitster@pobox.com> wrote:
->>>> ...
->>>> I wonder what causes user time drop from .29s to .13s here. I think
->>>> the main patch should increase computation, even only slightly, not
->>>> less.
->>>
->>> The main patch reduced the amount of the data needs to be sent to the
->>> machinery to checksum and write to disk by about 45%, saving both I/O
->>> and computation.
->>
->> I hacked together a quick patch to try predictive coding the other
->> fields of the index. I got a further 34% improvement in size over
->> this series. Patches to come. I just used the previous cache entry as
->> the predictor and reused varint.h together with zigzag encoding[1].
->>
->> That's a total improvement in size over v2 of 62%.
->
-> Have you posted (and I missed) the patches? I'm interested in seeing
-> what changes you made.
+The latest maintenance release Git 1.7.10.1 is now available at
+the usual places.
 
-I haven't posted anything - my proof of concept was write-only and slow.
+The release tarballs are found at:
 
-I added a prelude with a bitmask that describes which fields differ
-with the previous entry.
+    http://code.google.com/p/git-core/downloads/list
 
-For each differing field, I encoded something like:
-diff := this - prev;
-zigzag := (diff << 1) ^ (diff >> 31)
-raw := zigzag - 1 /* zero impossible because of mask */
-write_varint(raw)
+and their SHA-1 checksums are:
 
-I also experimented with using unique sha1 prefixes but it was slow
-and probably introduces race conditions.
+870361f93fad7999f121bc7bc91a743feda68bdb  git-1.7.10.1.tar.gz
+29b79312482f9aaf92ee3d970caee5ed8ab96bba  git-htmldocs-1.7.10.1.tar.gz
+5bff761bc40a6b3cfe35ba824357dcf611dbd5d2  git-manpages-1.7.10.1.tar.gz
 
->> [1] https://developers.google.com/protocol-buffers/docs/encoding#types
---
-David Barr
+Also the following public repositories all have a copy of the v1.7.10.1
+tag and the maint branch that the tag points at:
+
+  url = git://repo.or.cz/alt-git.git
+  url = https://code.google.com/p/git-core/
+  url = git://git.sourceforge.jp/gitroot/git-core/git.git
+  url = git://git-core.git.sourceforge.net/gitroot/git-core/git-core
+  url = https://github.com/gitster/git
+
+Git v1.7.10.1 Release Notes
+===========================
+
+Additions since v1.7.10
+-----------------------
+
+Localization message files for Danish and German have been added.
+
+
+Fixes since v1.7.10
+-------------------
+
+ * "git add -p" is not designed to deal with unmerged paths but did
+   not exclude them and tried to apply funny patches only to fail.
+
+ * "git blame" started missing quite a few changes from the origin
+   since we stopped using the diff minimalization by default in v1.7.2
+   era.
+
+ * When PATH contains an unreadable directory, alias expansion code
+   did not kick in, and failed with an error that said "git-subcmd"
+   was not found.
+
+ * "git clean -d -f" (not "-d -f -f") is supposed to protect nested
+   working trees of independent git repositories that exist in the
+   current project working tree from getting removed, but the
+   protection applied only to such working trees that are at the
+   top-level of the current project by mistake.
+
+ * "git commit --author=$name" did not tell the name that was being
+   recorded in the resulting commit to hooks, even though it does do
+   so when the end user overrode the authorship via the
+   "GIT_AUTHOR_NAME" environment variable.
+
+ * When "git commit --template F" errors out because the user did not
+   touch the message, it claimed that it aborts due to "empty
+   message", which was utterly wrong.
+
+ * The regexp configured with diff.wordregex was incorrectly reused
+   across files.
+
+ * An age-old corner case bug in combine diff (only triggered with -U0
+   and the hunk at the beginning of the file needs to be shown) has
+   been fixed.
+
+ * Rename detection logic used to match two empty files as renames
+   during merge-recursive, leading to unnatural mismerges.
+
+ * The parser in "fast-import" did not diagnose ":9" style references
+   that is not followed by required SP/LF as an error.
+
+ * When "git fetch" encounters repositories with too many references,
+   the command line of "fetch-pack" that is run by a helper
+   e.g. remote-curl, may fail to hold all of them. Now such an
+   internal invocation can feed the references through the standard
+   input of "fetch-pack".
+
+ * "git fetch" that recurses into submodules on demand did not check
+   if it needs to go into submodules when non branches (most notably,
+   tags) are fetched.
+
+ * "log -p --graph" used with "--stat" had a few formatting error.
+
+ * Running "notes merge --commit" failed to perform correctly when run
+   from any directory inside $GIT_DIR/.  When "notes merge" stops with
+   conflicts, $GIT_DIR/NOTES_MERGE_WORKTREE is the place a user edits
+   to resolve it.
+
+ * The 'push to upstream' implementation was broken in some corner
+   cases. "git push $there" without refspec, when the current branch
+   is set to push to a remote different from $there, used to push to
+   $there using the upstream information to a remote unreleated to
+   $there.
+
+ * Giving "--continue" to a conflicted "rebase -i" session skipped a
+   commit that only results in changes to submodules.
+
+Also contains minor fixes and documentation updates.
