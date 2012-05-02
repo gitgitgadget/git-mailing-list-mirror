@@ -1,76 +1,100 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCH 0/9] Prefix-compress on-disk index entries
-Date: Wed, 2 May 2012 08:58:50 +0700
-Message-ID: <CACsJy8DZ4t0f_mdDJTUZvz_pBPrPTsEBxHEkYREowWm6D1ikkw@mail.gmail.com>
-References: <1333493596-14202-1-git-send-email-gitster@pobox.com>
- <CACsJy8A+cJtzKdqJSWbmjT1LgP10LB69-NHfOv8S6BusGcMeFw@mail.gmail.com>
- <7vpqbn8hgr.fsf@alter.siamese.dyndns.org> <CAFfmPPNHkK3SB8cGjfJiVoQoSg2OLL8B5--mwH8HShhJ1WGy2g@mail.gmail.com>
+From: Jiang Xin <worldhello.net@gmail.com>
+Subject: Maintenance of the maint and master branches of git-po
+Date: Wed, 2 May 2012 10:42:33 +0800
+Message-ID: <CANYiYbHa_0ZKFwRz-FfJO4fP7E9fCqAaEQ2JfPr_UotzBOGpYQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: David Barr <davidbarr@google.com>
-X-From: git-owner@vger.kernel.org Wed May 02 03:59:27 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Git List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>,
+	=?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>,
+	Byrial Jensen <byrial@vip.cybercity.dk>,
+	Ralf Thielow <ralf.thielow@googlemail.com>,
+	Marco Sousa <marcomsousa@gmail.com>,
+	Vincent van Ravesteijn <vfr@lyx.org>,
+	Peter Krefting <peter@softwolves.pp.se>
+X-From: git-owner@vger.kernel.org Wed May 02 04:42:41 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SPOql-0008Qa-5k
-	for gcvg-git-2@plane.gmane.org; Wed, 02 May 2012 03:59:27 +0200
+	id 1SPPWY-0001nm-VJ
+	for gcvg-git-2@plane.gmane.org; Wed, 02 May 2012 04:42:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757607Ab2EBB7W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 May 2012 21:59:22 -0400
-Received: from mail-wi0-f178.google.com ([209.85.212.178]:45479 "EHLO
-	mail-wi0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757445Ab2EBB7V (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 May 2012 21:59:21 -0400
-Received: by wibhq7 with SMTP id hq7so116183wib.1
-        for <git@vger.kernel.org>; Tue, 01 May 2012 18:59:20 -0700 (PDT)
+	id S1758387Ab2EBCme (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 May 2012 22:42:34 -0400
+Received: from mail-yw0-f46.google.com ([209.85.213.46]:50577 "EHLO
+	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757586Ab2EBCmd (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 May 2012 22:42:33 -0400
+Received: by yhmm54 with SMTP id m54so174711yhm.19
+        for <git@vger.kernel.org>; Tue, 01 May 2012 19:42:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=XX6zo7iw9er9k09AqdkksGu23p5tid09u2lT2/Ylv1s=;
-        b=O6pLCHRirO0xhEyuckNq59b9/G0KsBJIOIar4UfDfqajKbsBo8yRjroZa6X8TZEDRs
-         fhmKwN21syYDtbKhh6XdNoIPXwo+91cNOux8PvYKS6hpHHlRhw8LVfx2eupfVEd1CxmD
-         Z+J5EXje8JTNTemmVY2Xk8yCs+igC5+QrtVgjAuKNgJMqoeDfXuVejDUeu38+Kt/uG/J
-         zeywqh28GrHdzJMG/xgkBAUVM7zUmUFmgOsdioOaiExgb5i1fzP1FrLI5Tz5+yHbm7on
-         HAM4jUQnpDjsurWx5u68bdtrhFTLdM8A6yQKixs2xiSPLthaNokMmiFrPrzTlD/0VUAd
-         4sTg==
-Received: by 10.180.83.38 with SMTP id n6mr11181363wiy.1.1335923960683; Tue,
- 01 May 2012 18:59:20 -0700 (PDT)
-Received: by 10.223.14.193 with HTTP; Tue, 1 May 2012 18:58:50 -0700 (PDT)
-In-Reply-To: <CAFfmPPNHkK3SB8cGjfJiVoQoSg2OLL8B5--mwH8HShhJ1WGy2g@mail.gmail.com>
+        h=mime-version:date:message-id:subject:from:to:cc:content-type;
+        bh=hj5iFIM5gkyJD7aIpR0vjLNLSdg7mRKcfxeIv7CvikE=;
+        b=Tz7UixXo71XbkQqkMB+hRsxjAvHS5ZWotx8GJJ5PInzqhVLSBeqfEKsKItnxNrBxi1
+         4ADvQgGKqoIqCx5NtJNtwyltwP2Rl5+IJcE8FBe8NIzSjdP5TAQCn2m92Mf0l4PAWSel
+         1Pd2cglO99gre9Osa6zOTJkxb6j2QlakQXMcNJ5/eIjtwfMM1ZTW/zkolRfiatqF9gk5
+         79tNq7tW7RBkuO22vfrU1QaZ95Zxxyk43rkb0de8dvkn66RuLuK3/ERAlw51SRi2vwG4
+         gOdLw/VlgbMAdqHaZEsyyk8zRtl+N55j27hxXfLVBMX5VVabzj5GK6N9/+CA0VWsuUC1
+         3d1Q==
+Received: by 10.50.36.195 with SMTP id s3mr3499336igj.27.1335926553250; Tue,
+ 01 May 2012 19:42:33 -0700 (PDT)
+Received: by 10.50.207.40 with HTTP; Tue, 1 May 2012 19:42:33 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196776>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196777>
 
-On Fri, Apr 6, 2012 at 3:41 PM, David Barr <davidbarr@google.com> wrote:
-> On Thu, Apr 5, 2012 at 4:44 AM, Junio C Hamano <gitster@pobox.com> wrote:
->> Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
->>
->>> On Wed, Apr 4, 2012 at 5:53 AM, Junio C Hamano <gitster@pobox.com> wrote:
->>> ...
->>> I wonder what causes user time drop from .29s to .13s here. I think
->>> the main patch should increase computation, even only slightly, not
->>> less.
->>
->> The main patch reduced the amount of the data needs to be sent to the
->> machinery to checksum and write to disk by about 45%, saving both I/O
->> and computation.
->
-> I hacked together a quick patch to try predictive coding the other
-> fields of the index. I got a further 34% improvement in size over
-> this series. Patches to come. I just used the previous cache entry as
-> the predictor and reused varint.h together with zigzag encoding[1].
->
-> That's a total improvement in size over v2 of 62%.
+The git-po repository (https://github.com/git-l10n/git-po/) has two
+branches: maint and master. These two branches track the l10n
+updates for the counterparts of git.git.
 
-Have you posted (and I missed) the patches? I'm interested in seeing
-what changes you made.
+ * When translaters send pull requests to maint branch of git-po,
+   they want their translations go into the next maintenance
+   release of git (i. e. 1.7.10.1 for now).
 
-> [1] https://developers.google.com/protocol-buffers/docs/encoding#types
+ * When translaters send pull requests to master branch of git-po,
+    they want their translations go into the next release of git
+    (1.7.11 for now).
+
+When I received pull request(s) to maint branch, I will not only
+merge commit(s) to maint branch, but also merge back to
+master branch. If not merge maint branch back to master
+branch of git-po before I send git-request-pull to Junio, it will
+make troubles to the maintenance of git.git:
+
+1. Maint branch can not fast-forward to master branch,
+    when new release is out. (See the "Maintenance branch
+    management after a feature release" section of
+    `git help workflows`)
+
+        $ git checkout maint
+        $ git merge --ff-only master
+
+2. Will encounter lots of hard to resolved conflicts when
+    merge maint branch back to master branch, because
+    of the indepent location lines like "#: filename:line" in
+    the git.pot and XX.po files.
+
+So when there are updates in maint branch of git-po, I
+will always generate two request-pull to Junio, one for
+maint branch, and one for master branch.
+
+To make the merge less pain and less complication, I
+use a custom merge driver learned from TopGit.
+
+ * File ".git/info/attributes"
+
+        po/git.pot      merge=ours
+
+ * File ".git/config"
+
+        [merge "ours"]
+                name = \"always keep ours\" merge driver
+                driver = touch %A
+
 -- 
-Duy
+Jiang Xin
