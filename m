@@ -1,115 +1,127 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Newbie grief
-Date: Wed, 02 May 2012 14:28:20 -0700 (PDT)
-Message-ID: <m3pqamqnnz.fsf@localhost.localdomain>
-References: <4F9F128C.5020304@palm.com>
-	<201204302331.q3UNVo7o032303@no.baka.org> <4F9F3919.6060805@palm.com>
-	<CAMK1S_jwVsyKrGoL5uVAiuRrOa8bz79-DAueBmHZE2k=PpcJ2Q@mail.gmail.com>
-	<20120501111415.GD5769@thunk.org>
-	<CAMK1S_jN_WdZF4W4szzyJqLfC3FmnhKQ65XQiD-JS_jxwSm8_g@mail.gmail.com>
-	<4FA02830.3040407@palm.com>
-	<CAMOZ1Bue4r7aP75xaeKkFC08WfOqD8O41pkSQGx7RSbW5xWcdg@mail.gmail.com>
-	<4FA030D1.5030301@palm.com>
+From: Ralf Thielow <ralf.thielow@googlemail.com>
+Subject: =?UTF-8?q?=5BPATCH=5D=20de=2Epo=3A=20unify=20translations=20of=20=22ahead=22=20and=20=22behind=22?=
+Date: Wed,  2 May 2012 23:29:51 +0200
+Message-ID: <1335994191-5927-1-git-send-email-ralf.thielow@googlemail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Michael Witten <mfwitten@gmail.com>,
-	Sitaram Chamarty <sitaramc@gmail.com>,
-	"Ted Ts'o" <tytso@mit.edu>, Seth Robertson <in-gitvger@baka.org>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Rich Pixley <rich.pixley@palm.com>
-X-From: git-owner@vger.kernel.org Wed May 02 23:28:29 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: trast@student.ethz.ch, stimming@tuhh.de,
+	Ralf Thielow <ralf.thielow@googlemail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed May 02 23:30:20 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SPh64-0007Ql-Iz
-	for gcvg-git-2@plane.gmane.org; Wed, 02 May 2012 23:28:28 +0200
+	id 1SPh7m-0000Dl-Nd
+	for gcvg-git-2@plane.gmane.org; Wed, 02 May 2012 23:30:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752792Ab2EBV2Y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 May 2012 17:28:24 -0400
-Received: from mail-wi0-f178.google.com ([209.85.212.178]:38701 "EHLO
-	mail-wi0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751770Ab2EBV2X (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 May 2012 17:28:23 -0400
-Received: by wibhr7 with SMTP id hr7so28671wib.1
-        for <git@vger.kernel.org>; Wed, 02 May 2012 14:28:21 -0700 (PDT)
+	id S1753321Ab2EBVaH convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 2 May 2012 17:30:07 -0400
+Received: from mail-we0-f174.google.com ([74.125.82.174]:61879 "EHLO
+	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752825Ab2EBVaG (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 May 2012 17:30:06 -0400
+Received: by were53 with SMTP id e53so712924wer.19
+        for <git@vger.kernel.org>; Wed, 02 May 2012 14:30:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        bh=wyK5qMeXracGwihhUtEZtoZ5rmIZWLEAcqb1HufSyGo=;
-        b=DSxf0sXOE0oaHfl45bCqyPpCrAZJ+OLYWvhwQQOWi9INk7UQGF+MbkZVBf0Bjd1PuD
-         X3UD4Ond/2ogB9aVQHEOedW/I8gTTLq3/NNRzNkUb/Rf0hgNuar0jPZt5KTJIV6IPwU3
-         Ba2xzOXswa7fAPOIlFsTo6ALhX86YRLU0LawumGTq9qDmGcKPOk2+9jcMlOX2y1KScBT
-         NEDZCYCxmkWf7+5V2DPrVjoFzdhJkuxOGUxhADKiuKa5ELlWTRqp+USQMxxdeFxASqEo
-         DGqSfMfALisK4JHihqbk9bDDGxr/piXBpoq0Xr4EZv6YUoxwCO5J+tElpEkushdCqlsU
-         xQpw==
-Received: by 10.180.78.9 with SMTP id x9mr17657311wiw.18.1335994101920;
-        Wed, 02 May 2012 14:28:21 -0700 (PDT)
-Received: from localhost.localdomain (eps70.neoplus.adsl.tpnet.pl. [83.20.60.70])
-        by mx.google.com with ESMTPS id ff2sm10699871wib.9.2012.05.02.14.28.20
+        d=googlemail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
+         :content-type:content-transfer-encoding;
+        bh=WyU8Z7YY8KvdmvopDdEwAWNoXeX6KtYqGysYfJYlNW4=;
+        b=i+7s1oeMUD0O8ucDl8gbHd1RgTdU1bdhS5cHmBkC5eksB9bBZ/nrVm79xlkYzzd5d9
+         L2jEDgwXta+xowf9L50VA4hi/GPPgkbaLZ3b9w3tknaOc7adCeW6xud42H3SMYajD4Zq
+         aaq0dRArsnE/9sJba2ytSL1VLC/2MdC9AaGj3pbZDS+I36pVlZVsZXw8FIorK7BVkW0/
+         NCpS+DiDqooG873dAbjuhtrsXlRrc2lDaRwUSqes9atRZJI4zQwllIlvCOleYtK9FN3e
+         es2+WzFPHbdc825EmnyNDJIbAFfUwws6TIraF6un4vxCjShdPqmqSL39hZ6MPSnzT8i/
+         Kobw==
+Received: by 10.216.133.139 with SMTP id q11mr7862163wei.44.1335994204690;
+        Wed, 02 May 2012 14:30:04 -0700 (PDT)
+Received: from localhost.localdomain (dslb-094-223-205-117.pools.arcor-ip.net. [94.223.205.117])
+        by mx.google.com with ESMTPS id gg2sm10726267wib.7.2012.05.02.14.30.02
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 02 May 2012 14:28:20 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id q42LRelV027225;
-	Wed, 2 May 2012 23:27:45 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id q42LRC3M027215;
-	Wed, 2 May 2012 23:27:12 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <4FA030D1.5030301@palm.com>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+        Wed, 02 May 2012 14:30:03 -0700 (PDT)
+X-Mailer: git-send-email 1.7.10.67.g0b77
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196862>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196863>
 
-Rich Pixley <rich.pixley@palm.com> writes:
-> On 5/1/12 11:20 , Michael Witten wrote:
->> On Tue, May 1, 2012 at 18:15, Rich Pixley<rich.pixley@palm.com>  wrote:
->>
->>> I want pull to work even without merging.  I want to be able to share a
->>> branch between different repositories and different users while the source
->>> code control system tracks this for me
->>
->> I believe you are missing the point that a `pull' in git is a `fetch'
->> followed by a `merge'. You should read about the `fetch' command by
->> reading (`git help fetch'), and make sure you understand how to use
->> refspecs; you will probably find it very instructive to play around
->> by specifying explicit refspecs to `git fetch' rather than relying
->> on the implicit rules (which can be somewhat confusing).
+Signed-off-by: Ralf Thielow <ralf.thielow@googlemail.com>
+---
+ po/de.po |   17 +++++++++--------
+ 1 Datei ge=C3=A4ndert, 9 Zeilen hinzugef=C3=BCgt(+), 8 Zeilen entfernt=
+(-)
 
-[...]
-> That git uses the word "pull" to mean something different than
-> previous source code control systems only adds to the confusion.  I
-> was using "pull" in the more general sense of pushing and pulling
-> data, not in the very narrow meaning of "git fetch + git merge".
-
-In using "pull" vs "fetch" Git follows the convention of BitKeeper
-(proprietary distributed version control system which was used for
-Linux kernel development 'till "BitKeeper fiasco", and which Git
-replaced).
-
-> I'm still pretty much lost on refspecs and refs.  The terms are
-> apparently not used in the manuals I've been reading and they don't
-> seem to be used consistently even within git error messages.
-> 
-> Is "refspec" the git word for the branch pointer that points to the
-> childless commit that defines a branch?
-
-"Ref" in Git is a named reference (pointer) to a commit in DAG of
-revisions, i.e. either [local] branch, tag, remote-tracking branch,
-etc.
-
-"Refspec" is a specification of mapping between ref name in remote
-repository and "tracking" ref in local repository, e.g.
-
-  refs/heads/*:refs/remotes/origin/*
-  refs/tags/*:refs/tags/*
-
-See any of git-pull(1), git-fetch(1) and git-push(1) manpages.
-
--- 
-Jakub Narebski
+diff --git a/po/de.po b/po/de.po
+index abb719b..a43d289 100644
+--- a/po/de.po
++++ b/po/de.po
+@@ -169,9 +169,10 @@ msgid "Your branch is behind '%s' by %d commit, an=
+d can be fast-forwarded.\n"
+ msgid_plural ""
+ "Your branch is behind '%s' by %d commits, and can be fast-forwarded.\=
+n"
+ msgstr[0] ""
+-"Dein Zweig ist hinter '%s' um %d Version, und kann vorgespult werden.=
+\n"
++"Dein Zweig ist zu '%s' um %d Version hinterher, und kann vorgespult w=
+erden.\n"
+ msgstr[1] ""
+-"Dein Zweig ist hinter '%s' um %d Versionen, und kann vorgespult werde=
+n.\n"
++"Dein Zweig ist zu '%s' um %d Versionen hinterher, und kann vorgespult=
+ "
++"werden.\n"
+=20
+ #: remote.c:1621
+ #, c-format
+@@ -650,15 +651,15 @@ msgstr "Initiale Version auf "
+=20
+ #: wt-status.c:905
+ msgid "behind "
+-msgstr "hinter "
++msgstr "hinterher: "
+=20
+ #: wt-status.c:908 wt-status.c:911
+ msgid "ahead "
+-msgstr "weiter: "
++msgstr "voraus: "
+=20
+ #: wt-status.c:913
+ msgid ", behind "
+-msgstr ", zur=C3=BCckgefallen "
++msgstr ", hinterher: "
+=20
+ #: builtin/add.c:62
+ #, c-format
+@@ -891,7 +892,7 @@ msgstr "%d voraus] "
+ #: builtin/branch.c:398
+ #, c-format
+ msgid "ahead %d, behind %d] "
+-msgstr "vor %d, hinter %d] "
++msgstr "%d voraus, %d hinterher] "
+=20
+ #: builtin/branch.c:501
+ msgid "(no branch)"
+@@ -1078,12 +1079,12 @@ msgid_plural ""
+ "\n"
+ "%s\n"
+ msgstr[0] ""
+-"Warnung: Du verl=C3=A4sst %d Version zur=C3=BCckliegend, nicht verbun=
+den zu\n"
++"Warnung: Du bist um %d Version hinterher, nicht verbunden zu\n"
+ "einem deiner Zweige:\n"
+ "\n"
+ "%s\n"
+ msgstr[1] ""
+-"Warnung: Du verl=C3=A4sst %d Versionen zur=C3=BCckliegend, nicht verb=
+unden zu\n"
++"Warnung: Du bist um %d Versionen hinterher, nicht verbunden zu\n"
+ "einem deiner Zweige:\n"
+ "\n"
+ "%s\n"
+--=20
+1.7.10.67.g0b77
