@@ -1,84 +1,91 @@
-From: Per Cederqvist <cederp@opera.com>
-Subject: Re: [GUILT] [PATCH] Handle empty patches and patches with only a
- header.
-Date: Wed, 02 May 2012 08:27:33 +0200
-Message-ID: <4FA0D3D5.5080004@opera.com>
-References: <87haw1342k.fsf@opera.com> <20120430164841.GG20761@poseidon.cudanet.local>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: Is there any way to make hooks part of the repository?
+Date: Wed, 02 May 2012 08:38:13 +0200
+Message-ID: <vpqfwbjnl4a.fsf@bauges.imag.fr>
+References: <CAE1pOi2hr7ewjo5WVDoW0ipYxDVTckr5M_sHNoOQ323=_k754Q@mail.gmail.com>
+	<7vipgf8wve.fsf@alter.siamese.dyndns.org>
+	<CAE1pOi0_ETdSYsuT0Udhbr6rDvmEcuTA157d6aKUosgi7w28jw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, ceder@lysator.liu.se
-To: Jeff Sipek <jeffpc@josefsipek.net>
-X-From: git-owner@vger.kernel.org Wed May 02 08:27:56 2012
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, Git Users <git@vger.kernel.org>
+To: Hilco Wijbenga <hilco.wijbenga@gmail.com>
+X-From: git-owner@vger.kernel.org Wed May 02 08:38:31 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SPT2T-0001Bd-Dj
-	for gcvg-git-2@plane.gmane.org; Wed, 02 May 2012 08:27:49 +0200
+	id 1SPTCp-00062A-4J
+	for gcvg-git-2@plane.gmane.org; Wed, 02 May 2012 08:38:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755903Ab2EBG1o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 May 2012 02:27:44 -0400
-Received: from smtp.opera.com ([213.236.208.81]:47765 "EHLO smtp.opera.com"
+	id S1751384Ab2EBGiX convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 2 May 2012 02:38:23 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:45318 "EHLO shiva.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755763Ab2EBG1n (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 May 2012 02:27:43 -0400
-Received: from [10.30.1.61] (oslo.jvpn.opera.com [213.236.208.46])
-	(authenticated bits=0)
-	by smtp.opera.com (8.14.3/8.14.3/Debian-5+lenny1) with ESMTP id q426RY2u028502
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Wed, 2 May 2012 06:27:36 GMT
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:11.0) Gecko/20120412 Thunderbird/11.0.1
-In-Reply-To: <20120430164841.GG20761@poseidon.cudanet.local>
+	id S1751185Ab2EBGiW (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 May 2012 02:38:22 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id q426VM89021232
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Wed, 2 May 2012 08:31:22 +0200
+Received: from bauges.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1SPTCY-0001co-QS; Wed, 02 May 2012 08:38:14 +0200
+In-Reply-To: <CAE1pOi0_ETdSYsuT0Udhbr6rDvmEcuTA157d6aKUosgi7w28jw@mail.gmail.com>
+	(Hilco Wijbenga's message of "Tue, 1 May 2012 14:00:28 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.93 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Wed, 02 May 2012 08:31:22 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: q426VM89021232
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1336545084.68397@ZefsMZUunLzADDB4+P+XAg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196787>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196788>
 
-On 04/30/2012 06:48 PM, Jeff Sipek wrote:
-> On Mon, Apr 30, 2012 at 12:29:55PM +0200, Per Cederqvist wrote:
->> "git apply --numstat" in Git 1.7.10 gives an error message unless the
->> patch contains a diff, so don't attempt to apply it unless we find a
->
-> Find a what?  Such a cliff-hanger! :)
->
-> I assume you mean find a '^diff'.
+Hilco Wijbenga <hilco.wijbenga@gmail.com> writes:
 
-Yes. Initially, I searched for "@@" and the commit message
-said "diff hunk", but that heuristic failed if you had a
-patch that just changed the mode of a single file.  So I
-changed the patch to search for "^diff" instead, and
-apparently got distracted while editing the commit message.
-
-     /cederp
-
-> I'll fix up the commit message before applying.
->
-> Thanks,
->
-> Jeff.
->
->> Signed-off-by: Per Cederqvist<cederp@opera.com>
->> ---
->>   guilt |    2 +-
->>   1 file changed, 1 insertion(+), 1 deletion(-)
+> On 1 May 2012 13:33, Junio C Hamano <gitster@pobox.com> wrote:
+>> Hilco Wijbenga <hilco.wijbenga@gmail.com> writes:
 >>
->> diff --git a/guilt b/guilt
->> index 5d619c5..66a671a 100755
->> --- a/guilt
->> +++ b/guilt
->> @@ -622,7 +622,7 @@ push_patch()
->>   		cd_to_toplevel
+>>> Is there any way to get (some of) the Git hooks to run for everyone
+>>> without everyone having to install them separately? If no, is this =
+by
+>>> design or simply a feature nobody has asked for (yet)?
 >>
->>   		# apply the patch if and only if there is something to apply
->> -		if [ `git apply --numstat "$p" | wc -l` -gt 0 ]; then
->> +		if grep -q '^diff ' "$p"&&  [ `git apply --numstat "$p" | wc -l` -gt 0 ]; then
->>   			if [ "$bail_action" = abort ]; then
->>   				reject=""
->>   			fi
->> --
->> 1.7.10
->>
+>> By design. =A0Do you want me to include "rm -fr ~hilco" in some hook=
+ of
+>> git.git repository?
 >
+> Mmm, well, I might get quite famous if you did... ;-)
+>
+> But if you wanted to be evil then you could easily find another place
+> (the build scripts, the code itself, et cetera).
+
+Yes, but at least, you have the opportunity to examine the other places
+before they are ran. Hooks would be really, really nasty security-wise.
+=46or example, "git clone" does a checkout, so should probably run the
+checkout hooks.
+
+> So I don't think this is a good argument. Moreover, I do not work wit=
+h
+> people that would ever consider such nastiness. You need to realize
+> that this is all closed source. Your argument would be more valid in
+> an open source environment (like git.git).
+
+That may be acceptable for you, but you can't ask for such feature to b=
+e
+included in Git itself. At best, a standardized way to setup hooks (but
+something that would require a user-action to be set up) would be
+acceptable.
+
+--=20
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
