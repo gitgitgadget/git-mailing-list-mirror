@@ -1,89 +1,71 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: Please pull git-po master branch
-Date: Wed, 2 May 2012 15:58:17 +0200
-Message-ID: <87ehr2znuu.fsf@thomas.inf.ethz.ch>
-References: <CANYiYbHtKKWw9LPnr+1khC5Oms-kOtA2WEucoNoE3Njzqiahzw@mail.gmail.com>
-	<87d36n2f2r.fsf@thomas.inf.ethz.ch>
-	<CAN0XMOJ0PBA2qptw2Lm9HOq4SAkeZNAyOwPdvcb-uAcsxKnzwg@mail.gmail.com>
+From: Rolf Leggewie <foss@rolf.leggewie.biz>
+Subject: broken bash completion
+Date: Wed, 02 May 2012 22:09:26 +0800
+Message-ID: <4FA14016.8050503@rolf.leggewie.biz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Thomas Rast <trast@student.ethz.ch>,
-	Jiang Xin <worldhello.net@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Git List <git@vger.kernel.org>,
-	Jan =?utf-8?Q?Kr=C3=BCger?= <jk@jk.gs>,
-	Christian Stimming <stimming@tuhh.de>
-To: Ralf Thielow <ralf.thielow@googlemail.com>
-X-From: git-owner@vger.kernel.org Wed May 02 15:58:29 2012
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed May 02 16:09:51 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SPa4X-000242-D8
-	for gcvg-git-2@plane.gmane.org; Wed, 02 May 2012 15:58:25 +0200
+	id 1SPaFZ-000122-00
+	for gcvg-git-2@plane.gmane.org; Wed, 02 May 2012 16:09:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754854Ab2EBN6V convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 2 May 2012 09:58:21 -0400
-Received: from edge10.ethz.ch ([82.130.75.186]:28275 "EHLO edge10.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754831Ab2EBN6T convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 2 May 2012 09:58:19 -0400
-Received: from CAS21.d.ethz.ch (172.31.51.111) by edge10.ethz.ch
- (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.2.283.3; Wed, 2 May
- 2012 15:58:16 +0200
-Received: from thomas.inf.ethz.ch.ethz.ch (129.132.153.233) by CAS21.d.ethz.ch
- (172.31.51.111) with Microsoft SMTP Server (TLS) id 14.1.355.2; Wed, 2 May
- 2012 15:58:18 +0200
-In-Reply-To: <CAN0XMOJ0PBA2qptw2Lm9HOq4SAkeZNAyOwPdvcb-uAcsxKnzwg@mail.gmail.com>
-	(Ralf Thielow's message of "Wed, 2 May 2012 11:13:04 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Originating-IP: [129.132.153.233]
+	id S1755120Ab2EBOJq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 May 2012 10:09:46 -0400
+Received: from mail-in-15.arcor-online.net ([151.189.21.55]:60082 "EHLO
+	mail-in-15.arcor-online.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755092Ab2EBOJp (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 2 May 2012 10:09:45 -0400
+Received: from mail-in-04-z2.arcor-online.net (mail-in-04-z2.arcor-online.net [151.189.8.16])
+	by mx.arcor.de (Postfix) with ESMTP id F2DD41AB9BC
+	for <git@vger.kernel.org>; Wed,  2 May 2012 16:09:43 +0200 (CEST)
+Received: from mail-in-12.arcor-online.net (mail-in-12.arcor-online.net [151.189.21.52])
+	by mail-in-04-z2.arcor-online.net (Postfix) with ESMTP id EC8E21F90A2
+	for <git@vger.kernel.org>; Wed,  2 May 2012 16:09:43 +0200 (CEST)
+Received: from [192.168.3.3] (unknown [110.55.115.205])
+	(Authenticated sender: leggewie@arcor.de)
+	by mail-in-12.arcor-online.net (Postfix) with ESMTPA id D4009266AE
+	for <git@vger.kernel.org>; Wed,  2 May 2012 16:09:40 +0200 (CEST)
+X-DKIM: Sendmail DKIM Filter v2.8.2 mail-in-12.arcor-online.net D4009266AE
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.28) Gecko/20120313 Thunderbird/3.1.20
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196822>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196823>
 
-Ralf Thielow <ralf.thielow@googlemail.com> writes:
+forward from http://code.google.com/p/git-core/issues/detail?id=11
+and https://bugs.launchpad.net/bugs/853081
 
-> As I said I've tried to unify with the git-gui translation. Actually,=
- I was
-> wondered why they translate terms like "Tag" or "Commit" because
-> I think they should be known by a Git user.
->=20
-> I know German books about Git using many other terms like
-> "Staging" or "Index" as it is.
 
-Well, this is getting into the eternal "German vs. Denglish"
-bikeshedding war.  If you can actually cite books, that would probably
-constitute a good argument in favour of changing it to the English term=
-s
-for these.  (I'd be all for it, and AFAIK so would Jan, but as I said
-this has been going on for a while.)
+Hello,
 
->> * Make a glossary of the relevant terminology first. =C2=A0Sadly
->> =C2=A0gitglossary(7) has gotten somewhat stale, and perhaps can also=
- benefit
->> =C2=A0from an overhaul. =C2=A0=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason=
- recently made a list[4] of
->> =C2=A0the most important terms, which is a good start.
->
-> I would be happy to work together with you on these things.
-> Tiny changes in the translation of basic terms can make
-> a big difference.
+not sure you guys pay much attention to the issue tracker over on 
+code.google.com so I'll try my luck here.
 
-Perhaps you could use the Github wiki feature to import =C3=86var's lis=
-t into
-a wiki in your git-de-po repository, which we could then edit?
+Current bash completion works the following way.
 
-> I don't think that it's sooo bad that it needs to get reverted.
+1) only tag-completion possible: complete tag as much as possible
+2) only file/dir-completion possible: complete path as much as possible
+3) all of tag/file/dir-completion possible: complete tag (!) as much as 
+possible
 
-Probably not, since that would be pointless without another minor
-release.  But I am saying it should not have been fast-tracked to maint
-in the first place.
+1 and 2 are fine, but for #3 git should really stop at the lowest common 
+denominator for all of tags, files and directories. This is explained 
+better in above tickets, but I'll also include an example here for 
+illustration.  Let's say I had tags debian/1.4.9-1 and debian/1.4.9-2 as 
+well as debian/changelog file (as is common when using git-buildpackage, 
+this is a real life example).  Current bash-completion behavior for "git 
+log debiTAB" is to complete to "git log debian/1.4.9-" when it really 
+should be "git log debian/".
 
---=20
-Thomas Rast
-trast@{inf,student}.ethz.ch
+Thank you for your attention.
+
+Regards
+
+Rolf
