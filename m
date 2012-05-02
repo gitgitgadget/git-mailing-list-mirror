@@ -1,8 +1,9 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH v2 00/10] Large file support for git-archive
-Date: Wed,  2 May 2012 20:25:12 +0700
-Message-ID: <1335965122-17458-1-git-send-email-pclouds@gmail.com>
+Subject: [PATCH v2 01/10] streaming: void pointer instead of char pointer
+Date: Wed,  2 May 2012 20:25:13 +0700
+Message-ID: <1335965122-17458-2-git-send-email-pclouds@gmail.com>
+References: <1335965122-17458-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
@@ -11,80 +12,91 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 02 15:29:04 2012
+X-From: git-owner@vger.kernel.org Wed May 02 15:29:17 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SPZc4-0000S2-N5
-	for gcvg-git-2@plane.gmane.org; Wed, 02 May 2012 15:29:01 +0200
+	id 1SPZcK-0000ZM-E8
+	for gcvg-git-2@plane.gmane.org; Wed, 02 May 2012 15:29:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753608Ab2EBN24 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 2 May 2012 09:28:56 -0400
+	id S1753890Ab2EBN3G convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 2 May 2012 09:29:06 -0400
 Received: from mail-pb0-f46.google.com ([209.85.160.46]:64496 "EHLO
 	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752127Ab2EBN2z (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 May 2012 09:28:55 -0400
-Received: by pbbrp8 with SMTP id rp8so1097342pbb.19
-        for <git@vger.kernel.org>; Wed, 02 May 2012 06:28:54 -0700 (PDT)
+	with ESMTP id S1753763Ab2EBN3E (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 May 2012 09:29:04 -0400
+Received: by mail-pb0-f46.google.com with SMTP id rp8so1097342pbb.19
+        for <git@vger.kernel.org>; Wed, 02 May 2012 06:29:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
-         :content-type:content-transfer-encoding;
-        bh=IflvQGUYYFt/s8x0YUjLIdKyu/6t6bbfrs1VgQ6U5oE=;
-        b=ReEdvh/Yr/C2eX/uCo1z5AT7D/654TqLYJGWJP/PrnwlVpPkYLFC3xZ8lHSIGtaRQ9
-         cdmv/BT6dAC+qbhrnoxU5AWLJBMCClmHhcN8QgJhumudoZkdfPSnUVOPzSF+YN8jjGoo
-         F8B5A/TM+fzNf9hvy5aB3WA19vOglStnmHNhsYXyIADsgbdKVZRlZr6xJrUf+srmbYHJ
-         o7rt33cQVM/cMRwApWq6JXMjLIHAkMYleP9k/RglnG0fW+ajRb9ERU8ikAAEOMhT9XkP
-         YQJZr4e6o0ATWx3GIo4OUQxntPCagxBYcKFdT0z5cC0e0dXW3xH9jcXBXJiTckWTCmbL
-         5aGg==
-Received: by 10.68.202.167 with SMTP id kj7mr147855pbc.9.1335965334718;
-        Wed, 02 May 2012 06:28:54 -0700 (PDT)
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding;
+        bh=dVReaPKD/Pi2UinMolWCYpZHyP8z895TAS1TkwqAy2Q=;
+        b=jJsuamMElpqQtDiySeD52aComg0nBw+2+CYLUgnK44QNGVFgsvxAog6N+Hgs+0uEPN
+         GM49EUMpodYcvsalu4hadlL9iLaavnl0VJe8gSHG/bvFGDpVkUTmAGeW++64lUqQq0Uy
+         NX4MqaR+yDbLZpIo4SEWh1tVqfsROL8kFo6Uun0T3bdiEAfn0gtGjucFOZMjPZ43vegg
+         jYt+LWVRaWs17hTvpH1d/ZFX8+aS342TotK2yyHqDsbnx0Rx75pSHVIgUQlFeyqFFYhX
+         o5owS0wN0h9qeuC5HWcaasxHHY7tq+9ReIxGFbtVzWqUf3R/Szmq02yuIbQTjxTwAXsn
+         AmLQ==
+Received: by 10.68.194.72 with SMTP id hu8mr40224057pbc.26.1335965344080;
+        Wed, 02 May 2012 06:29:04 -0700 (PDT)
 Received: from pclouds@gmail.com ([115.74.34.118])
-        by mx.google.com with ESMTPS id vq9sm1993888pbc.18.2012.05.02.06.28.49
+        by mx.google.com with ESMTPS id qa9sm1993376pbb.26.2012.05.02.06.28.59
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 02 May 2012 06:28:53 -0700 (PDT)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Wed, 02 May 2012 20:25:24 +0700
+        Wed, 02 May 2012 06:29:03 -0700 (PDT)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Wed, 02 May 2012 20:25:33 +0700
 X-Mailer: git-send-email 1.7.8.36.g69ee2
+In-Reply-To: <1335965122-17458-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196803>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196804>
 
-v2 incorporates Ren=C3=A9's zip streaming support, fixes broken tar out=
-put
-on large files and adds more tests for verification.
+=46rom: Ren=C3=A9 Scharfe <rene.scharfe@lsrfire.ath.cx>
 
-v1 is at http://thread.gmane.org/gmane.comp.version-control.git/196535
+Allow any kind of buffer to be fed to read_istream() without an explici=
+t
+cast by making it's buf argument a void pointer.  It's about arbitrary
+data, not only characters.
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy (5):
-  archive-tar: turn write_tar_entry into blob-writing only
-  archive-tar: unindent write_tar_entry by one level
-  archive: delegate blob reading to backend
-  archive-tar: allow to accumulate writes before writing 512-byte block=
-s
-  archive-tar: stream large blobs to tar file
+Signed-off-by: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
+Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+=2Ecom>
+---
+ streaming.c |    2 +-
+ streaming.h |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-Ren=C3=A9 Scharfe (5):
-  streaming: void pointer instead of char pointer
-  archive-zip: remove uncompressed_size
-  archive-zip: factor out helpers for writing sizes and CRC
-  archive-zip: streaming for stored files
-  archive-zip: streaming for deflated files
-
- archive-tar.c       |  201 +++++++++++++++++++++++++++++++++++--------=
---------
- archive-zip.c       |  200 +++++++++++++++++++++++++++++++++++++++++++=
-++------
- archive.c           |   28 +++-----
- archive.h           |   10 +++-
- streaming.c         |    2 +-
- streaming.h         |    2 +-
- t/t1050-large.sh    |   12 +++
- t/t5000-tar-tree.sh |   22 ++++++
- 8 files changed, 372 insertions(+), 105 deletions(-)
-
+diff --git a/streaming.c b/streaming.c
+index 7e7ee2b..3a3cd12 100644
+--- a/streaming.c
++++ b/streaming.c
+@@ -99,7 +99,7 @@ int close_istream(struct git_istream *st)
+ 	return r;
+ }
+=20
+-ssize_t read_istream(struct git_istream *st, char *buf, size_t sz)
++ssize_t read_istream(struct git_istream *st, void *buf, size_t sz)
+ {
+ 	return st->vtbl->read(st, buf, sz);
+ }
+diff --git a/streaming.h b/streaming.h
+index 3e82770..1d05c2a 100644
+--- a/streaming.h
++++ b/streaming.h
+@@ -10,7 +10,7 @@ struct git_istream;
+=20
+ extern struct git_istream *open_istream(const unsigned char *, enum ob=
+ject_type *, unsigned long *, struct stream_filter *);
+ extern int close_istream(struct git_istream *);
+-extern ssize_t read_istream(struct git_istream *, char *, size_t);
++extern ssize_t read_istream(struct git_istream *, void *, size_t);
+=20
+ extern int stream_blob_to_fd(int fd, const unsigned char *, struct str=
+eam_filter *, int can_seek);
+=20
 --=20
 1.7.8.36.g69ee2
