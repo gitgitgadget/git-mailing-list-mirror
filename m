@@ -1,88 +1,107 @@
-From: Hallvard Breien Furuseth <h.b.furuseth@usit.uio.no>
-Subject: Re: Newbie grief
-Date: Wed, 02 May 2012 16:21:07 +0200
-Message-ID: <85ff02fc05e4a52ee0b1f1922f774a8d@ulrik.uio.no>
-References: <4F9F128C.5020304@palm.com>
- <201204302331.q3UNVo7o032303@no.baka.org> <4F9F3919.6060805@palm.com>
- <CAMK1S_jwVsyKrGoL5uVAiuRrOa8bz79-DAueBmHZE2k=PpcJ2Q@mail.gmail.com>
- <20120501111415.GD5769@thunk.org>
- <CAMK1S_jN_WdZF4W4szzyJqLfC3FmnhKQ65XQiD-JS_jxwSm8_g@mail.gmail.com>
- <4FA02830.3040407@palm.com> <86havzoi8h.fsf@red.stonehenge.com>
- <4FA04D02.6090702@palm.com> <86mx5rmx32.fsf@red.stonehenge.com>
- <4FA055D0.7040102@palm.com> <86aa1rmvhb.fsf@red.stonehenge.com>
- <4FA05E9F.9090709@palm.com>
+From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [PATCH 1/3] cmd_fetch_pack(): declare dest to be const
+Date: Wed,  2 May 2012 21:38:08 +0700
+Message-ID: <1335969490-9181-2-git-send-email-pclouds@gmail.com>
+References: <4FA13835.7080204@alum.mit.edu>
+ <1335969490-9181-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
- charset=UTF-8;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "Randal L. Schwartz" <merlyn@stonehenge.com>,
-	Sitaram Chamarty <sitaramc@gmail.com>,
-	Ted Ts'o <tytso@mit.edu>, Seth Robertson <in-gitvger@baka.org>,
-	<git@vger.kernel.org>
-To: Rich Pixley <rich.pixley@palm.com>
-X-From: git-owner@vger.kernel.org Wed May 02 16:35:43 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Michael Haggerty <mhagger@alum.mit.edu>,
+	Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed May 02 16:41:58 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SPaeU-0000s0-VH
-	for gcvg-git-2@plane.gmane.org; Wed, 02 May 2012 16:35:35 +0200
+	id 1SPakg-0005BP-Ar
+	for gcvg-git-2@plane.gmane.org; Wed, 02 May 2012 16:41:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754782Ab2EBOfa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 May 2012 10:35:30 -0400
-Received: from mail-out1.uio.no ([129.240.10.57]:39167 "EHLO mail-out1.uio.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754536Ab2EBOf3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 May 2012 10:35:29 -0400
-X-Greylist: delayed 848 seconds by postgrey-1.27 at vger.kernel.org; Wed, 02 May 2012 10:35:29 EDT
-Received: from mail-mx1.uio.no ([129.240.10.29])
-	by mail-out1.uio.no with esmtp (Exim 4.75)
-	(envelope-from <h.b.furuseth@usit.uio.no>)
-	id 1SPaQe-0002ap-EG; Wed, 02 May 2012 16:21:16 +0200
-Received: from w3prod-wm03.uio.no ([129.240.4.40] helo=webmail.uio.no)
-	by mail-mx1.uio.no with esmtpsa (TLSv1:AES256-SHA:256)
-	user hbf (Exim 4.76)
-	(envelope-from <h.b.furuseth@usit.uio.no>)
-	id 1SPaQe-0004VN-2R; Wed, 02 May 2012 16:21:16 +0200
-Received: from bombur.uio.no ([129.240.6.233])
- by webmail.uio.no
- with HTTP (HTTP/1.1 POST); Wed, 02 May 2012 16:21:07 +0200
-In-Reply-To: <4FA05E9F.9090709@palm.com>
-X-Sender: h.b.furuseth@usit.uio.no
-User-Agent: Roundcube Webmail/0.4.2
-X-UiO-Ratelimit-Test: rcpts/h 6 msgs/h 1 sum rcpts/h 7 sum msgs/h 1 total rcpts 2358 max rcpts/h 17 ratelimit 0
-X-UiO-Spam-info: not spam, SpamAssassin (score=-5.0, required=5.0, autolearn=disabled, T_RP_MATCHES_RCVD=-0.01,UIO_MAIL_IS_INTERNAL=-5, uiobl=NO, uiouri=NO)
-X-UiO-Scanned: F6DFB1C1600724F0157BA48383FF817E39A10597
-X-UiO-SPAM-Test: remote_host: 129.240.4.40 spam_score: -49 maxlevel 80 minaction 2 bait 0 mail/h: 92 total 1285102 max/h 414 blacklist 0 greylist 0 ratelimit 0
+	id S1754622Ab2EBOlz convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 2 May 2012 10:41:55 -0400
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:53835 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754573Ab2EBOlx (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 May 2012 10:41:53 -0400
+Received: by yenm10 with SMTP id m10so228398yen.19
+        for <git@vger.kernel.org>; Wed, 02 May 2012 07:41:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding;
+        bh=pFTpmj/owvBOy/ORlnsaxNDkOhXFUFvMi6N3U5/D6EE=;
+        b=s1IvpfEBll4yKkTku9YORysQtck4LjN6zBR1ZSd7tIJ+1S6nN5uEUd364dVR/Qme82
+         cKmleTy0cBYjTkCTU28iBZlwn5wpV3BPm1B5iANKLTkOhORLglinXl8k91kIk53VJKZN
+         4G7wT/M6RUTVt+nb/xaAcZifXWJgWXKu/V6Q8N4xcTEv9+QZ0lLxo/sFVihQvKku8+oe
+         5qaRPm/mSf3BJQapKzIho1nJY+wK7XYl4WvLiD7tv9bn+iDjiOXlhdUUPkZh4eD2LE+r
+         nhE7BEwA7ozbsfrrg3JmLFN0+cwy5rmAy58mginibEfSa90SiaaIOCxW/dqpm9rB0v+p
+         8FhQ==
+Received: by 10.68.240.35 with SMTP id vx3mr26540338pbc.94.1335969712942;
+        Wed, 02 May 2012 07:41:52 -0700 (PDT)
+Received: from pclouds@gmail.com ([115.74.34.118])
+        by mx.google.com with ESMTPS id uu3sm2144845pbc.70.2012.05.02.07.41.48
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 02 May 2012 07:41:52 -0700 (PDT)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Wed, 02 May 2012 21:38:22 +0700
+X-Mailer: git-send-email 1.7.8.36.g69ee2
+In-Reply-To: <1335969490-9181-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196827>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196828>
 
- On Tue, 01 May 2012 15:07:27 -0700, Rich Pixley wrote:
-> On 5/1/12 14:39 , Randal L. Schwartz wrote:
->> "git fetch" updates the remote tracking branches, which you commonly
->> reference preceded by "origin".  So "git fetch" DOES NOT TOUCH 
->> "master".
->> It touches only "origin/master".
->
-> Yes.  I understand that that is how git typically works in a non-bare
-> repository.
+=46rom: Michael Haggerty <mhagger@alum.mit.edu>
 
- And in a bare repository:
+There is no need for it to be non-const, and this avoids the need
+for casting away constness of argv elements.
 
-     git init --bare foo.git
-     cd              foo.git
-     git remote add bar ../bar.git
-     git fetch      bar
-         --> adds bar/master etc.
+Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
+Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+=2Ecom>
+---
+ builtin/fetch-pack.c |    7 ++++---
+ 1 files changed, 4 insertions(+), 3 deletions(-)
 
- For some reason, 'git clone --bare' does not treat the cloned
- repository the same way - it just copies it under refs/heads/
- instead of refs/remotes/, without even adding it as a remote.
-
--- 
- Hallvard
+diff --git a/builtin/fetch-pack.c b/builtin/fetch-pack.c
+index 10db15b..7e9d62f 100644
+--- a/builtin/fetch-pack.c
++++ b/builtin/fetch-pack.c
+@@ -901,7 +901,8 @@ int cmd_fetch_pack(int argc, const char **argv, con=
+st char *prefix)
+ {
+ 	int i, ret, nr_heads;
+ 	struct ref *ref =3D NULL;
+-	char *dest =3D NULL, **heads;
++	const char *dest =3D NULL;
++	char **heads;
+ 	int fd[2];
+ 	char *pack_lockfile =3D NULL;
+ 	char **pack_lockfile_ptr =3D NULL;
+@@ -971,7 +972,7 @@ int cmd_fetch_pack(int argc, const char **argv, con=
+st char *prefix)
+ 			}
+ 			usage(fetch_pack_usage);
+ 		}
+-		dest =3D (char *)arg;
++		dest =3D arg;
+ 		heads =3D (char **)(argv + i + 1);
+ 		nr_heads =3D argc - i - 1;
+ 		break;
+@@ -1018,7 +1019,7 @@ int cmd_fetch_pack(int argc, const char **argv, c=
+onst char *prefix)
+ 		fd[0] =3D 0;
+ 		fd[1] =3D 1;
+ 	} else {
+-		conn =3D git_connect(fd, (char *)dest, args.uploadpack,
++		conn =3D git_connect(fd, dest, args.uploadpack,
+ 				   args.verbose ? CONNECT_VERBOSE : 0);
+ 	}
+=20
+--=20
+1.7.8.36.g69ee2
