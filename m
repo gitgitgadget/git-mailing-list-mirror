@@ -1,76 +1,97 @@
-From: Heiko Voigt <hvoigt@hvoigt.net>
-Subject: Re: Location-agnostic submodules
-Date: Wed, 2 May 2012 18:55:43 +0200
-Message-ID: <20120502165543.GB49462@book.hvoigt.net>
-References: <20120427143710.GA13953@pape.arcanes.fr.eu.org> <CABURp0qA9hK1fBd3rmLG61ErpbbzrcxO=AAmFOsoxjt=ozu09Q@mail.gmail.com> <20120430220244.GL22827@pape.arcanes.fr.eu.org> <CABURp0rUKubfWXxX2ABG2E4dRTEQh4zA0bZFOeXGwv2m4b0YaA@mail.gmail.com> <732A8D2DB3374CD6BC12A5E7C4384313@PhilipOakley> <7v4nrzaioc.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/2] index-v4: document the entry format
+Date: Wed, 02 May 2012 10:04:11 -0700
+Message-ID: <7vlilaikfo.fsf@alter.siamese.dyndns.org>
+References: <1333493596-14202-1-git-send-email-gitster@pobox.com>
+ <xmqqzk9w93zu.fsf@junio.mtv.corp.google.com>
+ <xmqqpqas93sa.fsf_-_@junio.mtv.corp.google.com>
+ <87vckhuofj.fsf@thomas.inf.ethz.ch> <7vlilcczzb.fsf@alter.siamese.dyndns.org>
+ <CAJo=hJvFfVbYRKtPDJbd8MXKFDAyk==Sbm8oTgypbpE2O4o1=w@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Philip Oakley <philipoakley@iee.org>,
-	Phil Hord <phil.hord@gmail.com>,
-	Pierre Thierry <pierre@nothos.net>, git@vger.kernel.org,
-	Jens Lehmann <Jens.Lehmann@web.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed May 02 18:55:53 2012
+Cc: Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org,
+	Thomas Gummerer <t.gummerer@gmail.com>,
+	David Michael Barr <davidbarr@google.com>
+To: Shawn Pearce <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Wed May 02 19:04:28 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SPcqG-0005YD-81
-	for gcvg-git-2@plane.gmane.org; Wed, 02 May 2012 18:55:52 +0200
+	id 1SPcyS-0003j9-SI
+	for gcvg-git-2@plane.gmane.org; Wed, 02 May 2012 19:04:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754376Ab2EBQzq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 May 2012 12:55:46 -0400
-Received: from darksea.de ([83.133.111.250]:60773 "HELO darksea.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753249Ab2EBQzp (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 May 2012 12:55:45 -0400
-Received: (qmail 12848 invoked from network); 2 May 2012 18:55:43 +0200
-Received: from unknown (HELO localhost) (127.0.0.1)
-  by localhost with SMTP; 2 May 2012 18:55:43 +0200
-Content-Disposition: inline
-In-Reply-To: <7v4nrzaioc.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.19 (2009-01-05)
+	id S1754377Ab2EBREP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 May 2012 13:04:15 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64707 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753527Ab2EBREO (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 May 2012 13:04:14 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B44E76D8D;
+	Wed,  2 May 2012 13:04:13 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=xKtiosHS8e+Z1l+DpHag1q77GoA=; b=yhztbA
+	W3DFtrbBGuXCzWlJRWSE7MZx2voIuwaUJn1KUOpKkCT9m5vkoEeqA5D0k8uF7DGK
+	vbnBqR3shKxsNH2pIR0ZQc1JLiDkVPi+prM2KQBg8fz9oAylrPSElT4wmngo+deF
+	lVIKo3FxxflumqVbTHgeLs9Tr4Sin5SfShdE4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=AWq/xnX9Tq50lOzIgL6BKerI1XLDTg1Z
+	L4+rUKJxY2lzEMjJSfGhiiVQm0snGx4CxYk1IllzznHx/gK84zzAErJ/v81i2vAl
+	qO/kuqXyO6Zcdw9N13lAqaO3kh/3E3/TXFEQ4frjxdUi/nmBZ8uC972I/Il5A9jX
+	Iub3ELTY07I=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AACF16D8C;
+	Wed,  2 May 2012 13:04:13 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7082D6D8A; Wed,  2 May 2012
+ 13:04:12 -0400 (EDT)
+In-Reply-To: <CAJo=hJvFfVbYRKtPDJbd8MXKFDAyk==Sbm8oTgypbpE2O4o1=w@mail.gmail.com> (Shawn
+ Pearce's message of "Wed, 2 May 2012 08:12:13 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: D72AEEB0-9478-11E1-AF10-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196841>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196842>
 
-Hi,
+Shawn Pearce <spearce@spearce.org> writes:
 
-On Tue, May 01, 2012 at 10:57:07AM -0700, Junio C Hamano wrote:
-> "Philip Oakley" <philipoakley@iee.org> writes:
-> 
-> > Would an alternative be something like:
-> >    git submodule update <module> --from <remote>
-> >
-> > so that the user can state which of the current submodule's remotes
-> > should be used for fetching the desired update.
-> 
-> Are you assuming that the <remote> in the above example will be different
-> per invocation for a single user?  I would imagine not---it would be more
-> like "the upstream has this URL in .gitmodules, but this other mirror is
-> closer to my network environment", i.e.
-> 
-> 	cd <module's directory> && git config remote.origin.url $there
-> 
-> no?
+> IMHO, keep this in next to avoid releasing it until we know the
+> outcome of the GSoC project. The handful of WebKit developers that use
+> Git that really benefit from index v4 can use it by building and
+> installing their own next.
+> ...
+> Its only a few months to wait and see where "v5" goes. If v5 is
+> successful, v4 will just be a minor footnote in the history of Git,
+> and other tools won't need to support v4, they can go straight to v5.
 
-Yes I think this is an important point. If we start working on this I
-would like to emphasize the fork use case Philip brought up. When
-cloning a forked repository with submodules you always have the problem
-of changing/adding the forked submodules remotes afterwards.
+You may not have noticed this, but there is no practical difference
+between keeping it in 'next' and releasing it to 'master' from the
+third-party tool's point of view.
 
-For me it would be more like an additional lookup mechanism of the
-"official" urls / names. Since I like to stay as close as possible to
-the upstream repository I usually refrain from changing the .gitmodules
-file. A changed .gitmodules file with additional urls (possibly some
-private ones) is not something you can propagate upstream.
+There is _only_ one way to end up with v4 version of index: running "git
+update-index --index-version 4".  When creating a new index, or working in
+a repository, starting from an index written in the current version, you
+will get v2 (or v3) index (this gentle handling of backward compatibility
+comes from later parts of the series).  It is either running that command
+or running 'next' version *and* running that command---either way, the
+user deliberately has to ask for it, and if a third-party tool like jgit
+chooses to ignore v4, it is not the end of the world.  The user opted-in
+can run "git update-index --index-version 2" to revert it before using
+such a tool.
 
-What I would like is a mechanism that, given a wanted sha1, would lookup
-the correct remote to clone/fetch from. But, I have to admit that even
-though thinking about this for some time now, I have not got to a
-satisfying answer for myself yet.
+For a third-party tool, lack of support of v4 is similar to not supporting
+a config file that does not record the core.repositoryformatversion, which
+the user can manually add it with the editor, and much less serious than
+not supporting the v3 version of the index, which the user cannot do much
+about it.
 
-Cheers Heiko
+I would say that the cost of not merging the refactoring in the earlier
+parts of the series and the gentler handling of backward compatibility in
+the later parts of the series is much higher.
