@@ -1,137 +1,115 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/2] [GIT PULL] ktest: A couple of fixes
-Date: Wed, 02 May 2012 13:14:28 -0700
-Message-ID: <7vsjfigx23.fsf@alter.siamese.dyndns.org>
-References: <20120502004439.965120020@goodmis.org>
- <CA+55aFy02d13HkfwY-TEGwu=2cd8en+_rnrnwcwixGKRmdJRtA@mail.gmail.com>
- <7v62cf6y3d.fsf@alter.siamese.dyndns.org>
- <1335966292.14207.40.camel@gandalf.stny.rr.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Newbie grief
+Date: Wed, 02 May 2012 14:28:20 -0700 (PDT)
+Message-ID: <m3pqamqnnz.fsf@localhost.localdomain>
+References: <4F9F128C.5020304@palm.com>
+	<201204302331.q3UNVo7o032303@no.baka.org> <4F9F3919.6060805@palm.com>
+	<CAMK1S_jwVsyKrGoL5uVAiuRrOa8bz79-DAueBmHZE2k=PpcJ2Q@mail.gmail.com>
+	<20120501111415.GD5769@thunk.org>
+	<CAMK1S_jN_WdZF4W4szzyJqLfC3FmnhKQ65XQiD-JS_jxwSm8_g@mail.gmail.com>
+	<4FA02830.3040407@palm.com>
+	<CAMOZ1Bue4r7aP75xaeKkFC08WfOqD8O41pkSQGx7RSbW5xWcdg@mail.gmail.com>
+	<4FA030D1.5030301@palm.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	linux-kernel@vger.kernel.org,
-	Git Mailing List <git@vger.kernel.org>
-To: Steven Rostedt <rostedt@goodmis.org>
-X-From: linux-kernel-owner@vger.kernel.org Wed May 02 22:14:48 2012
-Return-path: <linux-kernel-owner@vger.kernel.org>
-Envelope-to: glk-linux-kernel-3@plane.gmane.org
+Cc: Michael Witten <mfwitten@gmail.com>,
+	Sitaram Chamarty <sitaramc@gmail.com>,
+	"Ted Ts'o" <tytso@mit.edu>, Seth Robertson <in-gitvger@baka.org>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Rich Pixley <rich.pixley@palm.com>
+X-From: git-owner@vger.kernel.org Wed May 02 23:28:29 2012
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <linux-kernel-owner@vger.kernel.org>)
-	id 1SPfwk-0006gB-Ge
-	for glk-linux-kernel-3@plane.gmane.org; Wed, 02 May 2012 22:14:46 +0200
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1SPh64-0007Ql-Iz
+	for gcvg-git-2@plane.gmane.org; Wed, 02 May 2012 23:28:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757216Ab2EBUOc (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
-	Wed, 2 May 2012 16:14:32 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:60129 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757006Ab2EBUOa (ORCPT <rfc822;linux-kernel@vger.kernel.org>);
-	Wed, 2 May 2012 16:14:30 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 306217FD4;
-	Wed,  2 May 2012 16:14:30 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=6O3lNqLgGRwiZ9t8+N7Cwi+4350=; b=Vc0osV
-	bxrX1L6HEltsbjUomVHAqbF2pXSZeX3q9kTWp2sjj0hKHCxbVp56rUEqzsEA6qTC
-	BQc5SwOYG2AO3MrrKplPD28haSfDk2IlySBd28/PsblgFQeucP5ZqgzBD7DRac2w
-	C7C163FYpCeDPzN2tPrmE+wUCtJ3JC3QBQbL4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=VyOcjprCRvGCz2oDnVycaQrb5YUSONei
-	zqNxkARgf1omK8TfhfwfTIBiSKfbEKC4CbKyCvQGSzyF76Ulv0A2trCdaqeqLXF3
-	C2PsqEuWEHMDRnU9kvXYJjykLWyyV+S5GHN1OiXfPrab9mLuUF4KMHWchYSwsIud
-	ml5qRALo/0M=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 27C647FD3;
-	Wed,  2 May 2012 16:14:30 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5EC1E7FD0; Wed,  2 May 2012
- 16:14:29 -0400 (EDT)
-In-Reply-To: <1335966292.14207.40.camel@gandalf.stny.rr.com> (Steven
- Rostedt's message of "Wed, 02 May 2012 09:44:52 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 6C2FDA42-9493-11E1-8559-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
-Sender: linux-kernel-owner@vger.kernel.org
+	id S1752792Ab2EBV2Y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 May 2012 17:28:24 -0400
+Received: from mail-wi0-f178.google.com ([209.85.212.178]:38701 "EHLO
+	mail-wi0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751770Ab2EBV2X (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 May 2012 17:28:23 -0400
+Received: by wibhr7 with SMTP id hr7so28671wib.1
+        for <git@vger.kernel.org>; Wed, 02 May 2012 14:28:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        bh=wyK5qMeXracGwihhUtEZtoZ5rmIZWLEAcqb1HufSyGo=;
+        b=DSxf0sXOE0oaHfl45bCqyPpCrAZJ+OLYWvhwQQOWi9INk7UQGF+MbkZVBf0Bjd1PuD
+         X3UD4Ond/2ogB9aVQHEOedW/I8gTTLq3/NNRzNkUb/Rf0hgNuar0jPZt5KTJIV6IPwU3
+         Ba2xzOXswa7fAPOIlFsTo6ALhX86YRLU0LawumGTq9qDmGcKPOk2+9jcMlOX2y1KScBT
+         NEDZCYCxmkWf7+5V2DPrVjoFzdhJkuxOGUxhADKiuKa5ELlWTRqp+USQMxxdeFxASqEo
+         DGqSfMfALisK4JHihqbk9bDDGxr/piXBpoq0Xr4EZv6YUoxwCO5J+tElpEkushdCqlsU
+         xQpw==
+Received: by 10.180.78.9 with SMTP id x9mr17657311wiw.18.1335994101920;
+        Wed, 02 May 2012 14:28:21 -0700 (PDT)
+Received: from localhost.localdomain (eps70.neoplus.adsl.tpnet.pl. [83.20.60.70])
+        by mx.google.com with ESMTPS id ff2sm10699871wib.9.2012.05.02.14.28.20
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 02 May 2012 14:28:20 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id q42LRelV027225;
+	Wed, 2 May 2012 23:27:45 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id q42LRC3M027215;
+	Wed, 2 May 2012 23:27:12 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <4FA030D1.5030301@palm.com>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <linux-kernel.vger.kernel.org>
-X-Mailing-List: linux-kernel@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196861>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196862>
 
-Steven Rostedt <rostedt@goodmis.org> writes:
+Rich Pixley <rich.pixley@palm.com> writes:
+> On 5/1/12 11:20 , Michael Witten wrote:
+>> On Tue, May 1, 2012 at 18:15, Rich Pixley<rich.pixley@palm.com>  wrote:
+>>
+>>> I want pull to work even without merging.  I want to be able to share a
+>>> branch between different repositories and different users while the source
+>>> code control system tracks this for me
+>>
+>> I believe you are missing the point that a `pull' in git is a `fetch'
+>> followed by a `merge'. You should read about the `fetch' command by
+>> reading (`git help fetch'), and make sure you understand how to use
+>> refspecs; you will probably find it very instructive to play around
+>> by specifying explicit refspecs to `git fetch' rather than relying
+>> on the implicit rules (which can be somewhat confusing).
 
-> On Tue, 2012-05-01 at 20:49 -0700, Junio C Hamano wrote:
->> Linus Torvalds <torvalds@linux-foundation.org> writes:
->> 
->
->> When a normal developer wants to _reset to_ a particular tagged release,...
->
-> The problem is,...
-> But then I would end up with ...
+[...]
+> That git uses the word "pull" to mean something different than
+> previous source code control systems only adds to the confusion.  I
+> was using "pull" in the more general sense of pushing and pulling
+> data, not in the very narrow meaning of "git fetch + git merge".
 
-[comments on the part I declared "uninteresting" snipped]
+In using "pull" vs "fetch" Git follows the convention of BitKeeper
+(proprietary distributed version control system which was used for
+Linux kernel development 'till "BitKeeper fiasco", and which Git
+replaced).
 
->> So the case to "reset to" is not very interesting.
+> I'm still pretty much lost on refspecs and refs.  The terms are
+> apparently not used in the manuals I've been reading and they don't
+> seem to be used consistently even within git error messages.
+> 
+> Is "refspec" the git word for the branch pointer that points to the
+> childless commit that defines a branch?
 
->> But when a normal developer wants to _sync to_ a particular tagged
->> release, in order to _continue_ working on her topic, she would need to
->> have a merge (unless she does not have _anything_ herself), and at that
->> point, merging v3.4-rc5 vs v3.4-rc5^0 would not make that much of a
->> difference.  If she absolutely detests the "mergetag" header, she could do
->> a "git fetch --tags linus" followed by
->> 
->> 	git merge v3.4-rc5^0
->> 
->> which admittedly is two more letters than she used to type.
->
-> This would fit into my workflow. Thus I could use this.
+"Ref" in Git is a named reference (pointer) to a commit in DAG of
+revisions, i.e. either [local] branch, tag, remote-tracking branch,
+etc.
 
-OK.
+"Refspec" is a specification of mapping between ref name in remote
+repository and "tracking" ref in local repository, e.g.
 
->> If you mean by "Ideas" for additional features, obviously the last step
->> could be enhanced to use a more intuitive command line that requires the
->> user to type even more, i.e.
->> 
->> 	git merge --ff v3.4-rc5
->> 
->> Once that is done, "git pull --ff linus v3.4-rc5" would fall out as a
->> logical consequence.
->> 
->> But obviously these two would need new code ;-)
->
-> The -ff would make sense as it seems to be the logical thing a user
-> would want. If they specify the fast-forward flag, then the user would
-> expect the merge to be a fast forward if possible.
+  refs/heads/*:refs/remotes/origin/*
+  refs/tags/*:refs/tags/*
 
-OK.  Sounds like a good janitor project we could try to find a volunteer
-on ;-).
+See any of git-pull(1), git-fetch(1) and git-push(1) manpages.
 
-> BTW, is there a git compare type option. That is, I like to compare two
-> separate branches with the result that one currently gets with git when
-> a branch is following another branch. When you check out that branch, it
-> gives you an update on how those two branches are related (is one a fast
-> forward of the other, are they off by different commits?). It would be
-> nice if git could do this with any two branches. I wrote a script to do
-> this for me (attached) but it would be nice if git had it natively.
->
-> $ git-branch-status v3.0.4 v3.0.5              
-> Branch v3.0.4 can be fast forward to v3.0.5 in 240 commits
->
-> $ git-branch-status v3.0.4 v3.1  
-> Branch v3.0.4 and v3.1
-> differ by 257 and 9380 commit(s) respectively
-
-I personally do not think "257 and 9380" vs "15 and 400" totally
-uninteresting, in the sense that the absolute numbers do not matter much,
-and the only question that matter is "Is everything in this one included
-in the other?" and I just say "git lgf master..topic" (where I have in my
-$HOME/.gitconfig "[alias] lgf = log --oneline --boundary --first-parent"
-defined) to see the list of commits on a topic, with the indication of
-where the topic forked from.  Obviously it takes the "never merge mainline
-into topics" discipline for it to be useful.
-
-I also use "git show-branch $A $B $C..." for something like this but that
-is only useful when these branches are known to have only a handful of
-commits on their own, and its output is not very suited if they have
-hundreds of commits.
+-- 
+Jakub Narebski
