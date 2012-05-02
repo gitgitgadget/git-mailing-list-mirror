@@ -1,72 +1,72 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: New NULL dereference in sequence.c
-Date: Wed, 02 May 2012 19:39:19 +0200
-Message-ID: <vpqd36mcwjc.fsf@bauges.imag.fr>
-References: <CANV9Rr9PFR7SA_3jB-6PRF_V+4yB-FsYEuX5gs-LMpoTAxGDCQ@mail.gmail.com>
-	<4FA12E42.201@lsrfire.ath.cx>
-	<20120502173436.GA26732@hmsreliant.think-freely.org>
+From: Ralf Thielow <ralf.thielow@googlemail.com>
+Subject: Re: [PATCH 0/5] de.po suggested updates
+Date: Wed, 2 May 2012 19:52:37 +0200
+Message-ID: <CAN0XMOKBArgEJ1wE3A_rfoGQuJoJ1HX5LGG_JQVBZOEq7OF=ww@mail.gmail.com>
+References: <87d36n2f2r.fsf@thomas.inf.ethz.ch>
+	<cover.1335966202.git.trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: =?iso-8859-1?Q?Ren=E9?= Scharfe <rene.scharfe@lsrfire.ath.cx>,
-	Michael Mueller <mmueller@vigilantsw.com>, git@vger.kernel.org
-To: Neil Horman <nhorman@tuxdriver.com>
-X-From: git-owner@vger.kernel.org Wed May 02 19:39:38 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jiang Xin <worldhello.net@gmail.com>,
+	Git List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?Q?Jan_Kr=C3=BCger?= <jk@jk.gs>,
+	Christian Stimming <stimming@tuhh.de>
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Wed May 02 19:52:46 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SPdWa-0003Sc-IA
-	for gcvg-git-2@plane.gmane.org; Wed, 02 May 2012 19:39:36 +0200
+	id 1SPdjJ-0003zs-Ei
+	for gcvg-git-2@plane.gmane.org; Wed, 02 May 2012 19:52:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755408Ab2EBRjc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 May 2012 13:39:32 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:37911 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754749Ab2EBRjb (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 May 2012 13:39:31 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id q42HWUlV013214
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Wed, 2 May 2012 19:32:30 +0200
-Received: from bauges.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1SPdWK-0007jy-3d; Wed, 02 May 2012 19:39:20 +0200
-In-Reply-To: <20120502173436.GA26732@hmsreliant.think-freely.org> (Neil
-	Horman's message of "Wed, 2 May 2012 13:34:36 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.93 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Wed, 02 May 2012 19:32:30 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: q42HWUlV013214
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1336584750.56029@mi7NGnGuLlIGv3wTrAF35g
+	id S1755491Ab2EBRwl convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 2 May 2012 13:52:41 -0400
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:45442 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755424Ab2EBRwk convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 2 May 2012 13:52:40 -0400
+Received: by yenm10 with SMTP id m10so441020yen.19
+        for <git@vger.kernel.org>; Wed, 02 May 2012 10:52:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=0nip4QIKSCt9hDSKg9BbO+bqX0EnBa3tB0c/trntunM=;
+        b=Qr7+2IW7D4QfehZt9Mtap0pOtVZqN5bT1N3xcyoHUisz9HTkMVGn4RgMy+usCuSzUe
+         XicS0gG6tFimJp7IIuMqcwD0aD/vaj98jAAD1W664Ie72tXYMEgHCoiusfDucoQSki9U
+         +QwWLCWNvdEiYXsASLPPzq5w87b6cfZPepIScawpeo6YOJlp3WddOlPbEVy+0PvDItrw
+         fBtunW7X6ZvXTTbwLD6HVbIWAXDV4KKAZwbbfFdmkMiKAi5ait9oqWQuP3LYrn9RLH1m
+         EI4hd6L7bc16bmCzH0cjU9b3LAEP8hcqvWc793PUJZzE5NsDkb6Iw2eqpYlfdUtwSMVT
+         WMZg==
+Received: by 10.236.182.131 with SMTP id o3mr32221152yhm.113.1335981157390;
+ Wed, 02 May 2012 10:52:37 -0700 (PDT)
+Received: by 10.146.203.1 with HTTP; Wed, 2 May 2012 10:52:37 -0700 (PDT)
+In-Reply-To: <cover.1335966202.git.trast@student.ethz.ch>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196847>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196848>
 
-Neil Horman <nhorman@tuxdriver.com> writes:
+> [2/5] does away with the "bare"->"leer" issue that I used as an
+> =C2=A0 =C2=A0 =C2=A0example earlier. =C2=A0There's precedent in git-g=
+ui :-( This does
+> =C2=A0 =C2=A0 =C2=A0raise the question if it's kosher to patch both g=
+it and git-gui
+> =C2=A0 =C2=A0 =C2=A0at the same time, but if we want to keep the tran=
+slations in
+> =C2=A0 =C2=A0 =C2=A0sync it probably won't be the last such patch.
+>
+> [3/5] collects all the "obvious" stuff
+>
+> [4/5] and [5/5] gather the less-obvious stuff -- keep what you like.
 
->> >         if (!head_commit || parse_commit(head_commit))
->> >             return error(_("could not parse commit %s\n"),
->> >                      sha1_to_hex(head_commit->object.sha1));
+Looks good.
 
-[...]
+I applied 2-4 and most of the 5th (i'll comment it for itself)  on my
+maint branch.
 
-> Have you actually seen this problem occur? It seems to me that the
-> only way head_commit could be NULL is in the event that HEAD wasn't a
-> commit object, whcih I don't think can be the case unless something
-> else is very wrong with your tree.
-
-I don't know whether it can actually happen, but if it can't happen,
-then the if() condition should be rewritten. As it is, it explicitly
-allows head_commit to be NULL within the if body.
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Thanks
