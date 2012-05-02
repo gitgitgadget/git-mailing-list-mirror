@@ -1,165 +1,66 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCH 2/2] cmd_fetch_pack(): fix constness problem and memory leak
-Date: Wed, 2 May 2012 18:14:36 +0700
-Message-ID: <CACsJy8AE7Y1Y5Drda39OfSKwTQN7oSSrb2Ai+jq_hi8XC4dtsw@mail.gmail.com>
-References: <1335955259-15309-1-git-send-email-mhagger@alum.mit.edu> <1335955259-15309-3-git-send-email-mhagger@alum.mit.edu>
+From: rajmv <rene.veerman.netherlands@gmail.com>
+Subject: Noob asking for repo setup advice
+Date: Wed, 2 May 2012 04:46:45 -0700 (PDT)
+Message-ID: <1335959205015-7519875.post@n2.nabble.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: base64
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: mhagger@alum.mit.edu
-X-From: git-owner@vger.kernel.org Wed May 02 13:15:24 2012
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed May 02 13:46:53 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SPXWg-0006X0-I4
-	for gcvg-git-2@plane.gmane.org; Wed, 02 May 2012 13:15:19 +0200
+	id 1SPY1C-0007pc-FB
+	for gcvg-git-2@plane.gmane.org; Wed, 02 May 2012 13:46:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753805Ab2EBLPJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 May 2012 07:15:09 -0400
-Received: from mail-wg0-f44.google.com ([74.125.82.44]:43841 "EHLO
-	mail-wg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752658Ab2EBLPH (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 May 2012 07:15:07 -0400
-Received: by wgbdr13 with SMTP id dr13so512268wgb.1
-        for <git@vger.kernel.org>; Wed, 02 May 2012 04:15:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=JShIPnbSmogQVWexZlkpCtLABrpVzqVSkyad5hxMOjI=;
-        b=0GIThzMFBeRzOlUFatMDutI5Zp7KMlcFQPXtqfoD9ngyd+sz4WnTiQ1fVf1T+XIJLA
-         zPIw8fOZURwRL/30HzvFxxbuTzGkpVWm3fcVdWpvuuzbg892ic/A0AYa8H1v+DRu9tMU
-         H/U81b8uv6lXS/yyLNDH9gfilFU6EsUyA7mNl+Mac/5Ftptn/2ZPwdOd6XO3O9gvxLeX
-         cYjDMfuY+CYZXa2G09KDFRItXV+34qRc9e/BKPQEW2MEXERaMWoTUyHseCyjvgZ4H7q+
-         ucyhap2NvXUSSCv//DUVvgiYE12IPm9fOMeO3bNtrPgSWUq5DmEMj1W8X9gvwk5CNDQ+
-         eXXg==
-Received: by 10.180.88.67 with SMTP id be3mr13079726wib.20.1335957306478; Wed,
- 02 May 2012 04:15:06 -0700 (PDT)
-Received: by 10.223.14.193 with HTTP; Wed, 2 May 2012 04:14:36 -0700 (PDT)
-In-Reply-To: <1335955259-15309-3-git-send-email-mhagger@alum.mit.edu>
+	id S1753898Ab2EBLqq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 May 2012 07:46:46 -0400
+Received: from sam.nabble.com ([216.139.236.26]:60398 "EHLO sam.nabble.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752226Ab2EBLqp (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 May 2012 07:46:45 -0400
+Received: from jim.nabble.com ([192.168.236.80])
+	by sam.nabble.com with esmtp (Exim 4.72)
+	(envelope-from <rene.veerman.netherlands@gmail.com>)
+	id 1SPY17-0001cv-0o
+	for git@vger.kernel.org; Wed, 02 May 2012 04:46:45 -0700
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196800>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196801>
 
-T24gV2VkLCBNYXkgMiwgMjAxMiBhdCA1OjQwIFBNLCAgPG1oYWdnZXJAYWx1bS5taXQuZWR1PiB3
-cm90ZToKPiDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoGNvbnN0IGNoYXIgKmFyZyA9IGFyZ3ZbaV07
-Cj4KPiAtIMKgIMKgIMKgIMKgIMKgIMKgIMKgIGlmICgqYXJnID09ICctJykgewo+IC0gwqAgwqAg
-wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgaWYgKCFwcmVmaXhjbXAoYXJnLCAiLS11cGxvYWQt
-cGFjaz0iKSkgewo+IC0gwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
-wqAgYXJncy51cGxvYWRwYWNrID0gYXJnICsgMTQ7Cj4gLSDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
-oCDCoCDCoCDCoCDCoCDCoCDCoCDCoCBjb250aW51ZTsKPiAtIMKgIMKgIMKgIMKgIMKgIMKgIMKg
-IMKgIMKgIMKgIMKgIH0KPiAtIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIGlmICgh
-cHJlZml4Y21wKGFyZywgIi0tZXhlYz0iKSkgewo+IC0gwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
-wqAgwqAgwqAgwqAgwqAgwqAgwqAgYXJncy51cGxvYWRwYWNrID0gYXJnICsgNzsKPiAtIMKgIMKg
-IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIGNvbnRpbnVlOwo+IC0gwqAg
-wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgfQo+IC0gwqAgwqAgwqAgwqAgwqAgwqAgwqAg
-wqAgwqAgwqAgwqAgaWYgKCFzdHJjbXAoIi0tcXVpZXQiLCBhcmcpIHx8ICFzdHJjbXAoIi1xIiwg
-YXJnKSkgewo+IC0gwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
-YXJncy5xdWlldCA9IDE7Cj4gLSDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
-oCDCoCDCoCBjb250aW51ZTsKPiAtIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIH0K
-PiAtIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIGlmICghc3RyY21wKCItLWtlZXAi
-LCBhcmcpIHx8ICFzdHJjbXAoIi1rIiwgYXJnKSkgewo+IC0gwqAgwqAgwqAgwqAgwqAgwqAgwqAg
-wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgYXJncy5sb2NrX3BhY2sgPSBhcmdzLmtlZXBfcGFjazsK
-PiAtIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIGFyZ3Mua2Vl
-cF9wYWNrID0gMTsKPiAtIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
-IMKgIGNvbnRpbnVlOwo+IC0gwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgfQo+IC0g
-wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgaWYgKCFzdHJjbXAoIi0tdGhpbiIsIGFy
-ZykpIHsKPiAtIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIGFy
-Z3MudXNlX3RoaW5fcGFjayA9IDE7Cj4gLSDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
-oCDCoCDCoCDCoCDCoCBjb250aW51ZTsKPiAtIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
-IMKgIH0KPiAtIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIGlmICghc3RyY21wKCIt
-LWluY2x1ZGUtdGFnIiwgYXJnKSkgewo+IC0gwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
-wqAgwqAgwqAgwqAgwqAgYXJncy5pbmNsdWRlX3RhZyA9IDE7Cj4gLSDCoCDCoCDCoCDCoCDCoCDC
-oCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCBjb250aW51ZTsKPiAtIMKgIMKgIMKgIMKgIMKg
-IMKgIMKgIMKgIMKgIMKgIMKgIH0KPiAtIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
-IGlmICghc3RyY21wKCItLWFsbCIsIGFyZykpIHsKPiAtIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
-IMKgIMKgIMKgIMKgIMKgIMKgIMKgIGFyZ3MuZmV0Y2hfYWxsID0gMTsKPiAtIMKgIMKgIMKgIMKg
-IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIGNvbnRpbnVlOwo+IC0gwqAgwqAgwqAg
-wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgfQo+IC0gwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
-wqAgwqAgaWYgKCFzdHJjbXAoIi0tc3RkaW4iLCBhcmcpKSB7Cj4gLSDCoCDCoCDCoCDCoCDCoCDC
-oCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCBhcmdzLnN0ZGluX3JlZnMgPSAxOwo+IC0gwqAg
-wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgY29udGludWU7Cj4gLSDC
-oCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCB9Cj4gLSDCoCDCoCDCoCDCoCDCoCDCoCDC
-oCDCoCDCoCDCoCDCoCBpZiAoIXN0cmNtcCgiLXYiLCBhcmcpKSB7Cj4gLSDCoCDCoCDCoCDCoCDC
-oCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCBhcmdzLnZlcmJvc2UgPSAxOwo+IC0gwqAg
-wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgY29udGludWU7Cj4gLSDC
-oCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCB9Cj4gLSDCoCDCoCDCoCDCoCDCoCDCoCDC
-oCDCoCDCoCDCoCDCoCBpZiAoIXByZWZpeGNtcChhcmcsICItLWRlcHRoPSIpKSB7Cj4gLSDCoCDC
-oCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCBhcmdzLmRlcHRoID0gc3Ry
-dG9sKGFyZyArIDgsIE5VTEwsIDApOwo+IC0gwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
-wqAgwqAgwqAgwqAgwqAgY29udGludWU7Cj4gLSDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
-oCDCoCB9Cj4gLSDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCBpZiAoIXN0cmNtcCgi
-LS1uby1wcm9ncmVzcyIsIGFyZykpIHsKPiAtIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
-IMKgIMKgIMKgIMKgIMKgIGFyZ3Mubm9fcHJvZ3Jlc3MgPSAxOwo+IC0gwqAgwqAgwqAgwqAgwqAg
-wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgY29udGludWU7Cj4gLSDCoCDCoCDCoCDCoCDC
-oCDCoCDCoCDCoCDCoCDCoCDCoCB9Cj4gLSDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
-oCBpZiAoIXN0cmNtcCgiLS1zdGF0ZWxlc3MtcnBjIiwgYXJnKSkgewo+IC0gwqAgwqAgwqAgwqAg
-wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgYXJncy5zdGF0ZWxlc3NfcnBjID0gMTsK
-PiAtIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIGNvbnRpbnVl
-Owo+IC0gwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgfQo+IC0gwqAgwqAgwqAgwqAg
-wqAgwqAgwqAgwqAgwqAgwqAgwqAgaWYgKCFzdHJjbXAoIi0tbG9jay1wYWNrIiwgYXJnKSkgewo+
-IC0gwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgYXJncy5sb2Nr
-X3BhY2sgPSAxOwo+IC0gwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
-wqAgcGFja19sb2NrZmlsZV9wdHIgPSAmcGFja19sb2NrZmlsZTsKPiAtIMKgIMKgIMKgIMKgIMKg
-IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIGNvbnRpbnVlOwo+IC0gwqAgwqAgwqAgwqAg
-wqAgwqAgwqAgwqAgwqAgwqAgwqAgfQo+IC0gwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
-wqAgdXNhZ2UoZmV0Y2hfcGFja191c2FnZSk7Cj4gKyDCoCDCoCDCoCDCoCDCoCDCoCDCoCBpZiAo
-IXByZWZpeGNtcChhcmcsICItLXVwbG9hZC1wYWNrPSIpKSB7Cj4gKyDCoCDCoCDCoCDCoCDCoCDC
-oCDCoCDCoCDCoCDCoCDCoCBhcmdzLnVwbG9hZHBhY2sgPSBhcmcgKyAxNDsKPiArIMKgIMKgIMKg
-IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIGNvbnRpbnVlOwo+ICsgwqAgwqAgwqAgwqAgwqAgwqAg
-wqAgfQo+ICsgwqAgwqAgwqAgwqAgwqAgwqAgwqAgaWYgKCFwcmVmaXhjbXAoYXJnLCAiLS1leGVj
-PSIpKSB7Cj4gKyDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCBhcmdzLnVwbG9hZHBh
-Y2sgPSBhcmcgKyA3Owo+ICsgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgY29udGlu
-dWU7Cj4gKyDCoCDCoCDCoCDCoCDCoCDCoCDCoCB9Cj4gKyDCoCDCoCDCoCDCoCDCoCDCoCDCoCBp
-ZiAoIXN0cmNtcCgiLS1xdWlldCIsIGFyZykgfHwgIXN0cmNtcCgiLXEiLCBhcmcpKSB7Cj4gKyDC
-oCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCBhcmdzLnF1aWV0ID0gMTsKPiArIMKgIMKg
-IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIGNvbnRpbnVlOwo+ICsgwqAgwqAgwqAgwqAgwqAg
-wqAgwqAgfQo+ICsgwqAgwqAgwqAgwqAgwqAgwqAgwqAgaWYgKCFzdHJjbXAoIi0ta2VlcCIsIGFy
-ZykgfHwgIXN0cmNtcCgiLWsiLCBhcmcpKSB7Cj4gKyDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
-oCDCoCDCoCBhcmdzLmxvY2tfcGFjayA9IGFyZ3Mua2VlcF9wYWNrOwo+ICsgwqAgwqAgwqAgwqAg
-wqAgwqAgwqAgwqAgwqAgwqAgwqAgYXJncy5rZWVwX3BhY2sgPSAxOwo+ICsgwqAgwqAgwqAgwqAg
-wqAgwqAgwqAgwqAgwqAgwqAgwqAgY29udGludWU7Cj4gKyDCoCDCoCDCoCDCoCDCoCDCoCDCoCB9
-Cj4gKyDCoCDCoCDCoCDCoCDCoCDCoCDCoCBpZiAoIXN0cmNtcCgiLS10aGluIiwgYXJnKSkgewo+
-ICsgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgYXJncy51c2VfdGhpbl9wYWNrID0g
-MTsKPiArIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIGNvbnRpbnVlOwo+ICsgwqAg
-wqAgwqAgwqAgwqAgwqAgwqAgfQo+ICsgwqAgwqAgwqAgwqAgwqAgwqAgwqAgaWYgKCFzdHJjbXAo
-Ii0taW5jbHVkZS10YWciLCBhcmcpKSB7Cj4gKyDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
-oCDCoCBhcmdzLmluY2x1ZGVfdGFnID0gMTsKPiArIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
-IMKgIMKgIGNvbnRpbnVlOwo+ICsgwqAgwqAgwqAgwqAgwqAgwqAgwqAgfQo+ICsgwqAgwqAgwqAg
-wqAgwqAgwqAgwqAgaWYgKCFzdHJjbXAoIi0tYWxsIiwgYXJnKSkgewo+ICsgwqAgwqAgwqAgwqAg
-wqAgwqAgwqAgwqAgwqAgwqAgwqAgYXJncy5mZXRjaF9hbGwgPSAxOwo+ICsgwqAgwqAgwqAgwqAg
-wqAgwqAgwqAgwqAgwqAgwqAgwqAgY29udGludWU7Cj4gKyDCoCDCoCDCoCDCoCDCoCDCoCDCoCB9
-Cj4gKyDCoCDCoCDCoCDCoCDCoCDCoCDCoCBpZiAoIXN0cmNtcCgiLS1zdGRpbiIsIGFyZykpIHsK
-PiArIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIGFyZ3Muc3RkaW5fcmVmcyA9IDE7
-Cj4gKyDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCBjb250aW51ZTsKPiArIMKgIMKg
-IMKgIMKgIMKgIMKgIMKgIH0KPiArIMKgIMKgIMKgIMKgIMKgIMKgIMKgIGlmICghc3RyY21wKCIt
-diIsIGFyZykpIHsKPiArIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIGFyZ3MudmVy
-Ym9zZSA9IDE7Cj4gKyDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCBjb250aW51ZTsK
-PiArIMKgIMKgIMKgIMKgIMKgIMKgIMKgIH0KPiArIMKgIMKgIMKgIMKgIMKgIMKgIMKgIGlmICgh
-cHJlZml4Y21wKGFyZywgIi0tZGVwdGg9IikpIHsKPiArIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
-IMKgIMKgIMKgIGFyZ3MuZGVwdGggPSBzdHJ0b2woYXJnICsgOCwgTlVMTCwgMCk7Cj4gKyDCoCDC
-oCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCBjb250aW51ZTsKPiDCoCDCoCDCoCDCoCDCoCDC
-oCDCoCDCoH0KPiAtIMKgIMKgIMKgIMKgIMKgIMKgIMKgIGRlc3QgPSBhcmc7Cj4gLSDCoCDCoCDC
-oCDCoCDCoCDCoCDCoCBoZWFkcyA9IChjaGFyICoqKShhcmd2ICsgaSArIDEpOwo+IC0gwqAgwqAg
-wqAgwqAgwqAgwqAgwqAgbnJfaGVhZHMgPSBhcmdjIC0gaSAtIDE7Cj4gLSDCoCDCoCDCoCDCoCDC
-oCDCoCDCoCBicmVhazsKPiArIMKgIMKgIMKgIMKgIMKgIMKgIMKgIGlmICghc3RyY21wKCItLW5v
-LXByb2dyZXNzIiwgYXJnKSkgewo+ICsgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
-YXJncy5ub19wcm9ncmVzcyA9IDE7Cj4gKyDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
-oCBjb250aW51ZTsKPiArIMKgIMKgIMKgIMKgIMKgIMKgIMKgIH0KPiArIMKgIMKgIMKgIMKgIMKg
-IMKgIMKgIGlmICghc3RyY21wKCItLXN0YXRlbGVzcy1ycGMiLCBhcmcpKSB7Cj4gKyDCoCDCoCDC
-oCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCBhcmdzLnN0YXRlbGVzc19ycGMgPSAxOwo+ICsgwqAg
-wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgY29udGludWU7Cj4gKyDCoCDCoCDCoCDCoCDC
-oCDCoCDCoCB9Cj4gKyDCoCDCoCDCoCDCoCDCoCDCoCDCoCBpZiAoIXN0cmNtcCgiLS1sb2NrLXBh
-Y2siLCBhcmcpKSB7Cj4gKyDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCBhcmdzLmxv
-Y2tfcGFjayA9IDE7Cj4gKyDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCBwYWNrX2xv
-Y2tmaWxlX3B0ciA9ICZwYWNrX2xvY2tmaWxlOwo+ICsgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
-wqAgwqAgwqAgY29udGludWU7Cj4gKyDCoCDCoCDCoCDCoCDCoCDCoCDCoCB9Cj4gKyDCoCDCoCDC
-oCDCoCDCoCDCoCDCoCB1c2FnZShmZXRjaF9wYWNrX3VzYWdlKTsKClVnaCwgcGVyaGFwcyB5b3Ug
-Y2FuIGNvbnZlcnQgdGhlIGFib3ZlIHRvIHBhcnNlX29wdGlvbnMoKSB0b28gd2hpbGUKeW91J3Jl
-IG1ha2luZyBjaGFuZ2VzIGluIHRoaXMgcGFydD8gWW91IGNhbiBzYXkgbm8sIEknbGwgZG8gaXQg
-KG15Cml0Y2ggYW55d2F5KS4KLS0gCkR1eQo=
+Hi.
+
+The last time I used version control was in the 90's with microsoft's visual
+source control program.
+
+So I can use some advice about how to use git best.
+
+I still use windows (7) for my development, and I've managed to get msysgit
+up and running on this system.
+
+I've got a ".../htdocs" that I use for my web development, with underneath
+that several "sites/somedomainname.com" that hold common and custom code.
+The common code is always in ".../somedomainname.com/code", the custom is
+everything else (excluding cache directories I suppose).
+
+I'd like to be extra sure that my repo stays safe.
+So I'd like to keep a triple copy of my repo, 2x on seperate harddisks that
+are crypted with truecrypt.org, and once on a USB drive that's also
+truecrypted. Truecrypt interfaces as an ordinary drive letter and
+filesystem.
+
+I'd really appreciate a short description of how to setup repositories for
+the common code and the custom codes per domain, and how to properly use git
+while developing on one domain's copy of my common code, then pushing those
+changes to other domain folders to test them against that domain's custom
+code.
+Thanks in advance..
+
+
+--
+View this message in context: http://git.661346.n2.nabble.com/Noob-asking-for-repo-setup-advice-tp7519875.html
+Sent from the git mailing list archive at Nabble.com.
