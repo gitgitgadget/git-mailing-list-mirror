@@ -1,243 +1,165 @@
-From: mhagger@alum.mit.edu
-Subject: [PATCH 2/2] cmd_fetch_pack(): fix constness problem and memory leak
-Date: Wed,  2 May 2012 12:40:59 +0200
-Message-ID: <1335955259-15309-3-git-send-email-mhagger@alum.mit.edu>
-References: <1335955259-15309-1-git-send-email-mhagger@alum.mit.edu>
-Cc: git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed May 02 12:41:18 2012
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: [PATCH 2/2] cmd_fetch_pack(): fix constness problem and memory leak
+Date: Wed, 2 May 2012 18:14:36 +0700
+Message-ID: <CACsJy8AE7Y1Y5Drda39OfSKwTQN7oSSrb2Ai+jq_hi8XC4dtsw@mail.gmail.com>
+References: <1335955259-15309-1-git-send-email-mhagger@alum.mit.edu> <1335955259-15309-3-git-send-email-mhagger@alum.mit.edu>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: base64
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: mhagger@alum.mit.edu
+X-From: git-owner@vger.kernel.org Wed May 02 13:15:24 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SPWzm-0006EL-1h
-	for gcvg-git-2@plane.gmane.org; Wed, 02 May 2012 12:41:18 +0200
+	id 1SPXWg-0006X0-I4
+	for gcvg-git-2@plane.gmane.org; Wed, 02 May 2012 13:15:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753110Ab2EBKlP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 May 2012 06:41:15 -0400
-Received: from einhorn.in-berlin.de ([192.109.42.8]:37029 "EHLO
-	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752501Ab2EBKlO (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 May 2012 06:41:14 -0400
-X-Envelope-From: mhagger@alum.mit.edu
-Received: from michael.berlin.jpk.com (ssh.berlin.jpk.com [212.222.128.135])
-	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id q42Af4FY009926;
-	Wed, 2 May 2012 12:41:10 +0200
-X-Mailer: git-send-email 1.7.10
-In-Reply-To: <1335955259-15309-1-git-send-email-mhagger@alum.mit.edu>
-X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
+	id S1753805Ab2EBLPJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 May 2012 07:15:09 -0400
+Received: from mail-wg0-f44.google.com ([74.125.82.44]:43841 "EHLO
+	mail-wg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752658Ab2EBLPH (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 May 2012 07:15:07 -0400
+Received: by wgbdr13 with SMTP id dr13so512268wgb.1
+        for <git@vger.kernel.org>; Wed, 02 May 2012 04:15:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=JShIPnbSmogQVWexZlkpCtLABrpVzqVSkyad5hxMOjI=;
+        b=0GIThzMFBeRzOlUFatMDutI5Zp7KMlcFQPXtqfoD9ngyd+sz4WnTiQ1fVf1T+XIJLA
+         zPIw8fOZURwRL/30HzvFxxbuTzGkpVWm3fcVdWpvuuzbg892ic/A0AYa8H1v+DRu9tMU
+         H/U81b8uv6lXS/yyLNDH9gfilFU6EsUyA7mNl+Mac/5Ftptn/2ZPwdOd6XO3O9gvxLeX
+         cYjDMfuY+CYZXa2G09KDFRItXV+34qRc9e/BKPQEW2MEXERaMWoTUyHseCyjvgZ4H7q+
+         ucyhap2NvXUSSCv//DUVvgiYE12IPm9fOMeO3bNtrPgSWUq5DmEMj1W8X9gvwk5CNDQ+
+         eXXg==
+Received: by 10.180.88.67 with SMTP id be3mr13079726wib.20.1335957306478; Wed,
+ 02 May 2012 04:15:06 -0700 (PDT)
+Received: by 10.223.14.193 with HTTP; Wed, 2 May 2012 04:14:36 -0700 (PDT)
+In-Reply-To: <1335955259-15309-3-git-send-email-mhagger@alum.mit.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196799>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196800>
 
-From: Michael Haggerty <mhagger@alum.mit.edu>
-
-The old code cast away the constness of the strings passed to the
-function in argument argv[], which could result in their being
-modified by filter_refs().  Moreover, if refs were passed via stdin,
-then the memory allocated for them was never freed (though, of course,
-this function is only called once so it is not a real problem).
-
-Fix both errors by copying *all* reference names into our own array
-and always freeing the array at the end of the function.
-
-Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
----
-
-I understand that it is not crucial to free memory allocated in a
-cmd_*() function but it is unclear to me whether it is *preferred* to
-let the process clean up take care of things.  If so, the last chunk
-of this patch can be omitted.
-
- builtin/fetch-pack.c |  149 +++++++++++++++++++++++++-------------------------
- 1 file changed, 75 insertions(+), 74 deletions(-)
-
-diff --git a/builtin/fetch-pack.c b/builtin/fetch-pack.c
-index 7e9d62f..5f769e9 100644
---- a/builtin/fetch-pack.c
-+++ b/builtin/fetch-pack.c
-@@ -899,10 +899,11 @@ static void fetch_pack_setup(void)
- 
- int cmd_fetch_pack(int argc, const char **argv, const char *prefix)
- {
--	int i, ret, nr_heads;
-+	int i, ret;
- 	struct ref *ref = NULL;
- 	const char *dest = NULL;
--	char **heads;
-+	int alloc_heads = 0, nr_heads = 0;
-+	char **heads = NULL;
- 	int fd[2];
- 	char *pack_lockfile = NULL;
- 	char **pack_lockfile_ptr = NULL;
-@@ -910,86 +911,82 @@ int cmd_fetch_pack(int argc, const char **argv, const char *prefix)
- 
- 	packet_trace_identity("fetch-pack");
- 
--	nr_heads = 0;
--	heads = NULL;
--	for (i = 1; i < argc; i++) {
-+	for (i = 1; i < argc && *argv[i] == '-'; i++) {
- 		const char *arg = argv[i];
- 
--		if (*arg == '-') {
--			if (!prefixcmp(arg, "--upload-pack=")) {
--				args.uploadpack = arg + 14;
--				continue;
--			}
--			if (!prefixcmp(arg, "--exec=")) {
--				args.uploadpack = arg + 7;
--				continue;
--			}
--			if (!strcmp("--quiet", arg) || !strcmp("-q", arg)) {
--				args.quiet = 1;
--				continue;
--			}
--			if (!strcmp("--keep", arg) || !strcmp("-k", arg)) {
--				args.lock_pack = args.keep_pack;
--				args.keep_pack = 1;
--				continue;
--			}
--			if (!strcmp("--thin", arg)) {
--				args.use_thin_pack = 1;
--				continue;
--			}
--			if (!strcmp("--include-tag", arg)) {
--				args.include_tag = 1;
--				continue;
--			}
--			if (!strcmp("--all", arg)) {
--				args.fetch_all = 1;
--				continue;
--			}
--			if (!strcmp("--stdin", arg)) {
--				args.stdin_refs = 1;
--				continue;
--			}
--			if (!strcmp("-v", arg)) {
--				args.verbose = 1;
--				continue;
--			}
--			if (!prefixcmp(arg, "--depth=")) {
--				args.depth = strtol(arg + 8, NULL, 0);
--				continue;
--			}
--			if (!strcmp("--no-progress", arg)) {
--				args.no_progress = 1;
--				continue;
--			}
--			if (!strcmp("--stateless-rpc", arg)) {
--				args.stateless_rpc = 1;
--				continue;
--			}
--			if (!strcmp("--lock-pack", arg)) {
--				args.lock_pack = 1;
--				pack_lockfile_ptr = &pack_lockfile;
--				continue;
--			}
--			usage(fetch_pack_usage);
-+		if (!prefixcmp(arg, "--upload-pack=")) {
-+			args.uploadpack = arg + 14;
-+			continue;
-+		}
-+		if (!prefixcmp(arg, "--exec=")) {
-+			args.uploadpack = arg + 7;
-+			continue;
-+		}
-+		if (!strcmp("--quiet", arg) || !strcmp("-q", arg)) {
-+			args.quiet = 1;
-+			continue;
-+		}
-+		if (!strcmp("--keep", arg) || !strcmp("-k", arg)) {
-+			args.lock_pack = args.keep_pack;
-+			args.keep_pack = 1;
-+			continue;
-+		}
-+		if (!strcmp("--thin", arg)) {
-+			args.use_thin_pack = 1;
-+			continue;
-+		}
-+		if (!strcmp("--include-tag", arg)) {
-+			args.include_tag = 1;
-+			continue;
-+		}
-+		if (!strcmp("--all", arg)) {
-+			args.fetch_all = 1;
-+			continue;
-+		}
-+		if (!strcmp("--stdin", arg)) {
-+			args.stdin_refs = 1;
-+			continue;
-+		}
-+		if (!strcmp("-v", arg)) {
-+			args.verbose = 1;
-+			continue;
-+		}
-+		if (!prefixcmp(arg, "--depth=")) {
-+			args.depth = strtol(arg + 8, NULL, 0);
-+			continue;
- 		}
--		dest = arg;
--		heads = (char **)(argv + i + 1);
--		nr_heads = argc - i - 1;
--		break;
-+		if (!strcmp("--no-progress", arg)) {
-+			args.no_progress = 1;
-+			continue;
-+		}
-+		if (!strcmp("--stateless-rpc", arg)) {
-+			args.stateless_rpc = 1;
-+			continue;
-+		}
-+		if (!strcmp("--lock-pack", arg)) {
-+			args.lock_pack = 1;
-+			pack_lockfile_ptr = &pack_lockfile;
-+			continue;
-+		}
-+		usage(fetch_pack_usage);
- 	}
--	if (!dest)
-+	if (i < argc)
-+		dest = argv[i++];
-+	else
- 		usage(fetch_pack_usage);
- 
-+	/*
-+	 * Copy refs from cmdline to new growable list, then append
-+	 * any refs from the standard input.
-+	 */
-+	ALLOC_GROW(heads, argc - i, alloc_heads);
-+	for (; i < argc; i++)
-+		heads[nr_heads++] = xstrdup(argv[i]);
-+
- 	if (args.stdin_refs) {
--		/*
--		 * Copy refs from cmdline to new growable list, then
--		 * append the refs from the standard input.
--		 */
--		int alloc_heads = nr_heads;
--		int size = nr_heads * sizeof(*heads);
--		heads = memcpy(xmalloc(size), heads, size);
- 		if (args.stateless_rpc) {
--			/* in stateless RPC mode we use pkt-line to read
-+			/*
-+			 * in stateless RPC mode we use pkt-line to read
- 			 * from stdin, until we get a flush packet
- 			 */
- 			static char line[1000];
-@@ -1055,6 +1052,10 @@ int cmd_fetch_pack(int argc, const char **argv, const char *prefix)
- 		ref = ref->next;
- 	}
- 
-+	for (i = 0; i < nr_heads; ++i)
-+		free(heads[i]);
-+	free(heads);
-+
- 	return ret;
- }
- 
--- 
-1.7.10
+T24gV2VkLCBNYXkgMiwgMjAxMiBhdCA1OjQwIFBNLCAgPG1oYWdnZXJAYWx1bS5taXQuZWR1PiB3
+cm90ZToKPiDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoGNvbnN0IGNoYXIgKmFyZyA9IGFyZ3ZbaV07
+Cj4KPiAtIMKgIMKgIMKgIMKgIMKgIMKgIMKgIGlmICgqYXJnID09ICctJykgewo+IC0gwqAgwqAg
+wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgaWYgKCFwcmVmaXhjbXAoYXJnLCAiLS11cGxvYWQt
+cGFjaz0iKSkgewo+IC0gwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
+wqAgYXJncy51cGxvYWRwYWNrID0gYXJnICsgMTQ7Cj4gLSDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
+oCDCoCDCoCDCoCDCoCDCoCDCoCDCoCBjb250aW51ZTsKPiAtIMKgIMKgIMKgIMKgIMKgIMKgIMKg
+IMKgIMKgIMKgIMKgIH0KPiAtIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIGlmICgh
+cHJlZml4Y21wKGFyZywgIi0tZXhlYz0iKSkgewo+IC0gwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
+wqAgwqAgwqAgwqAgwqAgwqAgwqAgYXJncy51cGxvYWRwYWNrID0gYXJnICsgNzsKPiAtIMKgIMKg
+IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIGNvbnRpbnVlOwo+IC0gwqAg
+wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgfQo+IC0gwqAgwqAgwqAgwqAgwqAgwqAgwqAg
+wqAgwqAgwqAgwqAgaWYgKCFzdHJjbXAoIi0tcXVpZXQiLCBhcmcpIHx8ICFzdHJjbXAoIi1xIiwg
+YXJnKSkgewo+IC0gwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
+YXJncy5xdWlldCA9IDE7Cj4gLSDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
+oCDCoCDCoCBjb250aW51ZTsKPiAtIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIH0K
+PiAtIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIGlmICghc3RyY21wKCItLWtlZXAi
+LCBhcmcpIHx8ICFzdHJjbXAoIi1rIiwgYXJnKSkgewo+IC0gwqAgwqAgwqAgwqAgwqAgwqAgwqAg
+wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgYXJncy5sb2NrX3BhY2sgPSBhcmdzLmtlZXBfcGFjazsK
+PiAtIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIGFyZ3Mua2Vl
+cF9wYWNrID0gMTsKPiAtIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
+IMKgIGNvbnRpbnVlOwo+IC0gwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgfQo+IC0g
+wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgaWYgKCFzdHJjbXAoIi0tdGhpbiIsIGFy
+ZykpIHsKPiAtIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIGFy
+Z3MudXNlX3RoaW5fcGFjayA9IDE7Cj4gLSDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
+oCDCoCDCoCDCoCDCoCBjb250aW51ZTsKPiAtIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
+IMKgIH0KPiAtIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIGlmICghc3RyY21wKCIt
+LWluY2x1ZGUtdGFnIiwgYXJnKSkgewo+IC0gwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
+wqAgwqAgwqAgwqAgwqAgYXJncy5pbmNsdWRlX3RhZyA9IDE7Cj4gLSDCoCDCoCDCoCDCoCDCoCDC
+oCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCBjb250aW51ZTsKPiAtIMKgIMKgIMKgIMKgIMKg
+IMKgIMKgIMKgIMKgIMKgIMKgIH0KPiAtIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
+IGlmICghc3RyY21wKCItLWFsbCIsIGFyZykpIHsKPiAtIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
+IMKgIMKgIMKgIMKgIMKgIMKgIMKgIGFyZ3MuZmV0Y2hfYWxsID0gMTsKPiAtIMKgIMKgIMKgIMKg
+IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIGNvbnRpbnVlOwo+IC0gwqAgwqAgwqAg
+wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgfQo+IC0gwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
+wqAgwqAgaWYgKCFzdHJjbXAoIi0tc3RkaW4iLCBhcmcpKSB7Cj4gLSDCoCDCoCDCoCDCoCDCoCDC
+oCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCBhcmdzLnN0ZGluX3JlZnMgPSAxOwo+IC0gwqAg
+wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgY29udGludWU7Cj4gLSDC
+oCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCB9Cj4gLSDCoCDCoCDCoCDCoCDCoCDCoCDC
+oCDCoCDCoCDCoCDCoCBpZiAoIXN0cmNtcCgiLXYiLCBhcmcpKSB7Cj4gLSDCoCDCoCDCoCDCoCDC
+oCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCBhcmdzLnZlcmJvc2UgPSAxOwo+IC0gwqAg
+wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgY29udGludWU7Cj4gLSDC
+oCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCB9Cj4gLSDCoCDCoCDCoCDCoCDCoCDCoCDC
+oCDCoCDCoCDCoCDCoCBpZiAoIXByZWZpeGNtcChhcmcsICItLWRlcHRoPSIpKSB7Cj4gLSDCoCDC
+oCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCBhcmdzLmRlcHRoID0gc3Ry
+dG9sKGFyZyArIDgsIE5VTEwsIDApOwo+IC0gwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
+wqAgwqAgwqAgwqAgwqAgY29udGludWU7Cj4gLSDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
+oCDCoCB9Cj4gLSDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCBpZiAoIXN0cmNtcCgi
+LS1uby1wcm9ncmVzcyIsIGFyZykpIHsKPiAtIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
+IMKgIMKgIMKgIMKgIMKgIGFyZ3Mubm9fcHJvZ3Jlc3MgPSAxOwo+IC0gwqAgwqAgwqAgwqAgwqAg
+wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgY29udGludWU7Cj4gLSDCoCDCoCDCoCDCoCDC
+oCDCoCDCoCDCoCDCoCDCoCDCoCB9Cj4gLSDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
+oCBpZiAoIXN0cmNtcCgiLS1zdGF0ZWxlc3MtcnBjIiwgYXJnKSkgewo+IC0gwqAgwqAgwqAgwqAg
+wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgYXJncy5zdGF0ZWxlc3NfcnBjID0gMTsK
+PiAtIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIGNvbnRpbnVl
+Owo+IC0gwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgfQo+IC0gwqAgwqAgwqAgwqAg
+wqAgwqAgwqAgwqAgwqAgwqAgwqAgaWYgKCFzdHJjbXAoIi0tbG9jay1wYWNrIiwgYXJnKSkgewo+
+IC0gwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgYXJncy5sb2Nr
+X3BhY2sgPSAxOwo+IC0gwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
+wqAgcGFja19sb2NrZmlsZV9wdHIgPSAmcGFja19sb2NrZmlsZTsKPiAtIMKgIMKgIMKgIMKgIMKg
+IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIGNvbnRpbnVlOwo+IC0gwqAgwqAgwqAgwqAg
+wqAgwqAgwqAgwqAgwqAgwqAgwqAgfQo+IC0gwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
+wqAgdXNhZ2UoZmV0Y2hfcGFja191c2FnZSk7Cj4gKyDCoCDCoCDCoCDCoCDCoCDCoCDCoCBpZiAo
+IXByZWZpeGNtcChhcmcsICItLXVwbG9hZC1wYWNrPSIpKSB7Cj4gKyDCoCDCoCDCoCDCoCDCoCDC
+oCDCoCDCoCDCoCDCoCDCoCBhcmdzLnVwbG9hZHBhY2sgPSBhcmcgKyAxNDsKPiArIMKgIMKgIMKg
+IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIGNvbnRpbnVlOwo+ICsgwqAgwqAgwqAgwqAgwqAgwqAg
+wqAgfQo+ICsgwqAgwqAgwqAgwqAgwqAgwqAgwqAgaWYgKCFwcmVmaXhjbXAoYXJnLCAiLS1leGVj
+PSIpKSB7Cj4gKyDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCBhcmdzLnVwbG9hZHBh
+Y2sgPSBhcmcgKyA3Owo+ICsgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgY29udGlu
+dWU7Cj4gKyDCoCDCoCDCoCDCoCDCoCDCoCDCoCB9Cj4gKyDCoCDCoCDCoCDCoCDCoCDCoCDCoCBp
+ZiAoIXN0cmNtcCgiLS1xdWlldCIsIGFyZykgfHwgIXN0cmNtcCgiLXEiLCBhcmcpKSB7Cj4gKyDC
+oCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCBhcmdzLnF1aWV0ID0gMTsKPiArIMKgIMKg
+IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIGNvbnRpbnVlOwo+ICsgwqAgwqAgwqAgwqAgwqAg
+wqAgwqAgfQo+ICsgwqAgwqAgwqAgwqAgwqAgwqAgwqAgaWYgKCFzdHJjbXAoIi0ta2VlcCIsIGFy
+ZykgfHwgIXN0cmNtcCgiLWsiLCBhcmcpKSB7Cj4gKyDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
+oCDCoCDCoCBhcmdzLmxvY2tfcGFjayA9IGFyZ3Mua2VlcF9wYWNrOwo+ICsgwqAgwqAgwqAgwqAg
+wqAgwqAgwqAgwqAgwqAgwqAgwqAgYXJncy5rZWVwX3BhY2sgPSAxOwo+ICsgwqAgwqAgwqAgwqAg
+wqAgwqAgwqAgwqAgwqAgwqAgwqAgY29udGludWU7Cj4gKyDCoCDCoCDCoCDCoCDCoCDCoCDCoCB9
+Cj4gKyDCoCDCoCDCoCDCoCDCoCDCoCDCoCBpZiAoIXN0cmNtcCgiLS10aGluIiwgYXJnKSkgewo+
+ICsgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgYXJncy51c2VfdGhpbl9wYWNrID0g
+MTsKPiArIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIGNvbnRpbnVlOwo+ICsgwqAg
+wqAgwqAgwqAgwqAgwqAgwqAgfQo+ICsgwqAgwqAgwqAgwqAgwqAgwqAgwqAgaWYgKCFzdHJjbXAo
+Ii0taW5jbHVkZS10YWciLCBhcmcpKSB7Cj4gKyDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
+oCDCoCBhcmdzLmluY2x1ZGVfdGFnID0gMTsKPiArIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
+IMKgIMKgIGNvbnRpbnVlOwo+ICsgwqAgwqAgwqAgwqAgwqAgwqAgwqAgfQo+ICsgwqAgwqAgwqAg
+wqAgwqAgwqAgwqAgaWYgKCFzdHJjbXAoIi0tYWxsIiwgYXJnKSkgewo+ICsgwqAgwqAgwqAgwqAg
+wqAgwqAgwqAgwqAgwqAgwqAgwqAgYXJncy5mZXRjaF9hbGwgPSAxOwo+ICsgwqAgwqAgwqAgwqAg
+wqAgwqAgwqAgwqAgwqAgwqAgwqAgY29udGludWU7Cj4gKyDCoCDCoCDCoCDCoCDCoCDCoCDCoCB9
+Cj4gKyDCoCDCoCDCoCDCoCDCoCDCoCDCoCBpZiAoIXN0cmNtcCgiLS1zdGRpbiIsIGFyZykpIHsK
+PiArIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIGFyZ3Muc3RkaW5fcmVmcyA9IDE7
+Cj4gKyDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCBjb250aW51ZTsKPiArIMKgIMKg
+IMKgIMKgIMKgIMKgIMKgIH0KPiArIMKgIMKgIMKgIMKgIMKgIMKgIMKgIGlmICghc3RyY21wKCIt
+diIsIGFyZykpIHsKPiArIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIGFyZ3MudmVy
+Ym9zZSA9IDE7Cj4gKyDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCBjb250aW51ZTsK
+PiArIMKgIMKgIMKgIMKgIMKgIMKgIMKgIH0KPiArIMKgIMKgIMKgIMKgIMKgIMKgIMKgIGlmICgh
+cHJlZml4Y21wKGFyZywgIi0tZGVwdGg9IikpIHsKPiArIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
+IMKgIMKgIMKgIGFyZ3MuZGVwdGggPSBzdHJ0b2woYXJnICsgOCwgTlVMTCwgMCk7Cj4gKyDCoCDC
+oCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCBjb250aW51ZTsKPiDCoCDCoCDCoCDCoCDCoCDC
+oCDCoCDCoH0KPiAtIMKgIMKgIMKgIMKgIMKgIMKgIMKgIGRlc3QgPSBhcmc7Cj4gLSDCoCDCoCDC
+oCDCoCDCoCDCoCDCoCBoZWFkcyA9IChjaGFyICoqKShhcmd2ICsgaSArIDEpOwo+IC0gwqAgwqAg
+wqAgwqAgwqAgwqAgwqAgbnJfaGVhZHMgPSBhcmdjIC0gaSAtIDE7Cj4gLSDCoCDCoCDCoCDCoCDC
+oCDCoCDCoCBicmVhazsKPiArIMKgIMKgIMKgIMKgIMKgIMKgIMKgIGlmICghc3RyY21wKCItLW5v
+LXByb2dyZXNzIiwgYXJnKSkgewo+ICsgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
+YXJncy5ub19wcm9ncmVzcyA9IDE7Cj4gKyDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
+oCBjb250aW51ZTsKPiArIMKgIMKgIMKgIMKgIMKgIMKgIMKgIH0KPiArIMKgIMKgIMKgIMKgIMKg
+IMKgIMKgIGlmICghc3RyY21wKCItLXN0YXRlbGVzcy1ycGMiLCBhcmcpKSB7Cj4gKyDCoCDCoCDC
+oCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCBhcmdzLnN0YXRlbGVzc19ycGMgPSAxOwo+ICsgwqAg
+wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgY29udGludWU7Cj4gKyDCoCDCoCDCoCDCoCDC
+oCDCoCDCoCB9Cj4gKyDCoCDCoCDCoCDCoCDCoCDCoCDCoCBpZiAoIXN0cmNtcCgiLS1sb2NrLXBh
+Y2siLCBhcmcpKSB7Cj4gKyDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCBhcmdzLmxv
+Y2tfcGFjayA9IDE7Cj4gKyDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCBwYWNrX2xv
+Y2tmaWxlX3B0ciA9ICZwYWNrX2xvY2tmaWxlOwo+ICsgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
+wqAgwqAgwqAgY29udGludWU7Cj4gKyDCoCDCoCDCoCDCoCDCoCDCoCDCoCB9Cj4gKyDCoCDCoCDC
+oCDCoCDCoCDCoCDCoCB1c2FnZShmZXRjaF9wYWNrX3VzYWdlKTsKClVnaCwgcGVyaGFwcyB5b3Ug
+Y2FuIGNvbnZlcnQgdGhlIGFib3ZlIHRvIHBhcnNlX29wdGlvbnMoKSB0b28gd2hpbGUKeW91J3Jl
+IG1ha2luZyBjaGFuZ2VzIGluIHRoaXMgcGFydD8gWW91IGNhbiBzYXkgbm8sIEknbGwgZG8gaXQg
+KG15Cml0Y2ggYW55d2F5KS4KLS0gCkR1eQo=
