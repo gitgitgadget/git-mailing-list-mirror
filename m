@@ -1,90 +1,97 @@
-From: "Philip Oakley" <philipoakley@iee.org>
-Subject: Re: Newbie grief
-Date: Wed, 2 May 2012 00:55:24 +0100
-Organization: OPDS
-Message-ID: <5ADB8D763B2B4CDA889052A1AA45F089@PhilipOakley>
-References: <4F9F128C.5020304@palm.com> <201204302331.q3UNVo7o032303@no.baka.org> <4F9F3919.6060805@palm.com> <CAMK1S_jwVsyKrGoL5uVAiuRrOa8bz79-DAueBmHZE2k=PpcJ2Q@mail.gmail.com> <20120501111415.GD5769@thunk.org> <CAMK1S_jN_WdZF4W4szzyJqLfC3FmnhKQ65XQiD-JS_jxwSm8_g@mail.gmail.com> <4FA02830.3040407@palm.com> <86havzoi8h.fsf@red.stonehenge.com> <4FA04D02.6090702@palm.com> <86mx5rmx32.fsf@red.stonehenge.com> <7v62cf8v2d.fsf@alter.siamese.dyndns.org> <4FA054BA.80601@palm.com> <86ipgfmw05.fsf@red.stonehenge.com> <4FA05C66.2060608@palm.com> <CAMOZ1BuiznhrzEOHe0N+uu=mLEw5wWTQyDpnwG8PuF1f_aNaXw@mail.gmail.com>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From: Nathan Gray <n8gray@n8gray.org>
+Subject: Re: Is there any way to make hooks part of the repository?
+Date: Tue, 1 May 2012 17:10:02 -0700
+Message-ID: <CA+7g9JzvN+5RsSF+bRFtaMafZeY+TyFkXeq-6OSAW3qJ99JqKg@mail.gmail.com>
+References: <CAE1pOi2hr7ewjo5WVDoW0ipYxDVTckr5M_sHNoOQ323=_k754Q@mail.gmail.com>
+	<7vipgf8wve.fsf@alter.siamese.dyndns.org>
+	<86r4v3mxf7.fsf@red.stonehenge.com>
+	<7vaa1r8vhy.fsf@alter.siamese.dyndns.org>
+	<CAE1pOi00Mr4dOj2ChTJU9XWypUAaVUDDa36-M7LA+9BixW0nKw@mail.gmail.com>
+	<CAJsNXT=niP2Ja-pSbvj-OGi5t0x0-Zxm3CdcY0nLs9ROdCG8hg@mail.gmail.com>
+	<CAE1pOi02_u9j2oHy-RJ-XbrCmDiUWd4-=50f-v+iaK1GLaLQZw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="UTF-8";
-	reply-type=original
-Content-Transfer-Encoding: 7bit
-Cc: "Randal L. Schwartz" <merlyn@stonehenge.com>,
-	"Junio C Hamano" <gitster@pobox.com>,
-	"Sitaram Chamarty" <sitaramc@gmail.com>,
-	"Ted Ts'o" <tytso@mit.edu>, "Seth Robertson" <in-gitvger@baka.org>,
-	<git@vger.kernel.org>
-To: "Michael Witten" <mfwitten@gmail.com>,
-	"Rich Pixley" <rich.pixley@palm.com>
-X-From: git-owner@vger.kernel.org Wed May 02 01:55:07 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: PJ Weisberg <pj@irregularexpressions.net>,
+	Junio C Hamano <gitster@pobox.com>,
+	"Randal L. Schwartz" <merlyn@stonehenge.com>,
+	Git Users <git@vger.kernel.org>
+To: Hilco Wijbenga <hilco.wijbenga@gmail.com>
+X-From: git-owner@vger.kernel.org Wed May 02 02:10:20 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SPMuM-00066X-SB
-	for gcvg-git-2@plane.gmane.org; Wed, 02 May 2012 01:55:03 +0200
+	id 1SPN96-0004dp-8B
+	for gcvg-git-2@plane.gmane.org; Wed, 02 May 2012 02:10:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755408Ab2EAXy5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 May 2012 19:54:57 -0400
-Received: from out1.ip01ir2.opaltelecom.net ([62.24.128.237]:54517 "EHLO
-	out1.ip01ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752514Ab2EAXy5 (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 1 May 2012 19:54:57 -0400
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: AncFAG53oE9cGnaI/2dsb2JhbABEhWmFSKRKgwCBCIIEAQQBAQUIAQEZFR4BARUMCwIDBQIBAw4HAQICAgUhAgIUAQQIEgYHFwYBEggCAQIDAYU3B4IoCAMPB6dSiE4NiVOBL4hYhWo1YwSNeokVii6FA4Jp
-X-IronPort-AV: E=Sophos;i="4.75,514,1330905600"; 
-   d="scan'208";a="389675620"
-Received: from host-92-26-118-136.as13285.net (HELO PhilipOakley) ([92.26.118.136])
-  by out1.ip01ir2.opaltelecom.net with SMTP; 02 May 2012 00:54:54 +0100
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+	id S1757340Ab2EBAKH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 May 2012 20:10:07 -0400
+Received: from mail-bk0-f46.google.com ([209.85.214.46]:34472 "EHLO
+	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757334Ab2EBAKF (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 May 2012 20:10:05 -0400
+Received: by bkcji2 with SMTP id ji2so42406bkc.19
+        for <git@vger.kernel.org>; Tue, 01 May 2012 17:10:02 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:x-originating-ip:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type:x-gm-message-state;
+        bh=q13W2EjfMBbkr/76oSthvTyxZJ6F5UONgo/fI3sJrno=;
+        b=lZp3jxieqIU8yADYynYvEcIYytNArua/NE0Owbw4aC1rf72C1AuAHCj6Xo3W+QrM43
+         elpWoZ2bc9ER0Mjo5v9TECTDutM27SI6yuw3LYwS0zFKYFyKh+kZKj4uziQSaEc8TLIf
+         12SnRYzPuxubqttqCSXkzhni3eHIif0RACYrFYU0fMavS2+GKTE1lLAspg4vnT6zr/Ui
+         v1fJO21d/YIPCHfirK5uxq10LfnDWcd/+6+OiW88ogYlpWrupn+vP1a1DZqYOw2Gtyy1
+         RaantImU4vye2W5VD+sEU5dOJ8yu+vdkp4yX9kKaGXvQm/H9NLqTeQGlcPlGPFx4xD0z
+         SThA==
+Received: by 10.204.128.75 with SMTP id j11mr1649442bks.2.1335917402584; Tue,
+ 01 May 2012 17:10:02 -0700 (PDT)
+Received: by 10.205.42.6 with HTTP; Tue, 1 May 2012 17:10:02 -0700 (PDT)
+X-Originating-IP: [184.182.186.242]
+In-Reply-To: <CAE1pOi02_u9j2oHy-RJ-XbrCmDiUWd4-=50f-v+iaK1GLaLQZw@mail.gmail.com>
+X-Gm-Message-State: ALoCoQmJYVwOvB6k+HsYmAPUFv/54Lhc9DAAGtr9+uIXm5Nr7Luen/YMhFPeWxnCdlH6lg5PIeyZ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196771>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196772>
 
-From: "Michael Witten" <mfwitten@gmail.com> Sent: Tuesday, May 01, 2012 
-11:56 PM
-> On Tue, May 1, 2012 at 9:57 PM, Rich Pixley <rich.pixley@palm.com> wrote:
+On Tue, May 1, 2012 at 3:21 PM, Hilco Wijbenga <hilco.wijbenga@gmail.com> wrote:
+> On 1 May 2012 14:59, PJ Weisberg <pj@irregularexpressions.net> wrote:
+>> On Tue, May 1, 2012 at 2:09 PM, Hilco Wijbenga <hilco.wijbenga@gmail.com> wrote:
+>>
+>>> On 1 May 2012 14:03, Junio C Hamano <gitster@pobox.com> wrote:
+>>>
+>>>> We've talked about something like that a few times in the past, but as far
+>>>> as I (am concerned / remember) the conclusion has always been that is not
+>>>> worth "standardizing", i.e. nothing a ./setup script in-tree or a Makefile
+>>>> target cannot offer the same convenience.
+>>>
+>>> This would not keep things up-to-date, though, would it? It seems like
+>>> yet another thing developers need to remember and do. I would prefer
+>>> something more automatic.
+>>
+>> Once your hooks are installed, couldn't your post-checkout and
+>> post-merge hooks keep all the others up to date?
 >
->> In contrast, I was up and using mercurial in about a day and a half,
->> including all of the stuff we've discussed, and all of the things I've 
->> even
->> read about in git. Learning mq's only took about 20 minutes.
->
-> Fortunately, git is based on extremely simple principles.
-> Unfortunately, git grew out of really bright people hacking stuff
-> together in order to get sh!t dun; the result is not approachably or
-> even well documented, the UI is sometimes a bit of a kludge, the API
-> is probably nonexistent, and the terminology is so loosely thrown
-> about that it's easy to forget which way is up in discussions.
-> (Note, though, that Junio has done a laudable job of keeping the
-> whole experiment going strong).
->
-> Having recognized these deficiencies, I suggest that you provide
-> at least one tiny little use case that doesn't work as you'd
-> like; it should be in the form of a command line example that we
-> can all reproduce and discuss precisely.
-> --
-A bit of browsing found 
-http://stevelosh.com/blog/2009/08/a-guide-to-branching-in-mercurial/ which 
-helped with some of the confusion about the different meanings of "branch". 
-It looks like an Hg branch is a Git clone.  Git can be hard work until one 
-'gets' how and why the new DVCS approach works. Plus learing the UI.
+> Excellent point. Yes, that would certainly work.
 
-It is very hard to change one's mindset about how/why/when the old VCS 
-approach broke (or isn't). The common VCS approach is based on drawing 
-office practices from before the Titanic was built. It is only very recently 
-that the reproduction and verification cost for data duplication have 
-dropped sufficiently that a DVCS is the better approach. The historical 
-approach was to protect the single 'master' item (with lots of admin & 
-process). Now it's about 'status accounting' - do I have the right copy at 
-the right status - i.e. the declared master sha1.
+But beware, this has the effect of making your hooks
+version-dependent.  Check out a different branch and you can
+potentially end up with a different hook.
 
-Philip 
+IMHO things like this belong in a separate "admin" repo -- policy may
+change over time, but going back to an old version of your code
+shouldn't take you back to a correspondingly old version of your
+policy.
+
+Cheers,
+-n8
+
+-- 
+HexaLex: A New Angle on Crossword Games for iPhone and iPod Touch
+http://hexalex.com
+On The App Store: http://bit.ly/8Mj1CU
+On Facebook: http://bit.ly/9MIJiV
+On Twitter: http://twitter.com/hexalexgame
+http://n8gray.org
