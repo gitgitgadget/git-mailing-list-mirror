@@ -1,72 +1,110 @@
-From: bill lam <cbill.lam@gmail.com>
-Subject: git pull and GIT_DIR
-Date: Wed, 2 May 2012 22:25:36 +0800
-Message-ID: <20120502142536.GA2609@debian.b2j>
+From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <rene.scharfe@lsrfire.ath.cx>
+Subject: Re: [PATCH v2 05/10] archive-tar: allow to accumulate writes before
+ writing 512-byte blocks
+Date: Wed, 02 May 2012 16:28:39 +0200
+Message-ID: <4FA14497.5090203@lsrfire.ath.cx>
+References: <1335965122-17458-1-git-send-email-pclouds@gmail.com> <1335965122-17458-6-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed May 02 16:26:07 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+	<pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Wed May 02 16:28:49 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SPaVJ-0002zK-QX
-	for gcvg-git-2@plane.gmane.org; Wed, 02 May 2012 16:26:06 +0200
+	id 1SPaXu-0004iY-6r
+	for gcvg-git-2@plane.gmane.org; Wed, 02 May 2012 16:28:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754244Ab2EBO0A (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 May 2012 10:26:00 -0400
-Received: from mail-gg0-f174.google.com ([209.85.161.174]:63221 "EHLO
-	mail-gg0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753916Ab2EBOZ7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 May 2012 10:25:59 -0400
-Received: by gghe5 with SMTP id e5so66443ggh.19
-        for <git@vger.kernel.org>; Wed, 02 May 2012 07:25:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:subject:message-id:mime-version:content-type
-         :content-disposition:user-agent;
-        bh=1M+q32To6PNLzPPsv1LN3H0HtH7s6AyEwOZ6/GH67yI=;
-        b=bF0Mx/rMmoINSi9cLYkd6Q9p3/xMR1xoZg29CGDc636ROve9+ai/M8J/261I5k6SbV
-         5s+EIsLE1ZKx+IaRo7fcrOAWhq1xZol4PJKisqJKPMbRtLfl3rjsGp6mALy81Ho0taru
-         CiytGJ7rMGV+ZCkUTKggBvbl76sMypB8hO+MdEHcQ9oK48p2Yy41+WZOnow5QJqnH46r
-         DbFYNHTmydaiHUPLSrwLxmawymtlBm/Fiz/gYm3FiLM9+4XMZaY0TRWePjlBbT5EWpt6
-         uM6AjR9zMpIUgVw+25dqKZkmY0en9uhNIGPLGXJj/Y0Gdd5oNbEqu3jsG8vzLNGZ14q5
-         N25Q==
-Received: by 10.68.129.99 with SMTP id nv3mr41966336pbb.161.1335968758389;
-        Wed, 02 May 2012 07:25:58 -0700 (PDT)
-Received: from localhost (n1164843249.netvigator.com. [116.48.43.249])
-        by mx.google.com with ESMTPS id wi6sm2109446pbc.66.2012.05.02.07.25.50
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 02 May 2012 07:25:56 -0700 (PDT)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1754387Ab2EBO2m convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 2 May 2012 10:28:42 -0400
+Received: from india601.server4you.de ([85.25.151.105]:58204 "EHLO
+	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752382Ab2EBO2l (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 May 2012 10:28:41 -0400
+Received: from [192.168.2.105] (p4FFD98FB.dip.t-dialin.net [79.253.152.251])
+	by india601.server4you.de (Postfix) with ESMTPSA id 0CC7F2F804F;
+	Wed,  2 May 2012 16:28:40 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:12.0) Gecko/20120420 Thunderbird/12.0
+In-Reply-To: <1335965122-17458-6-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196824>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196825>
 
-It appeared that
+Am 02.05.2012 15:25, schrieb Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy:
+> This allows to split single write_blocked(buf, 123) call into multipl=
+e
+> calls
+>=20
+> write_blocked(buf, 100, 1);
+> write_blocked(buf,  23, 1);
+> write_blocked(buf,   0, 0);
+>=20
+> No call sites do this yet though.
+>=20
+> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy<pclouds@gmai=
+l.com>
+> ---
+>   archive-tar.c |   16 +++++++++-------
+>   1 files changed, 9 insertions(+), 7 deletions(-)
 
-a)
-cd /path/to && git pull git/https://....
+Hmm, I'm not a fan of adding binary parameters to distinguish between t=
+wo
+modes of a function.  It's usually better to split it up at that point.
+E.g. the patch below does that and still provides the old interface, i.=
+e.
+the existing callers don't need to be changed.
 
-will fetch and checkout latest changes to working tree.  This is as
-expected.  On the contrary
 
-b)
-GIT_DIR=/path/to/.git git pull git/https://....
+ archive-tar.c |   15 +++++++++++++--
+ 1 file changed, 13 insertions(+), 2 deletions(-)
 
-will only update git repo, but leaving working tree untouched.
-Subsequent git status and git diff will indicate unstaged changes, 
-apparently a commit that will revert the updated git repo. I have to
-do 'git reset --hard' to really update the working three.
-
-I'm not sure if this is an intended behavior or I missed something. 
-
--- 
-regards,
-====================================================
-GPG key 1024D/4434BAB3 2008-08-24
-gpg --keyserver subkeys.pgp.net --recv-keys 4434BAB3
+diff --git a/archive-tar.c b/archive-tar.c
+index 20af005..a2babe1 100644
+--- a/archive-tar.c
++++ b/archive-tar.c
+@@ -30,10 +30,9 @@ static void write_if_needed(void)
+  * queues up writes, so that all our write(2) calls write exactly one
+  * full block; pads writes to RECORDSIZE
+  */
+-static void write_blocked(const void *data, unsigned long size)
++static void do_write_blocked(const void *data, unsigned long size)
+ {
+ 	const char *buf =3D data;
+-	unsigned long tail;
+=20
+ 	if (offset) {
+ 		unsigned long chunk =3D BLOCKSIZE - offset;
+@@ -54,6 +53,12 @@ static void write_blocked(const void *data, unsigned=
+ long size)
+ 		memcpy(block + offset, buf, size);
+ 		offset +=3D size;
+ 	}
++}
++
++static void finish_record(void)
++{
++	unsigned long tail;
++
+ 	tail =3D offset % RECORDSIZE;
+ 	if (tail)  {
+ 		memset(block + offset, 0, RECORDSIZE - tail);
+@@ -62,6 +67,12 @@ static void write_blocked(const void *data, unsigned=
+ long size)
+ 	write_if_needed();
+ }
+=20
++static void write_blocked(const void *data, unsigned long size)
++{
++	do_write_blocked(data, size);
++	finish_record();
++}
++
+ /*
+  * The end of tar archives is marked by 2*512 nul bytes and after that
+  * follows the rest of the block (if any).
