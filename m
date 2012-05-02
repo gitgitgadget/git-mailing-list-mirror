@@ -1,70 +1,92 @@
-From: bill lam <cbill.lam@gmail.com>
-Subject: Re: git pull and GIT_DIR
-Date: Thu, 3 May 2012 07:21:02 +0800
-Message-ID: <20120502232102.GB2609@debian.b2j>
-References: <20120502142536.GA2609@debian.b2j>
- <7v62ceiejp.fsf@alter.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: What's cooking in git.git (May 2012, #01; Wed, 2)
+Date: Wed, 2 May 2012 19:43:52 -0400
+Message-ID: <20120502234352.GA2163@sigill.intra.peff.net>
+References: <7vipgegrl0.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git <git@vger.kernel.org>
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu May 03 01:26:23 2012
+X-From: git-owner@vger.kernel.org Thu May 03 01:44:04 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SPiwA-0004f9-3L
-	for gcvg-git-2@plane.gmane.org; Thu, 03 May 2012 01:26:22 +0200
+	id 1SPjDH-0006Ny-FR
+	for gcvg-git-2@plane.gmane.org; Thu, 03 May 2012 01:44:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751550Ab2EBX0R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 May 2012 19:26:17 -0400
-Received: from mail-pb0-f46.google.com ([209.85.160.46]:54353 "EHLO
-	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751369Ab2EBX0R (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 May 2012 19:26:17 -0400
-Received: by pbbrp8 with SMTP id rp8so1696208pbb.19
-        for <git@vger.kernel.org>; Wed, 02 May 2012 16:26:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=9CVbTQCxjd+ZG2Va9wZerSZjiSLnbyia1gf42l1Q2uU=;
-        b=QqS7VZPJHfjlqOo/xk4be3HAhITu01yaxbA0cSUWiQgtmqSATDv86BGPm9+Yn62d3n
-         PRICio9xxKjsFz+yose3w9x2eZuX0Sg6ag1O7KiOTLKXuhI1uJXuK64ORL5KndETanX7
-         AF+xHdP6efc+nNTIGbaXB6pDGAAdhdhx7d4SI0N7JXwXbHseg9OyuXPhyKfuewokKAlZ
-         0A+Fq2Ze2JEu+/a3WTF5OViNRIVSSJKGCJzrI+Xx11DeOzbjeotGxy1lwzXX3llmTORb
-         imGeqbJBqqQwchwa5qJVSEQmTWgqx4pXPg0IL/BHQs59G611arU/DfSkoh/G0moH06ib
-         i/dg==
-Received: by 10.68.194.1 with SMTP id hs1mr1839801pbc.6.1336000871005;
-        Wed, 02 May 2012 16:21:11 -0700 (PDT)
-Received: from localhost (n1164843249.netvigator.com. [116.48.43.249])
-        by mx.google.com with ESMTPS id u5sm3258335pbu.76.2012.05.02.16.21.07
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 02 May 2012 16:21:09 -0700 (PDT)
+	id S1753196Ab2EBXn6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 May 2012 19:43:58 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:55984
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751164Ab2EBXn6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 May 2012 19:43:58 -0400
+Received: (qmail 29695 invoked by uid 107); 2 May 2012 23:44:14 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 02 May 2012 19:44:14 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 02 May 2012 19:43:52 -0400
 Content-Disposition: inline
-In-Reply-To: <7v62ceiejp.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <7vipgegrl0.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196870>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196871>
 
-It is non-bare and /path/to is the working tree.  The git pull was
-run inside a shell and $(pwd) is $HOME.  GIT_WORK_TREE is not used.
-This let me remember that there were some directories/files checkout
-under $HOME that should be under /path/to.  I might recall
-incorrectly, but does it mean that it need to use the form
+On Wed, May 02, 2012 at 03:12:43PM -0700, Junio C Hamano wrote:
 
-GIT_DIR=/path/to/.git GIT_WORK_TREE=/path/to git pull url
+> [Graduated to "master"]
+> [...]
+> * jk/doc-asciidoc-inline-literal (2012-04-26) 1 commit
+>   (merged to 'next' on 2012-04-30 at a52b4e6)
+>  + docs: stop using asciidoc no-inline-literal
+> 
+> Our documentation was written for an ancient version of AsciiDoc,
+> making the source not very readable.
 
-to make it to the samething as
+Now that this is in master, any in-flight topics would need their
+documentation updated to match this, too. I checked:
 
-cd /path/to && git pull url
+  git diff jk/doc-asciidoc-inline-literal origin/pu Documentation
 
+and found only one case.  We may still get some submissions based on the
+old style, but now we are aware of the issue and can comment and correct
+it during review.
+
+This patch is for mm/include-userpath, which is in master already. And
+it's only the right thing to do after the merge of
+jk/doc-asciidoc-inline-literal, so really it should just go straight
+into master.
+
+-- >8 --
+Subject: [PATCH] doc/config: fix inline literals
+
+Since commit 6cf378f, asciidoc backticks are now inline
+literals; therefore quoting {tilde} inside them is wrong
+(this instance was missed in 6cf378f because it happened on
+a parallel line of development).
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ Documentation/config.txt |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index e67c8ef..d575481 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -95,8 +95,8 @@ included file is expanded immediately, as if its contents had been
+ found at the location of the include directive. If the value of the
+ `include.path` variable is a relative path, the path is considered to be
+ relative to the configuration file in which the include directive was
+-found. The value of `include.path` is subject to tilde expansion: `{tilde}/`
+-is expanded to the value of `$HOME`, and `{tilde}user/` to the specified
++found. The value of `include.path` is subject to tilde expansion: `~/`
++is expanded to the value of `$HOME`, and `~user/` to the specified
+ user's home directory. See below for examples.
+ 
+ Example
 -- 
-regards,
-====================================================
-GPG key 1024D/4434BAB3 2008-08-24
-gpg --keyserver subkeys.pgp.net --recv-keys 4434BAB3
+1.7.10.630.g31718
