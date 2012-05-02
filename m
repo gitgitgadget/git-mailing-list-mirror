@@ -1,115 +1,108 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/2] [GIT PULL] ktest: A couple of fixes
-Date: Tue, 01 May 2012 20:49:58 -0700
-Message-ID: <7v62cf6y3d.fsf@alter.siamese.dyndns.org>
-References: <20120502004439.965120020@goodmis.org>
- <CA+55aFy02d13HkfwY-TEGwu=2cd8en+_rnrnwcwixGKRmdJRtA@mail.gmail.com>
+From: David Barr <davidbarr@google.com>
+Subject: Re: [PATCH 0/9] Prefix-compress on-disk index entries
+Date: Wed, 2 May 2012 14:26:15 +1000
+Message-ID: <CAFfmPPOPWkUcuWRFYGk9LHCAJAbvNYK=Xk+pvSa8fbffpRDppQ@mail.gmail.com>
+References: <1333493596-14202-1-git-send-email-gitster@pobox.com>
+	<CACsJy8A+cJtzKdqJSWbmjT1LgP10LB69-NHfOv8S6BusGcMeFw@mail.gmail.com>
+	<7vpqbn8hgr.fsf@alter.siamese.dyndns.org>
+	<CAFfmPPNHkK3SB8cGjfJiVoQoSg2OLL8B5--mwH8HShhJ1WGy2g@mail.gmail.com>
+	<CACsJy8DZ4t0f_mdDJTUZvz_pBPrPTsEBxHEkYREowWm6D1ikkw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Steven Rostedt <rostedt@goodmis.org>, linux-kernel@vger.kernel.org,
-	Git Mailing List <git@vger.kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: linux-kernel-owner@vger.kernel.org Wed May 02 05:50:21 2012
-Return-path: <linux-kernel-owner@vger.kernel.org>
-Envelope-to: glk-linux-kernel-3@plane.gmane.org
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Wed May 02 06:26:57 2012
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <linux-kernel-owner@vger.kernel.org>)
-	id 1SPQa2-0004nj-Ad
-	for glk-linux-kernel-3@plane.gmane.org; Wed, 02 May 2012 05:50:18 +0200
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1SPR9T-0003uL-Kt
+	for gcvg-git-2@plane.gmane.org; Wed, 02 May 2012 06:26:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758827Ab2EBDuE (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
-	Tue, 1 May 2012 23:50:04 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:33504 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758603Ab2EBDuA (ORCPT <rfc822;linux-kernel@vger.kernel.org>);
-	Tue, 1 May 2012 23:50:00 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 02C807FD6;
-	Tue,  1 May 2012 23:50:00 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=9MZz+diyd14xXxWJ65U1u9Qd0Bk=; b=Z54Tuv
-	5ujr478iFwbiNXbFM4beOZhSHSTiDlwI/aW0Do1kKRKHaSosfgAqRnyD5hhEWGLs
-	Iid/i75fR38KGVPZtfNFfbfxKqIlz8KoO6PZ6kUAiFDwOOpfSBiZbws0WTrjC7yE
-	SiiTsR1SXQHyS+QymFc6v+P3dibCfhJheM5XM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Xu5RPjjeEU7o0h/BCm92e7ImuNPqXgRI
-	SJ54b53gWYF5j4slwKuOBtrexao+eg0o+Qm/SenDhn2t/Y0X4ZkDDk6kqHug+YQY
-	BCZakGlVuRfzzAjVdWKOWkgfLdM260ejNX3e7u6c26DlRdZUcilOgnQyo+p3uUoW
-	PvgadTz2/Tw=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EE37D7FD4;
-	Tue,  1 May 2012 23:49:59 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7EB5C7FD2; Tue,  1 May 2012
- 23:49:59 -0400 (EDT)
-In-Reply-To: <CA+55aFy02d13HkfwY-TEGwu=2cd8en+_rnrnwcwixGKRmdJRtA@mail.gmail.com> (Linus
- Torvalds's message of "Tue, 1 May 2012 19:58:46 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: E3CCD85A-9409-11E1-9CF8-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
-Sender: linux-kernel-owner@vger.kernel.org
+	id S1751098Ab2EBE0S (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 May 2012 00:26:18 -0400
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:60084 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750822Ab2EBE0R (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 May 2012 00:26:17 -0400
+Received: by yenl12 with SMTP id l12so233643yen.19
+        for <git@vger.kernel.org>; Tue, 01 May 2012 21:26:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:x-system-of-record;
+        bh=MAQmO5247ozXRousP8ZlUMi6s/B0Skg4aiHG3RoVqJU=;
+        b=Tp3K+LXH1aPbWdj6X36rLpzZtPSKTbA44pO/lyybQL5J+Fd1KWQyu+ID3Z+iRWD8Iu
+         ZRsVphuXoQrp8LUqDZu2HfaN24DCNGUE4MRBfxgHKNRFve9RbakwAn2td0Kyh/XSI37J
+         EaukIjrzmEX3IhrgtF5uFEJ+vbCC83AiW+Ko+sJ0hhanBZFlDMyGTFbIpW3kXuwKURoT
+         Edu48pr0Mr6CEgqH074MPnfaz4A5b2Hfdsv8Ucqr26zQQ+Dq8MhMQD1t1V2rd1uEQdyL
+         xIZQ8q4BRnxu9rOO64bqkKe4PtA/mFgsJxydIFPoSupMtd4QgV+GSEhS4NpZTfKFpCfa
+         UUoQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:x-system-of-record:x-gm-message-state;
+        bh=MAQmO5247ozXRousP8ZlUMi6s/B0Skg4aiHG3RoVqJU=;
+        b=mX3C7oKpwenrJ0Po5Hb9D90fRmvW10pgrWEqIaz+2PRqPZpN6+HfKNfg8bGElNVGkx
+         pPDhdG/EAQVpcFTP6tYcGqOfwt9+5RBgjt/YWbyioY2J9TTymqP1DXBc1zsK9KzFFfP+
+         KwVFKZGlpifGvvQfbo1upG0dJWpIuWYBtaltLWi0DFoXiPFWRCjBZYI8wK/Afp3TItie
+         54e7pMEgSuo4eQoZeCHSpOkv08vIjFQyuDEAFSj/O8AGVGJRNcwmNa89033oxXFJR1kr
+         EeaN6RozLpLWF0pAy/3MG59/Ymu0A1MgT/BnoMxbYqIhiBwg7fpSsAitScYmvJ7E5PMl
+         AESg==
+Received: by 10.236.73.99 with SMTP id u63mr29151419yhd.102.1335932775666;
+        Tue, 01 May 2012 21:26:15 -0700 (PDT)
+Received: by 10.236.73.99 with SMTP id u63mr29151408yhd.102.1335932775563;
+ Tue, 01 May 2012 21:26:15 -0700 (PDT)
+Received: by 10.101.83.5 with HTTP; Tue, 1 May 2012 21:26:15 -0700 (PDT)
+In-Reply-To: <CACsJy8DZ4t0f_mdDJTUZvz_pBPrPTsEBxHEkYREowWm6D1ikkw@mail.gmail.com>
+X-System-Of-Record: true
+X-Gm-Message-State: ALoCoQm0d+pnVEO+voREoHtah4icLFHeH5892TJe8XA6er4lKsxE8Ed1FJuWmj5k+pApAxPVoZRSUMG3r+/AwgBvdbYlCFV8VZDo85xMXG+vXpU8e95KVbUjb0JAAGf+mFxZZoVtCBIA900t76H9o4HCkpcGqvIf+w==
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <linux-kernel.vger.kernel.org>
-X-Mailing-List: linux-kernel@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196782>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196783>
 
-Linus Torvalds <torvalds@linux-foundation.org> writes:
-
-> If you do a
+On Wed, May 2, 2012 at 11:58 AM, Nguyen Thai Ngoc Duy <pclouds@gmail.com> wrote:
+> On Fri, Apr 6, 2012 at 3:41 PM, David Barr <davidbarr@google.com> wrote:
+>> On Thu, Apr 5, 2012 at 4:44 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>>> Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
+>>>
+>>>> On Wed, Apr 4, 2012 at 5:53 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>>>> ...
+>>>> I wonder what causes user time drop from .29s to .13s here. I think
+>>>> the main patch should increase computation, even only slightly, not
+>>>> less.
+>>>
+>>> The main patch reduced the amount of the data needs to be sent to the
+>>> machinery to checksum and write to disk by about 45%, saving both I/O
+>>> and computation.
+>>
+>> I hacked together a quick patch to try predictive coding the other
+>> fields of the index. I got a further 34% improvement in size over
+>> this series. Patches to come. I just used the previous cache entry as
+>> the predictor and reused varint.h together with zigzag encoding[1].
+>>
+>> That's a total improvement in size over v2 of 62%.
 >
->   git pull linus v3.4-rc5
->
-> in order to just update to the state of my latest tag, then git will
-> assume you want to do a new commit (and thus a non-fast-forward) just
-> so that git can record the tag signature in the commit.
->
-> The sad part is that I don't think you can even override the second
-> case.
-> ...
-> That's inconvenient, and an unintended consequence of the behavior I
-> wanted as a top-level maintainer. But I really do think it's wrong for
-> normal developers who might validly just want to update to some
-> particular tagged release.
->
-> Junio? Any ideas?
+> Have you posted (and I missed) the patches? I'm interested in seeing
+> what changes you made.
 
-"Ideas" meaning "recipe to do with deployed binaries"?
+I haven't posted anything - my proof of concept was write-only and slow.
 
-When a normal developer wants to _reset to_ a particular tagged release,
-in order to _start_ new work, she wouldn't be doing even the above "git
-pull linus v3.4-rc5".  That will contaminate the result with whatever
-random stuff she happened to have on the current branch.  A more natural
-sequence would be "git fetch --tags linus" followed by either
+I added a prelude with a bitmask that describes which fields differ
+with the previous entry.
 
-        git checkout v3.4-rc5 ;# to detach
+For each differing field, I encoded something like:
+diff := this - prev;
+zigzag := (diff << 1) ^ (diff >> 31)
+raw := zigzag - 1 /* zero impossible because of mask */
+write_varint(raw)
 
-or
+I also experimented with using unique sha1 prefixes but it was slow
+and probably introduces race conditions.
 
-        git checkout -b mywork v3.4-rc5 ;# to start
-
-So the case to "reset to" is not very interesting.
-
-But when a normal developer wants to _sync to_ a particular tagged
-release, in order to _continue_ working on her topic, she would need to
-have a merge (unless she does not have _anything_ herself), and at that
-point, merging v3.4-rc5 vs v3.4-rc5^0 would not make that much of a
-difference.  If she absolutely detests the "mergetag" header, she could do
-a "git fetch --tags linus" followed by
-
-	git merge v3.4-rc5^0
-
-which admittedly is two more letters than she used to type.
-
-If you mean by "Ideas" for additional features, obviously the last step
-could be enhanced to use a more intuitive command line that requires the
-user to type even more, i.e.
-
-	git merge --ff v3.4-rc5
-
-Once that is done, "git pull --ff linus v3.4-rc5" would fall out as a
-logical consequence.
-
-But obviously these two would need new code ;-)
+>> [1] https://developers.google.com/protocol-buffers/docs/encoding#types
+--
+David Barr
