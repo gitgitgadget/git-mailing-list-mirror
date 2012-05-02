@@ -1,86 +1,107 @@
-From: Ralf Thielow <ralf.thielow@googlemail.com>
-Subject: Re: [PATCH de.po 5/5] de.po: collection of suggestions
-Date: Wed, 2 May 2012 20:36:40 +0200
-Message-ID: <CAN0XMOJFSginzA-0ED36YMqxbdv3vAQ01UDW-5fR9gfso5E_cQ@mail.gmail.com>
-References: <cover.1335966202.git.trast@student.ethz.ch>
-	<abfde735e408a8fc34e143ec25d1a345b6fcbd27.1335966202.git.trast@student.ethz.ch>
+From: Hilco Wijbenga <hilco.wijbenga@gmail.com>
+Subject: Re: Is there any way to make hooks part of the repository?
+Date: Wed, 2 May 2012 12:10:41 -0700
+Message-ID: <CAE1pOi3RZ+x7YcVZ-dLt70=wwRsvY9D6GQR-T+JZ9S7x8CFjPw@mail.gmail.com>
+References: <CAE1pOi2hr7ewjo5WVDoW0ipYxDVTckr5M_sHNoOQ323=_k754Q@mail.gmail.com>
+	<7vipgf8wve.fsf@alter.siamese.dyndns.org>
+	<CAE1pOi0_ETdSYsuT0Udhbr6rDvmEcuTA157d6aKUosgi7w28jw@mail.gmail.com>
+	<vpqfwbjnl4a.fsf@bauges.imag.fr>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jiang Xin <worldhello.net@gmail.com>,
-	Git List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?Q?Jan_Kr=C3=BCger?= <jk@jk.gs>,
-	Christian Stimming <stimming@tuhh.de>
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Wed May 02 20:36:49 2012
+Cc: Junio C Hamano <gitster@pobox.com>, Git Users <git@vger.kernel.org>
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Wed May 02 21:10:53 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SPePu-0008DP-LQ
-	for gcvg-git-2@plane.gmane.org; Wed, 02 May 2012 20:36:47 +0200
+	id 1SPewp-0005rV-4V
+	for gcvg-git-2@plane.gmane.org; Wed, 02 May 2012 21:10:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755671Ab2EBSgl convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 2 May 2012 14:36:41 -0400
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:55661 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755457Ab2EBSgk convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 2 May 2012 14:36:40 -0400
-Received: by yenm10 with SMTP id m10so490632yen.19
-        for <git@vger.kernel.org>; Wed, 02 May 2012 11:36:40 -0700 (PDT)
+	id S1755871Ab2EBTKm convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 2 May 2012 15:10:42 -0400
+Received: from mail-yw0-f46.google.com ([209.85.213.46]:44436 "EHLO
+	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755587Ab2EBTKl convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 2 May 2012 15:10:41 -0400
+Received: by yhmm54 with SMTP id m54so1046923yhm.19
+        for <git@vger.kernel.org>; Wed, 02 May 2012 12:10:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20120113;
+        d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type:content-transfer-encoding;
-        bh=lXkGNgMY9P9+zJ3Uk3BaieV8wPcXfgrZntz459ueGX0=;
-        b=EHQK9J+D0Ey5TVtewXhGOwyQgskdfdPBfF8aUh6fAR7bLAJrdENkhNGZ+uLWxFmz1r
-         8eu+ztDXlNjC4A1lAZGwuxvpceuiZUQ0UJ0mq7LqoKoCVe4Azsa49xnVfGWva92iyLWi
-         Gfn+1T1xWDPDPKOdsteE2/pyPLG9qpcW9kYncuAwzcvQS1K0aKG/WhFqax0rqX0hLcIv
-         glqhdlaWomDv+8FRHYIvK/htFDjCxK6Gq+kbJg503t3WsVBYpgnVXvFnrNBPcNBIwZG8
-         WXrEuRe+seLESSOGygw49pDSIXaDRxUt5YpD+YDkEr+AL/iUVW+k9Ttk7U6RQkwqHhW7
-         rB2A==
-Received: by 10.236.181.129 with SMTP id l1mr32108061yhm.59.1335983800276;
- Wed, 02 May 2012 11:36:40 -0700 (PDT)
-Received: by 10.146.203.1 with HTTP; Wed, 2 May 2012 11:36:40 -0700 (PDT)
-In-Reply-To: <abfde735e408a8fc34e143ec25d1a345b6fcbd27.1335966202.git.trast@student.ethz.ch>
+        bh=UxmvvjMRAz6B30/X92q2l56jlmRIwDl3nW0Med4XIzQ=;
+        b=pAQDlnJbSMrynB7DjX4bRbZlofJFbsO6Ala75qA3TREkWVS2zWeubRCX0PCQg5kRvm
+         tDzXTpQHZIHA9zL7Gid+Vb7R50dt4tJdZ7Eomfb/8Lwtt8Q1zQy5MxPucL23VujGF8+K
+         8nsDBs1uAltoX+PTTsqmW/SopdA6WAqboPEL3bK+P/hUbZS2Lo/8A6AwYt394qDZfzyl
+         iYDEbb2vbex80htcawbYiIz50ditQcB0SIQp5iFE0j0WiT4EZMBp+ANeu9fcqvMsqRaF
+         OfcCXgkdLlFrqfvGUyHxRv3b3tGfwSzQC8ywUHDev0F+etuAx4PA9YL9dljl/IlIhNur
+         OGlg==
+Received: by 10.236.76.41 with SMTP id a29mr32555087yhe.117.1335985841310;
+ Wed, 02 May 2012 12:10:41 -0700 (PDT)
+Received: by 10.236.79.98 with HTTP; Wed, 2 May 2012 12:10:41 -0700 (PDT)
+In-Reply-To: <vpqfwbjnl4a.fsf@bauges.imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196849>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196850>
 
-Looks good so far.
-I amended (and applied) your patch but have changed the following parts=
-=2E
-If you don't agree with them, please let me know. Commonly I don't chan=
-ge
-a patch but I want to get these changes in and I think you'll agree wit=
-h my
-changes.
+On 1 May 2012 23:38, Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> wrote:
+> Hilco Wijbenga <hilco.wijbenga@gmail.com> writes:
+>
+>> On 1 May 2012 13:33, Junio C Hamano <gitster@pobox.com> wrote:
+>>> Hilco Wijbenga <hilco.wijbenga@gmail.com> writes:
+>>>
+>>>> Is there any way to get (some of) the Git hooks to run for everyon=
+e
+>>>> without everyone having to install them separately? If no, is this=
+ by
+>>>> design or simply a feature nobody has asked for (yet)?
+>>>
+>>> By design. =C2=A0Do you want me to include "rm -fr ~hilco" in some =
+hook of
+>>> git.git repository?
+>>
+>> Mmm, well, I might get quite famous if you did... ;-)
+>>
+>> But if you wanted to be evil then you could easily find another plac=
+e
+>> (the build scripts, the code itself, et cetera).
+>
+> Yes, but at least, you have the opportunity to examine the other plac=
+es
+> before they are ran. Hooks would be really, really nasty security-wis=
+e.
+> For example, "git clone" does a checkout, so should probably run the
+> checkout hooks.
 
-> +"um die Aufl=C3=B6sung entsprechend zu markieren und einzutragen,\n"
-> =C2=A0"oder benutze 'git commit -a'."
+There is (or, rather, should be) absolutely no difference between code
+changes and hook changes. Both would go through the same review
+process. If it's possible to put in nasty hooks then it's possible to
+put in nasty code.
 
-There are a couple of other parts in the file with the same pattern.
-I've changed them in the same way.
+>> So I don't think this is a good argument. Moreover, I do not work wi=
+th
+>> people that would ever consider such nastiness. You need to realize
+>> that this is all closed source. Your argument would be more valid in
+>> an open source environment (like git.git).
+>
+> That may be acceptable for you, but you can't ask for such feature to=
+ be
+> included in Git itself. At best, a standardized way to setup hooks (b=
+ut
+> something that would require a user-action to be set up) would be
+> acceptable.
 
-> =C2=A0#: wt-status.c:207
-> =C2=A0msgid "bug"
-> -msgstr "Fehler"
-> +msgstr "Bug"
+Given ${PROJECT}/.git, I would think that a simple config setting
+(hooks.run-automatically-this-is-a-security-risk [defaulting to false,
+of course]) and an extra directory like ${PROJECT}/.hooks (this should
+probably be configurable as well: hooks.directory) would work
+perfectly. Then it's up to the project to decide if they want to use
+that feature. Moreover, you could then still have "personal" hooks in
+${PROJECT}/.git/hooks.
 
-I don't think that "Bug" is a better translation than "Fehler". It's no=
-t
-really a German word. Most of the German people should
-know what that means, but at least it's the same question
-like the translation of terms like "commit". I removed it for now.
-
-> +"und benutze dann 'git add/rm <Datei>' \n"
-
-I removed the whitespace before the line break.
-
-I also changed "..packen..." to "...Packen...".
-
-Thanks
+Would such a setup be acceptable?
