@@ -1,162 +1,130 @@
-From: Sitaram Chamarty <sitaramc@gmail.com>
-Subject: Re: Newbie grief
-Date: Wed, 2 May 2012 06:14:46 +0530
-Message-ID: <CAMK1S_jrDXvPTKt_Azk2BZm=N7SdgcvgAV7X1TEUvGhwcan_AA@mail.gmail.com>
-References: <4F9F128C.5020304@palm.com>
-	<201204302331.q3UNVo7o032303@no.baka.org>
-	<4F9F3919.6060805@palm.com>
-	<CAMK1S_jwVsyKrGoL5uVAiuRrOa8bz79-DAueBmHZE2k=PpcJ2Q@mail.gmail.com>
-	<4FA01C73.5000909@palm.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Re: 1.7.10 doesn't show file pushstatus
+Date: Wed, 2 May 2012 03:04:20 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.1205020301560.27828@bonsai2>
+References: <20120501010609.GA14715@jupiter.local> <20120501065832.GA17777@sigill.intra.peff.net> <20120501073326.GA21087@sigill.intra.peff.net> <20120501084048.GA21904@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: Rich Pixley <rich.pixley@palm.com>
-X-From: git-owner@vger.kernel.org Wed May 02 02:44:53 2012
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: TEXT/PLAIN; charset=ISO-8859-1
+Cc: Clemens Buchacher <drizzd@aon.at>, Junio C Hamano <gitster@pobox.com>, 
+    dfowler <davidfowl@gmail.com>, git@vger.kernel.org, 
+    msysgit@googlegroups.com, Paul Betts <paul@github.com>, 
+    David Ebbo <david.ebbo@gmail.com>
+To: Jeff King <peff@peff.net>
+X-From: msysgit+bncCLLz_5DuGxCakIL9BBoEtFFR7Q@googlegroups.com Wed May 02 03:04:26 2012
+Return-path: <msysgit+bncCLLz_5DuGxCakIL9BBoEtFFR7Q@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-fa0-f58.google.com ([209.85.161.58])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SPNga-0002rB-Fd
-	for gcvg-git-2@plane.gmane.org; Wed, 02 May 2012 02:44:52 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755934Ab2EBAos convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 1 May 2012 20:44:48 -0400
-Received: from mail-ob0-f174.google.com ([209.85.214.174]:37210 "EHLO
-	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756253Ab2EBAor convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 1 May 2012 20:44:47 -0400
-Received: by obbtb18 with SMTP id tb18so179350obb.19
-        for <git@vger.kernel.org>; Tue, 01 May 2012 17:44:47 -0700 (PDT)
+	(envelope-from <msysgit+bncCLLz_5DuGxCakIL9BBoEtFFR7Q@googlegroups.com>)
+	id 1SPNzW-0002bV-I6
+	for gcvm-msysgit@m.gmane.org; Wed, 02 May 2012 03:04:26 +0200
+Received: by faaa20 with SMTP id a20sf50815faa.3
+        for <gcvm-msysgit@m.gmane.org>; Tue, 01 May 2012 18:04:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :content-type:content-transfer-encoding;
-        bh=93B50ztyja2odkpuSeg1Bpglg82nKD0lOhgWSbJC3QI=;
-        b=HFkbO+AeB9D1CANhuZpzacBAzG1iNaIKl34V+CIYFksp/6sJ4rcVchMYQY2Oq3QSnS
-         RCIgVo/676cvZ3HX3a23UWVyEOoJqjz0hBDEPwUyp4Tugg584uUARPklV4kkbumlQQbr
-         DGQYBk7A2T3f8H5zYyEMVFB1tPmLqyl5WQHwXca3pyOoNtCZno7X0rjtKmkypL0Bz1DK
-         D5Up6ijWRaASA+8XwFStlPFSoJyofYTSnCDiPLybGfbHZzgxfztA0yOEg/3cPXJjeVAj
-         wvYRWQ3RzQmih3RXKJuFCEwFUIWcxJrGcHvS02Sfrah6yhBd+8pklEKeLyX+JDEvoTwl
-         CoRw==
-Received: by 10.182.11.40 with SMTP id n8mr6971299obb.32.1335919487062; Tue,
- 01 May 2012 17:44:47 -0700 (PDT)
-Received: by 10.182.108.67 with HTTP; Tue, 1 May 2012 17:44:46 -0700 (PDT)
-In-Reply-To: <4FA01C73.5000909@palm.com>
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196774>
+        d=googlegroups.com; s=beta;
+        h=x-beenthere:received-spf:x-authenticated:x-provags-id:date:from
+         :x-x-sender:to:cc:subject:in-reply-to:message-id:references
+         :user-agent:mime-version:x-y-gmx-trusted:x-original-sender
+         :x-original-authentication-results:precedence:mailing-list:list-id
+         :x-google-group-id:list-post:list-help:list-archive:sender
+         :list-subscribe:list-unsubscribe:content-type;
+        bh=n+DUcoPKJ1S3iilBv+6oSBW0fLERWdFqnXDvzl4NLFc=;
+        b=mgaVYest+zu/TsOecXvqut8HJTs8f9rHy0dmo2PoqjOG3HAMPLo1pvgOIqtncU6KnW
+         OC7d5XimvUQz0svWF39P0qrqCS4gjYYh0/HtK7o5e/bfUDdV6Yq290vl5kEE+C9cscKF
+         /tlk1GHHhLNDbWatPUwAovQYAfRXCT4sEgB6w=
+Received: by 10.180.80.97 with SMTP id q1mr289388wix.3.1335920666076;
+        Tue, 01 May 2012 18:04:26 -0700 (PDT)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.180.78.134 with SMTP id b6ls3693454wix.4.canary; Tue, 01 May
+ 2012 18:04:24 -0700 (PDT)
+Received: by 10.180.87.165 with SMTP id az5mr559256wib.4.1335920664544;
+        Tue, 01 May 2012 18:04:24 -0700 (PDT)
+Received: by 10.180.87.165 with SMTP id az5mr559255wib.4.1335920664534;
+        Tue, 01 May 2012 18:04:24 -0700 (PDT)
+Received: from mailout-de.gmx.net (mailout-de.gmx.net. [213.165.64.22])
+        by gmr-mx.google.com with SMTP id n1si6511443wiy.0.2012.05.01.18.04.24;
+        Tue, 01 May 2012 18:04:24 -0700 (PDT)
+Received-SPF: pass (google.com: domain of Johannes.Schindelin@gmx.de designates 213.165.64.22 as permitted sender) client-ip=213.165.64.22;
+Received: (qmail invoked by alias); 02 May 2012 01:04:23 -0000
+Received: from 23.Red-81-44-254.staticIP.rima-tde.net (EHLO bonsai2.local) [81.44.254.23]
+  by mail.gmx.net (mp016) with SMTP; 02 May 2012 03:04:23 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+wfrwZIkSwyvALSdhlqqbW3xbjZuJNVH8xNzp9dF
+	y8B6IXWF7GVnQx
+X-X-Sender: gene099@bonsai2
+In-Reply-To: <20120501084048.GA21904@sigill.intra.peff.net>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-Original-Sender: johannes.schindelin@gmx.de
+X-Original-Authentication-Results: gmr-mx.google.com; spf=pass (google.com:
+ domain of Johannes.Schindelin@gmx.de designates 213.165.64.22 as permitted
+ sender) smtp.mail=Johannes.Schindelin@gmx.de
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post?hl=en>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/?hl=en>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit?hl=en>
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196775>
 
-[I'm going to assume not copying the list on your reply to me was an
-oversight, since there's nothing in the text to indicate it was
-supposed to confidential or personal in any way].
+Hi Peff,
 
-[second, sorry about the multiple emails!]
+On Tue, 1 May 2012, Jeff King wrote:
 
-On Tue, May 1, 2012 at 10:55 PM, Rich Pixley <rich.pixley@palm.com> wro=
-te:
->
-> On 4/30/12 20:44 , Sitaram Chamarty wrote:
->>
->> I've been reading the thread with interest.
->>
->> People who know far more than I do about git, its innards, and its
->> design have been responding in this thread so consider this a git
->> *user*'s point of view:
->>
->> On Tue, May 1, 2012 at 6:45 AM, Rich Pixley<rich.pixley@palm.com> =C2=
-=A0wrote:
->>
->>> Multiple heads are the idea that a single commit can "branch" in th=
-e
->>> repository and that both commits can be HEADS of the same branch at=
- once
->>> in
->>> a single repository. =C2=A0This allows a potential collision to exi=
-st in the
->>> repository and to be pushed and pulled through multiple repositorie=
-s.
->>> =C2=A0It
->>
->> That is bizarre; I have no other word for it.
->>
->> I teach git (occasionally), and if this feature existed I would
->> totally ignore it in my teaching material because I wouldn't know ho=
-w
->> to defend or explain the need for "hydra branches".
->>
->> It's like having two people with the same first name *and* last name
->> (a situation that is not impossible in real life, but is rare and
->> almost always requires special handling).
->>
->> Does Hg do this?
->
-> Yes, it does. =C2=A0"Hg merge" by default merges a second head into y=
-our
-> current working directory.
->
-> It's a conceptual leap, I concur. =C2=A0Believe me, I'm going through=
- the
+> On Tue, May 01, 2012 at 03:33:26AM -0400, Jeff King wrote:
+> 
+> > In this case, send pack gets its arguments from the command-line, not
+> > from the options set at the transport layer. Remote-curl will pass along
+> > "--quiet" if we get that from the transport layer, but it does not
+> > otherwise pass along the "progress" flag. So there are two problems:
+> > 
+> >   1. send-pack defaults its progress boolean to 0. Before 01fdc21, that
+> >      was OK, because it meant "don't explicitly ask for progress". But
+> >      after 01fdc21 that now means "explicitly ask for no progress", and
+> >      the direct-transport code paths were updated without updating
+> >      cmd_send_pack.
+> > 
+> >   2. There's no way to tell send-pack explicitly "yes, I would like
+> >      progress, no matter what isatty(2) says". I doubt anybody cares
+> >      much, but it probably makes sense to handle that for the sake of
+> >      completeness.
+> 
+> The following patch series fixes this:
+> 
+>   [1/3]: send-pack: show progress when isatty(2)
+>   [2/3]: teach send-pack about --[no-]progress
+>   [3/3]: t5541: test more combinations of --progress
 
+Thanks. I applied and pushed it after testing on Linux.
 
-It's a conceptual leap I can do without; I'm bowing out of this discuss=
-ion.
+David, if you want to relieve me of maintenance burden in the future, you
 
-There's an ambiguity in the branch name now that, to me, is both
-confusing and unnecessary.
+# apply the patches
 
-It's like each branch name is now an array variable instead of a scalar=
-=2E
+# push them to a fork on GitHub
 
-We all know when arrays are better than a bunch of similarly named
-scalars, but in *this* context I don't see why it is needed.
+# run the tests
 
-The fact that, (in later emails to others), you called this a basic
-beginning need, or words to that effect, is just icing on top.
+# report back to the mailing list (including the outcome of the test --
+  detailed, if it fails)
 
-> reverse cultural shock now that git doesn't have this facility. =C2=A0=
-But it's a
-> leap whose idea has been around for over 20 years. =C2=A0It wasn't un=
-til the
-> daggy source code control systems like monotone showed up that it bec=
-ame
-> practical, but that was a decade ago now.
->
-> The big win, of course, is that we can both push to the same reposito=
-ry,
-> (and through multiple repositories), and we can decide later whether =
-we want
-> to merge or branch permanently.
->
->> =C2=A0 That would explain why my (admittedly half-hearted)
->> attempts to learn it have failed -- whatever tutorial I used must ha=
-ve
->> been written with the idea that hydra branches are intuitive and
->> logical and sane, but did not express the concept as clearly and
->> succinctly as you did.
->>
->> Thanks for this insight; my next attempt to understand Hg, should I
->> ever be forced into it, might actually succeed!
->
-> It's really pretty simple. =C2=A0Your commit, (or push, or pull), alw=
-ays
-> succeeds, even if it's not at the tip of a branch. =C2=A0If it's not =
-at the tip
-> of a branch, then it creates a new tip.
->
-> The word "head" here is problematic since git uses it in a totally
-> different way. =C2=A0In git, "HEAD" refers to whatever commit is curr=
-ently
-> checked out. =C2=A0In hg, "head" refers to a childless commit. =C2=A0=
-It doesn't even
-> need to be on a named branch.
->
-> --rich
+Ciao,
+Johannes
 
+-- 
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
 
-
-
---
-Sitaram
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
