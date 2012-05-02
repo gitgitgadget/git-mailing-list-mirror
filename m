@@ -1,95 +1,137 @@
-From: Christian Stimming <stimming@tuhh.de>
-Subject: Re: [PATCH 0/5] de.po suggested updates
-Date: Wed, 02 May 2012 21:13:38 +0200
-Organization: Alumni Technische =?UTF-8?B?VW5pdmVyc2l0w6R0?= Hamburg-Harburg
-Message-ID: <7907002.V2EE7RxYrB@cs-pc>
-References: <87d36n2f2r.fsf@thomas.inf.ethz.ch> <cover.1335966202.git.trast@student.ethz.ch>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 0/2] [GIT PULL] ktest: A couple of fixes
+Date: Wed, 02 May 2012 13:14:28 -0700
+Message-ID: <7vsjfigx23.fsf@alter.siamese.dyndns.org>
+References: <20120502004439.965120020@goodmis.org>
+ <CA+55aFy02d13HkfwY-TEGwu=2cd8en+_rnrnwcwixGKRmdJRtA@mail.gmail.com>
+ <7v62cf6y3d.fsf@alter.siamese.dyndns.org>
+ <1335966292.14207.40.camel@gandalf.stny.rr.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Ralf Thielow <ralf.thielow@googlemail.com>,
-	Jiang Xin <worldhello.net@gmail.com>,
-	Git List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Jan =?ISO-8859-1?Q?Kr=FCger?= <jk@jk.gs>
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Wed May 02 22:07:20 2012
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
+Content-Type: text/plain; charset=us-ascii
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	linux-kernel@vger.kernel.org,
+	Git Mailing List <git@vger.kernel.org>
+To: Steven Rostedt <rostedt@goodmis.org>
+X-From: linux-kernel-owner@vger.kernel.org Wed May 02 22:14:48 2012
+Return-path: <linux-kernel-owner@vger.kernel.org>
+Envelope-to: glk-linux-kernel-3@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SPfpW-0001mN-TU
-	for gcvg-git-2@plane.gmane.org; Wed, 02 May 2012 22:07:19 +0200
+	(envelope-from <linux-kernel-owner@vger.kernel.org>)
+	id 1SPfwk-0006gB-Ge
+	for glk-linux-kernel-3@plane.gmane.org; Wed, 02 May 2012 22:14:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756962Ab2EBUHM convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 2 May 2012 16:07:12 -0400
-Received: from smtp3.rz.tu-harburg.de ([134.28.202.138]:45237 "EHLO
-	smtp3.rz.tu-harburg.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756196Ab2EBUHL convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 2 May 2012 16:07:11 -0400
-Received: from mail.tu-harburg.de (mail.tu-harburg.de [134.28.202.179])
-	by smtp3.rz.tu-harburg.de (8.13.8/8.13.8) with ESMTP id q42JDfM1025802
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK);
-	Wed, 2 May 2012 21:13:41 +0200
-Received: from cs-pc.localnet (e176204125.adsl.alicedsl.de [85.176.204.125])
-	(user=alucst mech=LOGIN bits=0)
-	by mail.tu-harburg.de (8.13.8/8.13.8) with ESMTP id q42JDenH009146
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 2 May 2012 21:13:41 +0200
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=tuhh.de; s=x2012-18;
-	t=1335986021; bh=MVvQI/MLL3tNRLsPGFbu2zGQrVsULrpTPfSfddtBruY=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Transfer-Encoding:Content-Type;
-	b=yhzh79k0JoH5qvOBjX2mvYy/317FOwh7+dHXYT2SKY7X/JdwSg2E0El80VSFtmaiS
-	 5U8vzpHf+m4hB5f1dk2W4yYCMOGWIkPDq/f6zMiSnjg7che1GuWTxqikue2oXKPT1L
-	 eukRufajrLU3kCrySHsK4c1Rgs+sAYJXykacx2z8=
-User-Agent: KMail/4.7.3 (Linux/3.0.0-17-generic; KDE/4.7.4; x86_64; ; )
-In-Reply-To: <cover.1335966202.git.trast@student.ethz.ch>
-X-Scanned-By: TUHH Rechenzentrum content checker on 134.28.202.138
-X-Scanned-By: TUHH Rechenzentrum content checker on 134.28.202.179
-Sender: git-owner@vger.kernel.org
+	id S1757216Ab2EBUOc (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
+	Wed, 2 May 2012 16:14:32 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:60129 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757006Ab2EBUOa (ORCPT <rfc822;linux-kernel@vger.kernel.org>);
+	Wed, 2 May 2012 16:14:30 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 306217FD4;
+	Wed,  2 May 2012 16:14:30 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=6O3lNqLgGRwiZ9t8+N7Cwi+4350=; b=Vc0osV
+	bxrX1L6HEltsbjUomVHAqbF2pXSZeX3q9kTWp2sjj0hKHCxbVp56rUEqzsEA6qTC
+	BQc5SwOYG2AO3MrrKplPD28haSfDk2IlySBd28/PsblgFQeucP5ZqgzBD7DRac2w
+	C7C163FYpCeDPzN2tPrmE+wUCtJ3JC3QBQbL4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=VyOcjprCRvGCz2oDnVycaQrb5YUSONei
+	zqNxkARgf1omK8TfhfwfTIBiSKfbEKC4CbKyCvQGSzyF76Ulv0A2trCdaqeqLXF3
+	C2PsqEuWEHMDRnU9kvXYJjykLWyyV+S5GHN1OiXfPrab9mLuUF4KMHWchYSwsIud
+	ml5qRALo/0M=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 27C647FD3;
+	Wed,  2 May 2012 16:14:30 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5EC1E7FD0; Wed,  2 May 2012
+ 16:14:29 -0400 (EDT)
+In-Reply-To: <1335966292.14207.40.camel@gandalf.stny.rr.com> (Steven
+ Rostedt's message of "Wed, 02 May 2012 09:44:52 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 6C2FDA42-9493-11E1-8559-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+Sender: linux-kernel-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196860>
+List-ID: <linux-kernel.vger.kernel.org>
+X-Mailing-List: linux-kernel@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196861>
 
-Am Mittwoch, 2. Mai 2012, 15:49:22 schrieb Thomas Rast:
-> The rest are for Ralf.
->=20
-> [2/5] does away with the "bare"->"leer" issue that I used as an
->       example earlier.  There's precedent in git-gui :-( This does
->       raise the question if it's kosher to patch both git and git-gui
->       at the same time, but if we want to keep the translations in
->       sync it probably won't be the last such patch.
->=20
-> [3/5] collects all the "obvious" stuff
->=20
-> [4/5] and=20
+Steven Rostedt <rostedt@goodmis.org> writes:
 
-As one of the earlier translators: I agree with all of those and I agre=
-e those=20
-are completely improvements. Thanks for improving the translation!
+> On Tue, 2012-05-01 at 20:49 -0700, Junio C Hamano wrote:
+>> Linus Torvalds <torvalds@linux-foundation.org> writes:
+>> 
+>
+>> When a normal developer wants to _reset to_ a particular tagged release,...
+>
+> The problem is,...
+> But then I would end up with ...
 
-Regards,
+[comments on the part I declared "uninteresting" snipped]
 
-Christian
+>> So the case to "reset to" is not very interesting.
 
-> [5/5] gather the less-obvious stuff -- keep what you like.
->=20
-> Cheers,
-> Thomas
->=20
-> Thomas Rast (5):
->   stash: make "saved" message translatable
->   de.po: translate "bare" as "blo=DF"
->   de.po: hopefully uncontroversial fixes
->   de.po: translate "bad" as "ung=FCltig" ("invalid")
->   de.po: collection of suggestions
->=20
->  git-gui/po/de.po |    4 +-
->  git-stash.sh     |    2 +-
->  po/de.po         |  153
-> +++++++++++++++++++++++++----------------------------- 3 files change=
-d, 74
-> insertions(+), 85 deletions(-)
+>> But when a normal developer wants to _sync to_ a particular tagged
+>> release, in order to _continue_ working on her topic, she would need to
+>> have a merge (unless she does not have _anything_ herself), and at that
+>> point, merging v3.4-rc5 vs v3.4-rc5^0 would not make that much of a
+>> difference.  If she absolutely detests the "mergetag" header, she could do
+>> a "git fetch --tags linus" followed by
+>> 
+>> 	git merge v3.4-rc5^0
+>> 
+>> which admittedly is two more letters than she used to type.
+>
+> This would fit into my workflow. Thus I could use this.
+
+OK.
+
+>> If you mean by "Ideas" for additional features, obviously the last step
+>> could be enhanced to use a more intuitive command line that requires the
+>> user to type even more, i.e.
+>> 
+>> 	git merge --ff v3.4-rc5
+>> 
+>> Once that is done, "git pull --ff linus v3.4-rc5" would fall out as a
+>> logical consequence.
+>> 
+>> But obviously these two would need new code ;-)
+>
+> The -ff would make sense as it seems to be the logical thing a user
+> would want. If they specify the fast-forward flag, then the user would
+> expect the merge to be a fast forward if possible.
+
+OK.  Sounds like a good janitor project we could try to find a volunteer
+on ;-).
+
+> BTW, is there a git compare type option. That is, I like to compare two
+> separate branches with the result that one currently gets with git when
+> a branch is following another branch. When you check out that branch, it
+> gives you an update on how those two branches are related (is one a fast
+> forward of the other, are they off by different commits?). It would be
+> nice if git could do this with any two branches. I wrote a script to do
+> this for me (attached) but it would be nice if git had it natively.
+>
+> $ git-branch-status v3.0.4 v3.0.5              
+> Branch v3.0.4 can be fast forward to v3.0.5 in 240 commits
+>
+> $ git-branch-status v3.0.4 v3.1  
+> Branch v3.0.4 and v3.1
+> differ by 257 and 9380 commit(s) respectively
+
+I personally do not think "257 and 9380" vs "15 and 400" totally
+uninteresting, in the sense that the absolute numbers do not matter much,
+and the only question that matter is "Is everything in this one included
+in the other?" and I just say "git lgf master..topic" (where I have in my
+$HOME/.gitconfig "[alias] lgf = log --oneline --boundary --first-parent"
+defined) to see the list of commits on a topic, with the indication of
+where the topic forked from.  Obviously it takes the "never merge mainline
+into topics" discipline for it to be useful.
+
+I also use "git show-branch $A $B $C..." for something like this but that
+is only useful when these branches are known to have only a handful of
+commits on their own, and its output is not very suited if they have
+hundreds of commits.
