@@ -1,79 +1,135 @@
-From: Michael Mueller <mmueller@vigilantsw.com>
-Subject: New NULL dereference in sequence.c
-Date: Wed, 2 May 2012 01:45:54 -0700
-Message-ID: <CANV9Rr9PFR7SA_3jB-6PRF_V+4yB-FsYEuX5gs-LMpoTAxGDCQ@mail.gmail.com>
+From: Ralf Thielow <ralf.thielow@googlemail.com>
+Subject: Re: Please pull git-po master branch
+Date: Wed, 2 May 2012 11:13:04 +0200
+Message-ID: <CAN0XMOJ0PBA2qptw2Lm9HOq4SAkeZNAyOwPdvcb-uAcsxKnzwg@mail.gmail.com>
+References: <CANYiYbHtKKWw9LPnr+1khC5Oms-kOtA2WEucoNoE3Njzqiahzw@mail.gmail.com>
+	<87d36n2f2r.fsf@thomas.inf.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 02 10:46:01 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jiang Xin <worldhello.net@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Git List <git@vger.kernel.org>,
+	=?UTF-8?Q?Jan_Kr=C3=BCger?= <jk@jk.gs>
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Wed May 02 11:13:15 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SPVCC-0003aV-8b
-	for gcvg-git-2@plane.gmane.org; Wed, 02 May 2012 10:46:00 +0200
+	id 1SPVcX-0000dS-Dz
+	for gcvg-git-2@plane.gmane.org; Wed, 02 May 2012 11:13:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755807Ab2EBIp4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 May 2012 04:45:56 -0400
-Received: from mail-qc0-f174.google.com ([209.85.216.174]:54287 "EHLO
-	mail-qc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755303Ab2EBIpz (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 May 2012 04:45:55 -0400
-Received: by qcro28 with SMTP id o28so178197qcr.19
-        for <git@vger.kernel.org>; Wed, 02 May 2012 01:45:54 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:x-originating-ip:date:message-id:subject:from:to
-         :content-type:x-gm-message-state;
-        bh=GoUXMFNQyl0T+WXTCsKvpsUog60RAhtooHW29LG+zOQ=;
-        b=HJwCjGPt4woNK/pD8FYjrE3CDJO5K8or/4B1g3A2SC0aAuvcLfAQFE5l85BclJQGBu
-         21EocfxfTQbITEXGaYiaiuh9jPhPecWUFTiVnXCGqg/TKLA4sCan3cncMINvoYcoAge7
-         onfVvtaC/LYbT8/VBnBPhzZ3VELmHKnQWepbZDku+84A9NMEY6Q/c5Y0weJbYdX6Rlvg
-         ujDNesUC0xKKVewR5lvBfYURzTvXwUdRTu6+H5joQHpyc5IjjD1ewkUwoKqPbZ8gD1tA
-         aiqu2gWg5eV7CYnPIU2TDHAU2ZyWCwUx1glw8zdEsHgYyacURD8zBCG9vBHY3Ji55T7w
-         hefg==
-Received: by 10.224.1.135 with SMTP id 7mr8624471qaf.16.1335948354246; Wed, 02
- May 2012 01:45:54 -0700 (PDT)
-Received: by 10.229.15.139 with HTTP; Wed, 2 May 2012 01:45:54 -0700 (PDT)
-X-Originating-IP: [67.180.177.185]
-X-Gm-Message-State: ALoCoQmX4SoihAG2N/zo5b0+4KV/LA1sqrql1Qj02upSRcepJLf9ZRRmDzEZi6M1PYiBD12gfcE+
+	id S1751436Ab2EBJNH convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 2 May 2012 05:13:07 -0400
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:50688 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750988Ab2EBJNF convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 2 May 2012 05:13:05 -0400
+Received: by ghrr11 with SMTP id r11so421035ghr.19
+        for <git@vger.kernel.org>; Wed, 02 May 2012 02:13:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=grjfmQcJYDGJrWhY2BCsWQNhipLqfDL0DXbAY1LBr4M=;
+        b=NrlsXgzqviw4qIBmP0aP7Jf2RNv0oyLh8Qtcws4Sm8pdF46xn7mqyiyvYvCTq0SSw8
+         Ii8pYV+6hsLnyKDnDbpCfWxEc72ZgJAxPfs45aeWNo/HiOqbUTe/BlK/cIgZmiVx/qow
+         2UBS+Z5VdoC4ebDIBF4ekvYrMlLYfIElIr4k1xdDyHSelr7wIG9BFoiWbZ0qPsthl10T
+         pGpiRLxrfaloqjIku3ar7DS3roW5YuaGQegoVMvzs6KzevYSRAii/sGBWuAC9vgr/wUv
+         7RhWcsoehhwaNeucK8g+P+6RuXH4/qxyzQikNO1FBJ0yqnH4XCCREcHoVI3Zm89ClFXM
+         9yuw==
+Received: by 10.236.108.199 with SMTP id q47mr29824762yhg.76.1335949984631;
+ Wed, 02 May 2012 02:13:04 -0700 (PDT)
+Received: by 10.146.203.1 with HTTP; Wed, 2 May 2012 02:13:04 -0700 (PDT)
+In-Reply-To: <87d36n2f2r.fsf@thomas.inf.ethz.ch>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196794>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196795>
 
-Hi all,
+Well, basically I've tried to unify the translation with the git-gui on=
+e.
+So i took over some of the translations from them (e.g. "commit").
 
-The last defect Sentry picked up has been removed, yay!  At the same
-time, a new NULL dereference bug appeared, in sequencer.c:
+> =C2=A0A related issue is when a single word splits into several in Ge=
+rman.
+>
+> =C2=A0Examples:
+>
+> =C2=A0"commit" -> "Eintrag/Version/eintragen"
 
-    static int is_index_unchanged(void)
-    {
-        unsigned char head_sha1[20];
-        struct commit *head_commit;
+I think we have to make a difference between "commit" as a noun and
+"commit" as a verb here.
 
-        if (!resolve_ref_unsafe("HEAD", head_sha1, 1, NULL))
-            return error(_("Could not resolve HEAD commit\n"));
+>
+> =C2=A0"commit" -> usually translated simply as "Commit", e.g. in the =
+SVN Red
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0Book
+>
 
-        head_commit = lookup_commit(head_sha1);
-        if (!head_commit || parse_commit(head_commit))
-            return error(_("could not parse commit %s\n"),
-                     sha1_to_hex(head_commit->object.sha1));
+As I said I've tried to unify with the git-gui translation. Actually, I=
+ was
+wondered why they translate terms like "Tag" or "Commit" because
+I think they should be known by a Git user.
+I know German books about Git using many other terms like
+"Staging" or "Index" as it is.
 
-In the last line quoted above, head_commit may be NULL, and it is
-dereferenced in the call to sha1_to_hex.  Assuming lookup_commit(head_sha1)
-can return NULL, this function will segfault.
+> * Make a glossary of the relevant terminology first. =C2=A0Sadly
+> =C2=A0gitglossary(7) has gotten somewhat stale, and perhaps can also =
+benefit
+> =C2=A0from an overhaul. =C2=A0=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason =
+recently made a list[4] of
+> =C2=A0the most important terms, which is a good start.
+>
+> * If you are interested in collaboration, IRC may be a good choice fo=
+r
+> =C2=A0the many little questions that probably arise? =C2=A0We hang ou=
+t in
+> =C2=A0#git-devel on Freenode[3]. =C2=A0Email is of course also an opt=
+ion, but
+> =C2=A0more time-consuming.
 
-Introduced here:
-https://github.com/gitster/git/commit/b27cfb0#sequencer.c
+I would be happy to work together with you on these things.
+Tiny changes in the translation of basic terms can make
+a big difference.
 
-Mike
+> Note that in the context of Git, a major problem is that the
+> documentation and books are only available in English. =C2=A0There is=
+n't even
+> a glossary. =C2=A0For example, you translated "detached" as "losgel=C3=
+=B6st".
+> From our experience the detached HEAD is something that users stumble
+> into, rather than learn about beforehand. =C2=A0They usually come cry=
+ing for
+> help when they've already lost their work in the "void" of unreachabl=
+e
+> commits. =C2=A0Now put yourself into the position of a user. =C2=A0Wh=
+ere can he
+> look up what the root of his problem is? =C2=A0At least for "detached=
+ HEAD"
+> there is a wealth of blog posts that rescue the poor user.
 
--- 
-Mike Mueller
-Phone: (401) 405-1525
-Email: mmueller@vigilantsw.com
+That's a basic problem when messages are translated.
 
-http://www.vigilantsw.com/
+> We think -- pardon the strong words -- that your current draft
+> translation makes things harder, not easier, for German users. =C2=A0=
+The
+> issues mentioned above, especially when it comes to ambiguities, spli=
+ts
+> into several terms and mistakes, add up to considerable bad weather, =
+and
+> the lack of reference material leaves the user out in the rain.
+>
+> Of course now that it has been released, we'll also have to file patc=
+hes
+> in the true open source spirit. =C2=A0Sigh.
+
+I don't think that it's sooo bad that it needs to get reverted.
+In the end it's an initial version. I'll join the IRC channel to
+work with you (and others) together to make the translation
+better.
+
+Thanks
