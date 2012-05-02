@@ -1,127 +1,99 @@
-From: Ralf Thielow <ralf.thielow@googlemail.com>
-Subject: =?UTF-8?q?=5BPATCH=5D=20de=2Epo=3A=20unify=20translations=20of=20=22ahead=22=20and=20=22behind=22?=
-Date: Wed,  2 May 2012 23:29:51 +0200
-Message-ID: <1335994191-5927-1-git-send-email-ralf.thielow@googlemail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Bad Man Page URLs
+Date: Wed, 02 May 2012 14:46:02 -0700 (PDT)
+Message-ID: <m3lilaqmub.fsf@localhost.localdomain>
+References: <2AC038A1-3D8D-425E-92B3-DADFD027761A@justatheory.com>
+	<20120406023223.GB16264@sigill.intra.peff.net>
+	<20120406025457.GA23997@sigill.intra.peff.net>
+	<20120406042215.GA3938@burratino>
+	<20120406054637.GA25301@sigill.intra.peff.net>
+	<7vzkap1gck.fsf@alter.siamese.dyndns.org>
+	<BCD7B631-8C73-4F3F-AB37-9B5CF02655D5@justatheory.com>
+	<20120426201921.GA15026@burratino>
+	<0DF25EFA-9CB5-4CA3-B654-D796175220F7@justatheory.com>
+	<20120426202909.GA15385@burratino>
+	<92D71232-83D3-4CC5-BC35-8F697070F8F7@justatheory.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: trast@student.ethz.ch, stimming@tuhh.de,
-	Ralf Thielow <ralf.thielow@googlemail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 02 23:30:20 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>, git@vger.kernel.org
+To: "David E. Wheeler" <david@justatheory.com>
+X-From: git-owner@vger.kernel.org Wed May 02 23:46:11 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SPh7m-0000Dl-Nd
-	for gcvg-git-2@plane.gmane.org; Wed, 02 May 2012 23:30:15 +0200
+	id 1SPhND-0001kz-3F
+	for gcvg-git-2@plane.gmane.org; Wed, 02 May 2012 23:46:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753321Ab2EBVaH convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 2 May 2012 17:30:07 -0400
-Received: from mail-we0-f174.google.com ([74.125.82.174]:61879 "EHLO
+	id S1753158Ab2EBVqG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 May 2012 17:46:06 -0400
+Received: from mail-we0-f174.google.com ([74.125.82.174]:37716 "EHLO
 	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752825Ab2EBVaG (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 May 2012 17:30:06 -0400
-Received: by were53 with SMTP id e53so712924wer.19
-        for <git@vger.kernel.org>; Wed, 02 May 2012 14:30:04 -0700 (PDT)
+	with ESMTP id S1752927Ab2EBVqE (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 May 2012 17:46:04 -0400
+Received: by were53 with SMTP id e53so720112wer.19
+        for <git@vger.kernel.org>; Wed, 02 May 2012 14:46:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
-         :content-type:content-transfer-encoding;
-        bh=WyU8Z7YY8KvdmvopDdEwAWNoXeX6KtYqGysYfJYlNW4=;
-        b=i+7s1oeMUD0O8ucDl8gbHd1RgTdU1bdhS5cHmBkC5eksB9bBZ/nrVm79xlkYzzd5d9
-         L2jEDgwXta+xowf9L50VA4hi/GPPgkbaLZ3b9w3tknaOc7adCeW6xud42H3SMYajD4Zq
-         aaq0dRArsnE/9sJba2ytSL1VLC/2MdC9AaGj3pbZDS+I36pVlZVsZXw8FIorK7BVkW0/
-         NCpS+DiDqooG873dAbjuhtrsXlRrc2lDaRwUSqes9atRZJI4zQwllIlvCOleYtK9FN3e
-         es2+WzFPHbdc825EmnyNDJIbAFfUwws6TIraF6un4vxCjShdPqmqSL39hZ6MPSnzT8i/
-         Kobw==
-Received: by 10.216.133.139 with SMTP id q11mr7862163wei.44.1335994204690;
-        Wed, 02 May 2012 14:30:04 -0700 (PDT)
-Received: from localhost.localdomain (dslb-094-223-205-117.pools.arcor-ip.net. [94.223.205.117])
-        by mx.google.com with ESMTPS id gg2sm10726267wib.7.2012.05.02.14.30.02
+        d=gmail.com; s=20120113;
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        bh=pbgac932HGcAMqEzNlARztFzhC1CedYEC4PON5uS55E=;
+        b=WDPt6RDd3qH1EsLBg/NJiE+TjtdnvbQ82xtmy+a6TKlVnOjlfOJ90pZERfHvSdcj7i
+         DX062GlLKWcM2O8a3Rergr6Fi8Mbwge6UNF7f6OIcRSdBYLqrWBPCtUXTl9BlsViCIEj
+         u9h3RCeJPdJOTGb8r61ZP/wGRT0RO1A4+ZQgxrS7rI5xHgqxIzHor9fX7m50LmTUJP9X
+         +DYNlK2WfkxiWXe0FveW6N4lhGO40eNe3giKwdjIo9Zt1G888f79zgGvHE1lMsGvMtvy
+         WTlhmtJ9GtMeH+ge4ELkV9xMq30fKAXgYoBccy6WK4MUMsn/kcPkMT8UlKc56tZtMbJG
+         bQtQ==
+Received: by 10.216.132.75 with SMTP id n53mr18054826wei.51.1335995162955;
+        Wed, 02 May 2012 14:46:02 -0700 (PDT)
+Received: from localhost.localdomain (eps70.neoplus.adsl.tpnet.pl. [83.20.60.70])
+        by mx.google.com with ESMTPS id fn2sm10901456wib.0.2012.05.02.14.46.01
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 02 May 2012 14:30:03 -0700 (PDT)
-X-Mailer: git-send-email 1.7.10.67.g0b77
+        Wed, 02 May 2012 14:46:02 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id q42LjMhK027426;
+	Wed, 2 May 2012 23:45:27 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id q42Lj0Up027419;
+	Wed, 2 May 2012 23:45:00 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <92D71232-83D3-4CC5-BC35-8F697070F8F7@justatheory.com>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196863>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196864>
 
-Signed-off-by: Ralf Thielow <ralf.thielow@googlemail.com>
----
- po/de.po |   17 +++++++++--------
- 1 Datei ge=C3=A4ndert, 9 Zeilen hinzugef=C3=BCgt(+), 8 Zeilen entfernt=
-(-)
+"David E. Wheeler" <david@justatheory.com> writes:
+> On Apr 26, 2012, at 1:29 PM, Jonathan Nieder wrote:
+>>> 
+>>> All of those titles have links on gitmanual.org:
+>>> 
+>>>  http://www.gitmanual.org/
+>> 
+>> Who runs that webpage?  Would they mind the increased traffic?  Can we
+>> count on them to continue to serve the docs?
+> 
+> Oh, not an official Git site? Seems to me that the project ought to
+> have something like that. Many of the same links are on
+> http://git-scm.com/documentation.
+>
+> As for gitmanual.org, whois says:
+> 
+> Registrant Name:Loic d'Anterroches
+> Registrant Organization:Ceondo Ltd
+> Registrant City:London
+> Registrant Email:pnwr10o0vs6u6a82ixx9@o.o-w-o.info
 
-diff --git a/po/de.po b/po/de.po
-index abb719b..a43d289 100644
---- a/po/de.po
-+++ b/po/de.po
-@@ -169,9 +169,10 @@ msgid "Your branch is behind '%s' by %d commit, an=
-d can be fast-forwarded.\n"
- msgid_plural ""
- "Your branch is behind '%s' by %d commits, and can be fast-forwarded.\=
-n"
- msgstr[0] ""
--"Dein Zweig ist hinter '%s' um %d Version, und kann vorgespult werden.=
-\n"
-+"Dein Zweig ist zu '%s' um %d Version hinterher, und kann vorgespult w=
-erden.\n"
- msgstr[1] ""
--"Dein Zweig ist hinter '%s' um %d Versionen, und kann vorgespult werde=
-n.\n"
-+"Dein Zweig ist zu '%s' um %d Versionen hinterher, und kann vorgespult=
- "
-+"werden.\n"
-=20
- #: remote.c:1621
- #, c-format
-@@ -650,15 +651,15 @@ msgstr "Initiale Version auf "
-=20
- #: wt-status.c:905
- msgid "behind "
--msgstr "hinter "
-+msgstr "hinterher: "
-=20
- #: wt-status.c:908 wt-status.c:911
- msgid "ahead "
--msgstr "weiter: "
-+msgstr "voraus: "
-=20
- #: wt-status.c:913
- msgid ", behind "
--msgstr ", zur=C3=BCckgefallen "
-+msgstr ", hinterher: "
-=20
- #: builtin/add.c:62
- #, c-format
-@@ -891,7 +892,7 @@ msgstr "%d voraus] "
- #: builtin/branch.c:398
- #, c-format
- msgid "ahead %d, behind %d] "
--msgstr "vor %d, hinter %d] "
-+msgstr "%d voraus, %d hinterher] "
-=20
- #: builtin/branch.c:501
- msgid "(no branch)"
-@@ -1078,12 +1079,12 @@ msgid_plural ""
- "\n"
- "%s\n"
- msgstr[0] ""
--"Warnung: Du verl=C3=A4sst %d Version zur=C3=BCckliegend, nicht verbun=
-den zu\n"
-+"Warnung: Du bist um %d Version hinterher, nicht verbunden zu\n"
- "einem deiner Zweige:\n"
- "\n"
- "%s\n"
- msgstr[1] ""
--"Warnung: Du verl=C3=A4sst %d Versionen zur=C3=BCckliegend, nicht verb=
-unden zu\n"
-+"Warnung: Du bist um %d Versionen hinterher, nicht verbunden zu\n"
- "einem deiner Zweige:\n"
- "\n"
- "%s\n"
---=20
-1.7.10.67.g0b77
+If I am not mistaken this is the person behind InDefero git hosting
+site (http://www.indefero.net) and git hosting software powering it
+(http://projects.ceondo.com/p/indefero) in PHP.
+
+I don't remember it being announced on git mailing list...
+
+-- 
+Jakub Narebski
