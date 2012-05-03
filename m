@@ -1,84 +1,166 @@
-From: Thomas Rast <trast@inf.ethz.ch>
-Subject: Re: Please pull git-po master branch
-Date: Thu, 3 May 2012 09:49:09 +0200
-Message-ID: <874nrxwvpm.fsf@thomas.inf.ethz.ch>
-References: <CANYiYbHtKKWw9LPnr+1khC5Oms-kOtA2WEucoNoE3Njzqiahzw@mail.gmail.com>
-	<87d36n2f2r.fsf@thomas.inf.ethz.ch>
-	<7vtxzyilid.fsf@alter.siamese.dyndns.org>
-	<CANYiYbH+N3k_=FWyeS_HfBWSBeBdOUqW5qrHFe=qV4ECtYABpA@mail.gmail.com>
+From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <rene.scharfe@lsrfire.ath.cx>
+Subject: [PATCH 10/9] t5000: rationalize unzip tests
+Date: Thu, 03 May 2012 10:52:16 +0200
+Message-ID: <4FA24740.4020502@lsrfire.ath.cx>
+References: <1336009868-7411-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Thomas Rast <trast@student.ethz.ch>,
-	Ralf Thielow <ralf.thielow@googlemail.com>,
-	Git List <git@vger.kernel.org>,
-	Jan =?utf-8?Q?Kr=C3=BCger?= <jk@jk.gs>,
-	Byrial Jensen <byrial@vip.cybercity.dk>,
-	Vincent van Ravesteijn <vfr@lyx.org>,
-	Marco Sousa <marcomsousa@gmail.com>
-To: Jiang Xin <worldhello.net@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 03 09:49:26 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+	<pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Thu May 03 10:52:28 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SPqmw-0000NG-QH
-	for gcvg-git-2@plane.gmane.org; Thu, 03 May 2012 09:49:23 +0200
+	id 1SPrlw-0002s0-Je
+	for gcvg-git-2@plane.gmane.org; Thu, 03 May 2012 10:52:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752817Ab2ECHtP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 May 2012 03:49:15 -0400
-Received: from edge20.ethz.ch ([82.130.99.26]:15865 "EHLO edge20.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752109Ab2ECHtL (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 May 2012 03:49:11 -0400
-Received: from CAS10.d.ethz.ch (172.31.38.210) by edge20.ethz.ch
- (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.2.283.3; Thu, 3 May
- 2012 09:49:10 +0200
-Received: from thomas.inf.ethz.ch.ethz.ch (129.132.153.233) by cas10.d.ethz.ch
- (172.31.38.210) with Microsoft SMTP Server (TLS) id 14.1.355.2; Thu, 3 May
- 2012 09:49:09 +0200
-In-Reply-To: <CANYiYbH+N3k_=FWyeS_HfBWSBeBdOUqW5qrHFe=qV4ECtYABpA@mail.gmail.com>
-	(Jiang Xin's message of "Thu, 3 May 2012 12:31:57 +0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Originating-IP: [129.132.153.233]
+	id S1754573Ab2ECIwS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 May 2012 04:52:18 -0400
+Received: from india601.server4you.de ([85.25.151.105]:58273 "EHLO
+	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751488Ab2ECIwR (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 May 2012 04:52:17 -0400
+Received: from [192.168.2.105] (p4FFDA20E.dip.t-dialin.net [79.253.162.14])
+	by india601.server4you.de (Postfix) with ESMTPSA id C93332F804F;
+	Thu,  3 May 2012 10:52:15 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:12.0) Gecko/20120420 Thunderbird/12.0
+In-Reply-To: <1336009868-7411-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196891>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196892>
 
-Jiang Xin <worldhello.net@gmail.com> writes:
+Factor out a function for checking the contents of ZIP archives.  It
+extracts their contents and compares them to the original files.  This
+removes some duplicate code.  Tests that just create archives can lose
+their UNZIP prerequisite.
 
->  * Pull requests with a initial XX.po (untranslated) and updated TEAMS file
->    will not merge to the master branch, but merge to a work in progress
->    branch, such as WIP/XX.
+Signed-off-by: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
+---
+ t/t5000-tar-tree.sh |   81 +++++++++++++++++++++++++--------------------------
+ 1 file changed, 40 insertions(+), 41 deletions(-)
 
-Please don't take my complaint as a request to completely over-engineer
-the process, that will just make it more work for everyone and scare
-away potential translators.
-
-I think it's sufficient to
-
-* not put _completely new_ translations in maint
-
-This one is actually very similar to the rule for code: maint does not
-usually get new features either.  (The only exception I'm aware of is
-when maint needs to learn to "speak" a new format introduced in newer
-versions.)
-
-* not submit pull requests late in the rc phase
-
-With a similar reasoning.  Because there are usually several -rc tags,
-doing this will ensure that the new translations get fairly wide
-exposure with interested developers.
-
-So more or less what we do for code, too.
-
-
-Of course there's the flip side that I should have watched i18n more
-closely (as evidenced by me being a loudmouth now).
-
--- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+diff --git a/t/t5000-tar-tree.sh b/t/t5000-tar-tree.sh
+index 94f2eba..a5314f6 100755
+--- a/t/t5000-tar-tree.sh
++++ b/t/t5000-tar-tree.sh
+@@ -31,6 +31,26 @@ GUNZIP=${GUNZIP:-gzip -d}
+ 
+ SUBSTFORMAT=%H%n
+ 
++check_zip() {
++	zipfile=$1.zip
++	listfile=$1.lst
++	dir=$1
++	dir_with_prefix=$dir/$2
++
++	test_expect_success UNZIP " extract ZIP archive" "
++		(mkdir $dir && cd $dir && $UNZIP ../$zipfile)
++	"
++
++	test_expect_success UNZIP " validate filenames" "
++		(cd ${dir_with_prefix}a && find .) | sort >$listfile &&
++		test_cmp a.lst $listfile
++	"
++
++	test_expect_success UNZIP " validate file contents" "
++		diff -r a ${dir_with_prefix}a
++	"
++}
++
+ test_expect_success \
+     'populate workdir' \
+     'mkdir a b c &&
+@@ -181,10 +201,19 @@ test_expect_success \
+       test_cmp a/substfile2 g/prefix/a/substfile2
+ '
+ 
++$UNZIP -v >/dev/null 2>&1
++if [ $? -eq 127 ]; then
++	say "Skipping ZIP tests, because unzip was not found"
++else
++	test_set_prereq UNZIP
++fi
++
+ test_expect_success \
+     'git archive --format=zip' \
+     'git archive --format=zip HEAD >d.zip'
+ 
++check_zip d
++
+ test_expect_success \
+     'git archive --format=zip in a bare repo' \
+     '(cd bare.git && git archive --format=zip HEAD) >d1.zip'
+@@ -207,56 +236,26 @@ test_expect_success 'git archive with --output, override inferred format' '
+ 	test_cmp b.tar d4.zip
+ '
+ 
+-$UNZIP -v >/dev/null 2>&1
+-if [ $? -eq 127 ]; then
+-	say "Skipping ZIP tests, because unzip was not found"
+-else
+-	test_set_prereq UNZIP
+-fi
+-
+-test_expect_success UNZIP \
+-    'extract ZIP archive' \
+-    '(mkdir d && cd d && $UNZIP ../d.zip)'
+-
+-test_expect_success UNZIP \
+-    'validate filenames' \
+-    '(cd d/a && find .) | sort >d.lst &&
+-     test_cmp a.lst d.lst'
+-
+-test_expect_success UNZIP \
+-    'validate file contents' \
+-    'diff -r a d/a'
+-
+ test_expect_success \
+     'git archive --format=zip with prefix' \
+     'git archive --format=zip --prefix=prefix/ HEAD >e.zip'
+ 
+-test_expect_success UNZIP \
+-    'extract ZIP archive with prefix' \
+-    '(mkdir e && cd e && $UNZIP ../e.zip)'
++check_zip e prefix/
+ 
+-test_expect_success UNZIP \
+-    'validate filenames with prefix' \
+-    '(cd e/prefix/a && find .) | sort >e.lst &&
+-     test_cmp a.lst e.lst'
+-
+-test_expect_success UNZIP \
+-    'validate file contents with prefix' \
+-    'diff -r a e/prefix/a'
+-
+-test_expect_success UNZIP 'git archive -0 --format=zip on large files' '
+-    test_config core.bigfilethreshold 1 &&
+-    git archive -0 --format=zip HEAD >large.zip &&
+-    (mkdir large && cd large && $UNZIP ../large.zip)
++test_expect_success 'git archive -0 --format=zip on large files' '
++	test_config core.bigfilethreshold 1 &&
++	git archive -0 --format=zip HEAD >large.zip
+ '
+ 
+-test_expect_success UNZIP 'git archive --format=zip on large files' '
+-    test_config core.bigfilethreshold 1 &&
+-    git archive --format=zip HEAD >large-compressed.zip &&
+-    (mkdir large-compressed && cd large-compressed && $UNZIP ../large-compressed.zip) &&
+-    test_cmp large-compressed/a/bin/sh large/a/bin/sh
++check_zip large
++
++test_expect_success 'git archive --format=zip on large files' '
++	test_config core.bigfilethreshold 1 &&
++	git archive --format=zip HEAD >large-compressed.zip
+ '
+ 
++check_zip large-compressed
++
+ test_expect_success \
+     'git archive --list outside of a git repo' \
+     'GIT_DIR=some/non-existing/directory git archive --list'
