@@ -1,77 +1,97 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: Index format v5
-Date: Thu, 3 May 2012 20:16:59 +0200
-Message-ID: <87obq5p1t0.fsf@thomas.inf.ethz.ch>
-References: <CALgYhfMKdbv8TiT4ALDSvD3pSXHEPLWHM09DxYnRmRdBWRjh8Q@mail.gmail.com>
+From: Rich Pixley <rich.pixley@palm.com>
+Subject: Re: Newbie grief
+Date: Thu, 03 May 2012 11:26:20 -0700
+Message-ID: <4FA2CDCC.6020303@palm.com>
+References: <4F9F128C.5020304@palm.com> <201204302331.q3UNVo7o032303@no.baka.org> <4F9F3919.6060805@palm.com> <CAMK1S_jwVsyKrGoL5uVAiuRrOa8bz79-DAueBmHZE2k=PpcJ2Q@mail.gmail.com> <20120501111415.GD5769@thunk.org> <CAMK1S_jN_WdZF4W4szzyJqLfC3FmnhKQ65XQiD-JS_jxwSm8_g@mail.gmail.com> <4FA02830.3040407@palm.com> <86havzoi8h.fsf@red.stonehenge.com> <4FA04D02.6090702@palm.com> <86mx5rmx32.fsf@red.stonehenge.com> <4FA055D0.7040102@palm.com> <86aa1rmvhb.fsf@red.stonehenge.com> <4FA05E9F.9090709@palm.com> <85ff02fc05e4a52ee0b1f1922f774a8d@ulrik.uio.no> <947c3d6ae263495985543764a57c3fbb-mfwitten@gmail.com> <63c4e1944dcfd03e8c9ff324080ff62f@ulrik.uio.no> <e7c7047452954a4b80f5fd436103cb11-mfwitten@gmail.com> <f66919ac273fd1c90839e5556f126960@ulrik.uio.no>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Cc: <git@vger.kernel.org>, <trast@student.ethz.ch>,
-	<gitster@pobox.com>, <mhagger@alum.mit.edu>, <peff@peff.net>,
-	<spearce@spearce.org>, <davidbarr@google.com>
-To: Thomas Gummerer <t.gummerer@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 03 20:17:10 2012
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Michael Witten <mfwitten@gmail.com>,
+	"Randal L. Schwartz" <merlyn@stonehenge.com>,
+	Sitaram Chamarty <sitaramc@gmail.com>,
+	"Ted Ts'o" <tytso@mit.edu>, Seth Robertson <in-gitvger@baka.org>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Hallvard Breien Furuseth <h.b.furuseth@usit.uio.no>
+X-From: git-owner@vger.kernel.org Thu May 03 20:26:27 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SQ0aT-0002Cm-49
-	for gcvg-git-2@plane.gmane.org; Thu, 03 May 2012 20:17:09 +0200
+	id 1SQ0jT-00026W-2B
+	for gcvg-git-2@plane.gmane.org; Thu, 03 May 2012 20:26:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754185Ab2ECSRD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 May 2012 14:17:03 -0400
-Received: from edge20.ethz.ch ([82.130.99.26]:26389 "EHLO edge20.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753637Ab2ECSRC (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 May 2012 14:17:02 -0400
-Received: from CAS12.d.ethz.ch (172.31.38.212) by edge20.ethz.ch
- (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.2.283.3; Thu, 3 May
- 2012 20:17:00 +0200
-Received: from thomas.inf.ethz.ch.ethz.ch (129.132.153.233) by CAS12.d.ethz.ch
- (172.31.38.212) with Microsoft SMTP Server (TLS) id 14.1.355.2; Thu, 3 May
- 2012 20:16:59 +0200
-In-Reply-To: <CALgYhfMKdbv8TiT4ALDSvD3pSXHEPLWHM09DxYnRmRdBWRjh8Q@mail.gmail.com>
-	(Thomas Gummerer's message of "Thu, 3 May 2012 19:25:12 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Originating-IP: [129.132.153.233]
+	id S1754834Ab2ECS0W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 May 2012 14:26:22 -0400
+Received: from smtp-relay2.palm.com ([64.28.152.243]:38969 "EHLO
+	smtp-relay2.palm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754310Ab2ECS0V (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 May 2012 14:26:21 -0400
+X-Greylist: delayed 312 seconds by postgrey-1.27 at vger.kernel.org; Thu, 03 May 2012 14:26:21 EDT
+X-IronPort-AV: E=Sophos;i="4.75,526,1330934400"; 
+   d="scan'208";a="13293688"
+Received: from unknown (HELO ushqusdns3.palm.com) ([148.92.223.90])
+  by smtp-relay2.palm.com with ESMTP; 03 May 2012 11:26:21 -0700
+Received: from fuji.noir.com ([10.100.2.12])
+	by ushqusdns3.palm.com (8.14.4/8.14.4) with ESMTP id q43IQKtX018018;
+	Thu, 3 May 2012 11:26:20 -0700
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.7; rv:12.0) Gecko/20120428 Thunderbird/12.0.1
+In-Reply-To: <f66919ac273fd1c90839e5556f126960@ulrik.uio.no>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196927>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196928>
 
-Thomas Gummerer <t.gummerer@gmail.com> writes:
+On 5/3/12 09:20 , Hallvard Breien Furuseth wrote:
+>   On Thu, 03 May 2012 16:09:15 -0000, Michael Witten wrote:
+>> On Thu, 03 May 2012 14:23:59 +0200, Hallvard Furuseth wrote:
+>>> I mean 'git clone --bare bar.git foo.git' does not give foo.git
+>>> a remote named 'origin' with a branch origin/master.  Not sure
+>>> if there is a _simple_ way to do it well either.  init + fetch
+>>> above does not try to hardlink objects/packs like clone does.
+>>>
+>>>> (...)
+>>>>    $ git init bar.git; cd bar.git
+>>>>    $ echo a>  a; git add a; git commit -m a; cd ..
+>>>>    $ git clone --bare bar.git foo.git; cd foo.git
+>>>     $ git branch -a
+>>>     * master
+>>  From `git help clone':
+>>
+>>    --bare
+>>        Make a bare GIT repository. That is, instead of creating
+>>        <directory>  and placing the administrative files in
+>>        <directory>/.git, make the<directory>  itself the $GIT_DIR.
+>>        This obviously implies the -n because there is nowhere to
+>>        check out the working tree. Also the branch heads at the
+>>        remote are copied directly to corresponding local branch
+>>        heads, without mapping them to refs/remotes/origin/. When
+>>        this option is used, neither remote-tracking branches nor the
+>>        related configuration variables are created.
+>   Yes, I know.  I just don't know why.
+I do.
 
->   32-bit crc32 checksum over ctime seconds, ctime nanoseconds,
->     ino, file size, dev, uid, gid (All stat(2) data except mtime) [7]
-[...]
-> [7] Since all stat data (except mtime and ctime) is just used for
->     checking if a file has changed a checksum of the data is enough.
->     In addition to that Thomas Rast suggested ctime could be ditched
->     completely (core.trustctime=false) and thus included in the
->     checksum. This would save 24 bytes per index entry, which would
->     be about 4 MB on the Webkit index.
->     (Thanks for the suggestion to Michael Haggerty)
+It's because creating a string of repositories is a nuisance in git 
+because of the remote/foo practice.  You have to manually fetch and 
+merge at each location.
 
-This is the part I'm most curious about.  Are we missing anything?
-Michael brought it up on IRC: the stat() results are only used to test
-whether they are still the same, with the exception of the mtime (which
-also undergoes raciness checks).
+In other systems, the branches are tracked identically.  You see master, 
+I see master.  The only differences we see are any changes I've created 
+that haven't yet been pushed to you or vice verse.  But since git can't 
+handle collisions in the repository the way other systems do, it's 
+forced to use the geographic branch scheme for non-bare repositories.  
+Bare repositories don't have the collision between repository branch and 
+working directory copy in git, so with bare repositories, git can use 
+the identical branch scheme, (although it still refuses colliding pushes).
 
-As far as I can see, none of st_{ino,dev,uid,gid} are useful for
-anything.  st_size might conceivably be used as a hint for a buffer
-size, but nobody actually does that.  The ctime undergoes stricter
-checks, but AFAICS it's also all about whether it has changed, and
-besides that can be turned off.  We think all of those fields can be
-replaced by an arbitrary hash/CRC and only tested for equality.  32 bits
-should be plenty, probably even if we just xor the values together.
+If bare repositories used the triangulation approach of non-bare 
+repositories, then automation would be considerably more complicated.  
+So would repository chaining.
 
-So what's wrong in this thinking?
+What I don't understand is why git chose this less functional 
+architecture over the previously existing practice that doesn't have 
+these limitations, although "because that's what BitKeeper did" might be 
+the sad answer.
 
-[The one flaw I found so far is that this makes it impossible to convert
-back to v2-4 without at the very least refreshing the index.  Do we
-care?]
-
--- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+--rich
