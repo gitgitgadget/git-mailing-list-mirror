@@ -1,116 +1,89 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Please pull git-po master branch
-Date: Wed, 02 May 2012 23:47:01 -0700
-Message-ID: <7vaa1phica.fsf@alter.siamese.dyndns.org>
-References: <CANYiYbHtKKWw9LPnr+1khC5Oms-kOtA2WEucoNoE3Njzqiahzw@mail.gmail.com>
- <87d36n2f2r.fsf@thomas.inf.ethz.ch> <7vtxzyilid.fsf@alter.siamese.dyndns.org>
- <CANYiYbH+N3k_=FWyeS_HfBWSBeBdOUqW5qrHFe=qV4ECtYABpA@mail.gmail.com>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH v2 08/18] do_for_each_reflog(): use a strbuf to hold logfile
+ name
+Date: Thu, 03 May 2012 08:47:53 +0200
+Message-ID: <4FA22A19.1030009@alum.mit.edu>
+References: <1335479227-7877-1-git-send-email-mhagger@alum.mit.edu> <1335479227-7877-9-git-send-email-mhagger@alum.mit.edu> <xmqqaa1y6poq.fsf@junio.mtv.corp.google.com> <4F9A5FE6.40409@alum.mit.edu> <7vwr4ugxel.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Thomas Rast <trast@student.ethz.ch>,
-	Ralf Thielow <ralf.thielow@googlemail.com>,
-	Git List <git@vger.kernel.org>,
-	Jan =?utf-8?Q?Kr=C3=BCger?= <jk@jk.gs>,
-	Byrial Jensen <byrial@vip.cybercity.dk>,
-	Vincent van Ravesteijn <vfr@lyx.org>,
-	Marco Sousa <marcomsousa@gmail.com>
-To: Jiang Xin <worldhello.net@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 03 08:47:13 2012
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Jakub Narebski <jnareb@gmail.com>,
+	Heiko Voigt <hvoigt@hvoigt.net>,
+	Johan Herland <johan@herland.net>,
+	Christian Couder <chriscool@tuxfamily.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu May 03 08:55:07 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SPpom-0001F5-6b
-	for gcvg-git-2@plane.gmane.org; Thu, 03 May 2012 08:47:12 +0200
+	id 1SPpwO-0006ca-KW
+	for gcvg-git-2@plane.gmane.org; Thu, 03 May 2012 08:55:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752866Ab2ECGrG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 May 2012 02:47:06 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48770 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751941Ab2ECGrF (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 May 2012 02:47:05 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7F7DD636E;
-	Thu,  3 May 2012 02:47:03 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=VdUqKty+HKDc+//k2VPEdoEUBUc=; b=iGH0wJ
-	r/3c6mn9jeCia18rHfRK2YXbEyOpMad+B9O7F8RN2iscVO9yMyo2wGeTQwAlMOoG
-	lxjT4Qk+h6QiHiia8xpoRkNVUkT8hHSBYiAIi326IDHzulzdwEr+xbBBOXn6UWrd
-	RO2WbnW2jE5YjTLZk5jvYVjcogXDZCJYV6314=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=skV12ShyZn+Slb6ZPSqfPc0THSrFASgw
-	BCBKNTxFexmLcpQJWJhc6xJxjet5Juz4qod9kwSumDBvcKU+tamu7nUP91WXYlEj
-	NXs1wJbDxVdGWmelYc1Gce/SInWlqED8wC2WHip2tKRYFtLjRzjuDxioACK61emY
-	jq5JX8VVqRc=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 74E35636D;
-	Thu,  3 May 2012 02:47:03 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id F2971636C; Thu,  3 May 2012
- 02:47:02 -0400 (EDT)
-In-Reply-To: <CANYiYbH+N3k_=FWyeS_HfBWSBeBdOUqW5qrHFe=qV4ECtYABpA@mail.gmail.com> (Jiang
- Xin's message of "Thu, 3 May 2012 12:31:57 +0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: CA504E10-94EB-11E1-B6BE-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753249Ab2ECGy7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 May 2012 02:54:59 -0400
+Received: from ALUM-MAILSEC-SCANNER-6.MIT.EDU ([18.7.68.18]:50519 "EHLO
+	alum-mailsec-scanner-6.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752455Ab2ECGy6 (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 3 May 2012 02:54:58 -0400
+X-Greylist: delayed 421 seconds by postgrey-1.27 at vger.kernel.org; Thu, 03 May 2012 02:54:58 EDT
+X-AuditID: 12074412-b7f1c6d00000092d-b3-4fa22a1c12fa
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-6.mit.edu (Symantec Messaging Gateway) with SMTP id 58.5E.02349.C1A22AF4; Thu,  3 May 2012 02:47:56 -0400 (EDT)
+Received: from [192.168.101.152] (ssh.berlin.jpk.com [212.222.128.135])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id q436lr3U022954
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Thu, 3 May 2012 02:47:54 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:11.0) Gecko/20120410 Thunderbird/11.0.1
+In-Reply-To: <7vwr4ugxel.fsf@alter.siamese.dyndns.org>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrCKsWRmVeSWpSXmKPExsUixO6iqCujtcjfoHm/hcWm5xOZLbqudDNZ
+	NPReYbZY+fgus8WKq3OYLebd3cVk8aOlh9mB3WPnrLvsHpdefmfzaH//jtnjWe8eRo+Ll5Q9
+	lj94xe7xeZNcAHsUt01SYklZcGZ6nr5dAnfG57cnWQueslUsem/YwLiQtYuRk0NCwESifcd1
+	NghbTOLCvfVANheHkMBlRomnExZBOceYJH5N/M4CUsUroC1x+uJGdhCbRUBV4uOjM2BxNgFd
+	iUU9zUwgtqhAmET/7S1MEPWCEidnPgGrERFQk5jYdogFZCizwANGietPvoElhAXCJbY1/2KE
+	2PaBUaJ75gVGkASngJnE9O+rgCZxAHVYS3zbXQQSZhaQl9j+dg7zBEaBWUh2zEKomoWkagEj
+	8ypGucSc0lzd3MTMnOLUZN3i5MS8vNQiXTO93MwSvdSU0k2MkFgQ2sG4/qTcIUYBDkYlHl6m
+	qIX+QqyJZcWVuYcYJTmYlER58zUW+QvxJeWnVGYkFmfEF5XmpBYfYpTgYFYS4VVrAyrnTUms
+	rEotyodJSXOwKInz/lys7ickkJ5YkpqdmlqQWgSTleHgUJLgzdEEGipYlJqeWpGWmVOCkGbi
+	4AQZziUlUpyal5JalFhakhEPitT4YmCsgqR4gPaGgLTzFhck5gJFIVpPMepyzF6y9SqjEEte
+	fl6qlDivD0iRAEhRRmke3ApY4nvFKA70sTDEKB5g0oSb9ApoCRPQknzzeSBLShIRUlINjPIn
+	Q3YZF5zXnfq/JmGtT/oldd5dAi0L/3t8UVOO7NUsaF84ce+B1/tvz8x8OHvdwQgu 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196887>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196888>
 
-Jiang Xin <worldhello.net@gmail.com> writes:
-
-> What I have learned from this:
+On 05/02/2012 10:06 PM, Junio C Hamano wrote:
+> Michael Haggerty<mhagger@alum.mit.edu>  writes:
 >
->  * Only pull reqests with updates of already exists language are accepted
->    for the 'maint' branch of git-po. If a new l10n language support wants to
->    be added to 'maint' branch or to the RC version, it must be fully
->    discussed int this list.
+>> On 04/27/2012 01:25 AM, Junio C Hamano wrote:
+>>> Please write this like this:
+>>>
+>>> 		if (...) {
+>>> 			; /* silently ignore */
+>>> 		}
+>>>
+>>> to make the "emptyness" stand out (I amended the previous round when I
+>>> queued them to 'pu', but I forgot to point it out in my review message).
+>>
+>> OK.  A similar construct is in patch 2 of the same series.  I've fixed
+>> them in my repo and will use the fixed versions if there are any
+>> future re-rolls.
 >
->  * Pull requests with a initial XX.po (untranslated) and updated TEAMS file
->    will not merge to the master branch, but merge to a work in progress
->    branch, such as WIP/XX.
->
->    In order to coordinate works of potential contributors for a new l10n
->    language, l10n team leader (the 1st contributor send me a pull request)
->    will send a pull requst with a untranslated XX.po and update TEAMS
->    file with URL of the dedicated repository for the new language XX.
->    Nobody can guarantee how long XX.po will 100% translated. If merge
->    this initial commit too soon to the master branch, unfinished *.po will
->    be released, like da.po from Byrial Jensen, nl.po from
->    Vincent van Ravesteijn, and pt_PT.po from Marco Sousa.
->    So create a WIP/XX branch may resolved this problem.
+> OK.  Has there been any re-roll I missed, or is what I have in 'pu' with
+> fixups ready for 'next'?
 
-I am not sure if writing down bureaucratic-sounding and rigid rules is the
-best first response to this kind of incident. It's a learning process for
-all of us involved, and in early rounds like this, mistakes are bound to
-happen, and the first response should be to admit it, i.e. "Sorry, there
-was a miscommunication and gap in understanding among us. I as the i18n
-coordinator should have double checked before responding to pull requests
-to see if there was a consensus within the l10n team for the particular
-language. I'll try to be more careful until we nail the procedure down and
-everybody gets more comfortable with the process."
+I haven't gotten any other feedback, so as far as I'm concerned, it's 
+ready for next.
 
-Obviously I was also at fault that I didn't double check with you to make
-sure that the l10n teams involved were happy with what you are about to
-feed me, and I was wrong to instead blindly have assumed that it was the
-case.  I should have done so until I get to know you better that you would
-always operate in such a careful fashion [*1*].
+Michael
 
-Once a sound process of human communication is in place, I do not think a
-rigid rule like "no new language to 'maint'" is particularly necessary.
-
-
-[Footnote]
-
-*1* Yes, I am saying that I shouldn't have blindly trusted you, and
-similarly, I expect you to learn not to blindly trust l10n people you work
-with, until you know they know you expect that they sufficiently
-coordinate among themselves within the l10n team for a single language
-before sending you an integration request.  Don't take this in a wrong
-way.  Trust will come after repeated interactions and learning the other
-parties you are working with.
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
