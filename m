@@ -1,106 +1,64 @@
-From: Hallvard Breien Furuseth <h.b.furuseth@usit.uio.no>
-Subject: Re: Newbie grief
-Date: Fri, 04 May 2012 01:04:24 +0200
-Message-ID: <da7535728c9a0ad2a27e83078492efa0@ulrik.uio.no>
-References: <4F9F128C.5020304@palm.com>
- <201204302331.q3UNVo7o032303@no.baka.org> <4F9F3919.6060805@palm.com>
- <CAMK1S_jwVsyKrGoL5uVAiuRrOa8bz79-DAueBmHZE2k=PpcJ2Q@mail.gmail.com>
- <20120501111415.GD5769@thunk.org>
- <CAMK1S_jN_WdZF4W4szzyJqLfC3FmnhKQ65XQiD-JS_jxwSm8_g@mail.gmail.com>
- <4FA02830.3040407@palm.com> <86havzoi8h.fsf@red.stonehenge.com>
- <4FA04D02.6090702@palm.com> <86mx5rmx32.fsf@red.stonehenge.com>
- <7v62cf8v2d.fsf@alter.siamese.dyndns.org> <4FA054BA.80601@palm.com>
- <86ipgfmw05.fsf@red.stonehenge.com> <4FA05C66.2060608@palm.com>
- <CAMOZ1BuiznhrzEOHe0N+uu=mLEw5wWTQyDpnwG8PuF1f_aNaXw@mail.gmail.com>
- <5ADB8D763B2B4CDA889052A1AA45F089@PhilipOakley>
- <67e635d73b952088917d197cbbd06684@ulrik.uio.no> <4FA2CC88.9000207@palm.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: RFC: reflog for deleted branches
+Date: Thu, 03 May 2012 16:05:44 -0700
+Message-ID: <7vwr4sdfw7.fsf@alter.siamese.dyndns.org>
+References: <4FA2F7DA.6020108@tu-clausthal.de>
+ <7vaa1pdjz8.fsf@alter.siamese.dyndns.org> <4FA30270.6000806@tu-clausthal.de>
 Mime-Version: 1.0
-Content-Type: text/plain;
- charset=UTF-8;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Philip Oakley <philipoakley@iee.org>,
-	Michael Witten <mfwitten@gmail.com>,
-	"Randal L. Schwartz" <merlyn@stonehenge.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Sitaram Chamarty <sitaramc@gmail.com>,
-	Ted Ts'o <tytso@mit.edu>, Seth Robertson <in-gitvger@baka.org>,
-	<git@vger.kernel.org>
-To: Rich Pixley <rich.pixley@palm.com>
-X-From: git-owner@vger.kernel.org Fri May 04 01:04:49 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Sven Strickroth <sven.strickroth@tu-clausthal.de>
+X-From: git-owner@vger.kernel.org Fri May 04 01:05:55 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SQ54o-0000xC-9j
-	for gcvg-git-2@plane.gmane.org; Fri, 04 May 2012 01:04:46 +0200
+	id 1SQ55r-0001kl-TB
+	for gcvg-git-2@plane.gmane.org; Fri, 04 May 2012 01:05:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758923Ab2ECXEm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 May 2012 19:04:42 -0400
-Received: from mail-out1.uio.no ([129.240.10.57]:38104 "EHLO mail-out1.uio.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757181Ab2ECXEl (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 May 2012 19:04:41 -0400
-Received: from mail-mx2.uio.no ([129.240.10.30])
-	by mail-out1.uio.no with esmtp (Exim 4.75)
-	(envelope-from <h.b.furuseth@usit.uio.no>)
-	id 1SQ54d-0003Pk-A3; Fri, 04 May 2012 01:04:35 +0200
-Received: from w3prod-wm03.uio.no ([129.240.4.40] helo=webmail.uio.no)
-	by mail-mx2.uio.no with esmtpsa (TLSv1:AES256-SHA:256)
-	user hbf (Exim 4.76)
-	(envelope-from <h.b.furuseth@usit.uio.no>)
-	id 1SQ54c-0002NB-R2; Fri, 04 May 2012 01:04:35 +0200
-Received: from c313D47C1.dhcp.bluecom.no ([193.71.61.49])
- by webmail.uio.no
- with HTTP (HTTP/1.1 POST); Fri, 04 May 2012 01:04:24 +0200
-In-Reply-To: <4FA2CC88.9000207@palm.com>
-X-Sender: h.b.furuseth@usit.uio.no
-User-Agent: Roundcube Webmail/0.4.2
-X-UiO-Ratelimit-Test: rcpts/h 9 msgs/h 1 sum rcpts/h 13 sum msgs/h 1 total rcpts 2391 max rcpts/h 17 ratelimit 0
-X-UiO-Spam-info: not spam, SpamAssassin (score=-5.0, required=5.0, autolearn=disabled, T_RP_MATCHES_RCVD=-0.01,UIO_MAIL_IS_INTERNAL=-5, uiobl=NO, uiouri=NO)
-X-UiO-Scanned: 3A02DDC747446AC186FCE34F0B7F5913F8FF05DA
-X-UiO-SPAM-Test: remote_host: 129.240.4.40 spam_score: -49 maxlevel 80 minaction 2 bait 0 mail/h: 1 total 1290006 max/h 414 blacklist 0 greylist 0 ratelimit 0
+	id S1758975Ab2ECXFr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 May 2012 19:05:47 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:57568 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756126Ab2ECXFq (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 May 2012 19:05:46 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5F0D473AA;
+	Thu,  3 May 2012 19:05:46 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=6769/O5wVuM0+aWSnZcX03hBsbE=; b=KLZGEC
+	12O5Tx9AfWhhLTWMUQlsJ+sNxTCeuCkdFO7vDkL3wFqdjVxP3KQYLdYp68CFRHji
+	NNZSXjdS9wn5Jul+RRzVv7YJ8erCNWKy0Ut5ctykkz9UkEKNm7ImOkNpYkLh1SWM
+	paxd3axYvPhbXj8haPqT6o44f1gGRop81KMQk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=gehkgsb/GN+2nN7nnch5Eot81KOZWn1o
+	+ttp3tqjT8AviSvGY7o8OUagvYKrrhLR/b/yPZpiMyZQrXZwqeGJFhOz26twBYQm
+	OcLDG9glByBREO5DFpCJboIwexXytbWfvLHQ74NqXBI66ejYcIDl3Heh/avuWDAc
+	a7aq0pJN4Fo=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5634C73A9;
+	Thu,  3 May 2012 19:05:46 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id CCE4D73A8; Thu,  3 May 2012
+ 19:05:45 -0400 (EDT)
+In-Reply-To: <4FA30270.6000806@tu-clausthal.de> (Sven Strickroth's message of
+ "Fri, 04 May 2012 00:10:56 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 83D7521A-9574-11E1-99EE-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196975>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196976>
 
- On Thu, 03 May 2012 11:20:56 -0700, Rich Pixley <rich.pixley@palm.com> 
- wrote:
-> On 5/3/12 09:08 , Hallvard Breien Furuseth wrote:
->>   Aha, now this thread finally makes some sense.  So when Rich
->>   wants a "branch" with several tips, he actually wants several
->>   Git clones (repositories) with the same Git branch checked out -
->>   and some of them with local commits to it.
-> Yes.
->>   And these commits can be shared as remote branches between the
->>   clones, which in Hg-speak means that in one particular clone,
->>   Git will "bookmark" the other clones' tips.
-> Well, no.  In hg, these are all managed.  So there's no scaling
-> issue.  They can all push/pull together, since they are really all
-> just one shared branch.  Adding a new repository to the mix is
-> trivial.  And either pushes or pulls can be used, or any combo.
->
-> With git, I must manually make space for each and every repository,
-> manually track which set of changes are where, manually track which
-> need to be merged, and manually track which repositories are looking
-> at which git branches so that they don't collide, or only collide in
-> the current repository and only when I'm prepared to merge them.
-> (...)
+Sven Strickroth <sven.strickroth@tu-clausthal.de> writes:
 
- If you say so.  I don't know Hg and I'm not about to try to guess
- if you're stuck in another misconception about Git or not, nor
- to re-read this entire thread substituting "clone" for "branch".
+> The "normal" reflog cannot be used if you just create and then delete a
+> branch - the reflog is empty in this case.
 
- Anyway, I notice you're now giving practical Hg examples to go
- with your Hg vocabulary instead talking Git in Hg vocabulary, so
- hopefully this'll get cleared up.
-
- Anyway, if you have not done so already: If you show this too with
- a practical Hg example instead of talking Git in a Hg vocabulary,
- maybe someone can help.
-
--- 
- Hallvard
+I somehow thought we discussed about the lack of "creation" event.
+Perhaps it is sufficient to create a reflog entry for such then?
