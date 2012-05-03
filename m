@@ -1,82 +1,79 @@
-From: Thomas Gummerer <t.gummerer@gmail.com>
-Subject: Re: Index format v5
-Date: Thu, 3 May 2012 22:36:07 +0200
-Message-ID: <CALgYhfOLGFK92833nZp5ny25+uoRnsygkH2M4yYRzU4JBE3Evw@mail.gmail.com>
-References: <CALgYhfMKdbv8TiT4ALDSvD3pSXHEPLWHM09DxYnRmRdBWRjh8Q@mail.gmail.com>
-	<87ehr15dnh.fsf@an-dro.info.enstb.org>
+From: Rich Pixley <rich.pixley@palm.com>
+Subject: Re: Newbie grief
+Date: Thu, 03 May 2012 13:52:35 -0700
+Message-ID: <4FA2F013.3020904@palm.com>
+References: <4F9F128C.5020304@palm.com> <201204302331.q3UNVo7o032303@no.baka.org> <4F9F3919.6060805@palm.com> <CAMK1S_jwVsyKrGoL5uVAiuRrOa8bz79-DAueBmHZE2k=PpcJ2Q@mail.gmail.com> <20120501111415.GD5769@thunk.org> <CAMK1S_jN_WdZF4W4szzyJqLfC3FmnhKQ65XQiD-JS_jxwSm8_g@mail.gmail.com> <4FA02830.3040407@palm.com> <86havzoi8h.fsf@red.stonehenge.com> <4FA04D02.6090702@palm.com> <86mx5rmx32.fsf@red.stonehenge.com> <4FA055D0.7040102@palm.com> <86aa1rmvhb.fsf@red.stonehenge.com> <4FA05E9F.9090709@palm.com> <CAJsNXTmo1B86nSm7u923jJuGX0zajz3iqVu-onANMN-5BE5DfQ@mail.gmail.com> <4FA2D1D7.3020807@palm.com> <CA+7g9JzZ36RgsniT4UN0Zk+z1ohZYW5u+0AoGMjJZqsoBjqvqA@mail.gmail.com> <4FA2D97A.8090504@palm.com> <86ipgdhvjo.fsf@red.stonehenge.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Ronan Keryell <Ronan.Keryell@hpc-project.com>
-X-From: git-owner@vger.kernel.org Thu May 03 22:36:23 2012
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Nathan Gray <n8gray@n8gray.org>,
+	PJ Weisberg <pj@irregularexpressions.net>,
+	Sitaram Chamarty <sitaramc@gmail.com>,
+	"Ted Ts'o" <tytso@mit.edu>, Seth Robertson <in-gitvger@baka.org>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: "Randal L. Schwartz" <merlyn@stonehenge.com>
+X-From: git-owner@vger.kernel.org Thu May 03 22:52:43 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SQ2l5-00043a-GS
-	for gcvg-git-2@plane.gmane.org; Thu, 03 May 2012 22:36:15 +0200
+	id 1SQ310-0000j7-IW
+	for gcvg-git-2@plane.gmane.org; Thu, 03 May 2012 22:52:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754623Ab2ECUgK convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 3 May 2012 16:36:10 -0400
-Received: from mail-lpp01m010-f46.google.com ([209.85.215.46]:53697 "EHLO
-	mail-lpp01m010-f46.google.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753205Ab2ECUgI convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Thu, 3 May 2012 16:36:08 -0400
-Received: by lahj13 with SMTP id j13so1550648lah.19
-        for <git@vger.kernel.org>; Thu, 03 May 2012 13:36:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=Uj+M2fdaFS5abwcOCxPmUkE37Hpr9IVIaNAkztP1H9w=;
-        b=lXGB562E0Pw85oDLVH98Cnjf8NPSEFFIV9MO5azXnr6BkjICKfBxhkHzcLUQSGyBUp
-         AiHYkR5r8ngzTIXmy6lQDU6ECASz1UAfqfmooqnjWi4FDPdK6cdyiqtR0ORP/em34GHN
-         OlxO4ssmaCJC/j8D2xR6EQTJvGo3tAkQ80ea5VEKKGVekOxFcsHqN+dEF84HxjVx8ipU
-         vy08wDfCU4SezdAR2OAckD/iZj9Oex8sRQoM9bKcL6eadIe0VZPSbcHTg0ZIAoZwoc8w
-         6oqyLnZY7SHrGHKczTApIFFhIJQ1kKha1u/j7yPtV10BU0A4CkSKpO8lfRBP9k/VmBWj
-         CLlw==
-Received: by 10.112.48.6 with SMTP id h6mr1651337lbn.94.1336077367479; Thu, 03
- May 2012 13:36:07 -0700 (PDT)
-Received: by 10.152.37.201 with HTTP; Thu, 3 May 2012 13:36:07 -0700 (PDT)
-In-Reply-To: <87ehr15dnh.fsf@an-dro.info.enstb.org>
+	id S1758642Ab2ECUwi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 May 2012 16:52:38 -0400
+Received: from smtp-relay2.palm.com ([64.28.152.243]:30015 "EHLO
+	smtp-relay2.palm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754004Ab2ECUwh (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 May 2012 16:52:37 -0400
+X-IronPort-AV: E=Sophos;i="4.75,527,1330934400"; 
+   d="scan'208";a="13296924"
+Received: from unknown (HELO ushqusdns4.palm.com) ([148.92.223.164])
+  by smtp-relay2.palm.com with ESMTP; 03 May 2012 13:52:36 -0700
+Received: from fuji.noir.com ([10.100.2.12])
+	by ushqusdns4.palm.com (8.14.4/8.14.4) with ESMTP id q43KqZYS008364;
+	Thu, 3 May 2012 13:52:35 -0700
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.7; rv:12.0) Gecko/20120428 Thunderbird/12.0.1
+In-Reply-To: <86ipgdhvjo.fsf@red.stonehenge.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196956>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196957>
 
-On Thu, May 3, 2012 at 8:21 PM, Ronan Keryell
-<Ronan.Keryell@hpc-project.com> wrote:
->>>>>> On Thu, 3 May 2012 19:25:12 +0200, Thomas Gummerer <t.gummerer@g=
-mail.com> said:
+On 5/3/12 13:14 , Randal L. Schwartz wrote:
+>>>>>> "Rich" == Rich Pixley<rich.pixley@palm.com>  writes:
+> Rich>  Corporate mandate.  Political decision made without discussion
+> Rich>  with the people who would be using it.
 >
-> =A0 =A0Thomas> I have been drafting the Version 5 of the index format=
- over
-> =A0 =A0Thomas> the past few days with the help of Thomas Rast, Michae=
-l
-> =A0 =A0Thomas> Haggerty, cmn and barrbrain on IRC. It will save with =
-prefix
-> =A0 =A0Thomas> compression on the path, and using a crc32 over the st=
-at
-> =A0 =A0Thomas> data, instead of the full data, since it is only used =
-for
-> =A0 =A0Thomas> checking if the file is changed. (Thanks Michael Hagge=
-rty
-> =A0 =A0Thomas> for this hint. Unless we are missing something this wi=
-ll
-> =A0 =A0Thomas> save another ~4 MB on the Webkit index.
+> Sounds like you put two strikes against git before you even invoked the
+> first command, with that attitude.
 >
-> Great!
+> If you are *serious* about having *git* work for you, it will.
+> Thousands of projects are using git every day.
 >
-> But I wonder whether it may not worth to investigate a 64-bit version=
- for
-> the offsets and so on, just in case...
+> But if you're looking at git like "it's not hg, and I already hate
+> that", you'll end up sounding like you have in the past few days.
+>
+> Methinks *this* is the actual problem.  Not git.
+It's not just hg.  It's other source code control systems as well.  
+Check out any of the other daggy guys.  So sure, I'll admit a bias for 
+current technology over older tech.
 
-64-bit versions of the offsets were taken into consideration, but curre=
-ntly
-the Webkit index (the largest I know) has a size of 26 Mb, which is
-reduced to about 15 MB or less with the v5 format. With 32-bit we can
-address 4GB, which is about 266 times the Webkit index. Therefore there
-probably is no use for 64-bit offsets in the years to come.
+Another part of the problem is that git is badly designed, poorly 
+documented, and the terminology is inconsistent.  That, and the 
+limitations make for a pretty steep learning curve.
+
+And a third part of the problem is that coming from a number of other 
+daggy tools, I was expecting a lot more out of git that what git 
+actually provides.  Certainly, git can be used to do whatever, but a 
+pile of sand and some plastic can be made into a computer too, if we're 
+willing to put enough effort into it.
+
+But hey, I'm using it.  (I refuse to work with perforce).  I had an even 
+worse bias against mecurial before I started using it.  The big learning 
+curve was from the linear tools to the daggy tools which happened for me 
+with monotone.
+
+--rich
