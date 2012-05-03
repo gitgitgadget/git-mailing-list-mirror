@@ -1,131 +1,86 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 3/3] index-pack: support multithreaded delta resolving
-Date: Thu, 03 May 2012 15:10:22 -0700
-Message-ID: <7v62ccex0x.fsf@alter.siamese.dyndns.org>
-References: <1334123388-6083-1-git-send-email-pclouds@gmail.com>
- <1334123388-6083-4-git-send-email-pclouds@gmail.com>
+From: Sven Strickroth <sven.strickroth@tu-clausthal.de>
+Subject: Re: RFC: reflog for deleted branches
+Date: Fri, 04 May 2012 00:10:56 +0200
+Message-ID: <4FA30270.6000806@tu-clausthal.de>
+References: <4FA2F7DA.6020108@tu-clausthal.de> <7vaa1pdjz8.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 04 00:10:32 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri May 04 00:11:14 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SQ4EI-00023w-JG
-	for gcvg-git-2@plane.gmane.org; Fri, 04 May 2012 00:10:30 +0200
+	id 1SQ4Ez-0002bH-M3
+	for gcvg-git-2@plane.gmane.org; Fri, 04 May 2012 00:11:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756432Ab2ECWK0 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 3 May 2012 18:10:26 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:65285 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755522Ab2ECWKZ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 3 May 2012 18:10:25 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5CDF4679C;
-	Thu,  3 May 2012 18:10:24 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=LGLcomZvAydC
-	GmAgDbqFMY1giY4=; b=gopknEQ5oEn8dYI+OKYZNFw0JDJpx/njYJo39Jyo2971
-	ofqCWfNJ8CEivpUQ9aNBus1iHK03s5Q6b/QXv72dMz4g5B3ip2yHxvhCA6B2xDM1
-	Nv5sQnth5/jdGj7FvE1UCexwaBMr6sauu7TiaSmrqLEOWskr+CrQE578jaF3inQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=DafSte
-	fs0zRuuo6QZFrEX+mHJmzl0cjCCnbxmOUQQfLr+315+0j0L4xugYPXJE9jwmnoL3
-	VEfJBqBG6qV85beG42Esj3wpYRR4+x5UCQzOKCs+HZHNUlPG3VVJPBibkYUL4lhp
-	HrEVQgdgDI5o/K5z7L+2QodWlGbcgmH6fzaEw=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 54EE96792;
-	Thu,  3 May 2012 18:10:24 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id DE5DA6791; Thu,  3 May 2012
- 18:10:23 -0400 (EDT)
-In-Reply-To: <1334123388-6083-4-git-send-email-pclouds@gmail.com>
- (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Wed, 11 Apr
- 2012 12:49:48 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: C7D14E2E-956C-11E1-9495-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1756593Ab2ECWLJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 May 2012 18:11:09 -0400
+Received: from mailrelay2.rz.tu-clausthal.de ([139.174.2.43]:14661 "EHLO
+	mailrelay2.rz.tu-clausthal.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1756469Ab2ECWLH (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 3 May 2012 18:11:07 -0400
+Received: from poseidon.rz.tu-clausthal.de (poseidon.rz.tu-clausthal.de [139.174.2.21])
+	by mailrelay2.rz.tu-clausthal.de (Postfix) with ESMTP id ECFB928BE3A;
+	Fri,  4 May 2012 00:11:05 +0200 (CEST)
+Received: from poseidon.rz.tu-clausthal.de (localhost [127.0.0.1])
+	by localhost (Postfix) with SMTP id CE2A629A0D7;
+	Fri,  4 May 2012 00:11:05 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=tu-clausthal.de; h=
+	message-id:date:from:mime-version:to:cc:subject:references
+	:in-reply-to:content-type:content-transfer-encoding; s=dkim1;
+	 bh=4TEZnP566Be4mVbBXmaf7mrkPag=; b=PzHdiHNIJr5hYetXlqah3OPtxXuh
+	3rav9A6bzGk/uoAevtbD/Cr510s6SjkNqRJfE1OoBVlQAL9HTX7NHCvMf/hGPPk+
+	uEruIDuEC/MKRFUbXIm7ooMb6Cp9qOqIIBxf3Ak6OmYpSrriKcy1Q3HOXlTKoYNA
+	GrHrPKJ8rzfchFA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=tu-clausthal.de; h=
+	message-id:date:from:mime-version:to:cc:subject:references
+	:in-reply-to:content-type:content-transfer-encoding; q=dns; s=
+	dkim1; b=xbpbFoQT6IW9BHA+37ZVErVhz/BLti42zV4XKxWC+pp88l8w0TGDzwq
+	aXQzP85ljOpC3E0Pfzgwa4itmhrEFc1KapI5K1aDlKrMHt4D1hdFIIgthPe7NCuV
+	SceqVy1dkRNt+n0kHabLlZ6jPwlPDb3DXCChBGcY4+cVPeyGv/Y4=
+Received: from tu-clausthal.de (hathor.rz.tu-clausthal.de [139.174.2.1])
+	by poseidon.rz.tu-clausthal.de (Postfix) with ESMTP id 6BEB729A0CA;
+	Fri,  4 May 2012 00:10:56 +0200 (CEST)
+Received: from [139.174.242.80] (account sstri@tu-clausthal.de [139.174.242.80] verified)
+  by tu-clausthal.de (CommuniGate Pro SMTP 5.4.5)
+  with ESMTPSA id 31628456; Fri, 04 May 2012 00:10:56 +0200
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:12.0) Gecko/20120428 Thunderbird/12.0.1
+In-Reply-To: <7vaa1pdjz8.fsf@alter.siamese.dyndns.org>
+X-Enigmail-Version: 1.4.1
+X-Virus-Scanned: by Sophos PureMessage V5.6 at tu-clausthal.de
+X-Spam-Level: (8%, '
+ HTML_00_01 0.05, HTML_00_10 0.05, BODYTEXTP_SIZE_3000_LESS 0, BODY_SIZE_1000_LESS 0, BODY_SIZE_2000_LESS 0, BODY_SIZE_5000_LESS 0, BODY_SIZE_7000_LESS 0, BODY_SIZE_900_999 0, __ANY_URI 0, __BOUNCE_CHALLENGE_SUBJ 0, __BOUNCE_NDR_SUBJ_EXEMPT 0, __CP_URI_IN_BODY 0, __CT 0, __CTE 0, __CT_TEXT_PLAIN 0, __HAS_MSGID 0, __MIME_TEXT_ONLY 0, __MIME_VERSION 0, __MOZILLA_MSGID 0, __SANE_MSGID 0, __SUBJ_ALPHA_END 0, __TO_MALFORMED_2 0, __URI_NO_MAILTO 0, __URI_NO_PATH 0, __URI_NS , __USER_AGENT 0')
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196965>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196966>
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
+Am 03.05.2012 23:37 schrieb Junio C Hamano:
+> The itch is legit, but I doubt a "special log for deleted branches" is a
+> good design.  Why do you limit yourself only to a single "last" commit?
 
-> @@ -696,7 +796,31 @@ static void second_pass(struct object_entry *obj=
-)
->  	base_obj->obj =3D obj;
->  	base_obj->data =3D NULL;
->  	find_unresolved_deltas(base_obj);
-> -	display_progress(progress, nr_resolved_deltas);
-> +}
-> +
-> +static void *threaded_second_pass(void *arg)
-> +{
-> +#ifndef NO_PTHREADS
-> +	if (threads_active)
-> +		pthread_setspecific(key, arg);
-> +#endif
-> +	for (;;) {
-> +		int i;
-> +		work_lock();
-> +		display_progress(progress, nr_resolved_deltas);
-> +		while (nr_processed < nr_objects &&
-> +		       is_delta_type(objects[nr_processed].type))
-> +			nr_processed++;
-> +		if (nr_processed >=3D nr_objects) {
-> +			work_unlock();
-> +			break;
-> +		}
-> +		i =3D nr_processed++;
-> +		work_unlock();
-> +
-> +		second_pass(&objects[i]);
-> +	}
-> +	return NULL;
->  }
+That was just the first idea ;)
 
-It may be just the matter of naming, but the above is taking the
-abstraction backwards, I think.  Shouldn't it be structured in such a w=
-ay
-that the caller may call second_pass() and its implementation may turn =
-out
-to be threaded (or not)?
+> Wouldn't it be a better design to save away the entire reflog for the
+> branch when a branch is deleted, possibly with expedited expire rule for
+> such a reflog?
 
-The naming of "arg" made things worse.  I wasted 5 minutes scratching m=
-y
-head thinking "arg" was a single specific object that was to be given t=
-o
-second_pass(), and wondered why it is made into thread-local data.  Nam=
-e
-it "thread_data" or something.
+The "normal" reflog cannot be used if you just create and then delete a
+branch - the reflog is empty in this case. A special "deleted" entry
+pointing to the SHA1 of the branch is needed. Also the question is how
+to handle the case that a user creates and deletes a new branch with the
+same name.
 
-And I think the root cause of this confusion is the way "second_pass" w=
-as
-split out in the earlier patch.  It is not the entire second-pass, but =
-is
-merely a single step of it (the whole "for (i =3D 0; i < nr_objects; i+=
-+)"
-is the second-pass, in other words), and its implementation detail migh=
-t
-change to either thread (i.e. instead of a single line of control
-iterating from 0 to nr_objects, each thread grab the next available tas=
-k
-and work on it until everything is exhausted) or not.
+All in all, I (and lots of other users) would be happy if this issue
+could be addressed in one of the next releases. :)
 
-By the way, if one object is very heavy and takes a lot of time until
-completion, could it be possible that objects[0] is still being process=
-ed
-for its base data but objects[1] has already completed and an available
-thread could work on objects[2]?  How does it learn to process objects[=
-2]
-in such a case, or does it wait until the thread working on objects[0] =
-is
-done?
+-- 
+Best regards,
+ Sven Strickroth
+ ClamAV, a GPL anti-virus toolkit   http://www.clamav.net
+ PGP key id F5A9D4C4 @ any key-server
