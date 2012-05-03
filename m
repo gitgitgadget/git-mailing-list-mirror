@@ -1,63 +1,101 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: What's cooking in git.git (May 2012, #01; Wed, 2)
-Date: Thu, 03 May 2012 00:10:17 -0700
-Message-ID: <7v62cdhh9i.fsf@alter.siamese.dyndns.org>
-References: <7vipgegrl0.fsf@alter.siamese.dyndns.org>
- <20120502234352.GA2163@sigill.intra.peff.net>
+From: Thomas Rast <trast@inf.ethz.ch>
+Subject: Re: [PATCH de.po 5/5] de.po: collection of suggestions
+Date: Thu, 3 May 2012 09:42:06 +0200
+Message-ID: <877gwtyalt.fsf@thomas.inf.ethz.ch>
+References: <cover.1335966202.git.trast@student.ethz.ch>
+	<abfde735e408a8fc34e143ec25d1a345b6fcbd27.1335966202.git.trast@student.ethz.ch>
+	<3137881.zK1NKVIFJ3@cs-pc>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu May 03 09:10:30 2012
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Thomas Rast <trast@student.ethz.ch>,
+	Ralf Thielow <ralf.thielow@googlemail.com>,
+	Jiang Xin <worldhello.net@gmail.com>,
+	Git List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Jan =?utf-8?Q?Kr=C3=BCger?= <jk@jk.gs>
+To: Christian Stimming <stimming@tuhh.de>
+X-From: git-owner@vger.kernel.org Thu May 03 09:42:18 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SPqBI-0007oh-Ks
-	for gcvg-git-2@plane.gmane.org; Thu, 03 May 2012 09:10:29 +0200
+	id 1SPqg4-0003gj-QP
+	for gcvg-git-2@plane.gmane.org; Thu, 03 May 2012 09:42:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755106Ab2ECHKW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 May 2012 03:10:22 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59083 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754557Ab2ECHKV (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 May 2012 03:10:21 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B9C3B6686;
-	Thu,  3 May 2012 03:10:20 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=FSfRmdQezI9DqRqVWe+eMHpEvKI=; b=w9jdwR
-	xWjo6fF7Xo5+R0y2kErH0dZ0yDoNs+3l6RJD2yZyPRFFhTUTu7AfhQjEPkPp8V+D
-	HQvr9TxmFvXKsQL7mqYQzS3pZ6MINAOlCUYumf/2lQQJIAVbDfyOfFuRIfAMEzSd
-	2rWW2rXeQcXh1K+kZqXyGDp/ZzO9zsmdSC3U4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=LR5lkwuoKcpX6FqbflSmYNN9nyWl5HF/
-	hI8gwLIBwNWvkMVPNKSSJ7xb2Y3oCKlu+DrEbaMSOYsrKTLnU+TP2KmMxLv3i96H
-	9rTYq0He4MDyNRgLnn0/fr2dOaw0I3yuKQ9yG+2s/fm74fUQOIN6JyJ0CZ7HDLQT
-	FnLLhbRE+Nk=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B0FF76685;
-	Thu,  3 May 2012 03:10:20 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4AC516672; Thu,  3 May 2012
- 03:10:19 -0400 (EDT)
-In-Reply-To: <20120502234352.GA2163@sigill.intra.peff.net> (Jeff King's
- message of "Wed, 2 May 2012 19:43:52 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 0A907EF2-94EF-11E1-9181-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753204Ab2ECHmK convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 3 May 2012 03:42:10 -0400
+Received: from edge10.ethz.ch ([82.130.75.186]:9517 "EHLO edge10.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752846Ab2ECHmJ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 3 May 2012 03:42:09 -0400
+Received: from CAS20.d.ethz.ch (172.31.51.110) by edge10.ethz.ch
+ (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.2.283.3; Thu, 3 May
+ 2012 09:42:04 +0200
+Received: from thomas.inf.ethz.ch.ethz.ch (129.132.153.233) by CAS20.d.ethz.ch
+ (172.31.51.110) with Microsoft SMTP Server (TLS) id 14.1.355.2; Thu, 3 May
+ 2012 09:42:06 +0200
+In-Reply-To: <3137881.zK1NKVIFJ3@cs-pc> (Christian Stimming's message of "Wed,
+	2 May 2012 21:42:06 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Originating-IP: [129.132.153.233]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196889>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196890>
 
-Jeff King <peff@peff.net> writes:
+Christian Stimming <stimming@tuhh.de> writes:
 
-> Now that this is in master, any in-flight topics would need their
-> documentation updated to match this, too.
+> As one of the earlier translators: I agree with most of those as well=
+=2E Thanks=20
+> a lot. However, one small remark:
+>
+> Am Mittwoch, 2. Mai 2012, 15:49:27 schrieb Thomas Rast:
+>> @@ -676,11 +675,11 @@ msgstr "hinter "
+>>=20
+>>  #: wt-status.c:908 wt-status.c:911
+>>  msgid "ahead "
+>> -msgstr "=C3=BCber "
+>> +msgstr "weiter: "
+>>=20
+>>  #: wt-status.c:913
+>>  msgid ", behind "
+>> -msgstr ", hinter "
+>> +msgstr ", zur=C3=BCckgefallen "
+>>=20
+>>  #: builtin/add.c:62
+>>  #, c-format
+>> @@ -903,12 +902,12 @@ msgstr "Zweig '%s' zeigt auf keine Version"
+>>  #: builtin/branch.c:396
+>>  #, c-format
+>>  msgid "behind %d] "
+>> -msgstr "hinter %d] "
+>> +msgstr "%d hinterher] "
+>>=20
+>>  #: builtin/branch.c:398
+>>  #, c-format
+>>  msgid "ahead %d] "
+>> -msgstr "vor %d] "
+>> +msgstr "%d voraus] "
+>
+> In the above hunk, you said "ahead =3D weiter" and "behind =3D zur=C3=
+=BCckgefallen",=20
+> but now you say "ahead =3D voraus" and "behind =3D hinterher". Is it =
+helpful to=20
+> use two different translations, or shouldn't those rather be chosen=20
+> identically? The second set sounds somewhat better to me, but the mor=
+e=20
+> important question is whether both hunks should use the same translat=
+ions.
 
-Thanks.
+Yeah, sorry about that.  The whole thing is a mess because of the lego
+going on.  It would probably be better to first patch the code into
+shape so that it builds the displays in one step, and then translate
+that.  As it stands, it's very hard to translate because wt-status.c
+does not even let you reposition the number.
+
+--=20
+Thomas Rast
+trast@{inf,student}.ethz.ch
