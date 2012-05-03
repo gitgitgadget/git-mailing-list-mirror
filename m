@@ -1,79 +1,98 @@
-From: Rich Pixley <rich.pixley@palm.com>
-Subject: Re: Newbie grief
-Date: Thu, 03 May 2012 13:52:35 -0700
-Message-ID: <4FA2F013.3020904@palm.com>
-References: <4F9F128C.5020304@palm.com> <201204302331.q3UNVo7o032303@no.baka.org> <4F9F3919.6060805@palm.com> <CAMK1S_jwVsyKrGoL5uVAiuRrOa8bz79-DAueBmHZE2k=PpcJ2Q@mail.gmail.com> <20120501111415.GD5769@thunk.org> <CAMK1S_jN_WdZF4W4szzyJqLfC3FmnhKQ65XQiD-JS_jxwSm8_g@mail.gmail.com> <4FA02830.3040407@palm.com> <86havzoi8h.fsf@red.stonehenge.com> <4FA04D02.6090702@palm.com> <86mx5rmx32.fsf@red.stonehenge.com> <4FA055D0.7040102@palm.com> <86aa1rmvhb.fsf@red.stonehenge.com> <4FA05E9F.9090709@palm.com> <CAJsNXTmo1B86nSm7u923jJuGX0zajz3iqVu-onANMN-5BE5DfQ@mail.gmail.com> <4FA2D1D7.3020807@palm.com> <CA+7g9JzZ36RgsniT4UN0Zk+z1ohZYW5u+0AoGMjJZqsoBjqvqA@mail.gmail.com> <4FA2D97A.8090504@palm.com> <86ipgdhvjo.fsf@red.stonehenge.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 05/18] refs.c: extract function search_for_subdir()
+Date: Thu, 03 May 2012 13:56:50 -0700
+Message-ID: <7vmx5pdlv1.fsf@alter.siamese.dyndns.org>
+References: <1335479227-7877-1-git-send-email-mhagger@alum.mit.edu>
+ <1335479227-7877-6-git-send-email-mhagger@alum.mit.edu>
+ <7v4nrxf3m2.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Nathan Gray <n8gray@n8gray.org>,
-	PJ Weisberg <pj@irregularexpressions.net>,
-	Sitaram Chamarty <sitaramc@gmail.com>,
-	"Ted Ts'o" <tytso@mit.edu>, Seth Robertson <in-gitvger@baka.org>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: "Randal L. Schwartz" <merlyn@stonehenge.com>
-X-From: git-owner@vger.kernel.org Thu May 03 22:52:43 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Jakub Narebski <jnareb@gmail.com>,
+	Heiko Voigt <hvoigt@hvoigt.net>,
+	Johan Herland <johan@herland.net>,
+	Christian Couder <chriscool@tuxfamily.org>
+To: mhagger@alum.mit.edu
+X-From: git-owner@vger.kernel.org Thu May 03 22:57:12 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SQ310-0000j7-IW
-	for gcvg-git-2@plane.gmane.org; Thu, 03 May 2012 22:52:42 +0200
+	id 1SQ35L-0004FQ-FA
+	for gcvg-git-2@plane.gmane.org; Thu, 03 May 2012 22:57:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758642Ab2ECUwi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 May 2012 16:52:38 -0400
-Received: from smtp-relay2.palm.com ([64.28.152.243]:30015 "EHLO
-	smtp-relay2.palm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754004Ab2ECUwh (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 May 2012 16:52:37 -0400
-X-IronPort-AV: E=Sophos;i="4.75,527,1330934400"; 
-   d="scan'208";a="13296924"
-Received: from unknown (HELO ushqusdns4.palm.com) ([148.92.223.164])
-  by smtp-relay2.palm.com with ESMTP; 03 May 2012 13:52:36 -0700
-Received: from fuji.noir.com ([10.100.2.12])
-	by ushqusdns4.palm.com (8.14.4/8.14.4) with ESMTP id q43KqZYS008364;
-	Thu, 3 May 2012 13:52:35 -0700
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.7; rv:12.0) Gecko/20120428 Thunderbird/12.0.1
-In-Reply-To: <86ipgdhvjo.fsf@red.stonehenge.com>
+	id S1758662Ab2ECU5F (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 May 2012 16:57:05 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:33559 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754928Ab2ECU4w (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 May 2012 16:56:52 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E9CE7755D;
+	Thu,  3 May 2012 16:56:51 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=5kgrAAyU4AO6wFgyD7qDiH0pTJI=; b=Q30Asu
+	o2Dp70l2aKZb9aKFa/NKq4Xh6f1sNiUDovDexbACumUcESdbo4mKnRPI4MgirAJ9
+	zKjBCf5F+jepjBY6x6wosE8mQdCSiENaxrWJhaGy4Dh8kz/z/BcXBd6RUiDsw7OF
+	dR0stDrDJB3E1Cnwfz4Gmx+6c8FAN9oNveikk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=qHcMSB97vvKZP+mU2qpI3PVAOa9pSMle
+	YrCgS7AXM/XRK2K6uzp+7KDIUpBlwNSg9APmVQaCLFpkyNB5sy9XbwuX1anPIBEO
+	ZYdl5ALv+XgiyHSCNkOIqZxu38spIkknpRLosjNECnXmjaWUdJwa9B/unYKbZ/35
+	qMlrURrjFMg=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E061F755C;
+	Thu,  3 May 2012 16:56:51 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 62389755B; Thu,  3 May 2012
+ 16:56:51 -0400 (EDT)
+In-Reply-To: <7v4nrxf3m2.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Thu, 03 May 2012 12:48:05 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 81C60906-9562-11E1-8ED2-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196957>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196958>
 
-On 5/3/12 13:14 , Randal L. Schwartz wrote:
->>>>>> "Rich" == Rich Pixley<rich.pixley@palm.com>  writes:
-> Rich>  Corporate mandate.  Political decision made without discussion
-> Rich>  with the people who would be using it.
+Junio C Hamano <gitster@pobox.com> writes:
+
+> Hrm.  The old code used to reset "dir" to NULL before breaking, so the
+> entire function used to return NULL.  Now, it calls search_for_subdir(),
+> which calls search_ref_dir() and gets NULL in entry, and returns NULL.
 >
-> Sounds like you put two strikes against git before you even invoked the
-> first command, with that attitude.
->
-> If you are *serious* about having *git* work for you, it will.
-> Thousands of projects are using git every day.
->
-> But if you're looking at git like "it's not hg, and I already hate
-> that", you'll end up sounding like you have in the past few days.
->
-> Methinks *this* is the actual problem.  Not git.
-It's not just hg.  It's other source code control systems as well.  
-Check out any of the other daggy guys.  So sure, I'll admit a bias for 
-current technology over older tech.
+> Wouldn't we end up returning the original parameter "dir" instead of NULL
+> in that case?  Would that make a difference?
 
-Another part of the problem is that git is badly designed, poorly 
-documented, and the terminology is inconsistent.  That, and the 
-limitations make for a pretty steep learning curve.
+In other words, isn't something like this necessary?
 
-And a third part of the problem is that coming from a number of other 
-daggy tools, I was expecting a lot more out of git that what git 
-actually provides.  Certainly, git can be used to do whatever, but a 
-pile of sand and some plastic can be made into a computer too, if we're 
-willing to put enough effort into it.
+Otherwise, wouldn't do_for_each_ref() called for a non-existing "refs/"
+subhierarchy in "base" start from the top-level packed_dir/loose_dir
+returned from find_containing_dir(), and end up running do_for_each_ref_in_dirs()
+with both top-level packed_dir/loose_dir and traversing all of them, only
+to find nothing?
 
-But hey, I'm using it.  (I refuse to work with perforce).  I had an even 
-worse bias against mecurial before I started using it.  The big learning 
-curve was from the linear tools to the daggy tools which happened for me 
-with monotone.
+ refs.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---rich
+diff --git a/refs.c b/refs.c
+index 9f2da16..af5da5f 100644
+--- a/refs.c
++++ b/refs.c
+@@ -390,8 +390,10 @@ static struct ref_dir *find_containing_dir(struct ref_dir *dir,
+ 			   refname + dirname.len,
+ 			   (slash + 1) - (refname + dirname.len));
+ 		subdir = search_for_subdir(dir, dirname.buf, mkdir);
+-		if (!subdir)
++		if (!subdir) {
++			dir = NULL;
+ 			break;
++		}
+ 		dir = subdir;
+ 	}
+ 
