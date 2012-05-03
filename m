@@ -1,69 +1,86 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: Is there any way to make hooks part of the repository?
-Date: Thu, 3 May 2012 11:00:10 +0200
-Message-ID: <87ipgdskpx.fsf@thomas.inf.ethz.ch>
-References: <CAE1pOi2hr7ewjo5WVDoW0ipYxDVTckr5M_sHNoOQ323=_k754Q@mail.gmail.com>
-	<7vipgf8wve.fsf@alter.siamese.dyndns.org>
-	<CAE1pOi0_ETdSYsuT0Udhbr6rDvmEcuTA157d6aKUosgi7w28jw@mail.gmail.com>
-	<vpqfwbjnl4a.fsf@bauges.imag.fr>
-	<CAE1pOi3RZ+x7YcVZ-dLt70=wwRsvY9D6GQR-T+JZ9S7x8CFjPw@mail.gmail.com>
-	<7v1un2idt0.fsf@alter.siamese.dyndns.org>
-	<CAE1pOi1SLU5_eLr3ahiUjzQqPUnVPX70CPq=OW-o-85Lk43GwA@mail.gmail.com>
+From: Jiang Xin <worldhello.net@gmail.com>
+Subject: Re: Please pull git-po master branch
+Date: Thu, 3 May 2012 18:19:30 +0800
+Message-ID: <CANYiYbGvfXFLK4AMGGUWyGd1YXEF_scES4mR--mbuZ1t2PdsEQ@mail.gmail.com>
+References: <CANYiYbHtKKWw9LPnr+1khC5Oms-kOtA2WEucoNoE3Njzqiahzw@mail.gmail.com>
+	<87d36n2f2r.fsf@thomas.inf.ethz.ch>
+	<7vtxzyilid.fsf@alter.siamese.dyndns.org>
+	<CANYiYbH+N3k_=FWyeS_HfBWSBeBdOUqW5qrHFe=qV4ECtYABpA@mail.gmail.com>
+	<7vaa1phica.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Git Users <git@vger.kernel.org>
-To: Hilco Wijbenga <hilco.wijbenga@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 03 11:00:28 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Thomas Rast <trast@student.ethz.ch>,
+	Ralf Thielow <ralf.thielow@googlemail.com>,
+	Git List <git@vger.kernel.org>,
+	=?ISO-8859-1?Q?Jan_Kr=FCger?= <jk@jk.gs>,
+	Byrial Jensen <byrial@vip.cybercity.dk>,
+	Vincent van Ravesteijn <vfr@lyx.org>,
+	Marco Sousa <marcomsousa@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu May 03 12:20:15 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SPrth-000084-Ik
-	for gcvg-git-2@plane.gmane.org; Thu, 03 May 2012 11:00:25 +0200
+	id 1SPt8u-00065O-6q
+	for gcvg-git-2@plane.gmane.org; Thu, 03 May 2012 12:20:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756118Ab2ECJAT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 May 2012 05:00:19 -0400
-Received: from edge20.ethz.ch ([82.130.99.26]:48985 "EHLO edge20.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755245Ab2ECJAR (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 May 2012 05:00:17 -0400
-Received: from CAS12.d.ethz.ch (172.31.38.212) by edge20.ethz.ch
- (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.2.283.3; Thu, 3 May
- 2012 11:00:16 +0200
-Received: from thomas.inf.ethz.ch.ethz.ch (129.132.153.233) by CAS12.d.ethz.ch
- (172.31.38.212) with Microsoft SMTP Server (TLS) id 14.1.355.2; Thu, 3 May
- 2012 11:00:11 +0200
-In-Reply-To: <CAE1pOi1SLU5_eLr3ahiUjzQqPUnVPX70CPq=OW-o-85Lk43GwA@mail.gmail.com>
-	(Hilco Wijbenga's message of "Wed, 2 May 2012 12:42:17 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Originating-IP: [129.132.153.233]
+	id S1755293Ab2ECKTc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 May 2012 06:19:32 -0400
+Received: from mail-gh0-f174.google.com ([209.85.160.174]:34353 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1751525Ab2ECKTb (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 3 May 2012 06:19:31 -0400
+Received: by ghrr11 with SMTP id r11so1566747ghr.19
+        for <git@vger.kernel.org>; Thu, 03 May 2012 03:19:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=Ev2wWKE4p0wGEjwHaaBwftpN5Cuts85oyfeHtX3fnbY=;
+        b=KWnLSaOjhqrDVGul/WfnBfXcDcys5kD5yibI0J+eUNwoLRpZV/wU4HOj40FhNBGrYL
+         e4sBgS7DH1NYZpno3Hbyshz2buZFaPNL2LmYeMVg7UdTO2lAuZ6/bdyzGDO6oGHleiOF
+         ufBELJ7E1kuYCfnLoJuiDDwIu5GGIKrtZ1hJOppxNmWiziEom8CTCfnQLDTJSwHNvRbF
+         lTHRqUu0u0KoJVuZjiA5isYwdTZX27P9C0IJzsl+xd9/nGvSofroeh9C48/xjHy/xCAo
+         irZaQMb9WxLQwXKqlD05mKg71ixCXkE3i+UsiWqMpg/ZNsqnYz4ZExul5UZOfwE4DWis
+         0D/w==
+Received: by 10.50.154.132 with SMTP id vo4mr364950igb.27.1336040370732; Thu,
+ 03 May 2012 03:19:30 -0700 (PDT)
+Received: by 10.50.207.40 with HTTP; Thu, 3 May 2012 03:19:30 -0700 (PDT)
+In-Reply-To: <7vaa1phica.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196893>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196894>
 
-Hilco Wijbenga <hilco.wijbenga@gmail.com> writes:
+2012/5/3 Junio C Hamano <gitster@pobox.com>:
+> I am not sure if writing down bureaucratic-sounding and rigid rules is the
+> best first response to this kind of incident.
 
->> Matthieu is *not* talking about auditing nastiness going into the
->> project's repository; he is talking is about a chance to audit whatever
->> comes from the project's repository that *could* potentially contain some
->> nastiness before it causes harm to your working environment. In other
->> words, not *having* to trust what is in the project's repository, but
->> having a way to verify.
->
-> Perhaps these automatic hooks should only be applicable for "outgoing"
-> changes like commit and push? That way you can review the hooks before
-> they run but you still have a chance to prevent developer errors from
-> getting to the server/other people (which is really all I care about,
-> I am looking for a way to protect developers from making silly
-> mistakes).
+I think a WIP/XX branch is nessary in the early phase of new language XX.
+If a contributor sent a pull request with a untranslated XX.po, and said,
+"Please pull this initial commit to master branch, so that other contributors
+may notice a team of XX already exists, and won't translate it twice."
+It does make sense, but what if this contributor gives up at last for some
+reasons, and left a zero translated XX.po in po/ directory?
 
-Shouldn't those checks be made server-side with a pre-receive hook?
+Create a WIP/XX branch and merge it back to master branch when the
+translation is 100% (or 90%) completed. The WIP/XX branch will be deleted
+after that. The overall workflow does not changed, no extra work for l10n
+teams, and leave po/README unchanged is OK.
+
+> the first response should be to admit it, i.e. "Sorry, there
+> was a miscommunication and gap in understanding among us. I as the i18n
+> coordinator should have double checked before responding to pull requests
+> to see if there was a consensus within the l10n team for the particular
+> language. I'll try to be more careful until we nail the procedure down and
+> everybody gets more comfortable with the process."
+
+Yes. I'm sorry about that. I think disallow new l10n support to the maint
+branch and later rc phase will solve this problem.
+
 
 -- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+Jiang Xin
