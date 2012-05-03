@@ -1,180 +1,129 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH on ab/i18n] branch: remove lego in i18n tracking info strings
-Date: Thu,  3 May 2012 20:12:00 +0700
-Message-ID: <1336050720-21200-1-git-send-email-pclouds@gmail.com>
-References: <877gwtyalt.fsf@thomas.inf.ethz.ch>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: Breaking up Git's color emission for i18n
+Date: Thu, 3 May 2012 20:35:16 +0700
+Message-ID: <CACsJy8DO6OqjowV32V9S2ehaXHLD+F1UdCmE_JBY3wyM5RasKw@mail.gmail.com>
+References: <CACBZZX7fE0CT5xV+QKPZ4BnkqdU0Lmd8LQU+45kjt+RM0meuEA@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Thomas Rast <trast@inf.ethz.ch>,
-	Christian Stimming <stimming@tuhh.de>,
-	Ralf Thielow <ralf.thielow@googlemail.com>,
-	Jiang Xin <worldhello.net@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0?= <avarab@gmail.com>,
-	=?UTF-8?q?Jan=20Kr=C3=BCger?= <jk@jk.gs>,
-	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 03 15:16:20 2012
+Cc: Ralf Thielow <ralf.thielow@googlemail.com>, git@vger.kernel.org,
+	trast@student.ethz.ch, stimming@tuhh.de
+To: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Thu May 03 15:35:55 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SPvtL-00056f-81
-	for gcvg-git-2@plane.gmane.org; Thu, 03 May 2012 15:16:19 +0200
+	id 1SPwCH-0002sz-UG
+	for gcvg-git-2@plane.gmane.org; Thu, 03 May 2012 15:35:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755222Ab2ECNQF convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 3 May 2012 09:16:05 -0400
-Received: from mail-pb0-f46.google.com ([209.85.160.46]:44507 "EHLO
-	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755133Ab2ECNQC (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 May 2012 09:16:02 -0400
-Received: by pbbrp8 with SMTP id rp8so2474664pbb.19
-        for <git@vger.kernel.org>; Thu, 03 May 2012 06:16:01 -0700 (PDT)
+	id S1755583Ab2ECNft convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 3 May 2012 09:35:49 -0400
+Received: from mail-wg0-f44.google.com ([74.125.82.44]:55910 "EHLO
+	mail-wg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754506Ab2ECNfs convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 3 May 2012 09:35:48 -0400
+Received: by wgbdr13 with SMTP id dr13so1761417wgb.1
+        for <git@vger.kernel.org>; Thu, 03 May 2012 06:35:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        bh=ft0Qlv5hVzuWeL16sD3Ei83s5UyllWRiExskKia+iE4=;
-        b=IZBVRID1JOUNYuJtVE5uGsT6wOCIP4rblOGQP8MmH4sXDVMGwaPajgnKmgFLOOQ2ds
-         xbKaPL4oxHtFWx3yJiKB2DqOMmDmxZfxdkP9jz0NbngqI91UCQ9sLE06k6KLbOz52M8q
-         L4mbP+LrwzI/bK2J1rpWvHRSWipYIEJ2sndxDjGsL/G0tPQQb5AVQk33O0IRyv0/GFi7
-         5d18I0rY0ZskhVkc6R6zB3Y9PAIbktblkEaGWVt+/HoiRjn8Z3sG/9cFpbUhtE39HyAA
-         fyqcIgVzsMCeQgfF3Sr12HXviXeMaMIwoXdKx5XLeKdSLqhJOyw87Gs/N5BtVgBmIEvj
-         VJiw==
-Received: by 10.68.225.104 with SMTP id rj8mr7413478pbc.135.1336050961489;
-        Thu, 03 May 2012 06:16:01 -0700 (PDT)
-Received: from pclouds@gmail.com ([115.74.34.118])
-        by mx.google.com with ESMTPS id r6sm5294706pbl.24.2012.05.03.06.15.54
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 03 May 2012 06:15:59 -0700 (PDT)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Thu, 03 May 2012 20:12:27 +0700
-X-Mailer: git-send-email 1.7.8.36.g69ee2
-In-Reply-To: <877gwtyalt.fsf@thomas.inf.ethz.ch>
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=REFssEHVpC4Ry6JnDqXgDN5/podCcf3mjVh51V0iN7A=;
+        b=flfy2J9NtFmM9peK+wl9NAC6mrorvznyeU/jfSFpggpFj10szIbA3ExpzlLbRRyUG4
+         bwJ8K6+r1jpiCb8zqLiTOIsgu2wD+8bZyOW7oSzdSLd6t2iP0+ToVaJtPyOKvS5CEmmq
+         QZ6yYF4RQmQlZ7QzagXHlrX9GQ1F2iY0MLhfPNtRxThDIBHr6pV6uBPxddbjIiYISX7x
+         Cxti6XtPdoPES/3/T4mbDqtCaYFfExeLqOx+GgBz0fRmdjy8EK0QDCuiD/AzO/yqfDX1
+         Vipezvnfhh17GYKoM0TZ2itSqvylrINo6ae/iiT/GZVwAeH0bLdLMs6QQ3JEauv3cyNp
+         vIvg==
+Received: by 10.180.78.105 with SMTP id a9mr3386517wix.20.1336052147638; Thu,
+ 03 May 2012 06:35:47 -0700 (PDT)
+Received: by 10.223.14.193 with HTTP; Thu, 3 May 2012 06:35:16 -0700 (PDT)
+In-Reply-To: <CACBZZX7fE0CT5xV+QKPZ4BnkqdU0Lmd8LQU+45kjt+RM0meuEA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196907>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196908>
 
+On Thu, May 3, 2012 at 5:56 AM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+<avarab@gmail.com> wrote:
+> Whether that's the case or not I wonder how we could handle all these
+> lego translations in wt-status.c.
+>
+> Currently we have stuff like this:
+>
+> =C2=A0 =C2=A0color_fprintf(s->fp, header_color, _("ahead "));
+> =C2=A0 =C2=A0color_fprintf(s->fp, branch_color_local, "%d", num_ours)=
+;
+> =C2=A0 =C2=A0color_fprintf(s->fp, header_color, _(", behind "));
+> =C2=A0 =C2=A0color_fprintf(s->fp, branch_color_remote, "%d", num_thei=
+rs);
+>
+> That could be something clever like this:
+>
+> =C2=A0 =C2=A0color_fprintf("<color header>ahead</color> <color
+> local>%d</color>, <color header>behind</color> <color
+> local>%d/<color>", ...);
 
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
----
- On Thu, May 3, 2012 at 2:42 PM, Thomas Rast <trast@inf.ethz.ch> wrote:
- > Christian Stimming <stimming@tuhh.de> writes:
- >
- >> As one of the earlier translators: I agree with most of those as we=
-ll. Thanks
- >> a lot. However, one small remark:
- >>
- >> Am Mittwoch, 2. Mai 2012, 15:49:27 schrieb Thomas Rast:
- >>> @@ -676,11 +675,11 @@ msgstr "hinter "
- >>>
- >>>  #: wt-status.c:908 wt-status.c:911
- >>>  msgid "ahead "
- >>> -msgstr "=C3=BCber "
- >>> +msgstr "weiter: "
- >>>
- >>>  #: wt-status.c:913
- >>>  msgid ", behind "
- >>> -msgstr ", hinter "
- >>> +msgstr ", zur=C3=BCckgefallen "
- >>>
- >>>  #: builtin/add.c:62
- >>>  #, c-format
- >>> @@ -903,12 +902,12 @@ msgstr "Zweig '%s' zeigt auf keine Version"
- >>>  #: builtin/branch.c:396
- >>>  #, c-format
- >>>  msgid "behind %d] "
- >>> -msgstr "hinter %d] "
- >>> +msgstr "%d hinterher] "
- >>>
- >>>  #: builtin/branch.c:398
- >>>  #, c-format
- >>>  msgid "ahead %d] "
- >>> -msgstr "vor %d] "
- >>> +msgstr "%d voraus] "
- >>
- >> In the above hunk, you said "ahead =3D weiter" and "behind =3D zur=C3=
-=BCckgefallen",
- >> but now you say "ahead =3D voraus" and "behind =3D hinterher". Is i=
-t helpful to
- >> use two different translations, or shouldn't those rather be chosen
- >> identically? The second set sounds somewhat better to me, but the m=
-ore
- >> important question is whether both hunks should use the same transl=
-ations.
- >
- > Yeah, sorry about that.  The whole thing is a mess because of the le=
-go
- > going on.  It would probably be better to first patch the code into
- > shape so that it builds the displays in one step, and then translate
- > that.  As it stands, it's very hard to translate because wt-status.c
- > does not even let you reposition the number.
+I am thinking of something more like "<color>ahead</color>
+<ours>%d</ours>, <color>behind</color> <theirs>%d</theirs>". It gives
+more context to translators.
 
- The translator in me totally agrees with you. I'll look into
- wt-status legos, but we probably need better infrastructure to mix
- color and text. Pseudo html tags to to mark color, like
- "On branch <color1>%s</color1>" is probably not a bad idea.
+Then we could do a simple search/replace:
 
- builtin/branch.c |   31 ++++++++++++++++++++++---------
- 1 files changed, 22 insertions(+), 9 deletions(-)
+struct tag_subst colors[] =3D {
+    { "color", WT_STATUS_HEADER, GIT_COLOR_RESET },
+    { "ours", WT_STATUS_LOCAL_BRANCH, GIT_COLOR_RESET },
+    { "theirs", WT_STATUS_REMOTE_BRANCH, GIT_COLOR_RESET },
+    { NULL, NULL, NULL }
+};
 
-diff --git a/builtin/branch.c b/builtin/branch.c
-index 8813d2e..5011881 100644
---- a/builtin/branch.c
-+++ b/builtin/branch.c
-@@ -384,6 +384,7 @@ static void fill_tracking_info(struct strbuf *stat,=
- const char *branch_name,
- 		int show_upstream_ref)
- {
- 	int ours, theirs;
-+	const char *ref =3D NULL;
- 	struct branch *branch =3D branch_get(branch_name);
-=20
- 	if (!stat_tracking_info(branch, &ours, &theirs)) {
-@@ -394,16 +395,28 @@ static void fill_tracking_info(struct strbuf *sta=
-t, const char *branch_name,
- 		return;
- 	}
-=20
--	strbuf_addch(stat, '[');
- 	if (show_upstream_ref)
--		strbuf_addf(stat, "%s: ",
--			shorten_unambiguous_ref(branch->merge[0]->dst, 0));
--	if (!ours)
--		strbuf_addf(stat, _("behind %d] "), theirs);
--	else if (!theirs)
--		strbuf_addf(stat, _("ahead %d] "), ours);
--	else
--		strbuf_addf(stat, _("ahead %d, behind %d] "), ours, theirs);
-+		ref =3D shorten_unambiguous_ref(branch->merge[0]->dst, 0);
-+	if (!ours) {
-+		if (ref)
-+			strbuf_addf(stat, _("[%s: behind %d]"), ref, theirs);
-+		else
-+			strbuf_addf(stat, _("[behind %d]"), theirs);
-+
-+	} else if (!theirs) {
-+		if (ref)
-+			strbuf_addf(stat, _("[%s: ahead %d]"), ref, ours);
-+		else
-+			strbuf_addf(stat, _("[ahead %d]"), ours);
-+	} else {
-+		if (ref)
-+			strbuf_addf(stat, _("[%s: ahead %d, behind %d]"),
-+				    ref, ours, theirs);
-+		else
-+			strbuf_addf(stat, _("[ahead %d, behind %d]"),
-+				    ours, theirs);
-+	}
-+	strbuf_addch(stat, ' ');
- }
-=20
- static int matches_merge_filter(struct commit *commit)
+strbuf_substitute_tags(buf, colors, "<color>ahead</color>
+<ours>%d</ours>, <color>behind</color> <theirs>%d</theirs>", ours,
+theirs);
+
+It'd be even more great if strbuf_substitute_tags() can flatten nested
+tags, so "<foo>abc<bar>def</bar>ghi</foo>" becomes
+"<foo>abc</foo><bar>def</bar><foo>ghi</foo>".
+
+The drawback is msgfmt does not catch malformed tags. But that already
+happens for plenty other projects. Maybe msgfmt will learn that soon.
+
+> We have some code in color_parse() in color.c for parsing colors, but
+> I haven't spotted if it can parse embedded things like that.
+>
+> But I think an easier option is:
+>
+> =C2=A0 =C2=A0color_fprintf(%sahead%s %s%d%s, %sbehind%s %s%d%s",
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0header_=
+color_begin,
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0color_r=
+eset,
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0branch_=
+color_begin,
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0num_our=
+s,
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0color_r=
+eset,
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0...
+> =C2=A0 =C2=A0);
+>
+> Which we already use in e.g. branch.c:
+>
+> =C2=A0 =C2=A0strbuf_addf(&out, "%c %s%-*s%s", c, branch_get_color(col=
+or),
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0maxwidth, name.buf,
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0branch_get_color(BRANCH_COLO=
+R_RESET));
+>
+> That would result in lots of arguments and fairly unintelligible
+> format strings, but at least we wouldn't have to create some custom
+> parser and the msgfmt --check option would check that we have all the
+> formats there.
+>
+> We could also expose this as an internal command to do coloring for
+> our shellscript libraries.
 --=20
-1.7.8.36.g69ee2
+Duy
