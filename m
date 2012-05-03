@@ -1,55 +1,71 @@
-From: Martin Mares <mj@ucw.cz>
-Subject: Re: [PATCH 0/4] report chmod'ed binary files the same as text files
-Date: Thu, 3 May 2012 13:45:30 +0200
-Message-ID: <mj+md-20120503.114519.14372.nikam@ucw.cz>
-References: <1335892215-21331-1-git-send-email-zbyszek@in.waw.pl>
+From: th.acker66@arcor.de
+Subject: Large repo and pack.packsizelimit
+Date: Thu, 3 May 2012 13:57:58 +0200 (CEST)
+Message-ID: <37267143.413194.1336046278583.JavaMail.ngmail@webmail07.arcor-online.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-2
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Zbigniew =?iso-8859-2?Q?J=EAdrzejewski-Szmek?= <zbyszek@in.waw.pl>
-X-From: git-owner@vger.kernel.org Thu May 03 13:56:54 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu May 03 13:58:08 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SPueQ-0007YD-S8
-	for gcvg-git-2@plane.gmane.org; Thu, 03 May 2012 13:56:51 +0200
+	id 1SPufe-0008Qb-BB
+	for gcvg-git-2@plane.gmane.org; Thu, 03 May 2012 13:58:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751502Ab2ECL4g convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 3 May 2012 07:56:36 -0400
-Received: from nikam.ms.mff.cuni.cz ([195.113.20.16]:60918 "EHLO
-	nikam.ms.mff.cuni.cz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750914Ab2ECL4f (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 May 2012 07:56:35 -0400
-X-Greylist: delayed 664 seconds by postgrey-1.27 at vger.kernel.org; Thu, 03 May 2012 07:56:35 EDT
-Received: by nikam.ms.mff.cuni.cz (Postfix, from userid 2587)
-	id 8362D9AC861; Thu,  3 May 2012 13:45:30 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <1335892215-21331-1-git-send-email-zbyszek@in.waw.pl>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1751592Ab2ECL6A (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 May 2012 07:58:00 -0400
+Received: from mail-in-01.arcor-online.net ([151.189.21.41]:56916 "EHLO
+	mail-in-01.arcor-online.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750952Ab2ECL57 (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 3 May 2012 07:57:59 -0400
+Received: from mail-in-18-z2.arcor-online.net (mail-in-18-z2.arcor-online.net [151.189.8.35])
+	by mx.arcor.de (Postfix) with ESMTP id 990085A567
+	for <git@vger.kernel.org>; Thu,  3 May 2012 13:57:58 +0200 (CEST)
+Received: from mail-in-09.arcor-online.net (mail-in-09.arcor-online.net [151.189.21.49])
+	by mail-in-18-z2.arcor-online.net (Postfix) with ESMTP id 9449633A3C0
+	for <git@vger.kernel.org>; Thu,  3 May 2012 13:57:58 +0200 (CEST)
+Received: from webmail07.arcor-online.net (webmail07.arcor-online.net [151.189.8.8])
+	by mail-in-09.arcor-online.net (Postfix) with ESMTP id 90257197B3C
+	for <git@vger.kernel.org>; Thu,  3 May 2012 13:57:58 +0200 (CEST)
+X-DKIM: Sendmail DKIM Filter v2.8.2 mail-in-09.arcor-online.net 90257197B3C
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arcor.de; s=mail-in;
+	t=1336046278; bh=ronuQsFadUN/NP0wYQ+6bVqgZCRMIDYcdU8HqlDB8DY=;
+	h=Date:From:To:Message-ID:Subject:MIME-Version:Content-Type:
+	 Content-Transfer-Encoding;
+	b=QN+MO09/QUUUGxIabV2PvAGEb9BPiswb2AKWLchxOh2X0DhfWVIPkxiKjnn4jZ5vr
+	 zHJDoFbE9Gd8ZWglhhMhIAba6z8uhWAUw7zp54mULvLdR7nFNh6d0v3yND3o5jA+PW
+	 uMp7yg9w3diZT7vLp3rM6xTfHe3qjexYk1qFSCaE=
+Received: from [194.138.39.56] by webmail07.arcor-online.net (151.189.8.8) with HTTP (Arcor Webmail); Thu, 3 May 2012 13:57:58 +0200 (CEST)
+X-ngMessageSubType: MessageSubType_MAIL
+X-WebmailclientIP: 194.138.39.56
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196899>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196900>
 
-Hi!
+Hello,
 
-> This patch series fixes a small discrepancy between the way that
-> text files and binary files are treated. Reported by Martin Mare=B9 i=
-n [1].
-> Firt patch is cleanup, second describes current behaviour, third does
-> the change, and fourth is a bonus micro-opt.
+I am using MSysgit 1.7.9 on WinXP 32bit and have a very large repo (10GB in .git; 20GB in source tree).
+I had to set pack.packsizelimit=1024MB to prevent "out of memory" during repacking in git-gc 
+and everything seemed to work fine.
 
-Thanks for the fix!
+When I tried to clone this repo an "out of memory" occured because the packs to be transferred
+by the git protocol are not limited by pack.packsizelimit. I "fixed" this by setting transfer.unpackLimit=100000
+and thus transferring only loose objects. This is very slow but it works.
 
-				Have a nice fortnight
---=20
-Martin `MJ' Mares                          <mj@ucw.cz>   http://mj.ucw.=
-cz/
-=46aculty of Math and Physics, Charles University, Prague, Czech Rep., =
-Earth
-This mail doesn't contain viruses, because it wasn't sent from MS Windo=
-ws. Checked by eyes.
+In this cloned repo now git-gc again causes "out of memory" because it tries to pack all loose
+objects in one go thereby seemingly not respecting pack.packsizelimit ... 
+(Setting --window-memory=512m in git-repack did not help here.)
+
+Am I doing anything wrong here or is this a bug/feature in git?
+
+BTW1 Repo is very large but contains only one really large file with 1.2GB; all other files are smaller than 256MB.
+BTW2 I cannot use 1.7.10 due to the http authorization bug.
+
+
+---
+Thomas
