@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH v3 8/9] archive-zip: streaming for stored files
-Date: Thu,  3 May 2012 08:51:07 +0700
-Message-ID: <1336009868-7411-9-git-send-email-pclouds@gmail.com>
+Subject: [PATCH v3 6/9] archive-zip: remove uncompressed_size
+Date: Thu,  3 May 2012 08:51:05 +0700
+Message-ID: <1336009868-7411-7-git-send-email-pclouds@gmail.com>
 References: <1336009868-7411-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -12,289 +12,111 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 03 03:59:23 2012
+X-From: git-owner@vger.kernel.org Thu May 03 04:00:58 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SPlKE-00034I-CN
-	for gcvg-git-2@plane.gmane.org; Thu, 03 May 2012 03:59:22 +0200
+	id 1SPlLg-00045D-0N
+	for gcvg-git-2@plane.gmane.org; Thu, 03 May 2012 04:00:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755482Ab2ECB7S convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 2 May 2012 21:59:18 -0400
-Received: from mail-pb0-f46.google.com ([209.85.160.46]:46673 "EHLO
+	id S1755424Ab2ECCAr convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 2 May 2012 22:00:47 -0400
+Received: from mail-pb0-f46.google.com ([209.85.160.46]:57004 "EHLO
 	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754672Ab2ECB7R (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 May 2012 21:59:17 -0400
-Received: by pbbrp8 with SMTP id rp8so1820021pbb.19
-        for <git@vger.kernel.org>; Wed, 02 May 2012 18:59:16 -0700 (PDT)
+	with ESMTP id S1754672Ab2ECCAr (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 May 2012 22:00:47 -0400
+Received: by pbbrp8 with SMTP id rp8so1821426pbb.19
+        for <git@vger.kernel.org>; Wed, 02 May 2012 19:00:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=gofqADVddym6V9MYQ+lEmqPtfT+sJ0BpZ6LlH4PKZj4=;
-        b=A0JCSRC+roaWXTvq0QuMgMRG4VgJwD3LwftFHc+dqKg1zPSw0ArcUdG+3ZcU6LigpX
-         7z3NzrTMZsMsh9572imKcUXxuuSuUaSul4A3ucF0EfJBRzKBYZHBG5A/XX++8NSH4eYG
-         tC3Xqgo9THauwLWY5IaujP6hHsjNYJbH+LXQWTCTYFhpcDoKs0ZwKkNZI60iYiO8NhgW
-         sLHj0/m/JQRycJRr5KxCl/TSFgQMjJCxO8bHHrNKoaDjDxtVVPYnQC5CvIZw5YjZKyCq
-         ++TYPBy+Y9F6e4DcPlzJUQVAWCqq6eeQj6VtCZpPDnfhhl4kcL1hg5pr3suOowg86m2U
-         Twdw==
-Received: by 10.68.135.226 with SMTP id pv2mr2388028pbb.127.1336009997077;
-        Wed, 02 May 2012 18:53:17 -0700 (PDT)
+        bh=rHHOCSqyBH6dKu7Fxa6bGNkDqW3ByhNiqHPYCe2sagI=;
+        b=e1T3WzbrXTL3bz+xNvy8/lNvrM0fT90yOdrqzvyFhrrL8pcsY4o3UkcFrXRXShxap6
+         6hQAw06gRUh+zA8hruPNe6ae6isgaUDtvQgoHYs5rSL+cPCBCYTFAKYyjlDHx1a5jWew
+         w2vUhBGe+ruSwYBug3cySOW54f8N5i0WOyZcxvzwGB5fuqbkkUX03m0T0I+s+hnDLZ7x
+         GEu1TsGoEH4UKVlNdXmOuytPHAtfhVKNVpSMUhT0HLQgd8pIOXXaiNrrelufUjcKdT9b
+         7K94EtTUh24B0XKCVPGV0jVJtU26njC+NTr02nkX+SPQNdFJ9QBMvrbL3ozsGI7Zgyw5
+         xqcQ==
+Received: by 10.68.134.37 with SMTP id ph5mr169095pbb.12.1336009981981;
+        Wed, 02 May 2012 18:53:01 -0700 (PDT)
 Received: from pclouds@gmail.com ([113.161.77.29])
-        by mx.google.com with ESMTPS id ud10sm3627366pbc.25.2012.05.02.18.53.12
+        by mx.google.com with ESMTPS id os8sm3626799pbc.14.2012.05.02.18.52.58
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 02 May 2012 18:53:16 -0700 (PDT)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Thu, 03 May 2012 08:52:20 +0700
+        Wed, 02 May 2012 18:53:01 -0700 (PDT)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Thu, 03 May 2012 08:52:05 +0700
 X-Mailer: git-send-email 1.7.3.1.256.g2539c.dirty
 In-Reply-To: <1336009868-7411-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196883>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196884>
 
 =46rom: Ren=C3=A9 Scharfe <rene.scharfe@lsrfire.ath.cx>
 
-Write a data descriptor containing the CRC of the entry and its sizes
-after streaming it out.  For simplicity, do that only if we're storing
-files (option -0) for now.
-
-t5000 verifies output. t1050 makes sure the command always respects
-core.bigfilethreshold
+We only need size and compressed_size.
 
 Signed-off-by: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- archive-zip.c       |   90 +++++++++++++++++++++++++++++++++++++++++++=
-+-------
- t/t1050-large.sh    |    4 ++
- t/t5000-tar-tree.sh |    6 +++
- 3 files changed, 88 insertions(+), 12 deletions(-)
+ archive-zip.c |    8 +++-----
+ 1 files changed, 3 insertions(+), 5 deletions(-)
 
 diff --git a/archive-zip.c b/archive-zip.c
-index 678569a..1c6c39d 100644
+index 716cc42..400ba38 100644
 --- a/archive-zip.c
 +++ b/archive-zip.c
-@@ -3,6 +3,7 @@
-  */
- #include "cache.h"
- #include "archive.h"
-+#include "streaming.h"
-=20
- static int zip_date;
- static int zip_time;
-@@ -15,6 +16,7 @@ static unsigned int zip_dir_offset;
- static unsigned int zip_dir_entries;
-=20
- #define ZIP_DIRECTORY_MIN_SIZE	(1024 * 1024)
-+#define ZIP_STREAM (8)
-=20
- struct zip_local_header {
- 	unsigned char magic[4];
-@@ -31,6 +33,14 @@ struct zip_local_header {
- 	unsigned char _end[1];
- };
-=20
-+struct zip_data_desc {
-+	unsigned char magic[4];
-+	unsigned char crc32[4];
-+	unsigned char compressed_size[4];
-+	unsigned char size[4];
-+	unsigned char _end[1];
-+};
-+
- struct zip_dir_header {
- 	unsigned char magic[4];
- 	unsigned char creator_version[2];
-@@ -70,6 +80,7 @@ struct zip_dir_trailer {
-  * we're interested in.
-  */
- #define ZIP_LOCAL_HEADER_SIZE	offsetof(struct zip_local_header, _end)
-+#define ZIP_DATA_DESC_SIZE	offsetof(struct zip_data_desc, _end)
- #define ZIP_DIR_HEADER_SIZE	offsetof(struct zip_dir_header, _end)
- #define ZIP_DIR_TRAILER_SIZE	offsetof(struct zip_dir_trailer, _end)
-=20
-@@ -120,6 +131,19 @@ static void *zlib_deflate(void *data, unsigned lon=
-g size,
- 	return buffer;
- }
-=20
-+static void write_zip_data_desc(unsigned long size,
-+				unsigned long compressed_size,
-+				unsigned long crc)
-+{
-+	struct zip_data_desc trailer;
-+
-+	copy_le32(trailer.magic, 0x08074b50);
-+	copy_le32(trailer.crc32, crc);
-+	copy_le32(trailer.compressed_size, compressed_size);
-+	copy_le32(trailer.size, size);
-+	write_or_die(1, &trailer, ZIP_DATA_DESC_SIZE);
-+}
-+
- static void set_zip_dir_data_desc(struct zip_dir_header *header,
- 				  unsigned long size,
- 				  unsigned long compressed_size,
-@@ -140,6 +164,8 @@ static void set_zip_header_data_desc(struct zip_loc=
-al_header *header,
- 	copy_le32(header->size, size);
- }
-=20
-+#define STREAM_BUFFER_SIZE (1024 * 16)
-+
- static int write_zip_entry(struct archiver_args *args,
- 			   const unsigned char *sha1,
- 			   const char *path, size_t pathlen,
-@@ -155,6 +181,8 @@ static int write_zip_entry(struct archiver_args *ar=
+@@ -129,7 +129,6 @@ static int write_zip_entry(struct archiver_args *ar=
 gs,
- 	unsigned char *out;
- 	void *deflated =3D NULL;
- 	void *buffer;
-+	struct git_istream *stream =3D NULL;
-+	unsigned long flags =3D 0;
- 	unsigned long size;
-=20
- 	crc =3D crc32(0, NULL, 0);
-@@ -173,25 +201,38 @@ static int write_zip_entry(struct archiver_args *=
-args,
+ 	struct zip_dir_header dirent;
+ 	unsigned long attr2;
+ 	unsigned long compressed_size;
+-	unsigned long uncompressed_size;
+ 	unsigned long crc;
+ 	unsigned long direntsize;
+ 	int method;
+@@ -149,7 +148,7 @@ static int write_zip_entry(struct archiver_args *ar=
+gs,
+ 		method =3D 0;
+ 		attr2 =3D 16;
+ 		out =3D NULL;
+-		uncompressed_size =3D 0;
++		size =3D 0;
+ 		compressed_size =3D 0;
  		buffer =3D NULL;
  		size =3D 0;
- 	} else if (S_ISREG(mode) || S_ISLNK(mode)) {
--		enum object_type type;
--		buffer =3D sha1_file_to_archive(args, path, sha1, mode, &type, &size=
-);
--		if (!buffer)
--			return error("cannot read %s", sha1_to_hex(sha1));
-+		enum object_type type =3D sha1_object_info(sha1, &size);
-=20
- 		method =3D 0;
- 		attr2 =3D S_ISLNK(mode) ? ((mode | 0777) << 16) :
- 			(mode & 0111) ? ((mode) << 16) : 0;
--		if (S_ISREG(mode) && args->compression_level !=3D 0)
-+		if (S_ISREG(mode) && args->compression_level !=3D 0 && size > 0)
+@@ -166,7 +165,6 @@ static int write_zip_entry(struct archiver_args *ar=
+gs,
  			method =3D 8;
--		crc =3D crc32(crc, buffer, size);
--		out =3D buffer;
+ 		crc =3D crc32(crc, buffer, size);
+ 		out =3D buffer;
+-		uncompressed_size =3D size;
  		compressed_size =3D size;
-+
-+		if (S_ISREG(mode) && type =3D=3D OBJ_BLOB && !args->convert &&
-+		    size > big_file_threshold && method =3D=3D 0) {
-+			stream =3D open_istream(sha1, &type, &size, NULL);
-+			if (!stream)
-+				return error("cannot stream blob %s",
-+					     sha1_to_hex(sha1));
-+			flags |=3D ZIP_STREAM;
-+			out =3D buffer =3D NULL;
-+		} else {
-+			buffer =3D sha1_file_to_archive(args, path, sha1, mode,
-+						      &type, &size);
-+			if (!buffer)
-+				return error("cannot read %s",
-+					     sha1_to_hex(sha1));
-+			crc =3D crc32(crc, buffer, size);
-+			out =3D buffer;
-+		}
  	} else {
  		return error("unsupported file mode: 0%o (SHA1: %s)", mode,
- 				sha1_to_hex(sha1));
- 	}
-=20
--	if (method =3D=3D 8) {
-+	if (buffer && method =3D=3D 8) {
- 		deflated =3D zlib_deflate(buffer, size, args->compression_level,
- 				&compressed_size);
- 		if (deflated && compressed_size - 6 < size) {
-@@ -216,7 +257,7 @@ static int write_zip_entry(struct archiver_args *ar=
+@@ -204,7 +202,7 @@ static int write_zip_entry(struct archiver_args *ar=
 gs,
- 	copy_le16(dirent.creator_version,
- 		S_ISLNK(mode) || (S_ISREG(mode) && (mode & 0111)) ? 0x0317 : 0);
- 	copy_le16(dirent.version, 10);
--	copy_le16(dirent.flags, 0);
-+	copy_le16(dirent.flags, flags);
- 	copy_le16(dirent.compression_method, method);
- 	copy_le16(dirent.mtime, zip_time);
  	copy_le16(dirent.mdate, zip_date);
-@@ -231,18 +272,43 @@ static int write_zip_entry(struct archiver_args *=
-args,
-=20
- 	copy_le32(header.magic, 0x04034b50);
- 	copy_le16(header.version, 10);
--	copy_le16(header.flags, 0);
-+	copy_le16(header.flags, flags);
- 	copy_le16(header.compression_method, method);
- 	copy_le16(header.mtime, zip_time);
+ 	copy_le32(dirent.crc32, crc);
+ 	copy_le32(dirent.compressed_size, compressed_size);
+-	copy_le32(dirent.size, uncompressed_size);
++	copy_le32(dirent.size, size);
+ 	copy_le16(dirent.filename_length, pathlen);
+ 	copy_le16(dirent.extra_length, 0);
+ 	copy_le16(dirent.comment_length, 0);
+@@ -226,7 +224,7 @@ static int write_zip_entry(struct archiver_args *ar=
+gs,
  	copy_le16(header.mdate, zip_date);
--	set_zip_header_data_desc(&header, size, compressed_size, crc);
-+	if (flags & ZIP_STREAM)
-+		set_zip_header_data_desc(&header, 0, 0, 0);
-+	else
-+		set_zip_header_data_desc(&header, size, compressed_size, crc);
+ 	copy_le32(header.crc32, crc);
+ 	copy_le32(header.compressed_size, compressed_size);
+-	copy_le32(header.size, uncompressed_size);
++	copy_le32(header.size, size);
  	copy_le16(header.filename_length, pathlen);
  	copy_le16(header.extra_length, 0);
  	write_or_die(1, &header, ZIP_LOCAL_HEADER_SIZE);
- 	zip_offset +=3D ZIP_LOCAL_HEADER_SIZE;
- 	write_or_die(1, path, pathlen);
- 	zip_offset +=3D pathlen;
--	if (compressed_size > 0) {
-+	if (stream && method =3D=3D 0) {
-+		unsigned char buf[STREAM_BUFFER_SIZE];
-+		ssize_t readlen;
-+
-+		for (;;) {
-+			readlen =3D read_istream(stream, buf, sizeof(buf));
-+			if (readlen <=3D 0)
-+				break;
-+			crc =3D crc32(crc, buf, readlen);
-+			write_or_die(1, buf, readlen);
-+		}
-+		close_istream(stream);
-+		if (readlen)
-+			return readlen;
-+
-+		compressed_size =3D size;
-+		zip_offset +=3D compressed_size;
-+
-+		write_zip_data_desc(size, compressed_size, crc);
-+		zip_offset +=3D ZIP_DATA_DESC_SIZE;
-+
-+		set_zip_dir_data_desc(&dirent, size, compressed_size, crc);
-+	} else if (compressed_size > 0) {
- 		write_or_die(1, out, compressed_size);
- 		zip_offset +=3D compressed_size;
- 	}
-diff --git a/t/t1050-large.sh b/t/t1050-large.sh
-index fe47554..9db54b5 100755
---- a/t/t1050-large.sh
-+++ b/t/t1050-large.sh
-@@ -138,4 +138,8 @@ test_expect_success 'tar achiving' '
- 	git archive --format=3Dtar HEAD >/dev/null
- '
-=20
-+test_expect_success 'zip achiving, store only' '
-+	git archive --format=3Dzip -0 HEAD >/dev/null
-+'
-+
- test_done
-diff --git a/t/t5000-tar-tree.sh b/t/t5000-tar-tree.sh
-index d9b997f..3b54c38 100755
---- a/t/t5000-tar-tree.sh
-+++ b/t/t5000-tar-tree.sh
-@@ -244,6 +244,12 @@ test_expect_success UNZIP \
-     'validate file contents with prefix' \
-     'diff -r a e/prefix/a'
-=20
-+test_expect_success UNZIP 'git archive -0 --format=3Dzip on large file=
-s' '
-+    test_config core.bigfilethreshold 1 &&
-+    git archive -0 --format=3Dzip HEAD >large.zip &&
-+    (mkdir large && cd large && $UNZIP ../large.zip)
-+'
-+
- test_expect_success \
-     'git archive --list outside of a git repo' \
-     'GIT_DIR=3Dsome/non-existing/directory git archive --list'
 --=20
 1.7.3.1.256.g2539c.dirty
