@@ -1,76 +1,73 @@
-From: Florian Achleitner <florian.achleitner2.6.31@gmail.com>
-Subject: [PATCH] Update Documentation/git-config to reflect --local option.
-Date: Fri, 04 May 2012 00:44:21 +0200
-Message-ID: <1754870.q6d2rgDqBT@flobuntu>
+From: merlyn@stonehenge.com (Randal L. Schwartz)
+Subject: Re: Newbie grief
+Date: Thu, 03 May 2012 15:53:29 -0700
+Message-ID: <861un0j2qe.fsf@red.stonehenge.com>
+References: <4F9F128C.5020304@palm.com>
+	<201204302331.q3UNVo7o032303@no.baka.org> <4F9F3919.6060805@palm.com>
+	<CAMK1S_jwVsyKrGoL5uVAiuRrOa8bz79-DAueBmHZE2k=PpcJ2Q@mail.gmail.com>
+	<20120501111415.GD5769@thunk.org>
+	<CAMK1S_jN_WdZF4W4szzyJqLfC3FmnhKQ65XQiD-JS_jxwSm8_g@mail.gmail.com>
+	<4FA02830.3040407@palm.com> <86havzoi8h.fsf@red.stonehenge.com>
+	<4FA04D02.6090702@palm.com> <86mx5rmx32.fsf@red.stonehenge.com>
+	<7v62cf8v2d.fsf@alter.siamese.dyndns.org> <4FA054BA.80601@palm.com>
+	<86ipgfmw05.fsf@red.stonehenge.com> <4FA05C66.2060608@palm.com>
+	<CAMOZ1BuiznhrzEOHe0N+uu=mLEw5wWTQyDpnwG8PuF1f_aNaXw@mail.gmail.com>
+	<7vipgddl9m.fsf@alter.siamese.dyndns.org> <4FA30A68.5010002@palm.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7Bit
-Cc: davidbarr@google.com, florian.achleitner.2.6.31@gmail.com,
-	jrnieder@gmail.com
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 04 00:45:32 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Michael Witten <mfwitten@gmail.com>,
+	Sitaram Chamarty <sitaramc@gmail.com>,
+	"Ted Ts'o" <tytso@mit.edu>, Seth Robertson <in-gitvger@baka.org>,
+	"git\@vger.kernel.org" <git@vger.kernel.org>
+To: Rich Pixley <rich.pixley@palm.com>
+X-From: git-owner@vger.kernel.org Fri May 04 00:53:38 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SQ4m5-0003Ti-Iq
-	for gcvg-git-2@plane.gmane.org; Fri, 04 May 2012 00:45:25 +0200
+	id 1SQ4u1-0001CC-3M
+	for gcvg-git-2@plane.gmane.org; Fri, 04 May 2012 00:53:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758951Ab2ECWpU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 May 2012 18:45:20 -0400
-Received: from mailrelay.tu-graz.ac.at ([129.27.2.202]:20428 "EHLO
-	mailrelay.tugraz.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757091Ab2ECWpT (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 May 2012 18:45:19 -0400
-Received: from flobuntu.localnet (m-149.vc-graz.ac.at [193.170.224.149])
-	(authenticated bits=0)
-	by mailrelay1.tugraz.at (8.14.4/8.14.4) with ESMTP id q43MjDqV023163
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Fri, 4 May 2012 00:45:13 +0200 (CEST)
-User-Agent: KMail/4.8.2 (Linux/3.2.0-24-generic; KDE/4.8.2; x86_64; ; )
-X-TUG-Backscatter-control: qyH/vN2riZ/masrHmZoJqQ
-X-Spam-Scanner: SpamAssassin 3.003000 
-X-Spam-Score-relay: 0.3
-X-Scanned-By: MIMEDefang 2.70 on 129.27.10.18
+	id S1756957Ab2ECWxc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 May 2012 18:53:32 -0400
+Received: from lax-gw16.mailroute.net ([199.89.0.116]:48386 "EHLO
+	gw16.lax01.mailroute.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756630Ab2ECWxb (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 May 2012 18:53:31 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by gw16.lax01.mailroute.net (Postfix) with ESMTP id 2FD7A5BC1DB;
+	Thu,  3 May 2012 22:53:31 +0000 (GMT)
+X-Virus-Scanned: by MailRoute
+Received: from gw16.lax01.mailroute.net ([199.89.0.116])
+	by localhost (gw16.lax01.mailroute.net.mailroute.net [127.0.0.1]) (mroute_mailscanner, port 10026)
+	with LMTP id Y4gPMc-Xrhrw; Thu,  3 May 2012 22:53:30 +0000 (GMT)
+Received: from red.stonehenge.com (red.stonehenge.com [208.79.95.2])
+	by gw16.lax01.mailroute.net (Postfix) with ESMTP id 282AE5BC10D;
+	Thu,  3 May 2012 22:53:30 +0000 (GMT)
+Received: by red.stonehenge.com (Postfix, from userid 1001)
+	id 3FE281866; Thu,  3 May 2012 15:53:29 -0700 (PDT)
+x-mayan-date: Long count = 12.19.19.6.8; tzolkin = 6 Lamat; haab = 11 Uo
+In-Reply-To: <4FA30A68.5010002@palm.com> (Rich Pixley's message of "Thu, 03
+	May 2012 15:44:56 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.4 (berkeley-unix)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196972>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196973>
 
-Describe config file selection in git-config.
-While the usage message of git-config shows --local,
-the documentation page did not contain anything about that.
+>>>>> "Rich" == Rich Pixley <rich.pixley@palm.com> writes:
 
-Signed-off-by: Florian Achleitner <florian.achleitner.2.6.31@gmail.com>
----
-This was pointed out in http://thread.gmane.org/gmane.comp.version-
-control.git/196326
+Rich> Git clearly doesn't have much of that value in the community
+Rich> culture.
 
- Documentation/git-config.txt |    7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+You don't know how wrong you are.  Good luck getting help after
+disrespecting the very people who *are* trying to help you.
 
-diff --git a/Documentation/git-config.txt b/Documentation/git-config.txt
-index 81b0398..bda8bbb 100644
---- a/Documentation/git-config.txt
-+++ b/Documentation/git-config.txt
-@@ -44,10 +44,13 @@ a "true" or "false" string for bool), or '--path', which 
-does some
- path expansion (see '--path' below).  If no type specifier is passed, no
- checks or transformations are performed on the value.
- 
--The file-option can be one of '--system', '--global' or '--file'
-+The file-option can be one of '--system', '--global', '--local', or '--file'
- which specify where the values will be read from or written to.
- The default is to assume the config file of the current repository,
--.git/config unless defined otherwise with GIT_DIR and GIT_CONFIG
-+.git/config unless defined otherwise with GIT_DIR and GIT_CONFIG.
-+For read commands like '--get' the default is to search local, global, and
-+system config files (in this order) for the requested value and stop after
-+the first finding.
- (see <<FILES>>).
- 
- This command will fail (with exit code ret) if:
 -- 
-1.7.9.5
+Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 0095
+<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
+Smalltalk/Perl/Unix consulting, Technical writing, Comedy, etc. etc.
+See http://methodsandmessages.posterous.com/ for Smalltalk discussion
