@@ -1,61 +1,58 @@
-From: Rich Pixley <rich.pixley@palm.com>
-Subject: Re: Newbie grief
-Date: Thu, 03 May 2012 11:31:52 -0700
-Message-ID: <4FA2CF18.5090509@palm.com>
-References: <4F9F128C.5020304@palm.com> <201204302331.q3UNVo7o032303@no.baka.org>	<4F9F3919.6060805@palm.com> <CAMK1S_jwVsyKrGoL5uVAiuRrOa8bz79-DAueBmHZE2k=PpcJ2Q@mail.gmail.com> <20120501111415.GD5769@thunk.org> <CAMK1S_jN_WdZF4W4szzyJqLfC3FmnhKQ65XQiD-JS_jxwSm8_g@mail.gmail.com> <4FA02830.3040407@palm.com>	<86havzoi8h.fsf@red.stonehenge.com> <4FA04D02.6090702@palm.com>	<86mx5rmx32.fsf@red.stonehenge.com> <4FA055D0.7040102@palm.com> <CAMP44s2h4EY3Qu2+Ys_n3TUzmyykMkG-wMoqmKg5hjg24JQ+bg@mail.gmail.com>
+From: Ronan Keryell <Ronan.Keryell@hpc-project.com>
+Subject: Re: Index format v5
+Date: Thu, 03 May 2012 11:21:22 -0700
+Message-ID: <87ehr15dnh.fsf@an-dro.info.enstb.org>
+References: <CALgYhfMKdbv8TiT4ALDSvD3pSXHEPLWHM09DxYnRmRdBWRjh8Q@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "Randal L. Schwartz" <merlyn@stonehenge.com>,
-	Sitaram Chamarty <sitaramc@gmail.com>,
-	"Ted Ts'o" <tytso@mit.edu>, Seth Robertson <in-gitvger@baka.org>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Felipe Contreras <felipe.contreras@gmail.com>
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Thomas Gummerer <t.gummerer@gmail.com>
 X-From: git-owner@vger.kernel.org Thu May 03 20:32:01 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SQ0op-0007Gc-LV
-	for gcvg-git-2@plane.gmane.org; Thu, 03 May 2012 20:32:00 +0200
+	id 1SQ0op-0007Gc-3Q
+	for gcvg-git-2@plane.gmane.org; Thu, 03 May 2012 20:31:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754943Ab2ECSby (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	id S1757942Ab2ECSbz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 May 2012 14:31:55 -0400
+Received: from minou.info.enstb.org ([193.50.97.146]:49881 "EHLO
+	minou.info.enstb.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753863Ab2ECSby (ORCPT <rfc822;git@vger.kernel.org>);
 	Thu, 3 May 2012 14:31:54 -0400
-Received: from smtp-relay2.palm.com ([64.28.152.243]:24523 "EHLO
-	smtp-relay2.palm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754345Ab2ECSbx (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 May 2012 14:31:53 -0400
-X-IronPort-AV: E=Sophos;i="4.75,526,1330934400"; 
-   d="scan'208";a="13293819"
-Received: from unknown (HELO ushqusdns4.palm.com) ([148.92.223.164])
-  by smtp-relay2.palm.com with ESMTP; 03 May 2012 11:31:53 -0700
-Received: from fuji.noir.com ([10.100.2.12])
-	by ushqusdns4.palm.com (8.14.4/8.14.4) with ESMTP id q43IVq5H000901;
-	Thu, 3 May 2012 11:31:52 -0700
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.7; rv:12.0) Gecko/20120428 Thunderbird/12.0.1
-In-Reply-To: <CAMP44s2h4EY3Qu2+Ys_n3TUzmyykMkG-wMoqmKg5hjg24JQ+bg@mail.gmail.com>
+X-Greylist: delayed 626 seconds by postgrey-1.27 at vger.kernel.org; Thu, 03 May 2012 14:31:53 EDT
+Received: from an-dro.info.enstb.org (localhost [127.0.0.1])
+	by minou.info.enstb.org (8.14.4/8.14.4/Debian-2) with ESMTP id q43ILMRp023885;
+	Thu, 3 May 2012 20:21:24 +0200
+In-Reply-To: <CALgYhfMKdbv8TiT4ALDSvD3pSXHEPLWHM09DxYnRmRdBWRjh8Q@mail.gmail.com>
+	(Thomas Gummerer's message of "Thu, 3 May 2012 19:25:12 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196930>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196931>
 
-On 5/1/12 16:30 , Felipe Contreras wrote:
-> On Tue, May 1, 2012 at 11:29 PM, Rich Pixley<rich.pixley@palm.com>  wrote:
->
->> I'm not asking for anything new.  I'm asking for something that's as capable
->> as what we've had for years now.
-> So you are basically saying; "I want to do X *exactly* like I do it in
-> mercurial, and that's not easy in git".
-Well, no, I'm saying that I want to do it at all, and that's not easy in 
-git.
-> Well, duh, that's because git is not mercurial. Why don't you do it
-> the _git way_? That would be easy.
-That would be great, except that it's not easy.  It's a mess.
+>>>>> On Thu, 3 May 2012 19:25:12 +0200, Thomas Gummerer <t.gummerer@gmail.com> said:
 
-I do have a partial solution now, thanks to the list.  It's just a bit 
-messier and non-intuitive since I have to work around the limitations of 
-git.
+    Thomas> I have been drafting the Version 5 of the index format over
+    Thomas> the past few days with the help of Thomas Rast, Michael
+    Thomas> Haggerty, cmn and barrbrain on IRC. It will save with prefix
+    Thomas> compression on the path, and using a crc32 over the stat
+    Thomas> data, instead of the full data, since it is only used for
+    Thomas> checking if the file is changed. (Thanks Michael Haggerty
+    Thomas> for this hint. Unless we are missing something this will
+    Thomas> save another ~4 MB on the Webkit index.
 
---rich
+Great!
+
+But I wonder whether it may not worth to investigate a 64-bit version for
+the offsets and so on, just in case...
+-- 
+  Ronan KERYELL                            |\/  Phone:  +1 408 658 9453
+  Wild Systems / HPC Project               |/)
+  5201 Great America Parkway, Suite 320    K    Ronan.Keryell@wild-systems.com
+  Santa Clara, CA 95054                    |\   skype:keryell
+  USA                                      | \  http://wild-systems.com
