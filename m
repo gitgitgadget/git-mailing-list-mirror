@@ -1,69 +1,111 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Index format v5
-Date: Thu, 03 May 2012 12:03:52 -0700
-Message-ID: <7v8vh9f5nr.fsf@alter.siamese.dyndns.org>
-References: <CALgYhfMKdbv8TiT4ALDSvD3pSXHEPLWHM09DxYnRmRdBWRjh8Q@mail.gmail.com>
- <87obq5p1t0.fsf@thomas.inf.ethz.ch>
+From: Nathan Gray <n8gray@n8gray.org>
+Subject: Re: Newbie grief
+Date: Thu, 3 May 2012 12:09:22 -0700
+Message-ID: <CA+7g9JzZ36RgsniT4UN0Zk+z1ohZYW5u+0AoGMjJZqsoBjqvqA@mail.gmail.com>
+References: <4F9F128C.5020304@palm.com>
+	<201204302331.q3UNVo7o032303@no.baka.org>
+	<4F9F3919.6060805@palm.com>
+	<CAMK1S_jwVsyKrGoL5uVAiuRrOa8bz79-DAueBmHZE2k=PpcJ2Q@mail.gmail.com>
+	<20120501111415.GD5769@thunk.org>
+	<CAMK1S_jN_WdZF4W4szzyJqLfC3FmnhKQ65XQiD-JS_jxwSm8_g@mail.gmail.com>
+	<4FA02830.3040407@palm.com>
+	<86havzoi8h.fsf@red.stonehenge.com>
+	<4FA04D02.6090702@palm.com>
+	<86mx5rmx32.fsf@red.stonehenge.com>
+	<4FA055D0.7040102@palm.com>
+	<86aa1rmvhb.fsf@red.stonehenge.com>
+	<4FA05E9F.9090709@palm.com>
+	<CAJsNXTmo1B86nSm7u923jJuGX0zajz3iqVu-onANMN-5BE5DfQ@mail.gmail.com>
+	<4FA2D1D7.3020807@palm.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Thomas Gummerer <t.gummerer@gmail.com>, <git@vger.kernel.org>,
-	<gitster@pobox.com>, <mhagger@alum.mit.edu>, <peff@peff.net>,
-	<spearce@spearce.org>, <davidbarr@google.com>
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Thu May 03 21:04:01 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: PJ Weisberg <pj@irregularexpressions.net>,
+	"Randal L. Schwartz" <merlyn@stonehenge.com>,
+	Sitaram Chamarty <sitaramc@gmail.com>,
+	"Ted Ts'o" <tytso@mit.edu>, Seth Robertson <in-gitvger@baka.org>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Rich Pixley <rich.pixley@palm.com>
+X-From: git-owner@vger.kernel.org Thu May 03 21:09:34 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SQ1Jo-00016e-Ju
-	for gcvg-git-2@plane.gmane.org; Thu, 03 May 2012 21:04:00 +0200
+	id 1SQ1P7-0005qM-3U
+	for gcvg-git-2@plane.gmane.org; Thu, 03 May 2012 21:09:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758253Ab2ECTD4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 May 2012 15:03:56 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:46900 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758210Ab2ECTDz (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 May 2012 15:03:55 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3943D78BF;
-	Thu,  3 May 2012 15:03:55 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=5y+oELs+KdEcUZBRt6jA8RynHaE=; b=sh/3oH
-	N99fwEJoBI4GVKlgwwf3Y3EtWKm6SDqTgMgCDiSw/XfXY4JK5AJCfIyx4qbIR2nJ
-	/OFqAD8+9ZaP6eLGhMNwZCmAD2iNcwtQBKrINSDz/Uz8PhE5m3IHhY7RJhBfTORI
-	owgJ51PtQw+x0BRdXDPVY4hp9vxYDiX5w3e2I=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=YFpfjnl+MhJTr3BYn8XjXkrvwdXZB5U/
-	3RJOInLDMDljl0gDQTx8GH2cwBvfVVbdIaysSXAUnHtl6a9K1worhrmJUc0THiRK
-	9NyBZGmBGvfvz5kYgre8PlR8gQBMrHNr/u+tTAnEpRHJ1C9194ZlyU/EoHvWt1wP
-	sQmhTMPvOeA=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2EB0978BE;
-	Thu,  3 May 2012 15:03:55 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id BDE3878BA; Thu,  3 May 2012
- 15:03:53 -0400 (EDT)
-In-Reply-To: <87obq5p1t0.fsf@thomas.inf.ethz.ch> (Thomas Rast's message of
- "Thu, 3 May 2012 20:16:59 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: B9FDA7BC-9552-11E1-98D9-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755824Ab2ECTJY convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 3 May 2012 15:09:24 -0400
+Received: from mail-bk0-f46.google.com ([209.85.214.46]:62553 "EHLO
+	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754690Ab2ECTJX convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 3 May 2012 15:09:23 -0400
+Received: by bkcji2 with SMTP id ji2so1657785bkc.19
+        for <git@vger.kernel.org>; Thu, 03 May 2012 12:09:22 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:x-originating-ip:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding:x-gm-message-state;
+        bh=mUuLkCSd1+zWqAzvHWWHWAmhVj710U7X677VJ2Fs5UA=;
+        b=BN/xEDdRZ/40NZMejNVMT+c2rFupYpc5AB6oN1LCUud4AAcU3Vlj4xsA/h6pY27RM3
+         LsTAfv575d+aV0uWTqQd5VSK1cRty38kVU6akD4vMc8S6dholNrJ0pTUzIkutrzz3fzo
+         StHVGCETL2LkZi80FwyNhrxsDh35QbHGLTdayJPenkUMz1buJsbRXQA44jF1r92krPSg
+         uKNZIPuwSAkR3N1ptLGuvjbDy7EU9oqV+nfTUqPzirHBTTvxyCJTxMTc8nQwJugd5YoV
+         JS81g457xnpM4jTfRyyp4ERdh0VZqDnBh//gc2w+p4/zXwkf63fpWLr39VtK7xDi3Pki
+         vKBA==
+Received: by 10.204.153.15 with SMTP id i15mr1154169bkw.74.1336072162112; Thu,
+ 03 May 2012 12:09:22 -0700 (PDT)
+Received: by 10.205.42.6 with HTTP; Thu, 3 May 2012 12:09:22 -0700 (PDT)
+X-Originating-IP: [184.182.186.242]
+In-Reply-To: <4FA2D1D7.3020807@palm.com>
+X-Gm-Message-State: ALoCoQl7B9a/X647s6FG/l1EhIjjsGu9zxvW4PXqM24tSb+1tT8f/sVi3LB0ITZoYslRSOm4fCZq
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196942>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196943>
 
-Thomas Rast <trast@student.ethz.ch> writes:
+On Thu, May 3, 2012 at 11:43 AM, Rich Pixley <rich.pixley@palm.com> wro=
+te:
+>
+> In hg, I don't have to think about how many other branches or reposit=
+ories
+> there might be. =A0I don't have to track where the changes are. =A0An=
+d I don't
+> have to do anything to add another repository to the mix or to remove=
+ one.
+> =A0Trivial merges are trivial. =A0The view from any repository is ide=
+ntical, not
+> just symmetric. =A0The things I want to do are all simple commands. =A0=
+Pull from
+> the cache, merge if necessary, do some work, push to the cache. =A0Re=
+peat as
+> necessary since there will be numerous collisions and merges since I'=
+m
+> working on multiple machines concurrently. =A0And eventually, push to=
+ central
+> server.
 
-> So what's wrong in this thinking?
+Wow, this hg sounds great!  You should use that!
 
-We tolerate giving occasional false positive "Yes" to "Has this changed?",
-but do not allow false negative "No".  So the value st_{ino,dev,uid,gid}
-gives us is strictly "these are not likely to change, but if even a single
-bit in them change, we need to suspect that it may have changed."  The
-primary field that protect us is mtime, and all the rest are more or less
-belt-and-suspender safety.
+All kidding aside, what you're talking about are design decisions
+based on preferred workflows.  The workflow you're describing may seem
+obvious and fantastic to you, but it sounds absurdly complicated to
+me.  You hate the way git handles remote branches.  I think it's
+incredibly sensible for a *truly* distributed VCS to enforce
+location-based namespacing.  Basically, we have differences of
+opinion.  Since your opinion seems to be that hg has done everything
+right and git has done everything wrong, why are you using git?
+
+Cheers,
+-n8
+
+--=20
+HexaLex: A New Angle on Crossword Games for iPhone and iPod Touch
+http://hexalex.com
+On The App Store: http://bit.ly/8Mj1CU
+On Facebook: http://bit.ly/9MIJiV
+On Twitter: http://twitter.com/hexalexgame
+http://n8gray.org
