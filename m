@@ -1,71 +1,76 @@
-From: Rich Pixley <rich.pixley@palm.com>
-Subject: Re: Newbie grief
-Date: Thu, 03 May 2012 15:44:56 -0700
-Message-ID: <4FA30A68.5010002@palm.com>
-References: <4F9F128C.5020304@palm.com> <201204302331.q3UNVo7o032303@no.baka.org> <4F9F3919.6060805@palm.com> <CAMK1S_jwVsyKrGoL5uVAiuRrOa8bz79-DAueBmHZE2k=PpcJ2Q@mail.gmail.com> <20120501111415.GD5769@thunk.org> <CAMK1S_jN_WdZF4W4szzyJqLfC3FmnhKQ65XQiD-JS_jxwSm8_g@mail.gmail.com> <4FA02830.3040407@palm.com> <86havzoi8h.fsf@red.stonehenge.com> <4FA04D02.6090702@palm.com> <86mx5rmx32.fsf@red.stonehenge.com> <7v62cf8v2d.fsf@alter.siamese.dyndns.org> <4FA054BA.80601@palm.com> <86ipgfmw05.fsf@red.stonehenge.com> <4FA05C66.2060608@palm.com> <CAMOZ1BuiznhrzEOHe0N+uu=mLEw5wWTQyDpnwG8PuF1f_aNaXw@mail.gmail.com> <7vipgddl9m.fsf@alter.siamese.dyndns.org>
+From: Florian Achleitner <florian.achleitner2.6.31@gmail.com>
+Subject: [PATCH] Update Documentation/git-config to reflect --local option.
+Date: Fri, 04 May 2012 00:44:21 +0200
+Message-ID: <1754870.q6d2rgDqBT@flobuntu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Michael Witten <mfwitten@gmail.com>,
-	"Randal L. Schwartz" <merlyn@stonehenge.com>,
-	Sitaram Chamarty <sitaramc@gmail.com>,
-	"Ted Ts'o" <tytso@mit.edu>, Seth Robertson <in-gitvger@baka.org>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri May 04 00:45:10 2012
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7Bit
+Cc: davidbarr@google.com, florian.achleitner.2.6.31@gmail.com,
+	jrnieder@gmail.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri May 04 00:45:32 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SQ4lm-0003ED-IU
-	for gcvg-git-2@plane.gmane.org; Fri, 04 May 2012 00:45:06 +0200
+	id 1SQ4m5-0003Ti-Iq
+	for gcvg-git-2@plane.gmane.org; Fri, 04 May 2012 00:45:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758948Ab2ECWo7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 May 2012 18:44:59 -0400
-Received: from smtp-relay2.palm.com ([64.28.152.243]:35355 "EHLO
-	smtp-relay2.palm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757091Ab2ECWo7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 May 2012 18:44:59 -0400
-X-IronPort-AV: E=Sophos;i="4.75,527,1330934400"; 
-   d="scan'208";a="13299083"
-Received: from unknown (HELO ushqusdns3.palm.com) ([148.92.223.90])
-  by smtp-relay2.palm.com with ESMTP; 03 May 2012 15:44:58 -0700
-Received: from joso.noir.com ([10.100.2.3])
-	by ushqusdns3.palm.com (8.14.4/8.14.4) with ESMTP id q43MiuGM007544;
-	Thu, 3 May 2012 15:44:57 -0700
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.7; rv:12.0) Gecko/20120420 Thunderbird/12.0
-In-Reply-To: <7vipgddl9m.fsf@alter.siamese.dyndns.org>
+	id S1758951Ab2ECWpU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 May 2012 18:45:20 -0400
+Received: from mailrelay.tu-graz.ac.at ([129.27.2.202]:20428 "EHLO
+	mailrelay.tugraz.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757091Ab2ECWpT (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 May 2012 18:45:19 -0400
+Received: from flobuntu.localnet (m-149.vc-graz.ac.at [193.170.224.149])
+	(authenticated bits=0)
+	by mailrelay1.tugraz.at (8.14.4/8.14.4) with ESMTP id q43MjDqV023163
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Fri, 4 May 2012 00:45:13 +0200 (CEST)
+User-Agent: KMail/4.8.2 (Linux/3.2.0-24-generic; KDE/4.8.2; x86_64; ; )
+X-TUG-Backscatter-control: qyH/vN2riZ/masrHmZoJqQ
+X-Spam-Scanner: SpamAssassin 3.003000 
+X-Spam-Score-relay: 0.3
+X-Scanned-By: MIMEDefang 2.70 on 129.27.10.18
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196971>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196972>
 
-On 5/3/12 14:09 , Junio C Hamano wrote:
-> Michael Witten<mfwitten@gmail.com>  writes:
->
->> (Note, though, that Junio has done a laudable job of keeping the
->> whole experiment going strong).
->
-> You are giving me too much credit, and at the same time insulting the
-> people who polished Git enough to suit their workflow.  To them, the tool
-> has past "experiment" stage long time ago.  They found what was lacking
-> and what would help the need in their workflow.  I just have helped them
-> shape their ideas into a coherent whole.
->
-> That does not mean there is nothing missing, still appears experimental,
-> or inconsistent in the parts of the system that these people do not use
-> nor care about, and when you bring in people coming from different
-> background, they will notice the behaviour or default that do not match
-> their expectation.  They can do the usual "scratching own itches" thing
-> the same way to others who have done before. As nobody forces them to do
-> so, they can instead keep whining.  It's mostly their choice.
+Describe config file selection in git-config.
+While the usage message of git-config shows --local,
+the documentation page did not contain anything about that.
 
-Once you've been bitten, and learned to shy away from the sore spot, you 
-don't really have much motivation to change it.  The motivation to 
-change it would be to make it easier for the next person.
+Signed-off-by: Florian Achleitner <florian.achleitner.2.6.31@gmail.com>
+---
+This was pointed out in http://thread.gmane.org/gmane.comp.version-
+control.git/196326
 
-Git clearly doesn't have much of that value in the community culture.
+ Documentation/git-config.txt |    7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
---rich
+diff --git a/Documentation/git-config.txt b/Documentation/git-config.txt
+index 81b0398..bda8bbb 100644
+--- a/Documentation/git-config.txt
++++ b/Documentation/git-config.txt
+@@ -44,10 +44,13 @@ a "true" or "false" string for bool), or '--path', which 
+does some
+ path expansion (see '--path' below).  If no type specifier is passed, no
+ checks or transformations are performed on the value.
+ 
+-The file-option can be one of '--system', '--global' or '--file'
++The file-option can be one of '--system', '--global', '--local', or '--file'
+ which specify where the values will be read from or written to.
+ The default is to assume the config file of the current repository,
+-.git/config unless defined otherwise with GIT_DIR and GIT_CONFIG
++.git/config unless defined otherwise with GIT_DIR and GIT_CONFIG.
++For read commands like '--get' the default is to search local, global, and
++system config files (in this order) for the requested value and stop after
++the first finding.
+ (see <<FILES>>).
+ 
+ This command will fail (with exit code ret) if:
+-- 
+1.7.9.5
