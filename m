@@ -1,78 +1,105 @@
-From: Hallvard Breien Furuseth <h.b.furuseth@usit.uio.no>
-Subject: Re: Newbie grief
-Date: Fri, 04 May 2012 01:06:54 +0200
-Message-ID: <5846cb41607f384fb2bd7c46ea896f25@ulrik.uio.no>
-References: <4F9F128C.5020304@palm.com>
- <201204302331.q3UNVo7o032303@no.baka.org> <4F9F3919.6060805@palm.com>
- <CAMK1S_jwVsyKrGoL5uVAiuRrOa8bz79-DAueBmHZE2k=PpcJ2Q@mail.gmail.com>
- <20120501111415.GD5769@thunk.org>
- <CAMK1S_jN_WdZF4W4szzyJqLfC3FmnhKQ65XQiD-JS_jxwSm8_g@mail.gmail.com>
- <4FA02830.3040407@palm.com> <86havzoi8h.fsf@red.stonehenge.com>
- <4FA04D02.6090702@palm.com> <86mx5rmx32.fsf@red.stonehenge.com>
- <7v62cf8v2d.fsf@alter.siamese.dyndns.org> <4FA054BA.80601@palm.com>
- <86ipgfmw05.fsf@red.stonehenge.com> <4FA05C66.2060608@palm.com>
- <CAMOZ1BuiznhrzEOHe0N+uu=mLEw5wWTQyDpnwG8PuF1f_aNaXw@mail.gmail.com>
- <5ADB8D763B2B4CDA889052A1AA45F089@PhilipOakley>
- <67e635d73b952088917d197cbbd06684@ulrik.uio.no> <4FA2CC88.9000207@palm.com>
- <da7535728c9a0ad2a27e83078492efa0@ulrik.uio.no>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Update Documentation/git-config to reflect --local
+ option.
+Date: Thu, 03 May 2012 16:25:59 -0700
+Message-ID: <7vr4v0deyg.fsf@alter.siamese.dyndns.org>
+References: <1754870.q6d2rgDqBT@flobuntu>
 Mime-Version: 1.0
-Content-Type: text/plain;
- charset=UTF-8;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Rich Pixley <rich.pixley@palm.com>,
-	Philip Oakley <philipoakley@iee.org>,
-	Michael Witten <mfwitten@gmail.com>,
-	"Randal L. Schwartz" <merlyn@stonehenge.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Sitaram Chamarty <sitaramc@gmail.com>,
-	Ted Ts'o <tytso@mit.edu>, Seth Robertson <in-gitvger@baka.org>,
-	<git@vger.kernel.org>
-To: Hallvard Breien Furuseth <h.b.furuseth@usit.uio.no>
-X-From: git-owner@vger.kernel.org Fri May 04 01:07:11 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, davidbarr@google.com,
+	florian.achleitner.2.6.31@gmail.com, jrnieder@gmail.com
+To: Florian Achleitner <florian.achleitner2.6.31@gmail.com>
+X-From: git-owner@vger.kernel.org Fri May 04 01:26:11 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SQ577-0002ig-Mw
-	for gcvg-git-2@plane.gmane.org; Fri, 04 May 2012 01:07:10 +0200
+	id 1SQ5PW-00083T-Lu
+	for gcvg-git-2@plane.gmane.org; Fri, 04 May 2012 01:26:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758946Ab2ECXHD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 May 2012 19:07:03 -0400
-Received: from mail-out1.uio.no ([129.240.10.57]:38445 "EHLO mail-out1.uio.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757217Ab2ECXHC (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 May 2012 19:07:02 -0400
-Received: from mail-mx4.uio.no ([129.240.10.45])
-	by mail-out1.uio.no with esmtp (Exim 4.75)
-	(envelope-from <h.b.furuseth@usit.uio.no>)
-	id 1SQ56t-00042e-Bq; Fri, 04 May 2012 01:06:55 +0200
-Received: from w3prod-wm02.uio.no ([129.240.4.215] helo=webmail.uio.no)
-	by mail-mx4.uio.no with esmtpsa (TLSv1:AES256-SHA:256)
-	user hbf (Exim 4.76)
-	(envelope-from <h.b.furuseth@usit.uio.no>)
-	id 1SQ56s-00040B-VP; Fri, 04 May 2012 01:06:55 +0200
-Received: from c313D47C1.dhcp.bluecom.no ([193.71.61.49])
- by webmail.uio.no
- with HTTP (HTTP/1.1 POST); Fri, 04 May 2012 01:06:54 +0200
-In-Reply-To: <da7535728c9a0ad2a27e83078492efa0@ulrik.uio.no>
-X-Sender: h.b.furuseth@usit.uio.no
-User-Agent: Roundcube Webmail/0.4.2
-X-UiO-Ratelimit-Test: rcpts/h 19 msgs/h 2 sum rcpts/h 23 sum msgs/h 2 total rcpts 2401 max rcpts/h 19 ratelimit 0
-X-UiO-Spam-info: not spam, SpamAssassin (score=-5.0, required=5.0, autolearn=disabled, T_RP_MATCHES_RCVD=-0.01,UIO_MAIL_IS_INTERNAL=-5, uiobl=NO, uiouri=NO)
-X-UiO-Scanned: 1F73CEF5FFBF0EE8A7FA6914B8BE7DDBC737157A
-X-UiO-SPAM-Test: remote_host: 129.240.4.215 spam_score: -49 maxlevel 80 minaction 1 bait 0 mail/h: 3 total 2315096 max/h 641 blacklist 0 greylist 1 ratelimit 0
+	id S1758977Ab2ECX0D (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 May 2012 19:26:03 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64844 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756403Ab2ECX0C (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 May 2012 19:26:02 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D3BFB783A;
+	Thu,  3 May 2012 19:26:01 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Y8yMVpBLdsFNpxz0Kbr58sNxQ7A=; b=aHCeuw
+	bSXGUgt/OiRMQgK36OuABGoYeNeaiVd1ulF8O1dCJAU4nUEcFT647XdpIiUWRRAe
+	S9voZw1Bdf/n5R67/qY9YwME/RgveA3mlr31QI398M2nIbZmB2gIClLOa3IVOtQ1
+	kCpsTewvXdQ5t9M96Xl6/M4vKf5XVOtRCS68c=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=SzJRX5da+LL2OHogceFg6LBKLlmM0WAu
+	07p2rod7A3dHDkUjEkqm37fiEqg2cpuOHRKY1UPF4QtbGVxhzmhS8JPM7BRpThe0
+	xKP7bOb2L2aiw6qE6tmAlfSRsmABJm2HQ4oT2EA3kWAdtPB9tD+0u3x9BmCLqjx0
+	R+f2OZWrsZw=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id ADF9A7839;
+	Thu,  3 May 2012 19:26:01 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 40C1A782E; Thu,  3 May 2012
+ 19:26:01 -0400 (EDT)
+In-Reply-To: <1754870.q6d2rgDqBT@flobuntu> (Florian Achleitner's message of
+ "Fri, 04 May 2012 00:44:21 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 584ADEC0-9577-11E1-B943-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196977>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196978>
 
- I wrote:
-> Anyway, (...) Anyway, (...)
+Florian Achleitner <florian.achleitner2.6.31@gmail.com> writes:
 
- Meh.  I hate cut&paste into/out of webmail.
+> Describe config file selection in git-config.
+> While the usage message of git-config shows --local,
+> the documentation page did not contain anything about that.
+>
+> Signed-off-by: Florian Achleitner <florian.achleitner.2.6.31@gmail.com>
+> ---
+> This was pointed out in http://thread.gmane.org/gmane.comp.version-
+> control.git/196326
 
--- 
- Hallvard
+Hrm, does the updated text explain the usefulness of the option clearly
+enough?
+
+Peff> Original motivation is here:
+Peff> http://thread.gmane.org/gmane.comp.version-control.git/152524
+
+> +The file-option can be one of '--system', '--global', '--local', or '--file'
+>  which specify where the values will be read from or written to.
+>  The default is to assume the config file of the current repository,
+> +.git/config unless defined otherwise with GIT_DIR and GIT_CONFIG.
+> +For read commands like '--get' the default is to search local, global, and
+> +system config files (in this order) for the requested value and stop after
+> +the first finding.
+
+It may be just me, but I find the untouched "The default is to assume"
+line somewhat out of place after this update.  When reading, without any
+of the options, we read all three places and consolidate them (stopping
+after the first file that has the definition is a funny exception that
+"--get" does; in general the internals read all of them so "--get-all"
+output is a better way to understand what you wrote in your configuration
+files), and when writing, without any of the options, we write to the
+current configuration file.
+
+The paragraph should first be restructured to describe read and write
+cases separately, and then '--local' should be described, perhaps like
+this?
+
+	When reading, the values are read from the system, global and
+	repository local configuration files by default, and options
+	'--system', '--global', '--local' and '--file <filename>' can be
+	used to tell the command to read from only that location.
+
+	When writing, the new value is written to the repository local
+	configuration file by default, and options '--system', '--global',
+	'--file <filename>' can be used to tell the command to write to
+	that location (you can say '--local' but that is the default).
