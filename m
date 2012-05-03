@@ -1,87 +1,119 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Newbie grief
-Date: Thu, 03 May 2012 14:09:41 -0700
-Message-ID: <7vipgddl9m.fsf@alter.siamese.dyndns.org>
-References: <4F9F128C.5020304@palm.com>
- <201204302331.q3UNVo7o032303@no.baka.org> <4F9F3919.6060805@palm.com>
- <CAMK1S_jwVsyKrGoL5uVAiuRrOa8bz79-DAueBmHZE2k=PpcJ2Q@mail.gmail.com>
- <20120501111415.GD5769@thunk.org>
- <CAMK1S_jN_WdZF4W4szzyJqLfC3FmnhKQ65XQiD-JS_jxwSm8_g@mail.gmail.com>
- <4FA02830.3040407@palm.com> <86havzoi8h.fsf@red.stonehenge.com>
- <4FA04D02.6090702@palm.com> <86mx5rmx32.fsf@red.stonehenge.com>
- <7v62cf8v2d.fsf@alter.siamese.dyndns.org> <4FA054BA.80601@palm.com>
- <86ipgfmw05.fsf@red.stonehenge.com> <4FA05C66.2060608@palm.com>
- <CAMOZ1BuiznhrzEOHe0N+uu=mLEw5wWTQyDpnwG8PuF1f_aNaXw@mail.gmail.com>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: [PATCH] de.po: collection of fixes
+Date: Thu, 3 May 2012 23:11:55 +0200
+Message-ID: <87obq5vujo.fsf@thomas.inf.ethz.ch>
+References: <1336075774-8447-1-git-send-email-ralf.thielow@googlemail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Rich Pixley <rich.pixley@palm.com>,
-	"Randal L. Schwartz" <merlyn@stonehenge.com>,
-	Sitaram Chamarty <sitaramc@gmail.com>,
-	"Ted Ts'o" <tytso@mit.edu>, Seth Robertson <in-gitvger@baka.org>,
-	git@vger.kernel.org
-To: Michael Witten <mfwitten@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 03 23:09:51 2012
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: <jk@jk.gs>, <git@vger.kernel.org>
+To: Ralf Thielow <ralf.thielow@googlemail.com>
+X-From: git-owner@vger.kernel.org Thu May 03 23:12:08 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SQ3HZ-0005iA-5n
-	for gcvg-git-2@plane.gmane.org; Thu, 03 May 2012 23:09:49 +0200
+	id 1SQ3Jn-0007dP-IN
+	for gcvg-git-2@plane.gmane.org; Thu, 03 May 2012 23:12:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758603Ab2ECVJo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 May 2012 17:09:44 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:40024 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754928Ab2ECVJn (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 May 2012 17:09:43 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 25BDD7913;
-	Thu,  3 May 2012 17:09:43 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=VicBMZ9+Ew3SmPIOUj2ptNL8IgI=; b=QHP92Z
-	oo7XdvMcTjk2bkNQOxpTVgCkR9DN+Mp3Fc5KVP8zq5ftBiwOFwQ3/qwafAIM9j97
-	bTVq5aqzOW80fiPtb5H8LuMnvPoSEJNNq2xjXjNCqBy7vw6L72JN0WYL97cLeonM
-	Gn93gpnHotdnaXW03VBtixosx+vicLJHdnVDg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=P0K3nKHVKNOI25oll/hsDVKFuAUltmLI
-	XMSYIwyGr6q9HIweyPy9HkBW4+13RDTJ3ba7abNXtniGBMhhJdMsClR2bza2lLzR
-	UCUOHb9nJu8P7RtCUSfIsPbQpClTvzn+4ooZ5Uyp7/UIX4iddUKMD3RDitMddPW9
-	Q/d4sNGgC4U=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1C8187912;
-	Thu,  3 May 2012 17:09:43 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 99DEC7911; Thu,  3 May 2012
- 17:09:42 -0400 (EDT)
-In-Reply-To: <CAMOZ1BuiznhrzEOHe0N+uu=mLEw5wWTQyDpnwG8PuF1f_aNaXw@mail.gmail.com> (Michael
- Witten's message of "Tue, 1 May 2012 22:56:29 +0000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 4D777340-9564-11E1-A8BB-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S932140Ab2ECVMA convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 3 May 2012 17:12:00 -0400
+Received: from edge20.ethz.ch ([82.130.99.26]:33932 "EHLO edge20.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754928Ab2ECVL7 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 3 May 2012 17:11:59 -0400
+Received: from CAS10.d.ethz.ch (172.31.38.210) by edge20.ethz.ch
+ (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.2.283.3; Thu, 3 May
+ 2012 23:11:57 +0200
+Received: from thomas.inf.ethz.ch.ethz.ch (188.155.176.28) by cas10.d.ethz.ch
+ (172.31.38.210) with Microsoft SMTP Server (TLS) id 14.1.355.2; Thu, 3 May
+ 2012 23:11:56 +0200
+In-Reply-To: <1336075774-8447-1-git-send-email-ralf.thielow@googlemail.com>
+	(Ralf Thielow's message of "Thu, 3 May 2012 22:09:34 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Originating-IP: [188.155.176.28]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196959>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196960>
 
-Michael Witten <mfwitten@gmail.com> writes:
+On a general note, if you consistently make a single type of change
+(like the first two quotes below), it would be easier on the reviewers
+if you split them out as separate commits.  That way I could say "I lik=
+e
+this in general, and I trust you're not sneaking in any other changes i=
+n
+this patch", and stop reading.
 
-> (Note, though, that Junio has done a laudable job of keeping the
-> whole experiment going strong).
+Ralf Thielow <ralf.thielow@googlemail.com> writes:
 
-You are giving me too much credit, and at the same time insulting the
-people who polished Git enough to suit their workflow.  To them, the tool
-has past "experiment" stage long time ago.  They found what was lacking
-and what would help the need in their workflow.  I just have helped them
-shape their ideas into a coherent whole.
+> -msgstr "konnte %s nicht parsen"
+> +msgstr "%s konnte nicht geparst werden"
+[...]
+> -msgstr "Konnte '%s' nicht zum Schreiben =C3=B6ffnen."
+> +msgstr "'%s' konnte nicht zum Schreiben ge=C3=B6ffnet werden."
 
-That does not mean there is nothing missing, still appears experimental,
-or inconsistent in the parts of the system that these people do not use
-nor care about, and when you bring in people coming from different
-background, they will notice the behaviour or default that do not match
-their expectation.  They can do the usual "scratching own itches" thing
-the same way to others who have done before. As nobody forces them to do
-so, they can instead keep whining.  It's mostly their choice.
+Why the switch to passive?  It should never be used, and all that...
+(There are more further down.)
+
+> -msgstr "Konnte nicht nach %s schreiben"
+> +msgstr "Konnte nicht nach '%s' schreiben"
+[...]
+> -msgstr "Fehler bei Nachbereitung von %s"
+> +msgstr "Fehler bei Nachbereitung von '%s'"
+
+These should perhaps also be fixed in the originals.  Again there are
+more of the same type.
+
+>  #: builtin/bundle.c:60
+>  msgid "Need a repository to unbundle."
+> -msgstr "Zum Zerlegen wird ein Projektarchiv ben=C3=B6tigt."
+> +msgstr "Zum Entpacken wird ein Projektarchiv ben=C3=B6tigt."
+
+Note that this collides with the use of Packen for packing (as in
+pack-objects).  Not sure it matters here, though, and it's definitely a=
+n
+improvement.
+
+>  #: builtin/gc.c:256
+>  msgid ""
+>  "There are too many unreachable loose objects; run 'git prune' to re=
+move them."
+> -msgstr "Es gibt zu viele unerreichbare lose Objekte; f=C3=BChre 'git=
+ prune' aus um diese zu entfernen."
+> +msgstr "Es gibt zu viele unerreichbare verlorene Objekte; f=C3=BChre=
+ 'git prune' "
+> +"aus um diese zu entfernen."
+
+I think you're partially reverting an earlier change of mine here.
+loose really is "lose" as in "not packed".  They are "lost" only by
+virtue of being unreachable, which you're also stating.  So if anything=
+,
+you should consistently change "loose object" to some term other than
+"loses Objekt".
+
+> -"Automatische Zusammenf=C3=BChrung gut gegangen; stoppe, wie angefra=
+gt, vor der "
+> -"Eintragung\n"
+> +"Automatische Zusammenf=C3=BChrung abgeschlossen; halte, wie angefra=
+gt, vor der "
+> +"Eintragung an\n"
+
+Unrelated to your change, but perhaps also "wie angefragt" -> "wie
+gew=C3=BCnscht"?
+
+> -"\"pull\" ist nicht m=C3=B6glich weil du nicht zusammengef=C3=BChrte=
+ Dateien hast.\n"
+> +"\"pull\" ist nicht m=C3=B6glich, weil du nicht zusammengef=C3=BChrt=
+e Dateien hast.\n"
+
+Again unrelated, but for me, this is quite hard to parse.  Perhaps,
+while strictly speaking wrong, "nicht-zusammengef=C3=BChrte Dateien" or=
+ also
+something like "konfliktbehaftete Dateien" would be easier to scan.
+
+--=20
+Thomas Rast
+trast@{inf,student}.ethz.ch
