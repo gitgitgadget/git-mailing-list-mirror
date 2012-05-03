@@ -1,111 +1,89 @@
-From: Nathan Gray <n8gray@n8gray.org>
-Subject: Re: Newbie grief
-Date: Thu, 3 May 2012 12:09:22 -0700
-Message-ID: <CA+7g9JzZ36RgsniT4UN0Zk+z1ohZYW5u+0AoGMjJZqsoBjqvqA@mail.gmail.com>
-References: <4F9F128C.5020304@palm.com>
-	<201204302331.q3UNVo7o032303@no.baka.org>
-	<4F9F3919.6060805@palm.com>
-	<CAMK1S_jwVsyKrGoL5uVAiuRrOa8bz79-DAueBmHZE2k=PpcJ2Q@mail.gmail.com>
-	<20120501111415.GD5769@thunk.org>
-	<CAMK1S_jN_WdZF4W4szzyJqLfC3FmnhKQ65XQiD-JS_jxwSm8_g@mail.gmail.com>
-	<4FA02830.3040407@palm.com>
-	<86havzoi8h.fsf@red.stonehenge.com>
-	<4FA04D02.6090702@palm.com>
-	<86mx5rmx32.fsf@red.stonehenge.com>
-	<4FA055D0.7040102@palm.com>
-	<86aa1rmvhb.fsf@red.stonehenge.com>
-	<4FA05E9F.9090709@palm.com>
-	<CAJsNXTmo1B86nSm7u923jJuGX0zajz3iqVu-onANMN-5BE5DfQ@mail.gmail.com>
-	<4FA2D1D7.3020807@palm.com>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: Index format v5
+Date: Thu, 3 May 2012 21:11:38 +0200
+Message-ID: <8762cdm651.fsf@thomas.inf.ethz.ch>
+References: <CALgYhfMKdbv8TiT4ALDSvD3pSXHEPLWHM09DxYnRmRdBWRjh8Q@mail.gmail.com>
+	<7vd36lf634.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: PJ Weisberg <pj@irregularexpressions.net>,
-	"Randal L. Schwartz" <merlyn@stonehenge.com>,
-	Sitaram Chamarty <sitaramc@gmail.com>,
-	"Ted Ts'o" <tytso@mit.edu>, Seth Robertson <in-gitvger@baka.org>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Rich Pixley <rich.pixley@palm.com>
-X-From: git-owner@vger.kernel.org Thu May 03 21:09:34 2012
+Content-Type: text/plain; charset="us-ascii"
+Cc: Thomas Gummerer <t.gummerer@gmail.com>, <git@vger.kernel.org>,
+	<trast@student.ethz.ch>, <mhagger@alum.mit.edu>, <peff@peff.net>,
+	<spearce@spearce.org>, <davidbarr@google.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu May 03 21:11:48 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SQ1P7-0005qM-3U
-	for gcvg-git-2@plane.gmane.org; Thu, 03 May 2012 21:09:29 +0200
+	id 1SQ1RJ-0007pJ-Tw
+	for gcvg-git-2@plane.gmane.org; Thu, 03 May 2012 21:11:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755824Ab2ECTJY convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 3 May 2012 15:09:24 -0400
-Received: from mail-bk0-f46.google.com ([209.85.214.46]:62553 "EHLO
-	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754690Ab2ECTJX convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 3 May 2012 15:09:23 -0400
-Received: by bkcji2 with SMTP id ji2so1657785bkc.19
-        for <git@vger.kernel.org>; Thu, 03 May 2012 12:09:22 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:x-originating-ip:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding:x-gm-message-state;
-        bh=mUuLkCSd1+zWqAzvHWWHWAmhVj710U7X677VJ2Fs5UA=;
-        b=BN/xEDdRZ/40NZMejNVMT+c2rFupYpc5AB6oN1LCUud4AAcU3Vlj4xsA/h6pY27RM3
-         LsTAfv575d+aV0uWTqQd5VSK1cRty38kVU6akD4vMc8S6dholNrJ0pTUzIkutrzz3fzo
-         StHVGCETL2LkZi80FwyNhrxsDh35QbHGLTdayJPenkUMz1buJsbRXQA44jF1r92krPSg
-         uKNZIPuwSAkR3N1ptLGuvjbDy7EU9oqV+nfTUqPzirHBTTvxyCJTxMTc8nQwJugd5YoV
-         JS81g457xnpM4jTfRyyp4ERdh0VZqDnBh//gc2w+p4/zXwkf63fpWLr39VtK7xDi3Pki
-         vKBA==
-Received: by 10.204.153.15 with SMTP id i15mr1154169bkw.74.1336072162112; Thu,
- 03 May 2012 12:09:22 -0700 (PDT)
-Received: by 10.205.42.6 with HTTP; Thu, 3 May 2012 12:09:22 -0700 (PDT)
-X-Originating-IP: [184.182.186.242]
-In-Reply-To: <4FA2D1D7.3020807@palm.com>
-X-Gm-Message-State: ALoCoQl7B9a/X647s6FG/l1EhIjjsGu9zxvW4PXqM24tSb+1tT8f/sVi3LB0ITZoYslRSOm4fCZq
+	id S1755596Ab2ECTLl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 May 2012 15:11:41 -0400
+Received: from edge20.ethz.ch ([82.130.99.26]:28916 "EHLO edge20.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754619Ab2ECTLl (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 May 2012 15:11:41 -0400
+Received: from CAS10.d.ethz.ch (172.31.38.210) by edge20.ethz.ch
+ (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.2.283.3; Thu, 3 May
+ 2012 21:11:39 +0200
+Received: from thomas.inf.ethz.ch.ethz.ch (129.132.153.233) by cas10.d.ethz.ch
+ (172.31.38.210) with Microsoft SMTP Server (TLS) id 14.1.355.2; Thu, 3 May
+ 2012 21:11:39 +0200
+In-Reply-To: <7vd36lf634.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Thu, 03 May 2012 11:54:39 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Originating-IP: [129.132.153.233]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196943>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196944>
 
-On Thu, May 3, 2012 at 11:43 AM, Rich Pixley <rich.pixley@palm.com> wro=
-te:
+Junio C Hamano <gitster@pobox.com> writes:
+
+>> [6] The length of the file name was dropped, since each file name is
+>>     nul terminated anyway.
 >
-> In hg, I don't have to think about how many other branches or reposit=
-ories
-> there might be. =A0I don't have to track where the changes are. =A0An=
-d I don't
-> have to do anything to add another repository to the mix or to remove=
- one.
-> =A0Trivial merges are trivial. =A0The view from any repository is ide=
-ntical, not
-> just symmetric. =A0The things I want to do are all simple commands. =A0=
-Pull from
-> the cache, merge if necessary, do some work, push to the cache. =A0Re=
-peat as
-> necessary since there will be numerous collisions and merges since I'=
-m
-> working on multiple machines concurrently. =A0And eventually, push to=
- central
-> server.
+> This is micronit, but I think we do this to save one strlen() for each
+> read of the entry, except for unusually long paths where we fall back to
+> strlen(). A change like this needs to be justified better than simply
+> saying "because we _could_ compute in a different way by spending extra
+> cycles".
 
-Wow, this hg sounds great!  You should use that!
+(Partially also answering the whole "what are these offsets" confusion)
 
-All kidding aside, what you're talking about are design decisions
-based on preferred workflows.  The workflow you're describing may seem
-obvious and fantastic to you, but it sounds absurdly complicated to
-me.  You hate the way git handles remote branches.  I think it's
-incredibly sensible for a *truly* distributed VCS to enforce
-location-based namespacing.  Basically, we have differences of
-opinion.  Since your opinion seems to be that hg has done everything
-right and git has done everything wrong, why are you using git?
+The bisectability has evolved to the point where we envision the
+structure of a "flat list" (the directories, and the files in each
+directory) to have the format
 
-Cheers,
--n8
+  offset to entry 1 [1]
+  ....
+  offset to entry n
 
---=20
-HexaLex: A New Angle on Crossword Games for iPhone and iPod Touch
-http://hexalex.com
-On The App Store: http://bit.ly/8Mj1CU
-On Facebook: http://bit.ly/9MIJiV
-On Twitter: http://twitter.com/hexalexgame
-http://n8gray.org
+  entry 1, consisting of:
+    name, nul-terminated
+    rest of data:
+      for dirs: cache-tree sha1, offset to files, etc.
+      for files: stat data, content sha1, flags, etc.
+
+That makes bisection very easy: the offsets point at the start of each
+string, so you just strcmp() and get on with it.
+
+On the other hand, by the time you can look at the flags, it's too late
+for the strlen() optimization anyway, so meh.  If you think it's
+important, we can perhaps lay it out so the rest of the data goes
+immediately after the pointer.  But so far it wasn't clear whether it's
+fixed-size, or uses some smart compression scheme.  Tonight's edition
+has a fixed length, so perhaps it would be preferable to keep the
+length.
+
+
+Footnotes: 
+[1]  It probably doesn't matter whether this is relative to the position
+of the offset, or absolute (in terms of file pointer).
+
+-- 
+Thomas Rast
+trast@{inf,student}.ethz.ch
