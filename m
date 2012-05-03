@@ -1,7 +1,7 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Hallvard Breien Furuseth <h.b.furuseth@usit.uio.no>
 Subject: Re: Newbie grief
-Date: Thu, 03 May 2012 15:59:45 -0700
-Message-ID: <7v1un0euqm.fsf@alter.siamese.dyndns.org>
+Date: Fri, 04 May 2012 01:04:24 +0200
+Message-ID: <da7535728c9a0ad2a27e83078492efa0@ulrik.uio.no>
 References: <4F9F128C.5020304@palm.com>
  <201204302331.q3UNVo7o032303@no.baka.org> <4F9F3919.6060805@palm.com>
  <CAMK1S_jwVsyKrGoL5uVAiuRrOa8bz79-DAueBmHZE2k=PpcJ2Q@mail.gmail.com>
@@ -12,94 +12,95 @@ References: <4F9F128C.5020304@palm.com>
  <7v62cf8v2d.fsf@alter.siamese.dyndns.org> <4FA054BA.80601@palm.com>
  <86ipgfmw05.fsf@red.stonehenge.com> <4FA05C66.2060608@palm.com>
  <CAMOZ1BuiznhrzEOHe0N+uu=mLEw5wWTQyDpnwG8PuF1f_aNaXw@mail.gmail.com>
- <7vipgddl9m.fsf@alter.siamese.dyndns.org> <4FA30A68.5010002@palm.com>
+ <5ADB8D763B2B4CDA889052A1AA45F089@PhilipOakley>
+ <67e635d73b952088917d197cbbd06684@ulrik.uio.no> <4FA2CC88.9000207@palm.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Michael Witten <mfwitten@gmail.com>,
+Content-Type: text/plain;
+ charset=UTF-8;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Philip Oakley <philipoakley@iee.org>,
+	Michael Witten <mfwitten@gmail.com>,
 	"Randal L. Schwartz" <merlyn@stonehenge.com>,
+	Junio C Hamano <gitster@pobox.com>,
 	Sitaram Chamarty <sitaramc@gmail.com>,
-	"Ted Ts'o" <tytso@mit.edu>, Seth Robertson <in-gitvger@baka.org>,
-	"git\@vger.kernel.org" <git@vger.kernel.org>
+	Ted Ts'o <tytso@mit.edu>, Seth Robertson <in-gitvger@baka.org>,
+	<git@vger.kernel.org>
 To: Rich Pixley <rich.pixley@palm.com>
-X-From: git-owner@vger.kernel.org Fri May 04 01:00:52 2012
+X-From: git-owner@vger.kernel.org Fri May 04 01:04:49 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SQ511-0006WS-OH
-	for gcvg-git-2@plane.gmane.org; Fri, 04 May 2012 01:00:52 +0200
+	id 1SQ54o-0000xC-9j
+	for gcvg-git-2@plane.gmane.org; Fri, 04 May 2012 01:04:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758937Ab2ECXAb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 May 2012 19:00:31 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:55199 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758922Ab2ECW7s (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 May 2012 18:59:48 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8833F7280;
-	Thu,  3 May 2012 18:59:47 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=LG6QLJ+0LZUtLDssVT9sXWXzppY=; b=tWrzYi
-	41zDmmWCa56/1g2HBtqZp5ykrRuCLz6sgQHIpDL+mrOKjJex99kqps3dLunAX6z6
-	iTaA9YIU+mIMuagno9ALstiHHR7OwbFnf30uHA1xuXUqQgZAWh0Gw/4/1ZEUob43
-	ydere5wvj/J/+1kIrPZaah+Ri7sOU9GzLlovQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=slhFzcEfbxAtON8WvOjPSxdh6Y4f5B/h
-	TqmZxRYDYzQeHulRWUKNCeYVhyA/fcKxQCisMDGXvdqheB6eTEF9GL12R8+IofVx
-	ki97F5n0mJHyLM1m2gYlUJkJ5L26ior/jdm8A8ZT8yu6jaccDFs6znJ7727hInpn
-	ZmB0nONxzXs=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7E884727F;
-	Thu,  3 May 2012 18:59:47 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0AD26727E; Thu,  3 May 2012
- 18:59:46 -0400 (EDT)
-In-Reply-To: <4FA30A68.5010002@palm.com> (Rich Pixley's message of "Thu, 03
- May 2012 15:44:56 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: ADFDFDEC-9573-11E1-8458-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1758923Ab2ECXEm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 May 2012 19:04:42 -0400
+Received: from mail-out1.uio.no ([129.240.10.57]:38104 "EHLO mail-out1.uio.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757181Ab2ECXEl (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 May 2012 19:04:41 -0400
+Received: from mail-mx2.uio.no ([129.240.10.30])
+	by mail-out1.uio.no with esmtp (Exim 4.75)
+	(envelope-from <h.b.furuseth@usit.uio.no>)
+	id 1SQ54d-0003Pk-A3; Fri, 04 May 2012 01:04:35 +0200
+Received: from w3prod-wm03.uio.no ([129.240.4.40] helo=webmail.uio.no)
+	by mail-mx2.uio.no with esmtpsa (TLSv1:AES256-SHA:256)
+	user hbf (Exim 4.76)
+	(envelope-from <h.b.furuseth@usit.uio.no>)
+	id 1SQ54c-0002NB-R2; Fri, 04 May 2012 01:04:35 +0200
+Received: from c313D47C1.dhcp.bluecom.no ([193.71.61.49])
+ by webmail.uio.no
+ with HTTP (HTTP/1.1 POST); Fri, 04 May 2012 01:04:24 +0200
+In-Reply-To: <4FA2CC88.9000207@palm.com>
+X-Sender: h.b.furuseth@usit.uio.no
+User-Agent: Roundcube Webmail/0.4.2
+X-UiO-Ratelimit-Test: rcpts/h 9 msgs/h 1 sum rcpts/h 13 sum msgs/h 1 total rcpts 2391 max rcpts/h 17 ratelimit 0
+X-UiO-Spam-info: not spam, SpamAssassin (score=-5.0, required=5.0, autolearn=disabled, T_RP_MATCHES_RCVD=-0.01,UIO_MAIL_IS_INTERNAL=-5, uiobl=NO, uiouri=NO)
+X-UiO-Scanned: 3A02DDC747446AC186FCE34F0B7F5913F8FF05DA
+X-UiO-SPAM-Test: remote_host: 129.240.4.40 spam_score: -49 maxlevel 80 minaction 2 bait 0 mail/h: 1 total 1290006 max/h 414 blacklist 0 greylist 0 ratelimit 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196974>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196975>
 
-Rich Pixley <rich.pixley@palm.com> writes:
+ On Thu, 03 May 2012 11:20:56 -0700, Rich Pixley <rich.pixley@palm.com> 
+ wrote:
+> On 5/3/12 09:08 , Hallvard Breien Furuseth wrote:
+>>   Aha, now this thread finally makes some sense.  So when Rich
+>>   wants a "branch" with several tips, he actually wants several
+>>   Git clones (repositories) with the same Git branch checked out -
+>>   and some of them with local commits to it.
+> Yes.
+>>   And these commits can be shared as remote branches between the
+>>   clones, which in Hg-speak means that in one particular clone,
+>>   Git will "bookmark" the other clones' tips.
+> Well, no.  In hg, these are all managed.  So there's no scaling
+> issue.  They can all push/pull together, since they are really all
+> just one shared branch.  Adding a new repository to the mix is
+> trivial.  And either pushes or pulls can be used, or any combo.
+>
+> With git, I must manually make space for each and every repository,
+> manually track which set of changes are where, manually track which
+> need to be merged, and manually track which repositories are looking
+> at which git branches so that they don't collide, or only collide in
+> the current repository and only when I'm prepared to merge them.
+> (...)
 
-> On 5/3/12 14:09 , Junio C Hamano wrote:
->> Michael Witten<mfwitten@gmail.com>  writes:
->>
->>> (Note, though, that Junio has done a laudable job of keeping the
->>> whole experiment going strong).
->>
->> You are giving me too much credit, and at the same time insulting the
->> people who polished Git enough to suit their workflow.  To them, the tool
->> has past "experiment" stage long time ago.  They found what was lacking
->> and what would help the need in their workflow.  I just have helped them
->> shape their ideas into a coherent whole.
->>
->> That does not mean there is nothing missing, still appears experimental,
->> or inconsistent in the parts of the system that these people do not use
->> nor care about, and when you bring in people coming from different
->> background, they will notice the behaviour or default that do not match
->> their expectation....
-> 
-> ...  The motivation to
-> change it would be to make it easier for the next person.
+ If you say so.  I don't know Hg and I'm not about to try to guess
+ if you're stuck in another misconception about Git or not, nor
+ to re-read this entire thread substituting "clone" for "branch".
 
-That is how the workflow support elements that were originally missing
-like reflogs, stashes, tracking branches, etc. all came to exist.  Making
-it easier for the next person is why we had a large discussion on the
-default behaviour of unconfigured push andthe follow-up implementation of
-the "simple" push behaviour.  It is a good example that community members
-are willing to help new person even at the expense of inconvenience to old
-timers.
+ Anyway, I notice you're now giving practical Hg examples to go
+ with your Hg vocabulary instead talking Git in Hg vocabulary, so
+ hopefully this'll get cleared up.
 
-What does _not_ happen is to chase down people who whined and left without
-giving us something concrete enough to base design of new workflow support
-elements, but the community cannot police the behaviour of those who come,
-whine and then leave, so...
+ Anyway, if you have not done so already: If you show this too with
+ a practical Hg example instead of talking Git in a Hg vocabulary,
+ maybe someone can help.
+
+-- 
+ Hallvard
