@@ -1,52 +1,82 @@
-From: Rich Pixley <rich.pixley@palm.com>
-Subject: Re: Newbie grief
-Date: Thu, 03 May 2012 11:58:45 -0700
-Message-ID: <4FA2D565.1080806@palm.com>
-References: <4F9F128C.5020304@palm.com> <201204302331.q3UNVo7o032303@no.baka.org>	<4F9F3919.6060805@palm.com> <CAMK1S_jwVsyKrGoL5uVAiuRrOa8bz79-DAueBmHZE2k=PpcJ2Q@mail.gmail.com> <20120501111415.GD5769@thunk.org> <CAMK1S_jN_WdZF4W4szzyJqLfC3FmnhKQ65XQiD-JS_jxwSm8_g@mail.gmail.com> <4FA02830.3040407@palm.com>	<86havzoi8h.fsf@red.stonehenge.com> <4FA04D02.6090702@palm.com>	<86mx5rmx32.fsf@red.stonehenge.com> <4FA055D0.7040102@palm.com> <CAMP44s2h4EY3Qu2+Ys_n3TUzmyykMkG-wMoqmKg5hjg24JQ+bg@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "Randal L. Schwartz" <merlyn@stonehenge.com>,
-	Sitaram Chamarty <sitaramc@gmail.com>,
-	"Ted Ts'o" <tytso@mit.edu>, Seth Robertson <in-gitvger@baka.org>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 03 20:58:54 2012
+From: Hallvard Breien Furuseth <h.b.furuseth@usit.uio.no>
+Subject: git gc == git garbage-create from removed branch
+Date: Thu,  3 May 2012 20:38:42 +0200 (CEST)
+Message-ID: <hbf.20120503q14w@bombur.uio.no>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu May 03 21:01:49 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SQ1Eq-00054t-DK
-	for gcvg-git-2@plane.gmane.org; Thu, 03 May 2012 20:58:52 +0200
+	id 1SQ1Hf-0007ZQ-SU
+	for gcvg-git-2@plane.gmane.org; Thu, 03 May 2012 21:01:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758198Ab2ECS6s (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 May 2012 14:58:48 -0400
-Received: from smtp-relay2.palm.com ([64.28.152.243]:49287 "EHLO
-	smtp-relay2.palm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758175Ab2ECS6r (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 May 2012 14:58:47 -0400
-X-IronPort-AV: E=Sophos;i="4.75,526,1330934400"; 
-   d="scan'208";a="13294498"
-Received: from unknown (HELO ushqusdns4.palm.com) ([148.92.223.164])
-  by smtp-relay2.palm.com with ESMTP; 03 May 2012 11:58:47 -0700
-Received: from fuji.noir.com ([10.100.2.12])
-	by ushqusdns4.palm.com (8.14.4/8.14.4) with ESMTP id q43IwkMO027440;
-	Thu, 3 May 2012 11:58:46 -0700
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.7; rv:12.0) Gecko/20120428 Thunderbird/12.0.1
-In-Reply-To: <CAMP44s2h4EY3Qu2+Ys_n3TUzmyykMkG-wMoqmKg5hjg24JQ+bg@mail.gmail.com>
+	id S1755621Ab2ECTBn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 May 2012 15:01:43 -0400
+Received: from mail-out2.uio.no ([129.240.10.58]:58402 "EHLO mail-out2.uio.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753784Ab2ECTBm (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 May 2012 15:01:42 -0400
+X-Greylist: delayed 1377 seconds by postgrey-1.27 at vger.kernel.org; Thu, 03 May 2012 15:01:42 EDT
+Received: from mail-mx1.uio.no ([129.240.10.29])
+	by mail-out2.uio.no with esmtp (Exim 4.75)
+	(envelope-from <hbf@ulrik.uio.no>)
+	id 1SQ0vM-0002kr-Gw
+	for git@vger.kernel.org; Thu, 03 May 2012 20:38:44 +0200
+Received: from bombur.uio.no ([129.240.6.233])
+	by mail-mx1.uio.no with esmtp  (Exim 4.76)
+	(envelope-from <hbf@ulrik.uio.no>)
+	id 1SQ0vM-0005ZJ-4F
+	for git@vger.kernel.org; Thu, 03 May 2012 20:38:44 +0200
+Received: by bombur.uio.no (Postfix, from userid 2112)
+	id 94DC5A59; Thu,  3 May 2012 20:38:42 +0200 (CEST)
+X-UiO-Ratelimit-Test: rcpts/h 1 msgs/h 1 sum rcpts/h 10 sum msgs/h 2 total rcpts 2382 max rcpts/h 17 ratelimit 0
+X-UiO-Spam-info: not spam, SpamAssassin (score=-5.0, required=5.0, autolearn=disabled, T_RP_MATCHES_RCVD=-0.01,UIO_MAIL_IS_INTERNAL=-5, uiobl=NO, uiouri=NO)
+X-UiO-Scanned: 4A7E2F8AA74C13E71014CE2225666E4AAC9DA43A
+X-UiO-SPAM-Test: remote_host: 129.240.6.233 spam_score: -49 maxlevel 80 minaction 2 bait 0 mail/h: 1 total 1038 max/h 5 blacklist 0 greylist 0 ratelimit 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196940>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196941>
 
-On 5/1/12 16:30 , Felipe Contreras wrote:
-> Show all the hg commands of what you are trying to do, and we can show
-> you how you can achieve the same in git, but much more easily.
-hg init foo
-for i in `yes | head -4000`; do (set -x ; d=`date +%s.%N` ; hg clone foo 
-foo-$d; (cd foo-$d && date > bar && hg add bar && hg ci -m $d)); done
-for i in foo-*; do (set -x ; (cd $i && hg push -f)); done
+After removing a branch, 'git gc' explodes all objects
+which were only in that branch.  Git filled up my disk that
+way when I had cherry-picked from a big remote repo and then
+did git remote rm.  Tested with Git 1.7.10.1 and 1.7.1.
 
---rich
+$ git clone --bare --branch linux-overhaul-20010122 \
+	git://git.savannah.gnu.org/config.git
+...
+Receiving objects: 100% (3263/3263), 517.15 KiB | 295 KiB/s, done.
+...
+$ cd config.git/
+$ git tag -d `git tag`
+...
+$ git branch -D master
+$ git gc
+Counting objects: 1183, done.
+Delta compression using up to 2 threads.
+Compressing objects: 100% (751/751), done.
+Writing objects: 100% (1183/1183), done.
+Total 1183 (delta 457), reused 1113 (delta 393)
+
+$ find objects/?? -type f -print | wc -l
+2080
+
+$ git reflog expire --expire=now; git gc --prune=now
+Counting objects: 1183, done.
+Delta compression using up to 2 threads.
+Compressing objects: 100% (687/687), done.
+Writing objects: 100% (1183/1183), done.
+Total 1183 (delta 457), reused 1183 (delta 457)
+
+$ ls objects/
+info/  pack/
+
+3263 fetched objects == 2080 loose objects before prune +
+HEAD's 1183 objects.
+
+-- 
+Hallvard
