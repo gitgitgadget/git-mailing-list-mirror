@@ -1,82 +1,69 @@
-From: Hallvard Breien Furuseth <h.b.furuseth@usit.uio.no>
-Subject: git gc == git garbage-create from removed branch
-Date: Thu,  3 May 2012 20:38:42 +0200 (CEST)
-Message-ID: <hbf.20120503q14w@bombur.uio.no>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 03 21:01:49 2012
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Index format v5
+Date: Thu, 03 May 2012 12:03:52 -0700
+Message-ID: <7v8vh9f5nr.fsf@alter.siamese.dyndns.org>
+References: <CALgYhfMKdbv8TiT4ALDSvD3pSXHEPLWHM09DxYnRmRdBWRjh8Q@mail.gmail.com>
+ <87obq5p1t0.fsf@thomas.inf.ethz.ch>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Thomas Gummerer <t.gummerer@gmail.com>, <git@vger.kernel.org>,
+	<gitster@pobox.com>, <mhagger@alum.mit.edu>, <peff@peff.net>,
+	<spearce@spearce.org>, <davidbarr@google.com>
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Thu May 03 21:04:01 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SQ1Hf-0007ZQ-SU
-	for gcvg-git-2@plane.gmane.org; Thu, 03 May 2012 21:01:48 +0200
+	id 1SQ1Jo-00016e-Ju
+	for gcvg-git-2@plane.gmane.org; Thu, 03 May 2012 21:04:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755621Ab2ECTBn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 May 2012 15:01:43 -0400
-Received: from mail-out2.uio.no ([129.240.10.58]:58402 "EHLO mail-out2.uio.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753784Ab2ECTBm (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 May 2012 15:01:42 -0400
-X-Greylist: delayed 1377 seconds by postgrey-1.27 at vger.kernel.org; Thu, 03 May 2012 15:01:42 EDT
-Received: from mail-mx1.uio.no ([129.240.10.29])
-	by mail-out2.uio.no with esmtp (Exim 4.75)
-	(envelope-from <hbf@ulrik.uio.no>)
-	id 1SQ0vM-0002kr-Gw
-	for git@vger.kernel.org; Thu, 03 May 2012 20:38:44 +0200
-Received: from bombur.uio.no ([129.240.6.233])
-	by mail-mx1.uio.no with esmtp  (Exim 4.76)
-	(envelope-from <hbf@ulrik.uio.no>)
-	id 1SQ0vM-0005ZJ-4F
-	for git@vger.kernel.org; Thu, 03 May 2012 20:38:44 +0200
-Received: by bombur.uio.no (Postfix, from userid 2112)
-	id 94DC5A59; Thu,  3 May 2012 20:38:42 +0200 (CEST)
-X-UiO-Ratelimit-Test: rcpts/h 1 msgs/h 1 sum rcpts/h 10 sum msgs/h 2 total rcpts 2382 max rcpts/h 17 ratelimit 0
-X-UiO-Spam-info: not spam, SpamAssassin (score=-5.0, required=5.0, autolearn=disabled, T_RP_MATCHES_RCVD=-0.01,UIO_MAIL_IS_INTERNAL=-5, uiobl=NO, uiouri=NO)
-X-UiO-Scanned: 4A7E2F8AA74C13E71014CE2225666E4AAC9DA43A
-X-UiO-SPAM-Test: remote_host: 129.240.6.233 spam_score: -49 maxlevel 80 minaction 2 bait 0 mail/h: 1 total 1038 max/h 5 blacklist 0 greylist 0 ratelimit 0
+	id S1758253Ab2ECTD4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 May 2012 15:03:56 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:46900 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758210Ab2ECTDz (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 May 2012 15:03:55 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3943D78BF;
+	Thu,  3 May 2012 15:03:55 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=5y+oELs+KdEcUZBRt6jA8RynHaE=; b=sh/3oH
+	N99fwEJoBI4GVKlgwwf3Y3EtWKm6SDqTgMgCDiSw/XfXY4JK5AJCfIyx4qbIR2nJ
+	/OFqAD8+9ZaP6eLGhMNwZCmAD2iNcwtQBKrINSDz/Uz8PhE5m3IHhY7RJhBfTORI
+	owgJ51PtQw+x0BRdXDPVY4hp9vxYDiX5w3e2I=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=YFpfjnl+MhJTr3BYn8XjXkrvwdXZB5U/
+	3RJOInLDMDljl0gDQTx8GH2cwBvfVVbdIaysSXAUnHtl6a9K1worhrmJUc0THiRK
+	9NyBZGmBGvfvz5kYgre8PlR8gQBMrHNr/u+tTAnEpRHJ1C9194ZlyU/EoHvWt1wP
+	sQmhTMPvOeA=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2EB0978BE;
+	Thu,  3 May 2012 15:03:55 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id BDE3878BA; Thu,  3 May 2012
+ 15:03:53 -0400 (EDT)
+In-Reply-To: <87obq5p1t0.fsf@thomas.inf.ethz.ch> (Thomas Rast's message of
+ "Thu, 3 May 2012 20:16:59 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: B9FDA7BC-9552-11E1-98D9-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196941>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196942>
 
-After removing a branch, 'git gc' explodes all objects
-which were only in that branch.  Git filled up my disk that
-way when I had cherry-picked from a big remote repo and then
-did git remote rm.  Tested with Git 1.7.10.1 and 1.7.1.
+Thomas Rast <trast@student.ethz.ch> writes:
 
-$ git clone --bare --branch linux-overhaul-20010122 \
-	git://git.savannah.gnu.org/config.git
-...
-Receiving objects: 100% (3263/3263), 517.15 KiB | 295 KiB/s, done.
-...
-$ cd config.git/
-$ git tag -d `git tag`
-...
-$ git branch -D master
-$ git gc
-Counting objects: 1183, done.
-Delta compression using up to 2 threads.
-Compressing objects: 100% (751/751), done.
-Writing objects: 100% (1183/1183), done.
-Total 1183 (delta 457), reused 1113 (delta 393)
+> So what's wrong in this thinking?
 
-$ find objects/?? -type f -print | wc -l
-2080
-
-$ git reflog expire --expire=now; git gc --prune=now
-Counting objects: 1183, done.
-Delta compression using up to 2 threads.
-Compressing objects: 100% (687/687), done.
-Writing objects: 100% (1183/1183), done.
-Total 1183 (delta 457), reused 1183 (delta 457)
-
-$ ls objects/
-info/  pack/
-
-3263 fetched objects == 2080 loose objects before prune +
-HEAD's 1183 objects.
-
--- 
-Hallvard
+We tolerate giving occasional false positive "Yes" to "Has this changed?",
+but do not allow false negative "No".  So the value st_{ino,dev,uid,gid}
+gives us is strictly "these are not likely to change, but if even a single
+bit in them change, we need to suspect that it may have changed."  The
+primary field that protect us is mtime, and all the rest are more or less
+belt-and-suspender safety.
