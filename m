@@ -1,90 +1,85 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: RFC: reflog for deleted branches
-Date: Fri, 04 May 2012 09:24:51 -0700
-Message-ID: <7vmx5nc3sc.fsf@alter.siamese.dyndns.org>
-References: <4FA2F7DA.6020108@tu-clausthal.de>
- <7vaa1pdjz8.fsf@alter.siamese.dyndns.org> <4FA30270.6000806@tu-clausthal.de>
- <7vwr4sdfw7.fsf@alter.siamese.dyndns.org> <4FA376B5.50804@dewire.com>
+From: Mark Brown <broonie@opensource.wolfsonmicro.com>
+Subject: Re: Newbie grief
+Date: Fri, 4 May 2012 17:29:48 +0100
+Message-ID: <20120504162947.GA2311@sirena.org.uk>
+References: <4FA3E31A.6060606@op5.se>
+ <6211a2de-a545-41c3-9fb5-e7e3033b45f4@mail>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Sven Strickroth <sven.strickroth@tu-clausthal.de>,
-	git@vger.kernel.org
-To: Robin Rosenberg <robin.rosenberg@dewire.com>
-X-From: git-owner@vger.kernel.org Fri May 04 18:24:59 2012
+Cc: Andreas Ericsson <ae@op5.se>,
+	Felipe Contreras <felipe.contreras@gmail.com>,
+	"Randal L. Schwartz" <merlyn@stonehenge.com>,
+	Sitaram Chamarty <sitaramc@gmail.com>,
+	Ted Ts'o <tytso@mit.edu>, Seth Robertson <in-gitvger@baka.org>,
+	git@vger.kernel.org, Rich Pixley <rich.pixley@palm.com>
+To: Stephen Bash <bash@genarts.com>
+X-From: git-owner@vger.kernel.org Fri May 04 18:30:02 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SQLJT-0004TT-7D
-	for gcvg-git-2@plane.gmane.org; Fri, 04 May 2012 18:24:59 +0200
+	id 1SQLOL-0000Jq-Ph
+	for gcvg-git-2@plane.gmane.org; Fri, 04 May 2012 18:30:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752411Ab2EDQYy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 4 May 2012 12:24:54 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:57564 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751875Ab2EDQYx (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 May 2012 12:24:53 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5BBF86E09;
-	Fri,  4 May 2012 12:24:53 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=ivXUxVUucOz7mBG8+cPsmucCwn0=; b=JwE95m
-	P9QdGKdX1oh/9ZrO2ZvKsFkDbkrqaX5ePf6zx2/HqEqRJOBdsqmig17wCfZh/Jq1
-	ab0rvKAS4kvj2kqGJfiebrUMBHk5j/zCkQkfbF4rwWAvj2iZOSS+wESOYwUmr6MQ
-	heN58MicNScnl049f72N1KH2wrgEpVqK34m0I=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=cGV5qc0R9O4dH8Ni/uXwzQ3SiOitwBT3
-	6MACgAgppJH6/C06iYlKJ/ygE6Z5Ieanv/UW3eoal9rTD3lMrNjLWKrp/yufpCqI
-	7Bo57x3smQfekyzLP/4K32KWL5HiOvbTj8gU59AfPsjXZfk6Z0JOsL5pcYmIPGBl
-	ppVrM7Zjdp8=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 528306E08;
-	Fri,  4 May 2012 12:24:53 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D911A6E07; Fri,  4 May 2012
- 12:24:52 -0400 (EDT)
-In-Reply-To: <4FA376B5.50804@dewire.com> (Robin Rosenberg's message of "Fri,
- 04 May 2012 08:27:01 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: AD9429DE-9605-11E1-B06D-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1757446Ab2EDQ35 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 4 May 2012 12:29:57 -0400
+Received: from cassiel.sirena.org.uk ([80.68.93.111]:34428 "EHLO
+	cassiel.sirena.org.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752667Ab2EDQ34 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 May 2012 12:29:56 -0400
+Received: from broonie by cassiel.sirena.org.uk with local (Exim 4.72)
+	(envelope-from <broonie@sirena.org.uk>)
+	id 1SQLO8-0000zz-1T; Fri, 04 May 2012 17:29:48 +0100
+Content-Disposition: inline
+In-Reply-To: <6211a2de-a545-41c3-9fb5-e7e3033b45f4@mail>
+X-Cookie: This login session: $13.99
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: broonie@sirena.org.uk
+X-SA-Exim-Scanned: No (on cassiel.sirena.org.uk); SAEximRunCond expanded to false
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197035>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197036>
 
-Robin Rosenberg <robin.rosenberg@dewire.com> writes:
+On Fri, May 04, 2012 at 10:59:30AM -0400, Stephen Bash wrote:
 
-> Junio C Hamano skrev 2012-05-04 01.05:
->> Sven Strickroth <sven.strickroth@tu-clausthal.de> writes:
->>
->>> The "normal" reflog cannot be used if you just create and then delete a
->>> branch - the reflog is empty in this case.
->>
->> I somehow thought we discussed about the lack of "creation" event.
->> Perhaps it is sufficient to create a reflog entry for such then?
->
-> We have the create event (oldd=0000...), if we just don't delete the log and add
-> a destroy event (newid=000000).
->
-> A bit trickier with the current reflog design is the case where you
-> delete branch foo and then create the branch foo/bar.
+> If my hg-foo isn't too out of date...  The hg recipe creates 4000
+> "heads" on a single branch, rather than 4000 branches (see the 'hg
+> heads' command).  This is basically the point Rich is arguing I
+> believe.  hg allows for multiple tip commits all with the same branch
+> name (IMO this is important because hg branch names are permanently
+> recorded in their version of the commit object).
 
-That is not worth worrying about from the behavioral point of view, as end
-users, even on Macs and Windows, have long learned that in a hierarchical
-name space, you cannot have foo and foo/bar at the same time.  But from
-the implementation point of view, that implies in this sequence:
+> This is a *fundamental* difference in the implementation of the two
+> tools (and causes confusion because now "branch" has two slightly
+> different meanings).  However, IMHO, philosophically it all boils down
+> to the same thing: development has forked and has to be merged.
+> Whether that fork has a name or not is up to the tool.  In hg it
+> doesn't *have* to have a name (multiple heads per branch), in git it
+> does (single head per branch).
 
-	create foo/bar, creating refs/heads/foo/bar and logs/foo/bar
-        delete foo/bar, removing refs/heads/foo/bar but keeping logs/foo/bar
-	create foo
+Ah, this makes some sense - I *think* it's coming down not so much that
+you have to name the branches (googling around it seems hg does assign
+names, it's just that they're autogenerated numbers) as to the fact that
+unless you branch directly from wherever your origin repository is git
+doesn't keep track of where you're ultimately trying to merge development
+back to.
 
-the third step needs to "rm -fr logs/foo && >logs/foo".  We have refs/heads/foo
-under lock, so presumably nobody can create a baz branch that adds logs/foo/baz
-to race with us while we do so, but I didn't check.  Our lock taking code
-may need to be tweaked so that if you take lock on refs/heads/foo, nobody
-else can take lock on refs/heads/foo/anything, and vice versa.
+If the above is right then some UI around remotes and branch --track and
+--set-upstream which provides an automated way of saying "this is a
+scratch branch for merge into X" and can then do things like helping
+with merging and enumerating all the scratch branches for a given
+destination, or with bundling up all the scratch branches and dropping
+them elsewhere for merge might do the trick?  A "strong" branch kind of
+thing.
+
+This does come up a bit with traditional git workflows - I have it a
+little when working between my desktop and my laptop - but is IME
+usually resolved by publishing frequently to some central location
+frequently and then rebasing if lots of local merges aren't approved of
+in your workflow.  git (at least in kernel usage) has more of a
+"building a patch series" model oriented around preparing things for
+review.
