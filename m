@@ -1,80 +1,210 @@
-From: Rich Pixley <rich.pixley@palm.com>
-Subject: Re: Newbie grief
-Date: Fri, 04 May 2012 11:23:10 -0700
-Message-ID: <4FA41E8E.20900@palm.com>
-References: <86mx5rmx32.fsf@red.stonehenge.com> <4FA055D0.7040102@palm.com> <86aa1rmvhb.fsf@red.stonehenge.com> <4FA05E9F.9090709@palm.com> <CAJsNXTmo1B86nSm7u923jJuGX0zajz3iqVu-onANMN-5BE5DfQ@mail.gmail.com> <4FA2D1D7.3020807@palm.com> <CA+7g9JzZ36RgsniT4UN0Zk+z1ohZYW5u+0AoGMjJZqsoBjqvqA@mail.gmail.com> <4FA2D97A.8090504@palm.com> <86ipgdhvjo.fsf@red.stonehenge.com> <4FA2F013.3020904@palm.com> <20120504155606.GB30130@sirena.org.uk>
+From: Csaba Henk <csaba@lowlife.hu>
+Subject: commit message parsing error in rebase
+Date: Sat, 5 May 2012 00:05:35 +0530
+Message-ID: <CAA-jfp=F7ije9nFJio5gnmNGptDR1ZTBbCi-aOv7JokqrXBgYA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "Randal L. Schwartz" <merlyn@stonehenge.com>,
-	Nathan Gray <n8gray@n8gray.org>,
-	PJ Weisberg <pj@irregularexpressions.net>,
-	Sitaram Chamarty <sitaramc@gmail.com>,
-	"Ted Ts'o" <tytso@mit.edu>, Seth Robertson <in-gitvger@baka.org>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Mark Brown <broonie@opensource.wolfsonmicro.com>
-X-From: git-owner@vger.kernel.org Fri May 04 20:23:29 2012
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri May 04 20:36:08 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SQNA7-0002DW-KR
-	for gcvg-git-2@plane.gmane.org; Fri, 04 May 2012 20:23:27 +0200
+	id 1SQNMI-00048n-Ov
+	for gcvg-git-2@plane.gmane.org; Fri, 04 May 2012 20:36:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753812Ab2EDSXX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 4 May 2012 14:23:23 -0400
-Received: from smtp-relay2.palm.com ([64.28.152.243]:48533 "EHLO
-	smtp-relay2.palm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753520Ab2EDSXW (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 May 2012 14:23:22 -0400
-X-IronPort-AV: E=Sophos;i="4.75,532,1330934400"; 
-   d="scan'208";a="13316545"
-Received: from unknown (HELO ushqusdns4.palm.com) ([148.92.223.164])
-  by smtp-relay2.palm.com with ESMTP; 04 May 2012 11:23:22 -0700
-Received: from fuji.noir.com ([10.100.2.1])
-	by ushqusdns4.palm.com (8.14.4/8.14.4) with ESMTP id q44IN9Xr020498;
-	Fri, 4 May 2012 11:23:10 -0700
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.7; rv:12.0) Gecko/20120428 Thunderbird/12.0.1
-In-Reply-To: <20120504155606.GB30130@sirena.org.uk>
+	id S1753270Ab2EDSf5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 4 May 2012 14:35:57 -0400
+Received: from mail-ey0-f174.google.com ([209.85.215.174]:36929 "EHLO
+	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752129Ab2EDSf5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 May 2012 14:35:57 -0400
+Received: by eaaq12 with SMTP id q12so918765eaa.19
+        for <git@vger.kernel.org>; Fri, 04 May 2012 11:35:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:from:date:x-google-sender-auth:message-id
+         :subject:to:content-type;
+        bh=+Pi28V2omYIiIr948MQf6RkmlwQjk/Mj9ypYihkVmwo=;
+        b=zvZuqCZ+c4o1fCpJ/keZDhY1lxiKJ1chDcFzxRJrgrPpKCHzuy8aZ+xZpFw/dFNQSj
+         me3Vq59RQsjUWeFeWUiOBRRZ1y4hHzjJQGz+YVYWvFOei5HzmVABr11dyMC9KuzUM+Hi
+         lPVg13EatUbOuILW/5iR/+JNmKqk5URDsYhXRnoMNFopTNJ3KbrzvuN5+/vuQwjOJt86
+         Kk+yzsG41s3MmmETVYrvNwIRHggV41qLi5hLYsR+tfMXhWONnNyROHrEuQjRihzOAxfG
+         sdc0/ZbSiazQ5/pdHcMXJ8HqMhewFp7zA+C12XBEXqhRXem3A7wUyqkBqGDue+dgpLJq
+         gy+g==
+Received: by 10.213.121.67 with SMTP id g3mr1350203ebr.134.1336156555913; Fri,
+ 04 May 2012 11:35:55 -0700 (PDT)
+Received: by 10.14.194.198 with HTTP; Fri, 4 May 2012 11:35:35 -0700 (PDT)
+X-Google-Sender-Auth: H_BXnu_EmIti-CgVXRFhN3YcoXM
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197046>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197047>
 
-On 5/4/12 08:56 , Mark Brown wrote:
-> On Thu, May 03, 2012 at 01:52:35PM -0700, Rich Pixley wrote:
->
->> It's not just hg.  It's other source code control systems as well.
->> Check out any of the other daggy guys.  So sure, I'll admit a bias
->> for current technology over older tech.
->
-> I'm still not sure what's missing here without a central server?   The
-> other DVCSs I've used (which don't include hg) do require that the user
-> trigger a merge operation somehow; they don't magically go and merge
-> things without being asked.
+Hi,
 
-Nor does hg.  Rather, it allows the collision to be tracked within the 
-source code control tool so that anyone who wants to see it can do so, 
-and so that anyone who wants to merge it can do so.  The data flow paths 
-for collisions and proposed changes can follow precisely the same paths 
-as any other code changes.  No meta channel is required.
+The bug I'm to report is objectively a bug; nevertheless, let
+me use a fictive scenario to illustrate it.
 
-This is a different situation from either the one where I, specifically 
-me, must merge or the one where I intend my changes to stay separated 
-from other development, (a new "branch").  The situation with multiple 
-heads allows the merge, the branch, even the decision about whether to 
-merge or branch, to be delayed indefinitely.
+Say we have a project where we fix a vulnerability in the
+server component. In the commit message of the fix, we
+give a PoC malicious client that can be used to test if
+server is vulnerable. The PoC is specified by embedding
+a diff against normal client in the commit message.
 
-The fact that it allows for this also allows for a number of different 
-repository network architectures, all of which are blocked in git 
-because of the push problem.  In git, those decisions must be made 
-_before_ the push.
+(Let's not discuss how good or bad it is to give PoCs in
+commit messages.)
 
-There's also a possibility of nonterminating merges.  That is, if my 
-team is making changes faster than you can merge them, then you'll never 
-get to push your changes.  With dual heads, you still can.  And then 
-anyone who wants to can merge them.
+Now if you rebase this commit, git-rebase will think the
+PoC diff in the commit message is part of the commit diff,
+and will apply it. So the client will became malicious
+upon the rebase.
 
---rich
+Nb. cherry-pick does not make this mistake (what took
+me by surprise as I thought rebase and cherry-pick have a
+common backend).
+
+The following script creates such a scenario:
+
+####################################################
+echo 'def client(conn):
+  print >> conn, "hello"' > client.py
+echo 'def server(conn):
+  print conn.read()[4]' > server.py
+git add .
+git commit -m first
+echo 'def server(conn):
+  msg = conn.read()
+  if len(msg) >= 5:
+    print msg[4]' > server.py
+git commit -am 'server: check msg size
+
+Make sure client cannot crash server.
+
+Q/A: check with PoC malicious client
+by applying patch:
+
+diff --git a/client.py b/client.py
+--- a/client.py
++++ b/client.py
+@@ -1,2 +1,2 @@
+ def client(conn):
+-  print >> conn, "hello"
++  print >> conn, "hell"'
+git checkout --detach HEAD^
+echo 'def load_balancer():
+  balance_load()' > load_balancer.py
+git add load_balancer.py
+git commit -m 'added load balancer prototype'
+git tag LOAD_BALANCER_PROTO
+git branch bleeding-edge master
+git rebase LOAD_BALANCER_PROTO bleeding-edge
+git checkout LOAD_BALANCER_PROTO
+git cherry-pick master
+echo
+echo '###### RESULT #######'
+echo '### '`git --version`
+echo
+echo '## topolgy'
+git log --graph --pretty=oneline --all --decorate
+echo
+echo '## original commit'
+git show --stat --decorate master
+echo
+echo '## rebased commit'
+git show --stat --decorate bleeding-edge
+echo
+echo '## cherry-picked commit'
+git show --stat --decorate HEAD
+####################################################
+
+and it has an output like this:
+
+###### RESULT #######
+### git version 1.7.10.1
+
+## topolgy
+* f5100d373242554f71db47592d8214c9e89d854a (bleeding-edge) server:
+check msg size
+| * c8fa20bd901d3bc0e745d976151d3b34d91f077d (HEAD) server: check msg size
+|/
+* 0cb17691eb9a9774af0fc991bf34da89fd413325 (tag: LOAD_BALANCER_PROTO)
+added load balancer prototype
+| * 3628281d81d275f431bdc0da36fe7c7d66240175 (master) server: check msg size
+|/
+* 80d8113aa7f6fa46245408ddbc846d9c1e796373 first
+
+## original commit
+commit 3628281d81d275f431bdc0da36fe7c7d66240175 (master)
+Author: Csaba Henk <>
+Date:   Fri May 4 23:56:51 2012 +0530
+
+    server: check msg size
+
+    Make sure client cannot crash server.
+
+    Q/A: check with PoC malicious client
+    by applying patch:
+
+    diff --git a/client.py b/client.py
+    --- a/client.py
+    +++ b/client.py
+    @@ -1,2 +1,2 @@
+     def client(conn):
+    -  print >> conn, "hello"
+    +  print >> conn, "hell"
+
+ server.py |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+## rebased commit
+commit f5100d373242554f71db47592d8214c9e89d854a (bleeding-edge)
+Author: Csaba Henk <>
+Date:   Fri May 4 23:56:51 2012 +0530
+
+    server: check msg size
+
+    Make sure client cannot crash server.
+
+    Q/A: check with PoC malicious client
+    by applying patch:
+
+    diff --git a/client.py b/client.py
+    --- a/client.py
+    +++ b/client.py
+    @@ -1,2 +1,2 @@
+     def client(conn):
+    -  print >> conn, "hello"
+    +  print >> conn, "hell"
+
+ client.py |    2 +-
+ server.py |    4 +++-
+ 2 files changed, 4 insertions(+), 2 deletions(-)
+
+## cherry-picked commit
+commit c8fa20bd901d3bc0e745d976151d3b34d91f077d (HEAD)
+Author: Csaba Henk <>
+Date:   Fri May 4 23:56:51 2012 +0530
+
+    server: check msg size
+
+    Make sure client cannot crash server.
+
+    Q/A: check with PoC malicious client
+    by applying patch:
+
+    diff --git a/client.py b/client.py
+    --- a/client.py
+    +++ b/client.py
+    @@ -1,2 +1,2 @@
+     def client(conn):
+    -  print >> conn, "hello"
+    +  print >> conn, "hell"
+
+ server.py |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+
+Csaba
