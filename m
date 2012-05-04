@@ -1,54 +1,67 @@
-From: karunakar merugu <karuna.linux@gmail.com>
-Subject: branching based on tag.
-Date: Fri, 4 May 2012 14:48:58 +0530
-Message-ID: <CABECqUE-WqnR_wQzMsuEFmUu86_9i+GnJdEKYXwB+WancTFnOA@mail.gmail.com>
+From: Nelson Benitez Leon <nelsonjesus.benitez@seap.minhap.es>
+Subject: Re: [PATCH 5/6] http: Avoid limit of retrying request only twice
+Date: Fri, 04 May 2012 12:20:34 +0200
+Message-ID: <4FA3AD72.1010407@seap.minhap.es>
+References: <4FA2B4FC.3030309@seap.minhap.es> <20120504072427.GE21895@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 04 11:19:08 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri May 04 11:24:33 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SQEfL-0001eX-Gy
-	for gcvg-git-2@plane.gmane.org; Fri, 04 May 2012 11:19:07 +0200
+	id 1SQEkW-0005gQ-FB
+	for gcvg-git-2@plane.gmane.org; Fri, 04 May 2012 11:24:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754001Ab2EDJTA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 4 May 2012 05:19:00 -0400
-Received: from mail-vc0-f174.google.com ([209.85.220.174]:55658 "EHLO
-	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1753712Ab2EDJS7 (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 4 May 2012 05:18:59 -0400
-Received: by vcqp1 with SMTP id p1so1881675vcq.19
-        for <git@vger.kernel.org>; Fri, 04 May 2012 02:18:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=gmIwOS9JdeKi/tYyzRtgbuqwWxSSpWuLyKPQcaJ1UCs=;
-        b=miRsvLfx3/z5r0QBMm4HwDHOKr3AiuNmeuC2XMrO/GnFJRAmiZ/YC2E9nBe16bioH1
-         6HkW6GTvn5Wk8NJv7WcnlBxOS4K88TvptkDzv26prtM0aGMewau9qAa31BlcptGtyMna
-         cX1+OWqYMYxk277JfpRTUkB2Nbl8UcIcqJyefmGwDTat2vscQjL/8yyWkIZ125hWBx1N
-         2scnGI9FXrY4Oo0PMNhIizr+Cqz3FAEiuRBDocmxLLvI1m0hgu/lYhIHWH9lR3Nhi79m
-         xHWepYw3IETXDS9WCkwA32rpR3Bhm380avjSSQALzgOQOjKBnb7XyUN4K7MLhV+vGKT3
-         IA+w==
-Received: by 10.52.96.35 with SMTP id dp3mr630782vdb.97.1336123138625; Fri, 04
- May 2012 02:18:58 -0700 (PDT)
-Received: by 10.220.232.142 with HTTP; Fri, 4 May 2012 02:18:58 -0700 (PDT)
+	id S1754189Ab2EDJYX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 4 May 2012 05:24:23 -0400
+Received: from luthien2.map.es ([82.150.0.102]:41864 "EHLO luthien2.map.es"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753676Ab2EDJYW (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 May 2012 05:24:22 -0400
+Received: from correo.map.es (unknown [10.1.24.31])
+	by luthien2.map.es (Postfix) with ESMTP id 4A03CB75AB;
+	Fri,  4 May 2012 11:23:22 +0200 (CEST)
+Received: from [10.47.128.147] (unknown [10.1.29.55])
+	by correo.map.es (Postfix) with ESMTP id 546E6D4C66;
+	Fri,  4 May 2012 11:23:15 +0200 (CEST)
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:12.0) Gecko/20120424 Thunderbird/12.0
+In-Reply-To: <20120504072427.GE21895@sigill.intra.peff.net>
+X-map-MapScanner: Libre de virus, Libre de virus
+X-Spam-Status: No, No
+X-map-MapScanner-Information: 
+X-map-MapScanner-ID: 4A03CB75AB.E4E8C
+X-map-MapScanner-From: nelsonjesus.benitez@seap.minhap.es
+X-map-MailScanner-Watermark: 1336728202.69269@HPhXugcyZ4tpwbl1zu3hQg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197008>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197009>
 
-hi
-I am new to the git.
-I just cloned the repository by following command
-git clone git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git
-After this I checked tags by
-git tag -l
-it gives me the lot of tags.I just want to work on some specific
-tag.Is it possible for me to create separate branch on that specific
-tag.
-thanks,
-karunakar.
+On 05/04/2012 09:24 AM, Jeff King wrote:
+> On Thu, May 03, 2012 at 06:40:28PM +0200, Nelson Benitez Leon wrote:
+> 
+>> [snip]
+>>
+>> Now we retry as long as we keep receiving HTTP_REAUTH, so the previous
+>> sequence correctly completes.
+>>
+>> Patch by Jeff King <peff@peff.net>
+> 
+> We usually spell that as:
+> 
+>   From: Jeff King <peff@peff.net>
+> 
+> at the beginning of the email body (which lets am set the author
+> appropriately).
+
+Are you saying the first line of the email body? isn't that for the
+commit message first-line? I suppose you're not refering to the 'from
+field' of the email as I would need alter identities in my email client
+and found that cumbersome. Sorry for me not getting it and asking for
+clarification.
