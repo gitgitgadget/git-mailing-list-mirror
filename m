@@ -1,155 +1,270 @@
 From: Ralf Thielow <ralf.thielow@googlemail.com>
-Subject: =?UTF-8?q?=5BPATCH=202/5=5D=20l10n=3A=20de=2Epo=3A=20translate=20=22track=22=20as=20=22folgen=22?=
-Date: Fri,  4 May 2012 21:48:23 +0200
-Message-ID: <1336160906-20708-3-git-send-email-ralf.thielow@googlemail.com>
+Subject: [PATCH 3/5] l10n: de.po: translate "remote" as "extern"
+Date: Fri,  4 May 2012 21:48:24 +0200
+Message-ID: <1336160906-20708-4-git-send-email-ralf.thielow@googlemail.com>
 References: <1336160906-20708-1-git-send-email-ralf.thielow@googlemail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org, Ralf Thielow <ralf.thielow@googlemail.com>
 To: trast@student.ethz.ch, jk@jk.gs, stimming@tuhh.de
-X-From: git-owner@vger.kernel.org Fri May 04 21:49:07 2012
+X-From: git-owner@vger.kernel.org Fri May 04 21:49:08 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SQOUy-0007I9-SZ
+	id 1SQOUz-0007I9-Bd
 	for gcvg-git-2@plane.gmane.org; Fri, 04 May 2012 21:49:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759559Ab2EDTsu convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 4 May 2012 15:48:50 -0400
-Received: from mail-we0-f174.google.com ([74.125.82.174]:62404 "EHLO
-	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754379Ab2EDTsr (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 May 2012 15:48:47 -0400
-Received: by mail-we0-f174.google.com with SMTP id b10so138033wer.19
-        for <git@vger.kernel.org>; Fri, 04 May 2012 12:48:47 -0700 (PDT)
+	id S1759561Ab2EDTsw convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 4 May 2012 15:48:52 -0400
+Received: from mail-wi0-f178.google.com ([209.85.212.178]:59400 "EHLO
+	mail-wi0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759557Ab2EDTsu (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 May 2012 15:48:50 -0400
+Received: by wibhr7 with SMTP id hr7so1702089wib.1
+        for <git@vger.kernel.org>; Fri, 04 May 2012 12:48:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=googlemail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=dSHFGndJ9To7MGyTma1Gm7QnaC9wElB1r8nL3tkf9qw=;
-        b=Z0pm1uAGQXo1DRHWVM1tK1kYtlctgfWxWs+rG79cGXtXXK4bEpOj6qnFKztSaEUdnI
-         +oLgf5nH6Kdg3nGeUQkB4722awbo7Eggjm6RLKKIQ1IJLF+5BbtrdiaKkrXmt0RcdRpN
-         xwj0FcyZzb9GLEnz5wK3uk+EUpZ1dbRyQXdcIIf7HYJHwIlxHQn5a8Xb6cDQeHhhY9zU
-         AB9CBxoQ3XrvXolFazYkJWzFQG3BAkTlPX4xblqj6oJmmWDTrsxv3YY7E0P4FxAWbfgp
-         Y3y/HK4W1fISY1b0n762kB+2tamxQu+yfnvLiGDMCnbNJe4j8/adfd758jM4C5kwtXrc
-         3etQ==
-Received: by 10.180.81.135 with SMTP id a7mr15823010wiy.16.1336160927424;
-        Fri, 04 May 2012 12:48:47 -0700 (PDT)
+        bh=V+lPwARXri5OI+Kv2GZPBMVhfJJMs1wMNw1PzoB8npM=;
+        b=soMpdKAx/Vv+bXZhdcU8mQZaEby4oJ+JCpyjxJFy8TGoNnf7H1OJsgvbmhGwI2s9Do
+         lz34qqKMEILaDzdibR+QGWJOJ3TksGFkYvYJ7JvJ8yxHDnoA7LMhFdo6IIVP+S+iNTX0
+         XLa7gQEHrz2Rr7xYOR6SJXX1lfnuX3O26RQNw494F0tcHYA/+SlKyigSlL57tvB/Txa9
+         B7OF4hAW3HAxbNElCsfdON9nKPj/CSJzCZqUN6hBeceW1/3P/F/O+yFzIDrXFGQI2RHX
+         1q5Gw16EigkXBVEMVdoUnIW+N8GdOA/eXoNdfXnPoRWj1IYK18wus6EgHj+Kno2ypQVG
+         qrMA==
+Received: by 10.180.90.233 with SMTP id bz9mr15097075wib.21.1336160928936;
+        Fri, 04 May 2012 12:48:48 -0700 (PDT)
 Received: from localhost.localdomain (dslb-094-223-205-117.pools.arcor-ip.net. [94.223.205.117])
-        by mx.google.com with ESMTPS id 6sm3408902wiz.1.2012.05.04.12.48.45
+        by mx.google.com with ESMTPS id 6sm3408902wiz.1.2012.05.04.12.48.47
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 04 May 2012 12:48:46 -0700 (PDT)
+        Fri, 04 May 2012 12:48:48 -0700 (PDT)
 X-Mailer: git-send-email 1.7.10.72.g0dc6d
 In-Reply-To: <1336160906-20708-1-git-send-email-ralf.thielow@googlemail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197066>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197067>
 
-The word "track" was translated as "verfolgt"
-which is not the correct word for it. We've
-changed it to "folgen".
+The word "remote" was translated as "entfernt"
+and "anders". Both of them aren't really good
+because "anders" in German means "other" and
+"entfernt" has two different meanings and could
+result in confusion to the users.
+We've changed the translation to "extern".
 
+Suggested-by: Jan Kr=C3=BCger <jk@jk.gs>
 Signed-off-by: Ralf Thielow <ralf.thielow@googlemail.com>
 ---
- po/de.po |   20 ++++++++++----------
- 1 Datei ge=C3=A4ndert, 10 Zeilen hinzugef=C3=BCgt(+), 10 Zeilen entfer=
+ po/de.po |   46 +++++++++++++++++++++++-----------------------
+ 1 Datei ge=C3=A4ndert, 23 Zeilen hinzugef=C3=BCgt(+), 23 Zeilen entfer=
 nt(-)
 
 diff --git a/po/de.po b/po/de.po
-index abb719b..e4fb676 100644
+index e4fb676..6fb7b17 100644
 --- a/po/de.po
 +++ b/po/de.po
-@@ -525,7 +525,7 @@ msgstr "ge=C3=A4nderter Inhalt, "
+@@ -779,7 +779,7 @@ msgstr "Konnte Ausgabe nicht umleiten."
 =20
- #: wt-status.c:252
- msgid "untracked content, "
--msgstr "unverfolgter Inhalt, "
-+msgstr "ungefolgter Inhalt, "
+ #: builtin/archive.c:37
+ msgid "git archive: Remote with no URL"
+-msgstr "git archive: Anderes Archiv ohne URL"
++msgstr "git archive: Externes Archiv ohne URL"
 =20
- #: wt-status.c:266
+ #: builtin/archive.c:58
+ msgid "git archive: expected ACK/NAK, got EOF"
+@@ -825,7 +825,7 @@ msgstr ""
+ #. TRANSLATORS: This is "remote " in "remote branch '%s' not found"
+ #: builtin/branch.c:163
+ msgid "remote "
+-msgstr "entfernter "
++msgstr "externer "
+=20
+ #: builtin/branch.c:171
+ msgid "cannot use -a with -d"
+@@ -1301,12 +1301,12 @@ msgstr "Fertig.\n"
+ #: builtin/clone.c:440
  #, c-format
-@@ -586,7 +586,7 @@ msgstr "Initiale Version"
+ msgid "Could not find remote branch %s to clone."
+-msgstr "Entfernter Zweig %s konnte nicht zum Klonen gefunden werden."
++msgstr "Externer Zweig %s konnte nicht zum Klonen gefunden werden."
 =20
- #: wt-status.c:745
- msgid "Untracked"
--msgstr "Unverfolgte"
-+msgstr "Ungefolgte"
+ #: builtin/clone.c:549
+ msgid "remote HEAD refers to nonexistent ref, unable to checkout.\n"
+ msgstr ""
+-"Entfernte Zweigspitze (HEAD) bezieht sich auf eine nicht existierende=
+ "
++"Externe Zweigspitze (HEAD) bezieht sich auf eine nicht existierende "
+ "Referenz und kann nicht ausgecheckt werden.\n"
 =20
- #: wt-status.c:747
- msgid "Ignored"
-@@ -595,11 +595,11 @@ msgstr "Ignorierte"
- #: wt-status.c:749
+ #: builtin/clone.c:639
+@@ -1369,7 +1369,7 @@ msgstr "Wei=C3=9F nicht wie %s zu klonen ist."
+ #: builtin/clone.c:835
  #, c-format
- msgid "Untracked files not listed%s"
--msgstr "Unverfolgte Dateien nicht aufgelistet%s"
-+msgstr "Ungefolgte Dateien nicht aufgelistet%s"
+ msgid "Remote branch %s not found in upstream %s"
+-msgstr "entfernten Zweig %s nicht im anderen Projektarchiv %s gefunden=
+"
++msgstr "externer Zweig %s nicht im anderen Projektarchiv %s gefunden"
 =20
- #: wt-status.c:751
- msgid " (use -u option to show untracked files)"
--msgstr " (benutze die Option -u um unverfolgte Dateien anzuzeigen)"
-+msgstr " (benutze die Option -u um ungefolgte Dateien anzuzeigen)"
+ #: builtin/clone.c:842
+ msgid "You appear to have cloned an empty repository."
+@@ -1846,7 +1846,7 @@ msgstr "unbehandeltes Objekt '%s' gegeben"
 =20
- #: wt-status.c:757
- msgid "No changes"
-@@ -617,11 +617,11 @@ msgstr " (benutze \"git add\" und/oder \"git comm=
-it -a\")"
- #: wt-status.c:765
+ #: builtin/fetch.c:200
+ msgid "Couldn't find remote ref HEAD"
+-msgstr "Konnte entfernte Referenz der Zweigspitze (HEAD) nicht finden.=
+"
++msgstr "Konnte externe Referenz der Zweigspitze (HEAD) nicht finden."
+=20
+ #: builtin/fetch.c:252
  #, c-format
- msgid "nothing added to commit but untracked files present%s\n"
--msgstr "nichts zum Eintragen hinzugef=C3=BCgt, aber es gibt unverfolgt=
-e Dateien%s\n"
-+msgstr "nichts zum Eintragen hinzugef=C3=BCgt, aber es gibt ungefolgte=
- Dateien%s\n"
+@@ -1973,8 +1973,8 @@ msgid ""
+ "No remote repository specified.  Please, specify either a URL or a\n"
+ "remote name from which new revisions should be fetched."
+ msgstr ""
+-"Kein entferntes Projektarchiv spezifiziert. Bitte spezifiziere entwed=
+er\n"
+-"eine URL oder den Namen eines entfernten Archivs, von welchem neue\n"
++"Kein externes Projektarchiv spezifiziert. Bitte spezifiziere entweder=
+\n"
++"eine URL oder den Namen eines externen Archivs, von welchem neue\n"
+ "Revisionen angefordert werden sollen."
 =20
- #: wt-status.c:767
- msgid " (use \"git add\" to track)"
--msgstr " (benutze \"git add\" zum Verfolgen)"
-+msgstr " (benutze \"git add\" zum Folgen)"
-=20
- #: wt-status.c:769 wt-status.c:772 wt-status.c:775
+ #: builtin/fetch.c:918
+@@ -1992,7 +1992,7 @@ msgstr "fetch --all macht keinen Sinn mit Referen=
+zspezifikationen"
+ #: builtin/fetch.c:983
  #, c-format
-@@ -630,11 +630,11 @@ msgstr "nichts zum Eintragen%s\n"
+ msgid "No such remote or remote group: %s"
+-msgstr "Keine solche Entfernung oder Entfernungsgruppe: %s"
++msgstr "Kein externes Archiv (einzeln oder Gruppe): %s"
 =20
- #: wt-status.c:770
- msgid " (create/copy files and use \"git add\" to track)"
--msgstr " (Erstelle/Kopiere Dateien und benutze \"git add\" zum Verfolg=
-en)"
-+msgstr " (Erstelle/Kopiere Dateien und benutze \"git add\" zum Folgen)=
+ #: builtin/fetch.c:991
+ msgid "Fetching a group and specifying refspecs does not make sense"
+@@ -2338,7 +2338,7 @@ msgstr "Fehler beim Erstellen der Ausgabedateien.=
+"
+ msgid ""
+ "Could not find a tracked remote branch, please specify <upstream> man=
+ually.\n"
+ msgstr ""
+-"Konnte gefolgten, entfernten Zweig nicht finden, bitte spezifiziere "
++"Konnte gefolgten, externen Zweig nicht finden, bitte spezifiziere "
+ "<upstream> manuell.\n"
+=20
+ #: builtin/log.c:1530 builtin/log.c:1532 builtin/log.c:1544
+@@ -2463,7 +2463,7 @@ msgid ""
+ msgstr ""
+ "Bitte gebe eine Versionsbeschreibung ein um zu erkl=C3=A4ren, warum d=
+iese "
+ "Zusammenf=C3=BChrung erforderlich ist,\n"
+-"insbesondere wenn es einen aktualisierten entfernten Zweig mit einem =
+"
++"insbesondere wenn es einen aktualisierten, externen Zweig mit einem "
+ "Thema-Zweig zusammenf=C3=BChrt.\n"
+ "\n"
+ "Zeilen beginnend mit '#' werden ignoriert, und eine leere Beschreibun=
+g "
+@@ -2496,17 +2496,17 @@ msgstr "Kein aktueller Zweig."
+=20
+ #: builtin/merge.c:1059
+ msgid "No remote for the current branch."
+-msgstr "Kein anderes Archiv f=C3=BCr den aktuellen Zweig."
++msgstr "Kein externes Archiv f=C3=BCr den aktuellen Zweig."
+=20
+ #: builtin/merge.c:1061
+ msgid "No default upstream defined for the current branch."
+-msgstr "Kein entferntes Standard-Projektarchiv f=C3=BCr den aktuellen =
+Zweig "
++msgstr "Kein externes Standard-Projektarchiv f=C3=BCr den aktuellen Zw=
+eig "
+ "definiert."
+=20
+ #: builtin/merge.c:1066
+ #, c-format
+ msgid "No remote tracking branch for %s from %s"
+-msgstr "Kein entfernter =C3=9Cbernahmezweig f=C3=BCr %s von %s"
++msgstr "Kein externer =C3=9Cbernahmezweig f=C3=BCr %s von %s"
+=20
+ #: builtin/merge.c:1188
+ msgid "There is no merge to abort (MERGE_HEAD missing)."
+@@ -2882,7 +2882,7 @@ msgstr ""
+ "Um die Historie, f=C3=BChrend zum aktuellen (freistehende Zweigspitze=
+ (HEAD))\n"
+ "Status zu versenden, benutze\n"
+ "\n"
+-"    git push %s HEAD:<Name-des-entfernten-Zweiges>\n"
++"    git push %s HEAD:<Name-des-externen-Zweiges>\n"
+=20
+ #: builtin/push.c:90
+ #, c-format
+@@ -2892,9 +2892,9 @@ msgid ""
+ "\n"
+ "    git push --set-upstream %s %s\n"
+ msgstr ""
+-"Der aktuelle Zweig %s hat keinen Zweig im entfernten Projektarchiv.\n=
+"
+-"Um den aktuellen Zweig zu versenden und die Entfernung als entferntes=
+\n"
+-"Projektarchiv zu setzen, benutze\n"
++"Der aktuelle Zweig %s hat keinen Zweig im externen Projektarchiv.\n"
++"Um den aktuellen Zweig zu versenden und das Fernarchiv als externes\n=
+"
++"Projektarchiv zu verwenden, benutze\n"
+ "\n"
+ "    git push --set-upstream %s %s\n"
+=20
+@@ -2902,7 +2902,7 @@ msgstr ""
+ #, c-format
+ msgid "The current branch %s has multiple upstream branches, refusing =
+to push."
+ msgstr ""
+-"Der aktuelle Zweig %s hat mehrere entfernte Zweige, Versand verweiger=
+t."
++"Der aktuelle Zweig %s hat mehrere externe Zweige, Versand verweigert.=
 "
 =20
- #: wt-status.c:773
- msgid " (use -u to show untracked files)"
--msgstr " (benutze -u um unverfolgte Dateien anzuzeigen)"
-+msgstr " (benutze -u um ungefolgte Dateien anzuzeigen)"
-=20
- #: wt-status.c:776
- msgid " (working directory clean)"
-@@ -1592,7 +1592,7 @@ msgstr "Kein existierender Autor mit '%s' gefunde=
-n."
- #: builtin/commit.c:1023 builtin/commit.c:1217
+ #: builtin/push.c:101
  #, c-format
- msgid "Invalid untracked files mode '%s'"
--msgstr "Ung=C3=BCltiger Modus '%s' f=C3=BCr unverfolgte Dateien"
-+msgstr "Ung=C3=BCltiger Modus '%s' f=C3=BCr ungefolgte Dateien"
-=20
- #: builtin/commit.c:1063
- msgid "Using both --reset-author and --author does not make sense"
-@@ -2087,7 +2087,7 @@ msgstr "--no-index oder --untracked kann nicht mi=
-t Revisionen benutzt werden"
- #: builtin/grep.c:974
- msgid "--[no-]exclude-standard cannot be used for tracked contents."
+@@ -2911,9 +2911,9 @@ msgid ""
+ "your current branch '%s', without telling me what to push\n"
+ "to update which remote branch."
  msgstr ""
--"--[no-]exlude-standard kann nicht mit verfolgten Inhalten benutzt wer=
-den"
-+"--[no-]exlude-standard kann nicht mit gefolgten Inhalten benutzt werd=
-en"
+-"Du versendest nach '%s', welches kein entferntes Projektarchiv deines=
+\n"
++"Du versendest nach '%s', welches kein externes Projektarchiv deines\n=
+"
+ "aktuellen Zweiges '%s' ist, ohne mir mitzuteilen, was ich versenden\n=
+"
+-"soll, um welchen entfernten Zweig zu aktualisieren."
++"soll, um welchen externen Zweig zu aktualisieren."
 =20
- #: builtin/grep.c:982
- msgid "both --cached and trees are given."
+ #: builtin/push.c:127
+ msgid ""
+@@ -2941,7 +2941,7 @@ msgid ""
+ msgstr ""
+ "Um dich vor Verlust von Historie zu bewahren, wurden nicht vorzuspule=
+nde "
+ "Aktualisierungen zur=C3=BCckgewiesen.\n"
+-"F=C3=BChre die entfernten =C3=84nderungen zusammen (z.B. 'git pull') =
+bevor du erneut "
++"F=C3=BChre die externen =C3=84nderungen zusammen (z.B. 'git pull') be=
+vor du erneut "
+ "versendest. Siehe auch die 'Note about fast-forwards' Sektion von \n"
+ "'git push --help' f=C3=BCr weitere Details.\n"
+=20
+@@ -2964,7 +2964,7 @@ msgid ""
+ msgstr ""
+ "Kein Ziel zum Versenden konfiguriert.\n"
+ "Entweder spezifizierst du die URL von der Kommandozeile oder konfigur=
+ierst "
+-"ein entferntes Projektarchiv unter Benutzung von\n"
++"ein externes Projektarchiv unter Benutzung von\n"
+ "\n"
+ "    git remote add <Name> <URL>\n"
+ "\n"
 --=20
 1.7.10.72.g0dc6d
