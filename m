@@ -1,79 +1,63 @@
-From: Stephen Bash <bash@genarts.com>
-Subject: Re: Newbie grief
-Date: Fri, 04 May 2012 10:59:30 -0400 (EDT)
-Message-ID: <6211a2de-a545-41c3-9fb5-e7e3033b45f4@mail>
-References: <4FA3E31A.6060606@op5.se>
+From: Daniel Stenberg <daniel@haxx.se>
+Subject: Re: [PATCH 1/6] http: try http_proxy env var when http.proxy config
+ option is not set
+Date: Fri, 4 May 2012 17:12:00 +0200 (CEST)
+Message-ID: <alpine.DEB.2.00.1205041710490.12158@tvnag.unkk.fr>
+References: <4FA2B4D3.90809@seap.minhap.es> <20120504070802.GA21895@sigill.intra.peff.net> <alpine.DEB.2.00.1205040921090.12158@tvnag.unkk.fr> <20120504073913.GA22388@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: Felipe Contreras <felipe.contreras@gmail.com>,
-	"Randal L. Schwartz" <merlyn@stonehenge.com>,
-	Sitaram Chamarty <sitaramc@gmail.com>,
-	Ted Ts'o <tytso@mit.edu>, Seth Robertson <in-gitvger@baka.org>,
-	git@vger.kernel.org, Rich Pixley <rich.pixley@palm.com>
-To: Andreas Ericsson <ae@op5.se>
-X-From: git-owner@vger.kernel.org Fri May 04 16:59:55 2012
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: Nelson Benitez Leon <nelsonjesus.benitez@seap.minhap.es>,
+	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri May 04 17:12:40 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SQJz7-00076a-ES
-	for gcvg-git-2@plane.gmane.org; Fri, 04 May 2012 16:59:53 +0200
+	id 1SQKBN-0000w7-JP
+	for gcvg-git-2@plane.gmane.org; Fri, 04 May 2012 17:12:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755939Ab2EDO7t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 4 May 2012 10:59:49 -0400
-Received: from hq.genarts.com ([173.9.65.1]:41331 "HELO mail.hq.genarts.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751000Ab2EDO7s (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 May 2012 10:59:48 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by mail.hq.genarts.com (Postfix) with ESMTP id 9FD66BE7E44;
-	Fri,  4 May 2012 10:59:36 -0400 (EDT)
-X-Virus-Scanned: amavisd-new at mail.hq.genarts.com
-Received: from mail.hq.genarts.com ([127.0.0.1])
-	by localhost (mail.hq.genarts.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id ZgNgEnJTbSIQ; Fri,  4 May 2012 10:59:30 -0400 (EDT)
-Received: from mail.hq.genarts.com (localhost [127.0.0.1])
-	by mail.hq.genarts.com (Postfix) with ESMTP id B96D1BE7E43;
-	Fri,  4 May 2012 10:59:30 -0400 (EDT)
-In-Reply-To: <4FA3E31A.6060606@op5.se>
-X-Mailer: Zimbra 7.1.3_GA_3346 (ZimbraWebClient - GC18 (Mac)/7.1.3_GA_3346)
+	id S1758716Ab2EDPM3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 4 May 2012 11:12:29 -0400
+Received: from giant.haxx.se ([80.67.6.50]:44944 "EHLO giant.haxx.se"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758696Ab2EDPM2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 May 2012 11:12:28 -0400
+Received: from giant.haxx.se (localhost.localdomain [127.0.0.1])
+	by giant.haxx.se (8.14.4/8.14.4/Debian-2) with ESMTP id q44FC2Kr001748
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Fri, 4 May 2012 17:12:02 +0200
+Received: from localhost (dast@localhost)
+	by giant.haxx.se (8.14.4/8.14.4/Submit) with ESMTP id q44FC0YO001621;
+	Fri, 4 May 2012 17:12:01 +0200
+X-Authentication-Warning: giant.haxx.se: dast owned process doing -bs
+X-X-Sender: dast@giant.haxx.se
+In-Reply-To: <20120504073913.GA22388@sigill.intra.peff.net>
+User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
+X-fromdanielhimself: yes
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197026>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197027>
 
------ Original Message -----
-> From: "Andreas Ericsson" <ae@op5.se>
-> Sent: Friday, May 4, 2012 10:09:30 AM
-> Subject: Re: Newbie grief
-> 
-> On 05/03/2012 08:58 PM, Rich Pixley wrote:
-> > On 5/1/12 16:30 , Felipe Contreras wrote:
-> > > Show all the hg commands of what you are trying to do, and we can
-> > > show you how you can achieve the same in git, but much more
-> > > easily.
-> >
-> > hg init foo
-> > for i in `yes | head -4000`; do (set -x ; d=`date +%s.%N` ; hg
-> > clone foo foo-$d; (cd foo-$d && date > bar && hg add bar && hg ci
-> > -m $d)); done
-> > for i in foo-*; do (set -x ; (cd $i && hg push -f)); done
+On Fri, 4 May 2012, Jeff King wrote:
+
+> The absolute simplest way for us would be to stop using
+> CURLOPT_PROXYUSERNAME/PASSWORD to set it ahead of time, and instead
+> provide a callback that curl would call on a 407. That callback would
+> just need the URL of the proxy, and would return the username/password
+> (or even just set them on the curl object via
+> CURLOPT_PROXYUSERNAME/PASSWORD).
 >
-> ... snip ... 
-> 
-> The hg recipe creates 4000 branches which I for some reason can't
-> find the names of so I have no idea how to interact with them. The
-> git recipe names them explicitly to foo-$i/master in the foo/ repo,
-> since git doesn't allow pushing of commits without a ref.
+> For that matter, it would simplify our code to do the same for regular http 
+> auth, too. And though we usually know our URL in that case, we might not if 
+> we got a 302 with FOLLOWLOCATION set.
 
-If my hg-foo isn't too out of date...  The hg recipe creates 4000 "heads" on a single branch, rather than 4000 branches (see the 'hg heads' command).  This is basically the point Rich is arguing I believe.  hg allows for multiple tip commits all with the same branch name (IMO this is important because hg branch names are permanently recorded in their version of the commit object).
+Thanks a lot. That is in fact almost exactly the solution we're discussing 
+right now.
 
-This is a *fundamental* difference in the implementation of the two tools (and causes confusion because now "branch" has two slightly different meanings).  However, IMHO, philosophically it all boils down to the same thing: development has forked and has to be merged.  Whether that fork has a name or not is up to the tool.  In hg it doesn't *have* to have a name (multiple heads per branch), in git it does (single head per branch).
+-- 
 
-I personally find Git's enforcement of naming a good thing: either the change I just made should be incorporated into the original branch, or there is a reason for it to stay separate.  In the latter case I should name it in a meaningful way so I (and other team members) remember why it is being kept separate (similar to why we use meaningful variable names).  In the former, I fetch and then merge or rebase as appropriate before pushing back upstream.
-
-HTH,
-Stephen
+  / daniel.haxx.se
