@@ -1,88 +1,172 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 2/6] http: handle proxy proactive authentication
-Date: Fri, 4 May 2012 09:55:15 -0400
-Message-ID: <20120504135514.GA29590@sigill.intra.peff.net>
-References: <4FA2B4DA.60908@seap.minhap.es>
- <20120504071632.GB21895@sigill.intra.peff.net>
- <4FA3DFE3.5050702@seap.minhap.es>
+From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [PATCH] Makefile: keep many variable list sorted
+Date: Fri,  4 May 2012 20:52:36 +0700
+Message-ID: <1336139556-28410-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Nelson Benitez Leon <nelsonjesus.benitez@seap.minhap.es>
-X-From: git-owner@vger.kernel.org Fri May 04 15:55:24 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri May 04 15:56:22 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SQIyh-0004N9-B4
-	for gcvg-git-2@plane.gmane.org; Fri, 04 May 2012 15:55:23 +0200
+	id 1SQIza-0005G3-FQ
+	for gcvg-git-2@plane.gmane.org; Fri, 04 May 2012 15:56:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756820Ab2EDNzS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 4 May 2012 09:55:18 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:57911
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752322Ab2EDNzR (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 May 2012 09:55:17 -0400
-Received: (qmail 20022 invoked by uid 107); 4 May 2012 13:55:34 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 04 May 2012 09:55:34 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 04 May 2012 09:55:15 -0400
-Content-Disposition: inline
-In-Reply-To: <4FA3DFE3.5050702@seap.minhap.es>
+	id S1757302Ab2EDN4O convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 4 May 2012 09:56:14 -0400
+Received: from mail-pb0-f46.google.com ([209.85.160.46]:39820 "EHLO
+	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752322Ab2EDN4N (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 May 2012 09:56:13 -0400
+Received: by pbbrp8 with SMTP id rp8so3870609pbb.19
+        for <git@vger.kernel.org>; Fri, 04 May 2012 06:56:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
+         :content-type:content-transfer-encoding;
+        bh=tD0IDilxtwdkijeFhXBPt00GMfUcR+bQkCVT3CjMLvA=;
+        b=Ky9Z+CRUdZsYoPP2up3k91SdY3PlyAHE6CyI3FwCsiN/HtOZC15/BW/3fOklvn+/2G
+         37XO7YOKG9VIW1bRlVJHa8z+6aIZGGSSu9zgaKw5aftnd2fd6qXHxGxFfdl0bMXYVtEf
+         aakcUUAdUXeM9KDNI1x8XezyFxVeXGMH4Xm/C9W/AnsMKo4V8N9OODh5E7b4DcQGevNA
+         Vtq380TJyVCRId54su2AgKs2mJwy26t2g2YuHVWtU6JtV0ttPrqtTFXok+/8gdkdUd2O
+         b/QD8d3UFQdLg0ufRBF6clTcqzxkE4kAZ+1fIxA8+1XyxUkwDsmXcYPk6dwQYyX/rTGm
+         1oGA==
+Received: by 10.68.233.103 with SMTP id tv7mr672399pbc.97.1336139773375;
+        Fri, 04 May 2012 06:56:13 -0700 (PDT)
+Received: from pclouds@gmail.com ([115.74.42.111])
+        by mx.google.com with ESMTPS id wn5sm1466740pbc.51.2012.05.04.06.56.09
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 04 May 2012 06:56:12 -0700 (PDT)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Fri, 04 May 2012 20:52:39 +0700
+X-Mailer: git-send-email 1.7.8.36.g69ee2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197022>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197023>
 
-On Fri, May 04, 2012 at 03:55:47PM +0200, Nelson Benitez Leon wrote:
+We tend to keep long lists sorted (extensions are not taken into
+account), which helps spot a name easily by eye. Rearrange a few
+items so these lists remain sorted.
 
-> >> Also take care that CURLOPT_PROXY don't include username or
-> >> password, as we now set them in the new set_proxy_auth() function
-> >> where we use their specific cURL options.
-> > 
-> > Do we actually need to do that? If we set CURLOPT_PROXYUSERNAME, will
-> > curl ignore it in favor of what's in the URL? 
-> 
-> I explicitly remove username/pass from CURLOPT_PROXY to not having to worry
-> about that question, to not provide cURL with two different sets of proxy auth
-> info, common sense dictates cURL specific proxy options should take precedence
-> over embedded in url by I haven't seen that mentioned by any cURL docs so we 
-> should look at the source to know the truth but even then that could change in
-> the future so I think is safer to only provide one path for auth info.
+Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+=2Ecom>
+---
+ Makefile |   26 +++++++++++++-------------
+ 1 files changed, 13 insertions(+), 13 deletions(-)
 
-Yes, I would expect the specific proxy options to take over. And that is
-what happens for the regular URL case, where we do not do any munging at
-all. I phrased my question as I did because that was the only set of
-circumstances I could see where not munging the URL would _hurt_ us. In
-other words, I do not find it likely that it will hurt us to leave it
-intact.
-
-But it may hurt us to munge it.  My concern is that we are adding a
-bunch of code to replicate how curl behaves (with respect to pulling the
-proxy information from the environment). If we leave the proxy URL
-untouched, then if we fail to do the same thing as curl, the worst case
-is that we don't get the credential properly (if one is even necessary).
-But if we do rewrite the proxy, then we are potentially screwing up what
-curl would do, whether a credential would have been necessary or not.
-
-So to me it is the lower-risk path to let curl do its regular thing
-(pulling the proxy from the environment), and just let us handle the
-credential acquisition side of things. And it also is less code for us.
-
-> Having username/password on the CURLOPT_PROXY option gives us no special gain at
-> the cost of not permitting usernames with reserved characters like '@' or ':' which
-> are not unusual at all. So I'm inclined to preserve current set_proxy_auth() 
-> function and re-introduce the code that sets CURLOPT_PROXY with only $prot://$host.
-> 
-> Are you ok with this? or do you prefer I change set_proxy_auth() to a set_curl_proxy()
-> function where I embedded user/pass in CURLOPT_PROXY ? that is the remaining thing I need
-> to know to send a new re-roll.
-
-No, I think you should leave CURLOPT_PROXY unset, unless you are giving
-curl the verbatim URL given to us via git-config. Let our parsing be
-only for credentials, and let curl handle everything else.
-
--Peff
+diff --git a/Makefile b/Makefile
+index ac40e24..2fa7211 100644
+--- a/Makefile
++++ b/Makefile
+@@ -461,15 +461,15 @@ EXTRA_PROGRAMS =3D
+ # ... and all the rest that could be moved out of bindir to gitexecdir
+ PROGRAMS +=3D $(EXTRA_PROGRAMS)
+=20
++PROGRAM_OBJS +=3D credential-store.o
+ PROGRAM_OBJS +=3D daemon.o
+ PROGRAM_OBJS +=3D fast-import.o
++PROGRAM_OBJS +=3D http-backend.o
+ PROGRAM_OBJS +=3D imap-send.o
++PROGRAM_OBJS +=3D sh-i18n--envsubst.o
+ PROGRAM_OBJS +=3D shell.o
+ PROGRAM_OBJS +=3D show-index.o
+ PROGRAM_OBJS +=3D upload-pack.o
+-PROGRAM_OBJS +=3D http-backend.o
+-PROGRAM_OBJS +=3D sh-i18n--envsubst.o
+-PROGRAM_OBJS +=3D credential-store.o
+=20
+ # Binary suffix, set to .exe for Windows builds
+ X =3D
+@@ -482,7 +482,6 @@ TEST_PROGRAMS_NEED_X +=3D test-ctype
+ TEST_PROGRAMS_NEED_X +=3D test-date
+ TEST_PROGRAMS_NEED_X +=3D test-delta
+ TEST_PROGRAMS_NEED_X +=3D test-dump-cache-tree
+-TEST_PROGRAMS_NEED_X +=3D test-scrap-cache-tree
+ TEST_PROGRAMS_NEED_X +=3D test-genrandom
+ TEST_PROGRAMS_NEED_X +=3D test-index-version
+ TEST_PROGRAMS_NEED_X +=3D test-line-buffer
+@@ -493,6 +492,7 @@ TEST_PROGRAMS_NEED_X +=3D test-parse-options
+ TEST_PROGRAMS_NEED_X +=3D test-path-utils
+ TEST_PROGRAMS_NEED_X +=3D test-revision-walking
+ TEST_PROGRAMS_NEED_X +=3D test-run-command
++TEST_PROGRAMS_NEED_X +=3D test-scrap-cache-tree
+ TEST_PROGRAMS_NEED_X +=3D test-sha1
+ TEST_PROGRAMS_NEED_X +=3D test-sigchain
+ TEST_PROGRAMS_NEED_X +=3D test-subprocess
+@@ -568,19 +568,19 @@ VCSSVN_H +=3D vcs-svn/fast_export.h
+ VCSSVN_H +=3D vcs-svn/svndiff.h
+ VCSSVN_H +=3D vcs-svn/svndump.h
+=20
++MISC_H +=3D bisect.h
+ MISC_H +=3D branch.h
+ MISC_H +=3D bundle.h
+-MISC_H +=3D bisect.h
+ MISC_H +=3D common-cmds.h
+ MISC_H +=3D fetch-pack.h
+-MISC_H +=3D thread-utils.h
++MISC_H +=3D reachable.h
+ MISC_H +=3D send-pack.h
+ MISC_H +=3D shortlog.h
+-MISC_H +=3D reachable.h
+-MISC_H +=3D wt-status.h
+ MISC_H +=3D tar.h
++MISC_H +=3D thread-utils.h
+ MISC_H +=3D url.h
+ MISC_H +=3D walker.h
++MISC_H +=3D wt-status.h
+=20
+ LIB_H +=3D advice.h
+ LIB_H +=3D archive.h
+@@ -598,18 +598,18 @@ LIB_H +=3D compat/cygwin.h
+ LIB_H +=3D compat/mingw.h
+ LIB_H +=3D compat/obstack.h
+ LIB_H +=3D compat/terminal.h
++LIB_H +=3D compat/win32/dirent.h
++LIB_H +=3D compat/win32/poll.h
+ LIB_H +=3D compat/win32/pthread.h
+ LIB_H +=3D compat/win32/syslog.h
+-LIB_H +=3D compat/win32/poll.h
+-LIB_H +=3D compat/win32/dirent.h
+ LIB_H +=3D connected.h
+ LIB_H +=3D convert.h
+ LIB_H +=3D credential.h
+ LIB_H +=3D csum-file.h
+ LIB_H +=3D decorate.h
+ LIB_H +=3D delta.h
+-LIB_H +=3D diffcore.h
+ LIB_H +=3D diff.h
++LIB_H +=3D diffcore.h
+ LIB_H +=3D dir.h
+ LIB_H +=3D exec_cmd.h
+ LIB_H +=3D fmt-merge-msg.h
+@@ -718,8 +718,8 @@ LIB_OBJS +=3D entry.o
+ LIB_OBJS +=3D environment.o
+ LIB_OBJS +=3D exec_cmd.o
+ LIB_OBJS +=3D fsck.o
+-LIB_OBJS +=3D gpg-interface.o
+ LIB_OBJS +=3D gettext.o
++LIB_OBJS +=3D gpg-interface.o
+ LIB_OBJS +=3D graph.o
+ LIB_OBJS +=3D grep.o
+ LIB_OBJS +=3D hash.o
+@@ -768,9 +768,9 @@ LIB_OBJS +=3D rerere.o
+ LIB_OBJS +=3D resolve-undo.o
+ LIB_OBJS +=3D revision.o
+ LIB_OBJS +=3D run-command.o
++LIB_OBJS +=3D sequencer.o
+ LIB_OBJS +=3D server-info.o
+ LIB_OBJS +=3D setup.o
+-LIB_OBJS +=3D sequencer.o
+ LIB_OBJS +=3D sha1-array.o
+ LIB_OBJS +=3D sha1-lookup.o
+ LIB_OBJS +=3D sha1_file.o
+--=20
+1.7.8.36.g69ee2
