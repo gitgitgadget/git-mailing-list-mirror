@@ -1,65 +1,92 @@
-From: Csaba Henk <csaba@lowlife.hu>
-Subject: Re: commit message parsing error in rebase
-Date: Sat, 5 May 2012 00:54:21 +0530
-Message-ID: <CAA-jfp=yMVFrfFgh9A_zNC5nG8PTvNWBRpkbpbVK+7GUU7jO9Q@mail.gmail.com>
-References: <CAA-jfp=F7ije9nFJio5gnmNGptDR1ZTBbCi-aOv7JokqrXBgYA@mail.gmail.com>
- <7vlil7ah5w.fsf@alter.siamese.dyndns.org>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: Newbie grief
+Date: Fri, 4 May 2012 21:30:38 +0200
+Message-ID: <CAMP44s2yv6rfAfFUmGRS5b8=KwFpZ5yLxgL01V9W514PaLUJ9A@mail.gmail.com>
+References: <4F9F128C.5020304@palm.com>
+	<201204302331.q3UNVo7o032303@no.baka.org>
+	<4F9F3919.6060805@palm.com>
+	<CAMK1S_jwVsyKrGoL5uVAiuRrOa8bz79-DAueBmHZE2k=PpcJ2Q@mail.gmail.com>
+	<20120501111415.GD5769@thunk.org>
+	<CAMK1S_jN_WdZF4W4szzyJqLfC3FmnhKQ65XQiD-JS_jxwSm8_g@mail.gmail.com>
+	<4FA02830.3040407@palm.com>
+	<86havzoi8h.fsf@red.stonehenge.com>
+	<4FA04D02.6090702@palm.com>
+	<86mx5rmx32.fsf@red.stonehenge.com>
+	<7v62cf8v2d.fsf@alter.siamese.dyndns.org>
+	<4FA054BA.80601@palm.com>
+	<86ipgfmw05.fsf@red.stonehenge.com>
+	<4FA05C66.2060608@palm.com>
+	<CAMOZ1BuiznhrzEOHe0N+uu=mLEw5wWTQyDpnwG8PuF1f_aNaXw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri May 04 21:24:49 2012
+Cc: Rich Pixley <rich.pixley@palm.com>,
+	"Randal L. Schwartz" <merlyn@stonehenge.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Sitaram Chamarty <sitaramc@gmail.com>,
+	"Ted Ts'o" <tytso@mit.edu>, Seth Robertson <in-gitvger@baka.org>,
+	git@vger.kernel.org
+To: Michael Witten <mfwitten@gmail.com>
+X-From: git-owner@vger.kernel.org Fri May 04 21:30:47 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SQO7T-00043N-QV
-	for gcvg-git-2@plane.gmane.org; Fri, 04 May 2012 21:24:48 +0200
+	id 1SQODF-0000Rw-6f
+	for gcvg-git-2@plane.gmane.org; Fri, 04 May 2012 21:30:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759474Ab2EDTYo convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 4 May 2012 15:24:44 -0400
-Received: from mail-ee0-f46.google.com ([74.125.83.46]:41513 "EHLO
-	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754111Ab2EDTYn convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 4 May 2012 15:24:43 -0400
-Received: by eekc41 with SMTP id c41so940124eek.19
-        for <git@vger.kernel.org>; Fri, 04 May 2012 12:24:42 -0700 (PDT)
+	id S1754287Ab2EDTal convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 4 May 2012 15:30:41 -0400
+Received: from mail-we0-f174.google.com ([74.125.82.174]:40363 "EHLO
+	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752993Ab2EDTak convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 4 May 2012 15:30:40 -0400
+Received: by werb10 with SMTP id b10so129059wer.19
+        for <git@vger.kernel.org>; Fri, 04 May 2012 12:30:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:from:date
-         :x-google-sender-auth:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=Wxk5jVuY1BeLd7V0e2rZ/0fLTR0VMwJpvO4QMjsQGTc=;
-        b=hFs6tNuF4xdyILEH/7Du08ckIhWsgwLUuk4GNDu5ai5z7r9l4d2fjw5I8Yc1OA7KEw
-         4A1kJd78zy9sjVbl0RKDxZ9PGYK6iYfZGOXWyGmIVGHMMPFy+uQ1XQ8/wf2lRCCBur3m
-         xQl4pGNBIR9RaZZRZaQsoMPL4doV3yGHGpwYDcfaleW+3YDvH2IlghCi93kSz1311THs
-         Aj/t+Upe3dvAmu+2zz9eoE7Y1gcUaqoq4/qF2PHewg4aH2KUJ/LVrqo8DJgiHc+qrF4x
-         bVHmqn5Pluhce4lHC2bcVM8R4vLOTEz6DYRIumfAWc9hidrAGCPrkCrgCUBskCndG31a
-         413g==
-Received: by 10.213.30.7 with SMTP id s7mr1393741ebc.77.1336159481869; Fri, 04
- May 2012 12:24:41 -0700 (PDT)
-Received: by 10.14.194.198 with HTTP; Fri, 4 May 2012 12:24:21 -0700 (PDT)
-In-Reply-To: <7vlil7ah5w.fsf@alter.siamese.dyndns.org>
-X-Google-Sender-Auth: MIpuO7cnc1xX0xrZkoPP2LOLPAY
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=Irazn4OGwm+IwjKC5TKjbdp0WxxND76ZmHzDFrGm9E8=;
+        b=suT7NaYgeuF6mHZTIDcgWj5huQ0sII8i4Ca/BICmAjzqsBzS5bRXJ9Uu9mR774oNaU
+         LR7G0aRGfVRsm+HfQ2w6UGGwN6G4EDqxTAXUBNnrgQV3NveOChSJ9R6DrXbxjmzYV1QB
+         KXph5IJ36ZvUjBWw5Z+K4kOTN3V7iX7mXptxxzVcsJDCQGUUpTawQau4Vb0DvR5IKE+L
+         V1IGvNpWi5ygveboLRKgv5ng1l+N7mYrcfIzrjfPFsu0uYPAGT2FsQ4F+mHG/cmnteUR
+         gOjcomw00wz1iy/iqMxZKHOP5tfeCiDZsRo7btdwuwa7a34VRyBllDxDN0tDaTCENYZQ
+         7MOw==
+Received: by 10.216.225.12 with SMTP id y12mr4514916wep.39.1336159839242; Fri,
+ 04 May 2012 12:30:39 -0700 (PDT)
+Received: by 10.216.124.197 with HTTP; Fri, 4 May 2012 12:30:38 -0700 (PDT)
+In-Reply-To: <CAMOZ1BuiznhrzEOHe0N+uu=mLEw5wWTQyDpnwG8PuF1f_aNaXw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197057>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197058>
 
-On Sat, May 5, 2012 at 12:48 AM, Junio C Hamano <gitster@pobox.com> wro=
-te:
-> Sorry, but we do not support writing "diff" output in log message as-=
-is
-> (it is primarily because format-patch output from such a commit is ha=
-rd to
-> read for humans). =A0A common workaround is to indent such an illustr=
-ative
-> patches indented in the log message.
+On Wed, May 2, 2012 at 12:56 AM, Michael Witten <mfwitten@gmail.com> wr=
+ote:
+> On Tue, May 1, 2012 at 9:57 PM, Rich Pixley <rich.pixley@palm.com> wr=
+ote:
+>
+>> In contrast, I was up and using mercurial in about a day and a half,
+>> including all of the stuff we've discussed, and all of the things I'=
+ve even
+>> read about in git. =C2=A0Learning mq's only took about 20 minutes.
+>
+> Fortunately, git is based on extremely simple principles.
+> Unfortunately, git grew out of really bright people hacking stuff
+> together in order to get sh!t dun; the result is not approachably or
+> even well documented, the UI is sometimes a bit of a kludge, the API
+> is probably nonexistent, and the terminology is so loosely thrown
+> about that it's easy to forget which way is up in discussions.
+> (Note, though, that Junio has done a laudable job of keeping the
+> whole experiment going strong).
 
-In that case, would it not be wise to be explicit about that and warn
-or err if such a commit is attempted?
+You are a prime example of this experiment called 'life', also based
+on extremely simple principles, mostly through trial and error. Design
+is overrated :)
 
-Csaba
+--=20
+=46elipe Contreras
