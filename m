@@ -1,93 +1,140 @@
-From: Sitaram Chamarty <sitaramc@gmail.com>
-Subject: Clarity of error messages
-Date: Fri, 4 May 2012 09:50:18 +0530
-Message-ID: <CAMK1S_hYRN=Td8oOZwtMud2-NyUX=jHWMGHG5ziD8axdQPF8tw@mail.gmail.com>
+From: Michael Witten <mfwitten@gmail.com>
+Subject: Re: Newbie grief
+Date: Fri, 04 May 2012 04:35:40 -0000
+Message-ID: <1167779eee7d442b9db0eecb347d5516-mfwitten@gmail.com>
+References: <4F9F128C.5020304@palm.com>
+            <201204302331.q3UNVo7o032303@no.baka.org>
+            <4F9F28F5.2020403@palm.com>
+            <201205010137.q411bxaU002449@no.baka.org>
+            <4F9F52B9.9060508@palm.com>
+            <08704bd2e32343a4b9def80e4fa1efa2-mfwitten@gmail.com>
+            <4FA2D8EA.7030809@palm.com>
+            <87obq5ggpu.fsf@an-dro.info.enstb.org>
+            <7vehr1dl2z.fsf@alter.siamese.dyndns.org>
+            <4FA307C5.102@palm.com>
+            <4FA3090D.5080406@palm.com>
+            <4FA32A6A.4070007@blizzard.com>
+            <CA+7g9Jxp859st6SrViizwOMrU9vsnmfy6P64SK9y_-ZEzEB6Mw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: TEXT/PLAIN; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Illia Bobyr <ibobyr@blizzard.com>,
+	Rich Pixley <rich.pixley@palm.com>,
+	Ronan Keryell <Ronan.Keryell@hpc-project.com>,
+	git@vger.kernel.org
 To: Nathan Gray <n8gray@n8gray.org>
-X-From: git-owner@vger.kernel.org Fri May 04 06:21:17 2012
+X-From: git-owner@vger.kernel.org Fri May 04 06:37:38 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SQA16-0005Ad-Pv
-	for gcvg-git-2@plane.gmane.org; Fri, 04 May 2012 06:21:17 +0200
+	id 1SQAGu-0000AN-W4
+	for gcvg-git-2@plane.gmane.org; Fri, 04 May 2012 06:37:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751134Ab2EDEVB convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 4 May 2012 00:21:01 -0400
-Received: from mail-ob0-f174.google.com ([209.85.214.174]:56868 "EHLO
-	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750981Ab2EDEUS convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 4 May 2012 00:20:18 -0400
-Received: by obbtb18 with SMTP id tb18so3421787obb.19
-        for <git@vger.kernel.org>; Thu, 03 May 2012 21:20:18 -0700 (PDT)
+	id S1750815Ab2EDEhc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 4 May 2012 00:37:32 -0400
+X-Warning: Original message contained 8-bit characters, however during
+	   the SMTP transport session the receiving system did not announce
+	   capability of receiving 8-bit SMTP (RFC 1651-1653), and as this
+	   message does not have MIME headers (RFC 2045-2049) to enable
+	   encoding change, we had very little choice.
+X-Warning: We ASSUME it is less harmful to add the MIME headers, and
+	   convert the text to Quoted-Printable, than not to do so,
+	   and to strip the message to 7-bits.. (RFC 1428 Appendix A)
+X-Warning: We don't know what character set the user used, thus we had to
+	   write these MIME-headers with our local system default value.
+Received: from mail-wg0-f44.google.com ([74.125.82.44]:37677 "EHLO
+	mail-wg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750747Ab2EDEhb (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 May 2012 00:37:31 -0400
+Received: by wgbdr13 with SMTP id dr13so2377954wgb.1
+        for <git@vger.kernel.org>; Thu, 03 May 2012 21:37:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=LkMMUNw+C/s/+BzcL33TZoMSUwlGrgqTBncaD+Rvhdk=;
-        b=yCCs8YZcKO70/9MRa3uLnHUOKwZ6E4YxEh+GEJVqfIb9emLC9i+2EPknKVqlkajpD+
-         32XYCHbAkiAQMEm+acZPtRJGy65ZlLaJN5txlH+gUSgJXWH1xd41fNNyedIYUZgTZFbg
-         WyTmrNAkJPtzoB9gAJYc3HBQpeCQ4n0xiiRULKALbqnySAf1tf55Eo3cONIAKUeSVIP7
-         mLGR1TH7LsddDflk45S2+0WEaCQbTDIhj7V+AuT5ZDDMlJuiFh8FBXWkGklqsY4+n3Wl
-         u9NK6I2n0Ef3HlJH9TqImOWkpkKRFTFHXuetjt8tpkdKxWube056jLdwhzUeCWp6lLdD
-         VeBg==
-Received: by 10.182.11.40 with SMTP id n8mr6280045obb.32.1336105218101; Thu,
- 03 May 2012 21:20:18 -0700 (PDT)
-Received: by 10.182.108.67 with HTTP; Thu, 3 May 2012 21:20:18 -0700 (PDT)
+        h=subject:date:from:to:cc:message-id:in-reply-to:references;
+        bh=fUxUYs10RKb9u4IMPwCAwrcLMCepWv1mSP4gAkIq0zU=;
+        b=PUrI6OHhzg20IJqgctNNw5xMFK0CY/9S1NT1sHpzw4tTDvNcJL5Ypi6OA+Fe4eGUTC
+         KHMZX9xITEArJxz7o9lpy9AGGEjqA6pc0NH7EMmoxJoevwGviaC+mhhUP38YNVdnYoNm
+         CY8TSmTD2xqmv5rhzMhkwZhKeBbtQG1EkHnU9t5L6jSsjyXkk39Ya2zd3FAdl7Xpfew3
+         f8+aznzTJXImqxvblZrU46AtYfBrpQJ7IujcnqHkCwAOu3SgfnnV54Wi38ByaPzN5Lzk
+         n/HNOyefbZEjYSnxYNXHivKJQrFcWi1LToAu8sgwm1KBpK+xl8IA3om0xUVdfLcXXWwG
+         D5mg==
+Received: by 10.180.77.233 with SMTP id v9mr9050320wiw.22.1336106250585;
+        Thu, 03 May 2012 21:37:30 -0700 (PDT)
+Received: from gmail.com (lumumba.torservers.net. [77.247.181.163])
+        by mx.google.com with ESMTPS id gg2sm10775029wib.7.2012.05.03.21.37.28
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 03 May 2012 21:37:29 -0700 (PDT)
+In-Reply-To: <CA+7g9Jxp859st6SrViizwOMrU9vsnmfy6P64SK9y_-ZEzEB6Mw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196985>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196986>
 
-On Fri, May 4, 2012 at 8:43 AM, Nathan Gray <n8gray@n8gray.org> wrote:
+On Thu, 3 May 2012 20:13:01 -0700, Nathan Gray wrote:
 
+> On Thu, May 3, 2012 at 6:01 PM, Illia Bobyr <ibobyr@blizzard.com> wro=
+te:
+>>
+>> It is just a "non-fast forward" move of a branch tip. =A0This term
+>> describes what happens precisely :)
+>>
+>> It is true, that the term is non obvious to the new comers.
+>> One may google and get an explanation of the error pretty quickly.
+>> First hit for "git non fast forward error" gives an explanation from=
+ a
+>> new comer point of view for the simplest case.
+>
 > I just led a team of reasonably bright people through a transition
-> from SVN to git. =C2=A0Not one of them understood this message. =C2=A0=
-Every one
-> of them thought something was broken. =C2=A0This is a very common
+> from SVN to git.  Not one of them understood this message.  Every one
+> of them thought something was broken.  This is a very common
 > occurrence, so a short, simple message without jargon for this error
 > would be a big, big win.
 
-[Doesn't matter what error message we're talking about so I snipped
-out most of this.  Also snipped out most of the original recipients
-and changed the subject line to better reflect the specific topic that
-evolved.]
+Well, what is your suggestion?
 
-What I have to say comes from my experience developing, documenting,
-and supporting gitolite, (a project that is far smaller than git).
+Nobody in this thread has yet provided an explicit improvement because
+the actual complaint is that the vast majority of people (including
+supposed "professionals") don't RTFM; it never even occurs to them!
 
-No one will ever agree on human-readable text.  It's not
-bike-shedding; that's the way it is.  I have changed the gitolite
-documentation far more often than I have changed the code, so far.  In
-fact, I have started batching documentation changes due to the sheer
-number of them.
+Let's look at the message in question:
 
-Also, some people don't want to read documentation or learn a bit
-about the tool before hand -- they would like the error message to be
-all they need to read.  (I wonder how they learned any programming in
-the first place!)
+  To $uri_for_central_repo
+   ! [rejected]        HEAD -> feature_0 (non-fast-forward)
+  error: failed to push some refs to '$uri_for_central_repo'
+  To prevent you from losing history, non-fast-forward updates were rej=
+ected
+  Merge the remote changes (e.g. 'git pull') before pushing again.  See=
+ the
+  'Note about fast-forwards' section of 'git push --help' for details.
 
-I am starting to think that the correct treatment for error messages
-is to assign every error a number (a la IBM mainframes; S0C7 anyone?)
-and force people to look it up in one or more of the following
-"indexes":
+Not only does this already spoonfeed the reader with a suggested
+command for getting back on track (i.e., 'git pull'), but it also
+explicitly points out the relevant documentation and HOW to gain
+immediate access to that information from the command line!
 
-  - brief
-  - verbose
-  - verbose with examples
-  - technical/internals
+As for a seemingly conservative suggestion, how about using a little
+more structural white space:
 
-The default could print the "brief" entry along with the error number.
+  To $uri_for_central_repo
+   ! [rejected]        HEAD -> feature_0 (non-fast-forward)
 
-That won't reduce the arguments about what the message should say but
-at least you can better accommodate more than one opinion.
+  error: failed to push some refs to '$uri_for_central_repo'
 
-Perl folks might recognise this as something like the 'diagnostics'
-pragma and/or the 'splain' program, although (1) perl does not print
-error numbers you can look up using 'splain', and (2) perl has only
-one "index", while I am suggesting 4 different ones.
+  To prevent you from losing history, non-fast-forward updates were rej=
+ected
+  Merge the remote changes (e.g. 'git pull') before pushing again.  See=
+ the
+  'Note about fast-forwards' section of 'git push --help' for details.
+
+Alas! Error output like this is constructed in the code in a way that
+potentially makes adding such white space non-trivial.
+
+Perhaps the error message system needs an overhall; rather than spittin=
+g
+out error messages from anywhere, they ought to be corralled and collat=
+ed
+by a dedicated subsystem.
