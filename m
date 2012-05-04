@@ -1,92 +1,73 @@
-From: Nathan Gray <n8gray@n8gray.org>
-Subject: Re: Newbie grief
-Date: Thu, 3 May 2012 20:13:01 -0700
-Message-ID: <CA+7g9Jxp859st6SrViizwOMrU9vsnmfy6P64SK9y_-ZEzEB6Mw@mail.gmail.com>
-References: <4F9F128C.5020304@palm.com>
-	<201204302331.q3UNVo7o032303@no.baka.org>
-	<4F9F28F5.2020403@palm.com>
-	<201205010137.q411bxaU002449@no.baka.org>
-	<4F9F52B9.9060508@palm.com>
-	<08704bd2e32343a4b9def80e4fa1efa2-mfwitten@gmail.com>
-	<4FA2D8EA.7030809@palm.com>
-	<87obq5ggpu.fsf@an-dro.info.enstb.org>
-	<7vehr1dl2z.fsf@alter.siamese.dyndns.org>
-	<4FA307C5.102@palm.com>
-	<4FA3090D.5080406@palm.com>
-	<4FA32A6A.4070007@blizzard.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH] Update Documentation/git-config to reflect --local
+ option.
+Date: Thu, 3 May 2012 22:26:35 -0500
+Message-ID: <20120504032400.GB2589@burratino>
+References: <1754870.q6d2rgDqBT@flobuntu>
+ <7vr4v0deyg.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Rich Pixley <rich.pixley@palm.com>,
-	Ronan Keryell <Ronan.Keryell@hpc-project.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Illia Bobyr <ibobyr@blizzard.com>
-X-From: git-owner@vger.kernel.org Fri May 04 05:13:39 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	davidbarr@google.com, Jeff King <peff@peff.net>
+To: Florian Achleitner <florian.achleitner2.6.31@gmail.com>
+X-From: git-owner@vger.kernel.org Fri May 04 05:26:46 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SQ8xc-00071h-Gx
-	for gcvg-git-2@plane.gmane.org; Fri, 04 May 2012 05:13:36 +0200
+	id 1SQ9AL-00089J-3E
+	for gcvg-git-2@plane.gmane.org; Fri, 04 May 2012 05:26:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753158Ab2EDDNK convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 3 May 2012 23:13:10 -0400
-Received: from mail-bk0-f46.google.com ([209.85.214.46]:58611 "EHLO
-	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756118Ab2EDDND convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 3 May 2012 23:13:03 -0400
-Received: by bkcji2 with SMTP id ji2so1876975bkc.19
-        for <git@vger.kernel.org>; Thu, 03 May 2012 20:13:01 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:x-originating-ip:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding:x-gm-message-state;
-        bh=6LgemwUjLkLfgrqwKLgGN0Pk51SoocraWsAMsGXoxXU=;
-        b=iuE33PU90fCzn6ToLNPktfVUEil/9Oh16C+DZpVwsa9kpcZ0qbJIyHKYkvqhQt9UDG
-         pjysIMj7UFVkzj65eZMXkcmY6KQl2jP/yfnuqbeXF5yQdiCjb0DKQXBSpMNC561oNeRl
-         7ex+KlUgTCWAysqcgUTcw6KdM+YmuJZknx+Ue10of1G/YAdRqfZw5P/aSb5cFs9ws/ff
-         m5AK9JDxE+HEEXxoyO0S59OXI0NUzY5ISMltEmJf80blKWtOmseO5ROV+pMOkeejxCMh
-         pnuPQnrfaARYGqHZvTg1i5EU3f/SaiqsFBHYJ2Xygp8+HAGnTaCtJ33Coal7KKOK7IEC
-         /UAg==
-Received: by 10.204.151.75 with SMTP id b11mr1486614bkw.1.1336101181506; Thu,
- 03 May 2012 20:13:01 -0700 (PDT)
-Received: by 10.205.42.6 with HTTP; Thu, 3 May 2012 20:13:01 -0700 (PDT)
-X-Originating-IP: [66.75.229.176]
-In-Reply-To: <4FA32A6A.4070007@blizzard.com>
-X-Gm-Message-State: ALoCoQkw+OWq/ByZ6ljtqZzPjNQy/lIQc+QJcBKuZ0GY+UwspspS8Tkt5a5h+w80Z5ShJCkaxBHF
+	id S1755878Ab2EDD0k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 May 2012 23:26:40 -0400
+Received: from mail-ob0-f174.google.com ([209.85.214.174]:39192 "EHLO
+	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752752Ab2EDD0j (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 May 2012 23:26:39 -0400
+Received: by obbtb18 with SMTP id tb18so3367597obb.19
+        for <git@vger.kernel.org>; Thu, 03 May 2012 20:26:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=+SzWOluEhJIGLoiCo6bZhiqbPzGnwTu6+fdsFFY1XPA=;
+        b=VxPLWOoFeYGsuOGZu/bZr4Ya0aFlonjiTHVd+j6hDsTvV5o0WQTA4KhLYzPMNuLF5z
+         2SuNjkw/Va06a5XnZU2/zbMfhKEQcUkg4QU/q6LuCn/En7PgfOetPftlG3I/JGEYWBuW
+         S+oTGPgnTiyir9+jQ60O3rlROIF+vQZeGPXigt0KxuXdGayXhOAYZ1AfAmj0h6YGDdV9
+         5VKlUKLYMSHNe7V8c2ytrKRk8LsUps7Ww7LAKxmdu7aHKCBNACMIttyPGd9+FQQjMjwu
+         dBjxUWkyCjngo0B1eXqoMEYoXxns+CC6M5cqhBQ3/S+6BK8BrQYYA4bIECLqtstmXQhB
+         IUPA==
+Received: by 10.50.135.36 with SMTP id pp4mr2088275igb.19.1336101998641;
+        Thu, 03 May 2012 20:26:38 -0700 (PDT)
+Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
+        by mx.google.com with ESMTPS id xf6sm3645857igb.13.2012.05.03.20.26.37
+        (version=SSLv3 cipher=OTHER);
+        Thu, 03 May 2012 20:26:38 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <7vr4v0deyg.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196983>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196984>
 
-On Thu, May 3, 2012 at 6:01 PM, Illia Bobyr <ibobyr@blizzard.com> wrote=
-:
->
-> It is just a "non-fast forward" move of a branch tip. =A0This term
-> describes what happens precisely :)
->
-> It is true, that the term is non obvious to the new comers.
-> One may google and get an explanation of the error pretty quickly.
-> First hit for "git non fast forward error" gives an explanation from =
-a
-> new comer point of view for the simplest case.
+(adding Jeff to cc)
+Hi Florian and Junio,
 
-I just led a team of reasonably bright people through a transition
-from SVN to git.  Not one of them understood this message.  Every one
-of them thought something was broken.  This is a very common
-occurrence, so a short, simple message without jargon for this error
-would be a big, big win.
+Junio C Hamano wrote:
 
-Cheers,
--n8
+> The paragraph should first be restructured to describe read and write
+> cases separately, and then '--local' should be described, perhaps like
+> this?
 
---=20
-HexaLex: A New Angle on Crossword Games for iPhone and iPod Touch
-http://hexalex.com
-On The App Store: http://bit.ly/8Mj1CU
-On Facebook: http://bit.ly/9MIJiV
-On Twitter: http://twitter.com/hexalexgame
-http://n8gray.org
+Thanks --- that makes a lot of sense to me.
+
+Florian, would you be interested in another go?  The usual convention
+in cases like this is to start the subject line with something like
+"[PATCH v2]" so it is clear which version of the patch is supposed to
+be better than the other.
+
+Hope that helps,
+Jonathan
