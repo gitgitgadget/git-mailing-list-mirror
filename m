@@ -1,129 +1,138 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH 3/4] reflog-walk: clean up "flag" field of commit_reflog
- struct
-Date: Fri, 4 May 2012 01:26:26 -0400
-Message-ID: <20120504052626.GC16107@sigill.intra.peff.net>
+From: Jeff King <peff-AdEPDUrAXsQ@public.gmane.org>
+Subject: [PATCH 4/4] reflog-walk: always make HEAD@{0} show indexed selectors
+Date: Fri, 4 May 2012 01:27:25 -0400
+Message-ID: <20120504052725.GD16107@sigill.intra.peff.net>
 References: <20120504052106.GA15970@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Yann Hodique <yann.hodique@gmail.com>,
-	Andreas Schwab <schwab@linux-m68k.org>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	magit@googlegroups.com
-To: Eli Barzilay <eli@barzilay.org>
-X-From: git-owner@vger.kernel.org Fri May 04 07:26:34 2012
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Cc: Yann Hodique <yann.hodique-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>,
+	Andreas Schwab <schwab-Td1EMuHUCqxL1ZNQvxDV9g@public.gmane.org>,
+	Junio C Hamano <gitster-e+AXbWqSrlAAvxtiuMwx3w@public.gmane.org>, git-u79uwXL29TY76Z2rM5mHXA@public.gmane.org,
+	magit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+To: Eli Barzilay <eli-oSK4jVRJLyZg9hUCZPvPmw@public.gmane.org>
+X-From: magit+bncCN2hpKqZChDA0Y39BBoEx_AewA-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org Fri May 04 07:27:30 2012
+Return-path: <magit+bncCN2hpKqZChDA0Y39BBoEx_AewA-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+Envelope-to: gcvgm-magit-3@m.gmane.org
+Received: from mail-qa0-f55.google.com ([209.85.216.55])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SQB2H-0000zP-9y
-	for gcvg-git-2@plane.gmane.org; Fri, 04 May 2012 07:26:33 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751503Ab2EDF03 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 4 May 2012 01:26:29 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:57549
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750807Ab2EDF03 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 May 2012 01:26:29 -0400
-Received: (qmail 15158 invoked by uid 107); 4 May 2012 05:26:45 -0000
+	(envelope-from <magit+bncCN2hpKqZChDA0Y39BBoEx_AewA-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>)
+	id 1SQB3B-0001eZ-Pa
+	for gcvgm-magit-3@m.gmane.org; Fri, 04 May 2012 07:27:30 +0200
+Received: by qabg40 with SMTP id g40sf1248274qab.10
+        for <gcvgm-magit-3@m.gmane.org>; Thu, 03 May 2012 22:27:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=beta;
+        h=x-beenthere:received-spf:date:from:to:cc:subject:message-id
+         :references:mime-version:in-reply-to:x-original-sender
+         :x-original-authentication-results:precedence:mailing-list:list-id
+         :x-google-group-id:list-post:list-help:list-archive:sender
+         :list-subscribe:list-unsubscribe:content-type:content-disposition;
+        bh=TyZ0VWUe1wTLwhhuAQP+8FmDNw0foKOhxou4mSWc/6g=;
+        b=3QfXBPwQk4t36PguDafSN8XubEPXts2wVAKLP/5E02+UUg4cMM4raS/1BGGUBz7xU8
+         ZGR6Hk0rbGYA4i2O6dN0+Ku24WgD2ll2YoQ0CdRXeJaHF83+LpU0muODmfV8mhTFsvrn
+         2ML9lF5n+qhnaJ3AXy2Le1/BShXNrLJyHEbEI=
+Received: by 10.50.179.72 with SMTP id de8mr305762igc.2.1336109248455;
+        Thu, 03 May 2012 22:27:28 -0700 (PDT)
+X-BeenThere: magit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+Received: by 10.50.151.199 with SMTP id us7ls668512igb.1.canary; Thu, 03 May
+ 2012 22:27:28 -0700 (PDT)
+Received: by 10.50.85.196 with SMTP id j4mr2937767igz.4.1336109248033;
+        Thu, 03 May 2012 22:27:28 -0700 (PDT)
+Received: by 10.50.85.196 with SMTP id j4mr2937765igz.4.1336109248021;
+        Thu, 03 May 2012 22:27:28 -0700 (PDT)
+Received: from peff.net (99-108-226-0.lightspeed.iplsin.sbcglobal.net. [99.108.226.0])
+        by gmr-mx.google.com with ESMTPS id eo1si952542igc.0.2012.05.03.22.27.27
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 03 May 2012 22:27:28 -0700 (PDT)
+Received-SPF: pass (google.com: domain of peff-AdEPDUrAXsQ@public.gmane.org designates 99.108.226.0 as permitted sender) client-ip=99.108.226.0;
+Received: (qmail 15191 invoked by uid 107); 4 May 2012 05:27:45 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 04 May 2012 01:26:45 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 04 May 2012 01:26:26 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 04 May 2012 01:27:45 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 04 May 2012 01:27:25 -0400
+In-Reply-To: <20120504052106.GA15970-bBVMEuqLR+SYVEpFpFwlB0AkDMvbqDRI@public.gmane.org>
+X-Original-Sender: peff-AdEPDUrAXsQ@public.gmane.org
+X-Original-Authentication-Results: gmr-mx.google.com; spf=pass (google.com:
+ domain of peff-AdEPDUrAXsQ@public.gmane.org designates 99.108.226.0 as permitted sender) smtp.mail=peff-AdEPDUrAXsQ@public.gmane.org
+Precedence: list
+Mailing-list: list magit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org; contact magit+owners-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+List-ID: <magit.googlegroups.com>
+X-Google-Group-Id: 752745291123
+List-Post: <http://groups.google.com/group/magit/post?hl=en_US>, <mailto:magit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+List-Help: <http://groups.google.com/support/?hl=en_US>, <mailto:magit+help-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+List-Archive: <http://groups.google.com/group/magit?hl=en_US>
+Sender: magit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+List-Subscribe: <http://groups.google.com/group/magit/subscribe?hl=en_US>, <mailto:magit+subscribe-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+List-Unsubscribe: <http://groups.google.com/group/magit/subscribe?hl=en_US>, <mailto:googlegroups-manage+752745291123+unsubscribe-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
 Content-Disposition: inline
-In-Reply-To: <20120504052106.GA15970@sigill.intra.peff.net>
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196991>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196992>
 
-When we prepare to walk a reflog, we parse the specification
-and pull some information from it, such as which reflog to
-look in (e.g., HEAD), and where to start (e.g., HEAD@{10} or
-HEAD@{yesterday}). The resulting struct has a "recno" field
-to show where in the reflog we are starting. It also has a
-"flag" field; if true, it means the recno field came from
-parsing a date like HEAD@{yesterday}.
+When we are showing reflog selectors during a walk, we infer
+from context whether the user wanted to see the index in
+each selector, or the reflog date. The current rules are:
 
-There are two problems with this:
+  1. if the user asked for an explicit date format in the
+     output, show the date
 
-  1. "flag" is an absolutely terrible name, as it conveys
-     nothing about the meaning
+  2. if the user asked for ref@{now}, show the date
 
-  2. you can tell "HEAD" from "HEAD@{yesterday}", but you
-     can't differentiate "HEAD" from "HEAD{0}"
+  3. if neither is true, show the index
 
-This patch converts the flag into a tri-state (and gives it
-a better name!).
+However,  if we see "ref@{0}", that should be a strong clue
+that the user wants to see the counted version. In fact, it
+should be much stronger than the date format in (1). The
+user may have been setting the date format to use in another
+part of the output (e.g., in --format="%gd (%ad)", they may
+have wanted to influence the author date).
 
-Signed-off-by: Jeff King <peff@peff.net>
+This patch flips the rules to:
+
+  1. if the user asked for ref@{0}, always show the index
+
+  2. if the user asked for ref@{now}, always show the date
+
+  3. otherwise, we have just "ref"; show them counted by
+     default, but respect the presence of "--date" as a clue
+     that the user wanted them date-based
+
+Signed-off-by: Jeff King <peff-AdEPDUrAXsQ@public.gmane.org>
 ---
- reflog-walk.c | 15 ++++++++++++---
- 1 file changed, 12 insertions(+), 3 deletions(-)
+ reflog-walk.c          | 3 ++-
+ t/t1411-reflog-show.sh | 8 ++++++++
+ 2 files changed, 10 insertions(+), 1 deletion(-)
 
 diff --git a/reflog-walk.c b/reflog-walk.c
-index 86d1884..3549318 100644
+index 3549318..b974258 100644
 --- a/reflog-walk.c
 +++ b/reflog-walk.c
-@@ -126,7 +126,12 @@ static void add_commit_info(struct commit *commit, void *util,
- }
- 
- struct commit_reflog {
--	int flag, recno;
-+	int recno;
-+	enum selector_type {
-+		SELECTOR_NONE,
-+		SELECTOR_INDEX,
-+		SELECTOR_DATE
-+	} selector;
- 	struct complete_reflogs *reflogs;
- };
- 
-@@ -150,6 +155,7 @@ int add_reflog_for_walk(struct reflog_walk_info *info,
- 	struct complete_reflogs *reflogs;
- 	char *branch, *at = strchr(name, '@');
- 	struct commit_reflog *commit_reflog;
-+	enum selector_type selector = SELECTOR_NONE;
- 
- 	if (commit->object.flags & UNINTERESTING)
- 		die ("Cannot walk reflogs for %s", name);
-@@ -162,7 +168,10 @@ int add_reflog_for_walk(struct reflog_walk_info *info,
- 		if (*ep != '}') {
- 			recno = -1;
- 			timestamp = approxidate(at + 2);
-+			selector = SELECTOR_DATE;
- 		}
-+		else
-+			selector = SELECTOR_INDEX;
- 	} else
- 		recno = 0;
- 
-@@ -200,7 +209,6 @@ int add_reflog_for_walk(struct reflog_walk_info *info,
- 
- 	commit_reflog = xcalloc(sizeof(struct commit_reflog), 1);
- 	if (recno < 0) {
--		commit_reflog->flag = 1;
- 		commit_reflog->recno = get_reflog_recno_by_time(reflogs, timestamp);
- 		if (commit_reflog->recno < 0) {
- 			free(branch);
-@@ -209,6 +217,7 @@ int add_reflog_for_walk(struct reflog_walk_info *info,
- 		}
- 	} else
- 		commit_reflog->recno = reflogs->nr - recno - 1;
-+	commit_reflog->selector = selector;
- 	commit_reflog->reflogs = reflogs;
- 
- 	add_commit_info(commit, commit_reflog, &info->reflogs);
-@@ -267,7 +276,7 @@ void get_reflog_selector(struct strbuf *sb,
+@@ -276,7 +276,8 @@ void get_reflog_selector(struct strbuf *sb,
  	}
  
  	strbuf_addf(sb, "%s@{", printed_ref);
--	if (commit_reflog->flag || dmode) {
-+	if (commit_reflog->selector == SELECTOR_DATE || dmode) {
+-	if (commit_reflog->selector == SELECTOR_DATE || dmode) {
++	if (commit_reflog->selector == SELECTOR_DATE ||
++	    (commit_reflog->selector == SELECTOR_NONE && dmode)) {
  		info = &commit_reflog->reflogs->items[commit_reflog->recno+1];
  		strbuf_addstr(sb, show_date(info->timestamp, info->tz, dmode));
  	} else {
+diff --git a/t/t1411-reflog-show.sh b/t/t1411-reflog-show.sh
+index 88247f8..7d9b5e3 100755
+--- a/t/t1411-reflog-show.sh
++++ b/t/t1411-reflog-show.sh
+@@ -127,6 +127,14 @@ test_expect_success 'log.date does not invoke "--date" magic (format=%gd)' '
+ 	test_cmp expect actual
+ '
+ 
++cat >expect <<'EOF'
++HEAD@{0}
++EOF
++test_expect_success '--date magic does not override explicit @{0} syntax' '
++	git log -g -1 --format=%gd --date=raw HEAD@{0} >actual &&
++	test_cmp expect actual
++'
++
+ : >expect
+ test_expect_success 'empty reflog file' '
+ 	git branch empty &&
 -- 
 1.7.10.1.10.ge534bc3
