@@ -1,210 +1,110 @@
-From: Csaba Henk <csaba@lowlife.hu>
-Subject: commit message parsing error in rebase
-Date: Sat, 5 May 2012 00:05:35 +0530
-Message-ID: <CAA-jfp=F7ije9nFJio5gnmNGptDR1ZTBbCi-aOv7JokqrXBgYA@mail.gmail.com>
+From: Eli Barzilay <eli-oSK4jVRJLyZg9hUCZPvPmw@public.gmane.org>
+Subject: Re: [git] Re: Bug in git-stash(.sh) ?
+Date: Fri, 4 May 2012 14:57:33 -0400
+Message-ID: <20388.9885.608325.489624@winooski.ccs.neu.edu>
+References: <20379.9312.943088.350379@winooski.ccs.neu.edu>
+	<87wr4za9mr.fsf@gmail.com>
+	<m2pqasb8mr.fsf@linux-m68k.org>
+	<xmqqvckk93ta.fsf@junio.mtv.corp.google.com>
+	<CALO-gut4csy5wef4iGPGD5jVPc1f0iFBfS3MUWrOwc2yczdviw@mail.gmail.com>
+	<20380.33897.666338.766096@winooski.ccs.neu.edu>
+	<20120429220132.GB4491@sigill.intra.peff.net>
+	<20381.49180.329586.983166@winooski.ccs.neu.edu>
+	<20120501134254.GA11900@sigill.intra.peff.net>
+	<20386.53745.200846.115335@winooski.ccs.neu.edu>
+	<20120504052106.GA15970@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 04 20:36:08 2012
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Cc: Yann Hodique <yann.hodique-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>,
+        Andreas Schwab <schwab-Td1EMuHUCqxL1ZNQvxDV9g@public.gmane.org>,
+        Junio C Hamano <gitster-e+AXbWqSrlAAvxtiuMwx3w@public.gmane.org>, git-u79uwXL29TY76Z2rM5mHXA@public.gmane.org,
+        magit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+To: Jeff King <peff-AdEPDUrAXsQ@public.gmane.org>
+X-From: magit+bncCOHCzKWgHRCgzZD9BBoE7Wu-eg-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org Fri May 04 20:57:41 2012
+Return-path: <magit+bncCOHCzKWgHRCgzZD9BBoE7Wu-eg-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+Envelope-to: gcvgm-magit-3@m.gmane.org
+Received: from mail-pz0-f58.google.com ([209.85.210.58])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SQNMI-00048n-Ov
-	for gcvg-git-2@plane.gmane.org; Fri, 04 May 2012 20:36:03 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753270Ab2EDSf5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 4 May 2012 14:35:57 -0400
-Received: from mail-ey0-f174.google.com ([209.85.215.174]:36929 "EHLO
-	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752129Ab2EDSf5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 May 2012 14:35:57 -0400
-Received: by eaaq12 with SMTP id q12so918765eaa.19
-        for <git@vger.kernel.org>; Fri, 04 May 2012 11:35:56 -0700 (PDT)
+	(envelope-from <magit+bncCOHCzKWgHRCgzZD9BBoE7Wu-eg-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>)
+	id 1SQNhB-00063w-N6
+	for gcvgm-magit-3@m.gmane.org; Fri, 04 May 2012 20:57:37 +0200
+Received: by daev18 with SMTP id v18sf2477648dae.3
+        for <gcvgm-magit-3@m.gmane.org>; Fri, 04 May 2012 11:57:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:from:date:x-google-sender-auth:message-id
-         :subject:to:content-type;
-        bh=+Pi28V2omYIiIr948MQf6RkmlwQjk/Mj9ypYihkVmwo=;
-        b=zvZuqCZ+c4o1fCpJ/keZDhY1lxiKJ1chDcFzxRJrgrPpKCHzuy8aZ+xZpFw/dFNQSj
-         me3Vq59RQsjUWeFeWUiOBRRZ1y4hHzjJQGz+YVYWvFOei5HzmVABr11dyMC9KuzUM+Hi
-         lPVg13EatUbOuILW/5iR/+JNmKqk5URDsYhXRnoMNFopTNJ3KbrzvuN5+/vuQwjOJt86
-         Kk+yzsG41s3MmmETVYrvNwIRHggV41qLi5hLYsR+tfMXhWONnNyROHrEuQjRihzOAxfG
-         sdc0/ZbSiazQ5/pdHcMXJ8HqMhewFp7zA+C12XBEXqhRXem3A7wUyqkBqGDue+dgpLJq
-         gy+g==
-Received: by 10.213.121.67 with SMTP id g3mr1350203ebr.134.1336156555913; Fri,
- 04 May 2012 11:35:55 -0700 (PDT)
-Received: by 10.14.194.198 with HTTP; Fri, 4 May 2012 11:35:35 -0700 (PDT)
-X-Google-Sender-Auth: H_BXnu_EmIti-CgVXRFhN3YcoXM
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197047>
+        d=googlegroups.com; s=beta;
+        h=x-beenthere:received-spf:from:mime-version:message-id:date:to:cc
+         :subject:in-reply-to:references:x-mailer:x-original-sender
+         :x-original-authentication-results:precedence:mailing-list:list-id
+         :x-google-group-id:list-post:list-help:list-archive:sender
+         :list-subscribe:list-unsubscribe:content-type
+         :content-transfer-encoding;
+        bh=xfUHkH8/mSVAyYnqIRjLPliBiIPkghjUzRofUgi74Xk=;
+        b=U8fvl5Trtd/ypGUDQMpIjIPK2c0EVb3SAiLFFZ6dZKoCIpkivyq0aQZ2YDubxGnG2l
+         NWjKYPuJJR1yiwCf2PdmOWq3ok0jf4LyoADNy6Juv9hEC/934IhBEGXkk9iTDFwDUKoj
+         DLhJx6JQJ68y9SJGMV1pykVdl74HqB+kqqodg=
+Received: by 10.50.216.133 with SMTP id oq5mr524536igc.4.1336157856367;
+        Fri, 04 May 2012 11:57:36 -0700 (PDT)
+X-BeenThere: magit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+Received: by 10.50.151.199 with SMTP id us7ls1141929igb.1.canary; Fri, 04 May
+ 2012 11:57:35 -0700 (PDT)
+Received: by 10.42.197.137 with SMTP id ek9mr5460959icb.5.1336157855679;
+        Fri, 04 May 2012 11:57:35 -0700 (PDT)
+Received: by 10.42.197.137 with SMTP id ek9mr5460956icb.5.1336157855667;
+        Fri, 04 May 2012 11:57:35 -0700 (PDT)
+Received: from winooski.ccs.neu.edu (winooski.ccs.neu.edu. [129.10.115.117])
+        by gmr-mx.google.com with ESMTPS id e7si372346iga.3.2012.05.04.11.57.35
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 04 May 2012 11:57:35 -0700 (PDT)
+Received-SPF: pass (google.com: best guess record for domain of eli-a5nvgYPMCZcx/1z6v04GWfZ8FUJU4vz8@public.gmane.org designates 129.10.115.117 as permitted sender) client-ip=129.10.115.117;
+Received: from winooski.ccs.neu.edu (localhost.localdomain [127.0.0.1])
+	by winooski.ccs.neu.edu (8.14.4/8.14.4) with ESMTP id q44IvYFl010034;
+	Fri, 4 May 2012 14:57:34 -0400
+Received: (from eli@localhost)
+	by winooski.ccs.neu.edu (8.14.4/8.14.4/Submit) id q44IvXTe010031;
+	Fri, 4 May 2012 14:57:33 -0400
+In-Reply-To: <20120504052106.GA15970-bBVMEuqLR+SYVEpFpFwlB0AkDMvbqDRI@public.gmane.org>
+X-Mailer: VM 8.2.0a under 23.2.1 (x86_64-redhat-linux-gnu)
+X-Original-Sender: eli-oSK4jVRJLyZg9hUCZPvPmw@public.gmane.org
+X-Original-Authentication-Results: gmr-mx.google.com; spf=pass (google.com:
+ best guess record for domain of eli-a5nvgYPMCZcx/1z6v04GWfZ8FUJU4vz8@public.gmane.org designates
+ 129.10.115.117 as permitted sender) smtp.mail=eli-a5nvgYPMCZcx/1z6v04GWfZ8FUJU4vz8@public.gmane.org
+Precedence: list
+Mailing-list: list magit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org; contact magit+owners-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+List-ID: <magit.googlegroups.com>
+X-Google-Group-Id: 752745291123
+List-Post: <http://groups.google.com/group/magit/post?hl=en_US>, <mailto:magit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+List-Help: <http://groups.google.com/support/?hl=en_US>, <mailto:magit+help-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+List-Archive: <http://groups.google.com/group/magit?hl=en_US>
+Sender: magit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+List-Subscribe: <http://groups.google.com/group/magit/subscribe?hl=en_US>, <mailto:magit+subscribe-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+List-Unsubscribe: <http://groups.google.com/group/magit/subscribe?hl=en_US>, <mailto:googlegroups-manage+752745291123+unsubscribe-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197048>
 
-Hi,
+Earlier today, Jeff King wrote:
+> On Thu, May 03, 2012 at 02:44:01PM -0400, Eli Barzilay wrote:
+> 
+> > > Once that is fixed, then we can consider whether something more
+> > > should happen for stash (though I am inclined to say that is
+> > > enough; it is a feature that you can do "git stash list
+> > > --date=relative" to see the stash timestamps).
+> > 
+> > Since the general problem is bigger, how about just the quick
+> > patch of adding --date=default in the list_stash function as a
+> > stopgap?  That seems to be close enough to how it should work
+> > anyway.
+> 
+> It is bigger in scope, but the fix is still pretty small. I was
+> trying to trick^W gently prod you into making a patch, but that does
+> not seem to have worked. :)
 
-The bug I'm to report is objectively a bug; nevertheless, let
-me use a fictive scenario to illustrate it.
+Apologies -- it wasn't clear to me what should be done to address the
+general problem, and I don't think that I'd do a good job with that
+anyway.
 
-Say we have a project where we fix a vulnerability in the
-server component. In the commit message of the fix, we
-give a PoC malicious client that can be used to test if
-server is vulnerable. The PoC is specified by embedding
-a diff against normal client in the commit message.
+I can still make a proper patch with the fix for git-stash.sh that
+avoids the problem with the spaces.
 
-(Let's not discuss how good or bad it is to give PoCs in
-commit messages.)
-
-Now if you rebase this commit, git-rebase will think the
-PoC diff in the commit message is part of the commit diff,
-and will apply it. So the client will became malicious
-upon the rebase.
-
-Nb. cherry-pick does not make this mistake (what took
-me by surprise as I thought rebase and cherry-pick have a
-common backend).
-
-The following script creates such a scenario:
-
-####################################################
-echo 'def client(conn):
-  print >> conn, "hello"' > client.py
-echo 'def server(conn):
-  print conn.read()[4]' > server.py
-git add .
-git commit -m first
-echo 'def server(conn):
-  msg = conn.read()
-  if len(msg) >= 5:
-    print msg[4]' > server.py
-git commit -am 'server: check msg size
-
-Make sure client cannot crash server.
-
-Q/A: check with PoC malicious client
-by applying patch:
-
-diff --git a/client.py b/client.py
---- a/client.py
-+++ b/client.py
-@@ -1,2 +1,2 @@
- def client(conn):
--  print >> conn, "hello"
-+  print >> conn, "hell"'
-git checkout --detach HEAD^
-echo 'def load_balancer():
-  balance_load()' > load_balancer.py
-git add load_balancer.py
-git commit -m 'added load balancer prototype'
-git tag LOAD_BALANCER_PROTO
-git branch bleeding-edge master
-git rebase LOAD_BALANCER_PROTO bleeding-edge
-git checkout LOAD_BALANCER_PROTO
-git cherry-pick master
-echo
-echo '###### RESULT #######'
-echo '### '`git --version`
-echo
-echo '## topolgy'
-git log --graph --pretty=oneline --all --decorate
-echo
-echo '## original commit'
-git show --stat --decorate master
-echo
-echo '## rebased commit'
-git show --stat --decorate bleeding-edge
-echo
-echo '## cherry-picked commit'
-git show --stat --decorate HEAD
-####################################################
-
-and it has an output like this:
-
-###### RESULT #######
-### git version 1.7.10.1
-
-## topolgy
-* f5100d373242554f71db47592d8214c9e89d854a (bleeding-edge) server:
-check msg size
-| * c8fa20bd901d3bc0e745d976151d3b34d91f077d (HEAD) server: check msg size
-|/
-* 0cb17691eb9a9774af0fc991bf34da89fd413325 (tag: LOAD_BALANCER_PROTO)
-added load balancer prototype
-| * 3628281d81d275f431bdc0da36fe7c7d66240175 (master) server: check msg size
-|/
-* 80d8113aa7f6fa46245408ddbc846d9c1e796373 first
-
-## original commit
-commit 3628281d81d275f431bdc0da36fe7c7d66240175 (master)
-Author: Csaba Henk <>
-Date:   Fri May 4 23:56:51 2012 +0530
-
-    server: check msg size
-
-    Make sure client cannot crash server.
-
-    Q/A: check with PoC malicious client
-    by applying patch:
-
-    diff --git a/client.py b/client.py
-    --- a/client.py
-    +++ b/client.py
-    @@ -1,2 +1,2 @@
-     def client(conn):
-    -  print >> conn, "hello"
-    +  print >> conn, "hell"
-
- server.py |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
-
-## rebased commit
-commit f5100d373242554f71db47592d8214c9e89d854a (bleeding-edge)
-Author: Csaba Henk <>
-Date:   Fri May 4 23:56:51 2012 +0530
-
-    server: check msg size
-
-    Make sure client cannot crash server.
-
-    Q/A: check with PoC malicious client
-    by applying patch:
-
-    diff --git a/client.py b/client.py
-    --- a/client.py
-    +++ b/client.py
-    @@ -1,2 +1,2 @@
-     def client(conn):
-    -  print >> conn, "hello"
-    +  print >> conn, "hell"
-
- client.py |    2 +-
- server.py |    4 +++-
- 2 files changed, 4 insertions(+), 2 deletions(-)
-
-## cherry-picked commit
-commit c8fa20bd901d3bc0e745d976151d3b34d91f077d (HEAD)
-Author: Csaba Henk <>
-Date:   Fri May 4 23:56:51 2012 +0530
-
-    server: check msg size
-
-    Make sure client cannot crash server.
-
-    Q/A: check with PoC malicious client
-    by applying patch:
-
-    diff --git a/client.py b/client.py
-    --- a/client.py
-    +++ b/client.py
-    @@ -1,2 +1,2 @@
-     def client(conn):
-    -  print >> conn, "hello"
-    +  print >> conn, "hell"
-
- server.py |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
-
-
-Csaba
+-- 
+          ((lambda (x) (x x)) (lambda (x) (x x)))          Eli Barzilay:
+                    http://barzilay.org/                   Maze is Life!
