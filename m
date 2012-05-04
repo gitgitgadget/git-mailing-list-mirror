@@ -1,95 +1,76 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH 1/2] sequencer: fix leaked todo_list memory
-Date: Fri, 04 May 2012 21:40:33 +0200
-Message-ID: <20120504194035.25080.49271.chriscool@tuxfamily.org>
-Cc: git@vger.kernel.org, Ramkumar Ramachandra <artagnon@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Nick Bowler <nbowler@elliptictech.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri May 04 21:46:35 2012
+From: Ralf Thielow <ralf.thielow@googlemail.com>
+Subject: [PATCH 1/5] l10n: add new members to German translation team
+Date: Fri,  4 May 2012 21:48:22 +0200
+Message-ID: <1336160906-20708-2-git-send-email-ralf.thielow@googlemail.com>
+References: <1336160906-20708-1-git-send-email-ralf.thielow@googlemail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Ralf Thielow <ralf.thielow@googlemail.com>
+To: trast@student.ethz.ch, jk@jk.gs, stimming@tuhh.de
+X-From: git-owner@vger.kernel.org Fri May 04 21:48:56 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SQOSX-0005E7-Ot
-	for gcvg-git-2@plane.gmane.org; Fri, 04 May 2012 21:46:34 +0200
+	id 1SQOUl-00076o-Ch
+	for gcvg-git-2@plane.gmane.org; Fri, 04 May 2012 21:48:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759492Ab2EDTq2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 4 May 2012 15:46:28 -0400
-Received: from smtp3-g21.free.fr ([212.27.42.3]:55069 "EHLO smtp3-g21.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754379Ab2EDTq1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 May 2012 15:46:27 -0400
-Received: from [127.0.1.1] (unknown [82.243.130.161])
-	by smtp3-g21.free.fr (Postfix) with ESMTP id 73CC9A6227;
-	Fri,  4 May 2012 21:46:17 +0200 (CEST)
-X-git-sha1: 688916d32858678b20a282c00365bc122ca6d35a 
-X-Mailer: git-mail-commits v0.5.2
+	id S1759556Ab2EDTsr convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 4 May 2012 15:48:47 -0400
+Received: from mail-we0-f174.google.com ([74.125.82.174]:62404 "EHLO
+	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759544Ab2EDTsq (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 May 2012 15:48:46 -0400
+Received: by mail-we0-f174.google.com with SMTP id b10so138033wer.19
+        for <git@vger.kernel.org>; Fri, 04 May 2012 12:48:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding;
+        bh=7C9Q/9r7jQw6IlGwWl4Faz5t9Xujtt+An7OhFdi3qcE=;
+        b=scczQW5l2vN+Gb7qqiDh/sVTaUrLgNntgvi1okBjeQiDDF3+cFtRrUsdEwzw4tPmxD
+         mNxyUWyxzr5wo4SOD4GUVA7Lh1Lqtn6rj7aWhdrDoTscjugmQqrQ8Zgc8QkyN/tFGqyI
+         FLKN5AVFdsxsCqXWzKytUW4d+cc9JD4wrr5dVUXugVbPuR86FOoE1ZzLGaX8LaaaWyDi
+         j/oJglXM6Wbbps79wQuTI9oJuInjEgMwecu/lhVkdrebgqtrg1MIqMbymzu1QaOVZNCt
+         6cBY8LTApuj9VxBumYHyKpYjuOBJ6rPemwyEqtivQoVZyZBRHnDpVxCjUq3WJ4ARSxCO
+         /PHA==
+Received: by 10.180.79.135 with SMTP id j7mr15608525wix.19.1336160925799;
+        Fri, 04 May 2012 12:48:45 -0700 (PDT)
+Received: from localhost.localdomain (dslb-094-223-205-117.pools.arcor-ip.net. [94.223.205.117])
+        by mx.google.com with ESMTPS id 6sm3408902wiz.1.2012.05.04.12.48.44
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 04 May 2012 12:48:45 -0700 (PDT)
+X-Mailer: git-send-email 1.7.10.72.g0dc6d
+In-Reply-To: <1336160906-20708-1-git-send-email-ralf.thielow@googlemail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197062>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197063>
 
+Add Thomas Rast, Jan Kr=C3=BCger and Christian Stimming
+to German translation team.
 
-Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+Signed-off-by: Ralf Thielow <ralf.thielow@googlemail.com>
 ---
-Hi,
+ po/TEAMS |    3 +++
+ 1 Datei ge=C3=A4ndert, 3 Zeilen hinzugef=C3=BCgt(+)
 
-This is a very small series to fix a few memory leaks.
-It will not fix the main leaks but it's a start.
-
-Regards,
-Christian.
-
- sequencer.c | 15 ++++++++++++---
- 1 file changed, 12 insertions(+), 3 deletions(-)
-
-diff --git a/sequencer.c b/sequencer.c
-index f83cdfd..aa4c1a4 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -892,6 +892,7 @@ static int continue_single_pick(void)
- static int sequencer_continue(struct replay_opts *opts)
- {
- 	struct commit_list *todo_list = NULL;
-+	int res;
- 
- 	if (!file_exists(git_path(SEQ_TODO_FILE)))
- 		return continue_single_pick();
-@@ -907,8 +908,11 @@ static int sequencer_continue(struct replay_opts *opts)
- 	}
- 	if (index_differs_from("HEAD", 0))
- 		return error_dirty_index(opts);
--	todo_list = todo_list->next;
--	return pick_commits(todo_list, opts);
-+	res = pick_commits(todo_list->next, opts);
-+
-+	free_commit_list(todo_list);
-+
-+	return res;
- }
- 
- static int single_pick(struct commit *cmit, struct replay_opts *opts)
-@@ -921,6 +925,7 @@ int sequencer_pick_revisions(struct replay_opts *opts)
- {
- 	struct commit_list *todo_list = NULL;
- 	unsigned char sha1[20];
-+	int res;
- 
- 	if (opts->subcommand == REPLAY_NONE)
- 		assert(opts->revs);
-@@ -977,5 +982,9 @@ int sequencer_pick_revisions(struct replay_opts *opts)
- 	}
- 	save_head(sha1_to_hex(sha1));
- 	save_opts(opts);
--	return pick_commits(todo_list, opts);
-+	res = pick_commits(todo_list, opts);
-+
-+	free_commit_list(todo_list);
-+
-+	return res;
- }
--- 
-1.7.10.579.g68891.dirty
+diff --git a/po/TEAMS b/po/TEAMS
+index 4515f57..cd3440e 100644
+--- a/po/TEAMS
++++ b/po/TEAMS
+@@ -8,6 +8,9 @@ Leader:		Byrial Jensen <byrial@vip.cybercity.dk>
+ Language:	de (German)
+ Repository:	https://github.com/ralfth/git-po-de
+ Leader:		Ralf Thielow <ralf.thielow@googlemail.com>
++Members:	Thomas Rast <trast@student.ethz.ch>
++		Jan Kr=C3=BCger <jk@jk.gs>
++		Christian Stimming <stimming@tuhh.de>
+=20
+ Language:	is (Icelandic)
+ Leader:		=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
+--=20
+1.7.10.72.g0dc6d
