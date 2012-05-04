@@ -1,85 +1,150 @@
-From: Mark Brown <broonie@opensource.wolfsonmicro.com>
+From: Nathan Gray <n8gray@n8gray.org>
 Subject: Re: Newbie grief
-Date: Fri, 4 May 2012 17:29:48 +0100
-Message-ID: <20120504162947.GA2311@sirena.org.uk>
-References: <4FA3E31A.6060606@op5.se>
- <6211a2de-a545-41c3-9fb5-e7e3033b45f4@mail>
+Date: Fri, 4 May 2012 09:46:04 -0700
+Message-ID: <CA+7g9Jx20q6C8JqrcrmbWhYNH1K35Gwp_BAckjM=8qg1kMwU4Q@mail.gmail.com>
+References: <4F9F128C.5020304@palm.com>
+	<201204302331.q3UNVo7o032303@no.baka.org>
+	<4F9F28F5.2020403@palm.com>
+	<201205010137.q411bxaU002449@no.baka.org>
+	<4F9F52B9.9060508@palm.com>
+	<08704bd2e32343a4b9def80e4fa1efa2-mfwitten@gmail.com>
+	<4FA2D8EA.7030809@palm.com>
+	<87obq5ggpu.fsf@an-dro.info.enstb.org>
+	<7vehr1dl2z.fsf@alter.siamese.dyndns.org>
+	<4FA307C5.102@palm.com>
+	<4FA3090D.5080406@palm.com>
+	<4FA32A6A.4070007@blizzard.com>
+	<CA+7g9Jxp859st6SrViizwOMrU9vsnmfy6P64SK9y_-ZEzEB6Mw@mail.gmail.com>
+	<1167779eee7d442b9db0eecb347d5516-mfwitten@gmail.com>
+	<7vmx5ocyc3.fsf@alter.siamese.dyndns.org>
+	<1336126182.3490.28.camel@beez.lab.cmartin.tk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Andreas Ericsson <ae@op5.se>,
-	Felipe Contreras <felipe.contreras@gmail.com>,
-	"Randal L. Schwartz" <merlyn@stonehenge.com>,
-	Sitaram Chamarty <sitaramc@gmail.com>,
-	Ted Ts'o <tytso@mit.edu>, Seth Robertson <in-gitvger@baka.org>,
-	git@vger.kernel.org, Rich Pixley <rich.pixley@palm.com>
-To: Stephen Bash <bash@genarts.com>
-X-From: git-owner@vger.kernel.org Fri May 04 18:30:02 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Michael Witten <mfwitten@gmail.com>,
+	Illia Bobyr <ibobyr@blizzard.com>,
+	Rich Pixley <rich.pixley@palm.com>,
+	Ronan Keryell <Ronan.Keryell@hpc-project.com>,
+	git@vger.kernel.org
+To: =?ISO-8859-1?Q?Carlos_Mart=EDn_Nieto?= <cmn@elego.de>
+X-From: git-owner@vger.kernel.org Fri May 04 18:46:18 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SQLOL-0000Jq-Ph
-	for gcvg-git-2@plane.gmane.org; Fri, 04 May 2012 18:30:02 +0200
+	id 1SQLe2-0005Xp-GK
+	for gcvg-git-2@plane.gmane.org; Fri, 04 May 2012 18:46:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757446Ab2EDQ35 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 4 May 2012 12:29:57 -0400
-Received: from cassiel.sirena.org.uk ([80.68.93.111]:34428 "EHLO
-	cassiel.sirena.org.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752667Ab2EDQ34 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 May 2012 12:29:56 -0400
-Received: from broonie by cassiel.sirena.org.uk with local (Exim 4.72)
-	(envelope-from <broonie@sirena.org.uk>)
-	id 1SQLO8-0000zz-1T; Fri, 04 May 2012 17:29:48 +0100
-Content-Disposition: inline
-In-Reply-To: <6211a2de-a545-41c3-9fb5-e7e3033b45f4@mail>
-X-Cookie: This login session: $13.99
-User-Agent: Mutt/1.5.20 (2009-06-14)
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: broonie@sirena.org.uk
-X-SA-Exim-Scanned: No (on cassiel.sirena.org.uk); SAEximRunCond expanded to false
+	id S1754048Ab2EDQqJ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 4 May 2012 12:46:09 -0400
+Received: from mail-bk0-f46.google.com ([209.85.214.46]:61781 "EHLO
+	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751134Ab2EDQqH convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 4 May 2012 12:46:07 -0400
+Received: by bkcji2 with SMTP id ji2so2376035bkc.19
+        for <git@vger.kernel.org>; Fri, 04 May 2012 09:46:05 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:x-originating-ip:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding:x-gm-message-state;
+        bh=x5vYU7+xkNex03hIL+0N9sZssBGhU/KD+tSzTmMn9Xg=;
+        b=MfMDAeCtaarxcCvs43XVyMWSVGZ2yydqKMzsw7w8kWXTJkhDV3Gk6stHpkP0MxMBkN
+         rIELyATKKA9UiFlNBmbfalqVgxcurSCM+hUm6ZfQ7vHXw+r9uq06EXXfMYZYdoffYdjs
+         4mn2ugNofOT1iGue4zn45KVsPvlGDg0Bs1mTK1SorbwGSi4SeNfrVUcERq7fwRTCV1cP
+         bRNfXsEAj5KKk8LMp9xWwB1pl9JKbGLABXH/3Iq6FdgUXJRmNGP2g7S9qpwvhgD3LC9x
+         C39Vb/D7c3/OnR+YehqtKc7q5QXP5+5cRnVKfnxVPHOPwzBuHsSdppFfcdn8sPjf4aea
+         xh7w==
+Received: by 10.204.150.92 with SMTP id x28mr2370380bkv.61.1336149965098; Fri,
+ 04 May 2012 09:46:05 -0700 (PDT)
+Received: by 10.204.224.141 with HTTP; Fri, 4 May 2012 09:46:04 -0700 (PDT)
+X-Originating-IP: [184.182.186.242]
+In-Reply-To: <1336126182.3490.28.camel@beez.lab.cmartin.tk>
+X-Gm-Message-State: ALoCoQnJNaHYCnmPuhhTuYlwTsWNTYAaYbPTsD3KwNdEmDH89Dmz1dp5fLGDG+XNo6xrS7up1bK5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197036>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197037>
 
-On Fri, May 04, 2012 at 10:59:30AM -0400, Stephen Bash wrote:
+On Fri, May 4, 2012 at 3:09 AM, Carlos Mart=EDn Nieto <cmn@elego.de> wr=
+ote:
+> On Thu, 2012-05-03 at 22:25 -0700, Junio C Hamano wrote:
+>> Michael Witten <mfwitten@gmail.com> writes:
+>>
+>> > As for a seemingly conservative suggestion, how about using a litt=
+le
+>> > more structural white space:
+>> >
+>> > =A0 To $uri_for_central_repo
+>> > =A0 =A0! [rejected] =A0 =A0 =A0 =A0HEAD -> feature_0 (non-fast-for=
+ward)
+>> >
+>> > =A0 error: failed to push some refs to '$uri_for_central_repo'
+>> >
+>> > =A0 To prevent you from losing history, non-fast-forward updates w=
+ere rejected
+>> > =A0 Merge the remote changes (e.g. 'git pull') before pushing agai=
+n. =A0See the
+>> > =A0 'Note about fast-forwards' section of 'git push --help' for de=
+tails.
+>> >
+>
+> Most of the first sentence repeats what we can see above. Restating t=
+hat
+> non-ff updates were rejected doesn't add information and doesn't help
+> people who don't already know what a non-ff update is, so it's either
+> redundant or not helpful[0]. So lets see if we can come up with a
+> friendlier way of saying it. Maybe something like:
+>
+> =A0 =A0To $uri_for_central_repo
+> =A0 =A0! [rejected] =A0 =A0 =A0 =A0HEAD -> feature_0 (non-fast-forwar=
+d)
+>
+> =A0 =A0error: failed to push some refs to '$uri_for_central_repo'
+>
+> =A0 =A0Some updates which might rewrite history and lose someone else=
+'s
+> =A0 =A0changes were rejected. Merge those changes (e.g. 'git pull') t=
+o
+> =A0 =A0incorporate that history. See the 'Note about fast-forwards' s=
+ection
+> =A0 =A0of 'git push --help' for details.
+>
+> It may be a bit longer, but if you don't know what a non-ff is or why
+> it's a problem, this text should help you a lot more than the previou=
+s
+> one did. Not reading the documentation (specially when the error mess=
+age
+> points you to a specific section for a longer explanation) is still n=
+o
+> excuse for not known what's going on, but if you've been working on y=
+our
+> own for a while, you might have forgotten what this is all about.[1]
 
-> If my hg-foo isn't too out of date...  The hg recipe creates 4000
-> "heads" on a single branch, rather than 4000 branches (see the 'hg
-> heads' command).  This is basically the point Rich is arguing I
-> believe.  hg allows for multiple tip commits all with the same branch
-> name (IMO this is important because hg branch names are permanently
-> recorded in their version of the commit object).
+The whitespace that Michael introduced is a big help, for starters,
+and this rewording is also a nice step forward.  I'm still not
+thrilled about the "rewriting history" verbiage -- that makes it sound
+like the user did something super risky and was rescued by the system.
+ Here's my suggestion for replacing the last paragraph:
 
-> This is a *fundamental* difference in the implementation of the two
-> tools (and causes confusion because now "branch" has two slightly
-> different meanings).  However, IMHO, philosophically it all boils down
-> to the same thing: development has forked and has to be merged.
-> Whether that fork has a name or not is up to the tool.  In hg it
-> doesn't *have* to have a name (multiple heads per branch), in git it
-> does (single head per branch).
+  Some of your branches are out of date.  Merge the remote changes
+(e.g. 'git pull') then try again.
 
-Ah, this makes some sense - I *think* it's coming down not so much that
-you have to name the branches (googling around it seems hg does assign
-names, it's just that they're autogenerated numbers) as to the fact that
-unless you branch directly from wherever your origin repository is git
-doesn't keep track of where you're ultimately trying to merge development
-back to.
+It's short and easy to scan.  It has no git-specific jargon that new
+users would be unfamiliar with.  There's no reference to fast-forward
+updates so no need to refer the user to that help section.  What do
+you think?
 
-If the above is right then some UI around remotes and branch --track and
---set-upstream which provides an automated way of saying "this is a
-scratch branch for merge into X" and can then do things like helping
-with merging and enumerating all the scratch branches for a given
-destination, or with bundling up all the scratch branches and dropping
-them elsewhere for merge might do the trick?  A "strong" branch kind of
-thing.
+Cheers,
+-n8
 
-This does come up a bit with traditional git workflows - I have it a
-little when working between my desktop and my laptop - but is IME
-usually resolved by publishing frequently to some central location
-frequently and then rebasing if lots of local merges aren't approved of
-in your workflow.  git (at least in kernel usage) has more of a
-"building a patch series" model oriented around preparing things for
-review.
+--=20
+HexaLex: A New Angle on Crossword Games for iPhone and iPod Touch
+http://hexalex.com
+On The App Store: http://bit.ly/8Mj1CU
+On Facebook: http://bit.ly/9MIJiV
+On Twitter: http://twitter.com/hexalexgame
+http://n8gray.org
