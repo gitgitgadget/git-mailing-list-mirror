@@ -1,85 +1,66 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Index format v5
-Date: Fri, 04 May 2012 08:46:47 -0700
-Message-ID: <7vzk9oaqzc.fsf@alter.siamese.dyndns.org>
-References: <CALgYhfMKdbv8TiT4ALDSvD3pSXHEPLWHM09DxYnRmRdBWRjh8Q@mail.gmail.com>
- <2A6D903A618147EEBBFEF99234104EE6@PhilipOakley>
+From: Mark Brown <broonie@opensource.wolfsonmicro.com>
+Subject: Re: Newbie grief
+Date: Fri, 4 May 2012 16:56:06 +0100
+Message-ID: <20120504155606.GB30130@sirena.org.uk>
+References: <86mx5rmx32.fsf@red.stonehenge.com>
+ <4FA055D0.7040102@palm.com>
+ <86aa1rmvhb.fsf@red.stonehenge.com>
+ <4FA05E9F.9090709@palm.com>
+ <CAJsNXTmo1B86nSm7u923jJuGX0zajz3iqVu-onANMN-5BE5DfQ@mail.gmail.com>
+ <4FA2D1D7.3020807@palm.com>
+ <CA+7g9JzZ36RgsniT4UN0Zk+z1ohZYW5u+0AoGMjJZqsoBjqvqA@mail.gmail.com>
+ <4FA2D97A.8090504@palm.com>
+ <86ipgdhvjo.fsf@red.stonehenge.com>
+ <4FA2F013.3020904@palm.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: "Thomas Gummerer" <t.gummerer@gmail.com>, <git@vger.kernel.org>,
-	<trast@student.ethz.ch>, <mhagger@alum.mit.edu>, <peff@peff.net>,
-	<spearce@spearce.org>, <davidbarr@google.com>
-To: "Philip Oakley" <philipoakley@iee.org>
-X-From: git-owner@vger.kernel.org Fri May 04 17:46:55 2012
+Cc: "Randal L. Schwartz" <merlyn@stonehenge.com>,
+	Nathan Gray <n8gray@n8gray.org>,
+	PJ Weisberg <pj@irregularexpressions.net>,
+	Sitaram Chamarty <sitaramc@gmail.com>,
+	Ted Ts'o <tytso@mit.edu>, Seth Robertson <in-gitvger@baka.org>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Rich Pixley <rich.pixley@palm.com>
+X-From: git-owner@vger.kernel.org Fri May 04 17:56:28 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SQKid-0005hv-69
-	for gcvg-git-2@plane.gmane.org; Fri, 04 May 2012 17:46:55 +0200
+	id 1SQKrq-0005Mi-4K
+	for gcvg-git-2@plane.gmane.org; Fri, 04 May 2012 17:56:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751578Ab2EDPqu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 4 May 2012 11:46:50 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:41386 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751209Ab2EDPqt (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 May 2012 11:46:49 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8D8C0633F;
-	Fri,  4 May 2012 11:46:49 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=YV+wMmOgNo78GvA1g5bP28NQVm8=; b=elIdC2
-	HuyXvHp9yKvbTuPvdyHovET/Cv9hgEvsT7xUJny4IW36Zs7YLE8ou8ylQvXIyLRO
-	YL6DmPTa/Z0atWFzKHnTKRZE3tYWfruHcLPHdwBQiJzK8rM+KGryrIJYWNoIL8rn
-	X5r8i5KnxhrK3Uc9HSMrA5Ffhk0WUKGYDaXHY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=egRvHndYYYJx0oIlXocD/i48HgvcYTJZ
-	86wG9r0PB6YhoNMneq+NpXnR1lYW/aeG7BxP9ruJRyGneFbwI3Pt1oO+ZYyDJO6A
-	E4WcZFTCgznqHPje0mdE4RMMC7LvQULai1v+V0JkX6a6R8Na7o8mZ/P7VXhDr78H
-	Sh0oJ1JFRBw=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 80594633D;
-	Fri,  4 May 2012 11:46:49 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0F6B1633C; Fri,  4 May 2012
- 11:46:48 -0400 (EDT)
-In-Reply-To: <2A6D903A618147EEBBFEF99234104EE6@PhilipOakley> (Philip Oakley's
- message of "Fri, 4 May 2012 14:25:05 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 5C53D3D0-9600-11E1-B46D-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751378Ab2EDP4U (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 4 May 2012 11:56:20 -0400
+Received: from cassiel.sirena.org.uk ([80.68.93.111]:44863 "EHLO
+	cassiel.sirena.org.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751182Ab2EDP4T (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 May 2012 11:56:19 -0400
+Received: from broonie by cassiel.sirena.org.uk with local (Exim 4.72)
+	(envelope-from <broonie@sirena.org.uk>)
+	id 1SQKrW-0000a0-7V; Fri, 04 May 2012 16:56:06 +0100
+Content-Disposition: inline
+In-Reply-To: <4FA2F013.3020904@palm.com>
+X-Cookie: Swap read error.  You lose your mind.
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: broonie@sirena.org.uk
+X-SA-Exim-Scanned: No (on cassiel.sirena.org.uk); SAEximRunCond expanded to false
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197031>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197032>
 
-"Philip Oakley" <philipoakley@iee.org> writes:
+On Thu, May 03, 2012 at 01:52:35PM -0700, Rich Pixley wrote:
 
-> Does the prohibition of ".git" prevent the potential for versioning of
-> the .git directory itself (e.g. .gitignore the pack & objects
-> themselves)?
+> It's not just hg.  It's other source code control systems as well.
+> Check out any of the other daggy guys.  So sure, I'll admit a bias
+> for current technology over older tech.
 
-It is a good thing that you are forbidden from adding .git/anything to the
-index and the trees.  The information inside your .git/ repository does
-have to change from time to time.  For example, you may change your e-mail
-address and update user.email in your .git/config file.
-
-But the history of them and the history of the evolution of the project
-itself are distinct [*1*]. When you clone git.git, you have no business
-learning what is in .git/config in my repository.  The project should not
-be able to overwrite what is in your .git/hooks/. These are only a few
-reasons why an attempt to "git add .git/something" is always a mistake.
-
-And it is irrelevant to this discussion, as the rest of .git does not
-allow putting .git anyway.  In that sense, the index "format" does not
-have to enforce it.  For that reason, I would suggest dropping the mention
-of ".git" (but not "..") from the format description.
-
-[Footnote]
-
-*1* You could choose to track the contents of .git/ in another repository
-with creative uses of GIT_DIR/GIT_WORK_TREE/core.worktree and friends.
+I'm still not sure what's missing here without a central server?   The
+other DVCSs I've used (which don't include hg) do require that the user
+trigger a merge operation somehow; they don't magically go and merge
+things without being asked.  The only thing I've noticed that git does
+differently is that it caches the remote branches locally by default
+when remotes are set up.
