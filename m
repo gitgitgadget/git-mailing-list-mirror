@@ -1,104 +1,79 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH v2 05/18] refs.c: extract function search_for_subdir()
-Date: Fri, 04 May 2012 09:24:44 +0200
-Message-ID: <4FA3843C.80603@alum.mit.edu>
-References: <1335479227-7877-1-git-send-email-mhagger@alum.mit.edu> <1335479227-7877-6-git-send-email-mhagger@alum.mit.edu> <7v4nrxf3m2.fsf@alter.siamese.dyndns.org> <7vmx5pdlv1.fsf@alter.siamese.dyndns.org>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: git gc == git garbage-create from removed branch
+Date: Fri, 04 May 2012 09:37:21 +0200
+Message-ID: <4FA38731.8010504@op5.se>
+References: <hbf.20120503q14w@bombur.uio.no>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain; charset=ISO-8859-15
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Jakub Narebski <jnareb@gmail.com>,
-	Heiko Voigt <hvoigt@hvoigt.net>,
-	Johan Herland <johan@herland.net>,
-	Christian Couder <chriscool@tuxfamily.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri May 04 09:31:55 2012
+Cc: git@vger.kernel.org
+To: Hallvard Breien Furuseth <h.b.furuseth@usit.uio.no>
+X-From: git-owner@vger.kernel.org Fri May 04 09:37:31 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SQCzb-0005uo-Ct
-	for gcvg-git-2@plane.gmane.org; Fri, 04 May 2012 09:31:55 +0200
+	id 1SQD50-0001X6-KF
+	for gcvg-git-2@plane.gmane.org; Fri, 04 May 2012 09:37:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752876Ab2EDHbv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 4 May 2012 03:31:51 -0400
-Received: from ALUM-MAILSEC-SCANNER-8.MIT.EDU ([18.7.68.20]:60198 "EHLO
-	alum-mailsec-scanner-8.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752134Ab2EDHbu (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 4 May 2012 03:31:50 -0400
-X-Greylist: delayed 422 seconds by postgrey-1.27 at vger.kernel.org; Fri, 04 May 2012 03:31:50 EDT
-X-AuditID: 12074414-b7fbf6d0000008cf-18-4fa3843fb094
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-8.mit.edu (Symantec Messaging Gateway) with SMTP id 4B.B2.02255.F3483AF4; Fri,  4 May 2012 03:24:47 -0400 (EDT)
-Received: from [192.168.101.152] (ssh.berlin.jpk.com [212.222.128.135])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id q447OiKS012807
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Fri, 4 May 2012 03:24:45 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:11.0) Gecko/20120410 Thunderbird/11.0.1
-In-Reply-To: <7vmx5pdlv1.fsf@alter.siamese.dyndns.org>
-X-Brightmail-Tracker: H4sIAAAAAAAAA02Sa0hTYRjHe3fmdqaeep1T32YanbLImBcSOdDFgsDRBxdGF6TSozu50XYm
-	52yiUSRpirdM9IvTQmZpZVZMw0tWoKZpRV7JEEVIDQUtMLQP3c7bUPv28Pz+z/Pj5XlJQt3t
-	pSXNvJ0TeNZCK7zlauWxHbq4vDpDVMVvhnF/KSeYotFiGZNTOkowDz5PEsz9sRqCuTPZIWN+
-	5JUQR5T6duekUj88v6rQF3xdIvRzpZ1APzS8U98wvaDUL7tDTyiTfA6msvbMk+Z0PvJwio+p
-	72Y1kfHJJ+tNZQfIAVWqIqAiEYxB7uV24KkD0eDUE0UR8CbVcASgxsZCLwzUsFeGKm7E45qC
-	e9HA8JgUIkk5DEP5bh1uK6AOuUpyZbgOgKdR2USLzBP3Q/1VM3Jca+BuVJ7fJcf7CTgN0MeZ
-	lX/AHx5H7c2VwCP+AFBJU4sSAxWMRXNLnUosI+ABtPJcwG0CbketizXELQCd/zmcGynnf6la
-	QDwEoazFYdVZWbNF5NJ0YhrL85ygYyKsZnsEZ3S4gecImjbQ0x/aBSAJaF9qqN5lUHuxmWK2
-	tQtsJWV0AGW5XmdQb061GbNNrGhKFhwWTuwCiCRoDQVsEqOMbPZlTrCtoWBSTgdRK3V7EtQw
-	nbVzlzgugxPW6DaSpBG1L1ca9BO4dC7rotli38AyUoWXe2s1IscbOYF12E3J+KbJonRUjHwl
-	rwGPU2IGa5W6ntEBoCOr7z4bA2o5b+M5bRDli0MQh0wOfl2x9vcWQJD0Yn+qEqd8pZ+5vmlB
-	ksgkSXCUC0vs7AbS5gBbz+2kd2R6mSlj3hVe/7TzTJHNXUJEv2o+F1JrTnRZEhQ/ 
+	id S1753175Ab2EDHh0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 4 May 2012 03:37:26 -0400
+Received: from mail-lpp01m010-f46.google.com ([209.85.215.46]:37761 "EHLO
+	mail-lpp01m010-f46.google.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751535Ab2EDHhZ (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 4 May 2012 03:37:25 -0400
+Received: by lahj13 with SMTP id j13so1813913lah.19
+        for <git@vger.kernel.org>; Fri, 04 May 2012 00:37:23 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding
+         :x-gm-message-state;
+        bh=9XqCROYWjso50wISZlfvbx6hNgioPYJScxz6wbK0ZKk=;
+        b=JGHHBp61auCXA6wQXt1dqlKoAG37bv0SliqvaPozaGwFgZ7rgpVqJzeDuKoKitcB2R
+         aLTo0d5CDjNraF5dEbw75dK06oZZw2RTDrNVYKMXpXqw1nxUGWCWrhF09MD00MRzzpvQ
+         YVQrEhC0JcVlBv9jU7Deq89uugY453jynlcvBjhRPcGqs7NTkOj6p0IHZAvpIRVK9G/8
+         H/fojqrolX844bCCaUnij3SlD7wZs2FNMfgFGUJWo3KA3zGK/PPhAlEQB79rJ5m6INV6
+         4f69enp6eBFcfHt2/xPaJiITotec0h8oEcw3AxgyysK0z/its9Ny8Vucpl6sOWTWQuEY
+         SngQ==
+Received: by 10.112.10.202 with SMTP id k10mr2335513lbb.65.1336117043600;
+        Fri, 04 May 2012 00:37:23 -0700 (PDT)
+Received: from vix.int.op5.se (sth-vpn1.op5.com. [193.201.96.49])
+        by mx.google.com with ESMTPS id i6sm9952161lbg.2.2012.05.04.00.37.21
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 04 May 2012 00:37:22 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:12.0) Gecko/20120424 Thunderbird/12.0
+In-Reply-To: <hbf.20120503q14w@bombur.uio.no>
+X-Gm-Message-State: ALoCoQk8Yn+20qR6lh3ZTVC89m+QyRVvPUup80gn8zjp6jbhSFMsO7HF+aK+H5lx1Ta5+fcdb1Ae
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197003>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197004>
 
-On 05/03/2012 10:56 PM, Junio C Hamano wrote:
-> Junio C Hamano<gitster@pobox.com>  writes:
->
->> Hrm.  The old code used to reset "dir" to NULL before breaking, so the
->> entire function used to return NULL.  Now, it calls search_for_subdir(),
->> which calls search_ref_dir() and gets NULL in entry, and returns NULL.
->>
->> Wouldn't we end up returning the original parameter "dir" instead of NULL
->> in that case?  Would that make a difference?
->
-> In other words, isn't something like this necessary?
+On 05/03/2012 08:38 PM, Hallvard Breien Furuseth wrote:
+> After removing a branch, 'git gc' explodes all objects
+> which were only in that branch.  Git filled up my disk that
+> way when I had cherry-picked from a big remote repo and then
+> did git remote rm.  Tested with Git 1.7.10.1 and 1.7.1.
+> 
 
-You are right.  Thanks for catching this.
+That's by design. It's added to save people who accidentally
+delete a branch or for some other reason really want to keep the
+objects they're about to delete.
 
-> Otherwise, wouldn't do_for_each_ref() called for a non-existing "refs/"
-> subhierarchy in "base" start from the top-level packed_dir/loose_dir
-> returned from find_containing_dir(), and end up running do_for_each_ref_in_dirs()
-> with both top-level packed_dir/loose_dir and traversing all of them, only
-> to find nothing?
->
->   refs.c | 4 +++-
->   1 file changed, 3 insertions(+), 1 deletion(-)
->
-> diff --git a/refs.c b/refs.c
-> index 9f2da16..af5da5f 100644
-> --- a/refs.c
-> +++ b/refs.c
-> @@ -390,8 +390,10 @@ static struct ref_dir *find_containing_dir(struct ref_dir *dir,
->   			   refname + dirname.len,
->   			   (slash + 1) - (refname + dirname.len));
->   		subdir = search_for_subdir(dir, dirname.buf, mkdir);
-> -		if (!subdir)
-> +		if (!subdir) {
-> +			dir = NULL;
->   			break;
-> +		}
->   		dir = subdir;
->   	}
->
+Use 'git gc --prune=now' with a recent* git and you'll avoid the
+problem.
 
+* Recent enough to include the patch that avoids writing out loose
+objects when they would be auto-deleted by the following pruning.
 
 -- 
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
+
+Considering the successes of the wars on alcohol, poverty, drugs and
+terror, I think we should give some serious thought to declaring war
+on peace.
