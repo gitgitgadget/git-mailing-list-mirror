@@ -1,72 +1,97 @@
-From: Hallvard Breien Furuseth <h.b.furuseth@usit.uio.no>
-Subject: Re: branching based on tag.
-Date: Fri, 04 May 2012 11:53:56 +0200
-Message-ID: <d0a5c7b492d53912d12f25ba6f8fe828@ulrik.uio.no>
-References: <CABECqUE-WqnR_wQzMsuEFmUu86_9i+GnJdEKYXwB+WancTFnOA@mail.gmail.com>
+From: Herman van Rink <rink@initfour.nl>
+Subject: Re: Subtree in Git
+Date: Fri, 04 May 2012 12:08:12 +0200
+Organization: Initfour Websolutions
+Message-ID: <4FA3AA8C.9030202@initfour.nl>
+References: <CAE1pOi2uT=wipyrOYCwy9QuXnXFV27F1gN3Ej-RaSr-fegQCfA@mail.gmail.com> <nngk410vrja.fsf@transit.us.cray.com> <4F9FA029.7040201@initfour.nl> <87fwbgbs0h.fsf@smith.obbligato.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
- charset=UTF-8;
- format=flowed
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: <git@vger.kernel.org>
-To: karunakar merugu <karuna.linux@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 04 11:54:04 2012
+Cc: dag@cray.com, Hilco Wijbenga <hilco.wijbenga@gmail.com>,
+	Git Users <git@vger.kernel.org>
+To: greened@obbligato.org
+X-From: git-owner@vger.kernel.org Fri May 04 12:11:42 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SQFD9-0003cW-FJ
-	for gcvg-git-2@plane.gmane.org; Fri, 04 May 2012 11:54:03 +0200
+	id 1SQFUB-0000cL-5M
+	for gcvg-git-2@plane.gmane.org; Fri, 04 May 2012 12:11:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754150Ab2EDJx7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 4 May 2012 05:53:59 -0400
-Received: from mail-out1.uio.no ([129.240.10.57]:36150 "EHLO mail-out1.uio.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753917Ab2EDJx6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 May 2012 05:53:58 -0400
-Received: from mail-mx5.uio.no ([129.240.10.46])
-	by mail-out1.uio.no with esmtp (Exim 4.75)
-	(envelope-from <h.b.furuseth@usit.uio.no>)
-	id 1SQFD3-0008IK-36; Fri, 04 May 2012 11:53:57 +0200
-Received: from w3prod-wm03.uio.no ([129.240.4.40] helo=webmail.uio.no)
-	by mail-mx5.uio.no with esmtpsa (TLSv1:AES256-SHA:256)
-	user hbf (Exim 4.76)
-	(envelope-from <h.b.furuseth@usit.uio.no>)
-	id 1SQFD2-0003js-Jv; Fri, 04 May 2012 11:53:56 +0200
-Received: from bombur.uio.no ([129.240.6.233])
- by webmail.uio.no
- with HTTP (HTTP/1.1 POST); Fri, 04 May 2012 11:53:56 +0200
-In-Reply-To: <CABECqUE-WqnR_wQzMsuEFmUu86_9i+GnJdEKYXwB+WancTFnOA@mail.gmail.com>
-X-Sender: h.b.furuseth@usit.uio.no
-User-Agent: Roundcube Webmail/0.4.2
-X-UiO-Ratelimit-Test: rcpts/h 2 msgs/h 1 sum rcpts/h 9 sum msgs/h 1 total rcpts 2406 max rcpts/h 20 ratelimit 0
-X-UiO-Spam-info: not spam, SpamAssassin (score=-5.0, required=5.0, autolearn=disabled, T_RP_MATCHES_RCVD=-0.01,UIO_MAIL_IS_INTERNAL=-5, uiobl=NO, uiouri=NO)
-X-UiO-Scanned: 543C4B9FBCAF01876569C8C766A46D5A36A23664
-X-UiO-SPAM-Test: remote_host: 129.240.4.40 spam_score: -49 maxlevel 80 minaction 2 bait 0 mail/h: 305 total 1291276 max/h 414 blacklist 0 greylist 0 ratelimit 0
+	id S1754294Ab2EDKI3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 4 May 2012 06:08:29 -0400
+Received: from hosted-by.initfour.nl ([83.137.144.7]:38240 "EHLO
+	mail.initfour.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754043Ab2EDKI2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 May 2012 06:08:28 -0400
+Received: from [192.168.42.73] (initfour.xs4all.nl [80.101.157.228])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	(Authenticated sender: helmo@INITFOUR.NL)
+	by mail.initfour.nl (Postfix) with ESMTPSA id 324F71954400;
+	Fri,  4 May 2012 12:08:22 +0200 (CEST)
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:11.0) Gecko/20120412 Thunderbird/11.0.1
+In-Reply-To: <87fwbgbs0h.fsf@smith.obbligato.org>
+X-Enigmail-Version: 1.4.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197011>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197012>
 
- On Fri, 4 May 2012 14:48:58 +0530, karunakar merugu wrote:
-> git tag -l
-> it gives me the lot of tags.I just want to work on some specific
-> tag.Is it possible for me to create separate branch on that specific
-> tag.
+On 04-05-12 04:26, greened@obbligato.org wrote:
+> Herman van Rink <rink@initfour.nl> writes:
+>
+>>> We don't know right now.  I want to take a look at Herman's patches
+>>> first but have been delayed for various reasons.  I hope to get to that
+>>> this weekend.  I also want to get at least one release under our belt.
+>> I've worked on this a bit over the weekend.
+>>
+>> I've forked the main git repo  on github to merge my tree on top of that.
+>>
+>> I basically did a: git subtree merge --prefix=contrib/subtree <my
+>> git-subtree branch>
+>>
+>> The work in progress in on: https://github.com/helmo/git (the
+>> subtree-updates branch)
+> This branch seems to have a bunch of commits from master or some other
+> branch:
+>
+> on master:
+> git log subtree-updates --not HEAD
+>
+> [...some git-subtree stuff...]
+> commit 10d4332e007132a38dc61f03c760d355da5cd550
+> Author: Junio C Hamano <gitster@pobox.com>
+> Date:   Sun Apr 29 18:00:47 2012 -0700
+>
+>     The seventh batch of topics graduated to 'master'
+>     
+>     Signed-off-by: Junio C Hamano <gitster@pobox.com>
+>
+> commit a75aba4a5306d0fee6a8ee8b48943e2c19eb2750
+> Merge: 55375e9 46e3581
+> Author: Junio C Hamano <gitster@pobox.com>
+> Date:   Sun Apr 29 17:52:02 2012 -0700
+>
+>     Merge branch 'js/daemon-test-race-fix'
+> [...]
+>
+> Perhaps I'm doing something wrong.  Or does the subtree-updates branch
+> need to be refreshed?
 
- Start a new branch from the tag, and check that
- branch out so you can work in it:
+Strange, I did fork the git/git repo on April 29 though.
+As far as I know I branched from master and merged the subtree stuff
+ontop of that.
 
-     git checkout -b your-new-branch tagname
+I've now merged master, fixed some whitespace and pushed my
+subtree-updates branch again.
 
- This is shorthand for the two commands
-     git branch   your-new-branch tagname
-     git checkout your-new-branch
-
- You should probably not move the tag, though you
- can with the 'git tag' command.
+And I get a nice diff from: git diff gitgit/master..subtree-updates
 
 -- 
- Hallvard
+Met vriendelijke groet / Regards,
+
+Herman van Rink 
+Initfour websolutions
