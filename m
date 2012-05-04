@@ -1,172 +1,93 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH] Makefile: keep many variable list sorted
-Date: Fri,  4 May 2012 20:52:36 +0700
-Message-ID: <1336139556-28410-1-git-send-email-pclouds@gmail.com>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: Newbie grief
+Date: Fri, 04 May 2012 16:09:30 +0200
+Message-ID: <4FA3E31A.6060606@op5.se>
+References: <4F9F128C.5020304@palm.com> <201204302331.q3UNVo7o032303@no.baka.org>	<4F9F3919.6060805@palm.com> <CAMK1S_jwVsyKrGoL5uVAiuRrOa8bz79-DAueBmHZE2k=PpcJ2Q@mail.gmail.com> <20120501111415.GD5769@thunk.org> <CAMK1S_jN_WdZF4W4szzyJqLfC3FmnhKQ65XQiD-JS_jxwSm8_g@mail.gmail.com> <4FA02830.3040407@palm.com>	<86havzoi8h.fsf@red.stonehenge.com> <4FA04D02.6090702@palm.com>	<86mx5rmx32.fsf@red.stonehenge.com> <4FA055D0.7040102@palm.com> <CAMP44s2h4EY3Qu2+Ys_n3TUzmyykMkG-wMoqmKg5hjg24JQ+bg@mail.gmail.com> <4FA2D565.1080806@palm.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 04 15:56:22 2012
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: Felipe Contreras <felipe.contreras@gmail.com>,
+	"Randal L. Schwartz" <merlyn@stonehenge.com>,
+	Sitaram Chamarty <sitaramc@gmail.com>,
+	Ted Ts'o <tytso@mit.edu>, Seth Robertson <in-gitvger@baka.org>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Rich Pixley <rich.pixley@palm.com>
+X-From: git-owner@vger.kernel.org Fri May 04 16:09:56 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SQIza-0005G3-FQ
-	for gcvg-git-2@plane.gmane.org; Fri, 04 May 2012 15:56:18 +0200
+	id 1SQJCl-0008G0-Ln
+	for gcvg-git-2@plane.gmane.org; Fri, 04 May 2012 16:09:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757302Ab2EDN4O convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 4 May 2012 09:56:14 -0400
-Received: from mail-pb0-f46.google.com ([209.85.160.46]:39820 "EHLO
-	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752322Ab2EDN4N (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 May 2012 09:56:13 -0400
-Received: by pbbrp8 with SMTP id rp8so3870609pbb.19
-        for <git@vger.kernel.org>; Fri, 04 May 2012 06:56:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
-         :content-type:content-transfer-encoding;
-        bh=tD0IDilxtwdkijeFhXBPt00GMfUcR+bQkCVT3CjMLvA=;
-        b=Ky9Z+CRUdZsYoPP2up3k91SdY3PlyAHE6CyI3FwCsiN/HtOZC15/BW/3fOklvn+/2G
-         37XO7YOKG9VIW1bRlVJHa8z+6aIZGGSSu9zgaKw5aftnd2fd6qXHxGxFfdl0bMXYVtEf
-         aakcUUAdUXeM9KDNI1x8XezyFxVeXGMH4Xm/C9W/AnsMKo4V8N9OODh5E7b4DcQGevNA
-         Vtq380TJyVCRId54su2AgKs2mJwy26t2g2YuHVWtU6JtV0ttPrqtTFXok+/8gdkdUd2O
-         b/QD8d3UFQdLg0ufRBF6clTcqzxkE4kAZ+1fIxA8+1XyxUkwDsmXcYPk6dwQYyX/rTGm
-         1oGA==
-Received: by 10.68.233.103 with SMTP id tv7mr672399pbc.97.1336139773375;
-        Fri, 04 May 2012 06:56:13 -0700 (PDT)
-Received: from pclouds@gmail.com ([115.74.42.111])
-        by mx.google.com with ESMTPS id wn5sm1466740pbc.51.2012.05.04.06.56.09
+	id S1752953Ab2EDOJh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 4 May 2012 10:09:37 -0400
+Received: from mail-lb0-f174.google.com ([209.85.217.174]:41705 "EHLO
+	mail-lb0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751585Ab2EDOJg (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 May 2012 10:09:36 -0400
+Received: by lbbgm6 with SMTP id gm6so2047050lbb.19
+        for <git@vger.kernel.org>; Fri, 04 May 2012 07:09:34 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding
+         :x-gm-message-state;
+        bh=QopAlEXuIVJ974s23n3YV/A08F4EeEHhB7/DIZ2e0k8=;
+        b=oDcKtokG/zXBnF055BDH6c/mFy1gV5HUDOm7ttuktcbhxMbIxnq7XuXavLk9H7Hzc6
+         qrxkoA6dpZPSyDKWrJbl8vPZARpBUenpwsLYk5p1HsfaK8bfXm/xogqEddM3f4D4TiHf
+         NaUwe2bBVZ05pFvRt+hhelFVWlk+N2dd7KTOFbqDK9DqtjSntOYg8HHuovx+qYcJKMo/
+         2h5XC0VAkAqdZAF174ketQBqRdVh7nEdFE39uJgrDkjkdNPIuPODG45tmLksooTPgISL
+         xOQ8nh2QcgZ+LmOdMRJrMYYX625NVF2OBN6hMEW07LySWc/KWaKFo7+o6EhP2l9GQV6o
+         eqXQ==
+Received: by 10.112.47.8 with SMTP id z8mr3038743lbm.51.1336140574612;
+        Fri, 04 May 2012 07:09:34 -0700 (PDT)
+Received: from vix.int.op5.se (sth-vpn1.op5.com. [193.201.96.49])
+        by mx.google.com with ESMTPS id b5sm11094472lbg.15.2012.05.04.07.09.31
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 04 May 2012 06:56:12 -0700 (PDT)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Fri, 04 May 2012 20:52:39 +0700
-X-Mailer: git-send-email 1.7.8.36.g69ee2
+        Fri, 04 May 2012 07:09:32 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:12.0) Gecko/20120424 Thunderbird/12.0
+In-Reply-To: <4FA2D565.1080806@palm.com>
+X-Gm-Message-State: ALoCoQmHLbm+MB5/CDYoUEzttKEGMaCf4GE/UgJ70aQ6AiTVgv6gfF/1yWQtD1gbtThyx+f9gv/I
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197023>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197024>
 
-We tend to keep long lists sorted (extensions are not taken into
-account), which helps spot a name easily by eye. Rearrange a few
-items so these lists remain sorted.
+On 05/03/2012 08:58 PM, Rich Pixley wrote:
+> On 5/1/12 16:30 , Felipe Contreras wrote:
+>> Show all the hg commands of what you are trying to do, and we can show
+>> you how you can achieve the same in git, but much more easily.
+> hg init foo
+> for i in `yes | head -4000`; do (set -x ; d=`date +%s.%N` ; hg clone foo foo-$d; (cd foo-$d && date > bar && hg add bar && hg ci -m $d)); done
+> for i in foo-*; do (set -x ; (cd $i && hg push -f)); done
+> 
 
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
----
- Makefile |   26 +++++++++++++-------------
- 1 files changed, 13 insertions(+), 13 deletions(-)
+Here's how that would look in git (though I got rid of the timestamp
+stuff and used seq instead):
 
-diff --git a/Makefile b/Makefile
-index ac40e24..2fa7211 100644
---- a/Makefile
-+++ b/Makefile
-@@ -461,15 +461,15 @@ EXTRA_PROGRAMS =3D
- # ... and all the rest that could be moved out of bindir to gitexecdir
- PROGRAMS +=3D $(EXTRA_PROGRAMS)
-=20
-+PROGRAM_OBJS +=3D credential-store.o
- PROGRAM_OBJS +=3D daemon.o
- PROGRAM_OBJS +=3D fast-import.o
-+PROGRAM_OBJS +=3D http-backend.o
- PROGRAM_OBJS +=3D imap-send.o
-+PROGRAM_OBJS +=3D sh-i18n--envsubst.o
- PROGRAM_OBJS +=3D shell.o
- PROGRAM_OBJS +=3D show-index.o
- PROGRAM_OBJS +=3D upload-pack.o
--PROGRAM_OBJS +=3D http-backend.o
--PROGRAM_OBJS +=3D sh-i18n--envsubst.o
--PROGRAM_OBJS +=3D credential-store.o
-=20
- # Binary suffix, set to .exe for Windows builds
- X =3D
-@@ -482,7 +482,6 @@ TEST_PROGRAMS_NEED_X +=3D test-ctype
- TEST_PROGRAMS_NEED_X +=3D test-date
- TEST_PROGRAMS_NEED_X +=3D test-delta
- TEST_PROGRAMS_NEED_X +=3D test-dump-cache-tree
--TEST_PROGRAMS_NEED_X +=3D test-scrap-cache-tree
- TEST_PROGRAMS_NEED_X +=3D test-genrandom
- TEST_PROGRAMS_NEED_X +=3D test-index-version
- TEST_PROGRAMS_NEED_X +=3D test-line-buffer
-@@ -493,6 +492,7 @@ TEST_PROGRAMS_NEED_X +=3D test-parse-options
- TEST_PROGRAMS_NEED_X +=3D test-path-utils
- TEST_PROGRAMS_NEED_X +=3D test-revision-walking
- TEST_PROGRAMS_NEED_X +=3D test-run-command
-+TEST_PROGRAMS_NEED_X +=3D test-scrap-cache-tree
- TEST_PROGRAMS_NEED_X +=3D test-sha1
- TEST_PROGRAMS_NEED_X +=3D test-sigchain
- TEST_PROGRAMS_NEED_X +=3D test-subprocess
-@@ -568,19 +568,19 @@ VCSSVN_H +=3D vcs-svn/fast_export.h
- VCSSVN_H +=3D vcs-svn/svndiff.h
- VCSSVN_H +=3D vcs-svn/svndump.h
-=20
-+MISC_H +=3D bisect.h
- MISC_H +=3D branch.h
- MISC_H +=3D bundle.h
--MISC_H +=3D bisect.h
- MISC_H +=3D common-cmds.h
- MISC_H +=3D fetch-pack.h
--MISC_H +=3D thread-utils.h
-+MISC_H +=3D reachable.h
- MISC_H +=3D send-pack.h
- MISC_H +=3D shortlog.h
--MISC_H +=3D reachable.h
--MISC_H +=3D wt-status.h
- MISC_H +=3D tar.h
-+MISC_H +=3D thread-utils.h
- MISC_H +=3D url.h
- MISC_H +=3D walker.h
-+MISC_H +=3D wt-status.h
-=20
- LIB_H +=3D advice.h
- LIB_H +=3D archive.h
-@@ -598,18 +598,18 @@ LIB_H +=3D compat/cygwin.h
- LIB_H +=3D compat/mingw.h
- LIB_H +=3D compat/obstack.h
- LIB_H +=3D compat/terminal.h
-+LIB_H +=3D compat/win32/dirent.h
-+LIB_H +=3D compat/win32/poll.h
- LIB_H +=3D compat/win32/pthread.h
- LIB_H +=3D compat/win32/syslog.h
--LIB_H +=3D compat/win32/poll.h
--LIB_H +=3D compat/win32/dirent.h
- LIB_H +=3D connected.h
- LIB_H +=3D convert.h
- LIB_H +=3D credential.h
- LIB_H +=3D csum-file.h
- LIB_H +=3D decorate.h
- LIB_H +=3D delta.h
--LIB_H +=3D diffcore.h
- LIB_H +=3D diff.h
-+LIB_H +=3D diffcore.h
- LIB_H +=3D dir.h
- LIB_H +=3D exec_cmd.h
- LIB_H +=3D fmt-merge-msg.h
-@@ -718,8 +718,8 @@ LIB_OBJS +=3D entry.o
- LIB_OBJS +=3D environment.o
- LIB_OBJS +=3D exec_cmd.o
- LIB_OBJS +=3D fsck.o
--LIB_OBJS +=3D gpg-interface.o
- LIB_OBJS +=3D gettext.o
-+LIB_OBJS +=3D gpg-interface.o
- LIB_OBJS +=3D graph.o
- LIB_OBJS +=3D grep.o
- LIB_OBJS +=3D hash.o
-@@ -768,9 +768,9 @@ LIB_OBJS +=3D rerere.o
- LIB_OBJS +=3D resolve-undo.o
- LIB_OBJS +=3D revision.o
- LIB_OBJS +=3D run-command.o
-+LIB_OBJS +=3D sequencer.o
- LIB_OBJS +=3D server-info.o
- LIB_OBJS +=3D setup.o
--LIB_OBJS +=3D sequencer.o
- LIB_OBJS +=3D sha1-array.o
- LIB_OBJS +=3D sha1-lookup.o
- LIB_OBJS +=3D sha1_file.o
---=20
-1.7.8.36.g69ee2
+git init foo
+for i in $(seq 1 4000); do git clone foo foo-$i; (cd foo-$i && date > bar && git add bar && git commit -m "$i"; done)
+for i in foo-*; do (set -x; (cd $i && git push master:$i/master)); done
+
+The hg recipe creates 4000 branches which I for some reason can't
+find the names of so I have no idea how to interact with them. The
+git recipe names them explicitly to foo-$i/master in the foo/ repo,
+since git doesn't allow pushing of commits without a ref.
+
+
+Having read further in the thread, I see you did "hg merge" to merge
+*all* the branches (which is impressive in itself, doing a 4000-way
+merge), but I still don't see how you'd go about merging just one of
+them. Perhaps that's not desirable.
+
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
+
+Considering the successes of the wars on alcohol, poverty, drugs and
+terror, I think we should give some serious thought to declaring war
+on peace.
