@@ -1,181 +1,110 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 3/3] index-pack: support multithreaded delta resolving
-Date: Fri, 04 May 2012 08:23:18 -0700
-Message-ID: <7v8vh8c6mx.fsf@alter.siamese.dyndns.org>
-References: <1334123388-6083-1-git-send-email-pclouds@gmail.com>
- <1334123388-6083-4-git-send-email-pclouds@gmail.com>
- <7v62ccex0x.fsf@alter.siamese.dyndns.org>
- <7vipgccvp9.fsf@alter.siamese.dyndns.org>
- <CACsJy8DHtBZdhoh1BPwn2_-3wVDRWypJOg3kR9wjd2o1bLUW-Q@mail.gmail.com>
+Subject: Re: [PATCH 1/6] http: try http_proxy env var when http.proxy config
+ option is not set
+Date: Fri, 04 May 2012 08:36:13 -0700
+Message-ID: <7v4nrwc61e.fsf@alter.siamese.dyndns.org>
+References: <4FA2B4D3.90809@seap.minhap.es>
+ <20120504070802.GA21895@sigill.intra.peff.net>
+ <alpine.DEB.2.00.1205040921090.12158@tvnag.unkk.fr>
+ <20120504073913.GA22388@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 04 17:23:41 2012
+Cc: Daniel Stenberg <daniel@haxx.se>,
+	Nelson Benitez Leon <nelsonjesus.benitez@seap.minhap.es>,
+	git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri May 04 17:36:23 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SQKM4-0001yx-JW
-	for gcvg-git-2@plane.gmane.org; Fri, 04 May 2012 17:23:36 +0200
+	id 1SQKYP-0004yg-4U
+	for gcvg-git-2@plane.gmane.org; Fri, 04 May 2012 17:36:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758936Ab2EDPXX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 4 May 2012 11:23:23 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:63901 "EHLO
+	id S1757042Ab2EDPgQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 4 May 2012 11:36:16 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:36653 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758821Ab2EDPXW (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 May 2012 11:23:22 -0400
+	id S1751133Ab2EDPgP (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 May 2012 11:36:15 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6E1327D01;
-	Fri,  4 May 2012 11:23:21 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 62D30607A;
+	Fri,  4 May 2012 11:36:15 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=vifHDr0Zuyr5hAHqAoO425znjGk=; b=Zp7BXg
-	HxhEsNiEBsI8w7vioI8z7emI6Sm7IwUD/OU116XzRiWOWcQZmv5THLvIrE+N3ABx
-	n72tMzXPDkeNKXUGCvigNPo/wpBKH3wV3HYR7KPvYPsvFNonlDgKgfB0cFTdx1hK
-	29H6+hkJkgpRyXzkn/PfHITU4eCShaGQ685zM=
+	:content-type; s=sasl; bh=/2aL+eusf2pDjpaus1+FqelCO5A=; b=OncLks
+	NDC5/Pl6dDivh6iixX4x0AE1h+pszL4NkFx2IJQBdObQubWgzThSyR9CUt7V/kN2
+	PXw+KJP+Q464eal+n4LycHPq9seDPr39a/t8XiujFz0xoulyPoXtvyU6M7xVqid+
+	wRQdWlZURptvnKjvHfH9yvK70yTkWCDimk9r0=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ani3SXlh1gi2IdfVhJVZ2wilOVYKRxv0
-	7EZEFxhoatM7BgqE+dlQb5yq4GEn0F9UhKZuRkwatY2JG8bK/h3f5p7zy6G1+zdf
-	5BHHW+snSJZo4awZS/F7Yff3rhFdJgLQsGeKLu3onJtPX154yH4XhF21OLl96xit
-	VA74Z7qt/f8=
+	:content-type; q=dns; s=sasl; b=F+JIcsOLaWZlAowtw5acGIIUWpYVI3Zq
+	QABCUb1kHfOtX/qTTmtMRjYiYe+HlWt/VydvnjSKmJL2/qEjgS1zL7KeFv/Pluvs
+	+Xjf3dXLXVOTQqNxJgIfY4kAC6UIpoLpNKuAfBai4aNFwn8slO36VNhVU3Sd78oo
+	YSVibmUZIoI=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 64C007D00;
-	Fri,  4 May 2012 11:23:21 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 59B9E6079;
+	Fri,  4 May 2012 11:36:15 -0400 (EDT)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A9E177CFE; Fri,  4 May 2012
- 11:23:20 -0400 (EDT)
-In-Reply-To: <CACsJy8DHtBZdhoh1BPwn2_-3wVDRWypJOg3kR9wjd2o1bLUW-Q@mail.gmail.com> (Nguyen
- Thai Ngoc Duy's message of "Fri, 4 May 2012 19:50:26 +0700")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id AFC036077; Fri,  4 May 2012
+ 11:36:14 -0400 (EDT)
+In-Reply-To: <20120504073913.GA22388@sigill.intra.peff.net> (Jeff King's
+ message of "Fri, 4 May 2012 03:39:13 -0400")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 14DC1D1C-95FD-11E1-967E-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: E2371D6A-95FE-11E1-99E4-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197028>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197029>
 
-Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
+Jeff King <peff@peff.net> writes:
 
-> Junio, can you make a patch (or update current ones) with better
-> naming? I obviously did not see why these names were bad. You may
-> provide more convincing explanation than me in the commit message.
+> On Fri, May 04, 2012 at 09:27:16AM +0200, Daniel Stenberg wrote:
+>
+>> On Fri, 4 May 2012, Jeff King wrote:
+>> 
+>> >I don't see any way around it besides implementing curl's full
+>> >tokenizing and matching algorithm, which is about a page of code.
+>> >I'd really prefer not to re-implement bits of curl (especially
+>> >because they may change later), but AFAIK there is no way to ask
+>> >curl "is there a proxy configured, and if so, what is it?".
+>> 
+>> Sorry for being thick, but I lost track on this thread. Why does it
+>> need this info again?
+>
+> We need to know information about the proxy in order to look up the
+> username and password in our credential database. Before the request is
+> made in some cases, and in others, after we see a 407. If we fed the
+> proxy to curl via CURLOPT_PROXY, it's easy. But if the proxy came from
+> the environment, we have to replicate curl's lookup rules.
+>
+>> Or perhaps put another way: if there was an ideal way to get this
+>> done or provide this to libcurl other than the current way, how would
+>> you suggest it would be done from a git internal point of view?
+>
+> The absolute simplest way for us would be to stop using
+> CURLOPT_PROXYUSERNAME/PASSWORD to set it ahead of time, and instead
+> provide a callback that curl would call on a 407. That callback would
+> just need the URL of the proxy, and would return the username/password
+> (or even just set them on the curl object via
+> CURLOPT_PROXYUSERNAME/PASSWORD).
+>
+> For that matter, it would simplify our code to do the same for regular
+> http auth, too. And though we usually know our URL in that case, we
+> might not if we got a 302 with FOLLOWLOCATION set.
+>
+> -Peff
 
-I have already explained s/nr_processed/nr_dispatched/.
+Thanks for a nice summary, and I agree with your list of what we wish we
+had from the cURL library.  With such a change, it becomes irrelevant how
+the user fed cURL provisional (partial) authentication information, either
+in http.proxy (which we turn into CURLOPT_PROXY), or from the environment
+(without Git having to know anything about it), and a lot of complexity
+that led to bugs in this series will become unnecessary.
 
-I do not think second_pass vs threaded_second_pass is merely a naming
-issue. The code structure ("taking the abstraction backwards") is the
-bigger issue.
-
-The original before the series has:
-
-	parse_pack_objects()
-	{
-		... a lot of code for the first pass ...
-		
-		... a lot of code for the second pass which looks like
-		for (all object entries) {
-			set global state base_obj->obj to it
-			find unresolved deltas for that single base_obj
-			display progress
-		}
-	}
-
-and you first split one iteration of the second pass, resulting in
-
-	parse_pack_objects()
-	{
-		... a lot of code for the first pass ...
-		
-		for (all object entries) {
-			set global state base_obj->obj to it
-			second_pass()
-		}
-	}
-
-which I think is a wrong way to do it, because here is what your next step
-ends up with because of that:
-
-	parse_pack_objects()
-	{
-		... a lot of code for the first pass ...
-		
-	#if WE SUPPORT THREADING
-		for (number of threads we are going to spawn) {
-			spawn thread and let it run threaded_second_pass
-		}
-		for (all threads) {
-			cull them when they are done
-		}
-		return
-	#endif
-		... when not threading ...
-		run threaded_second_pass() in the main process
-	}
-
-It could (and should) be like this instead from the beginning, I think:
-
-	parse_pack_objects()
-	{
-		... a lot of code for the first pass ...
-		second_pass()
-	}
-
-to encapsulate the whole second_pass() logic in the refactored function,
-whose implementation (i.e. how the objects to be processed are picked up
-and worked on) will change in the threaded version.  In the first
-refactoring patch, second_pass() would still iterate over object entries:
-
-	second_pass()
-	{
-		for (all object entries) {
-			resolve_deltas(base_obj)
-		}
-	}
-
-And at this point, introduce a helper function "resolve_deltas(base)"
-or something that is your "second_pass()".  This deals with only one
-family of objects that use the given object as their (recursive) base
-objects, and use it in the above loop.
-
-And then multi-threading support can turn that into something like
-
-	second_pass()
-	{
-	#if WE SUPPORT THREADING
-		for (number of threads we are going to spawn) {
-			spawn thread and let it run threaded_second_pass
-		}
-		for (all threads) {
-			cull them when they are done
-		}
-		return
-	#endif
-		... when not threading ...
-		for (all object entries) {
-			resolve_deltas(base_obj)
-		}
-	}
-
-to add support for threaded case.  The threaded_second_pass function does
-only one thing and one thing well:
-
-	threaded_second_pass()
-	{
-		set thread local
-		loop forever {
-			take work item under critical section
-			break if there is no more work
-			resolve_deltas(the work item)
-		}
-	}
-
-Wouldn't the result be much more readable that way?
-
-You may have saved a few lines by making unthreaded code call your
-threaded_second_pass() and pretend that the single main process still has
-to pick up a work item and work on it in a loop like you did, but I think
-it made the logic unnecessarily harder to follow.
+I am tempted to suggest that the current series should be rerolled without
+all the guessing and preauth tricks until such an update to the cURL
+library materializes.
