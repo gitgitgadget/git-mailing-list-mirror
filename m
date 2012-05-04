@@ -1,140 +1,127 @@
-From: Michael Witten <mfwitten@gmail.com>
-Subject: Re: Newbie grief
-Date: Fri, 04 May 2012 04:35:40 -0000
-Message-ID: <1167779eee7d442b9db0eecb347d5516-mfwitten@gmail.com>
-References: <4F9F128C.5020304@palm.com>
-            <201204302331.q3UNVo7o032303@no.baka.org>
-            <4F9F28F5.2020403@palm.com>
-            <201205010137.q411bxaU002449@no.baka.org>
-            <4F9F52B9.9060508@palm.com>
-            <08704bd2e32343a4b9def80e4fa1efa2-mfwitten@gmail.com>
-            <4FA2D8EA.7030809@palm.com>
-            <87obq5ggpu.fsf@an-dro.info.enstb.org>
-            <7vehr1dl2z.fsf@alter.siamese.dyndns.org>
-            <4FA307C5.102@palm.com>
-            <4FA3090D.5080406@palm.com>
-            <4FA32A6A.4070007@blizzard.com>
-            <CA+7g9Jxp859st6SrViizwOMrU9vsnmfy6P64SK9y_-ZEzEB6Mw@mail.gmail.com>
+From: Jeff King <peff-AdEPDUrAXsQ@public.gmane.org>
+Subject: Re: [git] Re: Bug in git-stash(.sh) ?
+Date: Fri, 4 May 2012 01:21:07 -0400
+Message-ID: <20120504052106.GA15970@sigill.intra.peff.net>
+References: <20379.9312.943088.350379@winooski.ccs.neu.edu>
+ <87wr4za9mr.fsf@gmail.com>
+ <m2pqasb8mr.fsf@linux-m68k.org>
+ <xmqqvckk93ta.fsf@junio.mtv.corp.google.com>
+ <CALO-gut4csy5wef4iGPGD5jVPc1f0iFBfS3MUWrOwc2yczdviw@mail.gmail.com>
+ <20380.33897.666338.766096@winooski.ccs.neu.edu>
+ <20120429220132.GB4491@sigill.intra.peff.net>
+ <20381.49180.329586.983166@winooski.ccs.neu.edu>
+ <20120501134254.GA11900@sigill.intra.peff.net>
+ <20386.53745.200846.115335@winooski.ccs.neu.edu>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Illia Bobyr <ibobyr@blizzard.com>,
-	Rich Pixley <rich.pixley@palm.com>,
-	Ronan Keryell <Ronan.Keryell@hpc-project.com>,
-	git@vger.kernel.org
-To: Nathan Gray <n8gray@n8gray.org>
-X-From: git-owner@vger.kernel.org Fri May 04 06:37:38 2012
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: text/plain; charset=utf-8
+Cc: Yann Hodique <yann.hodique-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>,
+	Andreas Schwab <schwab-Td1EMuHUCqxL1ZNQvxDV9g@public.gmane.org>,
+	Junio C Hamano <gitster-e+AXbWqSrlAAvxtiuMwx3w@public.gmane.org>, git-u79uwXL29TY76Z2rM5mHXA@public.gmane.org,
+	magit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+To: Eli Barzilay <eli-oSK4jVRJLyZg9hUCZPvPmw@public.gmane.org>
+X-From: magit+bncCN2hpKqZChDHzo39BBoEvRlLKA-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org Fri May 04 07:21:14 2012
+Return-path: <magit+bncCN2hpKqZChDHzo39BBoEvRlLKA-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+Envelope-to: gcvgm-magit-3@m.gmane.org
+Received: from mail-qa0-f55.google.com ([209.85.216.55])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SQAGu-0000AN-W4
-	for gcvg-git-2@plane.gmane.org; Fri, 04 May 2012 06:37:37 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750815Ab2EDEhc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 4 May 2012 00:37:32 -0400
-X-Warning: Original message contained 8-bit characters, however during
-	   the SMTP transport session the receiving system did not announce
-	   capability of receiving 8-bit SMTP (RFC 1651-1653), and as this
-	   message does not have MIME headers (RFC 2045-2049) to enable
-	   encoding change, we had very little choice.
-X-Warning: We ASSUME it is less harmful to add the MIME headers, and
-	   convert the text to Quoted-Printable, than not to do so,
-	   and to strip the message to 7-bits.. (RFC 1428 Appendix A)
-X-Warning: We don't know what character set the user used, thus we had to
-	   write these MIME-headers with our local system default value.
-Received: from mail-wg0-f44.google.com ([74.125.82.44]:37677 "EHLO
-	mail-wg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750747Ab2EDEhb (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 May 2012 00:37:31 -0400
-Received: by wgbdr13 with SMTP id dr13so2377954wgb.1
-        for <git@vger.kernel.org>; Thu, 03 May 2012 21:37:30 -0700 (PDT)
+	(envelope-from <magit+bncCN2hpKqZChDHzo39BBoEvRlLKA-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>)
+	id 1SQAx6-0005bR-TV
+	for gcvgm-magit-3@m.gmane.org; Fri, 04 May 2012 07:21:13 +0200
+Received: by qabg40 with SMTP id g40sf1245632qab.10
+        for <gcvgm-magit-3@m.gmane.org>; Thu, 03 May 2012 22:21:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=subject:date:from:to:cc:message-id:in-reply-to:references;
-        bh=fUxUYs10RKb9u4IMPwCAwrcLMCepWv1mSP4gAkIq0zU=;
-        b=PUrI6OHhzg20IJqgctNNw5xMFK0CY/9S1NT1sHpzw4tTDvNcJL5Ypi6OA+Fe4eGUTC
-         KHMZX9xITEArJxz7o9lpy9AGGEjqA6pc0NH7EMmoxJoevwGviaC+mhhUP38YNVdnYoNm
-         CY8TSmTD2xqmv5rhzMhkwZhKeBbtQG1EkHnU9t5L6jSsjyXkk39Ya2zd3FAdl7Xpfew3
-         f8+aznzTJXImqxvblZrU46AtYfBrpQJ7IujcnqHkCwAOu3SgfnnV54Wi38ByaPzN5Lzk
-         n/HNOyefbZEjYSnxYNXHivKJQrFcWi1LToAu8sgwm1KBpK+xl8IA3om0xUVdfLcXXWwG
-         D5mg==
-Received: by 10.180.77.233 with SMTP id v9mr9050320wiw.22.1336106250585;
-        Thu, 03 May 2012 21:37:30 -0700 (PDT)
-Received: from gmail.com (lumumba.torservers.net. [77.247.181.163])
-        by mx.google.com with ESMTPS id gg2sm10775029wib.7.2012.05.03.21.37.28
+        d=googlegroups.com; s=beta;
+        h=x-beenthere:received-spf:date:from:to:cc:subject:message-id
+         :references:mime-version:in-reply-to:x-original-sender
+         :x-original-authentication-results:precedence:mailing-list:list-id
+         :x-google-group-id:list-post:list-help:list-archive:sender
+         :list-subscribe:list-unsubscribe:content-type:content-disposition;
+        bh=NWvhDR1tynBDkJj8ECv4nEDhyKVCdYnOkVBX7rcdxGk=;
+        b=g17Rslmte0apR7Q0TbLEgR143rRFtvz5PT25cM+ZbLZqZndnKB3uL+l7SVxGmmf9VR
+         0/ndyiFyBAx+3N38sd4p/CQ/b3by2b5my4vH0wuwcz25gqKhGBJGfkA3dit0SY433oMi
+         rz7o5P5ezprZW3J4W7CleXH8QjcsMOu9XDH7o=
+Received: by 10.50.179.65 with SMTP id de1mr300767igc.0.1336108871717;
+        Thu, 03 May 2012 22:21:11 -0700 (PDT)
+X-BeenThere: magit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+Received: by 10.231.58.146 with SMTP id g18ls1541505ibh.3.gmail; Thu, 03 May
+ 2012 22:21:11 -0700 (PDT)
+Received: by 10.50.159.133 with SMTP id xc5mr2934649igb.0.1336108871199;
+        Thu, 03 May 2012 22:21:11 -0700 (PDT)
+Received: by 10.50.159.133 with SMTP id xc5mr2934648igb.0.1336108871187;
+        Thu, 03 May 2012 22:21:11 -0700 (PDT)
+Received: from peff.net (99-108-226-0.lightspeed.iplsin.sbcglobal.net. [99.108.226.0])
+        by gmr-mx.google.com with ESMTPS id e7si916904iga.3.2012.05.03.22.21.10
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 03 May 2012 21:37:29 -0700 (PDT)
-In-Reply-To: <CA+7g9Jxp859st6SrViizwOMrU9vsnmfy6P64SK9y_-ZEzEB6Mw@mail.gmail.com>
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196986>
+        Thu, 03 May 2012 22:21:10 -0700 (PDT)
+Received-SPF: pass (google.com: domain of peff-AdEPDUrAXsQ@public.gmane.org designates 99.108.226.0 as permitted sender) client-ip=99.108.226.0;
+Received: (qmail 14975 invoked by uid 107); 4 May 2012 05:21:27 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 04 May 2012 01:21:27 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 04 May 2012 01:21:07 -0400
+In-Reply-To: <20386.53745.200846.115335-a5nvgYPMCZcx/1z6v04GWfZ8FUJU4vz8@public.gmane.org>
+X-Original-Sender: peff-AdEPDUrAXsQ@public.gmane.org
+X-Original-Authentication-Results: gmr-mx.google.com; spf=pass (google.com:
+ domain of peff-AdEPDUrAXsQ@public.gmane.org designates 99.108.226.0 as permitted sender) smtp.mail=peff-AdEPDUrAXsQ@public.gmane.org
+Precedence: list
+Mailing-list: list magit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org; contact magit+owners-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+List-ID: <magit.googlegroups.com>
+X-Google-Group-Id: 752745291123
+List-Post: <http://groups.google.com/group/magit/post?hl=en_US>, <mailto:magit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+List-Help: <http://groups.google.com/support/?hl=en_US>, <mailto:magit+help-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+List-Archive: <http://groups.google.com/group/magit?hl=en_US>
+Sender: magit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+List-Subscribe: <http://groups.google.com/group/magit/subscribe?hl=en_US>, <mailto:magit+subscribe-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+List-Unsubscribe: <http://groups.google.com/group/magit/subscribe?hl=en_US>, <mailto:googlegroups-manage+752745291123+unsubscribe-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+Content-Disposition: inline
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/196987>
 
-On Thu, 3 May 2012 20:13:01 -0700, Nathan Gray wrote:
+On Thu, May 03, 2012 at 02:44:01PM -0400, Eli Barzilay wrote:
 
-> On Thu, May 3, 2012 at 6:01 PM, Illia Bobyr <ibobyr@blizzard.com> wro=
-te:
->>
->> It is just a "non-fast forward" move of a branch tip. =A0This term
->> describes what happens precisely :)
->>
->> It is true, that the term is non obvious to the new comers.
->> One may google and get an explanation of the error pretty quickly.
->> First hit for "git non fast forward error" gives an explanation from=
- a
->> new comer point of view for the simplest case.
->
-> I just led a team of reasonably bright people through a transition
-> from SVN to git.  Not one of them understood this message.  Every one
-> of them thought something was broken.  This is a very common
-> occurrence, so a short, simple message without jargon for this error
-> would be a big, big win.
+> > Once that is fixed, then we can consider whether something more should
+> > happen for stash (though I am inclined to say that is enough; it is a
+> > feature that you can do "git stash list --date=relative" to see the
+> > stash timestamps).
+> 
+> Since the general problem is bigger, how about just the quick patch of
+> adding --date=default in the list_stash function as a stopgap?  That
+> seems to be close enough to how it should work anyway.
 
-Well, what is your suggestion?
+It is bigger in scope, but the fix is still pretty small. I was trying
+to trick^W gently prod you into making a patch, but that does not seem
+to have worked. :) So here is a series that fixes it, and we don't have
+to worry about a stopgap.
 
-Nobody in this thread has yet provided an explicit improvement because
-the actual complaint is that the vast majority of people (including
-supposed "professionals") don't RTFM; it never even occurs to them!
+  [1/4]: t1411: add more selector index/date tests
+  [2/4]: log: respect date_mode_explicit --format:%gd
+  [3/4]: reflog-walk: clean up "flag" field of commit_reflog struct
+  [4/4]: reflog-walk: always make HEAD@{0} show indexed selectors
 
-Let's look at the message in question:
+The first two fix and test the bug I mentioned, and as a result solve
+the stash problem. The second two fix and test the bug that Junio
+mentioned. This doesn't affect stash, but it's the right thing for "git
+log" to do.
 
-  To $uri_for_central_repo
-   ! [rejected]        HEAD -> feature_0 (non-fast-forward)
-  error: failed to push some refs to '$uri_for_central_repo'
-  To prevent you from losing history, non-fast-forward updates were rej=
-ected
-  Merge the remote changes (e.g. 'git pull') before pushing again.  See=
- the
-  'Note about fast-forwards' section of 'git push --help' for details.
+> > >   * Some new %gi uses the index number: stash@{1}, and %gI produces
+> > >     refs/stash@{1}, unrelated to any date setting
+> > >   * git-stash.sh uses %gi so the output has the numbers
+> > >   * Some new option for "stash list" for the format string, so it's
+> > >     possible to show the dates if you want to with something like
+> > >     git stash list --format:"%gi: %gs (%gd)"
+> > 
+> > I don't have a huge problem with that. But what issue is it really
+> > solving? Are people using "git stash list --date=iso" and then
+> > getting confused by the output? Or is it simply a matter of
+> > mistakenly applying the config when it should not be? The latter
+> > needs fixed in either case.
+> 
+> It's basically an attempt to have a %gi that is disconnected from date
+> options (config or flags), which solves the config problem in a
+> trivial way (no date options are used)...
 
-Not only does this already spoonfeed the reader with a suggested
-command for getting back on track (i.e., 'git pull'), but it also
-explicitly points out the relevant documentation and HOW to gain
-immediate access to that information from the command line!
+I don't have a problem at all with %gi; I think it would be a good
+addition. I just think that stash shouldn't use, as the "--date" thing
+is a feature that there is no reason to deny to stash users (it just
+needs to be less buggy :) ).
 
-As for a seemingly conservative suggestion, how about using a little
-more structural white space:
-
-  To $uri_for_central_repo
-   ! [rejected]        HEAD -> feature_0 (non-fast-forward)
-
-  error: failed to push some refs to '$uri_for_central_repo'
-
-  To prevent you from losing history, non-fast-forward updates were rej=
-ected
-  Merge the remote changes (e.g. 'git pull') before pushing again.  See=
- the
-  'Note about fast-forwards' section of 'git push --help' for details.
-
-Alas! Error output like this is constructed in the code in a way that
-potentially makes adding such white space non-trivial.
-
-Perhaps the error message system needs an overhall; rather than spittin=
-g
-out error messages from anywhere, they ought to be corralled and collat=
-ed
-by a dedicated subsystem.
+-Peff
