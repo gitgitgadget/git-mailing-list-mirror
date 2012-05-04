@@ -1,64 +1,92 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: commit message parsing error in rebase
-Date: Fri, 04 May 2012 12:39:01 -0700
-Message-ID: <7vhavvag8a.fsf@alter.siamese.dyndns.org>
-References: <CAA-jfp=F7ije9nFJio5gnmNGptDR1ZTBbCi-aOv7JokqrXBgYA@mail.gmail.com>
- <7vlil7ah5w.fsf@alter.siamese.dyndns.org>
- <CAA-jfp=yMVFrfFgh9A_zNC5nG8PTvNWBRpkbpbVK+7GUU7jO9Q@mail.gmail.com>
+From: Michael Witten <mfwitten@gmail.com>
+Subject: Re: Newbie grief
+Date: Fri, 4 May 2012 19:41:09 +0000
+Message-ID: <CAMOZ1BvmBP2pfc_TxsyLBRtWGo5=vfiPu9N_cxLkj2x8oWEJ1w@mail.gmail.com>
+References: <4F9F128C.5020304@palm.com> <201204302331.q3UNVo7o032303@no.baka.org>
+ <4F9F3919.6060805@palm.com> <CAMK1S_jwVsyKrGoL5uVAiuRrOa8bz79-DAueBmHZE2k=PpcJ2Q@mail.gmail.com>
+ <20120501111415.GD5769@thunk.org> <CAMK1S_jN_WdZF4W4szzyJqLfC3FmnhKQ65XQiD-JS_jxwSm8_g@mail.gmail.com>
+ <4FA02830.3040407@palm.com> <86havzoi8h.fsf@red.stonehenge.com>
+ <4FA04D02.6090702@palm.com> <86mx5rmx32.fsf@red.stonehenge.com>
+ <7v62cf8v2d.fsf@alter.siamese.dyndns.org> <4FA054BA.80601@palm.com>
+ <86ipgfmw05.fsf@red.stonehenge.com> <4FA05C66.2060608@palm.com>
+ <CAMOZ1BuiznhrzEOHe0N+uu=mLEw5wWTQyDpnwG8PuF1f_aNaXw@mail.gmail.com> <CAMP44s2yv6rfAfFUmGRS5b8=KwFpZ5yLxgL01V9W514PaLUJ9A@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Csaba Henk <csaba@lowlife.hu>
-X-From: git-owner@vger.kernel.org Fri May 04 21:39:21 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Rich Pixley <rich.pixley@palm.com>,
+	"Randal L. Schwartz" <merlyn@stonehenge.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Sitaram Chamarty <sitaramc@gmail.com>,
+	"Ted Ts'o" <tytso@mit.edu>, Seth Robertson <in-gitvger@baka.org>,
+	git@vger.kernel.org
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Fri May 04 21:41:47 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SQOLQ-0007Ux-PX
-	for gcvg-git-2@plane.gmane.org; Fri, 04 May 2012 21:39:13 +0200
+	id 1SQONt-00019e-Dq
+	for gcvg-git-2@plane.gmane.org; Fri, 04 May 2012 21:41:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759538Ab2EDTjG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 4 May 2012 15:39:06 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:36639 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1759340Ab2EDTjF (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 May 2012 15:39:05 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 881707D24;
-	Fri,  4 May 2012 15:39:04 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=WMhCGxHN+zXMDGqSPXPGTKWpORo=; b=Kx+SCS
-	FwcB3ddgvln36t8bbzm2LlVkOiooB9DvQMkqHbNzUqNYnnk1KJPbPG1CSl9fU+vT
-	j8c/+4OKjnu47M0qBxbHCvEoydadG5o4X3/ws491gQ0SJRcxt4ZS8gK4Y7YwRjhf
-	cUPbWjX/TR4h5rL5WKnQnxfRq073HNwcCWx2M=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=cQosDsWKk8GvWJMxQoKHIkGjhwea30aJ
-	wbBE5d0KlVziT9q8ZWzddKd+P7j4BM1Ne0KVLLWZJgbEN+Yg3lzuP/4+ahhI0yvf
-	W/RvXymglMgkanzk0SyPyBlX4tiwO3jdxGKr19aOIXOJuLzvHJYY674KZd8okL9/
-	iq9k2nnhuFM=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7EDAF7D23;
-	Fri,  4 May 2012 15:39:04 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1B7BA7D20; Fri,  4 May 2012
- 15:39:03 -0400 (EDT)
-In-Reply-To: <CAA-jfp=yMVFrfFgh9A_zNC5nG8PTvNWBRpkbpbVK+7GUU7jO9Q@mail.gmail.com> (Csaba
- Henk's message of "Sat, 5 May 2012 00:54:21 +0530")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: CDA73D22-9620-11E1-A09C-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753910Ab2EDTll convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 4 May 2012 15:41:41 -0400
+Received: from mail-qc0-f174.google.com ([209.85.216.174]:50791 "EHLO
+	mail-qc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751785Ab2EDTlk convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 4 May 2012 15:41:40 -0400
+Received: by qcro28 with SMTP id o28so870833qcr.19
+        for <git@vger.kernel.org>; Fri, 04 May 2012 12:41:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=ZDqlB/DWVRv13u/8ylU8tKbP/N+SszzVxv/wfv8+Rqg=;
+        b=Ti/XMBdblhdFehsmsFAB9Nnl5tqkfOCQHN3SXgK19+E/sVQmstarfEXjnjQGbOtZ5H
+         2krZV35e8mlJmq2FaHQFoM3cPTZCSCG4y8c+otA8jPummcxTTvmmiabNLDpLPjEZY8Is
+         NTxAH3uPXw7DcUdyQ9jUm3qlYpVShgFEWjq/gpsP7aJQmJihryq+mmtpAaf/gSdaVEKK
+         wr7FDhBKwt9Xuf1gdqTK/8LJUNK1rYD3OKl7H7/kmrosLwvA/PJKd0VKNzYtuTsPqItJ
+         pMGm6cXV8w/aEKlk7Nh7otH4ux2XYYNDjfqJlYkIH1qjNsJE+MwhtPJdYYgS1OABs6hS
+         dEOQ==
+Received: by 10.224.102.7 with SMTP id e7mr11979569qao.15.1336160499910; Fri,
+ 04 May 2012 12:41:39 -0700 (PDT)
+Received: by 10.229.122.13 with HTTP; Fri, 4 May 2012 12:41:09 -0700 (PDT)
+In-Reply-To: <CAMP44s2yv6rfAfFUmGRS5b8=KwFpZ5yLxgL01V9W514PaLUJ9A@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197059>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197060>
 
-Csaba Henk <csaba@lowlife.hu> writes:
+On Fri, May 4, 2012 at 7:30 PM, Felipe Contreras
+<felipe.contreras@gmail.com> wrote:
+> On Wed, May 2, 2012 at 12:56 AM, Michael Witten <mfwitten@gmail.com> =
+wrote:
+>> On Tue, May 1, 2012 at 9:57 PM, Rich Pixley <rich.pixley@palm.com> w=
+rote:
+>>
+>>> In contrast, I was up and using mercurial in about a day and a half=
+,
+>>> including all of the stuff we've discussed, and all of the things I=
+'ve even
+>>> read about in git. =C2=A0Learning mq's only took about 20 minutes.
+>>
+>> Fortunately, git is based on extremely simple principles.
+>> Unfortunately, git grew out of really bright people hacking stuff
+>> together in order to get sh!t dun; the result is not approachably or
+>> even well documented, the UI is sometimes a bit of a kludge, the API
+>> is probably nonexistent, and the terminology is so loosely thrown
+>> about that it's easy to forget which way is up in discussions.
+>> (Note, though, that Junio has done a laudable job of keeping the
+>> whole experiment going strong).
+>
+> You are a prime example of this experiment called 'life', also based
+> on extremely simple principles, mostly through trial and error. Desig=
+n
+> is overrated :)
 
-> In that case, would it not be wise to be explicit about that and warn
-> or err if such a commit is attempted?
+There is no process other than trial and error, or more precisely,
+variation and selection.
 
-I could see warning (but not erroring out or requiring -f) may work well.
+Note, though, that the levels of sophistication involved with variation
+and selection differ among manifestations of this process.
