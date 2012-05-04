@@ -1,85 +1,100 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH] get_fetch_map(): tighten checks on dest refs
-Date: Fri, 04 May 2012 15:35:18 -0700
-Message-ID: <7vsjff8ti1.fsf_-_@alter.siamese.dyndns.org>
-References: <7vsjfj7des.fsf@alter.siamese.dyndns.org>
- <7vwr4r8tpm.fsf@alter.siamese.dyndns.org>
+From: Eli Barzilay <eli-oSK4jVRJLyZg9hUCZPvPmw@public.gmane.org>
+Subject: Re: [git] Re: Bug in git-stash(.sh) ?
+Date: Fri, 4 May 2012 18:36:42 -0400
+Message-ID: <20388.23034.73009.601819@winooski.ccs.neu.edu>
+References: <20379.9312.943088.350379@winooski.ccs.neu.edu>
+	<87wr4za9mr.fsf@gmail.com>
+	<m2pqasb8mr.fsf@linux-m68k.org>
+	<xmqqvckk93ta.fsf@junio.mtv.corp.google.com>
+	<CALO-gut4csy5wef4iGPGD5jVPc1f0iFBfS3MUWrOwc2yczdviw@mail.gmail.com>
+	<20380.33897.666338.766096@winooski.ccs.neu.edu>
+	<20120429220132.GB4491@sigill.intra.peff.net>
+	<20381.49180.329586.983166@winooski.ccs.neu.edu>
+	<20120501134254.GA11900@sigill.intra.peff.net>
+	<20386.53745.200846.115335@winooski.ccs.neu.edu>
+	<20120504052106.GA15970@sigill.intra.peff.net>
+	<20388.9885.608325.489624@winooski.ccs.neu.edu>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Michael Haggerty <mhagger@alum.mit.edu>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat May 05 00:35:29 2012
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Transfer-Encoding: 7bit
+To: Jeff King <peff-AdEPDUrAXsQ@public.gmane.org>, Yann Hodique <yann.hodique-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>,
+        Andreas Schwab <schwab-Td1EMuHUCqxL1ZNQvxDV9g@public.gmane.org>,
+        Junio C Hamano <gitster-e+AXbWqSrlAAvxtiuMwx3w@public.gmane.org>, git-u79uwXL29TY76Z2rM5mHXA@public.gmane.org,
+        magit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+X-From: magit+bncCOHCzKWgHRD_s5H9BBoEaLAy1A-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org Sat May 05 00:36:50 2012
+Return-path: <magit+bncCOHCzKWgHRD_s5H9BBoEaLAy1A-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+Envelope-to: gcvgm-magit-3@m.gmane.org
+Received: from mail-ob0-f186.google.com ([209.85.214.186])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SQR5y-0003h0-Ib
-	for gcvg-git-2@plane.gmane.org; Sat, 05 May 2012 00:35:26 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759997Ab2EDWfW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 4 May 2012 18:35:22 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:45225 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757775Ab2EDWfV (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 May 2012 18:35:21 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 42EF76382;
-	Fri,  4 May 2012 18:35:21 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=asAVGCtpmgZmh1bwBPFEt0w9ZLU=; b=EdqmaP
-	+kmqfGIxaBlqSrid+B3DybtPeOPfoVZQqKWQWPcfz6NG9oXbSSAhzqE+vsnKD0J+
-	6Sf6yrqOPLRJJQ8vMD8VSSI9pQoKXa2g4JkIJ7aXwHFdyDb5M4VJySbzeq8lKiuZ
-	+AFgBV8VjiFeEV47/pxlob4mMfLZkW6Q1dj8Q=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=DGmGYLS1/jEazIe8s2TtSGzuBUe5OzcZ
-	y93oo2I3aW4Y6ccpE8u57IBZKiTzwQCCUL0j1TsBR8C9K4gBWIRH57rPCgZYgSPe
-	Nr3L5nCdmcdpDSUnaYLTXPJpcb8AvdD7E7HKl0pzQV/X8fvBeAF84lYatE0sOUMt
-	1RT/Hm9t56I=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3908E6381;
-	Fri,  4 May 2012 18:35:21 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id AE2BE637F; Fri,  4 May 2012
- 18:35:19 -0400 (EDT)
-In-Reply-To: <7vwr4r8tpm.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Fri, 04 May 2012 15:30:45 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 6DCC6D96-9639-11E1-BBB8-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197078>
+	(envelope-from <magit+bncCOHCzKWgHRD_s5H9BBoEaLAy1A-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>)
+	id 1SQR7I-0004pl-Jf
+	for gcvgm-magit-3@m.gmane.org; Sat, 05 May 2012 00:36:48 +0200
+Received: by obbuo13 with SMTP id uo13sf4273120obb.3
+        for <gcvgm-magit-3@m.gmane.org>; Fri, 04 May 2012 15:36:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=beta;
+        h=x-beenthere:received-spf:from:mime-version:message-id:date:to
+         :subject:in-reply-to:references:x-mailer:x-original-sender
+         :x-original-authentication-results:precedence:mailing-list:list-id
+         :x-google-group-id:list-post:list-help:list-archive:sender
+         :list-subscribe:list-unsubscribe:content-type
+         :content-transfer-encoding;
+        bh=v6SwUAu6wZip5FnjhqZ3KZNiekbMHt/lbToeg4IJyss=;
+        b=Sas9gFtNiUDhFNURvr9z6kMjMRANF+AO514OjBkPWhp2S2RQplJBhAybKGvZ/8m0/K
+         Y+7/6xfxRNKcavfSqAyej9u0SqXP8L/FP6bGB5tUKAkbSyyCC6MwjObtmXvPX5NPxCvC
+         nbBV5JxvzFCRPSgDBkfoZLK9o8kCGfFvRZQLs=
+Received: by 10.50.154.130 with SMTP id vo2mr573563igb.1.1336171007440;
+        Fri, 04 May 2012 15:36:47 -0700 (PDT)
+X-BeenThere: magit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+Received: by 10.50.181.201 with SMTP id dy9ls1242383igc.1.gmail; Fri, 04 May
+ 2012 15:36:46 -0700 (PDT)
+Received: by 10.42.110.75 with SMTP id o11mr6062638icp.6.1336171006885;
+        Fri, 04 May 2012 15:36:46 -0700 (PDT)
+Received: by 10.42.110.75 with SMTP id o11mr6062637icp.6.1336171006876;
+        Fri, 04 May 2012 15:36:46 -0700 (PDT)
+Received: from winooski.ccs.neu.edu (winooski.ccs.neu.edu. [129.10.115.117])
+        by gmr-mx.google.com with ESMTPS id md3si118297igc.1.2012.05.04.15.36.46
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 04 May 2012 15:36:46 -0700 (PDT)
+Received-SPF: pass (google.com: best guess record for domain of eli-a5nvgYPMCZcx/1z6v04GWfZ8FUJU4vz8@public.gmane.org designates 129.10.115.117 as permitted sender) client-ip=129.10.115.117;
+Received: from winooski.ccs.neu.edu (localhost.localdomain [127.0.0.1])
+	by winooski.ccs.neu.edu (8.14.4/8.14.4) with ESMTP id q44MailV022951;
+	Fri, 4 May 2012 18:36:44 -0400
+Received: (from eli@localhost)
+	by winooski.ccs.neu.edu (8.14.4/8.14.4/Submit) id q44MahHJ022947;
+	Fri, 4 May 2012 18:36:43 -0400
+In-Reply-To: <20388.9885.608325.489624-a5nvgYPMCZcx/1z6v04GWfZ8FUJU4vz8@public.gmane.org>
+X-Mailer: VM 8.2.0a under 23.2.1 (x86_64-redhat-linux-gnu)
+X-Original-Sender: eli-oSK4jVRJLyZg9hUCZPvPmw@public.gmane.org
+X-Original-Authentication-Results: gmr-mx.google.com; spf=pass (google.com:
+ best guess record for domain of eli-a5nvgYPMCZcx/1z6v04GWfZ8FUJU4vz8@public.gmane.org designates
+ 129.10.115.117 as permitted sender) smtp.mail=eli-a5nvgYPMCZcx/1z6v04GWfZ8FUJU4vz8@public.gmane.org
+Precedence: list
+Mailing-list: list magit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org; contact magit+owners-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+List-ID: <magit.googlegroups.com>
+X-Google-Group-Id: 752745291123
+List-Post: <http://groups.google.com/group/magit/post?hl=en_US>, <mailto:magit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+List-Help: <http://groups.google.com/support/?hl=en_US>, <mailto:magit+help-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+List-Archive: <http://groups.google.com/group/magit?hl=en_US>
+Sender: magit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+List-Subscribe: <http://groups.google.com/group/magit/subscribe?hl=en_US>, <mailto:magit+subscribe-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+List-Unsubscribe: <http://groups.google.com/group/magit/subscribe?hl=en_US>, <mailto:googlegroups-manage+752745291123+unsubscribe-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197079>
 
-The code to check the refname we store the fetched result locally did not
-bother checking the first 5 bytes of it, presumably assuming that it
-always begin with "refs/".  For a fetch refspec (or the result of applying
-wildcard on one), we always want the RHS to map to something inside
-"refs/" hierarchy, so let's spell that rule out in a more explicit way.
+Four hours ago, Eli Barzilay wrote:
+> 
+> I can still make a proper patch with the fix for git-stash.sh that
+> avoids the problem with the spaces.
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- remote.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+Here's another idea for an easier patch that instead of fixing the
+issue with space just spits out a better error: before throwing the
+"Too many revisions specified" error, check if "$*" matches "{.*}"
+and if "$1" matches "{[^}]*" and in that case make the error say that
+spaces are not supported.  The change is therefore only in the error,
+and with a fixed output, that should be enough.
 
-diff --git a/remote.c b/remote.c
-index eacd8ad..0f2b1db 100644
---- a/remote.c
-+++ b/remote.c
-@@ -1402,8 +1402,8 @@ int get_fetch_map(const struct ref *remote_refs,
- 
- 	for (rmp = &ref_map; *rmp; ) {
- 		if ((*rmp)->peer_ref) {
--			if (check_refname_format((*rmp)->peer_ref->name + 5,
--				REFNAME_ALLOW_ONELEVEL)) {
-+			if (prefixcmp((*rmp)->peer_ref->name, "refs/") ||
-+			    check_refname_format((*rmp)->peer_ref->name, 0)) {
- 				struct ref *ignore = *rmp;
- 				error("* Ignoring funny ref '%s' locally",
- 				      (*rmp)->peer_ref->name);
+(Please tell me if the above or this is desirable...)
+
 -- 
-1.7.10.1.500.g37b1e9a
+          ((lambda (x) (x x)) (lambda (x) (x x)))          Eli Barzilay:
+                    http://barzilay.org/                   Maze is Life!
