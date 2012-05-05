@@ -1,74 +1,82 @@
-From: Sitaram Chamarty <sitaramc@gmail.com>
-Subject: Re: how to restrict git to specific non-root superuser
-Date: Sat, 5 May 2012 10:37:24 +0530
-Message-ID: <CAMK1S_g+EmVe+xHB0TvRB0Xhk0Su1MJXyQEHfHMcqvyhjg1Gvw@mail.gmail.com>
-References: <jo20t5$e8n$1@dough.gmane.org>
-	<4FA49EA6.8030000@gmail.com>
+From: Neal Kreitzinger <nkreitzinger@gmail.com>
+Subject: Re: recipe to use git for deployment
+Date: Sat, 05 May 2012 00:30:27 -0500
+Message-ID: <4FA4BAF3.10601@gmail.com>
+References: <jo283q$kna$1@dough.gmane.org> <1336190286-sup-3813@nixos>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: Neal Kreitzinger <nkreitzinger@gmail.com>
-X-From: git-owner@vger.kernel.org Sat May 05 07:07:31 2012
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git <git@vger.kernel.org>
+To: Marc Weber <marco-oweber@gmx.de>
+X-From: git-owner@vger.kernel.org Sat May 05 07:30:39 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SQXDO-0005uW-48
-	for gcvg-git-2@plane.gmane.org; Sat, 05 May 2012 07:07:30 +0200
+	id 1SQXZk-0003tC-Qw
+	for gcvg-git-2@plane.gmane.org; Sat, 05 May 2012 07:30:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751207Ab2EEFHZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 5 May 2012 01:07:25 -0400
-Received: from mail-ob0-f174.google.com ([209.85.214.174]:54478 "EHLO
+	id S1751816Ab2EEFac (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 5 May 2012 01:30:32 -0400
+Received: from mail-ob0-f174.google.com ([209.85.214.174]:35457 "EHLO
 	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750906Ab2EEFHZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 5 May 2012 01:07:25 -0400
-Received: by obbtb18 with SMTP id tb18so4955043obb.19
-        for <git@vger.kernel.org>; Fri, 04 May 2012 22:07:24 -0700 (PDT)
+	with ESMTP id S1751373Ab2EEFab (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 5 May 2012 01:30:31 -0400
+Received: by obbtb18 with SMTP id tb18so4976746obb.19
+        for <git@vger.kernel.org>; Fri, 04 May 2012 22:30:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=RE+LY+2hrw0uk2A8Hdb5IPQPLR1AReQbI7GyaHFfqt0=;
-        b=hnKghrrBfsdh27BIzw3wvnkssgUU4Mmx8LEjY19tz+5aa+ONAjMKwY3ZT6Ivgk/Nqe
-         BT8ynEgYC6dT2wkguhB1IVzdxi8pINL0lYeqBvP/RUBea9f1LHvZBWawb62XwjClM2+W
-         R1SZtVBmoHcPqFuPnvaFS52r7bh5S/8R2/I4isBHPGrE2KA/BC5emXVSPZUnX9hbCDzZ
-         2c1dIVBu1kyprvKJPfXChRzqjkfhn6ou6un3IOLQITnuRnFhEy6Gd13IZJJNvxjeg37B
-         WI2v9eHI2MUiKAS7cyvEqC9HMpLjpRdxfb+I+tAvlH3ujlDQbNgtdhQTkLG5o2C0Omyy
-         bvhg==
-Received: by 10.60.30.3 with SMTP id o3mr11992207oeh.9.1336194444652; Fri, 04
- May 2012 22:07:24 -0700 (PDT)
-Received: by 10.182.108.67 with HTTP; Fri, 4 May 2012 22:07:24 -0700 (PDT)
-In-Reply-To: <4FA49EA6.8030000@gmail.com>
+        h=message-id:date:from:user-agent:mime-version:newsgroups:to:cc
+         :subject:references:in-reply-to:content-type
+         :content-transfer-encoding;
+        bh=QNxWJNu/h9fkFbFL1uVmDOCtrCXekfprJks7sPd3M3M=;
+        b=Rudh1prLRgs4yIm0NcO/gp/AYX/IWYEcUv/y0xGptOcIc9KiaLLqdyJdfIbgfUmu4f
+         e2StqvA1GPxz0/cvHdJljihI6ww4yF9tl6luozczcNhSE8ARvJAsuvOSjS27X+JvNUCy
+         Vr7olQDI8uzMmsl1NpqB0QFQNZctclyH+ioVXKdBc0oT7lpvIMZMzb0qIJa0b1t7hcDk
+         Y+QgnJo3dOpmv1ml2LVcEeTSWxSPhxtimjqPkIwooPHZkHQ6HnlHYswTnBQK0N6DyIF1
+         k6GiPbsm/4nBqv+mrmczhJ+9kMSPIY87S4cwxMen5g1ZKo3amli7tC/IK12Zyy4/Mnof
+         lWLg==
+Received: by 10.60.10.231 with SMTP id l7mr2072537oeb.4.1336195830703;
+        Fri, 04 May 2012 22:30:30 -0700 (PDT)
+Received: from [172.25.2.210] ([67.63.162.200])
+        by mx.google.com with ESMTPS id bk8sm11369007obb.0.2012.05.04.22.30.29
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 04 May 2012 22:30:30 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:12.0) Gecko/20120428 Thunderbird/12.0.1
+Newsgroups: gmane.comp.version-control.git
+In-Reply-To: <1336190286-sup-3813@nixos>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197095>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197096>
 
-On Sat, May 5, 2012 at 8:59 AM, Neal Kreitzinger <nkreitzinger@gmail.com> wrote:
-> On 5/4/2012 8:48 PM, Neal Kreitzinger wrote:
->>
->> I work on systems where 'everyone' has the root password (that problem
->> is somewhat out of my hands). Is there a technique to setup git so that
->> only a certain non-root superuser (ie, gittech) is allowed to run git
->> commands? I don't want people logged in as root to mess up the git repos.
+On 5/4/2012 11:10 PM, Marc Weber wrote:
+>
+> If you really care that much about history why not push a zip file
+> using git archive --format=zip and unpack that on the deployment
+> server instead?
+>
+I summon forth the ents to do my bidding
+with one command to find them:  --format=tar
+one command to transform them:  --prefix=deployed/path
+one command to arm them:  config tar.umask (executable bits)
+one command to gather them:  tar -A
+and one command to bind them:  gzip
 
-move /usr/bin/git to some other name and replace it with this shell script:
+(We don't have the new tar with the transform option)
 
-#!/bin/bash
-# scary message
-echo 'running: rm -rf /'
-# lots of disk activity
-find / >/dev/null 2>&1
+They are faithful and true and have won many battles, but I fear they 
+may be too slow and lumbering for the gathering whirlwind of patches 
+about to descend from above and legion of servers encircling them on all 
+sides.
 
-Jokes apart, even though you said it is out of your hands, you
-actually have a very serious problem.  There are no shortcuts to that
-one until you get burnt.
+Interestingly, git-archive was not intended for deployment, but it does 
+pretty good at it.
 
-Meanwhile, you could add 'update' as well as 'pre-commit' hooks (and
-possibly several others; check 'man githooks') using code that checks
-the effective userid and aborts if it is root.
+(Sorry, I haven't even read LOTR, but couldn't resist the opportunity to 
+use the word 'ent' after reading about it in git-glossary ;)
 
-("aborts" in a hook generally means the eqvt of "exit 1" but again,
-please check "man githooks" for details).
+v/r,
+neal
