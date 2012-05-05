@@ -1,139 +1,54 @@
-From: "Philip Oakley" <philipoakley@iee.org>
-Subject: Re: [1.8.0] use 'stage' term consistently
-Date: Sat, 5 May 2012 20:53:36 +0100
-Organization: OPDS
-Message-ID: <38B7BCC61E844EAD97CC18D5D7299DD5@PhilipOakley>
-References: <CAMP44s1qqpTxRvjEH32MNqzUeNhgZ1gB+fu=cgvxnSbMB6oBGA@mail.gmail.com><703DFCB358F74F9D87F12C22B782EA61@PhilipOakley> <CAMP44s1isa2a=a-QLGaE9ThW1iUBj0je2NUi8FVxqA=OELLmyA@mail.gmail.com>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From: Kelly Dean <kellydeanch@yahoo.com>
+Subject: Does content provenance matter?
+Date: Sat, 5 May 2012 13:49:16 -0700 (PDT)
+Message-ID: <1336250956.54413.YahooMailClassic@web121505.mail.ne1.yahoo.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="UTF-8";
-	reply-type=original
-Content-Transfer-Encoding: 7bit
-Cc: "Git List" <git@vger.kernel.org>,
-	"Junio C Hamano" <gitster@pobox.com>,
-	"Jonathan Nieder" <jrnieder@gmail.com>,
-	"Jeff King" <peff@peff.net>, "Scott Chacon" <schacon@gmail.com>,
-	"Paolo Ciarrocchi" <paolo.ciarrocchi@gmail.com>,
-	=?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>,
-	"Johannes Schindelin" <johannes.schindelin@gmx.de>,
-	"Matthieu Moy" <matthieu.moy@imag.fr>,
-	"Piotr Krukowiecki" <piotr.krukowiecki.news@gmail.com>
-To: "Felipe Contreras" <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Sat May 05 21:53:42 2012
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat May 05 22:56:37 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SQl2y-0004YA-ID
-	for gcvg-git-2@plane.gmane.org; Sat, 05 May 2012 21:53:40 +0200
+	id 1SQm1q-0006wn-N9
+	for gcvg-git-2@plane.gmane.org; Sat, 05 May 2012 22:56:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755759Ab2EETxg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 5 May 2012 15:53:36 -0400
-Received: from out1.ip04ir2.opaltelecom.net ([62.24.128.240]:13694 "EHLO
-	out1.ip04ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754611Ab2EETxf (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 5 May 2012 15:53:35 -0400
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: AgMFALiEpU9cHlGK/2dsb2JhbABEhXKFSKc5gQiCBwUBAQQBCAEBGRUeAQEcBQUGAgMFAgEDFQECAgIFIQICFAEECBIGBxcGEwgCAQIDAYdvAwYJB6dFiDgNiVOBL4hoaBmEbzVjBI16k0OFA4JqgV0
-X-IronPort-AV: E=Sophos;i="4.75,536,1330905600"; 
-   d="scan'208";a="371047108"
-Received: from host-92-30-81-138.as13285.net (HELO PhilipOakley) ([92.30.81.138])
-  by out1.ip04ir2.opaltelecom.net with SMTP; 05 May 2012 20:53:32 +0100
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+	id S1750982Ab2EEUzz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 5 May 2012 16:55:55 -0400
+Received: from nm14-vm1.bullet.mail.ne1.yahoo.com ([98.138.91.38]:45740 "HELO
+	nm14-vm1.bullet.mail.ne1.yahoo.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S1750961Ab2EEUzy (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 5 May 2012 16:55:54 -0400
+X-Greylist: delayed 397 seconds by postgrey-1.27 at vger.kernel.org; Sat, 05 May 2012 16:55:54 EDT
+Received: from [98.138.90.56] by nm14.bullet.mail.ne1.yahoo.com with NNFMP; 05 May 2012 20:49:16 -0000
+Received: from [98.138.89.160] by tm9.bullet.mail.ne1.yahoo.com with NNFMP; 05 May 2012 20:49:16 -0000
+Received: from [127.0.0.1] by omp1016.mail.ne1.yahoo.com with NNFMP; 05 May 2012 20:49:16 -0000
+X-Yahoo-Newman-Property: ymail-3
+X-Yahoo-Newman-Id: 957708.59706.bm@omp1016.mail.ne1.yahoo.com
+Received: (qmail 58750 invoked by uid 60001); 5 May 2012 20:49:16 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s1024; t=1336250956; bh=z/1CaXW5PE2KnHrqRpKGckpnT+yPg3AoNo5NtbazEDI=; h=X-YMail-OSG:Received:X-Mailer:Message-ID:Date:From:Subject:To:MIME-Version:Content-Type; b=Jv4a6MxdkKD1hLkjzSjsyt7JUyJMIlVSgViTMYvirMuGGrr5wsUjUd/jMmwJUJchfuNdxIcWEZ/z9RRaBX3ZJ82RjlBBurcdJ5PPFCVzeTz1XuoRi0yFDFJizW/dFMQL3erVJY6mbUIYsL7hNMHmAKKIF7+o4ujlvP0UnKcoqrE=
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.com;
+  h=X-YMail-OSG:Received:X-Mailer:Message-ID:Date:From:Subject:To:MIME-Version:Content-Type;
+  b=dnqt9tUOR/xxMz0fsL25OQM8BwesbBH2QcPj2keE17BCB4iqzRJcaM70/kwi0qVehX38U2QI1kEzjX/bopWsreRtkOffDNuoau1BwtQqIcrcRuBP+ZDMLq1gYbJKofJsQwiI1icE2dNnNHVpmobrASsD1emlDzGhPfARZdEdrmE=;
+X-YMail-OSG: RhkFcIoVM1mZ5nlRHyoG3yevJ2yRojDIIlZdi4fl8I9Tg4G
+ KmdVGS54QUEvC5wun6dtZdeNsdXMPWSuBR5IAk.bcAWyimGes2wHRsw17jgY
+ TJYngp4jtmugPxPHHMCrw6_mlGgAdbLwIA6KwNg6KL9OF6BKjJVMTeV17WAu
+ Awnkhs8HesbjkcQBGXcpm1pj87ig23eD8D0yD7WUab1Ux4Mh_FJCVAEyEbjN
+ me.G43wotvK2NM.VsmWxDMTd4uiBacm2Xh1l6AV_EKh5YRo2JFKITL5N27F7
+ 3.X2vm8VfINFQtbqpaF0LAp60LVTOFW.sxnnuRQ7ouUAf7C_s3xX1X39wrpU
+ 2GmPPaRG4Smi4X_LSPEwA0FA3ksFyxjGMrUMaEpRvMtTnkCODgV4KFgwigia
+ j4vqsvA--
+Received: from [109.163.233.205] by web121505.mail.ne1.yahoo.com via HTTP; Sat, 05 May 2012 13:49:16 PDT
+X-Mailer: YahooMailClassic/15.0.6 YahooMailWebService/0.8.117.340979
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197135>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197136>
 
-From: "Felipe Contreras" <felipe.contreras@gmail.com> Sent: Saturday, May
-05, 2012 6:30 PM
-> On Sat, May 5, 2012 at 6:52 PM, Philip Oakley <philipoakley@iee.org>
-> wrote:
->> From: "Felipe Contreras" <felipe.contreras@gmail.com> Sent: Saturday, May
->> 05, 2012 2:04 PM
->>
->>> Proposal:
->>>
->>> Avoid the terms 'cache' and 'index' in favor of 'stage'.
->>>
->>> Advantages:
->>>
->>> The term 'stage' is more intuitive for newcomers which are more
->>> familiar with English than with git, and it seems to be a
->>> straightforward mental notion for people from different mother
->>> tongues.
->>>
->>> It is so intuitive that it is used already in a lot online
->>> documentation, and the people that do teach git professionally use
->>> this term.
->>
->>
->> I've never found any of the terms to be great (as per this discussion
->> ;-).
->>
->> The term that helped me most, heard on one of the git videos, was "it's
->> like
->> a manifest", alluding to a 'shipping manifest', which then leads to both
->> the
->> "staging area" and "index" terms. Though "index" is probably too
->> technical
->> for most folk.
->>
->> The allusion to shipping a consignment or rail marshalling
->> (classification)
->> yards, and similar freight flows
->
-> Perhaps, but these terms are not already used everywhere, unlike
-> 'stage', and haven't been brought in past discussions. Personally the
-> word 'manifest' says nothing to me (manifesto?), neither does
-> consignment, or marshalling.
-
-Useful to know..  The fact that there is such a variety of terms, usually
-based on specialist transport, is an indication of our on-going
-difficulties - people just don't talk about this aspect of 'work'. Usually
-it (packaging)  is 'someone else's problem' ;-)  E.g. what's it called when
-the post office batches up mail in the 'sorting' office? - I don't know, nor 
-usually care, except when I just post 60 letters to Hawaii - should I put a 
-band around them to 'help' the post office ... In the git case, unusually 
-for a VCS, we do our own grouping, but need a verb.
-
-Aside: wikipedia notes that even UK and US English railways can't agree 
-their term
-(http://en.wikipedia.org/wiki/Marshalling_yards) on what to call the
-'staging' process we are discussing
-
-I looked up a translation (I hope I haven't mis-chosen):
-    shipping manifest (n) (bill or inventory enclosed with a consignment)
-    manifiesto de carga (nm)
-so (to me) it does look like "index" is the best word for our *list* of what 
-we have
-prepared, and the stage of preparation of those items for our next commit 
-(shipment to the repo).
-
-It probably doesn't help that the concepts and the implementation aren't 
-always in alignment (a generic DVCS problem). e.g. when we `add` a file, a 
-copy goes straight into our objects store, but isn't actually 'in' the repo. 
-So the discussion suffers from knowing too much.
-
-> As discussed before, we need a term that
-> has a nice noun (stage), verb (to stage), and past-participle
-> (staged). There have been a lot of suggestions, but nothing as good as
-> 'stage', which is presumably the reason why it's so prevalent in
-> online documentation.
-
-Ooops, my note about my wording suggestions being used for *explanation* got 
-lost in
-the trimming. I wasn't suggesting a change to the candidate terms.
-
->
-> Maybe you are quite familiar with ships :)
->
-UK - home of the railways, and the SS Great Britain, and the Titanic ...
-Philip 
+Suppose you make dirs B and C, copy file X into B and C, insert "foo" somewhere into B/X and the same place into C/X, and commit. Now, you copy "foo" from B/X into the same place in the original X, and commit again. Git doesn't record the information about whether "foo" was copied from B or C, and this is intentional, on the theory that just content, not provenance, is what matters.
+Suppose instead, you branch master to new branches B and C, insert "foo" into B/X, commit, insert "foo" into C/X, and commit. Now, you merge B back into master. Git records that master contains "foo" because B contained it rather than because C contained it, on the theory that not only content, but also provenance, matters.
+Does provenance actually matter, or not? The reason git doesn't record it in the first case isn't simply that your editor didn't store that information (and the editor didn't store it because it isn't customary to store it, and there's no standard way to store it); even if the editor were to store the information (e.g. as metadata for X; details not relevant) and a patch to git were submitted for it to record this metadata, the git maintainers would presumably reject this patch, on the basis that it violates git's design specification which says that provenance doesn't matter. For the same reason, git intentionally doesn't distinguish the cases of renaming a file or directory vs. deleting it and creating a new one with the same content, as has already been thoroughly debated.
+The basic question is, if provenance doesn't matter, then why does a git commit record its parent(s)? Why not omit this information, and figure it out at search time (by looking at all commits with older timestamps), the same as you're supposed to figure out renames at search time and figure out the movement of lines within/among files at search time (by looking at all files in the parent commit(s))? (If speed is an issue, then use an index, but this doesn't require putting such derivative information in the commit record.)
