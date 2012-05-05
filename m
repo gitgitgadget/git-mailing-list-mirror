@@ -1,76 +1,139 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: Jonathan gives feedback --> flamewars inevitable?
-Date: Sat, 5 May 2012 13:42:55 -0500
-Message-ID: <20120505184255.GB18844@burratino>
-References: <1336231400-6878-1-git-send-email-felipe.contreras@gmail.com>
- <20120505155423.GA14684@burratino>
- <CAMP44s1dhAjKt3mxVmg2+0qp-QTyjYb1knhxf+m177Cg2ZBC1Q@mail.gmail.com>
- <20120505164736.GC14684@burratino>
- <CAMP44s2NRMxuvQXk4RyqFYR=oQw_vrJhmbdwtXsrg=eHhGBS2w@mail.gmail.com>
- <20120505173327.GE14684@burratino>
- <CAMP44s1SLb6CXMKxRDFUbxkg56dU3=ObZPZh7XxQC3vovNnvdw@mail.gmail.com>
+From: "Philip Oakley" <philipoakley@iee.org>
+Subject: Re: [1.8.0] use 'stage' term consistently
+Date: Sat, 5 May 2012 20:53:36 +0100
+Organization: OPDS
+Message-ID: <38B7BCC61E844EAD97CC18D5D7299DD5@PhilipOakley>
+References: <CAMP44s1qqpTxRvjEH32MNqzUeNhgZ1gB+fu=cgvxnSbMB6oBGA@mail.gmail.com><703DFCB358F74F9D87F12C22B782EA61@PhilipOakley> <CAMP44s1isa2a=a-QLGaE9ThW1iUBj0je2NUi8FVxqA=OELLmyA@mail.gmail.com>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org,
-	SZEDER =?utf-8?B?R8OhYm9y?= <szeder@ira.uka.de>,
-	Junio C Hamano <gitster@pobox.com>,
-	Thomas Rast <trast@student.ethz.ch>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Sat May 05 20:43:08 2012
+Content-Type: text/plain;
+	format=flowed;
+	charset="UTF-8";
+	reply-type=original
+Content-Transfer-Encoding: 7bit
+Cc: "Git List" <git@vger.kernel.org>,
+	"Junio C Hamano" <gitster@pobox.com>,
+	"Jonathan Nieder" <jrnieder@gmail.com>,
+	"Jeff King" <peff@peff.net>, "Scott Chacon" <schacon@gmail.com>,
+	"Paolo Ciarrocchi" <paolo.ciarrocchi@gmail.com>,
+	=?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>,
+	"Johannes Schindelin" <johannes.schindelin@gmx.de>,
+	"Matthieu Moy" <matthieu.moy@imag.fr>,
+	"Piotr Krukowiecki" <piotr.krukowiecki.news@gmail.com>
+To: "Felipe Contreras" <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Sat May 05 21:53:42 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SQjwh-0006mE-4f
-	for gcvg-git-2@plane.gmane.org; Sat, 05 May 2012 20:43:07 +0200
+	id 1SQl2y-0004YA-ID
+	for gcvg-git-2@plane.gmane.org; Sat, 05 May 2012 21:53:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756546Ab2EESnC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 5 May 2012 14:43:02 -0400
-Received: from mail-ob0-f174.google.com ([209.85.214.174]:33722 "EHLO
-	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756496Ab2EESnA (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 5 May 2012 14:43:00 -0400
-Received: by obbtb18 with SMTP id tb18so5774160obb.19
-        for <git@vger.kernel.org>; Sat, 05 May 2012 11:43:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=y3pgtVzbjmXOllZOkLU4y4ITc4W6YKxgwuhy7XddJ+I=;
-        b=ZM55/PVs7+TWa3KDf+nfJgLMt4rBvM48vMn4CcIYlU6SV4fAVF4He2gi6Jy7RswWAW
-         GIOrem7lUhRDpsVc+/NstZ41GiXJHfpfObwjIwlLwAV1F+gB5uOfVx1gMW9pd2P3MaZs
-         klThFQdYRMdH5KBlUiFmiMZ5DShH0rJ/A76lPnsy6NQHCJrr8WDLYaNk4ZU8j00qOBdG
-         kh+2QqavCuXBvBihRKZvggvbZTxmnbVkObdCe1XQQUok9YC5Un/p2MGD9UKYD+23dN/0
-         wfbfik3a5QNFZrvH2wjRfFez9BLMxgJi/zTXiQIZ9jyBKiWxmHA4vaiYs7xW+d4wM2Zd
-         UeQg==
-Received: by 10.50.187.137 with SMTP id fs9mr5438814igc.50.1336243380232;
-        Sat, 05 May 2012 11:43:00 -0700 (PDT)
-Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
-        by mx.google.com with ESMTPS id hq3sm4932025igc.0.2012.05.05.11.42.59
-        (version=SSLv3 cipher=OTHER);
-        Sat, 05 May 2012 11:42:59 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <CAMP44s1SLb6CXMKxRDFUbxkg56dU3=ObZPZh7XxQC3vovNnvdw@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1755759Ab2EETxg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 5 May 2012 15:53:36 -0400
+Received: from out1.ip04ir2.opaltelecom.net ([62.24.128.240]:13694 "EHLO
+	out1.ip04ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754611Ab2EETxf (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 5 May 2012 15:53:35 -0400
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: AgMFALiEpU9cHlGK/2dsb2JhbABEhXKFSKc5gQiCBwUBAQQBCAEBGRUeAQEcBQUGAgMFAgEDFQECAgIFIQICFAEECBIGBxcGEwgCAQIDAYdvAwYJB6dFiDgNiVOBL4hoaBmEbzVjBI16k0OFA4JqgV0
+X-IronPort-AV: E=Sophos;i="4.75,536,1330905600"; 
+   d="scan'208";a="371047108"
+Received: from host-92-30-81-138.as13285.net (HELO PhilipOakley) ([92.30.81.138])
+  by out1.ip04ir2.opaltelecom.net with SMTP; 05 May 2012 20:53:32 +0100
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197134>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197135>
 
-Felipe Contreras wrote:
-
-> http://article.gmane.org/gmane.comp.version-control.git/195685
-> http://article.gmane.org/gmane.comp.version-control.git/195689
-> http://article.gmane.org/gmane.comp.version-control.git/195691
-> http://article.gmane.org/gmane.comp.shells.bash.completion.devel/3877
+From: "Felipe Contreras" <felipe.contreras@gmail.com> Sent: Saturday, May
+05, 2012 6:30 PM
+> On Sat, May 5, 2012 at 6:52 PM, Philip Oakley <philipoakley@iee.org>
+> wrote:
+>> From: "Felipe Contreras" <felipe.contreras@gmail.com> Sent: Saturday, May
+>> 05, 2012 2:04 PM
+>>
+>>> Proposal:
+>>>
+>>> Avoid the terms 'cache' and 'index' in favor of 'stage'.
+>>>
+>>> Advantages:
+>>>
+>>> The term 'stage' is more intuitive for newcomers which are more
+>>> familiar with English than with git, and it seems to be a
+>>> straightforward mental notion for people from different mother
+>>> tongues.
+>>>
+>>> It is so intuitive that it is used already in a lot online
+>>> documentation, and the people that do teach git professionally use
+>>> this term.
+>>
+>>
+>> I've never found any of the terms to be great (as per this discussion
+>> ;-).
+>>
+>> The term that helped me most, heard on one of the git videos, was "it's
+>> like
+>> a manifest", alluding to a 'shipping manifest', which then leads to both
+>> the
+>> "staging area" and "index" terms. Though "index" is probably too
+>> technical
+>> for most folk.
+>>
+>> The allusion to shipping a consignment or rail marshalling
+>> (classification)
+>> yards, and similar freight flows
 >
-> You could have skipped this
+> Perhaps, but these terms are not already used everywhere, unlike
+> 'stage', and haven't been brought in past discussions. Personally the
+> word 'manifest' says nothing to me (manifesto?), neither does
+> consignment, or marshalling.
 
-I'm also really confused about this.  Are you saying that trying
-to figure out the bash-completion conventions was a waste of time?
-It even resulted in a patch to bash-completion being applied that
-improved consistency, which I thought was an attribute you valued.
+Useful to know..  The fact that there is such a variety of terms, usually
+based on specialist transport, is an indication of our on-going
+difficulties - people just don't talk about this aspect of 'work'. Usually
+it (packaging)  is 'someone else's problem' ;-)  E.g. what's it called when
+the post office batches up mail in the 'sorting' office? - I don't know, nor 
+usually care, except when I just post 60 letters to Hawaii - should I put a 
+band around them to 'help' the post office ... In the git case, unusually 
+for a VCS, we do our own grouping, but need a verb.
 
-Jonathan
+Aside: wikipedia notes that even UK and US English railways can't agree 
+their term
+(http://en.wikipedia.org/wiki/Marshalling_yards) on what to call the
+'staging' process we are discussing
+
+I looked up a translation (I hope I haven't mis-chosen):
+    shipping manifest (n) (bill or inventory enclosed with a consignment)
+    manifiesto de carga (nm)
+so (to me) it does look like "index" is the best word for our *list* of what 
+we have
+prepared, and the stage of preparation of those items for our next commit 
+(shipment to the repo).
+
+It probably doesn't help that the concepts and the implementation aren't 
+always in alignment (a generic DVCS problem). e.g. when we `add` a file, a 
+copy goes straight into our objects store, but isn't actually 'in' the repo. 
+So the discussion suffers from knowing too much.
+
+> As discussed before, we need a term that
+> has a nice noun (stage), verb (to stage), and past-participle
+> (staged). There have been a lot of suggestions, but nothing as good as
+> 'stage', which is presumably the reason why it's so prevalent in
+> online documentation.
+
+Ooops, my note about my wording suggestions being used for *explanation* got 
+lost in
+the trimming. I wasn't suggesting a change to the candidate terms.
+
+>
+> Maybe you are quite familiar with ships :)
+>
+UK - home of the railways, and the SS Great Britain, and the Titanic ...
+Philip 
