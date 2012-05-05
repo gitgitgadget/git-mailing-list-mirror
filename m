@@ -1,87 +1,68 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: broken bash completion
-Date: Sat, 5 May 2012 16:26:18 +0200
-Message-ID: <CAMP44s0HtcO0S-Vjq=XkiB7VLZq-LWr2tf2MF_HMpj=1C=LKSQ@mail.gmail.com>
-References: <4FA14016.8050503@rolf.leggewie.biz>
-	<20120504233213.GF2164@goldbirke>
-	<4FA4AB86.8020108@rolf.leggewie.biz>
-	<20120505121319.GG2164@goldbirke>
-	<CAMP44s0q_zeVwzhgeda1=9+Psjr5PaO1QtHT1QC0RwyCpfd=rg@mail.gmail.com>
-	<CADVrmKRjw6VFQAnQruBmc1OhOaswpOtzb+E8G_KooYiz6SuStA@mail.gmail.com>
+From: "Philip Oakley" <philipoakley@iee.org>
+Subject: Re: git-scm.com refresh
+Date: Sat, 5 May 2012 15:36:30 +0100
+Organization: OPDS
+Message-ID: <4C84FE6E927C4C04BB66EFC7122A61C8@PhilipOakley>
+References: <CAP2yMaJy=1c3b4F72h6jL_454+0ydEQNXYiC6E-ZeQQgE0PcVA@mail.gmail.com>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder@ira.uka.de>,
-	Rolf Leggewie <foss@rolf.leggewie.biz>, git@vger.kernel.org
-To: fREW Schmidt <frioux@gmail.com>
-X-From: git-owner@vger.kernel.org Sat May 05 16:27:01 2012
+Content-Type: text/plain;
+	format=flowed;
+	charset="UTF-8";
+	reply-type=original
+Content-Transfer-Encoding: 7bit
+To: "Scott Chacon" <schacon@gmail.com>,
+	"git list" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat May 05 16:36:27 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SQfwn-0001BJ-Sc
-	for gcvg-git-2@plane.gmane.org; Sat, 05 May 2012 16:26:58 +0200
+	id 1SQg5y-0008AQ-1q
+	for gcvg-git-2@plane.gmane.org; Sat, 05 May 2012 16:36:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755215Ab2EEO0V convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 5 May 2012 10:26:21 -0400
-Received: from mail-ee0-f46.google.com ([74.125.83.46]:39670 "EHLO
-	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755082Ab2EEO0U convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 5 May 2012 10:26:20 -0400
-Received: by eekc41 with SMTP id c41so1065455eek.19
-        for <git@vger.kernel.org>; Sat, 05 May 2012 07:26:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=XA7trNE6G+aJg1wrm3EmzsqEeG1/9nPbX0MX1o567zo=;
-        b=zTeVo+nkBjXONe2w8OZloXGWZ+vHUWcC5JX6vGSr50nmWLGif/9ZoCwl1riwzG/Lhy
-         KzT1PUFaIL8w3pugk4quGZ/KKSpgHlYo+R4YjX8e2ONesVwDRDCElJSkqiZ1fH0ZEC31
-         BikNhIdTBOs/ZWGddbtxXqA/yA2MGbvEB/Nbi1zXTVZ20sB8rCbGzXOOHSOWm3je27gc
-         pT9t4oMH9OUXAW0fgc2YXmaSvYqzFm3wZ2YFk4g+TsUASgSc2iLv4MHUf7T+zvcT7zFy
-         Wye7hiLl0o4iGDWEG44D1ThIumLf1vxSOBO+LoFQDPj9cmWbs1CvzjlNpX7pJso4dFxt
-         9y2Q==
-Received: by 10.213.19.200 with SMTP id c8mr1767358ebb.113.1336227979301; Sat,
- 05 May 2012 07:26:19 -0700 (PDT)
-Received: by 10.213.103.18 with HTTP; Sat, 5 May 2012 07:26:18 -0700 (PDT)
-In-Reply-To: <CADVrmKRjw6VFQAnQruBmc1OhOaswpOtzb+E8G_KooYiz6SuStA@mail.gmail.com>
+	id S1755548Ab2EEOgV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 5 May 2012 10:36:21 -0400
+Received: from out1.ip08ir2.opaltelecom.net ([62.24.128.244]:9155 "EHLO
+	out1.ip08ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755373Ab2EEOgV (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 5 May 2012 10:36:21 -0400
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: AgIFADM6pU9cGnSp/2dsb2JhbABFhXKFSKc5gQiCBwEEAQEFCAEBGRUeAQEsAgMFAgEDDgcBBAIFIQICFAEECBIGBxcGARIIAgECAwGFOAeCKAgDD6duiE0NiVOBL4hoaIUINWMEjXqTQwOFAIJq
+X-IronPort-AV: E=Sophos;i="4.75,536,1330905600"; 
+   d="scan'208";a="526976619"
+Received: from host-92-26-116-169.as13285.net (HELO PhilipOakley) ([92.26.116.169])
+  by out1.ip08ir2.opaltelecom.net with SMTP; 05 May 2012 15:36:19 +0100
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197115>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197116>
 
-On Sat, May 5, 2012 at 3:57 PM, fREW Schmidt <frioux@gmail.com> wrote:
-> On Sat, May 5, 2012 at 8:11 AM, Felipe Contreras
-> <felipe.contreras@gmail.com> wrote:
->>
->> On Sat, May 5, 2012 at 2:13 PM, SZEDER G=C3=A1bor <szeder@ira.uka.de=
-> wrote:
->>
->> The reason I started to use the bash completion in zsh is that the z=
-sh
->> completion goes for 100% correctness, that means 'git checkout <TAB>=
-'
->> took literally *minutes* in my machine on the Linux kernel repo. The
->> zsh developers said that was OK, and my patch to solve the problem w=
-as
->> not, because it would make the result less than 100% correct.
+From: "Scott Chacon" <schacon@gmail.com>Sent: Saturday, May 05, 2012 12:29 
+AM
+> Hey everyone,
 >
-> Could you elaborate on how you did that? =C2=A0I'm suffering from the=
- same
-> thing and don't see an obvious way to use bash-completion in zsh.
+> I just shipped a big update to the git-scm.com website, incorporating
+> tons of feedback I've gotten on the site, especially from new users,
+> over the years.  I think it will help new users to Git find the right
+> installer and get up and running easier.  I have other ideas of things
+> to add to it in the future, but I think this is much better than the
+> site that has served us well for a few years now.
+>
 
-Just source the bash script:
-http://git.kernel.org/?p=3Dgit/git.git;a=3Dblob;f=3Dcontrib/completion/=
-git-completion.bash
+I liked the groupings of the commands on the doc/reference page 
+http://git-scm.com/docs (plural).
+I felt they were reasonably grouped and relatively inviting to explore.
 
-Alternatively you can use my wrapper that works better than zsh's bash
-completion[1], but you still need the bash script anyway.
+The visual cheatsheet looks interesting and informative, though wasn't what 
+I was expecting from its title - perhaps "interactive cheatsheet"?
+[If they did a composite with all the cheats in cascade it'd make a good 
+printout]
 
-Cheers.
-
-[1] https://github.com/felipec/git-zsh/blob/master/git-completion.zsh
-
---=20
-=46elipe Contreras
+Philip Oakley
