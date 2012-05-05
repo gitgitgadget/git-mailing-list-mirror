@@ -1,54 +1,115 @@
-From: Kelly Dean <kellydeanch@yahoo.com>
-Subject: Does content provenance matter?
-Date: Sat, 5 May 2012 13:49:16 -0700 (PDT)
-Message-ID: <1336250956.54413.YahooMailClassic@web121505.mail.ne1.yahoo.com>
+From: Scott Chacon <schacon@gmail.com>
+Subject: Re: git-scm.com refresh
+Date: Sat, 5 May 2012 15:24:19 -0700
+Message-ID: <CAP2yMaJuGgowcdcySBa-qFNeaSCh8_LLv+d+g=WnGFpOf05vzw@mail.gmail.com>
+References: <CAP2yMaJy=1c3b4F72h6jL_454+0ydEQNXYiC6E-ZeQQgE0PcVA@mail.gmail.com>
+ <m38vh7qxs3.fsf@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat May 05 22:56:37 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git list <git@vger.kernel.org>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Sun May 06 00:25:26 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SQm1q-0006wn-N9
-	for gcvg-git-2@plane.gmane.org; Sat, 05 May 2012 22:56:35 +0200
+	id 1SQnPo-0000ah-PF
+	for gcvg-git-2@plane.gmane.org; Sun, 06 May 2012 00:25:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750982Ab2EEUzz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 5 May 2012 16:55:55 -0400
-Received: from nm14-vm1.bullet.mail.ne1.yahoo.com ([98.138.91.38]:45740 "HELO
-	nm14-vm1.bullet.mail.ne1.yahoo.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S1750961Ab2EEUzy (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 5 May 2012 16:55:54 -0400
-X-Greylist: delayed 397 seconds by postgrey-1.27 at vger.kernel.org; Sat, 05 May 2012 16:55:54 EDT
-Received: from [98.138.90.56] by nm14.bullet.mail.ne1.yahoo.com with NNFMP; 05 May 2012 20:49:16 -0000
-Received: from [98.138.89.160] by tm9.bullet.mail.ne1.yahoo.com with NNFMP; 05 May 2012 20:49:16 -0000
-Received: from [127.0.0.1] by omp1016.mail.ne1.yahoo.com with NNFMP; 05 May 2012 20:49:16 -0000
-X-Yahoo-Newman-Property: ymail-3
-X-Yahoo-Newman-Id: 957708.59706.bm@omp1016.mail.ne1.yahoo.com
-Received: (qmail 58750 invoked by uid 60001); 5 May 2012 20:49:16 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s1024; t=1336250956; bh=z/1CaXW5PE2KnHrqRpKGckpnT+yPg3AoNo5NtbazEDI=; h=X-YMail-OSG:Received:X-Mailer:Message-ID:Date:From:Subject:To:MIME-Version:Content-Type; b=Jv4a6MxdkKD1hLkjzSjsyt7JUyJMIlVSgViTMYvirMuGGrr5wsUjUd/jMmwJUJchfuNdxIcWEZ/z9RRaBX3ZJ82RjlBBurcdJ5PPFCVzeTz1XuoRi0yFDFJizW/dFMQL3erVJY6mbUIYsL7hNMHmAKKIF7+o4ujlvP0UnKcoqrE=
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.com;
-  h=X-YMail-OSG:Received:X-Mailer:Message-ID:Date:From:Subject:To:MIME-Version:Content-Type;
-  b=dnqt9tUOR/xxMz0fsL25OQM8BwesbBH2QcPj2keE17BCB4iqzRJcaM70/kwi0qVehX38U2QI1kEzjX/bopWsreRtkOffDNuoau1BwtQqIcrcRuBP+ZDMLq1gYbJKofJsQwiI1icE2dNnNHVpmobrASsD1emlDzGhPfARZdEdrmE=;
-X-YMail-OSG: RhkFcIoVM1mZ5nlRHyoG3yevJ2yRojDIIlZdi4fl8I9Tg4G
- KmdVGS54QUEvC5wun6dtZdeNsdXMPWSuBR5IAk.bcAWyimGes2wHRsw17jgY
- TJYngp4jtmugPxPHHMCrw6_mlGgAdbLwIA6KwNg6KL9OF6BKjJVMTeV17WAu
- Awnkhs8HesbjkcQBGXcpm1pj87ig23eD8D0yD7WUab1Ux4Mh_FJCVAEyEbjN
- me.G43wotvK2NM.VsmWxDMTd4uiBacm2Xh1l6AV_EKh5YRo2JFKITL5N27F7
- 3.X2vm8VfINFQtbqpaF0LAp60LVTOFW.sxnnuRQ7ouUAf7C_s3xX1X39wrpU
- 2GmPPaRG4Smi4X_LSPEwA0FA3ksFyxjGMrUMaEpRvMtTnkCODgV4KFgwigia
- j4vqsvA--
-Received: from [109.163.233.205] by web121505.mail.ne1.yahoo.com via HTTP; Sat, 05 May 2012 13:49:16 PDT
-X-Mailer: YahooMailClassic/15.0.6 YahooMailWebService/0.8.117.340979
+	id S1751663Ab2EEWYl convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 5 May 2012 18:24:41 -0400
+Received: from mail-qa0-f49.google.com ([209.85.216.49]:35338 "EHLO
+	mail-qa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751610Ab2EEWYk convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 5 May 2012 18:24:40 -0400
+Received: by qabj40 with SMTP id j40so2714463qab.1
+        for <git@vger.kernel.org>; Sat, 05 May 2012 15:24:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=MUyRkAq2aAcZesP3m8Onykl9J5glIYjYsG5lvKvPiz8=;
+        b=j39UwzbxbHCwztY9KVtpFH5klHdNwkgMhSppg+936zxjUl8nyCIyaJ82GynHjo1ZQo
+         A2CHBrJJnxwM3ULmiuLlrwvBrCZxoowH4nw3G8c4hDki0l72C7FMVtn303Dbdds0t6fd
+         x6BZTol7nxMWavNN4FaEXcb53kKsxeoNeDEj1rhUSXn/0WQcRvMYFTPxkneAjG0mUFNU
+         46AyZLMuBi+FWS0dmMXDYHlh7RZngrm/HeqCAtMvnLYmklNvoOUZPUoz1kCuMCB+VoTB
+         aMF7mRJKnJa9M7i9JMSgtiinhVbqJjTXorL/TnGcTxTTEIVIOenPiSQn8RBtOaQSoq/f
+         yGBQ==
+Received: by 10.229.136.75 with SMTP id q11mr5066973qct.97.1336256680140; Sat,
+ 05 May 2012 15:24:40 -0700 (PDT)
+Received: by 10.229.251.142 with HTTP; Sat, 5 May 2012 15:24:19 -0700 (PDT)
+In-Reply-To: <m38vh7qxs3.fsf@localhost.localdomain>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197136>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197137>
 
-Suppose you make dirs B and C, copy file X into B and C, insert "foo" somewhere into B/X and the same place into C/X, and commit. Now, you copy "foo" from B/X into the same place in the original X, and commit again. Git doesn't record the information about whether "foo" was copied from B or C, and this is intentional, on the theory that just content, not provenance, is what matters.
-Suppose instead, you branch master to new branches B and C, insert "foo" into B/X, commit, insert "foo" into C/X, and commit. Now, you merge B back into master. Git records that master contains "foo" because B contained it rather than because C contained it, on the theory that not only content, but also provenance, matters.
-Does provenance actually matter, or not? The reason git doesn't record it in the first case isn't simply that your editor didn't store that information (and the editor didn't store it because it isn't customary to store it, and there's no standard way to store it); even if the editor were to store the information (e.g. as metadata for X; details not relevant) and a patch to git were submitted for it to record this metadata, the git maintainers would presumably reject this patch, on the basis that it violates git's design specification which says that provenance doesn't matter. For the same reason, git intentionally doesn't distinguish the cases of renaming a file or directory vs. deleting it and creating a new one with the same content, as has already been thoroughly debated.
-The basic question is, if provenance doesn't matter, then why does a git commit record its parent(s)? Why not omit this information, and figure it out at search time (by looking at all commits with older timestamps), the same as you're supposed to figure out renames at search time and figure out the movement of lines within/among files at search time (by looking at all files in the parent commit(s))? (If speed is an issue, then use an index, but this doesn't require putting such derivative information in the commit record.)
+Hey,
+
+On Fri, May 4, 2012 at 5:26 PM, Jakub Narebski <jnareb@gmail.com> wrote=
+:
+>> version of any command: http://git-scm.com/docs/git-fsck/1.5.5
+>
+> That's very good. =C2=A0Thank you very much for giving home to git ma=
+npages
+> online.
+>
+> It would be nice for those manpages to have the title of page to be
+> set appropriately, e.g. for http://git-scm.com/docs/git-bisect to hav=
+e
+> "git-bisect(1)" or "git-bisect(1) Manual Page", or even perhaps
+> "git-bisect(1) Manual Page - Find by binary search the change that
+> introduced a bug" instead of just "Git".
+
+Good catch - I'm pushing that out in a minute.
+
+>> * We designed a new logo[1] - there are multiple variations availabl=
+e
+>> for download on the site under the most permissive CC license for an=
+y
+>> use.
+>
+> IMVHO it is too similar to Bazaar logo:
+>
+> =C2=A0http://bazaar.canonical.com/bzricons/bazaar-logo.png
+>
+> I like the [---] git logo, but I guess it is a bit cryptic.
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 [+++]
+>
+
+I was actually concerned with the same thing, but a) not that many
+people are familiar with the Bzr logo and b) when I actually look at
+the Bzr logo I don't really see that much in common.  It was done by
+someone totally unfamiliar with that logo and although I can still see
+similarities, I think it's a good, clean logo that would be easily
+recognizable and much more versatile than what we have been using so I
+decided to stick with it.
+
+
+>> Let me know if you run into anything or there are any features you
+>> would like to see.
+>
+> In my ancient 10-years old web browser (Mozilla 1.17.2, Linux) the ne=
+w
+> layout is seriously broken (misaligned), and much less readable than
+> the old one (BTW. could you keep the old one, perhaps only the front
+> page, for comparison?). =C2=A0Also the font size is too small.
+
+I have to assume that just about any modern site looks pretty awful to
+you.  I honestly don't know what to do about this - I can't even test
+it really.  I am aware since the launch that a number of people have
+issues with JS being turned off, which I'm working on, but there's not
+a lot I can do for browsers like that and I'm not sure what the point
+would be anyhow.  People with browsers like that don't need anything
+on this site as far as I can think of.  It targets people that don't
+know Git and possibly don't know version control and are trying to
+figure it out.
+
+I'll try to make it better, but it would be simpler if you could fix
+it and send me a pull request since I have no other way to see what
+you're seeing with tech that out of date.
+
+Scott
