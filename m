@@ -1,67 +1,141 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: Feature idea: git rebase --exec $CMD
-Date: Sat, 5 May 2012 13:54:13 +0200
-Message-ID: <CAMP44s2pj2dVeOp39d8TgaTv5a5ox74k29QpxB_YStWtQ6HPVw@mail.gmail.com>
-References: <20120505132650.637c4e06086654e0dbf641fc@studenti.unina.it>
+From: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
+Subject: Re: broken bash completion
+Date: Sat, 5 May 2012 14:13:19 +0200
+Message-ID: <20120505121319.GG2164@goldbirke>
+References: <4FA14016.8050503@rolf.leggewie.biz>
+	<20120504233213.GF2164@goldbirke>
+	<4FA4AB86.8020108@rolf.leggewie.biz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, Matthieu Moy <Matthieu.Moy@imag.fr>
-To: Antonio Ospite <ospite@studenti.unina.it>
-X-From: git-owner@vger.kernel.org Sat May 05 13:54:23 2012
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Rolf Leggewie <foss@rolf.leggewie.biz>
+X-From: git-owner@vger.kernel.org Sat May 05 14:13:33 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SQdZ6-0004rr-32
-	for gcvg-git-2@plane.gmane.org; Sat, 05 May 2012 13:54:20 +0200
+	id 1SQdrg-0001Fz-Rl
+	for gcvg-git-2@plane.gmane.org; Sat, 05 May 2012 14:13:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755165Ab2EELyP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 5 May 2012 07:54:15 -0400
-Received: from mail-we0-f174.google.com ([74.125.82.174]:33837 "EHLO
-	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754774Ab2EELyP (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 5 May 2012 07:54:15 -0400
-Received: by werb10 with SMTP id b10so407404wer.19
-        for <git@vger.kernel.org>; Sat, 05 May 2012 04:54:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=17fLuFyFl/I+X2GCKaXktJQ2oygTCULJiKlfGtBA9x0=;
-        b=vXDXgB8uDaxehIydan2lks6rflerwfrPIg1hLwg0ahD7zpBB4wd/jE4EeJEx6k0Lqx
-         w2wltpQjpya/0AI3gEYJ9Z+BJg635ostFgfy8+ejguY4VsE+meMZHAywN8eJcAj0gE1d
-         cg/878cd1bjOANmNbhXcD3l/F3h/QLSPlKbYM7wp0QHei+KZQ50FcN5zuJ7yi6PMaClO
-         GujmGROYzo88WvHTJ9PSww7fOmzEbnoNs7B/Lh3yU8YxDyk4w267LnNUzKYJi08aHAGq
-         RC3KM4XwbYJdEZt4qpgedwnq+B+hw0DKJ4B8ayHqX8DNME+a0WZiFLrF+5yPzz4cX6v+
-         669Q==
-Received: by 10.180.78.164 with SMTP id c4mr20821724wix.10.1336218853954; Sat,
- 05 May 2012 04:54:13 -0700 (PDT)
-Received: by 10.216.124.197 with HTTP; Sat, 5 May 2012 04:54:13 -0700 (PDT)
-In-Reply-To: <20120505132650.637c4e06086654e0dbf641fc@studenti.unina.it>
+	id S1755355Ab2EEMN2 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 5 May 2012 08:13:28 -0400
+Received: from moutng.kundenserver.de ([212.227.126.187]:61780 "EHLO
+	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754775Ab2EEMN1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 5 May 2012 08:13:27 -0400
+Received: from localhost6.localdomain6 (p5B130A62.dip0.t-ipconnect.de [91.19.10.98])
+	by mrelayeu.kundenserver.de (node=mreu2) with ESMTP (Nemesis)
+	id 0LuHCt-1RzfHR1QMp-011BLE; Sat, 05 May 2012 14:13:22 +0200
+Content-Disposition: inline
+In-Reply-To: <4FA4AB86.8020108@rolf.leggewie.biz>
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Provags-ID: V02:K0:DGH+cO2cSgfGw3B9ru9LbPNBykPei6N2GhjbCm+/SOA
+ 0grqiRzTgDF32Lx/vx8PfSvALKqZpPO9wabM9Zlxm/vzmNn/VP
+ mFTZ3c+Yl2cfu8uRINmjAfZYFuEpdLtobUJD3ND7JN1e7wnH5A
+ 8Na4CJCTSqqfyt/kgsCOykm9RYCxUTUxS3qJr1Fx7LRSBNzhuI
+ UM3xWoRjpIf2hq4MTXkype7Noq5F3Fe0tjUhzQ4f8xEpUccODw
+ TabsW++x2Wvxs04FZ3zoHMLb9rIa/p7U/bbsXVYNY7k++oVoxY
+ VUZe+mUIhUBmRotLhl9//FNG6BCGR77i2g2IVw1PaQ4FXaHxIU
+ JOdA4MByWjuIxFDeyZQk=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197107>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197108>
 
-On Sat, May 5, 2012 at 1:26 PM, Antonio Ospite <ospite@studenti.unina.it> wrote:
-> I find the x/exec function in "git rebase -i" very useful, but it may
-> be tedious to edit the commit list to add something like "make test"
-> after each commit.
+Hi Rolf,
 
-FWIW I have had the need for this, I think it's a good idea.
 
-> P.S. I am not subscribed to the list, please CC me.
+On Sat, May 05, 2012 at 12:24:38PM +0800, Rolf Leggewie wrote:
+> After all is said and done, though, the bash-completion remains
+> inconsistent and thus broken.  It's great that your life is
+> currently more convenient but in the end you are relying on broken
+> behaviour.
 
-No need for this; this is a sane mailing list that doesn't munge
-Reply-To, so everybody has to 'reply to all'. To be sure you can add
-yourself in the CC list, but I think most clients would do the right
-thing regardless.
+Well, git's completion script is consistent with itself: whenever
+there is no matching subcommand, option, parameter for an option, or
+ref, it falls back to filename completion.  I wouldn't consider this
+behavior as broken.
 
-Cheers.
+> Affected commands:
+> git log
+> git diff
+> git whatchanged
+> git branch (why offer tags OR files here at all)
 
-[1] http://felipec.wordpress.com/2010/08/03/avoid-reply-to-munging-mail-as-mail-was-meant-to-be/
+While files and tags make no sense for 'git branch' itself, completing
+them can be helpful to construct the name of a new branch.  I did the
+following at dayjob just the other day:
 
--- 
-Felipe Contreras
+# there are route_calculation.c and .h files in that project, and
+# there were some nasty bugs in there
+$ git branch ro<TAB>
+# which gave me
+$ git branch route_calculation.
+# just deleted the '.' and completed the new branch name by hand
+$ git branch route_calculation_fixes
+
+
+Anyway, I see two ways to fix this if we want to be anal, but none of
+them is actually applicable:
+
+- When registering _git() as the completion function for the git
+  command, we specify some options to tell Bash to do filename
+  completion when we can't find any matches to the word to be
+  completed.  Recent Bash versions provide the 'compopt' builtin to
+  allow modifying completion options for the currently executed
+  completion.  We could do a 'compopt +o bashdefault +o default'
+  to disable the filename completion fallback wherever we deem it
+  inappropriate.
+
+  'compopt' was introduced in Bash 4.0, but unfortunately msysgit
+  still includes an older version, so this is a no go.
+
+- We don't specify the options to ask Bash to fall back to filename
+  completion when registering _git(). This will disable filename
+  completion for the whole git completion script, so we must roll our
+  own helper functions to do filename completion, which we would
+  invoke wherever filename completion is explicitly desired.
+
+  This should work on any Bash version, but would inherently include
+  some fork()+exec()s, adding significant delays especially on
+  msysgit.
+
+> Unaffected programs, i.e. working correctly:
+> git commit
+> [...]
+
+You haven't tried it hard enough ;)
+
+$ git commit --fixup=3De<TAB>
+editor.c       entry.c        environment.c  exec_cmd.c     exec_cmd.o
+editor.o       entry.o        environment.o  exec_cmd.h    =20
+
+although at that point only a commit is accepted.
+
+> Some consistency would be great.  In a perfect world bash-completion
+> ought to work on all possible completion targets but at the same
+> time it should exclude all that make no sense, too.  Neither of the
+> two seems to be currently the case.
+
+Yeah, in that perfect world 'git rm <TAB>', 'git bisect -- <TAB>', and
+'git log -- <TAB>' whould offer only tracked files, 'git (add|commit)
+<TAB>' only modified or untracked files, and 'git diff <TAB>' would
+read your mind to find out whether you want to diff a ref or a file,
+etc. etc.
+
+But you miss an important point here: users expect the completion to
+be pretty fast, because delays are quite noticeable and annoying while
+typing a command.  So there's a trade-off between correctness and
+usability.  Unfortunately, in the real world all that filtering costs
+a great deal, so git's completion script does that only if it can be
+done cheaply (e.g. 'git rebase --<TAB>' won't offer you '--abort' and
+'--continue' if you're not in the middle of an ongoing rebase).  And
+as pointed out above, something might be nonsense for a command, but
+still be useful for the user.
+
+
+Best,
+G=E1bor
