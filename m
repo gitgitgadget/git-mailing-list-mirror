@@ -1,87 +1,93 @@
-From: Andrew Sayers <andrew-git@pileofstuff.org>
-Subject: Re: git-scm.com refresh
-Date: Sat, 05 May 2012 10:14:45 +0100
-Message-ID: <4FA4EF85.2060104@pileofstuff.org>
-References: <CAP2yMaJy=1c3b4F72h6jL_454+0ydEQNXYiC6E-ZeQQgE0PcVA@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: how to determine version of binary
+Date: Sat, 5 May 2012 05:24:43 -0400
+Message-ID: <20120505092443.GB8172@sigill.intra.peff.net>
+References: <jo2jtd$m6c$1@dough.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git list <git@vger.kernel.org>
-To: Scott Chacon <schacon@gmail.com>
-X-From: git-owner@vger.kernel.org Sat May 05 11:15:40 2012
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Neal Kreitzinger <nkreitzinger@gmail.com>
+X-From: git-owner@vger.kernel.org Sat May 05 11:25:31 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SQb5W-0004oG-3H
-	for gcvg-git-2@plane.gmane.org; Sat, 05 May 2012 11:15:38 +0200
+	id 1SQbF4-00038k-G0
+	for gcvg-git-2@plane.gmane.org; Sat, 05 May 2012 11:25:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754108Ab2EEJPZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 5 May 2012 05:15:25 -0400
-Received: from mtaout02-winn.ispmail.ntl.com ([81.103.221.48]:31117 "EHLO
-	mtaout02-winn.ispmail.ntl.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752283Ab2EEJOu (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 5 May 2012 05:14:50 -0400
-Received: from aamtaout03-winn.ispmail.ntl.com ([81.103.221.35])
-          by mtaout02-winn.ispmail.ntl.com
-          (InterMail vM.7.08.04.00 201-2186-134-20080326) with ESMTP
-          id <20120505091447.FWWS28930.mtaout02-winn.ispmail.ntl.com@aamtaout03-winn.ispmail.ntl.com>;
-          Sat, 5 May 2012 10:14:47 +0100
-Received: from [192.168.0.2] (really [94.170.150.126])
-          by aamtaout03-winn.ispmail.ntl.com
-          (InterMail vG.3.00.04.00 201-2196-133-20080908) with ESMTP
-          id <20120505091447.VWDP13318.aamtaout03-winn.ispmail.ntl.com@[192.168.0.2]>;
-          Sat, 5 May 2012 10:14:47 +0100
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.28) Gecko/20120313 Thunderbird/3.1.20
-In-Reply-To: <CAP2yMaJy=1c3b4F72h6jL_454+0ydEQNXYiC6E-ZeQQgE0PcVA@mail.gmail.com>
-X-Cloudmark-Analysis: v=1.1 cv=R50lirqlHffDPPkwUlkuVa99MrvKdVWo//yz83qex8g= c=1 sm=0 a=yXtjXN6ItgYA:10 a=u4BGzq-dJbcA:10 a=IkcTkHD0fZMA:10 a=anyJmfQTAAAA:8 a=pQs5aej7AAAA:8 a=_ZrFaiNRv8H5CVQpXFoA:9 a=11tZuYlhhMmTRtz-yAcA:7 a=QEXdDO2ut3YA:10 a=HIp4U4vYru96kNrq:21 a=El2x7Xazz8ML0egN:21 a=HpAAvcLHHh0Zw7uRqdWCyQ==:117
+	id S1754137Ab2EEJYq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 5 May 2012 05:24:46 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:58524
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752283Ab2EEJYp (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 5 May 2012 05:24:45 -0400
+Received: (qmail 31347 invoked by uid 107); 5 May 2012 09:25:02 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Sat, 05 May 2012 05:25:02 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 05 May 2012 05:24:43 -0400
+Content-Disposition: inline
+In-Reply-To: <jo2jtd$m6c$1@dough.gmane.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197101>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197102>
 
-I had a poke round the site looking for trouble - here's what I found:
+On Sat, May 05, 2012 at 02:12:44AM -0500, Neal Kreitzinger wrote:
 
-I'm using Linux, but for some reason the front page offers me downloads
-for Mac.  When I click on "Mac GUIs", I am taken to a sensible URL for
-Macs[1] but the button at the top says "Only show GUIs for my own OS
-(Windows)".  I'm not sure how the detection works, but I have Javascript
-disabled and the following user agent string:
-Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/535.11 (KHTML, like Gecko)
-Chrome/17.0.963.56 Safari/535.11
-Automatically guessing the user's OS is a good way of reducing interface
-complexity, but for example the Firefox homepage[2] shows Windows, Linux
-and Mac OS buttons if it can't guess.  This probably also helps Google
-index their site, as GoogleBot can follow links to all the OS-specific
-download pages.
+> Scenario:  I detect a binary file that is 'dirty'.  I don't know how
+> it got there.  However, I know it came from a git repo.  So I
+> calculate the sha1 of the binary.  What is the git command to
+> determine which commit that binary version first appeared in?  And
+> the last commit that binary appeared in?
 
-The "about" section doesn't work in JS-disabled browsers - I always see
-the "branching and merging" page no matter what I click on.  Again, this
-means GoogleBot most likely won't index the other pages.
+There is no pre-made git commit. I would look at the output of "git log --raw
+--no-abbrev" in a pager and search for the sha1 in question. That will show you
+the commits that made it come and go. Note that there may be multiple instances
+in which the sha1 comes and goes (e.g., two parallel lines of development which
+both introduce or modify a sha1, or even linear development with reverting).
 
-Not a bug, but a little tip - while investigating the issue on the
-"about" page, I noticed that all the links had href="#".  You might want
-to consider using href="#some-unique-identifier" so when you click round
-the site with a JS-enabled browser and notice a "#" in the URL, you can
-identify which click handler(s) failed.
+You can script it like this:
 
-Probably another non-JS browser issue, although not one that will bother
-Google: the "book" section in the documentation page[3] has the first
-"book cover" block protruding way into the left column, with all its
-text mirrored.
+  git log --format=%H --no-abbrev --raw |
+  perl -lne '
+    BEGIN { $sha1 = shift }
+    if (/^[0-9a-f]{40}$/) {
+      $commit = $_;
+    }
+    elsif (/^:\d+ \d+ ([0-9a-f]{40}) ([0-9a-f]{40}) \S+\t(.*)/) {
+      if ($2 eq $sha1) {
+        # sha1 on "after" side; content probably came into existence
+        if ($1 eq $sha1) {
+          # unless it was that way before, in which case it was a mode change
+          # or rename. Ignore.
+        }
+        else {
+          print "$commit: $sha1 appears (as $3)";
+        }
+      }
+      elsif ($1 eq $sha1) {
+        # sha1 on "before" side; content went away
+        print "$commit: $sha1 went away (from $3)";
+      }
+    }
+  ' $sha1_of_interest
 
-Not a bug but a feature request: in the actual book pages, could you put
-the prev/next links at the top as well as the bottom?  If I read through
-the book, then come back a few weeks later looking for one of the pages,
-it's much quicker to click through links at the top without needing to
-scroll or move the mouse.
+though I wouldn't bother to do so unless I was going to do some analysis over
+many files.
 
-These bugs are relatively minor - the new site looks great overall.
+> Why:  we have people ftp'ing binaries around.  I want to see the
+> commit message and source change of that commit to see what the
+> binary version is.
 
-	- Andrew
+This won't necessarily show you the version they have; it will only show you
+the version that introduced that particular version of a file. A more general
+question is "given a set of files, which revision did they come from?".  For
+that, you would want to find the set of commits that contain sha1 A, then
+intersect them with the set of commits that contain sha1 B, and so forth. You
+can do that by scripting around "rev-list" and "ls-tree", but it's a little
+more complicated.
 
-[1] http://git-scm.com/download/gui/mac
-[2] http://www.mozilla.org/en-US/firefox/new/
-[3] http://git-scm.com/documentation
+-Peff
