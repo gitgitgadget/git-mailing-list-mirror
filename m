@@ -1,101 +1,75 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Subtree in Git
-Date: Fri, 04 May 2012 21:25:27 -0700
-Message-ID: <7v8vh78dag.fsf@alter.siamese.dyndns.org>
-References: <CAE1pOi2uT=wipyrOYCwy9QuXnXFV27F1gN3Ej-RaSr-fegQCfA@mail.gmail.com>
- <nngk410vrja.fsf@transit.us.cray.com> <4F9FA029.7040201@initfour.nl>
- <87fwbgbs0h.fsf@smith.obbligato.org>
+Subject: Re: recipe to use git for deployment
+Date: Fri, 04 May 2012 21:31:55 -0700
+Message-ID: <7v4nrv8czo.fsf@alter.siamese.dyndns.org>
+References: <jo283q$kna$1@dough.gmane.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Herman van Rink <rink@initfour.nl>, dag@cray.com,
-	Hilco Wijbenga <hilco.wijbenga@gmail.com>,
-	Git Users <git@vger.kernel.org>
-To: greened@obbligato.org
-X-From: git-owner@vger.kernel.org Sat May 05 06:25:37 2012
+Cc: git@vger.kernel.org
+To: Neal Kreitzinger <nkreitzinger@gmail.com>
+X-From: git-owner@vger.kernel.org Sat May 05 06:32:17 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SQWYq-0004Dl-Ez
-	for gcvg-git-2@plane.gmane.org; Sat, 05 May 2012 06:25:36 +0200
+	id 1SQWfH-0008Lo-CP
+	for gcvg-git-2@plane.gmane.org; Sat, 05 May 2012 06:32:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751139Ab2EEEZc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 5 May 2012 00:25:32 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:42523 "EHLO
+	id S1751264Ab2EEEb7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 5 May 2012 00:31:59 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:44349 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751123Ab2EEEZb (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 5 May 2012 00:25:31 -0400
+	id S1751123Ab2EEEb6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 5 May 2012 00:31:58 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6D87386FB;
-	Sat,  5 May 2012 00:25:30 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E3C6E87C5;
+	Sat,  5 May 2012 00:31:57 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=yRhMgk9MzFhuVEAukX48GsP4xJo=; b=nbCvo9
-	g0cyURGHoDMU8qqfvNo0j9aBJA33uswzyNDeqNDhFhnFykykQLo7XBb3hkSWUObx
-	zdTu0fvGotqrtg47hnXgNZC0OKC6pqP+vgyBz8gXvnJxrujNMu0qqZG9pSnpJEdf
-	71wPkjNvBILm+Ca3vaKgW6spYJ+PU+o4iJUkM=
+	:content-type; s=sasl; bh=Rml6z2tLhq7SvIL+hKCufzKKjfo=; b=JyRZz5
+	SWLPpNQry2ogCVNeiNBVj1rLEaeI/kTc7ptn12F4WWRRvhuOmaiQm56/VQswzCsc
+	KcC0VWp+St8M35L2TEY9LLaT0TBo4NMtx+IuWLyOTyJVS3hDJBRo66MAbTRQvyk3
+	F6+wN3VCejY2b3J5OIcSkxhdK2JlNE516Ix8E=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=f+JhPtyrxy6YCCqZGJYz6pIDl9JtFT51
-	LGN0fKHeygVmou64ACCDIvNHzzEx4sO4Mk0yZvAPUODKUitjHykzzpDyjhADZSis
-	jwg/JIcTj41LRR+bZMjQWJErlVxjO7hugO9Fhpi5ecVmfN8+n0r3qY3azXFVVpYx
-	rIE8OELxevs=
+	:content-type; q=dns; s=sasl; b=vFEqBRc8QLH50VtG4/s/OF5lsF8Cp57J
+	MltDECncuL1StC97V/F72J4+f4WRBr4OCgNQYTRRKsuJ+iqeH6jtBV4EYcskdKYj
+	ybrGd7fsqf/OeVd0uCC8gh9g+PBBFyeopgEKzDvHoWGmhtC6GGzbkZbMdmgj9Szq
+	9tW9IPZkE0c=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 639A386FA;
-	Sat,  5 May 2012 00:25:30 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DB5DF87C4;
+	Sat,  5 May 2012 00:31:57 -0400 (EDT)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id DCEE386F9; Sat,  5 May 2012
- 00:25:28 -0400 (EDT)
-In-Reply-To: <87fwbgbs0h.fsf@smith.obbligato.org> (greened@obbligato.org's
- message of "Thu, 03 May 2012 21:26:54 -0500")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7240787C3; Sat,  5 May 2012
+ 00:31:57 -0400 (EDT)
+In-Reply-To: <jo283q$kna$1@dough.gmane.org> (Neal Kreitzinger's message of
+ "Fri, 04 May 2012 22:51:21 -0500")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 5840C93C-966A-11E1-B01F-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 3FDA827E-966B-11E1-993E-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197091>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197092>
 
-greened@obbligato.org writes:
+Neal Kreitzinger <nkreitzinger@gmail.com> writes:
 
->> I basically did a: git subtree merge --prefix=contrib/subtree <my
->> git-subtree branch>
->>
->> The work in progress in on: https://github.com/helmo/git (the
->> subtree-updates branch)
->
-> This branch seems to have a bunch of commits from master or some other
-> branch:
+> I'm trying to cook up automated mass deployment using git as the main
+> ingredient.
 
-Isn't the confusing shape of the history a direct result of what Herman
-said he did above, i.e. use of "subtree merge"?  I thought that we agreed
-not to do any more subtree merges for further updates when we slurped the
-subtree history to contrib/ early in this cycle, so if that is the case,
-Herman needs to rebase his work so that the integration will not need any
-"subtree merge" into git.git, perhaps?
+I think the standard answer to this is "don't do it".
 
-I looked at various branches found with ls-remote in that repository but I
-couldn't quite tell which is what, with too many cross merges, among which
-there are unnecessary duplicated commits (e.g. 90275824 and b9a745f7 seems
-to be two equivalent commits) and questionable changes from the overall
-project's point of view.
+You could of course add hooks to hack around it, but fundamentally Git was
+designed to track source files (so the only sane behaviour for "checking
+out" is to keep the timestamp of the working tree file to whatever the
+underlying OS gives it when "checkout" happens, for example), so anything
+that your "deployment strategy" wants conflicts with what the usual source
+coutrol operation should do, you need to tweak around what Git does (the
+same thing can be said for CVS or SVN, by the way).
 
-For example, it renames git-subtree.txt to README.md at a4416ee; while I
-find the idea of departing from asciidoc somewhat attractive (perhaps this
-is only because I haven't been burned by markdown yet), if "git subtree"
-wants to live in the git.git repository, that change is a regression.
-Later the file is renamed back to git-subtree.txt (README.md is lost) at
-9ffdeb, a commit with a single-liner "fixing typo" log message adds the
-README.md file with full contents of git-subtree.txt again at d9ccd03b,
-and then later merge of the branch at 8861de28 finally decides to revert
-that to have a shorter README.md that the history originally had, or
-something.  In short, it is a mess.
-
-Not very impressed, but I have this suspition that the history I was
-looking at was not what was meant to be sent to me and an older
-incarnation of the project before Herman cleaned it up for public
-consumption, or something.
-
-Confused...
+Unless you do this with an understanding that you are merely using git "as
+a better rsync" and take responsiblity of everything else that git-the-scm
+does _not_ do for you, I suspect that you would be volunteering for a lot
+of pain.
