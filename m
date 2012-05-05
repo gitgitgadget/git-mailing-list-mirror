@@ -1,75 +1,95 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Neal Kreitzinger <nkreitzinger@gmail.com>
 Subject: Re: recipe to use git for deployment
-Date: Fri, 04 May 2012 21:31:55 -0700
-Message-ID: <7v4nrv8czo.fsf@alter.siamese.dyndns.org>
-References: <jo283q$kna$1@dough.gmane.org>
+Date: Fri, 04 May 2012 23:43:16 -0500
+Message-ID: <4FA4AFE4.6040701@gmail.com>
+References: <jo283q$kna$1@dough.gmane.org> <1336190286-sup-3813@nixos>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Neal Kreitzinger <nkreitzinger@gmail.com>
-X-From: git-owner@vger.kernel.org Sat May 05 06:32:17 2012
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git <git@vger.kernel.org>
+To: Marc Weber <marco-oweber@gmx.de>
+X-From: git-owner@vger.kernel.org Sat May 05 06:43:29 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SQWfH-0008Lo-CP
-	for gcvg-git-2@plane.gmane.org; Sat, 05 May 2012 06:32:15 +0200
+	id 1SQWq4-00078a-G9
+	for gcvg-git-2@plane.gmane.org; Sat, 05 May 2012 06:43:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751264Ab2EEEb7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 5 May 2012 00:31:59 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:44349 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751123Ab2EEEb6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 5 May 2012 00:31:58 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E3C6E87C5;
-	Sat,  5 May 2012 00:31:57 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Rml6z2tLhq7SvIL+hKCufzKKjfo=; b=JyRZz5
-	SWLPpNQry2ogCVNeiNBVj1rLEaeI/kTc7ptn12F4WWRRvhuOmaiQm56/VQswzCsc
-	KcC0VWp+St8M35L2TEY9LLaT0TBo4NMtx+IuWLyOTyJVS3hDJBRo66MAbTRQvyk3
-	F6+wN3VCejY2b3J5OIcSkxhdK2JlNE516Ix8E=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=vFEqBRc8QLH50VtG4/s/OF5lsF8Cp57J
-	MltDECncuL1StC97V/F72J4+f4WRBr4OCgNQYTRRKsuJ+iqeH6jtBV4EYcskdKYj
-	ybrGd7fsqf/OeVd0uCC8gh9g+PBBFyeopgEKzDvHoWGmhtC6GGzbkZbMdmgj9Szq
-	9tW9IPZkE0c=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DB5DF87C4;
-	Sat,  5 May 2012 00:31:57 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7240787C3; Sat,  5 May 2012
- 00:31:57 -0400 (EDT)
-In-Reply-To: <jo283q$kna$1@dough.gmane.org> (Neal Kreitzinger's message of
- "Fri, 04 May 2012 22:51:21 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 3FDA827E-966B-11E1-993E-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751178Ab2EEEnU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 5 May 2012 00:43:20 -0400
+Received: from mail-ob0-f174.google.com ([209.85.214.174]:43674 "EHLO
+	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751171Ab2EEEnT (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 5 May 2012 00:43:19 -0400
+Received: by obbtb18 with SMTP id tb18so4932404obb.19
+        for <git@vger.kernel.org>; Fri, 04 May 2012 21:43:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=SDClqJ417sMKWrfV4a6U2CJXe0b2EjcK+xwE2B5wBUA=;
+        b=hu0u5gh/QO79RfVgySqpzUpYKQMH0olwfXV0TPEHXnQEzIvlFyfhwf2vIDTC0Sp5P8
+         z1B3h0whue4u2DzrkNMnFM0OX88AtyQRyig4HSYBXFgiH9KzfOAFO+HKb8hkgJVG6VCR
+         /M/NY2BGKUyY0dsS6oorif168aUTPaVMl3wO6oLT+hJ+kRZYFZKgnWUPeSs/DhzCvFYy
+         WAjqLlAhfq3vSU9MlJhGgr4WJ5yiN95pMIlKRtoJnA9dosj/EdHhpWVfCYlREPGso9VJ
+         2CenTTZurhCplcE+6BEal2hZ5ybxm8ZZ0lFXs/P4MdOWxZEj2hm1Sj+Ju8irmkK8W4Jm
+         ptqQ==
+Received: by 10.182.38.1 with SMTP id c1mr4144306obk.18.1336192999128;
+        Fri, 04 May 2012 21:43:19 -0700 (PDT)
+Received: from [172.25.2.210] ([67.63.162.200])
+        by mx.google.com with ESMTPS id d9sm11264041obz.6.2012.05.04.21.43.17
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 04 May 2012 21:43:18 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:12.0) Gecko/20120428 Thunderbird/12.0.1
+In-Reply-To: <1336190286-sup-3813@nixos>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197092>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197093>
 
-Neal Kreitzinger <nkreitzinger@gmail.com> writes:
+On 5/4/2012 11:10 PM, Marc Weber wrote:
+> I always did "git pull" on the servers - but the history of my projects
+> is not that huge.. Thus I never cared.
+> Great: You can keep some server specific config settings and rebase
+> them -
+So I could rebase apache virtual host conf files with generic template 
+changes like symlink support, but keep the networking ip's.  Merge 
+conflicts would be bad.  I guess that would be cause to reset --hard to 
+a previous commit.
 
-> I'm trying to cook up automated mass deployment using git as the main
-> ingredient.
+and you can do a fast git status to check whether file contents
+> have been modified (eg determine whether you've been hacked ..)
+>
+With 'source is run' like html, css, etc. that would be a good way to 
+enforce no-hacking-allowed support agreements.
 
-I think the standard answer to this is "don't do it".
+> If you really care that much about history why not push a zip file using
+> git archive --format=zip and unpack that on the deployment server
+> instead?
+>
+That is what I'm currently doing.  By paying attention to tracked 
+executable bits I don't even have to fix permissions on deployment.
 
-You could of course add hooks to hack around it, but fundamentally Git was
-designed to track source files (so the only sane behaviour for "checking
-out" is to keep the timestamp of the working tree file to whatever the
-underlying OS gives it when "checkout" happens, for example), so anything
-that your "deployment strategy" wants conflicts with what the usual source
-coutrol operation should do, you need to tweak around what Git does (the
-same thing can be said for CVS or SVN, by the way).
+The scriptable patching of a git repo (scripted checkout of remote 
+tracking branch commits to worktree with inserted conversions and 
+validations -- an interactive cherry-pick so to speak) allows for 
+flexible conversions of varying patch levels.  Maybe git-sequencer will 
+do this when it comes out.
 
-Unless you do this with an understanding that you are merely using git "as
-a better rsync" and take responsiblity of everything else that git-the-scm
-does _not_ do for you, I suspect that you would be volunteering for a lot
-of pain.
+Also, I could have a deployment tracking repo on one of my servers that 
+remotes to all deployed servers and pulls to refresh my monitor view of 
+all deployed revisions in gitk.
+
+> For FTP access only this did a great job for small projects:
+> https://github.com/MarcWeber/git-ftp (->  git-ftp-minimal.sh)
+> It only copies changed files *and* checks whether they have been
+> modified on the server first (detecting work of others).
+> But that's probably not a good thing for automatic deployment.
+>
+I'll take a look to see what I can steal, uh I mean reuse.  Thanks!
+
+v/r,
+neal
