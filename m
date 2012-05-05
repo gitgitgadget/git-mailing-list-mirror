@@ -1,93 +1,81 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: how to determine version of binary
-Date: Sat, 5 May 2012 05:24:43 -0400
-Message-ID: <20120505092443.GB8172@sigill.intra.peff.net>
-References: <jo2jtd$m6c$1@dough.gmane.org>
+From: Florian Achleitner <florian.achleitner2.6.31@gmail.com>
+Subject: [PATCH v2] Update Documentation/git-config to reflect --local option.
+Date: Sat, 05 May 2012 12:03:52 +0200
+Message-ID: <4557278.eakEfj5iWL@flomedio>
+References: <1754870.q6d2rgDqBT@flobuntu> <7vr4v0deyg.fsf@alter.siamese.dyndns.org> <20120504032400.GB2589@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Neal Kreitzinger <nkreitzinger@gmail.com>
-X-From: git-owner@vger.kernel.org Sat May 05 11:25:31 2012
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7Bit
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	davidbarr@google.com, Jeff King <peff@peff.net>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Sat May 05 12:04:19 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SQbF4-00038k-G0
-	for gcvg-git-2@plane.gmane.org; Sat, 05 May 2012 11:25:30 +0200
+	id 1SQbqc-0004cB-NS
+	for gcvg-git-2@plane.gmane.org; Sat, 05 May 2012 12:04:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754137Ab2EEJYq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 5 May 2012 05:24:46 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:58524
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752283Ab2EEJYp (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 5 May 2012 05:24:45 -0400
-Received: (qmail 31347 invoked by uid 107); 5 May 2012 09:25:02 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Sat, 05 May 2012 05:25:02 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 05 May 2012 05:24:43 -0400
-Content-Disposition: inline
-In-Reply-To: <jo2jtd$m6c$1@dough.gmane.org>
+	id S1752641Ab2EEKEN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 5 May 2012 06:04:13 -0400
+Received: from mailrelay.tu-graz.ac.at ([129.27.2.202]:12837 "EHLO
+	mailrelay.tugraz.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752597Ab2EEKEL (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 5 May 2012 06:04:11 -0400
+Received: from flomedio.localnet (cm56-227-93.liwest.at [86.56.227.93])
+	(authenticated bits=0)
+	by mailrelay1.tugraz.at (8.14.4/8.14.4) with ESMTP id q45A3sMG005938
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Sat, 5 May 2012 12:03:54 +0200 (CEST)
+User-Agent: KMail/4.8.2 (Linux/3.2.0-24-generic; KDE/4.8.2; x86_64; ; )
+In-Reply-To: <20120504032400.GB2589@burratino>
+X-TUG-Backscatter-control: qyH/vN2riZ/masrHmZoJqQ
+X-Spam-Scanner: SpamAssassin 3.003000 
+X-Spam-Score-relay: 0.6
+X-Scanned-By: MIMEDefang 2.70 on 129.27.10.18
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197102>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197103>
 
-On Sat, May 05, 2012 at 02:12:44AM -0500, Neal Kreitzinger wrote:
+Describe config file selection in git-config.
+While the usage message of git-config shows --local,
+the documentation page did not contain anything about that.
 
-> Scenario:  I detect a binary file that is 'dirty'.  I don't know how
-> it got there.  However, I know it came from a git repo.  So I
-> calculate the sha1 of the binary.  What is the git command to
-> determine which commit that binary version first appeared in?  And
-> the last commit that binary appeared in?
+Signed-off-by: Florian Achleitner <florian.achleitner.2.6.31@gmail.com>
+---
+Updated with the formulation suggested by Junio.
 
-There is no pre-made git commit. I would look at the output of "git log --raw
---no-abbrev" in a pager and search for the sha1 in question. That will show you
-the commits that made it come and go. Note that there may be multiple instances
-in which the sha1 comes and goes (e.g., two parallel lines of development which
-both introduce or modify a sha1, or even linear development with reverting).
+ Documentation/git-config.txt |   14 +++++++++-----
+ 1 file changed, 9 insertions(+), 5 deletions(-)
 
-You can script it like this:
-
-  git log --format=%H --no-abbrev --raw |
-  perl -lne '
-    BEGIN { $sha1 = shift }
-    if (/^[0-9a-f]{40}$/) {
-      $commit = $_;
-    }
-    elsif (/^:\d+ \d+ ([0-9a-f]{40}) ([0-9a-f]{40}) \S+\t(.*)/) {
-      if ($2 eq $sha1) {
-        # sha1 on "after" side; content probably came into existence
-        if ($1 eq $sha1) {
-          # unless it was that way before, in which case it was a mode change
-          # or rename. Ignore.
-        }
-        else {
-          print "$commit: $sha1 appears (as $3)";
-        }
-      }
-      elsif ($1 eq $sha1) {
-        # sha1 on "before" side; content went away
-        print "$commit: $sha1 went away (from $3)";
-      }
-    }
-  ' $sha1_of_interest
-
-though I wouldn't bother to do so unless I was going to do some analysis over
-many files.
-
-> Why:  we have people ftp'ing binaries around.  I want to see the
-> commit message and source change of that commit to see what the
-> binary version is.
-
-This won't necessarily show you the version they have; it will only show you
-the version that introduced that particular version of a file. A more general
-question is "given a set of files, which revision did they come from?".  For
-that, you would want to find the set of commits that contain sha1 A, then
-intersect them with the set of commits that contain sha1 B, and so forth. You
-can do that by scripting around "rev-list" and "ls-tree", but it's a little
-more complicated.
-
--Peff
+diff --git a/Documentation/git-config.txt b/Documentation/git-config.txt
+index 81b0398..3f5d216 100644
+--- a/Documentation/git-config.txt
++++ b/Documentation/git-config.txt
+@@ -44,11 +44,15 @@ a "true" or "false" string for bool), or '--path', which does some
+ path expansion (see '--path' below).  If no type specifier is passed, no
+ checks or transformations are performed on the value.
+ 
+-The file-option can be one of '--system', '--global' or '--file'
+-which specify where the values will be read from or written to.
+-The default is to assume the config file of the current repository,
+-.git/config unless defined otherwise with GIT_DIR and GIT_CONFIG
+-(see <<FILES>>).
++When reading, the values are read from the system, global and
++repository local configuration files by default, and options
++'--system', '--global', '--local' and '--file <filename>' can be
++used to tell the command to read from only that location (see <<FILES>>).
++
++When writing, the new value is written to the repository local
++configuration file by default, and options '--system', '--global',
++'--file <filename>' can be used to tell the command to write to
++that location (you can say '--local' but that is the default).
+ 
+ This command will fail (with exit code ret) if:
+ 
+-- 
+1.7.9.5
