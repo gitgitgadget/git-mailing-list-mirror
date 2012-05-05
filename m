@@ -1,137 +1,122 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH] fetch/push: allow refs/*:refs/*
-Date: Sat, 05 May 2012 20:22:52 +0200
-Message-ID: <4FA56FFC.9080201@alum.mit.edu>
-References: <7vsjfj7des.fsf@alter.siamese.dyndns.org> <7vwr4r8tpm.fsf@alter.siamese.dyndns.org> <4FA4C2CC.7080205@alum.mit.edu>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: Jonathan gives feedback --> flamewars inevitable? (Re: [PATCH v3]
+ completion: add new _GIT_complete helper)
+Date: Sat, 5 May 2012 20:23:33 +0200
+Message-ID: <CAMP44s1SLb6CXMKxRDFUbxkg56dU3=ObZPZh7XxQC3vovNnvdw@mail.gmail.com>
+References: <1336231400-6878-1-git-send-email-felipe.contreras@gmail.com>
+	<20120505155423.GA14684@burratino>
+	<CAMP44s1dhAjKt3mxVmg2+0qp-QTyjYb1knhxf+m177Cg2ZBC1Q@mail.gmail.com>
+	<20120505164736.GC14684@burratino>
+	<CAMP44s2NRMxuvQXk4RyqFYR=oQw_vrJhmbdwtXsrg=eHhGBS2w@mail.gmail.com>
+	<20120505173327.GE14684@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat May 05 20:23:03 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org,
+	=?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder@ira.uka.de>,
+	Junio C Hamano <gitster@pobox.com>,
+	Thomas Rast <trast@student.ethz.ch>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Sat May 05 20:23:41 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SQjdF-0001aC-4z
-	for gcvg-git-2@plane.gmane.org; Sat, 05 May 2012 20:23:01 +0200
+	id 1SQjdr-00022v-Nh
+	for gcvg-git-2@plane.gmane.org; Sat, 05 May 2012 20:23:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757607Ab2EESW4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 5 May 2012 14:22:56 -0400
-Received: from ALUM-MAILSEC-SCANNER-4.MIT.EDU ([18.7.68.15]:45603 "EHLO
-	alum-mailsec-scanner-4.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1757504Ab2EESWz (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 5 May 2012 14:22:55 -0400
-X-AuditID: 1207440f-b7fe16d000000920-76-4fa56fff6d61
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-4.mit.edu (Symantec Messaging Gateway) with SMTP id 2F.40.02336.FFF65AF4; Sat,  5 May 2012 14:22:55 -0400 (EDT)
-Received: from [192.168.69.140] (p4FC0D13D.dip.t-dialin.net [79.192.209.61])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id q45IMrbs025313
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Sat, 5 May 2012 14:22:54 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:11.0) Gecko/20120410 Thunderbird/11.0.1
-In-Reply-To: <4FA4C2CC.7080205@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFupnleLIzCtJLcpLzFFi42IRYndR1P2fv9Tf4MdBLouuK91MFg29V5gd
-	mDwuXlL2+LxJLoApitsmKbGkLDgzPU/fLoE7o2XWD8aCWxIVF+7eY29gnCrSxcjJISFgInH6
-	+1tGCFtM4sK99WxdjFwcQgKXGSW+XNvOCOGcZpLoOfocKMPBwSugLXHwsDNIA4uAqsSCCdPY
-	QWw2AV2JRT3NTCC2qECYRP/tLWA2r4CgxMmZT1hAbBEBNYmJbYdYQMYwC4hL9P8DCwsD3bDk
-	2x2wMUIC9RK7G5eDxTkFdCTevNjBBlFuLfFtdxFImFlAXmL72znMExgFZiFZMAuhahaSqgWM
-	zKsY5RJzSnN1cxMzc4pTk3WLkxPz8lKLdE30cjNL9FJTSjcxQgKUfwdj13qZQ4wCHIxKPLwZ
-	vEv8hVgTy4orcw8xSnIwKYnyZuUt9RfiS8pPqcxILM6ILyrNSS0+xCjBwawkwtvtCJTjTUms
-	rEotyodJSXOwKInzqi9R9xMSSE8sSc1OTS1ILYLJynBwKEnwJgIjUUiwKDU9tSItM6cEIc3E
-	wQkynEtKpDg1LyW1KLG0JCMeFKPxxcAoBUnxAO0VBWnnLS5IzAWKQrSeYtTlmL1k61VGIZa8
-	/LxUKXFeT5AiAZCijNI8uBWwdPSKURzoY2FeK5AqHmAqg5v0CmgJE9ASaYNFIEtKEhFSUg2M
-	Yq6tKeLRknLXYo9tXCZV8fDd7xeXA4WcXkvHmy23Xvj6zJKpkjyBxut41D+v79jz89x1JXm2
-	zy1cbgsnzT0izSKdFL9jhYTdhaDvd7MOmz98trrsk5j3wUNstw79c+PQv5X1+2zD 
+	id S1757687Ab2EESXf convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 5 May 2012 14:23:35 -0400
+Received: from mail-wi0-f172.google.com ([209.85.212.172]:35425 "EHLO
+	mail-wi0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757463Ab2EESXf convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 5 May 2012 14:23:35 -0400
+Received: by wibhj6 with SMTP id hj6so2276214wib.1
+        for <git@vger.kernel.org>; Sat, 05 May 2012 11:23:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=T8uXyZJI2+G6NVPLpO6GOEEQVID2zneKZwLurNZtcW4=;
+        b=w5WlFZnCPr8AZzMkrScJQNa3rxi1vU3TBnTFtUVxoeXSf/O5xntAKM+S3SqDOUEksx
+         Ca3nCro/lqak/CSBGLSQ7y1CFHjrJliK9oAi6/y5L6YxdVECKAZroCXg8Ti9xJ4DAR32
+         SuBj6VICy2sCmytirEc9UZoyV/hZzx62gCH14zSgY3gmVrX9MgAZLn2/W++cuhxzTQx5
+         JW8pBa0E2mbvP2DKvCCVRtOrzGhlF6LUgJiwtqQjiXukj5n0Zr7kALwsSDppSMGqeFPB
+         lr5mTkVo9+a1o/PXw/BTaFjWyKROM+Lx2KjvPc+VAYHXx6Ln05Jvy+o4QR85bxnnj8k4
+         TeJg==
+Received: by 10.180.24.7 with SMTP id q7mr22108289wif.11.1336242213852; Sat,
+ 05 May 2012 11:23:33 -0700 (PDT)
+Received: by 10.216.124.197 with HTTP; Sat, 5 May 2012 11:23:33 -0700 (PDT)
+In-Reply-To: <20120505173327.GE14684@burratino>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197131>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197132>
 
-On 05/05/2012 08:03 AM, Michael Haggerty wrote:
-> On 05/05/2012 12:30 AM, Junio C Hamano wrote:
->> There are a handful of places where we call check_refname_format() on a
->> substring after "refs/" of a refname we are going to use, and filter
->> out a
->> valid match with "refs/stash" with such a pathspec. Not sending a stash
->> may arguably be a feature (as stash is inherently a local workflow
->> element), but the code in the transport layer is oblivious to this
->> filtering performed by the lower layer of the code, and complains that
->> the
->> other side did not send all the objects that needs to complete refs/stash
->> at the end, even though the code will not write refs/stash out anyway,
->> and
->> making the whole command fail.
->>
->> This is an attempt to "fix" it by using check_refname_format() on the
->> whole "refs/....." string and allowing refs/stash to be also copied.
->>
->> Signed-off-by: Junio C Hamano<gitster@pobox.com>
->> ---
->>
->> * With this patch:
->>
->> $ git checkout HEAD^0 ;# make sure we are on detached HEAD
->> $ git fetch $somewhere +refs/*:refs/*
->>
->> and
->>
->> victim$ git config receive.denyCurrentBranch warn
->> master$ git push victim +refs/*:refs/*
->>
->> should work.
->>
->> builtin/fetch-pack.c | 2 +-
->> builtin/receive-pack.c | 2 +-
->> remote.c | 2 +-
->> t/t5516-fetch-push.sh | 30 ++++++++++++++++++++++++++++++
->> 4 files changed, 33 insertions(+), 3 deletions(-)
->>
->> diff --git a/builtin/fetch-pack.c b/builtin/fetch-pack.c
->> index 6207ecd..a3e3fa3 100644
->> --- a/builtin/fetch-pack.c
->> +++ b/builtin/fetch-pack.c
->> @@ -546,7 +546,7 @@ static void filter_refs(struct ref **refs, int
->> nr_match, char **match)
->> for (ref = *refs; ref; ref = next) {
->> next = ref->next;
->> if (!memcmp(ref->name, "refs/", 5)&&
->> - check_refname_format(ref->name + 5, 0))
->> + check_refname_format(ref->name, 0))
+On Sat, May 5, 2012 at 7:33 PM, Jonathan Nieder <jrnieder@gmail.com> wr=
+ote:
+> Felipe Contreras wrote:
 >
-> The patch looks fine to me.
+>> And I'd like to think that when you filibuster a discussion there's =
+a
+>> good reason for it.
 >
-> This combination "!memcmp(ref->name, "refs/", 5) &&
-> check_refname_format(ref->name, 0)" is the reason that I suggested
-> adding a REFNAME_FULL option [1], in which case it could be written
-> "check_refname_format(ref->name, REFNAME_FULL)". However, now I think
-> that the options should be constructed a little differently:
->
-> flags==0: Require refname to start with "refs/"
->
-> flags==REFNAME_ALLOW_SPECIAL: Also accept single-level ALL_CAPS refnames.
->
-> flags==REFNAME_ALLOW_PARTIAL: Don't check the namespace or require '/').
-> This could be used for checking partial names like "master" as shorthand
-> for "refs/master".
->
-> Does this sound reasonable to you?
+> Kind other people on the list, please enlighten me. =C2=A0What did I =
+say to
+> trigger this crap?
 
-Oops; I just realized that this particular example doesn't check "starts 
-with "refs/" and valid refname" as expected.  In fact it checks "starts 
-with "refs/" and INVALID refname".  The proposed REFNAME_FULL option 
-would of course be equivalent to the former.  (Why the latter is needed 
-here is something that needs a larger investment of time to figure out.)
+You said "Because our completion scripts are already using this
+convention, which happens to come from bash-completion's guidelines
+and here are the reasons behind those", so their guidelines are not
+essential, only the reasons behind the guidelines, but:
 
-The other examples that you patched do the expected combination of checks.
+http://article.gmane.org/gmane.comp.version-control.git/195685
+http://article.gmane.org/gmane.comp.version-control.git/195689
+http://article.gmane.org/gmane.comp.version-control.git/195691
+http://article.gmane.org/gmane.comp.shells.bash.completion.devel/3877
 
-Michael
+You could have skipped this, apparently it was not relevant for the
+discussion, it's not feedback for the patch, and the abrasiveness
+unnecessary.
 
--- 
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
+http://article.gmane.org/gmane.comp.version-control.git/195719
+http://article.gmane.org/gmane.comp.version-control.git/195723
+http://article.gmane.org/gmane.comp.version-control.git/195737
+http://article.gmane.org/gmane.comp.version-control.git/195742
+
+And more irrelevant bash-completion stuff, and then you even get angry
+when I suggest those guidelines were not there, but isn't supposed to
+be irrelevant?
+
+http://article.gmane.org/gmane.comp.version-control.git/195744
+
+And then you finally assume that because I say the guidelines were not
+there, I must not like namespace conventions. I don't see how that
+helps in any way.
+
+So the discussion about whether bash-completion actually had public
+API guidelines or not took basically the whole thread, and barely
+anything else got discussed. And now you say whether or not they had
+this guidelines is not relevant.
+
+If you had said "You know, I think they have this guideline, but it's
+not really relevant, what is relevant is X" right when the topic of
+bash-completion guidelines popped up, this thread would have looked
+much different.
+
+In addition to that you are saying that I shouldn't have took all
+those mails as some kind of impediment from you, just feedback, even
+though you say: "you refuse to put two and two together", or "OK, you
+win", or "it isn't my responsibility to waste time arguing with you"
+because I counter-argue your feedback.
+
+I honestly don't know what to think. I guess I will think three times
+before replying to your feedback... hopefully you won't take offense
+in my silence as well =3D/
+
+Cheers.
+
+--=20
+=46elipe Contreras
