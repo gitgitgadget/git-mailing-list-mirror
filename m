@@ -1,106 +1,99 @@
-From: Scott Chacon <schacon@gmail.com>
-Subject: Re: git-scm.com refresh
-Date: Sat, 5 May 2012 15:38:31 -0700
-Message-ID: <CAP2yMaJsDysqwwUga+fyWhUV-r78FoK7psY7howNBOCnsKLhvA@mail.gmail.com>
-References: <CAP2yMaJy=1c3b4F72h6jL_454+0ydEQNXYiC6E-ZeQQgE0PcVA@mail.gmail.com>
- <7vd36j8lc3.fsf@alter.siamese.dyndns.org>
+From: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
+Subject: Re: [PATCH] completion: simplify __git_complete_revlist_file
+Date: Sun, 6 May 2012 00:40:14 +0200
+Message-ID: <20120505224014.GH2164@goldbirke>
+References: <1335897776-3726-1-git-send-email-felipe.contreras@gmail.com>
+	<7vfwbj79od.fsf@alter.siamese.dyndns.org>
+	<CAMP44s0z5ghcDQOeL1TrJJ7nw4=tN5MhACqcmf4EjxsNNWiQnA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git list <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun May 06 00:39:05 2012
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Sun May 06 00:40:25 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SQnd2-0000dg-2K
-	for gcvg-git-2@plane.gmane.org; Sun, 06 May 2012 00:39:04 +0200
+	id 1SQneK-0001TN-UH
+	for gcvg-git-2@plane.gmane.org; Sun, 06 May 2012 00:40:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751895Ab2EEWi6 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 5 May 2012 18:38:58 -0400
-Received: from mail-qa0-f49.google.com ([209.85.216.49]:62438 "EHLO
-	mail-qa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751744Ab2EEWiw convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 5 May 2012 18:38:52 -0400
-Received: by qabj40 with SMTP id j40so2718882qab.1
-        for <git@vger.kernel.org>; Sat, 05 May 2012 15:38:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=9a/SKGJocLz1HYFyfteQ6pQHxkA3aGPmuXnBssyOjvs=;
-        b=DJAoYyuBnXKtlNLVpU66wEkNiQRbXG7yVayNVW14R0TdfgpsWHvdvTiEQMFKv/xXy+
-         YbRNTmaIQUBGXtCLBz3fdd0qkKEOetUUd+B5+n+Z0kq1smhZ/FvN54qN+LrOWewq0mJj
-         pfmPYOKdOLd92HdwD7t10zojQ02iOlht5TZxAcsu2jfpH2CloyvaUDH/q6EuqWcHeg0N
-         L+008Q37j2MZdwoR9IouSD37LWgTzgv9/qEuN3vVfogKsBpUBIwURBvGqUvzDg32CgKC
-         /ktXZakIvTYwIHTYMzvtkTkdpM1y+gWGCNEIsFzGjTnIeYpdL4D8M5r5xASJXktV4NTV
-         +/mg==
-Received: by 10.224.117.6 with SMTP id o6mr11146624qaq.18.1336257531573; Sat,
- 05 May 2012 15:38:51 -0700 (PDT)
-Received: by 10.229.251.142 with HTTP; Sat, 5 May 2012 15:38:31 -0700 (PDT)
-In-Reply-To: <7vd36j8lc3.fsf@alter.siamese.dyndns.org>
+	id S1751922Ab2EEWkV convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 5 May 2012 18:40:21 -0400
+Received: from moutng.kundenserver.de ([212.227.126.186]:60053 "EHLO
+	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751806Ab2EEWkU (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 5 May 2012 18:40:20 -0400
+Received: from localhost6.localdomain6 (p5B130A62.dip0.t-ipconnect.de [91.19.10.98])
+	by mrelayeu.kundenserver.de (node=mreu1) with ESMTP (Nemesis)
+	id 0Lla4p-1RqdgU2MTv-00bKV3; Sun, 06 May 2012 00:40:17 +0200
+Content-Disposition: inline
+In-Reply-To: <CAMP44s0z5ghcDQOeL1TrJJ7nw4=tN5MhACqcmf4EjxsNNWiQnA@mail.gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Provags-ID: V02:K0:QjjtlEXLfAn5ZSdn2FVJi8KFJStGaK7rtMeHMQm0jdB
+ UZl9PiUGFVgg0NihD7tOld9/Sa8LPcIvHfC6Q8L5r2znKErtr3
+ KlTs/BmYeTTfBKKNdMxtT1wlVG1s3azFQhArQFvAmSc1sXhX3W
+ U4YtxKKbHGIQKRunjtLhlzb7LeCQ5ZpKy4I1tjsYtFz87AsK+X
+ 54iUOstOSEjHGgFAq3uCyMpXHyXYcmvhTwIUt4HZwLhSQfJByF
+ A2x9jd3uqFJm+e3zR9QMvVrnykYLZ/8aCzRKh+pPuNAvzew95k
+ AgCMQW0dXhate2AUfhOVKwyPwT3AKXXnZFhYOi4K84Dc/RCkHO
+ xbjo2sk1oOPZFBvgIPrA=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197139>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197140>
 
-Hey,
+Hi,
 
-On Fri, May 4, 2012 at 6:31 PM, Junio C Hamano <gitster@pobox.com> wrot=
-e:
->
-> Thanks. =C2=A0The Reference Manual area lists "apply" in a very funny=
- place.
-> It should go together with "diff", whichever section you decide to pu=
-t
-> "diff" in. =C2=A0As "diff" is listed in "Basic Snapshotting", and it =
-will not
-> be able to achieve that without being able to apply its output back t=
-o the
-> working tree or to the index, I would suggest moving "apply" to the
-> section as well.
 
-I have to disagree.  You are thinking of 'apply' from an internals
-perspective I have to assume, because I use 'diff' every single day
-for all sorts of stuff ("what is modified and unstaged?", "what is
-modified and staged?", "what is different between these two branches?"
-etc) where I can't think of a single time I've ever used 'apply'.  In
-fact, even the times when I have needed to apply a patch generated
-from 'diff' I used 'patch -p1' because I know it better.  I, and most
-people I would guess, almost never use 'diff' to generate patch files,
-we use it to see what has changed before committing or things like
-that - in general usage, it's more like an advanced 'status' honestly.
+On Wed, May 02, 2012 at 01:46:32AM +0200, Felipe Contreras wrote:
+> On Wed, May 2, 2012 at 1:39 AM, Junio C Hamano <gitster@pobox.com> wr=
+ote:
+> > Felipe Contreras <felipe.contreras@gmail.com> writes:
+> >
+> >> Use new __gitcomp_nl; this is the last place that uses COMPREPLY a=
+nd
+> >> compgen directly.
 
-> I am fairly happy about the look of the new site except for a few thi=
-ngs
-> ;-).
->
-> It seems that you are trying to advocate "staging area" as some sort =
-of
-> official term. =C2=A0I think "it is like a staging area" is a good ph=
-rase to
-> use when answering "what is the index?", but I think repeating it mil=
-lion
-> times without telling the casual readers what its official name is is
-> counterproductive. =C2=A0Don't do that. =C2=A0It will confuse these s=
-ame people when
-> they start reading manuals.
+I didn't dare to touch that code back then while doing the
+__gitcomp_nl() changes; that sed command looked way too scary ;) But
+all it does is to process the output of 'git ls-tree' and removes the
+cruft and appends a space to filenames and a '/' to directories
+(without a trailing space).  So invoking __gitcomp_nl() with an empty
+suffix parameter is OK, as it doesn't change the current behavior.
 
-I'm not really trying to advocate it as much as using terminology that
-is already quite popular.  It's true that it's not what is used in the
-man pages, but neither is 'index' used consistently - there is 'cache'
-too, in addition to 'index' having two meanings - packfile and cache.
-I'm open to making things clearer, but I just don't think that
-changing the terminology to something more technical and vague would
-be overall less confusing to people.
+> >> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+> >> ---
+> >> =A0contrib/completion/git-completion.bash | =A0 =A06 ++----
+> >> =A01 file changed, 2 insertions(+), 4 deletions(-)
+> >>
+> >> diff --git a/contrib/completion/git-completion.bash b/contrib/comp=
+letion/git-completion.bash
+> >> index 31f714d..d877a23 100755
+> >
+> > This seems to be based on 'maint', which has 31f714d, but I see two=
+ hits
+> > with "git grep 'COMPREPLY.*compgen' contrib/completion" there, so I=
+ am not
+> > sure if that is where you wanted it to apply.
+>=20
+> The last place that is not the __gitcomp* functions, of course.
+>=20
+> > I see this was not addressed to me (neither was the other zsh one),=
+ so I
+> > take it that the patch is still for discussion, at least for the pu=
+rpose
+> > of today's integration round. =A0Ping me when it is ready for eithe=
+r 'pu' or
+> > 'next'.
+>=20
+> I'd say at least one person should say LGTM before asking you to inte=
+grate it.
 
-That said, in most places I use phrases like 'Git has something called
-the "staging area" or "index"' letting people know that there are
-multiple phrases for it and what it's technical term tends to be.  So
-your "without telling the casual readers what its official name is" is
-generally not true - I do try to do that too.
+Yeah, it's good to go.
 
-Scott
+
+Best,
+G=E1bor
