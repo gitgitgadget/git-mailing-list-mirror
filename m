@@ -1,100 +1,69 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [1.8.0] use 'stage' term consistently
-Date: Sat, 5 May 2012 19:30:41 +0200
-Message-ID: <CAMP44s1isa2a=a-QLGaE9ThW1iUBj0je2NUi8FVxqA=OELLmyA@mail.gmail.com>
-References: <CAMP44s1qqpTxRvjEH32MNqzUeNhgZ1gB+fu=cgvxnSbMB6oBGA@mail.gmail.com>
-	<703DFCB358F74F9D87F12C22B782EA61@PhilipOakley>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Jonathan gives feedback --> flamewars inevitable? (Re: [PATCH v3]
+ completion: add new _GIT_complete helper)
+Date: Sat, 5 May 2012 12:33:27 -0500
+Message-ID: <20120505173327.GE14684@burratino>
+References: <1336231400-6878-1-git-send-email-felipe.contreras@gmail.com>
+ <20120505155423.GA14684@burratino>
+ <CAMP44s1dhAjKt3mxVmg2+0qp-QTyjYb1knhxf+m177Cg2ZBC1Q@mail.gmail.com>
+ <20120505164736.GC14684@burratino>
+ <CAMP44s2NRMxuvQXk4RyqFYR=oQw_vrJhmbdwtXsrg=eHhGBS2w@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Jeff King <peff@peff.net>, Scott Chacon <schacon@gmail.com>,
-	Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>,
-	=?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>,
-	Matthieu Moy <matthieu.moy@imag.fr>,
-	Piotr Krukowiecki <piotr.krukowiecki.news@gmail.com>
-To: Philip Oakley <philipoakley@iee.org>
-X-From: git-owner@vger.kernel.org Sat May 05 19:30:48 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org,
+	SZEDER =?utf-8?B?R8OhYm9y?= <szeder@ira.uka.de>,
+	Junio C Hamano <gitster@pobox.com>,
+	Thomas Rast <trast@student.ethz.ch>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Sat May 05 19:33:42 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SQioh-0007A2-O0
-	for gcvg-git-2@plane.gmane.org; Sat, 05 May 2012 19:30:48 +0200
+	id 1SQirV-0000h9-49
+	for gcvg-git-2@plane.gmane.org; Sat, 05 May 2012 19:33:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757394Ab2EERan (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 5 May 2012 13:30:43 -0400
-Received: from mail-wg0-f44.google.com ([74.125.82.44]:53842 "EHLO
-	mail-wg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757302Ab2EERam (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 5 May 2012 13:30:42 -0400
-Received: by wgbdr13 with SMTP id dr13so3646441wgb.1
-        for <git@vger.kernel.org>; Sat, 05 May 2012 10:30:41 -0700 (PDT)
+	id S1757416Ab2EERde (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 5 May 2012 13:33:34 -0400
+Received: from mail-gh0-f174.google.com ([209.85.160.174]:52736 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1757099Ab2EERdd (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 5 May 2012 13:33:33 -0400
+Received: by ghrr11 with SMTP id r11so3508701ghr.19
+        for <git@vger.kernel.org>; Sat, 05 May 2012 10:33:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=QOEum4VZewPYSAthjlDjEiQfxpxv8HSxQBjq0/cXvEo=;
-        b=lFpOpgMbGtp/JOaw10oehZW+iCYgetCjgAcKgY5uPXvZgVlNBih6rXRRC+DnU6d+9j
-         PPIfee/+ALgXyCqSXmX5Uz9d0bacHt5uKSak/4H4hkUNmCLndYYWkf8wxicdOKGlujAm
-         K1aA4NObOBEgX1tl/ey8JT1w9J2s2gqTTL/H4wlh9GXEop4XsQDmIvz3sw0hipvPN1Y5
-         zclFftQB/fROIbJgj08QrzDgKJ8orH0M2qZLnLJUXoDWF0fAXJkfzfSmOk9hAm9sBACv
-         uVPUrSvRZcp0yD60/u8bC5w7WMncVfXdPJVoSQWYNTHYeJ01NVWggiqPkQtUt39fMonl
-         01rg==
-Received: by 10.180.107.104 with SMTP id hb8mr22290438wib.8.1336239041463;
- Sat, 05 May 2012 10:30:41 -0700 (PDT)
-Received: by 10.216.124.197 with HTTP; Sat, 5 May 2012 10:30:41 -0700 (PDT)
-In-Reply-To: <703DFCB358F74F9D87F12C22B782EA61@PhilipOakley>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=CDZvdlofzESstL0urCKT3o3IKUWPM+xx8f5MnMpBKEE=;
+        b=PbWAQBxd8556NQ6sZIDbMnvH43Z2jfwrsd/+HjDCSRtCK67h+3GNMCQ9q8FeNT6tPC
+         cmJVrFG64LGvkM4v+859+xOyhq9dSmCIN567ueRqvYn9Es9cJqSm8hFSubEafnE2nd82
+         zz+SnfJiIkJt5PIg3id4IAdPh8HtkBy78+M1sj/RdoFRlCf/Fs3KubVh4IR7rzpNWX+R
+         utHen7DGky1xC1Qwy32tDnNzOnXeRce/DWh0I/5sQ5BzoifHsBuuu1pOeS3m7tqv7EuS
+         W6pw6KrtZTXJ1i1Ccyk0j44j5iGdgtd8Yk1irEALJGvI43YYlvuFLRtKRntuAkVw001k
+         1yvA==
+Received: by 10.50.193.234 with SMTP id hr10mr5391927igc.14.1336239212649;
+        Sat, 05 May 2012 10:33:32 -0700 (PDT)
+Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
+        by mx.google.com with ESMTPS id k8sm3561039igz.4.2012.05.05.10.33.31
+        (version=SSLv3 cipher=OTHER);
+        Sat, 05 May 2012 10:33:32 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <CAMP44s2NRMxuvQXk4RyqFYR=oQw_vrJhmbdwtXsrg=eHhGBS2w@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197128>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197129>
 
-On Sat, May 5, 2012 at 6:52 PM, Philip Oakley <philipoakley@iee.org> wrote:
-> From: "Felipe Contreras" <felipe.contreras@gmail.com> Sent: Saturday, May
-> 05, 2012 2:04 PM
->
->> Proposal:
->>
->> Avoid the terms 'cache' and 'index' in favor of 'stage'.
->>
->> Advantages:
->>
->> The term 'stage' is more intuitive for newcomers which are more
->> familiar with English than with git, and it seems to be a
->> straightforward mental notion for people from different mother
->> tongues.
->>
->> It is so intuitive that it is used already in a lot online
->> documentation, and the people that do teach git professionally use
->> this term.
->
->
-> I've never found any of the terms to be great (as per this discussion ;-).
->
-> The term that helped me most, heard on one of the git videos, was "it's like
-> a manifest", alluding to a 'shipping manifest', which then leads to both the
-> "staging area" and "index" terms. Though "index" is probably too technical
-> for most folk.
->
-> The allusion to shipping a consignment or rail marshalling (classification)
-> yards, and similar frieght flows
+Felipe Contreras wrote:
 
-Perhaps, but these terms are not already used everywhere, unlike
-'stage', and haven't been brought in past discussions. Personally the
-word 'manifest' says nothing to me (manifesto?), neither does
-consignment, or marshalling. As discussed before, we need a term that
-has a nice noun (stage), verb (to stage), and past-participle
-(staged). There have been a lot of suggestions, but nothing as good as
-'stage', which is presumably the reason why it's so prevalent in
-online documentation.
+> And I'd like to think that when you filibuster a discussion there's a
+> good reason for it.
 
-Maybe you are quite familiar with ships :)
+Kind other people on the list, please enlighten me.  What did I say to
+trigger this crap?
 
-Cheers.
-
--- 
-Felipe Contreras
+Jonathan
