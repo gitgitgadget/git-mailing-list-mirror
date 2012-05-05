@@ -1,55 +1,59 @@
-From: Neal Kreitzinger <nkreitzinger@gmail.com>
-Subject: how to determine version of binary
-Date: Sat, 05 May 2012 02:12:44 -0500
-Message-ID: <jo2jtd$m6c$1@dough.gmane.org>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: recipe to use git for deployment
+Date: Sat, 5 May 2012 10:25:55 +0200
+Message-ID: <CACBZZX50LAu+XNWzHJjQB1kgK3W418FVW--DdsYchDvg8bEztw@mail.gmail.com>
+References: <jo283q$kna$1@dough.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat May 05 09:13:40 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Neal Kreitzinger <nkreitzinger@gmail.com>
+X-From: git-owner@vger.kernel.org Sat May 05 10:26:26 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SQZBT-0005Ok-Tb
-	for gcvg-git-2@plane.gmane.org; Sat, 05 May 2012 09:13:40 +0200
+	id 1SQaJt-0004Mv-Ms
+	for gcvg-git-2@plane.gmane.org; Sat, 05 May 2012 10:26:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753043Ab2EEHM7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 5 May 2012 03:12:59 -0400
-Received: from plane.gmane.org ([80.91.229.3]:51891 "EHLO plane.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751153Ab2EEHM7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 5 May 2012 03:12:59 -0400
-Received: from list by plane.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1SQZAm-0004xq-8P
-	for git@vger.kernel.org; Sat, 05 May 2012 09:12:56 +0200
-Received: from 67.63.162.200 ([67.63.162.200])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 05 May 2012 09:12:56 +0200
-Received: from nkreitzinger by 67.63.162.200 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 05 May 2012 09:12:56 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: 67.63.162.200
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:12.0) Gecko/20120428 Thunderbird/12.0.1
+	id S1753719Ab2EEI0U convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 5 May 2012 04:26:20 -0400
+Received: from mail-ey0-f174.google.com ([209.85.215.174]:59337 "EHLO
+	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753518Ab2EEI0R convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 5 May 2012 04:26:17 -0400
+Received: by eaaq12 with SMTP id q12so1006319eaa.19
+        for <git@vger.kernel.org>; Sat, 05 May 2012 01:26:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=k0UNHFIJ2pAVEqpQOjee7LRhhGGl3kBjkGLeRE8jdxQ=;
+        b=NMGRl1rCRvekTxEEPGieT7zw7Aujk2jvXDg17u6wKqzyo5clCQQpBjSsnVxeXBbLRL
+         XFKESzizoQhIietDSMlJ7CfcexHMgpfzBurFeMohURlN627waSKfzsmkB1ZvyCl/PV1E
+         fZjL876rvD3ybcgBl3CIaJsbO/1WlSWIh/9WBxIBd4fZfgA9VgKRm9Rq2WOC2lLuZkJ1
+         YLsv0f6Zi8uXaeFzV+reTTjZFClsDkss+kc/VEagJUh4lGf/guK3tGaWphUDmJTnXztf
+         1r03/n0K58Wuw6sCjjH7PlHu3v8Lk0mKJBjs9x8NONCMpUEVO1myIaYyffNxDSNwFliM
+         IMuQ==
+Received: by 10.14.94.131 with SMTP id n3mr1602451eef.76.1336206376093; Sat,
+ 05 May 2012 01:26:16 -0700 (PDT)
+Received: by 10.213.108.81 with HTTP; Sat, 5 May 2012 01:25:55 -0700 (PDT)
+In-Reply-To: <jo283q$kna$1@dough.gmane.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197098>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197099>
 
-Scenario:  I detect a binary file that is 'dirty'.  I don't know how it 
-got there.  However, I know it came from a git repo.  So I calculate the 
-sha1 of the binary.  What is the git command to determine which commit 
-that binary version first appeared in?  And the last commit that binary 
-appeared in?
+On Sat, May 5, 2012 at 5:51 AM, Neal Kreitzinger <nkreitzinger@gmail.co=
+m> wrote:
+> I'm trying to cook up automated mass deployment using git as the main
+> ingredient. =C2=A0Here's a recipe idea:
 
-Why:  we have people ftp'ing binaries around.  I want to see the commit 
-message and source change of that commit to see what the binary version is.
+At work we use and have open sourced
+https://github.com/git-deploy/git-deploy which we use for our
+deployments.
 
-v/r,
-neal
+It doesn't actually do the work of syncing out anything, we
+effectively do that with distributed rsync.
