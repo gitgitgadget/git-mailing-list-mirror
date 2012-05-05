@@ -1,181 +1,108 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v3] completion: add new _GIT_complete helper
-Date: Sat,  5 May 2012 17:23:20 +0200
-Message-ID: <1336231400-6878-1-git-send-email-felipe.contreras@gmail.com>
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	=?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>,
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH v3] completion: add new _GIT_complete helper
+Date: Sat, 5 May 2012 10:54:23 -0500
+Message-ID: <20120505155423.GA14684@burratino>
+References: <1336231400-6878-1-git-send-email-felipe.contreras@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org,
+	SZEDER =?utf-8?B?R8OhYm9y?= <szeder@ira.uka.de>,
 	Junio C Hamano <gitster@pobox.com>,
-	Thomas Rast <trast@student.ethz.ch>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat May 05 17:24:07 2012
+	Thomas Rast <trast@student.ethz.ch>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Sat May 05 17:54:45 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SQgq6-0001mD-AU
-	for gcvg-git-2@plane.gmane.org; Sat, 05 May 2012 17:24:06 +0200
+	id 1SQhJj-0007Er-TF
+	for gcvg-git-2@plane.gmane.org; Sat, 05 May 2012 17:54:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755989Ab2EEPYA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 5 May 2012 11:24:00 -0400
-Received: from mail-wi0-f172.google.com ([209.85.212.172]:60753 "EHLO
-	mail-wi0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755937Ab2EEPX7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 5 May 2012 11:23:59 -0400
-Received: by wibhj6 with SMTP id hj6so2195690wib.1
-        for <git@vger.kernel.org>; Sat, 05 May 2012 08:23:58 -0700 (PDT)
+	id S1756170Ab2EEPye convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 5 May 2012 11:54:34 -0400
+Received: from mail-yw0-f46.google.com ([209.85.213.46]:44862 "EHLO
+	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756107Ab2EEPyd convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 5 May 2012 11:54:33 -0400
+Received: by yhmm54 with SMTP id m54so3507199yhm.19
+        for <git@vger.kernel.org>; Sat, 05 May 2012 08:54:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        bh=zLx6PAXV2AED2dOg+cOAMdu8CVu5ka+acFp2vB+oTqc=;
-        b=BcGVmwVTwtThC5bhyI7UMVVQrb2AYLrYnBo/0XFZfvo5e6ySKflqjgRn+cHs/xU5eS
-         cOA/Rm6VUXbbuG+xIegEcfTJR3b/PPtF96CFLO7wY5Fgf6k95TJi/loH6Z9LIHs1NWqV
-         LEJ8Tq3HmvnxbSpourTZypNosKkChgyJC5zrA5B7ReamnLZfeXd2YhzTqTFPtSYhHKJ9
-         0BIMaw4ZCdxKSHZQKUEBrWESDewO4gIcMUCrw15Fd07DQ9X5+/JE/4P3fayY7NdJFoev
-         pImWp3DEf4P0bD/SCrceqOqymSEBysIRZztnfg91ChiClz355PYoHSSySbvWCDBJoK9R
-         IRZQ==
-Received: by 10.216.134.145 with SMTP id s17mr6427353wei.22.1336231438820;
-        Sat, 05 May 2012 08:23:58 -0700 (PDT)
-Received: from localhost (ip-109-43-0-5.web.vodafone.de. [109.43.0.5])
-        by mx.google.com with ESMTPS id ff9sm6494550wib.2.2012.05.05.08.23.57
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sat, 05 May 2012 08:23:58 -0700 (PDT)
-X-Mailer: git-send-email 1.7.10
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=+R4e6kDoo5VUwCAyOcGIN+HpERAl0zBhxdXVTuCJ8o4=;
+        b=VgQsIASeO+5xPVCUSaZcj7s1ko2i/U9t7Z1wlaaEaYBaqA3yuYmXBLGHXm7W5+2J4o
+         des+O7OURfB5d0WD/h4kHw3VN7r+KgkwlQBmOWe+7FxUZby504oGXhnuGmRzK+fpnahw
+         plyxSSgZWuGMy2BiacTV+0rfO70z+jSm9WBirW3t3mtQ/FXVp0DUrCi8AnN88sDSB7I1
+         JD6CdYpFJSVjYzanysv1vquFtCfsgxUAZxjt+vOl3sqU77FCmlyHCLfboDZQPf8xT5J2
+         SM2hziQSomLJgugsoxcxmtwrewMGIFk4AUhlZKCu5ItOTY3+44SzfoblE+Vlxb90Hz7N
+         a18w==
+Received: by 10.50.183.137 with SMTP id em9mr4720907igc.58.1336233272670;
+        Sat, 05 May 2012 08:54:32 -0700 (PDT)
+Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
+        by mx.google.com with ESMTPS id vp3sm3274289igb.3.2012.05.05.08.54.31
+        (version=SSLv3 cipher=OTHER);
+        Sat, 05 May 2012 08:54:31 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <1336231400-6878-1-git-send-email-felipe.contreras@gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197118>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197119>
 
-This simplifies the completions, and makes it easier to define aliases:
+=46elipe Contreras wrote:
 
- _GIT_complete gf git_fetch
+> Since v3:
+>
+>  * Rename to _GIT_complete to follow bash completion "guidelines"
+>  * Get rid of foo_wrap name
 
-Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
----
+Thanks.  G=C3=A1bor, does the "all caps _GIT_ prefix for public API
+functions" convention look like one we should adopt?  If I understand
+correctly, previously contrib/completion/git-completion.bash used
+leading double underscores for everything except completion functions,
+so this is a change.
 
-Since v3:
+=46ollowing a convention similar to the bash-completion project's
+proposed future convention doesn't really help compatibility.  If we
+want to be able to include this function in that project without
+change some day, we'd have to call it _BC_git_complete. :)
 
- * Rename to _GIT_complete to follow bash completion "guidelines"
- * Get rid of foo_wrap name
+I personally would be happier with a git_complete function provided
+by another script, like this:
 
-Since v2:
+	contrib/completion/git-completion.bash:
 
- * Remove stuff related to aliases fixes; should work on top of master
+		__git_complete () {
+			...
+		}
 
- contrib/completion/git-completion.bash |   67 ++++++++++++++------------------
- t/t9902-completion.sh                  |    2 +-
- 2 files changed, 31 insertions(+), 38 deletions(-)
+	contrib/completion/bash-helpers.bash:
 
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 9f56ec7..f300b87 100755
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -2603,21 +2603,6 @@ _git ()
- {
- 	local i c=1 command __git_dir
- 
--	if [[ -n ${ZSH_VERSION-} ]]; then
--		emulate -L bash
--		setopt KSH_TYPESET
--
--		# workaround zsh's bug that leaves 'words' as a special
--		# variable in versions < 4.3.12
--		typeset -h words
--
--		# workaround zsh's bug that quotes spaces in the COMPREPLY
--		# array if IFS doesn't contain spaces.
--		typeset -h IFS
--	fi
--
--	local cur words cword prev
--	_get_comp_words_by_ref -n =: cur words cword prev
- 	while [ $c -lt $cword ]; do
- 		i="${words[c]}"
- 		case "$i" in
-@@ -2667,22 +2652,6 @@ _git ()
- 
- _gitk ()
- {
--	if [[ -n ${ZSH_VERSION-} ]]; then
--		emulate -L bash
--		setopt KSH_TYPESET
--
--		# workaround zsh's bug that leaves 'words' as a special
--		# variable in versions < 4.3.12
--		typeset -h words
--
--		# workaround zsh's bug that quotes spaces in the COMPREPLY
--		# array if IFS doesn't contain spaces.
--		typeset -h IFS
--	fi
--
--	local cur words cword prev
--	_get_comp_words_by_ref -n =: cur words cword prev
--
- 	__git_has_doubledash && return
- 
- 	local g="$(__gitdir)"
-@@ -2703,16 +2672,40 @@ _gitk ()
- 	__git_complete_revlist
- }
- 
--complete -o bashdefault -o default -o nospace -F _git git 2>/dev/null \
--	|| complete -o default -o nospace -F _git git
--complete -o bashdefault -o default -o nospace -F _gitk gitk 2>/dev/null \
--	|| complete -o default -o nospace -F _gitk gitk
-+__git_func_wrap ()
-+{
-+	if [[ -n ${ZSH_VERSION-} ]]; then
-+		emulate -L bash
-+		setopt KSH_TYPESET
-+
-+		# workaround zsh's bug that leaves 'words' as a special
-+		# variable in versions < 4.3.12
-+		typeset -h words
-+
-+		# workaround zsh's bug that quotes spaces in the COMPREPLY
-+		# array if IFS doesn't contain spaces.
-+		typeset -h IFS
-+	fi
-+	local cur words cword prev
-+	_get_comp_words_by_ref -n =: cur words cword prev
-+	__git_func "$@"
-+}
-+
-+_GIT_complete ()
-+{
-+	local name="${2-$1}"
-+	eval "$(typeset -f __git_func_wrap | sed -e "s/__git_func/_$name/")"
-+	complete -o bashdefault -o default -o nospace -F _${name}_wrap $1 2>/dev/null \
-+		|| complete -o default -o nospace -F _${name}_wrap $1
-+}
-+
-+_GIT_complete git
-+_GIT_complete gitk
- 
- # The following are necessary only for Cygwin, and only are needed
- # when the user has tab-completed the executable name and consequently
- # included the '.exe' suffix.
- #
- if [ Cygwin = "$(uname -o 2>/dev/null)" ]; then
--complete -o bashdefault -o default -o nospace -F _git git.exe 2>/dev/null \
--	|| complete -o default -o nospace -F _git git.exe
-+_GIT_complete git.exe git
- fi
-diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
-index 5bda6b6..331a5b9 100755
---- a/t/t9902-completion.sh
-+++ b/t/t9902-completion.sh
-@@ -63,7 +63,7 @@ run_completion ()
- 	local _cword
- 	_words=( $1 )
- 	(( _cword = ${#_words[@]} - 1 ))
--	_git && print_comp
-+	_git_wrap && print_comp
- }
- 
- test_completion ()
--- 
-1.7.10
+		git_complete () {
+			__git_complete "$@"
+		}
+
+One might object that if the user includes bash-helpers.bash (name is
+just a strawman) in .bashrc for interactive shells because he is
+defining some custom completion functions,
+
+	git<TAB>
+
+would show the git_complete function.  I think that's fine.  Maybe
+the user would enjoy the reminder.  git<TAB> also shows any
+dashed-form git commands that happen to be on the $PATH.
+
+Please don't take this as a strong objection.  Maybe the
+user-unfriendly version would be called _GIT_complete and someone
+interested can provide the friendly git_complete and git_ps1 wrappers
+separately, for example.  I just think it is worth thinking carefully
+and being consistent about.
+
+Hope that helps,
+Jonathan
