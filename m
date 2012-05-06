@@ -1,70 +1,72 @@
-From: Josh Juran <jjuran@gmail.com>
+From: Neal Kreitzinger <nkreitzinger@gmail.com>
 Subject: Re: git-scm.com refresh
-Date: Sat, 5 May 2012 16:20:08 -0700
-Message-ID: <B09D9658-2BA5-4864-876D-39369B3C753B@gmail.com>
-References: <CAP2yMaJy=1c3b4F72h6jL_454+0ydEQNXYiC6E-ZeQQgE0PcVA@mail.gmail.com> <m38vh7qxs3.fsf@localhost.localdomain>
-Mime-Version: 1.0 (Apple Message framework v753.1)
-Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
+Date: Sat, 05 May 2012 19:08:59 -0500
+Message-ID: <4FA5C11B.6020701@gmail.com>
+References: <CAP2yMaJy=1c3b4F72h6jL_454+0ydEQNXYiC6E-ZeQQgE0PcVA@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Scott Chacon <schacon@gmail.com>, git list <git@vger.kernel.org>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sun May 06 01:21:03 2012
+Cc: git list <git@vger.kernel.org>
+To: Scott Chacon <schacon@gmail.com>
+X-From: git-owner@vger.kernel.org Sun May 06 02:09:45 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SQoHe-0001ux-Ns
-	for gcvg-git-2@plane.gmane.org; Sun, 06 May 2012 01:21:03 +0200
+	id 1SQp2m-0002qx-Px
+	for gcvg-git-2@plane.gmane.org; Sun, 06 May 2012 02:09:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752197Ab2EEXU0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 5 May 2012 19:20:26 -0400
-Received: from mail-pb0-f46.google.com ([209.85.160.46]:53936 "EHLO
-	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752092Ab2EEXUZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 5 May 2012 19:20:25 -0400
-Received: by pbbrp8 with SMTP id rp8so5237451pbb.19
-        for <git@vger.kernel.org>; Sat, 05 May 2012 16:20:25 -0700 (PDT)
+	id S1752417Ab2EFAJE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 5 May 2012 20:09:04 -0400
+Received: from mail-ob0-f174.google.com ([209.85.214.174]:47637 "EHLO
+	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752331Ab2EFAJC (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 5 May 2012 20:09:02 -0400
+Received: by obbtb18 with SMTP id tb18so6104619obb.19
+        for <git@vger.kernel.org>; Sat, 05 May 2012 17:09:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=in-reply-to:references:mime-version:content-type:message-id:cc
-         :content-transfer-encoding:from:subject:date:to:x-mailer;
-        bh=ONo6DmGAiwiRNlgG2V69C6Y/jZAJXChe2Gi0uzrjbPw=;
-        b=UIVnyge01VRxbMXCqaeb9ZLZV1lgtWaIoTaNfo8NjuNlcRdR6Os2l6VPDcq3UTF8Ha
-         HKoRdZejd8PEOqIQtllr8/2+I6XYwzeFKXyo6uv4oZviPm98eoONW5kGP9ljPcYJpHmG
-         zRyrNMmGSyPQbMTmnRAKbsgsGyZzx+bTwxhOnL97h7anTYOMBKuhCq3inOYH0oiMkH6w
-         hWsrydSvRDJ+aqVbLt0zyTZvgfdjycrV3U/fVre891/fPg6vPtpnbycPqVyArhJ26j4D
-         lmjkkoGBuiJiXrL3WV751bm6NeYLNjhYPGbg/1aDTgLeP5YJEbVFJe9UzFM7kyeK9GGC
-         uSJg==
-Received: by 10.68.241.37 with SMTP id wf5mr3494457pbc.104.1336260025356;
-        Sat, 05 May 2012 16:20:25 -0700 (PDT)
-Received: from [192.168.1.141] (c-98-248-132-10.hsd1.ca.comcast.net. [98.248.132.10])
-        by mx.google.com with ESMTPS id wn3sm13081638pbc.74.2012.05.05.16.20.23
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=rOMU0KZr+HFCjn/ouNcwTNNyVRJIkF6KqJ80JeybbbM=;
+        b=RI5VoGsW5KkDljNwvHve9PvrG5+Q7GZW055KdPf8d5xpDn3R71CHbFynoEAN+tNBuA
+         jZrQuGp+Z6jjmCS7ML5Mb3odpDO4HwNNK9jlGtKVmQZ6LngRh2NnsjSUG2mHJQGhXeE4
+         VivE8z7glgXnBmLCevZS1pGs1fVi4axO1zjiVWq5cItBoDHFey/Y++HHp1AXkU7E3Cqn
+         cistry/X/xH5gLM/lWg2sOWxw8h7DqYl6W9quq0kPgaL5lgb4Yvktl1myFcVdBTl8ZSr
+         Gmof/inoa/vgjjjvaK0AxwIzKxoG5X5SECDSQ1jJHvaabfDyPp7CQBuPbxoXDpkqRjf+
+         tbiQ==
+Received: by 10.60.20.10 with SMTP id j10mr15623465oee.33.1336262942333;
+        Sat, 05 May 2012 17:09:02 -0700 (PDT)
+Received: from [172.25.2.210] ([67.63.162.200])
+        by mx.google.com with ESMTPS id bk8sm13714860obb.0.2012.05.05.17.09.00
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Sat, 05 May 2012 16:20:24 -0700 (PDT)
-In-Reply-To: <m38vh7qxs3.fsf@localhost.localdomain>
-X-Mailer: Apple Mail (2.753.1)
+        Sat, 05 May 2012 17:09:01 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:12.0) Gecko/20120428 Thunderbird/12.0.1
+In-Reply-To: <CAP2yMaJy=1c3b4F72h6jL_454+0ydEQNXYiC6E-ZeQQgE0PcVA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197141>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197142>
 
-On May 4, 2012, at 5:26 PM, Jakub Narebski wrote:
-
-> Scott Chacon <schacon@gmail.com> writes:
+On 5/4/2012 6:29 PM, Scott Chacon wrote:
 >
->> * We designed a new logo[1] - there are multiple variations available
->> for download on the site under the most permissive CC license for any
->> use.
+> I just shipped a big update to the git-scm.com website
 >
-> IMVHO it is too similar to Bazaar logo:
->
->   http://bazaar.canonical.com/bzricons/bazaar-logo.png
+I'll miss Torvald the Troll (http://torvald.gjovaag.com/)showing the 
+trees of thor's woods (tor's wald) who's boss.  :(
 
-That's nothing compared to the similarity between the Bazaar logo and  
-the MacCVS Pro logo:
+> * There is now permanent man page hosting here
 
-http://www.maccvs.org/images/roadsign_small.gif
+Thanks for rescuing the man!  I suppose you also had help from the ents. 
+  Thanks to them too.  :)
 
-Josh
+> Let me know if you run into anything or there are any features you
+> would like to see.
+
+The new homepage looks too slick.  The hacky look of the old one was 
+more in keeping with cli git.  This is git.git, not github.  ;)
+
+v/r,
+neal
