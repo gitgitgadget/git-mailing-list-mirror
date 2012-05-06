@@ -1,105 +1,74 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: How does git now about future renames during a rebase?
-Date: Sun, 6 May 2012 04:52:49 -0400
-Message-ID: <20120506085248.GC27878@sigill.intra.peff.net>
-References: <CAH3Anro6o478A41eXcsFU7guOobQXhqq=DdpNpGWgriRVfqcZQ@mail.gmail.com>
+From: =?UTF-8?B?WmJpZ25pZXcgSsSZZHJ6ZWpld3NraS1Tem1law==?= 
+	<zbyszek@in.waw.pl>
+Subject: Re: [1.8.0] use 'stage' term consistently
+Date: Sun, 06 May 2012 11:53:42 +0200
+Message-ID: <4FA64A26.1020406@in.waw.pl>
+References: <CAMP44s1qqpTxRvjEH32MNqzUeNhgZ1gB+fu=cgvxnSbMB6oBGA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Jon Seymour <jon.seymour@gmail.com>
-X-From: git-owner@vger.kernel.org Sun May 06 10:53:39 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Jeff King <peff@peff.net>, Scott Chacon <schacon@gmail.com>,
+	Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>,
+	=?UTF-8?B?SmFrdWIgTmFyxJlic2tp?= <jnareb@gmail.com>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>,
+	Matthieu Moy <matthieu.moy@imag.fr>,
+	Piotr Krukowiecki <piotr.krukowiecki.news@gmail.com>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Sun May 06 11:55:46 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SQxDm-0007TY-Ef
-	for gcvg-git-2@plane.gmane.org; Sun, 06 May 2012 10:53:38 +0200
+	id 1SQyBs-00019o-Gd
+	for gcvg-git-2@plane.gmane.org; Sun, 06 May 2012 11:55:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752760Ab2EFIw6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 6 May 2012 04:52:58 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:59421
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752369Ab2EFIw5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 May 2012 04:52:57 -0400
-Received: (qmail 7692 invoked by uid 107); 6 May 2012 08:53:13 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Sun, 06 May 2012 04:53:13 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 06 May 2012 04:52:49 -0400
-Content-Disposition: inline
-In-Reply-To: <CAH3Anro6o478A41eXcsFU7guOobQXhqq=DdpNpGWgriRVfqcZQ@mail.gmail.com>
+	id S1752902Ab2EFJzU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 6 May 2012 05:55:20 -0400
+Received: from kawka.in.waw.pl ([178.63.212.103]:35961 "EHLO kawka.in.waw.pl"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752301Ab2EFJzT (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 6 May 2012 05:55:19 -0400
+Received: from ip-37-209-135-75.free.aero2.net.pl ([37.209.135.75])
+	by kawka.in.waw.pl with esmtpsa (TLS1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.72)
+	(envelope-from <zbyszek@in.waw.pl>)
+	id 1SQyBK-0003QS-K0; Sun, 06 May 2012 11:55:11 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:10.0.3) Gecko/20120329 Icedove/10.0.3
+In-Reply-To: <CAMP44s1qqpTxRvjEH32MNqzUeNhgZ1gB+fu=cgvxnSbMB6oBGA@mail.gmail.com>
+X-Enigmail-Version: 1.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197158>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197159>
 
-On Sun, May 06, 2012 at 09:41:00AM +0530, Jon Seymour wrote:
-
-> I had a history that looked like this:
+On 05/05/2012 03:04 PM, Felipe Contreras wrote:
+> Proposal:
 > 
-> 1. some other commit
-> 2. commit that moves files from one directory to a new directory
-> 3. commit that edits files in the new directory.
-> 
-> I then did an interactive rebase to move the commit 3 before commit 2.
-> 
-> 1. some other commit
-> 3a. commit that edits files in the new directory.
-> 2a. commit that moves files from one directory to a new directory
-> 
-> I didn't expect this to work, but somehow git worked out that it
-> needed to apply the change in 3 to the original location of the files.
-> 
-> How does it do this?
+> Avoid the terms 'cache' and 'index' in favor of 'stage'.
+Yeah, I think that this is a very good idea. Having three different
+terms for this great but relatively obscure idea adds an unnecessary
+cognitive burden for newcomers to git. 'stage' is certainly the best of
+the three options.
 
-When you pick a commit, we actually do a merge between it and the
-current HEAD, using the parent of the picked commit as a merge base. So
-imagine we have this short history:
+> stage: a 'stage' is a special area designated for convenience in order
+> for some activity to take place; an orator would prepare a stage in
+> order for her speak to be successful, otherwise many people might not
+> be able to hear, or see her.  Git porcelain is using the staging area
+> precisly as a special area to be separated from the working directory
+> for convenience.
+I think you missed the most relevant meaning-of/phrase-with this word in
+this context, the one that is really the reason why it is used in git:
 
-  git init repo &&
-  cd repo &&
-  seq 1 100 >foo && git add foo && git commit -m base &&
-  git mv foo bar && git commit -m move &&
-  echo 101 >>bar && git add bar && git commit -m change
+"A staging area (or staging point) is a location where organisms,
+people, vehicles, equipment or material are assembled before use."
+[http://en.wikipedia.org/wiki/Staging_area]
 
-I.e., a move followed by a change. And you run:
+> The term 'stage' is a good noun itself, but also 'staging area', it
+> has a good verb; 'to stage', and a nice past-participle; 'staged'.
 
-  git rebase -i HEAD~2
-
-and swap the two commits. So afterwards we will have a change followed
-by a move. What does git see?
-
-When we pick the first commit ("change"), we end up merging with these
-parameters:
-
-  - The "ours" side is "base", with "foo" containing 1..100.
-  - The "theirs" side is "change", with "foo" absent and "bar"
-    containing 1..101.
-  - The ancestor is "move", with "foo" absent and "bar" containing
-    1..100.
-
-So rename detection sees that our side moved bar to foo (compared to the
-ancestor), and the other side added a line to bar. And it resolves by
-putting the modified content into "foo". Now obviously nobody _actually_
-moved bar to foo; it was quite the opposite. But that makes sense; a
-cherry-pick merge like this sees the reverse of what happened between
-the picked commit and the destination commit (less any changes which
-have been picked already).
-
-And then we pick the second commit ("move"), with these merge
-parameters:
-
-  - The "ours" side is now changed', "foo" containing 1..101.
-  - The "theirs" side is "move", with "foo" absent and "bar" containing
-    1..100.
-  - The ancestor is "base", with "foo" containing 1..100.
-
-Now it looks like their side made a move ("foo" to "bar"), and our
-side modified "foo" (i.e., the opposite of the last case). So we again
-resolve to put the final content in "bar".
-
-Does that make sense?
-
--Peff
+-
+Zbyszek
