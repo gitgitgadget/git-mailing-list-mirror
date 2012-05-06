@@ -1,74 +1,70 @@
-From: =?UTF-8?B?WmJpZ25pZXcgSsSZZHJ6ZWpld3NraS1Tem1law==?= 
-	<zbyszek@in.waw.pl>
-Subject: Re: [1.8.0] use 'stage' term consistently
-Date: Sun, 06 May 2012 11:53:42 +0200
-Message-ID: <4FA64A26.1020406@in.waw.pl>
-References: <CAMP44s1qqpTxRvjEH32MNqzUeNhgZ1gB+fu=cgvxnSbMB6oBGA@mail.gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: Feature idea: git rebase --exec $CMD
+Date: Sun, 06 May 2012 12:03:49 +0200
+Message-ID: <vpqobq1mxru.fsf@bauges.imag.fr>
+References: <20120505132650.637c4e06086654e0dbf641fc@studenti.unina.it>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Jeff King <peff@peff.net>, Scott Chacon <schacon@gmail.com>,
-	Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>,
-	=?UTF-8?B?SmFrdWIgTmFyxJlic2tp?= <jnareb@gmail.com>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>,
-	Matthieu Moy <matthieu.moy@imag.fr>,
-	Piotr Krukowiecki <piotr.krukowiecki.news@gmail.com>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Sun May 06 11:55:46 2012
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Antonio Ospite <ospite@studenti.unina.it>
+X-From: git-owner@vger.kernel.org Sun May 06 12:04:13 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SQyBs-00019o-Gd
-	for gcvg-git-2@plane.gmane.org; Sun, 06 May 2012 11:55:44 +0200
+	id 1SQyK2-00074i-M8
+	for gcvg-git-2@plane.gmane.org; Sun, 06 May 2012 12:04:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752902Ab2EFJzU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 6 May 2012 05:55:20 -0400
-Received: from kawka.in.waw.pl ([178.63.212.103]:35961 "EHLO kawka.in.waw.pl"
+	id S1753196Ab2EFKD6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 6 May 2012 06:03:58 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:42387 "EHLO rominette.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752301Ab2EFJzT (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 May 2012 05:55:19 -0400
-Received: from ip-37-209-135-75.free.aero2.net.pl ([37.209.135.75])
-	by kawka.in.waw.pl with esmtpsa (TLS1.0:RSA_AES_256_CBC_SHA1:32)
+	id S1753184Ab2EFKD4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 6 May 2012 06:03:56 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id q469umfd023657
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Sun, 6 May 2012 11:56:48 +0200
+Received: from bauges.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
 	(Exim 4.72)
-	(envelope-from <zbyszek@in.waw.pl>)
-	id 1SQyBK-0003QS-K0; Sun, 06 May 2012 11:55:11 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:10.0.3) Gecko/20120329 Icedove/10.0.3
-In-Reply-To: <CAMP44s1qqpTxRvjEH32MNqzUeNhgZ1gB+fu=cgvxnSbMB6oBGA@mail.gmail.com>
-X-Enigmail-Version: 1.4
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1SQyJi-0007nZ-Q4; Sun, 06 May 2012 12:03:50 +0200
+In-Reply-To: <20120505132650.637c4e06086654e0dbf641fc@studenti.unina.it>
+	(Antonio Ospite's message of "Sat, 5 May 2012 13:26:50 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.93 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Sun, 06 May 2012 11:56:48 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: q469umfd023657
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1336903011.26422@w/iWybdDge2Ef8zosCwK7A
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197159>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197160>
 
-On 05/05/2012 03:04 PM, Felipe Contreras wrote:
-> Proposal:
-> 
-> Avoid the terms 'cache' and 'index' in favor of 'stage'.
-Yeah, I think that this is a very good idea. Having three different
-terms for this great but relatively obscure idea adds an unnecessary
-cognitive burden for newcomers to git. 'stage' is certainly the best of
-the three options.
+Antonio Ospite <ospite@studenti.unina.it> writes:
 
-> stage: a 'stage' is a special area designated for convenience in order
-> for some activity to take place; an orator would prepare a stage in
-> order for her speak to be successful, otherwise many people might not
-> be able to hear, or see her.  Git porcelain is using the staging area
-> precisly as a special area to be separated from the working directory
-> for convenience.
-I think you missed the most relevant meaning-of/phrase-with this word in
-this context, the one that is really the reason why it is used in git:
+> Maybe this -x option should conflict with -i to simplify its "execute
+> the command after each commit" semantics (what if it is combined with -i
+> and 'x/exec' lines?).
 
-"A staging area (or staging point) is a location where organisms,
-people, vehicles, equipment or material are assembled before use."
-[http://en.wikipedia.org/wiki/Staging_area]
+Actually, implementation-wise, it's simpler to have '-x' imply '-i', and
+suggest a todo-list containing 'x' lines. Then, the code would simply
+have to add these "x whatever" lines, and let the
+"git-rebase--interactive.sh" mechanics do the job. That would show the
+"x whatever" lines to the user, but that can be seen as added value,
+since it gives an opportunity to the user to remove or edit some of them
+if needed.
 
-> The term 'stage' is a good noun itself, but also 'staging area', it
-> has a good verb; 'to stage', and a nice past-participle; 'staged'.
+I'm not familiar with the code behind non-interactive rebase, but it
+doesn't seem to use the same todo-list at all. Maybe the sequencer would
+help, I don't know.
 
--
-Zbyszek
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
