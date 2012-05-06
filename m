@@ -1,88 +1,86 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH 4/4] index-pack: disable threading if NO_PREAD is defined
-Date: Sun,  6 May 2012 19:31:56 +0700
-Message-ID: <1336307516-1809-4-git-send-email-pclouds@gmail.com>
-References: <7v8vh8c6mx.fsf@alter.siamese.dyndns.org>
- <1336307516-1809-1-git-send-email-pclouds@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: how to determine version of binary
+Date: Sun, 6 May 2012 08:43:42 -0400
+Message-ID: <20120506124342.GC26194@sigill.intra.peff.net>
+References: <jo2jtd$m6c$1@dough.gmane.org>
+ <20120505092443.GB8172@sigill.intra.peff.net>
+ <4FA552C5.7090000@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun May 06 14:36:09 2012
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Neal Kreitzinger <nkreitzinger@gmail.com>
+X-From: git-owner@vger.kernel.org Sun May 06 14:43:54 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SR0h7-0007wc-HR
-	for gcvg-git-2@plane.gmane.org; Sun, 06 May 2012 14:36:09 +0200
+	id 1SR0oZ-00058a-PF
+	for gcvg-git-2@plane.gmane.org; Sun, 06 May 2012 14:43:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753514Ab2EFMgE convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 6 May 2012 08:36:04 -0400
-Received: from mail-pb0-f46.google.com ([209.85.160.46]:55519 "EHLO
-	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753497Ab2EFMgD (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 May 2012 08:36:03 -0400
-Received: by pbbrp8 with SMTP id rp8so5621480pbb.19
-        for <git@vger.kernel.org>; Sun, 06 May 2012 05:36:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        bh=XehAwUAAmMLqzYjhGwYgp3vWh9+wvWwhPjxQ97bGLmo=;
-        b=Rzf9iZmd/f/GQ7SNf6LMa9Fb7IC2hZ2VprnEqzZwuqWYBmRWtVf5WVncBjP+jxZ4mI
-         qIZEz64HKFWV9PZRKYLBX0xcCqaJYyXTYoXlDGGdu4F3N5fnLgHDUz7l3p2W99yTRwdd
-         eXnV6FhhjprPf9BUtJjF8KDu1nekYzoLEIP5P6wD2b3l04uTny/HlTltBldeENUkwPg4
-         y7LqTXi07g+qBNTumB8BIg8OHfIzQqatvHBL744KY0PcpJ6pALO+5u2+wig+tJ/aHoHf
-         BlfL3xUAh4KE0ilPx/IYgvjf06jnunSaJTwF8yoUXt8eblSVyRta15K1IwUMgkJcX20r
-         lAvw==
-Received: by 10.68.190.5 with SMTP id gm5mr17068143pbc.21.1336307762589;
-        Sun, 06 May 2012 05:36:02 -0700 (PDT)
-Received: from pclouds@gmail.com ([115.74.32.70])
-        by mx.google.com with ESMTPS id rs3sm14842809pbc.47.2012.05.06.05.35.58
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sun, 06 May 2012 05:36:01 -0700 (PDT)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Sun, 06 May 2012 19:32:27 +0700
-X-Mailer: git-send-email 1.7.8.36.g69ee2
-In-Reply-To: <1336307516-1809-1-git-send-email-pclouds@gmail.com>
+	id S1753476Ab2EFMnp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 6 May 2012 08:43:45 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:59616
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753445Ab2EFMno (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 6 May 2012 08:43:44 -0400
+Received: (qmail 10378 invoked by uid 107); 6 May 2012 12:44:02 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Sun, 06 May 2012 08:44:02 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 06 May 2012 08:43:42 -0400
+Content-Disposition: inline
+In-Reply-To: <4FA552C5.7090000@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197177>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197178>
 
-NO_PREAD simulates pread() as a sequence of seek, read, seek in
-compat/pread.c. The simulation is not thread-safe because another
-thread could move the file offset away in the middle of pread
-operation. Do not allow threading in that case.
+On Sat, May 05, 2012 at 11:18:13AM -0500, Neal Kreitzinger wrote:
 
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- builtin/index-pack.c |    5 +++++
- 1 files changed, 5 insertions(+), 0 deletions(-)
+> What about this recipe:
+> 
+> calculate sha1 of dirty deliverable (binary, html, etc)
+> 
+> grep git tree objects for that sha1
+> 
+> somehow determine which of the tree sha1's is newest.  Not sure how
+> to do that.
+> 
+> grep commit objects for that tree sha1
+>
+> now you have the last commit containing that file so now you know the
+> version of that file.
 
-diff --git a/builtin/index-pack.c b/builtin/index-pack.c
-index d4685c5..807ee56 100644
---- a/builtin/index-pack.c
-+++ b/builtin/index-pack.c
-@@ -39,6 +39,11 @@ struct base_data {
- 	int ofs_first, ofs_last;
- };
-=20
-+#if !defined(NO_PTHREADS) && defined(NO_PREAD)
-+/* NO_PREAD uses compat/pread.c, which is not thread-safe. Disable thr=
-eading. */
-+#define NO_PTHREADS
-+#endif
-+
- struct thread_local {
- #ifndef NO_PTHREADS
- 	pthread_t thread;
---=20
-1.7.8.36.g69ee2
+Your "not sure" step would be to walk the revision graph and look for
+the tree in question. So really you would just walk and grep the trees.
+If you know the filename (which you do in your instance), then it's not
+even that expensive:
+
+  git rev-list HEAD |
+  while read commit; do
+    if test "`git rev-parse $commit:path/to/file`" = $sha1; then
+      echo "found it in $commit"
+      break
+    fi
+  done
+
+But note that that does not tell you the revision of the whole project.
+It tells you one _possible_ version, because it is one that contains
+that file.  If you remove the "break" there you can get the full set of
+commits. And then you cross-reference that with the set of commits in
+another file.  And then another, and so on, until you eventually have
+narrowed it down to a single commit.
+
+It's kind of slow, mostly because we have to invoke rev-parse over and
+over. But I don't think there is a way to print the sha1 of some path
+for each revision via the regular revision walker.
+
+You could probably do better by finding trees that contain a particular
+sha1, then finding trees that contain that tree, and so forth, until you
+have a set of commits that contain those trees. And then you could do
+that backwards walk for all of the files in parallel (i.e., only accept
+a tree if it matches all of the deliverables you have).
+
+-Peff
