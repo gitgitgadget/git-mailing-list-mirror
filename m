@@ -1,55 +1,92 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: [PATCH] compat/regex: fix typos in comments.
-Date: Sun, 6 May 2012 17:18:15 +0200
-Message-ID: <CACBZZX7hUmEK5-7rpmZiDx4u5_aV_uiwijtzP5-jFNd4si-iQQ@mail.gmail.com>
-References: <1336308300-4858-1-git-send-email-semtlenori@gmail.com>
- <CACBZZX4K5vh7CjJ6SqX-reuuNqse7koONC=1HcXCuY0vbXRpbQ@mail.gmail.com> <CAFT+Tg8fvVawnCFwmXfBep1b+uonEB7J3eA3wJDMVSRcaXHMAQ@mail.gmail.com>
+From: Christian Stimming <stimming@tuhh.de>
+Subject: Re: [PATCH 2/5] l10n: de.po: translate "track" as "folgen"
+Date: Sun, 06 May 2012 17:20:46 +0200
+Organization: Alumni Technische =?UTF-8?B?VW5pdmVyc2l0w6R0?= Hamburg-Harburg
+Message-ID: <1543115.9YNtu9coLS@cs-pc>
+References: <1336160906-20708-1-git-send-email-ralf.thielow@googlemail.com> <1336160906-20708-3-git-send-email-ralf.thielow@googlemail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: semtlenori@gmail.com
-X-From: git-owner@vger.kernel.org Sun May 06 17:18:47 2012
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: trast@student.ethz.ch, jk@jk.gs, git@vger.kernel.org
+To: Ralf Thielow <ralf.thielow@googlemail.com>
+X-From: git-owner@vger.kernel.org Sun May 06 17:21:14 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SR3EQ-0007Ey-5z
-	for gcvg-git-2@plane.gmane.org; Sun, 06 May 2012 17:18:42 +0200
+	id 1SR3Go-0000UM-CN
+	for gcvg-git-2@plane.gmane.org; Sun, 06 May 2012 17:21:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753016Ab2EFPSh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 6 May 2012 11:18:37 -0400
-Received: from mail-ee0-f46.google.com ([74.125.83.46]:33095 "EHLO
-	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752934Ab2EFPSh (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 May 2012 11:18:37 -0400
-Received: by eekc41 with SMTP id c41so1204266eek.19
-        for <git@vger.kernel.org>; Sun, 06 May 2012 08:18:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=wzu3OL7KdFwjww5B2kDqMo1UTj8KsiMU2yGkbaXxCkw=;
-        b=ldf1S+kpjgBvrSaLVONMZ5DfpODqxfmJhp1+EbZlDU5NOY0xap9zAk06rNap6je8pf
-         if+MsZvhGZt8lGwNiFrAsROSXU+NBCPOaoRJmUh1tDndAKK3TZuQVnxfeA8OtmKbnmHl
-         9CcETDrEaWyR4Xy6nlhMrnL4r/g4YiTRkD15SipAb7PpKAHg9sJ+A14NrC/+n9TrdVlc
-         k+ZInlY/cOhBtfB6RgIqnycDpCZgT6ml+FVaD19DczQpOij5r1okHV/jQIuat3kkOxa0
-         qtyKggMkXOB1907WH2s40SSy+plY76pFHkgrNG0LcId/5DqtsboVyLmMTbSO7HHH5hKD
-         s4QQ==
-Received: by 10.14.127.5 with SMTP id c5mr35299eei.120.1336317515991; Sun, 06
- May 2012 08:18:35 -0700 (PDT)
-Received: by 10.213.108.81 with HTTP; Sun, 6 May 2012 08:18:15 -0700 (PDT)
-In-Reply-To: <CAFT+Tg8fvVawnCFwmXfBep1b+uonEB7J3eA3wJDMVSRcaXHMAQ@mail.gmail.com>
+	id S1753693Ab2EFPVE convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 6 May 2012 11:21:04 -0400
+Received: from smtp3.rz.tu-harburg.de ([134.28.202.138]:58924 "EHLO
+	smtp3.rz.tu-harburg.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753057Ab2EFPVD convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 6 May 2012 11:21:03 -0400
+Received: from mail.tu-harburg.de (mail.tu-harburg.de [134.28.202.179])
+	by smtp3.rz.tu-harburg.de (8.13.8/8.13.8) with ESMTP id q46FKqL3011044
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK);
+	Sun, 6 May 2012 17:20:52 +0200
+Received: from cs-pc.localnet (e176207151.adsl.alicedsl.de [85.176.207.151])
+	(user=alucst mech=LOGIN bits=0)
+	by mail.tu-harburg.de (8.13.8/8.13.8) with ESMTP id q46FKpdF025817
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Sun, 6 May 2012 17:20:52 +0200
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=tuhh.de; s=x2012-18;
+	t=1336317652; bh=oSXSvXrF2jNBfWSP5WR+cNsibY6aJ5Xswg1zL6dU6lw=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Transfer-Encoding:Content-Type;
+	b=Zgrn1LD66PgerTVlD5zGETqZ0RenxMWmGs5R+eAzG3z4lrHs3sW+vx0XrCZnuIzmd
+	 x/qUQDIDQ9c6gXwe7TUeGfkDIceE8PDbAIDHN8/ALUMbWlqPcHGXrhjecvIHdjQ90K
+	 f0Gd+9C3JMbpgxOIWWUiiOhjlvlHswiPFv6kTYyk=
+User-Agent: KMail/4.7.3 (Linux/3.0.0-17-generic; KDE/4.7.4; x86_64; ; )
+In-Reply-To: <1336160906-20708-3-git-send-email-ralf.thielow@googlemail.com>
+X-Scanned-By: TUHH Rechenzentrum content checker on 134.28.202.138
+X-Scanned-By: TUHH Rechenzentrum content checker on 134.28.202.179
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197195>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197196>
 
-On Sun, May 6, 2012 at 3:40 PM, Yi, EungJun <semtlenori@gmail.com> wrote:
-> You're right. I will send this patch to gawk developers.
+Am Freitag, 4. Mai 2012, 21:48:23 schrieb Ralf Thielow:
+> The word "track" was translated as "verfolgt"
+> which is not the correct word for it. We've
+> changed it to "folgen".
 
-If you're doing that anyway it would also be very useful to see if
-they'd be willing to take the the rest of the patches we've
-accumulated since we initially brought it into our tree. I.e. the ones
-I showed in the shortlog I posted.
+I'm not so sure about this choice. We're talking about files which are =
+tracked=20
+by git (i.e. being versioned) vs. files or content that are not tracked=
+, i.e.=20
+those are just existing in the working copy's directory but are not tra=
+cked by=20
+git. I think from the point of view of git, the content of the files is=
+ being=20
+"verfolgt" vs. "nicht verfolgt", as git checks whether the content is c=
+hanging=20
+vs. git doesn't check this. Saying "folgen" here rather sounds like git=
+ is=20
+following something, just as your twitter account is following other=20
+twitterers. Consider a choicebox "=C4nderungen dieser Datei verfolgen" =
+vs.=20
+"=C4nderungen dieser Datei folgen". In the former case, git is the subj=
+ect and=20
+it is tracking the file's content. In the latter case, the file is the =
+subject=20
+and git is triggered into some action when the file content changes. I =
+think=20
+the former fits the use case more.
+
+Regards,
+
+Christian
+
+> --- a/po/de.po
+> +++ b/po/de.po
+> @@ -525,7 +525,7 @@ msgstr "ge=E4nderter Inhalt, "
+>=20
+>  #: wt-status.c:252
+>  msgid "untracked content, "
+> -msgstr "unverfolgter Inhalt, "
+> +msgstr "ungefolgter Inhalt, "
