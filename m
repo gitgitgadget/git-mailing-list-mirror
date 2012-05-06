@@ -1,79 +1,52 @@
-From: Phil Hord <phil.hord@gmail.com>
-Subject: Re: Index format v5
-Date: Sun, 6 May 2012 12:49:27 -0400
-Message-ID: <CABURp0rAjrhVACQEafrZRxtXBAmajpEqfp+EmB7s595dobqHQQ@mail.gmail.com>
-References: <CALgYhfMKdbv8TiT4ALDSvD3pSXHEPLWHM09DxYnRmRdBWRjh8Q@mail.gmail.com>
+From: Marcus Karlsson <mk@acc.umu.se>
+Subject: Re: your mail
+Date: Sun, 6 May 2012 19:04:32 +0200
+Message-ID: <20120506170432.GA5725@moj>
+References: <CAJs0mJfAXgykqexfC1vDcp0f+N6FSLm4jfEjRvqU_ba5FXWP0A@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, trast@student.ethz.ch, gitster@pobox.com,
-	mhagger@alum.mit.edu, peff@peff.net, spearce@spearce.org,
-	davidbarr@google.com
-To: Thomas Gummerer <t.gummerer@gmail.com>
-X-From: git-owner@vger.kernel.org Sun May 06 18:49:57 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Bruce Zu <zu.bruce.china@gmail.com>
+X-From: git-owner@vger.kernel.org Sun May 06 19:05:02 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SR4ef-00065E-VL
-	for gcvg-git-2@plane.gmane.org; Sun, 06 May 2012 18:49:54 +0200
+	id 1SR4tH-0006rt-Jr
+	for gcvg-git-2@plane.gmane.org; Sun, 06 May 2012 19:04:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753964Ab2EFQts convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 6 May 2012 12:49:48 -0400
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:61005 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753899Ab2EFQts convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 6 May 2012 12:49:48 -0400
-Received: by yenm10 with SMTP id m10so3216320yen.19
-        for <git@vger.kernel.org>; Sun, 06 May 2012 09:49:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=ANXAzMLF581TS9pEvfhfnQ6wVhchuRlK3FlBrr9MC1o=;
-        b=aEdmz3f1Fty9ZHTtE6blJwBos2QwHODdJmtqEHezlIgzoNMX9j+VPlP+0cBLKJVM8I
-         1tM0HVcUYzgXGJVECyjjs32YVHN1aEH/3Af0BJvhKPupPpRgB7VmpR4ugIYhI6h0CP/i
-         kCq9CkKm25NvymNNvdxITaRbWZsA3Pv4Xov01iDIittJ9pIpSF4hhGZujpDsoOP9V6vC
-         cNaqoqS1969puPkBcB13jCahm7E1GQlkAajmzqnaRs0Q3DqYkdDrLjD6VO5KrnFH6vLg
-         oxGVnqaIeCRwEk0/TGVtE9D2Y4oIjjlPVBR5JCkyb2fwwch5K27IOCtX37oOcTL1Wkcd
-         FvQg==
-Received: by 10.236.125.168 with SMTP id z28mr16022558yhh.120.1336322987735;
- Sun, 06 May 2012 09:49:47 -0700 (PDT)
-Received: by 10.146.122.15 with HTTP; Sun, 6 May 2012 09:49:27 -0700 (PDT)
-In-Reply-To: <CALgYhfMKdbv8TiT4ALDSvD3pSXHEPLWHM09DxYnRmRdBWRjh8Q@mail.gmail.com>
+	id S1754086Ab2EFREy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 6 May 2012 13:04:54 -0400
+Received: from mail.acc.umu.se ([130.239.18.156]:36294 "EHLO mail.acc.umu.se"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754056Ab2EFREx (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 6 May 2012 13:04:53 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by amavisd-new (Postfix) with ESMTP id 7E8F3DB4;
+	Sun,  6 May 2012 19:04:52 +0200 (MEST)
+X-Virus-Scanned: amavisd-new at acc.umu.se
+Received: from moj (c-0971e155.122-2-64736c10.cust.bredbandsbolaget.se [85.225.113.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	(Authenticated sender: mk)
+	by mail.acc.umu.se (Postfix) with ESMTPSA id 5676CDB3;
+	Sun,  6 May 2012 19:04:51 +0200 (MEST)
+Content-Disposition: inline
+In-Reply-To: <CAJs0mJfAXgykqexfC1vDcp0f+N6FSLm4jfEjRvqU_ba5FXWP0A@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197202>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197203>
 
-On Thu, May 3, 2012 at 1:25 PM, Thomas Gummerer <t.gummerer@gmail.com> =
-wrote:
-> I have been drafting the Version 5 of the index format over the past
-> few days with the help of Thomas Rast, Michael Haggerty, cmn and
-> barrbrain on IRC. It will save with prefix compression on the path, a=
-nd
-> using a crc32 over the stat data, instead of the full data, since it =
-is only
-> used for checking if the file is changed. (Thanks Michael Haggerty fo=
-r
-> this hint. Unless we are missing something this will save another
-> ~4 MB on the Webkit index.
+On Sun, May 06, 2012 at 10:17:07PM +0800, Bruce Zu wrote:
+> I want subscribe this git mail list
+> thanks!
+> Bruce Zu
 
-=2E..
+Great idea. The instructions for how to subscribe can be found on
+http://vger.kernel.org/. Then subscribe to the list named 'git'.
 
-> =3D=3D Directory entry
->
-> =A0Directory entries are sorted in lexicographic order by the name
-> =A0of their path starting with the root.
->
-> =A0Path names (variable length) relative to top level directory (with=
-out the
-> =A0 =A0leading slash). '/' is used as path separator. '.' indicates t=
-he root
-> =A0 =A0directory. The special patch components ".." and ".git" (witho=
-ut quotes)
-> =A0 =A0are disallowed. Trailing slash is also disallowed.
-
-typo: The special _path_ components ".." and ".git" ...
+	Marcus
