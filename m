@@ -1,89 +1,114 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [1.8.0] use 'stage' term consistently
-Date: Sun, 06 May 2012 12:26:48 +0200
-Message-ID: <vpqehqxmwpj.fsf@bauges.imag.fr>
-References: <CAMP44s1qqpTxRvjEH32MNqzUeNhgZ1gB+fu=cgvxnSbMB6oBGA@mail.gmail.com>
+From: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
+Subject: Re: [PATCH v3] completion: add new _GIT_complete helper
+Date: Sun, 6 May 2012 12:30:06 +0200
+Message-ID: <20120506103006.GI2164@goldbirke>
+References: <1336231400-6878-1-git-send-email-felipe.contreras@gmail.com>
+	<20120505155423.GA14684@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Jeff King <peff@peff.net>, Scott Chacon <schacon@gmail.com>,
-	Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>,
-	Jakub =?utf-8?Q?Nar=C4=99bski?= <jnareb@gmail.com>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>,
-	Piotr Krukowiecki <piotr.krukowiecki.news@gmail.com>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Sun May 06 12:27:11 2012
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>,
+	Thomas Rast <trast@student.ethz.ch>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Sun May 06 12:30:18 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SQygI-0006Tx-Bj
-	for gcvg-git-2@plane.gmane.org; Sun, 06 May 2012 12:27:10 +0200
+	id 1SQyjJ-0000Lv-2T
+	for gcvg-git-2@plane.gmane.org; Sun, 06 May 2012 12:30:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753270Ab2EFK1F (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 6 May 2012 06:27:05 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:57881 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753200Ab2EFK1E (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 May 2012 06:27:04 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id q46AJlMx025938
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Sun, 6 May 2012 12:19:47 +0200
-Received: from bauges.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1SQyfx-00080s-9g; Sun, 06 May 2012 12:26:49 +0200
-In-Reply-To: <CAMP44s1qqpTxRvjEH32MNqzUeNhgZ1gB+fu=cgvxnSbMB6oBGA@mail.gmail.com>
-	(Felipe Contreras's message of "Sat, 5 May 2012 15:04:25 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.93 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Sun, 06 May 2012 12:19:47 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: q46AJlMx025938
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1336904390.12738@Q2p/0letJnkBQAPDiu2X/Q
+	id S1753277Ab2EFKaL convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 6 May 2012 06:30:11 -0400
+Received: from moutng.kundenserver.de ([212.227.17.8]:56158 "EHLO
+	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752973Ab2EFKaK (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 6 May 2012 06:30:10 -0400
+Received: from localhost6.localdomain6 (p5B130CE2.dip0.t-ipconnect.de [91.19.12.226])
+	by mrelayeu.kundenserver.de (node=mrbap4) with ESMTP (Nemesis)
+	id 0Lr20J-1Rw1Yy25AZ-00e8Um; Sun, 06 May 2012 12:30:07 +0200
+Content-Disposition: inline
+In-Reply-To: <20120505155423.GA14684@burratino>
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Provags-ID: V02:K0:SgA1N86C3AiPx03ynHXhHiZ8Efb9d8UhaOCBrEpKd6d
+ 5/shrbZzLzBkxO6KLQOnQFYp/UzNB93pvDlCQzrI6wJyAsPNfG
+ Tdg4AKA1EjciesiQwWpfO1P4ysifaYIBYtMnIuzsZN0G3Te8iN
+ jKuEweyw2gHbuagCsLMt4BldLTKWS9jDjinDXrxJ0nr4GtiCM1
+ ssa8pY11UaGvz+/dhDnfzk8RV2p16i4RBhlq8w807sk+HL+j9K
+ 3AiA2glCPLjb082wQ6JwM0YnN+8dE8jXhf94pZJ3O4PvYLJOHe
+ lX8jYWOIhioIM7IbaMT1T97qOYb0AFshsnDkxfJQfBwP54bGzH
+ c8/asmuD/RC+C6oufJhs=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197163>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197164>
 
-Felipe Contreras <felipe.contreras@gmail.com> writes:
+On Sat, May 05, 2012 at 10:54:23AM -0500, Jonathan Nieder wrote:
+> Felipe Contreras wrote:
+>=20
+> > Since v3:
+> >
+> >  * Rename to _GIT_complete to follow bash completion "guidelines"
+> >  * Get rid of foo_wrap name
+>=20
+> Thanks.  G=E1bor, does the "all caps _GIT_ prefix for public API
+> functions" convention look like one we should adopt?  If I understand
+> correctly, previously contrib/completion/git-completion.bash used
+> leading double underscores for everything except completion functions=
+,
+> so this is a change.
 
-> Proposal:
->
-> Avoid the terms 'cache' and 'index' in favor of 'stage'.
+Dunno.  I have only three concerns:
 
-I completely agree that something needs to be done.
+- It doesn't contaminate "my" namespace, where my installed programs,
+  aliases, and shell functions are, i.e. it begins with an underscore.
+- Its name conveys that it's git-specific.
+- It's not called _git_complete, so the completion script (in
+  particular at the end of _git()) won't misrecognize it as a
+  completion function for the 'git complete' command, just in case
+  somebody ever happens to have such a command or alias.
 
-But there are at least two points that were raised during the previous
-discussions that need to be taken into account:
+I'm not sure about the capital letters, but it fulfills all three.
 
-* Currenly, "index" and "staging area" are not exactly synonyms. When
-  used with "git add" and "git commit" (without -a), the index is the
-  staging area for the next commit. But when used by "git merge", the
-  index is more a "merging area".
 
-* There is currently a distinction in the meaning of --cached and
-  --index. See the end of Documentation/gitcli.txt. I think it is good
-  to have this distinction, but I agree that the wording of current
-  option name is wrong (i.e. without having read gitcli.txt, I don't
-  think anyone could have guessed this distinction). Perhaps something
-  like --staged-only/--staged-too?
+> I personally would be happier with a git_complete function provided
+> by another script, like this:
+>=20
+> 	contrib/completion/git-completion.bash:
+>=20
+> 		__git_complete () {
+> 			...
+> 		}
+>=20
+> 	contrib/completion/bash-helpers.bash:
+>=20
+> 		git_complete () {
+> 			__git_complete "$@"
+> 		}
+>=20
+> One might object that if the user includes bash-helpers.bash (name is
+> just a strawman) in .bashrc for interactive shells because he is
+> defining some custom completion functions,
+>=20
+> 	git<TAB>
+>=20
+> would show the git_complete function.  I think that's fine.
 
-About the name, an alternative to "stage" was suggested earlier:
-"precommit". If we were to rewrite Git from scratch, I'd argue in favor
-of this one, which is really easy to understand, especially for
-non-native (you really need to know what a "commit" is to use Git, and
-then infering the meaning of precommit is easy). But we probably have
-already a too long history of changing the name, so introducing yet
-another one is perhaps counter-productive. I don't know.
+It depends on what else will go into that bash-helpers.bash file.  If
+I have to source it to use git completion or the git-specific bash
+prompt, then I won't be very happy about it.
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+> Maybe
+> the user would enjoy the reminder.
+
+A reminder for what?
+
+It's a configuration thing, so it will be used in .bashrc; I think
+it's quite unlikely that it will be used interactively.
+
+
+Best,
+G=E1bor
