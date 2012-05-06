@@ -1,82 +1,69 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH] correct git-status Porcelain Format documentation
-Date: Sun, 6 May 2012 09:29:59 -0400
-Message-ID: <20120506132959.GA28214@sigill.intra.peff.net>
+From: Scott Chacon <schacon@gmail.com>
+Subject: Re: git-scm.com refresh
+Date: Sun, 6 May 2012 06:36:49 -0700
+Message-ID: <CAP2yMaKd79Kj6ixtWO8g_UZqagrpcWtKkbk5j5+-aTmKVr2_jQ@mail.gmail.com>
+References: <CAP2yMaJy=1c3b4F72h6jL_454+0ydEQNXYiC6E-ZeQQgE0PcVA@mail.gmail.com>
+ <vpqd36hlgf1.fsf@bauges.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun May 06 15:30:57 2012
+Content-Type: text/plain; charset=UTF-8
+Cc: git list <git@vger.kernel.org>
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Sun May 06 15:37:24 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SR1Y2-0007ms-Sb
-	for gcvg-git-2@plane.gmane.org; Sun, 06 May 2012 15:30:51 +0200
+	id 1SR1eG-0004HB-Ja
+	for gcvg-git-2@plane.gmane.org; Sun, 06 May 2012 15:37:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753671Ab2EFNaD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 6 May 2012 09:30:03 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:59654
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753616Ab2EFNaB (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 May 2012 09:30:01 -0400
-Received: (qmail 10913 invoked by uid 107); 6 May 2012 13:30:19 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Sun, 06 May 2012 09:30:19 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 06 May 2012 09:29:59 -0400
-Content-Disposition: inline
+	id S1752072Ab2EFNhK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 6 May 2012 09:37:10 -0400
+Received: from mail-qc0-f174.google.com ([209.85.216.174]:56134 "EHLO
+	mail-qc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751537Ab2EFNhJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 6 May 2012 09:37:09 -0400
+Received: by qcro28 with SMTP id o28so1429161qcr.19
+        for <git@vger.kernel.org>; Sun, 06 May 2012 06:37:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=sbElb2/ajYDrAIttnX0ntGKTuuoAGXoMb7aiA06Qdm8=;
+        b=P0IWZH+1+b62QgN79iDS0PZWAdO9Jczw3f4gsdjvns/uFsPj/1mjeD7S0VOz8Cgh5+
+         /9Rc266PDvskvs7IR9VgYINwRPnHX61Kx0tl9EoU6TkQU8bhOyaBRU4CA6GOQhvghsMi
+         FP+O7LdO4G913aENDBUcs3KXUgFUT08JCNq6ixNLLx8xnFdp6bAP9F4t8GGObG0xSLuD
+         zjd2QkvEmNq/jB5rIXs8qpBPyu4G+IlPwQY3qAY4yTJPrqyRw1oOGJFIZO1sUd0ZNr3f
+         Jb0PT/e4maa+YQ0PAMQ8YkwKsUOSqk+wnq1IToAYzQCZtwQQIamc4D3ZBJxIvbVQLB8C
+         bt9w==
+Received: by 10.224.117.6 with SMTP id o6mr13704922qaq.18.1336311429261; Sun,
+ 06 May 2012 06:37:09 -0700 (PDT)
+Received: by 10.229.251.142 with HTTP; Sun, 6 May 2012 06:36:49 -0700 (PDT)
+In-Reply-To: <vpqd36hlgf1.fsf@bauges.imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197184>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197185>
 
-From: Zak Johnson <zakj@nox.cx>
+Hey,
 
-The existing documentation implies that "git status --porcelain" has a branch
-line while "git status --porcelain -z" does not; in fact, neither includes a
-branch line.
+On Sun, May 6, 2012 at 4:04 AM, Matthieu Moy
+<Matthieu.Moy@grenoble-inp.fr> wrote:
+> Great.
+>
+> Could somebody with kernel.org access set up redirects from
+> http://www.kernel.org/pub/software/scm/git/docs/* to these pages? There
+> are still tons of links pointing to kernel.org's 404 errors ...
+>
+> Some time ago, you mentionned some plans to host a wiki on git-scm.com,
+> is it still the case? I noticed that the kernel.org wiki was back since
+> a few days, so the question is different now.
 
-Signed-off-by: Zak Johnson <zakj@nox.cx>
----
-This was forward to me by the original author, who had trouble posting
-to the list. So I'm trying it (I didn't see anything from the taboo list
-in the patch, but we'll see...).
+I am still planning on doing this.  Since it took them several months
+to get back and as you point out, while they're down links go bad all
+over the place, I am planning on owning the wiki so we can have more
+control over it.  I also want to make it easier to contribute to it
+and have it be Git backed.  This is a project on my to-do list.
 
-The patch itself looks obviously correct and describes the current
-behavior. But I have to wonder: the --short format will also not produce
-the branch line unless you provide "-b". So why is it that the porcelain
-format does not respect "-b", since anybody who asked for it would
-obviously be expecting to find and parse it?
-
-Should this bit of documentation be dropped in favor of just making "-b"
-work properly?
-
- Documentation/git-status.txt | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
-
-diff --git a/Documentation/git-status.txt b/Documentation/git-status.txt
-index 2883a28..3e12020 100644
---- a/Documentation/git-status.txt
-+++ b/Documentation/git-status.txt
-@@ -176,6 +176,8 @@ format, with a few exceptions:
- 2. The user's status.relativePaths configuration is not respected; paths
-    shown will always be relative to the repository root.
- 
-+3. There is no branch line.
-+
- There is also an alternate -z format recommended for machine parsing. In
- that format, the status field is the same, but some other things
- change.  First, the '\->' is omitted from rename entries and the field
-@@ -184,7 +186,7 @@ order is reversed (e.g 'from \-> to' becomes 'to from'). Second, a NUL
- and the terminating newline (but a space still separates the status
- field from the first filename).  Third, filenames containing special
- characters are not specially formatted; no quoting or
--backslash-escaping is performed. Fourth, there is no branch line.
-+backslash-escaping is performed.
- 
- CONFIGURATION
- -------------
--- 
-1.7.10.1.14.gb97aca1
+Scott
