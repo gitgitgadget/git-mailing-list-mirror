@@ -1,85 +1,62 @@
-From: Jakub Narebski <jnareb@gmail.com>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
 Subject: Re: [1.8.0] use 'stage' term consistently
-Date: Sun, 6 May 2012 23:21:49 +0200
-Message-ID: <201205062321.52148.jnareb@gmail.com>
-References: <CAMP44s1qqpTxRvjEH32MNqzUeNhgZ1gB+fu=cgvxnSbMB6oBGA@mail.gmail.com> <vpqtxztlhjd.fsf@bauges.imag.fr> <CAMP44s3kkEn+_fhdrXyT9znNDE_u39pv1cFvZ+kLFyzOVpsjHg@mail.gmail.com>
+Date: Sun, 6 May 2012 23:30:13 +0200
+Message-ID: <CACBZZX4_wjFG4D4_2w8UcvbRwBmJ583QpoP_n-tq+dNds3Bi7Q@mail.gmail.com>
+References: <CAMP44s1qqpTxRvjEH32MNqzUeNhgZ1gB+fu=cgvxnSbMB6oBGA@mail.gmail.com>
+ <vpqehqxmwpj.fsf@bauges.imag.fr> <CAMP44s2DU_3UnHxhgwsTVT59KjLi0+=iW7utuofEyis+_06jGA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=UTF-8
 Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>, git@vger.kernel.org,
 	Junio C Hamano <gitster@pobox.com>,
 	Jonathan Nieder <jrnieder@gmail.com>,
 	Jeff King <peff@peff.net>, Scott Chacon <schacon@gmail.com>,
 	Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>,
+	=?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>,
 	Johannes Schindelin <johannes.schindelin@gmx.de>,
 	Piotr Krukowiecki <piotr.krukowiecki.news@gmail.com>
 To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Sun May 06 23:22:03 2012
+X-From: git-owner@vger.kernel.org Sun May 06 23:30:46 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SR8u1-0003v9-Bm
-	for gcvg-git-2@plane.gmane.org; Sun, 06 May 2012 23:22:01 +0200
+	id 1SR92R-0000qJ-58
+	for gcvg-git-2@plane.gmane.org; Sun, 06 May 2012 23:30:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754714Ab2EFVV4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 6 May 2012 17:21:56 -0400
-Received: from mail-wg0-f44.google.com ([74.125.82.44]:38303 "EHLO
-	mail-wg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754679Ab2EFVVz (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 May 2012 17:21:55 -0400
-Received: by wgbdr13 with SMTP id dr13so4280364wgb.1
-        for <git@vger.kernel.org>; Sun, 06 May 2012 14:21:54 -0700 (PDT)
+	id S1754727Ab2EFVah (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 6 May 2012 17:30:37 -0400
+Received: from mail-ee0-f46.google.com ([74.125.83.46]:54342 "EHLO
+	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752005Ab2EFVag (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 6 May 2012 17:30:36 -0400
+Received: by eekc41 with SMTP id c41so1249740eek.19
+        for <git@vger.kernel.org>; Sun, 06 May 2012 14:30:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        bh=RUDW49OdKBgVyKvWzG73iqkaJP8ZauIIQcobzBGofXk=;
-        b=Epz+1URhcKAVTkF1nK/i2t1BPMtHY2O6XgmMsiQzBa4GWD4lhjyMKYUnZFpabD9GvD
-         o2kQvXGQ9m3Cok1BFeSeqZETLTorWP6qCRRpDNMwhqnsABN8SmzeJ6Ryg1lsa8T2Zs4T
-         55MSHdwM7N/nc3clQLSqOmQ3hpqsJsPMZYzUvsoiyY4MUIi6G8Z1mV3mBKQtrE87H+iL
-         LHPzi/H6Ifqeq4KRWcCRb7VXUiurDRFJ0FarvWjayz3I1mK3ek9pupUxmq9y4iL7wEUx
-         91QsWdlrZMq3ILHGVvQm1c7hiOrM6aVQC09bjFSCx9v6LOLOrGTkPwOLSToMWxKqbHB9
-         2f4w==
-Received: by 10.216.137.232 with SMTP id y82mr8168105wei.82.1336339314575;
-        Sun, 06 May 2012 14:21:54 -0700 (PDT)
-Received: from [192.168.1.13] (evc230.neoplus.adsl.tpnet.pl. [83.20.200.230])
-        by mx.google.com with ESMTPS id u9sm17067708wix.0.2012.05.06.14.21.53
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sun, 06 May 2012 14:21:53 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <CAMP44s3kkEn+_fhdrXyT9znNDE_u39pv1cFvZ+kLFyzOVpsjHg@mail.gmail.com>
-Content-Disposition: inline
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=mT2LLJaVpITF2tJREfxgb0nS+GN504oIPovgZ0Jx/tc=;
+        b=Ys+YD0hwURJHeoNZhKpVTjX6I15FmfzDbulDHwS0TycyIpsp5qqaUE3WQ+hmsPwovB
+         TWA+NVRRd5JIQPdWNx6jiLxa7GytKGtkae842gkT+Tbh9Jd9jvghEMHAzTdd6J4cuUdL
+         teqJm2texnn5MuSgbrAH7zsB3kQGmGfrl1m+dX10XYviefzl1u0O5L7I6QuqUoGShpad
+         /Rz6oj/nR3ywUx/ZI5gtuxdRkZVPvs6jjGxzJENqvJgEqUQ9tprbo4eU5d7/zfbKp2Yn
+         X9NnZnWiFr8X1dNAt3qOQTvi/yY8oJG9oJOkv27xmO/yJUjEAIPN5jagMjkb68zyX7tX
+         74fA==
+Received: by 10.213.157.2 with SMTP id z2mr2292942ebw.149.1336339833901; Sun,
+ 06 May 2012 14:30:33 -0700 (PDT)
+Received: by 10.213.108.81 with HTTP; Sun, 6 May 2012 14:30:13 -0700 (PDT)
+In-Reply-To: <CAMP44s2DU_3UnHxhgwsTVT59KjLi0+=iW7utuofEyis+_06jGA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197216>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197217>
 
-On Sun, May 6, 2012, Felipe Contreras wrote:
-> On Sun, May 6, 2012 at 12:39 PM, Matthieu Moy
-> <Matthieu.Moy@grenoble-inp.fr> wrote:
-> > Jakub Narebski <jnareb@gmail.com> writes:
-> >
-> > > Actually Git porcelain does use 'the index' as a cache (computing),
-> > > i.e. as a place to store redundant information (stat data, sha-1
-> > > for trees with DIRC dircache extension) for faster access.
-> >
-> > This is an implementation optimization, that is not supposed to be
-> > visible for the user. Commands refering to the "cache" are not about
-> > stat data cache (e.g. "git diff --cached" is really about the content,
-> > not the stat cache).
-> 
-> Exactly; that's an implementation detail that doesn't affect how the
-> user actually interacts with the staging area.
+On Sun, May 6, 2012 at 11:16 PM, Felipe Contreras
+<felipe.contreras@gmail.com> wrote:
+> I don't know, precommit is not an English word, and it was discussed
+> before, but not many people vouched for it.
 
-Well, it does (or hopefully just did) affect the user: _if it fails_,
-in the form of empty diff on no changes because of stat-dirtyness
-or racy-git :-P
-
--- 
-Jakub Narebski
-Poland
+FWIW in the Icelandic translation I translated "index/stage" to the
+equivalent of "the commit area".
