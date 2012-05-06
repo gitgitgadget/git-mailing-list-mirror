@@ -1,9 +1,9 @@
 From: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
 Subject: Re: [PATCH v3] completion: add new _GIT_complete helper
-Date: Sun, 6 May 2012 13:36:22 +0200
-Message-ID: <20120506113622.GL2164@goldbirke>
+Date: Sun, 6 May 2012 14:12:04 +0200
+Message-ID: <20120506121204.GA5799@goldbirke>
 References: <1336231400-6878-1-git-send-email-felipe.contreras@gmail.com>
-	<20120506111425.GJ2164@goldbirke> <20120506113021.GK2164@goldbirke>
+	<20120506111425.GJ2164@goldbirke>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
@@ -11,78 +11,138 @@ Cc: git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>,
 	Thomas Rast <trast@student.ethz.ch>
 To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Sun May 06 13:36:32 2012
+X-From: git-owner@vger.kernel.org Sun May 06 14:12:37 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SQzlO-00062m-LB
-	for gcvg-git-2@plane.gmane.org; Sun, 06 May 2012 13:36:30 +0200
+	id 1SR0KI-0007CD-Ic
+	for gcvg-git-2@plane.gmane.org; Sun, 06 May 2012 14:12:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753364Ab2EFLg0 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 6 May 2012 07:36:26 -0400
-Received: from moutng.kundenserver.de ([212.227.126.186]:60425 "EHLO
+	id S1753424Ab2EFMMJ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 6 May 2012 08:12:09 -0400
+Received: from moutng.kundenserver.de ([212.227.17.10]:65424 "EHLO
 	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753348Ab2EFLgZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 May 2012 07:36:25 -0400
+	with ESMTP id S1753376Ab2EFMMI (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 6 May 2012 08:12:08 -0400
 Received: from localhost6.localdomain6 (p5B130CE2.dip0.t-ipconnect.de [91.19.12.226])
-	by mrelayeu.kundenserver.de (node=mrbap2) with ESMTP (Nemesis)
-	id 0Lr4bL-1Rw4mx1tmV-00dtli; Sun, 06 May 2012 13:36:24 +0200
+	by mrelayeu.kundenserver.de (node=mreu2) with ESMTP (Nemesis)
+	id 0LwE4w-1S5bI01lok-017XK1; Sun, 06 May 2012 14:12:06 +0200
 Content-Disposition: inline
-In-Reply-To: <20120506113021.GK2164@goldbirke>
+In-Reply-To: <20120506111425.GJ2164@goldbirke>
 User-Agent: Mutt/1.5.20 (2009-06-14)
-X-Provags-ID: V02:K0:ibrN/2fH81ymdcg8JpWavRTonMjWjaUYmWHtQ7GS90R
- 6gzc0fz8kOHWwFkEYXJlskYvMK10fpeb4rsFy8iCaU9uAgvSX0
- LxPjyQ6eecXZCfSSR0XmwCh3oTHHMAmomoH20WZhZPczmRyJQ/
- Gb/LCfhdeaoFEODjg+iBK17XRWTUkz0Hk+LLGgSbL9SU87PciC
- x0z1g/+DA/7ICaI67F9SzdCEnzPQBAVcKHIRQBB/8nSBvTdNzZ
- Tnf+e982XSLzDIrCBIGyb1n/nKrfdD/TtG1ZGoo8evRUvyIVn7
- BwUlwd1dVFK9JjSuR8AxOGnriGpARNQ9exok/PatJYiupEXpLj
- lvrG99Z251hFpRzU6OJs=
+X-Provags-ID: V02:K0:Yy1CdcSqELLL+Jt9hAxUiKti2JSIzsMtDLKZFD8bUg2
+ aNPiHTakAhw30YyN2plt1Ye/2kvfizsa0YyzhkxKyPX/1FxYQn
+ XfdfuMr6Pmr1Xl70LoN2TCAnuRqZqzlXUYwPHre8DnZNSPnVjK
+ tLHEc0mmuLVnsGDSw+DqAnarrPcYKMjGXXIE3BDHknokPqqTQq
+ Cfemosi/EdeNeFJ/orDilt636oJY1UZjQOa2ARa7T5ltFFHdpp
+ t8OW9J3Up2AyE/mqm6zXCvTlVpvyJnFwgAqTaCU/Su2VmG6ouZ
+ MAwmoCRcNo1tn58A9Wo3igml/QzSLUo4phmTMDLkCdB101EimJ
+ wZs7gXIOgtpGahUewUiI=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197170>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197171>
 
-On Sun, May 06, 2012 at 01:30:21PM +0200, SZEDER G=E1bor wrote:
-> On Sun, May 06, 2012 at 01:14:25PM +0200, SZEDER G=E1bor wrote:
-> > On Sat, May 05, 2012 at 05:23:20PM +0200, Felipe Contreras wrote:
-> > > This simplifies the completions, and makes it easier to define al=
-iases:
-> > >=20
-> > >  _GIT_complete gf git_fetch
-> >=20
-> > So, 'gf' is an alias for 'git fetch', for which the user would like=
- to
-> > use the completion for 'git fetch', right?  But that completion
-> > function is caled _git_fetch(), so the underscore prefix is missing
-> > here.
-> >=20
-> > Besides, this example won't work, because the completion for 'git
-> > fetch' uses __git_complete_remote_or_refspec(), which in turn relie=
-s
-> > on finding out the name of the git command from the word on the
-> > command line, and it won't be able to do that from 'gf'.
->=20
-> I scanned the completion script for places where we iterate over the
-> words on the command line, i.e. for the pattern 'while.*\$cword'.
->=20
-> It seems that with the exception of __git_complete_remote_or_refspec(=
-)
-> all those places seem to be OK to be used with aliases.  They all
-> start the iteration at the first word on the command line ('git' or
-> 'gf' being the nullth) so they will iterate over all relevant words i=
-n
-> case of aliases, too.  Perhaps this is a heritage of the dashed
-> commands; back then the completion script had to deal with 'git cmd'
-> and 'git-cmd', too.  __git_complete_remote_or_refspec() starts at the
-> second word, so that must be changed.
+Hi,
 
-There is one more odd case, though: __git_config_get_set_variables()
-iterates over the words on the command line backwards, i.e. starting
-at the index $cword until the index of the word is greater than 1.
-This means that the iteration will stop at the second word, so this
-must be adjusted, too, just in case someone wants an alias for 'git
-config'.
+
+On Sun, May 06, 2012 at 01:14:25PM +0200, SZEDER G=E1bor wrote:
+> On Sat, May 05, 2012 at 05:23:20PM +0200, Felipe Contreras wrote:
+> > +__git_func_wrap ()
+> > +{
+> > +	if [[ -n ${ZSH_VERSION-} ]]; then
+> > +		emulate -L bash
+> > +		setopt KSH_TYPESET
+> > +
+> > +		# workaround zsh's bug that leaves 'words' as a special
+> > +		# variable in versions < 4.3.12
+> > +		typeset -h words
+> > +
+> > +		# workaround zsh's bug that quotes spaces in the COMPREPLY
+> > +		# array if IFS doesn't contain spaces.
+> > +		typeset -h IFS
+> > +	fi
+> > +	local cur words cword prev
+> > +	_get_comp_words_by_ref -n =3D: cur words cword prev
+> > +	__git_func "$@"
+> > +}
+> > +
+> > +_GIT_complete ()
+> > +{
+> > +	local name=3D"${2-$1}"
+> > +	eval "$(typeset -f __git_func_wrap | sed -e "s/__git_func/_$name/=
+")"
+>=20
+> Still don't like the subshell and sed here ...
+>=20
+> > +	complete -o bashdefault -o default -o nospace -F _${name}_wrap $1=
+ 2>/dev/null \
+> > +		|| complete -o default -o nospace -F _${name}_wrap $1
+> > +}
+> > +
+> > +_GIT_complete git
+> > +_GIT_complete gitk
+>=20
+> ... because it adds delay when the completion script is loaded.  But =
+I
+> still don't have ideas how to avoid them.
+
+Ok, I think I got it.  How about this on top of Felipe's patch?
+
+diff --git a/contrib/completion/git-completion.bash b/contrib/completio=
+n/git-completion.bash
+index f300b87d..8c18db92 100755
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -2688,19 +2688,19 @@ __git_func_wrap ()
+ 	fi
+ 	local cur words cword prev
+ 	_get_comp_words_by_ref -n =3D: cur words cword prev
+-	__git_func "$@"
++	$1
+ }
+=20
+ _GIT_complete ()
+ {
+-	local name=3D"${2-$1}"
+-	eval "$(typeset -f __git_func_wrap | sed -e "s/__git_func/_$name/")"
+-	complete -o bashdefault -o default -o nospace -F _${name}_wrap $1 2>/=
+dev/null \
+-		|| complete -o default -o nospace -F _${name}_wrap $1
++	local wrapper=3D"__git_wrap_$1"
++	eval "$wrapper () { __git_func_wrap $2 ; }"
++	complete -o bashdefault -o default -o nospace -F $wrapper $1 2>/dev/n=
+ull \
++		|| complete -o default -o nospace -F $wrapper $1
+ }
+=20
+-_GIT_complete git
+-_GIT_complete gitk
++_GIT_complete git _git
++_GIT_complete gitk _gitk
+=20
+ # The following are necessary only for Cygwin, and only are needed
+ # when the user has tab-completed the executable name and consequently
+
+
+The point is that __git_func_wrap() is not a template function
+processed by _GIT_complete() (or whatever we'll end up calling it)
+anymore, but simply a wrapper function around existing completion
+functions.  The name of the completion function to be invoked should
+be given as argument.  _GIT_complete() then uses 'eval' to create
+another wrapper function to invoke __git_func_wrap() with the name of
+the desired completion function.  The name of this dynamically created
+wrapper function is derived from the name of the command or alias,
+i.e. for 'gf' it will be __git_wrap_gf().
+
+The overhead of the additional function call is not even measureable,
+while it would spare the overhead of fork()ing a subshell and
+fork()+exec()ing 'sed' twice when loading the completion script and
+then for each subsequent alias.
+
+
+Best,
+G=E1bor
