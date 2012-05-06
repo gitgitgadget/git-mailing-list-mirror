@@ -1,72 +1,117 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 4/4] allow recovery from command name typos
-Date: Sun, 6 May 2012 04:21:30 -0400
-Message-ID: <20120506082130.GB27878@sigill.intra.peff.net>
-References: <1336287330-7215-1-git-send-email-rctay89@gmail.com>
- <1336287330-7215-2-git-send-email-rctay89@gmail.com>
- <1336287330-7215-3-git-send-email-rctay89@gmail.com>
- <1336287330-7215-4-git-send-email-rctay89@gmail.com>
- <1336287330-7215-5-git-send-email-rctay89@gmail.com>
+From: "Philip Oakley" <philipoakley@iee.org>
+Subject: Re: git-scm.com refresh
+Date: Sun, 6 May 2012 09:33:10 +0100
+Organization: OPDS
+Message-ID: <C0239E9A908644EAB06A52AE4A90F401@PhilipOakley>
+References: <CAP2yMaJy=1c3b4F72h6jL_454+0ydEQNXYiC6E-ZeQQgE0PcVA@mail.gmail.com> <7vd36j8lc3.fsf@alter.siamese.dyndns.org> <CAP2yMaJsDysqwwUga+fyWhUV-r78FoK7psY7howNBOCnsKLhvA@mail.gmail.com> <7vwr4q6qbh.fsf@alter.siamese.dyndns.org>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Tay Ray Chuan <rctay89@gmail.com>
-X-From: git-owner@vger.kernel.org Sun May 06 10:22:22 2012
+Content-Type: text/plain;
+	format=flowed;
+	charset="iso-8859-1";
+	reply-type=original
+Content-Transfer-Encoding: 7bit
+Cc: "git list" <git@vger.kernel.org>
+To: "Junio C Hamano" <gitster@pobox.com>,
+	"Scott Chacon" <schacon@gmail.com>
+X-From: git-owner@vger.kernel.org Sun May 06 10:33:16 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SQwjR-0002MD-BJ
-	for gcvg-git-2@plane.gmane.org; Sun, 06 May 2012 10:22:17 +0200
+	id 1SQwu3-0001af-Lk
+	for gcvg-git-2@plane.gmane.org; Sun, 06 May 2012 10:33:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752214Ab2EFIVe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 6 May 2012 04:21:34 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:59396
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752018Ab2EFIVd (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 May 2012 04:21:33 -0400
-Received: (qmail 7537 invoked by uid 107); 6 May 2012 08:21:51 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Sun, 06 May 2012 04:21:51 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 06 May 2012 04:21:30 -0400
-Content-Disposition: inline
-In-Reply-To: <1336287330-7215-5-git-send-email-rctay89@gmail.com>
+	id S1752530Ab2EFIdL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 6 May 2012 04:33:11 -0400
+Received: from out1.ip05ir2.opaltelecom.net ([62.24.128.241]:59788 "EHLO
+	out1.ip05ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752430Ab2EFIdI (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 6 May 2012 04:33:08 -0400
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: AgEFAFs2pk9cHlGK/2dsb2JhbABEizqnOIEIggcBBAEBBQgBAS4eAQEcBQsCAwUCAQMVAQslFAEECBIGBxcGARIIAgECAwGFOAeCKAgDDweveA2JU4oXaIU9YwSIMIVKk0OFA4JqgV0
+X-IronPort-AV: E=Sophos;i="4.75,538,1330905600"; 
+   d="scan'208";a="379969675"
+Received: from host-92-30-81-138.as13285.net (HELO PhilipOakley) ([92.30.81.138])
+  by out1.ip05ir2.opaltelecom.net with SMTP; 06 May 2012 09:33:06 +0100
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197156>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197157>
 
-On Sun, May 06, 2012 at 02:55:30PM +0800, Tay Ray Chuan wrote:
+From: "Junio C Hamano" <gitster@pobox.com> Sent: Sunday, May 06, 2012 2:39
+AM
+ > Scott Chacon <schacon@gmail.com> writes:
+>
+>>> As "diff" is listed in "Basic Snapshotting", and it will not
+>>> be able to achieve that without being able to apply its output back to
+>>> the
+>>> working tree or to the index, I would suggest moving "apply" to the
+>>> section as well.
+>>
+>> I have to disagree.  You are thinking of 'apply' from an internals
+>> perspective I have to assume, because I use 'diff' every single day
+>> for all sorts of stuff ("what is modified and unstaged?", "what is
+>> modified and staged?", "what is different between these two branches?"
+>> etc) ...
+>
+> The other day when I was surfing the 'net, I found a blog that was
+> complaining about Git UI.  Some of the things were worth listening to, but
+> there was one item I really had to scratch my head where the misconception
+> behind the complaint came from.  I am typing from memory without bothering
+> to go back to the site to quote, but the complaint essentially was:
+>
+>        Getting a patch is easy with "git diff", but to apply it you need
+>        to make it an email and feed it to "git am"???  That's crazy.
+>
+<snip>
 
-> If suggestions are available (based on Levenshtein distance) and if the
-> terminal isatty(), present a prompt to the user to select one of the
-> computed suggestions.
-> 
-> In the case where there is a single suggestion, present the prompt
-> "[Y/n]", such that "", "y" and "Y" as input leads git to proceed
-> executing the suggestion, while everything else (possibly "n") leads git
-> to terminate.
-> 
-> In the case where there are multiple suggestions, number the suggestions
-> 1 to n, and accept as input one of the numbers, while everything else
-> (possibly "n") leads git to terminate. In this case there is no default;
-> that is, an empty input leads git to terminate. A sample run:
-> 
->   $ git sh --pretty=oneline
->   git: 'sh' is not a git command. See 'git --help'.
-> 
->   Did you mean one of these?
->   1:	show
->   2:	push
->   [1/2/.../n] 1
+> "diff" pairs with "apply", and "format-patch" pairs with "am".
+>
+> I wouldn't mind adding "git patch" as a built-in synonym/alias for "git
+> apply", if you think that would make the above pairing more obvious.  Many
+> computer users know what "patch" does already even they have never used
+> any SCM.
+>
 
-Ugh. Please protect this with a config variable that defaults to
-"off".  It is very un-Unix to prompt unexpectedly, and I suspect a lot
-of people would be annoyed by this behavior changing by default (I know
-I would be).
+Part of the problem is that the `git diff` man page [1] doesn't actively
+tell the user that its result will be in a patch format, and that such a
+patch can be `apply`ed. There are only 5 uses of 'apply' buried in the body
+text, never as a command, as if they are special cases. There is a section
+on the -p option, again it feels like it is a special case.
 
--Peff
+The "--patch" option in [1] is corrupted(?) relative to my desktop in that 
+it
+misses the "(This is the default.)" ending (which most readers skip over 
+when
+speed reading).
+
+The normal case of `git diff` for most users is simply as an extended 'what
+changed' git status.
+
+The `git apply` page [2] does say its about a diff:
+    "DESCRIPTION - Reads the supplied diff output (i.e. "a patch") and
+    applies it to files."
+so it reads ok in reverse.
+
+Perhaps for `git diff` man page
+    NAME - git-diff - Show changes/, usually as a patch,/ between commits,
+    commit and working tree, etc.
+
+Then
+    DESCRIPTION - Show changes ...two files on disk.
+     /You can implement a diff patch by using git-apply(1)./
+
+The main point is that the new user is probably unaware of many of the
+conventions others take for granted. This gives them 'a clue' about `apply`.
+
+Philip
+
+[1] http://git-scm.com/docs/git-diff
+[2] http://git-scm.com/docs/git-apply.html
