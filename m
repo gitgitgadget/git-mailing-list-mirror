@@ -1,55 +1,54 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
+From: Scott Chacon <schacon@gmail.com>
 Subject: Re: git-scm.com refresh
-Date: Sun, 6 May 2012 04:31:35 +0200
-Message-ID: <CAMP44s28Xy4PB-k33RYU=W2Wa+SLs7GDkhr=DohUP_hqr5ur9Q@mail.gmail.com>
+Date: Sat, 5 May 2012 20:51:07 -0700
+Message-ID: <CAP2yMaJwT6=hEwt+v2OHB8yDdXQzV2P1kAimkN_a6GHtqkRJkQ@mail.gmail.com>
 References: <CAP2yMaJy=1c3b4F72h6jL_454+0ydEQNXYiC6E-ZeQQgE0PcVA@mail.gmail.com>
-	<7vd36j8lc3.fsf@alter.siamese.dyndns.org>
-	<CAP2yMaJsDysqwwUga+fyWhUV-r78FoK7psY7howNBOCnsKLhvA@mail.gmail.com>
-	<7vwr4q6qbh.fsf@alter.siamese.dyndns.org>
+ <7vd36j8lc3.fsf@alter.siamese.dyndns.org> <CAP2yMaJsDysqwwUga+fyWhUV-r78FoK7psY7howNBOCnsKLhvA@mail.gmail.com>
+ <7vwr4q6qbh.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Scott Chacon <schacon@gmail.com>, git list <git@vger.kernel.org>
+Cc: git list <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun May 06 04:32:13 2012
+X-From: git-owner@vger.kernel.org Sun May 06 05:52:03 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SQrGe-0004AH-9q
-	for gcvg-git-2@plane.gmane.org; Sun, 06 May 2012 04:32:12 +0200
+	id 1SQsVt-00046v-PC
+	for gcvg-git-2@plane.gmane.org; Sun, 06 May 2012 05:52:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752801Ab2EFCbh convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 5 May 2012 22:31:37 -0400
-Received: from mail-ey0-f174.google.com ([209.85.215.174]:40084 "EHLO
-	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752786Ab2EFCbg convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 5 May 2012 22:31:36 -0400
-Received: by eaaq12 with SMTP id q12so1117407eaa.19
-        for <git@vger.kernel.org>; Sat, 05 May 2012 19:31:35 -0700 (PDT)
+	id S1752701Ab2EFDv3 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 5 May 2012 23:51:29 -0400
+Received: from mail-qc0-f174.google.com ([209.85.216.174]:47777 "EHLO
+	mail-qc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751472Ab2EFDv2 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 5 May 2012 23:51:28 -0400
+Received: by qcro28 with SMTP id o28so1335081qcr.19
+        for <git@vger.kernel.org>; Sat, 05 May 2012 20:51:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type:content-transfer-encoding;
-        bh=K10LKp5DKlIRBFk2HqHKm1Zp98JKtFWzpWgkS9ASs4A=;
-        b=azdOgdPwgj4gDVrtgmNhyrniDr/aJlLCicZno4y+/5Yp9v6YMcs5T9fRelC66IICZW
-         yXkzO79DznkkEJpq9VzMavYUGMD2HNlae6HioHYUBkor8vLvuf2vdQ71LuupwSopdGZY
-         iTzvlZd2BV0TAscKBl8Eotp+Cy1MQCMHZw0YQSaiJRwvR1M09qAdjffAWDEkCKxOrcrt
-         KyyZk3d133hdpo0zglkj+nLJPrk6H6qRHF3BE97+dNg2yr5HIQzKcmxRJEW7PslId4Wy
-         lEFeayqQ9B4wOf6HdYaRY/405FwGL1jHfopWKrulypdgh0Qifjq8RZxIDc3zIeq6O0Ft
-         m/jA==
-Received: by 10.213.20.72 with SMTP id e8mr552609ebb.85.1336271495356; Sat, 05
- May 2012 19:31:35 -0700 (PDT)
-Received: by 10.213.103.18 with HTTP; Sat, 5 May 2012 19:31:35 -0700 (PDT)
+        bh=gCeHBc8oVzzq/ya0Q7+/yYHx7eSZflh+EZak4XvSh2I=;
+        b=rAld4jHYNkv2+HGncFFnLSGtoaFKcfIatGdhzwWA/lalwuBbBtIPB5iSg4fxHSrIq7
+         7U7JzauA2q3koo1ss8/q7AXsDa1Rm/EUplD7NAZNUp0B05KDD+2n54eAvaskvssoORrK
+         BcmIY3u81qv5Fqa2u9adus4lZWIHFZ0h15AqNIV0CkwEckGBhQWiOR+N2WRvheSJS3mk
+         RiIvjYDGRZgUiEUAlEEGIR//MKSe7uj7mozjI85xre2sWfOdDVzYF58qSk3LCfg6RuId
+         O5oDKxcyVIRc7lbNcJcQZJcwokgzg4Ds/1K8OvUdyVJylC62yYBjZ9AGhyIaPFWXDawO
+         eLlw==
+Received: by 10.224.73.77 with SMTP id p13mr18223031qaj.17.1336276287868; Sat,
+ 05 May 2012 20:51:27 -0700 (PDT)
+Received: by 10.229.251.142 with HTTP; Sat, 5 May 2012 20:51:07 -0700 (PDT)
 In-Reply-To: <7vwr4q6qbh.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197144>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197145>
 
-On Sun, May 6, 2012 at 3:39 AM, Junio C Hamano <gitster@pobox.com> wrot=
+On Sat, May 5, 2012 at 6:39 PM, Junio C Hamano <gitster@pobox.com> wrot=
 e:
 > Scott Chacon <schacon@gmail.com> writes:
 >
@@ -86,7 +85,18 @@ he
 > obvious "patch" (or "git apply") did not get into the mind of the aut=
 hor,
 > and I think I now know why.
->
+
+You think he doesn't know about 'git apply' because I'm not listing it
+under Basic Snapshotting in the site I put live yesterday?  Or because
+I'm not teaching that?  That makes no sense, I don't understand why
+you think I'm to blame for this guy not knowing that.  If anything,
+this new grouping will help that, since it clearly puts 'apply' under
+a section explicitly labeled 'Patching'.  It doesn't belong in "Basic
+Snapshotting" because that's not at all what it's used for and it
+doesn't make sense to put 'diff' under 'Patching' because that's not
+it's primary use case - it is mainly used to see what differences are
+in various cases, not to create patch files.
+
 > If the owner of the site that people call "git's home page" does not =
 care
 > about those who take diffs and apply them as patches, and thinks "git
@@ -98,17 +108,15 @@ ing
 n a
 > similar way. Sigh...
 
-So you think moving "git apply" to another section there is going to
-fix the problem? And what is the problem? That some random guy in a
-blog post thinks it's crazy to use 'git format-patch' and 'git am'? I
-don't think that's a problem worth worrying about, and I don't think
-it's crazy.
-
-Who cares if people don't know about "git apply"? I too have used it
-very rarely, and almost every time I gave up. It's not really useful
-because if there are conflicts (and there usually are), the thing just
-fails, and 'git apply --reject' (horrible name BTW; apply and reject a
-patch?) is too cumbersome. It's much easier to just avoid it.
+=46or one, it's not that I don't care, it's that I don't think that how
+you're considering the problem set here is common.  I'm trying to make
+Git a little bit easier to approach by grouping many of the commands
+into groups by the problems they are primarily used to address.  If
+you can argue that 'diff' is *primarily* used to create patch files
+for 'apply' to consume, then I would be happy to argue that, but
+that's not what you're saying.  You're ignoring my argument that I
+believe that 'diff' is used primarily for another use case and that
+that use case is closer to 'status' then to 'apply'.
 
 >> ... where I can't think of a single time I've ever used 'apply'. =C2=
 =A0In
@@ -130,18 +138,31 @@ eful when the
 >
 > and teach it as such.
 
-It's still basically useless.
+There is absolutely no reason to be this condescending.  You can read
+a similar description of 'apply' in the context of applying patches
+produced by 'diff' in my book which is CC licensed and now makes up a
+large part of the git-scm.com site here:
 
+http://git-scm.com/book/en/Distributed-Git-Maintaining-a-Project#Applyi=
+ng-Patches-from-E-mail
+
+It is also one of the top results when searching for 'apply' on the
+site and it is cross-linked from the git-apply manpage in the sidebar.
+ It's difficult for me to see how this can be made more clear by me on
+this site.
+
+>
 > "diff" pairs with "apply", and "format-patch" pairs with "am".
+>
 
-A contributor uses 'format-patch' often, a maintainer uses 'am' often,
-but who uses 'apply'? Nobody. Who uses 'diff'? Everybody.
+If you read on through the next paragraph in that book you will see
+this covered as well, as a slightly different use case where the
+contributor used 'format-patch' instead.
 
-'git diff' is *essential* to see what's going on with the staging
-area, and the working directory.
-
-When do you actually *need* 'git apply'? Never; you can always achieve
-the same in different ways probably much easier.
+Or, if you wish, you can read it in German, Japanese, French, Dutch,
+Russian, Chinese or Spanish - the languages that have fully translated
+my book and are also available on the site.  It's difficult to see why
+you think I'm making this perceived issue worse.
 
 > I wouldn't mind adding "git patch" as a built-in synonym/alias for "g=
 it
@@ -151,14 +172,12 @@ it
 ed
 > any SCM.
 
-'git patch' would certainly make more sense, but even more would be to
-make it actually usable so mergetool could be used in case of
-conflicts, or even just having the typical conflict markers.
+I don't think this is a good idea at all and I've never advocated
+this.  If people know what GNU 'patch' is they can use that, if people
+glance at the new git-scm.com site they should be able to easily see
+'git apply'  listed under other patch-y workflow tools.  What would be
+far easier would be for me to simply list 'diff' under both sections,
+since what we're really struggling with is the multiple use cases of
+the 'diff' command.  I think I'll just do that, OK?
 
-But even with all that, it still wouldn't be as essential as 'git diff'=
-=2E
-
-Cheers.
-
---=20
-=46elipe Contreras
+Scott
