@@ -1,294 +1,71 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
 Subject: Re: [PATCH v3] completion: add new _GIT_complete helper
-Date: Sun, 6 May 2012 22:37:06 +0200
-Message-ID: <CAMP44s3xwgsfjZA6r+bydu-5r1nEO5cGc=wcDSr+WdwunTtpwg@mail.gmail.com>
+Date: Sun, 6 May 2012 15:47:21 -0500
+Message-ID: <20120506204721.GD3063@burratino>
 References: <1336231400-6878-1-git-send-email-felipe.contreras@gmail.com>
-	<20120506111425.GJ2164@goldbirke>
+ <20120505155423.GA14684@burratino>
+ <20120506103006.GI2164@goldbirke>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary=0015174bdeceeb392204bf641d49
-Cc: git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>,
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org,
 	Junio C Hamano <gitster@pobox.com>,
 	Thomas Rast <trast@student.ethz.ch>
-To: =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder@ira.uka.de>
-X-From: git-owner@vger.kernel.org Sun May 06 22:37:16 2012
+To: SZEDER =?utf-8?B?R8OhYm9y?= <szeder@ira.uka.de>
+X-From: git-owner@vger.kernel.org Sun May 06 22:47:55 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SR8Ch-0002SJ-5s
-	for gcvg-git-2@plane.gmane.org; Sun, 06 May 2012 22:37:15 +0200
+	id 1SR8Mz-0000Da-Qs
+	for gcvg-git-2@plane.gmane.org; Sun, 06 May 2012 22:47:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754472Ab2EFUhI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 6 May 2012 16:37:08 -0400
-Received: from mail-ee0-f46.google.com ([74.125.83.46]:41704 "EHLO
-	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753863Ab2EFUhH (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 May 2012 16:37:07 -0400
-Received: by eekc41 with SMTP id c41so1244109eek.19
-        for <git@vger.kernel.org>; Sun, 06 May 2012 13:37:06 -0700 (PDT)
+	id S1754516Ab2EFUr0 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 6 May 2012 16:47:26 -0400
+Received: from mail-ob0-f174.google.com ([209.85.214.174]:34627 "EHLO
+	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754365Ab2EFUrZ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 6 May 2012 16:47:25 -0400
+Received: by obbtb18 with SMTP id tb18so7270779obb.19
+        for <git@vger.kernel.org>; Sun, 06 May 2012 13:47:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=p2402QVNRBy9YgVVj3cF4jRSFESQ1ujeqiBJimzFGzU=;
-        b=vVSh60+kxRQE7GwsNh0hSM3S+064s/pN38EQp2vBZRLIukng3SDppJq5qve1shvc1b
-         7GaU0cyoikcZsNsDJKMYDwFlTVv2KbVPCySZouk6OUlKwOJAr0fBv6vS2cpsicOem3wF
-         Ae7UVZ/4AlQ7Jb1jG95WMFuO5zlaoLQhNrZFAgbe4FPrqC8W/TJ2AOLuvhXrbGRPMvH5
-         9C0CszyWPezEtJEaMrevt8TmrZ9ks52uBayjn6kgS3pp2fNVRl/NcHCpo7WJlG9TSW21
-         ZDGpdT7PRCDMSTf+gVC8ZWCeR6BWH2b/j7/QNRL5lZpaLaW2IHnT/2/jy1rYntKukn3L
-         ZITQ==
-Received: by 10.213.19.200 with SMTP id c8mr2302930ebb.113.1336336626431; Sun,
- 06 May 2012 13:37:06 -0700 (PDT)
-Received: by 10.213.103.18 with HTTP; Sun, 6 May 2012 13:37:06 -0700 (PDT)
-In-Reply-To: <20120506111425.GJ2164@goldbirke>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=QMhVXc2FCPgbewvtHWfsKCSdE0sJVYakDkuAtmsw9zk=;
+        b=BohmtWbWnRZuAh9jzreJ3Uksw71akupRNhWwJ8/37x9Ji0f7KkvpMBqNQI0wY4Co6K
+         aD6Sg9gjn9NVco9zDGqXmSP45ab3xWHccxi+kkltmxEhcNVaX0EzZ+n9cwzTaG19JWEk
+         u58OHQICmW+XVX7s8ZfhKc0xlpC79UPgiF0An8fyidCUtzP2NWcZrdggtZ6bsNx8TZcu
+         KcQaLMLVC6KrP0l19Lfs+ZLJb8QrDA9mFTMwf+5Ka3uIzI7emrzLaI1kyiyvvRY2dU8y
+         qX2IN9ibmBqIi2y69PQ3AZYoB024HP/CjhD5Xv2i7CSbWy1X8elDW/S45swYNwQkdOJU
+         Ldaw==
+Received: by 10.50.34.200 with SMTP id b8mr7030073igj.50.1336337245212;
+        Sun, 06 May 2012 13:47:25 -0700 (PDT)
+Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
+        by mx.google.com with ESMTPS id hq3sm10375972igc.0.2012.05.06.13.47.24
+        (version=SSLv3 cipher=OTHER);
+        Sun, 06 May 2012 13:47:24 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <20120506103006.GI2164@goldbirke>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197209>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197210>
 
---0015174bdeceeb392204bf641d49
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+SZEDER G=C3=A1bor wrote:
 
-Hi,
+> It's a configuration thing, so it will be used in .bashrc; I think
+> it's quite unlikely that it will be used interactively.
 
-On Sun, May 6, 2012 at 1:14 PM, SZEDER G=C3=A1bor <szeder@ira.uka.de> wrote=
-:
-> On Sat, May 05, 2012 at 05:23:20PM +0200, Felipe Contreras wrote:
->> This simplifies the completions, and makes it easier to define aliases:
->>
->> =C2=A0_GIT_complete gf git_fetch
->
-> So, 'gf' is an alias for 'git fetch', for which the user would like to
-> use the completion for 'git fetch', right? =C2=A0But that completion
-> function is caled _git_fetch(), so the underscore prefix is missing
-> here.
+Yeah, makes sense.  So naming the public functions _GIT_complete
+and _GIT_ps1 sounds reasonable.
 
-No, it's not missing:
+Sorry, usually this kind of discussion would be easy but there is an
+element of the human interaction I haven't learned to handle well yet.
+Thanks for your help.
 
-       local name=3D"${2-$1}"
-       eval "$(typeset -f __git_func_wrap | sed -e "s/__git_func/_$name/")"
-       complete -o bashdefault -o default -o nospace -F _${name}_wrap
-$1 2>/dev/null \
-               || complete -o default -o nospace -F _${name}_wrap $1
-
-See how we add '_' before $name? There's not point in burdening the
-user with adding a prefix that will _always_ be there anyway.
-
-> Besides, this example won't work, because the completion for 'git
-> fetch' uses __git_complete_remote_or_refspec(), which in turn relies
-> on finding out the name of the git command from the word on the
-> command line, and it won't be able to do that from 'gf'.
-
-That's irrelevant, it's an example; replace with another command that
-doesn't use 'words', and it would work.
-
-> I remember we discussed this in an earlier round, and you even
-> suggested a possible fix (passing the command name as argument to
-> __git_complete_remote_or_refspec()). =C2=A0I think that's the right thing
-> to do here.
-
-Yeah, but I suggested that in order to avoid the eval and the typeset
-that I require for future future patches, but it turns out it's still
-needed anyway, so my suggestion is to have a 'cmd' variable that
-stores the command; __git_func_wrap would take the responsibility of
-doing that.
-
->> + =C2=A0 =C2=A0 __git_func "$@"
->
-> What is this "$@" for and why? =C2=A0None of the _git_<cmd>() functions
-> take any arguments, nor does _git() and _gitk(), and AFAICT Bash won't
-> pass any either.
-
-bash's complete passes 3 arguments. They might not be used, but it
-doesn't hurt to pass them either.
-
->> +}
->> +
->> +_GIT_complete ()
->> +{
->> + =C2=A0 =C2=A0 local name=3D"${2-$1}"
->> + =C2=A0 =C2=A0 eval "$(typeset -f __git_func_wrap | sed -e "s/__git_fun=
-c/_$name/")"
->
-> Still don't like the subshell and sed here ...
-
-I haven't found any other way.
-
-As for the fix to 'git fetch' and others, I've attached a crude diff
-of all the fixes I have queued together, and there it works perfectly
-fine, but there's a lot of modifications required to properly traverse
-the words array. I've meant to create a special function to traverse
-this array, but I haven't had time time for that; I haven't even
-landed this patch due to apparently irrelevant discussions.
-
-Cheers.
-
---=20
-Felipe Contreras
-
---0015174bdeceeb392204bf641d49
-Content-Type: application/octet-stream; name="fc-bash-update.diff"
-Content-Disposition: attachment; filename="fc-bash-update.diff"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: f_h1wkb6qo0
-
-ZGlmZiAtLWdpdCBhL2NvbnRyaWIvY29tcGxldGlvbi9naXQtY29tcGxldGlvbi5iYXNoIGIvY29u
-dHJpYi9jb21wbGV0aW9uL2dpdC1jb21wbGV0aW9uLmJhc2gKaW5kZXggOWY1NmVjNy4uZWMyYzNj
-YyAxMDA3NTUKLS0tIGEvY29udHJpYi9jb21wbGV0aW9uL2dpdC1jb21wbGV0aW9uLmJhc2gKKysr
-IGIvY29udHJpYi9jb21wbGV0aW9uL2dpdC1jb21wbGV0aW9uLmJhc2gKQEAgLTcyMSwxMCArNzIx
-LDE4IEBAIF9fZ2l0X2NvbXBsZXRlX3Jldmxpc3QgKCkKIAlfX2dpdF9jb21wbGV0ZV9yZXZsaXN0
-X2ZpbGUKIH0KIAorX19naXRfZ2V0X3BvcyAoKQoreworCWVjaG8gJCgoIHQgPSBjbWRfcG9zIC0g
-MiArICQxICkpCit9CisKIF9fZ2l0X2NvbXBsZXRlX3JlbW90ZV9vcl9yZWZzcGVjICgpCiB7Ci0J
-bG9jYWwgY3VyXz0iJGN1ciIgY21kPSIke3dvcmRzWzFdfSIKLQlsb2NhbCBpIGM9MiByZW1vdGU9
-IiIgcGZ4PSIiIGxocz0xIG5vX2NvbXBsZXRlX3JlZnNwZWM9MAorCWxvY2FsIGN1cl89IiRjdXIi
-CisJbG9jYWwgaSBjIHJlbW90ZT0iIiBwZng9IiIgbGhzPTEgbm9fY29tcGxldGVfcmVmc3BlYz0w
-CisKKwljPSQoX19naXRfZ2V0X3BvcyAyKQorCiAJaWYgWyAiJGNtZCIgPSAicmVtb3RlIiBdOyB0
-aGVuCiAJCSgoYysrKSkKIAlmaQpAQCAtOTc2LDcgKzk4NCw4IEBAIF9fZ2l0X2FsaWFzZWRfY29t
-bWFuZCAoKQogIyBfX2dpdF9maW5kX29uX2NtZGxpbmUgcmVxdWlyZXMgMSBhcmd1bWVudAogX19n
-aXRfZmluZF9vbl9jbWRsaW5lICgpCiB7Ci0JbG9jYWwgd29yZCBzdWJjb21tYW5kIGM9MQorCWxv
-Y2FsIHdvcmQgc3ViY29tbWFuZCBjCisJYz0kKF9fZ2l0X2dldF9wb3MgMSkKIAl3aGlsZSBbICRj
-IC1sdCAkY3dvcmQgXTsgZG8KIAkJd29yZD0iJHt3b3Jkc1tjXX0iCiAJCWZvciBzdWJjb21tYW5k
-IGluICQxOyBkbwpAQCAtOTkxLDcgKzEwMDAsOCBAQCBfX2dpdF9maW5kX29uX2NtZGxpbmUgKCkK
-IAogX19naXRfaGFzX2RvdWJsZWRhc2ggKCkKIHsKLQlsb2NhbCBjPTEKKwlsb2NhbCBjCisJYz0k
-KF9fZ2l0X2dldF9wb3MgMSkKIAl3aGlsZSBbICRjIC1sdCAkY3dvcmQgXTsgZG8KIAkJaWYgWyAi
-LS0iID0gIiR7d29yZHNbY119IiBdOyB0aGVuCiAJCQlyZXR1cm4gMApAQCAtMTExMSw4ICsxMTIx
-LDggQEAgX2dpdF9iaXNlY3QgKCkKIAogX2dpdF9icmFuY2ggKCkKIHsKLQlsb2NhbCBpIGM9MSBv
-bmx5X2xvY2FsX3JlZj0ibiIgaGFzX3I9Im4iCi0KKwlsb2NhbCBpIGMgb25seV9sb2NhbF9yZWY9
-Im4iIGhhc19yPSJuIgorCWM9JChfX2dpdF9nZXRfcG9zIDEpCiAJd2hpbGUgWyAkYyAtbHQgJGN3
-b3JkIF07IGRvCiAJCWk9IiR7d29yZHNbY119IgogCQljYXNlICIkaSIgaW4KQEAgLTExNDIsMTYg
-KzExNTIsMTkgQEAgX2dpdF9icmFuY2ggKCkKIAogX2dpdF9idW5kbGUgKCkKIHsKLQlsb2NhbCBj
-bWQ9IiR7d29yZHNbMl19IgotCWNhc2UgIiRjd29yZCIgaW4KKwlsb2NhbCBzdWJjb21tYW5kcz0n
-Y3JlYXRlIGxpc3QtaGVhZHMgdmVyaWZ5IHVuYnVuZGxlJworCWxvY2FsIHN1YmNvbW1hbmQ9IiQo
-X19naXRfZmluZF9vbl9jbWRsaW5lICIkc3ViY29tbWFuZHMiKSIKKwlsb2NhbCByCisJKCggciA9
-IGN3b3JkIC0gY21kX3BvcyArIDIgKSkKKwljYXNlICIkciIgaW4KIAkyKQotCQlfX2dpdGNvbXAg
-ImNyZWF0ZSBsaXN0LWhlYWRzIHZlcmlmeSB1bmJ1bmRsZSIKKwkJX19naXRjb21wICIkc3ViY29t
-bWFuZHMiCiAJCTs7CiAJMykKIAkJIyBsb29raW5nIGZvciBhIGZpbGUKIAkJOzsKIAkqKQotCQlj
-YXNlICIkY21kIiBpbgorCQljYXNlICIkc3ViY29tbWFuZCIgaW4KIAkJCWNyZWF0ZSkKIAkJCQlf
-X2dpdF9jb21wbGV0ZV9yZXZsaXN0CiAJCQk7OwpAQCAtMTQyNyw2ICsxNDQwLDcgQEAgX19naXRf
-bWF0Y2hfY3RhZygpIHsKIF9naXRfZ3JlcCAoKQogewogCV9fZ2l0X2hhc19kb3VibGVkYXNoICYm
-IHJldHVybgorCWxvY2FsIHA9JChfX2dpdF9nZXRfcG9zIDIpCiAKIAljYXNlICIkY3VyIiBpbgog
-CS0tKikKQEAgLTE0NDcsNyArMTQ2MSw3IEBAIF9naXRfZ3JlcCAoKQogCWVzYWMKIAogCWNhc2Ug
-IiRjd29yZCwkcHJldiIgaW4KLQkyLCp8KiwtKikKKwkkcCwqfCosLSopCiAJCWlmIHRlc3QgLXIg
-dGFnczsgdGhlbgogCQkJX19naXRjb21wX25sICIkKF9fZ2l0X21hdGNoX2N0YWcgIiRjdXIiIHRh
-Z3MpIgogCQkJcmV0dXJuCkBAIC0yNTYyLDcgKzI1NzYsOCBAQCBfZ2l0X3N2biAoKQogCiBfZ2l0
-X3RhZyAoKQogewotCWxvY2FsIGkgYz0xIGY9MAorCWxvY2FsIGkgYyBmPTAKKwljPSQoX19naXRf
-Z2V0X3BvcyAxKQogCXdoaWxlIFsgJGMgLWx0ICRjd29yZCBdOyBkbwogCQlpPSIke3dvcmRzW2Nd
-fSIKIAkJY2FzZSAiJGkiIGluCkBAIC0yNTk5LDM5ICsyNjE0LDI0IEBAIF9naXRfd2hhdGNoYW5n
-ZWQgKCkKIAlfZ2l0X2xvZwogfQogCi1fZ2l0ICgpCitfbWFpbl9naXQgKCkKIHsKLQlsb2NhbCBp
-IGM9MSBjb21tYW5kIF9fZ2l0X2RpcgotCi0JaWYgW1sgLW4gJHtaU0hfVkVSU0lPTi19IF1dOyB0
-aGVuCi0JCWVtdWxhdGUgLUwgYmFzaAotCQlzZXRvcHQgS1NIX1RZUEVTRVQKLQotCQkjIHdvcmth
-cm91bmQgenNoJ3MgYnVnIHRoYXQgbGVhdmVzICd3b3JkcycgYXMgYSBzcGVjaWFsCi0JCSMgdmFy
-aWFibGUgaW4gdmVyc2lvbnMgPCA0LjMuMTIKLQkJdHlwZXNldCAtaCB3b3JkcwotCi0JCSMgd29y
-a2Fyb3VuZCB6c2gncyBidWcgdGhhdCBxdW90ZXMgc3BhY2VzIGluIHRoZSBDT01QUkVQTFkKLQkJ
-IyBhcnJheSBpZiBJRlMgZG9lc24ndCBjb250YWluIHNwYWNlcy4KLQkJdHlwZXNldCAtaCBJRlMK
-LQlmaQorCWxvY2FsIGkgYz0xIGNtZCBjbWRfcG9zIF9fZ2l0X2RpcgogCi0JbG9jYWwgY3VyIHdv
-cmRzIGN3b3JkIHByZXYKLQlfZ2V0X2NvbXBfd29yZHNfYnlfcmVmIC1uID06IGN1ciB3b3JkcyBj
-d29yZCBwcmV2CiAJd2hpbGUgWyAkYyAtbHQgJGN3b3JkIF07IGRvCiAJCWk9IiR7d29yZHNbY119
-IgogCQljYXNlICIkaSIgaW4KIAkJLS1naXQtZGlyPSopIF9fZ2l0X2Rpcj0iJHtpIy0tZ2l0LWRp
-cj19IiA7OwogCQktLWJhcmUpICAgICAgX19naXRfZGlyPSIuIiA7OwotCQktLWhlbHApIGNvbW1h
-bmQ9ImhlbHAiOyBicmVhayA7OworCQktLWhlbHApIGNtZD0iaGVscCI7IGJyZWFrIDs7CiAJCS1j
-KSBjPSQoKCsrYykpIDs7CiAJCS0qKSA7OwotCQkqKSBjb21tYW5kPSIkaSI7IGJyZWFrIDs7CisJ
-CSopIGNtZD0iJGkiOyBicmVhayA7OwogCQllc2FjCiAJCSgoYysrKSkKIAlkb25lCiAKLQlpZiBb
-IC16ICIkY29tbWFuZCIgXTsgdGhlbgorCWlmIFsgLXogIiRjbWQiIF07IHRoZW4KIAkJY2FzZSAi
-JGN1ciIgaW4KIAkJLS0qKSAgIF9fZ2l0Y29tcCAiCiAJCQktLXBhZ2luYXRlCkBAIC0yNjU1LDM0
-ICsyNjU1LDIwIEBAIF9naXQgKCkKIAkJcmV0dXJuCiAJZmkKIAotCWxvY2FsIGNvbXBsZXRpb25f
-ZnVuYz0iX2dpdF8ke2NvbW1hbmQvLy0vX30iCisJKCggY21kX3BvcyA9IGMgKyAxICkpCisKKwls
-b2NhbCBjb21wbGV0aW9uX2Z1bmM9Il9naXRfJHtjbWQvLy0vX30iCiAJZGVjbGFyZSAtZiAkY29t
-cGxldGlvbl9mdW5jID4vZGV2L251bGwgJiYgJGNvbXBsZXRpb25fZnVuYyAmJiByZXR1cm4KIAot
-CWxvY2FsIGV4cGFuc2lvbj0kKF9fZ2l0X2FsaWFzZWRfY29tbWFuZCAiJGNvbW1hbmQiKQorCWxv
-Y2FsIGV4cGFuc2lvbj0kKF9fZ2l0X2FsaWFzZWRfY29tbWFuZCAiJGNtZCIpCiAJaWYgWyAtbiAi
-JGV4cGFuc2lvbiIgXTsgdGhlbgogCQljb21wbGV0aW9uX2Z1bmM9Il9naXRfJHtleHBhbnNpb24v
-Ly0vX30iCiAJCWRlY2xhcmUgLWYgJGNvbXBsZXRpb25fZnVuYyA+L2Rldi9udWxsICYmICRjb21w
-bGV0aW9uX2Z1bmMKIAlmaQogfQogCi1fZ2l0ayAoKQorX21haW5fZ2l0ayAoKQogewotCWlmIFtb
-IC1uICR7WlNIX1ZFUlNJT04tfSBdXTsgdGhlbgotCQllbXVsYXRlIC1MIGJhc2gKLQkJc2V0b3B0
-IEtTSF9UWVBFU0VUCi0KLQkJIyB3b3JrYXJvdW5kIHpzaCdzIGJ1ZyB0aGF0IGxlYXZlcyAnd29y
-ZHMnIGFzIGEgc3BlY2lhbAotCQkjIHZhcmlhYmxlIGluIHZlcnNpb25zIDwgNC4zLjEyCi0JCXR5
-cGVzZXQgLWggd29yZHMKLQotCQkjIHdvcmthcm91bmQgenNoJ3MgYnVnIHRoYXQgcXVvdGVzIHNw
-YWNlcyBpbiB0aGUgQ09NUFJFUExZCi0JCSMgYXJyYXkgaWYgSUZTIGRvZXNuJ3QgY29udGFpbiBz
-cGFjZXMuCi0JCXR5cGVzZXQgLWggSUZTCi0JZmkKLQotCWxvY2FsIGN1ciB3b3JkcyBjd29yZCBw
-cmV2Ci0JX2dldF9jb21wX3dvcmRzX2J5X3JlZiAtbiA9OiBjdXIgd29yZHMgY3dvcmQgcHJldgot
-CiAJX19naXRfaGFzX2RvdWJsZWRhc2ggJiYgcmV0dXJuCiAKIAlsb2NhbCBnPSIkKF9fZ2l0ZGly
-KSIKQEAgLTI3MDMsMTYgKzI2ODksNDIgQEAgX2dpdGsgKCkKIAlfX2dpdF9jb21wbGV0ZV9yZXZs
-aXN0CiB9CiAKLWNvbXBsZXRlIC1vIGJhc2hkZWZhdWx0IC1vIGRlZmF1bHQgLW8gbm9zcGFjZSAt
-RiBfZ2l0IGdpdCAyPi9kZXYvbnVsbCBcCi0JfHwgY29tcGxldGUgLW8gZGVmYXVsdCAtbyBub3Nw
-YWNlIC1GIF9naXQgZ2l0Ci1jb21wbGV0ZSAtbyBiYXNoZGVmYXVsdCAtbyBkZWZhdWx0IC1vIG5v
-c3BhY2UgLUYgX2dpdGsgZ2l0ayAyPi9kZXYvbnVsbCBcCi0JfHwgY29tcGxldGUgLW8gZGVmYXVs
-dCAtbyBub3NwYWNlIC1GIF9naXRrIGdpdGsKK2Zvb193cmFwICgpCit7CisJbG9jYWwgY21kPWZv
-b19jbWQgY21kX3Bvcz0xCisJaWYgW1sgLW4gJHtaU0hfVkVSU0lPTi19IF1dOyB0aGVuCisJCWVt
-dWxhdGUgLUwgYmFzaAorCQlzZXRvcHQgS1NIX1RZUEVTRVQKKworCQkjIHdvcmthcm91bmQgenNo
-J3MgYnVnIHRoYXQgbGVhdmVzICd3b3JkcycgYXMgYSBzcGVjaWFsCisJCSMgdmFyaWFibGUgaW4g
-dmVyc2lvbnMgPCA0LjMuMTIKKwkJdHlwZXNldCAtaCB3b3JkcworCisJCSMgd29ya2Fyb3VuZCB6
-c2gncyBidWcgdGhhdCBxdW90ZXMgc3BhY2VzIGluIHRoZSBDT01QUkVQTFkKKwkJIyBhcnJheSBp
-ZiBJRlMgZG9lc24ndCBjb250YWluIHNwYWNlcy4KKwkJdHlwZXNldCAtaCBJRlMKKwlmaQorCWxv
-Y2FsIGN1ciB3b3JkcyBjd29yZCBwcmV2CisJX2dldF9jb21wX3dvcmRzX2J5X3JlZiAtbiA9OiBj
-dXIgd29yZHMgY3dvcmQgcHJldgorCWZvbyAiJEAiCit9CisKK2dpdF9jb21wbGV0ZSAoKQorewor
-CWxvY2FsIG5hbWU9IiR7Mi1tYWluXyQxfSIKKwlsb2NhbCBjbWQ9IiR7bmFtZSNnaXRffSIKKwll
-dmFsICIkKHR5cGVzZXQgLWYgZm9vX3dyYXAgfCBzZWQgLWUgInMvZm9vL18kbmFtZS8iIC1lICJz
-L2Zvb19jbWQvJGNtZC8iKSIKKwljb21wbGV0ZSAtbyBiYXNoZGVmYXVsdCAtbyBkZWZhdWx0IC1v
-IG5vc3BhY2UgLUYgXyR7bmFtZX1fd3JhcCAkMSAyPi9kZXYvbnVsbCBcCisJCXx8IGNvbXBsZXRl
-IC1vIGRlZmF1bHQgLW8gbm9zcGFjZSAtRiBfJHtuYW1lfV93cmFwICQxCit9CisKK2dpdF9jb21w
-bGV0ZSBnaXQKK2dpdF9jb21wbGV0ZSBnaXRrCiAKICMgVGhlIGZvbGxvd2luZyBhcmUgbmVjZXNz
-YXJ5IG9ubHkgZm9yIEN5Z3dpbiwgYW5kIG9ubHkgYXJlIG5lZWRlZAogIyB3aGVuIHRoZSB1c2Vy
-IGhhcyB0YWItY29tcGxldGVkIHRoZSBleGVjdXRhYmxlIG5hbWUgYW5kIGNvbnNlcXVlbnRseQog
-IyBpbmNsdWRlZCB0aGUgJy5leGUnIHN1ZmZpeC4KICMKIGlmIFsgQ3lnd2luID0gIiQodW5hbWUg
-LW8gMj4vZGV2L251bGwpIiBdOyB0aGVuCi1jb21wbGV0ZSAtbyBiYXNoZGVmYXVsdCAtbyBkZWZh
-dWx0IC1vIG5vc3BhY2UgLUYgX2dpdCBnaXQuZXhlIDI+L2Rldi9udWxsIFwKLQl8fCBjb21wbGV0
-ZSAtbyBkZWZhdWx0IC1vIG5vc3BhY2UgLUYgX2dpdCBnaXQuZXhlCitnaXRfY29tcGxldGUgZ2l0
-LmV4ZSBtYWluX2dpdAogZmkKZGlmZiAtLWdpdCBhL3QvdDk5MDItY29tcGxldGlvbi5zaCBiL3Qv
-dDk5MDItY29tcGxldGlvbi5zaAppbmRleCBjYzEyNzMyLi4yOTY2YTE4IDEwMDc1NQotLS0gYS90
-L3Q5OTAyLWNvbXBsZXRpb24uc2gKKysrIGIvdC90OTkwMi1jb21wbGV0aW9uLnNoCkBAIC02Myw3
-ICs2Myw3IEBAIHJ1bl9jb21wbGV0aW9uICgpCiAJbG9jYWwgX2N3b3JkCiAJX3dvcmRzPSggJDEg
-KQogCSgoIF9jd29yZCA9ICR7I193b3Jkc1tAXX0gLSAxICkpCi0JX2dpdCAmJiBwcmludF9jb21w
-CisJJHtjb21wX3dyYXAtX21haW5fZ2l0X3dyYXB9ICYmIHByaW50X2NvbXAKIH0KIAogdGVzdF9j
-b21wbGV0aW9uICgpCkBAIC03Myw2ICs3MywyMiBAQCB0ZXN0X2NvbXBsZXRpb24gKCkKIAl0ZXN0
-X2NtcCBleHBlY3RlZCBvdXQKIH0KIAorc2V0dXBfcmVwb3NpdG9yeSAoKQoreworCW1rZGlyICIk
-MSIgJiYgKAorCWNkICIkMSIgJiYKKwlnaXQgaW5pdCAmJgorCXRlc3RfdGljayAmJgorCWdpdCBj
-b21taXQgLS1hbGxvdy1lbXB0eSAtbSAiSW5pdGlhbCIKKwkpCit9CisKK3Rlc3RfZXhwZWN0X3N1
-Y2Nlc3MgJ3ByZXBhcmUnICcKKwlzZXR1cF9yZXBvc2l0b3J5IG9uZSAmJgorCWdpdCBjbG9uZSBv
-bmUgdGVzdCAmJgorCWNkIHRlc3QKKycKKwogdGVzdF9leHBlY3Rfc3VjY2VzcyAnYmFzaWMnICcK
-IAlydW5fY29tcGxldGlvbiAiZ2l0IFwiXCIiICYmCiAJIyBidWlsdC1pbgpAQCAtMTU1LDQgKzE3
-MSw3MSBAQCB0ZXN0X2V4cGVjdF9zdWNjZXNzICdnZW5lcmFsIG9wdGlvbnMgcGx1cyBjb21tYW5k
-JyAnCiAJdGVzdF9jb21wbGV0aW9uICJnaXQgLS1uby1yZXBsYWNlLW9iamVjdHMgY2hlY2siICJj
-aGVja291dCAiCiAnCiAKK3Rlc3RfZXhwZWN0X3N1Y2Nlc3MgJ3JlbW90ZSBvciByZWZzcGVjJyAn
-CisJdGVzdF9jb21wbGV0aW9uICJnaXQgZmV0Y2ggbyIgIm9yaWdpbiAiICYmCisJdGVzdF9jb21w
-bGV0aW9uICJnaXQgZmV0Y2ggb3JpZ2luIG0iICJtYXN0ZXI6bWFzdGVyICIgJiYKKwl0ZXN0X2Nv
-bXBsZXRpb24gImdpdCBwdWxsIG8iICJvcmlnaW4gIiAmJgorCXRlc3RfY29tcGxldGlvbiAiZ2l0
-IHB1bGwgb3JpZ2luIG0iICJtYXN0ZXIgIiAmJgorCXRlc3RfY29tcGxldGlvbiAiZ2l0IHB1c2gg
-byIgIm9yaWdpbiAiICYmCisJdGVzdF9jb21wbGV0aW9uICJnaXQgcHVzaCBvcmlnaW4gbSIgIm1h
-c3RlciAiCisnCisKK3Rlc3RfZXhwZWN0X3N1Y2Nlc3MgJ3N1YmNvbWFuZHMnICcKKwl0ZXN0X2Nv
-bXBsZXRpb24gImdpdCBiaXNlY3Qgc3QiICJzdGFydCAiCisnCisKK3Rlc3RfZXhwZWN0X3N1Y2Nl
-c3MgJ2hhcyBkb3VibGUgZGFzaCcgJworCXRlc3RfY29tcGxldGlvbiAiZ2l0IGFkZCAtLSBmb28i
-ICIiCisnCisKK3Rlc3RfZXhwZWN0X3N1Y2Nlc3MgJ2NvbmZpZycgJworCWdpdCBjb25maWcgLS1m
-aWxlPWZvbyBjb2xvci51aSBhdXRvICYmCisJdGVzdF9jb21wbGV0aW9uICJnaXQgY29uZmlnIC0t
-ZmlsZT1mb28gLS1nZXQgYyIgImNvbG9yLnVpICIKKycKKwordGVzdF9leHBlY3Rfc3VjY2VzcyAn
-b3RoZXInICcKKwljYXQgPmV4cGVjdGVkIDw8LVxFT0YgJiYKKwlvcmlnaW4vSEVBRCAKKwlvcmln
-aW4vbWFzdGVyIAorCUVPRgorCXRlc3RfY29tcGxldGlvbiAiZ2l0IGJyYW5jaCAtciBvIiAmJgor
-CXRlc3RfY29tcGxldGlvbiAiZ2l0IGJ1bmRsZSBjciIgImNyZWF0ZSAiICYmCisKKwllY2hvIGZv
-b2JhciA+IHRhZ3MgJiYKKwl0ZXN0X2NvbXBsZXRpb24gImdpdCBncmVwIGYiICJmb29iYXIgIiAm
-JgorCisJdGVzdF9jb21wbGV0aW9uICJnaXQgbm90ZXMgLS1yZWYgbSIgIm1hc3RlciAiICYmCisK
-KwlnaXQgdGFnIHYwLjEgJiYKKwl0ZXN0X2NvbXBsZXRpb24gImdpdCB0YWcgLWQgdiIgInYwLjEg
-IgorJworCit0ZXN0X2V4cGVjdF9zdWNjZXNzICdnbG9iYWwgb3B0aW9ucyBleHRyYSBjaGVja3Mn
-ICcKKwl0ZXN0X2NvbXBsZXRpb24gImdpdCAtLW5vLXBhZ2VyIGZldGNoIG8iICJvcmlnaW4gIiAm
-JgorCXRlc3RfY29tcGxldGlvbiAiZ2l0IC0tbm8tcGFnZXIgZmV0Y2ggb3JpZ2luIG0iICJtYXN0
-ZXI6bWFzdGVyICIgJiYKKwl0ZXN0X2NvbXBsZXRpb24gImdpdCAtLW5vLXBhZ2VyIHB1bGwgbyIg
-Im9yaWdpbiAiICYmCisJdGVzdF9jb21wbGV0aW9uICJnaXQgLS1uby1wYWdlciBwdWxsIG9yaWdp
-biBtIiAibWFzdGVyICIgJiYKKwl0ZXN0X2NvbXBsZXRpb24gImdpdCAtLW5vLXBhZ2VyIHB1c2gg
-byIgIm9yaWdpbiAiICYmCisJdGVzdF9jb21wbGV0aW9uICJnaXQgLS1uby1wYWdlciBwdXNoIG9y
-aWdpbiBtIiAibWFzdGVyICIgJiYKKwl0ZXN0X2NvbXBsZXRpb24gImdpdCAtLW5vLXBhZ2VyIGJp
-c2VjdCBzdCIgInN0YXJ0ICIgJiYKKwl0ZXN0X2NvbXBsZXRpb24gImdpdCAtLW5vLXBhZ2VyIGFk
-ZCAtLSBmb28iICIiICYmCisJdGVzdF9jb21wbGV0aW9uICJnaXQgLS1uby1wYWdlciBjb25maWcg
-LS1maWxlPWZvbyAtLWdldCBjIiAiY29sb3IudWkgIiAmJgorCWNhdCA+ZXhwZWN0ZWQgPDwtXEVP
-RiAmJgorCW9yaWdpbi9IRUFEIAorCW9yaWdpbi9tYXN0ZXIgCisJRU9GCisJdGVzdF9jb21wbGV0
-aW9uICJnaXQgLS1uby1wYWdlciBicmFuY2ggLXIgbyIgJiYKKwl0ZXN0X2NvbXBsZXRpb24gImdp
-dCAtLW5vLXBhZ2VyIGJ1bmRsZSBjciIgImNyZWF0ZSAiICYmCisJdGVzdF9jb21wbGV0aW9uICJn
-aXQgLS1uby1wYWdlciBncmVwIGYiICJmb29iYXIgIiAmJgorCXRlc3RfY29tcGxldGlvbiAiZ2l0
-IC0tbm8tcGFnZXIgbm90ZXMgLS1yZWYgbSIgIm1hc3RlciAiICYmCisJdGVzdF9jb21wbGV0aW9u
-ICJnaXQgLS1uby1wYWdlciB0YWcgLWQgdiIgInYwLjEgIgorJworCit0ZXN0X2V4cGVjdF9zdWNj
-ZXNzICdhbGlhc2VzJyAnCisJbG9jYWwgY29tcF93cmFwPV9naXRfZmV0Y2hfd3JhcCAmJgorCWdp
-dF9jb21wbGV0ZSBnZiBnaXRfZmV0Y2ggJiYKKwl0ZXN0X2NvbXBsZXRpb24gImdmIG8iICJvcmln
-aW4gIiAmJgorCXRlc3RfY29tcGxldGlvbiAiZ2Ygb3JpZ2luIG0iICJtYXN0ZXI6bWFzdGVyICIK
-KycKKwogdGVzdF9kb25lCg==
---0015174bdeceeb392204bf641d49--
+Jonathan
