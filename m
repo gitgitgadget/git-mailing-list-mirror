@@ -1,147 +1,55 @@
-From: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
-Subject: Re: [PATCH v3] completion: add new _GIT_complete helper
-Date: Mon, 7 May 2012 01:32:35 +0200
-Message-ID: <20120506233235.GN2164@goldbirke>
-References: <1336231400-6878-1-git-send-email-felipe.contreras@gmail.com>
-	<20120506111425.GJ2164@goldbirke>
-	<CAMP44s3xwgsfjZA6r+bydu-5r1nEO5cGc=wcDSr+WdwunTtpwg@mail.gmail.com>
+From: Matthew Mendell <matthew.mendell@gmail.com>
+Subject: git-p4: planned view wildcard support
+Date: Sun, 6 May 2012 16:46:20 -0700
+Message-ID: <CAF0RQx-0M4iUHgGdH=RE_UFmLLZH8uy4kkMW=XspNzGm-vsyEg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Thomas Rast <trast@student.ethz.ch>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Mon May 07 01:32:54 2012
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon May 07 01:47:14 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SRAwd-0003Ep-N8
-	for gcvg-git-2@plane.gmane.org; Mon, 07 May 2012 01:32:52 +0200
+	id 1SRBAY-0002bx-4p
+	for gcvg-git-2@plane.gmane.org; Mon, 07 May 2012 01:47:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754681Ab2EFXcs convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 6 May 2012 19:32:48 -0400
-Received: from moutng.kundenserver.de ([212.227.126.186]:59050 "EHLO
-	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754338Ab2EFXcr (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 May 2012 19:32:47 -0400
-Received: from localhost6.localdomain6 (p5B130CE2.dip0.t-ipconnect.de [91.19.12.226])
-	by mrelayeu.kundenserver.de (node=mreu3) with ESMTP (Nemesis)
-	id 0M3q7C-1S9EPt23us-00rlpO; Mon, 07 May 2012 01:32:39 +0200
-Content-Disposition: inline
-In-Reply-To: <CAMP44s3xwgsfjZA6r+bydu-5r1nEO5cGc=wcDSr+WdwunTtpwg@mail.gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
-X-Provags-ID: V02:K0:7xuhQk3+D7klJLEoaCkSCLJqG2FnCG524bQ9C1hfbhr
- kpyEjxXWPCVXspFifWH+Ur/BtXia24r4FDhF0YCYcm+ZlVMdV3
- eRPMzLAj0a9FKgb71Nbq3+Ujh9XKuhzvnswr0H+VAc5sQkydYm
- T77wqrDdfUNpvN+xXUoR8HWz5X4wsAzCqrNoam6EX1toNN1PPA
- PoOYyp7dzSGWQtaK6YgJUws7/wuiTguy0NzvQq3POI5M1yu5wh
- Tn/s4IFrNNpCZlgHf+Wp3XFz9PH3Pf4/Hds4t23+YaXKFZrnIy
- /mD/yIZ7mw3cQOIqyeTzTMj/iBMf5kvLougTpL2/eOhKVArydr
- zCczUOfWiB0Hyyjidlro=
+	id S1754520Ab2EFXqm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 6 May 2012 19:46:42 -0400
+Received: from mail-wi0-f172.google.com ([209.85.212.172]:33145 "EHLO
+	mail-wi0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754471Ab2EFXql (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 6 May 2012 19:46:41 -0400
+Received: by wibhj6 with SMTP id hj6so2923210wib.1
+        for <git@vger.kernel.org>; Sun, 06 May 2012 16:46:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to:content-type;
+        bh=wNpO+SQXRZ5xdiwFEIQGFclaf41hOUphMjZ9nfllc24=;
+        b=j0hMACTEvPCawAYS8LPVEvztQNshZBZI50ad0mk/f8ySPCsecPMBNlkdHihC5bS3mT
+         y20qaoDh6z0GmnvZ27q4DnsJzjmX2Qc/fnepAcXjS7psVtzFCsnhBbydUzYTcDyjd6hC
+         td5EFM5/nsAXAynq0o+cbpWMpesXU4Jcs9uxnugSq8bJubldMONsgJiGlwt5O2HgjYMU
+         F1gdrPOHsNXSzmArOXE/mBErF81IWQA8ovDdHwKgYM5DXpJzpo5yETzqNRRpyDXaeobi
+         D7RC8biePCW2i6B5Ny58QQJCFmdcXHSv+p/LXhRJonmieAuKjgTCMSdWU6AddGafy4Q7
+         od3A==
+Received: by 10.180.78.233 with SMTP id e9mr364132wix.5.1336348000740; Sun, 06
+ May 2012 16:46:40 -0700 (PDT)
+Received: by 10.180.96.72 with HTTP; Sun, 6 May 2012 16:46:20 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197221>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197222>
 
-Hi,
+Hello,
 
+Is there any plan for the git-p4.py script to support the "*" wildcard
+in a p4 client?
 
-On Sun, May 06, 2012 at 10:37:06PM +0200, Felipe Contreras wrote:
-> On Sun, May 6, 2012 at 1:14 PM, SZEDER G=E1bor <szeder@ira.uka.de> wr=
-ote:
-> > On Sat, May 05, 2012 at 05:23:20PM +0200, Felipe Contreras wrote:
-> >> This simplifies the completions, and makes it easier to define ali=
-ases:
-> >>
-> >> =A0_GIT_complete gf git_fetch
-> >
-> > So, 'gf' is an alias for 'git fetch', for which the user would like=
- to
-> > use the completion for 'git fetch', right? =A0But that completion
-> > function is caled _git_fetch(), so the underscore prefix is missing
-> > here.
->=20
-> No, it's not missing:
->=20
->        local name=3D"${2-$1}"
->        eval "$(typeset -f __git_func_wrap | sed -e "s/__git_func/_$na=
-me/")"
->        complete -o bashdefault -o default -o nospace -F _${name}_wrap
-> $1 2>/dev/null \
->                || complete -o default -o nospace -F _${name}_wrap $1
->=20
-> See how we add '_' before $name?
+The specific test that exposes this unsupported feature:
+./t9809-git-p4-client-view.sh
+...
+ok 4 - unsupported view wildcard *
 
-Indeed, the '_' is added before $name no less than three times.  How
-could I have missed that?! ;)  It would be better to do it once and be
-done with it.
-
-> There's not point in burdening the
-> user with adding a prefix that will _always_ be there anyway.
-
-I don't think it's that much of a burden.  The function is called
-_git_fetch, use that as second argument
-
-> > Besides, this example won't work, because the completion for 'git
-> > fetch' uses __git_complete_remote_or_refspec(), which in turn relie=
-s
-> > on finding out the name of the git command from the word on the
-> > command line, and it won't be able to do that from 'gf'.
->=20
-> That's irrelevant, it's an example;=20
-
-It's relevant; if you give an example, then at least that example
-should work properly, don't you think?
-
-> replace with another command that
-> doesn't use 'words', and it would work.
-
-That it doesn't work has nothing to do with $words.  The problem is tha=
-t
-__git_complete_remote_or_refspec() expects to find the git command in
-${words[1]}, but in case of an alias it can't.
-
-> > I remember we discussed this in an earlier round, and you even
-> > suggested a possible fix (passing the command name as argument to
-> > __git_complete_remote_or_refspec()). =A0I think that's the right th=
-ing
-> > to do here.
->=20
-> Yeah, but I suggested that in order to avoid the eval and the typeset
-> that I require for future future patches, but it turns out it's still
-> needed anyway, so my suggestion is to have a 'cmd' variable that
-> stores the command; __git_func_wrap would take the responsibility of
-> doing that.
-
-Well, now I suggest to do that to fix
-__git_complete_remote_or_refspec(), because that seems to be the
-easiest, cleanest, and fastest solution.
-
-> >> + =A0 =A0 __git_func "$@"
-> >
-> > What is this "$@" for and why? =A0None of the _git_<cmd>() function=
-s
-> > take any arguments, nor does _git() and _gitk(), and AFAICT Bash wo=
-n't
-> > pass any either.
->=20
-> bash's complete passes 3 arguments.
-
-Oh, indeed; the first argument is the command name, the second is the
-current word, and the third is the previous word.  All these are
-available in our completion functions as ${words[0]}, $cur, and $prev,
-respectively.
-
-> They might not be used, but it
-> doesn't hurt to pass them either.
-
-They _are_ not used, so passing them has no benefit either.  I would
-rather stick to using $cur and $prev than $2 and $3.
-
-
-Best,
-G=E1bor
+Thanks,
+-Matt
