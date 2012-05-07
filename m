@@ -1,91 +1,63 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH/RFC] clone: inform the user we are checking out
-Date: Mon, 07 May 2012 12:03:46 -0700
-Message-ID: <7v397b6cfh.fsf@alter.siamese.dyndns.org>
-References: <1336381787-6484-1-git-send-email-kusmabite@gmail.com>
- <4FA7952C.90702@viscovery.net>
- <CABPQNSZ+FtMJ1msSmqvROP6YqRGKvz1uz8w1z5mF3YDXZyiPQw@mail.gmail.com>
- <CABPQNSbbH3ULjgYxW6RdH0emrgXoKf1mkiEAm2fR19LsC5q8_w@mail.gmail.com>
- <CABPQNSYe6dDf20D2pQpF=K97rZnWxqe5weEdO+FdKck9rwwzWg@mail.gmail.com>
+Subject: Re: [PATCH/RFC 0/3] Support ignore rule "**" using wildmatch from
+ rsync
+Date: Mon, 07 May 2012 12:05:11 -0700
+Message-ID: <7vy5p34xso.fsf@alter.siamese.dyndns.org>
+References: <1336395717-7799-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Sixt <j.sixt@viscovery.net>,
-	Tay Ray Chuan <rctay89@gmail.com>, git@vger.kernel.org
-To: kusmabite@gmail.com
-X-From: git-owner@vger.kernel.org Mon May 07 21:03:57 2012
+Cc: git@vger.kernel.org
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Mon May 07 21:05:32 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SRTDu-0006F6-1U
-	for gcvg-git-2@plane.gmane.org; Mon, 07 May 2012 21:03:54 +0200
+	id 1SRTFT-0006ro-A5
+	for gcvg-git-2@plane.gmane.org; Mon, 07 May 2012 21:05:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757578Ab2EGTDu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 May 2012 15:03:50 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:40460 "EHLO
+	id S1757660Ab2EGTFQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 May 2012 15:05:16 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:41063 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757564Ab2EGTDt (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 May 2012 15:03:49 -0400
+	id S1757653Ab2EGTFN (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 May 2012 15:05:13 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A88D27A7A;
-	Mon,  7 May 2012 15:03:48 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7077B7AEB;
+	Mon,  7 May 2012 15:05:13 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=x+WR5BlHUQbkd8fpbs+0CfzIMM4=; b=mkqh/5
-	kgL/sivD0bTE/R395FCSa1sV3+wow0PdTdS3yP85hFmJlcfBuMdz3mLanm7MDAC5
-	kNGsXqWn1yfnTP+53It9lKoPRz+m9lgwcsoSLrYuD2Q/4XxzI0ddHDkDb9E0k//i
-	n4wyZTs3LakiU0T/aZLF85vgucfXtf3W4v3Uc=
+	:content-type; s=sasl; bh=dmrlBLn/2vZ8OXQXabbyaesUWnY=; b=EdO+ud
+	MqFZCsmxzb7DFTJwQ8Hc31W89PHnnTHE54qRY5QcMrXUNdclVThub4v7BOYCs3W+
+	5+aNjaxXPnij5fAgZDxfTqHqz4gW1LmOl+WqTEY/VYs0owlXnuSIdqoElLIeZdwm
+	fp1T5ema0qM85uek1eQrajwGnz6CARal0B4vg=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=U1zmUR8XaQxxV5N7nemWRhwudi4VvPsS
-	lyooWNP1UYPyxAaARMRdSlXXh4ZjYCdjKMQMUZzBeFeYtbLgFNXyrwo4LKydVOxX
-	HVWHJupOQpjM/KBcwT/5fear0ZzHyp0EFmLyWMdV/oODgoboSFeTv8ZMp/PbEGG9
-	gnj1X+E0i/s=
+	:content-type; q=dns; s=sasl; b=ZsZ+rDCFe5noHdVfqrgQvEBH1p/gC1U7
+	4POnVDmolKZzZj8jEw8K/kx7073kPe0Q7f/4F+e3HXC9xvKNCc2fQmnm0AtqID6D
+	+zxIKcICmz8xxilOhFGl0wN9SmB/X6V1TVPavFOSXjSYHv/G4ZBN9adcNrjH5BK1
+	xC560usVldI=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9EEBA7A78;
-	Mon,  7 May 2012 15:03:48 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 67FDF7AEA;
+	Mon,  7 May 2012 15:05:13 -0400 (EDT)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3274E7A77; Mon,  7 May 2012
- 15:03:48 -0400 (EDT)
-In-Reply-To: <CABPQNSYe6dDf20D2pQpF=K97rZnWxqe5weEdO+FdKck9rwwzWg@mail.gmail.com> (Erik
- Faye-Lund's message of "Mon, 7 May 2012 12:02:46 +0200")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id F31227AE8; Mon,  7 May 2012
+ 15:05:12 -0400 (EDT)
+In-Reply-To: <1336395717-7799-1-git-send-email-pclouds@gmail.com>
+ (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Mon, 7 May
+ 2012 20:01:54 +0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 604F76DC-9877-11E1-B39B-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 92D91126-9877-11E1-8186-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197298>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197299>
 
-Erik Faye-Lund <kusmabite@gmail.com> writes:
-
-> OK, some blaming shows that this changed in 5bd631b3 ("clone: support
-> multiple levels of verbosity"), back in February 2010. Before this
-> patch, one would have to specify the "quiet"-flag to clone to suppress
-> progress-output, after the patch the default is progress being off.
->
-> This seems like the right thing to do if we want to resurrect the
-> progress-output's default-on behavior:
-> ---8<---
-> diff --git a/builtin/clone.c b/builtin/clone.c
-> index 3f863a1..f48e603 100644
-> --- a/builtin/clone.c
-> +++ b/builtin/clone.c
-> @@ -569,7 +569,7 @@ static int checkout(void)
->  	opts.update = 1;
->  	opts.merge = 1;
->  	opts.fn = oneway_merge;
-> -	opts.verbose_update = (option_verbosity > 0);
-> +	opts.verbose_update = (option_verbosity >= 0);
->  	opts.src_index = &the_index;
->  	opts.dst_index = &the_index;
->
-> ---8<---
-
-Sounds sensible, as the original said "verbosely update unless we were
-told to be quiet", so the normal case should be verbose_update which will
-give progress only if it takes too long.
-
-Care to roll a signed-off patch?
+I skimmed the series and I think it would be a good change in the longer
+term, but I suspect we probably have an unfinished business on the core
+side that sometimes uses pathspec->raw field and assume that they only
+need to do the leading-path match, which needs to be fixed first before
+changes like this can be sanely added.
