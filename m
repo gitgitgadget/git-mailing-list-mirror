@@ -1,87 +1,102 @@
-From: PJ Weisberg <pj@irregularexpressions.net>
-Subject: Re: Does content provenance matter?
-Date: Mon, 7 May 2012 15:14:25 -0700
-Message-ID: <CAJsNXT=26u-PPNe9_LFoC1tAKpWJRWfBNNKzQB5Ya3X0n4K_eg@mail.gmail.com>
-References: <878vh4flh1.fsf@thomas.inf.ethz.ch>
-	<1336427003.53220.YahooMailClassic@web121504.mail.ne1.yahoo.com>
+From: Andrew Sayers <andrew-git@pileofstuff.org>
+Subject: Re: Arguments to git hooks
+Date: Mon, 07 May 2012 23:17:51 +0100
+Message-ID: <4FA84A0F.6060608@pileofstuff.org>
+References: <CAH-tXsB4PBS_YjW4DCjT6ORmNPomQ8XMPbKx3hxVNH=FyB2u3g@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org
-To: Kelly Dean <kellydeanch@yahoo.com>
-X-From: git-owner@vger.kernel.org Tue May 08 00:14:31 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git mailing list <git@vger.kernel.org>
+To: jaseem abid <jaseemabid@gmail.com>
+X-From: git-owner@vger.kernel.org Tue May 08 00:18:02 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SRWCM-0004eC-QO
-	for gcvg-git-2@plane.gmane.org; Tue, 08 May 2012 00:14:31 +0200
+	id 1SRWFl-0005mH-LC
+	for gcvg-git-2@plane.gmane.org; Tue, 08 May 2012 00:18:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756818Ab2EGWO0 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 7 May 2012 18:14:26 -0400
-Received: from mail-vb0-f46.google.com ([209.85.212.46]:38227 "EHLO
-	mail-vb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752760Ab2EGWOZ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 7 May 2012 18:14:25 -0400
-Received: by vbbff1 with SMTP id ff1so1242756vbb.19
-        for <git@vger.kernel.org>; Mon, 07 May 2012 15:14:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=cWn3FwhE26XmuuJc1eVXLXJF65KBx7CRRAvdX88pECg=;
-        b=DAeZ/238IwxHMKsoTsuLA28lCznRqli+zcvAtJnTuJnapRPh+Xzgj1rKrMA5TvS9wE
-         jkDZ22yFASj2Bwf7j3haQZsZSYWVN+Td5IzsySHFivuSB/KCM1eh81dFbAUBW+WlqSDv
-         eWdFtclsnDMFJ+UIaShn5tb8XMjmADB9kcvgV1+A14+apgtZSVeM5Id9nIuqVS9eSrx1
-         vpHpL3XAjUBGgPtDHyypJdMahbmSiV2Y5bvI0xXsQYJ+6xu+XQ1pNQBRRkn5GvVxtHrW
-         OHfrxFZS2ItusI+lJo79+zlUI2hE7lpsahpZ6qiPitOA3fawlMOzn5vYUU52fDXvQMpA
-         OhIQ==
-Received: by 10.52.172.194 with SMTP id be2mr2293775vdc.60.1336428865210; Mon,
- 07 May 2012 15:14:25 -0700 (PDT)
-Received: by 10.220.118.206 with HTTP; Mon, 7 May 2012 15:14:25 -0700 (PDT)
-In-Reply-To: <1336427003.53220.YahooMailClassic@web121504.mail.ne1.yahoo.com>
-X-Google-Sender-Auth: BFkAXfsxx94n7qp8cZomNE6zXeI
+	id S1757546Ab2EGWR5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 May 2012 18:17:57 -0400
+Received: from mtaout02-winn.ispmail.ntl.com ([81.103.221.48]:21831 "EHLO
+	mtaout02-winn.ispmail.ntl.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1757270Ab2EGWR4 (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 7 May 2012 18:17:56 -0400
+Received: from aamtaout02-winn.ispmail.ntl.com ([81.103.221.35])
+          by mtaout02-winn.ispmail.ntl.com
+          (InterMail vM.7.08.04.00 201-2186-134-20080326) with ESMTP
+          id <20120507221754.WUSR28930.mtaout02-winn.ispmail.ntl.com@aamtaout02-winn.ispmail.ntl.com>;
+          Mon, 7 May 2012 23:17:54 +0100
+Received: from [192.168.0.3] (really [94.170.150.126])
+          by aamtaout02-winn.ispmail.ntl.com
+          (InterMail vG.3.00.04.00 201-2196-133-20080908) with ESMTP
+          id <20120507221754.LXPE3795.aamtaout02-winn.ispmail.ntl.com@[192.168.0.3]>;
+          Mon, 7 May 2012 23:17:54 +0100
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.28) Gecko/20120313 Thunderbird/3.1.20
+In-Reply-To: <CAH-tXsB4PBS_YjW4DCjT6ORmNPomQ8XMPbKx3hxVNH=FyB2u3g@mail.gmail.com>
+X-Cloudmark-Analysis: v=1.1 cv=R50lirqlHffDPPkwUlkuVa99MrvKdVWo//yz83qex8g= c=1 sm=0 a=yXtjXN6ItgYA:10 a=u4BGzq-dJbcA:10 a=IkcTkHD0fZMA:10 a=yqP5zQRIxvXerE2vXL8A:9 a=fFLV0aY6A8NLHGSejwgA:7 a=QEXdDO2ut3YA:10 a=HpAAvcLHHh0Zw7uRqdWCyQ==:117
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197320>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197321>
 
-On Mon, May 7, 2012 at 2:43 PM, Kelly Dean <kellydeanch@yahoo.com> wrot=
-e:
-> --- On Mon, 5/7/12, Thomas Rast <trast@student.ethz.ch> wrote:
->> What's the difference between the following series of
->> commits?
->>
->> =A0 Foo
->> =A0 Bar
->> =A0 Revert Bar
->>
->> and
->>
->> =A0 Foo
->>
->> You claim that they're the same, because the tree state
->> after each is
->> the same. =A0But I learned that Bar was broken, and
->> recorded it for all to see.
-> No, I don't claim they're the same. Different commits have different =
-timestamps (and different commit messages, but that's not useful for au=
-tomatic searching to find which commits are derived from which others).=
- Consider if "Revert Bar" and "Bar" didn't point to their parents; coul=
-d you still deduce from them that Bar was broken? Yes--on the basis of =
-the commit timestamps (which shows their temporal order) and the conten=
-ts of the trees which the commits point to (which shows that Revert Bar=
- undoes a change made in Bar).
+On 06/05/12 19:35, jaseem abid wrote:
+> Hello all,
+> 
+> I am trying to write a hook '.git/hooks/commit-msg' to be run before
+> every commit.
+> 
+> How can I pass arguments to the script? Now by default the only arg I
+> am getting is `.git/COMMIT_EDITMSG'`. I would love to get the list of
+> files I tried to commit also into the script so that I can run a lint
+> program on it before committing it. How can I get this done?
 
-But there could be any number of unrelated commits newer than "Bar"
-but older than "Revert Bar" on other branches.  Even if you could
-trust the timestamps to be accurate (you can't), you still can't
-determine a commit's parent unambiguously.
+First, a standard warning - consider using a pre-receive hook instead of
+a pre-commit hook.  A lot of git's power comes from making commits as
+cheap as possible, so rules like "no committing until your code is
+pretty" tend to stifle people.  For example, I often commit changes
+before running lint-type operations, then use `git add -p` and `git
+checkout -p` to selectively accept/reject individual changes.  When I'm
+done, I `git commit --amend` to pretend the original commit never
+happened.  A pre-receive hook gives you most of the same guarantees as a
+pre-commit hook with almost none of the cost.
 
--PJ
+Having said that, there are situations where pre-commit hooks are a good
+idea (like catching "DO NOT COMMIT" comments).  I've played with this a
+little before, and never found a very satisfactory solution.  Here are
+some important cases:
 
-Gehm's Corollary to Clark's Law: Any technology distinguishable from
-magic is insufficiently advanced.
+# git status will sometimes tell you the file that will be committed:
+# edit foo
+git add foo
+git commit
+
+
+# git status will sometimes need a bit of careful parsing:
+# edit foo
+# edit bar
+git add foo
+git commit
+
+
+# git status sometimes tells you the right file but the wrong contents:
+# edit foo
+git add foo
+# edit foo again
+git commit
+
+
+# but often git status will tell you the wrong file altogether:
+# edit foo
+# edit bar
+git add foo
+git commit bar
+
+
+The best solution I've found is a `git commit` wrapper that does
+something like `CHANGES="$(git commit $@ --dry-run -v)"` to get a
+reliable diff, then starts work from there.
+
+	- Andrew
