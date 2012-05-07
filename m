@@ -1,93 +1,137 @@
-From: Erik Faye-Lund <kusmabite@gmail.com>
-Subject: Re: [PATCH/RFC] clone: inform the user we are checking out
-Date: Mon, 7 May 2012 12:02:46 +0200
-Message-ID: <CABPQNSYe6dDf20D2pQpF=K97rZnWxqe5weEdO+FdKck9rwwzWg@mail.gmail.com>
-References: <1336381787-6484-1-git-send-email-kusmabite@gmail.com>
- <4FA7952C.90702@viscovery.net> <CABPQNSZ+FtMJ1msSmqvROP6YqRGKvz1uz8w1z5mF3YDXZyiPQw@mail.gmail.com>
- <CABPQNSbbH3ULjgYxW6RdH0emrgXoKf1mkiEAm2fR19LsC5q8_w@mail.gmail.com>
-Reply-To: kusmabite@gmail.com
+From: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
+Subject: Re: [RFC/PATCH v4 4/6] completion: simplify command stuff
+Date: Mon, 7 May 2012 12:08:58 +0200
+Message-ID: <20120507100858.GQ2164@goldbirke>
+References: <1336353800-17323-1-git-send-email-felipe.contreras@gmail.com>
+	<1336353800-17323-5-git-send-email-felipe.contreras@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org
-To: Johannes Sixt <j.sixt@viscovery.net>,
-	Tay Ray Chuan <rctay89@gmail.com>
-X-From: git-owner@vger.kernel.org Mon May 07 12:03:31 2012
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Thomas Rast <trast@student.ethz.ch>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Mon May 07 12:09:11 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SRKmx-00043f-I1
-	for gcvg-git-2@plane.gmane.org; Mon, 07 May 2012 12:03:31 +0200
+	id 1SRKsP-0007Yx-HO
+	for gcvg-git-2@plane.gmane.org; Mon, 07 May 2012 12:09:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755938Ab2EGKD1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 May 2012 06:03:27 -0400
-Received: from mail-pb0-f46.google.com ([209.85.160.46]:52973 "EHLO
-	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755544Ab2EGKD0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 May 2012 06:03:26 -0400
-Received: by pbbrp8 with SMTP id rp8so6481526pbb.19
-        for <git@vger.kernel.org>; Mon, 07 May 2012 03:03:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=cXsusRtW+kVBK+REr6S9ouw6fJF0KmcwjRD8m9Qj04A=;
-        b=cNkRTEDPn+B7XOArPBmhrvJi4jnzsPZ2gOaGM1gsOLpWTGRPXzx7fvoR04vNxG/K8i
-         /cEvh5eBlBCJm0DYOcenUFREVYSXXz1UlEkdE9bOKKc9keUalx++xla5piXt2UiaY8E/
-         cDtprF0GbCe1HZLG+nAWV1XhLY/vNPzpIO9C5IwTf5vVWs4uUQ6BefO9rUaSrlccFFv1
-         A7ZgbZHdrno5Dl5qz54MWNOdH65S9XBX6PXMxbZF5P4/UMWK4jO6u3rbcE9SWh/MFv3f
-         26rCEDUe8aWXzq3WHh7LmjD9YOXZZDeU6+Si1EGcVO8rGnRh83vV1i+DmjY63OK1G8ti
-         cMjQ==
-Received: by 10.68.224.36 with SMTP id qz4mr1568355pbc.69.1336385006432; Mon,
- 07 May 2012 03:03:26 -0700 (PDT)
-Received: by 10.68.73.65 with HTTP; Mon, 7 May 2012 03:02:46 -0700 (PDT)
-In-Reply-To: <CABPQNSbbH3ULjgYxW6RdH0emrgXoKf1mkiEAm2fR19LsC5q8_w@mail.gmail.com>
+	id S1756049Ab2EGKJE convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 7 May 2012 06:09:04 -0400
+Received: from moutng.kundenserver.de ([212.227.17.9]:51016 "EHLO
+	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755997Ab2EGKJD (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 May 2012 06:09:03 -0400
+Received: from localhost6.localdomain6 (p5B13051B.dip0.t-ipconnect.de [91.19.5.27])
+	by mrelayeu.kundenserver.de (node=mrbap4) with ESMTP (Nemesis)
+	id 0M40YM-1S97If3YDi-00qyXs; Mon, 07 May 2012 12:09:00 +0200
+Content-Disposition: inline
+In-Reply-To: <1336353800-17323-5-git-send-email-felipe.contreras@gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Provags-ID: V02:K0:qqdjq33pMCFh/mJKN1qbvJgCoxiJLM1bY0X0vkayLGo
+ +eIKuOsAb0Jwz4riBXINLne0IWKyIdZqbrf4cG/Lrm61dUXKwW
+ 0k8tCKFHaJWKcbowdn3q0F3zZLREJp6/C2QzTJOp5RPBPE3Rlj
+ aarM9I30amNCAMEH7+RvGV+3e8ie+w6tSPtJ5WMQpZyvy5dahd
+ LiiJVkzL/In7AR/AHFVZbaKBam7ii35dSK26IaLVY5B4XZmNG7
+ Di3FJKaudKk+r5rY0H/le+SluzlwUcu7w/pdladwebpFHLPZS4
+ XJcRFSYMaet3dLN4lq+EzICETC19PQqfarsI4G+LElYO0UBZm4
+ +ycx1bU+UO20RPV0TRQs=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197254>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197255>
 
-On Mon, May 7, 2012 at 11:46 AM, Erik Faye-Lund <kusmabite@gmail.com> wrote:
-> On Mon, May 7, 2012 at 11:35 AM, Erik Faye-Lund <kusmabite@gmail.com> wrote:
->> On Mon, May 7, 2012 at 11:26 AM, Johannes Sixt <j.sixt@viscovery.net> wrote:
->>> Am 5/7/2012 11:09, schrieb Erik Faye-Lund:
->>>> I asked git
->>>> to clone, and it told me it finished, only to hang around for
->>>> several minutes while, judging by the output, doing nothing.
->>>
->>> We have a nice "Checking out files" progress indicator. I wonder why you
->>> do not see it.
->
-> It seems progress is only enabled when cloning with the verbose-flag.
-> This is because check_updates in unpack-trees.c only enabled progress
-> if both o->update and o->verbose_update is set, and checkout in
-> builtin/clone.c fills in opts.verbose_update with (option_verbosity >
-> 0).
->
-> So that's that mystery. I still think the output without the
-> verbose-flag is confusing as-is.
+Hi,
 
-OK, some blaming shows that this changed in 5bd631b3 ("clone: support
-multiple levels of verbosity"), back in February 2010. Before this
-patch, one would have to specify the "quiet"-flag to clone to suppress
-progress-output, after the patch the default is progress being off.
+On Mon, May 07, 2012 at 03:23:18AM +0200, Felipe Contreras wrote:
+> No need to recalculate it.
+>=20
+> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+> ---
+>  contrib/completion/git-completion.bash |   14 +++++++-------
+>  1 file changed, 7 insertions(+), 7 deletions(-)
 
-This seems like the right thing to do if we want to resurrect the
-progress-output's default-on behavior:
----8<---
-diff --git a/builtin/clone.c b/builtin/clone.c
-index 3f863a1..f48e603 100644
---- a/builtin/clone.c
-+++ b/builtin/clone.c
-@@ -569,7 +569,7 @@ static int checkout(void)
- 	opts.update = 1;
- 	opts.merge = 1;
- 	opts.fn = oneway_merge;
--	opts.verbose_update = (option_verbosity > 0);
-+	opts.verbose_update = (option_verbosity >= 0);
- 	opts.src_index = &the_index;
- 	opts.dst_index = &the_index;
+This seems to be the same patch you sent earlier as 7/12 in the first
+round.  I had a few comments back then, see
 
----8<---
+  http://thread.gmane.org/gmane.comp.version-control.git/194958/focus=3D=
+195276
+
+But this $cmd variable will be only used in
+__git_complete_remote_or_refspec(), so perhaps your idea later in that
+thread about invoking it from _git_fetch() as
+
+  __git_complete_remote_or_refspec "fetch"
+
+would be better.  That would only require one modification in its four
+callers, but neither in _git() in this patch nor in __git_complete()
+later in the series to set $cmd.
+
+
+Best,
+G=E1bor
+
+
+> diff --git a/contrib/completion/git-completion.bash b/contrib/complet=
+ion/git-completion.bash
+> index 8de0358..e648d7c 100755
+> --- a/contrib/completion/git-completion.bash
+> +++ b/contrib/completion/git-completion.bash
+> @@ -723,7 +723,7 @@ __git_complete_revlist ()
+> =20
+>  __git_complete_remote_or_refspec ()
+>  {
+> -	local cur_=3D"$cur" cmd=3D"${words[1]}"
+> +	local cur_=3D"$cur"
+>  	local i c=3D2 remote=3D"" pfx=3D"" lhs=3D1 no_complete_refspec=3D0
+>  	if [ "$cmd" =3D "remote" ]; then
+>  		((c++))
+> @@ -2603,22 +2603,22 @@ _git_whatchanged ()
+> =20
+>  _git ()
+>  {
+> -	local i c=3D1 command __git_dir
+> +	local i c=3D1 cmd __git_dir
+> =20
+>  	while [ $c -lt $cword ]; do
+>  		i=3D"${words[c]}"
+>  		case "$i" in
+>  		--git-dir=3D*) __git_dir=3D"${i#--git-dir=3D}" ;;
+>  		--bare)      __git_dir=3D"." ;;
+> -		--help) command=3D"help"; break ;;
+> +		--help) cmd=3D"help"; break ;;
+>  		-c) c=3D$((++c)) ;;
+>  		-*) ;;
+> -		*) command=3D"$i"; break ;;
+> +		*) cmd=3D"$i"; break ;;
+>  		esac
+>  		((c++))
+>  	done
+> =20
+> -	if [ -z "$command" ]; then
+> +	if [ -z "$cmd" ]; then
+>  		case "$cur" in
+>  		--*)   __gitcomp "
+>  			--paginate
+> @@ -2642,10 +2642,10 @@ _git ()
+>  		return
+>  	fi
+> =20
+> -	local completion_func=3D"_git_${command//-/_}"
+> +	local completion_func=3D"_git_${cmd//-/_}"
+>  	declare -f $completion_func >/dev/null && $completion_func && retur=
+n
+> =20
+> -	local expansion=3D$(__git_aliased_command "$command")
+> +	local expansion=3D$(__git_aliased_command "$cmd")
+>  	if [ -n "$expansion" ]; then
+>  		completion_func=3D"_git_${expansion//-/_}"
+>  		declare -f $completion_func >/dev/null && $completion_func
+> --=20
+> 1.7.10
+>=20
