@@ -1,76 +1,75 @@
-From: Jon Seymour <jon.seymour@gmail.com>
-Subject: [PATCH] git-svn: clarify documentation of dcommit sub-command
-Date: Mon,  7 May 2012 19:18:47 +0530
-Message-ID: <1336398527-4363-1-git-send-email-jon.seymour@gmail.com>
-Cc: trast@student.ethz.ch, Jon Seymour <jon.seymour@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 07 15:49:05 2012
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH/RFC] clone: inform the user we are checking out
+Date: Mon, 7 May 2012 09:54:46 -0400
+Message-ID: <20120507135446.GB4860@sigill.intra.peff.net>
+References: <1336381787-6484-1-git-send-email-kusmabite@gmail.com>
+ <4FA7952C.90702@viscovery.net>
+ <CABPQNSZ+FtMJ1msSmqvROP6YqRGKvz1uz8w1z5mF3YDXZyiPQw@mail.gmail.com>
+ <CABPQNSbbH3ULjgYxW6RdH0emrgXoKf1mkiEAm2fR19LsC5q8_w@mail.gmail.com>
+ <CABPQNSYe6dDf20D2pQpF=K97rZnWxqe5weEdO+FdKck9rwwzWg@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Cc: Johannes Sixt <j.sixt@viscovery.net>,
+	Tay Ray Chuan <rctay89@gmail.com>, git@vger.kernel.org
+To: Erik Faye-Lund <kusmabite@gmail.com>
+X-From: git-owner@vger.kernel.org Mon May 07 15:55:26 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SROJF-0001Pz-Ik
-	for gcvg-git-2@plane.gmane.org; Mon, 07 May 2012 15:49:05 +0200
+	id 1SROPH-0005b5-5i
+	for gcvg-git-2@plane.gmane.org; Mon, 07 May 2012 15:55:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756533Ab2EGNtA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 May 2012 09:49:00 -0400
-Received: from mail-pb0-f46.google.com ([209.85.160.46]:51381 "EHLO
-	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756162Ab2EGNs7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 May 2012 09:48:59 -0400
-Received: by pbbrp8 with SMTP id rp8so6696757pbb.19
-        for <git@vger.kernel.org>; Mon, 07 May 2012 06:48:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        bh=V6zQU+d6F5jbsV3ypcTTBh+yGUt9izdi8m3g6xz99d0=;
-        b=kYIwR8RQWhvR9ck+FarkiN2bG5MQQmWfX+xPInnZdDyvvwDRlahSnk7+XGtyaHMAC5
-         R3zk7EwFxsDpv+tbIAPtIeACTfDly2M7D/RnA/VFhIvYJzDCRUfoteW1FI5+2R4ervjb
-         FESA+D6KrUjYcuq7W56yPSv3I84TtF//Sv5Sw4Acb5KvlfqZB0AwQRKWlKbiAUgNniqw
-         R227ZuRZa88Xr7wiys0vXEDE7GWG3AGkOer3GC0JhJGYfEPmof2WabDswso9J+Fv/D9N
-         Mx8eLc7d+fCJaLA6E9ehlEKmanJYuYBWHwgiYudI2XNQSS9ZZ9OnAwHQC4xhRQgdK7xV
-         CJMA==
-Received: by 10.68.204.227 with SMTP id lb3mr44314581pbc.92.1336398539401;
-        Mon, 07 May 2012 06:48:59 -0700 (PDT)
-Received: from ubuntu.au.ibm.com ([122.166.39.99])
-        by mx.google.com with ESMTPS id kd6sm8917633pbc.24.2012.05.07.06.48.56
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 07 May 2012 06:48:58 -0700 (PDT)
-X-Mailer: git-send-email 1.7.9.264.g3fbfe6
+	id S1756835Ab2EGNzL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 May 2012 09:55:11 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:32904
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756803Ab2EGNys (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 May 2012 09:54:48 -0400
+Received: (qmail 21238 invoked by uid 107); 7 May 2012 13:55:06 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 07 May 2012 09:55:06 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 07 May 2012 09:54:46 -0400
+Content-Disposition: inline
+In-Reply-To: <CABPQNSYe6dDf20D2pQpF=K97rZnWxqe5weEdO+FdKck9rwwzWg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197272>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197273>
 
-Clarify that the optional "revision or branch" argument on dcommit sub-command refers to a
-git branch not an SVN branch.
+On Mon, May 07, 2012 at 12:02:46PM +0200, Erik Faye-Lund wrote:
 
-If the user's intent is to commit the current series of commits onto a specific SVN branch
-rather than the trunk, the existing wording might lead them to believe that the optional
-argument may be a means to achieve this.
+> OK, some blaming shows that this changed in 5bd631b3 ("clone: support
+> multiple levels of verbosity"), back in February 2010. Before this
+> patch, one would have to specify the "quiet"-flag to clone to suppress
+> progress-output, after the patch the default is progress being off.
 
-The rewording clarifies that the optional argument actually refers to the source git
-branch, not the target svn branch.
+Yeah, I think this is a bug. We already show progress indicators from
+the transports without "-v", so there is no reason to require it for the
+checkout progress meter. And reading fbd631b3, it looks like the change
+is simply a mistake in the patch.
 
-Signed-off-by: Jon Seymour <jon.seymour@gmail.com>
----
- Documentation/git-svn.txt |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+> This seems like the right thing to do if we want to resurrect the
+> progress-output's default-on behavior:
+> ---8<---
+> diff --git a/builtin/clone.c b/builtin/clone.c
+> index 3f863a1..f48e603 100644
+> --- a/builtin/clone.c
+> +++ b/builtin/clone.c
+> @@ -569,7 +569,7 @@ static int checkout(void)
+>  	opts.update = 1;
+>  	opts.merge = 1;
+>  	opts.fn = oneway_merge;
+> -	opts.verbose_update = (option_verbosity > 0);
+> +	opts.verbose_update = (option_verbosity >= 0);
+>  	opts.src_index = &the_index;
+>  	opts.dst_index = &the_index;
+> 
+> ---8<---
 
-diff --git a/Documentation/git-svn.txt b/Documentation/git-svn.txt
-index 34ee785..c516283 100644
---- a/Documentation/git-svn.txt
-+++ b/Documentation/git-svn.txt
-@@ -197,7 +197,7 @@ and have no uncommitted changes.
- 	pull or merge) your commits against the latest changes in the
- 	SVN repository.
- 	An optional revision or branch argument may be specified, and
--	causes 'git svn' to do all work on that revision/branch
-+	causes 'git svn' to do all work on that git revision/branch
- 	instead of HEAD.
- 	This is advantageous over 'set-tree' (below) because it produces
- 	cleaner, more linear history.
--- 
-1.7.9.264.g3fbfe6
+Yes, that looks correct to me. Thanks for looking into this.
+
+-Peff
