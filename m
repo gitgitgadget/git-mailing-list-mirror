@@ -1,87 +1,114 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] clone: fix progress-regression
-Date: Mon, 07 May 2012 12:47:25 -0700
-Message-ID: <7vtxzr4vua.fsf@alter.siamese.dyndns.org>
-References: <1336418593-2792-1-git-send-email-kusmabite@gmail.com>
+From: Herman van Rink <rink@initfour.nl>
+Subject: Re: Subtree in Git
+Date: Mon, 07 May 2012 21:50:49 +0200
+Organization: Initfour websolutions
+Message-ID: <4FA82799.1020400@initfour.nl>
+References: <CAE1pOi2uT=wipyrOYCwy9QuXnXFV27F1gN3Ej-RaSr-fegQCfA@mail.gmail.com> <nngk410vrja.fsf@transit.us.cray.com> <4F9FA029.7040201@initfour.nl> <87fwbgbs0h.fsf@smith.obbligato.org> <7v8vh78dag.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, gitster@pobox.com, j.sixt@viscovery.net,
-	peff@peff.net, rctay89@gmail.com
-To: Erik Faye-Lund <kusmabite@gmail.com>
-X-From: git-owner@vger.kernel.org Mon May 07 21:47:39 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: greened@obbligato.org, dag@cray.com,
+	Hilco Wijbenga <hilco.wijbenga@gmail.com>,
+	Git Users <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon May 07 21:51:01 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SRTuB-0001fq-8N
-	for gcvg-git-2@plane.gmane.org; Mon, 07 May 2012 21:47:35 +0200
+	id 1SRTxT-0002mR-V8
+	for gcvg-git-2@plane.gmane.org; Mon, 07 May 2012 21:51:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757870Ab2EGTra (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 May 2012 15:47:30 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:56952 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757834Ab2EGTra (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 May 2012 15:47:30 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3039365C3;
-	Mon,  7 May 2012 15:47:27 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=ENLOXVyS1nTKITusbYHsaEi1ey8=; b=K4BsX4
-	EQLGBMfPso3T4jwXrIficp2ykm/nifSnd9v1IRGYXDns01NRmFHaEnxmSMl5rkpo
-	1rtiRAjLnTzx+xhOULeNgzDAASe37aqeA6X6mw/s9mfm+XvN9WussEZyycpfdllR
-	flSPzEbTXNg5+ai2ddmu/3ITpYZr0iR8ScYvA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=KtzjAUXbDgLUiECMpGSsfcqcDYE1Ozcy
-	mLQAjG2cIuQJ87b5Ord0ZCWXe+wl/LGGA2gB8YzrT7xxU6S73TfONMlUPtZoDXdH
-	g2ZwPTkLenmBB7wubt1/slG6ik2xgXZCWjQZpUsFk433YKDtBDfubSKT5SZ+5Vy7
-	jOOwybR8ybA=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2897E65C2;
-	Mon,  7 May 2012 15:47:27 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B16D965C1; Mon,  7 May 2012
- 15:47:26 -0400 (EDT)
-In-Reply-To: <1336418593-2792-1-git-send-email-kusmabite@gmail.com> (Erik
- Faye-Lund's message of "Mon, 7 May 2012 21:23:13 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 7912008A-987D-11E1-9192-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S932108Ab2EGTuz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 May 2012 15:50:55 -0400
+Received: from hosted-by.initfour.nl ([83.137.144.7]:47614 "EHLO
+	mail.initfour.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757822Ab2EGTuy (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 May 2012 15:50:54 -0400
+Received: from [192.168.65.204] (hosted-by.initfour.nl [83.137.144.34])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	(Authenticated sender: helmo@INITFOUR.NL)
+	by mail.initfour.nl (Postfix) with ESMTPSA id 4125E1954407;
+	Mon,  7 May 2012 21:50:50 +0200 (CEST)
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:12.0) Gecko/20120430 Thunderbird/12.0.1
+In-Reply-To: <7v8vh78dag.fsf@alter.siamese.dyndns.org>
+X-Enigmail-Version: 1.4.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197301>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197302>
 
-Erik Faye-Lund <kusmabite@gmail.com> writes:
-
-> In 5bd631b3 ("clone: support multiple levels of verbosity"), the
-> default behavior to show progress of the implicit checkout in
-> the clone-command regressed so that progress was only shown if
-> the verbose-option was specified.
+On 05/05/2012 06:25 AM, Junio C Hamano wrote:
+> greened@obbligato.org writes:
 >
-> Fix this by making option_verbosity == 0 output progress as well.
+>>> I basically did a: git subtree merge --prefix=contrib/subtree <my
+>>> git-subtree branch>
+>>>
+>>> The work in progress in on: https://github.com/helmo/git (the
+>>> subtree-updates branch)
+>> This branch seems to have a bunch of commits from master or some other
+>> branch:
+> Isn't the confusing shape of the history a direct result of what Herman
+> said he did above, i.e. use of "subtree merge"?  I thought that we agreed
+> not to do any more subtree merges for further updates when we slurped the
+> subtree history to contrib/ early in this cycle, so if that is the case,
+> Herman needs to rebase his work so that the integration will not need any
+> "subtree merge" into git.git, perhaps?
 >
-> Signed-off-by: Erik Faye-Lund <kusmabite@gmail.com>
-> ---
+> I looked at various branches found with ls-remote in that repository but I
+> couldn't quite tell which is what, with too many cross merges, among which
+> there are unnecessary duplicated commits (e.g. 90275824 and b9a745f7 seems
+> to be two equivalent commits) and questionable changes from the overall
+> project's point of view.
+>
+> For example, it renames git-subtree.txt to README.md at a4416ee; while I
+> find the idea of departing from asciidoc somewhat attractive (perhaps this
+> is only because I haven't been burned by markdown yet), if "git subtree"
+> wants to live in the git.git repository, that change is a regression.
+> Later the file is renamed back to git-subtree.txt (README.md is lost) at
+> 9ffdeb, a commit with a single-liner "fixing typo" log message adds the
+> README.md file with full contents of git-subtree.txt again at d9ccd03b,
+> and then later merge of the branch at 8861de28 finally decides to revert
+> that to have a shorter README.md that the history originally had, or
+> something.  In short, it is a mess.
+>
+> Not very impressed, but I have this suspition that the history I was
+> looking at was not what was meant to be sent to me and an older
+> incarnation of the project before Herman cleaned it up for public
+> consumption, or something.
+>
+> Confused...
 
-Thanks.
+I agree that it's a messy history.  It the result of the many painful
+merges I did. In various stages a conflicting indentation and other
+changes made it painful to get a clean merge.
+In an attempt to get through this in a pragmatic way the history has
+taken some damage.
 
-> Hmpf. While tidying this up for a proper submission, I found out that
-> writing a reliable test is tricky due to the start_progress_delay-usage.
-> I'd have to clone a repo that does not progress more than 50% of the
-> checkout-operation within one second or something like that (I didn't
-> quite follow the logic there), which is a lot :P.
+Before  starting this latest subtree merge I actually tried to rebase.
+However this failed very quickly, on the I think third commit out of 60,
+landing me in conflict resolution as I had already been through.
+I'd love to improve git but this was just taking too mush effort.
+When I saw the quick result from subtree merge that seemed like a good
+thing.
 
-In real life, most of the checkout is fairly quick for even projects like
-the kernel, and the logic is an attempt to avoid cluttering the terminal
-with progress unless it takes unusually long and might make the user feel
-worried.
+Wouldn't a good rebase have almost just as messy a history as the
+subtree merge?
 
-> So perhaps writing a test to avoid similar breakages in the future isn't
-> worth it?
+As an alternative I've now applied a patch with all changes on a clean
+master branch.
+In the commit message I've named all committers from the original history.
+Would that be acceptable?
+Its now available as https://github.com/helmo/git/tree/subtree-updates
+The subtree merge version is still available as
+https://github.com/helmo/git/tree/subtree-updates-merged
 
-I agree that it probably isn't worth it, given that it took forever for
-anybody to even complain about this.
+-- 
+
+Met vriendelijke groet / Regards,
+
+Herman van Rink
+Initfour websolutions
