@@ -1,68 +1,130 @@
-From: Peter Krefting <peter@softwolves.pp.se>
-Subject: Re: Really big update of git.pot (273 extra messages need to be
- translated)
-Date: Mon, 07 May 2012 09:59:33 +0200 (CEST)
-Organization: /universe/earth/europe/norway/oslo
-Message-ID: <alpine.DEB.2.00.1205070958550.11690@perkele.intern.softwolves.pp.se>
-References: <CANYiYbHBeabd3DV51Z-R-C13QppXvQ+k8AsX0pczLRhCjYpqfw@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Content-Transfer-Encoding: 7BIT
-Cc: Git List <git@vger.kernel.org>
-To: Jiang Xin <worldhello.net@gmail.com>
-X-From: git-owner@vger.kernel.org Mon May 07 10:59:44 2012
+From: Erik Faye-Lund <kusmabite@gmail.com>
+Subject: [PATCH/RFC] clone: inform the user we are checking out
+Date: Mon,  7 May 2012 11:09:47 +0200
+Message-ID: <1336381787-6484-1-git-send-email-kusmabite@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon May 07 11:09:57 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SRJnD-0006cA-3e
-	for gcvg-git-2@plane.gmane.org; Mon, 07 May 2012 10:59:43 +0200
+	id 1SRJx6-0004TY-Ji
+	for gcvg-git-2@plane.gmane.org; Mon, 07 May 2012 11:09:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755757Ab2EGI7i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 May 2012 04:59:38 -0400
-Received: from smtp.getmail.no ([84.208.15.66]:45784 "EHLO smtp.getmail.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755657Ab2EGI7h (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 May 2012 04:59:37 -0400
-X-Greylist: delayed 3601 seconds by postgrey-1.27 at vger.kernel.org; Mon, 07 May 2012 04:59:37 EDT
-Received: from get-mta-scan04.get.basefarm.net ([10.5.16.4])
- by get-mta-out01.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0M3N00DKX7JAEQ10@get-mta-out01.get.basefarm.net> for
- git@vger.kernel.org; Mon, 07 May 2012 09:59:34 +0200 (MEST)
-Received: from get-mta-scan04.get.basefarm.net
- (localhost.localdomain [127.0.0.1])	by localhost (Email Security Appliance)
- with SMTP id 0D1D41EF32F2_FA780E6B	for <git@vger.kernel.org>; Mon,
- 07 May 2012 07:59:34 +0000 (GMT)
-Received: from smtp.getmail.no (unknown [10.5.16.4])
-	by get-mta-scan04.get.basefarm.net (Sophos Email Appliance)
- with ESMTP id F1A5C1EF32EB_FA780E5F	for <git@vger.kernel.org>; Mon,
- 07 May 2012 07:59:33 +0000 (GMT)
-Received: from perkele ([84.215.118.180]) by get-mta-in01.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0M3N00BSX7J9JG10@get-mta-in01.get.basefarm.net> for
- git@vger.kernel.org; Mon, 07 May 2012 09:59:33 +0200 (MEST)
-Received: by perkele (Postfix, from userid 501)	id BF81F2FCFA; Mon,
- 07 May 2012 09:59:33 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])	by perkele (Postfix)
- with ESMTP id BB9662FCF9; Mon, 07 May 2012 09:59:33 +0200 (CEST)
-In-reply-to: <CANYiYbHBeabd3DV51Z-R-C13QppXvQ+k8AsX0pczLRhCjYpqfw@mail.gmail.com>
-User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
-X-Warning: Junk / bulk email will be reported
-X-Rating: This message is not to be eaten by humans
+	id S1755870Ab2EGJJw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 May 2012 05:09:52 -0400
+Received: from mail-we0-f174.google.com ([74.125.82.174]:47588 "EHLO
+	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755668Ab2EGJJv (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 May 2012 05:09:51 -0400
+Received: by werb10 with SMTP id b10so1111279wer.19
+        for <git@vger.kernel.org>; Mon, 07 May 2012 02:09:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:subject:date:message-id:x-mailer;
+        bh=PK+DaT4Qq04fg5RYD1bAzhv9oRlEHP3l/QY8n2dMPaI=;
+        b=j3HMr04VvQyA7Gd7oe4BSsPTZ7ZS66vNAlv7ghkUsXZIbw3p2Wcq3XizXo0Pz+akf2
+         L5SM+Pz/VUeq8eaGjowRUh24lutChm4fCoKxyU/9YkM4hTw6MU9jj4aEtONNaSFagT+E
+         b/5i9HgBxa9bsiMGchFb4DmcZr2g4DqsuhVcuwgVWYtQomdRQqE1QV/swkyMLjoDEUOj
+         9bKPwVCqcC3sV3W5MS6JpLUg1pTkra/k/ieeyyd20odOGB29qIYzf17qi3Gird1wD5v7
+         kBTwRy3WNzMpPXDHJzuL5YxZYm2FpHPlZHd3iBSiY2KvwJ/+f6PCwXb9hQMK+m6FF+Un
+         NZsQ==
+Received: by 10.180.24.7 with SMTP id q7mr32861543wif.11.1336381790434;
+        Mon, 07 May 2012 02:09:50 -0700 (PDT)
+Received: from localhost ([77.40.159.131])
+        by mx.google.com with ESMTPS id h8sm32122982wix.4.2012.05.07.02.09.48
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Mon, 07 May 2012 02:09:49 -0700 (PDT)
+X-Mailer: git-send-email 1.7.10.msysgit.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197243>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197244>
 
-Jiang Xin:
+When cloning a large repository over a local file-system, git
+can use hard-links to the old repository files, making the
+repository-cloning very fast. However, git also perform an
+implicit checkout of the files, which can be a lengthy
+operation.
 
-> I just update po/git.pot in master branch of git-po. It's really big update, and
-> there are 273 new messages!
+Inform the user about this, and move the logic to notify the
+user that we are done until we actually are.
 
-So, which branch should I update the translation of; maint or master?
+Signed-off-by: Erik Faye-Lund <kusmabite@gmail.com>
+---
 
+I just tried to clone a very large (proprietary) repository over
+a local filesystyem, and the output struck me as confusing:
+
+---8<---
+$ git clone some-repo.git some-other-repo
+Cloning into 'some-other-repo'...    <happens instantly>
+done.                                <hangs for minutes>
+$
+---8<---
+
+Now, seems to be because repo gets hard-linked, so the cloning
+part did not actually take much time. However, we perform a
+check-out at the end, and this does take time for my large repo.
+So the behavior probably makes sense from a git-internals point
+of view.
+
+But from an end-user point of view, it's confusing. I asked git
+to clone, and it told me it finished, only to hang around for
+several minutes while, judging by the output, doing nothing.
+
+So, perhaps it could make sense to do something along these lines?
+
+This gives me this output instead:
+
+---8<---
+$ git clone some-repo.git some-other-repo
+Cloning into 'some-repo'...    <happens instantly>
+Checking out HEAD...           <hangs for minutes>
+done.
+$
+---8<---
+
+...which seems much more informative to me.
+
+ builtin/clone.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
+
+diff --git a/builtin/clone.c b/builtin/clone.c
+index bbd5c96..3f863a1 100644
+--- a/builtin/clone.c
++++ b/builtin/clone.c
+@@ -368,9 +368,6 @@ static void clone_local(const char *src_repo, const char *dest_repo)
+ 		strbuf_release(&src);
+ 		strbuf_release(&dest);
+ 	}
+-
+-	if (0 <= option_verbosity)
+-		printf(_("done.\n"));
+ }
+ 
+ static const char *junk_work_tree;
+@@ -544,6 +541,9 @@ static int checkout(void)
+ 	if (option_no_checkout)
+ 		return 0;
+ 
++	if (0 <= option_verbosity)
++		printf(_("Checking out HEAD...\n"));
++
+ 	head = resolve_refdup("HEAD", sha1, 1, NULL);
+ 	if (!head) {
+ 		warning(_("remote HEAD refers to nonexistent ref, "
+@@ -870,5 +870,9 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+ 	strbuf_release(&key);
+ 	strbuf_release(&value);
+ 	junk_pid = 0;
++
++	if (is_local && 0 <= option_verbosity)
++		printf(_("done.\n"));
++
+ 	return err;
+ }
 -- 
-\\// Peter - http://www.softwolves.pp.se/
+1.7.10.1.457.g8275905
