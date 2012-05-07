@@ -1,72 +1,79 @@
-From: <dag@cray.com>
-Subject: Re: Subtree in Git
-Date: Mon, 7 May 2012 10:21:08 -0500
-Message-ID: <nng8vh4yq3f.fsf@transit.us.cray.com>
-References: <CAE1pOi2uT=wipyrOYCwy9QuXnXFV27F1gN3Ej-RaSr-fegQCfA@mail.gmail.com>
-	<nngk410vrja.fsf@transit.us.cray.com> <4F9FA029.7040201@initfour.nl>
-	<87fwbgbs0h.fsf@smith.obbligato.org>
-	<7v8vh78dag.fsf@alter.siamese.dyndns.org>
+From: Pete Wyckoff <pw@padd.com>
+Subject: Re: git-p4: planned view wildcard support
+Date: Mon, 7 May 2012 08:28:33 -0700
+Message-ID: <20120507152833.GA30191@padd.com>
+References: <CAF0RQx-0M4iUHgGdH=RE_UFmLLZH8uy4kkMW=XspNzGm-vsyEg@mail.gmail.com>
+ <20120507104443.GA20372@padd.com>
+ <CAF0RQx_0EYGiTd36WMtjeBwJL1cxsGTe44=P+btEfWn+5Hq5yg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Cc: <greened@obbligato.org>, Herman van Rink <rink@initfour.nl>,
-	Hilco Wijbenga <hilco.wijbenga@gmail.com>,
-	Git Users <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon May 07 17:22:37 2012
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Matthew Mendell <matthew.mendell@gmail.com>
+X-From: git-owner@vger.kernel.org Mon May 07 17:36:48 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SRPlj-0004PH-V0
-	for gcvg-git-2@plane.gmane.org; Mon, 07 May 2012 17:22:36 +0200
+	id 1SRPzQ-00036O-Bf
+	for gcvg-git-2@plane.gmane.org; Mon, 07 May 2012 17:36:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757247Ab2EGPW2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 May 2012 11:22:28 -0400
-Received: from exprod6og109.obsmtp.com ([64.18.1.23]:49746 "EHLO
-	exprod6og109.obsmtp.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756590Ab2EGPW1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 May 2012 11:22:27 -0400
-Received: from CFWEX01.americas.cray.com ([136.162.34.11]) (using TLSv1) by exprod6ob109.postini.com ([64.18.5.12]) with SMTP
-	ID DSNKT6foaIHPHlFhG8iE5UpEDpw1lMBkjo4Y@postini.com; Mon, 07 May 2012 08:22:26 PDT
-Received: from transit.us.cray.com (172.31.17.53) by CFWEX01.americas.cray.com
- (172.30.88.25) with Microsoft SMTP Server (TLS) id 14.1.355.2; Mon, 7 May
- 2012 10:21:12 -0500
-In-Reply-To: <7v8vh78dag.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Fri, 4 May 2012 21:25:27 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+	id S1756770Ab2EGPgj convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 7 May 2012 11:36:39 -0400
+Received: from honk.padd.com ([74.3.171.149]:43027 "EHLO honk.padd.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756623Ab2EGPgi (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 May 2012 11:36:38 -0400
+X-Greylist: delayed 485 seconds by postgrey-1.27 at vger.kernel.org; Mon, 07 May 2012 11:36:38 EDT
+Received: by honk.padd.com (Postfix, from userid 7770)
+	id 503653309; Mon,  7 May 2012 08:28:33 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <CAF0RQx_0EYGiTd36WMtjeBwJL1cxsGTe44=P+btEfWn+5Hq5yg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197278>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197279>
 
-Junio C Hamano <gitster@pobox.com> writes:
+matthew.mendell@gmail.com wrote on Mon, 07 May 2012 08:19 -0700:
+> On Mon, May 7, 2012 at 3:44 AM, Pete Wyckoff <pw@padd.com> wrote:
+> > matthew.mendell@gmail.com wrote on Sun, 06 May 2012 16:46 -0700:
+> >> Is there any plan for the git-p4.py script to support the "*" wild=
+card
+> >> in a p4 client?
+> >>
+> >> The specific test that exposes this unsupported feature:
+> >> ./t9809-git-p4-client-view.sh
+> >> ...
+> >> ok 4 - unsupported view wildcard *
+> >
+> > It hasn't been on anybody's priority list so far that I know, but
+> > this would be not too hard to implement in theory.
+> >
+> > The code changes would need to alter just one class. =A0In
+> > View.Path, functions Path.find_wildcards, match_wildcards and
+> > fill_in_wildcards, if you're interested in giving it a try.
+> >
+> > Can you constrain your use of "*" a bit? =A0What makes these
+> > wildcards difficult is all the edge cases. =A0For instance, is
+> > there ever more than one "*"? =A0Is it combined with "..."? =A0Are
+> > there multiple lines in the client spec with wildcards? =A0Some
+> > abstracted examples would be interesting.
+>=20
+> Yeah, I have been perusing the code and would like to give it a shot.
+> Is it ok to initially add partial support for the easy cases?
+> My usage of "*" is straight forward:
+>=20
+> //depot/project/* //my_clientspec/depot/project/*
 
->> This branch seems to have a bunch of commits from master or some other
->> branch:
->
-> Isn't the confusing shape of the history a direct result of what Herman
-> said he did above, i.e. use of "subtree merge"?  I thought that we agreed
-> not to do any more subtree merges for further updates when we slurped the
-> subtree history to contrib/ early in this cycle, so if that is the case,
-> Herman needs to rebase his work so that the integration will not need any
-> "subtree merge" into git.git, perhaps?
+That one does seem like it wouldn't be too hard.  Similar to
+trailing "...", but matching only one path component.
 
-I think you're right.
+As long as git-p4 can reliably detect when it can deal
+with a *, I think partial support would be just fine.
 
-> In short, it is a mess.
+I'll help think about test cases and such once you have
+some code that's ready to look at.  Thanks!
 
-I agree.  I think Herman is working to fix it.  A rebase and rework of
-the patch set would be very helpful.
-
-> Not very impressed, but I have this suspition that the history I was
-> looking at was not what was meant to be sent to me and an older
-> incarnation of the project before Herman cleaned it up for public
-> consumption, or something.
-
-That's the impression I got as well.
-
-I haven't had a chance to look at Herman's latest tree.
-
-                            -Dave
+		-- Pete
