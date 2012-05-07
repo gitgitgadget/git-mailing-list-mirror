@@ -1,120 +1,79 @@
-From: Tay Ray Chuan <rctay89@gmail.com>
-Subject: Re: [PATCH 4/4] allow recovery from command name typos
-Date: Mon, 7 May 2012 23:49:25 +0800
-Message-ID: <CALUzUxren063JA8NfDNWKXxf4=4jRDftpTHB76-1fFD-900XAw@mail.gmail.com>
-References: <1336287330-7215-1-git-send-email-rctay89@gmail.com>
-	<1336287330-7215-2-git-send-email-rctay89@gmail.com>
-	<1336287330-7215-3-git-send-email-rctay89@gmail.com>
-	<1336287330-7215-4-git-send-email-rctay89@gmail.com>
-	<1336287330-7215-5-git-send-email-rctay89@gmail.com>
-	<20120506082130.GB27878@sigill.intra.peff.net>
-	<CALUzUxqXrsB8XfQL6vOiQo1pLHNRjxRUxJLRiK_mcSU8fvTSCg@mail.gmail.com>
-	<878vh4con4.fsf@thomas.inf.ethz.ch>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] fetch/push: allow refs/*:refs/*
+Date: Mon, 07 May 2012 09:24:20 -0700
+Message-ID: <7vobq06jt7.fsf@alter.siamese.dyndns.org>
+References: <7vsjfj7des.fsf@alter.siamese.dyndns.org>
+ <7vwr4r8tpm.fsf@alter.siamese.dyndns.org> <4FA4C2CC.7080205@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jeff King <peff@peff.net>, Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Mon May 07 17:49:36 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Mon May 07 18:24:42 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SRQBo-0001N5-3a
-	for gcvg-git-2@plane.gmane.org; Mon, 07 May 2012 17:49:32 +0200
+	id 1SRQjn-0002Ch-Q9
+	for gcvg-git-2@plane.gmane.org; Mon, 07 May 2012 18:24:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756786Ab2EGPt1 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 7 May 2012 11:49:27 -0400
-Received: from mail-we0-f174.google.com ([74.125.82.174]:40458 "EHLO
-	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756590Ab2EGPt0 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 7 May 2012 11:49:26 -0400
-Received: by werb10 with SMTP id b10so1325180wer.19
-        for <git@vger.kernel.org>; Mon, 07 May 2012 08:49:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=hvpapdFJ4v1qcKHZ47WjCbp2V+8gKiFp+7B5F4MwrdM=;
-        b=dl/F79u8XtTFmyV8UbS3WuWKORnQFEFnfMz4MX0pLM8d5uu1oR6LEPn2O4KdsgA1co
-         M9hvqKvEHVOdlZkERkxGPpo8mGHhOcAe3oRcKfygb4AyFr5BqhNTS+a5CDP0KFnTe6Du
-         5ay/GF4WFm+RcWxzyNG31zNkgeMS32Bp9O2QF+mQNX4qe2v3qq+piB552ylKqogfBex9
-         OjK9FEkc/TkIe07dBNwsixjq/QuIawf12TZr19EqlTASMQr6SD2HXFxU0p+m50Yarcpl
-         QRXTQv/fkqX1NLdyzrYT/oGup90V8FDBBjyIbwWywt4GLOPl0dnNe40+2OqtwLqL6wTA
-         9R/g==
-Received: by 10.216.214.82 with SMTP id b60mr820484wep.38.1336405765550; Mon,
- 07 May 2012 08:49:25 -0700 (PDT)
-Received: by 10.223.156.136 with HTTP; Mon, 7 May 2012 08:49:25 -0700 (PDT)
-In-Reply-To: <878vh4con4.fsf@thomas.inf.ethz.ch>
+	id S1757386Ab2EGQYc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 May 2012 12:24:32 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:43230 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757263Ab2EGQY3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 May 2012 12:24:29 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A01EB70E7;
+	Mon,  7 May 2012 12:24:23 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=yXTnKwPcE94doT+Mm+FFoNqTiq0=; b=bpOI7F
+	yUF3hZPJ/LpCgQi4HyZymahAfJ7f0myEsyY9Lc46ctkFI2x2RhFsnL7+4PKQCXZV
+	IqNZTosMPl2ogp8ZVSVNrODLDX7wXR5T8jCF3eB1R515M5SKeqNYWPD7ra7wtbnl
+	PvcKAs2JYlm8+7gBf71Kd+G832SdFrtL9RupA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=BmQ29k0tCTWuIcMMbubPfSzJiD3uELvl
+	xdkatasXf2I89DYtAqPhMQB23C4EQbb66/jA71XDZz97rzA27GhKq+Uw8EfqBsch
+	R2DvpUTeTZaXczANBdQwALzNV/yuyZgPprhrm/BdhjmTogfb/Ssz/qkNEvL0mA+Y
+	HaJbZNnXXjY=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9275C70E6;
+	Mon,  7 May 2012 12:24:23 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 276A270E5; Mon,  7 May 2012
+ 12:24:23 -0400 (EDT)
+In-Reply-To: <4FA4C2CC.7080205@alum.mit.edu> (Michael Haggerty's message of
+ "Sat, 05 May 2012 08:03:56 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 1B197150-9861-11E1-BEF0-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197280>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197281>
 
-On Mon, May 7, 2012 at 5:43 PM, Thomas Rast <trast@student.ethz.ch> wro=
-te:
-> Tay Ray Chuan <rctay89@gmail.com> writes:
->
->> On Sun, May 6, 2012 at 4:21 PM, Jeff King <peff@peff.net> wrote:
->>> On Sun, May 06, 2012 at 02:55:30PM +0800, Tay Ray Chuan wrote:
->>>
->>>> =A0 $ git sh --pretty=3Doneline
->>>> =A0 git: 'sh' is not a git command. See 'git --help'.
->>>>
->>>> =A0 Did you mean one of these?
->>>> =A0 1: =A0show
->>>> =A0 2: =A0push
->>>> =A0 [1/2/.../n] 1
->>>
->>> Ugh. Please protect this with a config variable that defaults to
->>> "off". =A0It is very un-Unix to prompt unexpectedly, and I suspect =
-a lot
->>> of people would be annoyed by this behavior changing by default (I =
-know
->>> I would be).
->>>
->>> -Peff
->>
->> While I agree there should be a config to protect this, I was hoping
->> this would be useful to users on the terminal who make the occasiona=
-l
->> slip-up, without having to do any prior configuration.
->
-> We already have help.autocorrect. =A0It defaults to 0, which results =
-in
->
-> =A0$ g rebest
-> =A0git: 'rebest' is not a git command. See 'git --help'.
->
-> =A0Did you mean one of these?
-> =A0 =A0 =A0 =A0 =A0rebase
-> =A0 =A0 =A0 =A0 =A0reset
-> =A0 =A0 =A0 =A0 =A0revert
->
-> But it can also be a timeout in deciseconds, after which the match is
-> automatically executed (if there is only one). =A0You could hijack it=
- by
->
-> * making 'ask' mean your new feature
->
-> * making 'off' etc. be the same as 0 for sanity
->
-> * making the default value be like 0, but with an extra message such =
-as
->
-> =A0 =A0Use 'git config --global help.autocorrect ask' to let me promp=
-t for
-> =A0 =A0the correct command.
->
-> =A0though I'm sure you can improve on the wording.
+Michael Haggerty <mhagger@alum.mit.edu> writes:
 
-Thomas, that's a brilliant idea.
+> This combination "!memcmp(ref->name, "refs/", 5) &&
+> check_refname_format(ref->name, 0)" is the reason that I suggested
+> adding a REFNAME_FULL option [1], in which case it could be written
+> "check_refname_format(ref->name, REFNAME_FULL)".
 
-Re-roll coming up.
+I personally think that check-refname-format should lose its second
+parameter and always check for a concrete full refs, so that we can
+tighten the current allow-onelevel case a bit further (i.e. ".git/HEAD" is
+OK at the root level, but ".git/refs/heads/HEAD" is asking for trouble,
+and ".git/config" is downright confusing. The function does not get a good
+enough clue by only ONELEVEL).  That would mean REFNAME_FULL will not be
+necessary---it should be the only mode of operation, and the callers need
+to be adjusted accordingly.
 
---=20
-Cheers,
-Ray Chuan
+We should also introduce another function check-refspec-half-format to be
+used for the checks for left and right halves of refspec ("refs/heads/*"
+is OK but "refs/heads*" is not, perhaps).
+
+A single function trying to do both and not doing a good job in either
+case is not a pretty picture.
