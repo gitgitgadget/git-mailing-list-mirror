@@ -1,74 +1,97 @@
-From: Ralf Thielow <ralf.thielow@googlemail.com>
-Subject: Re: [PATCH 2/5] l10n: de.po: translate "track" as "folgen"
-Date: Mon, 7 May 2012 14:37:39 +0200
-Message-ID: <CAN0XMO+q7r4nu4scSE=KY6Vv35sU9qzfp6Pcw_oUopfDFp6LGg@mail.gmail.com>
-References: <1336160906-20708-1-git-send-email-ralf.thielow@googlemail.com>
-	<1336160906-20708-3-git-send-email-ralf.thielow@googlemail.com>
-	<1543115.9YNtu9coLS@cs-pc>
-	<87obq08fq5.fsf@thomas.inf.ethz.ch>
-	<CAN0XMOJgp-i=nd_7ygX=WuaegK6zMRypxRYH8nfGw6FLPAA1Fg@mail.gmail.com>
-	<878vh46v1g.fsf@thomas.inf.ethz.ch>
+From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [PATCH/RFC 0/3] Support ignore rule "**" using wildmatch from rsync
+Date: Mon,  7 May 2012 20:01:54 +0700
+Message-ID: <1336395717-7799-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Christian Stimming <stimming@tuhh.de>, jk@jk.gs,
-	git@vger.kernel.org
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Mon May 07 14:37:51 2012
+Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon May 07 15:05:46 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SRNCE-000772-JY
-	for gcvg-git-2@plane.gmane.org; Mon, 07 May 2012 14:37:46 +0200
+	id 1SRNdH-00088r-Up
+	for gcvg-git-2@plane.gmane.org; Mon, 07 May 2012 15:05:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756531Ab2EGMhm convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 7 May 2012 08:37:42 -0400
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:59507 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755636Ab2EGMhl convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 7 May 2012 08:37:41 -0400
-Received: by yhmm54 with SMTP id m54so4066909yhm.19
-        for <git@vger.kernel.org>; Mon, 07 May 2012 05:37:39 -0700 (PDT)
+	id S1756592Ab2EGNFj convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 7 May 2012 09:05:39 -0400
+Received: from mail-pz0-f46.google.com ([209.85.210.46]:59871 "EHLO
+	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752056Ab2EGNFh (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 May 2012 09:05:37 -0400
+Received: by dady13 with SMTP id y13so1231253dad.19
+        for <git@vger.kernel.org>; Mon, 07 May 2012 06:05:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=QYaOXhc3a7rFday6iJ7GWNChwgwiBV+nwGk5CX27HPc=;
-        b=vlrG3CKcKT5ScfCnxZ+qXM8qrAmviT4BQGyVmI/ZwH28KuKbgCnLLfn8pxql6VCP5U
-         bLqjsrOBbkOLh2sIf8GnugK+68V7NcHeDR5Ur9rzp7LS27JD1gfaKUFp95fWnY4hx0Rz
-         3Rk2ABnnDATbg1Q3AAZ50P7v+0mALDSrmmEZAy5kUfemX1HL/uBNTz+7UWy8Ykm2/FE5
-         fCyOOY7JUnnXOKuUsEYsgfiPipxvOpmHKTYh5HKsUXBy1HOfAJXV77L/kViCWX6blyPq
-         mKPizaT9ulPJ2flhsXthZNWtCU3rwspGNw4VUo9kDwOzlNytImqxfn7pw/7/3i5B1Oys
-         u57Q==
-Received: by 10.236.153.36 with SMTP id e24mr18893211yhk.66.1336394259281;
- Mon, 07 May 2012 05:37:39 -0700 (PDT)
-Received: by 10.146.218.6 with HTTP; Mon, 7 May 2012 05:37:39 -0700 (PDT)
-In-Reply-To: <878vh46v1g.fsf@thomas.inf.ethz.ch>
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
+         :content-type:content-transfer-encoding;
+        bh=753ytHUkAfR//qjPXCiXMkG+EY7Z7+DV1wTELo5bC1c=;
+        b=QmVjwY96ssH9f/NGjWadTRpRQJ9j0S6E6skPqVBAOiUYeJqNEcvJsGhcKFUVFc2zXV
+         tvueho0S5txCZRDGrRINvD3DUCJ1sqx+qQi7UycD4o+RbVkYdmN0+hjr3AhurbaXjAYA
+         boWz7ri8iLZ31oIaAb31ekYhw0LSmF0kKBYzc1PcXpKKnFRSWnyB/DU3mIEIcdHliH9q
+         PeTUdI5ntCoIExaOnXHl7/dbRRBU8s5tqnrs8GFryY7U6Y95qXlVZG/K3x6wY8K/yBOC
+         yftAMZ7iKvKac6rxM2tNJ4L/rZUcXJoTdk0jKcgX+TQQWgMIftczV1Zs16kNz4ViNOnX
+         qbXg==
+Received: by 10.68.134.228 with SMTP id pn4mr38015456pbb.78.1336395936785;
+        Mon, 07 May 2012 06:05:36 -0700 (PDT)
+Received: from pclouds@gmail.com ([115.74.38.158])
+        by mx.google.com with ESMTPS id kc7sm801080pbc.9.2012.05.07.06.05.32
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Mon, 07 May 2012 06:05:35 -0700 (PDT)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Mon, 07 May 2012 20:01:58 +0700
+X-Mailer: git-send-email 1.7.8.36.g69ee2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197264>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197265>
 
-On Mon, May 7, 2012 at 2:21 PM, Thomas Rast <trast@student.ethz.ch> wro=
-te:
->> I personally prefer "beobachten" for tracked files/contents and, as =
-you
->> said, "folgen" in the remote-tracking sense. But I wouldn't use
->> "ignoriert" because it has another meaning in git.
->
-> But that fits right in, doesn't it? =C2=A0Files can be tracked, untra=
-cked, or
-> untracked-and-ignored.
->
-> Or am I missing something?
+I've been looking for something like this. Bash 4 has a similar
+feature, but it's GPL-3. rsync is also GPL-3. Luckily this feature was
+availble before the license change.
 
-No, you don't.
-In order to distinguish between untracked and untracked-and-ignored
-I would use "ignoriert" only when files are ignored by a .gitignore fil=
-e,
-not when they are just untracked.
+I'm not sure if we should import wildmatch just to support "**". It see=
+ms
+a nice and often requested feature. And the code looks more readable th=
+an
+compat/fnmatch, which is good since I don't think we can cherry pick
+from (gpl3) upstream.
 
-Ralf
+We would need to add case folding support or convert "abc" to
+"[aA][bB][cC]". Performance vs fnmatch is another question but we
+could switch to wildmatch only in the presence of "**" if wildmatch
+perf sucks. Even pathspec may make use of this, thanks to pathspec
+magic.
+
+I have not looked carefully at it and this series is more like a proof
+of concept than a candidate for 'pu'. Any comments in favor or oppose
+this?
+
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy (3):
+  Import wildmatch from rsync
+  Integrate wildmatch to git
+  gitignore: support "**" with wildmatch()
+
+ Makefile                       |    3 +
+ compat/wildmatch.c             |  356 ++++++++++++++++++++++++++++++++=
+++++++++
+ compat/wildmatch.h             |    6 +
+ dir.c                          |   20 ++-
+ dir.h                          |    1 +
+ t/t3070-wildmatch.sh           |   27 +++
+ t/t3070-wildmatch/wildtest.txt |  165 +++++++++++++++++++
+ test-wildmatch.c               |  162 ++++++++++++++++++
+ 8 files changed, 736 insertions(+), 4 deletions(-)
+ create mode 100644 compat/wildmatch.c
+ create mode 100644 compat/wildmatch.h
+ create mode 100755 t/t3070-wildmatch.sh
+ create mode 100644 t/t3070-wildmatch/wildtest.txt
+ create mode 100644 test-wildmatch.c
+
+--=20
+1.7.8.36.g69ee2
