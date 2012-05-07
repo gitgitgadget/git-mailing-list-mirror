@@ -1,60 +1,75 @@
-From: Pete Wyckoff <pw@padd.com>
-Subject: Re: git-p4: planned view wildcard support
-Date: Mon, 7 May 2012 06:44:43 -0400
-Message-ID: <20120507104443.GA20372@padd.com>
-References: <CAF0RQx-0M4iUHgGdH=RE_UFmLLZH8uy4kkMW=XspNzGm-vsyEg@mail.gmail.com>
+From: Ralf Thielow <ralf.thielow@googlemail.com>
+Subject: Re: [PATCH 2/5] l10n: de.po: translate "track" as "folgen"
+Date: Mon, 7 May 2012 13:08:17 +0200
+Message-ID: <CAN0XMOJgp-i=nd_7ygX=WuaegK6zMRypxRYH8nfGw6FLPAA1Fg@mail.gmail.com>
+References: <1336160906-20708-1-git-send-email-ralf.thielow@googlemail.com>
+	<1336160906-20708-3-git-send-email-ralf.thielow@googlemail.com>
+	<1543115.9YNtu9coLS@cs-pc>
+	<87obq08fq5.fsf@thomas.inf.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Matthew Mendell <matthew.mendell@gmail.com>
-X-From: git-owner@vger.kernel.org Mon May 07 12:44:56 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Christian Stimming <stimming@tuhh.de>, jk@jk.gs,
+	git@vger.kernel.org
+To: Thomas Rast <trast@inf.ethz.ch>
+X-From: git-owner@vger.kernel.org Mon May 07 13:08:27 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SRLR0-0003mF-J1
-	for gcvg-git-2@plane.gmane.org; Mon, 07 May 2012 12:44:54 +0200
+	id 1SRLni-00011J-Ow
+	for gcvg-git-2@plane.gmane.org; Mon, 07 May 2012 13:08:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755396Ab2EGKot (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 May 2012 06:44:49 -0400
-Received: from honk.padd.com ([74.3.171.149]:33376 "EHLO honk.padd.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754153Ab2EGKor (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 May 2012 06:44:47 -0400
-Received: from arf.padd.com (unknown [50.55.155.59])
-	by honk.padd.com (Postfix) with ESMTPSA id 41353D27;
-	Mon,  7 May 2012 03:44:47 -0700 (PDT)
-Received: by arf.padd.com (Postfix, from userid 7770)
-	id BEFB0313D5; Mon,  7 May 2012 06:44:43 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <CAF0RQx-0M4iUHgGdH=RE_UFmLLZH8uy4kkMW=XspNzGm-vsyEg@mail.gmail.com>
+	id S1755418Ab2EGLIS convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 7 May 2012 07:08:18 -0400
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:55766 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752795Ab2EGLIR convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 7 May 2012 07:08:17 -0400
+Received: by yenm10 with SMTP id m10so3511515yen.19
+        for <git@vger.kernel.org>; Mon, 07 May 2012 04:08:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=8GpLEwJCw6H13VDjpy/N/+s2nU1oBCiYBvS//06MbQ4=;
+        b=AaK8edP4zMrvo0kaJ/iWsOVAOsGqkOPqJSOcT9EXrYYhmt4JfJ82vmcpS2ApylV4Ze
+         RGZG88ITpL5ocniJIyxajzIgbNA7KEpP23QW4C0ILUx0QI29fmpUpwnfG1OAX2Lg6H9X
+         5wHr42GV8GGSef3UKAfiAxpiXvMyqQ1qjUfqI+9zSoJmnr1NG/7ue8Uquo8/W08q1XxY
+         RkvBLg8eS6M5h1UnXQ82DhDuF7sF6Ggo4Jw+A0dsqSQryoWRJpE8pOyPWnYVUd14IWxg
+         89guaQkecMre8iV+1zV7ntJN2WsxlVCXKi0Se1NbroQvzsJuYzwoG5rF0ggMRLyi0JYK
+         fZiw==
+Received: by 10.236.75.232 with SMTP id z68mr19836663yhd.6.1336388897244; Mon,
+ 07 May 2012 04:08:17 -0700 (PDT)
+Received: by 10.146.218.6 with HTTP; Mon, 7 May 2012 04:08:17 -0700 (PDT)
+In-Reply-To: <87obq08fq5.fsf@thomas.inf.ethz.ch>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197258>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197259>
 
-matthew.mendell@gmail.com wrote on Sun, 06 May 2012 16:46 -0700:
-> Is there any plan for the git-p4.py script to support the "*" wildcard
-> in a p4 client?
-> 
-> The specific test that exposes this unsupported feature:
-> ./t9809-git-p4-client-view.sh
-> ...
-> ok 4 - unsupported view wildcard *
+On Mon, May 7, 2012 at 12:09 PM, Thomas Rast <trast@inf.ethz.ch> wrote:
+>
+> Good point. =C2=A0In addition, both "folgen" and "verfolgen" have the=
+ problem
+> that several derived words sound funny; e.g. "verfolgt" and "folgend"=
+=2E
+>
+> How about "beobachten" (for the English readers, roughly "observe") o=
+r
+> "beachten" ("pay attention to") for this meaning of tracking? =C2=A0T=
+he
+> latter even forms a nice group with "unbeachtet" and "ignoriert".
+>
+> You could use "folgen" in the remote-tracking sense instead?
+>
 
-It hasn't been on anybody's priority list so far that I know, but
-this would be not too hard to implement in theory.
+Good suggestions.
 
-The code changes would need to alter just one class.  In
-View.Path, functions Path.find_wildcards, match_wildcards and
-fill_in_wildcards, if you're interested in giving it a try.
+I personally prefer "beobachten" for tracked files/contents and, as you
+said, "folgen" in the remote-tracking sense. But I wouldn't use
+"ignoriert" because it has another meaning in git.
 
-Can you constrain your use of "*" a bit?  What makes these
-wildcards difficult is all the edge cases.  For instance, is
-there ever more than one "*"?  Is it combined with "..."?  Are
-there multiple lines in the client spec with wildcards?  Some
-abstracted examples would be interesting.
-
-		-- Pete
+Ralf
