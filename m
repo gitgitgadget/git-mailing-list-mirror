@@ -1,69 +1,92 @@
-From: Jon Seymour <jon.seymour@gmail.com>
-Subject: Re: git svn dcommit <branch> committed to trunk anyway
-Date: Mon, 7 May 2012 19:47:22 +0530
-Message-ID: <CAH3Anroub3a1+Nsj5C-ecTqaX9riUG7T27bHZYJOHiPJbeVCTQ@mail.gmail.com>
-References: <CAH3AnroP+ckzgijibPDEupBCfUFu5Bwsq8YP58h+igXoJyJEyg@mail.gmail.com>
-	<87txzsba0o.fsf@thomas.inf.ethz.ch>
-	<CAH3Anrq5SGZZsTpKd1MFBRVD8xzsUvckt6d-BxtTYYce--F1+g@mail.gmail.com>
-	<87havs6v9s.fsf@thomas.inf.ethz.ch>
+From: A Large Angry SCM <gitzilla@gmail.com>
+Subject: Re: git-scm.com refresh
+Date: Mon, 07 May 2012 11:08:50 -0400
+Message-ID: <4FA7E582.9090709@gmail.com>
+References: <CAP2yMaJy=1c3b4F72h6jL_454+0ydEQNXYiC6E-ZeQQgE0PcVA@mail.gmail.com>
+Reply-To: gitzilla@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Mon May 07 16:17:29 2012
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git list <git@vger.kernel.org>
+To: Scott Chacon <schacon@gmail.com>
+X-From: git-owner@vger.kernel.org Mon May 07 17:09:03 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SROkj-00037F-5g
-	for gcvg-git-2@plane.gmane.org; Mon, 07 May 2012 16:17:29 +0200
+	id 1SRPYc-0005Fd-Gq
+	for gcvg-git-2@plane.gmane.org; Mon, 07 May 2012 17:09:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756836Ab2EGORY convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 7 May 2012 10:17:24 -0400
-Received: from mail-wi0-f172.google.com ([209.85.212.172]:37491 "EHLO
-	mail-wi0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756194Ab2EGORY convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 7 May 2012 10:17:24 -0400
-Received: by wibhj6 with SMTP id hj6so3471903wib.1
-        for <git@vger.kernel.org>; Mon, 07 May 2012 07:17:23 -0700 (PDT)
+	id S1756901Ab2EGPI6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 May 2012 11:08:58 -0400
+Received: from mail-qc0-f174.google.com ([209.85.216.174]:37766 "EHLO
+	mail-qc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756862Ab2EGPI5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 May 2012 11:08:57 -0400
+Received: by qcro28 with SMTP id o28so1919838qcr.19
+        for <git@vger.kernel.org>; Mon, 07 May 2012 08:08:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=C+e29HEl8bEKSQdk792dZAVZSfdGwcghsRlVvfkm1ZI=;
-        b=p16wuaV6Ri7Np0ooW+39LnqlF/ApIQd4SmOKk5WDandgTQo0AL06z0gSP7rJtpAUA2
-         2iIXVqIJMSl5ZLYdjOy4STgTwEc96TDPVcjM6YfVqVG0itwv1icMXBcYiaIV8x6VJLOi
-         QqiKAKnZs6Sa6c36gUs91xZkifyUy3BRBa07cqzHVb/uZoidvKO/gZ8gM/UKEE1sXIaY
-         GMi9UyhuFflxeBIVRIHKetLep3fZctc++4pkrfoa1a+shfqfgv+3rkJOyWk8j5JEmwAt
-         MJKiy77taY2nGGdSMpRNLs9CK3Ur7eAn5k+Ke5VPHDgD7NAcfxz0Itm373pf70JaD10V
-         ywFw==
-Received: by 10.180.92.130 with SMTP id cm2mr35737795wib.4.1336400243044; Mon,
- 07 May 2012 07:17:23 -0700 (PDT)
-Received: by 10.180.82.35 with HTTP; Mon, 7 May 2012 07:17:22 -0700 (PDT)
-In-Reply-To: <87havs6v9s.fsf@thomas.inf.ethz.ch>
+        h=message-id:disposition-notification-to:date:from:reply-to
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :content-type:content-transfer-encoding;
+        bh=wLvrLSzRGUKDkhcnBftTtk9R55UYXk5uYMjaTVYBmgw=;
+        b=HVMX0NYBkEsOSJKY8KXCP/rVoIdWZRdS+fd+qqrIJJDLq6gJyBuBg6TH+bV941I1WS
+         RkrfWasPL8xwMHf9sLF+CNTSILgxoE5FC/hLYESU6jJPEAQjYKI7lnlnOfCH36XxQ/tx
+         Wqxr849kjf3H8L1jqIdIZq0dSYikJEa6OE4K0MxYjfTY5K+8n0/kRE8iY7HsWtWRHlk2
+         uZn9QYomzWs3aecnzUBjrpwb86ZCPsoDiG8yooQctdFlP8qM4RqJxcXiF+BTbXcTzvt9
+         QR8dTVFjI0hWnYAv+pBR2e4fEtCuvPPuMxptYa75348TCS8Y8pku9s5r5fySyDkvx4+c
+         gBqQ==
+Received: by 10.229.136.84 with SMTP id q20mr6907172qct.89.1336403336660;
+        Mon, 07 May 2012 08:08:56 -0700 (PDT)
+Received: from [10.0.1.130] (cpe-67-248-162-240.nycap.res.rr.com. [67.248.162.240])
+        by mx.google.com with ESMTPS id u3sm3770414qaa.4.2012.05.07.08.08.54
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Mon, 07 May 2012 08:08:55 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.16) Gecko/20120428 Icedove/3.0.11
+In-Reply-To: <CAP2yMaJy=1c3b4F72h6jL_454+0ydEQNXYiC6E-ZeQQgE0PcVA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197274>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197275>
 
-On Mon, May 7, 2012 at 5:46 PM, Thomas Rast <trast@student.ethz.ch> wro=
-te:
-> Jon Seymour <jon.seymour@gmail.com> writes:
-> Oh, now I understand. =C2=A0Yes, specifying a revision C there acts m=
-ostly as
-> if you said
+On 05/04/2012 07:29 PM, Scott Chacon wrote:
+> Hey everyone,
 >
-> =C2=A0git checkout C^0
-> =C2=A0git svn dcommit
-> =C2=A0git checkout -
->
+> I just shipped a big update to the git-scm.com website, incorporating
+> tons of feedback I've gotten on the site, especially from new users,
+> over the years.  I think it will help new users to Git find the right
+> installer and get up and running easier.  I have other ideas of things
+> to add to it in the future, but I think this is much better than the
+> site that has served us well for a few years now.
 
-Ok, I see my mistake - I had created the branch in SVN (using external
-means, since git svn branch doesn't use an HTTP proxy), had failed to
-fetch and then rebase my work onto remotes/<branch> and do the commit
-from there. If I had done that, it would have worked as expected.
+[...]
 
-Thanks for your help.
+I was looking over the updated website and what follows are my initial 
+impressions:
+
+1) I like the old logo much better.
+
+2) I notice that GitHub is NOT listed as a company or project using git 
+on the main page. What SCM does GitHub use? :-O
+
+3) On the About -> Small and Fast Page: you show a comparison to Git and 
+Git* for the clone operation but there is no explanation of how Git and 
+Git* differ.
+
+4) It's 2 clicks to get to a category view of the man pages: I think 
+that's 1 too many.
+
+5) I would like to see a page that lists all of the documentation in the 
+core distribution in one place. A good place for this would be somewhere 
+near the top of the category view page.
+
+6) The documentation pages should let the user decide with one click 
+which version of the documentation set they wish to view instead of 
+having to do it for every page.
+
+7) A help topic on the category view page about determining which 
+version of the documentation matches the user's installed version of Git 
+would be useful.
