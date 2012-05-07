@@ -1,84 +1,72 @@
-From: Egor Ryabkov <egor.ryabkov@gmail.com>
-Subject: Git fetch/pull stopped working
-Date: Tue, 8 May 2012 02:45:08 +0400
-Message-ID: <CADB4Qb1BhWpm1mAwiHy+edySvo7P+YcvrSiTSc8dVzKQsnNCfQ@mail.gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Does content provenance matter?
+Date: Mon, 07 May 2012 16:12:59 -0700 (PDT)
+Message-ID: <m3397ba8lh.fsf@localhost.localdomain>
+References: <1336250956.54413.YahooMailClassic@web121505.mail.ne1.yahoo.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 08 00:45:35 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Kelly Dean <kellydeanch@yahoo.com>
+X-From: git-owner@vger.kernel.org Tue May 08 01:13:19 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SRWgP-0003pS-GE
-	for gcvg-git-2@plane.gmane.org; Tue, 08 May 2012 00:45:33 +0200
+	id 1SRX7H-0001r7-D9
+	for gcvg-git-2@plane.gmane.org; Tue, 08 May 2012 01:13:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757738Ab2EGWpZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 May 2012 18:45:25 -0400
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:57975 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757710Ab2EGWpY (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 May 2012 18:45:24 -0400
-Received: by yhmm54 with SMTP id m54so4729452yhm.19
-        for <git@vger.kernel.org>; Mon, 07 May 2012 15:45:24 -0700 (PDT)
+	id S1757676Ab2EGXND (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 May 2012 19:13:03 -0400
+Received: from mail-we0-f174.google.com ([74.125.82.174]:40776 "EHLO
+	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753320Ab2EGXNB (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 May 2012 19:13:01 -0400
+Received: by werb10 with SMTP id b10so1559713wer.19
+        for <git@vger.kernel.org>; Mon, 07 May 2012 16:13:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to:content-type;
-        bh=VseQARpeJabFY0TbHBFtE4a+SFDlicdsE1X7puiXpGA=;
-        b=Tit3+03IKvrFJjrK0gjAQnlEMNwgAtBp/LXWvUPgh2lvZjI2nayLUuNf+DDgbNbmx+
-         T1tYyqVWllA3vPC3rxq4mLNqp79HF9ftnjieigKZ8NOov+3V7mEj0xuCSvPziWJwMqcL
-         3i2JIkNgkLmaTY2WfH/aW1faQwjhIpEXPzJEpepKz9z7W6h9OyT2FjUz+1cWTLbRNz9H
-         dNrEq0gtwO7uNNL8J5AniinvJlHh0d3LMy39JBFAv13Pj91mP05M8oBuSVA+FE5xEBMJ
-         p+pZfIDVMRudnr/vToNgi2alJ3P6yxJJ4kK8KF+b7V4GJYCnaXN4bPevJ256Tz2GMhcy
-         CIrQ==
-Received: by 10.50.222.200 with SMTP id qo8mr2090188igc.20.1336430723861; Mon,
- 07 May 2012 15:45:23 -0700 (PDT)
-Received: by 10.42.60.200 with HTTP; Mon, 7 May 2012 15:45:08 -0700 (PDT)
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        bh=ay4aNAVvkd1Jz30i/r0ZpydFPIKz50Pv+I1+68sJvrM=;
+        b=zmkNy3GNU8MqeptTvE3ZmDh1Iyuq9W4kt489rgSlV6f+AX6VgFmve2wPcgc1F26CCE
+         Eaai+7/Y7V00hXsYkE4FZgT3OnGlv+JZo3E7lPFWs/lMCJWVvFBAwUDqNIKc5VS/JOVk
+         YWnrnFaIFwVJ1UabHeTMByTnYx0pY9loy4Ymz7C8Iaf8PkArjowHe4mxQF3gA0fXESon
+         cAGcwyhVf0R9vlw7hF4GCwee/26xnt1ksrK1rmqaT0cYtpCDxb2HaK9VB3LjbqC1ORp5
+         0HIIMwoj0bnluPsF//uRioThAJ5bwlqsu3a8c6UYOo/pLmUDbnzZ4iXu8AJihvRBHIKY
+         T5oQ==
+Received: by 10.216.135.199 with SMTP id u49mr11153393wei.7.1336432380535;
+        Mon, 07 May 2012 16:13:00 -0700 (PDT)
+Received: from localhost.localdomain (adhb18.neoplus.adsl.tpnet.pl. [79.184.157.18])
+        by mx.google.com with ESMTPS id fl2sm39100839wib.2.2012.05.07.16.12.59
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Mon, 07 May 2012 16:12:59 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id q47NCxZe026350;
+	Tue, 8 May 2012 01:12:59 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id q47NCw24026347;
+	Tue, 8 May 2012 01:12:58 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <1336250956.54413.YahooMailClassic@web121505.mail.ne1.yahoo.com>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197323>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197324>
 
-Hi guys!
+Kelly Dean <kellydeanch@yahoo.com> writes:
 
-git fetch and pull stopped working a few days ago on my server with
-the following message:
+> The basic question is, if provenance doesn't matter, then why does a
+> git commit record its parent(s)? Why not omit this information, and
+> figure it out at search time (by looking at all commits with older
+> timestamps),
 
-$ git fetch
-ERROR: Repository not found.
-fatal: The remote end hung up unexpectedly
+Because it is not possible to do in reliable way in face of parallel
+concurrent branchy development by multiple developers... some of which
+can have badly set clock.
 
-
-fetch/push/pull still work just fine with the same (GitHub) repository
-from my local PC, and they also work fine with another GH repo from
-another server.
-
-I tried comparing "git remote -v" output for local PC and server,
-they're the same.
-"$ GIT_TRACE=1 git fetch" gives somewhat different output on local PC
-and server:
-http://pastecode.com/bd3fc1a79f8e9d1eaf30911d9895938051c472f4
-but the output is identical for the two servers I have (both are AWS
-instances, if that matters).
-
-There are two clones of the repository on the server in question, both
-giving the same error. ssh git@github.com works as it should, so SSH
-keys are alright.
-
-
-One quirk I noticed is that "git pull origin st+[Tab]" used to expand
-to a branch name; now it expands to a name of the file in current
-directory (and the filename is not the same as branch name).
-
-I guess it's some problem with git install on the server - any ideas
-how I could try and diagnose this, besides GIT_TRACE?
-
-
-A discussion on Stackoverflow:
-http://stackoverflow.com/questions/10438082/git-fetch-pull-have-stopped-working
-
-Thanks in advance!
-
-Egor.
+Also, multiple merges of the same branch.
+-- 
+Jakub Narebski
