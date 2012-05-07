@@ -1,60 +1,84 @@
-From: Kelly Dean <kellydeanch@yahoo.com>
-Subject: Re: Does content provenance matter?
-Date: Mon, 7 May 2012 16:13:37 -0700 (PDT)
-Message-ID: <1336432417.36394.YahooMailClassic@web121504.mail.ne1.yahoo.com>
-References: <CAJsNXT=26u-PPNe9_LFoC1tAKpWJRWfBNNKzQB5Ya3X0n4K_eg@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Git fetch/pull stopped working
+Date: Mon, 07 May 2012 16:44:23 -0700
+Message-ID: <7vehqv36aw.fsf@alter.siamese.dyndns.org>
+References: <CADB4Qb1BhWpm1mAwiHy+edySvo7P+YcvrSiTSc8dVzKQsnNCfQ@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: PJ Weisberg <pj@irregularexpressions.net>
-X-From: git-owner@vger.kernel.org Tue May 08 01:20:17 2012
+To: Egor Ryabkov <egor.ryabkov@gmail.com>
+X-From: git-owner@vger.kernel.org Tue May 08 01:44:32 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SRXDx-0003Xu-0I
-	for gcvg-git-2@plane.gmane.org; Tue, 08 May 2012 01:20:13 +0200
+	id 1SRXbT-0000dl-HX
+	for gcvg-git-2@plane.gmane.org; Tue, 08 May 2012 01:44:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757922Ab2EGXUE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 May 2012 19:20:04 -0400
-Received: from nm9-vm1.bullet.mail.ne1.yahoo.com ([98.138.90.47]:24185 "HELO
-	nm9-vm1.bullet.mail.ne1.yahoo.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S1757871Ab2EGXUB (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 7 May 2012 19:20:01 -0400
-X-Greylist: delayed 383 seconds by postgrey-1.27 at vger.kernel.org; Mon, 07 May 2012 19:20:01 EDT
-Received: from [98.138.90.57] by nm9.bullet.mail.ne1.yahoo.com with NNFMP; 07 May 2012 23:13:37 -0000
-Received: from [98.138.89.195] by tm10.bullet.mail.ne1.yahoo.com with NNFMP; 07 May 2012 23:13:37 -0000
-Received: from [127.0.0.1] by omp1053.mail.ne1.yahoo.com with NNFMP; 07 May 2012 23:13:37 -0000
-X-Yahoo-Newman-Property: ymail-3
-X-Yahoo-Newman-Id: 512069.42306.bm@omp1053.mail.ne1.yahoo.com
-Received: (qmail 56692 invoked by uid 60001); 7 May 2012 23:13:37 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s1024; t=1336432417; bh=SuRyqVXIQ866LXd+hrP5SfxbZnjwr8EMWxCdwGKfOhU=; h=X-YMail-OSG:Received:X-Mailer:Message-ID:Date:From:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type; b=m8GI4A8u0OMQCltxhFtn+Zdu9tJ1VVJm1p7xoBjOjeDLS2QpQrtfxAhWuUyDepJmbuIgISGBfrHPnA85w79o33LE3SJIK5C4+q+CEt0YSYgzwBdAsPai7aXoZ+i+aq58Wt/seUK5CjQ7OvPzU6gnqlgcvnNg8o8d2WqdzjqmMhw=
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.com;
-  h=X-YMail-OSG:Received:X-Mailer:Message-ID:Date:From:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type;
-  b=DiztR3vqOnXC+wviUwqFkNGRyjuNYfhWe6sOY29pLY8apb0xgmdznom2Q6FN+2nV2FZMRxc+hmaDK7n+7LLFy8yM0EBPOqvDY0iryVW5mGMMqyEZc6t0cbnM7wDx1XpDbIB3bDpc3Jbv780PkcAo9bi/D+wubFAl3ETknUrzXMs=;
-X-YMail-OSG: xkJncRMVM1kQNwYZ87xu.aMyJI9X1NCXygK2nXxzMTYLkRP
- Qu1yhzR3ntyokAv5HGXTrdogYpUnHKVOgx56ax2lPr6iJ6Lwi9_sqxGVXrf6
- q258qu0zsVCDgUbne8B5ItiZQyM5dQs59lKi.VUlhJFPj5nClwNLMW5ZCL2Q
- UNCjEk1WFG6YpZnU7DR6BaFT8xi2Rz0dJTV75fDCKFZF6FJvXxq8Fy38mfx2
- 8vZkg9z_kHXq4guOzG_uLhksiTuKu1SeiQzxNd8QouB67TlYigpUaPVO_Zdv
- L.D2qiZRSly5mzTOhyg7NkdKxOooTS9lakvHmUqjdStvdrYlRL1drOyOfgor
- lKCLJpyAQ0OiIN4_D6EzqCxuUng5QviLD4K7fOlYCoGYH4htJk9aP1lEdM5B
- .idsUMxO3aNsSUqU3tGBT6Vlyv8KD
-Received: from [217.115.137.222] by web121504.mail.ne1.yahoo.com via HTTP; Mon, 07 May 2012 16:13:37 PDT
-X-Mailer: YahooMailClassic/15.0.6 YahooMailWebService/0.8.117.340979
-In-Reply-To: <CAJsNXT=26u-PPNe9_LFoC1tAKpWJRWfBNNKzQB5Ya3X0n4K_eg@mail.gmail.com>
+	id S1757317Ab2EGXo1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 May 2012 19:44:27 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:51671 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756889Ab2EGXo0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 May 2012 19:44:26 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6A4057F27;
+	Mon,  7 May 2012 19:44:25 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=9KV+r3QVVscj/okDjE1cSI4+vEE=; b=f/ni5B
+	H2x3oOya8fO8sfOjLtvOcwAXx2md0spt8CN1k9EY5MmSGMEl8I1RunXNulAJyi54
+	yj26KdG2PjgMdHSfSrdvn5XiOytd/ZXYLpDGxZSyYIWs03sl77OgBGk/nB0WPQhC
+	9Kr5FQne9ZDnjzMDK+uSJoF+nYlX3wK+m+Ne4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=i+FLmx0MC6+udNVsoVXPO6/nI8Ghajxk
+	BQ7cnXgcumjfqKsilG0QTsUxT54YFhCbEexddD2fU+E7FXHnkTSZdwZw6rdDsPj3
+	dhZTkpmLZ+EEzVrLV6aA2lVwOzNRybO3qyPwVaUeGiKIlzPp72BLtC+oKQCgmuKl
+	ZOsXTXUdPqA=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 60F547F26;
+	Mon,  7 May 2012 19:44:25 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E88EB7F22; Mon,  7 May 2012
+ 19:44:24 -0400 (EDT)
+In-Reply-To: <CADB4Qb1BhWpm1mAwiHy+edySvo7P+YcvrSiTSc8dVzKQsnNCfQ@mail.gmail.com> (Egor
+ Ryabkov's message of "Tue, 8 May 2012 02:45:08 +0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 93CAF76C-989E-11E1-83C0-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197326>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197327>
 
---- On Mon, 5/7/12, PJ Weisberg <pj@irregularexpressions.net> wrote:
-> But there could be any number of unrelated commits newer than "Bar"
-> but older than "Revert Bar" on other branches.  Even if you could
-> trust the timestamps to be accurate (you can't), you still can't
-> determine a commit's parent unambiguously.
-Therefore, provenance does matter, and it must be explicitly recorded because it can't necessarily be correctly and fully deduced from content alone. And git does record inter-commit provenance.
-However, git doesn't record intra-commit provenance, as I mentioned in my original message. My question is: why this discrepancy? Either provenance matters, or it doesn't; why record it in one case but not the other?
+Egor Ryabkov <egor.ryabkov@gmail.com> writes:
+
+> git fetch and pull stopped working a few days ago on my server with
+> the following message:
+>
+> $ git fetch
+> ERROR: Repository not found.
+> fatal: The remote end hung up unexpectedly
+
+Are you sure it is an error on the remote side (presumably on GitHub)?
+
+More interestingly, neither "Repository not found" nor "ERROR:" hits
+anything relevant to "git fetch" codepath.  The closest I can find is in
+http-backend.c that says "Repository not exported", which is on the server
+side, but you were talking about ssh connection, so it probably is not
+what you are seeing.
+
+Oh, wait.
+
+> "$ GIT_TRACE=1 git fetch" gives somewhat different output on local PC
+> and server:
+> http://pastecode.com/bd3fc1a79f8e9d1eaf30911d9895938051c472f4
+
+So you are going over http:// after all.  But it does not look like github
+to me, so you may be comparing apples and oranges, which would not help in
+diagnosing the issue very much.
+
+Puzzled...
