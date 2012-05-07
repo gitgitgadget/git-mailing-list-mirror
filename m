@@ -1,61 +1,137 @@
-From: Mitar <mmitar@gmail.com>
-Subject: Re: post-fetch, tweak-fetch hook
-Date: Mon, 7 May 2012 11:11:30 +0200
-Message-ID: <CAKLmikNuUB01xKSm9Skd2chXWw3BcWDHT23hqWtNBJPJfYqDKQ@mail.gmail.com>
-References: <CAKLmikNaqVRb=pGUhbvVQTX2tYWT0HSS2R6Ezmico3X0rMgvYQ@mail.gmail.com>
-	<201205062310.q46NAHnM022630@no.baka.org>
-	<20120507072934.GC19874@sigill.intra.peff.net>
+From: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
+Subject: Re: [PATCH v3] completion: add new _GIT_complete helper
+Date: Mon, 7 May 2012 11:22:13 +0200
+Message-ID: <20120507092213.GO2164@goldbirke>
+References: <1336231400-6878-1-git-send-email-felipe.contreras@gmail.com>
+	<20120506111425.GJ2164@goldbirke>
+	<CAMP44s3xwgsfjZA6r+bydu-5r1nEO5cGc=wcDSr+WdwunTtpwg@mail.gmail.com>
+	<20120506233235.GN2164@goldbirke>
+	<CAMP44s3q-X7W5qeu6LZzu13C6SfhEZy9i4AfJ9Sszcou52MsGw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Seth Robertson <in-gitvger@baka.org>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon May 07 11:11:37 2012
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Thomas Rast <trast@student.ethz.ch>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Mon May 07 11:22:29 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SRJyh-0005Sx-NR
-	for gcvg-git-2@plane.gmane.org; Mon, 07 May 2012 11:11:36 +0200
+	id 1SRK9E-0003hp-VA
+	for gcvg-git-2@plane.gmane.org; Mon, 07 May 2012 11:22:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755900Ab2EGJLb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 May 2012 05:11:31 -0400
-Received: from mail-vb0-f46.google.com ([209.85.212.46]:59393 "EHLO
-	mail-vb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755668Ab2EGJLa (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 May 2012 05:11:30 -0400
-Received: by vbbff1 with SMTP id ff1so617338vbb.19
-        for <git@vger.kernel.org>; Mon, 07 May 2012 02:11:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=105NdD57VgVvqk52yPHe6uwX9Lo61F5NFUd7fXv/M4k=;
-        b=nYgEwgXuRAD/CC+IGeVwXwv8Be8iBYbf1imkVe0BERIkUis+vBbfBM0Z9q+mI5YuUq
-         8AP4imMJPiQT6m64bzV8wVQqFJ16NjLwxvMBtSa3O1AKWDTRC+vuiV4auTvUPbMDQPYN
-         A9nFxYHddXQt37bhuhBj+XGBrkM0uBCm4RewD/lEHVB7QxqEWy4irkJaQAD/OZqEm6Ed
-         CoWq3UYGlWlygs6INavAr4/n4QxRE0hr/ca0dvv8jJAVkFIOASxR/Q3vg5gGzJc1ZBvY
-         weoKvH4uHcFHKraAAgd3AOM9bQ++XSVPglH84485Xb/HrpZSjw5NY5Y55Iw5g7kv5YKd
-         UpTA==
-Received: by 10.220.152.205 with SMTP id h13mr3829255vcw.12.1336381890252;
- Mon, 07 May 2012 02:11:30 -0700 (PDT)
-Received: by 10.52.28.13 with HTTP; Mon, 7 May 2012 02:11:30 -0700 (PDT)
-In-Reply-To: <20120507072934.GC19874@sigill.intra.peff.net>
+	id S1755896Ab2EGJWX convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 7 May 2012 05:22:23 -0400
+Received: from moutng.kundenserver.de ([212.227.126.187]:59738 "EHLO
+	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755739Ab2EGJWW (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 May 2012 05:22:22 -0400
+Received: from localhost6.localdomain6 (p5B13051B.dip0.t-ipconnect.de [91.19.5.27])
+	by mrelayeu.kundenserver.de (node=mrbap1) with ESMTP (Nemesis)
+	id 0MWQQM-1SgGmC12Mc-00Xhce; Mon, 07 May 2012 11:22:14 +0200
+Content-Disposition: inline
+In-Reply-To: <CAMP44s3q-X7W5qeu6LZzu13C6SfhEZy9i4AfJ9Sszcou52MsGw@mail.gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Provags-ID: V02:K0:iH26Sa+Ffct7aGn7laYU+OxJ40GB8T/7peXgkzu6iYC
+ oWLtR0XFptSJEFn7o5Ch6Fvu2vjlq4ZsXdLBgPPuceqPpPNiaf
+ M/WZX+pxI+uOjT+YUeaNJENU4EaGP6A8LAq6Scy//YxrSTuBTd
+ 8QxYD2196YhMTxTXDL5LoI+4B/YfHrZHQ/1Li0qAkD3X3BrGDn
+ p5BO2EyqUnb7XSs92x91oc95gIzQq6xzfoAp3IO4st4/CcyLNn
+ 43n9cPk5+xwjxNZb7BMjcDLgK2fxkrLCHkLKlA4ogkOJGwE2Zl
+ M/H5KBG+lvJvvDhQuTa3NGGSBDlXndP7KGkJE7J6EVEheTPxqV
+ jzRlXdJd0mkOR0YsFeyk=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197245>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197246>
 
-Hi!
-
-On Mon, May 7, 2012 at 9:29 AM, Jeff King <peff@peff.net> wrote:
-> I would say the "most git" thing would be to implement "fetch
-> --porcelain", and use its output.
-
-Yes, that would be also useful. It still makes two different
-interfaces for probably same post-processing (after push and after
-fetch), but still better than nothing, what is current state.
+Hi,
 
 
-Mitar
+On Mon, May 07, 2012 at 02:20:54AM +0200, Felipe Contreras wrote:
+> In fact, it could be even simpler:
+>=20
+> _GIT_complete gf fetch
+
+That would be even better; just need to take care of 'cherry-pick' and
+the like.
+
+> >> > Besides, this example won't work, because the completion for 'gi=
+t
+> >> > fetch' uses __git_complete_remote_or_refspec(), which in turn re=
+lies
+> >> > on finding out the name of the git command from the word on the
+> >> > command line, and it won't be able to do that from 'gf'.
+
+> It does work... on my branch.
+
+I though the patch was supposed to be applied on git.git's master.  I
+didn't know what else you had on your branch, obviously.
+
+> If you have another example that works, feel free to suggest it
+
+I played around with 'gb' as 'git branch' and 'gc' as 'git checkout',
+they seemed to work properly, and they both use $words directly or
+indirectly.  I suspect most of them Just Works, except those using
+__git_complete_remote_or_refspec(), and _git_bundle() as you mention
+below, and perhaps a few surprises we hadn't spotted yet.
+
+> >> replace with another command that
+> >> doesn't use 'words', and it would work.
+> >
+> > That it doesn't work has nothing to do with $words. =A0The problem =
+is that
+> > __git_complete_remote_or_refspec() expects to find the git command =
+in
+> > ${words[1]}, but in case of an alias it can't.
+>=20
+> ${words[1]} is part of $words.
+
+The problem is not with $words per se, but with the '1'.
+
+> And BTW, git bundle also fails similarly.
+
+Indeed; using __git_find_on_cmdline() and checking which subcommand it
+found, if any, would allow us to get rid of all numbers from that
+function.
+
+> Also BTW, git fetch is already broken anyway:
+>=20
+>  git --no-pager fetch <TAB>
+>=20
+> So don't blame my patch :)
+
+Yeah, I know, but that's broken since "forever".  However, I think
+that would be a separate, though related topic, because it's not
+required to make completion for alias work.
+
+> >> > I remember we discussed this in an earlier round, and you even
+> >> > suggested a possible fix (passing the command name as argument t=
+o
+> >> > __git_complete_remote_or_refspec()). =A0I think that's the right=
+ thing
+> >> > to do here.
+
+> That's not enough to make 'git fetch' work, try it.
+
+As already mentioned it earlier in this thread, the iteration over
+$words in __git_complete_remote_or_refspec() have to be fixed, too.
+
+> >> >> + =A0 =A0 __git_func "$@"
+
+> Sure, but it was just 4 more characters that didn't hurt anybody. You=
+r
+> version makes passing those arguments more difficult, so I see no nee=
+d
+> to try to implement that.
+
+OK.  I doesn't hurt, but I think it's more important to avoid
+fork()+exec() overheads than to pass arguments whose values are
+readily available in other variables anyway.
+
+
+G=E1bor
