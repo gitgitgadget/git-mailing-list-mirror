@@ -1,76 +1,102 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH master] git p4 doc: fix formatting
-Date: Mon, 07 May 2012 11:14:27 -0700
-Message-ID: <7vk40n6epo.fsf@alter.siamese.dyndns.org>
-References: <20120506155650.GA12106@padd.com>
+From: Joe Zim <contact@joezimjs.com>
+Subject: Re: Broken Repo
+Date: Mon, 07 May 2012 13:12:40 -0500
+Message-ID: <4FA81098.3000208@joezimjs.com>
+References: <4FA74355.3020704@joezimjs.com> <20120507074917.GE18812@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Pete Wyckoff <pw@padd.com>
-X-From: git-owner@vger.kernel.org Mon May 07 20:14:36 2012
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon May 07 20:35:37 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SRSSB-0007eF-AU
-	for gcvg-git-2@plane.gmane.org; Mon, 07 May 2012 20:14:35 +0200
+	id 1SRSmX-0001BR-4n
+	for gcvg-git-2@plane.gmane.org; Mon, 07 May 2012 20:35:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755079Ab2EGSOb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 May 2012 14:14:31 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:52691 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754462Ab2EGSOa (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 May 2012 14:14:30 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EF3FE6D66;
-	Mon,  7 May 2012 14:14:29 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=SPjApClAl20n6jR1JaQQFzl2Kqo=; b=Bsp6sk
-	92ALdN8ZKWyTbWSmg5RHWzS3JJZ2awjIz+av8yQ+VUI0BKzSdidHLTXgDeAXcb+3
-	PpN0RdTqJjmuTsE+jizcQGOqLZoM09XKM+UH/2vq0csluJoIN81cnEUXzYsjV/dv
-	Ybgqc8DJC5Vyhn701oJyBXPS+P5JCV2R1yCjE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=tjuSg+ko0bDvDEgEmEcyBsFSKYspsfq4
-	9WBZXASEh0BWUdy52ozkMoeGfOnAqslYfBHma3fXwQoX48gNwyXRwHnvqk5FnyrS
-	u6uv9fQvCRueZG15sfdHJOkbgNbEZ3ORpkuAOLpyp8UgmzRFNyL//X8opBYK+vKy
-	7LSIWEvgjk4=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E6FAD6D65;
-	Mon,  7 May 2012 14:14:29 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 77F6A6D64; Mon,  7 May 2012
- 14:14:29 -0400 (EDT)
-In-Reply-To: <20120506155650.GA12106@padd.com> (Pete Wyckoff's message of
- "Sun, 6 May 2012 11:56:50 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 7CC71312-9870-11E1-970D-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1757296Ab2EGSfP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 May 2012 14:35:15 -0400
+Received: from gateway16.websitewelcome.com ([69.56.162.7]:56531 "EHLO
+	gateway16.websitewelcome.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1757183Ab2EGSfO (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 7 May 2012 14:35:14 -0400
+X-Greylist: delayed 1348 seconds by postgrey-1.27 at vger.kernel.org; Mon, 07 May 2012 14:35:13 EDT
+Received: by gateway16.websitewelcome.com (Postfix, from userid 5007)
+	id 7D8015122BAE0; Mon,  7 May 2012 13:12:43 -0500 (CDT)
+Received: from matiz.websitewelcome.com (matiz.websitewelcome.com [174.120.137.194])
+	by gateway16.websitewelcome.com (Postfix) with ESMTP id 02FEC5122B96C
+	for <git@vger.kernel.org>; Mon,  7 May 2012 13:12:43 -0500 (CDT)
+Received: from [66.189.143.116] (port=56069 helo=[192.168.1.101])
+	by matiz.websitewelcome.com with esmtpsa (TLSv1:CAMELLIA256-SHA:256)
+	(Exim 4.77)
+	(envelope-from <contact@joezimjs.com>)
+	id 1SRSQM-0001cK-Fo; Mon, 07 May 2012 13:12:42 -0500
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:12.0) Gecko/20120428 Thunderbird/12.0.1
+In-Reply-To: <20120507074917.GE18812@sigill.intra.peff.net>
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - matiz.websitewelcome.com
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - joezimjs.com
+X-BWhitelist: no
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+X-Source-Sender: ([192.168.1.101]) [66.189.143.116]:56069
+X-Source-Auth: contact+joezimjs.com
+X-Email-Count: 3
+X-Source-Cap: am9lemltanM7c21zaXRlczttYXRpei53ZWJzaXRld2VsY29tZS5jb20=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197292>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197293>
 
-Pete Wyckoff <pw@padd.com> writes:
+Thanks for the reply guys. It's fixed now.
 
-> Attach example sections to previous level of indenting.
+On 5/7/2012 2:49 AM, Jeff King wrote:
+> On Sun, May 06, 2012 at 10:36:53PM -0500, Joe Zim wrote:
 >
-> Fix a trailing ::
+>> Hi, I'm new here. I'm using Github right now. I have a repository
+>> there and a local copy on my Windows 7 PC. I made a change, committed
+>> it, then attempted to push it. I got a strange error that I can't
+>> remember. Anyway, after several attempts I decided to just delete the
+>> local repository, restore it from github and try again later. I
+>> realize now that there were other ways this should have been handled,
+>> but right now it doesn't matter. I can't figure out how to restore a
+>> copy from Github and make this renewed repo the master branch. Can
+>> anyone give me a detailed, step by step answer please?
+> I don't quite understand your question. You deleted the original
+> repository, which I assume means you removed the whole working tree. So
+> can you not "git clone" the original repository again and redo your
+> work?
 >
-> Signed-off-by: Pete Wyckoff <pw@padd.com>
-> ---
+> Or did you remove only the ".git" directory, leaving your modified
+> working tree in place? If that is the case, you probably want:
 >
-> The nice git-scm.com redo made me proofread this doc.
+>    # turn your directory back into a git repository
+>    cd $your_project
+>    git init
 >
-> Patch on origin/master.
+>    # fetch the existing work again
+>    git remote add origin $your_remote_url
+>    git fetch
 >
-> Even though this looks like a job for maint, both hunks
-> will collide there.  maint version follows.
-
-Will apply the 'maint' one and merge it up to 'master', and will use this
-as a reference to avoid mismerges.
-
-Thanks.
+>    # now tell git that we are basing our branch on the upstream master.
+>    # We must make sure not to use "--hard" here, because that would
+>    # overwrite the working tree.
+>    git reset origin/master
+>
+> At this point you should be able to use "git status" to see your
+> changes, and commit as normal. You might also want to run:
+>
+>    git branch --set-upstream master origin/master
+>
+> to make "git pull" work without any arguments. This setup is done
+> automatically by "git clone", but not by the manual init+fetch we did
+> above.
+>
+> -Peff
