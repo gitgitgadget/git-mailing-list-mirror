@@ -1,93 +1,97 @@
-From: Christian Stimming <stimming@tuhh.de>
-Subject: Re: [PATCH 2/5] l10n: de.po: translate "track" as "folgen"
-Date: Mon, 07 May 2012 13:28:33 +0200
-Message-ID: <20120507132833.Horde.UUP4Oz1l-NpPp7HhlwfXEJA@webmail.tu-harburg.de>
-References: <1336160906-20708-1-git-send-email-ralf.thielow@googlemail.com>
- <1336160906-20708-3-git-send-email-ralf.thielow@googlemail.com>
- <1543115.9YNtu9coLS@cs-pc> <87obq08fq5.fsf@thomas.inf.ethz.ch>
- <CAN0XMOJgp-i=nd_7ygX=WuaegK6zMRypxRYH8nfGw6FLPAA1Fg@mail.gmail.com>
+From: Jon Seymour <jon.seymour@gmail.com>
+Subject: Re: git svn dcommit <branch> committed to trunk anyway
+Date: Mon, 7 May 2012 17:08:56 +0530
+Message-ID: <CAH3Anrq5SGZZsTpKd1MFBRVD8xzsUvckt6d-BxtTYYce--F1+g@mail.gmail.com>
+References: <CAH3AnroP+ckzgijibPDEupBCfUFu5Bwsq8YP58h+igXoJyJEyg@mail.gmail.com>
+	<87txzsba0o.fsf@thomas.inf.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8;
-	format=flowed	DelSp=Yes
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Thomas Rast <trast@inf.ethz.ch>, jk@jk.gs, git@vger.kernel.org
-To: Ralf Thielow <ralf.thielow@googlemail.com>
-X-From: git-owner@vger.kernel.org Mon May 07 13:28:55 2012
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Mon May 07 13:39:13 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SRM7Y-00056M-KZ
-	for gcvg-git-2@plane.gmane.org; Mon, 07 May 2012 13:28:52 +0200
+	id 1SRMHZ-0002vj-55
+	for gcvg-git-2@plane.gmane.org; Mon, 07 May 2012 13:39:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756148Ab2EGL2s convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 7 May 2012 07:28:48 -0400
-Received: from smtp3.rz.tu-harburg.de ([134.28.202.138]:42784 "EHLO
-	smtp3.rz.tu-harburg.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755576Ab2EGL2r (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 May 2012 07:28:47 -0400
-Received: from mail.tu-harburg.de (mail.tu-harburg.de [134.28.202.179])
-	by smtp3.rz.tu-harburg.de (8.13.8/8.13.8) with ESMTP id q47BSX5P024944
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK);
-	Mon, 7 May 2012 13:28:34 +0200
-Received: from webmail.tu-harburg.de (webmail.rz.tu-harburg.de [134.28.202.69])
-	(user=alucst mech=PLAIN bits=0)
-	by mail.tu-harburg.de (8.13.8/8.13.8) with ESMTP id q47BSX96003349
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Mon, 7 May 2012 13:28:33 +0200
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=tuhh.de; s=x2012-19;
-	t=1336390113; bh=q4hagD095YkY3uD0MKn1qe25fX1etAbN4kl+rzqyQys=;
-	h=Date:Message-ID:From:To:Cc:Subject:References:In-Reply-To:
-	 Content-Type:MIME-Version:Content-Transfer-Encoding;
-	b=dOjA6JVcqXY3EesuKurWGkWU3ULoTVfKaLXxWQDvPmKyETCUE88qpWVmavgGRsOYT
-	 s5LAqny4TGKSydQ/imdnmw3eDnoX1B7D5hQSpCUGlnFzeOxlup8VDJEyg+07G/b6lf
-	 q1jFQOsThEczpevMRbPI9+quE0hKs/J6dHIuQ9nk=
-Received: from hansjoerg.sick.de (hansjoerg.sick.de [91.207.92.112]) by
- webmail.tu-harburg.de (Horde Framework) with HTTP; Mon, 07 May 2012 13:28:33
- +0200
-In-Reply-To: <CAN0XMOJgp-i=nd_7ygX=WuaegK6zMRypxRYH8nfGw6FLPAA1Fg@mail.gmail.com>
-User-Agent: Internet Messaging Program (IMP) H4 (5.0.20)
-Content-Disposition: inline
-X-Scanned-By: TUHH Rechenzentrum content checker on 134.28.202.138
-X-Scanned-By: TUHH Rechenzentrum content checker on 134.28.202.179
+	id S1756442Ab2EGLjA convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 7 May 2012 07:39:00 -0400
+Received: from mail-wi0-f172.google.com ([209.85.212.172]:48706 "EHLO
+	mail-wi0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756395Ab2EGLi5 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 7 May 2012 07:38:57 -0400
+Received: by wibhj6 with SMTP id hj6so3339188wib.1
+        for <git@vger.kernel.org>; Mon, 07 May 2012 04:38:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=B0pD/zGEMwi3rwXzBEhM0OwnfMhFsmUoBgxExqX89YE=;
+        b=zRrEzIyTPCMLHNQZjRQI0rOLLgzVbNIxVPk9gXQWphp2Jih7MMcsuB9IAqAdJBWABM
+         Kwqe+wsMI3XlDrLW4uMXkVlLQfU1gtF376hiGxO0b1Wjb9H6iliN+gHlzmHYxno3eDTE
+         7wLgMS7AhIEwfT6Zf/iicB/bXYgqWvvGDjJXd+eoutQbz/63TvZSlOvQ5OWljfiF47x/
+         xlgySJ/u3vOGesllLV2sVGS7tc5BJdHDitGMT9U0I1rc46BTojJ6Sx+ptPH8q9mqTD1+
+         rBSOfrugoD6jcKqeSefPZd7CTNrcBIuJOubmQESCaR4fkOCDFqAT+Nz87C/TRloZ8eCS
+         DvXA==
+Received: by 10.216.208.41 with SMTP id p41mr9471101weo.21.1336390736034; Mon,
+ 07 May 2012 04:38:56 -0700 (PDT)
+Received: by 10.180.82.35 with HTTP; Mon, 7 May 2012 04:38:56 -0700 (PDT)
+In-Reply-To: <87txzsba0o.fsf@thomas.inf.ethz.ch>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197260>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197261>
 
-
-Zitat von Ralf Thielow <ralf.thielow@googlemail.com>:
-
-> On Mon, May 7, 2012 at 12:09 PM, Thomas Rast <trast@inf.ethz.ch> wrot=
-e:
->>
->> Good point. =C2=A0In addition, both "folgen" and "verfolgen" have th=
-e problem
->> that several derived words sound funny; e.g. "verfolgt" and "folgend=
-".
->>
->> How about "beobachten" (for the English readers, roughly "observe") =
-or
->> "beachten" ("pay attention to") for this meaning of tracking? =C2=A0=
-The
->> latter even forms a nice group with "unbeachtet" and "ignoriert".
->>
->> You could use "folgen" in the remote-tracking sense instead?
+On Mon, May 7, 2012 at 3:14 PM, Thomas Rast <trast@student.ethz.ch> wro=
+te:
+> Jon Seymour <jon.seymour@gmail.com> writes:
 >
-> Good suggestions.
+>> I expected git svn dcommit <branch> to push commits into the svn
+>> branch called <branch> (a repo relative URL of
+>> /branches/foobar1/foobar2/<branch>)
+>>
+>> However, it decided to push into trunk instead, which was not the
+>> intended effect.
+>>
+>> What have I misunderstood about how git svn dcommit is supposed to w=
+ork?
 >
-> I personally prefer "beobachten" for tracked files/contents
+> Did the commits you dcommitted have any git-svn-id lines? =C2=A0It dc=
+ommits
+> (or at least it's supposed to :-) in the directory listed in the
+> git-svn-id line found by (roughly)
+>
+> =C2=A0git log --first-parent -1 --grep=3D^git-svn-id:
+>
 
-Indeed, very good suggestions. Thanks.
+None of the commits that dcommit committed to svn had such lines, but
+the immediately preceding commit did, and that commit referred to the
+trunk URL, rather than the branch URL.
 
-> and, as you
-> said, "folgen" in the remote-tracking sense. But I wouldn't use
-> "ignoriert" because it has another meaning in git.
+I guess I am confused by this guidance in git-svn(1) in the section on =
+dcommit:
 
-Yes, absolutely. Agreed. Thanks a lot.
+    "An optional revision or branch argument may be specified, and
+causes git svn to do all work on that revision/branch instead of
+HEAD":
+
+I had assumed that dcommit would respect the optional (SVN branch)
+argument that I had specified, but it seems that this is not the case.
+What do the words in the man page actually mean, if they don't mean
+what I thought they meant.  Do the words "optional revision or branch"
+actually refer to the git commit/branch rather than the SVN
+revision/branch?
 
 Regards,
 
-Christian
+jlon.
+
+
+> --
+> Thomas Rast
+> trast@{inf,student}.ethz.ch
