@@ -1,114 +1,84 @@
-From: Robin Rosenberg <robin.rosenberg@dewire.com>
-Subject: Re: Index format v5
-Date: Tue, 08 May 2012 00:18:26 +0200
-Message-ID: <4FA84A32.7070607@dewire.com>
-References: <CALgYhfMKdbv8TiT4ALDSvD3pSXHEPLWHM09DxYnRmRdBWRjh8Q@mail.gmail.com> <87obq5p1t0.fsf@thomas.inf.ethz.ch> <4FA3816E.8090005@alum.mit.edu>
+From: Egor Ryabkov <egor.ryabkov@gmail.com>
+Subject: Git fetch/pull stopped working
+Date: Tue, 8 May 2012 02:45:08 +0400
+Message-ID: <CADB4Qb1BhWpm1mAwiHy+edySvo7P+YcvrSiTSc8dVzKQsnNCfQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Thomas Rast <trast@student.ethz.ch>,
-	Thomas Gummerer <t.gummerer@gmail.com>, git@vger.kernel.org,
-	gitster@pobox.com, peff@peff.net, spearce@spearce.org,
-	davidbarr@google.com
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Tue May 08 00:19:24 2012
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 08 00:45:35 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SRWH4-00065G-QU
-	for gcvg-git-2@plane.gmane.org; Tue, 08 May 2012 00:19:23 +0200
+	id 1SRWgP-0003pS-GE
+	for gcvg-git-2@plane.gmane.org; Tue, 08 May 2012 00:45:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756966Ab2EGWTS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 May 2012 18:19:18 -0400
-Received: from mail.dewire.com ([83.140.172.130]:23416 "EHLO dewire.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752760Ab2EGWTR (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 May 2012 18:19:17 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by dewire.com (Postfix) with ESMTP id 528458FC76;
-	Tue,  8 May 2012 00:19:17 +0200 (CEST)
-X-Virus-Scanned: by amavisd-new at dewire.com
-Received: from dewire.com ([127.0.0.1])
-	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id UmwaDmImdkTN; Tue,  8 May 2012 00:19:16 +0200 (CEST)
-Received: from Robin-Rosenbergs-MacBook-Pro.local (unknown [10.9.0.2])
-	by dewire.com (Postfix) with ESMTP id A58DB8FC74;
-	Tue,  8 May 2012 00:19:15 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:13.0) Gecko/20120425 Thunderbird/13.0
-In-Reply-To: <4FA3816E.8090005@alum.mit.edu>
+	id S1757738Ab2EGWpZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 May 2012 18:45:25 -0400
+Received: from mail-yw0-f46.google.com ([209.85.213.46]:57975 "EHLO
+	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757710Ab2EGWpY (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 May 2012 18:45:24 -0400
+Received: by yhmm54 with SMTP id m54so4729452yhm.19
+        for <git@vger.kernel.org>; Mon, 07 May 2012 15:45:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to:content-type;
+        bh=VseQARpeJabFY0TbHBFtE4a+SFDlicdsE1X7puiXpGA=;
+        b=Tit3+03IKvrFJjrK0gjAQnlEMNwgAtBp/LXWvUPgh2lvZjI2nayLUuNf+DDgbNbmx+
+         T1tYyqVWllA3vPC3rxq4mLNqp79HF9ftnjieigKZ8NOov+3V7mEj0xuCSvPziWJwMqcL
+         3i2JIkNgkLmaTY2WfH/aW1faQwjhIpEXPzJEpepKz9z7W6h9OyT2FjUz+1cWTLbRNz9H
+         dNrEq0gtwO7uNNL8J5AniinvJlHh0d3LMy39JBFAv13Pj91mP05M8oBuSVA+FE5xEBMJ
+         p+pZfIDVMRudnr/vToNgi2alJ3P6yxJJ4kK8KF+b7V4GJYCnaXN4bPevJ256Tz2GMhcy
+         CIrQ==
+Received: by 10.50.222.200 with SMTP id qo8mr2090188igc.20.1336430723861; Mon,
+ 07 May 2012 15:45:23 -0700 (PDT)
+Received: by 10.42.60.200 with HTTP; Mon, 7 May 2012 15:45:08 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197322>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197323>
 
-Michael Haggerty skrev 2012-05-04 09.12:
-> On 05/03/2012 08:16 PM, Thomas Rast wrote:
->> Thomas Gummerer<t.gummerer@gmail.com>  writes:
->>
->>>    32-bit crc32 checksum over ctime seconds, ctime nanoseconds,
->>>      ino, file size, dev, uid, gid (All stat(2) data except mtime) [7]
->> [...]
->>> [7] Since all stat data (except mtime and ctime) is just used for
->>>      checking if a file has changed a checksum of the data is enough.
->>>      In addition to that Thomas Rast suggested ctime could be ditched
->>>      completely (core.trustctime=false) and thus included in the
->>>      checksum. This would save 24 bytes per index entry, which would
->>>      be about 4 MB on the Webkit index.
->>>      (Thanks for the suggestion to Michael Haggerty)
->>
->> This is the part I'm most curious about.  Are we missing anything?
->> Michael brought it up on IRC: the stat() results are only used to test
->> whether they are still the same, with the exception of the mtime (which
->> also undergoes raciness checks).
->>
->> As far as I can see, none of st_{ino,dev,uid,gid} are useful for
->> anything.  st_size might conceivably be used as a hint for a buffer
->> size, but nobody actually does that.  The ctime undergoes stricter
->> checks, but AFAICS it's also all about whether it has changed, and
->> besides that can be turned off.  We think all of those fields can be
->> replaced by an arbitrary hash/CRC and only tested for equality.  32 bits
->> should be plenty, probably even if we just xor the values together.
->
-> XOR is definitely *not* adequate; for example, changing uid=gid="you" to uid=gid="me"
- > would not affect the XOR of the values (assuming, as is often the case, that each user
-> has his own uid/gid with the same numerical values).
+Hi guys!
 
-If you change uid/gid, that has no relevance for the content that git tracks. If the CRC
-is equal you have to check the content. Ideally a change that does not change the content
-should not change the CRC either, so there is really no absolute need to see that change.
+git fetch and pull stopped working a few days ago on my server with
+the following message:
 
-I assume the idea is that if you do "tar xvf" or something like that, then changes in file,
-mtime etc could be picked up by looking at these attributes, but it seems that those that
-mess with mtime such that it goes back in time are out of luck with git anyway.
+$ git fetch
+ERROR: Repository not found.
+fatal: The remote end hung up unexpectedly
 
-> Which hash to use depends on some estimate of the likelihood that the hashes collide and
- > simultaneously that the other metadata coincide.  It seems to me that CRC-32 would
-> be adequate.  But if not, a longer hash could be used (albeit with less space savings).
->
-> Michael
->
 
-JGit simply ignores ctime, ino, dev, uid and gid.  The real reason is of course that
-standard Java does not have an API for these extra attributes. On the the other hand
-nobody is going to fix this bug. The reason is that if you follow the rule that mtime
-must always change to "now" if content change, then all changes will be found simply
-by looking at mtime or performing a content check for the racy case.  Those that mess
-with mtime tend to be unhappy anyway.
+fetch/push/pull still work just fine with the same (GitHub) repository
+from my local PC, and they also work fine with another GH repo from
+another server.
 
-Then there is the issue of how often we can detect changes without checking content. Ino
-usually changes, but when it changes mtime usually does too, so how often does it speed
-up.
+I tried comparing "git remote -v" output for local PC and server,
+they're the same.
+"$ GIT_TRACE=1 git fetch" gives somewhat different output on local PC
+and server:
+http://pastecode.com/bd3fc1a79f8e9d1eaf30911d9895938051c472f4
+but the output is identical for the two servers I have (both are AWS
+instances, if that matters).
 
-Has anyone instrumented git to see how much the different attributes actually
-contribute to performance and accuracy?
+There are two clones of the repository on the server in question, both
+giving the same error. ssh git@github.com works as it should, so SSH
+keys are alright.
 
-I'd like to extend the size field to 64 bits. We rarely need the extra bits, but we
-cannot differ between 3 bytes and 4294967299 bytes so avoiding the very expensive
-content check there would be welcome, even it it's a rare event. I haven't thought
-too much about this though. I just felt uncomfortable when looking at the code and
-knowing that performing a content check of a 4 GB file could take a minute or two.
 
--- robin
+One quirk I noticed is that "git pull origin st+[Tab]" used to expand
+to a branch name; now it expands to a name of the file in current
+directory (and the filename is not the same as branch name).
+
+I guess it's some problem with git install on the server - any ideas
+how I could try and diagnose this, besides GIT_TRACE?
+
+
+A discussion on Stackoverflow:
+http://stackoverflow.com/questions/10438082/git-fetch-pull-have-stopped-working
+
+Thanks in advance!
+
+Egor.
