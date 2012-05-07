@@ -1,79 +1,120 @@
-From: Pete Wyckoff <pw@padd.com>
-Subject: Re: git-p4: planned view wildcard support
-Date: Mon, 7 May 2012 08:28:33 -0700
-Message-ID: <20120507152833.GA30191@padd.com>
-References: <CAF0RQx-0M4iUHgGdH=RE_UFmLLZH8uy4kkMW=XspNzGm-vsyEg@mail.gmail.com>
- <20120507104443.GA20372@padd.com>
- <CAF0RQx_0EYGiTd36WMtjeBwJL1cxsGTe44=P+btEfWn+5Hq5yg@mail.gmail.com>
+From: Tay Ray Chuan <rctay89@gmail.com>
+Subject: Re: [PATCH 4/4] allow recovery from command name typos
+Date: Mon, 7 May 2012 23:49:25 +0800
+Message-ID: <CALUzUxren063JA8NfDNWKXxf4=4jRDftpTHB76-1fFD-900XAw@mail.gmail.com>
+References: <1336287330-7215-1-git-send-email-rctay89@gmail.com>
+	<1336287330-7215-2-git-send-email-rctay89@gmail.com>
+	<1336287330-7215-3-git-send-email-rctay89@gmail.com>
+	<1336287330-7215-4-git-send-email-rctay89@gmail.com>
+	<1336287330-7215-5-git-send-email-rctay89@gmail.com>
+	<20120506082130.GB27878@sigill.intra.peff.net>
+	<CALUzUxqXrsB8XfQL6vOiQo1pLHNRjxRUxJLRiK_mcSU8fvTSCg@mail.gmail.com>
+	<878vh4con4.fsf@thomas.inf.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Matthew Mendell <matthew.mendell@gmail.com>
-X-From: git-owner@vger.kernel.org Mon May 07 17:36:48 2012
+Cc: Jeff King <peff@peff.net>, Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Mon May 07 17:49:36 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SRPzQ-00036O-Bf
-	for gcvg-git-2@plane.gmane.org; Mon, 07 May 2012 17:36:44 +0200
+	id 1SRQBo-0001N5-3a
+	for gcvg-git-2@plane.gmane.org; Mon, 07 May 2012 17:49:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756770Ab2EGPgj convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 7 May 2012 11:36:39 -0400
-Received: from honk.padd.com ([74.3.171.149]:43027 "EHLO honk.padd.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756623Ab2EGPgi (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 May 2012 11:36:38 -0400
-X-Greylist: delayed 485 seconds by postgrey-1.27 at vger.kernel.org; Mon, 07 May 2012 11:36:38 EDT
-Received: by honk.padd.com (Postfix, from userid 7770)
-	id 503653309; Mon,  7 May 2012 08:28:33 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <CAF0RQx_0EYGiTd36WMtjeBwJL1cxsGTe44=P+btEfWn+5Hq5yg@mail.gmail.com>
+	id S1756786Ab2EGPt1 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 7 May 2012 11:49:27 -0400
+Received: from mail-we0-f174.google.com ([74.125.82.174]:40458 "EHLO
+	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756590Ab2EGPt0 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 7 May 2012 11:49:26 -0400
+Received: by werb10 with SMTP id b10so1325180wer.19
+        for <git@vger.kernel.org>; Mon, 07 May 2012 08:49:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=hvpapdFJ4v1qcKHZ47WjCbp2V+8gKiFp+7B5F4MwrdM=;
+        b=dl/F79u8XtTFmyV8UbS3WuWKORnQFEFnfMz4MX0pLM8d5uu1oR6LEPn2O4KdsgA1co
+         M9hvqKvEHVOdlZkERkxGPpo8mGHhOcAe3oRcKfygb4AyFr5BqhNTS+a5CDP0KFnTe6Du
+         5ay/GF4WFm+RcWxzyNG31zNkgeMS32Bp9O2QF+mQNX4qe2v3qq+piB552ylKqogfBex9
+         OjK9FEkc/TkIe07dBNwsixjq/QuIawf12TZr19EqlTASMQr6SD2HXFxU0p+m50Yarcpl
+         QRXTQv/fkqX1NLdyzrYT/oGup90V8FDBBjyIbwWywt4GLOPl0dnNe40+2OqtwLqL6wTA
+         9R/g==
+Received: by 10.216.214.82 with SMTP id b60mr820484wep.38.1336405765550; Mon,
+ 07 May 2012 08:49:25 -0700 (PDT)
+Received: by 10.223.156.136 with HTTP; Mon, 7 May 2012 08:49:25 -0700 (PDT)
+In-Reply-To: <878vh4con4.fsf@thomas.inf.ethz.ch>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197279>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197280>
 
-matthew.mendell@gmail.com wrote on Mon, 07 May 2012 08:19 -0700:
-> On Mon, May 7, 2012 at 3:44 AM, Pete Wyckoff <pw@padd.com> wrote:
-> > matthew.mendell@gmail.com wrote on Sun, 06 May 2012 16:46 -0700:
-> >> Is there any plan for the git-p4.py script to support the "*" wild=
-card
-> >> in a p4 client?
-> >>
-> >> The specific test that exposes this unsupported feature:
-> >> ./t9809-git-p4-client-view.sh
-> >> ...
-> >> ok 4 - unsupported view wildcard *
-> >
-> > It hasn't been on anybody's priority list so far that I know, but
-> > this would be not too hard to implement in theory.
-> >
-> > The code changes would need to alter just one class. =A0In
-> > View.Path, functions Path.find_wildcards, match_wildcards and
-> > fill_in_wildcards, if you're interested in giving it a try.
-> >
-> > Can you constrain your use of "*" a bit? =A0What makes these
-> > wildcards difficult is all the edge cases. =A0For instance, is
-> > there ever more than one "*"? =A0Is it combined with "..."? =A0Are
-> > there multiple lines in the client spec with wildcards? =A0Some
-> > abstracted examples would be interesting.
->=20
-> Yeah, I have been perusing the code and would like to give it a shot.
-> Is it ok to initially add partial support for the easy cases?
-> My usage of "*" is straight forward:
->=20
-> //depot/project/* //my_clientspec/depot/project/*
+On Mon, May 7, 2012 at 5:43 PM, Thomas Rast <trast@student.ethz.ch> wro=
+te:
+> Tay Ray Chuan <rctay89@gmail.com> writes:
+>
+>> On Sun, May 6, 2012 at 4:21 PM, Jeff King <peff@peff.net> wrote:
+>>> On Sun, May 06, 2012 at 02:55:30PM +0800, Tay Ray Chuan wrote:
+>>>
+>>>> =A0 $ git sh --pretty=3Doneline
+>>>> =A0 git: 'sh' is not a git command. See 'git --help'.
+>>>>
+>>>> =A0 Did you mean one of these?
+>>>> =A0 1: =A0show
+>>>> =A0 2: =A0push
+>>>> =A0 [1/2/.../n] 1
+>>>
+>>> Ugh. Please protect this with a config variable that defaults to
+>>> "off". =A0It is very un-Unix to prompt unexpectedly, and I suspect =
+a lot
+>>> of people would be annoyed by this behavior changing by default (I =
+know
+>>> I would be).
+>>>
+>>> -Peff
+>>
+>> While I agree there should be a config to protect this, I was hoping
+>> this would be useful to users on the terminal who make the occasiona=
+l
+>> slip-up, without having to do any prior configuration.
+>
+> We already have help.autocorrect. =A0It defaults to 0, which results =
+in
+>
+> =A0$ g rebest
+> =A0git: 'rebest' is not a git command. See 'git --help'.
+>
+> =A0Did you mean one of these?
+> =A0 =A0 =A0 =A0 =A0rebase
+> =A0 =A0 =A0 =A0 =A0reset
+> =A0 =A0 =A0 =A0 =A0revert
+>
+> But it can also be a timeout in deciseconds, after which the match is
+> automatically executed (if there is only one). =A0You could hijack it=
+ by
+>
+> * making 'ask' mean your new feature
+>
+> * making 'off' etc. be the same as 0 for sanity
+>
+> * making the default value be like 0, but with an extra message such =
+as
+>
+> =A0 =A0Use 'git config --global help.autocorrect ask' to let me promp=
+t for
+> =A0 =A0the correct command.
+>
+> =A0though I'm sure you can improve on the wording.
 
-That one does seem like it wouldn't be too hard.  Similar to
-trailing "...", but matching only one path component.
+Thomas, that's a brilliant idea.
 
-As long as git-p4 can reliably detect when it can deal
-with a *, I think partial support would be just fine.
+Re-roll coming up.
 
-I'll help think about test cases and such once you have
-some code that's ready to look at.  Thanks!
-
-		-- Pete
+--=20
+Cheers,
+Ray Chuan
