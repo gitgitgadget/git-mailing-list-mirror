@@ -1,102 +1,108 @@
-From: Erik Faye-Lund <kusmabite@gmail.com>
-Subject: [PATCH v2] checkout: do not corrupt HEAD on empty repo
-Date: Tue,  8 May 2012 19:22:33 +0200
-Message-ID: <1336497753-4208-1-git-send-email-kusmabite@gmail.com>
-Cc: gitster@pobox.com, j.sixt@viscovery.net, schwab@linux-m68k.org
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 08 19:22:49 2012
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Git commit path vs rebase path
+Date: Tue, 08 May 2012 10:25:26 -0700
+Message-ID: <7v1umuwpo9.fsf@alter.siamese.dyndns.org>
+References: <CAAXzdLU6bQ7ta4_-WfGJVaJgt1R5tX=4PW2sq3SdjAB+F72w+Q@mail.gmail.com>
+ <7vaa1j7vg1.fsf@alter.siamese.dyndns.org> <4FA8BBB0.1080406@viscovery.net>
+ <CAAXzdLVaDAQkd_9qjnmTRoy8ccpyrZvwvBJQAfkp7LkYa7Li2A@mail.gmail.com>
+ <4FA8C5DB.5060002@viscovery.net>
+ <CAAXzdLW9_O+feVpBhDSXQH_SFRdrct1tjadpFoJ5d7-Qd1LWEg@mail.gmail.com>
+ <7vhavqwqpz.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org
+To: Steven Penny <svnpenn@gmail.com>
+X-From: git-owner@vger.kernel.org Tue May 08 19:25:36 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SRo7d-0006ev-2l
-	for gcvg-git-2@plane.gmane.org; Tue, 08 May 2012 19:22:49 +0200
+	id 1SRoAJ-0007Zo-Q0
+	for gcvg-git-2@plane.gmane.org; Tue, 08 May 2012 19:25:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754262Ab2EHRWo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 May 2012 13:22:44 -0400
-Received: from mail-lb0-f174.google.com ([209.85.217.174]:58271 "EHLO
-	mail-lb0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754122Ab2EHRWn (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 May 2012 13:22:43 -0400
-Received: by lbbgm6 with SMTP id gm6so4389483lbb.19
-        for <git@vger.kernel.org>; Tue, 08 May 2012 10:22:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        bh=22dkCNmQAvjk7ByH5bnV0Mqwg1QTeYpT+rWIc4qiQDY=;
-        b=s8wYkGMNzaKr5iKo1Ym24MSOLsX6jby7Xh27NbT9PAv/0DPS6goNgipDq9HitEl6oh
-         3NJ+G4PBLxhPPMIwcnKKB5d6YHx8rFaKwfbJDci33SOUuLIk63PrHIcH4pX1O8e0/7Sw
-         CSq+RJnMtpNAQSntY60XM6K1b4Ihdzs7tHWLO96buEg1/Cm/pn6XNoWWTA9KVZqN8x4Y
-         GkEhC1JnppGYA69zbg5hxHtXaPog47P21h6zbEWGdXbsxtPkArenu5sTIfLeydecWv+f
-         kBY682y6Gyl8vYj2ajPmonML+NhPSBWJ8UMU88Gv4QQ6iYu9VWiNfZHkC0EZ4bnfUY6l
-         4XeA==
-Received: by 10.152.148.34 with SMTP id tp2mr5588797lab.47.1336497762106;
-        Tue, 08 May 2012 10:22:42 -0700 (PDT)
-Received: from localhost (cm-84.215.107.111.getinternet.no. [84.215.107.111])
-        by mx.google.com with ESMTPS id uc6sm28292196lbb.3.2012.05.08.10.22.39
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 08 May 2012 10:22:41 -0700 (PDT)
-X-Mailer: git-send-email 1.7.10.msysgit.1
+	id S1752509Ab2EHRZb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 May 2012 13:25:31 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:57820 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751858Ab2EHRZa (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 May 2012 13:25:30 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E6276748A;
+	Tue,  8 May 2012 13:25:29 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=S9KU9Eah/qUhCT5Z7TwyWQbu+Uk=; b=Mwmeak
+	lZUwkQfetoq7fPYwERRb6ETA/O31EYTUEsVnm2lw6ZqFIJvZiVtJyA6SbpFhlTRJ
+	WWyLcNJE9JtzCUqZpkxTZA764WPOZS7WcMSCrejYyY3JhJ0qjiY4vTaUt6lwFH5B
+	MnAhJrTxTgEA+IkmZV4NltS4bk6xBiUB/k0y0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=vrL5PBfhUyLwMatgs1QwBxlummsN2R40
+	iZ96bBxUkX8RiiqtQF3i6n/5ZwnDX/rA28nT3Kth7uHOL31I0PU+SlPQFx7YMA/3
+	0RoRUBg/YHxYPfTcL+3YdjuRAh6aokurIAypEIo/aTolyogsXMu1LhmbZKjvg6NO
+	IqJoCp1WUz4=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DB4227489;
+	Tue,  8 May 2012 13:25:29 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5E71C7482; Tue,  8 May 2012
+ 13:25:28 -0400 (EDT)
+In-Reply-To: <7vhavqwqpz.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Tue, 08 May 2012 10:02:48 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: CE282562-9932-11E1-AD56-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197397>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197398>
 
-In abe1998 ("git checkout -b: allow switching out of an unborn
-branch"), a code-path overly-optimisticly assumed that a
-branch-name was specified. This is not always the case, and as
-a result a NULL-pointer was attempted printed to .git/HEAD.
+Junio C Hamano <gitster@pobox.com> writes:
 
-This could lead to at least two different failure modes:
- 1) vsnprintf formated the NULL-string as something useful (e.g
-    "(null)")
- 2) vsnprintf crashed
+> Steven Penny <svnpenn@gmail.com> writes:
+>
+>> Johannes Sixt wrote:
+>>> Are you saying that the new pwd function will also be used on Cygwin? That
+>>> would be a bug.
+>>
+>> The linked patch should fix the problem for _MinGW_ users.
+>>
+>> The problem will persist with _Cygwin_ users.
+>
+> What does a full pathname, fed as a parameter when invoking Windows native
+> binaries like notepad, look like in a Cygwin environment?  That is, if you
+> are writing a bash script that is meant to run in a Cygwin environment,
+> and if the script takes the name of a file in the current directory, but
+> it needs to chdir around for its own reasons before spawning notepad on
+> the file, i.e.
+>
+> 	#!/bin/bash
+> 	file="$(pwd)/$1"
+>         ...
+>         cd ..some..where..else..you..have..no..control..over
+>         notepad "$file"
+>
+> what is the right incantation to replace `pwd` in 'file="$(pwd)/$1"'
+> above?
+>
+> Whatever that is, using that instead of `pwd` in git-sh-setup.sh here:
+>
+> 	test -n "$GIT_DIR" && GIT_DIR=$(cd "$GIT_DIR" && pwd) || {
+>
+> would be the solution.
 
-Neither were very convenient for formatting a new HEAD-reference.
+Actually, the above is stated rather poorly.  The path that ends up in
+$file must be usable by both Windows native and Cygwin programs, as the
+user may be using "vi" from Cygwin, or "notepad" like your example.
 
-To fix this, reintroduce some strictness so we only take this
-new codepath if a banch-name was specified.
+If there is no way to formulate $file to be acceptable for both, I do not
+see any sane solution other than one side compromising for the rest,
+perhaps by having
 
-Signed-off-by: Erik Faye-Lund <kusmabite@gmail.com>
----
- builtin/checkout.c         |    2 +-
- t/t2015-checkout-unborn.sh |   11 +++++++++++
- 2 files changed, 12 insertions(+), 1 deletion(-)
+	$ cat >notepad.sh <<\EOF
+        file=$(cygpath -m "$1") && exec notepad.exe "$file"
+        EOF
 
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index 23fc56d..35924d4 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -1091,7 +1091,7 @@ int cmd_checkout(int argc, const char **argv, const char *prefix)
- 	if (opts.writeout_stage)
- 		die(_("--ours/--theirs is incompatible with switching branches."));
- 
--	if (!new.commit) {
-+	if (!new.commit && opts.new_branch) {
- 		unsigned char rev[20];
- 		int flag;
- 
-diff --git a/t/t2015-checkout-unborn.sh b/t/t2015-checkout-unborn.sh
-index 6352b74..37bdced 100755
---- a/t/t2015-checkout-unborn.sh
-+++ b/t/t2015-checkout-unborn.sh
-@@ -46,4 +46,15 @@ test_expect_success 'checking out another branch from unborn state' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success 'checking out in a newly created repo' '
-+	test_create_repo empty &&
-+	(
-+		cd empty &&
-+		git symbolic-ref HEAD >expect &&
-+		test_must_fail git checkout &&
-+		git symbolic-ref HEAD >actual &&
-+		test_cmp expect actual
-+	)
-+'
-+
- test_done
--- 
-1.7.10.msysgit.1
+on the end-user side, or something like that.
