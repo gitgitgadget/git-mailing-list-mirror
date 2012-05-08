@@ -1,77 +1,66 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
+From: Steven Penny <svnpenn@gmail.com>
 Subject: Re: Git commit path vs rebase path
-Date: Tue, 08 May 2012 08:22:40 +0200
-Message-ID: <4FA8BBB0.1080406@viscovery.net>
-References: <CAAXzdLU6bQ7ta4_-WfGJVaJgt1R5tX=4PW2sq3SdjAB+F72w+Q@mail.gmail.com> <7vaa1j7vg1.fsf@alter.siamese.dyndns.org>
+Date: Tue, 8 May 2012 01:44:47 -0500
+Message-ID: <CAAXzdLVaDAQkd_9qjnmTRoy8ccpyrZvwvBJQAfkp7LkYa7Li2A@mail.gmail.com>
+References: <CAAXzdLU6bQ7ta4_-WfGJVaJgt1R5tX=4PW2sq3SdjAB+F72w+Q@mail.gmail.com>
+	<7vaa1j7vg1.fsf@alter.siamese.dyndns.org>
+	<4FA8BBB0.1080406@viscovery.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Steven Penny <svnpenn@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue May 08 08:22:59 2012
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Tue May 08 08:44:53 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SRdox-0000n7-JB
-	for gcvg-git-2@plane.gmane.org; Tue, 08 May 2012 08:22:51 +0200
+	id 1SReAG-0006Xl-LA
+	for gcvg-git-2@plane.gmane.org; Tue, 08 May 2012 08:44:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753483Ab2EHGWo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 May 2012 02:22:44 -0400
-Received: from lilzmailso02.liwest.at ([212.33.55.13]:38103 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751713Ab2EHGWn (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 May 2012 02:22:43 -0400
-Received: from cpe228-254-static.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.76)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1SRdpO-0004Vg-M3; Tue, 08 May 2012 08:23:19 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id ACF4A1660F;
-	Tue,  8 May 2012 08:22:40 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:12.0) Gecko/20120428 Thunderbird/12.0.1
-In-Reply-To: <7vaa1j7vg1.fsf@alter.siamese.dyndns.org>
-X-Spam-Score: -1.4 (-)
+	id S1753897Ab2EHGos (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 May 2012 02:44:48 -0400
+Received: from mail-yw0-f46.google.com ([209.85.213.46]:36675 "EHLO
+	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753364Ab2EHGor (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 May 2012 02:44:47 -0400
+Received: by yhmm54 with SMTP id m54so4998908yhm.19
+        for <git@vger.kernel.org>; Mon, 07 May 2012 23:44:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=1G7LYY90x8zaXjzijt43nxHgH62WTvNKvHen9FrnSfY=;
+        b=d1ydC9/588Mv4iHeKsztoftZkisvZgikKjR8sKzca95/VNhzINfEiypWwNg1DVV6dF
+         +MLziCkBRS98z/c/WKlzL83q6A8HFG53WGxKR1ngMviXLS5a5uXxmVhZZMYEkC7an6MR
+         s6sLj5C8PyhsP1TYCsEWOOTFLv9rux2bBe6U71JNLwBIzepn9iYZ0jTAy51Ih4kb2v2H
+         g544Rjl+5XGn8IfJMbOkB8lF3HEO0YzRGPqX+MqvlkOyQsF3Ui/PMNFnL4U2Y83Ec8Zn
+         JuZVyAQPNsR96V1QQbAzIiyopbc3ZdgMQmzIiD0B+tOYCIkbPMv+XsiC80obQTXDPtP1
+         0t8w==
+Received: by 10.50.160.225 with SMTP id xn1mr6691038igb.3.1336459487107; Mon,
+ 07 May 2012 23:44:47 -0700 (PDT)
+Received: by 10.231.80.147 with HTTP; Mon, 7 May 2012 23:44:47 -0700 (PDT)
+In-Reply-To: <4FA8BBB0.1080406@viscovery.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197340>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197341>
 
-Am 5/7/2012 19:27, schrieb Junio C Hamano:
-> Steven Penny <svnpenn@gmail.com> writes:
-> 
->> I have noticed
->>
->> git commit uses this path
->>
->> .git/COMMIT_EDITMSG
->>
->> git rebase uses this path
->>
->> /home/Steven/jquery/.git/rebase-merge/git-rebase-todo
->>
->> So git commit is using a relative path while git rebase is using absolute path.
->>
->> This causes problem in Windows if your editor does not understand linux paths,
->> e.g. notepad, Notepad2, Notepad++, etc.
-> 
-> ... the issue is _not_ that the path is
-> absolute, it is that the path is given as a wrong kind of absolute path.
-> 
-> Which suggests that "$(cd "$GIT_DIR" && pwd)" must give a full path that
-> is suitable for the platform, and your platform wants it to be something
-> like "c:\home\steven\jquery\..."?
+Johannes Sixt wrote:
+> The problem should be mitigated by be39048a7 (git-sh-setup.sh: Add an
+> pwd() function for MinGW), where the above now returns a Windows-style
+> absolute path, albeit with forward slashes instead of the backslashes.
 
-The problem should be mitigated by be39048a7 (git-sh-setup.sh: Add an
-pwd() function for MinGW), where the above now returns a Windows-style
-absolute path, albeit with forward slashes instead of the backslashes.
+http://github.com/git/git/commit/be390
 
-I don't know what "/home/..." is in Steven's case, because it should look
-more like "/c/home/..." unless it is an MSYS mount point, but even then it
-should be reported as Windows-style path with the new pwd function.
+This looks like a good solution for MinGW, but cygwin will not support that
 
-IOW, the problem should be fixed in the next release.
+$ pwd -W
+bash: pwd: -W: invalid option
+pwd: usage: pwd [-LP]
 
--- Hannes
+Cygwin uses cygpath
+
+$ cygpath -m /c/Windows/System32
+C:/Windows/System32
