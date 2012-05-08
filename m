@@ -1,128 +1,70 @@
-From: Erik Faye-Lund <kusmabite@gmail.com>
-Subject: Re: [PATCH] checkout: do not corrupt HEAD on empty repo
-Date: Tue, 8 May 2012 18:25:29 +0200
-Message-ID: <CABPQNSau5snkNLqsnBnsLVBVNKHXnvb8rsE8DbNfpo9__5uijA@mail.gmail.com>
-References: <1336493114-4984-1-git-send-email-kusmabite@gmail.com>
-Reply-To: kusmabite@gmail.com
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] notes: do not accept non-blobs as new notes
+Date: Tue, 08 May 2012 09:26:40 -0700
+Message-ID: <7v8vh2y6yn.fsf@alter.siamese.dyndns.org>
+References: <1336482692-30729-1-git-send-email-pclouds@gmail.com>
+ <20120508160334.GA26838@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: gitster@pobox.com, j.sixt@viscovery.net, schwab@linux-m68k.org
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 08 18:26:19 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+	git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue May 08 18:26:52 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SRnEu-0002p2-2a
-	for gcvg-git-2@plane.gmane.org; Tue, 08 May 2012 18:26:16 +0200
+	id 1SRnFQ-00035e-86
+	for gcvg-git-2@plane.gmane.org; Tue, 08 May 2012 18:26:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755445Ab2EHQ0K convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 8 May 2012 12:26:10 -0400
-Received: from mail-pz0-f46.google.com ([209.85.210.46]:52915 "EHLO
-	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753843Ab2EHQ0J convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 8 May 2012 12:26:09 -0400
-Received: by dady13 with SMTP id y13so2848267dad.19
-        for <git@vger.kernel.org>; Tue, 08 May 2012 09:26:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type:content-transfer-encoding;
-        bh=5OFCItzpFcYVHrlAXcYxOlUpGRbEPD9VwxoMvXxW1do=;
-        b=KD1CI744A2alDzHv0GU+U+VUjz5ULEqqxcZ86e74IdjMkd3MY4zsrP5XNI9Dn8Acz/
-         08ConPGwFxWOOVKUW7oIWyYuxZvJEJ66H5PprT5/UqF7xl7egLeDhWBUMyJnzgJv8bKK
-         ZWrozgpEN4o7hybeY1L7aw93obLUa44wdiCSF2eLmhqYb4DyK26reZ6cJxT0f/gx82XR
-         wdO2EpV6pR1Ma0x7Ekn/hIzANgKmpGyTeZ3bChM5+XeG8xk0LnL55zveuYwcTlhShyej
-         ddpMeTpyu83rzR8rNKokDpBtUllZdrnw+oShqY8KrUbLH8Q8hQBgAG7o3laMbA7bqn83
-         TgAQ==
-Received: by 10.68.225.104 with SMTP id rj8mr44508365pbc.135.1336494369294;
- Tue, 08 May 2012 09:26:09 -0700 (PDT)
-Received: by 10.68.73.65 with HTTP; Tue, 8 May 2012 09:25:29 -0700 (PDT)
-In-Reply-To: <1336493114-4984-1-git-send-email-kusmabite@gmail.com>
+	id S1755617Ab2EHQ0n (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 May 2012 12:26:43 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:62290 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754384Ab2EHQ0m (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 May 2012 12:26:42 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 714E46492;
+	Tue,  8 May 2012 12:26:42 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=k5mVAouoVz1ZBex+WgUqPTc5UwA=; b=qLnZs9
+	d69/zN7bQCwCklhZFlJS179pLJqsH6DQxbWvE4/z1BeMX9DV3mmV0jha4a1NCshe
+	ZUsw7YXFsdsWqINfXq96OFusoaMbdUWNZM7pq6LKNTtOX4RBQsIyOR4tK4P3d1Xi
+	uSnmzzBXPjF40bpbQb73ARec07sVKs3/FDmuc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Bb2m4EAFNzFt4xihFhSz6kWBKmrMy/RR
+	mq6yT++LDNHKl+QbtI+uyD5/MaljK5uAX78B4c0kFeTWinOT8N9SBSNs6ZzI5WaD
+	cfaE5AR772DLDQx0RSrsfOuDPxKZMJNvCyYtNPoRNB1FkK869QXlr4pVgkAsWzhZ
+	mFniqM5gX50=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 688AC6491;
+	Tue,  8 May 2012 12:26:42 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id DAE946490; Tue,  8 May 2012
+ 12:26:41 -0400 (EDT)
+In-Reply-To: <20120508160334.GA26838@sigill.intra.peff.net> (Jeff King's
+ message of "Tue, 8 May 2012 12:03:34 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 9834427C-992A-11E1-8FEE-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197384>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197385>
 
-On Tue, May 8, 2012 at 6:05 PM, Erik Faye-Lund <kusmabite@gmail.com> wr=
-ote:
-> In abe1998 ("git checkout -b: allow switching out of an unborn
-> branch"), a code-path overly-optimisticly assumed that a
-> branch-name was specified. This is not always the case, and as
-> a result a NULL-pointer was attempted printed to .git/HEAD.
->
-> This could lead to at least two different failure modes:
-> =A01) The CRT formated the NULL-string as something useful (e.g
-> =A0 =A0"(null)")
-> =A02) The CRT crasheed.
->
-> Neither were very convenient for formatting a new HEAD-reference.
->
-> To fix this, reintroduce some strictness so we only take this
-> new codepath if a banch-name was specified.
->
-> Signed-off-by: Erik Faye-Lund <kusmabite@gmail.com>
-> ---
-> =A0builtin/checkout.c =A0 =A0 =A0 =A0 | =A0 =A02 +-
-> =A0t/t2015-checkout-unborn.sh | =A0 11 +++++++++++
-> =A02 files changed, 12 insertions(+), 1 deletion(-)
->
-> diff --git a/builtin/checkout.c b/builtin/checkout.c
-> index 23fc56d..35924d4 100644
-> --- a/builtin/checkout.c
-> +++ b/builtin/checkout.c
-> @@ -1091,7 +1091,7 @@ int cmd_checkout(int argc, const char **argv, c=
-onst char *prefix)
-> =A0 =A0 =A0 =A0if (opts.writeout_stage)
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0die(_("--ours/--theirs is incompatible=
- with switching branches."));
->
-> - =A0 =A0 =A0 if (!new.commit) {
-> + =A0 =A0 =A0 if (!new.commit && opts.new_branch) {
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0unsigned char rev[20];
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0int flag;
->
-> diff --git a/t/t2015-checkout-unborn.sh b/t/t2015-checkout-unborn.sh
-> index 6352b74..2fa9458 100755
-> --- a/t/t2015-checkout-unborn.sh
-> +++ b/t/t2015-checkout-unborn.sh
-> @@ -46,4 +46,15 @@ test_expect_success 'checking out another branch f=
-rom unborn state' '
-> =A0 =A0 =A0 =A0test_cmp expect actual
-> =A0'
->
-> +test_expect_success 'checking out in a newly created repo' '
-> + =A0 =A0 =A0 test_create_repo empty &&
-> + =A0 =A0 =A0 (
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 cd empty &&
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 cat .git/HEAD >expect &&
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 test_must_fail git checkout &&
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 cat .git/HEAD >actual &&
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 test_cmp expect actual
-> + =A0 =A0 =A0 )
-> +'
-> +
-> =A0test_done
+Jeff King <peff@peff.net> writes:
 
-Hmh, this is needlessly cluttery. The following should cover it:
+> ...
+> At the same time, is there any reason not to allow experimentation in
+> this area? We don't know what other people might be putting in their
+> private notes trees, and the current interface does allow this.
+>
+> Is this fixing some important problem that justifies making such
+> experimentation harder?
 
----
-diff --git a/t/t2015-checkout-unborn.sh b/t/t2015-checkout-unborn.sh
-index 2fa9458..b49fedf 100755
---- a/t/t2015-checkout-unborn.sh
-+++ b/t/t2015-checkout-unborn.sh
-@@ -50,10 +50,7 @@ test_expect_success 'checking out in a newly created=
- repo' '
- 	test_create_repo empty &&
- 	(
- 		cd empty &&
--		cat .git/HEAD >expect &&
--		test_must_fail git checkout &&
--		cat .git/HEAD >actual &&
--		test_cmp expect actual
-+		test_must_fail git checkout
- 	)
- '
+You said everything I wanted to say and asked the right questions I wanted
+to ask.  Thanks.
