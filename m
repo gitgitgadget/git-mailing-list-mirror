@@ -1,91 +1,102 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] checkout: do not corrupt HEAD on empty repo
-Date: Tue, 08 May 2012 10:13:05 -0700
-Message-ID: <7v8vh2wq8u.fsf@alter.siamese.dyndns.org>
-References: <1336493114-4984-1-git-send-email-kusmabite@gmail.com>
- <CABPQNSau5snkNLqsnBnsLVBVNKHXnvb8rsE8DbNfpo9__5uijA@mail.gmail.com>
- <7vsjfawrmw.fsf@alter.siamese.dyndns.org>
- <CABPQNSbyh8oMfz8GbDDn_bdLc8RpEt5sq7wxtVFh61ekD_j8yQ@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, j.sixt@viscovery.net, schwab@linux-m68k.org
-To: kusmabite@gmail.com
-X-From: git-owner@vger.kernel.org Tue May 08 19:13:19 2012
+From: Erik Faye-Lund <kusmabite@gmail.com>
+Subject: [PATCH v2] checkout: do not corrupt HEAD on empty repo
+Date: Tue,  8 May 2012 19:22:33 +0200
+Message-ID: <1336497753-4208-1-git-send-email-kusmabite@gmail.com>
+Cc: gitster@pobox.com, j.sixt@viscovery.net, schwab@linux-m68k.org
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 08 19:22:49 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SRnyM-00033K-TN
-	for gcvg-git-2@plane.gmane.org; Tue, 08 May 2012 19:13:15 +0200
+	id 1SRo7d-0006ev-2l
+	for gcvg-git-2@plane.gmane.org; Tue, 08 May 2012 19:22:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756384Ab2EHRNJ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 8 May 2012 13:13:09 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50707 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754666Ab2EHRNI convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 8 May 2012 13:13:08 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8CA417102;
-	Tue,  8 May 2012 13:13:07 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=15y8xY4zLu4h
-	Wl9JXopijTB0A0Q=; b=LRnvSjB5+tkYuDfWxQTpPZFfajnOFOJuDcPl351t5YQ+
-	u0PM0bClTMT6GyBoMV9WOH9rms9yhuSIapYJ9B6S8nkhQvXgPD8dqMdAWbokhqlr
-	Is5s/slP5zHP0TR7BaS468vETe5b3F2EC/FxDArRAkuGOSm+AsO4qqz26p7kync=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=U9nGr+
-	/589Ijdj8CHsREpSgjE0G0nO0+CA4ZQ5LEM5LLyNxwVxsDKKo++q4bbpS+ma48s1
-	Du6/u8cExkCn0GZVwVhPGEevVwDafEGQ5HaqBZzz0hmZJNDdwi50z2OUUGq5iZ4G
-	NFjCWBw0LtaK3o4H1u1QB4tuSUiMlplJMIObI=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 802687101;
-	Tue,  8 May 2012 13:13:07 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id DAA4E7100; Tue,  8 May 2012
- 13:13:06 -0400 (EDT)
-In-Reply-To: <CABPQNSbyh8oMfz8GbDDn_bdLc8RpEt5sq7wxtVFh61ekD_j8yQ@mail.gmail.com> (Erik
- Faye-Lund's message of "Tue, 8 May 2012 18:52:11 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 1431955E-9931-11E1-A03D-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754262Ab2EHRWo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 May 2012 13:22:44 -0400
+Received: from mail-lb0-f174.google.com ([209.85.217.174]:58271 "EHLO
+	mail-lb0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754122Ab2EHRWn (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 May 2012 13:22:43 -0400
+Received: by lbbgm6 with SMTP id gm6so4389483lbb.19
+        for <git@vger.kernel.org>; Tue, 08 May 2012 10:22:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        bh=22dkCNmQAvjk7ByH5bnV0Mqwg1QTeYpT+rWIc4qiQDY=;
+        b=s8wYkGMNzaKr5iKo1Ym24MSOLsX6jby7Xh27NbT9PAv/0DPS6goNgipDq9HitEl6oh
+         3NJ+G4PBLxhPPMIwcnKKB5d6YHx8rFaKwfbJDci33SOUuLIk63PrHIcH4pX1O8e0/7Sw
+         CSq+RJnMtpNAQSntY60XM6K1b4Ihdzs7tHWLO96buEg1/Cm/pn6XNoWWTA9KVZqN8x4Y
+         GkEhC1JnppGYA69zbg5hxHtXaPog47P21h6zbEWGdXbsxtPkArenu5sTIfLeydecWv+f
+         kBY682y6Gyl8vYj2ajPmonML+NhPSBWJ8UMU88Gv4QQ6iYu9VWiNfZHkC0EZ4bnfUY6l
+         4XeA==
+Received: by 10.152.148.34 with SMTP id tp2mr5588797lab.47.1336497762106;
+        Tue, 08 May 2012 10:22:42 -0700 (PDT)
+Received: from localhost (cm-84.215.107.111.getinternet.no. [84.215.107.111])
+        by mx.google.com with ESMTPS id uc6sm28292196lbb.3.2012.05.08.10.22.39
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Tue, 08 May 2012 10:22:41 -0700 (PDT)
+X-Mailer: git-send-email 1.7.10.msysgit.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197396>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197397>
 
-Erik Faye-Lund <kusmabite@gmail.com> writes:
+In abe1998 ("git checkout -b: allow switching out of an unborn
+branch"), a code-path overly-optimisticly assumed that a
+branch-name was specified. This is not always the case, and as
+a result a NULL-pointer was attempted printed to .git/HEAD.
 
-> On Tue, May 8, 2012 at 6:43 PM, Junio C Hamano <gitster@pobox.com> wr=
-ote:
-> ...
->> Hrm, I am of two minds. =C2=A0Yes, we may want checkout to fail, but=
- at the
->> same time, we would want to make sure that a failed checkout does no=
-t
->> corrupt the HEAD.
->
-> Good point.
->
->> =C2=A0Perhaps it would make it more palatable if you replaced
->> "cat .git/HEAD" with "git symbolic-ref HEAD" in the original?
->
-> Ah, yes. That's much better. Do you want me to resend (improving the
-> test and replacing "CRT" with "vsnprintf")? I also spotted a typo in
-> the commit message ("crasheed" vs "crashed")...
+This could lead to at least two different failure modes:
+ 1) vsnprintf formated the NULL-string as something useful (e.g
+    "(null)")
+ 2) vsnprintf crashed
 
-Surely.
+Neither were very convenient for formatting a new HEAD-reference.
 
-By the way, notice I said "we *may* want checkout to fail"?  With the
-discussion "why is it wrong to allow 'git checkout' to be no-op in a
-freshly created repository" stemming from your other "I do not claim it=
- is
-correct but it makes the test pass" message, we may actually want to ma=
-ke
-that 'checkout' in the test pass, and then 'test_must_fail git checkout=
-'
-in the test would have to go when that happens.
+To fix this, reintroduce some strictness so we only take this
+new codepath if a banch-name was specified.
+
+Signed-off-by: Erik Faye-Lund <kusmabite@gmail.com>
+---
+ builtin/checkout.c         |    2 +-
+ t/t2015-checkout-unborn.sh |   11 +++++++++++
+ 2 files changed, 12 insertions(+), 1 deletion(-)
+
+diff --git a/builtin/checkout.c b/builtin/checkout.c
+index 23fc56d..35924d4 100644
+--- a/builtin/checkout.c
++++ b/builtin/checkout.c
+@@ -1091,7 +1091,7 @@ int cmd_checkout(int argc, const char **argv, const char *prefix)
+ 	if (opts.writeout_stage)
+ 		die(_("--ours/--theirs is incompatible with switching branches."));
+ 
+-	if (!new.commit) {
++	if (!new.commit && opts.new_branch) {
+ 		unsigned char rev[20];
+ 		int flag;
+ 
+diff --git a/t/t2015-checkout-unborn.sh b/t/t2015-checkout-unborn.sh
+index 6352b74..37bdced 100755
+--- a/t/t2015-checkout-unborn.sh
++++ b/t/t2015-checkout-unborn.sh
+@@ -46,4 +46,15 @@ test_expect_success 'checking out another branch from unborn state' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success 'checking out in a newly created repo' '
++	test_create_repo empty &&
++	(
++		cd empty &&
++		git symbolic-ref HEAD >expect &&
++		test_must_fail git checkout &&
++		git symbolic-ref HEAD >actual &&
++		test_cmp expect actual
++	)
++'
++
+ test_done
+-- 
+1.7.10.msysgit.1
