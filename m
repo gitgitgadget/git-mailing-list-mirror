@@ -1,89 +1,126 @@
-From: "Philip Oakley" <philipoakley@iee.org>
-Subject: Re: Does content provenance matter?
-Date: Tue, 8 May 2012 10:23:53 +0100
-Organization: OPDS
-Message-ID: <F5AF82B3BF334F0A88C8755426C725F0@PhilipOakley>
-References: <1336432417.36394.YahooMailClassic@web121504.mail.ne1.yahoo.com>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From: Erik Faye-Lund <kusmabite@gmail.com>
+Subject: git checkout creates strange '(null)'-branch
+Date: Tue, 8 May 2012 13:24:15 +0200
+Message-ID: <CABPQNSZbgZsQBReSqOskNQ4oZokHSibVr=yHdn6oSFjtdRvVVA@mail.gmail.com>
+Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="iso-8859-1";
-	reply-type=original
-Content-Transfer-Encoding: 7bit
-Cc: "Git List" <git@vger.kernel.org>
-To: "Kelly Dean" <kellydeanch@yahoo.com>,
-	"PJ Weisberg" <pj@irregularexpressions.net>
-X-From: git-owner@vger.kernel.org Tue May 08 11:23:42 2012
+Content-Type: text/plain; charset=ISO-8859-1
+To: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue May 08 13:25:03 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SRgdw-0003G3-Gd
-	for gcvg-git-2@plane.gmane.org; Tue, 08 May 2012 11:23:40 +0200
+	id 1SRiXO-00063t-8S
+	for gcvg-git-2@plane.gmane.org; Tue, 08 May 2012 13:25:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751646Ab2EHJXg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 May 2012 05:23:36 -0400
-Received: from out1.ip07ir2.opaltelecom.net ([62.24.128.243]:21409 "EHLO
-	out1.ip07ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751211Ab2EHJXf (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 8 May 2012 05:23:35 -0400
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: AmgQAObkqE9cHlGK/2dsb2JhbABEizqBA5RIkH8BAQKBHIEIggcFAQEEAQgBAQQqHgEBDRQFBgIDBQIBAxUBAgklFAEEGgYHBRIGARIIAgECAwGHbwMGCQetHo4AihppPxwQaINTYwSIMIVKiRWKLoUDgmo
-X-IronPort-AV: E=Sophos;i="4.75,549,1330905600"; 
-   d="scan'208";a="34136729"
-Received: from host-92-30-81-138.as13285.net (HELO PhilipOakley) ([92.30.81.138])
-  by out1.ip07ir2.opaltelecom.net with SMTP; 08 May 2012 10:23:33 +0100
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+	id S1753685Ab2EHLY5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 May 2012 07:24:57 -0400
+Received: from mail-pb0-f46.google.com ([209.85.160.46]:45131 "EHLO
+	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752794Ab2EHLY4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 May 2012 07:24:56 -0400
+Received: by pbbrp8 with SMTP id rp8so7920417pbb.19
+        for <git@vger.kernel.org>; Tue, 08 May 2012 04:24:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:reply-to:from:date:message-id:subject:to:content-type;
+        bh=zCJG0HxLqXM+/2sVHh/ljypHegFgu7BHOrQaJPknD70=;
+        b=Es3cqrvvu1YJ4JLQtbg6NIO1+quXPvu+PraRx9z8ub55t5bgvqafVphQgyIl47VejF
+         h3ppu4iedv51ehoP6L6f/Peqge+WPG7sBn7OCAgdV1f9Vqk2NpqQzDSSmd93jB+L8dn0
+         S4To6RJngeT0PU7ayKM5DRmEuD/6pQKX78f/7Xokb+H098JxRCebSKuFWMpJ9f7zxtn3
+         4Pz+Od0lnxkrnAP5OvIilQIhPf8Zwv3pH/neX9jBpVNfsY0TsjD5n7HpS+Y2HNZm9tVb
+         U/zHWdCBgs/d9KzX3HhT/Tw/OSv1+ZN6cQ4aKeejz9JUMDus2aRmOfeCxNTy9SVlDXqo
+         ECQg==
+Received: by 10.68.244.40 with SMTP id xd8mr39302038pbc.132.1336476295913;
+ Tue, 08 May 2012 04:24:55 -0700 (PDT)
+Received: by 10.68.73.65 with HTTP; Tue, 8 May 2012 04:24:15 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197351>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197352>
 
-From: "Kelly Dean" <kellydeanch@yahoo.com> Sent: Tuesday, May 08, 2012 12:13
-AM
-> --- On Mon, 5/7/12, PJ Weisberg <pj@irregularexpressions.net> wrote:
->> But there could be any number of unrelated commits newer than "Bar"
->> but older than "Revert Bar" on other branches.  Even if you could
->> trust the timestamps to be accurate (you can't), you still can't
->> determine a commit's parent unambiguously.
-> Therefore, provenance does matter, and it must be explicitly recorded
-> because it can't necessarily be correctly and fully deduced from content
-> alone. And git does record inter-commit provenance.
-> However, git doesn't record intra-commit provenance, as I mentioned in my
-> original message. My question is: why this discrepancy?
+I'm not very familiar with submodules, but I gave them a go today, and
+quite quickly bumped into something I consider a bit... odd behavior:
+When I add an empty submodule and commit to it, a strangely named
+"(null)"-branch gets created.
 
->  Either provenance matters, or it doesn't;
+Here's a test that illustrate the issue:
 
-The logic error is here. There are many other available choices as to
-deciding the points at which the many provenance quality levels decay. (e.g.
-see [1]).
+---8<---
+diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
+index 81827e6..ce47b0a 100755
+--- a/t/t7400-submodule-basic.sh
++++ b/t/t7400-submodule-basic.sh
+@@ -520,4 +520,16 @@ test_expect_success 'moving the superproject does
+not break submodules' '
+ 	)
+ '
 
-People eventually give up caring at some level of detail/history, each in a
-different place ;-) It's a choice. e.g. Have you noticed all high
-performance cars (Porche?) need brightly coloured brake cylinders with
-carefully specified paint jobs - why? At some point we give up caring how
-someone got a few (how few?) characters into a file... It's not right, but
-it's not wrong either.
++test_expect_failure 'committing to empty submodule does not create
+(null) branch' '
++	test_create_repo empty-repo &&
++	git submodule add ./empty-repo empty-submodule &&
++	(
++		cd empty-submodule &&
++		echo "foo" > bar.txt &&
++		git add bar.txt &&
++		git commit -m. &&
++		git show-ref | !grep "(null)"
++	)
++'
++
+ test_done
+---8<---
 
-I've worked with systems (e.g. DOORS) that record every keystroke, and
-recored every hunk at the undo/redo level, but for little benefit.
+Now, it could very well be that the best move here would be "don't do
+that". But in that case, I think we should error out instead of
+creating a cryptic branch.
 
-Git takes the approach of having lightweight (easy) branching with easy
-commits, with local history re-writing (rebase), to give users the ability
-to balance between their WIP (work in progress), and their public record.
-But with strong verification of any given history (e.g. "My Master"). It's a
-choice as to who and where to blame.
+So, I decided to dig a bit and see if I could figure out where this
+strange branch-name came from. So I inserted a few calls to
+test_pause, and noticed that:
+1) empty-repo/.git/HEAD contains "ref: refs/heads/master"
+2) .git/modules/empty-submodule/HEAD contains "ref: refs/heads/(null)"
 
->     why record it in one case but not the other?
+Digging further, it turns out that this magical "(null)"-branch
+creation can be reproduced without the use of "git submodule":
+$ git init empty
+$ cd empty
+$ cat .git/HEAD
+ref: refs/heads/master
+$ git checkout
+$ cat .git/HEAD
+ref: refs/heads/(null)
 
-Philip
-[1] Measuring and Managing Technological Knowledge,
-IEEE Engineering Management Review Winter 1997 p77-88.
-Reprinted from  Sloan Management Review, Fall 1994
-http://sloanreview.mit.edu/the-magazine/1994-fall/3615/measuring-and-managing-technological-knowledge/
+The offending code seems to be switch_unborn_to_new_branch, when
+opts->new_branch is NULL. This is relatively new code, introduced in
+January this year by commit abe1998 ("git checkout -b: allow switching
+out of an unborn branch") .
+
+Before this commit, the checkout would error out with "fatal: You are
+on a branch yet to be born". Perhaps abe1998 was too optimistic about
+allowing this, and something like this would be in order?
+
+---8<---
+diff --git a/builtin/checkout.c b/builtin/checkout.c
+index 23fc56d..35924d4 100644
+--- a/builtin/checkout.c
++++ b/builtin/checkout.c
+@@ -1091,7 +1091,7 @@ int cmd_checkout(int argc, const char **argv,
+const char *prefix)
+ 	if (opts.writeout_stage)
+ 		die(_("--ours/--theirs is incompatible with switching branches."));
+
+-	if (!new.commit) {
++	if (!new.commit && opts.new_branch) {
+ 		unsigned char rev[20];
+ 		int flag;
+---8<---
+
+Now, doing this doesn't make my test above pass, but it makes the "git
+submodule add" call fail when the submodule is empty, which is much
+better than what we do now IMO.
