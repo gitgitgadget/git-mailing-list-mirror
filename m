@@ -1,61 +1,53 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] checkout: squelch "'mode' may be used uninitialized in
- this function" warning
-Date: Tue, 8 May 2012 16:26:49 -0400
-Message-ID: <20120508202649.GA15502@sigill.intra.peff.net>
-References: <1335825567-7831-1-git-send-email-dsp@php.net>
- <slrnjq4p8c.i00.dsp@experimentalworks.net>
+From: Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto <cmn@elego.de>
+Subject: Re: Git fetch/pull stopped working
+Date: Tue, 8 May 2012 22:29:34 +0200
+Message-ID: <20120508202934.GA19037@centaur.lab.cmartin.tk>
+References: <CADB4Qb1BhWpm1mAwiHy+edySvo7P+YcvrSiTSc8dVzKQsnNCfQ@mail.gmail.com>
+ <7vehqv36aw.fsf@alter.siamese.dyndns.org>
+ <CADB4Qb35FfTL=XX04iR71+2Rg8p4s2roqAF8b_BdFNP9YN=sfA@mail.gmail.com>
+ <7v8vh2v501.fsf@alter.siamese.dyndns.org>
+ <20120508200842.GA14779@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: David Soria Parra <dsp@php.net>
-X-From: git-owner@vger.kernel.org Tue May 08 22:26:58 2012
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Egor Ryabkov <egor.ryabkov@gmail.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue May 08 22:29:47 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SRqzo-0003pS-OT
-	for gcvg-git-2@plane.gmane.org; Tue, 08 May 2012 22:26:57 +0200
+	id 1SRr2R-0004fa-UG
+	for gcvg-git-2@plane.gmane.org; Tue, 08 May 2012 22:29:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757049Ab2EHU0w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 May 2012 16:26:52 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:34385
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757027Ab2EHU0v (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 May 2012 16:26:51 -0400
-Received: (qmail 8022 invoked by uid 107); 8 May 2012 20:27:10 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 08 May 2012 16:27:10 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 08 May 2012 16:26:49 -0400
+	id S1757173Ab2EHU3f (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 May 2012 16:29:35 -0400
+Received: from kimmy.cmartin.tk ([91.121.65.165]:59172 "EHLO kimmy.cmartin.tk"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757119Ab2EHU3d (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 May 2012 16:29:33 -0400
+Received: from centaur.lab.cmartin.tk (brln-4db9c539.pool.mediaWays.net [77.185.197.57])
+	by kimmy.cmartin.tk (Postfix) with ESMTPA id F0C7346057;
+	Tue,  8 May 2012 22:29:24 +0200 (CEST)
+Received: (nullmailer pid 29319 invoked by uid 1000);
+	Tue, 08 May 2012 20:29:34 -0000
 Content-Disposition: inline
-In-Reply-To: <slrnjq4p8c.i00.dsp@experimentalworks.net>
+In-Reply-To: <20120508200842.GA14779@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197421>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197422>
 
-On Thu, May 03, 2012 at 10:59:24AM +0000, David Soria Parra wrote:
+On Tue, May 08, 2012 at 04:08:42PM -0400, Jeff King wrote:
+> 
+> I'll look into the weird routing thing that Carlos mentioned, too.
 
-> Any update on this patch? Is it going to maint?
+FWIW, it looks like it got solved. My ISP (or their ISP) seem pretty
+inept at keeping traffic flowing, so I wouldn't be surprised if it
+showed up again later. I sent an e-mail to support@ with some traces,
+if you're interested.
 
-I doubt it:
-
-> > diff --git a/builtin/checkout.c b/builtin/checkout.c
-> > index 84d3eb3..6b8bf31 100644
-> > --- a/builtin/checkout.c
-> > +++ b/builtin/checkout.c
-> > @@ -157,7 +157,7 @@ static int checkout_merged(int pos, struct checkout *state)
-> >  	unsigned char sha1[20];
-> >  	mmbuffer_t result_buf;
-> >  	unsigned char threeway[3][20];
-> > -	unsigned mode;
-> > +	unsigned mode = mode;
-
-What is this based on? This has been fixed since 335c6e4
-(checkout_merged(): squelch false warning from some gcc, 2011-12-15),
-which was in v1.7.8.2.
-
--Peff
+   cmn
