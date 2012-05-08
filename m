@@ -1,214 +1,70 @@
-From: Thomas Gummerer <t.gummerer@gmail.com>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
 Subject: Re: Index format v5
-Date: Tue, 8 May 2012 16:11:37 +0200
-Message-ID: <20120508141137.GA3937@tgummerer.surfnet.iacbox>
+Date: Tue, 8 May 2012 21:25:50 +0700
+Message-ID: <CACsJy8CUC8AXYvDEH75NGC_r3HwLoaiq0qxn2EAC0Aq4VXVMag@mail.gmail.com>
 References: <CALgYhfMKdbv8TiT4ALDSvD3pSXHEPLWHM09DxYnRmRdBWRjh8Q@mail.gmail.com>
- <4FA7E703.7040408@alum.mit.edu>
+ <4FA7E703.7040408@alum.mit.edu> <20120508141137.GA3937@tgummerer.surfnet.iacbox>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, trast@student.ethz.ch, gitster@pobox.com,
-	peff@peff.net, spearce@spearce.org, davidbarr@google.com
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Tue May 08 16:11:58 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Michael Haggerty <mhagger@alum.mit.edu>, git@vger.kernel.org,
+	trast@student.ethz.ch, gitster@pobox.com, peff@peff.net,
+	spearce@spearce.org, davidbarr@google.com
+To: Thomas Gummerer <t.gummerer@gmail.com>
+X-From: git-owner@vger.kernel.org Tue May 08 16:26:26 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SRl8r-0008V6-G4
-	for gcvg-git-2@plane.gmane.org; Tue, 08 May 2012 16:11:54 +0200
+	id 1SRlMw-0005Oc-8t
+	for gcvg-git-2@plane.gmane.org; Tue, 08 May 2012 16:26:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755420Ab2EHOLt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 May 2012 10:11:49 -0400
-Received: from mail-ob0-f174.google.com ([209.85.214.174]:64454 "EHLO
-	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754582Ab2EHOLs (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 May 2012 10:11:48 -0400
-Received: by obbtb18 with SMTP id tb18so9828698obb.19
-        for <git@vger.kernel.org>; Tue, 08 May 2012 07:11:47 -0700 (PDT)
+	id S1755394Ab2EHO0W convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 8 May 2012 10:26:22 -0400
+Received: from mail-wg0-f44.google.com ([74.125.82.44]:64728 "EHLO
+	mail-wg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755233Ab2EHO0V convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 8 May 2012 10:26:21 -0400
+Received: by wgbdr13 with SMTP id dr13so5976101wgb.1
+        for <git@vger.kernel.org>; Tue, 08 May 2012 07:26:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=VXtUwKBgK7SRLUfuMUBcFKUNG9MA7L/UDfWcVm8K1Sg=;
-        b=lBL1fy5n/3ClAPI+BIm9n+ZwgN4DN84LDkM0pRSiskkJsieG+PY5Mr9jV39Bd+o9m3
-         fRmWqmXlyo2cg1eINvWUYHF/UFiaMhdhFQeEfVJUDA9ovnp/9HPN8jrFjX2BEO1jn3m+
-         QAtgozmQ7/mP1bmdjDvbu63vmSS8qAe/H8i8dIG7XuBMiU1nOlswDnLXs4U8IgmWiXcf
-         B0YxeqMCru4qCiB2OSQpiy9krwRMzydPPnTafFUs+O4wpQgXMACCZDGnAmXK+sDLDiGa
-         DtWRqAm3DLw9yfwD1+XehwxNlXYnDhwKG2nwcPP4ZJ1oV1/eu6YvnGVdn927p08JpIe8
-         OueQ==
-Received: by 10.182.85.39 with SMTP id e7mr27106179obz.51.1336486306960;
-        Tue, 08 May 2012 07:11:46 -0700 (PDT)
-Received: from localhost ([216.18.212.218])
-        by mx.google.com with ESMTPS id m3sm17424910oem.7.2012.05.08.07.11.41
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 08 May 2012 07:11:45 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <4FA7E703.7040408@alum.mit.edu>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=U+a8UuFIQvAcGSrJRe7rs/HP6YV1esvQkVFRKJcqWt8=;
+        b=ScLmLVeWJtMfrYBofLJkQmsU96eNHSTUFCXehrqlGzo8ERak+V0ERdJC+42fJXxXkN
+         1BL8oXnM01nLgcq89psFya3vDZzviif+zmYpSPU9hZ8yjeCxbrOg/rRAkG/Sdeio9yOm
+         xZklC1Y8vfhOybTD91KD4CyZ/Pz/+w0dDHhz6O/0KquivfJpq2KoLpFsj2b1L4fCq/NP
+         c5fh2JXuzi6YR2RAEXRGOdqgLmeMJjkWaUFCvtU1MbiaE+94XJd12fUgYIJa8Sj0kE32
+         9RXKtNXuYYA8Wq3DQvNRDxetGBJ7cFFt296+2mmA/mQC45+ZDbmwzKQQz7z4YxrJZn/K
+         CRFQ==
+Received: by 10.216.193.80 with SMTP id j58mr860330wen.96.1336487180293; Tue,
+ 08 May 2012 07:26:20 -0700 (PDT)
+Received: by 10.223.14.193 with HTTP; Tue, 8 May 2012 07:25:50 -0700 (PDT)
+In-Reply-To: <20120508141137.GA3937@tgummerer.surfnet.iacbox>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197368>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197369>
 
-
-
-On 05/07, Michael Haggerty wrote:
-> Here are some comments about the format document, version 55047b3d.
-> They probably overlap with other feedback that you have gotten, but
-> I don't have time to cross-correlate everything.  Hope it helps.
-
-Thanks for the feedback!
-
-For those who may not know yet, I've created a wiki on github, since
-this file is going through a lot of revisions, it may not be a good
-idea to post every revision on the mailing list.
-https://github.com/tgummerer/git/wiki/Index-format-v5
-
-> Overall
-> =======
-> 
-> I find the format definition pretty difficult to read.  The following
-> suggestions might make it easier to follow.
-
-Thanks, I've incorporated your feedback. I hope it's easier readable now.
-
-> [...] 
-> * You seem to switch randomly between counting sizes in bits vs bytes.
->   Please try to be more consistent.  BTW, I think the size of an SHA1
->   object name is more commonly described as "20 bytes" rather than
->   "160 bits".
-
-All sizes are now in bits. I have taken the 160 bits for the SHA1 from
-the old index documentation in Documentation/technical. I chose to
-leave it as 160bits for now, as all the other sizes were changed to
-bits too.
-
-> * The details of the extension data blocks are described in the first
->   (overview) section, whereas it seems like they should be described
->   in their own section following the "conflict data" section.  But
->   wouldn't the presence of extension data blocks prevent the addition
->   of conflict data?
-
-Only the details that should be there for every extension are described
-in the overview (the header of the extension), to make sure every
-extension has the same header format, and thus a reader which doesn't
-understand a specific extension still can read its header and know 
-what's going on.
-
-They won't prevent the addition of conflicted data, since when a
-conflict is created, other files were probably added and the index has
-to be rewritten anyway. Once the conflict is resolved however only a
-bit has to be flipped, so there is no rewrite necessary.
-
-> * Are there situations (for example during conflicts?) when it is
->   allowed to have directory and file entries with the same name?
-
-Yes, that's why I have added the stage data to the directory.
-
-> * Does the index file include directory entries for empty directories?
->   What about directories that contain only other directories?
-
-In theory the index is able to include empty directories. I'm however
-not sure if this should be implemented. I'd be happy to get more
-feedback there.
-
-> Overview
-> ========
-> 
-> * Does "32-bit size of the extension" include the whole extension data
->   block (including header) or only the "extension data"?
-
-It includes only the extension data. It's clarified in the documentation
-now.
-
-> Directory entry
-> ===============
-> 
-> * "4-byte number of entries in the index that is covered by the tree
->   this entry represents."  What does this include?
->   Files/directories/both?  Recursive or non-recursive?
-
-This is from the cache-tree. I'm not sure but I think it includes both
-files and directories, recursively.
-
-> * "160-bit object name for the object that would result from writing
->   this span of index as a tree."  Is this always valid?
-
-No, this is only valid if the entry count is not -1. It's clarified
-now.
-
-> * It might be convenient to store directory names with trailing '/'
->   characters (except for the top-level directory, which can be stored
->   as "").  That way (1) it is trivial to concatenate the directory
->   name and the filename to produce the file path; (2) directories and
->   files can be distinguished by name and therefore intermingled in
->   lists; (3) such lists can be sorted using strcmp() without having to
->   simulate an invisible '/' character.
-
-Good point. Changed this in the documentation.
-
-> File entry
-> ==========
-> 
-> * I believe that only the basename is stored, not the whole path.  But
->   then why is the encoding for '/' specified (there should be no '/'
->   characters)?
+On Tue, May 8, 2012 at 9:11 PM, Thomas Gummerer <t.gummerer@gmail.com> =
+wrote:
+>> * "160-bit object name for the object that would result from writing
+>> =C2=A0 this span of index as a tree." =C2=A0Is this always valid?
 >
-> * Why is the encoding of '.' specified?  Is it somehow significant for
->   the index file format?
+> No, this is only valid if the entry count is not -1. It's clarified
+> now.
 
-Yes, you are right, only the basename is stored. '.' and '/' don't need
-a specific encoding, it's removed from the documentation.
+=2E.and..
 
-> * Are file entries sorted by entire path or only by the basename?
+> The entry_count in the index is only valid, if the cache-tree is vali=
+d,
+> which is not always the case.
 
-They are sorted by the basename, in the respective block of their
-directories.
-Example: paths: a/a a/z b/b
-File entries in the index:
-a ...
-z ...
-b ...
-
-> Flat loading
-> ============
-> 
-> * I found the explanation pretty incomprehensible.  Perhaps some
->   pseudo-code would make it clearer?
-> 
-> * Since I can't understand the explanation, I'm not sure if this
->   comment makes any sense.  But when traversing into a subdirectory,
->   don't *all* of the remaining files from the parent directory need to
->   be tucked away somewhere?
-> 
-> * At an even higher level of abstraction, your directory entry
->   contains a count "number of entries in the index that is covered by
->   the tree this entry represents".  If this count is recursive, then
->   it seems like it would be enough to know how many entries will come
->   from traversing a whole subdirectory tree.  So it should be possible
->   to skip that many entries in the in-memory array and continue
->   reading the file entries for the parent subdirectory.  For example,
->   suppose our files are [A, B/1, B/2/a, B/2/b, B/3, C].  If I start by
->   reading the files in the root directory, then I can fill the index
->   array entries
-> 
->       [A, -, -, -, -, C]
-> 
->   because when I see that "B" is a directory containing a total of
->   four entries, I just leave fours spaces for them in the array and
->   continue with the next file, "C".  Of course I would have to
->   remember (e.g., on a queue) that directory "B" still needs to be
->   processed, and the starting index in the array where its entries
->   have to be filled in.  Still, this jumping around would be in the
->   RAM holding the index array pointers rather than in the file
->   positions.
-
-The entry_count in the index is only valid, if the cache-tree is valid,
-which is not always the case. Therefore it's impossible to rely on that
-for the reading. I have changed the flat loading in the documentation,
-hope it's more understandable now.
-
---
-Thomas
+I think your trees are the cache-trees already. For invalid
+cache-trees, you can just use all-zero sha-1 as the indicator. Then
+entry_count can go away.
+--=20
+Duy
