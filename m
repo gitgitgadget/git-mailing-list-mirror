@@ -1,70 +1,75 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] notes: do not accept non-blobs as new notes
-Date: Tue, 08 May 2012 09:26:40 -0700
-Message-ID: <7v8vh2y6yn.fsf@alter.siamese.dyndns.org>
-References: <1336482692-30729-1-git-send-email-pclouds@gmail.com>
- <20120508160334.GA26838@sigill.intra.peff.net>
+Subject: Re: [PATCH] checkout: do not corrupt HEAD on empty repo
+Date: Tue, 08 May 2012 09:29:00 -0700
+Message-ID: <7v4nrqy6ur.fsf@alter.siamese.dyndns.org>
+References: <1336493114-4984-1-git-send-email-kusmabite@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-	git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue May 08 18:26:52 2012
+Cc: git@vger.kernel.org, gitster@pobox.com, j.sixt@viscovery.net,
+	schwab@linux-m68k.org
+To: Erik Faye-Lund <kusmabite@gmail.com>
+X-From: git-owner@vger.kernel.org Tue May 08 18:29:10 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SRnFQ-00035e-86
-	for gcvg-git-2@plane.gmane.org; Tue, 08 May 2012 18:26:48 +0200
+	id 1SRnHi-0003ro-6L
+	for gcvg-git-2@plane.gmane.org; Tue, 08 May 2012 18:29:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755617Ab2EHQ0n (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 May 2012 12:26:43 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:62290 "EHLO
+	id S1755610Ab2EHQ3E (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 May 2012 12:29:04 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:63142 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754384Ab2EHQ0m (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 May 2012 12:26:42 -0400
+	id S1754969Ab2EHQ3C (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 May 2012 12:29:02 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 714E46492;
-	Tue,  8 May 2012 12:26:42 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 41DF364FF;
+	Tue,  8 May 2012 12:29:02 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=k5mVAouoVz1ZBex+WgUqPTc5UwA=; b=qLnZs9
-	d69/zN7bQCwCklhZFlJS179pLJqsH6DQxbWvE4/z1BeMX9DV3mmV0jha4a1NCshe
-	ZUsw7YXFsdsWqINfXq96OFusoaMbdUWNZM7pq6LKNTtOX4RBQsIyOR4tK4P3d1Xi
-	uSnmzzBXPjF40bpbQb73ARec07sVKs3/FDmuc=
+	:content-type; s=sasl; bh=SSgiPXsNFKJQLvBmvbT81Nwsmy8=; b=Eo52ax
+	jLYxJKQVaNq1b/gPBmGcqeLIvM/sltt86jfHOhbCrEF8rV2GjdWrb3jDLvZDp8CT
+	Mhwc8Jetu/P58Ic3GZ7y2pWo2660uGmQeAQVwUnC6N6SDmkVwaS1Mca6UGybzpxF
+	qZiUIvit4nYElPoNbRVzA8UC8nc96pAJYooNc=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Bb2m4EAFNzFt4xihFhSz6kWBKmrMy/RR
-	mq6yT++LDNHKl+QbtI+uyD5/MaljK5uAX78B4c0kFeTWinOT8N9SBSNs6ZzI5WaD
-	cfaE5AR772DLDQx0RSrsfOuDPxKZMJNvCyYtNPoRNB1FkK869QXlr4pVgkAsWzhZ
-	mFniqM5gX50=
+	:content-type; q=dns; s=sasl; b=CErTa6GkKarrkAyV6FT16G73klql//9n
+	qw0dXp9MvasKIKTLODK40by5IU/v1FcFhgNJ37drEsdeKTkSodfRCIhuC/PKEAgL
+	GTSWyTeOGgwQF6jroQDvVuSLjcr11RSwCqESS9kaDE5cjlKjiuI5IVj3FlPvDkzQ
+	QYjck/f9ZdM=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 688AC6491;
-	Tue,  8 May 2012 12:26:42 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 37DC264FE;
+	Tue,  8 May 2012 12:29:02 -0400 (EDT)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id DAE946490; Tue,  8 May 2012
- 12:26:41 -0400 (EDT)
-In-Reply-To: <20120508160334.GA26838@sigill.intra.peff.net> (Jeff King's
- message of "Tue, 8 May 2012 12:03:34 -0400")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B874064FD; Tue,  8 May 2012
+ 12:29:01 -0400 (EDT)
+In-Reply-To: <1336493114-4984-1-git-send-email-kusmabite@gmail.com> (Erik
+ Faye-Lund's message of "Tue, 8 May 2012 18:05:14 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 9834427C-992A-11E1-8FEE-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: EB911BAC-992A-11E1-8DC6-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197385>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197386>
 
-Jeff King <peff@peff.net> writes:
+Erik Faye-Lund <kusmabite@gmail.com> writes:
 
-> ...
-> At the same time, is there any reason not to allow experimentation in
-> this area? We don't know what other people might be putting in their
-> private notes trees, and the current interface does allow this.
+> In abe1998 ("git checkout -b: allow switching out of an unborn
+> branch"), a code-path overly-optimisticly assumed that a
+> branch-name was specified. This is not always the case, and as
+> a result a NULL-pointer was attempted printed to .git/HEAD.
 >
-> Is this fixing some important problem that justifies making such
-> experimentation harder?
+> This could lead to at least two different failure modes:
+>  1) The CRT formated the NULL-string as something useful (e.g
+>     "(null)")
+>  2) The CRT crasheed.
 
-You said everything I wanted to say and asked the right questions I wanted
-to ask.  Thanks.
+Just a quick question.  What does a cathode ray tube have to do with this
+(or "are people expected to know what CRT you are talking about?")?
+
+Otherwise the explanation, the patch and the added test makes sense.
+
+Thanks.
