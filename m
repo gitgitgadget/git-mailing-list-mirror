@@ -1,75 +1,70 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Erik Faye-Lund <kusmabite@gmail.com>
 Subject: Re: [PATCH] checkout: do not corrupt HEAD on empty repo
-Date: Tue, 08 May 2012 09:29:00 -0700
-Message-ID: <7v4nrqy6ur.fsf@alter.siamese.dyndns.org>
-References: <1336493114-4984-1-git-send-email-kusmabite@gmail.com>
+Date: Tue, 8 May 2012 18:35:10 +0200
+Message-ID: <CABPQNSb-YPAa6qPtxeo1k-p-0REnk3soOTuPgABj9+s61o80VA@mail.gmail.com>
+References: <1336493114-4984-1-git-send-email-kusmabite@gmail.com> <7v4nrqy6ur.fsf@alter.siamese.dyndns.org>
+Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, gitster@pobox.com, j.sixt@viscovery.net,
-	schwab@linux-m68k.org
-To: Erik Faye-Lund <kusmabite@gmail.com>
-X-From: git-owner@vger.kernel.org Tue May 08 18:29:10 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, j.sixt@viscovery.net, schwab@linux-m68k.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue May 08 18:36:04 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SRnHi-0003ro-6L
-	for gcvg-git-2@plane.gmane.org; Tue, 08 May 2012 18:29:10 +0200
+	id 1SRnOG-0006EI-Mf
+	for gcvg-git-2@plane.gmane.org; Tue, 08 May 2012 18:35:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755610Ab2EHQ3E (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 May 2012 12:29:04 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:63142 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754969Ab2EHQ3C (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 May 2012 12:29:02 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 41DF364FF;
-	Tue,  8 May 2012 12:29:02 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=SSgiPXsNFKJQLvBmvbT81Nwsmy8=; b=Eo52ax
-	jLYxJKQVaNq1b/gPBmGcqeLIvM/sltt86jfHOhbCrEF8rV2GjdWrb3jDLvZDp8CT
-	Mhwc8Jetu/P58Ic3GZ7y2pWo2660uGmQeAQVwUnC6N6SDmkVwaS1Mca6UGybzpxF
-	qZiUIvit4nYElPoNbRVzA8UC8nc96pAJYooNc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=CErTa6GkKarrkAyV6FT16G73klql//9n
-	qw0dXp9MvasKIKTLODK40by5IU/v1FcFhgNJ37drEsdeKTkSodfRCIhuC/PKEAgL
-	GTSWyTeOGgwQF6jroQDvVuSLjcr11RSwCqESS9kaDE5cjlKjiuI5IVj3FlPvDkzQ
-	QYjck/f9ZdM=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 37DC264FE;
-	Tue,  8 May 2012 12:29:02 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B874064FD; Tue,  8 May 2012
- 12:29:01 -0400 (EDT)
-In-Reply-To: <1336493114-4984-1-git-send-email-kusmabite@gmail.com> (Erik
- Faye-Lund's message of "Tue, 8 May 2012 18:05:14 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: EB911BAC-992A-11E1-8DC6-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1756530Ab2EHQfw convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 8 May 2012 12:35:52 -0400
+Received: from mail-pb0-f46.google.com ([209.85.160.46]:38166 "EHLO
+	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755957Ab2EHQfv convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 8 May 2012 12:35:51 -0400
+Received: by pbbrp8 with SMTP id rp8so8241151pbb.19
+        for <git@vger.kernel.org>; Tue, 08 May 2012 09:35:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type:content-transfer-encoding;
+        bh=vC0WX+WKrsdH+CuwIu6W3CJ4PqZIy+aDqqz+RUTo1NU=;
+        b=K94OQEWcPTlZR+oVY2FkrhfobcDCy33PRpnnUadgfIG8sXpmI4SgsCovos9Eh66ACU
+         DbALizhEoRtioIX4CjTCtdNfxk8+eQYfzXtJt4EKvTsra0Y5GybNTpyG/YH5L/dCr4Yk
+         pXCkBH8TPceNqr45fCJ9Jg6sMtW5IAIbUKNiFUy+TrLxDEL+oJU57Aftv2vEHOW+7DDp
+         /ap1zK+bGjiI/MYRNFdhf453+GRHi9TuHF1pN5xzceXBm1NpBdzSKtAWug3cWcO9Qp07
+         KF/2Qx1V4MbpRXyZBsTqk1o0hvlFpheuRLy+dIscWdiIJRjug55nQ4LcSWH9r14COaAk
+         vKUQ==
+Received: by 10.68.132.41 with SMTP id or9mr11486145pbb.30.1336494951141; Tue,
+ 08 May 2012 09:35:51 -0700 (PDT)
+Received: by 10.68.73.65 with HTTP; Tue, 8 May 2012 09:35:10 -0700 (PDT)
+In-Reply-To: <7v4nrqy6ur.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197386>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197387>
 
-Erik Faye-Lund <kusmabite@gmail.com> writes:
-
-> In abe1998 ("git checkout -b: allow switching out of an unborn
-> branch"), a code-path overly-optimisticly assumed that a
-> branch-name was specified. This is not always the case, and as
-> a result a NULL-pointer was attempted printed to .git/HEAD.
+On Tue, May 8, 2012 at 6:29 PM, Junio C Hamano <gitster@pobox.com> wrot=
+e:
+> Erik Faye-Lund <kusmabite@gmail.com> writes:
 >
-> This could lead to at least two different failure modes:
->  1) The CRT formated the NULL-string as something useful (e.g
->     "(null)")
->  2) The CRT crasheed.
+>> In abe1998 ("git checkout -b: allow switching out of an unborn
+>> branch"), a code-path overly-optimisticly assumed that a
+>> branch-name was specified. This is not always the case, and as
+>> a result a NULL-pointer was attempted printed to .git/HEAD.
+>>
+>> This could lead to at least two different failure modes:
+>> =A01) The CRT formated the NULL-string as something useful (e.g
+>> =A0 =A0 "(null)")
+>> =A02) The CRT crasheed.
+>
+> Just a quick question. =A0What does a cathode ray tube have to do wit=
+h this
+> (or "are people expected to know what CRT you are talking about?")?
+>
 
-Just a quick question.  What does a cathode ray tube have to do with this
-(or "are people expected to know what CRT you are talking about?")?
-
-Otherwise the explanation, the patch and the added test makes sense.
-
-Thanks.
+=46eel free to change it to "the C runtime", or even "the vsnprintf
+implementation" if you feel like it :)
