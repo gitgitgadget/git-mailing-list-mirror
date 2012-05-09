@@ -1,126 +1,83 @@
 From: =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
-Subject: [PATCH 04/19] completion: respect $GIT_DIR
-Date: Wed,  9 May 2012 02:44:35 +0200
-Message-ID: <1336524290-30023-5-git-send-email-szeder@ira.uka.de>
+Subject: [PATCH 05/19] bash prompt: don't show the prompt when .git/HEAD is
+	unreadable
+Date: Wed,  9 May 2012 02:44:36 +0200
+Message-ID: <1336524290-30023-6-git-send-email-szeder@ira.uka.de>
 References: <1336524290-30023-1-git-send-email-szeder@ira.uka.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 09 02:45:57 2012
+X-From: git-owner@vger.kernel.org Wed May 09 02:46:04 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SRv2S-0004ur-NM
-	for gcvg-git-2@plane.gmane.org; Wed, 09 May 2012 02:45:57 +0200
+	id 1SRv2a-0004xa-0I
+	for gcvg-git-2@plane.gmane.org; Wed, 09 May 2012 02:46:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755623Ab2EIApq convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 8 May 2012 20:45:46 -0400
-Received: from moutng.kundenserver.de ([212.227.17.8]:62662 "EHLO
+	id S1755699Ab2EIAp6 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 8 May 2012 20:45:58 -0400
+Received: from moutng.kundenserver.de ([212.227.17.10]:62230 "EHLO
 	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755223Ab2EIApp (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 May 2012 20:45:45 -0400
+	with ESMTP id S1753964Ab2EIAp5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 May 2012 20:45:57 -0400
 Received: from localhost6.localdomain6 (p5B130353.dip0.t-ipconnect.de [91.19.3.83])
-	by mrelayeu.kundenserver.de (node=mreu4) with ESMTP (Nemesis)
-	id 0LzDcL-1S5Wic2n0z-0150ET; Wed, 09 May 2012 02:45:43 +0200
+	by mrelayeu.kundenserver.de (node=mreu0) with ESMTP (Nemesis)
+	id 0Mgrgq-1Sny9v3lJI-00MKlN; Wed, 09 May 2012 02:45:52 +0200
 X-Mailer: git-send-email 1.7.10.1.541.gb1be298
 In-Reply-To: <1336524290-30023-1-git-send-email-szeder@ira.uka.de>
-X-Provags-ID: V02:K0:iaMH/H9ILrxbY/l6CrubDt1Ur8phBm1J3EcHaySWOVr
- IuAzIqgpY8R0QCJ3P05fvf1Wk8QI1u4qD6U0M/lwcrnqyPvVfm
- KgrB6XMVom/9tDJULgNPPbPNOSStyN8cakqgSLZDfnJcor5a8V
- nF0ykGYHkI3wdFbFccWdqw+oOAgoVPCt6HD4RDDDXNEjvuZwUm
- GzvdMXkAzRtCf3k92A1hO/X3P9tNKhw3d2ChV6b3suyIidUoQl
- 5elAS4XHGcjGNEN0aFF/Dhode9/JlMq/j/CkN0nFx3nMojYy4w
- DsoJKNPLJJsK06BTqBU4lKu2ZVHfNvgWhahdowiiKJfH2ScRdl
- NV83FyWsLuOu27poe3HMKUsIXYAHbNxKIXqT1hCaZKlifJVJt9
- St5IqEn1Jqx6A==
+X-Provags-ID: V02:K0:fYX2mpOlq8lVUHW/7eUDjfXLQbS9tZUMfZ9sz3BQQFn
+ pegRIj5WcDYYTpXq2+DloH8OmUoVDeuB5bmIdQRA5J2E/gk1oe
+ 3MTGV5zCONKszZpcaoY5HlON92OVBWBIr5mcY9x5NBfd/faini
+ qw2Tz2eR6GLgv1hTHxbN2yRLDtdmVvbhg93WmIoFeoI5AMS/kl
+ hMbew2Su//TXTzaXDomQsC1MCsHrK14bXPqMDuIuWnoKqB6d1k
+ Tfn3pQ6CwF05vw5wd/kVmwpH7do4cKqtQzH3gH1ja6+azYWU/M
+ bILnq1281aLQ8jRVRi6JzgLHnGgT81x3lCCsPApZ/3RrL+HyRy
+ M1EN4cJd5wECaIc4Xo5RdsoJWvvuzL1vaPvg6COmaXBZuXH1NO
+ HLp35PlyYYgDQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197436>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197437>
 
-The __gitdir() helper function finds out the path of the git
-repository by running 'git rev-parse --git-dir'.  However, it has a
-shortcut first to avoid the overhead of running a git command in a
-subshell when the current directory is at the top of the work tree,
-i.e. when it contains a '.git' subdirectory.
+__git_ps1() has a chain of commands to figure out what to display in
+the prompt as current branch, i.e. the branch name, or a described
+detached head, or the 7 hexdigits abbreviated object name, or
+"(unknown)" when all of the above fails.
 
-If the 'GIT_DIR' environment variable is set then it specifies the
-path to the git repository, and the autodetection of the '.git'
-directory is not necessary.  However, $GIT_DIR is only taken into
-acocunt by 'git rev-parse --git-dir', and the check for the '.git'
-subdirectory is performed first, so it wins over the path given in
-$GIT_DIR.
-
-There are several completion (helper) functions that depend on
-__gitdir(), and when the above case triggers the completion script
-will do weird things, like offering refs, aliases, or stashes from a
-different repository, or displaying wrong or broken prompt, etc.
-
-So check first whether $GIT_DIR is set, and only proceed with checking
-the '.git' directory in the current directory if it isn't.  'git
-rev-parse' would also check whether the path in $GIT_DIR is a proper
-'.git' directory, i.e. 'HEAD', 'refs/', and 'objects/' are present and
-accessible, but we don't have to be that thorough for the bash prompt.
-And we've lived with an equally permissive check for '.git' in the
-current working directory for years anyway.
+Now, when the 7 hexdigits case fails, then '/path/to/.git/HEAD' can't
+be read.  This can happen when the file became unreadable after
+__gitdir() found it: unlikely, but a parallel process can racily
+delete it or change it's permissions in that short timeframe.
+Alternatively, it is possible that either the subshell or the 'cut'
+command fail.  Either way, when HEAD is not readable, then the path is
+not considered to be a git repository, therefore the bash prompt
+shouldn't be displayed at all.  And there is no point in continuing
+the execution of __git_ps1(), because its subsequent git commands will
+error out anyway.
 
 Signed-off-by: SZEDER G=C3=A1bor <szeder@ira.uka.de>
 ---
- contrib/completion/git-completion.bash |  3 +++
- t/t9903-bash-prompt.sh                 | 10 +++++++++-
- 2 files changed, 12 insertions(+), 1 deletion(-)
+ contrib/completion/git-completion.bash | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/contrib/completion/git-completion.bash b/contrib/completio=
 n/git-completion.bash
-index f17abccb..ab26bdc8 100755
+index ab26bdc8..cd6a5f12 100755
 --- a/contrib/completion/git-completion.bash
 +++ b/contrib/completion/git-completion.bash
-@@ -77,6 +77,9 @@ __gitdir ()
- 	if [ -z "${1-}" ]; then
- 		if [ -n "${__git_dir-}" ]; then
- 			echo "$__git_dir"
-+		elif [ -n "${GIT_DIR-}" ]; then
-+			test -d "${GIT_DIR-}" || return 1
-+			echo "$GIT_DIR"
- 		elif [ -d .git ]; then
- 			echo .git
- 		else
-diff --git a/t/t9903-bash-prompt.sh b/t/t9903-bash-prompt.sh
-index a6c9ce94..96468ceb 100755
---- a/t/t9903-bash-prompt.sh
-+++ b/t/t9903-bash-prompt.sh
-@@ -85,7 +85,7 @@ test_expect_success 'gitdir - parent is a .git direct=
-ory' '
- 	test_cmp expected "$actual"
- '
+@@ -258,7 +258,7 @@ __git_ps1 ()
+ 				esac 2>/dev/null)" ||
 =20
--test_expect_failure 'gitdir - $GIT_DIR set while .git directory in cwd=
-' '
-+test_expect_success 'gitdir - $GIT_DIR set while .git directory in cwd=
-' '
- 	echo "$TRASH_DIRECTORY/otherrepo/.git" > expected &&
- 	(
- 		GIT_DIR=3D"$TRASH_DIRECTORY/otherrepo/.git" &&
-@@ -106,6 +106,14 @@ test_expect_success 'gitdir - $GIT_DIR set while .=
-git directory in parent' '
- 	test_cmp expected "$actual"
- '
-=20
-+test_expect_success 'gitdir - non-existing $GIT_DIR' '
-+	(
-+		GIT_DIR=3D"$TRASH_DIRECTORY/non-existing" &&
-+		export GIT_DIR &&
-+		test_must_fail __gitdir
-+	)
-+'
-+
- test_expect_success 'gitdir - gitfile in cwd' '
- 	echo "$TRASH_DIRECTORY/otherrepo/.git" > expected &&
- 	echo "gitdir: $TRASH_DIRECTORY/otherrepo/.git" > subdir/.git &&
+ 				b=3D"$(cut -c1-7 "$g/HEAD" 2>/dev/null)..." ||
+-				b=3D"unknown"
++				return
+ 				b=3D"($b)"
+ 			}
+ 		fi
 --=20
 1.7.10.1.541.gb1be298
