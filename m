@@ -1,71 +1,87 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 11/19] bash prompt: use bash builtins to find out current
- branch
-Date: Wed, 09 May 2012 14:50:16 -0700
-Message-ID: <7vaa1hqb1j.fsf@alter.siamese.dyndns.org>
-References: <1336524290-30023-1-git-send-email-szeder@ira.uka.de>
- <1336524290-30023-12-git-send-email-szeder@ira.uka.de>
- <7vzk9hqg0u.fsf@alter.siamese.dyndns.org> <20120509211143.GE6958@goldbirke>
- <7vehqtqc6d.fsf@alter.siamese.dyndns.org> <20120509214534.GF6958@goldbirke>
+Subject: Re: Git commit path vs rebase path
+Date: Wed, 09 May 2012 14:54:24 -0700
+Message-ID: <7v62c5qaun.fsf@alter.siamese.dyndns.org>
+References: <CAAXzdLU6bQ7ta4_-WfGJVaJgt1R5tX=4PW2sq3SdjAB+F72w+Q@mail.gmail.com>
+ <7vaa1j7vg1.fsf@alter.siamese.dyndns.org> <4FA8BBB0.1080406@viscovery.net>
+ <CAAXzdLVaDAQkd_9qjnmTRoy8ccpyrZvwvBJQAfkp7LkYa7Li2A@mail.gmail.com>
+ <4FA8C5DB.5060002@viscovery.net>
+ <CAAXzdLW9_O+feVpBhDSXQH_SFRdrct1tjadpFoJ5d7-Qd1LWEg@mail.gmail.com>
+ <7vhavqwqpz.fsf@alter.siamese.dyndns.org>
+ <7v1umuwpo9.fsf@alter.siamese.dyndns.org>
+ <CAAXzdLVj0szCgpdOSdhnLdkBKAM+e6vrQpvrsz4HeUo+Nh1K6A@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder@ira.uka.de>
-X-From: git-owner@vger.kernel.org Wed May 09 23:50:26 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org
+To: Steven Penny <svnpenn@gmail.com>
+X-From: git-owner@vger.kernel.org Wed May 09 23:54:40 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SSEm9-0003tO-9n
-	for gcvg-git-2@plane.gmane.org; Wed, 09 May 2012 23:50:25 +0200
+	id 1SSEq9-0005M0-IH
+	for gcvg-git-2@plane.gmane.org; Wed, 09 May 2012 23:54:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932270Ab2EIVuV convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 9 May 2012 17:50:21 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50866 "EHLO
+	id S1758326Ab2EIVy2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 9 May 2012 17:54:28 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:52492 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757909Ab2EIVuU convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 9 May 2012 17:50:20 -0400
+	id S1758184Ab2EIVy0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 May 2012 17:54:26 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4E2467753;
-	Wed,  9 May 2012 17:50:19 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9F37F7852;
+	Wed,  9 May 2012 17:54:26 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=RmrmsGE7gPsO
-	yYAJuQeY7ylKiKU=; b=H97gHslKU1RZmqt2ZLLR3G8zyF6ziTyE3rWVc9W9JoiU
-	0zHZKHs+CZ8cpCKp85iCpjt9XzefV9meHvFcWAadgxju/BCOrHNy1N6WGpKdgrU1
-	5t2PJdYj5Vpvx+ay2LYtvVs+4ZrBkbStkJryx2MIKjn5nsdUaQc5F8G0FABMoVo=
+	:content-type; s=sasl; bh=ZoDGbrYJof12DQCfa4xGgZfKsiA=; b=mcron+
+	S1tJ3lUQnymZbN767AFnyaiKNkK+rZY1mwXKDnIPSecD8FPlmR8cbJqDUmj6vWg7
+	kjTMYEBKDYGQqXfMCT/l5xshpGMqYp6dnyQMps/y8Zug3yN+wSK4f+SpT97QFHMW
+	NF0SnDgf0nYT/GSvT9MeNmSJJyDrPC4eG+i40=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=KNC11J
-	itZxCUo7HhBmMUj38JfTbVrNO3hDUM2krfapJHV9P6Ah3CD+YPEEof5pTw1Z2Shn
-	sbZXsvTgX8rc48qfrU7jpY+ylZfr6L0y7I1IuQBhD/ZoRv755BTUJU+pfmrff+ST
-	wJKjI1YnrSZhUb0dPwlCXEW8vhN5FBDndlglg=
+	:content-type; q=dns; s=sasl; b=mAE7zRcFehPBwTx8FruyYAw+c9OHsDWh
+	IIDpkAbh5V1FWyFTKbCjOZe5ICWNiMNyhwGM+4ZU8wUk9Scn4rf/0tg2S/JIP59X
+	9hQtnMN+EZIDL1/IqlPaDr0OWHWSTey80esjhGNAFBCzyOuZZKssHCR3BOqNv7Tp
+	G0hC8uGgFNw=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 454297752;
-	Wed,  9 May 2012 17:50:19 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 95BA07851;
+	Wed,  9 May 2012 17:54:26 -0400 (EDT)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D1B5E7751; Wed,  9 May 2012
- 17:50:17 -0400 (EDT)
-In-Reply-To: <20120509214534.GF6958@goldbirke> ("SZEDER =?utf-8?Q?G=C3=A1b?=
- =?utf-8?Q?or=22's?= message of "Wed, 9 May 2012 23:45:34 +0200")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 29EB77850; Wed,  9 May 2012
+ 17:54:26 -0400 (EDT)
+In-Reply-To: <CAAXzdLVj0szCgpdOSdhnLdkBKAM+e6vrQpvrsz4HeUo+Nh1K6A@mail.gmail.com> (Steven
+ Penny's message of "Tue, 8 May 2012 17:47:45 -0500")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: F76EF5A6-9A20-11E1-A08D-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 8B705CB8-9A21-11E1-8080-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197520>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197521>
 
-SZEDER G=C3=A1bor <szeder@ira.uka.de> writes:
+Steven Penny <svnpenn@gmail.com> writes:
 
-> 'readlink' is not a bash builtin, so it would need the same number of
-> fork()s and exec() as 'symbolic-ref'.  Of course, the 'readlink'
-> binary is much smaller than git and has less to do, so it might be a
-> tiny bit faster, but for this rare corner case it really doesn't
-> matter.
+> so the best compromise would be "C:/test/hello.sh" which can be created with
+>
+> diff --git a/git-sh-setup.sh b/git-sh-setup.sh
+> index 7b3ae75..ba198d2 100644
+> --- a/git-sh-setup.sh
+> +++ b/git-sh-setup.sh
+> @@ -260,6 +260,11 @@ case $(uname -s) in
+>  		return 1
+>  	}
+>  	;;
+> +*CYGWIN*)
+> +    pwd () {
+> +        builtin cygpath -m
+> +    }
+> +    ;;
 
-Correct, and by not using it you do not have to worry about systems
-that does not install the binary.
+What does "uname -s" say on cygwin exactly?  Our existing system detection
+code I found was in the Makefile and it looks out "uname -o" output and
+compares it with "Cygwin".
+
+I am not suggesting to change this part of the code to use "uname -o" at
+all; I just want to double check that the above *CYGWIN* matches it.
