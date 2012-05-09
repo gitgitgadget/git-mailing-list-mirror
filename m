@@ -1,69 +1,72 @@
-From: Heiko Voigt <hvoigt@hvoigt.net>
-Subject: Re: Submodule status inside nested submodule fails
-Date: Wed, 9 May 2012 23:34:44 +0200
-Message-ID: <20120509213443.GA74366@book.hvoigt.net>
-References: <loom.20120224T104003-230@post.gmane.org> <loom.20120224T142455-253@post.gmane.org> <1336500675427-7540130.post@n2.nabble.com>
+From: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
+Subject: Re: [PATCH 11/19] bash prompt: use bash builtins to find out
+	current branch
+Date: Wed, 9 May 2012 23:45:34 +0200
+Message-ID: <20120509214534.GF6958@goldbirke>
+References: <1336524290-30023-1-git-send-email-szeder@ira.uka.de>
+	<1336524290-30023-12-git-send-email-szeder@ira.uka.de>
+	<7vzk9hqg0u.fsf@alter.siamese.dyndns.org>
+	<20120509211143.GE6958@goldbirke>
+	<7vehqtqc6d.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: "rollinsdr@gmail.com" <rollinsdr@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 09 23:41:32 2012
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed May 09 23:45:49 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SSEdX-0000zf-Os
-	for gcvg-git-2@plane.gmane.org; Wed, 09 May 2012 23:41:32 +0200
+	id 1SSEhZ-0002Kf-I5
+	for gcvg-git-2@plane.gmane.org; Wed, 09 May 2012 23:45:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932460Ab2EIVl1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 9 May 2012 17:41:27 -0400
-Received: from t2784.greatnet.de ([83.133.105.219]:40111 "HELO darksea.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S932439Ab2EIVl0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 May 2012 17:41:26 -0400
-X-Greylist: delayed 401 seconds by postgrey-1.27 at vger.kernel.org; Wed, 09 May 2012 17:41:26 EDT
-Received: (qmail 20459 invoked from network); 9 May 2012 21:34:44 -0000
-Received: from localhost (127.0.0.1)
-  by darksea.de with SMTP; 9 May 2012 21:34:44 -0000
+	id S932234Ab2EIVph convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 9 May 2012 17:45:37 -0400
+Received: from moutng.kundenserver.de ([212.227.126.186]:49179 "EHLO
+	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756451Ab2EIVpg (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 May 2012 17:45:36 -0400
+Received: from localhost6.localdomain6 (p5B1303EC.dip0.t-ipconnect.de [91.19.3.236])
+	by mrelayeu.kundenserver.de (node=mrbap4) with ESMTP (Nemesis)
+	id 0LjsL3-1Rqz4O3Sg5-00bULs; Wed, 09 May 2012 23:45:34 +0200
 Content-Disposition: inline
-In-Reply-To: <1336500675427-7540130.post@n2.nabble.com>
-User-Agent: Mutt/1.5.19 (2009-01-05)
+In-Reply-To: <7vehqtqc6d.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Provags-ID: V02:K0:fOsPKRGTliO2TMITQVVGPf35ZKCQcbj0geyfjAfSMoC
+ lsMOAafopGAxz429yur9vldShjbtkP95BevN5f/EvN2cPWeDKM
+ F1nMtNnvne3HWRy3wta/yKquvIv0aoObdSblj4IEvg7NyklKNR
+ IDucxjYDnay8ya7HRSFIzTq7izRt5m9YflBDIgxW1WxZTl9Pol
+ TGcn8G1eYNe0Qqet1mnELZvEoWucrCuf8PJNyiygPX+nMIQH7a
+ BOIvatqvfINlqaqpfsu1RkWbJZ+uLuv53kpw6WSbSPBHJq0+C/
+ My0kD+4/BcROPz4e8eFW54tnyxBFhX/F2T6d4bWicaopqX+USb
+ nFImuiB58P4CPhysLq64=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197518>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197519>
 
-Hi,
+On Wed, May 09, 2012 at 02:25:46PM -0700, Junio C Hamano wrote:
+> SZEDER G=E1bor <szeder@ira.uka.de> writes:
+>=20
+> > If the above is right, then we could check with bash builtins wheth=
+er
+> > HEAD is a symbolic link, which is cheap, and stick to '$(git
+> > symbolic-ref HEAD)' if it is, or use bash builtins if it isn't, rig=
+ht? =20
+>=20
+> Sure.  Alternatively, you could run "readlink" on it if that is avail=
+able
+> built-in, and manipulate the result in string builtins, but that is a=
+ b/c
+> slow path anyway, so I wouldn't bother.
 
-On Tue, May 08, 2012 at 11:11:15AM -0700, rollinsdr@gmail.com wrote:
-> I'm having the same issue. Did it ever get resolved, or is there a hack to
-> fix it, or is there some link I can track it on?
-> 
-> 
-> Charles Brossollet wrote
-> > 
-> > Charles Brossollet <chbrosso <at> lltech.fr> writes:
-> > Using MSysGit 1.7.9 on Win7 (64 bit), I have a repo with the following 
-> > structure: 
-> > 
-> > main/ 
-> >   src/ 
-> >   ext/ 
-> >     submodule/ 
-> >        modules/module1 
-> >        modules/module2 
-> > 
-> > submodule is... a submodule, having itself submodules. 
-> > 
-> > When I query submodule status --recursive in main/, no problem. 
-> > But when I query submodule status in  ext/submodule, I get error "You need
+OK, will do that then.
 
-Without having looked at the code itself this smells like an issue with
-the newly introduced gitlink files and git rev-parse --show-cdup not
-taking this into account.
-
-I will have a look at this issue.
-
-Cheers Heiko
+'readlink' is not a bash builtin, so it would need the same number of
+fork()s and exec() as 'symbolic-ref'.  Of course, the 'readlink'
+binary is much smaller than git and has less to do, so it might be a
+tiny bit faster, but for this rare corner case it really doesn't
+matter.
