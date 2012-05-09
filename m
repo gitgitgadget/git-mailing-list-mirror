@@ -1,97 +1,149 @@
-From: Thomas <th.acker66@arcor.de>
-Subject: Re: Large repo and pack.packsizelimit
-Date: Wed, 9 May 2012 11:46:13 +0000 (UTC)
-Message-ID: <loom.20120509T131228-943@post.gmane.org>
-References: <37267143.413194.1336046278583.JavaMail.ngmail@webmail07.arcor-online.net> <20120508203137.GA15707@sigill.intra.peff.net> <alpine.LFD.2.02.1205081709010.21030@xanadu.home> <20120508212012.GA20044@sigill.intra.peff.net> <alpine.LFD.2.02.1205081751011.21030@xanadu.home> <loom.20120509T113505-740@post.gmane.org> <CACsJy8BhSn+PB5tXME-w_cq4DVd2BULNRNLV-vk1_6yWKy+fNg@mail.gmail.com>
+From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [PATCH] apply: remove lego in i18n string in gitdiff_verify_name
+Date: Wed,  9 May 2012 19:29:22 +0700
+Message-ID: <1336566562-21933-1-git-send-email-pclouds@gmail.com>
+References: <7vd36ewqi2.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Jonathan Niedier <jrnieder@gmail.com>,
+	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+	<avarab@gmail.com>, Jiang Xin <worldhello.net@gmail.com>,
+	=?UTF-8?q?Zbigniew=20J=C4=99drzejewski-Szmek?= <zbyszek@in.waw.pl>,
+	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 09 13:46:37 2012
+X-From: git-owner@vger.kernel.org Wed May 09 14:33:18 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SS5Lm-0007Pe-3C
-	for gcvg-git-2@plane.gmane.org; Wed, 09 May 2012 13:46:34 +0200
+	id 1SS64y-0007X2-JN
+	for gcvg-git-2@plane.gmane.org; Wed, 09 May 2012 14:33:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757090Ab2EILq3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 9 May 2012 07:46:29 -0400
-Received: from plane.gmane.org ([80.91.229.3]:42854 "EHLO plane.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756083Ab2EILq3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 May 2012 07:46:29 -0400
-Received: from list by plane.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1SS5Lf-0007Mx-Lp
-	for git@vger.kernel.org; Wed, 09 May 2012 13:46:27 +0200
-Received: from proxy31.sbs.de ([194.138.39.61])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 09 May 2012 13:46:27 +0200
-Received: from th.acker66 by proxy31.sbs.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 09 May 2012 13:46:27 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: sea.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 194.138.39.61 (Mozilla/5.0 (Windows NT 5.1) AppleWebKit/535.19 (KHTML, like Gecko) Chrome/18.0.1025.168 Safari/535.19)
+	id S1757509Ab2EIMdM convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 9 May 2012 08:33:12 -0400
+Received: from mail-pz0-f46.google.com ([209.85.210.46]:35909 "EHLO
+	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751291Ab2EIMdK (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 May 2012 08:33:10 -0400
+Received: by dady13 with SMTP id y13so251605dad.19
+        for <git@vger.kernel.org>; Wed, 09 May 2012 05:33:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding;
+        bh=1RGvgFFFa/fkf+9W1gPg4vu35HkEWmPxHMThrmFbmWE=;
+        b=YyeT8+AnagcYqJmUPO82MotQquo4JKsDkMZUQVznabLQAnBMeBFpNASxy2kc66MVxS
+         zo4PO6yqpjrliJTKWUG+GgQ4bIZcSySEQWKT92xBxYbMT2EW9Av3kjnN4PsDU33ZgDPS
+         7gWNEyxmYfXoh8gwbpj4m7Ax66p3KrtwPY7/Qxl8zKxt3RbwwhJwx631HhaPGtML5bWz
+         //9A/Y8bvxFWkQzVYfy7USO3KFfp6SLOdP5MHTodPkNhvJ+VnMu+vqzWUMS/GXbgPa2x
+         Mb2kn3Ibqgz6GTfUEAqCg+yg+Fmpb8dc7b2xkngOhUycCdIct8DU6JUfjza8GogcPffo
+         36hg==
+Received: by 10.68.226.5 with SMTP id ro5mr8688764pbc.74.1336566790203;
+        Wed, 09 May 2012 05:33:10 -0700 (PDT)
+Received: from pclouds@gmail.com ([115.74.38.158])
+        by mx.google.com with ESMTPS id pb4sm5955899pbc.55.2012.05.09.05.33.03
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 09 May 2012 05:33:08 -0700 (PDT)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Wed, 09 May 2012 19:29:24 +0700
+X-Mailer: git-send-email 1.7.8.36.g69ee2
+In-Reply-To: <7vd36ewqi2.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197467>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197468>
 
-Nguyen Thai Ngoc Duy <pclouds <at> gmail.com> writes:
+Currently it marks the string "...inconsistent %s filename..." where
+%s is either "old" or "new" from caller. From a translator point of
+view, nothing hints what "%s" may be and what grammatical form it may
+use.
 
-> 
-> On Wed, May 9, 2012 at 4:36 PM, Thomas <th.acker66 <at> arcor.de> wrote:
-> > To be exact I did the clone locally on the same machine and so the clone 
-itself
-> > worked
-> > but I got the OOM during the first fetch. I "fixed" this by setting
-> > transfer.unpacklimit=100000
-> > which caused only loose objects to be transfered.
-> > So in this case I think the OOM was on the remote side. But there is another 
-OOM
-> > if I try to repack locally.
-> > It seems to me that neither pack-objects nor index-pack respekt
-> > pack.packsizelimit and always
-> > try to pack all objects to be transferred resp. all local loose objects in 
-one
-> > pack.
-> > I could live wth the transfer.unpacklimit=100000 but the local OOM stops me 
-from
-> > using the cloned repo.
-> 
-> I have some patches to make index-pack work better with large blobs
-> but they're not ready yet. I think pack-objects works fine with large
-> blobs as long as they are all in packs. Are there any loose objects on
-> the source repo?
-> 
-> It's strange that you chose "256mb" as the upper limit for small
-> objects in your first mail. Do you have a lot of >=10mb files? By
-> default, files smaller than 512mb will be put in memory for delta. A
-> lot of big (but smaller than 512mb) files can quickly consume all
-> memory. If it's the case, maybe you can lower core.bigFileThreshold
-> 
-> Also maybe try remove the 1.2GB file from the source repo and see if
-> it works better. That could give us some hints where the problem is.
+Make it two strings "...inconsistent new filename..." and
+"...inconsistent old filename..."
 
-I am using core.bigFileThreshold=256MB already; so the large file/s should not 
-be the problem (most of the files in the repo are "standard" source code files;
-I tried even smaller numbers for bigFileThreshold and packsizelimit but with no 
-success). 
-As long as I worked with the original repo which was updated regularily all 
-worked well as soon as pack.packsizelimit was set to 1024MB (even with the 1.2GB 
-file). Repack seems not to increase a pack further as soon as packsizelimit is 
-exceeded (so my packs are all slightly larger than 1024MB) BUT it also seems to 
-try to put everything in one pack regardless of packsizelimit in the following 
-cases:
-(1) all objects to be transferred to another repo 
-(2) all loose objects when starting a local repack
-Case (1) can be fixed by transfer.unpacklimit but there is no fix for (2).
+Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+=2Ecom>
 ---
-Thomas
+ Another try. enum this time.
+
+ builtin/apply.c |   17 +++++++++++++----
+ 1 files changed, 13 insertions(+), 4 deletions(-)
+
+diff --git a/builtin/apply.c b/builtin/apply.c
+index 725712d..3362f4a 100644
+--- a/builtin/apply.c
++++ b/builtin/apply.c
+@@ -910,6 +910,11 @@ static int gitdiff_hdrend(const char *line, struct=
+ patch *patch)
+ 	return -1;
+ }
+=20
++enum diff_filename {
++	DIFF_OLD,
++	DIFF_NEW
++};
++
+ /*
+  * We're anal about diff header consistency, to make
+  * sure that we don't end up having strange ambiguous
+@@ -919,7 +924,8 @@ static int gitdiff_hdrend(const char *line, struct =
+patch *patch)
+  * their names against any previous information, just
+  * to make sure..
+  */
+-static char *gitdiff_verify_name(const char *line, int isnull, char *o=
+rig_name, const char *oldnew)
++static char *gitdiff_verify_name(const char *line, int isnull, char *o=
+rig_name,
++				 enum diff_filename oldnew)
+ {
+ 	if (!orig_name && !isnull)
+ 		return find_name(line, NULL, p_value, TERM_TAB);
+@@ -934,7 +940,10 @@ static char *gitdiff_verify_name(const char *line,=
+ int isnull, char *orig_name,
+ 			die(_("git apply: bad git-diff - expected /dev/null, got %s on line=
+ %d"), name, linenr);
+ 		another =3D find_name(line, NULL, p_value, TERM_TAB);
+ 		if (!another || memcmp(another, name, len + 1))
+-			die(_("git apply: bad git-diff - inconsistent %s filename on line %=
+d"), oldnew, linenr);
++			die(oldnew =3D=3D DIFF_OLD ?
++			    _("git apply: bad git-diff - inconsistent old filename on line =
+%d") :
++			    _("git apply: bad git-diff - inconsistent new filename on line =
+%d"),
++			    linenr);
+ 		free(another);
+ 		return orig_name;
+ 	}
+@@ -949,7 +958,7 @@ static char *gitdiff_verify_name(const char *line, =
+int isnull, char *orig_name,
+ static int gitdiff_oldname(const char *line, struct patch *patch)
+ {
+ 	char *orig =3D patch->old_name;
+-	patch->old_name =3D gitdiff_verify_name(line, patch->is_new, patch->o=
+ld_name, "old");
++	patch->old_name =3D gitdiff_verify_name(line, patch->is_new, patch->o=
+ld_name, DIFF_OLD);
+ 	if (orig !=3D patch->old_name)
+ 		free(orig);
+ 	return 0;
+@@ -958,7 +967,7 @@ static int gitdiff_oldname(const char *line, struct=
+ patch *patch)
+ static int gitdiff_newname(const char *line, struct patch *patch)
+ {
+ 	char *orig =3D patch->new_name;
+-	patch->new_name =3D gitdiff_verify_name(line, patch->is_delete, patch=
+->new_name, "new");
++	patch->new_name =3D gitdiff_verify_name(line, patch->is_delete, patch=
+->new_name, DIFF_NEW);
+ 	if (orig !=3D patch->new_name)
+ 		free(orig);
+ 	return 0;
+--=20
+1.7.8.36.g69ee2
