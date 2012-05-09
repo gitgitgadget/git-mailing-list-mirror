@@ -1,100 +1,95 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: [PATCH] sha1_name: support sha1^{note} to return note sha-1
-Date: Wed, 9 May 2012 16:09:35 +0200
-Message-ID: <CALKQrgdGCoKooM7KayNMQ_+Fg9=-1YnwNE_9NHzpX0jfoRjT_A@mail.gmail.com>
-References: <1336482870-30842-1-git-send-email-pclouds@gmail.com>
-	<20120508161126.GB26838@sigill.intra.peff.net>
-	<CACsJy8AfD-N6L6nZNDG3uw4s6jAdYqkuQ8Jt2XRXRGzRwt1ncQ@mail.gmail.com>
+From: Tay Ray Chuan <rctay89@gmail.com>
+Subject: Re: [PATCH 4/4] allow recovery from command name typos
+Date: Wed, 9 May 2012 23:06:59 +0800
+Message-ID: <CALUzUxpF0zn0V89BcayavbVs6muuXPv4+eYWgCWJn90hj6s6hQ@mail.gmail.com>
+References: <1336287330-7215-1-git-send-email-rctay89@gmail.com>
+	<1336287330-7215-2-git-send-email-rctay89@gmail.com>
+	<1336287330-7215-3-git-send-email-rctay89@gmail.com>
+	<1336287330-7215-4-git-send-email-rctay89@gmail.com>
+	<1336287330-7215-5-git-send-email-rctay89@gmail.com>
+	<20120506082130.GB27878@sigill.intra.peff.net>
+	<CALUzUxqXrsB8XfQL6vOiQo1pLHNRjxRUxJLRiK_mcSU8fvTSCg@mail.gmail.com>
+	<878vh4con4.fsf@thomas.inf.ethz.ch>
+	<7v62c77uss.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 09 16:09:49 2012
+Cc: Thomas Rast <trast@student.ethz.ch>, Jeff King <peff@peff.net>,
+	Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed May 09 17:07:14 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SS7aM-0006Ez-Pu
-	for gcvg-git-2@plane.gmane.org; Wed, 09 May 2012 16:09:47 +0200
+	id 1SS8Tt-0007IL-HQ
+	for gcvg-git-2@plane.gmane.org; Wed, 09 May 2012 17:07:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758280Ab2EIOJm convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 9 May 2012 10:09:42 -0400
-Received: from locusts.copyleft.no ([188.94.218.116]:52848 "EHLO
-	mail.mailgateway.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752272Ab2EIOJl convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 9 May 2012 10:09:41 -0400
-Received: from mail-qa0-f49.google.com ([209.85.216.49])
-	by mail.mailgateway.no with esmtpsa (TLSv1:RC4-SHA:128)
-	(Exim 4.72 (FreeBSD))
-	(envelope-from <johan@herland.net>)
-	id 1SS7aF-0001pl-2a
-	for git@vger.kernel.org; Wed, 09 May 2012 16:09:39 +0200
-Received: by qabj40 with SMTP id j40so522419qab.1
-        for <git@vger.kernel.org>; Wed, 09 May 2012 07:09:35 -0700 (PDT)
-Received: by 10.60.4.199 with SMTP id m7mr208842oem.65.1336572575814; Wed, 09
- May 2012 07:09:35 -0700 (PDT)
-Received: by 10.76.133.226 with HTTP; Wed, 9 May 2012 07:09:35 -0700 (PDT)
-In-Reply-To: <CACsJy8AfD-N6L6nZNDG3uw4s6jAdYqkuQ8Jt2XRXRGzRwt1ncQ@mail.gmail.com>
+	id S1757975Ab2EIPHB convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 9 May 2012 11:07:01 -0400
+Received: from mail-wi0-f178.google.com ([209.85.212.178]:33154 "EHLO
+	mail-wi0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755596Ab2EIPHA convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 9 May 2012 11:07:00 -0400
+Received: by wibhn19 with SMTP id hn19so435025wib.1
+        for <git@vger.kernel.org>; Wed, 09 May 2012 08:06:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=onHyYF2r9A+vL1aguoJ7MoNJHFeffcztHQC2ad+7rls=;
+        b=Y2QeoI1yyan1lN5GZ/XbxugWKASxXIem098BALVJ45tlCCxPy11dX76dJvRMlgNc4l
+         q0FHvu6aHhP4LzdZG976qUY5WhegsAIWSSSuINvGzvBQvhHG06fPbU3GWWOoEYyzleD7
+         /ft1PAuZmuKbAHY6gcStmgPm0d80qctg8CGRAjAp1NsyNiWqOqUpovHjUqVY/Qe8NgUe
+         FLYwxsjQq7nB6gWr2WLVPNXrj7pH1A3ytolSEyDG0zJktMNpYhAhxHnoGD3ukPmtCkWo
+         YZAmCC3H3A3gV55AKdkgJ3cHFxZfM5945wBubQAXlk+FW2pmkEX69BsOUgTZgduCx7ZA
+         RjXg==
+Received: by 10.180.83.38 with SMTP id n6mr1200537wiy.4.1336576019544; Wed, 09
+ May 2012 08:06:59 -0700 (PDT)
+Received: by 10.223.156.136 with HTTP; Wed, 9 May 2012 08:06:59 -0700 (PDT)
+In-Reply-To: <7v62c77uss.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197474>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197475>
 
-On Wed, May 9, 2012 at 10:25 AM, Nguyen Thai Ngoc Duy <pclouds@gmail.co=
-m> wrote:
-> On Tue, May 8, 2012 at 11:11 PM, Jeff King <peff@peff.net> wrote:
->> On Tue, May 08, 2012 at 08:14:30PM +0700, Nguyen Thai Ngoc Duy wrote=
-:
->>> @@ -473,7 +474,19 @@ static int peel_onion(const char *name, int le=
-n, unsigned char *sha1)
->>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 expected_type =3D =
-OBJ_NONE;
->>> =C2=A0 =C2=A0 =C2=A0 else if (sp[0] =3D=3D '/')
->>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 expected_type =3D =
-OBJ_COMMIT;
->>> - =C2=A0 =C2=A0 else
->>> + =C2=A0 =C2=A0 else if (!strncmp("note}", sp, 5)) {
->>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 const unsigned char *no=
-te;
->>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 struct notes_tree t;
->>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (get_sha1_1(name, sp=
- - name - 2, outer))
->>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 return -1;
->>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 memset(&t, 0, sizeof(t)=
-);
->>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 init_notes(&t, NULL, NU=
-LL, 0);
->>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 note =3D get_note(&t, o=
-uter);
->>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (note)
->>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 hashcpy(sha1, note);
->>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 free_notes(&t);
->>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return note ? 0 : -1;
->>> + =C2=A0 =C2=A0 } else
->>
->> The notes code is relatively expensive to initialize, with the
->> assumption that the effort will be amortized across multiple lookups
->> (which are made faster). Is it possible to cache this initialized no=
-tes
->> structure in case many lookups are done?
+On Tue, May 8, 2012 at 1:41 AM, Junio C Hamano <gitster@pobox.com> wrot=
+e:
+> By the way, does anybody actually use the deciseconds grace period to=
+ ^C
+> the process? =A0I know I was the guilty party for suggesting it, but =
+it
+> strikes me that it is rather a dangerous option. =A0When checking out
+> another branch with great difference with "git chekcout foo", you wou=
+ld be
+> asked "did you mean checkout?", and if you hit ^C a bit too late, you=
+ may
+> not kill autocorrect but end up killing a lengthy "checkout" in the
+> middle, messing up the working tree with a mixture of files in old an=
+d new
+> branches, needing a "reset --hard" to recover. =A0We might want to up=
+date
+> the documentation to warn about this, even though I personally do not
+> think it is worth removing the support (and going through the trouble=
+ of
+> having to deal with "why did you remove the useful feature" complaint=
+s).
 >
-> No idea. I have never worked/used notes until yesterday (and these
-> patches were the result). I will look into it.
 
-IIRC, the initialization loads the top-level notes tree object into
-memory. Subtrees (if any) are loaded on demand. FTR, if you have less
-then ~256 notes in the notes tree, there will be no subtrees. As the
-number of notes grows, the number of subtree levels grow roughly
-logarithmically with the total number of notes (see determine_fanout()
-for more details).
+Actually, I've never heard of that feature, until I was reading help.c.
 
-=2E..Johan
+However, it's listed on Progit [1], so I'd imagine there'd be *some*
+users in the wild.
+
+[1] http://git-scm.com/book/ch7-1.html
+
+Personally, I think it's a little dangerous - imagine your script has
+a typo'd command that just runs anyway if help.autocorrect without any
+chance for user intervention. Perhaps there should be a isatty(2)
+check to guard it, like the prompting patch does.
 
 --=20
-Johan Herland, <johan@herland.net>
-www.herland.net
+Cheers,
+Ray Chuan
