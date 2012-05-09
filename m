@@ -1,86 +1,80 @@
 From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: Seeing high CPU usage during git-upload-pack
-Date: Wed, 9 May 2012 17:37:38 +0700
-Message-ID: <CACsJy8DMm0ZNiQYQ1CvOfDJu5ogP42Y06792iA_xyzeHDGLJaw@mail.gmail.com>
-References: <CAPeUw3EsFCxki6obAAeVBb0g4MKNWBteL3VueG5djbajkFiv3A@mail.gmail.com>
+Subject: Re: Large repo and pack.packsizelimit
+Date: Wed, 9 May 2012 17:50:55 +0700
+Message-ID: <CACsJy8BhSn+PB5tXME-w_cq4DVd2BULNRNLV-vk1_6yWKy+fNg@mail.gmail.com>
+References: <37267143.413194.1336046278583.JavaMail.ngmail@webmail07.arcor-online.net>
+ <20120508203137.GA15707@sigill.intra.peff.net> <alpine.LFD.2.02.1205081709010.21030@xanadu.home>
+ <20120508212012.GA20044@sigill.intra.peff.net> <alpine.LFD.2.02.1205081751011.21030@xanadu.home>
+ <loom.20120509T113505-740@post.gmane.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: David Ebbo <david.ebbo@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 09 12:38:20 2012
+To: Thomas <th.acker66@arcor.de>
+X-From: git-owner@vger.kernel.org Wed May 09 12:51:33 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SS4Hg-0007vu-0Y
-	for gcvg-git-2@plane.gmane.org; Wed, 09 May 2012 12:38:16 +0200
+	id 1SS4UW-00045J-Cc
+	for gcvg-git-2@plane.gmane.org; Wed, 09 May 2012 12:51:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754192Ab2EIKiK convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 9 May 2012 06:38:10 -0400
-Received: from mail-wg0-f44.google.com ([74.125.82.44]:60268 "EHLO
+	id S1755421Ab2EIKv2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 9 May 2012 06:51:28 -0400
+Received: from mail-wg0-f44.google.com ([74.125.82.44]:41826 "EHLO
 	mail-wg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751976Ab2EIKiJ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 9 May 2012 06:38:09 -0400
-Received: by wgbdr13 with SMTP id dr13so124845wgb.1
-        for <git@vger.kernel.org>; Wed, 09 May 2012 03:38:08 -0700 (PDT)
+	with ESMTP id S1755400Ab2EIKv1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 May 2012 06:51:27 -0400
+Received: by wgbdr13 with SMTP id dr13so135611wgb.1
+        for <git@vger.kernel.org>; Wed, 09 May 2012 03:51:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=QP4YTwU/43NvOijDqU34T60+e+PzlsPfW1HIiKe8N3Y=;
-        b=POP1qVo5KCdXW1YhBx3tcBqRTeYeBLdPnDwsM5Po9xPMNff55C/S6P6VX7eC4kV9Pi
-         pQhmMkLfh8eXMI6tTSgMkZRswlTMkXwucYyBqk23I73wZhaS6Ia+KZIGQ4LZaQmOyiq5
-         gFqzV64/kYrkwsPqJ3Efgwh6KmHyxyfY7yUoe21/JFUASM2jvPYgOTxCy0JR2STiSuMQ
-         6lr56vz2J0TaKlP2jcLZ4hAB0GAODndtFa7QD4viqQtkGU0lpL+NjKIsJUhDKz9nAuW0
-         iXTUNeIJksl241WDCUL3UN850JFmsOfx2orV3B3Gkb8e7nrgnsDIOrwN5LTEjhY1kPKl
-         XI3Q==
-Received: by 10.180.82.5 with SMTP id e5mr14211891wiy.0.1336559888333; Wed, 09
- May 2012 03:38:08 -0700 (PDT)
-Received: by 10.223.14.193 with HTTP; Wed, 9 May 2012 03:37:38 -0700 (PDT)
-In-Reply-To: <CAPeUw3EsFCxki6obAAeVBb0g4MKNWBteL3VueG5djbajkFiv3A@mail.gmail.com>
+         :cc:content-type;
+        bh=xu+xmi05HfSu15b44e78fo767QEtLeKIt8+dWO3w6/0=;
+        b=xytZI9moh6YX8Hbuqu4SxJds9vfYQHxBw4em6hPfdiH0DFRu7+JzWf84TkvcvxZPkv
+         1TuNs5ohnzXM7HGZsf4pprRGEStj/qB0wzq9ZWoP346DO6V7XFbOHAh2+Mh/+Lm6F5bj
+         lIqiExs4UQBpmfl+VPzMmFTqMkydRLbdMhDbNj5Wz0vNLk/l1SISd38negmR59i/2mdI
+         qUpM5I0Q9Sa+T23yjqN+PLGa7IUpbGvuWqU/k7WM+P1MaoBmmZDZQyJ8GJTugr92fiKo
+         MUpkx34GIq8oRuzn8ARQtFoB+GBwcTuKk6515QTRpEpfDWy74e833yWzoxHq9kUml9O5
+         UQaw==
+Received: by 10.180.81.166 with SMTP id b6mr5870461wiy.0.1336560686329; Wed,
+ 09 May 2012 03:51:26 -0700 (PDT)
+Received: by 10.223.14.193 with HTTP; Wed, 9 May 2012 03:50:55 -0700 (PDT)
+In-Reply-To: <loom.20120509T113505-740@post.gmane.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197465>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197466>
 
-On Wed, May 9, 2012 at 2:01 PM, David Ebbo <david.ebbo@gmail.com> wrote=
-:
-> We=E2=80=99re using git-upload-pack in a simple git server. When the =
-repo is
-> on a slow share, we=E2=80=99re noticing that git-upload-pack is huggi=
-ng the
-> CPU during the whole pack-objects operation.
+On Wed, May 9, 2012 at 4:36 PM, Thomas <th.acker66@arcor.de> wrote:
+> To be exact I did the clone locally on the same machine and so the clone itself
+> worked
+> but I got the OOM during the first fetch. I "fixed" this by setting
+> transfer.unpacklimit=100000
+> which caused only loose objects to be transfered.
+> So in this case I think the OOM was on the remote side. But there is another OOM
+> if I try to repack locally.
+> It seems to me that neither pack-objects nor index-pack respekt
+> pack.packsizelimit and always
+> try to pack all objects to be transferred resp. all local loose objects in one
+> pack.
+> I could live wth the transfer.unpacklimit=100000 but the local OOM stops me from
+> using the cloned repo.
 
-What OS is it run on? What git version?
+I have some patches to make index-pack work better with large blobs
+but they're not ready yet. I think pack-objects works fine with large
+blobs as long as they are all in packs. Are there any loose objects on
+the source repo?
 
-> More details:
->
-> - git-upload-pack gets launched (with params git-upload-pack
-> --stateless-rpc //path/to/repo)
-> - it itself launches a git process (with params pack-objects --revs
-> --all --stdout --progress --delta-base-offset). This git process is
-> the one that does all the disk I/O, but it's not the one using up the
-> CPU time.
-> - git-upload-pack appears to be waiting for the git process, and is a=
-t
-> high CPU during that time, suggesting that it's doing some kind of
-> busy wait. To further test that, I stopped the git process in the
-> debugger, preventing it from making progress. At that point,
-> git-upload-pack pegs the CPU forever.
+It's strange that you chose "256mb" as the upper limit for small
+objects in your first mail. Do you have a lot of >=10mb files? By
+default, files smaller than 512mb will be put in memory for delta. A
+lot of big (but smaller than 512mb) files can quickly consume all
+memory. If it's the case, maybe you can lower core.bigFileThreshold
 
-How about stopping upload-pack and see where it stops? There's a main
-loop in upload-pack.c, create_pack_file() that is only active when
-data comes. I looked but failed to see how it becomes a busywait loop.
-Maybe you can put some debugging there.
-
-Setting env var GIT_TRACE_PACKET and GIT_DEBUG_SEND_PACK before
-running upload-pack might also help.
-
-> Would someone familiar with the sources be able to comment on this
-> busy wait behavior, and on whether it could conceivably be done in a
-> way that doesn=E2=80=99t use up some much CPU?
---=20
+Also maybe try remove the 1.2GB file from the source repo and see if
+it works better. That could give us some hints where the problem is.
+-- 
 Duy
