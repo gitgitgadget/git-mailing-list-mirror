@@ -1,125 +1,83 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-svn: clarify documentation of dcommit sub-command
-Date: Wed, 09 May 2012 10:19:36 -0700
-Message-ID: <7vpqadtgpj.fsf@alter.siamese.dyndns.org>
-References: <1336398527-4363-1-git-send-email-jon.seymour@gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [1.8.0] use 'stage' term consistently
+Date: Wed, 09 May 2012 19:25:13 +0200
+Message-ID: <vpqehqtferq.fsf@bauges.imag.fr>
+References: <CAMP44s1qqpTxRvjEH32MNqzUeNhgZ1gB+fu=cgvxnSbMB6oBGA@mail.gmail.com>
+	<vpqehqxmwpj.fsf@bauges.imag.fr>
+	<CAMP44s2DU_3UnHxhgwsTVT59KjLi0+=iW7utuofEyis+_06jGA@mail.gmail.com>
+	<CACBZZX4_wjFG4D4_2w8UcvbRwBmJ583QpoP_n-tq+dNds3Bi7Q@mail.gmail.com>
+	<7v1umv7ub0.fsf@alter.siamese.dyndns.org>
+	<CACBZZX6u7rJer+tSqPddKdAF=bd216pZH5qUQNcrdr4nCmT46Q@mail.gmail.com>
+	<7v62c71fl7.fsf@alter.siamese.dyndns.org>
+	<CAMP44s0DRrqMdHzOBTeQGmKtP7LzFerLZTaNgbHfj0XtebW9wA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, trast@student.ethz.ch,
-	Eric Wong <normalperson@yhbt.net>
-To: Jon Seymour <jon.seymour@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 09 19:19:48 2012
+Content-Type: text/plain
+Cc: Junio C Hamano <gitster@pobox.com>,
+	=?iso-8859-1?Q?=C6var_Arnfj=F6r?= =?iso-8859-1?Q?=F0?= 
+	<avarab@gmail.com>, git@vger.kernel.org,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Jeff King <peff@peff.net>, Scott Chacon <schacon@gmail.com>,
+	Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>,
+	Jakub =?utf-8?Q?Nar=C4=99bski?= <jnareb@gmail.com>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>,
+	Piotr Krukowiecki <piotr.krukowiecki.news@gmail.com>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Wed May 09 19:26:10 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SSAYC-0006aA-P9
-	for gcvg-git-2@plane.gmane.org; Wed, 09 May 2012 19:19:45 +0200
+	id 1SSAeP-0000n0-29
+	for gcvg-git-2@plane.gmane.org; Wed, 09 May 2012 19:26:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760432Ab2EIRTj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 9 May 2012 13:19:39 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:56862 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755333Ab2EIRTj (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 May 2012 13:19:39 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 65CCD6234;
-	Wed,  9 May 2012 13:19:38 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=d03sk1cbx5ExekX62f/SBqeFLe4=; b=wbAzdX
-	x8+0X9PibYDffQLdvRJJru+lnXDLcT9DcgvwXOaQnTAZY44tAupYZlkc9Rcw3r8G
-	XHj/DypckNCstl+0Hn73vZhaMg7S24vzwNByPcYpsNuz0mW47SAqX2/RleayG+Mz
-	5veEMTpsgf8SJ97CpYQa+APh8auNT5Whsd3B0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Jy37YXL0hlbPo4Wr4tgdeHmadj191fTf
-	sDcZcPE6bNSu4p2owYwf38qliUImgPAi/RXnoroc4qTOCOvSQL085HyirmZmj/a9
-	nIx94eRjELL+AR8Iv3osHEWsdsekiAKmMaAzXXdDHPrLS1a3I62lC3nZANnCvMMw
-	l65cSB+9paA=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5D80A6233;
-	Wed,  9 May 2012 13:19:38 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B1DF56232; Wed,  9 May 2012
- 13:19:37 -0400 (EDT)
-In-Reply-To: <1336398527-4363-1-git-send-email-jon.seymour@gmail.com> (Jon
- Seymour's message of "Mon, 7 May 2012 19:18:47 +0530")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 278FD4D8-99FB-11E1-8FF0-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1760543Ab2EIR0D (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 9 May 2012 13:26:03 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:34391 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1760478Ab2EIR0B (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 May 2012 13:26:01 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id q49HI0W8020728
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Wed, 9 May 2012 19:18:00 +0200
+Received: from bauges.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1SSAdX-0006FU-1w; Wed, 09 May 2012 19:25:15 +0200
+In-Reply-To: <CAMP44s0DRrqMdHzOBTeQGmKtP7LzFerLZTaNgbHfj0XtebW9wA@mail.gmail.com>
+	(Felipe Contreras's message of "Wed, 9 May 2012 15:10:28 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.93 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Wed, 09 May 2012 19:18:00 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: q49HI0W8020728
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1337188684.872@NVVZ0qpm/p/iPl913uMNTQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197478>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197479>
 
-Jon Seymour <jon.seymour@gmail.com> writes:
+Felipe Contreras <felipe.contreras@gmail.com> writes:
 
-> Clarify that the optional "revision or branch" argument on dcommit
-> sub-command refers to a git branch not an SVN branch.
+> On Tue, May 8, 2012 at 6:06 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>> The word "index" is quite well understood: that which points at the
+>> information given a headword that refers to it, which is exactly what the
+>> "index" we have is. On the other hand, "to stage/staging area" is not as
+>> widely used outside the narrow shipping/logistics circles.
 >
-> If the user's intent is to commit the current series of commits onto a
-> specific SVN branch rather than the trunk, the existing wording might
-> lead them to believe that the optional argument may be a means to
-> achieve this.
->
-> The rewording clarifies that the optional argument actually refers to
-> the source git branch, not the target svn branch.
->
-> Signed-off-by: Jon Seymour <jon.seymour@gmail.com>
-> ---
->  Documentation/git-svn.txt |    2 +-
->  1 files changed, 1 insertions(+), 1 deletions(-)
->
-> diff --git a/Documentation/git-svn.txt b/Documentation/git-svn.txt
-> index 34ee785..c516283 100644
-> --- a/Documentation/git-svn.txt
-> +++ b/Documentation/git-svn.txt
-> @@ -197,7 +197,7 @@ and have no uncommitted changes.
->  	pull or merge) your commits against the latest changes in the
->  	SVN repository.
->  	An optional revision or branch argument may be specified, and
-> -	causes 'git svn' to do all work on that revision/branch
-> +	causes 'git svn' to do all work on that git revision/branch
->  	instead of HEAD.
->  	This is advantageous over 'set-tree' (below) because it produces
->  	cleaner, more linear history.
+> That's what git has, *internally*, but that's not how high-level users
+> interact with it.
 
-I was going to apply this to my tree and send a "Thanks" with Cc: to Eric
-to avoid double-application, but after reading the above again I started
-to have doubt.  If the original were "on that branch" and the rephrasing
-"on that git branch", I wouldn't have had any issue.
+I agree with that. Explaining users that the <whatever you call it> is
+the place where you stage content in preparation for the next commit is
+much more productive than explaining that it is an array of
+(name, sha1sum) pairs.
 
-When a "git revision" and not a "git branch" is given as an optional
-argument, what does the subcommand do?  Detach HEAD at that revision,
-and do the usual "rebase on top of svn history and push it back" dance?
-Perhaps "instead of HEAD" may want to be further rephrased, as in that
-case it indeed is working on HEAD; it is just not the original commit your
-HEAD pointed at before you issued the command.
-
-Also, wouldn't it be easier to the readers if instead of this patch you
-updated the beginning of the sentence to read "An optional git revision or
-git branch name may be specified"?  After all, that is a more prominent
-place to catch readers' eyes'.
-
-Yet another issue.  The entire paragraph begins with this:
-
-        Commit each diff from a specified head directly to the SVN
-        repository, and then rebase or reset (depending on whether or
-        not there is a diff between SVN and head).
-
-What is "a specified head" here?  It makes it sound as if the "optional
-revision or branch" is not optional at all and that is what specifies the
-"head to be worked on", but that is not what is happening here, right?
-
-Perhaps something like this?
-
-'dcommit'::
-	Commit each diff from the current branch directly to the SVN
-	repository, and then rebase or reset (depending on ...
-	...
-	When an optional git branch name (or a git commit object name)
-	is given, the subcommand works on the specified branch, not on
-        the current branch.
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
