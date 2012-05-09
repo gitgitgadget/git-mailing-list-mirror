@@ -1,96 +1,65 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 12/19] bash prompt: use bash builtins to check whether
- inside git dir
-Date: Wed, 09 May 2012 13:06:24 -0700
-Message-ID: <7vvck5qfun.fsf@alter.siamese.dyndns.org>
-References: <1336524290-30023-1-git-send-email-szeder@ira.uka.de>
- <1336524290-30023-13-git-send-email-szeder@ira.uka.de>
- <4FAA25B9.3010208@viscovery.net>
+From: =?ISO-8859-15?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
+Subject: [PATCH 0/5] xdiff: replace emit_func() with type-safe
+Date: Wed, 09 May 2012 22:19:10 +0200
+Message-ID: <4FAAD13E.8030806@lsrfire.ath.cx>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder@ira.uka.de>,
-	git@vger.kernel.org
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Wed May 09 22:06:38 2012
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>
+To: git discussion list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed May 09 22:19:45 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SSD9e-00077O-Nf
-	for gcvg-git-2@plane.gmane.org; Wed, 09 May 2012 22:06:35 +0200
+	id 1SSDMP-0003Rq-6o
+	for gcvg-git-2@plane.gmane.org; Wed, 09 May 2012 22:19:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760936Ab2EIUG3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 9 May 2012 16:06:29 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35071 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1760879Ab2EIUG2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 May 2012 16:06:28 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 58B7E8EA8;
-	Wed,  9 May 2012 16:06:28 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=j8VBqOLyGtQdokNlkj2ANU51SpU=; b=PSQFuz
-	hmxX2TaRYa93oQelz3FY7AshANQDSuN3tBBZXwuLxb5IpoysVIeDDCK2bnCpK+Xw
-	z722TJJ0zgbeaVuo8R9zEmnJVrJlWayrZo6r0joAoPbpAFuIO0kl8DT1q7evexK7
-	cn1UotpgbvdmdtRCYpY4aE5mxuigzhga0vfOc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=cc6qJvPlhCdGhXV6Erfw2xzInHcR//3G
-	6EPYayRVUMd/CzRX6NUak/uq3uardnOlQZiOFZ42wT4IBnQEy8BW3109XoeacwJ5
-	lK5zwUlNIVyZxl/unis07XoxFFflMaSg/loPl9QEq6oAB3V8QL7nUhEbn3k7yHC7
-	XNQgAaGG1/0=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 506358EA7;
-	Wed,  9 May 2012 16:06:28 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 167A48EA4; Wed,  9 May 2012
- 16:06:25 -0400 (EDT)
-In-Reply-To: <4FAA25B9.3010208@viscovery.net> (Johannes Sixt's message of
- "Wed, 09 May 2012 10:07:21 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 7502B868-9A12-11E1-90EE-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1761022Ab2EIUTb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 9 May 2012 16:19:31 -0400
+Received: from india601.server4you.de ([85.25.151.105]:59432 "EHLO
+	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760996Ab2EIUT2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 May 2012 16:19:28 -0400
+Received: from [192.168.2.105] (p4FFD8B75.dip.t-dialin.net [79.253.139.117])
+	by india601.server4you.de (Postfix) with ESMTPSA id 1119A2F803C;
+	Wed,  9 May 2012 22:19:26 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:12.0) Gecko/20120428 Thunderbird/12.0.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197501>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197502>
 
-Johannes Sixt <j.sixt@viscovery.net> writes:
+Commit ef2e62fe added the ability to bypass the creation of textual diffs
+and to access diff data directly, through the added emit_func member of
+xdemitconf_t.  This function pointer has a type of "void (*)()", because
+"int (*)(xdfenv_t *, xdchange_t *, xdemitcb_t *, xdemitconf_t const *)"
+(its real type) would be difficult to export due to the many internal
+types in that signature.
 
->> __git_ps1() runs the '$(git rev-parse --is-inside-git-dir)' command
->> substitution to check whether we are inside a .git directory and the
->> bash prompt needs to be adjusted accordingly (i.e. display 'BARE!' or
->> 'GIT_DIR!').  This imposes the overhead of fork()ing a subshell and
->> fork()+exec()ing a git process.
->> 
->> Perform this check by comparing the path to the repository and the
->> current directory using only bash builtins, thereby sparing all that
->> fork()+exec() overhead.
->
->> -	if [ "true" = "$(git rev-parse --is-inside-git-dir 2>/dev/null)" ]; then
->> +	local pwd_p
->> +	__git_pwd_p pwd_p
->> +	# inside .git dir?
->> +	if [ "$__git_dir" = "." -o \
->> +			"${pwd_p#$__git_dir}" != "$pwd_p" ]; then
->
-> At this point, $__git_dir is c:/dir style, whereas $pwd_p is /c/dir style,
-> and the intended prefix check does not trigger.
->
-> As long as $__git_dir is only used to access files, it does not matter
-> whether it is Windows style or POSIX style. But if $__git_dir is used in a
-> comparison, then you must make 100% sure that the involved paths are of
-> the same vintage.
->
-> What would be lost if this patch were dropped?
+This feature is currently used twice in git blame, through the function
+xdi_diff_hunks().  Both cases only need to know which lines are affected
+by the different hunks of a diff, i.e. the numbers shown in hunk headers
+of unified diffs.
 
-One loss of fork/exec is what would be lost, I would guess, and that seems
-to be the primary point of this entire series, so...
+This patch series adds a simpler mechanism to accommodate these two
+callers, in a type-safe way, without exporting too many internal types
+of libxdiff.  The last patch removes the old functions.
 
-At the conceptual level, I think the optimization in this patch makes
-sense, but if the assumed primary beneficiary (i.e. Windows) cannot
-benefit from this particular optimization due to two different path
-representations, it wouldn't help being conceptually sound X-<.
+  xdiff: add hunk_func()
+  blame: use hunk_func(), part 1
+  blame: use hunk_func(), part 2
+  blame: factor out helper for calling xdi_diff()
+  xdiff: remove emit_func() and xdi_diff_hunks()
+
+ builtin/blame.c   |   53 +++++++++++++++++++++++++++++++----------------------
+ xdiff-interface.c |   44 --------------------------------------------
+ xdiff-interface.h |    4 ----
+ xdiff/xdiff.h     |    6 +++++-
+ xdiff/xdiffi.c    |   17 +++++++++++++++--
+ 5 files changed, 51 insertions(+), 73 deletions(-)
+
+-- 
+1.7.10.1
