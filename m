@@ -1,152 +1,128 @@
-From: =?ISO-8859-15?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
-Subject: [PATCH 5/5] xdiff: remove emit_func() and xdi_diff_hunks()
-Date: Wed, 09 May 2012 22:24:34 +0200
-Message-ID: <4FAAD282.1060105@lsrfire.ath.cx>
-References: <4FAAD13E.8030806@lsrfire.ath.cx>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC PATCH 18/19] bash prompt: avoid command substitution when
+ checking for untracked files
+Date: Wed, 09 May 2012 13:32:55 -0700
+Message-ID: <7vr4utqemg.fsf@alter.siamese.dyndns.org>
+References: <1336524290-30023-1-git-send-email-szeder@ira.uka.de>
+ <1336524290-30023-19-git-send-email-szeder@ira.uka.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>
-To: git discussion list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed May 09 22:24:53 2012
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder@ira.uka.de>
+X-From: git-owner@vger.kernel.org Wed May 09 22:33:06 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SSDRM-0005cS-Si
-	for gcvg-git-2@plane.gmane.org; Wed, 09 May 2012 22:24:53 +0200
+	id 1SSDZH-0008Pa-Pu
+	for gcvg-git-2@plane.gmane.org; Wed, 09 May 2012 22:33:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761056Ab2EIUYs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 9 May 2012 16:24:48 -0400
-Received: from india601.server4you.de ([85.25.151.105]:59443 "EHLO
-	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1761030Ab2EIUYr (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 May 2012 16:24:47 -0400
-Received: from [192.168.2.105] (p4FFD8B75.dip.t-dialin.net [79.253.139.117])
-	by india601.server4you.de (Postfix) with ESMTPSA id 4072D2F803C;
-	Wed,  9 May 2012 22:24:46 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:12.0) Gecko/20120428 Thunderbird/12.0.1
-In-Reply-To: <4FAAD13E.8030806@lsrfire.ath.cx>
+	id S932275Ab2EIUc7 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 9 May 2012 16:32:59 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:44981 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755160Ab2EIUc6 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 9 May 2012 16:32:58 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 62C9C649D;
+	Wed,  9 May 2012 16:32:57 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=qpefEmtUrE/p
+	LzC260Yn9Onz2ag=; b=mG4OhQSKZxLJOvAZSdTRafAmrQuq37o1cpDLZl8pVv1T
+	toZqUhYnV9cqKQuriQ3bdbEv2EEqEO6UX6FGSj53Xt9q/LzpYSncIp+hmTFK6W1e
+	cRfY99CawhPemesqzBZQbW5fh04VqBTmWrMp8m6SyazPo3bo9baWRQybXa1+Zx4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=aPcR0n
+	D5T9tVMmHiQ9o99I6ZWbja3ehYAmgsHbwyrMeiXiAjJBvS+eRLTiS0WDKIEKidhp
+	bRPQqd0rQYLcN7zvTxTf9hHiuK7Xxt7+mfu5e35Moc+CdfYISohTBjXKuQG0ubZT
+	y7kwqYznC/+bOVk7s++kV0PiYKi8P0UvBcWoA=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 59779649C;
+	Wed,  9 May 2012 16:32:57 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B0DBB6498; Wed,  9 May 2012
+ 16:32:56 -0400 (EDT)
+In-Reply-To: <1336524290-30023-19-git-send-email-szeder@ira.uka.de> ("SZEDER
+ =?utf-8?Q?G=C3=A1bor=22's?= message of "Wed, 9 May 2012 02:44:49 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 291A033A-9A16-11E1-86EB-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197508>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197509>
 
-The functions are unused now, remove them.
+SZEDER G=C3=A1bor <szeder@ira.uka.de> writes:
 
-Signed-off-by: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
----
- xdiff-interface.c |   44 --------------------------------------------
- xdiff-interface.h |    4 ----
- xdiff/xdiff.h     |    1 -
- xdiff/xdiffi.c    |    6 +-----
- 4 files changed, 1 insertion(+), 54 deletions(-)
+> When enabled, the bash prompt can indicate the presence of untracked
+> files with a '%' sign.  __git_ps1() checks for untracked files by run=
+ning the
+> '$(git ls-files --others --exclude-standard)' command substitution,
+> and displays the indicator when there is no output.
+>
+> Avoid this command substitution by additionally passing
+> '--error-unmatch *', and checking the command's return value.
 
-diff --git a/xdiff-interface.c b/xdiff-interface.c
-index 0e2c169..ecfa05f 100644
---- a/xdiff-interface.c
-+++ b/xdiff-interface.c
-@@ -156,50 +156,6 @@ int xdi_diff_outf(mmfile_t *mf1, mmfile_t *mf2,
- 	return ret;
- }
- 
--struct xdiff_emit_hunk_state {
--	xdiff_emit_hunk_consume_fn consume;
--	void *consume_callback_data;
--};
--
--static int process_diff(xdfenv_t *xe, xdchange_t *xscr, xdemitcb_t *ecb,
--			xdemitconf_t const *xecfg)
--{
--	long s1, s2, same, p_next, t_next;
--	xdchange_t *xch, *xche;
--	struct xdiff_emit_hunk_state *state = ecb->priv;
--	xdiff_emit_hunk_consume_fn fn = state->consume;
--	void *consume_callback_data = state->consume_callback_data;
--
--	for (xch = xscr; xch; xch = xche->next) {
--		xche = xdl_get_hunk(xch, xecfg);
--
--		s1 = XDL_MAX(xch->i1 - xecfg->ctxlen, 0);
--		s2 = XDL_MAX(xch->i2 - xecfg->ctxlen, 0);
--		same = s2 + XDL_MAX(xch->i1 - s1, 0);
--		p_next = xche->i1 + xche->chg1;
--		t_next = xche->i2 + xche->chg2;
--
--		fn(consume_callback_data, same, p_next, t_next);
--	}
--	return 0;
--}
--
--int xdi_diff_hunks(mmfile_t *mf1, mmfile_t *mf2,
--		   xdiff_emit_hunk_consume_fn fn, void *consume_callback_data,
--		   xpparam_t const *xpp, xdemitconf_t *xecfg)
--{
--	struct xdiff_emit_hunk_state state;
--	xdemitcb_t ecb;
--
--	memset(&state, 0, sizeof(state));
--	memset(&ecb, 0, sizeof(ecb));
--	state.consume = fn;
--	state.consume_callback_data = consume_callback_data;
--	xecfg->emit_func = (void (*)())process_diff;
--	ecb.priv = &state;
--	return xdi_diff(mf1, mf2, xpp, xecfg, &ecb);
--}
--
- int read_mmfile(mmfile_t *ptr, const char *filename)
- {
- 	struct stat st;
-diff --git a/xdiff-interface.h b/xdiff-interface.h
-index 49d1116..eff7762 100644
---- a/xdiff-interface.h
-+++ b/xdiff-interface.h
-@@ -4,15 +4,11 @@
- #include "xdiff/xdiff.h"
- 
- typedef void (*xdiff_emit_consume_fn)(void *, char *, unsigned long);
--typedef void (*xdiff_emit_hunk_consume_fn)(void *, long, long, long);
- 
- int xdi_diff(mmfile_t *mf1, mmfile_t *mf2, xpparam_t const *xpp, xdemitconf_t const *xecfg, xdemitcb_t *ecb);
- int xdi_diff_outf(mmfile_t *mf1, mmfile_t *mf2,
- 		  xdiff_emit_consume_fn fn, void *consume_callback_data,
- 		  xpparam_t const *xpp, xdemitconf_t const *xecfg);
--int xdi_diff_hunks(mmfile_t *mf1, mmfile_t *mf2,
--		   xdiff_emit_hunk_consume_fn fn, void *consume_callback_data,
--		   xpparam_t const *xpp, xdemitconf_t *xecfg);
- int parse_hunk_header(char *line, int len,
- 		      int *ob, int *on,
- 		      int *nb, int *nn);
-diff --git a/xdiff/xdiff.h b/xdiff/xdiff.h
-index 33c010b..219a3bb 100644
---- a/xdiff/xdiff.h
-+++ b/xdiff/xdiff.h
-@@ -96,7 +96,6 @@ typedef struct s_xdemitconf {
- 	unsigned long flags;
- 	find_func_t find_func;
- 	void *find_func_priv;
--	void (*emit_func)();
- 	xdl_emit_hunk_consume_func_t hunk_func;
- } xdemitconf_t;
- 
-diff --git a/xdiff/xdiffi.c b/xdiff/xdiffi.c
-index 4d671f4..1b7012a 100644
---- a/xdiff/xdiffi.c
-+++ b/xdiff/xdiffi.c
-@@ -557,11 +557,7 @@ int xdl_diff(mmfile_t *mf1, mmfile_t *mf2, xpparam_t const *xpp,
- 	     xdemitconf_t const *xecfg, xdemitcb_t *ecb) {
- 	xdchange_t *xscr;
- 	xdfenv_t xe;
--	emit_func_t ef = xecfg->emit_func ?
--		(emit_func_t)xecfg->emit_func : xdl_emit_diff;
--
--	if (xecfg->hunk_func)
--		ef = xdl_call_hunk_func;
-+	emit_func_t ef = xecfg->hunk_func ? xdl_call_hunk_func : xdl_emit_diff;
- 
- 	if (xdl_do_diff(mf1, mf2, xpp, &xe) < 0) {
- 
--- 
-1.7.10.1
+This is too subtle and needs to be explained in a in-code comment.  For
+example, it is unclear to me how this '*' pathspec and an untracked fil=
+e
+that does not fnmatch(3) with the pattern (e.g. ".trash").
+
+
+        $ rm -fr /var/tmp/x && git init /var/tmp/x && cd /var/tmp/x
+	$ args=3D'ls-files --others --exclude-standard'
+
+	$ git $args | wc -l
+        0
+        $ git $args --error-unmatch -- '*' >/dev/null 2>&1 ; echo $?
+        1
+
+        $ >a
+        $ git $args | wc -l
+	1
+        $ git $args --error-unmatch -- '*' >/dev/null 2>&1 ; echo $?
+	0
+
+	$ mv a .a
+        $ git $args | wc -l
+	1
+        $ git $args --error-unmatch -- '*' >/dev/null 2>&1 ; echo $?
+	0
+
+The first two cases seem to be fine, but isn't the last one showing tha=
+t
+your update is incorrect?
+
+>
+> Signed-off-by: SZEDER G=C3=A1bor <szeder@ira.uka.de>
+> ---
+>
+> This seems to do the right thing, but I'm not quite sure, so I would
+> appreciate a pair of expert eyeballs on it.
+>
+>  contrib/completion/git-completion.bash | 5 ++---
+>  1 file changed, 2 insertions(+), 3 deletions(-)
+>
+> diff --git a/contrib/completion/git-completion.bash b/contrib/complet=
+ion/git-completion.bash
+> index c4feab68..5ea19018 100755
+> --- a/contrib/completion/git-completion.bash
+> +++ b/contrib/completion/git-completion.bash
+> @@ -348,9 +348,8 @@ __git_ps1 ()
+>  			fi
+> =20
+>  			if [ -n "${GIT_PS1_SHOWUNTRACKEDFILES-}" ]; then
+> -				if [ -n "$(git ls-files --others --exclude-standard)" ]; then
+> -					u=3D"%"
+> -				fi
+> +				git ls-files --others --exclude-standard --error-unmatch -- '*' =
+>/dev/null 2>/dev/null &&
+> +				u=3D"%"
+>  			fi
+>  		fi
+>  	fi
