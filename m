@@ -1,114 +1,214 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCH] sha1_name: support sha1^{note} to return note sha-1
-Date: Wed, 9 May 2012 15:25:15 +0700
-Message-ID: <CACsJy8AfD-N6L6nZNDG3uw4s6jAdYqkuQ8Jt2XRXRGzRwt1ncQ@mail.gmail.com>
-References: <1336482870-30842-1-git-send-email-pclouds@gmail.com> <20120508161126.GB26838@sigill.intra.peff.net>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: Index format v5
+Date: Wed, 09 May 2012 10:37:03 +0200
+Message-ID: <4FAA2CAF.3040408@alum.mit.edu>
+References: <CALgYhfMKdbv8TiT4ALDSvD3pSXHEPLWHM09DxYnRmRdBWRjh8Q@mail.gmail.com> <4FA7E703.7040408@alum.mit.edu> <20120508141137.GA3937@tgummerer.surfnet.iacbox>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed May 09 10:25:58 2012
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, trast@student.ethz.ch, gitster@pobox.com,
+	peff@peff.net, spearce@spearce.org, davidbarr@google.com
+To: Thomas Gummerer <t.gummerer@gmail.com>
+X-From: git-owner@vger.kernel.org Wed May 09 10:44:20 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SS2Dc-0002Yo-BU
-	for gcvg-git-2@plane.gmane.org; Wed, 09 May 2012 10:25:56 +0200
+	id 1SS2VO-0000g3-H2
+	for gcvg-git-2@plane.gmane.org; Wed, 09 May 2012 10:44:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757780Ab2EIIZu convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 9 May 2012 04:25:50 -0400
-Received: from mail-wi0-f172.google.com ([209.85.212.172]:49916 "EHLO
-	mail-wi0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751176Ab2EIIZr convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 9 May 2012 04:25:47 -0400
-Received: by wibhr2 with SMTP id hr2so181153wib.1
-        for <git@vger.kernel.org>; Wed, 09 May 2012 01:25:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=ASmv6qL8JUYtGjzG9JONSZZ5TNnWYSgZ5u0yfFVG/04=;
-        b=MzONf0E4XMNVFFvE+PPXadslL50qNKDhx7PwzOnS/PGHuFAE7BJf0U9K1pqcXHYL0E
-         IbLy8jrmQp1IoujQSWjLQwVJedvLGIk0L8EqAVLQ89td/WoUCD7vxxwoiD9gpQIzCOw6
-         rgjWwcbhUJRozxSkCf7ho01TtKG3FEoyrzOfWQm7+g7gmtm6U6XniPjUPZM7AZAKXrR/
-         gzJVNlPN7ksLV9gfcRKIvzpdLiTZtWW3phnBKuib0zm+/+HeaBYSoJMjiSk0LUc8dEfK
-         lEJ9yimVEi3Ecp4dP5bKRYi7thw2LsKy2xFsjQ9vrNPFTZTxZxE7e5Xrt9i9rrB5Ns1S
-         HWSA==
-Received: by 10.180.81.166 with SMTP id b6mr4704324wiy.0.1336551946572; Wed,
- 09 May 2012 01:25:46 -0700 (PDT)
-Received: by 10.223.14.193 with HTTP; Wed, 9 May 2012 01:25:15 -0700 (PDT)
-In-Reply-To: <20120508161126.GB26838@sigill.intra.peff.net>
+	id S1757877Ab2EIIoM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 9 May 2012 04:44:12 -0400
+Received: from ALUM-MAILSEC-SCANNER-6.MIT.EDU ([18.7.68.18]:55531 "EHLO
+	alum-mailsec-scanner-6.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755107Ab2EIIoJ (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 9 May 2012 04:44:09 -0400
+X-Greylist: delayed 422 seconds by postgrey-1.27 at vger.kernel.org; Wed, 09 May 2012 04:44:09 EDT
+X-AuditID: 12074412-b7f1c6d00000092d-93-4faa2cb2980e
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-6.mit.edu (Symantec Messaging Gateway) with SMTP id C5.19.02349.2BC2AAF4; Wed,  9 May 2012 04:37:06 -0400 (EDT)
+Received: from [192.168.101.152] (ssh.berlin.jpk.com [212.222.128.135])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id q498b3wQ014272
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Wed, 9 May 2012 04:37:04 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:12.0) Gecko/20120430 Thunderbird/12.0.1
+In-Reply-To: <20120508141137.GA3937@tgummerer.surfnet.iacbox>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrGKsWRmVeSWpSXmKPExsUixO6iqLtJZ5W/we+9AhaPTm5msui60s1k
+	0dB7hdniR0sPs8X8QxNZLS6svs1usXLXQiYHdo+ds+6yeyzYVOrxrHcPo8fFS8oef87vYfWY
+	+2kRq8fnTXIB7FHcNkmJJWXBmel5+nYJ3BmLf7IWzDCpOPVqJXMDY59mFyMnh4SAicTra7+Y
+	IWwxiQv31rN1MXJxCAlcZpS48u4RlHOMSeLhm3ZWkCpeAW2JhZ+PsIPYLAKqEqd3XGADsdkE
+	dCUW9TQzdTFycIgKhEmsfqABUS4ocXLmExYQW0RAS2LS1z6wMcwCLYwSr+dFgJQLC8hIbFjv
+	BbFqIaPErDlbGEFqOAVsJZ59esMGUsMsYC3xbXcRRKu8xPa3c5gnMArMQrJhFkLVLCRVCxiZ
+	VzHKJeaU5urmJmbmFKcm6xYnJ+blpRbpmunlZpbopaaUbmKExIDQDsb1J+UOMQpwMCrx8Gpt
+	XOkvxJpYVlyZe4hRkoNJSZTXU3uVvxBfUn5KZUZicUZ8UWlOavEhRgkOZiUR3lnqQOW8KYmV
+	ValF+TApaQ4WJXHen4vV/YQE0hNLUrNTUwtSi2CyMhwcShK8osBYFxIsSk1PrUjLzClBSDNx
+	cIIM55ISKU7NS0ktSiwtyYgHxWh8MTBKQVI8QHtfg9zEW1yQmAsUhWg9xWjMMW/K1quMHLOX
+	AEkhlrz8vFQpcV4lkE0CIKUZpXlwi2DJ7xWjONDfwrw6IFU8wMQJN+8V0ComoFXTDoO8WFyS
+	iJCSamA0FRZf+Krm5ZrH8xTqHa+ISNnuD6zqZIk+6j1j/q0PCds+tbFaK9hUmJjs 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197461>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197462>
 
-On Tue, May 8, 2012 at 11:11 PM, Jeff King <peff@peff.net> wrote:
-> On Tue, May 08, 2012 at 08:14:30PM +0700, Nguyen Thai Ngoc Duy wrote:
+On 05/08/2012 04:11 PM, Thomas Gummerer wrote:
+>> * The details of the extension data blocks are described in the first
+>>    (overview) section, whereas it seems like they should be described
+>>    in their own section following the "conflict data" section.  But
+>>    wouldn't the presence of extension data blocks prevent the addition
+>>    of conflict data?
 >
->> =C2=A0It may be useful for scripting, and looks nice. Though may be =
-not
->> =C2=A0worth adding if there are no actual users.
+> Only the details that should be there for every extension are described
+> in the overview (the header of the extension), to make sure every
+> extension has the same header format, and thus a reader which doesn't
+> understand a specific extension still can read its header and know
+> what's going on.
 >
-> There can be many notes refs. So I think to do this right, you would
-> want something like:
->
-> =C2=A0foo^{note:bar}
->
-> which would look in refs/notes/bar (this logic is handled by
-> expand_notes_ref). And "foo^{note}" would be a synonym for the defaul=
-t
-> note ref.
+> They won't prevent the addition of conflicted data, since when a
+> conflict is created, other files were probably added and the index has
+> to be rewritten anyway. Once the conflict is resolved however only a
+> bit has to be flipped, so there is no rewrite necessary.
 
-Right. Thanks.
+In other words, the presence of extensions *does indeed* prevent the 
+addition of conflict data, but you don't think that it is a problem.
 
->> @@ -473,7 +474,19 @@ static int peel_onion(const char *name, int len=
-, unsigned char *sha1)
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 expected_type =3D O=
-BJ_NONE;
->> =C2=A0 =C2=A0 =C2=A0 else if (sp[0] =3D=3D '/')
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 expected_type =3D O=
-BJ_COMMIT;
->> - =C2=A0 =C2=A0 else
->> + =C2=A0 =C2=A0 else if (!strncmp("note}", sp, 5)) {
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 const unsigned char *not=
-e;
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 struct notes_tree t;
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (get_sha1_1(name, sp =
-- name - 2, outer))
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 return -1;
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 memset(&t, 0, sizeof(t))=
-;
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 init_notes(&t, NULL, NUL=
-L, 0);
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 note =3D get_note(&t, ou=
-ter);
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (note)
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 hashcpy(sha1, note);
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 free_notes(&t);
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return note ? 0 : -1;
->> + =C2=A0 =C2=A0 } else
+Moving the conflict data to after the extensions, on the other hand, 
+would mean that conflict data can sometimes be added without a rewrite. 
+  I cannot judge whether this would be useful.
+
+Handling conflict data *as* an extension would allow the conflict data 
+to be added at any time without rewriting.  I cannot judge whether this 
+would be useful.
+
+>> * Does the index file include directory entries for empty directories?
+>>    What about directories that contain only other directories?
 >
-> The notes code is relatively expensive to initialize, with the
-> assumption that the effort will be amortized across multiple lookups
-> (which are made faster). Is it possible to cache this initialized not=
-es
-> structure in case many lookups are done?
+> In theory the index is able to include empty directories. I'm however
+> not sure if this should be implemented. I'd be happy to get more
+> feedback there.
 
-No idea. I have never worked/used notes until yesterday (and these
-patches were the result). I will look into it.
+Currently git does not keep track of empty directories.  Even though 
+there have been proposals to fix this, it is far beyond the scope of 
+your project to implement the handling of empty directories.  The 
+question is whether your format definition *forbids* the presence of 
+empty directories in the index file (in the interest of definiteness, 
+and it might make the reader implementation a little bit simpler, but it 
+imposes a constraint on the writer).  Obviously empty directories, even 
+if present, mustn't have an effect on the SHA1 of the trees containing them.
 
-> It may not be as important as it used to be, either. I think more rec=
-ent
-> versions of the code will progressively load the notes tree rather th=
-an
-> filling it all in at initialization time. But it has been a while sin=
-ce
-> I've done anything with notes.
---=20
-Duy
+>> Directory entry
+>> ===============
+>>
+>> * "4-byte number of entries in the index that is covered by the tree
+>>    this entry represents."  What does this include?
+>>    Files/directories/both?  Recursive or non-recursive?
+>
+> This is from the cache-tree. I'm not sure but I think it includes both
+> files and directories, recursively.
+
+Please figure this out for the final spec.
+
+>> File entry
+>> ==========
+>> [...]
+>
+>> * Are file entries sorted by entire path or only by the basename?
+>
+> They are sorted by the basename, in the respective block of their
+> directories.
+> Example: paths: a/a a/z b/b
+> File entries in the index:
+> a ...
+> z ...
+> b ...
+
+OK, so in other words, the file entries of all files in a directory (not 
+including files in subdirectories) are stored contiguously, sorted by 
+basename.  (The thing that wasn't immediately clear is whether files 
+from subdirectories are intermingled with those of the parent directory.)
+
+>> Flat loading
+>> ============
+>>
+>> * I found the explanation pretty incomprehensible.  Perhaps some
+>>    pseudo-code would make it clearer?
+>> [...]
+> [...] I have changed the flat loading in the documentation,
+> hope it's more understandable now.
+
+Maybe it's just be, but I still don't think it is very clear.  Here is 
+version fbf8add1b026:
+
+> == Flat loading
+>
+> Since internally git expects and works with lexicografic ordering,
+> a simple linear scan throught the subdirectories doesn't give
+> the right internal sorting. To achieve the right internal sorting
+> the loading will be done in the following way:
+>
+> 1. Start with the root directory, and read also the name of the
+>   first subdirectory (=next directory in the list).
+>
+> 1a. Use the next directory (the one against which the filenames
+>   were checked previously), and read the next directory name,
+>   to check the files against.
+>
+> 2. Check the stack if the element at the top is < then the current
+>   directoryname.
+>
+>   If it's < then current directory name, add files from the stack
+>     to the entry list, until the file name is > then the
+>     directory name.
+>
+> 2. While filename < directoryname add the filenames to the entry
+>   list
+>
+> 3. Add the rest of the files to a stack.
+>
+> 4. Continue with 1a, if there are more directories left.
+>
+> 5. Add the rest of the files from the stack to the end of the
+>   entry list.
+
+Aside from the fact that there are two number (2)s,
+
+* What does "Use the next directory (the one against which the filenames 
+were checked previously)" mean?  What does it mean to "use a directory"? 
+  Does it mean to recurse into the directory?  Is the stack preserved 
+passed down to the recursive function calls, or does each level of the 
+recursion have its own stack?  What does "against which the filenames 
+were checked previously" mean (there are no filenames mentioned in the 
+earlier steps)?
+
+* You talk about a stack, and "Add the rest of the files to a stack". 
+But when you retrieve entries from a stack, they come out in reverse 
+order.  So are you imagining that each element of the stack is an array 
+of file entries?  Or do you push the files onto the stack in reverse 
+order?  Or do you really mean a queue rather than a stack?
+
+* Are the file entries read before they are put on the stack, or does 
+the stack just remember where to read them from when their turn comes?
+
+* "Continue with 1a, if there are more directories left": I assume you 
+mean subdirectories of the current directory, but maybe you are talking 
+about all directories?
+
+There is a reason that I asked for pseudocode, namely because it forces 
+you to be more precise in your description.  I can certainly imagine 
+several workable algorithms for reading the index file, and the 
+different algorithms have different tradeoffs particularly regarding the 
+amount of temporary space needed and locality of reference in the index 
+file (which, I understand, will be mmapped when practical but it is not 
+practical on all platforms).  Once you express the algorithm in 
+pseudocode it is possible to be sure which variant you have chosen and 
+consider whether it is really workable.
+
+Michael
+
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
