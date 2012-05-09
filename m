@@ -1,115 +1,75 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 04/19] completion: respect $GIT_DIR
-Date: Wed, 09 May 2012 11:54:42 -0700
-Message-ID: <7vmx5hrxql.fsf@alter.siamese.dyndns.org>
+From: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
+Subject: Re: [PATCH 03/19] completion: use __gitdir() in _git_log()
+Date: Wed, 9 May 2012 21:01:00 +0200
+Message-ID: <20120509190100.GB6958@goldbirke>
 References: <1336524290-30023-1-git-send-email-szeder@ira.uka.de>
- <1336524290-30023-5-git-send-email-szeder@ira.uka.de>
+	<1336524290-30023-4-git-send-email-szeder@ira.uka.de>
+	<7vr4utryd2.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder@ira.uka.de>
-X-From: git-owner@vger.kernel.org Wed May 09 20:54:53 2012
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed May 09 21:02:02 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SSC2E-0003qZ-GZ
-	for gcvg-git-2@plane.gmane.org; Wed, 09 May 2012 20:54:50 +0200
+	id 1SSC9B-0006nS-Jr
+	for gcvg-git-2@plane.gmane.org; Wed, 09 May 2012 21:02:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760045Ab2EISyq convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 9 May 2012 14:54:46 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:34845 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755968Ab2EISyp convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 9 May 2012 14:54:45 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9CC707E91;
-	Wed,  9 May 2012 14:54:44 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=SMf6mUgcSNJy
-	8kwqNJ/lGfJ5QvU=; b=ASeZ4OmS/p7Epj9Lns1lAsng8qJq5brdTrdeYObPeDpY
-	Bp829QyNj0fFEGU/ImLxDd69FwmBSTTEZhkOI0nskd8SIFEx4NbwgOvp3s7bQkLv
-	6Z1WqhIT7SjYSpmeO+biInfWLnpi4dB/5XY8f/xCogoHAIjsq9awPCM8DQFcEVc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=REBbNd
-	cnHGFbQ801cbB2nTyU4t8KBKTBSfdviv6Xj8rqKGeujYmYIPUdJ31u0MFGJHcnvB
-	qYoQMih8rKwMwkZ5JMgA6fqSib6cBApI8UPkrYWAzf50/rfvYawWAzY7uJpLrl/V
-	KnOn+RsjUwbAhDIMl0paVpITOBf9UdtFDwQFU=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 950967E90;
-	Wed,  9 May 2012 14:54:44 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 27C6A7E8F; Wed,  9 May 2012
- 14:54:44 -0400 (EDT)
-In-Reply-To: <1336524290-30023-5-git-send-email-szeder@ira.uka.de> ("SZEDER
- =?utf-8?Q?G=C3=A1bor=22's?= message of "Wed, 9 May 2012 02:44:35 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 70DC500A-9A08-11E1-AA6E-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1756388Ab2EITB4 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 9 May 2012 15:01:56 -0400
+Received: from moutng.kundenserver.de ([212.227.17.10]:52450 "EHLO
+	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755699Ab2EITBz (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 May 2012 15:01:55 -0400
+Received: from localhost6.localdomain6 (p5B1303EC.dip0.t-ipconnect.de [91.19.3.236])
+	by mrelayeu.kundenserver.de (node=mreu0) with ESMTP (Nemesis)
+	id 0MK5c9-1STZAv0y4T-001DSa; Wed, 09 May 2012 21:01:00 +0200
+Content-Disposition: inline
+In-Reply-To: <7vr4utryd2.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Provags-ID: V02:K0:FC3m18HAcn+a0OcoGPnS8UOpsEA/3Ifbetl2oCbIkDD
+ O+eeFKw8i10f1ouNg+mZsKnm2Z985MUMTIxQ8v2ynG1L0Ibl57
+ 8GziIiCdJMOGrkJZHAjhTMJ+zfZkmVJ54w7Qup6sGjF2xxJtCt
+ lhXtYqUIf2Ptm9ZNmM0cEfGxTjNwCmmM+qNyV3qEiie4vL0NV+
+ Gbt/UUyRyBKN+J6oVXjzp0KTCQDhyzx2A0+7RiScvGcfhy/lKR
+ GJU1AOYrYIJwKGivt6ih4j6Ff+MV71UOtHMM0ibRJcEiSLQkDU
+ j2YoZukBykq2HeIRp7f+YkTUSWxjpsH1MA2NsUz8e73UTW77p7
+ MsfgMTHXlTF2WTTq4kI8=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197491>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197492>
 
-SZEDER G=C3=A1bor <szeder@ira.uka.de> writes:
+On Wed, May 09, 2012 at 11:41:13AM -0700, Junio C Hamano wrote:
+> SZEDER G=E1bor <szeder@ira.uka.de> writes:
+>=20
+> > The standard way to find out the path to the repository in the
+> > completion script is the __gitdir() helper function, because that
+> > handles the repository path given on the command line (i.e. git
+> > --git-dir=3D/path/to/repo log --<TAB>).  However, there is one
+> > exception: the completion function for 'git log' still uses 'git
+> > rev-parse --git-dir' directly, and could offer (or not) the '--merg=
+e'
+> > option erroneously when the repository is specified on the command
+> > line.
+>=20
+> Here `--merge` is the visible symptom, and the real issue you fixed i=
+s
+> that it used to be looking into a repository that is different from t=
+he
+> user is working with, right [*1*]?
 
-> The __gitdir() helper function finds out the path of the git
-> repository by running 'git rev-parse --git-dir'.  However, it has a
-> shortcut first to avoid the overhead of running a git command in a
-> subshell when the current directory is at the top of the work tree,
-> i.e. when it contains a '.git' subdirectory.
->
-> If the 'GIT_DIR' environment variable is set then it specifies the
-> path to the git repository, and the autodetection of the '.git'
-> directory is not necessary.  However, $GIT_DIR is only taken into
-> acocunt by 'git rev-parse --git-dir', and the check for the '.git'
-> subdirectory is performed first, so it wins over the path given in
-> $GIT_DIR.
+Exactly; will add a sentence about it to be more explicit in the
+reroll.
 
-Strictly speaking, you have to be a bit careful here, though.  If GIT_D=
-IR
-is set as a shell variable without being exported, it will not affect
-where the "git" process you will spawn from your interactive shell sess=
-ion
-will find the repository.  Only when it is exported it does.
+Note, however, that this doesn't influence refs completion, because
+__git_refs() does use __gitdir(), so it will look into the right
+repository.
 
-It is a different matter if the distinction matters in the real life, i=
-n
-other words, GIT_DIR set but not exported is a use case that is worth
-worrying about.  But note that our own git-sh-setup script is one such =
-use
-case, so I wouldn't be surprised if somebody uses it for a strange
-workflow (I suspect that might involve a working tree that has its .git
-dir in a totally unrelated place, and the user runs "GIT_DIR=3D$GIT_DIR=
- git
-subcmd", using the set but not exported GIT_DIR as a typesaver).
 
-> diff --git a/t/t9903-bash-prompt.sh b/t/t9903-bash-prompt.sh
-> index a6c9ce94..96468ceb 100755
-> --- a/t/t9903-bash-prompt.sh
-> +++ b/t/t9903-bash-prompt.sh
-> @@ -85,7 +85,7 @@ test_expect_success 'gitdir - parent is a .git dire=
-ctory' '
->  	test_cmp expected "$actual"
->  '
-> =20
-> -test_expect_failure 'gitdir - $GIT_DIR set while .git directory in c=
-wd' '
-> +test_expect_success 'gitdir - $GIT_DIR set while .git directory in c=
-wd' '
->  	echo "$TRASH_DIRECTORY/otherrepo/.git" > expected &&
->  	(
->  		GIT_DIR=3D"$TRASH_DIRECTORY/otherrepo/.git" &&
-
-And it is a good thing that the next line that comes after the above
-context is "export GIT_DIR".  If we were to declare "set but not export=
-ed"
-an uninteresting use case whose outcome is undefined (and that might be
-fine), this still tests the defined behaviour of having the GIT_DIR in =
-the
-environment.
+G=E1bor
