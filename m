@@ -1,83 +1,67 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 03/19] completion: use __gitdir() in _git_log()
-Date: Wed, 09 May 2012 11:41:13 -0700
-Message-ID: <7vr4utryd2.fsf@alter.siamese.dyndns.org>
-References: <1336524290-30023-1-git-send-email-szeder@ira.uka.de>
- <1336524290-30023-4-git-send-email-szeder@ira.uka.de>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] notes: do not accept non-blobs as new notes
+Date: Wed, 9 May 2012 14:43:55 -0400
+Message-ID: <20120509184355.GA13012@sigill.intra.peff.net>
+References: <1336482692-30729-1-git-send-email-pclouds@gmail.com>
+ <20120508160334.GA26838@sigill.intra.peff.net>
+ <CACsJy8DHotHhF0ADDwjUZx5m8SGjXFuXV9fY=mfHmswyZxzeSQ@mail.gmail.com>
+ <20120509173701.GB30487@sigill.intra.peff.net>
+ <7v4nrptf5z.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder@ira.uka.de>
-X-From: git-owner@vger.kernel.org Wed May 09 20:41:50 2012
+Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed May 09 20:44:06 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SSBpd-0006eF-Q9
-	for gcvg-git-2@plane.gmane.org; Wed, 09 May 2012 20:41:50 +0200
+	id 1SSBrp-0007R6-1J
+	for gcvg-git-2@plane.gmane.org; Wed, 09 May 2012 20:44:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754006Ab2EISlQ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 9 May 2012 14:41:16 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:60669 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752939Ab2EISlP convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 9 May 2012 14:41:15 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3059279F7;
-	Wed,  9 May 2012 14:41:15 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=BlWWHMIBawwG
-	xjD4udKP6IOggGE=; b=ad1YgFde9V0gVHHlewoiQl5daC9G4ueTXUpXnHJVBEEJ
-	oW35A5fZz9Uv2XrC0pdbwBVAYw8jPAvTYgNC0yHvy8sXsU9+vCGtWYcuq0BkupHY
-	7mCmakXuF9F8LOQqFAv1rkv0mkFYR9FL5/Znln01AQI1JYy2tnfQe1tLa7Z2jIk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=olaHFe
-	RQeRxzVMaDd2Z5GocmX+SI+2fSZz6fkvoiOf7osG2k6S+rIbPd+12Js6nCMD0wXW
-	4Rks5w432y4VCi8GVLU6TlwsJ9ivslg1ubGkxwRkqnbHuhPpB7YkAvVJfTf4DG1b
-	96ZPsX5QA3qFw2elGtrcj9FD2Z+uJiC+xkJkA=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 27DF779F6;
-	Wed,  9 May 2012 14:41:15 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B428479F5; Wed,  9 May 2012
- 14:41:14 -0400 (EDT)
-In-Reply-To: <1336524290-30023-4-git-send-email-szeder@ira.uka.de> ("SZEDER
- =?utf-8?Q?G=C3=A1bor=22's?= message of "Wed, 9 May 2012 02:44:34 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 8E67DCC2-9A06-11E1-A8A7-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1758176Ab2EISn7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 9 May 2012 14:43:59 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:38048
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752859Ab2EISn6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 May 2012 14:43:58 -0400
+Received: (qmail 19198 invoked by uid 107); 9 May 2012 18:44:17 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 09 May 2012 14:44:17 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 09 May 2012 14:43:55 -0400
+Content-Disposition: inline
+In-Reply-To: <7v4nrptf5z.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197489>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197490>
 
-SZEDER G=C3=A1bor <szeder@ira.uka.de> writes:
+On Wed, May 09, 2012 at 10:52:56AM -0700, Junio C Hamano wrote:
 
-> The standard way to find out the path to the repository in the
-> completion script is the __gitdir() helper function, because that
-> handles the repository path given on the command line (i.e. git
-> --git-dir=3D/path/to/repo log --<TAB>).  However, there is one
-> exception: the completion function for 'git log' still uses 'git
-> rev-parse --git-dir' directly, and could offer (or not) the '--merge'
-> option erroneously when the repository is specified on the command
-> line.
+> Jeff King <peff@peff.net> writes:
+> 
+> > Hmm. I was thinking that we supported arbitrary sha1s as note values via
+> > the command-line interface. But we don't; that is only the internal C
+> > API, and it is quite difficult to do anything useful with non-blob notes
+> > via the command-line interface. As you noticed, you can trick it into
+> > doing so with "-C", but even "-c" has disastrous results (unless you
+> > like dumping the binary tree object into your editor).
+> 
+> It is fair to restrict anything that involves an editor or end user
+> interaction with the terminal output for sanity, and raw tree object data
+> is on the other side of the border line that defines what is sane, so I
+> wouldn't have much problem with a new restriction on the command line
+> interface, except for "-C".  Advertising that we store arbitrary binary
+> out of an existing blob as-is and then starting to refuse taking it sounds
+> like a non-starter.
 
-Here `--merge` is the visible symptom, and the real issue you fixed is
-that it used to be looking into a repository that is different from the
-user is working with, right [*1*]?
+Fair enough. I was willing to accept the "-C $tree" case as collateral
+damage under the assumption that nobody is using it. But you're right,
+the real issue is restricting the "-c" case, as well as the "show" case
+when reading notes. The right patch would restrict those and leave "-C"
+alone.
 
-Well spotted, and the fix sounds correct.
-
-Thanks.
-
-[Footnote]
-
-*1* I am just making sure I am reading the above right; I am not
-suggesting to omit description of visible symptom at all---quite
-the opposite, I do want to see these visible symptom descriptions
-in the log messages.
+-Peff
