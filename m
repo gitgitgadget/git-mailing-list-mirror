@@ -1,54 +1,62 @@
-From: Heiko Voigt <hvoigt@hvoigt.net>
-Subject: Re: git submodule delete?
-Date: Thu, 10 May 2012 18:53:11 +0200
-Message-ID: <20120510165311.GB76400@book.hvoigt.net>
-References: <4FAB0D32.3000503@palm.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Clean weird documentation for 'git var' and 'git
+Date: Thu, 10 May 2012 09:55:17 -0700
+Message-ID: <7vzk9gm0wa.fsf@alter.siamese.dyndns.org>
+References: <CAGK7Mr7QWrddaRLkr=1h=GYUNtNVOatQF1sj+p11mejzs65u8A@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Rich Pixley <rich.pixley@palm.com>
-X-From: git-owner@vger.kernel.org Thu May 10 18:53:19 2012
+Cc: git@vger.kernel.org
+To: Philippe Vaucher <philippe.vaucher@gmail.com>
+X-From: git-owner@vger.kernel.org Thu May 10 18:55:28 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SSWcB-0005Dw-1I
-	for gcvg-git-2@plane.gmane.org; Thu, 10 May 2012 18:53:19 +0200
+	id 1SSWeE-0006Wd-RX
+	for gcvg-git-2@plane.gmane.org; Thu, 10 May 2012 18:55:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756747Ab2EJQxO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 May 2012 12:53:14 -0400
-Received: from t2784.greatnet.de ([83.133.105.219]:40137 "HELO darksea.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752349Ab2EJQxN (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 May 2012 12:53:13 -0400
-Received: (qmail 22685 invoked from network); 10 May 2012 16:53:11 -0000
-Received: from localhost (127.0.0.1)
-  by darksea.de with SMTP; 10 May 2012 16:53:11 -0000
-Content-Disposition: inline
-In-Reply-To: <4FAB0D32.3000503@palm.com>
-User-Agent: Mutt/1.5.19 (2009-01-05)
+	id S1757096Ab2EJQzW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 May 2012 12:55:22 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:51516 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751600Ab2EJQzU (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 May 2012 12:55:20 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A69BB808C;
+	Thu, 10 May 2012 12:55:19 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=4s/H+jvB9cf2fv21E+W/Kep+soA=; b=XaatWL
+	h2WUPdCpR5K0ZbLcpjrcJHW7z8iMYIanvB0Sk32fmeaT/jIxzlXq88ooeZ6U3iht
+	0+gW8F0yCi1ritAp1Uf+vPAepLK70gO8ohdgWrvyoqaDOUW3++z/+U/DXOtkgT7f
+	/15pG3co64v4IuSKT3PHVr3SiGStpjd8cnE9k=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=OOIk5Z+WpcP1gJiQNB9ZSjTlcTNFN4KC
+	CxsXnEW/1zCDygSP49pdevD25lB12dMCo/1lYrWlui6bMSixDTIWL/oL7Ir2aTgK
+	r8OBZVo7oHsqjyg5fIofwfC+oPy5vd1iYt8mea0MCCChT61J/WAfG98m6a/+VRwg
+	Q33DK7rzp2Y=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9CC43808B;
+	Thu, 10 May 2012 12:55:19 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1DE0C8088; Thu, 10 May 2012
+ 12:55:19 -0400 (EDT)
+In-Reply-To: <CAGK7Mr7QWrddaRLkr=1h=GYUNtNVOatQF1sj+p11mejzs65u8A@mail.gmail.com>
+ (Philippe Vaucher's message of "Thu, 10 May 2012 18:45:12 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: EC93AC12-9AC0-11E1-8187-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197600>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197601>
 
-On Wed, May 09, 2012 at 05:34:58PM -0700, Rich Pixley wrote:
-> Put another way, I've made a commit pointing to a nonexistent submodule  
-> commit.  And the submodule commit is now lost.  Can I manually force the  
-> submodule commit to the previous value?  Or can I remove the submodule  
-> and re-add it with an existing value?
+Philippe Vaucher <philippe.vaucher@gmail.com> writes:
 
-If want to create a new commit with a valid submodule sha1 then you can
-simply checkout the submodule at the desired commit and commit that
-change in the superproject.
+> Here's a patch removing the weird bits. I spoke about in my previous message.
 
-As far as changing the existing commit is concerned. That is not
-possible wihout rewriting history. If your commit is on a branch
-which nobody else is using you can use rebase to modify that commit.
-
-If it is on a shared branch its not easy since everybody will notice and
-would have to reset to the new history which will be a hassle.
-
-Cheers Heiko
+What's weird about them?  They are real messages issued exactly when they
+are described to be issued.
