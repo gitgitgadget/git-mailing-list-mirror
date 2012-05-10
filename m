@@ -1,143 +1,168 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 0/8] "git apply --threeway"
-Date: Wed,  9 May 2012 23:02:17 -0700
-Message-ID: <1336629745-22436-1-git-send-email-gitster@pobox.com>
+Subject: [PATCH 7/8] apply: plug the three-way merge logic in
+Date: Wed,  9 May 2012 23:02:24 -0700
+Message-ID: <1336629745-22436-8-git-send-email-gitster@pobox.com>
+References: <1336629745-22436-1-git-send-email-gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 10 08:02:42 2012
+X-From: git-owner@vger.kernel.org Thu May 10 08:03:05 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SSMSU-00025a-4w
-	for gcvg-git-2@plane.gmane.org; Thu, 10 May 2012 08:02:38 +0200
+	id 1SSMSv-0002NM-3v
+	for gcvg-git-2@plane.gmane.org; Thu, 10 May 2012 08:03:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752574Ab2EJGC3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 May 2012 02:02:29 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:62898 "EHLO
+	id S1755906Ab2EJGCv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 May 2012 02:02:51 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:63067 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752449Ab2EJGC2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 May 2012 02:02:28 -0400
+	id S1755672Ab2EJGCs (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 May 2012 02:02:48 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D7DE85FAC
-	for <git@vger.kernel.org>; Thu, 10 May 2012 02:02:27 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4C3C85FE6
+	for <git@vger.kernel.org>; Thu, 10 May 2012 02:02:48 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id; s=sasl; bh=DO5NzCLE0g4ABw8LLMACLHxZEOc
-	=; b=Fop2SpCtKcN2Jbh2mrtGnHVHulKyvjApRlNsVwHof77eB19f9kf13v4+6DL
-	b6iv5q3UEHqV5CNcSE4kqWHP2oF5R75usVvUC4jx5jlxj/j9hhCr0p9tHAaxG11+
-	Zm4nFBmZIDovsHFq9U04qKzQtOCrKv/klax3Apvd6gR+VD80=
+	:subject:date:message-id:in-reply-to:references; s=sasl; bh=gGko
+	w/aJ/uGH0SHHyzRqeo14uZ4=; b=HTy0oLJJW90YPu+dhmVCUZN6yz7NknPSLeXS
+	UNBY9VNyqWzfHoL2WOPbqqzjVVUxJMBa3e7F0RrpXj1U5iKX6JjvRCvUzqVS6Vg9
+	ALsYj5cVkYQ/0jdUpt5rZcE5UKuyfHqAX9DqRwzAjPZCBz0zdJA/19WWPNt80eFW
+	7hRjXXI=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id; q=dns; s=sasl; b=heFt29KNZ+ygJW8AVv2XRDOOMBGR8
-	2Y1S2w/ty8SVX3ZpoGdk9il/WOj+sV4c6IgNgD+GTyuWPrLU2ktFS0QGvtf6g0f1
-	wS9rogMHQp3wFJ2jhpUYI9LmMBKOrvmikJmKQlubN8QiJDNgsO7gdijYnmqYz1Ns
-	PPeNFRp3q+uGJg=
+	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=q+NBZ0
+	9v4q9/UQ+qMSWX6YVNu/NGO9GDOBWne7SCIY8tgeB7Y8rw1nF0QdXuE5nlaWU+MH
+	3ByrCYDDHccjEwqcP2DpXPMLLG6G9BJ1cLzK07AINNwAOZuyuusrvFOBGte+5FAH
+	6v19blH7MO5a5UZy05dld7LgDT/BYTBCY8vRw=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CF5075FAB
-	for <git@vger.kernel.org>; Thu, 10 May 2012 02:02:27 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4465B5FE5
+	for <git@vger.kernel.org>; Thu, 10 May 2012 02:02:48 -0400 (EDT)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 335F15FAA for
- <git@vger.kernel.org>; Thu, 10 May 2012 02:02:27 -0400 (EDT)
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 074B95FE4 for
+ <git@vger.kernel.org>; Thu, 10 May 2012 02:02:46 -0400 (EDT)
 X-Mailer: git-send-email 1.7.10.1.562.gfc79b1c
-X-Pobox-Relay-ID: B84C22B4-9A65-11E1-BDD3-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+In-Reply-To: <1336629745-22436-1-git-send-email-gitster@pobox.com>
+X-Pobox-Relay-ID: C41C4812-9A65-11E1-B1E0-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197538>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197539>
 
-This series teaches "git apply" the same "three-way merge fallback" logic
-that makes "am -3" so useful when flipping patches around.  For people who
-do not know how "am -3" magic works, the basic idea goes like this:
+When a patch does not apply to what we have, but we know the preimage the
+patch was made against, we apply the patch to the preimage to compute what
+the patch author wanted the result to look like, and attempt a three-way
+merge between the result and our version, using the intended preimage as
+the base version.
 
- 0) Suppose you have this history leading to commit E:
+When we are applying the patch using the index, we would additionally need
+to add the object names of these three blobs involved in the merge, which
+is not yet done in this step, but we add a field to "struct patch" so that
+later write-out step can use it.
 
-        O---A---B---...---E
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ builtin/apply.c | 53 +++++++++++++++++++++++++++++++++++++++++++++++------
+ 1 file changed, 47 insertions(+), 6 deletions(-)
 
- 1) Also suppose you have a patch that is based on an older version; it no
-    longer applies to the version of the file you have.  The patch would
-    apply cleanly to the file in an older version, say A, and would result
-    in file in a fictitious version X:
-
-              X
-             /
-        O---A---B---...---E
-
-    You can think of X as a commit where this patch was taken from, but
-    there may not be any such commit in your object database.
-
- 2) A useful observation to make here is that the result of applying such
-    a patch to your current version should look similar to the result of
-    merging X and E:
-
-              X-------------M merge!
-             /             /
-        O---A---B---...---E
-
-And this feature works exactly like that.
-
- - After trying and failing to apply the patch text, we inspect our object
-   database and see if there is a blob object that matches what is
-   recorded on the "index" line of the patch as its preimage.  We may not
-   have such a blob object, and we give up in such a case.
-
- - And then we try to apply the patch text to that blob.  This also could
-   fail, as the patch author could have tweaked the patch text after
-   producing the patch with "git diff" without adjusting the "index" line.
-   Again we simply give up in such a case.
-
- - When we successfully apply the patch to the older blob, the result
-   would be what would appear in the fictitious commit X in the above
-   picture.  We then try the usual file-level three-way merge between X
-   and E using A as the base version.  This could cleanly merge, in which
-   case we successfully applied the patch.  Or this could conflict, in
-   which case we record the conflicted stages in the index, just like a
-   conflicted "merge" or an "am -3" does, and leave the conflict markers
-   in the result.
-
-I've wanted to see this for the past few years, and even suggested that
-this is a good bite-sized GSoC project, but unfortunately nobody bit it;
-you have to do it yourself if you really want it, I guess.
-
-Note that this iteration still does not do a few things:
-
- - We probably should call into the rerere machinery to have it help the
-   user deal with the conflicts.
-
- - The "--threeway" option probably should be made explicitly incompatible
-   with the "--reject" option (implement it when the command line is
-   parsed).
-
- - It might make sense to make "--threeway" imply "--index", but it is not
-   strictly necessary (see the second test case in t4108).
-
- - Documentation updates are missing.
-
- - "am -3" should be rewritten by using this.  That in turn means that the
-   "--build-fake-ancestor" option of "git apply" will lose the only and
-   the last in-tree user, but we may not be able to drop it immediately as
-   there may be out-of-tree users.  On the other hand, any out-of-tree
-   user that uses the "--build-fake-ancestor" option is reimplementing the
-   three-way fallback on their own, and they can be updated to use the new
-   "--threeway" option of "git apply".
-
- - Once this proves useful, it may deserve to use short-and-sweet "-3"
-   option.
-
-Junio C Hamano (8):
-  apply: reformat comment
-  apply: accept --threeway command line option
-  apply: split load_preimage() helper function out
-  apply: clear_image() clears things a bit more
-  apply: refactor read_file_or_gitlink()
-  apply: fall back on three-way merge
-  apply: plug the three-way merge logic in
-  apply: register conflicted stages to the index
-
- builtin/apply.c           | 198 +++++++++++++++++++++++++++++++++++++++++-----
- t/t4108-apply-threeway.sh |  78 ++++++++++++++++++
- 2 files changed, 257 insertions(+), 19 deletions(-)
- create mode 100755 t/t4108-apply-threeway.sh
-
+diff --git a/builtin/apply.c b/builtin/apply.c
+index 798a634..e090e18 100644
+--- a/builtin/apply.c
++++ b/builtin/apply.c
+@@ -16,6 +16,8 @@
+ #include "dir.h"
+ #include "diff.h"
+ #include "parse-options.h"
++#include "xdiff-interface.h"
++#include "ll-merge.h"
+ 
+ /*
+  *  --check turns on checking that the working tree matches the
+@@ -194,12 +196,17 @@ struct patch {
+ 	unsigned int is_copy:1;
+ 	unsigned int is_rename:1;
+ 	unsigned int recount:1;
++	unsigned int did_threeway:1;
++	unsigned int conflicted_threeway:1;
+ 	struct fragment *fragments;
+ 	char *result;
+ 	size_t resultsize;
+ 	char old_sha1_prefix[41];
+ 	char new_sha1_prefix[41];
+ 	struct patch *next;
++
++	/* three-way fallback result */
++	unsigned char threeway_stage[3][20];
+ };
+ 
+ static void free_fragment_list(struct fragment *list)
+@@ -3075,11 +3082,33 @@ static int load_preimage(struct image *image,
+ 
+ static int three_way_merge(struct image *image,
+ 			   char *path,
+-			   unsigned char *base,
+-			   unsigned char *ours,
+-			   unsigned char *theirs)
++			   const unsigned char *base,
++			   const unsigned char *ours,
++			   const unsigned char *theirs)
+ {
+-	return -1; /* for now */
++	mmfile_t base_file, our_file, their_file;
++	mmbuffer_t result = { 0 };
++	int status;
++
++	read_mmblob(&base_file, base);
++	read_mmblob(&our_file, ours);
++	read_mmblob(&their_file, theirs);
++	status = ll_merge(&result, path,
++			  &base_file, "base",
++			  &our_file, "ours",
++			  &their_file, "theirs", NULL);
++	free(base_file.ptr);
++	free(our_file.ptr);
++	free(their_file.ptr);
++	if (status < 0 || !result.ptr) {
++		free(result.ptr);
++		return -1;
++	}
++	clear_image(image);
++	image->buf = result.ptr;
++	image->len = result.size;
++
++	return status;
+ }
+ 
+ static int try_threeway_fallback(struct image *image, struct patch *patch,
+@@ -3088,6 +3117,7 @@ static int try_threeway_fallback(struct image *image, struct patch *patch,
+ 	unsigned char pre_sha1[20], post_sha1[20], our_sha1[20];
+ 	struct strbuf buf = STRBUF_INIT;
+ 	size_t len;
++	int status;
+ 	char *img;
+ 	struct image tmp_image;
+ 
+@@ -3116,8 +3146,19 @@ static int try_threeway_fallback(struct image *image, struct patch *patch,
+ 	clear_image(&tmp_image);
+ 
+ 	/* in-core three-way merge between post and our using pre as base */
+-	return three_way_merge(image,
+-			       patch->new_name, pre_sha1, our_sha1, post_sha1);
++	status = three_way_merge(image, patch->new_name,
++				 pre_sha1, our_sha1, post_sha1);
++	if (status < 0)
++		return status;
++
++	patch->did_threeway = 1;
++	if (status) {
++		patch->conflicted_threeway = 1;
++		hashcpy(patch->threeway_stage[0], pre_sha1);
++		hashcpy(patch->threeway_stage[1], our_sha1);
++		hashcpy(patch->threeway_stage[2], post_sha1);
++	}
++	return 0;
+ }
+ 
+ static int apply_data(struct patch *patch, struct stat *st, struct cache_entry *ce)
 -- 
 1.7.10.1.562.gfc79b1c
