@@ -1,97 +1,67 @@
-From: Philippe Vaucher <philippe.vaucher@gmail.com>
-Subject: [PATCH] Clean weird documentation for 'git var' and 'git
-Date: Thu, 10 May 2012 18:45:12 +0200
-Message-ID: <CAGK7Mr7QWrddaRLkr=1h=GYUNtNVOatQF1sj+p11mejzs65u8A@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: What's cooking in git.git (May 2012, #02; Fri, 4)
+Date: Thu, 10 May 2012 09:47:16 -0700
+Message-ID: <7v8vh0nfu3.fsf@alter.siamese.dyndns.org>
+References: <7vhavv8s2d.fsf@alter.siamese.dyndns.org>
+ <20120510131255.GA2950@sigill.intra.peff.net>
+ <7vd36cozsi.fsf@alter.siamese.dyndns.org>
+ <20120510151328.GA20639@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 10 18:45:49 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu May 10 18:47:25 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SSWUu-0000kG-Kk
-	for gcvg-git-2@plane.gmane.org; Thu, 10 May 2012 18:45:48 +0200
+	id 1SSWWR-0001ik-IP
+	for gcvg-git-2@plane.gmane.org; Thu, 10 May 2012 18:47:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753100Ab2EJQpo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 May 2012 12:45:44 -0400
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:62265 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752572Ab2EJQpn (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 May 2012 12:45:43 -0400
-Received: by yenm10 with SMTP id m10so1672268yen.19
-        for <git@vger.kernel.org>; Thu, 10 May 2012 09:45:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to:content-type;
-        bh=yEZcFJdvJvs8sIGY6OhTqI0MT9/DBRyl6CjKj2DPfoE=;
-        b=RNrKIYDU2fifWE4RggaCKceD8JNqOSnEb3OksvJ1hm48Bkwl7wEuEA7qp8fLkckv3f
-         0oNvgDBaWAn49xrv6FIpmKIk0rOuRYKT2acjeUKHapvwgWtdRIx9mCTwoO+fI2eP8wDk
-         k7fFFJuOCOl8ZA4JVF7zsZBUnGV9AKlku9AFRKTa7wH9iOdifHpOFs6P5SUX3c/6rYuJ
-         nd5Aiq1Ho5XIO1zeaiwia4zPk2JKY7ljLa0u6aEF3MAVH7yrrkjVjZtu9DdbsjK8HJFJ
-         +hUJ8kp76YtAmLVeowErmpiXdeoIC1RFOdqRcxypCSg7mO41LRehqqrVsFfViphGzEh9
-         B+ng==
-Received: by 10.50.190.202 with SMTP id gs10mr3108099igc.45.1336668342556;
- Thu, 10 May 2012 09:45:42 -0700 (PDT)
-Received: by 10.50.65.101 with HTTP; Thu, 10 May 2012 09:45:12 -0700 (PDT)
+	id S1752908Ab2EJQrT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 May 2012 12:47:19 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48062 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751783Ab2EJQrS (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 May 2012 12:47:18 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3BA367E78;
+	Thu, 10 May 2012 12:47:18 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=rB7PRzJorApgTbnU8jly5d43S2w=; b=ngK5TR
+	ReE4NgkjhkI2h79zd+OvTaJ3/xEr8EapZ0RLT+Oab4NIZMeaX/C5mZHrHLvA0Jl1
+	0K18urmH1/0ifjjoGiFnhDHYMp9sigTCrMSXOgkhCidKYUbq0mGUSWPcaIjFvaZ6
+	efkaNjeQ0UOiZ6PwM8jj9bBpadwFojefTmKSY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=RiXdaCXtX9/QgUCCPUVDz0PDVD430j22
+	rovn7z4RKOueJZjaCI5YSv+227KoBN0jH7LTD4vcXXnGqqILkma9zplaIgfNGkan
+	b13eT00eIyya9CudxF2B/O4LSHYG27ww5NP7Ge5hfM9YWNUUzixeWhQ6Bta7mFRc
+	F/YoxjX0lgQ=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 25C897E77;
+	Thu, 10 May 2012 12:47:18 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B2A217E76; Thu, 10 May 2012
+ 12:47:17 -0400 (EDT)
+In-Reply-To: <20120510151328.GA20639@sigill.intra.peff.net> (Jeff King's
+ message of "Thu, 10 May 2012 11:13:29 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: CDA53D94-9ABF-11E1-A86E-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197596>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197597>
 
-Here's a patch removing the weird bits. I spoke about in my previous message.
+Jeff King <peff@peff.net> writes:
 
-Philippe
+> Ah, OK. I thought the progression you used was topic->pu->next->maint.
+> Did that used to be the case, or am I just crazy?
 
-
-Signed-off-by: Philippe Vaucher <philippe.vaucher@gmail.com>
----
- Documentation/git-commit-tree.txt |    9 ---------
- Documentation/git-var.txt         |    9 ---------
- 2 files changed, 18 deletions(-)
-
-diff --git a/Documentation/git-commit-tree.txt
-b/Documentation/git-commit-tree.txt
-index cfb9906..eb8ee99 100644
---- a/Documentation/git-commit-tree.txt
-+++ b/Documentation/git-commit-tree.txt
-@@ -88,15 +88,6 @@ for one to be entered and terminated with ^D.
-
- include::date-formats.txt[]
-
--Diagnostics
-------------
--You don't exist. Go away!::
--    The passwd(5) gecos field couldn't be read
--Your parents must have hated you!::
--    The passwd(5) gecos field is longer than a giant static buffer.
--Your sysadmin must hate you!::
--    The passwd(5) name field is longer than a giant static buffer.
--
- Discussion
- ----------
-
-diff --git a/Documentation/git-var.txt b/Documentation/git-var.txt
-index 988a323..67edf58 100644
---- a/Documentation/git-var.txt
-+++ b/Documentation/git-var.txt
-@@ -59,15 +59,6 @@ ifdef::git-default-pager[]
-     The build you are using chose '{git-default-pager}' as the default.
- endif::git-default-pager[]
-
--Diagnostics
-------------
--You don't exist. Go away!::
--    The passwd(5) gecos field couldn't be read
--Your parents must have hated you!::
--    The passwd(5) gecos field is longer than a giant static buffer.
--Your sysadmin must hate you!::
--    The passwd(5) name field is longer than a giant static buffer.
--
- SEE ALSO
- --------
- linkgit:git-commit-tree[1]
--- 
-1.7.9.5
+I may have done that in the past, but I think the current arrangement
+makes more sense in order to keep 'maint' really stale^Wstable.  The
+process improvement happens ;-).
