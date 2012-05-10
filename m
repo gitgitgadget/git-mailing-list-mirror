@@ -1,69 +1,114 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH 6/8] apply: fall back on three-way merge
-Date: Thu, 10 May 2012 17:41:04 +0200
-Message-ID: <vpq1ums2gdr.fsf@bauges.imag.fr>
-References: <1336629745-22436-1-git-send-email-gitster@pobox.com>
-	<1336629745-22436-7-git-send-email-gitster@pobox.com>
-	<vpqy5p0bioh.fsf@bauges.imag.fr>
-	<7v4nrooyv1.fsf@alter.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 4/4] notes: only append a blob to a blob
+Date: Thu, 10 May 2012 11:45:19 -0400
+Message-ID: <20120510154519.GB23941@sigill.intra.peff.net>
+References: <1336658701-9004-5-git-send-email-pclouds@gmail.com>
+ <1336661015-14149-1-git-send-email-pclouds@gmail.com>
+ <20120510151904.GB20639@sigill.intra.peff.net>
+ <CACsJy8ADE1PBYsQcJnO6U4OFoWQjaEW7=6=3V_UO=t5KNinDCA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu May 10 17:42:28 2012
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Thu May 10 17:45:36 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SSVVb-0004JE-0i
-	for gcvg-git-2@plane.gmane.org; Thu, 10 May 2012 17:42:27 +0200
+	id 1SSVYe-00061e-4H
+	for gcvg-git-2@plane.gmane.org; Thu, 10 May 2012 17:45:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753919Ab2EJPmW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 May 2012 11:42:22 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:43505 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750899Ab2EJPmV (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 May 2012 11:42:21 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id q4AFXmvu003817
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Thu, 10 May 2012 17:33:48 +0200
-Received: from bauges.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1SSVUH-0007xQ-8G; Thu, 10 May 2012 17:41:05 +0200
-In-Reply-To: <7v4nrooyv1.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Thu, 10 May 2012 08:10:58 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.93 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Thu, 10 May 2012 17:33:48 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: q4AFXmvu003817
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1337268830.37779@ScCrfkDwAaBKdP7lKpTXsQ
+	id S1755252Ab2EJPpX convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 10 May 2012 11:45:23 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:38876
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755242Ab2EJPpV (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 May 2012 11:45:21 -0400
+Received: (qmail 30264 invoked by uid 107); 10 May 2012 15:45:41 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 10 May 2012 11:45:41 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 10 May 2012 11:45:19 -0400
+Content-Disposition: inline
+In-Reply-To: <CACsJy8ADE1PBYsQcJnO6U4OFoWQjaEW7=6=3V_UO=t5KNinDCA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197587>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197588>
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Thu, May 10, 2012 at 10:31:23PM +0700, Nguyen Thai Ngoc Duy wrote:
 
-> Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
->
->> What happens if there are multiple objects for the same pre_sha1?
->
-> [...]The usefulness of -3 is limited to only two cases
-> in practice, and neither case gives you a big chance of seeing such a
-> collision. 
+> >> +static const char *type_name(enum object_type type)
+> >> +{
+> >> + =C2=A0 =C2=A0 switch (type) {
+> >> + =C2=A0 =C2=A0 case OBJ_BLOB: return _("a blob");
+> >> + =C2=A0 =C2=A0 case OBJ_TAG: return _("a tag");
+> >> + =C2=A0 =C2=A0 case OBJ_COMMIT: return _("a commit");
+> >> + =C2=A0 =C2=A0 case OBJ_TREE: return _("a tree");
+> >> + =C2=A0 =C2=A0 default:
+> >> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 die("BUG: put a new st=
+ring for type %d here", type);
+> >> + =C2=A0 =C2=A0 }
+> >> +}
+> >
+> > Don't we have object.c:typename for this
+>=20
+> The key difference here is _() with an article. It's i18n friendly. I
+> wanted to make 15 combinations (blob/blob cannot happen) of "cannot
+> append %s to %s", which is best for translators but probably too much
+> for C developers.
 
-Ah, OK, I missed the fact that the index line was using
-find_unique_abbrev(), not a fix number of characters. Thanks for the
-clarification.
+I do not pay much attention to the translation details, but I would
+think that we would keep terms like "tree" and "blob" universal, as the=
+y
+are technical terms. IOW, you would not expect the "blob" in "git
+cat-file blob $sha1" to be internationalized, and this seems like the
+same level of technical detail.
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+> >> @@ -204,8 +216,12 @@ static void create_note(const unsigned char *=
+object, struct msg_arg *msg,
+> >> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 strbuf_grow(&(msg=
+->buf), size + 1);
+> >> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (msg->buf.len =
+&& prev_buf && size)
+> >> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 strbuf_insert(&(msg->buf), 0, "\n", 1);
+> >> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (prev_buf && size)
+> >> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (prev_buf && size) =
+{
+> >> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 if (type !=3D OBJ_BLOB || msg->type !=3D OBJ_BLOB)
+> >> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 die(_("cannot append %s to %s"),
+> >> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 type_name(type), type_nam=
+e(msg->type));
+> >> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 strbuf_insert(&(msg->buf), 0, prev_buf, size);
+> >> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }
+> >
+> > I think this is wrong for the reasons above. You would not want to
+> > concatenate a tree to a tree.
+>=20
+> Hmm.. that would become "if (tree !=3D blob || tree !=3D blob) die();=
+",
+> exactly your point.
+
+Oh, I totally misread this as "type !=3D msg->type" for some reason.
+Sorry.
+
+I think the behavior is correct, but the message confused me. If I see
+"cannot append a foo to a bar", it implies to me that it is the
+combination of the elements that is the limiting factor. But it is not.
+It is that one (or more) of the elements is not a blob, regardless of
+what the other element is. So I think this would be more accurate:
+
+  if (type !=3D OBJ_BLOB)
+          die(_("cannot append to a non-blob note"));
+  if (msg->type !=3D OBJ_BLOB)
+          die(_("cannot append a non-blob object to a note"));
+
+-Peff
