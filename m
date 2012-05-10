@@ -1,116 +1,67 @@
-From: "Philip Oakley" <philipoakley@iee.org>
-Subject: Re: [PATCH] document submdule.$name.update=none option for gitmodules
-Date: Thu, 10 May 2012 21:30:12 +0100
-Organization: OPDS
-Message-ID: <A406C457BFB948FC9843C8F53AD82CDE@PhilipOakley>
-References: <20120510185903.GF76400@book.hvoigt.net>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 6/8] apply: fall back on three-way merge
+Date: Thu, 10 May 2012 16:31:13 -0400
+Message-ID: <20120510203113.GB18276@sigill.intra.peff.net>
+References: <1336629745-22436-1-git-send-email-gitster@pobox.com>
+ <1336629745-22436-7-git-send-email-gitster@pobox.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="iso-8859-1";
-	reply-type=original
-Content-Transfer-Encoding: 7bit
-Cc: <git@vger.kernel.org>
-To: "Heiko Voigt" <hvoigt@hvoigt.net>,
-	"Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu May 10 22:29:49 2012
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu May 10 22:31:23 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SSZzg-0003Wi-Fq
-	for gcvg-git-2@plane.gmane.org; Thu, 10 May 2012 22:29:48 +0200
+	id 1SSa1B-0004KP-2P
+	for gcvg-git-2@plane.gmane.org; Thu, 10 May 2012 22:31:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754403Ab2EJU3o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 May 2012 16:29:44 -0400
-Received: from out1.ip06ir2.opaltelecom.net ([62.24.128.242]:37258 "EHLO
-	out1.ip06ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752081Ab2EJU3m (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 10 May 2012 16:29:42 -0400
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: AiIRAO0krE9cHlGK/2dsb2JhbABEiz6nQAEBAYEdgQiCEAUBAQQBCAEBLh4BASEFBgIDBQIBAw4DBAEBCiUUAQQaBgcPCAYBEggCAQIDAYd4CbtUixJZgQFzgm1jBIgwhUqYQ4Jq
-X-IronPort-AV: E=Sophos;i="4.75,566,1330905600"; 
-   d="scan'208";a="537738835"
-Received: from host-92-30-81-138.as13285.net (HELO PhilipOakley) ([92.30.81.138])
-  by out1.ip06ir2.opaltelecom.net with SMTP; 10 May 2012 21:29:40 +0100
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+	id S1755815Ab2EJUbR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 May 2012 16:31:17 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:39136
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753271Ab2EJUbQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 May 2012 16:31:16 -0400
+Received: (qmail 2694 invoked by uid 107); 10 May 2012 20:31:35 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 10 May 2012 16:31:35 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 10 May 2012 16:31:13 -0400
+Content-Disposition: inline
+In-Reply-To: <1336629745-22436-7-git-send-email-gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197629>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197630>
 
-From: "Heiko Voigt" <hvoigt@hvoigt.net> Sent: Thursday, May 10, 2012 7:59 PM
-Subject: [PATCH] document submdule.$name.update=none option for gitmodules
+On Wed, May 09, 2012 at 11:02:23PM -0700, Junio C Hamano wrote:
 
-
-> This option was not yet described in the gitmodules documentation. We
-> only described it in the 'git submodule' command documentation but
-> gitmodules is the more natural place to look.
-
-The gitmodules documentation is only more natural if we tell (link) the reader early in the submodule documentation. A link to 
-gitmodules should be provided in the third paragraph of Description where the .gitmodules is introduced.
-
-Currently the gitmodules link is the last thing mentioned (i.e. 8 PgDn's for me).
-
->
-> A short reference in the 'git submodule' documentation should be
-> sufficient since the details can now be found in the documentation to
-> gitmodules.
->
-> Signed-off-by: Heiko Voigt <hvoigt@hvoigt.net>
-> ---
-> Documentation/git-submodule.txt |    7 ++-----
-> Documentation/gitmodules.txt    |    5 ++++-
-> 2 files changed, 6 insertions(+), 6 deletions(-)
->
-> diff --git a/Documentation/git-submodule.txt b/Documentation/git-submodule.txt
-> index c243ee5..c83a856 100644
-> --- a/Documentation/git-submodule.txt
-> +++ b/Documentation/git-submodule.txt
-> @@ -140,7 +140,8 @@ update::
->  checkout the commit specified in the index of the containing repository.
->  This will make the submodules HEAD be detached unless `--rebase` or
->  `--merge` is specified or the key `submodule.$name.update` is set to
-> - `rebase`, `merge` or `none`.
-> + `rebase`, `merge` or `none`. `none` can be overriden by specifying
-> + `--checkout`.
+> +static int try_threeway_fallback(struct image *image, struct patch *patch,
+> +				 struct stat *st, struct cache_entry *ce)
+> +{
+> +	unsigned char pre_sha1[20], post_sha1[20], our_sha1[20];
+> +	struct strbuf buf = STRBUF_INIT;
+> +	size_t len;
+> +	char *img;
+> +	struct image tmp_image;
 > +
-> If the submodule is not yet initialized, and you just want to use the
-> setting as stored in .gitmodules, you can automatically initialize the
-> @@ -148,10 +149,6 @@ submodule with the `--init` option.
-> +
-> If `--recursive` is specified, this command will recurse into the
-> registered submodules, and update any nested submodules within.
-> -+
-> -If the configuration key `submodule.$name.update` is set to `none` the
-> -submodule with name `$name` will not be updated by default. This can be
-> -overriden by adding `--checkout` to the command.
->
-> summary::
->  Show commit summary between the given commit (defaults to HEAD) and
-> diff --git a/Documentation/gitmodules.txt b/Documentation/gitmodules.txt
-> index 4e1fd52..4effd78 100644
-> --- a/Documentation/gitmodules.txt
-> +++ b/Documentation/gitmodules.txt
-> @@ -41,8 +41,11 @@ submodule.<name>.update::
->  the commit specified in the superproject. If 'merge', the commit
->  specified in the superproject will be merged into the current branch
->  in the submodule.
-> + If 'none', the submodule with name `$name` will not be updated
-> + by default.
-> +
->  This config option is overridden if 'git submodule update' is given
-> - the '--merge' or '--rebase' options.
-> + the '--merge', '--rebase' or '--checkout' options.
->
-> submodule.<name>.fetchRecurseSubmodules::
->  This option can be used to control recursive fetching of this
-> -- 
-> 1.7.10.rc2.31.gd8c60
->
+> +	/* No point falling back to 3-way merge in these cases */
+> +	if (patch->is_binary || patch->is_new || patch->is_delete ||
+> +	    S_ISGITLINK(patch->old_mode) || S_ISGITLINK(patch->new_mode))
+> +		return -1;
+
+Is it true that there is no point in doing a 3-way fallback when
+patch->is_binary? What if the user has a custom merge driver?
+For that matter, a custom driver could handle additions or deletions,
+too (e.g., for a sorted record-oriented file, merging two additions
+might just mean collating the records).
+
+It seems like we should just keep the logic here as stupid as possible,
+try to setup the 3-way content, and then hand it off to the merge code
+to try to make something happen. The only thing we have to lose is a
+little bit of efficiency in setting up blobs that are unlikely to
+actually get merged.
+
+-Peff
