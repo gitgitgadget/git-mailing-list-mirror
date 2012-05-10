@@ -1,109 +1,89 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Clean weird documentation for 'git var' and 'git
-Date: Thu, 10 May 2012 11:41:43 -0700
-Message-ID: <7vvck3najc.fsf@alter.siamese.dyndns.org>
-References: <CAGK7Mr7QWrddaRLkr=1h=GYUNtNVOatQF1sj+p11mejzs65u8A@mail.gmail.com>
- <7vzk9gm0wa.fsf@alter.siamese.dyndns.org>
- <F89882854A7D45E2843F6F1F7CB21DB4@PhilipOakley>
- <CAGK7Mr6AjSY-D9p1vzs=xCg-TMCPiBJDOSxMVYtykeCZCPW2FA@mail.gmail.com>
- <CAGK7Mr7rzuPVmGsnx+uhmVgBepAav734uh6hHeqn25BC0_+0Lw@mail.gmail.com>
+From: Heiko Voigt <hvoigt@hvoigt.net>
+Subject: Re: submodule update --force
+Date: Thu, 10 May 2012 20:57:38 +0200
+Message-ID: <20120510185738.GE76400@book.hvoigt.net>
+References: <CAHOQ7J8r4m2rz57BdkM9CADHdHE1yDFwExyF87u=DCEXjqzcqw@mail.gmail.com> <CAHOQ7J9xCYL=x=_nbq-3ksC2nF7L0=kxu9JX6M60xM-Bxmyfag@mail.gmail.com> <7vobpwpoyi.fsf@alter.siamese.dyndns.org> <7vk40kpnia.fsf@alter.siamese.dyndns.org> <CAHOQ7J_6+sfU6egjvVSPj-FAS6zjSUT=a057=kz_wYbogHLMMA@mail.gmail.com> <7v8vh0ozge.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Philip Oakley <philipoakley@iee.org>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Philippe Vaucher <philippe.vaucher@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 10 20:41:55 2012
+Cc: Stefan Zager <szager@google.com>, git@vger.kernel.org,
+	Jens Lehmann <Jens.Lehmann@web.de>,
+	Lars Hjemli <hjemli@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu May 10 20:57:46 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SSYJE-0005io-OC
-	for gcvg-git-2@plane.gmane.org; Thu, 10 May 2012 20:41:53 +0200
+	id 1SSYYb-0005k2-Ai
+	for gcvg-git-2@plane.gmane.org; Thu, 10 May 2012 20:57:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761345Ab2EJSlr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 May 2012 14:41:47 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64572 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1761245Ab2EJSlq (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 May 2012 14:41:46 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E65CF88EC;
-	Thu, 10 May 2012 14:41:45 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Wo/S1rxc0XqGP0tcEGCtFV29k94=; b=tc5P3e
-	SvdW7k1eACfopJ7B6HPbOd8/UFJcZ6mH3Dd8Mz3QnF/LRj+xd+K6EPTLq6jieUkm
-	MsMj/1s5CzVoofqBmSf12ha8QP+MekkL7lmbO+RKhZ6uXrHwo+iH/lUDY134bBtO
-	0NxR6TMbsjiMgH4avQauTLwCLqRnao5Jb9kxI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=vuJu82I9pTjQrppqDyd7Rq4LMGsYXGE3
-	Ph9YVhkofk6kG3yHCvLGui4QgD0Q4NKGqgUt0xPm9aZbZnEqItkMdBxNzbMKhWtS
-	1b3jfzjYPraQ2yXK/IPeeXQKac/SJ7C6gNjMF6DrJqMuyHW+pizrpQVhhjYjs231
-	S/tvdriQN3A=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DDA4188EB;
-	Thu, 10 May 2012 14:41:45 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 719F988EA; Thu, 10 May 2012
- 14:41:45 -0400 (EDT)
-In-Reply-To: <CAGK7Mr7rzuPVmGsnx+uhmVgBepAav734uh6hHeqn25BC0_+0Lw@mail.gmail.com>
- (Philippe Vaucher's message of "Thu, 10 May 2012 20:26:21 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: CB226334-9ACF-11E1-B2B6-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1759943Ab2EJS5k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 May 2012 14:57:40 -0400
+Received: from t2784.greatnet.de ([83.133.105.219]:40149 "HELO darksea.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1755221Ab2EJS5k (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 May 2012 14:57:40 -0400
+Received: (qmail 23338 invoked from network); 10 May 2012 18:57:38 -0000
+Received: from localhost (127.0.0.1)
+  by darksea.de with SMTP; 10 May 2012 18:57:38 -0000
+Content-Disposition: inline
+In-Reply-To: <7v8vh0ozge.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.19 (2009-01-05)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197613>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197614>
 
-Philippe Vaucher <philippe.vaucher@gmail.com> writes:
+Hallo all,
 
->>> What's weird about them? They are real messages issued exactly when they are described to be issued.
->>
->> The problem is surely that an explanatory line is needed to say that these are the diagnostic messages that occur in various cases. Its in 'ident.c'.
->
-> I guess I'm just unfamiliar with the "Diagnostics" section of a man
-> page.
+On Thu, May 10, 2012 at 07:58:09AM -0700, Junio C Hamano wrote:
+> Stefan Zager <szager@google.com> writes:
+> 
+> > ...  To my mind, any
+> > `git submodule` command should *always* run on the first level of
+> > submodules.  If you're going to specify --no-recurse, then why are you
+> > running `git submodule` at all?  I think 'recursion' only applies to
+> > moving beyond the first level of submodules.
+> 
+> Very true.
+> 
+> Submodule folks, any opinion on the Stefan's approach?
 
-Ahh, that makes your initial message understandable.
+The distinction between first level of submodules and deeper is only
+present in the "git submodule" subcommand and I think mainly for
+historical reasons. I do not see a use case where this would be helpful.
+To skip uninteresting submodules one can always use the
+submodule.$name.update option set to 'none'. (I just found that its
+documentation is in the wrong place but I will send a seperate patch
+about that).
 
-It indeed is not one of the very common and established ones, and it may
-help to give it a gentler introduction.
+In the non submodule commands we usually name this option
+--recurse-submodules=always and have another
+--recurse-submodules=on-demand option for the current behavior. Those
+options would either recurse or do nothing with the submodule. Such a
+behavior, as pointed out, does not make sense for 'submodule update'.
+Similar options names for 'submodule update' would probably be
+--recurse=always and --recurse=on-demand.
 
- Documentation/git-commit-tree.txt | 4 ++++
- Documentation/git-var.txt         | 4 ++++
- 2 files changed, 8 insertions(+)
+Nonetheless is force a term where the user probably wants to skip all
+optimizations which the sha1 equality provides. So to make the current
+behavior more consistent I would be fine with adding this change.
 
-diff --git a/Documentation/git-commit-tree.txt b/Documentation/git-commit-tree.txt
-index cfb9906..868ad09 100644
---- a/Documentation/git-commit-tree.txt
-+++ b/Documentation/git-commit-tree.txt
-@@ -90,6 +90,10 @@ include::date-formats.txt[]
- 
- Diagnostics
- -----------
-+
-+Some of the common error message the command may give upon errors are
-+listed here.
-+
- You don't exist. Go away!::
-     The passwd(5) gecos field couldn't be read
- Your parents must have hated you!::
-diff --git a/Documentation/git-var.txt b/Documentation/git-var.txt
-index 988a323..394bfa7 100644
---- a/Documentation/git-var.txt
-+++ b/Documentation/git-var.txt
-@@ -61,6 +61,10 @@ endif::git-default-pager[]
- 
- Diagnostics
- -----------
-+
-+Some of the common error message the command may give upon errors are
-+listed here.
-+
- You don't exist. Go away!::
-     The passwd(5) gecos field couldn't be read
- Your parents must have hated you!::
+One thing which might make force even more useful would be to also skip
+the "is the sha1 available"-check for fetch that is possibly run before
+the checkout and just always run the fetch.
+
+In the long term, once checkout has learned things 'submodule update' is
+currently doing, it probably makes sense to let 'submodule update'
+always recurse into all checked out submodules. Since then it does not
+make sense to run 'submodule update' for much more than resetting
+things or changing the currently registered commits anymore. So in the
+bright new future the 'on-demand' part will probably move away from
+'submodule update' and as such it does not make sense to implement
+the seperate recurse options I described above.
+
+What do others think?
+
+Cheers Heiko
