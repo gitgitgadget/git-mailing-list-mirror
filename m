@@ -1,112 +1,102 @@
-From: Thomas Gummerer <t.gummerer@gmail.com>
-Subject: Re: Index format v5
-Date: Thu, 10 May 2012 08:53:03 +0200
-Message-ID: <20120510065303.GA98491@tgummerer>
-References: <CALgYhfMKdbv8TiT4ALDSvD3pSXHEPLWHM09DxYnRmRdBWRjh8Q@mail.gmail.com>
- <4FA7E703.7040408@alum.mit.edu>
- <20120508141137.GA3937@tgummerer.surfnet.iacbox>
- <CACsJy8CUC8AXYvDEH75NGC_r3HwLoaiq0qxn2EAC0Aq4VXVMag@mail.gmail.com>
- <CACsJy8DmhcFHOOToEWLoHNRJtXHe8EOnKfOn4+kOMBaW=tyWBw@mail.gmail.com>
+From: Stefan Zager <szager@google.com>
+Subject: Re: submodule update --force
+Date: Thu, 10 May 2012 00:20:19 -0700
+Message-ID: <CAHOQ7J_6+sfU6egjvVSPj-FAS6zjSUT=a057=kz_wYbogHLMMA@mail.gmail.com>
+References: <CAHOQ7J8r4m2rz57BdkM9CADHdHE1yDFwExyF87u=DCEXjqzcqw@mail.gmail.com>
+	<CAHOQ7J9xCYL=x=_nbq-3ksC2nF7L0=kxu9JX6M60xM-Bxmyfag@mail.gmail.com>
+	<7vobpwpoyi.fsf@alter.siamese.dyndns.org>
+	<7vk40kpnia.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=unknown-8bit
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Michael Haggerty <mhagger@alum.mit.edu>, git@vger.kernel.org,
-	trast@student.ethz.ch, gitster@pobox.com, peff@peff.net,
-	spearce@spearce.org, davidbarr@google.com
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 10 08:53:17 2012
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu May 10 09:21:02 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SSNFU-0005tT-8U
-	for gcvg-git-2@plane.gmane.org; Thu, 10 May 2012 08:53:16 +0200
+	id 1SSNgL-00027I-GD
+	for gcvg-git-2@plane.gmane.org; Thu, 10 May 2012 09:21:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756104Ab2EJGxL convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 10 May 2012 02:53:11 -0400
-Received: from mail-wi0-f170.google.com ([209.85.212.170]:41840 "EHLO
-	mail-wi0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752333Ab2EJGxI (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 May 2012 02:53:08 -0400
-Received: by wibhm4 with SMTP id hm4so129530wib.1
-        for <git@vger.kernel.org>; Wed, 09 May 2012 23:53:06 -0700 (PDT)
+	id S1755881Ab2EJHUa convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 10 May 2012 03:20:30 -0400
+Received: from mail-qc0-f174.google.com ([209.85.216.174]:47212 "EHLO
+	mail-qc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752966Ab2EJHU3 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 10 May 2012 03:20:29 -0400
+Received: by qcro28 with SMTP id o28so888303qcr.19
+        for <git@vger.kernel.org>; Thu, 10 May 2012 00:20:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=E+YhH4LqiLVl5gYA1HiRBHVIp0haIGB/r9rsY8YrckU=;
-        b=jGCd788DY0mx4JyKnePkv85bmWpVn0WUA776zxf0TcZzNL0tGI80sEoNfOnL0i3EBm
-         cAYlzqTbtRYO021KU2CpmAmEfV0fj1DWJpu01CqV6BTSzkJZmHIjI/8e3MNKXQXBMM9T
-         6yW9l0Owml57XxNzzImDF92Qlqluoj5kCHR6UTv5dkqsZfsVdcA9WnQQMM5cOyCrUowK
-         zOkRsp/LOJHyk6KjDpl1ajxGNGnGKvtuua5GlEd/XjfYFVshRKN0wj8zU6CW/4BLKcdZ
-         QjYUsXevhSCmSMOl9fX/w3Rd0ClVRu9sBj4VOi7guTI7gozTztLxnIRzUZ80VRDdAQBv
-         d2EQ==
-Received: by 10.180.109.229 with SMTP id hv5mr20475577wib.0.1336632786078;
-        Wed, 09 May 2012 23:53:06 -0700 (PDT)
-Received: from localhost ([95.171.54.129])
-        by mx.google.com with ESMTPS id ff2sm2161512wib.9.2012.05.09.23.53.04
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 09 May 2012 23:53:05 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <CACsJy8DmhcFHOOToEWLoHNRJtXHe8EOnKfOn4+kOMBaW=tyWBw@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding:x-system-of-record;
+        bh=5ktDDpM91pW/aYpdOz7ERhdBo8k4J7RRx1oj8s/FRG4=;
+        b=hOpqvguhhCWFtqClcS67s3ikTdVyxc4pLVJYDztU5SBK8hoH8LWbziLf5vNj31q/nn
+         Iq0ym9XzJUtBtTz9/U8p86HrdkRe0pq2g0M1kajRWWYvrQBQj5Mx5kZGmcjQQk1HaJCH
+         k/7zyPsY8+3mPq2D9AujLR5bf0A7hb6kawQ7cQ3NIGa9wmAkfaxYJ6PnYe0W364oJHBV
+         5g8JUwFD5odsiZwLUM2oXiJzT97hr6OmBwe+Eg6iKaFilqXMlroageji5UqxqJEJdmmp
+         atQurOZ+3/7QVFfteF3tcWJwAogYt1SzxAhXIwDAMw179SdB/snj9ehJLKliGEC+Z11m
+         HYeQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding:x-system-of-record
+         :x-gm-message-state;
+        bh=5ktDDpM91pW/aYpdOz7ERhdBo8k4J7RRx1oj8s/FRG4=;
+        b=DhgXlrzlMR8ZYtmxrXXg+VrbHkq+ABGF17SZJFXTlNopo1hI13WRPoExTLUtVerl1R
+         A0t/NT8MzDEcM2pBrCuiqX3+lWUqog+aSKZU5maJ49gj1APcWoDGwXy1Mu6Z5MNMf9Q8
+         EONZ3g/aMDn3jHOO+w241apB4x7MbPNt6PgA8/qjWEO5s3/FTmqR3odZglVZ8RxjrCLD
+         WvN1Yk+uHmAd53XkNLaheOTFKEufBnVXRdrLiZ4ocqn8peQ7U2McS5Ku2MajrnVPaGYk
+         bLkUZeKtZIT7FO6lRgdUQ+kilbXqMJlX5DjyLK7igVXKyKHq5TdhMChFU0THm2BrjU+v
+         M3FA==
+Received: by 10.224.212.5 with SMTP id gq5mr10124519qab.1.1336634419771;
+        Thu, 10 May 2012 00:20:19 -0700 (PDT)
+Received: by 10.224.212.5 with SMTP id gq5mr10124508qab.1.1336634419683; Thu,
+ 10 May 2012 00:20:19 -0700 (PDT)
+Received: by 10.229.135.211 with HTTP; Thu, 10 May 2012 00:20:19 -0700 (PDT)
+In-Reply-To: <7vk40kpnia.fsf@alter.siamese.dyndns.org>
+X-System-Of-Record: true
+X-Gm-Message-State: ALoCoQmt0dGK+Br9eQDmp1GVzbr2Te0rowNyi61s5yL/+NAWOhThito5V72h98RjoDoSnCaOMowcr5PO27sswD2xUeJ5jnA7uzuyT10FPXIdyjJdJYiNwiqbYultpO0kUvmfQstA5/xIfCM00hq4wW0i2/Xb6VH9pQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197548>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197549>
 
+On Wed, May 9, 2012 at 11:18 PM, Junio C Hamano <gitster@pobox.com> wro=
+te:
 
+> If we follow that line of thought, it may make more sense not to impl=
+ement
+> your feature like the above patch, but instead make it so
+>
+> =A0 =A0 =A0 =A0if the user told us never to recurse
+> =A0 =A0 =A0 =A0then
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0nothing
+> =A0 =A0 =A0 =A0elif the user told us to always recurse ||
+> =A0 =A0 =A0 =A0 =A0 =A0 subsha1 !=3D sha1
+> =A0 =A0 =A0 =A0then
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0do the "recurse" thing
+> =A0 =A0 =A0 =A0fi
+>
+> so that you can still force it recurse into the submodule, even when =
+you
+> do not necessarily want the "force checkout" thing to happen to clobb=
+er
+> the working tree.
 
-On 05/08, Nguyen Thai Ngoc Duy wrote:
-> Sorry I replied too fast.
->=20
-> On Tue, May 8, 2012 at 9:25 PM, Nguyen Thai Ngoc Duy <pclouds@gmail.c=
-om> wrote:
-> > On Tue, May 8, 2012 at 9:11 PM, Thomas Gummerer <t.gummerer@gmail.c=
-om> wrote:
-> >>> * "160-bit object name for the object that would result from writ=
-ing
-> >>> =C2=A0 this span of index as a tree." =C2=A0Is this always valid?
-> >>
-> >> No, this is only valid if the entry count is not -1. It's clarifie=
-d
-> >> now.
-> >
-> > ..and..
-> >
-> >> The entry_count in the index is only valid, if the cache-tree is v=
-alid,
-> >> which is not always the case.
-> >
-> > I think your trees are the cache-trees already. For invalid
-> > cache-trees, you can just use all-zero sha-1 as the indicator. Then
-> > entry_count can go away.
+I'm a bit confused by your use of the term recursion here.  It sounds
+like you consider any operation run on a submodule to be a form of
+recursion, which is not the way I think about it.  To my mind, any
+`git submodule` command should *always* run on the first level of
+submodules.  If you're going to specify --no-recurse, then why are you
+running `git submodule` at all?  I think 'recursion' only applies to
+moving beyond the first level of submodules.
 
-How is it a cache-tree already? The subtree is covered, but the=20
-entry_count is calculated recursively, while nfiles only keeps track of
-the files directly in the directory, which is used for bisectability.
+I think your solution would work for our project, because we only use
+one level of submodules.  But IMO the functionality, as you have
+written it, is less generally useful.
 
-> Furthermore, in directory entry format:
->=20
->   The last 24 bytes (4-byte number of entries + 160-bit object name) =
-are
->     for the cache tree. An entry can be in an invalidated state which=
- is
->     represented by having -1 in the entry_count field. If an entry is=
- in
->     invalidated state, the next entry will begin after the number of
->     subtrees, and the 160-bit object name is dropped.
->=20
-> Dropping objname out of invalid (cache-)trees is a bad idea. When you
-> generate tree objects (aka cache_tree_update), you'll need objname
-> field again, which means structure change and directory entry rewrite=
-=2E
-> If objname is always there, you can just overwrite objname with new
-> value. Though this may bring race condition issue back to directory
-> entries. The same approach on file entries might be reused.
-
-Yes you're right, at least the field for the object name (even if 0)
-should always be there.
+Stefan
