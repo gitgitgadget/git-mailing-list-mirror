@@ -1,93 +1,107 @@
-From: "rollinsdr@gmail.com" <rollinsdr@gmail.com>
-Subject: Re: Submodule status inside nested submodule fails
-Date: Wed, 9 May 2012 18:40:04 -0700 (PDT)
-Message-ID: <1336614004527-7545109.post@n2.nabble.com>
-References: <loom.20120224T104003-230@post.gmane.org> <loom.20120224T142455-253@post.gmane.org> <1336500675427-7540130.post@n2.nabble.com> <20120509213443.GA74366@book.hvoigt.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: submodule update --force
+Date: Wed, 09 May 2012 22:47:17 -0700
+Message-ID: <7vobpwpoyi.fsf@alter.siamese.dyndns.org>
+References: <CAHOQ7J8r4m2rz57BdkM9CADHdHE1yDFwExyF87u=DCEXjqzcqw@mail.gmail.com>
+ <CAHOQ7J9xCYL=x=_nbq-3ksC2nF7L0=kxu9JX6M60xM-Bxmyfag@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 10 03:40:52 2012
+Cc: git@vger.kernel.org
+To: Stefan Zager <szager@google.com>
+X-From: git-owner@vger.kernel.org Thu May 10 07:47:29 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SSIN9-00035r-UG
-	for gcvg-git-2@plane.gmane.org; Thu, 10 May 2012 03:40:52 +0200
+	id 1SSMDn-0005Wq-81
+	for gcvg-git-2@plane.gmane.org; Thu, 10 May 2012 07:47:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751066Ab2EJBkH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 9 May 2012 21:40:07 -0400
-Received: from sam.nabble.com ([216.139.236.26]:48079 "EHLO sam.nabble.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750853Ab2EJBkG (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 May 2012 21:40:06 -0400
-Received: from jim.nabble.com ([192.168.236.80])
-	by sam.nabble.com with esmtp (Exim 4.72)
-	(envelope-from <rollinsdr@gmail.com>)
-	id 1SSIMO-0007s6-N7
-	for git@vger.kernel.org; Wed, 09 May 2012 18:40:04 -0700
-In-Reply-To: <20120509213443.GA74366@book.hvoigt.net>
+	id S1752774Ab2EJFrV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 May 2012 01:47:21 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:57237 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752449Ab2EJFrU (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 May 2012 01:47:20 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DDCC25C93;
+	Thu, 10 May 2012 01:47:19 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=z7PIN5sfn7RF0KL6miqcXClLh8E=; b=WdHB3p
+	OadHH0fvrfYW6pGaq6eZmXh7llbcVRt8xfEDSnWyXjxysQ+88aB0B/tDd0f+8wiX
+	u1pvzRf9FOLuf2ch8oCzMNto2J4tBEwhhsEL75/rWMwWeOm8vyfAR2c5CFKG3jJ4
+	fKkHBfCv9PhxLNW7Tab72MyJqO/otghBx5il0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=mxsr/uCuZJNmuzCmwZDJQL+kuClt2xQu
+	2z1SVKIRt8rlu5U8RdCydFcQs41cqsFPsQ6VSPyR2eJNieAGUNjuOgwMSgJ09p/x
+	Mj7bCPRavJeqOhX8bdUvoz/z1xiymqIvGjEUptk2rR0fqlfoRnqs24ypGkqhxtLK
+	FE4zOWM8Voc=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D578F5C92;
+	Thu, 10 May 2012 01:47:19 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 342185C90; Thu, 10 May 2012
+ 01:47:19 -0400 (EDT)
+In-Reply-To: <CAHOQ7J9xCYL=x=_nbq-3ksC2nF7L0=kxu9JX6M60xM-Bxmyfag@mail.gmail.com> (Stefan
+ Zager's message of "Wed, 9 May 2012 16:55:40 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 9B16FE1E-9A63-11E1-96ED-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197534>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197535>
 
-Thanks Heiko,
+Stefan Zager <szager@google.com> writes:
 
+> I'd like to propose amending the documentation thusly:
+>
+> According to the docs:
+>
+>        -f, --force
+>            This option is only valid for add and update commands. When
+> running add, allow adding an otherwise ignored
+>            submodule path. When running update, throw away local
+> changes in submodules when switching to a different
+>            commit; if not switching to a different commit, a checkout
+> to HEAD will still be run.
+>
+> ... and here's the patch to implement it:
+>
+> diff --git a/git-submodule.sh b/git-submodule.sh
+> index 64a70d6..8b045d9 100755
+> --- a/git-submodule.sh
+> +++ b/git-submodule.sh
+> @@ -536,7 +536,7 @@ Maybe you want to use 'update --init'?")"
+>                         die "$(eval_gettext "Unable to find current
+> revision in submodule path '\$sm_path'")"
+>                 fi
+>
+> -               if test "$subsha1" != "$sha1"
+> +               if test "$subsha1" != "$sha1" -o -n "$force"
+>                 then
+>                         subforce=$force
+>                         # If we don't already have a -f flag and the
+> submodule has never been checked out
+>
+> Thoughts?
 
-Heiko Voigt-3 wrote
-> 
-> Hi,
-> 
-> On Tue, May 08, 2012 at 11:11:15AM -0700, rollinsdr@ wrote:
->> I'm having the same issue. Did it ever get resolved, or is there a hack
->> to
->> fix it, or is there some link I can track it on?
->> 
->> 
->> Charles Brossollet wrote
->> > 
->> > Charles Brossollet <chbrosso <at> lltech.fr> writes:
->> > Using MSysGit 1.7.9 on Win7 (64 bit), I have a repo with the following 
->> > structure: 
->> > 
->> > main/ 
->> >   src/ 
->> >   ext/ 
->> >     submodule/ 
->> >        modules/module1 
->> >        modules/module2 
->> > 
->> > submodule is... a submodule, having itself submodules. 
->> > 
->> > When I query submodule status --recursive in main/, no problem. 
->> > But when I query submodule status in  ext/submodule, I get error "You
->> need
-> 
-> Without having looked at the code itself this smells like an issue with
-> the newly introduced gitlink files and git rev-parse --show-cdup not
-> taking this into account.
-> 
-> I will have a look at this issue.
-> 
-> Cheers Heiko
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@.kernel
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
-> 
+Even though I admit that I do not use submodule heavily myself, I think
+this is a sane thing to do.  After all, the user explicitly said "I want
+to force update it", and it is a strong sign that what is in the working
+tree is suspect and the user wants to make sure everything is in sync.
 
-Actually the issue went away once I upgraded from 1.7.9 to 1.7.10, and
-re-cloned my repo. I guess it was fixed in 1.7.10, but some stuff in the
-config files had to be rewritten during the new clone to fix the issue b/c
-just switching to 1.7.10 and trying to use the existing repo still had the
-same issue.
+This is a tangent, but what strikes me odd with the code before this patch
+is that the decision to recurse into the submodule repository is made
+solely on the status of the submodule, and there is no way for the user to
+say "I do not want it to recurse" (in other words, "--recursive" option
+from the command line does not have any effect on this part of the code).
 
-Thanks for all the work you guys do!
-DAVE
-
---
-View this message in context: http://git.661346.n2.nabble.com/Submodule-status-inside-nested-submodule-fails-tp7314413p7545109.html
-Sent from the git mailing list archive at Nabble.com.
+Perhaps that is because we consider submodules that have been "init"ed
+always interesting, and if that is the case that may not be a big deal,
+but it might not be a bad idea to allow "--no-recursive" option to mean
+something stronger than not giving --recursive option, i.e. not recursing
+in a situation where it normally would even when run without --recursive.
