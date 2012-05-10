@@ -1,201 +1,135 @@
-From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-Subject: Re: Git commit path vs rebase path
-Date: Thu, 10 May 2012 19:10:02 +0100
-Message-ID: <4FAC047A.4010001@ramsay1.demon.co.uk>
-References: <CAAXzdLU6bQ7ta4_-WfGJVaJgt1R5tX=4PW2sq3SdjAB+F72w+Q@mail.gmail.com>	<7vaa1j7vg1.fsf@alter.siamese.dyndns.org>	<4FA8BBB0.1080406@viscovery.net>	<CAAXzdLVaDAQkd_9qjnmTRoy8ccpyrZvwvBJQAfkp7LkYa7Li2A@mail.gmail.com>	<4FA8C5DB.5060002@viscovery.net>	<CAAXzdLW9_O+feVpBhDSXQH_SFRdrct1tjadpFoJ5d7-Qd1LWEg@mail.gmail.com>	<7vhavqwqpz.fsf@alter.siamese.dyndns.org>	<7v1umuwpo9.fsf@alter.siamese.dyndns.org> <CAAXzdLVj0szCgpdOSdhnLdkBKAM+e6vrQpvrsz4HeUo+Nh1K6A@mail.gmail.com>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: Index format v5
+Date: Thu, 10 May 2012 20:17:23 +0200
+Message-ID: <4FAC0633.90809@alum.mit.edu>
+References: <CALgYhfMKdbv8TiT4ALDSvD3pSXHEPLWHM09DxYnRmRdBWRjh8Q@mail.gmail.com> <4FA7E703.7040408@alum.mit.edu> <20120508141137.GA3937@tgummerer.surfnet.iacbox> <4FAA2CAF.3040408@alum.mit.edu> <20120510121911.GB98491@tgummerer>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org
-To: Steven Penny <svnpenn@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 10 20:11:40 2012
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, trast@student.ethz.ch, gitster@pobox.com,
+	peff@peff.net, spearce@spearce.org, davidbarr@google.com
+To: Thomas Gummerer <t.gummerer@gmail.com>
+X-From: git-owner@vger.kernel.org Thu May 10 20:24:45 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SSXq0-00064g-3e
-	for gcvg-git-2@plane.gmane.org; Thu, 10 May 2012 20:11:40 +0200
+	id 1SSY2c-0004Xz-1h
+	for gcvg-git-2@plane.gmane.org; Thu, 10 May 2012 20:24:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760349Ab2EJSLf convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 10 May 2012 14:11:35 -0400
-Received: from anchor-post-2.mail.demon.net ([195.173.77.133]:49958 "EHLO
-	anchor-post-2.mail.demon.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1758939Ab2EJSLf (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 10 May 2012 14:11:35 -0400
-Received: from ramsay1.demon.co.uk ([193.237.126.196])
-	by anchor-post-2.mail.demon.net with esmtp (Exim 4.69)
-	id 1SSXps-0001jj-l4; Thu, 10 May 2012 18:11:33 +0000
-User-Agent: Thunderbird 1.5.0.2 (Windows/20060308)
-In-Reply-To: <CAAXzdLVj0szCgpdOSdhnLdkBKAM+e6vrQpvrsz4HeUo+Nh1K6A@mail.gmail.com>
+	id S1761159Ab2EJSYb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 May 2012 14:24:31 -0400
+Received: from ALUM-MAILSEC-SCANNER-5.MIT.EDU ([18.7.68.17]:52853 "EHLO
+	alum-mailsec-scanner-5.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1761152Ab2EJSY3 (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 10 May 2012 14:24:29 -0400
+X-Greylist: delayed 422 seconds by postgrey-1.27 at vger.kernel.org; Thu, 10 May 2012 14:24:29 EDT
+X-AuditID: 12074411-b7f596d000000932-82-4fac06368455
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-5.mit.edu (Symantec Messaging Gateway) with SMTP id 8E.D7.02354.6360CAF4; Thu, 10 May 2012 14:17:26 -0400 (EDT)
+Received: from [192.168.101.152] (ssh.berlin.jpk.com [212.222.128.135])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id q4AIHNTw025072
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Thu, 10 May 2012 14:17:24 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:12.0) Gecko/20120430 Thunderbird/12.0.1
+In-Reply-To: <20120510121911.GB98491@tgummerer>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrIKsWRmVeSWpSXmKPExsUixO6iqGvGtsbfoPGgssWjk5uZLLqudDNZ
+	NPReYbb40dLDbDH/0ERWiwurb7NbrNy1kMmB3WPnrLvsHgs2lXo8693D6HHxkrLHn/N7WD3m
+	flrE6vF5k1wAexS3TVJiSVlwZnqevl0Cd8bhqd2sBT0SFe2HNjM3MB4X6mLk5JAQMJE4/msF
+	K4QtJnHh3nq2LkYuDiGBy4wS29dvY4ZwjjNJzHjdygRSxSugKbF2+RuwDhYBVYntWyezgNhs
+	AroSi3qagWo4OEQFwiRWP9CAKBeUODnzCViJiICWxKSvfWCtzAItjBKv50WAlAsLyEhsWO8F
+	seoJUPjGbzaQGk4BfYl77x+wg9QwC1hLfNtdBNEqL7H97RzmCYwCs5BsmIVQNQtJ1QJG5lWM
+	cok5pbm6uYmZOcWpybrFyYl5ealFuqZ6uZkleqkppZsYIVEguINxxkm5Q4wCHIxKPLzcb1f7
+	C7EmlhVX5h5ilORgUhLl/cC4xl+ILyk/pTIjsTgjvqg0J7X4EKMEB7OSCO+c6UDlvCmJlVWp
+	RfkwKWkOFiVxXr4l6n5CAumJJanZqakFqUUwWRkODiUJXgFWoKGCRanpqRVpmTklCGkmDk6Q
+	4VxSIsWpeSmpRYmlJRnxoCiNLwbGKUiKB2gvL0g7b3FBYi5QFKL1FKMux4xPi64xCrHk5eel
+	SonzfmABKhIAKcoozYNbAUt5rxjFgT4W5lUAGcUDTJdwk14BLWECWjLt8EqQJSWJCCmpBsYF
+	yRFMyUmne4tNLUTeWgkpZov1vbS6IGYeNl9fUV+w+KmStCLL9JbK539WbZGZzmo8 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197610>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197611>
 
-Steven Penny wrote:
-> Junio C Hamano wrote:
->> Actually, the above is stated rather poorly.  The path that ends up =
-in
->> $file must be usable by both Windows native and Cygwin programs, as =
-the
->> user may be using "vi" from Cygwin, or "notepad" like your example.
->=20
-> Excellent point.
->=20
-> I ran some test and this is what I came up with
->=20
-> # VI
-> /cygdrive/c/test/hello.sh # works
-> C:\test\hello.sh # works
-> C:/test/hello/sh # works
->=20
-> # NOTEPAD
-> /cygdrive/c/test/hello.sh # does not work
-> C:\test\hello.sh # works
-> C:/test/hello.sh # works
->=20
-> so the best compromise would be "C:/test/hello.sh" which can be creat=
-ed with
->=20
-> diff --git a/git-sh-setup.sh b/git-sh-setup.sh
-> index 7b3ae75..ba198d2 100644
-> --- a/git-sh-setup.sh
-> +++ b/git-sh-setup.sh
-> @@ -260,6 +260,11 @@ case $(uname -s) in
->  		return 1
->  	}
->  	;;
-> +*CYGWIN*)
-> +    pwd () {
-> +        builtin cygpath -m
-> +    }
-> +    ;;
->  *)
->  	is_absolute_path () {
->  		case "$1" in
->=20
-> http://github.com/svnpenn/git/commit/692bc
+On 05/10/2012 02:19 PM, Thomas Gummerer wrote:
+> == Flat loading
+>
+> Since internally git expects and works with lexicografic ordering,
+> a simple linear scan throught the subdirectories doesn't give
+> the right internal sorting. To achieve the right internal sorting
+> the loading will be done in the following way:
+>
+> The data structure is a stack of queues, to allow continous reading
+> of the file.
+>
+> s ->  queue1
+> t ->  queue2
+> a ->  queue3
+> c ->  queue4
+> k ->  queue5
+>
+> dirs = read_all_directories
+>
+> foreach dir in dirs do
+>      file = read_next_file
+>
+>      while element_on_top_of_stack.first_element<  nextdir
+>          indexentries.append(dequeue(element_on_top_of_stack))
+>          if element_on_top_of_stack == emtpy:
+>              remove_element_on_top_of_stack
+>
+>      if file[filename]<  nextdir
+>          indexentries.append(file)
+>      else
+>          queue.add(file)
+>          foreach f in rest_of_files_in_directory:
+>              queue.add(f)
+>          stack.push(queue)
+>
+> foreach queue in stack:
+>      foreach entry in queue:
+>          indexentry.append(entry)
 
-I would rather define a script; it can then be used independently of gi=
-t.
+1. It seems to me that the first time that a file with a filename before 
+nextdir is encountered, the reading of the directory containing the file 
+will be terminated.  This would, for example, be the case for any 
+directory that contains multiple files but no subdirectories.
 
-Personally, I don't have this specific problem because I use (the cygwi=
-n
-version of) vim. (does anybody actually use notepad?)
+2. There is still a lot that is unnecessarily obscure.  For example, I 
+suppose (but you don't say) that "rest_of_files_in_directory" means to 
+read the files at that moment.  It would be more explicit (and no more 
+verbose) to write
 
-I mostly, but not exclusively, use cygwin tools on cygwin. For example =
-I
-use win32 versions of doxygen, ghostscript, tex (MikTex 2.7), graphviz =
-etc.
-However, the makefiles which drive those tools use relative paths ...
+     while (f = read_next_file()) != NULL:
+         queue.add(f)
 
-In fact the only problem I have encountered is with firefox, which I
-resolved by hacking up a script. Indeed I have already posted to the
-list on this issue before (back in January 2009) and, to save you the
-effort of trawling the archives, I append that mail below.
+3. You don't cover corner cases, like when read_next_file() is called 
+but there are no files left in the directory, or when there is no 
+nextdir (which itself is not defined).  OK, this pseudocode is only 
+meant to be illustrative, so I guess we can wait until your real 
+implementation to see such details.  On the other hand, you probably 
+want to get all the details straight in pseudocode or Python before you 
+start translating it into C.
 
-HTH
+4. I think the algorithm would be easier to understand and implement if 
+it were written recursively.  The call stack would replace your explicit 
+stack (but you would still need one queue per directory level).  A key 
+observation is that when "nextdir" precedes the next file, then all of 
+the files in subdirectories of nextdir do as well.  Thus an obvious 
+recursion would be to call a function like 
+read_all_files_under_dir(indexentries, dirs, dirindex) at this point, 
+which would consume all of the directories that are subdirectories of 
+dirs[dirindex] (i.e., all directories whose names have the string 
+dirs[dirindex] as a prefix).  Using this method would mean that there is 
+no need to compare each file under dirs[dirindex] against the next file 
+in the outer directory.
 
-ATB,
-Ramsay Jones
+Michael
 
--- >8 --
-Date: Sat, 24 Jan 2009 18:51:23 +0000
-=46rom: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-To: =3D?ISO-8859-1?Q?Bj=3DF6rn_Steinbrink?=3D <B.Steinbrink@gmx.de>
-CC: Junio C Hamano <gitster@pobox.com>,  jaeckel@stzedn.de,=20
- git@vger.kernel.org
-Subject: Re: [PATCH] cygwin: Convert paths for html help from posix to =
-windows
-
-Bj=F6rn Steinbrink wrote:
-> When using "git help --web" with cygwin, we used to pass the posix pa=
-th
-> to the browser, but a native windows browser will expect a windows pa=
-th
-> and is unable to make use of the given path.
->=20
-> So the cygwin port gets its own open_html implementation that handles
-> the path conversion.
->=20
-> Reported-by: Steffen Jaeckel <jaeckel@stzedn.de>
-> Tested-by: Steffen Jaeckel <jaeckel@stzedn.de>
->=20
-> Signed-off-by: Bj=F6rn Steinbrink <B.Steinbrink@gmx.de>
-> ---
-> OK, I don't really know if this is the right way to do it. Maybe when
-> the browser was built for cygwin this breaks? I have no clue, it's
-> admittedly just the result of a quick glance at the code and some
-> googling to find the "right" cygwin function... :-/
->=20
-
-Hi Bj=F6rn,
-
-I had the same problem. However, rather than modifying git, I created a
-firefox wrapper script (in ~/bin) which used the cygpath command line
-tool to do the path conversion. Also, if you use "git instaweb", you
-also need to filter out http URLs and pass them through un-molested
-by cygpath (it turns http://localhost into http:\localhost).
-
-My script is clearly a "quick hack" just to get something working for
-me, but you may find it useful as a starting point for your own
-("proper" ;-) script, so I've included it below.
-
-HTH,
-Ramsay Jones
-
--->8--
-#!/bin/sh
-#
-
-while test $# !=3D 0
-do
-    case "$1" in
-	-version)
-	    echo "firefox 1.5.0.2"
-	    exit 0
-	    ;;
-	-new-tab)
-	    echo "-new-tab not supported"
-	    exit 1
-	    ;;
-	--)
-	    shift
-	    break
-	    ;;
-	-*)
-	    echo "option '$1' not supported"
-	    exit 1
-	    ;;
-	*)
-	    break
-	    ;;
-    esac
-    shift
-done
-
-if test "$1" =3D ""
-then
-	p=3D
-else
-	case "$1" in
-	    http*)
-		p=3D"$1"
-		;;
-	    *)
-		p=3D"$(cygpath -w "$1")"
-		;;
-	esac
-fi
-
-
-"/cygdrive/c/Program Files/Mozilla Firefox/firefox.exe" "$p"
-
-exit 0
-
-
-
--- 8< --
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
