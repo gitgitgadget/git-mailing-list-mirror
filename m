@@ -1,76 +1,60 @@
-From: Neal Kreitzinger <nkreitzinger@gmail.com>
-Subject: Re: GSoC - Some questions on the idea of
-Date: Thu, 10 May 2012 16:43:26 -0500
-Message-ID: <4FAC367E.8070006@gmail.com>
-References: <20120330203430.GB20376@sigill.intra.peff.net> <CA+M5ThR6jtxqs0-Kz-8fcRuOFRbLr-GvsJcTmrOQ7_geNspDLg@mail.gmail.com> <4F76E430.6020605@gmail.com> <4F772E48.3030708@gmail.com> <20120402210708.GA28926@sigill.intra.peff.net> <4F84DD60.20903@gmail.com> <20120411213522.GA28199@sigill.intra.peff.net> <4F872D24.8010609@gmail.com> <20120412210315.GC21018@sigill.intra.peff.net> <4F8A2EBD.1070407@gmail.com> <20120415021550.GA24102@sigill.intra.peff.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 6/8] apply: fall back on three-way merge
+Date: Thu, 10 May 2012 18:24:20 -0400
+Message-ID: <20120510222420.GA31116@sigill.intra.peff.net>
+References: <1336629745-22436-1-git-send-email-gitster@pobox.com>
+ <1336629745-22436-7-git-send-email-gitster@pobox.com>
+ <20120510203113.GB18276@sigill.intra.peff.net>
+ <7vaa1fn3u8.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Sergio Callegari <sergio.callegari@gmail.com>,
-	Bo Chen <chen@chenirvine.org>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu May 10 23:43:37 2012
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri May 11 00:24:57 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SSb96-0007Oq-N2
-	for gcvg-git-2@plane.gmane.org; Thu, 10 May 2012 23:43:37 +0200
+	id 1SSbn5-0002Qo-56
+	for gcvg-git-2@plane.gmane.org; Fri, 11 May 2012 00:24:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761633Ab2EJVnb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 May 2012 17:43:31 -0400
-Received: from mail-gg0-f174.google.com ([209.85.161.174]:58849 "EHLO
-	mail-gg0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1761626Ab2EJVna (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 May 2012 17:43:30 -0400
-Received: by gglu4 with SMTP id u4so1295114ggl.19
-        for <git@vger.kernel.org>; Thu, 10 May 2012 14:43:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=I6emCbX8PEPBQSfvY1YfcwS0WtV8gJUmwuHifWwP2tU=;
-        b=tOAa2WrN+AxB5JsGzQYAG/+usruy6YBneMtkyjBtAhNzwr965k8mmMLXMSHdgHsX8S
-         eLhlKGSLrn56yaoFOpy6/AO0dg4TUDPfpFjFU3tNKwlIUdMF3uHRiMRO8X+pdKFMSBC6
-         lCgOmWs5bgDgb3tYcdjupZ31IVY8f/QoDmw5CoQMVHS1YLDpD2eb/mJM3hp37kyIv5/2
-         4t2KAxzM0ZNg3Dd7qO8gpF7OLfRRHCKzs65aUI9dn0Ar/WV9jVHR3qIwj/PhSVOhMXBa
-         DSC5YIWR9mLrLz+VnZcSTZI+G2pazfaH5DnKzUCVh9ZNRf8IpEcdEtvIYnA3KcrYS83B
-         T/CA==
-Received: by 10.60.18.197 with SMTP id y5mr8173412oed.58.1336686209335;
-        Thu, 10 May 2012 14:43:29 -0700 (PDT)
-Received: from [172.25.2.210] ([67.63.162.200])
-        by mx.google.com with ESMTPS id qb7sm7410054obc.13.2012.05.10.14.43.26
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 10 May 2012 14:43:27 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:12.0) Gecko/20120428 Thunderbird/12.0.1
-In-Reply-To: <20120415021550.GA24102@sigill.intra.peff.net>
+	id S1761888Ab2EJWYi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 May 2012 18:24:38 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:39219
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1761882Ab2EJWY2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 May 2012 18:24:28 -0400
+Received: (qmail 3418 invoked by uid 107); 10 May 2012 22:24:48 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 10 May 2012 18:24:48 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 10 May 2012 18:24:20 -0400
+Content-Disposition: inline
+In-Reply-To: <7vaa1fn3u8.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197635>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197636>
 
-On 4/14/2012 9:15 PM, Jeff King wrote:
-> On Sat, Apr 14, 2012 at 09:13:17PM -0500, Neal Kreitzinger wrote:
->
->> Does a file's delta-compression efficiency in the pack-file directly
->> correlate to its efficiency of transmission size/bandwidth in a
->> git-fetch and git-push?  IOW, are big-files also a problem for
->> git-fetch and git-push by taking too long in a remote transfer?
-> Yes. The on-the-wire format is a packfile. We create a new packfile on
-> the fly, so we may find new deltas (e.g., between objects that were
-> stored on disk in two different packs), but we will mostly be reusing
-> deltas from the existing packs.
->
-> So any time you improve the on-disk representation, you are also
-> improving the network bandwidth utilization.
->
-The git-clone manpage says you can use the rsync protocol for the url.  
-If you use rsync:// as your url for your remote does that get you the 
-rsync delta-transfer algorithm efficiency for the network bandwidth 
-utilization part (as opposed to the on-disk representation part)?  (I'm 
-new to rsync.)
+On Thu, May 10, 2012 at 02:06:23PM -0700, Junio C Hamano wrote:
 
-v/r,
-neal
+> > Is it true that there is no point in doing a 3-way fallback when
+> > patch->is_binary? What if the user has a custom merge driver?
+> > ...
+> > It seems like we should just keep the logic here as stupid as possible,
+> 
+> Actually, the motivation behind that "No point" is to keep the logic as
+> stupid as possible.
+> [...]
+> I can buy that lifting "must not be binary" would be very cheap, but
+> adding support for new/delete case would mean the index-stuffing part
+> needs to gain more code, so removing the "not new, not delete"
+> conditionals actually goes against keeping the logic as stupid as
+> possible.
+
+Fair enough. It's by far the minority case, so we can wait until
+it is somebody's itch to scratch.
+
+-Peff
