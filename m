@@ -1,105 +1,70 @@
-From: Suchi Upadhyay <supadhyay@revitasinc.com>
-Subject: RE: how to clone/checkout branch/tag vesion from GIT repository
-Date: Thu, 10 May 2012 10:19:12 -0400
-Message-ID: <49A2AA38871E7B41841AA7D659D626A62E2098A2@njexch01.imany.com>
-References: <1336657187852-7546744.post@n2.nabble.com> <20120510135605.GA1495@sigill.intra.peff.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 0/4] git-notes ui fixes regarding non-blobs notes
+Date: Thu, 10 May 2012 10:29:20 -0400
+Message-ID: <20120510142920.GA14711@sigill.intra.peff.net>
+References: <1336482692-30729-1-git-send-email-pclouds@gmail.com>
+ <1336658701-9004-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
-Cc: <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu May 10 16:24:42 2012
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Thu May 10 16:29:29 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SSUIK-0000JY-1e
-	for gcvg-git-2@plane.gmane.org; Thu, 10 May 2012 16:24:40 +0200
+	id 1SSUMx-0003EB-Lb
+	for gcvg-git-2@plane.gmane.org; Thu, 10 May 2012 16:29:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757309Ab2EJOYf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 May 2012 10:24:35 -0400
-Received: from njedge1.revitasinc.com ([69.164.88.237]:20742 "EHLO
-	njedge1.imany.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751518Ab2EJOYe (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 May 2012 10:24:34 -0400
-X-Greylist: delayed 318 seconds by postgrey-1.27 at vger.kernel.org; Thu, 10 May 2012 10:24:34 EDT
-Received: from NJCASHUB1.imany.com (10.60.17.24) by njedge1.imany.com
- (10.60.17.20) with Microsoft SMTP Server (TLS) id 14.1.355.2; Thu, 10 May
- 2012 10:19:15 -0400
-Received: from njexch01.imany.com (10.60.17.16) by njcashub1.imany.com
- (10.60.17.24) with Microsoft SMTP Server id 14.1.355.2; Thu, 10 May 2012
- 10:19:14 -0400
-X-MimeOLE: Produced By Microsoft Exchange V6.5
-Content-Class: urn:content-classes:message
-In-Reply-To: <20120510135605.GA1495@sigill.intra.peff.net>
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-Thread-Topic: how to clone/checkout branch/tag vesion from GIT repository
-Thread-Index: Ac0utKeUITnI9maiTjm4r6qJElAWWwAAPBbA
+	id S1753297Ab2EJO3X (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 May 2012 10:29:23 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:38793
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751425Ab2EJO3W (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 May 2012 10:29:22 -0400
+Received: (qmail 28920 invoked by uid 107); 10 May 2012 14:29:41 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 10 May 2012 10:29:41 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 10 May 2012 10:29:20 -0400
+Content-Disposition: inline
+In-Reply-To: <1336658701-9004-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197571>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197572>
 
-SGkgSmVmZiwNCg0KVGhhbmtzIGZvciB5b3VyIHByb21wdCByZXBseS4NCg0KUGxlYXNlIHNlZSBt
-eSByZXBseSBiZWxvdzoNCg0KMS0gU2lkZSBub3RlOiBpZiBJIHJlcGVhdCB5b3VyIGV4cGVyaW1l
-bnQsIEkgZ2V0ICJicjYtMS0wIiBpbiB0aGUgZXJyb3IgbWVzc2FnZSAoaS5lLiwgd2hhdCB3YXMg
-b24gdGhlIGNvbW1hbmQgbGluZSkuIElzIHRoaXMganVzdCBhIGN1dCBhbmQgcGFzdGUgbWlzdGFr
-ZSBpbiByZXBvcnRpbmcgdGhlIGVycm9yLCBvciBpcyB0aGF0IGFjdHVhbGx5IHdoYXQgeW91IHNl
-ZT8NCg0KU3VjaGkgLSB5ZXMgbXkgbWlzdGFrZSBpbiBjdXQgJiBwYXN0ZS4gQnJhbmNoIG5hbWUg
-aXMgYnI2LTEtMA0KDQoyLSBmb3IgYnJhbmNoOg0KJCBnaXQgY2hlY2tvdXQgYnI2LTEtMA0KDQpT
-dWNoaSAtIEFzIHBlciBteSB1bmRlcnN0YW5kaW5nIHdpdGggR0lUIHRoaXMgY29tbWFuZCB3aWxs
-IGNyZWF0ZSBhIG5ldyBicmFuY2ggaW4gbXkgcmVwb3NpdG9yeS4uZm9yIGV4LiBJZiBJIHJ1biAi
-Z2l0IGNoZWNrb3V0IHN1Y2hpIiB0aGVuIGl0IHdpbGwgY3JlYXRlIHN1Y2hpIGFzIGEgbmV3IGJy
-YW5jaC4NCg0KMi4xIE5vdGUgdGhhdCBpZiB5b3UgYXJlIHBsYW5uaW5nIG9uIGRvaW5nIHdvcmsg
-YmFzZWQgb24gdGhlIHRhZywgeW91IHByb2JhYmx5IHdhbnQgdG8gY3JlYXRlIGEgbmV3IGJyYW5j
-aCwgbGlrZToNCiAgJCBnaXQgY2hlY2tvdXQgLWIgbXktd29yayBicjYtMS0wDQoNClN1Y2hpIC0g
-WWVzLCBJIGhhdmUgdGhpcyBicmFuY2ggYnI2LTEtMCBhbmQgZGF0YSBpcyBhc3NvY2lhdGVkIHRo
-ZXJlLCB0aGlzIGJyYW5jaCBpcyBkaWZmZXJlbnQgZnJvbSBoZWFkLiBGb3IgZW5kIHVzZXIgcGVy
-c3BlY3RpdmUgSSBqdXN0IHdhbnQgdG8gbWFrZSBzdXJlIHRoYXQgbXkgZGF0YSBpcyB0aGVyZSBv
-ciBub3Qgc28gSSBwZXJmb3JtZWQgY2xvbmUgYnV0IG5vdCB3b3JraW5nIChBZ2FpbiBub3Qgc3Vy
-ZSB3aGljaCBjb21tYW5kIEkgaGF2ZSB0byB1c2UpLg0KDQpQbGVhc2Ugbm90ZSB0aGF0ICAtIGJy
-YW5jaCBicjYtMS0wIGNyZWF0ZWQgaW4gQ1ZTIGFuZCB0aGVuIG91ciBzb3VyY2UgY29kZSBtaWdy
-YXRlZCB0byBHaXQuIEJ1dCBpbiBtaWdyYXRpb24gb3V0cHV0IEkgY2FuIHNlZSB0aGUgYnI2LTEt
-MCBwaWNrZWQgdXAgZm9yIGNvcHlpbmcgLi4uDQoNCg0KMy0gSW4geW91ciBsb2NhbCBjbG9uZSwg
-b3Igb24gdGhlIHJlbW90ZT8gSW4gdGhlIGxvY2FsIGNsb25lLCB5b3UgY2FuIHVzZSAiZ2l0IGJy
-YW5jaCIgdG8gc2VlIGxvY2FsIGJyYW5jaGVzLCBvciAiZ2l0IGJyYW5jaCAtYSIgdG8gc2VlIGJy
-YW5jaGVzIGNvcGllZCBmcm9tIHRoZSByZW1vdGUuIFRvIHNlZSB3aGF0IGlzIGF2YWlsYWJsZSBv
-biB0aGUgcmVtb3RlLCB0cnkgImdpdCBscy1yZW1vdGUgc3NoOi8vLi4uIi4NCg0KU3VjaGkgLSBJ
-IHdhbnQgYSBicmFuY2ggbGlzdCBmcm9tIHJlbW90ZS4gSSBoYXZlIHJ1biB5b3VyIHN1Z2dlc3Rl
-ZCBjb21tYW5kICBidXQgaXQgc2hvd3Mgb25seSB0YWcgbGlzdCBhbmQgbm8gYnJhbmNoLg0KDQoN
-ClRoYW5rcywNClN1Y2hpDQoNCi0tLS0tT3JpZ2luYWwgTWVzc2FnZS0tLS0tDQpGcm9tOiBKZWZm
-IEtpbmcgW21haWx0bzpwZWZmQHBlZmYubmV0XSANClNlbnQ6IFRodXJzZGF5LCBNYXkgMTAsIDIw
-MTIgNzoyNiBQTQ0KVG86IFN1Y2hpIFVwYWRoeWF5DQpDYzogZ2l0QHZnZXIua2VybmVsLm9yZw0K
-U3ViamVjdDogUmU6IGhvdyB0byBjbG9uZS9jaGVja291dCBicmFuY2gvdGFnIHZlc2lvbiBmcm9t
-IEdJVCByZXBvc2l0b3J5DQoNCk9uIFRodSwgTWF5IDEwLCAyMDEyIGF0IDA2OjM5OjQ3QU0gLTA3
-MDAsIHN1cGFkaHlheSB3cm90ZToNCg0KPiBJIHRyeSB0byB1c2UgYmVsb3cgY29tbWFuZCB0byBk
-byBjbG9uZSBmcm9tIHBhcnRpY3VsYXIgYnJhbmNoL3ZlcnNpb24gDQo+IG51bWJlci4gSSB1c2Vk
-IGJlbG93IGNvbW1hbmQuLi4NCj4gDQo+ICQgZ2l0IGNsb25lIC1iIGJyNi0xLTAgc3NoOi8vZ2l0
-b2xpdGVAbXlzZXJ2ZXJuYW1lL3Rlc3RyZXANCj4gQ2xvbmluZyBpbnRvICd0ZXN0cmVwJy4uLg0K
-PiByZW1vdGU6IENvdW50aW5nIG9iamVjdHM6IDE5NTM2LCBkb25lLg0KPiByZW1vdGU6IENvbXBy
-ZXNzaW5nIG9iamVjdHM6IDEwMCUgKDU4NTAvNTg1MCksIGRvbmUuDQo+IHJlbW90ZTogVG90YWwg
-MTk1MzYgKGRlbHRhIDEzODY5KSwgcmV1c2VkIDE4ODY5IChkZWx0YSAxMzIwMikgDQo+IFJlY2Vp
-dmluZyBvYmplY3RzOiAxMDAlICgxOTUzNi8xOTUzNiksIDYxLjQ0IE1pQiB8IDE3IEtpQi9zLCBk
-b25lLg0KPiBSZXNvbHZpbmcgZGVsdGFzOiAxMDAlICgxMzg2OS8xMzg2OSksIGRvbmUuDQo+IHdh
-cm5pbmc6IFJlbW90ZSBicmFuY2ggYnI2LTAgbm90IGZvdW5kIGluIHVwc3RyZWFtIG9yaWdpbiwg
-dXNpbmcgSEVBRCANCj4gaW5zdGVhZA0KDQpTaWRlIG5vdGU6IGlmIEkgcmVwZWF0IHlvdXIgZXhw
-ZXJpbWVudCwgSSBnZXQgImJyNi0xLTAiIGluIHRoZSBlcnJvciBtZXNzYWdlIChpLmUuLCB3aGF0
-IHdhcyBvbiB0aGUgY29tbWFuZCBsaW5lKS4gSXMgdGhpcyBqdXN0IGEgY3V0IGFuZCBwYXN0ZSBt
-aXN0YWtlIGluIHJlcG9ydGluZyB0aGUgZXJyb3IsIG9yIGlzIHRoYXQgYWN0dWFsbHkgd2hhdCB5
-b3Ugc2VlPw0KDQpBc3N1bWluZyB0aGF0IGlzIHRoZSBjYXNlLCB0aGUgcHJvYmxlbSBpcyB0aGF0
-IGdpdCB2ZXJzaW9ucyBiZWZvcmUNCnYxLjcuMTAgZGlkIG5vdCBleHBlY3QgYSB0YWcgbmFtZSB3
-aXRoIHRoZSAiLWIiIHN3aXRjaC4gRWl0aGVyIHVwZ3JhZGUgdG8gZ2l0IHYxLjcuMTAsIG9yIGNs
-b25lIGFuZCBtYW51YWxseSBzd2l0Y2ggdG8gdGhlIHRhZywgbGlrZSB0aGlzOg0KDQogICQgZ2l0
-IGNsb25lIHNzaDovLy4uLi90ZXN0cmVwDQogICQgY2QgdGVzdHJlcA0KICAkIGdpdCBjaGVja291
-dCBicjYtMS0wDQoNCk5vdGUgdGhhdCBpZiB5b3UgYXJlIHBsYW5uaW5nIG9uIGRvaW5nIHdvcmsg
-YmFzZWQgb24gdGhlIHRhZywgeW91IHByb2JhYmx5IHdhbnQgdG8gY3JlYXRlIGEgbmV3IGJyYW5j
-aCwgbGlrZToNCg0KICAkIGdpdCBjaGVja291dCAtYiBteS13b3JrIGJyNi0xLTANCg0KPiBJcyB0
-aGVyZSBhbnkgd2F5IHRvIGZpbmRvdXQgaG93IG1hbnkgYnJhbmNoZXMgYXJlIGF2YWlsYWJsZSBp
-biBteSBHSVQgDQo+IHJlcG9zaXRvcnkuDQoNCkluIHlvdXIgbG9jYWwgY2xvbmUsIG9yIG9uIHRo
-ZSByZW1vdGU/IEluIHRoZSBsb2NhbCBjbG9uZSwgeW91IGNhbiB1c2UgImdpdCBicmFuY2giIHRv
-IHNlZSBsb2NhbCBicmFuY2hlcywgb3IgImdpdCBicmFuY2ggLWEiIHRvIHNlZSBicmFuY2hlcyBj
-b3BpZWQgZnJvbSB0aGUgcmVtb3RlLiBUbyBzZWUgd2hhdCBpcyBhdmFpbGFibGUgb24gdGhlIHJl
-bW90ZSwgdHJ5ICJnaXQgbHMtcmVtb3RlIHNzaDovLy4uLiIuDQoNCi1QZWZmDQo=
+On Thu, May 10, 2012 at 09:04:57PM +0700, Nguyen Thai Ngoc Duy wrote:
+
+> Thanks Jeff and Junio for all the comments. This is basically what you
+> (and I) agree in v1's thread. The first patch is a new one, to avoid
+> git-notes from converting everything to blobs. I don't restrict the
+> "show" case either because git-notes uses "git show", which is
+> capable of displaying all kinds of objects.
+
+Nice, this is much better than the previous round.
+
+I was surprised by the "git show" thing you mentioned, because I checked
+before that "git notes add -C HEAD^{tree}; git notes show" generated
+garbage. But the problem is that "-C $tree" was more broken than we
+realized. It actually copied the tree contents into a blob object,
+giving it a new sha1:
+
+  $ git rev-parse HEAD^{tree}
+  f799843170cdddbbdfec446e934bbccf94e0d2a7
+  $ git notes add -C HEAD^{tree}
+  $ git notes list HEAD
+  587521811b7a5b84ed7cb48d11f9321ddcefd337
+
+So it really was totally useless, and nobody could possibly have been
+using it to store a real tree object, experimental or otherwise. But I
+still like these patches better than just disallowing it, because they
+allow people to experiment with the idea.
+
+It's a little odd that we rewrite the object in the "-C" case at all; we
+should never even need to open the object. I guess it is just to make
+the code paths between "-c" and "-C" simpler.
+
+-Peff
