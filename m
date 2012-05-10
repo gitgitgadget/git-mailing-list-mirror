@@ -1,89 +1,92 @@
 From: Heiko Voigt <hvoigt@hvoigt.net>
-Subject: Re: submodule update --force
-Date: Thu, 10 May 2012 20:57:38 +0200
-Message-ID: <20120510185738.GE76400@book.hvoigt.net>
-References: <CAHOQ7J8r4m2rz57BdkM9CADHdHE1yDFwExyF87u=DCEXjqzcqw@mail.gmail.com> <CAHOQ7J9xCYL=x=_nbq-3ksC2nF7L0=kxu9JX6M60xM-Bxmyfag@mail.gmail.com> <7vobpwpoyi.fsf@alter.siamese.dyndns.org> <7vk40kpnia.fsf@alter.siamese.dyndns.org> <CAHOQ7J_6+sfU6egjvVSPj-FAS6zjSUT=a057=kz_wYbogHLMMA@mail.gmail.com> <7v8vh0ozge.fsf@alter.siamese.dyndns.org>
+Subject: [PATCH] document submdule.$name.update=none option for gitmodules
+Date: Thu, 10 May 2012 20:59:04 +0200
+Message-ID: <20120510185903.GF76400@book.hvoigt.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Stefan Zager <szager@google.com>, git@vger.kernel.org,
-	Jens Lehmann <Jens.Lehmann@web.de>,
-	Lars Hjemli <hjemli@gmail.com>
+Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu May 10 20:57:46 2012
+X-From: git-owner@vger.kernel.org Thu May 10 20:59:19 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SSYYb-0005k2-Ai
-	for gcvg-git-2@plane.gmane.org; Thu, 10 May 2012 20:57:45 +0200
+	id 1SSYa0-0006al-Sz
+	for gcvg-git-2@plane.gmane.org; Thu, 10 May 2012 20:59:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759943Ab2EJS5k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 May 2012 14:57:40 -0400
-Received: from t2784.greatnet.de ([83.133.105.219]:40149 "HELO darksea.de"
+	id S1755948Ab2EJS7I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 May 2012 14:59:08 -0400
+Received: from t2784.greatnet.de ([83.133.105.219]:40152 "HELO darksea.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1755221Ab2EJS5k (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 May 2012 14:57:40 -0400
-Received: (qmail 23338 invoked from network); 10 May 2012 18:57:38 -0000
+	id S1754355Ab2EJS7G (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 May 2012 14:59:06 -0400
+Received: (qmail 23349 invoked from network); 10 May 2012 18:59:04 -0000
 Received: from localhost (127.0.0.1)
-  by darksea.de with SMTP; 10 May 2012 18:57:38 -0000
+  by darksea.de with SMTP; 10 May 2012 18:59:04 -0000
 Content-Disposition: inline
-In-Reply-To: <7v8vh0ozge.fsf@alter.siamese.dyndns.org>
 User-Agent: Mutt/1.5.19 (2009-01-05)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197614>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197615>
 
-Hallo all,
+This option was not yet described in the gitmodules documentation. We
+only described it in the 'git submodule' command documentation but
+gitmodules is the more natural place to look.
 
-On Thu, May 10, 2012 at 07:58:09AM -0700, Junio C Hamano wrote:
-> Stefan Zager <szager@google.com> writes:
-> 
-> > ...  To my mind, any
-> > `git submodule` command should *always* run on the first level of
-> > submodules.  If you're going to specify --no-recurse, then why are you
-> > running `git submodule` at all?  I think 'recursion' only applies to
-> > moving beyond the first level of submodules.
-> 
-> Very true.
-> 
-> Submodule folks, any opinion on the Stefan's approach?
+A short reference in the 'git submodule' documentation should be
+sufficient since the details can now be found in the documentation to
+gitmodules.
 
-The distinction between first level of submodules and deeper is only
-present in the "git submodule" subcommand and I think mainly for
-historical reasons. I do not see a use case where this would be helpful.
-To skip uninteresting submodules one can always use the
-submodule.$name.update option set to 'none'. (I just found that its
-documentation is in the wrong place but I will send a seperate patch
-about that).
+Signed-off-by: Heiko Voigt <hvoigt@hvoigt.net>
+---
+ Documentation/git-submodule.txt |    7 ++-----
+ Documentation/gitmodules.txt    |    5 ++++-
+ 2 files changed, 6 insertions(+), 6 deletions(-)
 
-In the non submodule commands we usually name this option
---recurse-submodules=always and have another
---recurse-submodules=on-demand option for the current behavior. Those
-options would either recurse or do nothing with the submodule. Such a
-behavior, as pointed out, does not make sense for 'submodule update'.
-Similar options names for 'submodule update' would probably be
---recurse=always and --recurse=on-demand.
-
-Nonetheless is force a term where the user probably wants to skip all
-optimizations which the sha1 equality provides. So to make the current
-behavior more consistent I would be fine with adding this change.
-
-One thing which might make force even more useful would be to also skip
-the "is the sha1 available"-check for fetch that is possibly run before
-the checkout and just always run the fetch.
-
-In the long term, once checkout has learned things 'submodule update' is
-currently doing, it probably makes sense to let 'submodule update'
-always recurse into all checked out submodules. Since then it does not
-make sense to run 'submodule update' for much more than resetting
-things or changing the currently registered commits anymore. So in the
-bright new future the 'on-demand' part will probably move away from
-'submodule update' and as such it does not make sense to implement
-the seperate recurse options I described above.
-
-What do others think?
-
-Cheers Heiko
+diff --git a/Documentation/git-submodule.txt b/Documentation/git-submodule.txt
+index c243ee5..c83a856 100644
+--- a/Documentation/git-submodule.txt
++++ b/Documentation/git-submodule.txt
+@@ -140,7 +140,8 @@ update::
+ 	checkout the commit specified in the index of the containing repository.
+ 	This will make the submodules HEAD be detached unless `--rebase` or
+ 	`--merge` is specified or the key `submodule.$name.update` is set to
+-	`rebase`, `merge` or `none`.
++	`rebase`, `merge` or `none`. `none` can be overriden by specifying
++	`--checkout`.
+ +
+ If the submodule is not yet initialized, and you just want to use the
+ setting as stored in .gitmodules, you can automatically initialize the
+@@ -148,10 +149,6 @@ submodule with the `--init` option.
+ +
+ If `--recursive` is specified, this command will recurse into the
+ registered submodules, and update any nested submodules within.
+-+
+-If the configuration key `submodule.$name.update` is set to `none` the
+-submodule with name `$name` will not be updated by default. This can be
+-overriden by adding `--checkout` to the command.
+ 
+ summary::
+ 	Show commit summary between the given commit (defaults to HEAD) and
+diff --git a/Documentation/gitmodules.txt b/Documentation/gitmodules.txt
+index 4e1fd52..4effd78 100644
+--- a/Documentation/gitmodules.txt
++++ b/Documentation/gitmodules.txt
+@@ -41,8 +41,11 @@ submodule.<name>.update::
+ 	the commit specified in the superproject. If 'merge', the commit
+ 	specified in the superproject will be merged into the current branch
+ 	in the submodule.
++	If 'none', the submodule with name `$name` will not be updated
++	by default.
++
+ 	This config option is overridden if 'git submodule update' is given
+-	the '--merge' or '--rebase' options.
++	the '--merge', '--rebase' or '--checkout' options.
+ 
+ submodule.<name>.fetchRecurseSubmodules::
+ 	This option can be used to control recursive fetching of this
+-- 
+1.7.10.rc2.31.gd8c60
