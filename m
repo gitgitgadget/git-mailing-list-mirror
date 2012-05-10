@@ -1,45 +1,93 @@
-From: Rich Pixley <rich.pixley@palm.com>
-Subject: git submodule delete?
-Date: Wed, 09 May 2012 17:34:58 -0700
-Message-ID: <4FAB0D32.3000503@palm.com>
+From: "rollinsdr@gmail.com" <rollinsdr@gmail.com>
+Subject: Re: Submodule status inside nested submodule fails
+Date: Wed, 9 May 2012 18:40:04 -0700 (PDT)
+Message-ID: <1336614004527-7545109.post@n2.nabble.com>
+References: <loom.20120224T104003-230@post.gmane.org> <loom.20120224T142455-253@post.gmane.org> <1336500675427-7540130.post@n2.nabble.com> <20120509213443.GA74366@book.hvoigt.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu May 10 02:35:15 2012
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu May 10 03:40:52 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SSHLe-0007dj-Ig
-	for gcvg-git-2@plane.gmane.org; Thu, 10 May 2012 02:35:14 +0200
+	id 1SSIN9-00035r-UG
+	for gcvg-git-2@plane.gmane.org; Thu, 10 May 2012 03:40:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754384Ab2EJAfE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 9 May 2012 20:35:04 -0400
-Received: from smtp-relay2.palm.com ([64.28.152.243]:58410 "EHLO
-	smtp-relay2.palm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750877Ab2EJAfD (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 May 2012 20:35:03 -0400
-X-IronPort-AV: E=Sophos;i="4.75,561,1330934400"; 
-   d="scan'208";a="13416090"
-Received: from unknown (HELO ushqusdns3.palm.com) ([148.92.223.90])
-  by smtp-relay2.palm.com with ESMTP; 09 May 2012 17:34:59 -0700
-Received: from fuji-land.noir.com ([10.100.2.2])
-	by ushqusdns3.palm.com (8.14.4/8.14.4) with ESMTP id q4A0YwUT030125;
-	Wed, 9 May 2012 17:34:59 -0700
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.7; rv:12.0) Gecko/20120428 Thunderbird/12.0.1
+	id S1751066Ab2EJBkH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 9 May 2012 21:40:07 -0400
+Received: from sam.nabble.com ([216.139.236.26]:48079 "EHLO sam.nabble.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750853Ab2EJBkG (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 May 2012 21:40:06 -0400
+Received: from jim.nabble.com ([192.168.236.80])
+	by sam.nabble.com with esmtp (Exim 4.72)
+	(envelope-from <rollinsdr@gmail.com>)
+	id 1SSIMO-0007s6-N7
+	for git@vger.kernel.org; Wed, 09 May 2012 18:40:04 -0700
+In-Reply-To: <20120509213443.GA74366@book.hvoigt.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197533>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197534>
 
-How do I remove a submodule?
+Thanks Heiko,
 
-Put another way, I've made a commit pointing to a nonexistent submodule 
-commit.  And the submodule commit is now lost.  Can I manually force the 
-submodule commit to the previous value?  Or can I remove the submodule 
-and re-add it with an existing value?
 
---rich
+Heiko Voigt-3 wrote
+> 
+> Hi,
+> 
+> On Tue, May 08, 2012 at 11:11:15AM -0700, rollinsdr@ wrote:
+>> I'm having the same issue. Did it ever get resolved, or is there a hack
+>> to
+>> fix it, or is there some link I can track it on?
+>> 
+>> 
+>> Charles Brossollet wrote
+>> > 
+>> > Charles Brossollet <chbrosso <at> lltech.fr> writes:
+>> > Using MSysGit 1.7.9 on Win7 (64 bit), I have a repo with the following 
+>> > structure: 
+>> > 
+>> > main/ 
+>> >   src/ 
+>> >   ext/ 
+>> >     submodule/ 
+>> >        modules/module1 
+>> >        modules/module2 
+>> > 
+>> > submodule is... a submodule, having itself submodules. 
+>> > 
+>> > When I query submodule status --recursive in main/, no problem. 
+>> > But when I query submodule status in  ext/submodule, I get error "You
+>> need
+> 
+> Without having looked at the code itself this smells like an issue with
+> the newly introduced gitlink files and git rev-parse --show-cdup not
+> taking this into account.
+> 
+> I will have a look at this issue.
+> 
+> Cheers Heiko
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@.kernel
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> 
+
+Actually the issue went away once I upgraded from 1.7.9 to 1.7.10, and
+re-cloned my repo. I guess it was fixed in 1.7.10, but some stuff in the
+config files had to be rewritten during the new clone to fix the issue b/c
+just switching to 1.7.10 and trying to use the existing repo still had the
+same issue.
+
+Thanks for all the work you guys do!
+DAVE
+
+--
+View this message in context: http://git.661346.n2.nabble.com/Submodule-status-inside-nested-submodule-fails-tp7314413p7545109.html
+Sent from the git mailing list archive at Nabble.com.
