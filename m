@@ -1,190 +1,89 @@
-From: Andrew Sayers <andrew-git@pileofstuff.org>
-Subject: Re: Git.pm
-Date: Thu, 10 May 2012 21:55:10 +0100
-Message-ID: <4FAC2B2E.7060101@pileofstuff.org>
-References: <CAB3zAY3-Bn86bCr7Rxqi4vxbYFxUesLwm8gddxyMSexov2tOhw@mail.gmail.com> <CAFouetgwRpB1GFJOC8PTVryVY-94S3xa5ZiSaWQWoz070qQ-6g@mail.gmail.com> <CAB3zAY0NeXuH-wXyYkbim5U74eANY4hq5D6SsVLu3KeUqHFqzQ@mail.gmail.com> <20120426203136.GA15432@burratino> <CAB3zAY3VHtUobJfJ7=nSKb_6uJOXLGVHzR18qV6txPkzf54cDw@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 6/8] apply: fall back on three-way merge
+Date: Thu, 10 May 2012 14:06:23 -0700
+Message-ID: <7vaa1fn3u8.fsf@alter.siamese.dyndns.org>
+References: <1336629745-22436-1-git-send-email-gitster@pobox.com>
+ <1336629745-22436-7-git-send-email-gitster@pobox.com>
+ <20120510203113.GB18276@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Tim Henigan <tim.henigan@gmail.com>, git <git@vger.kernel.org>
-To: Subho Banerjee <subs.zero@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 10 22:55:27 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu May 10 23:06:32 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SSaOR-00085g-Tw
-	for gcvg-git-2@plane.gmane.org; Thu, 10 May 2012 22:55:24 +0200
+	id 1SSaZD-0005Du-3h
+	for gcvg-git-2@plane.gmane.org; Thu, 10 May 2012 23:06:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757589Ab2EJUzT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 May 2012 16:55:19 -0400
-Received: from mtaout02-winn.ispmail.ntl.com ([81.103.221.48]:28425 "EHLO
-	mtaout02-winn.ispmail.ntl.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1757018Ab2EJUzQ (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 10 May 2012 16:55:16 -0400
-Received: from aamtaout03-winn.ispmail.ntl.com ([81.103.221.35])
-          by mtaout02-winn.ispmail.ntl.com
-          (InterMail vM.7.08.04.00 201-2186-134-20080326) with ESMTP
-          id <20120510205513.QIPQ28930.mtaout02-winn.ispmail.ntl.com@aamtaout03-winn.ispmail.ntl.com>;
-          Thu, 10 May 2012 21:55:13 +0100
-Received: from [192.168.0.2] (really [94.170.150.126])
-          by aamtaout03-winn.ispmail.ntl.com
-          (InterMail vG.3.00.04.00 201-2196-133-20080908) with ESMTP
-          id <20120510205513.NJXU13318.aamtaout03-winn.ispmail.ntl.com@[192.168.0.2]>;
-          Thu, 10 May 2012 21:55:13 +0100
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.28) Gecko/20120313 Thunderbird/3.1.20
-In-Reply-To: <CAB3zAY3VHtUobJfJ7=nSKb_6uJOXLGVHzR18qV6txPkzf54cDw@mail.gmail.com>
-X-Cloudmark-Analysis: v=1.1 cv=R50lirqlHffDPPkwUlkuVa99MrvKdVWo//yz83qex8g= c=1 sm=0 a=yXtjXN6ItgYA:10 a=u4BGzq-dJbcA:10 a=8nJEP1OIZ-IA:10 a=eNcD7ojaAAAA:8 a=N8CWN-2w2J1voUHUPqMA:9 a=qiw_mmVru794j0xgKxAA:7 a=wPNLvfGTeEIA:10 a=HpAAvcLHHh0Zw7uRqdWCyQ==:117
+	id S1755135Ab2EJVG1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 May 2012 17:06:27 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:65316 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753566Ab2EJVG0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 May 2012 17:06:26 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 51B876D3B;
+	Thu, 10 May 2012 17:06:25 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=hebinh7C4eFcZd3l5wtsXFhnPdw=; b=EUYG+X
+	VxmlWMzHd+JiIR+mR/i/CGECj+rjQtL7P2MDTI9z9hX8E/0oAv/ZXchYMavvB3s5
+	13HNgMruOsg5XHD1WTDs3P59ts0TjyQ1Gy69P5ToQAD/zI0AeseFtv9iDoQXbKTc
+	5a+Gc+AMMRIH5xh9gm40kaAbs5tqcGMU+iA08=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=wLhOPvpoYFl9Oaa5e8NOsxT6DJPzBCRx
+	XWC74h54VPDp9CEMVnFHXvZzzT2VmE1hwXi0tnmr1JFRWZ9rghsNSdRqsh2+7tpi
+	pY8uV8mc7+s445lZMy74GloSoc+f13pmXd+v12Dn81zc1WI4rTmGqQSFkcZy05ir
+	6TFprRdTIZQ=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 494EB6D3A;
+	Thu, 10 May 2012 17:06:25 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A306A6D36; Thu, 10 May 2012
+ 17:06:24 -0400 (EDT)
+In-Reply-To: <20120510203113.GB18276@sigill.intra.peff.net> (Jeff King's
+ message of "Thu, 10 May 2012 16:31:13 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 0057696E-9AE4-11E1-8206-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197633>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197634>
 
-Try::Tiny is an increasingly standard part of Perl - for example, it's
-used extensively in Moose.  There's a good list of arguments about why
-you should use it instead of eval in the Try::Tiny documentation:
-http://search.cpan.org/~nuffin/Try-Tiny-0.01/lib/Try/Tiny.pm
+Jeff King <peff@peff.net> writes:
 
-Now I've got that talking point done, here's what I really think :)
+> On Wed, May 09, 2012 at 11:02:23PM -0700, Junio C Hamano wrote:
+> ...
+>> +	/* No point falling back to 3-way merge in these cases */
+>> +	if (patch->is_binary || patch->is_new || patch->is_delete ||
+>> +	    S_ISGITLINK(patch->old_mode) || S_ISGITLINK(patch->new_mode))
+>> +		return -1;
+>
+> Is it true that there is no point in doing a 3-way fallback when
+> patch->is_binary? What if the user has a custom merge driver?
+> ...
+> It seems like we should just keep the logic here as stupid as possible,
 
-Try::Tiny is designed on the assumption that throwing and catching
-objects is something people should do all the time, and it can cause
-subtle errors that are only worth the hassle if you get a lot of benefit
-from doing so.  It's easy enough to come up with ideas for where they
-might be useful, but in the real world advanced uses for exceptions are
-usually a sign you're doing it wrong.  Three of the most common reasons
-for frequent/complex exceptions are handling errors further up the call
-stack, recovering from operations that fail, and clever error-handling.
+Actually, the motivation behind that "No point" is to keep the logic as
+stupid as possible.
 
+We had a history of setting up logic that covers cases far wider than we
+originally designed the behaviours for, leaving the corner case behaviour
+of the code "undefined", without saying exactly what is and what is not
+the defined use case, which lead users to try unexpected (possibly but not
+necessarily stupid) things and getting a random "you get whatever the code
+happens to do" results. The above is an attempt to limit the scope of the
+initial implementation to a narrow, well defined, and commonly occurring
+subset of the problem space.
 
-If you want exceptions to be caught by code further up the call stack
-than the immediate caller, you're likely to be disappointed.  This is
-one of the places where "separation of concerns" applies - if I use a
-module that uses a module that uses your module, then catching
-exceptions from your code will just cause my program to break when some
-module in the middle obscures your error by adding its own layer of
-error handling.
-
-
-If you have an operation that really might fail, and you want to
-encourage most people to handle it most of the time, it's better to have
-a function with a meaningful name and good documentation.  This puts the
-burden on the calling function to handle the error instead of letting
-them think "oh well, if it dies someone else will handle it".  It also
-forces you to split functions along boundaries that make your code
-readable, instead of falling for the temptation to make something that
-"just works"... until it doesn't, and the maintainer has to go
-spelunking through code they don't know.  So instead of:
-
-   try {
-       Foo::frobnicate( widgets => 3 );
-   } catch {
-      if (ref($_) eq 'Error::Widget') {
-          die "Could not add 3 widgets";
-      }
-   }
-
-It's better to ask the people using your module to write:
-
-   my $foo = Foo->new;
-   $foo->add_widgets(3) or die "could not add 3 widgets"
-   $foo->frobnicate;
-
-This is easier to document, easier to write and easier to read.
-
-
-If you have an operation where calling code is supposed to do something
-more complicated than give up, it's better to use a callback.  This
-gives you an opportunity to document what's needed, and to check that
-the calling code is doing the right thing before it's too late.  So
-instead of:
-
-    my $widgets = 3;
-    while ( $widgets ) {
-
-        try {
-            Foo::frobnicate($widgets);
-            $widgets = 0;
-        } catch {
-            if ( $_->{remaining_widgets} < 2 ) {
-                die $_->{error};
-            } elsif ( $_->{remaining_widgets} == 2 ) {
-                $widgets = 0;
-            }
-        }
-
-    }
-
-It's better to ask people using your module to write:
-
-    Foo::Frobnicate(
-        widgets => 3,
-        error_handler => sub {
-             my ( $remaining_widgets, $error ) = @_;
-             die $error if $broken_widgets < 2;
-             return "give up" if $remaining_widgets == 2;
-             return "continue";
-        },
-    );
-
-Again, this is more readable and easier to document.
-
-
-Aside from the philosophical angle, Try::Tiny is particularly hard to
-maintain because it looks like a language extension, but is actually
-just an ordinary module.  The try {} and catch {} blocks are anonymous
-subroutines, which lead to some wonderfully unintuitive behaviour.  See
-what you think these do, then run the code to find out:
-
-
-    sub foo {
-        try {
-            return 1;
-        }
-        return 0;
-    }
-
-    sub bar {
-
-        our @args = @_;
-        our @ret;
-
-        try {
-            @ret =
-                wantarray
-                    ?   grep( /blah/, @args )
-                    : [ grep( /blah/, @args ) ]
-        };
-
-        return @ret;
-    }
-
-    my $foo = "bar";
-    sub baz {
-        my $foo = "baz";
-        try {
-            print $foo;
-        }
-    }
-
-    sub qux {
-        my $ret;
-        try {
-            $ret = "value";
-        }
-        return $ret;
-    }
-
-    print foo, "\n";
-    print bar( "blah", "blip" ), "\n";
-    baz;
-    print qux, "\n";
-
-
-In short, Try::Tiny looks like a lot of gain for not much pain, but
-actually it's the other way around.
-
-	- Andrew
+I can buy that lifting "must not be binary" would be very cheap, but
+adding support for new/delete case would mean the index-stuffing part
+needs to gain more code, so removing the "not new, not delete"
+conditionals actually goes against keeping the logic as stupid as
+possible.
