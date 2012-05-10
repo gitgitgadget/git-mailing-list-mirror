@@ -1,62 +1,96 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Clean weird documentation for 'git var' and 'git
-Date: Thu, 10 May 2012 09:55:17 -0700
-Message-ID: <7vzk9gm0wa.fsf@alter.siamese.dyndns.org>
-References: <CAGK7Mr7QWrddaRLkr=1h=GYUNtNVOatQF1sj+p11mejzs65u8A@mail.gmail.com>
+From: Orion Poplawski <orion@cora.nwra.com>
+Subject: Using git apply inside a repository but on un-tracked files
+Date: Thu, 10 May 2012 10:46:25 -0600
+Message-ID: <4FABF0E1.1040902@cora.nwra.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Philippe Vaucher <philippe.vaucher@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 10 18:55:28 2012
+Content-Type: multipart/mixed;
+ boundary="------------040309010700020908030606"
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu May 10 19:01:56 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SSWeE-0006Wd-RX
-	for gcvg-git-2@plane.gmane.org; Thu, 10 May 2012 18:55:27 +0200
+	id 1SSWkU-0001iE-Os
+	for gcvg-git-2@plane.gmane.org; Thu, 10 May 2012 19:01:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757096Ab2EJQzW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 May 2012 12:55:22 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:51516 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751600Ab2EJQzU (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 May 2012 12:55:20 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A69BB808C;
-	Thu, 10 May 2012 12:55:19 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=4s/H+jvB9cf2fv21E+W/Kep+soA=; b=XaatWL
-	h2WUPdCpR5K0ZbLcpjrcJHW7z8iMYIanvB0Sk32fmeaT/jIxzlXq88ooeZ6U3iht
-	0+gW8F0yCi1ritAp1Uf+vPAepLK70gO8ohdgWrvyoqaDOUW3++z/+U/DXOtkgT7f
-	/15pG3co64v4IuSKT3PHVr3SiGStpjd8cnE9k=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=OOIk5Z+WpcP1gJiQNB9ZSjTlcTNFN4KC
-	CxsXnEW/1zCDygSP49pdevD25lB12dMCo/1lYrWlui6bMSixDTIWL/oL7Ir2aTgK
-	r8OBZVo7oHsqjyg5fIofwfC+oPy5vd1iYt8mea0MCCChT61J/WAfG98m6a/+VRwg
-	Q33DK7rzp2Y=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9CC43808B;
-	Thu, 10 May 2012 12:55:19 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1DE0C8088; Thu, 10 May 2012
- 12:55:19 -0400 (EDT)
-In-Reply-To: <CAGK7Mr7QWrddaRLkr=1h=GYUNtNVOatQF1sj+p11mejzs65u8A@mail.gmail.com>
- (Philippe Vaucher's message of "Thu, 10 May 2012 18:45:12 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: EC93AC12-9AC0-11E1-8187-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751498Ab2EJRBo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 May 2012 13:01:44 -0400
+Received: from earth.cora.nwra.com ([4.28.99.180]:41117 "EHLO
+	earth.cora.nwra.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751279Ab2EJRBn (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 May 2012 13:01:43 -0400
+X-Greylist: delayed 914 seconds by postgrey-1.27 at vger.kernel.org; Thu, 10 May 2012 13:01:43 EDT
+Received: from orca.cora.nwra.com (orca.cora.nwra.com [10.10.20.2])
+	(authenticated bits=0)
+	by earth.cora.nwra.com (8.13.8/8.13.8) with ESMTP id q4AGkPKe002471
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO)
+	for <git@vger.kernel.org>; Thu, 10 May 2012 10:46:26 -0600
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=cora.nwra.com;
+	s=default; t=1336668386;
+	bh=8pm/EDKs4H5Bu567qgtQpSxZP23Za2SOCj9+a9w7NKI=;
+	h=Message-ID:Date:From:MIME-Version:To:Subject:Content-Type;
+	b=oPclndBlFZ6d2Y8ZNc5TJbPOeQSkoKLTuDpSQyp6YYYzW1SiSmqHOhWVM1va1DyPq
+	 wGtJuzCadt84w/1DumFr4qsTXvcMS7mniym+Z+n+zy/pnHKeNzWqLfZ32pRY5BedX7
+	 YLQrJ5CZ1ILFrL99bZQ6S6G3gXeFXDfTKfZrI+ls=
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:12.0) Gecko/20120430 Thunderbird/12.0.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197601>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197602>
 
-Philippe Vaucher <philippe.vaucher@gmail.com> writes:
+This is a multi-part message in MIME format.
+--------------040309010700020908030606
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
 
-> Here's a patch removing the weird bits. I spoke about in my previous message.
+I'm a Fedora package which tracks the the package files in git.  When the 
+package source is unpacked it is unpacked under the git directory, however 
+these files are not tracked by git.
 
-What's weird about them?  They are real messages issued exactly when they
-are described to be issued.
+I tried to use git apply to apply a patch (because it is coming mercurial and 
+has diff --git rename info in it) to the package source.  However, the 
+presence of a .git repo in the parent tree caused git apply to refuse to apply 
+the patch, unfortunately silently without any complaint or error return code, 
+even with --verbose.  I got it to work by passing the  appropriate --directory 
+option, but this took me a long time to figure out due to the lack of a 
+warning messages.  Could one be added please?  Perhaps like in the attached patch?
+
+TIA,
+
+  Orion
+
+-- 
+Orion Poplawski
+Technical Manager                     303-415-9701 x222
+NWRA, Boulder Office                  FAX: 303-415-9702
+3380 Mitchell Lane                       orion@nwra.com
+Boulder, CO 80301                   http://www.nwra.com
+
+--------------040309010700020908030606
+Content-Type: text/x-patch;
+ name="apply.patch"
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment;
+ filename="apply.patch"
+
+--- apply.c.orig	2012-05-01 22:50:38.000000000 -0600
++++ apply.c	2012-05-10 10:45:10.744088807 -0600
+@@ -3631,8 +3631,12 @@
+ 	if (0 < prefix_length) {
+ 		int pathlen = strlen(pathname);
+ 		if (pathlen <= prefix_length ||
+-		    memcmp(prefix, pathname, prefix_length))
++		    memcmp(prefix, pathname, prefix_length)) {
++			if (apply_verbosely)
++				error("path '%s' is outide of git repo '%s'",
++				      pathname, prefix);
+ 			return 0;
++		}
+ 	}
+ 
+ 	/* See if it matches any of exclude/include rule */
+
+--------------040309010700020908030606--
