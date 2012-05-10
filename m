@@ -1,61 +1,58 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCH 2/8] apply: accept --threeway command line option
-Date: Thu, 10 May 2012 19:40:49 +0700
-Message-ID: <CACsJy8B18gua5kRCTY6aE13J1T0YROmvSFP+88XCunOZm32mww@mail.gmail.com>
-References: <1336629745-22436-1-git-send-email-gitster@pobox.com> <1336629745-22436-3-git-send-email-gitster@pobox.com>
+From: duperrav@minatec.inpg.fr
+Subject: Students contribution to git
+Date: Thu, 10 May 2012 14:18:45 +0200
+Message-ID: <20120510141845.Horde.YJA7YnwdC4BPq7IlmNXDFNA@webmail.minatec.inpg.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu May 10 14:41:38 2012
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed; DelSp=Yes
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu May 10 14:48:16 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SSSgX-0001fe-0O
-	for gcvg-git-2@plane.gmane.org; Thu, 10 May 2012 14:41:33 +0200
+	id 1SSSn1-0004YI-Be
+	for gcvg-git-2@plane.gmane.org; Thu, 10 May 2012 14:48:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755190Ab2EJMlW convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 10 May 2012 08:41:22 -0400
-Received: from mail-lpp01m010-f46.google.com ([209.85.215.46]:61666 "EHLO
-	mail-lpp01m010-f46.google.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1758518Ab2EJMlU convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 May 2012 08:41:20 -0400
-Received: by lahd3 with SMTP id d3so1029821lah.19
-        for <git@vger.kernel.org>; Thu, 10 May 2012 05:41:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=jQFmSdHIT2ZZdXvzyBiZwlSV/SEt9bfSjlbORh7ZejQ=;
-        b=faR7y9/WwGs5wwFXvYnGLJ6IDc0qNg+kGmRb0Gbhue2JE6ML3QwNCtfRri2roaASV7
-         n87+PROiHxONk8KeT5/ibZ/Vb1pnP9FWR5Vgz7KYbg5gsxhwA3D1IkFGxvidPiNMXUvC
-         /xl0GkIlT4wG2yKRKdbuy0UfMwRnf8w9iAs/r0wD2G5gWZzZZaC29bylKzbedEPydG++
-         35qDS3zqVx6QnuLQSG+7wquCrtkUEPg0/C4/bQ7uH3dLyaWCJNOdbIFmhMGghqLKvCiM
-         WCOhRapWhSbTlZO3K0hRylxfroOc/oHzl+6juFFfisKx5XMqX2VZ2oDJK1wzqXCspfqa
-         ZUkg==
-Received: by 10.112.45.230 with SMTP id q6mr1676252lbm.103.1336653679497; Thu,
- 10 May 2012 05:41:19 -0700 (PDT)
-Received: by 10.112.17.167 with HTTP; Thu, 10 May 2012 05:40:49 -0700 (PDT)
-In-Reply-To: <1336629745-22436-3-git-send-email-gitster@pobox.com>
+	id S1757110Ab2EJMsK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 May 2012 08:48:10 -0400
+Received: from v-smtp.minatec.grenoble-inp.fr ([147.173.216.28]:35923 "EHLO
+	v-smtp.minatec.grenoble-inp.fr" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1756486Ab2EJMsJ (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 10 May 2012 08:48:09 -0400
+Received: from localhost (www02.minatec.grenoble-inp.fr [147.173.216.15])
+	by v-smtp.minatec.grenoble-inp.fr (Postfix) with ESMTP id EC5631A02E7
+	for <git@vger.kernel.org>; Thu, 10 May 2012 14:18:45 +0200 (CEST)
+Received: from ensibm.imag.fr (ensibm.imag.fr [195.221.228.8]) by
+ webmail.minatec.inpg.fr (Horde Framework) with HTTP; Thu, 10 May 2012
+ 14:18:45 +0200
+User-Agent: Internet Messaging Program (IMP) H4 (5.0.17)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197558>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197559>
 
-On Thu, May 10, 2012 at 1:02 PM, Junio C Hamano <gitster@pobox.com> wro=
-te:
-> This is the beginning of teaching the three-way merge fallback logic =
-"git
-> am -3" uses to the underlying "git apply". =C2=A0It only implements t=
-he command
-> line parsing part, and does not do anything interesting yet.
+Hello everyone,
 
-Can we reuse '-3/--3way' instead of --threeway? I already have hard
-time remembering which command uses -m/--merge, which one -3.
---=20
-Duy
+We are French students from Ensimag (Computer science engineering
+school in Grenoble, France) and we would like to contribute to Git,
+as part of a one month project.
+We are under the guidance of Matthieu Moy <Matthieu.Moy@imag.fr>.
+
+In order to better understand how git works, we would like to
+work on "better advices in git status". You can find more details
+and other ideas of projects we could work on later on
+https://git.wiki.kernel.org/index.php/SmallProjectsIdeas.
+
+Feel free to add your suggestion on the wiki. All advices are
+welcomed.
+
+Best regards,
+
+Valentin Duperray <Valentin.Duperray@ensimag.imag.fr>
+Franck Jonas <Franck.Jonas@ensimag.imag.fr>
+Lucien Kong <Lucien.Kong@ensimag.imag.fr>
+Thomas Nguy <Thomas.Nguy@ensimag.imag.fr>
+Huynh-Khoi-Nguyen Nguyen <Huynh-Khoi-Nguyen.Nguyen@ensimag.imag.fr>
