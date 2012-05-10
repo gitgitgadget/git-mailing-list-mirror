@@ -1,102 +1,65 @@
-From: Stefan Zager <szager@google.com>
-Subject: Re: submodule update --force
-Date: Thu, 10 May 2012 00:20:19 -0700
-Message-ID: <CAHOQ7J_6+sfU6egjvVSPj-FAS6zjSUT=a057=kz_wYbogHLMMA@mail.gmail.com>
-References: <CAHOQ7J8r4m2rz57BdkM9CADHdHE1yDFwExyF87u=DCEXjqzcqw@mail.gmail.com>
-	<CAHOQ7J9xCYL=x=_nbq-3ksC2nF7L0=kxu9JX6M60xM-Bxmyfag@mail.gmail.com>
-	<7vobpwpoyi.fsf@alter.siamese.dyndns.org>
-	<7vk40kpnia.fsf@alter.siamese.dyndns.org>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH 6/8] apply: fall back on three-way merge
+Date: Thu, 10 May 2012 09:26:38 +0200
+Message-ID: <vpqy5p0bioh.fsf@bauges.imag.fr>
+References: <1336629745-22436-1-git-send-email-gitster@pobox.com>
+	<1336629745-22436-7-git-send-email-gitster@pobox.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain
 Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu May 10 09:21:02 2012
+X-From: git-owner@vger.kernel.org Thu May 10 09:26:51 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SSNgL-00027I-GD
-	for gcvg-git-2@plane.gmane.org; Thu, 10 May 2012 09:21:01 +0200
+	id 1SSNlx-0004ta-Rx
+	for gcvg-git-2@plane.gmane.org; Thu, 10 May 2012 09:26:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755881Ab2EJHUa convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 10 May 2012 03:20:30 -0400
-Received: from mail-qc0-f174.google.com ([209.85.216.174]:47212 "EHLO
-	mail-qc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752966Ab2EJHU3 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 10 May 2012 03:20:29 -0400
-Received: by qcro28 with SMTP id o28so888303qcr.19
-        for <git@vger.kernel.org>; Thu, 10 May 2012 00:20:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding:x-system-of-record;
-        bh=5ktDDpM91pW/aYpdOz7ERhdBo8k4J7RRx1oj8s/FRG4=;
-        b=hOpqvguhhCWFtqClcS67s3ikTdVyxc4pLVJYDztU5SBK8hoH8LWbziLf5vNj31q/nn
-         Iq0ym9XzJUtBtTz9/U8p86HrdkRe0pq2g0M1kajRWWYvrQBQj5Mx5kZGmcjQQk1HaJCH
-         k/7zyPsY8+3mPq2D9AujLR5bf0A7hb6kawQ7cQ3NIGa9wmAkfaxYJ6PnYe0W364oJHBV
-         5g8JUwFD5odsiZwLUM2oXiJzT97hr6OmBwe+Eg6iKaFilqXMlroageji5UqxqJEJdmmp
-         atQurOZ+3/7QVFfteF3tcWJwAogYt1SzxAhXIwDAMw179SdB/snj9ehJLKliGEC+Z11m
-         HYeQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding:x-system-of-record
-         :x-gm-message-state;
-        bh=5ktDDpM91pW/aYpdOz7ERhdBo8k4J7RRx1oj8s/FRG4=;
-        b=DhgXlrzlMR8ZYtmxrXXg+VrbHkq+ABGF17SZJFXTlNopo1hI13WRPoExTLUtVerl1R
-         A0t/NT8MzDEcM2pBrCuiqX3+lWUqog+aSKZU5maJ49gj1APcWoDGwXy1Mu6Z5MNMf9Q8
-         EONZ3g/aMDn3jHOO+w241apB4x7MbPNt6PgA8/qjWEO5s3/FTmqR3odZglVZ8RxjrCLD
-         WvN1Yk+uHmAd53XkNLaheOTFKEufBnVXRdrLiZ4ocqn8peQ7U2McS5Ku2MajrnVPaGYk
-         bLkUZeKtZIT7FO6lRgdUQ+kilbXqMJlX5DjyLK7igVXKyKHq5TdhMChFU0THm2BrjU+v
-         M3FA==
-Received: by 10.224.212.5 with SMTP id gq5mr10124519qab.1.1336634419771;
-        Thu, 10 May 2012 00:20:19 -0700 (PDT)
-Received: by 10.224.212.5 with SMTP id gq5mr10124508qab.1.1336634419683; Thu,
- 10 May 2012 00:20:19 -0700 (PDT)
-Received: by 10.229.135.211 with HTTP; Thu, 10 May 2012 00:20:19 -0700 (PDT)
-In-Reply-To: <7vk40kpnia.fsf@alter.siamese.dyndns.org>
-X-System-Of-Record: true
-X-Gm-Message-State: ALoCoQmt0dGK+Br9eQDmp1GVzbr2Te0rowNyi61s5yL/+NAWOhThito5V72h98RjoDoSnCaOMowcr5PO27sswD2xUeJ5jnA7uzuyT10FPXIdyjJdJYiNwiqbYultpO0kUvmfQstA5/xIfCM00hq4wW0i2/Xb6VH9pQ==
+	id S1756244Ab2EJH0p (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 May 2012 03:26:45 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:51162 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756134Ab2EJH0o (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 May 2012 03:26:44 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id q4A7JOai000701
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Thu, 10 May 2012 09:19:24 +0200
+Received: from bauges.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1SSNln-0006mf-DY; Thu, 10 May 2012 09:26:39 +0200
+In-Reply-To: <1336629745-22436-7-git-send-email-gitster@pobox.com> (Junio C.
+	Hamano's message of "Wed, 9 May 2012 23:02:23 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.93 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Thu, 10 May 2012 09:19:24 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: q4A7JOai000701
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1337239165.23867@ZoPH500oay3c+tfPRrWWCQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197549>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197550>
 
-On Wed, May 9, 2012 at 11:18 PM, Junio C Hamano <gitster@pobox.com> wro=
-te:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> If we follow that line of thought, it may make more sense not to impl=
-ement
-> your feature like the above patch, but instead make it so
->
-> =A0 =A0 =A0 =A0if the user told us never to recurse
-> =A0 =A0 =A0 =A0then
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0nothing
-> =A0 =A0 =A0 =A0elif the user told us to always recurse ||
-> =A0 =A0 =A0 =A0 =A0 =A0 subsha1 !=3D sha1
-> =A0 =A0 =A0 =A0then
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0do the "recurse" thing
-> =A0 =A0 =A0 =A0fi
->
-> so that you can still force it recurse into the submodule, even when =
-you
-> do not necessarily want the "force checkout" thing to happen to clobb=
-er
-> the working tree.
+> +	/* Preimage the patch was prepared for */
+> +	if (get_sha1(patch->old_sha1_prefix, pre_sha1) ||
+> +	    read_blob_object(&buf, pre_sha1, patch->old_mode))
+> +		return error("repository lacks necessary blobs to fall back on 3-way merge.");
 
-I'm a bit confused by your use of the term recursion here.  It sounds
-like you consider any operation run on a submodule to be a form of
-recursion, which is not the way I think about it.  To my mind, any
-`git submodule` command should *always* run on the first level of
-submodules.  If you're going to specify --no-recurse, then why are you
-running `git submodule` at all?  I think 'recursion' only applies to
-moving beyond the first level of submodules.
+What happens if there are multiple objects for the same pre_sha1? It's
+just 7 characters, so conflicts are unlikely but possible. Ideally, we
+could try applying the patch to all the blobs having the same prefix
+sha1, and take the first one for which the patch applies cleanly.
 
-I think your solution would work for our project, because we only use
-one level of submodules.  But IMO the functionality, as you have
-written it, is less generally useful.
-
-Stefan
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
