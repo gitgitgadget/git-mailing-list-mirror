@@ -1,135 +1,73 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: Index format v5
-Date: Thu, 10 May 2012 20:17:23 +0200
-Message-ID: <4FAC0633.90809@alum.mit.edu>
-References: <CALgYhfMKdbv8TiT4ALDSvD3pSXHEPLWHM09DxYnRmRdBWRjh8Q@mail.gmail.com> <4FA7E703.7040408@alum.mit.edu> <20120508141137.GA3937@tgummerer.surfnet.iacbox> <4FAA2CAF.3040408@alum.mit.edu> <20120510121911.GB98491@tgummerer>
+From: Philippe Vaucher <philippe.vaucher@gmail.com>
+Subject: Re: [PATCH] Clean weird documentation for 'git var' and 'git
+Date: Thu, 10 May 2012 20:26:21 +0200
+Message-ID: <CAGK7Mr7rzuPVmGsnx+uhmVgBepAav734uh6hHeqn25BC0_+0Lw@mail.gmail.com>
+References: <CAGK7Mr7QWrddaRLkr=1h=GYUNtNVOatQF1sj+p11mejzs65u8A@mail.gmail.com>
+ <7vzk9gm0wa.fsf@alter.siamese.dyndns.org> <F89882854A7D45E2843F6F1F7CB21DB4@PhilipOakley>
+ <CAGK7Mr6AjSY-D9p1vzs=xCg-TMCPiBJDOSxMVYtykeCZCPW2FA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, trast@student.ethz.ch, gitster@pobox.com,
-	peff@peff.net, spearce@spearce.org, davidbarr@google.com
-To: Thomas Gummerer <t.gummerer@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 10 20:24:45 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Philip Oakley <philipoakley@iee.org>
+X-From: git-owner@vger.kernel.org Thu May 10 20:26:59 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SSY2c-0004Xz-1h
-	for gcvg-git-2@plane.gmane.org; Thu, 10 May 2012 20:24:42 +0200
+	id 1SSY4o-0005rT-C7
+	for gcvg-git-2@plane.gmane.org; Thu, 10 May 2012 20:26:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761159Ab2EJSYb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 May 2012 14:24:31 -0400
-Received: from ALUM-MAILSEC-SCANNER-5.MIT.EDU ([18.7.68.17]:52853 "EHLO
-	alum-mailsec-scanner-5.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1761152Ab2EJSY3 (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 10 May 2012 14:24:29 -0400
-X-Greylist: delayed 422 seconds by postgrey-1.27 at vger.kernel.org; Thu, 10 May 2012 14:24:29 EDT
-X-AuditID: 12074411-b7f596d000000932-82-4fac06368455
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-5.mit.edu (Symantec Messaging Gateway) with SMTP id 8E.D7.02354.6360CAF4; Thu, 10 May 2012 14:17:26 -0400 (EDT)
-Received: from [192.168.101.152] (ssh.berlin.jpk.com [212.222.128.135])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id q4AIHNTw025072
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Thu, 10 May 2012 14:17:24 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:12.0) Gecko/20120430 Thunderbird/12.0.1
-In-Reply-To: <20120510121911.GB98491@tgummerer>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrIKsWRmVeSWpSXmKPExsUixO6iqGvGtsbfoPGgssWjk5uZLLqudDNZ
-	NPReYbb40dLDbDH/0ERWiwurb7NbrNy1kMmB3WPnrLvsHgs2lXo8693D6HHxkrLHn/N7WD3m
-	flrE6vF5k1wAexS3TVJiSVlwZnqevl0Cd8bhqd2sBT0SFe2HNjM3MB4X6mLk5JAQMJE4/msF
-	K4QtJnHh3nq2LkYuDiGBy4wS29dvY4ZwjjNJzHjdygRSxSugKbF2+RuwDhYBVYntWyezgNhs
-	AroSi3qagWo4OEQFwiRWP9CAKBeUODnzCViJiICWxKSvfWCtzAItjBKv50WAlAsLyEhsWO8F
-	seoJUPjGbzaQGk4BfYl77x+wg9QwC1hLfNtdBNEqL7H97RzmCYwCs5BsmIVQNQtJ1QJG5lWM
-	cok5pbm6uYmZOcWpybrFyYl5ealFuqZ6uZkleqkppZsYIVEguINxxkm5Q4wCHIxKPLzcb1f7
-	C7EmlhVX5h5ilORgUhLl/cC4xl+ILyk/pTIjsTgjvqg0J7X4EKMEB7OSCO+c6UDlvCmJlVWp
-	RfkwKWkOFiVxXr4l6n5CAumJJanZqakFqUUwWRkODiUJXgFWoKGCRanpqRVpmTklCGkmDk6Q
-	4VxSIsWpeSmpRYmlJRnxoCiNLwbGKUiKB2gvL0g7b3FBYi5QFKL1FKMux4xPi64xCrHk5eel
-	SonzfmABKhIAKcoozYNbAUt5rxjFgT4W5lUAGcUDTJdwk14BLWECWjLt8EqQJSWJCCmpBsYF
-	yRFMyUmne4tNLUTeWgkpZov1vbS6IGYeNl9fUV+w+KmStCLL9JbK539WbZGZzmo8 
+	id S1761184Ab2EJS0y convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 10 May 2012 14:26:54 -0400
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:34146 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1761152Ab2EJS0w convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 10 May 2012 14:26:52 -0400
+Received: by yenm10 with SMTP id m10so1781166yen.19
+        for <git@vger.kernel.org>; Thu, 10 May 2012 11:26:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=aa7j+ybg+qu7LvO98wiRRKq5656/WfNbJb0mczew8WI=;
+        b=FwE8vxqkP0kfsF3ghg7gxbfJ97efixTSnsgAEPV6U9EwDjyF5Yf2X8ErkIj1Cp2Qjq
+         PsAs5WmMqsvtsR5LF1EDDNiXkJObblyNMeYKz3XT7hUDCcy75K6wmMBFU4ynTL3bgOYZ
+         34GT4mSQE+EdX1NrhAjquaig+tTqCePdsAhPNFWsb6b/5E5V/yCjvexr1aau9LdnoQ0g
+         0dmJkXXNdaaNfeybHXwND2Ee/ROrEX3AfP0vFqjAcjBQDPCLSgxbaXIRf4aotJyxd5Ta
+         zXxHcz1LNyT3hqrMP4xZCTuavXJM4nIYJ2UAkfXno77zLCu/RG1w1vUXkKNYaSWe69uB
+         giUA==
+Received: by 10.50.207.38 with SMTP id lt6mr3248541igc.55.1336674411847; Thu,
+ 10 May 2012 11:26:51 -0700 (PDT)
+Received: by 10.50.65.101 with HTTP; Thu, 10 May 2012 11:26:21 -0700 (PDT)
+In-Reply-To: <CAGK7Mr6AjSY-D9p1vzs=xCg-TMCPiBJDOSxMVYtykeCZCPW2FA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197611>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197612>
 
-On 05/10/2012 02:19 PM, Thomas Gummerer wrote:
-> == Flat loading
+>> What's weird about them? =A0They are real messages issued exactly wh=
+en they are described to be issued.
 >
-> Since internally git expects and works with lexicografic ordering,
-> a simple linear scan throught the subdirectories doesn't give
-> the right internal sorting. To achieve the right internal sorting
-> the loading will be done in the following way:
->
-> The data structure is a stack of queues, to allow continous reading
-> of the file.
->
-> s ->  queue1
-> t ->  queue2
-> a ->  queue3
-> c ->  queue4
-> k ->  queue5
->
-> dirs = read_all_directories
->
-> foreach dir in dirs do
->      file = read_next_file
->
->      while element_on_top_of_stack.first_element<  nextdir
->          indexentries.append(dequeue(element_on_top_of_stack))
->          if element_on_top_of_stack == emtpy:
->              remove_element_on_top_of_stack
->
->      if file[filename]<  nextdir
->          indexentries.append(file)
->      else
->          queue.add(file)
->          foreach f in rest_of_files_in_directory:
->              queue.add(f)
->          stack.push(queue)
->
-> foreach queue in stack:
->      foreach entry in queue:
->          indexentry.append(entry)
+> The problem is surely that an explanatory line is needed to say that =
+these are the diagnostic messages that occur in various cases. Its in '=
+ident.c'.
 
-1. It seems to me that the first time that a file with a filename before 
-nextdir is encountered, the reading of the directory containing the file 
-will be terminated.  This would, for example, be the case for any 
-directory that contains multiple files but no subdirectories.
+I guess I'm just unfamiliar with the "Diagnostics" section of a man
+page.=A0When I fall on this there's nothing I learn... all the other
+sections are helpful and providing self explanatory informations.
 
-2. There is still a lot that is unnecessarily obscure.  For example, I 
-suppose (but you don't say) that "rest_of_files_in_directory" means to 
-read the files at that moment.  It would be more explicit (and no more 
-verbose) to write
+In this case (diagnostic section), the first thing I see is "You don't
+exist, Go away!", and I'm like "okay..." then I see something about
+the passwd file (what on earth has git-commit-tree in common with
+passwd?) then I see "Your parents must have hated you!" and there I'm
+like "okay, there's definitly something wrong with this man page".
 
-     while (f = read_next_file()) != NULL:
-         queue.add(f)
+I'm probably not the only one confused by this. I think a simple line
+"This tool might report the following error messages" would already be
+a great step forward. The next step would be to improve those error
+messages :)
 
-3. You don't cover corner cases, like when read_next_file() is called 
-but there are no files left in the directory, or when there is no 
-nextdir (which itself is not defined).  OK, this pseudocode is only 
-meant to be illustrative, so I guess we can wait until your real 
-implementation to see such details.  On the other hand, you probably 
-want to get all the details straight in pseudocode or Python before you 
-start translating it into C.
-
-4. I think the algorithm would be easier to understand and implement if 
-it were written recursively.  The call stack would replace your explicit 
-stack (but you would still need one queue per directory level).  A key 
-observation is that when "nextdir" precedes the next file, then all of 
-the files in subdirectories of nextdir do as well.  Thus an obvious 
-recursion would be to call a function like 
-read_all_files_under_dir(indexentries, dirs, dirindex) at this point, 
-which would consume all of the directories that are subdirectories of 
-dirs[dirindex] (i.e., all directories whose names have the string 
-dirs[dirindex] as a prefix).  Using this method would mean that there is 
-no need to compare each file under dirs[dirindex] against the next file 
-in the outer directory.
-
-Michael
-
--- 
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
+Philippe
