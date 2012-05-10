@@ -1,7 +1,7 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 5/8] apply: refactor read_file_or_gitlink()
-Date: Wed,  9 May 2012 23:02:22 -0700
-Message-ID: <1336629745-22436-6-git-send-email-gitster@pobox.com>
+Subject: [PATCH 6/8] apply: fall back on three-way merge
+Date: Wed,  9 May 2012 23:02:23 -0700
+Message-ID: <1336629745-22436-7-git-send-email-gitster@pobox.com>
 References: <1336629745-22436-1-git-send-email-gitster@pobox.com>
 To: git@vger.kernel.org
 X-From: git-owner@vger.kernel.org Thu May 10 08:03:06 2012
@@ -10,99 +10,123 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SSMSu-0002NM-25
-	for gcvg-git-2@plane.gmane.org; Thu, 10 May 2012 08:03:04 +0200
+	id 1SSMSv-0002NM-L2
+	for gcvg-git-2@plane.gmane.org; Thu, 10 May 2012 08:03:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755585Ab2EJGCr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 May 2012 02:02:47 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:63018 "EHLO
+	id S1755672Ab2EJGCw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 May 2012 02:02:52 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:63049 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755394Ab2EJGCn (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 May 2012 02:02:43 -0400
+	id S1755504Ab2EJGCq (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 May 2012 02:02:46 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EB1715FDA
-	for <git@vger.kernel.org>; Thu, 10 May 2012 02:02:42 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B9ECD5FE1
+	for <git@vger.kernel.org>; Thu, 10 May 2012 02:02:45 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:in-reply-to:references; s=sasl; bh=G2N/
-	Po0XmLEdlVBETdU7rRrzZzw=; b=nYLFuHz2MhbVCwH+wkmepaWH4JUYI5iLKZH/
-	H/LVeV8zdAYR0pXFcuueUj/rY8P5F42km+TNoksN3WoekAJBy8cqe5C7w+YbzYUa
-	Zcg9U60VOB9qxbIYdV9aSuYLjjtZT1lmAwRNfXxC5JEfSa0XEAMhMhxpzFryj9dk
-	mYxbOHQ=
+	:subject:date:message-id:in-reply-to:references; s=sasl; bh=NhLT
+	4HKx5tTvABrQgHtYMGj7dHc=; b=pR/fkJhuANJWhhK4owLwq+mKOdWZBj1CKE/d
+	M8QABT2e+l9pmDwNooo3vk7IIbxJmEwMOaRC8A8xzh4UegRlCR21idCb4fa4bXJX
+	0PERvZYwqDOUaf1eOZ0b9FE13PRg3zah9G+JjcKzIRaveKkux3Esf5p//m9y+lF3
+	7p8yK6Q=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=PwswO6
-	38ad19pSIS7nzFi13g7L847r6hZiJKlupLtttv9kqZl4uY/TyQN6aI80AYHG0vJl
-	SptNxQnXyAMqY28HGtSpWynETEC1GlVyDRXf0e0TKgquSSmQJVecapbx7lIQRICZ
-	VbverhTnN+K6OXlLUpBpyQvA2H7bDLWBN/JTQ=
+	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=t+yGRq
+	huCxJUcjZgts6c/RKSWz9UXyMBTqFRcwey7+DkgqeUydVCKo+rLrmVoVXayiWMNw
+	OtQDOYFc2WX9jcukxleRYbKResG9+iD3nSgYmcFih2x73T2TA1cVWMQ/+pQkC7XI
+	g74BawcnpRLUwM1ZT1vIWNYe0IL9en+ssRI4A=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E27645FD9
-	for <git@vger.kernel.org>; Thu, 10 May 2012 02:02:42 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B1FBE5FE0
+	for <git@vger.kernel.org>; Thu, 10 May 2012 02:02:45 -0400 (EDT)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 921255FD8 for
- <git@vger.kernel.org>; Thu, 10 May 2012 02:02:38 -0400 (EDT)
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 34F675FDD for
+ <git@vger.kernel.org>; Thu, 10 May 2012 02:02:44 -0400 (EDT)
 X-Mailer: git-send-email 1.7.10.1.562.gfc79b1c
 In-Reply-To: <1336629745-22436-1-git-send-email-gitster@pobox.com>
-X-Pobox-Relay-ID: BF15E968-9A65-11E1-BFDA-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: C26F20AC-9A65-11E1-8104-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197540>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197541>
 
-Reading a blob out of the object store does not have to require that the
-caller has a cache entry for it.
+Grab the preimage blob the patch claims to be based on out of the object
+store, apply the patch, and then call three-way-merge function.
 
-Create a read_blob_object() helper function that takes the object name and
-mode, and use it to reimplement the original function as a thin wrapper to
-it.
+This step does not plug the actual three-way merge logic yet, but we are
+getting there.
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- builtin/apply.c | 18 +++++++++++-------
- 1 file changed, 11 insertions(+), 7 deletions(-)
+ builtin/apply.c | 46 ++++++++++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 44 insertions(+), 2 deletions(-)
 
 diff --git a/builtin/apply.c b/builtin/apply.c
-index 628a89e..b1dd23c 100644
+index b1dd23c..798a634 100644
 --- a/builtin/apply.c
 +++ b/builtin/apply.c
-@@ -2931,20 +2931,17 @@ static int apply_fragments(struct image *img, struct patch *patch)
+@@ -3073,11 +3073,53 @@ static int load_preimage(struct image *image,
  	return 0;
  }
  
--static int read_file_or_gitlink(struct cache_entry *ce, struct strbuf *buf)
-+static int read_blob_object(struct strbuf *buf, const unsigned char *sha1, unsigned mode)
+-static int try_threeway_fallback(struct image *image, struct patch *patch)
++static int three_way_merge(struct image *image,
++			   char *path,
++			   unsigned char *base,
++			   unsigned char *ours,
++			   unsigned char *theirs)
  {
--	if (!ce)
--		return 0;
--
--	if (S_ISGITLINK(ce->ce_mode)) {
-+	if (S_ISGITLINK(mode)) {
- 		strbuf_grow(buf, 100);
--		strbuf_addf(buf, "Subproject commit %s\n", sha1_to_hex(ce->sha1));
-+		strbuf_addf(buf, "Subproject commit %s\n", sha1_to_hex(sha1));
- 	} else {
- 		enum object_type type;
- 		unsigned long sz;
- 		char *result;
- 
--		result = read_sha1_file(ce->sha1, &type, &sz);
-+		result = read_sha1_file(sha1, &type, &sz);
- 		if (!result)
- 			return -1;
- 		/* XXX read_sha1_file NUL-terminates */
-@@ -2953,6 +2950,13 @@ static int read_file_or_gitlink(struct cache_entry *ce, struct strbuf *buf)
- 	return 0;
+ 	return -1; /* for now */
  }
  
-+static int read_file_or_gitlink(struct cache_entry *ce, struct strbuf *buf)
++static int try_threeway_fallback(struct image *image, struct patch *patch,
++				 struct stat *st, struct cache_entry *ce)
 +{
-+	if (!ce)
-+		return 0;
-+	return read_blob_object(buf, ce->sha1, ce->ce_mode);
++	unsigned char pre_sha1[20], post_sha1[20], our_sha1[20];
++	struct strbuf buf = STRBUF_INIT;
++	size_t len;
++	char *img;
++	struct image tmp_image;
++
++	/* No point falling back to 3-way merge in these cases */
++	if (patch->is_binary || patch->is_new || patch->is_delete ||
++	    S_ISGITLINK(patch->old_mode) || S_ISGITLINK(patch->new_mode))
++		return -1;
++
++	/* Preimage the patch was prepared for */
++	if (get_sha1(patch->old_sha1_prefix, pre_sha1) ||
++	    read_blob_object(&buf, pre_sha1, patch->old_mode))
++		return error("repository lacks necessary blobs to fall back on 3-way merge.");
++	img = strbuf_detach(&buf, &len);
++	prepare_image(&tmp_image, img, len, 1);
++	/* Apply the patch to get the post image */
++	if (apply_fragments(&tmp_image, patch) < 0) {
++		clear_image(&tmp_image);
++		return -1;
++	}
++	hash_sha1_file(tmp_image.buf, tmp_image.len, blob_type, post_sha1);
++	clear_image(&tmp_image);
++
++	/* pre_sha1[] is common, post_sha1[] is theirs */
++	load_preimage(&tmp_image, patch, st, ce);
++	hash_sha1_file(tmp_image.buf, tmp_image.len, blob_type, our_sha1);
++	clear_image(&tmp_image);
++
++	/* in-core three-way merge between post and our using pre as base */
++	return three_way_merge(image,
++			       patch->new_name, pre_sha1, our_sha1, post_sha1);
 +}
 +
- static struct patch *in_fn_table(const char *name)
+ static int apply_data(struct patch *patch, struct stat *st, struct cache_entry *ce)
  {
- 	struct string_list_item *item;
+ 	struct image image;
+@@ -3087,7 +3129,7 @@ static int apply_data(struct patch *patch, struct stat *st, struct cache_entry *
+ 
+ 	if (apply_fragments(&image, patch) < 0) {
+ 		/* Note: with --reject, the above call succeeds. */
+-		if (!threeway || try_threeway_fallback(&image, patch) < 0)
++		if (!threeway || try_threeway_fallback(&image, patch, st, ce) < 0)
+ 			return -1;
+ 	}
+ 	patch->result = image.buf;
 -- 
 1.7.10.1.562.gfc79b1c
