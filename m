@@ -1,60 +1,58 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH 0/8] "git apply --threeway"
-Date: Thu, 10 May 2012 09:31:11 +0200
-Message-ID: <vpqtxzobigw.fsf@bauges.imag.fr>
-References: <1336629745-22436-1-git-send-email-gitster@pobox.com>
+From: "Thomas Hager" <duke@sigsegv.at>
+Subject: Re: git submodule delete?
+Date: Thu, 10 May 2012 08:56:16 +0200
+Message-ID: <20120510085616.138349f77tk1gplc@webmail.moger.at>
+References: <4FAB0D32.3000503@palm.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu May 10 09:31:26 2012
+Content-Type: text/plain;
+	charset=ISO-8859-1;
+	DelSp="Yes";
+	format="flowed"
+Content-Transfer-Encoding: 7bit
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu May 10 09:38:52 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SSNqP-00076E-Jj
-	for gcvg-git-2@plane.gmane.org; Thu, 10 May 2012 09:31:25 +0200
+	id 1SSNxZ-00021y-KX
+	for gcvg-git-2@plane.gmane.org; Thu, 10 May 2012 09:38:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756446Ab2EJHbU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 May 2012 03:31:20 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:40075 "EHLO rominette.imag.fr"
+	id S1756784Ab2EJHip (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 May 2012 03:38:45 -0400
+Received: from minbar.sigsegv.at ([83.64.197.38]:48973 "EHLO minbar.sigsegv.at"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754307Ab2EJHbT (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 May 2012 03:31:19 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id q4A7NuF5001457
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Thu, 10 May 2012 09:23:56 +0200
-Received: from bauges.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1SSNqC-0006sS-2D; Thu, 10 May 2012 09:31:12 +0200
-In-Reply-To: <1336629745-22436-1-git-send-email-gitster@pobox.com> (Junio C.
-	Hamano's message of "Wed, 9 May 2012 23:02:17 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.93 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Thu, 10 May 2012 09:23:57 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: q4A7NuF5001457
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1337239440.31897@GTcBmpEIFDgiu9v9/LzNpw
+	id S1756066Ab2EJHio (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 May 2012 03:38:44 -0400
+X-Greylist: delayed 2547 seconds by postgrey-1.27 at vger.kernel.org; Thu, 10 May 2012 03:38:44 EDT
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=sigsegv.at; s=default;
+	h=Content-Transfer-Encoding:Content-Type:MIME-Version:In-Reply-To:References:Subject:To:From:Date:Message-ID; bh=37fJrMulnkTPwi5QLkq0//ODGFm7zDo3+vrB1PGzCro=;
+	b=Je7YPufaA5Wdslk3WNFJNVF+9ZQO/KvVC9tYLGaUdcr2LB5gLmD1LT6JDbXZHdRztQ39fYAxqIQUgDE7xSo8BhSnSwTOMZDW9BXeCNujleLuNFPXhycjZmRC3yh82AYeYKvqRG2TnebFWtVyknQrQv8mpIb6u/ZFS2qC+WuS68ovtJjzhyKL48bwCuIs2LIbD2ceygYqTSKN5KmJDIHjspzQnbZz9IXpSwMpgnxaF6HiJLqY3OcvE/TRbhARJxkDwYYQkqAPccakAGdPS3ne6TmnYf7pczX0Iua0Qqo70tbY9Rslve6PAzvZz1moAwJ5O2iQ6ja/TqG297ub24rDxA==;
+In-Reply-To: <4FAB0D32.3000503@palm.com>
+Content-Disposition: inline
+User-Agent: Internet Messaging Program (IMP) H3 (4.2)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197551>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197552>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Quoting "Rich Pixley" <rich.pixley@palm.com>:
+> How do I remove a submodule?
+got to your superproject and:
 
->  - After trying and failing to apply the patch text, we inspect our object
->    database and see if there is a blob object that matches what is
->    recorded on the "index" line of the patch as its preimage.
+- delete the submodules's section in .gitmodules and .git/config
+- run "git rm --cached path_to_submodule"
+- commit the superproject
+- remove the submodule files.
+- remove .git/modules/your_submodule
 
-Just being curious: why is it called "index"?
+hth,
+tom.
 
 -- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Thomas "Duke" Hager                               duke@sigsegv.at
+GPG: 2048R/791C5EB1            http://www.sigsegv.at/gpg/duke.gpg
+=================================================================
+"Never Underestimate the Power of Stupid People in Large Groups."
