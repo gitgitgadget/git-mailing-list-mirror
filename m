@@ -1,74 +1,79 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: What's cooking in git.git (May 2012, #02; Fri, 4)
-Date: Thu, 10 May 2012 11:13:29 -0400
-Message-ID: <20120510151328.GA20639@sigill.intra.peff.net>
-References: <7vhavv8s2d.fsf@alter.siamese.dyndns.org>
- <20120510131255.GA2950@sigill.intra.peff.net>
- <7vd36cozsi.fsf@alter.siamese.dyndns.org>
+Subject: Re: [PATCH 4/4] notes: only append a blob to a blob
+Date: Thu, 10 May 2012 11:19:04 -0400
+Message-ID: <20120510151904.GB20639@sigill.intra.peff.net>
+References: <1336658701-9004-5-git-send-email-pclouds@gmail.com>
+ <1336661015-14149-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu May 10 17:13:50 2012
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Thu May 10 17:19:14 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SSV3t-0003uK-OL
-	for gcvg-git-2@plane.gmane.org; Thu, 10 May 2012 17:13:50 +0200
+	id 1SSV97-0007ES-Id
+	for gcvg-git-2@plane.gmane.org; Thu, 10 May 2012 17:19:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759995Ab2EJPNc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 May 2012 11:13:32 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:38829
+	id S1759900Ab2EJPTI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 May 2012 11:19:08 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:38840
 	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757749Ab2EJPNb (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 May 2012 11:13:31 -0400
-Received: (qmail 29386 invoked by uid 107); 10 May 2012 15:13:50 -0000
+	id S1757805Ab2EJPTG (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 May 2012 11:19:06 -0400
+Received: (qmail 29440 invoked by uid 107); 10 May 2012 15:19:26 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 10 May 2012 11:13:50 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 10 May 2012 11:13:29 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 10 May 2012 11:19:26 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 10 May 2012 11:19:04 -0400
 Content-Disposition: inline
-In-Reply-To: <7vd36cozsi.fsf@alter.siamese.dyndns.org>
+In-Reply-To: <1336661015-14149-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197578>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197579>
 
-On Thu, May 10, 2012 at 07:50:53AM -0700, Junio C Hamano wrote:
+On Thu, May 10, 2012 at 09:43:35PM +0700, Nguyen Thai Ngoc Duy wrote:
 
-> >> "git push" over smart-http lost progress output and this resurrects it.
-> >> 
-> >> Will merge to 'master'.
-> >
-> > I noticed that this graduated to master, but not to maint. Any reason?
-> 
-> Nobody goes direct to 'maint' if it is complex enough to go through
-> next/pu cycle these days.
-> 
->   $ git log -p Documentation/RelNotes/1.7.11.txt
-> 
-> will show, for example, jk/maint-config-bogus-section was merged as part
-> of the eighth batch (May 2) to 'master', but merged to 'maint' only after
-> we had it in 'master' for a bit without hearing any breakage caused by it.
+>  Yeah. It made me look again to see if that was true, and I found that
+>  my last patch was flawed. Reading object content in memory in "add
+>  -C" is nonsense, not so much in "append -C".
 
-Ah, OK. I thought the progression you used was topic->pu->next->maint.
-Did that used to be the case, or am I just crazy? I also don't remember
-seeing incremental updates to the release notes in this way. But then I
-don't pay too much attention to them during the actual cycle.
+Yeah. Although you would not want to "append -C" anything but blobs.
+While the tree syntax concatenates, I believe the entries are supposed
+to be in sorted order, no? And you would not want to concatenate commits
+at all.
 
-Not a criticism (in fact, it makes a lot more sense to me). Just natural
-curiosity.
+> +static const char *type_name(enum object_type type)
+> +{
+> +	switch (type) {
+> +	case OBJ_BLOB: return _("a blob");
+> +	case OBJ_TAG: return _("a tag");
+> +	case OBJ_COMMIT: return _("a commit");
+> +	case OBJ_TREE: return _("a tree");
+> +	default:
+> +		die("BUG: put a new string for type %d here", type);
+> +	}
+> +}
 
-> Just like all the other features listed below the "Fixes since v1.7.10"
-> fold, the 'push progress' went into 'master' very recently with a note to
-> merge it later to 'maint', and we haven't seen 'later' yet.
+Don't we have object.c:typename for this?
 
-Right. I saw only that it was dropped from "What's cooking" and didn't
-realize you were keeping state in the release notes.
+> @@ -204,8 +216,12 @@ static void create_note(const unsigned char *object, struct msg_arg *msg,
+>  		strbuf_grow(&(msg->buf), size + 1);
+>  		if (msg->buf.len && prev_buf && size)
+>  			strbuf_insert(&(msg->buf), 0, "\n", 1);
+> -		if (prev_buf && size)
+> +		if (prev_buf && size) {
+> +			if (type != OBJ_BLOB || msg->type != OBJ_BLOB)
+> +				die(_("cannot append %s to %s"),
+> +				    type_name(type), type_name(msg->type));
+>  			strbuf_insert(&(msg->buf), 0, prev_buf, size);
+> +		}
 
-Thanks for the explanation.
+I think this is wrong for the reasons above. You would not want to
+concatenate a tree to a tree.
 
 -Peff
