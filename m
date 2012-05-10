@@ -1,113 +1,105 @@
-From: Erik Faye-Lund <kusmabite@gmail.com>
-Subject: Re: git checkout creates strange '(null)'-branch
-Date: Thu, 10 May 2012 16:22:47 +0200
-Message-ID: <CABPQNSbBwpVJUx9BSSO2nqAnPxUESZBz-GEqOPPEyqvdcutb6w@mail.gmail.com>
-References: <CABPQNSZbgZsQBReSqOskNQ4oZokHSibVr=yHdn6oSFjtdRvVVA@mail.gmail.com>
- <4FA904C3.7070208@viscovery.net> <CABPQNSZjdpz8zqYOwBQ_SPeh0JqyxQ1bjrghG1vzxt0GiLR22w@mail.gmail.com>
- <7vd36ey70y.fsf@alter.siamese.dyndns.org>
-Reply-To: kusmabite@gmail.com
+From: Suchi Upadhyay <supadhyay@revitasinc.com>
+Subject: RE: how to clone/checkout branch/tag vesion from GIT repository
+Date: Thu, 10 May 2012 10:19:12 -0400
+Message-ID: <49A2AA38871E7B41841AA7D659D626A62E2098A2@njexch01.imany.com>
+References: <1336657187852-7546744.post@n2.nabble.com> <20120510135605.GA1495@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Johannes Sixt <j.sixt@viscovery.net>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu May 10 16:23:35 2012
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
+Cc: <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu May 10 16:24:42 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SSUHG-00086U-KV
-	for gcvg-git-2@plane.gmane.org; Thu, 10 May 2012 16:23:34 +0200
+	id 1SSUIK-0000JY-1e
+	for gcvg-git-2@plane.gmane.org; Thu, 10 May 2012 16:24:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756081Ab2EJOXa convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 10 May 2012 10:23:30 -0400
-Received: from mail-pb0-f46.google.com ([209.85.160.46]:47092 "EHLO
-	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755025Ab2EJOX2 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 10 May 2012 10:23:28 -0400
-Received: by pbbrp8 with SMTP id rp8so1968124pbb.19
-        for <git@vger.kernel.org>; Thu, 10 May 2012 07:23:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type:content-transfer-encoding;
-        bh=Qckl4LM/mx9TeYo57L6aTs5gqQCKC/w0WhGr/pbvHho=;
-        b=lx/Z9xpZ2jtGR1/ctMZM+65APJ/bNI7SklyqaJfH1auIzLfkGjVn3X1/vrdVCsA8p2
-         PYU4UUKDCAX+Qudq8TzrljnxRbvwZZmZU4S0ElbeuyjxhdnM1CKuxy5z60cZ132isd9z
-         s/ZUUJ7oPWPOoibJwgPEjUoLLGIsSWw18RfRWvSSrm8m4E5b2xzdPRzODGbjuRx1P8+K
-         yZR7mnUxFZFh0MH7fWfX+P4m6ibTqcfbpIAb0+IAw7fZ92doMwLEql9DHMikDKYQoL4K
-         F+2Wbe5U5TuwIooMawxakIvLmyi/P5RTY9YRiFZpaSyf7rFbGRKmu9tC5kbdMeTlk34H
-         onTA==
-Received: by 10.68.222.197 with SMTP id qo5mr568072pbc.72.1336659807374; Thu,
- 10 May 2012 07:23:27 -0700 (PDT)
-Received: by 10.68.73.65 with HTTP; Thu, 10 May 2012 07:22:47 -0700 (PDT)
-In-Reply-To: <7vd36ey70y.fsf@alter.siamese.dyndns.org>
+	id S1757309Ab2EJOYf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 May 2012 10:24:35 -0400
+Received: from njedge1.revitasinc.com ([69.164.88.237]:20742 "EHLO
+	njedge1.imany.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751518Ab2EJOYe (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 May 2012 10:24:34 -0400
+X-Greylist: delayed 318 seconds by postgrey-1.27 at vger.kernel.org; Thu, 10 May 2012 10:24:34 EDT
+Received: from NJCASHUB1.imany.com (10.60.17.24) by njedge1.imany.com
+ (10.60.17.20) with Microsoft SMTP Server (TLS) id 14.1.355.2; Thu, 10 May
+ 2012 10:19:15 -0400
+Received: from njexch01.imany.com (10.60.17.16) by njcashub1.imany.com
+ (10.60.17.24) with Microsoft SMTP Server id 14.1.355.2; Thu, 10 May 2012
+ 10:19:14 -0400
+X-MimeOLE: Produced By Microsoft Exchange V6.5
+Content-Class: urn:content-classes:message
+In-Reply-To: <20120510135605.GA1495@sigill.intra.peff.net>
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+Thread-Topic: how to clone/checkout branch/tag vesion from GIT repository
+Thread-Index: Ac0utKeUITnI9maiTjm4r6qJElAWWwAAPBbA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197570>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197571>
 
-On Tue, May 8, 2012 at 6:25 PM, Junio C Hamano <gitster@pobox.com> wrot=
-e:
-> Erik Faye-Lund <kusmabite@gmail.com> writes:
->
->> But if I apply the following patch, the test passes. I'm not saying
->> it's the right thing to do, though.
->>
->> (Warning: white-space damaged because of copying diffs between termi=
-nals)
->>
->> diff --git a/builtin/checkout.c b/builtin/checkout.c
->> index 23fc56d..d70e819 100644
->> --- a/builtin/checkout.c
->> +++ b/builtin/checkout.c
->> @@ -1096,8 +1096,11 @@ int cmd_checkout(int argc, const char **argv,
->> const char *prefix)
->> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 int flag;
->>
->> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 if (!read_ref_full("HEAD", rev, 0, &=
-flag) &&
->> - =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 (flag & REF_ISSYMREF) && is_nu=
-ll_sha1(rev))
->> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 (flag & REF_ISSYMREF) && is_nu=
-ll_sha1(rev)) {
->> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 if (!opts.new_branch)
->> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 return=
- 0;
->> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 return switch_unborn=
-_to_new_branch(&opts);
->> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 }
->> =A0 =A0 =A0 =A0 }
->> =A0 =A0 =A0 =A0 return switch_branches(&opts, &new);
->> =A0}
->
-> This patch, if we ignore submodules for a while, actually makes sense=
- to
-> me. =A0If you have a commit, you are on that commit and you haven't d=
-one
-> anything since you have checked out that commit, "git checkout" (no o=
-ther
-> parameters) would be a no-op. =A0If you "git init" a repository, and =
-you
-> haven't done anything since then, the above makes "git checkout" (no =
-other
-> parameters) a no-op.
-
-I agree. It does seem to make sense.
-
-> Am I missing some corner cases that we _should_ error out, perhaps fo=
-r the
-> sake of safety?
-
-I don't know, and I was kind of hoping someone would jump in and
-enlighten me of something, but that didn't happen (yet).
-
-I have a slight preference for this operation, though I'm not
-religious; it simply seem more consistent with other "git checkout"
-operation.
-
-Do you want me to prepare a proper patch including a variation of the
-test-case from the other patch?
+SGkgSmVmZiwNCg0KVGhhbmtzIGZvciB5b3VyIHByb21wdCByZXBseS4NCg0KUGxlYXNlIHNlZSBt
+eSByZXBseSBiZWxvdzoNCg0KMS0gU2lkZSBub3RlOiBpZiBJIHJlcGVhdCB5b3VyIGV4cGVyaW1l
+bnQsIEkgZ2V0ICJicjYtMS0wIiBpbiB0aGUgZXJyb3IgbWVzc2FnZSAoaS5lLiwgd2hhdCB3YXMg
+b24gdGhlIGNvbW1hbmQgbGluZSkuIElzIHRoaXMganVzdCBhIGN1dCBhbmQgcGFzdGUgbWlzdGFr
+ZSBpbiByZXBvcnRpbmcgdGhlIGVycm9yLCBvciBpcyB0aGF0IGFjdHVhbGx5IHdoYXQgeW91IHNl
+ZT8NCg0KU3VjaGkgLSB5ZXMgbXkgbWlzdGFrZSBpbiBjdXQgJiBwYXN0ZS4gQnJhbmNoIG5hbWUg
+aXMgYnI2LTEtMA0KDQoyLSBmb3IgYnJhbmNoOg0KJCBnaXQgY2hlY2tvdXQgYnI2LTEtMA0KDQpT
+dWNoaSAtIEFzIHBlciBteSB1bmRlcnN0YW5kaW5nIHdpdGggR0lUIHRoaXMgY29tbWFuZCB3aWxs
+IGNyZWF0ZSBhIG5ldyBicmFuY2ggaW4gbXkgcmVwb3NpdG9yeS4uZm9yIGV4LiBJZiBJIHJ1biAi
+Z2l0IGNoZWNrb3V0IHN1Y2hpIiB0aGVuIGl0IHdpbGwgY3JlYXRlIHN1Y2hpIGFzIGEgbmV3IGJy
+YW5jaC4NCg0KMi4xIE5vdGUgdGhhdCBpZiB5b3UgYXJlIHBsYW5uaW5nIG9uIGRvaW5nIHdvcmsg
+YmFzZWQgb24gdGhlIHRhZywgeW91IHByb2JhYmx5IHdhbnQgdG8gY3JlYXRlIGEgbmV3IGJyYW5j
+aCwgbGlrZToNCiAgJCBnaXQgY2hlY2tvdXQgLWIgbXktd29yayBicjYtMS0wDQoNClN1Y2hpIC0g
+WWVzLCBJIGhhdmUgdGhpcyBicmFuY2ggYnI2LTEtMCBhbmQgZGF0YSBpcyBhc3NvY2lhdGVkIHRo
+ZXJlLCB0aGlzIGJyYW5jaCBpcyBkaWZmZXJlbnQgZnJvbSBoZWFkLiBGb3IgZW5kIHVzZXIgcGVy
+c3BlY3RpdmUgSSBqdXN0IHdhbnQgdG8gbWFrZSBzdXJlIHRoYXQgbXkgZGF0YSBpcyB0aGVyZSBv
+ciBub3Qgc28gSSBwZXJmb3JtZWQgY2xvbmUgYnV0IG5vdCB3b3JraW5nIChBZ2FpbiBub3Qgc3Vy
+ZSB3aGljaCBjb21tYW5kIEkgaGF2ZSB0byB1c2UpLg0KDQpQbGVhc2Ugbm90ZSB0aGF0ICAtIGJy
+YW5jaCBicjYtMS0wIGNyZWF0ZWQgaW4gQ1ZTIGFuZCB0aGVuIG91ciBzb3VyY2UgY29kZSBtaWdy
+YXRlZCB0byBHaXQuIEJ1dCBpbiBtaWdyYXRpb24gb3V0cHV0IEkgY2FuIHNlZSB0aGUgYnI2LTEt
+MCBwaWNrZWQgdXAgZm9yIGNvcHlpbmcgLi4uDQoNCg0KMy0gSW4geW91ciBsb2NhbCBjbG9uZSwg
+b3Igb24gdGhlIHJlbW90ZT8gSW4gdGhlIGxvY2FsIGNsb25lLCB5b3UgY2FuIHVzZSAiZ2l0IGJy
+YW5jaCIgdG8gc2VlIGxvY2FsIGJyYW5jaGVzLCBvciAiZ2l0IGJyYW5jaCAtYSIgdG8gc2VlIGJy
+YW5jaGVzIGNvcGllZCBmcm9tIHRoZSByZW1vdGUuIFRvIHNlZSB3aGF0IGlzIGF2YWlsYWJsZSBv
+biB0aGUgcmVtb3RlLCB0cnkgImdpdCBscy1yZW1vdGUgc3NoOi8vLi4uIi4NCg0KU3VjaGkgLSBJ
+IHdhbnQgYSBicmFuY2ggbGlzdCBmcm9tIHJlbW90ZS4gSSBoYXZlIHJ1biB5b3VyIHN1Z2dlc3Rl
+ZCBjb21tYW5kICBidXQgaXQgc2hvd3Mgb25seSB0YWcgbGlzdCBhbmQgbm8gYnJhbmNoLg0KDQoN
+ClRoYW5rcywNClN1Y2hpDQoNCi0tLS0tT3JpZ2luYWwgTWVzc2FnZS0tLS0tDQpGcm9tOiBKZWZm
+IEtpbmcgW21haWx0bzpwZWZmQHBlZmYubmV0XSANClNlbnQ6IFRodXJzZGF5LCBNYXkgMTAsIDIw
+MTIgNzoyNiBQTQ0KVG86IFN1Y2hpIFVwYWRoeWF5DQpDYzogZ2l0QHZnZXIua2VybmVsLm9yZw0K
+U3ViamVjdDogUmU6IGhvdyB0byBjbG9uZS9jaGVja291dCBicmFuY2gvdGFnIHZlc2lvbiBmcm9t
+IEdJVCByZXBvc2l0b3J5DQoNCk9uIFRodSwgTWF5IDEwLCAyMDEyIGF0IDA2OjM5OjQ3QU0gLTA3
+MDAsIHN1cGFkaHlheSB3cm90ZToNCg0KPiBJIHRyeSB0byB1c2UgYmVsb3cgY29tbWFuZCB0byBk
+byBjbG9uZSBmcm9tIHBhcnRpY3VsYXIgYnJhbmNoL3ZlcnNpb24gDQo+IG51bWJlci4gSSB1c2Vk
+IGJlbG93IGNvbW1hbmQuLi4NCj4gDQo+ICQgZ2l0IGNsb25lIC1iIGJyNi0xLTAgc3NoOi8vZ2l0
+b2xpdGVAbXlzZXJ2ZXJuYW1lL3Rlc3RyZXANCj4gQ2xvbmluZyBpbnRvICd0ZXN0cmVwJy4uLg0K
+PiByZW1vdGU6IENvdW50aW5nIG9iamVjdHM6IDE5NTM2LCBkb25lLg0KPiByZW1vdGU6IENvbXBy
+ZXNzaW5nIG9iamVjdHM6IDEwMCUgKDU4NTAvNTg1MCksIGRvbmUuDQo+IHJlbW90ZTogVG90YWwg
+MTk1MzYgKGRlbHRhIDEzODY5KSwgcmV1c2VkIDE4ODY5IChkZWx0YSAxMzIwMikgDQo+IFJlY2Vp
+dmluZyBvYmplY3RzOiAxMDAlICgxOTUzNi8xOTUzNiksIDYxLjQ0IE1pQiB8IDE3IEtpQi9zLCBk
+b25lLg0KPiBSZXNvbHZpbmcgZGVsdGFzOiAxMDAlICgxMzg2OS8xMzg2OSksIGRvbmUuDQo+IHdh
+cm5pbmc6IFJlbW90ZSBicmFuY2ggYnI2LTAgbm90IGZvdW5kIGluIHVwc3RyZWFtIG9yaWdpbiwg
+dXNpbmcgSEVBRCANCj4gaW5zdGVhZA0KDQpTaWRlIG5vdGU6IGlmIEkgcmVwZWF0IHlvdXIgZXhw
+ZXJpbWVudCwgSSBnZXQgImJyNi0xLTAiIGluIHRoZSBlcnJvciBtZXNzYWdlIChpLmUuLCB3aGF0
+IHdhcyBvbiB0aGUgY29tbWFuZCBsaW5lKS4gSXMgdGhpcyBqdXN0IGEgY3V0IGFuZCBwYXN0ZSBt
+aXN0YWtlIGluIHJlcG9ydGluZyB0aGUgZXJyb3IsIG9yIGlzIHRoYXQgYWN0dWFsbHkgd2hhdCB5
+b3Ugc2VlPw0KDQpBc3N1bWluZyB0aGF0IGlzIHRoZSBjYXNlLCB0aGUgcHJvYmxlbSBpcyB0aGF0
+IGdpdCB2ZXJzaW9ucyBiZWZvcmUNCnYxLjcuMTAgZGlkIG5vdCBleHBlY3QgYSB0YWcgbmFtZSB3
+aXRoIHRoZSAiLWIiIHN3aXRjaC4gRWl0aGVyIHVwZ3JhZGUgdG8gZ2l0IHYxLjcuMTAsIG9yIGNs
+b25lIGFuZCBtYW51YWxseSBzd2l0Y2ggdG8gdGhlIHRhZywgbGlrZSB0aGlzOg0KDQogICQgZ2l0
+IGNsb25lIHNzaDovLy4uLi90ZXN0cmVwDQogICQgY2QgdGVzdHJlcA0KICAkIGdpdCBjaGVja291
+dCBicjYtMS0wDQoNCk5vdGUgdGhhdCBpZiB5b3UgYXJlIHBsYW5uaW5nIG9uIGRvaW5nIHdvcmsg
+YmFzZWQgb24gdGhlIHRhZywgeW91IHByb2JhYmx5IHdhbnQgdG8gY3JlYXRlIGEgbmV3IGJyYW5j
+aCwgbGlrZToNCg0KICAkIGdpdCBjaGVja291dCAtYiBteS13b3JrIGJyNi0xLTANCg0KPiBJcyB0
+aGVyZSBhbnkgd2F5IHRvIGZpbmRvdXQgaG93IG1hbnkgYnJhbmNoZXMgYXJlIGF2YWlsYWJsZSBp
+biBteSBHSVQgDQo+IHJlcG9zaXRvcnkuDQoNCkluIHlvdXIgbG9jYWwgY2xvbmUsIG9yIG9uIHRo
+ZSByZW1vdGU/IEluIHRoZSBsb2NhbCBjbG9uZSwgeW91IGNhbiB1c2UgImdpdCBicmFuY2giIHRv
+IHNlZSBsb2NhbCBicmFuY2hlcywgb3IgImdpdCBicmFuY2ggLWEiIHRvIHNlZSBicmFuY2hlcyBj
+b3BpZWQgZnJvbSB0aGUgcmVtb3RlLiBUbyBzZWUgd2hhdCBpcyBhdmFpbGFibGUgb24gdGhlIHJl
+bW90ZSwgdHJ5ICJnaXQgbHMtcmVtb3RlIHNzaDovLy4uLiIuDQoNCi1QZWZmDQo=
