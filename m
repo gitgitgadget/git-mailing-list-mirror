@@ -1,82 +1,93 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 1/9] apply: clear_image() clears things a bit more
-Date: Thu, 10 May 2012 15:32:45 -0700
-Message-ID: <1336689173-15822-2-git-send-email-gitster@pobox.com>
-References: <1336689173-15822-1-git-send-email-gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 11 00:33:42 2012
+From: Jeff King <peff@peff.net>
+Subject: Re: GSoC - Some questions on the idea of
+Date: Thu, 10 May 2012 18:39:16 -0400
+Message-ID: <20120510223916.GB31116@sigill.intra.peff.net>
+References: <4F76E430.6020605@gmail.com>
+ <4F772E48.3030708@gmail.com>
+ <20120402210708.GA28926@sigill.intra.peff.net>
+ <4F84DD60.20903@gmail.com>
+ <20120411213522.GA28199@sigill.intra.peff.net>
+ <4F872D24.8010609@gmail.com>
+ <20120412210315.GC21018@sigill.intra.peff.net>
+ <4F8A2EBD.1070407@gmail.com>
+ <20120415021550.GA24102@sigill.intra.peff.net>
+ <4FAC367E.8070006@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Cc: Sergio Callegari <sergio.callegari@gmail.com>,
+	Bo Chen <chen@chenirvine.org>, git@vger.kernel.org
+To: Neal Kreitzinger <nkreitzinger@gmail.com>
+X-From: git-owner@vger.kernel.org Fri May 11 00:39:25 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SSbvY-0006Py-1u
-	for gcvg-git-2@plane.gmane.org; Fri, 11 May 2012 00:33:40 +0200
+	id 1SSc17-0000ev-9Q
+	for gcvg-git-2@plane.gmane.org; Fri, 11 May 2012 00:39:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932519Ab2EJWdA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 May 2012 18:33:00 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:36622 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932399Ab2EJWc5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 May 2012 18:32:57 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0C23C8426
-	for <git@vger.kernel.org>; Thu, 10 May 2012 18:32:57 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:in-reply-to:references; s=sasl; bh=eccL
-	fR7e169p0CJDdj0CwBujFVw=; b=HoJxbzreRlm2PhW9iSIToYFnmxOmFcBXAyYv
-	XjBoFlHVZM/yR2nBhcW4KsG+97w1YHpWpbyXY7M6KZtp6WouwoHrDY3Fdzeyr11f
-	sM8KtK/wDG0R3I0qscN0z7AX9g0yFFBFGcUZ/oOdvualPto6EvBR3lncLkMtpI3U
-	RuVmIdE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=c/rb9r
-	lecy6GSkQVRCYh0EJNoyplDE1OcKG8OG8qUG+LKesKmS0M7BA6bjcrnGhh5P5nxC
-	CgTlHGEuI+SnFkeylHOJCQZ+Bln1ZgJfirqtYeWt5reTFPX9bkZpwEEew6vM0Jdq
-	lg2OHWv5snjd28nTVq5uJBE42r+048AZe0Pow=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 048618425
-	for <git@vger.kernel.org>; Thu, 10 May 2012 18:32:57 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 86E5E8424 for
- <git@vger.kernel.org>; Thu, 10 May 2012 18:32:56 -0400 (EDT)
-X-Mailer: git-send-email 1.7.10.1.574.g840b38f
-In-Reply-To: <1336689173-15822-1-git-send-email-gitster@pobox.com>
-X-Pobox-Relay-ID: 16F21AB4-9AF0-11E1-B5B1-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1761727Ab2EJWjU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 May 2012 18:39:20 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:39242
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1761578Ab2EJWjT (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 May 2012 18:39:19 -0400
+Received: (qmail 3887 invoked by uid 107); 10 May 2012 22:39:39 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 10 May 2012 18:39:39 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 10 May 2012 18:39:16 -0400
+Content-Disposition: inline
+In-Reply-To: <4FAC367E.8070006@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197646>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197647>
 
-The clear_image() function did not clear the line table in the image
-structure; this does not matter for the current callers, as the function
-is only called from the codepaths that deal with binary patches where the
-line table is never populated, and the codepaths that do populate the line
-table free it themselves.
+On Thu, May 10, 2012 at 04:43:26PM -0500, Neal Kreitzinger wrote:
 
-But it will start to matter when we introduce a codepath to retry a failed
-patch, so make sure it clears and frees everything.
+> >Yes. The on-the-wire format is a packfile. We create a new packfile on
+> >the fly, so we may find new deltas (e.g., between objects that were
+> >stored on disk in two different packs), but we will mostly be reusing
+> >deltas from the existing packs.
+> >
+> >So any time you improve the on-disk representation, you are also
+> >improving the network bandwidth utilization.
+> >
+> The git-clone manpage says you can use the rsync protocol for the
+> url.  If you use rsync:// as your url for your remote does that get
+> you the rsync delta-transfer algorithm efficiency for the network
+> bandwidth utilization part (as opposed to the on-disk representation
+> part)?  (I'm new to rsync.)
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- builtin/apply.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+Well, yes. If you use the rsync transport, it literally runs rsync,
+which will use the regular rsync algorithm. But it won't be better than
+the git protocol (and in fact will be much worse) for a few reasons:
 
-diff --git a/builtin/apply.c b/builtin/apply.c
-index 725712d..99b1608 100644
---- a/builtin/apply.c
-+++ b/builtin/apply.c
-@@ -371,8 +371,8 @@ static void prepare_image(struct image *image, char *buf, size_t len,
- static void clear_image(struct image *image)
- {
- 	free(image->buf);
--	image->buf = NULL;
--	image->len = 0;
-+	free(image->line_allocated);
-+	memset(image, 0, sizeof(*image));
- }
- 
- /* fmt must contain _one_ %s and no other substitution */
--- 
-1.7.10.1.574.g840b38f
+  1. The object db files are all named after the sha1 of their content
+     (the object sha1 for loose objects, and the sha1 of the whole pack
+     for packfiles). Rsync will not run its comparison algorithm between
+     files with different names. It will not re-transfer existing loose
+     objects, but it will delete obsolete packfiles and retransfer new
+     ones in their entirety. So it's like re-cloning over again for any
+     fetch after an upstream repack.
+
+  2. Even if you could use the rsync delta algorithm, it will never be
+     as efficient as git. Git understands the structure of the packfile
+     and can tell the other side "Hey, I have these objects". Whereas
+     rsync must guess from the bytes in the packfiles. Which is much
+     less efficient to compute, and can be wrong if the representation
+     has changed (e.g., something used to be a whole object, but is now
+     stored as a delta).
+
+  3. Even if you could get the exact right set of objects to transfer,
+     and then use the rsync delta algorithm on them, git would still do
+     better. Git's job is much easier: one side has both sets of
+     objects (those to be sent and those not), and is generating and
+     sending efficient deltas for the other side to apply to their
+     objects. Rsync assumes a harder job: you have one set, and
+     the remote side has the other set, and you must agree on a delta by
+     comparing checksums. So it will fundamentally never do as well.
+
+-Peff
