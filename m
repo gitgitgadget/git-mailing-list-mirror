@@ -1,93 +1,114 @@
-From: Eli Barzilay <eli-oSK4jVRJLyZg9hUCZPvPmw@public.gmane.org>
-Subject: Re: OT: gmane address mangling selectors
-Date: Thu, 10 May 2012 13:35:52 -0400
-Message-ID: <20395.64632.583415.101007@winooski.ccs.neu.edu>
-References: <20120504052106.GA15970@sigill.intra.peff.net>
-	<20120504052725.GD16107@sigill.intra.peff.net>
-	<7v7gwrc212.fsf@alter.siamese.dyndns.org>
-	<20120507213752.GA19911@sigill.intra.peff.net>
-	<20120510153754.GA23941@sigill.intra.peff.net>
-	<7vd36cng6n.fsf@alter.siamese.dyndns.org>
-	<20120510171912.GA29972@sigill.intra.peff.net>
+From: demerphq <demerphq@gmail.com>
+Subject: Re: Git.pm
+Date: Thu, 10 May 2012 19:38:29 +0200
+Message-ID: <CANgJU+WR9zWbwrHK-PT0jKKNQ6ZXv=9oGxOuQh6iLZaORohGBQ@mail.gmail.com>
+References: <CAB3zAY3-Bn86bCr7Rxqi4vxbYFxUesLwm8gddxyMSexov2tOhw@mail.gmail.com>
+	<CAFouetgwRpB1GFJOC8PTVryVY-94S3xa5ZiSaWQWoz070qQ-6g@mail.gmail.com>
+	<CAB3zAY0NeXuH-wXyYkbim5U74eANY4hq5D6SsVLu3KeUqHFqzQ@mail.gmail.com>
+	<20120426203136.GA15432@burratino>
+	<CAB3zAY3VHtUobJfJ7=nSKb_6uJOXLGVHzR18qV6txPkzf54cDw@mail.gmail.com>
+	<CANgJU+W-FJZRtu_4si7nr96KfNe2rzaiUaDC0GiK_WixudvcxA@mail.gmail.com>
+	<7vr4usnh2q.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster-e+AXbWqSrlAAvxtiuMwx3w@public.gmane.org>, git-u79uwXL29TY76Z2rM5mHXA@public.gmane.org,
-        magit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
-To: Jeff King <peff-AdEPDUrAXsQ@public.gmane.org>
-X-From: magit+bncCOHCzKWgHRD6-K_9BBoEjRy_gg-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org Thu May 10 19:35:55 2012
-Return-path: <magit+bncCOHCzKWgHRD6-K_9BBoEjRy_gg-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-Envelope-to: gcvgm-magit-3@m.gmane.org
-Received: from mail-yx0-f186.google.com ([209.85.213.186])
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Subho Banerjee <subs.zero@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Tim Henigan <tim.henigan@gmail.com>, git <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu May 10 19:38:50 2012
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <magit+bncCOHCzKWgHRD6-K_9BBoEjRy_gg-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>)
-	id 1SSXHP-0003xg-5m
-	for gcvgm-magit-3@m.gmane.org; Thu, 10 May 2012 19:35:55 +0200
-Received: by yenq6 with SMTP id q6sf1952075yen.3
-        for <gcvgm-magit-3@m.gmane.org>; Thu, 10 May 2012 10:35:54 -0700 (PDT)
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1SSXK9-0005Yi-Eu
+	for gcvg-git-2@plane.gmane.org; Thu, 10 May 2012 19:38:45 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1760820Ab2EJRie convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 10 May 2012 13:38:34 -0400
+Received: from mail-gg0-f174.google.com ([209.85.161.174]:34496 "EHLO
+	mail-gg0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760808Ab2EJRia convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 10 May 2012 13:38:30 -0400
+Received: by mail-gg0-f174.google.com with SMTP id u4so1105415ggl.19
+        for <git@vger.kernel.org>; Thu, 10 May 2012 10:38:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=beta;
-        h=x-beenthere:received-spf:from:mime-version:message-id:date:to:cc
-         :subject:in-reply-to:references:x-mailer:x-original-sender
-         :x-original-authentication-results:precedence:mailing-list:list-id
-         :x-google-group-id:list-post:list-help:list-archive:sender
-         :list-subscribe:list-unsubscribe:content-type
-         :content-transfer-encoding;
-        bh=wHCHaSBAzEJPoY7tB4Xph4SEpMtR2WIqvw3EyhcHfF8=;
-        b=jOzB05LhEF1Jwc2IIbx475iCIBWM8BqxOvyrTpCfBigq0dISApBpYfEjrRqCOQxpZm
-         HxYPgzTetmY7Zonwy44LfFxBulD+js4TNdFd0aDM2wjZRm9DjiDQTCfzidVcJzPxBhzy
-         O8/gTwm6kjzdmLGYwGQOtXEQbM5IOPfkFW4eU=
-Received: by 10.50.15.130 with SMTP id x2mr555135igc.5.1336671354237;
-        Thu, 10 May 2012 10:35:54 -0700 (PDT)
-X-BeenThere: magit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
-Received: by 10.231.48.9 with SMTP id p9ls1196464ibf.8.gmail; Thu, 10 May 2012
- 10:35:53 -0700 (PDT)
-Received: by 10.42.110.75 with SMTP id o11mr2986256icp.6.1336671353817;
-        Thu, 10 May 2012 10:35:53 -0700 (PDT)
-Received: by 10.42.110.75 with SMTP id o11mr2986255icp.6.1336671353808;
-        Thu, 10 May 2012 10:35:53 -0700 (PDT)
-Received: from winooski.ccs.neu.edu (winooski.ccs.neu.edu. [129.10.115.117])
-        by gmr-mx.google.com with ESMTPS id e7si601278iga.3.2012.05.10.10.35.53
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 10 May 2012 10:35:53 -0700 (PDT)
-Received-SPF: pass (google.com: best guess record for domain of eli-a5nvgYPMCZcx/1z6v04GWfZ8FUJU4vz8@public.gmane.org designates 129.10.115.117 as permitted sender) client-ip=129.10.115.117;
-Received: from winooski.ccs.neu.edu (localhost.localdomain [127.0.0.1])
-	by winooski.ccs.neu.edu (8.14.4/8.14.4) with ESMTP id q4AHZrxe029644;
-	Thu, 10 May 2012 13:35:53 -0400
-Received: (from eli@localhost)
-	by winooski.ccs.neu.edu (8.14.4/8.14.4/Submit) id q4AHZqsq029641;
-	Thu, 10 May 2012 13:35:52 -0400
-In-Reply-To: <20120510171912.GA29972-bBVMEuqLR+SYVEpFpFwlB0AkDMvbqDRI@public.gmane.org>
-X-Mailer: VM 8.2.0a under 23.2.1 (x86_64-redhat-linux-gnu)
-X-Original-Sender: eli-oSK4jVRJLyZg9hUCZPvPmw@public.gmane.org
-X-Original-Authentication-Results: gmr-mx.google.com; spf=pass (google.com:
- best guess record for domain of eli-a5nvgYPMCZcx/1z6v04GWfZ8FUJU4vz8@public.gmane.org designates
- 129.10.115.117 as permitted sender) smtp.mail=eli-a5nvgYPMCZcx/1z6v04GWfZ8FUJU4vz8@public.gmane.org
-Precedence: list
-Mailing-list: list magit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org; contact magit+owners-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
-List-ID: <magit.googlegroups.com>
-X-Google-Group-Id: 752745291123
-List-Post: <http://groups.google.com/group/magit/post?hl=en_US>, <mailto:magit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-List-Help: <http://groups.google.com/support/?hl=en_US>, <mailto:magit+help-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-List-Archive: <http://groups.google.com/group/magit?hl=en_US>
-Sender: magit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
-List-Subscribe: <http://groups.google.com/group/magit/subscribe?hl=en_US>, <mailto:magit+subscribe-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-List-Unsubscribe: <http://groups.google.com/group/magit/subscribe?hl=en_US>, <mailto:googlegroups-manage+752745291123+unsubscribe-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197606>
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=f+t6cLkksW8Wlw2u8unwTHEYFlZrqwsCaNVhySbwVyY=;
+        b=mXePeH+TjcOPaGKdGlQpGISZI7JNNbC3XAP6/bm1R28JWYqGp88XpP49V5vb95ptbk
+         TsNg1oW8ZtFF5Qwf/nEFq2+frd/v1SqG7bdVxKAz70h3R7yPHRsESXLWX0sbU46oXVZl
+         RnvjW8PnaLITXYRb1RKtasjsdGVC0hm/MR4SEdJV9Z0Z38nO9XmBUbj385JpD+LTuvqJ
+         1BWnZ3B07zTnk67caUwh5qmwiDyI4MrG5N0Tq3isvir/arJQJbKHkjZa7DFds5RmoQg5
+         76QkdL+iCUiKV9Wcw5kaleWvRM1A8tDPrXnTpBTClCO6RGIeoOwGjYyA8QRLua0OzALJ
+         KFaQ==
+Received: by 10.236.145.104 with SMTP id o68mr6299029yhj.74.1336671509730;
+ Thu, 10 May 2012 10:38:29 -0700 (PDT)
+Received: by 10.236.152.35 with HTTP; Thu, 10 May 2012 10:38:29 -0700 (PDT)
+In-Reply-To: <7vr4usnh2q.fsf@alter.siamese.dyndns.org>
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197607>
 
-A few minutes ago, Jeff King wrote:
-> 
-> The presence of the magit list is obviously the unusual thing here,
-> but he did not involve gmane at all. If I recall correctly, you read
-> the list via gmane. So I believe it is your workflow that introduces
-> the mangled addresses on the reading end, not the sender.
+On 10 May 2012 18:20, Junio C Hamano <gitster@pobox.com> wrote:
+> demerphq <demerphq@gmail.com> writes:
+>
+>> Similar logic for Try::Tiny. Why bother with it? It is pretty close =
+to
+>> a fancy way to write eval { ...; 1 } or do { .... }; =A0It is just o=
+ne
+>> more module for people to misunderstand, and then make bugs with.
+>
+> I personally like the approach to stick to bare "eval {}; if ($@) { .=
+=2E. }"
+> sequence, as it is much more explicit and easier to understand what i=
+s
+> happening underneath. =A0IOW, I like what I read in demerphq's messag=
+e.
 
-IIRC, gmane intercepts a first-time post to a newsgroup->mailing list
-using a mangled email that it gets and later forwards on your behalf
-when you prove that you're human.  Or something like that.  The weird
-thing is that it did that for a personal email -- maybe someone posted
-a reply with CCs, where the usual thing is to have only newsgroups?
+Basically that is the idiom that Try::Tiny encourages people not to
+use. Unfortunately the idiom documented in the Perl docs has been
+subtly wrong for pretty much ever due to a subtle bug in perl (which
+took years to come to light). :-(
 
--- 
-          ((lambda (x) (x x)) (lambda (x) (x x)))          Eli Barzilay:
-                    http://barzilay.org/                   Maze is Life!
+Anyway, anything written like this:
+
+eval {
+       whatever();
+       1;
+} or do {
+    my $error=3D $@ || "Zombie Error";
+    do_something_with_error($error);
+};
+
+is fine. See my other post to the list for details.
+
+> But it could be that these many people who wrote these different
+> catch/throw things did so for a reason that I am missing, and if that=
+ is
+> the case, I am interested to hear what benefit we will get from using
+> them.
+>
+> "It looks more familiar to people with (your favorite language)" coul=
+d be
+> it, but then I would not regret missing such a reason ;-)
+
+A few might justify things based on the bug in Perl, but I suspect the
+real motivation people have to use it is to emulate other languages
+constructs.
+
+The author of Try::Tiny might be an exception, I am reasonably
+convinced he was trying to provide a service to the community, but IMO
+on the balance of things the module muddies the water more than it
+improves things.
+
+cheers,
+Yves
+
+
+--=20
+perl -Mre=3Ddebug -e "/just|another|perl|hacker/"
