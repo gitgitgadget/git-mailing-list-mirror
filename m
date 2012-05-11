@@ -1,360 +1,87 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: What's cooking in git.git (May 2012, #04; Fri, 11)
-Date: Fri, 11 May 2012 14:57:14 -0700
-Message-ID: <7vvck2js91.fsf@alter.siamese.dyndns.org>
+Subject: Re: Please review this pull request for maint branch with update of
+ de.po
+Date: Fri, 11 May 2012 15:28:11 -0700
+Message-ID: <7vr4uqjqtg.fsf@alter.siamese.dyndns.org>
+References: <CANYiYbFf73hVen2sg1viNrXxt-g+tP=bF_ryBF8JYp0ZAL0b6A@mail.gmail.com>
+ <CANYiYbFiwvy8Lw+XQTehbc3k2FukrvhCvR6urfAR_3xVqXxNZA@mail.gmail.com>
+ <7vtxzr1kbd.fsf@alter.siamese.dyndns.org> <87ipg75drv.fsf@thomas.inf.ethz.ch>
+ <7vipg2le0u.fsf@alter.siamese.dyndns.org>
+ <CAN0XMOKi7PMLC0fSpT3n1+fYL_Uop1XGiTi_BJCRuxPRRknd7Q@mail.gmail.com>
+ <7vehqqld4w.fsf@alter.siamese.dyndns.org>
+ <CAN0XMOJLrGcB3=jy09b57FPc=ZoRxmo1Gx09vOLoxPexEe5fiQ@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 11 23:57:34 2012
+Cc: Thomas Rast <trast@inf.ethz.ch>,
+	Pat Thoyts <patthoyts@users.sourceforge.net>,
+	Jiang Xin <worldhello.net@gmail.com>,
+	Thomas Rast <trast@student.ethz.ch>,
+	Jan =?utf-8?Q?Kr=C3=BCger?= <jk@jk.gs>,
+	Christian Stimming <stimming@tuhh.de>,
+	Git List <git@vger.kernel.org>
+To: Ralf Thielow <ralf.thielow@googlemail.com>
+X-From: git-owner@vger.kernel.org Sat May 12 00:28:29 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SSxq9-0000kr-5z
-	for gcvg-git-2@plane.gmane.org; Fri, 11 May 2012 23:57:33 +0200
+	id 1SSyJy-0000tr-3m
+	for gcvg-git-2@plane.gmane.org; Sat, 12 May 2012 00:28:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1946184Ab2EKV5T (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 May 2012 17:57:19 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:43619 "EHLO
+	id S933306Ab2EKW2R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 May 2012 18:28:17 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:57039 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758746Ab2EKV5S (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 May 2012 17:57:18 -0400
+	id S933296Ab2EKW2Q (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 May 2012 18:28:16 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id F1E9986BA;
-	Fri, 11 May 2012 17:57:16 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:mime-version:content-type; s=sasl; bh=K
-	qGuDon6lXNAq8wZhOnjK46zEL0=; b=V2Bjt16zhCvzW9F7fAjHu7f1cgmVidVx4
-	7c3uFxpUzgIiTFfByMeRH7MmlTmjVYafADrUC80S//JlzfbOPitDNP3O4V1uKFqG
-	BW3+nrA2/zzEVDyiUialE7vGm8RZ7cnmR+wMemTajw3wvXFnDoyewQoTKMaXU2eb
-	/ie9UxrwKk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:mime-version:content-type; q=dns; s=sasl; b=Do8
-	CiM8KGHVKMxeXFJXl54+WBsfsLvMcQkmEXy3MRpG/hfTJg8ERVd2k29yDwXkIu8/
-	iZjZfMlRX9qKX+JuXUlfVgvt7TBOjSBBwvqNt5g2LaJc6z/jtzU/XUH2sXBEGXEw
-	XiQocRHVkNs7lwq9I/gNMCOCsR27SyUZJQWyWwYA=
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 50E248D5E;
+	Fri, 11 May 2012 18:28:15 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=lpH7x/t00m2zTxFfMN/ez4RTPUQ=; b=BzF1H+
+	adTZy7B47ptGCuJYp5UIUYYDiRvSg2I0hcWNDhea1f7BEEyuVSmYEQ/Hw3RPp5rN
+	RYp5QOJgQdZN/LxZl9rsAv2OqntiD0VBT0E6XsWIEFuoLJkaIxxVLJUEu4SU0MjF
+	eL1nCYhuYSafCUdMUDepj7V7DND5dr71rVyig=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=HaeMHhQSPr/hQDOgkm7DTJTW/AiAJjsG
+	BdWGhFSe942VZNmaxDoorMSbwdWTWPta+5ZaX5fySXCUGCekLlcMSYI8/xUUkI14
+	xnnZBarKCUulVH8JTAKE5i6bd5MyASA+XZrzLbDt1cJwoPB67v7YeiZAhDXnrfPH
+	jDYz2eL2NBc=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E9CB886B9;
-	Fri, 11 May 2012 17:57:16 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 470338D5C;
+	Fri, 11 May 2012 18:28:15 -0400 (EDT)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id F1BE686B8; Fri, 11 May 2012
- 17:57:15 -0400 (EDT)
-X-master-at: cd07cc53125fb2ca77a644831d4e5d9517bb7a05
-X-next-at: 441bd9a9d602910692074224920f8049ef81ea99
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C51B08D5A; Fri, 11 May 2012
+ 18:28:14 -0400 (EDT)
+In-Reply-To: <CAN0XMOJLrGcB3=jy09b57FPc=ZoRxmo1Gx09vOLoxPexEe5fiQ@mail.gmail.com> (Ralf
+ Thielow's message of "Fri, 11 May 2012 21:50:41 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 457C0128-9BB4-11E1-8933-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 9971AC70-9BB8-11E1-B447-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197700>
-
-Here are the topics that have been cooking.  Commits prefixed with '-' are
-only in 'pu' (proposed updates) while commits prefixed with '+' are in 'next'.
-
-The tenth and eleventh batch of topics are now in 'master', and there is
-the second maintenance release on the 1.7.10.x track out.
-
-You can find the changes described here in the integration branches of the
-repositories listed at
-
-    http://git-blame.blogspot.com/p/git-public-repositories.html
-
---------------------------------------------------
-[Graduated to "master"]
-
-* ah/maint-grep-double-init (2012-05-07) 1 commit
-  (merged to 'next' on 2012-05-08 at 51f84c5)
- + grep.c: remove redundant line of code
-
-* ef/checkout-empty (2012-05-08) 1 commit
-  (merged to 'next' on 2012-05-08 at fc4d754)
- + checkout: do not corrupt HEAD on empty repo
-
-Running "git checkout" on an unborn branch used to corrupt HEAD
-(regression in 1.7.10); this makes it error out.
-
-* ef/maint-1.7.6-clone-progress-fix (2012-05-07) 1 commit
- + clone: fix progress-regression
- (this branch is used by ef/maint-clone-progress-fix.)
-
-* ef/maint-clone-progress-fix (2012-05-07) 1 commit
-  (merged to 'next' on 2012-05-08 at b9a6cad)
- + Merge branch 'ef/maint-1.7.6-clone-progress-fix' into ef/maint-clone-progress-fix
- (this branch uses ef/maint-1.7.6-clone-progress-fix.)
-
-Some time ago, "git clone" lost the progress output for its "checkout"
-phase; when run without any "--quiet" option, it should give progress to
-the lengthy operation.
-
-* fa/maint-config-doc (2012-05-07) 1 commit
-  (merged to 'next' on 2012-05-08 at 54cc478)
- + Documentation/git-config: describe and clarify "--local <file>" option
-
-* jc/install-no-hardlinks (2012-05-04) 1 commit
-  (merged to 'next' on 2012-05-07 at b69e132)
- + Makefile: NO_INSTALL_HARDLINKS
-
-Your build platform may support hardlinks but you may prefer not to use
-them, e.g. when installing to DESTDIR to make a tarball and untarring on
-a filesystem that has poor support for hardlinks.
-
-The Makefile in git-gui project may need to learn to honor the same
-setting; it unconditionally creates git-citool by hardlinking git-gui.
-
-* jk/maint-reflog-walk-count-vs-time (2012-05-07) 5 commits
-  (merged to 'next' on 2012-05-08 at b1a9987)
- + reflog-walk: tell explicit --date=default from not having --date at all
-  (merged to 'next' on 2012-05-07 at 3652958)
- + reflog-walk: always make HEAD@{0} show indexed selectors
- + reflog-walk: clean up "flag" field of commit_reflog struct
- + log: respect date_mode_explicit with --format:%gd
- + t1411: add more selector index/date tests
-
-Gives a better DWIM behaviour for --pretty=format:%gd, "stash list", and
-"log -g", depending on how the starting point ("master" vs "master@{0}" vs
-"master@{now}") and date formatting options (e.g. "--date=iso") are given
-on the command line.
-
-* jk/maint-status-porcelain-z-b (2012-05-08) 4 commits
- + status: respect "-b" for porcelain format
- + status: fix null termination with "-b"
- + status: refactor null_termination option
- + commit: refactor option parsing
- (this branch is used by jk/status-porcelain-z-b.)
-
-* jk/status-porcelain-z-b (2012-05-08) 2 commits
-  (merged to 'next' on 2012-05-08 at 31172dd)
- + status: refactor colopts handling
- + Merge branch 'jk/maint-status-porcelain-z-b' into HEAD
- (this branch uses jk/maint-status-porcelain-z-b.)
-
-"git status --porcelain" ignored "--branch" option by mistake.  The output
-for "git status --branch -z" was also incorrect and did not terminate the
-record for the current branch name with NUL as asked.
-
-* js/checkout-detach-count (2012-05-04) 2 commits
-  (merged to 'next' on 2012-05-07 at 2957590)
- + checkout (detached): truncate list of orphaned commits at the new HEAD
- + t2020-checkout-detach: check for the number of orphaned commits
-
-When checking out another commit from an already detached state, we used
-to report all commits that are not reachable from any of the refs as
-lossage, but some of them might be reachable from the new HEAD, and there
-is no need to warn about them.
-
-* mh/ref-api-lazy-loose (2012-05-04) 18 commits
-  (merged to 'next' on 2012-05-04 at a70d858)
- + refs: fix find_containing_dir() regression
- + refs: read loose references lazily
- + read_loose_refs(): eliminate ref_cache argument
- + struct ref_dir: store a reference to the enclosing ref_cache
- + search_for_subdir(): return (ref_dir *) instead of (ref_entry *)
- + get_ref_dir(): add function for getting a ref_dir from a ref_entry
- + read_loose_refs(): rename function from get_ref_dir()
- + refs: wrap top-level ref_dirs in ref_entries
- + find_containing_dir(): use strbuf in implementation of this function
- + bisect: copy filename string obtained from git_path()
- + do_for_each_reflog(): use a strbuf to hold logfile name
- + do_for_each_reflog(): return early on error
- + get_ref_dir(): take the containing directory as argument
- + refs.c: extract function search_for_subdir()
- + get_ref_dir(): require that the dirname argument ends in '/'
- + get_ref_dir(): rename "base" parameter to "dirname"
- + get_ref_dir(): use a strbuf to hold refname
- + get_ref_dir(): return early if directory cannot be read
-
-Refs API is updated to lazily read sub-hierarchies of refs/ namespace,
-so that we do not have to grab everything from the filesystem when we
-are only interested in listing branches, for example.
-
-* nd/i18n-apply-lego (2012-05-08) 1 commit
-  (merged to 'next' on 2012-05-08 at c2be904)
- + apply: remove lego in i18n string in gitdiff_verify_name
-
-* nd/i18n-branch-lego (2012-05-04) 1 commit
-  (merged to 'next' on 2012-05-07 at af4e16f)
- + branch: remove lego in i18n tracking info strings
-
-Fix yet another message construction by concatenating pieces of sentenes,
-which is unfriendly to i18n.
-
-* nd/stream-to-archive (2012-05-03) 10 commits
-  (merged to 'next' on 2012-05-07 at 92f11c4)
- + t5000: rationalize unzip tests
- + archive-zip: streaming for deflated files
- + archive-zip: streaming for stored files
- + archive-zip: factor out helpers for writing sizes and CRC
- + archive-zip: remove uncompressed_size
- + archive-tar: stream large blobs to tar file
- + archive: delegate blob reading to backend
- + archive-tar: unindent write_tar_entry by one level
- + archive-tar: turn write_tar_entry into blob-writing only
- + streaming: void pointer instead of char pointer
-
-Stream large blobs directly out to archive files without slurping
-everything in memory first.
-
-* rs/dir-strbuf (2012-05-08) 1 commit
-  (merged to 'next' on 2012-05-08 at 0bc94fb)
- + Merge branch 'rs/maint-dir-strbuf' into rs/dir-strbuf
- (this branch uses rs/maint-dir-strbuf.)
-
-* rs/maint-dir-strbuf (2012-05-08) 1 commit
- + dir: convert to strbuf
- (this branch is used by rs/dir-strbuf.)
-
---------------------------------------------------
-[New Topics]
-
-* rs/xdiff-lose-emit-func (2012-05-09) 6 commits
-  (merged to 'next' on 2012-05-11 at 1eeb893)
- + xdiff: remove unused functions
- + xdiff: remove emit_func() and xdi_diff_hunks()
- + blame: factor out helper for calling xdi_diff()
- + blame: use hunk_func(), part 2
- + blame: use hunk_func(), part 1
- + xdiff: add hunk_func()
-
-Simplifies the interface between the implementation of "blame" and
-underlying xdiff engine, and removes a lot of unnecessary code from
-the latter.
-
-* sg/bash-prompt (2012-05-09) 4 commits
- - completion: respect $GIT_DIR
- - completion: use __gitdir() in _git_log()
- - tests: add tests for the bash prompt functions in the completion script
- - tests: move code to run tests under bash into a helper library
-
-This is only the "correction" bits taken from the beginning of a larger
-series that is to be rerolled.
-
-* jc/apply-3way (2012-05-10) 9 commits
- - apply: document --3way option
- - apply: allow rerere() upon --3way results
- - apply: register conflicted stages to the index
- - apply: plug the three-way merge logic in
- - apply: fall back on three-way merge
- - apply: accept -3/--3way command line option
- - apply: split load_preimage() helper function out
- - apply: refactor read_file_or_gitlink()
- - apply: clear_image() clears things a bit more
-
-"git apply" learns to wiggle the base version and perform three-way merge
-when a patch does not exactly apply to the version you have.
-
-* ld/git-p4-tags-and-labels (2012-05-11) 3 commits
-  (merged to 'next' on 2012-05-11 at 441bd9a)
- + git p4: fix bug when enabling tag import/export via config variables
- + git p4: fix bug when verbose enabled with tag export
- + git p4: add test for tag import/export enabled via config
-
-* rs/dir-strbuf-read-recursive-fix (2012-05-11) 2 commits
- - dir: simplify fill_directory()
- - dir: respect string length argument of read_directory_recursive()
-
---------------------------------------------------
-[Stalled]
-
-* jc/maint-push-refs-all (2012-05-04) 2 commits
- - get_fetch_map(): tighten checks on dest refs
- - fetch/push: allow refs/*:refs/*
-
-Allows pushing and fetching refs/stash.
-Not ready.
-There still seem to be other bugs hiding (e.g. try pushing twice).
-
-* jc/run-hook-env-1 (2012-03-11) 1 commit
- - run_hook(): enhance the interface to pass arbitrary environment
-
-Not urgent.
-
-Updates run_hook() API to be much less specific to "commit".  It would
-only be useful if people start doing more interesting things with hooks.
-
-* jc/split-blob (2012-04-03) 6 commits
- - chunked-object: streaming checkout
- - chunked-object: fallback checkout codepaths
- - bulk-checkin: support chunked-object encoding
- - bulk-checkin: allow the same data to be multiply hashed
- - new representation types in the packstream
- - packfile: use varint functions
-
-Not ready.
-
-I finished the streaming checkout codepath, but as explained in
-127b177 (bulk-checkin: support chunked-object encoding, 2011-11-30),
-these are still early steps of a long and painful journey. At least
-pack-objects and fsck need to learn the new encoding for the series
-to be usable locally, and then index-pack/unpack-objects needs to
-learn it to be used remotely.
-
-Given that I heard a lot of noise that people want large files, and
-that I was asked by somebody at GitTogether'11 privately for an
-advice on how to pay developers (not me) to help adding necessary
-support, I am somewhat dissapointed that the original patch series
-that was sent almost two months ago still remains here without much
-comments and updates from the developer community. I even made the
-interface to the logic that decides where to split chunks easily
-replaceable, and I deliberately made the logic in the original patch
-extremely stupid to entice others, especially the "bup" fanboys, to
-come up with a better logic, thinking that giving people an easy
-target to shoot for, they may be encouraged to help out. The plan is
-not working :-(.
-
---------------------------------------------------
-[Cooking]
-
-* nl/http-proxy-more (2012-05-11) 2 commits
- - http: rename HTTP_REAUTH to HTTP_AUTH_RETRY
- - http: Avoid limit of retrying request only twice
-
-I queued only the later two patches from this series, even though they do
-not make much sense without the first one that seems to need a bit more
-work, so that we won't forget.
-
-* fc/simplify-complete-revlist-file (2012-05-07) 1 commit
-  (merged to 'next' on 2012-05-08 at ff0b7d1)
- + completion: simplify __git_complete_revlist_file
-
-Will merge to 'master'.
-
-* nd/i18n-parseopt (2012-05-08) 2 commits
-  (merged to 'next' on 2012-05-08 at 15eb029)
- + i18n: apply: mark parseopt strings for translation
- + i18n: parseopt: lookup help and argument translations when showing usage
-
-Text from "git cmd --help" are getting prepared for i18n.
-
-* nd/threaded-index-pack (2012-05-07) 4 commits
-  (merged to 'next' on 2012-05-08 at 053b797)
- + index-pack: disable threading if NO_PREAD is defined
- + index-pack: support multithreaded delta resolving
- + index-pack: restructure pack processing into three main functions
- + compat/win32/pthread.h: Add an pthread_key_delete() implementation
-
-Enables threading in index-pack to resolve base data in parallel.
-
-Will merge to 'master'.
-
-* mm/push-default-switch-warning (2012-04-26) 2 commits
- - t5541: warning message is given even with --quiet
- - push: start warning upcoming default change for push.default
-
-Will squash the two, but this has to wait for a few release cycles.
-
---------------------------------------------------
-[Discarded]
-
-* cb/daemon-test-race-fix (2012-04-27) 2 commits
-  (merged to 'next' on 2012-04-27 at 84bbcf8)
- + Revert "git-daemon wrapper to wait until daemon is ready"
-  (merged to 'next' on 2012-04-24 at d5c30be)
- + git-daemon wrapper to wait until daemon is ready
-
-Fix race condition between starting and waiting for git-daemon in the
-test.
-
-Reverted from 'next' to replace it with js/daemon-test-race-fix.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197701>
+
+Ralf Thielow <ralf.thielow@googlemail.com> writes:
+
+> On Fri, May 11, 2012 at 9:40 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>> Ralf Thielow <ralf.thielow@googlemail.com> writes:
+>>
+>>> What about a README file like "/po" has?
+>>
+>> Sorry, but I cannot tell what you want to know about it.
+>
+> This was just an idea to do it in the same way.
+> What I want to say is that there is a README file in the po folder which
+> telling people that if they want to change something here, they have
+> to go through
+> the git.l10n repo to get changes into the git-core repo.
+> That's presumably the same situation here, isn't it?
+
+Hmph.  I thought we had something that was meant for contributors in
+Documentation/SubmittingPatches, but apparently we don't.
