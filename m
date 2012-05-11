@@ -1,93 +1,86 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: GSoC - Some questions on the idea of
-Date: Thu, 10 May 2012 18:39:16 -0400
-Message-ID: <20120510223916.GB31116@sigill.intra.peff.net>
-References: <4F76E430.6020605@gmail.com>
- <4F772E48.3030708@gmail.com>
- <20120402210708.GA28926@sigill.intra.peff.net>
- <4F84DD60.20903@gmail.com>
- <20120411213522.GA28199@sigill.intra.peff.net>
- <4F872D24.8010609@gmail.com>
- <20120412210315.GC21018@sigill.intra.peff.net>
- <4F8A2EBD.1070407@gmail.com>
- <20120415021550.GA24102@sigill.intra.peff.net>
- <4FAC367E.8070006@gmail.com>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: [PATCH 2/4] notes: "add -c" refuses to open an editor with non-blobs
+Date: Fri, 11 May 2012 08:11:57 +0700
+Message-ID: <CACsJy8AhB2fEtTws3rGDi3tQjVa6UivgAZUuQ+yrbp5r10oJUg@mail.gmail.com>
+References: <1336482692-30729-1-git-send-email-pclouds@gmail.com>
+ <1336658701-9004-1-git-send-email-pclouds@gmail.com> <1336658701-9004-3-git-send-email-pclouds@gmail.com>
+ <4FABDE2C.30406@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Sergio Callegari <sergio.callegari@gmail.com>,
-	Bo Chen <chen@chenirvine.org>, git@vger.kernel.org
-To: Neal Kreitzinger <nkreitzinger@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 11 00:39:25 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Fri May 11 03:12:40 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SSc17-0000ev-9Q
-	for gcvg-git-2@plane.gmane.org; Fri, 11 May 2012 00:39:25 +0200
+	id 1SSePM-0003yC-Sc
+	for gcvg-git-2@plane.gmane.org; Fri, 11 May 2012 03:12:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761727Ab2EJWjU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 May 2012 18:39:20 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:39242
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1761578Ab2EJWjT (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 May 2012 18:39:19 -0400
-Received: (qmail 3887 invoked by uid 107); 10 May 2012 22:39:39 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 10 May 2012 18:39:39 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 10 May 2012 18:39:16 -0400
-Content-Disposition: inline
-In-Reply-To: <4FAC367E.8070006@gmail.com>
+	id S1754411Ab2EKBMa convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 10 May 2012 21:12:30 -0400
+Received: from mail-we0-f174.google.com ([74.125.82.174]:43307 "EHLO
+	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751462Ab2EKBM3 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 10 May 2012 21:12:29 -0400
+Received: by weyu7 with SMTP id u7so79419wey.19
+        for <git@vger.kernel.org>; Thu, 10 May 2012 18:12:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=arcsR6+EiTFrUsjJdlcfxt+9yOGtWiAlvS/zlZlChck=;
+        b=UByU2pNpNJEwpKepuqz/FbDbIwHwobri8UOLUouE7oXw7zwYJsaKRFanQi/B5om9UH
+         oKi+uNDvrYIIYl60RF0VIOVxGW5w+j9PQLElndDo941zYs9QgB54XaN0mD9e4360wJL0
+         JUWw6yQJsCgZ/O8NmBefV0vxWrvLxxBUch/fXJhIclF5dExXMStHLvnaPFBs9oDky5sz
+         DQcQ549nmVCVGkNQS+xcXvLQRtQ5GEJBO0lmHM8d1s3UE2+E9hqKj1Or7iegCUW+7zxS
+         x7PQFj9QrDVjZqUX7PTJ/tMxsVd21WFo3cybcgAd485uoh0O6kbKaZiVWp+BVWdrCz7r
+         tujA==
+Received: by 10.180.107.101 with SMTP id hb5mr2713012wib.7.1336698747860; Thu,
+ 10 May 2012 18:12:27 -0700 (PDT)
+Received: by 10.223.64.208 with HTTP; Thu, 10 May 2012 18:11:57 -0700 (PDT)
+In-Reply-To: <4FABDE2C.30406@viscovery.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197647>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197648>
 
-On Thu, May 10, 2012 at 04:43:26PM -0500, Neal Kreitzinger wrote:
+On Thu, May 10, 2012 at 10:26 PM, Johannes Sixt <j.sixt@viscovery.net> =
+wrote:
+> Am 5/10/2012 16:04, schrieb Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy=
+:
+>> +test_expect_success 'non-blobs cannot be edited using editor' '
+>> + =C2=A0 =C2=A0 EDITOR=3Dcat test_must_fail git notes add -f -c HEAD=
+^{tree}
+>
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0(
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0test_set_edito=
+r cat &&
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0test_must_fail=
+ git notes add -f -c HEAD^{tree}
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0)
+>
+> Ditto in 3/4 and 4/4.
+>
+> (The problem is not that test_set_editor must be used, but that VAR=3D=
+value
+> in front of a shell function invocation does not do what you want it =
+to do
+> unless your shell is buggy.)
 
-> >Yes. The on-the-wire format is a packfile. We create a new packfile on
-> >the fly, so we may find new deltas (e.g., between objects that were
-> >stored on disk in two different packs), but we will mostly be reusing
-> >deltas from the existing packs.
-> >
-> >So any time you improve the on-disk representation, you are also
-> >improving the network bandwidth utilization.
-> >
-> The git-clone manpage says you can use the rsync protocol for the
-> url.  If you use rsync:// as your url for your remote does that get
-> you the rsync delta-transfer algorithm efficiency for the network
-> bandwidth utilization part (as opposed to the on-disk representation
-> part)?  (I'm new to rsync.)
+thanks. I looked again and t3301 already exports GIT_EDITOR, so we can
+skip setting EDITOR again.
 
-Well, yes. If you use the rsync transport, it literally runs rsync,
-which will use the regular rsync algorithm. But it won't be better than
-the git protocol (and in fact will be much worse) for a few reasons:
+>
+>> +'
+>
+> -- Hannes
 
-  1. The object db files are all named after the sha1 of their content
-     (the object sha1 for loose objects, and the sha1 of the whole pack
-     for packfiles). Rsync will not run its comparison algorithm between
-     files with different names. It will not re-transfer existing loose
-     objects, but it will delete obsolete packfiles and retransfer new
-     ones in their entirety. So it's like re-cloning over again for any
-     fetch after an upstream repack.
 
-  2. Even if you could use the rsync delta algorithm, it will never be
-     as efficient as git. Git understands the structure of the packfile
-     and can tell the other side "Hey, I have these objects". Whereas
-     rsync must guess from the bytes in the packfiles. Which is much
-     less efficient to compute, and can be wrong if the representation
-     has changed (e.g., something used to be a whole object, but is now
-     stored as a delta).
 
-  3. Even if you could get the exact right set of objects to transfer,
-     and then use the rsync delta algorithm on them, git would still do
-     better. Git's job is much easier: one side has both sets of
-     objects (those to be sent and those not), and is generating and
-     sending efficient deltas for the other side to apply to their
-     objects. Rsync assumes a harder job: you have one set, and
-     the remote side has the other set, and you must agree on a delta by
-     comparing checksums. So it will fundamentally never do as well.
-
--Peff
+--=20
+Duy
