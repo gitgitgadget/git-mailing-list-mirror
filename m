@@ -1,184 +1,99 @@
-From: Thomas Gummerer <t.gummerer@gmail.com>
-Subject: Re: Index format v5
-Date: Fri, 11 May 2012 19:12:30 +0200
-Message-ID: <20120511171230.GA2107@tgummerer>
-References: <CALgYhfMKdbv8TiT4ALDSvD3pSXHEPLWHM09DxYnRmRdBWRjh8Q@mail.gmail.com>
- <4FA7E703.7040408@alum.mit.edu>
- <20120508141137.GA3937@tgummerer.surfnet.iacbox>
- <4FAA2CAF.3040408@alum.mit.edu>
- <20120510121911.GB98491@tgummerer>
- <4FAC0633.90809@alum.mit.edu>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 1/3] http: handle proxy authentication failure (error 407)
+Date: Fri, 11 May 2012 13:15:51 -0400
+Message-ID: <20120511171550.GB26916@sigill.intra.peff.net>
+References: <4FAD1084.4000605@seap.minhap.es>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, trast@student.ethz.ch, gitster@pobox.com,
-	peff@peff.net, spearce@spearce.org, davidbarr@google.com
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Fri May 11 19:12:44 2012
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Nelson Benitez Leon <nelsonjesus.benitez@seap.minhap.es>
+X-From: git-owner@vger.kernel.org Fri May 11 19:16:10 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SStOV-0005A8-Mk
-	for gcvg-git-2@plane.gmane.org; Fri, 11 May 2012 19:12:44 +0200
+	id 1SStRo-0007FR-PJ
+	for gcvg-git-2@plane.gmane.org; Fri, 11 May 2012 19:16:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760836Ab2EKRMh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 May 2012 13:12:37 -0400
-Received: from mail-wg0-f44.google.com ([74.125.82.44]:64594 "EHLO
-	mail-wg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760706Ab2EKRMg (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 May 2012 13:12:36 -0400
-Received: by wgbdr13 with SMTP id dr13so2721800wgb.1
-        for <git@vger.kernel.org>; Fri, 11 May 2012 10:12:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=X7JR3hNB2m0SuRNvWxhOzEEQ4WwCPVxbLvzbFjGrZE0=;
-        b=w6OZJdZYevSvsjaPe8F7QK/P1/1Zl+zB8FhBasTMGI4lKjJJjqIwCFZ5iELMkSw3ey
-         1FVo01pu3PsI3d9pkVesmuVL9Cp0mer8dCQsFSSKTZU6OCwAbbAoOzpf45RrDgy9XO23
-         dqRZCg3/TFVOn4ttq54B8Pdm90W9A/Uv48MdS0FKT1HszbXn93cwTrBrXywUz+g9E9fi
-         I8qeFHIjBQNxPGjQomuAEbZwhFbu+JpexhVEW7OzaDVh5P+brniIZkEMKluIgA1KOLWq
-         kwLfEmUQUKiWjPoEN3alI6sN9mBOXmGGO1i9BNa8gKi4j/z5diXMIgLomKDaE7ZjEQ3Z
-         dlqg==
-Received: by 10.216.198.14 with SMTP id u14mr1981882wen.12.1336756355008;
-        Fri, 11 May 2012 10:12:35 -0700 (PDT)
-Received: from localhost (host186-197-dynamic.8-87-r.retail.telecomitalia.it. [87.8.197.186])
-        by mx.google.com with ESMTPS id b3sm11785917wib.4.2012.05.11.10.12.32
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 11 May 2012 10:12:33 -0700 (PDT)
+	id S932624Ab2EKRPz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 May 2012 13:15:55 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:40060
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752594Ab2EKRPx (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 May 2012 13:15:53 -0400
+Received: (qmail 13005 invoked by uid 107); 11 May 2012 17:16:13 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 11 May 2012 13:16:13 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 11 May 2012 13:15:51 -0400
 Content-Disposition: inline
-In-Reply-To: <4FAC0633.90809@alum.mit.edu>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <4FAD1084.4000605@seap.minhap.es>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197680>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197681>
 
-On 05/10, Michael Haggerty wrote:
-> On 05/10/2012 02:19 PM, Thomas Gummerer wrote:
-> >== Flat loading
-> >
-> >Since internally git expects and works with lexicografic ordering,
-> >a simple linear scan throught the subdirectories doesn't give
-> >the right internal sorting. To achieve the right internal sorting
-> >the loading will be done in the following way:
-> >
-> >The data structure is a stack of queues, to allow continous reading
-> >of the file.
-> >
-> >s ->  queue1
-> >t ->  queue2
-> >a ->  queue3
-> >c ->  queue4
-> >k ->  queue5
-> >
-> >dirs = read_all_directories
-> >
-> >foreach dir in dirs do
-> >     file = read_next_file
-> >
-> >     while element_on_top_of_stack.first_element<  nextdir
-> >         indexentries.append(dequeue(element_on_top_of_stack))
-> >         if element_on_top_of_stack == emtpy:
-> >             remove_element_on_top_of_stack
-> >
-> >     if file[filename]<  nextdir
-> >         indexentries.append(file)
-> >     else
-> >         queue.add(file)
-> >         foreach f in rest_of_files_in_directory:
-> >             queue.add(f)
-> >         stack.push(queue)
-> >
-> >foreach queue in stack:
-> >     foreach entry in queue:
-> >         indexentry.append(entry)
-> 
-> 1. It seems to me that the first time that a file with a filename
-> before nextdir is encountered, the reading of the directory
-> containing the file will be terminated.  This would, for example, be
-> the case for any directory that contains multiple files but no
-> subdirectories.
-> 
-> 2. There is still a lot that is unnecessarily obscure.  For example,
-> I suppose (but you don't say) that "rest_of_files_in_directory"
-> means to read the files at that moment.  It would be more explicit
-> (and no more verbose) to write
-> 
->     while (f = read_next_file()) != NULL:
->         queue.add(f)
-> 
-> 3. You don't cover corner cases, like when read_next_file() is
-> called but there are no files left in the directory, or when there
-> is no nextdir (which itself is not defined).  OK, this pseudocode is
-> only meant to be illustrative, so I guess we can wait until your
-> real implementation to see such details.  On the other hand, you
-> probably want to get all the details straight in pseudocode or
-> Python before you start translating it into C.
-> 
-> 4. I think the algorithm would be easier to understand and implement
-> if it were written recursively.  The call stack would replace your
-> explicit stack (but you would still need one queue per directory
-> level).  A key observation is that when "nextdir" precedes the next
-> file, then all of the files in subdirectories of nextdir do as well.
-> Thus an obvious recursion would be to call a function like
-> read_all_files_under_dir(indexentries, dirs, dirindex) at this
-> point, which would consume all of the directories that are
-> subdirectories of dirs[dirindex] (i.e., all directories whose names
-> have the string dirs[dirindex] as a prefix).  Using this method
-> would mean that there is no need to compare each file under
-> dirs[dirindex] against the next file in the outer directory.
-> 
-> Michael
+On Fri, May 11, 2012 at 03:13:40PM +0200, Nelson Benitez Leon wrote:
 
-Thanks for your feedback! To get clearer code I've now written a
-working reader for the v5 index format in Python. The full reader
-would probably be to long for the mailing list, but here is the
-interesting part:
+> @@ -804,6 +819,15 @@ static int http_request(const char *url, void *result, int target, int options)
+>  				init_curl_http_auth(slot->curl);
+>  				ret = HTTP_REAUTH;
+>  			}
+> +		} else if (results.http_code == 407) { /* Proxy authentication failure */
+> +			if (proxy_auth.username && proxy_auth.password) {
+> +				credential_reject(&proxy_auth);
+> +				ret = HTTP_NOAUTH;
+> +			} else {
+> +				credential_fill(&proxy_auth);
+> +				set_proxy_auth(slot->curl);
+> +				ret = HTTP_REAUTH;
+> +			}
 
+This part will fill in the username/password based on the proxy URL. But
+we never set the proxy URL ahead of time, so there is no chance for
+credential helpers to act, and the prompts will be confusing (they will
+just say "Password" instead of "Password for ...", which will make it
+unclear that we want the proxy password, not the remote server's
+password).
 
-def readfiles(directories, dirnr, entries):
-    global filedata
-    f.seek(directories[dirnr]["foffset"])
-    offset = struct.unpack("!I", fread(4))[0]
-    f.seek(offset)
-    filedata = list()
-    queue = list()
-    i = 0
-    while i < directories[dirnr]["nfiles"]:
-        filedata.append(struct.pack("!I", f.tell()))
-        filename = ""
-        byte = fread(1)
-        while byte != '\0':
-            filename += byte
-            byte = fread(1)
+So it's OK to drop the environment-parsing bits, but:
 
-        data = struct.unpack("!HHIII", fread(16))
-        objhash = fread(20)
-        readcrc = struct.pack("!i", binascii.crc32("".join(filedata)))
-        crc = f.read(4)
-        if readcrc != crc:
-            print "Wrong CRC: " + filename
-        filedata = list()
+  1. When we _do_ get the proxy via config, should we still parse it? I
+     could go either way. It's a nice feature, and I think we don't have
+     to care about how the environment parsing or NO_PROXY works. On the
+     other hand, we could just wait for the callback-based
+     authentication that will come in newer versions of curl, and code
+     to that, which will be even simpler. In the meantime, people can
+     just accept it.
 
-        i += 1
+  2. When we don't know the proxy name beforehand, we should probably
+     say something to stderr to indicate that it was a proxy
+     authentication failure.
 
-        queue.append(dict({"name": directories[dirnr]["pathname"] + filename, "flags": data[0], "mode": data[1], "mtimes": data[2], "mtimens": data[3], "statcrc": data[4], "objhash": binascii.hexlify(objhash)}))
+Also, what about the dumb http-push code-paths? They would need us to
+handle http_proactive_auth in the same way. Which obviously won't work
+for environment-based proxies, but could work for config-based proxies.
+I'm not sure if it's worth caring about. In the long run, the
+callback-based authentication is the way forward (though of course it
+will take time for that feature to get released in curl, and then for
+people to start having a curl that uses it, and so on).
 
-    if len(directories) > dirnr:
-        i = 0
-        while i < len(queue):
-            if len(directories) - 1 > dirnr and queue[i]["name"] > directories[dirnr + 1]["pathname"]:
-                entries, dirnr = readfiles(directories, dirnr + 1, entries)
-            else:
-                entries.append(queue[i])
-                i += 1
-        return entries, dirnr
+If we just punt on (1) and the proactive auth thing, then I think as a
+minimum we can get away with squashing this into your patch:
 
-The full reader can be found here:
-https://github.com/tgummerer/git/blob/pythonprototype/git-read-index-v5.py
+diff --git a/http.c b/http.c
+index 0023119..86e68ee 100644
+--- a/http.c
++++ b/http.c
+@@ -824,6 +824,7 @@ static int http_request(const char *url, void *result, int target, int options)
+ 				credential_reject(&proxy_auth);
+ 				ret = HTTP_NOAUTH;
+ 			} else {
++				warning(_("http proxy did not accept our credentials, retrying"))
+ 				credential_fill(&proxy_auth);
+ 				set_proxy_auth(slot->curl);
+ 				ret = HTTP_AUTH_RETRY;
 
--- 
-Thomas
+-Peff
