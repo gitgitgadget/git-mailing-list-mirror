@@ -1,159 +1,157 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [ANNOUNCE] Git 1.7.10.2
-Date: Fri, 11 May 2012 13:49:38 -0700
-Message-ID: <7v4nrml9y5.fsf@alter.siamese.dyndns.org>
+From: Phil Hord <phil.hord@gmail.com>
+Subject: Re: submodule update --force
+Date: Fri, 11 May 2012 16:56:07 -0400
+Message-ID: <CABURp0rFQ+330X8g3C2rmozQ77zxqhZhReZhaYMi1FE4uKeQtA@mail.gmail.com>
+References: <CAHOQ7J8r4m2rz57BdkM9CADHdHE1yDFwExyF87u=DCEXjqzcqw@mail.gmail.com>
+ <CAHOQ7J9xCYL=x=_nbq-3ksC2nF7L0=kxu9JX6M60xM-Bxmyfag@mail.gmail.com>
+ <7vobpwpoyi.fsf@alter.siamese.dyndns.org> <7vk40kpnia.fsf@alter.siamese.dyndns.org>
+ <CAHOQ7J_6+sfU6egjvVSPj-FAS6zjSUT=a057=kz_wYbogHLMMA@mail.gmail.com>
+ <7v8vh0ozge.fsf@alter.siamese.dyndns.org> <20120510185738.GE76400@book.hvoigt.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Linux Kernel <linux-kernel@vger.kernel.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 11 22:50:07 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Stefan Zager <szager@google.com>, git@vger.kernel.org,
+	Jens Lehmann <Jens.Lehmann@web.de>,
+	Lars Hjemli <hjemli@gmail.com>
+To: Heiko Voigt <hvoigt@hvoigt.net>
+X-From: git-owner@vger.kernel.org Fri May 11 22:56:36 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SSwms-0005pk-MJ
-	for gcvg-git-2@plane.gmane.org; Fri, 11 May 2012 22:50:07 +0200
+	id 1SSwt8-00010x-C9
+	for gcvg-git-2@plane.gmane.org; Fri, 11 May 2012 22:56:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758926Ab2EKUtn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 May 2012 16:49:43 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48289 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753457Ab2EKUtm (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 May 2012 16:49:42 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 995497753;
-	Fri, 11 May 2012 16:49:41 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:cc:date:message-id:mime-version:content-type; s=sasl;
-	 bh=awGaE6WAZNytc1PwhZoEdjHcODE=; b=Ojm0OP7gz++F4CFTKCE1UD4Hp8RR
-	HY5g0rAAFqFKjWxzdAbQNq8lP40M5C6FgrIKH+lXHbSMVSX4oN235795Tpe7TkOy
-	WEkAIRlMD76LdSev+sZDdfKlIY4mk/ekZk3VbY618VdORgVhQbls0JSgnAM7EJR7
-	ps6kFI6+qFqfpxY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:cc:date:message-id:mime-version:content-type; q=dns; s=sasl; b=
-	ehoVLjyp+OVpeWJag6scbF3BY9sGcpEsvCjKmlsgteIpntMxEHCIfVpfVTYVVMdz
-	wOkUfrRiD6TisKRCIhTBpzcE1FHE6q9yJNA8NDHuSh5OxLCDcAk//PopgQJc8UWj
-	N/bVR7inydwTTofHmwlqXgurUNaobUvPoFKkAFtGPbw=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 90C797752;
-	Fri, 11 May 2012 16:49:41 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id EFB347751; Fri, 11 May 2012
- 16:49:40 -0400 (EDT)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: D482FCBE-9BAA-11E1-811F-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S932908Ab2EKU4a convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 11 May 2012 16:56:30 -0400
+Received: from mail-yw0-f46.google.com ([209.85.213.46]:33920 "EHLO
+	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932227Ab2EKU42 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 11 May 2012 16:56:28 -0400
+Received: by yhmm54 with SMTP id m54so3048736yhm.19
+        for <git@vger.kernel.org>; Fri, 11 May 2012 13:56:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=4yIesaXuO/AxeJ+LLHoXgzH2ir33xM3c4QAf8cGMydY=;
+        b=WCPuUTXVuA4unBi2bAGP+Tm75JmgDcSDbXzy9PYK/sfpE6EsrD/jV3iG8xgEKhmqiA
+         ghZMjCHEX39dxyInhPE6RV2IAej3GZKTcw8US2BOQy2z67ZEsJ1v9YjobZTvBkrwgyq8
+         hf3EqixcVIGPYeJ/BNEW9QlcIb+v5juf1vMvQiWrbAGJu22SeHofS41oLxPtk3Dw3hux
+         62zjIob8Tnq4R6Dciu4E74qwDVj7iWxeYri9TKrgmcwjNF2f+bhPg8rAMcU6SqvXyPi5
+         yKsCYutJY/109k3adnzLAsYfftCSzeiAXdrJa3tnCPil44dV9YHoYuYZvN49cIPQYyKN
+         R6zA==
+Received: by 10.236.136.33 with SMTP id v21mr1804310yhi.17.1336769788219; Fri,
+ 11 May 2012 13:56:28 -0700 (PDT)
+Received: by 10.146.87.9 with HTTP; Fri, 11 May 2012 13:56:07 -0700 (PDT)
+In-Reply-To: <20120510185738.GE76400@book.hvoigt.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197696>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197697>
 
-The latest maintenance release Git 1.7.10.2 is now available at
-the usual places.
+On Thu, May 10, 2012 at 2:57 PM, Heiko Voigt <hvoigt@hvoigt.net> wrote:
+>
+> Hallo all,
+>
+> On Thu, May 10, 2012 at 07:58:09AM -0700, Junio C Hamano wrote:
+> > Stefan Zager <szager@google.com> writes:
+> >
+> > > ... =A0To my mind, any
+> > > `git submodule` command should *always* run on the first level of
+> > > submodules. =A0If you're going to specify --no-recurse, then why =
+are you
+> > > running `git submodule` at all? =A0I think 'recursion' only appli=
+es to
+> > > moving beyond the first level of submodules.
+> >
+> > Very true.
+> >
+> > Submodule folks, any opinion on the Stefan's approach?
+>
+> The distinction between first level of submodules and deeper is only
+> present in the "git submodule" subcommand and I think mainly for
+> historical reasons. I do not see a use case where this would be helpf=
+ul.
 
-The release tarballs are found at:
+Do I understand you to mean that you think the git-submodule ...
+--recursive option is archaic?  I would agree that one might expect it
+to be the default option, but I do not think it should be deprecated
+in any way.
 
-    http://code.google.com/p/git-core/downloads/list
+> To skip uninteresting submodules one can always use the
+> submodule.$name.update option set to 'none'. (I just found that its
+> documentation is in the wrong place but I will send a seperate patch
+> about that).
+>
+> In the non submodule commands we usually name this option
+> --recurse-submodules=3Dalways and have another
+> --recurse-submodules=3Don-demand option for the current behavior. Tho=
+se
+> options would either recurse or do nothing with the submodule.  Such =
+a
+> behavior, as pointed out, does not make sense for 'submodule update'.
+> Similar options names for 'submodule update' would probably be
+> --recurse=3Dalways and --recurse=3Don-demand.
+>
+> Nonetheless is force a term where the user probably wants to skip all
+> optimizations which the sha1 equality provides. So to make the curren=
+t
+> behavior more consistent I would be fine with adding this change.
+>
+> One thing which might make force even more useful would be to also sk=
+ip
+> the "is the sha1 available"-check for fetch that is possibly run befo=
+re
+> the checkout and just always run the fetch.
+>
+> In the long term, once checkout has learned things 'submodule update'=
+ is
+> currently doing, it probably makes sense to let 'submodule update'
+> always recurse into all checked out submodules. Since then it does no=
+t
+> make sense to run 'submodule update' for much more than resetting
+> things or changing the currently registered commits anymore. So in th=
+e
+> bright new future the 'on-demand' part will probably move away from
+> 'submodule update' and as such it does not make sense to implement
+> the seperate recurse options I described above.
+>
+> What do others think?
 
-and their SHA-1 checksums are:
+I think there are three cases:
 
-e4b7f746ff4e356baaddcad0b2911376efde031b  git-1.7.10.2.tar.gz
-004a2bf989b935657e2e1e6000a748d83657649f  git-htmldocs-1.7.10.2.tar.gz
-6cc3f80185bdd1a608cf373b05313b2adc82b898  git-manpages-1.7.10.2.tar.gz
+1. I want to update any sha1-mismatching submodules so
+    their HEAD matches the superproject gitlink.
 
-Also the following public repositories all have a copy of the v1.7.10.2
-tag and the maint branch that the tag points at:
+    git submodule update
 
-  url = git://repo.or.cz/alt-git.git
-  url = https://code.google.com/p/git-core/
-  url = git://git.sourceforge.jp/gitroot/git-core/git.git
-  url = git://git-core.git.sourceforge.net/gitroot/git-core/git-core
-  url = https://github.com/gitster/git
+2. Same as (1) above, but also check out files for all
+    submodules which are not already checked out.
 
-Git v1.7.10.2 Release Notes
-===========================
+    git submodule update &&
+    git submodule foreach 'git checkout HEAD || :'
 
-Fixes since v1.7.10.1
----------------------
+3. I want to update exactly to the gitlinks in the superproject
+   and discard any local or staged changes.
 
- * The test scaffolding for git-daemon was flaky.
+    git submodule update -f
 
- * The test scaffolding for fast-import was flaky.
+(2) above is the case Junio was trying to cover.  I cannot think of an
+elegant name for the switch for such an option, but I would be
+surprised it to find it is not the default behavior if I also
+encountered it like Stefan did.  We should try to eliminate surprises
+to help dispel the notion that submodules are unwieldy.
 
- * The filesystem boundary was not correctly reported when .git directory
-   discovery stopped at a mount point.
+(3) is too heavy when I really only wanted (2).
 
- * HTTP transport that requires authentication did not work correctly when
-   multiple connections are used simultaneously.
+I do not understand that use case that led Stefan to the predicament
+he was in where he had submodules with HEADs but with no checked out
+files.  But I do not begrudge his being there.
 
- * Minor memory leak during unpack_trees (hence "merge" and "checkout"
-   to check out another branch) has been plugged.
 
- * In the older days, the header "Conflicts:" in "cherry-pick" and "merge"
-   was separated by a blank line from the list of paths that follow for
-   readability, but when "merge" was rewritten in C, we lost it by
-   mistake. Remove the newline from "cherry-pick" to make them match
-   again.
-
- * The command line parser choked "git cherry-pick $name" when $name can
-   be both revision name and a pathname, even though $name can never be a
-   path in the context of the command.
-
- * The "include.path" facility in the configuration mechanism added in
-   1.7.10 forgot to interpret "~/path" and "~user/path" as it should.
-
- * "git config --rename-section" to rename an existing section into a
-   bogus one did not check the new name.
-
- * The "diff --no-index" codepath used limited-length buffers, risking
-   pathnames getting truncated.  Update it to use the strbuf API.
-
- * The report from "git fetch" said "new branch" even for a non branch
-   ref.
-
- * The http-backend (the server side of the smart http transfer) used
-   to overwrite GIT_COMMITTER_NAME and GIT_COMMITTER_EMAIL with the
-   value obtained from REMOTE_USER unconditionally, making it
-   impossible for the server side site-specific customization to use
-   different identity sources to affect the names logged. It now uses
-   REMOTE_USER only as a fallback value.
-
- * "log --graph" was not very friendly with "--stat" option and its
-   output had line breaks at wrong places.
-
- * Octopus merge strategy did not reduce heads that are recorded in the
-   final commit correctly.
-
- * "git push" over smart-http lost progress output a few releases ago;
-   this release resurrects it.
-
- * The error and advice messages given by "git push" when it fails due
-   to non-ff were not very helpful to new users; it has been broken
-   into three cases, and each is given a separate advice message.
-
- * The insn sheet given by "rebase -i" did not make it clear that the
-   insn lines can be re-ordered to affect the order of the commits in
-   the resulting history.
-
- * "git repack" used to write out unreachable objects as loose objects
-   when repacking, even if such loose objects will immediately pruned
-   due to its age.
-
- * A contrib script "rerere-train" did not work out of the box unless
-   user futzed with her $PATH.
-
- * "git rev-parse --show-prefix" used to emit nothing when run at the
-   top-level of the working tree, but now it gives a blank line.
-
- * The i18n of error message "git stash save" was not properly done.
-
- * "git submodule" used a sed script that some platforms mishandled.
-
- * When using a Perl script on a system where "perl" found on user's
-   $PATH could be ancient or otherwise broken, we allow builders to
-   specify the path to a good copy of Perl with $PERL_PATH.  The
-   gitweb test forgot to use that Perl when running its test.
-
-Also contains minor fixes and documentation updates.
+Regards,
+Phil
