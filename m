@@ -1,60 +1,65 @@
-From: supadhyay <supadhyay@imany.com>
-Subject: Re: how to clone/checkout branch/tag vesion from GIT repository
-Date: Fri, 11 May 2012 05:45:19 -0700 (PDT)
-Message-ID: <1336740319206-7550370.post@n2.nabble.com>
-References: <1336657187852-7546744.post@n2.nabble.com> <20120510135605.GA1495@sigill.intra.peff.net> <49A2AA38871E7B41841AA7D659D626A62E2098A2@njexch01.imany.com> <20120510143911.GB14711@sigill.intra.peff.net>
+From: Philippe Vaucher <philippe.vaucher@gmail.com>
+Subject: Re: Equivalent of "fixup" for git filter-branch
+Date: Fri, 11 May 2012 14:51:15 +0200
+Message-ID: <CAGK7Mr43Mxn-oJBDt11u0RMnxT1tv9OfbH9qNufb9X05mKh22Q@mail.gmail.com>
+References: <CAGK7Mr5D0WQn-Tc1B5=F7+3OgZd1uy54Be-ZrbyFv0CP8JY5bw@mail.gmail.com>
+ <m21umsylz8.fsf@igel.home> <CAGK7Mr7qdTwfha8aUdXE4FeXjA0rW3JL0q=a9kHArirjv5bygg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 11 14:45:27 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org
+To: Andreas Schwab <schwab@linux-m68k.org>
+X-From: git-owner@vger.kernel.org Fri May 11 14:51:54 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SSpDp-0003Ai-LR
-	for gcvg-git-2@plane.gmane.org; Fri, 11 May 2012 14:45:25 +0200
+	id 1SSpK4-0007b0-Lh
+	for gcvg-git-2@plane.gmane.org; Fri, 11 May 2012 14:51:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758942Ab2EKMpV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 May 2012 08:45:21 -0400
-Received: from sam.nabble.com ([216.139.236.26]:59767 "EHLO sam.nabble.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753318Ab2EKMpU (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 May 2012 08:45:20 -0400
-Received: from jim.nabble.com ([192.168.236.80])
-	by sam.nabble.com with esmtp (Exim 4.72)
-	(envelope-from <supadhyay@imany.com>)
-	id 1SSpDj-0007Am-7T
-	for git@vger.kernel.org; Fri, 11 May 2012 05:45:19 -0700
-In-Reply-To: <20120510143911.GB14711@sigill.intra.peff.net>
+	id S1755971Ab2EKMvs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 May 2012 08:51:48 -0400
+Received: from mail-qc0-f174.google.com ([209.85.216.174]:43918 "EHLO
+	mail-qc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757321Ab2EKMvr (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 May 2012 08:51:47 -0400
+Received: by qcro28 with SMTP id o28so1900553qcr.19
+        for <git@vger.kernel.org>; Fri, 11 May 2012 05:51:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=Ri9rl43K82GiR5d2HsbRwI4quj6dPG5s6uYkAx5qdoU=;
+        b=gCFZQLPXfMyFauVjrhbspfeyNu79vU4+xmGWeC5ofZ9uJKWr5g8dgdMiTHzgoTmECF
+         YDC365aVSIUTGTDH1nK2yKnedgWXvfkXaQ3/IisASzcpFUZhlvnHBvDPvZwSxUqmplv5
+         howitqyLENFl3J8GfKOtbL5sdS/sl0EdoGQNZJhuwY3YI38ueil4aVEranKfZ5D4962X
+         sKJdYlu7LH6ODPLrcPPrSX8qY0XtxBVveymlnxX/Xkxwz2RwLdSVcvpUi09DZMWZEDqB
+         a6kakT0cV2Or60yQ3TZHoiEPcUpwygDCH9AMqviZRxyfDIGbQtiODqT3rRpyGhs9GiJ/
+         lamA==
+Received: by 10.50.191.200 with SMTP id ha8mr1616317igc.45.1336740706135; Fri,
+ 11 May 2012 05:51:46 -0700 (PDT)
+Received: by 10.50.65.101 with HTTP; Fri, 11 May 2012 05:51:15 -0700 (PDT)
+In-Reply-To: <CAGK7Mr7qdTwfha8aUdXE4FeXjA0rW3JL0q=a9kHArirjv5bygg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197671>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197672>
 
-Hi Jeff,
+> > I know there is `skip_commit` for git filter branch with
+> > --commit-filter which squash the current commit with the next one,
+> > however I have trouble finding a "fixup" equivalent that'd squash the
+> > commit with the previous one (just like git rebase -i allows).
+>
+> Probably doable with an index filter that updates the index for the
+> parent commit with the contents of the fixup commit and a commit filter
+> that skips the fixup commit.
 
-Thanks for your reply.
 
-branch - br6-1-0 is already exists on remote. I have my few data which are
-associated on this branch and I want to get that specific data from br6-1-0.
+Hum, I'm unsure about how this would look... can I use "git commit
+--amend" inside a commit-filter?
 
-I did cvs2git and its working fine without any issue. 
-
-Also I can see the  list of branches when I run "git branch -r"  on my
-GITserver through "git" user. But after did this migration I do clone from
-git to gitolite on the same server (to manage with user functionality). Now,
-after cloning to gitolite if I run "git branch -r" it shows only master.
-
-I follow belwo step
-1- cvs 2 git  >> I can see list of branches here 
-2- git 2 gitolite  >> I can not see any branch except master.
+Also, how can I know in advance that the next commit will be a fixup commit?
 
 Thanks,
-Suchi
-
---
-View this message in context: http://git.661346.n2.nabble.com/how-to-clone-checkout-branch-tag-vesion-from-GIT-repository-tp7546744p7550370.html
-Sent from the git mailing list archive at Nabble.com.
+Philippe
