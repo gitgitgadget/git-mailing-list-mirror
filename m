@@ -1,79 +1,90 @@
-From: Egor Ryabkov <egor.ryabkov@gmail.com>
-Subject: Re: Git fetch/pull stopped working
-Date: Fri, 11 May 2012 22:47:29 +0400
-Message-ID: <CADB4Qb2-VB0LTrP8_i75V9e2FDeSjNLc+Pc4m73UJ0AX9NfX=w@mail.gmail.com>
-References: <CADB4Qb1BhWpm1mAwiHy+edySvo7P+YcvrSiTSc8dVzKQsnNCfQ@mail.gmail.com>
- <7vehqv36aw.fsf@alter.siamese.dyndns.org> <CADB4Qb35FfTL=XX04iR71+2Rg8p4s2roqAF8b_BdFNP9YN=sfA@mail.gmail.com>
- <7v8vh2v501.fsf@alter.siamese.dyndns.org> <20120508200842.GA14779@sigill.intra.peff.net>
- <CADB4Qb3sqy859k6QPuqU9u1cdxwz0LSQ7bdUXXFW_gQqaT+P3A@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	=?ISO-8859-1?Q?Carlos_Mart=EDn_Nieto?= <cmn@elego.de>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri May 11 20:47:53 2012
+From: Marc Weber <marco-oweber@gmx.de>
+Subject: Re: *IMPORTANT* to Linus Torvalds
+Date: Fri, 11 May 2012 21:04:36 +0200
+Message-ID: <1336761372-sup-8283@nixos>
+References: <loom.20120511T192427-748@post.gmane.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+To: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri May 11 21:04:46 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SSusZ-0000V4-Uw
-	for gcvg-git-2@plane.gmane.org; Fri, 11 May 2012 20:47:52 +0200
+	id 1SSv8v-0002c3-Uc
+	for gcvg-git-2@plane.gmane.org; Fri, 11 May 2012 21:04:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760357Ab2EKSrq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 May 2012 14:47:46 -0400
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:49588 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759374Ab2EKSrp (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 May 2012 14:47:45 -0400
-Received: by yhmm54 with SMTP id m54so2911991yhm.19
-        for <git@vger.kernel.org>; Fri, 11 May 2012 11:47:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=9X5ywRUPvKeZ7PIKL4nzKrH2JUdIpa7OKfzqWYPSkHo=;
-        b=mEnnZV4qTwVLHP+odqW9f9PjtNF4ef3szi4iyx077udvcklFu94eT+62KtFcLn/rza
-         NjHgxMKC+pcBXPUKk7ZK5a0oJv4SlznYzoa8DMe3vQFCZRHycQ2F/U+qwsPe8IxhZG+R
-         llHOTkDcl0FKfflyOiRUcRJBpqZV7HORw3NqRRp03erHXylBjA2n0F7sK20dU3JTzr3J
-         PYoSLvVy4guPjnLJmfTkEyod8VPFDnn52eUzxsVkpmkdWFcfykZDPUFpCDtwUcch3ZcS
-         gaZl6upNrFt4dMBBNdw637Ihk8QCpVsVQWyL5YwYXi0MzXn86xHV/eKxM0aCCmc5bzra
-         tlXQ==
-Received: by 10.50.202.35 with SMTP id kf3mr868138igc.20.1336762064631; Fri,
- 11 May 2012 11:47:44 -0700 (PDT)
-Received: by 10.42.60.200 with HTTP; Fri, 11 May 2012 11:47:29 -0700 (PDT)
-In-Reply-To: <CADB4Qb3sqy859k6QPuqU9u1cdxwz0LSQ7bdUXXFW_gQqaT+P3A@mail.gmail.com>
+	id S932232Ab2EKTEl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 May 2012 15:04:41 -0400
+Received: from mailout-de.gmx.net ([213.165.64.22]:59204 "HELO
+	mailout-de.gmx.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with SMTP id S1758861Ab2EKTEk (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 May 2012 15:04:40 -0400
+Received: (qmail invoked by alias); 11 May 2012 19:04:37 -0000
+Received: from p4FF8BCC0.dip.t-dialin.net (EHLO mail.gmx.net) [79.248.188.192]
+  by mail.gmx.net (mp032) with SMTP; 11 May 2012 21:04:37 +0200
+X-Authenticated: #9006135
+X-Provags-ID: V01U2FsdGVkX19UO5gkKKlUC7ei6/55kztlApeow4BOch1zs+qMLk
+	un2ugaiGHRSJh5
+Received: by mail.gmx.net (sSMTP sendmail emulation); Fri, 11 May 2012 21:04:36 +0200
+In-reply-to: <loom.20120511T192427-748@post.gmane.org>
+User-Agent: Sup/git
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197687>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197688>
 
-Problem solved.
+Summary:
 
-Turns out that was a miscommunication on out side: the guy who setup
-the keys on that box left, and his access to GH repo has been revoked.
+request:
+  Dear Mr Torvalds, help me please to make Ubuntu team
+  create or approve such a patch which would implement this:
+  > Ubuntu needs an API like Firefox's XML DOM, but in C, not Javascript.
 
-And GitHub returns "repo not found" rather than "you have no access
-rights for this repository".
+  I failed at understanding more valuable information.
 
+my reply:
+==========
+git kernel list is unlikely to be the appropriate forum.
+Try #ubuntu channel on freenode irc or http://ubuntuforums.org/
 
-On Wed, May 9, 2012 at 1:28 AM, Egor Ryabkov <egor.ryabkov@gmail.com> wrote:
->
-> > Agreed. It's hard to tell if there's a real problem or not. If the
-> > redacted bits are the same,
->
-> Yes, I checked this a few times and tried re-creating remote with the
-> address copied from GH site.
-> HTTP worked, SSH didn't.
->
->
-> > then it is probably a github issue. In that
-> > case, Egor, you should email support@github.com about it and mention the
-> > name of the problematic repo.
->
-> Yes, I actually contacted them last Friday, working with Simon Rozet now.
-> I updated him on what we've found and sent him the link to this thread.
->
->
-> Thanks for your help guys :)
+Also refine your request. Its not understandable (yet). Talk to other
+linux users and make them understand what you're idea is.
+
+I personally can't imagine what you're asking for because there are so
+many things which could be mapped to DOM including filesystem, linux
+configuration (/proc, /sys), ...
+
+You may want to look at "plan 9", they try to make everything be a 
+filesystem => http://cs-exhibitions.uni-klu.ac.at/index.php?id=214
+"Ken and Rob thought up the idea of building everything around a single
+file system protocol" ...
+So all you have to do is map the filesystem to DOM and you're done?
+
+You should find an appropriate forum for discussing and maturing your
+idea. Those forums will also help you make it complete enough such that
+average linux users / developers have a chance to understand what you
+really have in mind.
+
+I feel its unlikely that Torvalds understands what you are talking about
+either without providing samples etc.
+
+If you don't understand what I'm writing about contact me off list and
+and I'll help you find the appropriate forum and rephrase your idea
+making your description good enough to make others understand how you
+want ubuntu (linux in general?) to look like instead.
+
+If we're done with that we can write another mail to this thread telling
+where future discussion will take place. To speed everything up I've
+started a titanpad document:
+
+http://titanpad.com/pVtrCuSOr5
+and put some questions / comments there.
+
+You can also add additional references to discussions at the appropriate
+places to that public document.
+
+Marc Weber
