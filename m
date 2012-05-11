@@ -1,90 +1,124 @@
-From: Marc Weber <marco-oweber@gmx.de>
-Subject: Re: *IMPORTANT* to Linus Torvalds
-Date: Fri, 11 May 2012 21:04:36 +0200
-Message-ID: <1336761372-sup-8283@nixos>
-References: <loom.20120511T192427-748@post.gmane.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-To: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri May 11 21:04:46 2012
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Please review this pull request for maint branch with update of
+ de.po
+Date: Fri, 11 May 2012 12:21:37 -0700
+Message-ID: <7vipg2le0u.fsf@alter.siamese.dyndns.org>
+References: <CANYiYbFf73hVen2sg1viNrXxt-g+tP=bF_ryBF8JYp0ZAL0b6A@mail.gmail.com>
+ <CANYiYbFiwvy8Lw+XQTehbc3k2FukrvhCvR6urfAR_3xVqXxNZA@mail.gmail.com>
+ <7vtxzr1kbd.fsf@alter.siamese.dyndns.org> <87ipg75drv.fsf@thomas.inf.ethz.ch>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Pat Thoyts <patthoyts@users.sourceforge.net>,
+	Jiang Xin <worldhello.net@gmail.com>,
+	Ralf Thielow <ralf.thielow@googlemail.com>,
+	Thomas Rast <trast@student.ethz.ch>,
+	Jan =?utf-8?Q?Kr=C3=BCger?= <jk@jk.gs>,
+	Christian Stimming <stimming@tuhh.de>,
+	Git List <git@vger.kernel.org>
+To: Thomas Rast <trast@inf.ethz.ch>
+X-From: git-owner@vger.kernel.org Fri May 11 21:21:48 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SSv8v-0002c3-Uc
-	for gcvg-git-2@plane.gmane.org; Fri, 11 May 2012 21:04:46 +0200
+	id 1SSvPP-0004bu-9M
+	for gcvg-git-2@plane.gmane.org; Fri, 11 May 2012 21:21:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932232Ab2EKTEl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 May 2012 15:04:41 -0400
-Received: from mailout-de.gmx.net ([213.165.64.22]:59204 "HELO
-	mailout-de.gmx.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with SMTP id S1758861Ab2EKTEk (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 May 2012 15:04:40 -0400
-Received: (qmail invoked by alias); 11 May 2012 19:04:37 -0000
-Received: from p4FF8BCC0.dip.t-dialin.net (EHLO mail.gmx.net) [79.248.188.192]
-  by mail.gmx.net (mp032) with SMTP; 11 May 2012 21:04:37 +0200
-X-Authenticated: #9006135
-X-Provags-ID: V01U2FsdGVkX19UO5gkKKlUC7ei6/55kztlApeow4BOch1zs+qMLk
-	un2ugaiGHRSJh5
-Received: by mail.gmx.net (sSMTP sendmail emulation); Fri, 11 May 2012 21:04:36 +0200
-In-reply-to: <loom.20120511T192427-748@post.gmane.org>
-User-Agent: Sup/git
-X-Y-GMX-Trusted: 0
+	id S1760854Ab2EKTVm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 May 2012 15:21:42 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:46711 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1760812Ab2EKTVl (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 May 2012 15:21:41 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id ECCBA645C;
+	Fri, 11 May 2012 15:21:39 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=DwhojanFDgXpM3piGKvPviKkP1M=; b=XwoM07
+	SPjs/otbiQGT79ItCHaWxKG+P3ctzBWCWlzGBDz/YANbUQtELuyl+W7Yxe4ma6Az
+	Xp+Sm04GW7MWfMU5GzyOSK+HeceffeyMelbS8owdq8+K7JE6dcpk/JMhBsydBRFu
+	eEARHnT4qs4RbewVVt00Ci8VVeOeImud6pJ7M=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=w3+WizgqTUj3E9j4yqkww1cT2OAXJ/U1
+	WLlWYuJiLj4Z/TUm9INU6+yGTzp3ceU58jNsm3lQTSklij9JEUw46+5rRQE+CXcX
+	bXQ6e08ThkZgn9tMpVq90YFkxcHIeGRw4Fs4W3P7zIzyMg5gsmx7BNCfZt2r82YE
+	zajMAl9Dm6I=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E3648645B;
+	Fri, 11 May 2012 15:21:39 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 45DC7645A; Fri, 11 May 2012
+ 15:21:39 -0400 (EDT)
+In-Reply-To: <87ipg75drv.fsf@thomas.inf.ethz.ch> (Thomas Rast's message of
+ "Tue, 8 May 2012 09:32:20 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 8862DEE6-9B9E-11E1-8C49-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197688>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197689>
 
-Summary:
+Thomas Rast <trast@inf.ethz.ch> writes:
 
-request:
-  Dear Mr Torvalds, help me please to make Ubuntu team
-  create or approve such a patch which would implement this:
-  > Ubuntu needs an API like Firefox's XML DOM, but in C, not Javascript.
+> But for next time, can there be another solution?  It seems that this
+> process will make it very hard in general to keep the git-gui and core
+> git translations in sync.
 
-  I failed at understanding more valuable information.
+That unfortunately is fundamental in the way git-gui and the core git are
+related to each other, and the story is the same for gitk.
 
-my reply:
-==========
-git kernel list is unlikely to be the appropriate forum.
-Try #ubuntu channel on freenode irc or http://ubuntuforums.org/
+The arrangement to pull only in one direction comes from the initial
+desire from the maintainers of these "merge -s subtree" merged projects.
+These source trees are designed to be usable without being embedded inside
+a source tree of the core git, and when people want to work only on one of
+these projects, their clone will not have to carry any material from the
+history of the git core side.  The git core side didn't _have_ to have
+them as part of its tree, but because it makes distribution to end users
+more convenient, and that was the reason why we have these as part of our
+tree.
 
-Also refine your request. Its not understandable (yet). Talk to other
-linux users and make them understand what you're idea is.
+Theoretically, we could ignore the wish of git-gui/gitk projects and apply
+patches that touch these two parts directly to the git core tree, and let
+the maintainers of these projects deal with the consequences.  They can
+cherry-pick only a part of your commit from the git core tree to their
+trees while still retaining their independence, for example, and my next
+merge from them will see "both sides added identically or made identical
+changes", which is not a huge deal.  But that adds burden to integrators,
+which is not a scalable solution when contributors can make the burden
+smaller.
 
-I personally can't imagine what you're asking for because there are so
-many things which could be mapped to DOM including filesystem, linux
-configuration (/proc, /sys), ...
+The downside is of course the two projects won't be synchronised, but that
+is inherent---the contained projects do *not* want to be synchronised in
+the first place.  The price these projects pay is that they cannot affect
+what is outside of their trees (e.g. they cannot add test scripts to our
+side to test the new feature in their new tree).
 
-You may want to look at "plan 9", they try to make everything be a 
-filesystem => http://cs-exhibitions.uni-klu.ac.at/index.php?id=214
-"Ken and Rob thought up the idea of building everything around a single
-file system protocol" ...
-So all you have to do is map the filesystem to DOM and you're done?
+Another downside, once "merge -s subtree" is made, is that tracking
+changes in such a semi-subproject in the context of the containing project
+becomes harder, as we will continuously seeing what is essentially a
+renaming merge.  But it still is manageable as long as the merge is in one
+direction only.  When inspecting the history of the contained project, you
+only need to find the last such merge to the containing project, and then
+follow the history of its second parent, whose history will _not_ contain
+anything from the containing project.
 
-You should find an appropriate forum for discussing and maturing your
-idea. Those forums will also help you make it complete enough such that
-average linux users / developers have a chance to understand what you
-really have in mind.
+The recent contrib/subtree merge (not to be confused with "merge -s
+subtree") follows quite an opposite approach from what was used for
+git-gui/gitk.  It decided to cease to be an independent project to
+eventually integrate it as a part of the core, and further development of
+it will happen in the context of the layout of having the top of the last
+of its tree at contrib/subtree.  Because it has involved a merge in the
+"merge -s subtree" style once, it is harder to track its history beyond
+that point, but by being the part of the larger tree from now on, we only
+have to suffer once---it is inconvenient to inspect the history before the
+merge, but that is a one-time transition pain.
 
-I feel its unlikely that Torvalds understands what you are talking about
-either without providing samples etc.
-
-If you don't understand what I'm writing about contact me off list and
-and I'll help you find the appropriate forum and rephrase your idea
-making your description good enough to make others understand how you
-want ubuntu (linux in general?) to look like instead.
-
-If we're done with that we can write another mail to this thread telling
-where future discussion will take place. To speed everything up I've
-started a titanpad document:
-
-http://titanpad.com/pVtrCuSOr5
-and put some questions / comments there.
-
-You can also add additional references to discussions at the appropriate
-places to that public document.
-
-Marc Weber
+Incidentally, that is why I would be _very_ reluctant to take further
+merges for contrib/subtree if the merged history contain "git subtree"
+merges that ran "merge -s subtree" in both ways.  It makes what is
+supposedly just a one-time transition pain to continuous one.
