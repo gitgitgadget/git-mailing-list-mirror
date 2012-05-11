@@ -1,118 +1,78 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: merge unpack-objects to index-pack?
-Date: Fri, 11 May 2012 10:51:33 -0700
-Message-ID: <7vsjf6li6y.fsf@alter.siamese.dyndns.org>
-References: <CACsJy8BjA-L=jOZ7G9TbDY6D0rqhuzCCRwAjazEfBx_=HcqcqA@mail.gmail.com>
+Subject: Re: Git.pm
+Date: Fri, 11 May 2012 11:10:23 -0700
+Message-ID: <7vobpulhbk.fsf@alter.siamese.dyndns.org>
+References: <CAB3zAY3-Bn86bCr7Rxqi4vxbYFxUesLwm8gddxyMSexov2tOhw@mail.gmail.com>
+ <CAFouetgwRpB1GFJOC8PTVryVY-94S3xa5ZiSaWQWoz070qQ-6g@mail.gmail.com>
+ <CAB3zAY0NeXuH-wXyYkbim5U74eANY4hq5D6SsVLu3KeUqHFqzQ@mail.gmail.com>
+ <20120426203136.GA15432@burratino>
+ <CAB3zAY3VHtUobJfJ7=nSKb_6uJOXLGVHzR18qV6txPkzf54cDw@mail.gmail.com>
+ <86likyy7ub.fsf@red.stonehenge.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 11 19:51:56 2012
+Cc: Subho Banerjee <subs.zero@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Tim Henigan <tim.henigan@gmail.com>, git <git@vger.kernel.org>
+To: merlyn@stonehenge.com (Randal L. Schwartz)
+X-From: git-owner@vger.kernel.org Fri May 11 20:10:33 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SSu0R-0006MY-VO
-	for gcvg-git-2@plane.gmane.org; Fri, 11 May 2012 19:51:56 +0200
+	id 1SSuIS-0001rf-Bl
+	for gcvg-git-2@plane.gmane.org; Fri, 11 May 2012 20:10:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1946070Ab2EKRvl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 May 2012 13:51:41 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39043 "EHLO
+	id S933067Ab2EKSK1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 May 2012 14:10:27 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47731 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1945946Ab2EKRvh (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 May 2012 13:51:37 -0400
+	id S932215Ab2EKSKZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 May 2012 14:10:25 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BB2C18321;
-	Fri, 11 May 2012 13:51:35 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2C34C874E;
+	Fri, 11 May 2012 14:10:25 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=5LpsY9jmxSzZEfJA7kNRTZnK1+M=; b=VK5bQ1
-	r+hbLuVzxEBAPy0oAgyOyb5LTsY/RO6ELYbwrwSHfflEWmprsCWF13lR+JIf+Ds4
-	2gp/qumhg1t9MyovshctS/YCzLliDyt/Oqs2xZ24WK7Bc7/XThO3jtKv6FslPVXM
-	RAnLS20jxtRTN+Ywb/C9bzaMU1ESPdhPR5etk=
+	:content-type; s=sasl; bh=S+hdjVmPapZ6vc+rGHfY3nK+es0=; b=tvwS8H
+	shL3mYs10dINHezxMNZ4eQYQ4vHQXA76OivhVXNYObasAF9bJnIgHvgXKiOs0LOf
+	71csnGbymPeoyqHhvqFVgl4djhTzpVv6zrARK2+5c8b8T7/6cxo/F/byanFyFro/
+	1VVwPie2Ewqb5K0dyinoeaQOpNtNejm7m5Hy8=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=xPy6IvR8vij57e9Byr9zjvfoE+Cbf2Zc
-	MwTY7XVDaV+J+Z5mV2SrxPSDAKkpxKjbEfJE9zUdrMiMScymvGzIbRbybPLINKIT
-	VyVLMOpQKNZ3TD41MajjoNpauWhMoSWWOLW7ny7ztnZuAavueDEw02H2fUitEnit
-	XwWVIkXFMWo=
+	:content-type; q=dns; s=sasl; b=BtEubMtLht6zNyp4sOP41hlHuSvswJ0X
+	i2Aft7p/PVK57IECJHeDzNsgY4Zcv/SWVy1Y4LeAEejeB2meTA+xne3l8tZCvCLK
+	hcv5nKIKV1wEbxb7W5Oci4ZU5YYHOOm8h+QgX649vORMnA0ylJ+uNYQQB/3XGZ/F
+	w0QpHld1dyw=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B2DA88320;
-	Fri, 11 May 2012 13:51:35 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 231AB874C;
+	Fri, 11 May 2012 14:10:25 -0400 (EDT)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0891A831F; Fri, 11 May 2012
- 13:51:34 -0400 (EDT)
-In-Reply-To: <CACsJy8BjA-L=jOZ7G9TbDY6D0rqhuzCCRwAjazEfBx_=HcqcqA@mail.gmail.com> (Nguyen
- Thai Ngoc Duy's message of "Fri, 11 May 2012 19:02:14 +0700")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id AAAFA874B; Fri, 11 May 2012
+ 14:10:24 -0400 (EDT)
+In-Reply-To: <86likyy7ub.fsf@red.stonehenge.com> (Randal L. Schwartz's
+ message of "Fri, 11 May 2012 09:56:44 -0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: F330E5CC-9B91-11E1-A887-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 9485F8CA-9B94-11E1-B29C-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197684>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197685>
 
-Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
+merlyn@stonehenge.com (Randal L. Schwartz) writes:
 
-> I'm looking at adding large file support to unpack-objects. A simple
-> way is just to stream large blobs into loose large blobs. But I'd
-> rather keep those blobs in pack because pack-objects is happier that
-> way. I'm looking at unpack-objects and thinking maybe it's best to
-> just merge it back to index-pack.
+>>>>>> "Subho" == Subho Banerjee <subs.zero@gmail.com> writes:
 >
-> In normal mode (all small objects), index-pack receives the pack
-> stream. Objects will be unpacked in phase two, resolving objects in
-> index-pack. The only downside I can see is the new unpack-objects now
-> write temporary pack on disk, which does not sound too bad to me.
-> unpack-packs is called on small packs so extra space is small. For
-> single-huge-blob packs, it's good to keep them on disk anyway. When
-> the pack has large blobs, we could either just keep full pack.
+> Subho> I have started looking into how the error catching mechanism
+> Subho> implemented right now. I have looked into the more modern error
+> Subho> catching/throwing mechanisms in use in perl, and I am of the opinion
+> Subho> that Try::Simple would probably be the best candidate for being the
+> Subho> new error catching mechanism. I also wanted to discuss some aspects of
+> Subho> the changes to be made -
 >
-> After this, the only pack receiver at client side is index-pack.
-> fetch-pack does not have to choose between unpack-objects and
-> index-pack, just pass --unpack-limit <n> to index-pack.
->
-> What do you think?
+> Try::Tiny is preferred to Try::Simple.
 
-I think it is beneficial to step back a bit.  What is the _real_ reason
-why we call unpack-objects instead of index-pack when we receive only a
-handful of objects?
-
-I think we did this to avoid littering the receiving repository with too
-many packs from individual transfers.  As long as that goal is met, a
-solution that replaces the current "if we are going to get less than N
-objects, explode them to loose objects" does not actually have to explode
-them to loose objects.  It could explode normal objects into loose ones,
-while appending large ones into an existing pack (and it has to fix up the
-pack .idx after doing so), for example.  Or it could even choose to
-_always_ append into an existing pack designated for appending new
-objects.  Or it could punt the "appending" part, declaring that large
-object problem is a rare event, and create/leave a new pack in the
-repository that stores a large object (this however would not satisfy "do
-not litter the receiving repository with too many packs" goal if "large
-object problem" is not rare enough).
-
-And the first step to make that happen would be to let a single receiver
-program, instead of receive-pack/fetch-pack, make the decision.  That
-receiver program _might_ benefit from knowing how many objects it is going
-to receive when making the decision before seeing a single byte from the
-packstream, but there are other more meaningful data you can learn only
-after looking at what is in the pack.
-
-So I like the general direction you are heading.
-
-Probably the first step in the right structure of such a series would
-introduce a new helper program that builtin/receive-pack.c::unpack() and
-builtin/fetch-pack.c::get_pack() call, remove the header-peeking these
-calling processes currently do, and make that new helper responsible for
-switching between unpack/index-pack (the new helper may peek the header
-instead).  The first implementation of the new helper may decide exactly
-like how these two functions choose between the two.
-
-Once that is done, it will be an implementation detail of how objects in
-the incoming packstream is stored locally from the point of view of
-fetch-pack and receive-pack, and nobody should notice when the new helper
-is updated to call only the updated index-pack that knows to stream large
-(or all) objects into a pack.
+Thanks for an expert input; could you give another comparison between
+Try::Tiny vs the use of bare "eval / if ($@)"?
