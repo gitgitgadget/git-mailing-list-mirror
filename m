@@ -1,67 +1,95 @@
-From: Ryan McCue <lists@rotorised.com>
-Subject: Re: ls-tree and wildcards
-Date: Sun, 13 May 2012 01:46:50 +1000
-Message-ID: <4FAE85EA.3050807@rotorised.com>
-References: <4FAE7CBD.3020605@rotorised.com> <CACsJy8A73D_39ND-aqF0nECcKqjLHeqvEJ_XbT3BJd-0cLV1Nw@mail.gmail.com>
+From: Nicolas Pitre <nico@fluxnic.net>
+Subject: Re: [PATCH] pack-objects: use streaming interface for reading large
+ loose blobs
+Date: Sat, 12 May 2012 12:51:05 -0400 (EDT)
+Message-ID: <alpine.LFD.2.02.1205121220070.21030@xanadu.home>
+References: <1336818375-16895-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Sat May 12 17:47:04 2012
+Content-Type: multipart/mixed; boundary="Boundary_(ID_BKs8xSCPbOx1/XWdCLGjXw)"
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: =?VISCII?Q?Nguy=ADn_Th=E1i_Ng=F7c_Duy?= <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Sat May 12 18:51:51 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1STEX7-0001wD-P2
-	for gcvg-git-2@plane.gmane.org; Sat, 12 May 2012 17:47:02 +0200
+	id 1STFXp-0000fa-LM
+	for gcvg-git-2@plane.gmane.org; Sat, 12 May 2012 18:51:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754198Ab2ELPq5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 12 May 2012 11:46:57 -0400
-Received: from mta22-data1.ironport2.cbr1.mail-filtering.com.au ([117.55.227.22]:50348
-	"EHLO mta22-data1.ironport2.cbr1.mail-filtering.com.au"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752166Ab2ELPq4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 May 2012 11:46:56 -0400
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: Ah0LAD6Frk+va78LgWdsb2JhbABEgx6CW64ZAQEWJicEAwGCDQEBBAEjFUABBQsLGAICBRYLAgIJAwIBAgFFBg0BBwEBiAUEqCCSLIEwjlqBGASXDoRRE41G
-X-IronPort-AV: E=Sophos;i="4.75,576,1330866000"; 
-   d="scan'208";a="13569613"
-Received: from ju001lcs02.dfw.the-server.net.au (HELO ju001lcs02.dfw.the-server.com.au) ([175.107.191.11])
-  by smtp-data2.ironport2.cbr1.mail-filtering.com.au with ESMTP; 13 May 2012 01:46:54 +1000
-Received: from [124.191.162.147] (port=48404 helo=[192.168.0.2])
-	by ju001lcs02.dfw.the-server.com.au with esmtpa (Exim 4.77)
-	(envelope-from <lists@rotorised.com>)
-	id 1STEWy-003ohS-9B; Sun, 13 May 2012 01:46:52 +1000
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:12.0) Gecko/20120428 Thunderbird/12.0.1
-In-Reply-To: <CACsJy8A73D_39ND-aqF0nECcKqjLHeqvEJ_XbT3BJd-0cLV1Nw@mail.gmail.com>
+	id S1751349Ab2ELQvI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 12 May 2012 12:51:08 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:42795 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751232Ab2ELQvH (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 May 2012 12:51:07 -0400
+Received: from xanadu.home ([66.130.28.92]) by VL-VM-MR003.ip.videotron.ca
+ (Oracle Communications Messaging Exchange Server 7u4-22.01 64bit (built Apr 21
+ 2011)) with ESMTP id <0M3X005XE5H531B0@VL-VM-MR003.ip.videotron.ca> for
+ git@vger.kernel.org; Sat, 12 May 2012 12:51:05 -0400 (EDT)
+In-reply-to: <1336818375-16895-1-git-send-email-pclouds@gmail.com>
+User-Agent: Alpine 2.02 (LFD 1266 2009-07-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197737>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197738>
 
-Nguyen Thai Ngoc Duy wrote:
-> I don't think it ever does. There's a mention of "patterns" in ls-tree
-> man page, which is misleading.
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-Aha, I thought this might be the case. Thanks, I'll grep ls-tree then.
+--Boundary_(ID_BKs8xSCPbOx1/XWdCLGjXw)
+Content-type: TEXT/PLAIN; charset=UTF-8
+Content-transfer-encoding: 8BIT
 
-> A question that might help us understand your use case and give a
-> better advice, or improve the system: why do you need that?
+On Sat, 12 May 2012, Nguyễn Thái Ngọc Duy wrote:
 
-I need to be able to get all files starting with a certain string 
-("screenshot-" in this case) with certain extensions ("png", "jpg", 
-"jpeg" or "gif" in this case). Passing into grep will do the trick, but 
-a single command is my preferred option if it exists.
+> git usually streams large blobs directly to packs. But there are cases
+> where git can create large loose blobs (unpack-objects or hash-object
+> over pipe). Or they can come from other git implementations.
+> core.bigfilethreshold can also be lowered down and introduce a new
+> wave of large loose blobs.
+> 
+> Use streaming interface to read these blobs and compress/write at the
+> same time.
+> 
+> Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 
-I don't mind this not existing in git (given that piping into grep will 
-work just as well), but reading "patterns" on the man page made me think 
-it may exist. I think the wording of that should probably be changed to 
-avoid confusion.
+Comments below.
 
-Thanks for the response.
--- 
-Ryan McCue
-<http://ryanmccue.info/>
+> ---
+>  index-pack's streaming support is on the way. unpack-objects is
+>  another story because I'm thinking of merging it back to index-pack
+>  first, which may take more than one release cycle.
+> 
+>  builtin/pack-objects.c |   73 ++++++++++++++++++++++++++++++++++++++++++++----
+>  t/t1050-large.sh       |   16 ++++++++++
+>  2 files changed, 83 insertions(+), 6 deletions(-)
+> 
+> diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+> index 1861093..98b51c1 100644
+> --- a/builtin/pack-objects.c
+> +++ b/builtin/pack-objects.c
+> @@ -259,9 +309,14 @@ static unsigned long write_object(struct sha1file *f,
+>  	if (!to_reuse) {
+>  		no_reuse:
+>  		if (!usable_delta) {
+> -			buf = read_sha1_file(entry->idx.sha1, &type, &size);
+> -			if (!buf)
+> -				die("unable to read %s", sha1_to_hex(entry->idx.sha1));
+> +			type = sha1_object_info(entry->idx.sha1, &size);
+
+Please don't use sha1_object_info() lightly.  This is a potentially 
+expensive operation, and you really don't want to do it on each objects.
+
+And as a matter of fact, the information you are looking for has already 
+been determined earlier.  See the code in check_object() which tries 
+hard to avoid sha1_object_info() as much as possible.
+
+Therefore you should have entry->type and entry->size already set for 
+you to use.
+
+
+Nicolas
+
+--Boundary_(ID_BKs8xSCPbOx1/XWdCLGjXw)--
