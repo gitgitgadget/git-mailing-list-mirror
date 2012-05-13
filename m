@@ -1,275 +1,81 @@
-From: Heiko Voigt <hvoigt@hvoigt.net>
-Subject: [RFC/PATCH] read from 2 filedescriptors simultaneously into one
-	strbuf
-Date: Sun, 13 May 2012 16:47:34 +0200
-Message-ID: <20120513144733.GA23408@book.hvoigt.net>
-References: <20120213092541.GA15585@t1405.greatnet.de> <20120213093008.GD15585@t1405.greatnet.de> <7v7gzq9jg2.fsf@alter.siamese.dyndns.org> <4F3C3172.8030505@web.de>
+From: Dmitry Risenberg <dmitry.risenberg@gmail.com>
+Subject: Re: cherry-pick is slow
+Date: Sun, 13 May 2012 19:39:49 +0400
+Message-ID: <CAPZ_ugbV6hB+8z8UsQKdHhxGuHbLzC5WK19mK7M8k2tMz+mtXw@mail.gmail.com>
+References: <CAPZ_ugYojqTaWi0atr2ApOu9xmcwy4y8FduNC+TDhgWgSxXNPQ@mail.gmail.com>
+	<CAPc5daW6eBLUf55_Qk+4bA6Y16TehfOUGc1xFzhib9vm=8O2Yw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Fredrik Gustafsson <iveqy@iveqy.com>
-To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Sun May 13 16:48:17 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster-vger@pobox.com>
+X-From: git-owner@vger.kernel.org Sun May 13 17:39:58 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1STa5n-0006xg-2b
-	for gcvg-git-2@plane.gmane.org; Sun, 13 May 2012 16:48:15 +0200
+	id 1STatn-0004KI-SO
+	for gcvg-git-2@plane.gmane.org; Sun, 13 May 2012 17:39:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753252Ab2EMOrh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 13 May 2012 10:47:37 -0400
-Received: from t2784.greatnet.de ([83.133.105.219]:40195 "HELO darksea.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751901Ab2EMOrg (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 13 May 2012 10:47:36 -0400
-Received: (qmail 32342 invoked from network); 13 May 2012 14:47:34 -0000
-Received: from localhost (127.0.0.1)
-  by darksea.de with SMTP; 13 May 2012 14:47:34 -0000
-Content-Disposition: inline
-In-Reply-To: <4F3C3172.8030505@web.de>
-User-Agent: Mutt/1.5.19 (2009-01-05)
+	id S1753507Ab2EMPjv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 13 May 2012 11:39:51 -0400
+Received: from mail-ob0-f174.google.com ([209.85.214.174]:43589 "EHLO
+	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753408Ab2EMPju (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 13 May 2012 11:39:50 -0400
+Received: by obbtb18 with SMTP id tb18so6121428obb.19
+        for <git@vger.kernel.org>; Sun, 13 May 2012 08:39:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=69nlDq45u+jaNM6gD4n8fhFLShijmWaa7a+kSl8AEe0=;
+        b=jZNkrI4/6cl+Rqop1lzDNjTGPVBnJKsDE3BHNzS8XZwQszhX9NIVJXPgFAZwocdX97
+         Vgg/0+EWhLcMC5b+kj1B7iUR+rO8lvkTBg5YJskKaDM0toqAJQlYQ7M1Evj7oYfhIxFs
+         Tg1Xr0CA2mOTn5MuIHjyZNpLywOoxpbVJuji5oiBIi44Rt5xNeUFa1CX9984VWsSwwPO
+         CjsN4Yat1PsUKV78mslAz/kv304V7n9w+jYvfnLRtqcbZiGKRy1CxruzDwWmAiuYIA9V
+         jp3rKNwHEOajEqqlNM/XgLeyw9ECDQhaSjdZpt0rinESnz9iGy8ZqHgGM0N0KvIBb4mh
+         ZLZg==
+Received: by 10.60.10.231 with SMTP id l7mr7466552oeb.4.1336923590049; Sun, 13
+ May 2012 08:39:50 -0700 (PDT)
+Received: by 10.60.79.193 with HTTP; Sun, 13 May 2012 08:39:49 -0700 (PDT)
+In-Reply-To: <CAPc5daW6eBLUf55_Qk+4bA6Y16TehfOUGc1xFzhib9vm=8O2Yw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197747>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197748>
 
-Hi,
+2012/5/13 Junio C Hamano <gitster-vger@pobox.com>:
+> On Sat, May 12, 2012 at 3:39 PM, Dmitry Risenberg
+> <dmitry.risenberg@gmail.com> wrote:
+>>
+>> Hello.
+>>
+>> I have a very big git repository (the .git directory is about 5.3 Gb),
+>> which is a copy of an svn repository fetched via git-svn. In fact
+>> there are a few repositories ("working copies") that share the same
+>> .git directory (via symlinks), in which I have different svn branches
+>> checked out. Now I want to merge a commit from one svn branch to
+>> another via git cherry-pick. The commit contains diff in only one
+>> file. So I do
+>>
+>> git cherry-pick <commit>
+>>
+>> And the operation takes tens of seconds to finish. In "top" output I
+>> see that git process uses almost no CPU, but has hundreds of page
+>> faults, so I assume that it is reading a lot of files from disk.
+>
+> Wild guess: poorly (or worse yet, never) packed repository?
 
-On Wed, Feb 15, 2012 at 11:28:02PM +0100, Jens Lehmann wrote:
-> Am 14.02.2012 04:34, schrieb Junio C Hamano:
-> > Hmm, this makes me wonder if we fire subprocesses and have them run in
-> > parallel (to a reasonably limited parallelism), it might make the overall
-> > user experience more pleasant, and if we did the same on the fetching
-> > side, it would be even nicer.
-> 
-> Yeah, I had the same idea and did some experiments when working on
-> fetch some time ago.
-> 
-> > We would need to keep track of children and after firing a handful of them
-> > we would need to start waiting for some to finish and collect their exit
-> > status before firing more, and at the end we would need to wait for the
-> > remaining ones and find how each one of them did before returning from
-> > push_unpushed_submodules().  If we were to do so, what are the missing
-> > support we would need from the run_command() subsystem?
-> 
-> We would not only have to collect the exit status but also the output
-> lines. You don't want to see the output of multiple fetches or pushes
-> mixed together, so it makes sense to just defer that until the command
-> exited and then print everything at once. The interesting part I couldn't
-> come up with an easy solution for is to preserve the output order between
-> the stdout and stdin lines, as they contain different parts of the
-> progress which would look strange when shuffled around.
+You were absolutely right.
+I set "gc.auto = 0" during the initial checkout of svn and forgot to
+turn it on afterwards. After running "git gc", my repo became two
+times smaller, and git operations are now running much faster.
 
-I had a go at a possible implementation for deferred output of parallel
-subprocesses today. The idea is to use two concurrent threads
-simultaneously reading from the two filedescriptors and writing the
-result into one strbuf. Below is the diff for the current code I have[1].
+However, cherry-picking is still not as fast as I expected it to be -
+cherry-picking a single-file commit takes about 14-15 seconds, fully
+using one CPU core. Anything else I can improve?
 
-One current limitation is that it only works with pthreads enabled. I
-first tried to use the same pipe for the two threads to avoid the need
-for locking and shared memory. I am not sure but it seems that
-concurrents writes into the same pipe are not allowed.
-
-What do you think of this approach? Is it the correct place or should it
-go into another module? Also the function naming might need some polishing.
-
-Cheers Heiko
-
-P.S.: We can of course get rid of the second thread and just read in the
-main thread for one of the filedescriptors but this was easier while
-thinking about it.
-
-[1]
-diff --git a/run-command.c b/run-command.c
-index 2a1041e..48c9e07 100644
---- a/run-command.c
-+++ b/run-command.c
-@@ -1,6 +1,8 @@
- #include "cache.h"
- #include "run-command.h"
- #include "exec_cmd.h"
-+#include "strbuf.h"
-+#include <pthread.h>
- 
- static inline void close_pair(int fd[2])
- {
-@@ -407,6 +409,60 @@ fail_pipe:
- 	return 0;
- }
- 
-+#ifndef NO_PTHREADS
-+struct fd2fd_data {
-+	pthread_mutex_t mutex;
-+	struct strbuf *output;
-+};
-+
-+static int fd2fd(int in, int out, void *data)
-+{
-+	struct fd2fd_data *me = data;
-+	struct strbuf line;
-+
-+	FILE *fin = xfdopen(in, "r");
-+
-+	while (strbuf_getwholeline(&line, fin, '\n') != EOF) {
-+		pthread_mutex_lock(&me->mutex);
-+		strbuf_addbuf(me->output, &line);
-+		pthread_mutex_unlock(&me->mutex);
-+	}
-+
-+	strbuf_release(&line);
-+	return 0;
-+}
-+
-+void read_2_fds_into_strbuf(int fd1, int fd2, struct strbuf *output)
-+{
-+	struct async err_async;
-+	struct async out_async;
-+	struct fd2fd_data async_data;
-+
-+	pthread_mutex_init(&async_data.mutex, NULL);
-+	async_data.output = output;
-+
-+	/* start two threads to read fd1 and fd2 simultaneously
-+	 * into one strbuf */
-+	memset(&out_async, 0, sizeof(out_async));
-+	out_async.proc = fd2fd;
-+	out_async.data = &async_data;
-+	out_async.in = fd1;
-+
-+	memset(&err_async, 0, sizeof(err_async));
-+	err_async.proc = fd2fd;
-+	err_async.data = &async_data;
-+	err_async.in = fd2;
-+
-+	start_async(&out_async);
-+	start_async(&err_async);
-+
-+	finish_async(&out_async);
-+	finish_async(&err_async);
-+
-+	pthread_mutex_destroy(&async_data.mutex);
-+}
-+#endif /* NO_PTHREADS */
-+
- int finish_command(struct child_process *cmd)
- {
- 	return wait_or_whine(cmd->pid, cmd->argv[0], cmd->silent_exec_failure);
-diff --git a/run-command.h b/run-command.h
-index 56491b9..a65debb 100644
---- a/run-command.h
-+++ b/run-command.h
-@@ -5,6 +5,8 @@
- #include <pthread.h>
- #endif
- 
-+struct strbuf;
-+
- struct child_process {
- 	const char **argv;
- 	pid_t pid;
-@@ -90,4 +92,8 @@ struct async {
- int start_async(struct async *async);
- int finish_async(struct async *async);
- 
-+#ifndef NO_PTHREADS
-+void read_2_fds_into_strbuf(int fd1, int fd2, struct strbuf *output);
-+#endif
-+
- #endif
-diff --git a/t/t0061-run-command.sh b/t/t0061-run-command.sh
-index 10b26e4..774807b 100755
---- a/t/t0061-run-command.sh
-+++ b/t/t0061-run-command.sh
-@@ -11,4 +11,10 @@ test_expect_success 'start_command reports ENOENT' '
- 	test-run-command start-command-ENOENT ./does-not-exist
- '
- 
-+test_expect_success 'read_2_fds_into_strbuf basic behavior' '
-+	test-run-command out2strbuf >actual &&
-+	grep "^Hallo Stdout$" actual &&
-+	grep "^Hallo Stderr$" actual
-+'
-+
- test_done
-diff --git a/test-run-command.c b/test-run-command.c
-index 0612bfa..f59485d 100644
---- a/test-run-command.c
-+++ b/test-run-command.c
-@@ -10,26 +10,72 @@
- 
- #include "git-compat-util.h"
- #include "run-command.h"
-+#include "strbuf.h"
- #include <string.h>
- #include <errno.h>
- 
-+static int run_write_async(int in, int out, void *data)
-+{
-+	const char *msg = data;
-+
-+	FILE *fout = xfdopen(out, "w");
-+	fprintf(fout, "%s\n", msg);
-+
-+	fclose(fout);
-+	return 0;
-+}
-+
- int main(int argc, char **argv)
- {
- 	struct child_process proc;
-+	struct async write_out;
-+	struct async write_err;
- 
- 	memset(&proc, 0, sizeof(proc));
- 
--	if (argc < 3)
-+	if (argc < 2)
- 		return 1;
--	proc.argv = (const char **)argv+2;
- 
- 	if (!strcmp(argv[1], "start-command-ENOENT")) {
-+		if (argc < 3)
-+			return 1;
-+		proc.argv = (const char **)argv+2;
-+
- 		if (start_command(&proc) < 0 && errno == ENOENT)
- 			return 0;
- 		fprintf(stderr, "FAIL %s\n", argv[1]);
- 		return 1;
- 	}
- 
-+	if (!strcmp(argv[1], "out2strbuf")) {
-+#ifndef NO_PTHREADS
-+		struct strbuf output = STRBUF_INIT;
-+
-+		memset(&write_out, 0, sizeof(write_out));
-+		write_out.data = "Hallo Stdout";
-+		write_out.proc = run_write_async;
-+		write_out.out = -1;
-+
-+		memset(&write_err, 0, sizeof(write_err));
-+		write_err.data = "Hallo Stderr";
-+		write_err.proc = run_write_async;
-+		write_err.out = -1;
-+
-+		start_async(&write_out);
-+		start_async(&write_err);
-+
-+		read_2_fds_into_strbuf(write_out.out, write_err.out, &output);
-+
-+		finish_async(&write_out);
-+		finish_async(&write_err);
-+
-+		printf("%s", output.buf);
-+		strbuf_release(&output);
-+#endif /* NO_PTHREADS */
-+
-+		return 0;
-+	}
-+
- 	fprintf(stderr, "check usage\n");
- 	return 1;
- }
+-- 
+Dmitry Risenberg
