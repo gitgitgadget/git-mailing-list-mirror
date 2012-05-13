@@ -1,118 +1,153 @@
-From: Andrew Sayers <andrew-git@pileofstuff.org>
-Subject: Re: Some help on gitweb project.
-Date: Sun, 13 May 2012 19:53:34 +0100
-Message-ID: <4FB0032E.9060302@pileofstuff.org>
-References: <CAH-tXsAFMyrkAD1FWZKimbJt-gzmcyyXqt7gymtKozwfFt_aSA@mail.gmail.com>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: Index format v5
+Date: Sun, 13 May 2012 21:50:24 +0200
+Message-ID: <4FB01080.6010605@alum.mit.edu>
+References: <CALgYhfMKdbv8TiT4ALDSvD3pSXHEPLWHM09DxYnRmRdBWRjh8Q@mail.gmail.com> <4FA7E703.7040408@alum.mit.edu> <20120508141137.GA3937@tgummerer.surfnet.iacbox> <4FAA2CAF.3040408@alum.mit.edu> <20120510121911.GB98491@tgummerer> <4FAC0633.90809@alum.mit.edu> <20120511171230.GA2107@tgummerer>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git mailing list <git@vger.kernel.org>,
-	=?UTF-8?B?SmFrdWIgTmFyxJlic2tp?= <jnareb@gmail.com>
-To: jaseem abid <jaseemabid@gmail.com>
-X-From: git-owner@vger.kernel.org Sun May 13 20:53:55 2012
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, trast@student.ethz.ch, gitster@pobox.com,
+	peff@peff.net, spearce@spearce.org, davidbarr@google.com
+To: Thomas Gummerer <t.gummerer@gmail.com>
+X-From: git-owner@vger.kernel.org Sun May 13 21:58:45 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1STdvW-0000dO-PF
-	for gcvg-git-2@plane.gmane.org; Sun, 13 May 2012 20:53:55 +0200
+	id 1STewG-0003Ez-7S
+	for gcvg-git-2@plane.gmane.org; Sun, 13 May 2012 21:58:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752710Ab2EMSxj convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 13 May 2012 14:53:39 -0400
-Received: from mtaout02-winn.ispmail.ntl.com ([81.103.221.48]:29796 "EHLO
-	mtaout02-winn.ispmail.ntl.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752072Ab2EMSxj (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 13 May 2012 14:53:39 -0400
-Received: from aamtaout03-winn.ispmail.ntl.com ([81.103.221.35])
-          by mtaout02-winn.ispmail.ntl.com
-          (InterMail vM.7.08.04.00 201-2186-134-20080326) with ESMTP
-          id <20120513185336.OAEZ28930.mtaout02-winn.ispmail.ntl.com@aamtaout03-winn.ispmail.ntl.com>;
-          Sun, 13 May 2012 19:53:36 +0100
-Received: from [192.168.0.2] (really [94.170.150.126])
-          by aamtaout03-winn.ispmail.ntl.com
-          (InterMail vG.3.00.04.00 201-2196-133-20080908) with ESMTP
-          id <20120513185336.ENMH13318.aamtaout03-winn.ispmail.ntl.com@[192.168.0.2]>;
-          Sun, 13 May 2012 19:53:36 +0100
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.28) Gecko/20120313 Thunderbird/3.1.20
-In-Reply-To: <CAH-tXsAFMyrkAD1FWZKimbJt-gzmcyyXqt7gymtKozwfFt_aSA@mail.gmail.com>
-X-Cloudmark-Analysis: v=1.1 cv=R50lirqlHffDPPkwUlkuVa99MrvKdVWo//yz83qex8g= c=1 sm=0 a=yXtjXN6ItgYA:10 a=LbmhvjwabHoA:10 a=u4BGzq-dJbcA:10 a=IkcTkHD0fZMA:10 a=h7juetKEAAAA:8 a=3g80flMcAAAA:8 a=NEAV23lmAAAA:8 a=1NILi2k_KaSHdV_rVMIA:9 a=QEXdDO2ut3YA:10 a=HpAAvcLHHh0Zw7uRqdWCyQ==:117
+	id S1753018Ab2EMT6j (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 13 May 2012 15:58:39 -0400
+Received: from ALUM-MAILSEC-SCANNER-4.MIT.EDU ([18.7.68.15]:43920 "EHLO
+	alum-mailsec-scanner-4.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752612Ab2EMT6i (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 13 May 2012 15:58:38 -0400
+X-Greylist: delayed 421 seconds by postgrey-1.27 at vger.kernel.org; Sun, 13 May 2012 15:58:38 EDT
+X-AuditID: 1207440f-b7fe16d000000920-0c-4fb010c85b66
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-4.mit.edu (Symantec Messaging Gateway) with SMTP id 36.B6.02336.8C010BF4; Sun, 13 May 2012 15:51:36 -0400 (EDT)
+Received: from [192.168.69.140] (p4FC0AF35.dip.t-dialin.net [79.192.175.53])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id q4DJoPaY009814
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Sun, 13 May 2012 15:50:27 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:12.0) Gecko/20120430 Thunderbird/12.0.1
+In-Reply-To: <20120511171230.GA2107@tgummerer>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrAKsWRmVeSWpSXmKPExsUixO6iqHtCYIO/weuD0haPTm5msui60s1k
+	0dB7hdniR0sPs8X8QxNZLS6svs1usXLXQiYHdo+ds+6yeyzYVOrxrHcPo8fFS8oef87vYfWY
+	+2kRq8fnTXIB7FHcNkmJJWXBmel5+nYJ3BmTZ6xhLdiiULG9/RJrA+NZyS5GTg4JAROJabOv
+	MEHYYhIX7q1n62Lk4hASuMwocejbJTaQhJDAGSaJw63BIDavgLbEtdbNLCA2i4CqRNfkmcwg
+	NpuArsSinmagQRwcogJhEqsfaECUC0qcnPkErFxEQEti0tc+VhCbWaCFUeL1vAiQcmEBGYkN
+	670g1i5hknix4ik7SA2ngJ7ErC3zWEFqmAWsJb7tLoJolZfY/nYO8wRGgVlINsxCqJqFpGoB
+	I/MqRrnEnNJc3dzEzJzi1GTd4uTEvLzUIl0TvdzMEr3UlNJNjJAY4N/B2LVe5hCjAAejEg/v
+	AtH1/kKsiWXFlbmHGCU5mJREedN5N/gL8SXlp1RmJBZnxBeV5qQWH2KU4GBWEuFd/xConDcl
+	sbIqtSgfJiXNwaIkzqu+RN1PSCA9sSQ1OzW1ILUIJivDwaEkwdvODzRUsCg1PbUiLTOnBCHN
+	xMEJMpxLSqQ4NS8ltSixtCQjHhSj8cXAKAVJ8QDtbQVp5y0uSMwFikK0nmLU5ZjxadE1RiGW
+	vPy8VClx3iqQIgGQoozSPLgVsIT3ilEc6GNh3hSQKh5gsoSb9ApoCRPQEn6BdSBLShIRUlIN
+	jG1WZpclt7okbt/xR/zu6sN3Tq23nX3ccN+2DXfOZNTO5Q7a1e7L/Op352wXt53u 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197752>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197753>
 
-Jaseem and I discussed this in IRC.  You can see the log here:
-http://colabti.org/irclogger/irclogger_log/git-devel?date=3D2012-05-13
+On 05/11/2012 07:12 PM, Thomas Gummerer wrote:
+> Thanks for your feedback! To get clearer code I've now written a
+> working reader for the v5 index format in Python. The full reader
+> would probably be to long for the mailing list, but here is the
+> interesting part:
+>
+> [...]
+> The full reader can be found here:
+> https://github.com/tgummerer/git/blob/pythonprototype/git-read-index-v5.py
 
-Or see the (roughly) equivalent text below.
+Good.
 
-On 13/05/12 18:41, jaseem abid wrote:
-> Dear all,
->=20
-> CC : Andrew Sayers, Jakub Nar=C4=99bski
->=20
-> I have been working on gitweb for a couple of days as part of a
-> rejected GSoC proposal. I would love to get some help on this and if
-> somebody can, that would be thankful.
->=20
-> 1. How is code tested after some change? I am not talking about unit
-> testing but about making sure that application is doing what it is
-> actually intended to do. Do you have to re - install git/gitweb with
-> every version of code you commit and make sure that it works well and
-> as expected? Or, is there some other way? Sorry but I am a newbie whe=
-n
-> it comes to FOSS contribution and as well working on a project of thi=
-s
-> magnitude.
+I tried to review your code 3fe08f9b:git-read-index-v5.py and compare it 
+to your file spec f858cf6a9:Index-format-v5.textile.  I have the 
+following comments (some of them already discussed in IRC):
 
-Your later suggestion of symlinking /usr/share/giweb seems like it
-should work.  Alternatively, you could point Apache straight at your
-repo.  I don't think this is a situation where subtle issues creep up o=
-n
-you - if it looks like it works, it probably does.
+1. Your script seems to be reading a different version of the file than 
+described in the spec.  [When I mentioned this on IRC you pushed a new 
+version a4ee558ea of the spec.]
 
-> 2. How I should be committing ?
+2. Your script seems to assume that the index file has no extensions. 
+It would be better (for documentation purposes and to ensure that there 
+are no surprises) to make sure that the code knows how to handle extensions.
 
-Private commits are your own business.  When it comes time to push work
-out for public consumption, I like to think of it as telling a story -
-start at the beginning and concisely explain what happened.
+3. Please document briefly how the scripts should be used.
 
-> 3. How will I submit a commit like "Adding jQuery library"? Mail a
-> whole minimized JavaScript library to the mailing list? How can
-> somebody crosscheck the contents of a minimized JavaScript library ?
+4. Please limit line length to 80 columns (like the main git project).
 
-Probably best not to include jQuery in git itself - aside from anything
-else, it will be a big hassle to maintain.  Better to have a variable
-like "jquery_url" with a default like
-"https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" (i.e=
-=2E
-Google's CDN).  That avoids the need to include jQuery in git, and lets
-people e.g. link different gitweb instances to a single library on thei=
-r
-local network.
+5. Python has a nicer way to initialize dictionaries whose keys are all 
+valid identifiers; for example:
 
-> 4. At what stage is code to be submitted? After the full project is
-> done or in a modular manner? Can I ask for some review and help from
-> if I push the code to github and share the link, or do I have to mail
-> that also? I don't want to repeat this :
-> https://github.com/torvalds/linux/pull/17
+-        return dict({"signature": signature, "vnr": header[0], "ndir": 
+header[1], "nfile": header[2], "next": header[3]})
++        return dict(signature=signature, vnr=header[0], ndir=header[1],
++                    nfile=header[2], next=header[3])
 
-I expect it will become obvious when to submit code as your work
-continues.  For example, if you get into TDD and write a bunch of unit
-tests before anything else, you might want to send them in their own
-patch series.  I guess it's more likely you'll end up with one big patc=
-h
-series though.
+6. Some of your print statements are just begging to be written using 
+string interpolation; e.g.,
 
-Speaking for myself, I'm happy to look at code either here or on github=
-=2E
+-        print d["pathname"] + " " + str(d["flags"]) + " " + 
+str(d["foffset"]) + " " + str(d["cr"]) + " " + str(d["ncr"]) + " " + 
+str(d["nsubtrees"]) + " " + str(d["nfiles"]) + " " + str(d["nentries"]) 
++ " " + str(binascii.hexlify(d["objname"]))
++        print ("%(pathname)s %(flags)s %(foffset)s %(cr)s %(ncr)s "
++               "%(nsubtrees)s %(nfiles)s %(nentries)s " % d
++               + str(binascii.hexlify(d["objname"])))
 
-> 5. What should be my base commit/branch for starting the work ?
+printheader() can be rewritten similarly.
 
-Documentation/SubmittingPatches says:
+7. You have a couple of while loops that would be easier to read if 
+written as for loops.
 
- - A new feature should be based on 'master' in general.
+8. There is no need to use global variables.  Global variables have lots 
+of disadvantages, one of which is that it is hard to tell what functions 
+have side effects via the global variables.  It is better to pass the 
+needed variables explicitly to functions that need them.
 
-	- Andrew
+9. ...after you eliminate the global variables, you will see that the 
+checksums are mostly needed over limited areas of code then can be 
+discarded.  Rewriting the checksum handling in this way would make it 
+easier to see exactly what range of bytes is included in a particular 
+checksum.
+
+10. There is no need to keep track of all of the data that will go into 
+a checksum.  The CRC32 checksum can be computed incrementally via the 
+second argument of binascii.crc32(data, crc).  Therefore, you only need 
+to retain a 32-bit running checksum instead of the filedata array of 
+data strings.
+
+11. It is bad style to generate output from within the 
+readindexentries() function.  Given that it reads the whole array of 
+file entries anyway, it would be cleaner to return the array to the 
+caller and let the caller print out what it wants.
+
+12. Your handling of checksum errors is inconsistent.  In some places 
+you generate exceptions; in another you simply print an error to stdout 
+(not stderr!) and proceed to use the corrupt data.
+
+13. It is probably clearer to unpack the tuples returned by 
+struct.unpack() directly into local variables with meaningful names 
+instead of carrying them around as a tuple; e.g.,
+
+-    header = struct.unpack('!IIII', checksum.add(f.read(16)))
++    (vnr, ndir, nfile, next) = struct.unpack('!IIII', fread(16))
+
+14. It is more correct to check the file signature and version 
+explicitly before plowing into the rest of the file (that's what they're 
+there for!)
+
+That's as far as I've got.
+
+Michael
+
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
