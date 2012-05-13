@@ -1,165 +1,98 @@
-From: Heiko Voigt <hvoigt@hvoigt.net>
-Subject: Re: git-diff-tree does not use alternate objects for submodules
-Date: Sun, 13 May 2012 19:23:25 +0200
-Message-ID: <20120513172301.GA58961@book.hvoigt.net>
-References: <CAGHpTBLfbMU1WevW6XnY_N2BnfwPZ0_6jJDf45rCkVjWGwA9xg@mail.gmail.com> <7v1umuznuj.fsf@alter.siamese.dyndns.org> <20120509215815.GC74366@book.hvoigt.net> <7v1umtq9pm.fsf@alter.siamese.dyndns.org> <7vwr4lotjl.fsf@alter.siamese.dyndns.org>
+From: jaseem abid <jaseemabid@gmail.com>
+Subject: Some help on gitweb project.
+Date: Sun, 13 May 2012 23:11:12 +0530
+Message-ID: <CAH-tXsAFMyrkAD1FWZKimbJt-gzmcyyXqt7gymtKozwfFt_aSA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Orgad and Raizel Shaneh <orgads@gmail.com>, git@vger.kernel.org,
-	Jens Lehmann <Jens.Lehmann@web.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun May 13 19:23:34 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>,
+	Andrew Sayers <andrew-git@pileofstuff.org>
+To: git mailing list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun May 13 19:41:59 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1STcW5-00071d-OJ
-	for gcvg-git-2@plane.gmane.org; Sun, 13 May 2012 19:23:34 +0200
+	id 1STcnv-0006Vx-1r
+	for gcvg-git-2@plane.gmane.org; Sun, 13 May 2012 19:41:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751685Ab2EMRX2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 13 May 2012 13:23:28 -0400
-Received: from t2784.greatnet.de ([83.133.105.219]:40202 "HELO darksea.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750904Ab2EMRX1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 13 May 2012 13:23:27 -0400
-Received: (qmail 32715 invoked from network); 13 May 2012 17:23:25 -0000
-Received: from localhost (127.0.0.1)
-  by darksea.de with SMTP; 13 May 2012 17:23:25 -0000
-Content-Disposition: inline
-In-Reply-To: <7vwr4lotjl.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.19 (2009-01-05)
+	id S1751858Ab2EMRly convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 13 May 2012 13:41:54 -0400
+Received: from mail-wi0-f170.google.com ([209.85.212.170]:33960 "EHLO
+	mail-wi0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751100Ab2EMRly convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 13 May 2012 13:41:54 -0400
+Received: by wibhm6 with SMTP id hm6so862018wib.1
+        for <git@vger.kernel.org>; Sun, 13 May 2012 10:41:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=EAjZpNaqXm4zVWMsodcMlKE+iXPK/+P8SHZ9COU0J1g=;
+        b=TNKvPtWFAGD2RCv/SPBqdvwWa/JWMsS7dNOmOSeSJGbocJqzDKs7nf2L7DeKtPsh4n
+         uWnzj+poq3X5EzcozwS9khZiokWkeHisR+Q4ZZAsED3Go+nI00T0hu0iz07U6Jp7B5F+
+         WCRY+Pz5b1bBGNPtnsmsm7kfz1c3LU55N31JRbhNhxooHcQYJe0akUoNfdshdqXoR7u5
+         VnLrJuISPNVVC93EOPVUuYT0M6zp5cFJxFh9GNMZgUIrIM/IELWWwRzz/jeHHPJM8zYf
+         607kxleZtoAK7e0SECkkmMguCT0WDTuJ/l0lzysW5Khb5kK8V/1/BK7kf7h0yju4aizR
+         T2XQ==
+Received: by 10.216.213.219 with SMTP id a69mr3517087wep.16.1336930912554;
+ Sun, 13 May 2012 10:41:52 -0700 (PDT)
+Received: by 10.227.39.96 with HTTP; Sun, 13 May 2012 10:41:12 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197749>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197750>
 
-Hi,
+Dear all,
 
-On Wed, May 09, 2012 at 03:53:34PM -0700, Junio C Hamano wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
-> 
-> > Heiko Voigt <hvoigt@hvoigt.net> writes:
-> > ...
-> >> I will have a look if I can come up with something that reads the
-> >> submodules alternate config and uses it. Do you have other config
-> >> related things in mind that might be missing?
-> >
-> > No, I do not, and that is exactly the point.
-> >
-> > Making the process that works in the top-level superproject to imitate
-> > what would happen if the processing happened inside the submodule is what
-> > invited a bug like this.  Who knows what other discrepancies remain there.
-> >
-> > If we forked a separate process,...
-> 
-> Having said all that, we seem to have come too far and it is probably too
-> painful to revert the approach to contaminate the obj_hash (in object.c),
-> the set of refs (in refs.c) and the like in the top-level superproject
-> process with data borrowed from submodules repository [*1*].  So not only
-> I do not mind seeing you try solving it inside the superproject process, I
-> would appreciate and encourage the attempt.  One thing to be careful about
-> is relative paths stored in the objects/info/alternates; they are relative
-> to the object database of the repository the "alternates" is specified,
-> not relative to the superproject that happens to contain the submodule.
-> 
-> Thanks.
+CC : Andrew Sayers, Jakub Nar=C4=99bski
 
-Here is the simplest approach I could think of (not sure if its maybe
-too simple). On first sight it seems to work (even if I exchange the
-absolute path in alternates with a relative one.
+I have been working on gitweb for a couple of days as part of a
+rejected GSoC proposal. I would love to get some help on this and if
+somebody can, that would be thankful.
 
-Please see below.
+1. How is code tested after some change? I am not talking about unit
+testing but about making sure that application is doing what it is
+actually intended to do. Do you have to re - install git/gitweb with
+every version of code you commit and make sure that it works well and
+as expected? Or, is there some other way? Sorry but I am a newbie when
+it comes to FOSS contribution and as well working on a project of this
+magnitude.
 
-Cheers Heiko
+As far as I understand, gitweb by default is looking for files from
+`/usr/share/gitweb/` (I work on Debian Sid if that helps). If I edit
+the perl or some JavaScript code, how should I test it? *Install* my
+version from source as mentioned in "gitweb/INSTALL" ?
 
-I used the following setup to test:
+2. How I should be committing ?
 
-mkdir sub_alt &&
-(cd sub_alt &&
-git init &&
-echo a >a &&
-git add a &&
-git commit -m a) &&
-mkdir super &&
-(cd super &&
-git clone -s ../sub_alt sub &&
-git init &&
-git add sub &&
-git commit -m "sub a") &&
-(cd sub_alt &&
-echo b >b &&
-git add b &&
-git commit -m b) &&
-(cd super &&
-	(cd sub &&
-	 git fetch &&
-	 git checkout origin/master) &&
- git diff --submodule
-)
+Personally I commit on *very* small changes, so that I can easily get
+back to any point and do bisects well and good, but I see the patches
+in the mailing list to be polished and fine tuned. Commit somehow
+comfortably and then polish it in another branch with rebase and
+squashes and then submit it for comments on mailing list?
 
+Refer please: http://sethrobertson.github.com/GitBestPractices/#sausage
 
--8<--
-From: Heiko Voigt <hvoigt@hvoigt.net>
-Subject: [PATCH] teach add_submodule_odb() to look for alternates
+3. How will I submit a commit like "Adding jQuery library"? Mail a
+whole minimized JavaScript library to the mailing list? How can
+somebody crosscheck the contents of a minimized JavaScript library ?
 
-Since we allow to link other object databases when loading a submodules
-database we should also load possible alternates.
+Earlier Jakub mentioned about adding CDN support for the library,
+which I think is a very good feature. How should I do this? Add an
+extra config/build variable to select b/w local and CDN version ?
 
-Signed-off-by: Heiko Voigt <hvoigt@hvoigt.net>
----
- cache.h     | 1 +
- sha1_file.c | 3 +--
- submodule.c | 3 +++
- 3 files changed, 5 insertions(+), 2 deletions(-)
+4. At what stage is code to be submitted? After the full project is
+done or in a modular manner? Can I ask for some review and help from
+if I push the code to github and share the link, or do I have to mail
+that also? I don't want to repeat this :
+https://github.com/torvalds/linux/pull/17
 
-diff --git a/cache.h b/cache.h
-index e14ffcd..cc5048c 100644
---- a/cache.h
-+++ b/cache.h
-@@ -947,6 +947,7 @@ extern struct alternate_object_database {
- 	char base[FLEX_ARRAY]; /* more */
- } *alt_odb_list;
- extern void prepare_alt_odb(void);
-+extern void read_info_alternates(const char * relative_base, int depth);
- extern void add_to_alternates_file(const char *reference);
- typedef int alt_odb_fn(struct alternate_object_database *, void *);
- extern void foreach_alt_odb(alt_odb_fn, void*);
-diff --git a/sha1_file.c b/sha1_file.c
-index 3c4f165..4ccaf7a 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -229,7 +229,6 @@ char *sha1_pack_index_name(const unsigned char *sha1)
- struct alternate_object_database *alt_odb_list;
- static struct alternate_object_database **alt_odb_tail;
- 
--static void read_info_alternates(const char * alternates, int depth);
- static int git_open_noatime(const char *name);
- 
- /*
-@@ -354,7 +353,7 @@ static void link_alt_odb_entries(const char *alt, const char *ep, int sep,
- 	}
- }
- 
--static void read_info_alternates(const char * relative_base, int depth)
-+void read_info_alternates(const char * relative_base, int depth)
- {
- 	char *map;
- 	size_t mapsz;
-diff --git a/submodule.c b/submodule.c
-index 784b580..959d349 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -63,6 +63,9 @@ static int add_submodule_odb(const char *path)
- 	alt_odb->name[40] = '\0';
- 	alt_odb->name[41] = '\0';
- 	alt_odb_list = alt_odb;
-+
-+	/* add possible alternates from the submodule */
-+	read_info_alternates(objects_directory.buf, 0);
- 	prepare_alt_odb();
- done:
- 	strbuf_release(&objects_directory);
--- 
-1.7.10.1.491.gc66153e
+5. What should be my base commit/branch for starting the work ?
+
+V/r,
+
+Jaseem Abid
+http://jaseemabid.github.com
