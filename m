@@ -1,144 +1,152 @@
-From: Sebastian Kuzminsky <seb@highlab.com>
-Subject: Re: surprising behavior from merge
-Date: Mon, 14 May 2012 12:14:21 -0600
-Message-ID: <8F6454B6-5C93-45AA-8AB0-881FEEE22848@highlab.com>
-References: <9A9AD20F-B316-4DC1-8C6A-E0FC6ED80A61@highlab.com> <ae419d8bbc2b44bfa4c0a7eb421f5037-mfwitten@gmail.com> <4FADA967.10808@highlab.com> <4FADCA05.60109@blizzard.com>
-Mime-Version: 1.0 (Apple Message framework v1257)
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Illia Bobyr <ibobyr@blizzard.com>
-X-From: git-owner@vger.kernel.org Mon May 14 20:14:48 2012
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH v5] completion: add new __git_complete helper
+Date: Mon, 14 May 2012 20:30:45 +0200
+Message-ID: <CAMP44s1h=MPT8vx6JrGjMZWJzRjndxYKoYgo+1Y_Mmv+gWXzaQ@mail.gmail.com>
+References: <1337009718-1164-1-git-send-email-felipe.contreras@gmail.com>
+	<7vvcjyhd5n.fsf@alter.siamese.dyndns.org>
+	<CAMP44s1pb+J_SAzZ66QVcWq4V=LauUQ2VmzMD8KBtnhjubkkVg@mail.gmail.com>
+	<7vmx5ahbrm.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org,
+	=?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder@ira.uka.de>,
+	Thomas Rast <trast@student.ethz.ch>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon May 14 20:30:55 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1STzn8-0004o5-Mi
-	for gcvg-git-2@plane.gmane.org; Mon, 14 May 2012 20:14:43 +0200
+	id 1SU02n-0007p7-Jg
+	for gcvg-git-2@plane.gmane.org; Mon, 14 May 2012 20:30:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932123Ab2ENSOh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 May 2012 14:14:37 -0400
-Received: from smtp.quartz.synacor.com ([205.169.121.111]:59745 "EHLO
-	smtp.q.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932073Ab2ENSOg convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 14 May 2012 14:14:36 -0400
-X_CMAE_Category: 0,0 Undefined,Undefined
-X-CNFS-Analysis: v=1.1 cv=WzqRc1FjMqjoJrKlRBOavx4tBi4xUTjIXTxDts6qZHk= c=1 sm=0 a=oddu3yYFaF8A:10 a=8D6UOEW8R_kA:10 a=8nJEP1OIZ-IA:10 a=NEAV23lmAAAA:8 a=NuROZhZ1_UltXTFBSjYA:9 a=mZO3Y9GTKf3Ae6h4FVYA:7 a=wPNLvfGTeEIA:10 a=C8-wxyFeZeF9dpQ-:21 a=BHB1bcjKQTx98A7R:21 a=noO3zNo7aAGhcWOY2lY1YQ==:117
-X-CM-Score: 0
-X-Scanned-by: Cloudmark Authority Engine
-Authentication-Results: smtp03.quartz.synacor.com smtp.mail=seb@highlab.com; spf=neutral; sender-id=neutral
-Authentication-Results: smtp03.quartz.synacor.com header.from=seb@highlab.com; sender-id=neutral
-Authentication-Results: smtp03.quartz.synacor.com smtp.user=highlab@q.com; auth=pass (LOGIN)
-Received-SPF: neutral (smtp03.quartz.synacor.com: 75.166.179.153 is neither permitted nor denied by domain of highlab.com)
-Received: from [75.166.179.153] ([75.166.179.153:58089] helo=highlab.com)
-	by smtp.q.com (envelope-from <seb@highlab.com>)
-	(ecelerity 2.2.2.40 r(29895/29896)) with ESMTPA
-	id 9C/C3-11205-B8B41BF4; Mon, 14 May 2012 14:14:35 -0400
-Received: from [67.51.249.130] (helo=[10.126.1.197])
-	by highlab.com with esmtpsa (TLS1.0:RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.69)
-	(envelope-from <seb@highlab.com>)
-	id 1STzn0-0006ud-As; Mon, 14 May 2012 12:14:34 -0600
-In-Reply-To: <4FADCA05.60109@blizzard.com>
-X-Mailer: Apple Mail (2.1257)
+	id S1757448Ab2ENSat convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 14 May 2012 14:30:49 -0400
+Received: from mail-lpp01m010-f46.google.com ([209.85.215.46]:37053 "EHLO
+	mail-lpp01m010-f46.google.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1757199Ab2ENSar convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 May 2012 14:30:47 -0400
+Received: by lahd3 with SMTP id d3so3555115lah.19
+        for <git@vger.kernel.org>; Mon, 14 May 2012 11:30:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=rt764RdrDGjclGGZ+kc4JpPFeG0b68a2TMbIUXzU3E8=;
+        b=qX+YsTHiA+WqoaNdO9Bf2l6ZmBrfibCarNhF++EcCmQO3j0yQQgBZuzgwooACJ67am
+         uz4jeWAa5sPy/YCZKATdeTer0//yv4L85gxu8r9kenRNHnUthop5lkU+a6LJGbYBkh5w
+         E3poUNrkVUKJKrlbtCchI5Q6ACiMJjY+r8VsC/ZD+2Zb+t/0pvRcpf9VBR7XuZLZhcjF
+         P1e8f+C56XhHGdOEOsQyVBQou1svtm6lPwUq4OAwpMtKSZPi3Q5SGNqdC5yRTp5XeUyg
+         Bv8VQ8CThJFvCHDocAg6lX0vDF7Ooqrz6/3wDyRs35KLuoniNRdE7mdip9gMu+N74LSi
+         Wciw==
+Received: by 10.112.98.70 with SMTP id eg6mr4204464lbb.13.1337020245782; Mon,
+ 14 May 2012 11:30:45 -0700 (PDT)
+Received: by 10.112.107.65 with HTTP; Mon, 14 May 2012 11:30:45 -0700 (PDT)
+In-Reply-To: <7vmx5ahbrm.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197796>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197797>
 
-Here's a little script that reproduces the problem:
+On Mon, May 14, 2012 at 8:13 PM, Junio C Hamano <gitster@pobox.com> wro=
+te:
+> Felipe Contreras <felipe.contreras@gmail.com> writes:
+>
+>>>> +__git_func_wrap ()
+>>>> +{
+>>>> + =C2=A0 =C2=A0 if [[ -n ${ZSH_VERSION-} ]]; then
+>>>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 emulate -L bash
+>>>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 setopt KSH_TYPESET
+>>>> +
+>>>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 # workaround zsh's bug=
+ that leaves 'words' as a special
+>>>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 # variable in versions=
+ < 4.3.12
+>>>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 typeset -h words
+>>>> +
+>>>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 # workaround zsh's bug=
+ that quotes spaces in the COMPREPLY
+>>>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 # array if IFS doesn't=
+ contain spaces.
+>>>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 typeset -h IFS
+>>>> + =C2=A0 =C2=A0 fi
+>>>> + =C2=A0 =C2=A0 local cur words cword prev
+>>>> + =C2=A0 =C2=A0 _get_comp_words_by_ref -n =3D: cur words cword pre=
+v
+>>>> + =C2=A0 =C2=A0 $1
+>>>> +}
+>>>> +
+>>>> +# Setup completion for certain functions defined above by setting=
+ common
+>>>> +# variables and workarounds.
+>>>> +# This is NOT a public function; use at your own risk.
+>>>> +__git_complete ()
+>>>> +{
+>>>> + =C2=A0 =C2=A0 local wrapper=3D"__git_wrap${2}"
+>>>> + =C2=A0 =C2=A0 eval "$wrapper () { __git_func_wrap $2 ; }"
+>>>> + =C2=A0 =C2=A0 complete -o bashdefault -o default -o nospace -F $=
+wrapper $1 2>/dev/null \
+>>>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 || complete -o default=
+ -o nospace -F $wrapper $1
+>>>> +}
+>>>> +
+>>>> +__git_complete git _git
+>>>> +__git_complete gitk _gitk
+>>>
+>>> It makes my stomach queasy whenever I see $var not in double quotes=
+ that
+>>> forces me to guess (and trace to verify if the codepath is what I r=
+eally
+>>> care about) if any value with $IFS in it could be used there, so ev=
+en when
+>>> they are known to be safe, I'd prefer to see either explicit quotes=
+ or
+>>> comment that says what are expected in $1 and $2.
+>>
+>> Which ones?
+>
+> All of them ;-)
+>
+> Here is my attempt to explain why none of them needs to be quoted:
+>
+> =C2=A0# Setup completion for certain functions defined above by setti=
+ng common
+> =C2=A0# variables and workarounds.
+> =C2=A0# It takes two parameters:
+> =C2=A0# =C2=A0- the first is the command name on the command line to =
+complete its
+> =C2=A0# =C2=A0 =C2=A0arguments for the user;
+> =C2=A0# =C2=A0- the second is a name of the completion function
+> =C2=A0# This is NOT a public function; use at your own risk.
+> =C2=A0#
+> =C2=A0# Note that none of the variable reference in the implementatio=
+n of this
+> =C2=A0# function needs dq around it.
 
------
-#!/bin/bash
-set -e
+I don't understand that.
 
-if [ -e git-merge-problem ]; then
-    echo "'git-merge-problem' exists, not running test!"
-    exit 1
-fi
+> =C2=A0# wrapper: the name of an internal shell function that wraps th=
+e
+> =C2=A0# =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0completion function $2, for=
+med by prefixing "__git_wrap"
+> =C2=A0# =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0in front of it. =C2=A0As it=
+ has to be usable as a name of a
+> =C2=A0# =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0shell function, by definiti=
+on there won't be $IFS characters
+> =C2=A0# =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0in it.
+> =C2=A0# $1: =C2=A0 =C2=A0 =C2=A0the command name on the command line-=
+--ditto.
+> =C2=A0# $2: =C2=A0 =C2=A0 =C2=A0the shell function name that implemen=
+ts the completion-ditto.
 
-mkdir git-merge-problem
-cd git-merge-problem
-git init
+So in short; because the variables are used as function/command names.
 
-echo "first line" > myfile
-echo "second line" >> myfile
-echo "" >> myfile
-echo "next to last line" >> myfile
-echo "final line" >> myfile
-git add myfile
-git commit -m 'initial commit of myfile'
+Cheers.
 
-git branch other
-
-sed -i -e 's/second line/this line is in the context of the crucial patch/' myfile
-git add myfile
-git commit -m 'change context for crucial patch'
-
-sed -i -e 's/^$/\nthis line is added only once, but in two branches\n/' myfile
-git add myfile
-git commit -m 'add a line'
-
-git tag add-a-line
-
-git checkout other
-git cherry-pick -x add-a-line
-
-git checkout master
-
-git merge other
-
-NUM_LINES=$(grep 'added only once' myfile | wc -l)
-if [ $NUM_LINES -eq 2 ]; then
-    echo "FAIL!  the merge added the line twice"
-    cat myfile
-    exit 1
-elif [ $NUM_LINES -ne 1 ]; then
-    echo "FAIL!  the merge added the line a strange number of times ($NUM_LINES)"
-    exit 1
-fi
-
-echo "PASS!  the merge added the line just once!"
-exit 0
------
-
-
-
-On May 11, 2012, at 20:25 , Illia Bobyr wrote:
-
-> On 5/11/2012 5:05 PM, Sebastian Kuzminsky wrote:
->> On 05/11/2012 05:57 PM, Michael Witten wrote:
->>> On Fri, 11 May 2012 16:25:29 -0600, Sebastian Kuzminsky wrote:
->>> 
->>>> The simplified repo is here if anyone wants to inspect it:
->>>> https://github.com/SebKuzminsky/merge-problem
->> ...
->> 
->>> In other words, rather than burdening people with the task of
->>> constructing a mental picture of what you have done, you should
->>> show them as directly and precisely as possible; in this way,
->>> people can go about the business of discussing your issue much
->>> more quickly and, most importantly, PRECISELY.
->>> 
->> 
->> Ah, I had intended the extremely tiny git repo I linked to to provide 
->> the info in the most concise way possible.  The surprising behaviour 
->> happened at the final commit in the repo, which was made by 'git merge 
->> other'.
->> 
->> I can email a list of commands to reproduce the issue later tonight if 
->> that would make anything clearer.
-> 
-> The repository you provided is actually quite simple and clear, though I 
-> have no idea why this might be happening.  Or if it is an expected behavior.
-> 
-> At the same time if you provide a list of command if someone will be 
-> fixing this they may server as an automated test.  Git has a lot of them.
-> 
-> --
-> Illia Bobyr
-
--- 
-Sebastian Kuzminsky
+--=20
+=46elipe Contreras
