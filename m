@@ -1,88 +1,78 @@
-From: Jiang Xin <worldhello.net@gmail.com>
-Subject: Re: Please pull git-l10n maint branch with de, zh_CN l10n updates
-Date: Tue, 15 May 2012 07:29:23 +0800
-Message-ID: <CANYiYbFX5_JuCdbrDQpY-oHuBgpskB-woYcfVgSxk222Mx4bGQ@mail.gmail.com>
-References: <CANYiYbEyZsiE7MWbJVQGYM_1vyi+y8MVCeGGf7G-_y9vMRdxYQ@mail.gmail.com>
-	<7vehqmha43.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Update "gc" behavior in commit, merge, am, rebase and
+ index-pack
+Date: Mon, 14 May 2012 16:35:35 -0700
+Message-ID: <7vy5oufi9k.fsf@alter.siamese.dyndns.org>
+References: <1336810134-3103-1-git-send-email-pclouds@gmail.com>
+ <20120514205039.GB3740@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Git List <git@vger.kernel.org>,
-	Ralf Thielow <ralf.thielow@googlemail.com>,
-	Byrial Jensen <byrial@vip.cybercity.dk>,
-	=?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>,
-	Vincent van Ravesteijn <vfr@lyx.org>,
-	Marco Sousa <marcomsousa@gmail.com>,
-	Peter Krefting <peter@softwolves.pp.se>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue May 15 01:29:31 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+	git@vger.kernel.org, Sverre Rabbelier <srabbelier@gmail.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue May 15 01:35:44 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SU4hl-0003iU-Tl
-	for gcvg-git-2@plane.gmane.org; Tue, 15 May 2012 01:29:30 +0200
+	id 1SU4no-0008J3-0K
+	for gcvg-git-2@plane.gmane.org; Tue, 15 May 2012 01:35:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932657Ab2ENX3Z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 May 2012 19:29:25 -0400
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:43860 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932402Ab2ENX3Y (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 May 2012 19:29:24 -0400
-Received: by yenm10 with SMTP id m10so4829711yen.19
-        for <git@vger.kernel.org>; Mon, 14 May 2012 16:29:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=dT9Nadmaos/YJWX394GPJ0a1dThO1FUlN0s3AyuU5qs=;
-        b=A42quNo+3Iz7Y3yfosvsf8XyYdTz1OHup2vMMbPMYbPqFoX+KSC3h2ZyPMdEH28rnv
-         xFSB2mfylEWkuqvuVJNQujGloVGauE1BZ+idevKWI3As3uzgJ+1jfo5RtABo0KcV7peS
-         oo653ubf4QZsyh8lkrt3I0i3qS1GvaLNIXl6aNLknSPx2A2O2lHvCG/Oadu31V3hcTiO
-         IkOu9+/hScRkQL6KFfN3bBKJpvAMHg5W76MSLpaR0eFJpFxmh4uYAQ7LvvN3+yDl9ZLv
-         wnpI6SsnHFTftZFKw6CYIfz315WDCxZXSlMUPHsN//9IuHYPRPPQt7hRCJ6ee4hwS+VI
-         kPzQ==
-Received: by 10.50.190.197 with SMTP id gs5mr606663igc.37.1337038163916; Mon,
- 14 May 2012 16:29:23 -0700 (PDT)
-Received: by 10.50.134.102 with HTTP; Mon, 14 May 2012 16:29:23 -0700 (PDT)
-In-Reply-To: <7vehqmha43.fsf@alter.siamese.dyndns.org>
+	id S932679Ab2ENXfj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 May 2012 19:35:39 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:33361 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932402Ab2ENXfi (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 May 2012 19:35:38 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B99358F02;
+	Mon, 14 May 2012 19:35:37 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=vsr0n/1bFw2ryPVTa9JoPk690TY=; b=SbKMt1
+	JXTRP7Qbdof6PC1u+rMJ92VakUUfDCJHEwr2ubvXJ2J4I+AWSCtWNeVzHjfv1yja
+	X4YoNu6iUMJyFe2mV5zuabEc9876TXh6M6HjMyXEsb2hj2K3y2awRKPb2eafkpg3
+	qBAurhUooDX48SPrqolxgtEp13Tlzp8ATe2kQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=sT1fOz/77mGQbG78Rnc6CumPdTekhy+w
+	LKKyTGAeKmA/7RZYNQst1xvUulwv3V90babR1MeoUTg4pKcKoLMXuSxsxi3+SDRP
+	A7QeASCyLlP/TcWjcauyp98DCbIs7MpIDdvQo4tT4Elb5WeFwzx/ihcUFZ3vNIJE
+	SsL7yQAonZ0=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B06448EFF;
+	Mon, 14 May 2012 19:35:37 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3961E8EFE; Mon, 14 May 2012
+ 19:35:37 -0400 (EDT)
+In-Reply-To: <20120514205039.GB3740@sigill.intra.peff.net> (Jeff King's
+ message of "Mon, 14 May 2012 16:50:40 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 82244E8A-9E1D-11E1-A190-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197814>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197815>
 
-2012/5/15 Junio C Hamano <gitster@pobox.com>:
-> Pulled; thanks.
+Jeff King <peff@peff.net> writes:
 
-Found new messages need to be translated in both maint and master branch.
-So I update git.pot for both maint and master branch.
+> The pre-auto-gc hook runs only when we need to gc (i.e., when we would
+> be doing something expensive, anyway). So it is still cheap to check
+> whether we need to gc (although if you have an option like "--check"
+> which does not _fix_ the situation after checking, then you may end up
+> running the hook repeatedly).
 
- * Update in maint branch:
+Whether we need to gc might be cheap to check, but I think the worry about
+the new hook added after commit lost auto-gc was the hook to see if the
+user declines our offer to run "gc --auto" may be expensive with an extra
+fork and exec.  But I am personally fine with "commit" running "gc --auto"
+every time; pre-auto-gc hook is opt-in after all.
 
-    l10n: Update git.pot (3 new, 2 removed messages)
-
-    Generate po/git.pot from v1.7.10.2-35-g0b9f4:
-
-     - 3 new l10n messages at lines: 2743, 2751, 2759.
-
-     - 2 removed l10n messages from lines: 1879, 2757.
-
- * Update in master branch:
-
-    l10n: Update git.pot (8 new, 4 removed messages)
-
-    Generate po/git.pot from v1.7.10.2-520-g6a4a48:
-
-     - 8 new l10n messages at lines:
-
-       977, 982, 1404, 1409, 1414, 1419, 1424, 1429.
-
-     - 4 removed l10n messages from lines:
-
-       977, 1399, 1404, 1409.
-
-I will send another email to l10n team leader one by one latter.
-
--- 
-Jiang Xin
+As you mentioned in your own follow-up message, however, it will make
+things worse without any real benefit if it is merely "check and warn but
+never gc".  Also when "gc --auto" does not make the repository better (I
+vaguely recall some corner cases mentioned here in the past), repeated
+invocation of it might make such a change annoying.
