@@ -1,88 +1,76 @@
-From: jaseem abid <jaseemabid@gmail.com>
-Subject: Re: Arguments to git hooks
-Date: Tue, 15 May 2012 02:04:19 +0530
-Message-ID: <CAH-tXsBMYe2q6dZ6COyEH7N9n-mJh4yV8O50tgeZ1PeSEnZHvQ@mail.gmail.com>
-References: <CAH-tXsB4PBS_YjW4DCjT6ORmNPomQ8XMPbKx3hxVNH=FyB2u3g@mail.gmail.com>
- <4FA84A0F.6060608@pileofstuff.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] Update "gc" behavior in commit, merge, am, rebase and
+ index-pack
+Date: Mon, 14 May 2012 16:50:40 -0400
+Message-ID: <20120514205039.GB3740@sigill.intra.peff.net>
+References: <1336810134-3103-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git mailing list <git@vger.kernel.org>
-To: Andrew Sayers <andrew-git@pileofstuff.org>
-X-From: git-owner@vger.kernel.org Mon May 14 22:35:12 2012
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Mon May 14 22:50:46 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SU1z5-0003Uc-OC
-	for gcvg-git-2@plane.gmane.org; Mon, 14 May 2012 22:35:12 +0200
+	id 1SU2EA-0007pz-A6
+	for gcvg-git-2@plane.gmane.org; Mon, 14 May 2012 22:50:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757721Ab2ENUfE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 May 2012 16:35:04 -0400
-Received: from mail-wg0-f44.google.com ([74.125.82.44]:33667 "EHLO
-	mail-wg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757178Ab2ENUfC (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 May 2012 16:35:02 -0400
-Received: by wgbdr13 with SMTP id dr13so5074869wgb.1
-        for <git@vger.kernel.org>; Mon, 14 May 2012 13:35:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=fFJHG+0kEk7gLlZfAtMpiVUtGsC3RLkle549AhlaXaM=;
-        b=DwftD4G5RsLkphmUJkCyGPwhWO/2oo2cP6prnC64oNdOWT6OC/FnLbxBpE1mqFsFuc
-         Q4KoF+Ok/qtI4iEMPPpPeXDycBIZQLcHX5uytj4jnt0LWcLbXJQDdNV+PwM41+/dCLm7
-         ssvwDIQCPNoo0tyKvOljki+kYBsstajRDF2B7Yuw+D20S4HTjAGltLiTyPDq8k7jQPva
-         4FcEj2GX/7gCCdA8dgBN01K32JZ43IV5rUyIpidC76n8dvh8oq7c3CG7kxqb7cnWWOIv
-         nDOmgsy6ZPbly7l0HH9H0D2EU2NzkqmndrjvYM6gJ7SMRej1s8YxZRyj75zwKnrdisx8
-         a93w==
-Received: by 10.216.194.137 with SMTP id m9mr4990481wen.66.1337027701175; Mon,
- 14 May 2012 13:35:01 -0700 (PDT)
-Received: by 10.227.39.96 with HTTP; Mon, 14 May 2012 13:34:19 -0700 (PDT)
-In-Reply-To: <4FA84A0F.6060608@pileofstuff.org>
+	id S1757888Ab2ENUum (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 May 2012 16:50:42 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:43076
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757829Ab2ENUul (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 May 2012 16:50:41 -0400
+Received: (qmail 25288 invoked by uid 107); 14 May 2012 20:51:03 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 14 May 2012 16:51:03 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 14 May 2012 16:50:40 -0400
+Content-Disposition: inline
+In-Reply-To: <1336810134-3103-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197808>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197809>
 
-On Tue, May 8, 2012 at 3:47 AM, Andrew Sayers
-<andrew-git@pileofstuff.org> wrote:
-> On 06/05/12 19:35, jaseem abid wrote:
->> Hello all,
->>
->> I am trying to write a hook '.git/hooks/commit-msg' to be run before
->> every commit.
->>
->> How can I pass arguments to the script? Now by default the only arg I
->> am getting is `.git/COMMIT_EDITMSG'`. I would love to get the list of
->> files I tried to commit also into the script so that I can run a lint
->> program on it before committing it. How can I get this done?
->
-> First, a standard warning - consider using a pre-receive hook instead of
-> a pre-commit hook.
+On Sat, May 12, 2012 at 03:08:54PM +0700, Nguyen Thai Ngoc Duy wrote:
 
-I am trying to get a lint, commit message spell checker, trailing
-whitespace check in code etc work on my *local machine* before
-committing. pre-receive works in the server right? Its also time I
-need to seriously consider a pre-commit hook to "Reject commits made
-between 4am and 7am with a note to go to bed."
+> Instead, we could just inform users that "gc" should be run soon in
+> commonly used commands (this patch also reinstates "gc" check in
+> commit, which was lost at the sh->C conversion). [1] and [2] can annoy
+> users constantly with warnings. This patch shows the warning at most
+> once a day.
 
-> A lot of git's power comes from making commits as
-> cheap as possible, so rules like "no committing until your code is
-> pretty" tend to stifle people.
+Hmm. The missing "gc" from git-commit has been noticed before, but we
+decided not to reinstate it[1]:
 
-Its ok since I am the only one to use it because I want to make my
-commits cleaner and better.  There is always --no-verify for skipping
-hooks.
+  http://thread.gmane.org/gmane.comp.version-control.git/78524/focus=78693
 
-> The best solution I've found is a `git commit` wrapper that does
-> something like `CHANGES="$(git commit $@ --dry-run -v)"` to get a
-> reliable diff, then starts work from there.
+However, I'm not sure Junio's argument in that thread is valid:
 
-Isn't `git commit $@ --dry-run --porcelain` better for parsing or am I
-missing something ?
+  I had an impression that we accepted the hook which made "gc --auto"
+  more expensive by forcing it to check the hook (and possibly execute
+  it every time) after vetting am, svn and friends to make sure nobody
+  triggered "gc --auto" once per every commit, and during that vetting
+  process we noticed that "git commit" lost the "gc --auto" at the end.
 
--- 
-Jaseem Abid
-http://jaseemabid.github.com
+The pre-auto-gc hook runs only when we need to gc (i.e., when we would
+be doing something expensive, anyway). So it is still cheap to check
+whether we need to gc (although if you have an option like "--check"
+which does not _fix_ the situation after checking, then you may end up
+running the hook repeatedly).
+
+-Peff
+
+[1] It also came up other times:
+
+      http://thread.gmane.org/gmane.comp.version-control.git/101667
+
+      http://thread.gmane.org/gmane.comp.version-control.git/114089
+
+    but each time it seems to have been rejected on the basis of the
+    first argument.
