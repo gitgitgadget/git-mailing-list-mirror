@@ -1,139 +1,133 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] pack-objects: use streaming interface for reading
- large loose blobs
-Date: Mon, 14 May 2012 08:56:47 -0700
-Message-ID: <7vvcjyiwn4.fsf@alter.siamese.dyndns.org>
-References: <alpine.LFD.2.02.1205121220070.21030@xanadu.home>
- <1336883862-9013-1-git-send-email-pclouds@gmail.com>
+Subject: Re: [PATCH v2] git-svn: clarify the referent of dcommit's optional
+ argument
+Date: Mon, 14 May 2012 09:16:01 -0700
+Message-ID: <7vr4umivr2.fsf@alter.siamese.dyndns.org>
+References: <1336978405-17943-1-git-send-email-jon.seymour@gmail.com>
+ <CAH3Anroxjn6sCBYa71Y-H1AvitiFn=dRUapGxgQ1Nu6=Tf03Uw@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Nicolas Pitre <nico@fluxnic.net>
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Mon May 14 17:56:56 2012
+Cc: git@vger.kernel.org, normalperson@yhbt.net, trast@student.ethz.ch
+To: Jon Seymour <jon.seymour@gmail.com>
+X-From: git-owner@vger.kernel.org Mon May 14 18:16:36 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1STxdo-0007Dx-FA
-	for gcvg-git-2@plane.gmane.org; Mon, 14 May 2012 17:56:56 +0200
+	id 1STxwj-0005LY-1X
+	for gcvg-git-2@plane.gmane.org; Mon, 14 May 2012 18:16:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756717Ab2ENP4v convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 14 May 2012 11:56:51 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:51382 "EHLO
+	id S1757128Ab2ENQQP convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 14 May 2012 12:16:15 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59504 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756666Ab2ENP4u convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 14 May 2012 11:56:50 -0400
+	id S1753686Ab2ENQQM convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 14 May 2012 12:16:12 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6ED278AD9;
-	Mon, 14 May 2012 11:56:49 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 64EF29081;
+	Mon, 14 May 2012 12:16:12 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=2ydpWOy0DuBi
-	DIPgdy8E5F7w2Y0=; b=U5dkXjsAhhzBUmUkIQNUlrOIioJSixUgdg6hsSEIcDuY
-	e0P6oYvqxrBeBGQYmnxUnn7rjkO9bWRGgcr7M7QKgvYEotHQ+f01QpsfJMs6mSKE
-	bKy72S67dsoFijjz2AZ7exwgbR+zu4TQ3ZkXmoqCZP2kf/PNYQx//5oShBdPh0A=
+	:content-type:content-transfer-encoding; s=sasl; bh=KPW9uN5KsBBo
+	rcCxhHfyVqF/MqI=; b=GQwhKbyKEwMFfbCMVUR80c71ypukXMd3brqsnxkhiCXA
+	fQI93Tfsl/tgj75JqWyBTPy/apzU+y/cvyL1mkHws/7dDrWzm6W+XVz9EU2cCfo/
+	XmGsXPbCNfvI/w5EFcdrUur7AnDTZEyQqqClpQddIRrk2j2J7RWsEma6XJ0RBl4=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=AAgymj
-	IPk9B+Z9WMhWi+OzCPLWmbEeIW8j66k4AbEKf9bhBX0kjhzx89EF8FQ5RpNKZVvx
-	5WFh6QDfh4SaHCfkd3jnxi3PCqcsvRiJUJQxSDeds96Ewzp3QZzoRoJgKojkYM7u
-	uS/s3TjI5jBns3ETtZFbQvLbHmE/i+9u5CVFE=
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=BVB01+
+	6r2L4tbj47JX3Bz936UQ5RO5wDray2ZR8abt2Kwe6UrtbjwR9P6RG25mvJrwLpYB
+	oWnaxS773qJWvRzltQOnT0OIM8ZXM/NikAeh1wGnO+CpgF03FgAhlZKCxif+g9Zp
+	Hx4J1RRMzIrGIxod7qgmCNC+An/oglNMRGUEA=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 65AF38AD8;
-	Mon, 14 May 2012 11:56:49 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5A4D39080;
+	Mon, 14 May 2012 12:16:12 -0400 (EDT)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D600C8AD6; Mon, 14 May 2012
- 11:56:48 -0400 (EDT)
-In-Reply-To: <1336883862-9013-1-git-send-email-pclouds@gmail.com>
- (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Sun, 13 May
- 2012 11:37:42 +0700")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 34CA19053; Mon, 14 May 2012
+ 12:16:03 -0400 (EDT)
+In-Reply-To: <CAH3Anroxjn6sCBYa71Y-H1AvitiFn=dRUapGxgQ1Nu6=Tf03Uw@mail.gmail.com> (Jon
+ Seymour's message of "Mon, 14 May 2012 22:48:14 +1000")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 69F5BEB0-9DDD-11E1-AB0C-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 1A00265E-9DE0-11E1-8DBD-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197777>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197778>
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com> writes:
+Jon Seymour <jon.seymour@gmail.com> writes:
 
-> +	st =3D open_istream(sha1, &type, &sz, NULL);
-> +	if (!st)
-> +		die(_("unable to read %s"), sha1_to_hex(sha1));
-> +
-> +	memset(&stream, 0, sizeof(stream));
-> +	git_deflate_init(&stream, pack_compression_level);
-> +
-> +	if (type !=3D OBJ_BLOB)
-> +		die("BUG: %s is not a blob", sha1_to_hex(sha1));
+>> =C2=A0'dcommit'::
+>> - =C2=A0 =C2=A0 =C2=A0 Commit each diff from a specified head direct=
+ly to the SVN
+>> + =C2=A0 =C2=A0 =C2=A0 Commit each diff from the current branch dire=
+ctly to the SVN
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0repository, and then rebase or reset (dep=
+ending on whether or
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0not there is a diff between SVN and head)=
+=2E =C2=A0This will create
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0a revision in SVN for each commit in git.
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0It is recommended that you run 'git svn' =
+fetch and rebase (not
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0pull or merge) your commits against the l=
+atest changes in the
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0SVN repository.
+>> - =C2=A0 =C2=A0 =C2=A0 An optional revision or branch argument may b=
+e specified, and
+>> - =C2=A0 =C2=A0 =C2=A0 causes 'git svn' to do all work on that revis=
+ion/branch
+>> - =C2=A0 =C2=A0 =C2=A0 instead of HEAD.
+>> - =C2=A0 =C2=A0 =C2=A0 This is advantageous over 'set-tree' (below) =
+because it produces
+>> - =C2=A0 =C2=A0 =C2=A0 cleaner, more linear history.
+>> ++
+>> +When an optional git branch name (or a git commit object name)
+>> +is specified as an argument, the subcommand works on the specified
+>> +branch, not on the current branch.
+>> ++
+>> +Use of 'dcommit' is preferred to 'set-tree' (below) because it prod=
+uces
+>> +cleaner, more linear history.
+>> =C2=A0+
+>
+> Mmmm. I wonder if I should have left the original wording of this
+> paragraph, but switched the order with respect to the disucssion of
+> the optional argument, so that the text reads:
+>
+>     It is recommended that you run 'git svn' fetch and rebase (not
+> pull or merge) your commits against the latest changes in the =C2=A0S=
+VN
+> repository.
+>     This is advantageous over'set-tree' (below) because it produces
+> cleaner, more linear history.
+>
+>     When an optional git branch name (or a git commit object name) is
+> specified as an argument, the subcommand works on
+>     the specified branch, not on the current branch.
 
-Just a comment, not an expression of preference, but if we are treating
-istream interface as an add-on, I wonder it might make sense not to die=
- in
-these places, and instead fall back to the usual "read and then write"
-codepath.
+Probably not, but the order in the [PATCH v2] is not optimal, either.  =
+I
+would think it would read nicer to give "what it does" and then
+"recommendations", i.e.
 
-To put it another way, I am wondering if it makes the logic more clear =
-if
-you restructure the calling side a bit more, perhaps like this:
+ - (what it does) Commit each diff from the current branch of git to sv=
+n.
+   With an optional git branch name, the subcommand works on that branc=
+h.
 
-        if (!to_reuse) {
-                if (!usable_delta) {
-                        /* we know we will write as base object */
-                        ... do *NOT* do read_sha1_file() here !!!
-                } else if ... delta cases {
-                        decide delta_data and z_delta_size as before
-                }
+ - (recommendations)
+   . Do fetch and rebase, not pull and merge. =20
+   . Prefer dcommit over set-tree.
 
-                if (entry->z_delta_size) {
-                        datalen =3D entry->z_delta_size;
-                        hdrlen =3D encode_in_pack_object_header(type, s=
-ize, header);
-                        ... write either OFS_DELTA or REF_DELTA here
-                } else {
-                        /* base object case */
-                        if (write_object_in_base_representation(f, sha1=
-)) {
-                                /* stream interface punted */
-                                read_sha1_file();
-                                do_compress();
-                                write it;
-                        }
-                }
-        } else { /* reuse case ... */
-
-> @@ -259,9 +309,13 @@ static unsigned long write_object(struct sha1fil=
-e *f,
->  	if (!to_reuse) {
->  		no_reuse:
->  		if (!usable_delta) {
-> -			buf =3D read_sha1_file(entry->idx.sha1, &type, &size);
-> -			if (!buf)
-> -				die("unable to read %s", sha1_to_hex(entry->idx.sha1));
-> +			if (entry->type =3D=3D OBJ_BLOB && entry->size > big_file_thresho=
-ld)
-> +				buf =3D NULL;
-
-Two comments:
-
- - In get_object_details(), we do this:
-
-		if (big_file_threshold <=3D entry->size)
-			entry->no_try_delta =3D 1;
-
-   The new code is inconsistent with respect to the boundary conditions=
-,
-   when the size is exactly at the threshold.
-
- - Magic condition "buf has NULL means we will read via streaming
-   interface" feels somewhat hacky and tasteless.  I am borderline OK w=
-ith
-   such a hack whose scope is clearly limited to a short function like
-   this one, but at least it needs to be documented.  I'd rather see th=
-e
-   conditionals that look at !buf/buf are rewritten to use a new bool
-   variable similar to to_reuse and usable_delta whose name tells the
-   reader more explicitly what is going on, though.
+The only reason why the original is not ordered that way, as far as I c=
+an
+tell, is because "It is recommended that" was part of an existing parag=
+raph
+when dd31da2 (git-svn: allow dcommit to take an alternate head, 2006-12=
+-12)
+added "An optional ...", so it was tucked after existing paragraph with=
+out
+reading the resulting whole to see if "at the very end" was the best pl=
+ace.
