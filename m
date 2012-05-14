@@ -1,157 +1,129 @@
-From: Heiko Voigt <hvoigt@hvoigt.net>
-Subject: Re: submodule update --force
-Date: Mon, 14 May 2012 18:52:32 +0200
-Message-ID: <20120514165231.GB58058@book.hvoigt.net>
-References: <CAHOQ7J8r4m2rz57BdkM9CADHdHE1yDFwExyF87u=DCEXjqzcqw@mail.gmail.com> <CAHOQ7J9xCYL=x=_nbq-3ksC2nF7L0=kxu9JX6M60xM-Bxmyfag@mail.gmail.com> <7vobpwpoyi.fsf@alter.siamese.dyndns.org> <7vk40kpnia.fsf@alter.siamese.dyndns.org> <CAHOQ7J_6+sfU6egjvVSPj-FAS6zjSUT=a057=kz_wYbogHLMMA@mail.gmail.com> <7v8vh0ozge.fsf@alter.siamese.dyndns.org> <20120510185738.GE76400@book.hvoigt.net> <CABURp0rFQ+330X8g3C2rmozQ77zxqhZhReZhaYMi1FE4uKeQtA@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 1/2] drop length limitations on gecos-derived names and
+ emails
+Date: Mon, 14 May 2012 13:05:33 -0400
+Message-ID: <20120514170533.GA29909@sigill.intra.peff.net>
+References: <20120511231303.GA24611@sigill.intra.peff.net>
+ <20120514162824.GA24457@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Stefan Zager <szager@google.com>, git@vger.kernel.org,
-	Jens Lehmann <Jens.Lehmann@web.de>,
-	Lars Hjemli <hjemli@gmail.com>
-To: Phil Hord <phil.hord@gmail.com>
-X-From: git-owner@vger.kernel.org Mon May 14 18:52:47 2012
+Content-Type: text/plain; charset=utf-8
+Cc: Angus Hammond <angusgh@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon May 14 19:05:41 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1STyVi-0006lG-1L
-	for gcvg-git-2@plane.gmane.org; Mon, 14 May 2012 18:52:38 +0200
+	id 1STyiL-0007Fd-7j
+	for gcvg-git-2@plane.gmane.org; Mon, 14 May 2012 19:05:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757259Ab2ENQwf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 May 2012 12:52:35 -0400
-Received: from t2784.greatnet.de ([83.133.105.219]:40229 "HELO darksea.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1756377Ab2ENQwe (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 May 2012 12:52:34 -0400
-Received: (qmail 2735 invoked from network); 14 May 2012 16:52:32 -0000
-Received: from localhost (127.0.0.1)
-  by darksea.de with SMTP; 14 May 2012 16:52:32 -0000
+	id S1757071Ab2ENRFg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 May 2012 13:05:36 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:42880
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755826Ab2ENRFf (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 May 2012 13:05:35 -0400
+Received: (qmail 22896 invoked by uid 107); 14 May 2012 17:05:57 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 14 May 2012 13:05:57 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 14 May 2012 13:05:33 -0400
 Content-Disposition: inline
-In-Reply-To: <CABURp0rFQ+330X8g3C2rmozQ77zxqhZhReZhaYMi1FE4uKeQtA@mail.gmail.com>
-User-Agent: Mutt/1.5.19 (2009-01-05)
+In-Reply-To: <20120514162824.GA24457@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197786>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197787>
 
-Hi,
+On Mon, May 14, 2012 at 12:28:24PM -0400, Jeff King wrote:
 
-On Fri, May 11, 2012 at 04:56:07PM -0400, Phil Hord wrote:
-> On Thu, May 10, 2012 at 2:57 PM, Heiko Voigt <hvoigt@hvoigt.net> wrote:
-> > On Thu, May 10, 2012 at 07:58:09AM -0700, Junio C Hamano wrote:
-> > > Stefan Zager <szager@google.com> writes:
-> > >
-> > > > ... ?To my mind, any
-> > > > `git submodule` command should *always* run on the first level of
-> > > > submodules. ?If you're going to specify --no-recurse, then why are you
-> > > > running `git submodule` at all? ?I think 'recursion' only applies to
-> > > > moving beyond the first level of submodules.
-> > >
-> > > Very true.
-> > >
-> > > Submodule folks, any opinion on the Stefan's approach?
-> >
-> > The distinction between first level of submodules and deeper is only
-> > present in the "git submodule" subcommand and I think mainly for
-> > historical reasons. I do not see a use case where this would be helpful.
+> I noticed in add_domainname that we look up the host via gethostname,
+> and then if it is not fully qualified, call gethostbyname and steal the
+> domain portion of the result, tacking it onto the hostname we got.
 > 
-> Do I understand you to mean that you think the git-submodule ...
-> --recursive option is archaic?  I would agree that one might expect it
-> to be the default option, but I do not think it should be deprecated
-> in any way.
-
-In a way yes its archaic since I do not know why one would distinguish
-between the first level of populated submodules and below. For example
-if you have nested submodules and want them all be populated you need to
-use
-
-	git submodule update --init --recursive
-
-The sequence
-
-	git submodule init --recursive
-	git submodule update --recursive
-
-does not do the same thing but would have to be called multiple times
-until you have reached the deepest level. IMO that is confusing but not
-only a problem of this option.
-
-> > To skip uninteresting submodules one can always use the
-> > submodule.$name.update option set to 'none'. (I just found that its
-> > documentation is in the wrong place but I will send a seperate patch
-> > about that).
-> >
-> > In the non submodule commands we usually name this option
-> > --recurse-submodules=always and have another
-> > --recurse-submodules=on-demand option for the current behavior. Those
-> > options would either recurse or do nothing with the submodule.  Such a
-> > behavior, as pointed out, does not make sense for 'submodule update'.
-> > Similar options names for 'submodule update' would probably be
-> > --recurse=always and --recurse=on-demand.
-> >
-> > Nonetheless is force a term where the user probably wants to skip all
-> > optimizations which the sha1 equality provides. So to make the current
-> > behavior more consistent I would be fine with adding this change.
-> >
-> > One thing which might make force even more useful would be to also skip
-> > the "is the sha1 available"-check for fetch that is possibly run before
-> > the checkout and just always run the fetch.
-> >
-> > In the long term, once checkout has learned things 'submodule update' is
-> > currently doing, it probably makes sense to let 'submodule update'
-> > always recurse into all checked out submodules. Since then it does not
-> > make sense to run 'submodule update' for much more than resetting
-> > things or changing the currently registered commits anymore. So in the
-> > bright new future the 'on-demand' part will probably move away from
-> > 'submodule update' and as such it does not make sense to implement
-> > the seperate recurse options I described above.
-> >
-> > What do others think?
+> That seems oddly complex to me, and like it could result in a bogus
+> hostname if the unqualified name does not match the first part of the
+> returned qualified name. E.g., if the /etc/hosts file contains something
+> like:
 > 
-> I think there are three cases:
+>   192.168.1.1 foo.example.com bar.example.com bar
 > 
-> 1. I want to update any sha1-mismatching submodules so
->     their HEAD matches the superproject gitlink.
-> 
->     git submodule update
-> 
-> 2. Same as (1) above, but also check out files for all
->     submodules which are not already checked out.
-> 
->     git submodule update &&
->     git submodule foreach 'git checkout HEAD || :'
-> 
-> 3. I want to update exactly to the gitlinks in the superproject
->    and discard any local or staged changes.
-> 
->     git submodule update -f
-> 
-> (2) above is the case Junio was trying to cover.  I cannot think of an
-> elegant name for the switch for such an option, but I would be
-> surprised it to find it is not the default behavior if I also
-> encountered it like Stefan did.  We should try to eliminate surprises
-> to help dispel the notion that submodules are unwieldy.
+> (and your hostname is "bar"). I doubt it matters much in practice, and
+> it is outside the scope of this patch, so I left it for now.
 
-Yes we should eliminate surprises thats true. On the other hand there is
-no way to setup submodules in the way Stefan had them by using the git
-submodule command or is there? So for his use case the command sequence
-you described seems to be more appropriate but I am not sure whether
-that justifies a separate option for it.
+It looks like a bug in adc3dbc (Use sensible domain name (the DNS one)
+when guessing ident information, 2005-10-21). Before that we used
+getdomainname, where that procedure made more sense.
 
-> (3) is too heavy when I really only wanted (2).
-> 
-> I do not understand that use case that led Stefan to the predicament
-> he was in where he had submodules with HEADs but with no checked out
-> files.  But I do not begrudge his being there.
+The patch below fixes it. I doubt it matters much in practice, but I
+think the resulting code is way less confusing to read.
 
-Yes, but currently -f is wrong in the way that when the submodules HEAD
-sha1 is the same as registered in the superproject it will skip the
-checkout. That is wrong when you have local uncommitted changes in the
-worktree. In such a state I would expect it to throw away those local
-changes and checkout HEAD. So I think Stefans patch makes sense anyway
-even though it might actually be to heavy for his use case.
+-- >8 --
+Subject: [PATCH] ident: use full dns names to generate email addresses
 
-Cheers Heiko
+When we construct an email address from the username and
+hostname, we generate the host part of the email with this
+procedure:
+
+  1. add the result of gethostname
+
+  2. if it has a dot, ok, it's fully qualified
+
+  3. if not, then look up the unqualified hostname via
+     gethostbyname; take the domain name of the result and
+     append it to the hostname
+
+Step 3 can actually produce a bogus result, as the name
+returned by gethostbyname may not be related to the hostname
+we fed it (e.g., consider a machine "foo" with names
+"foo.one.example.com" and "bar.two.example.com"; we may have
+the latter returned and generate the bogus name
+"foo.two.example.com").
+
+This patch simply uses the full hostname returned by
+gethostbyname. In the common case that the first part is the
+same as the unqualified hostname, the behavior is identical.
+And in the case that it is not the same, we are much more
+likely to be generating a valid name.
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ ident.c | 13 ++++---------
+ 1 file changed, 4 insertions(+), 9 deletions(-)
+
+diff --git a/ident.c b/ident.c
+index 72944ba..e552e7f 100644
+--- a/ident.c
++++ b/ident.c
+@@ -62,23 +62,18 @@ static void add_domainname(struct strbuf *out)
+ {
+ 	char buf[1024];
+ 	struct hostent *he;
+-	const char *domainname;
+ 
+ 	if (gethostname(buf, sizeof(buf))) {
+ 		warning("cannot get host name: %s", strerror(errno));
+ 		strbuf_addstr(out, "(none)");
+ 		return;
+ 	}
+-	strbuf_addstr(out, buf);
+ 	if (strchr(buf, '.'))
+-		return;
+-
+-	he = gethostbyname(buf);
+-	strbuf_addch(out, '.');
+-	if (he && (domainname = strchr(he->h_name, '.')))
+-		strbuf_addstr(out, domainname + 1);
++		strbuf_addstr(out, buf);
++	else if ((he = gethostbyname(buf)) && strchr(he->h_name, '.'))
++		strbuf_addstr(out, he->h_name);
+ 	else
+-		strbuf_addstr(out, "(none)");
++		strbuf_addf(out, "%s.(none)", buf);
+ }
+ 
+ static void copy_email(const struct passwd *pw, struct strbuf *email)
+-- 
+1.7.10.2.8.g1101eed
