@@ -1,87 +1,88 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: Index format v5
-Date: Tue, 15 May 2012 00:10:49 +0200
-Message-ID: <87bolqtnva.fsf@thomas.inf.ethz.ch>
-References: <CALgYhfMKdbv8TiT4ALDSvD3pSXHEPLWHM09DxYnRmRdBWRjh8Q@mail.gmail.com>
-	<4FA7E703.7040408@alum.mit.edu>
-	<20120508141137.GA3937@tgummerer.surfnet.iacbox>
-	<4FAA2CAF.3040408@alum.mit.edu> <20120510121911.GB98491@tgummerer>
-	<4FAC0633.90809@alum.mit.edu> <20120511171230.GA2107@tgummerer>
-	<4FB01080.6010605@alum.mit.edu> <20120514150113.GD2107@tgummerer>
-	<4FB1746A.6090408@alum.mit.edu>
+From: Jiang Xin <worldhello.net@gmail.com>
+Subject: Re: Please pull git-l10n maint branch with de, zh_CN l10n updates
+Date: Tue, 15 May 2012 07:29:23 +0800
+Message-ID: <CANYiYbFX5_JuCdbrDQpY-oHuBgpskB-woYcfVgSxk222Mx4bGQ@mail.gmail.com>
+References: <CANYiYbEyZsiE7MWbJVQGYM_1vyi+y8MVCeGGf7G-_y9vMRdxYQ@mail.gmail.com>
+	<7vehqmha43.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Cc: Thomas Gummerer <t.gummerer@gmail.com>, <git@vger.kernel.org>,
-	<trast@student.ethz.ch>, <gitster@pobox.com>, <peff@peff.net>,
-	<spearce@spearce.org>, <davidbarr@google.com>
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Tue May 15 00:11:01 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Git List <git@vger.kernel.org>,
+	Ralf Thielow <ralf.thielow@googlemail.com>,
+	Byrial Jensen <byrial@vip.cybercity.dk>,
+	=?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>,
+	Vincent van Ravesteijn <vfr@lyx.org>,
+	Marco Sousa <marcomsousa@gmail.com>,
+	Peter Krefting <peter@softwolves.pp.se>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue May 15 01:29:31 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SU3Tn-0002rY-VG
-	for gcvg-git-2@plane.gmane.org; Tue, 15 May 2012 00:11:00 +0200
+	id 1SU4hl-0003iU-Tl
+	for gcvg-git-2@plane.gmane.org; Tue, 15 May 2012 01:29:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932443Ab2ENWKz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 May 2012 18:10:55 -0400
-Received: from edge20.ethz.ch ([82.130.99.26]:9811 "EHLO edge20.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757855Ab2ENWKy (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 May 2012 18:10:54 -0400
-Received: from CAS21.d.ethz.ch (172.31.51.111) by edge20.ethz.ch
- (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.2.298.4; Tue, 15 May
- 2012 00:10:50 +0200
-Received: from thomas.inf.ethz.ch.ethz.ch (188.155.176.28) by CAS21.d.ethz.ch
- (172.31.51.111) with Microsoft SMTP Server (TLS) id 14.1.355.2; Tue, 15 May
- 2012 00:10:50 +0200
-In-Reply-To: <4FB1746A.6090408@alum.mit.edu> (Michael Haggerty's message of
-	"Mon, 14 May 2012 23:08:58 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Originating-IP: [188.155.176.28]
+	id S932657Ab2ENX3Z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 May 2012 19:29:25 -0400
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:43860 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932402Ab2ENX3Y (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 May 2012 19:29:24 -0400
+Received: by yenm10 with SMTP id m10so4829711yen.19
+        for <git@vger.kernel.org>; Mon, 14 May 2012 16:29:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=dT9Nadmaos/YJWX394GPJ0a1dThO1FUlN0s3AyuU5qs=;
+        b=A42quNo+3Iz7Y3yfosvsf8XyYdTz1OHup2vMMbPMYbPqFoX+KSC3h2ZyPMdEH28rnv
+         xFSB2mfylEWkuqvuVJNQujGloVGauE1BZ+idevKWI3As3uzgJ+1jfo5RtABo0KcV7peS
+         oo653ubf4QZsyh8lkrt3I0i3qS1GvaLNIXl6aNLknSPx2A2O2lHvCG/Oadu31V3hcTiO
+         IkOu9+/hScRkQL6KFfN3bBKJpvAMHg5W76MSLpaR0eFJpFxmh4uYAQ7LvvN3+yDl9ZLv
+         wnpI6SsnHFTftZFKw6CYIfz315WDCxZXSlMUPHsN//9IuHYPRPPQt7hRCJ6ee4hwS+VI
+         kPzQ==
+Received: by 10.50.190.197 with SMTP id gs5mr606663igc.37.1337038163916; Mon,
+ 14 May 2012 16:29:23 -0700 (PDT)
+Received: by 10.50.134.102 with HTTP; Mon, 14 May 2012 16:29:23 -0700 (PDT)
+In-Reply-To: <7vehqmha43.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197813>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197814>
 
-Michael Haggerty <mhagger@alum.mit.edu> writes:
+2012/5/15 Junio C Hamano <gitster@pobox.com>:
+> Pulled; thanks.
 
-First of all, many thanks for taking up this time-consuming job while I
-was away!  There's not much I can add at this point, just a few minor
-points:
+Found new messages need to be translated in both maint and master branch.
+So I update git.pot for both maint and master branch.
 
-> 9. read_files() doesn't need to return "entries".  Since entries is an
-> array that is only mutated in place, the return value will always be
-> the same as the "entries" argument (albeit fuller).
+ * Update in maint branch:
 
-(Ab)using an array in this fashion is somewhat iffy.  It seems
-unavoidable in this case (while still retaining the runtime), but try
-not to do it too often, and perhaps name the parameter something that
-makes this clear (such as 'out').  Usually changing it to use a
-generator function (with 'yield') helps.
+    l10n: Update git.pot (3 new, 2 removed messages)
 
-> 11. It is good form to move the file-level code into a main()
-> function, then call that from the bottom of the file, something like
-> this:
->
->> def main(args):
->>     ....
->>
->> main(sys.argv[1:])
+    Generate po/git.pot from v1.7.10.2-35-g0b9f4:
 
-It's customary to wrap it as
+     - 3 new l10n messages at lines: 2743, 2751, 2759.
 
-if __name__ == '__main__':
-    main(sys.argv[1:])
+     - 2 removed l10n messages from lines: 1879, 2757.
 
-That way your script becomes 'import'-able, which can be handy (if only
-for testing).
+ * Update in master branch:
 
-Cheers,
-Thomas
+    l10n: Update git.pot (8 new, 4 removed messages)
+
+    Generate po/git.pot from v1.7.10.2-520-g6a4a48:
+
+     - 8 new l10n messages at lines:
+
+       977, 982, 1404, 1409, 1414, 1419, 1424, 1429.
+
+     - 4 removed l10n messages from lines:
+
+       977, 1399, 1404, 1409.
+
+I will send another email to l10n team leader one by one latter.
 
 -- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+Jiang Xin
