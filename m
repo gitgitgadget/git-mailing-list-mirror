@@ -1,58 +1,57 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Update "gc" behavior in commit, merge, am, rebase and
- index-pack
-Date: Mon, 14 May 2012 16:11:01 -0400
-Message-ID: <20120514201100.GA3740@sigill.intra.peff.net>
-References: <1336810134-3103-1-git-send-email-pclouds@gmail.com>
- <alpine.LFD.2.02.1205121326380.21030@xanadu.home>
+From: Heiko Voigt <hvoigt@hvoigt.net>
+Subject: Re: submodule update --force
+Date: Mon, 14 May 2012 22:16:15 +0200
+Message-ID: <20120514201615.GI58058@book.hvoigt.net>
+References: <7vobpwpoyi.fsf@alter.siamese.dyndns.org> <7vk40kpnia.fsf@alter.siamese.dyndns.org> <CAHOQ7J_6+sfU6egjvVSPj-FAS6zjSUT=a057=kz_wYbogHLMMA@mail.gmail.com> <7v8vh0ozge.fsf@alter.siamese.dyndns.org> <20120510185738.GE76400@book.hvoigt.net> <CABURp0rFQ+330X8g3C2rmozQ77zxqhZhReZhaYMi1FE4uKeQtA@mail.gmail.com> <20120514165231.GB58058@book.hvoigt.net> <CAHOQ7J_O=8NL0wp0Pu6pfjN_Y6NDJhKZUft9G2FL0vUWL7aEBw@mail.gmail.com> <20120514191802.GE58058@book.hvoigt.net> <CAHOQ7J8Wq+jHdghgNEGD+7aWNCv3rpPu1erCK4V_pu3sgXQLxA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>
-To: Nicolas Pitre <nico@fluxnic.net>
-X-From: git-owner@vger.kernel.org Mon May 14 22:11:10 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Phil Hord <phil.hord@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Jens Lehmann <Jens.Lehmann@web.de>,
+	Lars Hjemli <hjemli@gmail.com>
+To: Stefan Zager <szager@google.com>
+X-From: git-owner@vger.kernel.org Mon May 14 22:16:27 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SU1bp-0001ZD-D3
-	for gcvg-git-2@plane.gmane.org; Mon, 14 May 2012 22:11:09 +0200
+	id 1SU1gs-0005qG-JA
+	for gcvg-git-2@plane.gmane.org; Mon, 14 May 2012 22:16:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932273Ab2ENULE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 May 2012 16:11:04 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:43042
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932227Ab2ENULD (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 May 2012 16:11:03 -0400
-Received: (qmail 24710 invoked by uid 107); 14 May 2012 20:11:24 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 14 May 2012 16:11:24 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 14 May 2012 16:11:01 -0400
+	id S932325Ab2ENUQS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 May 2012 16:16:18 -0400
+Received: from t2784.greatnet.de ([83.133.105.219]:40264 "HELO darksea.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S932231Ab2ENUQR (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 May 2012 16:16:17 -0400
+Received: (qmail 3270 invoked from network); 14 May 2012 20:16:15 -0000
+Received: from localhost (127.0.0.1)
+  by darksea.de with SMTP; 14 May 2012 20:16:15 -0000
 Content-Disposition: inline
-In-Reply-To: <alpine.LFD.2.02.1205121326380.21030@xanadu.home>
+In-Reply-To: <CAHOQ7J8Wq+jHdghgNEGD+7aWNCv3rpPu1erCK4V_pu3sgXQLxA@mail.gmail.com>
+User-Agent: Mutt/1.5.19 (2009-01-05)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197806>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197807>
 
-On Sat, May 12, 2012 at 01:36:28PM -0400, Nicolas Pitre wrote:
-
-> > Instead, we could just inform users that "gc" should be run soon in
-> > commonly used commands (this patch also reinstates "gc" check in
-> > commit, which was lost at the sh->C conversion). [1] and [2] can annoy
-> > users constantly with warnings. This patch shows the warning at most
-> > once a day.
+On Mon, May 14, 2012 at 12:29:02PM -0700, Stefan Zager wrote:
+> On Mon, May 14, 2012 at 12:18 PM, Heiko Voigt <hvoigt@hvoigt.net> wrote:
 > 
-> I agree with this.  However don't bother making this once a day.  There 
-> is no harm in warning every time.
+> > On a side note: I am surprised that cloning through git is really that
+> > much slower than copying a zip from the network. Do you run git gc
+> > regularly enough on the server?
+> 
+> Don't know about running `git gc`, but I can tell you that the
+> 'resolving deltas' step on the client side is very slow; anecdotally,
+> it appears to take longer than the network transfer.  We also would
+> like to relieve the server of the burden of creating large pack files
+> many times a day (the repo is frequently cloned).  I'll check to see
+> whether `git gc` can help us.
 
-I don't mind seeing a warning every time I run "git commit" myself, but
-aren't there things which run "merge" and "commit" in a loop? For
-example, "git rebase -m"? Warning 20 times when 20 commits are rebased
-seems excessive.
+I do not think you need to do this many times a day a cronjob during the
+night should be sufficient. Maybe also do a gc --aggressive one a week?
 
--Peff
+Cheers Heiko
