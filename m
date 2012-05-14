@@ -1,115 +1,85 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] pack-objects: use streaming interface for reading
- large loose blobs
-Date: Mon, 14 May 2012 12:43:19 -0700
-Message-ID: <7v62byh7l4.fsf@alter.siamese.dyndns.org>
-References: <alpine.LFD.2.02.1205121220070.21030@xanadu.home>
- <1336883862-9013-1-git-send-email-pclouds@gmail.com>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH v5] completion: add new __git_complete helper
+Date: Mon, 14 May 2012 21:53:10 +0200
+Message-ID: <CAMP44s2L=s4bd-sDcY3RWLWe9=YzLgC7UavgnE6K0akMCJSK4w@mail.gmail.com>
+References: <1337009718-1164-1-git-send-email-felipe.contreras@gmail.com>
+	<7vvcjyhd5n.fsf@alter.siamese.dyndns.org>
+	<CAMP44s1pb+J_SAzZ66QVcWq4V=LauUQ2VmzMD8KBtnhjubkkVg@mail.gmail.com>
+	<7vmx5ahbrm.fsf@alter.siamese.dyndns.org>
+	<CAMP44s1h=MPT8vx6JrGjMZWJzRjndxYKoYgo+1Y_Mmv+gWXzaQ@mail.gmail.com>
+	<7vaa1ah95p.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Nicolas Pitre <nico@fluxnic.net>
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Mon May 14 21:43:32 2012
+Cc: git@vger.kernel.org,
+	=?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder@ira.uka.de>,
+	Thomas Rast <trast@student.ethz.ch>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon May 14 21:53:36 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SU1B2-0004YE-41
-	for gcvg-git-2@plane.gmane.org; Mon, 14 May 2012 21:43:28 +0200
+	id 1SU1Kk-00044e-J8
+	for gcvg-git-2@plane.gmane.org; Mon, 14 May 2012 21:53:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757653Ab2ENTnX convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 14 May 2012 15:43:23 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:42977 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757130Ab2ENTnW convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 14 May 2012 15:43:22 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id F41249DFE;
-	Mon, 14 May 2012 15:43:21 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=1aj2pnTwGJgg
-	UW2SzgVMHMNLICI=; b=IK94PpJV1x8FivZ8KWYSEj29BLLWQz566j+pcJX8xg0c
-	SQjVF/tfxxU6x1S9pHXZE18O3qI5JujmbEbwS5zX7jBNTQVYLklxZ/989k087kdv
-	OEn9KjCyhu0hZFvnsXWcYtZDAyzPBOaJ63+AA6Hc48YJjO7IwS4rIY9fE0MGRnI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=HLeD+E
-	FAl2vhxmgghJJqXwZ8ETnyqkgpV3sqljEQ39HaLIhivOGcXnWOzP1JeoPUzdoNuJ
-	sUUMxmrz9Az1QNaRwK91fkXkHeD6N20qRPOEzqo6RgTnG9SzWDU+ShLWmlphDHvH
-	UGx3hA1fH5Y2DZ+Ty0y4TrizsUOlDlL745i14=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EAD959DFD;
-	Mon, 14 May 2012 15:43:21 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7E39F9DFC; Mon, 14 May 2012
- 15:43:21 -0400 (EDT)
-In-Reply-To: <1336883862-9013-1-git-send-email-pclouds@gmail.com>
- (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Sun, 13 May
- 2012 11:37:42 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 0FCE0E5E-9DFD-11E1-9ABA-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1757729Ab2ENTxN convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 14 May 2012 15:53:13 -0400
+Received: from mail-lpp01m010-f46.google.com ([209.85.215.46]:42768 "EHLO
+	mail-lpp01m010-f46.google.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1757720Ab2ENTxM convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 May 2012 15:53:12 -0400
+Received: by lahd3 with SMTP id d3so3615896lah.19
+        for <git@vger.kernel.org>; Mon, 14 May 2012 12:53:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=58FdD8PfA+/xzwBPi8jxxaq538LY5W1xyCr8OUa51g4=;
+        b=PrtGpEaKf78LfISXpjF9qdL9N5Db8yxmS1xaJ9f24FpUHGdhJ/PiaTc55TIK4sghUL
+         t9coZoCr/zIsTjmh/gLJx6/HIugWABa8zuaVVDLIjpKjODPosSXhjAGFl0ombGDYz/wW
+         GxdsE0ZYYn36WyZL+skZoOSxlYbZHdUis3zS+aCTqHur217JIE9ksAtrRjGxuH9z7dt4
+         hLYSncHAztxU/o/IvVAfs4quESHLCISpAirnNKBvjsO3hKxB2K+19nDcGTrkgYCSVxEH
+         yNBaD1mvmoEmTs2s//iLaCwC3s7VPbjUFkweT8NwC+FeuOWlBf92EAAuj7srckBzcM3C
+         dlHQ==
+Received: by 10.112.98.70 with SMTP id eg6mr4323730lbb.13.1337025190757; Mon,
+ 14 May 2012 12:53:10 -0700 (PDT)
+Received: by 10.112.107.65 with HTTP; Mon, 14 May 2012 12:53:10 -0700 (PDT)
+In-Reply-To: <7vaa1ah95p.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197804>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197805>
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
+On Mon, May 14, 2012 at 9:09 PM, Junio C Hamano <gitster@pobox.com> wro=
+te:
+> Felipe Contreras <felipe.contreras@gmail.com> writes:
+>
+>>> Here is my attempt to explain why none of them needs to be quoted:
+>>> ...
+>> I don't understand that.
+>
+> That was my attempt to give the readers some context to understand wh=
+at
+> comes after that. =C2=A0If the original patch author does not underst=
+and it,
+> perhaps it is an indication that the function is somewhat underdocume=
+nted.
 
-> git usually streams large blobs directly to packs. But there are case=
-s
-> diff --git a/t/t1050-large.sh b/t/t1050-large.sh
-> index 55ed955..7fbd2e1 100755
-> --- a/t/t1050-large.sh
-> +++ b/t/t1050-large.sh
-> @@ -134,6 +134,22 @@ test_expect_success 'repack' '
->  	git repack -ad
->  '
-> =20
-> +test_expect_success 'pack-objects with large loose object' '
-> +	echo Z | dd of=3Dlarge4 bs=3D1k seek=3D2000 &&
-> +	OBJ=3D9f36d94e145816ec642592c09cc8e601d83af157 &&
-> +	P=3D.git/objects/9f/36d94e145816ec642592c09cc8e601d83af157 &&
+I mean I don't understand this "Note that none of the variable
+reference in the implementation of this function needs dq around it."
+I suppose you meant 'references' (as that would make it grammatically
+correct AFAICS), but I still don't understand what you are trying so
+say. That the way the arguments are used in the __git_complete
+function makes it so double quotes are irrelevant?
 
-I do not think you need these hardcoded constants; you will run
-hash-object later, no?
+If so, then yeah, I agree.
 
-Also, relying on $P to exist after hash-object -w returns is somewhat
-flaky, no?
+Is there something actionable?
 
-> +	(
-> +	unset GIT_ALLOC_LIMIT &&
-
-sane_unset?
-
-> +	cat large4 | git hash-object -w --stdin &&
-> +	git cat-file blob $OBJ >actual &&
-> +	cmp large4 actual
-> +	) &&
-> +	echo $OBJ | git pack-objects .git/objects/pack/pack &&
-
-If you do not write directly into this directory, and then
-create another _empty_ repository and deposit the packfile and its
-associated .idx file there, then you do not have to care how the earlie=
-r
-hash-object wrote its object.  You are interested only in pack-objects
-producing a usable pack, and testing it like so will be the most direct
-way to test it, no?
-
-> +	rm $P &&
-> +	git cat-file blob $OBJ >actual &&
-> +	cmp large4 actual
-> +'
-
-In any case, the patch when applied on top of cd07cc5 (Update draft
-release notes to 1.7.11 (11th batch), 2012-05-11) does not pass this pa=
-rt
-of the test on my box.
-
->  test_expect_success 'tar achiving' '
->  	git archive --format=3Dtar HEAD >/dev/null
->  '
+--=20
+=46elipe Contreras
