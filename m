@@ -1,152 +1,101 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH v5] completion: add new __git_complete helper
-Date: Mon, 14 May 2012 20:30:45 +0200
-Message-ID: <CAMP44s1h=MPT8vx6JrGjMZWJzRjndxYKoYgo+1Y_Mmv+gWXzaQ@mail.gmail.com>
-References: <1337009718-1164-1-git-send-email-felipe.contreras@gmail.com>
-	<7vvcjyhd5n.fsf@alter.siamese.dyndns.org>
-	<CAMP44s1pb+J_SAzZ66QVcWq4V=LauUQ2VmzMD8KBtnhjubkkVg@mail.gmail.com>
-	<7vmx5ahbrm.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH/RFC] fmt-merge-msg: add a blank line after people info
+Date: Mon, 14 May 2012 11:31:11 -0700
+Message-ID: <7vipfyhaxc.fsf@alter.siamese.dyndns.org>
+References: <7vvcmj68iz.fsf@alter.siamese.dyndns.org>
+ <CA+55aFzQ3+EFBVyE9PWOyH0XEC_oW+kUaBTYfixmi2wgMmiZvw@mail.gmail.com>
+ <7vipii27ka.fsf@alter.siamese.dyndns.org>
+ <CA+55aFw-sS_p7JXNXbSbpiwh9_bZhSrTtC3is4NtLa_n9Hzk5A@mail.gmail.com>
+ <7vmx7uzq8h.fsf_-_@alter.siamese.dyndns.org>
+ <20120312071121.GA17269@burratino> <7vipi9mfhx.fsf@alter.siamese.dyndns.org>
+ <20120511103122.GA19573@burratino> <7vipg2jpzp.fsf@alter.siamese.dyndns.org>
+ <CA+55aFyNqncpHydQJYjLu5d2y+gGLVQVV8zk=2ckZ-LLgRRNWA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org,
-	=?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder@ira.uka.de>,
-	Thomas Rast <trast@student.ethz.ch>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon May 14 20:30:55 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
+	Jeff King <peff@peff.net>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Mon May 14 20:31:23 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SU02n-0007p7-Jg
-	for gcvg-git-2@plane.gmane.org; Mon, 14 May 2012 20:30:53 +0200
+	id 1SU03C-00089P-Oz
+	for gcvg-git-2@plane.gmane.org; Mon, 14 May 2012 20:31:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757448Ab2ENSat convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 14 May 2012 14:30:49 -0400
-Received: from mail-lpp01m010-f46.google.com ([209.85.215.46]:37053 "EHLO
-	mail-lpp01m010-f46.google.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1757199Ab2ENSar convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 May 2012 14:30:47 -0400
-Received: by lahd3 with SMTP id d3so3555115lah.19
-        for <git@vger.kernel.org>; Mon, 14 May 2012 11:30:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=rt764RdrDGjclGGZ+kc4JpPFeG0b68a2TMbIUXzU3E8=;
-        b=qX+YsTHiA+WqoaNdO9Bf2l6ZmBrfibCarNhF++EcCmQO3j0yQQgBZuzgwooACJ67am
-         uz4jeWAa5sPy/YCZKATdeTer0//yv4L85gxu8r9kenRNHnUthop5lkU+a6LJGbYBkh5w
-         E3poUNrkVUKJKrlbtCchI5Q6ACiMJjY+r8VsC/ZD+2Zb+t/0pvRcpf9VBR7XuZLZhcjF
-         P1e8f+C56XhHGdOEOsQyVBQou1svtm6lPwUq4OAwpMtKSZPi3Q5SGNqdC5yRTp5XeUyg
-         Bv8VQ8CThJFvCHDocAg6lX0vDF7Ooqrz6/3wDyRs35KLuoniNRdE7mdip9gMu+N74LSi
-         Wciw==
-Received: by 10.112.98.70 with SMTP id eg6mr4204464lbb.13.1337020245782; Mon,
- 14 May 2012 11:30:45 -0700 (PDT)
-Received: by 10.112.107.65 with HTTP; Mon, 14 May 2012 11:30:45 -0700 (PDT)
-In-Reply-To: <7vmx5ahbrm.fsf@alter.siamese.dyndns.org>
+	id S1757512Ab2ENSbO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 May 2012 14:31:14 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:45024 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757199Ab2ENSbN (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 May 2012 14:31:13 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 22EDD8EA8;
+	Mon, 14 May 2012 14:31:13 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=djNZJr2LGLlPb/tjqzTIZcPdpVc=; b=v/xUVp
+	MyP4glRbht8UWCjlJg44VExiQTJyW7guZykP9aLyInYgpjoiMi58hBc/FreFwxue
+	9qxIpdP+caryszURo1YGZapZnital8a47qbVcCn1T8U3lWpXQaJKOyvpv35cR7Ij
+	9tYwqQvz0BIxcwp/H2yRxWFGMKGHzGbOMesps=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=L7WB4AVXaIkzrKXkYFxebzq/A0heryop
+	0l0YMG/SSfamaRlVDmAjDdTVJ9pnGHBACaFnies97M18NvB8RdOz0PtbrQS4C4YW
+	59+C5BwkAqYViGxF6PrE/bgsr29oUWQ1sECnWJxP7eComWfWIoWDSM38P0NzliSB
+	FtoSOulJWpg=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 195578EA7;
+	Mon, 14 May 2012 14:31:13 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A0DFD8EA4; Mon, 14 May 2012
+ 14:31:12 -0400 (EDT)
+In-Reply-To: <CA+55aFyNqncpHydQJYjLu5d2y+gGLVQVV8zk=2ckZ-LLgRRNWA@mail.gmail.com> (Linus
+ Torvalds's message of "Fri, 11 May 2012 16:20:05 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: FB9ACCC4-9DF2-11E1-9D86-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197797>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197798>
 
-On Mon, May 14, 2012 at 8:13 PM, Junio C Hamano <gitster@pobox.com> wro=
-te:
-> Felipe Contreras <felipe.contreras@gmail.com> writes:
->
->>>> +__git_func_wrap ()
->>>> +{
->>>> + =C2=A0 =C2=A0 if [[ -n ${ZSH_VERSION-} ]]; then
->>>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 emulate -L bash
->>>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 setopt KSH_TYPESET
->>>> +
->>>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 # workaround zsh's bug=
- that leaves 'words' as a special
->>>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 # variable in versions=
- < 4.3.12
->>>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 typeset -h words
->>>> +
->>>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 # workaround zsh's bug=
- that quotes spaces in the COMPREPLY
->>>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 # array if IFS doesn't=
- contain spaces.
->>>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 typeset -h IFS
->>>> + =C2=A0 =C2=A0 fi
->>>> + =C2=A0 =C2=A0 local cur words cword prev
->>>> + =C2=A0 =C2=A0 _get_comp_words_by_ref -n =3D: cur words cword pre=
-v
->>>> + =C2=A0 =C2=A0 $1
->>>> +}
->>>> +
->>>> +# Setup completion for certain functions defined above by setting=
- common
->>>> +# variables and workarounds.
->>>> +# This is NOT a public function; use at your own risk.
->>>> +__git_complete ()
->>>> +{
->>>> + =C2=A0 =C2=A0 local wrapper=3D"__git_wrap${2}"
->>>> + =C2=A0 =C2=A0 eval "$wrapper () { __git_func_wrap $2 ; }"
->>>> + =C2=A0 =C2=A0 complete -o bashdefault -o default -o nospace -F $=
-wrapper $1 2>/dev/null \
->>>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 || complete -o default=
- -o nospace -F $wrapper $1
->>>> +}
->>>> +
->>>> +__git_complete git _git
->>>> +__git_complete gitk _gitk
->>>
->>> It makes my stomach queasy whenever I see $var not in double quotes=
- that
->>> forces me to guess (and trace to verify if the codepath is what I r=
-eally
->>> care about) if any value with $IFS in it could be used there, so ev=
-en when
->>> they are known to be safe, I'd prefer to see either explicit quotes=
- or
->>> comment that says what are expected in $1 and $2.
->>
->> Which ones?
->
-> All of them ;-)
->
-> Here is my attempt to explain why none of them needs to be quoted:
->
-> =C2=A0# Setup completion for certain functions defined above by setti=
-ng common
-> =C2=A0# variables and workarounds.
-> =C2=A0# It takes two parameters:
-> =C2=A0# =C2=A0- the first is the command name on the command line to =
-complete its
-> =C2=A0# =C2=A0 =C2=A0arguments for the user;
-> =C2=A0# =C2=A0- the second is a name of the completion function
-> =C2=A0# This is NOT a public function; use at your own risk.
-> =C2=A0#
-> =C2=A0# Note that none of the variable reference in the implementatio=
-n of this
-> =C2=A0# function needs dq around it.
+Linus Torvalds <torvalds@linux-foundation.org> writes:
 
-I don't understand that.
+> Btw, the counting of commits is broken for the merge people. Do this
+> in the kernel tree, just to see an example of the breakage:
+> ...
+> I dunno. But it looks odd, and the above is not the only example of
+> "those counts don't make sense".
 
-> =C2=A0# wrapper: the name of an internal shell function that wraps th=
-e
-> =C2=A0# =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0completion function $2, for=
-med by prefixing "__git_wrap"
-> =C2=A0# =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0in front of it. =C2=A0As it=
- has to be usable as a name of a
-> =C2=A0# =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0shell function, by definiti=
-on there won't be $IFS characters
-> =C2=A0# =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0in it.
-> =C2=A0# $1: =C2=A0 =C2=A0 =C2=A0the command name on the command line-=
---ditto.
-> =C2=A0# $2: =C2=A0 =C2=A0 =C2=A0the shell function name that implemen=
-ts the completion-ditto.
+"By" numbers were meant to give credits to people who wrote the code, and
+"via" numbers were meant to give credits to people who helped usher code
+by others' to the person who is making the merge.
 
-So in short; because the variables are used as function/command names.
+The former is something like "git shortlog --no-merges -n -s ..MERGE_HEAD"
+and is quite straightforward to compute.  I didn't think things through
+for the latter and punted with an ad-hoc algorithm that does not require
+us to traverse reachability when I wrote that code, I guess, and I suspect
+that is what is causing the "odd" numbers.
 
-Cheers.
+Here are some things that "via" should count as "integrator's
+contribution":
 
---=20
-=46elipe Contreras
+ - making a commit authored by others (1 "credit" per such commit);
+
+ - merging a branch that has commits authored by others (1 "credit" per
+   commit authored by others brought in with such a merge).
+
+And here are some things that "via" should not count:
+
+ - merging your own topic branches into one branch for the person who is
+   making the (final) merge to pull;
+
+ - merging backwards, pulling bunch of unrelated commits from upstream.
+
+For that, I think the code needs to annotate each "new" commit that is
+brought into the history by the (final) merge with "how many others'
+commits does it pull into the history" number, or something.  But I am
+still in "thinking aloud" phase here, so...
