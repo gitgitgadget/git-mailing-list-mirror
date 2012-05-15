@@ -1,59 +1,120 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: cherry-pick is slow
-Date: Tue, 15 May 2012 09:24:51 -0400
-Message-ID: <20120515132451.GA25378@sigill.intra.peff.net>
-References: <CAPZ_ugYojqTaWi0atr2ApOu9xmcwy4y8FduNC+TDhgWgSxXNPQ@mail.gmail.com>
- <CAPc5daW6eBLUf55_Qk+4bA6Y16TehfOUGc1xFzhib9vm=8O2Yw@mail.gmail.com>
- <CAPZ_ugbV6hB+8z8UsQKdHhxGuHbLzC5WK19mK7M8k2tMz+mtXw@mail.gmail.com>
- <20120514145412.GA1159@sigill.intra.peff.net>
- <CAPZ_ugbD=mOPBs6GyapWtv6NWuJ-=r2+bqBN9n+gdTPwGj3F0Q@mail.gmail.com>
+From: Thomas Gummerer <t.gummerer@gmail.com>
+Subject: Re: Index format v5
+Date: Tue, 15 May 2012 15:49:16 +0200
+Message-ID: <20120515134916.GA2074@tgummerer.unibz.it>
+References: <CALgYhfMKdbv8TiT4ALDSvD3pSXHEPLWHM09DxYnRmRdBWRjh8Q@mail.gmail.com>
+ <4FA7E703.7040408@alum.mit.edu>
+ <20120508141137.GA3937@tgummerer.surfnet.iacbox>
+ <4FAA2CAF.3040408@alum.mit.edu>
+ <20120510121911.GB98491@tgummerer>
+ <4FAC0633.90809@alum.mit.edu>
+ <20120511171230.GA2107@tgummerer>
+ <4FB01080.6010605@alum.mit.edu>
+ <20120514150113.GD2107@tgummerer>
+ <4FB1746A.6090408@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Dmitry Risenberg <dmitry.risenberg@gmail.com>
-X-From: git-owner@vger.kernel.org Tue May 15 15:25:10 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, trast@student.ethz.ch, gitster@pobox.com,
+	peff@peff.net, spearce@spearce.org, davidbarr@google.com
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Tue May 15 15:49:31 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SUHkT-0007Fn-Bp
-	for gcvg-git-2@plane.gmane.org; Tue, 15 May 2012 15:25:09 +0200
+	id 1SUI82-0002dB-Vp
+	for gcvg-git-2@plane.gmane.org; Tue, 15 May 2012 15:49:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758863Ab2EONZA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 May 2012 09:25:00 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:43846
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758859Ab2EONY6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 May 2012 09:24:58 -0400
-Received: (qmail 31163 invoked by uid 107); 15 May 2012 13:25:19 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 15 May 2012 09:25:19 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 15 May 2012 09:24:51 -0400
+	id S932845Ab2EONt0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 May 2012 09:49:26 -0400
+Received: from mail-pb0-f46.google.com ([209.85.160.46]:61796 "EHLO
+	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758898Ab2EONtZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 May 2012 09:49:25 -0400
+Received: by pbbrp8 with SMTP id rp8so7555843pbb.19
+        for <git@vger.kernel.org>; Tue, 15 May 2012 06:49:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=W4fqzJuuab1E8tCuqUcXET4PGEkRCYCamJZjgrtPpyk=;
+        b=RCBhGQH8jQiRzf13rm+drCGEzkJmULdXJqFv1O+D1CcxpiwKyD0T3WWLbakmnCcUFq
+         WKQWIXDvU1+lsrWjMxF4+1Dm2Ml6pHUhpwS2g2+YySmXxWkEV0eEAiSVP+j6/eMc/1gH
+         yfNb/5TCNEpnZ7KS+pTNhSPjdxwYLc/4xde2TXnxTUY6E1C6UqbE8GMR/y4QkaE4bS5X
+         QzaYYUGMtBKHJ/UdpjhJWKLR8h7c1SiXY+LBjhtl7nb+eD/Rfuk44QomcH5+av2TzUxm
+         ialW51YdwEkZ0X1lUIkJWtFpxZC/NUZQVSVc6Li8ViRad+ESnQjUkIhNVHE1yGZ33wau
+         RNXg==
+Received: by 10.68.212.197 with SMTP id nm5mr5624903pbc.110.1337089765214;
+        Tue, 15 May 2012 06:49:25 -0700 (PDT)
+Received: from localhost ([216.18.212.218])
+        by mx.google.com with ESMTPS id iw4sm1941457pbc.7.2012.05.15.06.49.21
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Tue, 15 May 2012 06:49:24 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <CAPZ_ugbD=mOPBs6GyapWtv6NWuJ-=r2+bqBN9n+gdTPwGj3F0Q@mail.gmail.com>
+In-Reply-To: <4FB1746A.6090408@alum.mit.edu>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197831>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197832>
 
-[let's keep this on-list so others can benefit from the discussion]
 
-On Tue, May 15, 2012 at 12:38:59PM +0400, Dmitry Risenberg wrote:
 
-> > It's probably detecting renames as part of the merge, which can be
-> > expensive if the thing you are cherry-picking is far away from HEAD. You
-> > can try setting the merge.renamelimit config variable to something small
-> > (like 1; setting it to 0 means "no limit").
+On 05/14, Michael Haggerty wrote:
+> On 05/14/2012 05:01 PM, Thomas Gummerer wrote:
+> >Thanks a lot for your feedback. I've now refactored the code and
+> >thanks to your suggestions hopefully made it simpler and easier
+> >to read. The reader should now read exactly the data from the
+> >spec.
 > 
-> I set it to 1, but it didn't help at all - cherry-pick time is still
-> about the same.
+> Yes, the style is much better now.  Here is the next round of feedback:
+> [...]
+> 
+> >DIR_DATA_STRUCT = struct.Struct("!HIIIIII 20s")
+> >
+> >
+> >def read_dirs(f, ndir):
+> >    dirs = list()
+> >    for i in xrange(0, ndir):
+> >        (pathname, partialcrc) = read_name(f)
+> >
+> >        (filedata, partialcrc) = read_calc_crc(f, DIR_DATA_STRUCT.size, partialcrc)
+> >        (flags, foffset, cr, ncr, nsubtrees, nfiles,
+> >                nentries, objname) = DIR_DATA_STRUCT.unpack(filedata)
+> >    # ...
+> 
+> [...]
 
-OK, then my guess was probably wrong. You'll have to try profiling (if
-you are on Linux, "perf record git cherry-pick ..."; perf report" is the
-simplest way). Or if the repository is publicly available, I can do a
-quick profile run.
+Thanks again for your feedback. I've refactored the code again,
+thanks to your suggestions. If I'm correct it's fine to have the
+compiled structs global?
 
--Peff
+> What is your plan for testing this code, and later the C version?
+> For example, you might want to have a suite of index files with
+> various contents, and compare the "git ls-files --debug" output with
+> the output that is expected.  How would you create index files like
+> this?  Via git commands?  Or should one of your Python scripts be
+> taught how to do it?
+
+I thought of using real world examples for this, for example the
+WebKit index, which is pretty large, and some others, for example the
+git index and the linux kernel index.
+
+There would be some changes necessary to the output format of 
+git ls-files --debug, to work with the new index format, but those
+should be fairly simple.
+
+> To make testing easier, you probably don't want to hard-code the
+> name of the input file in git-read-index-v5.py, so that you can use
+> it to read arbitrary files.  For example, you might want to honor
+> the GIT_INDEX_FILES environment variable in some form, or to take
+> the name of the index file as a command-line argument.
+
+I've changed this in the script, which now takes a --file argument
+with the file name of the index file that should be read.
+(git-read-index-v5.py --file=FILENAME)
+
+-- 
+Thomas
