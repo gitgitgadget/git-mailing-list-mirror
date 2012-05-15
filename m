@@ -1,78 +1,145 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Update "gc" behavior in commit, merge, am, rebase and
- index-pack
-Date: Mon, 14 May 2012 16:35:35 -0700
-Message-ID: <7vy5oufi9k.fsf@alter.siamese.dyndns.org>
-References: <1336810134-3103-1-git-send-email-pclouds@gmail.com>
- <20120514205039.GB3740@sigill.intra.peff.net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Some help on gitweb project.
+Date: Tue, 15 May 2012 02:17:50 +0200
+Message-ID: <201205150217.51844.jnareb@gmail.com>
+References: <CAH-tXsAFMyrkAD1FWZKimbJt-gzmcyyXqt7gymtKozwfFt_aSA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-	git@vger.kernel.org, Sverre Rabbelier <srabbelier@gmail.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue May 15 01:35:44 2012
+Content-Type: text/plain;
+  charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Cc: git mailing list <git@vger.kernel.org>,
+	Andrew Sayers <andrew-git@pileofstuff.org>
+To: jaseem abid <jaseemabid@gmail.com>
+X-From: git-owner@vger.kernel.org Tue May 15 02:17:59 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SU4no-0008J3-0K
-	for gcvg-git-2@plane.gmane.org; Tue, 15 May 2012 01:35:44 +0200
+	id 1SU5Sg-0006Rp-8S
+	for gcvg-git-2@plane.gmane.org; Tue, 15 May 2012 02:17:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932679Ab2ENXfj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 May 2012 19:35:39 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:33361 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932402Ab2ENXfi (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 May 2012 19:35:38 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B99358F02;
-	Mon, 14 May 2012 19:35:37 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=vsr0n/1bFw2ryPVTa9JoPk690TY=; b=SbKMt1
-	JXTRP7Qbdof6PC1u+rMJ92VakUUfDCJHEwr2ubvXJ2J4I+AWSCtWNeVzHjfv1yja
-	X4YoNu6iUMJyFe2mV5zuabEc9876TXh6M6HjMyXEsb2hj2K3y2awRKPb2eafkpg3
-	qBAurhUooDX48SPrqolxgtEp13Tlzp8ATe2kQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=sT1fOz/77mGQbG78Rnc6CumPdTekhy+w
-	LKKyTGAeKmA/7RZYNQst1xvUulwv3V90babR1MeoUTg4pKcKoLMXuSxsxi3+SDRP
-	A7QeASCyLlP/TcWjcauyp98DCbIs7MpIDdvQo4tT4Elb5WeFwzx/ihcUFZ3vNIJE
-	SsL7yQAonZ0=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B06448EFF;
-	Mon, 14 May 2012 19:35:37 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3961E8EFE; Mon, 14 May 2012
- 19:35:37 -0400 (EDT)
-In-Reply-To: <20120514205039.GB3740@sigill.intra.peff.net> (Jeff King's
- message of "Mon, 14 May 2012 16:50:40 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 82244E8A-9E1D-11E1-A190-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S932762Ab2EOARx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 May 2012 20:17:53 -0400
+Received: from mail-we0-f174.google.com ([74.125.82.174]:56062 "EHLO
+	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932755Ab2EOARw (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 May 2012 20:17:52 -0400
+Received: by weyu7 with SMTP id u7so2142252wey.19
+        for <git@vger.kernel.org>; Mon, 14 May 2012 17:17:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        bh=6+gnyZTM9x+kfZWF8zQKD8vxFsmpDVl2WT6aBfOsDzc=;
+        b=dPY4gi68sfuRtBDlNpb6iMWfysvH1Te1DNMa6iPmH1j7b1AqLBhUceOYKLOjC7+QGL
+         oyw5ie2BLZxWv/lQ0xYQKPPSmRitxqn3obC+U5iJR7mmPKv/SCf4/AHM7iEDk+td5ICE
+         9+L7Hct9zw3S5bDcwI4r/bp++Bz7aezcIWD024Bwjuwl/fGT9tpy8kQ9iW9gdBaDeWRu
+         UqG/GvRHSXrpGVUmHpnCqeIQEjs+MiEEzyNHsparzr/VoHbD7sii8YpzjpDJc69nvkx7
+         dm2A8RhuGpZhWOJ38s/lcKVXxONgcHWCuNSdSgh2u0vpLbLT2gTTbl7hwnCiGMvhmuZ0
+         4Ldg==
+Received: by 10.180.81.36 with SMTP id w4mr2812719wix.16.1337041071596;
+        Mon, 14 May 2012 17:17:51 -0700 (PDT)
+Received: from [192.168.1.13] (acsn207.neoplus.adsl.tpnet.pl. [83.11.41.207])
+        by mx.google.com with ESMTPS id ez4sm38600202wid.3.2012.05.14.17.17.49
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Mon, 14 May 2012 17:17:50 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <CAH-tXsAFMyrkAD1FWZKimbJt-gzmcyyXqt7gymtKozwfFt_aSA@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197815>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197816>
 
-Jeff King <peff@peff.net> writes:
+On Sun, 13 May 2012, jaseem abid wrote:
 
-> The pre-auto-gc hook runs only when we need to gc (i.e., when we would
-> be doing something expensive, anyway). So it is still cheap to check
-> whether we need to gc (although if you have an option like "--check"
-> which does not _fix_ the situation after checking, then you may end up
-> running the hook repeatedly).
+> Dear all,
+> 
+> I have been working on gitweb for a couple of days as part of a
+> rejected GSoC proposal. I would love to get some help on this and if
+> somebody can, that would be thankful.
+> 
+> 1. How is code tested after some change? I am not talking about unit
+> testing but about making sure that application is doing what it is
+> actually intended to do. Do you have to re - install git/gitweb with
+> every version of code you commit and make sure that it works well and
+> as expected? Or, is there some other way? Sorry but I am a newbie when
+> it comes to FOSS contribution and as well working on a project of this
+> magnitude.
+> 
+> As far as I understand, gitweb by default is looking for files from
+> `/usr/share/gitweb/` (I work on Debian Sid if that helps). If I edit
+> the perl or some JavaScript code, how should I test it? *Install* my
+> version from source as mentioned in "gitweb/INSTALL" ?
 
-Whether we need to gc might be cheap to check, but I think the worry about
-the new hook added after commit lost auto-gc was the hook to see if the
-user declines our offer to run "gc --auto" may be expensive with an extra
-fork and exec.  But I am personally fine with "commit" running "gc --auto"
-every time; pre-auto-gc hook is opt-in after all.
+One possibility is to install gitweb with "make -C gitweb install"
+or "make install-gitweb".
 
-As you mentioned in your own follow-up message, however, it will make
-things worse without any real benefit if it is merely "check and warn but
-never gc".  Also when "gc --auto" does not make the repository better (I
-vaguely recall some corner cases mentioned here in the past), repeated
-invocation of it might make such a change annoying.
+The other is to set up config file in such way that gitweb.perl
+would work with it; see the config file for t950x tests, the one
+inside t/gitweb-lib.sh.
+
+Though in latter case you can miss some errors...
+ 
+> 2. How I should be committing ?
+> 
+> Personally I commit on *very* small changes, so that I can easily get
+> back to any point and do bisects well and good, but I see the patches
+> in the mailing list to be polished and fine tuned. Commit somehow
+> comfortably and then polish it in another branch with rebase and
+> squashes and then submit it for comments on mailing list?
+> 
+> Refer please: 
+http://sethrobertson.github.com/GitBestPractices/#sausage
+
+First, I alway use [interactive] rebase or equivalen (like patch 
+management interfaces: StGit, Guilt, TopGit) to clean up patches
+prior to submission.
+
+Second, please do not think that the first attemt must be perfect.
+The usual workflow is that one send RFC patches, people comment,
+corrected version is sent, etc., etc... until the patch series is
+polished to first get out RFC status then (if possible) get accepted.
+
+> 3. How will I submit a commit like "Adding jQuery library"? Mail a
+> whole minimized JavaScript library to the mailing list? How can
+> somebody crosscheck the contents of a minimized JavaScript library ?
+> 
+> Earlier Jakub mentioned about adding CDN support for the library,
+> which I think is a very good feature. How should I do this? Add an
+> extra config/build variable to select b/w local and CDN version ?
+
+I think that it would be simpler to start with CDN support in the form
+of (for example) $jquery_url gitweb config variable and JQUERY_LINK
+build-time configuration variable.
+
+In the case the Internet access is lacking or intermittent, $jquery_url
+might be to static file not to CDN.
+
+And of course if ultimately we decide that we need to support providing 
+out own work-tested version of gitweb, it can be done iff $jquery_url
+is undefined or empty string -- fallback to in-repo copy, perhaps 
+outdated but tested that it works.
+
+> 4. At what stage is code to be submitted? After the full project is
+> done or in a modular manner? Can I ask for some review and help from
+> if I push the code to github and share the link, or do I have to mail
+> that also? I don't want to repeat this :
+> https://github.com/torvalds/linux/pull/17
+
+Git development is based on git mailing list, not GitHub web interface.
+In early stages you can send pull requests by private email (to mentors)
+or to git mailing list; in final stages you better send patch series,
+unless series is long and with large patches -- then pull request via 
+email would be suitable.
+ 
+> 5. What should be my base commit/branch for starting the work ?
+
+Add include for jQuery (Makefile, gitweb.cgi, gitweb.txt) and check it.
+
+-- 
+Jakub Narebski
+Poland
