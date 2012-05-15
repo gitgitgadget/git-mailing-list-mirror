@@ -1,141 +1,90 @@
 From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-Subject: Re: Git commit path vs rebase path
-Date: Tue, 15 May 2012 18:32:10 +0100
-Message-ID: <4FB2931A.1080504@ramsay1.demon.co.uk>
-References: <CAAXzdLU6bQ7ta4_-WfGJVaJgt1R5tX=4PW2sq3SdjAB+F72w+Q@mail.gmail.com>	<7vaa1j7vg1.fsf@alter.siamese.dyndns.org>	<4FA8BBB0.1080406@viscovery.net>	<CAAXzdLVaDAQkd_9qjnmTRoy8ccpyrZvwvBJQAfkp7LkYa7Li2A@mail.gmail.com>	<4FA8C5DB.5060002@viscovery.net>	<CAAXzdLW9_O+feVpBhDSXQH_SFRdrct1tjadpFoJ5d7-Qd1LWEg@mail.gmail.com>	<7vhavqwqpz.fsf@alter.siamese.dyndns.org>	<7v1umuwpo9.fsf@alter.siamese.dyndns.org>	<CAAXzdLVj0szCgpdOSdhnLdkBKAM+e6vrQpvrsz4HeUo+Nh1K6A@mail.gmail.com>	<4FAC047A.4010001@ramsay1.demon.co.uk> <CAAXzdLXbYp5YW9cZXxmRJk0MP=6PU897f4nuTe4ipLqk+EH9PQ@mail.gmail.com> <4FB03CA1.4030703@ramsay1.demon.co.uk> <4FB09FF2.70309@viscovery.net>
+Subject: Re: [PATCH] builtin/blame.c: Fix a "Using plain integer as NULL pointer"
+ warning
+Date: Tue, 15 May 2012 18:33:12 +0100
+Message-ID: <4FB29358.90408@ramsay1.demon.co.uk>
+References: <4FB02A7C.1000605@ramsay1.demon.co.uk> <4FB0463D.4010909@lsrfire.ath.cx>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Steven Penny <svnpenn@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Tue May 15 19:32:23 2012
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	GIT Mailing-list <git@vger.kernel.org>
+To: =?ISO-8859-1?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
+X-From: git-owner@vger.kernel.org Tue May 15 19:33:27 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SULbi-00084m-S6
-	for gcvg-git-2@plane.gmane.org; Tue, 15 May 2012 19:32:23 +0200
+	id 1SULci-0000YB-Ig
+	for gcvg-git-2@plane.gmane.org; Tue, 15 May 2012 19:33:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S966092Ab2EORcS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 May 2012 13:32:18 -0400
-Received: from anchor-post-2.mail.demon.net ([195.173.77.133]:34798 "EHLO
-	anchor-post-2.mail.demon.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S966054Ab2EORcR (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 15 May 2012 13:32:17 -0400
+	id S966099Ab2EORdU convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 15 May 2012 13:33:20 -0400
+Received: from anchor-post-3.mail.demon.net ([195.173.77.134]:60923 "EHLO
+	anchor-post-3.mail.demon.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S966052Ab2EORdT (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 15 May 2012 13:33:19 -0400
 Received: from ramsay1.demon.co.uk ([193.237.126.196])
-	by anchor-post-2.mail.demon.net with esmtp (Exim 4.69)
-	id 1SULbb-0003VC-ja; Tue, 15 May 2012 17:32:16 +0000
+	by anchor-post-3.mail.demon.net with esmtp (Exim 4.69)
+	id 1SULcb-0006TC-oC; Tue, 15 May 2012 17:33:18 +0000
 User-Agent: Thunderbird 1.5.0.2 (Windows/20060308)
-In-Reply-To: <4FB09FF2.70309@viscovery.net>
+In-Reply-To: <4FB0463D.4010909@lsrfire.ath.cx>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197844>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197845>
 
-Johannes Sixt wrote:
-> Am 5/14/2012 0:58, schrieb Ramsay Jones:
->> BTW, Johannes, earlier you said commit be39048 ("git-sh-setup.sh: Add an pwd()
->> function for MinGW", 17-04-2012) would fix the problem on MinGW; I'm not so
->> sure it will. 
-> 
->> [...] problem (*which MinGW shares*) is that the
->> pwd() function is defined *after* the code that sets $GIT_DIR from which the
->> rebase state directory name is derived (see git-sh-setup.sh lines 223-239).
-> 
-> Good catch!
-> 
-> Nevertheless, if I set GIT_EDITOR to "notepad", 'git rebase -i' works to
-> some degree. Leaving aside that it does not understand LF line endings, it
-> opens the git-rebase-todo file; I can edit and save it. That is, it looks
-> like a usable Windows style path was passed to Notepad. (This is with
-> MinGW git, of course.)
-> 
+Ren=E9 Scharfe wrote:
+> Am 13.05.2012 23:41, schrieb Ramsay Jones:
+>>
+>> Signed-off-by: Ramsay Jones<ramsay@ramsay1.demon.co.uk>
+>> ---
+>>
+>> Hi Junio,
+>>
+>> I try to catch these warnings, while the topics are still in the
+>> pu branch, so that we can squash the fix into them before they
+>> hit next. I don't know how I missed this one (commit 4b4132f,
+>> "blame: factor out helper for calling xdi_diff()", 09-05-2012)
+>> which was part of the 'rs/xdiff-lose-emit-func' branch.
+>>
+>> Sorry about that.
+>>
+>> ATB,
+>> Ramsay Jones
+>>
+>>
+>>   builtin/blame.c |    2 +-
+>>   1 file changed, 1 insertion(+), 1 deletion(-)
+>>
+>> diff --git a/builtin/blame.c b/builtin/blame.c
+>> index 778d661..24d3dd5 100644
+>> --- a/builtin/blame.c
+>> +++ b/builtin/blame.c
+>> @@ -93,7 +93,7 @@ static int diff_hunks(mmfile_t *file_a, mmfile_t *=
+file_b, long ctxlen,
+>>   {
+>>   	xpparam_t xpp =3D {0};
+>>   	xdemitconf_t xecfg =3D {0};
+>> -	xdemitcb_t ecb =3D {0};
+>> +	xdemitcb_t ecb =3D {NULL};
+>>
+>>   	xpp.flags =3D xdl_opts;
+>>   	xecfg.ctxlen =3D ctxlen;
+>=20
+> The warning is given by sparse, not a C compiler, correct?  It's=20
+> probably worth shutting it up by making that change; my excuse for us=
+ing=20
+> {0} is that it is such a nice and portable idiom [1] for initializing=
+=20
+> any structure, however.
 
-I was about to, confidently, proclaim that it should fail when
-you run that rebase from a subdirectory ... Unfortunately, it
-seems to work! *ahem*
+Yes, sorry, it is indeed a sparse warning. (The original
+subject line mentioned sparse, but it was too long ... ;-)
 
-The reason I was confident, is simply that I have seen this
-pattern:
-
-    p= ...some path...
-    p=$(cd "$p" && pwd)
-
-many times while debugging scripts on MinGW, so I 'know' that if
-p is initially a relative path, then the result is an absolute
-windows path. For example, while cwd is /home/ramsay/git then:
-
-    .git => C:/msysgit/msysgit/home/ramsay/git/.git
-
-Whereas if p is initially an absolute windows path, then the result
-is a POSIX-like path, viz:
-
-    C:/msysgit/msysgit/home/ramsay/git/.git => /usr/home/ramsay/git/.git
-
-If you combine that with the behaviour of 'git rev-parse', thus:
-
-    $ cd /home/ramsay/git
-    $ git rev-parse --git-dir
-    .git
-    $ cd xdiff
-    $ git rev-parse --git-dir
-    C:/msysgit/msysgit/home/ramsay/git/.git
-    $
-
-you should see "git rebase -i" invoking the editor with a POSIX
-path.
-
-[BTW, I have noticed that I sometimes get different behaviour when
-I type this stuff into an interactive shell. :(]
-
-Anyway, a bit of debugging shows that I was right, kinda! :-D
-
-I placed a "set -x" in git-sh-setup (line 222) just before the code
-to set up GIT_DIR and ran git-rebase like so:
-
-    $ cd /home/ramsay/git
-    $ GIT_EDITOR=false ./bin-wrappers/git rebase -i master uname >ttt 2>&1
-    $ cd xdiff
-    $ GIT_EDITOR=false ../bin-wrappers/git rebase -i master uname >sss 2>&1
-    $ diff ../ttt sss | more
-
-which showed that in the subdirectory case, git was indeed invoking
-the editor with a POSIX-like path. (The output files, ttt and sss, show
-some other interesting/odd behaviour).
-
-['uname' is an old branch of mine that, currently, is based on v1.7.10]
-
-The reason it works, despite the above, is clear if you now run:
-
-    $ GIT_EDITOR=args ../bin-wrappers/git rebase -i master uname
-
-    ...
-
-    +++ git var GIT_EDITOR
-    ++ GIT_SEQUENCE_EDITOR=args
-    ++ eval args '"$@"'
-    +++ args /usr/home/ramsay/git/.git/rebase-merge/git-rebase-todo
-    argv[0] = 'C:\msysgit\msysgit\home\ramsay\bin\args.exe'
-    argv[1] = 'C:/msysgit/msysgit/home/ramsay/git/.git/rebase-merge/git-rebase-todo'
-
-    ++ die_abort 'Could not execute editor'
-    ++ rm -rf /usr/home/ramsay/git/.git/rebase-merge
-    ++ die 'Could not execute editor'
-    ++ die_with_status 1 'Could not execute editor'
-    ++ status=1
-    ++ shift
-    ++ echo 'Could not execute editor'
-    Could not execute editor
-    ++ exit 1
-
-[I'm sure you can guess what the args program looks like!]
-
-So, the msys "path munging" of program arguments saves the day!
-
-HTH
+Thanks!
 
 ATB,
 Ramsay Jones
