@@ -1,112 +1,98 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: Index format v5
-Date: Tue, 15 May 2012 17:02:37 +0200
-Message-ID: <4FB2700D.5000900@alum.mit.edu>
-References: <CALgYhfMKdbv8TiT4ALDSvD3pSXHEPLWHM09DxYnRmRdBWRjh8Q@mail.gmail.com> <4FA7E703.7040408@alum.mit.edu> <20120508141137.GA3937@tgummerer.surfnet.iacbox> <4FAA2CAF.3040408@alum.mit.edu> <20120510121911.GB98491@tgummerer> <4FAC0633.90809@alum.mit.edu> <20120511171230.GA2107@tgummerer> <4FB01080.6010605@alum.mit.edu> <20120514150113.GD2107@tgummerer> <4FB1746A.6090408@alum.mit.edu> <20120515134916.GA2074@tgummerer.unibz.it>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/2] drop length limitations on gecos-derived names and
+ emails
+Date: Tue, 15 May 2012 08:03:38 -0700
+Message-ID: <7vtxzhfpv9.fsf@alter.siamese.dyndns.org>
+References: <20120511231303.GA24611@sigill.intra.peff.net>
+ <20120514162824.GA24457@sigill.intra.peff.net>
+ <20120514210225.GA9677@sigill.intra.peff.net>
+ <20120514211324.GA11578@sigill.intra.peff.net>
+ <20120515015437.GA13833@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, trast@student.ethz.ch, gitster@pobox.com,
-	peff@peff.net, spearce@spearce.org, davidbarr@google.com
-To: Thomas Gummerer <t.gummerer@gmail.com>
-X-From: git-owner@vger.kernel.org Tue May 15 17:02:50 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Angus Hammond <angusgh@gmail.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue May 15 17:03:47 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SUJGy-0008C1-Hg
-	for gcvg-git-2@plane.gmane.org; Tue, 15 May 2012 17:02:48 +0200
+	id 1SUJHu-0000eh-PQ
+	for gcvg-git-2@plane.gmane.org; Tue, 15 May 2012 17:03:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757132Ab2EOPCn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 May 2012 11:02:43 -0400
-Received: from ALUM-MAILSEC-SCANNER-4.MIT.EDU ([18.7.68.15]:53780 "EHLO
-	alum-mailsec-scanner-4.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751107Ab2EOPCm (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 15 May 2012 11:02:42 -0400
-X-AuditID: 1207440f-b7fe16d000000920-51-4fb27011dd5c
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-4.mit.edu (Symantec Messaging Gateway) with SMTP id C8.D3.02336.11072BF4; Tue, 15 May 2012 11:02:41 -0400 (EDT)
-Received: from [192.168.101.152] (ssh.berlin.jpk.com [212.222.128.135])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id q4FF2cZB015317
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Tue, 15 May 2012 11:02:39 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:12.0) Gecko/20120430 Thunderbird/12.0.1
-In-Reply-To: <20120515134916.GA2074@tgummerer.unibz.it>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrAKsWRmVeSWpSXmKPExsUixO6iqCtYsMnfYPVBYYtHJzczWXRd6Way
-	aOi9wmzxo6WH2WL+oYmsFhdW32a3WLlrIZMDu8fOWXfZPRZsKvV41ruH0ePiJWWPP+f3sHrM
-	/bSI1ePzJrkA9ihum6TEkrLgzPQ8fbsE7owzG+cyFUwRrNh9/idzA+Mp3i5GTg4JAROJj6uv
-	sUHYYhIX7q0Hsrk4hAQuM0q07zvLCOEcZ5I4tKSJGaSKV0BbonHVU9YuRg4OFgFViZ/vE0DC
-	bAK6Eot6mplAwqICYRKrH2hAVAtKnJz5hAXEFhHQkpj0tY8VxGYWaGGUeD0vAqRcWEBGYsN6
-	L4hNG5klNl2czQ5SwylgLnHo9yE2kBpmAWuJb7uLIFrlJba/ncM8gVFgFpINsxCqZiGpWsDI
-	vIpRLjGnNFc3NzEzpzg1Wbc4OTEvL7VI10QvN7NELzWldBMjJAb4dzB2rZc5xCjAwajEw/tq
-	zUZ/IdbEsuLK3EOMkhxMSqK8Jjmb/IX4kvJTKjMSizPii0pzUosPMUpwMCuJ8IqZAeV4UxIr
-	q1KL8mFS0hwsSuK86kvU/YQE0hNLUrNTUwtSi2CyMhwcShK87PlAjYJFqempFWmZOSUIaSYO
-	TpDhXFIixal5KalFiaUlGfGgGI0vBkYpSIoHaO/fPJC9xQWJuUBRiNZTjLocMz4tusYoxJKX
-	n5cqJc77HqRIAKQoozQPbgUs4b1iFAf6WJj3D0gVDzBZwk16BbSECWhJWS7YkpJEhJRUA6N0
-	9BP+j0uaHvAHFrzcstZJ70pHUkN4PcuPmQXH+rN7YzXlJP9fW3X2i/fpY1vedzTv 
+	id S1754147Ab2EOPDm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 May 2012 11:03:42 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64757 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753009Ab2EOPDl (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 May 2012 11:03:41 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8629D677A;
+	Tue, 15 May 2012 11:03:40 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=88sF4XBAaE0GMvITn20bVv/xYOM=; b=PsIMgb
+	UDpFSf0atrdgmNuTwUudomUi+dg3znLfaTK3S5F9V3omODQHxkDISy6vWBUteJD6
+	Zvmq0bRa8pcK/w8CVdIlaBJCtoytlw9f9cQqkC6xyjfYeCWeftq0sh/M3w0rFHoD
+	sO6V6aH4kRmEWlmyfqT5f1/IWCZsU7FQQ7WD8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=LWLayecbjhbd12BUDS7RPcdHRa17ExC7
+	R9o/5Zneab0Cki0tPnU4YGo/a4xq0837yoL+uZ8JrbCxP2DNAxsTZ9NJjtkDNmTu
+	yAznc9+/jCypJMhHUlEjvX6n4qa3qI3DEjZddT1uWrShvKQULXRlj6bHXO1LjHXS
+	0++Um9b/z3U=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7D00B6779;
+	Tue, 15 May 2012 11:03:40 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0ED2D6777; Tue, 15 May 2012
+ 11:03:39 -0400 (EDT)
+In-Reply-To: <20120515015437.GA13833@sigill.intra.peff.net> (Jeff King's
+ message of "Mon, 14 May 2012 21:54:37 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 27B0D34C-9E9F-11E1-A737-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197834>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197835>
 
-On 05/15/2012 03:49 PM, Thomas Gummerer wrote:
-> Thanks again for your feedback. I've refactored the code again,
-> thanks to your suggestions.
+Jeff King <peff@peff.net> writes:
 
-Good.  I'll try to review the new version as soon as possible.
-
-I suggest that you apply the same kinds of cleanups to 
-git-convert-index.py (which I personally haven't looked at yet at all). 
-  If you want my feedback on that script, please let me know when you 
-think it is ready.
-
- > If I'm correct it's fine to have the
-> compiled structs global?
-
-Yes, that's OK because they are constants so there is no risk of them 
-propagating side-effects.  (Of course, Python doesn't enforce the 
-constness of identifiers, but by convention ALL_CAPS identifiers are 
-constants and it would be an obvious no-no to modify one.)
-
-A real Pythonic solution would probably encapsulate all of your code 
-(including the constants) in classes.  But since you will eventually 
-translate the code to C, I don't think that step is crucial.  If, on the 
-other hand, you propose to include Python scripts in the git 
-distribution, then making them Pythonic would definitely be on the agenda.
-
->> What is your plan for testing this code, and later the C version?
->> For example, you might want to have a suite of index files with
->> various contents, and compare the "git ls-files --debug" output with
->> the output that is expected.  How would you create index files like
->> this?  Via git commands?  Or should one of your Python scripts be
->> taught how to do it?
+> On Mon, May 14, 2012 at 05:13:24PM -0400, Jeff King wrote:
 >
-> I thought of using real world examples for this, for example the
-> WebKit index, which is pretty large, and some others, for example the
-> git index and the linux kernel index.
+> We call setup_ident with our name pointer, which usually comes from
+> getenv("GIT_*_NAME"), although could also come from something like "git
+> commit -c $commit". We feed that to setup_ident. If name is NULL, then
+> setup_ident will use git_default_name (filling it in from gecos or
+> config). If it's not NULL, then we use it literally. And then we check
+> _that_ result to see if it's empty. If it is, we either die or warn,
+> depending on the flags. In the latter case, we fallback to using the
+> username as the name.
+>
+> And that's what confuses me. Depending on what was passed in, we may
+> have checked that GIT_COMMITTER_NAME is an empty string, or we may have
+> checked that the config or gecos field yielded an empty string. 
 
-It is good to do such manual tests, but you probably also want small, 
-hand-constructed, automatable tests to make sure that all of the 
-codepaths are exercised.  For example,
+Sounds quite sensible to me, though.
 
-* A directory containing only files
+> In the
+> latter case, it makes sense to fall back to the username.
 
-* A directory containing only subdirectories
+I agree that we should use something like "Sorry, Mr. McDonald" codepath
+when the GECOS field returns an empty string---after all that is what we
+do when we are built with NO_GECOS_IN_PWENT.
 
-* A mixed directory whose last element is a file / last element is a 
-subdirectory
+> But in the
+> former case, it doesn't; we should fall back to the config name or the
+> gecos name.
 
-* Various types of conflicts
-
-...etc.
-
-Michael
-
--- 
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
+If the user said GIT_COMMITTER_NAME is empty with "GIT_COMMITTER_NAME=",
+that is different from saying with "unset GIT_COMMITTER_NAME" that the
+user does not want the environment to take effect, no?  So I do not think
+falling back to configured or gecos in the former case is the right thing
+to do, even though that would mean explicitly giving an empty string in
+that configuration variable is asking only for an error without any
+recourse, which is not useful at all.
