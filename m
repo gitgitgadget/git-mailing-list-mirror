@@ -1,73 +1,60 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 1/2] drop length limitations on gecos-derived names and
- emails
-Date: Mon, 14 May 2012 22:32:20 -0400
-Message-ID: <20120515023220.GA22947@sigill.intra.peff.net>
-References: <20120511231303.GA24611@sigill.intra.peff.net>
- <20120514162824.GA24457@sigill.intra.peff.net>
- <20120514210225.GA9677@sigill.intra.peff.net>
- <20120514211324.GA11578@sigill.intra.peff.net>
- <20120515015437.GA13833@sigill.intra.peff.net>
+From: Sylvain <syllant@gmail.com>
+Subject: Re: Git commit error: fatal: Repository has been updated, but unable to write =?utf-8?b?bmV3X2luZGV4?= file.
+Date: Tue, 15 May 2012 06:34:31 +0000 (UTC)
+Message-ID: <loom.20120515T082415-300@post.gmane.org>
+References: <34E530A4-A792-42AC-8C19-5F7CB71FA46C@jetbrains.com> <jks9k9$c35$1@dough.gmane.org> <20120327122045.GA7421@ikke-laptop.buyways.nl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Angus Hammond <angusgh@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue May 15 04:32:38 2012
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 15 08:40:15 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SU7Z0-0007G0-6H
-	for gcvg-git-2@plane.gmane.org; Tue, 15 May 2012 04:32:38 +0200
+	id 1SUBQb-0007HV-Nq
+	for gcvg-git-2@plane.gmane.org; Tue, 15 May 2012 08:40:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965493Ab2EOCca (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 May 2012 22:32:30 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:43347
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S965286Ab2EOCcW (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 May 2012 22:32:22 -0400
-Received: (qmail 27696 invoked by uid 107); 15 May 2012 02:32:43 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 14 May 2012 22:32:43 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 14 May 2012 22:32:20 -0400
-Content-Disposition: inline
-In-Reply-To: <20120515015437.GA13833@sigill.intra.peff.net>
+	id S1753558Ab2EOGkH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 May 2012 02:40:07 -0400
+Received: from plane.gmane.org ([80.91.229.3]:34654 "EHLO plane.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752007Ab2EOGkG (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 May 2012 02:40:06 -0400
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1SUBQS-00079L-Hy
+	for git@vger.kernel.org; Tue, 15 May 2012 08:40:04 +0200
+Received: from tok69-8-78-224-205-94.fbx.proxad.net ([78.224.205.94])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 15 May 2012 08:40:04 +0200
+Received: from syllant by tok69-8-78-224-205-94.fbx.proxad.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 15 May 2012 08:40:04 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 78.224.205.94 (Mozilla/5.0 (Windows NT 6.0) AppleWebKit/536.5 (KHTML, like Gecko) Chrome/19.0.1084.46 Safari/536.5)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197818>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197821>
 
-On Mon, May 14, 2012 at 09:54:37PM -0400, Jeff King wrote:
+Hi,
 
-> Of course we've still polluted this crappy fake name into
-> git_default_name, so that later calls with error_on_no_name will see it
-> and not error. I think so far it hasn't mattered because the only user
-> of this "warn" code is format-patch, which otherwise does not care about
-> ident (and doesn't even end up using the name at all!). And I doubt this
-> code path gets triggered much anyway; do people really run
-> "GIT_COMMITTER_NAME= git format-patch"?
-> 
-> I can just leave it as it's not really hurting anybody, I think. But I
-> was refactoring in the area and it just seemed flaky and questionable. I
-> wonder if we can simply get rid of the IDENT_WARN_ON_NO_NAME code path
-> entirely. The use here is grabbing the email address to use as part of a
-> message id. Could we just call setup_ident and then read from
-> git_default_email directly? There's no need to respect
-> GIT_COMMITTER_EMAIL here at all.
+I'm also experiencing this issue (msysGit 1.7.10-preview20120409 + TortoiseGit 
+1.7.9.0 + Intellij IDEA 11).
 
-Hmm, I was mistaken. This code path also gets followed whenever
-IDENT_ERROR_ON_NO_NAME is not set (regardless of IDENT_WARN_ON_NO_NAME).
-So other programs may accidentally get this pollution of
-git_default_name and show a username when we _could_ have shown the name
-from config. I can see the pollution in a debugger in "git commit", but
-I don't think you can actually trigger a commit with it, because later
-calls to fmt_ident use ERROR_ON_NO_NAME.
+Don't you think it could be related to parallel usage of msysGit + TortoiseGit?
 
-I really wonder if we can just get rid of all of the calls which do not
-use ERROR_ON_NO_NAME. As far as I can tell, they are all part of
-programs which later end up using ERROR_ON_NO_NAME anyway.
+I.e. after committing with msysGit (through IDEA or not), TortoiseGit would 
+launch a background operation (such as updating index) that would mess with 
+msysGit?
 
--Peff
+Just a guess, I don't know internal behaviour of msysGit/TortoiseGit.
+
+Sylvain
