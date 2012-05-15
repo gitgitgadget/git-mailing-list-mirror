@@ -1,145 +1,128 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Some help on gitweb project.
-Date: Tue, 15 May 2012 02:17:50 +0200
-Message-ID: <201205150217.51844.jnareb@gmail.com>
-References: <CAH-tXsAFMyrkAD1FWZKimbJt-gzmcyyXqt7gymtKozwfFt_aSA@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 1/2] drop length limitations on gecos-derived names and
+ emails
+Date: Mon, 14 May 2012 21:54:37 -0400
+Message-ID: <20120515015437.GA13833@sigill.intra.peff.net>
+References: <20120511231303.GA24611@sigill.intra.peff.net>
+ <20120514162824.GA24457@sigill.intra.peff.net>
+ <20120514210225.GA9677@sigill.intra.peff.net>
+ <20120514211324.GA11578@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Cc: git mailing list <git@vger.kernel.org>,
-	Andrew Sayers <andrew-git@pileofstuff.org>
-To: jaseem abid <jaseemabid@gmail.com>
-X-From: git-owner@vger.kernel.org Tue May 15 02:17:59 2012
+Content-Type: text/plain; charset=utf-8
+Cc: Angus Hammond <angusgh@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue May 15 03:54:46 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SU5Sg-0006Rp-8S
-	for gcvg-git-2@plane.gmane.org; Tue, 15 May 2012 02:17:58 +0200
+	id 1SU6yL-0002eg-E1
+	for gcvg-git-2@plane.gmane.org; Tue, 15 May 2012 03:54:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932762Ab2EOARx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 May 2012 20:17:53 -0400
-Received: from mail-we0-f174.google.com ([74.125.82.174]:56062 "EHLO
-	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932755Ab2EOARw (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 May 2012 20:17:52 -0400
-Received: by weyu7 with SMTP id u7so2142252wey.19
-        for <git@vger.kernel.org>; Mon, 14 May 2012 17:17:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        bh=6+gnyZTM9x+kfZWF8zQKD8vxFsmpDVl2WT6aBfOsDzc=;
-        b=dPY4gi68sfuRtBDlNpb6iMWfysvH1Te1DNMa6iPmH1j7b1AqLBhUceOYKLOjC7+QGL
-         oyw5ie2BLZxWv/lQ0xYQKPPSmRitxqn3obC+U5iJR7mmPKv/SCf4/AHM7iEDk+td5ICE
-         9+L7Hct9zw3S5bDcwI4r/bp++Bz7aezcIWD024Bwjuwl/fGT9tpy8kQ9iW9gdBaDeWRu
-         UqG/GvRHSXrpGVUmHpnCqeIQEjs+MiEEzyNHsparzr/VoHbD7sii8YpzjpDJc69nvkx7
-         dm2A8RhuGpZhWOJ38s/lcKVXxONgcHWCuNSdSgh2u0vpLbLT2gTTbl7hwnCiGMvhmuZ0
-         4Ldg==
-Received: by 10.180.81.36 with SMTP id w4mr2812719wix.16.1337041071596;
-        Mon, 14 May 2012 17:17:51 -0700 (PDT)
-Received: from [192.168.1.13] (acsn207.neoplus.adsl.tpnet.pl. [83.11.41.207])
-        by mx.google.com with ESMTPS id ez4sm38600202wid.3.2012.05.14.17.17.49
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 14 May 2012 17:17:50 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <CAH-tXsAFMyrkAD1FWZKimbJt-gzmcyyXqt7gymtKozwfFt_aSA@mail.gmail.com>
+	id S964771Ab2EOByj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 May 2012 21:54:39 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:43315
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758320Ab2EOByj (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 May 2012 21:54:39 -0400
+Received: (qmail 27331 invoked by uid 107); 15 May 2012 01:55:00 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 14 May 2012 21:55:00 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 14 May 2012 21:54:37 -0400
 Content-Disposition: inline
+In-Reply-To: <20120514211324.GA11578@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197816>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197817>
 
-On Sun, 13 May 2012, jaseem abid wrote:
+On Mon, May 14, 2012 at 05:13:24PM -0400, Jeff King wrote:
 
-> Dear all,
+> where we are not careful. The fix is trivial. However, while examining
+> fmt_ident, I notice there is another potential spot there that needs
+> further investigation (I think it may actually be unreachable code, but
+> I need to look closer).
 > 
-> I have been working on gitweb for a couple of days as part of a
-> rejected GSoC proposal. I would love to get some help on this and if
-> somebody can, that would be thankful.
+> I'll re-roll the series with the fixes after investigating fmt_ident.
+
+Hmm. This code from fmt_ident is very odd:
+
+> const char *fmt_ident(const char *name, const char *email,
+> 		      const char *date_str, int flag)
+> {
+> [...]
+> 	setup_ident(&name, &email);
 > 
-> 1. How is code tested after some change? I am not talking about unit
-> testing but about making sure that application is doing what it is
-> actually intended to do. Do you have to re - install git/gitweb with
-> every version of code you commit and make sure that it works well and
-> as expected? Or, is there some other way? Sorry but I am a newbie when
-> it comes to FOSS contribution and as well working on a project of this
-> magnitude.
+> 	if (!*name) {
+> 		struct passwd *pw;
 > 
-> As far as I understand, gitweb by default is looking for files from
-> `/usr/share/gitweb/` (I work on Debian Sid if that helps). If I edit
-> the perl or some JavaScript code, how should I test it? *Install* my
-> version from source as mentioned in "gitweb/INSTALL" ?
+> 		if ((warn_on_no_name || error_on_no_name) &&
+> 		    name == git_default_name && env_hint) {
+> 			fputs(env_hint, stderr);
+> 			env_hint = NULL; /* warn only once */
+> 		}
+> 		if (error_on_no_name)
+> 			die("empty ident %s <%s> not allowed", name, email);
+> 		pw = getpwuid(getuid());
+> 		if (!pw)
+> 			die("You don't exist. Go away!");
+> 		strlcpy(git_default_name, pw->pw_name,
+> 			sizeof(git_default_name));
+> 		name = git_default_name;
+> 	}
 
-One possibility is to install gitweb with "make -C gitweb install"
-or "make install-gitweb".
+We call setup_ident with our name pointer, which usually comes from
+getenv("GIT_*_NAME"), although could also come from something like "git
+commit -c $commit". We feed that to setup_ident. If name is NULL, then
+setup_ident will use git_default_name (filling it in from gecos or
+config). If it's not NULL, then we use it literally. And then we check
+_that_ result to see if it's empty. If it is, we either die or warn,
+depending on the flags. In the latter case, we fallback to using the
+username as the name.
 
-The other is to set up config file in such way that gitweb.perl
-would work with it; see the config file for t950x tests, the one
-inside t/gitweb-lib.sh.
+And that's what confuses me. Depending on what was passed in, we may
+have checked that GIT_COMMITTER_NAME is an empty string, or we may have
+checked that the config or gecos field yielded an empty string. In the
+latter case, it makes sense to fall back to the username. But in the
+former case, it doesn't; we should fall back to the config name or the
+gecos name. And worse, we've polluted git_default_name for the rest of
+the program run.
 
-Though in latter case you can miss some errors...
- 
-> 2. How I should be committing ?
-> 
-> Personally I commit on *very* small changes, so that I can easily get
-> back to any point and do bisects well and good, but I see the patches
-> in the mailing list to be polished and fine tuned. Commit somehow
-> comfortably and then polish it in another branch with rebase and
-> squashes and then submit it for comments on mailing list?
-> 
-> Refer please: 
-http://sethrobertson.github.com/GitBestPractices/#sausage
+Instead of falling back to getpwuid(), should it fall back to:
 
-First, I alway use [interactive] rebase or equivalen (like patch 
-management interfaces: StGit, Guilt, TopGit) to clean up patches
-prior to submission.
+   /* If this wasn't our default name already, then fall back to that. */
+   if (name != git_default_name) {
+           name = NULL;
+           setup_ident(&name, &email);
+   }
 
-Second, please do not think that the first attemt must be perfect.
-The usual workflow is that one send RFC patches, people comment,
-corrected version is sent, etc., etc... until the patch series is
-polished to first get out RFC status then (if possible) get accepted.
+   /* If we _still_ don't have a non-empty name, then fall back to
+    * username. */
+   if (!*name) {
+          pw = getpwuid(getuid());
+          if (!pw)
+                  die("You don't exist. Go away!");
+          strlcpy(git_default_name, pw->pw_name, sizeof(git_default_name));
+          nae = git_default_name;
+   }
 
-> 3. How will I submit a commit like "Adding jQuery library"? Mail a
-> whole minimized JavaScript library to the mailing list? How can
-> somebody crosscheck the contents of a minimized JavaScript library ?
-> 
-> Earlier Jakub mentioned about adding CDN support for the library,
-> which I think is a very good feature. How should I do this? Add an
-> extra config/build variable to select b/w local and CDN version ?
+Of course we've still polluted this crappy fake name into
+git_default_name, so that later calls with error_on_no_name will see it
+and not error. I think so far it hasn't mattered because the only user
+of this "warn" code is format-patch, which otherwise does not care about
+ident (and doesn't even end up using the name at all!). And I doubt this
+code path gets triggered much anyway; do people really run
+"GIT_COMMITTER_NAME= git format-patch"?
 
-I think that it would be simpler to start with CDN support in the form
-of (for example) $jquery_url gitweb config variable and JQUERY_LINK
-build-time configuration variable.
+I can just leave it as it's not really hurting anybody, I think. But I
+was refactoring in the area and it just seemed flaky and questionable. I
+wonder if we can simply get rid of the IDENT_WARN_ON_NO_NAME code path
+entirely. The use here is grabbing the email address to use as part of a
+message id. Could we just call setup_ident and then read from
+git_default_email directly? There's no need to respect
+GIT_COMMITTER_EMAIL here at all.
 
-In the case the Internet access is lacking or intermittent, $jquery_url
-might be to static file not to CDN.
-
-And of course if ultimately we decide that we need to support providing 
-out own work-tested version of gitweb, it can be done iff $jquery_url
-is undefined or empty string -- fallback to in-repo copy, perhaps 
-outdated but tested that it works.
-
-> 4. At what stage is code to be submitted? After the full project is
-> done or in a modular manner? Can I ask for some review and help from
-> if I push the code to github and share the link, or do I have to mail
-> that also? I don't want to repeat this :
-> https://github.com/torvalds/linux/pull/17
-
-Git development is based on git mailing list, not GitHub web interface.
-In early stages you can send pull requests by private email (to mentors)
-or to git mailing list; in final stages you better send patch series,
-unless series is long and with large patches -- then pull request via 
-email would be suitable.
- 
-> 5. What should be my base commit/branch for starting the work ?
-
-Add include for jQuery (Makefile, gitweb.cgi, gitweb.txt) and check it.
-
--- 
-Jakub Narebski
-Poland
+-Peff
