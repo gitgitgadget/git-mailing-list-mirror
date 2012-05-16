@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH v2 3/4] pack-objects: refactor write_object()
-Date: Wed, 16 May 2012 19:02:10 +0700
-Message-ID: <1337169731-23416-3-git-send-email-pclouds@gmail.com>
+Subject: [PATCH v2 4/4] pack-objects: use streaming interface for reading large loose blobs
+Date: Wed, 16 May 2012 19:02:11 +0700
+Message-ID: <1337169731-23416-4-git-send-email-pclouds@gmail.com>
 References: <1336818375-16895-1-git-send-email-pclouds@gmail.com>
  <1337169731-23416-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
@@ -13,434 +13,205 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 16 14:06:31 2012
+X-From: git-owner@vger.kernel.org Wed May 16 14:06:42 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SUczt-0000Ss-7b
-	for gcvg-git-2@plane.gmane.org; Wed, 16 May 2012 14:06:29 +0200
+	id 1SUd02-0000gi-EF
+	for gcvg-git-2@plane.gmane.org; Wed, 16 May 2012 14:06:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757606Ab2EPMGY convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 16 May 2012 08:06:24 -0400
-Received: from mail-pb0-f46.google.com ([209.85.160.46]:42323 "EHLO
-	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756376Ab2EPMGX (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 May 2012 08:06:23 -0400
-Received: by mail-pb0-f46.google.com with SMTP id rp8so1019187pbb.19
-        for <git@vger.kernel.org>; Wed, 16 May 2012 05:06:22 -0700 (PDT)
+	id S1758663Ab2EPMGd convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 16 May 2012 08:06:33 -0400
+Received: from mail-pz0-f46.google.com ([209.85.210.46]:38428 "EHLO
+	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756377Ab2EPMGc (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 May 2012 08:06:32 -0400
+Received: by mail-pz0-f46.google.com with SMTP id y13so898350dad.19
+        for <git@vger.kernel.org>; Wed, 16 May 2012 05:06:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=6SrkIyCRZLqy7XIabLWTKk6ENBFMd3KA0FUaX+Rd6Zg=;
-        b=sXy468+7kpDXG5nDuNYxvOkj41fWls3e9eyN514PSGOTiwMiZ8YZLqkLa4j2fGy/02
-         cX8TzfbfkMaTzMJ97j0hP575/qOR1Xh5MzHUGV+UpfChZu9L2buQh6C1dVCwd7kOvWkr
-         WFU4AK7CFgts/EUhKkiK4S2GpzH3wpaJuYhuvixi06FW6VmA6VQwoWKVNViByOQtsl2b
-         4cqWKC8D4pp+vstYJJRIFCPHSNJ+x0xHy6Tgog4dhcmztsTI9XbGYw3UgIkZqazO37Gh
-         oBdiehj3FvtFe4kBC0FgFXmbTr0w/Iel/ACPNiG96qzGkB4q1N/x7QMeQXbfs2zyjUTY
-         X64w==
-Received: by 10.68.130.9 with SMTP id oa9mr15877313pbb.95.1337169982781;
-        Wed, 16 May 2012 05:06:22 -0700 (PDT)
+        bh=mLer4h1hoITMp0/iHsO7aOnWg3eQBOPPqlIjXjrdZCM=;
+        b=Pz4FHEIWjcP1ldlh+u3+D25DgmfJD0K6eBt+LgMIkJwF4crGetsezpXy3hPENRxUdG
+         vXfZzvNoKTR1WpjWbFD2D4c0Wcv4OHjeXawKIHXPNPgIHlbEwur94eji00NQpPlurtd2
+         iPPdKDwWB5GuXZGswfq21qcXnI+Y3Oq5gDGSDr7tolzrOLS7jpucARY9WUxflybpu6Mh
+         qc25iTcNUVP0akQ97qi1BA6191bH6K8QQjqCw9cpBoOpy/u2YIm6fa5dH0g3THXkZX5l
+         kZBY0bD8dnTivEIzmBLBnMwQKJjw22ty+9ur9YU8NHSQAW3+cZaLUivPwZNoYpi48Mc1
+         SPeA==
+Received: by 10.68.223.37 with SMTP id qr5mr16088223pbc.159.1337169992621;
+        Wed, 16 May 2012 05:06:32 -0700 (PDT)
 Received: from pclouds@gmail.com ([115.74.61.104])
-        by mx.google.com with ESMTPS id pu5sm5279424pbc.28.2012.05.16.05.06.18
+        by mx.google.com with ESMTPS id sy3sm4200165pbc.0.2012.05.16.05.06.27
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 16 May 2012 05:06:21 -0700 (PDT)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Wed, 16 May 2012 19:02:32 +0700
+        Wed, 16 May 2012 05:06:31 -0700 (PDT)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Wed, 16 May 2012 19:02:41 +0700
 X-Mailer: git-send-email 1.7.8.36.g69ee2
 In-Reply-To: <1337169731-23416-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197871>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197872>
 
-Move !to_reuse and to_reuse write code out into two separate functions
-and remove "goto no_reuse;" hack
+git usually streams large blobs directly to packs. But there are cases
+where git can create large loose blobs (unpack-objects or hash-object
+over pipe). Or they can come from other git implementations.
+core.bigfilethreshold can also be lowered down and introduce a new
+wave of large loose blobs.
+
+Use streaming interface to read/compress/write these blobs in one go.
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- builtin/pack-objects.c |  322 ++++++++++++++++++++++++++--------------=
---------
- 1 files changed, 172 insertions(+), 150 deletions(-)
+ Changes since the first version:
+
+  - use "struct git_istream *" as streaming indicator, instead of "buf
+    !=3D NULL"
+  - fall back to read_sha1_file() if open_istream() fails
+  - write_object() returns correct written number of bytes (previously
+    datalen was miscalculated, leading to wrong pack size calculation)
+
+ builtin/pack-objects.c |   63 ++++++++++++++++++++++++++++++++++++++++=
+++++---
+ t/t1050-large.sh       |   12 +++++++++
+ 2 files changed, 71 insertions(+), 4 deletions(-)
 
 diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index b2e0940..ccfcbad 100644
+index ccfcbad..b2679cb 100644
 --- a/builtin/pack-objects.c
 +++ b/builtin/pack-objects.c
-@@ -200,22 +200,178 @@ static void copy_pack_data(struct sha1file *f,
+@@ -16,6 +16,7 @@
+ #include "list-objects.h"
+ #include "progress.h"
+ #include "refs.h"
++#include "streaming.h"
+ #include "thread-utils.h"
+=20
+ static const char *pack_usage[] =3D {
+@@ -150,6 +151,46 @@ static unsigned long do_compress(void **pptr, unsi=
+gned long size)
+ 	return stream.total_out;
  }
 =20
- /* Return 0 if we will bust the pack-size limit */
--static unsigned long write_object(struct sha1file *f,
--				  struct object_entry *entry,
--				  off_t write_offset)
-+static unsigned long write_no_reuse_object(struct sha1file *f, struct =
-object_entry *entry,
-+					   unsigned long limit, int usable_delta)
- {
--	unsigned long size, limit, datalen;
--	void *buf;
-+	unsigned long size, datalen;
- 	unsigned char header[10], dheader[10];
++static unsigned long write_large_blob_data(struct git_istream *st, str=
+uct sha1file *f,
++					   const unsigned char *sha1)
++{
++	git_zstream stream;
++	unsigned char ibuf[1024 * 16];
++	unsigned char obuf[1024 * 16];
++	unsigned long olen =3D 0;
++
++	memset(&stream, 0, sizeof(stream));
++	git_deflate_init(&stream, pack_compression_level);
++
++	for (;;) {
++		ssize_t readlen;
++		int zret =3D Z_OK;
++		readlen =3D read_istream(st, ibuf, sizeof(ibuf));
++		if (readlen =3D=3D -1)
++			die(_("unable to read %s"), sha1_to_hex(sha1));
++
++		stream.next_in =3D ibuf;
++		stream.avail_in =3D readlen;
++		while ((stream.avail_in || readlen =3D=3D 0) &&
++		       (zret =3D=3D Z_OK || zret =3D=3D Z_BUF_ERROR)) {
++			stream.next_out =3D obuf;
++			stream.avail_out =3D sizeof(obuf);
++			zret =3D git_deflate(&stream, readlen ? 0 : Z_FINISH);
++			sha1write(f, obuf, stream.next_out - obuf);
++			olen +=3D stream.next_out - obuf;
++		}
++		if (stream.avail_in)
++			die(_("deflate error (%d)"), zret);
++		if (readlen =3D=3D 0) {
++			if (zret !=3D Z_STREAM_END)
++				die(_("deflate error (%d)"), zret);
++			break;
++		}
++	}
++	git_deflate_end(&stream);
++	return olen;
++}
++
+ /*
+  * we are going to reuse the existing object data as is.  make
+  * sure it is not corrupt.
+@@ -208,11 +249,18 @@ static unsigned long write_no_reuse_object(struct=
+ sha1file *f, struct object_ent
  	unsigned hdrlen;
  	enum object_type type;
-+	void *buf;
-+
-+	if (!usable_delta) {
-+		buf =3D read_sha1_file(entry->idx.sha1, &type, &size);
-+		if (!buf)
-+			die("unable to read %s", sha1_to_hex(entry->idx.sha1));
-+		/*
-+		 * make sure no cached delta data remains from a
-+		 * previous attempt before a pack split occurred.
-+		 */
-+		free(entry->delta_data);
-+		entry->delta_data =3D NULL;
-+		entry->z_delta_size =3D 0;
-+	} else if (entry->delta_data) {
-+		size =3D entry->delta_size;
-+		buf =3D entry->delta_data;
-+		entry->delta_data =3D NULL;
-+		type =3D (allow_ofs_delta && entry->delta->idx.offset) ?
-+			OBJ_OFS_DELTA : OBJ_REF_DELTA;
-+	} else {
-+		buf =3D get_delta(entry);
-+		size =3D entry->delta_size;
-+		type =3D (allow_ofs_delta && entry->delta->idx.offset) ?
-+			OBJ_OFS_DELTA : OBJ_REF_DELTA;
-+	}
-+
-+	if (entry->z_delta_size)
-+		datalen =3D entry->z_delta_size;
+ 	void *buf;
++	struct git_istream *st =3D NULL;
+=20
+ 	if (!usable_delta) {
+-		buf =3D read_sha1_file(entry->idx.sha1, &type, &size);
+-		if (!buf)
+-			die("unable to read %s", sha1_to_hex(entry->idx.sha1));
++		if (entry->type =3D=3D OBJ_BLOB &&
++		    entry->size > big_file_threshold &&
++		    (st =3D open_istream(entry->idx.sha1, &type, &size, NULL)) !=3D =
+NULL)
++			buf =3D NULL;
++		else {
++			buf =3D read_sha1_file(entry->idx.sha1, &type, &size);
++			if (!buf)
++				die(_("unable to read %s"), sha1_to_hex(entry->idx.sha1));
++		}
+ 		/*
+ 		 * make sure no cached delta data remains from a
+ 		 * previous attempt before a pack split occurred.
+@@ -235,6 +283,9 @@ static unsigned long write_no_reuse_object(struct s=
+ha1file *f, struct object_ent
+=20
+ 	if (entry->z_delta_size)
+ 		datalen =3D entry->z_delta_size;
++	else if (st)
++		/* large blob case, just assume we don't compress well */
++		datalen =3D size;
+ 	else
+ 		datalen =3D do_compress(&buf, size);
+=20
+@@ -281,7 +332,11 @@ static unsigned long write_no_reuse_object(struct =
+sha1file *f, struct object_ent
+ 		}
+ 		sha1write(f, header, hdrlen);
+ 	}
+-	sha1write(f, buf, datalen);
++	if (st)
++		datalen =3D write_large_blob_data(st, f, entry->idx.sha1);
 +	else
-+		datalen =3D do_compress(&buf, size);
-+
-+	/*
-+	 * The object header is a byte of 'type' followed by zero or
-+	 * more bytes of length.
-+	 */
-+	hdrlen =3D encode_in_pack_object_header(type, size, header);
-+
-+	if (type =3D=3D OBJ_OFS_DELTA) {
-+		/*
-+		 * Deltas with relative base contain an additional
-+		 * encoding of the relative offset for the delta
-+		 * base from this object's position in the pack.
-+		 */
-+		off_t ofs =3D entry->idx.offset - entry->delta->idx.offset;
-+		unsigned pos =3D sizeof(dheader) - 1;
-+		dheader[pos] =3D ofs & 127;
-+		while (ofs >>=3D 7)
-+			dheader[--pos] =3D 128 | (--ofs & 127);
-+		if (limit && hdrlen + sizeof(dheader) - pos + datalen + 20 >=3D limi=
-t) {
-+			free(buf);
-+			return 0;
-+		}
-+		sha1write(f, header, hdrlen);
-+		sha1write(f, dheader + pos, sizeof(dheader) - pos);
-+		hdrlen +=3D sizeof(dheader) - pos;
-+	} else if (type =3D=3D OBJ_REF_DELTA) {
-+		/*
-+		 * Deltas with a base reference contain
-+		 * an additional 20 bytes for the base sha1.
-+		 */
-+		if (limit && hdrlen + 20 + datalen + 20 >=3D limit) {
-+			free(buf);
-+			return 0;
-+		}
-+		sha1write(f, header, hdrlen);
-+		sha1write(f, entry->delta->idx.sha1, 20);
-+		hdrlen +=3D 20;
-+	} else {
-+		if (limit && hdrlen + datalen + 20 >=3D limit) {
-+			free(buf);
-+			return 0;
-+		}
-+		sha1write(f, header, hdrlen);
-+	}
-+	sha1write(f, buf, datalen);
-+	free(buf);
-+
-+	return hdrlen + datalen;
-+}
-+
-+/* Return 0 if we will bust the pack-size limit */
-+static unsigned long write_reuse_object(struct sha1file *f, struct obj=
-ect_entry *entry,
-+					unsigned long limit, int usable_delta)
-+{
-+	struct packed_git *p =3D entry->in_pack;
-+	struct pack_window *w_curs =3D NULL;
-+	struct revindex_entry *revidx;
-+	off_t offset;
-+	enum object_type type =3D entry->type;
-+	unsigned long datalen;
-+	unsigned char header[10], dheader[10];
-+	unsigned hdrlen;
-+
-+	if (entry->delta)
-+		type =3D (allow_ofs_delta && entry->delta->idx.offset) ?
-+			OBJ_OFS_DELTA : OBJ_REF_DELTA;
-+	hdrlen =3D encode_in_pack_object_header(type, entry->size, header);
-+
-+	offset =3D entry->in_pack_offset;
-+	revidx =3D find_pack_revindex(p, offset);
-+	datalen =3D revidx[1].offset - offset;
-+	if (!pack_to_stdout && p->index_version > 1 &&
-+	    check_pack_crc(p, &w_curs, offset, datalen, revidx->nr)) {
-+		error("bad packed object CRC for %s", sha1_to_hex(entry->idx.sha1));
-+		unuse_pack(&w_curs);
-+		return write_no_reuse_object(f, entry, limit, usable_delta);
-+	}
-+
-+	offset +=3D entry->in_pack_header_size;
-+	datalen -=3D entry->in_pack_header_size;
-+
-+	if (!pack_to_stdout && p->index_version =3D=3D 1 &&
-+	    check_pack_inflate(p, &w_curs, offset, datalen, entry->size)) {
-+		error("corrupt packed object for %s", sha1_to_hex(entry->idx.sha1));
-+		unuse_pack(&w_curs);
-+		return write_no_reuse_object(f, entry, limit, usable_delta);
-+	}
-+
-+	if (type =3D=3D OBJ_OFS_DELTA) {
-+		off_t ofs =3D entry->idx.offset - entry->delta->idx.offset;
-+		unsigned pos =3D sizeof(dheader) - 1;
-+		dheader[pos] =3D ofs & 127;
-+		while (ofs >>=3D 7)
-+			dheader[--pos] =3D 128 | (--ofs & 127);
-+		if (limit && hdrlen + sizeof(dheader) - pos + datalen + 20 >=3D limi=
-t) {
-+			unuse_pack(&w_curs);
-+			return 0;
-+		}
-+		sha1write(f, header, hdrlen);
-+		sha1write(f, dheader + pos, sizeof(dheader) - pos);
-+		hdrlen +=3D sizeof(dheader) - pos;
-+		reused_delta++;
-+	} else if (type =3D=3D OBJ_REF_DELTA) {
-+		if (limit && hdrlen + 20 + datalen + 20 >=3D limit) {
-+			unuse_pack(&w_curs);
-+			return 0;
-+		}
-+		sha1write(f, header, hdrlen);
-+		sha1write(f, entry->delta->idx.sha1, 20);
-+		hdrlen +=3D 20;
-+		reused_delta++;
-+	} else {
-+		if (limit && hdrlen + datalen + 20 >=3D limit) {
-+			unuse_pack(&w_curs);
-+			return 0;
-+		}
-+		sha1write(f, header, hdrlen);
-+	}
-+	copy_pack_data(f, p, &w_curs, offset, datalen);
-+	unuse_pack(&w_curs);
-+	reused++;
-+	return hdrlen + datalen;
-+}
-+
-+/* Return 0 if we will bust the pack-size limit */
-+static unsigned long write_object(struct sha1file *f,
-+				  struct object_entry *entry,
-+				  off_t write_offset)
-+{
-+	unsigned long limit, len;
- 	int usable_delta, to_reuse;
++		sha1write(f, buf, datalen);
++	close_istream(st);
+ 	free(buf);
 =20
- 	if (!pack_to_stdout)
- 		crc32_begin(f);
+ 	return hdrlen + datalen;
+diff --git a/t/t1050-large.sh b/t/t1050-large.sh
+index 55ed955..313889b 100755
+--- a/t/t1050-large.sh
++++ b/t/t1050-large.sh
+@@ -134,6 +134,18 @@ test_expect_success 'repack' '
+ 	git repack -ad
+ '
 =20
--	type =3D entry->type;
--
- 	/* apply size limit if limited packsize and not first object */
- 	if (!pack_size_limit || !nr_written)
- 		limit =3D 0;
-@@ -243,11 +399,11 @@ static unsigned long write_object(struct sha1file=
- *f,
- 		to_reuse =3D 0;	/* explicit */
- 	else if (!entry->in_pack)
- 		to_reuse =3D 0;	/* can't reuse what we don't have */
--	else if (type =3D=3D OBJ_REF_DELTA || type =3D=3D OBJ_OFS_DELTA)
-+	else if (entry->type =3D=3D OBJ_REF_DELTA || entry->type =3D=3D OBJ_O=
-=46S_DELTA)
- 				/* check_object() decided it for us ... */
- 		to_reuse =3D usable_delta;
- 				/* ... but pack split may override that */
--	else if (type !=3D entry->in_pack_type)
-+	else if (entry->type !=3D entry->in_pack_type)
- 		to_reuse =3D 0;	/* pack has delta which is unusable */
- 	else if (entry->delta)
- 		to_reuse =3D 0;	/* we want to pack afresh */
-@@ -256,153 +412,19 @@ static unsigned long write_object(struct sha1fil=
-e *f,
- 				 * and we do not need to deltify it.
- 				 */
-=20
--	if (!to_reuse) {
--		no_reuse:
--		if (!usable_delta) {
--			buf =3D read_sha1_file(entry->idx.sha1, &type, &size);
--			if (!buf)
--				die("unable to read %s", sha1_to_hex(entry->idx.sha1));
--			/*
--			 * make sure no cached delta data remains from a
--			 * previous attempt before a pack split occurred.
--			 */
--			free(entry->delta_data);
--			entry->delta_data =3D NULL;
--			entry->z_delta_size =3D 0;
--		} else if (entry->delta_data) {
--			size =3D entry->delta_size;
--			buf =3D entry->delta_data;
--			entry->delta_data =3D NULL;
--			type =3D (allow_ofs_delta && entry->delta->idx.offset) ?
--				OBJ_OFS_DELTA : OBJ_REF_DELTA;
--		} else {
--			buf =3D get_delta(entry);
--			size =3D entry->delta_size;
--			type =3D (allow_ofs_delta && entry->delta->idx.offset) ?
--				OBJ_OFS_DELTA : OBJ_REF_DELTA;
--		}
--
--		if (entry->z_delta_size)
--			datalen =3D entry->z_delta_size;
--		else
--			datalen =3D do_compress(&buf, size);
--
--		/*
--		 * The object header is a byte of 'type' followed by zero or
--		 * more bytes of length.
--		 */
--		hdrlen =3D encode_in_pack_object_header(type, size, header);
--
--		if (type =3D=3D OBJ_OFS_DELTA) {
--			/*
--			 * Deltas with relative base contain an additional
--			 * encoding of the relative offset for the delta
--			 * base from this object's position in the pack.
--			 */
--			off_t ofs =3D entry->idx.offset - entry->delta->idx.offset;
--			unsigned pos =3D sizeof(dheader) - 1;
--			dheader[pos] =3D ofs & 127;
--			while (ofs >>=3D 7)
--				dheader[--pos] =3D 128 | (--ofs & 127);
--			if (limit && hdrlen + sizeof(dheader) - pos + datalen + 20 >=3D lim=
-it) {
--				free(buf);
--				return 0;
--			}
--			sha1write(f, header, hdrlen);
--			sha1write(f, dheader + pos, sizeof(dheader) - pos);
--			hdrlen +=3D sizeof(dheader) - pos;
--		} else if (type =3D=3D OBJ_REF_DELTA) {
--			/*
--			 * Deltas with a base reference contain
--			 * an additional 20 bytes for the base sha1.
--			 */
--			if (limit && hdrlen + 20 + datalen + 20 >=3D limit) {
--				free(buf);
--				return 0;
--			}
--			sha1write(f, header, hdrlen);
--			sha1write(f, entry->delta->idx.sha1, 20);
--			hdrlen +=3D 20;
--		} else {
--			if (limit && hdrlen + datalen + 20 >=3D limit) {
--				free(buf);
--				return 0;
--			}
--			sha1write(f, header, hdrlen);
--		}
--		sha1write(f, buf, datalen);
--		free(buf);
--	}
--	else {
--		struct packed_git *p =3D entry->in_pack;
--		struct pack_window *w_curs =3D NULL;
--		struct revindex_entry *revidx;
--		off_t offset;
--
--		if (entry->delta)
--			type =3D (allow_ofs_delta && entry->delta->idx.offset) ?
--				OBJ_OFS_DELTA : OBJ_REF_DELTA;
--		hdrlen =3D encode_in_pack_object_header(type, entry->size, header);
--
--		offset =3D entry->in_pack_offset;
--		revidx =3D find_pack_revindex(p, offset);
--		datalen =3D revidx[1].offset - offset;
--		if (!pack_to_stdout && p->index_version > 1 &&
--		    check_pack_crc(p, &w_curs, offset, datalen, revidx->nr)) {
--			error("bad packed object CRC for %s", sha1_to_hex(entry->idx.sha1))=
-;
--			unuse_pack(&w_curs);
--			goto no_reuse;
--		}
--
--		offset +=3D entry->in_pack_header_size;
--		datalen -=3D entry->in_pack_header_size;
--		if (!pack_to_stdout && p->index_version =3D=3D 1 &&
--		    check_pack_inflate(p, &w_curs, offset, datalen, entry->size)) {
--			error("corrupt packed object for %s", sha1_to_hex(entry->idx.sha1))=
-;
--			unuse_pack(&w_curs);
--			goto no_reuse;
--		}
-+	if (!to_reuse)
-+		len =3D write_no_reuse_object(f, entry, limit, usable_delta);
-+	else
-+		len =3D write_reuse_object(f, entry, limit, usable_delta);
-+	if (!len)
-+		return 0;
-=20
--		if (type =3D=3D OBJ_OFS_DELTA) {
--			off_t ofs =3D entry->idx.offset - entry->delta->idx.offset;
--			unsigned pos =3D sizeof(dheader) - 1;
--			dheader[pos] =3D ofs & 127;
--			while (ofs >>=3D 7)
--				dheader[--pos] =3D 128 | (--ofs & 127);
--			if (limit && hdrlen + sizeof(dheader) - pos + datalen + 20 >=3D lim=
-it) {
--				unuse_pack(&w_curs);
--				return 0;
--			}
--			sha1write(f, header, hdrlen);
--			sha1write(f, dheader + pos, sizeof(dheader) - pos);
--			hdrlen +=3D sizeof(dheader) - pos;
--			reused_delta++;
--		} else if (type =3D=3D OBJ_REF_DELTA) {
--			if (limit && hdrlen + 20 + datalen + 20 >=3D limit) {
--				unuse_pack(&w_curs);
--				return 0;
--			}
--			sha1write(f, header, hdrlen);
--			sha1write(f, entry->delta->idx.sha1, 20);
--			hdrlen +=3D 20;
--			reused_delta++;
--		} else {
--			if (limit && hdrlen + datalen + 20 >=3D limit) {
--				unuse_pack(&w_curs);
--				return 0;
--			}
--			sha1write(f, header, hdrlen);
--		}
--		copy_pack_data(f, p, &w_curs, offset, datalen);
--		unuse_pack(&w_curs);
--		reused++;
--	}
- 	if (usable_delta)
- 		written_delta++;
- 	written++;
- 	if (!pack_to_stdout)
- 		entry->idx.crc32 =3D crc32_end(f);
--	return hdrlen + datalen;
-+	return len;
- }
-=20
- enum write_one_status {
++test_expect_success 'pack-objects with large loose object' '
++	SHA1=3D`git hash-object huge` &&
++	test_create_repo loose &&
++	echo $SHA1 | git pack-objects --stdout |
++		GIT_ALLOC_LIMIT=3D0 GIT_DIR=3Dloose/.git git unpack-objects &&
++	echo $SHA1 | GIT_DIR=3Dloose/.git git pack-objects pack &&
++	test_create_repo packed &&
++	mv pack-* packed/.git/objects/pack &&
++	GIT_DIR=3Dpacked/.git git cat-file blob $SHA1 >actual &&
++	cmp huge actual
++'
++
+ test_expect_success 'tar achiving' '
+ 	git archive --format=3Dtar HEAD >/dev/null
+ '
 --=20
 1.7.8.36.g69ee2
