@@ -1,128 +1,118 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] git-sh-setup: work around Cygwin path handling
- gotchas
-Date: Wed, 16 May 2012 12:02:26 -0700
-Message-ID: <7vd364c5kt.fsf@alter.siamese.dyndns.org>
-References: <4FB09FF2.70309@viscovery.net>
- <1337191208-21110-1-git-send-email-gitster@pobox.com>
- <1337191208-21110-3-git-send-email-gitster@pobox.com>
- <CAAXzdLW5VYnHc41WZ0id=4Qe17dHSj4+J9tqVvG-PvtpXLmh+Q@mail.gmail.com>
+From: =?UTF-8?B?UMOhZHJhaWcgQnJhZHk=?= <P@draigBrady.com>
+Subject: Re: git format-patch doesn't exclude merged hunks
+Date: Wed, 16 May 2012 20:04:57 +0100
+Message-ID: <4FB3FA59.1010707@draigBrady.com>
+References: <4FB3CAE3.6040608@draigBrady.com> <7vhavgc660.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Johannes Sixt <j.sixt@viscovery.net>,
-	Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-To: Steven Penny <svnpenn@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 16 21:03:15 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed May 16 21:05:15 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SUjVB-000769-4J
-	for gcvg-git-2@plane.gmane.org; Wed, 16 May 2012 21:03:13 +0200
+	id 1SUjX8-0000W8-M8
+	for gcvg-git-2@plane.gmane.org; Wed, 16 May 2012 21:05:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932515Ab2EPTDH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 May 2012 15:03:07 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:55335 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755138Ab2EPTDF (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 May 2012 15:03:05 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 82BD682C7;
-	Wed, 16 May 2012 15:03:04 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=VJbBOhmfBn9bsEUEu0KdM2mhZNU=; b=V1kIec
-	TOb5OAsCLgyMNAMC6GejKBmijRNhfQi3+3h8TvZljcsvEPdIL5eyCJCGtp9GdMWF
-	5MMUUqrZW1N5bJnIVCnOcCQtHGsINeBgsGKE2EQYmwyRYAwboYXwYcrk+vLp7oHC
-	gg/iaMUUVvX0Jg2BHpjFicoAI0uWF/D3Kzezs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=n7JSKL7Q5Pjbm0JCF+GudLSR6XOg3N9v
-	FA49u8eAvlR+K8yWmR9w0SN0l/2HwXNHRufST1pMkTXPE6rFRCA+EeD+s7cDhmuZ
-	UhheWA7DhYGwfZS4JsWd5MqGujxlFaalglGwkd1v7P+OK4Hjudss6StsaDzkus1U
-	2/0/VyMulv8=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 79E8382C6;
-	Wed, 16 May 2012 15:03:04 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1A59F82BA; Wed, 16 May 2012
- 15:02:36 -0400 (EDT)
-In-Reply-To: <CAAXzdLW5VYnHc41WZ0id=4Qe17dHSj4+J9tqVvG-PvtpXLmh+Q@mail.gmail.com> (Steven
- Penny's message of "Wed, 16 May 2012 13:51:27 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: B43F1B80-9F89-11E1-AA95-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1756227Ab2EPTFJ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 16 May 2012 15:05:09 -0400
+Received: from mx1.redhat.com ([209.132.183.28]:36330 "EHLO mx1.redhat.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754161Ab2EPTFI (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 May 2012 15:05:08 -0400
+Received: from int-mx11.intmail.prod.int.phx2.redhat.com (int-mx11.intmail.prod.int.phx2.redhat.com [10.5.11.24])
+	by mx1.redhat.com (8.14.4/8.14.4) with ESMTP id q4GJ4xOi026014
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK);
+	Wed, 16 May 2012 15:05:02 -0400
+Received: from [10.36.116.83] (ovpn-116-83.ams2.redhat.com [10.36.116.83])
+	by int-mx11.intmail.prod.int.phx2.redhat.com (8.14.4/8.14.4) with ESMTP id q4GJ4vGr007707
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-CAMELLIA256-SHA bits=256 verify=NO);
+	Wed, 16 May 2012 15:04:59 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:6.0) Gecko/20110816 Thunderbird/6.0
+In-Reply-To: <7vhavgc660.fsf@alter.siamese.dyndns.org>
+X-Enigmail-Version: 1.3.2
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.24
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197892>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197893>
 
-Steven Penny <svnpenn@gmail.com> writes:
+On 05/16/2012 07:49 PM, Junio C Hamano wrote:
+> P=C3=A1draig Brady <P@draigBrady.com> writes:
+>=20
+>> For reference the two commits in question are:
+>> https://github.com/openstack/nova/commit/7028d66
+>> https://github.com/openstack/nova/commit/26dc6b7
+>> Notice how both make the same change to Authors.
+>=20
+> If you compare the changes these two commits introduce, you will also
+> notice that the "Authors" file is the _only_ common part of them.
+>=20
+> "format-patch" (more precicely, the "git cherry" machinery that ident=
+ifies
+> the same patch) does not _selectively_ drop only a part of a patch wh=
+ile
+> keeping the other parts.  It is not per "hunk", it is not even per "f=
+ile".
+>=20
+> This is very much on purpose, and I think it is a good design decisio=
+n.
+>=20
+> In this particular case, the behaviour does look suboptimal, but if y=
+ou
+> think about it harder, you will realize that the perception comes lar=
+gely
+> because in this particular commit, the change to the "Authors" file i=
+s the
+> least interesting part of the change.
+>=20
+> Imagine a case where you were replaying a commit that changes a file
+> significantly and also changes another file in a trivial way, and whe=
+re it
+> were the significant change that has already been applied to the rece=
+iving
+> codebase, not the insignificant change to "Authors" file.
+>=20
+> Now imagine that format-patch dropped the part that brings in the
+> significant change as duplicate, and replayed only the insignificant =
+part.
+> Most likely, the log message of the original commit explains what iss=
+ue
+> that significant change tried to solve, and how the implementation in=
+ the
+> patch was determined to be an acceptable approach to solve it, and th=
+at is
+> what you will be recording for the replayed commit that only introduc=
+es
+> the remaining insignificant change.
+>=20
+> I am not fundamentally opposed to the idea of (optionally) detecting =
+and
+> selectively dropping parts of a patch to an entire file or even hunks=
+ that
+> have already applied, but it needs to have a way remind the user some=
+where
+> in the workflow that it did so and the log message may no longer desc=
+ribe
+> what the change does.  Most likely it would have to be done when prod=
+ucing
+> format-patch output, but an approach to make it a responsibility to n=
+otice
+> and fix the resulting log message to the person who applies the outpu=
+t, I
+> would imagine.
 
-> Junio C Hamano wrote:
->> +*CYGWIN*)
->> +       pwd () {
->> +               builtin cygpath -m
->> +       }
->> +       ;;
->
-> Ok I got it!
->
-> The problem is twofold
->
-> 1. Ramsay Jones	was right, it needs to be called like
->
-> 	cygpath -m "$PWD"
->
-> 2. The Cygwin "pwd" (and quite possibly MinGW "pwd") needs to be defined
->    **before** it is called
+Yep agreed, it would have to be optional.
+Maybe --ignore-duplicate-changes ?
 
-OK, I missed the first point, it seems.  But you seem to have missed that
-these two problems are more or less independent---that is why I sent two
-patches, not a single ball of wax like the one I am responding to.
+Appending a marker to the commit message of the adjusted patch would ma=
+ke sense,
+similar to how a 'Conflicts:' list is auto generated for commit message=
+s.
 
-So the replacement for [PATCH 2/2] would now look like this?
-
-In addition to "applies fine, tested and works" reports from Windows
-stakeholders, I still prefer to have a sign off from you (see
-Documentation/SubmittingPatches).
-
-Thanks.
-
--- >8 --
-From: Steven Penny <svnpenn@gmail.com>
-Date: Wed, 16 May 2012 10:44:49 -0700
-Subject: [PATCH] git-sh-setup: work around Cygwin path handling gotchas
-
-On Cygwin, tools built for Cygwin can take both Windows-style paths
-(e.g. C:/dir/file.txt or C:\dir\file.txt) and Cygwin-style paths
-(e.g. /cygdrive/c/dir/file.txt), but Windows-native tools can only take
-Windows-style paths.  Because the paths that are relative to $GIT_DIR,
-e.g. the name of the insn sheet file of the "rebase -i" command, are given
-to the programs with $GIT_DIR prefixed, and $GIT_DIR in turn is computed
-by calling "pwd", wrap "pwd" to call "cygpath -m" to give a Windows-style
-path, in a way similar to how mingw does this.
----
- git-sh-setup.sh | 5 +++++
- 1 file changed, 5 insertions(+)
-
-diff --git a/git-sh-setup.sh b/git-sh-setup.sh
-index 770a86e..b8e6327 100644
---- a/git-sh-setup.sh
-+++ b/git-sh-setup.sh
-@@ -241,6 +241,11 @@ case $(uname -s) in
- 		return 1
- 	}
- 	;;
-+*CYGWIN*)
-+	pwd () {
-+		cygpath -m "$PWD"
-+	}
-+	;;
- *)
- 	is_absolute_path () {
- 		case "$1" in
--- 
-1.7.10.2.537.g0ac6509
+cheers,
+P=C3=A1draig.
