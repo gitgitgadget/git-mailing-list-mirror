@@ -1,100 +1,97 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [PATCH/RFC] fmt-merge-msg: add a blank line after people info
-Date: Tue, 15 May 2012 19:02:23 -0700
-Message-ID: <CA+55aFyX66RpUA2Xh8drGErHB7Wuni20cUAMGawLsqG6MTTohA@mail.gmail.com>
-References: <7vvcmj68iz.fsf@alter.siamese.dyndns.org> <CA+55aFzQ3+EFBVyE9PWOyH0XEC_oW+kUaBTYfixmi2wgMmiZvw@mail.gmail.com>
- <7vipii27ka.fsf@alter.siamese.dyndns.org> <CA+55aFw-sS_p7JXNXbSbpiwh9_bZhSrTtC3is4NtLa_n9Hzk5A@mail.gmail.com>
- <7vmx7uzq8h.fsf_-_@alter.siamese.dyndns.org> <20120312071121.GA17269@burratino>
- <7vipi9mfhx.fsf@alter.siamese.dyndns.org> <20120511103122.GA19573@burratino>
- <7vipg2jpzp.fsf@alter.siamese.dyndns.org> <CA+55aFyNqncpHydQJYjLu5d2y+gGLVQVV8zk=2ckZ-LLgRRNWA@mail.gmail.com>
- <7vipfyhaxc.fsf@alter.siamese.dyndns.org> <7v62bxdwgs.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
-	Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed May 16 04:02:53 2012
+From: Bobby Powers <bobbypowers@gmail.com>
+Subject: [PATCH] diff --no-index: reset temporary buffer lengths on directory iteration
+Date: Wed, 16 May 2012 00:14:53 -0400
+Message-ID: <1337141693-3515-1-git-send-email-bobbypowers@gmail.com>
+Cc: Bobby Powers <bobbypowers@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed May 16 06:15:51 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SUTZi-0001zW-TP
-	for gcvg-git-2@plane.gmane.org; Wed, 16 May 2012 04:02:51 +0200
+	id 1SUVeO-0000xy-8W
+	for gcvg-git-2@plane.gmane.org; Wed, 16 May 2012 06:15:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758212Ab2EPCCq convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 15 May 2012 22:02:46 -0400
-Received: from mail-wi0-f172.google.com ([209.85.212.172]:57806 "EHLO
-	mail-wi0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756993Ab2EPCCp convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 15 May 2012 22:02:45 -0400
-Received: by wibhj8 with SMTP id hj8so3427574wib.1
-        for <git@vger.kernel.org>; Tue, 15 May 2012 19:02:44 -0700 (PDT)
+	id S1750842Ab2EPEPF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 May 2012 00:15:05 -0400
+Received: from mail-qa0-f49.google.com ([209.85.216.49]:38090 "EHLO
+	mail-qa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750828Ab2EPEPD (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 May 2012 00:15:03 -0400
+Received: by qabj40 with SMTP id j40so458748qab.1
+        for <git@vger.kernel.org>; Tue, 15 May 2012 21:15:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:from:date
-         :x-google-sender-auth:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=8ACJ7VRLx1cd6ksflCQgsQZ4QubpqwjCFyfCqbB1DdY=;
-        b=lKLVbeHt4rIr2NDJNsAP3zJ7rCSsPhfcxqWPdLhfSgDcDaN0JtDpMwKEuDLZDGhXC3
-         WNuOcvaSjzMO4z2/AQVHvwbtquBpH5QKVZSxwN7g4R8cXMuSZKXfnctXYxXdPF8wFEjq
-         yPUm7aGD6upLou0PotkPmLrl6oHPHGQfX5AVDvg7hhFTMMR/ziUJA0cN5jF2TXpSL7HL
-         E8CYGf7kLF7yojam7SLymDGFJ3s/Hmgsot1fC7bPgChtrYRIgvTtFpyk74aTkPe2dGh5
-         sgKv0PkEHuWrMBTo1JlbA3N9tdIt8wCmcfUZoCB4xius+X8bRayxDHUcdoGwxWqAQMkb
-         BevA==
-Received: by 10.180.81.234 with SMTP id d10mr3074750wiy.10.1337133764047; Tue,
- 15 May 2012 19:02:44 -0700 (PDT)
-Received: by 10.223.2.10 with HTTP; Tue, 15 May 2012 19:02:23 -0700 (PDT)
-In-Reply-To: <7v62bxdwgs.fsf@alter.siamese.dyndns.org>
-X-Google-Sender-Auth: -ms6XbgHWprXeU80DgLhS8pcx6s
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        bh=CWHqbEajpmAE8jw9CIQX0Mm+zn7roKrGMC5LIXwFbHU=;
+        b=0pzXOMIdVG9X7/DMWl+qaTzW1dwymCfMAyH73A9M/znlxS/exY+oRhX0Dfl4YSXStN
+         RHQEOpeHjWkxgsrKlyg3WV+00N0GDh0lW2VSNZ29b+2EB6jiYrpxLubOGmejEHAZ69Tn
+         IhWrYURlEpSgYBRa+zObFXW00vnB8CmH7RzM9BZkmeWTTZTPzzUjBaVBpHyj6YGk8FGB
+         zzLj1C9TtSxy2RSyJftlM5BQQy5x83j7w1F4qamCEf52ew3QSQnVGdPcQXdU29TJAMLa
+         99iUIGQQyDMsvTsB+alWOPMyNXwINQkdE7uYwRtYon6q01BV9aRwB3LpvkzjRMB70Sh9
+         Sy7Q==
+Received: by 10.229.137.135 with SMTP id w7mr724824qct.62.1337141702798;
+        Tue, 15 May 2012 21:15:02 -0700 (PDT)
+Received: from fina.localdomain (pool-96-255-98-6.washdc.fios.verizon.net. [96.255.98.6])
+        by mx.google.com with ESMTPS id ch15sm6790940qab.18.2012.05.15.21.15.01
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Tue, 15 May 2012 21:15:02 -0700 (PDT)
+X-Mailer: git-send-email 1.7.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197862>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197863>
 
-On Tue, May 15, 2012 at 1:24 PM, Junio C Hamano <gitster@pobox.com> wro=
-te:
->
-> Now, computing this efficiently may not be trivial, as you would need=
- N^2
-> reachability analysis when pulling in N commits. =A0Among 2000 recent=
- merges
-> I sampled from the kernel history, 70+ pull in more than 1000 commits=
- (the
-> largest one d4bbf7e77 pulls in 21k commits).
+Commit 875b91b3 introduced a regression when using diff --no-index
+with directories.  When iterating through a directory, the switch to
+strbuf from heap-allocated char arrays caused paths to form like
+'dir/file1', 'dir/file1file2', rather than 'dir/file1', 'dir/file2' as
+expected.  By resetting the length on each iteration (but not
+buf.alloc), we avoid this.
 
-So I have to say, for my purposes, it not only might be inefficient,
-but it can still be very misleading.
+Signed-off-by: Bobby Powers <bobbypowers@gmail.com>
+---
+ diff-no-index.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-I actually care most about the person I personally pull from. And if
-he is a submaintainer who has other submaintainers, it can be that
-following the commit history doesn't show him at *all*. He might have
-done just a fast-forward merge, but he's still the person *I* want to
-credit.
-
-So I'm getting the feeling that the "count authors/committers" may be
-cute, but it's not necessarily all that relevant. It's the kind of
-information you can see later from the git tree itself.
-
-(Admittedly, so it the shortlog we put in the merge, so that "you can
-find it later in the git tree itself" not *that* great of an argument
-- the real argument for me is that it doesn't matter what you count,
-you'll not necessarily get the actual piece of information I care
-about..).
-
-So I think it's somewhat interesting information, and I haven't really
-disliked seeing it, but I have mostly edited it away (although I see
-that some other maintainers also run modern versions of git and have
-left it in place, so we do have those in the kernel).
-
-The one merge commit of mine that has it, I edited it so that the "via
-C Committer" was on the same lne as the "By A Author" information.
-
-So I'm not entirely convinced yet. I don't *dislike* the concept, but
-I could definitely do without it (or maybe have it in the commented
-part of the commit message, so that you'd have to explicitly edit it
-to show up).
-
-                       Linus
+diff --git a/diff-no-index.c b/diff-no-index.c
+index b44473e..bec3ea4 100644
+--- a/diff-no-index.c
++++ b/diff-no-index.c
+@@ -67,7 +67,7 @@ static int queue_diff(struct diff_options *o,
+ 		struct strbuf buffer2 = STRBUF_INIT;
+ 		struct string_list p1 = STRING_LIST_INIT_DUP;
+ 		struct string_list p2 = STRING_LIST_INIT_DUP;
+-		int i1, i2, ret = 0;
++		int len1 = 0, len2 = 0, i1, i2, ret = 0;
+ 
+ 		if (name1 && read_directory(name1, &p1))
+ 			return -1;
+@@ -80,18 +80,23 @@ static int queue_diff(struct diff_options *o,
+ 			strbuf_addstr(&buffer1, name1);
+ 			if (buffer1.len && buffer1.buf[buffer1.len - 1] != '/')
+ 				strbuf_addch(&buffer1, '/');
++			len1 = buffer1.len;
+ 		}
+ 
+ 		if (name2) {
+ 			strbuf_addstr(&buffer2, name2);
+ 			if (buffer2.len && buffer2.buf[buffer2.len - 1] != '/')
+ 				strbuf_addch(&buffer2, '/');
++			len2 = buffer2.len;
+ 		}
+ 
+ 		for (i1 = i2 = 0; !ret && (i1 < p1.nr || i2 < p2.nr); ) {
+ 			const char *n1, *n2;
+ 			int comp;
+ 
++			buffer1.len = len1;
++			buffer2.len = len2;
++
+ 			if (i1 == p1.nr)
+ 				comp = 1;
+ 			else if (i2 == p2.nr)
+-- 
+1.7.10.2
