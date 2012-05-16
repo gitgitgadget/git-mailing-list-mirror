@@ -1,89 +1,116 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 2/2] git-sh-setup: work around Cygwin path handling gotchas
-Date: Wed, 16 May 2012 11:00:08 -0700
-Message-ID: <1337191208-21110-3-git-send-email-gitster@pobox.com>
-References: <4FB09FF2.70309@viscovery.net>
- <1337191208-21110-1-git-send-email-gitster@pobox.com>
-Cc: Steven Penny <svnpenn@gmail.com>,
-	Johannes Sixt <j.sixt@viscovery.net>,
-	Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 16 20:02:21 2012
+Subject: Re: git format-patch doesn't exclude merged hunks
+Date: Wed, 16 May 2012 11:49:43 -0700
+Message-ID: <7vhavgc660.fsf@alter.siamese.dyndns.org>
+References: <4FB3CAE3.6040608@draigBrady.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?utf-8?Q?P=C3=A1draig?= Brady <P@draigBrady.com>
+X-From: git-owner@vger.kernel.org Wed May 16 20:50:03 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SUiYA-0001FY-Nr
-	for gcvg-git-2@plane.gmane.org; Wed, 16 May 2012 20:02:15 +0200
+	id 1SUjIQ-0003PM-7o
+	for gcvg-git-2@plane.gmane.org; Wed, 16 May 2012 20:50:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760043Ab2EPSCD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 May 2012 14:02:03 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:61680 "EHLO
+	id S932100Ab2EPStz convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 16 May 2012 14:49:55 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:49633 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1760039Ab2EPSCA (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 May 2012 14:02:00 -0400
+	id S1755159Ab2EPSty convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 16 May 2012 14:49:54 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 26977827B;
-	Wed, 16 May 2012 14:02:00 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 80E008F4B;
+	Wed, 16 May 2012 14:49:53 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:date:message-id:in-reply-to:references; s=sasl; bh=w1Ow
-	nGTw9fazkIV9ePmpWEVu+aI=; b=Qv4gQikAwyVU8wTZ84QPJJXzXmW7n+YDseXp
-	tQPde2BNGOhKIRHVNZHRc0b/IO7QV5VCwSyxbPZ4/wWDkZTA8LQQ0RZAEXezoAIL
-	utsGMWPilWVkZvJXVRRMfsRlYFIILmz5c6TSHuD7zea77VK8s1AIP9KAlWx7V7jk
-	tboChd8=
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=nlc4Eb9dEcK8
+	2xvY4BlF1L8tFfA=; b=Fehqi1ishBPKbyqjxPxdESDmWil3OXmPwI/L9RPsJCjf
+	LeLo0QFrzGtRB3hykexdVQHwkIE2A+s59zeXNnGqN+LoaE+5DySmGINSUGolJNyL
+	5P9CkWw3p4hhJMOZKHGPxl9vdkTNCp6fcfSGPywHZaBCVFlllKYMx6CuzgFKwYE=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:date:message-id:in-reply-to:references; q=dns; s=sasl; b=
-	W6wr68oOsbEKyPOzWzgzXushBKU3AMO/fHWemcZdglm/RlpIg7r/GVSEP2NvCutZ
-	ixZ8RGVm2MV7wqepWmIywVlHimXnnIHrf/xETFGQFcFbEfQI2TbsS4OUJ/WzFd4z
-	r6aUujF9V7BincVBCOdBB/IZijb3gqtpy/yLKU4Q+jo=
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=rBTYuB
+	WyegHEPImm0LtMglhS7wZFDaEl8yN1wT3kU0pUSyPyz7WQiYW7GbT1FgtE3hwJg4
+	e6dA01NG69XG69A1abB3a//Ehg246uievnnllLsjVJU7CdVDRPxsIkQW9PG7iRb4
+	hYUziJT4J1SBN2WSAxMtY4ZjPeuJW/7ZDsGZY=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1D4048279;
-	Wed, 16 May 2012 14:02:00 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7837C8F4A;
+	Wed, 16 May 2012 14:49:53 -0400 (EDT)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8DB588278; Wed, 16 May 2012
- 14:01:59 -0400 (EDT)
-X-Mailer: git-send-email 1.7.10.2.537.g0ac6509
-In-Reply-To: <1337191208-21110-1-git-send-email-gitster@pobox.com>
-X-Pobox-Relay-ID: 3B83B492-9F81-11E1-B8AD-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8D5E48F43; Wed, 16 May 2012
+ 14:49:48 -0400 (EDT)
+In-Reply-To: <4FB3CAE3.6040608@draigBrady.com> (=?utf-8?Q?=22P=C3=A1draig?=
+ Brady"'s message of "Wed, 16 May 2012 16:42:27 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: EA2ACDF4-9F87-11E1-91CE-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197889>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197890>
 
-From: Steven Penny <svnpenn@gmail.com>
+P=C3=A1draig Brady <P@draigBrady.com> writes:
 
-From: Steven Penny <svnpenn@gmail.com>
+> For reference the two commits in question are:
+> https://github.com/openstack/nova/commit/7028d66
+> https://github.com/openstack/nova/commit/26dc6b7
+> Notice how both make the same change to Authors.
 
-On Cygwin, tools built for Cygwin can take both Windows-style paths
-(e.g. C:/dir/file.txt or C:\dir\file.txt) and Cygwin-style paths
-(e.g. /cygdrive/c/dir/file.txt), but Windows-native tools can only take
-Windows-style paths.  Because the paths that are relative to $GIT_DIR,
-e.g. the name of the insn sheet file of the "rebase -i" command, are given
-to the programs with $GIT_DIR prefixed, and $GIT_DIR in turn is computed
-by calling "pwd", wrap "pwd" to call "cygpath -m" to give a Windows-style
-path, in a way similar to how mingw does this.
----
- git-sh-setup.sh | 5 +++++
- 1 file changed, 5 insertions(+)
+If you compare the changes these two commits introduce, you will also
+notice that the "Authors" file is the _only_ common part of them.
 
-diff --git a/git-sh-setup.sh b/git-sh-setup.sh
-index 770a86e..f0f941d 100644
---- a/git-sh-setup.sh
-+++ b/git-sh-setup.sh
-@@ -241,6 +241,11 @@ case $(uname -s) in
- 		return 1
- 	}
- 	;;
-+*CYGWIN*)
-+	pwd () {
-+		builtin cygpath -m
-+	}
-+	;;
- *)
- 	is_absolute_path () {
- 		case "$1" in
--- 
-1.7.10.2.537.g0ac6509
+"format-patch" (more precicely, the "git cherry" machinery that identif=
+ies
+the same patch) does not _selectively_ drop only a part of a patch whil=
+e
+keeping the other parts.  It is not per "hunk", it is not even per "fil=
+e".
+
+This is very much on purpose, and I think it is a good design decision.
+
+In this particular case, the behaviour does look suboptimal, but if you
+think about it harder, you will realize that the perception comes large=
+ly
+because in this particular commit, the change to the "Authors" file is =
+the
+least interesting part of the change.
+
+Imagine a case where you were replaying a commit that changes a file
+significantly and also changes another file in a trivial way, and where=
+ it
+were the significant change that has already been applied to the receiv=
+ing
+codebase, not the insignificant change to "Authors" file.
+
+Now imagine that format-patch dropped the part that brings in the
+significant change as duplicate, and replayed only the insignificant pa=
+rt.
+Most likely, the log message of the original commit explains what issue
+that significant change tried to solve, and how the implementation in t=
+he
+patch was determined to be an acceptable approach to solve it, and that=
+ is
+what you will be recording for the replayed commit that only introduces
+the remaining insignificant change.
+
+I am not fundamentally opposed to the idea of (optionally) detecting an=
+d
+selectively dropping parts of a patch to an entire file or even hunks t=
+hat
+have already applied, but it needs to have a way remind the user somewh=
+ere
+in the workflow that it did so and the log message may no longer descri=
+be
+what the change does.  Most likely it would have to be done when produc=
+ing
+format-patch output, but an approach to make it a responsibility to not=
+ice
+and fix the resulting log message to the person who applies the output,=
+ I
+would imagine.
