@@ -1,68 +1,98 @@
-From: Neal Kreitzinger <nkreitzinger@gmail.com>
-Subject: Re: recipe to use git for deployment
-Date: Wed, 16 May 2012 15:08:00 -0500
-Message-ID: <4FB40920.6010106@gmail.com>
-References: <jo283q$kna$1@dough.gmane.org> <1336190286-sup-3813@nixos> <4FA4BAF3.10601@gmail.com> <CAMK1S_i0bsO0fp69Ae_75dySsN9r=z1+c2psEMm4urw+UpYGXw@mail.gmail.com>
+From: =?UTF-8?B?UMOhZHJhaWcgQnJhZHk=?= <P@draigBrady.com>
+Subject: Re: git format-patch doesn't exclude merged hunks
+Date: Wed, 16 May 2012 21:13:50 +0100
+Message-ID: <4FB40A7E.80705@draigBrady.com>
+References: <4FB3CAE3.6040608@draigBrady.com> <7vhavgc660.fsf@alter.siamese.dyndns.org> <4FB3FA59.1010707@draigBrady.com> <7v8vgsc544.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Marc Weber <marco-oweber@gmx.de>, git <git@vger.kernel.org>
-To: Sitaram Chamarty <sitaramc@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 16 22:08:13 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed May 16 22:14:13 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SUkW3-0007aY-2T
-	for gcvg-git-2@plane.gmane.org; Wed, 16 May 2012 22:08:11 +0200
+	id 1SUkbp-0004ty-Jt
+	for gcvg-git-2@plane.gmane.org; Wed, 16 May 2012 22:14:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965281Ab2EPUIG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 May 2012 16:08:06 -0400
-Received: from mail-gg0-f174.google.com ([209.85.161.174]:41340 "EHLO
-	mail-gg0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760597Ab2EPUIE (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 May 2012 16:08:04 -0400
-Received: by gglu4 with SMTP id u4so1114075ggl.19
-        for <git@vger.kernel.org>; Wed, 16 May 2012 13:08:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=1CXCfxCgwmAXLxpLiWnEEgRY+dRl50eaCREF7RArODA=;
-        b=EVw0Oyxf+mtfPElwqER0GsDh5m34zNOKOgIC+M/6xnuxDqHuFWDys/LbYeHvxLC0E0
-         JLBd7U9CbA+r2rDUNxCbuvoqKhp1gdGdcaoLfqvmBhYpeA9gpg98hC0R3/DWyGK71HsP
-         YLvAGGGqw0eGAVEVOGv9eeewzNKT/kq7w8lecSVLZbGRYgTQt0EXvAcaf6CmLsWb+WCW
-         QOOk1/wvq48K2bA4txiwcsdsPjJ6PzepVhoXdK2UTfysp/kh6os3dJFlAExIMlZvuqLO
-         0sIVkQUJ9xBWikKqQmzkEKYH2D+HijYJdL/DwOGzEZjLv3c+pCyXHmU/tSu26vEZRpJM
-         AfpQ==
-Received: by 10.60.14.41 with SMTP id m9mr4025508oec.57.1337198882716;
-        Wed, 16 May 2012 13:08:02 -0700 (PDT)
-Received: from [172.25.2.210] ([67.63.162.200])
-        by mx.google.com with ESMTPS id a6sm2531875oeg.7.2012.05.16.13.08.01
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 16 May 2012 13:08:01 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:12.0) Gecko/20120428 Thunderbird/12.0.1
-In-Reply-To: <CAMK1S_i0bsO0fp69Ae_75dySsN9r=z1+c2psEMm4urw+UpYGXw@mail.gmail.com>
+	id S965757Ab2EPUOD convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 16 May 2012 16:14:03 -0400
+Received: from mx1.redhat.com ([209.132.183.28]:45132 "EHLO mx1.redhat.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S965745Ab2EPUOB (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 May 2012 16:14:01 -0400
+Received: from int-mx10.intmail.prod.int.phx2.redhat.com (int-mx10.intmail.prod.int.phx2.redhat.com [10.5.11.23])
+	by mx1.redhat.com (8.14.4/8.14.4) with ESMTP id q4GKDrmj003062
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK);
+	Wed, 16 May 2012 16:13:53 -0400
+Received: from [10.36.116.83] (ovpn-116-83.ams2.redhat.com [10.36.116.83])
+	by int-mx10.intmail.prod.int.phx2.redhat.com (8.14.4/8.14.4) with ESMTP id q4GKDoHg029367
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-CAMELLIA256-SHA bits=256 verify=NO);
+	Wed, 16 May 2012 16:13:52 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:6.0) Gecko/20110816 Thunderbird/6.0
+In-Reply-To: <7v8vgsc544.fsf@alter.siamese.dyndns.org>
+X-Enigmail-Version: 1.3.2
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.23
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197896>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197897>
 
-On 5/5/2012 7:14 AM, Sitaram Chamarty wrote:
-> On Sat, May 5, 2012 at 11:00 AM, Neal Kreitzinger
-> <nkreitzinger@gmail.com>  wrote:
->
->> Interestingly, git-archive was not intended for deployment, but it does
->> pretty good at it.
-> Except it doesn't delete files that should be deleted (the way 'git
-> checkout' does or rsync would if you gave it --delete).
->
-Oh, yeah.  Thats why I move everything to a backup directory before 
-untarring it.  That also satisfies our pre-git practice of saving off 
-the old version before replacing it so we have a quick recovery point if 
-the new version turns out to be worse than the old one!
+On 05/16/2012 08:12 PM, Junio C Hamano wrote:
+> P=C3=A1draig Brady <P@draigBrady.com> writes:
+>=20
+>> On 05/16/2012 07:49 PM, Junio C Hamano wrote:
+>>
+>>> I am not fundamentally opposed to the idea of (optionally) detectin=
+g and
+>>> selectively dropping parts of a patch to an entire file or even hun=
+ks that
+>>> have already applied, but it needs to have a way remind the user so=
+mewhere
+>>> in the workflow that it did so and the log message may no longer de=
+scribe
+>>> what the change does.  Most likely it would have to be done when pr=
+oducing
+>>> format-patch output, but an approach to make it a responsibility to=
+ notice
+>>> and fix the resulting log message to the person who applies the out=
+put, I
+>>> would imagine.
+>>
+>> Yep agreed, it would have to be optional.
+>> Maybe --ignore-duplicate-changes ?
+>>
+>> Appending a marker to the commit message of the adjusted patch would=
+ make sense,
+>> similar to how a 'Conflicts:' list is auto generated for commit mess=
+ages.
+>=20
+> These existing "conflicts:" are offered when recording manual resolut=
+ions
+> of a conflicting merge, and the user is actively thrown into an edito=
+r
+> when running "git commit" to record the result.
+>=20
+> A patch that is reduced in a way you propose will apply to the receiv=
+ing
+> tree cleanly without stopping, and does not offer an editor session t=
+o
+> adjust the log before making a commit.  "The user has a chance to not=
+ice
+> and correct" is not sufficient---nobody will spend extra effort to no=
+tice
+> let alone correct.  The reminder has to be a lot stronger than that, =
+I
+> think, to cause the patch application to "fail" and require the user =
+to
+> actively look at the situation.
 
-v/r,
-neal
+Yes it would make sense for `git am` to balk at
+such reduced patches, while allowing standard
+patch utilities to process the patches as normal.
+
+cheers,
+P=C3=A1draig.
