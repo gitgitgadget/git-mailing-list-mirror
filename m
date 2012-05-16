@@ -1,155 +1,121 @@
-From: Jon Seymour <jon.seymour@gmail.com>
-Subject: Re: [PATCH v4] git-svn: clarify the referent of dcommit's optional argument
-Date: Thu, 17 May 2012 06:45:39 +1000
-Message-ID: <CAH3AnrqQDfx7s1fXBgKJmFtMA33CW9qx2tWSoenqSR0pVc63WQ@mail.gmail.com>
-References: <1337200956-9260-1-git-send-email-jon.seymour@gmail.com>
+From: Thomas Gummerer <t.gummerer@gmail.com>
+Subject: Re: Index format v5
+Date: Wed, 16 May 2012 23:54:07 +0200
+Message-ID: <20120516215407.GA1738@tgummerer.surfnet.iacbox>
+References: <20120508141137.GA3937@tgummerer.surfnet.iacbox>
+ <4FAA2CAF.3040408@alum.mit.edu>
+ <20120510121911.GB98491@tgummerer>
+ <4FAC0633.90809@alum.mit.edu>
+ <20120511171230.GA2107@tgummerer>
+ <4FB01080.6010605@alum.mit.edu>
+ <20120514150113.GD2107@tgummerer>
+ <4FB1746A.6090408@alum.mit.edu>
+ <20120515134916.GA2074@tgummerer.unibz.it>
+ <4FB334C7.2070201@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 16 22:45:49 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, trast@student.ethz.ch, gitster@pobox.com,
+	peff@peff.net, spearce@spearce.org, davidbarr@google.com
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Wed May 16 23:54:23 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SUl6S-0000jS-Cj
-	for gcvg-git-2@plane.gmane.org; Wed, 16 May 2012 22:45:48 +0200
+	id 1SUmAn-0003Y1-Ec
+	for gcvg-git-2@plane.gmane.org; Wed, 16 May 2012 23:54:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755889Ab2EPUpm convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 16 May 2012 16:45:42 -0400
-Received: from mail-we0-f174.google.com ([74.125.82.174]:59690 "EHLO
-	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755489Ab2EPUpl convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 16 May 2012 16:45:41 -0400
-Received: by weyu7 with SMTP id u7so737557wey.19
-        for <git@vger.kernel.org>; Wed, 16 May 2012 13:45:39 -0700 (PDT)
+	id S1758514Ab2EPVyQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 May 2012 17:54:16 -0400
+Received: from mail-pb0-f46.google.com ([209.85.160.46]:42751 "EHLO
+	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753758Ab2EPVyP (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 May 2012 17:54:15 -0400
+Received: by pbbrp8 with SMTP id rp8so1660981pbb.19
+        for <git@vger.kernel.org>; Wed, 16 May 2012 14:54:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :content-type:content-transfer-encoding;
-        bh=g5lhUsH2TfzPL/UJ87+Ud+JCj1OTXzx2txu+N4OWVSM=;
-        b=enV4Pv+wotUU4OTBT+ps+5S6/ZkRd4fTCuxJZdVBYhzoXAeTctr3myfJls6oGxKxze
-         X997I5t1PmRrU2kDZBx2TMsIQ4xOwXFGma+sr8SgYUZsCo0C4qk9+HxfwrKLjiAe9M44
-         wRB3VtCiCOlB9NSnxpzxtLITf465HNZcHFkcDcSsxQZx15+33BujrkO3n49C4MMtRzIc
-         5B5Jd3XMVqqHe72dl6sFRT97xEdHITx09c8YOF6UmKsl8xhoMEapw0VOm7YX0W3gHP70
-         QHZD0h5Ej2pvRntSdH6uZMNLiGvpsbTOowr90Vcd07sGGUu3gMK6VpP3EBR/wu4IRNkH
-         xNIw==
-Received: by 10.180.74.193 with SMTP id w1mr11560067wiv.4.1337201139742; Wed,
- 16 May 2012 13:45:39 -0700 (PDT)
-Received: by 10.180.83.131 with HTTP; Wed, 16 May 2012 13:45:39 -0700 (PDT)
-In-Reply-To: <1337200956-9260-1-git-send-email-jon.seymour@gmail.com>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=c1wx53WZw4SWhih4aHxiavtTDBCJGGT0MgH8VLd7IQQ=;
+        b=zP21h+sZ6rnnBBZLJUX49bdhufHdsbi998o0uYxSxNLI6UxZvXyxoDUTC3hiqHoAsb
+         g6fDdkUWCA5nUh89TRxiMo3CF5j5zDMZgFiBrs4MIkJ0J5elyWvN2xuZ/gs//tv/vFff
+         sqZsk2tTKFlo2dnOK20mPrnYH3F+4veeYVpcMDU5VicsxNfbr6EjU9YSgon42youjtAA
+         SM5wYRKz7vXXqW4sEoTyIP2yK+36R0RtjVhqBsMEKJKCVJ+j2SVBAXU5lE8JjfcdUWra
+         qVnfThD8WgTFTSj1BNjZiks96GrOhPKbLQdFNI6hpPG5h/sR7dkwhMzJunXAOd1Cafts
+         WVQw==
+Received: by 10.68.223.138 with SMTP id qu10mr6938368pbc.124.1337205255252;
+        Wed, 16 May 2012 14:54:15 -0700 (PDT)
+Received: from localhost ([216.18.212.218])
+        by mx.google.com with ESMTPS id iw4sm6741849pbc.7.2012.05.16.14.54.10
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 16 May 2012 14:54:13 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <4FB334C7.2070201@alum.mit.edu>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197901>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197902>
 
-On Thu, May 17, 2012 at 6:42 AM, Jon Seymour <jon.seymour@gmail.com> wr=
-ote:
-> The documentation of the dcommit subcommand is reworded to clarify th=
-at
-> the optional argument refers to a git branch, not an SVN branch.
->
-> The discussion of the optional argument is put into its own paragraph
-> as is the guidance about using 'dcommit' in preference to 'set-tree'.
->
-> The section on REBASE vs. PULL/MERGE is reworded to incorporate the
-> advice to prefer 'git rebase' previously in the description of 'dcomm=
-it'.
->
-> Signed-off-by: Jon Seymour <jon.seymour@gmail.com>
-> ---
-> =C2=A0Documentation/git-svn.txt | 40 +++++++++++++++++++-------------=
---------
-> =C2=A01 file changed, 19 insertions(+), 21 deletions(-)
->
-> Restore original meaning that pull/merge causes issues specifically
-> with set-tree A..B (not with set-tree A, in general).
->
-> diff --git a/Documentation/git-svn.txt b/Documentation/git-svn.txt
-> index 34ee785..4384ed9 100644
-> --- a/Documentation/git-svn.txt
-> +++ b/Documentation/git-svn.txt
-> @@ -189,18 +189,16 @@ and have no uncommitted changes.
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0last fetched commit from the upstream SVN.
->
-> =C2=A0'dcommit'::
-> - =C2=A0 =C2=A0 =C2=A0 Commit each diff from a specified head directl=
-y to the SVN
-> + =C2=A0 =C2=A0 =C2=A0 Commit each diff from the current branch direc=
-tly to the SVN
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0repository, and then rebase or reset (depe=
-nding on whether or
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0not there is a diff between SVN and head).=
- =C2=A0This will create
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0a revision in SVN for each commit in git.
-> - =C2=A0 =C2=A0 =C2=A0 It is recommended that you run 'git svn' fetch=
- and rebase (not
-> - =C2=A0 =C2=A0 =C2=A0 pull or merge) your commits against the latest=
- changes in the
-> - =C2=A0 =C2=A0 =C2=A0 SVN repository.
-> - =C2=A0 =C2=A0 =C2=A0 An optional revision or branch argument may be=
- specified, and
-> - =C2=A0 =C2=A0 =C2=A0 causes 'git svn' to do all work on that revisi=
-on/branch
-> - =C2=A0 =C2=A0 =C2=A0 instead of HEAD.
-> - =C2=A0 =C2=A0 =C2=A0 This is advantageous over 'set-tree' (below) b=
-ecause it produces
-> - =C2=A0 =C2=A0 =C2=A0 cleaner, more linear history.
-> ++
-> +When an optional git branch name (or a git commit object name)
-> +is specified as an argument, the subcommand works on the specified
-> +branch, not on the current branch.
-> ++
-> +Use of 'dcommit' is preferred to 'set-tree' (below).
-> =C2=A0+
-> =C2=A0--no-rebase;;
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0After committing, do not rebase or reset.
-> @@ -800,18 +798,18 @@ have each person clone that repository with 'gi=
-t clone':
->
-> =C2=A0REBASE VS. PULL/MERGE
-> =C2=A0---------------------
-> -
-> -Originally, 'git svn' recommended that the 'remotes/git-svn' branch =
-be
-> -pulled or merged from. =C2=A0This is because the author favored
-> -`git svn set-tree B` to commit a single head rather than the
-> -`git svn set-tree A..B` notation to commit multiple commits.
-> -
-> -If you use `git svn set-tree A..B` to commit several diffs and you d=
-o
-> -not have the latest remotes/git-svn merged into my-branch, you shoul=
-d
-> -use `git svn rebase` to update your work branch instead of `git pull=
-` or
-> -`git merge`. =C2=A0`pull`/`merge` can cause non-linear history to be=
- flattened
-> -when committing into SVN, which can lead to merge commits reversing
-> -previous commits in SVN.
-> +Prefer to use 'git svn rebase' or 'git rebase', rather than
-> +'git pull' or 'git merge' to synchronize unintegrated commits with a=
- 'git svn'
-> +branch. Doing so will keep the history of unintegrated commits linea=
-r with
-> +respect to the upstream SVN repository and allow the use of the pref=
-erred
-> +'git svn dcommit' subcommand to push unintegrated commits back into =
-SVN.
-> +
-> +Originally, 'git svn' recommended that developers pulled or merged f=
-rom
-> +the 'git svn' branch. =C2=A0This was because the author favored `git=
- svn set-tree B`
-> +to commit a single head rather than the `git svn set-tree A..B` nota=
-tion to
-> +commit multiple commits. Use of 'git pull' or 'git merge' with `git =
-svn set-tree A...B`
 
-A...B -> A..B
 
-Will fix in next iteration, assuming Junio and Eric are otherwise
-happy with the update.
+On 05/16, Michael Haggerty wrote:
+> I just reviewed version 1369bd855b86 of your script, and it is MUCH
+> better.  It's easy to read and review.  The functions that it
+> defines are now self-contained and could therefore be reused for
+> other purposes.  There are fewer magic numbers (though there are
+> still a few; I wonder if there is a way to get rid of those?)
+> You've done a nice job polishing up the code.
 
-jon.
+Thanks for the feedback! I could get rid of the magic numbers for
+the crc code, but I'm not sure if it makes sense to replace the
+others with constants, since they only occur once in the file. I
+added comments instead explaining where those numbers come from
+instead.
+
+> I have only a few remaining niggles::
+> 
+> 1. The struct module can handle fixed-length strings, so you could
+> read and parse the SHA1s as part of FILE_DATA_STRUCT and
+> DIR_DATA_STRUCT rather than handling them separately.
+> 
+> 2. At least some of the functions deserve docstrings, especially
+> when they are nontrivial.  For example, what arguments read_files()
+> needs and how they are used is far from obvious.
+> 
+> 3. It would be easier to read the multiline string formatting
+> templates if they are written as multiline strings (even though this
+> kindof requires that they be made file-level constants); e.g.,
+> 
+> FILE_FORMAT = """\
+> %(name)s (%(objhash)s)
+> mtime: %(mtimes)s:%(mtimens)s
+> mode: %(mode)s flags: %(flags)s
+> statcrc: """
+
+Thanks, I have changed those. I added the docstrings for all read
+functions, they however don't seem to make sense for the print
+functions, since you're probably faster just reading the code for
+them.
+
+One since I changed in addition is to those changes, is that I
+gave the exceptions names to make them more meaningful.
+
+> In the future, please try to commit one self-contained change at a
+> time and make your commit messages really describe what is changed
+> in the commit.  For example, commit fb2654c648a does at least three
+> things, only one of which is mentioned in its commit message.  It
+> would be better to break this into three commits with three commit
+> messages.  Use "git rebase -i" and the other commit-rewriting tools
+> liberally to tidy up commits before publishing them (but not after
+> publishing them!); for example, commit be8d01c22c should really have
+> been squashed on top of "Changed main to a function" so that the
+> rest of the world doesn't have to see the broken latter commit.
+
+Ok, I'll try my best to do that.
+
+--
+Thomas
