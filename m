@@ -1,108 +1,112 @@
-From: =?ISO-8859-15?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
-Subject: Re: [PATCH] diff --no-index: reset temporary buffer lengths on directory
- iteration
-Date: Wed, 16 May 2012 08:33:38 +0200
-Message-ID: <4FB34A42.60300@lsrfire.ath.cx>
-References: <1337141693-3515-1-git-send-email-bobbypowers@gmail.com>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: [PATCH v2] pack-objects: use streaming interface for reading
+ large loose blobs
+Date: Wed, 16 May 2012 14:09:32 +0700
+Message-ID: <CACsJy8DzdFORUMy7p_eVotr=HdkMX10uXy25H=05TBDjOmi4yw@mail.gmail.com>
+References: <alpine.LFD.2.02.1205121220070.21030@xanadu.home>
+ <1336883862-9013-1-git-send-email-pclouds@gmail.com> <7v62byh7l4.fsf@alter.siamese.dyndns.org>
+ <CACsJy8Bk5=X8hQAHKXCArfq57o2tLBv0RN641N3-ws69S3GghQ@mail.gmail.com> <7vhavhforl.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Bobby Powers <bobbypowers@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 16 08:34:03 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Nicolas Pitre <nico@fluxnic.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed May 16 09:10:17 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SUXo9-0007zf-2C
-	for gcvg-git-2@plane.gmane.org; Wed, 16 May 2012 08:34:01 +0200
+	id 1SUYNE-0001nr-Qe
+	for gcvg-git-2@plane.gmane.org; Wed, 16 May 2012 09:10:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759169Ab2EPGdo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 May 2012 02:33:44 -0400
-Received: from india601.server4you.de ([85.25.151.105]:60692 "EHLO
-	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759160Ab2EPGdl (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 May 2012 02:33:41 -0400
-Received: from [192.168.2.105] (p4FFD98A9.dip.t-dialin.net [79.253.152.169])
-	by india601.server4you.de (Postfix) with ESMTPSA id 09EB02F806F;
-	Wed, 16 May 2012 08:33:39 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:12.0) Gecko/20120428 Thunderbird/12.0.1
-In-Reply-To: <1337141693-3515-1-git-send-email-bobbypowers@gmail.com>
+	id S1759419Ab2EPHKF convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 16 May 2012 03:10:05 -0400
+Received: from mail-wi0-f172.google.com ([209.85.212.172]:53497 "EHLO
+	mail-wi0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759272Ab2EPHKE convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 16 May 2012 03:10:04 -0400
+Received: by wibhj8 with SMTP id hj8so3616275wib.1
+        for <git@vger.kernel.org>; Wed, 16 May 2012 00:10:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=NBdSFwqedQGl9B0Xf/6BHiVOTN9mzINAJaU+uMy2Jig=;
+        b=DEA8EToFyxMyhq1vAFws1p/M6OG59F+hTLfRuS7yaFalz6kRxS2cvcWsdMIE4XAvpC
+         RQB4vUKUPjS5QiCVGplWbBLwUqna6zBg0JCE57jO/RqiOqCr/SX4k/V6QtPEZ3IgMWRl
+         zN/eIgXLmVvP85L+D9Kwy6y6Jb3rbrloTz+kJMjRS+UI88IoQwfgn97BWkQd1JH/fR5F
+         YxKjmWu1GJdTrM20PqqYqdgSDgvQ3aIuSbl2OG+ocvhjdomT69bXYK/kvFyNaBAI9DRJ
+         Sn4QbmxBhTdXEWmMqlVZJeD43WTeyUHSAQN/q7JCBEqg/zCJuG3QSDDDvaIQbHNVwgZv
+         irQA==
+Received: by 10.180.77.4 with SMTP id o4mr5013699wiw.17.1337152202949; Wed, 16
+ May 2012 00:10:02 -0700 (PDT)
+Received: by 10.223.64.208 with HTTP; Wed, 16 May 2012 00:09:32 -0700 (PDT)
+In-Reply-To: <7vhavhforl.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197866>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197867>
 
-Am 16.05.2012 06:14, schrieb Bobby Powers:
-> Commit 875b91b3 introduced a regression when using diff --no-index
-> with directories.  When iterating through a directory, the switch to
-> strbuf from heap-allocated char arrays caused paths to form like
-> 'dir/file1', 'dir/file1file2', rather than 'dir/file1', 'dir/file2' as
-> expected.  By resetting the length on each iteration (but not
-> buf.alloc), we avoid this.
+On Tue, May 15, 2012 at 10:27 PM, Junio C Hamano <gitster@pobox.com> wr=
+ote:
+> Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
 >
-> Signed-off-by: Bobby Powers <bobbypowers@gmail.com>
-> ---
->  diff-no-index.c |    7 ++++++-
->  1 file changed, 6 insertions(+), 1 deletion(-)
-
-Nice catch!  Could you please also add a test case so that we can be 
-sure a similar bug is not reintroduced later?
-
-> diff --git a/diff-no-index.c b/diff-no-index.c
-> index b44473e..bec3ea4 100644
-> --- a/diff-no-index.c
-> +++ b/diff-no-index.c
-> @@ -67,7 +67,7 @@ static int queue_diff(struct diff_options *o,
->  		struct strbuf buffer2 = STRBUF_INIT;
->  		struct string_list p1 = STRING_LIST_INIT_DUP;
->  		struct string_list p2 = STRING_LIST_INIT_DUP;
-> -		int i1, i2, ret = 0;
-> +		int len1 = 0, len2 = 0, i1, i2, ret = 0;
+>> On Tue, May 15, 2012 at 2:43 AM, Junio C Hamano <gitster@pobox.com> =
+wrote:
+>>> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy =C2=A0<pclouds@gmail.com>=
+ writes:
+>>>
+>>>> git usually streams large blobs directly to packs. But there are c=
+ases
+>>>> diff --git a/t/t1050-large.sh b/t/t1050-large.sh
+>>>> index 55ed955..7fbd2e1 100755
+>>>> --- a/t/t1050-large.sh
+>>>> +++ b/t/t1050-large.sh
+>>>> @@ -134,6 +134,22 @@ test_expect_success 'repack' '
+>>>> =C2=A0 =C2=A0 =C2=A0 git repack -ad
+>>>> =C2=A0'
+>>>>
+>>>> +test_expect_success 'pack-objects with large loose object' '
+>>>> + =C2=A0 =C2=A0 echo Z | dd of=3Dlarge4 bs=3D1k seek=3D2000 &&
+>>>> + =C2=A0 =C2=A0 OBJ=3D9f36d94e145816ec642592c09cc8e601d83af157 &&
+>>>> + =C2=A0 =C2=A0 P=3D.git/objects/9f/36d94e145816ec642592c09cc8e601=
+d83af157 &&
+>>>
+>>> I do not think you need these hardcoded constants; you will run
+>>> hash-object later, no?
+>>>
+>>> Also, relying on $P to exist after hash-object -w returns is somewh=
+at
+>>> flaky, no?
+>>
+>> I need it to be a loose object to test this code path.
 >
->  		if (name1 && read_directory(name1, &p1))
->  			return -1;
-> @@ -80,18 +80,23 @@ static int queue_diff(struct diff_options *o,
->  			strbuf_addstr(&buffer1, name1);
->  			if (buffer1.len && buffer1.buf[buffer1.len - 1] != '/')
->  				strbuf_addch(&buffer1, '/');
-> +			len1 = buffer1.len;
->  		}
+> No you don't. =C2=A0You only need it to be something istream_read() w=
+ill read
+> from, iow, it could come from a base representation in a packfile.
+
+No, an in-pack object will set to_reuse to 1, which goes a completely
+different code path. write_large_blob_data() is only called when
+to_reuse =3D=3D 0.
+
+>>> In any case, the patch when applied on top of cd07cc5 (Update draft
+>>> release notes to 1.7.11 (11th batch), 2012-05-11) does not pass thi=
+s part
+>>> of the test on my box.
+>>
+>> Interesting. It passes for me (same base). I assume rm failed?
 >
->  		if (name2) {
->  			strbuf_addstr(&buffer2, name2);
->  			if (buffer2.len && buffer2.buf[buffer2.len - 1] != '/')
->  				strbuf_addch(&buffer2, '/');
-> +			len2 = buffer2.len;
->  		}
->
->  		for (i1 = i2 = 0; !ret && (i1 < p1.nr || i2 < p2.nr); ) {
->  			const char *n1, *n2;
->  			int comp;
+> No, reading the resulting pack dies with an error message that says t=
+he
+> object could not be read at offset 12, implying that the pack writer =
+wrote
+> something bogus.
 
-If you declare len1 and len2 right here at the start of the loop and 
-reset the strbufs at its end, you wouldn't have to initialize them to 
-zero and they'd have the right scope for their task.
-
-Using type size_t, the type used in struct strbuf, is more correct.
-
->
-> +			buffer1.len = len1;
-> +			buffer2.len = len2;
-
-It's cleaner to use strbuf_setlen() instead of setting the len member 
-directly.
-
-Looking at the code, I think the strbufs are never freed and the 
-strbuf_reset() calls after the loop should be replaced by ones to 
-strbuf_release() in order to avoid leaking.  This is a different issue, 
-but would be nice to squash as well.
-
-> +
->  			if (i1 == p1.nr)
->  				comp = 1;
->  			else if (i2 == p2.nr)
-> -- 1.7.10.2
->
+I'm still unable to reproduce that. But I think I found the problem.
+In streaming code path, I set datalen =3D <uncompressed size> but
+write_object() returns "hdrlen + (wrong) datalen". Patches will come a
+couple of hours from now.
+--=20
+Duy
