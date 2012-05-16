@@ -1,173 +1,185 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH v2 5/5] Update "gc" behavior in commit, merge, am and rebase
-Date: Wed, 16 May 2012 19:29:37 +0700
-Message-ID: <1337171377-26960-6-git-send-email-pclouds@gmail.com>
-References: <1336810134-3103-1-git-send-email-pclouds@gmail.com>
- <1337171377-26960-1-git-send-email-pclouds@gmail.com>
+Subject: [PATCH 1/2] index-pack: hash non-delta objects while reading from stream
+Date: Wed, 16 May 2012 19:50:29 +0700
+Message-ID: <1337172630-23679-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Junio C Hamano <gitster@pobox.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Jeff King <peff@peff.net>, Nicolas Pitre <nico@fluxnic.net>,
-	Fernando Vezzosi <buccia@repnz.net>,
 	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 16 14:34:28 2012
+X-From: git-owner@vger.kernel.org Wed May 16 14:54:31 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SUdQx-0002xb-W1
-	for gcvg-git-2@plane.gmane.org; Wed, 16 May 2012 14:34:28 +0200
+	id 1SUdkL-0006a0-Gq
+	for gcvg-git-2@plane.gmane.org; Wed, 16 May 2012 14:54:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932118Ab2EPMeX convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 16 May 2012 08:34:23 -0400
-Received: from mail-pz0-f46.google.com ([209.85.210.46]:45919 "EHLO
-	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757231Ab2EPMeW (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 May 2012 08:34:22 -0400
-Received: by mail-pz0-f46.google.com with SMTP id y13so927067dad.19
-        for <git@vger.kernel.org>; Wed, 16 May 2012 05:34:22 -0700 (PDT)
+	id S1759122Ab2EPMyY convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 16 May 2012 08:54:24 -0400
+Received: from mail-pb0-f46.google.com ([209.85.160.46]:57217 "EHLO
+	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750838Ab2EPMyX (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 May 2012 08:54:23 -0400
+Received: by pbbrp8 with SMTP id rp8so1069602pbb.19
+        for <git@vger.kernel.org>; Wed, 16 May 2012 05:54:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        bh=2F+J/N+PEdtxaN66MVn2jhzgehmcdW0WrtC1pTkeNEI=;
-        b=xObz84w0JYHYGOJ7W0DoS6C9iOY1BoS6QA3Ph5KqD/723aQbzpXenuJeXm1g6k67zu
-         2Hl1qYMKLtzMtimKLGDqfYsZ6D3/PxjBvLZhmnvo6yoGlG89/QeH1Br4FQryhe4hTHnM
-         byKMTp2PGKMEH0bDkE6hmW7otfv3AS/AVP/mOpw01gxce7vY5VxRLYNTk2VdqkBeRqK8
-         /Je+7Um7B5EOHAo5mJtlpXbIJ/wB3zE4VsYCScC0iW08iTG0scsS6anGjc1YzY/oYvTR
-         ER0OCIfJGPPVzxlFZtjwHCZLZvM9DvXEu85ZwqbDGipt02NhsPlcUA43x+PIu+NYBEqc
-         leog==
-Received: by 10.68.229.65 with SMTP id so1mr16335305pbc.2.1337171662084;
-        Wed, 16 May 2012 05:34:22 -0700 (PDT)
+        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
+         :content-type:content-transfer-encoding;
+        bh=58bHCbHgL0wFqzwyhqA+AvD9ZCrrtLZwk16C6qfjq2c=;
+        b=Jw0vJGQy3feRc0AeV1PGx6Kym4K6sfYbRij31/SeEhTEFDhIdnZ+jPihYC/qRbcP3w
+         w/Gp3MS3xBv2Ldz1/37fy2GQWF3qdNWRdosSzAo43ASH8Dv+I9bulSxs3PngI2dXBslu
+         SyJQGeAwvAtefDgI2Q+HySod/r3ulzkchocRaINybjh7Whf754cLl4b0Aror8lQIP18O
+         PDxq4LqFPEYvhxigPDpanqEFdAu19WerLZofmsIRnyg5DC1X0Pvi8cRMyAhHQ9AfoWSN
+         JcrW8xGNk7TJfWtrTB+srzsUnMgTTk5QzlicGWdUkP2OjSGNfqI6kCvgOPgxolI83eZO
+         d1ww==
+Received: by 10.68.193.226 with SMTP id hr2mr16087907pbc.155.1337172862464;
+        Wed, 16 May 2012 05:54:22 -0700 (PDT)
 Received: from pclouds@gmail.com ([115.74.61.104])
-        by mx.google.com with ESMTPS id ru4sm5325849pbc.66.2012.05.16.05.34.16
+        by mx.google.com with ESMTPS id ou5sm5384516pbb.54.2012.05.16.05.54.17
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 16 May 2012 05:34:21 -0700 (PDT)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Wed, 16 May 2012 19:30:30 +0700
+        Wed, 16 May 2012 05:54:21 -0700 (PDT)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Wed, 16 May 2012 19:50:31 +0700
 X-Mailer: git-send-email 1.7.8.36.g69ee2
-In-Reply-To: <1337171377-26960-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197878>
-
-Commit d4bb43e (Invoke "git gc --auto" from commit, merge, am and
-rebase. - 2007-09-05) used the rule to put "gc --auto" is "where
-update-ref occurs". I would argue that this is not a good condition to
-run gc, because (at least current) gc is slow. We encourage commit
-often and rebase to make all patches in good shape and this workflow
-should not be slowed down by random "gc".
-
-Instead, we could just inform users that "gc" should be run soon in
-commonly used commands (commit, merge, am and rebase). The warning is
-shown once every hour to avoid constantly annoy users, or flooding the
-output with warnings if a command is run repeatedly (e.g. in scripts).
-
-Commands that are not expected to return immediately, like
-receive-pack or index-pack, are more suitable for "gc --auto". These
-keep "gc --auto" as before.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197879>
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- builtin/commit.c           |    2 +-
- builtin/gc.c               |    4 +++-
- builtin/gc.h               |    1 +
- builtin/merge.c            |    2 +-
- git-am.sh                  |    2 +-
- git-rebase--interactive.sh |    2 +-
- 6 files changed, 8 insertions(+), 5 deletions(-)
+ Preparatory step for large blob support.
 
-diff --git a/builtin/commit.c b/builtin/commit.c
-index bf7d0aa..bfc4b4e 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -1590,7 +1590,7 @@ int cmd_commit(int argc, const char **argv, const=
- char *prefix)
- 		     "new_index file. Check that disk is not full or quota is\n"
- 		     "not exceeded, and then \"git reset HEAD\" to recover."));
+ builtin/index-pack.c |   43 ++++++++++++++++++++++++++++++++----------=
+-
+ 1 files changed, 32 insertions(+), 11 deletions(-)
+
+diff --git a/builtin/index-pack.c b/builtin/index-pack.c
+index dc2cfe6..ccb0214 100644
+--- a/builtin/index-pack.c
++++ b/builtin/index-pack.c
+@@ -384,30 +384,55 @@ static void unlink_base_data(struct base_data *c)
+ 	free_base_data(c);
+ }
 =20
--	gc("commit.autogc", 0);
-+	gc("commit.autogc", GC_DRYRUN);
- 	rerere(0);
- 	run_hook(get_index_file(), "post-commit", NULL);
- 	if (amend && !no_post_rewrite) {
-diff --git a/builtin/gc.c b/builtin/gc.c
-index f82b9ef..bff3d9c 100644
---- a/builtin/gc.c
-+++ b/builtin/gc.c
-@@ -182,7 +182,7 @@ static int need_to_gc(void)
-=20
- int gc(const char *cmd, int flags)
+-static void *unpack_entry_data(unsigned long offset, unsigned long siz=
+e)
++static int is_delta_type(enum object_type type)
++{
++	return (type =3D=3D OBJ_REF_DELTA || type =3D=3D OBJ_OFS_DELTA);
++}
++
++static void *unpack_entry_data(unsigned long offset, unsigned long siz=
+e,
++			       enum object_type type, unsigned char *sha1)
  {
--	const char *av[] =3D { "gc", "--auto", NULL, NULL };
-+	const char *av[] =3D { "gc", "--auto", NULL, NULL, NULL };
- 	int ac =3D 2;
+ 	int status;
+ 	git_zstream stream;
+ 	void *buf =3D xmalloc(size);
++	git_SHA_CTX c;
++	char hdr[32];
++	int hdrlen;
++	unsigned char *last_out;
++
++	if (!is_delta_type(type)) {
++		hdrlen =3D sprintf(hdr, "%s %lu", typename(type), size)+1;
++		git_SHA1_Init(&c);
++		git_SHA1_Update(&c, hdr, hdrlen);
++	} else
++		sha1 =3D NULL;
 =20
- 	git_config(gc_config, (void*)cmd);
-@@ -190,6 +190,8 @@ int gc(const char *cmd, int flags)
- 	if (!auto_gc || !need_to_gc())
- 		return 0;
+ 	memset(&stream, 0, sizeof(stream));
+ 	git_inflate_init(&stream);
+ 	stream.next_out =3D buf;
+ 	stream.avail_out =3D size;
++	last_out =3D buf;
 =20
-+	if (flags & GC_DRYRUN)
-+		av[ac++] =3D "--dry-run";
- 	if (flags & GC_QUIET)
- 		av[ac++] =3D "--quiet";
- 	return run_command_v_opt(av, RUN_GIT_CMD);
-diff --git a/builtin/gc.h b/builtin/gc.h
-index 3482e92..d022944 100644
---- a/builtin/gc.h
-+++ b/builtin/gc.h
-@@ -2,6 +2,7 @@
- #define GC_H
+ 	do {
+ 		stream.next_in =3D fill(1);
+ 		stream.avail_in =3D input_len;
+ 		status =3D git_inflate(&stream, 0);
+ 		use(input_len - stream.avail_in);
++		if (sha1)
++			git_SHA1_Update(&c, last_out, stream.next_out - last_out);
++		last_out =3D stream.next_out;
+ 	} while (status =3D=3D Z_OK);
+ 	if (stream.total_out !=3D size || status !=3D Z_STREAM_END)
+ 		bad_object(offset, _("inflate returned %d"), status);
+ 	git_inflate_end(&stream);
++	if (sha1)
++		git_SHA1_Final(sha1, &c);
+ 	return buf;
+ }
 =20
- #define GC_QUIET  1
-+#define GC_DRYRUN 2
-=20
- extern int gc(const char *cmd, int flags);
-=20
-diff --git a/builtin/merge.c b/builtin/merge.c
-index 940259d..a0680b0 100644
---- a/builtin/merge.c
-+++ b/builtin/merge.c
-@@ -389,7 +389,7 @@ static void finish(struct commit *head_commit,
- 			update_ref(reflog_message.buf, "HEAD",
- 				new_head, head, 0,
- 				DIE_ON_ERR);
--			gc(NULL, 0);
-+			gc(NULL, GC_DRYRUN);
- 		}
+-static void *unpack_raw_entry(struct object_entry *obj, union delta_ba=
+se *delta_base)
++static void *unpack_raw_entry(struct object_entry *obj,
++			      union delta_base *delta_base,
++			      unsigned char *sha1)
+ {
+ 	unsigned char *p;
+ 	unsigned long size, c;
+@@ -467,7 +492,7 @@ static void *unpack_raw_entry(struct object_entry *=
+obj, union delta_base *delta_
  	}
- 	if (new_head && show_diffstat) {
-diff --git a/git-am.sh b/git-am.sh
-index f8b7a0c..71cd2fd 100755
---- a/git-am.sh
-+++ b/git-am.sh
-@@ -902,4 +902,4 @@ if test -s "$dotest"/rewritten; then
- fi
+ 	obj->hdr_size =3D consumed_bytes - obj->idx.offset;
 =20
- rm -fr "$dotest"
--git gc --auto
-+git gc --auto --dry-run
-diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-index 0c19b7c..6c1c054 100644
---- a/git-rebase--interactive.sh
-+++ b/git-rebase--interactive.sh
-@@ -573,7 +573,7 @@ do_next () {
- 		true # we don't care if this hook failed
- 	fi &&
- 	rm -rf "$state_dir" &&
--	git gc --auto &&
-+	git gc --auto --dry-run &&
- 	warn "Successfully rebased and updated $head_name."
+-	data =3D unpack_entry_data(obj->idx.offset, obj->size);
++	data =3D unpack_entry_data(obj->idx.offset, obj->size, obj->type, sha=
+1);
+ 	obj->idx.crc32 =3D input_crc32;
+ 	return data;
+ }
+@@ -569,9 +594,8 @@ static void find_delta_children(const union delta_b=
+ase *base,
+ }
 =20
- 	exit
+ static void sha1_object(const void *data, unsigned long size,
+-			enum object_type type, unsigned char *sha1)
++			enum object_type type, const unsigned char *sha1)
+ {
+-	hash_sha1_file(data, size, typename(type), sha1);
+ 	read_lock();
+ 	if (has_sha1_file(sha1)) {
+ 		void *has_data;
+@@ -627,11 +651,6 @@ static void sha1_object(const void *data, unsigned=
+ long size,
+ 	}
+ }
+=20
+-static int is_delta_type(enum object_type type)
+-{
+-	return (type =3D=3D OBJ_REF_DELTA || type =3D=3D OBJ_OFS_DELTA);
+-}
+-
+ /*
+  * This function is part of find_unresolved_deltas(). There are two
+  * walkers going in the opposite ways.
+@@ -711,6 +730,8 @@ static void resolve_delta(struct object_entry *delt=
+a_obj,
+ 	free(delta_data);
+ 	if (!result->data)
+ 		bad_object(delta_obj->idx.offset, _("failed to apply delta"));
++	hash_sha1_file(result->data, result->size,
++		       typename(delta_obj->real_type), delta_obj->idx.sha1);
+ 	sha1_object(result->data, result->size, delta_obj->real_type,
+ 		    delta_obj->idx.sha1);
+ 	counter_lock();
+@@ -851,7 +872,7 @@ static void parse_pack_objects(unsigned char *sha1)
+ 				nr_objects);
+ 	for (i =3D 0; i < nr_objects; i++) {
+ 		struct object_entry *obj =3D &objects[i];
+-		void *data =3D unpack_raw_entry(obj, &delta->base);
++		void *data =3D unpack_raw_entry(obj, &delta->base, obj->idx.sha1);
+ 		obj->real_type =3D obj->type;
+ 		if (is_delta_type(obj->type)) {
+ 			nr_deltas++;
 --=20
 1.7.8.36.g69ee2
