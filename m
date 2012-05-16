@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH v2 3/5] commit: reinstate "gc --auto"
-Date: Wed, 16 May 2012 19:29:35 +0700
-Message-ID: <1337171377-26960-4-git-send-email-pclouds@gmail.com>
+Subject: [PATCH v2 4/5] gc: add --dry-run
+Date: Wed, 16 May 2012 19:29:36 +0700
+Message-ID: <1337171377-26960-5-git-send-email-pclouds@gmail.com>
 References: <1336810134-3103-1-git-send-email-pclouds@gmail.com>
  <1337171377-26960-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
@@ -15,93 +15,159 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 16 14:34:13 2012
+X-From: git-owner@vger.kernel.org Wed May 16 14:34:26 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SUdQf-0002gi-0J
-	for gcvg-git-2@plane.gmane.org; Wed, 16 May 2012 14:34:09 +0200
+	id 1SUdQp-0002r1-AI
+	for gcvg-git-2@plane.gmane.org; Wed, 16 May 2012 14:34:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932936Ab2EPMeE convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 16 May 2012 08:34:04 -0400
+	id S933037Ab2EPMeN convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 16 May 2012 08:34:13 -0400
 Received: from mail-pz0-f46.google.com ([209.85.210.46]:45919 "EHLO
 	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932118Ab2EPMeB (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 May 2012 08:34:01 -0400
+	with ESMTP id S932118Ab2EPMeM (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 May 2012 08:34:12 -0400
 Received: by mail-pz0-f46.google.com with SMTP id y13so927067dad.19
-        for <git@vger.kernel.org>; Wed, 16 May 2012 05:34:01 -0700 (PDT)
+        for <git@vger.kernel.org>; Wed, 16 May 2012 05:34:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=fdux/VFx7haUw9s8z2MOfageC69sXts6Q9xXQKV0/u8=;
-        b=I3zy+LdMmsXBO9z9xu1H4JGEry5VhpQpgoU0XSIFmTb8Laj/RfFxKDXwSEsGX31jrj
-         mQBUWBQ9ztVxlE3FDDzlsJEnxzjWP4ufGU0Diy0+K9QZ3/X7w4TjJcs+QikH/p4SXZFH
-         XWm0fmBIape1h4JTeUuk4o2t0kg5+YnuF7ruf79qrtW29e6Ny19JbhJLZ/0sPV47MZbf
-         tJcPVTllZCLtfXb8/FjTuHpfVBM4OJBGYN7A+y6v6NaxpkfyFZzs2gmC8/DG0RSrCeVe
-         rvvYCfiawvKyg4bOtME1jg9PCAJMU81nn+7JIpSCHyBQ1P5xO0e0OVU4riONzggMlcjY
-         b7TQ==
-Received: by 10.68.191.201 with SMTP id ha9mr16397627pbc.75.1337171641478;
-        Wed, 16 May 2012 05:34:01 -0700 (PDT)
+        bh=oWT9DM0ieh4wNIUPMjmVvZCYqLxyjDNgV0IPuWWMd/0=;
+        b=HPeNOTYpP+khyOCaTsyEBYZXzdh6WzJL6We/L+11nEqWFhfo34k+hAsUYNxxWUE5Zm
+         cdMzsPsDOAwJ2ZsecAlq2qINsuc0BCDl7QPpxDl/Xx6bB8+N0rbgqffVh5Oty3tQJNVs
+         u03l1Kj5nIbqO6M4Hww5tZBcFPeQ9+aRGLfPs2/gMuM8KJwm96Mc7U6hjpdakP/PCFJg
+         Ed5B00BCDvfD5FaX8HCwfV8hYW4ppSDbAinLinOyWX6ukJTq4ON7lXuTuRdRot8y0lWS
+         3NGlRPdMzJFu500qTWvTv0p1uXfv8jD6YGm0n38jbaboJ++R1uPtubTFwEhaWnv18RGq
+         Y5QQ==
+Received: by 10.68.228.106 with SMTP id sh10mr6692669pbc.107.1337171651761;
+        Wed, 16 May 2012 05:34:11 -0700 (PDT)
 Received: from pclouds@gmail.com ([115.74.61.104])
-        by mx.google.com with ESMTPS id ov3sm5342184pbb.35.2012.05.16.05.33.56
+        by mx.google.com with ESMTPS id oy8sm5331034pbc.52.2012.05.16.05.34.06
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 16 May 2012 05:34:00 -0700 (PDT)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Wed, 16 May 2012 19:30:10 +0700
+        Wed, 16 May 2012 05:34:10 -0700 (PDT)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Wed, 16 May 2012 19:30:20 +0700
 X-Mailer: git-send-email 1.7.8.36.g69ee2
 In-Reply-To: <1337171377-26960-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197876>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197877>
 
-This check was lost after sh->C conversion
+"git gc --auto --dry-run" will print instead of doing
+housekeeping. This option is to be called by other commands rather
+than by user and will not print more than one warning every hour. gc()
+function also behaves this way.
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- Documentation/config.txt |    4 ++++
- builtin/commit.c         |    2 ++
- 2 files changed, 6 insertions(+), 0 deletions(-)
+ Documentation/git-gc.txt |    7 ++++++-
+ builtin/gc.c             |   19 +++++++++++++++++++
+ 2 files changed, 25 insertions(+), 1 deletions(-)
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 3b6d773..8f5dd48 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -904,6 +904,10 @@ commit.template::
- 	"`~/`" is expanded to the value of `$HOME` and "`~user/`" to the
- 	specified user's home directory.
+diff --git a/Documentation/git-gc.txt b/Documentation/git-gc.txt
+index b370b02..f69f5e1 100644
+--- a/Documentation/git-gc.txt
++++ b/Documentation/git-gc.txt
+@@ -9,7 +9,7 @@ git-gc - Cleanup unnecessary files and optimize the loc=
+al repository
+ SYNOPSIS
+ --------
+ [verse]
+-'git gc' [--aggressive] [--auto] [--quiet] [--prune=3D<date> | --no-pr=
+une]
++'git gc' [--aggressive] [--auto [--dry-run]] [--quiet] [--prune=3D<dat=
+e> | --no-prune]
 =20
-+commit.autogc::
-+	By default, git-commit will run "git gc --auto" after each
-+	commit. You can stop it by setting this variable to false.
+ DESCRIPTION
+ -----------
+@@ -60,6 +60,11 @@ are consolidated into a single pack by using the `-A=
+` option of
+ 'git repack'. Setting `gc.autopacklimit` to 0 disables
+ automatic consolidation of packs.
+=20
++--dry-run::
++	Only show warning if housekeeping is required. The warning
++	is only shown at most once every hour even if
++	"gc --auto --dry-run" is run continuously.
 +
- credential.helper::
- 	Specify an external helper to be called when a username or
- 	password credential is needed; the helper may consult external
-diff --git a/builtin/commit.c b/builtin/commit.c
-index a2ec73d..bf7d0aa 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -28,6 +28,7 @@
- #include "submodule.h"
- #include "gpg-interface.h"
- #include "column.h"
-+#include "gc.h"
+ --prune=3D<date>::
+ 	Prune loose objects older than date (default is 2 weeks ago,
+ 	overridable by the config variable `gc.pruneExpire`).  This
+diff --git a/builtin/gc.c b/builtin/gc.c
+index ce60225..f82b9ef 100644
+--- a/builtin/gc.c
++++ b/builtin/gc.c
+@@ -150,6 +150,8 @@ static void add_repack_all_option(void)
 =20
- static const char * const builtin_commit_usage[] =3D {
- 	"git commit [options] [--] <filepattern>...",
-@@ -1589,6 +1590,7 @@ int cmd_commit(int argc, const char **argv, const=
- char *prefix)
- 		     "new_index file. Check that disk is not full or quota is\n"
- 		     "not exceeded, and then \"git reset HEAD\" to recover."));
+ static int need_to_gc(void)
+ {
++	struct stat st;
++
+ 	/*
+ 	 * Setting gc.auto to 0 or negative can disable the
+ 	 * automatic gc.
+@@ -168,6 +170,13 @@ static int need_to_gc(void)
+ 	else if (!too_many_loose_objects())
+ 		return 0;
 =20
-+	gc("commit.autogc", 0);
- 	rerere(0);
- 	run_hook(get_index_file(), "post-commit", NULL);
- 	if (amend && !no_post_rewrite) {
++	if (stat(git_path("gc_needed"), &st))
++		open(git_path("gc_needed"), O_CREAT | O_RDWR, 0644);
++	else if (time(NULL) - st.st_mtime < 3600)
++		return 0;
++	else
++		utime(git_path("gc_needed"), NULL);
++
+ 	return 1;
+ }
+=20
+@@ -190,6 +199,7 @@ int cmd_gc(int argc, const char **argv, const char =
+*prefix)
+ {
+ 	int aggressive =3D 0;
+ 	int auto_gc =3D 0;
++	int check_gc =3D 0;
+ 	int quiet =3D 0;
+=20
+ 	struct option builtin_gc_options[] =3D {
+@@ -199,12 +209,16 @@ int cmd_gc(int argc, const char **argv, const cha=
+r *prefix)
+ 			PARSE_OPT_OPTARG, NULL, (intptr_t)prune_expire },
+ 		OPT_BOOLEAN(0, "aggressive", &aggressive, "be more thorough (increas=
+ed runtime)"),
+ 		OPT_BOOLEAN(0, "auto", &auto_gc, "enable auto-gc mode"),
++		OPT_BOOLEAN(0, "dry-run", &check_gc, "warn if auto gc is needed"),
+ 		OPT_END()
+ 	};
+=20
+ 	if (argc =3D=3D 2 && !strcmp(argv[1], "-h"))
+ 		usage_with_options(builtin_gc_usage, builtin_gc_options);
+=20
++	if (!auto_gc && check_gc)
++		die(_("--dry-run is useless without --auto"));
++
+ 	argv_array_pushl(&pack_refs_cmd, "pack-refs", "--all", "--prune", NUL=
+L);
+ 	argv_array_pushl(&reflog, "reflog", "expire", "--all", NULL);
+ 	argv_array_pushl(&repack, "repack", "-d", "-l", NULL);
+@@ -240,6 +254,11 @@ int cmd_gc(int argc, const char **argv, const char=
+ *prefix)
+ 		if (run_hook(NULL, "pre-auto-gc", NULL))
+ 			return 0;
+=20
++		if (check_gc) {
++			warning(_("This repository needs maintenance. "
++				  "Please run \"git gc\" as soon as possible."));
++			return 0;
++		}
+ 		if (quiet)
+ 			fprintf(stderr, _("Auto packing the repository for optimum performa=
+nce.\n"));
+ 		else
 --=20
 1.7.8.36.g69ee2
