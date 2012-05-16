@@ -1,101 +1,65 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git format-patch doesn't exclude merged hunks
-Date: Wed, 16 May 2012 12:12:27 -0700
-Message-ID: <7v8vgsc544.fsf@alter.siamese.dyndns.org>
-References: <4FB3CAE3.6040608@draigBrady.com>
- <7vhavgc660.fsf@alter.siamese.dyndns.org> <4FB3FA59.1010707@draigBrady.com>
+From: Neal Kreitzinger <nkreitzinger@gmail.com>
+Subject: Re: new website: where is the blob ... ?
+Date: Wed, 16 May 2012 14:59:05 -0500
+Message-ID: <4FB40709.8000603@gmail.com>
+References: <20120510152440.133270@gmx.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: =?utf-8?Q?P=C3=A1draig?= Brady <P@draigBrady.com>
-X-From: git-owner@vger.kernel.org Wed May 16 21:12:39 2012
+To: Gunnar Schulze <gunnar.schulze@gmx.de>
+X-From: git-owner@vger.kernel.org Wed May 16 21:59:17 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SUjeJ-0007Ii-0d
-	for gcvg-git-2@plane.gmane.org; Wed, 16 May 2012 21:12:39 +0200
+	id 1SUkNR-0007hD-Gk
+	for gcvg-git-2@plane.gmane.org; Wed, 16 May 2012 21:59:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760269Ab2EPTMd convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 16 May 2012 15:12:33 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59369 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758644Ab2EPTMc convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 16 May 2012 15:12:32 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 711C08595;
-	Wed, 16 May 2012 15:12:32 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=ww2RSu7oFysG
-	UZEKxgNyElSqztQ=; b=ljFaR5Jpc0fkINd1376VrTdKWXQ/tny+dQ42rxJNN0GU
-	8xs1YyJhXh35N5X+gQkeB9UsEx7YeuXH8X6fWG3MKGA9/iQGTt2FeE4DtOH7yYFx
-	66tcbMCgLYJRtOm0Gw2Macj6z01bJqmGHybLLoKMyDs4bp9HZSfDkJfiIDuqfbQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=r47Ueb
-	6jI0Hy1Keog08efVspGi69J/IMNPe7JA18hMNzjO0TNcilQliQo6PmwcJsQXS05J
-	YkL0EsvPdyR/i1puij9yLRVASfOvDLmuN30xVh+FzBDU+F15Fk6fyGwyY7reg74z
-	gdz84WCSh8DH9d8AiXI3xD4A5bdR9VybrikxA=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6627F8593;
-	Wed, 16 May 2012 15:12:32 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A03668592; Wed, 16 May 2012
- 15:12:28 -0400 (EDT)
-In-Reply-To: <4FB3FA59.1010707@draigBrady.com> (=?utf-8?Q?=22P=C3=A1draig?=
- Brady"'s message of "Wed, 16 May 2012 20:04:57 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 143D6806-9F8B-11E1-AE96-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S932210Ab2EPT7L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 May 2012 15:59:11 -0400
+Received: from mail-ob0-f174.google.com ([209.85.214.174]:55058 "EHLO
+	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760594Ab2EPT7I (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 May 2012 15:59:08 -0400
+Received: by obbtb18 with SMTP id tb18so1445427obb.19
+        for <git@vger.kernel.org>; Wed, 16 May 2012 12:59:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=1hzKRvudHSJMbKH36KUNtX4FZIUPpqadt7HGHrYL0g8=;
+        b=PasLiOm1Ju0yQ63HpOw8XPOfXJVT3MWsj/05pBKwPtxwL4dGOFsvzJ/rhUp+CQ4Xxp
+         0NpHlEWufYEEfkmaEe5IcZnXnNR12k8tkjuw0KrVNzvmMLyL2q1ErgnRyk6IHZfBXCOu
+         TG9ioQMCbuEkmxVcNuwVYv5Ju/fqjGzUOrDcmJP4LpsEuYpSUOK0rDCjWmr4y8qTPLN0
+         MZ0DlEG3NuMWcgQ8x7kRQr757oatUh3jOY7dvcO9PwsUtRwe3vvotbDV6TyXFFVkTxqO
+         DxmmKp9kbuKvzC2Qiuc01H/Zg8rbiE62gH/oaS+lJcPZKSKTQNS1WoL4PqBkX5IEkE6B
+         2Aog==
+Received: by 10.182.131.7 with SMTP id oi7mr3974480obb.74.1337198347953;
+        Wed, 16 May 2012 12:59:07 -0700 (PDT)
+Received: from [172.25.2.210] ([67.63.162.200])
+        by mx.google.com with ESMTPS id j2sm3217053obn.1.2012.05.16.12.59.06
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 16 May 2012 12:59:07 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:12.0) Gecko/20120428 Thunderbird/12.0.1
+In-Reply-To: <20120510152440.133270@gmx.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197894>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197895>
 
-P=C3=A1draig Brady <P@draigBrady.com> writes:
-
-> On 05/16/2012 07:49 PM, Junio C Hamano wrote:
->=20
->> I am not fundamentally opposed to the idea of (optionally) detecting=
- and
->> selectively dropping parts of a patch to an entire file or even hunk=
-s that
->> have already applied, but it needs to have a way remind the user som=
-ewhere
->> in the workflow that it did so and the log message may no longer des=
-cribe
->> what the change does.  Most likely it would have to be done when pro=
-ducing
->> format-patch output, but an approach to make it a responsibility to =
-notice
->> and fix the resulting log message to the person who applies the outp=
-ut, I
->> would imagine.
+On 5/10/2012 10:24 AM, Gunnar Schulze wrote:
+> Hey, where is the picture of the funny blob monster eating all the trees? The original git community book was a good reference for git beginners and I liked the neat title image a lot.
 >
-> Yep agreed, it would have to be optional.
-> Maybe --ignore-duplicate-changes ?
->
-> Appending a marker to the commit message of the adjusted patch would =
-make sense,
-> similar to how a 'Conflicts:' list is auto generated for commit messa=
-ges.
+the website was recently redesigned.  see this thread: 
+http://article.gmane.org/gmane.comp.version-control.git/197082
 
-These existing "conflicts:" are offered when recording manual resolutio=
-ns
-of a conflicting merge, and the user is actively thrown into an editor
-when running "git commit" to record the result.
+the thing called '"original" Git Community Book' was a pre-cursor to 
+ProGit.  ProGit is now the "Git Community Book".  If you compare the 
+original Git Community Book to ProGit its obvious that ProGit is just 
+"version 2.0" of the original.
 
-A patch that is reduced in a way you propose will apply to the receivin=
-g
-tree cleanly without stopping, and does not offer an editor session to
-adjust the log before making a commit.  "The user has a chance to notic=
-e
-and correct" is not sufficient---nobody will spend extra effort to noti=
-ce
-let alone correct.  The reminder has to be a lot stronger than that, I
-think, to cause the patch application to "fail" and require the user to
-actively look at the situation.
+v/r,
+neal
