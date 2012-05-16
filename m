@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH v2 2/5] index-pack: perform automatic gc, share receive.gc config with receive-pack
-Date: Wed, 16 May 2012 19:29:34 +0700
-Message-ID: <1337171377-26960-3-git-send-email-pclouds@gmail.com>
+Subject: [PATCH v2 3/5] commit: reinstate "gc --auto"
+Date: Wed, 16 May 2012 19:29:35 +0700
+Message-ID: <1337171377-26960-4-git-send-email-pclouds@gmail.com>
 References: <1336810134-3103-1-git-send-email-pclouds@gmail.com>
  <1337171377-26960-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
@@ -15,105 +15,93 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 16 14:34:03 2012
+X-From: git-owner@vger.kernel.org Wed May 16 14:34:13 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SUdQT-0002Ti-Gw
-	for gcvg-git-2@plane.gmane.org; Wed, 16 May 2012 14:33:57 +0200
+	id 1SUdQf-0002gi-0J
+	for gcvg-git-2@plane.gmane.org; Wed, 16 May 2012 14:34:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932887Ab2EPMdw convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 16 May 2012 08:33:52 -0400
-Received: from mail-pb0-f46.google.com ([209.85.160.46]:39519 "EHLO
-	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932118Ab2EPMdv (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 May 2012 08:33:51 -0400
-Received: by mail-pb0-f46.google.com with SMTP id rp8so1047153pbb.19
-        for <git@vger.kernel.org>; Wed, 16 May 2012 05:33:51 -0700 (PDT)
+	id S932936Ab2EPMeE convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 16 May 2012 08:34:04 -0400
+Received: from mail-pz0-f46.google.com ([209.85.210.46]:45919 "EHLO
+	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932118Ab2EPMeB (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 May 2012 08:34:01 -0400
+Received: by mail-pz0-f46.google.com with SMTP id y13so927067dad.19
+        for <git@vger.kernel.org>; Wed, 16 May 2012 05:34:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=VO1fKrW8wevZTVgpAhb+dHlw65o+Y/r6TH4wDMJ+09A=;
-        b=E+7xGSpj4k5Rn2YqLUR5MiIsJrqI5fARXDnIAsoxlp13VIMtjNB8jxhihqHdxcgoYJ
-         Nfhz8c1tLCCnK+jVLrsPNmgWxuADhMNxh3a1s6p3Y+JXTSdUbUr3beDuKf8RkVYWy59R
-         Iaq1Uj0FsDn1eeU898YHJC2sY+8lK8HV4EcerVr3zGIxVd8v6J17z2ApHE/dO6yPDDCM
-         eswO6j8st4VsLY8LTx6STsDLAfetVAhGW9WIUXVfjeGABe/YQht6My8AvASkwPJM+A0g
-         QRpmS0f3QpAIMx+5ViQ6NOwSSMPlHwkzYcqIPUIuthe2e0Xn7hle+oaYQ9u2SuTrSvUX
-         MGWw==
-Received: by 10.68.222.134 with SMTP id qm6mr16589534pbc.14.1337171631048;
-        Wed, 16 May 2012 05:33:51 -0700 (PDT)
+        bh=fdux/VFx7haUw9s8z2MOfageC69sXts6Q9xXQKV0/u8=;
+        b=I3zy+LdMmsXBO9z9xu1H4JGEry5VhpQpgoU0XSIFmTb8Laj/RfFxKDXwSEsGX31jrj
+         mQBUWBQ9ztVxlE3FDDzlsJEnxzjWP4ufGU0Diy0+K9QZ3/X7w4TjJcs+QikH/p4SXZFH
+         XWm0fmBIape1h4JTeUuk4o2t0kg5+YnuF7ruf79qrtW29e6Ny19JbhJLZ/0sPV47MZbf
+         tJcPVTllZCLtfXb8/FjTuHpfVBM4OJBGYN7A+y6v6NaxpkfyFZzs2gmC8/DG0RSrCeVe
+         rvvYCfiawvKyg4bOtME1jg9PCAJMU81nn+7JIpSCHyBQ1P5xO0e0OVU4riONzggMlcjY
+         b7TQ==
+Received: by 10.68.191.201 with SMTP id ha9mr16397627pbc.75.1337171641478;
+        Wed, 16 May 2012 05:34:01 -0700 (PDT)
 Received: from pclouds@gmail.com ([115.74.61.104])
-        by mx.google.com with ESMTPS id og6sm5337285pbb.42.2012.05.16.05.33.45
+        by mx.google.com with ESMTPS id ov3sm5342184pbb.35.2012.05.16.05.33.56
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 16 May 2012 05:33:50 -0700 (PDT)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Wed, 16 May 2012 19:29:59 +0700
+        Wed, 16 May 2012 05:34:00 -0700 (PDT)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Wed, 16 May 2012 19:30:10 +0700
 X-Mailer: git-send-email 1.7.8.36.g69ee2
 In-Reply-To: <1337171377-26960-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197875>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197876>
 
+This check was lost after sh->C conversion
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- Documentation/config.txt |    7 ++++---
- builtin/index-pack.c     |    6 ++++--
- 2 files changed, 8 insertions(+), 5 deletions(-)
+ Documentation/config.txt |    4 ++++
+ builtin/commit.c         |    2 ++
+ 2 files changed, 6 insertions(+), 0 deletions(-)
 
 diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 915cb5a..3b6d773 100644
+index 3b6d773..8f5dd48 100644
 --- a/Documentation/config.txt
 +++ b/Documentation/config.txt
-@@ -1754,9 +1754,10 @@ rebase.autosquash::
- 	If set to true enable '--autosquash' option by default.
+@@ -904,6 +904,10 @@ commit.template::
+ 	"`~/`" is expanded to the value of `$HOME` and "`~user/`" to the
+ 	specified user's home directory.
 =20
- receive.autogc::
--	By default, git-receive-pack will run "git-gc --auto" after
--	receiving data from git-push and updating refs.  You can stop
--	it by setting this variable to false.
-+	By default, git-receive-pack and git-index-pack will run
-+	"git-gc --auto" after receiving data from git-push and
-+	updating refs.  You can stop it by setting this variable to
-+	false.
-=20
- receive.fsckObjects::
- 	If it is set to true, git-receive-pack will check all received
-diff --git a/builtin/index-pack.c b/builtin/index-pack.c
-index dc2cfe6..4e888ea 100644
---- a/builtin/index-pack.c
-+++ b/builtin/index-pack.c
-@@ -10,6 +10,7 @@
- #include "fsck.h"
- #include "exec_cmd.h"
- #include "thread-utils.h"
++commit.autogc::
++	By default, git-commit will run "git gc --auto" after each
++	commit. You can stop it by setting this variable to false.
++
+ credential.helper::
+ 	Specify an external helper to be called when a username or
+ 	password credential is needed; the helper may consult external
+diff --git a/builtin/commit.c b/builtin/commit.c
+index a2ec73d..bf7d0aa 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -28,6 +28,7 @@
+ #include "submodule.h"
+ #include "gpg-interface.h"
+ #include "column.h"
 +#include "gc.h"
 =20
- static const char index_pack_usage[] =3D
- "git index-pack [-v] [-o <index-file>] [--keep | --keep=3D<msg>] [--ve=
-rify] [--strict] (<pack-file> | --stdin [--fix-thin] [<pack-file>])";
-@@ -1463,12 +1464,13 @@ int cmd_index_pack(int argc, const char **argv,=
- const char *prefix)
- 	curr_index =3D write_idx_file(index_name, idx_objects, nr_objects, &o=
-pts, pack_sha1);
- 	free(idx_objects);
+ static const char * const builtin_commit_usage[] =3D {
+ 	"git commit [options] [--] <filepattern>...",
+@@ -1589,6 +1590,7 @@ int cmd_commit(int argc, const char **argv, const=
+ char *prefix)
+ 		     "new_index file. Check that disk is not full or quota is\n"
+ 		     "not exceeded, and then \"git reset HEAD\" to recover."));
 =20
--	if (!verify)
-+	if (!verify) {
- 		final(pack_name, curr_pack,
- 		      index_name, curr_index,
- 		      keep_name, keep_msg,
- 		      pack_sha1);
--	else
-+		gc("receive.autogc", 0);
-+	} else
- 		close(input_fd);
- 	free(objects);
- 	free(index_name_buf);
++	gc("commit.autogc", 0);
+ 	rerere(0);
+ 	run_hook(get_index_file(), "post-commit", NULL);
+ 	if (amend && !no_post_rewrite) {
 --=20
 1.7.8.36.g69ee2
