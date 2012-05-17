@@ -1,142 +1,78 @@
-From: =?UTF-8?B?w5h5dmluZCBBLiBIb2xt?= <sunny@sunbase.org>
-Subject: tr/xdiff-fast-hash generates warnings and breaks tests
-Date: Thu, 17 May 2012 01:31:54 +0200
-Message-ID: <CAA787r=WCJXeDipiVL37oMgji=ncoPyXXVOcCyYbSC6iCcTi1g@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Thomas Rast <trast@student.ethz.ch>,
-	Junio C Hamano <gitster@pobox.com>
+From: Steven Penny <svnpenn@gmail.com>
+Subject: [PATCH] git-sh-setup: work around Cygwin path handling gotchas
+Date: Wed, 16 May 2012 19:39:42 -0500
+Message-ID: <1337215182-4036-1-git-send-email-svnpenn@gmail.com>
+Cc: Steven Penny <svnpenn@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 17 01:32:03 2012
+X-From: git-owner@vger.kernel.org Thu May 17 02:40:34 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SUnhK-0005nK-6J
-	for gcvg-git-2@plane.gmane.org; Thu, 17 May 2012 01:32:02 +0200
+	id 1SUold-0004HO-PB
+	for gcvg-git-2@plane.gmane.org; Thu, 17 May 2012 02:40:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932977Ab2EPXb4 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 16 May 2012 19:31:56 -0400
-Received: from mail-pb0-f46.google.com ([209.85.160.46]:37089 "EHLO
-	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932144Ab2EPXby convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 16 May 2012 19:31:54 -0400
-Received: by pbbrp8 with SMTP id rp8so1742665pbb.19
-        for <git@vger.kernel.org>; Wed, 16 May 2012 16:31:54 -0700 (PDT)
+	id S1757035Ab2EQAk2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 May 2012 20:40:28 -0400
+Received: from mail-ob0-f174.google.com ([209.85.214.174]:34696 "EHLO
+	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752914Ab2EQAk1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 May 2012 20:40:27 -0400
+Received: by obbtb18 with SMTP id tb18so1737837obb.19
+        for <git@vger.kernel.org>; Wed, 16 May 2012 17:40:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:date:x-google-sender-auth:message-id:subject
-         :from:to:cc:content-type:content-transfer-encoding;
-        bh=a01EI86RSPJPhWRyyz7M+dJovnm1tbdXGpYnyHpfCVM=;
-        b=0qkPbiqS1WSrHBOADGWeA1ep7fYQSMpMdyEbgKbfkk1voqxGCf5XCcm6togYCLkq5D
-         PbxmeiQVyjPYvzIQggd5A6qD1+75KEHmKrw/Ew2IWwN5QjS/44A6eE4gnTC6Gf7Cwzv4
-         MJ9/75JKsC+593wRh/4d9aeq7q5B5DKamkAN3nPwmKMkLf/qQuPbW85nP6/L0ep5V5jw
-         5AiFn4Nq+wtSOnSqgwcYs9rfFx1e2NaMRFAeWBTdsz7nHA2f1/l06K+gfFbeUWMOlDaH
-         bth5k3TTm/GwfzKTWSjUzFB0h9wqOn3bd8/hbvzSEKHtdVz7Ymz+T1XLEJuH1+crd8NT
-         wuvA==
-Received: by 10.68.203.40 with SMTP id kn8mr20980676pbc.162.1337211114037;
- Wed, 16 May 2012 16:31:54 -0700 (PDT)
-Received: by 10.68.26.98 with HTTP; Wed, 16 May 2012 16:31:54 -0700 (PDT)
-X-Google-Sender-Auth: 5kxbVELwl6hhIwTZe2vGqdo6kDo
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        bh=/9AXew6EBSuz+FIJOI6yTNS5UQnGSLvUmJRsPdykWG0=;
+        b=WxJA/Twcv7dXA3/5k/qzYOFK3HPIsdnKbTiJpujraXeFywunZoJnBE3/spWM51PQe8
+         aG0vi26uFSnBP9ikwGVgMrgqGraKFvMQy7T6NNzGP+4jj6koNYETaySGt0N/scNQEeRG
+         YVrIbRxdo235ba7O/zjoDFMP7fycuF+EJ3hCDg2h7CZSmE4HKoih6+Kq9iTWoAFZR91v
+         Wi9j4fNcSUbUVH7QyJ8nx5eQiRll+y9AEvHkeGa0D8WfwC+sB9xXql0dTydm1xAPdNCh
+         xZOW/u1H1XTZwbI5ILQVo+Rqhb+A/m5DRE/PC7XJEDz3mSews4WzwfeBc/1QJUBFLGM+
+         IQlQ==
+Received: by 10.60.3.234 with SMTP id f10mr4581380oef.66.1337215227134;
+        Wed, 16 May 2012 17:40:27 -0700 (PDT)
+Received: from localhost.localdomain (cpe-76-187-106-31.tx.res.rr.com. [76.187.106.31])
+        by mx.google.com with ESMTPS id r8sm3015978oer.6.2012.05.16.17.40.26
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 16 May 2012 17:40:26 -0700 (PDT)
+X-Mailer: git-send-email 1.7.9
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197906>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197907>
 
-On Debian GNU/Linux 6.0.5 (squeeze), the two commits on the
-tr/xdiff-fast-hash branch introduces compiler warnings and breaks
-t/t0020-crlf.sh and maybe later tests:
+On Cygwin, tools built for Cygwin can take both Windows-style paths
+(e.g. C:/dir/file.txt or C:\dir\file.txt) and Cygwin-style paths
+(e.g. /cygdrive/c/dir/file.txt), but Windows-native tools can only take
+Windows-style paths.  Because the paths that are relative to $GIT_DIR,
+e.g. the name of the insn sheet file of the "rebase -i" command, are given
+to the programs with $GIT_DIR prefixed, and $GIT_DIR in turn is computed
+by calling "pwd", wrap "pwd" to call "cygpath -m" to give a Windows-style
+path, in a way similar to how mingw does this.
 
-6942efc (xdiff: load full words in the inner loop of xdl_hash_record)
-  Introduces these compiler warnings (formatted for readability):
+Signed-off-by: Steven Penny <svnpenn@gmail.com>
+---
+ git-sh-setup.sh |    5 +++++
+ 1 files changed, 5 insertions(+), 0 deletions(-)
 
-  [...]
-      CC xdiff/xprepare.o
-      CC xdiff/xutils.o
-  xdiff/xutils.c: In function `has_zero':
-  xdiff/xutils.c:290: warning: integer constant is too large for
-                      `unsigned long' type
-  xdiff/xutils.c:290: warning: integer constant is too large for
-                      `unsigned long' type
-  xdiff/xutils.c: In function `xdl_hash_record':
-  xdiff/xutils.c:345: warning: integer constant is too large for
-                      `unsigned long' type
-  xdiff/xutils.c:361: warning: integer constant is too large for
-                      `unsigned long' type
-      CC xdiff/xemit.o
-      CC xdiff/xmerge.o
-  [...]
-
-6f1af02 (xdiff: choose XDL_FAST_HASH code on sizeof(long) instead of
-        __WORDSIZE)
-
-  Breaks these tests in t/t0020-crlf.sh :
-
-  not ok - 12 apply patch (autocrlf=3Dinput)
-  not ok - 13 apply patch --cached (autocrlf=3Dinput)
-  not ok - 14 apply patch --index (autocrlf=3Dinput)
-  not ok - 15 apply patch (autocrlf=3Dtrue)
-  not ok - 16 apply patch --cached (autocrlf=3Dtrue)
-  not ok - 17 apply patch --index (autocrlf=3Dtrue)
-  # failed 6 among 34 test(s)
-
-Some later tests might also fail, haven't tested that.
-
-Reverting those two commits on current master (6a4a482) fixes both
-problems. Tried building on two other systems (Ubuntu 10.04.4 LTS and
-Ubuntu 10.10), and these problems don't appear there. Some info:
-
-  $ lsb_release -a
-    No LSB modules are available.
-    Distributor ID: Debian
-    Description:    Debian GNU/Linux 6.0.5 (squeeze)
-    Release:        6.0.5
-    Codename:       squeeze
-
-  $ gcc --version
-    gcc (Debian 4.4.5-8) 4.4.5
-
-  $ ldd --version
-    ldd (Debian EGLIBC 2.11.3-3) 2.11.3
-
-  $ uname -a
-    Linux shell 2.6.32-5-amd64 #1 SMP Mon Jan 16 17:15:00 UTC 2012
-    x86_64 GNU/Linux
-
-  First part of /proc/cpuinfo:
-    processor       : 0
-    vendor_id       : GenuineIntel
-    cpu family      : 6
-    model           : 23
-    model name      : Intel(R) Xeon(R) CPU           X3350  @ 2.66GHz
-    stepping        : 7
-    cpu MHz         : 2666.649
-    cache size      : 6144 KB
-    physical id     : 0
-    siblings        : 4
-    core id         : 0
-    cpu cores       : 4
-    apicid          : 0
-    initial apicid  : 0
-    fpu             : yes
-    fpu_exception   : yes
-    cpuid level     : 10
-    wp              : yes
-    flags           : fpu vme de pse tsc msr pae mce cx8 apic sep mtrr
-                      pge mca cmov pat pse36 clflush dts acpi mmx fxsr
-                      sse sse2 ss ht tm pbe syscall nx lm constant_tsc
-                      arch_perfmon pebs bts rep_good aperfmperf pni
-                      dtes64 monitor ds_cpl vmx smx est tm2 ssse3 cx16
-                      xtpr pdcm sse4_1 lahf_lm tpr_shadow vnmi
-                      flexpriority
-    bogomips        : 5333.29
-    clflush size    : 64
-    cache_alignment : 64
-    address sizes   : 36 bits physical, 48 bits virtual
-    power management:
-
-Cheers,
-=C3=98yvind
+diff --git a/git-sh-setup.sh b/git-sh-setup.sh
+index 7b3ae75..07f54c1 100644
+--- a/git-sh-setup.sh
++++ b/git-sh-setup.sh
+@@ -260,6 +260,11 @@ case $(uname -s) in
+ 		return 1
+ 	}
+ 	;;
++*CYGWIN*)
++	pwd () {
++		cygpath -m "$PWD"
++	}
++	;;
+ *)
+ 	is_absolute_path () {
+ 		case "$1" in
+-- 
+1.7.9
