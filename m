@@ -1,77 +1,144 @@
-From: =?UTF-8?Q?Bartosz_G=C4=99za?= <bartoszgeza@gmail.com>
-Subject: Re: Local cache for git objects
-Date: Thu, 17 May 2012 23:11:47 +0200
-Message-ID: <CALnNMuFtp0CoMkiP0W+6bOmd4Y6JD2b5HZuc3qfAuxiJjTcwEA@mail.gmail.com>
-References: <CALnNMuHdNFktUkp+Vdc=ooTJ9ay_BJftAJ_toVaBDA5EOzt9ww@mail.gmail.com>
- <1337285744-ner-2739@calvin> <CALnNMuE=YQsXK-kiRUntNU_0s7s6ONgBk92dZN4UD0Va+qqF+Q@mail.gmail.com>
- <xmqqk40a7cwi.fsf@junio.mtv.corp.google.com>
+From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+Subject: Re: [PATCH 1/2] git-sh-setup: define workaround wrappers before they
+ are used
+Date: Thu, 17 May 2012 23:36:01 +0100
+Message-ID: <4FB57D51.7050402@ramsay1.demon.co.uk>
+References: <4FB09FF2.70309@viscovery.net> <1337191208-21110-1-git-send-email-gitster@pobox.com> <1337191208-21110-2-git-send-email-gitster@pobox.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Johannes Sixt <j.sixt@viscovery.net>,
+	Steven Penny <svnpenn@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu May 17 23:12:24 2012
+X-From: git-owner@vger.kernel.org Fri May 18 01:16:52 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SV7zj-0003T2-NW
-	for gcvg-git-2@plane.gmane.org; Thu, 17 May 2012 23:12:24 +0200
+	id 1SV9w6-0006UO-V4
+	for gcvg-git-2@plane.gmane.org; Fri, 18 May 2012 01:16:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757145Ab2EQVMT convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 17 May 2012 17:12:19 -0400
-Received: from mail-ob0-f174.google.com ([209.85.214.174]:36783 "EHLO
-	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753168Ab2EQVMS convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 17 May 2012 17:12:18 -0400
-Received: by obbtb18 with SMTP id tb18so2994646obb.19
-        for <git@vger.kernel.org>; Thu, 17 May 2012 14:12:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=YgV5JvBo7BCkDIU5ccGo3aS7u7g8hetMkcHmGA6yi+4=;
-        b=qKrDOekqlWoIm3TkYvdn28qGrpwii40HJHh3/6RuFmhbf39k4ySNH8rHNg29sLtMa0
-         /trGyb7lr94GR8VHaPyRisC3F1HdBzwhZKiCo34avUr7Ueji6suPeaxwPnE0vAG6zl0Q
-         H0u0U8UWEx8Gps871paR0ASlYFjeFjnuxJRSI2+bk5TXvHKowBkxmAwWzMfF0Uez54PI
-         7WN7RfNW8rJfJ5qqzvcxRiv+za6AqjakgbmCuW+l6nZn1FH/8Nk7aj1mFnHLczbt41AR
-         eTYY3JlAAxNgxjnA8UP5AmDUkteZUNve/xY554O//q+Niysv4NOFBHsxEP58LeznrYSC
-         J1XQ==
-Received: by 10.182.113.71 with SMTP id iw7mr7995653obb.59.1337289137647; Thu,
- 17 May 2012 14:12:17 -0700 (PDT)
-Received: by 10.76.74.35 with HTTP; Thu, 17 May 2012 14:11:47 -0700 (PDT)
-In-Reply-To: <xmqqk40a7cwi.fsf@junio.mtv.corp.google.com>
+	id S1762434Ab2EQXQm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 May 2012 19:16:42 -0400
+Received: from lon1-post-3.mail.demon.net ([195.173.77.150]:46191 "EHLO
+	lon1-post-3.mail.demon.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755845Ab2EQXQl (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 17 May 2012 19:16:41 -0400
+Received: from ramsay1.demon.co.uk ([193.237.126.196])
+	by lon1-post-3.mail.demon.net with esmtp (Exim 4.69)
+	id 1SV9vv-0004Wr-fY; Thu, 17 May 2012 23:16:39 +0000
+User-Agent: Thunderbird 1.5.0.2 (Windows/20060308)
+In-Reply-To: <1337191208-21110-2-git-send-email-gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197930>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197931>
 
-On Thu, May 17, 2012 at 10:47 PM, Junio C Hamano <gitster@pobox.com> wr=
-ote:
->
-> Bartosz G=C4=99za <bartoszgeza@gmail.com> writes:
->
-> > Reference is read only (?)
-> > I'd like to set up one global cache repository and forget.
-> > Later as I fetch any objects they are stored there for fast future
-> > access.
->
-> Somebody needs to keep the "global cache" up to date, and that has to=
- be
-> somebody who has access to cron(7) on your system, and you will be a
-> good candidate to do so. =C2=A0So as part of the procedure to "set up=
- one
-> global cache repository and forget (about it)", make a bare clone and
-> then set up a scheduled task to periodically "git fetch" from its
-> origin, and then you are pretty much done, no?
+Junio C Hamano wrote:
+> Recently we tweaked this scriptlet to let mingw port redefine "pwd" to
+> always return Windows-style path, but the code to do so came after the
+> first use of "pwd" to set up $GIT_DIR shell variable.
+> 
+> Move the block to define these workaround wrappers, so that everything
+> everything that executes when the scriptlet is dot-sourced uses the
+> replacements.
+> 
+> Noticed-by: Ramsay Jones
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+>  git-sh-setup.sh | 41 +++++++++++++++++++++--------------------
+>  1 file changed, 21 insertions(+), 20 deletions(-)
+> 
+> diff --git a/git-sh-setup.sh b/git-sh-setup.sh
+> index 7b3ae75..770a86e 100644
+> --- a/git-sh-setup.sh
+> +++ b/git-sh-setup.sh
+> @@ -218,27 +218,8 @@ clear_local_git_env() {
+>  	unset $(git rev-parse --local-env-vars)
+>  }
+>  
+> -# Make sure we are in a valid repository of a vintage we understand,
+> -# if we require to be in a git repository.
+> -if test -z "$NONGIT_OK"
+> -then
+> -	GIT_DIR=$(git rev-parse --git-dir) || exit
+> -	if [ -z "$SUBDIRECTORY_OK" ]
+> -	then
+> -		test -z "$(git rev-parse --show-cdup)" || {
+> -			exit=$?
+> -			echo >&2 "You need to run this command from the toplevel of the working tree."
+> -			exit $exit
+> -		}
+> -	fi
+> -	test -n "$GIT_DIR" && GIT_DIR=$(cd "$GIT_DIR" && pwd) || {
+> -		echo >&2 "Unable to determine absolute path of git directory"
+> -		exit 1
+> -	}
+> -	: ${GIT_OBJECT_DIRECTORY="$GIT_DIR/objects"}
+> -fi
+>  
+> -# Fix some commands on Windows
+> +# Platform specific tweaks to work around some commands
+>  case $(uname -s) in
+>  *MINGW*)
+>  	# Windows has its own (incompatible) sort and find
+> @@ -269,3 +250,23 @@ case $(uname -s) in
+>  		return 1
+>  	}
+>  esac
+> +
+> +# Make sure we are in a valid repository of a vintage we understand,
+> +# if we require to be in a git repository.
+> +if test -z "$NONGIT_OK"
+> +then
+> +	GIT_DIR=$(git rev-parse --git-dir) || exit
+> +	if [ -z "$SUBDIRECTORY_OK" ]
+> +	then
+> +		test -z "$(git rev-parse --show-cdup)" || {
+> +			exit=$?
+> +			echo >&2 "You need to run this command from the toplevel of the working tree."
+> +			exit $exit
+> +		}
+> +	fi
+> +	test -n "$GIT_DIR" && GIT_DIR=$(cd "$GIT_DIR" && pwd) || {
+> +		echo >&2 "Unable to determine absolute path of git directory"
+> +		exit 1
+> +	}
+> +	: ${GIT_OBJECT_DIRECTORY="$GIT_DIR/objects"}
+> +fi
 
-That would work. It's a good practice for a single project with stable
-dependencies.
+Thanks for doing this. (I would have got around to it, honest! However, it does
+solve a minor problem for me, since I kinda promised not to post anymore MinGW
+specific patches. :-D ).
 
-My only concern is that it requires effort from user of the cache to
-keep the list of tracked remotes up to date. After time user would
-have to recall how to update the list or bother somebody who
-remembers. I suppose that in a few months since set up it would only
-include repositories that take over 5-10 minutes to fetch.
+I have not done a full test on this patch; I have only run the following tests
+on MinGW and cygwin:
+
+    $ git grep -l -e 'git *submodule' -- t
+    t/t5526-fetch-submodules.sh
+    t/t6008-rev-list-submodule.sh
+    t/t7003-filter-branch.sh
+    t/t7400-submodule-basic.sh
+    t/t7401-submodule-summary.sh
+    t/t7403-submodule-sync.sh
+    t/t7405-submodule-merge.sh
+    t/t7406-submodule-update.sh
+    t/t7407-submodule-foreach.sh
+    t/t7408-submodule-reference.sh
+    t/t7506-status-submodule.sh
+    t/t7610-mergetool.sh
+    t/t9300-fast-import.sh
+    t/t9350-fast-export.sh
+
+(On MinGW i have to use a "GIT_TEST_CMP='diff -ub'" prefix, otherwise there are
+some failures caused by "lf/crlf line ending" problems).
+
+All of these tests pass. I don't anticipate any problems (especially on cygwin,
+since it is essentially a noop there), but I have not done a complete test.
+
+I probably won't get to it soon, so I'm hoping somebody can beat me to it!
+
+ATB,
+Ramsay Jones
