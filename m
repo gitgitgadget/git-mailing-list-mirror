@@ -1,83 +1,111 @@
-From: Jon Seymour <jon.seymour@gmail.com>
-Subject: Re: [PATCH v4] git-svn: clarify the referent of dcommit's optional argument
-Date: Thu, 17 May 2012 11:46:56 +1000
-Message-ID: <CAH3AnrpCJZt0acr7f5C5kwCF+KxgzD3dbeT+g7Ko5uCMxNqU0Q@mail.gmail.com>
-References: <1337200956-9260-1-git-send-email-jon.seymour@gmail.com>
-	<CAH3AnrqQDfx7s1fXBgKJmFtMA33CW9qx2tWSoenqSR0pVc63WQ@mail.gmail.com>
-	<7vzk97bv2j.fsf@alter.siamese.dyndns.org>
+From: Andrew Ardill <andrew.ardill@gmail.com>
+Subject: Re: Making git history strictly time safe
+Date: Thu, 17 May 2012 11:50:11 +1000
+Message-ID: <CAH5451m33+4Y6sRzeji-Zvh2meN12ZxHKQMGRZ0Zwid8uGOyBw@mail.gmail.com>
+References: <2EDEF5ABBE208442B7547C8D36B9D8840C4A03@nawespscez09v.nadsuswe.nads.navy.mil>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, normalperson@yhbt.net, trast@student.ethz.ch
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu May 17 03:47:41 2012
+Cc: git@vger.kernel.org
+To: "Jones, Brian P CTR SPAWARSYSCEN-PACIFIC, 63600" 
+	<brian.p.jones4.ctr@navy.mil>
+X-From: git-owner@vger.kernel.org Thu May 17 03:50:39 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SUpoY-0006QB-1Z
-	for gcvg-git-2@plane.gmane.org; Thu, 17 May 2012 03:47:38 +0200
+	id 1SUprS-0000v3-KO
+	for gcvg-git-2@plane.gmane.org; Thu, 17 May 2012 03:50:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760798Ab2EQBq7 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 16 May 2012 21:46:59 -0400
-Received: from mail-wi0-f178.google.com ([209.85.212.178]:50515 "EHLO
-	mail-wi0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755771Ab2EQBq6 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 16 May 2012 21:46:58 -0400
-Received: by wibhn6 with SMTP id hn6so1336816wib.1
-        for <git@vger.kernel.org>; Wed, 16 May 2012 18:46:57 -0700 (PDT)
+	id S1760815Ab2EQBue convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 16 May 2012 21:50:34 -0400
+Received: from mail-we0-f174.google.com ([74.125.82.174]:54718 "EHLO
+	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760019Ab2EQBud convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 16 May 2012 21:50:33 -0400
+Received: by weyu7 with SMTP id u7so851437wey.19
+        for <git@vger.kernel.org>; Wed, 16 May 2012 18:50:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type:content-transfer-encoding;
-        bh=JDeClztkQIqjoon4/qehGRcxbkPjmqesP5DPIoscqJg=;
-        b=tKMFC5n/VnTuD6hWdcemGuW9bjWxx/4VuDjgLzhJNT5n85VhSy65WXhJjbLOIu1DtN
-         sIfjPMr43yUDK+Y4b+3t6QH1/5i7FLPTwr9zw+7N88ZS2LTEikZ50Q2x1ZL6Fwm8rENY
-         4mI6t/UgYVApk4HtQ6Rgy8Ctcu0pE55AhF69o85702CRWvJWbdmrAeDJ1vS0QUXDh2OE
-         iAeXCgIrijL9x5yn6Gdjgi8m10al23QZejeY/cjZjSHHYkVG/1umAFABwE5LgTHT/7Jc
-         VP7D0EGM5fXKizLcVl66e3i6X/FZ4xBBGs2pWp6PvD9ZGVlzXMZMVHi63G/qN8FKqdno
-         poIg==
-Received: by 10.181.11.137 with SMTP id ei9mr13241765wid.21.1337219216919;
- Wed, 16 May 2012 18:46:56 -0700 (PDT)
-Received: by 10.180.83.131 with HTTP; Wed, 16 May 2012 18:46:56 -0700 (PDT)
-In-Reply-To: <7vzk97bv2j.fsf@alter.siamese.dyndns.org>
+        bh=7DghVQuvTYIQ282iX4mAXtij0kDxBDv+VWdkmn+4aOE=;
+        b=slmkOvadHQMEBt9pgxG2pFlFqackCqCfdlKjPE93IkWfxbmYUKSt2dlxKrU+lOQvMg
+         PQTgy2Brugw/afhXJ2IVp1AWxXGzMTj1T+FZYLvNlJoIswGbYt8XomTj+lgmWVGD0whh
+         FxKW8gztp046gie0nJEoULMtlkvSCR1TukM+unwOp9dkSbueaXDDIL5nz6NSTmCSFom3
+         Waixjfjqw0C67CTnGM0jEfUQvpD560IY/zWIqjKOEojRXPH/xuXDdL3oHhQJOuW1e6Pb
+         jM7m53+URVLJegwTSyNk/vSFFWQyCh39mi7Q/iEF7JssLOFhU/owhY3ZYLUOf321MnIu
+         WfjA==
+Received: by 10.216.150.225 with SMTP id z75mr3457279wej.77.1337219432015;
+ Wed, 16 May 2012 18:50:32 -0700 (PDT)
+Received: by 10.223.86.80 with HTTP; Wed, 16 May 2012 18:50:11 -0700 (PDT)
+In-Reply-To: <2EDEF5ABBE208442B7547C8D36B9D8840C4A03@nawespscez09v.nadsuswe.nads.navy.mil>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197908>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197909>
 
-On Thu, May 17, 2012 at 8:49 AM, Junio C Hamano <gitster@pobox.com> wro=
-te:
-> Jon Seymour <jon.seymour@gmail.com> writes:
->
->>> +Originally, 'git svn' recommended that developers pulled or merged=
- from
->>> +the 'git svn' branch. =C2=A0This was because the author favored `g=
-it svn set-tree B`
->>> +to commit a single head rather than the `git svn set-tree A..B` no=
-tation to
->>> +commit multiple commits. Use of 'git pull' or 'git merge' with `gi=
-t svn set-tree A...B`
->>
->> A...B -> A..B
->>
->> Will fix in next iteration, assuming Junio and Eric are otherwise
->> happy with the update.
->
-> I don't have an opinion on the latter half of the patch that is prima=
-rily
-> about the rationale given by "the author", i.e. Eric ;-), but the
-> description of dcommit subcommand itself certainly looks simpler and =
-more
-> readble to me.
->
-> Thanks.
->
->
+Brian,
 
-Ok, I'll fix the ... issue mentioned above and (also some trailing
-whitespace) once Eric has given his feedback or acknowledgement.
+The first thing to know is that given a unique identifier for a
+commit, it's sha-1, it is guaranteed that the history of that commit
+will never change. Perhaps more accurately, the history is encoded
+with the commit contents as part of the sha-1, so it is as secure as
+sha-1.
 
-jon.
+What can change are references to commits - branches, the HEAD
+reference, tags etc. Someone could take the contents of each commit,
+and use them to create a new history that is slightly altered, but
+this would be recorded as a different commit object, with a different
+sha-1. At this point they could point a reference, such as a branch,
+at this new commit object, and try to convince everyone that the
+history hasn't changed. Git will viciously warn everyone when they try
+to update this reference, requiring a force update to continue.
+
+My understanding is that the config options you show are enough to
+stop a remote user from updating a reference that changes history in
+the way I mentioned. If they did update a reference like this, the
+previous history would still exist, it would just not be referenced by
+the branch name etc.
+
+Regards,
+
+Andrew Ardill
+
+
+On 17 May 2012 08:47, Jones, Brian P CTR SPAWARSYSCEN-PACIFIC, 63600
+<brian.p.jones4.ctr@navy.mil> wrote:
+> I am working towards git adoption on a project. One of the concerns i=
+s the fear that git history is not guaranteed to be time safe. How can =
+I configure a git repository so users cannot push or pull changes into =
+it that change it's history? This includes keeping users who work direc=
+tly in the repository from doing a rebase.
+>
+> I've found...
+> http://stackoverflow.com/questions/2085871/strategy-for-preventing-or=
+-catching-git-history-rewrite
+>
+> Which recommends setting...
+>
+> =C2=A0git config --system receive.denyNonFastforwards true
+> =C2=A0git config --system receive.denyDeletes true
+>
+> ...Is this enough to guarantee time safe history?
+>
+> Notes:
+> 1. Only certain process-central repositories would need time safe his=
+tory.
+> 2. Developers can change their history provided it does not impact an=
+yone else. I don't care about this case (yet).
+>
+> Brian P. Jones
+> Senior Software Engineer
+> Configuration Management
+>
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at =C2=A0http://vger.kernel.org/majordomo-info.ht=
+ml
