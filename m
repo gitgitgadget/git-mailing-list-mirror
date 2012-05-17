@@ -1,79 +1,52 @@
-From: =?UTF-8?B?w5h5dmluZCBBLiBIb2xt?= <sunny@sunbase.org>
-Subject: Re: tr/xdiff-fast-hash generates warnings and breaks tests
-Date: Thu, 17 May 2012 11:33:27 +0200
-Message-ID: <CAA787r=aMJCQvxtMZaYUHJsTkxs-mUYBYroArvVN=E=_EGKDDQ@mail.gmail.com>
-References: <CAA787r=WCJXeDipiVL37oMgji=ncoPyXXVOcCyYbSC6iCcTi1g@mail.gmail.com>
-	<4FB4A4B9.3080009@lsrfire.ath.cx>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: [PATCH v5] git-svn: clarify the referent of dcommit's optional
+ argument
+Date: Thu, 17 May 2012 09:37:07 +0000
+Message-ID: <20120517093707.GA18177@dcvr.yhbt.net>
+References: <1337224843-21718-1-git-send-email-jon.seymour@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Thomas Rast <trast@student.ethz.ch>,
-	Junio C Hamano <gitster@pobox.com>
-To: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
-X-From: git-owner@vger.kernel.org Thu May 17 11:33:34 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, gitster@pobox.com, trast@student.ethz.ch
+To: Jon Seymour <jon.seymour@gmail.com>
+X-From: git-owner@vger.kernel.org Thu May 17 11:37:20 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SUx5R-0006x5-RP
-	for gcvg-git-2@plane.gmane.org; Thu, 17 May 2012 11:33:34 +0200
+	id 1SUx92-0002Bj-Hr
+	for gcvg-git-2@plane.gmane.org; Thu, 17 May 2012 11:37:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755563Ab2EQJd3 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 17 May 2012 05:33:29 -0400
-Received: from mail-pb0-f46.google.com ([209.85.160.46]:49198 "EHLO
-	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753201Ab2EQJd2 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 17 May 2012 05:33:28 -0400
-Received: by pbbrp8 with SMTP id rp8so2308610pbb.19
-        for <git@vger.kernel.org>; Thu, 17 May 2012 02:33:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=QqM260E350V5Tq4m7+E+Wlbrrh0/r1Oqz7bLsyZG3Bw=;
-        b=Lyso7+B1Sl8O81jXFw7nJfOJ/aZG4pKKnivb7cSWy5WZDf9gRXdVM6eU6lZeJnuv/Q
-         fopUB14G9dYiaZFC2qQgojq2YK/aNaiKvs0Lgs4Knx40/H4WylIY75rXM1FnsVIWuN+5
-         iq9F40QcAbJwl9ibEN/JL2v6VoY/Z9ICA/pSbXfCouMn9so9ISfnUU5JLke1U9wettzs
-         36jhNng6XKOD450AcYt0p3zCkWOXCNj2V4Z3hAnYxJrWoM/3bMu1+mMLSfRXbX14bVYK
-         vGkRv78pbbu9EGhoPIe4P0lalAVQu2XmtSfyd3Zl6vNZPuVsZ4SxrmFaoTcWVCJnXgxB
-         D7ow==
-Received: by 10.68.221.39 with SMTP id qb7mr25735403pbc.120.1337247207758;
- Thu, 17 May 2012 02:33:27 -0700 (PDT)
-Received: by 10.68.26.98 with HTTP; Thu, 17 May 2012 02:33:27 -0700 (PDT)
-In-Reply-To: <4FB4A4B9.3080009@lsrfire.ath.cx>
-X-Google-Sender-Auth: tPbe8Wr2PyVOx3xqKbZz6JdIdiM
+	id S1758310Ab2EQJhK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 May 2012 05:37:10 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:56521 "EHLO dcvr.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754398Ab2EQJhJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 May 2012 05:37:09 -0400
+Received: from localhost (dcvr.yhbt.net [127.0.0.1])
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5D6E41F4DE;
+	Thu, 17 May 2012 09:37:07 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <1337224843-21718-1-git-send-email-jon.seymour@gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197914>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197915>
 
-On 17 May 2012 09:11, Ren=C3=A9 Scharfe <rene.scharfe@lsrfire.ath.cx> w=
-rote:
-> Am 17.05.2012 01:31, schrieb =C3=98yvind A. Holm:
-> > On Debian GNU/Linux 6.0.5 (squeeze), the two commits on the
-> > tr/xdiff-fast-hash branch introduces compiler warnings and breaks
-> > t/t0020-crlf.sh and maybe later tests:
->
-> What does the following short C program report when run (e.g. put it
-> in a file named s.c, then run "gcc -o s s.c" and "./s")?
->
-> =C2=A0#include <stdio.h>
-> =C2=A0int main(int argc, const char **argv) {
-> =C2=A0 =C2=A0printf("%u %u %u\n", sizeof(int), sizeof(long), sizeof(v=
-oid *));
-> =C2=A0 =C2=A0return 0;
-> =C2=A0}
+Jon Seymour <jon.seymour@gmail.com> wrote:
+> The documentation of the dcommit subcommand is reworded to clarify that
+> the optional argument refers to a git branch, not an SVN branch.
+> 
+> The discussion of the optional argument is put into its own paragraph
+> as is the guidance about using 'dcommit' in preference to 'set-tree'.
+> 
+> The section on REBASE vs. PULL/MERGE is reworded to incorporate the
+> advice to prefer 'git rebase' previously in the description of 'dcommit'.
+> 
+> Signed-off-by: Jon Seymour <jon.seymour@gmail.com>
 
-The result is "4 4 4".
+Thanks, Acked-by: Eric Wong <normalperson@yhbt.net>
 
-> I suspect you run a 32-bit userland on a 64-bit kernel.
-
-Yes, it looks like that to me, too. FYI, this isn't my computer, but a
-login shell at a webhosting provider, so I don't know the exact details
-about the installation.
-
-Cheers,
-=C3=98yvind
+Pushed to git://bogomips.org/git-svn along with Avishay's recent patch
