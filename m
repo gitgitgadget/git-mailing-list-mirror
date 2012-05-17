@@ -1,124 +1,88 @@
-From: Jon Seymour <jon.seymour@gmail.com>
-Subject: [PATCH v5] git-svn: clarify the referent of dcommit's optional argument
-Date: Thu, 17 May 2012 13:20:43 +1000
-Message-ID: <1337224843-21718-1-git-send-email-jon.seymour@gmail.com>
-Cc: gitster@pobox.com, normalperson@yhbt.net, trast@student.ethz.ch,
-	Jon Seymour <jon.seymour@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 17 05:23:46 2012
+From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <rene.scharfe@lsrfire.ath.cx>
+Subject: Re: tr/xdiff-fast-hash generates warnings and breaks tests
+Date: Thu, 17 May 2012 09:11:53 +0200
+Message-ID: <4FB4A4B9.3080009@lsrfire.ath.cx>
+References: <CAA787r=WCJXeDipiVL37oMgji=ncoPyXXVOcCyYbSC6iCcTi1g@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Thomas Rast <trast@student.ethz.ch>,
+	Junio C Hamano <gitster@pobox.com>
+To: =?UTF-8?B?IsOYeXZpbmQgQS4gSG9sbSI=?= <sunny@sunbase.org>
+X-From: git-owner@vger.kernel.org Thu May 17 09:12:10 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SUrJZ-0005qB-1Y
-	for gcvg-git-2@plane.gmane.org; Thu, 17 May 2012 05:23:45 +0200
+	id 1SUusU-00007Q-LW
+	for gcvg-git-2@plane.gmane.org; Thu, 17 May 2012 09:12:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932911Ab2EQDXk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 May 2012 23:23:40 -0400
-Received: from mail-pz0-f46.google.com ([209.85.210.46]:49495 "EHLO
-	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932678Ab2EQDXj (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 May 2012 23:23:39 -0400
-Received: by dady13 with SMTP id y13so1831194dad.19
-        for <git@vger.kernel.org>; Wed, 16 May 2012 20:23:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        bh=nXYiwn5NRCtqJ31YjL3hvLG5YjpGSGqUyY1cChEnLXE=;
-        b=Y0IKlRT+v+UiDerccjApLzQjyygv83E3idTMqb3vTpoOdyKARGYx4hyfazC9ZhO6jo
-         qbBkGTCQNzFCzln54oDpVfGnhx2bUNa1ZOuMzywBi+Paq5/TYD71wkAtreVjezYUO1OW
-         P3r0Uqdjla0OM/oQZhnOa4d23jw/JtLcHGkz5ulSwCouJXMdtkoBrwgaUg97CCY/8P+6
-         SYvyFAGZ2ag7Tr7/Ts/kIe5vAJ0OCt9fnP9EjP/5vsH9Ij0tmTp52OfusB+c6pN1yVSi
-         SO9sWjlV/QmgEizAMh5Q8lezLquO83EhbeDdkwqMeOUSa+YoVmz8VhtEKt6h4uHCoekv
-         9/Ig==
-Received: by 10.68.239.231 with SMTP id vv7mr22852574pbc.104.1337225018637;
-        Wed, 16 May 2012 20:23:38 -0700 (PDT)
-Received: from ubuntu.au.ibm.com ([1.132.149.222])
-        by mx.google.com with ESMTPS id qt10sm7561855pbc.57.2012.05.16.20.23.31
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 16 May 2012 20:23:37 -0700 (PDT)
-X-Mailer: git-send-email 1.7.10.1.514.ge33c7ea
+	id S1761056Ab2EQHL5 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 17 May 2012 03:11:57 -0400
+Received: from india601.server4you.de ([85.25.151.105]:60791 "EHLO
+	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760967Ab2EQHL4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 May 2012 03:11:56 -0400
+Received: from [192.168.2.105] (p4FFD93A6.dip.t-dialin.net [79.253.147.166])
+	by india601.server4you.de (Postfix) with ESMTPSA id 0CDD22F806F;
+	Thu, 17 May 2012 09:11:54 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:12.0) Gecko/20120428 Thunderbird/12.0.1
+In-Reply-To: <CAA787r=WCJXeDipiVL37oMgji=ncoPyXXVOcCyYbSC6iCcTi1g@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197911>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197912>
 
-The documentation of the dcommit subcommand is reworded to clarify that
-the optional argument refers to a git branch, not an SVN branch.
+Am 17.05.2012 01:31, schrieb =C3=98yvind A. Holm:
+> On Debian GNU/Linux 6.0.5 (squeeze), the two commits on the
+> tr/xdiff-fast-hash branch introduces compiler warnings and breaks
+> t/t0020-crlf.sh and maybe later tests:
 
-The discussion of the optional argument is put into its own paragraph
-as is the guidance about using 'dcommit' in preference to 'set-tree'.
+What does the following short C program report when run (e.g. put it in=
+=20
+a file named s.c, then run "gcc -o s s.c" and "./s")?
 
-The section on REBASE vs. PULL/MERGE is reworded to incorporate the
-advice to prefer 'git rebase' previously in the description of 'dcommit'.
+   #include <stdio.h>
+   int main(int argc, const char **argv) {
+     printf("%u %u %u\n", sizeof(int), sizeof(long), sizeof(void *));
+     return 0;
+   }
 
-Signed-off-by: Jon Seymour <jon.seymour@gmail.com>
----
- Documentation/git-svn.txt | 39 +++++++++++++++++++--------------------
- 1 file changed, 19 insertions(+), 20 deletions(-)
+I suspect you run a 32-bit userland on a 64-bit kernel.
 
-diff --git a/Documentation/git-svn.txt b/Documentation/git-svn.txt
-index 34ee785..1fd8a1f 100644
---- a/Documentation/git-svn.txt
-+++ b/Documentation/git-svn.txt
-@@ -189,18 +189,16 @@ and have no uncommitted changes.
- 	last fetched commit from the upstream SVN.
- 
- 'dcommit'::
--	Commit each diff from a specified head directly to the SVN
-+	Commit each diff from the current branch directly to the SVN
- 	repository, and then rebase or reset (depending on whether or
- 	not there is a diff between SVN and head).  This will create
- 	a revision in SVN for each commit in git.
--	It is recommended that you run 'git svn' fetch and rebase (not
--	pull or merge) your commits against the latest changes in the
--	SVN repository.
--	An optional revision or branch argument may be specified, and
--	causes 'git svn' to do all work on that revision/branch
--	instead of HEAD.
--	This is advantageous over 'set-tree' (below) because it produces
--	cleaner, more linear history.
-++
-+When an optional git branch name (or a git commit object name)
-+is specified as an argument, the subcommand works on the specified
-+branch, not on the current branch.
-++
-+Use of 'dcommit' is preferred to 'set-tree' (below).
- +
- --no-rebase;;
- 	After committing, do not rebase or reset.
-@@ -800,18 +798,19 @@ have each person clone that repository with 'git clone':
- 
- REBASE VS. PULL/MERGE
- ---------------------
+On Ubuntu 12.04 x86, t0020 fails for me as well when I compile with=20
+XDL_FAST_HASH explicitly set (it's off by default).  It succeeds after=20
+reverting 6f1af02, though, strangely enough.  No compiler warnings are=20
+printed in either case.
+
+   $ gcc --version
+   gcc (Ubuntu/Linaro 4.6.3-1ubuntu5) 4.6.3
+
+   $ uname -a
+   Linux ubuntu 3.2.0-24-generic #37-Ubuntu SMP Wed Apr 25 08:43:52 UTC=
+=20
+2012 i686 i686 i386 GNU/Linux
+
+Also, here are the measurements for master (v1.7.10.2-520-g6a4a482)=20
+without XDL_FAST_HASH, and with master minus 6f1af02 plus explicitly se=
+t=20
+XDL_FAST_HASH:
+
+   Test                                 master           reverted+FAST
+   --------------------------------------------------------------------=
 -
--Originally, 'git svn' recommended that the 'remotes/git-svn' branch be
--pulled or merged from.  This is because the author favored
-+Prefer to use 'git svn rebase' or 'git rebase', rather than
-+'git pull' or 'git merge' to synchronize unintegrated commits with a 'git svn'
-+branch. Doing so will keep the history of unintegrated commits linear with
-+respect to the upstream SVN repository and allow the use of the preferred
-+'git svn dcommit' subcommand to push unintegrated commits back into SVN.
-+
-+Originally, 'git svn' recommended that developers pulled or merged from
-+the 'git svn' branch.  This was because the author favored
- `git svn set-tree B` to commit a single head rather than the
--`git svn set-tree A..B` notation to commit multiple commits.
--
--If you use `git svn set-tree A..B` to commit several diffs and you do
--not have the latest remotes/git-svn merged into my-branch, you should
--use `git svn rebase` to update your work branch instead of `git pull` or
--`git merge`.  `pull`/`merge` can cause non-linear history to be flattened
--when committing into SVN, which can lead to merge commits reversing
--previous commits in SVN.
-+`git svn set-tree A..B` notation to commit multiple commits. Use of
-+'git pull' or 'git merge' with `git svn set-tree A..B` will cause non-linear
-+history to be flattened when committing into SVN and this can lead to merge
-+commits unexpectedly reversing previous commits in SVN.
- 
- MERGE TRACKING
- --------------
--- 
-1.7.10.1.514.ge33c7ea
+   4000.1: log -3000 (baseline)         0.08(0.05+0.02)  0.08(0.05+0.02=
+)
+   4000.2: log --raw -3000 (tree-only)  0.39(0.34+0.04)  0.39(0.32+0.06=
+)
+   4000.3: log -p -3000 (Myers)         1.55(1.43+0.11)  1.43(1.29+0.12=
+)
+   4000.4: log -p -3000 --histogram     1.63(1.51+0.10)  1.50(1.35+0.14=
+)
+   4000.5: log -p -3000 --patience      1.85(1.71+0.13)  1.73(1.62+0.10=
+)
+
+Ren=C3=A9
