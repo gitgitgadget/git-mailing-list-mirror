@@ -1,159 +1,107 @@
-From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <rene.scharfe@lsrfire.ath.cx>
-Subject: Re: tr/xdiff-fast-hash generates warnings and breaks tests
-Date: Thu, 17 May 2012 20:40:12 +0200
-Message-ID: <4FB5460C.10807@lsrfire.ath.cx>
-References: <CAA787r=WCJXeDipiVL37oMgji=ncoPyXXVOcCyYbSC6iCcTi1g@mail.gmail.com> <4FB4A4B9.3080009@lsrfire.ath.cx> <xmqqmx56rd2r.fsf@junio.mtv.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Git commit path vs rebase path
+Date: Thu, 17 May 2012 12:19:33 -0700
+Message-ID: <xmqqfwayobsq.fsf@junio.mtv.corp.google.com>
+References: <CAAXzdLU6bQ7ta4_-WfGJVaJgt1R5tX=4PW2sq3SdjAB+F72w+Q@mail.gmail.com>
+	<7vaa1j7vg1.fsf@alter.siamese.dyndns.org>
+	<4FA8BBB0.1080406@viscovery.net>
+	<CAAXzdLVaDAQkd_9qjnmTRoy8ccpyrZvwvBJQAfkp7LkYa7Li2A@mail.gmail.com>
+	<4FA8C5DB.5060002@viscovery.net>
+	<CAAXzdLW9_O+feVpBhDSXQH_SFRdrct1tjadpFoJ5d7-Qd1LWEg@mail.gmail.com>
+	<7vhavqwqpz.fsf@alter.siamese.dyndns.org>
+	<7v1umuwpo9.fsf@alter.siamese.dyndns.org>
+	<CAAXzdLVj0szCgpdOSdhnLdkBKAM+e6vrQpvrsz4HeUo+Nh1K6A@mail.gmail.com>
+	<4FAC047A.4010001@ramsay1.demon.co.uk>
+	<CAAXzdLXbYp5YW9cZXxmRJk0MP=6PU897f4nuTe4ipLqk+EH9PQ@mail.gmail.com>
+	<4FB03CA1.4030703@ramsay1.demon.co.uk> <4FB09FF2.70309@viscovery.net>
+	<4FB2931A.1080504@ramsay1.demon.co.uk> <4FB340A9.60607@viscovery.net>
+	<4FB543B7.6000506@ramsay1.demon.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?B?IsOYeXZpbmQgQS4gSG9sbSI=?= <sunny@sunbase.org>,
-	git@vger.kernel.org, Thomas Rast <trast@student.ethz.ch>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu May 17 20:40:26 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Sixt <j.sixt@viscovery.net>,
+	Steven Penny <svnpenn@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+X-From: git-owner@vger.kernel.org Thu May 17 21:19:52 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SV5cd-0002VI-08
-	for gcvg-git-2@plane.gmane.org; Thu, 17 May 2012 20:40:23 +0200
+	id 1SV6Ei-0004GP-VK
+	for gcvg-git-2@plane.gmane.org; Thu, 17 May 2012 21:19:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762310Ab2EQSkQ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 17 May 2012 14:40:16 -0400
-Received: from india601.server4you.de ([85.25.151.105]:60838 "EHLO
-	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760878Ab2EQSkP (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 May 2012 14:40:15 -0400
-Received: from [192.168.2.105] (p4FFD9588.dip.t-dialin.net [79.253.149.136])
-	by india601.server4you.de (Postfix) with ESMTPSA id 840D32F806F;
-	Thu, 17 May 2012 20:40:12 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:12.0) Gecko/20120428 Thunderbird/12.0.1
-In-Reply-To: <xmqqmx56rd2r.fsf@junio.mtv.corp.google.com>
+	id S967648Ab2EQTTj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 May 2012 15:19:39 -0400
+Received: from mail-fa0-f74.google.com ([209.85.161.74]:61300 "EHLO
+	mail-fa0-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932405Ab2EQTTi (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 May 2012 15:19:38 -0400
+Received: by faaa25 with SMTP id a25so112156faa.1
+        for <git@vger.kernel.org>; Thu, 17 May 2012 12:19:34 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type:x-gm-message-state;
+        bh=U7dPTZ81C4bP6vNKhWMQr0Q9NG+kzfIjuOgw4oR06QU=;
+        b=CELaMrMofpVZODSwTfsPbZ3sN2y8IDu3mV4bcGHJZp+/pAZPhCTgwLaxSRN015ZCSQ
+         Gblm5/OZC6JZ2b4fQtiqYjPUA8Dz3kcM6pYyn0q0/xJK1mcSda5vFtobg961QARNkR71
+         ame9JMzfJLnHZ8B24/gPl7+PIKNR++BJbc5NjRStn8TDRSkD73V56c56n6vL5xU2haQ6
+         0wPwAqlQR77hM1vTtOtX1EIW10x5fKI+9z9tqz/6OC2ADdJEJHyuw2mfiQ56ozusT7MG
+         fxvrZJvXshOvUFCzeQ6X83ovylfx/oYgBoeUYT8i/Zr7Lu6PXzYR7BnfWza+g1FhCNbl
+         aKEA==
+Received: by 10.14.100.75 with SMTP id y51mr1749501eef.2.1337282374332;
+        Thu, 17 May 2012 12:19:34 -0700 (PDT)
+Received: by 10.14.100.75 with SMTP id y51mr1749490eef.2.1337282374234;
+        Thu, 17 May 2012 12:19:34 -0700 (PDT)
+Received: from hpza10.eem.corp.google.com ([74.125.121.33])
+        by gmr-mx.google.com with ESMTPS id b15si5990888een.0.2012.05.17.12.19.34
+        (version=TLSv1/SSLv3 cipher=AES128-SHA);
+        Thu, 17 May 2012 12:19:34 -0700 (PDT)
+Received: from junio.mtv.corp.google.com (junio.mtv.corp.google.com [172.27.69.24])
+	by hpza10.eem.corp.google.com (Postfix) with ESMTP id 0B79020004E;
+	Thu, 17 May 2012 12:19:34 -0700 (PDT)
+Received: by junio.mtv.corp.google.com (Postfix, from userid 110493)
+	id 4FAFBE25F4; Thu, 17 May 2012 12:19:33 -0700 (PDT)
+In-Reply-To: <4FB543B7.6000506@ramsay1.demon.co.uk> (Ramsay Jones's message of
+	"Thu, 17 May 2012 19:30:15 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1 (gnu/linux)
+X-Gm-Message-State: ALoCoQlhc6L0xhXpPjfjIvv6VVMvq/nEUqbZW31ehuvTs7/FRIcN2cOy8QHrSFXlWwHiewYanrhtu3Ck+ChSbvoJzkSmSiXRx+oXwo2R7bVAC2XlLYWWlMpE+AWSYZjcXfAzVQwpgsnbIFgdUjM/admG07upYvdBFA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197925>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197926>
 
-Am 17.05.2012 18:23, schrieb Junio C Hamano:
-> Ren=C3=A9 Scharfe<rene.scharfe@lsrfire.ath.cx>  writes:
->> On Ubuntu 12.04 x86, t0020 fails for me as well when I compile with
->> XDL_FAST_HASH explicitly set (it's off by default).
+Ramsay Jones <ramsay@ramsay1.demon.co.uk> writes:
+
+> As you surmised, cygwin does not have this feature. On cygwin you are
+> encouraged to use the cygpath utility in scripts. (Also, cygwin does
+> provide an API to convert to/from POSIX/win32 paths from your own
+> programs. eg. cygwin_conv_to_[full]_win32_path() and cygwin_conv_to_\
+> [full]_posix_path().)
+> ...
+> Just as an exercise, I created a script to use the windows PSPad editor
+> (included below), using it to create a commit and also run this rebase:
 >
-> OK.  So does that indicate at least breakage in the Makefile that
-> attempts to set XDL_FAST_HASH only on x86_64, mistakenly triggering
-> on =C3=98yvind's x86 32-bit userland, or did =C3=98yvind manually fli=
-pped the
-> feature on?
-
-It's turned on by default if uname -m says x86_64, which it does for=20
-=C3=98yvind (64-bit kernel).  His userland is a 32-bit one, though.
-
-> It is a separate issue that XDL_FAST_HASH code does not work on 32-bi=
-t
-> systems, even though it is advertised that it only needs to be on
-> little-endian.
-
-Indeed.
-
->> It succeeds after reverting 6f1af02, though, strangely enough.
+>     GIT_EDITOR=pspad git rebase -i master uname
 >
-> It is strange.  I do not see anything glaringly wrong in the conversi=
-on
-> in that commit.  The only difference I see is that count_masked_bytes=
- in
-> the original used to take unsigned long on 64-bit archs but the updat=
-ed
-> one takes signed long, but that on 32-bit archs the function takes
-> signed long in both versions so it cannot be it.  Stumped...
+> Both git commands launched the editor (and completed their task) just fine.
 
-The assembly differs in two instructions:
+So where does the above leave us?
 
-	--- master/xdiff/xutils.s
-	+++ reverted/xdiff/xutils.s
-	@@ -733,7 +733,7 @@
-	 	shrl	$7, %ebx
-	 	leal	-256(%ebx), %ecx
-	 	movl	%ebx, %edi
-	-	shrl	$23, %ecx
-	+	sarl	$23, %ecx
-	 	andl	$1, %edi
-	 	leal	1(%ecx,%edi), %ecx
-	 	addl	%ecx, %esi
-	@@ -934,7 +934,7 @@
-	 	jmp	.L123
-	 .L153:
-	 	movl	$__PRETTY_FUNCTION__.4151, 12(%esp)
-	-	movl	$374, 8(%esp)
-	+	movl	$380, 8(%esp)
-	 	movl	$.LC1, 4(%esp)
-	 	movl	$.LC2, (%esp)
-	 	call	__assert_fail
+Your message showed a way to "solve" it without changing git, but the
+presense of workaround alone is not a good reason not to change git, if
+the change makes things better without breaking other things.  I'd like
+to know if Steven's patch breaks Cygwin users in other ways.
 
-The second one is just a line number of an assert() that is moved aroun=
-d=20
-a bit.  The first one means that master is doing a logical shift right=20
-(shr) while with 6f1af02 reverted, an arithmetic shift right (sar) is=20
-performed in the same place.
-
-While sar keeps the sign bit of the operand intact, shr shifts it to th=
-e=20
-right like the other bits.  The code seems to rely on arithmetic shift=20
-being done.  It's implementation-defined for signed numbers, but that's=
-=20
-not that much of a problem, as we turn on the feature only on selected=20
-architectures anyway (modulo detection problems, as above ;).
-
-The real issue seems to be that the shifted number is unsigned:
-
-		long a =3D (mask - 256) >> 23;
-
-=46or unsigned values, a logical shift right is done, always. Not sure =
-why=20
-wrapping it  in "if (sizeof(long) =3D=3D 8)" would make a difference at=
- all,=20
-though.
-
-The following patch on top of master makes the compiler put a sarl in m=
-y=20
-build, and "make -j4 XDL_FAST_HASH=3D1 test" passes.
-
-=C3=98yvind, does this oneliner help in your case as well?
-
--- >8 --
-Subject: xdiff: signed right shift for 32-bit case of XDL_FAST_HASH
-
-In the 32-bit branch of count_masked_bytes(), the compiler uses a
-logical right shift on mask, because it is unsigned.  We want it to
-be an arithmetic right shift, however (keeping negative numbers
-negative instead of shifting the sign bit as well).
-
-There is no way to specify it in C, but we can at least cast mask to
-signed long.  This will make the compiler use an arithmetic right shift
-on certain implementations, but that's OK because we only turn on
-XDL_FAST_HASH in the Makefile for known-good architectures, and at leas=
-t=20
-gcc 4.6.3 and clang 3.0 do what we want on the most interesting one (x8=
-6).
-
-Signed-off-by: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
----
-  xdiff/xutils.c |    2 +-
-  1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/xdiff/xutils.c b/xdiff/xutils.c
-index 1b3b471..29df57e 100644
---- a/xdiff/xutils.c
-+++ b/xdiff/xutils.c
-@@ -311,7 +311,7 @@ static inline long count_masked_bytes(unsigned
-  		 * (a+b+1) gives us
-  		 *   correct 0-3 bytemask count result
-  		 */
--		long a =3D (mask - 256) >> 23;
-+		long a =3D ((long)mask - 256) >> 23;
-  		long b =3D mask & 1;
-  		return a + b + 1;
-  	}
---=20
-1.7.10.2
+Steven's message showed that spawning Cygwin programs and feeding paths
+in $GIT_DIR to them would not be broken if we start giving GIT_DIR as a
+Windows style path inside shell scripted Porcelains.  But will there be
+other things that get broken by the change?  An example of what would
+worry me is that we define has_drive_prefix() only for compat/mingw.h,
+so if somebody exports GIT_DIR back to call the binaries from scripted
+Porcelains, it is likely that it would break git running on Cygwin,
+where it expects only posix-style paths.  Upon seeing C:/foo/bar.txt, it
+will start saying "Ah, that is a relative path" and may end up adding
+the $(pwd) in front when it needs to know its absolute path.
