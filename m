@@ -1,88 +1,57 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH] send-email: support coloring dry-run output
-Date: Thu, 17 May 2012 20:16:36 +0700
-Message-ID: <1337260596-15498-1-git-send-email-pclouds@gmail.com>
+From: Angus Hammond <angusgh@gmail.com>
+Subject: Re: [PATCH] send-email: support coloring dry-run output
+Date: Thu, 17 May 2012 15:27:40 +0100
+Message-ID: <CAOBOgRaEnFOJ9=ZHczAq_TNerrrMciG8g0SHYDiKrqfhASU-iA@mail.gmail.com>
+References: <1337260596-15498-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org
+To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
 	<pclouds@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 17 15:20:37 2012
+X-From: git-owner@vger.kernel.org Thu May 17 16:28:02 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SV0dA-0003II-KZ
-	for gcvg-git-2@plane.gmane.org; Thu, 17 May 2012 15:20:36 +0200
+	id 1SV1gG-00021Y-Jw
+	for gcvg-git-2@plane.gmane.org; Thu, 17 May 2012 16:27:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965807Ab2EQNUa convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 17 May 2012 09:20:30 -0400
-Received: from mail-pz0-f46.google.com ([209.85.210.46]:64343 "EHLO
-	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1761885Ab2EQNU3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 May 2012 09:20:29 -0400
-Received: by dady13 with SMTP id y13so2413100dad.19
-        for <git@vger.kernel.org>; Thu, 17 May 2012 06:20:28 -0700 (PDT)
+	id S1760684Ab2EQO1n (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 May 2012 10:27:43 -0400
+Received: from mail-lb0-f174.google.com ([209.85.217.174]:48029 "EHLO
+	mail-lb0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752204Ab2EQO1m (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 May 2012 10:27:42 -0400
+Received: by lbbgm6 with SMTP id gm6so1336598lbb.19
+        for <git@vger.kernel.org>; Thu, 17 May 2012 07:27:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
-         :content-type:content-transfer-encoding;
-        bh=9sb4OcMZ+I7jbQlNVRAOre5EwpKoOpJXXgE5iWL8OvE=;
-        b=kYJ1Y+BepQG/qRhbVgwzVQWgNLcTX2mQApsDDHVB4dku/W3aWwF9sLngOCZgm07US7
-         qjkzHYZQM4e6W1pGojDRBOI67YC/KQExwAlgXw4EUsdzYZmGiqsjxj2ZclvK1kOM2oAx
-         yjXiiK0EmgTGmCAS/iMHUW0rPHmtV5kjnkCVwBoKjxP+p9vqPckc9GPkpTAG1IkTQqRE
-         BJ9R4nXapXktkBE8WfwUbIkUr69wyLSn8ZLneAzcVC4RnVAweX3DdnOWJBWz2hX12+ey
-         g+raAYc5fnJvE8KLSJ+qbI3HPJmq2VtCjPJJfJRq9IMU9KiBkFtWQjqEZ09bW4jU6wiS
-         KSQQ==
-Received: by 10.68.225.170 with SMTP id rl10mr27434143pbc.76.1337260828365;
-        Thu, 17 May 2012 06:20:28 -0700 (PDT)
-Received: from pclouds@gmail.com ([115.74.36.213])
-        by mx.google.com with ESMTPS id ud10sm9123219pbc.25.2012.05.17.06.20.23
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 17 May 2012 06:20:26 -0700 (PDT)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Thu, 17 May 2012 20:16:37 +0700
-X-Mailer: git-send-email 1.7.10.2.525.gd34301a.dirty
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=dI11DNd7iuDnKPdvwoILoZJkKvm9nGUwnJp+/o9vc8o=;
+        b=avjgzRFu7gSo0+pnkVaoOoPuwIX0kZtGClv2sFTL0jdX4dS5hXvqXtkMFnZvezSCo+
+         u+ZCiJH9tD8db59Pmkm3AgLhe1ZrYrAcuiz3yu49RkZIsC4CQKdqsc5OlC75a1v+RySl
+         rYywKzfRdYvbEm3XXCfABrUXnr++ZLl99viXkR0n9/TByNVr2LT2thLBMo8HqErKagt7
+         /cv3uzjrnm0K1xmGu0dzYas568fiqQBeSB/15kbZCtvigm+V82Gkldxv+JNgFCYvSyNG
+         Nf88/qbk3sNEc7SxqGYC/XKcZjuy85cb2m1+1o6PFmhthfFhlnPd2we5lUCahev0inus
+         80Sg==
+Received: by 10.112.11.38 with SMTP id n6mr3040201lbb.82.1337264860626; Thu,
+ 17 May 2012 07:27:40 -0700 (PDT)
+Received: by 10.114.12.1 with HTTP; Thu, 17 May 2012 07:27:40 -0700 (PDT)
+In-Reply-To: <1337260596-15498-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197917>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197918>
 
-It highlights sendmail command and subject lines. The most important
-lines to me.
-
-I'm no Perl expert. This patch is by no means for submission. But
-maybe it'll motivate someone to do a proper patch.
-
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
----
- git-send-email.perl |    6 +++++-
- 1 files changed, 5 insertions(+), 1 deletions(-)
-
-diff --git a/git-send-email.perl b/git-send-email.perl
-index ef30c55..033ca5e 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -1157,9 +1157,13 @@ X-Mailer: git-send-email $gitversion
- 			    print "RCPT TO:<$entry>\n";
- 			}
- 		} else {
-+			print color 'yellow';
- 			print "Sendmail: $smtp_server ".join(' ',@sendmail_parameters)."\n"=
-;
-+			print color 'reset';
- 		}
--		print $header, "\n";
-+		my $colored_header =3D $header;
-+		$colored_header =3D~ s/^(Subject: .*)/color("bold").$1.color("reset"=
-)/em;
-+		print $colored_header, "\n";
- 		if ($smtp) {
- 			print "Result: ", $smtp->code, ' ',
- 				($smtp->message =3D~ /\n([^\n]+\n)$/s), "\n";
---=20
-1.7.8.36.g69ee2
+This seems like it would be a useful patch for those of us using sendmail.
+I'll admit I don't know any perl at all, but one bit seems a little
+odd to me. Is there a reason you use 3 separate print statements to
+deal with the colours on the Sendmail line, but a regex substitution
+the second time? I have no idea which would be considered the better
+practice but surely we should pick one and be consistent? Unless
+there's some difference between the two that I'm missing.
+Thanks
+Angus
