@@ -1,144 +1,166 @@
 From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-Subject: Re: [PATCH 1/2] git-sh-setup: define workaround wrappers before they
- are used
-Date: Thu, 17 May 2012 23:36:01 +0100
-Message-ID: <4FB57D51.7050402@ramsay1.demon.co.uk>
-References: <4FB09FF2.70309@viscovery.net> <1337191208-21110-1-git-send-email-gitster@pobox.com> <1337191208-21110-2-git-send-email-gitster@pobox.com>
+Subject: Re: [PATCH 2/2] git-sh-setup: work around Cygwin path handling gotchas
+Date: Fri, 18 May 2012 00:15:04 +0100
+Message-ID: <4FB58678.1050009@ramsay1.demon.co.uk>
+References: <4FB09FF2.70309@viscovery.net> <1337191208-21110-1-git-send-email-gitster@pobox.com> <1337191208-21110-3-git-send-email-gitster@pobox.com> <CAAXzdLW5VYnHc41WZ0id=4Qe17dHSj4+J9tqVvG-PvtpXLmh+Q@mail.gmail.com> <7vd364c5kt.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Johannes Sixt <j.sixt@viscovery.net>,
-	Steven Penny <svnpenn@gmail.com>
+Cc: Steven Penny <svnpenn@gmail.com>, git@vger.kernel.org,
+	Johannes Sixt <j.sixt@viscovery.net>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri May 18 01:16:52 2012
+X-From: git-owner@vger.kernel.org Fri May 18 01:16:55 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SV9w6-0006UO-V4
-	for gcvg-git-2@plane.gmane.org; Fri, 18 May 2012 01:16:47 +0200
+	id 1SV9wD-0006ZS-Jf
+	for gcvg-git-2@plane.gmane.org; Fri, 18 May 2012 01:16:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762434Ab2EQXQm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 May 2012 19:16:42 -0400
-Received: from lon1-post-3.mail.demon.net ([195.173.77.150]:46191 "EHLO
-	lon1-post-3.mail.demon.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755845Ab2EQXQl (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 17 May 2012 19:16:41 -0400
+	id S965828Ab2EQXQr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 May 2012 19:16:47 -0400
+Received: from lon1-post-2.mail.demon.net ([195.173.77.149]:35482 "EHLO
+	lon1-post-2.mail.demon.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1762456Ab2EQXQq (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 17 May 2012 19:16:46 -0400
 Received: from ramsay1.demon.co.uk ([193.237.126.196])
-	by lon1-post-3.mail.demon.net with esmtp (Exim 4.69)
-	id 1SV9vv-0004Wr-fY; Thu, 17 May 2012 23:16:39 +0000
+	by lon1-post-2.mail.demon.net with esmtp (Exim 4.69)
+	id 1SV9w3-0005x5-cY; Thu, 17 May 2012 23:16:45 +0000
 User-Agent: Thunderbird 1.5.0.2 (Windows/20060308)
-In-Reply-To: <1337191208-21110-2-git-send-email-gitster@pobox.com>
+In-Reply-To: <7vd364c5kt.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197931>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197932>
 
 Junio C Hamano wrote:
-> Recently we tweaked this scriptlet to let mingw port redefine "pwd" to
-> always return Windows-style path, but the code to do so came after the
-> first use of "pwd" to set up $GIT_DIR shell variable.
+> Steven Penny <svnpenn@gmail.com> writes:
 > 
-> Move the block to define these workaround wrappers, so that everything
-> everything that executes when the scriptlet is dot-sourced uses the
-> replacements.
+>> Junio C Hamano wrote:
+>>> +*CYGWIN*)
+>>> +       pwd () {
+>>> +               builtin cygpath -m
+>>> +       }
+>>> +       ;;
+>> Ok I got it!
+>>
+>> The problem is twofold
+>>
+>> 1. Ramsay Jones	was right, it needs to be called like
+>>
+>> 	cygpath -m "$PWD"
+>>
+>> 2. The Cygwin "pwd" (and quite possibly MinGW "pwd") needs to be defined
+>>    **before** it is called
 > 
-> Noticed-by: Ramsay Jones
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> OK, I missed the first point, it seems.  But you seem to have missed that
+> these two problems are more or less independent---that is why I sent two
+> patches, not a single ball of wax like the one I am responding to.
+> 
+> So the replacement for [PATCH 2/2] would now look like this?
+> 
+> In addition to "applies fine, tested and works" reports from Windows
+> stakeholders, I still prefer to have a sign off from you (see
+> Documentation/SubmittingPatches).
+> 
+> Thanks.
+> 
+> -- >8 --
+> From: Steven Penny <svnpenn@gmail.com>
+> Date: Wed, 16 May 2012 10:44:49 -0700
+> Subject: [PATCH] git-sh-setup: work around Cygwin path handling gotchas
+> 
+> On Cygwin, tools built for Cygwin can take both Windows-style paths
+> (e.g. C:/dir/file.txt or C:\dir\file.txt) and Cygwin-style paths
+> (e.g. /cygdrive/c/dir/file.txt), but Windows-native tools can only take
+> Windows-style paths.  Because the paths that are relative to $GIT_DIR,
+> e.g. the name of the insn sheet file of the "rebase -i" command, are given
+> to the programs with $GIT_DIR prefixed, and $GIT_DIR in turn is computed
+> by calling "pwd", wrap "pwd" to call "cygpath -m" to give a Windows-style
+> path, in a way similar to how mingw does this.
 > ---
->  git-sh-setup.sh | 41 +++++++++++++++++++++--------------------
->  1 file changed, 21 insertions(+), 20 deletions(-)
+>  git-sh-setup.sh | 5 +++++
+>  1 file changed, 5 insertions(+)
 > 
 > diff --git a/git-sh-setup.sh b/git-sh-setup.sh
-> index 7b3ae75..770a86e 100644
+> index 770a86e..b8e6327 100644
 > --- a/git-sh-setup.sh
 > +++ b/git-sh-setup.sh
-> @@ -218,27 +218,8 @@ clear_local_git_env() {
->  	unset $(git rev-parse --local-env-vars)
->  }
->  
-> -# Make sure we are in a valid repository of a vintage we understand,
-> -# if we require to be in a git repository.
-> -if test -z "$NONGIT_OK"
-> -then
-> -	GIT_DIR=$(git rev-parse --git-dir) || exit
-> -	if [ -z "$SUBDIRECTORY_OK" ]
-> -	then
-> -		test -z "$(git rev-parse --show-cdup)" || {
-> -			exit=$?
-> -			echo >&2 "You need to run this command from the toplevel of the working tree."
-> -			exit $exit
-> -		}
-> -	fi
-> -	test -n "$GIT_DIR" && GIT_DIR=$(cd "$GIT_DIR" && pwd) || {
-> -		echo >&2 "Unable to determine absolute path of git directory"
-> -		exit 1
-> -	}
-> -	: ${GIT_OBJECT_DIRECTORY="$GIT_DIR/objects"}
-> -fi
->  
-> -# Fix some commands on Windows
-> +# Platform specific tweaks to work around some commands
->  case $(uname -s) in
->  *MINGW*)
->  	# Windows has its own (incompatible) sort and find
-> @@ -269,3 +250,23 @@ case $(uname -s) in
+> @@ -241,6 +241,11 @@ case $(uname -s) in
 >  		return 1
 >  	}
->  esac
-> +
-> +# Make sure we are in a valid repository of a vintage we understand,
-> +# if we require to be in a git repository.
-> +if test -z "$NONGIT_OK"
-> +then
-> +	GIT_DIR=$(git rev-parse --git-dir) || exit
-> +	if [ -z "$SUBDIRECTORY_OK" ]
-> +	then
-> +		test -z "$(git rev-parse --show-cdup)" || {
-> +			exit=$?
-> +			echo >&2 "You need to run this command from the toplevel of the working tree."
-> +			exit $exit
-> +		}
-> +	fi
-> +	test -n "$GIT_DIR" && GIT_DIR=$(cd "$GIT_DIR" && pwd) || {
-> +		echo >&2 "Unable to determine absolute path of git directory"
-> +		exit 1
+>  	;;
+> +*CYGWIN*)
+> +	pwd () {
+> +		cygpath -m "$PWD"
 > +	}
-> +	: ${GIT_OBJECT_DIRECTORY="$GIT_DIR/objects"}
-> +fi
+> +	;;
+>  *)
+>  	is_absolute_path () {
+>  		case "$1" in
 
-Thanks for doing this. (I would have got around to it, honest! However, it does
-solve a minor problem for me, since I kinda promised not to post anymore MinGW
-specific patches. :-D ).
+I guess you won't be shocked to hear that I don't think this patch is
+necessary. :-P
 
-I have not done a full test on this patch; I have only run the following tests
-on MinGW and cygwin:
+However, I can appreciate that some people would rather not have to
+create a shell script to wrap their text editor, just to use git.
+So I'm certainly not opposed to finding a solution to this problem
+that doesn't require the user to do so.
 
-    $ git grep -l -e 'git *submodule' -- t
-    t/t5526-fetch-submodules.sh
-    t/t6008-rev-list-submodule.sh
-    t/t7003-filter-branch.sh
-    t/t7400-submodule-basic.sh
-    t/t7401-submodule-summary.sh
-    t/t7403-submodule-sync.sh
-    t/t7405-submodule-merge.sh
-    t/t7406-submodule-update.sh
-    t/t7407-submodule-foreach.sh
-    t/t7408-submodule-reference.sh
-    t/t7506-status-submodule.sh
-    t/t7610-mergetool.sh
-    t/t9300-fast-import.sh
-    t/t9350-fast-export.sh
+My concerns about this patch include:
 
-(On MinGW i have to use a "GIT_TEST_CMP='diff -ub'" prefix, otherwise there are
-some failures caused by "lf/crlf line ending" problems).
+    - the additional fork+exec overhead associated with calling cygpath.
+      I'm not actually claiming there is any substantial increase; I
+      haven't tried it, so I don't know how "hot" the pwd() function is.
 
-All of these tests pass. I don't anticipate any problems (especially on cygwin,
-since it is essentially a noop there), but I have not done a complete test.
+    - this is a "big hammer" which will affect much more code that is
+      required to fix this problem.
 
-I probably won't get to it soon, so I'm hoping somebody can beat me to it!
+The latter is my main concern. I would rather have the call to cygpath
+at the point in the code where the editor is launched. This would reduce
+the scope of the change and any side-effects that go with it.
+
+Anyway, I applied this patch tonight to give it a go. The very first test
+I tried failed. I've attached the log of the failing test below.
+Note that it is attempting to use "ssh" to a "host" that ends in ".../C:".
+
+I haven't investigated yet (I've got to get some sleep).
+
+HTH
 
 ATB,
 Ramsay Jones
+
+
+expecting success:
+        (
+                cd addtest &&
+                git submodule add ../repo relative &&
+                test "$(git config -f .gitmodules submodule.relative.url)" = ../
+repo &&
+                git submodule sync relative &&
+                test "$(git config submodule.relative.url)" = "$submodurl/repo"
+        )
+
+Cloning into 'relative'...
+ssh: /home/ramsay/git/t/trash directory.t7400-submodule-basic/addtest/C: no addr
+ess associated with name
+fatal: The remote end hung up unexpectedly
+Clone of 'C:/cygwin/home/ramsay/git/t/trash directory.t7400-submodule-basic/repo
+' into submodule path 'relative' failed
+not ok - 41 use superproject as upstream when path is relative and no url is set
+ there
+#
+#               (
+#                       cd addtest &&
+#                       git submodule add ../repo relative &&
+#                       test "$(git config -f .gitmodules submodule.relative.url
+)" = ../repo &&
+#                       git submodule sync relative &&
+#                       test "$(git config submodule.relative.url)" = "$submodur
+l/repo"
+#               )
+#
+$
