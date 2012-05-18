@@ -1,105 +1,183 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH 0/13] ident cleanups and bugfixes
-Date: Fri, 18 May 2012 19:05:28 -0400
-Message-ID: <20120518230528.GA30510@sigill.intra.peff.net>
-References: <20120511231303.GA24611@sigill.intra.peff.net>
- <20120514162824.GA24457@sigill.intra.peff.net>
- <20120514210225.GA9677@sigill.intra.peff.net>
- <20120514211324.GA11578@sigill.intra.peff.net>
- <20120515015437.GA13833@sigill.intra.peff.net>
- <7vtxzhfpv9.fsf@alter.siamese.dyndns.org>
- <20120515174724.GA329@sigill.intra.peff.net>
- <7vsjf1e2n7.fsf@alter.siamese.dyndns.org>
+Subject: [PATCH 10/13] ident: report passwd errors with a more friendly
+ message
+Date: Fri, 18 May 2012 19:21:07 -0400
+Message-ID: <20120518232106.GJ30031@sigill.intra.peff.net>
+References: <20120518230528.GA30510@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: Angus Hammond <angusgh@gmail.com>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat May 19 01:21:12 2012
+X-From: git-owner@vger.kernel.org Sat May 19 01:21:47 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SVWTv-0000UB-3g
-	for gcvg-git-2@plane.gmane.org; Sat, 19 May 2012 01:21:11 +0200
+	id 1SVWUS-0001CC-Jg
+	for gcvg-git-2@plane.gmane.org; Sat, 19 May 2012 01:21:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S966739Ab2ERXVF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 May 2012 19:21:05 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:48736
+	id S967304Ab2ERXVQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 May 2012 19:21:16 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:48794
 	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1946569Ab2ERXFb (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 May 2012 19:05:31 -0400
-Received: (qmail 7494 invoked by uid 107); 18 May 2012 23:05:55 -0000
+	id S966775Ab2ERXVK (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 May 2012 19:21:10 -0400
+Received: (qmail 7888 invoked by uid 107); 18 May 2012 23:21:33 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 18 May 2012 19:05:55 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 18 May 2012 19:05:28 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 18 May 2012 19:21:33 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 18 May 2012 19:21:07 -0400
 Content-Disposition: inline
-In-Reply-To: <7vsjf1e2n7.fsf@alter.siamese.dyndns.org>
+In-Reply-To: <20120518230528.GA30510@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197990>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197991>
 
-On Tue, May 15, 2012 at 11:10:36AM -0700, Junio C Hamano wrote:
+When getpwuid fails, we give a cute but cryptic message.
+While it makes sense if you know that getpwuid or identity
+functions are being called, this code is triggered behind
+the scenes by quite a few git commands these days (e.g.,
+receive-pack on a remote server might use it for a reflog;
+the current message is hard to distinguish from an
+authentication error).  Let's switch to something that gives
+a little more context.
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > So it seems to me like a much simpler set of rules would be:
-> >
-> >   1. When reading gecos, always fall back to the username if the gecos
-> >      field is unavailable or blank.
-> >
-> >   2. Always die when the name field is blank. That means we will die
-> >      when you pass in a bogus empty GIT_COMMITTER_NAME (or an empty
-> >      config name), which makes a lot more sense to me than falling back;
-> >      those are bogus requests, not system config problems.  And we won't
-> >      ever have a blank gecos name, because we'll always fall back on the
-> >      username.
-> 
-> That certainly sounds very simple to explain and understand, and I do not
-> offhand think of anything *sane* that would break ;-)
+While we're at it, we can factor out all of the
+cut-and-pastes of the "you don't exist" message into a
+wrapper function. Rather than provide xgetpwuid, let's make
+it even more specific to just getting the passwd entry for
+the current uid. That's the only way we use getpwuid anyway,
+and it lets us make an even more specific error message.
 
-Actually, it does end up breaking. The "error_on_no_name" check wants to
-see the value _before_ the fallback, because it is not just about "do
-not hand out an ident with an empty name", but rather about "do not hand
-out this crappy fallback name when the gecos field is empty".  So we
-cannot do an "always fallback" behavior without breaking that check.
+The current message also fails to mention errno. While the
+usual cause for getpwuid failing is that the user does not
+exist, mentioning errno makes it easier to diagnose these
+problems.  Note that POSIX specifies that errno remain
+untouched if the passwd entry does not exist (but will be
+set on actual errors), whereas some systems will return
+ENOENT or similar for a missing entry. We handle both cases
+in our wrapper.
 
-I ended up avoiding the issue in a different way, as you'll see in patch
-8 below. Here's the series:
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ Documentation/git-commit-tree.txt |  5 -----
+ Documentation/git-var.txt         |  5 -----
+ git-compat-util.h                 |  3 +++
+ ident.c                           | 20 +++++---------------
+ wrapper.c                         | 12 ++++++++++++
+ 5 files changed, 20 insertions(+), 25 deletions(-)
 
-  [01/13]: ident: split setup_ident into separate functions
-  [02/13]: http-push: do not access git_default_email directly
-  [03/13]: fmt-merge-msg: don't use static buffer in record_person
-  [04/13]: move identity config parsing to ident.c
-  [05/13]: move git_default_* variables to ident.c
-  [06/13]: format-patch: use default email for generating message ids
-  [07/13]: fmt_ident: drop IDENT_WARN_ON_NO_NAME code
-  [08/13]: ident: don't write fallback username into git_default_name
-  [09/13]: drop length limitations on gecos-derived names and emails
-  [10/13]: ident: report passwd errors with a more friendly message
-  [11/13]: ident: use full dns names to generate email addresses
-  [12/13]: ident: use a dynamic strbuf in fmt_ident
-  [13/13]: format-patch: refactor get_patch_filename
-
-Patches 2, 8, and 11 fix actual bugs. The rest of it is refactoring and
-cleanup; here's the diffstat:
-
- Documentation/git-commit-tree.txt |    9 --
- Documentation/git-var.txt         |    9 --
- builtin/fmt-merge-msg.c           |    8 +-
- builtin/log.c                     |   45 ++------
- cache.h                           |   12 +-
- config.c                          |   24 +----
- environment.c                     |    3 -
- git-compat-util.h                 |    3 +
- http-push.c                       |    2 +-
- ident.c                           |  213 ++++++++++++++++---------------------
- log-tree.c                        |   19 ++--
- log-tree.h                        |    4 +-
- wrapper.c                         |   12 ++
- 13 files changed, 142 insertions(+), 221 deletions(-)
-
--Peff
+diff --git a/Documentation/git-commit-tree.txt b/Documentation/git-commit-tree.txt
+index eb12b2d..eb8ee99 100644
+--- a/Documentation/git-commit-tree.txt
++++ b/Documentation/git-commit-tree.txt
+@@ -88,11 +88,6 @@ for one to be entered and terminated with ^D.
+ 
+ include::date-formats.txt[]
+ 
+-Diagnostics
+------------
+-You don't exist. Go away!::
+-    The passwd(5) gecos field couldn't be read
+-
+ Discussion
+ ----------
+ 
+diff --git a/Documentation/git-var.txt b/Documentation/git-var.txt
+index 3f703e3..67edf58 100644
+--- a/Documentation/git-var.txt
++++ b/Documentation/git-var.txt
+@@ -59,11 +59,6 @@ ifdef::git-default-pager[]
+     The build you are using chose '{git-default-pager}' as the default.
+ endif::git-default-pager[]
+ 
+-Diagnostics
+------------
+-You don't exist. Go away!::
+-    The passwd(5) gecos field couldn't be read
+-
+ SEE ALSO
+ --------
+ linkgit:git-commit-tree[1]
+diff --git a/git-compat-util.h b/git-compat-util.h
+index ed11ad8..5bd9ad7 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -595,4 +595,7 @@ int rmdir_or_warn(const char *path);
+  */
+ int remove_or_warn(unsigned int mode, const char *path);
+ 
++/* Get the passwd entry for the UID of the current process. */
++struct passwd *xgetpwuid_self(void);
++
+ #endif
+diff --git a/ident.c b/ident.c
+index 73a06a1..5aec073 100644
+--- a/ident.c
++++ b/ident.c
+@@ -100,12 +100,8 @@ static void copy_email(const struct passwd *pw, struct strbuf *email)
+ 
+ const char *ident_default_name(void)
+ {
+-	if (!git_default_name.len) {
+-		struct passwd *pw = getpwuid(getuid());
+-		if (!pw)
+-			die("You don't exist. Go away!");
+-		copy_gecos(pw, &git_default_name);
+-	}
++	if (!git_default_name.len)
++		copy_gecos(xgetpwuid_self(), &git_default_name);
+ 	return git_default_name.buf;
+ }
+ 
+@@ -117,12 +113,8 @@ const char *ident_default_email(void)
+ 		if (email && email[0]) {
+ 			strbuf_addstr(&git_default_email, email);
+ 			user_ident_explicitly_given |= IDENT_MAIL_GIVEN;
+-		} else {
+-			struct passwd *pw = getpwuid(getuid());
+-			if (!pw)
+-				die("You don't exist. Go away!");
+-			copy_email(pw, &git_default_email);
+-		}
++		} else
++			copy_email(xgetpwuid_self(), &git_default_email);
+ 	}
+ 	return git_default_email.buf;
+ }
+@@ -303,9 +295,7 @@ const char *fmt_ident(const char *name, const char *email,
+ 				fputs(env_hint, stderr);
+ 			die("empty ident %s <%s> not allowed", name, email);
+ 		}
+-		pw = getpwuid(getuid());
+-		if (!pw)
+-			die("You don't exist. Go away!");
++		pw = xgetpwuid_self();
+ 		name = pw->pw_name;
+ 	}
+ 
+diff --git a/wrapper.c b/wrapper.c
+index 6ccd059..b5e33e4 100644
+--- a/wrapper.c
++++ b/wrapper.c
+@@ -402,3 +402,15 @@ int remove_or_warn(unsigned int mode, const char *file)
+ {
+ 	return S_ISGITLINK(mode) ? rmdir_or_warn(file) : unlink_or_warn(file);
+ }
++
++struct passwd *xgetpwuid_self(void)
++{
++	struct passwd *pw;
++
++	errno = 0;
++	pw = getpwuid(getuid());
++	if (!pw)
++		die(_("unable to look up current user in the passwd file: %s"),
++		    errno ? strerror(errno) : _("no such user"));
++	return pw;
++}
+-- 
+1.7.10.1.16.g53a707b
