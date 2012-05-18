@@ -1,117 +1,93 @@
-From: Thomas Rast <trast@inf.ethz.ch>
-Subject: Re: [PATCH] rebase -i: avoid checking out $branch when possible
-Date: Fri, 18 May 2012 10:27:53 +0200
-Message-ID: <87obplhp12.fsf@thomas.inf.ethz.ch>
-References: <fee3225e29915e1b61e29a5d2fe37db20fa4b596.1334933837.git.trast@student.ethz.ch>
-	<xmqqwr5atn89.fsf@junio.mtv.corp.google.com>
-	<87lilqjstf.fsf@thomas.inf.ethz.ch>
-	<xmqqmx66mamc.fsf@junio.mtv.corp.google.com>
-	<CANMpiOQPefL_FNocLJ=pZyAb1hZ7bEvLk6frU3xme6VQrSDD2A@mail.gmail.com>
-	<7vwr4de5j8.fsf@alter.siamese.dyndns.org>
+From: Jon Seymour <jon.seymour@gmail.com>
+Subject: git submodule: git sync does the wrong thing if the origin URL is relative
+Date: Fri, 18 May 2012 18:44:28 +1000
+Message-ID: <CAH3Anrr6mLVedBPcgfVwy=5KRjUgdp5W8P0DQ3qaX_UjH-npDw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Cc: Shezan Baig <shezbaig.wk@gmail.com>,
-	Thomas Rast <trast@student.ethz.ch>, <git@vger.kernel.org>,
-	Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri May 18 10:29:07 2012
+Content-Type: text/plain; charset=UTF-8
+Cc: Jens Lehmann <Jens.Lehmann@web.de>
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri May 18 10:44:39 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SVIYZ-0005Mi-V2
-	for gcvg-git-2@plane.gmane.org; Fri, 18 May 2012 10:29:04 +0200
+	id 1SVIne-0002iN-TA
+	for gcvg-git-2@plane.gmane.org; Fri, 18 May 2012 10:44:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762254Ab2ERI2c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 May 2012 04:28:32 -0400
-Received: from edge20.ethz.ch ([82.130.99.26]:20960 "EHLO edge20.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1761613Ab2ERI16 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 May 2012 04:27:58 -0400
-Received: from CAS12.d.ethz.ch (172.31.38.212) by edge20.ethz.ch
- (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.2.298.4; Fri, 18 May
- 2012 10:27:56 +0200
-Received: from thomas.inf.ethz.ch.ethz.ch (217.235.93.211) by CAS12.d.ethz.ch
- (172.31.38.212) with Microsoft SMTP Server (TLS) id 14.1.355.2; Fri, 18 May
- 2012 10:27:56 +0200
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Originating-IP: [217.235.93.211]
+	id S965279Ab2ERIod (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 May 2012 04:44:33 -0400
+Received: from mail-we0-f174.google.com ([74.125.82.174]:65453 "EHLO
+	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S964847Ab2ERIo3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 May 2012 04:44:29 -0400
+Received: by weyu7 with SMTP id u7so1660176wey.19
+        for <git@vger.kernel.org>; Fri, 18 May 2012 01:44:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:cc:content-type;
+        bh=uC+HcZstnRVgVSUiyjI4CYN6hNr+p//iIDrfqKzIVFM=;
+        b=btkzNmK70N7sdEyWeJ9BFKWAqJCeMAD/bM1J1E5V5pUej5ss3cFZFE3RGmjE6gk2V9
+         vtMhMjIVdq7Dcv+2kSgBqZz8thp1vLX4mXNeBgla78zUoJVpYhyRA24YA9BB4Amw6LQg
+         uMjDgVmLSLCx+GSpbjU5sLRSIO0tKUaUqm9a9pbpRVV/1HFIou5wErIa9epUxDTs/pmL
+         +ghcvaRlMINZKZ3tqbx+zVrIJvLSWbpBvKAIfprkdyTkAtAPG9k+sfF7NQg3dlmw+h8+
+         J6abEOvJsf0y75+3gri/TZH53hUoKc194uhpPgnciU6Q+G2nX/PXSATT2W5MNY5hjYa6
+         aqjw==
+Received: by 10.180.75.241 with SMTP id f17mr26050499wiw.11.1337330668081;
+ Fri, 18 May 2012 01:44:28 -0700 (PDT)
+Received: by 10.180.83.131 with HTTP; Fri, 18 May 2012 01:44:28 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197942>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197943>
 
-Junio C Hamano <gitster@pobox.com> writes:
+The following is a test case that demonstrates a problem with the
+heuristic that git sync uses to update the origin URL of submodules in
+the case that the origin URL of the super module itself is a relative
+URL
 
-> Shezan Baig <shezbaig.wk@gmail.com> writes:
->
->> Just wondering if this patch is going to be available in an upcoming
->> version of git?
->
-> As we can see from the exchange you quoted, I do not think we have nailed
-> the details of desired behaviour in the updated code down.
->
-> Thomas, how would you want to proceed?
+I think what it should be doing is prefixing the relative path between
+the submodule and the supermodule to the supermodules origin URL as
+well as doing what it currently does with the suffix.
 
-Hrm.  You wrote:
+Does anyone disagree?
 
-> The discrepancy in the "abort" case may come only in the three cases:
-> 
->  - EDITOR is pointing at something funny, [let's do the checkout to be
->    safe for scripts]
+jon.
 
-Agreed.
+--
 
->  - The user told us not to do the rebase by making insn sheet empty.  In
->    other words, this is "aborting the entire rebase", so ideally it
->    should come back to the state before the user ran "git rebase"
->    command (i.e. where she was before we switched to <branch>).
-> 
->    I do not think this ideal behaviour is something neither batch or
->    interactive rebase has traditionally implemented, but I can see how
->    we can sell this as a bugfix to the end users.
-
-That's a convincing argument, so let's make it so.
-
->  - It turns out that everything is already contained and there is
->    nothing to apply, i.e. after this sequence:
-> 
-> 	git checkout branch
-> 	git checkout $onto_or_merge_base_between_base_and_branch
-> 
->    we find out that "git cherry $onto_or_merge_base branch" is empty.
-
-Is there a command missing here?  This alone does not make them the
-same, perhaps you meant some resetting.
-
-I'll assume that you meant a case where the user is *not* on branch, but
-base/onto is an ancestor of the branch, e.g., in a sequence
-
-  git checkout base
-  git reset --hard branch~5
-  # now branch..base is empty
-  git rebase base branch
-
-the rebase will not do anything unless forced.  Similarly for the case
-where base==branch.  And then
-
->    Because you will be one commit ahead of $onto_or_merge_base if "git
->    cherry" were to give one commit to be replayed, I think it is
->    logically correct if you stayed at the $onto_or_merge_base without
->    checking out <branch>.  In other words, abort-with-checkout is not
->    ideal for this case; we would want to just abort in this case.
-
-This would be hard to sell, because a script that runs
-
-  git rebase base branch
-
-could reasonably assume that after the rebase, the current branch is
-'branch', unless some error occurred.  And we'd be breaking that.
-
-Or am I missing the point of your reasoning?
-
--- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+#!/bin/sh
+mkdir work &&
+cd work &&
+rm -rf public &&
+rm -rf checkout &&
+rm -rf private &&
+mkdir public &&
+mkdir checkout &&
+mkdir -p private/progenitor &&
+cd private/progenitor &&
+git init &&
+mkdir child &&
+pushd child &&
+git init &&
+:> .gitignore &&
+git add .gitignore &&
+git commit -m "initial child" &&
+popd &&
+git submodule add ../progenitor/child ./child &&
+git commit -m "initial progenitor" &&
+git clone --bare . ../../public/progenitor.git &&
+git clone --bare child ../../public/progenitor/child.git &&
+cd ../../checkout &&
+git clone ../public/progenitor.git progenitor &&
+cd progenitor &&
+git submodule init &&
+git submodule update --rebase &&
+git fetch origin &&
+git submodule foreach git fetch origin &&
+git remote set-url origin ../../public/progenitor.git &&
+git submodule sync &&
+git submodule update --rebase &&
+git fetch origin &&
+git submodule foreach git fetch origin
