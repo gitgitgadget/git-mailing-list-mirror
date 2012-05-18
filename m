@@ -1,57 +1,63 @@
-From: Ralf Thielow <ralf.thielow@googlemail.com>
-Subject: Re: [PATCH] remote: fix typo
-Date: Fri, 18 May 2012 19:16:02 +0200
-Message-ID: <CAN0XMOJoW0jZSYYZv0rWqJTEbCRBjDogq3iJ96SeYnpU9_Ab5g@mail.gmail.com>
-References: <1337359561-17337-1-git-send-email-ralf.thielow@googlemail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] archive: simplify refname handling
+Date: Fri, 18 May 2012 11:22:14 -0700
+Message-ID: <xmqq1umh4aeh.fsf@junio.mtv.corp.google.com>
+References: <4FB5DAE5.6020307@lsrfire.ath.cx>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: pclouds@gmail.com, git@vger.kernel.org,
-	Ralf Thielow <ralf.thielow@googlemail.com>
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Fri May 18 19:16:27 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git discussion list <git@vger.kernel.org>,
+	Jeff King <peff@peff.net>
+To: =?utf-8?Q?Ren=C3=A9?= Scharfe <rene.scharfe@lsrfire.ath.cx>
+X-From: git-owner@vger.kernel.org Fri May 18 20:22:28 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SVQmw-00008g-5V
-	for gcvg-git-2@plane.gmane.org; Fri, 18 May 2012 19:16:26 +0200
+	id 1SVRoo-0002M2-I8
+	for gcvg-git-2@plane.gmane.org; Fri, 18 May 2012 20:22:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932999Ab2ERRQR convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 18 May 2012 13:16:17 -0400
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:42440 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933048Ab2ERRQD convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 18 May 2012 13:16:03 -0400
-Received: by yhmm54 with SMTP id m54so3102726yhm.19
-        for <git@vger.kernel.org>; Fri, 18 May 2012 10:16:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=jDwgNV23/6bd3RjYEO6R3P/y/QX13LXlBexRXQtfjK0=;
-        b=p8w9MvbhuDhe17PHUWkqgrjouZMVGS1H1vkIJV7MmxPCOf4yl9wdf3dEbCxFOMwW4C
-         8v5soRymNggaVFBAg6eWDu3wne9+UbQ4tY+JQgK8dZgv7yo5w9AViS9X8kE/mwejdQhd
-         aV2jK32hp2ojq0/YAym5XfIWYVSl0mCDBTH7pwpuBNO3mKRDt7G1p4Jv/l84kfajAzq0
-         KkAzxCEJOfEK85fzp5ZVJ87r9Ib8bKt6hHKCKwdSQaOy3UT9n3ehunZMOo9N15o/Q3qb
-         YUD8b3xxGA9sA+USHJT28eSfGxel+5z1xSWswn+r3duP7vng1YLyEvZcEsJUpZ/G/uoR
-         +BuQ==
-Received: by 10.236.109.229 with SMTP id s65mr13399196yhg.10.1337361362340;
- Fri, 18 May 2012 10:16:02 -0700 (PDT)
-Received: by 10.146.218.6 with HTTP; Fri, 18 May 2012 10:16:02 -0700 (PDT)
-In-Reply-To: <1337359561-17337-1-git-send-email-ralf.thielow@googlemail.com>
+	id S966456Ab2ERSWT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 May 2012 14:22:19 -0400
+Received: from mail-lb0-f202.google.com ([209.85.217.202]:38411 "EHLO
+	mail-lb0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S966445Ab2ERSWR (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 May 2012 14:22:17 -0400
+Received: by lbbgp10 with SMTP id gp10so190222lbb.1
+        for <git@vger.kernel.org>; Fri, 18 May 2012 11:22:15 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type:x-gm-message-state;
+        bh=+hqx90FkX5OOwNMUbG5WtE5iOLSD4r1g435zCxYw8kw=;
+        b=b42DVQP6J4+iQO8KEr6nm+XcpYulmjNTmRztAmyAd6uoG5tNlsjte4FTqRjoKJBI/y
+         2MCwigJVAMRab1XsiMIHJkPlFp1eEub7rvyCBWYCc3kR8rPOIT5pWjS5krD5DDCdvN8m
+         rvqrFWwBzdGqWpkmnG/PZtvyYixF+WlaP/TuBBUUCYVjuEz5ngii9J1xa1WZrfrg0P/c
+         7E60KFLv9IUO39jD97+LDdCMMDZfytJegoHAEgPOdDR+5sGu5s/jn/4o6hfN/y4/mo0n
+         YGxUDRsuAp9zAEn97BonyA0m1HoyEISo42pjh4d0fzWxgF/WboxQZNKA4yKTnsxGkrPm
+         r1tg==
+Received: by 10.14.199.133 with SMTP id x5mr2544242een.7.1337365335703;
+        Fri, 18 May 2012 11:22:15 -0700 (PDT)
+Received: by 10.14.199.133 with SMTP id x5mr2544236een.7.1337365335634;
+        Fri, 18 May 2012 11:22:15 -0700 (PDT)
+Received: from hpza9.eem.corp.google.com ([74.125.121.33])
+        by gmr-mx.google.com with ESMTPS id b16si9403087eeg.3.2012.05.18.11.22.15
+        (version=TLSv1/SSLv3 cipher=AES128-SHA);
+        Fri, 18 May 2012 11:22:15 -0700 (PDT)
+Received: from junio.mtv.corp.google.com (junio.mtv.corp.google.com [172.27.69.24])
+	by hpza9.eem.corp.google.com (Postfix) with ESMTP id 70CCD5C0050;
+	Fri, 18 May 2012 11:22:15 -0700 (PDT)
+Received: by junio.mtv.corp.google.com (Postfix, from userid 110493)
+	id BF4BCE1772; Fri, 18 May 2012 11:22:14 -0700 (PDT)
+In-Reply-To: <4FB5DAE5.6020307@lsrfire.ath.cx> (=?utf-8?Q?=22Ren=C3=A9?=
+ Scharfe"'s message of
+	"Fri, 18 May 2012 07:15:17 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1 (gnu/linux)
+X-Gm-Message-State: ALoCoQkDRWDFxUMVLRw87qzqsjz1z7Wlop4NcTR9aNMk6nwQ2+rS03Ye83Y4LuGFkK0wI+lojo+pzgAhLCMkRjcMUFm+0brls9p3DcZ4mZGirlGHNu9b3+igKT/sD48O1VdfjUbM+qZy8DrlHLksZVALLGYcE+FTiA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197963>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197964>
 
-On Fri, May 18, 2012 at 6:46 PM, Ralf Thielow
-<ralf.thielow@googlemail.com> wrote:
-> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 warning(_("Not updating non-default fetch respec\n"
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 warning(_("Not updating non-default fetch refspec\n"
-
-Oops, probably it's not a typo, sorry
+Looks good to me.  Thanks.
