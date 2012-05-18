@@ -1,83 +1,98 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] index-pack: use streaming interface on large blobs (most of the time)
-Date: Fri, 18 May 2012 15:20:15 -0700
-Message-ID: <xmqqzk95168w.fsf@junio.mtv.corp.google.com>
-References: <1337172630-23679-1-git-send-email-pclouds@gmail.com>
-	<1337172630-23679-2-git-send-email-pclouds@gmail.com>
+From: Stepan Koltsov <stepan.koltsov@jetbrains.com>
+Subject: Re: bugreport: stgit cannot export empty patch
+Date: Sat, 19 May 2012 02:26:08 +0400
+Message-ID: <CAPk5vtyc1gHB=31CPDpk=s4QE+Wtp-8wMJDuV1F=R11MfERdTw@mail.gmail.com>
+References: <CAPk5vtzpUHgL_dfJLJHgKsaNPZodx1jbTRQpRdoj01RRPRoBfg@mail.gmail.com>
+	<xmqqboll2nl0.fsf@junio.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Sat May 19 00:20:27 2012
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat May 19 00:26:35 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SVVX6-0003Cs-TA
-	for gcvg-git-2@plane.gmane.org; Sat, 19 May 2012 00:20:25 +0200
+	id 1SVVd2-0003F2-G3
+	for gcvg-git-2@plane.gmane.org; Sat, 19 May 2012 00:26:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965239Ab2ERWUS convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 18 May 2012 18:20:18 -0400
-Received: from mail-gg0-f202.google.com ([209.85.161.202]:40186 "EHLO
-	mail-gg0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756477Ab2ERWUQ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 18 May 2012 18:20:16 -0400
-Received: by ggeh3 with SMTP id h3so428341gge.1
-        for <git@vger.kernel.org>; Fri, 18 May 2012 15:20:16 -0700 (PDT)
+	id S1030289Ab2ERW0Z convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 18 May 2012 18:26:25 -0400
+Received: from mail1.intellij.net ([46.137.178.215]:53144 "EHLO
+	mail1.intellij.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1030334Ab2ERW0L convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 18 May 2012 18:26:11 -0400
+Received: (qmail 4283 invoked by uid 89); 18 May 2012 22:26:09 -0000
+Received: by simscan 1.1.0 ppid: 4225, pid: 4273, t: 0.1235s
+         scanners: regex: 1.1.0 clamav: 0.97/m:53/d:13443
+Received: from unknown (HELO mail-gg0-f174.google.com) (Stepan.Koltsov@jetbrains.com@209.85.161.174)
+  by ip-10-48-137-145.eu-west-1.compute.internal with ESMTPA; 18 May 2012 22:26:09 -0000
+Received: by gglu4 with SMTP id u4so3341671ggl.19
+        for <git@vger.kernel.org>; Fri, 18 May 2012 15:26:08 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
-        h=from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type:content-transfer-encoding
-         :x-gm-message-state;
-        bh=uTxKZ4Fj8lbdVGgvXVaP2vRMOiYFgLBCFyFdxirpIik=;
-        b=cHM0Y4X1Tknait40SPnDEnwzSfRKWNUoHZ7AmM45YKDdsxx5cHnulJ0JOh2GHkYmtX
-         UnarwLywkCDeQeSQUi82INoT/7BZvs9YA06qUNUSdgTW9ycgcRqFnU3vHwWYqu/wKytN
-         M5Rk9Mns4Bg/LLZtsj3K8EJ+AKVglQmcKEdMHVfhY/6TCGJ3ElmvTX6BEA7AGcZf6coq
-         rF5HKe/V8z6J6NE2Ec75oFKTSMritWjvKhHAeCclnTuO7zVOyYSH7DzIqgdaDNmVVbPX
-         yDlCa/AwE6SGqkQHj5t71RUP6w5WA4nEFBKkMqP9Vs6ecZTcECTl2V1R+9PdIyGMFF8J
-         /HiA==
-Received: by 10.100.246.30 with SMTP id t30mr2275099anh.17.1337379616086;
-        Fri, 18 May 2012 15:20:16 -0700 (PDT)
-Received: by 10.100.246.30 with SMTP id t30mr2275094anh.17.1337379616026;
-        Fri, 18 May 2012 15:20:16 -0700 (PDT)
-Received: from wpzn4.hot.corp.google.com (216-239-44-65.google.com [216.239.44.65])
-        by gmr-mx.google.com with ESMTPS id a57si8966565yhh.5.2012.05.18.15.20.16
-        (version=TLSv1/SSLv3 cipher=AES128-SHA);
-        Fri, 18 May 2012 15:20:16 -0700 (PDT)
-Received: from junio.mtv.corp.google.com (junio.mtv.corp.google.com [172.27.69.24])
-	by wpzn4.hot.corp.google.com (Postfix) with ESMTP id E5DE21E004D;
-	Fri, 18 May 2012 15:20:15 -0700 (PDT)
-Received: by junio.mtv.corp.google.com (Postfix, from userid 110493)
-	id 91E70E1772; Fri, 18 May 2012 15:20:15 -0700 (PDT)
-In-Reply-To: <1337172630-23679-2-git-send-email-pclouds@gmail.com>
- (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Wed, 16
- May 2012 19:50:30 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1 (gnu/linux)
-X-Gm-Message-State: ALoCoQntK6m0U0W1wVeAV2W0g8vT90F7VAgOUOdXdzSdTZtQPmGszWw5K2cm4uprrkvB6JHh7Y9LeFaMJjjUw9WmvdahBVMig6LYcD+mZ7aTR9EzLmIfKJpg9aoXZgsEUWOoUuJYjNj7o4Ksm4ktQEHJu8m6Gsl7KA==
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding:x-gm-message-state;
+        bh=YrE43zzvTDTsNCBpVRtK7VkSKmWcLCW4Ax0HOxK/tJ4=;
+        b=LnnRvvNi1oh80GXN6QimHgXG+mVeUQBj2DcQu2ycsLpkNADw4Drn3cVlalwTStr9FM
+         lVLXM8aXproPsnpRhJI8bCulrSBGRsYMfYA3BI3yhP0VozXo98PntRbLJQgehA1DOS5P
+         HiVegQa/5cbglYVonZ2sw0DfDjwGkz/TimhkCQjCihcHVd09vJoRCF7OydiPSfK6SJ7i
+         hLK6Il58XVGw8NJQLSmJh90nHU2ahtcmkQASCqMUogrlRnssHFr3xaYWnYn2wx/l3no4
+         srwaZyEGyyDvKyn3C6a80we3LgnfqKELAQssbNEqZYmyz5+N63dOzBMFJtztweYpKUcB
+         blEg==
+Received: by 10.236.115.163 with SMTP id e23mr11684355yhh.95.1337379968101;
+ Fri, 18 May 2012 15:26:08 -0700 (PDT)
+Received: by 10.147.115.3 with HTTP; Fri, 18 May 2012 15:26:08 -0700 (PDT)
+In-Reply-To: <xmqqboll2nl0.fsf@junio.mtv.corp.google.com>
+X-Gm-Message-State: ALoCoQnNEEITEriIs7Q/lFPdrsyWVcuxRfhurHU3eSN39kUs8lk3aM5iFCmE+qMwo0M0ACJdNmiA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197978>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197979>
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
-
-> unpack_raw_entry() will not allocate and return decompressed blobs if
-> they are larger than core.bigFileThreshold.
+On Sat, May 19, 2012 at 1:20 AM, Junio C Hamano <gitster@pobox.com> wro=
+te:
+> Stepan Koltsov <stepan.koltsov@jetbrains.com> writes:
 >
-> The blob content is needed by sha1_object() in some cases. When we do
-> need the blob content, we put it back in core with
-> get_data_from_pack(). However we rarely need that in pratice.
+>> stgit fails to export empty patches:
+>>
+>> % stg new empty-patch -m 'asasas'
+>> Now at patch "empty-patch"
+>> % stg export empty-patch
+>> Checking for changes in the working directory ... done
+>> fatal: unrecognized input
+>> stg export: git failed with code 128
+>> zsh: exit 2 =C2=A0 =C2=A0 stg export empty-patch
+>>
+>> % stg --version
+>> Stacked GIT 0.16-3-g67cf
+>> git version 1.7.9.1
+>> Python version 2.7.1 (r271:86832, Jul 31 2011, 19:30:53)
+>> [GCC 4.2.1 (Based on Apple Inc. build 5658) (LLVM build 2335.15.00)]
 >
-> The first case is when we find an in-repo blob with the same SHA-1. W=
-e
-> need to do collision test, byte-on-byte. Normally (e.g. in
-> fetch/pull/clone) this does not happen because git avoid to send
-> objects that client already has.
+> I don't use (or read the sources to) StGIT, but isn't the whole point=
+ of
+> "stg export" to "convert your StGIT patches into patch files"? =C2=A0=
+=46or an
+> empty commit, what is an appropriate output? =C2=A0IOW, is it reasona=
+ble to
+> have an empty commit in your history if you are planning to "stg expo=
+rt"
+> it?
 
-Perhaps the codepath that performs the byte-for-byte comparison can be
-taught to stream from the received pack data and whatever was already
-in the repository, using the streaming interface?  That way you do not
-have to hold all of the both objects at the same time in core, no?
+I'm executing stg export to back up. If series contains empty patches,
+backup fails.
+
+Scenario: I started some work, created new empty patch, but did
+nothing, decided to go home, and do backup of the whole series before
+leaving. Backup fails.
+
+AFAIU there's no simpler way to backup stg series than executing
+
+% stg export `stg series --noprefix`
+
+--=20
+Stepa
