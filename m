@@ -1,69 +1,78 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCH v1] Documentation: git-rev-parse: clarify that --git-dir
- does not necessarily show relative paths
-Date: Fri, 18 May 2012 17:23:00 +0700
-Message-ID: <CACsJy8DNMcA_FKbKAYMvr19JqtsDy9a5nGBg8UoiAnOqunV2ow@mail.gmail.com>
-References: <20120517182304.GA14367@burratino> <1337333004-23164-1-git-send-email-jon.seymour@gmail.com>
+From: "Torne (Richard Coles)" <torne@google.com>
+Subject: git grep -F doesn't behave like grep -F?
+Date: Fri, 18 May 2012 12:00:17 +0100
+Message-ID: <CAEV-rjc0PtuQZei95_24=Ou=mZZxA0Lsr6boXGrGy3z40otkNQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=windows-1252
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, gitster@pobox.com, jrnieder@gmail.com
-To: Jon Seymour <jon.seymour@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 18 12:23:40 2012
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri May 18 13:00:50 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SVKLS-00027I-Mx
-	for gcvg-git-2@plane.gmane.org; Fri, 18 May 2012 12:23:39 +0200
+	id 1SVKvO-00055C-21
+	for gcvg-git-2@plane.gmane.org; Fri, 18 May 2012 13:00:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S967943Ab2ERKXd convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 18 May 2012 06:23:33 -0400
-Received: from mail-wg0-f42.google.com ([74.125.82.42]:39737 "EHLO
-	mail-wg0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S967636Ab2ERKXc convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 18 May 2012 06:23:32 -0400
-Received: by wgbds11 with SMTP id ds11so722204wgb.1
-        for <git@vger.kernel.org>; Fri, 18 May 2012 03:23:30 -0700 (PDT)
+	id S964827Ab2ERLAX convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 18 May 2012 07:00:23 -0400
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:43128 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752718Ab2ERLAS convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 18 May 2012 07:00:18 -0400
+Received: by yenm10 with SMTP id m10so2662209yen.19
+        for <git@vger.kernel.org>; Fri, 18 May 2012 04:00:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=1lIOeM1Hs+dgTIuasoz08Ffqzq3mEWxEgBLJ81QGR8E=;
-        b=fxyw/Foq9R12GElbSuOlP1SGIVdjxwwrMst2W6rkjK19J56CW+0/JDALXZ8UIyJUAL
-         n9YxgREawz7QQsf+T5g5Y9K8qliRvY4hLjjx8x+6ne1zeROPlRPlIpIh18k4vG5MhAYL
-         54YwePSYf1QBoqp2oVL/gkNxlDRCWbOManCriYJTBcJMmb016ab/79zR2e7FkSNvtj3A
-         ppwTu24PPFEcg9tL9hDPNB4to2J5fbPzY1opis6wXO6zrW7IjSqU4WGji13blBRNrcgL
-         6RVjtZTXvMPZZYgnS0Jp5d14I3PwWS51kRisYyX4FBCgCv/ztUzn6wPblPNvjQbRmpYI
-         0zoQ==
-Received: by 10.216.227.214 with SMTP id d64mr6596786weq.93.1337336610587;
- Fri, 18 May 2012 03:23:30 -0700 (PDT)
-Received: by 10.223.64.208 with HTTP; Fri, 18 May 2012 03:23:00 -0700 (PDT)
-In-Reply-To: <1337333004-23164-1-git-send-email-jon.seymour@gmail.com>
+        d=google.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:content-type
+         :content-transfer-encoding:x-system-of-record;
+        bh=nAaLsYRFSjb+OYIQna67NIRy3X0uiT5DOOq/I62xv68=;
+        b=XNtK+WB4QZTC7NzSj2AuT8dhG8J98hCr+idUXMwwQgSuKM2fmfSj7od9C2Q2r/7362
+         K7VwgODuh/bVO+2GGq0v4N2KIKu6SfcfzponA5zlprfrZtp0D8WWS6rDRPKf3PlIDU4z
+         LNsGsJPf0HOJGAYBpaHYbNwdH78qcydtAYYAoBjyELEh4pfwzc7ZQ8XPFaGWNZ3ZVmoh
+         tjyJjR4llCDSxTDmGNZFKAe8KmormzgnMozWVpGjHNj8w3TREQoj5O3bPjixSCSNzd2O
+         LzFI5tKoubMOiBYnPgjgspXXMVzsQBI75PnpYYBQc2aiEnDRTTE7vtNUE54gu5ireL3f
+         FCBQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:content-type
+         :content-transfer-encoding:x-system-of-record:x-gm-message-state;
+        bh=nAaLsYRFSjb+OYIQna67NIRy3X0uiT5DOOq/I62xv68=;
+        b=mVSFRq5LzPcs6lotSf0KlFWA/JVlt0tnqBiPFp5H4u6zI11ilK59qfSv3Eg76Z1GL3
+         3zflaPA81X+Qj8amzxSlFPda/Rg3SPKeCxTxq/0Srou1iRVH8cWZpdqoEa7Pk4szfOFU
+         dKtBP8DqqS2/Lc+bDDB1RF2UvJFP5VaxPK5VO2zplY1YDQA8976siQP0hmI1GgZmzTNH
+         NYFyuUGkUs4Bepsj6wIOYmzyC+nT8UsfnA94oXC5BhwUSFBzrOo8xoXcpi7Rc21zojXx
+         JDVhL2yRO0f2Z+YJVX6OOSedr94j0/N2rySbRPkHqE7VklNUiCe5Bu44SOPmrCCg5FL+
+         iyOg==
+Received: by 10.42.77.69 with SMTP id h5mr6678248ick.44.1337338817259;
+        Fri, 18 May 2012 04:00:17 -0700 (PDT)
+Received: by 10.42.77.69 with SMTP id h5mr6678242ick.44.1337338817115; Fri, 18
+ May 2012 04:00:17 -0700 (PDT)
+Received: by 10.231.111.131 with HTTP; Fri, 18 May 2012 04:00:17 -0700 (PDT)
+X-System-Of-Record: true
+X-Gm-Message-State: ALoCoQn33dMynqZ/0KoTNlRg3iCgbNedMl+I15Y/RGReY+Bq6Hao5wfW3qEtZL+hAq/IkOmKbtc1qTnl2F+jl1ZERuW0G4d5yxknnfI/zMmTOquMGnLPlcVwnQwZisW9nhufFljYD4bIJJ5uHg3Cro1+BuLdLQjTFA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197946>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197947>
 
-On Fri, May 18, 2012 at 4:23 PM, Jon Seymour <jon.seymour@gmail.com> wr=
-ote:
-> @@ -137,7 +137,8 @@ shown. =C2=A0If the pattern does not contain a gl=
-obbing character (`?`,
->
-> =C2=A0--git-dir::
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0Show `$GIT_DIR` if defined. Otherwise show=
- the path to
-> - =C2=A0 =C2=A0 =C2=A0 the .git directory, relative to the current di=
-rectory.
-> + =C2=A0 =C2=A0 =C2=A0 the .git directory. The path shown, when relat=
-ive, is
-> + =C2=A0 =C2=A0 =C2=A0 relative to the current working directory.
-> =C2=A0+
-> =C2=A0If `$GIT_DIR` is not defined and the current directory
-> =C2=A0is not detected to lie in a git repository or work tree
+Hi folks,
 
-Definitely an improvement. Thanks.
+git grep -F is documented as: "Use fixed strings for patterns (don=92t
+interpret pattern as a regex)."
+
+whereas grep -F is documented as "Interpret PATTERN as a  list  of
+fixed  strings,  separated  by newlines,  any  of  which is to be
+matched."
+
+This accurately describes how they behave, which means that git grep
+-F with a pattern containing newlines never matches anything (at least
+as far as I can see). Is this intentional, or an oversight? The
+ability to grep -F for a list (e.g. the output of another grep) is
+pretty handy...
+
 --=20
-Duy
+Torne (Richard Coles)
+torne@google.com
