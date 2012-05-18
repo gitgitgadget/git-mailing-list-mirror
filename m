@@ -1,105 +1,144 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH 11/13] ident: use full dns names to generate email addresses
-Date: Fri, 18 May 2012 19:22:56 -0400
-Message-ID: <20120518232256.GK30031@sigill.intra.peff.net>
+Subject: [PATCH 12/13] ident: use a dynamic strbuf in fmt_ident
+Date: Fri, 18 May 2012 19:23:39 -0400
+Message-ID: <20120518232338.GL30031@sigill.intra.peff.net>
 References: <20120518230528.GA30510@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: Angus Hammond <angusgh@gmail.com>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat May 19 01:23:21 2012
+X-From: git-owner@vger.kernel.org Sat May 19 01:23:56 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SVWW1-0003Ez-BG
-	for gcvg-git-2@plane.gmane.org; Sat, 19 May 2012 01:23:21 +0200
+	id 1SVWWY-0003x5-7Z
+	for gcvg-git-2@plane.gmane.org; Sat, 19 May 2012 01:23:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1031153Ab2ERXXE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 May 2012 19:23:04 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:48799
+	id S1946515Ab2ERXXo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 May 2012 19:23:44 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:48803
 	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1031019Ab2ERXW7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 May 2012 19:22:59 -0400
-Received: (qmail 7943 invoked by uid 107); 18 May 2012 23:23:23 -0000
+	id S1946489Ab2ERXXm (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 May 2012 19:23:42 -0400
+Received: (qmail 7974 invoked by uid 107); 18 May 2012 23:24:05 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 18 May 2012 19:23:23 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 18 May 2012 19:22:56 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 18 May 2012 19:24:05 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 18 May 2012 19:23:39 -0400
 Content-Disposition: inline
 In-Reply-To: <20120518230528.GA30510@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197992>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197993>
 
-When we construct an email address from the username and
-hostname, we generate the host part of the email with this
-procedure:
-
-  1. add the result of gethostname
-
-  2. if it has a dot, ok, it's fully qualified
-
-  3. if not, then look up the unqualified hostname via
-     gethostbyname; take the domain name of the result and
-     append it to the hostname
-
-Step 3 can actually produce a bogus result, as the name
-returned by gethostbyname may not be related to the hostname
-we fed it (e.g., consider a machine "foo" with names
-"foo.one.example.com" and "bar.two.example.com"; we may have
-the latter returned and generate the bogus name
-"foo.two.example.com").
-
-This patch simply uses the full hostname returned by
-gethostbyname. In the common case that the first part is the
-same as the unqualified hostname, the behavior is identical.
-And in the case that it is not the same, we are much more
-likely to be generating a valid name.
+Now that we accept arbitrary-sized names and email
+addresses, the only remaining limit is in the actual
+formatting of the names into a buffer. The current limit is
+1000 characters, which is not likely to be reached, but
+using a strbuf is one less error condition we have to worry
+about.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
-It takes a pretty odd /etc/hosts setup, but I was able to trigger this
-bug. I doubt anyone is affected in practice, but hey, the right code is
-5 lines shorter (and easier to understand).
-
- ident.c | 13 ++++---------
- 1 file changed, 4 insertions(+), 9 deletions(-)
+ ident.c | 43 +++++++++++++++----------------------------
+ 1 file changed, 15 insertions(+), 28 deletions(-)
 
 diff --git a/ident.c b/ident.c
-index 5aec073..b111e34 100644
+index b111e34..cefb829 100644
 --- a/ident.c
 +++ b/ident.c
-@@ -65,23 +65,18 @@ static void add_domainname(struct strbuf *out)
- {
- 	char buf[1024];
- 	struct hostent *he;
--	const char *domainname;
- 
- 	if (gethostname(buf, sizeof(buf))) {
- 		warning("cannot get host name: %s", strerror(errno));
- 		strbuf_addstr(out, "(none)");
- 		return;
- 	}
--	strbuf_addstr(out, buf);
- 	if (strchr(buf, '.'))
--		return;
--
--	he = gethostbyname(buf);
--	strbuf_addch(out, '.');
--	if (he && (domainname = strchr(he->h_name, '.')))
--		strbuf_addstr(out, domainname + 1);
-+		strbuf_addstr(out, buf);
-+	else if ((he = gethostbyname(buf)) && strchr(he->h_name, '.'))
-+		strbuf_addstr(out, he->h_name);
- 	else
--		strbuf_addstr(out, "(none)");
-+		strbuf_addf(out, "%s.(none)", buf);
+@@ -121,15 +121,6 @@ const char *ident_default_date(void)
+ 	return git_default_date;
  }
  
- static void copy_email(const struct passwd *pw, struct strbuf *email)
+-static int add_raw(char *buf, size_t size, int offset, const char *str)
+-{
+-	size_t len = strlen(str);
+-	if (offset + len > size)
+-		return size;
+-	memcpy(buf + offset, str, len);
+-	return offset + len;
+-}
+-
+ static int crud(unsigned char c)
+ {
+ 	return  c <= 32  ||
+@@ -148,7 +139,7 @@ static int crud(unsigned char c)
+  * Copy over a string to the destination, but avoid special
+  * characters ('\n', '<' and '>') and remove crud at the end
+  */
+-static int copy(char *buf, size_t size, int offset, const char *src)
++static void strbuf_addstr_without_crud(struct strbuf *sb, const char *src)
+ {
+ 	size_t i, len;
+ 	unsigned char c;
+@@ -172,19 +163,19 @@ static int copy(char *buf, size_t size, int offset, const char *src)
+ 	/*
+ 	 * Copy the rest to the buffer, but avoid the special
+ 	 * characters '\n' '<' and '>' that act as delimiters on
+-	 * an identification line
++	 * an identification line. We can only remove crud, never add it,
++	 * so 'len' is our maximum.
+ 	 */
++	strbuf_grow(sb, len);
+ 	for (i = 0; i < len; i++) {
+ 		c = *src++;
+ 		switch (c) {
+ 		case '\n': case '<': case '>':
+ 			continue;
+ 		}
+-		if (offset >= size)
+-			return size;
+-		buf[offset++] = c;
++		sb->buf[sb->len++] = c;
+ 	}
+-	return offset;
++	sb->buf[sb->len] = '\0';
+ }
+ 
+ /*
+@@ -271,9 +262,8 @@ static const char *env_hint =
+ const char *fmt_ident(const char *name, const char *email,
+ 		      const char *date_str, int flag)
+ {
+-	static char buffer[1000];
++	static struct strbuf ident = STRBUF_INIT;
+ 	char date[50];
+-	int i;
+ 	int error_on_no_name = (flag & IDENT_ERROR_ON_NO_NAME);
+ 	int name_addr_only = (flag & IDENT_NO_DATE);
+ 
+@@ -300,19 +290,16 @@ const char *fmt_ident(const char *name, const char *email,
+ 			die("invalid date format: %s", date_str);
+ 	}
+ 
+-	i = copy(buffer, sizeof(buffer), 0, name);
+-	i = add_raw(buffer, sizeof(buffer), i, " <");
+-	i = copy(buffer, sizeof(buffer), i, email);
++	strbuf_reset(&ident);
++	strbuf_addstr_without_crud(&ident, name);
++	strbuf_addstr(&ident, " <");
++	strbuf_addstr_without_crud(&ident, email);
++	strbuf_addch(&ident, '>');
+ 	if (!name_addr_only) {
+-		i = add_raw(buffer, sizeof(buffer), i,  "> ");
+-		i = copy(buffer, sizeof(buffer), i, date);
+-	} else {
+-		i = add_raw(buffer, sizeof(buffer), i, ">");
++		strbuf_addch(&ident, ' ');
++		strbuf_addstr_without_crud(&ident, date);
+ 	}
+-	if (i >= sizeof(buffer))
+-		die("Impossibly long personal identifier");
+-	buffer[i] = 0;
+-	return buffer;
++	return ident.buf;
+ }
+ 
+ const char *fmt_name(const char *name, const char *email)
 -- 
 1.7.10.1.16.g53a707b
