@@ -1,66 +1,74 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: [PATCH] Fix t3411.3 to actually rebase something
-Date: Fri, 18 May 2012 15:48:53 +0200
-Message-ID: <4FB65345.3090201@kdbg.org>
+From: Stephen Haberman <stephen@exigencecorp.com>
+Subject: Re: [PATCH] Fix t3411.3 to actually rebase something
+Date: Fri, 18 May 2012 10:15:32 -0500
+Organization: Exigence
+Message-ID: <20120518101532.0c0c9dcf@sh9>
+References: <4FB65345.3090201@kdbg.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
 Cc: Git Mailing List <git@vger.kernel.org>
-To: Stephen Haberman <stephen@exigencecorp.com>
-X-From: git-owner@vger.kernel.org Fri May 18 15:49:22 2012
+To: Johannes Sixt <j6t@kdbg.org>
+X-From: git-owner@vger.kernel.org Fri May 18 17:15:47 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SVNYT-00017m-W0
-	for gcvg-git-2@plane.gmane.org; Fri, 18 May 2012 15:49:18 +0200
+	id 1SVOu9-00088v-H1
+	for gcvg-git-2@plane.gmane.org; Fri, 18 May 2012 17:15:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933730Ab2ERNs7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 May 2012 09:48:59 -0400
-Received: from bsmtp.bon.at ([213.33.87.14]:30413 "EHLO bsmtp.bon.at"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933714Ab2ERNs6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 May 2012 09:48:58 -0400
-Received: from dx.sixt.local (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTP id 9077510016;
-	Fri, 18 May 2012 15:44:30 +0200 (CEST)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-	by dx.sixt.local (Postfix) with ESMTP id 6274119F6E5;
-	Fri, 18 May 2012 15:48:54 +0200 (CEST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:12.0) Gecko/20120421 Thunderbird/12.0
+	id S1752126Ab2ERPPj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 May 2012 11:15:39 -0400
+Received: from mail-gh0-f174.google.com ([209.85.160.174]:62033 "EHLO
+	mail-gh0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751199Ab2ERPPi (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 May 2012 11:15:38 -0400
+Received: by ghrr11 with SMTP id r11so101950ghr.19
+        for <git@vger.kernel.org>; Fri, 18 May 2012 08:15:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=exigencecorp.com; s=google;
+        h=date:from:to:cc:subject:message-id:in-reply-to:references
+         :organization:x-mailer:mime-version:content-type
+         :content-transfer-encoding;
+        bh=aQWAvjPhrgKj0oas32i8a1jLrD0M0tZmg4xeSd1YDdM=;
+        b=FP+EHvlF5agg6Uf716bqzMIuadcWxIW0Kwy/ABH3CL5Q+9R3TcJrpR6NN0815SAOz8
+         2RPdnqQfuXDZoo3Kej2n1021RyQc3btXc/bo+U2EeeUCmJu4aw2sfFCfuHCUq7L4giB+
+         DY6akIpm2d4FrRAth6DNBznp+e24R+XpI5LDk=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:in-reply-to:references
+         :organization:x-mailer:mime-version:content-type
+         :content-transfer-encoding:x-gm-message-state;
+        bh=aQWAvjPhrgKj0oas32i8a1jLrD0M0tZmg4xeSd1YDdM=;
+        b=blsElmzNkQLHZJ8Z7CWu+hz0nuZtmlJFafhfB9GblzcV1XHWiJDmiuU4NdECF4TxnO
+         PEzZwdprrVhBsN39CKR3FZrYAXhYUUxfYTP4RT927f1N1nE2MKcaTf8PsP+au9/EEZJv
+         CnY5Mb+UMQqQdR6WmzpLNe8XCFLbhVA5NSW9asYEZAM+QoTfJC9EN/GPogL/EmoPd6dX
+         fwDJGWcT77+HSHwRXjSp8y7EON2b0BRJijuCU5FZoa4tJR/5M/w3W+SpbGd9+7ldyMUp
+         ddPYnVNiKE+v+Vxhm2Zl/IYiuMwOXOno7zZ04q9CXuOZfhbU+O1/X/bip4kLkIDPOGud
+         4IEA==
+Received: by 10.60.25.100 with SMTP id b4mr1233415oeg.64.1337354136343;
+        Fri, 18 May 2012 08:15:36 -0700 (PDT)
+Received: from sh9 (wsip-184-187-11-226.om.om.cox.net. [184.187.11.226])
+        by mx.google.com with ESMTPS id a6sm6191368oeg.7.2012.05.18.08.15.34
+        (version=SSLv3 cipher=OTHER);
+        Fri, 18 May 2012 08:15:35 -0700 (PDT)
+In-Reply-To: <4FB65345.3090201@kdbg.org>
+X-Mailer: Claws Mail 3.8.0 (GTK+ 2.24.6; x86_64-pc-linux-gnu)
+X-Gm-Message-State: ALoCoQmKQueWxvi0mOnkAA3rCR7KzcpLb/fiO+SCbzclugeNsQJJdCe2+iKHJ5ohtdQiqwMzD7Wa
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197955>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/197956>
 
-The test intends to rebase a branchy history onto a later commit, but it
-forgot to reset HEAD back to an earlier commit before it set up the side
-branches. In the end, every "rebased" commit was only a fast-forward and
-the 'rebase -p' did not change the commit graph at all. Insert the missing
-checkout that moves to an earlier commit.
 
-Signed-off-by: Johannes Sixt <j6t@kdbg.org>
----
- Noticed while I was working on replacing 'git merge' by 'git
- cherry-pick' in the rebase -p code path.
+> The test intends to rebase a branchy history onto a later commit, but
+> it forgot to reset HEAD back to an earlier commit before it set up
+> the side branches. In the end, every "rebased" commit was only a
+> fast-forward and the 'rebase -p' did not change the commit graph at
+> all. Insert the missing checkout that moves to an earlier commit.
 
- t/t3411-rebase-preserve-around-merges.sh | 1 +
- 1 file changed, 1 insertion(+)
+Makes sense to me. Thanks, Johannes.
 
-diff --git a/t/t3411-rebase-preserve-around-merges.sh
-b/t/t3411-rebase-preserve-around-merges.sh
-index ace8e54..dc81bf2 100755
---- a/t/t3411-rebase-preserve-around-merges.sh
-+++ b/t/t3411-rebase-preserve-around-merges.sh
-@@ -56,6 +56,7 @@ test_expect_success 'squash F1 into D1' '
- # And rebase G1..M1 onto E2
-
- test_expect_success 'rebase two levels of merge' '
-+	git checkout A1 &&
- 	test_commit G1 &&
- 	test_commit H1 &&
- 	test_commit I1 &&
--- 
-1.7.10.2.529.g0c18cfd
+- Stephen
