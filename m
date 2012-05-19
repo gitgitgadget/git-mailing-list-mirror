@@ -1,81 +1,135 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH 0/2] Fix some constness errors in fetch-pack
-Date: Sat, 19 May 2012 16:05:07 +0200
-Message-ID: <4FB7A893.8080109@alum.mit.edu>
-References: <1335955259-15309-1-git-send-email-mhagger@alum.mit.edu>
+From: =?UTF-8?B?w5h5dmluZCBBLiBIb2xt?= <sunny@sunbase.org>
+Subject: Re: tr/xdiff-fast-hash generates warnings and breaks tests
+Date: Sat, 19 May 2012 16:17:23 +0200
+Message-ID: <CAA787rmJixvyKhubHXZCDVYc=DdVk8_vHsHF6bOsLQ_j=39bGw@mail.gmail.com>
+References: <CAA787r=WCJXeDipiVL37oMgji=ncoPyXXVOcCyYbSC6iCcTi1g@mail.gmail.com>
+	<4FB4A4B9.3080009@lsrfire.ath.cx>
+	<xmqqmx56rd2r.fsf@junio.mtv.corp.google.com>
+	<4FB5460C.10807@lsrfire.ath.cx>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: mhagger@alum.mit.edu
-X-From: git-owner@vger.kernel.org Sat May 19 16:05:21 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Thomas Rast <trast@student.ethz.ch>
+To: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
+X-From: git-owner@vger.kernel.org Sat May 19 16:17:40 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SVkHW-0001pW-I6
-	for gcvg-git-2@plane.gmane.org; Sat, 19 May 2012 16:05:18 +0200
+	id 1SVkTS-0000SL-Mi
+	for gcvg-git-2@plane.gmane.org; Sat, 19 May 2012 16:17:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756651Ab2ESOFM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 19 May 2012 10:05:12 -0400
-Received: from ALUM-MAILSEC-SCANNER-5.MIT.EDU ([18.7.68.17]:50836 "EHLO
-	alum-mailsec-scanner-5.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754537Ab2ESOFL (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 19 May 2012 10:05:11 -0400
-X-AuditID: 12074411-b7f596d000000932-25-4fb7a896b47d
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-5.mit.edu (Symantec Messaging Gateway) with SMTP id 6E.B1.02354.698A7BF4; Sat, 19 May 2012 10:05:10 -0400 (EDT)
-Received: from [192.168.2.130] (p4FC0C79F.dip.t-dialin.net [79.192.199.159])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id q4JE58iX018557
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Sat, 19 May 2012 10:05:09 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:12.0) Gecko/20120430 Thunderbird/12.0.1
-In-Reply-To: <1335955259-15309-1-git-send-email-mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprJKsWRmVeSWpSXmKPExsUixO6iqDttxXZ/g+0/hCy6rnQzWTT0XmG2
-	uL1iPrMDs8ff9x+YPC5eUvb4vEkugDmK2yYpsaQsODM9T98ugTtjQst09oKN7BUf1n5nbGCc
-	wNbFyMEhIWAi0bBNuYuRE8gUk7hwbz1QmItDSOAyo8TbWSdYIJwzTBJTLn5jB6niFdCWWPvy
-	EhuIzSKgKrFt7lUWEJtNQFdiUU8zE8hQUYEwidUPNCDKBSVOznwCViIiICHRu2glmM0sYC2x
-	4vVhJhBbWMBB4tOCWWAjhQRcJA6u3gdWwyngKjF33j92kJEg9d92F0G0yktsfzuHeQKjwCwk
-	G2YhVM1CUrWAkXkVo1xiTmmubm5iZk5xarJucXJiXl5qka6pXm5miV5qSukmRkjQCu5gnHFS
-	7hCjAAejEg/vpUnb/IVYE8uKK3MPMUpyMCmJ8kYs3e4vxJeUn1KZkVicEV9UmpNafIhRgoNZ
-	SYR3hSdQjjclsbIqtSgfJiXNwaIkzsu3RN1PSCA9sSQ1OzW1ILUIJivDwaEkwasLjE4hwaLU
-	9NSKtMycEoQ0EwcnyHAuKZHi1LyU1KLE0pKMeFCMxhcDoxQkxQO09/lykL3FBYm5QFGI1lOM
-	uhwzPi26xijEkpeflyolzmsJskMApCijNA9uBSxFvWIUB/pYGOISHmB6g5v0CmgJE9CSSrZt
-	IEtKEhFSUg2Mi3ZPfv9LdvKFQtaTjfab9rScvfti+q59ep/7gtYfOLM8RXXd7eOOJkIfDv4J
-	sbTTcJ/QeGiuBMf8vyEsSVnnGM4KFDcpRt+vep12s3L9lTmrlyjXTVmX+/y/YEjK 
+	id S1760189Ab2ESOR0 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 19 May 2012 10:17:26 -0400
+Received: from mail-pz0-f46.google.com ([209.85.210.46]:52059 "EHLO
+	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754957Ab2ESORY convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 19 May 2012 10:17:24 -0400
+Received: by dady13 with SMTP id y13so4985385dad.19
+        for <git@vger.kernel.org>; Sat, 19 May 2012 07:17:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=oLKSX3JJOVA1spYm8kI+SEl9jh97LVBbx+4xYpc/UVU=;
+        b=J3k9LPpdTnGVAhmeWWHjbpJGzWgNbrOfll57hgs4uPfv4Ul7iXN1VU0DQ1XJq1wt22
+         OluC5Clyd51TmnxHhSiq5Q8EOha12r/2S808bknZnUGw//rPUbgSjK9qgxCkfJ60OAnN
+         c3Nx5YV8nBfXWb41QzSkvlx6NBqec86+yZfMarZgMEQEOA8uyNf4smJowxWYSDbzprDT
+         R7UgAKMajS4GtZfEhjOSr6Yd77GIxqaLHSHoWhhDY6LeImN98Rwu7P2Wyna8K0P6Q1DH
+         E4HLLj8uXetF2HyTGNmg8kNmg51tB8ekwvmiyZ9Tw6HOrN0+Mttb6UWrGELEo81XqoBN
+         /N5Q==
+Received: by 10.68.230.68 with SMTP id sw4mr24027444pbc.142.1337437043667;
+ Sat, 19 May 2012 07:17:23 -0700 (PDT)
+Received: by 10.68.26.98 with HTTP; Sat, 19 May 2012 07:17:23 -0700 (PDT)
+In-Reply-To: <4FB5460C.10807@lsrfire.ath.cx>
+X-Google-Sender-Auth: B_0eHASVc9N1gXF9eF8YpOG1x8Y
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198031>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198032>
 
-On 05/02/2012 12:40 PM, mhagger@alum.mit.edu wrote:
-> From: Michael Haggerty<mhagger@alum.mit.edu>
+On 17 May 2012 18:23, Junio C Hamano <gitster@pobox.com> wrote:
+> Ren=C3=A9 Scharfe <rene.scharfe@lsrfire.ath.cx> writes:
+> > On Ubuntu 12.04 x86, t0020 fails for me as well when I compile with
+> > XDL_FAST_HASH explicitly set (it's off by default).
 >
-> Fix some constness errors that I noticed while reading the code in
-> builtin/fetch-pack.c.
+> OK. =C2=A0So does that indicate at least breakage in the Makefile tha=
+t
+> attempts to set XDL_FAST_HASH only on x86_64, mistakenly triggering o=
+n
+> =C3=98yvind's x86 32-bit userland, or did =C3=98yvind manually flippe=
+d the
+> feature on?
+
+No, I haven't fiddled with any of those, only using standard ./configur=
+e
+and also verified by running make using the standard Makefile.
+
+On 17 May 2012 20:40, Ren=C3=A9 Scharfe <rene.scharfe@lsrfire.ath.cx> w=
+rote:
+> The following patch on top of master makes the compiler put a sarl in
+> my build, and "make -j4 XDL_FAST_HASH=3D1 test" passes.
 >
-> Michael Haggerty (2):
->    cmd_fetch_pack(): declare dest to be const
->    cmd_fetch_pack(): fix constness problem and memory leak
+> =C3=98yvind, does this oneliner help in your case as well?
 >
->   builtin/fetch-pack.c |  152 +++++++++++++++++++++++++-------------------------
->   1 file changed, 77 insertions(+), 75 deletions(-)
+> Subject: xdiff: signed right shift for 32-bit case of XDL_FAST_HASH
+> [...]
+> =C2=A0xdiff/xutils.c | =C2=A0 =C2=A02 +-
+> =C2=A01 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/xdiff/xutils.c b/xdiff/xutils.c
+> index 1b3b471..29df57e 100644
+> --- a/xdiff/xutils.c
+> +++ b/xdiff/xutils.c
+> @@ -311,7 +311,7 @@ static inline long count_masked_bytes(unsigned
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 * (a+b+1) giv=
+es us
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 * =C2=A0 corr=
+ect 0-3 bytemask count result
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 */
+> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 long a =3D (mask -=
+ 256) >> 23;
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 long a =3D ((long)=
+mask - 256) >> 23;
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0long b =3D mas=
+k & 1;
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0return a + b +=
+ 1;
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0}
 
-I think that these patches got dropped because of an inconclusive 
-discussion [1]: Duy suggested converting the code for fetch-pack to use 
-parse_options(), which idea Junio didn't like.  But I think that any 
-objections were raised against these two patches, which are just simple 
-cleanups.
+Yes, applied your patch to current master (9de9681), and the whole test
+suite runs without errors. The compiler still generates the same
+warnings, though:
 
-Michael
+    CC xdiff/xdiffi.o
+    CC xdiff/xprepare.o
+    CC xdiff/xutils.o
+xdiff/xutils.c: In function =E2=80=98has_zero=E2=80=99:
+xdiff/xutils.c:261: warning: integer constant is too large for =E2=80=98=
+unsigned
+                    long=E2=80=99 type
+xdiff/xutils.c:261: warning: integer constant is too large for =E2=80=98=
+unsigned
+                    long=E2=80=99 type
+xdiff/xutils.c: In function =E2=80=98count_masked_bytes=E2=80=99:
+xdiff/xutils.c:273: warning: integer constant is too large for =E2=80=98=
+long=E2=80=99
+                    type
+xdiff/xutils.c: In function =E2=80=98xdl_hash_record=E2=80=99:
+xdiff/xutils.c:310: warning: integer constant is too large for =E2=80=98=
+unsigned
+                    long=E2=80=99 type
+xdiff/xutils.c:326: warning: integer constant is too large for =E2=80=98=
+unsigned
+                    long=E2=80=99 type
+    CC xdiff/xemit.o
+    CC xdiff/xmerge.o
 
-[1] http://comments.gmane.org/gmane.comp.version-control.git/196797
+But with this patch, you're certainly on the right track. Thanks.
 
--- 
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
+Cheers,
+=C3=98yvind
