@@ -1,84 +1,103 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: cherry-pick is slow
-Date: Fri, 18 May 2012 20:54:24 -0400
-Message-ID: <20120519005424.GF765@sigill.intra.peff.net>
-References: <CAPZ_ugYojqTaWi0atr2ApOu9xmcwy4y8FduNC+TDhgWgSxXNPQ@mail.gmail.com>
- <CAPc5daW6eBLUf55_Qk+4bA6Y16TehfOUGc1xFzhib9vm=8O2Yw@mail.gmail.com>
- <CAPZ_ugbV6hB+8z8UsQKdHhxGuHbLzC5WK19mK7M8k2tMz+mtXw@mail.gmail.com>
- <20120514145412.GA1159@sigill.intra.peff.net>
- <CAPZ_ugbD=mOPBs6GyapWtv6NWuJ-=r2+bqBN9n+gdTPwGj3F0Q@mail.gmail.com>
- <20120515132451.GA25378@sigill.intra.peff.net>
- <7v1umldw3i.fsf@alter.siamese.dyndns.org>
- <7vwr4dcg2b.fsf@alter.siamese.dyndns.org>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: git-completion with bash alias
+Date: Sat, 19 May 2012 04:28:53 +0200
+Message-ID: <CAMP44s3DzJFoXTbUKEKUKcSs1TRWGW+2Ze+zMA1ch2eVgtu9bA@mail.gmail.com>
+References: <CACY+Hvqd6L7gWgDBvjPmLPsfA2o1CVKuqkDZ_j7XYf=WjuwvKQ@mail.gmail.com>
+	<20120519004147.GE765@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Dmitry Risenberg <dmitry.risenberg@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat May 19 02:54:35 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Carsten Mattner <carstenmattner@googlemail.com>,
+	git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sat May 19 04:29:02 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SVXwH-0003GK-Vf
-	for gcvg-git-2@plane.gmane.org; Sat, 19 May 2012 02:54:34 +0200
+	id 1SVZPg-0000dc-LG
+	for gcvg-git-2@plane.gmane.org; Sat, 19 May 2012 04:29:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S968265Ab2ESAy3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 May 2012 20:54:29 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:48914
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S968248Ab2ESAy2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 May 2012 20:54:28 -0400
-Received: (qmail 10283 invoked by uid 107); 19 May 2012 00:54:51 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 18 May 2012 20:54:51 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 18 May 2012 20:54:24 -0400
-Content-Disposition: inline
-In-Reply-To: <7vwr4dcg2b.fsf@alter.siamese.dyndns.org>
+	id S968287Ab2ESC2z convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 18 May 2012 22:28:55 -0400
+Received: from mail-wg0-f44.google.com ([74.125.82.44]:44894 "EHLO
+	mail-wg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753692Ab2ESC2y convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 18 May 2012 22:28:54 -0400
+Received: by wgbdr13 with SMTP id dr13so3275970wgb.1
+        for <git@vger.kernel.org>; Fri, 18 May 2012 19:28:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=f50uCB7tWyWQjCr2qmN3Pz144K5GumJiwxLjt/2gX+o=;
+        b=PHtXU7AKFcwA+8NN939q3xN4LWCgXdoW6rB94uBaPtLxoY0V4RFMARSbG/frXyZia7
+         STxK+WGybpZisfDNyuQU5qblOcea48LkCM/Nvi1iLOUOvXlsi+AwJbzRCBCNS3JavwIL
+         YyuHCo+7ih4CWlMsSrXkTzMMauZFJYHDDgoizqIifrV0ZAzYOz9kcimq0Hxv0r07h0h1
+         lekHg7jBgqi8K7QtXGFCbCH8AdkOepH/EZp42rk5aDT6FbMwlnikDEfPpK4yLeQ4oLrP
+         qvhojquKbdX7czBemwCTyKZOMWgD1penJjhOp2ATU8kxHDEzcJpqTfvIh6REXKyzsp9H
+         JUCA==
+Received: by 10.180.85.129 with SMTP id h1mr6808327wiz.2.1337394533479; Fri,
+ 18 May 2012 19:28:53 -0700 (PDT)
+Received: by 10.216.124.197 with HTTP; Fri, 18 May 2012 19:28:53 -0700 (PDT)
+In-Reply-To: <20120519004147.GE765@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198003>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198004>
 
-On Tue, May 15, 2012 at 02:03:40PM -0700, Junio C Hamano wrote:
-
-> > 	git format-patch -1 --stdout $commit | git apply --index --3way
-> [...]
-> An unscientific datapoint shows that with a project as small as the kernel,
-> the difference is noticeable.
+On Sat, May 19, 2012 at 2:41 AM, Jeff King <peff@peff.net> wrote:
+> On Fri, May 18, 2012 at 01:35:24PM +0200, Carsten Mattner wrote:
 >
-> For example, v3.4-rc7-22-g3911ff3 (random tip of the day) touches two
-> paths, and cherry-picking it on top of v3.3 goes like this:
+>> Completion works when used as "git checkout foo" but fails with
+>> "bash: [: 1: unary operator expected" when trying to complete
+>> via a single character shell alias like "alias g=3Dgit" as in
+>> "g checkout foo".
+>>
+>> git version 1.7.10.2.548.g9de9681
+>
+> Hmm. Are you invoking the completion like:
+>
+> =C2=A0complete -F _git g
 
-Yeah that's what I would expect. And that's not even that far away.
-Cherry-picking the same commit onto v3.0 should be even more noticeable.
+s/_git/__git_wrap_git/
 
-> I _think_ most of the overhead comes from having to match the large trees
-> in unpack_trees() even though none of the changes between the base
-> versions matters for this" cherry-pick".
-> 
-> Both reads the flat index into the core in its entirety and futzing with
-> the index file format would not affect this comparison, even though it
-> could improve the performance of "am", if done right, as it could limit
-> its updates to only two paths.  In the merge case, we pretty much rebuild
-> the resulting index from scratch by walking the entire tree in
-> unpack_trees(), so there won't be much benefit.
-> 
-> Perhaps we might want to rethink the way we run merges?
+> ? That used to work, but was broken by the recent 6b179ad (completion=
+:
+> add new __git_complete helper, 2012-05-14).
+>
+> The "new" way seems to be:
+>
+> =C2=A0__git_complete g _git
+>
+> but that function is explicitly labeled as "not public". It looks lik=
+e
+> there was a follow-on patch that was discussed to make a public versi=
+on,
+> but it got dropped.
 
-For merge-recursive, we would always want to compute the pair-wise
-renames between each side and the ancestor. So that diff to the
-cherry-pick destination is always going to be an expensive O(# of
-changes between source and dest) operation.
+Well, _git was probably not public either.
 
-Without renames, you could do better on the actual merge with a
-three-way tree walk. E.g., you see that some sub-tree is at tree A in
-the "ours" and "ancestor" trees, but at tree B in "theirs". So you don't
-have to descend further, and can just say "take theirs" (well, you have
-to descend "theirs" to get the values). But I expect it gets more
-complicated with the interactions with the index (and is probably not
-worth spending much effort on because of the rename issue, anyway).
+> I'm not sure if this regression is intentional, or if the "old" way e=
+ven
+> worked reliably (I seem to recall people running into issues with
+> _get_comp_words_by_ref not being called properly sometimes, but I don=
+'t
+> remember the details). So it's not clear to me if the right way forwa=
+rd
+> is fixing "complete -F _git" to work again, or if that way is just
+> broken, and a public version of __git_complete is the right path.
+>
+> Felipe, can you comment?
 
--Peff
+The problem is with certain functions (e.g. _git_fetch), which are
+broken not only for aliases: try 'git --git-dir=3D$PWD fetch <tab>'.
+
+Should be easy to provide backward compatibility though.
+
+I'll send a patch soon.
+
+--=20
+=46elipe Contreras
