@@ -1,187 +1,74 @@
 From: Jon Seymour <jon.seymour@gmail.com>
-Subject: [PATCH v2 2/2] submodule: fix handling of superproject with relative origin URLs
-Date: Sun, 20 May 2012 09:00:28 +1000
-Message-ID: <1337468428-26155-2-git-send-email-jon.seymour@gmail.com>
-References: <1337468428-26155-1-git-send-email-jon.seymour@gmail.com>
-Cc: Jens.Lehmann@web.de, gitster@pobox.com,
-	Jon Seymour <jon.seymour@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun May 20 01:01:00 2012
+Subject: Re: [PATCH 2/2] submodule: fix handling of supermodules with relative
+ origin URLs
+Date: Sun, 20 May 2012 09:10:15 +1000
+Message-ID: <CAH3AnrrxgT1OQe-K2A91XfMLSd2WGvJ5CzyNR4tRqvYfp4wgQg@mail.gmail.com>
+References: <1337402403-7546-1-git-send-email-jon.seymour@gmail.com>
+	<1337402403-7546-2-git-send-email-jon.seymour@gmail.com>
+	<4FB7ECCF.9020403@web.de>
+	<CAH3AnrrqiXqdHHGZPyOPJ3Zend5JrQX0rKV+pz_mjs3SDjv9DA@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Jens Lehmann <Jens.Lehmann@web.de>
+X-From: git-owner@vger.kernel.org Sun May 20 01:10:59 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SVsdo-0004Uo-8N
-	for gcvg-git-2@plane.gmane.org; Sun, 20 May 2012 01:00:52 +0200
+	id 1SVsnZ-00075e-Sv
+	for gcvg-git-2@plane.gmane.org; Sun, 20 May 2012 01:10:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757375Ab2ESXAp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 19 May 2012 19:00:45 -0400
-Received: from mail-pb0-f46.google.com ([209.85.160.46]:33808 "EHLO
-	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754903Ab2ESXAm (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 19 May 2012 19:00:42 -0400
-Received: by pbbrp8 with SMTP id rp8so5392782pbb.19
-        for <git@vger.kernel.org>; Sat, 19 May 2012 16:00:42 -0700 (PDT)
+	id S1756822Ab2ESXKS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 19 May 2012 19:10:18 -0400
+Received: from mail-wi0-f172.google.com ([209.85.212.172]:41103 "EHLO
+	mail-wi0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754872Ab2ESXKR (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 19 May 2012 19:10:17 -0400
+Received: by wibhj8 with SMTP id hj8so1215216wib.1
+        for <git@vger.kernel.org>; Sat, 19 May 2012 16:10:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=m6HZeiKirC8szWa/SFNYWLJJsDskuVsmoeXViIZyrjQ=;
-        b=TiskaL7I6nsc9nsTjQprClvD5/tIpmUVtuO8wRBDiXHsIpVkdo4/wy9jCLZvVozfHf
-         tb/MxnubNyrVQNR7KkyoGbUcwpAo5sBhF4krgPVq8Zx82zLq2ZGMLJNuEkuvv6gW3mcD
-         bhfcTQaEAGn1w2PW0xtjMoJaIXyMUB/d4piqrFEkCjBjjb1gD2Y+vqDWSZ8E3FXnFcYa
-         XgxB0uYbFRvsPjgQXKrJx5KFn+OaQYkTvKGTxM/+XPoZlNLqNOm+caXosptYVqt9wJlM
-         RRzeKoRzIqSMcfPr8t2IYvgcvwctv7GajSGKPAfTAWANvKIM0JURVaxNH7k0sp+ZoqKq
-         bILQ==
-Received: by 10.68.222.74 with SMTP id qk10mr7524227pbc.67.1337468442149;
-        Sat, 19 May 2012 16:00:42 -0700 (PDT)
-Received: from ubuntu.ubuntu-domain (124-170-214-58.dyn.iinet.net.au. [124.170.214.58])
-        by mx.google.com with ESMTPS id po10sm5720934pbb.21.2012.05.19.16.00.39
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sat, 19 May 2012 16:00:41 -0700 (PDT)
-X-Mailer: git-send-email 1.7.10.2.650.g22d2504
-In-Reply-To: <1337468428-26155-1-git-send-email-jon.seymour@gmail.com>
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=XFUaIP9VxtGW7PxriEp8ONr/V1satFgDTIbQMXkWknk=;
+        b=YsO1+unFcQddb5A51MP8ollvEYTO2dR6TCtjEfiE+ykNj1wYvSbK5Eou6KFqNoHDpR
+         oLCBIrmcnoVQ8fJ65GOP3zL4GxseNS0sznGjrdTfEYlmjexb4RZL2sZZRT2NAWF1kC4N
+         ci/G0/WVFLUkE8MyT5MT8Sof2hnQNpfVBi7P5BEycJzKFxMAdAKtMsmaL5YV7+J4c79u
+         kaeBDFhrNobPRvnjkqr1FZX5TgGuX60thjrWU4gOk9Hs1Elmr+7K5w8DcjGEY9AiOch8
+         qmHlMe1NTI5i0cANPPvcmYcS8OHFWEVAT7NgUsmRvzhCp4fwV+asIO4M9tNUCCwFQpV0
+         mtzQ==
+Received: by 10.180.86.197 with SMTP id r5mr12659268wiz.21.1337469015912; Sat,
+ 19 May 2012 16:10:15 -0700 (PDT)
+Received: by 10.180.146.166 with HTTP; Sat, 19 May 2012 16:10:15 -0700 (PDT)
+In-Reply-To: <CAH3AnrrqiXqdHHGZPyOPJ3Zend5JrQX0rKV+pz_mjs3SDjv9DA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198043>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198044>
 
-Prior to this change, an operation such as git submodule add, init or
-sync produced the wrong result when the origin URL of the superproject
-was itself a relative URL.
+On Sun, May 20, 2012 at 8:51 AM, Jon Seymour <jon.seymour@gmail.com> wrote:
+> On Sun, May 20, 2012 at 4:56 AM, Jens Lehmann <Jens.Lehmann@web.de> wrote:
+>> Am 19.05.2012 06:40, schrieb Jon Seymour:
+> I noticed one relative case that is not handled properly yet, but
+> there is a workaround. If the superproject's origin URL is of the
+> form: foo/bar (a case I actually have myself for reasons I can explain
+> if you want me to), then the correct rule doesn't get matched by
+> .*/*). The workaround is for the user to change foo/bar style origin
+> URLs to ./foo/bar.
+>
+> Let me know if I should fix this case now too.
 
-The issue arises in these cases because the origin URL of
-the superproject needs to be prepended with a prefix that navigates
-from the submodule to the superproject so that when the submodule
-URL is concatenated the resulting URL is relative to the working tree
-of the submodule.
+I think this expression:
 
-This change ensures that this is done for add, sync and init.
+    remoteurl=$(echo "remoteurl" | sed "s|^[^/][^:]*\$|./&|" )
+    remoteurl=${remoteurl%/}
 
-Note that superproject relative origin URLs of the form foo/bar
-are still not handled correctly. The user can workaround this case
-by adding ./ prefix to the origin URL.
+would normalize remoteurl correctly for the foo/bar case and not any other.
 
-Signed-off-by: Jon Seymour <jon.seymour@gmail.com>
----
- git-submodule.sh           | 35 ++++++++++++++++++++---------------
- t/t7400-submodule-basic.sh |  4 ++--
- t/t7403-submodule-sync.sh  |  2 +-
- 3 files changed, 23 insertions(+), 18 deletions(-)
+I'd also need to add at least one new test (or do I actually need 3?),
+of course.
 
-diff --git a/git-submodule.sh b/git-submodule.sh
-index 64a70d6..230c219 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -45,6 +45,10 @@ resolve_relative_url ()
- 		../*)
- 			url="${url#../}"
- 			case "$remoteurl" in
-+			.*/*)
-+				up_path="$(echo "$2" | sed "s/[^/]*/../g")"
-+				remoteurl="${up_path%/}/${remoteurl%/*}"
-+				;;
- 			*/*)
- 				remoteurl="${remoteurl%/*}"
- 				;;
-@@ -235,11 +239,24 @@ cmd_add()
- 		usage
- 	fi
- 
-+	# normalize path:
-+	# multiple //; leading ./; /./; /../; trailing /
-+	sm_path=$(printf '%s/\n' "$sm_path" |
-+		sed -e '
-+			s|//*|/|g
-+			s|^\(\./\)*||
-+			s|/\./|/|g
-+			:start
-+			s|\([^/]*\)/\.\./||
-+			tstart
-+			s|/*$||
-+		')
-+
- 	# assure repo is absolute or relative to parent
- 	case "$repo" in
- 	./*|../*)
- 		# dereference source url relative to parent's url
--		realrepo=$(resolve_relative_url "$repo") || exit
-+		realrepo=$(resolve_relative_url "$repo" "$sm_path") || exit
- 		;;
- 	*:*|/*)
- 		# absolute url
-@@ -250,18 +267,6 @@ cmd_add()
- 	;;
- 	esac
- 
--	# normalize path:
--	# multiple //; leading ./; /./; /../; trailing /
--	sm_path=$(printf '%s/\n' "$sm_path" |
--		sed -e '
--			s|//*|/|g
--			s|^\(\./\)*||
--			s|/\./|/|g
--			:start
--			s|\([^/]*\)/\.\./||
--			tstart
--			s|/*$||
--		')
- 	git ls-files --error-unmatch "$sm_path" > /dev/null 2>&1 &&
- 	die "$(eval_gettext "'\$sm_path' already exists in the index")"
- 
-@@ -407,7 +412,7 @@ cmd_init()
- 			# Possibly a url relative to parent
- 			case "$url" in
- 			./*|../*)
--				url=$(resolve_relative_url "$url") || exit
-+				url=$(resolve_relative_url "$url" "$sm_path") || exit
- 				;;
- 			esac
- 			git config submodule."$name".url "$url" ||
-@@ -964,7 +969,7 @@ cmd_sync()
- 		# Possibly a url relative to parent
- 		case "$url" in
- 		./*|../*)
--			url=$(resolve_relative_url "$url") || exit
-+			url=$(resolve_relative_url "$url" "$sm_path") || exit
- 			;;
- 		esac
- 
-diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
-index 1c40951..e10abc4 100755
---- a/t/t7400-submodule-basic.sh
-+++ b/t/t7400-submodule-basic.sh
-@@ -507,7 +507,7 @@ test_expect_success 'relative path works with user@host:path' '
- 	)
- '
- 
--test_expect_failure 'relative path works with ../relative/repo' '
-+test_expect_success 'relative path works with ../relative/repo' '
- 	(
- 		cd reltest &&
- 		cp pristine-.git-config .git/config &&
-@@ -517,7 +517,7 @@ test_expect_failure 'relative path works with ../relative/repo' '
- 	)
- '
- 
--test_expect_failure 'test that submodule add creates the correct url when super origin url is relative' '
-+test_expect_success 'test that submodule add creates the correct url when super origin url is relative' '
- 	mkdir reladd &&
- 	(
- 		cd reladd &&
-diff --git a/t/t7403-submodule-sync.sh b/t/t7403-submodule-sync.sh
-index 788bc24..35700ef 100755
---- a/t/t7403-submodule-sync.sh
-+++ b/t/t7403-submodule-sync.sh
-@@ -86,7 +86,7 @@ test_expect_success '"git submodule sync" should not vivify uninteresting submod
- 	)
- '
- 
--test_expect_failure '"git submodule sync" should handle a super with a relative origin URL' '
-+test_expect_success '"git submodule sync" should handle a super with a relative origin URL' '
- 	git clone super relative-clone &&
- 	(cd relative-clone &&
- 	 git submodule update --init &&
--- 
-1.7.10.2.650.g22d2504
+jon.
