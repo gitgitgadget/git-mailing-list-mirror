@@ -1,135 +1,108 @@
-From: =?UTF-8?B?w5h5dmluZCBBLiBIb2xt?= <sunny@sunbase.org>
-Subject: Re: tr/xdiff-fast-hash generates warnings and breaks tests
-Date: Sat, 19 May 2012 16:17:23 +0200
-Message-ID: <CAA787rmJixvyKhubHXZCDVYc=DdVk8_vHsHF6bOsLQ_j=39bGw@mail.gmail.com>
-References: <CAA787r=WCJXeDipiVL37oMgji=ncoPyXXVOcCyYbSC6iCcTi1g@mail.gmail.com>
-	<4FB4A4B9.3080009@lsrfire.ath.cx>
-	<xmqqmx56rd2r.fsf@junio.mtv.corp.google.com>
-	<4FB5460C.10807@lsrfire.ath.cx>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH] t/Makefile: retain cache t/.prove across prove runs
+Date: Sat, 19 May 2012 16:54:33 +0200
+Message-ID: <4FB7B429.80805@alum.mit.edu>
+References: <1335972712-20621-1-git-send-email-mhagger@alum.mit.edu> <20120502160753.GA7193@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Thomas Rast <trast@student.ethz.ch>
-To: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
-X-From: git-owner@vger.kernel.org Sat May 19 16:17:40 2012
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sat May 19 16:55:06 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SVkTS-0000SL-Mi
-	for gcvg-git-2@plane.gmane.org; Sat, 19 May 2012 16:17:39 +0200
+	id 1SVl3h-0004Ng-R4
+	for gcvg-git-2@plane.gmane.org; Sat, 19 May 2012 16:55:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760189Ab2ESOR0 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 19 May 2012 10:17:26 -0400
-Received: from mail-pz0-f46.google.com ([209.85.210.46]:52059 "EHLO
-	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754957Ab2ESORY convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 19 May 2012 10:17:24 -0400
-Received: by dady13 with SMTP id y13so4985385dad.19
-        for <git@vger.kernel.org>; Sat, 19 May 2012 07:17:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=oLKSX3JJOVA1spYm8kI+SEl9jh97LVBbx+4xYpc/UVU=;
-        b=J3k9LPpdTnGVAhmeWWHjbpJGzWgNbrOfll57hgs4uPfv4Ul7iXN1VU0DQ1XJq1wt22
-         OluC5Clyd51TmnxHhSiq5Q8EOha12r/2S808bknZnUGw//rPUbgSjK9qgxCkfJ60OAnN
-         c3Nx5YV8nBfXWb41QzSkvlx6NBqec86+yZfMarZgMEQEOA8uyNf4smJowxWYSDbzprDT
-         R7UgAKMajS4GtZfEhjOSr6Yd77GIxqaLHSHoWhhDY6LeImN98Rwu7P2Wyna8K0P6Q1DH
-         E4HLLj8uXetF2HyTGNmg8kNmg51tB8ekwvmiyZ9Tw6HOrN0+Mttb6UWrGELEo81XqoBN
-         /N5Q==
-Received: by 10.68.230.68 with SMTP id sw4mr24027444pbc.142.1337437043667;
- Sat, 19 May 2012 07:17:23 -0700 (PDT)
-Received: by 10.68.26.98 with HTTP; Sat, 19 May 2012 07:17:23 -0700 (PDT)
-In-Reply-To: <4FB5460C.10807@lsrfire.ath.cx>
-X-Google-Sender-Auth: B_0eHASVc9N1gXF9eF8YpOG1x8Y
+	id S1755403Ab2ESOyh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 19 May 2012 10:54:37 -0400
+Received: from ALUM-MAILSEC-SCANNER-2.MIT.EDU ([18.7.68.13]:50709 "EHLO
+	alum-mailsec-scanner-2.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753072Ab2ESOyg (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 19 May 2012 10:54:36 -0400
+X-AuditID: 1207440d-b7f336d00000097b-af-4fb7b42b7d91
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-2.mit.edu (Symantec Messaging Gateway) with SMTP id 47.6E.02427.B24B7BF4; Sat, 19 May 2012 10:54:35 -0400 (EDT)
+Received: from [192.168.2.130] (p4FC0C79F.dip.t-dialin.net [79.192.199.159])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id q4JEsXKt020282
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Sat, 19 May 2012 10:54:34 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:12.0) Gecko/20120430 Thunderbird/12.0.1
+In-Reply-To: <20120502160753.GA7193@sigill.intra.peff.net>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprDKsWRmVeSWpSXmKPExsUixO6iqKu9Zbu/wa65qhZdV7qZLBp6rzBb
+	/GjpYXZg9njWu4fR4+IlZY/Pm+QCmKO4bZISS8qCM9Pz9O0SuDPa1/QyFRwWqej7fZSlgXGV
+	QBcjJ4eEgInEreWrmSBsMYkL99azdTFycQgJXGaUOD13LwuEc4ZJ4u6BQ4wgVbwCmhKnX+9h
+	A7FZBFQl5p/pAutmE9CVWNTTDGRzcIgKhEmsfqABUS4ocXLmExYQW0RAVuL74Y1gY5gFrCVW
+	vD4M1ios4CHxYf48sBohgSKJ3W0t7CA2p4CVxOv7e5kg6s0kurZ2QfXKS2x/O4d5AqPALCQr
+	ZiEpm4WkbAEj8ypGucSc0lzd3MTMnOLUZN3i5MS8vNQiXSO93MwSvdSU0k2MkNDl3cH4f53M
+	IUYBDkYlHt7KCdv8hVgTy4orcw8xSnIwKYnybt683V+ILyk/pTIjsTgjvqg0J7X4EKMEB7OS
+	CO8KT6Acb0piZVVqUT5MSpqDRUmcV22Jup+QQHpiSWp2ampBahFMVoaDQ0mCdwvIUMGi1PTU
+	irTMnBKENBMHJ8hwLimR4tS8lNSixNKSjHhQpMYXA2MVJMUDtHcRSDtvcUFiLlAUovUUoy7H
+	jE+LrjEKseTl56VKifO2gBQJgBRllObBrYAlqleM4kAfC/OuAaniASY5uEmvgJYwAS2pZNsG
+	sqQkESEl1cDYvD3pzcn973k00qfcVYiZVOJU8+lvxZFHn40fLsmfsfiFxzKmhIuxX9f1bpj+
+	d9ne3yae1wW1b71/bh6pcn6GWeWBiBLmvTt/W/5uFV/xIHNNbX3P+vzZc4ou7Vnu 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198032>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198033>
 
-On 17 May 2012 18:23, Junio C Hamano <gitster@pobox.com> wrote:
-> Ren=C3=A9 Scharfe <rene.scharfe@lsrfire.ath.cx> writes:
-> > On Ubuntu 12.04 x86, t0020 fails for me as well when I compile with
-> > XDL_FAST_HASH explicitly set (it's off by default).
+On 05/02/2012 06:07 PM, Jeff King wrote:
+> On Wed, May 02, 2012 at 05:31:52PM +0200, mhagger@alum.mit.edu wrote:
+>> prove(1) can write a summary of its test results and timings into a
+>> cache file, t/.prove, then use this information during later runs for
+>> various purposes.  But deleting t/.prove after every test run defeats
+>> this purpose.  So do not delete t/.prove as part of "make
+>> DEFAILT_TEST_TARGET=prove test".  (Continue to delete the file on
+>> "make clean".)
 >
-> OK. =C2=A0So does that indicate at least breakage in the Makefile tha=
-t
-> attempts to set XDL_FAST_HASH only on x86_64, mistakenly triggering o=
-n
-> =C3=98yvind's x86 32-bit userland, or did =C3=98yvind manually flippe=
-d the
-> feature on?
-
-No, I haven't fiddled with any of those, only using standard ./configur=
-e
-and also verified by running make using the standard Makefile.
-
-On 17 May 2012 20:40, Ren=C3=A9 Scharfe <rene.scharfe@lsrfire.ath.cx> w=
-rote:
-> The following patch on top of master makes the compiler put a sarl in
-> my build, and "make -j4 XDL_FAST_HASH=3D1 test" passes.
+> Thanks. I had found some odd behaviors with putting "--state" into
+> GIT_PROVE_OPTS when I first switched my setup to use prove, but I didn't
+> investigate. I think this issue explained some of what I saw.
 >
-> =C3=98yvind, does this oneliner help in your case as well?
+> Do note, though, that we only clean ".prove" on a successful run. So
+> something like "--state=hot,save" will still see the cache from the last
+> run if there were failures. However, the prove cache is meant to be kept
+> across many runs, even successful ones, so I think your patch makes
+> sense.
 >
-> Subject: xdiff: signed right shift for 32-bit case of XDL_FAST_HASH
-> [...]
-> =C2=A0xdiff/xutils.c | =C2=A0 =C2=A02 +-
-> =C2=A01 file changed, 1 insertion(+), 1 deletion(-)
+>> ---
+>> prove(1) can be told to retain information about test runs, and to use
+>> it for interesting purposes during future invocations.  For example,
+>> it can be told to run tests that failed during the last run:
+>>
+>>      GIT_PROVE_OPTS = --state=failed,save
 >
-> diff --git a/xdiff/xutils.c b/xdiff/xutils.c
-> index 1b3b471..29df57e 100644
-> --- a/xdiff/xutils.c
-> +++ b/xdiff/xutils.c
-> @@ -311,7 +311,7 @@ static inline long count_masked_bytes(unsigned
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 * (a+b+1) giv=
-es us
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 * =C2=A0 corr=
-ect 0-3 bytemask count result
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 */
-> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 long a =3D (mask -=
- 256) >> 23;
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 long a =3D ((long)=
-mask - 256) >> 23;
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0long b =3D mas=
-k & 1;
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0return a + b +=
- 1;
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0}
+> I don't think this actually works, because we also feed all of the test
+> scripts to prove on the command line. So it will run them all, both
+> failed and successful.
+>
+> I'm not sure if it is worth solving for "make test". I suspect having
+> that not test everything would be error prone (i.e., it's too easy to
+> accidentally not run the full suite when you meant to, and unexpected
+> regressions in other tests will go unnoticed). You can always run
+> "prove" yourself from the command line, or we can add a new target to do
+> a partial test (with other options set up properly).
 
-Yes, applied your patch to current master (9de9681), and the whole test
-suite runs without errors. The compiler still generates the same
-warnings, though:
+I totally believe you that some of the variations that I listed in my 
+commentary don't work in the git context.  I'm not a prove expert; I 
+just noticed that removing the .prove file is counterproductive and 
+breaks some other prove features.  I also agree with you that it would 
+be dangerous to encourage partial testing and that it is therefore not a 
+priority to make the use case that you mentioned work in the git context.
 
-    CC xdiff/xdiffi.o
-    CC xdiff/xprepare.o
-    CC xdiff/xutils.o
-xdiff/xutils.c: In function =E2=80=98has_zero=E2=80=99:
-xdiff/xutils.c:261: warning: integer constant is too large for =E2=80=98=
-unsigned
-                    long=E2=80=99 type
-xdiff/xutils.c:261: warning: integer constant is too large for =E2=80=98=
-unsigned
-                    long=E2=80=99 type
-xdiff/xutils.c: In function =E2=80=98count_masked_bytes=E2=80=99:
-xdiff/xutils.c:273: warning: integer constant is too large for =E2=80=98=
-long=E2=80=99
-                    type
-xdiff/xutils.c: In function =E2=80=98xdl_hash_record=E2=80=99:
-xdiff/xutils.c:310: warning: integer constant is too large for =E2=80=98=
-unsigned
-                    long=E2=80=99 type
-xdiff/xutils.c:326: warning: integer constant is too large for =E2=80=98=
-unsigned
-                    long=E2=80=99 type
-    CC xdiff/xemit.o
-    CC xdiff/xmerge.o
+I still think my patch makes sense.  The error that Peff pointed out was 
+in my commentary, not in the patch itself or in the log message.  Junio, 
+is there something else keeping you from applying this patch?
 
-But with this patch, you're certainly on the right track. Thanks.
+Michael
 
-Cheers,
-=C3=98yvind
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
