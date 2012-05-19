@@ -1,72 +1,138 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: [PATCH 2/2] submodule: fix handling of supermodules with relative
- origin URLs
-Date: Sat, 19 May 2012 20:56:15 +0200
-Message-ID: <4FB7ECCF.9020403@web.de>
-References: <1337402403-7546-1-git-send-email-jon.seymour@gmail.com> <1337402403-7546-2-git-send-email-jon.seymour@gmail.com>
+From: jaseem abid <jaseemabid@gmail.com>
+Subject: Testing JavaScript code in gitweb.
+Date: Sun, 20 May 2012 03:14:55 +0530
+Message-ID: <CAH-tXsDif9YOrkEcj7AdRfn6gvLx4mj4+SKCB4GzyW6QJpx=9A@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Jon Seymour <jon.seymour@gmail.com>
-X-From: git-owner@vger.kernel.org Sat May 19 20:56:28 2012
+Content-Type: text/plain; charset=UTF-8
+Cc: =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
+To: git mailing list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat May 19 23:46:27 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SVopH-0006pk-3s
-	for gcvg-git-2@plane.gmane.org; Sat, 19 May 2012 20:56:27 +0200
+	id 1SVrTd-0001ah-Ba
+	for gcvg-git-2@plane.gmane.org; Sat, 19 May 2012 23:46:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758144Ab2ESS4W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 19 May 2012 14:56:22 -0400
-Received: from fmmailgate01.web.de ([217.72.192.221]:47060 "EHLO
-	fmmailgate01.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757648Ab2ESS4V (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 19 May 2012 14:56:21 -0400
-Received: from moweb001.kundenserver.de (moweb001.kundenserver.de [172.19.20.114])
-	by fmmailgate01.web.de (Postfix) with ESMTP id BFB451AE8BE62
-	for <git@vger.kernel.org>; Sat, 19 May 2012 20:56:19 +0200 (CEST)
-Received: from [192.168.178.48] ([91.3.152.157]) by smtp.web.de (mrweb001)
- with ESMTPA (Nemesis) id 0LgYi5-1Rht9Y40mr-00nwnV; Sat, 19 May 2012 20:56:18
- +0200
-User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:12.0) Gecko/20120428 Thunderbird/12.0.1
-In-Reply-To: <1337402403-7546-2-git-send-email-jon.seymour@gmail.com>
-X-Provags-ID: V02:K0:PexDR31BlI/5X0bDqGp5brd2xpYPD5IJftKi3qZKoJd
- 35pAB2nKmqacXCqIIMocN0lY3f3edRSG4dSoydInPKU3zj2VlE
- IW2GSjIKZ3LtYhhGLxvD4Xd3QY4YWUZyji/zDqsXiLiSigS97I
- smTcwSXWerLdjHwtGNyh4bAuToMdyZK2XpExXSBeLYU8dUxRwT
- yY2NcNHIFC89jN7MvZlnQ==
+	id S1753575Ab2ESVpi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 19 May 2012 17:45:38 -0400
+Received: from mail-wi0-f172.google.com ([209.85.212.172]:35942 "EHLO
+	mail-wi0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753279Ab2ESVph (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 19 May 2012 17:45:37 -0400
+Received: by wibhj8 with SMTP id hj8so1189560wib.1
+        for <git@vger.kernel.org>; Sat, 19 May 2012 14:45:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to:cc:content-type;
+        bh=T+kc6TKEowojLYSjMUgh1BhSDRkyDz6w3Qofr+zoRww=;
+        b=MyzWWZkXKGFwPabyR1J/H+GDKcGYkm4MrrWe2zsgcujXs4innPUXdYVuqZD8O/Qf+V
+         Oxl91wpT9Oklw4gDafadGXbKZXJYGiCbFgm2hGzpnaAVsPm5DNHeDeeTILlhDW6GrM6c
+         BdUyDdCdxWwLMJ1NX/5SvhsNLXXfV3ToZb33u9yf0076qFfydjifBdqbV4qzvC/zJzc3
+         YkLSxHNRbjuTesUyuQDFE+1nhtSUsjzT3X1L2CLxhvjXo371ag+uwSaSCs1lTHMgLWEv
+         x3mZDLAYjwJ29yJCC9GdsqA1Cj1krQlXJj0H3022Yd4whw+uh3mDPPGJxiTMI1hbwmpQ
+         wxmg==
+Received: by 10.180.101.103 with SMTP id ff7mr12297737wib.6.1337463935431;
+ Sat, 19 May 2012 14:45:35 -0700 (PDT)
+Received: by 10.227.39.96 with HTTP; Sat, 19 May 2012 14:44:55 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198038>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198039>
 
-Am 19.05.2012 06:40, schrieb Jon Seymour:
-> Prior to this change, an operation such as git submodule add, init or
-> sync produced the wrong result when the origin URL of the supermodule
-> was itself a relative URL.
-> 
-> The issue arises in these cases, because the origin URL of
-> the supermodule needs to be prepended with a prefix that navigates
-> from the submodule to the supermodule so that when the submodule
-> URL is concatenated, the resulting url is relative to the working tree
-> of the submodule.
+Hi,
 
-Just a small nit: I'd prefer to replace the 4 occurrences of the term
-"supermodule" with "superproject".
+Over the last few days, I explored ways to test the JavaScript code in
+gitweb, and this is what I came up with.
+
+Tests can be split into 2 major categories.
+
+- Tests in the console.
+	Pros
+		- Can stick to the existing TAP, t/95xx testing pattern.
+		- Easier integration with the existing test system.
+	Cons
+		- Will need a run time environment for JavaScript. Major ones are
+node.js[1], spidermonkey and Rhino. All add *huge* dependencies to
+git.
+		- [IMP] The code is ultimately going to be run in a browser. Its
+best to test in the same environment.
+			From [2]:
+				> JS test suites generally run in the browser because knowing that
+your  tests pass in some sane command-line compiler tells you nothing
+about  how it will be mangled by IE (or in rare cases, other
+browsers).
+
+- Tests in the browser.
+
+	Pros
+		- Test in the same environment where the code is going to be run.
+Andrew mentioned this [2]
+		- Ideal way to test in all those browsers out there across platforms
+and versions effectively.  Can host the test page publicly with
+gitweb, so that people can test it quickly in their won browsers and
+report bugs.
+		- No new dependencies.
+		- Great libraries available.
+
+	Cons
+		- Wont go with the existing system.
+			There are no tests for JavaScript now[3] . This would definitely
+make it only better.  The perl code can be tested in the existing
+manner and the JavaScript code can run in browser with no issues.
+			Jakub mentioned this wont be a problem [4]
+			
+- Here are a few frameworks I considered for the task.
+
+- Jasmine.
+	BDD style testing. Current priority #1.
+	Runs in the browser. Benefits mentioned above.
+	Powerful and feature rich. A good tool for the task.
+
+- node-tap [5]
+	Needs node.js as previously mentioned.  This is the one that is
+officially recommenced[6].
+
+- JSdev
+- TestSwarm
+- JSTestDriver
+- sinon.js
+
+	Rejected by Jakub as not suitable after discussions[4].
+
+-Qunit
+
+	Priority #2. Runs in the browser.
 
 
-BTW, what happened to the following comment in you other email?
+I would prefer BDD style Jasmine for testing. The argument against it
+was that It cant be run from terminal (node.js). That will add a new
+dependency and hence cant be done. And as Andrew mentioned earlier, I
+think its better to run JavaScript tests in a real browser itself,
+because that's where it ultimately needs to run. He also mentioned
+that TDD would be a nice way to go [7]. I guess BDD will be ok in the
+context.
+Jakub almost agreed with browsers after the previous discussion thread[8].
 
->> +                               remoteurl="${up_path%/}/${remoteurl%/*}"
->
-> Meant up_path%/ to be up_path%/*
+I would love to hear from all about testing JavaScript code in the
+browser with Jasmine.
 
-The '*' is not there (but the test suite runs fine no matter if I add
-a '*' there or not). Thinking about it not adding the '*' should be
-correct, as you just want to chop off a trailing '/' from $up_path
-here, right?
+More on testing frameworks[9]
 
-So no objection on the code changes from my side.
+
+1 : http://nodejs.org
+2 : http://git.661346.n2.nabble.com/GSOC-Contributing-to-git-tp7420040p7423349.html
+3 : http://git.661346.n2.nabble.com/GSOC-Contributing-to-git-tp7420040p7420271.html
+4 : http://git.661346.n2.nabble.com/GSOC-Contributing-to-git-tp7420040p7423442.html
+5 : https://github.com/twada/qunit-tap
+6 : http://testanything.org/wiki/index.php/TAP_Consumers
+7 : http://colabti.org/irclogger/irclogger_log/git-devel?date=2012-05-13#l57
+8 : http://git.661346.n2.nabble.com/GSOC-Contributing-to-git-tp7420040p7432237.html
+9 : http://en.wikipedia.org/wiki/List_of_unit_testing_frameworks#JavaScript
+
+
+-- 
+Jaseem Abid
+http://jaseemabid.github.com
