@@ -1,131 +1,140 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: Index format v5
-Date: Sat, 19 May 2012 07:40:56 +0200
-Message-ID: <4FB73268.4020204@alum.mit.edu>
-References: <20120508141137.GA3937@tgummerer.surfnet.iacbox> <4FAA2CAF.3040408@alum.mit.edu> <20120510121911.GB98491@tgummerer> <4FAC0633.90809@alum.mit.edu> <20120511171230.GA2107@tgummerer> <4FB01080.6010605@alum.mit.edu> <20120514150113.GD2107@tgummerer> <4FB1746A.6090408@alum.mit.edu> <20120515134916.GA2074@tgummerer.unibz.it> <4FB334C7.2070201@alum.mit.edu> <20120516215407.GA1738@tgummerer.surfnet.iacbox>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [1.8.0] use 'stage' term consistently
+Date: Sat, 19 May 2012 01:00:32 -0500
+Message-ID: <20120519060031.GB23799@burratino>
+References: <CAMP44s1qqpTxRvjEH32MNqzUeNhgZ1gB+fu=cgvxnSbMB6oBGA@mail.gmail.com>
+ <vpqehqxmwpj.fsf@bauges.imag.fr>
+ <CAMP44s2DU_3UnHxhgwsTVT59KjLi0+=iW7utuofEyis+_06jGA@mail.gmail.com>
+ <CACBZZX4_wjFG4D4_2w8UcvbRwBmJ583QpoP_n-tq+dNds3Bi7Q@mail.gmail.com>
+ <7v1umv7ub0.fsf@alter.siamese.dyndns.org>
+ <CAHREChgTHZL0sNJ3TkZOL7x4k9x=4GRhrZ6Gm0W+Ai_UnX2FEg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, trast@student.ethz.ch, gitster@pobox.com,
-	peff@peff.net, spearce@spearce.org, davidbarr@google.com
-To: Thomas Gummerer <t.gummerer@gmail.com>
-X-From: git-owner@vger.kernel.org Sat May 19 07:48:16 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>,
+	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
+	Felipe Contreras <felipe.contreras@gmail.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Scott Chacon <schacon@gmail.com>,
+	Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>,
+	Jakub =?utf-8?B?TmFyxJlic2tp?= <jnareb@gmail.com>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>,
+	Piotr Krukowiecki <piotr.krukowiecki.news@gmail.com>
+To: Mark Lodato <lodatom@gmail.com>
+X-From: git-owner@vger.kernel.org Sat May 19 08:01:25 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SVcWU-0006PZ-6l
-	for gcvg-git-2@plane.gmane.org; Sat, 19 May 2012 07:48:14 +0200
+	id 1SVcjA-0006A3-HL
+	for gcvg-git-2@plane.gmane.org; Sat, 19 May 2012 08:01:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753532Ab2ESFsJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 19 May 2012 01:48:09 -0400
-Received: from ALUM-MAILSEC-SCANNER-6.MIT.EDU ([18.7.68.18]:58341 "EHLO
-	alum-mailsec-scanner-6.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751366Ab2ESFsG (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 19 May 2012 01:48:06 -0400
-X-Greylist: delayed 424 seconds by postgrey-1.27 at vger.kernel.org; Sat, 19 May 2012 01:48:06 EDT
-X-AuditID: 12074412-b7f1c6d00000092d-28-4fb7326d8242
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-6.mit.edu (Symantec Messaging Gateway) with SMTP id 73.75.02349.D6237BF4; Sat, 19 May 2012 01:41:01 -0400 (EDT)
-Received: from [192.168.2.130] (p4FC0C79F.dip.t-dialin.net [79.192.199.159])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id q4J5evHc001400
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Sat, 19 May 2012 01:40:58 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:12.0) Gecko/20120430 Thunderbird/12.0.1
-In-Reply-To: <20120516215407.GA1738@tgummerer.surfnet.iacbox>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrGKsWRmVeSWpSXmKPExsUixO6iqJtrtN3f4GC/hMWjk5uZLLqudDNZ
-	NPReYbb40dLDbDH/0ERWiwurb7NbrNy1kMmB3WPnrLvsHgs2lXo8693D6HHxkrLHn/N7WD3m
-	flrE6vF5k1wAexS3TVJiSVlwZnqevl0Cd8asnvKCPVIVG66fYW5gnCLaxcjJISFgIvHt0HF2
-	CFtM4sK99WxdjFwcQgKXGSUOLDzBAuGcYZK4t/8UWBWvgLbEymdP2UBsFgFViW0Lv4LZbAK6
-	Eot6mpm6GDk4RAXCJFY/0IAoF5Q4OfMJC4gtIqAlMelrHyuIzSzQwijxel4ESLmwgIzEhvVe
-	EKvmMkucnNYAVsMpYCsx//IZVpAaZgFriW+7iyBa5SW2v53DPIFRYBaSDbMQqmYhqVrAyLyK
-	US4xpzRXNzcxM6c4NVm3ODkxLy+1SNdMLzezRC81pXQTIyQGhHYwrj8pd4hRgINRiYf30qRt
-	/kKsiWXFlbmHGCU5mJREeWMMt/sL8SXlp1RmJBZnxBeV5qQWH2KU4GBWEuF9qwuU401JrKxK
-	LcqHSUlzsCiJ8/5crO4nJJCeWJKanZpakFoEk5Xh4FCS4F0BMlSwKDU9tSItM6cEIc3EwQky
-	nEtKpDg1LyW1KLG0JCMeFKPxxcAoBUnxAO29DNLOW1yQmAsUhWg9xWjM8efhomuMHDM+AUkh
-	lrz8vFQpcd7VIKUCIKUZpXlwi2DJ7xWjONDfwrx7Qap4gIkTbt4roFVMQKsq2baBrCpJREhJ
-	NTAWS53/8rbz0AF105kzP92S4yvufxx/qjWe7+ck7UNV+05pLZgmNeOSRPhFu9eL 
+	id S1753634Ab2ESGAk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 19 May 2012 02:00:40 -0400
+Received: from mail-ob0-f174.google.com ([209.85.214.174]:64462 "EHLO
+	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753167Ab2ESGAj (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 19 May 2012 02:00:39 -0400
+Received: by obbtb18 with SMTP id tb18so4940812obb.19
+        for <git@vger.kernel.org>; Fri, 18 May 2012 23:00:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=tOBRq55ItTZnCDjM8k/zfUYgG/UjURYhF8117uHYSAk=;
+        b=g4j3ZZvBFCzrAzhSW5KgoFjesKHDibXvq6Te6Jwra+rnFa7oVJWLuKG/LqUnULxfAK
+         haQaapaSCmxgvZjhNihZelKjhTLZ32IPH4CZ0LSWKiM85wCERu0DFxzPwJ9/G4MwMYiU
+         34Oyl09Clfy8GFb+PrWiEyLJuEuxbv5gJ6Rcx5enNRkt0JHoELtvw3EzI8uJrqm5V61O
+         KpZicitot6JvfOqIEwpo59icz6QuspCqsP4bKWq/nWjHcQ8DQKZ+syqRa7+4SgMBwMAk
+         V1mmKG8BNZrOE84H9OeNxkg9NUJxC13BRCFsUj1fYmIPdHRor+JPtKX4tDj+2+cJKg0o
+         Bcmw==
+Received: by 10.50.42.130 with SMTP id o2mr2543125igl.37.1337407238442;
+        Fri, 18 May 2012 23:00:38 -0700 (PDT)
+Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
+        by mx.google.com with ESMTPS id gj10sm2164502igc.9.2012.05.18.23.00.36
+        (version=SSLv3 cipher=OTHER);
+        Fri, 18 May 2012 23:00:37 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <CAHREChgTHZL0sNJ3TkZOL7x4k9x=4GRhrZ6Gm0W+Ai_UnX2FEg@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198016>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198017>
 
-On 05/16/2012 11:54 PM, Thomas Gummerer wrote:
-> On 05/16, Michael Haggerty wrote:
->> I just reviewed version 1369bd855b86 of your script, and it is MUCH
->> better.  It's easy to read and review.  The functions that it
->> defines are now self-contained and could therefore be reused for
->> other purposes.  There are fewer magic numbers (though there are
->> still a few; I wonder if there is a way to get rid of those?)
->> You've done a nice job polishing up the code.
->
-> Thanks for the feedback! I could get rid of the magic numbers for
-> the crc code, but I'm not sure if it makes sense to replace the
-> others with constants, since they only occur once in the file. I
-> added comments instead explaining where those numbers come from
-> instead.
+Hi Mark,
 
-I think it is possible to remove the last magic number and also to make 
-the CRC handling easier.  I have pushed some suggested changes to github 
-[1]:
+Mark Lodato wrote:
 
-1. With the current code, trying to read a file that is less than 24 
-bytes long would result in a struct.error (because it would try to 
-unpack a string that is shorter than the struct) whereas the underlying 
-error in this case should almost always be reported as a signature 
-error.  So it is correct to read the signature separately from the rest 
-of the header, but it is even more correct to check the signature 
-(including its length) before reading on.
+> I agree with Felipe that "staging" is the most appropriate term for
+> "adding to the index" in git.  As a native English speaker, I have
+> never thought of "to stage" as relating to shipping in any way.  To
+> me, by far the most common usage is in real estate.  The seller of a
+> home "stages" it by setting up furniture and decorations to make the
+> home as appealing to prospective buyers as possible.
 
-2. I introduce a class CRC to hold checksums, so that (a) the code for 
-handling checksums can be encapsulated, and (b) an instance of this 
-class can be passed into functions and mutated in-place, which is less 
-cumbersome than requiring functions to return (data, crc) tuples.  This, 
-in turn, makes possible...
+I think staging a home does not fit very well here, actually.  As you
+said, staging a home is like staging a play, creating an illusion and
+putting on a production.  It is not obvious how this concept would
+help me understand what it means to add content to the index.
 
-3. ...a new function read_struct(f, s, crc), which reads the data for a 
-struct.Struct from f, checksums it, and returns the unpacked data.  This 
-function is more convenient to use than the old read_calc_crc().
+By contrast, if you run an image search for "staging area", you will
+see examples in all sorts of fields --- shipping, military logistics,
+data warehousing, disaster relief.  It is a familiar, non
+domain-specific term for native English speakers.  In all these
+fields, staging means to put everything needed in one place before
+deploying.  This matches the concept of a file that tracks the content
+of the commit being prepared very well.
 
-4. The checksum instance can also be made responsible for verifying that 
-the next four bytes in the file agree with the expected checksum.  This 
-removes some more code duplication.  (See CRC.matches().)
+"aire de rassemblement" doesn't get as many hits from a web search,
+alas, so I guess the idiom is not as popular in other languages.
 
-5. You read the extension offsets using CRC_STRUCT.size, which is 
-technically correct but misleading.  In fact, the extension offsets 
-should be documented using their own EXTENSION_INDEX_STRUCT.  Also, it 
-makes more sense to store the unpacked integer offsets to extoffsets 
-rather than the raw 4-byte strings.
+For the sake of having a proposal: :)
 
-6. With a couple of more minor changes it is possible to replace the 
-magic number "24" in read_index_entries().  With this change the 
-computation is documented very explicitly and is also (somewhat) robust 
-against future changes in the format.
+ - the file representing the content of the next command would still
+   be called .git/index and not be renamed
 
-Look over my changes and take whatever you want.
+ - adding and removing content to and from the index is "staging a
+   change".  Since it is not safe to assume the reader already
+   knows what that means, when working on the manual authors should
+   try to imagine themselves as a new user and make the text
+   unambiguous enough to help such a person.
 
-> Thanks, I have changed those. I added the docstrings for all read
-> functions, they however don't seem to make sense for the print
-> functions, since you're probably faster just reading the code for
-> them.
+   For example, the first sentence of the "git add" manual:
 
-That's fine.  If you document nontrivial functions you are already doing 
-much better than the git project average.
+	This command updates the index using the current content found in the
+	working tree, to prepare the content staged for the next commit.
 
-> One since I changed in addition is to those changes, is that I
-> gave the exceptions names to make them more meaningful.
+   should not be changed to:
 
-Good.
+	This command updates the staging area using ...
 
-Michael
+   because that just makes it less clear.  Before, it said "the index"
+   and I could look in the glossary or the .git directory to at least
+   find what file it was talking about.  Afterwards, it is using an
+   everyday term and the new user wonders "which staging area?".
 
-[1] https://github.com/mhagger/git/tree/pythonprototype
+   Instead, it would be better to change it to something like:
 
--- 
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
+	This command modifies the content staged for the next commit
+	using content found in the working tree.  It typically adds ...
+
+	The "index" file (see gitindex(5)) typically holds a snapshot of
+	the content of the working tree, and it is this snapshot that is
+	taken as the content of the next commit.  Thus after making any
+	changes to the working directory, and before running the commit
+	command, you must use the add command to add any new or modified
+	files.
+
+Sensible?  If so, patches welcome. :)  If not, what sort of changes
+would you like to see instead?
+
+By the way, I don't mean that "the .git/index file will not be
+renamed" above to be non-negotiable.  I didn't get the impression
+anyone wanted it to be renamed, but if someone does want to rename it
+to .git/staging-area, then I suppose we could discuss that.
+
+Hope that helps,
+Jonathan
