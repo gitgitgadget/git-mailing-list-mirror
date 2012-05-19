@@ -1,71 +1,71 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: git-completion with bash alias
-Date: Fri, 18 May 2012 20:41:47 -0400
-Message-ID: <20120519004147.GE765@sigill.intra.peff.net>
-References: <CACY+Hvqd6L7gWgDBvjPmLPsfA2o1CVKuqkDZ_j7XYf=WjuwvKQ@mail.gmail.com>
+From: Steven Penny <svnpenn@gmail.com>
+Subject: Re: [PATCH 2/2] git-sh-setup: work around Cygwin path handling gotchas
+Date: Fri, 18 May 2012 19:43:54 -0500
+Message-ID: <CAAXzdLU2t64x0jk_QHjwBDP2OPEeVqipT6uaivikn=6F6aieAA@mail.gmail.com>
+References: <4FB09FF2.70309@viscovery.net>
+	<1337191208-21110-1-git-send-email-gitster@pobox.com>
+	<1337191208-21110-3-git-send-email-gitster@pobox.com>
+	<CAAXzdLW5VYnHc41WZ0id=4Qe17dHSj4+J9tqVvG-PvtpXLmh+Q@mail.gmail.com>
+	<7vd364c5kt.fsf@alter.siamese.dyndns.org>
+	<4FB58678.1050009@ramsay1.demon.co.uk>
+	<7vehqib4kk.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org
-To: Carsten Mattner <carstenmattner@googlemail.com>
-X-From: git-owner@vger.kernel.org Sat May 19 02:41:57 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Ramsay Jones <ramsay@ramsay1.demon.co.uk>, git@vger.kernel.org,
+	Johannes Sixt <j.sixt@viscovery.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat May 19 02:44:01 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SVXk4-0004Og-Lo
-	for gcvg-git-2@plane.gmane.org; Sat, 19 May 2012 02:41:56 +0200
+	id 1SVXm4-0006kc-9m
+	for gcvg-git-2@plane.gmane.org; Sat, 19 May 2012 02:44:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965128Ab2ESAlw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 May 2012 20:41:52 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:48900
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S964782Ab2ESAlv (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 May 2012 20:41:51 -0400
-Received: (qmail 10078 invoked by uid 107); 19 May 2012 00:42:14 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 18 May 2012 20:42:14 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 18 May 2012 20:41:47 -0400
-Content-Disposition: inline
-In-Reply-To: <CACY+Hvqd6L7gWgDBvjPmLPsfA2o1CVKuqkDZ_j7XYf=WjuwvKQ@mail.gmail.com>
+	id S965081Ab2ESAn4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 May 2012 20:43:56 -0400
+Received: from mail-ob0-f174.google.com ([209.85.214.174]:46358 "EHLO
+	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758797Ab2ESAnz (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 May 2012 20:43:55 -0400
+Received: by obbtb18 with SMTP id tb18so4648810obb.19
+        for <git@vger.kernel.org>; Fri, 18 May 2012 17:43:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=rBwHjx5UtEgirF0JTyy70A6o0n44wZDwAFswz2NMyN4=;
+        b=V7zfSpkX+pPn5OmrkkBCwtHzGN5sr2dvy6xWPq1wDVBH6MLhNlpZvQp70rEv4dD9ud
+         azNiGUN0J7MZDGE4L7l35pcRA6V4Y43S/hhHG4wBLYsGfC6PUzoX3UQsigyFSERIfe2/
+         kaVbI1bgZCtQey5O/82ts+9/dn6PXlnlbzY6Eqmo0VZgFyJzX0hlNH/EDBlkC0kozq9K
+         NybRJwmvNXqi8zPw/GB9kZqR4cmxQHq/tm6p27jjdTWnJ86KK7G7YxVM333EvrEaPA6c
+         iN9/YpRTikuejJhzqmMbhr9ygJ4e4GhtZGqfHHw46c5yEAPRj96zF46NMxFy2AhBQsuY
+         h2aw==
+Received: by 10.50.195.131 with SMTP id ie3mr2121361igc.73.1337388234623; Fri,
+ 18 May 2012 17:43:54 -0700 (PDT)
+Received: by 10.231.69.140 with HTTP; Fri, 18 May 2012 17:43:54 -0700 (PDT)
+In-Reply-To: <7vehqib4kk.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198000>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198001>
 
-On Fri, May 18, 2012 at 01:35:24PM +0200, Carsten Mattner wrote:
+On Thu, May 17, 2012 at 9:34 PM, Junio C Hamano wrote:
+> And from Cygwin Git, your programs (like $EDITOR and hooks) will get POSIX
+> paths.  It is your programs' responsibility to turn them into Windows
+> paths if/as necessary.
 
-> Completion works when used as "git checkout foo" but fails with
-> "bash: [: 1: unary operator expected" when trying to complete
-> via a single character shell alias like "alias g=git" as in
-> "g checkout foo".
-> 
-> git version 1.7.10.2.548.g9de9681
+I think this is correct. These program should be accepting Cygwin paths and are
+not for obvious reason, they exist outside the the Cygwin world.
 
-Hmm. Are you invoking the completion like:
+For now I will do something like this
 
-  complete -F _git g
+	editor(){
+		cygpath -m "$1" | xargs notepad
+	}
 
-? That used to work, but was broken by the recent 6b179ad (completion:
-add new __git_complete helper, 2012-05-14).
-
-The "new" way seems to be:
-
-  __git_complete g _git
-
-but that function is explicitly labeled as "not public". It looks like
-there was a follow-on patch that was discussed to make a public version,
-but it got dropped.
-
-I'm not sure if this regression is intentional, or if the "old" way even
-worked reliably (I seem to recall people running into issues with
-_get_comp_words_by_ref not being called properly sometimes, but I don't
-remember the details). So it's not clear to me if the right way forward
-is fixing "complete -F _git" to work again, or if that way is just
-broken, and a public version of __git_complete is the right path.
-
-Felipe, can you comment?
-
--Peff
+	export -f editor
+	
+	git config core.editor editor
