@@ -1,70 +1,94 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] t3404: begin "exchange commits with -p" test with
- correct preconditions
-Date: Sat, 19 May 2012 17:15:43 -0500
-Message-ID: <20120519221543.GE4567@burratino>
-References: <4FB79CA8.7080103@kdbg.org>
+From: Jon Seymour <jon.seymour@gmail.com>
+Subject: Re: [PATCH 2/2] submodule: fix handling of supermodules with relative
+ origin URLs
+Date: Sun, 20 May 2012 08:51:08 +1000
+Message-ID: <CAH3AnrrqiXqdHHGZPyOPJ3Zend5JrQX0rKV+pz_mjs3SDjv9DA@mail.gmail.com>
+References: <1337402403-7546-1-git-send-email-jon.seymour@gmail.com>
+	<1337402403-7546-2-git-send-email-jon.seymour@gmail.com>
+	<4FB7ECCF.9020403@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Sun May 20 00:16:43 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Jens Lehmann <Jens.Lehmann@web.de>
+X-From: git-owner@vger.kernel.org Sun May 20 00:51:17 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SVrwx-0003qy-2Z
-	for gcvg-git-2@plane.gmane.org; Sun, 20 May 2012 00:16:35 +0200
+	id 1SVsUW-0001aW-J5
+	for gcvg-git-2@plane.gmane.org; Sun, 20 May 2012 00:51:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754804Ab2ESWPx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 19 May 2012 18:15:53 -0400
-Received: from mail-ob0-f174.google.com ([209.85.214.174]:41637 "EHLO
-	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753049Ab2ESWPw (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 19 May 2012 18:15:52 -0400
-Received: by obbtb18 with SMTP id tb18so5886710obb.19
-        for <git@vger.kernel.org>; Sat, 19 May 2012 15:15:51 -0700 (PDT)
+	id S1756190Ab2ESWvL convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 19 May 2012 18:51:11 -0400
+Received: from mail-wg0-f44.google.com ([74.125.82.44]:61021 "EHLO
+	mail-wg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752220Ab2ESWvJ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 19 May 2012 18:51:09 -0400
+Received: by wgbdr13 with SMTP id dr13so3813523wgb.1
+        for <git@vger.kernel.org>; Sat, 19 May 2012 15:51:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=6SEdGK3Gxg5pm0QdSR8nXGNAXYlWY/EY3m7wC8cdmsA=;
-        b=MZ7vlo6DIk0Gf49DdC3OUTlHOoeTaIE66LlFOF4EhDTCzE1giygsT6wx1GI1viQjc7
-         +Vpjv3RItL+luCiVPBcXJc8sAPvQZ17h1sacoTmAilwbA0yIAI6IvP6XTdcyMgb07eMH
-         UlFskf3EBrmiKify8C+INVE0Ji5hK53zHUYLb6Cgchak279/M0fsV2KJ0I3BrFZ4Vx4p
-         dX4ggECnfYtcKnmItrcUm2AHc6GHhbSi0YBALxH5Zu6HZ4l22SnanX5t1gm/fIqkM/id
-         ZOLKxd6UZJ7rVP7QXKhKvVWQhWoUeLfTB2ZdI5OurnmFuLgdH4jEmKvYGPiZtiRPbaVp
-         qicw==
-Received: by 10.50.100.226 with SMTP id fb2mr3747518igb.31.1337465751225;
-        Sat, 19 May 2012 15:15:51 -0700 (PDT)
-Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
-        by mx.google.com with ESMTPS id fk6sm6361483igc.5.2012.05.19.15.15.50
-        (version=SSLv3 cipher=OTHER);
-        Sat, 19 May 2012 15:15:50 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <4FB79CA8.7080103@kdbg.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=pRF7TB6XWt/kK4aTxEZFhn5Hh/n5+1s8ZZYGU/vVjuk=;
+        b=OrNuakIeQW9Q0fuQT6q/W+T+IhPED0l9OVHkSwwbqgNH0F+DLdLilG/SiN6O4BFXuW
+         PiuVfR0OUPGq5YcC0hsKaP1Y9HXLIcHcWt+pSPpfP1XagMnn57shKE2Y5EXfArdacFvo
+         aDH1Z+b48/S+u/f3eeyb+dGz5Ii+6onTvI+yUImdQ+wlp0q8TMLXocpIg0/ze6Ia+2Ei
+         RrpmtSVuqpHDRoj7nhpWtPPPHEvjX/LQFolhXIC0G2iZWKjPasZ/HAdfSgZw5goig3Kt
+         LsY5PklIJgOS0m9v5z4k7uGG3rUr5nBP04SFndUkNWJVbDjyR4X/QyEtKEyPq8At70He
+         ljqA==
+Received: by 10.180.84.193 with SMTP id b1mr12575440wiz.11.1337467868219; Sat,
+ 19 May 2012 15:51:08 -0700 (PDT)
+Received: by 10.180.146.166 with HTTP; Sat, 19 May 2012 15:51:08 -0700 (PDT)
+In-Reply-To: <4FB7ECCF.9020403@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198040>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198041>
 
-Johannes Sixt wrote:
-
-> The test case shows a bug in 'rebase -p', but even if the bug were fixed
-> the test would fail because it did not ensure that the preconditions match
-> the postconditions that were checked. Insert the suitable 'git checkout'.
+On Sun, May 20, 2012 at 4:56 AM, Jens Lehmann <Jens.Lehmann@web.de> wro=
+te:
+> Am 19.05.2012 06:40, schrieb Jon Seymour:
 >
-> Signed-off-by: Johannes Sixt <j6t@kdbg.org>
-> ---
->  Could it be that this bug existed since the test case was introduced
->  in cddb42d2?
+> Just a small nit: I'd prefer to replace the 4 occurrences of the term
+> "supermodule" with "superproject".
 
-Yeah, looks like it was always broken.  I remember sanity checking
-by removing the "-p", too, but that was probably before moving the
-test to join the other -p tests.  Thanks for fixing it.
+Sure. I can't argue with precedent, of course, but I guess I was
+favouring the consistency in the suffixes used with sub and super.
 
-Acked-by: Jonathan Nieder <jrnieder@gmail.com>
+>
+>
+> BTW, what happened to the following comment in you other email?
+>
+>>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 remoteurl=3D"${up_path%/}/${remo=
+teurl%/*}"
+>>
+>> Meant up_path%/ to be up_path%/*
+>
+> The '*' is not there (but the test suite runs fine no matter if I add
+> a '*' there or not). Thinking about it not adding the '*' should be
+> correct, as you just want to chop off a trailing '/' from $up_path
+> here, right?
+
+Yes %/* was actually the wrong thing to do - my original intent was to
+remove repeated trailing occurrences of /, but, of course, %/* doesn't
+do that, nor should it be necessary  (assuming the sm_path was
+normalized during add).
+
+>
+> So no objection on the code changes from my side.
+
+I noticed one relative case that is not handled properly yet, but
+there is a workaround. If the superproject's origin URL is of the
+form: foo/bar (a case I actually have myself for reasons I can explain
+if you want me to), then the correct rule doesn't get matched by
+=2E*/*). The workaround is for the user to change foo/bar style origin
+URLs to ./foo/bar.
+
+Let me know if I should fix this case now too.
+
+jon.
