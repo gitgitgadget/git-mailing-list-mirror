@@ -1,145 +1,136 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [1.8.0] use 'stage' term consistently
-Date: Sun, 20 May 2012 14:04:46 +0200
-Message-ID: <CAMP44s2bbJLgqOdi49jS34E79EvNtRifpCbDE_bQUys+3xrs3w@mail.gmail.com>
-References: <CAMP44s1qqpTxRvjEH32MNqzUeNhgZ1gB+fu=cgvxnSbMB6oBGA@mail.gmail.com>
-	<vpqehqxmwpj.fsf@bauges.imag.fr>
-	<CAMP44s2DU_3UnHxhgwsTVT59KjLi0+=iW7utuofEyis+_06jGA@mail.gmail.com>
-	<CACBZZX4_wjFG4D4_2w8UcvbRwBmJ583QpoP_n-tq+dNds3Bi7Q@mail.gmail.com>
-	<7v1umv7ub0.fsf@alter.siamese.dyndns.org>
-	<CAHREChgTHZL0sNJ3TkZOL7x4k9x=4GRhrZ6Gm0W+Ai_UnX2FEg@mail.gmail.com>
-	<20120519060031.GB23799@burratino>
-	<20120519063208.GA24556@burratino>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: [PATCH] Consistently use "superproject" instead of "supermodule"
+Date: Sun, 20 May 2012 15:28:26 +0200
+Message-ID: <4FB8F17A.9090308@web.de>
+References: <1337402403-7546-1-git-send-email-jon.seymour@gmail.com> <1337402403-7546-2-git-send-email-jon.seymour@gmail.com> <4FB7ECCF.9020403@web.de> <CAH3AnrrqiXqdHHGZPyOPJ3Zend5JrQX0rKV+pz_mjs3SDjv9DA@mail.gmail.com> <7v4nrbbfer.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Mark Lodato <lodatom@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Scott Chacon <schacon@gmail.com>,
-	Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>,
-	=?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>,
-	Piotr Krukowiecki <piotr.krukowiecki.news@gmail.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Sun May 20 14:04:57 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Jon Seymour <jon.seymour@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun May 20 15:28:39 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SW4sX-0002GI-G9
-	for gcvg-git-2@plane.gmane.org; Sun, 20 May 2012 14:04:53 +0200
+	id 1SW6BZ-0000Cr-Pv
+	for gcvg-git-2@plane.gmane.org; Sun, 20 May 2012 15:28:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753918Ab2ETMEt convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 20 May 2012 08:04:49 -0400
-Received: from mail-lb0-f174.google.com ([209.85.217.174]:41172 "EHLO
-	mail-lb0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753849Ab2ETMEs convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 20 May 2012 08:04:48 -0400
-Received: by lbbgm6 with SMTP id gm6so2904382lbb.19
-        for <git@vger.kernel.org>; Sun, 20 May 2012 05:04:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=22f35EKLY3gNp+IyLTDd5Wn4hxTCJzZPXrNMbKzkSjo=;
-        b=EtWjKp19F4EYUkhOavyIQOv/CFdsU/BCE+HsHXgT/yP7KI4H6N2qDfpnTbX8oYQDAz
-         C0vWf++/GWHRhr9CxWTsRwx4UNgPbkvLIg3vvIHteqb2ScKSc7NTc2KkaieBCkVwk249
-         Tq7LrVREyH9M3+LkIuNruLjmpqf7UmNn6RO/w42GeiTd91FMJ0/+DA+Cro4twjLa+uOy
-         XZoRP3kDcCaOyy3D+aO5OJr+bHcTelqCmv/sozC4tZrGZlEQYWLfoVEardDF8AiCjLeg
-         8rqy5w9L6gHRSBKUzMsFE5F3sPEK1zvIwRJwaVjcPL77bhevfolGvTRyLGKkThKe3l+1
-         NUmA==
-Received: by 10.152.109.166 with SMTP id ht6mr16607528lab.46.1337515486557;
- Sun, 20 May 2012 05:04:46 -0700 (PDT)
-Received: by 10.112.107.65 with HTTP; Sun, 20 May 2012 05:04:46 -0700 (PDT)
-In-Reply-To: <20120519063208.GA24556@burratino>
+	id S1755007Ab2ETN2d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 20 May 2012 09:28:33 -0400
+Received: from fmmailgate03.web.de ([217.72.192.234]:40141 "EHLO
+	fmmailgate03.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754832Ab2ETN2c (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 20 May 2012 09:28:32 -0400
+Received: from moweb002.kundenserver.de (moweb002.kundenserver.de [172.19.20.108])
+	by fmmailgate03.web.de (Postfix) with ESMTP id 5DF2C1B4E3676
+	for <git@vger.kernel.org>; Sun, 20 May 2012 15:28:30 +0200 (CEST)
+Received: from [192.168.178.48] ([79.193.81.251]) by smtp.web.de (mrweb002)
+ with ESMTPA (Nemesis) id 0MGzFy-1SJOrH0CSw-00DnTx; Sun, 20 May 2012 15:28:29
+ +0200
+User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:12.0) Gecko/20120428 Thunderbird/12.0.1
+In-Reply-To: <7v4nrbbfer.fsf@alter.siamese.dyndns.org>
+X-Provags-ID: V02:K0:yem47ldwo4mIdeXNWXVJzzTksiR02VqTY6xFpY3u+E/
+ IxUhkcV9O4D7s7G79XxpTTA/6yYRlJmcsmetr5zoOezqFTh9xP
+ Dxq0ev3jQ2I+8v5KDrvPPTyUTYUbRPnFfQSQdCD2wnTSToSzS1
+ vpdCvu7H8Aiy7giQdXE98/fF6wehsns2YFhN0/Ff7pWTIIZO5S
+ RppmKNBXnvSNCWZ8hmXjw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198058>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198059>
 
-On Sat, May 19, 2012 at 8:32 AM, Jonathan Nieder <jrnieder@gmail.com> w=
-rote:
-> Jonathan Nieder wrote:
->
->> For the sake of having a proposal: :)
->
-> For the command-line interface:
->
-> Making the "git stage" command more prominent. =C2=A0Unfortunately it=
- is
-> currently a synonym for "git add", which makes "git rm" less
-> discoverable and generally isn't very helpful. =C2=A0But if we discar=
-d that
-> property, it could become a nice way to make some operations more
-> discoverable:
->
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0git stage --add <paths>; # stage an additi=
-on
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0git stage --remove <paths>; # stage a remo=
-val
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0git stage --edit <paths>; # edit the stage=
-d content
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0git stage --apply <patch>; # stage the des=
-cribed change
->
-> These would be commands that modify the index without touching the
-> worktree.
+We fairly consistently say "superproject" and never "supermodule" these
+days. But there are seven occurrences of "supermodule" left in the current
+work tree. Three appear in Release Notes for 1.5.3 and 1.7.7, three in
+test names and one in a C-code comment.
 
-If they are commands, why do they start with --?
+Replace all occurrences of "supermodule" outside of the Release Notes
+(which shouldn't be changed after the fact) with "superproject" for
+consistency.
 
-'git stage add'
-'git stage remove'
-'git stage edit'
+Signed-off-by: Jens Lehmann <Jens.Lehmann@web.de>
+---
 
-Would be more appropriate.
+Am 20.05.2012 07:16, schrieb Junio C Hamano:
+> Jon Seymour <jon.seymour@gmail.com> writes:
+> 
+>> On Sun, May 20, 2012 at 4:56 AM, Jens Lehmann <Jens.Lehmann@web.de> wrote:
+>>> Am 19.05.2012 06:40, schrieb Jon Seymour:
+>>>
+>>> Just a small nit: I'd prefer to replace the 4 occurrences of the term
+>>> "supermodule" with "superproject".
+>>
+>> Sure. I can't argue with precedent, of course, but I guess I was
+>> favouring the consistency in the suffixes used with sub and super.
+> 
+> We fairly consistently say (even outside the documentation---for example,
+> listen to the TechTalk Linus gave in May 2007) "superproject" and never
+> "supermodule".  You can tell people who were not paying attention when
+> they say "supermodule" ;-).
 
-But I think revamping 'git stage' should be a separate task.
+Or they used one of the nine commit messages in current masters history
+or one the seven occurrences in the current work tree which use the term
+"supermodule" as inspiration ;-)
 
-> Finding a better mnemonic than "also update the current directory cac=
-he"
-> and "trust the current directory cache" for operations like git apply
-> --index and git grep --cached. =C2=A0Better concepts would be "search=
- the
-> content staged for the next commit" and "also update the staged
-> content".
->
-> Maybe:
->
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0git apply --index=3D(yes | no | only)
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0# apply =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =3D apply --index=3Dn=
-o
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0# apply --inde=
-x =C2=A0 =C2=A0 =C2=A0 =C2=A0 =3D apply --index=3Dyes
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0# apply --cach=
-ed =C2=A0 =C2=A0 =C2=A0 =C2=A0=3D apply --index=3Donly
->
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0git grep --index; # (=3D git grep --cached=
-)
->
-> I imagine others can come up with something better.
+While we can't change history and shouldn't change Release Notes, the
+other uses of "supermodule" should be removed.
 
-'index'? That goes contrary to this request; the term 'index' should
-be avoided in porcelain commands. s/index/stage/ and the proposal
-seems sensible, but I fail to see how --stage=3Dno could be helpful, an=
-d
---stage=3Dyes should be the same as --stage, and then I wonder what
-would be the purpose of having --stage, and --stage=3Donly, where we
-could have a --stage(d)-only for commands that need this distinction
-(not all of them). If in the future we want more --stage=3Dfoo options,
-then it might make sense, but I just don't see that ever happening.
 
-I guess the next step would be to list all the commands that use
---index, --staged, and --cached, and propose new options that would
-eventually help to remove --index and --cached (after some period of
-deprecation).
+ t/t7408-submodule-reference.sh | 4 ++--
+ t/t9300-fast-import.sh         | 2 +-
+ unpack-trees.c                 | 2 +-
+ 3 files changed, 4 insertions(+), 4 deletions(-)
 
-Cheers.
+diff --git a/t/t7408-submodule-reference.sh b/t/t7408-submodule-reference.sh
+index a45fadc..b770b2f 100755
+--- a/t/t7408-submodule-reference.sh
++++ b/t/t7408-submodule-reference.sh
+@@ -28,7 +28,7 @@ git prune'
 
---=20
-=46elipe Contreras
+ cd "$base_dir"
+
+-test_expect_success 'preparing supermodule' \
++test_expect_success 'preparing superproject' \
+ 'test_create_repo super && cd super &&
+ echo file > file &&
+ git add file &&
+@@ -55,7 +55,7 @@ diff expected current'
+
+ cd "$base_dir"
+
+-test_expect_success 'cloning supermodule' \
++test_expect_success 'cloning superproject' \
+ 'git clone super super-clone'
+
+ cd "$base_dir"
+diff --git a/t/t9300-fast-import.sh b/t/t9300-fast-import.sh
+index 7da0e8d..2aa1824 100755
+--- a/t/t9300-fast-import.sh
++++ b/t/t9300-fast-import.sh
+@@ -1657,7 +1657,7 @@ M 160000 :6 sub
+ INPUT_END
+
+ test_expect_success \
+-	'P: supermodule & submodule mix' \
++	'P: superproject & submodule mix' \
+ 	'git fast-import <input &&
+ 	 git checkout subuse1 &&
+ 	 rm -rf sub && mkdir sub && (cd sub &&
+diff --git a/unpack-trees.c b/unpack-trees.c
+index bcee99c..ad40109 100644
+--- a/unpack-trees.c
++++ b/unpack-trees.c
+@@ -1210,7 +1210,7 @@ static int verify_uptodate_1(struct cache_entry *ce,
+ 			return 0;
+ 		/*
+ 		 * NEEDSWORK: the current default policy is to allow
+-		 * submodule to be out of sync wrt the supermodule
++		 * submodule to be out of sync wrt the superproject
+ 		 * index.  This needs to be tightened later for
+ 		 * submodules that are marked to be automatically
+ 		 * checked out.
+-- 
+1.7.10.2.548.g9de9681.dirty
