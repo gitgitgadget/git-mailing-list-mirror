@@ -1,86 +1,83 @@
-From: mhagger@alum.mit.edu
-Subject: [PATCH] free_ref_entry(): do not trigger reading of loose refs
-Date: Sun, 20 May 2012 08:49:32 +0200
-Message-ID: <1337496572-11258-1-git-send-email-mhagger@alum.mit.edu>
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun May 20 08:57:43 2012
+From: Carsten Mattner <carstenmattner@googlemail.com>
+Subject: Re: [PATCH 0/2] completion: backwards compatibility fix
+Date: Sun, 20 May 2012 11:02:35 +0200
+Message-ID: <CACY+HvqhJf6ywTaDgT5ie-3iBQAGwngTYPiCvKgw6mJB=1+fOg@mail.gmail.com>
+References: <1337395295-29162-1-git-send-email-felipe.contreras@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Sun May 20 11:02:49 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SW05F-0004Iw-Nx
-	for gcvg-git-2@plane.gmane.org; Sun, 20 May 2012 08:57:42 +0200
+	id 1SW22E-0004yi-QU
+	for gcvg-git-2@plane.gmane.org; Sun, 20 May 2012 11:02:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751843Ab2ETG47 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 20 May 2012 02:56:59 -0400
-Received: from ALUM-MAILSEC-SCANNER-3.MIT.EDU ([18.7.68.14]:53168 "EHLO
-	alum-mailsec-scanner-3.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751096Ab2ETG46 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 20 May 2012 02:56:58 -0400
-X-Greylist: delayed 422 seconds by postgrey-1.27 at vger.kernel.org; Sun, 20 May 2012 02:56:58 EDT
-X-AuditID: 1207440e-b7f256d0000008c1-74-4fb894149f97
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-3.mit.edu (Symantec Messaging Gateway) with SMTP id BE.30.02241.41498BF4; Sun, 20 May 2012 02:49:56 -0400 (EDT)
-Received: from michael.fritz.box (p4FC0ABAB.dip.t-dialin.net [79.192.171.171])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id q4K6nix4022017
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Sun, 20 May 2012 02:49:54 -0400
-X-Mailer: git-send-email 1.7.10
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrEIsWRmVeSWpSXmKPExsUixO6iqCsyZYe/wfdzLBZdV7qZLBp6rzBb
-	3F4xn9niR0sPswOLx9/3H5g8nvXuYfS4eEnZ4/MmuQCWKG6bpMSSsuDM9Dx9uwTujH9LXAo6
-	2CtWT3vF2MB4gbWLkZNDQsBEYuXhKewQtpjEhXvr2boYuTiEBC4zShxYuJIFwjnHJHH1wGY2
-	kCo2ASmJl409YB0iAmoSE9sOsYDYzAIpEq/+7gKyOTiEBdwljr9hBDFZBFQlZh8PB6ngFXCR
-	+L/lMRPELnmJp/f72CYwci9gZFjFKJeYU5qrm5uYmVOcmqxbnJyYl5dapGusl5tZopeaUrqJ
-	ERIKfDsY29fLHGIU4GBU4uEN0t/hL8SaWFZcmXuIUZKDSUmUl3ciUIgvKT+lMiOxOCO+qDQn
-	tfgQowQHs5IIr3QWUI43JbGyKrUoHyYlzcGiJM6rtkTdT0ggPbEkNTs1tSC1CCYrw8GhJMG7
-	YTJQo2BRanpqRVpmTglCmomDE0RwgWzgAdpgDlLIW1yQmFucmQ5RdIpRUUqctx8kIQCSyCjN
-	gxsAi9pXjOJA/wjztoBU8QAjHq77FdBgJqDBlWzbQAaXJCKkpBoYZ8Q/crVdkN+2cdL/U/u3
-	SUY6uTdEabOrPvxdHp2sd8cua67Apnqn3bPyF7QJ7FQ3+qLU1ivhEBbBlbPDPuOZuNVjxZkO
-	B7bJ/j4vniuuIOtx4NhkZ5YzNQG7LXZrTbr35+2TtN83nMOd/taZ5UXVXru1JzLikbrGjnqL
-	ov8rOpJz81yTuXYosRRnJBpqMRcVJwIA6+wqkbUCAAA=
+	id S1752559Ab2ETJCi convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 20 May 2012 05:02:38 -0400
+Received: from mail-gg0-f174.google.com ([209.85.161.174]:44327 "EHLO
+	mail-gg0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752127Ab2ETJCg convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 20 May 2012 05:02:36 -0400
+Received: by gglu4 with SMTP id u4so3741034ggl.19
+        for <git@vger.kernel.org>; Sun, 20 May 2012 02:02:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=fi6GIHrd5KbEQZ9ASZXQKH/0iKRWFR3PbHufzLFS56Y=;
+        b=Z5kSqtTXpy2huKPSQJqqBKXmb3SqBkwvlEywDHM86nBfx9BI+736LdlGxwxvmz0hG0
+         W22hYIO5jmxn61tMhzmzQlfol+zfCRhzQhYVvX1AzmWdXwfMhQOzvY6zwcJJNy5bCIbg
+         aooAVLYlVSG4/KbfjYhauwtFE3eHtCq0a9ZghYlER1HCSczM+JDVgUqB+fwSo+MGmmDf
+         2lJu5FHeFYFbWxi0D1w0n2k1Hwl/u3RI4s9quANgZPhIPq1gFjME/u2yJ97JRqqZ50se
+         +KVAJWF4SRiMYX7ROdriDOji3FmCaAA/Tahqg8qY/PgoxqnXscIYhEMC774URXB2WHYH
+         Z6yw==
+Received: by 10.42.19.138 with SMTP id c10mr5704827icb.27.1337504555428; Sun,
+ 20 May 2012 02:02:35 -0700 (PDT)
+Received: by 10.50.6.231 with HTTP; Sun, 20 May 2012 02:02:35 -0700 (PDT)
+In-Reply-To: <1337395295-29162-1-git-send-email-felipe.contreras@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198051>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198053>
 
-From: Michael Haggerty <mhagger@alum.mit.edu>
+On Sat, May 19, 2012 at 4:41 AM, Felipe Contreras
+<felipe.contreras@gmail.com> wrote:
+> Hi,
+>
+> These two patches are meant to fix the backwards compatibility of _gi=
+t, and
+> _gitk. This also helps my zsh's wrapper.
+>
+> Felipe Contreras (2):
+> =A0completion: rename _git and _gitk
+> =A0completion: add support for backwards compatibilit
+>
+> =A0contrib/completion/git-completion.bash | =A0 22 +++++++++++++++++-=
+----
+> =A0t/t9902-completion.sh =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0| =A0 =A0=
+2 +-
+> =A02 files changed, 18 insertions(+), 6 deletions(-)
+>
+> --
+> 1.7.10.2
+>
 
-Do not call get_ref_dir() from within free_ref_entry(), because that
-triggers the reading of loose refs, only for them to be freed
-immediately.
+Thanks Felipe. With the 2 patches applied all the following
+completion definitions work.
 
-Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
----
-Fix a silly inefficiency from the lazy-loose changes.
+complete -o bashdefault -o default -o nospace -F _git g 2>/dev/null \
+   || complete -o default -o nospace -F _git g
+__git_complete g _git
+__git_complete g _main_git
 
- refs.c |    9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
-
-diff --git a/refs.c b/refs.c
-index d6bdb47..26c8fcd 100644
---- a/refs.c
-+++ b/refs.c
-@@ -259,8 +259,13 @@ static void clear_ref_dir(struct ref_dir *dir);
- 
- static void free_ref_entry(struct ref_entry *entry)
- {
--	if (entry->flag & REF_DIR)
--		clear_ref_dir(get_ref_dir(entry));
-+	if (entry->flag & REF_DIR) {
-+		/*
-+		 * Do not use get_ref_dir() here, as that might
-+		 * trigger the reading of loose refs.
-+		 */
-+		clear_ref_dir(&entry->u.subdir);
-+	}
- 	free(entry);
- }
- 
--- 
-1.7.10
+Ignoring backwards compatibility, which one would you suggest
+I use? Keep in mind that I originally copied the first
+long completion defintion from git-completion.bash a long time
+ago.
