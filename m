@@ -1,85 +1,84 @@
-From: Gelonida N <gelonida@gmail.com>
-Subject: Re: How to properly rename a repository with submodules
-Date: Sun, 20 May 2012 20:49:13 +0200
-Message-ID: <jpbeb9$cni$1@dough.gmane.org>
-References: <jpbcjj$ho$1@dough.gmane.org>
+From: Christian Stimming <stimming@tuhh.de>
+Subject: Re: [PATCH] l10n: de.po: translate 265 new messages
+Date: Sun, 20 May 2012 22:56:10 +0200
+Organization: Alumni Technische =?UTF-8?B?VW5pdmVyc2l0w6R0?= Hamburg-Harburg
+Message-ID: <1825828.hnjW9vybBO@cs-pc>
+References: <1337533755-29399-1-git-send-email-ralf.thielow@googlemail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun May 20 20:49:57 2012
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7Bit
+Cc: trast@student.ethz.ch, jk@jk.gs, worldhello.net@gmail.com,
+	git@vger.kernel.org
+To: Ralf Thielow <ralf.thielow@googlemail.com>
+X-From: git-owner@vger.kernel.org Sun May 20 22:56:43 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SWBCO-0001uD-Kh
-	for gcvg-git-2@plane.gmane.org; Sun, 20 May 2012 20:49:48 +0200
+	id 1SWDB5-0001nd-2E
+	for gcvg-git-2@plane.gmane.org; Sun, 20 May 2012 22:56:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756811Ab2ETSt0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 20 May 2012 14:49:26 -0400
-Received: from plane.gmane.org ([80.91.229.3]:45329 "EHLO plane.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756741Ab2ETStZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 20 May 2012 14:49:25 -0400
-Received: from list by plane.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1SWBBz-0001By-ET
-	for git@vger.kernel.org; Sun, 20 May 2012 20:49:23 +0200
-Received: from unicorn.dungeon.de ([81.56.82.123])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 20 May 2012 20:49:23 +0200
-Received: from gelonida by unicorn.dungeon.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 20 May 2012 20:49:23 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: unicorn.dungeon.de
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:12.0) Gecko/20120430 Thunderbird/12.0.1
-In-Reply-To: <jpbcjj$ho$1@dough.gmane.org>
+	id S1755273Ab2ETU40 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 20 May 2012 16:56:26 -0400
+Received: from smtp3.rz.tu-harburg.de ([134.28.202.138]:36097 "EHLO
+	smtp3.rz.tu-harburg.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755099Ab2ETU4Z (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 20 May 2012 16:56:25 -0400
+Received: from mail.tu-harburg.de (mail.tu-harburg.de [134.28.202.179])
+	by smtp3.rz.tu-harburg.de (8.13.8/8.13.8) with ESMTP id q4KKuFFL028317
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK);
+	Sun, 20 May 2012 22:56:15 +0200
+Received: from cs-pc.localnet (e176207053.adsl.alicedsl.de [85.176.207.53])
+	(user=alucst mech=LOGIN bits=0)
+	by mail.tu-harburg.de (8.13.8/8.13.8) with ESMTP id q4KKuELr028050
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Sun, 20 May 2012 22:56:15 +0200
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=tuhh.de; s=x2012-20;
+	t=1337547375; bh=VBfR/zM4AOReVTQGVG7MI3rf/Wz4Rd53aal8Sd42gWs=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Transfer-Encoding:Content-Type;
+	b=hrTVdQJ6Xdr1vEpNy4MHtyvSYAB9Xk9uoXm91ddirD8rmSE3hceYEKNO1ct77IOlQ
+	 RxpHEgPYwQTjw5O9XqsE5I4j+cMMv/CrRJ3hkHVQS3nOCS3l1tIODfBJgs5eaO/s8C
+	 LInjzCg1TRPY5r3FVli0p2LJYeIFXSUlupDGw1EY=
+User-Agent: KMail/4.7.3 (Linux/3.0.0-19-generic; KDE/4.7.4; x86_64; ; )
+In-Reply-To: <1337533755-29399-1-git-send-email-ralf.thielow@googlemail.com>
+X-Scanned-By: TUHH Rechenzentrum content checker on 134.28.202.138
+X-Scanned-By: TUHH Rechenzentrum content checker on 134.28.202.179
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198068>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198069>
 
-On 05/20/2012 08:19 PM, Gelonida N wrote:
-> Hi,
->
-> Today I noticed to my surprise, that a repository with submodules
-> contains absolute paths.in the .git file of each sub module.
->
-> This is kind of surprising to me and seems to make it absolutely
-> impossible to have a non bare git repository on a memory stick.
->
-> It also seems to make it impossible to rename a working repository after
-> cloning.
->
-> So I have three questions.
->
-> 1.) Is there any way to force git to use relative path names, such, that
-> this issue just disappears.
->
-> 2,) Is there any existing script, that allows me to move a git
-> repository to another location without breaking it's sub modules.
->
-> 3.) Why do these path names have to be absolute? Is this for performance
-> reasons? path names relative to the location of the .git file seem to be
-> much more flexible / portable.
->
+Dear Ralf,
 
-It seems this behaviur is just on one of my 'new' machines which was 
-upgraded to
-Ubuntu 12.04 (git version 1.7.9.5)
+your changes are very good. However, I just noticed one specific stylistic 
+issue with the existing German translation, which you've continued in the very 
+same way:
 
+Am Sonntag, 20. Mai 2012, 19:09:15 schrieb Ralf Thielow:
+> +#: help.c:214
+> +msgid "git commands available from elsewhere on your $PATH"
+> +msgstr "Vorhandene Git-Kommandos irgendwo in deinem $PATH"
+(and several more following)
 
-on my old machines I had either really old git versions or the most 
-recent ones 1.7.10
+The translation (both in the existing strings and in your newly added ones) 
+addresses the user as "du" instead of "Sie" (for the non-German-speaking: "du" 
+is the informal addressing, "Sie" is the formal addressing). However, in 
+German software there are two main rules on this: 1. Don't address the user 
+directly. Rather prefer passive forms over directly addressing the person. I 
+know English software is much more permissive of this one. Hence, occasionally 
+the German translator should take the freedom to change the wording so that 
+the addressing of the user is replaced in the translation by some passive 
+wording without the addressing of the user. 2. If the addressing of the user 
+is unavoidable, the text should use "Sie" instead of "du". Addressing the user 
+as "du" should be constrained to audiences which for sure always address each 
+other as "du", such as certain educational settings and/or games and such (and 
+maybe in the Ikea-Katalog, but even there they switched from Du to Sie and 
+back again several times). Please try to avoid using "du" in developer tools' 
+user-visible strings. Thanks a lot!
 
+Regards,
 
-I just added ppa:git-core/ppa to the Ubuntu sources and upgraded git to 
-1.7.10
-
-Problem solved!! Path names are now relative. So it seems it wasn't only 
-me thinking absolute path names are a bad idea :-)
+Christian
