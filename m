@@ -1,138 +1,115 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: [PATCH/RFC] rebase -p: do not redo the merge, but cherry-pick first-parent
- changes
-Date: Mon, 21 May 2012 22:19:09 +0200
-Message-ID: <4FBAA33D.1080703@kdbg.org>
+From: Thomas Gummerer <t.gummerer@gmail.com>
+Subject: Re: Index format v5
+Date: Mon, 21 May 2012 22:30:18 +0200
+Message-ID: <20120521203018.GA57389@tgummerer.unibz.it>
+References: <20120510121911.GB98491@tgummerer>
+ <4FAC0633.90809@alum.mit.edu>
+ <20120511171230.GA2107@tgummerer>
+ <4FB01080.6010605@alum.mit.edu>
+ <20120514150113.GD2107@tgummerer>
+ <4FB1746A.6090408@alum.mit.edu>
+ <20120515134916.GA2074@tgummerer.unibz.it>
+ <4FB334C7.2070201@alum.mit.edu>
+ <20120516215407.GA1738@tgummerer.surfnet.iacbox>
+ <4FB73268.4020204@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: Stephen Haberman <stephen@exigencecorp.com>,
-	Andrew Wong <andrew.kw.w@gmail.com>
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon May 21 22:19:28 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, trast@student.ethz.ch, gitster@pobox.com,
+	peff@peff.net, spearce@spearce.org, davidbarr@google.com
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Mon May 21 22:31:13 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SWZ4a-0001Ow-Bo
-	for gcvg-git-2@plane.gmane.org; Mon, 21 May 2012 22:19:20 +0200
+	id 1SWZG3-0006K5-RF
+	for gcvg-git-2@plane.gmane.org; Mon, 21 May 2012 22:31:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758282Ab2EUUTP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 May 2012 16:19:15 -0400
-Received: from bsmtp.bon.at ([213.33.87.14]:7737 "EHLO bsmtp.bon.at"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752999Ab2EUUTO (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 May 2012 16:19:14 -0400
-Received: from dx.sixt.local (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTP id 7DDDFCDF86;
-	Mon, 21 May 2012 22:20:13 +0200 (CEST)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-	by dx.sixt.local (Postfix) with ESMTP id 247C319F30B;
-	Mon, 21 May 2012 22:19:10 +0200 (CEST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:12.0) Gecko/20120421 Thunderbird/12.0
+	id S1758497Ab2EUUa3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 May 2012 16:30:29 -0400
+Received: from mail-wi0-f172.google.com ([209.85.212.172]:40028 "EHLO
+	mail-wi0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758465Ab2EUUaX (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 May 2012 16:30:23 -0400
+Received: by wibhj8 with SMTP id hj8so2739566wib.1
+        for <git@vger.kernel.org>; Mon, 21 May 2012 13:30:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=dTxozoCLUegXWeGOlOQJ1aT1ibrC3UVVM4mlApl5Hf4=;
+        b=pRuUbNXPsGG3e3glJ9US15mkKo+qjXU8vr2On+1Q8gQ3Ofqrb7OuqIRg/zfb3QP0f0
+         KBVxUx4FGobWjL51+hEpw5MNkvYzL+VmnOcv9pLTVha09vDfWPuA1UqnXXnmzCWScJcm
+         jpyFveEp7tdjCKzzDsc39gtIC5O5NRKCkvN+yEzdbV0CrjvT0l8zgbrnep/At7hZ9oxG
+         Zg5+THWKHzfh4dItIpPQnJTNnmEHx9axVf7V+o/XWBr8Ka3c9RWLXe55mZ3hOEGC6g1c
+         IX57lQaOaQnJR2NP87RJ5idGmOAqJVRE+bsQqVOxRjT3O8r56oGosV2Rl2Zm9ZmLU7mZ
+         9FQQ==
+Received: by 10.216.196.218 with SMTP id r68mr280046wen.122.1337632221363;
+        Mon, 21 May 2012 13:30:21 -0700 (PDT)
+Received: from localhost (host84-52-dynamic.14-87-r.retail.telecomitalia.it. [87.14.52.84])
+        by mx.google.com with ESMTPS id dg2sm43482657wib.4.2012.05.21.13.30.19
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Mon, 21 May 2012 13:30:20 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <4FB73268.4020204@alum.mit.edu>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198125>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198126>
 
-When rebase -p had to replay a merge commit, it used to redo the merge.
-But this has drawbacks:
 
-- When the merge was evil, i.e., contained changes that are in neither of
-  the parents, that change was not preserved.
 
-- The 'git merge' invocation passed the commit message of the old merge
-  commit, but it still obeyed the merge.log option. If it was set, the log
-  ended up twice in the commit message.
+On 05/19, Michael Haggerty wrote:
+> I think it is possible to remove the last magic number and also to
+> make the CRC handling easier.  I have pushed some suggested changes
+> to github [1]:
+> 
+> 1. With the current code, trying to read a file that is less than 24
+> bytes long would result in a struct.error (because it would try to
+> unpack a string that is shorter than the struct) whereas the
+> underlying error in this case should almost always be reported as a
+> signature error.  So it is correct to read the signature separately
+> from the rest of the header, but it is even more correct to check
+> the signature (including its length) before reading on.
 
-Replace the 'git merge' by a cherry-pick that picks the changes that the
-merge introduces with respect to the first parent.
+I looked at the current git code, and the filesize is used for
+checking if the index size is big enough. I'll implement it that way
+in the prototype for now.
 
-The change in t3409 reflects the new situation after a conflicting merge
-is replayed: Earlier, 'git merge' found a conflict in an add/add
-situation with file B only in stage 2 and 3, now it is a regular three-way
-merge conflict.
+> 2. I introduce a class CRC to hold checksums, so that (a) the code
+> for handling checksums can be encapsulated, and (b) an instance of
+> this class can be passed into functions and mutated in-place, which
+> is less cumbersome than requiring functions to return (data, crc)
+> tuples.  This, in turn, makes possible...
+> 
+> 3. ...a new function read_struct(f, s, crc), which reads the data
+> for a struct.Struct from f, checksums it, and returns the unpacked
+> data.  This function is more convenient to use than the old
+> read_calc_crc().
+> 
+> 4. The checksum instance can also be made responsible for verifying
+> that the next four bytes in the file agree with the expected
+> checksum.  This removes some more code duplication.  (See
+> CRC.matches().)
+>
+> 5. You read the extension offsets using CRC_STRUCT.size, which is
+> technically correct but misleading.  In fact, the extension offsets
+> should be documented using their own EXTENSION_INDEX_STRUCT.  Also,
+> it makes more sense to store the unpacked integer offsets to
+> extoffsets rather than the raw 4-byte strings.
+> 
+> 6. With a couple of more minor changes it is possible to replace the
+> magic number "24" in read_index_entries().  With this change the
+> computation is documented very explicitly and is also (somewhat)
+> robust against future changes in the format.
+> 
+> Look over my changes and take whatever you want.
 
-A test in  t3410 fails now with this new implementation. The branch that
-is merged in by the old history and that is to be preserved is already
-merged into the new upstream. In the old implementation, 'git merge'
-detected this situation and succeeded with "Already up to date", but the
-new implementation does not notice that it is pointless to keep the merge.
-It just tries to follow instructions, but fails due to a conflicting
-cherry-pick. This is a corner case whose correct solution should be that
-the "pick" instruction is not generated in the first place.
+Thanks, I didn't merge them directly, but I took the basics out and
+merged them with my code.
 
-Signed-off-by: Johannes Sixt <j6t@kdbg.org>
----
- This is RFC because of the new failure addressed in the last paragraph
- above (see also the art work in the patch context below), how serious
- the failure is, and what to do about it.
-
- See also this recent thread for further motivation:
- http://thread.gmane.org/gmane.comp.version-control.git/194434/focus=194737
-
- git-rebase--interactive.sh                | 12 +++++++-----
- t/t3409-rebase-preserve-merges.sh         |  2 +-
- t/t3410-rebase-preserve-dropped-merges.sh |  4 ++--
- 3 files changed, 10 insertions(+), 8 deletions(-)
-
-diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-index 0c19b7c..642daab 100644
---- a/git-rebase--interactive.sh
-+++ b/git-rebase--interactive.sh
-@@ -312,12 +312,14 @@ pick_one_preserving_merges () {
- 			msg_content="$(commit_message $sha1)"
- 			# No point in merging the first parent, that's HEAD
- 			new_parents=${new_parents# $first_parent}
--			if ! do_with_author output \
--				git merge --no-ff ${strategy:+-s $strategy} -m \
--					"$msg_content" $new_parents
-+			printf "%s\n" $new_parents >"$GIT_DIR"/MERGE_HEAD
-+			printf "%s\n" "$msg_content" >"$GIT_DIR"/MERGE_MSG
-+			if output git cherry-pick -m 1 -n "$sha1"
- 			then
--				printf "%s\n" "$msg_content" > "$GIT_DIR"/MERGE_MSG
--				die_with_patch $sha1 "Error redoing merge $sha1"
-+				do_with_author output git commit --no-verify -F "$GIT_DIR"/MERGE_MSG ||
-+					die_with_patch $sha1 "Could not replay merge $sha1"
-+			else
-+				die_with_patch $sha1 "Could not pick merge $sha1"
- 			fi
- 			echo "$sha1 $(git rev-parse HEAD^0)" >> "$rewritten_list"
- 			;;
-diff --git a/t/t3409-rebase-preserve-merges.sh b/t/t3409-rebase-preserve-merges.sh
-index 6de4e22..7161b99 100755
---- a/t/t3409-rebase-preserve-merges.sh
-+++ b/t/t3409-rebase-preserve-merges.sh
-@@ -116,7 +116,7 @@ test_expect_success '--continue works after a conflict' '
- 	cd clone2 &&
- 	git fetch &&
- 	test_must_fail git rebase -p origin/topic &&
--	test 2 = $(git ls-files B | wc -l) &&
-+	test 3 = $(git ls-files B | wc -l) &&
- 	echo Resolved again > B &&
- 	test_must_fail git rebase --continue &&
- 	grep "^@@@ " .git/rebase-merge/patch &&
-diff --git a/t/t3410-rebase-preserve-dropped-merges.sh b/t/t3410-rebase-preserve-dropped-merges.sh
-index 6f73b95..36c69b2 100755
---- a/t/t3410-rebase-preserve-dropped-merges.sh
-+++ b/t/t3410-rebase-preserve-dropped-merges.sh
-@@ -60,12 +60,12 @@ test_expect_success 'skip same-resolution merges with -p' '
- # A - B - C - D - E
- #   \             \ \
- #     F - G - H -- L2 \        -->   L2
- #       \             |                \
- #         I -- G3 --- J2 -- K2           I -- G3 -- K2
--# G2 = different changes as G
--test_expect_success 'keep different-resolution merges with -p' '
-+# G3 = different changes as G
-+test_expect_failure 'keep different-resolution merges with -p' '
- 	git checkout H &&
- 	test_must_fail git merge E &&
- 	test_commit L2 file1 23 &&
- 	git checkout I &&
- 	test_commit G3 file1 4 &&
--- 
-1.7.10.2.529.g0c18cfd
+--
+Thomas
