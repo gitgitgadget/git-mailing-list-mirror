@@ -1,74 +1,72 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: remove_duplicates() in builtin/fetch-pack.c is O(N^2)
-Date: Mon, 21 May 2012 15:41:14 -0400
-Message-ID: <20120521194114.GA28358@sigill.intra.peff.net>
-References: <4FB9F92D.8000305@alum.mit.edu>
- <201205211215.14455.mfick@codeaurora.org>
+From: Christian Stimming <stimming@tuhh.de>
+Subject: Re: [PATCH] l10n: de.po: translate 265 new messages
+Date: Mon, 21 May 2012 21:44:18 +0200
+Organization: Alumni Technische =?UTF-8?B?VW5pdmVyc2l0w6R0?= Hamburg-Harburg
+Message-ID: <3329216.EHqWPidfNL@cs-pc>
+References: <1337533755-29399-1-git-send-email-ralf.thielow@googlemail.com> <1825828.hnjW9vybBO@cs-pc> <CAN0XMOKsKRwsrHv=FNKtzydf8_sW6nM7bw2HJu6wT4reR=jujg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Michael Haggerty <mhagger@alum.mit.edu>,
-	git discussion list <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Martin Fick <mfick@codeaurora.org>
-X-From: git-owner@vger.kernel.org Mon May 21 21:41:23 2012
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7Bit
+Cc: trast@student.ethz.ch, jk@jk.gs, worldhello.net@gmail.com,
+	git@vger.kernel.org
+To: Ralf Thielow <ralf.thielow@googlemail.com>
+X-From: git-owner@vger.kernel.org Mon May 21 21:44:42 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SWYTq-0005k3-O0
-	for gcvg-git-2@plane.gmane.org; Mon, 21 May 2012 21:41:23 +0200
+	id 1SWYX2-0003k4-M2
+	for gcvg-git-2@plane.gmane.org; Mon, 21 May 2012 21:44:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756264Ab2EUTlS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 May 2012 15:41:18 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:51017
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756181Ab2EUTlR (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 May 2012 15:41:17 -0400
-Received: (qmail 4942 invoked by uid 107); 21 May 2012 19:41:42 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 21 May 2012 15:41:42 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 21 May 2012 15:41:14 -0400
-Content-Disposition: inline
-In-Reply-To: <201205211215.14455.mfick@codeaurora.org>
+	id S1755326Ab2EUTog (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 May 2012 15:44:36 -0400
+Received: from smtp3.rz.tu-harburg.de ([134.28.202.138]:52247 "EHLO
+	smtp3.rz.tu-harburg.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750728Ab2EUTof (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 May 2012 15:44:35 -0400
+Received: from mail.tu-harburg.de (mail.tu-harburg.de [134.28.202.179])
+	by smtp3.rz.tu-harburg.de (8.13.8/8.13.8) with ESMTP id q4LJiL3I032712
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK);
+	Mon, 21 May 2012 21:44:21 +0200
+Received: from cs-pc.localnet (e176202190.adsl.alicedsl.de [85.176.202.190])
+	(user=alucst mech=LOGIN bits=0)
+	by mail.tu-harburg.de (8.13.8/8.13.8) with ESMTP id q4LJiKBM027430
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Mon, 21 May 2012 21:44:21 +0200
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=tuhh.de; s=x2012-21;
+	t=1337629461; bh=cVN/SSpa0dkwlZyc+BIakGzpJ4ITbxP/1ia/J6ncyoM=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Transfer-Encoding:Content-Type;
+	b=ouTyzo8csLV5y98lgYA0V0mcCp8/IICClG0kIp+setMIu5oPh1Bv20rzZCBgMiggm
+	 8P8kh4589Ov/acxi/mghGvqsMbCuknrzqdslkzd8wdi4/1MYUcTM5hURdCtbQnRHud
+	 OX1J1MULudVnFtQJdWRqcSBLVPnFPwJDVWpuAhT8=
+User-Agent: KMail/4.7.3 (Linux/3.0.0-19-generic; KDE/4.7.4; x86_64; ; )
+In-Reply-To: <CAN0XMOKsKRwsrHv=FNKtzydf8_sW6nM7bw2HJu6wT4reR=jujg@mail.gmail.com>
+X-Scanned-By: TUHH Rechenzentrum content checker on 134.28.202.138
+X-Scanned-By: TUHH Rechenzentrum content checker on 134.28.202.179
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198123>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198124>
 
-On Mon, May 21, 2012 at 12:15:13PM -0600, Martin Fick wrote:
+Am Montag, 21. Mai 2012, 20:02:26 schrieb Ralf Thielow:
+> Hi Christian,
+> 
+> thanks for your review. I agree with you that using a formal addressing
+> is better and probably sounds a bit more serious than an informal. However,
+> I would put that change in another commit to make it through the whole
+> translation,
+> because it's probably not a good idea to mix them. This also includes the
+> last git.pot update on master. I don't expect big updates on git.pot after
+> 1.7.11-rc0 was tagged, so afterwards I start working on this.
 
-> Of course, we use Gerrit, so features tend to be called 
-> changes and each change may get many revisions (patchsets), 
-> so all of these get refs, but I think that it might be wrong 
-> to consider that out of the ordinary anymore.  After all, 
-> should a version control system such as git not support 100K 
-> revisions of features developed independently on separate 
-> branches (within Gerrit or not)?  100K is not really that 
-> many when you consider a large project.  Even without 
-> Gerrit, if someone wanted to track that many features 
-> (likely over a few years), they will probably use up tons of 
-> refs.  
+Hi Ralf,
 
-I think the more compelling line of argument is not "is this
-reasonable?", but rather that git has been designed from the ground-up
-to be efficient, and these are not fundamental design issues with git at
-all. They are just silly little spots where we used a quick-to-write
-quadratic algorithm instead of something more complex with better
-asymptotic behavior. And if we can fix these silly spots easily, then
-there's no reason not to. It helps the small-N case a tiny bit, and it
-makes the big-N case feasible.
+this is a very good proposal! Indeed the addressing shouldn't be mixed for 
+now. Thanks for picking up the suggestion.
 
-So far, the only quadratic case I have seen that is not easy to fix is
-replacing "struct commit_list" with a priority queue or similar.  But we
-managed to hack around that long ago with fce87ae (Fix quadratic
-performance in rewrite_one., 2008-07-12), and I don't think it's
-generally a problem in practice.
+Regards,
 
-Anyway, my point is that we don't even have to talk about "reasonable"
-or "absurd". Git should be fast even on absurd cases, because 99% of the
-work has already been done, and the last 1% is easy.
-
--Peff
+Christian
