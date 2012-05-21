@@ -1,7 +1,7 @@
 From: Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH 4/7] revert: free opts.revs to do a bit of cleanup
-Date: Mon, 21 May 2012 16:56:06 +0200
-Message-ID: <20120521145610.1911.57879.chriscool@tuxfamily.org>
+Subject: [PATCH 5/7] revert: free revs->cmdline.rev
+Date: Mon, 21 May 2012 16:56:07 +0200
+Message-ID: <20120521145610.1911.46356.chriscool@tuxfamily.org>
 References: <20120521143309.1911.94302.chriscool@tuxfamily.org>
 Cc: git@vger.kernel.org, Ramkumar Ramachandra <artagnon@gmail.com>,
 	Jonathan Nieder <jrnieder@gmail.com>,
@@ -13,52 +13,56 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SWUG3-0003sk-Ui
-	for gcvg-git-2@plane.gmane.org; Mon, 21 May 2012 17:10:52 +0200
+	id 1SWUG4-0003sk-T8
+	for gcvg-git-2@plane.gmane.org; Mon, 21 May 2012 17:10:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751619Ab2EUPKj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 May 2012 11:10:39 -0400
-Received: from smtp3-g21.free.fr ([212.27.42.3]:39682 "EHLO smtp3-g21.free.fr"
+	id S1751671Ab2EUPKt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 May 2012 11:10:49 -0400
+Received: from smtp3-g21.free.fr ([212.27.42.3]:40127 "EHLO smtp3-g21.free.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751579Ab2EUPKh (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 May 2012 11:10:37 -0400
+	id S1751576Ab2EUPKr (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 May 2012 11:10:47 -0400
 Received: from [127.0.1.1] (unknown [82.243.130.161])
-	by smtp3-g21.free.fr (Postfix) with ESMTP id 6BBC9A62FE;
-	Mon, 21 May 2012 17:10:31 +0200 (CEST)
-X-git-sha1: f5ecb3495be69aba4654aedd0f9fe6d2fbe4ba64 
+	by smtp3-g21.free.fr (Postfix) with ESMTP id 44FB1A620B;
+	Mon, 21 May 2012 17:10:36 +0200 (CEST)
+X-git-sha1: 1c47c46501e7b175eee91f56a93578f085c2938c 
 X-Mailer: git-mail-commits v0.5.2
 In-Reply-To: <20120521143309.1911.94302.chriscool@tuxfamily.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198112>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198113>
 
+add_rev_cmdline() in revision.c is (re)allocating an array of
+struct rev_cmdline_entry. This patch releases it.
 
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- builtin/revert.c | 2 ++
- 1 file changed, 2 insertions(+)
+ builtin/revert.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
 diff --git a/builtin/revert.c b/builtin/revert.c
-index 82d1bf8..5f82a84 100644
+index 5f82a84..1d32ed5 100644
 --- a/builtin/revert.c
 +++ b/builtin/revert.c
-@@ -217,6 +217,7 @@ int cmd_revert(int argc, const char **argv, const char *prefix)
+@@ -217,6 +217,8 @@ int cmd_revert(int argc, const char **argv, const char *prefix)
  	git_config(git_default_config, NULL);
  	parse_args(argc, argv, &opts);
  	res = sequencer_pick_revisions(&opts);
-+	free(opts.revs);
++	if (opts.revs)
++		free(opts.revs->cmdline.rev);
+ 	free(opts.revs);
  	if (res < 0)
  		die(_("revert failed"));
- 	return res;
-@@ -232,6 +233,7 @@ int cmd_cherry_pick(int argc, const char **argv, const char *prefix)
+@@ -233,6 +235,8 @@ int cmd_cherry_pick(int argc, const char **argv, const char *prefix)
  	git_config(git_default_config, NULL);
  	parse_args(argc, argv, &opts);
  	res = sequencer_pick_revisions(&opts);
-+	free(opts.revs);
++	if (opts.revs)
++		free(opts.revs->cmdline.rev);
+ 	free(opts.revs);
  	if (res < 0)
  		die(_("cherry-pick failed"));
- 	return res;
 -- 
 1.7.10.2.555.g6528037
