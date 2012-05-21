@@ -1,121 +1,163 @@
-From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <rene.scharfe@lsrfire.ath.cx>
-Subject: Re: [PATCH 3/3] grep: support newline separated pattern list
-Date: Mon, 21 May 2012 18:10:09 +0200
-Message-ID: <4FBA68E1.60908@lsrfire.ath.cx>
-References: <CAEV-rjc0PtuQZei95_24=Ou=mZZxA0Lsr6boXGrGy3z40otkNQ@mail.gmail.com> <4FB6426C.7040202@lsrfire.ath.cx> <CAEV-rjd=WjLu8e+UCnAHVxg7DTLWe+YrEO_Gs2rh5Oy1=KA5sw@mail.gmail.com> <4FB900A3.9050309@lsrfire.ath.cx> <7vobpia3l3.fsf@alter.siamese.dyndns.org>
+From: Jon Seymour <jon.seymour@gmail.com>
+Subject: Re: [PATCH v3 2/4] submodule: support superproject origin URLs of the
+ form ./foo/bar or ../foo/bar
+Date: Tue, 22 May 2012 02:35:27 +1000
+Message-ID: <CAH3AnrqBeD3JisjoK2dqnPWcBAFTxB5NYgRkfSPqb-CS8a0hsw@mail.gmail.com>
+References: <1337607102-14737-1-git-send-email-jon.seymour@gmail.com>
+	<1337607102-14737-2-git-send-email-jon.seymour@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Torne (Richard Coles)" <torne@google.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon May 21 18:10:27 2012
+Content-Transfer-Encoding: base64
+Cc: Jens Lehmann <Jens.Lehmann@web.de>,
+	Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon May 21 18:36:15 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SWVBg-0003rg-Gs
-	for gcvg-git-2@plane.gmane.org; Mon, 21 May 2012 18:10:24 +0200
+	id 1SWVaa-0007oj-2t
+	for gcvg-git-2@plane.gmane.org; Mon, 21 May 2012 18:36:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755853Ab2EUQKS convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 21 May 2012 12:10:18 -0400
-Received: from india601.server4you.de ([85.25.151.105]:32999 "EHLO
-	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754477Ab2EUQKR (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 May 2012 12:10:17 -0400
-Received: from [192.168.2.105] (p4FFDA0CF.dip.t-dialin.net [79.253.160.207])
-	by india601.server4you.de (Postfix) with ESMTPSA id 06BD32F8058;
-	Mon, 21 May 2012 18:10:14 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:12.0) Gecko/20120428 Thunderbird/12.0.1
-In-Reply-To: <7vobpia3l3.fsf@alter.siamese.dyndns.org>
+	id S1755950Ab2EUQf3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 May 2012 12:35:29 -0400
+Received: from mail-we0-f174.google.com ([74.125.82.174]:60029 "EHLO
+	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752785Ab2EUQf3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 May 2012 12:35:29 -0400
+Received: by weyu7 with SMTP id u7so3307048wey.19
+        for <git@vger.kernel.org>; Mon, 21 May 2012 09:35:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=H5R5bFfsymEoXdR/wM1jFYyN4LdKFrIuvCAltVeJ/9k=;
+        b=ANthm9yalOMyOrHSR7oNgUO5bGpHLB1Te0WOq6Iq44U7D42SBiIykgQHMZDjdRRCTx
+         QMTmdPcVCHWP+yVuk4erw2JTaOiuj2gUmvniJHGltpjRB46spG6T8TWc80rxTiz8y87d
+         uA4XUze7JjAlJf9M5ClWmPkf5vLwMH9P8ZSBhgXJAL1PfUBGXIT5BqLQNfIhlTOXP8PB
+         4c4BwVu2Ln3PgmfQP+N9sa/Obh9XIvORctk3U9CAVIP2hVGEp6DW73VoyuBiE8PaGQ65
+         hmOW2b4vw8n/1+cV377B0NIkEK4+xBvFcn2rFjHoh7BK2JB30Eu4ZRi6dnWYu5DqIOoq
+         V3fw==
+Received: by 10.181.11.137 with SMTP id ei9mr26729112wid.21.1337618127673;
+ Mon, 21 May 2012 09:35:27 -0700 (PDT)
+Received: by 10.180.146.166 with HTTP; Mon, 21 May 2012 09:35:27 -0700 (PDT)
+In-Reply-To: <1337607102-14737-2-git-send-email-jon.seymour@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198116>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198117>
 
-Am 21.05.2012 00:29, schrieb Junio C Hamano:
-> Ren=C3=A9 Scharfe<rene.scharfe@lsrfire.ath.cx>  writes:
->=20
->> Currently, patterns that contain newline characters don't match anyt=
-hing
->> when given to git grep.  Regular grep(1) interprets patterns as list=
-s of
->> newline separated search strings instead.
->>
->> Implement this functionality by creating and inserting extra grep_pa=
-t
->> structures for patterns consisting of multiple lines when appending =
-to
->> the pattern lists.  For simplicity, all pattern strings are duplicat=
-ed.
->> The original pattern is truncated in place to make it contain only t=
-he
->> first line.
->=20
-> Thanks for a fix; I am assuming that the duplication for simplicity i=
-s not
-> for simplified allocation but primarily for a simpler freeing?
-
-When we split a search string into multiple parts, we could allocate on=
-ly
-the new parts and remember which strings were allocated, so that we cou=
-ld
-later free them (and only them).  Or we could allocate and leak them, a=
-s
-there aren't that many and we keep them during the whole run of the pro=
-gram
-anyway.  Or we could do without any allocations if all match backends
-respected length limited strings like kwset does.  Or only allocate
-non-fixed pattern.
-
-Allocating any and all pattern strings and freeing them at the end, thu=
-s
-disregarding these considerations, is simpler, cleaner and still doesn'=
-t
-cause excessive memory usage.
-
-That reminds me that we can now have this bonus patch:
-
--- >8 --
-Subject: [PATCH 4/3] grep: stop leaking line strings with -f
-
-When reading patterns from a file, we pass the lines as allocated strin=
-g
-buffers to append_grep_pat() and never free them.  That's not a problem
-because they are needed until the program ends anyway.
-
-However, now that the function duplicates the pattern string, we can
-reuse the strbuf after calling that function.  This simplifies the code
-a bit and plugs a minor memory leak.
-
-Signed-off-by: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
----
- builtin/grep.c |    7 ++-----
- 1 file changed, 2 insertions(+), 5 deletions(-)
-
-diff --git a/builtin/grep.c b/builtin/grep.c
-index 643938d..fe1726f 100644
---- a/builtin/grep.c
-+++ b/builtin/grep.c
-@@ -600,15 +600,12 @@ static int file_callback(const struct option *opt=
-, const char *arg, int unset)
- 	if (!patterns)
- 		die_errno(_("cannot open '%s'"), arg);
- 	while (strbuf_getline(&sb, patterns, '\n') =3D=3D 0) {
--		char *s;
--		size_t len;
--
- 		/* ignore empty line like grep does */
- 		if (sb.len =3D=3D 0)
- 			continue;
-=20
--		s =3D strbuf_detach(&sb, &len);
--		append_grep_pat(grep_opt, s, len, arg, ++lno, GREP_PATTERN);
-+		append_grep_pat(grep_opt, sb.buf, sb.len, arg, ++lno,
-+				GREP_PATTERN);
- 	}
- 	if (!from_stdin)
- 		fclose(patterns);
---=20
-1.7.10.2
+T24gTW9uLCBNYXkgMjEsIDIwMTIgYXQgMTE6MzEgUE0sIEpvbiBTZXltb3VyIDxqb24uc2V5bW91
+ckBnbWFpbC5jb20+IHdyb3RlOgo+IFdoZW4gdGhlIG9yaWdpbiBVUkwgb2YgdGhlIHN1cGVycHJv
+amVjdCBpcyBpdHNlbGYgcmVsYXRpdmUsIGFuIG9wZXJhdGlvbgo+IHN1Y2ggYXMgZ2l0IHN1Ym1v
+ZHVsZSBhZGQsIGluaXQgb3Igc3luYyBwcm9kdWNlcyBhIHJlbGF0aXZlCj4gVVJMIGZvciB0aGUg
+c3VibW9kdWxlIHRoYXQgZG9lc24ndCBwb2ludCBhdCB0aGUgY29ycmVjdCBsb2NhdGlvbi4KPgo+
+IFRoZSBpc3N1ZSBhcmlzZXMgaW4gdGhlc2UgY2FzZXMgYmVjYXVzZSB0aGUgb3JpZ2luIFVSTCBv
+Zgo+IHRoZSBzdXBlcnByb2plY3QgbmVlZHMgdG8gYmUgcHJlcGVuZGVkIHdpdGggYSBwcmVmaXgg
+dGhhdCBuYXZpZ2F0ZXMKPiBmcm9tIHRoZSBzdWJtb2R1bGUgdG8gdGhlIHN1cGVycHJvamVjdCBz
+byB0aGF0IHdoZW4gdGhlIHN1Ym1vZHVsZQo+IFVSTCBpcyBjb25jYXRlbmF0ZWQgdGhlIHJlc3Vs
+dGluZyBVUkwgaXMgcmVsYXRpdmUgdG8gdGhlIHdvcmtpbmcgdHJlZQo+IG9mIHRoZSBzdWJtb2R1
+bGUuCj4KPiBUaGlzIGNoYW5nZSBlbnN1cmVzIHRoYXQgdGhpcyBpcyBkb25lIGZvciBhZGQsIHN5
+bmMgYW5kIGluaXQuCj4KPiBTaWduZWQtb2ZmLWJ5OiBKb24gU2V5bW91ciA8am9uLnNleW1vdXJA
+Z21haWwuY29tPgo+IC0tLQo+IMKgZ2l0LXN1Ym1vZHVsZS5zaCDCoCDCoCDCoCDCoCDCoCB8IDM1
+ICsrKysrKysrKysrKysrKysrKysrLS0tLS0tLS0tLS0tLS0tCj4gwqB0L3Q3NDAwLXN1Ym1vZHVs
+ZS1iYXNpYy5zaCB8IMKgNCArKy0tCj4gwqB0L3Q3NDAzLXN1Ym1vZHVsZS1zeW5jLnNoIMKgfCDC
+oDIgKy0KPiDCoDMgZmlsZXMgY2hhbmdlZCwgMjMgaW5zZXJ0aW9ucygrKSwgMTggZGVsZXRpb25z
+KC0pCj4KPiBkaWZmIC0tZ2l0IGEvZ2l0LXN1Ym1vZHVsZS5zaCBiL2dpdC1zdWJtb2R1bGUuc2gK
+PiBpbmRleCA2NGE3MGQ2Li4yMzBjMjE5IDEwMDc1NQo+IC0tLSBhL2dpdC1zdWJtb2R1bGUuc2gK
+PiArKysgYi9naXQtc3VibW9kdWxlLnNoCj4gQEAgLTQ1LDYgKzQ1LDEwIEBAIHJlc29sdmVfcmVs
+YXRpdmVfdXJsICgpCj4gwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAuLi8qKQo+IMKgIMKgIMKgIMKg
+IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgdXJsPSIke3VybCMuLi99Igo+IMKgIMKgIMKgIMKgIMKg
+IMKgIMKgIMKgIMKgIMKgIMKgIMKgY2FzZSAiJHJlbW90ZXVybCIgaW4KPiArIMKgIMKgIMKgIMKg
+IMKgIMKgIMKgIMKgIMKgIMKgIMKgIC4qLyopCj4gKyDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
+oCDCoCDCoCDCoCDCoCDCoCDCoCB1cF9wYXRoPSIkKGVjaG8gIiQyIiB8IHNlZCAicy9bXi9dKi8u
+Li9nIikiCj4gKyDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCBy
+ZW1vdGV1cmw9IiR7dXBfcGF0aCUvfS8ke3JlbW90ZXVybCUvKn0iCj4gKyDCoCDCoCDCoCDCoCDC
+oCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCA7Owo+IMKgIMKgIMKgIMKgIMKgIMKgIMKg
+IMKgIMKgIMKgIMKgIMKgKi8qKQo+IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
+IMKgIMKgIMKgIMKgcmVtb3RldXJsPSIke3JlbW90ZXVybCUvKn0iCj4gwqAgwqAgwqAgwqAgwqAg
+wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqA7Owo+IEBAIC0yMzUsMTEgKzIzOSwyNCBA
+QCBjbWRfYWRkKCkKPiDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoHVzYWdlCj4gwqAgwqAgwqAgwqBm
+aQo+Cj4gKyDCoCDCoCDCoCAjIG5vcm1hbGl6ZSBwYXRoOgo+ICsgwqAgwqAgwqAgIyBtdWx0aXBs
+ZSAvLzsgbGVhZGluZyAuLzsgLy4vOyAvLi4vOyB0cmFpbGluZyAvCj4gKyDCoCDCoCDCoCBzbV9w
+YXRoPSQocHJpbnRmICclcy9cbicgIiRzbV9wYXRoIiB8Cj4gKyDCoCDCoCDCoCDCoCDCoCDCoCDC
+oCBzZWQgLWUgJwo+ICsgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgc3wvLyp8L3xn
+Cj4gKyDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCBzfF5cKFwuL1wpKnx8Cj4gKyDC
+oCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCBzfC9cLi98L3xnCj4gKyDCoCDCoCDCoCDC
+oCDCoCDCoCDCoCDCoCDCoCDCoCDCoCA6c3RhcnQKPiArIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
+IMKgIMKgIMKgIHN8XChbXi9dKlwpL1wuXC4vfHwKPiArIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
+IMKgIMKgIMKgIHRzdGFydAo+ICsgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgc3wv
+KiR8fAo+ICsgwqAgwqAgwqAgwqAgwqAgwqAgwqAgJykKPiArCj4gwqAgwqAgwqAgwqAjIGFzc3Vy
+ZSByZXBvIGlzIGFic29sdXRlIG9yIHJlbGF0aXZlIHRvIHBhcmVudAo+IMKgIMKgIMKgIMKgY2Fz
+ZSAiJHJlcG8iIGluCj4gwqAgwqAgwqAgwqAuLyp8Li4vKikKPiDCoCDCoCDCoCDCoCDCoCDCoCDC
+oCDCoCMgZGVyZWZlcmVuY2Ugc291cmNlIHVybCByZWxhdGl2ZSB0byBwYXJlbnQncyB1cmwKPiAt
+IMKgIMKgIMKgIMKgIMKgIMKgIMKgIHJlYWxyZXBvPSQocmVzb2x2ZV9yZWxhdGl2ZV91cmwgIiRy
+ZXBvIikgfHwgZXhpdAo+ICsgwqAgwqAgwqAgwqAgwqAgwqAgwqAgcmVhbHJlcG89JChyZXNvbHZl
+X3JlbGF0aXZlX3VybCAiJHJlcG8iICIkc21fcGF0aCIpIHx8IGV4aXQKPiDCoCDCoCDCoCDCoCDC
+oCDCoCDCoCDCoDs7Cj4gwqAgwqAgwqAgwqAqOip8LyopCj4gwqAgwqAgwqAgwqAgwqAgwqAgwqAg
+wqAjIGFic29sdXRlIHVybAo+IEBAIC0yNTAsMTggKzI2Nyw2IEBAIGNtZF9hZGQoKQo+IMKgIMKg
+IMKgIMKgOzsKPiDCoCDCoCDCoCDCoGVzYWMKPgo+IC0gwqAgwqAgwqAgIyBub3JtYWxpemUgcGF0
+aDoKPiAtIMKgIMKgIMKgICMgbXVsdGlwbGUgLy87IGxlYWRpbmcgLi87IC8uLzsgLy4uLzsgdHJh
+aWxpbmcgLwo+IC0gwqAgwqAgwqAgc21fcGF0aD0kKHByaW50ZiAnJXMvXG4nICIkc21fcGF0aCIg
+fAo+IC0gwqAgwqAgwqAgwqAgwqAgwqAgwqAgc2VkIC1lICcKPiAtIMKgIMKgIMKgIMKgIMKgIMKg
+IMKgIMKgIMKgIMKgIMKgIHN8Ly8qfC98Zwo+IC0gwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
+wqAgwqAgc3xeXChcLi9cKSp8fAo+IC0gwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
+c3wvXC4vfC98Zwo+IC0gwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgOnN0YXJ0Cj4g
+LSDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCBzfFwoW14vXSpcKS9cLlwuL3x8Cj4g
+LSDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCB0c3RhcnQKPiAtIMKgIMKgIMKgIMKg
+IMKgIMKgIMKgIMKgIMKgIMKgIMKgIHN8LyokfHwKPiAtIMKgIMKgIMKgIMKgIMKgIMKgIMKgICcp
+Cj4gwqAgwqAgwqAgwqBnaXQgbHMtZmlsZXMgLS1lcnJvci11bm1hdGNoICIkc21fcGF0aCIgPiAv
+ZGV2L251bGwgMj4mMSAmJgo+IMKgIMKgIMKgIMKgZGllICIkKGV2YWxfZ2V0dGV4dCAiJ1wkc21f
+cGF0aCcgYWxyZWFkeSBleGlzdHMgaW4gdGhlIGluZGV4IikiCj4KPiBAQCAtNDA3LDcgKzQxMiw3
+IEBAIGNtZF9pbml0KCkKPiDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCMgUG9z
+c2libHkgYSB1cmwgcmVsYXRpdmUgdG8gcGFyZW50Cj4gwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
+wqAgwqAgwqAgwqBjYXNlICIkdXJsIiBpbgo+IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
+IMKgIMKgLi8qfC4uLyopCj4gLSDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
+oCDCoCDCoCB1cmw9JChyZXNvbHZlX3JlbGF0aXZlX3VybCAiJHVybCIpIHx8IGV4aXQKPiArIMKg
+IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIHVybD0kKHJlc29sdmVf
+cmVsYXRpdmVfdXJsICIkdXJsIiAiJHNtX3BhdGgiKSB8fCBleGl0Cj4gwqAgwqAgwqAgwqAgwqAg
+wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqA7Owo+IMKgIMKgIMKgIMKgIMKgIMKgIMKg
+IMKgIMKgIMKgIMKgIMKgZXNhYwo+IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
+Z2l0IGNvbmZpZyBzdWJtb2R1bGUuIiRuYW1lIi51cmwgIiR1cmwiIHx8Cj4gQEAgLTk2NCw3ICs5
+NjksNyBAQCBjbWRfc3luYygpCj4gwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAjIFBvc3NpYmx5IGEg
+dXJsIHJlbGF0aXZlIHRvIHBhcmVudAo+IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgY2FzZSAiJHVy
+bCIgaW4KPiDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoC4vKnwuLi8qKQo+IC0gwqAgwqAgwqAgwqAg
+wqAgwqAgwqAgwqAgwqAgwqAgwqAgdXJsPSQocmVzb2x2ZV9yZWxhdGl2ZV91cmwgIiR1cmwiKSB8
+fCBleGl0Cj4gKyDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCB1cmw9JChyZXNvbHZl
+X3JlbGF0aXZlX3VybCAiJHVybCIgIiRzbV9wYXRoIikgfHwgZXhpdAo+IMKgIMKgIMKgIMKgIMKg
+IMKgIMKgIMKgIMKgIMKgIMKgIMKgOzsKPiDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoGVzYWMKPgo+
+IGRpZmYgLS1naXQgYS90L3Q3NDAwLXN1Ym1vZHVsZS1iYXNpYy5zaCBiL3QvdDc0MDAtc3VibW9k
+dWxlLWJhc2ljLnNoCj4gaW5kZXggMDJlNjQyOC4uYjgzOGY0MyAxMDA3NTUKPiAtLS0gYS90L3Q3
+NDAwLXN1Ym1vZHVsZS1iYXNpYy5zaAo+ICsrKyBiL3QvdDc0MDAtc3VibW9kdWxlLWJhc2ljLnNo
+Cj4gQEAgLTUwNyw3ICs1MDcsNyBAQCB0ZXN0X2V4cGVjdF9zdWNjZXNzICdyZWxhdGl2ZSBwYXRo
+IHdvcmtzIHdpdGggdXNlckBob3N0OnBhdGgnICcKPiDCoCDCoCDCoCDCoCkKPiDCoCcKPgo+IC10
+ZXN0X2V4cGVjdF9mYWlsdXJlICdyZWxhdGl2ZSBwYXRoIHdvcmtzIHdpdGggLi4vcmVsYXRpdmUv
+cmVwbycgJwo+ICt0ZXN0X2V4cGVjdF9zdWNjZXNzICdyZWxhdGl2ZSBwYXRoIHdvcmtzIHdpdGgg
+Li4vcmVsYXRpdmUvcmVwbycgJwo+IMKgIMKgIMKgIMKgKAo+IMKgIMKgIMKgIMKgIMKgIMKgIMKg
+IMKgY2QgcmVsdGVzdCAmJgo+IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgY3AgcHJpc3RpbmUtLmdp
+dC1jb25maWcgLmdpdC9jb25maWcgJiYKPiBAQCAtNTE3LDcgKzUxNyw3IEBAIHRlc3RfZXhwZWN0
+X2ZhaWx1cmUgJ3JlbGF0aXZlIHBhdGggd29ya3Mgd2l0aCAuLi9yZWxhdGl2ZS9yZXBvJyAnCj4g
+wqAgwqAgwqAgwqApCj4gwqAnCj4KPiAtdGVzdF9leHBlY3RfZmFpbHVyZSAndGVzdCB0aGF0IHN1
+Ym1vZHVsZSBhZGQgY3JlYXRlcyB0aGUgY29ycmVjdCB1cmwgd2hlbiBzdXBlciBvcmlnaW4gdXJs
+IGlzIC4uL3JlbGF0aXZlL3JlcG8nICcKPiArdGVzdF9leHBlY3Rfc3VjZXNzICd0ZXN0IHRoYXQg
+c3VibW9kdWxlIGFkZCBjcmVhdGVzIHRoZSBjb3JyZWN0IHVybCB3aGVuIHN1cGVyIG9yaWdpbiB1
+cmwgaXMgLi4vcmVsYXRpdmUvcmVwbycgJwo+IMKgIMKgIMKgIMKgbWtkaXIgcmVsYWRkICYmCj4g
+wqAgwqAgwqAgwqAoCj4gwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqBjZCByZWxhZGQgJiYKPiBkaWZm
+IC0tZ2l0IGEvdC90NzQwMy1zdWJtb2R1bGUtc3luYy5zaCBiL3QvdDc0MDMtc3VibW9kdWxlLXN5
+bmMuc2gKPiBpbmRleCA3ODhiYzI0Li4zNTcwMGVmIDEwMDc1NQo+IC0tLSBhL3QvdDc0MDMtc3Vi
+bW9kdWxlLXN5bmMuc2gKPiArKysgYi90L3Q3NDAzLXN1Ym1vZHVsZS1zeW5jLnNoCj4gQEAgLTg2
+LDcgKzg2LDcgQEAgdGVzdF9leHBlY3Rfc3VjY2VzcyAnImdpdCBzdWJtb2R1bGUgc3luYyIgc2hv
+dWxkIG5vdCB2aXZpZnkgdW5pbnRlcmVzdGluZyBzdWJtb2QKPiDCoCDCoCDCoCDCoCkKPiDCoCcK
+Pgo+IC10ZXN0X2V4cGVjdF9mYWlsdXJlICciZ2l0IHN1Ym1vZHVsZSBzeW5jIiBzaG91bGQgaGFu
+ZGxlIGEgc3VwZXIgd2l0aCBhIHJlbGF0aXZlIG9yaWdpbiBVUkwnICcKPiArdGVzdF9leHBlY3Rf
+c3VjY2VzcyAnImdpdCBzdWJtb2R1bGUgc3luYyIgc2hvdWxkIGhhbmRsZSBhIHN1cGVyIHdpdGgg
+YSByZWxhdGl2ZSBvcmlnaW4gVVJMJyAnCj4gwqAgwqAgwqAgwqBnaXQgY2xvbmUgc3VwZXIgcmVs
+YXRpdmUtY2xvbmUgJiYKPiDCoCDCoCDCoCDCoChjZCByZWxhdGl2ZS1jbG9uZSAmJgo+IMKgIMKg
+IMKgIMKgIGdpdCBzdWJtb2R1bGUgdXBkYXRlIC0taW5pdCAmJgo+IC0tCj4gMS43LjEwLjIuNTk0
+Lmc1YzUyMzE1Cj4KCk1tbW0uIEJldHRlciBob2xkIG9mZiBvbiB0aGlzIG9uZSBmb3IgdGhlIG1v
+bWVudCwgSSBoYXZlIGRldGVjdGVkIGEKYnJlYWsgZHVyaW5nIGEgc3Vic2VxdWVudCBnaXQgc3Vi
+bW9kdWxlIHVwZGF0ZSB0aGF0IG15IHNlbGVjdGlvbiBvZgpyZWdyZXNzaW9uIHRlc3RzIGRpZG4n
+dCBwaWNrIHVwLiBUaGUgaXNzdWUgaXMgdGhhdCB0aGUgVVJMIHVzZWQgZm9yCmNsb25pbmcgdGhl
+IHN1Ym1vZHVsZSBkdXJpbmcgdGhlIHVwZGF0ZSBpcyBub3cgbm90IGNvcnJlY3QuCgpqb24uCg==
