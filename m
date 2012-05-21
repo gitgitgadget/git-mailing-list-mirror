@@ -1,144 +1,80 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCHv2 13/15] ident: use a dynamic strbuf in fmt_ident
-Date: Mon, 21 May 2012 19:10:26 -0400
-Message-ID: <20120521231026.GM10981@sigill.intra.peff.net>
+Subject: [PATCHv2 14/15] ident: trim whitespace from default name/email
+Date: Mon, 21 May 2012 19:10:29 -0400
+Message-ID: <20120521231029.GN10981@sigill.intra.peff.net>
 References: <20120521230917.GA474@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: Angus Hammond <angusgh@gmail.com>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue May 22 01:10:49 2012
+X-From: git-owner@vger.kernel.org Tue May 22 01:10:51 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SWbkW-00008T-Ao
-	for gcvg-git-2@plane.gmane.org; Tue, 22 May 2012 01:10:48 +0200
+	id 1SWbkW-00008T-RR
+	for gcvg-git-2@plane.gmane.org; Tue, 22 May 2012 01:10:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757706Ab2EUXKb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 May 2012 19:10:31 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:51241
+	id S1757810Ab2EUXKh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 May 2012 19:10:37 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:51244
 	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756866Ab2EUXK3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 May 2012 19:10:29 -0400
-Received: (qmail 7971 invoked by uid 107); 21 May 2012 23:10:54 -0000
+	id S1757679Ab2EUXKc (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 May 2012 19:10:32 -0400
+Received: (qmail 7976 invoked by uid 107); 21 May 2012 23:10:57 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 21 May 2012 19:10:54 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 21 May 2012 19:10:26 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 21 May 2012 19:10:57 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 21 May 2012 19:10:29 -0400
 Content-Disposition: inline
 In-Reply-To: <20120521230917.GA474@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198155>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198156>
 
-Now that we accept arbitrary-sized names and email
-addresses, the only remaining limit is in the actual
-formatting of the names into a buffer. The current limit is
-1000 characters, which is not likely to be reached, but
-using a strbuf is one less error condition we have to worry
-about.
+Usually these values get fed to fmt_ident, which will trim
+any cruft anyway, but there are a few code paths which use
+them directly. Let's clean them up for the benefit of those
+callers. Furthermore, fmt_ident will look at the pre-trimmed
+value and decide whether to invoke ERROR_ON_NO_NAME; this
+check can be fooled by a name consisting only of spaces.
+
+Note that we only bother to clean up when we are pulling the
+information from gecos or from system files. Any other value
+comes from a config file, where we will have cleaned up
+accidental whitespace already.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- ident.c | 43 +++++++++++++++----------------------------
- 1 file changed, 15 insertions(+), 28 deletions(-)
+ ident.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
 diff --git a/ident.c b/ident.c
-index b111e34..cefb829 100644
+index cefb829..e279039 100644
 --- a/ident.c
 +++ b/ident.c
-@@ -121,15 +121,6 @@ const char *ident_default_date(void)
- 	return git_default_date;
+@@ -95,8 +95,10 @@ static void copy_email(const struct passwd *pw, struct strbuf *email)
+ 
+ const char *ident_default_name(void)
+ {
+-	if (!git_default_name.len)
++	if (!git_default_name.len) {
+ 		copy_gecos(xgetpwuid_self(), &git_default_name);
++		strbuf_trim(&git_default_name);
++	}
+ 	return git_default_name.buf;
  }
  
--static int add_raw(char *buf, size_t size, int offset, const char *str)
--{
--	size_t len = strlen(str);
--	if (offset + len > size)
--		return size;
--	memcpy(buf + offset, str, len);
--	return offset + len;
--}
--
- static int crud(unsigned char c)
- {
- 	return  c <= 32  ||
-@@ -148,7 +139,7 @@ static int crud(unsigned char c)
-  * Copy over a string to the destination, but avoid special
-  * characters ('\n', '<' and '>') and remove crud at the end
-  */
--static int copy(char *buf, size_t size, int offset, const char *src)
-+static void strbuf_addstr_without_crud(struct strbuf *sb, const char *src)
- {
- 	size_t i, len;
- 	unsigned char c;
-@@ -172,19 +163,19 @@ static int copy(char *buf, size_t size, int offset, const char *src)
- 	/*
- 	 * Copy the rest to the buffer, but avoid the special
- 	 * characters '\n' '<' and '>' that act as delimiters on
--	 * an identification line
-+	 * an identification line. We can only remove crud, never add it,
-+	 * so 'len' is our maximum.
- 	 */
-+	strbuf_grow(sb, len);
- 	for (i = 0; i < len; i++) {
- 		c = *src++;
- 		switch (c) {
- 		case '\n': case '<': case '>':
- 			continue;
- 		}
--		if (offset >= size)
--			return size;
--		buf[offset++] = c;
-+		sb->buf[sb->len++] = c;
+@@ -110,6 +112,7 @@ const char *ident_default_email(void)
+ 			user_ident_explicitly_given |= IDENT_MAIL_GIVEN;
+ 		} else
+ 			copy_email(xgetpwuid_self(), &git_default_email);
++		strbuf_trim(&git_default_email);
  	}
--	return offset;
-+	sb->buf[sb->len] = '\0';
+ 	return git_default_email.buf;
  }
- 
- /*
-@@ -271,9 +262,8 @@ static const char *env_hint =
- const char *fmt_ident(const char *name, const char *email,
- 		      const char *date_str, int flag)
- {
--	static char buffer[1000];
-+	static struct strbuf ident = STRBUF_INIT;
- 	char date[50];
--	int i;
- 	int error_on_no_name = (flag & IDENT_ERROR_ON_NO_NAME);
- 	int name_addr_only = (flag & IDENT_NO_DATE);
- 
-@@ -300,19 +290,16 @@ const char *fmt_ident(const char *name, const char *email,
- 			die("invalid date format: %s", date_str);
- 	}
- 
--	i = copy(buffer, sizeof(buffer), 0, name);
--	i = add_raw(buffer, sizeof(buffer), i, " <");
--	i = copy(buffer, sizeof(buffer), i, email);
-+	strbuf_reset(&ident);
-+	strbuf_addstr_without_crud(&ident, name);
-+	strbuf_addstr(&ident, " <");
-+	strbuf_addstr_without_crud(&ident, email);
-+	strbuf_addch(&ident, '>');
- 	if (!name_addr_only) {
--		i = add_raw(buffer, sizeof(buffer), i,  "> ");
--		i = copy(buffer, sizeof(buffer), i, date);
--	} else {
--		i = add_raw(buffer, sizeof(buffer), i, ">");
-+		strbuf_addch(&ident, ' ');
-+		strbuf_addstr_without_crud(&ident, date);
- 	}
--	if (i >= sizeof(buffer))
--		die("Impossibly long personal identifier");
--	buffer[i] = 0;
--	return buffer;
-+	return ident.buf;
- }
- 
- const char *fmt_name(const char *name, const char *email)
 -- 
 1.7.10.1.19.g711d603
