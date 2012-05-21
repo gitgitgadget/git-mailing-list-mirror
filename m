@@ -1,83 +1,67 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 06/13] format-patch: use default email for generating
- message ids
-Date: Mon, 21 May 2012 02:36:43 -0400
-Message-ID: <20120521063643.GC2077@sigill.intra.peff.net>
+Subject: Re: [PATCH 05/13] move git_default_* variables to ident.c
+Date: Mon, 21 May 2012 02:41:18 -0400
+Message-ID: <20120521064117.GA21472@sigill.intra.peff.net>
 References: <20120518230528.GA30510@sigill.intra.peff.net>
- <20120518231347.GF30031@sigill.intra.peff.net>
- <7vzk928clf.fsf@alter.siamese.dyndns.org>
+ <20120518231113.GE30031@sigill.intra.peff.net>
+ <7vsjeu89dd.fsf@alter.siamese.dyndns.org>
+ <20120521054118.GA2077@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: Angus Hammond <angusgh@gmail.com>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon May 21 08:36:51 2012
+X-From: git-owner@vger.kernel.org Mon May 21 08:41:45 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SWMEc-0006yG-4r
-	for gcvg-git-2@plane.gmane.org; Mon, 21 May 2012 08:36:50 +0200
+	id 1SWMJG-0007da-09
+	for gcvg-git-2@plane.gmane.org; Mon, 21 May 2012 08:41:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752546Ab2EUGgq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 May 2012 02:36:46 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:50629
+	id S1754656Ab2EUGl1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 May 2012 02:41:27 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:50633
 	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751467Ab2EUGgp (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 May 2012 02:36:45 -0400
-Received: (qmail 31135 invoked by uid 107); 21 May 2012 06:37:10 -0000
+	id S1751467Ab2EUGlU (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 May 2012 02:41:20 -0400
+Received: (qmail 31199 invoked by uid 107); 21 May 2012 06:41:44 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 21 May 2012 02:37:10 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 21 May 2012 02:36:43 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 21 May 2012 02:41:44 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 21 May 2012 02:41:18 -0400
 Content-Disposition: inline
-In-Reply-To: <7vzk928clf.fsf@alter.siamese.dyndns.org>
+In-Reply-To: <20120521054118.GA2077@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198085>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198086>
 
-On Sun, May 20, 2012 at 07:58:04PM -0700, Junio C Hamano wrote:
+On Mon, May 21, 2012 at 01:41:18AM -0400, Jeff King wrote:
 
-> > Technically this is a regression if you really wanted:
-> >
-> >   GIT_COMMITTER_EMAIL=some.addr@example.com \
-> >   git format-patch --thread=deep
-> >
-> > to make your environment variable part of the message-ids. I don't think
-> > it matters, but I can adjust it if we care.
+> > > -#define MAX_GITNAME (1000)
+> > > -extern char git_default_email[MAX_GITNAME];
+> > > -extern char git_default_name[MAX_GITNAME];
+> > >  #define IDENT_NAME_GIVEN 01
+> > >  #define IDENT_MAIL_GIVEN 02
+> > >  #define IDENT_ALL_GIVEN (IDENT_NAME_GIVEN|IDENT_MAIL_GIVEN)
+> > 
+> > During this step, builtin/fmt-merge-msg.c ceases to compile, even though
+> > in the end it is fixed...
 > 
-> Is it because you no longer explicitly ask for "committer" and get generic
-> "who am I" bit from the ident infrastructure?
+> Hrm. I ran the series through "make" on each commit before submitting,
+> and it compiled fine. I just did it again to double-check, and it's
+> still fine.
+> 
+> What was the error you got? Are you sure you had 03/13 in place
+> beforehand, which removes the use of MAX_GITNAME from
+> builtin/fmt-merge-msg.c?
 
-Right. Calling git_committer_info will also check
-getenv("GIT_COMMITTER_EMAIL"), but we don't bother to do that here. We
-could change the code to:
-
-  const char *email = getenv("GIT_COMMITTER_EMAIL");
-  if (!email)
-          email = ident_default_email();
-
-if it matters. I don't think it's worth building an alternate version of
-git_committer_info that doesn't do the "name" half of the info.
-
-> I wouldn't be surprised if some automated "commit email notification
-> reacting to push" bot in post-receive hook is using the environment
-> variable to affect the message ID.  I would doubt that would break the
-> message as long as the message ID generated from this codepath stays
-> valid, though, so I wouldn't worry about complaints along the lines of
-> "you started using names different from what you used to use".  As long as
-> we don't die due to "Hey bot, you do not seem to have a valid e-mail
-> address!", I don't think we need to worry about it.
-
-No, we'll never die as a result. But if you have a poorly configured
-machine, you might get "user@host.(none)". Or I suppose you could leak
-information about the username of the post-receive process. In both
-cases, we do this already, so the only change is if you are trying to
-override that with GIT_COMMITTER_EMAIL.
-
-So it's a little far-fetched, which is why I didn't bother. But the code
-above is quite simple, so maybe it is better to be conservative.
+Ah, yeah. I just looked at what you wrote in the "What's Cooking"
+message. For some reason you applied patch 03/13 out of order (in slot
+5). I'm not sure how you order the messages in a series when you apply
+it, but AFAICT, the numbers in the subjects and the date stamps are
+in the right order. Operator error? :)
 
 -Peff
