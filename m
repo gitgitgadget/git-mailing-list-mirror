@@ -1,116 +1,74 @@
-From: Bryan Turner <bturner@atlassian.com>
-Subject: git rev-list %an, %ae, %at bug in v1.7.10.1 and beyond
-Date: Mon, 21 May 2012 18:01:50 +1000
-Message-ID: <CAGyf7-G3nNTTP1bKdd9HLKEn-8+LoxCeY2R08x9gKZwS0L_N6g@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 21 10:01:59 2012
+From: mhagger@alum.mit.edu
+Subject: [PATCH v2 0/4] Fix some constness errors in fetch-pack
+Date: Mon, 21 May 2012 09:59:55 +0200
+Message-ID: <1337587199-21099-1-git-send-email-mhagger@alum.mit.edu>
+Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>, git@vger.kernel.org,
+	Michael Haggerty <mhagger@alum.mit.edu>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon May 21 10:07:49 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SWNYz-0008Cl-C0
-	for gcvg-git-2@plane.gmane.org; Mon, 21 May 2012 10:01:57 +0200
+	id 1SWNeZ-0002Ux-De
+	for gcvg-git-2@plane.gmane.org; Mon, 21 May 2012 10:07:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752210Ab2EUIBx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 May 2012 04:01:53 -0400
-Received: from na3sys009aog121.obsmtp.com ([74.125.149.145]:54831 "HELO
-	na3sys009aog121.obsmtp.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S1751505Ab2EUIBw (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 21 May 2012 04:01:52 -0400
-Received: from mail-gg0-f177.google.com ([209.85.161.177]) (using TLSv1) by na3sys009aob121.postini.com ([74.125.148.12]) with SMTP
-	ID DSNKT7n2b6GJLqf5AIybOmfFGOGoXMXsz3CW@postini.com; Mon, 21 May 2012 01:01:52 PDT
-Received: by ggcs5 with SMTP id s5so4646198ggc.36
-        for <git@vger.kernel.org>; Mon, 21 May 2012 01:01:51 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:content-type
-         :x-gm-message-state;
-        bh=GlQ91Ny3KIecBlJj6+2BYAaCA2DbFHDOPUYevMOHgvA=;
-        b=oJfpx81dqZ+0WquzzwsrGgWSo2ZdXJLFyiagKkAzv0JxwDPDvaGZCa6GZxVd3TvfpD
-         sTPqdHm+cFuhn/Zo54sBRDdj3nCE2soERFcWkyjHklzHaaYpTjDWO0bnsD6cQGT8NGIJ
-         ZgUesxW20wfu5w63t9zaPXWkO6Y69iJtbHcqZbBv/gM+woguKev89tCC3j44gmw46Ka4
-         U1XGc9zx/v6Z1ny8PDS+V1vK0CM28EBR5vC9llhFQrOdp5ax1pge57mVYAjmFb4uqiC7
-         vbCNXJwyAngY1JMPDofSt+wc3PxcBvxhlZlWpdeBuwkMEMWmbM/FrmxAz460uqzn/CZ6
-         /3Tw==
-Received: by 10.50.85.196 with SMTP id j4mr5876604igz.30.1337587310953; Mon,
- 21 May 2012 01:01:50 -0700 (PDT)
-Received: by 10.231.65.12 with HTTP; Mon, 21 May 2012 01:01:50 -0700 (PDT)
-X-Gm-Message-State: ALoCoQn8KxAz94vcvYistTbGnJwDKuP9V8tzH/mh3gj06wzLBA3ahtc7+zfca2dxmiOnPCRmrrax
+	id S1756109Ab2EUIHd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 May 2012 04:07:33 -0400
+Received: from ALUM-MAILSEC-SCANNER-3.MIT.EDU ([18.7.68.14]:50194 "EHLO
+	alum-mailsec-scanner-3.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755897Ab2EUIH3 (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 21 May 2012 04:07:29 -0400
+X-Greylist: delayed 422 seconds by postgrey-1.27 at vger.kernel.org; Mon, 21 May 2012 04:07:29 EDT
+X-AuditID: 1207440e-b7f256d0000008c1-23-4fb9f61ae792
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-3.mit.edu (Symantec Messaging Gateway) with SMTP id D6.67.02241.A16F9BF4; Mon, 21 May 2012 04:00:27 -0400 (EDT)
+Received: from michael.berlin.jpk.com (ssh.berlin.jpk.com [212.222.128.135])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id q4L80LNv006950
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Mon, 21 May 2012 04:00:26 -0400
+X-Mailer: git-send-email 1.7.10
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrMIsWRmVeSWpSXmKPExsUixO6iqCv9bae/wZYOZouuK91MFg29V5gt
+	bq+Yz2zRPeUtowOLx9/3H5g8ds66y+5x8ZKyx+dNcgEsUdw2SYklZcGZ6Xn6dgncGafuWhV8
+	Ya04N28iewPjS5YuRk4OCQETiW+H5jJC2GISF+6tZ+ti5OIQErjMKPFh3T1mCOcMk8SNll1g
+	HWwCUhIvG3vYQWwRATWJiW2HgOIcHMwCxRKXF5uAhIUF7CXm/dvBCmKzCKhKzO/YC9bKK+Ai
+	8f3cZqhl8hJP7/exTWDkXsDIsIpRLjGnNFc3NzEzpzg1Wbc4OTEvL7VI11gvN7NELzWldBMj
+	JBj4djC2r5c5xCjAwajEw+s0Y6e/EGtiWXFl7iFGSQ4mJVFe009AIb6k/JTKjMTijPii0pzU
+	4kOMEhzMSiK8dx8C5XhTEiurUovyYVLSHCxK4rxqS9T9hATSE0tSs1NTC1KLYLIyHBxKErxT
+	vwI1ChalpqdWpGXmlCCkmTg4QQQXyAYeoA0JIIW8xQWJucWZ6RBFpxgVpcR5m0ESAiCJjNI8
+	uAGwuH3FKA70jzDvUpAqHmDMw3W/AhrMBDQ46AXY4JJEhJRUA6Pq0zvf/lS1srJrFb1dlduw
+	mefe01OySk8el01pWXVs4Qdnebs53Dd2/ta/a39loWr3rrCJtYzHzJuao03Y7p3Rllw8odEg
+	z6A7IaZpdpRNhtyB7toJd+5deV3YmeesNeGot9uDtLtfVBaGPDiam+1b4R5z7s+sP2VrI3ae
+	PLnz/yWlJ/fLJ/1UYinOSDTUYi4qTgQAKmB/K7YCAAA=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198089>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198090>
 
-Hello all,
+From: Michael Haggerty <mhagger@alum.mit.edu>
 
-I believe I've found an issue in git v1.7.10.1 and v1.7.10.2 (and
-master) where the output of git rev-list has changed for some commits.
-Most commits do not appear to trigger the issue; it may be related to
-Unicode characters being used in the author name. I've run a git
-bisect and it appears the bug was introduced in
-4b340cfab9c7a18e39bc531d6a6ffaffdf95f62d.
+Fix some constness errors that I noticed while reading the code in
+builtin/fetch-pack.c.
 
-Built from master (as well as using the 1.7.10.1 and 1.7.10.2 release
-tags), I get output like this:
-================================ Output =====================================
-aphrael:qa-resources.git bturner$ git rev-list
---format="%H|%h|%P|%p|%an|%ae|%at%n%B%n@@object_end@@" -1
-5c1ccdec5f84aa149a4978f729fdda70769f942f
-commit 5c1ccdec5f84aa149a4978f729fdda70769f942f
-5c1ccdec5f84aa149a4978f729fdda70769f942f|5c1ccde|02c78bc39ac6192623bf080e3e2ac892a4f5764c|02c78bc|||
-commit with unicode name
+This version differs from v1 as follows:
 
-@@object_end@@
-================================ End ========================================
+* cmd_fetch_pack() is not made to free the memory that it allocates.
 
-Note that the author name, e-mail and timestamp values are all missing
-(the three |'s in a row at the end).
+* The second patch is broken into separate pieces to make each piece
+  more readable.
 
-Built from 0dbe6592ccbd1a394a69a52074e3729d546fe952, the parent of
-4b340cf, and in previous versions of git (1.7.10 and earlier), I got
-output like this:
-================================ Output =====================================
-aphrael:qa-resources.git bturner$ git rev-list
---format="%H|%h|%P|%p|%an|%ae|%at%n%B%n@@object_end@@" -1
-5c1ccdec5f84aa149a4978f729fdda70769f942f
-commit 5c1ccdec5f84aa149a4978f729fdda70769f942f
-5c1ccdec5f84aa149a4978f729fdda70769f942f|5c1ccde|02c78bc39ac6192623bf080e3e2ac892a4f5764c|02c78bc|a|farmas@atlassian.com|1327876222
-commit with unicode name
+Michael Haggerty (4):
+  cmd_fetch_pack(): declare dest to be const
+  cmd_fetch_pack(): handle non-option arguments outside of the loop
+  cmd_fetch_pack(): combine the loop termination conditions
+  cmd_fetch_pack(): respect constness of argv parameter
 
-@@object_end@@
-================================ End ========================================
+ builtin/fetch-pack.c |  145 ++++++++++++++++++++++++--------------------------
+ 1 file changed, 71 insertions(+), 74 deletions(-)
 
-Note that the author name, e-mail and timestamp are all present. The
-"a" appears as ASCII here, but it's actually a UTF-16LE character (the
-terminal on the Mac is being "helpful").
-
-To try and verify whether the difference is a bug or a bugfix (because
-I wasn't certain whether perhaps the output from earlier versions was
-the result of a bug which was fixed in 1.7.10.1 and on), I compared
-the git rev-list output with git cat-file -p (again, built from
-master):
-================================ Output =====================================
-aphrael:qa-resources.git bturner$ git cat-file -p
-5c1ccdec5f84aa149a4978f729fdda70769f942f
-tree dd173cb70baaac07bdf405f4e3db110e7fafd180
-parent 02c78bc39ac6192623bf080e3e2ac892a4f5764c
-author a <farmas@atlassian.com> 1327876222 +1100
-committer a <farmas@atlassian.com> 1327876222 +1100
-
-commit with unicode name
-================================ End ========================================
-
-The git cat-file output is consistent across versions of git where I'm
-seeing the rev-list issue and versions where I'm not.
-
-I would be happy to provide a zip file containing the repository with
-the commit shown in all the output above, if that will facilitate
-testing/fixing the issue. Just let me know where to put it. I lack the
-C chops to provide a patch myself; sorry about that.
-
-Best regards,
-Bryan Turner
+-- 
+1.7.10
