@@ -1,97 +1,96 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [1.8.0] use 'stage' term consistently
-Date: Sun, 20 May 2012 20:32:34 -0500
-Message-ID: <20120521013234.GA3055@burratino>
-References: <CAMP44s1qqpTxRvjEH32MNqzUeNhgZ1gB+fu=cgvxnSbMB6oBGA@mail.gmail.com>
- <vpqehqxmwpj.fsf@bauges.imag.fr>
- <CAMP44s2DU_3UnHxhgwsTVT59KjLi0+=iW7utuofEyis+_06jGA@mail.gmail.com>
- <CACBZZX4_wjFG4D4_2w8UcvbRwBmJ583QpoP_n-tq+dNds3Bi7Q@mail.gmail.com>
- <7v1umv7ub0.fsf@alter.siamese.dyndns.org>
- <CAHREChgTHZL0sNJ3TkZOL7x4k9x=4GRhrZ6Gm0W+Ai_UnX2FEg@mail.gmail.com>
- <20120519060031.GB23799@burratino>
- <7vzk92a76z.fsf@alter.siamese.dyndns.org>
- <CAMP44s1Bghc6zXRQ7fJxJORiHqAgs5dg-8_cp_FoChnBG7oD4w@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/2] cmd_fetch_pack(): fix constness problem and memory
+ leak
+Date: Sun, 20 May 2012 18:47:03 -0700
+Message-ID: <7vk4069ug8.fsf@alter.siamese.dyndns.org>
+References: <1335955259-15309-1-git-send-email-mhagger@alum.mit.edu>
+ <1335955259-15309-3-git-send-email-mhagger@alum.mit.edu>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Mark Lodato <lodatom@gmail.com>,
-	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Scott Chacon <schacon@gmail.com>,
-	Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>,
-	Jakub =?utf-8?B?TmFyxJlic2tp?= <jnareb@gmail.com>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>,
-	Piotr Krukowiecki <piotr.krukowiecki.news@gmail.com>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Mon May 21 03:32:57 2012
+Cc: git@vger.kernel.org
+To: mhagger@alum.mit.edu
+X-From: git-owner@vger.kernel.org Mon May 21 03:47:23 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SWHUT-0000JL-04
-	for gcvg-git-2@plane.gmane.org; Mon, 21 May 2012 03:32:53 +0200
+	id 1SWHiM-0007uH-HJ
+	for gcvg-git-2@plane.gmane.org; Mon, 21 May 2012 03:47:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755188Ab2EUBcn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 20 May 2012 21:32:43 -0400
-Received: from mail-ob0-f174.google.com ([209.85.214.174]:40084 "EHLO
-	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754700Ab2EUBcn (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 20 May 2012 21:32:43 -0400
-Received: by obbtb18 with SMTP id tb18so7401581obb.19
-        for <git@vger.kernel.org>; Sun, 20 May 2012 18:32:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=NemEiTWA0+JIvdd7TFtJsYEE4rTEmd9+Wpa3c8cOEuo=;
-        b=fk6GeL0eiOfJJISFryISFqTK7xHvof+yj/49RbN5dhF4QguccbwImbgvKYZ5lRFCMR
-         z7fLVKtsX3rxZEWCltch8pWTtDgXe1R3/vjT7ufYYk4svIgfw66HInsDyVt2ZyD4VJIl
-         HamXLZft0LVwOYn0jFs6GfljknTCRT94ahz12et9egYM4W2W9sxPvh2xyaSwMso6hKLl
-         y7Axnfd5j1xXJ3YNXIy2QzbisKejkoRHU7DouVgVnIdWWvj5ZAccixzmfmngedYxUH4p
-         9O4vJL4MslsvG8IiDbEtZ381jCm2zuDSvCkW06ihDERm1pFn5qpCk+fqsJwl15moxBR/
-         f11g==
-Received: by 10.50.11.225 with SMTP id t1mr5479370igb.64.1337563962643;
-        Sun, 20 May 2012 18:32:42 -0700 (PDT)
-Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
-        by mx.google.com with ESMTPS id rf2sm19283820igb.0.2012.05.20.18.32.39
-        (version=SSLv3 cipher=OTHER);
-        Sun, 20 May 2012 18:32:41 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <CAMP44s1Bghc6zXRQ7fJxJORiHqAgs5dg-8_cp_FoChnBG7oD4w@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1755526Ab2EUBrI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 20 May 2012 21:47:08 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:37652 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755289Ab2EUBrH (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 20 May 2012 21:47:07 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id ACD108D0C;
+	Sun, 20 May 2012 21:47:05 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=+CwH3nB+NLFsB51kGFirt/cSKmE=; b=kR1AGg
+	UvTwS7e5vDx6v/c5NjlkP4c9tJd/nv6tKahIWiHYCnQr/C0FIWDAEex4Tpw9HxRQ
+	pTpkBrb/6MGvizfx4xv3Y5+ps5OKEs/OEFGHthgNNg+gMjNvYziiFuB0bIanEEMc
+	la4uQQosg7tVMVOip3tkTUewluTZ4tnIak3TI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=p0eHCyMghCyK7XL5s8427R9iS0F9K8cw
+	wmOYQ/sYsek0byvFRJ2sZML5cmJMwwa3V0j+xNVprxPKdFSVYoqlfKAhi34NpXk0
+	K60cdHYH0f2HTX/nRMY0dL8eWEU9fUCQ8fIVHvqzWPDgjKoBOxN4x7EfC3yR5JTR
+	VNj+IHqQ8sE=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A3C788D0B;
+	Sun, 20 May 2012 21:47:05 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 37FF38D07; Sun, 20 May 2012
+ 21:47:05 -0400 (EDT)
+In-Reply-To: <1335955259-15309-3-git-send-email-mhagger@alum.mit.edu>
+ (mhagger@alum.mit.edu's message of "Wed, 2 May 2012 12:40:59 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: DE3ACEC4-A2E6-11E1-A8ED-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198075>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198076>
 
-Hi Felipe,
+mhagger@alum.mit.edu writes:
 
-Felipe Contreras wrote:
+> I understand that it is not crucial to free memory allocated in a
+> cmd_*() function but it is unclear to me whether it is *preferred* to
+> let the process clean up take care of things.
 
-> Indeed, but you are missing the important part; everything else in
-> that sentence.
+Traditionally, the cmd_foo() functions roughly correspond to main() in
+other programs, so from that point of view, "it is not crucial to free" is
+an understatement. It is not even worth wasting people's time to (1)
+decide which way is *preferred* and to (2) churn the code only to match
+whichever way.
 
-You're probably onto something, but I'm missing the point in your
-message.  Could you repeat, carefully explaining:
+These cmd_foo() functions, being roughly equivalent to main(), have logic
+to interpret the end-user's intentions (i.e. parse_options()), and carry
+out that intention.  In the long run, some _other_ parts of the system may
+want to do "foo" (whatever that "foo" may be) from inside the process
+without forking, and the first step to do so may be to split cmd_foo()
+into two, one that does "parse options", and the other that does "foo".
+At that point, it starts to matter that we make the part that does "foo"
+leak free, especially if such a caller (or callers) can ask to do "foo"
+number of times.
 
- - what change you would like to propose in git
- - whether it is backward compatible, and if it is not, what
-   transition plan you propose
- - briefly, the rationale behind the change, in such a way as to
-   convince skeptics like me that it is a good idea and to recruit
-   us to help in your cause
+If you have a plan to split cmd_fetch_pack() and make other parts of the
+system call it, probably restructuring the current separation between
+"figure out what refs will be fetched" done in cmd_fetch_pack() and "fetch
+these refs in heads[] array" in fetch_pack() into something else (like
+"the new caller also wants to read the list of refs from the standard
+input, instead of having parse them into head[] array itself"), then
+freeing the memory would matter a lot more, and the approach this patch
+takes is a first step in the right direction, I would think.
 
-?  For that third part, a good example to take inspiration from is the
-project to improve Linux to function as a real-time operating system.
-Each change is so well justified _individually_ that someone not
-interested at all in that goal can still not help but agree with the
-changes!
+It also seems that some cruft has snuck into this patch, e.g. like this
+part,
 
-Perhaps your message includes these elements already, but I found it
-hard to follow, hence this request.
+> -	int i, ret, nr_heads;
+> +	int i, ret;
 
-Thanks,
-Jonathan
+that do not have anything to do with "fix constness" nor "memory leak".
