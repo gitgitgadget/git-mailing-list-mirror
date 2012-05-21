@@ -1,8 +1,8 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCHv2 11/15] ident: report passwd errors with a more friendly
- message
-Date: Mon, 21 May 2012 19:10:20 -0400
-Message-ID: <20120521231020.GK10981@sigill.intra.peff.net>
+Subject: [PATCHv2 10/15] drop length limitations on gecos-derived names and
+ emails
+Date: Mon, 21 May 2012 19:10:17 -0400
+Message-ID: <20120521231017.GJ10981@sigill.intra.peff.net>
 References: <20120521230917.GA474@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -14,170 +14,308 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SWbko-0000r2-Gb
-	for gcvg-git-2@plane.gmane.org; Tue, 22 May 2012 01:11:06 +0200
+	id 1SWbkp-0000r2-2L
+	for gcvg-git-2@plane.gmane.org; Tue, 22 May 2012 01:11:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757394Ab2EUXKZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 May 2012 19:10:25 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:51233
+	id S1757086Ab2EUXK0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 May 2012 19:10:26 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:51229
 	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757066Ab2EUXKX (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 May 2012 19:10:23 -0400
-Received: (qmail 7911 invoked by uid 107); 21 May 2012 23:10:48 -0000
+	id S1754182Ab2EUXKU (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 May 2012 19:10:20 -0400
+Received: (qmail 7881 invoked by uid 107); 21 May 2012 23:10:45 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 21 May 2012 19:10:48 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 21 May 2012 19:10:20 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 21 May 2012 19:10:45 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 21 May 2012 19:10:17 -0400
 Content-Disposition: inline
 In-Reply-To: <20120521230917.GA474@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198159>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198160>
 
-When getpwuid fails, we give a cute but cryptic message.
-While it makes sense if you know that getpwuid or identity
-functions are being called, this code is triggered behind
-the scenes by quite a few git commands these days (e.g.,
-receive-pack on a remote server might use it for a reflog;
-the current message is hard to distinguish from an
-authentication error).  Let's switch to something that gives
-a little more context.
+When we pull the user's name from the GECOS field of the
+passwd file (or generate an email address based on their
+username and hostname), we put the result into a
+static buffer. While it's extremely unlikely that anybody
+ever hit these limits (after all, in such a case their
+parents must have hated them), we still had to deal with the
+error cases in our code.
 
-While we're at it, we can factor out all of the
-cut-and-pastes of the "you don't exist" message into a
-wrapper function. Rather than provide xgetpwuid, let's make
-it even more specific to just getting the passwd entry for
-the current uid. That's the only way we use getpwuid anyway,
-and it lets us make an even more specific error message.
+Converting these static buffers to strbufs lets us simplify
+the code and drop some error messages from the documentation
+that have confused some users.
 
-The current message also fails to mention errno. While the
-usual cause for getpwuid failing is that the user does not
-exist, mentioning errno makes it easier to diagnose these
-problems.  Note that POSIX specifies that errno remain
-untouched if the passwd entry does not exist (but will be
-set on actual errors), whereas some systems will return
-ENOENT or similar for a missing entry. We handle both cases
-in our wrapper.
+The conversion is mostly mechanical: replace string copies
+with strbuf equivalents, and access the strbuf.buf directly.
+There are a few exceptions:
+
+  - copy_gecos and copy_email are the big winners in code
+    reduction (since they no longer have to manage the
+    string length manually)
+
+  - git_ident_config wants to replace old versions of
+    the default name (e.g., if we read the config multiple
+    times), so it must reset+add to the strbuf instead of
+    just adding
+
+Note that there is still one length limitation: the
+gethostname interface requires us to provide a static
+buffer, so we arbitrarily choose 1024 bytes for the
+hostname.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- Documentation/git-commit-tree.txt |  5 -----
- Documentation/git-var.txt         |  5 -----
- git-compat-util.h                 |  3 +++
- ident.c                           | 20 +++++---------------
- wrapper.c                         | 12 ++++++++++++
- 5 files changed, 20 insertions(+), 25 deletions(-)
+ Documentation/git-commit-tree.txt |   4 --
+ Documentation/git-var.txt         |   4 --
+ ident.c                           | 104 ++++++++++++++------------------------
+ 3 files changed, 39 insertions(+), 73 deletions(-)
 
 diff --git a/Documentation/git-commit-tree.txt b/Documentation/git-commit-tree.txt
-index eb12b2d..eb8ee99 100644
+index cfb9906..eb12b2d 100644
 --- a/Documentation/git-commit-tree.txt
 +++ b/Documentation/git-commit-tree.txt
-@@ -88,11 +88,6 @@ for one to be entered and terminated with ^D.
+@@ -92,10 +92,6 @@ Diagnostics
+ -----------
+ You don't exist. Go away!::
+     The passwd(5) gecos field couldn't be read
+-Your parents must have hated you!::
+-    The passwd(5) gecos field is longer than a giant static buffer.
+-Your sysadmin must hate you!::
+-    The passwd(5) name field is longer than a giant static buffer.
  
- include::date-formats.txt[]
- 
--Diagnostics
-------------
--You don't exist. Go away!::
--    The passwd(5) gecos field couldn't be read
--
  Discussion
  ----------
- 
 diff --git a/Documentation/git-var.txt b/Documentation/git-var.txt
-index 3f703e3..67edf58 100644
+index 988a323..3f703e3 100644
 --- a/Documentation/git-var.txt
 +++ b/Documentation/git-var.txt
-@@ -59,11 +59,6 @@ ifdef::git-default-pager[]
-     The build you are using chose '{git-default-pager}' as the default.
- endif::git-default-pager[]
+@@ -63,10 +63,6 @@ Diagnostics
+ -----------
+ You don't exist. Go away!::
+     The passwd(5) gecos field couldn't be read
+-Your parents must have hated you!::
+-    The passwd(5) gecos field is longer than a giant static buffer.
+-Your sysadmin must hate you!::
+-    The passwd(5) name field is longer than a giant static buffer.
  
--Diagnostics
-------------
--You don't exist. Go away!::
--    The passwd(5) gecos field couldn't be read
--
  SEE ALSO
  --------
- linkgit:git-commit-tree[1]
-diff --git a/git-compat-util.h b/git-compat-util.h
-index ed11ad8..5bd9ad7 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -595,4 +595,7 @@ int rmdir_or_warn(const char *path);
-  */
- int remove_or_warn(unsigned int mode, const char *path);
- 
-+/* Get the passwd entry for the UID of the current process. */
-+struct passwd *xgetpwuid_self(void);
-+
- #endif
 diff --git a/ident.c b/ident.c
-index 73a06a1..5aec073 100644
+index 87e3cbe..73a06a1 100644
 --- a/ident.c
 +++ b/ident.c
-@@ -100,12 +100,8 @@ static void copy_email(const struct passwd *pw, struct strbuf *email)
+@@ -7,9 +7,8 @@
+  */
+ #include "cache.h"
+ 
+-#define MAX_GITNAME (1000)
+-static char git_default_name[MAX_GITNAME];
+-static char git_default_email[MAX_GITNAME];
++static struct strbuf git_default_name = STRBUF_INIT;
++static struct strbuf git_default_email = STRBUF_INIT;
+ static char git_default_date[50];
+ int user_ident_explicitly_given;
+ 
+@@ -19,42 +18,27 @@ int user_ident_explicitly_given;
+ #define get_gecos(struct_passwd) ((struct_passwd)->pw_gecos)
+ #endif
+ 
+-static void copy_gecos(const struct passwd *w, char *name, size_t sz)
++static void copy_gecos(const struct passwd *w, struct strbuf *name)
+ {
+-	char *src, *dst;
+-	size_t len, nlen;
+-
+-	nlen = strlen(w->pw_name);
++	char *src;
+ 
+ 	/* Traditionally GECOS field had office phone numbers etc, separated
+ 	 * with commas.  Also & stands for capitalized form of the login name.
+ 	 */
+ 
+-	for (len = 0, dst = name, src = get_gecos(w); len < sz; src++) {
++	for (src = get_gecos(w); *src && *src != ','; src++) {
+ 		int ch = *src;
+-		if (ch != '&') {
+-			*dst++ = ch;
+-			if (ch == 0 || ch == ',')
+-				break;
+-			len++;
+-			continue;
+-		}
+-		if (len + nlen < sz) {
++		if (ch != '&')
++			strbuf_addch(name, ch);
++		else {
+ 			/* Sorry, Mr. McDonald... */
+-			*dst++ = toupper(*w->pw_name);
+-			memcpy(dst, w->pw_name + 1, nlen - 1);
+-			dst += nlen - 1;
+-			len += nlen;
++			strbuf_addch(name, toupper(*w->pw_name));
++			strbuf_addstr(name, w->pw_name + 1);
+ 		}
+ 	}
+-	if (len < sz)
+-		name[len] = 0;
+-	else
+-		die("Your parents must have hated you!");
+-
+ }
+ 
+-static int add_mailname_host(char *buf, size_t len)
++static int add_mailname_host(struct strbuf *buf)
+ {
+ 	FILE *mailname;
+ 
+@@ -65,7 +49,7 @@ static int add_mailname_host(char *buf, size_t len)
+ 				strerror(errno));
+ 		return -1;
+ 	}
+-	if (!fgets(buf, len, mailname)) {
++	if (strbuf_getline(buf, mailname, '\n') == EOF) {
+ 		if (ferror(mailname))
+ 			warning("cannot read /etc/mailname: %s",
+ 				strerror(errno));
+@@ -74,85 +58,73 @@ static int add_mailname_host(char *buf, size_t len)
+ 	}
+ 	/* success! */
+ 	fclose(mailname);
+-
+-	len = strlen(buf);
+-	if (len && buf[len-1] == '\n')
+-		buf[len-1] = '\0';
+ 	return 0;
+ }
+ 
+-static void add_domainname(char *buf, size_t len)
++static void add_domainname(struct strbuf *out)
+ {
++	char buf[1024];
+ 	struct hostent *he;
+-	size_t namelen;
+ 	const char *domainname;
+ 
+-	if (gethostname(buf, len)) {
++	if (gethostname(buf, sizeof(buf))) {
+ 		warning("cannot get host name: %s", strerror(errno));
+-		strlcpy(buf, "(none)", len);
++		strbuf_addstr(out, "(none)");
+ 		return;
+ 	}
+-	namelen = strlen(buf);
+-	if (memchr(buf, '.', namelen))
++	strbuf_addstr(out, buf);
++	if (strchr(buf, '.'))
+ 		return;
+ 
+ 	he = gethostbyname(buf);
+-	buf[namelen++] = '.';
+-	buf += namelen;
+-	len -= namelen;
++	strbuf_addch(out, '.');
+ 	if (he && (domainname = strchr(he->h_name, '.')))
+-		strlcpy(buf, domainname + 1, len);
++		strbuf_addstr(out, domainname + 1);
+ 	else
+-		strlcpy(buf, "(none)", len);
++		strbuf_addstr(out, "(none)");
+ }
+ 
+-static void copy_email(const struct passwd *pw)
++static void copy_email(const struct passwd *pw, struct strbuf *email)
+ {
+ 	/*
+ 	 * Make up a fake email address
+ 	 * (name + '@' + hostname [+ '.' + domainname])
+ 	 */
+-	size_t len = strlen(pw->pw_name);
+-	if (len > sizeof(git_default_email)/2)
+-		die("Your sysadmin must hate you!");
+-	memcpy(git_default_email, pw->pw_name, len);
+-	git_default_email[len++] = '@';
+-
+-	if (!add_mailname_host(git_default_email + len,
+-				sizeof(git_default_email) - len))
++	strbuf_addstr(email, pw->pw_name);
++	strbuf_addch(email, '@');
++
++	if (!add_mailname_host(email))
+ 		return;	/* read from "/etc/mailname" (Debian) */
+-	add_domainname(git_default_email + len,
+-			sizeof(git_default_email) - len);
++	add_domainname(email);
+ }
  
  const char *ident_default_name(void)
  {
--	if (!git_default_name.len) {
--		struct passwd *pw = getpwuid(getuid());
--		if (!pw)
--			die("You don't exist. Go away!");
--		copy_gecos(pw, &git_default_name);
--	}
-+	if (!git_default_name.len)
-+		copy_gecos(xgetpwuid_self(), &git_default_name);
- 	return git_default_name.buf;
+-	if (!git_default_name[0]) {
++	if (!git_default_name.len) {
+ 		struct passwd *pw = getpwuid(getuid());
+ 		if (!pw)
+ 			die("You don't exist. Go away!");
+-		copy_gecos(pw, git_default_name, sizeof(git_default_name));
++		copy_gecos(pw, &git_default_name);
+ 	}
+-	return git_default_name;
++	return git_default_name.buf;
  }
  
-@@ -117,12 +113,8 @@ const char *ident_default_email(void)
+ const char *ident_default_email(void)
+ {
+-	if (!git_default_email[0]) {
++	if (!git_default_email.len) {
+ 		const char *email = getenv("EMAIL");
+ 
  		if (email && email[0]) {
- 			strbuf_addstr(&git_default_email, email);
+-			strlcpy(git_default_email, email,
+-				sizeof(git_default_email));
++			strbuf_addstr(&git_default_email, email);
  			user_ident_explicitly_given |= IDENT_MAIL_GIVEN;
--		} else {
--			struct passwd *pw = getpwuid(getuid());
--			if (!pw)
--				die("You don't exist. Go away!");
--			copy_email(pw, &git_default_email);
--		}
-+		} else
-+			copy_email(xgetpwuid_self(), &git_default_email);
+ 		} else {
+ 			struct passwd *pw = getpwuid(getuid());
+ 			if (!pw)
+ 				die("You don't exist. Go away!");
+-			copy_email(pw);
++			copy_email(pw, &git_default_email);
+ 		}
  	}
- 	return git_default_email.buf;
+-	return git_default_email;
++	return git_default_email.buf;
  }
-@@ -303,9 +295,7 @@ const char *fmt_ident(const char *name, const char *email,
+ 
+ const char *ident_default_date(void)
+@@ -327,7 +299,7 @@ const char *fmt_ident(const char *name, const char *email,
+ 		struct passwd *pw;
+ 
+ 		if (error_on_no_name) {
+-			if (name == git_default_name)
++			if (name == git_default_name.buf)
  				fputs(env_hint, stderr);
  			die("empty ident %s <%s> not allowed", name, email);
  		}
--		pw = getpwuid(getuid());
--		if (!pw)
--			die("You don't exist. Go away!");
-+		pw = xgetpwuid_self();
- 		name = pw->pw_name;
+@@ -397,7 +369,8 @@ int git_ident_config(const char *var, const char *value, void *data)
+ 	if (!strcmp(var, "user.name")) {
+ 		if (!value)
+ 			return config_error_nonbool(var);
+-		strlcpy(git_default_name, value, sizeof(git_default_name));
++		strbuf_reset(&git_default_name);
++		strbuf_addstr(&git_default_name, value);
+ 		user_ident_explicitly_given |= IDENT_NAME_GIVEN;
+ 		return 0;
  	}
- 
-diff --git a/wrapper.c b/wrapper.c
-index 6ccd059..b5e33e4 100644
---- a/wrapper.c
-+++ b/wrapper.c
-@@ -402,3 +402,15 @@ int remove_or_warn(unsigned int mode, const char *file)
- {
- 	return S_ISGITLINK(mode) ? rmdir_or_warn(file) : unlink_or_warn(file);
- }
-+
-+struct passwd *xgetpwuid_self(void)
-+{
-+	struct passwd *pw;
-+
-+	errno = 0;
-+	pw = getpwuid(getuid());
-+	if (!pw)
-+		die(_("unable to look up current user in the passwd file: %s"),
-+		    errno ? strerror(errno) : _("no such user"));
-+	return pw;
-+}
+@@ -405,7 +378,8 @@ int git_ident_config(const char *var, const char *value, void *data)
+ 	if (!strcmp(var, "user.email")) {
+ 		if (!value)
+ 			return config_error_nonbool(var);
+-		strlcpy(git_default_email, value, sizeof(git_default_email));
++		strbuf_reset(&git_default_email);
++		strbuf_addstr(&git_default_email, value);
+ 		user_ident_explicitly_given |= IDENT_MAIL_GIVEN;
+ 		return 0;
+ 	}
 -- 
 1.7.10.1.19.g711d603
