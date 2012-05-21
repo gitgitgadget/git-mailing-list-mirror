@@ -1,121 +1,80 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: remove_duplicates() in builtin/fetch-pack.c is O(N^2)
-Date: Mon, 21 May 2012 13:45:25 -0400
-Message-ID: <20120521174525.GA22643@sigill.intra.peff.net>
-References: <4FB9F92D.8000305@alum.mit.edu>
+From: Ralf Thielow <ralf.thielow@googlemail.com>
+Subject: Re: [PATCH] l10n: de.po: translate 265 new messages
+Date: Mon, 21 May 2012 20:02:26 +0200
+Message-ID: <CAN0XMOKsKRwsrHv=FNKtzydf8_sW6nM7bw2HJu6wT4reR=jujg@mail.gmail.com>
+References: <1337533755-29399-1-git-send-email-ralf.thielow@googlemail.com>
+	<1825828.hnjW9vybBO@cs-pc>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git discussion list <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Mon May 21 19:46:35 2012
+Content-Type: text/plain; charset=UTF-8
+Cc: trast@student.ethz.ch, jk@jk.gs, worldhello.net@gmail.com,
+	git@vger.kernel.org
+To: Christian Stimming <stimming@tuhh.de>
+X-From: git-owner@vger.kernel.org Mon May 21 20:03:14 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SWWgg-0007BE-Fy
-	for gcvg-git-2@plane.gmane.org; Mon, 21 May 2012 19:46:30 +0200
+	id 1SWWwn-0004WQ-Vo
+	for gcvg-git-2@plane.gmane.org; Mon, 21 May 2012 20:03:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933019Ab2EURpo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 May 2012 13:45:44 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:50969
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932986Ab2EURpa (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 May 2012 13:45:30 -0400
-Received: (qmail 4152 invoked by uid 107); 21 May 2012 17:45:53 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 21 May 2012 13:45:53 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 21 May 2012 13:45:25 -0400
-Content-Disposition: inline
-In-Reply-To: <4FB9F92D.8000305@alum.mit.edu>
+	id S1758309Ab2EUSDG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 May 2012 14:03:06 -0400
+Received: from mail-we0-f174.google.com ([74.125.82.174]:44593 "EHLO
+	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758225Ab2EUSC1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 May 2012 14:02:27 -0400
+Received: by weyu7 with SMTP id u7so3358016wey.19
+        for <git@vger.kernel.org>; Mon, 21 May 2012 11:02:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=IYie4NpVmmQsEK+RyRMw2RmkKfMCAjBow6woWOyhaPc=;
+        b=OElxgb0IRIvvKkduz5f8Ol3LZKAXT/aDJ12XzKrSPgFDLima7uk47q55XJCaBWdmYB
+         XWopyMucEhADKR+p5KLdPzgRVJlwJpYjvz7OXUEVNG9JiZxBpC15lvRoo/o1ud/g22H7
+         mI3I61qXZXL6G/umh/w3TzxRWJuM1J3RFb0vvXcarNeuMMGipj6VjpGhcnfXKI4CgdSI
+         eZVMZZOK9WCF5SP79u1rptxEpErRaIkzlcum8pVZhurgv+add5rXjm4K/fOw5u3f3xjx
+         wp5GQkcXVOPV1+Q2c4DWoX0b8PRff6Fkt8ABHP4CyXsaQZk/zmARdXSYOfAgH17LUnsx
+         Lktg==
+Received: by 10.180.78.105 with SMTP id a9mr13095745wix.14.1337623346335; Mon,
+ 21 May 2012 11:02:26 -0700 (PDT)
+Received: by 10.194.0.132 with HTTP; Mon, 21 May 2012 11:02:26 -0700 (PDT)
+In-Reply-To: <1825828.hnjW9vybBO@cs-pc>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198119>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198120>
 
-On Mon, May 21, 2012 at 10:13:33AM +0200, Michael Haggerty wrote:
+>
+> The translation (both in the existing strings and in your newly added ones)
+> addresses the user as "du" instead of "Sie" (for the non-German-speaking: "du"
+> is the informal addressing, "Sie" is the formal addressing). However, in
+> German software there are two main rules on this: 1. Don't address the user
+> directly. Rather prefer passive forms over directly addressing the person. I
+> know English software is much more permissive of this one. Hence, occasionally
+> the German translator should take the freedom to change the wording so that
+> the addressing of the user is replaced in the translation by some passive
+> wording without the addressing of the user. 2. If the addressing of the user
+> is unavoidable, the text should use "Sie" instead of "du". Addressing the user
+> as "du" should be constrained to audiences which for sure always address each
+> other as "du", such as certain educational settings and/or games and such (and
+> maybe in the Ikea-Katalog, but even there they switched from Du to Sie and
+> back again several times). Please try to avoid using "du" in developer tools'
+> user-visible strings. Thanks a lot!
+>
 
-> I just noticed that the remove_duplicates() function in
-> builtin/fetch-pack.c is O(N^2) in the number of heads.  Empirically,
-> this function takes on the order of 25 seconds to process 100k
-> references.
-> 
-> I know that 100k heads is kindof absurd.  Perhaps handling this many
-> heads is unrealistic for other reasons.  But I vaguely recall numbers
-> like this being mentioned on the mailing list.
+Hi Christian,
 
-The rails/rails network repository at GitHub (i.e., a master repo with
-all of the objects and refs for all of the forks) has about 400K refs,
-and has been the usual impetus for me finding and fixing these sorts of
-quadratic problems.
+thanks for your review. I agree with you that using a formal addressing
+is better and probably sounds a bit more serious than an informal. However,
+I would put that change in another commit to make it through the whole
+translation,
+because it's probably not a good idea to mix them. This also includes the last
+git.pot update on master. I don't expect big updates on git.pot after 1.7.11-rc0
+was tagged, so afterwards I start working on this.
 
-I've never triggered this one, though, because it relies not just on
-having a repo with a lot of refs, but actually fetching all of them at
-one time (which we don't tend to do).
+Thanks
 
-But it would be nice to fix it. There is a similar case in filter_refs,
-which I mentioned here:
-
-  http://article.gmane.org/gmane.comp.version-control.git/186994
-
-> It would be pretty trivial to reduce the work to O(N) by using a hash
-> set to keep track of the references that have already been seen.
-
-I don't think there is any reason we can't sort the list of heads, and
-then we can get rid of the duplicates with an O(n) traversal, like the
-(largely untested) patch below.
-
-> I don't plan to work on this, but I thought I would point it out in
-> case it is causing somebody pain.
-
-I'll clean up the patch and make one for the filter_refs case, too.
-
--Peff
-
----
-diff --git a/builtin/fetch-pack.c b/builtin/fetch-pack.c
-index b6cc75e..7efcf2f 100644
---- a/builtin/fetch-pack.c
-+++ b/builtin/fetch-pack.c
-@@ -859,25 +859,23 @@ static struct ref *do_fetch_pack(int fd[2],
- 	return ref;
- }
- 
-+static int compare_heads(const void *a, const void *b)
-+{
-+	return strcmp(*(const char **)a, *(const char **)b);
-+}
-+
- static int remove_duplicates(int nr_heads, char **heads)
- {
- 	int src, dst;
- 
--	for (src = dst = 0; src < nr_heads; src++) {
--		/* If heads[src] is different from any of
--		 * heads[0..dst], push it in.
--		 */
--		int i;
--		for (i = 0; i < dst; i++) {
--			if (!strcmp(heads[i], heads[src]))
--				break;
--		}
--		if (i < dst)
--			continue;
--		if (src != dst)
--			heads[dst] = heads[src];
--		dst++;
--	}
-+	if (!nr_heads)
-+		return 0;
-+
-+	qsort(heads, nr_heads, sizeof(*heads), compare_heads);
-+
-+	for (src = dst = 1; src < nr_heads; src++)
-+		if (strcmp(heads[src], heads[dst-1]))
-+			heads[dst++] = heads[src];
- 	return dst;
- }
- 
+Ralf
