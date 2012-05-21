@@ -1,94 +1,64 @@
 From: demerphq <demerphq@gmail.com>
-Subject: Is it by design you can create a branch called 'HEAD'?
-Date: Mon, 21 May 2012 11:14:58 +0200
-Message-ID: <CANgJU+UAbpFvROFynZ-MHzfhEYksM-Mhf5rVjcA6GUhk6BX-NQ@mail.gmail.com>
+Subject: Re: remove_duplicates() in builtin/fetch-pack.c is O(N^2)
+Date: Mon, 21 May 2012 11:42:06 +0200
+Message-ID: <CANgJU+WwA0FfwVFWO23o0wLbpXNS+RXwwx=VKZ_J3e57r1pBsQ@mail.gmail.com>
+References: <4FB9F92D.8000305@alum.mit.edu>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Cc: =?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>,
-	Rafael Garcia-Suarez <rgarciasuarez@gmail.com>
-To: Git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon May 21 11:15:06 2012
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git discussion list <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Mon May 21 11:42:26 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SWOhk-0000p7-6I
-	for gcvg-git-2@plane.gmane.org; Mon, 21 May 2012 11:15:04 +0200
+	id 1SWP88-0000Cb-7Q
+	for gcvg-git-2@plane.gmane.org; Mon, 21 May 2012 11:42:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757397Ab2EUJPA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 May 2012 05:15:00 -0400
-Received: from mail-gg0-f174.google.com ([209.85.161.174]:41351 "EHLO
-	mail-gg0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757387Ab2EUJO6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 May 2012 05:14:58 -0400
-Received: by gglu4 with SMTP id u4so4098266ggl.19
-        for <git@vger.kernel.org>; Mon, 21 May 2012 02:14:58 -0700 (PDT)
+	id S1757537Ab2EUJmI convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 21 May 2012 05:42:08 -0400
+Received: from mail-gh0-f174.google.com ([209.85.160.174]:33972 "EHLO
+	mail-gh0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756802Ab2EUJmG convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 21 May 2012 05:42:06 -0400
+Received: by ghrr11 with SMTP id r11so329527ghr.19
+        for <git@vger.kernel.org>; Mon, 21 May 2012 02:42:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:cc:content-type;
-        bh=UvDIkDpwa8NMXOjay4cC7o2b15/kbf3vY1+r0P6fUqw=;
-        b=qmcSjsrA+CkZCJoU4eiSocPHDnBdLVi163PhE/0fIVAj4iAc5FeBuZLuBZ6ApmfP5r
-         Wfs3XNfgFdTw+43xAnkrR/mdeziq90TMH67lTe/nsffWw9InUT3edWrOjWc7ZowHhoGy
-         dR9mfwAMb08hsxLvLciQSMOrY2DwW0nkgioUQzDdOF2HGZKlUGz71acPBuxjIG0snHCB
-         cX8aUYxjOM3L05lhB7XLoAlVKYMHQHiy5cVb1H/XWVjSld7Te0u+QC6oFRi8hbaLFO7m
-         ON6yByc/TOolf4nzgriwoyYdqF4IEIZq4pyBXd/6gHyvXhgCHmNJvgdQIAWFgzPfES9b
-         3IKg==
-Received: by 10.236.197.74 with SMTP id s50mr2870660yhn.96.1337591698131; Mon,
- 21 May 2012 02:14:58 -0700 (PDT)
-Received: by 10.236.152.35 with HTTP; Mon, 21 May 2012 02:14:58 -0700 (PDT)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=JdziUP97g+sJNEeCDEU4CJFASxAh5M7MX4XvWtd0Qog=;
+        b=sFSh2qlYymD8DHmrwBsM09Uez/hJjjH8LJB5K7ypPF9NbZjmOqfgxCofNCDmh9Wf7X
+         k4Hf0ACaTSuXMBa8jktimwIoD44YI5OT85duF4xafGTsI7uaO3DzI3byne/40pfawUEC
+         iIkRCRLUxII/IfTmT6dbjvv0CnlOLBjyQrDlhF8OdKQEIG/Dr5qwZCDukOWhbzNw26yT
+         ySQxW+wEDCHbhjiMGxeDFKrbKkS4JrPY+R24NLX2jEEG3l0hJtwVaZD4SUjx9cVyy08S
+         jihqB310Y0tu452S7OSOQcufhQrweOs1oQPnhi0WC25B4c6419PbLiex6t4IOzKs81N4
+         HuVQ==
+Received: by 10.101.218.19 with SMTP id v19mr6722492anq.63.1337593326180; Mon,
+ 21 May 2012 02:42:06 -0700 (PDT)
+Received: by 10.236.152.35 with HTTP; Mon, 21 May 2012 02:42:06 -0700 (PDT)
+In-Reply-To: <4FB9F92D.8000305@alum.mit.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198098>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198099>
 
-One of our devs managed to push a branch called HEAD into our master
-repository, which then caused various failures for people doing pulls.
+On 21 May 2012 10:13, Michael Haggerty <mhagger@alum.mit.edu> wrote:
+> I just noticed that the remove_duplicates() function in builtin/fetch=
+-pack.c
+> is O(N^2) in the number of heads. =A0Empirically, this function takes=
+ on the
+> order of 25 seconds to process 100k references.
 
-   c2014aa..cbe0021  trunk      -> origin/trunk
-error: Ref refs/remotes/origin/trunk is at
-cbe002152fcc917216ad9003037309893f09901d but expected
-c2014aa485130013ca7eda1cb4a4eef192f9406d
- ! c2014aa...2bb416b HEAD       -> origin/HEAD  (unable to update local ref)
+Does "heads" in this context include tags? Sorry if this is a stupid qu=
+estion.
 
-And warnings like:
-
-$ git log HEAD
-warning: refname 'HEAD' is ambiguous.
-
-(we renamed master to 'trunk' long ago for various reasons)
-
-In order to clean it up we found that there was an entry
-
-2bb416bb4a44fbd61f29479d63a95705a7044e32 refs/heads/HEAD
-
-in our master packed-refs file, along with the normal HEAD file:
-
-$ cat HEAD
-ref: refs/heads/trunk
-$ cat refs/heads/trunk
-0752c05e75dd645833fb0ea7ce8e534cbd603f0b
-
-I deleted that line and then we removed these (output of find -ls)
-
-20119672    0 -rw-rw-r--   1 root     cvs             0 May 21 01:26
-./logs/refs/remotes/origin/HEAD
-20120092    4 -rw-rw-r--   1 root     cvs           162 May 21 01:26
-./logs/refs/heads/HEAD
-
-And things seemed to be fine. (yes we hillariously call our git user
-group cvs :-)
-
-So I am wondering, did we do the cleanup right?  Is this behavior by
-design? What is the most appropriate way to prevent it from happening
-again?
-
-I will try to find out from the responsible dev if they have their
-command history available to see what they did.
-
-cheers,
 Yves
 
--- 
-perl -Mre=debug -e "/just|another|perl|hacker/"
+
+--=20
+perl -Mre=3Ddebug -e "/just|another|perl|hacker/"
