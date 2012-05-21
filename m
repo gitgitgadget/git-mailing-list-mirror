@@ -1,110 +1,153 @@
 From: Jon Seymour <jon.seymour@gmail.com>
-Subject: [PATCH v3 4/4] submodule: support superproject origin URLs of the form foo/bar
-Date: Mon, 21 May 2012 23:31:42 +1000
-Message-ID: <1337607102-14737-4-git-send-email-jon.seymour@gmail.com>
-References: <1337607102-14737-1-git-send-email-jon.seymour@gmail.com>
-Cc: gitster@pobox.com, Jens.Lehmann@web.de,
-	Jon Seymour <jon.seymour@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 21 15:32:26 2012
+Subject: Re: [PATCH v2 2/2] submodule: fix handling of superproject with
+ relative origin URLs
+Date: Mon, 21 May 2012 23:52:56 +1000
+Message-ID: <CAH3AnrrNTrMcd6ZaUKqt9EgGvbRGBaqiqsPmECZAXZnahzr7OA@mail.gmail.com>
+References: <1337468428-26155-1-git-send-email-jon.seymour@gmail.com>
+	<1337468428-26155-2-git-send-email-jon.seymour@gmail.com>
+	<7vfwau9tgc.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Jens.Lehmann@web.de
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon May 21 15:53:21 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SWSim-0006D0-Fs
-	for gcvg-git-2@plane.gmane.org; Mon, 21 May 2012 15:32:25 +0200
+	id 1SWT2x-0008SK-8v
+	for gcvg-git-2@plane.gmane.org; Mon, 21 May 2012 15:53:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756533Ab2EUNcP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 May 2012 09:32:15 -0400
-Received: from mail-pz0-f46.google.com ([209.85.210.46]:50612 "EHLO
-	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756371Ab2EUNcM (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 May 2012 09:32:12 -0400
-Received: by dady13 with SMTP id y13so6816640dad.19
-        for <git@vger.kernel.org>; Mon, 21 May 2012 06:32:12 -0700 (PDT)
+	id S1757045Ab2EUNxD convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 21 May 2012 09:53:03 -0400
+Received: from mail-wi0-f172.google.com ([209.85.212.172]:64046 "EHLO
+	mail-wi0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757007Ab2EUNw5 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 21 May 2012 09:52:57 -0400
+Received: by wibhj8 with SMTP id hj8so2398784wib.1
+        for <git@vger.kernel.org>; Mon, 21 May 2012 06:52:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=w2e2nv4sx5bc1vaMK2qTOIe7E0UQ4eXaLk3sTzCri2o=;
-        b=ELNstdWquki6RDzyll3KLU65a1HBdYrwtZh01aART8We/RcDcar2jUpWJncI/iaOFd
-         fa4f5v5Ka7V+0KNPC3cURBLZga/KKo3oXIoO9uaq8hC5rBHpsLybf4y3ITDrZk7z0/ER
-         AaEwORrOLCIJF+xJbaeQ1GTcP5vigG/qa7TpSS4Cmp2eWHjQ/jlAv5Clwe4Q9QEUyjkR
-         cO48sn0oACBhTzFcjJRtzh6O0FiAprAdwcpT5l4FBQpkZjdr/FvjzzFTHnwUI3HVnFst
-         3xQqOWk+2acUUkf+uhXgOIYvCaHp0PSD9Sqp3ZGchzxfzjza5SOqY1jDj2bz4f12cXTy
-         srzg==
-Received: by 10.68.224.103 with SMTP id rb7mr17530639pbc.23.1337607132278;
-        Mon, 21 May 2012 06:32:12 -0700 (PDT)
-Received: from ubuntu.au.ibm.com ([110.173.237.195])
-        by mx.google.com with ESMTPS id wi8sm23153721pbc.11.2012.05.21.06.32.09
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 21 May 2012 06:32:11 -0700 (PDT)
-X-Mailer: git-send-email 1.7.10.2.594.g5c52315
-In-Reply-To: <1337607102-14737-1-git-send-email-jon.seymour@gmail.com>
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=hD3jTg7dPiG/KwZDgrIGJdPvRskH41PmUUIKT3m94+0=;
+        b=aGJUDbFfaGFC8L5RSMqZT3Bp8Hc9g+T2TeSZuHJbPfpal3BLsr1nUaDS3mZa7aMDj5
+         6BZ6pyMpxStoNRrkDu7LZXHIbUl7V3dpLFdsqMVdCChBMH0+u8flD1M6BOZ+dY05J667
+         caF6MDNQ7KJtxWog/WnzplTfu3RcBrbMhSc2VME01ZiMLxP8TCUlZGzRJVj//viUjcEI
+         TpGBbm59jL/8l4C9mBp9C347aNo12r70O2fR28abWaPghnkpuU7am1cBrJfK4ZarepH6
+         pDrNLvkI8bSvErNJ89xR439NZ6Z9hCd2zIPBlSknlWIzlSaOkVqZVPi1FN/nm3EIrmCv
+         eqzg==
+Received: by 10.180.86.197 with SMTP id r5mr25671885wiz.21.1337608376041; Mon,
+ 21 May 2012 06:52:56 -0700 (PDT)
+Received: by 10.180.146.166 with HTTP; Mon, 21 May 2012 06:52:56 -0700 (PDT)
+In-Reply-To: <7vfwau9tgc.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198104>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198105>
 
-When the origin URL of a superproject is of the form foo/bar, submodule
-operations such as add, sync or init will configure the URL of any
-submodule with an origin URL that points at the incorrect location.
+On Mon, May 21, 2012 at 12:08 PM, Junio C Hamano <gitster@pobox.com> wr=
+ote:
+> Jon Seymour <jon.seymour@gmail.com> writes:
+>
+>> Prior to this change, an operation such as git submodule add, init o=
+r
+>> sync produced the wrong result when the origin URL of the superproje=
+ct
+>> was itself a relative URL.
+>
+> If you say you are "fixing" something in the title, it is already kno=
+wn to
+> the reader that a broken behaviour exists in the code without the pat=
+ch in
+> question. =C2=A0Instead of spending four useless words "Prior to this=
+ change",
+> could "the wrong result" be clarified with either saying "wrong in wh=
+at
+> way" and/or "because of this and that reason"?
+>
 
-Origin URLs of this form are not expected in most cases, since
-the origin URL of a repo will usually point to a location that is not
-nested within the current working tree.
+I hope v3 is closer to what you would like to see.
 
-However, the situation can arise when the physical location
-of an upstream repo is managed with a symbolic link nested within
-the working tree itself.
+>> Note that superproject relative origin URLs of the form foo/bar
+>> are still not handled correctly.
+>
+> I am not sure what the use case of such a layout is. =C2=A0A project =
+that has a
+> "bar" repository as its superproject (or its one of submodules for th=
+at
+> matter) may advertise that the other repository lives at ../bar.git, =
+so
+> that when these two projects are served at a random hosting service, =
+such
+> a cross-project pointer does not have to be rewritten as long as thei=
+r
+> relative location at the hosting service remains the same. =C2=A0But =
+what does
+> it mean to say a related "foo" project lives in foo/bar.git directory
+> relative to one project in the first place? =C2=A0Does the project's =
+$GIT_DIR/
+> have a "foo" directory next to its "refs" and "objects"? =C2=A0Probab=
+ly I am
+> missing what you are trying to achieve. =C2=A0Puzzled.
 
-For example, suppose that a toolset is installed in ~/tools and
-~/tools/mnt/usb is a occasionally used as the origin for a refresh of the
-toolset. Different users with different USB devices may map ~/tools/mnt/usb
-to a different subdirectory of /media, but the auto-update function of the
-toolset may simply pull an update from mnt/usb, assuming that the user has
-done what is required to initialise mnt/usb to refer to the correct subdirectory
-of /media.
+I have tried to explain the use case again in 4/4 of the v3 patch (my
+previous attempt
+was in a previous reply to one of Jen's posts). I don't claim that
+this is a common
+use case at all, but it is a use case that I have used several times my=
+self.
 
-Signed-off-by: Jon Seymour <jon.seymour@gmail.com>
----
- git-submodule.sh           | 2 ++
- t/t7400-submodule-basic.sh | 2 +-
- 2 files changed, 3 insertions(+), 1 deletion(-)
+It is particularly useful in cases where there is a need to regularly
+synchronize
+a collection of git repos and other files across an "air gap" (for exam=
+ple, via
+an intermediary USB drive) where one of the repos being synchronized is=
+ the
+synchronization toolset itself.
 
-diff --git a/git-submodule.sh b/git-submodule.sh
-index 230c219..b8a7403 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -37,6 +37,7 @@ resolve_relative_url ()
- 	remoteurl=$(git config "remote.$remote.url") ||
- 		remoteurl=$(pwd) # the repository is its own authoritative upstream
- 	url="$1"
-+	remoteurl=$(echo "$remoteurl" | sed "s|^[^/][^:]*\$|./&|")
- 	remoteurl=${remoteurl%/}
- 	sep=/
- 	while test -n "$url"
-@@ -47,6 +48,7 @@ resolve_relative_url ()
- 			case "$remoteurl" in
- 			.*/*)
- 				up_path="$(echo "$2" | sed "s/[^/]*/../g")"
-+				remoteurl=${remoteurl#./}
- 				remoteurl="${up_path%/}/${remoteurl%/*}"
- 				;;
- 			*/*)
-diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
-index 71f30d8..a4a8363 100755
---- a/t/t7400-submodule-basic.sh
-+++ b/t/t7400-submodule-basic.sh
-@@ -533,7 +533,7 @@ test_expect_sucess 'test that submodule add creates the correct url when super o
- 		test "$(git config submodule.sub.url)" = ../../relative/subrepo
- 	)
- '
--test_expect_failure 'test that submodule add creates the correct url when super origin url is relative/repo' '
-+test_expect_success 'test that submodule add creates the correct url when super origin url is relative/repo' '
- 	mkdir reladd &&
- 	(
- 		cd reladd &&
--- 
-1.7.10.2.594.g5c52315
+In this case, it may well be that the origin repo for a particular
+toolset instance
+itself is actually located on a USB drive whose physical location chang=
+es as
+the removable device used to  update the tool set changes.
+
+The user may choose to manage the relative location of the USB drive wi=
+th a
+symbolic link (relative to the toolset) rather than a git origin URL.
+(The advantage of
+using a symbolic link in this case is that you can update the actual ph=
+ysical
+location of the USB drive with a single update to a single symbolic
+link - this may
+be more convenient in cases where are multiple git repos that need to b=
+e synced
+to the USB or if there are resources other than git repos on the USB).
+
+So, for example, suppose the toolset is managed within ~/tools with dir=
+ectories
+such as:
+
+=C2=A0 ~/tools/bin
+=C2=A0 ~/tools/lib
+
+then, perhaps the origin copy of the toolset is found by:
+
+=C2=A0 ~/tools/mnt/usb -> /media/MY_USB_DEVICE/tools
+
+remote.origin.url in ~/tools/.git/config might refer to mnt/usb/tools s=
+o that
+if the device occasionally changes to /media/YOUR_USB_DEVICE/tools
+then this can be accomodated by updating a single symbolic link
+(e.g. ~/tools/mnt/usb)
+
+Apologies if this explanation is not clear enough.
+
+Again, I don't claim it is a common use case, but then I don't see
+any harm with git supporting it either since it doesn't require much
+work.
+
+jon
