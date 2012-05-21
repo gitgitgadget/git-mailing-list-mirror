@@ -1,321 +1,75 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCHv2 10/15] drop length limitations on gecos-derived names and
- emails
-Date: Mon, 21 May 2012 19:10:17 -0400
-Message-ID: <20120521231017.GJ10981@sigill.intra.peff.net>
-References: <20120521230917.GA474@sigill.intra.peff.net>
+From: "Matt Seitz (matseitz)" <matseitz@cisco.com>
+Subject: Re: [PATCH 2/2] git-sh-setup: work around Cygwin path handling gotchas
+Date: Mon, 21 May 2012 16:51:04 -0700
+Message-ID: <70952A932255A2489522275A628B97C31348C4AB@xmb-sjc-233.amer.cisco.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Angus Hammond <angusgh@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue May 22 01:11:14 2012
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue May 22 01:52:21 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SWbkp-0000r2-2L
-	for gcvg-git-2@plane.gmane.org; Tue, 22 May 2012 01:11:07 +0200
+	id 1SWcOT-0006Bw-32
+	for gcvg-git-2@plane.gmane.org; Tue, 22 May 2012 01:52:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757086Ab2EUXK0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 May 2012 19:10:26 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:51229
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754182Ab2EUXKU (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 May 2012 19:10:20 -0400
-Received: (qmail 7881 invoked by uid 107); 21 May 2012 23:10:45 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 21 May 2012 19:10:45 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 21 May 2012 19:10:17 -0400
-Content-Disposition: inline
-In-Reply-To: <20120521230917.GA474@sigill.intra.peff.net>
+	id S932709Ab2EUXvW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 May 2012 19:51:22 -0400
+Received: from mtv-iport-3.cisco.com ([173.36.130.14]:4792 "EHLO
+	mtv-iport-3.cisco.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932726Ab2EUXvG convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 21 May 2012 19:51:06 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=cisco.com; i=matseitz@cisco.com; l=683; q=dns/txt;
+  s=iport; t=1337644266; x=1338853866;
+  h=mime-version:content-transfer-encoding:subject:date:
+   message-id:from:to;
+  bh=SWhCz8F3krse6OLWFzDNGGqDcxSzE7M6lmvF+8XBXtc=;
+  b=Zwq5+sP1cqeKAsfT6tgBHMUrWZtAiY1WqFw+bzx2OzBwZRoH6bmiD9Qh
+   Dk6WXkLxaT+LVaWPjZH4DiNS6+mUrVP0rZLWNFrG1ZGbVwM0759LWKNDp
+   oD3I15CGRYwmL9UzIIlBGon+O9E0jf7TIaj1ljOkIOPz/Z6yhjK/Gx0eI
+   8=;
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: Av4EAMLTuk+rRDoI/2dsb2JhbABEtBmBB4IXAQQSAR0KUQEIIgYYB0gBDgEEEwgSCIdeAwoBC51UgSiWLQmJVo0jgjxiA4hCjWiMfYFkgwk
+X-IronPort-AV: E=Sophos;i="4.75,633,1330905600"; 
+   d="scan'208";a="43216806"
+Received: from mtv-core-3.cisco.com ([171.68.58.8])
+  by mtv-iport-3.cisco.com with ESMTP; 21 May 2012 23:51:06 +0000
+Received: from xbh-sjc-211.amer.cisco.com (xbh-sjc-211.cisco.com [171.70.151.144])
+	by mtv-core-3.cisco.com (8.14.3/8.14.3) with ESMTP id q4LNp3tZ029247
+	for <git@vger.kernel.org>; Mon, 21 May 2012 23:51:05 GMT
+Received: from xmb-sjc-233.amer.cisco.com ([128.107.191.88]) by xbh-sjc-211.amer.cisco.com with Microsoft SMTPSVC(6.0.3790.4675);
+	 Mon, 21 May 2012 16:51:05 -0700
+X-MimeOLE: Produced By Microsoft Exchange V6.5
+Content-class: urn:content-classes:message
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+Thread-Topic: [PATCH 2/2] git-sh-setup: work around Cygwin path handling gotchas
+Thread-Index: Ac03rJOpPT++uXN1SYmVLLBAMYoQhA==
+X-OriginalArrivalTime: 21 May 2012 23:51:05.0832 (UTC) FILETIME=[96406E80:01CD37AC]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198160>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198162>
 
-When we pull the user's name from the GECOS field of the
-passwd file (or generate an email address based on their
-username and hostname), we put the result into a
-static buffer. While it's extremely unlikely that anybody
-ever hit these limits (after all, in such a case their
-parents must have hated them), we still had to deal with the
-error cases in our code.
+"Junio C Hamano" <gitster@pobox.com> wrote in message
+news:<7vaa116ulx.fsf@alter.siamese.dyndns.org>...
+> 
+> If you _only_ allow editors that understands windows style paths, your
+> patch may make sense, but doesn't it break editors that wants only
+POSIX
+> style paths?
 
-Converting these static buffers to strbufs lets us simplify
-the code and drop some error messages from the documentation
-that have confused some users.
+The Cygwin Users' Guide says "Using native Win32 paths in Cygwin, while
+possible, is generally inadvisable."
 
-The conversion is mostly mechanical: replace string copies
-with strbuf equivalents, and access the strbuf.buf directly.
-There are a few exceptions:
+http://cygwin.com/cygwin-ug-net/using.html#pathnames-win32
 
-  - copy_gecos and copy_email are the big winners in code
-    reduction (since they no longer have to manage the
-    string length manually)
-
-  - git_ident_config wants to replace old versions of
-    the default name (e.g., if we read the config multiple
-    times), so it must reset+add to the strbuf instead of
-    just adding
-
-Note that there is still one length limitation: the
-gethostname interface requires us to provide a static
-buffer, so we arbitrarily choose 1024 bytes for the
-hostname.
-
-Signed-off-by: Jeff King <peff@peff.net>
----
- Documentation/git-commit-tree.txt |   4 --
- Documentation/git-var.txt         |   4 --
- ident.c                           | 104 ++++++++++++++------------------------
- 3 files changed, 39 insertions(+), 73 deletions(-)
-
-diff --git a/Documentation/git-commit-tree.txt b/Documentation/git-commit-tree.txt
-index cfb9906..eb12b2d 100644
---- a/Documentation/git-commit-tree.txt
-+++ b/Documentation/git-commit-tree.txt
-@@ -92,10 +92,6 @@ Diagnostics
- -----------
- You don't exist. Go away!::
-     The passwd(5) gecos field couldn't be read
--Your parents must have hated you!::
--    The passwd(5) gecos field is longer than a giant static buffer.
--Your sysadmin must hate you!::
--    The passwd(5) name field is longer than a giant static buffer.
- 
- Discussion
- ----------
-diff --git a/Documentation/git-var.txt b/Documentation/git-var.txt
-index 988a323..3f703e3 100644
---- a/Documentation/git-var.txt
-+++ b/Documentation/git-var.txt
-@@ -63,10 +63,6 @@ Diagnostics
- -----------
- You don't exist. Go away!::
-     The passwd(5) gecos field couldn't be read
--Your parents must have hated you!::
--    The passwd(5) gecos field is longer than a giant static buffer.
--Your sysadmin must hate you!::
--    The passwd(5) name field is longer than a giant static buffer.
- 
- SEE ALSO
- --------
-diff --git a/ident.c b/ident.c
-index 87e3cbe..73a06a1 100644
---- a/ident.c
-+++ b/ident.c
-@@ -7,9 +7,8 @@
-  */
- #include "cache.h"
- 
--#define MAX_GITNAME (1000)
--static char git_default_name[MAX_GITNAME];
--static char git_default_email[MAX_GITNAME];
-+static struct strbuf git_default_name = STRBUF_INIT;
-+static struct strbuf git_default_email = STRBUF_INIT;
- static char git_default_date[50];
- int user_ident_explicitly_given;
- 
-@@ -19,42 +18,27 @@ int user_ident_explicitly_given;
- #define get_gecos(struct_passwd) ((struct_passwd)->pw_gecos)
- #endif
- 
--static void copy_gecos(const struct passwd *w, char *name, size_t sz)
-+static void copy_gecos(const struct passwd *w, struct strbuf *name)
- {
--	char *src, *dst;
--	size_t len, nlen;
--
--	nlen = strlen(w->pw_name);
-+	char *src;
- 
- 	/* Traditionally GECOS field had office phone numbers etc, separated
- 	 * with commas.  Also & stands for capitalized form of the login name.
- 	 */
- 
--	for (len = 0, dst = name, src = get_gecos(w); len < sz; src++) {
-+	for (src = get_gecos(w); *src && *src != ','; src++) {
- 		int ch = *src;
--		if (ch != '&') {
--			*dst++ = ch;
--			if (ch == 0 || ch == ',')
--				break;
--			len++;
--			continue;
--		}
--		if (len + nlen < sz) {
-+		if (ch != '&')
-+			strbuf_addch(name, ch);
-+		else {
- 			/* Sorry, Mr. McDonald... */
--			*dst++ = toupper(*w->pw_name);
--			memcpy(dst, w->pw_name + 1, nlen - 1);
--			dst += nlen - 1;
--			len += nlen;
-+			strbuf_addch(name, toupper(*w->pw_name));
-+			strbuf_addstr(name, w->pw_name + 1);
- 		}
- 	}
--	if (len < sz)
--		name[len] = 0;
--	else
--		die("Your parents must have hated you!");
--
- }
- 
--static int add_mailname_host(char *buf, size_t len)
-+static int add_mailname_host(struct strbuf *buf)
- {
- 	FILE *mailname;
- 
-@@ -65,7 +49,7 @@ static int add_mailname_host(char *buf, size_t len)
- 				strerror(errno));
- 		return -1;
- 	}
--	if (!fgets(buf, len, mailname)) {
-+	if (strbuf_getline(buf, mailname, '\n') == EOF) {
- 		if (ferror(mailname))
- 			warning("cannot read /etc/mailname: %s",
- 				strerror(errno));
-@@ -74,85 +58,73 @@ static int add_mailname_host(char *buf, size_t len)
- 	}
- 	/* success! */
- 	fclose(mailname);
--
--	len = strlen(buf);
--	if (len && buf[len-1] == '\n')
--		buf[len-1] = '\0';
- 	return 0;
- }
- 
--static void add_domainname(char *buf, size_t len)
-+static void add_domainname(struct strbuf *out)
- {
-+	char buf[1024];
- 	struct hostent *he;
--	size_t namelen;
- 	const char *domainname;
- 
--	if (gethostname(buf, len)) {
-+	if (gethostname(buf, sizeof(buf))) {
- 		warning("cannot get host name: %s", strerror(errno));
--		strlcpy(buf, "(none)", len);
-+		strbuf_addstr(out, "(none)");
- 		return;
- 	}
--	namelen = strlen(buf);
--	if (memchr(buf, '.', namelen))
-+	strbuf_addstr(out, buf);
-+	if (strchr(buf, '.'))
- 		return;
- 
- 	he = gethostbyname(buf);
--	buf[namelen++] = '.';
--	buf += namelen;
--	len -= namelen;
-+	strbuf_addch(out, '.');
- 	if (he && (domainname = strchr(he->h_name, '.')))
--		strlcpy(buf, domainname + 1, len);
-+		strbuf_addstr(out, domainname + 1);
- 	else
--		strlcpy(buf, "(none)", len);
-+		strbuf_addstr(out, "(none)");
- }
- 
--static void copy_email(const struct passwd *pw)
-+static void copy_email(const struct passwd *pw, struct strbuf *email)
- {
- 	/*
- 	 * Make up a fake email address
- 	 * (name + '@' + hostname [+ '.' + domainname])
- 	 */
--	size_t len = strlen(pw->pw_name);
--	if (len > sizeof(git_default_email)/2)
--		die("Your sysadmin must hate you!");
--	memcpy(git_default_email, pw->pw_name, len);
--	git_default_email[len++] = '@';
--
--	if (!add_mailname_host(git_default_email + len,
--				sizeof(git_default_email) - len))
-+	strbuf_addstr(email, pw->pw_name);
-+	strbuf_addch(email, '@');
-+
-+	if (!add_mailname_host(email))
- 		return;	/* read from "/etc/mailname" (Debian) */
--	add_domainname(git_default_email + len,
--			sizeof(git_default_email) - len);
-+	add_domainname(email);
- }
- 
- const char *ident_default_name(void)
- {
--	if (!git_default_name[0]) {
-+	if (!git_default_name.len) {
- 		struct passwd *pw = getpwuid(getuid());
- 		if (!pw)
- 			die("You don't exist. Go away!");
--		copy_gecos(pw, git_default_name, sizeof(git_default_name));
-+		copy_gecos(pw, &git_default_name);
- 	}
--	return git_default_name;
-+	return git_default_name.buf;
- }
- 
- const char *ident_default_email(void)
- {
--	if (!git_default_email[0]) {
-+	if (!git_default_email.len) {
- 		const char *email = getenv("EMAIL");
- 
- 		if (email && email[0]) {
--			strlcpy(git_default_email, email,
--				sizeof(git_default_email));
-+			strbuf_addstr(&git_default_email, email);
- 			user_ident_explicitly_given |= IDENT_MAIL_GIVEN;
- 		} else {
- 			struct passwd *pw = getpwuid(getuid());
- 			if (!pw)
- 				die("You don't exist. Go away!");
--			copy_email(pw);
-+			copy_email(pw, &git_default_email);
- 		}
- 	}
--	return git_default_email;
-+	return git_default_email.buf;
- }
- 
- const char *ident_default_date(void)
-@@ -327,7 +299,7 @@ const char *fmt_ident(const char *name, const char *email,
- 		struct passwd *pw;
- 
- 		if (error_on_no_name) {
--			if (name == git_default_name)
-+			if (name == git_default_name.buf)
- 				fputs(env_hint, stderr);
- 			die("empty ident %s <%s> not allowed", name, email);
- 		}
-@@ -397,7 +369,8 @@ int git_ident_config(const char *var, const char *value, void *data)
- 	if (!strcmp(var, "user.name")) {
- 		if (!value)
- 			return config_error_nonbool(var);
--		strlcpy(git_default_name, value, sizeof(git_default_name));
-+		strbuf_reset(&git_default_name);
-+		strbuf_addstr(&git_default_name, value);
- 		user_ident_explicitly_given |= IDENT_NAME_GIVEN;
- 		return 0;
- 	}
-@@ -405,7 +378,8 @@ int git_ident_config(const char *var, const char *value, void *data)
- 	if (!strcmp(var, "user.email")) {
- 		if (!value)
- 			return config_error_nonbool(var);
--		strlcpy(git_default_email, value, sizeof(git_default_email));
-+		strbuf_reset(&git_default_email);
-+		strbuf_addstr(&git_default_email, value);
- 		user_ident_explicitly_given |= IDENT_MAIL_GIVEN;
- 		return 0;
- 	}
--- 
-1.7.10.1.19.g711d603
+Is this similar to the problem of line ending (POSIX lf vs. Windows
+cr-lf)?  Windows Notepad won't correctly display files with lf line
+endings, either.
+So maybe this should be a configuration option, as with line endings?
