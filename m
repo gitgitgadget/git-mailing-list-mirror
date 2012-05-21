@@ -1,115 +1,97 @@
-From: Thomas Gummerer <t.gummerer@gmail.com>
-Subject: Re: Index format v5
-Date: Mon, 21 May 2012 22:30:18 +0200
-Message-ID: <20120521203018.GA57389@tgummerer.unibz.it>
-References: <20120510121911.GB98491@tgummerer>
- <4FAC0633.90809@alum.mit.edu>
- <20120511171230.GA2107@tgummerer>
- <4FB01080.6010605@alum.mit.edu>
- <20120514150113.GD2107@tgummerer>
- <4FB1746A.6090408@alum.mit.edu>
- <20120515134916.GA2074@tgummerer.unibz.it>
- <4FB334C7.2070201@alum.mit.edu>
- <20120516215407.GA1738@tgummerer.surfnet.iacbox>
- <4FB73268.4020204@alum.mit.edu>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 5/7] revert: free revs->cmdline.rev
+Date: Mon, 21 May 2012 15:39:41 -0500
+Message-ID: <20120521203941.GB28331@burratino>
+References: <20120521143309.1911.94302.chriscool@tuxfamily.org>
+ <20120521145610.1911.46356.chriscool@tuxfamily.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, trast@student.ethz.ch, gitster@pobox.com,
-	peff@peff.net, spearce@spearce.org, davidbarr@google.com
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Mon May 21 22:31:13 2012
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Nick Bowler <nbowler@elliptictech.com>
+To: Christian Couder <chriscool@tuxfamily.org>
+X-From: git-owner@vger.kernel.org Mon May 21 22:39:55 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SWZG3-0006K5-RF
-	for gcvg-git-2@plane.gmane.org; Mon, 21 May 2012 22:31:12 +0200
+	id 1SWZOT-0006Hj-Q2
+	for gcvg-git-2@plane.gmane.org; Mon, 21 May 2012 22:39:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758497Ab2EUUa3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 May 2012 16:30:29 -0400
-Received: from mail-wi0-f172.google.com ([209.85.212.172]:40028 "EHLO
-	mail-wi0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758465Ab2EUUaX (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 May 2012 16:30:23 -0400
-Received: by wibhj8 with SMTP id hj8so2739566wib.1
-        for <git@vger.kernel.org>; Mon, 21 May 2012 13:30:21 -0700 (PDT)
+	id S1758361Ab2EUUjt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 May 2012 16:39:49 -0400
+Received: from mail-gg0-f174.google.com ([209.85.161.174]:34066 "EHLO
+	mail-gg0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754046Ab2EUUjs (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 May 2012 16:39:48 -0400
+Received: by gglu4 with SMTP id u4so4763354ggl.19
+        for <git@vger.kernel.org>; Mon, 21 May 2012 13:39:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-type:content-disposition:in-reply-to:user-agent;
-        bh=dTxozoCLUegXWeGOlOQJ1aT1ibrC3UVVM4mlApl5Hf4=;
-        b=pRuUbNXPsGG3e3glJ9US15mkKo+qjXU8vr2On+1Q8gQ3Ofqrb7OuqIRg/zfb3QP0f0
-         KBVxUx4FGobWjL51+hEpw5MNkvYzL+VmnOcv9pLTVha09vDfWPuA1UqnXXnmzCWScJcm
-         jpyFveEp7tdjCKzzDsc39gtIC5O5NRKCkvN+yEzdbV0CrjvT0l8zgbrnep/At7hZ9oxG
-         Zg5+THWKHzfh4dItIpPQnJTNnmEHx9axVf7V+o/XWBr8Ka3c9RWLXe55mZ3hOEGC6g1c
-         IX57lQaOaQnJR2NP87RJ5idGmOAqJVRE+bsQqVOxRjT3O8r56oGosV2Rl2Zm9ZmLU7mZ
-         9FQQ==
-Received: by 10.216.196.218 with SMTP id r68mr280046wen.122.1337632221363;
-        Mon, 21 May 2012 13:30:21 -0700 (PDT)
-Received: from localhost (host84-52-dynamic.14-87-r.retail.telecomitalia.it. [87.14.52.84])
-        by mx.google.com with ESMTPS id dg2sm43482657wib.4.2012.05.21.13.30.19
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 21 May 2012 13:30:20 -0700 (PDT)
+        bh=ENPX+NHkg9J1Yf4mQHy+CjF4laJsMLP9IZJndKNcFsI=;
+        b=nSxTe5TC+TAqf/gu2QmLIwQkOAvtD11QHevqGlR57HPxmAIF1lAjvjnVcJsyED1N/p
+         PB8f21UQLXEDP6WJfpzXKjsPBWi7XPnhfB5jGhsANX4UMjkFQYxxBzV0hUeZLqYYPtM/
+         TH3cXrIH35lBecLD/m31o+JIHZj8Osg+PJF+3lJf6ueI8joh/75vKjKfD0DD849YiZq6
+         3fzz2Ogd8xShbhdcydR9e3FIWwrtI/z2sh032xxRszhaJBtSZMgWc/RP9qZ8Jr1+o3/n
+         EZuImczfYqwLjQEeVlCCbsX8/Y9MZWaYFkXxf1SpNmpiiYpB9vZeD2ZPTm2bT0XCMYqN
+         rZhw==
+Received: by 10.50.149.132 with SMTP id ua4mr7869528igb.41.1337632787667;
+        Mon, 21 May 2012 13:39:47 -0700 (PDT)
+Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
+        by mx.google.com with ESMTPS id ey7sm14498059igb.2.2012.05.21.13.39.46
+        (version=SSLv3 cipher=OTHER);
+        Mon, 21 May 2012 13:39:47 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <4FB73268.4020204@alum.mit.edu>
+In-Reply-To: <20120521145610.1911.46356.chriscool@tuxfamily.org>
 User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198126>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198127>
 
+Hi,
 
+Christian Couder wrote:
 
-On 05/19, Michael Haggerty wrote:
-> I think it is possible to remove the last magic number and also to
-> make the CRC handling easier.  I have pushed some suggested changes
-> to github [1]:
-> 
-> 1. With the current code, trying to read a file that is less than 24
-> bytes long would result in a struct.error (because it would try to
-> unpack a string that is shorter than the struct) whereas the
-> underlying error in this case should almost always be reported as a
-> signature error.  So it is correct to read the signature separately
-> from the rest of the header, but it is even more correct to check
-> the signature (including its length) before reading on.
+> add_rev_cmdline() in revision.c is (re)allocating an array of
+> struct rev_cmdline_entry. This patch releases it.
+[...]
+> --- a/builtin/revert.c
+> +++ b/builtin/revert.c
+> @@ -217,6 +217,8 @@ int cmd_revert(int argc, const char **argv, const char *prefix)
+>  	git_config(git_default_config, NULL);
+>  	parse_args(argc, argv, &opts);
+>  	res = sequencer_pick_revisions(&opts);
+> +	if (opts.revs)
+> +		free(opts.revs->cmdline.rev);
+>  	free(opts.revs);
+>  	if (res < 0)
+>  		die(_("revert failed"));
 
-I looked at the current git code, and the filesize is used for
-checking if the index size is big enough. I'll implement it that way
-in the prototype for now.
+Quick thoughts:
 
-> 2. I introduce a class CRC to hold checksums, so that (a) the code
-> for handling checksums can be encapsulated, and (b) an instance of
-> this class can be passed into functions and mutated in-place, which
-> is less cumbersome than requiring functions to return (data, crc)
-> tuples.  This, in turn, makes possible...
-> 
-> 3. ...a new function read_struct(f, s, crc), which reads the data
-> for a struct.Struct from f, checksums it, and returns the unpacked
-> data.  This function is more convenient to use than the old
-> read_calc_crc().
-> 
-> 4. The checksum instance can also be made responsible for verifying
-> that the next four bytes in the file agree with the expected
-> checksum.  This removes some more code duplication.  (See
-> CRC.matches().)
->
-> 5. You read the extension offsets using CRC_STRUCT.size, which is
-> technically correct but misleading.  In fact, the extension offsets
-> should be documented using their own EXTENSION_INDEX_STRUCT.  Also,
-> it makes more sense to store the unpacked integer offsets to
-> extoffsets rather than the raw 4-byte strings.
-> 
-> 6. With a couple of more minor changes it is possible to replace the
-> magic number "24" in read_index_entries().  With this change the
-> computation is documented very explicitly and is also (somewhat)
-> robust against future changes in the format.
-> 
-> Look over my changes and take whatever you want.
+This feels like a layering violation.  Avoidable?  Maybe revision.c
+could gain a helper to allow this to be written like so:
 
-Thanks, I didn't merge them directly, but I took the basics out and
-merged them with my code.
+	free_rev_info(opts.revs);
+	free(opts.revs);
 
---
-Thomas
+Since this is a one-time allocation it is probably worth mentioning in
+the log message that this is a futureproofing/valgrind-cleanliness
+measure and is not actually fixing a leak.
+
+Micronit: it would feel slightly more comfortable if the free() were
+after the die(), even though the die() should probably be changed to
+exit().  That way someone wanting to add code after the die() that
+continues to assume opts.revs is valid would be able to.
+
+Of course I'd imagine the largest leak in cherry-pick is the
+deliberately constantly growing object hash table.  It would be very
+interesting to fix that --- do you know how libgit2 handles it?
+
+Thanks much and hope that helps,
+Jonathan
