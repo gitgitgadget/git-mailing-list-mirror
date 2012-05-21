@@ -1,83 +1,94 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 08/13] ident: don't write fallback username into
- git_default_name
-Date: Mon, 21 May 2012 02:11:58 -0700
-Message-ID: <7v396t99up.fsf@alter.siamese.dyndns.org>
-References: <20120518230528.GA30510@sigill.intra.peff.net>
- <20120518231933.GH30031@sigill.intra.peff.net>
- <7v7gw69rbz.fsf@alter.siamese.dyndns.org>
- <20120521063145.GB2077@sigill.intra.peff.net>
+From: demerphq <demerphq@gmail.com>
+Subject: Is it by design you can create a branch called 'HEAD'?
+Date: Mon, 21 May 2012 11:14:58 +0200
+Message-ID: <CANgJU+UAbpFvROFynZ-MHzfhEYksM-Mhf5rVjcA6GUhk6BX-NQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Angus Hammond <angusgh@gmail.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon May 21 11:12:12 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: =?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>,
+	Rafael Garcia-Suarez <rgarciasuarez@gmail.com>
+To: Git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon May 21 11:15:06 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SWOew-0003PX-JV
-	for gcvg-git-2@plane.gmane.org; Mon, 21 May 2012 11:12:10 +0200
+	id 1SWOhk-0000p7-6I
+	for gcvg-git-2@plane.gmane.org; Mon, 21 May 2012 11:15:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757337Ab2EUJMF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 May 2012 05:12:05 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:34202 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757259Ab2EUJMC (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 May 2012 05:12:02 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 62DCD4827;
-	Mon, 21 May 2012 05:12:02 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 s=sasl; bh=pTFZojwn1Rj9h6DhkMgGuWL62OQ=; b=J+zLU5kmEy39SfgBxWhT
-	TxIBA8mi9vX3k2qd/3QQrwIuOn7HJRAdHt3sfCpaS0V2DdD+lbQpyj0banQY70o8
-	YKrroNYzMSphgf/gMg4d6RTnsKTosY17QPwj11XuecGyv+wPpQbD7wDHBdR4qG5v
-	mg6yZtBBL55TKTy4+/gBWCE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 q=dns; s=sasl; b=VOG4wWxHim1pD4gRavz5HySfWUZWtI9cM/6nlGTJwPIYKz
-	IzXozbDW7hzQZxYlz5ajwXLdI5IGn6V5E2nQcv3HOcig95Hmqf8vP6ZQ117GQmvA
-	AXTBL74omhZdlT72jbOfVZP8FEUoPMOSRO+cIjVC6sCtM4AnrkKiDhJ8poEcE=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 46FAD4826;
-	Mon, 21 May 2012 05:12:02 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1B7574823; Mon, 21 May 2012
- 05:12:00 -0400 (EDT)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 059EABC8-A325-11E1-9C3A-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1757397Ab2EUJPA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 May 2012 05:15:00 -0400
+Received: from mail-gg0-f174.google.com ([209.85.161.174]:41351 "EHLO
+	mail-gg0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757387Ab2EUJO6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 May 2012 05:14:58 -0400
+Received: by gglu4 with SMTP id u4so4098266ggl.19
+        for <git@vger.kernel.org>; Mon, 21 May 2012 02:14:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:cc:content-type;
+        bh=UvDIkDpwa8NMXOjay4cC7o2b15/kbf3vY1+r0P6fUqw=;
+        b=qmcSjsrA+CkZCJoU4eiSocPHDnBdLVi163PhE/0fIVAj4iAc5FeBuZLuBZ6ApmfP5r
+         Wfs3XNfgFdTw+43xAnkrR/mdeziq90TMH67lTe/nsffWw9InUT3edWrOjWc7ZowHhoGy
+         dR9mfwAMb08hsxLvLciQSMOrY2DwW0nkgioUQzDdOF2HGZKlUGz71acPBuxjIG0snHCB
+         cX8aUYxjOM3L05lhB7XLoAlVKYMHQHiy5cVb1H/XWVjSld7Te0u+QC6oFRi8hbaLFO7m
+         ON6yByc/TOolf4nzgriwoyYdqF4IEIZq4pyBXd/6gHyvXhgCHmNJvgdQIAWFgzPfES9b
+         3IKg==
+Received: by 10.236.197.74 with SMTP id s50mr2870660yhn.96.1337591698131; Mon,
+ 21 May 2012 02:14:58 -0700 (PDT)
+Received: by 10.236.152.35 with HTTP; Mon, 21 May 2012 02:14:58 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198097>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198098>
 
-Jeff King <peff@peff.net> writes:
+One of our devs managed to push a branch called HEAD into our master
+repository, which then caused various failures for people doing pulls.
 
-> It does raise a subtle issue, though: should we be trimming whitespace
-> and other undesirable characters from git_default_email (or
-> git_default_name)? We don't currently, and it ends up OK because the
-> result typically is fed through fmt_ident, which cleans it up. But:
->
->   1. We do look at the git_default_* variables for things like deciding
->      whether the name is blank. So if your gecos field was " ", I think
->      that would fool git into thinking it had something useful, and skip
->      the IDENT_ERROR_ON_NO_NAME check, even though fmt_ident would
->      produce an empty name.
->
->   2. We don't always feed it through fmt_ident (the http-push.c callsite
->      I mentioned above, and now patch 6 adds another one).
->
-> So I think my preference would be:
->
->   - apply the patch below as 5.5/13
->
->   - tweak patch 9 to remove the extra trimming
->
->   - add a patch 14 to call strbuf_trim on the name and email buffers
->     after reading them from system files.
+   c2014aa..cbe0021  trunk      -> origin/trunk
+error: Ref refs/remotes/origin/trunk is at
+cbe002152fcc917216ad9003037309893f09901d but expected
+c2014aa485130013ca7eda1cb4a4eef192f9406d
+ ! c2014aa...2bb416b HEAD       -> origin/HEAD  (unable to update local ref)
 
-Sounds sensible; thanks.
+And warnings like:
+
+$ git log HEAD
+warning: refname 'HEAD' is ambiguous.
+
+(we renamed master to 'trunk' long ago for various reasons)
+
+In order to clean it up we found that there was an entry
+
+2bb416bb4a44fbd61f29479d63a95705a7044e32 refs/heads/HEAD
+
+in our master packed-refs file, along with the normal HEAD file:
+
+$ cat HEAD
+ref: refs/heads/trunk
+$ cat refs/heads/trunk
+0752c05e75dd645833fb0ea7ce8e534cbd603f0b
+
+I deleted that line and then we removed these (output of find -ls)
+
+20119672    0 -rw-rw-r--   1 root     cvs             0 May 21 01:26
+./logs/refs/remotes/origin/HEAD
+20120092    4 -rw-rw-r--   1 root     cvs           162 May 21 01:26
+./logs/refs/heads/HEAD
+
+And things seemed to be fine. (yes we hillariously call our git user
+group cvs :-)
+
+So I am wondering, did we do the cleanup right?  Is this behavior by
+design? What is the most appropriate way to prevent it from happening
+again?
+
+I will try to find out from the responsible dev if they have their
+command history available to see what they did.
+
+cheers,
+Yves
+
+-- 
+perl -Mre=debug -e "/just|another|perl|hacker/"
