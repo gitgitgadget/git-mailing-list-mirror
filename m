@@ -1,122 +1,100 @@
-From: mhagger@alum.mit.edu
-Subject: [PATCH v2 4/4] cmd_fetch_pack(): respect constness of argv parameter
-Date: Mon, 21 May 2012 09:59:59 +0200
-Message-ID: <1337587199-21099-5-git-send-email-mhagger@alum.mit.edu>
-References: <1337587199-21099-1-git-send-email-mhagger@alum.mit.edu>
-Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>, git@vger.kernel.org,
-	Michael Haggerty <mhagger@alum.mit.edu>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH 2/2] cmd_fetch_pack(): fix constness problem and memory
+ leak
+Date: Mon, 21 May 2012 10:13:48 +0200
+Message-ID: <4FB9F93C.4010308@alum.mit.edu>
+References: <1335955259-15309-1-git-send-email-mhagger@alum.mit.edu> <1335955259-15309-3-git-send-email-mhagger@alum.mit.edu> <7vk4069ug8.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon May 21 10:08:13 2012
+X-From: git-owner@vger.kernel.org Mon May 21 10:14:05 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SWNf0-0003JW-DC
-	for gcvg-git-2@plane.gmane.org; Mon, 21 May 2012 10:08:10 +0200
+	id 1SWNkd-0006JI-Sv
+	for gcvg-git-2@plane.gmane.org; Mon, 21 May 2012 10:14:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755787Ab2EUIIE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 May 2012 04:08:04 -0400
-Received: from ALUM-MAILSEC-SCANNER-3.MIT.EDU ([18.7.68.14]:47307 "EHLO
-	alum-mailsec-scanner-3.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751563Ab2EUIH7 (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 21 May 2012 04:07:59 -0400
-X-Greylist: delayed 440 seconds by postgrey-1.27 at vger.kernel.org; Mon, 21 May 2012 04:07:59 EDT
-X-AuditID: 1207440e-b7f256d0000008c1-46-4fb9f6268b5f
+	id S1756238Ab2EUINy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 May 2012 04:13:54 -0400
+Received: from ALUM-MAILSEC-SCANNER-5.MIT.EDU ([18.7.68.17]:62829 "EHLO
+	alum-mailsec-scanner-5.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1756213Ab2EUINu (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 21 May 2012 04:13:50 -0400
+X-AuditID: 12074411-b7f596d000000932-37-4fb9f93dfddd
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-3.mit.edu (Symantec Messaging Gateway) with SMTP id 98.67.02241.626F9BF4; Mon, 21 May 2012 04:00:38 -0400 (EDT)
-Received: from michael.berlin.jpk.com (ssh.berlin.jpk.com [212.222.128.135])
+	by alum-mailsec-scanner-5.mit.edu (Symantec Messaging Gateway) with SMTP id 9A.B8.02354.D39F9BF4; Mon, 21 May 2012 04:13:49 -0400 (EDT)
+Received: from [192.168.101.152] (ssh.berlin.jpk.com [212.222.128.135])
 	(authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id q4L80LO1006950
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id q4L8DmTa007552
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Mon, 21 May 2012 04:00:38 -0400
-X-Mailer: git-send-email 1.7.10
-In-Reply-To: <1337587199-21099-1-git-send-email-mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrDIsWRmVeSWpSXmKPExsUixO6iqKv2bae/wdMeQ4uuK91MFg29V5gt
-	bq+Yz2zRPeUtowOLx9/3H5g8ds66y+5x8ZKyx+dNcgEsUdw2SYklZcGZ6Xn6dgncGQ8aF7IX
-	HBKs6P3YydjA+IC3i5GTQ0LAROLeor/sELaYxIV769m6GLk4hAQuM0p0/F/KDuGcYZJovf6e
-	DaSKTUBK4mVjD1iHiICaxMS2QyxdjBwczALFEpcXm4CEhQV8JTa9+ApWwiKgKrHt0ldmEJtX
-	wEVi1f0NLBDL5CWe3u8DG8kp4Cpx6PpusLgQUM2Gh4vZJjDyLmBkWMUol5hTmqubm5iZU5ya
-	rFucnJiXl1qka6yXm1mil5pSuokREj58Oxjb18scYhTgYFTi4XWasdNfiDWxrLgy9xCjJAeT
-	kiiv6SegEF9SfkplRmJxRnxRaU5q8SFGCQ5mJRHeuw+BcrwpiZVVqUX5MClpDhYlcV61Jep+
-	QgLpiSWp2ampBalFMFkZDg4lCd6pX4EaBYtS01Mr0jJzShDSTBycIIILZAMP0IYEkELe4oLE
-	3OLMdIiiU4yKUuK8zSAJAZBERmke3ABYpL9iFAf6R5h3KUgVDzBJwHW/AhrMBDQ46AXY4JJE
-	hJRUA6Oz4tILlrrrEzpuMhUsvaV1LCqj0dKTV8gjuuSbQ8jfj8fKtjxmnpll9+wkw5OKU6x9
-	Jx72Pfjwvo3ze0dWlt+2iy2n038EndpgvT35nLjClYeLM2exv3UL6zkpqKT8MSL8/Mv/2x/1
-	NunssV94y/KZSEqxn0zurV2Rty+Kf9x757vPlmcc1TeVWIozEg21mIuKEwFksQeZ 
+	Mon, 21 May 2012 04:13:49 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:12.0) Gecko/20120430 Thunderbird/12.0.1
+In-Reply-To: <7vk4069ug8.fsf@alter.siamese.dyndns.org>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprAKsWRmVeSWpSXmKPExsUixO6iqGv7c6e/weXZVhZdV7qZLBp6rzA7
+	MHlcvKTs8XmTXABTFLdNUmJJWXBmep6+XQJ3xq2GS6wFT3gqJm1/z9TA2MPVxcjJISFgIrGy
+	YyEbhC0mceHeeiCbi0NI4DKjxMzT39ghnONMEpPevGYHqeIV0JZ4caCTBcRmEVCVuN1/ixnE
+	ZhPQlVjU08zUxcjBISoQJrH6gQZEuaDEyZlPwMpFBNQkJrYdYgEpYRYQl+j/BxYWFgiSOHq+
+	gRli1XJGidVNe8FGcgqYSdxdNJENot5a4tvuIpAws4C8xPa3c5gnMArMQrJhFkLVLCRVCxiZ
+	VzHKJeaU5urmJmbmFKcm6xYnJ+blpRbpmurlZpbopaaUbmKEhKjgDsYZJ+UOMQpwMCrx8DrN
+	2OkvxJpYVlyZe4hRkoNJSZT39TegEF9SfkplRmJxRnxRaU5q8SFGCQ5mJRHeuw+BcrwpiZVV
+	qUX5MClpDhYlcV6+Jep+QgLpiSWp2ampBalFMFkZDg4lCd6cH0CNgkWp6akVaZk5JQhpJg5O
+	kOFcUiLFqXkpqUWJpSUZ8aAojS8GxilIigdobxFIO29xQWIuUBSi9RSjLseMT4uuMQqx5OXn
+	pUqJ8yqDFAmAFGWU5sGtgCWkV4ziQB8L81qAVPEAkxncpFdAS5iAlgS9AFtSkoiQkmpgdHFz
+	XL3xT+9i2R6RidGJx38//PGn4X5terHbq81d64TLaroN891OR6Y5nNb9dcnG8q/a48/3Am8w
+	JFcmZZ4KPbLpqTZz78Fjf70nJF2xPrW+LHxLPqvGh0ID/4JdhV2xV/Ksul5YPflx 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198093>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198094>
 
-From: Michael Haggerty <mhagger@alum.mit.edu>
+On 05/21/2012 03:47 AM, Junio C Hamano wrote:
+> mhagger@alum.mit.edu writes:
+>
+>> I understand that it is not crucial to free memory allocated in a
+>> cmd_*() function but it is unclear to me whether it is *preferred* to
+>> let the process clean up take care of things.
+>
+> Traditionally, the cmd_foo() functions roughly correspond to main() in
+> other programs, so from that point of view, "it is not crucial to free" is
+> an understatement. It is not even worth wasting people's time to (1)
+> decide which way is *preferred* and to (2) churn the code only to match
+> whichever way.
 
-The old code cast away the constness of the strings passed to the
-function in argument argv[], which could result in their being
-modified by filter_refs().  Fix by copying reference names from argv
-and putting them into our own array (similarly to how refnames passed
-to stdin were already handled).
+OK, thanks for the info.  I will remove the "freeing-memory" part of the 
+patch.
 
-Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
----
-This change results in heads being left set to NULL if nr_heads==0,
-but all of the code paths are OK with this.
+> If you have a plan to split cmd_fetch_pack() and make other parts of the
+> system call it, [...]
 
- builtin/fetch-pack.c |   23 ++++++++++-------------
- 1 file changed, 10 insertions(+), 13 deletions(-)
+No, I have no plans for cmd_fetch_pack() besides cleaning up the 
+constness errors that I found when randomly reading the code.
 
-diff --git a/builtin/fetch-pack.c b/builtin/fetch-pack.c
-index 96849a4..7ad9e54 100644
---- a/builtin/fetch-pack.c
-+++ b/builtin/fetch-pack.c
-@@ -899,10 +899,11 @@ static void fetch_pack_setup(void)
- 
- int cmd_fetch_pack(int argc, const char **argv, const char *prefix)
- {
--	int i, ret, nr_heads;
-+	int i, ret;
- 	struct ref *ref = NULL;
- 	const char *dest = NULL;
--	char **heads;
-+	int alloc_heads = 0, nr_heads = 0;
-+	char **heads = NULL;
- 	int fd[2];
- 	char *pack_lockfile = NULL;
- 	char **pack_lockfile_ptr = NULL;
-@@ -910,7 +911,6 @@ int cmd_fetch_pack(int argc, const char **argv, const char *prefix)
- 
- 	packet_trace_identity("fetch-pack");
- 
--	heads = NULL;
- 	for (i = 1; i < argc && *argv[i] == '-'; i++) {
- 		const char *arg = argv[i];
- 
-@@ -976,17 +976,14 @@ int cmd_fetch_pack(int argc, const char **argv, const char *prefix)
- 	else
- 		usage(fetch_pack_usage);
- 
--	heads = (char **)(argv + i);
--	nr_heads = argc - i;
--
-+	/*
-+	 * Copy refs from cmdline to growable list, then append any
-+	 * refs from the standard input:
-+	 */
-+	ALLOC_GROW(heads, argc - i, alloc_heads);
-+	for (; i < argc; i++)
-+		heads[nr_heads++] = xstrdup(argv[i]);
- 	if (args.stdin_refs) {
--		/*
--		 * Copy refs from cmdline to new growable list, then
--		 * append the refs from the standard input.
--		 */
--		int alloc_heads = nr_heads;
--		int size = nr_heads * sizeof(*heads);
--		heads = memcpy(xmalloc(size), heads, size);
- 		if (args.stateless_rpc) {
- 			/* in stateless RPC mode we use pkt-line to read
- 			 * from stdin, until we get a flush packet
+> It also seems that some cruft has snuck into this patch, e.g. like this
+> part,
+>
+>> -	int i, ret, nr_heads;
+>> +	int i, ret;
+>
+> that do not have anything to do with "fix constness" nor "memory leak".
+
+This particular hunk is part of moving alloc_heads, nr_heads, and heads 
+together to make it more obvious that they are part of an ALLOC_GROW 
+triplet.  Previously alloc_heads was a block-local variable used only in 
+the case of the --stdin option.
+
+But I admit that the patch is harder than necessary to read because of 
+the indentation changes etc, so I will break it up into more digestible 
+quanta.
+
+Michael
+
 -- 
-1.7.10
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
