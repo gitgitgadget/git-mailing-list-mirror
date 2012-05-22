@@ -1,70 +1,70 @@
-From: Alexey Pelykh <alexey.pelykh@gmail.com>
-Subject: Re: Question about submodules and absolute paths
-Date: Tue, 22 May 2012 23:25:43 +0300
-Message-ID: <CAOmKuSoxf_mRJRyjXj99NQLoa+fD-HU_oUYPrJYPNTPmvhs46g@mail.gmail.com>
-References: <CAOmKuSoYP9fYORDy5twLpFh7SQ7rc6x2A=F8XjfKMqo-ErCauQ@mail.gmail.com>
-	<CAOmKuSpqFrC7G4DbZu=uYDwvU6QqrJUi2aNBnSjy7_PXMMJpjQ@mail.gmail.com>
-	<7vk4043wc5.fsf@alter.siamese.dyndns.org>
-	<CAOmKuSrmxnHKaip2X87Y0Cp=XtLAtpAwUp71QhZ5od3gbDF2sg@mail.gmail.com>
-	<70952A932255A2489522275A628B97C31348C70D@xmb-sjc-233.amer.cisco.com>
-	<CAOmKuSqRHMS+hvCXL4Ok6ReTPW-3xT9SunGeibjCCCgVk9SU6Q@mail.gmail.com>
-	<70952A932255A2489522275A628B97C31348C71F@xmb-sjc-233.amer.cisco.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: "Matt Seitz (matseitz)" <matseitz@cisco.com>
-X-From: git-owner@vger.kernel.org Tue May 22 22:25:54 2012
+From: Samuel John <mail@samueljohn.de>
+Subject: contrib/credential/osxkeychain: Makefile should allow to set CFLAGS
+Date: Tue, 22 May 2012 22:25:51 +0200
+Message-ID: <AB628C35-FEC2-4425-B3D8-EEC7F8D6A66B@samueljohn.de>
+Mime-Version: 1.0 (Apple Message framework v1278)
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 22 22:26:05 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SWveQ-00015P-7u
-	for gcvg-git-2@plane.gmane.org; Tue, 22 May 2012 22:25:50 +0200
+	id 1SWveb-0001at-RA
+	for gcvg-git-2@plane.gmane.org; Tue, 22 May 2012 22:26:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932575Ab2EVUZp convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 22 May 2012 16:25:45 -0400
-Received: from mail-ob0-f174.google.com ([209.85.214.174]:34619 "EHLO
-	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932474Ab2EVUZo convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 22 May 2012 16:25:44 -0400
-Received: by obbtb18 with SMTP id tb18so10050184obb.19
-        for <git@vger.kernel.org>; Tue, 22 May 2012 13:25:44 -0700 (PDT)
+	id S932549Ab2EVUZ5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 May 2012 16:25:57 -0400
+Received: from mail-bk0-f46.google.com ([209.85.214.46]:59843 "EHLO
+	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932474Ab2EVUZ4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 May 2012 16:25:56 -0400
+Received: by bkcji2 with SMTP id ji2so5357088bkc.19
+        for <git@vger.kernel.org>; Tue, 22 May 2012 13:25:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=Rc2lgfs3r8Y6jzcbG9iZINZrS9jouYw8Jv6P9Q24Bus=;
-        b=JiPBqHlrvj0O13XaCBO2L2EJ71M8YK5ZlOHfMkE74zo291KLbxwsV+g6Sslzq7voVw
-         /CDNY5azPhsQksc+yTMrI0l2twsMTBjMM7DABRGCc6XXvYZ5sT554aRPyP6qXFgDFhrk
-         ieo+MNdN0xSyhDabsA8p8yVFAI94TmhGactQPXiuKmP8E/TQvCbB36LgmXvVXCsQt4MH
-         98/j1L3aJNpNP9niO3W24/0n3105+zlWEPOEQateSU+OcB8OexIlJeyofUy7v9sZawpE
-         Gbkz5qT6U+PPGGK5DbsTB5jjBgu88yAy2lZwYGdB7aZ+T7y+00eeU3sGowOpUyktXd6b
-         L8Jw==
-Received: by 10.182.45.72 with SMTP id k8mr1775915obm.51.1337718343899; Tue,
- 22 May 2012 13:25:43 -0700 (PDT)
-Received: by 10.182.72.65 with HTTP; Tue, 22 May 2012 13:25:43 -0700 (PDT)
-In-Reply-To: <70952A932255A2489522275A628B97C31348C71F@xmb-sjc-233.amer.cisco.com>
+        d=googlemail.com; s=20120113;
+        h=sender:from:content-type:content-transfer-encoding:subject:date
+         :message-id:to:mime-version:x-mailer;
+        bh=YpbB9h5ni8WpWPB7a43G+AxMYmyQeDNwfCRx+6Ep9oE=;
+        b=aieiSGq1s0OzToU8dAHUpQr25y+lxRmPEms/G73gLBW+zEClwgc26NLqs0geSR4ky/
+         3NGaiJvChhTn0j040jFx80J2OAp7FFUzJIE7F1YN1FS+DhYLBa1AhJWEuLdrdNe0WFka
+         HwtyQy0e7aJo32GrZCLWEMYzNyIh/o0aWEFxXEGLmXjdeg/MvKT42fvSfwr6L4QP/vVc
+         m8M4el+OOQNmV8HCfgNGL80D8BONFx/GxkfDEoKwRPDx+CkmRDFAiRZtTowZcF5+Ck4l
+         iP35v9K1k9pA50i/1qDtklfW/zmyrlI/N94uwK6dtwPVd8qtJyalxlRxb9zD2qPAUrQ4
+         TgQg==
+Received: by 10.204.129.196 with SMTP id p4mr10564673bks.28.1337718354734;
+        Tue, 22 May 2012 13:25:54 -0700 (PDT)
+Received: from samuels-macbookpro.speedport_w723_v_typ_a_1_00_092 (p4FEF53A1.dip.t-dialin.net. [79.239.83.161])
+        by mx.google.com with ESMTPS id ig1sm33987431bkc.4.2012.05.22.13.25.52
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Tue, 22 May 2012 13:25:53 -0700 (PDT)
+X-Mailer: Apple Mail (2.1278)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198241>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198242>
 
-Getting back to the topic, who has what opinions on it?
+Hi there,
 
-On Tue, May 22, 2012 at 10:36 PM, Matt Seitz (matseitz)
-<matseitz@cisco.com> wrote:
->> From: Alexey Pelykh [mailto:alexey.pelykh@gmail.com]
->>
->> Indeed this is a workaround, what I was thinking about to use. The
-> thing I
->> wanted actually to discuss whether it worth to research possibility =
-of
->> replacing these absolute paths with relative ones.
->
-> Sure. =A0I just wanted to offer an immediate, interim solution until =
-there
-> is a decision on the permanent solution.
->
+the contrib/credential/osxkeychain/Makefile goes like this
+
+> CC = gcc
+> RM = rm -f
+> CFLAGS = -g -Wall
+> 
+> git-credential-osxkeychain: git-credential-osxkeychain.o
+> 	$(CC) -o $@ $< -Wl,-framework -Wl,Security
+> 
+
+
+and does not allow me to pass CFLAGS to build git-credential-osxkeychain.o.
+My hack is to call: make CC="$CC $CFLAGS"
+That is ugly.
+
+Would you mind to add the CFLAGS to that CC call?
+
+bests,
+ Samuel
