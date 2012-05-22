@@ -1,88 +1,113 @@
-From: Martin Fick <mfick@codeaurora.org>
-Subject: Re: remove_duplicates() in builtin/fetch-pack.c is O(N^2)
-Date: Tue, 22 May 2012 16:19:30 -0600
-Organization: CAF
-Message-ID: <201205221619.31738.mfick@codeaurora.org>
-References: <4FB9F92D.8000305@alum.mit.edu> <3b77e2a3-872a-41c1-9a51-0f219a549c04@email.android.com> <20120522182157.GB20305@sigill.intra.peff.net>
+From: Ted Pavlic <ted@tedpavlic.com>
+Subject: Re: [PATCH 2/2] completion: split __git_ps1 into a separate script
+Date: Tue, 22 May 2012 18:27:08 -0400
+Message-ID: <CAOnadRGgduprp_Dbjzf_TsyQQQjivzKxCgUq4y_HevvtKd7h7Q@mail.gmail.com>
+References: <1337719600-7361-1-git-send-email-felipe.contreras@gmail.com> <1337719600-7361-3-git-send-email-felipe.contreras@gmail.com>
 Mime-Version: 1.0
-Content-Type: Text/Plain;
-  charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Cc: Michael Haggerty <mhagger@alum.mit.edu>,
-	git discussion list <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed May 23 00:19:41 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Thomas Rast <trast@student.ethz.ch>,
+	=?ISO-8859-1?Q?SZEDER_G=E1bor?= <szeder@ira.uka.de>,
+	Kerrick Staley <mail@kerrickstaley.com>,
+	Marius Storm-Olsen <mstormo@gmail.com>,
+	=?ISO-8859-1?Q?Ville_Skytt=E4?= <ville.skytta@iki.fi>,
+	Dan McGee <dan@archlinux.org>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Wed May 23 00:27:36 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SWxQY-0006bh-13
-	for gcvg-git-2@plane.gmane.org; Wed, 23 May 2012 00:19:38 +0200
+	id 1SWxYD-0000SE-CT
+	for gcvg-git-2@plane.gmane.org; Wed, 23 May 2012 00:27:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755623Ab2EVWTd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 May 2012 18:19:33 -0400
-Received: from wolverine02.qualcomm.com ([199.106.114.251]:60448 "EHLO
-	wolverine02.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754698Ab2EVWTc (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 May 2012 18:19:32 -0400
-X-IronPort-AV: E=McAfee;i="5400,1158,6719"; a="191365887"
-Received: from pdmz-css-vrrp.qualcomm.com (HELO mostmsg01.qualcomm.com) ([199.106.114.130])
-  by wolverine02.qualcomm.com with ESMTP/TLS/DHE-RSA-AES256-SHA; 22 May 2012 15:19:32 -0700
-Received: from mfick-lnx.localnet (pdmz-snip-v218.qualcomm.com [192.168.218.1])
-	by mostmsg01.qualcomm.com (Postfix) with ESMTPA id 4AF7410004A9;
-	Tue, 22 May 2012 15:19:32 -0700 (PDT)
-User-Agent: KMail/1.13.5 (Linux/2.6.32.49+drm33.21-mfick7; KDE/4.4.5; x86_64; ; )
-In-Reply-To: <20120522182157.GB20305@sigill.intra.peff.net>
-X-Length: 2632
-X-UID: 106
+	id S932091Ab2EVW13 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 May 2012 18:27:29 -0400
+Received: from mail-we0-f174.google.com ([74.125.82.174]:62345 "EHLO
+	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754677Ab2EVW12 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 May 2012 18:27:28 -0400
+Received: by weyu7 with SMTP id u7so4201736wey.19
+        for <git@vger.kernel.org>; Tue, 22 May 2012 15:27:25 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=dkim-signature:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type:x-gm-message-state;
+        bh=QcGgeMwpQgJdTUqPJ1CHrw5RXLJBLULYQGPjAGBIthA=;
+        b=CGwwR62F4XaNTmysz0H3DZsHWFJCiVFjZWTQtk3oD6Bc6Isxx3fDrcmsJEC794dAat
+         E2FvfwXAl2ZMJGoUUU/DkyLcyigDKaAaVg9+peu7F6DrpjEXCXip4GE//m0BoXncoeBB
+         SGKJ3jq67/aSQ5A6KpynoKWFzbLq0pQDh+YyCt3KI2QIUfSLikk8tSzNMUx+E/SfvoLs
+         Z2YBBVsnAJFB3JSb1onBu7u1qhywhvg1zHEtqhwMO02UZv8QCj79Kl5y6z/Elqfnosej
+         dV5tQp6mmrhAipWOkE/Kb/Lgd1yZLgsHx+m9iOibJpsWLobw+8k+2D2XvYpx+eDw6zR3
+         xK1Q==
+Received: by 10.180.100.230 with SMTP id fb6mr38073994wib.3.1337725645355;
+        Tue, 22 May 2012 15:27:25 -0700 (PDT)
+Received: from mail-we0-f174.google.com (mail-we0-f174.google.com [74.125.82.174])
+        by mx.google.com with ESMTPS id et10sm35789492wib.2.2012.05.22.15.27.24
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Tue, 22 May 2012 15:27:24 -0700 (PDT)
+Received: by weyu7 with SMTP id u7so4201727wey.19
+        for <git@vger.kernel.org>; Tue, 22 May 2012 15:27:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=tedpavlic.com; s=google;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=QcGgeMwpQgJdTUqPJ1CHrw5RXLJBLULYQGPjAGBIthA=;
+        b=ghkt5yRlGT5EtY6Zqxs09FJR0BIwAlnPdfPf8EenjRZcRYjafA1NdjWmWErn9WZa0n
+         td3bUIXPOVfZOXVuseecpwniPjjCxD42C3uLRq6424+S+MxKLEVgM1ZUmjP2OFKLtsH+
+         riRhyz1isA7GDQXT4WKkv2xKo1n9NimYwLWLY=
+Received: by 10.180.85.129 with SMTP id h1mr39005400wiz.2.1337725643997; Tue,
+ 22 May 2012 15:27:23 -0700 (PDT)
+Received: by 10.216.131.211 with HTTP; Tue, 22 May 2012 15:27:08 -0700 (PDT)
+In-Reply-To: <1337719600-7361-3-git-send-email-felipe.contreras@gmail.com>
+X-Gm-Message-State: ALoCoQmHQbQHDE5YEvio+RDl8d/ZZ3n1uvYmyLPykO3FL5SEQUuqGo8CZD3TCRZWZSLglAdCXzW+
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198260>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198261>
 
-On Tuesday, May 22, 2012 12:21:57 pm Jeff King wrote:
-> On Mon, May 21, 2012 at 11:51:16PM -0600, Martin Fick 
-wrote:
-> AFAIK, ref advertisement scales linearly. Which is
-> probably not acceptable over a slow link, and we could
-> do better.
+> The solution, proposed by Kerrick Staley[3], is to split the git script
+> in two; the part that deals with __git_ps1() in one (i.e.
+> git-prompt.sh), and everything else in another (i.e.
+> git-completion.bash).
 
-Right, although it is not just a slow link issue.  Linear or 
-not, this problem does not scale, it needs to be based on N, 
-the number of refs which need updating, not N the number of 
-refs in the repo.
+Seems like this solution has popped up on lots of forums for about
+every Linux distribution around the time the new bash completion was
+introduced. I'm not sure Kerric Staley deserves sole attribution
+(sorry Kerrick; I mean no offense).
 
-I gave the following numbers to Junio and Shawn recently and 
-I figure it is probably worth mentioning them here to 
-perhaps give others some insights into just how bad this 
-problem can be...
+Moreover, every time the subject of splitting __gitdir out comes up, a
+side discussion about all of the complications that could cause comes
+up... and people give up and hope that the folks upstream (i.e., here)
+will come up with a better solution.
 
-Android consists of approximately 400 projects, and if 
-anyone tags their builds regularly, that means that they 
-will be tagging 400 projects per build.  We have something 
-like 10K tags on average across 400 projects, so when we do 
-a simple No Op sync just to see if all 400 projects are up 
-to date, this yields about 200MB of data over the wire (4M 
-refs)!!!
+If it was so simple to just split __gitdir out, I think it would have
+already been done.
 
-That 200MB is using a -j4 on repo sync and it chews up about 
-1.5 cores on a high end server to serve that 200MB for over 
-1min.  Now imagine a build bot needing to build about 25 
-images in parallel all just doing a No Op sync to see if 
-they are up to date!  That's 25 * 200MB = 5GB data and 25 * 
-1.5 cores ~= 36 cores. That means our high end 24 core 
-server falls over all for a No Op.
+> The only slight issue is that __gitdir() would be duplicated, but this
+> is probably not a big deal.
 
-As you can imagine, we really would like to see this 
-eliminated from our workflows.  If we want to check 400 
-projects to see if they are up to date, it should be 400 
-refs, not 400 * 10K,
+That seems ugly. I know that splitting __gitdir out is also ugly, but
+I know that there are going to be a lot more people who use git
+completion than git_ps1. Consequently, in a duplicated __gitdir
+scneario, I worry that __gitdir will receive more attention and may
+relatively quickly diverge in implementation if not very careful in
+approving patches. Moreover, a __gitdir of the future may not be
+atomic and will pick up side effects and become impossible to manage
+in two places.
 
--Martin
+So maybe a split out "git-gitdir.sh" that both files include would be
+"better." Either that or the functionality of "__gitdir" gets pulled
+into git itself. (perhaps a git-gitdir added to the main git
+distribution)
+
+> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+
+As the patch is from you, there's no need to sign off on it too.
+
+--Ted
 
 -- 
-Employee of Qualcomm Innovation Center, Inc. which is a 
-member of Code Aurora Forum
+Ted Pavlic <ted@tedpavlic.com>
