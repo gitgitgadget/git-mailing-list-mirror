@@ -1,101 +1,76 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH] avoid segfault when reading header of malformed commits
-Date: Tue, 22 May 2012 00:52:17 -0400
-Message-ID: <20120522045217.GA23155@sigill.intra.peff.net>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [PATCH 2/7] sequencer: release a strbuf used in save_head()
+Date: Tue, 22 May 2012 10:37:36 +0530
+Message-ID: <CALkWK0kvjr3NSx6-8svz=PKb5ta_UwOUiF4uqh7GriwuJYncUA@mail.gmail.com>
+References: <20120521143309.1911.94302.chriscool@tuxfamily.org>
+ <20120521145610.1911.61154.chriscool@tuxfamily.org> <CALkWK0m9F6EU43v0HbJxWUVtHTiw+ZvjCjwqbSVdQfomb6f4Aw@mail.gmail.com>
+ <20120522042316.GA3080@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue May 22 06:52:31 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Christian Couder <chriscool@tuxfamily.org>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Nick Bowler <nbowler@elliptictech.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Tue May 22 07:08:47 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SWh58-0000Wb-MR
-	for gcvg-git-2@plane.gmane.org; Tue, 22 May 2012 06:52:27 +0200
+	id 1SWhKp-00081q-32
+	for gcvg-git-2@plane.gmane.org; Tue, 22 May 2012 07:08:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753352Ab2EVEwW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 May 2012 00:52:22 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:51459
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753149Ab2EVEwV (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 May 2012 00:52:21 -0400
-Received: (qmail 12357 invoked by uid 107); 22 May 2012 04:52:46 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 22 May 2012 00:52:46 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 22 May 2012 00:52:17 -0400
-Content-Disposition: inline
+	id S932871Ab2EVFIQ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 22 May 2012 01:08:16 -0400
+Received: from mail-wi0-f172.google.com ([209.85.212.172]:34610 "EHLO
+	mail-wi0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932861Ab2EVFH6 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 22 May 2012 01:07:58 -0400
+Received: by wibhj8 with SMTP id hj8so3026257wib.1
+        for <git@vger.kernel.org>; Mon, 21 May 2012 22:07:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=fxILOqpXeIAeTi+BK+V5BsefRAvl6DtrkDuLM6xv09U=;
+        b=t0g6iOLwC8+xh6jSEoVDEREVepEfjnAqrPGroJC4tHz+DNSp8omrB7LqFBDQXteKky
+         7dSYEtFyf1BkLonXbxxoYdtkE41bqWjgDXkn2eKX22eeJ1ssZNybIXQFcou2wPQa5XXO
+         fh2iXFeGN6oX40ZfsiY169HJZ7oEntMG+4iAnPSrBrpumnCCHF8x5tpgPd6VvcWqVWBM
+         B9DZLBNrR+vR7H5qsPlQCHuecJZYLPOZJLxIdeYdTQc7hoLfjYApsvoiPPh25y4KJA6O
+         YpIgUQTAWZeC6sDKNzbMMJnE1fkJfWqzYp4KKedM36SDadbd22ASvsWeSpZGMQbK1wDo
+         uDzA==
+Received: by 10.180.83.196 with SMTP id s4mr31200246wiy.15.1337663276257; Mon,
+ 21 May 2012 22:07:56 -0700 (PDT)
+Received: by 10.216.68.10 with HTTP; Mon, 21 May 2012 22:07:36 -0700 (PDT)
+In-Reply-To: <20120522042316.GA3080@burratino>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198172>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198173>
 
-If a commit object has a header line at the end of the
-buffer that is missing its newline (or if it appears so
-because the content on the header line contains a stray
-NUL), then git will segfault.
+Hi Jonathan,
 
-Interestingly, this case is explicitly handled and we do
-correctly scan the final line for the header we are looking
-for. But if we don't find it, we will dereference NULL while
-trying to look at the next line.
+Jonathan Nieder wrote:
+> Ramkumar Ramachandra wrote:
+>> Christian Couder wrote:
+>>> [...]
+>> =C2=A0 =C2=A0 =C2=A0 if (write_in_full(fd, buf.buf, buf.len) < 0) {
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 strbuf_release(&buf=
+);
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 die_errno(_("Could =
+not write to %s"), todo_file);
+>
+> [...]
+> And
+> looking at it from the other side, doesn't using exit mean that you
+> cannot be valgrind-clean anyway, since allocations by functions highe=
+r
+> in the call chain do not get a chance to be freed?
 
-Git will never generate such a commit, but it's good to be
-defensive. We could die() in such a case, but since it's
-easy enough to handle it gracefully, let's just issue a
-warning and continue (so you could still view such a commit
-with "git show", though you might be missing headers after
-the NUL).
+Good point; save_todo() sets a bad example.  For symmetry, should
+these two instances of strbuf_release() before die() be removed in a
+separate patch?
 
-Signed-off-by: Jeff King <peff@peff.net>
----
-I happened to notice this while experimenting with somebody else's
-problem and generating a bogus commit with hash-object. I don't know of
-any actual implementation which generates this particular bug.
-
- pretty.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
-
-diff --git a/pretty.c b/pretty.c
-index 02a0a2b..dc57e5b 100644
---- a/pretty.c
-+++ b/pretty.c
-@@ -436,29 +436,32 @@ static void add_merge_info(const struct pretty_print_context *pp,
- 
- static char *get_header(const struct commit *commit, const char *key)
- {
- 	int key_len = strlen(key);
- 	const char *line = commit->buffer;
- 
--	for (;;) {
-+	while (line) {
- 		const char *eol = strchr(line, '\n'), *next;
- 
- 		if (line == eol)
- 			return NULL;
- 		if (!eol) {
-+			warning("malformed commit (header is missing newline): %s",
-+				sha1_to_hex(commit->object.sha1));
- 			eol = line + strlen(line);
- 			next = NULL;
- 		} else
- 			next = eol + 1;
- 		if (eol - line > key_len &&
- 		    !strncmp(line, key, key_len) &&
- 		    line[key_len] == ' ') {
- 			return xmemdupz(line + key_len + 1, eol - line - key_len - 1);
- 		}
- 		line = next;
- 	}
-+	return NULL;
- }
- 
- static char *replace_encoding_header(char *buf, const char *encoding)
- {
- 	struct strbuf tmp = STRBUF_INIT;
- 	size_t start, len;
--- 
-1.7.9.7.33.gc430a50
+Ram
