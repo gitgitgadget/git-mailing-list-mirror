@@ -1,88 +1,55 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: remove_duplicates() in builtin/fetch-pack.c is O(N^2)
-Date: Tue, 22 May 2012 13:46:48 -0400
-Message-ID: <20120522174648.GE11600@sigill.intra.peff.net>
-References: <4FB9F92D.8000305@alum.mit.edu>
- <20120521174525.GA22643@sigill.intra.peff.net>
- <CACsJy8Dw+mbP+ttTP6gAfX9o4q4NyZgPYpbhS=tket=5fvBXwg@mail.gmail.com>
- <20120522170101.GA11600@sigill.intra.peff.net>
- <7vaa105dah.fsf@alter.siamese.dyndns.org>
+From: Angus Hammond <angusgh@gmail.com>
+Subject: Re: git stash destroys hard links
+Date: Tue, 22 May 2012 18:52:00 +0100
+Message-ID: <CAOBOgRYtMi38f63G2Nzd3--FsmN0F8geFi-AHxL2L2MMHWHFHA@mail.gmail.com>
+References: <CAAXzdLWadNg9d_i8fZTawaxYm3ytcGCT4pzeth=LxrQYEO-3ww@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	git discussion list <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue May 22 19:46:58 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org
+To: Steven Penny <svnpenn@gmail.com>
+X-From: git-owner@vger.kernel.org Tue May 22 19:52:29 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SWtAe-0000Cd-3t
-	for gcvg-git-2@plane.gmane.org; Tue, 22 May 2012 19:46:56 +0200
+	id 1SWtFy-00054Q-LX
+	for gcvg-git-2@plane.gmane.org; Tue, 22 May 2012 19:52:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752539Ab2EVRqv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 May 2012 13:46:51 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:51853
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751852Ab2EVRqu (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 May 2012 13:46:50 -0400
-Received: (qmail 20569 invoked by uid 107); 22 May 2012 17:47:16 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 22 May 2012 13:47:16 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 22 May 2012 13:46:48 -0400
-Content-Disposition: inline
-In-Reply-To: <7vaa105dah.fsf@alter.siamese.dyndns.org>
+	id S1753774Ab2EVRwW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 May 2012 13:52:22 -0400
+Received: from mail-lpp01m010-f46.google.com ([209.85.215.46]:55796 "EHLO
+	mail-lpp01m010-f46.google.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753183Ab2EVRwV (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 22 May 2012 13:52:21 -0400
+Received: by lahd3 with SMTP id d3so4502511lah.19
+        for <git@vger.kernel.org>; Tue, 22 May 2012 10:52:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=zXKDm3GAJSK7XdMseEvdq50dZPevEqjm0Kn36Fp5fjM=;
+        b=cnMh+chzU6m0SxOl4PmHcA8Lm3ys1KkKvss0HRzqp+2zImEVBCFY/br6CYYexxjBua
+         Gv+h14CloJXzZ69QD4C+tY7ITDQMZoV1ypc9pu/BJlFwOTyLJzdzZLH7IFkogrxtK/G4
+         wXOlcheTdSoEhtf2WW6QROeYJMS00gHfLEVcadMbjJ44CFVZ99RkMvhwJgLNsT/6RVn2
+         ZAtp8+L1o5KolkJEfelxSEpjjpNeGDStqXTmSALvWwIZ/uUT5GfcI6VrlRauof9QczEW
+         hhT6VTrMpVACgL3PyL3N9ruIXB94F5nAmldaqNLZn0EH5oy8zyidnGbTVtsRQDk9LwOw
+         sFZA==
+Received: by 10.152.111.200 with SMTP id ik8mr23859396lab.15.1337709140301;
+ Tue, 22 May 2012 10:52:20 -0700 (PDT)
+Received: by 10.114.12.1 with HTTP; Tue, 22 May 2012 10:52:00 -0700 (PDT)
+In-Reply-To: <CAAXzdLWadNg9d_i8fZTawaxYm3ytcGCT4pzeth=LxrQYEO-3ww@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198214>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198215>
 
-On Tue, May 22, 2012 at 10:35:50AM -0700, Junio C Hamano wrote:
-
-> > In this case, the packed-refs file is 30MB. Even just gzipping it takes
-> > it down to 2MB. As far as I know, we don't ever do random access on the
-> > file, but instead just stream it into memory.
-> 
-> True.
-> 
-> The current code reads the whole thing in upon first use of _any_ element
-> in the file, just like the index codepath does for the index file.
-> 
-> But the calling pattern to the refs machinery is fairly well isolated and
-> all happens in refs.c file.  Especially thanks to the recent work by
-> Michael Haggerty, for "I am about to create a new branch 'frotz'; do I
-> have 'refs/heads/frotz' or anything that begins with 'refs/heads/frotz/'?"
-> kind of callers, it is reasonably easy to design a better structured
-> packed-refs file format to allow us to read only a subtree portion of
-> refs/ hierarchy, and plug that logic into the lazy ref population code.
-> Such a "design a better packed-refs format for scalability to 400k refs"
-> is a very well isolated project that has high chance of succeeding without
-> breaking things.  No code outside refs.c assumes that there is a flat
-> array of refs that records what was read from the packed-refs file and can
-> walk linearly over it, unlike the in-core index.
-
-Yeah. As gross as I find a 30MB packed-refs file, I don't actually think
-that is the bottle-neck at all. Sure, it wastes some disk cache, but
-in the grand scheme of things, anybody with 400K refs probably has a
-much, much bigger object database.
-
-So there probably isn't much point in clever tricks to make it smaller
-on disk, especially if they will make further partial-read optimizations
-harder to do. But...
-
-> If you do "for_each_ref()" for everything (e.g. sending 'have' during the
-> object transfer, or repacking the whole repository), you would end up
-> needing to read the whole thing for obvious reasons.
-
-I think Michael's work is really great for the loose refs, where hitting
-each directory is very expensive. But for a repo with packed refs that
-is just going to call for_each_ref, I'm worried that breaking apart the
-ref list is going to cause noticeable overhead. But still, the
-regression I'm seeing seems way too big for that overhead, so I think
-something else is going on. We just need to find it.
-
--Peff
+>From the very quick and unscientific test that I just did, it doesn't
+appear that git commits hard links, it just collapses them into
+separate regular files (presumably to avoid changes in one place
+mucking things up elsewhere without git knowing about it). I don't
+think it makes much sense to stash hardlinks if the policy is to
+forget them in commits.
+Thanks
+Angus
