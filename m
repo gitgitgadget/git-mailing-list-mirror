@@ -1,89 +1,71 @@
-From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <rene.scharfe@lsrfire.ath.cx>
-Subject: [PATCH 3/3] xdiff: import new 32-bit version of count_masked_bytes()
-Date: Tue, 22 May 2012 22:36:57 +0200
-Message-ID: <4FBBF8E9.7020103@lsrfire.ath.cx>
-References: <CAA787r=WCJXeDipiVL37oMgji=ncoPyXXVOcCyYbSC6iCcTi1g@mail.gmail.com> <4FB4A4B9.3080009@lsrfire.ath.cx> <xmqqmx56rd2r.fsf@junio.mtv.corp.google.com> <4FB5460C.10807@lsrfire.ath.cx> <CAA787rmJixvyKhubHXZCDVYc=DdVk8_vHsHF6bOsLQ_j=39bGw@mail.gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: Git is on TWITTER !!!!!!!!!!!!
+Date: Tue, 22 May 2012 22:38:01 +0200
+Message-ID: <vpqehqcq7di.fsf@bauges.imag.fr>
+References: <CA+EOSBkYERH7yevGNbXngAbzNLEXWMHyB2dJtgjc9saQjnxOCQ@mail.gmail.com>
+	<CA+EOSBneLk-KwJ=fs3OUN_mz6GiPP6h+yc1YfMZb+Q7F3a4eBA@mail.gmail.com>
+	<4FBB5928.7020207@rktmb.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Thomas Rast <trast@student.ethz.ch>
-To: =?UTF-8?B?IsOYeXZpbmQgQS4gSG9sbSI=?= <sunny@sunbase.org>
-X-From: git-owner@vger.kernel.org Tue May 22 22:37:26 2012
+Content-Type: text/plain
+Cc: "git\@vger.kernel.org" <git@vger.kernel.org>
+To: Mihamina Rakotomandimby <mihamina@rktmb.org>
+X-From: git-owner@vger.kernel.org Tue May 22 22:38:22 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SWvpa-0005s6-N0
-	for gcvg-git-2@plane.gmane.org; Tue, 22 May 2012 22:37:23 +0200
+	id 1SWvqY-0002fM-3y
+	for gcvg-git-2@plane.gmane.org; Tue, 22 May 2012 22:38:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933106Ab2EVUhN convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 22 May 2012 16:37:13 -0400
-Received: from india601.server4you.de ([85.25.151.105]:33107 "EHLO
-	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933077Ab2EVUhC (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 May 2012 16:37:02 -0400
-Received: from [192.168.2.105] (p579BE06F.dip.t-dialin.net [87.155.224.111])
-	by india601.server4you.de (Postfix) with ESMTPSA id E74682F8058;
-	Tue, 22 May 2012 22:37:00 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:12.0) Gecko/20120428 Thunderbird/12.0.1
-In-Reply-To: <CAA787rmJixvyKhubHXZCDVYc=DdVk8_vHsHF6bOsLQ_j=39bGw@mail.gmail.com>
+	id S933195Ab2EVUiS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 May 2012 16:38:18 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:49930 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S933246Ab2EVUiJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 May 2012 16:38:09 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id q4MKU57K031476
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Tue, 22 May 2012 22:30:05 +0200
+Received: from bauges.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1SWvqE-0006Ah-O8; Tue, 22 May 2012 22:38:02 +0200
+In-Reply-To: <4FBB5928.7020207@rktmb.org> (Mihamina Rakotomandimby's message
+	of "Tue, 22 May 2012 12:15:20 +0300")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.93 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Tue, 22 May 2012 22:30:05 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: q4MKU57K031476
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1338323408.21225@c/xIp7/zCRmE5fjelRI8FA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198246>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198247>
 
-Import the latest 32-bit implementation of count_masked_bytes() from
-Linux (arch/x86/include/asm/word-at-a-time.h).  It's shorter and avoids
-overflows and negative numbers.
+Mihamina Rakotomandimby <mihamina@rktmb.org> writes:
 
-This fixes test failures on 32-bit, where negative partial results had
-been shifted right using the "wrong" method (logical shift right instea=
-d
-of arithmetic short right).  The compiler is free to chose the method,
-so it was only wrong in the sense that it didn't work as intended by us=
-=2E
+> Would more agree with an agregation of tutorial, annouce,
+> tip&trick,... but timelining discussions looks messy to me.
 
-Reported-by: =C3=98yvind A. Holm <sunny@sunbase.org>
-Signed-off-by: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
----
-Does this fix all the warnings, and do the tests pass?  I can only
-reproduce the "shifting to far to the right" warning..
+Same here.
 
- xdiff/xutils.c |   18 +++++-------------
- 1 file changed, 5 insertions(+), 13 deletions(-)
+Replicating announces, or "what's cooking in git" messages in tweeter
+may be nice for people who prefer twitter to RSS readers. RSS feeds are
+already available here:
 
-diff --git a/xdiff/xutils.c b/xdiff/xutils.c
-index 78549e3..9504eae 100644
---- a/xdiff/xutils.c
-+++ b/xdiff/xutils.c
-@@ -280,19 +280,11 @@ static inline long count_masked_bytes(unsigned lo=
-ng mask)
- 		long a =3D (REPEAT_BYTE(0x01) / 0xff + 1);
- 		return mask * a >> (sizeof(long) * 7);
- 	} else {
--		/*
--		 * Modified Carl Chatfield G+ version for 32-bit *
--		 *
--		 * (a) gives us
--		 *   -1 (0, ff), 0 (ffff) or 1 (ffffff)
--		 * (b) gives us
--		 *   0 for 0, 1 for (ff ffff ffffff)
--		 * (a+b+1) gives us
--		 *   correct 0-3 bytemask count result
--		 */
--		long a =3D (mask - 256) >> 23;
--		long b =3D mask & 1;
--		return a + b + 1;
-+		/* Carl Chatfield / Jan Achrenius G+ version for 32-bit */
-+		/* (000000 0000ff 00ffff ffffff) -> ( 1 1 2 3 ) */
-+		long a =3D (0x0ff0001 + mask) >> 23;
-+		/* Fix the 1 for 00 case */
-+		return a & mask;
- 	}
- }
-=20
---=20
-1.7.10.2
+http://gitrss.q42.co.uk/
+http://gitrss.q42.co.uk/announce.rss
+http://gitrss.q42.co.uk/status.rss
+
+but having the whole discussions as tweets seem pointless.
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
