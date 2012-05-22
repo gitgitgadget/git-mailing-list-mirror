@@ -1,97 +1,70 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH] pretty: avoid buffer overflow in format_person_part
-Date: Tue, 22 May 2012 01:45:08 -0400
-Message-ID: <20120522054508.GA10576@sigill.intra.peff.net>
+From: Martin Fick <mfick@codeaurora.org>
+Subject: Re: remove_duplicates() in builtin/fetch-pack.c is O(N^2)
+Date: Mon, 21 May 2012 23:51:16 -0600
+Message-ID: <3b77e2a3-872a-41c1-9a51-0f219a549c04@email.android.com>
+References: <4FB9F92D.8000305@alum.mit.edu> <201205211215.14455.mfick@codeaurora.org> <20120521194114.GA28358@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue May 22 07:45:36 2012
+Content-Type: text/plain;
+ charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Cc: Michael Haggerty <mhagger@alum.mit.edu>,
+	git discussion list <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue May 22 07:54:59 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SWhuY-0008UK-Bj
-	for gcvg-git-2@plane.gmane.org; Tue, 22 May 2012 07:45:34 +0200
+	id 1SWi3d-00022J-9V
+	for gcvg-git-2@plane.gmane.org; Tue, 22 May 2012 07:54:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754728Ab2EVFpN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 May 2012 01:45:13 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:51485
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754133Ab2EVFpL (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 May 2012 01:45:11 -0400
-Received: (qmail 12835 invoked by uid 107); 22 May 2012 05:45:36 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 22 May 2012 01:45:36 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 22 May 2012 01:45:08 -0400
-Content-Disposition: inline
+	id S1753588Ab2EVFyu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 May 2012 01:54:50 -0400
+Received: from wolverine01.qualcomm.com ([199.106.114.254]:9138 "EHLO
+	wolverine01.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751111Ab2EVFyu (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 May 2012 01:54:50 -0400
+X-IronPort-AV: E=McAfee;i="5400,1158,6718"; a="193379320"
+Received: from pdmz-css-vrrp.qualcomm.com (HELO mostmsg01.qualcomm.com) ([199.106.114.130])
+  by wolverine01.qualcomm.com with ESMTP/TLS/DHE-RSA-AES256-SHA; 21 May 2012 22:54:49 -0700
+Received: from [192.168.1.160] (pdmz-snip-v218.qualcomm.com [192.168.218.1])
+	by mostmsg01.qualcomm.com (Postfix) with ESMTPA id 0870010004A9;
+	Mon, 21 May 2012 22:54:47 -0700 (PDT)
+User-Agent: K-9 Mail for Android
+In-Reply-To: <20120521194114.GA28358@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198177>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198178>
 
-When we parse the name and email from a commit to
-pretty-print them, we usually can just put the result
-directly into our strbuf result. However, if we are going to
-use the mailmap, then we must first copy them into a
-NUL-terminated buffer to feed to the mailmap machinery.
 
-We did so by using strlcpy into a static buffer, but we used
-it wrong. We fed it the length of the substring we wanted to
-copy, but never checked that that length was less than the
-size of the destination buffer.
 
-The simplest fix is to just use snprintf to copy the
-substring properly while still respecting the destination
-buffer's size. It might seem like replacing the static
-buffer with a strbuf would help, but we need to feed a
-static buffer to the mailmap machinery anyway, so there's
-not much benefit to handling arbitrary sizes.
+Jeff King <peff@peff.net> wrote:
 
-A more ideal solution would be for mailmap to grow an
-interface that:
+>On Mon, May 21, 2012 at 12:15:13PM -0600, Martin Fick wrote:
+>
+>> Of course, we use Gerrit, so features tend to be called 
+>> changes and each change may get many revisions (patchsets), 
+>> so all of these get refs, but I think that it might be wrong 
+>> to consider that out of the ordinary anymore.  After all, 
+>> should a version control system such as git not support 100K 
+>> revisions of features developed independently on separate 
+>> branches (within Gerrit or not)?  100K is not really that 
+>> many when you consider a large project.  Even without 
+>> Gerrit, if someone wanted to track that many features 
+>> (likely over a few years), they will probably use up tons of 
+>> refs.  
+...
+>
+>Anyway, my point is that we don't even have to talk about "reasonable"
+>or "absurd". Git should be fast even on absurd cases, because 99% of
+>the work has already been done, and the last 1% is easy.
 
-  1. Takes a pointer and length combination, instead of
-     assuming a NUL-terminated string.
+I hope you are right, but I don't quite completely share your optimism.  Some of that last 1% is perhaps last exactly because it is hard.  More specificaly, I am talking about the git protocol's ref advertisement on connection.  This has been considered a known issue for many years, yet it has not been fixed because it is hard to fix since it requires breaking the protocol in a non backwards compatible way.  I would be delighted if you had an easy fix for this rather fundamental ref scaling issue? We talked with Junio and Shawn and they agreed that it would be reasonable to put forward a proposal which does break backwards compatibility. So if there is a chance that there still may be another way, I hope it is found before this gets underway (no, I don't really expect that to happen),
 
-  2. Returns a pointer to the mailmap's allocated string,
-     rather than copying it into the buffer.
+-Martin
 
-Then we could avoid the need for an extra buffer entirely.
-However, doing this would involve a lot of refactoring of
-mailmap and of string_list (which mailmap uses to store the
-map itself). For now, let's do the simplest thing to fix the
-bug.
-
-Signed-off-by: Jeff King <peff@peff.net>
----
-Current git will not generate commits with names long enough to overflow
-here. With my recent series, that is no longer the case. Of course, that
-is not really relevant; a malicious attacker is free to craft a bogus
-commit directly with hash-object.
-
- pretty.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
-
-diff --git a/pretty.c b/pretty.c
-index 02a0a2b..986e114 100644
---- a/pretty.c
-+++ b/pretty.c
-@@ -547,8 +547,10 @@ static size_t format_person_part(struct strbuf *sb, char part,
- 	mail_end = s.mail_end;
- 
- 	if (part == 'N' || part == 'E') { /* mailmap lookup */
--		strlcpy(person_name, name_start, name_end - name_start + 1);
--		strlcpy(person_mail, mail_start, mail_end - mail_start + 1);
-+		snprintf(person_name, sizeof(person_name), "%.*s",
-+			 (int)(name_end - name_start), name_start);
-+		snprintf(person_mail, sizeof(person_mail), "%.*s",
-+			 (int)(mail_end - mail_start), mail_start);
- 		mailmap_name(person_mail, sizeof(person_mail), person_name, sizeof(person_name));
- 		name_start = person_name;
- 		name_end = name_start + strlen(person_name);
--- 
-1.7.9.7.33.gc430a50
+Employee of Qualcomm Innovation Center,Inc. which is a member of Code Aurora Forum
