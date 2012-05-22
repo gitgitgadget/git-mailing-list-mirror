@@ -1,81 +1,85 @@
-From: "Matt Seitz (matseitz)" <matseitz@cisco.com>
-Subject: RE: Question about submodules and absolute paths
-Date: Tue, 22 May 2012 12:25:28 -0700
-Message-ID: <70952A932255A2489522275A628B97C31348C70D@xmb-sjc-233.amer.cisco.com>
-References: <CAOmKuSoYP9fYORDy5twLpFh7SQ7rc6x2A=F8XjfKMqo-ErCauQ@mail.gmail.com><CAOmKuSpqFrC7G4DbZu=uYDwvU6QqrJUi2aNBnSjy7_PXMMJpjQ@mail.gmail.com><7vk4043wc5.fsf@alter.siamese.dyndns.org> <CAOmKuSrmxnHKaip2X87Y0Cp=XtLAtpAwUp71QhZ5od3gbDF2sg@mail.gmail.com>
+From: Alexey Pelykh <alexey.pelykh@gmail.com>
+Subject: Re: Question about submodules and absolute paths
+Date: Tue, 22 May 2012 22:29:07 +0300
+Message-ID: <CAOmKuSqRHMS+hvCXL4Ok6ReTPW-3xT9SunGeibjCCCgVk9SU6Q@mail.gmail.com>
+References: <CAOmKuSoYP9fYORDy5twLpFh7SQ7rc6x2A=F8XjfKMqo-ErCauQ@mail.gmail.com>
+	<CAOmKuSpqFrC7G4DbZu=uYDwvU6QqrJUi2aNBnSjy7_PXMMJpjQ@mail.gmail.com>
+	<7vk4043wc5.fsf@alter.siamese.dyndns.org>
+	<CAOmKuSrmxnHKaip2X87Y0Cp=XtLAtpAwUp71QhZ5od3gbDF2sg@mail.gmail.com>
+	<70952A932255A2489522275A628B97C31348C70D@xmb-sjc-233.amer.cisco.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-Cc: <git@vger.kernel.org>
-To: "Alexey Pelykh" <alexey.pelykh@gmail.com>,
-	"Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue May 22 21:25:42 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: "Matt Seitz (matseitz)" <matseitz@cisco.com>
+X-From: git-owner@vger.kernel.org Tue May 22 21:29:26 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SWui7-0005GM-I2
-	for gcvg-git-2@plane.gmane.org; Tue, 22 May 2012 21:25:35 +0200
+	id 1SWuli-0006HA-6h
+	for gcvg-git-2@plane.gmane.org; Tue, 22 May 2012 21:29:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760186Ab2EVTZa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 May 2012 15:25:30 -0400
-Received: from mtv-iport-4.cisco.com ([173.36.130.15]:41596 "EHLO
-	mtv-iport-4.cisco.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752117Ab2EVTZa convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 22 May 2012 15:25:30 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=cisco.com; i=matseitz@cisco.com; l=700; q=dns/txt;
-  s=iport; t=1337714730; x=1338924330;
-  h=mime-version:content-transfer-encoding:subject:date:
-   message-id:in-reply-to:references:from:to:cc;
-  bh=E3uZbhvZ1KfDsWaAuYpAWaalQ0HwBarUtehUqx1kXug=;
-  b=b4T6IeHMEE4aIKZjBj1oa4GCFtmsUQ0Mz0lLWrUWY9bQvSI67jVTL4EL
-   aJcDTatAQ/nF1KcjSVXcttQWdEuXgQV5cYTxDOSyE+6PvrSJnG01+7IzM
-   O59fJ/Hg7RPITn1Le+quHGrchS4hlkxED1mn9f15kcdPb2PAMf4LxHoyv
-   w=;
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: Av8EAPznu0+rRDoJ/2dsb2JhbABEtBeBB4IVAQEBAwESAR0KPwULAgEIFQ0GFwEGAUUDAQ0BAQQBEggah2cEAQuaVp9sj2NiA4hDjWiMfYFkgwo
-X-IronPort-AV: E=Sophos;i="4.75,639,1330905600"; 
-   d="scan'208";a="45833970"
-Received: from mtv-core-4.cisco.com ([171.68.58.9])
-  by mtv-iport-4.cisco.com with ESMTP; 22 May 2012 19:25:29 +0000
-Received: from xbh-sjc-221.amer.cisco.com (xbh-sjc-221.cisco.com [128.107.191.63])
-	by mtv-core-4.cisco.com (8.14.3/8.14.3) with ESMTP id q4MJPTuX006733;
-	Tue, 22 May 2012 19:25:29 GMT
-Received: from xmb-sjc-233.amer.cisco.com ([128.107.191.88]) by xbh-sjc-221.amer.cisco.com with Microsoft SMTPSVC(6.0.3790.4675);
-	 Tue, 22 May 2012 12:25:28 -0700
-X-MimeOLE: Produced By Microsoft Exchange V6.5
-Content-class: urn:content-classes:message
-In-Reply-To: <CAOmKuSrmxnHKaip2X87Y0Cp=XtLAtpAwUp71QhZ5od3gbDF2sg@mail.gmail.com>
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-Thread-Topic: Question about submodules and absolute paths
-Thread-Index: Ac04T7ivFkiT58qsReOyi/N/GhBK/gAACZqA
-X-OriginalArrivalTime: 22 May 2012 19:25:28.0454 (UTC) FILETIME=[A53F4A60:01CD3850]
+	id S1760288Ab2EVT3L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 May 2012 15:29:11 -0400
+Received: from mail-yw0-f46.google.com ([209.85.213.46]:58970 "EHLO
+	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760238Ab2EVT3I (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 May 2012 15:29:08 -0400
+Received: by yhmm54 with SMTP id m54so5819894yhm.19
+        for <git@vger.kernel.org>; Tue, 22 May 2012 12:29:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=FDEvbsAHSqWPLdXdrpF74mATYs18RR7kR/juNpCkypk=;
+        b=rzKEii8YxHPNH/nD6bEaNO8CJCJHH7rU56udV+Yyhs0XHjwXyk7yqX6l2JAfqd+gG2
+         Y400Lzro95tz8SeZBf9PAdRK5nk8XTbnNAPSbXG61YubI2f3r5Gd+S4ykliyXNWlVqAr
+         BTu2Cfe8ItKeL4VJAaANGl8ZL27bqa7EkBZTDTkK1S5ctHsevLliLFha+aE27n63h6Ey
+         2vhbZDqIrK5EcG//55vqgzf9QVkI5gYcIQgeid7SJSmPtUWRh19xYPMi9CfaekGHQTtX
+         /f3Na6fY5/9WBx3FNALSNdU3JaMOZN775kzHTIQNOFjp0Fh9Ez1rYE7r7nKBt8Xs0Xxu
+         OWNA==
+Received: by 10.60.9.170 with SMTP id a10mr24002587oeb.14.1337714947906; Tue,
+ 22 May 2012 12:29:07 -0700 (PDT)
+Received: by 10.182.72.65 with HTTP; Tue, 22 May 2012 12:29:07 -0700 (PDT)
+In-Reply-To: <70952A932255A2489522275A628B97C31348C70D@xmb-sjc-233.amer.cisco.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198230>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198231>
 
-> From: git-owner@vger.kernel.org [mailto:git-owner@vger.kernel.org] On
-> Behalf Of Alexey Pelykh
-> 
-> Not on two machines, on single machine but with two OSes Windows +
-Linux +
-> shared 'work' partition :) So both Windows and Linux use same repo
-clone
-> that is stored on a 'work' partition. But due to those absolute paths,
-it
-> gives '/cygdrive/d/work' on windows and '/media/work' on linux. Thus I
-> have to keep 2 copies of each repository that uses submodules (and
-that is
-> very inconvenient :( )
+Thanks, Matt.
 
-As a workaround, how about using Cygwin's mount table to mount "/media"
-to "d:/", or "/media/work" to "d:/work"?
+Indeed this is a workaround, what I was thinking about to use. The
+thing I wanted actually to discuss whether it worth to research
+possibility of replacing these absolute paths with relative ones. At
+least afaik, git repo clone is fully portable (movable) except for
+submodules. So I wanted to ask community if this is an intended
+behavior, or it may (and should?) be refined.
 
-See:
-http://cygwin.com/cygwin-ug-net/using.html#mount-table
+Best regards,
+Alexey
+
+On Tue, May 22, 2012 at 10:25 PM, Matt Seitz (matseitz)
+<matseitz@cisco.com> wrote:
+>> From: git-owner@vger.kernel.org [mailto:git-owner@vger.kernel.org] On
+>> Behalf Of Alexey Pelykh
+>>
+>> Not on two machines, on single machine but with two OSes Windows +
+> Linux +
+>> shared 'work' partition :) So both Windows and Linux use same repo
+> clone
+>> that is stored on a 'work' partition. But due to those absolute paths,
+> it
+>> gives '/cygdrive/d/work' on windows and '/media/work' on linux. Thus I
+>> have to keep 2 copies of each repository that uses submodules (and
+> that is
+>> very inconvenient :( )
+>
+> As a workaround, how about using Cygwin's mount table to mount "/media"
+> to "d:/", or "/media/work" to "d:/work"?
+>
+> See:
+> http://cygwin.com/cygwin-ug-net/using.html#mount-table
+>
