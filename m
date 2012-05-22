@@ -1,140 +1,108 @@
-From: Steven Walter <stevenrwalter@gmail.com>
-Subject: Re: [PATCH] git-svn: support rebase --preserve-merges
-Date: Tue, 22 May 2012 13:32:25 -0400
-Message-ID: <CAK8d-aLFr3Bk6LU-H8FgR8kKQM9sLvectneZ1QnaHDzg_08P-g@mail.gmail.com>
-References: <CAHkK2boS2ffnz+vz1jRqKHy1vQcrcd6FHEdWgY-btHZaCapdkA@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: remove_duplicates() in builtin/fetch-pack.c is O(N^2)
+Date: Tue, 22 May 2012 13:33:55 -0400
+Message-ID: <20120522173355.GC11600@sigill.intra.peff.net>
+References: <4FB9F92D.8000305@alum.mit.edu>
+ <20120521174525.GA22643@sigill.intra.peff.net>
+ <20120521221417.GA22664@sigill.intra.peff.net>
+ <20120521235219.GA5589@sigill.intra.peff.net>
+ <4FBB0F21.5080608@alum.mit.edu>
+ <20120522041123.GA9972@sigill.intra.peff.net>
+ <4FBB3D2B.4010300@alum.mit.edu>
+ <20120522073740.GA10093@sigill.intra.peff.net>
+ <4FBB9480.4010407@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Eric Wong <normalperson@yhbt.net>, avarab@gmail.com,
-	git@vger.kernel.org
-To: Avishay Lavie <avishay.lavie@gmail.com>
-X-From: git-owner@vger.kernel.org Tue May 22 19:32:53 2012
+Content-Type: text/plain; charset=utf-8
+Cc: Martin Fick <mfick@codeaurora.org>,
+	git discussion list <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Tue May 22 19:34:07 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SWsx1-0001J8-RK
-	for gcvg-git-2@plane.gmane.org; Tue, 22 May 2012 19:32:52 +0200
+	id 1SWsyD-0004Si-Ls
+	for gcvg-git-2@plane.gmane.org; Tue, 22 May 2012 19:34:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753768Ab2EVRcr convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 22 May 2012 13:32:47 -0400
-Received: from mail-qc0-f174.google.com ([209.85.216.174]:46641 "EHLO
-	mail-qc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751493Ab2EVRcq convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 22 May 2012 13:32:46 -0400
-Received: by qcro28 with SMTP id o28so4186109qcr.19
-        for <git@vger.kernel.org>; Tue, 22 May 2012 10:32:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=QZCLe1eNQYpZIwuaBtnstxCtTcEU7BeVBbL2zdI3L1o=;
-        b=gRSGi6yyvjeUHHFm297WxaPDOoypkAyaoqBneNYX/tPHDobWu2Bkrs5pDM9+FzH5/1
-         ezsaNGhLghVaMOMXSTcfN0MRXfdGd17Txf35rbNsv1VxJW5DfyVBnLD3AysZVL6puq9W
-         00UMCm9Un78oquDMv/qY2Wm9sIUVoSe2wyLQpn+Dxv617th/xWpX19vSG8lt2GlIlEod
-         Ks2QTeEOYY/Hdb/Hu+eAQUCwu3WaH9pOeI9lUwezbWTFlmIZBdPyD98qJ9PtCFfD7x/5
-         p6JTPxeezzOJETOorWVS6S3dio8of6s2YCqqMjkC3vI6BmLAL8dUJ1OKZE19Q4d4VnId
-         4HmA==
-Received: by 10.224.105.202 with SMTP id u10mr492681qao.54.1337707965719; Tue,
- 22 May 2012 10:32:45 -0700 (PDT)
-Received: by 10.224.182.143 with HTTP; Tue, 22 May 2012 10:32:25 -0700 (PDT)
-In-Reply-To: <CAHkK2boS2ffnz+vz1jRqKHy1vQcrcd6FHEdWgY-btHZaCapdkA@mail.gmail.com>
+	id S1759946Ab2EVRd7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 May 2012 13:33:59 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:51835
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751604Ab2EVRd6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 May 2012 13:33:58 -0400
+Received: (qmail 20309 invoked by uid 107); 22 May 2012 17:34:23 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 22 May 2012 13:34:23 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 22 May 2012 13:33:55 -0400
+Content-Disposition: inline
+In-Reply-To: <4FBB9480.4010407@alum.mit.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198209>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198210>
 
-Signed-Off-By: Steven Walter <stevenrwalter@gmail.com>
+On Tue, May 22, 2012 at 03:28:32PM +0200, Michael Haggerty wrote:
 
-On Tue, May 15, 2012 at 8:09 AM, Avishay Lavie <avishay.lavie@gmail.com=
-> wrote:
-> (Adding previous authors of git-svn.perl)
->
-> ---------- Forwarded message ----------
-> From: Avishay Lavie <avishay.lavie@gmail.com>
-> Date: Tue, May 15, 2012 at 12:09 PM
-> Subject: PATCH: git-svn: support rebase --preserve-merges
-> To: git@vger.kernel.org
->
->
-> From: Avishay Lavie <avishay.lavie@gmail.com>
-> Date: Tue, 15 May 2012 11:45:50 +0300
-> Subject: [PATCH] git-svn: support rebase --preserve-merges
->
-> When git svn rebase is performed after an unpushed merge, the
-> rebase operation follows both parents and replays both the user's
-> local commits and those from the merged branch. This is usually
-> not the intended behavior.
-> This patch adds support for the --preserve-merges/-p flag which
-> allows for a better workflow by re-applying merge commits as merges.
->
-> Signed-off-by: Avishay Lavie <avishay.lavie@gmail.com>
-> ---
-> =A0Documentation/git-svn.txt | =A0 =A02 ++
-> =A0git-svn.perl =A0 =A0 =A0 =A0 =A0 =A0 =A0| =A0 =A04 +++-
-> =A02 files changed, 5 insertions(+), 1 deletions(-)
->
-> diff --git a/Documentation/git-svn.txt b/Documentation/git-svn.txt
-> index 34ee785..0d52997 100644
-> --- a/Documentation/git-svn.txt
-> +++ b/Documentation/git-svn.txt
-> @@ -572,6 +572,8 @@ config key: svn.repackflags
-> =A0--merge::
-> =A0-s<strategy>::
-> =A0--strategy=3D<strategy>::
-> +-p::
-> +--preserve-merges::
-> =A0 =A0 =A0 =A0These are only used with the 'dcommit' and 'rebase' co=
-mmands.
-> =A0+
-> =A0Passed directly to 'git rebase' when using 'dcommit' if a
-> diff --git a/git-svn.perl b/git-svn.perl
-> index ca038ec..e86d60b 100755
-> --- a/git-svn.perl
-> +++ b/git-svn.perl
-> @@ -84,7 +84,7 @@ my ($_stdin, $_help, $_edit,
-> =A0 =A0 =A0 =A0$_message, $_file, $_branch_dest,
-> =A0 =A0 =A0 =A0$_template, $_shared,
-> =A0 =A0 =A0 =A0$_version, $_fetch_all, $_no_rebase, $_fetch_parent,
-> - =A0 =A0 =A0 $_merge, $_strategy, $_dry_run, $_local,
-> + =A0 =A0 =A0 $_merge, $_strategy, $_preserve_merges, $_dry_run, $_lo=
-cal,
-> =A0 =A0 =A0 =A0$_prefix, $_no_checkout, $_url, $_verbose,
-> =A0 =A0 =A0 =A0$_git_format, $_commit_url, $_tag, $_merge_info, $_int=
-eractive);
-> =A0$Git::SVN::_follow_parent =3D 1;
-> @@ -233,6 +233,7 @@ my %cmd =3D (
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0'local|l' =3D> \$_=
-local,
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0'fetch-all|all' =3D=
-> \$_fetch_all,
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0'dry-run|n' =3D> \=
-$_dry_run,
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 'preserve-merges|p'=
- =3D> \$_preserve_merges
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0%fc_opts } ],
-> =A0 =A0 =A0 =A0'commit-diff' =3D> [ \&cmd_commit_diff,
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 'Commit a diff be=
-tween two trees',
-> @@ -1570,6 +1571,7 @@ sub rebase_cmd {
-> =A0 =A0 =A0 =A0push @cmd, '-v' if $_verbose;
-> =A0 =A0 =A0 =A0push @cmd, qw/--merge/ if $_merge;
-> =A0 =A0 =A0 =A0push @cmd, "--strategy=3D$_strategy" if $_strategy;
-> + =A0 =A0 =A0 push @cmd, "--preserve-merges" if $_preserve_merges;
-> =A0 =A0 =A0 =A0@cmd;
-> =A0}
->
-> --
-> 1.7.9.msysgit.0
+> >When I try it with both 'next' and v1.7.10, I see that the latter is
+> >much faster.  I did my tests with a warm cache, but the interesting
+> >number is the CPU time, which is quite different.
+> 
+> I cannot reproduce anything as big as the performance regression that
+> you see.  I did find a regression 9.5 s -> 10.1 s caused by
+> 
+> 5fa044184 find_containing_dir(): use strbuf in implementation of this
+> function
+> 
+> It is fixed by the patch that I just sent to the mailing list [1],
+> which sizes the strbuf in that function to strlen(refname) instead of
+> PATH_MAX.  Since your experiments suggest that the performance
+> regression is related to the size of the repository contents, it
+> could be that the same test produces more memory pressure on your
+> system and therefore a larger effect.  Please try the patch and tell
+> me if it fixes the problem for you.
 
+That patch drops about a second off of the slow case, but the main
+problem still remains. Just to be sure we are both doing the exact same
+thing, here is a complete reproduction recipe:
 
+  GIT=/path/to/your/git/checkout
+  RAILS=/path/to/unpacked/rails.git
 
---=20
--Steven Walter <stevenrwalter@gmail.com>
-"The rotter who simpers that he sees no difference between the power
-of the dollar and the power of the whip, ought to learn the difference
-on his own hide."
-=A0 =A0 -Francisco d'Anconia, Atlas Shrugged
+  cd $GIT &&
+  git checkout 432ad41e60cedb87ceec446ab034d46a53f5f9d8^ &&
+  make &&
+
+  cd $RAILS &&
+  time $GIT/bin-wrappers/git fetch . refs/*:refs/* &&
+
+  cd $GIT &&
+  git checkout 432ad41e60cedb87ceec446ab034d46a53f5f9d8 &&
+  make &&
+
+  cd $RAILS &&
+  time $GIT/bin-wrappers/git fetch . refs/*:refs/*
+
+produces:
+
+  [before]
+  real    0m9.128s
+  user    0m9.369s
+  sys     0m0.976s
+
+  [after]
+  real    0m15.926s
+  user    0m16.181s
+  sys     0m0.984s
+
+I don't think memory pressure is involved. The git process maxes out at
+~300M, and this machine has 7.5G available.
+
+I wonder why we are getting different results. Could it be compilation
+options? As I mentioned, I compile with -O0, but I got similar results
+with -O3.
+
+-Peff
