@@ -1,64 +1,82 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Question about submodules and absolute paths
-Date: Tue, 22 May 2012 11:27:22 -0700
-Message-ID: <7vk4043wc5.fsf@alter.siamese.dyndns.org>
-References: <CAOmKuSoYP9fYORDy5twLpFh7SQ7rc6x2A=F8XjfKMqo-ErCauQ@mail.gmail.com>
- <CAOmKuSpqFrC7G4DbZu=uYDwvU6QqrJUi2aNBnSjy7_PXMMJpjQ@mail.gmail.com>
+From: Syed M Raihan <syed_raihan@yahoo.com>
+Subject: Re: [RFC] Convert builin-mailinfo.c to use The Better String Library.
+Date: Tue, 22 May 2012 18:30:13 +0000 (UTC)
+Message-ID: <loom.20120522T201747-568@post.gmane.org>
+References: <46DDC500.5000606@etek.chalmers.se><1189004090.20311.12.camel@hinata.boston.redhat.com> <vpq642pkoln.fsf@bauges.imag.fr> <4AFD7EAD1AAC4E54A416BA3F6E6A9E52@ntdev.corp.microsoft.com> <alpine.LFD.0.999.0709061839510.5626@evo.linux-foundation.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Alexey Pelykh <alexey.pelykh@gmail.com>
-X-From: git-owner@vger.kernel.org Tue May 22 20:27:37 2012
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 22 20:35:17 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SWtnu-0003aR-Tx
-	for gcvg-git-2@plane.gmane.org; Tue, 22 May 2012 20:27:31 +0200
+	id 1SWtvP-00056O-IQ
+	for gcvg-git-2@plane.gmane.org; Tue, 22 May 2012 20:35:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759920Ab2EVS1Z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 May 2012 14:27:25 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:49487 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751227Ab2EVS1Y (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 May 2012 14:27:24 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 35CBE88F6;
-	Tue, 22 May 2012 14:27:24 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=UdoqwVuM7BZHoJ3MSJEeR9c1+XA=; b=fZyYBB
-	qacbvVCaDXuGvYo3nOpcZl3Hs4ZDzIiKrI+IhidugP3ui686ZzsDYuhUrqLxudxK
-	ys4HMo0xdRGmLbxPhtfhm0k2+pEVeY5nEiy26f8jb1Y7s36Op1OjUVVhFyBVA7dj
-	nO1Zc5ThzqswPxcqlrDYKeyboqvUpeLZy4DMM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=oliIIHZajBRnVok/KadR3WMmsLD7bUm5
-	kDAc1Z5mJBtM1OeBneAFSPThT+OaPIIvjaBV6sCz9ducfpz+nz4qfdpZs7+hTQH7
-	bJJBZcIcv+hUndLNBRx1HGgNvHxePqH/q7YtAxAftO/SnHnYTBBdDyqi3SUYtqCC
-	V55pPlwwEhQ=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2C80B88F5;
-	Tue, 22 May 2012 14:27:24 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B887288F4; Tue, 22 May 2012
- 14:27:23 -0400 (EDT)
-In-Reply-To: <CAOmKuSpqFrC7G4DbZu=uYDwvU6QqrJUi2aNBnSjy7_PXMMJpjQ@mail.gmail.com> (Alexey
- Pelykh's message of "Tue, 22 May 2012 14:36:45 +0300")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: C678D3DE-A43B-11E1-9857-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752094Ab2EVSfJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 May 2012 14:35:09 -0400
+Received: from plane.gmane.org ([80.91.229.3]:47163 "EHLO plane.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751625Ab2EVSfI (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 May 2012 14:35:08 -0400
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1SWtvE-0004dH-G0
+	for git@vger.kernel.org; Tue, 22 May 2012 20:35:04 +0200
+Received: from 65.200.62.4 ([65.200.62.4])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 22 May 2012 20:35:04 +0200
+Received: from syed_raihan by 65.200.62.4 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 22 May 2012 20:35:04 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 65.200.62.4 (Mozilla/5.0 (X11; Ubuntu; Linux i686; rv:12.0) Gecko/20100101 Firefox/12.0)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198222>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198223>
 
-Alexey Pelykh <alexey.pelykh@gmail.com> writes:
+Linus Torvalds <torvalds <at> linux-foundation.org> writes:
 
-> since these paths differ from OS to OS and thus I have to keep two clones of
-> each repository.
+> 
+> 
+> On Wed, 5 Sep 2007, Dmitry Kakurin wrote:
+> > 
+> > When I first looked at Git source code two things struck me as odd:
+> > 1. Pure C as opposed to C++. No idea why. Please don't talk about port,
+> > it's BS.
+> 
+> *YOU* are full of bullshit.
+> 
+> C++ is a horrible language. It's made more horrible by the fact that a lot 
+> of substandard programmers use it, to the point where it's much much 
+> easier to generate total and utter crap with it. Quite frankly, even if 
+> the choice of C were to do *nothing* but keep the C++ programmers out, 
+> that in itself would be a huge reason to use C.
+> 			Linus
+> 
 
-I am not sure what "absolute path" has with this.  If you are working on
-two machines, don't you need two clones, one for each, anyway?
+C++ has one weakness that is ABI compatibility among compilers.
+Other than that Object Model does not make things horrible. 
+I have seen 15 years old C++ application library which still 
+uses old implementation to implement new enhancement/features 
+that just works seamlessly and even an old dog can learn 
+this old library written in C++.
+
+I have seen C programmers constantly trying how they can mimic 
+poly-morphism, inheritance and encapsulation in their C.
+This is just *BS* - if you dont want C++ then dont use poly-morphism,
+inheritance and encapsulation in your C code!
+Or else just use C++ or Jave or C#.
+
+Regards
+Please note: I am really a Fan of Linus Torvalds since ever :)
+Syed Raihan
