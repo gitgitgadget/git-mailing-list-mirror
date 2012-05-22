@@ -1,111 +1,60 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCHv2 14/15] ident: trim whitespace from default name/email
-Date: Tue, 22 May 2012 09:55:19 -0700
-Message-ID: <7vipfo5f60.fsf@alter.siamese.dyndns.org>
-References: <20120521230917.GA474@sigill.intra.peff.net>
- <20120521231029.GN10981@sigill.intra.peff.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: remove_duplicates() in builtin/fetch-pack.c is O(N^2)
+Date: Tue, 22 May 2012 13:01:01 -0400
+Message-ID: <20120522170101.GA11600@sigill.intra.peff.net>
+References: <4FB9F92D.8000305@alum.mit.edu>
+ <20120521174525.GA22643@sigill.intra.peff.net>
+ <CACsJy8Dw+mbP+ttTP6gAfX9o4q4NyZgPYpbhS=tket=5fvBXwg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Angus Hammond <angusgh@gmail.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue May 22 18:55:40 2012
+Content-Type: text/plain; charset=utf-8
+Cc: Michael Haggerty <mhagger@alum.mit.edu>,
+	git discussion list <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Tue May 22 19:01:19 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SWsMy-00006q-8y
-	for gcvg-git-2@plane.gmane.org; Tue, 22 May 2012 18:55:36 +0200
+	id 1SWsSM-0004tJ-HA
+	for gcvg-git-2@plane.gmane.org; Tue, 22 May 2012 19:01:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755614Ab2EVQz0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 May 2012 12:55:26 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39772 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752715Ab2EVQzW (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 May 2012 12:55:22 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1CD33812C;
-	Tue, 22 May 2012 12:55:22 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 s=sasl; bh=S4i6UhW0Zl7CCuorrGfsT5xNTYM=; b=JWb48ozt0Owa89aBLnJs
-	8P0DCeo1z3jRcCvaVyE5Febm/LRg7wCZadKjThJ6eABwVp/S/izRbS+5vMXNecER
-	2LgIwSgba4CQ8e+Zf/BCMAZjNG+ThQotxcPudMSsjZ8QXKc59Qs8RL4ykSWNQlmS
-	L6fTik/pjC3R5ks5k81ygiw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 q=dns; s=sasl; b=j7YEroW4O9cgxfty+iYgdhUQBjHW2nfXPNouiFz1Aybs+D
-	oSQgukNvupj+cIca8ATNuT6ny/7Ei2ND4qvLp2y1DSSRYw1e+Gc9XSCncOpDp9EO
-	49aYRpS9KxNghdpWA76GVvy9s0iTq8pJWmWve+RBwa6bKatuxiqlR2gmApClE=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 12F96812B;
-	Tue, 22 May 2012 12:55:22 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9967D8125; Tue, 22 May 2012
- 12:55:21 -0400 (EDT)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: EB07157E-A42E-11E1-AA1B-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1756264Ab2EVRBF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 May 2012 13:01:05 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:51802
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753712Ab2EVRBE (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 May 2012 13:01:04 -0400
+Received: (qmail 19799 invoked by uid 107); 22 May 2012 17:01:29 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 22 May 2012 13:01:29 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 22 May 2012 13:01:01 -0400
+Content-Disposition: inline
+In-Reply-To: <CACsJy8Dw+mbP+ttTP6gAfX9o4q4NyZgPYpbhS=tket=5fvBXwg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198205>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198206>
 
-Jeff King <peff@peff.net> writes:
+On Tue, May 22, 2012 at 07:18:00PM +0700, Nguyen Thai Ngoc Duy wrote:
 
-> ... Any other value
-> comes from a config file, where we will have cleaned up
-> accidental whitespace already.
+> On Tue, May 22, 2012 at 12:45 AM, Jeff King <peff@peff.net> wrote:
+> > The rails/rails network repository at GitHub (i.e., a master repo with
+> > all of the objects and refs for all of the forks) has about 400K refs,
+> > and has been the usual impetus for me finding and fixing these sorts of
+> > quadratic problems.
+> 
+> Off topic and pure speculation. With 400k refs, each one 20 byte in
+> length, the pathname part only can take 7MB. Perhaps packed-refs
+> should learn prefix compressing too, like index v4, to reduce size
+> (and hopefully improve startup speed). Compressing refs/heads/ and
+> refs/tags/ only could gain quite a bit already.
 
-Are you referring to the behaviour of the config parser that removes
-leading and trailing whitespaces when reading an unquoted string value?
+In this case, the packed-refs file is 30MB. Even just gzipping it takes
+it down to 2MB. As far as I know, we don't ever do random access on the
+file, but instead just stream it into memory.
 
-If the user really wanted to have trailing whitespaces by quoting, we
-would let it pass, in other words; it probably is a reasonable behaviour.
-
-The same can be said about the environment variable GIT_COMMITTER_NAME and
-friends, but "accidental whitespaces are cleaned up already" does not
-apply to them.
-
-So, isn't the real rationale behind this choice to allow users who give
-leading or trailing whitespaces in the configuration and environment
-variables on purpose use whatever value they specified?
-
-I agree with the placement of trimming in this patch, but I do not quite
-get (I do not mean "I do not agree with") what the quoted sentence wanted
-to say.
-
-Other than that single small "hrm...", the entire series was a pleasant
-read.  Thanks.
-
->
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
->  ident.c | 5 ++++-
->  1 file changed, 4 insertions(+), 1 deletion(-)
->
-> diff --git a/ident.c b/ident.c
-> index cefb829..e279039 100644
-> --- a/ident.c
-> +++ b/ident.c
-> @@ -95,8 +95,10 @@ static void copy_email(const struct passwd *pw, struct strbuf *email)
->  
->  const char *ident_default_name(void)
->  {
-> -	if (!git_default_name.len)
-> +	if (!git_default_name.len) {
->  		copy_gecos(xgetpwuid_self(), &git_default_name);
-> +		strbuf_trim(&git_default_name);
-> +	}
->  	return git_default_name.buf;
->  }
->  
-> @@ -110,6 +112,7 @@ const char *ident_default_email(void)
->  			user_ident_explicitly_given |= IDENT_MAIL_GIVEN;
->  		} else
->  			copy_email(xgetpwuid_self(), &git_default_email);
-> +		strbuf_trim(&git_default_email);
->  	}
->  	return git_default_email.buf;
->  }
+-Peff
