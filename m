@@ -1,62 +1,66 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH 6/7] unpack-trees: record which unpack error messages
- should be freed
-Date: Tue, 22 May 2012 22:22:42 +0200 (CEST)
-Message-ID: <20120522.222242.2217647953969252595.chriscool@tuxfamily.org>
-References: <20120521143309.1911.94302.chriscool@tuxfamily.org>
-	<20120521145610.1911.60207.chriscool@tuxfamily.org>
-	<20120521204350.GC28331@burratino>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 1/5] fetch-pack: sort incoming heads
+Date: Tue, 22 May 2012 16:23:36 -0400
+Message-ID: <20120522202336.GA31231@sigill.intra.peff.net>
+References: <20120521221417.GA22664@sigill.intra.peff.net>
+ <20120521221702.GA22914@sigill.intra.peff.net>
+ <7v7gw43rn9.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: Text/Plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: gitster@pobox.com, git@vger.kernel.org, artagnon@gmail.com,
-	nbowler@elliptictech.com
-To: jrnieder@gmail.com
-X-From: git-owner@vger.kernel.org Tue May 22 22:23:01 2012
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, Martin Fick <mfick@codeaurora.org>,
+	Michael Haggerty <mhagger@alum.mit.edu>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue May 22 22:23:48 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SWvbc-0002m2-OI
-	for gcvg-git-2@plane.gmane.org; Tue, 22 May 2012 22:22:57 +0200
+	id 1SWvcO-0004eo-QU
+	for gcvg-git-2@plane.gmane.org; Tue, 22 May 2012 22:23:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932454Ab2EVUWw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 May 2012 16:22:52 -0400
-Received: from smtp3-g21.free.fr ([212.27.42.3]:41235 "EHLO smtp3-g21.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932296Ab2EVUWv (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 May 2012 16:22:51 -0400
-Received: from localhost (unknown [82.243.130.161])
-	by smtp3-g21.free.fr (Postfix) with ESMTP id 7BC23A623A;
-	Tue, 22 May 2012 22:22:43 +0200 (CEST)
-In-Reply-To: <20120521204350.GC28331@burratino>
-X-Mailer: Mew version 6.3 on Emacs 23.3 / Mule 6.0 (HANACHIRUSATO)
+	id S932476Ab2EVUXk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 May 2012 16:23:40 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:51956
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932296Ab2EVUXj (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 May 2012 16:23:39 -0400
+Received: (qmail 23121 invoked by uid 107); 22 May 2012 20:24:04 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 22 May 2012 16:24:04 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 22 May 2012 16:23:36 -0400
+Content-Disposition: inline
+In-Reply-To: <7v7gw43rn9.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198238>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198239>
 
-From: Jonathan Nieder <jrnieder@gmail.com>
-> Christian Couder wrote:
+On Tue, May 22, 2012 at 01:08:42PM -0700, Junio C Hamano wrote:
+
+> > @@ -1076,6 +1081,8 @@ struct ref *fetch_pack(struct fetch_pack_args *my_args,
+> >  			st.st_mtime = 0;
+> >  	}
+> >  
+> > +	qsort(heads, nr_heads, sizeof(*heads), compare_heads);
+> > +
+> >  	if (heads && nr_heads)
+> >  		nr_heads = remove_duplicates(nr_heads, heads);
 > 
->> "struct unpack_trees_options" has a "const char *msgs[]" field
->> that is setup with string values in setup_unpack_trees_porcelain().
-> 
-> Hmm.  Incidentally, should callers (e.g., the 100 single-picks
-> involved in a large multi-pick) be reusing these strings instead of
-> allocating them again and again?
+> Hrm, could heads and/or nr_heads be NULL/0 here when we try to run qsort()
+> in this codepath?
 
-Some strings filling the msgs field are created with sprintf() using
-the cmd argument passed to setup_unpack_trees_porcelain(). So they
-could be different if different cmd arguments are used. In practice
-now cmd is either "checkout" or "merge", so we could probably reuse
-the same strings. But if we ever add a checkout command to the
-sequencer for example, we might want to use different error messages.
+Good catch. I had originally put the qsort into remove_duplicates, but
+hoisted it out, as the second optimization depends on the sorting, too.
+heads can be NULL here (for example, if you run fetch-pack without any
+arguments, and without --stdin; though why you would do so is a
+mystery, we should protect against it).
 
-Another possibility is to xmalloc all the strings and then free them
-all.
+A sane qsort would see that its second parameter is 0 and never try to
+dereference the array. But I'm not sure all qsort implementations we
+will see are sane, so it's probably better to protect it by putting it
+inside the conditional block just below.
 
-Thanks,
-Christian.
+-Peff
