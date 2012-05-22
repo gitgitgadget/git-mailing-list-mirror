@@ -1,61 +1,81 @@
-From: =?UTF-8?B?WmJpZ25pZXcgSsSZZHJ6ZWpld3NraS1Tem1law==?= 
-	<zbyszek@in.waw.pl>
-Subject: Re: diffstat witdth with one changed file
-Date: Tue, 22 May 2012 07:59:39 +0200
-Message-ID: <4FBB2B4B.6030402@in.waw.pl>
-References: <CACsJy8BrqaLbtVp5uF3q2Jo63DPwtFACYw3_rPy8eyNK7VSWMw@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: [PATCH] fix off-by-one error in split_ident_line
+Date: Tue, 22 May 2012 02:12:20 -0400
+Message-ID: <20120522061220.GA17886@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Tue May 22 08:00:13 2012
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, Bryan Turner <bturner@atlassian.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue May 22 08:12:31 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SWi8g-0004mW-IW
-	for gcvg-git-2@plane.gmane.org; Tue, 22 May 2012 08:00:10 +0200
+	id 1SWiKb-0005md-8c
+	for gcvg-git-2@plane.gmane.org; Tue, 22 May 2012 08:12:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755469Ab2EVGAE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 May 2012 02:00:04 -0400
-Received: from kawka.in.waw.pl ([178.63.212.103]:37157 "EHLO kawka.in.waw.pl"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755248Ab2EVGAD (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 May 2012 02:00:03 -0400
-Received: from 69-mo7-2.acn.waw.pl ([85.222.93.69] helo=[192.168.0.150])
-	by kawka.in.waw.pl with esmtpsa (TLS1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.72)
-	(envelope-from <zbyszek@in.waw.pl>)
-	id 1SWi8X-0003E3-7M; Tue, 22 May 2012 08:00:01 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:10.0.3) Gecko/20120329 Icedove/10.0.3
-In-Reply-To: <CACsJy8BrqaLbtVp5uF3q2Jo63DPwtFACYw3_rPy8eyNK7VSWMw@mail.gmail.com>
-X-Enigmail-Version: 1.4
+	id S1751328Ab2EVGMY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 May 2012 02:12:24 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:51505
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751168Ab2EVGMX (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 May 2012 02:12:23 -0400
+Received: (qmail 13337 invoked by uid 107); 22 May 2012 06:12:49 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 22 May 2012 02:12:49 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 22 May 2012 02:12:20 -0400
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198181>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198182>
 
-On 05/21/2012 05:52 PM, Nguyen Thai Ngoc Duy wrote:
-> Hi,
-> 
-> With recent git, "git log --stat 90e6ef5", the first commit's diffstat
-> uses full terminal width while the next one uses less than 80 chars.
-> Both changes one file. Is it intentional? I tend to think it's a bug
-> because with one-file changes, diffstat width is not important as we
-> have no other files to compare with.
-Hi,
-90e6ef5 makes 502 additions/deletions, so it scales the +- part to the
-whole available terminal width. 90e6ef5^ does only 41 additions, so it
-can display the +- part unscaled without even filling the terminal width.
+Commit 4b340cf split the logic to parse an ident line out of
+pretty.c's format_person_part. But in doing so, it
+accidentally introduced an off-by-one error that caused it
+to think that single-character names were invalid.
 
-Since we don't coordinate the diffstat width between different commits
-in the same git-log invocation, there's no way to make the diffstats use
-the same scale. Anyway, diffstat is only supposed to give a rough
-overview, and it does that here.
+This manifested itself as the "%an" format failing to show
+anything at all for a single-character name.
 
-What output would you expect?
+Reported-by: Brian Turner <bturner@atlassian.com>
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ ident.c                    | 2 +-
+ t/t6006-rev-list-format.sh | 7 +++++++
+ 2 files changed, 8 insertions(+), 1 deletion(-)
 
-Zbyszek
+diff --git a/ident.c b/ident.c
+index 87c697c..5df094d 100644
+--- a/ident.c
++++ b/ident.c
+@@ -244,7 +244,7 @@ int split_ident_line(struct ident_split *split, const char *line, int len)
+ 	if (!split->mail_begin)
+ 		return status;
+ 
+-	for (cp = split->mail_begin - 2; line < cp; cp--)
++	for (cp = split->mail_begin - 2; line <= cp; cp--)
+ 		if (!isspace(*cp)) {
+ 			split->name_end = cp + 1;
+ 			break;
+diff --git a/t/t6006-rev-list-format.sh b/t/t6006-rev-list-format.sh
+index a01d244..f94f0c4 100755
+--- a/t/t6006-rev-list-format.sh
++++ b/t/t6006-rev-list-format.sh
+@@ -283,4 +283,11 @@ test_expect_success 'oneline with empty message' '
+ 	test_line_count = 5 testg.txt
+ '
+ 
++test_expect_success 'single-character name is parsed correctly' '
++	git commit --author="a <a@example.com>" --allow-empty -m foo &&
++	echo "a <a@example.com>" >expect &&
++	git log -1 --format="%an <%ae>" >actual &&
++	test_cmp expect actual
++'
++
+ test_done
+-- 
+1.7.9.7.33.gc430a50
