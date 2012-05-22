@@ -1,75 +1,97 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 2/7] sequencer: release a strbuf used in save_head()
-Date: Tue, 22 May 2012 00:18:48 -0500
-Message-ID: <20120522051827.GA4486@burratino>
-References: <20120521143309.1911.94302.chriscool@tuxfamily.org>
- <20120521145610.1911.61154.chriscool@tuxfamily.org>
- <CALkWK0m9F6EU43v0HbJxWUVtHTiw+ZvjCjwqbSVdQfomb6f4Aw@mail.gmail.com>
- <20120522042316.GA3080@burratino>
- <CALkWK0kvjr3NSx6-8svz=PKb5ta_UwOUiF4uqh7GriwuJYncUA@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: [PATCH] pretty: avoid buffer overflow in format_person_part
+Date: Tue, 22 May 2012 01:45:08 -0400
+Message-ID: <20120522054508.GA10576@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Christian Couder <chriscool@tuxfamily.org>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Nick Bowler <nbowler@elliptictech.com>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Tue May 22 07:19:01 2012
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue May 22 07:45:36 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SWhUq-00042B-H7
-	for gcvg-git-2@plane.gmane.org; Tue, 22 May 2012 07:19:00 +0200
+	id 1SWhuY-0008UK-Bj
+	for gcvg-git-2@plane.gmane.org; Tue, 22 May 2012 07:45:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753751Ab2EVFS4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 May 2012 01:18:56 -0400
-Received: from mail-gg0-f174.google.com ([209.85.161.174]:45488 "EHLO
-	mail-gg0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753265Ab2EVFSz (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 May 2012 01:18:55 -0400
-Received: by gglu4 with SMTP id u4so5048732ggl.19
-        for <git@vger.kernel.org>; Mon, 21 May 2012 22:18:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=oD9S5ga0JRiIsd6zlzeMrcEehj47z0pTG9hu8gyK6p8=;
-        b=Otj86VxJ0qb+BNM9TgvRUzR42ip11W7kBbxswlzKaq8GgguNLInQ70xbP0zfIts1Eq
-         20TyjkiywoaWljDnZCtFL/fbcA0whkGn8v9M6n4jp142GvH/6L4B4dBKh1o1uSHmil5U
-         lquZVH9dBJ/1jbeFI8wEwnturlazYvIRec1mnql5XD8nFHwQnCWQ+CNcX06hB2wgDzxN
-         t8v4JL+WoCQtUHqPJGsMneam8IFDyYsmBHdp1q6Zwy/WkBgddubfu0TfD0lBHNbpZLFp
-         +CFbaWoKPDAGGihQhb2TVYE/yd5lCR0pw1Ypo2Lh3mWFnRGF7R4DPWJCFEXhzcLJUann
-         GmVQ==
-Received: by 10.50.187.164 with SMTP id ft4mr8612907igc.6.1337663934485;
-        Mon, 21 May 2012 22:18:54 -0700 (PDT)
-Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
-        by mx.google.com with ESMTPS id ch5sm9449319igb.0.2012.05.21.22.18.53
-        (version=SSLv3 cipher=OTHER);
-        Mon, 21 May 2012 22:18:54 -0700 (PDT)
+	id S1754728Ab2EVFpN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 May 2012 01:45:13 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:51485
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754133Ab2EVFpL (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 May 2012 01:45:11 -0400
+Received: (qmail 12835 invoked by uid 107); 22 May 2012 05:45:36 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 22 May 2012 01:45:36 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 22 May 2012 01:45:08 -0400
 Content-Disposition: inline
-In-Reply-To: <CALkWK0kvjr3NSx6-8svz=PKb5ta_UwOUiF4uqh7GriwuJYncUA@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198176>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198177>
 
-Ramkumar Ramachandra wrote:
-> Jonathan Nieder wrote:
+When we parse the name and email from a commit to
+pretty-print them, we usually can just put the result
+directly into our strbuf result. However, if we are going to
+use the mailmap, then we must first copy them into a
+NUL-terminated buffer to feed to the mailmap machinery.
 
->> And
->> looking at it from the other side, doesn't using exit mean that you
->> cannot be valgrind-clean anyway, since allocations by functions higher
->> in the call chain do not get a chance to be freed?
->
-> Good point; save_todo() sets a bad example.  For symmetry, should
-> these two instances of strbuf_release() before die() be removed in a
-> separate patch?
+We did so by using strlcpy into a static buffer, but we used
+it wrong. We fed it the length of the substring we wanted to
+copy, but never checked that that length was less than the
+size of the destination buffer.
 
-I can't find myself caring much either way. :)
+The simplest fix is to just use snprintf to copy the
+substring properly while still respecting the destination
+buffer's size. It might seem like replacing the static
+buffer with a strbuf would help, but we need to feed a
+static buffer to the mailmap machinery anyway, so there's
+not much benefit to handling arbitrary sizes.
 
-A single free() doesn't hurt performance much, so my hunch would be to
-leave it alone unless some other practical reason to keep or remove
-the free()s comes up.
+A more ideal solution would be for mailmap to grow an
+interface that:
+
+  1. Takes a pointer and length combination, instead of
+     assuming a NUL-terminated string.
+
+  2. Returns a pointer to the mailmap's allocated string,
+     rather than copying it into the buffer.
+
+Then we could avoid the need for an extra buffer entirely.
+However, doing this would involve a lot of refactoring of
+mailmap and of string_list (which mailmap uses to store the
+map itself). For now, let's do the simplest thing to fix the
+bug.
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+Current git will not generate commits with names long enough to overflow
+here. With my recent series, that is no longer the case. Of course, that
+is not really relevant; a malicious attacker is free to craft a bogus
+commit directly with hash-object.
+
+ pretty.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
+
+diff --git a/pretty.c b/pretty.c
+index 02a0a2b..986e114 100644
+--- a/pretty.c
++++ b/pretty.c
+@@ -547,8 +547,10 @@ static size_t format_person_part(struct strbuf *sb, char part,
+ 	mail_end = s.mail_end;
+ 
+ 	if (part == 'N' || part == 'E') { /* mailmap lookup */
+-		strlcpy(person_name, name_start, name_end - name_start + 1);
+-		strlcpy(person_mail, mail_start, mail_end - mail_start + 1);
++		snprintf(person_name, sizeof(person_name), "%.*s",
++			 (int)(name_end - name_start), name_start);
++		snprintf(person_mail, sizeof(person_mail), "%.*s",
++			 (int)(mail_end - mail_start), mail_start);
+ 		mailmap_name(person_mail, sizeof(person_mail), person_name, sizeof(person_name));
+ 		name_start = person_name;
+ 		name_end = name_start + strlen(person_name);
+-- 
+1.7.9.7.33.gc430a50
