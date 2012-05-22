@@ -1,72 +1,62 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 5/5] fetch-pack: avoid quadratic loop in filter_refs
-Date: Tue, 22 May 2012 13:16:34 -0700
-Message-ID: <7v396s3ra5.fsf@alter.siamese.dyndns.org>
-References: <20120521221417.GA22664@sigill.intra.peff.net>
- <20120521222329.GE22914@sigill.intra.peff.net>
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH 6/7] unpack-trees: record which unpack error messages
+ should be freed
+Date: Tue, 22 May 2012 22:22:42 +0200 (CEST)
+Message-ID: <20120522.222242.2217647953969252595.chriscool@tuxfamily.org>
+References: <20120521143309.1911.94302.chriscool@tuxfamily.org>
+	<20120521145610.1911.60207.chriscool@tuxfamily.org>
+	<20120521204350.GC28331@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Martin Fick <mfick@codeaurora.org>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue May 22 22:16:48 2012
+Content-Type: Text/Plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Cc: gitster@pobox.com, git@vger.kernel.org, artagnon@gmail.com,
+	nbowler@elliptictech.com
+To: jrnieder@gmail.com
+X-From: git-owner@vger.kernel.org Tue May 22 22:23:01 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SWvVa-0004hr-Az
-	for gcvg-git-2@plane.gmane.org; Tue, 22 May 2012 22:16:42 +0200
+	id 1SWvbc-0002m2-OI
+	for gcvg-git-2@plane.gmane.org; Tue, 22 May 2012 22:22:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932317Ab2EVUQh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 May 2012 16:16:37 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35311 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753440Ab2EVUQh (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 May 2012 16:16:37 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7FFEA8458;
-	Tue, 22 May 2012 16:16:36 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=M52LPEHelOhUfMv/iiN59q2O98M=; b=UPi6ir
-	eaieDynzaXxY20YvdsxGh1172V/HM4UpYgKPL9PlHBXEQH+l59Gp9a/r17cFv7Qd
-	Ei6OVVVjZmF7rv/rA3JsKTFPEAWvp50qR85CyQhkh0sey/a3aXv4gCF99eyth70w
-	+Isl4iGeftKEVFEqkpgIypxJ0d4uLU5Gk9Kj8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=GgTBQfY3NhCPdBdOv7WAx3sseyPSpnKr
-	g/vtw8vqcjopXO2DO0qd1yZ37GQHCt9Y6cA9SFAj1YlKIVeDFtdDeQbRD+Fu59B5
-	Pm1ModNi1dSJ4jYiPNQ0Hkcqc1AWld/DDirIGuA4bS4xL77t/kwJ3HF9jcWgo3mN
-	MR6ZdwaDC3Y=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 774678457;
-	Tue, 22 May 2012 16:16:36 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0DD098455; Tue, 22 May 2012
- 16:16:35 -0400 (EDT)
-In-Reply-To: <20120521222329.GE22914@sigill.intra.peff.net> (Jeff King's
- message of "Mon, 21 May 2012 18:23:29 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 07F2EB6A-A44B-11E1-8110-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S932454Ab2EVUWw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 May 2012 16:22:52 -0400
+Received: from smtp3-g21.free.fr ([212.27.42.3]:41235 "EHLO smtp3-g21.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932296Ab2EVUWv (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 May 2012 16:22:51 -0400
+Received: from localhost (unknown [82.243.130.161])
+	by smtp3-g21.free.fr (Postfix) with ESMTP id 7BC23A623A;
+	Tue, 22 May 2012 22:22:43 +0200 (CEST)
+In-Reply-To: <20120521204350.GC28331@burratino>
+X-Mailer: Mew version 6.3 on Emacs 23.3 / Mule 6.0 (HANACHIRUSATO)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198237>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198238>
 
-Jeff King <peff@peff.net> writes:
+From: Jonathan Nieder <jrnieder@gmail.com>
+> Christian Couder wrote:
+> 
+>> "struct unpack_trees_options" has a "const char *msgs[]" field
+>> that is setup with string values in setup_unpack_trees_porcelain().
+> 
+> Hmm.  Incidentally, should callers (e.g., the 100 single-picks
+> involved in a large multi-pick) be reusing these strings instead of
+> allocating them again and again?
 
-> We have a list of refs that we want to compare against the
-> "match" array. The current code searches the match list
-> linearly, giving quadratic behavior over the number of refs
-> when you want to fetch all of them.
->
-> Instead, we can compare the lists as we go, giving us linear
-> behavior.
->
-> Signed-off-by: Jeff King <peff@peff.net>
+Some strings filling the msgs field are created with sprintf() using
+the cmd argument passed to setup_unpack_trees_porcelain(). So they
+could be different if different cmd arguments are used. In practice
+now cmd is either "checkout" or "merge", so we could probably reuse
+the same strings. But if we ever add a checkout command to the
+sequencer for example, we might want to use different error messages.
 
-Nice.  Thanks.
+Another possibility is to xmalloc all the strings and then free them
+all.
+
+Thanks,
+Christian.
