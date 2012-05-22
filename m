@@ -1,76 +1,96 @@
-From: =?UTF-8?B?VGFqdGkgw4Frb3M=?= <akos.tajti@intland.com>
-Subject: Re: git-upload-pack stream
-Date: Tue, 22 May 2012 23:46:08 +0200
-Message-ID: <4FBC091F.2070705@intland.com>
-References: <4FBBC063.3050108@intland.com> <20120522181240.GA20305@sigill.intra.peff.net>
+From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <rene.scharfe@lsrfire.ath.cx>
+Subject: Re: [PATCH 3/3] refs: use strings directly in find_containing_dir()
+Date: Wed, 23 May 2012 00:11:30 +0200
+Message-ID: <4FBC0F12.2000001@lsrfire.ath.cx>
+References: <1337692566-3718-1-git-send-email-mhagger@alum.mit.edu> <4FBBE012.6090702@lsrfire.ath.cx> <7vlikj3nzc.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8;
 	format=flowed
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue May 22 23:46:28 2012
+Cc: mhagger@alum.mit.edu, Jeff King <peff@peff.net>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed May 23 00:11:53 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SWwuP-0008DT-Uo
-	for gcvg-git-2@plane.gmane.org; Tue, 22 May 2012 23:46:26 +0200
+	id 1SWxJ0-0004BL-1B
+	for gcvg-git-2@plane.gmane.org; Wed, 23 May 2012 00:11:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754315Ab2EVVqV convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 22 May 2012 17:46:21 -0400
-Received: from moutng.kundenserver.de ([212.227.17.10]:55415 "EHLO
-	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752348Ab2EVVqU (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 May 2012 17:46:20 -0400
-Received: from [192.168.2.199] (dslb-188-104-171-178.pools.arcor-ip.net [188.104.171.178])
-	by mrelayeu.kundenserver.de (node=mreu1) with ESMTP (Nemesis)
-	id 0MM2YK-1SPGLH36Gy-008Kqh; Tue, 22 May 2012 23:46:13 +0200
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.1; hu; rv:1.9.2.28) Gecko/20120306 Thunderbird/3.1.20
-In-Reply-To: <20120522181240.GA20305@sigill.intra.peff.net>
-X-Provags-ID: V02:K0:fwdxsfC7NjhhSYl5SCrvhPwrYzRa56DEcoRwlGvKxgO
- +yG+/ci5yoQZ8oZQfA1nFUGREVs7AuhJezF+qqMTGyRajjrr3A
- MYReLNEyG4iD+l9ZpS49jO0cbNSuuJYgyQ8ZNP/+O7FLTH2lJm
- POZ7cP2lO68eSRL8oH4O6FLGOK1EsMP23zZzugwrWN6c3trDUF
- U+vnEoDM0kv7MerfF+yb3kpsdw+oAIZmHvBaJfLTPhYy6kuLui
- 3Qho/gae6cOTBIgl51rNz9vhW3QCydAk1Y/7Ayx8bT/TvVBeMi
- Yi7L8l6BZrBhoEpO2OiThnEg909yfiejIPKqAWyaRBrmknitLG
- j++Na15LBBvC4szgDp5Q=
+	id S1758402Ab2EVWLj convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 22 May 2012 18:11:39 -0400
+Received: from india601.server4you.de ([85.25.151.105]:33113 "EHLO
+	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755623Ab2EVWLh (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 May 2012 18:11:37 -0400
+Received: from [192.168.2.105] (p579BE06F.dip.t-dialin.net [87.155.224.111])
+	by india601.server4you.de (Postfix) with ESMTPSA id 51FEB2F8058;
+	Wed, 23 May 2012 00:11:34 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:12.0) Gecko/20120428 Thunderbird/12.0.1
+In-Reply-To: <7vlikj3nzc.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198257>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198258>
 
-Jeff,
-
-thanks for the information
-
-=C3=81kos
-
-2012.05.22. 20:12 keltez=C3=A9ssel, Jeff King =C3=ADrta:
-> On Tue, May 22, 2012 at 06:35:47PM +0200, Tajti =C3=81kos wrote:
+Am 22.05.2012 23:27, schrieb Junio C Hamano:
+> Ren=C3=A9 Scharfe<rene.scharfe@lsrfire.ath.cx>  writes:
 >
->> when pushing through http git-http-backend gets a stream of object
->> when sending the git-upload-packl command. This stream starts with
->> two object ids and a branch name. Is there a specification about how
->> this streem exactly looks like?
-> Have you looked at what's in Documentation/technical in the git.git
-> repository? Specifically, protocol-common.txt and pack-protocol.txt
-> describe what happens over the regular protocol. The http version of =
-the
-> protocol just splits that into chunks, but the output that upload-pac=
-k
-> produces is the same.
+>> Why allocate a NUL-terminated copy at all when we can teach the code=
+ to
+>> stop after a given number of characters just as easily?  Alas, this
+>> will still trigger an allocation in search_ref_dir() (see first patc=
+h).
 >
-> You mentioned "pushing", though, which does not involve git-upload-pa=
-ck
-> at all. Did you mean git-receive-pack? From your description, I guess
-> maybe you mean the "command-list" lines sent by send-pack to
-> receive-pack? They are defined pack-protocol.txt. See the subsection
-> "Reference Update Request and Packfile Transfer" under "Pushing Data =
-to
-> a Server".
+> Yeah, but it is only because search_ref_dir() tries to use ref_entry_=
+cmp(),
+> whose signature is geared more towards being used as a qsort(3) callb=
+ack,
+> as the comparison function for bsearch(3).
 >
-> -Peff
+> A bsearch() callback takes two pointers, one is for the key and the o=
+ther
+> for an array element, and there is no reason to require the two types=
+ be
+> the same.
+>
+> In other words, something like this patch and we won't need an alloca=
+tion
+> of the ref_entry that did not have to be a full ref_entry in the firs=
+t
+> place (it only had to be something that supplies the "key" into a sor=
+ted
+> array).
+
+Right, and this order (key-first) is documented for Linux, *BSD and by=20
+Microsoft, so we can probably rely on it.  The proposed asymmetry=20
+between sorting and lookup is a bit ... untidy, nevertheless.  But it's=
+=20
+certainly worth it to avoid that ugly allocation.
+
+Here's a random observation that led me to write the three patches: Whe=
+n=20
+running the following command under valgrind, it reports a few=20
+interesting numbers for total heap usage:
+
+	$ git grep guess xdiff/xutils.c
+
+   v1.7.8       591 allocs,    96 frees,   383,565 bytes allocated
+   v1.7.9     2,940 allocs,   121 frees,   361,001 bytes allocated
+   v1.7.10    3,002 allocs,   129 frees,   366,487 bytes allocated
+   master     4,555 allocs, 1,586 frees, 2,380,265 bytes allocated
+   3 patches  4,079 allocs, 1,110 frees,   430,093 bytes allocated
+   4 patches  3,093 allocs,   124 frees,   377,749 bytes allocated
+
+With your last patch, I think we're doing fine again, as the total
+allocated size is within a few KB of the smallest one in this
+arbitrary list of versions.
+
+What has git grep to do with refs?  It checks if the path in the comman=
+d
+above is a ref, which makes it iterate over all of them..
+
+Ren=C3=A9
