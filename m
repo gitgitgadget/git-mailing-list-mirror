@@ -1,83 +1,76 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: contrib/credential/osxkeychain: Makefile should allow to set
- CFLAGS
-Date: Tue, 22 May 2012 14:00:05 -0700
-Message-ID: <7vtxz82ap6.fsf@alter.siamese.dyndns.org>
-References: <AB628C35-FEC2-4425-B3D8-EEC7F8D6A66B@samueljohn.de>
+Subject: Re: Question about submodules and absolute paths
+Date: Tue, 22 May 2012 14:06:45 -0700
+Message-ID: <7vpq9w2ae2.fsf@alter.siamese.dyndns.org>
+References: <CAOmKuSoYP9fYORDy5twLpFh7SQ7rc6x2A=F8XjfKMqo-ErCauQ@mail.gmail.com>
+ <CAOmKuSpqFrC7G4DbZu=uYDwvU6QqrJUi2aNBnSjy7_PXMMJpjQ@mail.gmail.com>
+ <7vk4043wc5.fsf@alter.siamese.dyndns.org>
+ <CAOmKuSrmxnHKaip2X87Y0Cp=XtLAtpAwUp71QhZ5od3gbDF2sg@mail.gmail.com>
+ <70952A932255A2489522275A628B97C31348C70D@xmb-sjc-233.amer.cisco.com>
+ <CAOmKuSqRHMS+hvCXL4Ok6ReTPW-3xT9SunGeibjCCCgVk9SU6Q@mail.gmail.com>
+ <70952A932255A2489522275A628B97C31348C71F@xmb-sjc-233.amer.cisco.com>
+ <CAOmKuSoxf_mRJRyjXj99NQLoa+fD-HU_oUYPrJYPNTPmvhs46g@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Samuel John <mail@samueljohn.de>
-X-From: git-owner@vger.kernel.org Tue May 22 23:00:27 2012
+Cc: "Matt Seitz \(matseitz\)" <matseitz@cisco.com>,
+	git@vger.kernel.org, Jens Lehmann <Jens.Lehmann@web.de>
+To: Alexey Pelykh <alexey.pelykh@gmail.com>
+X-From: git-owner@vger.kernel.org Tue May 22 23:07:02 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SWwBs-0008HK-Oc
-	for gcvg-git-2@plane.gmane.org; Tue, 22 May 2012 23:00:25 +0200
+	id 1SWwIA-0007bI-RQ
+	for gcvg-git-2@plane.gmane.org; Tue, 22 May 2012 23:06:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753642Ab2EVVAS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 May 2012 17:00:18 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35055 "EHLO
+	id S932161Ab2EVVGu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 May 2012 17:06:50 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39955 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752680Ab2EVVAQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 May 2012 17:00:16 -0400
+	id S1756496Ab2EVVGt (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 May 2012 17:06:49 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 30D859072;
-	Tue, 22 May 2012 17:00:16 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C7EA7921F;
+	Tue, 22 May 2012 17:06:48 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=roFKFK83EOmFnoKSjoCgSLa1/qc=; b=PG+bDp
-	ejpFGFkhykMIKlnxw76EYpovnn5KicWZb/zzhkemuv+/VfqtsUhlZGhOEa+MdtSX
-	ENhRoIpx4qb+LWuW8RjBElF7gnLlUKVS3PJfVRWWV0pcYjkvBBUTQqtWN/9WkV9q
-	MeJBVShoDCyG5D4KT3Zm+BJ1e5r1v9QcKwp/s=
+	:content-type; s=sasl; bh=Rln/9eVkc7VnUwpL0S/1TkmWOPQ=; b=m2Q24w
+	TiMoKip43YAdUuAFpwQqroRTPdpPwU67Gq7WUxOQRpTvZGjNbcrh3wthkiamNpXC
+	7jt54mIUVxpCje1J066fSd/xE9epKDykNW2zSszlpOvlggAYUV/5pa8ZD6sd9Ae0
+	Atg4V+bvBG330VrRHO8E1H17hNTdCOYdrM1t4=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=oLaV1pjZ6TUtwf1rGsnp8fuG2Y/+Y9Ul
-	p4EJNnF2TyZuLkjaKPcOC0hYpn4kaPAIPONYbeI4dtIA2DC+zmoUXyh3Z37XjEXp
-	0WRdi/6hFpwVJKTjbLdseUuMEyLzVG4CV125HsVCDZrbdN5/Jwig8OkKQlFBmqZl
-	AUqQo2l6ZhU=
+	:content-type; q=dns; s=sasl; b=VWL17CxiO5D6eTI8x8+xPG8vEsmbSxvY
+	zxqJvO/Ps29ztGf/hmITi6vbEKLvtQSi/bB6g6smtznNY3a27yJX/WqQqx9LHY6Q
+	XCu6N10OKO3xFy2RMdgjIYFbX/09ALJuRfHXQv+orArrSu55guz9FhSFXruSK/dX
+	XMyUsTQgLqg=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 26FF69070;
-	Tue, 22 May 2012 17:00:16 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BEA4E921E;
+	Tue, 22 May 2012 17:06:48 -0400 (EDT)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7EBE3905E; Tue, 22 May 2012
- 17:00:09 -0400 (EDT)
-In-Reply-To: <AB628C35-FEC2-4425-B3D8-EEC7F8D6A66B@samueljohn.de> (Samuel
- John's message of "Tue, 22 May 2012 22:25:51 +0200")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5E5D3921D; Tue, 22 May 2012
+ 17:06:47 -0400 (EDT)
+In-Reply-To: <CAOmKuSoxf_mRJRyjXj99NQLoa+fD-HU_oUYPrJYPNTPmvhs46g@mail.gmail.com> (Alexey
+ Pelykh's message of "Tue, 22 May 2012 23:25:43 +0300")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 1DC6104C-A451-11E1-A193-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 0AD73492-A452-11E1-8731-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198253>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198254>
 
-Samuel John <mail@samueljohn.de> writes:
+Alexey Pelykh <alexey.pelykh@gmail.com> writes:
 
-> Hi there,
->
-> the contrib/credential/osxkeychain/Makefile goes like this
->
->> CC = gcc
->> RM = rm -f
->> CFLAGS = -g -Wall
->> 
->> git-credential-osxkeychain: git-credential-osxkeychain.o
->> 	$(CC) -o $@ $< -Wl,-framework -Wl,Security
->
-> and does not allow me to pass CFLAGS to build git-credential-osxkeychain.o.
-> My hack is to call: make CC="$CC $CFLAGS"
-> That is ugly.
+> Getting back to the topic, who has what opinions on it?
 
-Yeah, that is ugly.
+You wait ;-) I do not think our friends in certain timezones had chance to
+see your message and think about it yet.
 
-It however seems to me that git-credential-osxkeychain.o does honor
-$(CFLAGS), either from the user "make CFLAGS=..." or the default the
-Makefile in question supplies.
+Didn't the submodule folks worked on the related area recently, and
+doesn't the result of their work already in v1.7.10?
 
-The line you quoted is not using $(CC) as the compiler, but is using it to
-link the final build product.  It may not hurt to have $(CFLAGS) on that
-line, but shouldn't the line also have $(LDFLAGS) on it?
+I am thinking specifically about the series around d75219b (submodules:
+always use a relative path from gitdir to work tree, 2012-03-04).  Jens?
