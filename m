@@ -1,85 +1,93 @@
-From: Alexey Pelykh <alexey.pelykh@gmail.com>
-Subject: Re: Question about submodules and absolute paths
-Date: Tue, 22 May 2012 22:29:07 +0300
-Message-ID: <CAOmKuSqRHMS+hvCXL4Ok6ReTPW-3xT9SunGeibjCCCgVk9SU6Q@mail.gmail.com>
-References: <CAOmKuSoYP9fYORDy5twLpFh7SQ7rc6x2A=F8XjfKMqo-ErCauQ@mail.gmail.com>
-	<CAOmKuSpqFrC7G4DbZu=uYDwvU6QqrJUi2aNBnSjy7_PXMMJpjQ@mail.gmail.com>
-	<7vk4043wc5.fsf@alter.siamese.dyndns.org>
-	<CAOmKuSrmxnHKaip2X87Y0Cp=XtLAtpAwUp71QhZ5od3gbDF2sg@mail.gmail.com>
-	<70952A932255A2489522275A628B97C31348C70D@xmb-sjc-233.amer.cisco.com>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH/RFC] rebase -p: do not redo the merge, but cherry-pick
+ first-parent changes
+Date: Tue, 22 May 2012 21:30:17 +0200
+Message-ID: <4FBBE949.8060305@kdbg.org>
+References: <4FBAA33D.1080703@kdbg.org> <7vobpg3wj6.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: "Matt Seitz (matseitz)" <matseitz@cisco.com>
-X-From: git-owner@vger.kernel.org Tue May 22 21:29:26 2012
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Stephen Haberman <stephen@exigencecorp.com>,
+	Andrew Wong <andrew.kw.w@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue May 22 21:30:27 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SWuli-0006HA-6h
-	for gcvg-git-2@plane.gmane.org; Tue, 22 May 2012 21:29:18 +0200
+	id 1SWumo-0000Wc-HW
+	for gcvg-git-2@plane.gmane.org; Tue, 22 May 2012 21:30:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760288Ab2EVT3L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 May 2012 15:29:11 -0400
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:58970 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760238Ab2EVT3I (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 May 2012 15:29:08 -0400
-Received: by yhmm54 with SMTP id m54so5819894yhm.19
-        for <git@vger.kernel.org>; Tue, 22 May 2012 12:29:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=FDEvbsAHSqWPLdXdrpF74mATYs18RR7kR/juNpCkypk=;
-        b=rzKEii8YxHPNH/nD6bEaNO8CJCJHH7rU56udV+Yyhs0XHjwXyk7yqX6l2JAfqd+gG2
-         Y400Lzro95tz8SeZBf9PAdRK5nk8XTbnNAPSbXG61YubI2f3r5Gd+S4ykliyXNWlVqAr
-         BTu2Cfe8ItKeL4VJAaANGl8ZL27bqa7EkBZTDTkK1S5ctHsevLliLFha+aE27n63h6Ey
-         2vhbZDqIrK5EcG//55vqgzf9QVkI5gYcIQgeid7SJSmPtUWRh19xYPMi9CfaekGHQTtX
-         /f3Na6fY5/9WBx3FNALSNdU3JaMOZN775kzHTIQNOFjp0Fh9Ez1rYE7r7nKBt8Xs0Xxu
-         OWNA==
-Received: by 10.60.9.170 with SMTP id a10mr24002587oeb.14.1337714947906; Tue,
- 22 May 2012 12:29:07 -0700 (PDT)
-Received: by 10.182.72.65 with HTTP; Tue, 22 May 2012 12:29:07 -0700 (PDT)
-In-Reply-To: <70952A932255A2489522275A628B97C31348C70D@xmb-sjc-233.amer.cisco.com>
+	id S1760214Ab2EVTaV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 May 2012 15:30:21 -0400
+Received: from bsmtp.bon.at ([213.33.87.14]:41258 "EHLO bsmtp.bon.at"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752823Ab2EVTaV (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 May 2012 15:30:21 -0400
+Received: from dx.sixt.local (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTP id AF81AA7ED0;
+	Tue, 22 May 2012 21:31:58 +0200 (CEST)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+	by dx.sixt.local (Postfix) with ESMTP id 6ED8A19F69F;
+	Tue, 22 May 2012 21:30:17 +0200 (CEST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:12.0) Gecko/20120421 Thunderbird/12.0
+In-Reply-To: <7vobpg3wj6.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198231>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198232>
 
-Thanks, Matt.
-
-Indeed this is a workaround, what I was thinking about to use. The
-thing I wanted actually to discuss whether it worth to research
-possibility of replacing these absolute paths with relative ones. At
-least afaik, git repo clone is fully portable (movable) except for
-submodules. So I wanted to ask community if this is an intended
-behavior, or it may (and should?) be refined.
-
-Best regards,
-Alexey
-
-On Tue, May 22, 2012 at 10:25 PM, Matt Seitz (matseitz)
-<matseitz@cisco.com> wrote:
->> From: git-owner@vger.kernel.org [mailto:git-owner@vger.kernel.org] On
->> Behalf Of Alexey Pelykh
+Am 22.05.2012 20:23, schrieb Junio C Hamano:
+> Johannes Sixt <j6t@kdbg.org> writes:
+> 
+>> When rebase -p had to replay a merge commit, it used to redo the merge.
+>> But this has drawbacks:
 >>
->> Not on two machines, on single machine but with two OSes Windows +
-> Linux +
->> shared 'work' partition :) So both Windows and Linux use same repo
-> clone
->> that is stored on a 'work' partition. But due to those absolute paths,
-> it
->> gives '/cygdrive/d/work' on windows and '/media/work' on linux. Thus I
->> have to keep 2 copies of each repository that uses submodules (and
-> that is
->> very inconvenient :( )
->
-> As a workaround, how about using Cygwin's mount table to mount "/media"
-> to "d:/", or "/media/work" to "d:/work"?
->
-> See:
-> http://cygwin.com/cygwin-ug-net/using.html#mount-table
->
+>> - When the merge was evil, i.e., contained changes that are in neither of
+>>   the parents, that change was not preserved.
+> 
+> This is a desiable property, and not necessarily limited to "evil" merges
+> but also applies to everyday conflict resolutions.  Replaying the change
+> between the merge and its first parent is a way to achieve it, but I think
+> it also has downsides.  If you are replaying a merge to an updated history
+> that already contains a part of what is merged, some part of the
+> difference between the original merge and its first parent already exists
+> in the commit that the will become the first parent of the replayed merge.
+
+Yes, in such a case we need some cleverness from the merge machinery in
+cherry-pick: It has to recognize that some changes were applied on both
+branches. This might generate new conflicts.
+
+I'll have to see whether this is an issue in practice.
+
+At any rate, if any difficulties with a particular merge commit can be
+anticipated, it is always possible to replace the
+
+  pick that-merge-commit
+
+instruction by
+
+  x git merge that-branch
+
+(we could even generate these lines in the instruction sheet as a comment).
+
+>> - The 'git merge' invocation passed the commit message of the old merge
+>>   commit, but it still obeyed the merge.log option. If it was set, the log
+>>   ended up twice in the commit message.
+> 
+> This should be fixed independent of this patch, no?  Is it a matter of
+> just passing --no-log or something, or is there anything more elaborate
+> necessary?
+
+Frankly, IMHO[*], rebase -p that is based on git-cherry-pick is so much
+better that I don't want to think about which workarounds would be
+needed to make it work better with git-merge :-)
+
+[*] It is still only an opinion. I haven't gotten around to use the
+updated rebase -p in the field. Another reason that it's still RFC.
+
+Thanks,
+-- Hannes
