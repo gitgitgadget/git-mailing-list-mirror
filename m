@@ -1,67 +1,81 @@
-From: jaseem abid <jaseemabid@gmail.com>
-Subject: Re: Git is on TWITTER !!!!!!!!!!!!
-Date: Wed, 23 May 2012 00:48:21 +0530
-Message-ID: <CAH-tXsAHP=qj22VaRqNnRJ=hDjgPQYj7xwe5M3vG3ErOYS_Bqg@mail.gmail.com>
-References: <CA+EOSBkYERH7yevGNbXngAbzNLEXWMHyB2dJtgjc9saQjnxOCQ@mail.gmail.com>
- <CA+EOSBneLk-KwJ=fs3OUN_mz6GiPP6h+yc1YfMZb+Q7F3a4eBA@mail.gmail.com> <4FBBD623.6060009@gmail.com>
+From: "Matt Seitz (matseitz)" <matseitz@cisco.com>
+Subject: RE: Question about submodules and absolute paths
+Date: Tue, 22 May 2012 12:25:28 -0700
+Message-ID: <70952A932255A2489522275A628B97C31348C70D@xmb-sjc-233.amer.cisco.com>
+References: <CAOmKuSoYP9fYORDy5twLpFh7SQ7rc6x2A=F8XjfKMqo-ErCauQ@mail.gmail.com><CAOmKuSpqFrC7G4DbZu=uYDwvU6QqrJUi2aNBnSjy7_PXMMJpjQ@mail.gmail.com><7vk4043wc5.fsf@alter.siamese.dyndns.org> <CAOmKuSrmxnHKaip2X87Y0Cp=XtLAtpAwUp71QhZ5od3gbDF2sg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Elia Pinto <gitter.spiros@gmail.com>, git@vger.kernel.org
-To: Neal Kreitzinger <nkreitzinger@gmail.com>
-X-From: git-owner@vger.kernel.org Tue May 22 21:19:16 2012
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+Cc: <git@vger.kernel.org>
+To: "Alexey Pelykh" <alexey.pelykh@gmail.com>,
+	"Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue May 22 21:25:42 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SWubv-0008UA-Sk
-	for gcvg-git-2@plane.gmane.org; Tue, 22 May 2012 21:19:12 +0200
+	id 1SWui7-0005GM-I2
+	for gcvg-git-2@plane.gmane.org; Tue, 22 May 2012 21:25:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760252Ab2EVTTG convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 22 May 2012 15:19:06 -0400
-Received: from mail-wi0-f172.google.com ([209.85.212.172]:39235 "EHLO
-	mail-wi0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760199Ab2EVTTD convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 22 May 2012 15:19:03 -0400
-Received: by wibhj8 with SMTP id hj8so3798835wib.1
-        for <git@vger.kernel.org>; Tue, 22 May 2012 12:19:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=UgVfOc/s5i57vtv1gpX/RNYGC3kyA7ZJzJ1sjtxJC6s=;
-        b=y2aptMWcMbKwulnywzYHv9TCkBCu+hl+SgFJPHEmwaFBK7+hHC5NoUQg7qWoBXXcu5
-         a8zmP69BB9Uh+kldeP/aOJhhxtILCJ1s8oqd1DUGjO9LPWIgwfOarz+P32urRp4MUeeX
-         FZoOd+VsKcqqWy3OU3zK4Yl7s5NxT3fiAjVRttPXhG5o7RYDrACfFCLDO4dTftSf/5pj
-         WCW360o2P4LP2x2qntNAsUPd3EDuiOflXU7qdOHoeDwUlQI9oVOi0l3cxzN5uisUh8EU
-         TKngBdKEcKuWm//sBqIoERkMZUrga4fdrHOp4+axoMMxPhzEMvzsseYbjMGMe2HWcAUJ
-         t/Bg==
-Received: by 10.180.104.231 with SMTP id gh7mr37517538wib.10.1337714341275;
- Tue, 22 May 2012 12:19:01 -0700 (PDT)
-Received: by 10.227.173.142 with HTTP; Tue, 22 May 2012 12:18:21 -0700 (PDT)
-In-Reply-To: <4FBBD623.6060009@gmail.com>
+	id S1760186Ab2EVTZa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 May 2012 15:25:30 -0400
+Received: from mtv-iport-4.cisco.com ([173.36.130.15]:41596 "EHLO
+	mtv-iport-4.cisco.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752117Ab2EVTZa convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 22 May 2012 15:25:30 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=cisco.com; i=matseitz@cisco.com; l=700; q=dns/txt;
+  s=iport; t=1337714730; x=1338924330;
+  h=mime-version:content-transfer-encoding:subject:date:
+   message-id:in-reply-to:references:from:to:cc;
+  bh=E3uZbhvZ1KfDsWaAuYpAWaalQ0HwBarUtehUqx1kXug=;
+  b=b4T6IeHMEE4aIKZjBj1oa4GCFtmsUQ0Mz0lLWrUWY9bQvSI67jVTL4EL
+   aJcDTatAQ/nF1KcjSVXcttQWdEuXgQV5cYTxDOSyE+6PvrSJnG01+7IzM
+   O59fJ/Hg7RPITn1Le+quHGrchS4hlkxED1mn9f15kcdPb2PAMf4LxHoyv
+   w=;
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: Av8EAPznu0+rRDoJ/2dsb2JhbABEtBeBB4IVAQEBAwESAR0KPwULAgEIFQ0GFwEGAUUDAQ0BAQQBEggah2cEAQuaVp9sj2NiA4hDjWiMfYFkgwo
+X-IronPort-AV: E=Sophos;i="4.75,639,1330905600"; 
+   d="scan'208";a="45833970"
+Received: from mtv-core-4.cisco.com ([171.68.58.9])
+  by mtv-iport-4.cisco.com with ESMTP; 22 May 2012 19:25:29 +0000
+Received: from xbh-sjc-221.amer.cisco.com (xbh-sjc-221.cisco.com [128.107.191.63])
+	by mtv-core-4.cisco.com (8.14.3/8.14.3) with ESMTP id q4MJPTuX006733;
+	Tue, 22 May 2012 19:25:29 GMT
+Received: from xmb-sjc-233.amer.cisco.com ([128.107.191.88]) by xbh-sjc-221.amer.cisco.com with Microsoft SMTPSVC(6.0.3790.4675);
+	 Tue, 22 May 2012 12:25:28 -0700
+X-MimeOLE: Produced By Microsoft Exchange V6.5
+Content-class: urn:content-classes:message
+In-Reply-To: <CAOmKuSrmxnHKaip2X87Y0Cp=XtLAtpAwUp71QhZ5od3gbDF2sg@mail.gmail.com>
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+Thread-Topic: Question about submodules and absolute paths
+Thread-Index: Ac04T7ivFkiT58qsReOyi/N/GhBK/gAACZqA
+X-OriginalArrivalTime: 22 May 2012 19:25:28.0454 (UTC) FILETIME=[A53F4A60:01CD3850]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198229>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198230>
 
-On Tue, May 22, 2012 at 11:38 PM, Neal Kreitzinger
-<nkreitzinger@gmail.com> wrote:
-> If I don't use twitter can I ignore this fact? (I've never used twitt=
-er and
-> don't think I foresee using it.) =C2=A0I thought I heard twitter was =
-limited to
-> 40 character messages or something like that.
+> From: git-owner@vger.kernel.org [mailto:git-owner@vger.kernel.org] On
+> Behalf Of Alexey Pelykh
+> 
+> Not on two machines, on single machine but with two OSes Windows +
+Linux +
+> shared 'work' partition :) So both Windows and Linux use same repo
+clone
+> that is stored on a 'work' partition. But due to those absolute paths,
+it
+> gives '/cygdrive/d/work' on windows and '/media/work' on linux. Thus I
+> have to keep 2 copies of each repository that uses submodules (and
+that is
+> very inconvenient :( )
 
-I guess you can. In short twitter lets you subscribe to people by
-"following them" or topics via "#hashTags", say #git. You can watch
-#git to know what random people are telling about it but as somebody
-mentioned above, if this guy tweets everything from the mailing list
-with #git, its gonna be a big mess. Else its for people who watch
-twitter more often than their email inbox.
+As a workaround, how about using Cygwin's mount table to mount "/media"
+to "d:/", or "/media/work" to "d:/work"?
 
---=20
-Jaseem Abid
-http://jaseemabid.github.com
+See:
+http://cygwin.com/cygwin-ug-net/using.html#mount-table
