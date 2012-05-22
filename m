@@ -1,113 +1,91 @@
 From: Ted Pavlic <ted@tedpavlic.com>
 Subject: Re: [PATCH 2/2] completion: split __git_ps1 into a separate script
-Date: Tue, 22 May 2012 18:27:08 -0400
-Message-ID: <CAOnadRGgduprp_Dbjzf_TsyQQQjivzKxCgUq4y_HevvtKd7h7Q@mail.gmail.com>
-References: <1337719600-7361-1-git-send-email-felipe.contreras@gmail.com> <1337719600-7361-3-git-send-email-felipe.contreras@gmail.com>
+Date: Tue, 22 May 2012 18:29:45 -0400
+Message-ID: <CAOnadRGBi0+Zno_eqzzkJjoUfXh=vEpEV5Cf_6zjOV42XPjXdg@mail.gmail.com>
+References: <1337719600-7361-1-git-send-email-felipe.contreras@gmail.com>
+ <1337719600-7361-3-git-send-email-felipe.contreras@gmail.com> <4FBC0019.6030702@in.waw.pl>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>,
 	Thomas Rast <trast@student.ethz.ch>,
 	=?ISO-8859-1?Q?SZEDER_G=E1bor?= <szeder@ira.uka.de>,
 	Kerrick Staley <mail@kerrickstaley.com>,
 	Marius Storm-Olsen <mstormo@gmail.com>,
 	=?ISO-8859-1?Q?Ville_Skytt=E4?= <ville.skytta@iki.fi>,
 	Dan McGee <dan@archlinux.org>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 23 00:27:36 2012
+To: =?ISO-8859-2?Q?Zbigniew_J=EAdrzejewski=2DSzmek?= 
+	<zbyszek@in.waw.pl>
+X-From: git-owner@vger.kernel.org Wed May 23 00:30:15 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SWxYD-0000SE-CT
-	for gcvg-git-2@plane.gmane.org; Wed, 23 May 2012 00:27:33 +0200
+	id 1SWxal-0006rj-2i
+	for gcvg-git-2@plane.gmane.org; Wed, 23 May 2012 00:30:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932091Ab2EVW13 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 May 2012 18:27:29 -0400
-Received: from mail-we0-f174.google.com ([74.125.82.174]:62345 "EHLO
-	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754677Ab2EVW12 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 May 2012 18:27:28 -0400
-Received: by weyu7 with SMTP id u7so4201736wey.19
-        for <git@vger.kernel.org>; Tue, 22 May 2012 15:27:25 -0700 (PDT)
+	id S1755842Ab2EVWaE convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 22 May 2012 18:30:04 -0400
+Received: from mail-wi0-f172.google.com ([209.85.212.172]:59392 "EHLO
+	mail-wi0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752892Ab2EVWaD convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 22 May 2012 18:30:03 -0400
+Received: by wibhj8 with SMTP id hj8so3929550wib.1
+        for <git@vger.kernel.org>; Tue, 22 May 2012 15:30:02 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=dkim-signature:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type:x-gm-message-state;
-        bh=QcGgeMwpQgJdTUqPJ1CHrw5RXLJBLULYQGPjAGBIthA=;
-        b=CGwwR62F4XaNTmysz0H3DZsHWFJCiVFjZWTQtk3oD6Bc6Isxx3fDrcmsJEC794dAat
-         E2FvfwXAl2ZMJGoUUU/DkyLcyigDKaAaVg9+peu7F6DrpjEXCXip4GE//m0BoXncoeBB
-         SGKJ3jq67/aSQ5A6KpynoKWFzbLq0pQDh+YyCt3KI2QIUfSLikk8tSzNMUx+E/SfvoLs
-         Z2YBBVsnAJFB3JSb1onBu7u1qhywhvg1zHEtqhwMO02UZv8QCj79Kl5y6z/Elqfnosej
-         dV5tQp6mmrhAipWOkE/Kb/Lgd1yZLgsHx+m9iOibJpsWLobw+8k+2D2XvYpx+eDw6zR3
-         xK1Q==
-Received: by 10.180.100.230 with SMTP id fb6mr38073994wib.3.1337725645355;
-        Tue, 22 May 2012 15:27:25 -0700 (PDT)
+         :message-id:subject:to:cc:content-type:content-transfer-encoding
+         :x-gm-message-state;
+        bh=gBxXh1eidJG3zKs6+s+Vq2zyfcJFySIiWObHjV1rSns=;
+        b=m20uTEE4ThRo6BfMsE8KYubPsDo6a5lGMpzVtmrRpISa7wh20HdHefNHjVQVWI6fkF
+         CEGIOMmqUnoap8M6Ch4zSyOfaUcXzH0Z3L73vRzR++JXkXRzgZl+by81KdKXNwOlaNhv
+         Y39AE68YsCroEWvLbcGOikzYKQdrIcMkGmYPPP/eJFI9ngim2s7UrNBvcTCObjThm0mO
+         yfWEyYqkeEHGbxIjfr1KX8IrtgeUEllmwR6tWtH0hbRR7gbKh1zs0zQOdL9e07MQ3+2S
+         PIrhi8O7p3QELgoN6B7wUtVR+YWprCDLu5ufVMVx/v38f06/OHrDRs/0buOByfzTgYn0
+         W77Q==
+Received: by 10.180.105.69 with SMTP id gk5mr39031160wib.3.1337725802275;
+        Tue, 22 May 2012 15:30:02 -0700 (PDT)
 Received: from mail-we0-f174.google.com (mail-we0-f174.google.com [74.125.82.174])
-        by mx.google.com with ESMTPS id et10sm35789492wib.2.2012.05.22.15.27.24
+        by mx.google.com with ESMTPS id k8sm56332404wia.6.2012.05.22.15.30.01
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 22 May 2012 15:27:24 -0700 (PDT)
-Received: by weyu7 with SMTP id u7so4201727wey.19
-        for <git@vger.kernel.org>; Tue, 22 May 2012 15:27:24 -0700 (PDT)
+        Tue, 22 May 2012 15:30:01 -0700 (PDT)
+Received: by weyu7 with SMTP id u7so4202728wey.19
+        for <git@vger.kernel.org>; Tue, 22 May 2012 15:30:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=tedpavlic.com; s=google;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=QcGgeMwpQgJdTUqPJ1CHrw5RXLJBLULYQGPjAGBIthA=;
-        b=ghkt5yRlGT5EtY6Zqxs09FJR0BIwAlnPdfPf8EenjRZcRYjafA1NdjWmWErn9WZa0n
-         td3bUIXPOVfZOXVuseecpwniPjjCxD42C3uLRq6424+S+MxKLEVgM1ZUmjP2OFKLtsH+
-         riRhyz1isA7GDQXT4WKkv2xKo1n9NimYwLWLY=
-Received: by 10.180.85.129 with SMTP id h1mr39005400wiz.2.1337725643997; Tue,
- 22 May 2012 15:27:23 -0700 (PDT)
-Received: by 10.216.131.211 with HTTP; Tue, 22 May 2012 15:27:08 -0700 (PDT)
-In-Reply-To: <1337719600-7361-3-git-send-email-felipe.contreras@gmail.com>
-X-Gm-Message-State: ALoCoQmHQbQHDE5YEvio+RDl8d/ZZ3n1uvYmyLPykO3FL5SEQUuqGo8CZD3TCRZWZSLglAdCXzW+
+         :cc:content-type:content-transfer-encoding;
+        bh=gBxXh1eidJG3zKs6+s+Vq2zyfcJFySIiWObHjV1rSns=;
+        b=JxxJBpz57/Tszwmv87+xePMEW/XVHDEHD9KXYDmgPbW8OyMagc+1inre02mPk34yqZ
+         RKOlGN9CEo7I4HmBaNBLkdJlfcS4E0TlHxklzG+bnnaPhaFD71mWRhRTNN36e/RiCyFI
+         LftJbUPxs+KnouwKBI1KrV7PgdMlcvNQ+E3nc=
+Received: by 10.180.85.129 with SMTP id h1mr39026229wiz.2.1337725800546; Tue,
+ 22 May 2012 15:30:00 -0700 (PDT)
+Received: by 10.216.131.211 with HTTP; Tue, 22 May 2012 15:29:45 -0700 (PDT)
+In-Reply-To: <4FBC0019.6030702@in.waw.pl>
+X-Gm-Message-State: ALoCoQlJnfqtuZfrAe4KTZom1uAe3nD7lN3S8liYO2nSH4UcZn1kOZLqj67zvyvycPm5LOFwHBYy
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198261>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198262>
 
-> The solution, proposed by Kerrick Staley[3], is to split the git script
-> in two; the part that deals with __git_ps1() in one (i.e.
-> git-prompt.sh), and everything else in another (i.e.
-> git-completion.bash).
+>> =A0create mode 100644 contrib/completion/git-prompt.sh
+> Hi,
+> since git-prompt is not completion related anymore, should a differen=
+t
+> directory be used?
 
-Seems like this solution has popped up on lots of forums for about
-every Linux distribution around the time the new bash completion was
-introduced. I'm not sure Kerric Staley deserves sole attribution
-(sorry Kerrick; I mean no offense).
+Making it even more likely that the __gitdir in one will someday not
+match the __gitdir in another...
 
-Moreover, every time the subject of splitting __gitdir out comes up, a
-side discussion about all of the complications that could cause comes
-up... and people give up and hope that the folks upstream (i.e., here)
-will come up with a better solution.
+Maybe __gitdir should live inside git-prompt and git-completion would
+include git-prompt. That would make everything backward compatible
+too. And that way there's a good answer to why git-prompt lives inside
+the completion directory.
 
-If it was so simple to just split __gitdir out, I think it would have
-already been done.
-
-> The only slight issue is that __gitdir() would be duplicated, but this
-> is probably not a big deal.
-
-That seems ugly. I know that splitting __gitdir out is also ugly, but
-I know that there are going to be a lot more people who use git
-completion than git_ps1. Consequently, in a duplicated __gitdir
-scneario, I worry that __gitdir will receive more attention and may
-relatively quickly diverge in implementation if not very careful in
-approving patches. Moreover, a __gitdir of the future may not be
-atomic and will pick up side effects and become impossible to manage
-in two places.
-
-So maybe a split out "git-gitdir.sh" that both files include would be
-"better." Either that or the functionality of "__gitdir" gets pulled
-into git itself. (perhaps a git-gitdir added to the main git
-distribution)
-
-> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
-
-As the patch is from you, there's no need to sign off on it too.
-
---Ted
-
--- 
+--=20
 Ted Pavlic <ted@tedpavlic.com>
