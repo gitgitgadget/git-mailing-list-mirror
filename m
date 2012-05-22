@@ -1,117 +1,86 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 2/7] sequencer: release a strbuf used in save_head()
-Date: Tue, 22 May 2012 09:17:35 -0500
-Message-ID: <20120522141735.GA6660@burratino>
-References: <20120521143309.1911.94302.chriscool@tuxfamily.org>
- <20120521145610.1911.61154.chriscool@tuxfamily.org>
+From: Simon Perrat <simon.perrat@gmail.com>
+Subject: Re: Working on MediaWiki-to-Git contrib
+Date: Tue, 22 May 2012 17:27:54 +0200
+Message-ID: <CA+hdvHi+ovbCTu-QxNfhrWQ6vfcHHvnnX0Wh8S8z4y50jkNHag@mail.gmail.com>
+References: <CA+hdvHjbF-xPBLwmCdMByhN96pk=naeGUrMo0TcgmzrebxARHg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Nick Bowler <nbowler@elliptictech.com>
-To: Christian Couder <chriscool@tuxfamily.org>
-X-From: git-owner@vger.kernel.org Tue May 22 16:17:54 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: matthieu.moy@imag.fr, julien.khayat@ensimag.fr,
+	simon.cathebras@ensimag.fr, charles.roussel@ensimag.fr,
+	Guillaume Sasdy <guillaume.sasdy@gmail.com>,
+	kim-thuat.nguyen@ensimag.fr, pavel.volek@ensimag.fr,
+	javier.roucher-iglesias@ensimag.fr
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 22 17:28:26 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SWpuK-0001jq-IS
-	for gcvg-git-2@plane.gmane.org; Tue, 22 May 2012 16:17:52 +0200
+	id 1SWr0Z-00060C-Ig
+	for gcvg-git-2@plane.gmane.org; Tue, 22 May 2012 17:28:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756005Ab2EVORr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 May 2012 10:17:47 -0400
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:48847 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753046Ab2EVORq (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 May 2012 10:17:46 -0400
-Received: by yenm10 with SMTP id m10so5402461yen.19
-        for <git@vger.kernel.org>; Tue, 22 May 2012 07:17:45 -0700 (PDT)
+	id S1759209Ab2EVP2S (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 May 2012 11:28:18 -0400
+Received: from mail-ob0-f174.google.com ([209.85.214.174]:51973 "EHLO
+	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752889Ab2EVP2P (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 May 2012 11:28:15 -0400
+Received: by obbtb18 with SMTP id tb18so9732369obb.19
+        for <git@vger.kernel.org>; Tue, 22 May 2012 08:28:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=0RLnvfFCBpLcxm3e8B+8f2O1hcTg07yZ/iahMyZNAUs=;
-        b=bnkdt0BvtQM7gOi3NNO4I9KN3lyvg2nntKLQD+8P5zKCE0dFM2MIrWomfddSHcP/D6
-         5dlv+tyhF8WaTOxSiHWoMjXAwrNe3BMhnPi2d14uRRjyeqneOiZ0d5H82iq8ikY4zgui
-         2zyyx9IO4BUvmrAupT1FA2ir83JLO5+Bx9uR8GF5RhR5f0mxW3HqTqFHdJKs9Th6RQiQ
-         SWG1zQPT3vYuJowzXWbWBjq0HnJZ6FrBm4jXcAA/M+0z83RekXtEr37qfoqSXfCL5kEc
-         +aTnb8yLThxZb1Vb+cjB/SHSgX4fGKsa9VfpL1djR+cFYI6O4pYxllsQhgkBCoUVLWSx
-         t4bw==
-Received: by 10.50.186.196 with SMTP id fm4mr1506954igc.34.1337696265433;
-        Tue, 22 May 2012 07:17:45 -0700 (PDT)
-Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
-        by mx.google.com with ESMTPS id wh8sm17680761igb.11.2012.05.22.07.17.42
-        (version=SSLv3 cipher=OTHER);
-        Tue, 22 May 2012 07:17:43 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <20120521145610.1911.61154.chriscool@tuxfamily.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=lqakHDiIbecQrzXdPx0nwz3vZqnN96cmJxU4beROgp0=;
+        b=zxsCin4fRSnIJssRiN8wp57bbVB0V7DrSRtnm1tlo/sV/DyjGc65N3qhvlKFcUHwta
+         p75376YKKpTi6Ks/KP2dr3KTQen8m0zYp7mexJiw5HkPpPqxs3Q1pSKNTMNn5q6d1Ksi
+         wjSxcJt3OWDld0JDNHIQoiAYl5FKarme9pElBv3iX1DINr6HgsKyPYzDc3SaH4b7O1kk
+         5bZtavq2HZe/YkO0uDlMd933DdNd/IatVcb22KzfKo3PcwVGtnIrQztMKXD3zzhfFjVi
+         RlwbOZnJ1To6x1U2QWX9AYIvP3vpfNnKod0s+lZykN+y20K5qWFRWbAwJvR5A3+nXnvU
+         uBvA==
+Received: by 10.182.46.36 with SMTP id s4mr22673267obm.58.1337700494587; Tue,
+ 22 May 2012 08:28:14 -0700 (PDT)
+Received: by 10.60.169.107 with HTTP; Tue, 22 May 2012 08:27:54 -0700 (PDT)
+In-Reply-To: <CA+hdvHjbF-xPBLwmCdMByhN96pk=naeGUrMo0TcgmzrebxARHg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198200>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198201>
 
 Hi,
 
-Christian Couder wrote:
- 
-> Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
-> ---
->  sequencer.c | 1 +
->  1 file changed, 1 insertion(+)
->
-> diff --git a/sequencer.c b/sequencer.c
-> index 762c527..ad1bbea 100644
-> --- a/sequencer.c
-> +++ b/sequencer.c
-> @@ -741,6 +741,7 @@ static void save_head(const char *head)
->  		die_errno(_("Could not write to %s"), head_file);
->  	if (commit_lock_file(&head_lock) < 0)
->  		die(_("Error wrapping up %s."), head_file);
-> +	strbuf_release(&buf);
+Last year, a group of students from Ensimag, institute of technology
+in Grenoble, France, contributed to Git: they developed a bridge
+between Git and Mediawiki, meaning you could edit wikis using your
+favorite version control system. You can have a view of their work
+here: https://github.com/Bibzball/Git-Mediawiki/wiki
 
-Makes good sense.  Actually, I'm not sure why this allocation is
-needed in the first place.  Would something like the following work?
+This year, we are two groups of students which get down to the work
+again. Matthieu Moy is mentoring us.
 
--- >8 --
-Subject: sequencer: avoid a one-time leak in save_head()
+Group 1: Simon Cathebras, Julien Khayat, Simon Perrat, Charles Roussel
+and Guillaume Sasdy. Our first goal is to develop a comprehensive
+testing environment for this project; afterwards we will jump on to
+the development of new functionalities.
 
-This function uses the lockfile API to make its change to the
-.git/sequencer/head file effectively atomic, so there is no need to
-gather output intended for that file in a new buffer to write it in
-one go.
+Group 2: Javier Roucher Iglesias, Kim Thuat Nguyen, Pavel Volek. Our
+goal is to develop some new functionalities for the bridge
+git-mediawiki and improve the functionalities which are incomplete.
 
-Noticed with valgrind.
+First functionality:
+Basically, we want to manage MediaWiki attachments (i.e. File:...
+pages): allow git-remote-mediawiki to export local files to MediaWiki
+attachments, and vice-versa.
 
-Reported-by: Christian Couder <chriscool@tuxfamily.org>
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
----
-By the way, the lockfile API usage looks fishy.  What kind of races is
-the locking meant to prevent?  What happens if someone tries "git
-cherry-pick --abort" in another window after my multipick has started
-and before it finishes?
+Second functionality:
+We want to use another procedure to save the login and the password
+without saving it in a local file. Is it possible to use the "Git
+Credential Helper"? Or is there another way to save this information?
 
- sequencer.c |    5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+If you've had the occasion to use this tool and have some feedback, or
+have any suggestion of improvement, we'd be grateful to hear your
+comments.
 
-diff --git i/sequencer.c w/sequencer.c
-index 3c384b94..75b6a995 100644
---- i/sequencer.c
-+++ w/sequencer.c
-@@ -732,12 +732,11 @@ static void save_head(const char *head)
- {
- 	const char *head_file = git_path(SEQ_HEAD_FILE);
- 	static struct lock_file head_lock;
--	struct strbuf buf = STRBUF_INIT;
- 	int fd;
- 
- 	fd = hold_lock_file_for_update(&head_lock, head_file, LOCK_DIE_ON_ERROR);
--	strbuf_addf(&buf, "%s\n", head);
--	if (write_in_full(fd, buf.buf, buf.len) < 0)
-+	if (write_in_full(fd, head, strlen(head)) < 0 ||
-+	    write_in_full(fd, "\n", 1) < 0)
- 		die_errno(_("Could not write to %s"), head_file);
- 	if (commit_lock_file(&head_lock) < 0)
- 		die(_("Error wrapping up %s."), head_file);
+Best regards, we hope to make a good job ;)
