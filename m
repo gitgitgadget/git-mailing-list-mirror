@@ -1,75 +1,88 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 3/3] refs: use strings directly in find_containing_dir()
-Date: Tue, 22 May 2012 15:18:06 -0700
-Message-ID: <7vhav73lnl.fsf@alter.siamese.dyndns.org>
-References: <1337692566-3718-1-git-send-email-mhagger@alum.mit.edu>
- <4FBBE012.6090702@lsrfire.ath.cx> <7vlikj3nzc.fsf@alter.siamese.dyndns.org>
- <4FBC0F12.2000001@lsrfire.ath.cx>
+From: Martin Fick <mfick@codeaurora.org>
+Subject: Re: remove_duplicates() in builtin/fetch-pack.c is O(N^2)
+Date: Tue, 22 May 2012 16:19:30 -0600
+Organization: CAF
+Message-ID: <201205221619.31738.mfick@codeaurora.org>
+References: <4FB9F92D.8000305@alum.mit.edu> <3b77e2a3-872a-41c1-9a51-0f219a549c04@email.android.com> <20120522182157.GB20305@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: mhagger@alum.mit.edu, Jeff King <peff@peff.net>,
-	git@vger.kernel.org
-To: =?utf-8?Q?Ren=C3=A9?= Scharfe <rene.scharfe@lsrfire.ath.cx>
-X-From: git-owner@vger.kernel.org Wed May 23 00:18:18 2012
+Content-Type: Text/Plain;
+  charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Cc: Michael Haggerty <mhagger@alum.mit.edu>,
+	git discussion list <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed May 23 00:19:41 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SWxPD-0003IJ-Lz
-	for gcvg-git-2@plane.gmane.org; Wed, 23 May 2012 00:18:16 +0200
+	id 1SWxQY-0006bh-13
+	for gcvg-git-2@plane.gmane.org; Wed, 23 May 2012 00:19:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758092Ab2EVWSK convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 22 May 2012 18:18:10 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48949 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754212Ab2EVWSJ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 22 May 2012 18:18:09 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4E78D82AB;
-	Tue, 22 May 2012 18:18:08 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=qtUMNx9PBLXQ
-	u5Xa2VujPVeRN5U=; b=ot/3RYKE7WpF3SQU9aoaftJqEOG/+Zs1BlmOseFbDtlN
-	n8gmqmT4MK5kITKos2JfZciZuJFc96TmzOyfwg4kVDXhom/VLrWVlOg+VpjR+5si
-	q4ZHLiRGn0oSRBuEC5FeTAbcgYsqQFJP78vgGwD2mXRHGEbuvNOF003ZXrBPxmc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=QCJZfb
-	11v63ZGZ90E10mYkyJJ9RmhlplVKmsfFCMc7RrNaF2/jFxk7mYxEumGwn+hrbAE4
-	dHjeTe52QWRZ/pjmcsbPUpzTSNCPIkn+QhtM47+ZNQ9XJODU9qWHFb6p9aE5twA1
-	LsJQ9JGf96oHm4UD+vQPra5PzIIIiWDuZxaZY=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 42CEA82AA;
-	Tue, 22 May 2012 18:18:08 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id CA72982A8; Tue, 22 May 2012
- 18:18:07 -0400 (EDT)
-In-Reply-To: <4FBC0F12.2000001@lsrfire.ath.cx> (=?utf-8?Q?=22Ren=C3=A9?=
- Scharfe"'s message of "Wed, 23 May 2012 00:11:30 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 022F0D06-A45C-11E1-B521-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755623Ab2EVWTd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 May 2012 18:19:33 -0400
+Received: from wolverine02.qualcomm.com ([199.106.114.251]:60448 "EHLO
+	wolverine02.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754698Ab2EVWTc (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 May 2012 18:19:32 -0400
+X-IronPort-AV: E=McAfee;i="5400,1158,6719"; a="191365887"
+Received: from pdmz-css-vrrp.qualcomm.com (HELO mostmsg01.qualcomm.com) ([199.106.114.130])
+  by wolverine02.qualcomm.com with ESMTP/TLS/DHE-RSA-AES256-SHA; 22 May 2012 15:19:32 -0700
+Received: from mfick-lnx.localnet (pdmz-snip-v218.qualcomm.com [192.168.218.1])
+	by mostmsg01.qualcomm.com (Postfix) with ESMTPA id 4AF7410004A9;
+	Tue, 22 May 2012 15:19:32 -0700 (PDT)
+User-Agent: KMail/1.13.5 (Linux/2.6.32.49+drm33.21-mfick7; KDE/4.4.5; x86_64; ; )
+In-Reply-To: <20120522182157.GB20305@sigill.intra.peff.net>
+X-Length: 2632
+X-UID: 106
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198259>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198260>
 
-Ren=C3=A9 Scharfe <rene.scharfe@lsrfire.ath.cx> writes:
+On Tuesday, May 22, 2012 12:21:57 pm Jeff King wrote:
+> On Mon, May 21, 2012 at 11:51:16PM -0600, Martin Fick 
+wrote:
+> AFAIK, ref advertisement scales linearly. Which is
+> probably not acceptable over a slow link, and we could
+> do better.
 
-> What has git grep to do with refs?  It checks if the path in the comm=
-and
-> above is a ref, which makes it iterate over all of them..
+Right, although it is not just a slow link issue.  Linear or 
+not, this problem does not scale, it needs to be based on N, 
+the number of refs which need updating, not N the number of 
+refs in the repo.
 
-Do you mean:
+I gave the following numbers to Junio and Shawn recently and 
+I figure it is probably worth mentioning them here to 
+perhaps give others some insights into just how bad this 
+problem can be...
 
-	/* Is it a rev? */
-        get_sha1()
-        -> ...
-          -> get_sha1_basic()
-            -> dwim_ref()
+Android consists of approximately 400 projects, and if 
+anyone tags their builds regularly, that means that they 
+will be tagging 400 projects per build.  We have something 
+like 10K tags on average across 400 projects, so when we do 
+a simple No Op sync just to see if all 400 projects are up 
+to date, this yields about 200MB of data over the wire (4M 
+refs)!!!
 
-callpath?
+That 200MB is using a -j4 on repo sync and it chews up about 
+1.5 cores on a high end server to serve that 200MB for over 
+1min.  Now imagine a build bot needing to build about 25 
+images in parallel all just doing a No Op sync to see if 
+they are up to date!  That's 25 * 200MB = 5GB data and 25 * 
+1.5 cores ~= 36 cores. That means our high end 24 core 
+server falls over all for a No Op.
+
+As you can imagine, we really would like to see this 
+eliminated from our workflows.  If we want to check 400 
+projects to see if they are up to date, it should be 400 
+refs, not 400 * 10K,
+
+-Martin
+
+-- 
+Employee of Qualcomm Innovation Center, Inc. which is a 
+member of Code Aurora Forum
