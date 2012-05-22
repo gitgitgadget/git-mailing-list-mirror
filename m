@@ -1,54 +1,101 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: git rev-list %an, %ae, %at bug in v1.7.10.1 and beyond
-Date: Tue, 22 May 2012 00:35:09 -0400
-Message-ID: <20120522043509.GB6859@sigill.intra.peff.net>
-References: <CAGyf7-G3nNTTP1bKdd9HLKEn-8+LoxCeY2R08x9gKZwS0L_N6g@mail.gmail.com>
- <20120522043221.GA6859@sigill.intra.peff.net>
+Subject: [PATCH] avoid segfault when reading header of malformed commits
+Date: Tue, 22 May 2012 00:52:17 -0400
+Message-ID: <20120522045217.GA23155@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org
-To: Bryan Turner <bturner@atlassian.com>
-X-From: git-owner@vger.kernel.org Tue May 22 06:35:19 2012
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue May 22 06:52:31 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SWgoY-0007Hy-Ft
-	for gcvg-git-2@plane.gmane.org; Tue, 22 May 2012 06:35:18 +0200
+	id 1SWh58-0000Wb-MR
+	for gcvg-git-2@plane.gmane.org; Tue, 22 May 2012 06:52:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752313Ab2EVEfN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 May 2012 00:35:13 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:51432
+	id S1753352Ab2EVEwW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 May 2012 00:52:22 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:51459
 	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752011Ab2EVEfM (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 May 2012 00:35:12 -0400
-Received: (qmail 12196 invoked by uid 107); 22 May 2012 04:35:38 -0000
+	id S1753149Ab2EVEwV (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 May 2012 00:52:21 -0400
+Received: (qmail 12357 invoked by uid 107); 22 May 2012 04:52:46 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 22 May 2012 00:35:38 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 22 May 2012 00:35:09 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 22 May 2012 00:52:46 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 22 May 2012 00:52:17 -0400
 Content-Disposition: inline
-In-Reply-To: <20120522043221.GA6859@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198171>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198172>
 
-On Tue, May 22, 2012 at 12:32:21AM -0400, Jeff King wrote:
+If a commit object has a header line at the end of the
+buffer that is missing its newline (or if it appears so
+because the content on the header line contains a stray
+NUL), then git will segfault.
 
-> I'm not too surprised this is broken (in fact, I'm surprised it ever
-> really worked). UTF-16, especially representing pure ascii characters,
-> will have embedded NULs. Most of the code assumes that things like names
-> and emails are NUL-terminated and ascii-compatible (so ascii, or some
-> ascii-superset encoding like utf8, iso8859-1, etc). You can store a
-> commit message (and name) in utf-16 if you tell git that you are doing
-> so, but we should be re-encoding it before handling it.
+Interestingly, this case is explicitly handled and we do
+correctly scan the final line for the header we are looking
+for. But if we don't find it, we will dereference NULL while
+trying to look at the next line.
 
-Actually, I take that back. I think storing in utf-16 would probably
-fail. We need to use ascii to even read the headers to get to the
-encoding header to realize that it is in utf-16. So I believe we really
-do only support ascii-superset encodings.
+Git will never generate such a commit, but it's good to be
+defensive. We could die() in such a case, but since it's
+easy enough to handle it gracefully, let's just issue a
+warning and continue (so you could still view such a commit
+with "git show", though you might be missing headers after
+the NUL).
 
--Peff
+Signed-off-by: Jeff King <peff@peff.net>
+---
+I happened to notice this while experimenting with somebody else's
+problem and generating a bogus commit with hash-object. I don't know of
+any actual implementation which generates this particular bug.
+
+ pretty.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+diff --git a/pretty.c b/pretty.c
+index 02a0a2b..dc57e5b 100644
+--- a/pretty.c
++++ b/pretty.c
+@@ -436,29 +436,32 @@ static void add_merge_info(const struct pretty_print_context *pp,
+ 
+ static char *get_header(const struct commit *commit, const char *key)
+ {
+ 	int key_len = strlen(key);
+ 	const char *line = commit->buffer;
+ 
+-	for (;;) {
++	while (line) {
+ 		const char *eol = strchr(line, '\n'), *next;
+ 
+ 		if (line == eol)
+ 			return NULL;
+ 		if (!eol) {
++			warning("malformed commit (header is missing newline): %s",
++				sha1_to_hex(commit->object.sha1));
+ 			eol = line + strlen(line);
+ 			next = NULL;
+ 		} else
+ 			next = eol + 1;
+ 		if (eol - line > key_len &&
+ 		    !strncmp(line, key, key_len) &&
+ 		    line[key_len] == ' ') {
+ 			return xmemdupz(line + key_len + 1, eol - line - key_len - 1);
+ 		}
+ 		line = next;
+ 	}
++	return NULL;
+ }
+ 
+ static char *replace_encoding_header(char *buf, const char *encoding)
+ {
+ 	struct strbuf tmp = STRBUF_INIT;
+ 	size_t start, len;
+-- 
+1.7.9.7.33.gc430a50
