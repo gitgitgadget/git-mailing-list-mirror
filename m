@@ -1,82 +1,109 @@
-From: Syed M Raihan <syed_raihan@yahoo.com>
-Subject: Re: [RFC] Convert builin-mailinfo.c to use The Better String Library.
-Date: Tue, 22 May 2012 18:30:13 +0000 (UTC)
-Message-ID: <loom.20120522T201747-568@post.gmane.org>
-References: <46DDC500.5000606@etek.chalmers.se><1189004090.20311.12.camel@hinata.boston.redhat.com> <vpq642pkoln.fsf@bauges.imag.fr> <4AFD7EAD1AAC4E54A416BA3F6E6A9E52@ntdev.corp.microsoft.com> <alpine.LFD.0.999.0709061839510.5626@evo.linux-foundation.org>
+From: =?ISO-8859-15?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
+Subject: [PATCH 2/3] refs: convert parameter of create_dir_entry() to length-limited
+ string
+Date: Tue, 22 May 2012 20:50:52 +0200
+Message-ID: <4FBBE00C.9020104@lsrfire.ath.cx>
+References: <1337692566-3718-1-git-send-email-mhagger@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-15
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 22 20:35:17 2012
+Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+	git@vger.kernel.org
+To: mhagger@alum.mit.edu
+X-From: git-owner@vger.kernel.org Tue May 22 20:51:07 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SWtvP-00056O-IQ
-	for gcvg-git-2@plane.gmane.org; Tue, 22 May 2012 20:35:15 +0200
+	id 1SWuAi-0000G8-Id
+	for gcvg-git-2@plane.gmane.org; Tue, 22 May 2012 20:51:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752094Ab2EVSfJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 May 2012 14:35:09 -0400
-Received: from plane.gmane.org ([80.91.229.3]:47163 "EHLO plane.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751625Ab2EVSfI (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 May 2012 14:35:08 -0400
-Received: from list by plane.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1SWtvE-0004dH-G0
-	for git@vger.kernel.org; Tue, 22 May 2012 20:35:04 +0200
-Received: from 65.200.62.4 ([65.200.62.4])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 22 May 2012 20:35:04 +0200
-Received: from syed_raihan by 65.200.62.4 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 22 May 2012 20:35:04 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: sea.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 65.200.62.4 (Mozilla/5.0 (X11; Ubuntu; Linux i686; rv:12.0) Gecko/20100101 Firefox/12.0)
+	id S1760142Ab2EVSvA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 May 2012 14:51:00 -0400
+Received: from india601.server4you.de ([85.25.151.105]:33064 "EHLO
+	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752278Ab2EVSu6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 May 2012 14:50:58 -0400
+Received: from [192.168.2.105] (p579BE06F.dip.t-dialin.net [87.155.224.111])
+	by india601.server4you.de (Postfix) with ESMTPSA id 42C112F811C;
+	Tue, 22 May 2012 20:50:56 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:12.0) Gecko/20120428 Thunderbird/12.0.1
+In-Reply-To: <1337692566-3718-1-git-send-email-mhagger@alum.mit.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198223>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198224>
 
-Linus Torvalds <torvalds <at> linux-foundation.org> writes:
+Signed-off-by: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
+---
+ refs.c |   18 ++++++++++--------
+ 1 file changed, 10 insertions(+), 8 deletions(-)
 
-> 
-> 
-> On Wed, 5 Sep 2007, Dmitry Kakurin wrote:
-> > 
-> > When I first looked at Git source code two things struck me as odd:
-> > 1. Pure C as opposed to C++. No idea why. Please don't talk about port,
-> > it's BS.
-> 
-> *YOU* are full of bullshit.
-> 
-> C++ is a horrible language. It's made more horrible by the fact that a lot 
-> of substandard programmers use it, to the point where it's much much 
-> easier to generate total and utter crap with it. Quite frankly, even if 
-> the choice of C were to do *nothing* but keep the C++ programmers out, 
-> that in itself would be a huge reason to use C.
-> 			Linus
-> 
-
-C++ has one weakness that is ABI compatibility among compilers.
-Other than that Object Model does not make things horrible. 
-I have seen 15 years old C++ application library which still 
-uses old implementation to implement new enhancement/features 
-that just works seamlessly and even an old dog can learn 
-this old library written in C++.
-
-I have seen C programmers constantly trying how they can mimic 
-poly-morphism, inheritance and encapsulation in their C.
-This is just *BS* - if you dont want C++ then dont use poly-morphism,
-inheritance and encapsulation in your C code!
-Or else just use C++ or Jave or C#.
-
-Regards
-Please note: I am really a Fan of Linus Torvalds since ever :)
-Syed Raihan
+diff --git a/refs.c b/refs.c
+index c028333..c5e167b 100644
+--- a/refs.c
++++ b/refs.c
+@@ -294,12 +294,13 @@ static void clear_ref_dir(struct ref_dir *dir)
+  * "refs/heads/") or "" for the top-level directory.
+  */
+ static struct ref_entry *create_dir_entry(struct ref_cache *ref_cache,
+-					  const char *dirname, int incomplete)
++					  const char *dirname, size_t len,
++					  int incomplete)
+ {
+ 	struct ref_entry *direntry;
+-	int len = strlen(dirname);
+ 	direntry = xcalloc(1, sizeof(struct ref_entry) + len + 1);
+-	memcpy(direntry->name, dirname, len + 1);
++	memcpy(direntry->name, dirname, len);
++	direntry->name[len] = '\0';
+ 	direntry->u.subdir.ref_cache = ref_cache;
+ 	direntry->flag = REF_DIR | (incomplete ? REF_INCOMPLETE : 0);
+ 	return direntry;
+@@ -364,7 +365,7 @@ static struct ref_dir *search_for_subdir(struct ref_dir *dir,
+ 		 * therefore, create an empty record for it but mark
+ 		 * the record complete.
+ 		 */
+-		entry = create_dir_entry(dir->ref_cache, subdirname, 0);
++		entry = create_dir_entry(dir->ref_cache, subdirname, len, 0);
+ 		add_entry_to_dir(dir, entry);
+ 	}
+ 	return get_ref_dir(entry);
+@@ -823,7 +824,7 @@ static struct ref_dir *get_packed_refs(struct ref_cache *refs)
+ 		const char *packed_refs_file;
+ 		FILE *f;
+ 
+-		refs->packed = create_dir_entry(refs, "", 0);
++		refs->packed = create_dir_entry(refs, "", 0, 0);
+ 		if (*refs->name)
+ 			packed_refs_file = git_path_submodule(refs->name, "packed-refs");
+ 		else
+@@ -888,7 +889,8 @@ static void read_loose_refs(const char *dirname, struct ref_dir *dir)
+ 		} else if (S_ISDIR(st.st_mode)) {
+ 			strbuf_addch(&refname, '/');
+ 			add_entry_to_dir(dir,
+-					 create_dir_entry(refs, refname.buf, 1));
++					 create_dir_entry(refs, refname.buf,
++							  refname.len, 1));
+ 		} else {
+ 			if (*refs->name) {
+ 				hashclr(sha1);
+@@ -918,12 +920,12 @@ static struct ref_dir *get_loose_refs(struct ref_cache *refs)
+ 		 * are about to read the only subdirectory that can
+ 		 * hold references:
+ 		 */
+-		refs->loose = create_dir_entry(refs, "", 0);
++		refs->loose = create_dir_entry(refs, "", 0, 0);
+ 		/*
+ 		 * Create an incomplete entry for "refs/":
+ 		 */
+ 		add_entry_to_dir(get_ref_dir(refs->loose),
+-				 create_dir_entry(refs, "refs/", 1));
++				 create_dir_entry(refs, "refs/", 5, 1));
+ 	}
+ 	return get_ref_dir(refs->loose);
+ }
+-- 
+1.7.10.2
