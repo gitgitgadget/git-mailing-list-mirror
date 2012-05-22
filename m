@@ -1,70 +1,94 @@
-From: "Matt Seitz (matseitz)" <matseitz@cisco.com>
-Subject: RE: Question about submodules and absolute paths
-Date: Tue, 22 May 2012 12:36:29 -0700
-Message-ID: <70952A932255A2489522275A628B97C31348C71F@xmb-sjc-233.amer.cisco.com>
-References: <CAOmKuSoYP9fYORDy5twLpFh7SQ7rc6x2A=F8XjfKMqo-ErCauQ@mail.gmail.com><CAOmKuSpqFrC7G4DbZu=uYDwvU6QqrJUi2aNBnSjy7_PXMMJpjQ@mail.gmail.com><7vk4043wc5.fsf@alter.siamese.dyndns.org><CAOmKuSrmxnHKaip2X87Y0Cp=XtLAtpAwUp71QhZ5od3gbDF2sg@mail.gmail.com><70952A932255A2489522275A628B97C31348C70D@xmb-sjc-233.amer.cisco.com> <CAOmKuSqRHMS+hvCXL4Ok6ReTPW-3xT9SunGeibjCCCgVk9SU6Q@mail.gmail.com>
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH 5/7] revert: free revs->cmdline.rev
+Date: Tue, 22 May 2012 22:01:42 +0200 (CEST)
+Message-ID: <20120522.220142.31626389365969573.chriscool@tuxfamily.org>
+References: <20120521143309.1911.94302.chriscool@tuxfamily.org>
+	<20120521145610.1911.46356.chriscool@tuxfamily.org>
+	<20120521203941.GB28331@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-Cc: "Junio C Hamano" <gitster@pobox.com>, <git@vger.kernel.org>
-To: "Alexey Pelykh" <alexey.pelykh@gmail.com>
-X-From: git-owner@vger.kernel.org Tue May 22 21:36:39 2012
+Content-Type: Text/Plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Cc: gitster@pobox.com, git@vger.kernel.org, artagnon@gmail.com,
+	nbowler@elliptictech.com
+To: jrnieder@gmail.com
+X-From: git-owner@vger.kernel.org Tue May 22 22:02:02 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SWusm-0006cf-Nh
-	for gcvg-git-2@plane.gmane.org; Tue, 22 May 2012 21:36:37 +0200
+	id 1SWvHL-0001n2-Di
+	for gcvg-git-2@plane.gmane.org; Tue, 22 May 2012 22:01:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760284Ab2EVTgb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 May 2012 15:36:31 -0400
-Received: from mtv-iport-3.cisco.com ([173.36.130.14]:35567 "EHLO
-	mtv-iport-3.cisco.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758479Ab2EVTgb convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 22 May 2012 15:36:31 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=cisco.com; i=matseitz@cisco.com; l=390; q=dns/txt;
-  s=iport; t=1337715391; x=1338924991;
-  h=mime-version:content-transfer-encoding:subject:date:
-   message-id:in-reply-to:references:from:to:cc;
-  bh=UXIGh7/ntA3LkjExenzr1frO3RPj57paA+YmqhKWWr4=;
-  b=iJUpfvFh+x5vnvSRKZ89UhnlutvJPH6hSN32u6bmTh+AQOT2r+aYRY7T
-   u0p1/QHXk/pZSanRHhBWG12iogpHg8D1lwOlQX1NtDmlQtRuWD5KZo7TX
-   Vs9FFxStUTXw3/85wR4OsmWV+HOR8/yQUgua23QRRxAc5nrB6ILIZ16P1
-   U=;
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: Av8EAGzpu0+rRDoG/2dsb2JhbABEtBeBB4IVAQEBAwESAR0KPwULAgEIFQ0GFwEGASAlEQEBBBMIEweHXgMGBAGaYpYNDYlSihqFSWIDiEOXUIMVgWSDCg
-X-IronPort-AV: E=Sophos;i="4.75,639,1330905600"; 
-   d="scan'208";a="43349495"
-Received: from mtv-core-1.cisco.com ([171.68.58.6])
-  by mtv-iport-3.cisco.com with ESMTP; 22 May 2012 19:36:30 +0000
-Received: from xbh-sjc-211.amer.cisco.com (xbh-sjc-211.cisco.com [171.70.151.144])
-	by mtv-core-1.cisco.com (8.14.5/8.14.5) with ESMTP id q4MJaUVv005987;
-	Tue, 22 May 2012 19:36:30 GMT
-Received: from xmb-sjc-233.amer.cisco.com ([128.107.191.88]) by xbh-sjc-211.amer.cisco.com with Microsoft SMTPSVC(6.0.3790.4675);
-	 Tue, 22 May 2012 12:36:30 -0700
-X-MimeOLE: Produced By Microsoft Exchange V6.5
-Content-class: urn:content-classes:message
-In-Reply-To: <CAOmKuSqRHMS+hvCXL4Ok6ReTPW-3xT9SunGeibjCCCgVk9SU6Q@mail.gmail.com>
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-Thread-Topic: Question about submodules and absolute paths
-Thread-Index: Ac04UTCfyWtLZGn2TS+VBMOcB3mRYgAAHLaA
-X-OriginalArrivalTime: 22 May 2012 19:36:30.0317 (UTC) FILETIME=[2FBF91D0:01CD3852]
+	id S932303Ab2EVUBx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 May 2012 16:01:53 -0400
+Received: from smtp3-g21.free.fr ([212.27.42.3]:60749 "EHLO smtp3-g21.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932215Ab2EVUBw (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 May 2012 16:01:52 -0400
+Received: from localhost (unknown [82.243.130.161])
+	by smtp3-g21.free.fr (Postfix) with ESMTP id 78CABA62DA;
+	Tue, 22 May 2012 22:01:43 +0200 (CEST)
+In-Reply-To: <20120521203941.GB28331@burratino>
+X-Mailer: Mew version 6.3 on Emacs 23.3 / Mule 6.0 (HANACHIRUSATO)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198233>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198234>
 
-> From: Alexey Pelykh [mailto:alexey.pelykh@gmail.com]
+Hi,
+
+From: Jonathan Nieder <jrnieder@gmail.com>
+> Hi,
 > 
-> Indeed this is a workaround, what I was thinking about to use. The
-thing I
-> wanted actually to discuss whether it worth to research possibility of
-> replacing these absolute paths with relative ones. 
+> Christian Couder wrote:
+> 
+>> add_rev_cmdline() in revision.c is (re)allocating an array of
+>> struct rev_cmdline_entry. This patch releases it.
+> [...]
+>> --- a/builtin/revert.c
+>> +++ b/builtin/revert.c
+>> @@ -217,6 +217,8 @@ int cmd_revert(int argc, const char **argv, const char *prefix)
+>>  	git_config(git_default_config, NULL);
+>>  	parse_args(argc, argv, &opts);
+>>  	res = sequencer_pick_revisions(&opts);
+>> +	if (opts.revs)
+>> +		free(opts.revs->cmdline.rev);
+>>  	free(opts.revs);
+>>  	if (res < 0)
+>>  		die(_("revert failed"));
+> 
+> Quick thoughts:
+> 
+> This feels like a layering violation.  Avoidable?  Maybe revision.c
+> could gain a helper to allow this to be written like so:
+> 
+> 	free_rev_info(opts.revs);
+> 	free(opts.revs);
+> 
+> Since this is a one-time allocation it is probably worth mentioning in
+> the log message that this is a futureproofing/valgrind-cleanliness
+> measure and is not actually fixing a leak.
 
-Sure.  I just wanted to offer an immediate, interim solution until there
-is a decision on the permanent solution.
+Ok, I will create the free_rev_info() helper and improve the commit
+message.
+
+> Micronit: it would feel slightly more comfortable if the free() were
+> after the die(), even though the die() should probably be changed to
+> exit().  That way someone wanting to add code after the die() that
+> continues to assume opts.revs is valid would be able to.
+> 
+> Of course I'd imagine the largest leak in cherry-pick is the
+> deliberately constantly growing object hash table.  It would be very
+> interesting to fix that --- do you know how libgit2 handles it?
+
+About the constantly growing hash table, perhaps it should be taken
+care of in a try_to_free_routine() used by xmalloc and other such
+functions. And no I don't know much about libgit2.
+
+> Thanks much and hope that helps,
+> Jonathan
+
+Thanks for your kind review,
+Christian.
