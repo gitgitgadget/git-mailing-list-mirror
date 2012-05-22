@@ -1,82 +1,75 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH 4/7] revert: free opts.revs to do a bit of cleanup
-Date: Tue, 22 May 2012 10:44:59 +0530
-Message-ID: <CALkWK0=1a_LvQ=zhdAEt91j1sMsgp6J=_CyeNFOkB95dw15pnQ@mail.gmail.com>
-References: <20120521143309.1911.94302.chriscool@tuxfamily.org> <20120521145610.1911.57879.chriscool@tuxfamily.org>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 2/7] sequencer: release a strbuf used in save_head()
+Date: Tue, 22 May 2012 00:18:48 -0500
+Message-ID: <20120522051827.GA4486@burratino>
+References: <20120521143309.1911.94302.chriscool@tuxfamily.org>
+ <20120521145610.1911.61154.chriscool@tuxfamily.org>
+ <CALkWK0m9F6EU43v0HbJxWUVtHTiw+ZvjCjwqbSVdQfomb6f4Aw@mail.gmail.com>
+ <20120522042316.GA3080@burratino>
+ <CALkWK0kvjr3NSx6-8svz=PKb5ta_UwOUiF4uqh7GriwuJYncUA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Jonathan Nieder <jrnieder@gmail.com>,
+Content-Type: text/plain; charset=us-ascii
+Cc: Christian Couder <chriscool@tuxfamily.org>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
 	Nick Bowler <nbowler@elliptictech.com>
-To: Christian Couder <chriscool@tuxfamily.org>
-X-From: git-owner@vger.kernel.org Tue May 22 07:15:28 2012
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Tue May 22 07:19:01 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SWhRO-0005YK-8Z
-	for gcvg-git-2@plane.gmane.org; Tue, 22 May 2012 07:15:26 +0200
+	id 1SWhUq-00042B-H7
+	for gcvg-git-2@plane.gmane.org; Tue, 22 May 2012 07:19:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753768Ab2EVFPW convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 22 May 2012 01:15:22 -0400
-Received: from mail-wi0-f172.google.com ([209.85.212.172]:44379 "EHLO
-	mail-wi0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753640Ab2EVFPU convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 22 May 2012 01:15:20 -0400
-Received: by wibhj8 with SMTP id hj8so3031182wib.1
-        for <git@vger.kernel.org>; Mon, 21 May 2012 22:15:19 -0700 (PDT)
+	id S1753751Ab2EVFS4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 May 2012 01:18:56 -0400
+Received: from mail-gg0-f174.google.com ([209.85.161.174]:45488 "EHLO
+	mail-gg0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753265Ab2EVFSz (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 May 2012 01:18:55 -0400
+Received: by gglu4 with SMTP id u4so5048732ggl.19
+        for <git@vger.kernel.org>; Mon, 21 May 2012 22:18:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=dNuCu8BQjSlS7ag4RfSv5tpxALJJoyAXOIyKD8lY9LA=;
-        b=EwyzMecsM5hPC4/ClFCNXvaBCYsN6q82RMREeE+IXURA8Bisi97bubvNaNrBKaXZDi
-         r9wKUEebV4dzinwSxDkg2AMCskS5S1IWJPoYCzf01mDylSaWzvv1brXcRUdEQ77Zlo1Q
-         ZH6biuGP4UJLU6jP/xWHW+7z1EbqKvX8tfCDoPZTp6y0xoGpJWqlHs2cZb0/tPgfqWuh
-         hosCPGctpFmVPw2l/Kv2rMC4iPgYVo6YyaE53Gb19bwPZbruGiAsolTI5gcmzn3uWKf7
-         OUIm2aHSnuttOwbwtO15o2Hs1/jqrFTc7M232ipQ37XregxH1vszpvb34yV5G/QcgDbx
-         uVTA==
-Received: by 10.180.102.36 with SMTP id fl4mr24008999wib.2.1337663719619; Mon,
- 21 May 2012 22:15:19 -0700 (PDT)
-Received: by 10.216.68.10 with HTTP; Mon, 21 May 2012 22:14:59 -0700 (PDT)
-In-Reply-To: <20120521145610.1911.57879.chriscool@tuxfamily.org>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=oD9S5ga0JRiIsd6zlzeMrcEehj47z0pTG9hu8gyK6p8=;
+        b=Otj86VxJ0qb+BNM9TgvRUzR42ip11W7kBbxswlzKaq8GgguNLInQ70xbP0zfIts1Eq
+         20TyjkiywoaWljDnZCtFL/fbcA0whkGn8v9M6n4jp142GvH/6L4B4dBKh1o1uSHmil5U
+         lquZVH9dBJ/1jbeFI8wEwnturlazYvIRec1mnql5XD8nFHwQnCWQ+CNcX06hB2wgDzxN
+         t8v4JL+WoCQtUHqPJGsMneam8IFDyYsmBHdp1q6Zwy/WkBgddubfu0TfD0lBHNbpZLFp
+         +CFbaWoKPDAGGihQhb2TVYE/yd5lCR0pw1Ypo2Lh3mWFnRGF7R4DPWJCFEXhzcLJUann
+         GmVQ==
+Received: by 10.50.187.164 with SMTP id ft4mr8612907igc.6.1337663934485;
+        Mon, 21 May 2012 22:18:54 -0700 (PDT)
+Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
+        by mx.google.com with ESMTPS id ch5sm9449319igb.0.2012.05.21.22.18.53
+        (version=SSLv3 cipher=OTHER);
+        Mon, 21 May 2012 22:18:54 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <CALkWK0kvjr3NSx6-8svz=PKb5ta_UwOUiF4uqh7GriwuJYncUA@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198175>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198176>
 
-Hi Christian,
+Ramkumar Ramachandra wrote:
+> Jonathan Nieder wrote:
 
-Christian Couder wrote:
-> diff --git a/builtin/revert.c b/builtin/revert.c
-> index 82d1bf8..5f82a84 100644
-> --- a/builtin/revert.c
-> +++ b/builtin/revert.c
-> @@ -217,6 +217,7 @@ int cmd_revert(int argc, const char **argv, const=
- char *prefix)
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0git_config(git_default_config, NULL);
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0parse_args(argc, argv, &opts);
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0res =3D sequencer_pick_revisions(&opts);
-> + =C2=A0 =C2=A0 =C2=A0 free(opts.revs);
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0if (res < 0)
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0die(_("revert =
-failed"));
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0return res;
-> @@ -232,6 +233,7 @@ int cmd_cherry_pick(int argc, const char **argv, =
-const char *prefix)
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0git_config(git_default_config, NULL);
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0parse_args(argc, argv, &opts);
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0res =3D sequencer_pick_revisions(&opts);
-> + =C2=A0 =C2=A0 =C2=A0 free(opts.revs);
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0if (res < 0)
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0die(_("cherry-=
-pick failed"));
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0return res;
+>> And
+>> looking at it from the other side, doesn't using exit mean that you
+>> cannot be valgrind-clean anyway, since allocations by functions higher
+>> in the call chain do not get a chance to be freed?
+>
+> Good point; save_todo() sets a bad example.  For symmetry, should
+> these two instances of strbuf_release() before die() be removed in a
+> separate patch?
 
-Technically, memory is allocated to both opts->revs and opts->xopts in
-parse_args().  Why not free both?
+I can't find myself caring much either way. :)
 
-Ram
+A single free() doesn't hurt performance much, so my hunch would be to
+leave it alone unless some other practical reason to keep or remove
+the free()s comes up.
