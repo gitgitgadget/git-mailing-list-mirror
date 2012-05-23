@@ -1,92 +1,98 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 3/3] refs: use strings directly in find_containing_dir()
-Date: Wed, 23 May 2012 09:56:36 -0700
-Message-ID: <7v4nr625vf.fsf@alter.siamese.dyndns.org>
-References: <1337692566-3718-1-git-send-email-mhagger@alum.mit.edu>
- <4FBBE012.6090702@lsrfire.ath.cx> <7vlikj3nzc.fsf@alter.siamese.dyndns.org>
- <4FBC0F12.2000001@lsrfire.ath.cx> <7vhav73lnl.fsf@alter.siamese.dyndns.org>
- <4FBD0E33.4060309@lsrfire.ath.cx>
+From: Ted Pavlic <ted@tedpavlic.com>
+Subject: Re: [PATCH 2/2] completion: split __git_ps1 into a separate script
+Date: Wed, 23 May 2012 13:03:02 -0400
+Message-ID: <CAOnadRF8XyZKi+d=y1fFy2Xvs-3ETVyCbJBj83mK3Q8yuK7oQw@mail.gmail.com>
+References: <1337719600-7361-1-git-send-email-felipe.contreras@gmail.com>
+ <1337719600-7361-3-git-send-email-felipe.contreras@gmail.com>
+ <4FBC0019.6030702@in.waw.pl> <7v4nr72bim.fsf@alter.siamese.dyndns.org> <CAMP44s0aKi+8WHPXYLQ+iSMkj9iV88JGTabrpBRNBWb7upAMiQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: mhagger@alum.mit.edu, Jeff King <peff@peff.net>,
-	git@vger.kernel.org
-To: =?utf-8?Q?Ren=C3=A9?= Scharfe <rene.scharfe@lsrfire.ath.cx>
-X-From: git-owner@vger.kernel.org Wed May 23 18:56:52 2012
+Cc: Junio C Hamano <gitster@pobox.com>,
+	=?ISO-8859-2?Q?Zbigniew_J=EAdrzejewski=2DSzmek?= 
+	<zbyszek@in.waw.pl>, git@vger.kernel.org,
+	Thomas Rast <trast@student.ethz.ch>,
+	=?ISO-8859-1?Q?SZEDER_G=E1bor?= <szeder@ira.uka.de>,
+	Kerrick Staley <mail@kerrickstaley.com>,
+	Marius Storm-Olsen <mstormo@gmail.com>,
+	=?ISO-8859-1?Q?Ville_Skytt=E4?= <ville.skytta@iki.fi>,
+	Dan McGee <dan@archlinux.org>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Wed May 23 19:03:35 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SXErb-0002dg-4d
-	for gcvg-git-2@plane.gmane.org; Wed, 23 May 2012 18:56:43 +0200
+	id 1SXEy7-0007uu-TZ
+	for gcvg-git-2@plane.gmane.org; Wed, 23 May 2012 19:03:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760527Ab2EWQ4k convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 23 May 2012 12:56:40 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64455 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753003Ab2EWQ4j convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 23 May 2012 12:56:39 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9E2BD8AF9;
-	Wed, 23 May 2012 12:56:38 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=YUDiZKyh2Lif
-	VbjFVtGHHIdlPwA=; b=lnV6LvE2pVuAHA5+5lDNY2R7RtcQNBR0HqBmOJsUNlGI
-	mTpxbemKgBHKFhfm62eQC4TU2Ictg/YdbKiKTsrL/veDDbpygRT8LS6Y7mKE1+/s
-	Qf8Stx7/lvjrEFxZz6P5DTvFYNjXP4ODdpMkAGoBC813QpwGY8YwH4RgNYP71/M=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=ufRYrS
-	QOuDl/LMhXb0GPqYw5ORxqyWWmxLjKqUQr69LM/XKkctT+v+pm2nbdicIaf9BXHa
-	kfTQENaydP0RiQgk5FzjSLZUtTxnxy/JgyppQ6SiDpto8W7ZgJGRFFD6KuvUUimI
-	CM9fi49nsauHFldLy2H8xOeZqlfTc2H9G8EEQ=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9306C8AF6;
-	Wed, 23 May 2012 12:56:38 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 170518AF5; Wed, 23 May 2012
- 12:56:37 -0400 (EDT)
-In-Reply-To: <4FBD0E33.4060309@lsrfire.ath.cx> (=?utf-8?Q?=22Ren=C3=A9?=
- Scharfe"'s message of "Wed, 23 May 2012 18:20:03 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 4304C50E-A4F8-11E1-B7A7-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752164Ab2EWRDX convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 23 May 2012 13:03:23 -0400
+Received: from mail-we0-f174.google.com ([74.125.82.174]:62593 "EHLO
+	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751145Ab2EWRDW convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 23 May 2012 13:03:22 -0400
+Received: by weyu7 with SMTP id u7so4781950wey.19
+        for <git@vger.kernel.org>; Wed, 23 May 2012 10:03:19 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=dkim-signature:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type:content-transfer-encoding
+         :x-gm-message-state;
+        bh=XjUVJ4tDwSsCGUcGDgRlLz6Yaih7JSiWpE2LrvVSdx8=;
+        b=dsxX3Pd3QHqNg306VMQmC7Go1+3c3poeYMq/7Tg691bg1S1tMr4zONBjJvcw7p0wvB
+         +OdDxfBIJo8dDQ/I7ZsJW5+KlWbqluWmf5l+4HkTDF3G24fdj+527046Sy/Owmrgsgfm
+         /oVh0aoNo1W/GiAT16TkEXIpbGUhP/M2KRzgFb9I+k1LyMU5NNv9oegRJYzE6wvkq2PC
+         WqXnDjw9RZEU9xhqAhLChrt+3dupnTz+pPAdCfs1FMhm8PjfRnNonTM4Gv7VDoWHbzEp
+         7pl0EZpA9tFxHaFzXUGhrQzym5vaH02/McDJSs4mtLZ4LHm4X8YGJvz0hnqO9z7gad9B
+         ao1w==
+Received: by 10.180.107.99 with SMTP id hb3mr47605060wib.0.1337792599784;
+        Wed, 23 May 2012 10:03:19 -0700 (PDT)
+Received: from mail-wi0-f178.google.com (mail-wi0-f178.google.com [209.85.212.178])
+        by mx.google.com with ESMTPS id e20sm36444595wiv.7.2012.05.23.10.03.17
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 23 May 2012 10:03:18 -0700 (PDT)
+Received: by wibhn6 with SMTP id hn6so4972273wib.1
+        for <git@vger.kernel.org>; Wed, 23 May 2012 10:03:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=tedpavlic.com; s=google;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=XjUVJ4tDwSsCGUcGDgRlLz6Yaih7JSiWpE2LrvVSdx8=;
+        b=TdGoHuSoJ+3qdW/mU9Cb/rWDQByljK1IklmDV0Wv35Rx2a+2E/2qEiKgzKrdTjM2MG
+         skcAOtm5tT6HB7ymyszEGZ2dYxlgjBUMpWgW9ue/L6g89Ykqt53bx5RwbIWd3Qsri5Gh
+         gAY4wmOaeCf6MeCF7pr0ApH+Bx+7iPGB79/sQ=
+Received: by 10.180.93.38 with SMTP id cr6mr47736950wib.16.1337792597372; Wed,
+ 23 May 2012 10:03:17 -0700 (PDT)
+Received: by 10.216.131.211 with HTTP; Wed, 23 May 2012 10:03:02 -0700 (PDT)
+In-Reply-To: <CAMP44s0aKi+8WHPXYLQ+iSMkj9iV88JGTabrpBRNBWb7upAMiQ@mail.gmail.com>
+X-Gm-Message-State: ALoCoQmpljDRZebHC+IbLrplv4CqL8GT93SGPK79qBkKgvEIUfdhz0QuehjBKI9bmsCUr3PfKlv/
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198311>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198312>
 
-Ren=C3=A9 Scharfe <rene.scharfe@lsrfire.ath.cx> writes:
-
-> Am 23.05.2012 00:18, schrieb Junio C Hamano:
->> Ren=C3=A9 Scharfe<rene.scharfe@lsrfire.ath.cx>  writes:
->>
->>> What has git grep to do with refs?  It checks if the path in the co=
-mmand
->>> above is a ref, which makes it iterate over all of them..
->>
->> Do you mean:
->>
->> 	/* Is it a rev? */
->>          get_sha1()
->>          ->  ...
->>            ->  get_sha1_basic()
->>              ->  dwim_ref()
->>
->> callpath?
+>> I am not sure if that is worth it. =A0These two share/duplicate some=
+ shell
+>> functions and we may end up refactoring them (a way to do so may be =
+to
+>> dot-source git-prompt from git-completion and drop duplicated defini=
+tions
+>> from the latter), for example.
 >
-> Yes, indeed.  Hmm, this is done even if the paths come after a
-> double-dash.  Anyway, I don't consider the check to be a performance
-> issue, just a quick way to test the allocation count that i stumbled
-> upon while working on the recent grep patches.
+> And how do you propose to update the install documentation?
+>
+> 1) Copy the file (e.g. ~/.git-completion.sh)
+> 2) Copy the other file (.e.g ~/.git-prompt.sh)
+> 3) Edit the original file (~/.git-completion.sh), modify the 'source'
+> command to use the other file (~/.git-prompt.sh)
 
-I was merely reacting "iterate over all of them"; dwim_ref() only check=
-s
-if .git/blah, .git/refs/heads/blah, .git/refs/tags/blah, etc.  exists a=
-nd
-the number of checks do not depend on the number of refs you have, so I
-was wondering if I overlooked something that does for_each_ref() of
-everything.
+The third step doesn't seem necessary if .git-completion sources
+git-prompt when it's available (and otherwise ignores it gracefully).
+Then anyone who cares about the prompt just makes sure that git-prompt
+is available.
+
+--=20
+Ted Pavlic <ted@tedpavlic.com>
