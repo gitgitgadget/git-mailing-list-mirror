@@ -1,73 +1,100 @@
-From: Alexey Pelykh <alexey.pelykh@gmail.com>
-Subject: Re: Question about submodules and absolute paths
-Date: Wed, 23 May 2012 10:32:38 +0300
-Message-ID: <CAOmKuSqUm+WoTA5U5ZSgqFS6Oc7q+y8wSR0sMxHW_EPKoz6fwQ@mail.gmail.com>
-References: <CAOmKuSoYP9fYORDy5twLpFh7SQ7rc6x2A=F8XjfKMqo-ErCauQ@mail.gmail.com>
-	<CAOmKuSpqFrC7G4DbZu=uYDwvU6QqrJUi2aNBnSjy7_PXMMJpjQ@mail.gmail.com>
-	<7vk4043wc5.fsf@alter.siamese.dyndns.org>
-	<CAOmKuSrmxnHKaip2X87Y0Cp=XtLAtpAwUp71QhZ5od3gbDF2sg@mail.gmail.com>
-	<70952A932255A2489522275A628B97C31348C70D@xmb-sjc-233.amer.cisco.com>
-	<CAOmKuSqRHMS+hvCXL4Ok6ReTPW-3xT9SunGeibjCCCgVk9SU6Q@mail.gmail.com>
-	<70952A932255A2489522275A628B97C31348C71F@xmb-sjc-233.amer.cisco.com>
-	<CAOmKuSoxf_mRJRyjXj99NQLoa+fD-HU_oUYPrJYPNTPmvhs46g@mail.gmail.com>
-	<7vpq9w2ae2.fsf@alter.siamese.dyndns.org>
-	<4FBC90C2.6050203@web.de>
+From: Thomas Rast <trast@inf.ethz.ch>
+Subject: Re: [PATCH 2/3] xdiff: avoid more compiler warnings with XDL_FAST_HASH on 32-bit machines
+Date: Wed, 23 May 2012 10:30:38 +0200
+Message-ID: <8762bn7101.fsf@thomas.inf.ethz.ch>
+References: <CAA787r=WCJXeDipiVL37oMgji=ncoPyXXVOcCyYbSC6iCcTi1g@mail.gmail.com>
+	<4FB4A4B9.3080009@lsrfire.ath.cx>
+	<xmqqmx56rd2r.fsf@junio.mtv.corp.google.com>
+	<4FB5460C.10807@lsrfire.ath.cx>
+	<CAA787rmJixvyKhubHXZCDVYc=DdVk8_vHsHF6bOsLQ_j=39bGw@mail.gmail.com>
+	<4FBBF8D7.7050701@lsrfire.ath.cx>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	"Matt Seitz (matseitz)" <matseitz@cisco.com>, git@vger.kernel.org
-To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Wed May 23 09:32:46 2012
+Cc: =?utf-8?Q?=C3=98yvind_A=2E_Holm?= <sunny@sunbase.org>,
+	Junio C Hamano <gitster@pobox.com>, <git@vger.kernel.org>,
+	Thomas Rast <trast@student.ethz.ch>
+To: =?utf-8?Q?Ren=C3=A9?= Scharfe <rene.scharfe@lsrfire.ath.cx>
+X-From: git-owner@vger.kernel.org Wed May 23 10:30:59 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SX63o-000792-Hd
-	for gcvg-git-2@plane.gmane.org; Wed, 23 May 2012 09:32:44 +0200
+	id 1SX6y3-0002vs-7J
+	for gcvg-git-2@plane.gmane.org; Wed, 23 May 2012 10:30:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755537Ab2EWHck convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 23 May 2012 03:32:40 -0400
-Received: from mail-ob0-f174.google.com ([209.85.214.174]:62100 "EHLO
-	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753723Ab2EWHcj convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 23 May 2012 03:32:39 -0400
-Received: by obbtb18 with SMTP id tb18so10715853obb.19
-        for <git@vger.kernel.org>; Wed, 23 May 2012 00:32:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=WFoB7+NdGT5wOa1XnsV2wHjKcEzhg2RZ2hDTdwkxSwI=;
-        b=JneeN2uMyKOCOtKsGPgx0iRpLTkB5hX/v2vsei4WXeOdaAaF7/AkSu5Yn8Cy/VCLvx
-         kSUX25gr4zUp7I9xVjVupcBZ52yvxIJ+4ZU16kPuJiD6Ff2Lax/3ch5gnfmSaxt5pII/
-         Ldr4FTbRh/UW8AzDm60LOm5i0LLEY2hBSRwzc7iHOFStIcvnTBouQf7DD4VkhBstSJP4
-         9cAc8u+66OvvcmMoRtY99dwFaxPUvrtDoKO4N9X516ChYvWp+qRuBVSsTP11YXWCVPjS
-         pjyW0nd3dKmSuZpa951UvNTaMQOxvVz31LnrANE1HcGlM+4mzSrpwECut8jXHAdkXHHt
-         64Qw==
-Received: by 10.182.51.9 with SMTP id g9mr25262334obo.56.1337758358954; Wed,
- 23 May 2012 00:32:38 -0700 (PDT)
-Received: by 10.182.72.65 with HTTP; Wed, 23 May 2012 00:32:38 -0700 (PDT)
-In-Reply-To: <4FBC90C2.6050203@web.de>
+	id S1757559Ab2EWIap convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 23 May 2012 04:30:45 -0400
+Received: from edge10.ethz.ch ([82.130.75.186]:55246 "EHLO edge10.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757483Ab2EWIan convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 23 May 2012 04:30:43 -0400
+Received: from CAS22.d.ethz.ch (172.31.51.112) by edge10.ethz.ch
+ (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.2.298.4; Wed, 23 May
+ 2012 10:30:37 +0200
+Received: from thomas.inf.ethz.ch.ethz.ch (129.132.153.233) by CAS22.d.ethz.ch
+ (172.31.51.112) with Microsoft SMTP Server (TLS) id 14.1.355.2; Wed, 23 May
+ 2012 10:30:38 +0200
+In-Reply-To: <4FBBF8D7.7050701@lsrfire.ath.cx> (=?utf-8?Q?=22Ren=C3=A9?=
+ Scharfe"'s message of
+	"Tue, 22 May 2012 22:36:39 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Originating-IP: [129.132.153.233]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198275>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198276>
 
-Great! I'll try git from sources then
+Ren=C3=A9 Scharfe <rene.scharfe@lsrfire.ath.cx> writes:
 
-On Wed, May 23, 2012 at 10:24 AM, Jens Lehmann <Jens.Lehmann@web.de> wr=
-ote:
+> Hide literals that can cause compiler warnings for 32-bit architectur=
+es in
+> expressions that evaluate to small numbers there.  Some compilers war=
+n that
+> 0x0001020304050608 won't fit into a 32-bit long, others that shifting=
+ right
+> by 56 bits clears a 32-bit value completely.
 >
-> Am 22.05.2012 23:06, schrieb Junio C Hamano:
-> > Didn't the submodule folks worked on the related area recently, and
-> > doesn't the result of their work already in v1.7.10?
-> >
-> > I am thinking specifically about the series around d75219b (submodu=
-les:
-> > always use a relative path from gitdir to work tree, 2012-03-04). =A0=
-Jens?
+> The correct values are calculated in the 64-bit case, which is all th=
+at matters
+> in this if-branch.
 >
-> Yes, these changes should fix the problem described by Alexey.
+> Reported-by: =C3=98yvind A. Holm <sunny@sunbase.org>
+> Signed-off-by: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
+
+Thanks for fixing this.  As far as logic and review goes, both patches
+
+Acked-by: Thomas Rast <trast@student.ethz.ch>
+
+I haven't checked whether it actually fixes the warnings, however.
+
+> ---
+>  xdiff/xutils.c |    8 +++++++-
+>  1 file changed, 7 insertions(+), 1 deletion(-)
+>
+> diff --git a/xdiff/xutils.c b/xdiff/xutils.c
+> index 8580da7..78549e3 100644
+> --- a/xdiff/xutils.c
+> +++ b/xdiff/xutils.c
+> @@ -272,7 +272,13 @@ static inline long count_masked_bytes(unsigned l=
+ong mask)
+>  		 * that works for the bytemasks without having to
+>  		 * mask them first.
+>  		 */
+> -		return mask * 0x0001020304050608 >> 56;
+> +		/*
+> +		 * return mask * 0x0001020304050608 >> 56;
+> +		 *
+> +		 * Doing it like this avoids warnings on 32-bit machines.
+> +		 */
+> +		long a =3D (REPEAT_BYTE(0x01) / 0xff + 1);
+> +		return mask * a >> (sizeof(long) * 7);
+>  	} else {
+>  		/*
+>  		 * Modified Carl Chatfield G+ version for 32-bit *
+
+--=20
+Thomas Rast
+trast@{inf,student}.ethz.ch
