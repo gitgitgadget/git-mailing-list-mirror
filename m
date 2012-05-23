@@ -1,99 +1,93 @@
-From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <rene.scharfe@lsrfire.ath.cx>
-Subject: Re: [PATCH 3/3] refs: use strings directly in find_containing_dir()
-Date: Wed, 23 May 2012 19:15:34 +0200
-Message-ID: <4FBD1B36.5060404@lsrfire.ath.cx>
-References: <1337692566-3718-1-git-send-email-mhagger@alum.mit.edu> <4FBBE012.6090702@lsrfire.ath.cx> <7vlikj3nzc.fsf@alter.siamese.dyndns.org> <4FBC0F12.2000001@lsrfire.ath.cx> <7vhav73lnl.fsf@alter.siamese.dyndns.org> <4FBD0E33.4060309@lsrfire.ath.cx> <7v4nr625vf.fsf@alter.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: contrib/credential/osxkeychain: Makefile should allow to set
+ CFLAGS
+Date: Wed, 23 May 2012 13:36:53 -0400
+Message-ID: <20120523173653.GA29458@sigill.intra.peff.net>
+References: <AB628C35-FEC2-4425-B3D8-EEC7F8D6A66B@samueljohn.de>
+ <7vtxz82ap6.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: mhagger@alum.mit.edu, Jeff King <peff@peff.net>,
-	git@vger.kernel.org
+Content-Type: text/plain; charset=utf-8
+Cc: Samuel John <mail@samueljohn.de>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed May 23 19:15:50 2012
+X-From: git-owner@vger.kernel.org Wed May 23 19:37:04 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SXFA2-0004T1-EZ
-	for gcvg-git-2@plane.gmane.org; Wed, 23 May 2012 19:15:46 +0200
+	id 1SXFUc-00025S-Fh
+	for gcvg-git-2@plane.gmane.org; Wed, 23 May 2012 19:37:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933050Ab2EWRPl convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 23 May 2012 13:15:41 -0400
-Received: from india601.server4you.de ([85.25.151.105]:33203 "EHLO
-	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932155Ab2EWRPk (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 May 2012 13:15:40 -0400
-Received: from [192.168.2.105] (p579BE06F.dip.t-dialin.net [87.155.224.111])
-	by india601.server4you.de (Postfix) with ESMTPSA id 6ADD42F8058;
-	Wed, 23 May 2012 19:15:38 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:12.0) Gecko/20120428 Thunderbird/12.0.1
-In-Reply-To: <7v4nr625vf.fsf@alter.siamese.dyndns.org>
+	id S932533Ab2EWRg5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 May 2012 13:36:57 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:52929
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752872Ab2EWRg4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 May 2012 13:36:56 -0400
+Received: (qmail 18732 invoked by uid 107); 23 May 2012 17:37:22 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 23 May 2012 13:37:22 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 23 May 2012 13:36:53 -0400
+Content-Disposition: inline
+In-Reply-To: <7vtxz82ap6.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198314>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198315>
 
-Am 23.05.2012 18:56, schrieb Junio C Hamano:
-> Ren=C3=A9 Scharfe<rene.scharfe@lsrfire.ath.cx>  writes:
->=20
->> Am 23.05.2012 00:18, schrieb Junio C Hamano:
->>> Ren=C3=A9 Scharfe<rene.scharfe@lsrfire.ath.cx>   writes:
->>>
->>>> What has git grep to do with refs?  It checks if the path in the c=
-ommand
->>>> above is a ref, which makes it iterate over all of them..
->>>
->>> Do you mean:
->>>
->>> 	/* Is it a rev? */
->>>           get_sha1()
->>>           ->   ...
->>>             ->   get_sha1_basic()
->>>               ->   dwim_ref()
->>>
->>> callpath?
->>
->> Yes, indeed.  Hmm, this is done even if the paths come after a
->> double-dash.  Anyway, I don't consider the check to be a performance
->> issue, just a quick way to test the allocation count that i stumbled
->> upon while working on the recent grep patches.
->=20
-> I was merely reacting "iterate over all of them"; dwim_ref() only che=
-cks
-> if .git/blah, .git/refs/heads/blah, .git/refs/tags/blah, etc.  exists=
- and
-> the number of checks do not depend on the number of refs you have, so=
- I
-> was wondering if I overlooked something that does for_each_ref() of
-> everything.
+On Tue, May 22, 2012 at 02:00:05PM -0700, Junio C Hamano wrote:
 
-Yeah, for loose refs that's true. However, I have 470 packed refs, and
-this command:
+> It however seems to me that git-credential-osxkeychain.o does honor
+> $(CFLAGS), either from the user "make CFLAGS=..." or the default the
+> Makefile in question supplies.
+> 
+> The line you quoted is not using $(CC) as the compiler, but is using it to
+> link the final build product.  It may not hurt to have $(CFLAGS) on that
+> line, but shouldn't the line also have $(LDFLAGS) on it?
 
-	$ valgrind --tool=3Dexp-dhat ./git grep guess xdiff/xutils.c
+I think so. Why don't we do this?
 
-reports (among other findings):
+-- >8 --
+Subject: osxkeychain: pull make config from top-level directory
 
-=3D=3D28255=3D=3D max-live:    30,334 in 470 blocks
-=3D=3D28255=3D=3D tot-alloc:   30,334 in 470 blocks (avg size 64.54)
-=3D=3D28255=3D=3D deaths:      none (none of these blocks were freed)
-=3D=3D28255=3D=3D acc-ratios:  7.76 rd, 0.95 wr  (235,582 b-read, 28,92=
-4 b-written)
-=3D=3D28255=3D=3D    at 0x402AEE8: malloc (in /usr/lib/valgrind/vgprelo=
-ad_exp-dhat-x86-linux.so)
-=3D=3D28255=3D=3D    by 0x813691D: xmalloc (wrapper.c:50)
-=3D=3D28255=3D=3D    by 0x8106B1A: create_ref_entry.constprop.8 (refs.c=
-:250)
-=3D=3D28255=3D=3D    by 0x8107761: read_packed_refs (refs.c:817)
-=3D=3D28255=3D=3D    by 0x810785F: get_packed_refs (refs.c:843)
-=3D=3D28255=3D=3D    by 0x8107BE7: resolve_ref_unsafe (refs.c:1028)
-=3D=3D28255=3D=3D    by 0x81090AA: dwim_ref (refs.c:1549)
-=3D=3D28255=3D=3D    by 0x8122E06: get_sha1_1 (sha1_name.c:304)
-=3D=3D28255=3D=3D    by 0x81237EF: get_sha1_with_context_1 (sha1_name.c=
-:1044)
-=3D=3D28255=3D=3D    by 0x8124016: get_sha1 (cache.h:795)
-=3D=3D28255=3D=3D    by 0x75782F65: ???
+The default compiler and cflags were mostly "works for me"
+when I built the original version. We need to be much less
+careful here than usual, because we know we are building
+only on OS X.  But it's only polite to at least respect the
+CFLAGS and CC definitions that the user may have provided
+earlier.
 
-Ren=C3=A9
+While we're at it, let's update our definitions and rules to
+be more like the top-level Makefile; default our CFLAGS to
+include -O2, and make sure we use CFLAGS and LDFLAGS when
+linking.
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ contrib/credential/osxkeychain/Makefile | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
+
+diff --git a/contrib/credential/osxkeychain/Makefile b/contrib/credential/osxkeychain/Makefile
+index 75c07f8..4b3a08a 100644
+--- a/contrib/credential/osxkeychain/Makefile
++++ b/contrib/credential/osxkeychain/Makefile
+@@ -2,10 +2,13 @@ all:: git-credential-osxkeychain
+ 
+ CC = gcc
+ RM = rm -f
+-CFLAGS = -g -Wall
++CFLAGS = -g -O2 -Wall
++
++-include ../../../config.mak.autogen
++-include ../../../config.mak
+ 
+ git-credential-osxkeychain: git-credential-osxkeychain.o
+-	$(CC) -o $@ $< -Wl,-framework -Wl,Security
++	$(CC) $(CFLAGS) -o $@ $< $(LDFLAGS) -Wl,-framework -Wl,Security
+ 
+ git-credential-osxkeychain.o: git-credential-osxkeychain.c
+ 	$(CC) -c $(CFLAGS) $<
+-- 
+1.7.9.7.35.gbeaaf11
