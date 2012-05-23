@@ -1,85 +1,93 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH 2/2] completion: split __git_ps1 into a separate script
-Date: Wed, 23 May 2012 13:59:10 +0200
-Message-ID: <CAMP44s2DAFjtZY_s_h0GEMmDwwxApR1pwXVnfPP8S5bmauDkhQ@mail.gmail.com>
-References: <1337719600-7361-1-git-send-email-felipe.contreras@gmail.com>
-	<1337719600-7361-3-git-send-email-felipe.contreras@gmail.com>
-	<4FBC0019.6030702@in.waw.pl>
+From: Thomas Gummerer <t.gummerer@gmail.com>
+Subject: [GSoC] Designing a faster index format - Progress report
+Date: Wed, 23 May 2012 14:21:35 +0200
+Message-ID: <20120523122135.GA58204@tgummerer.unibz.it>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Ted Pavlic <ted@tedpavlic.com>,
-	Thomas Rast <trast@student.ethz.ch>,
-	=?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder@ira.uka.de>,
-	Kerrick Staley <mail@kerrickstaley.com>,
-	Marius Storm-Olsen <mstormo@gmail.com>,
-	=?UTF-8?Q?Ville_Skytt=C3=A4?= <ville.skytta@iki.fi>,
-	Dan McGee <dan@archlinux.org>
-To: =?UTF-8?Q?Zbigniew_J=C4=99drzejewski=2DSzmek?= <zbyszek@in.waw.pl>
-X-From: git-owner@vger.kernel.org Wed May 23 13:59:18 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: trast@student.ethz.ch, gitster@pobox.com, pclouds@gmail.com,
+	mhagger@alum.mit.edu
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed May 23 14:22:21 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SXADk-0002u9-Mp
-	for gcvg-git-2@plane.gmane.org; Wed, 23 May 2012 13:59:17 +0200
+	id 1SXAa2-0001dz-QH
+	for gcvg-git-2@plane.gmane.org; Wed, 23 May 2012 14:22:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932537Ab2EWL7M convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 23 May 2012 07:59:12 -0400
-Received: from mail-lb0-f174.google.com ([209.85.217.174]:40050 "EHLO
-	mail-lb0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932473Ab2EWL7L convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 23 May 2012 07:59:11 -0400
-Received: by lbbgm6 with SMTP id gm6so4996648lbb.19
-        for <git@vger.kernel.org>; Wed, 23 May 2012 04:59:10 -0700 (PDT)
+	id S932229Ab2EWMVk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 May 2012 08:21:40 -0400
+Received: from mail-wg0-f44.google.com ([74.125.82.44]:60342 "EHLO
+	mail-wg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753534Ab2EWMVj (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 May 2012 08:21:39 -0400
+Received: by wgbdr13 with SMTP id dr13so7095367wgb.1
+        for <git@vger.kernel.org>; Wed, 23 May 2012 05:21:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=49TSigG2rG8a89ba9F/RQiRA4Qt3WbKFXcC2h8nitro=;
-        b=DxJKvSXXy7bgsi5VPi+H6x7gWPpn+SQ05GHNU1z2d4xrC13MmlvVGz/h/8VvviEPBT
-         BgUpoSVo/afrNt2veKpdhlrO98DWgJrMwNXy8y1PFtoieUsxhA7HYOGpPXm6HaRLNAUA
-         lzN/3ivIz16ZPlr6vScDHQMI0J7mL9y7rvK0ah0280JjQ8W9GG2gAiv0ILQ0X2GBomu6
-         ejryRezDTU5v63eFgXPi9LRFuGYnwrx5LSygVfwyAhhwI6esOzNvffJ5HdXyWK9Ep37o
-         qAcrW/IswZhoqQvpgXaY8pv2JDkX3hTJXsML30TNL0gOpjxwWZQWU5wMsT7cSYTivz+i
-         peCQ==
-Received: by 10.152.112.138 with SMTP id iq10mr11497078lab.13.1337774350048;
- Wed, 23 May 2012 04:59:10 -0700 (PDT)
-Received: by 10.112.107.65 with HTTP; Wed, 23 May 2012 04:59:10 -0700 (PDT)
-In-Reply-To: <4FBC0019.6030702@in.waw.pl>
+        h=date:from:to:cc:subject:message-id:mime-version:content-type
+         :content-disposition:user-agent;
+        bh=lR8NwX2hbit58tPB2RZlLwpa7vQX/Fo/fgUxK2H19ko=;
+        b=q0RaSv86bdpy9HaGPx7W/K5BpElU4N09cvC1nRSzZomdUkvAUxn7fQgpwrTDFuUhO3
+         r01huWDrrfNW/gdjVYuSwQz2XrUx9f6JG8oHJOufQSUaCNfWfD56lcc8QVMZ/j2gBT8e
+         pWS4xRaSz1EYvp3dgHUmeovg+Fhm4wVBy/K7kUE260tGaUxkEtVqPWOxLQJJZxVKJGj9
+         BV2cpVUqm9eCrU/rxa9uiqTqqkC5tYvPDcoKB/QJK340q6S/g2HY7m7mL/W8/SWD7asb
+         DzZB9LELsIHO3zcZJ7MwHlQbHhnQagXr4Erb9wWvUqh1JZHaeCd4s+CNFIWEcKlbcXxl
+         +SCQ==
+Received: by 10.180.92.65 with SMTP id ck1mr45538061wib.14.1337775698068;
+        Wed, 23 May 2012 05:21:38 -0700 (PDT)
+Received: from localhost ([46.18.27.126])
+        by mx.google.com with ESMTPS id fo7sm39860232wib.9.2012.05.23.05.21.36
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 23 May 2012 05:21:37 -0700 (PDT)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198282>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198283>
 
-On Tue, May 22, 2012 at 11:07 PM, Zbigniew J=C4=99drzejewski-Szmek
-<zbyszek@in.waw.pl> wrote:
-> On 05/22/2012 10:46 PM, Felipe Contreras wrote:
->> =C2=A0contrib/completion/git-completion.bash | =C2=A0257 +----------=
------------------
->> =C2=A0contrib/completion/git-prompt.sh =C2=A0 =C2=A0 =C2=A0 | =C2=A0=
-287 ++++++++++++++++++++++++++++++++
->> =C2=A0t/t9903-bash-prompt.sh =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 | =C2=A0 =C2=A02 +-
->> =C2=A03 files changed, 290 insertions(+), 256 deletions(-)
->> =C2=A0create mode 100644 contrib/completion/git-prompt.sh
 
-> since git-prompt is not completion related anymore, should a differen=
-t
-> directory be used?
 
-That's a good point. I personally wouldn't worry too much about this
-until there's a real issue. If we were to fix this, I would rather
-have a 'shell' sub-directory and move everything there; I think have a
-sub-directory for 'completion' and another for 'prompt' would be
-overkill.
+mhagger@alum.mit.edu, pclouds@gmail.com
+Bcc: 
+Subject: [GSoC] Designing a new index format - Progress update
+Reply-To: 
 
-Unfortunately this would mean packagers need to update.
+As Thomas Rast suggested yesterday on IRC, I'll give you a quick
+overview of the work that has already been done in my GSoC project.
 
-Cheers.
 
---=20
-=46elipe Contreras
+== Work done in the past 5 weeks ==
+
+- Definition of a tentative index file v5 format [1]. This differs
+  from the proposal in making it possible to bisect the directory
+  entries and file entries, to do a binary search. The exact bits
+  for each section were also defined. To further compress the index,
+  along with prefix compression, the stat data is hashed, since
+  it's only used for comparison, but the plain data is never used.
+  Thanks to Michael Haggerty, Nguyen Thai Ngoc Duy, Thomas Rast
+  and Robin Rosenberg for feedback.
+- Prototype of a converter from the index format v2/v3 to the index
+  format v5. [2] The converter reads the index from a git repository,
+  can output parts of the index (header, index entries as in
+  git ls-files --debug, cache tree as in test-dump-cache-tree, or
+  the reuc data). Then it writes the v5 index file format to
+  .git/index-v5. Thanks to Michael Haggerty for the code review.
+- Prototype of a reader for the new index file format. [3] The
+  reader has mainly the purpose to show the algorithm used to read
+  the index lexicographically sorted after the full name which is
+  required by the current internal memory format. Big thanks for
+  reviewing this code and giving me advice on refactoring goes
+  to Michael Haggerty.
+
+== Outlook for the next week ==
+
+- Start working on actual git code
+- Read the header of the new format
+
+[1] https://github.com/tgummerer/git/wiki/Index-file-format-v5
+[2] https://github.com/tgummerer/git/blob/pythonprototype/git-convert-index.py
+[3] https://github.com/tgummerer/git/blob/pythonprototype/git-read-index-v5.py
