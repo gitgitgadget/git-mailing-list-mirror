@@ -1,51 +1,113 @@
-From: <dag@cray.com>
-Subject: Re: [Announce] libgit2 v0.17.0
-Date: Wed, 23 May 2012 10:37:48 -0500
-Message-ID: <nngy5oi3o37.fsf@transit.us.cray.com>
-References: <CAFFjANQ_kfRc8LhZD4nxeYmRML6i5dQEskUv3Caz7GmnvZi2Jw@mail.gmail.com>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH 2/2] completion: split __git_ps1 into a separate script
+Date: Wed, 23 May 2012 17:40:46 +0200
+Message-ID: <CAMP44s0aKi+8WHPXYLQ+iSMkj9iV88JGTabrpBRNBWb7upAMiQ@mail.gmail.com>
+References: <1337719600-7361-1-git-send-email-felipe.contreras@gmail.com>
+	<1337719600-7361-3-git-send-email-felipe.contreras@gmail.com>
+	<4FBC0019.6030702@in.waw.pl>
+	<7v4nr72bim.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Cc: <libgit2@librelist.org>, <git-dev@github.com>,
-	<git@vger.kernel.org>
-To: Vicent Marti <vicent@github.com>
-X-From: git-owner@vger.kernel.org Wed May 23 17:38:18 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?UTF-8?Q?Zbigniew_J=C4=99drzejewski=2DSzmek?= <zbyszek@in.waw.pl>,
+	git@vger.kernel.org, Ted Pavlic <ted@tedpavlic.com>,
+	Thomas Rast <trast@student.ethz.ch>,
+	=?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder@ira.uka.de>,
+	Kerrick Staley <mail@kerrickstaley.com>,
+	Marius Storm-Olsen <mstormo@gmail.com>,
+	=?UTF-8?Q?Ville_Skytt=C3=A4?= <ville.skytta@iki.fi>,
+	Dan McGee <dan@archlinux.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed May 23 17:40:59 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SXDdf-0000Ik-ID
-	for gcvg-git-2@plane.gmane.org; Wed, 23 May 2012 17:38:15 +0200
+	id 1SXDgE-0007eC-EQ
+	for gcvg-git-2@plane.gmane.org; Wed, 23 May 2012 17:40:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965320Ab2EWPiD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 May 2012 11:38:03 -0400
-Received: from exprod6og117.obsmtp.com ([64.18.1.39]:57971 "EHLO
-	exprod6og117.obsmtp.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965223Ab2EWPiB (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 May 2012 11:38:01 -0400
-Received: from CFWEX01.americas.cray.com ([136.162.34.11]) (using TLSv1) by exprod6ob117.postini.com ([64.18.5.12]) with SMTP
-	ID DSNKT70EUqcSSLPRFpdqTXS5MRxSmiP6yKCW@postini.com; Wed, 23 May 2012 08:38:00 PDT
-Received: from transit.us.cray.com (172.31.17.53) by CFWEX01.americas.cray.com
- (172.30.88.25) with Microsoft SMTP Server (TLS) id 14.2.247.3; Wed, 23 May
- 2012 10:37:51 -0500
-In-Reply-To: <CAFFjANQ_kfRc8LhZD4nxeYmRML6i5dQEskUv3Caz7GmnvZi2Jw@mail.gmail.com>
-	(Vicent Marti's message of "Sat, 19 May 2012 02:00:02 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+	id S932597Ab2EWPkt convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 23 May 2012 11:40:49 -0400
+Received: from mail-lb0-f174.google.com ([209.85.217.174]:45770 "EHLO
+	mail-lb0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755457Ab2EWPks convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 23 May 2012 11:40:48 -0400
+Received: by lbbgm6 with SMTP id gm6so5173304lbb.19
+        for <git@vger.kernel.org>; Wed, 23 May 2012 08:40:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=ELrHzXWQP1GYo97ul1O2l3gRnyA7S8slF4Ee8GArrU4=;
+        b=fw26pKPHmI0lZIjMApvE2XHu5jbh5GrZRqOw2fQAnA+k0F0UZv7+FG3TqXvwYYU6Uo
+         aFcKGon6dUM3cEJDAOgJd1rnOqlXAdsJmOzQCN4teEcMrL1w+Fri0eKNREpjBFjrYq6A
+         QDSBNVNsu6Hzdx7F/wekuow/72WJvri/dArHO8OorvF71sSc6/usUTclEMgX2PtlH1pn
+         KbNl/J7TqD+99aZfxrI2LbPCdXk7ipO4m2BR+b9wC/drSJtHwyzSTcqyWv0JHmNfgq3x
+         hR0hWgA4LSwfIq9Y6s3m/lP2dita9QTfg7a7RP9i778fTiqZerCxg9LIzAG5m19XMGFV
+         gMwQ==
+Received: by 10.112.23.200 with SMTP id o8mr12452422lbf.9.1337787646643; Wed,
+ 23 May 2012 08:40:46 -0700 (PDT)
+Received: by 10.112.107.65 with HTTP; Wed, 23 May 2012 08:40:46 -0700 (PDT)
+In-Reply-To: <7v4nr72bim.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198298>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198299>
 
-Vicent Marti <vicent@github.com> writes:
+Hi,
 
-> Hello everyone,
+On Wed, May 23, 2012 at 4:54 PM, Junio C Hamano <gitster@pobox.com> wro=
+te:
+> Zbigniew J=C4=99drzejewski-Szmek =C2=A0<zbyszek@in.waw.pl> writes:
 >
-> A new libgit2 release is here. This one is huge (most new features to
-> date). Check out the diff API. It's shiny.
+>> On 05/22/2012 10:46 PM, Felipe Contreras wrote:
+>>> =C2=A0contrib/completion/git-completion.bash | =C2=A0257 +---------=
+------------------
+>>> =C2=A0contrib/completion/git-prompt.sh =C2=A0 =C2=A0 =C2=A0 | =C2=A0=
+287 ++++++++++++++++++++++++++++++++
+>>> =C2=A0t/t9903-bash-prompt.sh =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 | =C2=A0 =C2=A02 +-
+>>> =C2=A03 files changed, 290 insertions(+), 256 deletions(-)
+>>> =C2=A0create mode 100644 contrib/completion/git-prompt.sh
+>> Hi,
+>> since git-prompt is not completion related anymore, should a differe=
+nt
+>> directory be used?
+>
+> I am not sure if that is worth it. =C2=A0These two share/duplicate so=
+me shell
+> functions and we may end up refactoring them (a way to do so may be t=
+o
+> dot-source git-prompt from git-completion and drop duplicated definit=
+ions
+> from the latter), for example.
 
-This is cool.  I've wanted this for a while.  How do you ensure that the
-operation of libgit2 matches that of git proper?  Is there any plan to
-slowly convert git commands over to a libgit2 implementation?
+And how do you propose to update the install documentation?
 
-                             -Dave
+#    1) Copy this file to somewhere (e.g. ~/.git-completion.sh).
+#    2) Add the following line to your .bashrc/.zshrc:
+#        source ~/.git-completion.sh
+#
+#    3) Consider changing your PS1 to also show the current branch:
+
+1) Copy the file (e.g. ~/.git-completion.sh)
+2) Copy the other file (.e.g ~/.git-prompt.sh)
+3) Edit the original file (~/.git-completion.sh), modify the 'source'
+command to use the other file (~/.git-prompt.sh)
+
+And if the user doesn't care about prompt this certainly looks like ove=
+rkill.
+
+What do we gain by this incredible user annoyance? Less maintenance
+burden of __gitdir() which barely changes anyway?
+
+What about 'git dir' or 'git info dir' (this could be used by other
+scripts to get information about various git commands, for completion,
+documentation, what not)?
+
+Cheers.
+
+--=20
+=46elipe Contreras
