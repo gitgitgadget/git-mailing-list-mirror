@@ -1,62 +1,99 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: Question about submodules and absolute paths
-Date: Wed, 23 May 2012 22:42:31 +0200
-Message-ID: <4FBD4BB7.9070704@web.de>
-References: <CAOmKuSoYP9fYORDy5twLpFh7SQ7rc6x2A=F8XjfKMqo-ErCauQ@mail.gmail.com> <CAOmKuSpqFrC7G4DbZu=uYDwvU6QqrJUi2aNBnSjy7_PXMMJpjQ@mail.gmail.com> <7vk4043wc5.fsf@alter.siamese.dyndns.org> <CAOmKuSrmxnHKaip2X87Y0Cp=XtLAtpAwUp71QhZ5od3gbDF2sg@mail.gmail.com> <70952A932255A2489522275A628B97C31348C70D@xmb-sjc-233.amer.cisco.com> <CAOmKuSqRHMS+hvCXL4Ok6ReTPW-3xT9SunGeibjCCCgVk9SU6Q@mail.gmail.com> <70952A932255A2489522275A628B97C31348C71F@xmb-sjc-233.amer.cisco.com> <CAOmKuSoxf_mRJRyjXj99NQLoa+fD-HU_oUYPrJYPNTPmvhs46g@mail.gmail.com> <7vpq9w2ae2.fsf@alter.siamese.dyndns.org> <4FBC90C2.6050203@web.de> <CAOmKuSqUm+WoTA5U5ZSgqFS6Oc7q+y8wSR0sMxHW_EPKoz6fwQ@mail.gmail.com>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH 2/2] completion: split __git_ps1 into a separate script
+Date: Wed, 23 May 2012 22:50:05 +0200
+Message-ID: <CAMP44s3uW75O_jt2F7POxTAhX+qPyRSjOX9-DuEkg7a7WtnLsA@mail.gmail.com>
+References: <1337719600-7361-1-git-send-email-felipe.contreras@gmail.com>
+	<1337719600-7361-3-git-send-email-felipe.contreras@gmail.com>
+	<4FBC0019.6030702@in.waw.pl>
+	<7v4nr72bim.fsf@alter.siamese.dyndns.org>
+	<CAMP44s0aKi+8WHPXYLQ+iSMkj9iV88JGTabrpBRNBWb7upAMiQ@mail.gmail.com>
+	<CAOnadRF8XyZKi+d=y1fFy2Xvs-3ETVyCbJBj83mK3Q8yuK7oQw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Junio C Hamano <gitster@pobox.com>,
-	"Matt Seitz (matseitz)" <matseitz@cisco.com>, git@vger.kernel.org
-To: Alexey Pelykh <alexey.pelykh@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 23 22:42:43 2012
+	=?UTF-8?Q?Zbigniew_J=C4=99drzejewski=2DSzmek?= <zbyszek@in.waw.pl>,
+	git@vger.kernel.org, Thomas Rast <trast@student.ethz.ch>,
+	=?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder@ira.uka.de>,
+	Kerrick Staley <mail@kerrickstaley.com>,
+	Marius Storm-Olsen <mstormo@gmail.com>,
+	=?UTF-8?Q?Ville_Skytt=C3=A4?= <ville.skytta@iki.fi>,
+	Dan McGee <dan@archlinux.org>
+To: Ted Pavlic <ted@tedpavlic.com>
+X-From: git-owner@vger.kernel.org Wed May 23 22:50:16 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SXIOI-0007ed-8Y
-	for gcvg-git-2@plane.gmane.org; Wed, 23 May 2012 22:42:42 +0200
+	id 1SXIVa-0006d7-M8
+	for gcvg-git-2@plane.gmane.org; Wed, 23 May 2012 22:50:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758841Ab2EWUmi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 May 2012 16:42:38 -0400
-Received: from fmmailgate03.web.de ([217.72.192.234]:34226 "EHLO
-	fmmailgate03.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752141Ab2EWUmh (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 May 2012 16:42:37 -0400
-Received: from moweb002.kundenserver.de (moweb002.kundenserver.de [172.19.20.108])
-	by fmmailgate03.web.de (Postfix) with ESMTP id 00B7F1B4E97B3
-	for <git@vger.kernel.org>; Wed, 23 May 2012 22:42:36 +0200 (CEST)
-Received: from [192.168.178.48] ([91.3.160.4]) by smtp.web.de (mrweb001) with
- ESMTPA (Nemesis) id 0LnjRP-1RqotR3ebX-00hs57; Wed, 23 May 2012 22:42:35 +0200
-User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:12.0) Gecko/20120428 Thunderbird/12.0.1
-In-Reply-To: <CAOmKuSqUm+WoTA5U5ZSgqFS6Oc7q+y8wSR0sMxHW_EPKoz6fwQ@mail.gmail.com>
-X-Provags-ID: V02:K0:p9MnDDbt/02db6Y9IS7BOcEpMojMy0gChneOZTlc8BE
- 9hkreu1NrNyT9HsIg9EQEnbKGEvY4pIizMdjr2DTUdv69QLV1D
- OzvfQb8TBgLIx1ylwOeGgBHTBNi1OIykrOzURcFkubS4gP82nV
- VwA7fn078abkR+KrnETOhbeVjEl4RrLQLWkdP1/euiFdzdRgUT
- va+eLk3n9Cj93LmPsDi/A==
+	id S1759640Ab2EWUuI convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 23 May 2012 16:50:08 -0400
+Received: from mail-lb0-f174.google.com ([209.85.217.174]:36804 "EHLO
+	mail-lb0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755389Ab2EWUuG convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 23 May 2012 16:50:06 -0400
+Received: by lbbgm6 with SMTP id gm6so5391850lbb.19
+        for <git@vger.kernel.org>; Wed, 23 May 2012 13:50:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=tXFJWxabjUB0D/zQ/MQVoS9gPxXGzhU6nV5iO1g5yaU=;
+        b=IomznjLlPrA7xGx/PZnCgts2g4r5V3wdT+wxRFMIQeEc6PaHDg+uaFt2x8DIFLvwy9
+         RJPvA4OJ16TtsmtjEnMGnMYH+EdYumJbPF/6hz7SR17NTMPVkfJwbVl3vwY3LLVkR1CY
+         2EuVzmnlK/6UabzriCEKomCVkaFUe1UC2woSOBLY9FG97HBBe9yFA5btarpW+gHol7PB
+         TaoHPr6g1+V+2ogtPOwS91tqzBr9yx7C6cZvyhLsT6+CXuQxGbQeFkwMLaVbf/25aVKw
+         huda0m6gvKfqb8eHFdqBfaENFP6bOKnoEzyqUiqe16iBKORve+YartXtNp50hLwihCpr
+         gwGg==
+Received: by 10.112.36.130 with SMTP id q2mr4848740lbj.44.1337806205271; Wed,
+ 23 May 2012 13:50:05 -0700 (PDT)
+Received: by 10.112.107.65 with HTTP; Wed, 23 May 2012 13:50:05 -0700 (PDT)
+In-Reply-To: <CAOnadRF8XyZKi+d=y1fFy2Xvs-3ETVyCbJBj83mK3Q8yuK7oQw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198321>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198322>
 
-[please do not top-post]
-
-Am 23.05.2012 09:32, schrieb Alexey Pelykh:
-> On Wed, May 23, 2012 at 10:24 AM, Jens Lehmann <Jens.Lehmann@web.de> wrote:
+On Wed, May 23, 2012 at 7:03 PM, Ted Pavlic <ted@tedpavlic.com> wrote:
+>>> I am not sure if that is worth it. =C2=A0These two share/duplicate =
+some shell
+>>> functions and we may end up refactoring them (a way to do so may be=
+ to
+>>> dot-source git-prompt from git-completion and drop duplicated defin=
+itions
+>>> from the latter), for example.
 >>
->> Am 22.05.2012 23:06, schrieb Junio C Hamano:
->>> Didn't the submodule folks worked on the related area recently, and
->>> doesn't the result of their work already in v1.7.10?
->>>
->>> I am thinking specifically about the series around d75219b (submodules:
->>> always use a relative path from gitdir to work tree, 2012-03-04).  Jens?
+>> And how do you propose to update the install documentation?
 >>
->> Yes, these changes should fix the problem described by Alexey.
+>> 1) Copy the file (e.g. ~/.git-completion.sh)
+>> 2) Copy the other file (.e.g ~/.git-prompt.sh)
+>> 3) Edit the original file (~/.git-completion.sh), modify the 'source=
+'
+>> command to use the other file (~/.git-prompt.sh)
 >
-> Great! I'll try git from sources then
+> The third step doesn't seem necessary if .git-completion sources
+> git-prompt when it's available (and otherwise ignores it gracefully).
+> Then anyone who cares about the prompt just makes sure that git-promp=
+t
+> is available.
 
-But don't forget to re-clone the submodules, the paths won't be updated
-for existing submodules.
+And then anything that uses __gitdir() would fail.
+
+And how would you figure if it's available, and where it is available?
+What if git-completion.bash is distributed on
+/usr/share/bash-completion/completions/git? Where would you put
+git-prompt.sh so it can be found *and* you would not require
+modifications? And what if I want to put the latest version on
+~/.git-completion.sh (as the script actually suggests).
+
+There's no way git-prompt.sh can be sourced without modifications to
+the script, unless you expect it would always be named
+'.git-prompt.sh' and would be on the same directory, which many
+distributions would frown upon.
+
+--=20
+=46elipe Contreras
