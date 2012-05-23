@@ -1,129 +1,119 @@
-From: Vitor Antunes <vitor.hda@gmail.com>
-Subject: [PATCH 2/2] git-p4: Verify detection of "empty" branch creation
-Date: Wed, 23 May 2012 00:38:11 +0100
-Message-ID: <1337729891-27648-3-git-send-email-vitor.hda@gmail.com>
-References: <1337729891-27648-1-git-send-email-vitor.hda@gmail.com>
-Cc: Pete Wyckoff <pw@padd.com>, Luke Diamand <luke@diamand.org>,
-	Vitor Antunes <vitor.hda@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 23 01:38:49 2012
+From: Martin Fick <mfick@codeaurora.org>
+Subject: Re: remove_duplicates() in builtin/fetch-pack.c is O(N^2)
+Date: Tue, 22 May 2012 18:46:37 -0600
+Organization: CAF
+Message-ID: <201205221846.38230.mfick@codeaurora.org>
+References: <4FB9F92D.8000305@alum.mit.edu> <201205221619.31738.mfick@codeaurora.org> <7v8vgj3imy.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: Text/Plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Jeff King <peff@peff.net>, Michael Haggerty <mhagger@alum.mit.edu>,
+	git discussion list <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed May 23 02:46:47 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SWyfA-0006Jp-H0
-	for gcvg-git-2@plane.gmane.org; Wed, 23 May 2012 01:38:48 +0200
+	id 1SWziv-00028c-M2
+	for gcvg-git-2@plane.gmane.org; Wed, 23 May 2012 02:46:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932831Ab2EVXio (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 May 2012 19:38:44 -0400
-Received: from mail-wi0-f178.google.com ([209.85.212.178]:41070 "EHLO
-	mail-wi0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932724Ab2EVXin (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 May 2012 19:38:43 -0400
-Received: by mail-wi0-f178.google.com with SMTP id hn6so4034207wib.1
-        for <git@vger.kernel.org>; Tue, 22 May 2012 16:38:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=9y9ZPcdsVgODYsEKZkOV1oMkG2hpbng/xtB/FZwtwvw=;
-        b=UbvTHuY0qgymiuQQPa8shio6gNo4yZOY4o6gqBGldID5z26BFE1+rrmjHcIoDadOzz
-         HqrgSseGlKl4OM5AA/Uu+zz0xTl0WOyGZkVMDlY17ncbOVD1ByE/MkcZ4BNG9MCR4p4X
-         4035MPtDlR2tbc18sWrie0V6NVfVBINksYfIubQRq6qPEmG0A9wiOFsJveFyj+68tuyx
-         UeoqHAEhlg8q82DTnN+nXtwvUt+6GzE7rsGLgLP7hLz7+ckNyq44fToeyjkQdSAkZbzX
-         BgLYJHGHAXdNVkISZcGS3ChRKviIB+kUvDXmWVsGuaaR5c1hFA8ht9jHHsxIgkxKaMze
-         yShQ==
-Received: by 10.180.95.137 with SMTP id dk9mr30303154wib.1.1337729922730;
-        Tue, 22 May 2012 16:38:42 -0700 (PDT)
-Received: from localhost.localdomain (111.216.54.77.rev.vodafone.pt. [77.54.216.111])
-        by mx.google.com with ESMTPS id r2sm56922565wif.7.2012.05.22.16.38.41
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 22 May 2012 16:38:42 -0700 (PDT)
-X-Mailer: git-send-email 1.7.7.rc2.14.g5e044.dirty
-In-Reply-To: <1337729891-27648-1-git-send-email-vitor.hda@gmail.com>
+	id S932914Ab2EWAqk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 May 2012 20:46:40 -0400
+Received: from wolverine01.qualcomm.com ([199.106.114.254]:52132 "EHLO
+	wolverine01.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756924Ab2EWAqj (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 May 2012 20:46:39 -0400
+X-IronPort-AV: E=McAfee;i="5400,1158,6719"; a="193720164"
+Received: from pdmz-css-vrrp.qualcomm.com (HELO mostmsg01.qualcomm.com) ([199.106.114.130])
+  by wolverine01.qualcomm.com with ESMTP/TLS/DHE-RSA-AES256-SHA; 22 May 2012 17:46:38 -0700
+Received: from mfick-lnx.localnet (pdmz-snip-v218.qualcomm.com [192.168.218.1])
+	by mostmsg01.qualcomm.com (Postfix) with ESMTPA id C0BFB10004A9;
+	Tue, 22 May 2012 17:46:38 -0700 (PDT)
+User-Agent: KMail/1.13.5 (Linux/2.6.32.49+drm33.21-mfick7; KDE/4.4.5; x86_64; ; )
+In-Reply-To: <7v8vgj3imy.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198268>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198269>
 
-Current implementation of new branch parent detection works on the
-principle that the new branch is a complete integration, with no
-changes, of the original files.
-This test shows this deficiency in the particular case when the new
-branch is created from a subset of the original files.
+On Tuesday, May 22, 2012 05:23:17 pm Junio C Hamano wrote:
+> Martin Fick <mfick@codeaurora.org> writes:
+>
+> I think we can ignore that 400 part from the above for
+> now.  As they are independent "projects", it is
+> unreasonable to expect that any solution would add costs
+> less than linearly when you add more projects.  
 
-Signed-off-by: Vitor Antunes <vitor.hda@gmail.com>
----
- t/t9801-git-p4-branch.sh |   56 ++++++++++++++++++++++++++++++++++++++++++++++
- 1 files changed, 56 insertions(+), 0 deletions(-)
+As far as git is concerned, sure they are independent, but 
+the projects aren't really independent.  Separate repos were 
+likely selected for scalibility reasons in the first place, 
+but this ends up being a "scale fail" pattern.  I don't 
+expect git to fix this * 400 issue, but I want to highlight, 
+how difficult it is to make things scale in these cases and 
+that this problems is a natural multiplier when you split 
+something into separate git repos because your tags tend to 
+now be multiplied.  So while 10K tags sound like a lot but 
+manageable for 1 repo, it ends up actually being 4M tags if 
+you split your repos.
 
-diff --git a/t/t9801-git-p4-branch.sh b/t/t9801-git-p4-branch.sh
-index 89d8c59..c8e4d86 100755
---- a/t/t9801-git-p4-branch.sh
-+++ b/t/t9801-git-p4-branch.sh
-@@ -360,6 +360,62 @@ test_expect_success 'git p4 sync changes to two branches in the same changelist'
- 	)
- '
- 
-+# Create a branch by integrating a single file
-+test_expect_success 'git p4 file subset branch' '
-+	test_when_finished cleanup_git &&
-+	test_create_repo "$git" &&
-+	(
-+		cd "$cli" &&
-+		p4 integrate //depot/branch1/file1 //depot/branch6/file1 &&
-+		p4 submit -d "Integrate file1 alone from branch1 to branch6"
-+	)
-+'
-+
-+# Check if git -p4 creates a new branch containing a single file,
-+# instead of keeping the old files from the original branch
-+test_expect_failure 'git p4 clone file subset branch' '
-+	test_when_finished cleanup_git &&
-+	test_create_repo "$git" &&
-+	(
-+		cd "$git" &&
-+		git config git-p4.branchList branch1:branch2 &&
-+		git config --add git-p4.branchList branch1:branch3 &&
-+		git config --add git-p4.branchList branch1:branch4 &&
-+		git config --add git-p4.branchList branch1:branch5 &&
-+		git config --add git-p4.branchList branch1:branch6 &&
-+		"$GITP4" clone --dest=. --detect-branches //depot@all &&
-+		git log --all --graph --decorate --stat &&
-+		git reset --hard p4/depot/branch1 &&
-+		test_path_is_file file1 &&
-+		test_path_is_file file2 &&
-+		test_path_is_file file3 &&
-+		grep update file2 &&
-+		git reset --hard p4/depot/branch2 &&
-+		test_path_is_file file1 &&
-+		test_path_is_file file2 &&
-+		test_path_is_missing file3 &&
-+		! grep update file2 &&
-+		git reset --hard p4/depot/branch3 &&
-+		test_path_is_file file1 &&
-+		test_path_is_file file2 &&
-+		test_path_is_missing file3 &&
-+		grep update file2 &&
-+		git reset --hard p4/depot/branch4 &&
-+		test_path_is_file file1 &&
-+		test_path_is_file file2 &&
-+		test_path_is_file file3 &&
-+		! grep update file2 &&
-+		git reset --hard p4/depot/branch5 &&
-+		test_path_is_file file1 &&
-+		test_path_is_file file2 &&
-+		test_path_is_file file3 &&
-+		! grep update file2 &&
-+		git reset --hard p4/depot/branch6 &&
-+		test_path_is_file file1 &&
-+		! test_path_is_file file2 &&
-+		! test_path_is_file file3
-+	)
-+'
- test_expect_success 'kill p4d' '
- 	kill_p4d
- '
+
+...
+> I think the assumption in your build-bot scenario needs
+> to be a bit more clarified to give context.  I am
+> assuming, when you say "see if projects are up to date",
+> you mean your build-bot is interested in a single branch
+> in each repository, possibly together with new tags that
+> have become reachable from the updated tip of the branch
+> (if the branch tip moved). 
+
+Just the branch generally.
+
+
+> I also assume that the
+> build-bot polls very often and that is why 200MB (or
+> divided by 400 it would be 0.5MB, which still is a lot
+> when you talk about a single repository) hurts a lot.
+
+To clarify for others (since you likely know), we serialize 
+our submits, so the "poll" is before every build to ensure 
+that we are up to date with what just got merged.  In our 
+case we use Gerrit with slaves (read only Gerrit copies), so 
+we offload the "update" to the slave, which incurs the same 
+hit, all though it is not quite a No Op but close (there 
+will have been a batch of commits added to a few projects).  
+But then since the slave may be slightly behind the master 
+(replication from the master to the slave takes time, 
+partially because of the same ref advertisement problem), so 
+we want to verify the slave update by polling the master, 
+which if replication was fast enough would be a No Op.  So, 
+our attempts to scale by using slaves does not help very 
+much since the real update and the No Op are almost 
+identical in their impacts... There are workarounds, but 
+mostly hacks.
+
+
+...
+> Unlike the capability exchange that happens after the
+> initial connection, there is no gap in the protocol for
+> the side that initiates the connection to tell the
+> serving side to skip/delay the initial ref
+> advertisement.
+
+Crazy stupid suggestion: could the URI somehow be exploited 
+to signal the option to disable advertisements?  What if the 
+path part of the URI started with something like several 
+slashes?  Older servers just strip the extra slashes right?  
+Newer servers could disable advertisements if they see the 
+slashes.  Of course, this gets ugly if scripts add slashes 
+and expect them to be stripped (old clients talking to new 
+servers would probably then fail),
+
+-Martin
+
 -- 
-1.7.7.rc2.14.g5e044.dirty
+Employee of Qualcomm Innovation Center, Inc. which is a 
+member of Code Aurora Forum
