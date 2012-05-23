@@ -1,91 +1,88 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCH v2 6/6] sha1_loose_object_info: do not complain out loud
- on non-existent objects
-Date: Wed, 23 May 2012 21:24:12 +0700
-Message-ID: <CACsJy8A5Xv8_KY2z4eQvm2e=3e=KjDJyVM+-d0dmXntHJ-6efg@mail.gmail.com>
-References: <1337172630-23679-1-git-send-email-pclouds@gmail.com>
- <1337782191-10091-1-git-send-email-pclouds@gmail.com> <1337782191-10091-6-git-send-email-pclouds@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/2] completion: split __git_ps1 into a separate script
+Date: Wed, 23 May 2012 07:54:41 -0700
+Message-ID: <7v4nr72bim.fsf@alter.siamese.dyndns.org>
+References: <1337719600-7361-1-git-send-email-felipe.contreras@gmail.com>
+ <1337719600-7361-3-git-send-email-felipe.contreras@gmail.com>
+ <4FBC0019.6030702@in.waw.pl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-	<pclouds@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 23 16:24:56 2012
+Cc: Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>,
+	Ted Pavlic <ted@tedpavlic.com>,
+	Thomas Rast <trast@student.ethz.ch>,
+	SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder@ira.uka.de>,
+	Kerrick Staley <mail@kerrickstaley.com>,
+	Marius Storm-Olsen <mstormo@gmail.com>,
+	Ville =?utf-8?Q?Skytt=C3=A4?= <ville.skytta@iki.fi>,
+	Dan McGee <dan@archlinux.org>
+To: Zbigniew =?utf-8?Q?J=C4=99drzejewski-Szmek?= <zbyszek@in.waw.pl>
+X-From: git-owner@vger.kernel.org Wed May 23 16:55:00 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SXCUc-0000Ub-KW
-	for gcvg-git-2@plane.gmane.org; Wed, 23 May 2012 16:24:50 +0200
+	id 1SXCxh-0006wd-4L
+	for gcvg-git-2@plane.gmane.org; Wed, 23 May 2012 16:54:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932547Ab2EWOYp convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 23 May 2012 10:24:45 -0400
-Received: from mail-wi0-f172.google.com ([209.85.212.172]:44413 "EHLO
-	mail-wi0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754149Ab2EWOYo convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 23 May 2012 10:24:44 -0400
-Received: by wibhj8 with SMTP id hj8so4667111wib.1
-        for <git@vger.kernel.org>; Wed, 23 May 2012 07:24:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=pX+xKDHRgiNBBTvniq+zL1UH/bBkRepIkZNr01gmQlw=;
-        b=aw9+oPC36qmUgD74zuz+ChQS9janhDLNawk9YimHejOvKg2owA+4bgjXYHDcCnPxTF
-         EJnb49K/DCljcFXOvt2Ow+UpSaLnok/6MLt3NJKVb5S/FCw+rVsZk9NN4zr/fs4meVS7
-         MKYTMsYu22hIYuIMnGGrfVmNu6W8nfunalRNxZvmdibONSVAePyuOLFTTvKHRSMTpYn6
-         AYLtrH8hmIipfRmPuxorwyVQmwWuWvtROkWwZSN+RJAtL6sB3LC/dp7oxVMsfETbbGTx
-         ruwkxTyRHBBkmpvHg6xh5HBVarLXy9KTtEQ5RamGQx1p5PRQPpodEiTL7+fmtKyJ8UUn
-         2P9g==
-Received: by 10.180.95.100 with SMTP id dj4mr25474836wib.17.1337783083128;
- Wed, 23 May 2012 07:24:43 -0700 (PDT)
-Received: by 10.223.64.208 with HTTP; Wed, 23 May 2012 07:24:12 -0700 (PDT)
-In-Reply-To: <1337782191-10091-6-git-send-email-pclouds@gmail.com>
+	id S932274Ab2EWOyr convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 23 May 2012 10:54:47 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:34117 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1759620Ab2EWOyq convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 23 May 2012 10:54:46 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 88A6A86F4;
+	Wed, 23 May 2012 10:54:43 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=UaTLRvfY34On
+	JLeZt3jShJLY9I8=; b=Anp3q6ooAgZHmvNq4hCJG910Dxr3HrNeRPerRJuhgy7Z
+	WWt74I6wDUgtyoK50c43Vs5V/qxCpuvwQLQoylQtsswWg8P2Agq4dOwTmARRYdrd
+	yryNFuJWzRZZuuEh8dDeCC0Rz+fOLZN1SXQMGvr9B8YrFQxVnR8z6Gb1VLJG7Z8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=xnVA7P
+	xFGqOo/VzD0iOdbfniyZE9joE1zUROxrAucqPpaXQegp9tDnUKOZzC/F/8OLmnJM
+	qvy2UKbK5d/cnR3lpgNzmTAHwssnuOgPE+hfLLzupiOwdKjiZd2lqBowm4FsgVuH
+	U0t9sDxg1CT3ftCIbG2bmONREBPTXcBLnUCGo=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7CDB686F2;
+	Wed, 23 May 2012 10:54:43 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0A7B086F0; Wed, 23 May 2012
+ 10:54:42 -0400 (EDT)
+In-Reply-To: <4FBC0019.6030702@in.waw.pl> ("Zbigniew =?utf-8?Q?J=C4=99drze?=
+ =?utf-8?Q?jewski-Szmek=22's?= message of "Tue, 22 May 2012 23:07:37 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 3AEBE8FE-A4E7-11E1-AD03-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198292>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198293>
 
-On Wed, May 23, 2012 at 9:09 PM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc =
-Duy <pclouds@gmail.com> wrote:
->
-> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
-il.com>
-> ---
-> =C2=A0makes sense to me, but I might have overlooked something
+Zbigniew J=C4=99drzejewski-Szmek  <zbyszek@in.waw.pl> writes:
 
-while it's still making sense for me, i think it's more logical  to
-move the check to the caller, where "entry in pack?" check is also
-done.
+> On 05/22/2012 10:46 PM, Felipe Contreras wrote:
+>>  contrib/completion/git-completion.bash |  257 +--------------------=
+-------
+>>  contrib/completion/git-prompt.sh       |  287 +++++++++++++++++++++=
++++++++++++
+>>  t/t9903-bash-prompt.sh                 |    2 +-
+>>  3 files changed, 290 insertions(+), 256 deletions(-)
+>>  create mode 100644 contrib/completion/git-prompt.sh
+> Hi,
+> since git-prompt is not completion related anymore, should a differen=
+t
+> directory be used?
 
->
-> =C2=A0sha1_file.c | 2 ++
-> =C2=A01 file changed, 2 insertions(+)
->
-> diff --git a/sha1_file.c b/sha1_file.c
-> index 3c4f165..520b41e 100644
-> --- a/sha1_file.c
-> +++ b/sha1_file.c
-> @@ -2133,6 +2133,8 @@ static int sha1_loose_object_info(const unsigne=
-d char *sha1, unsigned long *size
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0git_zstream stream;
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0char hdr[32];
->
-> + =C2=A0 =C2=A0 =C2=A0 if (!has_loose_object(sha1))
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return -1;
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0map =3D map_sha1_file(sha1, &mapsize);
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0if (!map)
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0return error("=
-unable to find %s", sha1_to_hex(sha1));
-> --
-> 1.7.10.2.549.g9354186
->
-
-
-
---=20
-Duy
+I am not sure if that is worth it.  These two share/duplicate some shel=
+l
+functions and we may end up refactoring them (a way to do so may be to
+dot-source git-prompt from git-completion and drop duplicated definitio=
+ns
+from the latter), for example.
