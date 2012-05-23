@@ -1,270 +1,70 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: [PATCH v4 2/2] submodule: fix handling of relative superproject
- origin URLs
-Date: Wed, 23 May 2012 23:50:04 +0200
-Message-ID: <4FBD5B8C.60605@web.de>
-References: <1337791554-31294-1-git-send-email-jon.seymour@gmail.com> <1337791554-31294-3-git-send-email-jon.seymour@gmail.com>
+From: Ted Pavlic <ted@tedpavlic.com>
+Subject: Re: [PATCH 2/2] completion: split __git_ps1 into a separate script
+Date: Wed, 23 May 2012 17:55:13 -0400
+Message-ID: <4FBD5CC1.3060701@tedpavlic.com>
+References: <1337719600-7361-1-git-send-email-felipe.contreras@gmail.com> <1337719600-7361-3-git-send-email-felipe.contreras@gmail.com> <4FBC0019.6030702@in.waw.pl> <7v4nr72bim.fsf@alter.siamese.dyndns.org> <CAMP44s0aKi+8WHPXYLQ+iSMkj9iV88JGTabrpBRNBWb7upAMiQ@mail.gmail.com> <CAOnadRF8XyZKi+d=y1fFy2Xvs-3ETVyCbJBj83mK3Q8yuK7oQw@mail.gmail.com> <CAMP44s3uW75O_jt2F7POxTAhX+qPyRSjOX9-DuEkg7a7WtnLsA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Jon Seymour <jon.seymour@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 23 23:50:21 2012
+Cc: Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?B?WmJpZ25pZXcgSsSZZHJ6ZWpl?= =?UTF-8?B?d3NraS1Tem1law==?= 
+	<zbyszek@in.waw.pl>, git@vger.kernel.org,
+	Thomas Rast <trast@student.ethz.ch>,
+	=?UTF-8?B?U1pFREVSIEfDoWJvcg==?= <szeder@ira.uka.de>,
+	Kerrick Staley <mail@kerrickstaley.com>,
+	Marius Storm-Olsen <mstormo@gmail.com>,
+	=?UTF-8?B?VmlsbGUgU2t5dHTDpA==?= <ville.skytta@iki.fi>,
+	Dan McGee <dan@archlinux.org>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Wed May 23 23:55:31 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SXJRg-0003bW-Ia
-	for gcvg-git-2@plane.gmane.org; Wed, 23 May 2012 23:50:17 +0200
+	id 1SXJWd-000353-MG
+	for gcvg-git-2@plane.gmane.org; Wed, 23 May 2012 23:55:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760830Ab2EWVuK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 May 2012 17:50:10 -0400
-Received: from fmmailgate02.web.de ([217.72.192.227]:43856 "EHLO
-	fmmailgate02.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754756Ab2EWVuI (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 May 2012 17:50:08 -0400
-Received: from moweb002.kundenserver.de (moweb002.kundenserver.de [172.19.20.108])
-	by fmmailgate02.web.de (Postfix) with ESMTP id B20851C4D1D75
-	for <git@vger.kernel.org>; Wed, 23 May 2012 23:50:06 +0200 (CEST)
-Received: from [192.168.178.48] ([91.3.160.4]) by smtp.web.de (mrweb002) with
- ESMTPA (Nemesis) id 0Lsy7e-1S5MAh0JyM-012bTX; Wed, 23 May 2012 23:50:05 +0200
-User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:12.0) Gecko/20120428 Thunderbird/12.0.1
-In-Reply-To: <1337791554-31294-3-git-send-email-jon.seymour@gmail.com>
-X-Provags-ID: V02:K0:0BE7b/y+KlYUuekxT4zHzySHhtbx/nPQNPQMtnzZTYE
- 0fVZ0owIG26S3wTF/dzs03BQBTurV3wQtz7gPH/hCKXEXdiQou
- RB1QVpAQACuD1g3QjK3hfOeSbbnpLVeWtpUyIXx7ReQ4TS4voZ
- 0oueXZW+JryfR8nqdZkik7HeSjsj7Kt0PUCTqf2G4r7MuLgqEn
- YJ9zO5na2u0doImkWD62A==
+	id S1760829Ab2EWVzR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 May 2012 17:55:17 -0400
+Received: from mail-ob0-f174.google.com ([209.85.214.174]:64906 "EHLO
+	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754397Ab2EWVzQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 May 2012 17:55:16 -0400
+Received: by obbtb18 with SMTP id tb18so11603495obb.19
+        for <git@vger.kernel.org>; Wed, 23 May 2012 14:55:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=tedpavlic.com; s=google;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:x-enigmail-version:content-type
+         :content-transfer-encoding;
+        bh=zkgr9qlL8ykBCNPszyk2qX3Bf/NhSIbfbtLUeRv4FPE=;
+        b=Mw3Lf0U7iFu+GyZb815X5ZpA82NkJADZYm2NMsCUgUKDqrvsKPDV+w9KSrwW5YFXso
+         eg11Fi5b0m4nymyvNowhcrVgnh1nsqB6+gvqQEwD5x0L7LYjy9UAsceHbEQGZBSYFNer
+         VsAAToKZW8S70mQNyj6KLYgbem70nuP/xv9Pc=
+Received: by 10.182.5.164 with SMTP id t4mr28803874obt.1.1337810115756;
+        Wed, 23 May 2012 14:55:15 -0700 (PDT)
+Received: from [164.107.119.81] (calgary.cse.ohio-state.edu. [164.107.119.81])
+        by mx.google.com with ESMTPS id js6sm22180530obb.2.2012.05.23.14.55.13
+        (version=SSLv3 cipher=OTHER);
+        Wed, 23 May 2012 14:55:14 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:12.0) Gecko/20120430 Thunderbird/12.0.1
+In-Reply-To: <CAMP44s3uW75O_jt2F7POxTAhX+qPyRSjOX9-DuEkg7a7WtnLsA@mail.gmail.com>
+X-Enigmail-Version: 1.4.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198327>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198328>
 
-Am 23.05.2012 18:45, schrieb Jon Seymour:
-> When the origin URL of the superproject is itself relative, an operation
-> such as git submodule add, init or sync may result in either the
-> submodule.{name}.url configuration property of the superproject
-> referring to the incorrect location or remote.origin.url configuration
-> property of the submodule referring to the incorrect location or both
-> these conditions. In some cases, git submodule fails to update
-> the configuration and fails with an error condition.
-> 
-> The issue arises in these cases because the origin URL of
-> the superproject needs to be prepended with a prefix that navigates
-> from the submodule to the superproject so that when the submodule
-> URL is concatenated the resulting URL is relative to the working tree
-> of the submodule.
-> 
-> This change fixes handling for relative superproject origin URLs
-> for 6 cases:
->   foo
->   foo/bar
->   ./foo
->   ./foo/bar
->   ../foo
->   ../foo/bar
-> 
-> In each case, the configuration properties in the superproject's
-> configuration and the submodule's configuration refer to the
-> correct, relative, location of the submodule's origin repo. In all cases,
-> the configured paths are relative to the working trees of the
-> repositories containing the configuration.
-> 
-> Signed-off-by: Jon Seymour <jon.seymour@gmail.com>
-> ---
->  git-submodule.sh           | 17 +++++++++++++++--
->  t/t7400-submodule-basic.sh | 12 +++++-------
->  t/t7403-submodule-sync.sh  | 21 +++++++++++----------
->  3 files changed, 31 insertions(+), 19 deletions(-)
-> 
-> diff --git a/git-submodule.sh b/git-submodule.sh
-> index 64a70d6..3e943de 100755
-> --- a/git-submodule.sh
-> +++ b/git-submodule.sh
-> @@ -37,6 +37,8 @@ resolve_relative_url ()
->  	remoteurl=$(git config "remote.$remote.url") ||
->  		remoteurl=$(pwd) # the repository is its own authoritative upstream
->  	url="$1"
-> +	prefix="$2"
+> There's no way git-prompt.sh can be sourced without modifications to
+> the script, unless you expect it would always be named
+> '.git-prompt.sh' and would be on the same directory, which many
+> distributions would frown upon.
 
-As mentioned last time I'd rather use $2 directly at the only site
-where $prefix is used. (On the other hand it might also make sense
-to give the parameters a descriptive name at the beginning of the
-function, but then I'd vote for a descriptive name like "urlprefix"
-or similar to make its meaning clearer)
+So, again, seems like a good argument for building a git-gitdir into git
+proper. Maybe there are other utilities that could make use of it as
+well...
 
-> +	remoteurl=$(echo "$remoteurl" | sed "s|^[^/:\\.][^:]*\$|./&|")
-
-A comment describing what this line actually does would be nice.
-
->  	remoteurl=${remoteurl%/}
->  	sep=/
->  	while test -n "$url"
-> @@ -45,6 +47,11 @@ resolve_relative_url ()
->  		../*)
->  			url="${url#../}"
->  			case "$remoteurl" in
-> +			.*/*)
-> +				remoteurl="${remoteurl%/*}"
-> +				remoteurl="${remoteurl#./}"
-> +				remoteurl="${prefix}${remoteurl}"
-> +				;;
->  			*/*)
->  				remoteurl="${remoteurl%/*}"
->  				;;
-> @@ -64,7 +71,7 @@ resolve_relative_url ()
->  			break;;
->  		esac
->  	done
-> -	echo "$remoteurl$sep${url%/}"
-> +	echo "${remoteurl%/.}$sep${url%/}"
-
-Wouldn't that better be handled in the ".*/*)" case above to avoid
-accidentally affecting the other cases?
-
->  }
->  
->  #
-> @@ -964,8 +971,14 @@ cmd_sync()
->  		# Possibly a url relative to parent
->  		case "$url" in
->  		./*|../*)
-> +			up_path="$(echo "$sm_path" | sed "s/[^/]*/../g")" &&
-> +			up_path=${up_path%/}/ &&
-> +			remoteurl=$(resolve_relative_url "$url" "$up_path") &&
->  			url=$(resolve_relative_url "$url") || exit
->  			;;
-> +		*)
-> +			remoteurl="$url"
-> +			;;
->  		esac
->  
->  		if git config "submodule.$name.url" >/dev/null 2>/dev/null
-> @@ -979,7 +992,7 @@ cmd_sync()
->  				clear_local_git_env
->  				cd "$sm_path"
->  				remote=$(get_default_remote)
-> -				git config remote."$remote".url "$url"
-> +				git config remote."$remote".url "$remoteurl"
->  			)
->  			fi
->  		fi
-
-I still have to wrap my head around these two hunks (I suspect it's
-too late for that in my timezone ;-), but I really wonder how you get
-away without changing cmd_add and cmd_init like you did last time.
-This looks much different than #2 and #4 of your v3 combined, which
-makes me suspicious in what direction this is evolving. Maybe you could
-tell us what you found out addressing the last problem you mentioned
-and how you handled it?
-
-
-The only changes following here should be from test_expect_failure
-to test_expect_success as mentioned in my response to your first patch.
-
-> diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
-> index 97e7a73..f2f907f 100755
-> --- a/t/t7400-submodule-basic.sh
-> +++ b/t/t7400-submodule-basic.sh
-> @@ -507,17 +507,15 @@ test_expect_success 'relative path works with user@host:path' '
->  	)
->  '
->  
-> -test_expect_success 'relative path works with foo' "
-> +test_expect_success 'relative path works with foo' '
->  	(
->  		cd reltest &&
->  		cp pristine-.git-config .git/config &&
->  		git config remote.origin.url foo &&
-> -		echo \"cannot strip one component off url 'foo'\" >expect &&
-> -		test_must_fail git submodule init 2>actual &&
-> -		cat actual &&
-> -		test_cmp expect actual
-> +		git submodule init &&
-> +		test "$(git config submodule.sub.url)" = ./subrepo
->  	)
-> -"
-> +'
->  
->  test_expect_success 'relative path works with foo/bar' '
->  	(
-> @@ -545,7 +543,7 @@ test_expect_success 'relative path works with ./foo/bar' '
->  		cp pristine-.git-config .git/config &&
->  		git config remote.origin.url ./foo/bar &&
->  		git submodule init &&
-> -		test "$(git config submodule.sub.url)" = ./foo/subrepo
-> +		test "$(git config submodule.sub.url)" = foo/subrepo
->  	)
->  '
->  
-> diff --git a/t/t7403-submodule-sync.sh b/t/t7403-submodule-sync.sh
-> index 3784c9b..583fe21 100755
-> --- a/t/t7403-submodule-sync.sh
-> +++ b/t/t7403-submodule-sync.sh
-> @@ -88,21 +88,22 @@ test_expect_success '"git submodule sync" should not vivify uninteresting submod
->  	)
->  '
->  
-> -test_expect_success '"git submodule sync" handles origin URL of the form foo' "
-> +test_expect_success '"git submodule sync" handles origin URL of the form foo' '
->  	(cd relative-clone &&
->  	 git remote set-url origin foo
-> -	 echo \"cannot strip one component off url 'foo'\" > expect &&
-> -	 test_must_fail git submodule sync 2> actual &&
-> -	 test_cmp expect actual
-> +	 git submodule sync &&
-> +	(cd submodule &&
-> +	 test "$(git config remote.origin.url)" == "../submodule"
->  	)
-> -"
-> +	)
-> +'
->  
->  test_expect_success '"git submodule sync" handles origin URL of the form foo/bar' '
->  	(cd relative-clone &&
->  	 git remote set-url origin foo/bar
->  	 git submodule sync &&
->  	(cd submodule &&
-> -	 test "$(git config remote.origin.url)" == "foo/submodule"
-> +	 test "$(git config remote.origin.url)" == "../foo/submodule"
->  	)
->  	)
->  '
-> @@ -112,7 +113,7 @@ test_expect_success '"git submodule sync" handles origin URL of the form ./foo'
->  	 git remote set-url origin ./foo
->  	 git submodule sync &&
->  	(cd submodule &&
-> -	 test "$(git config remote.origin.url)" == "./submodule"
-> +	 test "$(git config remote.origin.url)" == "../submodule"
->  	)
->  	)
->  '
-> @@ -122,7 +123,7 @@ test_expect_success '"git submodule sync" handles origin URL of the form ./foo/b
->  	 git remote set-url origin ./foo/bar
->  	 git submodule sync &&
->  	(cd submodule &&
-> -	 test "$(git config remote.origin.url)" == "./foo/submodule"
-> +	 test "$(git config remote.origin.url)" == "../foo/submodule"
->  	)
->  	)
->  '
-> @@ -132,7 +133,7 @@ test_expect_success '"git submodule sync" handles origin URL of the form ../foo'
->  	 git remote set-url origin ../foo
->  	 git submodule sync &&
->  	(cd submodule &&
-> -	 test "$(git config remote.origin.url)" == "../submodule"
-> +	 test "$(git config remote.origin.url)" == "../../submodule"
->  	)
->  	)
->  '
-> @@ -142,7 +143,7 @@ test_expect_success '"git submodule sync" handles origin URL of the form ../foo/
->  	 git remote set-url origin ../foo/bar
->  	 git submodule sync &&
->  	(cd submodule &&
-> -	 test "$(git config remote.origin.url)" == "../foo/submodule"
-> +	 test "$(git config remote.origin.url)" == "../../foo/submodule"
->  	)
->  	)
->  '
+-- 
+Ted Pavlic <ted@tedpavlic.com>
