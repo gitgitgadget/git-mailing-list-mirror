@@ -1,91 +1,62 @@
-From: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
-Subject: Re: [PATCH/RFC] rebase -p: do not redo the merge, but cherry-pick
- first-parent changes
-Date: Wed, 23 May 2012 13:41:17 -0700
-Message-ID: <CAOeW2eGvEaQYk9KODmLzZuEBu-KhKcQeL4PE-4YHwSgtP0dJfA@mail.gmail.com>
-References: <4FBAA33D.1080703@kdbg.org>
-	<CAOeW2eE9EW3gER7ZDThGABtZ0doNuUb70DnKrnzD+OeWYLO7cQ@mail.gmail.com>
-	<7vzk8yzq35.fsf@alter.siamese.dyndns.org>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: Question about submodules and absolute paths
+Date: Wed, 23 May 2012 22:42:31 +0200
+Message-ID: <4FBD4BB7.9070704@web.de>
+References: <CAOmKuSoYP9fYORDy5twLpFh7SQ7rc6x2A=F8XjfKMqo-ErCauQ@mail.gmail.com> <CAOmKuSpqFrC7G4DbZu=uYDwvU6QqrJUi2aNBnSjy7_PXMMJpjQ@mail.gmail.com> <7vk4043wc5.fsf@alter.siamese.dyndns.org> <CAOmKuSrmxnHKaip2X87Y0Cp=XtLAtpAwUp71QhZ5od3gbDF2sg@mail.gmail.com> <70952A932255A2489522275A628B97C31348C70D@xmb-sjc-233.amer.cisco.com> <CAOmKuSqRHMS+hvCXL4Ok6ReTPW-3xT9SunGeibjCCCgVk9SU6Q@mail.gmail.com> <70952A932255A2489522275A628B97C31348C71F@xmb-sjc-233.amer.cisco.com> <CAOmKuSoxf_mRJRyjXj99NQLoa+fD-HU_oUYPrJYPNTPmvhs46g@mail.gmail.com> <7vpq9w2ae2.fsf@alter.siamese.dyndns.org> <4FBC90C2.6050203@web.de> <CAOmKuSqUm+WoTA5U5ZSgqFS6Oc7q+y8wSR0sMxHW_EPKoz6fwQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Johannes Sixt <j6t@kdbg.org>,
-	Git Mailing List <git@vger.kernel.org>,
-	Stephen Haberman <stephen@exigencecorp.com>,
-	Andrew Wong <andrew.kw.w@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed May 23 22:41:29 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	"Matt Seitz (matseitz)" <matseitz@cisco.com>, git@vger.kernel.org
+To: Alexey Pelykh <alexey.pelykh@gmail.com>
+X-From: git-owner@vger.kernel.org Wed May 23 22:42:43 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SXIMz-0003m1-W3
-	for gcvg-git-2@plane.gmane.org; Wed, 23 May 2012 22:41:22 +0200
+	id 1SXIOI-0007ed-8Y
+	for gcvg-git-2@plane.gmane.org; Wed, 23 May 2012 22:42:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758933Ab2EWUlS convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 23 May 2012 16:41:18 -0400
-Received: from mail-pb0-f46.google.com ([209.85.160.46]:38286 "EHLO
-	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752141Ab2EWUlR convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 23 May 2012 16:41:17 -0400
-Received: by pbbrp8 with SMTP id rp8so10391408pbb.19
-        for <git@vger.kernel.org>; Wed, 23 May 2012 13:41:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=GSY0MUC8Rro9uhGiERdHk32FSv28xkdYoPLGUt1q3+8=;
-        b=gyiacnB/pwW8962gpdtKgEliz0b8gSSAEnSX7t9LiYUHWNzPb7qdsJJcm0h/3KVzm/
-         usRVlkQA1Es+WhIwEyzZSxMsUvnDBSgR+XicOdIZ9mmJYDZM1lwHK2d5AhtBYhyzlDJA
-         W0c4Q5xZearYwuah6VQYmHKfFo8LOfNMRIzKNb+k6oosxZGDXHxd1g0wRArT54zEZ08Q
-         P1pAN9PiEz/gLd09+tE9yd086hRdVFTna6jaX7Ayn2hGFsRlt2xzRSLiLVmMcmvhP+Ta
-         CndiCMykfmMNy1ErT2g6zxjjXm4fyApSZbOSmUtVX6MnhK/oCy4mc5Q6EmP63CBSZuku
-         dvvw==
-Received: by 10.68.197.99 with SMTP id it3mr13399612pbc.148.1337805677065;
- Wed, 23 May 2012 13:41:17 -0700 (PDT)
-Received: by 10.68.51.130 with HTTP; Wed, 23 May 2012 13:41:17 -0700 (PDT)
-In-Reply-To: <7vzk8yzq35.fsf@alter.siamese.dyndns.org>
+	id S1758841Ab2EWUmi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 May 2012 16:42:38 -0400
+Received: from fmmailgate03.web.de ([217.72.192.234]:34226 "EHLO
+	fmmailgate03.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752141Ab2EWUmh (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 May 2012 16:42:37 -0400
+Received: from moweb002.kundenserver.de (moweb002.kundenserver.de [172.19.20.108])
+	by fmmailgate03.web.de (Postfix) with ESMTP id 00B7F1B4E97B3
+	for <git@vger.kernel.org>; Wed, 23 May 2012 22:42:36 +0200 (CEST)
+Received: from [192.168.178.48] ([91.3.160.4]) by smtp.web.de (mrweb001) with
+ ESMTPA (Nemesis) id 0LnjRP-1RqotR3ebX-00hs57; Wed, 23 May 2012 22:42:35 +0200
+User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:12.0) Gecko/20120428 Thunderbird/12.0.1
+In-Reply-To: <CAOmKuSqUm+WoTA5U5ZSgqFS6Oc7q+y8wSR0sMxHW_EPKoz6fwQ@mail.gmail.com>
+X-Provags-ID: V02:K0:p9MnDDbt/02db6Y9IS7BOcEpMojMy0gChneOZTlc8BE
+ 9hkreu1NrNyT9HsIg9EQEnbKGEvY4pIizMdjr2DTUdv69QLV1D
+ OzvfQb8TBgLIx1ylwOeGgBHTBNi1OIykrOzURcFkubS4gP82nV
+ VwA7fn078abkR+KrnETOhbeVjEl4RrLQLWkdP1/euiFdzdRgUT
+ va+eLk3n9Cj93LmPsDi/A==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198320>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198321>
 
-On Wed, May 23, 2012 at 11:53 AM, Junio C Hamano <gitster@pobox.com> wr=
-ote:
-> I think your original point was that the above clean picture would no=
-t
-> hold if e-b and g-b has interactions. =C2=A0g-b may contain some chan=
-ge that
-> e-b has independently done, in which case e'-g would be made smaller =
-than
-> e-b when the conflict is resolved while replaying e to produce e' on =
-top
-> of c' (the same applies if you replace e with any commit in the dag
-> "rev-list ^b e d"). =C2=A0The merge to produce f' may result in confl=
-icts,
-> whether you merge e' and d' or replay f-e on top of e'.
+[please do not top-post]
 
-Right. Or if e' was changed as a result of a "edit" action (I meant to
-include '-i' in addition to '-p').
+Am 23.05.2012 09:32, schrieb Alexey Pelykh:
+> On Wed, May 23, 2012 at 10:24 AM, Jens Lehmann <Jens.Lehmann@web.de> wrote:
+>>
+>> Am 22.05.2012 23:06, schrieb Junio C Hamano:
+>>> Didn't the submodule folks worked on the related area recently, and
+>>> doesn't the result of their work already in v1.7.10?
+>>>
+>>> I am thinking specifically about the series around d75219b (submodules:
+>>> always use a relative path from gitdir to work tree, 2012-03-04).  Jens?
+>>
+>> Yes, these changes should fix the problem described by Alexey.
+>
+> Great! I'll try git from sources then
 
-> A better way to keep potential "evil merges" at f while replaying to
-> produce f' may *not* be by applying the difference f-e on top of e'.
-> Instead, you can learn from what 'rerere' does. =C2=A0That is, to att=
-empt a
-> mechanical merge between e and d and call the result (with possible
-> conflict markers and all) pre-f. =C2=A0If you compare pre-f and f, th=
-at is the
-> resolution and evil change made at f. =C2=A0When reproducing f', mech=
-anically
-> merge e' and d', call the result (again, with possible conflict marke=
-rs
-> and all) pre-f', and try reproducing f' by a 3-way merge between pre-=
-f,
-> pre-f' and f.
-
-Yes, I've had the same idea myself. Anyway, as Johannes said, that's
-probably something to consider for the sequencer.
-
-Martin
+But don't forget to re-clone the submodules, the paths won't be updated
+for existing submodules.
