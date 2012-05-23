@@ -1,79 +1,74 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH/RFC] rebase -p: do not redo the merge, but cherry-pick
- first-parent changes
-Date: Wed, 23 May 2012 20:59:29 +0200
-Message-ID: <4FBD3391.7010905@kdbg.org>
-References: <4FBAA33D.1080703@kdbg.org> <CAOeW2eE9EW3gER7ZDThGABtZ0doNuUb70DnKrnzD+OeWYLO7cQ@mail.gmail.com>
+From: Andrew Sayers <andrew-git@pileofstuff.org>
+Subject: Re: [PATCH][GIT.PM 2/3] Getting rid of throwing Error::Simple objects
+ in favour of simple Perl scalars which can be caught in eval{} blocks
+Date: Wed, 23 May 2012 20:36:13 +0100
+Message-ID: <4FBD3C2D.3010107@pileofstuff.org>
+References: <7vobpulhbk.fsf@alter.siamese.dyndns.org> <1337411317-14931-1-git-send-email-subs.zero@gmail.com> <1337411317-14931-2-git-send-email-subs.zero@gmail.com> <4FB76A21.7000801@pileofstuff.org> <CAB3zAY3nVDiBH6kJKK9YTXKsaFZZnUz7AAFh5z+J0VhXHjYiMQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Stephen Haberman <stephen@exigencecorp.com>,
-	Andrew Wong <andrew.kw.w@gmail.com>
-To: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 23 20:59:43 2012
+Cc: git@vger.kernel.org
+To: Subho Banerjee <subs.zero@gmail.com>
+X-From: git-owner@vger.kernel.org Wed May 23 21:36:40 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SXGmY-0000Sj-ST
-	for gcvg-git-2@plane.gmane.org; Wed, 23 May 2012 20:59:39 +0200
+	id 1SXHMM-0002YZ-OX
+	for gcvg-git-2@plane.gmane.org; Wed, 23 May 2012 21:36:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933846Ab2EWS7e (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 May 2012 14:59:34 -0400
-Received: from bsmtp.bon.at ([213.33.87.14]:33743 "EHLO bsmtp.bon.at"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933834Ab2EWS7d (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 May 2012 14:59:33 -0400
-Received: from dx.sixt.local (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTP id 32ED013004E;
-	Wed, 23 May 2012 20:59:30 +0200 (CEST)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-	by dx.sixt.local (Postfix) with ESMTP id D964D19F5F6;
-	Wed, 23 May 2012 20:59:29 +0200 (CEST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:12.0) Gecko/20120421 Thunderbird/12.0
-In-Reply-To: <CAOeW2eE9EW3gER7ZDThGABtZ0doNuUb70DnKrnzD+OeWYLO7cQ@mail.gmail.com>
+	id S934020Ab2EWTgf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 May 2012 15:36:35 -0400
+Received: from mtaout01-winn.ispmail.ntl.com ([81.103.221.47]:28352 "EHLO
+	mtaout01-winn.ispmail.ntl.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S933930Ab2EWTgU (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 23 May 2012 15:36:20 -0400
+Received: from aamtaout03-winn.ispmail.ntl.com ([81.103.221.35])
+          by mtaout01-winn.ispmail.ntl.com
+          (InterMail vM.7.08.04.00 201-2186-134-20080326) with ESMTP
+          id <20120523193618.NJEI10903.mtaout01-winn.ispmail.ntl.com@aamtaout03-winn.ispmail.ntl.com>;
+          Wed, 23 May 2012 20:36:18 +0100
+Received: from [192.168.0.2] (really [94.170.150.126])
+          by aamtaout03-winn.ispmail.ntl.com
+          (InterMail vG.3.00.04.00 201-2196-133-20080908) with ESMTP
+          id <20120523193618.DOZT13318.aamtaout03-winn.ispmail.ntl.com@[192.168.0.2]>;
+          Wed, 23 May 2012 20:36:18 +0100
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.28) Gecko/20120313 Thunderbird/3.1.20
+In-Reply-To: <CAB3zAY3nVDiBH6kJKK9YTXKsaFZZnUz7AAFh5z+J0VhXHjYiMQ@mail.gmail.com>
+X-Cloudmark-Analysis: v=1.1 cv=JvdXmxIgLJv2/GthKqHpGJEEHukvLcvELVXUanXFreg= c=1 sm=0 a=yXtjXN6ItgYA:10 a=dNJI9zxkJdgA:10 a=u4BGzq-dJbcA:10 a=8nJEP1OIZ-IA:10 a=3tnZ8uVCtx8Dmri_DA0A:9 a=wPNLvfGTeEIA:10 a=HpAAvcLHHh0Zw7uRqdWCyQ==:117
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198317>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198318>
 
-Am 23.05.2012 17:37, schrieb Martin von Zweigbergk:
-> On Mon, May 21, 2012 at 1:19 PM, Johannes Sixt <j6t@kdbg.org> wrote:
->> Replace the 'git merge' by a cherry-pick that picks the changes that the
->> merge introduces with respect to the first parent.
-> 
-> Just a reminder of what I said in [1] (the same thread that you referenced):
-> 
-> I think this will break "git rebase -p --onto g b f" on  the below history.
-> 
->           .-e-.
->          /     \
->       .-c---d---f
->      /
-> a---b---g
+On 23/05/12 12:02, Subho Banerjee wrote:
+> Hi,
+> The semantic
+>>        <fail> unless <noun>
+> works well when the <fail> part of the code is a singular statement.
+> But it is of ungainly when there are a couple of statements to be
+> executed as a block. In this case, I believe that a the conjunctive
+> ,,or''/,,and'' statement makes more sense. In the sense -
+>                  <verb1> or <die_gracefully1> and <die_gracefully2>
+> I believe this is easier to read compared to -
+>                  <die_gracefully1> and <die_gracefully2> unless <noun>
+> especially if you have a larger block of commands to execute in case
+> of the failure. I believe the easiest to read would be a classical C
+> styled if() block, but that would make the code more "verbose" :-)
 
-This still works. It is tested by t3411.3.
+To be honest, I drop straight back to C-style if() statements as soon as
+I have to start thinking consciously about precedence rules (where by
+"thinking" I mean "creating bugs then failing to see them under my
+nose").  I also don't think anyone would object if you wanted to stick
+with classic if() statements everywhere - colloquialisms are supported,
+not required :)
 
-> Even if this wasn't the intended use case, git currently supports it
-> and I would personally be a little surprised if no one has gotten used
-> to it working. So should we at least check for this case and handle it
-> with "git merge" as usual? Or stop supporting it and error out instead
-> (and mention in release notes?)?
+So long as you're aware this is an exception to the rule about matching
+the style of surrounding code, I'm personally quite relaxed about fixing
+these specific instances.  If nobody else has any opinions, maybe hold
+off and see how much change you're planning to make elsewhere?  No sense
+getting too attached to code you might have to throw away.
 
-YESSS, drop it. It would allow us to remove all sorts of crufty
-work-arounds for work-arounds. THIS IS NOT 'git sequencer'!
-
-> Btw, with a history without "internal" merges, but where the merge
-> commit was generated "backwards" so the first parent is not in the
-> to-be-rebased history, am I correct in thinking that the "git
-> cherry-pick -m 1" will fail? Do you think we should consider this case
-> or do we consider that too broken to care about?
-
-I think something odd will happen. If in doubt, I would suggest to
-consider this such an odd case which rebase is not intended for ;-)
-(garbage in - garbage out).
-
--- Hannes
+	- Andrew
