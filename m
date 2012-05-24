@@ -1,90 +1,81 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [RFC/PATCH] Reduce cost of deletion in levenstein distance (4 -> 3)
-Date: Thu, 24 May 2012 22:33:32 +0200
-Message-ID: <vpq62blwc83.fsf@bauges.imag.fr>
-References: <1335517082-29325-1-git-send-email-Matthieu.Moy@imag.fr>
-	<4F9A6A4E.2070808@in.waw.pl>
+From: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
+Subject: Re: [PATCH 2/2] completion: split __git_ps1 into a separate script
+Date: Thu, 24 May 2012 22:35:49 +0200
+Message-ID: <20120524203549.GA2052@goldbirke>
+References: <1337719600-7361-1-git-send-email-felipe.contreras@gmail.com>
+	<1337719600-7361-3-git-send-email-felipe.contreras@gmail.com>
+	<4FBC0019.6030702@in.waw.pl>
+	<7v4nr72bim.fsf@alter.siamese.dyndns.org>
+	<CAMP44s0aKi+8WHPXYLQ+iSMkj9iV88JGTabrpBRNBWb7upAMiQ@mail.gmail.com>
+	<CAOnadRF8XyZKi+d=y1fFy2Xvs-3ETVyCbJBj83mK3Q8yuK7oQw@mail.gmail.com>
+	<CAMP44s3uW75O_jt2F7POxTAhX+qPyRSjOX9-DuEkg7a7WtnLsA@mail.gmail.com>
+	<4FBD5CC1.3060701@tedpavlic.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Zbigniew =?utf-8?Q?J=C4=99drzejewski-Szmek?= <zbyszek@in.waw.pl>
-X-From: git-owner@vger.kernel.org Thu May 24 22:34:12 2012
+Cc: Felipe Contreras <felipe.contreras@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Zbigniew =?utf-8?Q?J=C4=99drzejewski-Szmek?= <zbyszek@in.waw.pl>,
+	git@vger.kernel.org, Thomas Rast <trast@student.ethz.ch>,
+	Kerrick Staley <mail@kerrickstaley.com>,
+	Marius Storm-Olsen <mstormo@gmail.com>,
+	Ville =?iso-8859-1?Q?Skytt=E4?= <ville.skytta@iki.fi>,
+	Dan McGee <dan@archlinux.org>
+To: Ted Pavlic <ted@tedpavlic.com>
+X-From: git-owner@vger.kernel.org Thu May 24 22:36:18 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SXeja-0006zn-WE
-	for gcvg-git-2@plane.gmane.org; Thu, 24 May 2012 22:34:11 +0200
+	id 1SXelY-0004QS-5v
+	for gcvg-git-2@plane.gmane.org; Thu, 24 May 2012 22:36:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932447Ab2EXUeG convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 24 May 2012 16:34:06 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:43896 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756730Ab2EXUeE convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 24 May 2012 16:34:04 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id q4OKPTwJ008449
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Thu, 24 May 2012 22:25:29 +0200
-Received: from bauges.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1SXeiz-0008J8-IS; Thu, 24 May 2012 22:33:33 +0200
-In-Reply-To: <4F9A6A4E.2070808@in.waw.pl> ("Zbigniew \=\?utf-8\?Q\?J\=C4\=99drze\?\=
- \=\?utf-8\?Q\?jewski-Szmek\=22's\?\=
-	message of "Fri, 27 Apr 2012 11:43:42 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.93 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Thu, 24 May 2012 22:25:33 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: q4OKPTwJ008449
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1338495934.99587@mWV5ZqzFmpOvoRuX6Aw4ig
+	id S1751933Ab2EXUgH convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 24 May 2012 16:36:07 -0400
+Received: from moutng.kundenserver.de ([212.227.17.9]:61096 "EHLO
+	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751181Ab2EXUgF (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 May 2012 16:36:05 -0400
+Received: from localhost6.localdomain6 (p5B13046B.dip0.t-ipconnect.de [91.19.4.107])
+	by mrelayeu.kundenserver.de (node=mreu0) with ESMTP (Nemesis)
+	id 0Lxbn5-1S0JtU16OR-016u0G; Thu, 24 May 2012 22:35:51 +0200
+Content-Disposition: inline
+In-Reply-To: <4FBD5CC1.3060701@tedpavlic.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Provags-ID: V02:K0:WeYbNo8WKyjZhrTU4Lf777pYCaDeRQHHihIeEpsAhat
+ sGoR4TWhdRB0PGXFVQQKBlno5kMTvnGlatu41y/14d08g2Rv02
+ XlMUxpzIktdZ6T3zGzeWfgoL4B7+oL6agDFxtH8ZXiHjhYZDrA
+ SwTO/ogC+PO0+ul09XifNpFmaeHnyZk/40dVRKT3dl0ZwEjBHG
+ /vhMfkP3T78wn3A55N22jOwFW8ymPJoWDI7reAWkBeCxOTHovU
+ 70oE1Ots9rVVETSbj9z2nbcQccbth2EXmRucYPXuY2eQW3PTWc
+ p1t+qZJgy/PFZzk4EWc7XcXEV19zWhVtidxKMmF+a0AsWDyojy
+ UXl1d0S5IJae4voBEN1s=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198419>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198420>
 
-[ Sorry for the looong delay ]
+Hi,
 
-Zbigniew J=C4=99drzejewski-Szmek <zbyszek@in.waw.pl> writes:
 
-> On 04/27/2012 10:58 AM, Matthieu Moy wrote:
->> Before this patch, a character deletion has the same cost as 2 swaps=
-, or
->> 4 additions, so Git prefers suggesting a completely scrambled comman=
-d
->> name to removing a character. For example, "git tags" suggests "stag=
-e",
->> but not "tag".
->>=20
->> By setting the deletion cost to 3, we keep it higher than swaps or
->> additions, but prefer 1 deletion to 2 swaps. "git tags" now suggests
->> "tag" in addition to staged.
->
-> Hi,
-> looks sensible, but I wonder if the algorithm shouldn't be tweaked ev=
-en
-> further. I understand why 'tags' and 'stage' are similar,
-> but if I say 'tagz', git proposes (with your change), both 'stage' an=
-d
-> 'tag'. 'tag' is one deletion away, but 'stage' requires a deletion an=
-d a
-> replacement, so should loose to 'tag', I think.
+On Wed, May 23, 2012 at 05:55:13PM -0400, Ted Pavlic wrote:
+> > There's no way git-prompt.sh can be sourced without modifications t=
+o
+> > the script, unless you expect it would always be named
+> > '.git-prompt.sh' and would be on the same directory, which many
+> > distributions would frown upon.
+>=20
+> So, again, seems like a good argument for building a git-gitdir into =
+git
+> proper. Maybe there are other utilities that could make use of it as
+> well...
 
-=46irst, my patch is also an improvement here since it allows showing t=
-ags
-(previously, it showed only stage). The idea for showing stage before
-tag is that the cost of deletion is greater than the cost of insertion,
-which corresponds to the hypothesis that it's more common to miss one
-character when typing than typing too many. That's probably subjective,
-but I think it makes sense.
+You mean a real git command, which does the same as __gitdir()?  I
+don't like that, because it will always require 2 fork()s and an
+exec() and would be slow on Windows.
 
---=20
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+
+Best,
+G=E1bor
