@@ -1,153 +1,198 @@
-From: Phil Hord <phil.hord@gmail.com>
-Subject: Re: [PATCH v5 2/2] submodule: fix handling of relative superproject
- origin URLs
-Date: Thu, 24 May 2012 14:58:25 -0400
-Message-ID: <CABURp0pE7TjSOx7aWNqak4iyK5dBS-70wf0xvBU4KXtsGu5tRw@mail.gmail.com>
-References: <1337830657-16400-1-git-send-email-jon.seymour@gmail.com> <1337830657-16400-3-git-send-email-jon.seymour@gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: credential-helpers + remote-helper, starting  point?
+Date: Thu, 24 May 2012 21:20:08 +0200
+Message-ID: <vpq7gw1z8rb.fsf@bauges.imag.fr>
+References: <b13df32797edbe8f71c796dbb4dc06a5@telesun.imag.fr>
+	<20120524182110.GE3161@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, gitster@pobox.com, Jens.Lehmann@web.de
-To: Jon Seymour <jon.seymour@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 24 20:59:21 2012
+Content-Type: text/plain
+Cc: roucherj <roucherj@telesun.imag.fr>, git@vger.kernel.org,
+	kim-thuat.nguyen@ensimag.fr, pavel.volek@ensimag.fr,
+	javier.roucher-iglesias@ensimag.fr
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu May 24 21:21:13 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SXdFn-0005bC-Ry
-	for gcvg-git-2@plane.gmane.org; Thu, 24 May 2012 20:59:20 +0200
+	id 1SXdas-00050i-PX
+	for gcvg-git-2@plane.gmane.org; Thu, 24 May 2012 21:21:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756105Ab2EXS7P convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 24 May 2012 14:59:15 -0400
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:51239 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751513Ab2EXS7N convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 24 May 2012 14:59:13 -0400
-Received: by yhmm54 with SMTP id m54so129137yhm.19
-        for <git@vger.kernel.org>; Thu, 24 May 2012 11:59:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=MIYT72A9+RcFwN55Tqge9qMW5SfEawnpvwJB3RVTmII=;
-        b=BWUvmB7OcpgAIzlBX5z2EHfCcTTvJqldzLsPIKcSpxtdDEg9mv+eOHRecnabjbhDIw
-         +8G6laaKaHw5TMCqJNVwKiOZ4njPAKcPVRiE+o7IP0sNzFUza9gYAuvt+CHre6/PxbQl
-         R/Kgnk8r8AMKX24tSDh0ZcFLQfYw9dUUICPz4h0Yo3z6LYp8cxA54M1HXxSXAZl0rcq4
-         sAlc+hGMe1jwErpPZPPV8yw9Z5G8s8lP2vYTCNWJAuCg0SazTeO9WH2S2W/CSBEXGxa3
-         7sx0u9CXC81hKmSf8sJZ0ttHVcb2z3PhRAmZ7kz/hrIDwDnjv1s7ZNSJzggB/uz9NK14
-         Blrg==
-Received: by 10.60.27.134 with SMTP id t6mr407889oeg.70.1337885952897; Thu, 24
- May 2012 11:59:12 -0700 (PDT)
-Received: by 10.182.67.168 with HTTP; Thu, 24 May 2012 11:58:25 -0700 (PDT)
-In-Reply-To: <1337830657-16400-3-git-send-email-jon.seymour@gmail.com>
+	id S934077Ab2EXTU0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 May 2012 15:20:26 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:45760 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S934315Ab2EXTUW (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 May 2012 15:20:22 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id q4OJC9ix003749
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Thu, 24 May 2012 21:12:09 +0200
+Received: from bauges.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1SXdZx-0007HR-Ma; Thu, 24 May 2012 21:20:09 +0200
+In-Reply-To: <20120524182110.GE3161@sigill.intra.peff.net> (Jeff King's
+	message of "Thu, 24 May 2012 14:21:10 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.93 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Thu, 24 May 2012 21:12:10 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: q4OJC9ix003749
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1338491534.35225@uT/an5CzrietyGwQ9Dr0Aw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198408>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198409>
 
-On Wed, May 23, 2012 at 11:37 PM, Jon Seymour <jon.seymour@gmail.com> w=
-rote:
-> -# Resolve relative url by appending to parent's url
-> +# Resolve relative url by appending the submodule url
-> +# to the superproject's origin URL
-> +#
-> +# If the origin URL is itself a relative URL prepend
-> +# an additional prefix, if present, that represents
-> +# the relative path from the submodule's working tree
-> +# to the superprojects' working tree.
-> +#
-> +# This behaviour is required to ensure that the origin URL
+Jeff King <peff@peff.net> writes:
 
-"Required behavior" always seems overstated to me when I
-read it in comments and so I tend to distrust it.  I'd prefer to
-see "This behaviour is intended to ensure..."  But this is
-only my personal preference.
+>   https://github.com/git/git/blob/master/Documentation/technical/api-credentials.txt
 
+I just re-read that document (I had a quick glance only before), and
+started to understand. I think the document really lacks the "big
+picture". I took time to understand whether the API was to call
+credential helpers, or to write a new one. Actually, there are two
+"API": the C one, and the specification of what may flow on the pipe
+between the two processes.
 
-> +# of a submodule, when relative, is relative to the
-> +# submodule's work tree and not to the superproject's work tree.
-> +#
-> =A0resolve_relative_url ()
-> =A0{
-> =A0 =A0 =A0 =A0remote=3D$(get_default_remote)
-> =A0 =A0 =A0 =A0remoteurl=3D$(git config "remote.$remote.url") ||
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0remoteurl=3D$(pwd) # the repository is=
- its own authoritative upstream
-> =A0 =A0 =A0 =A0url=3D"$1"
-> + =A0 =A0 =A0 up_path=3D"$2"
-> +
-> + =A0 =A0 =A0 #
-> + =A0 =A0 =A0 # ensure all relative paths begin with ./ to enable
+Perhaps something like this should be added:
 
-Are we talking about remote urls or local filesystem paths?  I think th=
-is
-is all confusing enough without the comments also using terminology
-inconsistently.  Would it be more correct to say "all relatiive urls" h=
-ere?
-Or is this function only interested in local filesystem paths?
+Subject: [PATCH] credential-helper documentation: show the big picture first
 
-I realize that urls are paths of a different nature.  I pick this nit
-only in the cause of clarity.
+---
+ Documentation/technical/api-credentials.txt |   47 +++++++++++++++++++++++++--
+ 1 file changed, 44 insertions(+), 3 deletions(-)
 
-> + =A0 =A0 =A0 # selection relative branch of subsequent case "$remote=
-url"
-> + =A0 =A0 =A0 # statement.
-> + =A0 =A0 =A0 #
-> + =A0 =A0 =A0 # rewrites foo/bar to ./foo/bar but leaves /foo, :foo .=
-/foo
-> + =A0 =A0 =A0 # and ../foo untouched.
-> + =A0 =A0 =A0 #
+diff --git a/Documentation/technical/api-credentials.txt b/Documentation/technical/api-credentials.txt
+index 21ca6a2..5a872c0 100644
+--- a/Documentation/technical/api-credentials.txt
++++ b/Documentation/technical/api-credentials.txt
+@@ -6,8 +6,40 @@ password credentials from the user (even though credentials in the wider
+ world can take many forms, in this document the word "credential" always
+ refers to a username and password pair).
+ 
++When a function in Git or one of its remote-helpers needs to obtain
++credentials (either by asking the user or by fetching from a store),
++it can call the functions in the C API. These functions will fork a
++new process, and communicate with it by passing command-line arguments
++and then communicating through a pipe (see 'Credential Helpers'
++below). The credential helper process will be in charge of actually
++prompting the user and/or storing and fetching the credentials.
++
++For example, the execution of a command connecting to an HTTP server
++and using the credential helper "cache" will have the following
++structure:
++
++------------
+++-----+ -----> +-----------------+
++| git |  pipe  | git remote-http | --- to HTTP server --->
+++-----+ <----- +-----------------+
++                    ^      |
++                    | pipe |
++                    |      v
++             +----------------------+
++             | git credential-cache |
++             +----------------------+
++------------
++
++git remote-http will take care of contacting the HTTP server, do the
++actual authentication and see if it's accepted by the server. The
++credential helper will deal with the credential store (which can be
++done by contacting a keyring daemon) and the prompting if needed.
++
++C API
++-----
++
+ Data Structures
+----------------
++~~~~~~~~~~~~~~~
+ 
+ `struct credential`::
+ 
+@@ -28,7 +60,7 @@ This struct should always be initialized with `CREDENTIAL_INIT` or
+ 
+ 
+ Functions
+----------
++~~~~~~~~~
+ 
+ `credential_init`::
+ 
+@@ -72,7 +104,7 @@ Functions
+ 	Parse a URL into broken-down credential fields.
+ 
+ Example
+--------
++~~~~~~~
+ 
+ The example below shows how the functions of the credential API could be
+ used to login to a fictitious "foo" service on a remote host:
+@@ -130,6 +162,9 @@ int foo_login(struct foo_connection *f)
+ Credential Helpers
+ ------------------
+ 
++Choosing the credential helper command
++~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
++
+ Credential helpers are programs executed by git to fetch or save
+ credentials from and to long-term storage (where "long-term" is simply
+ longer than a single git process; e.g., credentials may be stored
+@@ -176,6 +211,9 @@ users by naming their program "git-credential-$NAME", and putting it in
+ the $PATH or $GIT_EXEC_PATH during installation, which will allow a user
+ to enable it with `git config credential.helper $NAME`.
+ 
++Credential helper command-line arguments
++~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
++
+ When a helper is executed, it will have one "operation" argument
+ appended to its command line, which is one of:
+ 
+@@ -191,6 +229,9 @@ appended to its command line, which is one of:
+ 
+ 	Remove a matching credential, if any, from the helper's storage.
+ 
++Credential helper protocol
++~~~~~~~~~~~~~~~~~~~~~~~~~~
++
+ The details of the credential will be provided on the helper's stdin
+ stream. The credential is split into a set of named attributes.
+ Attributes are provided to the helper, one per line. Each attribute is
+-- 
+1.7.10.363.g7fcd3d.dirty
 
-In many filesystems, ":foo" and "\foo" are valid filenames.
-I suspect it is unwise to employ them and expect them not
-to cause trouble, so I don't know if we should make
-special efforts to accept them here.  But I think it
-is worth noting.
+Also, shouldn't the documentation about choosing the command name be
+moved to git-config.txt, to document credential.helper? It really seems
+to be a user documentation, not a technical one meant for Git
+developers.
 
-On the other hand, I do not know how these special
-characters are represented in urls.
+> But that is the C API, and I assume you are building on the existing
+> mediawiki helper that is written in perl.
 
-> + =A0 =A0 =A0 remoteurl=3D$(echo "$remoteurl" | sed "s|^[^/:\\.][^:]*=
-\$|./&|")
-> =A0 =A0 =A0 =A0remoteurl=3D${remoteurl%/}
-> =A0 =A0 =A0 =A0sep=3D/
-> =A0 =A0 =A0 =A0while test -n "$url"
-> @@ -45,6 +67,16 @@ resolve_relative_url ()
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0../*)
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0url=3D"${url#../}"
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0case "$remoteurl" in
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 .*/*)
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 # remov=
-e last part
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 remoteu=
-rl=3D"${remoteurl%/*}"
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 # remov=
-e redundant leading ./
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 remoteu=
-rl=3D"${remoteurl#./}"
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 # prefi=
-x path from submodule work tree to superproject work tree
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 remoteu=
-rl=3D"${up_path}${remoteurl}"
+Right.
 
-Here we seem to be talking about paths since we are concerned
-with the worktrees.  So maybe my earlier concern about "urls"
-vs. "paths" was miguided.  My head swims.
+> So I think what you really want is a "git credential" command that
+> will let scripts hook into the credential API. Something like:
+>
+>   $ git credential get https://example.com
+>   username=bob
+>   password=secret
+> [...]
 
+This is almost already done by test-credential.c indeed. But that's
+probably the simplest way to expose the C API to a perl program.
 
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 # remov=
-e trailing /.
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 remoteu=
-rl=3D"${remoteurl%/.}"
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 ;;
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0*/*)
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0remote=
-url=3D"${remoteurl%/*}"
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0;;
+> Do you guys want to try writing "git credential" as above? It might be a
+> fun side project, but I know you are also on a limited timeframe for
+> your project. I can work on it if you don't have time.
 
-I haven't tested it, but the rest of this is making more sense to me no=
-w.
+I leave it up to the students.
 
-Phil
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
