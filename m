@@ -1,53 +1,58 @@
 From: Vincent van Ravesteijn <vfr@lyx.org>
-Subject: [PATCH] Do not autosquash in case of an implied interactive rebase
-Date: Thu, 24 May 2012 13:52:55 +0000
-Message-ID: <1337867575-7212-1-git-send-email-vfr@lyx.org>
+Subject: [PATCHv2] Do not autosquash in case of an implied interactive rebase
+Date: Thu, 24 May 2012 13:57:26 +0000
+Message-ID: <1337867846-5336-1-git-send-email-vfr@lyx.org>
+References: <1337867575-7212-1-git-send-email-vfr@lyx.org>
 Cc: Vincent van Ravesteijn <vfr@lyx.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 24 15:53:35 2012
+X-From: git-owner@vger.kernel.org Thu May 24 15:57:48 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SXYTu-0002WS-7D
-	for gcvg-git-2@plane.gmane.org; Thu, 24 May 2012 15:53:34 +0200
+	id 1SXYXw-0006k9-C2
+	for gcvg-git-2@plane.gmane.org; Thu, 24 May 2012 15:57:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753788Ab2EXNx3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 May 2012 09:53:29 -0400
-Received: from mail-ee0-f46.google.com ([74.125.83.46]:45438 "EHLO
+	id S1753929Ab2EXN5k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 May 2012 09:57:40 -0400
+Received: from mail-ee0-f46.google.com ([74.125.83.46]:49548 "EHLO
 	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753381Ab2EXNx1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 May 2012 09:53:27 -0400
-Received: by eeit10 with SMTP id t10so2439318eei.19
-        for <git@vger.kernel.org>; Thu, 24 May 2012 06:53:26 -0700 (PDT)
+	with ESMTP id S1752445Ab2EXN5j (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 May 2012 09:57:39 -0400
+Received: by eeit10 with SMTP id t10so2440854eei.19
+        for <git@vger.kernel.org>; Thu, 24 May 2012 06:57:38 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer:x-gm-message-state;
-        bh=jOdnHetuo5QoHYrjB72zkAusJCEap4dAFhfEIiOjeDU=;
-        b=XuHbIiMRGcQHXzdMElJFBOn0567zQOHrIenxH3OGh3SrlsAkwEa7sS+FUJvjKzZ5Fz
-         vF6R64p4ywU4+DnoATbENrgglZbeZGxeSLJGJmTPSSY4MP/3GFPFo5CCfx7DByX3WWm6
-         4vMXkjQTsOiJRi124T150B3fI3MHum8L8tiHJhYJ7tw9W2DwH+kIdcfivKkKrBCnSeAJ
-         pXHgfUAZRtHqIE7mkpovelqE0x5osfpdlT+lEqxR91Lm4iVmNutSjlcRfKY5or1xc6nQ
-         JfCDyQlrheuoQ9/FNuIYQha5qS9rLbeTZM/WEI6nDhCuNViK13rTjT/gzjndXFuBDCRg
-         KxUA==
-Received: by 10.213.112.210 with SMTP id x18mr2220806ebp.33.1337867605863;
-        Thu, 24 May 2012 06:53:25 -0700 (PDT)
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
+         :x-gm-message-state;
+        bh=sWwbSa7OczbKJ8xOfXelbgaZFQHLFl7b63Sn70T7rp0=;
+        b=pT6fH6O7pU934hM8QsdHeXsKza+VUj/QTU1V0kXxewKmeiFFq8q8tY9MHjrGJ5+ZCS
+         m410Ds5IohLtYsgDu2S6F2CTU0eC1YtmE+AnP66d1NfEQb+VtCd6dLM00i6tQStTgPZm
+         HS2eLLJZ1gUTwtPvKU7/rDFQuxFW+MNkuuO1NeqnWh1vxgirbxUAzs4rbfbGAPdn/X1e
+         PKFvbInXl1Ha+uilUWpATt2V5wAOZgL9LdLTC8HAVMWwGQYr3R6WNgWOrSr5lWYaqYwm
+         6Pnb00wRP3pPKKt2kzORZoDqgg3m/bJf+XJVIyrZDIwnlQPVm+h5AvPkX3YRIe3sW4hV
+         aZcg==
+Received: by 10.213.108.72 with SMTP id e8mr2236979ebp.40.1337867858444;
+        Thu, 24 May 2012 06:57:38 -0700 (PDT)
 Received: from localhost (wlan-145-94-170-237.wlan.tudelft.nl. [145.94.170.237])
-        by mx.google.com with ESMTPS id s47sm1289568eef.4.2012.05.24.06.53.24
+        by mx.google.com with ESMTPS id m5sm1239239eeh.17.2012.05.24.06.57.37
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 24 May 2012 06:53:24 -0700 (PDT)
+        Thu, 24 May 2012 06:57:37 -0700 (PDT)
 X-Mailer: git-send-email 1.7.9.msysgit.0
-X-Gm-Message-State: ALoCoQkLFciXxIr/wAht6C6+/m0ndw5ucFTUJBF9s59ZNQTJRTibISX/dAQy9vSfrIzlph4lEy0D
+In-Reply-To: <1337867575-7212-1-git-send-email-vfr@lyx.org>
+X-Gm-Message-State: ALoCoQlgj5FCxX8Fg/ZkHSybiirOHbq0vuFILoOVOUQtUqmHAJcCi1qPdzTAe1Da3yuEXC7NFbQ4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198372>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198373>
 
 The option to autosquash is only used in case of an interactive rebase.
 When merges are preserved, rebase uses an interactive rebase internally,
 but in this case autosquash should still be disabled.
+
+Signed-off-by: Vincent van Ravesteijn <vfr@lyx.org>
 ---
  git-rebase.sh |    1 +
  1 files changed, 1 insertions(+), 0 deletions(-)
