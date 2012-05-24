@@ -1,55 +1,90 @@
-From: =?ISO-8859-1?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
-Subject: Re: What's cooking in git.git (May 2012, #06; Wed, 23)
-Date: Thu, 24 May 2012 07:36:58 +0200
-Message-ID: <4FBDC8FA.9050501@lsrfire.ath.cx>
-References: <7vmx4yzgce.fsf@alter.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] progress: don't print if !isatty(2).
+Date: Thu, 24 May 2012 01:45:06 -0400
+Message-ID: <20120524054506.GA3440@sigill.intra.peff.net>
+References: <1337836732-26778-1-git-send-email-apenwarr@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu May 24 07:37:14 2012
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Avery Pennarun <apenwarr@gmail.com>
+X-From: git-owner@vger.kernel.org Thu May 24 07:45:32 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SXQjZ-0002AS-C7
-	for gcvg-git-2@plane.gmane.org; Thu, 24 May 2012 07:37:13 +0200
+	id 1SXQra-0001Lc-9f
+	for gcvg-git-2@plane.gmane.org; Thu, 24 May 2012 07:45:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752465Ab2EXFhG convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 24 May 2012 01:37:06 -0400
-Received: from india601.server4you.de ([85.25.151.105]:33247 "EHLO
-	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751808Ab2EXFhF (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 May 2012 01:37:05 -0400
-Received: from [192.168.2.105] (p4FFDBBD1.dip.t-dialin.net [79.253.187.209])
-	by india601.server4you.de (Postfix) with ESMTPSA id 60EF02F8058;
-	Thu, 24 May 2012 07:37:03 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:12.0) Gecko/20120428 Thunderbird/12.0.1
-In-Reply-To: <7vmx4yzgce.fsf@alter.siamese.dyndns.org>
+	id S1752837Ab2EXFpM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 May 2012 01:45:12 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:53405
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751346Ab2EXFpL (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 May 2012 01:45:11 -0400
+Received: (qmail 24344 invoked by uid 107); 24 May 2012 05:45:34 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 24 May 2012 01:45:34 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 24 May 2012 01:45:06 -0400
+Content-Disposition: inline
+In-Reply-To: <1337836732-26778-1-git-send-email-apenwarr@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198353>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198354>
 
-Am 24.05.2012 00:24, schrieb Junio C Hamano:
-> * rs/maint-grep-F (2012-05-21) 4 commits
->    (merged to 'next' on 2012-05-23 at b24143c)
->   + grep: stop leaking line strings with -f
->   + grep: support newline separated pattern list
->   + grep: factor out do_append_grep_pat()
->   + grep: factor out create_grep_pat()
->
-> "git grep -F", unlike the case where it reads from a file, did not tr=
-eat
-> individual lines in the given pattern argument as separate patterns a=
-s it
-> should.
+On Thu, May 24, 2012 at 01:18:52AM -0400, Avery Pennarun wrote:
 
-This is not specific to -F; grep(1) accepts newline-separated pattern=20
-lists with -E etc. as well, as does git grep with the patches above.
+> If stderr isn't a tty, we shouldn't be printing incremental progress
+> messages.  In particular, this affected 'git checkout -f . >&logfile' unless
+> you provided -q.  And git-new-workdir has no way to provide -q.
 
-Ren=E9
+Makes sense to fix checkout, but...
+
+> diff --git a/progress.c b/progress.c
+> index 3971f49..4d9f416 100644
+> --- a/progress.c
+> +++ b/progress.c
+> @@ -211,9 +211,11 @@ int display_progress(struct progress *progress, unsigned n)
+>  struct progress *start_progress_delay(const char *title, unsigned total,
+>  				       unsigned percent_treshold, unsigned delay)
+>  {
+> -	struct progress *progress = malloc(sizeof(*progress));
+> +	struct progress *progress = NULL;
+> +	if (isatty(2))
+> +		progress = malloc(sizeof(*progress));
+
+This is the wrong place to put the fix. The user might have asked git to
+override the isatty(2) check and show progress anyway (e.g., "git push
+--progress"), and this would break that case.
+
+The fix has to go in builtin/checkout.c, and probably looks like this:
+
+diff --git a/builtin/checkout.c b/builtin/checkout.c
+index 3ddda34..e8c1b1f 100644
+--- a/builtin/checkout.c
++++ b/builtin/checkout.c
+@@ -343,7 +343,7 @@ static int reset_tree(struct tree *tree, struct checkout_opts *o, int worktree)
+ 	opts.reset = 1;
+ 	opts.merge = 1;
+ 	opts.fn = oneway_merge;
+-	opts.verbose_update = !o->quiet;
++	opts.verbose_update = !o->quiet && isatty(2);
+ 	opts.src_index = &the_index;
+ 	opts.dst_index = &the_index;
+ 	parse_tree(tree);
+@@ -420,7 +420,7 @@ static int merge_working_tree(struct checkout_opts *opts,
+ 		topts.update = 1;
+ 		topts.merge = 1;
+ 		topts.gently = opts->merge && old->commit;
+-		topts.verbose_update = !opts->quiet;
++		topts.verbose_update = !opts->quiet && isatty(2);
+ 		topts.fn = twoway_merge;
+ 		if (opts->overwrite_ignore) {
+ 			topts.dir = xcalloc(1, sizeof(*topts.dir));
+
+but I did not test it.
+
+-Peff
