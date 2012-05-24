@@ -1,81 +1,99 @@
-From: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
-Subject: Re: [PATCH/RFC] rebase -p: do not redo the merge, but cherry-pick
- first-parent changes
-Date: Thu, 24 May 2012 10:47:57 -0700
-Message-ID: <CAOeW2eH85+qa2PXS55_xGwH+tpMDMEK76HywfpLTYrv_Dtg49Q@mail.gmail.com>
-References: <4FBAA33D.1080703@kdbg.org>
-	<CAOeW2eE9EW3gER7ZDThGABtZ0doNuUb70DnKrnzD+OeWYLO7cQ@mail.gmail.com>
-	<7vzk8yzq35.fsf@alter.siamese.dyndns.org>
-	<CAOeW2eGvEaQYk9KODmLzZuEBu-KhKcQeL4PE-4YHwSgtP0dJfA@mail.gmail.com>
-	<7vehq9xz7a.fsf@alter.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] Avoid sorting if references are added to ref_cache in
+ order
+Date: Thu, 24 May 2012 13:49:06 -0400
+Message-ID: <20120524174906.GC3161@sigill.intra.peff.net>
+References: <1337861810-9366-1-git-send-email-mhagger@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Johannes Sixt <j6t@kdbg.org>,
-	Git Mailing List <git@vger.kernel.org>,
-	Stephen Haberman <stephen@exigencecorp.com>,
-	Andrew Wong <andrew.kw.w@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu May 24 19:48:15 2012
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Martin Fick <mfick@codeaurora.org>, git@vger.kernel.org
+To: mhagger@alum.mit.edu
+X-From: git-owner@vger.kernel.org Thu May 24 19:49:20 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SXc8o-0007fS-NM
-	for gcvg-git-2@plane.gmane.org; Thu, 24 May 2012 19:48:03 +0200
+	id 1SXc9y-0002kI-9i
+	for gcvg-git-2@plane.gmane.org; Thu, 24 May 2012 19:49:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758750Ab2EXRr6 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 24 May 2012 13:47:58 -0400
-Received: from mail-pz0-f46.google.com ([209.85.210.46]:62755 "EHLO
-	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755738Ab2EXRr5 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 24 May 2012 13:47:57 -0400
-Received: by dady13 with SMTP id y13so55891dad.19
-        for <git@vger.kernel.org>; Thu, 24 May 2012 10:47:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=iy3Mp+g0kRxXHooOaxtzVJI3Hk3YTiRg7HfEPLdhrB4=;
-        b=rpeR63G01ksPjbkHqdwKs17O9PtrFAu+eJ65XDaAZDcVUCxnwxxzVWn9pKpR5RLdpA
-         kqAxX1hmFK+6OE6iez4t9M8YyVZr9wNPz+ikTnqUqwBsdeCasq2MiSyx8MYLDqfrX18s
-         X0+fZQPvt4m179YLRwEQadGkSo3jghflr99UOCKTf8YtG0C5hJwwAHgnN3Hl9XZkciXN
-         dL0S4CrzY7vsQVS0/ZlNWdlZ64p50pfgZDta0+7reJ0XHphhbcajbPVQilrlhhMA8LEG
-         oIEXfKVp5VXfTOTlVXGi0/W0wadG20p68k8qiwRW+T/ZHh+FKex1dM8bdD1S/dEPYUjF
-         eztA==
-Received: by 10.68.225.9 with SMTP id rg9mr22980867pbc.137.1337881677107; Thu,
- 24 May 2012 10:47:57 -0700 (PDT)
-Received: by 10.68.51.130 with HTTP; Thu, 24 May 2012 10:47:57 -0700 (PDT)
-In-Reply-To: <7vehq9xz7a.fsf@alter.siamese.dyndns.org>
+	id S1757624Ab2EXRtJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 May 2012 13:49:09 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:53750
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753677Ab2EXRtI (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 May 2012 13:49:08 -0400
+Received: (qmail 29801 invoked by uid 107); 24 May 2012 17:49:34 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 24 May 2012 13:49:34 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 24 May 2012 13:49:06 -0400
+Content-Disposition: inline
+In-Reply-To: <1337861810-9366-1-git-send-email-mhagger@alum.mit.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198398>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198399>
 
-On Thu, May 24, 2012 at 10:31 AM, Junio C Hamano <gitster@pobox.com> wr=
-ote:
-> Martin von Zweigbergk <martin.von.zweigbergk@gmail.com> writes:
->
->> Yes, I've had the same idea myself. Anyway, as Johannes said, that's
->> probably something to consider for the sequencer.
->
-> Are you saying that "rebase -any-variant" and the sequencer should be=
-have
-> differently? =C2=A0It is not immediately obvious to me why it is a go=
-od idea.
+On Thu, May 24, 2012 at 02:16:50PM +0200, mhagger@alum.mit.edu wrote:
 
-That's not what I meant to say. I thought the sequencer is supposed to
-replace much of git-rebase and I thought that's what Johannes was
-referring to as well when he said not to make git-rebase too
-intelligent. I assumed the reasoning was that any work spent on
-git-rebase at this point will be thrown away once git-rebase instead
-calls into the sequencer. But I have not been very involved in the
-discussions about the sequencer, so I may very well have misunderstood
-things. Or are you saying that even if it's true that git-rebase will
-eventually call into the sequencer for much of its operation, this
-specific part (if at all implemented) does not belong in the
-sequencer?
+> The old code allowed many references to be efficiently added to a
+> single directory, because it just appended the references to the
+> containing directory unsorted without doing any searching (and
+> therefore without requiring any intermediate sorting).  But the old
+> code was inefficient when a large number of subdirectories were added
+> to a directory, because the directory always had to be searched to see
+> if the new subdirectory already existed, and this search required the
+> directory to be sorted first.  The same was repeated for every new
+> subdirectory, so the time scaled like O(N^2), where N is the number of
+> subdirectories within a single directory.
+> 
+> In practice, references are often added to the ref_cache in
+> lexicographic order, for example when reading the packed-refs file.
+> So build some intelligence into add_entry_to_dir() to optimize for the
+> case of references and/or subdirectories being added in lexicographic
+> order: if the existing entries were already sorted, and the new entry
+> comes after the last existing entry, then adjust ref_dir::sorted to
+> reflect the fact that the ref_dir is still sorted.
 
-Martin
+Thanks for a nice analysis and the patch; this definitely fixes the
+regression I was seeing.
+
+The fix feels a little bit like a hack to me. The real problem is that
+there is a mismatch in how the ref code wants to receive chunks of refs,
+and how the packed-refs code wants to feed them. The optimal way to feed
+refs would be breadth-first, giving an entire single level (say,
+"refs/remotes/*", but not "refs/remotes/*/*") at once, and then sorting
+the result. And as far as I can tell, that is what read_loose_refs does.
+
+But the packed-refs file is read sequentially, and we end up inserting
+the refs in a depth-first way, which triggers this problem. Your fix
+relies on the fact that our depth-first feed happens in sorted order,
+and we can avoid the extra sorts. But I think the problem would still
+exist if we did a depth-first feed of unsorted refs.
+
+The packed-refs file is always in sorted order. The only other source of
+feed-one-at-a-time refs seems to be clone.c:write_remote_refs. It gets
+its refs from the mapped_refs, which eventually come from the remote
+side of the connection (and git tends to list refs in sorted order).
+
+So I think in practice we are OK, but would go quadratic again if we
+ever fed an unsorted list of refs. So the right thing is probably to
+apply this patch (which makes sense _anyway_, as it is even cheaper than
+sorting afterwards when we can avoid it), and be aware of the issue for
+any future unsorted provider, and deal with it if and when it ever
+happens.
+
+> +	/* optimize for the case that entries are added in order */
+> +	if (dir->nr == 1 ||
+> +	    (dir->nr == dir->sorted + 1 &&
+> +	     strcmp(dir->entries[dir->nr - 2]->name,
+> +		    dir->entries[dir->nr - 1]->name) < 0))
+> +		dir->sorted = dir->nr;
+
+Technically we would still be sorted if strcmp(...) == 0. But I guess it
+probably doesn't matter, as we shouldn't ever be adding duplicates here.
+
+-Peff
