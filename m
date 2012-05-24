@@ -1,72 +1,104 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH/RFC] rebase -p: do not redo the merge, but cherry-pick
- first-parent changes
-Date: Thu, 24 May 2012 13:09:59 -0700
-Message-ID: <7vpq9twdbc.fsf@alter.siamese.dyndns.org>
-References: <4FBAA33D.1080703@kdbg.org>
- <CAOeW2eE9EW3gER7ZDThGABtZ0doNuUb70DnKrnzD+OeWYLO7cQ@mail.gmail.com>
- <7vzk8yzq35.fsf@alter.siamese.dyndns.org>
- <CAOeW2eGvEaQYk9KODmLzZuEBu-KhKcQeL4PE-4YHwSgtP0dJfA@mail.gmail.com>
- <7vehq9xz7a.fsf@alter.siamese.dyndns.org>
- <CAOeW2eH85+qa2PXS55_xGwH+tpMDMEK76HywfpLTYrv_Dtg49Q@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: t4014 broken by 43ae9f47ab: format-patch: use default email for
+ generating message ids
+Date: Thu, 24 May 2012 16:15:53 -0400
+Message-ID: <20120524201553.GA19990@sigill.intra.peff.net>
+References: <4FBE2335.2090903@jpk.com>
+ <20120524171640.GB3161@sigill.intra.peff.net>
+ <7vtxz5wdg8.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Sixt <j6t@kdbg.org>,
-	Git Mailing List <git@vger.kernel.org>,
-	Stephen Haberman <stephen@exigencecorp.com>,
-	Andrew Wong <andrew.kw.w@gmail.com>
-To: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 24 22:10:17 2012
+Content-Type: text/plain; charset=utf-8
+Cc: Michael Haggerty <haggerty@jpk.com>,
+	git discussion list <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu May 24 22:16:01 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SXeMT-0005KW-2d
-	for gcvg-git-2@plane.gmane.org; Thu, 24 May 2012 22:10:17 +0200
+	id 1SXeS0-0004lp-F9
+	for gcvg-git-2@plane.gmane.org; Thu, 24 May 2012 22:16:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758619Ab2EXUKL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 May 2012 16:10:11 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64277 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754070Ab2EXUKJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 May 2012 16:10:09 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2D6DC880D;
-	Thu, 24 May 2012 16:10:09 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=evjmziMDF7Bk/jrL1AVhOroFtTc=; b=DfsDVK
-	Cud1IHi0CGKlJaG5zhP20Ouskb5UX2UHSlLvKxsqaWn6P4pt42nsx4tyQXPXwNkq
-	PTRF+yuMN97TPCuU9SfHeI6fZWpZQFrPm90MhDQ1yvCABvV/kQqcKDpjmGP/CvVv
-	/OU8QKfdUZfLDc6DgBkaG0nSEo+W2DWuEVBGk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Prs8GA/6h2Tnho+34CEImtd//gaGUMXP
-	BwpHEwS6poOKbt0sj27I5tageviGW3hFyAOCwceGjzgQ+Rjn8HvWjr6AhChizeO8
-	NaYv4/LhpU9Mskw2dX3p+GIkU2h6U+PhjebIv+Clv/eQ82H1dLWdjGEt8x2unYk4
-	x5yQaWldhgg=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 24C4E880C;
-	Thu, 24 May 2012 16:10:09 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9B0E68807; Thu, 24 May 2012
- 16:10:07 -0400 (EDT)
-In-Reply-To: <CAOeW2eH85+qa2PXS55_xGwH+tpMDMEK76HywfpLTYrv_Dtg49Q@mail.gmail.com> (Martin
- von Zweigbergk's message of "Thu, 24 May 2012 10:47:57 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 7541F76E-A5DC-11E1-AD18-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1758601Ab2EXUP4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 May 2012 16:15:56 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:54165
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756132Ab2EXUPz (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 May 2012 16:15:55 -0400
+Received: (qmail 31876 invoked by uid 107); 24 May 2012 20:16:22 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 24 May 2012 16:16:22 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 24 May 2012 16:15:53 -0400
+Content-Disposition: inline
+In-Reply-To: <7vtxz5wdg8.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198414>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198415>
 
-Martin von Zweigbergk <martin.von.zweigbergk@gmail.com> writes:
+On Thu, May 24, 2012 at 01:07:03PM -0700, Junio C Hamano wrote:
 
-> ... I assumed the reasoning was that any work spent on
-> git-rebase at this point will be thrown away once git-rebase instead
-> calls into the sequencer....
+> > The only setup that _would_ care is if the generated default is bogus
+> > and you set $GIT_COMMITTER_EMAIL in the environment and relied on that
+> > to get a sane value. Which is exactly what the test environment does.
+> 
+> Or they worked to create their series in a good machine, pull it down to
+> another machine during their lunch break, and run format-patch to send it
+> out after the final eyeballing.  Perhaps they are not supposed to be
+> working on the project in question during the day at work, so the work
+> machine does not have user.email set up correctly yet.
 
-Ah, sorry I mis-read you.
+True. Although the chances that they have set GIT_COMMITTER_EMAIL in
+their environment seem unlikely in that case. In other words, it was
+broken before, and it is broken now.
+
+> > The question is, is what it is doing sane and something we should care
+> > about? Or is the test broken (it fails to parse the message-id that
+> > contains ".(none)", but I am not even sure that is intentional and not
+> > simply lazy regex writing in the test).
+> 
+> I doubt that it was carefully written to try to exclude ".(none)".
+> 
+> It somewhat curious---it seems to want to grab everything after "<" up to
+> the first occurrence of ">"---why isn't this pattern matching?
+
+I think it is even grosser than that. We follow-up that match with a
+search-and-replace using the message-ids we have found as regular
+expressions, but we do not bother to quote them. So the ()
+metacharacters get interpreted as regular expressions. I suspect
+something like this would fix it:
+
+diff --git a/t/t4014-format-patch.sh b/t/t4014-format-patch.sh
+index b473b6d..3171c06 100755
+--- a/t/t4014-format-patch.sh
++++ b/t/t4014-format-patch.sh
+@@ -251,7 +251,7 @@ check_threading () {
+ 		}
+ 		if ($printing) {
+ 			$h{$1}=$i++ if (/<([^>]+)>/ and !exists $h{$1});
+-			for $k (keys %h) {s/$k/$h{$k}/};
++			for $k (keys %h) {s/\Q$k\E/$h{$k}/};
+ 			print;
+ 		}
+ 		print "---\n" if /^From /i;
+
+> > It also strikes me as a little ugly that this code path
+> > needs to care about $GIT_COMMITTER_EMAIL at all.
+> 
+> Do you mean "why committer and not author"?  It primarily is because we
+> want to see "who is this person who wants a unique token tied to his
+> identity" and author and committer ident are both equally reasonable
+> choices.  But we have picked to use committer in these cases long time
+> ago.
+> 
+> If you mean "why environment and not an API call?", then I would have to
+> agree.  ident_committer_email() call, that returns a sanitized version,
+> would have been a natural way to write this, if it were available.
+
+I meant the latter. There is no such call, but I can make one. Let me
+see how awkward it is.
+
+-Peff
