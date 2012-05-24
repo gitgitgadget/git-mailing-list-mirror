@@ -1,164 +1,103 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: remove_duplicates() in builtin/fetch-pack.c is O(N^2)
-Date: Thu, 24 May 2012 14:05:16 +0200
-Message-ID: <4FBE23FC.5070405@alum.mit.edu>
-References: <4FB9F92D.8000305@alum.mit.edu> <20120521174525.GA22643@sigill.intra.peff.net> <20120521221417.GA22664@sigill.intra.peff.net> <20120521235219.GA5589@sigill.intra.peff.net> <4FBB0F21.5080608@alum.mit.edu> <20120522041123.GA9972@sigill.intra.peff.net> <4FBB3D2B.4010300@alum.mit.edu> <20120522073740.GA10093@sigill.intra.peff.net> <4FBB9480.4010407@alum.mit.edu> <20120522173355.GC11600@sigill.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Martin Fick <mfick@codeaurora.org>,
-	git discussion list <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu May 24 14:12:32 2012
+From: mhagger@alum.mit.edu
+Subject: [PATCH] Avoid sorting if references are added to ref_cache in order
+Date: Thu, 24 May 2012 14:16:50 +0200
+Message-ID: <1337861810-9366-1-git-send-email-mhagger@alum.mit.edu>
+Cc: Jeff King <peff@peff.net>, Martin Fick <mfick@codeaurora.org>,
+	git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu May 24 14:17:10 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SXWu3-0002uC-Ez
-	for gcvg-git-2@plane.gmane.org; Thu, 24 May 2012 14:12:27 +0200
+	id 1SXWyY-00085Y-1m
+	for gcvg-git-2@plane.gmane.org; Thu, 24 May 2012 14:17:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756551Ab2EXMMX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 May 2012 08:12:23 -0400
-Received: from ALUM-MAILSEC-SCANNER-2.MIT.EDU ([18.7.68.13]:50353 "EHLO
-	alum-mailsec-scanner-2.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754595Ab2EXMMW (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 24 May 2012 08:12:22 -0400
-X-Greylist: delayed 421 seconds by postgrey-1.27 at vger.kernel.org; Thu, 24 May 2012 08:12:22 EDT
-X-AuditID: 1207440d-b7f336d00000097b-a0-4fbe23ff444b
+	id S1756560Ab2EXMRA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 May 2012 08:17:00 -0400
+Received: from ALUM-MAILSEC-SCANNER-6.MIT.EDU ([18.7.68.18]:64750 "EHLO
+	alum-mailsec-scanner-6.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753763Ab2EXMQ7 (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 24 May 2012 08:16:59 -0400
+X-AuditID: 12074412-b7f1c6d00000092d-1d-4fbe26ba33a6
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-2.mit.edu (Symantec Messaging Gateway) with SMTP id BA.9D.02427.FF32EBF4; Thu, 24 May 2012 08:05:19 -0400 (EDT)
-Received: from [192.168.101.152] (ssh.berlin.jpk.com [212.222.128.135])
+	by alum-mailsec-scanner-6.mit.edu (Symantec Messaging Gateway) with SMTP id 14.02.02349.AB62EBF4; Thu, 24 May 2012 08:16:58 -0400 (EDT)
+Received: from michael.berlin.jpk.com (ssh.berlin.jpk.com [212.222.128.135])
 	(authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id q4OC5Hlm010846
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id q4OCGqcO013494
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Thu, 24 May 2012 08:05:18 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:12.0) Gecko/20120430 Thunderbird/12.0.1
-In-Reply-To: <20120522173355.GC11600@sigill.intra.peff.net>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrOKsWRmVeSWpSXmKPExsUixO6iqPtfeZ+/QXujukXXlW4mi4beK8wW
-	99+vY7L40dLD7MDicbmvl8njWe8eRo+Ll5Q9Pm+SC2CJ4rZJSiwpC85Mz9O3S+DOOHP3OFPB
-	A/mKOyseszUwrpPsYuTkkBAwkZi7dAU7hC0mceHeerYuRi4OIYHLjBKfVi9hgXCOM0l0rPvH
-	BlLFK6AtsfzpR1YQm0VAVeLUuk1MIDabgK7Eop5mIJuDQ1QgTGL1Aw2IckGJkzOfsIDYIgKy
-	Et8Pb2QEsZkF2hklzu+1A7GFBZwkVvyYygqxazGzRMPuBWDzOQWsJY4duMEE0WAm0bW1C6pZ
-	XmL72znMExgFZiHZMQtJ2SwkZQsYmVcxyiXmlObq5iZm5hSnJusWJyfm5aUW6Rrp5WaW6KWm
-	lG5ihAQ07w7G/+tkDjEKcDAq8fB2Cez1F2JNLCuuzD3EKMnBpCTKy6W0z1+ILyk/pTIjsTgj
-	vqg0J7X4EKMEB7OSCG+TFFCONyWxsiq1KB8mJc3BoiTOq7ZE3U9IID2xJDU7NbUgtQgmK8PB
-	oSTBaw+MXCHBotT01Iq0zJwShDQTByfIcC4pkeLUvJTUosTSkox4UKzGFwOjFSTFA7TXFKSd
-	t7ggMRcoCtF6ilGX48rvidcZhVjy8vNSpcR51UGKBECKMkrz4FbA0tcrRnGgj4V5VUGqeICp
-	D27SK6AlTEBLtjzeC7KkJBEhJdXAWJBjE568Qjtsx7rb/j/9RFi3PRM8k3y24cmDC5OqNoYo
-	sUcfF33vcz/TztDz2tpDetciFd7u+7TH9HXKYw2DdcsXXfC4w+OcILK1/2DGboWf 
+	Thu, 24 May 2012 08:16:57 -0400
+X-Mailer: git-send-email 1.7.10
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrHIsWRmVeSWpSXmKPExsUixO6iqLtLbZ+/wdZ/ZhZdV7qZLBp6rzBb
+	3H+/jsni9or5zBY/WnqYHVg9/r7/wORxua+XyeNZ7x5Gj4uXlD0+b5ILYI3itklKLCkLzkzP
+	07dL4M7YeMq94I5AxZtlfA2M53m7GDk5JARMJObs/cMGYYtJXLi3Hsjm4hASuMwoceb7ImYI
+	5wyTxO7/x5lBqtgEpCReNvawg9giAmoSE9sOsYAUMQt0MEq8/HiGCSQhLOAjsfVIK1gDi4Cq
+	xLLGpYwgNq+As8TNneuZIdbJSzy938c2gZF7ASPDKka5xJzSXN3cxMyc4tRk3eLkxLy81CJd
+	M73czBK91JTSTYyQEBHawbj+pNwhRgEORiUe3i6Bvf5CrIllxZW5hxglOZiURHmjVff5C/El
+	5adUZiQWZ8QXleakFh9ilOBgVhLhbZICyvGmJFZWpRblw6SkOViUxHl/Llb3ExJITyxJzU5N
+	LUgtgsnKcHAoSfD6AGNBSLAoNT21Ii0zpwQhzcTBCSK4QDbwAG3gAinkLS5IzC3OTIcoOsWo
+	KCXO+w3kLAGQREZpHtwAWDS/YhQH+keY1wSknQeYCOC6XwENZgIavOXxXpDBJYkIKakGRmG7
+	vwwx20+tyV/LZJnS0PGz3szzRdNdvfxbFV+NJ0dInjto5K2zlz8uznDf46wHK1dfLPV91JJk
+	+lt4nfVWNkYBYZG6me8L7daHS4nZ3L5z9FLMklYrzuAL0msYVjycefRA9v6/qydV/lvyT2OK
+	fedhicUP5u4XuTDhSL/KuvuHFMzzbvf5TFZiKc5INNRiLipOBAC9taQnwQIAAA== 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198367>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198368>
 
-On 05/22/2012 07:33 PM, Jeff King wrote:
-> On Tue, May 22, 2012 at 03:28:32PM +0200, Michael Haggerty wrote:
->
->>> When I try it with both 'next' and v1.7.10, I see that the latter is
->>> much faster.  I did my tests with a warm cache, but the interesting
->>> number is the CPU time, which is quite different.
->>
->> I cannot reproduce anything as big as the performance regression that
->> you see.  I did find a regression 9.5 s ->  10.1 s caused by
->>
->> 5fa044184 find_containing_dir(): use strbuf in implementation of this
->> function
->>
->> It is fixed by the patch that I just sent to the mailing list [1],
->> which sizes the strbuf in that function to strlen(refname) instead of
->> PATH_MAX.  Since your experiments suggest that the performance
->> regression is related to the size of the repository contents, it
->> could be that the same test produces more memory pressure on your
->> system and therefore a larger effect.  Please try the patch and tell
->> me if it fixes the problem for you.
->
-> That patch drops about a second off of the slow case, but the main
-> problem still remains. Just to be sure we are both doing the exact same
-> thing, here is a complete reproduction recipe:
->
->    GIT=/path/to/your/git/checkout
->    RAILS=/path/to/unpacked/rails.git
->
->    cd $GIT&&
->    git checkout 432ad41e60cedb87ceec446ab034d46a53f5f9d8^&&
->    make&&
->
->    cd $RAILS&&
->    time $GIT/bin-wrappers/git fetch . refs/*:refs/*&&
->
->    cd $GIT&&
->    git checkout 432ad41e60cedb87ceec446ab034d46a53f5f9d8&&
->    make&&
->
->    cd $RAILS&&
->    time $GIT/bin-wrappers/git fetch . refs/*:refs/*
->
-> produces:
->
->    [before]
->    real    0m9.128s
->    user    0m9.369s
->    sys     0m0.976s
->
->    [after]
->    real    0m15.926s
->    user    0m16.181s
->    sys     0m0.984s
->
-> I don't think memory pressure is involved. The git process maxes out at
-> ~300M, and this machine has 7.5G available.
->
-> I wonder why we are getting different results. Could it be compilation
-> options? As I mentioned, I compile with -O0, but I got similar results
-> with -O3.
+From: Michael Haggerty <mhagger@alum.mit.edu>
 
-Thanks for the idiot-proof reproduction steps.  I don't know what I was 
-doing differently last time, but now I can reproduce your slowdown.
+The old code allowed many references to be efficiently added to a
+single directory, because it just appended the references to the
+containing directory unsorted without doing any searching (and
+therefore without requiring any intermediate sorting).  But the old
+code was inefficient when a large number of subdirectories were added
+to a directory, because the directory always had to be searched to see
+if the new subdirectory already existed, and this search required the
+directory to be sorted first.  The same was repeated for every new
+subdirectory, so the time scaled like O(N^2), where N is the number of
+subdirectories within a single directory.
 
-The thing that triggers the problem is a reference directory 
-("refs/remotes/8514/pull/") with 3810 sub-namespaces 
-("refs/remotes/8514/pull/1091", "refs/remotes/8514/pull/1092", etc), 
-each subnamespace containing only one or two references.  It wouldn't be 
-a problem having so many *references* in a namespace, because references 
-are just added to the end of the directory unsorted, and typically only 
-sorted once after all of them have been added.  But every time that a 
-sub-namespace is accessed, the namespace has to be searched to see if 
-that sub-namespace already exists.  The searching requires the namespace 
-to be sorted.  So, for example, when adding the following sequence of 
-references:
+In practice, references are often added to the ref_cache in
+lexicographic order, for example when reading the packed-refs file.
+So build some intelligence into add_entry_to_dir() to optimize for the
+case of references and/or subdirectories being added in lexicographic
+order: if the existing entries were already sorted, and the new entry
+comes after the last existing entry, then adjust ref_dir::sorted to
+reflect the fact that the ref_dir is still sorted.
 
-1. refs/remotes/8514/pull/1091/head
-2. refs/remotes/8514/pull/1091/merge
-3. refs/remotes/8514/pull/1092/head
-4. refs/remotes/8514/pull/1092/merge
-5. refs/remotes/8514/pull/1093/head
-6. refs/remotes/8514/pull/1093/merge
+Thanks to Peff for pointing out the performance regression that
+inspired this change.
 
-At step 1, sub-namespace "refs/remotes/8514/pull/1091/" is added to 
-"refs/remotes/8514/pull/".  This makes the code think that 
-"refs/remotes/8514/pull/" is unsorted.
+Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
+---
+This patch can be applied to either mh/ref-api or next.  It should fix
+the performance regression discovered by Peff [1].
 
-Step 2 is not problematic; the new references is added to 
-"refs/remotes/8514/pull/1091/", but adding a reference doesn't require 
-the ref_dir to be sorted.
+[1] http://article.gmane.org/gmane.comp.version-control.git/198163
 
-At step 3, namespace "refs/remotes/8514/pull/" is first checked to see 
-if sub-namespace "refs/remotes/8514/pull/1092/" already exists.  This 
-search requires namespace "refs/remotes/8514/pull/" to be sorted because 
-step 1 caused it to be considered unsorted.
+ refs.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
-Again at step 5, namespace "refs/remotes/8514/pull/" needs to be sorted, 
-and so on every time a subnamespace is added.
-
-I will submit a patch shortly.
-
-Michael
-
+diff --git a/refs.c b/refs.c
+index 09322fe..98f6425 100644
+--- a/refs.c
++++ b/refs.c
+@@ -208,6 +208,12 @@ static void add_entry_to_dir(struct ref_dir *dir, struct ref_entry *entry)
+ {
+ 	ALLOC_GROW(dir->entries, dir->nr + 1, dir->alloc);
+ 	dir->entries[dir->nr++] = entry;
++	/* optimize for the case that entries are added in order */
++	if (dir->nr == 1 ||
++	    (dir->nr == dir->sorted + 1 &&
++	     strcmp(dir->entries[dir->nr - 2]->name,
++		    dir->entries[dir->nr - 1]->name) < 0))
++		dir->sorted = dir->nr;
+ }
+ 
+ /*
 -- 
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
+1.7.10
