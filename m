@@ -1,66 +1,65 @@
-From: Vicent Marti <vicent@github.com>
-Subject: Re: [Announce] libgit2 v0.17.0
-Date: Thu, 24 May 2012 03:57:24 +0200
-Message-ID: <CAFFjANSyRbm=0Q+EFXL8HGJnr=4CBW6phzeEjaCb26wVf4EaXg@mail.gmail.com>
-References: <CAFFjANQ_kfRc8LhZD4nxeYmRML6i5dQEskUv3Caz7GmnvZi2Jw@mail.gmail.com>
- <nngy5oi3o37.fsf@transit.us.cray.com> <7v8vgi263h.fsf@alter.siamese.dyndns.org>
+From: Jon Seymour <jon.seymour@gmail.com>
+Subject: Re: [PATCH v4 2/2] submodule: fix handling of relative superproject
+ origin URLs
+Date: Thu, 24 May 2012 12:32:31 +1000
+Message-ID: <CAH3AnrqekvFL3qvRh7HFCENG8-kO5xxnG113_xPqnhjHgxYtzA@mail.gmail.com>
+References: <1337791554-31294-1-git-send-email-jon.seymour@gmail.com>
+	<1337791554-31294-3-git-send-email-jon.seymour@gmail.com>
+	<4FBD5B8C.60605@web.de>
+	<CAH3AnrrYm_KeP64yDc+gujkYqj-kiuLQ4URHX5Z57vj5XXLfKw@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: dag@cray.com, libgit2@librelist.org, git-dev@github.com,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu May 24 03:58:20 2012
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Jens Lehmann <Jens.Lehmann@web.de>
+X-From: git-owner@vger.kernel.org Thu May 24 04:32:51 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SXNJh-00053U-H8
-	for gcvg-git-2@plane.gmane.org; Thu, 24 May 2012 03:58:17 +0200
+	id 1SXNqx-0002qR-6b
+	for gcvg-git-2@plane.gmane.org; Thu, 24 May 2012 04:32:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755110Ab2EXB6I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 May 2012 21:58:08 -0400
-Received: from mail-vc0-f174.google.com ([209.85.220.174]:65530 "EHLO
-	mail-vc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754863Ab2EXB5p (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 May 2012 21:57:45 -0400
-Received: by vcbf11 with SMTP id f11so1221254vcb.19
-        for <git@vger.kernel.org>; Wed, 23 May 2012 18:57:44 -0700 (PDT)
+	id S1755469Ab2EXCcd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 May 2012 22:32:33 -0400
+Received: from mail-wg0-f44.google.com ([74.125.82.44]:38048 "EHLO
+	mail-wg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751993Ab2EXCcc (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 May 2012 22:32:32 -0400
+Received: by wgbdr13 with SMTP id dr13so7804938wgb.1
+        for <git@vger.kernel.org>; Wed, 23 May 2012 19:32:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:from:date
-         :x-google-sender-auth:message-id:subject:to:cc:content-type;
-        bh=SoQQtNpkyuj2XoAV2ME0jerRZaqE0BqBXRbbtkFq8ew=;
-        b=w0hjnLR8gaDx6jpxEpR+VKJLFjaPGfTRW6I8c/xvcoeRPP2vtOLWgN7Y6dM6jbG7oi
-         lzoMFnDQpe7CvTuUDkzJ9wR6iSYyocj7bwc2S/scUnZ+BYYX2SQIopu+5n+ecZ0SzfRB
-         6sAo2pA4B9gJAFLNd4uJHsCfQ+8PfiL/FOLZPwQ0dmH+De+PYu0AkLcLwrb2np5qw0JN
-         pe2s78+4ubF69ka1I0/6wK0SS2D+ELCKUd9hMGgcZFyYwZbaoncw02QAP1ZVv0rNH8ge
-         W06JSw8cjgj9HZNmLLYnJ+18EHH95QgH3txFxvO1qM0E70/QOz8jrSaqyS+olER95Sso
-         Ewsw==
-Received: by 10.52.29.69 with SMTP id i5mr14010213vdh.84.1337824664442; Wed,
- 23 May 2012 18:57:44 -0700 (PDT)
-Received: by 10.52.30.104 with HTTP; Wed, 23 May 2012 18:57:24 -0700 (PDT)
-In-Reply-To: <7v8vgi263h.fsf@alter.siamese.dyndns.org>
-X-Google-Sender-Auth: ETNatrRIg5DzRzAXp-hu9ttzJ_4
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=kdPmx8tqSifNqMhCHGLgP1L0TRYr9HgsgdB4mifgD7M=;
+        b=zjyRK7wdEfboTTmKGSzwXX8MiTTZWqCHAPlGR9Mxo/pcuyHduwuMBVlz+gjvsBdkbh
+         v3H9j/GgAorN1ZYpIXXmxqoR2U2+lnoJkojq9hCv3s9ysRxOs2+idg1GNUAigxsdXRjn
+         YAdUw0AmF7y2ZdgyoPpR/LmBM2tGZ6JBqtlq6PkKZSSg+2kFWhMhIZ7UJFJKsDWL6fzD
+         7yyq8xKCqEPNbbtJfpONwBn7cBb9wgZHYGGCy7ENO/hgS1uqBZKSUjx0mzw5j9UbKpp7
+         Jo7k2rV12Tgz9aHc8swORTx0AhgFDe6Fux5mvBWxAotRbk3cPmGOPp4S+gcRx+HM3EjN
+         7OgA==
+Received: by 10.216.143.223 with SMTP id l73mr15299641wej.97.1337826751796;
+ Wed, 23 May 2012 19:32:31 -0700 (PDT)
+Received: by 10.180.146.166 with HTTP; Wed, 23 May 2012 19:32:31 -0700 (PDT)
+In-Reply-To: <CAH3AnrrYm_KeP64yDc+gujkYqj-kiuLQ4URHX5Z57vj5XXLfKw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198341>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198342>
 
-On Wed, May 23, 2012 at 6:51 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> I am hoping that the library would become solid enough to allow us to
-> start attempting such an experiment some day, but at the same time, I know
-> that that "some day" is not in a very near future, after having seen at
-> $DAYJOB that a certain internal tool linked with a version of libgit2
-> breaking user's trees from time to time, bugs against the internal tool
-> getting filed and then some of them getting fixed at libgit2 level, either
-> by upstreaming fix or by updating to newer snapshot of libgit2.
+On Thu, May 24, 2012 at 8:17 AM, Jon Seymour <jon.seymour@gmail.com> wrote:
+> On Thu, May 24, 2012 at 7:50 AM, Jens Lehmann <Jens.Lehmann@web.de> wrote:
+>> Am 23.05.2012 18:45, schrieb Jon Seymour:
+>> Wouldn't that better be handled in the ".*/*)" case above to avoid
+>> accidentally affecting the other cases?
+>
+> Yes, I think you are right. Thanks.
+>
 
-If you're building internal tools with libgit2 and encountering
-issues, maybe somebody from $DAYJOB could spend some of his 20% time
-in throwing us a hand pushing the library forward. That way $DAYJOB
-and the whole community would benefit.
+Turns out this case was necessary, but I don't fully understand why as
+yet. I'll work that out and see if I can avoid doing it, otherwise I
+will document why it is reasonable.
 
-Love,
-Vicent
+jon.
