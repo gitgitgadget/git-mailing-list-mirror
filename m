@@ -1,234 +1,211 @@
 From: Jon Seymour <jon.seymour@gmail.com>
-Subject: [PATCH v5 1/2] submodule: document failures handling relative superproject origin URLs
-Date: Thu, 24 May 2012 13:37:36 +1000
-Message-ID: <1337830657-16400-2-git-send-email-jon.seymour@gmail.com>
+Subject: Re: [PATCH v5 2/2] submodule: fix handling of relative superproject
+ origin URLs
+Date: Thu, 24 May 2012 13:40:42 +1000
+Message-ID: <CAH3AnrpweAah9GojN2QodTx6qW2rHE4wadxbc23zrwj=uPCP-A@mail.gmail.com>
 References: <1337830657-16400-1-git-send-email-jon.seymour@gmail.com>
-Cc: gitster@pobox.com, Jens.Lehmann@web.de,
-	Jon Seymour <jon.seymour@gmail.com>
+	<1337830657-16400-3-git-send-email-jon.seymour@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: base64
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 24 05:38:18 2012
+X-From: git-owner@vger.kernel.org Thu May 24 05:40:51 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SXOsL-00081O-DE
-	for gcvg-git-2@plane.gmane.org; Thu, 24 May 2012 05:38:09 +0200
+	id 1SXOuv-00077e-4Q
+	for gcvg-git-2@plane.gmane.org; Thu, 24 May 2012 05:40:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752406Ab2EXDiC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 May 2012 23:38:02 -0400
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:42381 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751992Ab2EXDiA (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 May 2012 23:38:00 -0400
-Received: by mail-yw0-f46.google.com with SMTP id m54so7355332yhm.19
-        for <git@vger.kernel.org>; Wed, 23 May 2012 20:38:00 -0700 (PDT)
+	id S1753562Ab2EXDko (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 May 2012 23:40:44 -0400
+Received: from mail-wg0-f44.google.com ([74.125.82.44]:34171 "EHLO
+	mail-wg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752501Ab2EXDko (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 May 2012 23:40:44 -0400
+Received: by wgbdr13 with SMTP id dr13so7847827wgb.1
+        for <git@vger.kernel.org>; Wed, 23 May 2012 20:40:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=aLpYUg8m56ifXUQAyMRF7IYjk89tDq89E9e07wZ/pao=;
-        b=nbiGxeRFBBAUx1b4GQpLjREtVl7wbK2enGkkYJMzAM7w/HJJTpF9+HF/JByhVnMwo+
-         0r+dbre5YkI/E5uF81+S4jjkbdr6W7+b1gUQXbd2tsIIV8J6cZXCUIBr7z/zirGdf+Fa
-         fCqYGpbe0G61WWfHOdeWa2qstCYbBu1udNOvtmGJaer2oj525KVbHTJXm3dBPjp3Pt3P
-         XOnZfV6YoND4GEI/StDrUJfBVm/STa79xvHTuKVLqiy+ZGgSlJ80t0hQkqaagqtnFp+x
-         /0rEvJXwgoL2FaohimDHSz6bd1JD5VPh1ODrONWGyHHpn7RVnknP2+tqN0gz6KZ5M1zG
-         LBKw==
-Received: by 10.50.236.74 with SMTP id us10mr3465656igc.29.1337830679694;
-        Wed, 23 May 2012 20:37:59 -0700 (PDT)
-Received: from ubuntu.au.ibm.com ([1.142.1.227])
-        by mx.google.com with ESMTPS id if4sm14062525igc.10.2012.05.23.20.37.56
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 23 May 2012 20:37:58 -0700 (PDT)
-X-Mailer: git-send-email 1.7.10.2.649.g5ca7d80
-In-Reply-To: <1337830657-16400-1-git-send-email-jon.seymour@gmail.com>
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :content-type:content-transfer-encoding;
+        bh=TTkjPZ0UDiUiyF4mjQl1ovL34lfMoAuijlMWoV63wxY=;
+        b=ftGddSlk89pESeJyKaMbaWYiOYuZLpkSzVwXXVUljOFvAfZ5llIDpP+vtf3WWLjB3m
+         pqDY/9mA5Nf/rwB9LwfO5ld+ojhPBcZtfmdnisVTpdpiy2DBf3YFLrdQGjGEwdI6hx4W
+         CJp8Z5DgSVlJKYa/zp2SIDiSL152fBIKlHmC2bIAjkMGl1/kezyRMpbuEedc7MUi4YDi
+         pdclYQcyKHerKZ6LQPNktw1hO/U4fnlXVb+FlKXWmUb4yiyKnGzwxxxfZNZn0g+ySF5Y
+         piy+Rm+7EeE9kg7YVFJyu8DMOJzodAmzDVHH0fox/zl2f3z7cEjMjKc2ANx14JHY4cxn
+         Y7tQ==
+Received: by 10.181.11.137 with SMTP id ei9mr51210191wid.21.1337830842682;
+ Wed, 23 May 2012 20:40:42 -0700 (PDT)
+Received: by 10.180.146.166 with HTTP; Wed, 23 May 2012 20:40:42 -0700 (PDT)
+In-Reply-To: <1337830657-16400-3-git-send-email-jon.seymour@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198346>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198347>
 
-These tests document how submodule sync and init handle various
-kinds of relative super project origin URLs.  The submodule URL
-path is ../subrepo.
-
-6 cases are documented:
-  foo
-  foo/bar
-  ./foo
-  ./foo/bar
-  ../foo
-  ../foo/bar
-
-Signed-off-by: Jon Seymour <jon.seymour@gmail.com>
----
- t/t7400-submodule-basic.sh | 62 +++++++++++++++++++++++++++++++++++++
- t/t7403-submodule-sync.sh  | 76 +++++++++++++++++++++++++++++++++++++++++++++-
- 2 files changed, 137 insertions(+), 1 deletion(-)
-
-diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
-index 81827e6..08b8d2f 100755
---- a/t/t7400-submodule-basic.sh
-+++ b/t/t7400-submodule-basic.sh
-@@ -507,6 +507,68 @@ test_expect_success 'relative path works with user@host:path' '
- 	)
- '
- 
-+test_expect_failure 'relative path works with foo' '
-+	(
-+		cd reltest &&
-+		cp pristine-.git-config .git/config &&
-+		git config remote.origin.url foo &&
-+		# actual: fails with an error
-+		git submodule init &&
-+		test "$(git config submodule.sub.url)" = ./subrepo
-+	)
-+'
-+
-+test_expect_success 'relative path works with foo/bar' '
-+	(
-+		cd reltest &&
-+		cp pristine-.git-config .git/config &&
-+		git config remote.origin.url foo/bar &&
-+		git submodule init &&
-+		test "$(git config submodule.sub.url)" = foo/subrepo
-+	)
-+'
-+
-+test_expect_success 'relative path works with ./foo' '
-+	(
-+		cd reltest &&
-+		cp pristine-.git-config .git/config &&
-+		git config remote.origin.url ./foo &&
-+		git submodule init &&
-+		test "$(git config submodule.sub.url)" = ./subrepo
-+	)
-+'
-+
-+test_expect_failure 'relative path works with ./foo/bar' '
-+	(
-+		cd reltest &&
-+		cp pristine-.git-config .git/config &&
-+		git config remote.origin.url ./foo/bar &&
-+		git submodule init &&
-+		#actual: ./foo/subrepo
-+		test "$(git config submodule.sub.url)" = foo/subrepo
-+	)
-+'
-+
-+test_expect_success 'relative path works with ../foo' '
-+	(
-+		cd reltest &&
-+		cp pristine-.git-config .git/config &&
-+		git config remote.origin.url ../foo &&
-+		git submodule init &&
-+		test "$(git config submodule.sub.url)" = ../subrepo
-+	)
-+'
-+
-+test_expect_success 'relative path works with ../foo/bar' '
-+	(
-+		cd reltest &&
-+		cp pristine-.git-config .git/config &&
-+		git config remote.origin.url ../foo/bar &&
-+		git submodule init &&
-+		test "$(git config submodule.sub.url)" = ../foo/subrepo
-+	)
-+'
-+
- test_expect_success 'moving the superproject does not break submodules' '
- 	(
- 		cd addtest &&
-diff --git a/t/t7403-submodule-sync.sh b/t/t7403-submodule-sync.sh
-index 3620215..9fa4e58 100755
---- a/t/t7403-submodule-sync.sh
-+++ b/t/t7403-submodule-sync.sh
-@@ -26,7 +26,9 @@ test_expect_success setup '
- 	(cd super-clone && git submodule update --init) &&
- 	git clone super empty-clone &&
- 	(cd empty-clone && git submodule init) &&
--	git clone super top-only-clone
-+	git clone super top-only-clone &&
-+	git clone super relative-clone &&
-+	(cd relative-clone && git submodule update --init)
- '
- 
- test_expect_success 'change submodule' '
-@@ -86,4 +88,76 @@ test_expect_success '"git submodule sync" should not vivify uninteresting submod
- 	)
- '
- 
-+test_expect_failure '"git submodule sync" handles origin URL of the form foo' '
-+	(cd relative-clone &&
-+	 git remote set-url origin foo
-+	 git submodule sync &&
-+	(cd submodule &&
-+	 #actual fails with: "cannot strip off url foo
-+	 git config remote.origin.url &&
-+	 test "$(git config remote.origin.url)" == "../submodule"
-+	)
-+	)
-+'
-+
-+test_expect_failure '"git submodule sync" handles origin URL of the form foo/bar' '
-+	(cd relative-clone &&
-+	 git remote set-url origin foo/bar
-+	 git submodule sync &&
-+	(cd submodule &&
-+	 #actual foo/submodule
-+	 git config remote.origin.url &&
-+	 test "$(git config remote.origin.url)" == "../foo/submodule"
-+	)
-+	)
-+'
-+
-+test_expect_failure '"git submodule sync" handles origin URL of the form ./foo' '
-+	(cd relative-clone &&
-+	 git remote set-url origin ./foo
-+	 git submodule sync &&
-+	(cd submodule &&
-+	 #actual ./submodule
-+	 git config remote.origin.url &&
-+	 test "$(git config remote.origin.url)" == "../submodule"
-+	)
-+	)
-+'
-+
-+test_expect_failure '"git submodule sync" handles origin URL of the form ./foo/bar' '
-+	(cd relative-clone &&
-+	 git remote set-url origin ./foo/bar
-+	 git submodule sync &&
-+	(cd submodule &&
-+	 #actual ./foo/submodule
-+	 git config remote.origin.url &&
-+	 test "$(git config remote.origin.url)" == "../foo/submodule"
-+	)
-+	)
-+'
-+
-+test_expect_failure '"git submodule sync" handles origin URL of the form ../foo' '
-+	(cd relative-clone &&
-+	 git remote set-url origin ../foo
-+	 git submodule sync &&
-+	(cd submodule &&
-+	 #actual ../submodule
-+	 git config remote.origin.url &&
-+	 test "$(git config remote.origin.url)" == "../../submodule"
-+	)
-+	)
-+'
-+
-+test_expect_failure '"git submodule sync" handles origin URL of the form ../foo/bar' '
-+	(cd relative-clone &&
-+	 git remote set-url origin ../foo/bar
-+	 git submodule sync &&
-+	(cd submodule &&
-+	 #actual ../foo/submodule
-+	 git config remote.origin.url &&
-+	 test "$(git config remote.origin.url)" == "../../foo/submodule"
-+	)
-+	)
-+'
-+
- test_done
--- 
-1.7.10.2.649.g5ca7d80
+T24gVGh1LCBNYXkgMjQsIDIwMTIgYXQgMTozNyBQTSwgSm9uIFNleW1vdXIgPGpvbi5zZXltb3Vy
+QGdtYWlsLmNvbT4gd3JvdGU6Cj4gV2hlbiB0aGUgb3JpZ2luIFVSTCBvZiB0aGUgc3VwZXJwcm9q
+ZWN0IGlzIGl0c2VsZiByZWxhdGl2ZSwgYW4gb3BlcmF0aW9uCj4gc3VjaCBhcyBnaXQgc3VibW9k
+dWxlIGFkZCwgaW5pdCBvciBzeW5jIG1heSByZXN1bHQgaW4gZWl0aGVyIHRoZQo+IHN1Ym1vZHVs
+ZS57bmFtZX0udXJsIGNvbmZpZ3VyYXRpb24gcHJvcGVydHkgb2YgdGhlIHN1cGVycHJvamVjdAo+
+IHJlZmVycmluZyB0byB0aGUgaW5jb3JyZWN0IGxvY2F0aW9uIG9yIHJlbW90ZS5vcmlnaW4udXJs
+IGNvbmZpZ3VyYXRpb24KPiBwcm9wZXJ0eSBvZiB0aGUgc3VibW9kdWxlIHJlZmVycmluZyB0byB0
+aGUgaW5jb3JyZWN0IGxvY2F0aW9uIG9yIGJvdGgKPiB0aGVzZSBjb25kaXRpb25zLiBJbiBzb21l
+IGNhc2VzLCBnaXQgc3VibW9kdWxlIGZhaWxzIHRvIHVwZGF0ZQo+IHRoZSBjb25maWd1cmF0aW9u
+IGFuZCBmYWlscyB3aXRoIGFuIGVycm9yIGNvbmRpdGlvbi4KPgo+IFRoZSBpc3N1ZSBhcmlzZXMg
+aW4gdGhlc2UgY2FzZXMgYmVjYXVzZSB0aGUgb3JpZ2luIFVSTCBvZgo+IHRoZSBzdXBlcnByb2pl
+Y3QgbmVlZHMgdG8gYmUgcHJlcGVuZGVkIHdpdGggYSBwcmVmaXggdGhhdCBuYXZpZ2F0ZXMKPiBm
+cm9tIHRoZSBzdWJtb2R1bGUgdG8gdGhlIHN1cGVycHJvamVjdCBzbyB0aGF0IHdoZW4gdGhlIHN1
+Ym1vZHVsZQo+IFVSTCBpcyBjb25jYXRlbmF0ZWQgdGhlIHJlc3VsdGluZyBVUkwgaXMgcmVsYXRp
+dmUgdG8gdGhlIHdvcmtpbmcgdHJlZQo+IG9mIHRoZSBzdWJtb2R1bGUuCj4KPiBUaGlzIGNoYW5n
+ZSBmaXhlcyBoYW5kbGluZyBmb3IgcmVsYXRpdmUgc3VwZXJwcm9qZWN0IG9yaWdpbiBVUkxzCj4g
+Zm9yIDYgY2FzZXM6Cj4gwqBmb28KPiDCoGZvby9iYXIKPiDCoC4vZm9vCj4gwqAuL2Zvby9iYXIK
+PiDCoC4uL2Zvbwo+IMKgLi4vZm9vL2Jhcgo+Cj4gSW4gZWFjaCBjYXNlLCB0aGUgY29uZmlndXJh
+dGlvbiBwcm9wZXJ0aWVzIGluIHRoZSBzdXBlcnByb2plY3Qncwo+IGNvbmZpZ3VyYXRpb24gYW5k
+IHRoZSBzdWJtb2R1bGUncyBjb25maWd1cmF0aW9uIHJlZmVyIHRvIHRoZQo+IGNvcnJlY3QsIHJl
+bGF0aXZlLCBsb2NhdGlvbiBvZiB0aGUgc3VibW9kdWxlJ3Mgb3JpZ2luIHJlcG8uIEluIGFsbCBj
+YXNlcywKPiB0aGUgY29uZmlndXJlZCBwYXRocyBhcmUgcmVsYXRpdmUgdG8gdGhlIHdvcmtpbmcg
+dHJlZXMgb2YgdGhlCj4gcmVwb3NpdG9yaWVzIGNvbnRhaW5pbmcgdGhlIGNvbmZpZ3VyYXRpb24u
+Cj4KPiBTaWduZWQtb2ZmLWJ5OiBKb24gU2V5bW91ciA8am9uLnNleW1vdXJAZ21haWwuY29tPgo+
+IC0tLQo+IMKgZ2l0LXN1Ym1vZHVsZS5zaCDCoCDCoCDCoCDCoCDCoCB8IDU3ICsrKysrKysrKysr
+KysrKysrKysrKysrKysrKysrKysrKysrKysrKysrLS0tLS0KPiDCoHQvdDc0MDAtc3VibW9kdWxl
+LWJhc2ljLnNoIHwgwqA2ICsrLS0tCj4gwqB0L3Q3NDAzLXN1Ym1vZHVsZS1zeW5jLnNoIMKgfCAx
+OCArKysrKy0tLS0tLS0tLS0KPiDCoDMgZmlsZXMgY2hhbmdlZCwgNTkgaW5zZXJ0aW9ucygrKSwg
+MjIgZGVsZXRpb25zKC0pCj4KPiBkaWZmIC0tZ2l0IGEvZ2l0LXN1Ym1vZHVsZS5zaCBiL2dpdC1z
+dWJtb2R1bGUuc2gKPiBpbmRleCA2NGE3MGQ2Li43MzhlYmEzIDEwMDc1NQo+IC0tLSBhL2dpdC1z
+dWJtb2R1bGUuc2gKPiArKysgYi9naXQtc3VibW9kdWxlLnNoCj4gQEAgLTMwLDEzICszMCwzNSBA
+QCBub2ZldGNoPQo+IMKgdXBkYXRlPQo+IMKgcHJlZml4PQo+Cj4gLSMgUmVzb2x2ZSByZWxhdGl2
+ZSB1cmwgYnkgYXBwZW5kaW5nIHRvIHBhcmVudCdzIHVybAo+ICsjIFJlc29sdmUgcmVsYXRpdmUg
+dXJsIGJ5IGFwcGVuZGluZyB0aGUgc3VibW9kdWxlIHVybAo+ICsjIHRvIHRoZSBzdXBlcnByb2pl
+Y3QncyBvcmlnaW4gVVJMCj4gKyMKPiArIyBJZiB0aGUgb3JpZ2luIFVSTCBpcyBpdHNlbGYgYSBy
+ZWxhdGl2ZSBVUkwgcHJlcGVuZAo+ICsjIGFuIGFkZGl0aW9uYWwgcHJlZml4LCBpZiBwcmVzZW50
+LCB0aGF0IHJlcHJlc2VudHMKPiArIyB0aGUgcmVsYXRpdmUgcGF0aCBmcm9tIHRoZSBzdWJtb2R1
+bGUncyB3b3JraW5nIHRyZWUKPiArIyB0byB0aGUgc3VwZXJwcm9qZWN0cycgd29ya2luZyB0cmVl
+Lgo+ICsjCj4gKyMgVGhpcyBiZWhhdmlvdXIgaXMgcmVxdWlyZWQgdG8gZW5zdXJlIHRoYXQgdGhl
+IG9yaWdpbiBVUkwKPiArIyBvZiBhIHN1Ym1vZHVsZSwgd2hlbiByZWxhdGl2ZSwgaXMgcmVsYXRp
+dmUgdG8gdGhlCj4gKyMgc3VibW9kdWxlJ3Mgd29yayB0cmVlIGFuZCBub3QgdG8gdGhlIHN1cGVy
+cHJvamVjdCdzIHdvcmsgdHJlZS4KPiArIwo+IMKgcmVzb2x2ZV9yZWxhdGl2ZV91cmwgKCkKPiDC
+oHsKPiDCoCDCoCDCoCDCoHJlbW90ZT0kKGdldF9kZWZhdWx0X3JlbW90ZSkKPiDCoCDCoCDCoCDC
+oHJlbW90ZXVybD0kKGdpdCBjb25maWcgInJlbW90ZS4kcmVtb3RlLnVybCIpIHx8Cj4gwqAgwqAg
+wqAgwqAgwqAgwqAgwqAgwqByZW1vdGV1cmw9JChwd2QpICMgdGhlIHJlcG9zaXRvcnkgaXMgaXRz
+IG93biBhdXRob3JpdGF0aXZlIHVwc3RyZWFtCj4gwqAgwqAgwqAgwqB1cmw9IiQxIgo+ICsgwqAg
+wqAgwqAgdXBfcGF0aD0iJDIiCj4gKwo+ICsgwqAgwqAgwqAgIwo+ICsgwqAgwqAgwqAgIyBlbnN1
+cmUgYWxsIHJlbGF0aXZlIHBhdGhzIGJlZ2luIHdpdGggLi8gdG8gZW5hYmxlCj4gKyDCoCDCoCDC
+oCAjIHNlbGVjdGlvbiByZWxhdGl2ZSBicmFuY2ggb2Ygc3Vic2VxdWVudCBjYXNlICIkcmVtb3Rl
+dXJsIgo+ICsgwqAgwqAgwqAgIyBzdGF0ZW1lbnQuCj4gKyDCoCDCoCDCoCAjCj4gKyDCoCDCoCDC
+oCAjIHJld3JpdGVzIGZvby9iYXIgdG8gLi9mb28vYmFyIGJ1dCBsZWF2ZXMgL2ZvbywgOmZvbyAu
+L2Zvbwo+ICsgwqAgwqAgwqAgIyBhbmQgLi4vZm9vIHVudG91Y2hlZC4KPiArIMKgIMKgIMKgICMK
+PiArIMKgIMKgIMKgIHJlbW90ZXVybD0kKGVjaG8gIiRyZW1vdGV1cmwiIHwgc2VkICJzfF5bXi86
+XFwuXVteOl0qXCR8Li8mfCIpCj4gwqAgwqAgwqAgwqByZW1vdGV1cmw9JHtyZW1vdGV1cmwlL30K
+PiDCoCDCoCDCoCDCoHNlcD0vCj4gwqAgwqAgwqAgwqB3aGlsZSB0ZXN0IC1uICIkdXJsIgo+IEBA
+IC00NSw2ICs2NywxNiBAQCByZXNvbHZlX3JlbGF0aXZlX3VybCAoKQo+IMKgIMKgIMKgIMKgIMKg
+IMKgIMKgIMKgLi4vKikKPiDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoHVybD0i
+JHt1cmwjLi4vfSIKPiDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoGNhc2UgIiRy
+ZW1vdGV1cmwiIGluCj4gKyDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCAuKi8qKQo+
+ICsgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgIyByZW1vdmUg
+bGFzdCBwYXJ0Cj4gKyDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
+oCByZW1vdGV1cmw9IiR7cmVtb3RldXJsJS8qfSIKPiArIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
+IMKgIMKgIMKgIMKgIMKgIMKgIMKgICMgcmVtb3ZlIHJlZHVuZGFudCBsZWFkaW5nIC4vCj4gKyDC
+oCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCByZW1vdGV1cmw9IiR7
+cmVtb3RldXJsIy4vfSIKPiArIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
+IMKgIMKgICMgcHJlZml4IHBhdGggZnJvbSBzdWJtb2R1bGUgd29yayB0cmVlIHRvIHN1cGVycHJv
+amVjdCB3b3JrIHRyZWUKPiArIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
+IMKgIMKgIHJlbW90ZXVybD0iJHt1cF9wYXRofSR7cmVtb3RldXJsfSIKPiArIMKgIMKgIMKgIMKg
+IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgICMgcmVtb3ZlIHRyYWlsaW5nIC8uCj4g
+KyDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCByZW1vdGV1cmw9
+IiR7cmVtb3RldXJsJS8ufSIKPiArIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
+IMKgIMKgIMKgIDs7Cj4gwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAqLyopCj4g
+wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqByZW1vdGV1cmw9
+IiR7cmVtb3RldXJsJS8qfSIKPiDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
+oCDCoCDCoCDCoDs7Cj4gQEAgLTk1OSwxOSArOTkxLDMyIEBAIGNtZF9zeW5jKCkKPiDCoCDCoCDC
+oCDCoHdoaWxlIHJlYWQgbW9kZSBzaGExIHN0YWdlIHNtX3BhdGgKPiDCoCDCoCDCoCDCoGRvCj4g
+wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqBuYW1lPSQobW9kdWxlX25hbWUgIiRzbV9wYXRoIikKPiAt
+IMKgIMKgIMKgIMKgIMKgIMKgIMKgIHVybD0kKGdpdCBjb25maWcgLWYgLmdpdG1vZHVsZXMgLS1n
+ZXQgc3VibW9kdWxlLiIkbmFtZSIudXJsKQo+ICsgwqAgwqAgwqAgwqAgwqAgwqAgwqAgIyBwYXRo
+IGZyb20gc3VwZXJwcm9qZWN0IG9yaWdpbiByZXBvIHRvIHN1Ym1vZHVsZSBvcmlnaW4gcmVwbwo+
+ICsgwqAgwqAgwqAgwqAgwqAgwqAgwqAgbW9kdWxlX3VybD0kKGdpdCBjb25maWcgLWYgLmdpdG1v
+ZHVsZXMgLS1nZXQgc3VibW9kdWxlLiIkbmFtZSIudXJsKQo+Cj4gwqAgwqAgwqAgwqAgwqAgwqAg
+wqAgwqAjIFBvc3NpYmx5IGEgdXJsIHJlbGF0aXZlIHRvIHBhcmVudAo+IC0gwqAgwqAgwqAgwqAg
+wqAgwqAgwqAgY2FzZSAiJHVybCIgaW4KPiArIMKgIMKgIMKgIMKgIMKgIMKgIMKgIGNhc2UgIiRt
+b2R1bGVfdXJsIiBpbgo+IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgLi8qfC4uLyopCj4gLSDCoCDC
+oCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCB1cmw9JChyZXNvbHZlX3JlbGF0aXZlX3VybCAi
+JHVybCIpIHx8IGV4aXQKPiArIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgICMgcmV3
+cml0ZSBmb28vYmFyIGFzIC4uLy4uIHRvIGZpbmQgcGF0aCBmcm9tCj4gKyDCoCDCoCDCoCDCoCDC
+oCDCoCDCoCDCoCDCoCDCoCDCoCAjIHN1Ym1vZHVsZSB3b3JrIHRyZWUgdG8gc3VwZXJwcm9qZWN0
+IHdvcmsgdHJlZQo+ICsgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgdXBfcGF0aD0i
+JChlY2hvICIkc21fcGF0aCIgfCBzZWQgInMvW14vXSovLi4vZyIpIiAmJgo+ICsgwqAgwqAgwqAg
+wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgIyBndWFyYW50ZWUgYSB0cmFpbGluZyAvCj4gKyDCoCDC
+oCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCB1cF9wYXRoPSR7dXBfcGF0aCUvfS8gJiYKPiAr
+IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgICMgcGF0aCBmcm9tIHN1Ym1vZHVsZSB3
+b3JrIHRyZWUgdG8gc3VibW9kdWxlIG9yaWdpbiByZXBvCj4gKyDCoCDCoCDCoCDCoCDCoCDCoCDC
+oCDCoCDCoCDCoCDCoCBzdWJfb3JpZ2luX3VybD0kKHJlc29sdmVfcmVsYXRpdmVfdXJsICIkbW9k
+dWxlX3VybCIgIiR1cF9wYXRoIikgJiYKPiArIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
+IMKgICMgcGF0aCBmcm9tIHN1cGVycHJvamVjdCB3b3JrIHRyZWUgdG8gc3VibW9kdWxlIG9yaWdp
+biByZXBvCj4gKyDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCBzdXBlcl9jb25maWdf
+dXJsPSQocmVzb2x2ZV9yZWxhdGl2ZV91cmwgIiRtb2R1bGVfdXJsIikgfHwgZXhpdAo+ICsgwqAg
+wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgOzsKPiArIMKgIMKgIMKgIMKgIMKgIMKgIMKg
+ICopCj4gKyDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCBzdWJfb3JpZ2luX3VybD0i
+JG1vZHVsZV91cmwiCj4gKyDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCBzdXBlcl9j
+b25maWdfdXJsPSIkbW9kdWxlX3VybCIKPiDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
+oCDCoDs7Cj4gwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqBlc2FjCj4KPiDCoCDCoCDCoCDCoCDCoCDC
+oCDCoCDCoGlmIGdpdCBjb25maWcgInN1Ym1vZHVsZS4kbmFtZS51cmwiID4vZGV2L251bGwgMj4v
+ZGV2L251bGwKPiDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoHRoZW4KPiDCoCDCoCDCoCDCoCDCoCDC
+oCDCoCDCoCDCoCDCoCDCoCDCoHNheSAiJChldmFsX2dldHRleHQgIlN5bmNocm9uaXppbmcgc3Vi
+bW9kdWxlIHVybCBmb3IgJ1wkbmFtZSciKSIKPiAtIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
+IMKgIMKgIGdpdCBjb25maWcgc3VibW9kdWxlLiIkbmFtZSIudXJsICIkdXJsIgo+ICsgwqAgwqAg
+wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgZ2l0IGNvbmZpZyBzdWJtb2R1bGUuIiRuYW1lIi51
+cmwgIiRzdXBlcl9jb25maWdfdXJsIgo+Cj4gwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
+wqAgwqBpZiB0ZXN0IC1lICIkc21fcGF0aCIvLmdpdAo+IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
+IMKgIMKgIMKgIMKgdGhlbgo+IEBAIC05NzksNyArMTAyNCw3IEBAIGNtZF9zeW5jKCkKPiDCoCDC
+oCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoGNsZWFyX2xvY2FsX2dp
+dF9lbnYKPiDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoGNk
+ICIkc21fcGF0aCIKPiDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
+oCDCoHJlbW90ZT0kKGdldF9kZWZhdWx0X3JlbW90ZSkKPiAtIMKgIMKgIMKgIMKgIMKgIMKgIMKg
+IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIGdpdCBjb25maWcgcmVtb3RlLiIkcmVtb3RlIi51cmwg
+IiR1cmwiCj4gKyDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCBn
+aXQgY29uZmlnIHJlbW90ZS4iJHJlbW90ZSIudXJsICIkc3ViX29yaWdpbl91cmwiCj4gwqAgwqAg
+wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqApCj4gwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
+wqAgwqAgwqAgwqBmaQo+IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgZmkKPiBkaWZmIC0tZ2l0IGEv
+dC90NzQwMC1zdWJtb2R1bGUtYmFzaWMuc2ggYi90L3Q3NDAwLXN1Ym1vZHVsZS1iYXNpYy5zaAo+
+IGluZGV4IDA4YjhkMmYuLmYyZjkwN2YgMTAwNzU1Cj4gLS0tIGEvdC90NzQwMC1zdWJtb2R1bGUt
+YmFzaWMuc2gKPiArKysgYi90L3Q3NDAwLXN1Ym1vZHVsZS1iYXNpYy5zaAo+IEBAIC01MDcsMTIg
+KzUwNywxMSBAQCB0ZXN0X2V4cGVjdF9zdWNjZXNzICdyZWxhdGl2ZSBwYXRoIHdvcmtzIHdpdGgg
+dXNlckBob3N0OnBhdGgnICcKPiDCoCDCoCDCoCDCoCkKPiDCoCcKPgo+IC10ZXN0X2V4cGVjdF9m
+YWlsdXJlICdyZWxhdGl2ZSBwYXRoIHdvcmtzIHdpdGggZm9vJyAnCj4gK3Rlc3RfZXhwZWN0X3N1
+Y2Nlc3MgJ3JlbGF0aXZlIHBhdGggd29ya3Mgd2l0aCBmb28nICcKPiDCoCDCoCDCoCDCoCgKPiDC
+oCDCoCDCoCDCoCDCoCDCoCDCoCDCoGNkIHJlbHRlc3QgJiYKPiDCoCDCoCDCoCDCoCDCoCDCoCDC
+oCDCoGNwIHByaXN0aW5lLS5naXQtY29uZmlnIC5naXQvY29uZmlnICYmCj4gwqAgwqAgwqAgwqAg
+wqAgwqAgwqAgwqBnaXQgY29uZmlnIHJlbW90ZS5vcmlnaW4udXJsIGZvbyAmJgo+IC0gwqAgwqAg
+wqAgwqAgwqAgwqAgwqAgIyBhY3R1YWw6IGZhaWxzIHdpdGggYW4gZXJyb3IKPiDCoCDCoCDCoCDC
+oCDCoCDCoCDCoCDCoGdpdCBzdWJtb2R1bGUgaW5pdCAmJgo+IMKgIMKgIMKgIMKgIMKgIMKgIMKg
+IMKgdGVzdCAiJChnaXQgY29uZmlnIHN1Ym1vZHVsZS5zdWIudXJsKSIgPSAuL3N1YnJlcG8KPiDC
+oCDCoCDCoCDCoCkKPiBAQCAtNTM4LDEzICs1MzcsMTIgQEAgdGVzdF9leHBlY3Rfc3VjY2VzcyAn
+cmVsYXRpdmUgcGF0aCB3b3JrcyB3aXRoIC4vZm9vJyAnCj4gwqAgwqAgwqAgwqApCj4gwqAnCj4K
+PiAtdGVzdF9leHBlY3RfZmFpbHVyZSAncmVsYXRpdmUgcGF0aCB3b3JrcyB3aXRoIC4vZm9vL2Jh
+cicgJwo+ICt0ZXN0X2V4cGVjdF9zdWNjZXNzICdyZWxhdGl2ZSBwYXRoIHdvcmtzIHdpdGggLi9m
+b28vYmFyJyAnCj4gwqAgwqAgwqAgwqAoCj4gwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqBjZCByZWx0
+ZXN0ICYmCj4gwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqBjcCBwcmlzdGluZS0uZ2l0LWNvbmZpZyAu
+Z2l0L2NvbmZpZyAmJgo+IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgZ2l0IGNvbmZpZyByZW1vdGUu
+b3JpZ2luLnVybCAuL2Zvby9iYXIgJiYKPiDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoGdpdCBzdWJt
+b2R1bGUgaW5pdCAmJgo+IC0gwqAgwqAgwqAgwqAgwqAgwqAgwqAgI2FjdHVhbDogLi9mb28vc3Vi
+cmVwbwo+IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgdGVzdCAiJChnaXQgY29uZmlnIHN1Ym1vZHVs
+ZS5zdWIudXJsKSIgPSBmb28vc3VicmVwbwo+IMKgIMKgIMKgIMKgKQo+IMKgJwo+IGRpZmYgLS1n
+aXQgYS90L3Q3NDAzLXN1Ym1vZHVsZS1zeW5jLnNoIGIvdC90NzQwMy1zdWJtb2R1bGUtc3luYy5z
+aAo+IGluZGV4IDlmYTRlNTguLjk1MjZmOGQgMTAwNzU1Cj4gLS0tIGEvdC90NzQwMy1zdWJtb2R1
+bGUtc3luYy5zaAo+ICsrKyBiL3QvdDc0MDMtc3VibW9kdWxlLXN5bmMuc2gKPiBAQCAtODgsNzIg
+Kzg4LDY2IEBAIHRlc3RfZXhwZWN0X3N1Y2Nlc3MgJyJnaXQgc3VibW9kdWxlIHN5bmMiIHNob3Vs
+ZCBub3Qgdml2aWZ5IHVuaW50ZXJlc3Rpbmcgc3VibW9kCj4gwqAgwqAgwqAgwqApCj4gwqAnCj4K
+PiAtdGVzdF9leHBlY3RfZmFpbHVyZSAnImdpdCBzdWJtb2R1bGUgc3luYyIgaGFuZGxlcyBvcmln
+aW4gVVJMIG9mIHRoZSBmb3JtIGZvbycgJwo+ICt0ZXN0X2V4cGVjdF9zdWNjZXNzICciZ2l0IHN1
+Ym1vZHVsZSBzeW5jIiBoYW5kbGVzIG9yaWdpbiBVUkwgb2YgdGhlIGZvcm0gZm9vJyAnCj4gwqAg
+wqAgwqAgwqAoY2QgcmVsYXRpdmUtY2xvbmUgJiYKPiDCoCDCoCDCoCDCoCBnaXQgcmVtb3RlIHNl
+dC11cmwgb3JpZ2luIGZvbwo+IMKgIMKgIMKgIMKgIGdpdCBzdWJtb2R1bGUgc3luYyAmJgo+IMKg
+IMKgIMKgIMKgKGNkIHN1Ym1vZHVsZSAmJgo+IC0gwqAgwqAgwqAgwqAjYWN0dWFsIGZhaWxzIHdp
+dGg6ICJjYW5ub3Qgc3RyaXAgb2ZmIHVybCBmb28KPiDCoCDCoCDCoCDCoCBnaXQgY29uZmlnIHJl
+bW90ZS5vcmlnaW4udXJsICYmCgpTb3JyeSwgaXQgYXBwZWFycyBJIGxlZnQgc29tZSBkZWJ1ZyBv
+dXRwdXQgaW4gdGhlIHRlc3RzLiBXaWxsIHJvbGwKdGhpcyBpbnRvIGEgdjYgd2l0aCBhbnkgdXBk
+YXRlcyB5b3Ugc3VnZ2VzdC4KClJlZ2FyZHMsCgpqb24uCg==
