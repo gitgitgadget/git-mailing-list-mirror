@@ -1,140 +1,66 @@
-From: Pete Wyckoff <pw@padd.com>
-Subject: Re: [PATCH 2/2] git-p4: Verify detection of "empty" branch creation
-Date: Wed, 23 May 2012 21:13:38 -0400
-Message-ID: <20120524011338.GB26443@padd.com>
-References: <1337729891-27648-1-git-send-email-vitor.hda@gmail.com>
- <1337729891-27648-3-git-send-email-vitor.hda@gmail.com>
+From: Vicent Marti <vicent@github.com>
+Subject: Re: [Announce] libgit2 v0.17.0
+Date: Thu, 24 May 2012 03:57:24 +0200
+Message-ID: <CAFFjANSyRbm=0Q+EFXL8HGJnr=4CBW6phzeEjaCb26wVf4EaXg@mail.gmail.com>
+References: <CAFFjANQ_kfRc8LhZD4nxeYmRML6i5dQEskUv3Caz7GmnvZi2Jw@mail.gmail.com>
+ <nngy5oi3o37.fsf@transit.us.cray.com> <7v8vgi263h.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Luke Diamand <luke@diamand.org>
-To: Vitor Antunes <vitor.hda@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 24 03:13:48 2012
+Content-Type: text/plain; charset=UTF-8
+Cc: dag@cray.com, libgit2@librelist.org, git-dev@github.com,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu May 24 03:58:20 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SXMcd-0000Xb-Q2
-	for gcvg-git-2@plane.gmane.org; Thu, 24 May 2012 03:13:48 +0200
+	id 1SXNJh-00053U-H8
+	for gcvg-git-2@plane.gmane.org; Thu, 24 May 2012 03:58:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754842Ab2EXBNn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 May 2012 21:13:43 -0400
-Received: from honk.padd.com ([74.3.171.149]:46772 "EHLO honk.padd.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752856Ab2EXBNm (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 May 2012 21:13:42 -0400
-Received: from arf.padd.com (unknown [50.55.145.1])
-	by honk.padd.com (Postfix) with ESMTPSA id 4C728D27;
-	Wed, 23 May 2012 18:13:41 -0700 (PDT)
-Received: by arf.padd.com (Postfix, from userid 7770)
-	id D7B1631600; Wed, 23 May 2012 21:13:38 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <1337729891-27648-3-git-send-email-vitor.hda@gmail.com>
+	id S1755110Ab2EXB6I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 May 2012 21:58:08 -0400
+Received: from mail-vc0-f174.google.com ([209.85.220.174]:65530 "EHLO
+	mail-vc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754863Ab2EXB5p (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 May 2012 21:57:45 -0400
+Received: by vcbf11 with SMTP id f11so1221254vcb.19
+        for <git@vger.kernel.org>; Wed, 23 May 2012 18:57:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:from:date
+         :x-google-sender-auth:message-id:subject:to:cc:content-type;
+        bh=SoQQtNpkyuj2XoAV2ME0jerRZaqE0BqBXRbbtkFq8ew=;
+        b=w0hjnLR8gaDx6jpxEpR+VKJLFjaPGfTRW6I8c/xvcoeRPP2vtOLWgN7Y6dM6jbG7oi
+         lzoMFnDQpe7CvTuUDkzJ9wR6iSYyocj7bwc2S/scUnZ+BYYX2SQIopu+5n+ecZ0SzfRB
+         6sAo2pA4B9gJAFLNd4uJHsCfQ+8PfiL/FOLZPwQ0dmH+De+PYu0AkLcLwrb2np5qw0JN
+         pe2s78+4ubF69ka1I0/6wK0SS2D+ELCKUd9hMGgcZFyYwZbaoncw02QAP1ZVv0rNH8ge
+         W06JSw8cjgj9HZNmLLYnJ+18EHH95QgH3txFxvO1qM0E70/QOz8jrSaqyS+olER95Sso
+         Ewsw==
+Received: by 10.52.29.69 with SMTP id i5mr14010213vdh.84.1337824664442; Wed,
+ 23 May 2012 18:57:44 -0700 (PDT)
+Received: by 10.52.30.104 with HTTP; Wed, 23 May 2012 18:57:24 -0700 (PDT)
+In-Reply-To: <7v8vgi263h.fsf@alter.siamese.dyndns.org>
+X-Google-Sender-Auth: ETNatrRIg5DzRzAXp-hu9ttzJ_4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198340>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198341>
 
-vitor.hda@gmail.com wrote on Wed, 23 May 2012 00:38 +0100:
-> Current implementation of new branch parent detection works on the
-> principle that the new branch is a complete integration, with no
-> changes, of the original files.
-> This test shows this deficiency in the particular case when the new
-> branch is created from a subset of the original files.
-> 
-> Signed-off-by: Vitor Antunes <vitor.hda@gmail.com>
-> ---
->  t/t9801-git-p4-branch.sh |   56 ++++++++++++++++++++++++++++++++++++++++++++++
->  1 files changed, 56 insertions(+), 0 deletions(-)
-> 
-> diff --git a/t/t9801-git-p4-branch.sh b/t/t9801-git-p4-branch.sh
-> index 89d8c59..c8e4d86 100755
-> --- a/t/t9801-git-p4-branch.sh
-> +++ b/t/t9801-git-p4-branch.sh
-> @@ -360,6 +360,62 @@ test_expect_success 'git p4 sync changes to two branches in the same changelist'
->  	)
->  '
->  
-> +# Create a branch by integrating a single file
-> +test_expect_success 'git p4 file subset branch' '
-> +	test_when_finished cleanup_git &&
-> +	test_create_repo "$git" &&
+On Wed, May 23, 2012 at 6:51 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> I am hoping that the library would become solid enough to allow us to
+> start attempting such an experiment some day, but at the same time, I know
+> that that "some day" is not in a very near future, after having seen at
+> $DAYJOB that a certain internal tool linked with a version of libgit2
+> breaking user's trees from time to time, bugs against the internal tool
+> getting filed and then some of them getting fixed at libgit2 level, either
+> by upstreaming fix or by updating to newer snapshot of libgit2.
 
-Ditto; no need for git here.
+If you're building internal tools with libgit2 and encountering
+issues, maybe somebody from $DAYJOB could spend some of his 20% time
+in throwing us a hand pushing the library forward. That way $DAYJOB
+and the whole community would benefit.
 
-> +	(
-> +		cd "$cli" &&
-> +		p4 integrate //depot/branch1/file1 //depot/branch6/file1 &&
-> +		p4 submit -d "Integrate file1 alone from branch1 to branch6"
-> +	)
-> +'
-> +
-> +# Check if git -p4 creates a new branch containing a single file,
-
-Stray "-"  -------^
-
-> +# instead of keeping the old files from the original branch
-> +test_expect_failure 'git p4 clone file subset branch' '
-> +	test_when_finished cleanup_git &&
-> +	test_create_repo "$git" &&
-> +	(
-> +		cd "$git" &&
-> +		git config git-p4.branchList branch1:branch2 &&
-> +		git config --add git-p4.branchList branch1:branch3 &&
-> +		git config --add git-p4.branchList branch1:branch4 &&
-> +		git config --add git-p4.branchList branch1:branch5 &&
-> +		git config --add git-p4.branchList branch1:branch6 &&
-> +		"$GITP4" clone --dest=. --detect-branches //depot@all &&
-
-Rebase error?  It fails because this should be "git p4".
-
-> +		git log --all --graph --decorate --stat &&
-> +		git reset --hard p4/depot/branch1 &&
-> +		test_path_is_file file1 &&
-> +		test_path_is_file file2 &&
-> +		test_path_is_file file3 &&
-> +		grep update file2 &&
-> +		git reset --hard p4/depot/branch2 &&
-> +		test_path_is_file file1 &&
-> +		test_path_is_file file2 &&
-> +		test_path_is_missing file3 &&
-> +		! grep update file2 &&
-> +		git reset --hard p4/depot/branch3 &&
-> +		test_path_is_file file1 &&
-> +		test_path_is_file file2 &&
-> +		test_path_is_missing file3 &&
-> +		grep update file2 &&
-> +		git reset --hard p4/depot/branch4 &&
-> +		test_path_is_file file1 &&
-> +		test_path_is_file file2 &&
-> +		test_path_is_file file3 &&
-> +		! grep update file2 &&
-> +		git reset --hard p4/depot/branch5 &&
-> +		test_path_is_file file1 &&
-> +		test_path_is_file file2 &&
-> +		test_path_is_file file3 &&
-> +		! grep update file2 &&
-> +		git reset --hard p4/depot/branch6 &&
-> +		test_path_is_file file1 &&
-> +		! test_path_is_file file2 &&
-
-But then it fails here too because the code is indeed buggy.
-Nice to have this test too, to document the problem and maybe
-prod someone to fix it someday.
-
-> +		! test_path_is_file file3
-
-Do use "test_path_is_missing" for these non-existant file
-tests, though, please.
-
-		-- Pete
-
-> +	)
-> +'
->  test_expect_success 'kill p4d' '
->  	kill_p4d
->  '
-> -- 
-> 1.7.7.rc2.14.g5e044.dirty
-> 
+Love,
+Vicent
