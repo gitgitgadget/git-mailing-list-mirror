@@ -1,171 +1,91 @@
-From: Kong Lucien <Lucien.Kong@ensimag.imag.fr>
-Subject: [PATCH/RFC] t7512-status-warnings.sh : better advices for git status
-Date: Thu, 24 May 2012 11:37:43 +0200
-Message-ID: <1337852264-32619-1-git-send-email-Lucien.Kong@ensimag.imag.fr>
-Cc: Matthieu.Moy@grenoble-inp.fr,
-	Kong Lucien <Lucien.Kong@ensimag.imag.fr>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 24 11:54:33 2012
+From: Vincent van Ravesteijn <vfr@lyx.org>
+Subject: Re: [PATCH] Collocate strings to simplify translation
+Date: Thu, 24 May 2012 11:55:31 +0200
+Message-ID: <4FBE0593.7070205@lyx.org>
+References: <1337845288-7656-1-git-send-email-vfr@lyx.org> <4FBDF21F.1010807@in.waw.pl>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?UTF-8?B?WmJpZ25pZXcgSsSZZHJ6ZWpld3NraS1Tem1law==?= 
+	<zbyszek@in.waw.pl>
+X-From: git-owner@vger.kernel.org Thu May 24 11:55:41 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SXUkX-00079k-Sz
-	for gcvg-git-2@plane.gmane.org; Thu, 24 May 2012 11:54:30 +0200
+	id 1SXUlg-0002Jh-L7
+	for gcvg-git-2@plane.gmane.org; Thu, 24 May 2012 11:55:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754982Ab2EXJyY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 May 2012 05:54:24 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:51410 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754082Ab2EXJyX (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 May 2012 05:54:23 -0400
-X-Greylist: delayed 984 seconds by postgrey-1.27 at vger.kernel.org; Thu, 24 May 2012 05:54:23 EDT
-Received: from ensimag.imag.fr (ensimag.imag.fr [195.221.228.12])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id q4O9Tidr027099
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 24 May 2012 11:29:44 +0200
-Received: from ensibm.imag.fr (ensibm [195.221.228.8])
-	by ensimag.imag.fr (8.13.8/8.13.8/ImagV2.1.r_ens) with ESMTP id q4O9bkTl025277;
-	Thu, 24 May 2012 11:37:46 +0200
-Received: from ensibm.imag.fr (localhost [127.0.0.1])
-	by ensibm.imag.fr (8.13.8/8.13.8/ImagV2.1.sb_ens.pm) with ESMTP id q4O9bkKw000508;
-	Thu, 24 May 2012 11:37:46 +0200
-Received: (from konglu@localhost)
-	by ensibm.imag.fr (8.13.8/8.13.8/Submit) id q4O9bk4Q000507;
-	Thu, 24 May 2012 11:37:46 +0200
-X-Mailer: git-send-email 1.7.8
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Thu, 24 May 2012 11:29:44 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: q4O9Tidr027099
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: lucien.kong@phelma.grenoble-inp.fr
-MailScanner-NULL-Check: 1338456588.02427@KiA1YTMIwbZmSiCs0nDAmg
+	id S1755154Ab2EXJzg convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 24 May 2012 05:55:36 -0400
+Received: from mail-bk0-f46.google.com ([209.85.214.46]:40335 "EHLO
+	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754789Ab2EXJzf (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 May 2012 05:55:35 -0400
+Received: by bkcji2 with SMTP id ji2so6762485bkc.19
+        for <git@vger.kernel.org>; Thu, 24 May 2012 02:55:34 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding
+         :x-gm-message-state;
+        bh=ZkloOm25TPEUnp3KB5k2A84rx0Row4HH7iAf+PFcPQE=;
+        b=a8e6uGRhahP4lfvLnhED+rqPxyViop3DEDIe9pwwm1llJa8pIsNZj2OfuU1wXNTM2a
+         GCrNJ4J9hGO5S6vp7g4TvchvAqhYpqLMdnGVz8FLQBNQ1IJzwo5ZXWFGWxCLoxPhJ+qC
+         JxQ3aGnH8XU0U0buTQtJy8g2E+gL7HjTAz/CUS5VAqv/3BMql0G955lm1XpNDOMLX5cR
+         sM+QKCS6ntDIfaVV9GBzPOcz1GIEDw6dWCT6VUjgIxjqHufEwW5/+sJoCcdGPss2DoxB
+         VWMYeIrVvbIhmuS6NpYHaZLIW2m+VOReEWmtuHHICcySiROAx0FCb4ejFzePGkDn6Xyo
+         gpAg==
+Received: by 10.204.151.81 with SMTP id b17mr13192933bkw.52.1337853333855;
+        Thu, 24 May 2012 02:55:33 -0700 (PDT)
+Received: from [145.94.170.237] (wlan-145-94-170-237.wlan.tudelft.nl. [145.94.170.237])
+        by mx.google.com with ESMTPS id fw10sm1837841bkc.11.2012.05.24.02.55.32
+        (version=SSLv3 cipher=OTHER);
+        Thu, 24 May 2012 02:55:33 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:12.0) Gecko/20120428 Thunderbird/12.0.1
+In-Reply-To: <4FBDF21F.1010807@in.waw.pl>
+X-Gm-Message-State: ALoCoQnbPY2HnZuL8rqU5ZQW40OeVKiEdO6vVIz2ecIwwtnvilzg8aqwZ9QyHEEQ/HhQ9iIXwVEi
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198363>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198364>
 
-Tests for the display of 'git status' before and after a conflict
-resolved, and after a conflict warning during a rebase.
+Op 24-5-2012 10:32, Zbigniew J=C4=99drzejewski-Szmek schreef:
+> On 05/24/2012 09:41 AM, Vincent van Ravesteijn wrote:
+>> The translation of 'Untracked' and 'Ignored' might depend on the fol=
+lowing
+>> word. To help the translator, this patch collocates the term 'files'=
+=2E
+>>
+>> Signed-off-by: Vincent van Ravesteijn<vfr@lyx.org>
+>> ---
+>>   wt-status.c |    6 +++---
+>>   1 files changed, 3 insertions(+), 3 deletions(-)
+>>
+>> diff --git a/wt-status.c b/wt-status.c
+>> index dd6d8c4..9b65a8c 100644
+>> --- a/wt-status.c
+>> +++ b/wt-status.c
+>> @@ -185,7 +185,7 @@ static void wt_status_print_other_header(struct =
+wt_status *s,
+>>   					 const char *how)
+>>   {
+>>   	const char *c =3D color(WT_STATUS_HEADER, s);
+>> -	status_printf_ln(s, c, _("%s files:"), what);
+>> +	status_printf_ln(s, c, _("%s:"), what);
+> How can "%s:" be translated? _() should be removed here.
 
-Signed-off-by: Kong Lucien <Lucien.Kong@ensimag.imag.fr>
----
-The three following tests are supposed to be successful
-but are not currently as we are not sure about the implementation.
-For example, should the warning messages be in the top header of 'git status' or after that ?
-If the warning messages are put as in the following tests,
-we will have to code the messages in remote.c, and not in wt-status.c.
+Some languages might use a character different from ':'. For example,=20
+Chinese uses a full-width character ':' (unicode 0xFF1A) instead of a=20
+half-width character. Maybe this is taken care of by the system/shell o=
+r=20
+whatever, maybe not. Other examples are languages that read from right=20
+to left. I guess it should then be translated by ":%s".
 
-We are also working on the same kind of messages for git am and bisect.
+This will probably be a matter of convention.
 
- git/t/t7512-status-warnings.sh |   96 ++++++++++++++++++++++++++++++++++++++++
- 1 files changed, 96 insertions(+), 0 deletions(-)
- create mode 100755 git/t/t7512-status-warnings.sh
-
-diff --git a/git/t/t7512-status-warnings.sh b/git/t/t7512-status-warnings.sh
-new file mode 100755
-index 0000000..0214348
---- /dev/null
-+++ b/git/t/t7512-status-warnings.sh
-@@ -0,0 +1,96 @@
-+#!/bin/sh
-+#
-+# Copyright (c) 2012 Valentin Duperray, Lucien Kong, Franck Jonas,
-+#		     Thomas Nguy, Khoi Nguyen
-+#		     Grenoble INP Ensimag
-+#
-+
-+test_description='git status advices'
-+
-+. ./test-lib.sh
-+
-+test_expect_success 'status when conflicts unresolved' '
-+	git init --shared --bare conflict_test.git &&
-+	git clone conflict_test.git test1 &&
-+	git clone conflict_test.git test2 &&
-+	cd ./test1 &&
-+	test_commit A main.txt toto &&
-+	cd ../test2 &&
-+	test_commit B main.txt tata &&
-+	git push --all &&
-+	cd ../test1 &&
-+	test_must_fail git pull &&
-+	cat >expect <<-\EOF &&
-+	# On branch master
-+	# Your branch and '\''origin/master'\'' have diverged,
-+	# and have 1 and 1 different commit each, respectively.
-+	# You have unmerged paths : fix conflicts and then commit the result.
-+	#
-+	# Unmerged paths:
-+	#   (use "git add/rm <file>..." as appropriate to mark resolution)
-+	#
-+	#	both added:         main.txt
-+	#
-+	# Untracked files:
-+	#   (use "git add <file>..." to include in what will be committed)
-+	#
-+	#	expect
-+	#	output
-+	no changes added to commit (use "git add" and/or "git commit -a")
-+	EOF
-+	git status >output &&
-+	test_cmp expect output
-+'
-+
-+
-+test_expect_success 'status when conflicts resolved before commit' '
-+	echo toto > main.txt &&
-+	git add main.txt &&
-+	cat >expect <<-\EOF &&
-+	# On branch master
-+	# Your branch and '\''origin/master'\'' have diverged,
-+	# and have 1 and 1 different commit each, respectively.
-+	# You are still merging, commit to end merge.
-+	#
-+	# Untracked files:
-+	#   (use "git add <file>..." to include in what will be committed)
-+	#
-+	#	expect
-+	#	output
-+	nothing added to commit but untracked files present (use "git add" to track)
-+	EOF
-+	git status >output &&
-+	test_cmp expect output
-+'
-+
-+
-+
-+
-+test_expect_success 'status when rebase in progress' '
-+	git commit -m "one" &&
-+	test_commit two main.txt tata &&
-+	test_commit three main.txt titi &&
-+	test_must_fail git rebase HEAD^ --onto HEAD^^ &&
-+	cat >expect <<-\EOF &&
-+	# Not currently on any branch.
-+	# You are currently rebasing : fix conflicts and then run "git rebase -- continue".
-+	# If you would prefer to skip this patch, instead run "git rebase --skip".
-+	# To check out  the original branch and stop rebasing run "git rebase --abort".
-+	# Unmerged paths:
-+	#   (use "git reset HEAD <file>..." to unstage)
-+	#   (use "git add/rm <file>..." as appropriate to mark resolution)
-+	#
-+	#	both modified:      main.txt
-+	#
-+	# Untracked files:
-+	#   (use "git add <file>..." to include in what will be committed)
-+	#
-+	#	expect
-+	#	output
-+	no changes added to commit (use "git add" and/or "git commit -a")
-+	EOF
-+	git status >output &&
-+	test_cmp expect output
-+'
-+
-+test_done
--- 
-1.7.8
+Vincent
