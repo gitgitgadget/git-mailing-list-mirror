@@ -1,80 +1,80 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] checkout: no progress messages if !isatty(2).
-Date: Thu, 24 May 2012 11:29:52 -0700
-Message-ID: <7vy5ohwhy7.fsf@alter.siamese.dyndns.org>
-References: <20120524061000.GA14035@sigill.intra.peff.net>
- <1337839944-4651-1-git-send-email-apenwarr@gmail.com>
+From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+Subject: Re: [PATCH 2/2] git-sh-setup: work around Cygwin path handling gotchas
+Date: Thu, 24 May 2012 19:27:53 +0100
+Message-ID: <4FBE7DA9.8040309@ramsay1.demon.co.uk>
+References: <4FB09FF2.70309@viscovery.net> <1337191208-21110-1-git-send-email-gitster@pobox.com> <1337191208-21110-3-git-send-email-gitster@pobox.com> <CAAXzdLW5VYnHc41WZ0id=4Qe17dHSj4+J9tqVvG-PvtpXLmh+Q@mail.gmail.com> <7vd364c5kt.fsf@alter.siamese.dyndns.org> <4FB58678.1050009@ramsay1.demon.co.uk> <7vehqib4kk.fsf@alter.siamese.dyndns.org> <4FBA8CD4.3020001@ramsay1.demon.co.uk> <7vaa116ulx.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Avery Pennarun <apenwarr@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 24 20:30:05 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Steven Penny <svnpenn@gmail.com>, git@vger.kernel.org,
+	Johannes Sixt <j.sixt@viscovery.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu May 24 20:30:27 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SXcnT-0008PK-35
-	for gcvg-git-2@plane.gmane.org; Thu, 24 May 2012 20:30:03 +0200
+	id 1SXcnp-00015w-Gc
+	for gcvg-git-2@plane.gmane.org; Thu, 24 May 2012 20:30:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934100Ab2EXS35 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 May 2012 14:29:57 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50080 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933804Ab2EXS34 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 May 2012 14:29:56 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 81003716C;
-	Thu, 24 May 2012 14:29:55 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=a6Q1e3qQOUkHwOU90w949/2Ho4c=; b=VxpGSb
-	TPKdYGnfELcjMumOt2yBJVuI2XH13s7PAiz8FkfvUDMHuFfNZBCizQJGhlh9h+iC
-	Qwcqy2f2VsnySI33NuTyLTxD6bVU/da2NQ9xrQRKp9RfoD5hSyjL+tP/HFAvLSp/
-	mF2JunvIrnh8RkkHBdEtyybVowD1bgV775By4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=fBa96sbRpYpMSqpMleQrAT4DUP+0LLhR
-	W2Ef1jN28K1CnHSDQdwU/lUzT6qZVHmX887m2dcI+sEIEVVYWMYThLXJ8ABQs/Dk
-	mez4EQxa4Waupw+ChGUDd1fHRXTGDzSAl0VzRGsldd50PqgNuQZimw1C6HBHPQVU
-	2aHumYG/OSw=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 78F8D716A;
-	Thu, 24 May 2012 14:29:55 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0B4B27168; Thu, 24 May 2012
- 14:29:54 -0400 (EDT)
-In-Reply-To: <1337839944-4651-1-git-send-email-apenwarr@gmail.com> (Avery
- Pennarun's message of "Thu, 24 May 2012 02:12:24 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 7579A6EA-A5CE-11E1-BF7D-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S934105Ab2EXSaT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 May 2012 14:30:19 -0400
+Received: from anchor-post-1.mail.demon.net ([195.173.77.132]:37500 "EHLO
+	anchor-post-1.mail.demon.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S934102Ab2EXSaS (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 24 May 2012 14:30:18 -0400
+Received: from ramsay1.demon.co.uk ([193.237.126.196])
+	by anchor-post-1.mail.demon.net with esmtp (Exim 4.69)
+	id 1SXcng-0005Yi-g4; Thu, 24 May 2012 18:30:16 +0000
+User-Agent: Thunderbird 1.5.0.2 (Windows/20060308)
+In-Reply-To: <7vaa116ulx.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198403>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198404>
 
-Avery Pennarun <apenwarr@gmail.com> writes:
+Junio C Hamano wrote:
+> Ramsay Jones <ramsay@ramsay1.demon.co.uk> writes:
+> 
+>> However, you could imagine adding code to accommodate external windows
+>> programs. If we limit ourselves to the text editor, for example, I could
+>> imagine something like the diff attached below to fix up the C based git
+>> programs. (You would need to make similar changes to the shell and perl
+>> scripts which launch the text editor).
+> 
+> If you _only_ allow editors that understands windows style paths, your
+> patch may make sense, but doesn't it break editors that wants only POSIX
+> style paths?
 
-> It would probably be better to have progress.c check isatty(2) all the time,
-> but that wouldn't allow things like 'git push --progress' to force progress
-> reporting to on, so I won't try to solve the general case right now.
+Yes.
 
-Before that "It would probably be better" comment to give your opinion,
-you need to describe what problem you wanted to solve in the first place.
-I'll lift it from your original version of the patch:
+(If it wasn't clear, I included the code to show what I *didn't* want to see!).
 
-    If stderr isn't a tty, we shouldn't be printing incremental progress
-    messages.  In particular, this affected 'git checkout -f . >&logfile'
-    unless you provided -q.  And git-new-workdir has no way to provide -q.
+Cygwin built text editors will, of course, work fine with POSIX paths, but
+may also work with win32 paths as well. For example, vim supports win32 paths
+just fine (it's the *only* editor I tested).
 
-I do not seem to find a sane justification for
+I would not be surprised if vim is not alone in that; I think it mainly depends
+on whether the editor attempts to "interpret" the parameter, or simply treats it
+as an opaque token to be passed straight to [f]open() [1].
 
-	git $cmd --progress 2>output
+Equally, I suspect some cygwin built editors will fail miserably (maybe they try
+to interpret the parameter as an scp-like url, say). I don't know and I'm not
+about to test every cygwin text editor to find out!
 
-use case and I do not immediately see how that "output" file can be
-useful.  But we've allowed it for a long time, so probably this version is
-safer.  Besides, it is more explicit.
+So, in my opinion, adding code to explicitly support win32 paths, while possible,
+is likely to open up a can-o-worms (even if this support were opt-in via config).
+I would prefer that we don't go there. :-D
 
-Thanks.
+
+ATB,
+Ramsay Jones
+
+[1] Which is why git already supports win32 paths to a certain degree. For example,
+the following will work as expected:
+
+  $ git config --global core.excludesfile 'C:/cygwin/home/ramsay/.gitignore'
+
+(ie git will read and use the given .gitignore file without problem)
