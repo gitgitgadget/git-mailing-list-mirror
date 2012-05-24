@@ -1,94 +1,130 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: What's cooking in git.git (May 2012, #06; Wed, 23)
-Date: Thu, 24 May 2012 10:01:55 -0700
-Message-ID: <7vlikhy0l8.fsf@alter.siamese.dyndns.org>
-References: <7vmx4yzgce.fsf@alter.siamese.dyndns.org>
- <4FBDC8FA.9050501@lsrfire.ath.cx> <4FBDCE26.1080904@viscovery.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: t4014 broken by 43ae9f47ab: format-patch: use default email for
+ generating message ids
+Date: Thu, 24 May 2012 13:16:40 -0400
+Message-ID: <20120524171640.GB3161@sigill.intra.peff.net>
+References: <4FBE2335.2090903@jpk.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?utf-8?Q?Ren=C3=A9?= Scharfe <rene.scharfe@lsrfire.ath.cx>,
-	git@vger.kernel.org
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Thu May 24 19:02:05 2012
+Cc: Junio C Hamano <gitster@pobox.com>,
+	git discussion list <git@vger.kernel.org>
+To: Michael Haggerty <haggerty@jpk.com>
+X-From: git-owner@vger.kernel.org Thu May 24 19:16:50 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SXbQK-0001t7-0M
-	for gcvg-git-2@plane.gmane.org; Thu, 24 May 2012 19:02:04 +0200
+	id 1SXbeb-0001Hc-DY
+	for gcvg-git-2@plane.gmane.org; Thu, 24 May 2012 19:16:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933757Ab2EXRB7 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 24 May 2012 13:01:59 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:36656 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932549Ab2EXRB6 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 24 May 2012 13:01:58 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 248F88F10;
-	Thu, 24 May 2012 13:01:58 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=gmtPzQFSzM1q
-	ewOUeFY1ARjl9IQ=; b=t0pg4dLILWuJKHAHmdqFRhfZPXv31qWwFuje9sfEGi6A
-	hAs69njaW98GzfF0lXZbP2Vkc+mT7/mTQ7ev3bxRA/j/ncFh53lWWW7oEGDHXoJ3
-	f9caf3P542VE+SNg/nM/EcfEklrDkYXM8HnM5J8W9T/cuWlXjTvgr8lf1/4TrFQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=KUpMRx
-	gnXSeJlUfyW4omwemV2Q3cmQWUu044U1aOpfHfHzsGugwXlQD/Uqq8K6agA5H+cs
-	ggCyBpuUc1+79sgU+Yu9+aI7CpRs5DLxvpQOggy4rEA7qkEuz7+INmZXbkeQxE4+
-	zkuHBma7Lz36eSbAoTLWzKb56rh8hLFuQL3yk=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 16E5F8F0F;
-	Thu, 24 May 2012 13:01:58 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7163E8F0C; Thu, 24 May 2012
- 13:01:57 -0400 (EDT)
-In-Reply-To: <4FBDCE26.1080904@viscovery.net> (Johannes Sixt's message of
- "Thu, 24 May 2012 07:59:02 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 2BCA975E-A5C2-11E1-870F-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S933670Ab2EXRQp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 May 2012 13:16:45 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:53727
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754966Ab2EXRQo (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 May 2012 13:16:44 -0400
+Received: (qmail 29484 invoked by uid 107); 24 May 2012 17:17:08 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 24 May 2012 13:17:08 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 24 May 2012 13:16:40 -0400
+Content-Disposition: inline
+In-Reply-To: <4FBE2335.2090903@jpk.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198393>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198394>
 
-Johannes Sixt <j.sixt@viscovery.net> writes:
+On Thu, May 24, 2012 at 02:01:57PM +0200, Michael Haggerty wrote:
 
-> Am 5/24/2012 7:36, schrieb Ren=C3=A9 Scharfe:
->> Am 24.05.2012 00:24, schrieb Junio C Hamano:
->>> * rs/maint-grep-F (2012-05-21) 4 commits
->>>    (merged to 'next' on 2012-05-23 at b24143c)
->>>   + grep: stop leaking line strings with -f
->>>   + grep: support newline separated pattern list
->>>   + grep: factor out do_append_grep_pat()
->>>   + grep: factor out create_grep_pat()
->>>
->>> "git grep -F", unlike the case where it reads from a file, did not =
-treat
->>> individual lines in the given pattern argument as separate patterns=
- as it
->>> should.
->>=20
->> This is not specific to -F; grep(1) accepts newline-separated patter=
-n
->> lists with -E etc. as well, as does git grep with the patches above.
->
-> Shouldn't we worry that this change breaks existing users?
->
-> Consider a script that generates a pattern that sometimes contains NL=
-=2E
-> Yes, it would not match anywhere, but what if that is a deliberate ch=
-oice
-> of the script writer? With this change, the script would now observe
-> spurious matches where earlier there were no matches.
+> On my setup, the above commit causes 12 tests in t4014 to fail.  For
+> example, test 25:
+> 
+> >-Message-Id: <0>
+> >+Message-Id: <1135adfeed86678c55e1aad7c568046ee8215660.1337860646.git.mhagger@michael.(none)>
 
-While I prefer to be conservative, and the scenario above may be
-theoretically possible, I personally find this particular "breakage" of
-backward compatibility is very well defensible, as the original behavio=
-ur
-is clearly buggy and unintuitive.
+Thanks for the report. I know exactly what the issue is, as it came up
+in the discussion of the original series. 43ae9f47ab stopped using
+git_committer_info (which looks at $GIT_COMMITTER_EMAIL) for the end of
+the message-id and started using the default-generated email directly.
+
+Nobody should care, because either:
+
+  1. The defaults set up a reasonable hostname for your machine.
+
+  2. They do not, but you adjust it by setting user.email. Otherwise,
+     your author ident would have this bogus email in it.
+
+The only setup that _would_ care is if the generated default is bogus
+and you set $GIT_COMMITTER_EMAIL in the environment and relied on that
+to get a sane value. Which is exactly what the test environment does.
+
+The question is, is what it is doing sane and something we should care
+about? Or is the test broken (it fails to parse the message-id that
+contains ".(none)", but I am not even sure that is intentional and not
+simply lazy regex writing in the test).
+
+I suspect that is not especially sane, but at the same time, it is not
+hard to support. The patch below (on top of jk/ident-gecos-strbuf)
+should fix it.
+
+-- >8 --
+Subject: format-patch: use GIT_COMMITTER_EMAIL when making message ids
+
+Before commit 43ae9f4, we generated the tail of a message id
+by calling git_committer_info and parsing the email out of
+the result. 43ae9f4 changed to use ident_default_email
+directly, so we didn't have to bother with parsing. As a
+side effect, it meant we no longer used GIT_COMMITTER_EMAIL
+at all.
+
+In general, this is probably reasonable behavior. Either the
+default email is sane on your system, or you are using
+user.email to provide something sane. The exception is if
+you rely on GIT_COMMITTER_EMAIL being set all the time to
+override the bogus generated email.
+
+This is unlikely to match anybody's real-life setup, but we
+do use it in the test environment. And furthermore, it's
+what we have always done, and the change in 43ae9f4 was
+about cleaning up, not fixing any bug; we should be
+conservative and keep the behavior identical.
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+Note that we check the environment outside of the usual strbuf_trim that
+happens to the default email. And outside of fmt_ident, which trims
+whitespace, as well. So compared to the state before this series,
+something like:
+
+  GIT_COMMITTER_EMAIL="$(printf 'foo@bar\n')" git format-patch ...
+
+is now broken. It also strikes me as a little ugly that this code path
+needs to care about $GIT_COMMITTER_EMAIL at all. I can rework the ident
+interface to provide a more sanitized broken-down version of the ident
+if we care.
+
+ builtin/log.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+diff --git a/builtin/log.c b/builtin/log.c
+index 8010a40..3f1883c 100644
+--- a/builtin/log.c
++++ b/builtin/log.c
+@@ -739,8 +739,11 @@ static void get_patch_ids(struct rev_info *rev, struct patch_ids *ids, const cha
+ static void gen_message_id(struct rev_info *info, char *base)
+ {
+ 	struct strbuf buf = STRBUF_INIT;
++	const char *email = getenv("GIT_COMMITTER_EMAIL");
++	if (!email)
++		email = ident_default_email();
+ 	strbuf_addf(&buf, "%s.%lu.git.%s", base,
+-		    (unsigned long) time(NULL), ident_default_email());
++		    (unsigned long) time(NULL), email);
+ 	info->message_id = strbuf_detach(&buf, NULL);
+ }
+ 
+-- 
+1.7.10.1.25.g7031a0f
