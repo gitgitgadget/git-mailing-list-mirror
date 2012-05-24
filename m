@@ -1,79 +1,156 @@
-From: Nicolas <sanpi@homecomputing.fr>
-Subject: Re: [stgit] Play with patch remotely
-Date: Fri, 25 May 2012 00:28:01 +0200
-Message-ID: <4FBEB5F1.2010909@homecomputing.fr>
-References: <20120524135807.GB1016@homecomputing.fr> <CAFBaKAyjaSw5zC3AfHp3j+YWbV=Ds1J-xZ_gb7Qp5tsYLxCw_g@mail.gmail.com>
+From: Vitor Antunes <vitor.hda@gmail.com>
+Subject: Re: [PATCH 1/2] git-p4: Test changelists touching two branches
+Date: Thu, 24 May 2012 23:42:06 +0100
+Message-ID: <CAOpHH-U+cG2DvTtWD25JNgLYKrNcwXgqysA0G-wr5DFhLG-DAg@mail.gmail.com>
+References: <1337729891-27648-1-git-send-email-vitor.hda@gmail.com>
+ <1337729891-27648-2-git-send-email-vitor.hda@gmail.com> <20120524010805.GA26443@padd.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature";
- boundary="------------enig292095934494537CFBF8C412"
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 25 00:28:48 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Luke Diamand <luke@diamand.org>
+To: Pete Wyckoff <pw@padd.com>
+X-From: git-owner@vger.kernel.org Fri May 25 00:42:49 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SXgWL-0000tU-NS
-	for gcvg-git-2@plane.gmane.org; Fri, 25 May 2012 00:28:38 +0200
+	id 1SXgjz-0004NI-RF
+	for gcvg-git-2@plane.gmane.org; Fri, 25 May 2012 00:42:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757438Ab2EXW2I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 May 2012 18:28:08 -0400
-Received: from homecomputing.fr ([88.185.228.16]:34750 "EHLO homecomputing.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756080Ab2EXW2H (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 May 2012 18:28:07 -0400
-Received: by homecomputing.fr (Postfix, from userid 1002)
-	id B00BBFB48; Fri, 25 May 2012 00:28:05 +0200 (CEST)
-X-Spam-Checker-Version: SpamAssassin 3.3.1 (2010-03-16) on
-	cuddles.homecomputing.fr
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=5.0 tests=ALL_TRUSTED,BAYES_00
-	autolearn=ham version=3.3.1
-Received: from [192.168.51.2] (unknown [192.168.51.254])
-	(Authenticated sender: sanpi)
-	by homecomputing.fr (Postfix) with ESMTPSA id 0F33DFA88
-	for <git@vger.kernel.org>; Fri, 25 May 2012 00:28:04 +0200 (CEST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:10.0.4) Gecko/20120510 Icedove/10.0.4
-In-Reply-To: <CAFBaKAyjaSw5zC3AfHp3j+YWbV=Ds1J-xZ_gb7Qp5tsYLxCw_g@mail.gmail.com>
-X-Enigmail-Version: 1.4
-OpenPGP: id=78532E92
+	id S1752184Ab2EXWmj convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 24 May 2012 18:42:39 -0400
+Received: from mail-bk0-f46.google.com ([209.85.214.46]:39489 "EHLO
+	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751255Ab2EXWmi convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 24 May 2012 18:42:38 -0400
+Received: by bkcji2 with SMTP id ji2so255515bkc.19
+        for <git@vger.kernel.org>; Thu, 24 May 2012 15:42:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=bxkXFfkcfpghlcxu8TJtPysQGO68TXiTxKVbV0ZT4s8=;
+        b=DkV3ywokCH17B5B84zVvoG0YgGby1APLUkuSL2gTlxFTshquR3JEOCHarzXuzwqj/W
+         f2P25OoOzDKMHRpd9cwtjJtTWbtsdPWyHxA3ew9omO1A4C33eJJIDRTTJaBA7IUou+2U
+         iVib+moBbrcH4Zpe/cfP5dca9ULAlBQCYpfUjzFuI5wrO2Sbh7pTIepPECIHsI+tr6QW
+         HptQauANNBtZsIkgUBsaxxGQdKWcz9XMw3S+cycUnbCSgAIcaCxL7zwq34KU2+e168to
+         VS8r4i5D6/4Ym7y6/GDZHDSFVd26GAPh9rxdEpn6Af+ScoXpnIrPzFuvL4uKXLDb9eAP
+         PrZg==
+Received: by 10.204.157.23 with SMTP id z23mr489685bkw.71.1337899357163; Thu,
+ 24 May 2012 15:42:37 -0700 (PDT)
+Received: by 10.204.129.215 with HTTP; Thu, 24 May 2012 15:42:06 -0700 (PDT)
+In-Reply-To: <20120524010805.GA26443@padd.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198439>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198440>
 
-This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
---------------enig292095934494537CFBF8C412
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: quoted-printable
+On Thu, May 24, 2012 at 2:08 AM, Pete Wyckoff <pw@padd.com> wrote:
+> vitor.hda@gmail.com wrote on Wed, 23 May 2012 00:38 +0100:
+>> It is possible to modify two different branches in P4 in a single
+>> changelist. git-p4 correctly detects this and commits the relevant
+>> changes to the different branches separately. This test proves that =
+and
+>> avoid future regressions in this behavior.
+>>
+>> Signed-off-by: Vitor Antunes <vitor.hda@gmail.com>
+>> ---
+>> =A0t/t9801-git-p4-branch.sh | =A0 54 +++++++++++++++++++++++++++++++=
++++++++++++++++
+>> =A01 files changed, 54 insertions(+), 0 deletions(-)
+>>
+>> diff --git a/t/t9801-git-p4-branch.sh b/t/t9801-git-p4-branch.sh
+>> index 2859256..89d8c59 100755
+>> --- a/t/t9801-git-p4-branch.sh
+>> +++ b/t/t9801-git-p4-branch.sh
+>> @@ -306,6 +306,60 @@ test_expect_success 'git p4 clone complex branc=
+hes' '
+>> =A0 =A0 =A0 )
+>> =A0'
+>>
+>> +# Move branch3/file3 to branch4/file3 in a single changelist
+>> +test_expect_success 'git p4 submit to two branches in a single chan=
+gelist' '
+>> + =A0 =A0 test_when_finished cleanup_git &&
+>> + =A0 =A0 test_create_repo "$git" &&
+>
+> You can skip the git bits here. =A0This is just setup for the next
+> test.
 
-On 24/05/2012 21:01, Gustav H=E5llberg wrote:
-> I believe you need .git/patches as well, which cannot be cloned like th=
-at.
+What about the parentheses in the next line, is it necessary? Or can I
+simply remove that pair of parentheses and unindent the code in
+between?
 
-Ok. Is there is a command for create this directory?
+Thanks,
+Vitor
 
-This seems to be a directory version of the master.stgit branch: a patch
-is a directory and sections (Bottom, Author, =85) are files.
-
-
---------------enig292095934494537CFBF8C412
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iQEcBAEBAgAGBQJPvrX0AAoJEAbXGiR4Uy6SseoIAML9w/mJRMyJtYas5a/Qm6Nk
-KZe0ZeVjCD5DJCZyu7mKCGROi87+yLx7pCk8YNotd/I6dL8AsdsyQsKIlcjmZopp
-Tn+71ETURh/FYLBf/yTcngAFR9rlxLONk7QKjprgnTNri+56O3cZUCYovb/cghxo
-TOsVXPFZEopAyO3ojCLoq373BFZB6tIE1VprE9ozhJsiNtBjTcIi39xGZCrlHWWO
-sUmHqo6LingjodEAxh1DIh3Z2gkSFqX02HgMLxjnilo0qeTKgXIeaYKJiYf+WE7E
-KpQLcdh/+2Hqbfc3uYr6SmN2gjY4PsoqYONnfFkPUDkon48UP0JtlhUQvkr3U58=
-=anCu
------END PGP SIGNATURE-----
-
---------------enig292095934494537CFBF8C412--
+> Ack everything else. =A0Nice to have the extra tests.
+>
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0-- Pete
+>
+>> + =A0 =A0 (
+>> + =A0 =A0 =A0 =A0 =A0 =A0 cd "$cli" &&
+>> + =A0 =A0 =A0 =A0 =A0 =A0 p4 integrate //depot/branch3/file3 //depot=
+/branch4/file3 &&
+>> + =A0 =A0 =A0 =A0 =A0 =A0 p4 delete //depot/branch3/file3 &&
+>> + =A0 =A0 =A0 =A0 =A0 =A0 p4 submit -d "Move branch3/file3 to branch=
+4/file3"
+>> + =A0 =A0 )
+>> +'
+>> +
+>> +# Confirm that changes to two branches done in a single changelist
+>> +# are correctly imported by git p4
+>> +test_expect_success 'git p4 sync changes to two branches in the sam=
+e changelist' '
+>> + =A0 =A0 test_when_finished cleanup_git &&
+>> + =A0 =A0 test_create_repo "$git" &&
+>> + =A0 =A0 (
+>> + =A0 =A0 =A0 =A0 =A0 =A0 cd "$git" &&
+>> + =A0 =A0 =A0 =A0 =A0 =A0 git config git-p4.branchList branch1:branc=
+h2 &&
+>> + =A0 =A0 =A0 =A0 =A0 =A0 git config --add git-p4.branchList branch1=
+:branch3 &&
+>> + =A0 =A0 =A0 =A0 =A0 =A0 git config --add git-p4.branchList branch1=
+:branch4 &&
+>> + =A0 =A0 =A0 =A0 =A0 =A0 git config --add git-p4.branchList branch1=
+:branch5 &&
+>> + =A0 =A0 =A0 =A0 =A0 =A0 git p4 clone --dest=3D. --detect-branches =
+//depot@all &&
+>> + =A0 =A0 =A0 =A0 =A0 =A0 git log --all --graph --decorate --stat &&
+>> + =A0 =A0 =A0 =A0 =A0 =A0 git reset --hard p4/depot/branch1 &&
+>> + =A0 =A0 =A0 =A0 =A0 =A0 test_path_is_file file1 &&
+>> + =A0 =A0 =A0 =A0 =A0 =A0 test_path_is_file file2 &&
+>> + =A0 =A0 =A0 =A0 =A0 =A0 test_path_is_file file3 &&
+>> + =A0 =A0 =A0 =A0 =A0 =A0 grep update file2 &&
+>> + =A0 =A0 =A0 =A0 =A0 =A0 git reset --hard p4/depot/branch2 &&
+>> + =A0 =A0 =A0 =A0 =A0 =A0 test_path_is_file file1 &&
+>> + =A0 =A0 =A0 =A0 =A0 =A0 test_path_is_file file2 &&
+>> + =A0 =A0 =A0 =A0 =A0 =A0 test_path_is_missing file3 &&
+>> + =A0 =A0 =A0 =A0 =A0 =A0 ! grep update file2 &&
+>> + =A0 =A0 =A0 =A0 =A0 =A0 git reset --hard p4/depot/branch3 &&
+>> + =A0 =A0 =A0 =A0 =A0 =A0 test_path_is_file file1 &&
+>> + =A0 =A0 =A0 =A0 =A0 =A0 test_path_is_file file2 &&
+>> + =A0 =A0 =A0 =A0 =A0 =A0 test_path_is_missing file3 &&
+>> + =A0 =A0 =A0 =A0 =A0 =A0 grep update file2 &&
+>> + =A0 =A0 =A0 =A0 =A0 =A0 git reset --hard p4/depot/branch4 &&
+>> + =A0 =A0 =A0 =A0 =A0 =A0 test_path_is_file file1 &&
+>> + =A0 =A0 =A0 =A0 =A0 =A0 test_path_is_file file2 &&
+>> + =A0 =A0 =A0 =A0 =A0 =A0 test_path_is_file file3 &&
+>> + =A0 =A0 =A0 =A0 =A0 =A0 ! grep update file2 &&
+>> + =A0 =A0 =A0 =A0 =A0 =A0 git reset --hard p4/depot/branch5 &&
+>> + =A0 =A0 =A0 =A0 =A0 =A0 test_path_is_file file1 &&
+>> + =A0 =A0 =A0 =A0 =A0 =A0 test_path_is_file file2 &&
+>> + =A0 =A0 =A0 =A0 =A0 =A0 test_path_is_file file3 &&
+>> + =A0 =A0 =A0 =A0 =A0 =A0 ! grep update file2 &&
+>> + =A0 =A0 =A0 =A0 =A0 =A0 test_path_is_missing .git/git-p4-tmp
+>> + =A0 =A0 )
+>> +'
+>> +
+>> =A0test_expect_success 'kill p4d' '
+>> =A0 =A0 =A0 kill_p4d
+>> =A0'
+>> --
+>> 1.7.7.rc2.14.g5e044.dirty
+>>
