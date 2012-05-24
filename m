@@ -1,84 +1,80 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: credential-helpers + remote-helper, starting  point?
-Date: Thu, 24 May 2012 14:21:10 -0400
-Message-ID: <20120524182110.GE3161@sigill.intra.peff.net>
-References: <b13df32797edbe8f71c796dbb4dc06a5@telesun.imag.fr>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2] checkout: no progress messages if !isatty(2).
+Date: Thu, 24 May 2012 11:29:52 -0700
+Message-ID: <7vy5ohwhy7.fsf@alter.siamese.dyndns.org>
+References: <20120524061000.GA14035@sigill.intra.peff.net>
+ <1337839944-4651-1-git-send-email-apenwarr@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, matthieu.moy@imag.fr,
-	kim-thuat.nguyen@ensimag.fr, pavel.volek@ensimag.fr,
-	javier.roucher-iglesias@ensimag.fr
-To: roucherj <roucherj@telesun.imag.fr>
-X-From: git-owner@vger.kernel.org Thu May 24 20:21:20 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Avery Pennarun <apenwarr@gmail.com>
+X-From: git-owner@vger.kernel.org Thu May 24 20:30:05 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SXcf1-0000qu-2w
-	for gcvg-git-2@plane.gmane.org; Thu, 24 May 2012 20:21:19 +0200
+	id 1SXcnT-0008PK-35
+	for gcvg-git-2@plane.gmane.org; Thu, 24 May 2012 20:30:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934053Ab2EXSVN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 May 2012 14:21:13 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:53856
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933474Ab2EXSVN (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 May 2012 14:21:13 -0400
-Received: (qmail 30154 invoked by uid 107); 24 May 2012 18:21:39 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 24 May 2012 14:21:39 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 24 May 2012 14:21:10 -0400
-Content-Disposition: inline
-In-Reply-To: <b13df32797edbe8f71c796dbb4dc06a5@telesun.imag.fr>
+	id S934100Ab2EXS35 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 May 2012 14:29:57 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50080 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S933804Ab2EXS34 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 May 2012 14:29:56 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 81003716C;
+	Thu, 24 May 2012 14:29:55 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=a6Q1e3qQOUkHwOU90w949/2Ho4c=; b=VxpGSb
+	TPKdYGnfELcjMumOt2yBJVuI2XH13s7PAiz8FkfvUDMHuFfNZBCizQJGhlh9h+iC
+	Qwcqy2f2VsnySI33NuTyLTxD6bVU/da2NQ9xrQRKp9RfoD5hSyjL+tP/HFAvLSp/
+	mF2JunvIrnh8RkkHBdEtyybVowD1bgV775By4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=fBa96sbRpYpMSqpMleQrAT4DUP+0LLhR
+	W2Ef1jN28K1CnHSDQdwU/lUzT6qZVHmX887m2dcI+sEIEVVYWMYThLXJ8ABQs/Dk
+	mez4EQxa4Waupw+ChGUDd1fHRXTGDzSAl0VzRGsldd50PqgNuQZimw1C6HBHPQVU
+	2aHumYG/OSw=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 78F8D716A;
+	Thu, 24 May 2012 14:29:55 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0B4B27168; Thu, 24 May 2012
+ 14:29:54 -0400 (EDT)
+In-Reply-To: <1337839944-4651-1-git-send-email-apenwarr@gmail.com> (Avery
+ Pennarun's message of "Thu, 24 May 2012 02:12:24 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 7579A6EA-A5CE-11E1-BF7D-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198402>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198403>
 
-On Thu, May 24, 2012 at 05:14:35PM +0200, roucherj wrote:
+Avery Pennarun <apenwarr@gmail.com> writes:
 
-> I want to know if anyone can help me with git-credential-helpers we
-> are trying to use git-credential-helpers in the git-mediawiki
-> (implemented as a remote-helper).
-> We need to ask for the login/pass of the wiki and it would be nice if
-> we can use credential-helpers to manage this credentials.
+> It would probably be better to have progress.c check isatty(2) all the time,
+> but that wouldn't allow things like 'git push --progress' to force progress
+> reporting to on, so I won't try to solve the general case right now.
 
-Yeah, I think it makes sense to use the credential-helpers.
+Before that "It would probably be better" comment to give your opinion,
+you need to describe what problem you wanted to solve in the first place.
+I'll lift it from your original version of the patch:
 
-> Anyone can send me a starting point, like a url with the
-> documentation of git-credential-helpers?
+    If stderr isn't a tty, we shouldn't be printing incremental progress
+    messages.  In particular, this affected 'git checkout -f . >&logfile'
+    unless you provided -q.  And git-new-workdir has no way to provide -q.
 
-Try:
+I do not seem to find a sane justification for
 
-  https://github.com/git/git/blob/master/Documentation/technical/api-credentials.txt
+	git $cmd --progress 2>output
 
-But that is the C API, and I assume you are building on the existing
-mediawiki helper that is written in perl. So I think what you really
-want is a "git credential" command that will let scripts hook into the
-credential API. Something like:
+use case and I do not immediately see how that "output" file can be
+useful.  But we've allowed it for a long time, so probably this version is
+safer.  Besides, it is more explicit.
 
-  $ git credential get https://example.com
-  username=bob
-  password=secret
-
-  $ cat <<\EOF | git credential store https://example.com
-  username=bob
-  password=secret
-  EOF
-
-  $ cat <<\EOF | git credential erase https://example.com
-  username=bob
-  password=secret
-  EOF
-
-I had planned eventually to do something like this for git-svn, but
-realized that it was more sane to just let svn library handle the
-credential storage.
-
-Do you guys want to try writing "git credential" as above? It might be a
-fun side project, but I know you are also on a limited timeframe for
-your project. I can work on it if you don't have time.
-
--Peff
+Thanks.
