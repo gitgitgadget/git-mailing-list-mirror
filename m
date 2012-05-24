@@ -1,77 +1,85 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] checkout: no progress messages if !isatty(2).
-Date: Thu, 24 May 2012 14:46:41 -0700
-Message-ID: <7v62blw8u6.fsf@alter.siamese.dyndns.org>
-References: <20120524061000.GA14035@sigill.intra.peff.net>
- <1337839944-4651-1-git-send-email-apenwarr@gmail.com>
- <7vy5ohwhy7.fsf@alter.siamese.dyndns.org>
- <CAHqTa-3QUsW_AP67NWjc-Gu5FZ7xQZyOOM-=zea+vwZeT79=0A@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+From: Timothy Normand Miller <theosib@att.net>
+Subject: =?windows-1252?Q?Git_hangs_at_=93Writing_objects=3A_11=25=94?=
+Date: Thu, 24 May 2012 17:40:41 -0400
+Message-ID: <EF4D4C5F-2D6B-46F2-B5A4-9DB1BA55BB6B@att.net>
+Mime-Version: 1.0 (Apple Message framework v1278)
+Content-Type: text/plain; charset=windows-1252
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Avery Pennarun <apenwarr@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 24 23:46:59 2012
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu May 24 23:47:06 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SXfru-0001xM-Rs
-	for gcvg-git-2@plane.gmane.org; Thu, 24 May 2012 23:46:51 +0200
+	id 1SXfs7-0002QW-Ga
+	for gcvg-git-2@plane.gmane.org; Thu, 24 May 2012 23:47:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965006Ab2EXVqq convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 24 May 2012 17:46:46 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:44484 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758046Ab2EXVqp convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 24 May 2012 17:46:45 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D6FF780E0;
-	Thu, 24 May 2012 17:46:44 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=jqOe12ucI333
-	6DrHTlfeULgnIh4=; b=bU5HGC8ieibedqPzdIlF5tsYKFPYkv7dQTs+3xEbk4sU
-	kOl+fLCx2amhrzj2scGnF4spc+2QVzt5AL2mrwi7JpQw7MbNdeLC3Z6XdwdQkgcz
-	Q9h0+UTpdNxpJz7qr8Y3E17DzWCuR3eEdwG+Sw0RcwwumJTvwSABk8UsTmhTVuA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=u8JpiC
-	DidNUIHMjn1MDZYu7zxgg++PYq4cYquWGVsqMHmyI+J0UfripGViH5Jw06APrxIi
-	dFIF8TAITtmBbT2e8jBPVjBJz2UYQs83hLiozz6zM+WIluAoN6iqF4a40A6xYbAd
-	AZ2N7IvP2MJzN1VTa6F4cYwDYno8c765G6D8Y=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BBAA380DB;
-	Thu, 24 May 2012 17:46:43 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 494B080D7; Thu, 24 May 2012
- 17:46:43 -0400 (EDT)
-In-Reply-To: <CAHqTa-3QUsW_AP67NWjc-Gu5FZ7xQZyOOM-=zea+vwZeT79=0A@mail.gmail.com> (Avery
- Pennarun's message of "Thu, 24 May 2012 14:46:42 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: F3BE0D32-A5E9-11E1-8652-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S965567Ab2EXVq7 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 24 May 2012 17:46:59 -0400
+Received: from nm17-vm0.access.bullet.mail.mud.yahoo.com ([66.94.236.21]:29805
+	"HELO nm17-vm0.access.bullet.mail.mud.yahoo.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S965151Ab2EXVq6 convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 May 2012 17:46:58 -0400
+X-Greylist: delayed 374 seconds by postgrey-1.27 at vger.kernel.org; Thu, 24 May 2012 17:46:57 EDT
+Received: from [66.94.237.126] by nm17.access.bullet.mail.mud.yahoo.com with NNFMP; 24 May 2012 21:40:42 -0000
+Received: from [98.139.221.57] by tm1.access.bullet.mail.mud.yahoo.com with NNFMP; 24 May 2012 21:40:42 -0000
+Received: from [127.0.0.1] by smtp110.sbc.mail.bf1.yahoo.com with NNFMP; 24 May 2012 21:40:42 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=att.net; s=s1024; t=1337895642; bh=pHQ4TaPFez68VCDqpBKs+aeApsRnhztj46X7+LWyzp8=; h=X-Yahoo-Newman-Id:X-Yahoo-Newman-Property:X-YMail-OSG:X-Yahoo-SMTP:Received:From:Content-Type:Content-Transfer-Encoding:Subject:Date:Message-Id:To:Mime-Version:X-Mailer; b=TJUWDfWzLAe+svPPBu+rHI0+bMP4amwRc3G1jUcXdtjybSEOlO69rRMjIFtDdaKbcoegvacPxNmShvm+F3zer0KGEzx27UeC4LfJk4zJ4jIOw6yoN6Tw5tgU7oBuhpVGAJt1kqDa4Oj4Ers7ohG0/AAeBKIgonr3inphEgA3gyY=
+X-Yahoo-Newman-Id: 619655.97246.bm@smtp110.sbc.mail.bf1.yahoo.com
+X-Yahoo-Newman-Property: ymail-3
+X-YMail-OSG: tX0HP3AVM1m7YTMUkiv_SeUkG_WZw18m9AEcri8yTXsCdha
+ fKHZP5sle7WrNWbxU_9qkU1rtT_3wA6VJ6c52KK0.tdNpkcs475Gow3e7y_F
+ Ujj0DwvNjvIjlcgJsBF1OgXS0W.XAVKC_HeK2o0imP2Dez3Z9eQWchLynYXr
+ 4ZDGS2r.jNCmXnwVDFGsdVcn_HjQoDUbtwyoXvmS7whZaLtqQgXOgpM6F1ht
+ OU68LK.IJm6ZOPKaKvSxtuU8U8hsvhvy3f9cCehgeKjXFaLNwvx_Hx6TewZF
+ w1h.EPoNITAlXk.8WyWUc6stwG.EBKesjq_NX_WvYdrH9Si2SLhNsNkgUjE4
+ x4yxUtQLJhNr4VNSeIbuGHwvvf_Y63aNwaiunEgNPw9vlJr4AMOavQux2Rpw
+ DwM7xlmlYW5vEBGTumuy7tSB23polaJ2mon_R3FOfK2YeT.hGgsfACpczqPz
+ RwcbPOzCGXOFuzPDx1pNXZ6nfL_Yh2buPaPQlAGP2hj1HUeggS6Ux5VrQXSi
+ HNgDQRJr1DdkEBaaitsufsBb0GxlnCpDzASRrG.epGgX59ri5bBWN1FbMPez
+ 6D12hUjCZ.1RHYDWXUWaLCfwAnzBYJwmfYf.X2kKWEA--
+X-Yahoo-SMTP: fnCipqKswBBOUfpM7XF4CajMkMYSy.KS.UTLsA--
+Received: from [192.168.1.107] (theosib@76.232.38.36 with plain)
+        by smtp110.sbc.mail.bf1.yahoo.com with SMTP; 24 May 2012 14:40:42 -0700 PDT
+X-Mailer: Apple Mail (2.1278)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198435>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198436>
 
-Avery Pennarun <apenwarr@gmail.com> writes:
+Hi, everyone,
 
->> I'll lift it from your original version of the patch:
->>
->> =C2=A0 =C2=A0If stderr isn't a tty, we shouldn't be printing increme=
-ntal progress
->> =C2=A0 =C2=A0messages. =C2=A0In particular, this affected 'git check=
-out -f . >&logfile'
->> =C2=A0 =C2=A0unless you provided -q. =C2=A0And git-new-workdir has n=
-o way to provide -q.
->
-> Do you want me to rephrase the commit message and resend?
+I've run into a problem that I cannot debug.  I've talked with people a=
+t length on IRC, I've made ample use of Google.  I'm getting nowhere.  =
+I'm not even getting any attention on stackexchange (where usually, que=
+stions are answered with surprising alacrity). =20
 
-No need, unless you want to say something vastly different from the abo=
-ve.
+This is not the common scenario of Windows and git-daemon that I have s=
+een answered elsewhere. This is Linux to Linux, using ssh. On both the =
+client and server, git version is 1.7.8.6.
 
-Thanks.
+I've tried doing the following:
+
+	=95 Create a local empty repo and push to that -- works fine
+	=95 Pull from local repo to local repo -- works fine
+	=95 Clone the remote repo to the local machine -- works fine
+	=95 git fsck and git gc on both server and client repos
+	=95 Push to pre-existing remote repo -- hangs writing objects at 11%
+	=95 Create empty remote repo and push to that -- hangs writing objects=
+ at 2%
+
+There's an env variable I can set to make git produce debug messages. N=
+othing useful there.
+
+Can anyone here help me figure out what's going wrong?
+
+
+The post to stackexchange is at:  http://stackoverflow.com/questions/10=
+740601/cannot-push-to-remote-git-repo-over-ssh-stuck-at-writing-objects=
+-11
+
+
+Thanks in advance for any advice you can give!
