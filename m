@@ -1,112 +1,84 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Add persistent-https to contrib
-Date: Thu, 24 May 2012 11:17:53 -0700
-Message-ID: <7v62blxx2m.fsf@alter.siamese.dyndns.org>
-References: <1337792767-18914-1-git-send-email-cranger@google.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: credential-helpers + remote-helper, starting  point?
+Date: Thu, 24 May 2012 14:21:10 -0400
+Message-ID: <20120524182110.GE3161@sigill.intra.peff.net>
+References: <b13df32797edbe8f71c796dbb4dc06a5@telesun.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Colby Ranger <cranger@google.com>
-X-From: git-owner@vger.kernel.org Thu May 24 20:18:14 2012
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, matthieu.moy@imag.fr,
+	kim-thuat.nguyen@ensimag.fr, pavel.volek@ensimag.fr,
+	javier.roucher-iglesias@ensimag.fr
+To: roucherj <roucherj@telesun.imag.fr>
+X-From: git-owner@vger.kernel.org Thu May 24 20:21:20 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SXcc0-0000Px-6Y
-	for gcvg-git-2@plane.gmane.org; Thu, 24 May 2012 20:18:12 +0200
+	id 1SXcf1-0000qu-2w
+	for gcvg-git-2@plane.gmane.org; Thu, 24 May 2012 20:21:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933948Ab2EXSR6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 May 2012 14:17:58 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:44013 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933458Ab2EXSR5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 May 2012 14:17:57 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C91938EE4;
-	Thu, 24 May 2012 14:17:56 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=WnBsgrte7RSyP7bcItNPK0UX0Bs=; b=ReX/yE
-	6Tx53/gq4tiwdMyeEuRGidrlcw3DOJ5RxsGUEn/6t+yFLz/tw//YHxELnCef2CJW
-	Ovk+PYLR+tKQ0oAOLg5pix2TNzMGF5WxcYDo0jwhFAvtFZMY3uB3oDYCUYaPkXtL
-	ys2hMlVM8DLaDOJcjQBZx+qS9ofB6CfcMxVx0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=aDhNa5PvL5MpYQfm1pWbozCd574xE+xe
-	bsStErZZG+w+vEWrW1tkgAXYM8YeQQERRM3TLX8gjVrip11x7kEEwnETmyFahnjh
-	2cHuPWJ+bnHL94lxyzJloXpXmbfS5+ogFi8AOTF3uy0UqQeb3ZHjEZ2a6I0x/YBH
-	bs3TXtE/fc4=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C099A8EE3;
-	Thu, 24 May 2012 14:17:56 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C8C008EDF; Thu, 24 May 2012
- 14:17:54 -0400 (EDT)
-In-Reply-To: <1337792767-18914-1-git-send-email-cranger@google.com> (Colby
- Ranger's message of "Wed, 23 May 2012 10:06:07 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: C830238E-A5CC-11E1-8FF7-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S934053Ab2EXSVN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 May 2012 14:21:13 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:53856
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S933474Ab2EXSVN (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 May 2012 14:21:13 -0400
+Received: (qmail 30154 invoked by uid 107); 24 May 2012 18:21:39 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 24 May 2012 14:21:39 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 24 May 2012 14:21:10 -0400
+Content-Disposition: inline
+In-Reply-To: <b13df32797edbe8f71c796dbb4dc06a5@telesun.imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198401>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198402>
 
-Colby Ranger <cranger@google.com> writes:
+On Thu, May 24, 2012 at 05:14:35PM +0200, roucherj wrote:
 
-> Git over HTTPS has a high request startup latency, since the SSL
-> negotiation can take up to a second. In order to reduce this latency,
-> connections should be left open to the Git server across requests
-> (or invocations of the git commandline).
->
-> Reduce SSL startup latency by running a daemon job that keeps
-> connections open to a Git server. The daemon job
-> (git-remote-persistent-https--proxy) is started on the first request
-> through the client binary (git-remote-persistent-https) and remains
-> running for 24 hours after the last request, or until a new daemon
-> binary is placed in the PATH. The client determines the daemon's
-> HTTP address by communicating over a UNIX socket with the daemon.
->>From there, the rest of the Git protocol work is delegated to the
-> "git-remote-http" binary, with the environment's http_proxy set to
-> the daemon.
->
-> Signed-off-by: Colby Ranger <cranger@google.com>
+> I want to know if anyone can help me with git-credential-helpers we
+> are trying to use git-credential-helpers in the git-mediawiki
+> (implemented as a remote-helper).
+> We need to ask for the login/pass of the wiki and it would be nice if
+> we can use credential-helpers to manage this credentials.
 
-Clever.  Do you have some numbers?
+Yeah, I think it makes sense to use the credential-helpers.
 
-If this persistent proxy weren't in the picture, the git client would
-directly delegate its communication with the origin server to
-git-remote-https, and git-remote-https would interact with the credential
-API to handle authentication for "https://origin.server.xz/repo".
+> Anyone can send me a starting point, like a url with the
+> documentation of git-credential-helpers?
 
-How does the persistent proxy sitting in between your git client and the
-origin server and/or the real proxy you have at the perimeter of your
-network interact with respect to authentication/authorization to access
-the repository or the real proxy?  They will talk with the persistent
-proxy, and the persistent proxy will talk with the git client via
-git-remote-http, and I am assuming that this last git-remote-http will be
-the one that uses the credential API.  Would it ask credential for
-"https://origin.server.xz/repo"?  "http://origin.server.xz/repo"?  Or
-would it be "persistent-https://origin.server.xz.repo"?
+Try:
 
->  contrib/persistent-https/COPYING    |  202 +++++++++++++++++++++++++++++++++++
+  https://github.com/git/git/blob/master/Documentation/technical/api-credentials.txt
 
-I do not mind carrying this in the contrib/ area (I am assuming that
-distributing Apache licensed software that does not link with GPLv2 core
-is OK).  It may be just me, but a file called COPYING that does not have
-GPL text in it was a bit surprising.  I wonder if it is more customary to
-call it either LICENSE (or perhaps LICENSE-2.0)?
+But that is the C API, and I assume you are building on the existing
+mediawiki helper that is written in perl. So I think what you really
+want is a "git credential" command that will let scripts hook into the
+credential API. Something like:
 
->  contrib/persistent-https/README     |   62 +++++++++++
->  contrib/persistent-https/client.go  |  178 ++++++++++++++++++++++++++++++
->  contrib/persistent-https/main.go    |   82 ++++++++++++++
->  contrib/persistent-https/proxy.go   |  190 ++++++++++++++++++++++++++++++++
->  contrib/persistent-https/release.sh |   45 ++++++++
->  contrib/persistent-https/socket.go  |   97 +++++++++++++++++
->  contrib/persistent-https/tar.sh     |   40 +++++++
->  8 files changed, 896 insertions(+)
+  $ git credential get https://example.com
+  username=bob
+  password=secret
 
-It might deserve its own contrib/persistent-https/Makefile in addition to
-your internal "release" scripts, though.
+  $ cat <<\EOF | git credential store https://example.com
+  username=bob
+  password=secret
+  EOF
+
+  $ cat <<\EOF | git credential erase https://example.com
+  username=bob
+  password=secret
+  EOF
+
+I had planned eventually to do something like this for git-svn, but
+realized that it was more sane to just let svn library handle the
+credential storage.
+
+Do you guys want to try writing "git credential" as above? It might be a
+fun side project, but I know you are also on a limited timeframe for
+your project. I can work on it if you don't have time.
+
+-Peff
