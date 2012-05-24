@@ -1,68 +1,106 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: What's cooking in git.git (May 2012, #06; Wed, 23)
-Date: Thu, 24 May 2012 07:59:02 +0200
-Message-ID: <4FBDCE26.1080904@viscovery.net>
-References: <7vmx4yzgce.fsf@alter.siamese.dyndns.org> <4FBDC8FA.9050501@lsrfire.ath.cx>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 1/5] fetch-pack: sort incoming heads
+Date: Thu, 24 May 2012 02:04:51 -0400
+Message-ID: <20120524060451.GA13502@sigill.intra.peff.net>
+References: <20120521221417.GA22664@sigill.intra.peff.net>
+ <20120521221702.GA22914@sigill.intra.peff.net>
+ <7v7gw43rn9.fsf@alter.siamese.dyndns.org>
+ <20120522202336.GA31231@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: =?ISO-8859-1?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
-X-From: git-owner@vger.kernel.org Thu May 24 07:59:20 2012
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, Martin Fick <mfick@codeaurora.org>,
+	Michael Haggerty <mhagger@alum.mit.edu>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu May 24 08:05:03 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SXR4t-0008Te-3b
-	for gcvg-git-2@plane.gmane.org; Thu, 24 May 2012 07:59:15 +0200
+	id 1SXRAQ-0008H3-VQ
+	for gcvg-git-2@plane.gmane.org; Thu, 24 May 2012 08:04:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752896Ab2EXF7I convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 24 May 2012 01:59:08 -0400
-Received: from lilzmailso02.liwest.at ([212.33.55.13]:51713 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752175Ab2EXF7H convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 24 May 2012 01:59:07 -0400
-Received: from cpe228-254-static.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.76)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1SXR5X-0003Vp-8H; Thu, 24 May 2012 07:59:55 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id A31761660F;
-	Thu, 24 May 2012 07:59:02 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:12.0) Gecko/20120428 Thunderbird/12.0.1
-In-Reply-To: <4FBDC8FA.9050501@lsrfire.ath.cx>
-X-Spam-Score: -1.4 (-)
+	id S1753224Ab2EXGEy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 May 2012 02:04:54 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:53419
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753012Ab2EXGEx (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 May 2012 02:04:53 -0400
+Received: (qmail 24518 invoked by uid 107); 24 May 2012 06:05:19 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 24 May 2012 02:05:19 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 24 May 2012 02:04:51 -0400
+Content-Disposition: inline
+In-Reply-To: <20120522202336.GA31231@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198355>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198356>
 
-Am 5/24/2012 7:36, schrieb Ren=E9 Scharfe:
-> Am 24.05.2012 00:24, schrieb Junio C Hamano:
->> * rs/maint-grep-F (2012-05-21) 4 commits
->>    (merged to 'next' on 2012-05-23 at b24143c)
->>   + grep: stop leaking line strings with -f
->>   + grep: support newline separated pattern list
->>   + grep: factor out do_append_grep_pat()
->>   + grep: factor out create_grep_pat()
->>
->> "git grep -F", unlike the case where it reads from a file, did not t=
-reat
->> individual lines in the given pattern argument as separate patterns =
-as it
->> should.
->=20
-> This is not specific to -F; grep(1) accepts newline-separated pattern
-> lists with -E etc. as well, as does git grep with the patches above.
+On Tue, May 22, 2012 at 04:23:36PM -0400, Jeff King wrote:
 
-Shouldn't we worry that this change breaks existing users?
+> On Tue, May 22, 2012 at 01:08:42PM -0700, Junio C Hamano wrote:
+> 
+> > > @@ -1076,6 +1081,8 @@ struct ref *fetch_pack(struct fetch_pack_args *my_args,
+> > >  			st.st_mtime = 0;
+> > >  	}
+> > >  
+> > > +	qsort(heads, nr_heads, sizeof(*heads), compare_heads);
+> > > +
+> > >  	if (heads && nr_heads)
+> > >  		nr_heads = remove_duplicates(nr_heads, heads);
+> > 
+> > Hrm, could heads and/or nr_heads be NULL/0 here when we try to run qsort()
+> > in this codepath?
+> [...]
+> A sane qsort would see that its second parameter is 0 and never try to
+> dereference the array. But I'm not sure all qsort implementations we
+> will see are sane, so it's probably better to protect it by putting it
+> inside the conditional block just below.
 
-Consider a script that generates a pattern that sometimes contains NL.
-Yes, it would not match anywhere, but what if that is a deliberate choi=
-ce
-of the script writer? With this change, the script would now observe
-spurious matches where earlier there were no matches.
+I eye-balled what you queued in pu, and I wonder if you mis-read my
+"just below" as "just below the existing line in the conditional" and
+not "in the conditional that is just below the code we are talking
+about".
 
--- Hannes
+I think we need this on top (or squashed in, but it looks like it is
+already in next):
+
+-- >8 --
+Subject: fetch-pack: sort incoming heads list earlier
+
+Commit 4435968 started sorting heads fed to fetch-pack so
+that later commits could use more optimized algorithms;
+commit 7db8d53 switched the remove_duplicates function to
+such an algorithm.
+
+Of course, the sorting is more effective if you do it
+_before_ the algorithm in question.
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+I suspect that all parts of git feed the refs in sorted order already,
+which is why there were no test failures. But we should handle arbitrary
+order from the command-line.
+
+ builtin/fetch-pack.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/builtin/fetch-pack.c b/builtin/fetch-pack.c
+index 8a72473..b18ba05 100644
+--- a/builtin/fetch-pack.c
++++ b/builtin/fetch-pack.c
+@@ -1082,8 +1082,8 @@ struct ref *fetch_pack(struct fetch_pack_args *my_args,
+ 	}
+ 
+ 	if (heads && nr_heads) {
+-		nr_heads = remove_duplicates(nr_heads, heads);
+ 		qsort(heads, nr_heads, sizeof(*heads), compare_heads);
++		nr_heads = remove_duplicates(nr_heads, heads);
+ 	}
+ 
+ 	if (!ref) {
+-- 
+1.7.10.1.25.g7031a0f
