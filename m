@@ -1,86 +1,68 @@
 From: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
 Subject: Re: [PATCH 2/2] completion: split __git_ps1 into a separate script
-Date: Thu, 24 May 2012 22:47:26 +0200
-Message-ID: <20120524204726.GB2052@goldbirke>
+Date: Thu, 24 May 2012 22:49:48 +0200
+Message-ID: <20120524204948.GA9028@goldbirke>
 References: <1337719600-7361-1-git-send-email-felipe.contreras@gmail.com>
 	<1337719600-7361-3-git-send-email-felipe.contreras@gmail.com>
+	<4FBC0019.6030702@in.waw.pl>
+	<7v4nr72bim.fsf@alter.siamese.dyndns.org>
+	<CAMP44s0aKi+8WHPXYLQ+iSMkj9iV88JGTabrpBRNBWb7upAMiQ@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Ted Pavlic <ted@tedpavlic.com>,
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Zbigniew =?utf-8?Q?J=C4=99drzejewski-Szmek?= <zbyszek@in.waw.pl>,
+	git@vger.kernel.org, Ted Pavlic <ted@tedpavlic.com>,
 	Thomas Rast <trast@student.ethz.ch>,
 	Kerrick Staley <mail@kerrickstaley.com>,
 	Marius Storm-Olsen <mstormo@gmail.com>,
 	Ville =?iso-8859-1?Q?Skytt=E4?= <ville.skytta@iki.fi>,
 	Dan McGee <dan@archlinux.org>
 To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 24 22:47:47 2012
+X-From: git-owner@vger.kernel.org Thu May 24 22:50:06 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SXewf-0003dB-Aq
-	for gcvg-git-2@plane.gmane.org; Thu, 24 May 2012 22:47:41 +0200
+	id 1SXeyz-00023Y-MX
+	for gcvg-git-2@plane.gmane.org; Thu, 24 May 2012 22:50:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758593Ab2EXUrh convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 24 May 2012 16:47:37 -0400
-Received: from moutng.kundenserver.de ([212.227.126.187]:54229 "EHLO
+	id S1759230Ab2EXUt7 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 24 May 2012 16:49:59 -0400
+Received: from moutng.kundenserver.de ([212.227.126.186]:63713 "EHLO
 	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756080Ab2EXUrg (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 May 2012 16:47:36 -0400
+	with ESMTP id S1759219Ab2EXUt7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 May 2012 16:49:59 -0400
 Received: from localhost6.localdomain6 (p5B13046B.dip0.t-ipconnect.de [91.19.4.107])
 	by mrelayeu.kundenserver.de (node=mreu0) with ESMTP (Nemesis)
-	id 0LckSJ-1RoBBY3RUF-00jqvE; Thu, 24 May 2012 22:47:28 +0200
+	id 0M7Fkw-1S9uzz3Oha-00xKFy; Thu, 24 May 2012 22:49:50 +0200
 Content-Disposition: inline
-In-Reply-To: <1337719600-7361-3-git-send-email-felipe.contreras@gmail.com>
+In-Reply-To: <CAMP44s0aKi+8WHPXYLQ+iSMkj9iV88JGTabrpBRNBWb7upAMiQ@mail.gmail.com>
 User-Agent: Mutt/1.5.20 (2009-06-14)
-X-Provags-ID: V02:K0:8y0oEAA/a7t7LU7IusIGj2fg/vrFTe5Yp6ncc60r/Wt
- sJeNtfKYTmLz5Lh5VBlb122qhR/MjsQZq6j3THkJo6gNNdAp+K
- IdTVBJdF6uCvL94f09KQTBAfBZ9XRdz81VyioDxZ9/zBdZNjuI
- 92Xxc0sEZN4h9kpBUH6PWXo1KCf2jGHGA2IdSSoJj5GoENs3rQ
- Od7ibBz2WdsB/p6kEqMJ0krjHauaS+d/TUv4KE1vPlOKb5SBlG
- v28JbRxLMDUSPXOHrfHnPyDtgnXnFI3b1pLt/OI/GLwnprNhcO
- mVkeB8X7bqXlcPiEEpE6bbspztUPpu5imnFzGzFIjMqee/moqN
- HJac+eHN4B6euPSFx4WI=
+X-Provags-ID: V02:K0:o6lx8sYPIPB8mTA3SChT/Y2FnRZrGoeAm2fuiVu4bWV
+ 4GrpEix0rGuu2hhGbrVYNXPK+SO6S2KGGPd7G2U+rNQG25FKK3
+ 8xENwm6xG03pPy3R3Dc4+pnpfNMazevuZB5A731EJNavmlZZoj
+ xJqxwSqbmcqZ4hx2DDcZ6kckUZLISdRaz00BPYBgqPCxQdYjus
+ b6dUKZE+IV3G+ibi/6ozUfQzSvw6uXuT/EvMx/K1Kr2EjV3jhQ
+ kff3W/+mHkjdeDYu4relxh2h/gomwh8baLXieGKQLDpydlT4Lz
+ qu2sv0K7zF+j4DNiVgpjaLQkh7d7ALSUgM0CzCOXKLO4KJXeRF
+ NShV8scRvaSKTT1xC/kM=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198424>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198425>
+
+On Wed, May 23, 2012 at 05:40:46PM +0200, Felipe Contreras wrote:
+> What do we gain by this incredible user annoyance? Less maintenance
+> burden of __gitdir() which barely changes anyway?
+
+I happen to have a topic in the works which changes __gitdir() and
+adds some helper functions to it, so the diffstat of all
+__gitdir()-related changes is this:
+
+ 1 file changed, 71 insertions(+), 6 deletions(-)
 
 
-Hi,
-
-
-On Tue, May 22, 2012 at 10:46:40PM +0200, Felipe Contreras wrote:
-> bash-completion 1.90 shipped=20
-
-That's still beta, right?  (or the bash-completion website is out of
-date...)
-
-> with support to load completions
-> dynamically[1], which means the git completion script wouldn't be loa=
-ded
-> until the user types 'git <tab>'--this creates a problem to people us=
-ing
-> __git_ps1(); that function won't be available when the shell is first
-> created.
->=20
-> For now distributions have workarounded this issue by moving the git
-> completion to the "compatdir"[2]; this of course is not ideal.
->=20
-> The solution, proposed by Kerrick Staley[3], is to split the git scri=
-pt
-> in two; the part that deals with __git_ps1() in one (i.e.
-> git-prompt.sh), and everything else in another (i.e.
-> git-completion.bash).
-
-This breaks existing setups, where the user installs
-git-completion.bash with 'make install', or where the user sources
-git-completion.bash directly from the repository.
-
-
-Best,
 G=E1bor
