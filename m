@@ -1,75 +1,82 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: remove_duplicates() in builtin/fetch-pack.c is O(N^2)
-Date: Thu, 24 May 2012 20:39:20 -0400
-Message-ID: <20120525003920.GB11300@sigill.intra.peff.net>
-References: <4FB9F92D.8000305@alum.mit.edu>
- <20120521174525.GA22643@sigill.intra.peff.net>
- <20120521221417.GA22664@sigill.intra.peff.net>
- <201205241817.46034.mfick@codeaurora.org>
+Subject: Re: Git hangs at =?utf-8?B?4oCcV3JpdGlu?=
+ =?utf-8?B?ZyBvYmplY3RzOiAxMSXigJ0=?=
+Date: Thu, 24 May 2012 20:51:56 -0400
+Message-ID: <20120525005156.GC11300@sigill.intra.peff.net>
+References: <EF4D4C5F-2D6B-46F2-B5A4-9DB1BA55BB6B@att.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Michael Haggerty <mhagger@alum.mit.edu>,
-	git discussion list <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Martin Fick <mfick@codeaurora.org>
-X-From: git-owner@vger.kernel.org Fri May 25 02:39:41 2012
+Cc: git@vger.kernel.org
+To: Timothy Normand Miller <theosib@att.net>
+X-From: git-owner@vger.kernel.org Fri May 25 02:52:06 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SXiZ7-0007Bg-4V
-	for gcvg-git-2@plane.gmane.org; Fri, 25 May 2012 02:39:37 +0200
+	id 1SXilA-0007j5-Te
+	for gcvg-git-2@plane.gmane.org; Fri, 25 May 2012 02:52:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759527Ab2EYAj0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 May 2012 20:39:26 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:54660
+	id S1759450Ab2EYAv7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 May 2012 20:51:59 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:54675
 	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753394Ab2EYAjW (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 May 2012 20:39:22 -0400
-Received: (qmail 2857 invoked by uid 107); 25 May 2012 00:39:49 -0000
+	id S1751357Ab2EYAv6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 May 2012 20:51:58 -0400
+Received: (qmail 2928 invoked by uid 107); 25 May 2012 00:52:25 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 24 May 2012 20:39:49 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 24 May 2012 20:39:20 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 24 May 2012 20:52:25 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 24 May 2012 20:51:56 -0400
 Content-Disposition: inline
-In-Reply-To: <201205241817.46034.mfick@codeaurora.org>
+In-Reply-To: <EF4D4C5F-2D6B-46F2-B5A4-9DB1BA55BB6B@att.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198455>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198456>
 
-On Thu, May 24, 2012 at 06:17:45PM -0600, Martin Fick wrote:
+On Thu, May 24, 2012 at 05:40:41PM -0400, Timothy Normand Miller wrote:
 
-> On Monday, May 21, 2012 04:14:17 pm Jeff King wrote:
-> > On Mon, May 21, 2012 at 01:45:25PM -0400, Jeff King wrote:
-> > Martin, let me know if this improves things for your
-> > many-ref cases (and if you are still seeing slowness in
-> > your repos with many refs, let me know which operations
-> > cause it).
+> I've run into a problem that I cannot debug.  I've talked with people
+> at length on IRC, I've made ample use of Google.  I'm getting nowhere.
+> I'm not even getting any attention on stackexchange (where usually,
+> questions are answered with surprising alacrity).  
 > 
-> I have not been ignoring you, I am sorry that I have not 
-> replied yet.  Unfortunately, I am having a very hard time 
-> getting conclusive tests with my large repo.  I making
-> plenty of mistakes in what I think I am testing I believe,
-> but also I am having a hard time getting reproducible 
-> results so far.  And some tests take quite a while, so it is 
-> not always obvious what I might be doing wrong.
+> This is not the common scenario of Windows and git-daemon that I have
+> seen answered elsewhere. This is Linux to Linux, using ssh. On both
+> the client and server, git version is 1.7.8.6.
 
-No worries. I am pretty confident that the patches I supplied so far are
-a good thing whether they help your case or not. So if you come back in
-a month and show that they solved all your problems, then great. And if
-they don't, then it will just show us what new problems we have to work
-on. :)
+I'd first start with trying to remove as many variables as possible.
+Does the problem only happen over ssh, or does it also happen when
+pushing across a pipe to a repo on the local machine? If so, does it
+also happen during a fetch of the same data?
 
-> Were your tests mostly warm cache tests?
+If you can reproduce it at will (which it sounds like you can), you
+could also try some older or newer git versions to see if they work any
+better. If you can find a working version, it might be worth trying to
+bisect and find the commit that introduces the breakage.
 
-Yes, exclusively warm. And all of the refs were packed, which makes the
-warm/cold difference less interesting (it's one 30MB or so file).  I
-don't think there's much point in thinking about the performance of 400K
-loose refs (which would be absolutely horrific cold-cache on most
-traditional filesystems). If you have that many, you would want to keep
-the bulk of them packed.
+If the problem still exists in the latest version, then I'd start by
+stracing as much as possible. On the client side, you can use "strace
+-f" to see what all of the processes are doing; you'll probably also
+want to pass:
+
+  --receive-pack='strace -f -o foo.out git-receive-pack'
+
+to git-push to ask the remote side to strace. There's a reasonable
+chance you'll simply see that the client side is waiting on the server
+side for I/O, so you'll want to know what the server side is doing.
+
+I see you posted an strace snippet of a process waiting in select() on
+stack overflow. It's hard to tell what's going on from there, though,
+because we can't see which processes are which (we see the pids, but we
+don't know which programs they're running, or where the commands go). A
+full strace log would help a lot (if it's long and you need a place to
+post it, try something like https://gist.github.com).
+
+And finally, if the repo is something you can make public, I can try to
+reproduce on my machine. That might tell us if the problem is with your
+repo, or something else about your machines or setup.
 
 -Peff
