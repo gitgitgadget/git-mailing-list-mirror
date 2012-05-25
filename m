@@ -1,72 +1,78 @@
-From: "J.V." <jvsrvcs@gmail.com>
-Subject: how to share files between machines?
-Date: Fri, 25 May 2012 13:28:09 -0600
-Message-ID: <4FBFDD49.2000801@gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [RFC] Possibility to choose ~/.config/git/config instead of ~/.gitconfig
+Date: Fri, 25 May 2012 21:29:51 +0200
+Message-ID: <vpqvcjknjo0.fsf@bauges.imag.fr>
+References: <20120525181526.Horde.VibLf3wdC4BPv7AeKacSMiA@webmail.minatec.grenoble-inp.fr>
+	<CAE1pOi0eY2=eNzuTUVGmHuvfGWvxoXSJUADWr0CfPpVe5ktxow@mail.gmail.com>
+	<7v4nr4t9gc.fsf@alter.siamese.dyndns.org>
+	<20120525182558.GC4491@burratino>
+	<7vsjeortwu.fsf@alter.siamese.dyndns.org>
+	<20120525184408.GA4740@burratino>
+	<7vobpcrstn.fsf@alter.siamese.dyndns.org>
+	<20120525191701.GA4944@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git mailing list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri May 25 21:28:51 2012
+Content-Type: text/plain
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Hilco Wijbenga <hilco.wijbenga@gmail.com>,
+	nguyenhu@minatec.inpg.fr, git@vger.kernel.org,
+	Valentin DUPERRAY <Valentin.Duperray@phelma.grenoble-inp.fr>,
+	Franck JONAS <Franck.Jonas@phelma.grenoble-inp.fr>,
+	Lucien KONG <Lucien.Kong@phelma.grenoble-inp.fr>,
+	Thomas NGUY <Thomas.Nguy@phelma.grenoble-inp.fr>,
+	Huynh Khoi Nguyen NGUYEN 
+	<Huynh-Khoi-Nguyen.Nguyen@phelma.grenoble-inp.fr>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Fri May 25 21:30:44 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SY0Bu-00046P-EU
-	for gcvg-git-2@plane.gmane.org; Fri, 25 May 2012 21:28:50 +0200
+	id 1SY0Di-0000WB-3H
+	for gcvg-git-2@plane.gmane.org; Fri, 25 May 2012 21:30:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932184Ab2EYT2P (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 May 2012 15:28:15 -0400
-Received: from mail-pz0-f46.google.com ([209.85.210.46]:38923 "EHLO
-	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756862Ab2EYT2P (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 May 2012 15:28:15 -0400
-Received: by dady13 with SMTP id y13so1633785dad.19
-        for <git@vger.kernel.org>; Fri, 25 May 2012 12:28:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:subject
-         :content-type:content-transfer-encoding;
-        bh=+ANkfdLJNZ4U48Ycp+sHnVL3TnjHTl7iAC3SH2HHFcc=;
-        b=V6y5Tvl5m4BvvI4siyBxCrGAkX3qeGJYTeqfoR4iGPak+BtWg7dpcZfqjLUONlxHG9
-         KFUoIo92DSs4M45JGiUkVDCMQrDtNvRhRe3fq26jtLA8udHQi8k6yEpcJ32XmrdbCw56
-         z1/YiYfxQSBB5Kk39xzWC6AUt2cvi6NYZIgt9aTdzN/KJ77iy9ZnM0Lzx1Z+183llwhX
-         Gi1BiWvTjRPgUAatdWFii7GIAjFJP1z4KGpE0AL27YGyYSpEoSXYWdHElkruRlFQ4wZE
-         agEpU8yxp6IFYSxQFILpLejgoIxAdk6onRsjwEKsmfo9DHNfGUCaHJ9eqeRubX4VzEsF
-         /CEQ==
-Received: by 10.68.225.9 with SMTP id rg9mr254366pbc.137.1337974094701;
-        Fri, 25 May 2012 12:28:14 -0700 (PDT)
-Received: from [10.21.1.60] ([64.55.39.36])
-        by mx.google.com with ESMTPS id tx9sm9964274pbc.10.2012.05.25.12.28.13
-        (version=SSLv3 cipher=OTHER);
-        Fri, 25 May 2012 12:28:14 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:12.0) Gecko/20120428 Thunderbird/12.0.1
+	id S1758153Ab2EYTai (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 May 2012 15:30:38 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:54840 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756553Ab2EYTah (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 May 2012 15:30:37 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id q4PJLnVt006221
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Fri, 25 May 2012 21:21:49 +0200
+Received: from bauges.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1SY0Cv-0005rt-08; Fri, 25 May 2012 21:29:53 +0200
+In-Reply-To: <20120525191701.GA4944@burratino> (Jonathan Nieder's message of
+	"Fri, 25 May 2012 14:17:01 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.93 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Fri, 25 May 2012 21:21:52 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: q4PJLnVt006221
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1338578515.46671@kN9dJR9Ig9eraDc59Ap/aw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198511>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198512>
 
-We have a shared git repository (origin).  Everyone on the team clones 
-the repo, does some work, commits locally then pushes to the shared 
-repository.
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-I have a box where I have cloned the repo.  I have another box (test 
-box) where I have also cloned the same repo.  I change/commit/push code 
-on either box to the shared repo depending on the task at hand.
+> I am guessing
+> that putting all user git configuration in one directory is part of
+> the goal, and separating temporary files like ~/.fontconfig/*.cache*
+> from configuration files like ~/.mutt/muttrc is another part.
 
-Now I want to do something different.  I want to create new files on my 
-local box in various directories that are part of my local git rep, and 
-share them only between just the two boxes.  So I need the ability to 
-commit/push to another repo such that others on the repo mentioned in 
-the first sentence will not be affected.
+That's another good thing with XDG (~/.config Vs ~/.cache/ for example),
+but I don't think Git would have anything user-wide that would not be
+configuration.
 
-There will be various files in various sub directories, so when I pull 
-on the second box, I want all the files to come down and be put in the 
-same directory that they existed on my box 1 where I committed them.
-
-Is this at all possible? Maybe by creating a bare repository on my box 1?
-
-
-
-J.V.
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
