@@ -1,87 +1,120 @@
-From: =?UTF-8?B?w5h5dmluZCBBLiBIb2xt?= <sunny@sunbase.org>
-Subject: Re: [PATCH 3/3] xdiff: import new 32-bit version of count_masked_bytes()
-Date: Fri, 25 May 2012 17:18:00 +0200
-Message-ID: <CAA787rkRZudv96wJ4WPFWt7k0Y628dvhxrPes1g6rbw8C_Kiog@mail.gmail.com>
-References: <CAA787r=WCJXeDipiVL37oMgji=ncoPyXXVOcCyYbSC6iCcTi1g@mail.gmail.com>
-	<4FB4A4B9.3080009@lsrfire.ath.cx>
-	<xmqqmx56rd2r.fsf@junio.mtv.corp.google.com>
-	<4FB5460C.10807@lsrfire.ath.cx>
-	<CAA787rmJixvyKhubHXZCDVYc=DdVk8_vHsHF6bOsLQ_j=39bGw@mail.gmail.com>
-	<4FBBF8E9.7020103@lsrfire.ath.cx>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH/RFC] rebase -p: do not redo the merge, but cherry-pick
+ first-parent changes
+Date: Fri, 25 May 2012 17:58:17 +0200
+Message-ID: <4FBFAC19.8030108@kdbg.org>
+References: <4FBAA33D.1080703@kdbg.org> <CAOeW2eE9EW3gER7ZDThGABtZ0doNuUb70DnKrnzD+OeWYLO7cQ@mail.gmail.com> <7vzk8yzq35.fsf@alter.siamese.dyndns.org> <CAOeW2eGvEaQYk9KODmLzZuEBu-KhKcQeL4PE-4YHwSgtP0dJfA@mail.gmail.com> <7vehq9xz7a.fsf@alter.siamese.dyndns.org> <CAOeW2eH85+qa2PXS55_xGwH+tpMDMEK76HywfpLTYrv_Dtg49Q@mail.gmail.com> <4FBE9AC7.3010506@kdbg.org> <7vaa0xw9dy.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Thomas Rast <trast@student.ethz.ch>
-To: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
-X-From: git-owner@vger.kernel.org Fri May 25 17:18:10 2012
+Content-Type: text/plain; charset=ISO-2022-JP
+Content-Transfer-Encoding: 7bit
+Cc: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Stephen Haberman <stephen@exigencecorp.com>,
+	Andrew Wong <andrew.kw.w@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri May 25 17:58:58 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SXwHJ-0005zp-7m
-	for gcvg-git-2@plane.gmane.org; Fri, 25 May 2012 17:18:09 +0200
+	id 1SXwum-0003oc-1c
+	for gcvg-git-2@plane.gmane.org; Fri, 25 May 2012 17:58:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755787Ab2EYPSD convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 25 May 2012 11:18:03 -0400
-Received: from mail-pb0-f46.google.com ([209.85.160.46]:46012 "EHLO
-	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756007Ab2EYPSB convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 25 May 2012 11:18:01 -0400
-Received: by pbbrp8 with SMTP id rp8so1887096pbb.19
-        for <git@vger.kernel.org>; Fri, 25 May 2012 08:18:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=GFWms0Ar4f8dWh/OhicaD79PFhp2hJ5rhfLj6mqLaAk=;
-        b=W5Z6Gu6vyLXm+ITPYHASofIKuU4QWlq5/x7VMb6+QlURpgh9WtQqWKfezwZztRUqrW
-         cqNEJzZ3KSAkJNxjCaniz154oKJu+fTc82ec1TETCmJcJmpZO2jeZyIp5ntRasI3u3Jy
-         0/XKii+vKBN3F5b+iUIR9wAqIdnaQesHXXIt0VTDz08hH4KlP8UPBh3ioS3lpSxU3jzL
-         1Hor0cH4W63ubhTL1LwKMwAViyM0YINFWQJ8FczSB+fTqu0Rf7AwIFyXROdgl4Xur38s
-         sngoorEJm2QJYiakzbZW0y4rKSLCvZu1TuursBdz9pcVP3mYtgxSHrD+hIhcSWoMVwvn
-         Is0g==
-Received: by 10.68.190.131 with SMTP id gq3mr11541962pbc.17.1337959080965;
- Fri, 25 May 2012 08:18:00 -0700 (PDT)
-Received: by 10.68.26.98 with HTTP; Fri, 25 May 2012 08:18:00 -0700 (PDT)
-In-Reply-To: <4FBBF8E9.7020103@lsrfire.ath.cx>
-X-Google-Sender-Auth: HB3fZZrLwNz4Ye5GnVvoxB7cdbo
+	id S1752908Ab2EYP6W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 May 2012 11:58:22 -0400
+Received: from bsmtp.bon.at ([213.33.87.14]:41573 "EHLO bsmtp.bon.at"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750864Ab2EYP6V (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 May 2012 11:58:21 -0400
+Received: from dx.sixt.local (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTP id 3EB78130060;
+	Fri, 25 May 2012 17:54:05 +0200 (CEST)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+	by dx.sixt.local (Postfix) with ESMTP id D63D319F6BF;
+	Fri, 25 May 2012 17:58:17 +0200 (CEST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:12.0) Gecko/20120421 Thunderbird/12.0
+In-Reply-To: <7vaa0xw9dy.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198477>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198479>
 
-On 22 May 2012 22:36, Ren=C3=A9 Scharfe <rene.scharfe@lsrfire.ath.cx> w=
-rote:
-> Import the latest 32-bit implementation of count_masked_bytes() from
-> Linux (arch/x86/include/asm/word-at-a-time.h). =C2=A0It's shorter and=
- avoids
-> overflows and negative numbers.
->
-> This fixes test failures on 32-bit, where negative partial results ha=
-d
-> been shifted right using the "wrong" method (logical shift right inst=
-ead
-> of arithmetic short right). =C2=A0The compiler is free to chose the m=
-ethod,
-> so it was only wrong in the sense that it didn't work as intended by =
-us.
->
-> Reported-by: =C3=98yvind A. Holm <sunny@sunbase.org>
-> Signed-off-by: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
-> ---
-> Does this fix all the warnings, and do the tests pass? =C2=A0I can on=
-ly
-> reproduce the "shifting to far to the right" warning..
+Am 24.05.2012 23:34, schrieb Junio C Hamano:
+> Johannes Sixt <j6t@kdbg.org> writes:
+> 
+>> Today I was able to use rebase -i -p in the field. I used it to rebuild
+>> an integration branch (akin to git's pu branch). Guess what? It did not
+>> work as expected:
+>>
+>> Two of the topic branches' early parts were already merged in the
+>> upstream. The instruction sheet had only 'pick' of merge commits for the
+>> topics. Except for these two; there, all commits (that were not yet in
+>> upstream) were offered to pick, including the merge commit.
+>>
+>> I started with this:
+>>
+>>     A--M--o--o   <- master
+>>    /  /
+>> --o--X--Y        <- side branch (partially merged in master)
+>>    \     \
+>>     R--S--N--T   <- integration (to be rebuilt on master)
+>>
+>> I wanted this:
+>>
+>>      A--M--o--o
+>>     /  /       \
+>>    /  /          R'--S'--N'--T'
+>> --o--X--Y---------------´
+> 
+> It is unclear what exact revisions you gave to rebase, but I am assuming
+> that you asked "rebase --onto master X^ T" (you can use R^ instead of X^;
+> they refer to the same commit).
 
-Hi, I finally got around to test this, and it compiles flawlessly with
-your three patches. No warnings, and the test suite seems to run
-without errors.
+Sorry, I should have been more precise. The command was
 
-Nice work, sir.
+  git rebase -i -p master T
 
-Cheers,
-=C3=98yvind
+An important detail is that the order of parents of N is S, Y. (I
+assumed that this was somewhat clear from the context of my message.)
+
+> It is straightforward to see what should happen to R and S; they should be
+> a straight replay of single parent commit on top of 'master'.  
+> 
+> But it is unclear what should happen to X and Y.
+
+Nothing. Relabel "integration" to "topic" in my artwork above. Then X
+and Y are on an "unrelated side branch" that is merged into the topic
+whose tip is at T. The early part of this side branch is already in
+master.  In fact, if X were not merged into master, yet, then 'rebase -i
+-p' already works as (I) intended: it leaves X and Y alone.
+
+> When you are rebasing the X^..T sub-DAG, can you say what makes S more
+> special than Y by looking at the original topology?  Your "I wanted this"
+> picture depicts S' to be rewritten but Y stays the same.  Why?  
+
+It is "not on topic" (pun intended). It is the second parent of N. Think
+of X and Y as an independent bug fix sub-topic. It is merged into topic
+only because T depends on the fix.
+
+> They are both in the X^..T DAG, and neither of them is merged to 'master'.
+> I can sort of see why X and R would be treated differently (X is part of
+> master, R is not), but I cannot justify why your "I wanted this" picture
+> replays S' without replaying Y'.
+> 
+> What am I missing?
+
+First-parentship. When a topic or an integration branch is rebased (with
+--preserve-merges), only the first-parent chain should be rewritten.
+
+>> But I got this:
+>>
+>>     A--M--o--o-------Y'
+>>    /  /       \       \
+>> --o--X--Y      R'--S'--N'--T'
+> 
+> Which is what I would expect, from the "Y and S play a similar role in the
+> sub-DAG X^..T in the original DAG, with respect to master" point of view.
+
+-- Hannes
