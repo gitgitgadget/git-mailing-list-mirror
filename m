@@ -1,78 +1,200 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [RFC] Possibility to choose ~/.config/git/config instead of ~/.gitconfig
-Date: Fri, 25 May 2012 19:54:06 +0200
-Message-ID: <vpqipfkrvsx.fsf@bauges.imag.fr>
-References: <20120525181526.Horde.VibLf3wdC4BPv7AeKacSMiA@webmail.minatec.grenoble-inp.fr>
-	<CAE1pOi0eY2=eNzuTUVGmHuvfGWvxoXSJUADWr0CfPpVe5ktxow@mail.gmail.com>
-	<20120525174237.GA4267@burratino>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/2] completion: split __git_ps1 into a separate script
+Date: Fri, 25 May 2012 11:03:14 -0700
+Message-ID: <7v8vggt9y5.fsf@alter.siamese.dyndns.org>
+References: <1337719600-7361-1-git-send-email-felipe.contreras@gmail.com>
+ <1337719600-7361-3-git-send-email-felipe.contreras@gmail.com>
+ <4FBC0019.6030702@in.waw.pl> <7v4nr72bim.fsf@alter.siamese.dyndns.org>
+ <CAMP44s0aKi+8WHPXYLQ+iSMkj9iV88JGTabrpBRNBWb7upAMiQ@mail.gmail.com>
+ <CAOnadRF8XyZKi+d=y1fFy2Xvs-3ETVyCbJBj83mK3Q8yuK7oQw@mail.gmail.com>
+ <CAMP44s3uW75O_jt2F7POxTAhX+qPyRSjOX9-DuEkg7a7WtnLsA@mail.gmail.com>
+ <4FBD5CC1.3060701@tedpavlic.com> <20120524203549.GA2052@goldbirke>
+ <CAOnadRFbrhrFz7Ya3Vhgsju9G723Qu0OdJnM31xFmBqQNgj6gA@mail.gmail.com>
+ <20120525073506.GD2052@goldbirke> <87ehq8its8.fsf@thomas.inf.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Hilco Wijbenga <hilco.wijbenga@gmail.com>,
-	nguyenhu@minatec.inpg.fr, git@vger.kernel.org,
-	Valentin DUPERRAY <Valentin.Duperray@phelma.grenoble-inp.fr>,
-	Franck JONAS <Franck.Jonas@phelma.grenoble-inp.fr>,
-	Lucien KONG <Lucien.Kong@phelma.grenoble-inp.fr>,
-	Thomas NGUY <Thomas.Nguy@phelma.grenoble-inp.fr>,
-	Huynh Khoi Nguyen NGUYEN 
-	<Huynh-Khoi-Nguyen.Nguyen@phelma.grenoble-inp.fr>,
-	Jeff King <peff@peff.net>,
-	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 25 19:54:24 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder@ira.uka.de>,
+	Ted Pavlic <ted@tedpavlic.com>,
+	Felipe Contreras <felipe.contreras@gmail.com>,
+	Ville =?utf-8?Q?Skytt=C3=A4?= <ville.skytta@iki.fi>,
+	Thomas Rast <trast@student.ethz.ch>,
+	Kerrick Staley <mail@kerrickstaley.com>,
+	Dan McGee <dan@archlinux.org>,
+	Zbigniew =?utf-8?Q?J=C4=99drzejewski-Szmek?= <zbyszek@in.waw.pl>,
+	<git@vger.kernel.org>, Marius Storm-Olsen <mstormo@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: Thomas Rast <trast@inf.ethz.ch>
+X-From: git-owner@vger.kernel.org Fri May 25 20:03:25 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SXyiW-0000rT-6I
-	for gcvg-git-2@plane.gmane.org; Fri, 25 May 2012 19:54:24 +0200
+	id 1SXyrD-0000Ri-Eh
+	for gcvg-git-2@plane.gmane.org; Fri, 25 May 2012 20:03:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756263Ab2EYRyU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 May 2012 13:54:20 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:57528 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751434Ab2EYRyT (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 May 2012 13:54:19 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id q4PHk4fd018338
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Fri, 25 May 2012 19:46:04 +0200
-Received: from bauges.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1SXyiF-0004tA-9I; Fri, 25 May 2012 19:54:07 +0200
-In-Reply-To: <20120525174237.GA4267@burratino> (Jonathan Nieder's message of
-	"Fri, 25 May 2012 12:42:37 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.93 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Fri, 25 May 2012 19:46:06 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: q4PHk4fd018338
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1338572769.46203@HOMxvsQx3kc6ou97U/OBvQ
+	id S1758123Ab2EYSDT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 May 2012 14:03:19 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:38039 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758030Ab2EYSDS (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 May 2012 14:03:18 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id ED8E38311;
+	Fri, 25 May 2012 14:03:16 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=ueGpW+dlJctEAfPxlNwl8mCm0aQ=; b=pPKgdU
+	PL5bv2H4jPgU0pm9h9xRP/PRYey6ctrazpo8o0zgswiLiTA1vhqJJ2d770TotOhe
+	w1WwF7Oj3kWEJKsqPA5nabI/iCMNn8nmMYqLa40x/ylDOFOSN6wYYP2G9JK32pcA
+	MsK9kNS9fvVEB5Wy1LwpM2XjZANPMx6vOuNsg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=l4T6bIoYCUc9QDDdLc+h1prxzNQw+D6Y
+	uisEdJw7CCa0Y6QA2ILBsDfT9NJk/NQuuVd/qD/GeQfKNOXePw6ViMHvQWE7XKL1
+	0mE5DecDLzkbh7GAqdOZ7br8oAAEnvKp/gHwtneibg8/CNRwAPfTgwPEwyq81ScU
+	hfde69chFRI=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E24D78310;
+	Fri, 25 May 2012 14:03:16 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 53108830E; Fri, 25 May 2012
+ 14:03:16 -0400 (EDT)
+In-Reply-To: <87ehq8its8.fsf@thomas.inf.ethz.ch> (Thomas Rast's message of
+ "Fri, 25 May 2012 09:50:15 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: E70017E8-A693-11E1-A95F-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198496>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198498>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+Thomas Rast <trast@inf.ethz.ch> writes:
 
-> Regarding $GIT_DIR/config, it says "The filename is of course relative
-> to the repository root, not the working directory.".  Is this out of
-> date?  (Cc-ing Peff and Duy.)
+> Why not make a git builtin command that figures out everything that
+> __git_ps1 does?  Perhaps in a format that can be eval'd and processed to
+> the user's taste.
 
-This is a per-repository, but not "part of the repository" in the sense
-"files tracked by Git" (i.e. it's not fetched by git clone).
+I'd rather not to see something so specific for one interpreter like that
+in the core.  How about doing it this way instead?
 
-Having a $GIT_WORKTREE/.gitconfig file would be very nice, but raises a
-lot of security issues, so it's a much larger project (define which
-configuration values are allowed there, possibly take them into account
-at clone time, i.e. before checking out the files, and so on). Most
-likely out of the scope of my students' project ;-).
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+diff --git a/contrib/completion/Makefile b/contrib/completion/Makefile
+new file mode 100644
+index 0000000..71c600f
+--- /dev/null
++++ b/contrib/completion/Makefile
+@@ -0,0 +1,13 @@
++# The default target is ...
++all::
++
++SCRIPTS = git-completion.bash git-prompt.sh
++
++all:: $(SCRIPTS)
++clean::
++	rm -f $(SCRIPTS)
++
++$(SCRIPTS): % : %.shc
++	rm -f $@+ $@
++	sed -e '/## include common-bits/r common-bits' $< >$@+
++	mv $@+ $@
+diff --git a/contrib/completion/common-bits b/contrib/completion/common-bits
+new file mode 100644
+index 0000000..06c2845
+--- /dev/null
++++ b/contrib/completion/common-bits
+@@ -0,0 +1,22 @@
++# __gitdir accepts 0 or 1 arguments (i.e., location)
++# returns location of .git repo
++__gitdir ()
++{
++	if [ -z "${1-}" ]; then
++		if [ -n "${__git_dir-}" ]; then
++			echo "$__git_dir"
++		elif [ -n "${GIT_DIR-}" ]; then
++			test -d "${GIT_DIR-}" || return 1
++			echo "$GIT_DIR"
++		elif [ -d .git ]; then
++			echo .git
++		else
++			git rev-parse --git-dir 2>/dev/null
++		fi
++	elif [ -d "$1/.git" ]; then
++		echo "$1/.git"
++	else
++		echo "$1"
++	fi
++}
++
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash.shc
+similarity index 99%
+rename from contrib/completion/git-completion.bash
+rename to contrib/completion/git-completion.bash.shc
+index abf8215..cf30f01 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash.shc
+@@ -32,24 +32,8 @@ case "$COMP_WORDBREAKS" in
+ *)   COMP_WORDBREAKS="$COMP_WORDBREAKS:"
+ esac
+ 
+-# __gitdir accepts 0 or 1 arguments (i.e., location)
+-# returns location of .git repo
+-__gitdir ()
+-{
+-	if [ -z "${1-}" ]; then
+-		if [ -n "${__git_dir-}" ]; then
+-			echo "$__git_dir"
+-		elif [ -d .git ]; then
+-			echo .git
+-		else
+-			git rev-parse --git-dir 2>/dev/null
+-		fi
+-	elif [ -d "$1/.git" ]; then
+-		echo "$1/.git"
+-	else
+-		echo "$1"
+-	fi
+-}
++## include common-bits here
++## common-bits ends here
+ 
+ __gitcomp_1 ()
+ {
+diff --git a/contrib/completion/git-prompt.sh b/contrib/completion/git-prompt.sh.shc
+similarity index 94%
+rename from contrib/completion/git-prompt.sh
+rename to contrib/completion/git-prompt.sh.shc
+index 8e2e9f3..d442a1a 100644
+--- a/contrib/completion/git-prompt.sh
++++ b/contrib/completion/git-prompt.sh.shc
+@@ -49,27 +49,8 @@
+ # GIT_PS1_SHOWUPSTREAM, you can override it on a per-repository basis by
+ # setting the bash.showUpstream config variable.
+ 
+-# __gitdir accepts 0 or 1 arguments (i.e., location)
+-# returns location of .git repo
+-__gitdir ()
+-{
+-	if [ -z "${1-}" ]; then
+-		if [ -n "${__git_dir-}" ]; then
+-			echo "$__git_dir"
+-		elif [ -n "${GIT_DIR-}" ]; then
+-			test -d "${GIT_DIR-}" || return 1
+-			echo "$GIT_DIR"
+-		elif [ -d .git ]; then
+-			echo .git
+-		else
+-			git rev-parse --git-dir 2>/dev/null
+-		fi
+-	elif [ -d "$1/.git" ]; then
+-		echo "$1/.git"
+-	else
+-		echo "$1"
+-	fi
+-}
++## include common-bits here
++## common-bits ends here
+ 
+ # stores the divergence from upstream in $p
+ # used by GIT_PS1_SHOWUPSTREAM
