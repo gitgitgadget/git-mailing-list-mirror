@@ -1,131 +1,87 @@
-From: roucherj <roucherj@telesun.imag.fr>
-Subject: Re: credential-helpers + remote-helper, starting  =?UTF-8?Q?=20point=3F?=
-Date: Fri, 25 May 2012 15:28:39 +0200
-Message-ID: <5edbcd2530e49e719129f799f8c78dd3@telesun.imag.fr>
-References: <b13df32797edbe8f71c796dbb4dc06a5@telesun.imag.fr>
- <20120524182110.GE3161@sigill.intra.peff.net>
+From: =?UTF-8?B?w5h5dmluZCBBLiBIb2xt?= <sunny@sunbase.org>
+Subject: Re: [PATCH 3/3] xdiff: import new 32-bit version of count_masked_bytes()
+Date: Fri, 25 May 2012 17:18:00 +0200
+Message-ID: <CAA787rkRZudv96wJ4WPFWt7k0Y628dvhxrPes1g6rbw8C_Kiog@mail.gmail.com>
+References: <CAA787r=WCJXeDipiVL37oMgji=ncoPyXXVOcCyYbSC6iCcTi1g@mail.gmail.com>
+	<4FB4A4B9.3080009@lsrfire.ath.cx>
+	<xmqqmx56rd2r.fsf@junio.mtv.corp.google.com>
+	<4FB5460C.10807@lsrfire.ath.cx>
+	<CAA787rmJixvyKhubHXZCDVYc=DdVk8_vHsHF6bOsLQ_j=39bGw@mail.gmail.com>
+	<4FBBF8E9.7020103@lsrfire.ath.cx>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: <git@vger.kernel.org>, <matthieu.moy@imag.fr>,
-	<kim-thuat.nguyen@ensimag.fr>, <pavel.volek@ensimag.fr>,
-	<javier.roucher-iglesias@ensimag.fr>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri May 25 15:28:55 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Thomas Rast <trast@student.ethz.ch>
+To: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
+X-From: git-owner@vger.kernel.org Fri May 25 17:18:10 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SXuZa-0005ma-BC
-	for gcvg-git-2@plane.gmane.org; Fri, 25 May 2012 15:28:54 +0200
+	id 1SXwHJ-0005zp-7m
+	for gcvg-git-2@plane.gmane.org; Fri, 25 May 2012 17:18:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752617Ab2EYN2t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 May 2012 09:28:49 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:50106 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752430Ab2EYN2s (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 May 2012 09:28:48 -0400
-Received: from ensimag.imag.fr (ensimag.imag.fr [195.221.228.12])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id q4PDKXR9012190
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Fri, 25 May 2012 15:20:33 +0200
-Received: from web-ensimag.imag.fr (web-ensimag [195.221.228.24])
-	by ensimag.imag.fr (8.13.8/8.13.8/ImagV2.1.r_ens) with ESMTP id q4PDSeYD011508;
-	Fri, 25 May 2012 15:28:40 +0200
-Received: from web-ensimag.imag.fr (localhost [127.0.0.1])
-	by web-ensimag.imag.fr (8.13.8/8.13.8/ImagV2.1.sb_ens) with ESMTP id q4PDSeWI026325;
-	Fri, 25 May 2012 15:28:40 +0200
-Received: (from apache@localhost)
-	by web-ensimag.imag.fr (8.13.8/8.13.8/Submit) id q4PDSdAp026324;
-	Fri, 25 May 2012 15:28:39 +0200
-X-Authentication-Warning: web-ensimag.imag.fr: apache set sender to roucherj@telesun.imag.fr using -f
-In-Reply-To: <20120524182110.GE3161@sigill.intra.peff.net>
-X-Sender: roucherj@telesun.imag.fr
-User-Agent: Roundcube Webmail/0.5.3
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Fri, 25 May 2012 15:20:34 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: q4PDKXR9012190
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: roucherj@telesun.imag.fr
-MailScanner-NULL-Check: 1338556836.60784@66fs8cEgivs9ciWs7yVSjw
+	id S1755787Ab2EYPSD convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 25 May 2012 11:18:03 -0400
+Received: from mail-pb0-f46.google.com ([209.85.160.46]:46012 "EHLO
+	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756007Ab2EYPSB convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 25 May 2012 11:18:01 -0400
+Received: by pbbrp8 with SMTP id rp8so1887096pbb.19
+        for <git@vger.kernel.org>; Fri, 25 May 2012 08:18:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=GFWms0Ar4f8dWh/OhicaD79PFhp2hJ5rhfLj6mqLaAk=;
+        b=W5Z6Gu6vyLXm+ITPYHASofIKuU4QWlq5/x7VMb6+QlURpgh9WtQqWKfezwZztRUqrW
+         cqNEJzZ3KSAkJNxjCaniz154oKJu+fTc82ec1TETCmJcJmpZO2jeZyIp5ntRasI3u3Jy
+         0/XKii+vKBN3F5b+iUIR9wAqIdnaQesHXXIt0VTDz08hH4KlP8UPBh3ioS3lpSxU3jzL
+         1Hor0cH4W63ubhTL1LwKMwAViyM0YINFWQJ8FczSB+fTqu0Rf7AwIFyXROdgl4Xur38s
+         sngoorEJm2QJYiakzbZW0y4rKSLCvZu1TuursBdz9pcVP3mYtgxSHrD+hIhcSWoMVwvn
+         Is0g==
+Received: by 10.68.190.131 with SMTP id gq3mr11541962pbc.17.1337959080965;
+ Fri, 25 May 2012 08:18:00 -0700 (PDT)
+Received: by 10.68.26.98 with HTTP; Fri, 25 May 2012 08:18:00 -0700 (PDT)
+In-Reply-To: <4FBBF8E9.7020103@lsrfire.ath.cx>
+X-Google-Sender-Auth: HB3fZZrLwNz4Ye5GnVvoxB7cdbo
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198476>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198477>
 
-On Thu, 24 May 2012 14:21:10 -0400, Jeff King wrote:
-> On Thu, May 24, 2012 at 05:14:35PM +0200, roucherj wrote:
+On 22 May 2012 22:36, Ren=C3=A9 Scharfe <rene.scharfe@lsrfire.ath.cx> w=
+rote:
+> Import the latest 32-bit implementation of count_masked_bytes() from
+> Linux (arch/x86/include/asm/word-at-a-time.h). =C2=A0It's shorter and=
+ avoids
+> overflows and negative numbers.
 >
->> I want to know if anyone can help me with git-credential-helpers we
->> are trying to use git-credential-helpers in the git-mediawiki
->> (implemented as a remote-helper).
->> We need to ask for the login/pass of the wiki and it would be nice 
->> if
->> we can use credential-helpers to manage this credentials.
+> This fixes test failures on 32-bit, where negative partial results ha=
+d
+> been shifted right using the "wrong" method (logical shift right inst=
+ead
+> of arithmetic short right). =C2=A0The compiler is free to chose the m=
+ethod,
+> so it was only wrong in the sense that it didn't work as intended by =
+us.
 >
-> Yeah, I think it makes sense to use the credential-helpers.
->
->> Anyone can send me a starting point, like a url with the
->> documentation of git-credential-helpers?
->
-> Try:
->
->
-> 
-> https://github.com/git/git/blob/master/Documentation/technical/api-credentials.txt
->
-> But that is the C API, and I assume you are building on the existing
-> mediawiki helper that is written in perl. So I think what you really
-> want is a "git credential" command that will let scripts hook into 
-> the
-> credential API. Something like:
->
->   $ git credential get https://example.com
->   username=bob
->   password=secret
->
->   $ cat <<\EOF | git credential store https://example.com
->   username=bob
->   password=secret
->   EOF
->
->   $ cat <<\EOF | git credential erase https://example.com
->   username=bob
->   password=secret
->   EOF
->
-> I had planned eventually to do something like this for git-svn, but
-> realized that it was more sane to just let svn library handle the
-> credential storage.
->
-> Do you guys want to try writing "git credential" as above? It might 
-> be a
-> fun side project, but I know you are also on a limited timeframe for
-> your project. I can work on it if you don't have time.
->
-> -Peff
+> Reported-by: =C3=98yvind A. Holm <sunny@sunbase.org>
+> Signed-off-by: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
+> ---
+> Does this fix all the warnings, and do the tests pass? =C2=A0I can on=
+ly
+> reproduce the "shifting to far to the right" warning..
 
-Jeff thanks you for helping me with use credentials-helpers with 
-git-remote
-I will try to code your proposed solution.
-making something like that:
+Hi, I finally got around to test this, and it compiles flawlessly with
+your three patches. No warnings, and the test suite seems to run
+without errors.
 
-+-----+ -----> +----------------------+
-| git |  pipe  | git-remote-mediawiki |
-+-----+ <----- +----------------------+
-                      /\      ||
-                      || pipe ||
-                      ||      \/
-                  +----------------+ ----->  O
-                  | git-credential | <----- -|-
-                  +----------------+        / \
-                      /\      ||            User
-                      || pipe ||
-                      ||      \/
-                  +-------------------------+
-                  | git-credentials-helpers |
-                  +-------------------------+
+Nice work, sir.
+
+Cheers,
+=C3=98yvind
