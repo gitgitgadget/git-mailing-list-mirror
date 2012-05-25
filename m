@@ -1,15 +1,11 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH] config doc: remove confusion about relative GIT_DIR from
- FILES section
-Date: Fri, 25 May 2012 13:12:04 -0500
-Message-ID: <20120525181204.GA4491@burratino>
-References: <20120525181526.Horde.VibLf3wdC4BPv7AeKacSMiA@webmail.minatec.grenoble-inp.fr>
- <CAE1pOi0eY2=eNzuTUVGmHuvfGWvxoXSJUADWr0CfPpVe5ktxow@mail.gmail.com>
- <20120525174237.GA4267@burratino>
- <CAE1pOi3qSEY=Dj-Fqj+=anULVmCdsm72_k+B0SpdGiCO3u7L9A@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC] Possibility to choose ~/.config/git/config instead of
+ ~/.gitconfig
+Date: Fri, 25 May 2012 11:13:55 -0700
+Message-ID: <7v4nr4t9gc.fsf@alter.siamese.dyndns.org>
+References: <20120525181526.Horde.VibLf3wdC4BPv7AeKacSMiA@webmail.minatec.grenoble-inp.fr> <CAE1pOi0eY2=eNzuTUVGmHuvfGWvxoXSJUADWr0CfPpVe5ktxow@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=us-ascii
 Cc: nguyenhu@minatec.inpg.fr, git@vger.kernel.org,
 	matthieu.moy@grenoble-inp.fr,
 	Valentin DUPERRAY <Valentin.Duperray@phelma.grenoble-inp.fr>,
@@ -18,118 +14,69 @@ Cc: nguyenhu@minatec.inpg.fr, git@vger.kernel.org,
 	Thomas NGUY <Thomas.Nguy@phelma.grenoble-inp.fr>,
 	Huynh Khoi Nguyen NGUYEN 
 	<Huynh-Khoi-Nguyen.Nguyen@phelma.grenoble-inp.fr>,
-	Jeff King <peff@peff.net>,
-	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= <pclouds@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
+	Jonathan Nieder <jrnieder@gmail.com>
 To: Hilco Wijbenga <hilco.wijbenga@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 25 20:12:19 2012
+X-From: git-owner@vger.kernel.org Fri May 25 20:14:04 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SXyzq-0007mM-MW
-	for gcvg-git-2@plane.gmane.org; Fri, 25 May 2012 20:12:19 +0200
+	id 1SXz1W-0004J7-UW
+	for gcvg-git-2@plane.gmane.org; Fri, 25 May 2012 20:14:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758148Ab2EYSMN convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 25 May 2012 14:12:13 -0400
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:50726 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757950Ab2EYSMM convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 25 May 2012 14:12:12 -0400
-Received: by yhmm54 with SMTP id m54so802711yhm.19
-        for <git@vger.kernel.org>; Fri, 25 May 2012 11:12:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=juV0zqdJZl4G/C5KxJr6idW8iVeJJkTAKGBzheqmv1s=;
-        b=YDydR7zdgI1Y19+Du2sV/O1CUxcrhfOeV+synsRozbesNhvHycB1mTz28/wBkWMv/r
-         KSb9nR5KgTWU+XJSFbboPPQa3W/ApNLCeLE0UcugwemHTrhiVn7FwJ9FTwwR4eClGAXS
-         FjdXVyNUjSdrpV397jC/BM9BLUgkmM+JtRAuz+MRTRdZI1Cg68zECFJc/zv9oDxWHJ2S
-         Ef32m9bkBA53pMEOodnjhP2gWPFfTj4BfK2XxuJh3m8Xh1Dww1s8sushMI3Eo5ASVQDT
-         APypLuAgWmO4gaGGqfohSAzQbWB4q/VEjKfrjGxYrsKdGwa56a4k9Y9xQgqtrIXCJ54r
-         X0ow==
-Received: by 10.50.203.98 with SMTP id kp2mr3787579igc.42.1337969531916;
-        Fri, 25 May 2012 11:12:11 -0700 (PDT)
-Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
-        by mx.google.com with ESMTPS id dk9sm18470770igb.13.2012.05.25.11.12.10
-        (version=SSLv3 cipher=OTHER);
-        Fri, 25 May 2012 11:12:11 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <CAE1pOi3qSEY=Dj-Fqj+=anULVmCdsm72_k+B0SpdGiCO3u7L9A@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1758158Ab2EYSN6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 May 2012 14:13:58 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:42380 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757950Ab2EYSN6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 May 2012 14:13:58 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 84D3985D9;
+	Fri, 25 May 2012 14:13:57 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=oFiYY4S4+xPsMuLB5eE0wYZ7nL4=; b=M9tOmX
+	WZkx3Q4D2vwCtsthSf+fh9BMY1pMsCLnrvgaINANpKBcjL/cCvVuIcCLbIW1LPKs
+	lOAq5UPVX/SzO7mlAOfKRuox/MAZP+RBR5FNXI9Hr0/8fDYaIzaUHvxw6Hccp03z
+	HJCo0CxHNbjDKKGfG7cIuYtPiAD91bif2VY7c=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=eNIQoqdS8V41X8wvsvWZWAZC0ENMF5VC
+	Yke/M71si2s1XBNRxCySV99xX9qh1bmjWJUUPILlipslY4q63236wNqvsIemW4J0
+	xCsix8MXRlvgMZYYkVV74QmhzchhKzviFDM3CTg+8XlTylmooWcjQdGdIWB35jle
+	IQHBHNkbqWg=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7B3C385D8;
+	Fri, 25 May 2012 14:13:57 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id DC1FA85D6; Fri, 25 May 2012
+ 14:13:56 -0400 (EDT)
+In-Reply-To: <CAE1pOi0eY2=eNzuTUVGmHuvfGWvxoXSJUADWr0CfPpVe5ktxow@mail.gmail.com> (Hilco
+ Wijbenga's message of "Fri, 25 May 2012 10:31:24 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 64D74BB8-A695-11E1-B490-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198500>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198501>
 
-=46rom the FILES section of the git-config(1) manual:
+Hilco Wijbenga <hilco.wijbenga@gmail.com> writes:
 
-	$GIT_DIR/config::
-		Repository specific configuration file. (The filename is
-		of course relative to the repository root, not the working
-		directory.)
-
-That's confusing because $GIT_DIR really is relative to the working
-directory.
-
-	$ GIT_DIR=3D.git GIT_EDITOR=3D'pwd; echo editing'
-	$ export GIT_DIR GIT_EDITOR
-	$ git config --edit --local
-	/home/jrn/src/git/Documentation
-	editing .git/config
-
-It turns out that the comment is a remnant from older days when the
-heading said ".git/config" (which is indeed relative to the top of the
-worktree).
-
-It was only when the heading was changed to refer more precisely to
-<git dir>/config (see v1.5.3.2~18, AsciiDoc tweak to avoid leading
-dot, 2007-09-14) that the parenthesis stopped making sense.  Remove
-it.
-
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
----
-Hilco Wijbenga wrote:
-> On 25 May 2012 10:42, Jonathan Nieder <jrnieder@gmail.com> wrote:
-
->> Regarding $GIT_DIR/config, it says "The filename is of course relati=
-ve
->> to the repository root, not the working directory.". =C2=A0Is this o=
-ut of
->> date? =C2=A0(Cc-ing Peff and Duy.)
+> This is, of course, highly OS dependent. Ironically, I'd say we need a
+> setting in .gitconfig for it. :-)
 >
-> I'm sure it's not.
+> There is also /etc(/default|/sysconfig|)/git/config to consider
+> (perhaps for some settings that should be the same for everyone).
+> Better yet, it would be nice if at least some settings could be part
+> of the repository itself (whitespace handling e.g.).
 
-You're right --- the current wording never made sense and is not an
-example of accurate documentation going stale with later behavior
-changes as I had suspected.  Sorry for the noise.
-
-Thanks,
-Jonathan
-
- Documentation/git-config.txt |    4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
-
-diff --git a/Documentation/git-config.txt b/Documentation/git-config.tx=
-t
-index 3f5d216a..d9463cb3 100644
---- a/Documentation/git-config.txt
-+++ b/Documentation/git-config.txt
-@@ -198,9 +198,7 @@ If not set explicitly with '--file', there are thre=
-e files where
- 'git config' will search for configuration options:
-=20
- $GIT_DIR/config::
--	Repository specific configuration file. (The filename is
--	of course relative to the repository root, not the working
--	directory.)
-+	Repository specific configuration file.
-=20
- ~/.gitconfig::
- 	User-specific configuration file. Also called "global"
---=20
-1.7.10
+As long as we make sure we have knobs for distro packagers and people
+building from the source to twist so that they can easily name the places
+they want us to read from and write to, what we decide in-tree does not
+matter.  We default to ~/.gitconfig and /etc/gitconfig as before, and that
+is perfectly fine.  We already have ETC_GITCONFIG, so the only thing it
+might be nicer to add is the build configurability of ~/.gitconfig file,
+no?
