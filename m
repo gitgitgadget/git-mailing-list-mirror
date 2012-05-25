@@ -1,134 +1,78 @@
-From: NGUYEN Huynh Khoi Nguyen <nguyenhu@ensimag.imag.fr>
-Subject: [PATCH 1/2] Add possibility to store configuration in ~/.config/git/config file
-Date: Fri, 25 May 2012 21:47:18 +0200
-Message-ID: <1337975239-17169-1-git-send-email-nguyenhu@ensibm.imag.fr>
-Cc: Matthieu.Moy@grenoble-inp.fr,
-	NGUYEN Huynh Khoi Nguyen <nguyenhu@ensibm.imag.fr>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 25 22:09:51 2012
+From: Jeff King <peff@peff.net>
+Subject: Re: [RFC] Possibility to choose ~/.config/git/config instead of
+ ~/.gitconfig
+Date: Fri, 25 May 2012 16:11:23 -0400
+Message-ID: <20120525201123.GB4364@sigill.intra.peff.net>
+References: <20120525181526.Horde.VibLf3wdC4BPv7AeKacSMiA@webmail.minatec.grenoble-inp.fr>
+ <CAE1pOi0eY2=eNzuTUVGmHuvfGWvxoXSJUADWr0CfPpVe5ktxow@mail.gmail.com>
+ <20120525174237.GA4267@burratino>
+ <vpqipfkrvsx.fsf@bauges.imag.fr>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Hilco Wijbenga <hilco.wijbenga@gmail.com>,
+	nguyenhu@minatec.inpg.fr, git@vger.kernel.org,
+	Valentin DUPERRAY <Valentin.Duperray@phelma.grenoble-inp.fr>,
+	Franck JONAS <Franck.Jonas@phelma.grenoble-inp.fr>,
+	Lucien KONG <Lucien.Kong@phelma.grenoble-inp.fr>,
+	Thomas NGUY <Thomas.Nguy@phelma.grenoble-inp.fr>,
+	Huynh Khoi Nguyen NGUYEN 
+	<Huynh-Khoi-Nguyen.Nguyen@phelma.grenoble-inp.fr>,
+	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Fri May 25 22:11:31 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SY0pW-0002Qm-N1
-	for gcvg-git-2@plane.gmane.org; Fri, 25 May 2012 22:09:47 +0200
+	id 1SY0rC-000721-8W
+	for gcvg-git-2@plane.gmane.org; Fri, 25 May 2012 22:11:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758455Ab2EYUJm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 May 2012 16:09:42 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:55671 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756085Ab2EYUJl (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 May 2012 16:09:41 -0400
-Received: from ensimag.imag.fr (ensimag.imag.fr [195.221.228.12])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id q4PJdJIL009657
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Fri, 25 May 2012 21:39:19 +0200
-Received: from ensibm.imag.fr (ensibm [195.221.228.8])
-	by ensimag.imag.fr (8.13.8/8.13.8/ImagV2.1.r_ens) with ESMTP id q4PJlMAu013898;
-	Fri, 25 May 2012 21:47:22 +0200
-Received: from ensibm.imag.fr (localhost [127.0.0.1])
-	by ensibm.imag.fr (8.13.8/8.13.8/ImagV2.1.sb_ens.pm) with ESMTP id q4PJlMZW011317;
-	Fri, 25 May 2012 21:47:22 +0200
-Received: (from nguyenhu@localhost)
-	by ensibm.imag.fr (8.13.8/8.13.8/Submit) id q4PJlMnA011309;
-	Fri, 25 May 2012 21:47:22 +0200
-X-Mailer: git-send-email 1.7.8
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Fri, 25 May 2012 21:39:19 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: q4PJdJIL009657
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: huynh-khoi-nguyen.nguyen@phelma.grenoble-inp.fr
-MailScanner-NULL-Check: 1338579562.49675@ntU/9PXck11CVr1lyTpoFw
+	id S1758545Ab2EYUL0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 May 2012 16:11:26 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:56083
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758524Ab2EYULZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 May 2012 16:11:25 -0400
+Received: (qmail 12728 invoked by uid 107); 25 May 2012 20:11:52 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 25 May 2012 16:11:52 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 25 May 2012 16:11:23 -0400
+Content-Disposition: inline
+In-Reply-To: <vpqipfkrvsx.fsf@bauges.imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198519>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198520>
 
-git will store its configuration in ~/.config/git/config file if this file
-exists and ~/.gitconfig file doesn't, otherwise git store its configuration
-in ~/.gitconfig as usual
----
- builtin/config.c |   31 ++++++++++++++++++++++++++++---
- config.c         |   15 ++++++++++++++-
- 2 files changed, 42 insertions(+), 4 deletions(-)
+On Fri, May 25, 2012 at 07:54:06PM +0200, Matthieu Moy wrote:
 
-diff --git a/builtin/config.c b/builtin/config.c
-index 33c8820..dc890d5 100644
---- a/builtin/config.c
-+++ b/builtin/config.c
-@@ -171,8 +171,20 @@ static int get_value(const char *key_, const char *regex_)
- 	if (!local) {
- 		const char *home = getenv("HOME");
- 		local = repo_config = git_pathdup("config");
--		if (home)
--			global = xstrdup(mkpath("%s/.gitconfig", home));
-+		if (home) {
-+			char gitconfig_path[PATH_MAX], config_path[PATH_MAX];
-+			FILE *gitconfig_file, *config_file;
-+
-+			sprintf(gitconfig_path, "%s/.gitconfig", home);
-+			sprintf(config_path, "%s/.config/git/config", home);
-+			gitconfig_file = fopen(gitconfig_path, "r");
-+			config_file = fopen(config_path, "r");
-+
-+			if (gitconfig_file==NULL && config_file!=NULL)
-+				global = xstrdup(mkpath("%s/.config/git/config", home));
-+			else
-+				global = xstrdup(mkpath("%s/.gitconfig", home));
-+		}
- 		if (git_config_system())
- 			system_wide = git_etc_gitconfig();
- 	}
-@@ -381,7 +393,20 @@ int cmd_config(int argc, const char **argv, const char *prefix)
- 	if (use_global_config) {
- 		char *home = getenv("HOME");
- 		if (home) {
--			char *user_config = xstrdup(mkpath("%s/.gitconfig", home));
-+			char gitconfig_path[PATH_MAX], config_path[PATH_MAX];
-+			FILE *gitconfig_file, *config_file;
-+			char *user_config;
-+
-+			sprintf(gitconfig_path, "%s/.gitconfig", home);
-+			sprintf(config_path, "%s/.config/git/config", home);
-+			gitconfig_file = fopen(gitconfig_path, "r");
-+			config_file = fopen(config_path, "r");
-+
-+			if (gitconfig_file==NULL && config_file!=NULL)
-+				user_config = xstrdup(mkpath("%s/.config/git/config", home));
-+			else
-+				user_config = xstrdup(mkpath("%s/.gitconfig", home));
-+
- 			given_config_file = user_config;
- 		} else {
- 			die("$HOME not set");
-diff --git a/config.c b/config.c
-index eeee986..998dbbc 100644
---- a/config.c
-+++ b/config.c
-@@ -962,7 +962,20 @@ int git_config_early(config_fn_t fn, void *data, const char *repo_config)
- 	home = getenv("HOME");
- 	if (home) {
- 		char buf[PATH_MAX];
--		char *user_config = mksnpath(buf, sizeof(buf), "%s/.gitconfig", home);
-+		char gitconfig_path[PATH_MAX], config_path[PATH_MAX];
-+		FILE *gitconfig_file, *config_file;
-+		char *user_config;
-+
-+		sprintf(gitconfig_path, "%s/.gitconfig", home);
-+		sprintf(config_path, "%s/.config/git/config", home);
-+		gitconfig_file = fopen(gitconfig_path, "r");
-+		config_file = fopen(config_path, "r");
-+
-+		if (gitconfig_file==NULL && config_file!=NULL)
-+			user_config = mksnpath(buf, sizeof(buf), "%s/.config/git/config", home);
-+		else
-+			user_config = mksnpath(buf, sizeof(buf), "%s/.gitconfig", home);
-+
- 		if (!access(user_config, R_OK)) {
- 			ret += git_config_from_file(fn, user_config, data);
- 			found += 1;
--- 
-1.7.0.4
+> Having a $GIT_WORKTREE/.gitconfig file would be very nice, but raises a
+> lot of security issues, so it's a much larger project (define which
+> configuration values are allowed there, possibly take them into account
+> at clone time, i.e. before checking out the files, and so on). Most
+> likely out of the scope of my students' project ;-).
+
+Yes, I have proposed it in multiple forms, and the discussion always
+ends in "gross, it's too complex".
+
+If you really want to do it, the recommended way at this point is:
+
+  # review for any issues (1)
+  less .gitconfig
+
+  # assuming it's OK, copy into place (2)
+  cp .gitconfig .git/config-from-upstream
+
+  # include it
+  git config include.path config-from-upstream
+
+And then repeat steps (1) and (2) whenever you want to update from
+upstream. That fixes not only the security issues, but also means that
+you won't accidentally drop back to some antique bogus config when you
+"git checkout $some_old_version".
+
+-Peff
