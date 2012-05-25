@@ -1,78 +1,77 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [RFC] Possibility to choose ~/.config/git/config instead of
- ~/.gitconfig
-Date: Fri, 25 May 2012 16:11:23 -0400
-Message-ID: <20120525201123.GB4364@sigill.intra.peff.net>
-References: <20120525181526.Horde.VibLf3wdC4BPv7AeKacSMiA@webmail.minatec.grenoble-inp.fr>
- <CAE1pOi0eY2=eNzuTUVGmHuvfGWvxoXSJUADWr0CfPpVe5ktxow@mail.gmail.com>
- <20120525174237.GA4267@burratino>
- <vpqipfkrvsx.fsf@bauges.imag.fr>
+From: Thomas Gummerer <t.gummerer@gmail.com>
+Subject: Re: [GSoC] Designing a faster index format - Progress report
+Date: Fri, 25 May 2012 22:15:47 +0200
+Message-ID: <20120525201547.GB86874@tgummerer>
+References: <20120523122135.GA58204@tgummerer.unibz.it>
+ <CACsJy8As2SQwEi2vHAQA+OeH+TjoCzzcknFbQ2tGXaWX7zsHVA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Hilco Wijbenga <hilco.wijbenga@gmail.com>,
-	nguyenhu@minatec.inpg.fr, git@vger.kernel.org,
-	Valentin DUPERRAY <Valentin.Duperray@phelma.grenoble-inp.fr>,
-	Franck JONAS <Franck.Jonas@phelma.grenoble-inp.fr>,
-	Lucien KONG <Lucien.Kong@phelma.grenoble-inp.fr>,
-	Thomas NGUY <Thomas.Nguy@phelma.grenoble-inp.fr>,
-	Huynh Khoi Nguyen NGUYEN 
-	<Huynh-Khoi-Nguyen.Nguyen@phelma.grenoble-inp.fr>,
-	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Fri May 25 22:11:31 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, trast@student.ethz.ch, gitster@pobox.com,
+	mhagger@alum.mit.edu
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Fri May 25 22:16:08 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SY0rC-000721-8W
-	for gcvg-git-2@plane.gmane.org; Fri, 25 May 2012 22:11:30 +0200
+	id 1SY0vZ-0002o7-IY
+	for gcvg-git-2@plane.gmane.org; Fri, 25 May 2012 22:16:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758545Ab2EYUL0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 May 2012 16:11:26 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:56083
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758524Ab2EYULZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 May 2012 16:11:25 -0400
-Received: (qmail 12728 invoked by uid 107); 25 May 2012 20:11:52 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 25 May 2012 16:11:52 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 25 May 2012 16:11:23 -0400
+	id S1752839Ab2EYUP5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 May 2012 16:15:57 -0400
+Received: from mail-pb0-f46.google.com ([209.85.160.46]:60395 "EHLO
+	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750749Ab2EYUP4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 May 2012 16:15:56 -0400
+Received: by pbbrp8 with SMTP id rp8so2181269pbb.19
+        for <git@vger.kernel.org>; Fri, 25 May 2012 13:15:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=NQU+EA2DzkW27va2VkQvCvqN17PgiE0BubUq5sppw50=;
+        b=WFSzW6IpVC4XvUqG+HzXeSoZx6TUCiehm02k8v1DaGZLTivGqQaDZ/rh3kHU3y7X+/
+         Z4TLFvN9HHNbSTiX6pQU1wunO+9Wx8z6iTqAVPAevIFAV/ix5/Tss0Qnsw/IealRVje6
+         lO2RPmSVHBWyomIUHY0q7fnHCjnsh11h9mddQpaZQP6dNlibedsXhPd8D4NmPHAO4W2p
+         CgTyKWul8XzTZIWNMQawJsBrct+EEoG5JLLvhjCP43yR5sBddPJcqruUTXshgtYkd92Q
+         5PnI4prUZhHeBKXLsoFFYtghGLaUxOi0w5t3GQbuhPX2AgyQfo7T/+gCR9tTrULbIG2n
+         7QHw==
+Received: by 10.68.197.41 with SMTP id ir9mr979540pbc.20.1337976955917;
+        Fri, 25 May 2012 13:15:55 -0700 (PDT)
+Received: from localhost ([216.18.212.218])
+        by mx.google.com with ESMTPS id qt10sm10050592pbc.57.2012.05.25.13.15.52
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 25 May 2012 13:15:54 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <vpqipfkrvsx.fsf@bauges.imag.fr>
+In-Reply-To: <CACsJy8As2SQwEi2vHAQA+OeH+TjoCzzcknFbQ2tGXaWX7zsHVA@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198520>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198521>
 
-On Fri, May 25, 2012 at 07:54:06PM +0200, Matthieu Moy wrote:
+On 05/25, Nguyen Thai Ngoc Duy wrote:
+> On Wed, May 23, 2012 at 7:21 PM, Thomas Gummerer <t.gummerer@gmail.com> wrote:
+> > == Outlook for the next week ==
+> >
+> > - Start working on actual git code
+> > - Read the header of the new format
+> 
+> I know it's out of scope, but it would be great if you could make
+> ls-files read the new index format directly. Having something that
+> actual works will ensure we don't overlook anything in the new format.
+> We can then learn from ls-files lesson (especially how to handle both
+> new/old format) and come up with api/in-core structures for the rest
+> of git later.
 
-> Having a $GIT_WORKTREE/.gitconfig file would be very nice, but raises a
-> lot of security issues, so it's a much larger project (define which
-> configuration values are allowed there, possibly take them into account
-> at clone time, i.e. before checking out the files, and so on). Most
-> likely out of the scope of my students' project ;-).
+Thanks for your suggestion. How did you think this should be done?
+Writing a extra function in ls-files, just for outputting? I don't
+think it is necessary to write a extra function, since the result
+from the read_index_from function in read-cache is used for that
+anyway. Or did you have something different in mind, that I'm missing
+here?
 
-Yes, I have proposed it in multiple forms, and the discussion always
-ends in "gross, it's too complex".
-
-If you really want to do it, the recommended way at this point is:
-
-  # review for any issues (1)
-  less .gitconfig
-
-  # assuming it's OK, copy into place (2)
-  cp .gitconfig .git/config-from-upstream
-
-  # include it
-  git config include.path config-from-upstream
-
-And then repeat steps (1) and (2) whenever you want to update from
-upstream. That fixes not only the security issues, but also means that
-you won't accidentally drop back to some antique bogus config when you
-"git checkout $some_old_version".
-
--Peff
+--
+Thomas
