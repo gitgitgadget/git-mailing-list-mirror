@@ -1,69 +1,84 @@
-From: "From Hang Seng Bank" <lisa_1563@yahoo.com>
-Subject: Date: 25/05/2012.
-Date: Fri, 25 May 2012 08:40:13 +0200
-Message-ID: <201205250640.q4P6eAY7004051@mail.ucla.edu>
-Reply-To: draymndch8@yahoo.co.jp
+From: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
+Subject: Re: [PATCH 2/2] completion: split __git_ps1 into a separate script
+Date: Fri, 25 May 2012 09:35:06 +0200
+Message-ID: <20120525073506.GD2052@goldbirke>
+References: <1337719600-7361-1-git-send-email-felipe.contreras@gmail.com>
+	<1337719600-7361-3-git-send-email-felipe.contreras@gmail.com>
+	<4FBC0019.6030702@in.waw.pl>
+	<7v4nr72bim.fsf@alter.siamese.dyndns.org>
+	<CAMP44s0aKi+8WHPXYLQ+iSMkj9iV88JGTabrpBRNBWb7upAMiQ@mail.gmail.com>
+	<CAOnadRF8XyZKi+d=y1fFy2Xvs-3ETVyCbJBj83mK3Q8yuK7oQw@mail.gmail.com>
+	<CAMP44s3uW75O_jt2F7POxTAhX+qPyRSjOX9-DuEkg7a7WtnLsA@mail.gmail.com>
+	<4FBD5CC1.3060701@tedpavlic.com> <20120524203549.GA2052@goldbirke>
+	<CAOnadRFbrhrFz7Ya3Vhgsju9G723Qu0OdJnM31xFmBqQNgj6gA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-To: Recipients <lisa_1563@yahoo.com>
-X-From: git-owner@vger.kernel.org Fri May 25 08:56:06 2012
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Felipe Contreras <felipe.contreras@gmail.com>,
+	Ville =?iso-8859-1?Q?Skytt=E4?= <ville.skytta@iki.fi>,
+	Thomas Rast <trast@student.ethz.ch>,
+	Kerrick Staley <mail@kerrickstaley.com>,
+	Dan McGee <dan@archlinux.org>,
+	Zbigniew =?utf-8?Q?J=C4=99drzejewski-Szmek?= <zbyszek@in.waw.pl>,
+	git@vger.kernel.org, Marius Storm-Olsen <mstormo@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: Ted Pavlic <ted@tedpavlic.com>
+X-From: git-owner@vger.kernel.org Fri May 25 09:35:46 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SXoRQ-0002gK-Gg
-	for gcvg-git-2@plane.gmane.org; Fri, 25 May 2012 08:56:04 +0200
+	id 1SXp3n-0005o7-VB
+	for gcvg-git-2@plane.gmane.org; Fri, 25 May 2012 09:35:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754121Ab2EYGz7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 May 2012 02:55:59 -0400
-Received: from out-78.smtp.ucla.edu ([169.232.46.181]:42582 "EHLO
-	out-78.smtp.ucla.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751124Ab2EYGz6 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 25 May 2012 02:55:58 -0400
-X-Greylist: delayed 354 seconds by postgrey-1.27 at vger.kernel.org; Fri, 25 May 2012 02:55:58 EDT
-Received: from smtp-15.smtp.ucla.edu (smtp-15.smtp.ucla.edu [169.232.46.251])
-	by out-78.smtp.ucla.edu with ESMTP id q4P6eoWG006484;
-	Thu, 24 May 2012 23:41:08 -0700
-Received: from mail.ucla.edu (m6.mail.ucla.edu [128.97.27.134])
-	by smtp-15.smtp.ucla.edu (8.14.3/8.14.3) with ESMTP id q4P6eoWG006484;
-	Thu, 24 May 2012 23:40:52 -0700
-Received: from [192.168.2.100] ([90.166.229.145])
-	(user=yyl mech=PLAIN bits=0)
-	by mail.ucla.edu (8.14.3/8.14.3/Debian-9.4) with ESMTP id q4P6eAY7004051
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Thu, 24 May 2012 23:40:31 -0700
-Content-Description: Mail message body
-X-Probable-Spam: yes
-X-Spam-Hits: 13.545
-X-Spam-Score: **************
-X-Spam-Report: ADVANCE_FEE_2,ADVANCE_FEE_3,DCC_CHECK,DEAR_FRIEND,FORGED_YAHOO_RCVD,MILLION_USD,RCVD_IN_SBL
-X-Scanned-By: smtp.ucla.edu on 169.232.46.251
+	id S1755882Ab2EYHfh convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 25 May 2012 03:35:37 -0400
+Received: from moutng.kundenserver.de ([212.227.126.186]:58206 "EHLO
+	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752896Ab2EYHfc (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 May 2012 03:35:32 -0400
+Received: from localhost6.localdomain6 (p5B1305E7.dip0.t-ipconnect.de [91.19.5.231])
+	by mrelayeu.kundenserver.de (node=mreu1) with ESMTP (Nemesis)
+	id 0LdZry-1RpNPd1AhO-00iFMw; Fri, 25 May 2012 09:35:07 +0200
+Content-Disposition: inline
+In-Reply-To: <CAOnadRFbrhrFz7Ya3Vhgsju9G723Qu0OdJnM31xFmBqQNgj6gA@mail.gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Provags-ID: V02:K0:EWKlB1bf7JdTjGd+I4H5INK1kKvsDB3Bn/f/MrXsz2E
+ d0hDs6+I9OiRuePnu7UYtgOrKCnh8JAF/oUkBelcJnfHigXkBc
+ mHdb2EQJWVODdx0L3zLUDVvx6B2sfyDAz60cY3/Grdb+DDM8+o
+ 91gQYGape8CPYlFu6NyjHPlTz8YKedfrMQIi1nAbNPz/89EczI
+ 0vl8GK5y0tNyRpjBsghHZvZztC1LDvjlk7e1lRYDCunToh2H6c
+ gdXWnjK0LvO4VpUuatVEMwPwJDzFZc5TDH4rFZ49pQqlX1J42E
+ vHaK/Amg9XuulDOphLAIDRJ5Y6VoT1jYm6piURU4MpnPrJ2waH
+ 8zOZPaCPMk6eM+BjG3Cc=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-X-Spam-Report: 6.4 points;
- *  1.4 FORGED_YAHOO_RCVD 'From' yahoo.com does not match 'Received' headers
- *  1.8 MILLION_USD BODY: Talks about millions of dollars
- *  2.7 DEAR_FRIEND BODY: Dear Friend? That's not very dear!
- * -8.0 RCVD_IN_DNSWL_HI RBL: Sender listed at http://www.dnswl.org/, high
- *      trust
- *      [209.132.180.67 listed in list.dnswl.org]
- *  2.2 RCVD_IN_BL_SPAMCOP_NET RBL: Received via a relay in bl.spamcop.net
- *      [Blocked - see <http://www.spamcop.net/bl.shtml?90.166.229.145>]
- *  2.8 RCVD_IN_SBL RBL: Received via a relay in Spamhaus SBL
- *      [90.166.229.145 listed in zen.spamhaus.org]
- *  2.0 ADVANCE_FEE_2 Appears to be advance fee fraud (Nigerian 419)
- *  1.4 ADVANCE_FEE_3 Appears to be advance fee fraud (Nigerian 419)
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198466>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198468>
 
-Dear friend                                 
-I am Dr Raymond Chien Independent Non-executive Director of Hang Seng
-Bank Hong Kong I have a business transaction of $44.5 million USD
-to share with you,If interested contact me for more details via my
-personal email:  draymndch8@yahoo.co.jp
-Full names:Address:Age:Occupation:Phone/Fax
-Regards: Date: 25/05/2012.
-Dr Raymond Chien Kuo Fung 
+On Thu, May 24, 2012 at 11:36:45PM -0400, Ted Pavlic wrote:
+> > You mean a real git command, which does the same as __gitdir()?  I
+> > don't like that, because it will always require 2 fork()s and an
+> > exec() and would be slow on Windows.
+>=20
+> Interesting. I guess I didn't realize bash completion was an issue fo=
+r most
+> Windows users. Is it?
+
+It is.  Emulating fork() and exec() is very expensive, so every
+subshell, external command, or especially git command in a command
+substitution costs dearly.  And the completion script uses many git
+commands and even more subshells.
+
+Case in point is __git_ps1() and __gitdir().  There are scenarios
+where displaying the git-specific bash prompt takes more than 400ms on
+Windows, while displaying the same prompt takes only about 26ms on
+Linux on the same hardware.
+
+  http://thread.gmane.org/gmane.comp.version-control.git/197432
+
+
+Best,
+G=E1bor
