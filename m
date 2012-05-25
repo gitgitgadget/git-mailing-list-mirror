@@ -1,11 +1,9 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [RFC] Possibility to choose ~/.config/git/config instead of
  ~/.gitconfig
-Date: Fri, 25 May 2012 13:25:58 -0500
-Message-ID: <20120525182558.GC4491@burratino>
-References: <20120525181526.Horde.VibLf3wdC4BPv7AeKacSMiA@webmail.minatec.grenoble-inp.fr>
- <CAE1pOi0eY2=eNzuTUVGmHuvfGWvxoXSJUADWr0CfPpVe5ktxow@mail.gmail.com>
- <7v4nr4t9gc.fsf@alter.siamese.dyndns.org>
+Date: Fri, 25 May 2012 11:34:57 -0700
+Message-ID: <7vsjeortwu.fsf@alter.siamese.dyndns.org>
+References: <20120525181526.Horde.VibLf3wdC4BPv7AeKacSMiA@webmail.minatec.grenoble-inp.fr> <CAE1pOi0eY2=eNzuTUVGmHuvfGWvxoXSJUADWr0CfPpVe5ktxow@mail.gmail.com> <7v4nr4t9gc.fsf@alter.siamese.dyndns.org> <20120525182558.GC4491@burratino>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: Hilco Wijbenga <hilco.wijbenga@gmail.com>,
@@ -17,78 +15,60 @@ Cc: Hilco Wijbenga <hilco.wijbenga@gmail.com>,
 	Thomas NGUY <Thomas.Nguy@phelma.grenoble-inp.fr>,
 	Huynh Khoi Nguyen NGUYEN 
 	<Huynh-Khoi-Nguyen.Nguyen@phelma.grenoble-inp.fr>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri May 25 20:26:14 2012
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Fri May 25 20:35:16 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SXzDG-0003pc-Dq
-	for gcvg-git-2@plane.gmane.org; Fri, 25 May 2012 20:26:10 +0200
+	id 1SXzLz-0002fy-Iq
+	for gcvg-git-2@plane.gmane.org; Fri, 25 May 2012 20:35:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758335Ab2EYS0E (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 May 2012 14:26:04 -0400
-Received: from mail-gg0-f174.google.com ([209.85.161.174]:53947 "EHLO
-	mail-gg0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750864Ab2EYS0D (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 May 2012 14:26:03 -0400
-Received: by gglu4 with SMTP id u4so1055080ggl.19
-        for <git@vger.kernel.org>; Fri, 25 May 2012 11:26:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=qeyHkt7PNxJ00nj92l9pKWHsyoLBuv69eUyiW4/U/g0=;
-        b=ThLt8o2bB9W2Pzumrm3ypiXiQXzzXjRWkKBor/344cF5uYKvkm7jnLmZCQ94DcZOrQ
-         v6JrBRbQ6vi1PkY/cb3gWEtMwZDQVYmWzHwPqW7dtpJA3PeCmZKQJgFOWd07ea5UJ4B3
-         6Hs2f2zYAHLCd9ZxPRWA0pNWk2pYdOIo5LrZJpSPdJmMMtDNbamICk3FdnGIuWz8X8M/
-         5StcRVidwcX+4o93xyvXa9iUdoov8M+vliQPvIKY0WcBMHnaNNIJlujcdn4m8pbubiA/
-         VX5wbTsspfAu7WLJx2qSHgMabl/YxuJ562jWQ6Cz1ct/qt7jcoSYyxLHMH2/NetGoWEZ
-         tfVw==
-Received: by 10.50.187.135 with SMTP id fs7mr3333099igc.63.1337970361996;
-        Fri, 25 May 2012 11:26:01 -0700 (PDT)
-Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
-        by mx.google.com with ESMTPS id nh8sm46401709igc.1.2012.05.25.11.26.00
-        (version=SSLv3 cipher=OTHER);
-        Fri, 25 May 2012 11:26:01 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <7v4nr4t9gc.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1756884Ab2EYSfB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 May 2012 14:35:01 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:52134 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932083Ab2EYSfA (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 May 2012 14:35:00 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1F3D98C58;
+	Fri, 25 May 2012 14:34:59 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=9jTnb3QR5eF3XSaQvEXYWjfgOrI=; b=LYrECv
+	SCgk8RR3ihGuDrwKM6K9Y/xlnqNY/XmXD3JxNyOQPM+pBBlk5G3KYKVqu1yKwGAK
+	OTYtzMdfsWPc2L1QwOCZdnlHSCXvNNAGPvBD1MJXple3K55yfmOd8WDxUE+hJOJc
+	tzOtZosmy0dAxUHPMsxVzl1B9n/uZseB9XUco=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=kNq4KZszu4qicPdcfimXOy8eC8XB1whr
+	HZj+FRYQxGWeIW+ZaGhQsJl63+aiuDEbbFwngbnbJuIb/8jgvknE2wbzO0pwpd3k
+	TMC+CrMwW3UPXM41HAjT9pUyaJ4RbMncUG2AKHIbz853oQcT23p9vCheeCxhEWCq
+	sDeR6D9Faaw=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1535D8C56;
+	Fri, 25 May 2012 14:34:59 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9C8EA8C55; Fri, 25 May 2012
+ 14:34:58 -0400 (EDT)
+In-Reply-To: <20120525182558.GC4491@burratino> (Jonathan Nieder's message of
+ "Fri, 25 May 2012 13:25:58 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 54DC3216-A698-11E1-8261-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198503>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198504>
 
-Junio C Hamano wrote:
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
->                     We already have ETC_GITCONFIG, so the only thing it
-> might be nicer to add is the build configurability of ~/.gitconfig file,
-> no?
+> If I understand correctly, the proposal that started this thread was
+> to give people a chance to tidy their HOME directory by moving
+> personal git configuration under ~/.config/git/.  
 
-If we were trying to solve a different problem ("my filesystem does
-not support filenames starting with '.' with more than three
-characters afterward") then I would agree, but in this case no.  HOME
-directories are often shared between multiple machines, even machines
-with different operating systems.
+So it is exactly "I do not want ~/.gitconfig, I want ~/.config/git", no?
 
-If I understand correctly, the proposal that started this thread was
-to give people a chance to tidy their HOME directory by moving
-personal git configuration under ~/.config/git/.  Git would detect it
-automatically.  I think the main complication would be phasing in the
-change slowly and carefully so people helping each other with git
-problems do not get confused:
-
-  "Why is this setting not taking effect?  It's in ~/.config/gitconfig
-   just like it should be.  Oh, what git version do you have?"
-
-and
-
-  "Is there no .gitconfig?  Okay, we can assume all the default
-   settings are in use.  Now let's..."
-
-That's why I'd be happy to see how an initial patch approaches the
-transition, to see how it can be improved to happen smoothly.
-
-Jonathan
+That is something distro should be able to decide.
