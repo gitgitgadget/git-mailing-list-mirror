@@ -1,125 +1,85 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 1/2] Add possibility to store configuration in
- ~/.config/git/config file
-Date: Fri, 25 May 2012 17:44:07 -0400
-Message-ID: <20120525214406.GA10064@sigill.intra.peff.net>
-References: <1337975239-17169-1-git-send-email-nguyenhu@ensibm.imag.fr>
- <20120525203056.GC4364@sigill.intra.peff.net>
- <7vd35sq7fx.fsf@alter.siamese.dyndns.org>
+From: Neal Kreitzinger <nkreitzinger@gmail.com>
+Subject: Re: behaviour of .gitignore
+Date: Fri, 25 May 2012 17:41:09 -0500
+Message-ID: <4FC00A85.9090400@gmail.com>
+References: <4FBFB42D.3090303@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: NGUYEN Huynh Khoi Nguyen <nguyenhu@ensimag.imag.fr>,
-	git@vger.kernel.org, Matthieu.Moy@grenoble-inp.fr,
-	NGUYEN Huynh Khoi Nguyen <nguyenhu@ensibm.imag.fr>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri May 25 23:44:22 2012
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "J.V." <jvsrvcs@gmail.com>
+X-From: git-owner@vger.kernel.org Sat May 26 00:41:20 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SY2J0-0003IN-C9
-	for gcvg-git-2@plane.gmane.org; Fri, 25 May 2012 23:44:18 +0200
+	id 1SY3C8-0003KA-Qv
+	for gcvg-git-2@plane.gmane.org; Sat, 26 May 2012 00:41:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754683Ab2EYVoL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 May 2012 17:44:11 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:56192
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754657Ab2EYVoJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 May 2012 17:44:09 -0400
-Received: (qmail 14080 invoked by uid 107); 25 May 2012 21:44:36 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 25 May 2012 17:44:36 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 25 May 2012 17:44:07 -0400
-Content-Disposition: inline
-In-Reply-To: <7vd35sq7fx.fsf@alter.siamese.dyndns.org>
+	id S1756143Ab2EYWlM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 May 2012 18:41:12 -0400
+Received: from mail-ob0-f174.google.com ([209.85.214.174]:41358 "EHLO
+	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755237Ab2EYWlL (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 May 2012 18:41:11 -0400
+Received: by obbtb18 with SMTP id tb18so1799763obb.19
+        for <git@vger.kernel.org>; Fri, 25 May 2012 15:41:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=1N6RRJc4dJlA1n43yeY9cg0ngaSrg2kdES7kZlNzg1A=;
+        b=b+ftGzC/ZHyyK52W5RWuVDBAiq6nqjABFkRr68jmxNfDRBr3xo04I4dgwOm3TeaIDv
+         /2T1AozaO7Vjn2W5h3bDcrIdBV8VGVMcUrqHDu26BrpnBok/eUSNPV4akju7U4f6cSLY
+         m3IcQ9TsIn0pI2RlV71qW/xAHD4F1xipuoQ8sN08xLlyuBj3lZCtIZIU69szjPeuBBhX
+         XTi0Ea2cwU6cNTFTYOqBWq9i1kXm8O2sPbCz6/u9Ra0hDb1Q8VDygOMTvmTSoVZowzfe
+         zVAH9hBQSq/qoVP/8IImNmX/cTtzfY9/GBS3rrnfqAgTaE1Xt6WT01p3N3ZVp+KMR38J
+         GoPg==
+Received: by 10.60.14.169 with SMTP id q9mr566508oec.19.1337985670979;
+        Fri, 25 May 2012 15:41:10 -0700 (PDT)
+Received: from [172.25.2.210] ([67.63.162.200])
+        by mx.google.com with ESMTPS id ju5sm3077300obb.23.2012.05.25.15.41.10
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 25 May 2012 15:41:10 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:12.0) Gecko/20120428 Thunderbird/12.0.1
+In-Reply-To: <4FBFB42D.3090303@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198529>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198531>
 
-On Fri, May 25, 2012 at 02:25:38PM -0700, Junio C Hamano wrote:
+On 5/25/2012 11:32 AM, J.V. wrote:
+> On my local machine, I create a /bin/ directory added some bash
+> scripts, comitted and then pushed them to the repository.
+>
+You should be able to click on that commit in gitk and see that the
+files were added (confirm you really added them).
 
-> > At first people will have only one or the other, but people using
-> > multiple versions of git, or people following already-written
-> > instructions on the web about modifying ~/.gitconfig could end up with
-> > both.
-> 
-> Isn't it actually much worse than that?
-> 
-> If you read from .gitconfig and also from the new location, but update
-> only the new location, people who use two versions of git will be in a
-> very confusing situation.  Randomly, some of their updates are always in
-> effect, and others only appear sometimes, and after wasting a lot of time
-> and hair scratching their heads, they will realize that writing with old
-> versions of Git will store values to a place visible to both versions,
-> while writing with new versions will store values to a place visible only
-> to new versions.
+> Now today I do a git pull and they are gone but cannot see that
+> anyone deleted them in the git log / history, but there is a /bin/
+> entry in the .gitignore file.
+>
+If that ignore entry was there when you did the commit then maybe you
+never really committed them.
 
-That's true, but...
+> Does this mean, the files are still in the shared repository (orgin)
+>  that I could get them back?
+>
+The gitk step above will tell you if they are there.
 
-> I'd rather see it ignore the new location as long as ~/.gitconfig exists
-> (and if only the new location exists, read from and write to it), and have
-> users make a conscious decision to transition.  That is:
-> 
->  - If ~/.gitconfig exists, do not do anything new.  Just exercise the
->    original code.  For these users, ~/.config/ does _not_ exist as far as
->    Git is concerned.
-> 
->  - (optional) If ~/.gitconfig exists, offer _moving_ it to the new
->    location after telling the user to make sure that the user will never
->    use older version of git again, and move it if the user agrees.
-> 
->  - Otherwise, read from and write to the new location.
+> I tried removing /bin/ from the git ignore and doing a pull but my
+> /bin/ directory is still not there.
+>
+Its not looking like you really committed them like you thought you did.
 
-That doesn't solve all problems with multiple versions, though. For
-example, this sequence:
+> Is there anyway to do a pull now and have it look at my local
+> gitignore and pull the directory back?
+>
+If the files were really committed, then you should have that commit in
+your history also.  Therefore, you should be able to 'git checkout' 
+those files into your worktree.
 
-  1. User consciously moves to new location, moving ~/.gitconfig to
-     ~/.config/git/config (or perhaps they do not do so consciously, but
-     do not have a ~/.gitconfig at all, and run "git config --global"
-     with the new version.
-
-  2. User runs "git config --global" with an old version of git, which
-     writes to ~/.gitconfig.
-
-After step 1, old versions of git will not respect the user's config at
-all. This is unavoidable; the old version does not know about the new
-location.
-
-But after step 2, _all_ versions of git have stopped respecting the new
-location (because ~/.gitconfig takes precedence). Whereas if we read
-from everywhere, then it is broken only in older versions (which are
-broken anyway).
-
-So I consider it the lesser of two evils. The rule is much simpler: "old
-versions of git do not know about this new location". Which is
-unavoidable, and easier to explain than "Old versions of git do not know
-about this location. New versions do, but will sometimes ignore
-depending on whether this other file exists, which might have been
-created by an old version".
-
-However, let's take a step back for a minute. I think the real issue is
-writing to the XDG location without the user knowing about it. So a
-better transition plan would be:
-
-  1. Start reading from the XDG location in addition to the old
-     location. Always write to the old location.
-
-  2. Wait N time units until everybody reasonable has a version that
-     does (1).
-
-  3. Start writing to the XDG location by default. Keep reading from the
-     old version for compatibility.
-
-People who want to start using the new location after step 1 are free to
-do so; they just shouldn't expect git to write to it, and they should
-accept the obvious caveat that older versions of git will not understand
-it. An optional addendum is that we could start writing to the XDG
-location after step 1 only if it exists, which implies that the user has
-decided it's OK to do so (which is still a guess; they might have wanted
-to split their config intentionally).
-
--Peff
+v/r,
+neal
