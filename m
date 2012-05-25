@@ -1,72 +1,75 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: t4014 broken by 43ae9f47ab: format-patch: use default email for
- generating message ids
-Date: Thu, 24 May 2012 20:34:57 -0400
-Message-ID: <20120525003457.GA11300@sigill.intra.peff.net>
-References: <4FBE2335.2090903@jpk.com>
- <20120524171640.GB3161@sigill.intra.peff.net>
- <7vtxz5wdg8.fsf@alter.siamese.dyndns.org>
- <20120524201553.GA19990@sigill.intra.peff.net>
- <20120524232515.GA11054@sigill.intra.peff.net>
- <7vipflunps.fsf@alter.siamese.dyndns.org>
+Subject: Re: remove_duplicates() in builtin/fetch-pack.c is O(N^2)
+Date: Thu, 24 May 2012 20:39:20 -0400
+Message-ID: <20120525003920.GB11300@sigill.intra.peff.net>
+References: <4FB9F92D.8000305@alum.mit.edu>
+ <20120521174525.GA22643@sigill.intra.peff.net>
+ <20120521221417.GA22664@sigill.intra.peff.net>
+ <201205241817.46034.mfick@codeaurora.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Michael Haggerty <haggerty@jpk.com>,
-	git discussion list <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri May 25 02:35:08 2012
+Cc: Michael Haggerty <mhagger@alum.mit.edu>,
+	git discussion list <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Martin Fick <mfick@codeaurora.org>
+X-From: git-owner@vger.kernel.org Fri May 25 02:39:41 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SXiUm-0002R1-6V
-	for gcvg-git-2@plane.gmane.org; Fri, 25 May 2012 02:35:08 +0200
+	id 1SXiZ7-0007Bg-4V
+	for gcvg-git-2@plane.gmane.org; Fri, 25 May 2012 02:39:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933333Ab2EYAfA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 May 2012 20:35:00 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:54657
+	id S1759527Ab2EYAj0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 May 2012 20:39:26 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:54660
 	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752922Ab2EYAfA (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 May 2012 20:35:00 -0400
-Received: (qmail 2826 invoked by uid 107); 25 May 2012 00:35:26 -0000
+	id S1753394Ab2EYAjW (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 May 2012 20:39:22 -0400
+Received: (qmail 2857 invoked by uid 107); 25 May 2012 00:39:49 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 24 May 2012 20:35:26 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 24 May 2012 20:34:57 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 24 May 2012 20:39:49 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 24 May 2012 20:39:20 -0400
 Content-Disposition: inline
-In-Reply-To: <7vipflunps.fsf@alter.siamese.dyndns.org>
+In-Reply-To: <201205241817.46034.mfick@codeaurora.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198454>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198455>
 
-On Thu, May 24, 2012 at 05:08:15PM -0700, Junio C Hamano wrote:
+On Thu, May 24, 2012 at 06:17:45PM -0600, Martin Fick wrote:
 
-> >   [5/7]: ident: rename IDENT_ERROR_ON_NO_NAME to IDENT_STRICT
-> >   [6/7]: ident: reject bogus email addresses with IDENT_STRICT
-> >   [7/7]: format-patch: do not use bogus email addresses in message ids
-> >
-> > These ones prevent bogus message ids from being generated at all
-> > (which is an improvement over the previous state).
+> On Monday, May 21, 2012 04:14:17 pm Jeff King wrote:
+> > On Mon, May 21, 2012 at 01:45:25PM -0400, Jeff King wrote:
+> > Martin, let me know if this improves things for your
+> > many-ref cases (and if you are still seeing slowness in
+> > your repos with many refs, let me know which operations
+> > cause it).
 > 
-> All looked pretty straightforward and cleanly done.
-> 
-> We might want to further tighten 6/7 to verify user-supplied (i.e. non
-> default) e-mail for sanity, as I agree with the comment below --- lines of
-> that patch.
+> I have not been ignoring you, I am sorry that I have not 
+> replied yet.  Unfortunately, I am having a very hard time 
+> getting conclusive tests with my large repo.  I making
+> plenty of mistakes in what I think I am testing I believe,
+> but also I am having a hard time getting reproducible 
+> results so far.  And some tests take quite a while, so it is 
+> not always obvious what I might be doing wrong.
 
-Yeah. I'd be fine with more tightening, but I wanted to just catch the
-most common uncontroversial problem in the initial round. We can build
-on top later if we want.
+No worries. I am pretty confident that the patches I supplied so far are
+a good thing whether they help your case or not. So if you come back in
+a month and show that they solved all your problems, then great. And if
+they don't, then it will just show us what new problems we have to work
+on. :)
 
-> Also the check might want to be further tightened in the RFC 822/2822/5322
-> sense, but getting it correct will open a huge can of worms; I think the
-> check in 6/7 is a good place to stop, at least for now.
+> Were your tests mostly warm cache tests?
 
-Yeah, I considered that, but got nervous thinking about the same can of
-worms. It is not like people are complaining now, so I'd rather leave
-it.
+Yes, exclusively warm. And all of the refs were packed, which makes the
+warm/cold difference less interesting (it's one 30MB or so file).  I
+don't think there's much point in thinking about the performance of 400K
+loose refs (which would be absolutely horrific cold-cache on most
+traditional filesystems). If you have that many, you would want to keep
+the bulk of them packed.
 
 -Peff
