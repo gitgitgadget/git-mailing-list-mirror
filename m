@@ -1,79 +1,62 @@
-From: Caleb Marchent <cmarchent@aminocom.com>
-Subject: Re: Interpretation of '/' changed sparse-checkout
-Date: Fri, 25 May 2012 10:21:10 +0000 (UTC)
-Message-ID: <loom.20120525T120226-506@post.gmane.org>
-References: <loom.20120521T183651-286@post.gmane.org> <loom.20120523T160215-390@post.gmane.org> <20120524142858.GA10938@do>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: [GSoC] Designing a faster index format - Progress report
+Date: Fri, 25 May 2012 18:31:14 +0700
+Message-ID: <CACsJy8As2SQwEi2vHAQA+OeH+TjoCzzcknFbQ2tGXaWX7zsHVA@mail.gmail.com>
+References: <20120523122135.GA58204@tgummerer.unibz.it>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 25 12:21:35 2012
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org, trast@student.ethz.ch, gitster@pobox.com,
+	mhagger@alum.mit.edu
+To: Thomas Gummerer <t.gummerer@gmail.com>
+X-From: git-owner@vger.kernel.org Fri May 25 13:31:53 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SXreI-0004FY-Mm
-	for gcvg-git-2@plane.gmane.org; Fri, 25 May 2012 12:21:35 +0200
+	id 1SXskJ-0004nv-Pp
+	for gcvg-git-2@plane.gmane.org; Fri, 25 May 2012 13:31:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753265Ab2EYKV0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 May 2012 06:21:26 -0400
-Received: from plane.gmane.org ([80.91.229.3]:35733 "EHLO plane.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752697Ab2EYKVZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 May 2012 06:21:25 -0400
-Received: from list by plane.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1SXre4-0003X8-KI
-	for git@vger.kernel.org; Fri, 25 May 2012 12:21:22 +0200
-Received: from mail.aminocom.com ([62.255.172.253])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 25 May 2012 12:21:20 +0200
-Received: from cmarchent by mail.aminocom.com with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 25 May 2012 12:21:20 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: sea.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 62.255.172.253 (Mozilla/5.0 (X11; Linux i686) AppleWebKit/536.5 (KHTML, like Gecko) Chrome/19.0.1084.46 Safari/536.5)
+	id S1757293Ab2EYLbr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 May 2012 07:31:47 -0400
+Received: from mail-wi0-f172.google.com ([209.85.212.172]:45212 "EHLO
+	mail-wi0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757146Ab2EYLbq (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 May 2012 07:31:46 -0400
+Received: by wibhj8 with SMTP id hj8so6829542wib.1
+        for <git@vger.kernel.org>; Fri, 25 May 2012 04:31:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=avm7uim+0axM8FI+y3BK/yYdS99lbDUjJovwGdW6sRE=;
+        b=uMs/wY3XHIKCcBI+LaxbitS3+HiFHOGaHrycXWB7TXKgy3nCc61uFFfzW3oJT1o0JV
+         FHlf3h0IH0Ox0zIDhsb2f6SiJxqW8r26ZpG0ez/r8HLA1v7u07bmt+x3LPnbUJhCjkHT
+         NL3QFsQCEAi8LdFZoF7Ik9MwWnkJtQO4cClLrWt6GB19yJKezuHgFr1IAuGzYyO4aiN1
+         4OQCQBUowHwyaYJTR1h8W/E8nsqcSSjhRX7w7Rw2xn0dutR/ugK8QRn0iFKd5yfJZIlx
+         rimaxCWmi8WWPnZd9kTZ3tQLbvT6/6Eudw2Qe4qorCAk0iM7y3hlCGDhM88CQC0735lS
+         eCuw==
+Received: by 10.216.226.218 with SMTP id b68mr1677172weq.167.1337945505144;
+ Fri, 25 May 2012 04:31:45 -0700 (PDT)
+Received: by 10.223.64.208 with HTTP; Fri, 25 May 2012 04:31:14 -0700 (PDT)
+In-Reply-To: <20120523122135.GA58204@tgummerer.unibz.it>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198473>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198474>
 
-Nguyen Thai Ngoc Duy <pclouds <at> gmail.com> writes:
+On Wed, May 23, 2012 at 7:21 PM, Thomas Gummerer <t.gummerer@gmail.com> wrote:
+> == Outlook for the next week ==
+>
+> - Start working on actual git code
+> - Read the header of the new format
 
-> 
-> As a user I agree that "/" should mean "everything under the sky" and
-> your use case should work (i.e. it is broken in 1.7.10.2). If you can
-> build git, you can try the patch below. I'll submit a patch for
-> inclusion to git later (perhaps with optimization for this special case).
-> 
-
-Many Thanks Duy!, that patch works so please do submit the patch.
-
-
-That just leaves the other issue I noted in my original posting - if I 
-exclude a path from the top-level with a 1.7.2.5 format sparse-checkout
- file, git 1.7.10.2 will exclude a sub-directory with the same name:
-
-/
-!exclude/
-
-Unfortunately (for me), I think this is correct behaviour of 1.7.10.2 
-because in 1.7.10.2 you can now do: 
-
-/
-!/exclude/
-/exlucde/reinclude/
-
-which makes sense and correctly excludes "/exclude", but not 
-"/exclude/reinclude/exclude". The flexibility to have:
-
-/
-!CVS/
-
-or something like that is required; so I don't believe should be changed?
+I know it's out of scope, but it would be great if you could make
+ls-files read the new index format directly. Having something that
+actual works will ensure we don't overlook anything in the new format.
+We can then learn from ls-files lesson (especially how to handle both
+new/old format) and come up with api/in-core structures for the rest
+of git later.
+-- 
+Duy
