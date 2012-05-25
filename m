@@ -1,89 +1,70 @@
-From: Jeff King <peff@peff.net>
+From: Martin Fick <mfick@codeaurora.org>
 Subject: Re: remove_duplicates() in builtin/fetch-pack.c is O(N^2)
-Date: Thu, 24 May 2012 21:04:34 -0400
-Message-ID: <20120525010434.GA11861@sigill.intra.peff.net>
-References: <4FB9F92D.8000305@alum.mit.edu>
- <201205241817.46034.mfick@codeaurora.org>
- <20120525003920.GB11300@sigill.intra.peff.net>
- <201205241854.56934.mfick@codeaurora.org>
+Date: Thu, 24 May 2012 19:32:36 -0600
+Organization: CAF
+Message-ID: <201205241932.37045.mfick@codeaurora.org>
+References: <4FB9F92D.8000305@alum.mit.edu> <201205241854.56934.mfick@codeaurora.org> <20120525010434.GA11861@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: Text/Plain;
+  charset="utf-8"
+Content-Transfer-Encoding: 7bit
 Cc: Michael Haggerty <mhagger@alum.mit.edu>,
 	git discussion list <git@vger.kernel.org>,
 	Junio C Hamano <gitster@pobox.com>
-To: Martin Fick <mfick@codeaurora.org>
-X-From: git-owner@vger.kernel.org Fri May 25 03:04:58 2012
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri May 25 03:32:49 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SXixd-0002NA-AY
-	for gcvg-git-2@plane.gmane.org; Fri, 25 May 2012 03:04:57 +0200
+	id 1SXjOW-0006Xq-Cw
+	for gcvg-git-2@plane.gmane.org; Fri, 25 May 2012 03:32:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759606Ab2EYBEh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 May 2012 21:04:37 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:54687
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757869Ab2EYBEg (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 May 2012 21:04:36 -0400
-Received: (qmail 3111 invoked by uid 107); 25 May 2012 01:05:03 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 24 May 2012 21:05:03 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 24 May 2012 21:04:34 -0400
-Content-Disposition: inline
-In-Reply-To: <201205241854.56934.mfick@codeaurora.org>
+	id S1754802Ab2EYBcj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 May 2012 21:32:39 -0400
+Received: from wolverine01.qualcomm.com ([199.106.114.254]:30560 "EHLO
+	wolverine01.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754009Ab2EYBci (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 May 2012 21:32:38 -0400
+X-IronPort-AV: E=McAfee;i="5400,1158,6721"; a="194562549"
+Received: from pdmz-ns-mip.qualcomm.com (HELO mostmsg01.qualcomm.com) ([199.106.114.10])
+  by wolverine01.qualcomm.com with ESMTP/TLS/DHE-RSA-AES256-SHA; 24 May 2012 18:32:38 -0700
+Received: from mfick-lnx.localnet (pdmz-snip-v218.qualcomm.com [192.168.218.1])
+	by mostmsg01.qualcomm.com (Postfix) with ESMTPA id 13EDA10004A9;
+	Thu, 24 May 2012 18:32:38 -0700 (PDT)
+User-Agent: KMail/1.13.5 (Linux/2.6.32.49+drm33.21-mfick7; KDE/4.4.5; x86_64; ; )
+In-Reply-To: <20120525010434.GA11861@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198458>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198459>
 
-On Thu, May 24, 2012 at 06:54:56PM -0600, Martin Fick wrote:
+On Thursday, May 24, 2012 07:04:34 pm Jeff King wrote:
+> On Thu, May 24, 2012 at 06:54:56PM -0600, Martin Fick 
+wrote:
+> > > Yes, exclusively warm. And all of the refs were
+> We'd have to give some thought to potential race
+> conditions, though. Usually pack-refs isn't modifying
+> the ref, so it can just write out the value to the
+> packed-refs file, then delete the loose ref if nobody
+> has touched it since we wrote. But here we're combining
+> it with a modification, so I suspect there would be a
+> race with another process trying to modify it.
 
-> > Yes, exclusively warm. And all of the refs were packed,
-> > which makes the warm/cold difference less interesting
-> > (it's one 30MB or so file).  I don't think there's much
-> > point in thinking about the performance of 400K loose
-> > refs (which would be absolutely horrific cold-cache on
-> > most traditional filesystems). If you have that many,
-> > you would want to keep the bulk of them packed.
-> 
-> Mostly true, except for one strange case still I think?
-> 
-> When cloning a gerrit repo, users to not get the changes 
-> since they are not under refs/heads but refs/changes.  So 
-> later, if they choose to fetch refs/changes/*, all of those
-> new incoming refs are loose.
+Yeah, I thought about that.  Could you just right the new 
+packed-ref file with the new refs and the old refs which 
+were in the file already, then just delete any loose refs 
+which were ones which were just added by this operation, 
+only if they have not changed?
 
-Hmm. Yeah, clone will always write a packed-refs file, but I think "git
-fetch" will always write loose refs, under the assumption that the
-former will be getting a lot more refs than the latter. But of course
-that is only a guess. It would be nice if fetch could fetch straight
-into packed refs if we are getting more than N items.
+This way, if someone else modifies one of the same refs, 
+they could just win?
 
-We'd have to give some thought to potential race conditions, though.
-Usually pack-refs isn't modifying the ref, so it can just write out the
-value to the packed-refs file, then delete the loose ref if nobody has
-touched it since we wrote. But here we're combining it with a
-modification, so I suspect there would be a race with another process
-trying to modify it.
+-Martin
 
-> Yes, someone should pack those 
-> refs right away, but I think it actually churns the hell out 
-> of my disk and takes a significant amount of time during the 
-> initial fetch.  I am not certain about this, and the 
-> behavior may depend on the filesystem in use, but I think 
-> that this time might even be asynchronous (journals and 
-> all), it feels like my disk keeps churning for a while even 
-> after this is over.  I believe that this might still be the 
-> worst case left with refs, and it can be pretty bad,
 
-Yeah, I wouldn't be surprised if this thrashes your disk. Writing
-hundreds of thousands of 40-byte files is one of the most awful loads
-for many filesystems, since each file gets its own inode. I haven't
-tried btrfs, but my impression is that it can magically pack the data
-from many files into one node.
-
--Peff
+-- 
+Employee of Qualcomm Innovation Center, Inc. which is a 
+member of Code Aurora Forum
