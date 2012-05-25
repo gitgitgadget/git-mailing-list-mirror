@@ -1,120 +1,131 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH] Teach ignore machinery about pattern "/"
-Date: Fri, 25 May 2012 19:47:36 +0700
-Message-ID: <1337950056-26491-1-git-send-email-pclouds@gmail.com>
+From: roucherj <roucherj@telesun.imag.fr>
+Subject: Re: credential-helpers + remote-helper, starting  =?UTF-8?Q?=20point=3F?=
+Date: Fri, 25 May 2012 15:28:39 +0200
+Message-ID: <5edbcd2530e49e719129f799f8c78dd3@telesun.imag.fr>
+References: <b13df32797edbe8f71c796dbb4dc06a5@telesun.imag.fr>
+ <20120524182110.GE3161@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 25 14:51:51 2012
+Content-Type: text/plain; charset=UTF-8;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: <git@vger.kernel.org>, <matthieu.moy@imag.fr>,
+	<kim-thuat.nguyen@ensimag.fr>, <pavel.volek@ensimag.fr>,
+	<javier.roucher-iglesias@ensimag.fr>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri May 25 15:28:55 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SXtzi-0000kS-3X
-	for gcvg-git-2@plane.gmane.org; Fri, 25 May 2012 14:51:50 +0200
+	id 1SXuZa-0005ma-BC
+	for gcvg-git-2@plane.gmane.org; Fri, 25 May 2012 15:28:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751389Ab2EYMvp convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 25 May 2012 08:51:45 -0400
-Received: from mail-pb0-f46.google.com ([209.85.160.46]:57898 "EHLO
-	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751154Ab2EYMvo (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 May 2012 08:51:44 -0400
-Received: by pbbrp8 with SMTP id rp8so1728381pbb.19
-        for <git@vger.kernel.org>; Fri, 25 May 2012 05:51:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
-         :content-type:content-transfer-encoding;
-        bh=rqruody3CLGs0cj1P+TKKEFl5fB9n/Yji8Yvly9a3W0=;
-        b=XfmJG2YQgutYB/rVvBRaCuTmBIYKER1jqo6RLbpgh+FLdZJAaGqm0FofMIREk5paG/
-         3n+FVYxNScSkb3m/qUuvAQbhdlmgolrmDMteg2USAebXDdYRpZZeGA27O3cnUYwYAxTv
-         LiT3qtqhTA1saznJkjyJI75ANpi27WuTHye0XdExvTyNoxAjkElDlNU72cII528l+EPs
-         A81LEtyKOZeAbuTFDfPkD3PqHgxwg58wXWD6oEFwpuoaGzAXe7kC6i6Anjlx2h6lHg+R
-         NOuxeKYS/muDFPLDwUFx+WIwwGaHyKlzF7UbGDHoi+aL1CrMIZO2i2Cod8d+NO3o6bi7
-         XjZg==
-Received: by 10.68.213.104 with SMTP id nr8mr32550593pbc.26.1337950303990;
-        Fri, 25 May 2012 05:51:43 -0700 (PDT)
-Received: from pclouds@gmail.com ([115.74.39.86])
-        by mx.google.com with ESMTPS id pb4sm8969507pbc.55.2012.05.25.05.51.39
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 25 May 2012 05:51:42 -0700 (PDT)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Fri, 25 May 2012 19:47:37 +0700
-X-Mailer: git-send-email 1.7.10.2.549.g9354186
+	id S1752617Ab2EYN2t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 May 2012 09:28:49 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:50106 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752430Ab2EYN2s (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 May 2012 09:28:48 -0400
+Received: from ensimag.imag.fr (ensimag.imag.fr [195.221.228.12])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id q4PDKXR9012190
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Fri, 25 May 2012 15:20:33 +0200
+Received: from web-ensimag.imag.fr (web-ensimag [195.221.228.24])
+	by ensimag.imag.fr (8.13.8/8.13.8/ImagV2.1.r_ens) with ESMTP id q4PDSeYD011508;
+	Fri, 25 May 2012 15:28:40 +0200
+Received: from web-ensimag.imag.fr (localhost [127.0.0.1])
+	by web-ensimag.imag.fr (8.13.8/8.13.8/ImagV2.1.sb_ens) with ESMTP id q4PDSeWI026325;
+	Fri, 25 May 2012 15:28:40 +0200
+Received: (from apache@localhost)
+	by web-ensimag.imag.fr (8.13.8/8.13.8/Submit) id q4PDSdAp026324;
+	Fri, 25 May 2012 15:28:39 +0200
+X-Authentication-Warning: web-ensimag.imag.fr: apache set sender to roucherj@telesun.imag.fr using -f
+In-Reply-To: <20120524182110.GE3161@sigill.intra.peff.net>
+X-Sender: roucherj@telesun.imag.fr
+User-Agent: Roundcube Webmail/0.5.3
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Fri, 25 May 2012 15:20:34 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: q4PDKXR9012190
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: roucherj@telesun.imag.fr
+MailScanner-NULL-Check: 1338556836.60784@66fs8cEgivs9ciWs7yVSjw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198475>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198476>
 
-Pattern "/" is ambiguous because the slash can mean "anchor the
-pattern to this location" (e.g. /path), but it can also mean
-"match directories only" (e.g. path/). Currently git interprets it as
-the latter except that 'path' is an empty string, which makes this
-pattern totally useless.
+On Thu, 24 May 2012 14:21:10 -0400, Jeff King wrote:
+> On Thu, May 24, 2012 at 05:14:35PM +0200, roucherj wrote:
+>
+>> I want to know if anyone can help me with git-credential-helpers we
+>> are trying to use git-credential-helpers in the git-mediawiki
+>> (implemented as a remote-helper).
+>> We need to ask for the login/pass of the wiki and it would be nice 
+>> if
+>> we can use credential-helpers to manage this credentials.
+>
+> Yeah, I think it makes sense to use the credential-helpers.
+>
+>> Anyone can send me a starting point, like a url with the
+>> documentation of git-credential-helpers?
+>
+> Try:
+>
+>
+> 
+> https://github.com/git/git/blob/master/Documentation/technical/api-credentials.txt
+>
+> But that is the C API, and I assume you are building on the existing
+> mediawiki helper that is written in perl. So I think what you really
+> want is a "git credential" command that will let scripts hook into 
+> the
+> credential API. Something like:
+>
+>   $ git credential get https://example.com
+>   username=bob
+>   password=secret
+>
+>   $ cat <<\EOF | git credential store https://example.com
+>   username=bob
+>   password=secret
+>   EOF
+>
+>   $ cat <<\EOF | git credential erase https://example.com
+>   username=bob
+>   password=secret
+>   EOF
+>
+> I had planned eventually to do something like this for git-svn, but
+> realized that it was more sane to just let svn library handle the
+> credential storage.
+>
+> Do you guys want to try writing "git credential" as above? It might 
+> be a
+> fun side project, but I know you are also on a limited timeframe for
+> your project. I can work on it if you don't have time.
+>
+> -Peff
 
-On the other hand, it's intuitive to read '/' as "match root
-directory", or equivalent to "/*". (The other way to see it is "match
-all directories", which leads to the same result).
+Jeff thanks you for helping me with use credentials-helpers with 
+git-remote
+I will try to code your proposed solution.
+making something like that:
 
-One may wonder why bother an "ignore all" pattern. The pattern is
-useful when you want to keep just a small portion of the working
-directory. But that's still a rare case.
-
-A more popular case would be sparse checkout, where ignore rules are
-used to _include_. The thus now "include all" pattern is used to say
-"make a sparse checkout that includes everything except this and
-this".
-
-Recognize this special pattern and turn it the working equivalence
-pattern "/*"
-
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
----
- dir.c                              | 3 +++
- t/t3001-ls-files-others-exclude.sh | 6 ++++++
- 2 files changed, 9 insertions(+)
-
-diff --git a/dir.c b/dir.c
-index c6a98cc..b65d37c 100644
---- a/dir.c
-+++ b/dir.c
-@@ -308,6 +308,9 @@ void add_exclude(const char *string, const char *ba=
-se,
- 	int to_exclude =3D 1;
- 	int flags =3D 0;
-=20
-+	if (string[0] =3D=3D '/' && string[1] =3D=3D '\0')
-+		string =3D "/*";
-+
- 	if (*string =3D=3D '!') {
- 		to_exclude =3D 0;
- 		string++;
-diff --git a/t/t3001-ls-files-others-exclude.sh b/t/t3001-ls-files-othe=
-rs-exclude.sh
-index c8fe978..7cb790d 100755
---- a/t/t3001-ls-files-others-exclude.sh
-+++ b/t/t3001-ls-files-others-exclude.sh
-@@ -175,6 +175,12 @@ test_expect_success 'negated exclude matches can o=
-verride previous ones' '
- 	grep "^a.1" output
- '
-=20
-+test_expect_success '"/" pattern is equivalent to "/*" (exclude all)' =
-'
-+	git ls-files --others --exclude=3D/ >output &&
-+	: >expected &&
-+	test_cmp expected output
-+'
-+
- test_expect_success 'subdirectory ignore (setup)' '
- 	mkdir -p top/l1/l2 &&
- 	(
---=20
-1.7.10.2.549.g9354186
++-----+ -----> +----------------------+
+| git |  pipe  | git-remote-mediawiki |
++-----+ <----- +----------------------+
+                      /\      ||
+                      || pipe ||
+                      ||      \/
+                  +----------------+ ----->  O
+                  | git-credential | <----- -|-
+                  +----------------+        / \
+                      /\      ||            User
+                      || pipe ||
+                      ||      \/
+                  +-------------------------+
+                  | git-credentials-helpers |
+                  +-------------------------+
