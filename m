@@ -1,130 +1,82 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Teach ignore machinery about pattern "/"
-Date: Fri, 25 May 2012 10:32:46 -0700
-Message-ID: <7vlikgtbcx.fsf@alter.siamese.dyndns.org>
-References: <1337950056-26491-1-git-send-email-pclouds@gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [RFC] Possibility to choose ~/.config/git/config instead of
+ ~/.gitconfig
+Date: Fri, 25 May 2012 12:42:37 -0500
+Message-ID: <20120525174237.GA4267@burratino>
+References: <20120525181526.Horde.VibLf3wdC4BPv7AeKacSMiA@webmail.minatec.grenoble-inp.fr>
+ <CAE1pOi0eY2=eNzuTUVGmHuvfGWvxoXSJUADWr0CfPpVe5ktxow@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 25 19:32:56 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: nguyenhu@minatec.inpg.fr, git@vger.kernel.org,
+	matthieu.moy@grenoble-inp.fr,
+	Valentin DUPERRAY <Valentin.Duperray@phelma.grenoble-inp.fr>,
+	Franck JONAS <Franck.Jonas@phelma.grenoble-inp.fr>,
+	Lucien KONG <Lucien.Kong@phelma.grenoble-inp.fr>,
+	Thomas NGUY <Thomas.Nguy@phelma.grenoble-inp.fr>,
+	Huynh Khoi Nguyen NGUYEN 
+	<Huynh-Khoi-Nguyen.Nguyen@phelma.grenoble-inp.fr>,
+	Jeff King <peff@peff.net>,
+	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+To: Hilco Wijbenga <hilco.wijbenga@gmail.com>
+X-From: git-owner@vger.kernel.org Fri May 25 19:42:53 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SXyNi-0002mv-NS
-	for gcvg-git-2@plane.gmane.org; Fri, 25 May 2012 19:32:55 +0200
+	id 1SXyXM-0003xS-JD
+	for gcvg-git-2@plane.gmane.org; Fri, 25 May 2012 19:42:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754482Ab2EYRcu convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 25 May 2012 13:32:50 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:56911 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751781Ab2EYRct convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 25 May 2012 13:32:49 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BF4C18B07;
-	Fri, 25 May 2012 13:32:48 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=0Gt63ux5EozB
-	z805LDbqgLQGxIk=; b=JSTm9dtXW/4gUYSLmyjSOf0T9YdGsEN0JPvNu+LbysvZ
-	pTlooNEtKi7xXt9kgsYc+aCVmoWjxp+Te/fB+j/UGabLLgynl6376GwDzmGl59Ik
-	Uu0O8TjZg5G0/Pz0Q6wCbaf3qCtuSAxMV9/0cczgoTYeu+5f8TGtzTnYybPdGOg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=R0zWUa
-	fwZD3R7ciz76UFbSKt1fDqyYgp0J7DqEy2zfvNWkX2AtomXPkTy6HPDjsMaLfsie
-	T1iMLAmCtNOkf1b5Agu27j1o9NpC6iZgMY0OnBbJ96iReqXGypuws0KaK/cQWCaK
-	2bXRXxsbSwDckvFBcGUcjlFMHLBpyZTjUPaaY=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B708C8B06;
-	Fri, 25 May 2012 13:32:48 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1BDFE8B05; Fri, 25 May 2012
- 13:32:48 -0400 (EDT)
-In-Reply-To: <1337950056-26491-1-git-send-email-pclouds@gmail.com>
- (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Fri, 25 May
- 2012 19:47:36 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: A546DFAC-A68F-11E1-94BC-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1756613Ab2EYRms (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 May 2012 13:42:48 -0400
+Received: from mail-gg0-f174.google.com ([209.85.161.174]:43821 "EHLO
+	mail-gg0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756295Ab2EYRmr (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 May 2012 13:42:47 -0400
+Received: by gglu4 with SMTP id u4so1020698ggl.19
+        for <git@vger.kernel.org>; Fri, 25 May 2012 10:42:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=nxdVh9uDjtAN/oFEe+mZd8Z0Fg08AuzQHSLjb+1T660=;
+        b=PIcg57oaWiC6DtqQCjurq3GNVedWiuJMFkNDJ8I61f8N2LwkrwTVDzaDLMW4R2XeWJ
+         M3Wys28timQy2FcjLx+gLJ5oXlWzvQJPZ1UtReOWfFp7PqJ6VBYx7GmLxwYHDX6ovSVc
+         BJZQAOK/mrydbSFWFEavT5z1ZNTSqkReBiGYCycp8QwT/D/xSX4yDX5ZgMf1at6ZfwUL
+         F3rv4dEuQL+/zyfc2B94upcQenbx7f62NWqah7p69ySSGio+M1IEp95HVTQAqAZnZipp
+         eeEckwItpTorsXh6O8Bl/YpZFm7vbmfRHiy58x+CxTh0DpAgkDxFadiqZDTAKdDhGLL5
+         dwmg==
+Received: by 10.42.132.138 with SMTP id d10mr531577ict.28.1337967766483;
+        Fri, 25 May 2012 10:42:46 -0700 (PDT)
+Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
+        by mx.google.com with ESMTPS id wh8sm7947616igb.11.2012.05.25.10.42.43
+        (version=SSLv3 cipher=OTHER);
+        Fri, 25 May 2012 10:42:43 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <CAE1pOi0eY2=eNzuTUVGmHuvfGWvxoXSJUADWr0CfPpVe5ktxow@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198490>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198491>
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
+Hi Hilco,
 
-> Pattern "/" is ambiguous because the slash can mean "anchor the
-> pattern to this location" (e.g. /path), but it can also mean
-> "match directories only" (e.g. path/). Currently git interprets it as
-> the latter except that 'path' is an empty string, which makes this
-> pattern totally useless.
+Hilco Wijbenga wrote:
 
-Did the old version interprete it as the former?  How does the above
-observation relate to the end-user help request in the other thread?
-
-When talking about an ambiguous expression X that can be in multiple wa=
-ys
-and each interpretation gives surprisingly different result, if there a=
-re
-ways A, B and C to unambiguously spell each and every of its possible a=
-nd
-useful interpretations, and if one of the interpretations C is to ignor=
-e
-the expression altogether, it is preferrable to either
-
- (1) warn if it does not trigger anything useful to write a no-op; or
- (2) just ignore it if a no-op is a meaningful behaviour
-
-when you see X.
-
-> On the other hand, it's intuitive to read '/' as "match root
-> directory", or equivalent to "/*". (The other way to see it is "match
-> all directories", which leads to the same result).
-
-I am a bit confused about the above, especially "The other way" part.
-
-Does this alternative interpretation view "/" as "/foo" whose "foo"
-happens to be an empty string, or does it view "/" as "foo/" whose "foo=
-"
-happens to be an empty string?
-
-The former would mean "ignore foo, and don't bother descending into foo=
- if
-it is a directory, as everything in it is ignored", while the latter wo=
-uld
-mean "anywhere in this directory and its subdirectories, if we see foo
-that is a directory, don't bother descending into it as everything in i=
-t
-is ignored."
-
-What I am trying to get at is why you are making '/' the same as '/*' a=
-s
-opposed to '*/', '/*/', or even a plain '*'.
-
-> One may wonder why bother an "ignore all" pattern. The pattern is
-> useful when you want to keep just a small portion of the working
-> directory. But that's still a rare case.
+> This is, of course, highly OS dependent. Ironically, I'd say we need a
+> setting in .gitconfig for it. :-)
 >
-> A more popular case would be sparse checkout, where ignore rules are
-> used to _include_. The thus now "include all" pattern is used to say
-> "make a sparse checkout that includes everything except this and
-> this".
+> There is also /etc(/default|/sysconfig|)/git/config to consider
+> (perhaps for some settings that should be the same for everyone).
+> Better yet, it would be nice if at least some settings could be part
+> of the repository itself (whitespace handling e.g.).
 
-If the "sparse checkout" hack writes "/" for whatever reason, it should=
- be
-corrected to write "*" (or perhaps "/*") instead.  I do not see it as a
-valid factor to affect when we decide what should be done for a possibl=
-y
-ambiguous "/" entry in the exclude machinery.
+The FILES section of git-config(1) might leave you happier. :)
 
-> Recognize this special pattern and turn it the working equivalence
-> pattern "/*"
+Regarding $GIT_DIR/config, it says "The filename is of course relative
+to the repository root, not the working directory.".  Is this out of
+date?  (Cc-ing Peff and Duy.)
 
-Regardless of the answer to the "is it *, /*, */ or /*/" question above=
-,
-I do not think silent conversion is a right solution for the ambiguity.
+Jonathan
