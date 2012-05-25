@@ -1,72 +1,78 @@
-From: =?ISO-8859-1?Q?Ville_Skytt=E4?= <ville.skytta@iki.fi>
-Subject: Re: [PATCH 2/2] completion: split __git_ps1 into a separate script
-Date: Fri, 25 May 2012 20:51:37 +0300
-Message-ID: <4FBFC6A9.1050209@iki.fi>
-References: <1337719600-7361-1-git-send-email-felipe.contreras@gmail.com> <1337719600-7361-3-git-send-email-felipe.contreras@gmail.com> <20120524204726.GB2052@goldbirke>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [RFC] Possibility to choose ~/.config/git/config instead of ~/.gitconfig
+Date: Fri, 25 May 2012 19:54:06 +0200
+Message-ID: <vpqipfkrvsx.fsf@bauges.imag.fr>
+References: <20120525181526.Horde.VibLf3wdC4BPv7AeKacSMiA@webmail.minatec.grenoble-inp.fr>
+	<CAE1pOi0eY2=eNzuTUVGmHuvfGWvxoXSJUADWr0CfPpVe5ktxow@mail.gmail.com>
+	<20120525174237.GA4267@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>,
-	Ted Pavlic <ted@tedpavlic.com>,
-	Thomas Rast <trast@student.ethz.ch>,
-	Kerrick Staley <mail@kerrickstaley.com>,
-	Marius Storm-Olsen <mstormo@gmail.com>,
-	Dan McGee <dan@archlinux.org>
-To: =?ISO-8859-1?Q?SZEDER_G=E1bor?= <szeder@ira.uka.de>
-X-From: git-owner@vger.kernel.org Fri May 25 19:51:53 2012
+Content-Type: text/plain
+Cc: Hilco Wijbenga <hilco.wijbenga@gmail.com>,
+	nguyenhu@minatec.inpg.fr, git@vger.kernel.org,
+	Valentin DUPERRAY <Valentin.Duperray@phelma.grenoble-inp.fr>,
+	Franck JONAS <Franck.Jonas@phelma.grenoble-inp.fr>,
+	Lucien KONG <Lucien.Kong@phelma.grenoble-inp.fr>,
+	Thomas NGUY <Thomas.Nguy@phelma.grenoble-inp.fr>,
+	Huynh Khoi Nguyen NGUYEN 
+	<Huynh-Khoi-Nguyen.Nguyen@phelma.grenoble-inp.fr>,
+	Jeff King <peff@peff.net>,
+	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Fri May 25 19:54:24 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SXyfz-0002NZ-LK
-	for gcvg-git-2@plane.gmane.org; Fri, 25 May 2012 19:51:48 +0200
+	id 1SXyiW-0000rT-6I
+	for gcvg-git-2@plane.gmane.org; Fri, 25 May 2012 19:54:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757698Ab2EYRvn convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 25 May 2012 13:51:43 -0400
-Received: from mail-lpp01m010-f46.google.com ([209.85.215.46]:65083 "EHLO
-	mail-lpp01m010-f46.google.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754380Ab2EYRvn (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 25 May 2012 13:51:43 -0400
-Received: by lahd3 with SMTP id d3so825974lah.19
-        for <git@vger.kernel.org>; Fri, 25 May 2012 10:51:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:x-enigmail-version:content-type
-         :content-transfer-encoding;
-        bh=RDH4HjD4mj8ZcnfG92cRNypglRm2KfvBVO9YzbrrIx0=;
-        b=Q5wbgBWrkNqoLU20/wouiuQZE6hgbIhfV9WCser5cSCU3cJx12v37el9jChSbpR5+0
-         oiO4hmw8wSzEqCDtJ/rRK74U4A9dOx+V/fhLnce7Abtd8HitrJSXEDuJCMPxKmuTD3Ui
-         u6p1NRYLCTYT0K799WLugOuKubI8c9QhjJBXnreZSFs/K5+kNkH5XwL/akEV7qZ4rrbR
-         LyxRw8qFtR2C/2BiFQIxomEqSntShKZrmuebINDQvOjO4OWePJXXcXCkR1eBjKLu5Qg1
-         i+rctiDiHm2cTu/0zfFhnXRc5aqglUC5O4DBYA7NgkKrN+QqSem/ueluQEgZVw4c5I3P
-         ZzJA==
-Received: by 10.152.104.44 with SMTP id gb12mr4429943lab.29.1337968301631;
-        Fri, 25 May 2012 10:51:41 -0700 (PDT)
-Received: from michael.steam.fi (cs78200229.pp.htv.fi. [62.78.200.229])
-        by mx.google.com with ESMTPS id gi19sm4856287lab.16.2012.05.25.10.51.38
-        (version=SSLv3 cipher=OTHER);
-        Fri, 25 May 2012 10:51:39 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:12.0) Gecko/20120430 Thunderbird/12.0.1
-In-Reply-To: <20120524204726.GB2052@goldbirke>
-X-Enigmail-Version: 1.4.1
+	id S1756263Ab2EYRyU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 May 2012 13:54:20 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:57528 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751434Ab2EYRyT (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 May 2012 13:54:19 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id q4PHk4fd018338
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Fri, 25 May 2012 19:46:04 +0200
+Received: from bauges.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1SXyiF-0004tA-9I; Fri, 25 May 2012 19:54:07 +0200
+In-Reply-To: <20120525174237.GA4267@burratino> (Jonathan Nieder's message of
+	"Fri, 25 May 2012 12:42:37 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.93 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Fri, 25 May 2012 19:46:06 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: q4PHk4fd018338
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1338572769.46203@HOMxvsQx3kc6ou97U/OBvQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198495>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198496>
 
-On 2012-05-24 23:47, SZEDER G=E1bor wrote:
->=20
-> On Tue, May 22, 2012 at 10:46:40PM +0200, Felipe Contreras wrote:
->> bash-completion 1.90 shipped=20
->=20
-> That's still beta, right?  (or the bash-completion website is out of
-> date...)
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-1.99 has been out since January, and the website has also mentioned it
-since then.  1.99 is a beta or a release candidate if you prefer, but
-personally I believe it's very close to 2.0 at least in terms of things
-being discussed in this thread.
+> Regarding $GIT_DIR/config, it says "The filename is of course relative
+> to the repository root, not the working directory.".  Is this out of
+> date?  (Cc-ing Peff and Duy.)
+
+This is a per-repository, but not "part of the repository" in the sense
+"files tracked by Git" (i.e. it's not fetched by git clone).
+
+Having a $GIT_WORKTREE/.gitconfig file would be very nice, but raises a
+lot of security issues, so it's a much larger project (define which
+configuration values are allowed there, possibly take them into account
+at clone time, i.e. before checking out the files, and so on). Most
+likely out of the scope of my students' project ;-).
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
