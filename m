@@ -1,104 +1,72 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCHv2] Do not autosquash in case of an implied interactive
- rebase
-Date: Fri, 25 May 2012 10:50:26 -0700
-Message-ID: <7vehq8tajh.fsf@alter.siamese.dyndns.org>
-References: <1337867575-7212-1-git-send-email-vfr@lyx.org>
- <1337867846-5336-1-git-send-email-vfr@lyx.org>
+From: =?ISO-8859-1?Q?Ville_Skytt=E4?= <ville.skytta@iki.fi>
+Subject: Re: [PATCH 2/2] completion: split __git_ps1 into a separate script
+Date: Fri, 25 May 2012 20:51:37 +0300
+Message-ID: <4FBFC6A9.1050209@iki.fi>
+References: <1337719600-7361-1-git-send-email-felipe.contreras@gmail.com> <1337719600-7361-3-git-send-email-felipe.contreras@gmail.com> <20120524204726.GB2052@goldbirke>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Vincent van Ravesteijn <vfr@lyx.org>
-X-From: git-owner@vger.kernel.org Fri May 25 19:50:36 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>,
+	Ted Pavlic <ted@tedpavlic.com>,
+	Thomas Rast <trast@student.ethz.ch>,
+	Kerrick Staley <mail@kerrickstaley.com>,
+	Marius Storm-Olsen <mstormo@gmail.com>,
+	Dan McGee <dan@archlinux.org>
+To: =?ISO-8859-1?Q?SZEDER_G=E1bor?= <szeder@ira.uka.de>
+X-From: git-owner@vger.kernel.org Fri May 25 19:51:53 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SXyep-0007JQ-Cz
-	for gcvg-git-2@plane.gmane.org; Fri, 25 May 2012 19:50:35 +0200
+	id 1SXyfz-0002NZ-LK
+	for gcvg-git-2@plane.gmane.org; Fri, 25 May 2012 19:51:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932104Ab2EYRub (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 May 2012 13:50:31 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:65124 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757588Ab2EYRu3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 May 2012 13:50:29 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4109F8F5A;
-	Fri, 25 May 2012 13:50:29 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=x/80mIXFnk/wzCdzdgOZZZ1oziY=; b=vM+eHe
-	cFqXRvJ0xF815nyK8pfRv4Vo7HI024QiqQ5GKUH0rTyiW7vl16IuSk5NJvDNaDFd
-	v8BZndG3Gjb8BJrNtDTeNsVTr49EYAc1RAy2IyXWgpFvqcBvAtGo8y0wjyOJEZjS
-	FZoUqWf10m7ENM8YRVxYOLrAHhdFsz57DjlSE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=oExTIMfcK+D3Unrk/27T/ISWeTHd+XCC
-	O+oWnN4Q4hR4vc0Qxy3GHKTl6frjK5v9fxp5uZjiHjYozCpaZOpFbW9FqUrgw0e9
-	3qUZO3hpg3r69gBlhvnHeTnbdtKXLnwnPowDJLk0mrx4UirgXvPCU8wb3fU6UMnf
-	pXwm+FiohJU=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3725B8F59;
-	Fri, 25 May 2012 13:50:29 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9B8FE8F50; Fri, 25 May 2012
- 13:50:27 -0400 (EDT)
-In-Reply-To: <1337867846-5336-1-git-send-email-vfr@lyx.org> (Vincent van
- Ravesteijn's message of "Thu, 24 May 2012 13:57:26 +0000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 1CCD587E-A692-11E1-B842-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1757698Ab2EYRvn convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 25 May 2012 13:51:43 -0400
+Received: from mail-lpp01m010-f46.google.com ([209.85.215.46]:65083 "EHLO
+	mail-lpp01m010-f46.google.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754380Ab2EYRvn (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 25 May 2012 13:51:43 -0400
+Received: by lahd3 with SMTP id d3so825974lah.19
+        for <git@vger.kernel.org>; Fri, 25 May 2012 10:51:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:x-enigmail-version:content-type
+         :content-transfer-encoding;
+        bh=RDH4HjD4mj8ZcnfG92cRNypglRm2KfvBVO9YzbrrIx0=;
+        b=Q5wbgBWrkNqoLU20/wouiuQZE6hgbIhfV9WCser5cSCU3cJx12v37el9jChSbpR5+0
+         oiO4hmw8wSzEqCDtJ/rRK74U4A9dOx+V/fhLnce7Abtd8HitrJSXEDuJCMPxKmuTD3Ui
+         u6p1NRYLCTYT0K799WLugOuKubI8c9QhjJBXnreZSFs/K5+kNkH5XwL/akEV7qZ4rrbR
+         LyxRw8qFtR2C/2BiFQIxomEqSntShKZrmuebINDQvOjO4OWePJXXcXCkR1eBjKLu5Qg1
+         i+rctiDiHm2cTu/0zfFhnXRc5aqglUC5O4DBYA7NgkKrN+QqSem/ueluQEgZVw4c5I3P
+         ZzJA==
+Received: by 10.152.104.44 with SMTP id gb12mr4429943lab.29.1337968301631;
+        Fri, 25 May 2012 10:51:41 -0700 (PDT)
+Received: from michael.steam.fi (cs78200229.pp.htv.fi. [62.78.200.229])
+        by mx.google.com with ESMTPS id gi19sm4856287lab.16.2012.05.25.10.51.38
+        (version=SSLv3 cipher=OTHER);
+        Fri, 25 May 2012 10:51:39 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:12.0) Gecko/20120430 Thunderbird/12.0.1
+In-Reply-To: <20120524204726.GB2052@goldbirke>
+X-Enigmail-Version: 1.4.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198494>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198495>
 
-Vincent van Ravesteijn <vfr@lyx.org> writes:
+On 2012-05-24 23:47, SZEDER G=E1bor wrote:
+>=20
+> On Tue, May 22, 2012 at 10:46:40PM +0200, Felipe Contreras wrote:
+>> bash-completion 1.90 shipped=20
+>=20
+> That's still beta, right?  (or the bash-completion website is out of
+> date...)
 
-> The option to autosquash is only used in case of an interactive rebase.
-> When merges are preserved, rebase uses an interactive rebase internally,
-> but in this case autosquash should still be disabled.
->
-> Signed-off-by: Vincent van Ravesteijn <vfr@lyx.org>
-
-Hrm, what if the end user said "git rebase --autosquash -p" explicitly
-from the command line?
-
-I _think_ you are addressing the case where rebase.autosquash is set to
-true in the configuration.  The handling of that variable that was added
-in dd1e5b3 (add configuration variable for --autosquash option of
-interactive rebase, 2010-07-14) is not correct.  The configuration should
-kick in only when the end user did not explicitly give either --autosquash
-or --no-autosquash, so the variable $autosquash is logically a tristate
-(unknown, set to yes, set to no), initialized to "unknown", set to either
-value when --[no-]autosquash option is seen, and fall back to the
-configured value _only_ after the option parsing loop exits and the
-variable is still set to "unknown".  In other words, the current:
-
-	autosquash=$(ask rebase.autosquash or default to no)
-        for each option:
-        	if option == --autosquash: autosquash=yes
-                if option == --no-autosquash: autosquash=no
-
-is wrong and I think this patch is trying to sweep that real problem under
-the rug.  Shouldn't the fix be more like the following, learning from what
-was done to the "implied interactive rebase" case, to fix the option
-parsing loop?
-
-	autosquash=unknown
-        interactive_rebase=unknown
-        for each option:
-        	if option == --autosquash: autosquash=yes
-                if option == --no-autosquash: autosquash=no
-                if option == --preserve-merges:
-                	preserve_merges=yes
-                        if interactive_rebase is unknown:
-				interactive_rebase=implied
-			if autosquash is unknown:
-                        	autosquash=no
-		... other options ...
-	if autosquash is unknown:
-        	autosquash=$(ask rebase.autosquash or default to no)
+1.99 has been out since January, and the website has also mentioned it
+since then.  1.99 is a beta or a release candidate if you prefer, but
+personally I believe it's very close to 2.0 at least in terms of things
+being discussed in this thread.
