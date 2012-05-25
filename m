@@ -1,200 +1,77 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] completion: split __git_ps1 into a separate script
-Date: Fri, 25 May 2012 11:03:14 -0700
-Message-ID: <7v8vggt9y5.fsf@alter.siamese.dyndns.org>
-References: <1337719600-7361-1-git-send-email-felipe.contreras@gmail.com>
- <1337719600-7361-3-git-send-email-felipe.contreras@gmail.com>
- <4FBC0019.6030702@in.waw.pl> <7v4nr72bim.fsf@alter.siamese.dyndns.org>
- <CAMP44s0aKi+8WHPXYLQ+iSMkj9iV88JGTabrpBRNBWb7upAMiQ@mail.gmail.com>
- <CAOnadRF8XyZKi+d=y1fFy2Xvs-3ETVyCbJBj83mK3Q8yuK7oQw@mail.gmail.com>
- <CAMP44s3uW75O_jt2F7POxTAhX+qPyRSjOX9-DuEkg7a7WtnLsA@mail.gmail.com>
- <4FBD5CC1.3060701@tedpavlic.com> <20120524203549.GA2052@goldbirke>
- <CAOnadRFbrhrFz7Ya3Vhgsju9G723Qu0OdJnM31xFmBqQNgj6gA@mail.gmail.com>
- <20120525073506.GD2052@goldbirke> <87ehq8its8.fsf@thomas.inf.ethz.ch>
+From: Martin Fick <mfick@codeaurora.org>
+Subject: Re: fmt-merge-message: add empty line between tag and signature verification
+Date: Fri, 25 May 2012 12:06:30 -0600
+Organization: CAF
+Message-ID: <201205251206.30783.mfick@codeaurora.org>
+References: <alpine.LFD.2.02.1205250850001.19607@i5.linux-foundation.org> <7vtxz4tcmn.fsf@alter.siamese.dyndns.org> <CA+55aFwwUzErbcCGa597N4G7i-_mYso+aJO_0aRq0jNBOi9=ew@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder@ira.uka.de>,
-	Ted Pavlic <ted@tedpavlic.com>,
-	Felipe Contreras <felipe.contreras@gmail.com>,
-	Ville =?utf-8?Q?Skytt=C3=A4?= <ville.skytta@iki.fi>,
-	Thomas Rast <trast@student.ethz.ch>,
-	Kerrick Staley <mail@kerrickstaley.com>,
-	Dan McGee <dan@archlinux.org>,
-	Zbigniew =?utf-8?Q?J=C4=99drzejewski-Szmek?= <zbyszek@in.waw.pl>,
-	<git@vger.kernel.org>, Marius Storm-Olsen <mstormo@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: Thomas Rast <trast@inf.ethz.ch>
-X-From: git-owner@vger.kernel.org Fri May 25 20:03:25 2012
+Content-Type: Text/Plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Fri May 25 20:06:40 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SXyrD-0000Ri-Eh
-	for gcvg-git-2@plane.gmane.org; Fri, 25 May 2012 20:03:23 +0200
+	id 1SXyuK-0000tK-R4
+	for gcvg-git-2@plane.gmane.org; Fri, 25 May 2012 20:06:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758123Ab2EYSDT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 May 2012 14:03:19 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:38039 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758030Ab2EYSDS (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 May 2012 14:03:18 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id ED8E38311;
-	Fri, 25 May 2012 14:03:16 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=ueGpW+dlJctEAfPxlNwl8mCm0aQ=; b=pPKgdU
-	PL5bv2H4jPgU0pm9h9xRP/PRYey6ctrazpo8o0zgswiLiTA1vhqJJ2d770TotOhe
-	w1WwF7Oj3kWEJKsqPA5nabI/iCMNn8nmMYqLa40x/ylDOFOSN6wYYP2G9JK32pcA
-	MsK9kNS9fvVEB5Wy1LwpM2XjZANPMx6vOuNsg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=l4T6bIoYCUc9QDDdLc+h1prxzNQw+D6Y
-	uisEdJw7CCa0Y6QA2ILBsDfT9NJk/NQuuVd/qD/GeQfKNOXePw6ViMHvQWE7XKL1
-	0mE5DecDLzkbh7GAqdOZ7br8oAAEnvKp/gHwtneibg8/CNRwAPfTgwPEwyq81ScU
-	hfde69chFRI=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E24D78310;
-	Fri, 25 May 2012 14:03:16 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 53108830E; Fri, 25 May 2012
- 14:03:16 -0400 (EDT)
-In-Reply-To: <87ehq8its8.fsf@thomas.inf.ethz.ch> (Thomas Rast's message of
- "Fri, 25 May 2012 09:50:15 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: E70017E8-A693-11E1-A95F-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1756726Ab2EYSGc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 May 2012 14:06:32 -0400
+Received: from wolverine02.qualcomm.com ([199.106.114.251]:35149 "EHLO
+	wolverine02.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753442Ab2EYSGc (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 May 2012 14:06:32 -0400
+X-IronPort-AV: E=McAfee;i="5400,1158,6722"; a="192491396"
+Received: from pdmz-css-vrrp.qualcomm.com (HELO mostmsg01.qualcomm.com) ([199.106.114.130])
+  by wolverine02.qualcomm.com with ESMTP/TLS/DHE-RSA-AES256-SHA; 25 May 2012 11:06:31 -0700
+Received: from mfick-lnx.localnet (pdmz-snip-v218.qualcomm.com [192.168.218.1])
+	by mostmsg01.qualcomm.com (Postfix) with ESMTPA id A473310004A9;
+	Fri, 25 May 2012 11:06:31 -0700 (PDT)
+User-Agent: KMail/1.13.5 (Linux/2.6.32.49+drm33.21-mfick7; KDE/4.4.5; x86_64; ; )
+In-Reply-To: <CA+55aFwwUzErbcCGa597N4G7i-_mYso+aJO_0aRq0jNBOi9=ew@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198498>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198499>
 
-Thomas Rast <trast@inf.ethz.ch> writes:
+On Friday, May 25, 2012 11:20:10 am Linus Torvalds wrote:
+> On Fri, May 25, 2012 at 10:05 AM, Junio C Hamano 
+<gitster@pobox.com> wrote:
+> >> Btw, I'd also like to see the merge notes (notably the
+> >> conflict file list) before the generated shortlog,
+> >> but that seems to really not work with the current
+> >> fmt-merge-message model.  Oh well.
+> > 
+> Yes. Right now, the conflict line is hidden way at the
+> bottom, and I've actually overlooked it several times
+> (and I don't think I'm the only one - do "git log
+> --grep=Conflicts:" on the kernel tree and you'll see a
+> lot of people just leaving them be).
 
-> Why not make a git builtin command that figures out everything that
-> __git_ps1 does?  Perhaps in a format that can be eval'd and processed to
-> the user's taste.
+Tangentially related, I think that in the cherry-pick case 
+this can also be a problem. Not exactly the same, but in the 
+cherry-pick case you are generally starting with an existing 
+commit message, and the location of the conflicts at the 
+bottom ends up actually causing functional problems for the 
+interpretations of the old "footer-lines" by some tools.  
 
-I'd rather not to see something so specific for one interpreter like that
-in the core.  How about doing it this way instead?
+Notably, our users sometimes cherry-pick gerrit changes but 
+then the old Change-Id footer line gets placed above the 
+conflicts and if they forget to remove the conflicts, the 
+Change-Id footer is not recognized by Gerrit.  
 
-diff --git a/contrib/completion/Makefile b/contrib/completion/Makefile
-new file mode 100644
-index 0000000..71c600f
---- /dev/null
-+++ b/contrib/completion/Makefile
-@@ -0,0 +1,13 @@
-+# The default target is ...
-+all::
-+
-+SCRIPTS = git-completion.bash git-prompt.sh
-+
-+all:: $(SCRIPTS)
-+clean::
-+	rm -f $(SCRIPTS)
-+
-+$(SCRIPTS): % : %.shc
-+	rm -f $@+ $@
-+	sed -e '/## include common-bits/r common-bits' $< >$@+
-+	mv $@+ $@
-diff --git a/contrib/completion/common-bits b/contrib/completion/common-bits
-new file mode 100644
-index 0000000..06c2845
---- /dev/null
-+++ b/contrib/completion/common-bits
-@@ -0,0 +1,22 @@
-+# __gitdir accepts 0 or 1 arguments (i.e., location)
-+# returns location of .git repo
-+__gitdir ()
-+{
-+	if [ -z "${1-}" ]; then
-+		if [ -n "${__git_dir-}" ]; then
-+			echo "$__git_dir"
-+		elif [ -n "${GIT_DIR-}" ]; then
-+			test -d "${GIT_DIR-}" || return 1
-+			echo "$GIT_DIR"
-+		elif [ -d .git ]; then
-+			echo .git
-+		else
-+			git rev-parse --git-dir 2>/dev/null
-+		fi
-+	elif [ -d "$1/.git" ]; then
-+		echo "$1/.git"
-+	else
-+		echo "$1"
-+	fi
-+}
-+
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash.shc
-similarity index 99%
-rename from contrib/completion/git-completion.bash
-rename to contrib/completion/git-completion.bash.shc
-index abf8215..cf30f01 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash.shc
-@@ -32,24 +32,8 @@ case "$COMP_WORDBREAKS" in
- *)   COMP_WORDBREAKS="$COMP_WORDBREAKS:"
- esac
- 
--# __gitdir accepts 0 or 1 arguments (i.e., location)
--# returns location of .git repo
--__gitdir ()
--{
--	if [ -z "${1-}" ]; then
--		if [ -n "${__git_dir-}" ]; then
--			echo "$__git_dir"
--		elif [ -d .git ]; then
--			echo .git
--		else
--			git rev-parse --git-dir 2>/dev/null
--		fi
--	elif [ -d "$1/.git" ]; then
--		echo "$1/.git"
--	else
--		echo "$1"
--	fi
--}
-+## include common-bits here
-+## common-bits ends here
- 
- __gitcomp_1 ()
- {
-diff --git a/contrib/completion/git-prompt.sh b/contrib/completion/git-prompt.sh.shc
-similarity index 94%
-rename from contrib/completion/git-prompt.sh
-rename to contrib/completion/git-prompt.sh.shc
-index 8e2e9f3..d442a1a 100644
---- a/contrib/completion/git-prompt.sh
-+++ b/contrib/completion/git-prompt.sh.shc
-@@ -49,27 +49,8 @@
- # GIT_PS1_SHOWUPSTREAM, you can override it on a per-repository basis by
- # setting the bash.showUpstream config variable.
- 
--# __gitdir accepts 0 or 1 arguments (i.e., location)
--# returns location of .git repo
--__gitdir ()
--{
--	if [ -z "${1-}" ]; then
--		if [ -n "${__git_dir-}" ]; then
--			echo "$__git_dir"
--		elif [ -n "${GIT_DIR-}" ]; then
--			test -d "${GIT_DIR-}" || return 1
--			echo "$GIT_DIR"
--		elif [ -d .git ]; then
--			echo .git
--		else
--			git rev-parse --git-dir 2>/dev/null
--		fi
--	elif [ -d "$1/.git" ]; then
--		echo "$1/.git"
--	else
--		echo "$1"
--	fi
--}
-+## include common-bits here
-+## common-bits ends here
- 
- # stores the divergence from upstream in $p
- # used by GIT_PS1_SHOWUPSTREAM
+So, not only are users forgetting to remove the conflicts, 
+it causes tooling problems in the cherry-pick case by 
+messing with the footer layouts,
+
+-Martin
+
+-- 
+Employee of Qualcomm Innovation Center, Inc. which is a 
+member of Code Aurora Forum
