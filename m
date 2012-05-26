@@ -1,49 +1,55 @@
-From: Pete Wyckoff <pw@padd.com>
-Subject: Re: [PATCHv2 0/3] New test cases for branch detection
-Date: Sat, 26 May 2012 10:00:18 -0400
-Message-ID: <20120526140018.GA28962@padd.com>
-References: <1338026166-5462-1-git-send-email-vitor.hda@gmail.com>
+From: =?ISO-8859-2?Q?Tajti_=C1kos?= <akos.tajti@intland.com>
+Subject: git-http-backend with hooks
+Date: Sat, 26 May 2012 16:11:55 +0200
+Message-ID: <4FC0E4AB.5050103@intland.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Luke Diamand <luke@diamand.org>
-To: Vitor Antunes <vitor.hda@gmail.com>
-X-From: git-owner@vger.kernel.org Sat May 26 16:00:35 2012
+Content-Type: text/plain; charset=ISO-8859-2;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat May 26 16:12:18 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SYHXg-0000U5-Q7
-	for gcvg-git-2@plane.gmane.org; Sat, 26 May 2012 16:00:29 +0200
+	id 1SYHj6-0001X5-3K
+	for gcvg-git-2@plane.gmane.org; Sat, 26 May 2012 16:12:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752727Ab2EZOAY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 26 May 2012 10:00:24 -0400
-Received: from honk.padd.com ([74.3.171.149]:44552 "EHLO honk.padd.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752097Ab2EZOAX (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 26 May 2012 10:00:23 -0400
-Received: from arf.padd.com (unknown [50.55.145.1])
-	by honk.padd.com (Postfix) with ESMTPSA id CD3FED27;
-	Sat, 26 May 2012 07:00:21 -0700 (PDT)
-Received: by arf.padd.com (Postfix, from userid 7770)
-	id 78AF931610; Sat, 26 May 2012 10:00:18 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <1338026166-5462-1-git-send-email-vitor.hda@gmail.com>
+	id S1752307Ab2EZOMF convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 26 May 2012 10:12:05 -0400
+Received: from moutng.kundenserver.de ([212.227.17.8]:53690 "EHLO
+	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751593Ab2EZOME (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 26 May 2012 10:12:04 -0400
+Received: from [192.168.1.101] (92-249-245-66.pool.digikabel.hu [92.249.245.66])
+	by mrelayeu.kundenserver.de (node=mreu4) with ESMTP (Nemesis)
+	id 0MK8bx-1SZelj148D-0021YJ; Sat, 26 May 2012 16:12:02 +0200
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.1; hu; rv:1.9.2.28) Gecko/20120306 Thunderbird/3.1.20
+X-Provags-ID: V02:K0:LjLl9mh3pfybRq/94iizCTtVprRDEuJlM9WqvK+oy2j
+ Qi9MYJ5CEGSbzUfFc5wmV1+AFGVHC9Xae35MGzaAw+jFWRM3rj
+ zdRBfOwPvczHMavVqiuOa+mmvVsLLDZ/Who3hxFtAfn6s9LEZD
+ gH3SIV1+EY/LuY5Hc7r1gJam2vBXsr1Oo8Pmw5BrqFxf0T0tk+
+ 6yzvbrZpk1jcJmmwXpQR2yUkDkVRp2+C1RAahZ6IXcxvPYu+Wg
+ G/CVuiW5VvsGUDiUkcd3wL59zlDrjsIDBe7YtJwHQEJPDPRMoc
+ ooHiZaZkmGc9yY1knYPGa9qcaywDPlmshWYXJmwXRvIaBuyWw0
+ 6ZjR00rZYVXBc8D/1zUw=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198562>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198563>
 
-vitor.hda@gmail.com wrote on Sat, 26 May 2012 10:56 +0100:
-> Updates for previous patch according to feedback from Pete Wyckoff (and
-> some help from Junio). I also tried to find more improvement
-> opportunities and included an extra small patch with two small fixes.
-> 
-> Please review and provide feedback.
+dear list,
 
-These all look great to me, including the new fixes.
+we wrote a script that is basically a proxy before git-http-backend. Al=
+l=20
+git requests go through this and if some criteria is true then they're=20
+passed to git-http-backend. We also have hooks in our repositories. The=
+=20
+problem is that in some cases we don't want the hooks to run. Is it=20
+possible to somehow tell git-http-backend that the hooks shouldn't be r=
+un?
 
-Acked-by: Pete Wyckoff <pw@padd.com>
-
-		-- Pete
+thanks in advance,
+=E1kos tajti
