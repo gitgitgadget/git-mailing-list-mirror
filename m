@@ -1,94 +1,105 @@
-From: Vincent van Ravesteijn <vfr@lyx.org>
-Subject: Re: git rebase -f --autosquash
-Date: Sat, 26 May 2012 14:53:26 +0200
-Message-ID: <4FC0D246.2010701@lyx.org>
-References: <D7BE2BACB49749DB9FC37D4ACCCD008B@gmail.com> <1336820755.3002.11.camel@centaur.lab.cmartin.tk> <7vipfyiuv6.fsf@alter.siamese.dyndns.org> <33DF11B90FEF4CB6B4103BE0AAF9B256@gmail.com>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: [PATCHv2 1/2] wt-status: better advices for git status
+Date: Sat, 26 May 2012 20:01:08 +0700
+Message-ID: <CACsJy8Dx=HWKJ8H3LQhVAAJGtZKmMe0d5e3Q7eHER6Xo4yTAZw@mail.gmail.com>
+References: <1337852264-32619-1-git-send-email-Lucien.Kong@ensimag.imag.fr> <1338035905-24166-1-git-send-email-Lucien.Kong@ensimag.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?B?Q2FybG9zIE1hcnTDrW4gTmlldG8=?= <cmn@elego.de>
-To: Andy Kitchen <kitchen.andy@gmail.com>
-X-From: git-owner@vger.kernel.org Sat May 26 14:53:38 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: base64
+Cc: git@vger.kernel.org, Matthieu.Moy@grenoble-inp.fr,
+	Duperray Valentin <Valentin.Duperray@ensimag.imag.fr>,
+	Jonas Franck <Franck.Jonas@ensimag.imag.fr>,
+	Nguy Thomas <Thomas.Nguy@ensimag.imag.fr>,
+	Nguyen Huynh Khoi Nguyen Lucien 
+	<Huynh-Khoi-Nguyen.Nguyen@ensimag.imag.fr>
+To: Kong Lucien <Lucien.Kong@ensimag.imag.fr>
+X-From: git-owner@vger.kernel.org Sat May 26 15:02:24 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SYGUy-00024i-Od
-	for gcvg-git-2@plane.gmane.org; Sat, 26 May 2012 14:53:37 +0200
+	id 1SYGdR-0005FP-Cm
+	for gcvg-git-2@plane.gmane.org; Sat, 26 May 2012 15:02:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751876Ab2EZMxb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 26 May 2012 08:53:31 -0400
-Received: from mail-ey0-f174.google.com ([209.85.215.174]:33009 "EHLO
-	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751432Ab2EZMxb (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 26 May 2012 08:53:31 -0400
-Received: by eaak11 with SMTP id k11so412823eaa.19
-        for <git@vger.kernel.org>; Sat, 26 May 2012 05:53:29 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding
-         :x-gm-message-state;
-        bh=JHFb3J4QCKQeO5KZjfpGHYKlcEupfCsKleRVuiBDorI=;
-        b=M2gYOjBMngdYSviEZN9DJzbsVajg+B57bYGaONVyBCP80e0Fm7VpHzNnIncslpsqPM
-         ZJYFi9XygYtwIWMEWpXw5jLCormJUZucJHYUBHiZ3PbqXNtS0D8G7zyA2wVeazJfEnxA
-         FgwfitmqvKWdmLmpr6g2eOs+7VZuH98UM8Iii/2wIjSPML3deNQn2XkODwtYZgE6eCwc
-         1Agf89DHtOZSrgUwlr7TDoT72za2zRuG2c3ivsphhCnDqajSnnqseK9lTxf+25OxoW10
-         smOW5v4mHZcsNJ8iG8ypMCmbaWztHiz0xhiOpLQDe+XPQ+oWxRToJL3y8d0nuNepuJJY
-         cHDQ==
-Received: by 10.14.37.76 with SMTP id x52mr445526eea.102.1338036809656;
-        Sat, 26 May 2012 05:53:29 -0700 (PDT)
-Received: from [192.168.1.2] (j175101.upc-j.chello.nl. [24.132.175.101])
-        by mx.google.com with ESMTPS id o16sm17133707eeb.13.2012.05.26.05.53.27
-        (version=SSLv3 cipher=OTHER);
-        Sat, 26 May 2012 05:53:28 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:12.0) Gecko/20120428 Thunderbird/12.0.1
-In-Reply-To: <33DF11B90FEF4CB6B4103BE0AAF9B256@gmail.com>
-X-Gm-Message-State: ALoCoQm0ryVDoN/DaLoEg44aMoUJMgfwTa0fJafbxnBAl/L7zp68aqap1TUIf95fiofGJNT/68er
+	id S1751839Ab2EZNBl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 26 May 2012 09:01:41 -0400
+Received: from mail-wi0-f170.google.com ([209.85.212.170]:58512 "EHLO
+	mail-wi0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751432Ab2EZNBk (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 26 May 2012 09:01:40 -0400
+Received: by wibhm6 with SMTP id hm6so303243wib.1
+        for <git@vger.kernel.org>; Sat, 26 May 2012 06:01:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=CEUX3uKRDoGGdNgNX5rQaE6sVf+hxE9E0T6QE7anjw0=;
+        b=ZX+tVIP+sH+pXqp+EEfSN8d6nglib9443GqVMsRYDFosEFGQGD9cwTeGDPvt5UcUNw
+         YAy73okrP5QJ3ZD4nIzJRz3oH5LhGnGQdLxVqyg/mBmqtgohb3W9DaZ03o04sy/LMDKZ
+         TjCLHDh2ygsgj3n5p+uw3Azan54N/n86Ca3Mw0jX9or8fb7FxUvsnjpSv/lnqt6W92hs
+         ubfNS/ZfPUMhDkoSIR4irYEZk+oSFMWQBtfLpTAgfx5PSLjKwzfgIdIl/E5PFlgCaWEd
+         wyEuXYy4XqrUZyh3gFwpCjz48i7pwYQvbVk0EYFTQzoX7v/iStDlbENMoeIHp8dSm9sB
+         ixRw==
+Received: by 10.216.216.95 with SMTP id f73mr1230938wep.149.1338037298980;
+ Sat, 26 May 2012 06:01:38 -0700 (PDT)
+Received: by 10.223.64.208 with HTTP; Sat, 26 May 2012 06:01:08 -0700 (PDT)
+In-Reply-To: <1338035905-24166-1-git-send-email-Lucien.Kong@ensimag.imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198559>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198560>
 
-Op 26-5-2012 9:30, Andy Kitchen schreef:
-> On Tuesday, 15 May 2012 at 2:35 AM, Junio C Hamano wrote:
->> Given "EDITOR=: git commit args..." and "EDITOR=: git merge args..." are
->> equivalent to giving "--no-edit" option to these commands, I would imagine
->> "git rebase opts... --no-editor args..." would not be such a stretch.
-> I agree. However, I think it would be more intuitive to make --autosquash
-> work with -f or even just on its own in non-interactive mode.
-> It definitely makes sense practically and semantically to autosquash
-> non-interactively. Otherwise one needs to activate interactive mode
-> and effectively disable it in the same command which is a bit esoteric.
-> ...
-> In summary, I propose:
->
-> 1a)
->
-> $ git rebase -f --autosquash<base>
-> is made to be effectively equivalent to:
-> $ EDITOR=: git rebase -i --autosquash<base>
->
-
-I think the following one-line patch will effectively do what you want.
-
-diff --git a/git-rebase.sh b/git-rebase.sh
-index 24a2840..c4ffdcd 100755
---- a/git-rebase.sh
-+++ b/git-rebase.sh
-@@ -228,8 +228,9 @@ do
-      -p)
-          preserve_merges=t
-          test -z "$interactive_rebase" && interactive_rebase=implied
-          ;;
-      --autosquash)
-          autosquash=t
-+        test -z "$interactive_rebase" && interactive_rebase=implied
-          ;;
-      --no-autosquash)
-
-
-Vincent
+T24gU2F0LCBNYXkgMjYsIDIwMTIgYXQgNzozOCBQTSwgS29uZyBMdWNpZW4KPEx1Y2llbi5Lb25n
+QGVuc2ltYWcuaW1hZy5mcj4gd3JvdGU6Cj4gKyDCoCDCoCDCoCBwYXRoID0gbWtwYXRoKCIlcy9N
+RVJHRV9IRUFEIiwgZ2l0X2Rpcik7CgpZb3UgY2FuIHVzZSBnaXRfcGF0aCgiTUVSR0VfSEVBRCIp
+IGZvciB0aGlzLCBqdXN0IGRvbid0IHNhdmUgaXQuIFRoZQpzYW1lIGZvciBvdGhlciBjYWxsIHNp
+dGVzCgo+ICsgwqAgwqAgwqAgaWYoYmlzZWN0X3N0YXRlKSB7Cj4gKyDCoCDCoCDCoCDCoCDCoCDC
+oCDCoCBzdGF0dXNfcHJpbnRmX2xuKHMsIGMsIF8oIllvdSBhcmUgY3VycmVudGx5IGJpc2VjdGlu
+Zy4iKSk7Cj4gKyDCoCDCoCDCoCDCoCDCoCDCoCDCoCBzdGF0dXNfcHJpbnRmX2xuKHMsIGMsIF8o
+IlRvIGdldCBiYWNrIHRvIHRoZSBvcmlnaW5hbCBicmFuY2ggcnVuIFwiZ2l0IGJpc2VjdCByZXNl
+dFwiIikpOwo+ICsgwqAgwqAgwqAgwqAgwqAgwqAgwqAgd3Rfc3RhdHVzX3ByaW50X3RyYWlsZXIo
+cyk7Cj4gKyDCoCDCoCDCoCB9Cj4gKwo+ICsgwqAgwqAgwqAgaWYodW5tZXJnZWRfc3RhdGUpIHsK
+PiArIMKgIMKgIMKgIMKgIMKgIMKgIMKgIGlmIChjb25mbGljdCkKPiArIMKgIMKgIMKgIMKgIMKg
+IMKgIMKgIMKgIMKgIMKgIMKgIHN0YXR1c19wcmludGZfbG4ocywgYywgXygiWW91IGhhdmUgdW5t
+ZXJnZWQgcGF0aHM6IGZpeCBjb25mbGljdHMgYW5kIHRoZW4gY29tbWl0IHRoZSByZXN1bHQuIikp
+Owo+ICsgwqAgwqAgwqAgwqAgwqAgwqAgwqAgZWxzZQo+ICsgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
+wqAgwqAgwqAgwqAgc3RhdHVzX3ByaW50Zl9sbihzLCBjLCBfKCJZb3UgYXJlIHN0aWxsIG1lcmdp
+bmcsIHJ1biBcImdpdCBjb21taXRcIiB0byBjb25jbHVkZSBtZXJnZS4iKSk7Cj4gKyDCoCDCoCDC
+oCDCoCDCoCDCoCDCoCB3dF9zdGF0dXNfcHJpbnRfdHJhaWxlcihzKTsKPiArIMKgIMKgIMKgIH0K
+Ck5pY2UuIEFsdGhvdWdoIGdpdC1zdGF0dXMgaXMgc29tZXRpbWVzIHRvbyBoZWF2eSBJIGF2b2lk
+IGl0LiBCdXQgSQpsaWtlIHRoaXMuIEkgZG9uJ3Qga25vdywgaXQgbWlnaHQgaGVscCBpZiB0aGlz
+IGluZm8gY291bGQgYmUgcHJpbnRlZAphbG9uZSwgbWF5YmUgd2l0aCBhbiBvcHRpb24sIHdpdGhv
+dXQgdGhlIGFjdHVhbCBzdGF0dXMgc3R1ZmYgKGNoYW5nZWQsCmNhY2hlZCwgb3RoZXJzLi4uKS4K
+Cj4gKyDCoCDCoCDCoCBpZihyZWJhc2Vfc3RhdGUgfHwgcmViYXNlX2ludGVyYWN0aXZlX3N0YXRl
+KSB7Cj4gKyDCoCDCoCDCoCDCoCDCoCDCoCDCoCBpZiAoY29uZmxpY3QpIHsKPiArIMKgIMKgIMKg
+IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIHN0YXR1c19wcmludGZfbG4ocywgYywgXygiWW91IGFy
+ZSBjdXJyZW50bHkgcmViYXNpbmc6IGZpeCBjb25mbGljdHMgYW5kIHRoZW4gcnVuIFwiZ2l0IHJl
+YmFzZSAtLSBjb250aW51ZVwiLiIpKTsKPiArIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
+IMKgIHN0YXR1c19wcmludGZfbG4ocywgYywgXygiSWYgeW91IHdvdWxkIHByZWZlciB0byBza2lw
+IHRoaXMgcGF0Y2gsIGluc3RlYWQgcnVuIFwiZ2l0IHJlYmFzZSAtLXNraXBcIi4iKSk7Cj4gKyDC
+oCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCBzdGF0dXNfcHJpbnRmX2xuKHMsIGMsIF8o
+IlRvIGNoZWNrIG91dCDCoHRoZSBvcmlnaW5hbCBicmFuY2ggYW5kIHN0b3AgcmViYXNpbmcgcnVu
+IFwiZ2l0IHJlYmFzZSAtLWFib3J0XCIuIikpOwo+ICsgwqAgwqAgwqAgwqAgwqAgwqAgwqAgfQo+
+ICsgwqAgwqAgwqAgwqAgwqAgwqAgwqAgZWxzZSB7Cj4gKyDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
+oCDCoCDCoCDCoCBpZiAocmViYXNlX3N0YXRlKQo+ICsgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
+wqAgwqAgwqAgwqAgwqAgwqAgwqAgc3RhdHVzX3ByaW50Zl9sbihzLCBjLCBfKCJZb3UgYXJlIGN1
+cnJlbnRseSByZWJhc2luZzogYWxsIGNvbmZsaWN0cyBmaXhlZDsgcnVuIFwiZ2l0IHJlYmFzZSAt
+LWNvbnRpbnVlXCIuIikpOwo+ICsgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgZWxz
+ZSB7Cj4gKyDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCBzdGF0
+dXNfcHJpbnRmX2xuKHMsIGMsIF8oIllvdSBhcmUgY3VycmVudGx5IGVkaXRpbmcgaW4gYSByZWJh
+c2UgcHJvZ3Jlc3MuIikpOwo+ICsgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
+wqAgwqAgwqAgc3RhdHVzX3ByaW50Zl9sbihzLCBjLCBfKCJZb3UgY2FuIGFtZW5kIHRoZSBjb21t
+aXQgd2l0aCIpKTsKPiArIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
+IMKgIHN0YXR1c19wcmludGZfbG4ocywgYywgXygiIMKgIMKgIMKgZ2l0IGNvbW1pdCAtLWFtZW5k
+IikpOwo+ICsgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgc3Rh
+dHVzX3ByaW50Zl9sbihzLCBjLCBfKCJPbmNlIHlvdSBhcmUgc2F0aXNmaWVkIHdpdGggeW91ciBj
+aGFuZ2VzLCBydW4iKSk7Cj4gKyDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
+oCDCoCDCoCBzdGF0dXNfcHJpbnRmX2xuKHMsIGMsIF8oIiDCoCDCoCDCoGdpdCByZWJhc2UgLS1j
+b250aW51ZSIpKTsKPiArIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIH0KPiArIMKg
+IMKgIMKgIMKgIMKgIMKgIMKgIH0KPiArIMKgIMKgIMKgIMKgIMKgIMKgIMKgIHd0X3N0YXR1c19w
+cmludF90cmFpbGVyKHMpOwo+ICsgwqAgwqAgwqAgfQoKU2hvdWxkIHRoaXMgdmVyYm9zZSBhZHZp
+Y2UgYmUgY29udHJvbGxlZCBieSBhZHZpY2UuKiBjb25maWcga2V5cz8KRXhwZXJpZW5jZWQgdXNl
+cnMga25vdyBieSBoZWFydCB3aGF0IHRvIGRvIGFuZCB3aWxsIGFwcHJlY2lhdGUgc2NyZWVuCmVz
+dGF0ZSBiZWluZyB1c2VkIG1vcmUgaGVscGZ1bCAodG8gdGhlbSkgaW5mbwotLSAKRHV5Cg==
