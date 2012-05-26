@@ -1,107 +1,120 @@
-From: NGUY Thomas <thomasxnguy@gmail.com>
-Subject: Re: [PATCHv2 1/2] wt-status: better advices for git status
-Date: Sat, 26 May 2012 19:17:02 +0200
-Message-ID: <4FC1100E.2080909@gmail.com>
-References: <1337852264-32619-1-git-send-email-Lucien.Kong@ensimag.imag.fr> <1338035905-24166-1-git-send-email-Lucien.Kong@ensimag.imag.fr> <CACsJy8Dx=HWKJ8H3LQhVAAJGtZKmMe0d5e3Q7eHER6Xo4yTAZw@mail.gmail.com>
+From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+Subject: [PATCH] t7403-*.sh: Avoid use of the nonportable '==' operator
+Date: Sat, 26 May 2012 17:51:23 +0100
+Message-ID: <4FC10A0B.5080407@ramsay1.demon.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Kong Lucien <Lucien.Kong@ensimag.imag.fr>, git@vger.kernel.org,
-	Matthieu.Moy@grenoble-inp.fr,
-	Duperray Valentin <Valentin.Duperray@ensimag.imag.fr>,
-	Jonas Franck <Franck.Jonas@ensimag.imag.fr>,
-	Nguy Thomas <Thomas.Nguy@ensimag.imag.fr>,
-	Nguyen Huynh Khoi Nguyen Lucien 
-	<Huynh-Khoi-Nguyen.Nguyen@ensimag.imag.fr>
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Sat May 26 19:17:27 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	GIT Mailing-list <git@vger.kernel.org>
+To: jon.seymour@gmail.com
+X-From: git-owner@vger.kernel.org Sat May 26 19:53:53 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SYKcI-0000xD-5i
-	for gcvg-git-2@plane.gmane.org; Sat, 26 May 2012 19:17:26 +0200
+	id 1SYLBY-00017i-U4
+	for gcvg-git-2@plane.gmane.org; Sat, 26 May 2012 19:53:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754050Ab2EZRRO convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 26 May 2012 13:17:14 -0400
-Received: from mail-wg0-f44.google.com ([74.125.82.44]:38185 "EHLO
-	mail-wg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750906Ab2EZRRK (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 26 May 2012 13:17:10 -0400
-Received: by wgbdr13 with SMTP id dr13so1765647wgb.1
-        for <git@vger.kernel.org>; Sat, 26 May 2012 10:17:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=BIENx8/5r+BEG+rRnGwmfZNpFNljlvsNGXrsa/k2e0Q=;
-        b=gvojFvKEfRdUuJebtnLR7Omd3SbDJ/ijdRTnXz3qnabcCRXtvBUmDkz0/eQvMShL3a
-         8VfA6whnALoMPfkxvLM74PsT8bw2Cu5w0sCYw7hhpPJ5ZdJpfxb3rAvU6XN0Ltv4bs/S
-         skgpyKHmm+Y7evlIHlQNqkUaJGM5qbE0GpUnfh55mxOTuBjgLMT2YPGoqKnYP7RaRPz4
-         pjRFFqxKMeNTiykcvChsdhB9E4bJOeVH1sp98U0mbUEhtoBo3CJ63eZ5TQs5e5dPaRj4
-         EzpiLvmfOStOY3SX3DVJH+eIoi2/UMU4qqJ1xm+WKNzlsjRR9vBOi88rkWi76X/AkXzt
-         +Y1A==
-Received: by 10.180.99.70 with SMTP id eo6mr4495963wib.17.1338052629182;
-        Sat, 26 May 2012 10:17:09 -0700 (PDT)
-Received: from [192.168.1.73] (183.24.91.79.rev.sfr.net. [79.91.24.183])
-        by mx.google.com with ESMTPS id hv7sm5765605wib.0.2012.05.26.10.17.07
-        (version=SSLv3 cipher=OTHER);
-        Sat, 26 May 2012 10:17:08 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.1; fr; rv:1.9.2.28) Gecko/20120306 Thunderbird/3.1.20
-In-Reply-To: <CACsJy8Dx=HWKJ8H3LQhVAAJGtZKmMe0d5e3Q7eHER6Xo4yTAZw@mail.gmail.com>
+	id S1754039Ab2EZRxs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 26 May 2012 13:53:48 -0400
+Received: from lon1-post-1.mail.demon.net ([195.173.77.148]:54474 "EHLO
+	lon1-post-1.mail.demon.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751353Ab2EZRxr (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 26 May 2012 13:53:47 -0400
+Received: from ramsay1.demon.co.uk ([193.237.126.196])
+	by lon1-post-1.mail.demon.net with esmtp (Exim 4.69)
+	id 1SYLBR-0007Fn-Xm; Sat, 26 May 2012 17:53:46 +0000
+User-Agent: Thunderbird 1.5.0.2 (Windows/20060308)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198566>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198567>
 
-Le 26/05/2012 15:01, Nguyen Thai Ngoc Duy a =C3=A9crit :
 
->> +       if(rebase_state || rebase_interactive_state) {
->> +               if (conflict) {
->> +                       status_printf_ln(s, c, _("You are currently =
-rebasing: fix conflicts and then run \"git rebase -- continue\"."));
->> +                       status_printf_ln(s, c, _("If you would prefe=
-r to skip this patch, instead run \"git rebase --skip\"."));
->> +                       status_printf_ln(s, c, _("To check out  the =
-original branch and stop rebasing run \"git rebase --abort\"."));
->> +               }
->> +               else {
->> +                       if (rebase_state)
->> +                               status_printf_ln(s, c, _("You are cu=
-rrently rebasing: all conflicts fixed; run \"git rebase --continue\".")=
-);
->> +                       else {
->> +                               status_printf_ln(s, c, _("You are cu=
-rrently editing in a rebase progress."));
->> +                               status_printf_ln(s, c, _("You can am=
-end the commit with"));
->> +                               status_printf_ln(s, c, _("      git =
-commit --amend"));
->> +                               status_printf_ln(s, c, _("Once you a=
-re satisfied with your changes, run"));
->> +                               status_printf_ln(s, c, _("      git =
-rebase --continue"));
->> +                       }
->> +               }
->> +               wt_status_print_trailer(s);
->> +       }
-> Should this verbose advice be controlled by advice.* config keys?
-> Experienced users know by heart what to do and will appreciate screen
-> estate being used more helpful (to them) info
-Indeed, the advices are a bit long and could be restricted to the=20
-information about the
-current state but the idea is also to give the user a way to know what=20
-to do next.
-=46or long messages, such as the rebase case, we could actually use the=
-=20
-advice_status_hints
-variable to display what to do next or not.
+Some shells, including dash, do not support using the '==' string
+equality operator. This results in the failure of tests 7-12 with
+'test' complaining of an "unexpected operator".
 
-Kong Lucien <Lucien.Kong@ensimag.imag.fr>
-Nguy Thomas <Thomas.Nguy@ensimag.imag.fr>
-Duperray Valentin <Valentin.Duperray@ensimag.imag.fr>
-Jonas Franck <Franck.Jonas@ensimag.imag.fr>
-Nguyen Huynh Khoi Nguyen <Huynh-Khoi-Nguyen.Nguyen@ensimag.imag.fr>
+In order to suppress the errors, we replace the '==' operator with
+'=', which must be supported by any POSIX shell.
+
+Signed-off-by: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+---
+
+Hi Jon,
+
+If you need to re-roll your patches from the 'js/submodule-relative'
+branch (commits 3f4542e and efa4c90), could you please squash this
+fix into them.
+
+Thanks!
+
+ATB,
+Ramsay Jones
+
+ t/t7403-submodule-sync.sh |   12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
+
+diff --git a/t/t7403-submodule-sync.sh b/t/t7403-submodule-sync.sh
+index 583fe21..3d85739 100755
+--- a/t/t7403-submodule-sync.sh
++++ b/t/t7403-submodule-sync.sh
+@@ -93,7 +93,7 @@ test_expect_success '"git submodule sync" handles origin URL of the form foo' '
+ 	 git remote set-url origin foo
+ 	 git submodule sync &&
+ 	(cd submodule &&
+-	 test "$(git config remote.origin.url)" == "../submodule"
++	 test "$(git config remote.origin.url)" = "../submodule"
+ 	)
+ 	)
+ '
+@@ -103,7 +103,7 @@ test_expect_success '"git submodule sync" handles origin URL of the form foo/bar
+ 	 git remote set-url origin foo/bar
+ 	 git submodule sync &&
+ 	(cd submodule &&
+-	 test "$(git config remote.origin.url)" == "../foo/submodule"
++	 test "$(git config remote.origin.url)" = "../foo/submodule"
+ 	)
+ 	)
+ '
+@@ -113,7 +113,7 @@ test_expect_success '"git submodule sync" handles origin URL of the form ./foo'
+ 	 git remote set-url origin ./foo
+ 	 git submodule sync &&
+ 	(cd submodule &&
+-	 test "$(git config remote.origin.url)" == "../submodule"
++	 test "$(git config remote.origin.url)" = "../submodule"
+ 	)
+ 	)
+ '
+@@ -123,7 +123,7 @@ test_expect_success '"git submodule sync" handles origin URL of the form ./foo/b
+ 	 git remote set-url origin ./foo/bar
+ 	 git submodule sync &&
+ 	(cd submodule &&
+-	 test "$(git config remote.origin.url)" == "../foo/submodule"
++	 test "$(git config remote.origin.url)" = "../foo/submodule"
+ 	)
+ 	)
+ '
+@@ -133,7 +133,7 @@ test_expect_success '"git submodule sync" handles origin URL of the form ../foo'
+ 	 git remote set-url origin ../foo
+ 	 git submodule sync &&
+ 	(cd submodule &&
+-	 test "$(git config remote.origin.url)" == "../../submodule"
++	 test "$(git config remote.origin.url)" = "../../submodule"
+ 	)
+ 	)
+ '
+@@ -143,7 +143,7 @@ test_expect_success '"git submodule sync" handles origin URL of the form ../foo/
+ 	 git remote set-url origin ../foo/bar
+ 	 git submodule sync &&
+ 	(cd submodule &&
+-	 test "$(git config remote.origin.url)" == "../../foo/submodule"
++	 test "$(git config remote.origin.url)" = "../../foo/submodule"
+ 	)
+ 	)
+ '
+-- 
+1.7.10
