@@ -1,78 +1,134 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [GSoC] Designing a faster index format - Progress report
-Date: Sat, 26 May 2012 11:09:07 +0700
-Message-ID: <CACsJy8BRWmqz+2_A5_=1S9_sxOQa9GXnPQ7J1Y6id0_vh2-=+Q@mail.gmail.com>
-References: <20120523122135.GA58204@tgummerer.unibz.it> <CACsJy8As2SQwEi2vHAQA+OeH+TjoCzzcknFbQ2tGXaWX7zsHVA@mail.gmail.com>
- <20120525201547.GB86874@tgummerer>
+From: Jeff King <peff@peff.net>
+Subject: [PATCH 4/3] clone: send diagnostic messages to stderr
+Date: Sat, 26 May 2012 00:11:35 -0400
+Message-ID: <20120526041135.GA28957@sigill.intra.peff.net>
+References: <20120526034226.GA14287@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, trast@student.ethz.ch, gitster@pobox.com,
-	mhagger@alum.mit.edu
-To: Thomas Gummerer <t.gummerer@gmail.com>
-X-From: git-owner@vger.kernel.org Sat May 26 06:10:27 2012
+Content-Type: text/plain; charset=utf-8
+Cc: Phil Haack <phil@github.com>,
+	Emeric Fermas <emeric.fermas@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat May 26 06:11:47 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SY8Kg-0002X9-Vo
-	for gcvg-git-2@plane.gmane.org; Sat, 26 May 2012 06:10:27 +0200
+	id 1SY8Lu-0005pz-Dk
+	for gcvg-git-2@plane.gmane.org; Sat, 26 May 2012 06:11:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750834Ab2EZEJj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 26 May 2012 00:09:39 -0400
-Received: from mail-lpp01m010-f46.google.com ([209.85.215.46]:37276 "EHLO
-	mail-lpp01m010-f46.google.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750778Ab2EZEJj (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 26 May 2012 00:09:39 -0400
-Received: by lahd3 with SMTP id d3so1056742lah.19
-        for <git@vger.kernel.org>; Fri, 25 May 2012 21:09:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=M20IeuGzzlxptMLpsjnG55Bi93CV3rCOhMGQJv19A+8=;
-        b=kI8Pt4mLs/yFMGmkCZs+m2sRACh0zBBYLwL2P0ATgw17M65l3J5OCLY3amBHUGOjGa
-         ijRUll1BtGIAGyOmnlqayGT5fKnEeQWsQSeUpXCodeRHUfvknJZBs+Rr8L7S2jnNyR3K
-         qcFh0JmGotOWaIr/glINznyhG7VhJdsH4nTN3ya9u8NsQKlvAPaJsyiMrSD2NWZxPlyZ
-         OB7RFTOS8gbVW6kbHnC255XyLQL1NOR0KkVptEOB4c0cjr9NgJ/d1SiUiJdlMBImOIk0
-         sK/qA5nOdckxNV0Tub/Tba4lNPDNrV7EUL3YZb5LunBO/W+HXPcckT18JkQXBS+KlCUc
-         zpuw==
-Received: by 10.152.105.235 with SMTP id gp11mr1102806lab.44.1338005377412;
- Fri, 25 May 2012 21:09:37 -0700 (PDT)
-Received: by 10.112.150.100 with HTTP; Fri, 25 May 2012 21:09:07 -0700 (PDT)
-In-Reply-To: <20120525201547.GB86874@tgummerer>
+	id S1750975Ab2EZELi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 26 May 2012 00:11:38 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:56362
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750868Ab2EZELh (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 26 May 2012 00:11:37 -0400
+Received: (qmail 16583 invoked by uid 107); 26 May 2012 04:12:05 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Sat, 26 May 2012 00:12:05 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 26 May 2012 00:11:35 -0400
+Content-Disposition: inline
+In-Reply-To: <20120526034226.GA14287@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198539>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198540>
 
-On Sat, May 26, 2012 at 3:15 AM, Thomas Gummerer <t.gummerer@gmail.com> wrote:
-> On 05/25, Nguyen Thai Ngoc Duy wrote:
->> On Wed, May 23, 2012 at 7:21 PM, Thomas Gummerer <t.gummerer@gmail.com> wrote:
->> > == Outlook for the next week ==
->> >
->> > - Start working on actual git code
->> > - Read the header of the new format
->>
->> I know it's out of scope, but it would be great if you could make
->> ls-files read the new index format directly. Having something that
->> actual works will ensure we don't overlook anything in the new format.
->> We can then learn from ls-files lesson (especially how to handle both
->> new/old format) and come up with api/in-core structures for the rest
->> of git later.
->
-> Thanks for your suggestion. How did you think this should be done?
-> Writing a extra function in ls-files, just for outputting? I don't
-> think it is necessary to write a extra function, since the result
-> from the read_index_from function in read-cache is used for that
-> anyway. Or did you have something different in mind, that I'm missing
-> here?
+Putting messages like "Cloning into.." and "done" on stdout
+is un-Unix and uselessly clutters the stdout channel. Send
+them to stderr.
 
-No, read_index_from would go through the normal tree->list conversion.
-What I'd like to see is what it looks like when a command accesses
-index v5 directly in tree form, taking all advantages that tree-form
-provides, and how we should deal with old index versions while still
-supporting index v5 (without losing tree advantages)
+We have to tweak two tests to accommodate this:
+
+  1. t5601 checks for doubled output due to forking, and
+     doesn't actually care where the output goes; adjust it
+     to check stderr.
+
+  2. t5702 is trying to test whether progress output was
+     sent to stderr, but naively does so by checking
+     whether stderr produced any output. Instead, have it
+     look for "%", a token found in progress output but not
+     elsewhere (and which lets us avoid hard-coding the
+     progress text in the test).
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+This one isn't really related to the other patches in the series, but
+while we're on the subject of extremely minor git-clone annoyances, I
+thought I'd throw it in as a bonus round.
+
+Arguably the test in t5601 should just go away entirely. stderr tends to
+be line-buffered anyway, so the thing it is testing for wouldn't happen.
+Not to mention that according to 2c3766f, which introduced it, the
+problem was due to start_async() not flushing output before forking.
+But we long ago switched start_async to use pthreads, so the bug it is
+testing for wouldn't even be detectable on any modern platform.
+
+ builtin/clone.c          | 6 +++---
+ t/t5601-clone.sh         | 2 +-
+ t/t5702-clone-options.sh | 4 ++--
+ 3 files changed, 6 insertions(+), 6 deletions(-)
+
+diff --git a/builtin/clone.c b/builtin/clone.c
+index d004abb..08470ed 100644
+--- a/builtin/clone.c
++++ b/builtin/clone.c
+@@ -371,7 +371,7 @@ static void clone_local(const char *src_repo, const char *dest_repo)
+ 	}
+ 
+ 	if (0 <= option_verbosity)
+-		printf(_("done.\n"));
++		fprintf(stderr, _("done.\n"));
+ }
+ 
+ static const char *junk_work_tree;
+@@ -751,9 +751,9 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+ 
+ 	if (0 <= option_verbosity) {
+ 		if (option_bare)
+-			printf(_("Cloning into bare repository '%s'...\n"), dir);
++			fprintf(stderr, _("Cloning into bare repository '%s'...\n"), dir);
+ 		else
+-			printf(_("Cloning into '%s'...\n"), dir);
++			fprintf(stderr, _("Cloning into '%s'...\n"), dir);
+ 	}
+ 	init_db(option_template, INIT_DB_QUIET);
+ 	write_config(&option_config);
+diff --git a/t/t5601-clone.sh b/t/t5601-clone.sh
+index 67869b4..aa9f991 100755
+--- a/t/t5601-clone.sh
++++ b/t/t5601-clone.sh
+@@ -36,7 +36,7 @@ test_expect_success 'clone with excess parameters (2)' '
+ 
+ test_expect_success C_LOCALE_OUTPUT 'output from clone' '
+ 	rm -fr dst &&
+-	git clone -n "file://$(pwd)/src" dst >output &&
++	git clone -n "file://$(pwd)/src" dst >output 2>&1 &&
+ 	test $(grep Clon output | wc -l) = 1
+ '
+ 
+diff --git a/t/t5702-clone-options.sh b/t/t5702-clone-options.sh
+index 02cb024..67e170e 100755
+--- a/t/t5702-clone-options.sh
++++ b/t/t5702-clone-options.sh
+@@ -22,14 +22,14 @@ test_expect_success 'clone -o' '
+ test_expect_success 'redirected clone' '
+ 
+ 	git clone "file://$(pwd)/parent" clone-redirected >out 2>err &&
+-	test ! -s err
++	! grep % err
+ 
+ '
+ test_expect_success 'redirected clone -v' '
+ 
+ 	git clone --progress "file://$(pwd)/parent" clone-redirected-progress \
+ 		>out 2>err &&
+-	test -s err
++	grep % err
+ 
+ '
+ 
 -- 
-Duy
+1.7.10.1.21.g62fda49.dirty
