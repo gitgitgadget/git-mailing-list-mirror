@@ -1,159 +1,125 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCH] Teach ignore machinery about pattern "/"
-Date: Sat, 26 May 2012 11:30:36 +0700
-Message-ID: <CACsJy8BjUQsCVVdzZtJxA9Qu2G0izZa8dvP1EKsQQAHWXZbHdg@mail.gmail.com>
-References: <1337950056-26491-1-git-send-email-pclouds@gmail.com> <7vlikgtbcx.fsf@alter.siamese.dyndns.org>
+From: Andy Kitchen <kitchen.andy@gmail.com>
+Subject: Re: git rebase -f --autosquash
+Date: Sat, 26 May 2012 17:30:21 +1000
+Message-ID: <33DF11B90FEF4CB6B4103BE0AAF9B256@gmail.com>
+References: <D7BE2BACB49749DB9FC37D4ACCCD008B@gmail.com>
+ <1336820755.3002.11.camel@centaur.lab.cmartin.tk>
+ <7vipfyiuv6.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat May 26 06:31:48 2012
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	=?utf-8?Q?Carlos_Mart=C3=ADn_Nieto?= <cmn@elego.de>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat May 26 09:30:34 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SY8fK-0003uq-9M
-	for gcvg-git-2@plane.gmane.org; Sat, 26 May 2012 06:31:46 +0200
+	id 1SYBSL-00026c-9R
+	for gcvg-git-2@plane.gmane.org; Sat, 26 May 2012 09:30:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750925Ab2EZEbL convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 26 May 2012 00:31:11 -0400
-Received: from mail-lb0-f174.google.com ([209.85.217.174]:40408 "EHLO
-	mail-lb0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750768Ab2EZEbJ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 26 May 2012 00:31:09 -0400
-Received: by lbbgm6 with SMTP id gm6so1053036lbb.19
-        for <git@vger.kernel.org>; Fri, 25 May 2012 21:31:08 -0700 (PDT)
+	id S1751327Ab2EZHa2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 26 May 2012 03:30:28 -0400
+Received: from mail-pz0-f46.google.com ([209.85.210.46]:37299 "EHLO
+	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750886Ab2EZHa1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 26 May 2012 03:30:27 -0400
+Received: by dady13 with SMTP id y13so2131940dad.19
+        for <git@vger.kernel.org>; Sat, 26 May 2012 00:30:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=2f5MMG5BE+gZIbtZ2LEBYpJAxnkiZ858laJexnZ9RY0=;
-        b=MGmMg+pt1y+IUlJTmIeNpFZ+tO3fYq+uwiUsnP4YhM2TOSGQp3NA0r4RvpVpNu2UvU
-         1Ij797sMVwNfETWNUk1f7yzy/29M84hmnIT4UGfO2iVw+voI3o8tkB80d+OAt6Upo4sh
-         q2+AHrNIg8vYns+eF+r16dxlpG156g2jTJmwq4vjSETxzsNZL06k+ImgtsEt5QobaP/5
-         XA++dmo2UaVKjDb442Th9LVNvSjCRWqH72vIY/9oNCDVmRphB+FDDTug3XqN0AN7ehi7
-         NIcU7sq8tIpoRXX6gcbhvSQ8KK8t4T4oBkxTbQQDy0K+kGhWnCcBUe3BllqPZ5TO/MOX
-         RULw==
-Received: by 10.112.98.40 with SMTP id ef8mr556367lbb.72.1338006668109; Fri,
- 25 May 2012 21:31:08 -0700 (PDT)
-Received: by 10.112.150.100 with HTTP; Fri, 25 May 2012 21:30:36 -0700 (PDT)
-In-Reply-To: <7vlikgtbcx.fsf@alter.siamese.dyndns.org>
+        h=date:from:to:cc:message-id:in-reply-to:references:subject:x-mailer
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition;
+        bh=6XiA7fm16A7g27G0RmYV7BHG51/k8F3vn2WKr5OJkBI=;
+        b=1DerjhAad2g/1O3MdfCoBNFC+18bvb4A3g6xz+un10DuvvN7biUd/CHMRDGlqn9/VO
+         RLT1nL6JWuhIVjCeFiU1ZKOU9EKGSyag8NPOlEm6YX8QFCqrIRzD0m4soqlA4jsDSRqL
+         kn5/shoxg5JrKEh9dG3asXFgJkapV/GPO255/67zKYSpB0i1d+kPx/bgLTmNL/NCesLl
+         +uLk/gF5vT2KK/lV7ARPalnO9y2BZQbMPs/cs01ZvlzkyIyDeLzHUgZBQDdUwADJPY98
+         0Afdceq9n2mo6dmYmd6gVvUU1tsHayvOaHcGL+1/DjQ63TnGC/cn9tVHoNeM58b9zB6v
+         UhVQ==
+Received: by 10.68.197.166 with SMTP id iv6mr5369330pbc.40.1338017426295;
+        Sat, 26 May 2012 00:30:26 -0700 (PDT)
+Received: from iceman.local (220-244-228-34.static.tpgi.com.au. [220.244.228.34])
+        by mx.google.com with ESMTPS id qt8sm11714248pbb.32.2012.05.26.00.30.23
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sat, 26 May 2012 00:30:25 -0700 (PDT)
+In-Reply-To: <7vipfyiuv6.fsf@alter.siamese.dyndns.org>
+X-Mailer: sparrow 1.5 (build 1043.1)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198541>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198542>
 
-On Sat, May 26, 2012 at 12:32 AM, Junio C Hamano <gitster@pobox.com> wr=
-ote:
-> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy =C2=A0<pclouds@gmail.com> w=
-rites:
->
->> Pattern "/" is ambiguous because the slash can mean "anchor the
->> pattern to this location" (e.g. /path), but it can also mean
->> "match directories only" (e.g. path/). Currently git interprets it a=
-s
->> the latter except that 'path' is an empty string, which makes this
->> pattern totally useless.
->
-> Did the old version interprete it as the former?
+On Tuesday, 15 May 2012 at 2:35 AM, Junio C Hamano wrote:
+> Given "EDITOR=: git commit args..." and "EDITOR=: git merge args..." are
+> equivalent to giving "--no-edit" option to these commands, I would imagine
+> "git rebase opts... --no-editor args..." would not be such a stretch.
 
-That calls for bit of testing, which I'll do soon.
+I agree. However, I think it would be more intuitive to make --autosquash
+work with -f or even just on its own in non-interactive mode.
+It definitely makes sense practically and semantically to autosquash
+non-interactively. Otherwise one needs to activate interactive mode
+and effectively disable it in the same command which is a bit esoteric.
 
-> How does the above
-> observation relate to the end-user help request in the other thread?
+I am of the opinion that autosquashing is such a useful feature,
+it's even worth having a separate command:
 
-I assume you meant the recent sparse-checkout thread. "/" happens to
-work due to (probably) a mistake in sparse-checkout v1.7.2 even though
-"/" behavior is undefined. This sets a specific behavior to "/" and
-makes 1.7.10 treat "/" like 1.7.2.
+$ git fix
 
-> When talking about an ambiguous expression X that can be in multiple =
-ways
-> and each interpretation gives surprisingly different result, if there=
- are
-> ways A, B and C to unambiguously spell each and every of its possible=
- and
-> useful interpretations, and if one of the interpretations C is to ign=
-ore
-> the expression altogether, it is preferrable to either
->
-> =C2=A0(1) warn if it does not trigger anything useful to write a no-o=
-p; or
-> =C2=A0(2) just ignore it if a no-op is a meaningful behaviour
->
-> when you see X.
+For generally rebuilding commits based on directives
+placed in commit messages. Especially because it integrates
+nicely with `git commit --fixup' as a kind of super amend. While
+this can be easily added with a bit of customisation, I think
+that it is generally applicable and useful enough to warrant being
+a default part of git.
 
-except that we do the ignoring in (2) but I don't see this as a
-meaningful behavior.
+In summary, I propose:
 
->> On the other hand, it's intuitive to read '/' as "match root
->> directory", or equivalent to "/*". (The other way to see it is "matc=
-h
->> all directories", which leads to the same result).
->
-> I am a bit confused about the above, especially "The other way" part.
->
-> Does this alternative interpretation view "/" as "/foo" whose "foo"
-> happens to be an empty string, or does it view "/" as "foo/" whose "f=
-oo"
-> happens to be an empty string?
+1a)
 
-The latter. Though there may be two way of interpreting the empty
-string as pattern. The computer would happily say "match nothing", but
-my human brain tends to thinkg "match everything" as "match nothing"
-does not really makes sense as a pattern.
+$ git rebase -f --autosquash <base>
+is made to be effectively equivalent to:
+$ EDITOR=: git rebase -i --autosquash <base>
 
-> The former would mean "ignore foo, and don't bother descending into f=
-oo if
-> it is a directory, as everything in it is ignored", while the latter =
-would
-> mean "anywhere in this directory and its subdirectories, if we see fo=
-o
-> that is a directory, don't bother descending into it as everything in=
- it
-> is ignored."
->
-> What I am trying to get at is why you are making '/' the same as '/*'=
- as
-> opposed to '*/', '/*/', or even a plain '*'.
+1b)
 
-Because I see "/" as a special case of "/foo". It makes more sense
-than "/" as a special case of "foo/", at least not without more
-thoughts on it.
+$ git rebase --autosquash <base>
+(i.e. -f is implicit) is made to be effectively equivalent to:
+$ EDITOR=: git rebase -i --autosquash <base>
 
->> One may wonder why bother an "ignore all" pattern. The pattern is
->> useful when you want to keep just a small portion of the working
->> directory. But that's still a rare case.
->>
->> A more popular case would be sparse checkout, where ignore rules are
->> used to _include_. The thus now "include all" pattern is used to say
->> "make a sparse checkout that includes everything except this and
->> this".
->
-> If the "sparse checkout" hack writes "/" for whatever reason, it shou=
-ld be
-> corrected to write "*" (or perhaps "/*") instead. =C2=A0I do not see =
-it as a
-> valid factor to affect when we decide what should be done for a possi=
-bly
-> ambiguous "/" entry in the exclude machinery.
 
-That's one way of seeing it. What I propose in the patch is "this is
-useless no-op pattern (*), let's assign some meaning to it, what makes
-most sense"
 
-(*) still needs verification though.
+3) A new command is created, for example one of:
 
->
->> Recognize this special pattern and turn it the working equivalence
->> pattern "/*"
->
-> Regardless of the answer to the "is it *, /*, */ or /*/" question abo=
-ve,
-> I do not think silent conversion is a right solution for the ambiguit=
-y.
---=20
-Duy
+$ git fix
+$ git squash
+$ git autosquash
+
+For preening commits before pushing them upstream.
+
+The default base for these operations would be HEAD@{upstream}
+
+A config option could also be added to warn the user before pushing
+commits with messages of the form /^fixup!/ etc.
+
+It could also be less ad-hoc in its operation than --autosquash
+currently is. For example, `git commit --fixup' could note the intended
+target for the fix allowing `git fix' to operate correctly even when two
+commits share the same message.
+
+
+
+
+Of course as with any polite feature request, I am happy to write the
+appropriate code, however not being familiar with the git code-base,
+I would require some guidance.
+
+
+Thank you for your time, suggestions welcomed
+
+AK
