@@ -1,150 +1,243 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCH 1/2] Add possibility to store configuration in
- ~/.config/git/config file
-Date: Sat, 26 May 2012 17:15:13 +0700
-Message-ID: <CACsJy8BD_=6PtQeuDGEt2mee9tMWZB1hL2obu2f2KUmAENTEzA@mail.gmail.com>
-References: <1337975239-17169-1-git-send-email-nguyenhu@ensibm.imag.fr>
- <20120525203056.GC4364@sigill.intra.peff.net> <7vd35sq7fx.fsf@alter.siamese.dyndns.org>
- <20120525214406.GA10064@sigill.intra.peff.net>
+From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [PATCH] pack-objects: use streaming interface for reading large loose blobs
+Date: Sat, 26 May 2012 17:28:01 +0700
+Message-ID: <1338028081-22638-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Junio C Hamano <gitster@pobox.com>,
-	NGUYEN Huynh Khoi Nguyen <nguyenhu@ensimag.imag.fr>,
-	git@vger.kernel.org, Matthieu.Moy@grenoble-inp.fr,
-	NGUYEN Huynh Khoi Nguyen <nguyenhu@ensibm.imag.fr>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat May 26 12:16:28 2012
+	Nicolas Pitre <nico@fluxnic.net>,
+	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat May 26 12:32:21 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SYE2s-0006jq-Rn
-	for gcvg-git-2@plane.gmane.org; Sat, 26 May 2012 12:16:27 +0200
+	id 1SYEIG-0003Vd-9p
+	for gcvg-git-2@plane.gmane.org; Sat, 26 May 2012 12:32:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752290Ab2EZKPq convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 26 May 2012 06:15:46 -0400
-Received: from mail-wg0-f44.google.com ([74.125.82.44]:33988 "EHLO
-	mail-wg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752070Ab2EZKPp convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 26 May 2012 06:15:45 -0400
-Received: by wgbdr13 with SMTP id dr13so1567059wgb.1
-        for <git@vger.kernel.org>; Sat, 26 May 2012 03:15:44 -0700 (PDT)
+	id S1752469Ab2EZKcP convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 26 May 2012 06:32:15 -0400
+Received: from mail-pz0-f46.google.com ([209.85.210.46]:46556 "EHLO
+	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752422Ab2EZKcO (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 26 May 2012 06:32:14 -0400
+Received: by dady13 with SMTP id y13so2242483dad.19
+        for <git@vger.kernel.org>; Sat, 26 May 2012 03:32:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=u0icZkzWGy2H95BbxBpNw6olrx0jBan6C4vxMRc/dIg=;
-        b=rJCQIVm0Uldq0gYVg1j93GxGgCnSzp/tIoQ4HWRpWllHtc9+7NcoMP/PguRNXoaGnf
-         gdK3x72WGUpA+d9yL297e6BSbyC2u1kQFGpHzEXpme8k6Bs8yLtq29POAiW2HgTsXHby
-         t8GxhBgI2ZF8VPCRYTgtygI6qF8lY8IdhsNLl1HZWsBZfT4ZWgOCmubrADeJBd3h6DKg
-         OlkGcVfGFEKYYs/GZXGfnRqR0iZ+yaiFRX4ZGahu1zaT7Q0pmBs1KWTdJUkvplhuSUVE
-         hcP50m/jo+nAtjcsaePwZT+gKYwFi8nxPbv61H85+d4VsCPSX7D83t2fPF5YxfpqOoxL
-         V6dQ==
-Received: by 10.216.194.196 with SMTP id m46mr254303wen.197.1338027344164;
- Sat, 26 May 2012 03:15:44 -0700 (PDT)
-Received: by 10.223.64.208 with HTTP; Sat, 26 May 2012 03:15:13 -0700 (PDT)
-In-Reply-To: <20120525214406.GA10064@sigill.intra.peff.net>
+        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
+         :content-type:content-transfer-encoding;
+        bh=+0OvD/+CKRl5ptz7IEcNfrUEli7MGXbi13dpFjugEfg=;
+        b=MT66RT9vWZc0mQTf01dHdkKiqLUZIDsylTAS8fS57BI3lhPQtHCwzemByrXFZvsyFh
+         nQtjECKZt0negN5+nSuOvJgKm772sOZZ0ZcDUoqxZFYDa5bzXrq/H4myIVIxPyaPfw2n
+         HkKDq68wwsqc4RTqlEQnXJ813L/ldwGmsq6JSyoy7V/MOkQqHjfOPirCPjkj8EGoB4vK
+         ik1CQ3IjxfXLIt4Cv0VTqRaYu7ln9RcSyf7VaSmOMHSi2zpYXhCkT3RC5I+o/Nwd7eSf
+         gSTjT0Xd8aPHKpRXVbj3nPXxIeZ/js3/QcQyWJj8hTjfGakq1MfP+9o1qLD8goIcqMov
+         JtAA==
+Received: by 10.68.236.129 with SMTP id uu1mr6340554pbc.77.1338028333625;
+        Sat, 26 May 2012 03:32:13 -0700 (PDT)
+Received: from pclouds@gmail.com ([115.74.50.33])
+        by mx.google.com with ESMTPS id ix5sm12157625pbc.18.2012.05.26.03.32.09
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sat, 26 May 2012 03:32:12 -0700 (PDT)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Sat, 26 May 2012 17:28:12 +0700
+X-Mailer: git-send-email 1.7.10.2.549.g9354186
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198549>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198550>
 
-On Sat, May 26, 2012 at 4:44 AM, Jeff King <peff@peff.net> wrote:
->> I'd rather see it ignore the new location as long as ~/.gitconfig ex=
-ists
->> (and if only the new location exists, read from and write to it), an=
-d have
->> users make a conscious decision to transition. =C2=A0That is:
->>
->> =C2=A0- If ~/.gitconfig exists, do not do anything new. =C2=A0Just e=
-xercise the
->> =C2=A0 =C2=A0original code. =C2=A0For these users, ~/.config/ does _=
-not_ exist as far as
->> =C2=A0 =C2=A0Git is concerned.
->>
->> =C2=A0- (optional) If ~/.gitconfig exists, offer _moving_ it to the =
-new
->> =C2=A0 =C2=A0location after telling the user to make sure that the u=
-ser will never
->> =C2=A0 =C2=A0use older version of git again, and move it if the user=
- agrees.
->>
->> =C2=A0- Otherwise, read from and write to the new location.
->
-> That doesn't solve all problems with multiple versions, though. For
-> example, this sequence:
->
-> =C2=A01. User consciously moves to new location, moving ~/.gitconfig =
-to
-> =C2=A0 =C2=A0 ~/.config/git/config (or perhaps they do not do so cons=
-ciously, but
-> =C2=A0 =C2=A0 do not have a ~/.gitconfig at all, and run "git config =
---global"
-> =C2=A0 =C2=A0 with the new version.
->
-> =C2=A02. User runs "git config --global" with an old version of git, =
-which
-> =C2=A0 =C2=A0 writes to ~/.gitconfig.
->
-> After step 1, old versions of git will not respect the user's config =
-at
-> all. This is unavoidable; the old version does not know about the new
-> location.
->
-> But after step 2, _all_ versions of git have stopped respecting the n=
-ew
-> location (because ~/.gitconfig takes precedence). Whereas if we read
-> from everywhere, then it is broken only in older versions (which are
-> broken anyway).
->
-> So I consider it the lesser of two evils. The rule is much simpler: "=
-old
-> versions of git do not know about this new location". Which is
-> unavoidable, and easier to explain than "Old versions of git do not k=
-now
-> about this location. New versions do, but will sometimes ignore
-> depending on whether this other file exists, which might have been
-> created by an old version".
+git usually streams large blobs directly to packs. But there are cases
+where git can create large loose blobs (unpack-objects or hash-object
+over pipe). Or they can come from other git implementations.
+core.bigfilethreshold can also be lowered down and introduce a new
+wave of large loose blobs.
 
-We could amend Junio's version a bit:
+Use streaming interface to read/compress/write these blobs in one
+go. Fall back to normal way if somehow streaming interface cannot be
+used.
 
- - if both versions exist, warn loudly (optionally refuse to work) and
-suggest to symlink .gitconfig to .config/git/config
+Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+=2Ecom>
+---
+ On top of ng/pack-objects-cleanup. Changes since the last version is
+ we do not rely on close_istream(NULL); any more.
 
+ builtin/pack-objects.c | 73 ++++++++++++++++++++++++++++++++++++++++++=
++++-----
+ t/t1050-large.sh       | 12 +++++++++
+ 2 files changed, 79 insertions(+), 6 deletions(-)
 
-> However, let's take a step back for a minute. I think the real issue =
-is
-> writing to the XDG location without the user knowing about it. So a
-> better transition plan would be:
->
-> =C2=A01. Start reading from the XDG location in addition to the old
-> =C2=A0 =C2=A0 location. Always write to the old location.
->
-> =C2=A02. Wait N time units until everybody reasonable has a version t=
-hat
-> =C2=A0 =C2=A0 does (1).
->
-> =C2=A03. Start writing to the XDG location by default. Keep reading f=
-rom the
-> =C2=A0 =C2=A0 old version for compatibility.
-
-Hang on.. this "by default" is only for Linux, or for every other OS to=
-o?
-
-
-> People who want to start using the new location after step 1 are free=
- to
-> do so; they just shouldn't expect git to write to it, and they should
-> accept the obvious caveat that older versions of git will not underst=
-and
-> it. An optional addendum is that we could start writing to the XDG
-> location after step 1 only if it exists, which implies that the user =
-has
-> decided it's OK to do so (which is still a guess; they might have wan=
-ted
-> to split their config intentionally).
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index ccfcbad..f334820 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -16,6 +16,7 @@
+ #include "list-objects.h"
+ #include "progress.h"
+ #include "refs.h"
++#include "streaming.h"
+ #include "thread-utils.h"
+=20
+ static const char *pack_usage[] =3D {
+@@ -150,6 +151,46 @@ static unsigned long do_compress(void **pptr, unsi=
+gned long size)
+ 	return stream.total_out;
+ }
+=20
++static unsigned long write_large_blob_data(struct git_istream *st, str=
+uct sha1file *f,
++					   const unsigned char *sha1)
++{
++	git_zstream stream;
++	unsigned char ibuf[1024 * 16];
++	unsigned char obuf[1024 * 16];
++	unsigned long olen =3D 0;
++
++	memset(&stream, 0, sizeof(stream));
++	git_deflate_init(&stream, pack_compression_level);
++
++	for (;;) {
++		ssize_t readlen;
++		int zret =3D Z_OK;
++		readlen =3D read_istream(st, ibuf, sizeof(ibuf));
++		if (readlen =3D=3D -1)
++			die(_("unable to read %s"), sha1_to_hex(sha1));
++
++		stream.next_in =3D ibuf;
++		stream.avail_in =3D readlen;
++		while ((stream.avail_in || readlen =3D=3D 0) &&
++		       (zret =3D=3D Z_OK || zret =3D=3D Z_BUF_ERROR)) {
++			stream.next_out =3D obuf;
++			stream.avail_out =3D sizeof(obuf);
++			zret =3D git_deflate(&stream, readlen ? 0 : Z_FINISH);
++			sha1write(f, obuf, stream.next_out - obuf);
++			olen +=3D stream.next_out - obuf;
++		}
++		if (stream.avail_in)
++			die(_("deflate error (%d)"), zret);
++		if (readlen =3D=3D 0) {
++			if (zret !=3D Z_STREAM_END)
++				die(_("deflate error (%d)"), zret);
++			break;
++		}
++	}
++	git_deflate_end(&stream);
++	return olen;
++}
++
+ /*
+  * we are going to reuse the existing object data as is.  make
+  * sure it is not corrupt.
+@@ -208,11 +249,18 @@ static unsigned long write_no_reuse_object(struct=
+ sha1file *f, struct object_ent
+ 	unsigned hdrlen;
+ 	enum object_type type;
+ 	void *buf;
++	struct git_istream *st =3D NULL;
+=20
+ 	if (!usable_delta) {
+-		buf =3D read_sha1_file(entry->idx.sha1, &type, &size);
+-		if (!buf)
+-			die("unable to read %s", sha1_to_hex(entry->idx.sha1));
++		if (entry->type =3D=3D OBJ_BLOB &&
++		    entry->size > big_file_threshold &&
++		    (st =3D open_istream(entry->idx.sha1, &type, &size, NULL)) !=3D =
+NULL)
++			buf =3D NULL;
++		else {
++			buf =3D read_sha1_file(entry->idx.sha1, &type, &size);
++			if (!buf)
++				die(_("unable to read %s"), sha1_to_hex(entry->idx.sha1));
++		}
+ 		/*
+ 		 * make sure no cached delta data remains from a
+ 		 * previous attempt before a pack split occurred.
+@@ -233,7 +281,9 @@ static unsigned long write_no_reuse_object(struct s=
+ha1file *f, struct object_ent
+ 			OBJ_OFS_DELTA : OBJ_REF_DELTA;
+ 	}
+=20
+-	if (entry->z_delta_size)
++	if (st)	/* large blob case, just assume we don't compress well */
++		datalen =3D size;
++	else if (entry->z_delta_size)
+ 		datalen =3D entry->z_delta_size;
+ 	else
+ 		datalen =3D do_compress(&buf, size);
+@@ -256,6 +306,8 @@ static unsigned long write_no_reuse_object(struct s=
+ha1file *f, struct object_ent
+ 		while (ofs >>=3D 7)
+ 			dheader[--pos] =3D 128 | (--ofs & 127);
+ 		if (limit && hdrlen + sizeof(dheader) - pos + datalen + 20 >=3D limi=
+t) {
++			if (st)
++				close_istream(st);
+ 			free(buf);
+ 			return 0;
+ 		}
+@@ -268,6 +320,8 @@ static unsigned long write_no_reuse_object(struct s=
+ha1file *f, struct object_ent
+ 		 * an additional 20 bytes for the base sha1.
+ 		 */
+ 		if (limit && hdrlen + 20 + datalen + 20 >=3D limit) {
++			if (st)
++				close_istream(st);
+ 			free(buf);
+ 			return 0;
+ 		}
+@@ -276,13 +330,20 @@ static unsigned long write_no_reuse_object(struct=
+ sha1file *f, struct object_ent
+ 		hdrlen +=3D 20;
+ 	} else {
+ 		if (limit && hdrlen + datalen + 20 >=3D limit) {
++			if (st)
++				close_istream(st);
+ 			free(buf);
+ 			return 0;
+ 		}
+ 		sha1write(f, header, hdrlen);
+ 	}
+-	sha1write(f, buf, datalen);
+-	free(buf);
++	if (st) {
++		datalen =3D write_large_blob_data(st, f, entry->idx.sha1);
++		close_istream(st);
++	} else {
++		sha1write(f, buf, datalen);
++		free(buf);
++	}
+=20
+ 	return hdrlen + datalen;
+ }
+diff --git a/t/t1050-large.sh b/t/t1050-large.sh
+index 55ed955..313889b 100755
+--- a/t/t1050-large.sh
++++ b/t/t1050-large.sh
+@@ -134,6 +134,18 @@ test_expect_success 'repack' '
+ 	git repack -ad
+ '
+=20
++test_expect_success 'pack-objects with large loose object' '
++	SHA1=3D`git hash-object huge` &&
++	test_create_repo loose &&
++	echo $SHA1 | git pack-objects --stdout |
++		GIT_ALLOC_LIMIT=3D0 GIT_DIR=3Dloose/.git git unpack-objects &&
++	echo $SHA1 | GIT_DIR=3Dloose/.git git pack-objects pack &&
++	test_create_repo packed &&
++	mv pack-* packed/.git/objects/pack &&
++	GIT_DIR=3Dpacked/.git git cat-file blob $SHA1 >actual &&
++	cmp huge actual
++'
++
+ test_expect_success 'tar achiving' '
+ 	git archive --format=3Dtar HEAD >/dev/null
+ '
 --=20
-Duy
+1.7.10.2.549.g9354186
