@@ -1,104 +1,72 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [GSoC] Designing a faster index format - Progress report
-Date: Sun, 27 May 2012 19:23:07 +0700
-Message-ID: <CACsJy8D+WgEr4i2H-1oiBLY5oLurM0aNxGovbVEZDvr7OGgknw@mail.gmail.com>
-References: <20120523122135.GA58204@tgummerer.unibz.it> <CACsJy8As2SQwEi2vHAQA+OeH+TjoCzzcknFbQ2tGXaWX7zsHVA@mail.gmail.com>
- <20120525201547.GB86874@tgummerer> <CACsJy8BRWmqz+2_A5_=1S9_sxOQa9GXnPQ7J1Y6id0_vh2-=+Q@mail.gmail.com>
- <20120527090407.GD86874@tgummerer> <7vbolaotwj.fsf@alter.siamese.dyndns.org>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Finding a branch point in git
+Date: Sun, 27 May 2012 14:37:32 +0200
+Message-ID: <CAMP44s0f7AJPQSTDgvy0U7vx8nxzq2a3vMhSr2Tcc61fetFkJA@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	trast@student.ethz.ch, mhagger@alum.mit.edu
-To: Thomas Gummerer <t.gummerer@gmail.com>
-X-From: git-owner@vger.kernel.org Sun May 27 14:24:27 2012
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun May 27 14:37:42 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SYcWC-0002xC-O2
-	for gcvg-git-2@plane.gmane.org; Sun, 27 May 2012 14:24:21 +0200
+	id 1SYcj4-0001yM-90
+	for gcvg-git-2@plane.gmane.org; Sun, 27 May 2012 14:37:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751793Ab2E0MXm convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 27 May 2012 08:23:42 -0400
-Received: from mail-we0-f174.google.com ([74.125.82.174]:61054 "EHLO
-	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751587Ab2E0MXm convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 27 May 2012 08:23:42 -0400
-Received: by weyu7 with SMTP id u7so1437129wey.19
-        for <git@vger.kernel.org>; Sun, 27 May 2012 05:23:38 -0700 (PDT)
+	id S1751361Ab2E0Mhe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 27 May 2012 08:37:34 -0400
+Received: from mail-lpp01m010-f46.google.com ([209.85.215.46]:60423 "EHLO
+	mail-lpp01m010-f46.google.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750975Ab2E0Mhd (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 27 May 2012 08:37:33 -0400
+Received: by lahd3 with SMTP id d3so1447153lah.19
+        for <git@vger.kernel.org>; Sun, 27 May 2012 05:37:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=1eZDAjWdSaO9s4suRVzm5nfe0m1f8KoftpwxwqRMWho=;
-        b=0yRvioUpc9BZrcmZD8GKdWFyjJFEh/XUP9JtmjQb/N4O/GPrrsCHedfTfHHXvsjO1v
-         mtDXM6ryFsUHo9KHW+fcml1Fg/pagWRfXHUfKOK6VUeJytnI5VzxDXR21qMKivgivkWX
-         5d0BVrn960eUsj9wRp8DC53JsgIDs4n1Js8gTsmJbb3y2LC/w6/QYFJR3vRzVmzznGRG
-         +Cxm0IFVFDH+Q/Qkrit3pUMJSQkC2FDylEWDfqmsSiMROTpXJlhdcEpULqnZ5zcHQaSz
-         t4JBtPlTcN/E7hvJbYIKhMyDJR0kyAo1redbbYsf6ppYGBPI3K3/jMYiX823HRAFVwK4
-         7zqQ==
-Received: by 10.180.79.71 with SMTP id h7mr8722764wix.19.1338121418321; Sun,
- 27 May 2012 05:23:38 -0700 (PDT)
-Received: by 10.223.64.208 with HTTP; Sun, 27 May 2012 05:23:07 -0700 (PDT)
-In-Reply-To: <7vbolaotwj.fsf@alter.siamese.dyndns.org>
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=W7q6hZ2JFxSkI8aSih229MUiyt5T/YbTcJpG/baHZmg=;
+        b=W2YF504qSbq+NvQL1b4dL2tKicwxqHNkp7drgA3dGNsmHZcYBSSYrk3Tg2WP9FjUUo
+         x1n6O6MoTB2bSxXY5uk1n/fk1hR74ph8RANs9X5UE+yZvxC0Bt0LN0Qh8R/o8uao4v9g
+         s1rSBBNdjDa8YpB1pySt7d4c6+/L5PwgjUbWsPYBLL/i3pBNUfqSQv6sLnX5ahUiMSRD
+         jEPvaz9CoBwcdXmLlUpCIgO6jRv7E3qEgZszR/wWLfqdwlV/3Ldur3X+AXC4RwgcvNIO
+         v6ZkIzZ5jyIQaaMRZCtu7UPOavAyUsUEbsVjGRyivfusXgO70o1tUsF4uhQCYbVYTiUj
+         45xQ==
+Received: by 10.112.98.225 with SMTP id el1mr2203064lbb.30.1338122252264; Sun,
+ 27 May 2012 05:37:32 -0700 (PDT)
+Received: by 10.112.107.65 with HTTP; Sun, 27 May 2012 05:37:32 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198586>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198587>
 
-On Sun, May 27, 2012 at 4:27 PM, Junio C Hamano <gitster@pobox.com> wro=
-te:
-> Thomas Gummerer <t.gummerer@gmail.com> writes:
->
->>> No, read_index_from would go through the normal tree->list conversi=
-on.
->>> What I'd like to see is what it looks like when a command accesses
->>> index v5 directly in tree form, taking all advantages that tree-for=
-m
->>> provides, and how we should deal with old index versions while stil=
-l
->>> supporting index v5 (without losing tree advantages)
->>
->> Ah ok, thanks for the clarification, I understand what you meant now=
-=2E
->> I think however, that it's not very beneficial to do this conversion
->> now. git ls-files needs the whole index file anyway, so it's probabl=
-y
->> not a very good test.
->
-> Think about "git ls-files t/" and "git ls-files -u".
+Hi,
 
-Or harder things like "ls-files -- 't/*.sh'"
+When discussing git vs. mercurial, and what can mercurial do that git
+can't, I inevitably see somebody mention that mercurial branches can
+be used to find the branch point (the point at which a branch started;
+even if it's a long-lived one that has been merged to 'master'
+multiple times).
 
-> The former obviously does *not* have to look at the whole thing, even
-> though the current code assumes the in-core data structure that has t=
-he
-> whole thing in a flat array. =C2=A0IIRC, you had unmerged entries tuc=
-ked at the
-> end outside the main index data, so the latter is also an interesting
-> demonstration of how wonderful the new data format could be.
+There have been a few solutions in stackoverflow[1], but none that
+work in all cases.
 
-and "ls-files -uc" can show how you combine unmerged entries back.
-There's also entry existence check deep in "ls-files -o" that you can
-show how good bsearch on trees is, though that might be going too far
-for an experiment because the call chain is really deep, way outside
-ls-files.c:
+But I think I've found an ad-hoc one that uses the commit messages to
+find the first merge of a branch, and then the merge-base.
 
-show_files (builtin/ls-files.c)
- fill_directory (dir.c)
-  read_directory
-   read_directory_recursive
-    treat_path
-     treat_one_path
-      treat_directory
-       directory_exists_in_index
-        cache_pos_name (read-cache.c)
+For reference, if somebody is interested:
 
-I just want to make sure that by exercising the new format with some
-real problems, we are certain we don't overlook anything in designing
-the format (or else could be fixed before finalizing it).
---=20
-Duy
+---
+[alias]
+    branch-point = !sh -c 'merge=$(git rev-list --min-parents=2
+--grep="Merge.*$1" --all | tail -1) && git merge-base $merge^1
+$merge^2'
+---
+
+Cheers.
+
+[1] http://stackoverflow.com/questions/1527234/finding-a-branch-point-with-git/
+
+-- 
+Felipe Contreras
