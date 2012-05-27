@@ -1,81 +1,120 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: [PATCH] Reduce cost of deletion in levenstein distance (4 -> 3)
-Date: Sun, 27 May 2012 18:02:58 +0200
-Message-ID: <1338134578-29011-1-git-send-email-Matthieu.Moy@imag.fr>
-Cc: Matthieu Moy <Matthieu.Moy@imag.fr>
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Sun May 27 18:03:47 2012
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/3] exclude: do strcmp as much as possible before
+ fnmatch
+Date: Sun, 27 May 2012 11:14:42 -0700
+Message-ID: <7v8vgd7ap9.fsf@alter.siamese.dyndns.org>
+References: <1338035474-4346-1-git-send-email-pclouds@gmail.com>
+ <1338035474-4346-3-git-send-email-pclouds@gmail.com>
+ <7vk3zyp14i.fsf@alter.siamese.dyndns.org>
+ <CACsJy8DOz30GD_zv9yO7KD55+=H0t=+q_5qRtt51nOoYXwOBBQ@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Sun May 27 20:14:55 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SYfwZ-000676-0G
-	for gcvg-git-2@plane.gmane.org; Sun, 27 May 2012 18:03:47 +0200
+	id 1SYhzP-0003p6-KH
+	for gcvg-git-2@plane.gmane.org; Sun, 27 May 2012 20:14:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752703Ab2E0QDI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 27 May 2012 12:03:08 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:35941 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752305Ab2E0QDF (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 27 May 2012 12:03:05 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id q4RFspOh009716
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Sun, 27 May 2012 17:54:51 +0200
-Received: from bauges.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.72)
-	(envelope-from <moy@imag.fr>)
-	id 1SYfvn-0001I9-VW; Sun, 27 May 2012 18:03:00 +0200
-Received: from moy by bauges.imag.fr with local (Exim 4.72)
-	(envelope-from <moy@imag.fr>)
-	id 1SYfvn-0007Yc-R1; Sun, 27 May 2012 18:02:59 +0200
-X-Mailer: git-send-email 1.7.10.363.g7fcd3d.dirty
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Sun, 27 May 2012 17:54:51 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: q4RFspOh009716
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
-MailScanner-NULL-Check: 1338738891.85569@67nOrxIMerw26lnNPv5P+g
+	id S1751602Ab2E0SOq convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 27 May 2012 14:14:46 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39574 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751076Ab2E0SOp convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 27 May 2012 14:14:45 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 52A45852A;
+	Sun, 27 May 2012 14:14:44 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=zaLvpqct8oYE
+	ggvhD8QapiO6UmY=; b=MruWHouPfctuvyrq28c3i8URYIR7nYJje0qagH1PUdyP
+	Fva3Qs4kSLG37fAhGfFUAnC6aCW0FYwoRcsNZPLOFlu6SEeEafYkL77JNuEvSODn
+	yLBWLEl4rYIag2l4MOuQv9qbZN5uIH73NI/KNEZjUH7oPfgEIeMEF+F4aFpHmTY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=BQSN+6
+	5E39ynkXiUKYQGPNYV6vAIqs31/hqYFqR8kIzAp7MiYPJuSOWUqqcs5gP5f6wwqR
+	vS3ys/8UtLkkSyfbLnVaRGRK8YdgzRMs665T8+QHWmLsXSAT9NFrkNnMHjfwaFIG
+	uMUuCKUfSP08ZQGxpuhrN6HHB5O0ZSHigeAHA=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 49C558529;
+	Sun, 27 May 2012 14:14:44 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id CE9278527; Sun, 27 May 2012
+ 14:14:43 -0400 (EDT)
+In-Reply-To: <CACsJy8DOz30GD_zv9yO7KD55+=H0t=+q_5qRtt51nOoYXwOBBQ@mail.gmail.com> (Nguyen
+ Thai Ngoc Duy's message of "Sun, 27 May 2012 19:06:14 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: D598BAEC-A827-11E1-992E-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198614>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198615>
 
-Before this patch, a character deletion has the same cost as 2 swaps, or
-4 additions, so Git prefers suggesting a completely scrambled command
-name to removing a character. For example, "git tags" suggests "stage",
-but not "tag".
+Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
 
-By setting the deletion cost to 3, we keep it higher than swaps or
-additions, but prefer 1 deletion to 2 swaps. "git tags" now suggests
-"tag" in addition to staged.
+>> I have been wondering if you can take a different approach based on =
+the
+>> same observation this patch is based on. =C2=A0If you see an entry /=
+foo/bar/*.c
+>> in the top-level .gitignore, perhaps you can set it aside in a diffe=
+rent
+>> part of "struct exclude" for the top-level directory (because the pa=
+ttern
+>> will never match outside foo/bar directory), so that it is not even =
+used
+>> for matching, and only when you descend to foo/bar directory, add "/=
+*.c"
+>> to the "struct exclude" you create for that directory.
+>
+> that part is "base" field in "struct exclude", I believe.
 
-Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
----
-The RFC sent earlier [1] didn't receive negative comments, so I think this
-is a good change.
+Sorry, I misspoke; it is not about struct exclude at all.
 
-http://thread.gmane.org/gmane.comp.version-control.git/196457
+>> That way, instead of "strcmp is faster than fnmatch, but we always c=
+ompare
+>> all elements in the huge pattern list given at the toplevel", you wo=
+uld be
+>> doing "we do not even bother to compare with the elements we know do=
+ not
+>> matter", which would be far more efficient, no?
+>
+> You still have to do at least one strncmp on "base" though to know if
+> a pattern is applicable to the given directory. So it's not really
+> cheaper than what is done in 3/3.
 
- help.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Actually I was referring to the exclude_stack.
 
-diff --git a/help.c b/help.c
-index 14eefc9..fdaa90d 100644
---- a/help.c
-+++ b/help.c
-@@ -334,7 +334,7 @@ const char *help_unknown_cmd(const char *cmd)
- 		}
- 
- 		main_cmds.names[i]->len =
--			levenshtein(cmd, candidate, 0, 2, 1, 4) + 1;
-+			levenshtein(cmd, candidate, 0, 2, 1, 3) + 1;
- 	}
- 
- 	qsort(main_cmds.names, main_cmds.cnt,
--- 
-1.7.10.363.g7fcd3d.dirty
+Suppose you have .gitignore file at the top that lists /foo/bar/*.c
+(among other millions of patterns anchored to specific directory),
+and another in the foo/bar directory.  When you are looking at a
+path in the top-level, currently the exclude_stack would have one
+element, per-directory one for .gitignore at the top, that has
+millions of patterns that would never match.  And then when you
+descend into foo/bar directory, prep_exclude would link two elements
+(one for foo/ directory which may be empty, another for foo/bar
+directory) to this, and then you check paths you see in foo/bar
+directory using all the elements that appear in the exclude_stack.
+
+What I was suggesting was that you could choose not to add
+/foo/bar/*.c entry in the exclude_stack element for the top-level
+(but remember you did so), and then inside prep_exclude() when you
+look at different directory, e.g. foo/bar, notice that higher level
+(i.e. toplevel in this example) has such a deferred patterns that
+applies to the new directory.  Then instead of adding /foo/bar/*.c
+at the top-level, you can pretend as if /*.c appeared in .gitignore
+file in the deeper level in the hierarchy.
+
+And this does not happen per path you check; exclude_stack used by
+excluded() is designed to take advantage of the access pattern that
+we tend to check paths from the same directory together, so such an
+adjustment will be per directory switching (i.e. it will be part of
+the prep_exclude() overhead that is amortized over paths you walk).
