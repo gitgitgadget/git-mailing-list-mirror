@@ -1,231 +1,104 @@
 From: Jon Seymour <jon.seymour@gmail.com>
-Subject: [PATCH v6 3/9] submodule: document failure to handle relative superproject origin URLs
-Date: Sun, 27 May 2012 23:43:24 +1000
-Message-ID: <1338126210-11517-4-git-send-email-jon.seymour@gmail.com>
+Subject: [PATCH v6 5/9] submodule: extract normalize_path into standalone function
+Date: Sun, 27 May 2012 23:43:26 +1000
+Message-ID: <1338126210-11517-6-git-send-email-jon.seymour@gmail.com>
 References: <1338126210-11517-1-git-send-email-jon.seymour@gmail.com>
 Cc: Jens.Lehmann@web.de, gitster@pobox.com, phil.hord@gmail.com,
 	ramsay@ramsay1.demon.co.uk, Jon Seymour <jon.seymour@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun May 27 15:44:08 2012
+X-From: git-owner@vger.kernel.org Sun May 27 15:44:09 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SYdlI-00060W-9z
-	for gcvg-git-2@plane.gmane.org; Sun, 27 May 2012 15:44:00 +0200
+	id 1SYdlQ-00063X-1z
+	for gcvg-git-2@plane.gmane.org; Sun, 27 May 2012 15:44:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752472Ab2E0Nny (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 27 May 2012 09:43:54 -0400
+	id S1752585Ab2E0NoD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 27 May 2012 09:44:03 -0400
 Received: from mail-pz0-f46.google.com ([209.85.210.46]:38301 "EHLO
 	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752431Ab2E0Nnw (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 27 May 2012 09:43:52 -0400
+	with ESMTP id S1752490Ab2E0Nn7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 27 May 2012 09:43:59 -0400
 Received: by mail-pz0-f46.google.com with SMTP id y13so3101250dad.19
-        for <git@vger.kernel.org>; Sun, 27 May 2012 06:43:52 -0700 (PDT)
+        for <git@vger.kernel.org>; Sun, 27 May 2012 06:43:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=L3S49376mTZsK23tSlq4Uy5FS/Fgva2U4F///OT+ldI=;
-        b=vTiJcbG9HY+BjrKc1Ce9W6oYTVEkzdXmmGtmwJY40PJPNSBoUlYnhZH5zta6YIwr82
-         lAHGOpfErZVM4lW/HM+mFfSQPeNwBjcZAC2j6QncPykCXcBJ5oDfE2aeBSedCD0TXQQy
-         W822XUxAUNPIKEmilCTpxV6enfNaRGiI6hJnXbdfWcAV6f16il8xeV9i4z1RYooxKmiJ
-         PP5y9RzPLZhAV8R6qnnF8PiKrK1NfY2gEfbE3zjGcEX72/AUrOmdyndyhc+GmO+JVl0G
-         klyDLBPA/dmd9vFBMnO3tho9su7sXKQK/TI4xE/Yb7L5wdWppO7hIuq6xXzg+3lk5EBN
-         pEgg==
-Received: by 10.68.190.39 with SMTP id gn7mr17480841pbc.5.1338126232632;
-        Sun, 27 May 2012 06:43:52 -0700 (PDT)
+        bh=L0itF3o+I2nsUHcsUKn1KG3SoQn26JEz+ommSEHgI7Q=;
+        b=Kj624dyGd5NSf5++IGNrY1bZjOCAZQNGjLa0Rca2BxxHWSQ9A+sogY6UKpAFNhJiAW
+         rgKua4SXz7Ye5eVOTGdv05FTRSJMu/oZVOBn0AF9k5BkrW+ZynbfKLo6SFtkyk2ulTM3
+         Jo7Z8s+EqXn3fkAJXxqnkhXYC+LACfeE2Eo2/LOoBMffvqJ2FcD19IfeiMjmWZBFGrY2
+         /6aTr4/R98Y9GuMR9vHJXtWD37R2BesVbwUnwMW0eVDtQlnznVDqUio5QMk5DDClwPwQ
+         j15m35MhF5EedySRSYaKQVHp/iBOFio6zXilD/lDRixOCZ2uXxRV8kDVBEqSecPBkSUY
+         mC2Q==
+Received: by 10.68.200.9 with SMTP id jo9mr16988066pbc.122.1338126239730;
+        Sun, 27 May 2012 06:43:59 -0700 (PDT)
 Received: from ubuntu.ubuntu-domain (124-170-214-58.dyn.iinet.net.au. [124.170.214.58])
-        by mx.google.com with ESMTPS id ru4sm15870005pbc.66.2012.05.27.06.43.49
+        by mx.google.com with ESMTPS id ru4sm15870005pbc.66.2012.05.27.06.43.56
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Sun, 27 May 2012 06:43:51 -0700 (PDT)
+        Sun, 27 May 2012 06:43:58 -0700 (PDT)
 X-Mailer: git-send-email 1.7.10.2.656.gb5a46db
 In-Reply-To: <1338126210-11517-1-git-send-email-jon.seymour@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198595>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198596>
 
-This test case documents several cases where handling of relative
-superproject origin URLs doesn't produce an expected result.
-
-submodule.{sub}.url in the superproject is incorrect in these cases:
-  foo
-  ./foo
-  ./foo/bar
-
-The remote.origin.url of the submodule is incorrect in the above cases
-and also when the superproject origin URL is like:
-  foo/bar
-  ../foo
-  ../foo/bar
+Extract the normalize_path function so that it can be re-used elsewhere.
 
 Signed-off-by: Jon Seymour <jon.seymour@gmail.com>
 ---
- t/t7400-submodule-basic.sh | 36 +++++++++++++++++++
- t/t7403-submodule-sync.sh  | 90 +++++++++++++++++++++++++++++++++++++++++++++-
- 2 files changed, 125 insertions(+), 1 deletion(-)
+ git-submodule.sh | 28 ++++++++++++++++------------
+ 1 file changed, 16 insertions(+), 12 deletions(-)
 
-diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
-index a758c63..80ec0f7 100755
---- a/t/t7400-submodule-basic.sh
-+++ b/t/t7400-submodule-basic.sh
-@@ -634,6 +634,18 @@ test_expect_success '../subrepo works with scp-style URL - user@host:path/to/rep
- 	)
- '
+diff --git a/git-submodule.sh b/git-submodule.sh
+index 64a70d6..dbbc905 100755
+--- a/git-submodule.sh
++++ b/git-submodule.sh
+@@ -176,6 +176,21 @@ module_clone()
+ 	(clear_local_git_env; cd "$sm_path" && GIT_WORK_TREE=. git config core.worktree "$rel/$b")
+ }
  
-+test_expect_failure '../subrepo works with relative local path - foo' '
-+	(
-+		cd reltest &&
-+		cp pristine-.git-config .git/config &&
-+		cp pristine-.gitmodules .gitmodules &&
-+		git config remote.origin.url foo &&
-+		# actual: fails with an error
-+		git submodule init &&
-+		test "$(git config submodule.sub.url)" = subrepo
-+	)
-+'
-+
- test_expect_success '../subrepo works with relative local path - foo/bar' '
- 	(
- 		cd reltest &&
-@@ -645,6 +657,30 @@ test_expect_success '../subrepo works with relative local path - foo/bar' '
- 	)
- '
++normalize_path()
++{
++	# normalize path:
++	# multiple //; leading ./; /./; /../; trailing /
++	printf '%s/\n' "$1" |
++		sed -e '
++			s|//*|/|g
++			s|^\(\./\)*||
++			s|/\./|/|g
++			:start
++			s|\([^/]*\)/\.\./||
++			tstart
++			s|/*$||
++		'
++}
+ #
+ # Add a new submodule to the working tree, .gitmodules and the index
+ #
+@@ -250,18 +265,7 @@ cmd_add()
+ 	;;
+ 	esac
  
-+test_expect_failure '../subrepo works with relative local path - ./foo' '
-+	(
-+		cd reltest &&
-+		cp pristine-.git-config .git/config &&
-+		cp pristine-.gitmodules .gitmodules &&
-+		git config remote.origin.url ./foo &&
-+		git submodule init &&
-+		#actual ./subrepo
-+		test "$(git config submodule.sub.url)" = subrepo
-+	)
-+'
-+
-+test_expect_failure '../subrepo works with relative local path - ./foo/bar' '
-+	(
-+		cd reltest &&
-+		cp pristine-.git-config .git/config &&
-+		cp pristine-.gitmodules .gitmodules &&
-+		git config remote.origin.url ./foo/bar &&
-+		git submodule init &&
-+		#actual: ./foo/subrepo
-+		test "$(git config submodule.sub.url)" = foo/subrepo
-+	)
-+'
-+
- test_expect_success '../subrepo works with relative local path - ../foo' '
- 	(
- 		cd reltest &&
-diff --git a/t/t7403-submodule-sync.sh b/t/t7403-submodule-sync.sh
-index 3620215..56b933d 100755
---- a/t/t7403-submodule-sync.sh
-+++ b/t/t7403-submodule-sync.sh
-@@ -26,7 +26,9 @@ test_expect_success setup '
- 	(cd super-clone && git submodule update --init) &&
- 	git clone super empty-clone &&
- 	(cd empty-clone && git submodule init) &&
--	git clone super top-only-clone
-+	git clone super top-only-clone &&
-+	git clone super relative-clone &&
-+	(cd relative-clone && git submodule update --init)
- '
+-	# normalize path:
+-	# multiple //; leading ./; /./; /../; trailing /
+-	sm_path=$(printf '%s/\n' "$sm_path" |
+-		sed -e '
+-			s|//*|/|g
+-			s|^\(\./\)*||
+-			s|/\./|/|g
+-			:start
+-			s|\([^/]*\)/\.\./||
+-			tstart
+-			s|/*$||
+-		')
++	sm_path="$(normalize_path "$sm_path")"
+ 	git ls-files --error-unmatch "$sm_path" > /dev/null 2>&1 &&
+ 	die "$(eval_gettext "'\$sm_path' already exists in the index")"
  
- test_expect_success 'change submodule' '
-@@ -86,4 +88,90 @@ test_expect_success '"git submodule sync" should not vivify uninteresting submod
- 	)
- '
- 
-+test_expect_failure '"git submodule sync" handles origin URL of the form foo' '
-+	(cd relative-clone &&
-+	 git remote set-url origin foo &&
-+	 git submodule sync &&
-+	(cd submodule &&
-+	 #actual fails with: "cannot strip off url foo
-+	 test "$(git config remote.origin.url)" = "../submodule"
-+	)
-+	)
-+'
-+
-+test_expect_failure '"git submodule sync" handles origin URL of the form foo/bar' '
-+	(cd relative-clone &&
-+	 git remote set-url origin foo/bar &&
-+	 git submodule sync &&
-+	(cd submodule &&
-+	 #actual foo/submodule
-+	 test "$(git config remote.origin.url)" = "../foo/submodule"
-+	)
-+	)
-+'
-+
-+test_expect_failure '"git submodule sync" handles origin URL of the form ./foo' '
-+	(cd relative-clone &&
-+	 git remote set-url origin ./foo &&
-+	 git submodule sync &&
-+	(cd submodule &&
-+	 #actual ./submodule
-+	 test "$(git config remote.origin.url)" = "../submodule"
-+	)
-+	)
-+'
-+
-+test_expect_failure '"git submodule sync" handles origin URL of the form ./foo/bar' '
-+	(cd relative-clone &&
-+	 git remote set-url origin ./foo/bar &&
-+	 git submodule sync &&
-+	(cd submodule &&
-+	 #actual ./foo/submodule
-+	 test "$(git config remote.origin.url)" = "../foo/submodule"
-+	)
-+	)
-+'
-+
-+test_expect_failure '"git submodule sync" handles origin URL of the form ../foo' '
-+	(cd relative-clone &&
-+	 git remote set-url origin ../foo &&
-+	 git submodule sync &&
-+	(cd submodule &&
-+	 #actual ../submodule
-+	 test "$(git config remote.origin.url)" = "../../submodule"
-+	)
-+	)
-+'
-+
-+test_expect_failure '"git submodule sync" handles origin URL of the form ../foo/bar' '
-+	(cd relative-clone &&
-+	 git remote set-url origin ../foo/bar &&
-+	 git submodule sync &&
-+	(cd submodule &&
-+	 #actual ../foo/submodule
-+	 test "$(git config remote.origin.url)" = "../../foo/submodule"
-+	)
-+	)
-+'
-+
-+test_expect_failure '"git submodule sync" handles origin URL of the form ../foo/bar with deeply nested submodule' '
-+	(cd relative-clone &&
-+	 git remote set-url origin ../foo/bar &&
-+	 mkdir -p a/b/c &&
-+	 ( cd a/b/c &&
-+	   git init &&
-+	   :> .gitignore &&
-+	   git add .gitignore &&
-+	   test_tick &&
-+	   git commit -m "initial commit" ) &&
-+	 git submodule add ../bar/a/b/c ./a/b/c &&
-+	 git submodule sync &&
-+	(cd a/b/c &&
-+	 #actual ../foo/bar/a/b/c
-+	 test "$(git config remote.origin.url)" = "../../../../foo/bar/a/b/c"
-+	)
-+	)
-+'
-+
-+
- test_done
 -- 
 1.7.10.2.656.gb5a46db
