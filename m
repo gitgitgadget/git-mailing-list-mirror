@@ -1,72 +1,89 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Finding a branch point in git
-Date: Sun, 27 May 2012 14:37:32 +0200
-Message-ID: <CAMP44s0f7AJPQSTDgvy0U7vx8nxzq2a3vMhSr2Tcc61fetFkJA@mail.gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCHv2 2/2] t7512-status-warnings.sh: better advices for git status
+Date: Sun, 27 May 2012 14:57:44 +0200
+Message-ID: <vpqlikdlr1z.fsf@bauges.imag.fr>
+References: <1337852264-32619-1-git-send-email-Lucien.Kong@ensimag.imag.fr>
+	<1338035905-24166-1-git-send-email-Lucien.Kong@ensimag.imag.fr>
+	<1338035905-24166-2-git-send-email-Lucien.Kong@ensimag.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun May 27 14:37:42 2012
+Content-Type: text/plain
+Cc: git@vger.kernel.org,
+	Duperray Valentin <Valentin.Duperray@ensimag.imag.fr>,
+	Jonas Franck <Franck.Jonas@ensimag.imag.fr>,
+	Nguy Thomas <Thomas.Nguy@ensimag.imag.fr>,
+	Nguyen Huynh Khoi Nguyen Lucien 
+	<Huynh-Khoi-Nguyen.Nguyen@ensimag.imag.fr>
+To: Kong Lucien <Lucien.Kong@ensimag.imag.fr>
+X-From: git-owner@vger.kernel.org Sun May 27 14:58:35 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SYcj4-0001yM-90
-	for gcvg-git-2@plane.gmane.org; Sun, 27 May 2012 14:37:38 +0200
+	id 1SYd3K-00029K-QI
+	for gcvg-git-2@plane.gmane.org; Sun, 27 May 2012 14:58:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751361Ab2E0Mhe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 27 May 2012 08:37:34 -0400
-Received: from mail-lpp01m010-f46.google.com ([209.85.215.46]:60423 "EHLO
-	mail-lpp01m010-f46.google.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750975Ab2E0Mhd (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 27 May 2012 08:37:33 -0400
-Received: by lahd3 with SMTP id d3so1447153lah.19
-        for <git@vger.kernel.org>; Sun, 27 May 2012 05:37:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=W7q6hZ2JFxSkI8aSih229MUiyt5T/YbTcJpG/baHZmg=;
-        b=W2YF504qSbq+NvQL1b4dL2tKicwxqHNkp7drgA3dGNsmHZcYBSSYrk3Tg2WP9FjUUo
-         x1n6O6MoTB2bSxXY5uk1n/fk1hR74ph8RANs9X5UE+yZvxC0Bt0LN0Qh8R/o8uao4v9g
-         s1rSBBNdjDa8YpB1pySt7d4c6+/L5PwgjUbWsPYBLL/i3pBNUfqSQv6sLnX5ahUiMSRD
-         jEPvaz9CoBwcdXmLlUpCIgO6jRv7E3qEgZszR/wWLfqdwlV/3Ldur3X+AXC4RwgcvNIO
-         v6ZkIzZ5jyIQaaMRZCtu7UPOavAyUsUEbsVjGRyivfusXgO70o1tUsF4uhQCYbVYTiUj
-         45xQ==
-Received: by 10.112.98.225 with SMTP id el1mr2203064lbb.30.1338122252264; Sun,
- 27 May 2012 05:37:32 -0700 (PDT)
-Received: by 10.112.107.65 with HTTP; Sun, 27 May 2012 05:37:32 -0700 (PDT)
+	id S1751149Ab2E0M5w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 27 May 2012 08:57:52 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:42480 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750975Ab2E0M5v (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 27 May 2012 08:57:51 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id q4RCnW2B010669
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Sun, 27 May 2012 14:49:32 +0200
+Received: from bauges.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1SYd2X-0007gZ-Ea; Sun, 27 May 2012 14:57:45 +0200
+In-Reply-To: <1338035905-24166-2-git-send-email-Lucien.Kong@ensimag.imag.fr>
+	(Kong Lucien's message of "Sat, 26 May 2012 14:38:25 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.93 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Sun, 27 May 2012 14:49:32 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: q4RCnW2B010669
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1338727775.64465@kUe3vyqCiBeG6qY7Ip0TIg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198587>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198588>
 
-Hi,
+Kong Lucien <Lucien.Kong@ensimag.imag.fr> writes:
 
-When discussing git vs. mercurial, and what can mercurial do that git
-can't, I inevitably see somebody mention that mercurial branches can
-be used to find the branch point (the point at which a branch started;
-even if it's a long-lived one that has been merged to 'master'
-multiple times).
+>  t/t7060-wtstatus.sh        |    2 +
+>  t/t7512-status-warnings.sh |  280 ++++++++++++++++++++++++++++++++++++++++++++
+>  2 files changed, 282 insertions(+), 0 deletions(-)
 
-There have been a few solutions in stackoverflow[1], but none that
-work in all cases.
+> diff --git a/t/t7060-wtstatus.sh b/t/t7060-wtstatus.sh
+> index b8cb490..d9a1e18 100755
+> --- a/t/t7060-wtstatus.sh
+> +++ b/t/t7060-wtstatus.sh
+> @@ -30,6 +30,8 @@ test_expect_success 'Report new path with conflict' '
+>  
+>  cat >expect <<EOF
+>  # On branch side
+> +# You have unmerged paths: fix conflicts and then commit the result.
+> +#
+>  # Unmerged paths:
+>  #   (use "git add/rm <file>..." as appropriate to mark resolution)
+>  #
 
-But I think I've found an ad-hoc one that uses the commit messages to
-find the first merge of a branch, and then the merge-base.
-
-For reference, if somebody is interested:
-
----
-[alias]
-    branch-point = !sh -c 'merge=$(git rev-list --min-parents=2
---grep="Merge.*$1" --all | tail -1) && git merge-base $merge^1
-$merge^2'
----
-
-Cheers.
-
-[1] http://stackoverflow.com/questions/1527234/finding-a-branch-point-with-git/
+Doesn't the test fail after this if you don't modify the code at the
+same time? Git's codebase should pass all tests at each commit (if only
+to allow "git bisect" to run smoothly), so don't modify tests and code
+in different commits. What you can do on the other hand is to introduce
+new failing tests (test_expect_failure), and then mark them as success
+when you update the code. Or introduce tests that show the current
+behavior, and then patch the expected output when you update the code 
+(the above patch hunk is a nice way to demonstrate the change introduced
+by the code for example).
 
 -- 
-Felipe Contreras
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
