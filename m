@@ -1,74 +1,61 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: [RFC/PATCH] git-svn: use YAML format for mergeinfo cache when
- possible
-Date: Sun, 27 May 2012 20:14:50 +0000
-Message-ID: <20120527201450.GA3630@dcvr.yhbt.net>
-References: <1313979422-21286-1-git-send-email-jgross@mit.edu>
- <20110823081546.GA28091@dcvr.yhbt.net>
- <7vobzgrrbg.fsf@alter.siamese.dyndns.org>
- <20120527192541.GA29490@burratino>
+From: Jon Seymour <jon.seymour@gmail.com>
+Subject: Re: [PATCH v7 8/9] submodule: fix handling of denormalized
+ superproject origin URLs
+Date: Mon, 28 May 2012 08:57:53 +1000
+Message-ID: <CAH3AnrpTgwHDDLKM=OraEZfBRDyKzf1jjgqaBCJwkudDvsWkEQ@mail.gmail.com>
+References: <1338132851-23497-1-git-send-email-jon.seymour@gmail.com>
+	<1338132851-23497-9-git-send-email-jon.seymour@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, Jason Gross <jgross@MIT.EDU>,
-	git@vger.kernel.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Sun May 27 22:15:04 2012
+Content-Type: text/plain; charset=UTF-8
+Cc: Jens.Lehmann@web.de, gitster@pobox.com, phil.hord@gmail.com,
+	ramsay@ramsay1.demon.co.uk, Jon Seymour <jon.seymour@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon May 28 00:58:44 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SYjrj-0003O9-Sl
-	for gcvg-git-2@plane.gmane.org; Sun, 27 May 2012 22:15:04 +0200
+	id 1SYmQ2-0000Do-Hg
+	for gcvg-git-2@plane.gmane.org; Mon, 28 May 2012 00:58:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753202Ab2E0UOx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 27 May 2012 16:14:53 -0400
-Received: from dcvr.yhbt.net ([64.71.152.64]:38776 "EHLO dcvr.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752160Ab2E0UOw (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 27 May 2012 16:14:52 -0400
-Received: from localhost (dcvr.yhbt.net [127.0.0.1])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 328201F4C8;
-	Sun, 27 May 2012 20:14:51 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <20120527192541.GA29490@burratino>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1751209Ab2E0W5z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 27 May 2012 18:57:55 -0400
+Received: from mail-we0-f174.google.com ([74.125.82.174]:51372 "EHLO
+	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751014Ab2E0W5y (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 27 May 2012 18:57:54 -0400
+Received: by weyu7 with SMTP id u7so1614326wey.19
+        for <git@vger.kernel.org>; Sun, 27 May 2012 15:57:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=puOk2jRfu3/jrQJbFPPBGeN5t1u1WaTpN/K8BDmZnBM=;
+        b=E4EMOMV8tNmciuRIl4pjpvs74tKRUNqTygAwtMpOFotbbKtBkxY/SMgYUXsTu1+SIl
+         QdCFt6PdYPVgsR6HojUwZvEjPubuqtg6X+09La+zoCVad2+XE/zedpw5dXcl7P3L0ZtU
+         lp8lrJpOwW9PBFVBfOyRbvdj8qg/afstG04opz3CmfrKit+CAx+UkfW5dQuqd5LdvIbp
+         0QZIA8Vn64oUZ/JmEKE57oJHU5i6FskSRhG74wVIUqG5NNSDAAnApvhJsXzgXlf71KRI
+         iuDl2kQtxopEmWAtgulvam/6s0KmG8Pu2RGZ8Mx3bjQlz9/wi6RieMWk/8R5WVudGBJC
+         Elqw==
+Received: by 10.216.216.148 with SMTP id g20mr3199379wep.187.1338159473551;
+ Sun, 27 May 2012 15:57:53 -0700 (PDT)
+Received: by 10.180.146.166 with HTTP; Sun, 27 May 2012 15:57:53 -0700 (PDT)
+In-Reply-To: <1338132851-23497-9-git-send-email-jon.seymour@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198618>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198619>
 
-Jonathan Nieder <jrnieder@gmail.com> wrote:
-> My personal motivation is the ability to upgrade or downgrade perl or
-> change perl's use64bitint compile-time parameter without having to
-> invalidate caches or (worse, what users unaware of .git/svn/.caches
-> would probably do) reclone repositories.  The Storable format is not
-> stable enough for forward-compatibility.
-> 
-> Seems to work.  I haven't run any benchmarks.  
-> 
-> Thoughts?  Improvements?
-> 
-> Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+On Mon, May 28, 2012 at 1:34 AM, Jon Seymour <jon.seymour@gmail.com> wrote:
+> This change also fixes a subtle error in the setup of some tests which was
+> masked by the denormalization issue that is now fixed.
+>
 
-Seems reasonable, a few comments below.
+I guess this patch could be improved by moving the change to the test
+setup to a separate, earlier patch and also including a separate test
+which demonstrates the
+flawed behaviour described by the commit message. Anyone disagree?
 
->  git-svn.perl |  126 +++++++++++++++++++++++++++++++++++++++++++++++++++++++---
-
-> +package Git::SVN::Memoize::YAML;
-
-Can we use this as an opportunity to start splitting git-svn.perl into
-multiple .pm files?  Thanks.
-
-> +	my $truehash = (-e $filename) ? YAML::Any::LoadFile($filename) : {};
-
-> +	YAML::Any::DumpFile($self->{FILENAME}, $self->{H});
-
-These should die on errors, right?
-
-> +=head1 BUGS
-
-> +Error handling is awkward.
-
-How so?
+jon.
