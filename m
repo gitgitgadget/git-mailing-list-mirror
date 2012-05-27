@@ -1,83 +1,61 @@
-From: Sitaram Chamarty <sitaramc@gmail.com>
-Subject: locking (binary) files in git with gitolite
-Date: Sun, 27 May 2012 19:23:19 +0530
-Message-ID: <CAMK1S_jM=QTMjp7pJLCMxZ12F8q4-WmdPDEEpPT-+8ouYXAO2g@mail.gmail.com>
+From: Jon Seymour <jon.seymour@gmail.com>
+Subject: Re: [PATCH v6 7/9] submodule: fix sync handling of relative
+ superproject origin URLs
+Date: Sun, 27 May 2012 23:55:07 +1000
+Message-ID: <CAH3AnroV7yWoTp4EW6smmX8T2H1vj8de4dH2Q2y9qiZgBnDS4g@mail.gmail.com>
+References: <1338126210-11517-1-git-send-email-jon.seymour@gmail.com>
+	<1338126210-11517-8-git-send-email-jon.seymour@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-To: gitolite <gitolite@googlegroups.com>, Git Mailing List <git@vger.kernel.org>
-X-From: gitolite+bncCO7u1pXgChDQ44j-BBoEIRXxQw@googlegroups.com Sun May 27 15:53:23 2012
-Return-path: <gitolite+bncCO7u1pXgChDQ44j-BBoEIRXxQw@googlegroups.com>
-Envelope-to: gcvg-gitolite@m.gmane.org
-Received: from mail-qc0-f186.google.com ([209.85.216.186])
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun May 27 15:55:14 2012
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <gitolite+bncCO7u1pXgChDQ44j-BBoEIRXxQw@googlegroups.com>)
-	id 1SYduL-0000K5-Ko
-	for gcvg-gitolite@m.gmane.org; Sun, 27 May 2012 15:53:21 +0200
-Received: by qcsc2 with SMTP id c2sf2465996qcs.3
-        for <gcvg-gitolite@m.gmane.org>; Sun, 27 May 2012 06:53:21 -0700 (PDT)
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1SYdw9-0002Xi-PD
+	for gcvg-git-2@plane.gmane.org; Sun, 27 May 2012 15:55:14 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1752383Ab2E0NzK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 27 May 2012 09:55:10 -0400
+Received: from mail-wi0-f178.google.com ([209.85.212.178]:43352 "EHLO
+	mail-wi0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751661Ab2E0NzJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 27 May 2012 09:55:09 -0400
+Received: by wibhn6 with SMTP id hn6so955456wib.1
+        for <git@vger.kernel.org>; Sun, 27 May 2012 06:55:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=beta;
-        h=x-beenthere:received-spf:mime-version:date:message-id:subject:from
-         :to:x-original-sender:x-original-authentication-results:precedence
-         :mailing-list:list-id:x-google-group-id:list-post:list-help
-         :list-archive:sender:list-subscribe:list-unsubscribe:content-type;
-        bh=5Ya8MDInRvMyXLJ+FRqbQ4m57aTwTAExrzhHJVtraok=;
-        b=iURW56faM2IMLYFc9A+2oKVW/zNFydhkpO3beGWTuMfjspVEe8+DFhSlx98HPQjgFj
-         OW3uGMYCzDQRo3QLQ8+Majd6mi1fzLRqoPdN5bc/C/GPwaHp2+sF10tc3+S9o+hb86Eh
-         CRdrypAyshFMqMfyAINsQssnk1q2+KxevCm7A=
-Received: by 10.50.169.37 with SMTP id ab5mr489794igc.1.1338126800467;
-        Sun, 27 May 2012 06:53:20 -0700 (PDT)
-X-BeenThere: gitolite@googlegroups.com
-Received: by 10.50.202.5 with SMTP id ke5ls886503igc.2.gmail; Sun, 27 May 2012
- 06:53:19 -0700 (PDT)
-Received: by 10.43.47.202 with SMTP id ut10mr1122195icb.5.1338126799457;
-        Sun, 27 May 2012 06:53:19 -0700 (PDT)
-Received: by 10.43.47.202 with SMTP id ut10mr1122193icb.5.1338126799445;
-        Sun, 27 May 2012 06:53:19 -0700 (PDT)
-Received: from mail-ob0-f170.google.com (mail-ob0-f170.google.com [209.85.214.170])
-        by gmr-mx.google.com with ESMTPS id cv4si1336912igc.0.2012.05.27.06.53.19
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sun, 27 May 2012 06:53:19 -0700 (PDT)
-Received-SPF: pass (google.com: domain of sitaramc@gmail.com designates 209.85.214.170 as permitted sender) client-ip=209.85.214.170;
-Received: by mail-ob0-f170.google.com with SMTP id uo13so8976977obb.1
-        for <gitolite@googlegroups.com>; Sun, 27 May 2012 06:53:19 -0700 (PDT)
-Received: by 10.182.131.2 with SMTP id oi2mr5075208obb.43.1338126799282; Sun,
- 27 May 2012 06:53:19 -0700 (PDT)
-Received: by 10.182.108.67 with HTTP; Sun, 27 May 2012 06:53:19 -0700 (PDT)
-X-Original-Sender: sitaramc@gmail.com
-X-Original-Authentication-Results: gmr-mx.google.com; spf=pass (google.com:
- domain of sitaramc@gmail.com designates 209.85.214.170 as permitted sender)
- smtp.mail=sitaramc@gmail.com; dkim=pass header.i=@gmail.com
-Precedence: list
-Mailing-list: list gitolite@googlegroups.com; contact gitolite+owners@googlegroups.com
-List-ID: <gitolite.googlegroups.com>
-X-Google-Group-Id: 373658679585
-List-Post: <http://groups.google.com/group/gitolite/post?hl=en-GB_IN>, <mailto:gitolite@googlegroups.com>
-List-Help: <http://groups.google.com/support/?hl=en-GB_IN>, <mailto:gitolite+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/gitolite?hl=en-GB_IN>
-Sender: gitolite@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/gitolite/subscribe?hl=en-GB_IN>,
- <mailto:gitolite+subscribe@googlegroups.com>
-List-Unsubscribe: <http://groups.google.com/group/gitolite/subscribe?hl=en-GB_IN>,
- <mailto:googlegroups-manage+373658679585+unsubscribe@googlegroups.com>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198601>
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :content-type;
+        bh=UM2WvPd2fNWENO0UFIZUO+dw2ytARlaFs7L/Qeo+Z+Y=;
+        b=j3oOil0eNBMinrCVJ17OUb6EkyHAYVSVxpT0w85oCmMFJA/I9XHBb2+QTeU3q6wmqE
+         /eP+r+SburJNX1yiuZSvMLg95q5aeaEAenTD1FcwG6W0Ac38FqLjy0JufbIYlHeF3ykZ
+         3OKyf2IntlocxAfKoxQZKc6mLKFuDZgGdJbWQrV3caf9GwDqsBzEKqbOsHSZl8z/LIyB
+         o/NoM4uEM36MDW6Nduc90Bq6GpYJR+jFGa+SBcD4tvJAfxNQM32NHse4lTXkxe3rX2bz
+         qYmsqZvG8hfCs0xSw1N/7iaYuKjafrlTklpE3pYewa+cIW6qU/9UKtIHV5nRP+jg8DMw
+         dswg==
+Received: by 10.180.84.6 with SMTP id u6mr1387104wiy.11.1338126907857; Sun, 27
+ May 2012 06:55:07 -0700 (PDT)
+Received: by 10.180.146.166 with HTTP; Sun, 27 May 2012 06:55:07 -0700 (PDT)
+In-Reply-To: <1338126210-11517-8-git-send-email-jon.seymour@gmail.com>
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198602>
 
-One of the groups at $DAYJOB indicated that lack of file locking was a
-show stopper for using git itself, due to the number of binary
-artefacts (images, ODTs etc) they have and the fact that prevention is
-far, *far* better than cure when it comes to merging those animals :-)
+On Sun, May 27, 2012 at 11:43 PM, Jon Seymour <jon.seymour@gmail.com> wrote:
+> When the origin URL of the superproject is itself relative, git sync
+> configures the remote.origin.url configuration property of the submodule
+> with a path that is relative to the work tree of the super project
 
-Thinking about it, it struck me that most corporate setups have
-exactly one canonical repo/source of truth and all devs clone
-from/push to it, and so it ought to be possible to do something about
-locking in this limited case.
+sorry! super project -> superproject
 
-Anyway, the end result of all this is here:
-http://sitaramc.github.com/gitolite/locking.html.  You'll need the
-latest tip from "master" on gitolite if you want to use it.
+> rather than the work tree of the submodule.
+>
+> To fix this an 'up_path' that navigates from the work tree of the submodule
+> to the work tree of the supermodule needs to be prepended to the URL
 
-Hope this helps someone.  Especially if you're already using gitolite
-(v3.x) it ought to be relatively painless to try out.
-
--- 
-Sitaram
+sorry! supermodule -> superproject.
