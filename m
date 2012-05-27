@@ -1,119 +1,81 @@
-From: Jon Seymour <jon.seymour@gmail.com>
-Subject: [PATCH v7 9/9] submodule: fix normalization to handle repeated ./
-Date: Mon, 28 May 2012 01:34:11 +1000
-Message-ID: <1338132851-23497-10-git-send-email-jon.seymour@gmail.com>
-References: <1338132851-23497-1-git-send-email-jon.seymour@gmail.com>
-Cc: Jens.Lehmann@web.de, gitster@pobox.com, phil.hord@gmail.com,
-	ramsay@ramsay1.demon.co.uk, Jon Seymour <jon.seymour@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun May 27 17:36:25 2012
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: [PATCH] Reduce cost of deletion in levenstein distance (4 -> 3)
+Date: Sun, 27 May 2012 18:02:58 +0200
+Message-ID: <1338134578-29011-1-git-send-email-Matthieu.Moy@imag.fr>
+Cc: Matthieu Moy <Matthieu.Moy@imag.fr>
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Sun May 27 18:03:47 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SYfVt-0006Ww-Gq
-	for gcvg-git-2@plane.gmane.org; Sun, 27 May 2012 17:36:13 +0200
+	id 1SYfwZ-000676-0G
+	for gcvg-git-2@plane.gmane.org; Sun, 27 May 2012 18:03:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752962Ab2E0PfS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 27 May 2012 11:35:18 -0400
-Received: from mail-pb0-f46.google.com ([209.85.160.46]:59885 "EHLO
-	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752751Ab2E0Pe4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 27 May 2012 11:34:56 -0400
-Received: by mail-pb0-f46.google.com with SMTP id rp8so3669135pbb.19
-        for <git@vger.kernel.org>; Sun, 27 May 2012 08:34:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=Cjzod+SXCbEsVntB7Wx+0JBXxcQCSjlQ2dnFbbaFtJw=;
-        b=bg6sEuAfP1XNr/X/s8OUKWXZ39tFMreI/88CkBCqDE9TflzjC+G4Xsl41G/aQ7lgF6
-         SR3Mq13K3Md1HEMP44hukWvo0qnyfY73RLrVOLC2d067PIEnjzX/1RAV1Ok53OiIdZpg
-         W97Gq58baLxFbB80G0RTZx4PdAxrSZTzdiPHUSPo4Gito0bPrdzJQNpcCkbebmiLwydY
-         GHYnlSRGE9H9UUxZ7Vs0pbd76rgDQYDhJIdcBszbriIRUA+L0Wr+bD7Z+TilGE9zFduv
-         zy7z8KqW8pKacm4vs//pbHOtGXfD5UAe9PDvlHvZbTjQSbXfK0FkFQ88N7Dg22g+6jgN
-         UbVw==
-Received: by 10.68.212.67 with SMTP id ni3mr3967268pbc.136.1338132895841;
-        Sun, 27 May 2012 08:34:55 -0700 (PDT)
-Received: from ubuntu.ubuntu-domain (124-170-214-58.dyn.iinet.net.au. [124.170.214.58])
-        by mx.google.com with ESMTPS id rk4sm16128261pbc.48.2012.05.27.08.34.52
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sun, 27 May 2012 08:34:54 -0700 (PDT)
-X-Mailer: git-send-email 1.7.10.2.656.g24a6219
-In-Reply-To: <1338132851-23497-1-git-send-email-jon.seymour@gmail.com>
+	id S1752703Ab2E0QDI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 27 May 2012 12:03:08 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:35941 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752305Ab2E0QDF (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 27 May 2012 12:03:05 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id q4RFspOh009716
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Sun, 27 May 2012 17:54:51 +0200
+Received: from bauges.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.72)
+	(envelope-from <moy@imag.fr>)
+	id 1SYfvn-0001I9-VW; Sun, 27 May 2012 18:03:00 +0200
+Received: from moy by bauges.imag.fr with local (Exim 4.72)
+	(envelope-from <moy@imag.fr>)
+	id 1SYfvn-0007Yc-R1; Sun, 27 May 2012 18:02:59 +0200
+X-Mailer: git-send-email 1.7.10.363.g7fcd3d.dirty
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Sun, 27 May 2012 17:54:51 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: q4RFspOh009716
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
+MailScanner-NULL-Check: 1338738891.85569@67nOrxIMerw26lnNPv5P+g
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198613>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198614>
 
-Currently path/./foo/./bar is denormalized correctly, but path/foo/././bar
-is not.
+Before this patch, a character deletion has the same cost as 2 swaps, or
+4 additions, so Git prefers suggesting a completely scrambled command
+name to removing a character. For example, "git tags" suggests "stage",
+but not "tag".
 
-We fix the normalization script to allow repeated application of the
-./ -> / normalization in the same way that foo/.. is handled - by
-moving it inside a sed loop.
+By setting the deletion cost to 3, we keep it higher than swaps or
+additions, but prefer 1 deletion to 2 swaps. "git tags" now suggests
+"tag" in addition to staged.
 
-The existing sed label, start, is renamed to fooslashdotdotslash to
-indicate which of the two loops is being refered to by the second
-branch directive.
-
-Signed-off-by: Jon Seymour <jon.seymour@gmail.com>
+Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
 ---
- git-submodule.sh           | 8 +++++---
- t/t7400-submodule-basic.sh | 6 +++---
- 2 files changed, 8 insertions(+), 6 deletions(-)
+The RFC sent earlier [1] didn't receive negative comments, so I think this
+is a good change.
 
-diff --git a/git-submodule.sh b/git-submodule.sh
-index 1f0983c..8f3bc71 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -229,10 +229,12 @@ normalize_path()
- 		sed -e '
- 			s|//*|/|g
- 			s|^\(\./\)*||
--			s|/\./|/|g
--			:start
-+			:slashdotslash
-+			s|/\./|/|
-+			tslashdotslash
-+			:fooslashdotdotslash
- 			s|\([^/]*\)/\.\./||
--			tstart
-+			tfooslashdotdotslash
- 			s|/*$||
- 		'
- }
-diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
-index b01f479..61887b2 100755
---- a/t/t7400-submodule-basic.sh
-+++ b/t/t7400-submodule-basic.sh
-@@ -499,7 +499,7 @@ test_expect_success '../subrepo works with URL - ssh://hostname/repo' '
- 	)
- '
+http://thread.gmane.org/gmane.comp.version-control.git/196457
+
+ help.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/help.c b/help.c
+index 14eefc9..fdaa90d 100644
+--- a/help.c
++++ b/help.c
+@@ -334,7 +334,7 @@ const char *help_unknown_cmd(const char *cmd)
+ 		}
  
--test_expect_failure 'relative path works with URL - ssh://hostname/path/././repo' '
-+test_expect_success 'relative path works with URL - ssh://hostname/path/././repo' '
- 	(
- 		cd reltest &&
- 		cp pristine-.git-config .git/config &&
-@@ -510,7 +510,7 @@ test_expect_failure 'relative path works with URL - ssh://hostname/path/././repo
- 	)
- '
+ 		main_cmds.names[i]->len =
+-			levenshtein(cmd, candidate, 0, 2, 1, 4) + 1;
++			levenshtein(cmd, candidate, 0, 2, 1, 3) + 1;
+ 	}
  
--test_expect_failure 'relative path works with URL - ssh://hostname/path/detour/././../repo' '
-+test_expect_success 'relative path works with URL - ssh://hostname/path/detour/././../repo' '
- 	(
- 		cd reltest &&
- 		cp pristine-.git-config .git/config &&
-@@ -685,7 +685,7 @@ test_expect_success 'relative path works with user@host:path/to/./repo' '
- 	)
- '
- 
--test_expect_failure 'relative path works with user@host:path/to/././repo' '
-+test_expect_success 'relative path works with user@host:path/to/././repo' '
- 	(
- 		cd reltest &&
- 		cp pristine-.git-config .git/config &&
+ 	qsort(main_cmds.names, main_cmds.cnt,
 -- 
-1.7.10.2.656.g24a6219
+1.7.10.363.g7fcd3d.dirty
