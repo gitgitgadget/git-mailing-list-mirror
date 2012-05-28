@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH 19/65] i18n: describe: mark parseopt strings for translation
-Date: Mon, 28 May 2012 18:13:31 +0700
-Message-ID: <1338203657-26486-17-git-send-email-pclouds@gmail.com>
+Subject: [PATCH 21/65] i18n: fetch: mark parseopt strings for translation
+Date: Mon, 28 May 2012 18:13:33 +0700
+Message-ID: <1338203657-26486-19-git-send-email-pclouds@gmail.com>
 References: <1336314232-21002-3-git-send-email-pclouds@gmail.com>
  <1338203657-26486-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
@@ -15,112 +15,131 @@ Cc: Jonathan Niedier <jrnieder@gmail.com>,
 	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 28 13:21:03 2012
+X-From: git-owner@vger.kernel.org Mon May 28 13:21:25 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SYy0T-0008IR-1h
-	for gcvg-git-2@plane.gmane.org; Mon, 28 May 2012 13:21:01 +0200
+	id 1SYy0l-0000Gq-LJ
+	for gcvg-git-2@plane.gmane.org; Mon, 28 May 2012 13:21:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753968Ab2E1LUx convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 28 May 2012 07:20:53 -0400
+	id S1754051Ab2E1LVL convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 28 May 2012 07:21:11 -0400
 Received: from mail-pz0-f46.google.com ([209.85.210.46]:57776 "EHLO
 	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753587Ab2E1LUu (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 May 2012 07:20:50 -0400
+	with ESMTP id S1753960Ab2E1LVH (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 May 2012 07:21:07 -0400
 Received: by mail-pz0-f46.google.com with SMTP id y13so4034594dad.19
-        for <git@vger.kernel.org>; Mon, 28 May 2012 04:20:50 -0700 (PDT)
+        for <git@vger.kernel.org>; Mon, 28 May 2012 04:21:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=muJWmP5vrevOp8D8Yci9L9zg2ECJrm9Idr/H6K0Jbbg=;
-        b=dhehAUjYuTxltbRlSGHljHCvwZ2Sn8RRg7XFB/4qhFhDiyD4/yIOKenOUmcGNUwrP9
-         Np1+8FaM+dCxbs/HT8JVJSB3s+5K9PYQ+kem/m6Oi4T5lPPMHdOc7gxgU/UBN2TFJY+y
-         DmXdxlPNgJ3e+2RN5gF+6ZiHyeDQ9vtXvUYs6DiqiCRYXZ4AtWxSXHqh9063IHuEHpBJ
-         UnLwecBP4WJt/e96tTCchzUSf+1JhzlUnYlNp1K5Q4j5zI/s22BhbNBflLCYCzpxWdyZ
-         k4t5hLv4GIHSNQW0VAbZ4uB1cRBcglTNN3Go7NmHu05hhaADCiM/zPuIWZH1uveqFLis
-         MeTg==
-Received: by 10.68.202.136 with SMTP id ki8mr25802957pbc.65.1338204049945;
-        Mon, 28 May 2012 04:20:49 -0700 (PDT)
+        bh=v+FjkYoWZ3Sz1pXgrtNszyb3C6xBJ4kT03qCdklxv20=;
+        b=ZDWORkXVWtXrxq3KTQW4Jkr6UftjEA7wUuLF2bY2Zn3z3GNj87ouq1UpCLRiHEavPC
+         K4cS+XMH6qCeCiC4pBq8nqq1Bued+of2bTfzkIN8SvAn8l7HUpYjvvxCewV9WYVpHQCj
+         OGfsDIA0A+4q8Ht/33q48fttk6K+yBO2jcGHBxF5iNsBOaTggvDXUEX2H5U6VrLF43Fz
+         99GbrWG5RAcho7K/F17VywdCoRF+bLMLhGeZLmXpOrqsuU0gM6TjxU3MN8Q9Z8OaNIoe
+         rk8mNFXXZRGZz57rJFmoAKt7FC00cA0aS/x3kYjOh+D1BPVKZvKPyV0zpDKb0PUoJolY
+         2Tzg==
+Received: by 10.68.231.36 with SMTP id td4mr26637707pbc.141.1338204067183;
+        Mon, 28 May 2012 04:21:07 -0700 (PDT)
 Received: from pclouds@gmail.com ([115.74.41.88])
-        by mx.google.com with ESMTPS id ve6sm18972079pbc.75.2012.05.28.04.20.45
+        by mx.google.com with ESMTPS id po10sm19003765pbb.21.2012.05.28.04.21.02
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 28 May 2012 04:20:49 -0700 (PDT)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Mon, 28 May 2012 18:16:44 +0700
+        Mon, 28 May 2012 04:21:06 -0700 (PDT)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Mon, 28 May 2012 18:17:01 +0700
 X-Mailer: git-send-email 1.7.10.2.549.g9354186
 In-Reply-To: <1338203657-26486-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198655>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198656>
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- builtin/describe.c | 28 ++++++++++++++--------------
- 1 file changed, 14 insertions(+), 14 deletions(-)
+ builtin/fetch.c | 48 ++++++++++++++++++++++++------------------------
+ 1 file changed, 24 insertions(+), 24 deletions(-)
 
-diff --git a/builtin/describe.c b/builtin/describe.c
-index 9f63067..9fe11ed 100644
---- a/builtin/describe.c
-+++ b/builtin/describe.c
-@@ -12,8 +12,8 @@
- #define MAX_TAGS	(FLAG_BITS - 1)
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index bb9a074..3f2ad77 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -16,10 +16,10 @@
+ #include "connected.h"
 =20
- static const char * const describe_usage[] =3D {
--	"git describe [options] <committish>*",
--	"git describe [options] --dirty",
-+	N_("git describe [options] <committish>*"),
-+	N_("git describe [options] --dirty"),
+ static const char * const builtin_fetch_usage[] =3D {
+-	"git fetch [<options>] [<repository> [<refspec>...]]",
+-	"git fetch [<options>] <group>",
+-	"git fetch --multiple [<options>] [(<repository> | <group>)...]",
+-	"git fetch --all [<options>]",
++	N_("git fetch [<options>] [<repository> [<refspec>...]]"),
++	N_("git fetch [<options>] <group>"),
++	N_("git fetch --multiple [<options>] [(<repository> | <group>)...]"),
++	N_("git fetch --all [<options>]"),
  	NULL
  };
 =20
-@@ -400,22 +400,22 @@ int cmd_describe(int argc, const char **argv, con=
-st char *prefix)
- {
- 	int contains =3D 0;
- 	struct option options[] =3D {
--		OPT_BOOLEAN(0, "contains",   &contains, "find the tag that comes aft=
-er the commit"),
--		OPT_BOOLEAN(0, "debug",      &debug, "debug search strategy on stder=
-r"),
--		OPT_BOOLEAN(0, "all",        &all, "use any ref in .git/refs"),
--		OPT_BOOLEAN(0, "tags",       &tags, "use any tag in .git/refs/tags")=
-,
--		OPT_BOOLEAN(0, "long",       &longformat, "always use long format"),
-+		OPT_BOOLEAN(0, "contains",   &contains, N_("find the tag that comes =
-after the commit")),
-+		OPT_BOOLEAN(0, "debug",      &debug, N_("debug search strategy on st=
-derr")),
-+		OPT_BOOLEAN(0, "all",        &all, N_("use any ref in .git/refs")),
-+		OPT_BOOLEAN(0, "tags",       &tags, N_("use any tag in .git/refs/tag=
-s")),
-+		OPT_BOOLEAN(0, "long",       &longformat, N_("always use long format=
-")),
- 		OPT__ABBREV(&abbrev),
- 		OPT_SET_INT(0, "exact-match", &max_candidates,
--			    "only output exact matches", 0),
-+			    N_("only output exact matches"), 0),
- 		OPT_INTEGER(0, "candidates", &max_candidates,
--			    "consider <n> most recent tags (default: 10)"),
--		OPT_STRING(0, "match",       &pattern, "pattern",
--			   "only consider tags matching <pattern>"),
-+			    N_("consider <n> most recent tags (default: 10)")),
-+		OPT_STRING(0, "match",       &pattern, N_("pattern"),
-+			   N_("only consider tags matching <pattern>")),
- 		OPT_BOOLEAN(0, "always",     &always,
--			   "show abbreviated commit object as fallback"),
--		{OPTION_STRING, 0, "dirty",  &dirty, "mark",
--			   "append <mark> on dirty working tree (default: \"-dirty\")",
-+			   N_("show abbreviated commit object as fallback")),
-+		{OPTION_STRING, 0, "dirty",  &dirty, N_("mark"),
-+			   N_("append <mark> on dirty working tree (default: \"-dirty\")"),
- 		 PARSE_OPT_OPTARG, NULL, (intptr_t) "-dirty"},
- 		OPT_END(),
- 	};
+@@ -56,36 +56,36 @@ static int option_parse_recurse_submodules(const st=
+ruct option *opt,
+ static struct option builtin_fetch_options[] =3D {
+ 	OPT__VERBOSITY(&verbosity),
+ 	OPT_BOOLEAN(0, "all", &all,
+-		    "fetch from all remotes"),
++		    N_("fetch from all remotes")),
+ 	OPT_BOOLEAN('a', "append", &append,
+-		    "append to .git/FETCH_HEAD instead of overwriting"),
+-	OPT_STRING(0, "upload-pack", &upload_pack, "path",
+-		   "path to upload pack on remote end"),
+-	OPT__FORCE(&force, "force overwrite of local branch"),
++		    N_("append to .git/FETCH_HEAD instead of overwriting")),
++	OPT_STRING(0, "upload-pack", &upload_pack, N_("path"),
++		   N_("path to upload pack on remote end")),
++	OPT__FORCE(&force, N_("force overwrite of local branch")),
+ 	OPT_BOOLEAN('m', "multiple", &multiple,
+-		    "fetch from multiple remotes"),
++		    N_("fetch from multiple remotes")),
+ 	OPT_SET_INT('t', "tags", &tags,
+-		    "fetch all tags and associated objects", TAGS_SET),
++		    N_("fetch all tags and associated objects"), TAGS_SET),
+ 	OPT_SET_INT('n', NULL, &tags,
+-		    "do not fetch all tags (--no-tags)", TAGS_UNSET),
++		    N_("do not fetch all tags (--no-tags)"), TAGS_UNSET),
+ 	OPT_BOOLEAN('p', "prune", &prune,
+-		    "prune remote-tracking branches no longer on remote"),
+-	{ OPTION_CALLBACK, 0, "recurse-submodules", NULL, "on-demand",
+-		    "control recursive fetching of submodules",
++		    N_("prune remote-tracking branches no longer on remote")),
++	{ OPTION_CALLBACK, 0, "recurse-submodules", NULL, N_("on-demand"),
++		    N_("control recursive fetching of submodules"),
+ 		    PARSE_OPT_OPTARG, option_parse_recurse_submodules },
+ 	OPT_BOOLEAN(0, "dry-run", &dry_run,
+-		    "dry run"),
+-	OPT_BOOLEAN('k', "keep", &keep, "keep downloaded pack"),
++		    N_("dry run")),
++	OPT_BOOLEAN('k', "keep", &keep, N_("keep downloaded pack")),
+ 	OPT_BOOLEAN('u', "update-head-ok", &update_head_ok,
+-		    "allow updating of HEAD ref"),
+-	OPT_BOOL(0, "progress", &progress, "force progress reporting"),
+-	OPT_STRING(0, "depth", &depth, "depth",
+-		   "deepen history of shallow clone"),
+-	{ OPTION_STRING, 0, "submodule-prefix", &submodule_prefix, "dir",
+-		   "prepend this to submodule path output", PARSE_OPT_HIDDEN },
++		    N_("allow updating of HEAD ref")),
++	OPT_BOOL(0, "progress", &progress, N_("force progress reporting")),
++	OPT_STRING(0, "depth", &depth, N_("depth"),
++		   N_("deepen history of shallow clone")),
++	{ OPTION_STRING, 0, "submodule-prefix", &submodule_prefix, N_("dir"),
++		   N_("prepend this to submodule path output"), PARSE_OPT_HIDDEN },
+ 	{ OPTION_STRING, 0, "recurse-submodules-default",
+ 		   &recurse_submodules_default, NULL,
+-		   "default mode for recursion", PARSE_OPT_HIDDEN },
++		   N_("default mode for recursion"), PARSE_OPT_HIDDEN },
+ 	OPT_END()
+ };
+=20
 --=20
 1.7.10.2.549.g9354186
