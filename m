@@ -1,75 +1,115 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: [PATCH v7 0/9] submodule: improve robustness of path handling
-Date: Mon, 28 May 2012 22:07:11 +0200
-Message-ID: <4FC3DAEF.1070508@web.de>
-References: <1338132851-23497-1-git-send-email-jon.seymour@gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCHv3 1/2] wt-status.*: better advices for git status added
+Date: Mon, 28 May 2012 22:23:31 +0200
+Message-ID: <vpqobp89hrw.fsf@bauges.imag.fr>
+References: <1338035905-24166-1-git-send-email-Lucien.Kong@ensimag.imag.fr>
+	<1338226598-16056-1-git-send-email-Lucien.Kong@ensimag.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, gitster@pobox.com, phil.hord@gmail.com,
-	Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
-	Johannes Sixt <j6t@kdbg.org>
-To: Jon Seymour <jon.seymour@gmail.com>
-X-From: git-owner@vger.kernel.org Mon May 28 22:08:07 2012
+Content-Type: text/plain
+Cc: git@vger.kernel.org,
+	Duperray Valentin <Valentin.Duperray@ensimag.imag.fr>,
+	Jonas Franck <Franck.Jonas@ensimag.imag.fr>,
+	Nguy Thomas <Thomas.Nguy@ensimag.imag.fr>,
+	Nguyen Huynh Khoi Nguyen Lucien 
+	<Huynh-Khoi-Nguyen.Nguyen@ensimag.imag.fr>
+To: Kong Lucien <Lucien.Kong@ensimag.imag.fr>
+X-From: git-owner@vger.kernel.org Mon May 28 22:23:47 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SZ6EY-0005qY-Ma
-	for gcvg-git-2@plane.gmane.org; Mon, 28 May 2012 22:08:07 +0200
+	id 1SZ6Td-0006XI-Vi
+	for gcvg-git-2@plane.gmane.org; Mon, 28 May 2012 22:23:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755016Ab2E1UHj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 May 2012 16:07:39 -0400
-Received: from fmmailgate01.web.de ([217.72.192.221]:55428 "EHLO
-	fmmailgate01.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754970Ab2E1UHi (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 May 2012 16:07:38 -0400
-Received: from moweb002.kundenserver.de (moweb002.kundenserver.de [172.19.20.108])
-	by fmmailgate01.web.de (Postfix) with ESMTP id B4DD31AF02771
-	for <git@vger.kernel.org>; Mon, 28 May 2012 22:07:14 +0200 (CEST)
-Received: from [192.168.178.48] ([91.3.180.110]) by smtp.web.de (mrweb002)
- with ESMTPA (Nemesis) id 0MgOQQ-1SMMlF48xC-00NjKR; Mon, 28 May 2012 22:07:13
- +0200
-User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:12.0) Gecko/20120428 Thunderbird/12.0.1
-In-Reply-To: <1338132851-23497-1-git-send-email-jon.seymour@gmail.com>
-X-Provags-ID: V02:K0:Ajwgpj/hGzIDkZM5ywU+5Y8w4Diwau9iwDo0de6B7Ry
- GEoPn8xXaec+RahR6ZsfjAryaMaTgfrKlY/fpaZQbhSRkykc1f
- rnS1iC2x7Yom5V/aOzxv6EhiU+3uwAFQr4sFr0007vV7rZnrFt
- DaUsQXZWVVVxlzVrrkmcrm2ofv9xZOR4r11cFwtRqtera6i3AD
- s7E5JcG8Yk+87evz+0uXA==
+	id S1755082Ab2E1UXh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 May 2012 16:23:37 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:54143 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755057Ab2E1UXg (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 May 2012 16:23:36 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id q4SKFEO6007335
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Mon, 28 May 2012 22:15:14 +0200
+Received: from bauges.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1SZ6TU-0007RD-P2; Mon, 28 May 2012 22:23:32 +0200
+In-Reply-To: <1338226598-16056-1-git-send-email-Lucien.Kong@ensimag.imag.fr>
+	(Kong Lucien's message of "Mon, 28 May 2012 19:36:37 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.93 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Mon, 28 May 2012 22:15:15 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: q4SKFEO6007335
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1338840915.97414@+v06R8US3BmwZ3hYoKIpWA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198719>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198720>
 
-Am 27.05.2012 17:34, schrieb Jon Seymour:
-> This series improves the robustness of path handling by 'git submodule' by:
-> 
-> * detecting submodule URLs that will result in non-sensical submodule origin URLs
-> 
-> * improving handling of various kinds of relative superproject origin URLs
-> 
-> * improving handling of various kinds of denormalized superproject origin URLs
+Kong Lucien <Lucien.Kong@ensimag.imag.fr> writes:
 
-Hmm, this has become a quite invasive patch series. While I bought the
-use case of having a superproject with a relative url and was inclined
-to accept that it might even not start "./" or "../" (even though that
-is a pretty unusual use and can be easily fixed by prepending a "./"),
-I'm not sure the in depth check of URLs is worth the code churn. And
-especially the high probability of breaking other peoples use cases in
-rather subtle ways worry me (this did happen quite often when the
-submodule script was changed in the past; as an example take the
-windows path issues Johannes already pointed out in his email). And I
-can't remember bug reports that people complained about URL problems
-due to the issues you intend to fix here, which makes me think they
-might be well intended but possibly unnecessary (but my memory might
-server me wrong here).
+> These messages can be shortened by setting
+> the new advice.* config key called advice.statushelp to false.
 
-So I'd vote for just fixing the relative submodule path issues and to
-not care about the possible issues with URLs. Opinions?
+It may make sense to use the existing advice.statusHint here.
 
-(And patches 6-8 contain changes to test cases other than just changing
-test_expect_failure to test_expect_success which makes reviewing this
-series unnecessarily hard)
+> +	else {
+> +		if (!stat(git_path("rebase-apply"), &st)) {
+
+"else { if" is usually spelt "else if", without an additional level of
+indentation.
+
+> +			status_printf_ln(s, c, _("You have unmerged paths: fix conflicts and then commit the result."));
+
+I'd even say
+
+You have unmerged paths; fix conflicts and run "git commit"
+
+> +				status_printf_ln(s, c, _("One of the patches is empty or corrupted !"));
+
+No space before !
+
+> +				status_printf_ln(s, c, _("When you have resolved this problem run \"git am --resolved\"."));
+> +				status_printf_ln(s, c, _("If you would prefer to skip this patch, instead run \"git am --skip\"."));
+> +				status_printf_ln(s, c, _("To restore the original branch and stop patching run \"git am --abort\"."));
+
+You have overly long lines. I already suggested splitting the function
+into smaller functions, and the presence of long lines is usually an
+indication that the splitting should be done.
+
+Documentation/CodingGuidelines says:
+
+,----
+| For C programs:
+| 
+|  - We use tabs to indent, and interpret tabs as taking up to
+|    8 spaces.
+| 
+|  - We try to keep to at most 80 characters per line.
+`----
+
+> +				status_printf_ln(s, c, _("You are currently rebasing%s"),
+> +				advice_status_help
+> +				? _(": fix conflicts and then run \"git rebase -- continue\".") : ".");
+
+Weird indentation, it feels like 3 different statements.
+
+> +	if(bisect_state) {
+
+Space between if and (.
+
+> +		if (advice_status_help)
+> +		status_printf_ln(s, c, _("To get back to the original branch run \"git bisect reset\""));
+
+Broken indentation.
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
