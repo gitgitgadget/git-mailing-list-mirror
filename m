@@ -1,92 +1,91 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCHv2 1/2] wt-status: better advices for git status
-Date: Mon, 28 May 2012 09:05:10 +0200
-Message-ID: <vpqwr3whjkp.fsf@bauges.imag.fr>
-References: <1337852264-32619-1-git-send-email-Lucien.Kong@ensimag.imag.fr>
-	<1338035905-24166-1-git-send-email-Lucien.Kong@ensimag.imag.fr>
-	<7v1um47vik.fsf@alter.siamese.dyndns.org>
+From: Jiang Xin <worldhello.net@gmail.com>
+Subject: Re: Vietnamese l10n pull request problems
+Date: Mon, 28 May 2012 15:42:57 +0800
+Message-ID: <CANYiYbGkHn7NgKgi2SG11fWV7kzuLPH_vhgOrhow17s9JzqBNg@mail.gmail.com>
+References: <CANYiYbHWsfNSVESsZ6KoSH+_FEuLrrESC1_N0=DB5uMaWSv+Xg@mail.gmail.com>
+	<4fc320ce.04d8440a.0581.ffff8a98@mx.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Kong Lucien <Lucien.Kong@ensimag.imag.fr>, git@vger.kernel.org,
-	Duperray Valentin <Valentin.Duperray@ensimag.imag.fr>,
-	Jonas Franck <Franck.Jonas@ensimag.imag.fr>,
-	Nguy Thomas <Thomas.Nguy@ensimag.imag.fr>,
-	Nguyen Huynh Khoi Nguyen Lucien 
-	<Huynh-Khoi-Nguyen.Nguyen@ensimag.imag.fr>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon May 28 09:05:28 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
+To: =?UTF-8?B?VHLhuqduIE5n4buNYyBRdcOibg==?= <vnwildman@gmail.com>
+X-From: git-owner@vger.kernel.org Mon May 28 09:43:03 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SYu15-0002SO-7y
-	for gcvg-git-2@plane.gmane.org; Mon, 28 May 2012 09:05:23 +0200
+	id 1SYubX-0000cH-66
+	for gcvg-git-2@plane.gmane.org; Mon, 28 May 2012 09:43:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752893Ab2E1HFR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 May 2012 03:05:17 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:54655 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751915Ab2E1HFQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 May 2012 03:05:16 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id q4S6utNX006220
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Mon, 28 May 2012 08:56:55 +0200
-Received: from bauges.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1SYu0t-00069J-Ma; Mon, 28 May 2012 09:05:11 +0200
-In-Reply-To: <7v1um47vik.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Sun, 27 May 2012 21:57:23 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.93 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Mon, 28 May 2012 08:56:55 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: q4S6utNX006220
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1338793016.60031@gA9evm0G44BgeZcjKd1F+Q
+	id S1751128Ab2E1Hm7 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 28 May 2012 03:42:59 -0400
+Received: from mail-gg0-f174.google.com ([209.85.161.174]:41842 "EHLO
+	mail-gg0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750791Ab2E1Hm6 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 28 May 2012 03:42:58 -0400
+Received: by gglu4 with SMTP id u4so1666228ggl.19
+        for <git@vger.kernel.org>; Mon, 28 May 2012 00:42:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=WUuyLqUaq1AX+CX1Uj+HAV6S5iBljZbyYCrhLy0Q+fU=;
+        b=Vfc5IvUvzrdezfQQd5KQ+UucMeSOXr8uODePxAMrI4rU+yDIhtlKpn6eXjhbJ8vVX/
+         HoBqbrqHsh3pXsuLYYUFU1KgqtImQ9Oq81KmqD548DQsQJZtBpb4SVCGvT5O/kKl91Mw
+         dT7XXMBzK4v+/vubPvJ/GdVCdbEBNJQA9daywgA/39Dqz+mw2XdfIVpEikyr+3ljqUp8
+         RKOCLG+/2aCu83xOlcf8KoJ5VcHERTmVFTKi/WqbGhBVbaB+K1uZ8MfVvVt55EPEBlX9
+         K3G1LnzwWgtXuqzPv409hV4eGUonHlQk7podNh9lCARkSHyn4Q2B88n8DG0sC8nj1hO5
+         bj2Q==
+Received: by 10.50.180.225 with SMTP id dr1mr3729165igc.52.1338190977616; Mon,
+ 28 May 2012 00:42:57 -0700 (PDT)
+Received: by 10.50.82.105 with HTTP; Mon, 28 May 2012 00:42:57 -0700 (PDT)
+In-Reply-To: <4fc320ce.04d8440a.0581.ffff8a98@mx.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198632>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198633>
 
-Junio C Hamano <gitster@pobox.com> writes:
+2012/5/28 Tr=E1=BA=A7n Ng=E1=BB=8Dc Qu=C3=A2n <vnwildman@gmail.com>:
+>> Fuzzy means wrong
+> It isn't true! When complete into mo, fuzzy will be ignore. When run,=
+ it use origin string.
+>> pull from git.git
+> Now I will:
 
-> These are not independent (you cannot be in bisect and am at the
-> same time).
+> -Drop my current repository
 
-You should not, but it seems you can. At least, I just successfully
-started a "git am" during a "git bisect".
+It's not necessary, just making a force push is OK. I already
+clean the history, squash the commits, add the signed-off-by
+line, and what I have done is pushed to branch WIP/vi/master
+at:
 
-Even if some checks may be added to actually prevent the situation, it
-seems better to keep "git status" robust to this kind of situation. If
-the user did something really wrong, nice advices in "git status" will
-be particularly helpful.
+ * https://github.com/git-l10n/git-po/commits/WIP/vi/master
 
->> +	int conflict = 0;
->
-> How is this different from "unmerged"?
-[...]
->> +	path = mkpath("%s/MERGE_HEAD", git_dir);
->> +	if (!access(path, R_OK))
->> +		unmerged_state = 1;
->
-> Ahh, so "unmerged" is "conflicted during merge" (as opposed to
-> rebase_state is "conflicted during rebase")?  Doesn't the naming
-> sound odd?  If it were "merge_state", it might have made a bit more
-> sense (but again, these are not independent conditions, so multiple
-> variables do not make sense).
+You can just reset your master branch to it. See comment:
 
-The variable naming is wrong (it could be s/conflicts/unmerged_present/
-and s/unmerged_state/merge_in_progress/ for example). But these two
-variables are indeed independant. You can have unmerged path without an
-actual merge in progress (conflicts during "git am"), an you can have a
-merge in progress without conflicts (if you've just "git add"-ed them).
+ * https://github.com/git-l10n/git-po/pull/22#issuecomment-5954600
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+> -Clone from git.git
+
+You already forked a repo directly from https://github.com/git-l10n/git=
+-po/
+right? And registered it as your team's main repo, which you have alrea=
+dy
+written in the TEAMS file.
+
+You should clone your own forked repo, which you have rights to push.
+
+> Sorry about inconvenience!
+
+Your translation for Vietnamese is most completed than any other langua=
+ges.
+=46eel free to make pull request.
+
+Indead, close pull request #22 on GitHub is unnecessary, just clean
+commit history of your master branch, create new commit to fix
+fuzzy translations, and the pull request will update automatically.
+
+--
+Jiang Xin
