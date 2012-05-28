@@ -1,91 +1,167 @@
-From: Nicolas Viennot and Sid Nair <nicolas@viennot.com>
-Subject: [PATCH] git-submodule.sh: Always initialize $url variable
-Date: Mon, 28 May 2012 05:41:54 -0400
-Message-ID: <1338198114-20480-1-git-send-email-nviennot+sidnair@viennot.biz>
-Cc: Nicolas Viennot and Sid Nair <nviennot+sidnair@viennot.biz>,
-	Jens Lehmann <Jens.Lehmann@web.de>,
-	Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
-	Nicolas Viennot <nicolas@viennot.biz>,
-	Sid Nair <sidnair09@gmail.com>
-To: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon May 28 11:43:07 2012
+From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [PATCH 03/65] i18n: archive: mark parseopt strings for translation
+Date: Mon, 28 May 2012 18:13:15 +0700
+Message-ID: <1338203657-26486-1-git-send-email-pclouds@gmail.com>
+References: <1336314232-21002-3-git-send-email-pclouds@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jonathan Niedier <jrnieder@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+	<avarab@gmail.com>, Jiang Xin <worldhello.net@gmail.com>,
+	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon May 28 13:18:37 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SYwTh-0006Dy-R2
-	for gcvg-git-2@plane.gmane.org; Mon, 28 May 2012 11:43:06 +0200
+	id 1SYxy8-0005LL-Eh
+	for gcvg-git-2@plane.gmane.org; Mon, 28 May 2012 13:18:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752932Ab2E1Jmo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 May 2012 05:42:44 -0400
-Received: from mail-vc0-f174.google.com ([209.85.220.174]:32806 "EHLO
-	mail-vc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752667Ab2E1JmT (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 May 2012 05:42:19 -0400
-Received: by vcbf11 with SMTP id f11so1368345vcb.19
-        for <git@vger.kernel.org>; Mon, 28 May 2012 02:42:18 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=sender:from:to:cc:subject:date:message-id:x-mailer
-         :x-gm-message-state;
-        bh=vMwcmGQ4qy7laPGQzNykTJt/ltJpq9plC9OrDQdxtg8=;
-        b=YQswsLcOvs4MhBpl7QgKg9CZ81ipHlAYS/h+mLH9r0u1YQjZgh9cZI3rbymEJQHwyE
-         ijJek5o8rGWy7rSB9tIUNXXM9KWfpSiw2oG1NFm6qFXI4NQkgYJryj8WMQKes8W1LdhT
-         0or0LJUzog79VIHsHECZ7BkzMN3gs07ZeV4PD/+1ZJWdshTyyV0QrPPFg9gTRdwB53q2
-         RPXDmseaTQfVYp6GwGT6jqPKipJuoHhBaSiGdotD6z6JQ7ZwlJcirXqWwdu5aHnEayNr
-         EytYo/n22Af9xLL8XCjcAxi2FigJGJRZg8bCkfniM+FMevgJ3jbziD+Z0sEBqVR8VaNa
-         y4Yg==
-Received: by 10.52.73.42 with SMTP id i10mr6548299vdv.116.1338198138422;
-        Mon, 28 May 2012 02:42:18 -0700 (PDT)
-Received: from smtp.gmail.com:587 (cpe-72-229-241-198.nyc.res.rr.com. [72.229.241.198])
-        by mx.google.com with ESMTPS id o15sm18140005vdi.15.2012.05.28.02.42.16
+	id S1752843Ab2E1LSc convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 28 May 2012 07:18:32 -0400
+Received: from mail-pz0-f46.google.com ([209.85.210.46]:43442 "EHLO
+	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752539Ab2E1LSb (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 May 2012 07:18:31 -0400
+Received: by dady13 with SMTP id y13so4032956dad.19
+        for <git@vger.kernel.org>; Mon, 28 May 2012 04:18:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding;
+        bh=hWEaArBPabkHnGOlDJfjqMZjeKYF0r2V6pOaMHAO+yU=;
+        b=xgcE5HSLDRhgbOE9ksQspyy5G7+jyWMMQBs24INvKSKpG7hZlwBmQH8LTljKOmp9m0
+         RgEShnDJGN+FlnKGD83PXUSpzP7sBNG6L8z8edGt7/N979BUrXja8NwOMPgILGViUR7V
+         ch04OVKcXuGr1bwKt8y8I3975sJDmI9SjjLsCPYowaa4b+vW0Uj+KVu/VibutkmHy8si
+         KTGCP8raFqbt7pN+qfpuCtc4vyRlgijtQFw8YQOiSUtqNVDTZFND1iXm3nZHfYy3TGT4
+         ySovewtB+ib3odUbC1mHLgObfRRexDAgIUuXqXtnfkK5/4Ys9te/jBEOTMGo5SEoKXy9
+         t2Lg==
+Received: by 10.68.203.7 with SMTP id km7mr26514387pbc.7.1338203910914;
+        Mon, 28 May 2012 04:18:30 -0700 (PDT)
+Received: from pclouds@gmail.com ([115.74.41.88])
+        by mx.google.com with ESMTPS id wd10sm18980321pbc.70.2012.05.28.04.18.22
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 28 May 2012 02:42:17 -0700 (PDT)
-Received: by smtp.gmail.com:587 (sSMTP sendmail emulation); Mon, 28 May 2012 05:42:15 -0400
-X-Mailer: git-send-email 1.7.8.6
-X-Gm-Message-State: ALoCoQkRYIA8Ao+xge5DByAP8JrYHRh8u06itp5icRcpbbLV3rlp4sVhhX4qSAupwAkQScP+beKE
+        Mon, 28 May 2012 04:18:29 -0700 (PDT)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Mon, 28 May 2012 18:14:20 +0700
+X-Mailer: git-send-email 1.7.10.2.549.g9354186
+In-Reply-To: <1336314232-21002-3-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198638>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198639>
 
-When git submodule init was called, the $url variable was not initialized
-properly for submodules which have already been initialized. This led
-to two problems.
-
-First, when all of the submodules were initialized, each showed an empty url
-instead of the actual url.
-
-Second, when previously initialized submodules were printed after newly
-added submodules, the displayed urls were incorrect.
-
-Cc: Jens Lehmann <Jens.Lehmann@web.de>
-Cc: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-Signed-off-by: Nicolas Viennot <nicolas@viennot.biz>
-Signed-off-by: Sid Nair <sidnair09@gmail.com>
+Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+=2Ecom>
 ---
- git-submodule.sh |    4 ++--
- 1 files changed, 2 insertions(+), 2 deletions(-)
+ rc times are usually more quiet times, let's slip the series in..
+ minor conflict with revert topic in pu, but should be easy to
+ resolve.
 
-diff --git a/git-submodule.sh b/git-submodule.sh
-index 64a70d6..92fd6e2 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -396,11 +396,11 @@ cmd_init()
- 	module_list "$@" |
- 	while read mode sha1 stage sm_path
- 	do
--		# Skip already registered paths
- 		name=$(module_name "$sm_path") || exit
-+		url=$(git config -f .gitmodules submodule."$name".url)
-+		# Skip already registered paths
- 		if test -z "$(git config "submodule.$name.url")"
- 		then
--			url=$(git config -f .gitmodules submodule."$name".url)
- 			test -z "$url" &&
- 			die "$(eval_gettext "No url found for submodule path '\$sm_path' in .gitmodules")"
- 
--- 
-1.7.8.6
+ archive.c         | 38 +++++++++++++++++++-------------------
+ builtin/archive.c | 12 ++++++------
+ 2 files changed, 25 insertions(+), 25 deletions(-)
+
+diff --git a/archive.c b/archive.c
+index a484433..2584324 100644
+--- a/archive.c
++++ b/archive.c
+@@ -7,10 +7,10 @@
+ #include "unpack-trees.h"
+=20
+ static char const * const archive_usage[] =3D {
+-	"git archive [options] <tree-ish> [<path>...]",
+-	"git archive --list",
+-	"git archive --remote <repo> [--exec <cmd>] [options] <tree-ish> [<pa=
+th>...]",
+-	"git archive --remote <repo> [--exec <cmd>] --list",
++	N_("git archive [options] <tree-ish> [<path>...]"),
++	N_("git archive --list"),
++	N_("git archive --remote <repo> [--exec <cmd>] [options] <tree-ish> [=
+<path>...]"),
++	N_("git archive --remote <repo> [--exec <cmd>] --list"),
+ 	NULL
+ };
+=20
+@@ -319,16 +319,16 @@ static int parse_archive_args(int argc, const cha=
+r **argv,
+ 	int worktree_attributes =3D 0;
+ 	struct option opts[] =3D {
+ 		OPT_GROUP(""),
+-		OPT_STRING(0, "format", &format, "fmt", "archive format"),
+-		OPT_STRING(0, "prefix", &base, "prefix",
+-			"prepend prefix to each pathname in the archive"),
+-		OPT_STRING('o', "output", &output, "file",
+-			"write the archive to this file"),
++		OPT_STRING(0, "format", &format, N_("fmt"), N_("archive format")),
++		OPT_STRING(0, "prefix", &base, N_("prefix"),
++			N_("prepend prefix to each pathname in the archive")),
++		OPT_STRING('o', "output", &output, N_("file"),
++			N_("write the archive to this file")),
+ 		OPT_BOOL(0, "worktree-attributes", &worktree_attributes,
+-			"read .gitattributes in working directory"),
+-		OPT__VERBOSE(&verbose, "report archived files on stderr"),
+-		OPT__COMPR('0', &compression_level, "store only", 0),
+-		OPT__COMPR('1', &compression_level, "compress faster", 1),
++			N_("read .gitattributes in working directory")),
++		OPT__VERBOSE(&verbose, N_("report archived files on stderr")),
++		OPT__COMPR('0', &compression_level, N_("store only"), 0),
++		OPT__COMPR('1', &compression_level, N_("compress faster"), 1),
+ 		OPT__COMPR_HIDDEN('2', &compression_level, 2),
+ 		OPT__COMPR_HIDDEN('3', &compression_level, 3),
+ 		OPT__COMPR_HIDDEN('4', &compression_level, 4),
+@@ -336,15 +336,15 @@ static int parse_archive_args(int argc, const cha=
+r **argv,
+ 		OPT__COMPR_HIDDEN('6', &compression_level, 6),
+ 		OPT__COMPR_HIDDEN('7', &compression_level, 7),
+ 		OPT__COMPR_HIDDEN('8', &compression_level, 8),
+-		OPT__COMPR('9', &compression_level, "compress better", 9),
++		OPT__COMPR('9', &compression_level, N_("compress better"), 9),
+ 		OPT_GROUP(""),
+ 		OPT_BOOL('l', "list", &list,
+-			"list supported archive formats"),
++			N_("list supported archive formats")),
+ 		OPT_GROUP(""),
+-		OPT_STRING(0, "remote", &remote, "repo",
+-			"retrieve the archive from remote repository <repo>"),
+-		OPT_STRING(0, "exec", &exec, "cmd",
+-			"path to the remote git-upload-archive command"),
++		OPT_STRING(0, "remote", &remote, N_("repo"),
++			N_("retrieve the archive from remote repository <repo>")),
++		OPT_STRING(0, "exec", &exec, N_("cmd"),
++			N_("path to the remote git-upload-archive command")),
+ 		OPT_END()
+ 	};
+=20
+diff --git a/builtin/archive.c b/builtin/archive.c
+index 931956d..e7965bf 100644
+--- a/builtin/archive.c
++++ b/builtin/archive.c
+@@ -88,12 +88,12 @@ int cmd_archive(int argc, const char **argv, const =
+char *prefix)
+ 	const char *output =3D NULL;
+ 	const char *remote =3D NULL;
+ 	struct option local_opts[] =3D {
+-		OPT_STRING('o', "output", &output, "file",
+-			"write the archive to this file"),
+-		OPT_STRING(0, "remote", &remote, "repo",
+-			"retrieve the archive from remote repository <repo>"),
+-		OPT_STRING(0, "exec", &exec, "cmd",
+-			"path to the remote git-upload-archive command"),
++		OPT_STRING('o', "output", &output, N_("file"),
++			N_("write the archive to this file")),
++		OPT_STRING(0, "remote", &remote, N_("repo"),
++			N_("retrieve the archive from remote repository <repo>")),
++		OPT_STRING(0, "exec", &exec, N_("cmd"),
++			N_("path to the remote git-upload-archive command")),
+ 		OPT_END()
+ 	};
+=20
+--=20
+1.7.10.2.549.g9354186
