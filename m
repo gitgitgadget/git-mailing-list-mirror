@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH 14/65] i18n: clone: mark parseopt strings for translation
-Date: Mon, 28 May 2012 18:13:26 +0700
-Message-ID: <1338203657-26486-12-git-send-email-pclouds@gmail.com>
+Subject: [PATCH 16/65] i18n: commit: mark parseopt strings for translation
+Date: Mon, 28 May 2012 18:13:28 +0700
+Message-ID: <1338203657-26486-14-git-send-email-pclouds@gmail.com>
 References: <1336314232-21002-3-git-send-email-pclouds@gmail.com>
  <1338203657-26486-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
@@ -15,140 +15,198 @@ Cc: Jonathan Niedier <jrnieder@gmail.com>,
 	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 28 13:20:20 2012
+X-From: git-owner@vger.kernel.org Mon May 28 13:20:32 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SYxzk-0007NC-8m
-	for gcvg-git-2@plane.gmane.org; Mon, 28 May 2012 13:20:16 +0200
+	id 1SYxzz-0007c8-AL
+	for gcvg-git-2@plane.gmane.org; Mon, 28 May 2012 13:20:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753861Ab2E1LUI convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 28 May 2012 07:20:08 -0400
+	id S1753916Ab2E1LUY convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 28 May 2012 07:20:24 -0400
 Received: from mail-pb0-f46.google.com ([209.85.160.46]:43145 "EHLO
 	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753837Ab2E1LUG (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 May 2012 07:20:06 -0400
-Received: by pbbrp8 with SMTP id rp8so4539054pbb.19
-        for <git@vger.kernel.org>; Mon, 28 May 2012 04:20:06 -0700 (PDT)
+	with ESMTP id S1753905Ab2E1LUW (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 May 2012 07:20:22 -0400
+Received: by mail-pb0-f46.google.com with SMTP id rp8so4539054pbb.19
+        for <git@vger.kernel.org>; Mon, 28 May 2012 04:20:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=rFytqxLQyD55JTcl2chOlSQHfoPQEBjup54rro9M6Ug=;
-        b=xP7hHuaur35Zuba8MC5+w1wrVO+MSJStwwREfJhElkZgwyKLM70gIOB4Kb67DbzOaH
-         M1whWZZMzau+ndUqAipNHNdcgfdFX5282ThkqdPLJxKJscmySgnCzAHxsGFYZhmyQ9Nc
-         YzaWbolVIRgW+ZSNGe9hRwF+2PUAsFRAIlyEeOSwA0a2dC0E/MmQLd0sWNcGPP6wKpOb
-         UB1EksjrKwydA5+4VELN/uRp9tiWyf4+fcYFLxuHYMB5SVlGCQfKTb/z9tk2k3LQKIep
-         n3f3SX1sj5RTK9aHagKprmhInnd4nXhwmE5oizCQ2A3E23aTiFUicuEouO3ySgHM4t/2
-         njjw==
-Received: by 10.68.189.133 with SMTP id gi5mr26170522pbc.154.1338204006416;
-        Mon, 28 May 2012 04:20:06 -0700 (PDT)
+        bh=RXB0rvSdNltRklQM8o7x0ypOUlp8pB1RLfACW5RXZAc=;
+        b=ZuxDMh/h6YcOl9XTYrXEum1b9Ofnb9AKoDeOAa1avjvvfR+XIXC5jiV87kKZb75lS7
+         TG1DuZTnPdpexCAvmOHd3YsUmbpS7aPVilBPeTt4cE05TLUW9q1cEvIyXYGZgzi8XACQ
+         CA0T59tFOW9VyCf1fOnL8FsA7HUcIt4pQGiG7ymu6eow6yyqOuGggPswpGO3xZP+XR/r
+         3I46caBy3l0uNYK414mqi5yz+8NBjFpLQlzzlrqIcE6vmC0wwMJtFo8FIQ7R5xjwInZL
+         p+xnic15Y5VhultdcQKTuqH0wF4tleNMW9ep2uAfCYxtr9H7BGaadkxOD+vlJB5siEAG
+         k/aQ==
+Received: by 10.68.233.193 with SMTP id ty1mr26555805pbc.47.1338204022221;
+        Mon, 28 May 2012 04:20:22 -0700 (PDT)
 Received: from pclouds@gmail.com ([115.74.41.88])
-        by mx.google.com with ESMTPS id pq1sm18988808pbb.5.2012.05.28.04.20.02
+        by mx.google.com with ESMTPS id ok6sm9656655pbb.29.2012.05.28.04.20.17
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 28 May 2012 04:20:05 -0700 (PDT)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Mon, 28 May 2012 18:16:01 +0700
+        Mon, 28 May 2012 04:20:21 -0700 (PDT)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Mon, 28 May 2012 18:16:17 +0700
 X-Mailer: git-send-email 1.7.10.2.549.g9354186
 In-Reply-To: <1338203657-26486-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198650>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198651>
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- builtin/clone.c | 56 ++++++++++++++++++++++++++++---------------------=
--------
- 1 file changed, 28 insertions(+), 28 deletions(-)
+ builtin/commit.c | 76 ++++++++++++++++++++++++++++--------------------=
+--------
+ 1 file changed, 38 insertions(+), 38 deletions(-)
 
-diff --git a/builtin/clone.c b/builtin/clone.c
-index a4d8d25..579319c 100644
---- a/builtin/clone.c
-+++ b/builtin/clone.c
-@@ -33,7 +33,7 @@
-  *
-  */
- static const char * const builtin_clone_usage[] =3D {
--	"git clone [options] [--] <repo> [<dir>]",
-+	N_("git clone [options] [--] <repo> [<dir>]"),
+diff --git a/builtin/commit.c b/builtin/commit.c
+index a2ec73d..34d723b 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -30,7 +30,7 @@
+ #include "column.h"
+=20
+ static const char * const builtin_commit_usage[] =3D {
+-	"git commit [options] [--] <filepattern>...",
++	N_("git commit [options] [--] <filepattern>..."),
  	NULL
  };
 =20
-@@ -61,43 +61,43 @@ static int opt_parse_reference(const struct option =
-*opt, const char *arg, int un
- static struct option builtin_clone_options[] =3D {
- 	OPT__VERBOSITY(&option_verbosity),
- 	OPT_BOOL(0, "progress", &option_progress,
--		 "force progress reporting"),
-+		 N_("force progress reporting")),
- 	OPT_BOOLEAN('n', "no-checkout", &option_no_checkout,
--		    "don't create a checkout"),
--	OPT_BOOLEAN(0, "bare", &option_bare, "create a bare repository"),
-+		    N_("don't create a checkout")),
-+	OPT_BOOLEAN(0, "bare", &option_bare, N_("create a bare repository")),
- 	{ OPTION_BOOLEAN, 0, "naked", &option_bare, NULL,
--		"create a bare repository",
-+		N_("create a bare repository"),
- 		PARSE_OPT_NOARG | PARSE_OPT_HIDDEN },
- 	OPT_BOOLEAN(0, "mirror", &option_mirror,
--		    "create a mirror repository (implies bare)"),
-+		    N_("create a mirror repository (implies bare)")),
- 	OPT_BOOLEAN('l', "local", &option_local,
--		    "to clone from a local repository"),
-+		    N_("to clone from a local repository")),
- 	OPT_BOOLEAN(0, "no-hardlinks", &option_no_hardlinks,
--		    "don't use local hardlinks, always copy"),
-+		    N_("don't use local hardlinks, always copy")),
- 	OPT_BOOLEAN('s', "shared", &option_shared,
--		    "setup as shared repository"),
-+		    N_("setup as shared repository")),
- 	OPT_BOOLEAN(0, "recursive", &option_recursive,
--		    "initialize submodules in the clone"),
-+		    N_("initialize submodules in the clone")),
- 	OPT_BOOLEAN(0, "recurse-submodules", &option_recursive,
--		    "initialize submodules in the clone"),
--	OPT_STRING(0, "template", &option_template, "template-directory",
--		   "directory from which templates will be used"),
--	OPT_CALLBACK(0 , "reference", &option_reference, "repo",
--		     "reference repository", &opt_parse_reference),
--	OPT_STRING('o', "origin", &option_origin, "name",
--		   "use <name> instead of 'origin' to track upstream"),
--	OPT_STRING('b', "branch", &option_branch, "branch",
--		   "checkout <branch> instead of the remote's HEAD"),
--	OPT_STRING('u', "upload-pack", &option_upload_pack, "path",
--		   "path to git-upload-pack on the remote"),
--	OPT_STRING(0, "depth", &option_depth, "depth",
--		    "create a shallow clone of that depth"),
-+		    N_("initialize submodules in the clone")),
-+	OPT_STRING(0, "template", &option_template, N_("template-directory"),
-+		   N_("directory from which templates will be used")),
-+	OPT_CALLBACK(0 , "reference", &option_reference, N_("repo"),
-+		     N_("reference repository"), &opt_parse_reference),
-+	OPT_STRING('o', "origin", &option_origin, N_("name"),
-+		   N_("use <name> instead of 'origin' to track upstream")),
-+	OPT_STRING('b', "branch", &option_branch, N_("branch"),
-+		   N_("checkout <branch> instead of the remote's HEAD")),
-+	OPT_STRING('u', "upload-pack", &option_upload_pack, N_("path"),
-+		   N_("path to git-upload-pack on the remote")),
-+	OPT_STRING(0, "depth", &option_depth, N_("depth"),
-+		    N_("create a shallow clone of that depth")),
- 	OPT_BOOL(0, "single-branch", &option_single_branch,
--		    "clone only one branch, HEAD or --branch"),
--	OPT_STRING(0, "separate-git-dir", &real_git_dir, "gitdir",
--		   "separate git dir from working tree"),
--	OPT_STRING_LIST('c', "config", &option_config, "key=3Dvalue",
--			"set config inside the new repository"),
-+		    N_("clone only one branch, HEAD or --branch")),
-+	OPT_STRING(0, "separate-git-dir", &real_git_dir, N_("gitdir"),
-+		   N_("separate git dir from working tree")),
-+	OPT_STRING_LIST('c', "config", &option_config, N_("key=3Dvalue"),
-+			N_("set config inside the new repository")),
- 	OPT_END()
- };
+@@ -1367,53 +1367,53 @@ int cmd_commit(int argc, const char **argv, con=
+st char *prefix)
+ {
+ 	static struct wt_status s;
+ 	static struct option builtin_commit_options[] =3D {
+-		OPT__QUIET(&quiet, "suppress summary after successful commit"),
+-		OPT__VERBOSE(&verbose, "show diff in commit message template"),
+-
+-		OPT_GROUP("Commit message options"),
+-		OPT_FILENAME('F', "file", &logfile, "read message from file"),
+-		OPT_STRING(0, "author", &force_author, "author", "override author fo=
+r commit"),
+-		OPT_STRING(0, "date", &force_date, "date", "override date for commit=
+"),
+-		OPT_CALLBACK('m', "message", &message, "message", "commit message", =
+opt_parse_m),
+-		OPT_STRING('c', "reedit-message", &edit_message, "commit", "reuse an=
+d edit message from specified commit"),
+-		OPT_STRING('C', "reuse-message", &use_message, "commit", "reuse mess=
+age from specified commit"),
+-		OPT_STRING(0, "fixup", &fixup_message, "commit", "use autosquash for=
+matted message to fixup specified commit"),
+-		OPT_STRING(0, "squash", &squash_message, "commit", "use autosquash f=
+ormatted message to squash specified commit"),
+-		OPT_BOOLEAN(0, "reset-author", &renew_authorship, "the commit is aut=
+hored by me now (used with -C/-c/--amend)"),
+-		OPT_BOOLEAN('s', "signoff", &signoff, "add Signed-off-by:"),
+-		OPT_FILENAME('t', "template", &template_file, "use specified templat=
+e file"),
+-		OPT_BOOL('e', "edit", &edit_flag, "force edit of commit"),
+-		OPT_STRING(0, "cleanup", &cleanup_arg, "default", "how to strip spac=
+es and #comments from message"),
+-		OPT_BOOLEAN(0, "status", &include_status, "include status in commit =
+message template"),
+-		{ OPTION_STRING, 'S', "gpg-sign", &sign_commit, "key id",
+-		  "GPG sign commit", PARSE_OPT_OPTARG, NULL, (intptr_t) "" },
++		OPT__QUIET(&quiet, N_("suppress summary after successful commit")),
++		OPT__VERBOSE(&verbose, N_("show diff in commit message template")),
++
++		OPT_GROUP(N_("Commit message options")),
++		OPT_FILENAME('F', "file", &logfile, N_("read message from file")),
++		OPT_STRING(0, "author", &force_author, N_("author"), N_("override au=
+thor for commit")),
++		OPT_STRING(0, "date", &force_date, N_("date"), N_("override date for=
+ commit")),
++		OPT_CALLBACK('m', "message", &message, N_("message"), N_("commit mes=
+sage"), opt_parse_m),
++		OPT_STRING('c', "reedit-message", &edit_message, N_("commit"), N_("r=
+euse and edit message from specified commit")),
++		OPT_STRING('C', "reuse-message", &use_message, N_("commit"), N_("reu=
+se message from specified commit")),
++		OPT_STRING(0, "fixup", &fixup_message, N_("commit"), N_("use autosqu=
+ash formatted message to fixup specified commit")),
++		OPT_STRING(0, "squash", &squash_message, N_("commit"), N_("use autos=
+quash formatted message to squash specified commit")),
++		OPT_BOOLEAN(0, "reset-author", &renew_authorship, N_("the commit is =
+authored by me now (used with -C/-c/--amend)")),
++		OPT_BOOLEAN('s', "signoff", &signoff, N_("add Signed-off-by:")),
++		OPT_FILENAME('t', "template", &template_file, N_("use specified temp=
+late file")),
++		OPT_BOOL('e', "edit", &edit_flag, N_("force edit of commit")),
++		OPT_STRING(0, "cleanup", &cleanup_arg, N_("default"), N_("how to str=
+ip spaces and #comments from message")),
++		OPT_BOOLEAN(0, "status", &include_status, N_("include status in comm=
+it message template")),
++		{ OPTION_STRING, 'S', "gpg-sign", &sign_commit, N_("key id"),
++		  N_("GPG sign commit"), PARSE_OPT_OPTARG, NULL, (intptr_t) "" },
+ 		/* end commit message options */
 =20
+-		OPT_GROUP("Commit contents options"),
+-		OPT_BOOLEAN('a', "all", &all, "commit all changed files"),
+-		OPT_BOOLEAN('i', "include", &also, "add specified files to index for=
+ commit"),
+-		OPT_BOOLEAN(0, "interactive", &interactive, "interactively add files=
+"),
+-		OPT_BOOLEAN('p', "patch", &patch_interactive, "interactively add cha=
+nges"),
+-		OPT_BOOLEAN('o', "only", &only, "commit only specified files"),
+-		OPT_BOOLEAN('n', "no-verify", &no_verify, "bypass pre-commit hook"),
+-		OPT_BOOLEAN(0, "dry-run", &dry_run, "show what would be committed"),
+-		OPT_SET_INT(0, "short", &status_format, "show status concisely",
++		OPT_GROUP(N_("Commit contents options")),
++		OPT_BOOLEAN('a', "all", &all, N_("commit all changed files")),
++		OPT_BOOLEAN('i', "include", &also, N_("add specified files to index =
+for commit")),
++		OPT_BOOLEAN(0, "interactive", &interactive, N_("interactively add fi=
+les")),
++		OPT_BOOLEAN('p', "patch", &patch_interactive, N_("interactively add =
+changes")),
++		OPT_BOOLEAN('o', "only", &only, N_("commit only specified files")),
++		OPT_BOOLEAN('n', "no-verify", &no_verify, N_("bypass pre-commit hook=
+")),
++		OPT_BOOLEAN(0, "dry-run", &dry_run, N_("show what would be committed=
+")),
++		OPT_SET_INT(0, "short", &status_format, N_("show status concisely"),
+ 			    STATUS_FORMAT_SHORT),
+-		OPT_BOOLEAN(0, "branch", &s.show_branch, "show branch information"),
++		OPT_BOOLEAN(0, "branch", &s.show_branch, N_("show branch information=
+")),
+ 		OPT_SET_INT(0, "porcelain", &status_format,
+-			    "machine-readable output", STATUS_FORMAT_PORCELAIN),
++			    N_("machine-readable output"), STATUS_FORMAT_PORCELAIN),
+ 		OPT_BOOLEAN('z', "null", &s.null_termination,
+-			    "terminate entries with NUL"),
+-		OPT_BOOLEAN(0, "amend", &amend, "amend previous commit"),
+-		OPT_BOOLEAN(0, "no-post-rewrite", &no_post_rewrite, "bypass post-rew=
+rite hook"),
+-		{ OPTION_STRING, 'u', "untracked-files", &untracked_files_arg, "mode=
+", "show untracked files, optional modes: all, normal, no. (Default: al=
+l)", PARSE_OPT_OPTARG, NULL, (intptr_t)"all" },
++			    N_("terminate entries with NUL")),
++		OPT_BOOLEAN(0, "amend", &amend, N_("amend previous commit")),
++		OPT_BOOLEAN(0, "no-post-rewrite", &no_post_rewrite, N_("bypass post-=
+rewrite hook")),
++		{ OPTION_STRING, 'u', "untracked-files", &untracked_files_arg, N_("m=
+ode"), N_("show untracked files, optional modes: all, normal, no. (Defa=
+ult: all)"), PARSE_OPT_OPTARG, NULL, (intptr_t)"all" },
+ 		/* end commit contents options */
+=20
+ 		{ OPTION_BOOLEAN, 0, "allow-empty", &allow_empty, NULL,
+-		  "ok to record an empty change",
++		  N_("ok to record an empty change"),
+ 		  PARSE_OPT_NOARG | PARSE_OPT_HIDDEN },
+ 		{ OPTION_BOOLEAN, 0, "allow-empty-message", &allow_empty_message, NU=
+LL,
+-		  "ok to record a change with an empty message",
++		  N_("ok to record a change with an empty message"),
+ 		  PARSE_OPT_NOARG | PARSE_OPT_HIDDEN },
+=20
+ 		OPT_END()
 --=20
 1.7.10.2.549.g9354186
