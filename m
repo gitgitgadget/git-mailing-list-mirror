@@ -1,61 +1,385 @@
-From: nguyenhu@minatec.inpg.fr
-Subject: Re: [PATCH 1/2] Add possibility to store configuration in
- ~/.config/git/config file
-Date: Mon, 28 May 2012 18:16:50 +0200
-Message-ID: <20120528181650.Horde.R4mBK3wdC4BPw6Ty4V8EreA@webmail.minatec.grenoble-inp.fr>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed; DelSp=Yes
-Cc: git@vger.kernel.org
-To: jaseemabid@gmail.com
-X-From: git-owner@vger.kernel.org Mon May 28 18:17:00 2012
+From: Kong Lucien <Lucien.Kong@ensimag.imag.fr>
+Subject: [PATCHv3 2/2] t7512-status-warnings.sh: better advices for git status
+Date: Mon, 28 May 2012 19:36:38 +0200
+Message-ID: <1338226598-16056-2-git-send-email-Lucien.Kong@ensimag.imag.fr>
+References: <1338035905-24166-1-git-send-email-Lucien.Kong@ensimag.imag.fr>
+ <1338226598-16056-1-git-send-email-Lucien.Kong@ensimag.imag.fr>
+Cc: Matthieu.Moy@grenoble-inp.fr,
+	Kong Lucien <Lucien.Kong@ensimag.imag.fr>,
+	Duperray Valentin <Valentin.Duperray@ensimag.imag.fr>,
+	Jonas Franck <Franck.Jonas@ensimag.imag.fr>,
+	Nguy Thomas <Thomas.Nguy@ensimag.imag.fr>,
+	Nguyen Huynh Khoi Nguyen Lucien 
+	<Huynh-Khoi-Nguyen.Nguyen@ensimag.imag.fr>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon May 28 19:36:58 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SZ2ct-00061a-IT
-	for gcvg-git-2@plane.gmane.org; Mon, 28 May 2012 18:16:59 +0200
+	id 1SZ3sF-0006Rn-JO
+	for gcvg-git-2@plane.gmane.org; Mon, 28 May 2012 19:36:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754656Ab2E1QQz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 May 2012 12:16:55 -0400
-Received: from v-smtp.minatec.grenoble-inp.fr ([147.173.216.28]:47340 "EHLO
-	v-smtp.minatec.grenoble-inp.fr" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753252Ab2E1QQy (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 28 May 2012 12:16:54 -0400
-Received: from localhost (www02.minatec.grenoble-inp.fr [147.173.216.15])
-	by v-smtp.minatec.grenoble-inp.fr (Postfix) with ESMTP id 5BCF71A0275;
-	Mon, 28 May 2012 18:16:51 +0200 (CEST)
-Received: from 183.24.91.79.rev.sfr.net (183.24.91.79.rev.sfr.net
- [79.91.24.183]) by webmail.minatec.grenoble-inp.fr (Horde Framework) with
- HTTP; Mon, 28 May 2012 18:16:50 +0200
-User-Agent: Internet Messaging Program (IMP) H4 (5.0.17)
-Content-Disposition: inline
+	id S1752706Ab2E1Rgr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 May 2012 13:36:47 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:60981 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752638Ab2E1Rgo (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 May 2012 13:36:44 -0400
+Received: from ensimag.imag.fr (ensimag.imag.fr [195.221.228.12])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id q4SHSLtd021543
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Mon, 28 May 2012 19:28:21 +0200
+Received: from ensibm.imag.fr (ensibm [195.221.228.8])
+	by ensimag.imag.fr (8.13.8/8.13.8/ImagV2.1.r_ens) with ESMTP id q4SHadjG010775;
+	Mon, 28 May 2012 19:36:39 +0200
+Received: from ensibm.imag.fr (localhost [127.0.0.1])
+	by ensibm.imag.fr (8.13.8/8.13.8/ImagV2.1.sb_ens.pm) with ESMTP id q4SHad7a016304;
+	Mon, 28 May 2012 19:36:39 +0200
+Received: (from konglu@localhost)
+	by ensibm.imag.fr (8.13.8/8.13.8/Submit) id q4SHad5g016303;
+	Mon, 28 May 2012 19:36:39 +0200
+X-Mailer: git-send-email 1.7.8
+In-Reply-To: <1338226598-16056-1-git-send-email-Lucien.Kong@ensimag.imag.fr>
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Mon, 28 May 2012 19:28:22 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: q4SHSLtd021543
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: lucien.kong@phelma.grenoble-inp.fr
+MailScanner-NULL-Check: 1338830903.0192@FgcydmXwCNj/eXU1wtnGHA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198709>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198710>
 
+The following tests include several cases in which the user
+needs to run 'git status' to know his current situation,
+whether there're conflicts or he's in rebase/bisect/am progress.
 
-jaseem abid <jaseemabid@gmail.com>wrote:
-> If a new config file gets introduced at `~/.config/git/config`, what
-> will be the new order of config file precedence?
->
-> `/etc/gitconfig` > `~/.gitconfig` > `~/.config/git/config`  >  
-> `.git/config` or
-> `/etc/gitconfig` >  `~/.config/git/config` > `~/.gitconfig` > `.git/config` ?
->
-> What will be the new flag to access it? I mean anything new like
-> --system / --global going to be introduced?
+The last test is about the set of the advice.statushelp config key
+on false in .git/config.
 
-The new order would be:
-`/etc/gitconfig` >  `~/.config/git/config` > `~/.gitconfig` > `.git/config`
+Signed-off-by: Kong Lucien <Lucien.Kong@ensimag.imag.fr>
+Signed-off-by: Duperray Valentin <Valentin.Duperray@ensimag.imag.fr>
+Signed-off-by: Jonas Franck <Franck.Jonas@ensimag.imag.fr>
+Signed-off-by: Nguy Thomas <Thomas.Nguy@ensimag.imag.fr>
+Signed-off-by: Nguyen Huynh Khoi Nguyen Lucien <Huynh-Khoi-Nguyen.Nguyen@ensimag.imag.fr>
+---
+ t/t7512-status-warnings.sh |  303 ++++++++++++++++++++++++++++++++++++++++++++
+ 1 files changed, 303 insertions(+), 0 deletions(-)
+ create mode 100755 t/t7512-status-warnings.sh
 
-There won't be new flag to access it.
-You can access it with --global only if ~/.gitconfig doesn't exist.
-
-But I will try to create another patch _only_ for reading first. So if  
-git doesn't find a value in ~/.gitconfig or if this file doesn't  
-exist, git will search this value in ~/.config/git/config if this file  
-exists.
-But for the time being, I don't know how to do it.
+diff --git a/t/t7512-status-warnings.sh b/t/t7512-status-warnings.sh
+new file mode 100755
+index 0000000..7824626
+--- /dev/null
++++ b/t/t7512-status-warnings.sh
+@@ -0,0 +1,303 @@
++#!/bin/sh
++#
++# Copyright (c) 2012 Valentin Duperray, Lucien Kong, Franck Jonas,
++#		     Thomas Nguy, Khoi Nguyen
++#		     Grenoble INP Ensimag
++#
++
++test_description='git status advices'
++
++. ./test-lib.sh
++
++. "$TEST_DIRECTORY"/lib-rebase.sh
++
++set_fake_editor
++
++test_expect_success 'status when conflicts unresolved' '
++	git init git &&
++	cd git &&
++	test_commit init main.txt init &&
++	git branch second_branch &&
++	test_commit on_master main.txt on_master &&
++	git checkout second_branch &&
++	test_commit on_second_branch main.txt on_second_branch &&
++	test_must_fail git merge master &&
++	cat >expect <<-\EOF &&
++	# On branch second_branch
++	# You have unmerged paths: fix conflicts and then commit the result.
++	#
++	# Unmerged paths:
++	#   (use "git add/rm <file>..." as appropriate to mark resolution)
++	#
++	#	both modified:      main.txt
++	#
++	# Untracked files:
++	#   (use "git add <file>..." to include in what will be committed)
++	#
++	#	expect
++	#	output
++	no changes added to commit (use "git add" and/or "git commit -a")
++	EOF
++	git status >output &&
++	test_cmp expect output
++'
++
++
++test_expect_success 'status when conflicts resolved before commit' '
++	echo one >main.txt &&
++	git add main.txt &&
++	cat >expect <<-\EOF &&
++	# On branch second_branch
++	# You are still merging, run "git commit" to conclude merge.
++	#
++	# Changes to be committed:
++	#
++	#	modified:   main.txt
++	#
++	# Untracked files:
++	#   (use "git add <file>..." to include in what will be committed)
++	#
++	#	expect
++	#	output
++	EOF
++	git status >output &&
++	test_cmp expect output
++'
++
++
++
++
++test_expect_success 'status when rebase in progress before resolving conflicts' '
++	git commit -m "one" &&
++	test_commit two main.txt two &&
++	test_commit three main.txt three &&
++	test_must_fail git rebase HEAD^ --onto HEAD^^ &&
++	cat >expect <<-\EOF &&
++	# Not currently on any branch.
++	# You are currently rebasing: fix conflicts and then run "git rebase -- continue".
++	# If you would prefer to skip this patch, instead run "git rebase --skip".
++	# To check out  the original branch and stop rebasing run "git rebase --abort".
++	#
++	# Unmerged paths:
++	#   (use "git reset HEAD <file>..." to unstage)
++	#   (use "git add/rm <file>..." as appropriate to mark resolution)
++	#
++	#	both modified:      main.txt
++	#
++	# Untracked files:
++	#   (use "git add <file>..." to include in what will be committed)
++	#
++	#	expect
++	#	output
++	no changes added to commit (use "git add" and/or "git commit -a")
++	EOF
++	git status >output &&
++	test_cmp expect output
++'
++
++
++
++test_expect_success 'status when rebase in progress before rebase --continue' '
++	test_when_finished "cd ../ && rm -rf git" &&
++	echo three >main.txt &&
++	git add main.txt &&
++	cat >expect <<-\EOF &&
++	# Not currently on any branch.
++	# You are currently rebasing: all conflicts fixed: run "git rebase --continue".
++	#
++	# Changes to be committed:
++	#   (use "git reset HEAD <file>..." to unstage)
++	#
++	#	modified:   main.txt
++	#
++	# Untracked files:
++	#   (use "git add <file>..." to include in what will be committed)
++	#
++	#	expect
++	#	output
++	EOF
++	git status >output &&
++	test_cmp expect output
++'
++
++test_expect_success 'status when rebasing -i in edit mode' '
++	git init git &&
++	cd git &&
++	test_when_finished "cd ../ && rm -rf git fake-editor.sh" &&
++	test_commit one main.txt one &&
++	test_commit two main.txt two &&
++	test_commit three main.txt three &&
++	FAKE_LINES="1 edit 2" &&
++	export FAKE_LINES &&
++	git rebase -i HEAD~2 &&
++	cat >expect <<-\EOF &&
++	# Not currently on any branch.
++	# You are currently editing a commit during a rebase.
++	# You can amend the commit with
++	#	git commit --amend
++	# Once you are satisfied with your changes, run
++	#	git rebase --continue
++	#
++	# Untracked files:
++	#   (use "git add <file>..." to include in what will be committed)
++	#
++	#	expect
++	#	output
++	nothing added to commit but untracked files present (use "git add" to track)
++	EOF
++	git status >output &&
++	test_cmp expect output &&
++	git rebase --abort
++'
++
++
++
++test_expect_success 'status in am progress: file already exists' '
++	git init git &&
++	cd git &&
++	test_when_finished "cd ../ && rm -rf git" &&
++	test_commit one main.txt "one  " &&
++	git format-patch -1 -oMaildir &&
++	test_must_fail git am Maildir/*.patch &&
++	cat >expect <<-\EOF &&
++	# On branch master
++	# You are currently in am progress:
++	# When you have resolved this problem run "git am --resolved".
++	# If you would prefer to skip this patch, instead run "git am --skip".
++	# To restore the original branch and stop patching run "git am --abort".
++	#
++	# Untracked files:
++	#   (use "git add <file>..." to include in what will be committed)
++	#
++	#	Maildir/
++	#	expect
++	#	output
++	nothing added to commit but untracked files present (use "git add" to track)
++	EOF
++	git status >output &&
++	test_cmp expect output
++'
++
++
++
++test_expect_success 'status in am progress: file does not exist' '
++	git init git &&
++	cd git &&
++	test_when_finished "cd ../ && rm -rf git" &&
++	test_commit one main.txt "one" &&
++	git rm main.txt &&
++	git commit -m "delete main.txt" &&
++	git format-patch -1 -oMaildir &&
++	test_must_fail git am Maildir/*.patch &&
++	cat >expect <<-\EOF &&
++	# On branch master
++	# You are currently in am progress:
++	# When you have resolved this problem run "git am --resolved".
++	# If you would prefer to skip this patch, instead run "git am --skip".
++	# To restore the original branch and stop patching run "git am --abort".
++	#
++	# Untracked files:
++	#   (use "git add <file>..." to include in what will be committed)
++	#
++	#	Maildir/
++	#	expect
++	#	output
++	nothing added to commit but untracked files present (use "git add" to track)
++	EOF
++	git status >output &&
++	test_cmp expect output
++'
++
++
++
++test_expect_success 'status in am progress : patch corrupted/wrong format' '
++	git init git &&
++	cd git &&
++	test_when_finished "cd ../ && rm -rf git" &&
++	test_commit one one.txt "one" &&
++	test_commit two two.txt "two" &&
++	test_commit three three.txt "three" &&
++	git format-patch -3 -oMaildir &&
++	git rm one.txt two.txt three.txt &&
++	git commit -m "delete all" &&
++	echo error >Maildir/0002-two.patch &&
++	test_must_fail git am Maildir/*.patch &&
++	cat >expect <<-\EOF &&
++	# On branch master
++	# You are currently in am progress:
++	# One of the patches is empty or corrupted !
++	# When you have resolved this problem run "git am --resolved".
++	# If you would prefer to skip this patch, instead run "git am --skip".
++	# To restore the original branch and stop patching run "git am --abort".
++	#
++	# Untracked files:
++	#   (use "git add <file>..." to include in what will be committed)
++	#
++	#	Maildir/
++	#	expect
++	#	output
++	nothing added to commit but untracked files present (use "git add" to track)
++	EOF
++	git status >output &&
++	test_cmp expect output
++'
++
++
++
++test_expect_success 'status when bisecting' '
++	git init git &&
++	cd git &&
++	test_when_finished "cd ../ && rm -rf git" &&
++	test_commit one main.txt one &&
++	test_commit two main.txt two &&
++	test_commit three main.txt three &&
++	git bisect start &&
++	git bisect bad &&
++	git bisect good one &&
++	cat >expect <<-\EOF &&
++	# Not currently on any branch.
++	# You are currently bisecting.
++	# To get back to the original branch run "git bisect reset"
++	#
++	# Untracked files:
++	#   (use "git add <file>..." to include in what will be committed)
++	#
++	#	expect
++	#	output
++	nothing added to commit but untracked files present (use "git add" to track)
++	EOF
++	git status >output &&
++	test_cmp expect output
++'
++
++test_expect_success 'status when rebase conflicts with statushelp disabled' '
++	git init git &&
++	cd git &&
++	test_when_finished "cd ../ && rm -rf git" &&
++	git config --local advice.statushelp false &&
++	test_commit one main.txt one &&
++	test_commit two main.txt two &&
++	test_commit three main.txt three &&
++	test_must_fail git rebase HEAD^ --onto HEAD^^ &&
++	cat >expect <<-\EOF &&
++	# Not currently on any branch.
++	# You are currently rebasing.
++	#
++	# Unmerged paths:
++	#   (use "git reset HEAD <file>..." to unstage)
++	#   (use "git add/rm <file>..." as appropriate to mark resolution)
++	#
++	#	both modified:      main.txt
++	#
++	# Untracked files:
++	#   (use "git add <file>..." to include in what will be committed)
++	#
++	#	expect
++	#	output
++	no changes added to commit (use "git add" and/or "git commit -a")
++	EOF
++	git status >output &&
++	test_cmp expect output
++'
++
++test_done
+-- 
+1.7.8
