@@ -1,82 +1,78 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH v7 6/9] submodule: fix detection of invalid submodule
- URL
-Date: Mon, 28 May 2012 21:01:18 +0200
-Message-ID: <4FC3CB7E.6000501@kdbg.org>
-References: <1338132851-23497-1-git-send-email-jon.seymour@gmail.com> <1338132851-23497-7-git-send-email-jon.seymour@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: Finding a branch point in git
+Date: Mon, 28 May 2012 15:06:39 -0400
+Message-ID: <20120528190639.GA2478@sigill.intra.peff.net>
+References: <CAMP44s0f7AJPQSTDgvy0U7vx8nxzq2a3vMhSr2Tcc61fetFkJA@mail.gmail.com>
+ <20120528062026.GB11174@sigill.intra.peff.net>
+ <CAMP44s04msWMOaaH8U30XXg5yXJnEd=bULJ7VPxWSD0Wfh2=EA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Jens.Lehmann@web.de, gitster@pobox.com,
-	phil.hord@gmail.com, ramsay@ramsay1.demon.co.uk
-To: Jon Seymour <jon.seymour@gmail.com>
-X-From: git-owner@vger.kernel.org Mon May 28 21:01:59 2012
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Mon May 28 21:06:58 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SZ5CZ-0005Wy-5f
-	for gcvg-git-2@plane.gmane.org; Mon, 28 May 2012 21:01:59 +0200
+	id 1SZ5HG-0002PP-Fk
+	for gcvg-git-2@plane.gmane.org; Mon, 28 May 2012 21:06:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753560Ab2E1TBU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 May 2012 15:01:20 -0400
-Received: from bsmtp.bon.at ([213.33.87.14]:22290 "EHLO bsmtp.bon.at"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752711Ab2E1TBU (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 May 2012 15:01:20 -0400
-Received: from dx.sixt.local (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTP id 2A2D4A7EB5;
-	Mon, 28 May 2012 21:03:03 +0200 (CEST)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-	by dx.sixt.local (Postfix) with ESMTP id 4BC3619F5E3;
-	Mon, 28 May 2012 21:01:18 +0200 (CEST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:12.0) Gecko/20120421 Thunderbird/12.0
-In-Reply-To: <1338132851-23497-7-git-send-email-jon.seymour@gmail.com>
+	id S1753885Ab2E1TGq convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 28 May 2012 15:06:46 -0400
+Received: from 99-108-225-23.lightspeed.iplsin.sbcglobal.net ([99.108.225.23]:34403
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753567Ab2E1TGq (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 May 2012 15:06:46 -0400
+Received: (qmail 15101 invoked by uid 107); 28 May 2012 19:06:44 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 28 May 2012 15:06:44 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 28 May 2012 15:06:39 -0400
+Content-Disposition: inline
+In-Reply-To: <CAMP44s04msWMOaaH8U30XXg5yXJnEd=bULJ7VPxWSD0Wfh2=EA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198713>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198714>
 
-Am 27.05.2012 17:34, schrieb Jon Seymour:
-> diff --git a/git-submodule.sh b/git-submodule.sh
-> index dbbc905..2550681 100755
-> --- a/git-submodule.sh
-> +++ b/git-submodule.sh
-> @@ -37,23 +37,42 @@ resolve_relative_url ()
->  	remoteurl=$(git config "remote.$remote.url") ||
->  		remoteurl=$(pwd) # the repository is its own authoritative upstream
->  	url="$1"
-> -	remoteurl=${remoteurl%/}
-> -	sep=/
-> +	remoteurl="${remoteurl%/}"
-> +
-> +	case "$remoteurl" in
-> +		*//*/*)
-> +			variant="${remoteurl#*//*/}"
-> +		;;
-> +		*::*)
-> +			variant="${remoteurl#*::}"
-> +		;;
-> +		*:*)
-> +			variant="${remoteurl#*:}"
-> +		;;
-> +		/*)
-> +			variant="${remoteurl#/}"
+On Mon, May 28, 2012 at 02:36:04PM +0200, Felipe Contreras wrote:
 
-Without understanding in detail what this series is about, I would guess
-that the previous two case arms are not very Windows friendly. Does the
-right thing happen when $remoteurl is "c:/path/to/remote"? Would it help
-to use is_absolute_path?
+> > What about a history with multiple branches?
+> >
+> > --X--A--B--C--D----E =C2=A0(master)
+> > =C2=A0 =C2=A0 =C2=A0\ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 /
+> > =C2=A0 =C2=A0 =C2=A0 G--H--I---J =C2=A0 (branch X)
+> > =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 \ =C2=A0 =C2=A0/
+> > =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0K--L =C2=A0 =C2=A0(branch =
+Y)
+> [...]
+>=20
+> Yes, but then you would need to specify a second branch. I would avoi=
+d
+> that if possible.
 
-	if is_absolute_path "$remoteurl"
-	then
-		variant="${remoteurl#*/}"
-	else
-		case "$remoteurl" in
-		...other cases go here...
-		esac
-	fi
+I agree that is less nice. But I don't think the operation is
+well-defined with a single branch. If you ask for "when did branch X
+split", then in the above graph it is unclear if you meant "split from
+master", or "split from Y".
 
--- Hannes
+Maybe you could assume "master", or assume "git symbolic-ref HEAD" as
+the second branch?
+
+> There's also another case that doesn't work:
+>=20
+> -- X -- A -- B (master)
+>          \
+>           \
+>            C (branch A)
+>=20
+> Shouldn't be hard to add checks for those cases I think.
+
+Actually, I think that one extends naturally. They are never merged, so
+your rev-list never finds a merge commit, and you can just take the
+merge base of the branch tips.
+
+-Peff
