@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH 44/65] i18n: prune: mark parseopt strings for translation
-Date: Mon, 28 May 2012 18:13:56 +0700
-Message-ID: <1338203657-26486-42-git-send-email-pclouds@gmail.com>
+Subject: [PATCH 45/65] i18n: push: mark parseopt strings for translation
+Date: Mon, 28 May 2012 18:13:57 +0700
+Message-ID: <1338203657-26486-43-git-send-email-pclouds@gmail.com>
 References: <1336314232-21002-3-git-send-email-pclouds@gmail.com>
  <1338203657-26486-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
@@ -15,84 +15,124 @@ Cc: Jonathan Niedier <jrnieder@gmail.com>,
 	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 28 13:24:47 2012
+X-From: git-owner@vger.kernel.org Mon May 28 13:24:51 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SYy40-0004VT-Bd
-	for gcvg-git-2@plane.gmane.org; Mon, 28 May 2012 13:24:40 +0200
+	id 1SYy4A-0004hX-1Y
+	for gcvg-git-2@plane.gmane.org; Mon, 28 May 2012 13:24:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754302Ab2E1LYg convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 28 May 2012 07:24:36 -0400
+	id S1754314Ab2E1LYp convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 28 May 2012 07:24:45 -0400
 Received: from mail-pb0-f46.google.com ([209.85.160.46]:63413 "EHLO
 	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752508Ab2E1LYf (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 May 2012 07:24:35 -0400
+	with ESMTP id S1752813Ab2E1LYo (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 May 2012 07:24:44 -0400
 Received: by mail-pb0-f46.google.com with SMTP id rp8so4541874pbb.19
-        for <git@vger.kernel.org>; Mon, 28 May 2012 04:24:35 -0700 (PDT)
+        for <git@vger.kernel.org>; Mon, 28 May 2012 04:24:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=UG6WMIPR/OukcTDPCfnm33ZzMN4VKjAKjFXa+vuEBB8=;
-        b=hyLx8omFepmpppft+3KMutpRMNXK15Gw2B+X/cxy3lqk4I0GfG+4FO5ToSzflAllHC
-         jS4u0H3yLvix1WtkKKsy9F55q6va4imU6M1MBLmbPQbpdCY5jgkf8A8tLyrU++HMXqxk
-         b8QAVBCtfBcW0hawiiNlFcti2gGVoREVfvqezqnQUuz8R7S/mY6DhvN9lQNi7NW0khig
-         9NG+oWdyEJWSLHsWRYWeRHdb392q8g0l7ZV+PwLofveUSOi1IeGgA5zMqDNii8kzuUEI
-         vyDoQFezx17XJFQDLksW/p7ialX8xL6TS5VKZ5PIz3W0XsaDiIS9FU+YWHC0awcvuPCc
-         31iA==
-Received: by 10.68.239.161 with SMTP id vt1mr6393840pbc.15.1338204275030;
-        Mon, 28 May 2012 04:24:35 -0700 (PDT)
+        bh=waY5rjP9mXRl3w0Z3xOJyo6oYMW1JrViDkJwZiz/iDA=;
+        b=U/sTrG55T7cbb2TxSX1XxHQMj8vERS7bUcrY8cYbqVdW/OKDjGF3Av+Q2K2tvqmIw9
+         t8NAyBFPOTWNOe7MN/WOsoHZHYm+eeW1FKDUQTBOqVPtg3pqDBsmNt3HCLrgiH+QsYPD
+         dkX7fbscQaTrZhJKHI9eJTvWO4PvBTeEsvBzLNTZDvAozQHa33Q9DekrhPiAsJPmre3S
+         BYge4kap6U3J/4kJkXWcpBz/WmldR8K3vh4gtna2GeEfhU8zgBdqRnZu2gSVt/qoOr/+
+         kHcTbVoD6XuNeFadsUakE+lyA1OtaXmstn/H7bpclwkYw7Tn2MAvUzTGrxo0jiWYEhMw
+         c7dQ==
+Received: by 10.68.227.5 with SMTP id rw5mr27238395pbc.32.1338204284010;
+        Mon, 28 May 2012 04:24:44 -0700 (PDT)
 Received: from pclouds@gmail.com ([115.74.41.88])
-        by mx.google.com with ESMTPS id py5sm19023280pbb.1.2012.05.28.04.24.30
+        by mx.google.com with ESMTPS id wn3sm18988028pbc.74.2012.05.28.04.24.39
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 28 May 2012 04:24:34 -0700 (PDT)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Mon, 28 May 2012 18:20:27 +0700
+        Mon, 28 May 2012 04:24:43 -0700 (PDT)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Mon, 28 May 2012 18:20:38 +0700
 X-Mailer: git-send-email 1.7.10.2.549.g9354186
 In-Reply-To: <1338203657-26486-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198680>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198681>
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- builtin/prune.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ builtin/push.c | 34 +++++++++++++++++-----------------
+ 1 file changed, 17 insertions(+), 17 deletions(-)
 
-diff --git a/builtin/prune.c b/builtin/prune.c
-index b99b635..a9e2241 100644
---- a/builtin/prune.c
-+++ b/builtin/prune.c
-@@ -9,7 +9,7 @@
- #include "dir.h"
+diff --git a/builtin/push.c b/builtin/push.c
+index fdfcc6c..4840bc2 100644
+--- a/builtin/push.c
++++ b/builtin/push.c
+@@ -11,7 +11,7 @@
+ #include "submodule.h"
 =20
- static const char * const prune_usage[] =3D {
--	"git prune [-n] [-v] [--expire <time>] [--] [<head>...]",
-+	N_("git prune [-n] [-v] [--expire <time>] [--] [<head>...]"),
- 	NULL
+ static const char * const push_usage[] =3D {
+-	"git push [<options>] [<repository> [<refspec>...]]",
++	N_("git push [<options>] [<repository> [<refspec>...]]"),
+ 	NULL,
  };
- static int show_only;
-@@ -128,11 +128,11 @@ int cmd_prune(int argc, const char **argv, const =
-char *prefix)
- 	struct rev_info revs;
- 	struct progress *progress =3D NULL;
- 	const struct option options[] =3D {
--		OPT__DRY_RUN(&show_only, "do not remove, show only"),
--		OPT__VERBOSE(&verbose, "report pruned objects"),
--		OPT_BOOL(0, "progress", &show_progress, "show progress"),
-+		OPT__DRY_RUN(&show_only, N_("do not remove, show only")),
-+		OPT__VERBOSE(&verbose, N_("report pruned objects")),
-+		OPT_BOOL(0, "progress", &show_progress, N_("show progress")),
- 		OPT_DATE(0, "expire", &expire,
--			 "expire objects older than <time>"),
-+			 N_("expire objects older than <time>")),
+=20
+@@ -354,25 +354,25 @@ int cmd_push(int argc, const char **argv, const c=
+har *prefix)
+ 	const char *repo =3D NULL;	/* default repository */
+ 	struct option options[] =3D {
+ 		OPT__VERBOSITY(&verbosity),
+-		OPT_STRING( 0 , "repo", &repo, "repository", "repository"),
+-		OPT_BIT( 0 , "all", &flags, "push all refs", TRANSPORT_PUSH_ALL),
+-		OPT_BIT( 0 , "mirror", &flags, "mirror all refs",
++		OPT_STRING( 0 , "repo", &repo, N_("repository"), N_("repository")),
++		OPT_BIT( 0 , "all", &flags, N_("push all refs"), TRANSPORT_PUSH_ALL)=
+,
++		OPT_BIT( 0 , "mirror", &flags, N_("mirror all refs"),
+ 			    (TRANSPORT_PUSH_MIRROR|TRANSPORT_PUSH_FORCE)),
+-		OPT_BOOLEAN( 0, "delete", &deleterefs, "delete refs"),
+-		OPT_BOOLEAN( 0 , "tags", &tags, "push tags (can't be used with --all=
+ or --mirror)"),
+-		OPT_BIT('n' , "dry-run", &flags, "dry run", TRANSPORT_PUSH_DRY_RUN),
+-		OPT_BIT( 0,  "porcelain", &flags, "machine-readable output", TRANSPO=
+RT_PUSH_PORCELAIN),
+-		OPT_BIT('f', "force", &flags, "force updates", TRANSPORT_PUSH_FORCE)=
+,
+-		{ OPTION_CALLBACK, 0, "recurse-submodules", &flags, "check",
+-			"controls recursive pushing of submodules",
++		OPT_BOOLEAN( 0, "delete", &deleterefs, N_("delete refs")),
++		OPT_BOOLEAN( 0 , "tags", &tags, N_("push tags (can't be used with --=
+all or --mirror)")),
++		OPT_BIT('n' , "dry-run", &flags, N_("dry run"), TRANSPORT_PUSH_DRY_R=
+UN),
++		OPT_BIT( 0,  "porcelain", &flags, N_("machine-readable output"), TRA=
+NSPORT_PUSH_PORCELAIN),
++		OPT_BIT('f', "force", &flags, N_("force updates"), TRANSPORT_PUSH_FO=
+RCE),
++		{ OPTION_CALLBACK, 0, "recurse-submodules", &flags, N_("check"),
++			N_("controls recursive pushing of submodules"),
+ 			PARSE_OPT_OPTARG, option_parse_recurse_submodules },
+-		OPT_BOOLEAN( 0 , "thin", &thin, "use thin pack"),
+-		OPT_STRING( 0 , "receive-pack", &receivepack, "receive-pack", "recei=
+ve pack program"),
+-		OPT_STRING( 0 , "exec", &receivepack, "receive-pack", "receive pack =
+program"),
+-		OPT_BIT('u', "set-upstream", &flags, "set upstream for git pull/stat=
+us",
++		OPT_BOOLEAN( 0 , "thin", &thin, N_("use thin pack")),
++		OPT_STRING( 0 , "receive-pack", &receivepack, "receive-pack", N_("re=
+ceive pack program")),
++		OPT_STRING( 0 , "exec", &receivepack, "receive-pack", N_("receive pa=
+ck program")),
++		OPT_BIT('u', "set-upstream", &flags, N_("set upstream for git pull/s=
+tatus"),
+ 			TRANSPORT_PUSH_SET_UPSTREAM),
+-		OPT_BOOL(0, "progress", &progress, "force progress reporting"),
+-		OPT_BIT(0, "prune", &flags, "prune locally removed refs",
++		OPT_BOOL(0, "progress", &progress, N_("force progress reporting")),
++		OPT_BIT(0, "prune", &flags, N_("prune locally removed refs"),
+ 			TRANSPORT_PUSH_PRUNE),
  		OPT_END()
  	};
- 	char *s;
 --=20
 1.7.10.2.549.g9354186
