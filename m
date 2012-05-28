@@ -1,116 +1,80 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Finding a branch point in git
-Date: Mon, 28 May 2012 02:20:26 -0400
-Message-ID: <20120528062026.GB11174@sigill.intra.peff.net>
-References: <CAMP44s0f7AJPQSTDgvy0U7vx8nxzq2a3vMhSr2Tcc61fetFkJA@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: [RFC/PATCH 0/2] git-svn: give SVN::Git::Fetcher its own file
+Date: Mon, 28 May 2012 01:57:23 -0500
+Message-ID: <20120528065723.GC10976@burratino>
+References: <1313979422-21286-1-git-send-email-jgross@mit.edu>
+ <20110823081546.GA28091@dcvr.yhbt.net>
+ <7vobzgrrbg.fsf@alter.siamese.dyndns.org>
+ <20120527192541.GA29490@burratino>
+ <20120527201450.GA3630@dcvr.yhbt.net>
+ <20120528003901.GA11103@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Mon May 28 08:20:58 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, Jason Gross <jgross@MIT.EDU>,
+	git@vger.kernel.org
+To: Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Mon May 28 08:57:48 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SYtK3-0006Va-FM
-	for gcvg-git-2@plane.gmane.org; Mon, 28 May 2012 08:20:55 +0200
+	id 1SYttf-0002lM-Mn
+	for gcvg-git-2@plane.gmane.org; Mon, 28 May 2012 08:57:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753510Ab2E1GUt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 May 2012 02:20:49 -0400
-Received: from 99-108-225-23.lightspeed.iplsin.sbcglobal.net ([99.108.225.23]:33979
-	"EHLO peff.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752996Ab2E1GUs (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 May 2012 02:20:48 -0400
-Received: (qmail 5828 invoked by uid 107); 28 May 2012 06:20:27 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 28 May 2012 02:20:27 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 28 May 2012 02:20:26 -0400
+	id S1752618Ab2E1G5c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 May 2012 02:57:32 -0400
+Received: from mail-gh0-f174.google.com ([209.85.160.174]:42943 "EHLO
+	mail-gh0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751406Ab2E1G5b (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 May 2012 02:57:31 -0400
+Received: by ghrr11 with SMTP id r11so1039986ghr.19
+        for <git@vger.kernel.org>; Sun, 27 May 2012 23:57:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=GenoRVw5by0h4d5CMSmhmStotDXlf0uM+d4AV6Wdr68=;
+        b=Y1HD5tpTujYcMvUcC9cl9W2MNp9lWK90VhIC3o+Wj/myZUHBGKyjXn1/ikW69pAEPP
+         J35LwiHAR0Af4EKs/tbFq0328bhJFNQhaeSB5iQVS8hdst74k91VIUmA4CDRSqIOltxK
+         C95UMXiS2Ga1Yr0oh7XNwUgQZiGeeI9TzK/ThcZD4iEKrGzudMg9IgFLXUu5/xlMOWu1
+         I8Kp+1nK2xS1qsgypAs3vjedbNoymg64w4DDD6V4jbZjWcQn7TMkvO8WrTiwNYPNAyg2
+         uhW2diqYSO2Yj8nF4eiMvOzA6LeGI1dR7YPDYZKfayRLddjxPLvB3GAqnvWzi4/SrmG1
+         xmnA==
+Received: by 10.42.123.66 with SMTP id q2mr3615692icr.52.1338188250398;
+        Sun, 27 May 2012 23:57:30 -0700 (PDT)
+Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
+        by mx.google.com with ESMTPS id ut8sm5363921igc.8.2012.05.27.23.57.26
+        (version=SSLv3 cipher=OTHER);
+        Sun, 27 May 2012 23:57:29 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <CAMP44s0f7AJPQSTDgvy0U7vx8nxzq2a3vMhSr2Tcc61fetFkJA@mail.gmail.com>
+In-Reply-To: <20120528003901.GA11103@burratino>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198628>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198629>
 
-On Sun, May 27, 2012 at 02:37:32PM +0200, Felipe Contreras wrote:
+Jonathan Nieder wrote:
+> Eric Wong wrote:
 
-> When discussing git vs. mercurial, and what can mercurial do that git
-> can't, I inevitably see somebody mention that mercurial branches can
-> be used to find the branch point (the point at which a branch started;
-> even if it's a long-lived one that has been merged to 'master'
-> multiple times).
-> 
-> There have been a few solutions in stackoverflow[1], but none that
-> work in all cases.
-> 
-> But I think I've found an ad-hoc one that uses the commit messages to
-> find the first merge of a branch, and then the merge-base.
-> 
-> For reference, if somebody is interested:
-> 
-> ---
-> [alias]
->     branch-point = !sh -c 'merge=$(git rev-list --min-parents=2
-> --grep="Merge.*$1" --all | tail -1) && git merge-base $merge^1
-> $merge^2'
-> ---
+>> Can we use this as an opportunity to start splitting git-svn.perl into
+>> multiple .pm files?
+>
+> Not a bad idea.  I've included an example patch to sanity-check the
+> approach below.
+[...]
+> Let's start with Git::SVN::Prompt.
 
-I think this approach works for two-branch cases, but there is some
-subtlety with the regex. My initial thought was that you were looking
-for "Merge 'branch_A'" in the commit message (and that is what is
-implied by your stackoverflow response). If you always merge the topic
-into the main branch, then you will find the first merge. But imagine
-this history:
+And here's a more interesting one: SVN::Git::Fetcher.
 
--- X -- A -- B -- C -- D --  E  (master)
-         \         \        /
-          \         \      /
-           G -- H -- I -- J  (branch A)
+Jonathan Nieder (2):
+  git-svn: rename SVN::Git::* packages to Git::SVN::*
+  git-svn: make Git::SVN::Fetcher a separate file
 
-where I is a merge from master to branch A (e.g., for testing), and then
-E is a merge from branch A to master (the actual integration).
-
-Searching for "Merge 'branch_A'" will find E, and then you will take
-the merge base of J and D, which is C. But the answer you want is A.
-However, we also say "Merge master into 'branch_A'" when HEAD is not
-master. So your regex _would_ catch that, and would find I, for which
-the merge base is A.
-
-What about a history with multiple branches?
-
---X--A--B--C--D----E  (master)
-      \           /
-       G--H--I---J   (branch X)
-           \    /
-            K--L    (branch Y)
-
-where Y is merged to X (commit J), and then X is merged to master
-(commit E). Searching for the earliest merge mentioning X will find J,
-the merge between X and Y. But the merge base of its parents is H.
-
-You can improve your regex by specifying a pair of branches and
-looking for "Merge X into master" and "Merge master into X" (IOW, make
-sure we don't see merges between X and other branches). Then you would
-find E, which yields the correct answer.
-
-There are also even more complex cases. It doesn't make much sense to
-ask about where branch Y split from master, since it actually came from
-branch X in the above example. But let's say we branched straight from
-master, merged our result to X, which got merged to master, and then we
-built some more commits on Y and merged them to master. Like:
-
---X--A--B--C--D----E--F (master)
-     |\           /  /
-     | \         /  /
-      \ G--H----I  /  (branch X)
-       \       /  /
-        K--L--M--O  (branch Y)
-
-The only merge between master and X is F, but its merge base is M. We
-missed the earlier merge to master because it actually happened across
-two different commits.
-
--Peff
+ git-svn.perl            |  551 ++-----------------------------------------
+ perl/Git/SVN/Fetcher.pm |  602 +++++++++++++++++++++++++++++++++++++++++++++++
+ perl/Makefile.PL        |    1 +
+ 3 files changed, 627 insertions(+), 527 deletions(-)
+ create mode 100644 perl/Git/SVN/Fetcher.pm
