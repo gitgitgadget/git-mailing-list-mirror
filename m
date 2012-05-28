@@ -1,61 +1,70 @@
-From: =?UTF-8?B?VHLhuqduIE5n4buNYyBRdcOibg==?= <vnwildman@gmail.com>
-Subject: RE: Vietnamese l10n pull request problems
-Date: Mon, 28 May 2012 15:36:42 +0700
-Message-ID: <4fc33949.24ef440a.22da.fffff905@mx.google.com>
-References: <CANYiYbGkHn7NgKgi2SG11fWV7kzuLPH_vhgOrhow17s9JzqBNg@mail.gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCHv2 2/2] t7512-status-warnings.sh: better advices for git status
+Date: Mon, 28 May 2012 10:43:31 +0200
+Message-ID: <vpqaa0shf0s.fsf@bauges.imag.fr>
+References: <1337852264-32619-1-git-send-email-Lucien.Kong@ensimag.imag.fr>
+	<1338035905-24166-1-git-send-email-Lucien.Kong@ensimag.imag.fr>
+	<1338035905-24166-2-git-send-email-Lucien.Kong@ensimag.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "'Junio C Hamano'" <gitster@pobox.com>,
-	"'Git List'" <git@vger.kernel.org>
-To: "'Jiang Xin'" <worldhello.net@gmail.com>
-X-From: git-owner@vger.kernel.org Mon May 28 10:37:41 2012
+Content-Type: text/plain
+Cc: git@vger.kernel.org,
+	Duperray Valentin <Valentin.Duperray@ensimag.imag.fr>,
+	Jonas Franck <Franck.Jonas@ensimag.imag.fr>,
+	Nguy Thomas <Thomas.Nguy@ensimag.imag.fr>,
+	Nguyen Huynh Khoi Nguyen Lucien 
+	<Huynh-Khoi-Nguyen.Nguyen@ensimag.imag.fr>
+To: Kong Lucien <Lucien.Kong@ensimag.imag.fr>
+X-From: git-owner@vger.kernel.org Mon May 28 10:43:44 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SYvSN-0000uW-8I
-	for gcvg-git-2@plane.gmane.org; Mon, 28 May 2012 10:37:39 +0200
+	id 1SYvYD-0007bM-Ex
+	for gcvg-git-2@plane.gmane.org; Mon, 28 May 2012 10:43:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751371Ab2E1Ihe convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 28 May 2012 04:37:34 -0400
-Received: from mail-pz0-f46.google.com ([209.85.210.46]:41947 "EHLO
-	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751264Ab2E1Ihd convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 28 May 2012 04:37:33 -0400
-Received: by dady13 with SMTP id y13so3875846dad.19
-        for <git@vger.kernel.org>; Mon, 28 May 2012 01:37:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:from:to:cc:subject:date:mime-version:content-type
-         :content-transfer-encoding:x-mailer:in-reply-to:thread-index
-         :x-mimeole;
-        bh=VfIDxNGFeVrGXP7KOReVSodA3DkDDLdEtJ6Ld8AdFlI=;
-        b=zrmfnqscryreDek65zlMOsKhs4h3fAC9gJFdmmx+90zGS64qM+oAu53Pjsm9Ny8L5O
-         60ycI11UpZDZO1kxgoUeziVAodViLFJ8vPMPeb5uqG/q7/hKFwdO/yIrxsQOp4/TSXpz
-         V/3tFn7uviuEm/oi7swGhZ1n6iGH6E0eEQsVi2mHjuHVaHyo34HcIMvUfVEOuB08VP0i
-         l7eyXaE30kOlCFYFK0S1KfNLXGVpmZeAOc1WqOXMu/qjCz1Obl+4MdhEiXYuxDyZSs5t
-         aBcgfvt8lgirZXQjzB0c304cnG8l55v1ADUSdCe1QB5P2C+hYjBJz0hdhbnjP276zM2H
-         pAOA==
-Received: by 10.68.221.74 with SMTP id qc10mr25014500pbc.31.1338194250369;
-        Mon, 28 May 2012 01:37:30 -0700 (PDT)
-Received: from tnquan339ht ([123.27.97.217])
-        by mx.google.com with ESMTPS id vp4sm18577006pbc.61.2012.05.28.01.37.26
-        (version=SSLv3 cipher=OTHER);
-        Mon, 28 May 2012 01:37:29 -0700 (PDT)
-X-Mailer: Microsoft Office Outlook, Build 11.0.5510
-In-Reply-To: <CANYiYbGkHn7NgKgi2SG11fWV7kzuLPH_vhgOrhow17s9JzqBNg@mail.gmail.com>
-Thread-Index: Ac08pYAYMGFSSDdXQKGnOfzcdPMZUQAA6Lcg
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.5931
+	id S1751481Ab2E1Inf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 May 2012 04:43:35 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:48456 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751264Ab2E1Ine (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 May 2012 04:43:34 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id q4S8ZLvA002659
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Mon, 28 May 2012 10:35:21 +0200
+Received: from bauges.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1SYvY4-0007Vn-4O; Mon, 28 May 2012 10:43:32 +0200
+In-Reply-To: <1338035905-24166-2-git-send-email-Lucien.Kong@ensimag.imag.fr>
+	(Kong Lucien's message of "Sat, 26 May 2012 14:38:25 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.93 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Mon, 28 May 2012 10:35:21 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: q4S8ZLvA002659
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1338798921.30321@/azHlWufSqwVlZgGESbVXw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198635>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198636>
 
-> $ git fetch https://github.com/git-l10n/git-po/ WIP/vi/master
-> $ git reset --hard FETCH_HEAD
-done! And also translated some tring.
-Thank all of you!
-Tr=E1=BA=A7n Ng=E1=BB=8Dc Qu=C3=A2n.
+Kong Lucien <Lucien.Kong@ensimag.imag.fr> writes:
+
+> +test_expect_success 'status when conflicts unresolved' '
+> +	git init --shared --bare conflict_test.git &&
+> +	git clone conflict_test.git test1 &&
+> +	git clone conflict_test.git test2 &&
+
+I already asked off-list, but why do you need 3 repositories here.
+Wouldn't it be simpler to have 2 branches and test conflicts with
+"git merge"?
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
