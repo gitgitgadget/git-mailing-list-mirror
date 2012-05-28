@@ -1,107 +1,231 @@
-From: Jon Seymour <jon.seymour@gmail.com>
-Subject: Re: [PATCH v7 0/9] submodule: improve robustness of path handling
-Date: Tue, 29 May 2012 08:01:19 +1000
-Message-ID: <CAH3AnroT1vs-s==ykNyogq6gbVncY0pt5U1=fMp+b6B0jwG19Q@mail.gmail.com>
-References: <1338132851-23497-1-git-send-email-jon.seymour@gmail.com>
-	<4FC3DAEF.1070508@web.de>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 03/65] i18n: archive: mark parseopt strings for
+ translation
+Date: Mon, 28 May 2012 17:47:29 -0500
+Message-ID: <20120528224729.GK14606@burratino>
+References: <1336314232-21002-3-git-send-email-pclouds@gmail.com>
+ <1338203657-26486-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, gitster@pobox.com, phil.hord@gmail.com,
-	Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
-	Johannes Sixt <j6t@kdbg.org>
-To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Tue May 29 00:01:29 2012
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+	Jiang Xin <worldhello.net@gmail.com>
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Tue May 29 00:47:49 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SZ80D-0005cC-Hs
-	for gcvg-git-2@plane.gmane.org; Tue, 29 May 2012 00:01:25 +0200
+	id 1SZ8j1-0006gP-Fc
+	for gcvg-git-2@plane.gmane.org; Tue, 29 May 2012 00:47:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751033Ab2E1WBV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 May 2012 18:01:21 -0400
-Received: from mail-wg0-f44.google.com ([74.125.82.44]:40400 "EHLO
-	mail-wg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750808Ab2E1WBU (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 May 2012 18:01:20 -0400
-Received: by wgbdr13 with SMTP id dr13so3263469wgb.1
-        for <git@vger.kernel.org>; Mon, 28 May 2012 15:01:19 -0700 (PDT)
+	id S1751933Ab2E1Wri convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 28 May 2012 18:47:38 -0400
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:47355 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751870Ab2E1Wrh convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 28 May 2012 18:47:37 -0400
+Received: by yenm10 with SMTP id m10so1647393yen.19
+        for <git@vger.kernel.org>; Mon, 28 May 2012 15:47:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=bYE6crEkxw7IALb0g4Xe24XRdLZ7brki1ZYo3uRMNn8=;
-        b=dovacpW21aUKkFTa/0RNii7GnFE4UhIqVVL4+NMxC2YBu4wJlQI3wI8SRkygi0xxYJ
-         p6ARm3kopZ5iTFM1aVUwoFOS4AkVuMe5AzFbFPywqQmFGREmiWKIlEFEw/XsvFw5C8hx
-         Coj7IQbVck8659olpfdmO9urffRr8avGfMBDLUMuuYox1FZ3qXCr1tap46SJg8kNgMK9
-         mrBt34xcn5Z15Sd1M7IEEBRTBobrlOtKewIT5l2IBHYBebsr4J2XkGucfqC1W1s7OpRJ
-         DvqRgLC+Yh1n6lEunnxwCzUPvsZky7WxcNW+820d7KjBFgNBZPOJGDhw4SYW83gO6kEm
-         CSfg==
-Received: by 10.216.228.135 with SMTP id f7mr6148851weq.129.1338242479667;
- Mon, 28 May 2012 15:01:19 -0700 (PDT)
-Received: by 10.180.146.166 with HTTP; Mon, 28 May 2012 15:01:19 -0700 (PDT)
-In-Reply-To: <4FC3DAEF.1070508@web.de>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=Vjr303hd4KfU6hFym4X40iaGNdo8AlAxTvsKll+d0nM=;
+        b=q/xVRYhq1BzqzXsEIsrWOAj+5e9Jgly7IDhmXY8yUMRx1ffNNgJ1pAlmEP3DMpTG8o
+         zB1+qxTArWicSX05K0Dhnqd+8a9BxrbBRR5qbBP0uWtcA2qBA50eW/SYTaYaHkyFFNDo
+         azYt2VwDaOPXXpIPeNiqzrrGtQGTeNJabQ32o4xm1pXILiTf3zqYX6YTM9b334mjSVMh
+         swjCEOYSz6LNDq+MTyelbzLXFObOBr9uVSGPyYSmjjFvn8gcsCPGZOanDn18pCX8+NWE
+         FNTYm8dtTwBPWgPKaIjD+zLplfsEMtvLluCHefOvuok6/IVUdnClUKoHdeu/yT2DDHLt
+         RQhg==
+Received: by 10.50.46.230 with SMTP id y6mr5459356igm.20.1338245256725;
+        Mon, 28 May 2012 15:47:36 -0700 (PDT)
+Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
+        by mx.google.com with ESMTPS id fv9sm2605907igc.8.2012.05.28.15.47.35
+        (version=SSLv3 cipher=OTHER);
+        Mon, 28 May 2012 15:47:35 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <1338203657-26486-1-git-send-email-pclouds@gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198727>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198728>
 
-On Tue, May 29, 2012 at 6:07 AM, Jens Lehmann <Jens.Lehmann@web.de> wrote:
-> Am 27.05.2012 17:34, schrieb Jon Seymour:
->> This series improves the robustness of path handling by 'git submodule' by:
->>
->> * detecting submodule URLs that will result in non-sensical submodule origin URLs
->>
->> * improving handling of various kinds of relative superproject origin URLs
->>
->> * improving handling of various kinds of denormalized superproject origin URLs
->
-> Hmm, this has become a quite invasive patch series. While I bought the
-> use case of having a superproject with a relative url and was inclined
-> to accept that it might even not start "./" or "../" (even though that
-> is a pretty unusual use and can be easily fixed by prepending a "./"),
-> I'm not sure the in depth check of URLs is worth the code churn. And
-> especially the high probability of breaking other peoples use cases in
-> rather subtle ways worry me (this did happen quite often when the
-> submodule script was changed in the past; as an example take the
-> windows path issues Johannes already pointed out in his email). And I
-> can't remember bug reports that people complained about URL problems
-> due to the issues you intend to fix here, which makes me think they
-> might be well intended but possibly unnecessary (but my memory might
-> server me wrong here).
->
-> So I'd vote for just fixing the relative submodule path issues and to
-> not care about the possible issues with URLs. Opinions?
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
 
-I'll write a minimal patch to solve my relative path problem without
-fixing the invalid/"greedy" submodule url or url normalization issues.
+>  rc times are usually more quiet times, let's slip the series in..
+>  minor conflict with revert topic in pu, but should be easy to
+>  resolve.
 
-The reason I went with a more extensive series is that the change in
-6/9 considerably simplified the change I wanted to make in 7/9 while
-at the same time making the path handling of resolve_relative_url more
-precise, in the sense documented by the tests in 2/9.
+Thanks.  Some semi-automated checks follow. :)
 
-The refactoring in 5/9 and the changes in 8/9 and 9/9 are related to
-renormalization which I realised was a weakness (if not a problem
-people were complaining about) in the original code as documented by
-the tests in 4/9.
+"git log --name-status" reveals that files these patches change don't
+overlap.  Good.
 
-Do you have any comments about whether the failures documented in 2/9
-and 4/9 are worth noting, at least, as weaknesses?
+=46iltering out changes involving N, _, (, and ) by running "git diff
+--word-diff-regex=3D'[^N_()]' origin/master", the remaining changes are
+in
 
->
-> (And patches 6-8 contain changes to test cases other than just changing
-> test_expect_failure to test_expect_success which makes reviewing this
-> series unnecessarily hard)
+	builtin/for-each-ref.c
+	builtin/ls-tree.c
+	builtin/notes.c
+	builtin/rev-parse.c
+	builtin/show-branch.c
 
-Agree absolutely about patch 8 - I will re-roll with separate tests to
-document the test setup issue I fixed in 8.
+These are whitespace adjustments to keep continuation lines lined up
+given the extra "N_(" characters, except for the for-each-ref.c change
+which is an unrelated conversion of 8 spaces to a tab (also seems
+fine).
 
-The only other changes to tests in 6 and 7 were the removal of
-comments about the actual bad behaviour. Would your preference be that
-I removed these #actual comments completely or that I moved
-documentation of the actual behaviour to the header of the test?
+GETTEXT_POISON is annoyed by
 
-jon.
+  t0006.1-11 relative dates
+
+	test-date show $t >actual &&
+	test_cmp expect actual
+
+  t0040.1 test help
+
+	test_must_fail test-parse-options -h > output 2> output.err &&
+	test_cmp expect output
+
+  t0040.11-12 handling of unknown options
+
+	test_must_fail test-parse-options $* >output 2>output.err &&
+	test_cmp expect output.err
+
+  t0040.27 form of errors from OPT_CALLBACK
+
+	test_cmp expect.err output.err
+
+  t1300.48 no arguments, but no crash
+
+	grep usage output
+
+  t1502.1 --parseopt help output
+
+	test_expect_code 129 git rev-parse --parseopt -- -h > output < options=
+pec &&
+	test_cmp expect output
+
+  t2006.1,2 checkout-index --gobbledegook, -h
+
+	grep "[Uu]sage" err
+
+  t2107.2 update-index --nonsense dumps usage
+
+	grep "[Uu]sage: git update-index" err
+
+  t3004.3 ls-files with nonsense option
+
+	grep "[Uu]sage: git ls-files" actual
+
+  t3004.4 ls-files -h in corrupt repository
+
+	grep "[Uu]sage: git ls-files " broken/usage
+
+  t3200.3 branch -h in broken repository
+
+	grep "[Uu]sage" broken/usage
+
+  t3200.10 branch -m dumps usage
+
+	grep "[Uu]sage: git branch" err'
+
+  t3501.2,3 cherry-pick/revert --nonsense
+
+	test_must_fail git cherry-pick --nonsense 2>msg &&
+	grep '[Uu]sage:' msg
+
+  t4006.4-7 diff --stat, --shorstat
+
+	git diff HEAD --stat >actual &&
+	test_cmp expect actual
+
+  t4120.3,5 apply with too large -p
+
+	grep "removing 3 leading" err
+
+  t4012.5-6 apply detects corrupt patch
+
+	 detected=3D`expr "$detected" : "fatal.*at line \\([0-9]*\\)\$"` &&
+
+  t4133.2 apply diff with consistent filename in headers
+
+	grep "inconsistent new filename" err &&
+
+  t4200.24,25 rerere --no-no-rerere-autoupdate, -h
+
+	grep [Uu]sage err &&
+
+  t4202.33 log --graph with diff and stats
+
+	sed -e 's/ *$//' \
+	    -e 's/commit [0-9a-f]*$/commit COMMIT_OBJECT_NAME/' \
+	    -e 's/Merge: [ 0-9a-f]*$/Merge: MERGE_PARENTS/' \
+	    -e 's/Merge tag.*/Merge HEADS DESCRIPTION/' \
+	    -e 's/Merge commit.*/Merge HEADS DESCRIPTION/' \
+	    -e 's/, 0 deletions(-)//' \
+	    -e 's/, 0 insertions(+)//' \
+	    -e 's/ 1 files changed, / 1 file changed, /' \
+	    -e 's/, 1 deletions(-)/, 1 deletion(-)/' \
+	    -e 's/, 1 insertions(+)/, 1 insertion(+)/'
+
+  t4205.12 NUL separation with --stat
+
+	expecting success:=20
+		  stat0_part=3D$(git diff --stat HEAD^ HEAD) &&
+		  stat1_part=3D$(git diff --stat --root HEAD^) &&
+		  printf "add bar\n$stat0_part\n\0initial\n$stat1_part\n" >expected &=
+&
+		  git log -z --stat --pretty=3D"format:%s" >actual &&
+		  test_cmp expected actual
+
+	Binary files expected and actual differ
+	not ok - 12 NUL separation with --stat
+	$ xxd trash\ directory.t4205-log-pretty-formats/expected
+	0000000: 6164 6420 6261 720a 2320 4745 5454 4558  add bar.# GETTEX
+	0000010: 5420 504f 4953 4f4e 2023 0a00 696e 6974  T POISON #..init
+	0000020: 6961 6c0a 2320 4745 5454 4558 5420 504f  ial.# GETTEXT PO
+	0000030: 4953 4f4e 2023 0a                        ISON #.
+	$ xxd trash\ directory.t4205-log-pretty-formats/actual=20
+	0000000: 6164 6420 6261 720a 2320 4745 5454 4558  add bar.# GETTEX
+	0000010: 5420 504f 4953 4f4e 2023 0069 6e69 7469  T POISON #.initi
+	0000020: 616c 0a23 2047 4554 5445 5854 2050 4f49  al.# GETTEXT POI
+	0000030: 534f 4e20 23                             SON #
+
+  t5300.32 index-pack detects the SHA1 collision
+
+	grep "SHA1 COLLISION FOUND" msg
+
+  t5505.2-3,6-9,13,15,46 remote porcelain-ish
+
+	actual=3D$(git remote show "$1" | sed -ne 's|^    \(.*\) tracked$|\1|p=
+')
+	shift &&
+	tokens_match "$*" "$actual"
+
+  r6500.2-3 gc --gobbledegook, -h
+
+	grep "[Uu]sage: git gc" err
+
+  t7508.5 status --column
+
+	COLUMNS=3D50 git status --column=3D"column dense" >output &&
+	test_cmp expect output
+
+  t7600.3 merge -h
+
+	grep "[Uu]sage: git merge" broken/usage
+
+Assuming we want to require scripts to set LC_ALL=3DC before trying
+to parse error messages and descriptions within usage strings (which
+seems like a sensible requirement to me), these look like test suite
+bugs and not bugs in git itself.  So for what it's worth,
+
+Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
