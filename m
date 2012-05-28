@@ -1,65 +1,124 @@
-From: =?ISO-8859-15?Q?Martin_Storsj=F6?= <martin@martin.st>
-Subject: =?UTF-8?Q?Re=3A_Git_hangs_at_=E2=80=9CWriting_objects=3A_11%=E2=80=9D?=
-Date: Mon, 28 May 2012 22:36:44 +0300 (EEST)
-Message-ID: <alpine.DEB.2.00.1205282225590.31146@cone.martin.st>
-References: <EF4D4C5F-2D6B-46F2-B5A4-9DB1BA55BB6B@att.net> <20120525005156.GC11300@sigill.intra.peff.net> <033AF49C-4CB3-4412-8845-0246D356358C@att.net> <2DE05B0B-1D7E-451F-9151-B01CDDF4593E@att.net> <201205270312.q4R3Chef014187@no.baka.org>
- <3BBC77C3-B747-4F68-A135-954C3C00ECBA@att.net>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: [PATCH] submodules: print "registered for path" message only once
+Date: Mon, 28 May 2012 21:46:58 +0200
+Message-ID: <4FC3D632.6030604@web.de>
+References: <1338198114-20480-1-git-send-email-nviennot+sidnair@viennot.biz>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: Seth Robertson <in-gitvger@baka.org>, Jeff King <peff@peff.net>,
-	git@vger.kernel.org
-To: Timothy Normand Miller <theosib@att.net>
-X-From: git-owner@vger.kernel.org Mon May 28 21:43:45 2012
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Nicolas Viennot and Sid Nair <nviennot+sidnair@viennot.biz>,
+	Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
+	Nicolas Viennot <nicolas@viennot.biz>,
+	Sid Nair <sidnair09@gmail.com>, Heiko Voigt <hvoigt@hvoigt.net>
+To: Nicolas Viennot and Sid Nair <nicolas@viennot.com>
+X-From: git-owner@vger.kernel.org Mon May 28 21:47:13 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SZ5qr-0003jM-EA
-	for gcvg-git-2@plane.gmane.org; Mon, 28 May 2012 21:43:37 +0200
+	id 1SZ5uJ-0007uc-SA
+	for gcvg-git-2@plane.gmane.org; Mon, 28 May 2012 21:47:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754906Ab2E1Tmz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 May 2012 15:42:55 -0400
-Received: from mta-out.inet.fi ([195.156.147.13]:41739 "EHLO jenni2.inet.fi"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754867Ab2E1Tmy (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 May 2012 15:42:54 -0400
-X-Greylist: delayed 352 seconds by postgrey-1.27 at vger.kernel.org; Mon, 28 May 2012 15:42:54 EDT
-Received: from cone.home.martin.st (84.250.16.54) by jenni2.inet.fi (8.5.140.02)
-        id 4FBB425E0044B1AC; Mon, 28 May 2012 22:36:47 +0300
-In-Reply-To: <3BBC77C3-B747-4F68-A135-954C3C00ECBA@att.net>
-User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
+	id S1754986Ab2E1TrH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 May 2012 15:47:07 -0400
+Received: from fmmailgate02.web.de ([217.72.192.227]:37830 "EHLO
+	fmmailgate02.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754960Ab2E1TrG (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 May 2012 15:47:06 -0400
+Received: from moweb001.kundenserver.de (moweb001.kundenserver.de [172.19.20.114])
+	by fmmailgate02.web.de (Postfix) with ESMTP id EFCB71C4FFE5D
+	for <git@vger.kernel.org>; Mon, 28 May 2012 21:47:03 +0200 (CEST)
+Received: from [192.168.178.48] ([91.3.180.110]) by smtp.web.de (mrweb001)
+ with ESMTPA (Nemesis) id 0LpwMZ-1S4Pa642FD-00fgZb; Mon, 28 May 2012 21:47:03
+ +0200
+User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:12.0) Gecko/20120428 Thunderbird/12.0.1
+In-Reply-To: <1338198114-20480-1-git-send-email-nviennot+sidnair@viennot.biz>
+X-Provags-ID: V02:K0:uCXXvkNj+EX7eGiC5fTLnfnf9EWKy1O+qZSVuCW+3mG
+ HFUUN9csQI5UntQvINrvqCV/oILtTSmI4HQxyimG6Q09pV5855
+ KawEer2/pgXxaImdTz2IVIAYZlPjci3tHMWIZn1PciRQLdPE6j
+ BylTtcX24MS2YflOhAb2HRWWxYL/KS7SZQGEUPcXXfQJUQwvmC
+ 1y5gLu/7k0f2M+DhBtVJQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198717>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198718>
 
-On Mon, 28 May 2012, Timothy Normand Miller wrote:
+Since 2cd9de3e (submodule add: always initialize .git/config entry) the
+message "Submodule '\$name' (\$url) registered for path '\$sm_path'" is
+printed every time cmd_init() is called, e.g. each time "git submodule
+update" is used with the --init option.
 
-> I tried uploading a file via sftp, and it stalls out at 160K.  So this 
-> is the cause of the problem.  SSH is broken.  Unfortunately, googling 
-> for ssh and stall isn't getting me anywhere.
+This was not intended and leads to bogus output which can confuse users
+and build systems. Apart from that the $url variable was not set after the
+first run which did the actual initialization and only "()" was printed
+in subsequent runs where "($url)" was meant to inform the user about the
+upstream repo.
 
-Not sure if this is the same issue you're seeing or not, but I ran into 
-something similar a while ago - when connected from less reliable 
-networks, connections (especially rsync or scp) over SSH stalled after a 
-short while - interactive sessions worked fine.
+Fix that by moving the say command in question into the if block where the
+url is initialized, restoring the behavior that was in place before the
+2cd9de3e commit. While at it also remove the comment which still describes
+the logic used before 2cd9de3e and add a comment about how things work now.
 
-In my case, the issue was a too pedantic iptables configuration. When 
-communicating with the server from a less reliable network, packets could 
-arrive out of order. If the server received packets that 
-iptables/conntrack didn't think belonged to the session, my config sent 
-ICMP unreachable packets as response (-j REJECT), basically terminating 
-the connection.
+Reported-by: Nicolas Viennot and Sid Nair <nicolas@viennot.com>
+Reported-by: Heiko Voigt <hvoigt@hvoigt.net>
+Signed-off-by: Jens Lehmann <Jens.Lehmann@web.de>
+---
 
-I fixed it by adjusting the iptables config to not send ICMP unreachable 
-for this case. An alternative solution was to set sysctl 
-"net.netfilter.nf_conntrack_tcp_be_liberal = 1" - this made the out of 
-order packets still be counted as part of the session, not triggering the 
-bad behaviour of my iptables config.
+Am 28.05.2012 11:41, schrieb Nicolas Viennot and Sid Nair:
+> When git submodule init was called, the $url variable was not initialized
+> properly for submodules which have already been initialized. This led
+> to two problems.
+> 
+> First, when all of the submodules were initialized, each showed an empty url
+> instead of the actual url.
+> 
+> Second, when previously initialized submodules were printed after newly
+> added submodules, the displayed urls were incorrect.
 
-Again, not sure if this is related to your issue or not, but it at least a 
-similar symptom.
+Thanks for pointing this one out. Me thinks the real culprit here is to
+print the "registered for path" message even though that was not what
+was done. This popped up last week at $dayjob and I just got around to
+do this fix when your patch appeared on the list ;-)
 
-// Martin
+
+ git-submodule.sh | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
+
+diff --git a/git-submodule.sh b/git-submodule.sh
+index 64a70d6..5c61ae2 100755
+--- a/git-submodule.sh
++++ b/git-submodule.sh
+@@ -396,8 +396,9 @@ cmd_init()
+ 	module_list "$@" |
+ 	while read mode sha1 stage sm_path
+ 	do
+-		# Skip already registered paths
+ 		name=$(module_name "$sm_path") || exit
++
++		# Copy url setting when it is not set yet
+ 		if test -z "$(git config "submodule.$name.url")"
+ 		then
+ 			url=$(git config -f .gitmodules submodule."$name".url)
+@@ -412,6 +413,8 @@ cmd_init()
+ 			esac
+ 			git config submodule."$name".url "$url" ||
+ 			die "$(eval_gettext "Failed to register url for submodule path '\$sm_path'")"
++
++			say "$(eval_gettext "Submodule '\$name' (\$url) registered for path '\$sm_path'")"
+ 		fi
+
+ 		# Copy "update" setting when it is not set yet
+@@ -420,8 +423,6 @@ cmd_init()
+ 		test -n "$(git config submodule."$name".update)" ||
+ 		git config submodule."$name".update "$upd" ||
+ 		die "$(eval_gettext "Failed to register update mode for submodule path '\$sm_path'")"
+-
+-		say "$(eval_gettext "Submodule '\$name' (\$url) registered for path '\$sm_path'")"
+ 	done
+ }
+
+-- 
+1.7.11.rc0.dirty
