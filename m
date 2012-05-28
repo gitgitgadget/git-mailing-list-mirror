@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH 36/65] i18n: merge: mark parseopt strings for translation
-Date: Mon, 28 May 2012 18:13:48 +0700
-Message-ID: <1338203657-26486-34-git-send-email-pclouds@gmail.com>
+Subject: [PATCH 37/65] i18n: mktree: mark parseopt strings for translation
+Date: Mon, 28 May 2012 18:13:49 +0700
+Message-ID: <1338203657-26486-35-git-send-email-pclouds@gmail.com>
 References: <1336314232-21002-3-git-send-email-pclouds@gmail.com>
  <1338203657-26486-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
@@ -15,138 +15,87 @@ Cc: Jonathan Niedier <jrnieder@gmail.com>,
 	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 28 13:23:27 2012
+X-From: git-owner@vger.kernel.org Mon May 28 13:23:36 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SYy2n-0002od-Ji
-	for gcvg-git-2@plane.gmane.org; Mon, 28 May 2012 13:23:26 +0200
+	id 1SYy2v-00031p-Vg
+	for gcvg-git-2@plane.gmane.org; Mon, 28 May 2012 13:23:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753824Ab2E1LXV convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 28 May 2012 07:23:21 -0400
+	id S1754190Ab2E1LXa convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 28 May 2012 07:23:30 -0400
 Received: from mail-pz0-f46.google.com ([209.85.210.46]:58121 "EHLO
 	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753742Ab2E1LXU (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 May 2012 07:23:20 -0400
+	with ESMTP id S1753867Ab2E1LX3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 May 2012 07:23:29 -0400
 Received: by mail-pz0-f46.google.com with SMTP id y13so4036469dad.19
-        for <git@vger.kernel.org>; Mon, 28 May 2012 04:23:20 -0700 (PDT)
+        for <git@vger.kernel.org>; Mon, 28 May 2012 04:23:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=o5uvXYd1gE7APaF7jbetuYugDkWj96Tjq0RMUvnQtDI=;
-        b=o2wueeIgJ9WOoO8KEgCRxZ1YOu5BPeZ1YZI8HbVgrMn6ELeE92mBGWUic1UG+vtdux
-         h3ilk+0NetYBaC+HRImfkm4vuhy2ErPTOP30O7ZTtvxSDeRLZeu2Ebm24ZUvBqAb6ltS
-         AU3ZJ70S+hdLCYfJ8YPgfmVnONesM/KlYzhHmtd1pLrddjtDk816LSsl/cizrY61vZd0
-         zvmh1xd8E7mWWWJ60xDONNUcVrSpf7YPcUrwbimwse/1iXb7hNUMTJzhiQJYXC0Jf/Nh
-         4m96O4Quz5eb9687mU1cCw3B8EdGYglBaJjiexz1Lqysi2AMyjyDE5cBHRBLlXYeIPTR
-         FUjg==
-Received: by 10.68.225.69 with SMTP id ri5mr26195278pbc.147.1338204200224;
-        Mon, 28 May 2012 04:23:20 -0700 (PDT)
+        bh=EHsRnW5I6dVo/PcWf7fLXvnbgDt6pdRpZnYQas0xQIM=;
+        b=yxn+u5PpJDD0LRcOs7PrZ5Ow6wYLviXu+ypo536eLwH62LIdHxOMu6XqIZClf0eeWU
+         s7p05wNCiFXQakuSYRbYRf/hoKshgWX9hQ2Uetx5Uavx1mvPXbLNICcSy2Ywl55h3Vgg
+         g0OLwBzWjyXxJP8RimgeTwfaaosYdbnut2NSj9rT/f3HDDPrTh870M5dObfr/wkpr5wt
+         voBZbEElfmqH9Ud/E08z+6xMzclObcPi7Oi/aPj6N7CHBL0dtC99fr7wSZlayl09AnKM
+         mu2JHpFEEMvYDx3HAKwI8Bo2cvoNyUgBNqpZhFtnNDttzBymmo7wYE4+wxI4KZHyv4yK
+         r3bQ==
+Received: by 10.68.203.73 with SMTP id ko9mr26989281pbc.66.1338204208850;
+        Mon, 28 May 2012 04:23:28 -0700 (PDT)
 Received: from pclouds@gmail.com ([115.74.41.88])
-        by mx.google.com with ESMTPS id pi8sm1030878pbb.32.2012.05.28.04.23.15
+        by mx.google.com with ESMTPS id nw7sm18981360pbb.73.2012.05.28.04.23.24
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 28 May 2012 04:23:19 -0700 (PDT)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Mon, 28 May 2012 18:19:14 +0700
+        Mon, 28 May 2012 04:23:28 -0700 (PDT)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Mon, 28 May 2012 18:19:23 +0700
 X-Mailer: git-send-email 1.7.10.2.549.g9354186
 In-Reply-To: <1338203657-26486-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198672>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198673>
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- builtin/merge.c | 48 ++++++++++++++++++++++++------------------------
- 1 file changed, 24 insertions(+), 24 deletions(-)
+ builtin/mktree.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/builtin/merge.c b/builtin/merge.c
-index 470fc57..9b0d37b 100644
---- a/builtin/merge.c
-+++ b/builtin/merge.c
-@@ -40,9 +40,9 @@ struct strategy {
- };
+diff --git a/builtin/mktree.c b/builtin/mktree.c
+index 4ae1c41..f92ba40 100644
+--- a/builtin/mktree.c
++++ b/builtin/mktree.c
+@@ -64,7 +64,7 @@ static void write_tree(unsigned char *sha1)
+ }
 =20
- static const char * const builtin_merge_usage[] =3D {
--	"git merge [options] [<commit>...]",
--	"git merge [options] <msg> HEAD <commit>",
--	"git merge --abort",
-+	N_("git merge [options] [<commit>...]"),
-+	N_("git merge [options] <msg> HEAD <commit>"),
-+	N_("git merge --abort"),
+ static const char *mktree_usage[] =3D {
+-	"git mktree [-z] [--missing] [--batch]",
++	N_("git mktree [-z] [--missing] [--batch]"),
  	NULL
  };
 =20
-@@ -180,39 +180,39 @@ static int option_parse_n(const struct option *op=
-t,
+@@ -150,9 +150,9 @@ int cmd_mktree(int ac, const char **av, const char =
+*prefix)
+ 	int got_eof =3D 0;
 =20
- static struct option builtin_merge_options[] =3D {
- 	{ OPTION_CALLBACK, 'n', NULL, NULL, NULL,
--		"do not show a diffstat at the end of the merge",
-+		N_("do not show a diffstat at the end of the merge"),
- 		PARSE_OPT_NOARG, option_parse_n },
- 	OPT_BOOLEAN(0, "stat", &show_diffstat,
--		"show a diffstat at the end of the merge"),
--	OPT_BOOLEAN(0, "summary", &show_diffstat, "(synonym to --stat)"),
--	{ OPTION_INTEGER, 0, "log", &shortlog_len, "n",
--	  "add (at most <n>) entries from shortlog to merge commit message",
-+		N_("show a diffstat at the end of the merge")),
-+	OPT_BOOLEAN(0, "summary", &show_diffstat, N_("(synonym to --stat)")),
-+	{ OPTION_INTEGER, 0, "log", &shortlog_len, N_("n"),
-+	  N_("add (at most <n>) entries from shortlog to merge commit message=
-"),
- 	  PARSE_OPT_OPTARG, NULL, DEFAULT_MERGE_LOG_LEN },
- 	OPT_BOOLEAN(0, "squash", &squash,
--		"create a single commit instead of doing a merge"),
-+		N_("create a single commit instead of doing a merge")),
- 	OPT_BOOLEAN(0, "commit", &option_commit,
--		"perform a commit if the merge succeeds (default)"),
-+		N_("perform a commit if the merge succeeds (default)")),
- 	OPT_BOOL('e', "edit", &option_edit,
--		"edit message before committing"),
-+		N_("edit message before committing")),
- 	OPT_BOOLEAN(0, "ff", &allow_fast_forward,
--		"allow fast-forward (default)"),
-+		N_("allow fast-forward (default)")),
- 	OPT_BOOLEAN(0, "ff-only", &fast_forward_only,
--		"abort if fast-forward is not possible"),
-+		N_("abort if fast-forward is not possible")),
- 	OPT_RERERE_AUTOUPDATE(&allow_rerere_auto),
--	OPT_CALLBACK('s', "strategy", &use_strategies, "strategy",
--		"merge strategy to use", option_parse_strategy),
--	OPT_CALLBACK('X', "strategy-option", &xopts, "option=3Dvalue",
--		"option for selected merge strategy", option_parse_x),
--	OPT_CALLBACK('m', "message", &merge_msg, "message",
--		"merge commit message (for a non-fast-forward merge)",
-+	OPT_CALLBACK('s', "strategy", &use_strategies, N_("strategy"),
-+		N_("merge strategy to use"), option_parse_strategy),
-+	OPT_CALLBACK('X', "strategy-option", &xopts, N_("option=3Dvalue"),
-+		N_("option for selected merge strategy"), option_parse_x),
-+	OPT_CALLBACK('m', "message", &merge_msg, N_("message"),
-+		N_("merge commit message (for a non-fast-forward merge)"),
- 		option_parse_message),
- 	OPT__VERBOSITY(&verbosity),
- 	OPT_BOOLEAN(0, "abort", &abort_current_merge,
--		"abort the current in-progress merge"),
--	OPT_SET_INT(0, "progress", &show_progress, "force progress reporting"=
-, 1),
--	{ OPTION_STRING, 'S', "gpg-sign", &sign_commit, "key id",
--	  "GPG sign commit", PARSE_OPT_OPTARG, NULL, (intptr_t) "" },
--	OPT_BOOLEAN(0, "overwrite-ignore", &overwrite_ignore, "update ignored=
- files (default)"),
-+		N_("abort the current in-progress merge")),
-+	OPT_SET_INT(0, "progress", &show_progress, N_("force progress reporti=
-ng"), 1),
-+	{ OPTION_STRING, 'S', "gpg-sign", &sign_commit, N_("key id"),
-+	  N_("GPG sign commit"), PARSE_OPT_OPTARG, NULL, (intptr_t) "" },
-+	OPT_BOOLEAN(0, "overwrite-ignore", &overwrite_ignore, N_("update igno=
-red files (default)")),
- 	OPT_END()
- };
+ 	const struct option option[] =3D {
+-		OPT_SET_INT('z', NULL, &line_termination, "input is NUL terminated",=
+ '\0'),
+-		OPT_SET_INT( 0 , "missing", &allow_missing, "allow missing objects",=
+ 1),
+-		OPT_SET_INT( 0 , "batch", &is_batch_mode, "allow creation of more th=
+an one tree", 1),
++		OPT_SET_INT('z', NULL, &line_termination, N_("input is NUL terminate=
+d"), '\0'),
++		OPT_SET_INT( 0 , "missing", &allow_missing, N_("allow missing object=
+s"), 1),
++		OPT_SET_INT( 0 , "batch", &is_batch_mode, N_("allow creation of more=
+ than one tree"), 1),
+ 		OPT_END()
+ 	};
 =20
 --=20
 1.7.10.2.549.g9354186
