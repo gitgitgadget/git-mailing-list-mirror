@@ -1,100 +1,92 @@
-From: "Steven E. Harris" <seh@panix.com>
-Subject: How does Git's maintenance policy handle topics that don't start from "master?"
-Date: Tue, 29 May 2012 16:33:45 -0400
-Organization: SEH Labs
-Message-ID: <m21um2682e.fsf@Spindle.sehlabs.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 03/65] i18n: archive: mark parseopt strings for
+ translation
+Date: Tue, 29 May 2012 15:37:59 -0500
+Message-ID: <20120529203759.GC22151@burratino>
+References: <1336314232-21002-3-git-send-email-pclouds@gmail.com>
+ <1338203657-26486-1-git-send-email-pclouds@gmail.com>
+ <7vr4u23f0i.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 29 22:34:08 2012
+Cc: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+	git@vger.kernel.org,
+	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+	Jiang Xin <worldhello.net@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue May 29 22:38:15 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SZT7G-0002VA-6M
-	for gcvg-git-2@plane.gmane.org; Tue, 29 May 2012 22:34:06 +0200
+	id 1SZTBH-0004lE-4A
+	for gcvg-git-2@plane.gmane.org; Tue, 29 May 2012 22:38:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755140Ab2E2UeB convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 29 May 2012 16:34:01 -0400
-Received: from plane.gmane.org ([80.91.229.3]:49638 "EHLO plane.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754386Ab2E2UeA (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 May 2012 16:34:00 -0400
-Received: from list by plane.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1SZT76-0002Pv-N5
-	for git@vger.kernel.org; Tue, 29 May 2012 22:33:56 +0200
-Received: from c-24-23-122-157.hsd1.pa.comcast.net ([24.23.122.157])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 29 May 2012 22:33:56 +0200
-Received: from seh by c-24-23-122-157.hsd1.pa.comcast.net with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 29 May 2012 22:33:56 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: c-24-23-122-157.hsd1.pa.comcast.net
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3.50 (darwin)
-Cancel-Lock: sha1:/Gmu3cqgyNb2D6CbdjHFOK73l24=
+	id S1755843Ab2E2UiL convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 29 May 2012 16:38:11 -0400
+Received: from mail-ob0-f174.google.com ([209.85.214.174]:60406 "EHLO
+	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753719Ab2E2UiJ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 29 May 2012 16:38:09 -0400
+Received: by obbtb18 with SMTP id tb18so7348238obb.19
+        for <git@vger.kernel.org>; Tue, 29 May 2012 13:38:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=hRTlvMkFwZPJDPM4DWrNe3sp478iFOlS7LCf346eK7c=;
+        b=wPj7G294htrHMjgIqFtKH0YL1Jam/Pcjc1sTCbGS/Xyueu6TP8IKbv9l0+xtN5xFMM
+         s/DnIKALKEMy4qUzFO/l3WbjFAa04LFTvjyhCV+7mNZw8GwEbE0h6u2E5PnbljuwMTfk
+         WHiUB3I2A85zu3SPoSaAQhRhtroNTRzmoJWxbAsMUzAO/zjR0ZiBQmBuxF+Av/a4SeHq
+         l16mOcu343vaJ017JLAh5vL/Ku+MvvQXUSoiP7+U5/LwEOhzN0H9Gbq+vYPTWA7QcJPv
+         YGxM+MGMB+bYI4iGqEDbfW0Ye9HgqGboYLmebDdOrEntEBlIBvmvJEhk+wayIYachlZR
+         fLWQ==
+Received: by 10.182.154.73 with SMTP id vm9mr2350055obb.72.1338323889116;
+        Tue, 29 May 2012 13:38:09 -0700 (PDT)
+Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
+        by mx.google.com with ESMTPS id r8sm9586533oer.6.2012.05.29.13.38.08
+        (version=SSLv3 cipher=OTHER);
+        Tue, 29 May 2012 13:38:08 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <7vr4u23f0i.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198758>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198759>
 
-I've read the /Addendum to "MaintNotes"/ document=C2=B9 several times i=
-n the
-last few years, but in the process of trying to employ the policy with
-my current team, our progress is stuck on a case that isn't addressed b=
-y
-the policy -- directly, anyway.
+Junio C Hamano wrote:
+> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes=
+:
 
-In the policy section "Handle the remaining patches," the first clause
-reads as follows:
+>> --- a/archive.c
+>> +++ b/archive.c
+>> @@ -7,10 +7,10 @@
+>>  #include "unpack-trees.h"
+>> =20
+>>  static char const * const archive_usage[] =3D {
+>> -	"git archive [options] <tree-ish> [<path>...]",
+>> -	"git archive --list",
+>> -	"git archive --remote <repo> [--exec <cmd>] [options] <tree-ish> [=
+<path>...]",
+>> -	"git archive --remote <repo> [--exec <cmd>] --list",
+>> +	N_("git archive [options] <tree-ish> [<path>...]"),
+>> +	N_("git archive --list"),
+>> +	N_("git archive --remote <repo> [--exec <cmd>] [options] <tree-ish=
+> [<path>...]"),
+>> +	N_("git archive --remote <repo> [--exec <cmd>] --list"),
+>>  	NULL
+>>  };
+>
+> I can understand the "help" text member of OPT_BLAH() construct, but
+> do we really want to translate the above?
 
-,----[ First case for remaining patches ]
-| Anything unobvious that is applicable to 'master' (in other
-| words, does not depend on anything that is still in 'next'
-| and not in 'master') is applied to a new topic branch that
-| is forked from the tip of 'master'.  This includes both
-| enhancements and unobvious fixes to 'master'.
-`----
+<repo>, <cmd>, [options], <tree-ish>, and <path> may be spelled
+differently in other languages.  Would it be possible to take care
+of this kind of substitution automatically?
 
-It addresses topics that can be built on top of the "master" branch,
-these topics not depending on anything only available outside the
-"master" branch, such as in the "next" branch. This policy is focusing
-on the receiver and integrator of patches, rather than the author, but
-it's not hard to infer that an author should start his work from the
-"master" branch in order for his patches to be eligible for treatment b=
-y
-this clause.
-
-What about the case where an author started his work from the "next"
-branch instead? He may have submitted an earlier batch of work that's
-still cooking in "next," and now he needs to build something else that
-can take advantage of that earlier work. It's clear that if he starts
-from "next" and relies on that earlier work, then his later work is not
-independent and cannot possibly graduate to the "master" branch unless
-and until his earlier work graduates too.
-
-Is the Git policy on such dependency simply, "Don't do that?"
-
-Consider a situation where the earlier topic branch's contribution
-cooking in "next" is looking good and everyone is feeling confident tha=
-t
-it's going to graduate, and our poor author /needs/ to get started on
-his next task that would make use of the earlier work. If he does start
-his new topic branch from "next" -- or maybe starts it from his earlier
-topic branch instead -- what will go wrong later? Is there a part of th=
-e
-policy that addresses this case that I missed?
-
-
-=46ootnotes:=20
-=C2=B9 http://www.kernel.org/pub/software/scm/git/docs/v1.7.10.1/howto/=
-maintain-git.txt
-
---=20
-Steven E. Harris
+At least "git archive --list" should probably be kept untranslated
+to lessen the translator workload a bit.  Good catch.
