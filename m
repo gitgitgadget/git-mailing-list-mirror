@@ -1,91 +1,84 @@
-From: Jeff King <peff@peff.net>
+From: Dennis Kaarsemaker <dennis@kaarsemaker.net>
 Subject: Re: "docs: stop using asciidoc no-inline-literal" breaks asciidoc
  8.2.5
-Date: Tue, 29 May 2012 18:01:13 -0400
-Message-ID: <20120529220113.GC17598@sigill.intra.peff.net>
+Date: Wed, 30 May 2012 00:05:00 +0200
+Message-ID: <1338329100.2621.3.camel@localhost>
 References: <CACBZZX7Y-NTzRP1KYy=eEHTsLHTrzxGms61anXSHVbyCSPgurw@mail.gmail.com>
- <87ehq3mbxg.fsf@thomas.inf.ethz.ch>
- <CACBZZX5iOB5PCZUCX5ksR4hpw+DTLTaP4jOnyHAJ8hZVe9xo5w@mail.gmail.com>
- <7vzk8q3h5c.fsf@alter.siamese.dyndns.org>
+	 <87ehq3mbxg.fsf@thomas.inf.ethz.ch>
+	 <CACBZZX5iOB5PCZUCX5ksR4hpw+DTLTaP4jOnyHAJ8hZVe9xo5w@mail.gmail.com>
+	 <20120529215613.GB17598@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+Cc: =?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
 	Thomas Rast <trast@inf.ethz.ch>,
+	Junio C Hamano <gitster@pobox.com>,
 	Thomas Rast <trast@student.ethz.ch>,
-	Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto <cmn@elego.de>,
+	Carlos =?ISO-8859-1?Q?Mart=EDn?= Nieto <cmn@elego.de>,
 	Matthieu Moy <Matthieu.Moy@imag.fr>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed May 30 00:01:21 2012
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed May 30 00:05:13 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SZUTg-0000d7-U3
-	for gcvg-git-2@plane.gmane.org; Wed, 30 May 2012 00:01:21 +0200
+	id 1SZUXQ-0002js-EW
+	for gcvg-git-2@plane.gmane.org; Wed, 30 May 2012 00:05:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753869Ab2E2WBQ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 29 May 2012 18:01:16 -0400
-Received: from 99-108-225-23.lightspeed.iplsin.sbcglobal.net ([99.108.225.23]:35446
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752176Ab2E2WBQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 May 2012 18:01:16 -0400
-Received: (qmail 29184 invoked by uid 107); 29 May 2012 22:01:16 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 29 May 2012 18:01:16 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 29 May 2012 18:01:13 -0400
-Content-Disposition: inline
-In-Reply-To: <7vzk8q3h5c.fsf@alter.siamese.dyndns.org>
+	id S1753928Ab2E2WFG convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 29 May 2012 18:05:06 -0400
+Received: from mail-ee0-f46.google.com ([74.125.83.46]:62112 "EHLO
+	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752511Ab2E2WFF (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 May 2012 18:05:05 -0400
+Received: by eeit10 with SMTP id t10so1297390eei.19
+        for <git@vger.kernel.org>; Tue, 29 May 2012 15:05:03 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=message-id:subject:from:to:cc:date:in-reply-to:references
+         :organization:content-type:x-mailer:content-transfer-encoding
+         :mime-version:x-gm-message-state;
+        bh=j8gYwO+dhwWI08GUvQwO06phMLLMrQAAvHFasUdBJhc=;
+        b=TTf/asW23PWIsSTpXTe6HHBkS3TR7rRrSez1z8pVwQBUXbWDDzhk9NcDiJe4Q3TJIs
+         vleYTRCZlXRBJ4MwwmvMTLxxykY7FfF6XRx8q0VNBOxn7bJ35DTl/FtaijQPokW9SMi7
+         1ZCxMJB9d1r6kSXAWgAZcO8voyXUKM28ygjHhqD13as7p2IdQ26+dOWw1xcjuho5Hq7e
+         XzBAghYAEgfdgVERDr7zlVKkFw5UmD30KPSHvVmPd21EvHKeRaGto/z2ziJAJ7pfpHTt
+         GLNPwPspzF/KMY4I5Y5uqAROeKfiXP3QsNCh+6+570ei4tEFCZoPCaAV0DPlPGZQCKim
+         d8Yw==
+Received: by 10.14.119.196 with SMTP id n44mr5358941eeh.29.1338329103460;
+        Tue, 29 May 2012 15:05:03 -0700 (PDT)
+Received: from [10.42.1.4] (82-168-107-74.ip.telfort.nl. [82.168.107.74])
+        by mx.google.com with ESMTPS id c51sm53446628eei.12.2012.05.29.15.05.01
+        (version=SSLv3 cipher=OTHER);
+        Tue, 29 May 2012 15:05:02 -0700 (PDT)
+In-Reply-To: <20120529215613.GB17598@sigill.intra.peff.net>
+X-Mailer: Evolution 3.2.3-0ubuntu6
+X-Gm-Message-State: ALoCoQmrk5hsztSILEyrdgJ6BWqGCXV4M63jo+N5dApXSIUhWG2zDEDwoZGE49PZlbA2yPQWNRRU
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198769>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198770>
 
-On Tue, May 29, 2012 at 12:45:51PM -0700, Junio C Hamano wrote:
-
-> > We could also keep the nice syntax and have some simple sed-based
-> > pre-processor that converts the syntax to the older and more widely
-> > supported version.
+On di, 2012-05-29 at 17:56 -0400, Jeff King wrote:
 >=20
-> No, let's not go there.  I do not see any reason to believe that
-> such a sed script would do an equally good or better job as native
-> AsciiDoc implementation to deal with inline-literals.  That means we
-> would end up writing our documentation with a subset of newer
-> AsciiDoc that the custom sed script can grok---which defeats the
-> purpose of the whole exercise.
+> From my searches, there is no stock version in RHEL5 or CentOS 5. The=
+y
+> did not start shipping asciidoc until RHEL6, which includes 8.4.5. It=
+'s
+> very easy to find 3rd-party RPMs for asciidoc, which is presumably wh=
+y
+> you have multiple versions. And these days it's easy to find 8.4.5
+> packaged for el5.=20
 
-Very much agreed; that way lies madness.
+epel (pretty much the default 2=C2=BDth party repo, maintained by the f=
+edora
+people) ships asciidoc for rhel5/centos5, but not anything newer than
+8.1.x=20
 
-> > Or we could just decide to break RHEL 5 and systems released at a
-> > similar time, but that isn't what the patch suggested it was doing,=
- so
-> > we should probably step back and ponder whether that's something we
-> > want to do.
->=20
-> Very true.  Jeff, how do we want to proceed?  For the upcoming
-> release, I am inclined to say that we would revert 6cf378f (docs:
-> stop using asciidoc no-inline-literal, 2012-04-26).  We would still
-> need to double check the result, though. Documentation updates that
-> came after it are written assuming "inline-literal" behaviour, and
-> parts we may have "fixed" with the commit will format to their old
-> rendition.
+--=20
+Dennis K.
 
-I'd really rather keep it; I won't repeat my arguments here, but I made
-several in a reply to =C3=86var elsewhere in the thread. However, if we=
- do
-revert it, then it would be really great if somebody comes up with
-alternate solutions to fix the long list of bugs that were fixed by
-6cf378f (they are all documented in the commit message). And it would b=
-e
-even greater if that somebody isn't me.
-
-I think it would also be worth figuring out when a switch would be
-appropriate.  Moving to inline literals is obviously the way forward
-(it's way less error-prone, and eventually asciidoc may deprecate or
-drop the backwards compatibility feature themselves). So it is simply a
-matter of time in deciding when. If not now, then when?
-
--Peff
+Life is what happens to you while you're busy making other plans=20
+  - John Lennon
