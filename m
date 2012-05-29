@@ -1,67 +1,81 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCH 03/65] i18n: archive: mark parseopt strings for translation
-Date: Tue, 29 May 2012 18:30:54 +0700
-Message-ID: <CACsJy8ANyMxLNCP1P28AKywssGdSQP3QnE_HZHHGzkX-4oqFtw@mail.gmail.com>
-References: <1336314232-21002-3-git-send-email-pclouds@gmail.com>
- <1338203657-26486-1-git-send-email-pclouds@gmail.com> <20120528224729.GK14606@burratino>
+From: Thomas Rast <trast@inf.ethz.ch>
+Subject: Re: "docs: stop using asciidoc no-inline-literal" breaks asciidoc 8.2.5
+Date: Tue, 29 May 2012 14:03:39 +0200
+Message-ID: <87ehq3mbxg.fsf@thomas.inf.ethz.ch>
+References: <CACBZZX7Y-NTzRP1KYy=eEHTsLHTrzxGms61anXSHVbyCSPgurw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
-	Jiang Xin <worldhello.net@gmail.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Tue May 29 13:31:36 2012
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+	Thomas Rast <trast@student.ethz.ch>,
+	Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto <cmn@elego.de>,
+	Matthieu Moy <Matthieu.Moy@imag.fr>, <git@vger.kernel.org>
+To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Tue May 29 14:03:48 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SZKeF-00077q-Sh
-	for gcvg-git-2@plane.gmane.org; Tue, 29 May 2012 13:31:36 +0200
+	id 1SZL9P-0005Ti-Ag
+	for gcvg-git-2@plane.gmane.org; Tue, 29 May 2012 14:03:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751795Ab2E2Lb1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 May 2012 07:31:27 -0400
-Received: from mail-wg0-f44.google.com ([74.125.82.44]:54534 "EHLO
-	mail-wg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751180Ab2E2Lb0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 May 2012 07:31:26 -0400
-Received: by wgbdr13 with SMTP id dr13so3781546wgb.1
-        for <git@vger.kernel.org>; Tue, 29 May 2012 04:31:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=DSccOACjuzatVrdlfcrm9qrsapbPnK6bl61RCkovoP8=;
-        b=Qwf5s0l/Sj6nQC+2G7gR8FZukBSoSQv0Han9BHUgvBlpQ2Kfpqa2e58zY590HQIcBd
-         tJ/+wvqMvHWlfb2eJwFG28S6/xR2kfhWDm3xZjGZMfPZDKXQdT2veG+r2DR/tZCC2/Ub
-         /4GklwEk/HX9lasqN5xOvkmTmnW7eXCbMz7bZl+oU+BHIPeR+tS6DK7lxlVVCwsrs++T
-         rRJh5mu7ehFfHzaj2H7PD52Q4cWzTqjRHkrDt65e49+R6OqQWJwoxYKitHFY5/b0tqOt
-         F1a01adU5HtdArN93ZoMcTTbn7GXC1Bbj5o1ZPDnSKMSzxNHw0QRLzcebAdecvGfWhLr
-         nu/Q==
-Received: by 10.216.216.95 with SMTP id f73mr7185048wep.149.1338291085254;
- Tue, 29 May 2012 04:31:25 -0700 (PDT)
-Received: by 10.223.64.208 with HTTP; Tue, 29 May 2012 04:30:54 -0700 (PDT)
-In-Reply-To: <20120528224729.GK14606@burratino>
+	id S1753871Ab2E2MDm convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 29 May 2012 08:03:42 -0400
+Received: from edge20.ethz.ch ([82.130.99.26]:16364 "EHLO edge20.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753866Ab2E2MDl convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 29 May 2012 08:03:41 -0400
+Received: from CAS12.d.ethz.ch (172.31.38.212) by edge20.ethz.ch
+ (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.2.298.4; Tue, 29 May
+ 2012 14:03:39 +0200
+Received: from thomas.inf.ethz.ch.ethz.ch (129.132.153.233) by CAS12.d.ethz.ch
+ (172.31.38.212) with Microsoft SMTP Server (TLS) id 14.1.355.2; Tue, 29 May
+ 2012 14:03:39 +0200
+In-Reply-To: <CACBZZX7Y-NTzRP1KYy=eEHTsLHTrzxGms61anXSHVbyCSPgurw@mail.gmail.com>
+	(=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Tue, 29 May
+ 2012 12:19:56
+	+0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Originating-IP: [129.132.153.233]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198735>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198736>
 
-On Tue, May 29, 2012 at 5:47 AM, Jonathan Nieder <jrnieder@gmail.com> wrote:
-> GETTEXT_POISON is annoyed by
-> ...
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
-I have not followed gettext poison development, so this question may
-be silly. Is there any value in running the test suite with
-GETTEXT_POISON on?
+> Jeff King's 6cf378f0cbe7c7f944637892caeb9058c90a185a broke my Git
+> build on CentOS 5.5. The patch suggests that it only breaks
+> compatibility with asciidoc 7 but that isn't actually the case.
 
-I can see the value in running the poisoned command manually under
-many scenarios, so we are certain we do not miss any i18n strings. But
-current test suite may not be suitable for automating that task (i.e.
-spot new i18n strings). The test suite is currently more focused on
-features than human readable output. And some strings like die("...")
-may never happen unless you tweak the source code to emulate a broken
-disk or so.
--- 
-Duy
+The commit message of 6cf378f0 is not correct in that respect.  My
+ancient 71c020c5 has the right numbers: asciidoc 8.4.1 is the one that
+introduced the new inline-literal behavior.  Based on my little survey
+in
+
+  http://thread.gmane.org/gmane.comp.version-control.git/191738/focus=3D=
+191790
+
+we decided that "nobody" really uses such an old asciidoc any more.
+Evidently you are a counterexample.
+
+> I suggest just ejecting this patch and trying again, these RedHat
+> systems are still used in a lot of environments, especially by variou=
+s
+> companies.
+
+Do you/they have to *build* the docs, as opposed to using the prebuilt
+ones coming from Junio?  Perhaps we can make it so 'make man' refuses t=
+o
+run if asciidoc is too old, and give a message to the effect that you
+should 'make quick-install-man' instead.
+
+Otherwise we'll be working around the f{asterisk}{asterisk}{asterisk}in=
+g
+quoting rules for years to come.
+
+--=20
+Thomas Rast
+trast@{inf,student}.ethz.ch
