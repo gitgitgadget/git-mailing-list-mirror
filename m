@@ -1,122 +1,129 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: "docs: stop using asciidoc no-inline-literal" breaks asciidoc 8.2.5
-Date: Tue, 29 May 2012 14:31:38 +0200
-Message-ID: <CACBZZX5iOB5PCZUCX5ksR4hpw+DTLTaP4jOnyHAJ8hZVe9xo5w@mail.gmail.com>
-References: <CACBZZX7Y-NTzRP1KYy=eEHTsLHTrzxGms61anXSHVbyCSPgurw@mail.gmail.com>
- <87ehq3mbxg.fsf@thomas.inf.ethz.ch>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: [GSoC] Designing a faster index format - Progress report
+Date: Tue, 29 May 2012 15:29:09 +0200
+Message-ID: <87vcjfi09m.fsf@thomas.inf.ethz.ch>
+References: <20120523122135.GA58204@tgummerer.unibz.it>
+	<CACsJy8As2SQwEi2vHAQA+OeH+TjoCzzcknFbQ2tGXaWX7zsHVA@mail.gmail.com>
+	<20120525201547.GB86874@tgummerer>
+	<CACsJy8BRWmqz+2_A5_=1S9_sxOQa9GXnPQ7J1Y6id0_vh2-=+Q@mail.gmail.com>
+	<20120527090407.GD86874@tgummerer>
+	<7vbolaotwj.fsf@alter.siamese.dyndns.org>
+	<CACsJy8D+WgEr4i2H-1oiBLY5oLurM0aNxGovbVEZDvr7OGgknw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-	Thomas Rast <trast@student.ethz.ch>,
-	=?UTF-8?Q?Carlos_Mart=C3=ADn_Nieto?= <cmn@elego.de>,
-	Matthieu Moy <Matthieu.Moy@imag.fr>, git@vger.kernel.org
-To: Thomas Rast <trast@inf.ethz.ch>
-X-From: git-owner@vger.kernel.org Tue May 29 14:32:07 2012
+Cc: Junio C Hamano <gitster@pobox.com>, <git@vger.kernel.org>,
+	<mhagger@alum.mit.edu>, Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+To: Thomas Gummerer <t.gummerer@gmail.com>
+X-From: git-owner@vger.kernel.org Tue May 29 15:29:19 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SZLan-0000iH-HB
-	for gcvg-git-2@plane.gmane.org; Tue, 29 May 2012 14:32:05 +0200
+	id 1SZMUA-0007f8-NS
+	for gcvg-git-2@plane.gmane.org; Tue, 29 May 2012 15:29:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750950Ab2E2McA convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 29 May 2012 08:32:00 -0400
-Received: from mail-ob0-f174.google.com ([209.85.214.174]:58567 "EHLO
-	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750715Ab2E2Mb7 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 29 May 2012 08:31:59 -0400
-Received: by obbtb18 with SMTP id tb18so6809778obb.19
-        for <git@vger.kernel.org>; Tue, 29 May 2012 05:31:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=I+svPrtkqHH58pFRhhN/bAny09BbhpA106q5Q8sfDKE=;
-        b=M4K1aWxMAoxwDz7jMBscykAlQvjQa1DWCqjfjzxwHKuJHFPXyrrzwQK0OE+hmAyXR8
-         kJhnCoVOgxWbeXyN9L2rD56OA521MGLNKMohlG4+QiA3xZzMIFDE2dKt1l2ge+CZ9A5d
-         N0UJAwIXL2gk9M+DfCiPboGczvbOytDHA1v6LqVIqRGksIKBAM4f0JzzTSzfoQwFQnPL
-         gYceAP4E22LbyfXgAxOR+qS1UX7WUgtIIy7eNHP1GmPHrL51l72is4AYNysXE12KVI0n
-         01Nl1vr/wDP6AfO/4/9P5hwtavZWnTIZQdLhvA95+b6mwJ4+sCLyQ5GeBErfW4pBzDdI
-         /phA==
-Received: by 10.60.14.169 with SMTP id q9mr11339723oec.19.1338294718939; Tue,
- 29 May 2012 05:31:58 -0700 (PDT)
-Received: by 10.182.167.65 with HTTP; Tue, 29 May 2012 05:31:38 -0700 (PDT)
-In-Reply-To: <87ehq3mbxg.fsf@thomas.inf.ethz.ch>
+	id S1751666Ab2E2N3O convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 29 May 2012 09:29:14 -0400
+Received: from edge20.ethz.ch ([82.130.99.26]:54416 "EHLO edge20.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751319Ab2E2N3N convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 29 May 2012 09:29:13 -0400
+Received: from CAS11.d.ethz.ch (172.31.38.211) by edge20.ethz.ch
+ (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.2.298.4; Tue, 29 May
+ 2012 15:29:10 +0200
+Received: from thomas.inf.ethz.ch.ethz.ch (129.132.153.233) by CAS11.d.ethz.ch
+ (172.31.38.211) with Microsoft SMTP Server (TLS) id 14.1.355.2; Tue, 29 May
+ 2012 15:29:10 +0200
+In-Reply-To: <CACsJy8D+WgEr4i2H-1oiBLY5oLurM0aNxGovbVEZDvr7OGgknw@mail.gmail.com>
+	(Nguyen Thai Ngoc Duy's message of "Sun, 27 May 2012 19:23:07 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Originating-IP: [129.132.153.233]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198738>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198739>
 
-On Tue, May 29, 2012 at 2:03 PM, Thomas Rast <trast@inf.ethz.ch> wrote:
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
+
+> On Sun, May 27, 2012 at 4:27 PM, Junio C Hamano <gitster@pobox.com> w=
+rote:
+>> Thomas Gummerer <t.gummerer@gmail.com> writes:
+>>
+>>> Ah ok, thanks for the clarification, I understand what you meant no=
+w.
+>>> I think however, that it's not very beneficial to do this conversio=
+n
+>>> now. git ls-files needs the whole index file anyway, so it's probab=
+ly
+>>> not a very good test.
+>>
+>> Think about "git ls-files t/" and "git ls-files -u".
 >
->> Jeff King's 6cf378f0cbe7c7f944637892caeb9058c90a185a broke my Git
->> build on CentOS 5.5. The patch suggests that it only breaks
->> compatibility with asciidoc 7 but that isn't actually the case.
+> Or harder things like "ls-files -- 't/*.sh'"
 >
-> The commit message of 6cf378f0 is not correct in that respect. =C2=A0=
-My
-> ancient 71c020c5 has the right numbers: asciidoc 8.4.1 is the one tha=
-t
-> introduced the new inline-literal behavior. =C2=A0Based on my little =
-survey
-> in
+>> The former obviously does *not* have to look at the whole thing, eve=
+n
+>> though the current code assumes the in-core data structure that has =
+the
+>> whole thing in a flat array. =C2=A0IIRC, you had unmerged entries tu=
+cked at the
+>> end outside the main index data, so the latter is also an interestin=
+g
+>> demonstration of how wonderful the new data format could be.
 >
-> =C2=A0http://thread.gmane.org/gmane.comp.version-control.git/191738/f=
-ocus=3D191790
+> and "ls-files -uc" can show how you combine unmerged entries back.
+> There's also entry existence check deep in "ls-files -o" that you can
+> show how good bsearch on trees is, though that might be going too far
+> for an experiment because the call chain is really deep, way outside
+> ls-files.c:
+>a
+> show_files (builtin/ls-files.c)
+>  fill_directory (dir.c)
+>   read_directory
+>    read_directory_recursive
+>     treat_path
+>      treat_one_path
+>       treat_directory
+>        directory_exists_in_index
+>         cache_pos_name (read-cache.c)
 >
-> we decided that "nobody" really uses such an old asciidoc any more.
-> Evidently you are a counterexample.
+> I just want to make sure that by exercising the new format with some
+> real problems, we are certain we don't overlook anything in designing
+> the format (or else could be fixed before finalizing it).
 
-Well, me and and others using current production RHEL releases:
+I envision an index API that more strictly controls access to the index=
+=2E
+Right now the API consists largely of read_index, write_index and the
+flat the_index->cache array of entries.  Eventually it will have to be =
+a
+family of calls that support the v5 format, and boil down to suitable
+wrappers for older ones.  For example (just tossing up ideas):
 
-    $ cat /etc/redhat-release && yum info asciidoc.noarch|grep Version
-    CentOS release 5.5 (Final)
-    Version    : 8.1.0
-    $ cat /etc/redhat-release && yum info asciidoc.noarch|grep Version
-    CentOS release 5.5 (Final)
-    Version    : 8.2.5
+  index_open(struct index_state *index, int fd):
+    initialization, checking, leaves the "real" data fields empty
 
-I can't quite recall how I ended up with 8.2.5 on one of the boxes,
-but it seems 8.1.0 may actually be the stock version.
+  index_load_filtered(..., const char **pathspec):
+    load everything needed to satisfy queries filtered by 'pathspec'
 
->> I suggest just ejecting this patch and trying again, these RedHat
->> systems are still used in a lot of environments, especially by vario=
-us
->> companies.
->
-> Do you/they have to *build* the docs, as opposed to using the prebuil=
-t
-> ones coming from Junio? =C2=A0Perhaps we can make it so 'make man' re=
-fuses to
-> run if asciidoc is too old, and give a message to the effect that you
-> should 'make quick-install-man' instead.
->
-> Otherwise we'll be working around the f{asterisk}{asterisk}{asterisk}=
-ing
-> quoting rules for years to come.
+  index_for_each_entry(..., void (*callback)(struct cache_entry *ent)):
+    like the current hand-rolled looping
 
-I could personally change my build process to do something else, but
-the reason I'm running "all doc" occasionally on this older toolchain
-is to smoke out issues like these for other users on slightly older
-toolchains as well.
+  index_for_each_entry_filtered(..., void (*callback)(struct cache_entr=
+y *ent), char **pathspec):
+    ditto but for a pathspec lookup
 
-I think it's too soon to break the stock toolchain on systems as
-recent as RHEL 5.5 in the name of slightly nicer asciidoc syntax.
+etc.
 
-We could also keep the nice syntax and have some simple sed-based
-pre-processor that converts the syntax to the older and more widely
-supported version.
+Then I will twist Duy's words to mean that you should make git-ls-files
+the poster child of this new API for development and profiling purposes
+:-)
 
-Or we could just decide to break RHEL 5 and systems released at a
-similar time, but that isn't what the patch suggested it was doing, so
-we should probably step back and ponder whether that's something we
-want to do.
+Actually converting the rest of the git code base to such an API is too
+big an undertaking for the summer, so please don't stray on that path.
 
-Personally I think having a hard dependency on a version of a software
-package released more recently than 2007 (8.2.5 came out on
-2007-11-18) is way too soon, it would be similar to breaking on a GCC
-older than 4.2.0 which came out around the same time.
+--=20
+Thomas Rast
+trast@{inf,student}.ethz.ch
