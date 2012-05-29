@@ -1,71 +1,62 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: "git push" silently fails, says 'Everything up-to-date" when
- it's not.
-Date: Tue, 29 May 2012 11:53:31 -0700
-Message-ID: <7vipfe4y50.fsf@alter.siamese.dyndns.org>
-References: <1338206011.11518.115.camel@shinybook.infradead.org>
- <vpqipfgec9k.fsf@bauges.imag.fr>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH] Reduce cost of deletion in levenstein distance (4 -> 3)
+Date: Tue, 29 May 2012 20:58:37 +0200
+Message-ID: <vpqehq224rm.fsf@bauges.imag.fr>
+References: <1338134578-29011-1-git-send-email-Matthieu.Moy@imag.fr>
+	<7v4nqy6e0k.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: David Woodhouse <dwmw2@infradead.org>, git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Tue May 29 20:53:41 2012
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue May 29 20:59:28 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SZRY2-0001QT-Of
-	for gcvg-git-2@plane.gmane.org; Tue, 29 May 2012 20:53:39 +0200
+	id 1SZRdd-0004hB-VW
+	for gcvg-git-2@plane.gmane.org; Tue, 29 May 2012 20:59:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755083Ab2E2Sxe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 May 2012 14:53:34 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:51643 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754536Ab2E2Sxe (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 May 2012 14:53:34 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AFA57845A;
-	Tue, 29 May 2012 14:53:33 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=9wF5nCG/wkjllUyOlPAFKB+IE8M=; b=BRW1b+
-	wzctLVftKYgazkqJFVHW9Q1eE527EXYhqWRt1jJBWGtJJcIp/E7EXQn4NHAug+x3
-	JGY5mcfHYvESMPowiqU69mRmEKk3id4m3lIAKew4BP3rt3j9McUl8eADKxrviS/d
-	oea/ubRM/P3iHwtp39L7Wo4kAz2oEWCXQLtkY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=qz0wca4SzMAbee7yau9hpdo33BTzBPJf
-	mnNtdXLV/bxlRuUSyAneaj5pHE1yd1POXFuOEWjDB3S+XjWu51gaoj2Z9oDcQJEd
-	KgURjGuRMwYF0fLcEZSda7RwBmV4WrRuEfV8CdTkj/zx+Gp9/gsrzswIKD2CUQws
-	fb2GiRYFlt4=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A666F8459;
-	Tue, 29 May 2012 14:53:33 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3B5E38458; Tue, 29 May 2012
- 14:53:33 -0400 (EDT)
-In-Reply-To: <vpqipfgec9k.fsf@bauges.imag.fr> (Matthieu Moy's message of
- "Mon, 28 May 2012 14:11:19 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 96D9E8D2-A9BF-11E1-9A01-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755159Ab2E2S7U (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 May 2012 14:59:20 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:38269 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755130Ab2E2S7T (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 May 2012 14:59:19 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id q4TIoGJp011146
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Tue, 29 May 2012 20:50:16 +0200
+Received: from bauges.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1SZRcr-0004yp-SO; Tue, 29 May 2012 20:58:37 +0200
+In-Reply-To: <7v4nqy6e0k.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Tue, 29 May 2012 11:25:15 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.93 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Tue, 29 May 2012 20:50:16 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: q4TIoGJp011146
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1338922218.98818@FOfv3jcFuc/Bvr51lp/iuQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198751>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198752>
 
-Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> I don't know what can be done to improve the case of detached HEAD with
-> push.default=matching. Perhaps Git should warn when HEAD is not pushed
-> (detached HEAD, or HEAD points to a branch that doesn't exist remotely)?
+> Lack of objections is never a good reason to assume it is a good
+> change.
 
-Please don't.  For those whose workflow clearly separates local
-history building (checking different branches, making commits, etc.)
-and publishing the result (git push), "git push" is *not* a way to
-say "I am done with the work I have been doing on *this* branch",
-but is a way to say "I am done for the day, and all the branches I
-push out are in good order". It does not matter what branch the user
-happens to be on when "git push" is run for them (including me).
+The other reason I forgot to mention is "I've lived with this patch and
+my fat fingers for a few weeks, and didn't find weird cases". But my
+fingers are not _that_ fat, and not necessarily representative ;-).
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
