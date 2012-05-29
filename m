@@ -1,105 +1,103 @@
-From: Colby Ranger <cranger@google.com>
-Subject: Re: [PATCH] Add persistent-https to contrib
-Date: Tue, 29 May 2012 14:29:14 -0700
-Message-ID: <CAFFbUKJz=-KdNJSgqwkaBNAL6gyBzjxCkVjKgAmHQ7ztzGh=UA@mail.gmail.com>
-References: <1337792767-18914-1-git-send-email-cranger@google.com>
-	<7v62blxx2m.fsf@alter.siamese.dyndns.org>
-	<CAJo=hJt=q-ZnLrqzcfGrKNcao2MPDSRt3Y_r2OOfu75++N+3zw@mail.gmail.com>
-	<7vlikhwbdc.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: How does Git's maintenance policy handle topics that don't start
+ from "master?"
+Date: Tue, 29 May 2012 14:29:23 -0700
+Message-ID: <7vbol63ccs.fsf@alter.siamese.dyndns.org>
+References: <m21um2682e.fsf@Spindle.sehlabs.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Shawn Pearce <spearce@spearce.org>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue May 29 23:29:25 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: "Steven E. Harris" <seh@panix.com>
+X-From: git-owner@vger.kernel.org Tue May 29 23:29:36 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SZTyk-0008DZ-0s
-	for gcvg-git-2@plane.gmane.org; Tue, 29 May 2012 23:29:22 +0200
+	id 1SZTyt-0008JV-9z
+	for gcvg-git-2@plane.gmane.org; Tue, 29 May 2012 23:29:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755937Ab2E2V3R convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 29 May 2012 17:29:17 -0400
-Received: from mail-vc0-f174.google.com ([209.85.220.174]:45220 "EHLO
-	mail-vc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755921Ab2E2V3P convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 29 May 2012 17:29:15 -0400
-Received: by vcbf11 with SMTP id f11so2424900vcb.19
-        for <git@vger.kernel.org>; Tue, 29 May 2012 14:29:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding:x-system-of-record;
-        bh=ol0Hnori8SX5QI+LAmlhXPjWemMF0/YnlU4eTKRF5YI=;
-        b=HyeQrfK0i9fOrdP7M0i++vtIBBvYcPhGhR2H11101E4MpRt4fjlLnW1gHMZNouZpS1
-         sKMDPXu1kq5n6DUWAcSFKd+FOMTslpercG6ZiiWtHRXR3ZTGAJYnak9z2Y//2bpsjW+D
-         IQGnlEEthzwha7+BmqLGjW9h7bvsCm7zjXSUn37o9XFVxX+NdR/ZHRYto1h6wNHd72pS
-         wXa2SXrcFA0DOBDb28Kfj6AvmXZltj+FGdPqCPXjByohRDAUznLQeSPzdOxMmJptzRIA
-         o3EVuz2wvxV2NRq6HhqYkeV/pH7b1auuAPBiRkUrr4c8DganhvosWM6eD7+aQBEvViVE
-         HjLg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding:x-system-of-record
-         :x-gm-message-state;
-        bh=ol0Hnori8SX5QI+LAmlhXPjWemMF0/YnlU4eTKRF5YI=;
-        b=ZvQ9e6cbqTn55ftbFUyRZx8d3iUFlsJ2PxwhbbR62byTvudk5kxHI5tOCL4rb1PyoL
-         YWopm3aEPVdKaU7ovc8q6X8Ylucs3mvCx5IgjwdE/RpAtx2AGcA1HniK8NE8+MNigWNi
-         YpLsWG4By/3LHFuDn4IYf/HPjvWb2cdw3/iVaJeorxyvz1RnaTHJNAuA0k/uL4//qt1h
-         i9+ztCxV1nBdml4wm+vYjXkY3WqiOd5DAIc61TK5O2egxnd6jSMqtxL5VccsVhkp/MUh
-         Sbl/c2IaE4gdzir+x8dFX+VDTxZKGxPHY3DaErAsyGz9lPGA6HwCbUVqs9aSWGgjVKic
-         RfgQ==
-Received: by 10.52.70.116 with SMTP id l20mr12328167vdu.19.1338326954249;
-        Tue, 29 May 2012 14:29:14 -0700 (PDT)
-Received: by 10.52.70.116 with SMTP id l20mr12328159vdu.19.1338326954145; Tue,
- 29 May 2012 14:29:14 -0700 (PDT)
-Received: by 10.52.175.232 with HTTP; Tue, 29 May 2012 14:29:14 -0700 (PDT)
-In-Reply-To: <7vlikhwbdc.fsf@alter.siamese.dyndns.org>
-X-System-Of-Record: true
-X-Gm-Message-State: ALoCoQmeBCGU8eHZ3ShtNSTtaTdb2gKomkHLKfIte/NZKblBEld/1aNusd3hLfy20tAw+Lu4YbPxcC3OQK3ryezbFI+kMx6rFgH4dqfjRs2ZmCYYbRS/n08dmXwfLcQRF/EAVoIWqBYKGaEqedu4mb+OPTjMmhNp0w==
+	id S1755923Ab2E2V31 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 May 2012 17:29:27 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:52918 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755875Ab2E2V30 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 May 2012 17:29:26 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DC2828991;
+	Tue, 29 May 2012 17:29:25 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=vxA+gU68Zkj0NNR2UiagXkML464=; b=kcZ5Vm
+	S931G4SNy+uf75rYAjcuqBF/bGejNCx2LPlenuf8vF56MsFarw2R5Shk7W2rqQJD
+	XQZZ36m55QcZ3/9Wd9d6BXnvDGxMPNva8cfAFzo/JphJXWVEu6O7spGjeifMhdiG
+	Fv3y7EM4ReI3WIfCNa6BY5LRqzVKZtGwoQavQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Fa8yoXq1k7g+VEAnSf3uPGsPgUAO7DF0
+	VAw0C9riyhfWNEI5LUXwoafJQVKc1Pen+UBSQm/KkOAI2gAB4TftvoKx2tivVUc0
+	QqCYZ9FaRCSzFXl3mvcIfOA7qp8XJsjRO5qJUNRGZrgM1vS7s8xfPKrzUdzs3g4T
+	NDVDL/swPBU=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D091C8990;
+	Tue, 29 May 2012 17:29:25 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 64DDD898E; Tue, 29 May 2012
+ 17:29:25 -0400 (EDT)
+In-Reply-To: <m21um2682e.fsf@Spindle.sehlabs.com> (Steven E. Harris's message
+ of "Tue, 29 May 2012 16:33:45 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 5D2DBBFC-A9D5-11E1-828A-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198764>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198765>
 
-> I do not mind carrying this in the contrib/ area (I am assuming that
-> distributing Apache licensed software that does not link with GPLv2 c=
-ore
-> is OK).  It may be just me, but a file called COPYING that does not h=
-ave
-> GPL text in it was a bit surprising.  I wonder if it is more customar=
-y to
-> call it either LICENSE (or perhaps LICENSE-2.0)?
+"Steven E. Harris" <seh@panix.com> writes:
 
-Agreed. I'll change the name to LICENSE.
+> What about the case where an author started his work from the "next"
+> branch instead? He may have submitted an earlier batch of work that's
+> still cooking in "next," and now he needs to build something else that
+> can take advantage of that earlier work.
 
+It often is clear that the follow-on topic depends on an earlier
+topic branch (mostly because the contributor is aware of it and
+state it in the message).  An obvious thing to do in such a case is
+to create a new branch to queue that topic starting at the tip of
+the earlier topic.  Note that this is never from the tip of "next",
+as it is very unlikely that such a follow-on topic depends on
+everything that is not in "master" yet.
 
-> It might deserve its own contrib/persistent-https/Makefile in additio=
-n to
-> your internal "release" scripts, though.
+Sometimes a new work depends on multiple topics that are still
+cooking, and *all* of these topics that the new work depends on are
+in good shape.  In such a case, I create a new branch by merging
+these prerequisite topics and then queue new work there.  Obviously
+the new work is taken hostage to *all* of its dependent topics, and
+cannot graduate until all of the base topics graduate.
 
-OK. I'll update the code to use a simple Makefile for everything,
-instead of the shell scripts.
+Sometimes a new work depends on one topic that is still cooking in
+"next", *and* also needs updates made by other topics that are
+already in "master".  You can guess what should happen---take the
+tip of that topic that is still cooking in "next", merge the commit
+on "master" that adds other necessary bits, and then that becomes
+the base of the new topic.  The "commit that adds other necessary
+bits" could be the tip of "master" (easiest for me, but it makes the
+new topic unmergeable to "maint" later) or the tip of an old topic
+that was merged to "master" (more work for me, but it is worth if
+both the other old topic and the topic that is cooking in "next" are
+meant to be merged to "maint" later, and the new work is also meant
+to eventually be merged to "maint").
 
+In a rare cases where a new work depends on millions of uncooked
+topics, we simply reject the follow-on series and tell the submitter
+to wait until the dust settles, but in practice it does not happen
+very often.
 
-> More specifically, this environment variable is a way to tell the wra=
-pped
-> helper who is wrapping it. =A0Users outside Google's environment of t=
-he
-> persistent-https helper obviously would not care about the corporate
-> sanitary sewer overflow mechanism, but they may have a similar need t=
-o
-> tweak what happens inside the git-remote-http that is driven by the
-> persistent helper. They would not care about "we can enable corpsso",=
- but
-> they would benefit from knowing that either:
->
-> =A0(1) the connection is "secure" (by the definition above); or
-> =A0(2) the connection is going to this particular helper.
+In other words, the "policy" is not a mechanical recipe to be
+followed by brainless monkeys; the integrator needs to follow the
+common sense of keeping the resulting topic branch mergeable to as
+many relevant contexts as necessary.
 
-Agreed, I'll go with approach (1) and change the name of the var to be
-GIT_PERSISTENT_HTTPS_SECURE. Also, I will update the code to remove
-any GIT_PERSISTENT_HTTPS_SECURE from the environment.
+And the contributor can help in this process, as well.
