@@ -1,81 +1,95 @@
-From: Thiago Farina <tfransosi@gmail.com>
-Subject: Re: [PATCH 2/3] exclude: do strcmp as much as possible before fnmatch
-Date: Tue, 29 May 2012 15:21:37 -0300
-Message-ID: <CACnwZYeB2Da5mEtw9xX9pPnCa=Ld4WoePsJytn90L9XwO2+WxQ@mail.gmail.com>
-References: <1338035474-4346-1-git-send-email-pclouds@gmail.com>
-	<1338035474-4346-3-git-send-email-pclouds@gmail.com>
-	<7v8vga6f1a.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Reduce cost of deletion in levenstein distance (4 -> 3)
+Date: Tue, 29 May 2012 11:25:15 -0700
+Message-ID: <7v4nqy6e0k.fsf@alter.siamese.dyndns.org>
+References: <1338134578-29011-1-git-send-email-Matthieu.Moy@imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= <pclouds@gmail.com>,
-	git@vger.kernel.org, Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue May 29 20:21:50 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Matthieu Moy <Matthieu.Moy@imag.fr>
+X-From: git-owner@vger.kernel.org Tue May 29 20:25:31 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SZR39-0008Ca-D3
-	for gcvg-git-2@plane.gmane.org; Tue, 29 May 2012 20:21:43 +0200
+	id 1SZR6h-0001nR-8w
+	for gcvg-git-2@plane.gmane.org; Tue, 29 May 2012 20:25:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754957Ab2E2SVj convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 29 May 2012 14:21:39 -0400
-Received: from mail-vb0-f46.google.com ([209.85.212.46]:56808 "EHLO
-	mail-vb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754776Ab2E2SVi convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 29 May 2012 14:21:38 -0400
-Received: by vbbff1 with SMTP id ff1so2727146vbb.19
-        for <git@vger.kernel.org>; Tue, 29 May 2012 11:21:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=3tjo4tplMzB7VdBwa4U7B4xbWtpYujK+Dha6RXyd8C0=;
-        b=q9/5sDKogNTtqpTQdOw27Lv2CB7fcK9GDZJxu07IWbm/BV8IXt/HlGlVDVuGoYpLVW
-         Yjl08R4IoS87qHNpEanf0Wdla3v3Ghjrkx3FZym1dQtpC14pmgicf5DpOIy2x+6VeCB2
-         JpT31eOkAoDxY1DkyySyA2wUgEXlHHI7VdII48YIPtYxI/XTeFMElG98AmsYYCuGY+eZ
-         De/SjM7ApGcenZwLQi9kXqv+XIGjNO1M4XcIH3Mmzh+3PVa8YDKsehzr+81DEzNhjaZy
-         axLnPXsx9/h4HWgmX49qbv3V5+uOAhqqKbmartmiAk2zP+UR9JKrW86LYXtu/gCS2WpU
-         w9/A==
-Received: by 10.52.23.144 with SMTP id m16mr11686948vdf.77.1338315697740; Tue,
- 29 May 2012 11:21:37 -0700 (PDT)
-Received: by 10.220.214.73 with HTTP; Tue, 29 May 2012 11:21:37 -0700 (PDT)
-In-Reply-To: <7v8vga6f1a.fsf@alter.siamese.dyndns.org>
+	id S1754966Ab2E2SZT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 May 2012 14:25:19 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39827 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751347Ab2E2SZS (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 May 2012 14:25:18 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B689B8C95;
+	Tue, 29 May 2012 14:25:17 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=dMK7Em49ZAO46g6r3ATfyPiwv6k=; b=bHbh3J
+	kiB23oqW3rAeSwprnKVF6PDFAY1Y3ozCIp9BtTryE5mX1n0xqp7E8nRsqry1J0qa
+	x8TmWAIiZS9PBVxTIQ35KbOqV+aXqKHovv7TrYdmTEDDibfb3EAzN1C3i5J/ELRz
+	sARVgizBxxljYP+w4qc8AZ5ngHudpKHwIwqw0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=c31Zxlx2t3q1ABEF9Ri+sXENPRt1Veav
+	1KMPDUnQPLaEjxyEERvyu5w8DZuKDGU8pej7kq5wvOwMZdzfxY0iY3UmNq9BsDkE
+	eyPvNkLXiy9+nYE/4h1h49gN7mHk+XVqORqkwapOfL0t6GwoHhPICHcQHujX6Nmw
+	uoETKvuQLbk=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id ADBCA8C94;
+	Tue, 29 May 2012 14:25:17 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 35F658C90; Tue, 29 May 2012
+ 14:25:17 -0400 (EDT)
+In-Reply-To: <1338134578-29011-1-git-send-email-Matthieu.Moy@imag.fr>
+ (Matthieu Moy's message of "Sun, 27 May 2012 18:02:58 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: A3F182B8-A9BB-11E1-BAF7-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198745>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198746>
 
-On Tue, May 29, 2012 at 3:03 PM, Junio C Hamano <gitster@pobox.com> wro=
-te:
-> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy =C2=A0<pclouds@gmail.com> w=
-rites:
->
->> this also avoids calling fnmatch() if the non-wildcard prefix is
->> longer than basename
->>
->> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gm=
-ail.com>
->> ---
->> =C2=A0dir.c | 41 +++++++++++++++++++++++++++--------------
->> =C2=A0dir.h | =C2=A02 +-
->> =C2=A02 files changed, 28 insertions(+), 15 deletions(-)
->>
->> diff --git a/dir.c b/dir.c
->> index 8535cf2..50d744f 100644
->> --- a/dir.c
->> +++ b/dir.c
->> @@ -295,9 +295,11 @@ int match_pathspec_depth(const struct pathspec =
-*ps,
->> =C2=A0 =C2=A0 =C2=A0 return retval;
->> =C2=A0}
->>
->> +const char *wildcards =3D "*?[{\\";
->
-nit: can this be const char wildcards[] =3D "..."; ?
+Matthieu Moy <Matthieu.Moy@imag.fr> writes:
 
-also an unrelated question, is there a style guide for naming
-constants like this? In chromium project we write them like kFoo.
+> Before this patch, a character deletion has the same cost as 2 swaps, or
+> 4 additions, so Git prefers suggesting a completely scrambled command
+> name to removing a character. For example, "git tags" suggests "stage",
+> but not "tag".
+>
+> By setting the deletion cost to 3, we keep it higher than swaps or
+> additions, but prefer 1 deletion to 2 swaps. "git tags" now suggests
+> "tag" in addition to staged.
+>
+> Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+> ---
+> The RFC sent earlier [1] didn't receive negative comments, so I think this
+> is a good change.
+>
+> http://thread.gmane.org/gmane.comp.version-control.git/196457
+
+Lack of objections is never a good reason to assume it is a good
+change.  In this particular case, I think the reason why you saw
+no comments, either positive or negative, was because nobody came up
+with a more "scientific" way to judge the weighting.  Choosing
+between "tag" and "stage" given "tags" is just one datapoint, but
+does not convince anybody there are not surprising combinations
+where this change affects negatively.
+
+I wonder if we can mechanically find a set of parameters that
+optimally separates the built-in commands by computing N^2 distances
+(e.g. compute "tag" and all other command names and record
+minimum. Do so for all other commands. Now fudge the parameters and
+repeat to see if it results in better minimum separation.  Something
+like that).
+
+Having said all that, until somebody comes up with a better method
+of judging, I'd say that the best thing we could do is to apply this
+patch and see if anybody finds a "surprising" case where this leads
+to a regression.
+
+Thanks.
