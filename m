@@ -1,62 +1,82 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH] Reduce cost of deletion in levenstein distance (4 -> 3)
-Date: Tue, 29 May 2012 20:58:37 +0200
-Message-ID: <vpqehq224rm.fsf@bauges.imag.fr>
-References: <1338134578-29011-1-git-send-email-Matthieu.Moy@imag.fr>
-	<7v4nqy6e0k.fsf@alter.siamese.dyndns.org>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: [PATCH v7 0/9] submodule: improve robustness of path handling
+Date: Tue, 29 May 2012 21:21:18 +0200
+Message-ID: <4FC521AE.1010707@web.de>
+References: <1338132851-23497-1-git-send-email-jon.seymour@gmail.com> <4FC3DAEF.1070508@web.de> <CAH3AnroT1vs-s==ykNyogq6gbVncY0pt5U1=fMp+b6B0jwG19Q@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue May 29 20:59:28 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, gitster@pobox.com, phil.hord@gmail.com,
+	Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
+	Johannes Sixt <j6t@kdbg.org>
+To: Jon Seymour <jon.seymour@gmail.com>
+X-From: git-owner@vger.kernel.org Tue May 29 21:22:02 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SZRdd-0004hB-VW
-	for gcvg-git-2@plane.gmane.org; Tue, 29 May 2012 20:59:26 +0200
+	id 1SZRzV-00011k-VA
+	for gcvg-git-2@plane.gmane.org; Tue, 29 May 2012 21:22:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755159Ab2E2S7U (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 May 2012 14:59:20 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:38269 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755130Ab2E2S7T (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 May 2012 14:59:19 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id q4TIoGJp011146
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Tue, 29 May 2012 20:50:16 +0200
-Received: from bauges.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1SZRcr-0004yp-SO; Tue, 29 May 2012 20:58:37 +0200
-In-Reply-To: <7v4nqy6e0k.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Tue, 29 May 2012 11:25:15 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.93 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Tue, 29 May 2012 20:50:16 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: q4TIoGJp011146
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1338922218.98818@FOfv3jcFuc/Bvr51lp/iuQ
+	id S1755174Ab2E2TV6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 May 2012 15:21:58 -0400
+Received: from fmmailgate03.web.de ([217.72.192.234]:59397 "EHLO
+	fmmailgate03.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755168Ab2E2TV5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 May 2012 15:21:57 -0400
+Received: from moweb002.kundenserver.de (moweb002.kundenserver.de [172.19.20.108])
+	by fmmailgate03.web.de (Postfix) with ESMTP id 8CB8E1B53C234
+	for <git@vger.kernel.org>; Tue, 29 May 2012 21:21:25 +0200 (CEST)
+Received: from [192.168.178.48] ([79.193.81.60]) by smtp.web.de (mrweb002)
+ with ESMTPA (Nemesis) id 0McFgl-1SH6Jf2TSR-00JdID; Tue, 29 May 2012 21:21:25
+ +0200
+User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:12.0) Gecko/20120428 Thunderbird/12.0.1
+In-Reply-To: <CAH3AnroT1vs-s==ykNyogq6gbVncY0pt5U1=fMp+b6B0jwG19Q@mail.gmail.com>
+X-Provags-ID: V02:K0:ZY9fz5CeOknflNHCZqg2EjstGeOSpwsRh8jD7arXpFi
+ 77cVYwTezaujSqAq2G9Y66wKvZaeqYEp9UZm1rKKl5k18yTAFj
+ 1iQYlqJ/wOUqr90JscTGsnccYxVbuxm3AUIwOT08S2FPJ45nk/
+ a3PXkzhcNynYWC8GipRaqe1dWAwD/AHmr+3cmALEQ3B1j111HU
+ Z4OmhGUAVFURDCdr2Hh7w==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198752>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198753>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Am 29.05.2012 00:01, schrieb Jon Seymour:
+> On Tue, May 29, 2012 at 6:07 AM, Jens Lehmann <Jens.Lehmann@web.de> wrote:
+>> So I'd vote for just fixing the relative submodule path issues and to
+>> not care about the possible issues with URLs. Opinions?
+> 
+> I'll write a minimal patch to solve my relative path problem without
+> fixing the invalid/"greedy" submodule url or url normalization issues.
 
-> Lack of objections is never a good reason to assume it is a good
-> change.
+I'd really appreciate that.
 
-The other reason I forgot to mention is "I've lived with this patch and
-my fat fingers for a few weeks, and didn't find weird cases". But my
-fingers are not _that_ fat, and not necessarily representative ;-).
+> Do you have any comments about whether the failures documented in 2/9
+> and 4/9 are worth noting, at least, as weaknesses?
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Sure, they document known problems. Me thinks they all should be
+squashed into a single patch and submitted separately. The following
+three tests from 2/9 are redundant and can be dropped (they are
+already handled by the '../../subrepo' case):
+
+    '../../../subrepo fails with URL - ssh://hostname/repo' "
+    '../../../../subrepo fails with with URL - ssh://hostname/repo' "
+    '../../../../../subrepo fails with URL - ssh://hostname/repo' "
+
+>> (And patches 6-8 contain changes to test cases other than just changing
+>> test_expect_failure to test_expect_success which makes reviewing this
+>> series unnecessarily hard)
+> 
+> Agree absolutely about patch 8 - I will re-roll with separate tests to
+> document the test setup issue I fixed in 8.
+> 
+> The only other changes to tests in 6 and 7 were the removal of
+> comments about the actual bad behaviour. Would your preference be that
+> I removed these #actual comments completely or that I moved
+> documentation of the actual behaviour to the header of the test?
+
+I'd prefer just to see the failure => success changes, so the comments
+look superfluous to me and should be dropped from the failure case.
