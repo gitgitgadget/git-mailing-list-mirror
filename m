@@ -1,95 +1,79 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Reduce cost of deletion in levenstein distance (4 -> 3)
-Date: Tue, 29 May 2012 11:25:15 -0700
-Message-ID: <7v4nqy6e0k.fsf@alter.siamese.dyndns.org>
-References: <1338134578-29011-1-git-send-email-Matthieu.Moy@imag.fr>
+Subject: Re: [GSoC] Designing a faster index format - Progress report
+Date: Tue, 29 May 2012 11:33:59 -0700
+Message-ID: <7vzk8q4z1k.fsf@alter.siamese.dyndns.org>
+References: <20120523122135.GA58204@tgummerer.unibz.it>
+ <CACsJy8As2SQwEi2vHAQA+OeH+TjoCzzcknFbQ2tGXaWX7zsHVA@mail.gmail.com>
+ <20120525201547.GB86874@tgummerer>
+ <CACsJy8BRWmqz+2_A5_=1S9_sxOQa9GXnPQ7J1Y6id0_vh2-=+Q@mail.gmail.com>
+ <20120527090407.GD86874@tgummerer> <7vbolaotwj.fsf@alter.siamese.dyndns.org>
+ <CACsJy8D+WgEr4i2H-1oiBLY5oLurM0aNxGovbVEZDvr7OGgknw@mail.gmail.com>
+ <87vcjfi09m.fsf@thomas.inf.ethz.ch>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@imag.fr>
-X-From: git-owner@vger.kernel.org Tue May 29 20:25:31 2012
+Cc: Thomas Gummerer <t.gummerer@gmail.com>, <git@vger.kernel.org>,
+	<mhagger@alum.mit.edu>, Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Tue May 29 20:34:20 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SZR6h-0001nR-8w
-	for gcvg-git-2@plane.gmane.org; Tue, 29 May 2012 20:25:23 +0200
+	id 1SZRFM-0006nk-6D
+	for gcvg-git-2@plane.gmane.org; Tue, 29 May 2012 20:34:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754966Ab2E2SZT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 May 2012 14:25:19 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39827 "EHLO
+	id S1754986Ab2E2SeE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 May 2012 14:34:04 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:43202 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751347Ab2E2SZS (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 May 2012 14:25:18 -0400
+	id S1754681Ab2E2SeD (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 May 2012 14:34:03 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B689B8C95;
-	Tue, 29 May 2012 14:25:17 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1A3F68EA0;
+	Tue, 29 May 2012 14:34:02 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=dMK7Em49ZAO46g6r3ATfyPiwv6k=; b=bHbh3J
-	kiB23oqW3rAeSwprnKVF6PDFAY1Y3ozCIp9BtTryE5mX1n0xqp7E8nRsqry1J0qa
-	x8TmWAIiZS9PBVxTIQ35KbOqV+aXqKHovv7TrYdmTEDDibfb3EAzN1C3i5J/ELRz
-	sARVgizBxxljYP+w4qc8AZ5ngHudpKHwIwqw0=
+	:content-type; s=sasl; bh=8tJTkzUn2or3KzGRYLr1KfkU4Jo=; b=wkJ4XW
+	vBMhoIbDJ0jSKAeEyCgEDbRxKTzsbSjnmNumCo1US4BtNkWNjsWC6yU4v75ypTzM
+	cTBMpP4MTsMyATr9uWwZM+RCRfjYOw6ME6/hqKjlePItk01L4F3X8ugBVJmB6R+V
+	ngdaf+FDUjOdMl+1y4Uu934zyrlwsMwyL/zTU=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=c31Zxlx2t3q1ABEF9Ri+sXENPRt1Veav
-	1KMPDUnQPLaEjxyEERvyu5w8DZuKDGU8pej7kq5wvOwMZdzfxY0iY3UmNq9BsDkE
-	eyPvNkLXiy9+nYE/4h1h49gN7mHk+XVqORqkwapOfL0t6GwoHhPICHcQHujX6Nmw
-	uoETKvuQLbk=
+	:content-type; q=dns; s=sasl; b=dSQSa5ymtizYc92oesR71468BiOKOC2z
+	Ya0vGFjD8+LbtbvoI3phM35GtGdeDmFvR7Ij3/0SVS8bxcYHAfDDCImEtpft+EhL
+	ONC+y76x4zUnp+o78gqPYqE+VFIIgeoSlXbUEdA1Tp6wsNUKTVg+iIPxdzcRo84y
+	rM6yp5tz7V0=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id ADBCA8C94;
-	Tue, 29 May 2012 14:25:17 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A25FA8E9E;
+	Tue, 29 May 2012 14:34:01 -0400 (EDT)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 35F658C90; Tue, 29 May 2012
- 14:25:17 -0400 (EDT)
-In-Reply-To: <1338134578-29011-1-git-send-email-Matthieu.Moy@imag.fr>
- (Matthieu Moy's message of "Sun, 27 May 2012 18:02:58 +0200")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2FC0E8E9B; Tue, 29 May 2012
+ 14:34:01 -0400 (EDT)
+In-Reply-To: <87vcjfi09m.fsf@thomas.inf.ethz.ch> (Thomas Rast's message of
+ "Tue, 29 May 2012 15:29:09 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: A3F182B8-A9BB-11E1-BAF7-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: DC41D842-A9BC-11E1-9DF8-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198746>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198747>
 
-Matthieu Moy <Matthieu.Moy@imag.fr> writes:
+Thomas Rast <trast@student.ethz.ch> writes:
 
-> Before this patch, a character deletion has the same cost as 2 swaps, or
-> 4 additions, so Git prefers suggesting a completely scrambled command
-> name to removing a character. For example, "git tags" suggests "stage",
-> but not "tag".
->
-> By setting the deletion cost to 3, we keep it higher than swaps or
-> additions, but prefer 1 deletion to 2 swaps. "git tags" now suggests
-> "tag" in addition to staged.
->
-> Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
-> ---
-> The RFC sent earlier [1] didn't receive negative comments, so I think this
-> is a good change.
->
-> http://thread.gmane.org/gmane.comp.version-control.git/196457
+> Then I will twist Duy's words to mean that you should make git-ls-files
+> the poster child of this new API for development and profiling purposes
+> :-)
 
-Lack of objections is never a good reason to assume it is a good
-change.  In this particular case, I think the reason why you saw
-no comments, either positive or negative, was because nobody came up
-with a more "scientific" way to judge the weighting.  Choosing
-between "tag" and "stage" given "tags" is just one datapoint, but
-does not convince anybody there are not surprising combinations
-where this change affects negatively.
+Exactly.
 
-I wonder if we can mechanically find a set of parameters that
-optimally separates the built-in commands by computing N^2 distances
-(e.g. compute "tag" and all other command names and record
-minimum. Do so for all other commands. Now fudge the parameters and
-repeat to see if it results in better minimum separation.  Something
-like that).
+> Actually converting the rest of the git code base to such an API is too
+> big an undertaking for the summer, so please don't stray on that path.
 
-Having said all that, until somebody comes up with a better method
-of judging, I'd say that the best thing we could do is to apply this
-patch and see if anybody finds a "surprising" case where this leads
-to a regression.
-
-Thanks.
+Didn't I say that this topic is too big for a GSoC task _way_ before
+GSoC organization application started?  Without meaningful portion
+of the codebase using the newly proposed data stracture and giving
+demonstratably better performance figure, it is very hard to justify
+that the project completed successfully at the end of the summer.
