@@ -1,90 +1,116 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: "docs: stop using asciidoc no-inline-literal" breaks asciidoc 8.2.5
-Date: Wed, 30 May 2012 00:51:08 +0200
-Message-ID: <CACBZZX7qg50su6Yhbk1HEY9wJgzr=vM_NZfDDMDGQ3sRkLqyAQ@mail.gmail.com>
-References: <CACBZZX7Y-NTzRP1KYy=eEHTsLHTrzxGms61anXSHVbyCSPgurw@mail.gmail.com>
- <87ehq3mbxg.fsf@thomas.inf.ethz.ch> <CACBZZX5iOB5PCZUCX5ksR4hpw+DTLTaP4jOnyHAJ8hZVe9xo5w@mail.gmail.com>
- <20120529215613.GB17598@sigill.intra.peff.net> <CACBZZX6a2BQVhe8-X5o+WnfbsrqPKa_Cn93GZ1bbq1TLezB97Q@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: How does Git's maintenance policy handle topics that don't start
+ from "master?"
+Date: Tue, 29 May 2012 16:06:56 -0700
+Message-ID: <7vzk8q1t9r.fsf@alter.siamese.dyndns.org>
+References: <m21um2682e.fsf@Spindle.sehlabs.com>
+ <7vbol63ccs.fsf@alter.siamese.dyndns.org>
+ <m2sjei4pvq.fsf@Spindle.sehlabs.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Thomas Rast <trast@inf.ethz.ch>,
-	Junio C Hamano <gitster@pobox.com>,
-	Thomas Rast <trast@student.ethz.ch>,
-	=?UTF-8?Q?Carlos_Mart=C3=ADn_Nieto?= <cmn@elego.de>,
-	Matthieu Moy <Matthieu.Moy@imag.fr>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed May 30 00:52:23 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: "Steven E. Harris" <seh@panix.com>
+X-From: git-owner@vger.kernel.org Wed May 30 01:07:08 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SZVH0-0004yM-IB
-	for gcvg-git-2@plane.gmane.org; Wed, 30 May 2012 00:52:18 +0200
+	id 1SZVVJ-00056w-P1
+	for gcvg-git-2@plane.gmane.org; Wed, 30 May 2012 01:07:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755806Ab2E2Wvf convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 29 May 2012 18:51:35 -0400
-Received: from mail-ob0-f174.google.com ([209.85.214.174]:41253 "EHLO
-	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755678Ab2E2Wva convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 29 May 2012 18:51:30 -0400
-Received: by obbtb18 with SMTP id tb18so7493859obb.19
-        for <git@vger.kernel.org>; Tue, 29 May 2012 15:51:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=d2hx0c4QNVUszgbVinNI8BDEai27SS6vx2M6DEkKyAs=;
-        b=FkFA4ONRNjOVKVEt+jk5c/7OHuwasO9WD5HT7ib4JMsgy8ipUSb2ksMwn/8z9IJYrX
-         C7TO+Jdox/qEeFJ6j7+Tbtc+gZe5JhWpiT27cNauY+LqBD6l3asTVbIt7ArLaa6Y6zVW
-         mBsQUgtSWOJz8uGDUqlLVeeFSs1Cs4lHN6oldHKg2IXBeS8N3+LR+Yujd7UC2V/iRCv5
-         dS7TJg/N9GbYm2ZN/0BoSGutHXBhPgUTeFEOPGTLCoyR6zw6rTUjPNU/7wrAUO/mzuLF
-         CNVfHanqweQN7eydCCFlXXJVtWfncS6O+Eu2YKi+DIGRofDPq0BbLNXGHUaNp1QqaXar
-         t0EQ==
-Received: by 10.182.36.102 with SMTP id p6mr12881927obj.77.1338331889496; Tue,
- 29 May 2012 15:51:29 -0700 (PDT)
-Received: by 10.182.167.65 with HTTP; Tue, 29 May 2012 15:51:08 -0700 (PDT)
-In-Reply-To: <CACBZZX6a2BQVhe8-X5o+WnfbsrqPKa_Cn93GZ1bbq1TLezB97Q@mail.gmail.com>
+	id S1753567Ab2E2XHA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 May 2012 19:07:00 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59101 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753253Ab2E2XG7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 May 2012 19:06:59 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 663ED8EF7;
+	Tue, 29 May 2012 19:06:58 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=P72xpoVBWLbQ4dBBiHwW2yg/zzo=; b=xTwiB7
+	ZGQHjS0A6CTvQAO+P4cPX1tkudB7LBZ0ihyJKmICWVWAlGY+4JSW/eTqN/qGnqQq
+	jrY7zGdrobCghAX1WRwzZvOsOt6SEm3T9Fdxf7z5qqOwKiu1CtU/Kuqy/UT3jSjo
+	GtCdtRw044/7ynQQCqZjYN/YmYO27Znly3g1k=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=PuiV3zdG4HMS4r4duKbI2CeP7CDaRo+D
+	kL9JFxH1nwH352+/Wv5KOpj69+y5VvhVcOJ/5GTkjmpurYacrvHTPFZssOlifng7
+	ljd/RESVv4hyxW+4s7HjfbZaCx35n5yzkjmcb1bHi//RrdzWIXyBSrnJdOlqA9fa
+	woSrUP9WrsQ=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5E1BD8EF6;
+	Tue, 29 May 2012 19:06:58 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D47928EF4; Tue, 29 May 2012
+ 19:06:57 -0400 (EDT)
+In-Reply-To: <m2sjei4pvq.fsf@Spindle.sehlabs.com> (Steven E. Harris's message
+ of "Tue, 29 May 2012 17:51:53 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: FD83F51E-A9E2-11E1-BEA5-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198772>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198773>
 
-On Wed, May 30, 2012 at 12:42 AM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmaso=
-n
-<avarab@gmail.com> wrote:
-> On Tue, May 29, 2012 at 11:56 PM, Jeff King <peff@peff.net> wrote:
->
->> I'm very sympathetic to having platform support dropped. It's annoyi=
-ng
->> for the user. But given that it's a 3rd-party install anyway (and yo=
-u
->> can install a newer 3rd-party RPM), and that you can additionally us=
-e
->> "make quick-install-man" to avoid needing asciidoc entirely, and giv=
-en
->> the sheer number of bugs this patch fixes (and prevents), to me the
->> balance still argues for keeping the patch.
->
-> To be clear I like the patch, I was just suggesting that we might wan=
-t
-> to hold it off for a bit.
->
-> Anyway, I've tested dropping asciidoc.py from the source distribution
-> into compat/asciidoc.py and doing "make doc
-> ASCIIDOC=3D../compat/asciidoc.py", it seems to work.
->
-> I wonder if the easiest solution is to change the default asciidoc
-> invocation from "asciidoc" to a small Documentation/asciidoc.sh scrip=
-t
-> that we supply, it would check if there's an asciidoc present on the
-> system, whether it's sufficiently new, and if not fall back on a copy
-> we have in compat/.
+"Steven E. Harris" <seh@panix.com> writes:
 
-Something like this silly patch, which seems to work, but needs cleanup=
-:
+> What isn't so clear to me, though, is /why/ this don't-merge-from-"next"
+> rule is so important. Say that we had one topic "t1" depart from "next,"
+> and then another topic "t2" depart from "t1," and both have been cooking
+> in "next," with good results.
+>
+>   ---o---o---o---o  master
+>                   \
+>                    o---o---o---o---o---M---o---o next
+>                         \     /       /
+>                          o---o t1    /
+>                               \     /
+>                                o---o t2
+>
+> If we wanted to graduate these two topics to "master," we /could/ merge
+> from commit M back to "master," though here I deliberately included the
+> nefarious commit X, which shows other interleaved contributions along
+> "next" that are also part of the M commit.
 
-    https://github.com/avar/git/compare/git:master...avar/asciidoc-fall=
-back
+I do not see any X above, but I think you meant the commits in
+master..M that are not reachable from either t1 and t2.
+
+And I think you answered your own question.  These "master..M ^t1
+^t2" commits are topics that are *not* part of t1 nor t2.  If you
+deem all of them are good enough for your master, it is perfectly
+fine to merge M to master.  In reality, it is more cumbersome to
+think about what is and what is not yet in M and decide if the set
+of changes that happen to be in M match exactly what you want to
+merge, than knowing that you exactly want to have t1 and t2 and
+nothing else in your master during this integration run and merge
+only these two topics.
+
+The same answer to the other picture.  If you can figure out an
+appropriate commit M that has what you want, go right ahead and
+merge that to 'master'; I do not see any harm there.  I personally
+do not think it is worth the effort to figure out which commit
+between master..next that M is, and verify master..M contains
+everything you want and nothing you don't.  Merging t1 and t2
+explicitly, when you know they are the only thing you want to merge,
+is much simpler and less error prone.
+
+> What about this case, where topics "t1" and "t2" did depart from
+> "master," and are doing well along "next" together as of commit M.
+>
+>   ---o---o---o---o  master
+>       \   \       \
+>        \   o---o---o---M---o---o next
+>         \     /       /
+>          o---o t1    /
+>           \         /
+>            o---o---o t2
+>
+> The Git policy as I understand it prescribes that we merge from the tips
+> of "t1" and "t2" back to master, not from a commit like M. What harm
+> would come from merging from M in this case? Future archaeology of topic
+> provenance?
