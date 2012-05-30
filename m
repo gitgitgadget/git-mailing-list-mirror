@@ -1,67 +1,61 @@
-From: Nick <oinksocket@letterboxes.org>
-Subject: gitk - remembering views
-Date: Wed, 30 May 2012 11:27:07 +0100
-Message-ID: <4FC5F5FB.2000607@letterboxes.org>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: git 1.7.10.msysgit.1: different behaviour in ".gitignore" and
+ ".git/info/exclude"
+Date: Wed, 30 May 2012 12:28:49 +0200
+Message-ID: <4FC5F661.6090105@viscovery.net>
+References: <96434119.20120530104356@gmx.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 30 12:27:35 2012
+Cc: git-mailing <git@vger.kernel.org>
+To: Thomas Wichern <nordertom@gmx.de>
+X-From: git-owner@vger.kernel.org Wed May 30 12:29:03 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SZg7p-0002dN-NI
-	for gcvg-git-2@plane.gmane.org; Wed, 30 May 2012 12:27:34 +0200
+	id 1SZg9G-0003MC-TK
+	for gcvg-git-2@plane.gmane.org; Wed, 30 May 2012 12:29:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752088Ab2E3K12 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 May 2012 06:27:28 -0400
-Received: from out3-smtp.messagingengine.com ([66.111.4.27]:54593 "EHLO
-	out3-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751512Ab2E3K12 (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 30 May 2012 06:27:28 -0400
-Received: from compute3.internal (compute3.nyi.mail.srv.osa [10.202.2.43])
-	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id C2BCA2097C
-	for <git@vger.kernel.org>; Wed, 30 May 2012 06:27:27 -0400 (EDT)
-Received: from frontend1.nyi.mail.srv.osa ([10.202.2.160])
-  by compute3.internal (MEProxy); Wed, 30 May 2012 06:27:27 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=letterboxes.org;
-	 h=message-id:date:from:mime-version:to:subject:content-type
-	:content-transfer-encoding; s=mesmtp; bh=M1YIv56FhfYQqTjwWty9Ybd
-	Oq2s=; b=aX3+eJtcWymeo0Xl5xfUXMA7l5hXljYVYtRoF/6ZDRecAKpDo0cRgYa
-	wFH6ApDFMF3t8VpEBBnU7TUxIOXhd4fZe3HLdO4ZsBzzti6B+662hUe5eKcBD43a
-	E3GJ/ISL42uF8fz7oBJEPAxtqTVYAwoUJhF+xWi8gcGr5k1jKC3Q=
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=message-id:date:from:mime-version:to
-	:subject:content-type:content-transfer-encoding; s=smtpout; bh=M
-	1YIv56FhfYQqTjwWty9YbdOq2s=; b=dem8Zgei7uZ+T471QYRV4ljvqjZmIjnPT
-	z5OIwK40VurY2zUgD/Z/qN5MFFTQfT62XeGlvqxZ8oturF/BswedhZiSDCZH+CF8
-	UDwSTprdvi9D2F5KQuGk2QI6RFL/fSQKVsLY4y9CSY0YI64vkMOeoZMSClheUs7g
-	nZKKCV3nMg=
-X-Sasl-enc: An17yTdYZETHvMiMx8RgzeuO/gJvPYY2iW6j/3+zcUw5 1338373647
-Received: from [192.168.0.103] (unknown [87.194.154.6])
-	by mail.messagingengine.com (Postfix) with ESMTPA id 606328E01BA
-	for <git@vger.kernel.org>; Wed, 30 May 2012 06:27:27 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:12.0) Gecko/20120430 Thunderbird/12.0.1
+	id S1752035Ab2E3K26 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 May 2012 06:28:58 -0400
+Received: from lilzmailso02.liwest.at ([212.33.55.13]:4639 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751512Ab2E3K25 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 May 2012 06:28:57 -0400
+Received: from cpe228-254-static.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.76)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1SZg9z-0006nL-I3; Wed, 30 May 2012 12:29:52 +0200
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id 6C79B1660F;
+	Wed, 30 May 2012 12:28:49 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:12.0) Gecko/20120428 Thunderbird/12.0.1
+In-Reply-To: <96434119.20120530104356@gmx.de>
+X-Spam-Score: -1.0 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198793>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198794>
 
-Hello,
+Am 5/30/2012 10:43, schrieb Thomas Wichern:
+> If you have a ".gitignore" - file that contains the pattern "/(*)/", a
+> directory that matches the pattern is ignored completely.
+> 
+> If you put the same pattern into the ".git/info/exclude" - file, the
+> pattern does not work - these directories still show up.
+> 
+> I expected that all directories anywhere the repository that match the
+> pattern to be ignored.
 
-gitk has a feature in which one or more "views" can be created of a repository.
- I find this useful, and I find my self creating the same views over and over
-(typically: show all refs, show local refs, show only the current branch).  I
-then switch between them when rebasing branches, depending on what I want to know.
+The first slash in the pattern means: Match only in this directory, not in
+subdirectories. For patterns in .git/info/exclude, "this directory" is the
+top-level of the repository.
 
-Is there any way to get gitk to save these views and even share them between
-repositories?  There is a "remember me" checkbox in each view's settings, but so
-far as I can tell, that doesn't do anything: when gitk is restarted, the views
-are lost.
+> Am I doing something wrong? Is the pattern not correct?
 
-Thanks,
+Perhaps you need "(*)/", i.e., without the first slash.
 
-N
+-- Hannes
