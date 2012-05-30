@@ -1,71 +1,100 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] clone: allow --no-local to turn off local
- optimizations
-Date: Wed, 30 May 2012 15:10:37 -0700
-Message-ID: <7vmx4pxqua.fsf@alter.siamese.dyndns.org>
-References: <20120530110305.GA13445@sigill.intra.peff.net>
- <20120530111016.GB15550@sigill.intra.peff.net>
- <7vzk8pziuk.fsf@alter.siamese.dyndns.org>
- <20120530215912.GC3237@sigill.intra.peff.net>
+From: Pedro Werneck <pjwerneck@gmail.com>
+Subject: bug? Python traceback on git push
+Date: Wed, 30 May 2012 19:11:38 -0300
+Message-ID: <CA+u+8CLcUtTCkWN2bZvR8JNmgnCoX+TwRK3_e64zWaV__jOo7A@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Emeric Fermas <emeric.fermas@gmail.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu May 31 00:10:56 2012
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu May 31 00:12:06 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SZr6U-00008u-OG
-	for gcvg-git-2@plane.gmane.org; Thu, 31 May 2012 00:10:55 +0200
+	id 1SZr7d-0000r9-Vr
+	for gcvg-git-2@plane.gmane.org; Thu, 31 May 2012 00:12:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757188Ab2E3WKl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 May 2012 18:10:41 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59354 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757053Ab2E3WKk (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 May 2012 18:10:40 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A696788A7;
-	Wed, 30 May 2012 18:10:39 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=cuteQW/6Du+HE1QCke95hcRFtb0=; b=xyFS0F
-	y9TJq6Qazhom4ydt/erSMJXmaaNdQ1lgVxkNlr3MjFELXDE73q7pd7J6jVopspfn
-	zLr6N+09lfwE3J5NRcu5GaMDD7dllHQrFhWZhFLXrAA72/gv1tlTaSYqMzZmQjhT
-	sgoJtFbjW8ANp05ChjSK4O+ofTLnppaw2N2zQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=dSAyCwznfZOJnJLq9DYRc4GqwsQXKn8s
-	Sy4eYlfd/D914d73zEH8ilYEoQyybKbj5D8+bKr2J/qk7gz5AbKjt1p1icWO1EdF
-	Cct21f8u+bD7/SHIaTr8uYckb7i303ccEtFuVuVjtMj5bQdmTGV3E/RxImkViTeS
-	nYAw+Gsm8/A=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9DC2788A5;
-	Wed, 30 May 2012 18:10:39 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 394CF88A4; Wed, 30 May 2012
- 18:10:39 -0400 (EDT)
-In-Reply-To: <20120530215912.GC3237@sigill.intra.peff.net> (Jeff King's
- message of "Wed, 30 May 2012 17:59:12 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 4A1ACB20-AAA4-11E1-B9CC-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1757246Ab2E3WMA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 May 2012 18:12:00 -0400
+Received: from mail-vc0-f174.google.com ([209.85.220.174]:62367 "EHLO
+	mail-vc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757053Ab2E3WL7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 May 2012 18:11:59 -0400
+Received: by vcbf11 with SMTP id f11so229609vcb.19
+        for <git@vger.kernel.org>; Wed, 30 May 2012 15:11:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to:content-type;
+        bh=2JkIduLy3edvCj5vsj84FCKi4HvgP1I1ccZDr1Ngvao=;
+        b=KPmK01Cz6hhIiil0n0y7AUwNqjX49L3K29b6ChUsq6GLwRqRpa2iBjr5FYdHHrggR1
+         7jG+fB6QZJ5p030OLWox6nZqfmzCSVdVkKrsCD9zgIXfz3ZFcAHyem8eYnfmPH3tJfx8
+         d7l36oBl7BahVFmJ/NlsPTbk38P4XIQTt4OrPShOxZqjSdRwdMDATQp8sBh5FmJCtx8G
+         UdWM2fzKT39Agv7vEQcvWFezhdo8qLAPAx/bDPdEM3P4L2MnbGVdtgkHUq4pOD6j85z6
+         woo7ySave0IF+klXx7P5/UoBg4+0GQphaOQxiUTw5iOJ2/WZu6olUdqy73cB6RBWuBsa
+         rQmg==
+Received: by 10.52.66.205 with SMTP id h13mr15765571vdt.87.1338415918925; Wed,
+ 30 May 2012 15:11:58 -0700 (PDT)
+Received: by 10.220.153.71 with HTTP; Wed, 30 May 2012 15:11:38 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198844>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198845>
 
-Jeff King <peff@peff.net> writes:
+git 1.7.9.5
 
-> Similarly, I find it a little odd that "git clone file:///foo.git" will
-> actually find a file named "file:/foo.git" before checking the URL (IOW,
-> the argument is a path first, and then fallback to URL). I suspect
-> nobody actually cares about either, as they are very unlikely corner
-> cases.
+I was pushing to a repository
 
-Yeah, if anything, I would have expected --no-local to mean "I might
-have a local file that happens to be the same as this URL, but I am
-not cloning from there; just go straight to the URL using transports".
+push actually seems to have worked, but popped this weird python traceback
+
+
+(tcf-env)werneck@werneck:~/devel/tcf-api/src/tcf$ git push
+Warning: Permanently added 'bitbucket.org,207.223.240.181' (RSA) to
+the list of known hosts.
+Counting objects: 15, done.
+Delta compression using up to 4 threads.
+Compressing objects: 100% (8/8), done.
+Writing objects: 100% (8/8), 860 bytes, done.
+Total 8 (delta 7), reused 0 (delta 0)
+remote: Traceback (most recent call last):
+remote:   File "/opt/python/domains/bitbucket.org/current/bitbucket/scripts/git/hooks/pre-receive",
+line 9, in <module>
+remote:     from bitbucket.apps.repo2.hooks import prehooks
+remote:   File "/data/vol1/www/venvs/deployed/bitbucket/apps/repo2/hooks.py",
+line 4, in <module>
+remote:     from orochi.hooks import failonerror, HookError, HookManager
+remote:   File "/opt/python/domains/bitbucket.org/current/bitbucket/local/env/lib/python2.7/site-packages/orochi/hooks.py",
+line 9, in <module>
+remote:     from orochi.git import githook
+remote:   File "/opt/python/domains/bitbucket.org/current/bitbucket/local/env/lib/python2.7/site-packages/orochi/git.py",
+line 23, in <module>
+remote:     from orochi.lock import lock
+remote:   File "/opt/python/domains/bitbucket.org/current/bitbucket/local/env/lib/python2.7/site-packages/orochi/lock.py",
+line 9, in <module>
+remote:     from mercurial.lock import lock as mlock
+remote: ImportError: No module named mercurial.lock
+To git@bitbucket.org:titansgroup/tcf-api.git
+ ! [remote rejected] master -> master (pre-receive hook declined)
+error: failed to push some refs to 'git@bitbucket.org:titansgroup/tcf-api.git'
+
+(tcf-env)werneck@werneck:~/devel/tcf-api/src/tcf$ git pull
+Warning: Permanently added 'bitbucket.org,207.223.240.181' (RSA) to
+the list of known hosts.
+Already up-to-date.
+
+(tcf-env)werneck@werneck:~/devel/tcf-api/src/tcf$ git push
+Warning: Permanently added 'bitbucket.org,207.223.240.181' (RSA) to
+the list of known hosts.
+Counting objects: 15, done.
+Delta compression using up to 4 threads.
+Compressing objects: 100% (8/8), done.
+Writing objects: 100% (8/8), 860 bytes, done.
+Total 8 (delta 7), reused 0 (delta 0)
+remote: bb/acl: pjwerneck is allowed. accepted payload.
+To git@bitbucket.org:titansgroup/tcf-api.git
+   16b3b54..a50f671  master -> master
+
+
+-- 
+---
+Pedro Werneck
