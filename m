@@ -1,77 +1,89 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: Finding a branch point in git
-Date: Wed, 30 May 2012 18:52:15 +0200
-Message-ID: <CAMP44s3pKo-Dzg6bTKNmjFsLSYvUfhXfk9NQJxOBTvFekqgrFA@mail.gmail.com>
-References: <CAMP44s0f7AJPQSTDgvy0U7vx8nxzq2a3vMhSr2Tcc61fetFkJA@mail.gmail.com>
-	<20120528062026.GB11174@sigill.intra.peff.net>
+From: "Simon.Cathebras" <Simon.Cathebras@ensimag.imag.fr>
+Subject: [PATCH/RFC]Test environment for Git-MediaWiki
+Date: Wed, 30 May 2012 18:30:04 +0200
+Message-ID: <4FC64B0C.6070507@ensimag.imag.fr>
+Reply-To: Simon.Cathebras@ensimag.imag.fr
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed May 30 18:52:44 2012
+Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	charles.roussel@ensimag.fr, julien.khayat@ensimag.imag.fr,
+	Simon PERRAT <Simon.Perrat@ensimag.imag.fr>,
+	Guillaume Sasdy <guillaume.sasdy@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed May 30 18:52:50 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SZm8U-0003gv-Ao
-	for gcvg-git-2@plane.gmane.org; Wed, 30 May 2012 18:52:38 +0200
+	id 1SZm8X-0003gv-O0
+	for gcvg-git-2@plane.gmane.org; Wed, 30 May 2012 18:52:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755872Ab2E3QwS convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 30 May 2012 12:52:18 -0400
-Received: from mail-lpp01m010-f46.google.com ([209.85.215.46]:54515 "EHLO
-	mail-lpp01m010-f46.google.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753796Ab2E3QwQ convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 May 2012 12:52:16 -0400
-Received: by lahd3 with SMTP id d3so20368lah.19
-        for <git@vger.kernel.org>; Wed, 30 May 2012 09:52:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=I+t2dsUdkvzgJtVO3AM9qXEWqc5+W+QBTa7aK4MdH/g=;
-        b=vyqF1Au+vFQM12TVhc0BT6oI/+j9ExLJpssfHHsgOeZVNtac5NkmD/CTTm4TYdUHgj
-         9c0RrFIOT4SipW2ZPpkhYd0uQY35GCm1dEIqV9M9OsIe66qwggIQy5QiEkZNtNmD+oTv
-         nXRGOZBZ1lbudjUCQRMX1OB3Bf33ucv8vCKSaHXEw6GqqxeoB5K1saOptKrR/LG5HdAb
-         srvhMCeA4X+KjnGBqKLABnRpNs0EUh94chYK1k2s1AUJWKqzhq5kPxB+SzlyLUhANyNa
-         EFy0dOz2qFDeqXfyyIqWQnH7/GvgICFC2INO1+sauK0vRXRQ21hkC9LDd9+DCGP/F7QM
-         ITVw==
-Received: by 10.152.125.116 with SMTP id mp20mr16253350lab.19.1338396735195;
- Wed, 30 May 2012 09:52:15 -0700 (PDT)
-Received: by 10.112.107.65 with HTTP; Wed, 30 May 2012 09:52:15 -0700 (PDT)
-In-Reply-To: <20120528062026.GB11174@sigill.intra.peff.net>
+	id S1754636Ab2E3QwW convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 30 May 2012 12:52:22 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:37875 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755855Ab2E3QwR (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 May 2012 12:52:17 -0400
+X-Greylist: delayed 1330 seconds by postgrey-1.27 at vger.kernel.org; Wed, 30 May 2012 12:52:17 EDT
+Received: from ensimag.imag.fr (ensimag.imag.fr [195.221.228.12])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id q4UGLjaE032052
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Wed, 30 May 2012 18:21:45 +0200
+Received: from [IPv6:::1] (ensibm [195.221.228.8])
+	by ensimag.imag.fr (8.13.8/8.13.8/ImagV2.1.r_ens) with ESMTP id q4UGU2hI014526;
+	Wed, 30 May 2012 18:30:03 +0200
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:12.0) Gecko/20120430 Thunderbird/12.0.1
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Wed, 30 May 2012 18:21:45 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: q4UGLjaE032052
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: simon.cathebras@ensimag.imag.fr
+MailScanner-NULL-Check: 1338999705.84414@Jewi1933qH5sPiYo0xprIw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198817>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198818>
 
-On Mon, May 28, 2012 at 8:20 AM, Jeff King <peff@peff.net> wrote:
+Hello all,
 
-> There are also even more complex cases. It doesn't make much sense to
-> ask about where branch Y split from master, since it actually came fr=
-om
-> branch X in the above example. But let's say we branched straight fro=
-m
-> master, merged our result to X, which got merged to master, and then =
-we
-> built some more commits on Y and merged them to master. Like:
->
-> --X--A--B--C--D----E--F (master)
-> =C2=A0 =C2=A0 |\ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 / =C2=A0/
-> =C2=A0 =C2=A0 | \ =C2=A0 =C2=A0 =C2=A0 =C2=A0 / =C2=A0/
-> =C2=A0 =C2=A0 =C2=A0\ G--H----I =C2=A0/ =C2=A0(branch X)
-> =C2=A0 =C2=A0 =C2=A0 \ =C2=A0 =C2=A0 =C2=A0 / =C2=A0/
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0K--L--M--O =C2=A0(branch Y)
->
-> The only merge between master and X is F, but its merge base is M. We
-> missed the earlier merge to master because it actually happened acros=
-s
-> two different commits.
+We are developing the test environment for the Git-MediaWiki project.
+=46or now, we have focused mainly on the environment with some simple t=
+est=20
+cases.
 
-I assume you mean the merge between master and Y.
+In this version, we have developed a script to install and delete a=20
+MediaWiki wiki easily.
+The environment provides shell functions to manage a wiki (fetch,=20
+delete, edit a page, compare the content of a page) and a git-mediawiki=
+=20
+() repository.
+There are two simple test cases for git clone.
+
+You can find all the code in our Github:=20
+https://github.com/Fafinou/git/wiki and how to install and run the test=
+s.
+
+We would like you to give us a lot of comments about our code :)
+
+Note
+* In this version we have a binary file "wikidb.sqlite" which contains=20
+an empty SQLite3 database. We know this is not a good thing to put a=20
+binary file in a repository so we will change this bad behavior later=20
+(we will generate the "wikidb.sqlite" file with a http request to the=20
+config page of MediaWiki)
+* We will add simple test cases for pull and push the soonest
+
+Thanks you in advance for your time ;)
 
 --=20
-=46elipe Contreras
+CATHEBRAS Simon
+
+2A-ENSIMAG
+
+=46ili=E8re Ing=E9ni=E9rie des Syst=E8mes d'Information
+Membre Bug-Buster
