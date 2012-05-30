@@ -1,124 +1,329 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH/RFC] improve no-op push output
-Date: Wed, 30 May 2012 10:52:28 -0700
-Message-ID: <7vr4u1zhcz.fsf@alter.siamese.dyndns.org>
-References: <20120530120804.GA3501@sigill.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed May 30 19:52:39 2012
+From: Huynh Khoi Nguyen NGUYEN 
+	<Huynh-Khoi-Nguyen.Nguyen@ensimag.imag.fr>
+Subject: [PATCH] Possibility to read both from ~/.gitconfig and from $XDG_CONFIG_HOME/git/config
+Date: Wed, 30 May 2012 20:02:35 +0200
+Message-ID: <1338400955-22991-1-git-send-email-Huynh-Khoi-Nguyen.Nguyen@ensimag.imag.fr>
+Cc: Matthieu.Moy@grenoble-inp.fr,
+	NGUYEN Huynh Khoi Nguyen <nguyenhu@ensibm.imag.fr>,
+	Huynh Khoi Nguyen NGUYEN 
+	<Huynh-Khoi-Nguyen.Nguyen@ensimag.imag.fr>,
+	Lucien KONG <Lucien.Kong@ensimag.imag.fr>,
+	Valentin DUPERRAY <Valentin.Duperray@ensimag.imag.fr>,
+	Thomas NGUY <Thomas.Nguy@ensimag.imag.fr>,
+	Franck JONAS <Franck.Jonas@ensimag.imag.fr>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed May 30 20:02:52 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SZn4X-0001yN-5i
-	for gcvg-git-2@plane.gmane.org; Wed, 30 May 2012 19:52:37 +0200
+	id 1SZnEM-00089h-Mh
+	for gcvg-git-2@plane.gmane.org; Wed, 30 May 2012 20:02:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756859Ab2E3Rwd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 May 2012 13:52:33 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47224 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756281Ab2E3Rwb (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 May 2012 13:52:31 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BE4F786D5;
-	Wed, 30 May 2012 13:52:30 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=JDSrNKYIG7uX/Mqeaxfhmer+sHE=; b=D9BERh
-	Wd1SupBvDCiuGT5d7S3VZFJRQmE7fW7qdA6Vr8wf5iMs3oYzQC+8/uwFleI/KJvW
-	DaIsIxzB+X+EwlE2qIyumXiMg3akUY6u2fJyGsZY7Clo+YJWNMUxk55ZKpy3NNdf
-	bfoH1hf2eHR3ad1vsdF5V6GcFRIZgmXm1+xSA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=plQjtT20I5206W5vTxKprRDnfIJs6Dd9
-	eAkt773km8oayVUWpA7Ika+bd54TcVT0daHHgu/qdNSH/FG12hIUaTy1ydKF9ewU
-	nJAIszSvSePsyETqTZXQqimlhMivLMCK9FNKN+D5OXe2nIUzCXCMta8ZBmlYK0OB
-	8FCDPO5QLIA=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B532686D4;
-	Wed, 30 May 2012 13:52:30 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 45FF186D3; Wed, 30 May 2012
- 13:52:30 -0400 (EDT)
-In-Reply-To: <20120530120804.GA3501@sigill.intra.peff.net> (Jeff King's
- message of "Wed, 30 May 2012 08:08:04 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 39F8E372-AA80-11E1-A151-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1757248Ab2E3SCm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 May 2012 14:02:42 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:42159 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756327Ab2E3SCl (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 May 2012 14:02:41 -0400
+Received: from ensimag.imag.fr (ensimag.imag.fr [195.221.228.12])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id q4UHsHvK014196
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Wed, 30 May 2012 19:54:17 +0200
+Received: from ensibm.imag.fr (ensibm [195.221.228.8])
+	by ensimag.imag.fr (8.13.8/8.13.8/ImagV2.1.r_ens) with ESMTP id q4UI2ZAl015427;
+	Wed, 30 May 2012 20:02:35 +0200
+Received: from ensibm.imag.fr (localhost [127.0.0.1])
+	by ensibm.imag.fr (8.13.8/8.13.8/ImagV2.1.sb_ens.pm) with ESMTP id q4UI2Zq0023071;
+	Wed, 30 May 2012 20:02:35 +0200
+Received: (from nguyenhu@localhost)
+	by ensibm.imag.fr (8.13.8/8.13.8/Submit) id q4UI2ZxB023070;
+	Wed, 30 May 2012 20:02:35 +0200
+X-Mailer: git-send-email 1.7.8
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Wed, 30 May 2012 19:54:17 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: q4UHsHvK014196
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: huynh-khoi-nguyen.nguyen@phelma.grenoble-inp.fr
+MailScanner-NULL-Check: 1339005261.08837@RDhIm4LEJXIMG/1Tir51VA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198826>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198827>
 
-Jeff King <peff@peff.net> writes:
+From: NGUYEN Huynh Khoi Nguyen <nguyenhu@ensibm.imag.fr>
 
-> I noticed the mention of the "Everything up-to-date" message in a nearby
-> thread. This patch doesn't help with the case there, but it made me
-> think about how vague that message is.
->
-> -- >8 --
-> When a push is a no-op because all refs are up-to-date, we print
-> "Everything up-to-date". That is reasonable when push.default is
-> "matching" (or when a wildcard refspec is given), because "Everything"
-> pretty obviously means "everything you asked git to push".
->
-> But when one of the single-ref push.default modes is used, the
-> "Everything" is slightly misleading; we only tried to push one thing,
-> and we should not give the user the impression that the remote is
-> completely in sync with what is in their local repo.
->
-> Instead, let's detect the case that we attempted to push a single ref,
-> and if so, just show the verbose status table (which includes the
-> up-to-date ref). We don't want to show it if we tried to push many refs,
-> because it could be quite long (e.g., in the case of "matching").
->
-> ---
-> So before, running:
->
->   git init -q --bare parent &&
->   git clone -q parent child 2>/dev/null &&
->   cd child &&
->   echo one >one && git add one && git commit -q -m one &&
->   git branch other &&
->   git -c push.default=simple push
->
-> would just print:
->
->   Everything up-to-date
->
-> and now you get:
->
->   To /tmp/push-message/parent
->    = [up to date]      master -> master
->
-> which is much more informative.
+Git will read both in $XDG_CONFIG_HOME/git/config and in ~/.gitconfig in this order:
+.git/config > ~/.gitconfig > $XDG_CONFIG_HOME/git/config > /etc/gitconfig
+If $XDG_CONFIG_HOME is either not set or empty, $HOME/.config/git/config will be used.
 
-I think a more interesting case is to do this in the child:
+Signed-off-by: Huynh Khoi Nguyen NGUYEN <Huynh-Khoi-Nguyen.Nguyen@ensimag.imag.fr>
+Signed-off-by: Lucien KONG <Lucien.Kong@ensimag.imag.fr>
+Signed-off-by: Valentin DUPERRAY <Valentin.Duperray@ensimag.imag.fr>
+Signed-off-by: Thomas NGUY <Thomas.Nguy@ensimag.imag.fr>
+Signed-off-by: Franck JONAS <Franck.Jonas@ensimag.imag.fr>
+---
+ Documentation/git-config.txt    |    9 +++-
+ builtin/config.c                |   48 +++++++++++++++++----
+ config.c                        |   21 +++++++--
+ t/t1306-read-xdg-config-file.sh |   88 +++++++++++++++++++++++++++++++++++++++
+ 4 files changed, 150 insertions(+), 16 deletions(-)
+ create mode 100755 t/t1306-read-xdg-config-file.sh
 
-	git checkout other
-        git -c push.default=matching push
-
-after the above sequence.  It will try to push master to master (and
-the most important part is 'other' is not involved in this push at
-all) and would give you the same updated message, which would make
-it more clear that 'other' is not involved.  Although it by itself
-is good, but unless you are paying attention, you may not catch that
-your current branch is *not* listed in the output, so it might not
-help people that much, even if they weren't on a detached HEAD.
-
-Somebody who is unaware that she has been working on detached HEAD
-is by definition very unlikely to notice that the 'master' in the
-output is different from her current branch, as she is not paying
-attention to what branch she is working on.
-
-It might be a better approach to check if the set of pushed refs
-include the current branch and rephrase the message only in that
-case, perhaps
-
-	Everything up-to-date (the current branch not pushed)
-
-or something.
+diff --git a/Documentation/git-config.txt b/Documentation/git-config.txt
+index d9463cb..30418fa 100644
+--- a/Documentation/git-config.txt
++++ b/Documentation/git-config.txt
+@@ -99,8 +99,8 @@ OPTIONS
+ 	For writing options: write to global ~/.gitconfig file rather than
+ 	the repository .git/config.
+ +
+-For reading options: read only from global ~/.gitconfig rather than
+-from all available files.
++For reading options: read only from global ~/.gitconfig then from
++$XDG_CONFIG_HOME/git/config rather than from all available files.
+ +
+ See also <<FILES>>.
+ 
+@@ -194,7 +194,7 @@ See also <<FILES>>.
+ FILES
+ -----
+ 
+-If not set explicitly with '--file', there are three files where
++If not set explicitly with '--file', there are four files where
+ 'git config' will search for configuration options:
+ 
+ $GIT_DIR/config::
+@@ -204,6 +204,9 @@ $GIT_DIR/config::
+ 	User-specific configuration file. Also called "global"
+ 	configuration file.
+ 
++$XDG_CONFIG_HOME/git/config::
++	Second user-specific configuration file. ~/.gitconfig has priority.
++
+ $(prefix)/etc/gitconfig::
+ 	System-wide configuration file.
+ 
+diff --git a/builtin/config.c b/builtin/config.c
+index 33c8820..38dba4f 100644
+--- a/builtin/config.c
++++ b/builtin/config.c
+@@ -161,7 +161,7 @@ static int show_config(const char *key_, const char *value_, void *cb)
+ static int get_value(const char *key_, const char *regex_)
+ {
+ 	int ret = -1;
+-	char *global = NULL, *repo_config = NULL;
++	char *gitconfig_global = NULL, *xdg_global = NULL, *repo_config = NULL;
+ 	const char *system_wide = NULL, *local;
+ 	struct config_include_data inc = CONFIG_INCLUDE_INIT;
+ 	config_fn_t fn;
+@@ -171,8 +171,15 @@ static int get_value(const char *key_, const char *regex_)
+ 	if (!local) {
+ 		const char *home = getenv("HOME");
+ 		local = repo_config = git_pathdup("config");
+-		if (home)
+-			global = xstrdup(mkpath("%s/.gitconfig", home));
++		if (home) {
++			const char *xdg_config_home = getenv("XDG_CONFIG_HOME");
++			if (xdg_config_home)
++				xdg_global = xstrdup(mkpath("%s/git/config", xdg_config_home));
++			else
++				xdg_global = xstrdup(mkpath("%s/.config/git/config", home));
++
++			gitconfig_global = xstrdup(mkpath("%s/.gitconfig", home));
++		}
+ 		if (git_config_system())
+ 			system_wide = git_etc_gitconfig();
+ 	}
+@@ -229,15 +236,19 @@ static int get_value(const char *key_, const char *regex_)
+ 
+ 	if (do_all && system_wide)
+ 		git_config_from_file(fn, system_wide, data);
+-	if (do_all && global)
+-		git_config_from_file(fn, global, data);
++	if (do_all && xdg_global)
++		git_config_from_file(fn, xdg_global, data);
++	if (do_all && gitconfig_global)
++		git_config_from_file(fn, gitconfig_global, data);
+ 	if (do_all)
+ 		git_config_from_file(fn, local, data);
+ 	git_config_from_parameters(fn, data);
+ 	if (!do_all && !seen)
+ 		git_config_from_file(fn, local, data);
+-	if (!do_all && !seen && global)
+-		git_config_from_file(fn, global, data);
++	if (!do_all && !seen && gitconfig_global)
++		git_config_from_file(fn, gitconfig_global, data);
++	if (!do_all && !seen && xdg_global)
++		git_config_from_file(fn, xdg_global, data);
+ 	if (!do_all && !seen && system_wide)
+ 		git_config_from_file(fn, system_wide, data);
+ 
+@@ -254,7 +265,8 @@ static int get_value(const char *key_, const char *regex_)
+ 
+ free_strings:
+ 	free(repo_config);
+-	free(global);
++	free(gitconfig_global);
++	free(xdg_global);
+ 	return ret;
+ }
+ 
+@@ -381,7 +393,25 @@ int cmd_config(int argc, const char **argv, const char *prefix)
+ 	if (use_global_config) {
+ 		char *home = getenv("HOME");
+ 		if (home) {
+-			char *user_config = xstrdup(mkpath("%s/.gitconfig", home));
++			char *user_config;
++			const char *gitconfig_path = mkpath("%s/.gitconfig", home);
++			const char *xdg_config_path = NULL;
++			const char *xdg_config_home = NULL;
++
++			xdg_config_home = getenv("XDG_CONFIG_HOME");
++			if (xdg_config_home)
++				xdg_config_path = mkpath("%s/git/config", xdg_config_home);
++			else
++				xdg_config_path = mkpath("%s/.config/git/config", home);
++
++			if (access(gitconfig_path, R_OK) && !access(xdg_config_path, R_OK) &&
++			    (actions == ACTION_LIST ||
++			     actions == ACTION_GET_COLOR ||
++			     actions == ACTION_GET_COLORBOOL))
++				user_config = xstrdup(xdg_config_path);
++			else
++				user_config = xstrdup(gitconfig_path);
++
+ 			given_config_file = user_config;
+ 		} else {
+ 			die("$HOME not set");
+diff --git a/config.c b/config.c
+index 71ef171..53557dc 100644
+--- a/config.c
++++ b/config.c
+@@ -939,10 +939,23 @@ int git_config_early(config_fn_t fn, void *data, const char *repo_config)
+ 
+ 	home = getenv("HOME");
+ 	if (home) {
+-		char buf[PATH_MAX];
+-		char *user_config = mksnpath(buf, sizeof(buf), "%s/.gitconfig", home);
+-		if (!access(user_config, R_OK)) {
+-			ret += git_config_from_file(fn, user_config, data);
++		const char *gitconfig_path = xstrdup(mkpath("%s/.gitconfig", home));
++		const char *xdg_config_path = NULL;
++		const char *xdg_config_home = NULL;
++
++		xdg_config_home = getenv("XDG_CONFIG_HOME");
++		if (xdg_config_home)
++			xdg_config_path = xstrdup(mkpath("%s/git/config", xdg_config_home));
++		else
++			xdg_config_path = xstrdup(mkpath("%s/.config/git/config", home));
++
++		if (!access(xdg_config_path, R_OK)) {
++			ret += git_config_from_file(fn, xdg_config_path, data);
++			found += 1;
++		}
++
++		if (!access(gitconfig_path, R_OK)) {
++			ret += git_config_from_file(fn, gitconfig_path, data);
+ 			found += 1;
+ 		}
+ 	}
+diff --git a/t/t1306-read-xdg-config-file.sh b/t/t1306-read-xdg-config-file.sh
+new file mode 100755
+index 0000000..2ce5e4b
+--- /dev/null
++++ b/t/t1306-read-xdg-config-file.sh
+@@ -0,0 +1,88 @@
++#!/bin/sh
++#
++# Copyright (c) 2012 Valentin Duperray, Lucien Kong, Franck Jonas,
++#		     Thomas Nguy, Khoi Nguyen
++#		     Grenoble INP Ensimag
++#
++
++test_description='possibility to read $XDG_CONFIG_HOME/git/config file'
++
++. ./test-lib.sh
++
++test_expect_success 'read automatically: xdg file exists and ~/.gitconfig doesn'\''t' '
++	mkdir -p .config/git &&
++	echo "[user]" >.config/git/config &&
++	echo "	name = read_config" >>.config/git/config &&
++	git config --global advice.statushints false &&
++	cat >expect <<-\EOF &&
++	# On branch master
++	#
++	# Initial commit
++	#
++	# Untracked files:
++	#	.config/
++	#	.gitconfig
++	#	expect
++	#	output
++	nothing added to commit but untracked files present
++	EOF
++	git status >output &&
++	test_cmp expect output
++'
++
++test_expect_success 'read automatically: xdg file exists and ~/.gitconfig exists' '
++	>.gitconfig &&
++	echo "[user]" >.gitconfig &&
++	echo "	name = read_gitconfig" >>.gitconfig &&
++	git config --global advice.statushints true &&
++	cat >expect <<-\EOF &&
++	# On branch master
++	#
++	# Initial commit
++	#
++	# Untracked files:
++	#   (use "git add <file>..." to include in what will be committed)
++	#
++	#	.config/
++	#	.gitconfig
++	#	expect
++	#	output
++	nothing added to commit but untracked files present (use "git add" to track)
++	EOF
++	git status >output &&
++	test_cmp expect output
++'
++
++test_expect_success 'read with --get: xdg file exists and ~/.gitconfig doesn'\''t' '
++	rm .gitconfig &&
++	echo read_config >expect &&
++	git config --get user.name >output &&
++	test_cmp expect output
++'
++
++test_expect_success 'read with --get: xdg file exists and ~/.gitconfig exists' '
++	>.gitconfig &&
++	echo "[user]" >.gitconfig &&
++	echo "	name = read_gitconfig" >>.gitconfig &&
++	echo read_gitconfig >expect &&
++	git config --get user.name >output &&
++	test_cmp expect output
++'
++
++test_expect_success 'read with --list: xdg file exists and ~/.gitconfig doesn'\''t' '
++	rm .gitconfig &&
++	echo user.name=read_config >expect &&
++	git config --global --list >output &&
++	test_cmp expect output
++'
++
++test_expect_success 'read with --list: xdg file exists and ~/.gitconfig exists' '
++	>.gitconfig &&
++	echo "[user]" >.gitconfig &&
++	echo "	name = read_gitconfig" >>.gitconfig &&
++	echo user.name=read_gitconfig >expect &&
++	git config --global --list >output &&
++	test_cmp expect output
++'
++
++test_done
+-- 
+1.7.8
