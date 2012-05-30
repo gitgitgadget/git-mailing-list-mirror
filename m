@@ -1,72 +1,82 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: =?UTF-8?Q?J=C3=BCrgen_Kreileder?= <jk@blackdown.de>
 Subject: Re: Bug: rebase when an author uses accents in name on MacOSx
-Date: Wed, 30 May 2012 16:45:33 -0700
-Message-ID: <7vehq18c82.fsf@alter.siamese.dyndns.org>
-References: <06DD2F56-F956-46DF-84A4-3443D4702CDE@spotinfluence.com>
+Date: Thu, 31 May 2012 01:57:52 +0200
+Message-ID: <CAKD0UuwGptoOQOT9eBEpd_aXes76CdaijYvnvyWGU99ZNz=v2g@mail.gmail.com>
+References: <06DD2F56-F956-46DF-84A4-3443D4702CDE@spotinfluence.com> <7vehq18c82.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Lanny Ripple <lanny@spotinfluence.com>
-X-From: git-owner@vger.kernel.org Thu May 31 01:45:52 2012
+Cc: Lanny Ripple <lanny@spotinfluence.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu May 31 01:58:20 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SZsaM-0002pI-2B
-	for gcvg-git-2@plane.gmane.org; Thu, 31 May 2012 01:45:50 +0200
+	id 1SZsmR-0003X7-4v
+	for gcvg-git-2@plane.gmane.org; Thu, 31 May 2012 01:58:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752785Ab2E3Xph convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 30 May 2012 19:45:37 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:62955 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752631Ab2E3Xpg convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 30 May 2012 19:45:36 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AC9979A8C;
-	Wed, 30 May 2012 19:45:35 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=52ayC9Xlq5K/
-	V1Jd6B4P5+rt4FM=; b=kw+4agfaG2EnQmPBR/M+R48JxUtRC88ME9yvdNrnZY6/
-	77Mx4oc0SmnTXZte4QYkPHC+aeWIQiinQW2jH/2CXoC6ChYQzw/Z2liBqNPZW4gn
-	YHUDnx3UFxxZAUsM6U2MwiXX/t5agclBYtMCLxWnzls66YuRH2cQ1mhpL3Luq5I=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=ZvkHZX
-	Pi4fRbOfQIfbDQX/Jw3uJOdvFt4OquUqVvjfb5chHpwVknA1ijUJDqsvMvwCb3xa
-	OjfF4/fkNqExuqLBfnkNPJQd3hkyWEiXSWV4KWyMbu7CsNGjQt4UQQvJ73Jx8h++
-	n5D1Vf5MjK7YKWwkWkX5SwmwmK/20dxOgSNEA=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9E68A9A8A;
-	Wed, 30 May 2012 19:45:35 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1DCE29A89; Wed, 30 May 2012
- 19:45:35 -0400 (EDT)
-In-Reply-To: <06DD2F56-F956-46DF-84A4-3443D4702CDE@spotinfluence.com> (Lanny
- Ripple's message of "Wed, 30 May 2012 17:16:53 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 8D1E3328-AAB1-11E1-B59E-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753006Ab2E3X6P convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 30 May 2012 19:58:15 -0400
+Received: from mail-qa0-f46.google.com ([209.85.216.46]:52372 "EHLO
+	mail-qa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752429Ab2E3X6O convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 30 May 2012 19:58:14 -0400
+Received: by qadb17 with SMTP id b17so2224111qad.19
+        for <git@vger.kernel.org>; Wed, 30 May 2012 16:58:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=blackdown.de; s=google;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=T5PsdKVxOZNqsmP/+iegclAUcGsxONi2rTEhr0eikug=;
+        b=VHDhwPaj1r+4F0oAMufPHtCdmNLRr3uVxaeuFno9J0aHC9Qr1LBRX27qY8Oj/sJwV9
+         NelyUlRR/SaHnTCMrLMKQMCCAcSva9VWcaRaIxY8qZxfPid7L4fI6mC7Q8bdFsDKOXUu
+         gH0yrAumRaRAXbUal9Y58LanjRzIzRQN0YWPo=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding:x-gm-message-state;
+        bh=T5PsdKVxOZNqsmP/+iegclAUcGsxONi2rTEhr0eikug=;
+        b=oaGDRMkBOzMVEuxznTHy78an7+iaB6kPggvYtxT+k8j3HbEXCa5UXFxc1ZhTzEjLg2
+         khxJHw6g+2XmTOyootsQJpvq/r9+X4yxk17/UflqZWxBQ0oEHMhVRShWhvGH42L48ca3
+         op+ekC7I0gRli9xanJ8QKNfqdJhRl3A4xVg5YjE4inP4BMi0OfDVBQ8529qWAEAczYbx
+         IiKgPX/Iqf4NCAZXYCw7UTG3wsk596STuz5lLZS0I4Cpz/vMDLalHIyRvbC1lFK5oIr6
+         p4zNGUjD6PrKukqQ4dvNFsjWvB8PHf0bP+NHToM/FOqsXXdg/eXaldBwa/27nRATC8oh
+         Y44g==
+Received: by 10.224.116.203 with SMTP id n11mr13347520qaq.61.1338422293028;
+ Wed, 30 May 2012 16:58:13 -0700 (PDT)
+Received: by 10.229.18.82 with HTTP; Wed, 30 May 2012 16:57:52 -0700 (PDT)
+In-Reply-To: <7vehq18c82.fsf@alter.siamese.dyndns.org>
+X-Gm-Message-State: ALoCoQlAZd5QOSMJvzKnD1eLyJpoALF5bxu/sYZRXqKkTEVLd/g93zAvF5SX2CMHasqhKpKKOM0g
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198852>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198853>
 
-Lanny Ripple <lanny@spotinfluence.com> writes:
+On Thu, May 31, 2012 at 1:45 AM, Junio C Hamano <gitster@pobox.com> wro=
+te:
+>
+> Lanny Ripple <lanny@spotinfluence.com> writes:
+>
+> > =C2=A0 lanny;~> echo "R=C3=A9mi Leblond" | LANG=3DC LC_ALL=3DC sed =
+-ne 's/.*/GIT_AUTHOR_NAME=3D'\''&'\''/p'
+> > =C2=A0 GIT_AUTHOR_NAME=3D'R'=C3=A9mi Leblond
+>
+> So in C locale where each byte is supposed to be a single character,
+> that implementation of "sed" refuses to match a byte with high-bit
+> set when given a pattern '.'?
+>
+> That is a surprising breakage, I would have to say.
 
->   lanny;~> echo "R=C3=A9mi Leblond" | LANG=3DC LC_ALL=3DC sed -ne 's/=
-=2E*/GIT_AUTHOR_NAME=3D'\''&'\''/p'
->   GIT_AUTHOR_NAME=3D'R'=C3=A9mi Leblond
+=46WIW, the command above correctly returns GIT_AUTHOR_NAME=3D'R=C3=A9m=
+i
+Leblond' for me on OS X 10.8.
 
-So in C locale where each byte is supposed to be a single character,
-that implementation of "sed" refuses to match a byte with high-bit
-set when given a pattern '.'?
 
-That is a surprising breakage, I would have to say.
+J=C3=BCrgen
 
-Can anybody with a more vanilla BSD try the above out and report
-what happens?  I am mostly interested to see if this was inherited
-from BSD or something MacOS introduced.
+--
+https://blackdown.de/
+http://www.flickr.com/photos/jkreileder/
