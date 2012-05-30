@@ -1,69 +1,94 @@
-From: Thomas Wichern <nordertom@gmx.de>
-Subject: Re: git 1.7.10.msysgit.1: different behaviour in ".gitignore" and ".git/info/exclude"
-Date: Wed, 30 May 2012 12:52:33 +0200
-Message-ID: <799289647.20120530125233@gmx.de>
-References: <96434119.20120530104356@gmx.de> <4FC5F661.6090105@viscovery.net>
-Reply-To: Thomas Wichern <nordertom@gmx.de>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 0/3] clone --local fixes
+Date: Wed, 30 May 2012 07:03:05 -0400
+Message-ID: <20120530110305.GA13445@sigill.intra.peff.net>
+References: <20120526034226.GA14287@sigill.intra.peff.net>
+ <7vsjemp20j.fsf@alter.siamese.dyndns.org>
+ <20120528053602.GA11174@sigill.intra.peff.net>
+ <7vhauy6fy3.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git-mailing <git@vger.kernel.org>
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Wed May 30 12:52:41 2012
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, Emeric Fermas <emeric.fermas@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed May 30 13:03:15 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SZgW8-00083b-Ir
-	for gcvg-git-2@plane.gmane.org; Wed, 30 May 2012 12:52:41 +0200
+	id 1SZggN-0005ne-4g
+	for gcvg-git-2@plane.gmane.org; Wed, 30 May 2012 13:03:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752486Ab2E3Kwg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 May 2012 06:52:36 -0400
-Received: from mailout-de.gmx.net ([213.165.64.23]:48948 "HELO
-	mailout-de.gmx.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with SMTP id S1752425Ab2E3Kwg convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 30 May 2012 06:52:36 -0400
-Received: (qmail invoked by alias); 30 May 2012 10:52:34 -0000
-Received: from unknown (EHLO w7-wic.gdsdom.inet) [80.150.227.58]
-  by mail.gmx.net (mp071) with SMTP; 30 May 2012 12:52:34 +0200
-X-Authenticated: #35162558
-X-Provags-ID: V01U2FsdGVkX18vEMMT+QEveOQ56i0WhNtBSxZOIt5Y6PXk2KjXLI
-	EEIbRi/HBfZ7Hw
-X-Priority: 3 (Normal)
-In-Reply-To: <4FC5F661.6090105@viscovery.net>
-X-Y-GMX-Trusted: 0
+	id S1752679Ab2E3LDL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 May 2012 07:03:11 -0400
+Received: from 99-108-225-23.lightspeed.iplsin.sbcglobal.net ([99.108.225.23]:36232
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752573Ab2E3LDK (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 May 2012 07:03:10 -0400
+Received: (qmail 3690 invoked by uid 107); 30 May 2012 11:03:10 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 30 May 2012 07:03:10 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 30 May 2012 07:03:05 -0400
+Content-Disposition: inline
+In-Reply-To: <7vhauy6fy3.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198796>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198797>
 
-Hi Hannes,
+On Tue, May 29, 2012 at 10:43:32AM -0700, Junio C Hamano wrote:
 
-thanks a lot - it was my fault and you're right.
-It works with "(*)/" very well!
+> Jeff King <peff@peff.net> writes:
+> 
+> > I think it depends on the definition of "--local". If it means "when we
+> > are cloning without a URL, turn on the local optimizations", then yes,
+> > "file://" should not work. If it means "turn on local optimizations if
+> > this destination supports it", then it should.
+> 
+> It has meant the former since the day --local was introduced, and
+> the semi-deprecation at 3d5c418 (git-clone: aggressively optimize
+> local clone behaviour., 2007-08-01) didn't change it, either.
 
-Horrido,
-Thomas
+Right, but my argument was that since nobody probably ever cared about
+the distinction, it is more important to do the least surprising thing.
 
+> > The current behavior is ambiguous as to whether it is the first case, or
+> > whether it is the second, and it was simply buggy. The history you gave
+> > argues that the original intent was the former. But to me that is much
+> > less important than what is useful and least surprising to users.
+> 
+> Changing it would make it even more confusing to people who started
+> using Git before mid 2007, though.  That is why I am for deprecating
+> (and eventually removing) "--local".
 
-> Am 5/30/2012 10:43, schrieb Thomas Wichern:
->> If you have a ".gitignore" - file that contains the pattern "/(*)/", a
->> directory that matches the pattern is ignored completely.
->> 
->> If you put the same pattern into the ".git/info/exclude" - file, the
->> pattern does not work - these directories still show up.
->> 
->> I expected that all directories anywhere the repository that match the
->> pattern to be ignored.
+Yes, it would technically be a regression. But I highly doubt that
+somebody is relying on the fact that "--local" with file:// is a silent
+no-op. And other than that, the behavior remains the same (note that my
+patch explicitly did not try to turn on --local when it sees file://).
 
-> The first slash in the pattern means: Match only in this directory, not in
-> subdirectories. For patterns in .git/info/exclude, "this directory" is the
-> top-level of the repository.
+Anyway, I do not really care about this part of the series. It was not
+"this is a needed feature" but rather "this is less surprising and easy
+to do, so why not?". We can drop it and replace it with a documentation
+update.
 
->> Am I doing something wrong? Is the pattern not correct?
+I would still like to keep the --no-local patch, for two reasons:
 
-> Perhaps you need "(*)/", i.e., without the first slash.
+  1. The fact that using file:// overrides the local optimizations is
+     somewhat non-obvious if you do not already know that it is the
+     case.
 
-> -- Hannes
+  2. File URLs require absolute paths[1]. You can't do the equivalent of
+     "git clone --no-local foo.git" without resorting to $PWD.
+
+So here's an updated series (I see you took the test cleanups already).
+
+  [1/2]: docs/clone: mention that --local may be ignored
+  [2/2]: clone: allow --no-local to turn off local optimizations
+
+I didn't bother with deprecation or erroring out on URLs. So far we have
+had exactly one report on this, and I think the improved documentation
+would have solved this particular case.
+
+-Peff
