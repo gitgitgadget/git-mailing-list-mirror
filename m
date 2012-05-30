@@ -1,81 +1,75 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: 'git merge tag' not working as before
-Date: Thu, 31 May 2012 01:12:17 +0200
-Message-ID: <CAMP44s0EQOgEKQ7x1as7HAi0UHcWmJwnuWNYQ9ifpThOLYx5MQ@mail.gmail.com>
-References: <CAMP44s1bry3=W8hJPP9mJLzHmXFZug58aimGHhCSzwS9+Q-yWw@mail.gmail.com>
-	<7vfwahxqhr.fsf@alter.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 2/2] clone: allow --no-local to turn off local
+ optimizations
+Date: Wed, 30 May 2012 19:21:16 -0400
+Message-ID: <20120530232116.GA5007@sigill.intra.peff.net>
+References: <20120530110305.GA13445@sigill.intra.peff.net>
+ <20120530111016.GB15550@sigill.intra.peff.net>
+ <7vzk8pziuk.fsf@alter.siamese.dyndns.org>
+ <20120530215912.GC3237@sigill.intra.peff.net>
+ <7vmx4pxqua.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, Emeric Fermas <emeric.fermas@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu May 31 01:12:32 2012
+X-From: git-owner@vger.kernel.org Thu May 31 01:21:24 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SZs46-0003tM-OW
-	for gcvg-git-2@plane.gmane.org; Thu, 31 May 2012 01:12:31 +0200
+	id 1SZsCh-0001V7-MN
+	for gcvg-git-2@plane.gmane.org; Thu, 31 May 2012 01:21:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755109Ab2E3XMV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 May 2012 19:12:21 -0400
-Received: from mail-lb0-f174.google.com ([209.85.217.174]:43907 "EHLO
-	mail-lb0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754646Ab2E3XMT (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 May 2012 19:12:19 -0400
-Received: by lbbgm6 with SMTP id gm6so412528lbb.19
-        for <git@vger.kernel.org>; Wed, 30 May 2012 16:12:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=qfPQ2GEk/PZLcShEWF2Ayk0T7WMPiIMvgZc7WOMcLhs=;
-        b=S4bOcaiPGBXK52Utx+3hbYfuJzEPFnKOs4zXTu8W/kU+P57mianyPqtBZoKAgfCG1c
-         5pdU3axSmTl//IUW5xBh3k5qtwXK2lf/MEvDS5edWT1UEOuUrMGSid9DFahCk3VlqSzz
-         R8yURApOh2HMjd+UZQm+5MufuScEJ30sQxkY0lEpn2/3ZeC8YHq/PTV/QRpxpAlj55jI
-         l2dshTmMTS99JV6yPz/j/LTpMjU0hUee5vpU0QbSK1W4mEA/BlVEV/IsuIZB8WaLFXZN
-         pRVJwhqOvkmIVN3t45ZY25zrBvJk17vtnnSfF7KxTCmJ2aMnRnPtOZfzfdRah19zqst9
-         pmhA==
-Received: by 10.152.112.138 with SMTP id iq10mr17538920lab.13.1338419537532;
- Wed, 30 May 2012 16:12:17 -0700 (PDT)
-Received: by 10.112.107.65 with HTTP; Wed, 30 May 2012 16:12:17 -0700 (PDT)
-In-Reply-To: <7vfwahxqhr.fsf@alter.siamese.dyndns.org>
+	id S1751961Ab2E3XVT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 May 2012 19:21:19 -0400
+Received: from 99-108-225-23.lightspeed.iplsin.sbcglobal.net ([99.108.225.23]:36636
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751635Ab2E3XVT (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 May 2012 19:21:19 -0400
+Received: (qmail 11585 invoked by uid 107); 30 May 2012 23:21:19 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 30 May 2012 19:21:19 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 30 May 2012 19:21:16 -0400
+Content-Disposition: inline
+In-Reply-To: <7vmx4pxqua.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198848>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198849>
 
-On Thu, May 31, 2012 at 12:18 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Felipe Contreras <felipe.contreras@gmail.com> writes:
->
->> I used to do things like 'git merge v1.7.10.3' (from v1.7.10.2) but
->> even though it's ff it tries to create a merge commit.
->>
->> Seems like now I have to run 'git merge v1.7.10.3^0', I don't see why
->> that would be desirable.
->>
->> I think this is a bug and a regression.
->
-> It was a deliberate feature enhancement a few releases back, IIRC.
->
-> You should be able to say "git merge --ff-only v1.7.10.3" as well.
+On Wed, May 30, 2012 at 03:10:37PM -0700, Junio C Hamano wrote:
 
-How is that an enhancement?
+> Jeff King <peff@peff.net> writes:
+> 
+> > Similarly, I find it a little odd that "git clone file:///foo.git" will
+> > actually find a file named "file:/foo.git" before checking the URL (IOW,
+> > the argument is a path first, and then fallback to URL). I suspect
+> > nobody actually cares about either, as they are very unlikely corner
+> > cases.
+> 
+> Yeah, if anything, I would have expected --no-local to mean "I might
+> have a local file that happens to be the same as this URL, but I am
+> not cloning from there; just go straight to the URL using transports".
 
-Basically:
+But that would not be the opposite of "--local", which you have just
+argued is not about interpreting the URL syntax at all, but is about
+turning off the local optimization code path when the origin repo is
+local.
 
-  git merge branch # fast-forward
-  git merge tag # fast-forward
-  git merge annotated-tag # not fast-forward
+Interestingly, it seems that we don't handle this case well at all,
+anyway. We notice that "file:///foo.git" is resolvable as a path, set
+is_local, and set the path to "$PWD/file:///foo.git". But we still feed
+that to the transport code to get the list of refs (just not to fetch
+them). And the transport code barfs and says "I don't understand the URL
+scheme $PWD/file".
 
-Why should I do different actions depending on whether the tag is
-annotated or not? 99% of users probably have never used annotated
-tags, why complicate the interface for 99% of users, when the 1% of
-users who actually want the messages of the annotated tag in their
-merge message can just do --no-ff?
+So I'm not sure what the actual rules were meant to be, and if we
+actually follow them. Or whether there are even intentional rules, and
+it is not "what happens to work". Again, these are such silly corner
+cases that I suspect it is simply the case that nobody has run into them
+or cared.
 
-Cheers.
-
--- 
-Felipe Contreras
+-Peff
