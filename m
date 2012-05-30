@@ -1,107 +1,77 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] clone: allow --no-local to turn off local
- optimizations
-Date: Wed, 30 May 2012 16:33:10 -0700
-Message-ID: <7vipfd8csp.fsf@alter.siamese.dyndns.org>
-References: <20120530110305.GA13445@sigill.intra.peff.net>
- <20120530111016.GB15550@sigill.intra.peff.net>
- <7vzk8pziuk.fsf@alter.siamese.dyndns.org>
- <20120530215912.GC3237@sigill.intra.peff.net>
- <7vmx4pxqua.fsf@alter.siamese.dyndns.org>
- <20120530232116.GA5007@sigill.intra.peff.net>
+From: Phil Hord <hordp@cisco.com>
+Subject: Re: Cherry-pick dangles and forgets helpful advice in next
+Date: Wed, 30 May 2012 19:40:19 -0400
+Message-ID: <4FC6AFE3.5070805@cisco.com>
+References: <4FBD4904.9090000@cisco.com> <7vipfmzfel.fsf@alter.siamese.dyndns.org> <7vehqazf9d.fsf@alter.siamese.dyndns.org> <4FBD6EC2.3000804@cisco.com> <7v62bmzdmy.fsf@alter.siamese.dyndns.org> <7vipfe1ihg.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Emeric Fermas <emeric.fermas@gmail.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu May 31 01:33:38 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Neil Horman <nhorman@tuxdriver.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu May 31 01:40:36 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SZsOV-00015p-Iy
-	for gcvg-git-2@plane.gmane.org; Thu, 31 May 2012 01:33:35 +0200
+	id 1SZsVE-0006E5-V1
+	for gcvg-git-2@plane.gmane.org; Thu, 31 May 2012 01:40:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752163Ab2E3XdO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 May 2012 19:33:14 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:57770 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751935Ab2E3XdN (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 May 2012 19:33:13 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9A72E97FF;
-	Wed, 30 May 2012 19:33:12 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=KyDh+sHQPwM8VCZ2td65a4JLDmE=; b=EKup70
-	tHGX99jLO9OWVnSZ3hjBnrFXfP25FC6QwDIAAtHj+qSCu++MgGhbhJMk0KZNSoFy
-	rjSSo9wDegRZHtsoZYEU0vN4hJ712EZKxlWSIiafa6eygelVxqisoAiAbuwo8VMF
-	D5yMc1uCK4RbEUUAiY/ibzCiPP2y2eZ9rSg0Q=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=n77Co9suJm1//5I0H/uLgn8FSybGqI0F
-	MV/niD573G1+NupBbvpiVwPGfdnRGQFhHV0lRksY2Qs8uRxv8gpmM2RHQqYmy9qq
-	G7CscT9Loi9kRa7olrTT8sAK9Ma59h8fLv/3sQN4rTod+72LO2tfz1BgoBT7N0al
-	9Zy/h2wt+uY=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 901A197FE;
-	Wed, 30 May 2012 19:33:12 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E96FA97FD; Wed, 30 May 2012
- 19:33:11 -0400 (EDT)
-In-Reply-To: <20120530232116.GA5007@sigill.intra.peff.net> (Jeff King's
- message of "Wed, 30 May 2012 19:21:16 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: D2281B84-AAAF-11E1-84B0-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751935Ab2E3XkV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 May 2012 19:40:21 -0400
+Received: from rcdn-iport-7.cisco.com ([173.37.86.78]:43690 "EHLO
+	rcdn-iport-7.cisco.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751383Ab2E3XkU (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 May 2012 19:40:20 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=cisco.com; i=hordp@cisco.com; l=970; q=dns/txt;
+  s=iport; t=1338421220; x=1339630820;
+  h=message-id:date:from:mime-version:to:cc:subject:
+   references:in-reply-to:content-transfer-encoding;
+  bh=JB2PoECbQ6+tBC46W5t6UqLS4KKqf9fpZ3Qpy7AZdKg=;
+  b=KjJJlx9ym1XSMjGfMW9Xw0rVDCM+zP1sIP5fRNij4bpKdQh9CAtuqaSB
+   gY9dkkiaZCPfJi9FsDd9OcD8fwFdvhSdvY93WzrqmbL001rZetc4GCVDN
+   y6LROrnrXgjpO/Jz8LITJdMSOf3VytpXatodOR+InCaJ4TIXHYZa1YCLD
+   k=;
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: Av8EADqvxk+tJV2d/2dsb2JhbABEtBOBB4IXAQEBAwESAWUBBQsLIRYPCQMCAQIBRQYNAQcBAR6HZAWZPJ9okEsDlRiFT4g+gWaCfA
+X-IronPort-AV: E=Sophos;i="4.75,686,1330905600"; 
+   d="scan'208";a="88118773"
+Received: from rcdn-core-6.cisco.com ([173.37.93.157])
+  by rcdn-iport-7.cisco.com with ESMTP; 30 May 2012 23:40:19 +0000
+Received: from [64.100.104.83] (dhcp-64-100-104-83.cisco.com [64.100.104.83])
+	by rcdn-core-6.cisco.com (8.14.5/8.14.5) with ESMTP id q4UNeIoI026922;
+	Wed, 30 May 2012 23:40:19 GMT
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:12.0) Gecko/20120430 Thunderbird/12.0.1
+In-Reply-To: <7vipfe1ihg.fsf@alter.siamese.dyndns.org>
+X-Enigmail-Version: 1.4.1
+X-TagToolbar-Keys: D20120530194019452
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198850>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198851>
 
-Jeff King <peff@peff.net> writes:
+Junio C Hamano wrote:
 
-> On Wed, May 30, 2012 at 03:10:37PM -0700, Junio C Hamano wrote:
+> Instead of reverting the entire thing, perhaps we can fix the
+> regression like this.
 >
->> Jeff King <peff@peff.net> writes:
->> 
->> > Similarly, I find it a little odd that "git clone file:///foo.git" will
->> > actually find a file named "file:/foo.git" before checking the URL (IOW,
->> > the argument is a path first, and then fallback to URL). I suspect
->> > nobody actually cares about either, as they are very unlikely corner
->> > cases.
->> 
->> Yeah, if anything, I would have expected --no-local to mean "I might
->> have a local file that happens to be the same as this URL, but I am
->> not cloning from there; just go straight to the URL using transports".
+> With this, we no longer unconditionally give "--allow-empty" when we
+> run "git commit", when --allow-empty (which is only about commits
+> that are originally empty) is given to cherry-pick; specifically,
+> when the user did not ask for --keep-redundant-commit, we do not
+> give "--allow-empty" if the original commit is not.
 >
-> But that would not be the opposite of "--local", which you have just
-> argued is not about interpreting the URL syntax at all, but is about
-> turning off the local optimization code path when the origin repo is
-> local.
+> Thinking about it again, I _think_ we do not even have to check if
+> the result is an empty commit ourselves ("git commit" will do that
+> for us anyway), so we might want to rip "is_empty_commit()" out of
+> the problematic patch and keep only "is_index_unmodified()" bit, but
+> for now I think this may be good enough.
+>
+> Phil, does it fix your issue?
+Yes, it appears to fix my issue.  I don't have the original condition in
+play anymore, but it fixes the test case I cooked up earlier.
 
-What I meant to say was that promoting "--local" like your original
-series did and giving it a new meaning did not make much sense in
-the context of the current semantics (i.e. if the path exists, it is
-a path and you do not have to tell "--local" about it), but the
-semantics _instead_ needs "--no-local" to be complete; without
-"--no-local" that is defined as such, the funny corner case that a
-path with the same as $URL prevents you from going to where you want
-to go.
-
-> Interestingly, it seems that we don't handle this case well at all,
-
-Yes, isn't it interesting?  It is not just we feed it to transport,
-but we also store it in the config so later "git fetch" will also do
-something inconsistent.  "<scheme>://", primarily because it has
-doubled slashes, I wouldn't worry too much about them, but I would
-not be surprised if somebody saw scp-style <host>:<path> conflict
-with a local path and wished we handled such a case a bit more
-sanely.
-
-> ... Again, these are such silly corner
-> cases that I suspect it is simply the case that nobody has run into them
-> or cared.
-
-;-)
+Thanks,
+Phil
