@@ -1,125 +1,97 @@
-From: konglu@minatec.inpg.fr
-Subject: Re: [PATCHv4 3/3] Advices about 'git rm' during conflicts (unmerged
- paths) more relevant
-Date: Wed, 30 May 2012 23:50:48 +0200
-Message-ID: <20120530235048.Horde.jSNYW3wdC4BPxpY4izr11PA@webmail.minatec.grenoble-inp.fr>
-References: <1338226598-16056-1-git-send-email-Lucien.Kong@ensimag.imag.fr>
- <1338384216-18782-1-git-send-email-Lucien.Kong@ensimag.imag.fr>
- <1338384216-18782-3-git-send-email-Lucien.Kong@ensimag.imag.fr>
- <7vipfdzeyu.fsf@alter.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: Finding a branch point in git
+Date: Wed, 30 May 2012 17:54:15 -0400
+Message-ID: <20120530215415.GB3237@sigill.intra.peff.net>
+References: <CAMP44s0f7AJPQSTDgvy0U7vx8nxzq2a3vMhSr2Tcc61fetFkJA@mail.gmail.com>
+ <20120528062026.GB11174@sigill.intra.peff.net>
+ <CAMP44s04msWMOaaH8U30XXg5yXJnEd=bULJ7VPxWSD0Wfh2=EA@mail.gmail.com>
+ <20120528190639.GA2478@sigill.intra.peff.net>
+ <CAMP44s0UBsVicuEcwACsm1zTT_jGau_Q20hJv4J_6uvancYJRQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed	DelSp=Yes
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Kong Lucien <Lucien.Kong@ensimag.imag.fr>, git@vger.kernel.org,
-	Matthieu.Moy@grenoble-inp.fr,
-	Duperray Valentin <Valentin.Duperray@ensimag.imag.fr>,
-	Jonas Franck <Franck.Jonas@ensimag.imag.fr>,
-	Nguy Thomas <Thomas.Nguy@ensimag.imag.fr>,
-	Nguyen Huynh Khoi Nguyen Lucien 
-	<Huynh-Khoi-Nguyen.Nguyen@ensimag.imag.fr>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed May 30 23:50:58 2012
+Cc: git@vger.kernel.org
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Wed May 30 23:54:24 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SZqnB-0002rA-SC
-	for gcvg-git-2@plane.gmane.org; Wed, 30 May 2012 23:50:58 +0200
+	id 1SZqqU-00055D-7G
+	for gcvg-git-2@plane.gmane.org; Wed, 30 May 2012 23:54:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757067Ab2E3Vuy convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 30 May 2012 17:50:54 -0400
-Received: from v-smtp.minatec.grenoble-inp.fr ([147.173.216.28]:47365 "EHLO
-	v-smtp.minatec.grenoble-inp.fr" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1756990Ab2E3Vux (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 30 May 2012 17:50:53 -0400
-Received: from localhost (www02.minatec.grenoble-inp.fr [147.173.216.15])
-	by v-smtp.minatec.grenoble-inp.fr (Postfix) with ESMTP id 334731A02E9;
-	Wed, 30 May 2012 23:50:49 +0200 (CEST)
-Received: from reverse.completel.net (reverse.completel.net [92.103.38.66])
- by webmail.minatec.grenoble-inp.fr (Horde Framework) with HTTP; Wed, 30 May
- 2012 23:50:48 +0200
-In-Reply-To: <7vipfdzeyu.fsf@alter.siamese.dyndns.org>
-User-Agent: Internet Messaging Program (IMP) H4 (5.0.17)
+	id S1757216Ab2E3VyS convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 30 May 2012 17:54:18 -0400
+Received: from 99-108-225-23.lightspeed.iplsin.sbcglobal.net ([99.108.225.23]:36576
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757055Ab2E3VyR (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 May 2012 17:54:17 -0400
+Received: (qmail 10411 invoked by uid 107); 30 May 2012 21:54:18 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 30 May 2012 17:54:18 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 30 May 2012 17:54:15 -0400
 Content-Disposition: inline
+In-Reply-To: <CAMP44s0UBsVicuEcwACsm1zTT_jGau_Q20hJv4J_6uvancYJRQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198839>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198840>
 
+On Wed, May 30, 2012 at 07:07:39PM +0200, Felipe Contreras wrote:
 
-Junio C Hamano <gitster@pobox.com> a =E9crit=A0:
+> On Mon, May 28, 2012 at 9:06 PM, Jeff King <peff@peff.net> wrote:
+> > On Mon, May 28, 2012 at 02:36:04PM +0200, Felipe Contreras wrote:
+> >
+> >> > What about a history with multiple branches?
+> >> >
+> >> > --X--A--B--C--D----E =C2=A0(master)
+> >> > =C2=A0 =C2=A0 =C2=A0\ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 /
+> >> > =C2=A0 =C2=A0 =C2=A0 G--H--I---J =C2=A0 (branch X)
+> >> > =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 \ =C2=A0 =C2=A0/
+> >> > =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0K--L =C2=A0 =C2=A0(bran=
+ch Y)
+> >> [...]
+> >>
+> >> Yes, but then you would need to specify a second branch. I would a=
+void
+> >> that if possible.
+> >
+> > I agree that is less nice. But I don't think the operation is
+> > well-defined with a single branch. If you ask for "when did branch =
+X
+> > split", then in the above graph it is unclear if you meant "split f=
+rom
+> > master", or "split from Y".
+>=20
+> If you look from the context that I explained in the first mail; it
+> would be from *any* branch; IOW; find the first commit from branch X
+> (G), and then find the parent. That would be the first commit where
+> branch X started.
 
->> +		if (d->stagemask =3D=3D 1 && !both_deleted_flag)
->> +			both_deleted_flag =3D 1;
->> +		else if ((d->stagemask =3D=3D 3 || d->stagemask =3D=3D 5) && =20
->> !simple_deleted_flag)
->> +			simple_deleted_flag =3D 1;
->> +		else if ((d->stagemask =3D=3D 2 || d->stagemask =3D=3D 4 || d->st=
-agemask =3D=3D 6 ||
->> +				d->stagemask =3D=3D 7) && !not_deleted_flag)
->> +			not_deleted_flag =3D 1;
->> +	}
->
-> 	switch (d->stagemask) {
->         case 1:
->         	both_deleted =3D 1;
->                 break;
->         case 3:
->         case 5:
->         	simple_deleted =3D 1;
->                 break;
->         default:
->         	not_deleted =3D 1;
->                 break;
-> 	}
+I'm not sure that's possible, though, in the face of criss-cross merges=
+=2E
+How do we distinguish the history above from one in which branch Y was
+forked from master at G, and then branch X was forked from branch Y at
+H?
 
-Yes, using switch makes the code easier to read. In fact, I put explici=
-tly the
-condition when there are no delete (cases 2, 4, 6 and 7) because there =
-=20
-are cases
-when d->stagemask can take other number than 1..7. For example:
+> I think it would be easy to support this case if somehow there was a
+> way to find all the commits that comprise a branch;
+>=20
+>  % git log branch ^<any-other-branch>
+>=20
+> I could swear I saw such an option, but I've been looking for days an=
+d
+> I can't find it.
 
-git init git &&
-cd git &&
-test_commit foo main.txt foo &&
-git branch second_branch &&
-git mv main.txt sub_master.txt &&
-git commit -m "main.txt renamed in sub_master.txt" &&
-git checkout second_branch &&
-git mv main.txt sub_second.txt &&
-git commit -m "main.txt renamed in sub_second.txt" &&
-git merge master &&
-git add sub_master.txt &&
-git add sub_second.txt
+I don't think there is such an option. You have to do something like:
 
-At this point, the output of git status shows in unmerged paths the =20
-file main.txt
-that is marked as 'both deleted' so the number of elements in =20
-s->change.items should
-be 1. However, in this case, there are 2 elements. One is about the =20
-file main.txt and
-its stagemask is '1' (as expected) but the stagemask of the other =20
-element (I don't
-know its origin) is '0'.
-Anyway, the new code becomes something like:
+  {
+    echo "--not"
+    git for-each-ref --format=3D'%(refname)' | grep -v "^$branch\$"
+  } |
+  git rev-list --stdin $branch
 
-switch (d->stagemask) {
-case 0:
-	break;
-case 1:
-	both_deleted =3D 1;
-	break;
-case 3:
-case 5:
-	del_mod_conflict =3D 1;
-	break;
-default:
-	not_deleted =3D 1;
-	break;
-}
-
-Though I don't know if d->stagemask can take values such as 8, 9, etc.
+-Peff
