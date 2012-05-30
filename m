@@ -1,103 +1,124 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Felipe Contreras <felipe.contreras@gmail.com>
 Subject: Re: How to find all the commits that comprise a branch?
-Date: Wed, 30 May 2012 12:29:14 -0700
-Message-ID: <7vaa0pzcvp.fsf@alter.siamese.dyndns.org>
+Date: Wed, 30 May 2012 22:23:03 +0200
+Message-ID: <CAMP44s0ZJG1aqe8z-fPfwU+oMNwSh=YjNA6mPiZ+Tdj2eBgpKQ@mail.gmail.com>
 References: <CAMP44s2kEMK8ik2NTiP4uiN4FPWFNYNJfY5qh5QE_hRH2AiNYA@mail.gmail.com>
+	<7vaa0pzcvp.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 30 21:29:23 2012
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed May 30 22:23:25 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SZoaA-0006v3-65
-	for gcvg-git-2@plane.gmane.org; Wed, 30 May 2012 21:29:22 +0200
+	id 1SZpQF-0001Bf-7i
+	for gcvg-git-2@plane.gmane.org; Wed, 30 May 2012 22:23:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751269Ab2E3T3S (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 May 2012 15:29:18 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:58732 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751146Ab2E3T3R (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 May 2012 15:29:17 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B6E638120;
-	Wed, 30 May 2012 15:29:16 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=TF062K2JjhdOZM6jvD00nd8fJTk=; b=Pro8ti
-	6JYliEQHJHt4aVcDQmGliA9ONtT66sp5rjGkqf0EgxLQsEHDrRuWLUTrT7BipNaq
-	w44V6z2N5XAoZQC3ZwA7l5CcDgRafR85tBqVW+BsquwMmXdbEwgEPbGRgXZMUu8W
-	YKREoqxctFJ2l3AlPj1EAW7o95Dyxq9riVsZ8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=tra/uKkmGXD4DotrQ7Ov3G2/xBty5Kj0
-	fQVB2bV30z8CyNSVGGPYDlqhC3LYk9ttwv6JR/8PZ3ls0xRKZ8cH1b4ef+F7v8Ge
-	yQ8kQpO9y5ggp5VXHhpRKJMbq7a7A5Dsva41S6AzFd3HkkqT+E58rVP/IB3Aa0Ff
-	TvMLKBKFjAg=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AE446811E;
-	Wed, 30 May 2012 15:29:16 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 352D5811D; Wed, 30 May 2012
- 15:29:16 -0400 (EDT)
-In-Reply-To: <CAMP44s2kEMK8ik2NTiP4uiN4FPWFNYNJfY5qh5QE_hRH2AiNYA@mail.gmail.com> (Felipe
- Contreras's message of "Wed, 30 May 2012 19:39:28 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: BE93A33A-AA8D-11E1-BA5C-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753788Ab2E3UXG convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 30 May 2012 16:23:06 -0400
+Received: from mail-lpp01m010-f46.google.com ([209.85.215.46]:43225 "EHLO
+	mail-lpp01m010-f46.google.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750903Ab2E3UXF convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 May 2012 16:23:05 -0400
+Received: by lahd3 with SMTP id d3so181713lah.19
+        for <git@vger.kernel.org>; Wed, 30 May 2012 13:23:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=oxcmZbIJknaXgxzPKdBqQ/9Jvg8e2zldVnJZCqYPtZg=;
+        b=MxFAJm0yTr7T0XclQMcuGbyTk3fiF22kXFDV2LPLL4p/QmGse3/yIoNbXV0oW9nQmx
+         AO4KIyTflWlqKRoPYd0VRpkDTcoVEKChN0AnUgEXN2PA+3i39HylKO82YRdKJtnz3DAE
+         Wgtix9iuOOwk7MV4+yR05vgkJ9orfu/r5GiBfo3q7VOPcgm/QuJTA5ranj77ni9sLpRx
+         zK2zkXofMOf1CmuXyXwO+aodbU0+SAwUowOsd5AJ4GjgeJ1trSdVZfZ0d5c1+VpUqFmO
+         Y1t5CPmPlGD1ZU+smw8rC66Jo77gXqZMxZYQIdjQcpPGD4w9tBh9QY4tQw79qJPmThZJ
+         7AVQ==
+Received: by 10.152.109.166 with SMTP id ht6mr17133060lab.46.1338409383112;
+ Wed, 30 May 2012 13:23:03 -0700 (PDT)
+Received: by 10.112.107.65 with HTTP; Wed, 30 May 2012 13:23:03 -0700 (PDT)
+In-Reply-To: <7vaa0pzcvp.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198832>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198833>
 
-Felipe Contreras <felipe.contreras@gmail.com> writes:
-
-> Hi,
+On Wed, May 30, 2012 at 9:29 PM, Junio C Hamano <gitster@pobox.com> wro=
+te:
+> Felipe Contreras <felipe.contreras@gmail.com> writes:
 >
-> Basically what I want to do is:
+>> Hi,
+>>
+>> Basically what I want to do is:
+>>
+>> =C2=A0% git log branch ^<any-other-branch>
+>>
+>> IOW; all the commits were 'git branch --contains' would show 'branch=
+'
+>> and nothing else.
+>>
+>> Is there any easy way to do that?
 >
->  % git log branch ^<any-other-branch>
+> There was "log blah --not --all --exclude-ref=3Drefs/heads/blah"
+> discussion a few months ago, but I do not think anything came out of
+> it.
 >
-> IOW; all the commits were 'git branch --contains' would show 'branch'
-> and nothing else.
+> This is a tangent, but it would be a good way to find out set of
+> commits that you would lose and need to go to reflog to find if you
+> were to delete the branch.
 >
-> Is there any easy way to do that?
+> It however is a poor definition for "commits that comprise a branch";
+> I actually am not sure if the concept has a sensible definition.
+>
+> Let's think aloud with a few examples.
+>
+> You may be done with your "work" branch and merge it to "master".
+> At that point, do you think you no longer have any commit that
+> comprises your "work" branch?
 
-There was "log blah --not --all --exclude-ref=refs/heads/blah"
-discussion a few months ago, but I do not think anything came out of
-it.
+That's right... no commits.
 
-This is a tangent, but it would be a good way to find out set of
-commits that you would lose and need to go to reflog to find if you
-were to delete the branch.
+> You could argue that "work" branch is no longer relevant because it
+> is part of "master", and it is an understandable viewpoint.
+>
+> But imagine what happens when you find a bug in your "work" and want
+> to fix it up by queuing a correction on your "work" branch (not
+> directly on "master", because your "work" branch was forked from
+> "maint" and you eventually want to merge it there as well). =C2=A0Now=
+, is
+> the single fix-up commit the only commit that comprises your "work"?
 
-It however is a poor definition for "commits that comprise a branch";
-I actually am not sure if the concept has a sensible definition.
+Yes. On that branch.
 
-Let's think aloud with a few examples.
+> Suppose you have 5-patch series in your "work" branch, two commits
+> at the bottom of which are useful refactoring of existing code. =C2=A0=
+I
+> fork from the second commit to take advantage of your refactoring to
+> work on something entirely different. =C2=A0These two branches now sh=
+are
+> the bottom two commits. =C2=A0At this point, do you have only three
+> remaining commits on your "work" branch? =C2=A0Wouldn't we rather wan=
+t to
+> say that I am merely borrowing two commits from you and you still
+> have 5 commits that is what your "work" branch consists of?
 
-You may be done with your "work" branch and merge it to "master".
-At that point, do you think you no longer have any commit that
-comprises your "work" branch?
+It depends; if your branch gets merged to master, then my work branch
+is comprised of 3 commits.
 
-You could argue that "work" branch is no longer relevant because it
-is part of "master", and it is an understandable viewpoint.
+Of course it's debatable how to consider the commits that are
+contained in multiple branches, but it's clear that the commits that
+are only in one branch comprise that branch.
 
-But imagine what happens when you find a bug in your "work" and want
-to fix it up by queuing a correction on your "work" branch (not
-directly on "master", because your "work" branch was forked from
-"maint" and you eventually want to merge it there as well).  Now, is
-the single fix-up commit the only commit that comprises your "work"?
+Either way, call them 'independent' or whatever you want, but the
+concept of "commits that are only in one branch" is clear, and it's
+useful to find this information.
 
-Suppose you have 5-patch series in your "work" branch, two commits
-at the bottom of which are useful refactoring of existing code.  I
-fork from the second commit to take advantage of your refactoring to
-work on something entirely different.  These two branches now share
-the bottom two commits.  At this point, do you have only three
-remaining commits on your "work" branch?  Wouldn't we rather want to
-say that I am merely borrowing two commits from you and you still
-have 5 commits that is what your "work" branch consists of?
+Cheers.
+
+--=20
+=46elipe Contreras
