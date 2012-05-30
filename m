@@ -1,100 +1,124 @@
-From: Pedro Werneck <pjwerneck@gmail.com>
-Subject: bug? Python traceback on git push
-Date: Wed, 30 May 2012 19:11:38 -0300
-Message-ID: <CA+u+8CLcUtTCkWN2bZvR8JNmgnCoX+TwRK3_e64zWaV__jOo7A@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+From: Lanny Ripple <lanny@spotinfluence.com>
+Subject: Bug: rebase when an author uses accents in name on MacOSx
+Date: Wed, 30 May 2012 17:16:53 -0500
+Message-ID: <06DD2F56-F956-46DF-84A4-3443D4702CDE@spotinfluence.com>
+Mime-Version: 1.0 (Apple Message framework v1278)
+Content-Type: multipart/signed; boundary="Apple-Mail=_10D8BC24-27A5-4D03-AAC1-5DD96251730D"; protocol="application/pgp-signature"; micalg=pgp-sha1
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 31 00:12:06 2012
+X-From: git-owner@vger.kernel.org Thu May 31 00:17:01 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SZr7d-0000r9-Vr
-	for gcvg-git-2@plane.gmane.org; Thu, 31 May 2012 00:12:06 +0200
+	id 1SZrCK-0004Pa-29
+	for gcvg-git-2@plane.gmane.org; Thu, 31 May 2012 00:16:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757246Ab2E3WMA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 May 2012 18:12:00 -0400
-Received: from mail-vc0-f174.google.com ([209.85.220.174]:62367 "EHLO
-	mail-vc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757053Ab2E3WL7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 May 2012 18:11:59 -0400
-Received: by vcbf11 with SMTP id f11so229609vcb.19
-        for <git@vger.kernel.org>; Wed, 30 May 2012 15:11:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to:content-type;
-        bh=2JkIduLy3edvCj5vsj84FCKi4HvgP1I1ccZDr1Ngvao=;
-        b=KPmK01Cz6hhIiil0n0y7AUwNqjX49L3K29b6ChUsq6GLwRqRpa2iBjr5FYdHHrggR1
-         7jG+fB6QZJ5p030OLWox6nZqfmzCSVdVkKrsCD9zgIXfz3ZFcAHyem8eYnfmPH3tJfx8
-         d7l36oBl7BahVFmJ/NlsPTbk38P4XIQTt4OrPShOxZqjSdRwdMDATQp8sBh5FmJCtx8G
-         UdWM2fzKT39Agv7vEQcvWFezhdo8qLAPAx/bDPdEM3P4L2MnbGVdtgkHUq4pOD6j85z6
-         woo7ySave0IF+klXx7P5/UoBg4+0GQphaOQxiUTw5iOJ2/WZu6olUdqy73cB6RBWuBsa
-         rQmg==
-Received: by 10.52.66.205 with SMTP id h13mr15765571vdt.87.1338415918925; Wed,
- 30 May 2012 15:11:58 -0700 (PDT)
-Received: by 10.220.153.71 with HTTP; Wed, 30 May 2012 15:11:38 -0700 (PDT)
+	id S1756083Ab2E3WQw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 May 2012 18:16:52 -0400
+Received: from mail-gg0-f174.google.com ([209.85.161.174]:53422 "EHLO
+	mail-gg0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753833Ab2E3WQv (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 May 2012 18:16:51 -0400
+Received: by gglu4 with SMTP id u4so343781ggl.19
+        for <git@vger.kernel.org>; Wed, 30 May 2012 15:16:50 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=from:content-type:subject:date:message-id:to:mime-version:x-mailer
+         :x-gm-message-state;
+        bh=CvwBWbjaWsye+w2XG1gaQmj4WfdRq5EUSiH4NWk9qs8=;
+        b=XpO+HBYoIOo7JyfLlwMzqXPbBO+byohNDDVSj1oA6rIWbqjS7fvrpw/CO/vWoqbiL8
+         zHS4iwOVPB/UkA1WZaJ2jkDR00+WtU1rwL1eFelsBZjp4pfYR2nBJZ5Pw5q+cAN8VjUy
+         W+i5bS0Ou/6uhTz04VuhS6YK8PfxDJvlEWUIgz+cAnRVqidf6bUl/yiLPFuLGzUPWJK1
+         IUQmvbZOVL0GEv6m6imstzurUG0GxeR0CHwR5bO+MW9S0XSVEssFHUobg7qrGGbLu/jk
+         phNVAHw8XMWfi3QUy2qgxMbUpUCf8AwHf/zrAsL9ujo2HA31y6UV95roohS85ruJMgSD
+         QQEw==
+Received: by 10.60.27.65 with SMTP id r1mr16744329oeg.55.1338416210267;
+        Wed, 30 May 2012 15:16:50 -0700 (PDT)
+Received: from [192.168.1.4] (c-98-198-192-29.hsd1.tx.comcast.net. [98.198.192.29])
+        by mx.google.com with ESMTPS id a10sm897722obp.7.2012.05.30.15.16.48
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 30 May 2012 15:16:49 -0700 (PDT)
+X-Mailer: Apple Mail (2.1278)
+X-Gm-Message-State: ALoCoQnGqRoWGFIr5QVRXSPESFn2csUM5uhEn0id9HEN0KjYjlSpp+I5W0Xc8gK8JcRxiJnyjaRL
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198845>
-
-git 1.7.9.5
-
-I was pushing to a repository
-
-push actually seems to have worked, but popped this weird python traceback
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198846>
 
 
-(tcf-env)werneck@werneck:~/devel/tcf-api/src/tcf$ git push
-Warning: Permanently added 'bitbucket.org,207.223.240.181' (RSA) to
-the list of known hosts.
-Counting objects: 15, done.
-Delta compression using up to 4 threads.
-Compressing objects: 100% (8/8), done.
-Writing objects: 100% (8/8), 860 bytes, done.
-Total 8 (delta 7), reused 0 (delta 0)
-remote: Traceback (most recent call last):
-remote:   File "/opt/python/domains/bitbucket.org/current/bitbucket/scripts/git/hooks/pre-receive",
-line 9, in <module>
-remote:     from bitbucket.apps.repo2.hooks import prehooks
-remote:   File "/data/vol1/www/venvs/deployed/bitbucket/apps/repo2/hooks.py",
-line 4, in <module>
-remote:     from orochi.hooks import failonerror, HookError, HookManager
-remote:   File "/opt/python/domains/bitbucket.org/current/bitbucket/local/env/lib/python2.7/site-packages/orochi/hooks.py",
-line 9, in <module>
-remote:     from orochi.git import githook
-remote:   File "/opt/python/domains/bitbucket.org/current/bitbucket/local/env/lib/python2.7/site-packages/orochi/git.py",
-line 23, in <module>
-remote:     from orochi.lock import lock
-remote:   File "/opt/python/domains/bitbucket.org/current/bitbucket/local/env/lib/python2.7/site-packages/orochi/lock.py",
-line 9, in <module>
-remote:     from mercurial.lock import lock as mlock
-remote: ImportError: No module named mercurial.lock
-To git@bitbucket.org:titansgroup/tcf-api.git
- ! [remote rejected] master -> master (pre-receive hook declined)
-error: failed to push some refs to 'git@bitbucket.org:titansgroup/tcf-api.git'
+--Apple-Mail=_10D8BC24-27A5-4D03-AAC1-5DD96251730D
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;
+	charset=iso-8859-1
 
-(tcf-env)werneck@werneck:~/devel/tcf-api/src/tcf$ git pull
-Warning: Permanently added 'bitbucket.org,207.223.240.181' (RSA) to
-the list of known hosts.
-Already up-to-date.
+Hello,
 
-(tcf-env)werneck@werneck:~/devel/tcf-api/src/tcf$ git push
-Warning: Permanently added 'bitbucket.org,207.223.240.181' (RSA) to
-the list of known hosts.
-Counting objects: 15, done.
-Delta compression using up to 4 threads.
-Compressing objects: 100% (8/8), done.
-Writing objects: 100% (8/8), 860 bytes, done.
-Total 8 (delta 7), reused 0 (delta 0)
-remote: bb/acl: pjwerneck is allowed. accepted payload.
-To git@bitbucket.org:titansgroup/tcf-api.git
-   16b3b54..a50f671  master -> master
+I've come across behavior I'd say is a bug.
 
+We have a developer with an accent in his name, R=E9mi Leblond.  Very =
+recently we stopped being able to rebase getting the error
 
--- 
+  lanny(master);<work/IdeaProjects/Piper> git rebase master rl-clean292
+  First, rewinding head to replay your work on top of it...
+  /sw/lib/git-core/git-am: line 692: Leblond: command not found
+  Patch does not have a valid e-mail address.
+  lanny((ae6c220...)|REBASE);<work/IdeaProjects/Piper>=20
+
+Versions 1.7.10.2 is (now?) exhibiting this behavior.  We've been =
+rebasing fine for several month which is why I wonder if being on MacOSX =
+is involved?  (I'm at 10.7.4)  Some digging shows the root cause to be =
+in function get_author_ident_from_commit at line 210 of =
+git-core/git-sh-setup, namely the sed with environment overrides LANG=3DC =
+LC_ALL=3DC.  This causes git-am to incorrectly build the =
+.git/rebase-apply/author-script.
+
+  lanny((ae6c220...)|REBASE);<work/IdeaProjects/Piper> cat =
+.git/rebase-apply/author-script
+  GIT_AUTHOR_NAME=3D'R'=E9mi Leblond
+  GIT_AUTHOR_EMAIL=3D'remi@spotinfluence.com'
+  GIT_AUTHOR_DATE=3D'@1335301038 -0600'
+
+=46rom the command-line
+
+  lanny;~> echo $LANG
+  en_US.UTF-8
+  lanny;~> echo $LC_ALL
+
+  lanny;~> echo "R=E9mi Leblond" | LANG=3DC LC_ALL=3DC sed -ne =
+'s/.*/GIT_AUTHOR_NAME=3D'\''&'\''/p'
+  GIT_AUTHOR_NAME=3D'R'=E9mi Leblond
+  lanny;~> echo "R=E9mi Leblond" | sed -ne =
+'s/.*/GIT_AUTHOR_NAME=3D'\''&'\''/p'
+  GIT_AUTHOR_NAME=3D'R=E9mi Leblond'
+
+I can work around it easily enough by editing git-sh-setup to remove the =
+locale overrides but thought a bug report might be useful.
+
+Enjoy,
+  -ljr
+
 ---
-Pedro Werneck
+Lanny Ripple
+lanny@spotinfluence.com
+
+
+
+--Apple-Mail=_10D8BC24-27A5-4D03-AAC1-5DD96251730D
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment;
+	filename=signature.asc
+Content-Type: application/pgp-signature;
+	name=signature.asc
+Content-Description: Message signed with OpenPGP using GPGMail
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG/MacGPG2 v2.0.17 (Darwin)
+
+iF4EAREIAAYFAk/GnFYACgkQ+owW65SoXfhYUgD/c5AR932aJuTUze/TZPKgGXJr
++cC5DLzy7GB076ahJgIBANAaGVEkZNkY3CiT3zxfEfNwWRR/ijSEqwZXo5KruQSg
+=aNeu
+-----END PGP SIGNATURE-----
+
+--Apple-Mail=_10D8BC24-27A5-4D03-AAC1-5DD96251730D--
