@@ -1,72 +1,67 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH 3/3] docs: drop antique comment from Makefile
-Date: Wed, 30 May 2012 06:22:58 -0400
-Message-ID: <20120530102258.GC13341@sigill.intra.peff.net>
-References: <20120530101758.GA13285@sigill.intra.peff.net>
+From: Nick <oinksocket@letterboxes.org>
+Subject: gitk - remembering views
+Date: Wed, 30 May 2012 11:27:07 +0100
+Message-ID: <4FC5F5FB.2000607@letterboxes.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-	Thomas Rast <trast@inf.ethz.ch>,
-	Junio C Hamano <gitster@pobox.com>,
-	Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto <cmn@elego.de>,
-	Matthieu Moy <Matthieu.Moy@imag.fr>
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 30 12:23:10 2012
+X-From: git-owner@vger.kernel.org Wed May 30 12:27:35 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SZg3Y-00009l-3v
-	for gcvg-git-2@plane.gmane.org; Wed, 30 May 2012 12:23:08 +0200
+	id 1SZg7p-0002dN-NI
+	for gcvg-git-2@plane.gmane.org; Wed, 30 May 2012 12:27:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752155Ab2E3KXD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 May 2012 06:23:03 -0400
-Received: from 99-108-225-23.lightspeed.iplsin.sbcglobal.net ([99.108.225.23]:36190
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751736Ab2E3KXC (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 May 2012 06:23:02 -0400
-Received: (qmail 2930 invoked by uid 107); 30 May 2012 10:23:02 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 30 May 2012 06:23:02 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 30 May 2012 06:22:58 -0400
-Content-Disposition: inline
-In-Reply-To: <20120530101758.GA13285@sigill.intra.peff.net>
+	id S1752088Ab2E3K12 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 May 2012 06:27:28 -0400
+Received: from out3-smtp.messagingengine.com ([66.111.4.27]:54593 "EHLO
+	out3-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751512Ab2E3K12 (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 30 May 2012 06:27:28 -0400
+Received: from compute3.internal (compute3.nyi.mail.srv.osa [10.202.2.43])
+	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id C2BCA2097C
+	for <git@vger.kernel.org>; Wed, 30 May 2012 06:27:27 -0400 (EDT)
+Received: from frontend1.nyi.mail.srv.osa ([10.202.2.160])
+  by compute3.internal (MEProxy); Wed, 30 May 2012 06:27:27 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=letterboxes.org;
+	 h=message-id:date:from:mime-version:to:subject:content-type
+	:content-transfer-encoding; s=mesmtp; bh=M1YIv56FhfYQqTjwWty9Ybd
+	Oq2s=; b=aX3+eJtcWymeo0Xl5xfUXMA7l5hXljYVYtRoF/6ZDRecAKpDo0cRgYa
+	wFH6ApDFMF3t8VpEBBnU7TUxIOXhd4fZe3HLdO4ZsBzzti6B+662hUe5eKcBD43a
+	E3GJ/ISL42uF8fz7oBJEPAxtqTVYAwoUJhF+xWi8gcGr5k1jKC3Q=
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=message-id:date:from:mime-version:to
+	:subject:content-type:content-transfer-encoding; s=smtpout; bh=M
+	1YIv56FhfYQqTjwWty9YbdOq2s=; b=dem8Zgei7uZ+T471QYRV4ljvqjZmIjnPT
+	z5OIwK40VurY2zUgD/Z/qN5MFFTQfT62XeGlvqxZ8oturF/BswedhZiSDCZH+CF8
+	UDwSTprdvi9D2F5KQuGk2QI6RFL/fSQKVsLY4y9CSY0YI64vkMOeoZMSClheUs7g
+	nZKKCV3nMg=
+X-Sasl-enc: An17yTdYZETHvMiMx8RgzeuO/gJvPYY2iW6j/3+zcUw5 1338373647
+Received: from [192.168.0.103] (unknown [87.194.154.6])
+	by mail.messagingengine.com (Postfix) with ESMTPA id 606328E01BA
+	for <git@vger.kernel.org>; Wed, 30 May 2012 06:27:27 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:12.0) Gecko/20120430 Thunderbird/12.0.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198792>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198793>
 
-This comment warns about a bug in asciidoc 6, and points to
-a patch from 2005. Since we don't even support versions of
-asciidoc that old, we can safely get rid of the warning.
+Hello,
 
-Signed-off-by: Jeff King <peff@peff.net>
----
- Documentation/Makefile | 9 ---------
- 1 file changed, 9 deletions(-)
+gitk has a feature in which one or more "views" can be created of a repository.
+ I find this useful, and I find my self creating the same views over and over
+(typically: show all refs, show local refs, show only the current branch).  I
+then switch between them when rebasing branches, depending on what I want to know.
 
-diff --git a/Documentation/Makefile b/Documentation/Makefile
-index 030e2c8..eb1b6ad 100644
---- a/Documentation/Makefile
-+++ b/Documentation/Makefile
-@@ -125,15 +125,6 @@ DEFAULT_EDITOR_SQ = $(subst ','\'',$(DEFAULT_EDITOR))
- ASCIIDOC_EXTRA += -a 'git-default-editor=$(DEFAULT_EDITOR_SQ)'
- endif
- 
--#
--# Please note that there is a minor bug in asciidoc.
--# The version after 6.0.3 _will_ include the patch found here:
--#   http://marc.theaimsgroup.com/?l=git&m=111558757202243&w=2
--#
--# Until that version is released you may have to apply the patch
--# yourself - yes, all 6 characters of it!
--#
--
- QUIET_SUBDIR0  = +$(MAKE) -C # space to separate -C and subdir
- QUIET_SUBDIR1  =
- 
--- 
-1.7.11.rc0.12.g6048c92
+Is there any way to get gitk to save these views and even share them between
+repositories?  There is a "remember me" checkbox in each view's settings, but so
+far as I can tell, that doesn't do anything: when gitk is restarted, the views
+are lost.
+
+Thanks,
+
+N
