@@ -1,329 +1,57 @@
-From: Huynh Khoi Nguyen NGUYEN 
-	<Huynh-Khoi-Nguyen.Nguyen@ensimag.imag.fr>
-Subject: [PATCH] Possibility to read both from ~/.gitconfig and from $XDG_CONFIG_HOME/git/config
-Date: Wed, 30 May 2012 20:02:35 +0200
-Message-ID: <1338400955-22991-1-git-send-email-Huynh-Khoi-Nguyen.Nguyen@ensimag.imag.fr>
-Cc: Matthieu.Moy@grenoble-inp.fr,
-	NGUYEN Huynh Khoi Nguyen <nguyenhu@ensibm.imag.fr>,
-	Huynh Khoi Nguyen NGUYEN 
-	<Huynh-Khoi-Nguyen.Nguyen@ensimag.imag.fr>,
-	Lucien KONG <Lucien.Kong@ensimag.imag.fr>,
-	Valentin DUPERRAY <Valentin.Duperray@ensimag.imag.fr>,
-	Thomas NGUY <Thomas.Nguy@ensimag.imag.fr>,
-	Franck JONAS <Franck.Jonas@ensimag.imag.fr>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: 'git merge tag' not working as before
+Date: Wed, 30 May 2012 20:06:15 +0200
+Message-ID: <CAMP44s1bry3=W8hJPP9mJLzHmXFZug58aimGHhCSzwS9+Q-yWw@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 30 20:02:52 2012
+X-From: git-owner@vger.kernel.org Wed May 30 20:06:53 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SZnEM-00089h-Mh
-	for gcvg-git-2@plane.gmane.org; Wed, 30 May 2012 20:02:47 +0200
+	id 1SZnIK-0002IW-0m
+	for gcvg-git-2@plane.gmane.org; Wed, 30 May 2012 20:06:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757248Ab2E3SCm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 May 2012 14:02:42 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:42159 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756327Ab2E3SCl (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 May 2012 14:02:41 -0400
-Received: from ensimag.imag.fr (ensimag.imag.fr [195.221.228.12])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id q4UHsHvK014196
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 30 May 2012 19:54:17 +0200
-Received: from ensibm.imag.fr (ensibm [195.221.228.8])
-	by ensimag.imag.fr (8.13.8/8.13.8/ImagV2.1.r_ens) with ESMTP id q4UI2ZAl015427;
-	Wed, 30 May 2012 20:02:35 +0200
-Received: from ensibm.imag.fr (localhost [127.0.0.1])
-	by ensibm.imag.fr (8.13.8/8.13.8/ImagV2.1.sb_ens.pm) with ESMTP id q4UI2Zq0023071;
-	Wed, 30 May 2012 20:02:35 +0200
-Received: (from nguyenhu@localhost)
-	by ensibm.imag.fr (8.13.8/8.13.8/Submit) id q4UI2ZxB023070;
-	Wed, 30 May 2012 20:02:35 +0200
-X-Mailer: git-send-email 1.7.8
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Wed, 30 May 2012 19:54:17 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: q4UHsHvK014196
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: huynh-khoi-nguyen.nguyen@phelma.grenoble-inp.fr
-MailScanner-NULL-Check: 1339005261.08837@RDhIm4LEJXIMG/1Tir51VA
+	id S1757322Ab2E3SGS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 May 2012 14:06:18 -0400
+Received: from mail-lpp01m010-f46.google.com ([209.85.215.46]:56040 "EHLO
+	mail-lpp01m010-f46.google.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1757311Ab2E3SGR (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 30 May 2012 14:06:17 -0400
+Received: by lahd3 with SMTP id d3so77755lah.19
+        for <git@vger.kernel.org>; Wed, 30 May 2012 11:06:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=PKFOtej8zJp12BT7pZgBqugXMFMZXBo9T2FLEMO2ojs=;
+        b=cH9tsrEKcg29IJs/+qWsHoXPbyYa8D8VhRjNzqgIyttv29ZSPMAxHZ6ymnOSQrY13q
+         j8GC1rUGKk6x78dFqLMesIAGZIPLN2LuCWynApoiVLmBaakh34ZlsNJFR+whP4KcWRzw
+         5PLkyP08YylMgqaS0IkRvmr6kr8IT81f8hy/GH+ejXNtkCOIa7SyzmqS7lgXJpftA/O+
+         s+Yz875wRPC+MEbtvcqWmmAhcXSybn4A++CFgvQLNxkUQ4YXwTKVH8DA+6flXzxGOPIg
+         xhTBB1f0ccIAqEBCmzIOff9EbdBKHXE44zxXnkMTlGt9Y4m99jhh2v/it6Zf79mXXOM7
+         fZXQ==
+Received: by 10.152.112.138 with SMTP id iq10mr16679936lab.13.1338401175703;
+ Wed, 30 May 2012 11:06:15 -0700 (PDT)
+Received: by 10.112.107.65 with HTTP; Wed, 30 May 2012 11:06:15 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198827>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198828>
 
-From: NGUYEN Huynh Khoi Nguyen <nguyenhu@ensibm.imag.fr>
+Hi,
 
-Git will read both in $XDG_CONFIG_HOME/git/config and in ~/.gitconfig in this order:
-.git/config > ~/.gitconfig > $XDG_CONFIG_HOME/git/config > /etc/gitconfig
-If $XDG_CONFIG_HOME is either not set or empty, $HOME/.config/git/config will be used.
+I used to do things like 'git merge v1.7.10.3' (from v1.7.10.2) but
+even though it's ff it tries to create a merge commit.
 
-Signed-off-by: Huynh Khoi Nguyen NGUYEN <Huynh-Khoi-Nguyen.Nguyen@ensimag.imag.fr>
-Signed-off-by: Lucien KONG <Lucien.Kong@ensimag.imag.fr>
-Signed-off-by: Valentin DUPERRAY <Valentin.Duperray@ensimag.imag.fr>
-Signed-off-by: Thomas NGUY <Thomas.Nguy@ensimag.imag.fr>
-Signed-off-by: Franck JONAS <Franck.Jonas@ensimag.imag.fr>
----
- Documentation/git-config.txt    |    9 +++-
- builtin/config.c                |   48 +++++++++++++++++----
- config.c                        |   21 +++++++--
- t/t1306-read-xdg-config-file.sh |   88 +++++++++++++++++++++++++++++++++++++++
- 4 files changed, 150 insertions(+), 16 deletions(-)
- create mode 100755 t/t1306-read-xdg-config-file.sh
+Seems like now I have to run 'git merge v1.7.10.3^0', I don't see why
+that would be desirable.
 
-diff --git a/Documentation/git-config.txt b/Documentation/git-config.txt
-index d9463cb..30418fa 100644
---- a/Documentation/git-config.txt
-+++ b/Documentation/git-config.txt
-@@ -99,8 +99,8 @@ OPTIONS
- 	For writing options: write to global ~/.gitconfig file rather than
- 	the repository .git/config.
- +
--For reading options: read only from global ~/.gitconfig rather than
--from all available files.
-+For reading options: read only from global ~/.gitconfig then from
-+$XDG_CONFIG_HOME/git/config rather than from all available files.
- +
- See also <<FILES>>.
- 
-@@ -194,7 +194,7 @@ See also <<FILES>>.
- FILES
- -----
- 
--If not set explicitly with '--file', there are three files where
-+If not set explicitly with '--file', there are four files where
- 'git config' will search for configuration options:
- 
- $GIT_DIR/config::
-@@ -204,6 +204,9 @@ $GIT_DIR/config::
- 	User-specific configuration file. Also called "global"
- 	configuration file.
- 
-+$XDG_CONFIG_HOME/git/config::
-+	Second user-specific configuration file. ~/.gitconfig has priority.
-+
- $(prefix)/etc/gitconfig::
- 	System-wide configuration file.
- 
-diff --git a/builtin/config.c b/builtin/config.c
-index 33c8820..38dba4f 100644
---- a/builtin/config.c
-+++ b/builtin/config.c
-@@ -161,7 +161,7 @@ static int show_config(const char *key_, const char *value_, void *cb)
- static int get_value(const char *key_, const char *regex_)
- {
- 	int ret = -1;
--	char *global = NULL, *repo_config = NULL;
-+	char *gitconfig_global = NULL, *xdg_global = NULL, *repo_config = NULL;
- 	const char *system_wide = NULL, *local;
- 	struct config_include_data inc = CONFIG_INCLUDE_INIT;
- 	config_fn_t fn;
-@@ -171,8 +171,15 @@ static int get_value(const char *key_, const char *regex_)
- 	if (!local) {
- 		const char *home = getenv("HOME");
- 		local = repo_config = git_pathdup("config");
--		if (home)
--			global = xstrdup(mkpath("%s/.gitconfig", home));
-+		if (home) {
-+			const char *xdg_config_home = getenv("XDG_CONFIG_HOME");
-+			if (xdg_config_home)
-+				xdg_global = xstrdup(mkpath("%s/git/config", xdg_config_home));
-+			else
-+				xdg_global = xstrdup(mkpath("%s/.config/git/config", home));
-+
-+			gitconfig_global = xstrdup(mkpath("%s/.gitconfig", home));
-+		}
- 		if (git_config_system())
- 			system_wide = git_etc_gitconfig();
- 	}
-@@ -229,15 +236,19 @@ static int get_value(const char *key_, const char *regex_)
- 
- 	if (do_all && system_wide)
- 		git_config_from_file(fn, system_wide, data);
--	if (do_all && global)
--		git_config_from_file(fn, global, data);
-+	if (do_all && xdg_global)
-+		git_config_from_file(fn, xdg_global, data);
-+	if (do_all && gitconfig_global)
-+		git_config_from_file(fn, gitconfig_global, data);
- 	if (do_all)
- 		git_config_from_file(fn, local, data);
- 	git_config_from_parameters(fn, data);
- 	if (!do_all && !seen)
- 		git_config_from_file(fn, local, data);
--	if (!do_all && !seen && global)
--		git_config_from_file(fn, global, data);
-+	if (!do_all && !seen && gitconfig_global)
-+		git_config_from_file(fn, gitconfig_global, data);
-+	if (!do_all && !seen && xdg_global)
-+		git_config_from_file(fn, xdg_global, data);
- 	if (!do_all && !seen && system_wide)
- 		git_config_from_file(fn, system_wide, data);
- 
-@@ -254,7 +265,8 @@ static int get_value(const char *key_, const char *regex_)
- 
- free_strings:
- 	free(repo_config);
--	free(global);
-+	free(gitconfig_global);
-+	free(xdg_global);
- 	return ret;
- }
- 
-@@ -381,7 +393,25 @@ int cmd_config(int argc, const char **argv, const char *prefix)
- 	if (use_global_config) {
- 		char *home = getenv("HOME");
- 		if (home) {
--			char *user_config = xstrdup(mkpath("%s/.gitconfig", home));
-+			char *user_config;
-+			const char *gitconfig_path = mkpath("%s/.gitconfig", home);
-+			const char *xdg_config_path = NULL;
-+			const char *xdg_config_home = NULL;
-+
-+			xdg_config_home = getenv("XDG_CONFIG_HOME");
-+			if (xdg_config_home)
-+				xdg_config_path = mkpath("%s/git/config", xdg_config_home);
-+			else
-+				xdg_config_path = mkpath("%s/.config/git/config", home);
-+
-+			if (access(gitconfig_path, R_OK) && !access(xdg_config_path, R_OK) &&
-+			    (actions == ACTION_LIST ||
-+			     actions == ACTION_GET_COLOR ||
-+			     actions == ACTION_GET_COLORBOOL))
-+				user_config = xstrdup(xdg_config_path);
-+			else
-+				user_config = xstrdup(gitconfig_path);
-+
- 			given_config_file = user_config;
- 		} else {
- 			die("$HOME not set");
-diff --git a/config.c b/config.c
-index 71ef171..53557dc 100644
---- a/config.c
-+++ b/config.c
-@@ -939,10 +939,23 @@ int git_config_early(config_fn_t fn, void *data, const char *repo_config)
- 
- 	home = getenv("HOME");
- 	if (home) {
--		char buf[PATH_MAX];
--		char *user_config = mksnpath(buf, sizeof(buf), "%s/.gitconfig", home);
--		if (!access(user_config, R_OK)) {
--			ret += git_config_from_file(fn, user_config, data);
-+		const char *gitconfig_path = xstrdup(mkpath("%s/.gitconfig", home));
-+		const char *xdg_config_path = NULL;
-+		const char *xdg_config_home = NULL;
-+
-+		xdg_config_home = getenv("XDG_CONFIG_HOME");
-+		if (xdg_config_home)
-+			xdg_config_path = xstrdup(mkpath("%s/git/config", xdg_config_home));
-+		else
-+			xdg_config_path = xstrdup(mkpath("%s/.config/git/config", home));
-+
-+		if (!access(xdg_config_path, R_OK)) {
-+			ret += git_config_from_file(fn, xdg_config_path, data);
-+			found += 1;
-+		}
-+
-+		if (!access(gitconfig_path, R_OK)) {
-+			ret += git_config_from_file(fn, gitconfig_path, data);
- 			found += 1;
- 		}
- 	}
-diff --git a/t/t1306-read-xdg-config-file.sh b/t/t1306-read-xdg-config-file.sh
-new file mode 100755
-index 0000000..2ce5e4b
---- /dev/null
-+++ b/t/t1306-read-xdg-config-file.sh
-@@ -0,0 +1,88 @@
-+#!/bin/sh
-+#
-+# Copyright (c) 2012 Valentin Duperray, Lucien Kong, Franck Jonas,
-+#		     Thomas Nguy, Khoi Nguyen
-+#		     Grenoble INP Ensimag
-+#
-+
-+test_description='possibility to read $XDG_CONFIG_HOME/git/config file'
-+
-+. ./test-lib.sh
-+
-+test_expect_success 'read automatically: xdg file exists and ~/.gitconfig doesn'\''t' '
-+	mkdir -p .config/git &&
-+	echo "[user]" >.config/git/config &&
-+	echo "	name = read_config" >>.config/git/config &&
-+	git config --global advice.statushints false &&
-+	cat >expect <<-\EOF &&
-+	# On branch master
-+	#
-+	# Initial commit
-+	#
-+	# Untracked files:
-+	#	.config/
-+	#	.gitconfig
-+	#	expect
-+	#	output
-+	nothing added to commit but untracked files present
-+	EOF
-+	git status >output &&
-+	test_cmp expect output
-+'
-+
-+test_expect_success 'read automatically: xdg file exists and ~/.gitconfig exists' '
-+	>.gitconfig &&
-+	echo "[user]" >.gitconfig &&
-+	echo "	name = read_gitconfig" >>.gitconfig &&
-+	git config --global advice.statushints true &&
-+	cat >expect <<-\EOF &&
-+	# On branch master
-+	#
-+	# Initial commit
-+	#
-+	# Untracked files:
-+	#   (use "git add <file>..." to include in what will be committed)
-+	#
-+	#	.config/
-+	#	.gitconfig
-+	#	expect
-+	#	output
-+	nothing added to commit but untracked files present (use "git add" to track)
-+	EOF
-+	git status >output &&
-+	test_cmp expect output
-+'
-+
-+test_expect_success 'read with --get: xdg file exists and ~/.gitconfig doesn'\''t' '
-+	rm .gitconfig &&
-+	echo read_config >expect &&
-+	git config --get user.name >output &&
-+	test_cmp expect output
-+'
-+
-+test_expect_success 'read with --get: xdg file exists and ~/.gitconfig exists' '
-+	>.gitconfig &&
-+	echo "[user]" >.gitconfig &&
-+	echo "	name = read_gitconfig" >>.gitconfig &&
-+	echo read_gitconfig >expect &&
-+	git config --get user.name >output &&
-+	test_cmp expect output
-+'
-+
-+test_expect_success 'read with --list: xdg file exists and ~/.gitconfig doesn'\''t' '
-+	rm .gitconfig &&
-+	echo user.name=read_config >expect &&
-+	git config --global --list >output &&
-+	test_cmp expect output
-+'
-+
-+test_expect_success 'read with --list: xdg file exists and ~/.gitconfig exists' '
-+	>.gitconfig &&
-+	echo "[user]" >.gitconfig &&
-+	echo "	name = read_gitconfig" >>.gitconfig &&
-+	echo user.name=read_gitconfig >expect &&
-+	git config --global --list >output &&
-+	test_cmp expect output
-+'
-+
-+test_done
+I think this is a bug and a regression.
+
+Cheers.
+
 -- 
-1.7.8
+Felipe Contreras
