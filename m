@@ -1,59 +1,69 @@
-From: "Christoph Buchner" <bilderbuchi@phononoia.at>
-Subject: Bug: git ls-files and ignored directories
-Date: Wed, 30 May 2012 12:22:18 +0200 (CEST)
-Message-ID: <20120530102218.0625CFC006A@dd24126.kasserver.com>
+From: Thomas Wichern <nordertom@gmx.de>
+Subject: Re: git 1.7.10.msysgit.1: different behaviour in ".gitignore" and ".git/info/exclude"
+Date: Wed, 30 May 2012 12:52:33 +0200
+Message-ID: <799289647.20120530125233@gmx.de>
+References: <96434119.20120530104356@gmx.de> <4FC5F661.6090105@viscovery.net>
+Reply-To: Thomas Wichern <nordertom@gmx.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 30 12:31:18 2012
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git-mailing <git@vger.kernel.org>
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Wed May 30 12:52:41 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SZgBS-0004c1-C6
-	for gcvg-git-2@plane.gmane.org; Wed, 30 May 2012 12:31:18 +0200
+	id 1SZgW8-00083b-Ir
+	for gcvg-git-2@plane.gmane.org; Wed, 30 May 2012 12:52:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752273Ab2E3KbO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 May 2012 06:31:14 -0400
-Received: from dd24126.kasserver.com ([85.13.143.154]:47880 "EHLO
-	dd24126.kasserver.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751146Ab2E3KbO (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 May 2012 06:31:14 -0400
-X-Greylist: delayed 535 seconds by postgrey-1.27 at vger.kernel.org; Wed, 30 May 2012 06:31:13 EDT
-Received: from dd24126.kasserver.com (dd0801.kasserver.com [85.13.143.205])
-	by dd24126.kasserver.com (Postfix) with SMTP id 0625CFC006A
-	for <git@vger.kernel.org>; Wed, 30 May 2012 12:22:18 +0200 (CEST)
-X-SenderIP: 128.130.169.107
-User-Agent: ALL-INKL Webmail
+	id S1752486Ab2E3Kwg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 May 2012 06:52:36 -0400
+Received: from mailout-de.gmx.net ([213.165.64.23]:48948 "HELO
+	mailout-de.gmx.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with SMTP id S1752425Ab2E3Kwg convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 30 May 2012 06:52:36 -0400
+Received: (qmail invoked by alias); 30 May 2012 10:52:34 -0000
+Received: from unknown (EHLO w7-wic.gdsdom.inet) [80.150.227.58]
+  by mail.gmx.net (mp071) with SMTP; 30 May 2012 12:52:34 +0200
+X-Authenticated: #35162558
+X-Provags-ID: V01U2FsdGVkX18vEMMT+QEveOQ56i0WhNtBSxZOIt5Y6PXk2KjXLI
+	EEIbRi/HBfZ7Hw
+X-Priority: 3 (Normal)
+In-Reply-To: <4FC5F661.6090105@viscovery.net>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198795>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198796>
 
-Hi!
+Hi Hannes,
 
-I think I've been bitten by a bug in git ls-files - committed directories (and files therein) which are matched by a "dir/" gitignore rule are not shown by "git ls-files --exclude-standard -i", although they should be. Matched files are shown.
+thanks a lot - it was my fault and you're right.
+It works with "(*)/" very well!
 
-I've found a very brief discussion on this mailing list from March 2011 about this, including a repro procedure which still is valid today, at http://marc.info/?l=git&m=129926031808376&w=4
+Horrido,
+Thomas
 
-Is that a known/in progress bug? If yes, (when) can a fix be expected? How can I work around this in the meantime? 
-If it's not a bug, how do you do this properly? My original problem was that  I want to list files which have been committed to git but match an existing gitignore pattern. Richard Hansen has written a very nice alias for that (http://stackoverflow.com/a/9370094/599884, with some discussion of this bug in the comments), but due to the present bug this does not work totally correctly. 
 
-Having a built-in git feature for this would be great, btw ("git ls-files --committed-but-ignored"? :-)). Do I have to submit a separate feature request?
+> Am 5/30/2012 10:43, schrieb Thomas Wichern:
+>> If you have a ".gitignore" - file that contains the pattern "/(*)/", a
+>> directory that matches the pattern is ignored completely.
+>> 
+>> If you put the same pattern into the ".git/info/exclude" - file, the
+>> pattern does not work - these directories still show up.
+>> 
+>> I expected that all directories anywhere the repository that match the
+>> pattern to be ignored.
 
-thanks, 
-Christoph
+> The first slash in the pattern means: Match only in this directory, not in
+> subdirectories. For patterns in .git/info/exclude, "this directory" is the
+> top-level of the repository.
 
-p.s.: The repro procedure from the linked list discussion:
-> $ mkdir test
-> $ cd test
-> $ git init
-> $ mkdir testdir
-> $ touch testdir/test
-> $ git add testdir/test
-> $ git commit -m "add test"
-> $ echo "testdir/" > .gitignore
-> $ git ls-files --exclude-standard -i
+>> Am I doing something wrong? Is the pattern not correct?
+
+> Perhaps you need "(*)/", i.e., without the first slash.
+
+> -- Hannes
