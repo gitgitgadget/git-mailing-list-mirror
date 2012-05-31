@@ -1,121 +1,127 @@
-From: Lanny Ripple <lanny@spotinfluence.com>
-Subject: Re: Bug: rebase when an author uses accents in name on MacOSx
-Date: Thu, 31 May 2012 08:36:16 -0500
-Message-ID: <78E7FEAC-6587-4EB3-B78B-08D321F53BF9@spotinfluence.com>
-References: <06DD2F56-F956-46DF-84A4-3443D4702CDE@spotinfluence.com> <7vehq18c82.fsf@alter.siamese.dyndns.org> <20120531011911.GC5488@sigill.intra.peff.net> <7v62bc97w1.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0 (Apple Message framework v1278)
-Content-Type: multipart/signed; boundary="Apple-Mail=_11E4F298-9736-4F50-A6CC-8A865628F4FE"; protocol="application/pgp-signature"; micalg=pgp-sha1
-Cc: Jeff King <peff@peff.net>, Thomas Rast <trast@inf.ethz.ch>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu May 31 15:36:30 2012
+From: Travis P <git@castle.fastmail.fm>
+Subject: Re: How to handle terminal detection in a daemon calling git?
+Date: Thu, 31 May 2012 08:39:42 -0500
+Message-ID: <1338471582.12573.140661083191693.32060E78@webmail.messagingengine.com>
+References: <1338412607.9452.140661082904349.02F677C3@webmail.messagingengine.com>
+ <20120531012908.GD5488@sigill.intra.peff.net>
+ <7vaa0o98e5.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu May 31 15:39:49 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Sa5YA-0004Li-5o
-	for gcvg-git-2@plane.gmane.org; Thu, 31 May 2012 15:36:26 +0200
+	id 1Sa5bQ-0007Pp-Bx
+	for gcvg-git-2@plane.gmane.org; Thu, 31 May 2012 15:39:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758093Ab2EaNgW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 31 May 2012 09:36:22 -0400
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:52060 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757949Ab2EaNgV (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 31 May 2012 09:36:21 -0400
-Received: by yenm10 with SMTP id m10so778936yen.19
-        for <git@vger.kernel.org>; Thu, 31 May 2012 06:36:20 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=subject:mime-version:content-type:from:in-reply-to:date:cc
-         :message-id:references:to:x-mailer:x-gm-message-state;
-        bh=PncUTwAJZHRnytKLohlj/or3LCqkX9wp9ciYcnPYBqc=;
-        b=l46q2qkSo3zJYREQq+RBnaM3dV1+DnqCEKbLFjme23P3Ls3ijIQTiOcjJY+TqS4pOD
-         cSWYC578+ECxL/WRMlQBGRdw2GNO/GK0khTAukIp2x5kC905UXzqaowh4iWpt7e1bnVD
-         ArabkzCNiCgiQCVPBbu+nEWMM/HdHP4nqONew/spbWmfVAPjMxBST3zl9BcqXJFu6GVy
-         DsOaRmLh6kl/X9T70j/PC04zHHUj8onD7ku2FXRP6swOrMSxGT6w9mRP9SIAxItbD9Vb
-         zf4G0lLC0bYIwuEfUOO3D9PQ6/OxDaravRtlGDlY820BYuP1MDjnAa1FUI9p4CteSKbY
-         sbFQ==
-Received: by 10.60.30.194 with SMTP id u2mr19035919oeh.5.1338471380434;
-        Thu, 31 May 2012 06:36:20 -0700 (PDT)
-Received: from [192.168.1.4] (c-98-198-192-29.hsd1.tx.comcast.net. [98.198.192.29])
-        by mx.google.com with ESMTPS id x10sm1926958oeb.8.2012.05.31.06.36.18
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 31 May 2012 06:36:19 -0700 (PDT)
-In-Reply-To: <7v62bc97w1.fsf@alter.siamese.dyndns.org>
-X-Mailer: Apple Mail (2.1278)
-X-Gm-Message-State: ALoCoQkB/iDxqSBhrcvb7azY6g/+r9UGC5kHMA30KmTzbVq5n9uoKxydPPmIlEnhiVTPHzSJJT8A
+	id S1758099Ab2EaNjo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 31 May 2012 09:39:44 -0400
+Received: from out3-smtp.messagingengine.com ([66.111.4.27]:50372 "EHLO
+	out3-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1757840Ab2EaNjn (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 31 May 2012 09:39:43 -0400
+Received: from compute2.internal (compute2.nyi.mail.srv.osa [10.202.2.42])
+	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id 8D1462110D;
+	Thu, 31 May 2012 09:39:42 -0400 (EDT)
+Received: from web5.nyi.mail.srv.osa ([10.202.2.215])
+  by compute2.internal (MEProxy); Thu, 31 May 2012 09:39:42 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=message-id:from:to:cc:mime-version
+	:content-transfer-encoding:content-type:in-reply-to:references
+	:subject:date; s=smtpout; bh=5dtpwm1vcwA7VvlEQWwut7evrFM=; b=R1T
+	znQpqGe3t4mI2EDflU5b8JsaJvh7ggxYvmZiDsAV/KrpF4SeqnKy0yNhQym1Edgz
+	qiQRb1jlwADJ3TEYKDisCF/+y9is47Kk1KpTqb/J2iB0tztT9VGTC0H3tlNo6x4h
+	x4KVEntHmpnf9V2gSjOlb5GUdyNJ6NYnLkNt3p1w=
+Received: by web5.nyi.mail.srv.osa (Postfix, from userid 99)
+	id 6B76A4C0F46; Thu, 31 May 2012 09:39:42 -0400 (EDT)
+X-Sasl-Enc: Cuaz9ooJ/qUMW85XJS7cFWStwKJsfLgKWDeGxGKlxeAV 1338471582
+X-Mailer: MessagingEngine.com Webmail Interface
+In-Reply-To: <7vaa0o98e5.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198896>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198897>
 
 
---Apple-Mail=_11E4F298-9736-4F50-A6CC-8A865628F4FE
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain;
-	charset=iso-8859-1
+On Wed, May 30, 2012, at 11:22 PM, Junio C Hamano wrote:
+> 
+> A more likely failure case is when fd 0, 1 and 2 are _closed_.
+> 
+> I vaguely recall we once saw a failure report for that particular
+> case, and then audited the code several years ago, but I do not
+> offhand know if we have regressed over time.
 
-Bingo.
+Thanks all for your suggestions about where to look.  I've been doing
+some more experiments, and I see that Junio's comment is very relevant.
 
-  lanny;~> echo "R=E9mi Leblond" | LANG=3DC LC_ALL=3DC /usr/bin/sed -ne =
-'s/.*/GIT_AUTHOR_NAME=3D'\''&'\''/p'
-  GIT_AUTHOR_NAME=3D'R=E9mi Leblond'
+Here's what I learned this morning: it appears to work when I don't
+close STDIN.
 
-Just occurred to me that I'm using fink and that git-am doesn't use =
-/usr/bin/sed but just sed.  My suggestion is to be explicit on the path =
-in git-am.
+    #close $_ for *STDIN, *STDOUT, *STDERR; # What I was doing. Fails.
+    close $_ for *STDOUT, *STDERR;  # Tried this, it works.
+    *STDOUT = $log_fh;
+    *STDERR = $log_fh;
 
-So it now stands at two bug-reports and one pebkac.
+Jeff King wrote:
+> Could it be not related to a terminal at all, but that
+> there is a problem writing to the original stdout?
 
-  Thanks!,
-  -ljr
----
-Lanny Ripple
-lanny@spotinfluence.com
+Writing to stdout, stderr are both fine.  I've been doing
+  print STDOUT "Stdout test.\n";
+  print STDERR "Stderr test.\n";
+right before the git commands to ensure that STDOUT, STDERR are hooked
+up fine to the log file.
 
+But, you gave me a hint that led to an error message.
 
-On May 31, 2012, at 1:33 AM, Junio C Hamano wrote:
+In a test rig where I've been looking at this just now, I was using
+backticks and losing
+a message to stderr:
+ 'cd /local/test_web; git pull --ff-only | cat'   rc=0 out={{}}
+ 'cd /local/test_web; git pull --ff-only 2>&1 | cat'   rc=0 out={{fatal:
+ The remote end hung up unexpectedly
+ 
+Note however:  despite the "fatal", I am seeing rc=0 and I was observing
+my working
+copy update as expected, so I wasn't looking for error output.
 
-> Jeff King <peff@peff.net> writes:
->=20
->> On Wed, May 30, 2012 at 04:45:33PM -0700, Junio C Hamano wrote:
->> ...
->>> So in C locale where each byte is supposed to be a single character,
->>> that implementation of "sed" refuses to match a byte with high-bit
->>> set when given a pattern '.'?
->>>=20
->>> That is a surprising breakage, I would have to say.
->>=20
->> It should not be too surprising, since we discussed it a few months =
-ago:
->>=20
->>  http://thread.gmane.org/gmane.comp.version-control.git/192218
->=20
-> Heh, no wonder I do not recall that one, as everything happened and
-> conclusions reached while I was sleeping ;-)
->=20
-> If it is not a bug in platform-sanctioned sed, but a buggy
-> third-party build, then I wouldn't worry about it for this cycle,
-> but pre-release freeze might be a good time to start sketching
-> Thomas's --format=3D"%'%an <%ae>%'" approach, perhaps?
+> 1. We check isatty(2) to enable progress reporting by default. You can
+> use --no-progress to disable this.
 
+I don't see "--no-progress" making any difference.
 
---Apple-Mail=_11E4F298-9736-4F50-A6CC-8A865628F4FE
-Content-Transfer-Encoding: 7bit
-Content-Disposition: attachment;
-	filename=signature.asc
-Content-Type: application/pgp-signature;
-	name=signature.asc
-Content-Description: Message signed with OpenPGP using GPGMail
+>  2. We check isatty(1) for starting a pager, auto-selecting color, and
+>    in recent versions of git, for column support. But none of those
+>    things should be in use by git-pull anyway.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG/MacGPG2 v2.0.17 (Darwin)
+Ahh, this could be it:  when the pull does receive an output and I'm
+running
+the command in the shell, I get output with a "+-" where the plus is
+green
+and the minus red.  So, I think that git may be trying to check whether
+color
+ (and columns?) is supported to output.  However, it appears that this
+ check
+is sensitive to stdin being connected (based on test mentioned earlier
+here),
+which is surprising.
 
-iF4EAREIAAYFAk/Hc9EACgkQ+owW65SoXfi4WAD/XRTLvQO6CgpPaQ0LE2NK9nYh
-dWR8pA/9COxfUa2wCJEA/0HKHd9xRghEXzbZdf6HRy5G1Ox5+XxyveBaQhdoWrUs
-=KbUI
------END PGP SIGNATURE-----
+Is the code that calls isatty, calling it on all 3 descriptors, even
+when
+STDIN is not relevant?
 
---Apple-Mail=_11E4F298-9736-4F50-A6CC-8A865628F4FE--
+>  3. Merge was changed recently to open an editor when we have a
+>     terminal. That can be changed by setting GIT_MERGE_AUTOEDIT=no in
+>     the environment. However, since you pass --ff-only, we shouldn't be
+>     running merge at all.
+
+Yes, I tried the env switch just to be sure, and this doesn't appear
+relevant.
+
+-Travis
