@@ -1,197 +1,107 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCHv3] Read from XDG configuration file, not write
-Date: Thu, 31 May 2012 13:13:31 -0700
-Message-ID: <7vr4u05ct0.fsf@alter.siamese.dyndns.org>
-References: <1338412775-22840-1-git-send-email-Huynh-Khoi-Nguyen.Nguyen@ensimag.imag.fr>
- <1338475242-21770-1-git-send-email-Huynh-Khoi-Nguyen.Nguyen@ensimag.imag.fr>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 2/6] reflog: remove i18n legos in pruning message
+Date: Thu, 31 May 2012 15:31:02 -0500
+Message-ID: <20120531203102.GA27332@burratino>
+References: <1338463242-10618-1-git-send-email-worldhello.net@gmail.com>
+ <1338469482-30936-1-git-send-email-pclouds@gmail.com>
+ <1338469482-30936-3-git-send-email-pclouds@gmail.com>
+ <20120531134538.GA10523@burratino>
+ <7vlik86xqd.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Matthieu.Moy@grenoble-inp.fr,
-	NGUYEN Huynh Khoi Nguyen <nguyenhu@ensibm.imag.fr>,
-	Lucien KONG <Lucien.Kong@ensimag.imag.fr>,
-	Valentin DUPERRAY <Valentin.Duperray@ensimag.imag.fr>,
-	Thomas NGUY <Thomas.Nguy@ensimag.imag.fr>,
-	Franck JONAS <Franck.Jonas@ensimag.imag.fr>
-To: Huynh Khoi Nguyen NGUYEN 
-	<Huynh-Khoi-Nguyen.Nguyen@ensimag.imag.fr>
-X-From: git-owner@vger.kernel.org Thu May 31 22:13:41 2012
+Cc: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+	git@vger.kernel.org,
+	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+	Jiang Xin <worldhello.net@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu May 31 22:31:56 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SaBkZ-0000nm-HA
-	for gcvg-git-2@plane.gmane.org; Thu, 31 May 2012 22:13:40 +0200
+	id 1SaC2C-0007Py-En
+	for gcvg-git-2@plane.gmane.org; Thu, 31 May 2012 22:31:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964809Ab2EaUNf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 31 May 2012 16:13:35 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:44651 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S964792Ab2EaUNe (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 31 May 2012 16:13:34 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9099B8464;
-	Thu, 31 May 2012 16:13:33 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=9ktk6exkrn1oa4evcfllpNfI6nw=; b=rxENbI
-	7YFfpft9qCplgYEEeAhVwhV1Uo+ME48My6hNz5sawBsnObqHxmNvDPwV+o8gciBC
-	EE+d1ksdGmH4yWqYcgGN7rE1y/H86ZIANmowFNG3gvjoD1lJpB89r9IixyjWfVJ/
-	R/r7Yl5v/pN/a7dor0McF0ESS2E3NXo7e3I2c=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=fIMdWm25J+368A6ej6GUGdmuSwv+oMZR
-	S2FPARK+ZPVKbrIl5eRylItOj7H9AeVdjcLLRUNmobrHyg90CnawOgtiF8ZINzF7
-	8p5M077H01d1Nuk3J4KXIMblOlB/fmL0cP/yt3W+GOFVTPFDP18uDD7wqCPmTrGK
-	BQp8BDsmaSY=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 873F48462;
-	Thu, 31 May 2012 16:13:33 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C6F948460; Thu, 31 May 2012
- 16:13:32 -0400 (EDT)
-In-Reply-To: <1338475242-21770-1-git-send-email-Huynh-Khoi-Nguyen.Nguyen@ensimag.imag.fr>
- (Huynh Khoi Nguyen NGUYEN's message of "Thu, 31 May 2012 16:40:42 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 1877016A-AB5D-11E1-A76F-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1758470Ab2EaUbj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 31 May 2012 16:31:39 -0400
+Received: from mail-gh0-f180.google.com ([209.85.160.180]:44063 "EHLO
+	mail-gh0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758453Ab2EaUbR (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 31 May 2012 16:31:17 -0400
+Received: by mail-gh0-f180.google.com with SMTP id z12so1385326ghb.11
+        for <git@vger.kernel.org>; Thu, 31 May 2012 13:31:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=UHJZW7x3M8KzMB5KTo0rLw/fiJjjq14elS4pn6clLFY=;
+        b=dril52RC5X73nDJ+FJfiR1hV3yvxcJomRbfCF9p+MmbWsF7b2dUja1e2+h9U1GI1LZ
+         vKe+DZFGVFkR97skALViPcXvwRUL9yVVTf0D2Nbhz1QrFBaq4gPNwWJ8CQIBXYnd4djd
+         uXgMWVR1VAJ0MB9AUB5pC7xZD8nIc4lyTRKTC7zqFGF/ga8WaNcERYMo3JKMK8fj0HlC
+         XhgsNT+HXCNASk8gXgmCCrKa02M2+pqd0OKukZ87AZUpszwpylOY4V2TnqM368PmGfat
+         0Rhinud282Xmjqnq88kwxOL8xQhRqS9P/AkflwcVZd6iNbAwogmEkhZkpphhNO4WiNnf
+         ZGQg==
+Received: by 10.50.42.196 with SMTP id q4mr15392950igl.28.1338496276671;
+        Thu, 31 May 2012 13:31:16 -0700 (PDT)
+Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
+        by mx.google.com with ESMTPS id yg9sm2287554igb.15.2012.05.31.13.31.14
+        (version=SSLv3 cipher=OTHER);
+        Thu, 31 May 2012 13:31:15 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <7vlik86xqd.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198944>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198945>
 
-Huynh Khoi Nguyen NGUYEN  <Huynh-Khoi-Nguyen.Nguyen@ensimag.imag.fr>
-writes:
+Junio C Hamano wrote:
 
-> From: NGUYEN Huynh Khoi Nguyen <nguyenhu@ensibm.imag.fr>
->
-> Git will be able to read in $XDG_CONFIG_HOME/git/config, a new
+> These are for human consumption; they used to go to standard error
+> stream back when it was written at 4264dc1 (git reflog expire,
+> 2006-12-19).
 
-Getting nicer.
+Good.  Thanks for clarifying and for looking that up.
 
-> @@ -172,7 +172,9 @@ static int get_value(const char *key_, const char *regex_)
->  		const char *home = getenv("HOME");
->  		local = repo_config = git_pathdup("config");
->  		if (home)
-> -			global = xstrdup(mkpath("%s/.gitconfig", home));
-> +			gitconfig_global = xstrdup(mkpath("%s/.gitconfig", home));
-> +		if (xdg_git_path("config"))
-> +			xdg_global = xdg_git_path("config");
->  		if (git_config_system())
->  			system_wide = git_etc_gitconfig();
->  	}
+Why was this changed to write to standard output in 1389d9dd (reflog
+expire --fix-stale, 2007-01-06)?  Would changing it back some time
+to follow the usual "progress and diagnostics go to stderr" pattern
+be worthwhile?
+---
+ builtin/reflog.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-Hrm, xdg_git_path() returns allocated memory, and each call site
-leaks its return value, no?
-
-I didn't mean a micro-helper function like xdg_git_path() when I
-suggested refactoring.  I meant a helper that figures out all the
-necessary bits in one go.  For example, can't the above call site
-look more like this?
-
-        static int get_value(const char *key_, const char *regex_)
-        {
-                int ret = -1;
-                char *global = NULL, *xdg = NULL, *repo_config = NULL;
-                const char *system_wide = NULL, *local;
-                struct config_include_data inc = CONFIG_INCLUDE_INIT;
-                config_fn_t fn;
-                void *data;
-
-                local = given_config_file;
-                if (!local) {
-                        local = repo_config = git_pathdup("config");
-                        if (git_config_system())
-                                system_wide = git_etc_gitconfig();
-			home_config_paths(&global, &xdg);
-                }
-		...
-
-And then the config.c::home_config_paths() may look like:
-
-	void home_config_paths(char **global, char **xdg)
-	{
-		char *xdg_home = getenv("XDG_CONFIG_HOME");
-                char *home = getenv("HOME");
-                char *to_free = NULL;
-		
-                if (!home) {
-			*global = NULL;
-		} else {
-			if (!xdg_home) {
-	                        to_free = strdup(mkpath("%s/.config", home));
-				xdg_home = to_free;
-			}
-			*global = xstrdup(mkpath("%s/.gitconfig", home));
-		}
-                
-                if (!xdg_home)
-                	*xdg = NULL;
-		else
-			*xdg = xstrdup(mkpath("%s/git/config", xdg_home));
-		free(to_free);
-	}
-
-
-> diff --git a/t/t1306-read-xdg-config-file.sh b/t/t1306-read-xdg-config-file.sh
-> new file mode 100755
-> index 0000000..4cab38b
-> --- /dev/null
-> +++ b/t/t1306-read-xdg-config-file.sh
-> @@ -0,0 +1,87 @@
-> +#!/bin/sh
-> +#
-> +# Copyright (c) 2012 Valentin Duperray, Lucien Kong, Franck Jonas,
-> +#		     Thomas Nguy, Khoi Nguyen
-> +#		     Grenoble INP Ensimag
-> +#
-> +
-> +test_description='possibility to read $XDG_CONFIG_HOME/git/config file'
-> +
-> +. ./test-lib.sh
-> +
-> +test_expect_success 'read automatically: xdg file exists and ~/.gitconfig doesn'\''t' '
-> +	mkdir -p .config/git &&
-> +	echo "[advice]" >.config/git/config &&
-> +	echo "	statushints = false" >>.config/git/config &&
-> +	cat >expect <<-\EOF &&
-> +	# On branch master
-> +	#
-> +	# Initial commit
-
-Use of "status" output as test vector is not such a good idea for
-multiple reasons.
-
- - You are aware that the "status hints" feature is currently in
-   flux (somebody nearby is working on a patch);
-
- - Even without another topic that currently works on it, "git
-   status" output is for human consumption and subject to
-   improvement and also l10n.
-
- - "status" output lists tracked and untracked paths, which makes it
-   harder to later introduce new file to the test directory that are
-   needed for later tests, or rename ones that were used in earlier
-   versions of the test, without having to update all of these test
-   vectors.
-
-> +	#
-> +	# Untracked files:
-> +	#	.config/
-> +	#	expect
-> +	#	output
-
-This is a good example that shows why using "status" output as a
-test vector is not a good idea.
-
-Notice you listed "expect" and "output" here.  As my next suggestion
-is to rename "output" to "actual" (we typically "test_cmp expect actual"),
-use of "git status" output as a test vector would mean you would
-have to update them whenever such a change is needed.
-
-> +	nothing added to commit but untracked files present
-> +	EOF
-> +	git status >output &&
-> +	test_cmp expect output
-> +'
+diff --git i/builtin/reflog.c w/builtin/reflog.c
+index 062d7dad..90e820a0 100644
+--- i/builtin/reflog.c
++++ w/builtin/reflog.c
+@@ -327,11 +327,11 @@ static int expire_reflog_ent(unsigned char *osha1, unsigned char *nsha1,
+ 		hashcpy(cb->last_kept_sha1, nsha1);
+ 	}
+ 	if (cb->cmd->verbose)
+-		printf("keep %s", message);
++		fprintf(stderr, "keep %s", message);
+ 	return 0;
+  prune:
+ 	if (!cb->newlog || cb->cmd->verbose)
+-		printf("%sprune %s", cb->newlog ? "" : "would ", message);
++		fprintf(stderr, "%sprune %s", cb->newlog ? "" : "would ", message);
+ 	return 0;
+ }
+ 
+@@ -646,10 +646,10 @@ static int cmd_reflog_expire(int argc, const char **argv, const char *prefix)
+ 	if (cb.stalefix) {
+ 		init_revisions(&cb.revs, prefix);
+ 		if (cb.verbose)
+-			printf("Marking reachable objects...");
++			fprintf(stderr, "Marking reachable objects...");
+ 		mark_reachable_objects(&cb.revs, 0, NULL);
+ 		if (cb.verbose)
+-			putchar('\n');
++			fputc('\n', stderr);
+ 	}
+ 
+ 	if (do_all) {
+-- 
