@@ -1,83 +1,79 @@
-From: Erik Faye-Lund <kusmabite@gmail.com>
-Subject: [PATCH/RFC] Makefile: add missing GIT-VERSION-FILE dependency
-Date: Thu, 31 May 2012 16:10:44 +0200
-Message-ID: <1338473444-8960-1-git-send-email-kusmabite@gmail.com>
-Cc: nickh@reactrix.com
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 31 16:11:01 2012
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: [PATCH 2/6] reflog: remove i18n legos in pruning message
+Date: Thu, 31 May 2012 21:18:20 +0700
+Message-ID: <CACsJy8AAnDDGSusfd2EaKW-sj=kM=xE5tET0RprEyszOBYOztg@mail.gmail.com>
+References: <1338463242-10618-1-git-send-email-worldhello.net@gmail.com>
+ <1338469482-30936-1-git-send-email-pclouds@gmail.com> <1338469482-30936-3-git-send-email-pclouds@gmail.com>
+ <20120531134538.GA10523@burratino> <CACsJy8Bgzkc51N+t=0NyOasJRd2y3U+pyZCGa-qGoDuTQuyOgg@mail.gmail.com>
+ <20120531141020.GD10523@burratino>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
+	Jiang Xin <worldhello.net@gmail.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Thu May 31 16:19:04 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Sa65a-0001gs-I2
-	for gcvg-git-2@plane.gmane.org; Thu, 31 May 2012 16:10:58 +0200
+	id 1Sa6DK-00006q-Lr
+	for gcvg-git-2@plane.gmane.org; Thu, 31 May 2012 16:18:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758205Ab2EaOKy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 31 May 2012 10:10:54 -0400
-Received: from mail-bk0-f46.google.com ([209.85.214.46]:33926 "EHLO
-	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758091Ab2EaOKx (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 31 May 2012 10:10:53 -0400
-Received: by bkcji2 with SMTP id ji2so880258bkc.19
-        for <git@vger.kernel.org>; Thu, 31 May 2012 07:10:52 -0700 (PDT)
+	id S1758092Ab2EaOSy convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 31 May 2012 10:18:54 -0400
+Received: from mail-we0-f174.google.com ([74.125.82.174]:48944 "EHLO
+	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757496Ab2EaOSx convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 31 May 2012 10:18:53 -0400
+Received: by weyu7 with SMTP id u7so658160wey.19
+        for <git@vger.kernel.org>; Thu, 31 May 2012 07:18:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        bh=wbDpS9+7ni0OBDizVYnmojU3czXrtRPluejWGAk3cYk=;
-        b=nZr71ATVxKjRy0Sw8WCp7NOfPbUp+7MhhhC1e2BGbhBLMhjSH/MXfHqLgJYZAoMgn8
-         94vUydMbaB/qOCPQgV1CJRJrBoJQIS+ZGkylLYPPPzxResRvVzA5U0Lv6QVKuq9+IJQc
-         YVH9yqFatZxjZTh3/Rd8sGdflsmqzA1R/ZOX+iybQJo6q7Yt28XJN9u8GZd3/vlmpxQY
-         NdaLLh8ixd+QqtgkQd0hJz1aXrxDoMAn1hp9yz/Az3pr4H2/U+UwgKnCbJy5NOpELfQs
-         +wzSVNAamW/uTAfKziZZ+lUJO/kkkf2gbUNuZeixrSpYQrLJ8yEu5RRRvHRswRw/4WSP
-         rD7g==
-Received: by 10.204.152.22 with SMTP id e22mr12103534bkw.8.1338473451945;
-        Thu, 31 May 2012 07:10:51 -0700 (PDT)
-Received: from localhost ([77.40.159.131])
-        by mx.google.com with ESMTPS id 9sm3464749bku.9.2012.05.31.07.10.50
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 31 May 2012 07:10:51 -0700 (PDT)
-X-Mailer: git-send-email 1.7.11.rc0.6836.gdf573d9
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=jf6TWy+PE+WSSTlgkhAf1CJTCtto4sgMN1BBmvw6DFk=;
+        b=CM4/5fEs0JzTXmYXgsLxk2T/tOfNkGvC3Ds+iHlwAnpcN4T+jiwokmgs2BLEFwEbuI
+         QBD6ZuH60FlCt/r7cOzDqd9eUFTJDatRLOsAn5YRl7GtLXCwpLDUU9SVcwSy4WCgk0t2
+         a+kGKBqsU2qL+CMLKrZ0pFU7MJSJYlX8E2zLmKMgZ7QwYGAZPgAvvCztKBg1C5GoIl7O
+         xc0kkVT1SvTtS65syDCUnXPmTlqrQKpWaHiYBZUa13fjlnkFe3ypy5PjUC+aF+16wFtP
+         tV3H6VU5rqrON2K3+MTgj4Zes6OiGswh++jrzR2GkBQ9n0luIjRoLzl7tPFTJlwQECiE
+         HZqA==
+Received: by 10.216.216.95 with SMTP id f73mr13262293wep.149.1338473932096;
+ Thu, 31 May 2012 07:18:52 -0700 (PDT)
+Received: by 10.223.64.208 with HTTP; Thu, 31 May 2012 07:18:20 -0700 (PDT)
+In-Reply-To: <20120531141020.GD10523@burratino>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198905>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198906>
 
-In 20fc9bc (Set HTTP user agent to git/GIT_VERSION, 2006-04-04),
-http.o started recording GIT_VERSION, but http.o wasn't added
-to the list of files that depends on GIT-VERSION-FILE.
+On Thu, May 31, 2012 at 9:10 PM, Jonathan Nieder <jrnieder@gmail.com> w=
+rote:
+> Nguyen Thai Ngoc Duy wrote:
+>
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0Maybe adding
+>> --plumbing for scripts?
+>
+> That wouldn't take care of existing scripts, and new scripts should
+> use LC_ALL=3DC to defend themselves when they don't want to be impact=
+ed
+> by i18n.
+>
+> Do you have some other reason in mind that a script should choose to
+> pass --plumbing here? =C2=A0Is it an output format flag specific to '=
+git
+> reflog expire', in the spirit of status --porcelain, or a more generi=
+c
+> "I care about output stability" flag that spans multiple commands?
 
-Fix this, so mofications to GIT-VERSION-FILE will result in an
-updated user-agent string.
-
-Signed-off-by: Erik Faye-Lund <kusmabite@gmail.com>
----
-
-I stumbled over this while debugging something related. Perhaps this
-fix is worth applying?
-
-There's a similar issue with generation of assembly-listings, but I
-figured that was intended for inspection of the generated code; the
-version string probably doesn't matter in such cases.
-
-Dunno...
-
- Makefile | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/Makefile b/Makefile
-index c09a679..59e2b25 100644
---- a/Makefile
-+++ b/Makefile
-@@ -2104,7 +2104,7 @@ configure: configure.ac
- 	$(RM) $<+
- 
- # These can record GIT_VERSION
--git.o git.spec \
-+git.o git.spec http.o \
- 	$(patsubst %.sh,%,$(SCRIPT_SH)) \
- 	$(patsubst %.perl,%,$(SCRIPT_PERL)) \
- 	: GIT-VERSION-FILE
--- 
-1.7.11.rc0.6836.gdf573d9
+I was thinking (but without checking) that this is the only way a
+script can check for expired reflog entries. Maybe something more
+script friendly, like ref names only.
+--=20
+Duy
