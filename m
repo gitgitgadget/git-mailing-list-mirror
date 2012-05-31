@@ -1,164 +1,146 @@
 From: Jeff King <peff@peff.net>
-Subject: git version statistics
-Date: Thu, 31 May 2012 07:48:02 -0400
-Message-ID: <20120531114801.GA21367@sigill.intra.peff.net>
+Subject: Re: git version statistics
+Date: Thu, 31 May 2012 08:00:19 -0400
+Message-ID: <20120531120018.GA24986@sigill.intra.peff.net>
+References: <20120531114801.GA21367@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 31 13:48:17 2012
+X-From: git-owner@vger.kernel.org Thu May 31 14:00:28 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Sa3rU-0004er-0m
-	for gcvg-git-2@plane.gmane.org; Thu, 31 May 2012 13:48:16 +0200
+	id 1Sa43H-00079c-Ck
+	for gcvg-git-2@plane.gmane.org; Thu, 31 May 2012 14:00:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756017Ab2EaLsL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 31 May 2012 07:48:11 -0400
-Received: from 99-108-225-23.lightspeed.iplsin.sbcglobal.net ([99.108.225.23]:37771
+	id S1756789Ab2EaMAX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 31 May 2012 08:00:23 -0400
+Received: from 99-108-225-23.lightspeed.iplsin.sbcglobal.net ([99.108.225.23]:37781
 	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754625Ab2EaLsK (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 31 May 2012 07:48:10 -0400
-Received: (qmail 20290 invoked by uid 107); 31 May 2012 11:48:09 -0000
+	id S1754620Ab2EaMAW (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 31 May 2012 08:00:22 -0400
+Received: (qmail 20444 invoked by uid 107); 31 May 2012 12:00:22 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 31 May 2012 07:48:09 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 31 May 2012 07:48:02 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 31 May 2012 08:00:22 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 31 May 2012 08:00:19 -0400
 Content-Disposition: inline
+In-Reply-To: <20120531114801.GA21367@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198884>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198885>
 
-Just for fun, I've assembled a few statistics on git client versions
-that hit github.com. These are collected from the http user-agent
-strings provided by smart-http requests (we don't allow dumb http at all
-these days, and the git protocol does not provide any version
-information). It includes only the git/* entries (which are the vast
-majority of clients hitting "info/refs?service=.*"; the second biggest
-is JGit/*). And I counted each version only a single time from each IP
-(so this would skew if you had a lot of clients behind a single IP;
-their version would be counted only once).
+On Thu, May 31, 2012 at 07:48:01AM -0400, Jeff King wrote:
 
-Here are the results from the last few days:
+> Just for fun, I've assembled a few statistics on git client versions
+> that hit github.com. These are collected from the http user-agent
+> strings provided by smart-http requests (we don't allow dumb http at all
+> these days, and the git protocol does not provide any version
+> information).
 
-  git/1.7.11.x |  0.1%   (0%) | 
-  git/1.7.10.x | 21.1%  (21%) | **********************************
-  git/1.7.9.x  | 11.4%  (32%) | ******************
-  git/1.7.8.x  | 24.1%  (56%) | ****************************************
-  git/1.7.7.x  | 12.2%  (68%) | ********************
-  git/1.7.6.x  |  1.8%  (70%) | **
-  git/1.7.5.x  |  8.2%  (78%) | *************
-  git/1.7.4.x  |  7.2%  (86%) | ***********
-  git/1.7.3.x  |  1.9%  (87%) | ***
-  git/1.7.2.x  |  3.0%  (90%) | ****
-  git/1.7.1.x  |  2.1%  (93%) | ***
-  git/1.7.0.x  |  7.0%  (99%) | ***********
-  git/1.6.6.x  |  0.0% (100%) | 
+We have capabilities, and I looked into trying to fingerprint client
+versions based on the capabilities. Unfortunately, it's extremely
+coarse-grained, because we just don't add capabilities very often.
 
-In this table, I've collapsed all of the x.y.z.* versions into a single
-string to get an overview (a more detailed table is below). The first
-percentage is the portion of the total requests; the second is a
-cumulative portion (so, for example, 90% of clients are running v1.7.2.x
-or higher, though only 3% are running v1.7.2.x itself).
+I came up with this list of fetch-pack capabilities, and when they were
+introduced:
 
-Note that these numbers are skewed away from git versions lower than
-v1.6.6, because that is when we added smart http support. Requests over
-git:// or ssh are not included at all in these results.
+  - multi_ack v0.99.9
+  - thin-pack v1.3.0
+  - side-band v1.4.1
+  - side-band-64k v1.4.3
+  - ofs-delta v1.4.4
+  - shallow v1.5.0
+  - no-progress v1.5.1
+  - include-tag v1.5.5
+  - multi_ack_detailed v1.6.6
+  - no-done v1.7.5
 
-For comparison, here's the same table from mid-September of 2011 (v1.7.7
-was in -rc1 at the time):
+But note that "shallow" is not requested explicitly by the client; you
+can detect it by the client sending "shallow" commands, but then only if
+it is a shallow repository. Similarly, "no-progress" is only requested
+if the client is run with "--no-progress" or without a tty.
 
-  git/1.7.7.x |  0.2%   (0%) | 
-  git/1.7.6.x | 19.3%  (19%) | *****************
-  git/1.7.5.x |  8.0%  (27%) | *******
-  git/1.7.4.x | 43.8%  (71%) | ****************************************
-  git/1.7.3.x | 10.7%  (82%) | *********
-  git/1.7.2.x |  4.9%  (86%) | ****
-  git/1.7.1.x |  4.7%  (91%) | ****
-  git/1.7.0.x |  8.2%  (99%) | *******
-  git/1.6.6.x |  0.1% (100%) | 
+The "no-done" capability is only requested in stateless-rpc mode (i.e.,
+over smart-http). So we can use it only for smart-http, in which case we
+have more accurate numbers already (because git puts the version in the
+http user-agent string).
 
-So it seems that a large proportion of git users (or at least github
-users) stay within a few versions of the most current. In both cases,
-70% are within 4 major releases of the most recent version.
+So realistically you are looking at identifying whether a client version
+is >= v1.6.6 (if it has multi_ack_detailed) or >= v1.5.5 (if it has
+include-tag). Beyond that it gets uselessly old, and that's really not
+very fine-grained at all.
 
-Here's a more detailed table (from recent data), showing individual
-w.x.y.z versions:
-
-  git/1.7.10.3 |  3.6%   (3%) | *******
-  git/1.7.10.2 |  4.4%   (8%) | *********
-  git/1.7.10.1 |  1.5%   (9%) | ***
-  git/1.7.10   |  2.4%  (11%) | *****
-  git/1.7.9.6  |  0.2%  (12%) | 
-  git/1.7.9.5  |  9.2%  (21%) | *******************
-  git/1.7.9.4  |  1.2%  (22%) | **
-  git/1.7.9.3  |  0.3%  (22%) | 
-  git/1.7.9.2  |  0.4%  (23%) | 
-  git/1.7.9.1  |  0.4%  (23%) | 
-  git/1.7.9    |  1.1%  (24%) | **
-  git/1.7.8.6  |  0.3%  (25%) | 
-  git/1.7.8.5  |  0.0%  (25%) | 
-  git/1.7.8.4  |  0.7%  (25%) | *
-  git/1.7.8.3  | 12.2%  (38%) | *************************
-  git/1.7.8.2  | 18.8%  (56%) | ****************************************
-  git/1.7.8.1  |  0.1%  (56%) | 
-  git/1.7.8    |  0.3%  (57%) | 
-  git/1.7.7.6  |  0.5%  (57%) | *
-  git/1.7.7.4  |  0.2%  (57%) | 
-  git/1.7.7.3  |  0.4%  (58%) | 
-  git/1.7.7.2  |  0.1%  (58%) | 
-  git/1.7.7.1  |  0.0%  (58%) | 
-  git/1.7.7    |  0.7%  (59%) | *
-  git/1.7.6.5  |  0.1%  (59%) | 
-  git/1.7.6.4  |  0.2%  (59%) | 
-  git/1.7.6.3  |  0.0%  (59%) | 
-  git/1.7.6.1  |  0.5%  (59%) | *
-  git/1.7.6    |  0.7%  (60%) | *
-  git/1.7.5.4  | 10.9%  (71%) | ***********************
-  git/1.7.5.3  |  0.1%  (71%) | 
-  git/1.7.5.2  |  0.1%  (71%) | 
-  git/1.7.5.1  |  0.2%  (71%) | 
-  git/1.7.5    |  0.1%  (71%) | 
-  git/1.7.4.5  |  0.4%  (72%) | 
-  git/1.7.4.4  |  3.3%  (75%) | *******
-  git/1.7.4.3  |  0.0%  (75%) | 
-  git/1.7.4.2  |  0.0%  (75%) | 
-  git/1.7.4.1  |  5.3%  (81%) | ***********
-  git/1.7.4    |  0.2%  (81%) | 
-  git/1.7.3.5  |  0.2%  (81%) | 
-  git/1.7.3.4  |  1.2%  (82%) | **
-  git/1.7.3.3  |  0.1%  (82%) | 
-  git/1.7.3.2  |  0.4%  (83%) | 
-  git/1.7.3.1  |  0.1%  (83%) | 
-  git/1.7.3    |  0.1%  (83%) | 
-  git/1.7.2.5  |  3.6%  (86%) | *******
-  git/1.7.2.3  |  0.3%  (87%) | 
-  git/1.7.2.2  |  0.1%  (87%) | 
-  git/1.7.2.1  |  0.0%  (87%) | 
-  git/1.7.2    |  0.1%  (87%) | 
-  git/1.7.1.1  |  0.1%  (87%) | 
-  git/1.7.1    |  2.8%  (90%) | ******
-  git/1.7.0.6  |  0.0%  (90%) | 
-  git/1.7.0.5  |  0.0%  (90%) | 
-  git/1.7.0.4  |  7.0%  (97%) | **************
-  git/1.7.0    |  2.6%  (99%) | *****
-  git/1.6.6    |  0.0% (100%) | 
-
-The interesting thing to me is how spiky it is, and where the spikes
-fall. I would expect to see a spike around the highest maint release of
-each major version (so v1.7.8.6, for example, with many fewer installs
-of v1.7.8.5, v1.7.8.4, and so forth). But that's not what happens. The
-most popular v1.7.8.x versions are .3 and .2, and hardly anybody
-bothered to move to v1.7.8.6.
-
-I can only assume these are skewed by some widely-used binary
-distribution being locked onto particular versions (e.g., the spike at
-v1.7.2.5 represents Debian stable).
-
-If anybody has suggestions for other interesting analyses to perform,
-let me know.
+I'm really tempted to do something like the patch below, which adds an
+agent field to the capability string. It wouldn't help with identifying
+older versions, but eventually all versions of git would send it (and
+those that didn't could be stuck in the "wow, that's old" bin).
 
 -Peff
+
+-- >8 --
+Subject: include agent identifier in capability string
+
+Instead of having the client advertise a particular version
+number in the git protocol, we have managed extensions and
+backwards compatibility by having clients and servers
+advertise capabilities that they support. This is far more
+robust than having each side consult a table of
+known versions, and provides sufficient information for the
+protocol interaction to complete.
+
+However, it does not allow servers to keep statistics on
+which client versions are being used. This information is
+not necessary to complete the network request (the
+capabilities provide enough information for that), but it
+may be helpful to conduct a general survey of client
+versions in use.
+
+We already send the client version in the user-agent header
+for http requests; adding it here would allow us to gather
+similar statistics for non-http requests.
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ builtin/fetch-pack.c | 1 +
+ builtin/send-pack.c  | 6 ++++--
+ 2 files changed, 5 insertions(+), 2 deletions(-)
+
+diff --git a/builtin/fetch-pack.c b/builtin/fetch-pack.c
+index 149db88..f3b8422 100644
+--- a/builtin/fetch-pack.c
++++ b/builtin/fetch-pack.c
+@@ -327,6 +327,7 @@ static int find_common(int fd[2], unsigned char *result_sha1,
+ 			if (args.no_progress)   strbuf_addstr(&c, " no-progress");
+ 			if (args.include_tag)   strbuf_addstr(&c, " include-tag");
+ 			if (prefer_ofs_delta)   strbuf_addstr(&c, " ofs-delta");
++			strbuf_addf(&c, " agent=git/%s", git_version_string);
+ 			packet_buf_write(&req_buf, "want %s%s\n", remote_hex, c.buf);
+ 			strbuf_release(&c);
+ 		} else
+diff --git a/builtin/send-pack.c b/builtin/send-pack.c
+index d5d7105..3d87c71 100644
+--- a/builtin/send-pack.c
++++ b/builtin/send-pack.c
+@@ -306,11 +306,13 @@ int send_pack(struct send_pack_args *args,
+ 			int quiet = quiet_supported && (args->quiet || !args->progress);
+ 
+ 			if (!cmds_sent && (status_report || use_sideband || args->quiet)) {
+-				packet_buf_write(&req_buf, "%s %s %s%c%s%s%s",
++				packet_buf_write(&req_buf,
++						 "%s %s %s%c%s%s%s agent=git/%s",
+ 						 old_hex, new_hex, ref->name, 0,
+ 						 status_report ? " report-status" : "",
+ 						 use_sideband ? " side-band-64k" : "",
+-						 quiet ? " quiet" : "");
++						 quiet ? " quiet" : "",
++						 git_version_string);
+ 			}
+ 			else
+ 				packet_buf_write(&req_buf, "%s %s %s",
+-- 
+1.7.11.rc0.35.ga99aee0
