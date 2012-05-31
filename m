@@ -1,82 +1,92 @@
-From: =?UTF-8?Q?J=C3=BCrgen_Kreileder?= <jk@blackdown.de>
-Subject: Re: Bug: rebase when an author uses accents in name on MacOSx
-Date: Thu, 31 May 2012 01:57:52 +0200
-Message-ID: <CAKD0UuwGptoOQOT9eBEpd_aXes76CdaijYvnvyWGU99ZNz=v2g@mail.gmail.com>
-References: <06DD2F56-F956-46DF-84A4-3443D4702CDE@spotinfluence.com> <7vehq18c82.fsf@alter.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: bug? Python traceback on git push
+Date: Wed, 30 May 2012 21:08:20 -0400
+Message-ID: <20120531010820.GB5488@sigill.intra.peff.net>
+References: <CA+u+8CLcUtTCkWN2bZvR8JNmgnCoX+TwRK3_e64zWaV__jOo7A@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Lanny Ripple <lanny@spotinfluence.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu May 31 01:58:20 2012
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Pedro Werneck <pjwerneck@gmail.com>
+X-From: git-owner@vger.kernel.org Thu May 31 03:08:31 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SZsmR-0003X7-4v
-	for gcvg-git-2@plane.gmane.org; Thu, 31 May 2012 01:58:19 +0200
+	id 1SZtsL-0004Z0-0a
+	for gcvg-git-2@plane.gmane.org; Thu, 31 May 2012 03:08:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753006Ab2E3X6P convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 30 May 2012 19:58:15 -0400
-Received: from mail-qa0-f46.google.com ([209.85.216.46]:52372 "EHLO
-	mail-qa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752429Ab2E3X6O convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 30 May 2012 19:58:14 -0400
-Received: by qadb17 with SMTP id b17so2224111qad.19
-        for <git@vger.kernel.org>; Wed, 30 May 2012 16:58:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=blackdown.de; s=google;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=T5PsdKVxOZNqsmP/+iegclAUcGsxONi2rTEhr0eikug=;
-        b=VHDhwPaj1r+4F0oAMufPHtCdmNLRr3uVxaeuFno9J0aHC9Qr1LBRX27qY8Oj/sJwV9
-         NelyUlRR/SaHnTCMrLMKQMCCAcSva9VWcaRaIxY8qZxfPid7L4fI6mC7Q8bdFsDKOXUu
-         gH0yrAumRaRAXbUal9Y58LanjRzIzRQN0YWPo=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding:x-gm-message-state;
-        bh=T5PsdKVxOZNqsmP/+iegclAUcGsxONi2rTEhr0eikug=;
-        b=oaGDRMkBOzMVEuxznTHy78an7+iaB6kPggvYtxT+k8j3HbEXCa5UXFxc1ZhTzEjLg2
-         khxJHw6g+2XmTOyootsQJpvq/r9+X4yxk17/UflqZWxBQ0oEHMhVRShWhvGH42L48ca3
-         op+ekC7I0gRli9xanJ8QKNfqdJhRl3A4xVg5YjE4inP4BMi0OfDVBQ8529qWAEAczYbx
-         IiKgPX/Iqf4NCAZXYCw7UTG3wsk596STuz5lLZS0I4Cpz/vMDLalHIyRvbC1lFK5oIr6
-         p4zNGUjD6PrKukqQ4dvNFsjWvB8PHf0bP+NHToM/FOqsXXdg/eXaldBwa/27nRATC8oh
-         Y44g==
-Received: by 10.224.116.203 with SMTP id n11mr13347520qaq.61.1338422293028;
- Wed, 30 May 2012 16:58:13 -0700 (PDT)
-Received: by 10.229.18.82 with HTTP; Wed, 30 May 2012 16:57:52 -0700 (PDT)
-In-Reply-To: <7vehq18c82.fsf@alter.siamese.dyndns.org>
-X-Gm-Message-State: ALoCoQlAZd5QOSMJvzKnD1eLyJpoALF5bxu/sYZRXqKkTEVLd/g93zAvF5SX2CMHasqhKpKKOM0g
+	id S1757622Ab2EaBIY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 May 2012 21:08:24 -0400
+Received: from 99-108-225-23.lightspeed.iplsin.sbcglobal.net ([99.108.225.23]:36686
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757620Ab2EaBIW (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 May 2012 21:08:22 -0400
+Received: (qmail 12303 invoked by uid 107); 31 May 2012 01:08:23 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 30 May 2012 21:08:23 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 30 May 2012 21:08:20 -0400
+Content-Disposition: inline
+In-Reply-To: <CA+u+8CLcUtTCkWN2bZvR8JNmgnCoX+TwRK3_e64zWaV__jOo7A@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198853>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198854>
 
-On Thu, May 31, 2012 at 1:45 AM, Junio C Hamano <gitster@pobox.com> wro=
-te:
->
-> Lanny Ripple <lanny@spotinfluence.com> writes:
->
-> > =C2=A0 lanny;~> echo "R=C3=A9mi Leblond" | LANG=3DC LC_ALL=3DC sed =
--ne 's/.*/GIT_AUTHOR_NAME=3D'\''&'\''/p'
-> > =C2=A0 GIT_AUTHOR_NAME=3D'R'=C3=A9mi Leblond
->
-> So in C locale where each byte is supposed to be a single character,
-> that implementation of "sed" refuses to match a byte with high-bit
-> set when given a pattern '.'?
->
-> That is a surprising breakage, I would have to say.
+On Wed, May 30, 2012 at 07:11:38PM -0300, Pedro Werneck wrote:
 
-=46WIW, the command above correctly returns GIT_AUTHOR_NAME=3D'R=C3=A9m=
-i
-Leblond' for me on OS X 10.8.
+> git 1.7.9.5
+> 
+> I was pushing to a repository
+> 
+> push actually seems to have worked, but popped this weird python traceback
 
+Not a bug in git. There is no python code at all in the push code path
+(the only python in git these days is in the experimental svn
+remote-helper). However, the remote side may have a hook that is written
+in python...
 
-J=C3=BCrgen
+> remote: Traceback (most recent call last):
+> remote:   File "/opt/python/domains/bitbucket.org/current/bitbucket/scripts/git/hooks/pre-receive",
+> line 9, in <module>
+> remote:     from bitbucket.apps.repo2.hooks import prehooks
+> [...]
+> remote: ImportError: No module named mercurial.lock
+> To git@bitbucket.org:titansgroup/tcf-api.git
+>  ! [remote rejected] master -> master (pre-receive hook declined)
+> error: failed to push some refs to 'git@bitbucket.org:titansgroup/tcf-api.git'
 
---
-https://blackdown.de/
-http://www.flickr.com/photos/jkreileder/
+...and that is exactly what happened. Bitbucket's custom python hook
+failed, and git did not allow the push to go through.
+
+> (tcf-env)werneck@werneck:~/devel/tcf-api/src/tcf$ git pull
+> Warning: Permanently added 'bitbucket.org,207.223.240.181' (RSA) to
+> the list of known hosts.
+> Already up-to-date.
+
+I don't know that this shows anything conclusive; depending on your
+configuration, you may or may not be pulling from the same ref you were
+trying to push to a moment ago.
+
+> (tcf-env)werneck@werneck:~/devel/tcf-api/src/tcf$ git push
+> Warning: Permanently added 'bitbucket.org,207.223.240.181' (RSA) to
+> the list of known hosts.
+> Counting objects: 15, done.
+> Delta compression using up to 4 threads.
+> Compressing objects: 100% (8/8), done.
+> Writing objects: 100% (8/8), 860 bytes, done.
+> Total 8 (delta 7), reused 0 (delta 0)
+> remote: bb/acl: pjwerneck is allowed. accepted payload.
+> To git@bitbucket.org:titansgroup/tcf-api.git
+>    16b3b54..a50f671  master -> master
+
+And here you repeat the push, and you see that we had to send the data
+again (because the push did not go through last time). No clue why their
+hook failed the first time but not the second.
+
+So as far as I can tell, git is operating as advertised. You might want
+to file a report with bitbucket about their hook failing.
+
+-Peff
