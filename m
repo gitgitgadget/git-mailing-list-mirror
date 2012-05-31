@@ -1,87 +1,110 @@
 From: David Barr <davidbarr@google.com>
-Subject: [PATCH v2 1/6] vcs-svn: fix clang-analyzer error
-Date: Fri,  1 Jun 2012 00:41:25 +1000
-Message-ID: <1338475290-22644-2-git-send-email-davidbarr@google.com>
+Subject: [PATCH v2 2/6] vcs-svn: simplify cleanup in apply_one_window()
+Date: Fri,  1 Jun 2012 00:41:26 +1000
+Message-ID: <1338475290-22644-3-git-send-email-davidbarr@google.com>
 References: <1338475290-22644-1-git-send-email-davidbarr@google.com>
 Cc: Jonathan Nieder <jrnieder@gmail.com>,
 	David Barr <davidbarr@google.com>
 To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu May 31 16:42:33 2012
+X-From: git-owner@vger.kernel.org Thu May 31 16:42:34 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Sa6a8-0003gL-Nf
+	id 1Sa6a9-0003gL-7D
 	for gcvg-git-2@plane.gmane.org; Thu, 31 May 2012 16:42:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932072Ab2EaOmV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 31 May 2012 10:42:21 -0400
+	id S932380Ab2EaOmY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 31 May 2012 10:42:24 -0400
 Received: from mail-pb0-f46.google.com ([209.85.160.46]:50238 "EHLO
 	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751581Ab2EaOmU (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 31 May 2012 10:42:20 -0400
-Received: by pbbrp8 with SMTP id rp8so1551829pbb.19
-        for <git@vger.kernel.org>; Thu, 31 May 2012 07:42:20 -0700 (PDT)
+	with ESMTP id S932326Ab2EaOmW (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 31 May 2012 10:42:22 -0400
+Received: by mail-pb0-f46.google.com with SMTP id rp8so1551829pbb.19
+        for <git@vger.kernel.org>; Thu, 31 May 2012 07:42:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=LrEVfTg6Cx0DhQcMEbrEoMip53IzyDiB6xDC0KjdQNs=;
-        b=cA3z+k3FCiC5pQmbR9KpMZzP7uvJyszQhW9axvzZiVEctVDPHXYW/pFhETo5OFUeko
-         DIDZ4ur4oEVYCCqrQlRe5U4T3fNLWI2evWk6syUi+5XUn+Ty8XqRBHW/1ir27Rugczul
-         6Kk59X34h1W9jM/sHE6vIX8KEVFskQkXWT+c9eVI7PKiZu0ATxK0+eLGWlRJ9IstNgoy
-         MQBEr5vzNBgOnyXI02gq1e6BnDZfhCaTHqciRTjv8EdtJGMEWPDPszDlBG0ELK1nokZ1
-         qORhj9mgii7cQqI42NchakUFOznF5w8fffGpNUCdP0rqOv1clYt6t8YW1W6wWiFz7bEJ
-         gidA==
+        bh=Sb1I2l0oSEQVgBVThtoOHTVCklpxPUZbQEmXPX1nd2Q=;
+        b=OCw/GY4rHu1dYK/nn8FUM1GWiLi1BTY2t2CqYNckIS0+zyHqA1mZRXVa0C/O6JUQmD
+         ea2l9s8nwIRSilVE9cYISidCo4YKrZj7npELU63TMjsVAqYbju+7DZpar9avsNaz0jDE
+         wN8pxO1x8AEffcvWJcisjMVDDFC8fu84xC5ycWvfWRIgrUtAhezbpZUHQ5hyB6/KbBAg
+         8ONK4GB0TGIr+/yxajpqVR8DCG4Z+ZeQxNuLmAaGmVooMjSeGivMtO1WRqwKbAULrV1f
+         F0h0D5ll/tCsfcqzcmK9r2YMvoFi227LZwIiG4crUeJOG5TF+pRcy5cWYKStpP3GzQAu
+         W0cA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
          :x-gm-message-state;
-        bh=LrEVfTg6Cx0DhQcMEbrEoMip53IzyDiB6xDC0KjdQNs=;
-        b=JO7ObjLqcwoT22YskMTilabPrJEZ+Uy1mpHRKOEpHR4olfM3WLn8Rqixz/iKzaZ4yh
-         Oqa1oRsgLE2BOEp80V+aOPgAHbAEVCo8yh3t0zQDu7Yjo3zDh0KZXMutG2KB+HO1nVTr
-         WJm7MWUH1cDIZRzc8Oj8ozw/wibN96BaY8UgVHaot1FwzzFeTamgYLbIAAy5Z1Qpeinf
-         tolh/I+k+b8psjam3L0aL/WuebkhICUsdZ3xEtnIXG9hFrmRNMgxHRom1PUj5cz7kzSj
-         MKiS6lcCpiw834HX1PuPGKLqSQepy4YMhjzhN3B7Q7JwtyKtutvq2VkfqTLkxw3obAyU
-         RJ3A==
-Received: by 10.68.211.234 with SMTP id nf10mr373231pbc.121.1338475339895;
-        Thu, 31 May 2012 07:42:19 -0700 (PDT)
-Received: by 10.68.211.234 with SMTP id nf10mr373204pbc.121.1338475339675;
-        Thu, 31 May 2012 07:42:19 -0700 (PDT)
+        bh=Sb1I2l0oSEQVgBVThtoOHTVCklpxPUZbQEmXPX1nd2Q=;
+        b=Uld5/3slhZJz03uJsmVUa7BU71sKjxSlf1IKhgNUWlROLl8gTa8IkN+Yvn6T6w9aW0
+         Zbu8npiNgR3oSCOA0nVIxYu2IvB9iD+eE80fkY1XqPnVtYOmEVTy0qpILntxpdXTDOK0
+         9dqgpnyHsHF0TLemEHYyzorqsP9++pdU6iWGlTVaNJ8vxBRLtUNIRouyWG1+1VN5KKmO
+         MxtYiQ7nEHz4GvI7ZrlgGVYsyiu/QjOA0UIgCaqQinPzyLCcGmJP0+EcUPxwT55tg8Rv
+         1BiEIywGroVtWnz5H6mbdAR3NAG3Yq91/U4AhT1LO56hQJ4QHRmj5T85EmxwBRVwKchN
+         ZD6w==
+Received: by 10.68.237.166 with SMTP id vd6mr319069pbc.139.1338475342529;
+        Thu, 31 May 2012 07:42:22 -0700 (PDT)
+Received: by 10.68.237.166 with SMTP id vd6mr319044pbc.139.1338475342288;
+        Thu, 31 May 2012 07:42:22 -0700 (PDT)
 Received: from localhost.localdomain (c122-107-58-35.blktn5.nsw.optusnet.com.au. [122.107.58.35])
-        by mx.google.com with ESMTPS id og6sm4376720pbb.42.2012.05.31.07.42.17
+        by mx.google.com with ESMTPS id og6sm4376720pbb.42.2012.05.31.07.42.20
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 31 May 2012 07:42:19 -0700 (PDT)
+        Thu, 31 May 2012 07:42:21 -0700 (PDT)
 X-Mailer: git-send-email 1.7.10.2
 In-Reply-To: <1338475290-22644-1-git-send-email-davidbarr@google.com>
-X-Gm-Message-State: ALoCoQkXvgHLpyJadPuIAv6mPfCc8WNM760qNVuO4kpuIm9LQd4e8txD1dVvI+TErRj/fbNAAqErnJ3dBBOF57QrZjLCUP9xpT5cFpddBitCiv4Vlw5oEi0wdcGO4K1yXvAtfV0a1dtOMlx7Uq8Tz2N0VqQVjd3XK9AeJDeSZe7j2i/ytMUHIDA=
+X-Gm-Message-State: ALoCoQldATNWQRZtLF5MLpRZs8tKPplQxKvoSn13FNbYpkJdPNqA2kQchI6u4qHFeFSJdmVGJi+cWb+rpsfreSYHRldGW1QIFTxWeNwbjZ0l3+cHCVRtkoDovhk2v482Xk94hx1k7KqsFTT8TdYQ4gm/wj0efyemgStJj7SFupAJ8FdNhAaAX6U=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198910>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198911>
 
-vcs-svn/svndiff.c:298:3: warning: Assigned value is garbage or undefined
-                off_t pre_off = pre_off; /* stupid GCC... */
-                ^               ~~~~~~~
+As a side-effect, fix clang-analyzer warning:
+
+vcs-svn/svndiff.c:278:3: warning: expression result unused [-Wunused-value]
+                error("invalid delta: incorrect postimage length");
+                ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+This warning caused by an insanely concise error() upstream.
 
 Signed-off-by: David Barr <davidbarr@google.com>
 ---
- vcs-svn/svndiff.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ vcs-svn/svndiff.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
 diff --git a/vcs-svn/svndiff.c b/vcs-svn/svndiff.c
-index 1647c1a..57d647d 100644
+index 57d647d..11a0e38 100644
 --- a/vcs-svn/svndiff.c
 +++ b/vcs-svn/svndiff.c
-@@ -295,7 +295,7 @@ int svndiff0_apply(struct line_buffer *delta, off_t delta_len,
- 	if (read_magic(delta, &delta_len))
- 		return -1;
- 	while (delta_len) {	/* For each window: */
--		off_t pre_off = pre_off; /* stupid GCC... */
-+		off_t pre_off = 0; /* stupid GCC and clang-analyzer... */
- 		size_t pre_len;
+@@ -258,6 +258,7 @@ static int apply_window_in_core(struct window *ctx)
+ static int apply_one_window(struct line_buffer *delta, off_t *delta_len,
+ 			    struct sliding_view *preimage, FILE *out)
+ {
++	int rv = -1;
+ 	struct window ctx = WINDOW_INIT(preimage);
+ 	size_t out_len;
+ 	size_t instructions_len;
+@@ -275,16 +276,15 @@ static int apply_one_window(struct line_buffer *delta, off_t *delta_len,
+ 	if (apply_window_in_core(&ctx))
+ 		goto error_out;
+ 	if (ctx.out.len != out_len) {
+-		error("invalid delta: incorrect postimage length");
++		rv = error("invalid delta: incorrect postimage length");
+ 		goto error_out;
+ 	}
+ 	if (write_strbuf(&ctx.out, out))
+ 		goto error_out;
+-	window_release(&ctx);
+-	return 0;
++	rv = 0;
+ error_out:
+ 	window_release(&ctx);
+-	return -1;
++	return rv;
+ }
  
- 		if (read_offset(delta, &pre_off, &delta_len) ||
+ int svndiff0_apply(struct line_buffer *delta, off_t delta_len,
 -- 
 1.7.10.2
