@@ -1,54 +1,109 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+From: Johannes Sixt <j.sixt@viscovery.net>
 Subject: Re: [PATCH] Remove perl dependency from git-submodule.sh
-Date: Thu, 31 May 2012 11:07:22 +0200
-Message-ID: <CACBZZX6fV5PpgV6GMhDMYgXeeP_QYK9jnP15tMn9Y-a-O6Pn3A@mail.gmail.com>
+Date: Thu, 31 May 2012 11:19:04 +0200
+Message-ID: <4FC73788.6070805@viscovery.net>
 References: <1338454126-30441-1-git-send-email-iveqy@iveqy.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org, jens.lehmann@web.de, gitster@pobox.com
 To: Fredrik Gustafsson <iveqy@iveqy.com>
-X-From: git-owner@vger.kernel.org Thu May 31 11:07:52 2012
+X-From: git-owner@vger.kernel.org Thu May 31 11:19:19 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Sa1MC-0002Hb-SP
-	for gcvg-git-2@plane.gmane.org; Thu, 31 May 2012 11:07:49 +0200
+	id 1Sa1XL-0003aO-H0
+	for gcvg-git-2@plane.gmane.org; Thu, 31 May 2012 11:19:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753397Ab2EaJHo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 31 May 2012 05:07:44 -0400
-Received: from mail-ob0-f174.google.com ([209.85.214.174]:40133 "EHLO
-	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751331Ab2EaJHo (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 31 May 2012 05:07:44 -0400
-Received: by obbtb18 with SMTP id tb18so1077395obb.19
-        for <git@vger.kernel.org>; Thu, 31 May 2012 02:07:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=s9LcfhmwV7m/PXReFepokCWnVhW8Ny0yr2iprGzW3Ew=;
-        b=Csm4yMp2OxalbZsPyn8lhNJoWscASiFtaqw834aJgGViZtGcu707OhWxSFs1nS0EyA
-         zq6CWapDMw+ih4bHJoSihp0iehTz+Qaxo3Xny/EpYuilxeJaDGB+Ab355wLO/InYQptM
-         LjhpJ2CELizWc2wLUFQzf3jxbAhhEjWj+d+vnKt02beRGyNPKHOXjGWNZptVU6hhVC/U
-         zzaaAu1gzrM7bcTuAYX0tpOQzv8p0HCu7MeBYiST/ggBwU1Xl49HoPhWWdCUBW9Zlya4
-         kG2fG0KNSA/hWY/s599VJnSm+1+sUIQXqrhkCpfgHKvdzK3VVqhVBFFyPAtKomHGFYBu
-         /AdQ==
-Received: by 10.182.47.105 with SMTP id c9mr1290397obn.49.1338455263631; Thu,
- 31 May 2012 02:07:43 -0700 (PDT)
-Received: by 10.182.167.65 with HTTP; Thu, 31 May 2012 02:07:22 -0700 (PDT)
+	id S1753178Ab2EaJTM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 31 May 2012 05:19:12 -0400
+Received: from lilzmailso02.liwest.at ([212.33.55.13]:19547 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1753168Ab2EaJTM (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 31 May 2012 05:19:12 -0400
+Received: from cpe228-254-static.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
+	by lilzmailso01.liwest.at with esmtpa (Exim 4.76)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1Sa1X7-0005Jt-1v; Thu, 31 May 2012 11:19:05 +0200
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id A17961660F;
+	Thu, 31 May 2012 11:19:04 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:12.0) Gecko/20120428 Thunderbird/12.0.1
 In-Reply-To: <1338454126-30441-1-git-send-email-iveqy@iveqy.com>
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198874>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198875>
 
-On Thu, May 31, 2012 at 10:48 AM, Fredrik Gustafsson <iveqy@iveqy.com> wrote:
+Am 5/31/2012 10:48, schrieb Fredrik Gustafsson:
 > Rewrote a perl section in sh.
->
+
 > The code may be a bit slower (doing grep on strings instead of using
 > perl-lists).
 
-May be? Did you test it, if so what's the difference?
+"A lot" would be more correct on Windows :-) But it can be avoided, I think.
+
+>  module_list()
+>  {
+> +	unmerged=
+> +	null_sha1=0000000000000000000000000000000000000000
+>  	git ls-files --error-unmatch --stage -- "$@" |
+> -	perl -e '
+> -	my %unmerged = ();
+> -	my ($null_sha1) = ("0" x 40);
+> -	while (<STDIN>) {
+> -		chomp;
+> -		my ($mode, $sha1, $stage, $path) =
+> -			/^([0-7]+) ([0-9a-f]{40}) ([0-3])\t(.*)$/;
+> -		next unless $mode eq "160000";
+> -		if ($stage ne "0") {
+> -			if (!$unmerged{$path}++) {
+> -				print "$mode $null_sha1 U\t$path\n";
+> -			}
+> -			next;
+> -		}
+> -		print "$_\n";
+> -	}
+> -	'
+> +	while read mode sha1 stage path
+
+Be prepared for backslashes in the path name:
+
+	while read -r mode sha1 stage path
+
+> +	do
+> +		if test $mode -eq 160000
+
+$mode is not a number, but a string: test "$mode" = 160000
+
+> +		then
+> +			if test $stage -ne 0
+
+That $stage looks like a number is of no importance, either.
+
+> +			then
+> +				if test -z "$(echo $unmerged | grep "|$path|")"
+> +					then
+> +					echo "$mode $null_sha1 U\t$path"
+> +				fi
+> +				unmerged="$unmerged|$path|"
+
+IIUC, the purpose of $unmerged and this check is to avoid that an unmerged
+path is dumped for each stage that is listed by ls-files. Therefore it
+should be sufficient to just check that the current path is different from
+the last path.
+
+> +			else
+> +				echo "$mode $sha1 $stage\t$path"
+> +			fi
+> +		fi
+> +	done
+>  }
+>  
+>  #
+
+-- Hannes
