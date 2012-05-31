@@ -1,96 +1,118 @@
-From: Fredrik Gustafsson <iveqy@iveqy.com>
-Subject: Re: [PATCH] Remove perl dependency from git-submodule.sh
-Date: Thu, 31 May 2012 20:48:41 +0200
-Message-ID: <20120531184841.GA32131@paksenarrion.iveqy.com>
-References: <1338454126-30441-1-git-send-email-iveqy@iveqy.com>
- <4FC73788.6070805@viscovery.net>
- <20120531104036.GB30500@paksenarrion.iveqy.com>
- <7vpq9k6y16.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Fredrik Gustafsson <iveqy@iveqy.com>,
-	Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org,
-	jens.lehmann@web.de
+From: Lanny Ripple <lanny@spotinfluence.com>
+Subject: Re: Bug: rebase when an author uses accents in name on MacOSx
+Date: Thu, 31 May 2012 14:21:16 -0500
+Message-ID: <168277BB-0E71-4987-A2BE-6202034A96F1@spotinfluence.com>
+References: <06DD2F56-F956-46DF-84A4-3443D4702CDE@spotinfluence.com> <7vehq18c82.fsf@alter.siamese.dyndns.org> <20120531011911.GC5488@sigill.intra.peff.net> <7v62bc97w1.fsf@alter.siamese.dyndns.org> <78E7FEAC-6587-4EB3-B78B-08D321F53BF9@spotinfluence.com> <7vtxyw6ypx.fsf@alter.siamese.dyndns.org> <69ED148F-BD10-4DE3-91F2-D31F83A0EAB7@spotinfluence.com> <7vd35k6w0i.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0 (Apple Message framework v1278)
+Content-Type: multipart/signed; boundary="Apple-Mail=_B13D22AA-B143-47DF-A12F-BE4373E4EFDF"; protocol="application/pgp-signature"; micalg=pgp-sha1
+Cc: Jeff King <peff@peff.net>, Thomas Rast <trast@inf.ethz.ch>,
+	git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu May 31 20:49:40 2012
+X-From: git-owner@vger.kernel.org Thu May 31 21:21:26 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SaARC-0003DY-AG
-	for gcvg-git-2@plane.gmane.org; Thu, 31 May 2012 20:49:34 +0200
+	id 1SaAw2-0003r5-4x
+	for gcvg-git-2@plane.gmane.org; Thu, 31 May 2012 21:21:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754041Ab2EaSt2 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 31 May 2012 14:49:28 -0400
-Received: from mail-lpp01m010-f46.google.com ([209.85.215.46]:58630 "EHLO
-	mail-lpp01m010-f46.google.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752178Ab2EaStQ (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 31 May 2012 14:49:16 -0400
-Received: by lahd3 with SMTP id d3so964983lah.19
-        for <git@vger.kernel.org>; Thu, 31 May 2012 11:49:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=WpK1N1I8WoWBWxxQahY5xL1MYRje33x+xYqHk5l/jkk=;
-        b=LKBAJ/P6F2CeHxT4r+ZDTNJNDVbvOxbHzjVLNirG0mrqDJAwJ466ZOsbzX2Uj5rqae
-         noPkspTFejYF0oK/uYcMfS5PL0GKAKwG5TwA2w/XXF+qQ6g4kpYfJBqTRSubu79J9Lj+
-         ZENd5g+OuUZn1UHR1dvgE1WHJs5R5chNdJNKjVoQ2Gy37geT8JTjAKKPFGI+v8KQOfZG
-         P/7tVuRms2hCXEQDKHRL7MttxEcRrAKr6tGT98dzehS74kV9HvjXvgyo9PyH7ylArNWG
-         CC4GQVXDY4ROhAuURjhUlHrPv9PRz1UzISnlwMzgq6gboXKbMkUzJnYraJXhtf+IEWYJ
-         1Gdw==
-Received: by 10.112.51.228 with SMTP id n4mr555165lbo.35.1338490155091;
-        Thu, 31 May 2012 11:49:15 -0700 (PDT)
-Received: from paksenarrion.iveqy.com (h-184-249.a189.priv.bahnhof.se. [85.24.184.249])
-        by mx.google.com with ESMTPS id gd9sm2509015lbb.15.2012.05.31.11.49.12
+	id S933080Ab2EaTVV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 31 May 2012 15:21:21 -0400
+Received: from mail-gg0-f174.google.com ([209.85.161.174]:38943 "EHLO
+	mail-gg0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933068Ab2EaTVV (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 31 May 2012 15:21:21 -0400
+Received: by gglu4 with SMTP id u4so1142031ggl.19
+        for <git@vger.kernel.org>; Thu, 31 May 2012 12:21:20 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=subject:mime-version:content-type:from:in-reply-to:date:cc
+         :message-id:references:to:x-mailer:x-gm-message-state;
+        bh=vgi2162rgcd8wqJxwknE8zyWZe07T8D7msqLd1VtnQ4=;
+        b=J4rn790CQ6znmjFv8TzzRdD+uypmVZjZaQMJUDgWc/fYw0Y4PJHEXZpOM1Ox3vqZeW
+         RynkAaQ1du/InFMhV3z9Ctr3go733Cqy2R7A775ANYVRDkpVjzLrPJseNni27V8qpxGU
+         oEC5hzCdW5Fy+D/8Z+WY4PD+CcwznB8JFMZQBdkolzCRDlFAJnhaGB8OO/2JAI0WNLs/
+         aYiJ1Ew7X5lNROGWGZX90Mcuc7mvPRb5Iv9xQ/hX8MX2zDQ0Trwe1IBRORuKFqCzoqZ4
+         /cg732LhYW2AUNNvbpc3LEsMFdKzwspZZO5DvZiUZ8pO3Ggad6tDYaKTJSuElfin60pB
+         K9Tg==
+Received: by 10.60.20.70 with SMTP id l6mr3239666oee.38.1338492080167;
+        Thu, 31 May 2012 12:21:20 -0700 (PDT)
+Received: from [192.168.1.4] (c-98-198-192-29.hsd1.tx.comcast.net. [98.198.192.29])
+        by mx.google.com with ESMTPS id qb7sm3128724obc.13.2012.05.31.12.21.18
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 31 May 2012 11:49:13 -0700 (PDT)
-Received: from iveqy by paksenarrion.iveqy.com with local (Exim 4.72)
-	(envelope-from <iveqy@paksenarrion.iveqy.com>)
-	id 1SaAQL-0000Az-Ue; Thu, 31 May 2012 20:48:41 +0200
-Content-Disposition: inline
-In-Reply-To: <7vpq9k6y16.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+        Thu, 31 May 2012 12:21:19 -0700 (PDT)
+In-Reply-To: <7vd35k6w0i.fsf@alter.siamese.dyndns.org>
+X-Mailer: Apple Mail (2.1278)
+X-Gm-Message-State: ALoCoQnr746JiyxsyYFxop8DjavPu5SYRtDMII/Rx/FKZRf5JI47kAz56MLvMbXq+MHIUiUn9R0M
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198939>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198940>
 
-On Thu, May 31, 2012 at 10:49:41AM -0700, Junio C Hamano wrote:
-> Having said that, in the longer term, I think the right direction to
-> go is the opposite.  It would be better to make "git-submodule.sh"
-> work better with paths with funny characters in them, and one
-> obvious approach is to read "ls-files -z" output with something
-> capable of parsing NUL-terminated records, e.g. a Perl scriptlet.
-> Adding a new shell loop like this patch only adds one place that
-> needs to be fixed later when that happens, so I am not sure I like
-> this patch.
 
-Is perl really a dependency that git wants? Today only a few bit (often
-non critical) are in perl. I thought the way was to get rid of those an=
-d
-replace them with c? I'm very critical to dependencies when they are no=
-t needed.
+--Apple-Mail=_B13D22AA-B143-47DF-A12F-BE4373E4EFDF
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;
+	charset=us-ascii
 
-I don't think forking for text-parsing when not needed is a good idea
-either. Apart from the runtime issues, it makes the code harder to read=
-=2E
+You have three recent instances where people have bumped into this with =
+sed.  (And yes on reporting it to the packaging project.)  It seems to =
+me leaving a breadcrumb so that folks can figure out what's going on =
+without having to bother the list would be a win for everyone.  And yes, =
+if any and all uses of POSIX tools started showing up with some =
+frequency then I think the same breadcrumb win/win logic would apply.
 
-With that said I do agree that funny path names should be supported and
-maybe the correct solution is to make more use of perl and less of sh.
-Mixing those, and doing it in the same file, I don't think is a good
-idea.
+  Enjoy,
+  -ljr
+---
+Lanny Ripple
+lanny@spotinfluence.com
 
-Is the right direction to run a shellscript that invokes a
-perl-scriptlet for textparsing?
 
---=20
-Med v=E4nliga h=E4lsningar
-=46redrik Gustafsson
+On May 31, 2012, at 1:33 PM, Junio C Hamano wrote:
 
-tel: 0733-608274
-e-post: iveqy@iveqy.com
+> Lanny Ripple <lanny@spotinfluence.com> writes:
+>=20
+>> Perhaps the error message in git-am could be modified to indicate
+>> sed is a suspect?.  E.g.,
+>>=20
+>> lanny(master);<work/IdeaProjects/Piper> git rebase master rl-clean292
+>> First, rewinding head to replay your work on top of it...
+>> /sw/lib/git-core/git-am: line 692: Leblond: command not found
+>> Patch does not have a valid e-mail address.  (Used /sw/bin/sed found =
+on PATH).
+>>                                              ^  ^  ^  ^  ^  ^  ^  ^  =
+^  ^  ^
+>> lanny((ae6c220...)|REBASE);<work/IdeaProjects/Piper>=20
+>=20
+> Hrm, that does not sound an attractive way going forward.
+>=20
+> Do we have to suspect any and all uses of POSIX tools, just in case
+> somebody installs a broken implementation from random places?  Is
+> sed the only thing that is possibly broken?
+>=20
+> By the way, have you filed a bug report to whoever supplied your =
+/sw/bin/sed?
+>=20
+>=20
+
+
+--Apple-Mail=_B13D22AA-B143-47DF-A12F-BE4373E4EFDF
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment;
+	filename=signature.asc
+Content-Type: application/pgp-signature;
+	name=signature.asc
+Content-Description: Message signed with OpenPGP using GPGMail
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG/MacGPG2 v2.0.17 (Darwin)
+
+iF4EAREIAAYFAk/HxK0ACgkQ+owW65SoXfiTlwEAp47Jc4zk8HLZNWmiLMyBgixj
+0oMfV0IA+5t+RUXMO0sA/0WYqBdX7Ww1nrpScYw/gr7YCFw0ceNSygO9Tv2lbO51
+=GDj2
+-----END PGP SIGNATURE-----
+
+--Apple-Mail=_B13D22AA-B143-47DF-A12F-BE4373E4EFDF--
