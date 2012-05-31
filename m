@@ -1,55 +1,54 @@
 From: Guillaume Sasdy <guillaume.sasdy@ensimag.imag.fr>
-Subject: [PATCH 2/2] FIX: Syntax of shell and perl scripts and posix compliant
-Date: Thu, 31 May 2012 20:13:12 +0200
-Message-ID: <1338487992-305-2-git-send-email-guillaume.sasdy@ensimag.imag.fr>
+Subject: [PATCH] FIX: Syntax of shell and perl scripts and posix compliant
+Date: Thu, 31 May 2012 20:16:07 +0200
+Message-ID: <1338488167-1217-1-git-send-email-guillaume.sasdy@ensimag.imag.fr>
 References: <4FC64B0C.6070507@ensimag.imag.fr>
- <1338487992-305-1-git-send-email-guillaume.sasdy@ensimag.imag.fr>
 Cc: Matthieu.Moy@imag.fr, simon.cathebras@ensimag.imag.fr,
 	charles.roussel@ensimag.imag.fr, Julien.Khayat@ensimag.imag.fr,
 	Simon.Perrat@ensimag.imag.fr
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 31 20:13:41 2012
+X-From: git-owner@vger.kernel.org Thu May 31 20:16:34 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Sa9sR-0007tS-2E
-	for gcvg-git-2@plane.gmane.org; Thu, 31 May 2012 20:13:39 +0200
+	id 1Sa9vE-0001ii-68
+	for gcvg-git-2@plane.gmane.org; Thu, 31 May 2012 20:16:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754680Ab2EaSNf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 31 May 2012 14:13:35 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:42996 "EHLO rominette.imag.fr"
+	id S1758242Ab2EaSQY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 31 May 2012 14:16:24 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:49073 "EHLO rominette.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752668Ab2EaSNe (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 31 May 2012 14:13:34 -0400
+	id S1754388Ab2EaSQV (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 31 May 2012 14:16:21 -0400
 Received: from ensimag.imag.fr (ensimag.imag.fr [195.221.228.12])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id q4VI5292004816
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id q4VI7nrP005050
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 31 May 2012 20:05:02 +0200
+	Thu, 31 May 2012 20:07:49 +0200
 Received: from ensibm.imag.fr (ensibm [195.221.228.8])
-	by ensimag.imag.fr (8.13.8/8.13.8/ImagV2.1.r_ens) with ESMTP id q4VIDUrP031592;
-	Thu, 31 May 2012 20:13:30 +0200
+	by ensimag.imag.fr (8.13.8/8.13.8/ImagV2.1.r_ens) with ESMTP id q4VIGHCa031613;
+	Thu, 31 May 2012 20:16:17 +0200
 Received: from ensibm.imag.fr (localhost [127.0.0.1])
-	by ensibm.imag.fr (8.13.8/8.13.8/ImagV2.1.sb_ens.pm) with ESMTP id q4VIDU0V000406;
-	Thu, 31 May 2012 20:13:30 +0200
+	by ensibm.imag.fr (8.13.8/8.13.8/ImagV2.1.sb_ens.pm) with ESMTP id q4VIGHLK001292;
+	Thu, 31 May 2012 20:16:17 +0200
 Received: (from sasdygu@localhost)
-	by ensibm.imag.fr (8.13.8/8.13.8/Submit) id q4VIDUtm000405;
-	Thu, 31 May 2012 20:13:30 +0200
+	by ensibm.imag.fr (8.13.8/8.13.8/Submit) id q4VIGHbU001291;
+	Thu, 31 May 2012 20:16:17 +0200
 X-Mailer: git-send-email 1.7.10.2.568.g4c26a3a
-In-Reply-To: <1338487992-305-1-git-send-email-guillaume.sasdy@ensimag.imag.fr>
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Thu, 31 May 2012 20:05:02 +0200 (CEST)
+In-Reply-To: <4FC64B0C.6070507@ensimag.imag.fr>
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Thu, 31 May 2012 20:07:49 +0200 (CEST)
 X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: q4VI5292004816
+X-MailScanner-ID: q4VI7nrP005050
 X-IMAG-MailScanner: Found to be clean
 X-IMAG-MailScanner-SpamCheck: 
 X-IMAG-MailScanner-From: guillaume.sasdy@ensimag.imag.fr
-MailScanner-NULL-Check: 1339092303.45279@blzrrMmfC20p3rj2D2FDxA
+MailScanner-NULL-Check: 1339092471.2583@hdeDt+H81WUQENP5UqTYog
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198933>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198934>
 
 From: Simon Cathebras <simon.cathebras@ensimag.imag.fr>
 
