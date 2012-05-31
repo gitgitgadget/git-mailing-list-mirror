@@ -1,87 +1,89 @@
-From: Sitaram Chamarty <sitaramc@gmail.com>
-Subject: Re: How to find all the commits that comprise a branch?
-Date: Thu, 31 May 2012 08:52:12 +0530
-Message-ID: <CAMK1S_i5-ALrMA+iJ1Q4R5FuVbjVdFLfxKoEF4BVHERHSzmjeg@mail.gmail.com>
-References: <CAMP44s2kEMK8ik2NTiP4uiN4FPWFNYNJfY5qh5QE_hRH2AiNYA@mail.gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH/RFC] improve no-op push output
+Date: Thu, 31 May 2012 08:10:47 +0200
+Message-ID: <vpqtxywswwo.fsf@bauges.imag.fr>
+References: <20120530120804.GA3501@sigill.intra.peff.net>
+	<7vr4u1zhcz.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 31 05:22:19 2012
+Content-Type: text/plain
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu May 31 08:11:08 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SZvxp-0000pj-W7
-	for gcvg-git-2@plane.gmane.org; Thu, 31 May 2012 05:22:18 +0200
+	id 1SZybE-0002wl-9O
+	for gcvg-git-2@plane.gmane.org; Thu, 31 May 2012 08:11:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752357Ab2EaDWO convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 30 May 2012 23:22:14 -0400
-Received: from mail-ob0-f174.google.com ([209.85.214.174]:61553 "EHLO
-	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752026Ab2EaDWN convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 30 May 2012 23:22:13 -0400
-Received: by obbtb18 with SMTP id tb18so709943obb.19
-        for <git@vger.kernel.org>; Wed, 30 May 2012 20:22:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=vzwvu60/Edqbe9SU+UHn+by9i+wwT65l5UnA8g9hDOU=;
-        b=UZg4ryPqgJqsCtszuvHckReOctPaLI1l522+2bZYAxDUD2VrX6NBs7gnPw4ezoRuKj
-         a+z1FJCULDjNVj1HGkrtphVe8DKgc1j6Y6OQy0muReH3VOmtfOxCs75k9IMRTo3ym5Fa
-         Zcu55jF3u9HyNga7AUaPeJtBfa4uUf3ZGRytooBPGraT2lxucrQRzPYZX8HDueFxkshn
-         UYfu/f1K27Wz3Zwa+EfRfXOUeI/ktb0sMCiPNMntV1wBBEQ8+x4rExgW6sEQKYDjGWVV
-         SCE/FVuaJ4Pu12L6lbyKmWX98BSyiC/oZrQtKDcfU11Ld2yiGnc4wtMS0Ix5HFO/1Piv
-         zBDQ==
-Received: by 10.60.26.65 with SMTP id j1mr17943718oeg.9.1338434532796; Wed, 30
- May 2012 20:22:12 -0700 (PDT)
-Received: by 10.182.108.67 with HTTP; Wed, 30 May 2012 20:22:12 -0700 (PDT)
-In-Reply-To: <CAMP44s2kEMK8ik2NTiP4uiN4FPWFNYNJfY5qh5QE_hRH2AiNYA@mail.gmail.com>
+	id S1753441Ab2EaGLD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 31 May 2012 02:11:03 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:52986 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752556Ab2EaGLB (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 31 May 2012 02:11:01 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id q4V62SOp016352
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Thu, 31 May 2012 08:02:28 +0200
+Received: from bauges.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1SZyau-00021a-0e; Thu, 31 May 2012 08:10:48 +0200
+In-Reply-To: <7vr4u1zhcz.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Wed, 30 May 2012 10:52:28 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.93 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Thu, 31 May 2012 08:02:29 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: q4V62SOp016352
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1339048953.0854@/uoXo7M1lwwQFGTruTj4eg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198858>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198859>
 
-On Wed, May 30, 2012 at 11:09 PM, Felipe Contreras
-<felipe.contreras@gmail.com> wrote:
-> Hi,
+Junio C Hamano <gitster@pobox.com> writes:
+
+>> would just print:
+>>
+>>   Everything up-to-date
+>>
+>> and now you get:
+>>
+>>   To /tmp/push-message/parent
+>>    = [up to date]      master -> master
+> [...]
 >
-> Basically what I want to do is:
->
-> =C2=A0% git log branch ^<any-other-branch>
->
-> IOW; all the commits were 'git branch --contains' would show 'branch'
-> and nothing else.
+> 	Everything up-to-date (the current branch not pushed)
 
-I have a script called "otb" (only this branch, I guess; I tend to use
-crappily short names for stuff I don't make public!) that looks like
-this:
+I like both. They don't really take more screen space (1 more line for
+Jeff, which is acceptable IMHO), and do add information.
 
-#!/bin/bash
+I'd add the number of branches pushed in case it's not one, so it could
+say one of:
 
-m=3D$(git rev-parse HEAD)
-n=3D$(git rev-parse --branches | grep -v $m)
-git log --oneline $m --not $n
+  To /tmp/push-message/parent
+   = [up to date]      master -> master
 
-I think that fits your description, but it's not *one* command.
+or
 
-> Is there any easy way to do that?
->
-> Cheers.
->
-> --
-> Felipe Contreras
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at =C2=A0http://vger.kernel.org/majordomo-info.ht=
-ml
+  Everything up-to-date (X branches pushed, including the current)
 
+or
 
+  Everything up-to-date (X branches pushed, not including the current)
 
---=20
-Sitaram
+It would give a clue to a user having created many local branches that
+his local branches were not pushed, and vice-versa, may help people who
+did not understand that "push.default=matching" was pushing multiple
+branches.
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
