@@ -1,115 +1,91 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: Finding a branch point in git
-Date: Thu, 31 May 2012 18:10:16 +0200
-Message-ID: <CAMP44s2eqLQvfaMhQJV-JmmQf3hXMK2_85OVGrd4bLqC5xzMVA@mail.gmail.com>
-References: <CAMP44s0f7AJPQSTDgvy0U7vx8nxzq2a3vMhSr2Tcc61fetFkJA@mail.gmail.com>
-	<20120528062026.GB11174@sigill.intra.peff.net>
-	<CAMP44s04msWMOaaH8U30XXg5yXJnEd=bULJ7VPxWSD0Wfh2=EA@mail.gmail.com>
-	<20120528190639.GA2478@sigill.intra.peff.net>
-	<CAMP44s0UBsVicuEcwACsm1zTT_jGau_Q20hJv4J_6uvancYJRQ@mail.gmail.com>
-	<20120530215415.GB3237@sigill.intra.peff.net>
-	<CAMP44s1Q26B9hCdubfDiP2_YUUWGOtyyA=gSwqpGOE4FfZrN8A@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Cherry-pick dangles and forgets helpful advice in next
+Date: Thu, 31 May 2012 10:29:57 -0700
+Message-ID: <7vy5o86yy2.fsf@alter.siamese.dyndns.org>
+References: <4FBD4904.9090000@cisco.com>
+ <7vipfmzfel.fsf@alter.siamese.dyndns.org>
+ <7vehqazf9d.fsf@alter.siamese.dyndns.org> <4FBD6EC2.3000804@cisco.com>
+ <7v62bmzdmy.fsf@alter.siamese.dyndns.org>
+ <7vipfe1ihg.fsf@alter.siamese.dyndns.org> <4FC6AFE3.5070805@cisco.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu May 31 18:10:33 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Neil Horman <nhorman@tuxdriver.com>, git@vger.kernel.org
+To: Phil Hord <hordp@cisco.com>
+X-From: git-owner@vger.kernel.org Thu May 31 19:30:12 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Sa7xC-0007Jc-9B
-	for gcvg-git-2@plane.gmane.org; Thu, 31 May 2012 18:10:26 +0200
+	id 1Sa9CL-0005Qb-Si
+	for gcvg-git-2@plane.gmane.org; Thu, 31 May 2012 19:30:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932703Ab2EaQKV convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 31 May 2012 12:10:21 -0400
-Received: from mail-lpp01m010-f46.google.com ([209.85.215.46]:43981 "EHLO
-	mail-lpp01m010-f46.google.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S932692Ab2EaQKU convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 31 May 2012 12:10:20 -0400
-Received: by lahd3 with SMTP id d3so840069lah.19
-        for <git@vger.kernel.org>; Thu, 31 May 2012 09:10:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=XEC5v26O16VK2pNQqVI1oWT9VrWjYC7r0t1CSvFcRLI=;
-        b=qL0thkHspo+EsV8ES8z7OuAt2bDv6i7KB/0tnI2yzvy6BOVxsy3HAwOzOAV1b+Vgzm
-         ifwwYrQf2hz+DPfg/FHEh+HPMtK8XW0nguj+O0pFzJJkvOaURxzHTU0nVyu5iXRH+DKS
-         wyTWbD8A5ohtcrL8eTv4pYMe+lBzLTQni4WOxRbKuXbnQzs5AEV5d3g9m3Azmdh3uKE3
-         F871m5BC9Rk9kLSREtjwJldSQXGfzZ60Se5SKe92LO7o8a+Dl+mChJGZwAkHJMCU5rs0
-         0O4pAmu1WK1ZY7QP2qzvCJdSgA/eZBIY4e8GXyTRLz1u83ElAGHU3IPH4dOc89PqwtPo
-         vprw==
-Received: by 10.152.109.166 with SMTP id ht6mr20711153lab.46.1338480616899;
- Thu, 31 May 2012 09:10:16 -0700 (PDT)
-Received: by 10.112.107.65 with HTTP; Thu, 31 May 2012 09:10:16 -0700 (PDT)
-In-Reply-To: <CAMP44s1Q26B9hCdubfDiP2_YUUWGOtyyA=gSwqpGOE4FfZrN8A@mail.gmail.com>
+	id S1754933Ab2EaRaB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 31 May 2012 13:30:01 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:33966 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754836Ab2EaRaA (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 31 May 2012 13:30:00 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AF7FE8AC5;
+	Thu, 31 May 2012 13:29:59 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=ctQmvM4cL7yp7Qu5XHyydQIhgG4=; b=ozIKUW
+	sjgiiibrQebukBYGgWyTnw5Q6IcMojtndRXoLbvsZHbzT145IY2OKch2Mfe3SFcl
+	Y0glkHD90XpQR+6RvAb7BFvKgz6sF4HwjDEYM/5ItIK5oEVvL6hEriVrHdLYlB4K
+	CbA7O+mmXobc+kC/kzxNDxnOTyPf1ObvAvZbY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=S9BbMDcchMne9hGh3BMu77+vQBvH8dyy
+	upIW/IRYThr+VU2nkes2uZ929wPvCw3aFrzxGurDVGIMT9AbY5CUXAXQW6QUBkqm
+	xSPVrCLHBfoKNJpi8izwnypGW85pyLjQ0A04C3aZqYhntw0bIg84/Qjb2Jndie3E
+	5KE5XQQrLSE=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A72978AC4;
+	Thu, 31 May 2012 13:29:59 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 28C438AC3; Thu, 31 May 2012
+ 13:29:59 -0400 (EDT)
+In-Reply-To: <4FC6AFE3.5070805@cisco.com> (Phil Hord's message of "Wed, 30
+ May 2012 19:40:19 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 3F0E2E1E-AB46-11E1-B677-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198925>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198926>
 
-On Thu, May 31, 2012 at 5:27 PM, Felipe Contreras
-<felipe.contreras@gmail.com> wrote:
-> On Wed, May 30, 2012 at 11:54 PM, Jeff King <peff@peff.net> wrote:
->> On Wed, May 30, 2012 at 07:07:39PM +0200, Felipe Contreras wrote:
->>
->>> On Mon, May 28, 2012 at 9:06 PM, Jeff King <peff@peff.net> wrote:
->>> > On Mon, May 28, 2012 at 02:36:04PM +0200, Felipe Contreras wrote:
->>> >
->>> >> > What about a history with multiple branches?
->>> >> >
->>> >> > --X--A--B--C--D----E =C2=A0(master)
->>> >> > =C2=A0 =C2=A0 =C2=A0\ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 /
->>> >> > =C2=A0 =C2=A0 =C2=A0 G--H--I---J =C2=A0 (branch X)
->>> >> > =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 \ =C2=A0 =C2=A0/
->>> >> > =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0K--L =C2=A0 =C2=A0(br=
-anch Y)
->>> >> [...]
->>> >>
->>> >> Yes, but then you would need to specify a second branch. I would=
- avoid
->>> >> that if possible.
->>> >
->>> > I agree that is less nice. But I don't think the operation is
->>> > well-defined with a single branch. If you ask for "when did branc=
-h X
->>> > split", then in the above graph it is unclear if you meant "split=
- from
->>> > master", or "split from Y".
->>>
->>> If you look from the context that I explained in the first mail; it
->>> would be from *any* branch; IOW; find the first commit from branch =
-X
->>> (G), and then find the parent. That would be the first commit where
->>> branch X started.
->>
->> I'm not sure that's possible, though, in the face of criss-cross mer=
-ges.
->> How do we distinguish the history above from one in which branch Y w=
-as
->> forked from master at G, and then branch X was forked from branch Y =
-at
->> H?
+Phil Hord <hordp@cisco.com> writes:
+
+> Junio C Hamano wrote:
 >
-> That is true, but we could use the algorithm used by name-rev: G woul=
-d
-> have a distance 3 from branch X, and distance 2 from Y, so it would b=
-e
-> considered part of branch Y.
+>> Instead of reverting the entire thing, perhaps we can fix the
+>> regression like this.
+>>
+>> With this, we no longer unconditionally give "--allow-empty" when we
+>> run "git commit", when --allow-empty (which is only about commits
+>> that are originally empty) is given to cherry-pick; specifically,
+>> when the user did not ask for --keep-redundant-commit, we do not
+>> give "--allow-empty" if the original commit is not.
+>>
+>> Thinking about it again, I _think_ we do not even have to check if
+>> the result is an empty commit ourselves ("git commit" will do that
+>> for us anyway), so we might want to rip "is_empty_commit()" out of
+>> the problematic patch and keep only "is_index_unmodified()" bit, but
+>> for now I think this may be good enough.
+>>
+>> Phil, does it fix your issue?
+>
+> Yes, it appears to fix my issue.  I don't have the original condition in
+> play anymore, but it fixes the test case I cooked up earlier.
 
-Er, actually that would list X as branch Y. Now I believe there is a
-real problem.
+OK, I'm planning to merge the fix down before 1.7.11 final. It may
+have broken the use case Neil wanted to support as a side effect (I
+tried to be careful but I did not do anything beyond the test cases
+as I do not deliberately add empty commits to my history); Neil may
+want to double check the result.
 
-However, I don't believe mercurial branch labels are the solution;
-probably a pointer to the tail of the branch would provide with all
-the information needed.
-
-Cheers.
-
---=20
-=46elipe Contreras
+Thanks.
