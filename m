@@ -1,9 +1,10 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: Re: [PATCH] i18n: apply: split to fix a partial i18n message
-Date: Thu, 31 May 2012 20:04:36 +0700
-Message-ID: <1338469482-30936-1-git-send-email-pclouds@gmail.com>
+Subject: [PATCH 1/6] Remove i18n legos in notifying new branch tracking setup
+Date: Thu, 31 May 2012 20:04:37 +0700
+Message-ID: <1338469482-30936-2-git-send-email-pclouds@gmail.com>
 References: <1338463242-10618-1-git-send-email-worldhello.net@gmail.com>
+ <1338469482-30936-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
@@ -14,83 +15,121 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 31 15:09:03 2012
+X-From: git-owner@vger.kernel.org Thu May 31 15:09:17 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Sa57c-0006WW-V3
-	for gcvg-git-2@plane.gmane.org; Thu, 31 May 2012 15:09:01 +0200
+	id 1Sa57o-0006fy-4G
+	for gcvg-git-2@plane.gmane.org; Thu, 31 May 2012 15:09:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757945Ab2EaNI5 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 31 May 2012 09:08:57 -0400
+	id S1757957Ab2EaNJH convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 31 May 2012 09:09:07 -0400
 Received: from mail-pb0-f46.google.com ([209.85.160.46]:47113 "EHLO
 	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757516Ab2EaNI4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 31 May 2012 09:08:56 -0400
-Received: by pbbrp8 with SMTP id rp8so1441131pbb.19
-        for <git@vger.kernel.org>; Thu, 31 May 2012 06:08:55 -0700 (PDT)
+	with ESMTP id S1757948Ab2EaNJG (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 31 May 2012 09:09:06 -0400
+Received: by mail-pb0-f46.google.com with SMTP id rp8so1441131pbb.19
+        for <git@vger.kernel.org>; Thu, 31 May 2012 06:09:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=Gm2c1Bl32qfq/Y+PBldhpaJs16Xgrh3W0Kh94fziIWY=;
-        b=jxPl0zqaPF5smabgS4vazIwoNw2A76F1ZMcuRW5Fwv4cu4KL7cl7pe3zo2y5wXuFOd
-         3u4iCkTPi+4fbabPHP2Pc33JlEl/VfATH4k1E/vWREUn4/sK1SHat0p/OD6GRtvOGiLO
-         Vx6mLhAG2219Aqck1BpdPDs9MJ4sCAYBFKkW6KzX1dHK073G39CNTBXeO1ZC2OONCB5S
-         4LIHkUbYgg+75jQrvHXKwz4wDkSTQGtOrVcg3fEJ9Q4/r4kBkmfiyZr56qHKeXA3Wpkb
-         IlMP3P7OKJAgXMWrJfm/lLKT4m6Xu6qY/4GT0SgiY0NAZ1RZH+dLvMvzCAWm/7SRjaZr
-         n/vA==
-Received: by 10.68.197.136 with SMTP id iu8mr59648243pbc.111.1338469735646;
-        Thu, 31 May 2012 06:08:55 -0700 (PDT)
+        bh=6tj0SiwLU/mJ6HaxrsH6c8UrViSTxi5W96VuObaGaY0=;
+        b=I8OVmiZV7i/ugeki4PowFyEkvfl3Pg+6qgIsNvU7e3cof/qTYlpD4khOpRneN3YAe0
+         qAFyoGwP46lEB3GdjTObXo6gysIsrVx3ME9NDB2Sa8shK+8pKBP+8496fMMSm1P1rtpU
+         bZoLKwUO3/yC+fhLGQ/1/CNfdK+Qj1msPjC/MWgJCNs/l5hjO98pUGD+NR0mFSKnlG3o
+         GoN0izaimdLRZC7MheXU8iicgD8p7qIzz48jTdNLeMn7BSFQqFmd2hVtN39p9FBHzPeo
+         jzFKPAakANqYInGg4f5FxrIRyx43uPuzgq8S0JFt+Gv9xrvAGz+uexh5P2sBDXN7gGyP
+         zQiA==
+Received: by 10.68.232.103 with SMTP id tn7mr6630134pbc.86.1338469745917;
+        Thu, 31 May 2012 06:09:05 -0700 (PDT)
 Received: from pclouds@gmail.com ([115.74.54.14])
-        by mx.google.com with ESMTPS id ph1sm4140207pbb.45.2012.05.31.06.08.49
+        by mx.google.com with ESMTPS id x1sm4139697pbp.50.2012.05.31.06.09.00
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 31 May 2012 06:08:54 -0700 (PDT)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Thu, 31 May 2012 20:04:43 +0700
+        Thu, 31 May 2012 06:09:05 -0700 (PDT)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Thu, 31 May 2012 20:04:54 +0700
 X-Mailer: git-send-email 1.7.10.2.549.g9354186
-In-Reply-To: <1338463242-10618-1-git-send-email-worldhello.net@gmail.com>
+In-Reply-To: <1338469482-30936-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198888>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198889>
 
-On Thu, May 31, 2012 at 6:20 PM, Jiang Xin <worldhello.net@gmail.com> w=
-rote:
-> The 4th arg of "new mode (%o) of %s does not match old mode (%o)%s%s"
-> is blank string or string " of ". Even mark the string " of " for a
-> complete i18n, this message is still hard to translate right.
 
-Your patch looks good. I have a habit of looking for similar spots and
-the following patches are the result. These messages are not marked
-for translation because I think mass-marking by file or by command is
-better.
+Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+=2Ecom>
+---
+ branch.c | 48 +++++++++++++++++++++++++++++++++---------------
+ 1 file changed, 33 insertions(+), 15 deletions(-)
 
-Not sure if it's the right way to fix these though. For example, while
-1/1 looks very good from i18n perspective, code-wise it's quite ugly.
-Grouping format strings in array also prevents gcc from checking
-correct parameters, I think.
-
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy (6):
-  Remove i18n legos in notifying new branch tracking setup
-  reflog: remove i18n legos in pruning message
-  merge-recursive: remove i18n legos in conflict messages
-  notes-merge: remove i18n legos in merge result message
-  rerere: remove i18n legos in result message
-  unpack-trees: remove i18n legos in unpack's porcelain error messages
-
- branch.c          | 48 +++++++++++++++++++++++++++++++++--------------=
+diff --git a/branch.c b/branch.c
+index eccdaf9..d8facf7 100644
+--- a/branch.c
++++ b/branch.c
+@@ -74,25 +74,43 @@ void install_branch_config(int flag, const char *lo=
+cal, const char *origin, cons
+ 		strbuf_addf(&key, "branch.%s.rebase", local);
+ 		git_config_set(key.buf, "true");
+ 	}
++	strbuf_release(&key);
+=20
+ 	if (flag & BRANCH_CONFIG_VERBOSE) {
+-		strbuf_reset(&key);
 -
- builtin/reflog.c  |  8 ++++++--
- merge-recursive.c | 49 +++++++++++++++++++++++++++++++++--------------=
---
- notes-merge.c     | 11 ++++++++---
- rerere.c          | 12 ++++++------
- unpack-trees.c    | 55 +++++++++++++++++++++++++++++++++--------------=
---------
- 6 files changed, 119 insertions(+), 64 deletions(-)
-
+-		strbuf_addstr(&key, origin ? "remote" : "local");
+-
+-		/* Are we tracking a proper "branch"? */
+-		if (remote_is_branch) {
+-			strbuf_addf(&key, " branch %s", shortname);
+-			if (origin)
+-				strbuf_addf(&key, " from %s", origin);
++		if (rebasing) {
++			if (remote_is_branch) {
++				if (origin)
++					printf("Branch %s set up to track remote branch %s from %s by reb=
+asing.\n",
++					       local, shortname, origin);
++				else
++					printf("Branch %s set up to track local branch %s by rebasing.\n"=
+,
++					       local, shortname);
++			} else {
++				if (origin)
++					printf("Branch %s set up to track remote ref %s by rebasing.\n",
++					       local, remote);
++				else
++					printf("Branch %s set up to track local ref %s by rebasing.\n",
++					       local, remote);
++			}
++		} else {
++			if (remote_is_branch) {
++				if (origin)
++					printf("Branch %s set up to track remote branch %s from %s.\n",
++					       local, shortname, origin);
++				else
++					printf("Branch %s set up to track local branch %s.\n",
++					       local, shortname);
++			} else {
++				if (origin)
++					printf("Branch %s set up to track remote ref %s.\n",
++					       local, remote);
++				else
++					printf("Branch %s set up to track local ref %s.\n",
++					       local, remote);
++			}
+ 		}
+-		else
+-			strbuf_addf(&key, " ref %s", remote);
+-		printf("Branch %s set up to track %s%s.\n",
+-		       local, key.buf,
+-		       rebasing ? " by rebasing" : "");
+ 	}
+-	strbuf_release(&key);
+ }
+=20
+ /*
 --=20
 1.7.10.2.549.g9354186
