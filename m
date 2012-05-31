@@ -1,139 +1,121 @@
-From: David Michael Barr <davidbarr@google.com>
-Subject: Re: [PATCH 3/7] vcs-svn: fix signedness warnings
-Date: Thu, 31 May 2012 23:14:43 +1000
-Message-ID: <CAFfmPPOoRfc9ZHuyQ+Qa0UDqARLLyXwqTxOOLr_2m8BbnzeEfg@mail.gmail.com>
-References: <1337868259-45626-1-git-send-email-davidbarr@google.com>
-	<1337868259-45626-4-git-send-email-davidbarr@google.com>
-	<20120524144847.GC3732@burratino>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 31 15:14:50 2012
+From: Lanny Ripple <lanny@spotinfluence.com>
+Subject: Re: Bug: rebase when an author uses accents in name on MacOSx
+Date: Thu, 31 May 2012 08:36:16 -0500
+Message-ID: <78E7FEAC-6587-4EB3-B78B-08D321F53BF9@spotinfluence.com>
+References: <06DD2F56-F956-46DF-84A4-3443D4702CDE@spotinfluence.com> <7vehq18c82.fsf@alter.siamese.dyndns.org> <20120531011911.GC5488@sigill.intra.peff.net> <7v62bc97w1.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0 (Apple Message framework v1278)
+Content-Type: multipart/signed; boundary="Apple-Mail=_11E4F298-9736-4F50-A6CC-8A865628F4FE"; protocol="application/pgp-signature"; micalg=pgp-sha1
+Cc: Jeff King <peff@peff.net>, Thomas Rast <trast@inf.ethz.ch>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu May 31 15:36:30 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Sa5DE-0002hg-MG
-	for gcvg-git-2@plane.gmane.org; Thu, 31 May 2012 15:14:48 +0200
+	id 1Sa5YA-0004Li-5o
+	for gcvg-git-2@plane.gmane.org; Thu, 31 May 2012 15:36:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757872Ab2EaNOo convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 31 May 2012 09:14:44 -0400
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:58682 "EHLO
+	id S1758093Ab2EaNgW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 31 May 2012 09:36:22 -0400
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:52060 "EHLO
 	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757290Ab2EaNOn convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 31 May 2012 09:14:43 -0400
-Received: by yenm10 with SMTP id m10so757047yen.19
-        for <git@vger.kernel.org>; Thu, 31 May 2012 06:14:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding:x-system-of-record;
-        bh=kmqjzzyXwuCAE4Ud+tN1GKhPEfzAmxhNTalswQUGLso=;
-        b=SpHKnpdemrhUvjFiDXnzHXLsxN33XLxoF8qst6v2ueiKUHOxPs/+o+6bFCdfVUwT4p
-         NtT0zsIT1iYoz1ao0YuY5MgvryM59AkjEXzB93PtEs0DtFIhS9Lkevx7mBRdGEOEXIgL
-         1iXKKSkLpSogNq+EJTcStAcAJNoWM1VrM3Ia7aPIxu2+sF0+FjIiJI7wkLD/8+wM9Aw5
-         r/gXPyHD5YTD6TcjdOjFiljuKwEuLcoezig9nRhhOPV1xzHQsr+K+VdkrVlOKq+dH5h4
-         GMP8kMnX1oLlUP3mc4jZFwgA0eJbnkBB/+J0Nf4rq5j2kcKFzSPDlbHRRQqYpv3NqMiF
-         njyA==
+	with ESMTP id S1757949Ab2EaNgV (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 31 May 2012 09:36:21 -0400
+Received: by yenm10 with SMTP id m10so778936yen.19
+        for <git@vger.kernel.org>; Thu, 31 May 2012 06:36:20 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding:x-system-of-record
-         :x-gm-message-state;
-        bh=kmqjzzyXwuCAE4Ud+tN1GKhPEfzAmxhNTalswQUGLso=;
-        b=LX+Y3RquvxF2n+MezxNajOA/s4uMh1xZ08jPcy/H/b03VfV5KbkpV+8ZmzsowHlMGL
-         TAXyOlxhvHDYAg0NMl7RXHbcaHyd4YYUlpmRdT+5p8JuevKCGOGUxWJ79+J8oSuqJ2wg
-         TJmtdzRXMQmw3NIAP5vZ4AZIxP4zChCFLDr4AXVbPWKXCY9e0l/oR5j5jij6Cti0EuL8
-         6MH1CG+LNBGr+9K0ZeXAEedLpYiMd+jwJAIvmXBbcv86ircT1co2jZLXGb7bjYMqVnf3
-         Bo6E6YcDSmNxuRj62aaGO7m+k7r6lD20sXPix4XTm8V2wYsnCWUYqJQuqOcnCPl9b/PV
-         NG2A==
-Received: by 10.236.187.2 with SMTP id x2mr2263461yhm.42.1338470083183;
-        Thu, 31 May 2012 06:14:43 -0700 (PDT)
-Received: by 10.236.187.2 with SMTP id x2mr2263451yhm.42.1338470083094; Thu,
- 31 May 2012 06:14:43 -0700 (PDT)
-Received: by 10.101.155.23 with HTTP; Thu, 31 May 2012 06:14:43 -0700 (PDT)
-In-Reply-To: <20120524144847.GC3732@burratino>
-X-System-Of-Record: true
-X-Gm-Message-State: ALoCoQlRZujlWaXmMznJxvLOEPVhJGhiKfPByynxe9TIa2XLXCnusCFUGPqEkT3G5HZnfoBUaQmxI3VYenhAzXdGDq9D5r11/Jjm9Z9qK9UWS1d/geXEZBwfQGujixZCTThXaPy8aoT/DaVk/MLZQkvWhHmfY3trXA==
+        h=subject:mime-version:content-type:from:in-reply-to:date:cc
+         :message-id:references:to:x-mailer:x-gm-message-state;
+        bh=PncUTwAJZHRnytKLohlj/or3LCqkX9wp9ciYcnPYBqc=;
+        b=l46q2qkSo3zJYREQq+RBnaM3dV1+DnqCEKbLFjme23P3Ls3ijIQTiOcjJY+TqS4pOD
+         cSWYC578+ECxL/WRMlQBGRdw2GNO/GK0khTAukIp2x5kC905UXzqaowh4iWpt7e1bnVD
+         ArabkzCNiCgiQCVPBbu+nEWMM/HdHP4nqONew/spbWmfVAPjMxBST3zl9BcqXJFu6GVy
+         DsOaRmLh6kl/X9T70j/PC04zHHUj8onD7ku2FXRP6swOrMSxGT6w9mRP9SIAxItbD9Vb
+         zf4G0lLC0bYIwuEfUOO3D9PQ6/OxDaravRtlGDlY820BYuP1MDjnAa1FUI9p4CteSKbY
+         sbFQ==
+Received: by 10.60.30.194 with SMTP id u2mr19035919oeh.5.1338471380434;
+        Thu, 31 May 2012 06:36:20 -0700 (PDT)
+Received: from [192.168.1.4] (c-98-198-192-29.hsd1.tx.comcast.net. [98.198.192.29])
+        by mx.google.com with ESMTPS id x10sm1926958oeb.8.2012.05.31.06.36.18
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 31 May 2012 06:36:19 -0700 (PDT)
+In-Reply-To: <7v62bc97w1.fsf@alter.siamese.dyndns.org>
+X-Mailer: Apple Mail (2.1278)
+X-Gm-Message-State: ALoCoQkB/iDxqSBhrcvb7azY6g/+r9UGC5kHMA30KmTzbVq5n9uoKxydPPmIlEnhiVTPHzSJJT8A
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198895>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198896>
 
-On Fri, May 25, 2012 at 12:48 AM, Jonathan Nieder <jrnieder@gmail.com> =
-wrote:
-> David Barr wrote:
->
->> --- a/vcs-svn/fast_export.c
->> +++ b/vcs-svn/fast_export.c
->> @@ -259,7 +259,7 @@ static int parse_ls_response(const char *respons=
-e, uint32_t *mode,
->> =A0 =A0 =A0 }
->>
->> =A0 =A0 =A0 /* Mode. */
->> - =A0 =A0 if (response_end - response < strlen("100644") ||
->> + =A0 =A0 if (response_end - response < (off_t) strlen("100644") ||
->
-> I wish the static analyzer could notice that "response_end - response=
-"
-> is always nonnegative and stop worrying. =A0If we want to appease it,
-> I guess I'd mildly prefer something like
->
-> =A0 =A0 =A0 =A0if (response_end - response < (signed) strlen("100644"=
-) ||
->
-> which expresses the intent more directly.
 
-Noted.
+--Apple-Mail=_11E4F298-9736-4F50-A6CC-8A865628F4FE
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;
+	charset=iso-8859-1
 
-> [...]
->> --- a/vcs-svn/line_buffer.c
->> +++ b/vcs-svn/line_buffer.c
->> @@ -91,8 +91,7 @@ char *buffer_read_line(struct line_buffer *buf)
->> =A0 =A0 =A0 return buf->line_buffer;
->> =A0}
->>
->> -size_t buffer_read_binary(struct line_buffer *buf,
->> - =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 struct str=
-buf *sb, size_t size)
->> +off_t buffer_read_binary(struct line_buffer *buf, struct strbuf *sb=
-, off_t size)
->> =A0{
->> =A0 =A0 =A0 return strbuf_fread(sb, size, buf->infile);
->> =A0}
->
-> On systems with larger off_t than size_t (think "typical 32-bit PC,
-> since file offsets tend to be 64 bits"), this silently throws away
-> bits. =A0I think the cure is worse than the disease.
+Bingo.
 
-Agreed, I'll implement a better approach when I update the series.
+  lanny;~> echo "R=E9mi Leblond" | LANG=3DC LC_ALL=3DC /usr/bin/sed -ne =
+'s/.*/GIT_AUTHOR_NAME=3D'\''&'\''/p'
+  GIT_AUTHOR_NAME=3D'R=E9mi Leblond'
 
-> [...]
->> --- a/vcs-svn/sliding_window.c
->> +++ b/vcs-svn/sliding_window.c
->> @@ -43,11 +43,11 @@ static int check_offset_overflow(off_t offset, u=
-intmax_t len)
->> =A0 =A0 =A0 return 0;
->> =A0}
->>
->> -int move_window(struct sliding_view *view, off_t off, size_t width)
->> +int move_window(struct sliding_view *view, off_t off, off_t width)
->> =A0{
->
-> Likewise. =A0I'd rather the caller know that the window has to fit in=
- an
-> address space which can be smaller than the maximum file size.
->
-> Is this to avoid having two different functions that parse a
-> variable-length integer, or is there some other reason?
+Just occurred to me that I'm using fink and that git-am doesn't use =
+/usr/bin/sed but just sed.  My suggestion is to be explicit on the path =
+in git-am.
 
-Nope, just me taking the wrong approach.
+So it now stands at two bug-reports and one pebkac.
 
-I'll submit an alternate patch, which much shorter and less worrying.
+  Thanks!,
+  -ljr
+---
+Lanny Ripple
+lanny@spotinfluence.com
 
---
-David Barr
+
+On May 31, 2012, at 1:33 AM, Junio C Hamano wrote:
+
+> Jeff King <peff@peff.net> writes:
+>=20
+>> On Wed, May 30, 2012 at 04:45:33PM -0700, Junio C Hamano wrote:
+>> ...
+>>> So in C locale where each byte is supposed to be a single character,
+>>> that implementation of "sed" refuses to match a byte with high-bit
+>>> set when given a pattern '.'?
+>>>=20
+>>> That is a surprising breakage, I would have to say.
+>>=20
+>> It should not be too surprising, since we discussed it a few months =
+ago:
+>>=20
+>>  http://thread.gmane.org/gmane.comp.version-control.git/192218
+>=20
+> Heh, no wonder I do not recall that one, as everything happened and
+> conclusions reached while I was sleeping ;-)
+>=20
+> If it is not a bug in platform-sanctioned sed, but a buggy
+> third-party build, then I wouldn't worry about it for this cycle,
+> but pre-release freeze might be a good time to start sketching
+> Thomas's --format=3D"%'%an <%ae>%'" approach, perhaps?
+
+
+--Apple-Mail=_11E4F298-9736-4F50-A6CC-8A865628F4FE
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment;
+	filename=signature.asc
+Content-Type: application/pgp-signature;
+	name=signature.asc
+Content-Description: Message signed with OpenPGP using GPGMail
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG/MacGPG2 v2.0.17 (Darwin)
+
+iF4EAREIAAYFAk/Hc9EACgkQ+owW65SoXfi4WAD/XRTLvQO6CgpPaQ0LE2NK9nYh
+dWR8pA/9COxfUa2wCJEA/0HKHd9xRghEXzbZdf6HRy5G1Ox5+XxyveBaQhdoWrUs
+=KbUI
+-----END PGP SIGNATURE-----
+
+--Apple-Mail=_11E4F298-9736-4F50-A6CC-8A865628F4FE--
