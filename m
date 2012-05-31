@@ -1,82 +1,96 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Bug: rebase when an author uses accents in name on MacOSx
-Date: Thu, 31 May 2012 11:33:17 -0700
-Message-ID: <7vd35k6w0i.fsf@alter.siamese.dyndns.org>
-References: <06DD2F56-F956-46DF-84A4-3443D4702CDE@spotinfluence.com>
- <7vehq18c82.fsf@alter.siamese.dyndns.org>
- <20120531011911.GC5488@sigill.intra.peff.net>
- <7v62bc97w1.fsf@alter.siamese.dyndns.org>
- <78E7FEAC-6587-4EB3-B78B-08D321F53BF9@spotinfluence.com>
- <7vtxyw6ypx.fsf@alter.siamese.dyndns.org>
- <69ED148F-BD10-4DE3-91F2-D31F83A0EAB7@spotinfluence.com>
+From: Fredrik Gustafsson <iveqy@iveqy.com>
+Subject: Re: [PATCH] Remove perl dependency from git-submodule.sh
+Date: Thu, 31 May 2012 20:48:41 +0200
+Message-ID: <20120531184841.GA32131@paksenarrion.iveqy.com>
+References: <1338454126-30441-1-git-send-email-iveqy@iveqy.com>
+ <4FC73788.6070805@viscovery.net>
+ <20120531104036.GB30500@paksenarrion.iveqy.com>
+ <7vpq9k6y16.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, Thomas Rast <trast@inf.ethz.ch>,
-	git@vger.kernel.org
-To: Lanny Ripple <lanny@spotinfluence.com>
-X-From: git-owner@vger.kernel.org Thu May 31 20:33:30 2012
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Fredrik Gustafsson <iveqy@iveqy.com>,
+	Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org,
+	jens.lehmann@web.de
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu May 31 20:49:40 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SaABZ-0006ri-Jt
-	for gcvg-git-2@plane.gmane.org; Thu, 31 May 2012 20:33:25 +0200
+	id 1SaARC-0003DY-AG
+	for gcvg-git-2@plane.gmane.org; Thu, 31 May 2012 20:49:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932214Ab2EaSdV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 31 May 2012 14:33:21 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:34617 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758340Ab2EaSdU (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 31 May 2012 14:33:20 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 96D4B8C42;
-	Thu, 31 May 2012 14:33:19 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=EqGZwaYMEWpv421WulCc/YJH9h4=; b=eb4koz
-	snASnlAYHjCOCsyHu3zBOebo+oTny0g1/c+fIvSojz+Jqs6Nql1zSY+5cA/HtoCM
-	v6LcRFYMpwj02t8mGPVMwZ4Tfrza+txmS1admDvTBCQI/QF9yKCr8SiSdAgko965
-	ShXAN6VT5BqT7Cl2JoqZCCgMVDOu8d/PnAdlI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=TA6g+oMG1LmJX0qKzlGqSoZi6SpO31Ul
-	oNPTWT1DUuyQ/xEtkB8gP0jWUmLfQtpmuPXAJNvO0l5m3fi3RhrhpHQnX+7MRthK
-	Zv8jh4GfGGD+Nic6RcN4BmmOO1pUHpxE5mkmTnyxoZXlSP/OkqkgKk0yYfaqdllT
-	f+nGRWgJNOw=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8E35D8C40;
-	Thu, 31 May 2012 14:33:19 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 232A18C3D; Thu, 31 May 2012
- 14:33:19 -0400 (EDT)
-In-Reply-To: <69ED148F-BD10-4DE3-91F2-D31F83A0EAB7@spotinfluence.com> (Lanny
- Ripple's message of "Thu, 31 May 2012 12:49:16 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 1804A61E-AB4F-11E1-B146-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754041Ab2EaSt2 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 31 May 2012 14:49:28 -0400
+Received: from mail-lpp01m010-f46.google.com ([209.85.215.46]:58630 "EHLO
+	mail-lpp01m010-f46.google.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752178Ab2EaStQ (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 31 May 2012 14:49:16 -0400
+Received: by lahd3 with SMTP id d3so964983lah.19
+        for <git@vger.kernel.org>; Thu, 31 May 2012 11:49:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=WpK1N1I8WoWBWxxQahY5xL1MYRje33x+xYqHk5l/jkk=;
+        b=LKBAJ/P6F2CeHxT4r+ZDTNJNDVbvOxbHzjVLNirG0mrqDJAwJ466ZOsbzX2Uj5rqae
+         noPkspTFejYF0oK/uYcMfS5PL0GKAKwG5TwA2w/XXF+qQ6g4kpYfJBqTRSubu79J9Lj+
+         ZENd5g+OuUZn1UHR1dvgE1WHJs5R5chNdJNKjVoQ2Gy37geT8JTjAKKPFGI+v8KQOfZG
+         P/7tVuRms2hCXEQDKHRL7MttxEcRrAKr6tGT98dzehS74kV9HvjXvgyo9PyH7ylArNWG
+         CC4GQVXDY4ROhAuURjhUlHrPv9PRz1UzISnlwMzgq6gboXKbMkUzJnYraJXhtf+IEWYJ
+         1Gdw==
+Received: by 10.112.51.228 with SMTP id n4mr555165lbo.35.1338490155091;
+        Thu, 31 May 2012 11:49:15 -0700 (PDT)
+Received: from paksenarrion.iveqy.com (h-184-249.a189.priv.bahnhof.se. [85.24.184.249])
+        by mx.google.com with ESMTPS id gd9sm2509015lbb.15.2012.05.31.11.49.12
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 31 May 2012 11:49:13 -0700 (PDT)
+Received: from iveqy by paksenarrion.iveqy.com with local (Exim 4.72)
+	(envelope-from <iveqy@paksenarrion.iveqy.com>)
+	id 1SaAQL-0000Az-Ue; Thu, 31 May 2012 20:48:41 +0200
+Content-Disposition: inline
+In-Reply-To: <7vpq9k6y16.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198938>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198939>
 
-Lanny Ripple <lanny@spotinfluence.com> writes:
+On Thu, May 31, 2012 at 10:49:41AM -0700, Junio C Hamano wrote:
+> Having said that, in the longer term, I think the right direction to
+> go is the opposite.  It would be better to make "git-submodule.sh"
+> work better with paths with funny characters in them, and one
+> obvious approach is to read "ls-files -z" output with something
+> capable of parsing NUL-terminated records, e.g. a Perl scriptlet.
+> Adding a new shell loop like this patch only adds one place that
+> needs to be fixed later when that happens, so I am not sure I like
+> this patch.
 
-> Perhaps the error message in git-am could be modified to indicate
-> sed is a suspect?.  E.g.,
->
->  lanny(master);<work/IdeaProjects/Piper> git rebase master rl-clean292
->  First, rewinding head to replay your work on top of it...
->  /sw/lib/git-core/git-am: line 692: Leblond: command not found
->  Patch does not have a valid e-mail address.  (Used /sw/bin/sed found on PATH).
->                                               ^  ^  ^  ^  ^  ^  ^  ^  ^  ^  ^
->  lanny((ae6c220...)|REBASE);<work/IdeaProjects/Piper> 
+Is perl really a dependency that git wants? Today only a few bit (often
+non critical) are in perl. I thought the way was to get rid of those an=
+d
+replace them with c? I'm very critical to dependencies when they are no=
+t needed.
 
-Hrm, that does not sound an attractive way going forward.
+I don't think forking for text-parsing when not needed is a good idea
+either. Apart from the runtime issues, it makes the code harder to read=
+=2E
 
-Do we have to suspect any and all uses of POSIX tools, just in case
-somebody installs a broken implementation from random places?  Is
-sed the only thing that is possibly broken?
+With that said I do agree that funny path names should be supported and
+maybe the correct solution is to make more use of perl and less of sh.
+Mixing those, and doing it in the same file, I don't think is a good
+idea.
 
-By the way, have you filed a bug report to whoever supplied your /sw/bin/sed?
+Is the right direction to run a shellscript that invokes a
+perl-scriptlet for textparsing?
+
+--=20
+Med v=E4nliga h=E4lsningar
+=46redrik Gustafsson
+
+tel: 0733-608274
+e-post: iveqy@iveqy.com
