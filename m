@@ -1,107 +1,80 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 1/6] Remove i18n legos in notifying new branch tracking
- setup
-Date: Thu, 31 May 2012 09:00:24 -0500
-Message-ID: <20120531140024.GC10523@burratino>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: [PATCH 2/6] reflog: remove i18n legos in pruning message
+Date: Thu, 31 May 2012 21:00:29 +0700
+Message-ID: <CACsJy8Bgzkc51N+t=0NyOasJRd2y3U+pyZCGa-qGoDuTQuyOgg@mail.gmail.com>
 References: <1338463242-10618-1-git-send-email-worldhello.net@gmail.com>
- <1338469482-30936-1-git-send-email-pclouds@gmail.com>
- <1338469482-30936-2-git-send-email-pclouds@gmail.com>
+ <1338469482-30936-1-git-send-email-pclouds@gmail.com> <1338469482-30936-3-git-send-email-pclouds@gmail.com>
+ <20120531134538.GA10523@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
 	Jiang Xin <worldhello.net@gmail.com>
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 31 16:00:43 2012
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Thu May 31 16:01:08 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Sa5vc-0001E7-TJ
-	for gcvg-git-2@plane.gmane.org; Thu, 31 May 2012 16:00:41 +0200
+	id 1Sa5w3-0001cQ-Sa
+	for gcvg-git-2@plane.gmane.org; Thu, 31 May 2012 16:01:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758195Ab2EaOAh convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 31 May 2012 10:00:37 -0400
-Received: from mail-gg0-f174.google.com ([209.85.161.174]:34800 "EHLO
-	mail-gg0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757496Ab2EaOAg convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 31 May 2012 10:00:36 -0400
-Received: by gglu4 with SMTP id u4so806163ggl.19
-        for <git@vger.kernel.org>; Thu, 31 May 2012 07:00:36 -0700 (PDT)
+	id S1758068Ab2EaOBD convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 31 May 2012 10:01:03 -0400
+Received: from mail-wg0-f44.google.com ([74.125.82.44]:62964 "EHLO
+	mail-wg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757496Ab2EaOBB convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 31 May 2012 10:01:01 -0400
+Received: by wgbdr13 with SMTP id dr13so930185wgb.1
+        for <git@vger.kernel.org>; Thu, 31 May 2012 07:01:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=ZjbNVE5SA6iTkAdOh9i9Dw6esEpQB1ekfaEMZkacKY4=;
-        b=FVXfPf3nzmBOvs0nGiYANrYxcvW6M4sq7BEZBFZF1Oxm2WPxnk+BaGiLI/1q/MEYPU
-         dLjVjiB3ybb0U5izWUXKg/mEN3LISdKU2bUYb4aSeIqGu4JoSm954pomG21HlG69wiM6
-         tkcNHe1ovtqumB6zKUBHJOmzz8KhRnF8Fr36XUJqjVCcHUuTN/u9WujxKvw+PfyjXsas
-         h4f+K0cFw+VK5y4JlNdpukAnQVqbvU9WjMLgRKN+SbHuRg9+xUQuvkoBYcaJXnnmXYKW
-         raDzgf9zc5iRhDQPNa09eb22yS3/K7CWCWecay08PVXQEDJ3e1WN0KF+Pvjtl11UKebq
-         bPEA==
-Received: by 10.50.212.70 with SMTP id ni6mr13726765igc.30.1338472835447;
-        Thu, 31 May 2012 07:00:35 -0700 (PDT)
-Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
-        by mx.google.com with ESMTPS id z7sm1542334igb.3.2012.05.31.07.00.32
-        (version=SSLv3 cipher=OTHER);
-        Thu, 31 May 2012 07:00:32 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <1338469482-30936-2-git-send-email-pclouds@gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=tcaEdiGeW3+dGcM7FB4pWg0eGuqEwKHJDMH4Y/G6TxA=;
+        b=nJS0s8oXlXKl9QjezhmpJNOOlwcFvUnz0aFK31kumOkk9a/cF7997e/9bByHNJoESs
+         oBUHdSat6lbwUMPIp11XCY24PIX7y3OSK2hzYpl878tktQSQAIMTscwjneG1heJ/E25L
+         C2Est+WpyrVVkpeTS1q2bQXD8avnu+aHy/7+ni6TfQcaDtp1M7qTwq+7VoSsKSpOzw+j
+         DF+CRdqDuAN/AxXMOBuyX6xHAwRi9A9BoU+DxH167xZO+30aMI+nUu06ULqOuleZFxD+
+         7i9sA7zVeixTCxfdPgGwNPLWiCZqCtAsDFPJDymQ1wGtJIGWiMR5lkgUPOpACcD4vPD/
+         FHdw==
+Received: by 10.216.226.218 with SMTP id b68mr13987051weq.167.1338472860220;
+ Thu, 31 May 2012 07:01:00 -0700 (PDT)
+Received: by 10.223.64.208 with HTTP; Thu, 31 May 2012 07:00:29 -0700 (PDT)
+In-Reply-To: <20120531134538.GA10523@burratino>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198902>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198903>
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
+On Thu, May 31, 2012 at 8:45 PM, Jonathan Nieder <jrnieder@gmail.com> w=
+rote:
+> Thanks. =C2=A0Style: how about
+>
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0if (!cb->newlog)
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0printf("would =
+prune %s", message);
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0else if (cb->cmd->verbose)
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0printf("prune =
+%s", message);
+>
+> ? =C2=A0I think that would be more readable than the lego original.
 
-> Not sure if it's the right way to fix these though. For example, whil=
-e
-> 1/1 looks very good from i18n perspective, code-wise it's quite ugly.
-> Grouping format strings in array also prevents gcc from checking
-> correct parameters, I think.
-[...]
-> --- a/branch.c
-> +++ b/branch.c
-> @@ -74,25 +74,43 @@ void install_branch_config(int flag, const char *=
-local, const char *origin, cons
-[...]
-> -		strbuf_addstr(&key, origin ? "remote" : "local");
-> -
-> -		/* Are we tracking a proper "branch"? */
-> -		if (remote_is_branch) {
-> -			strbuf_addf(&key, " branch %s", shortname);
-> -			if (origin)
-> -				strbuf_addf(&key, " from %s", origin);
-> +		if (rebasing) {
-> +			if (remote_is_branch) {
-> +				if (origin)
-> +					printf("Branch %s set up to track remote branch %s from %s by r=
-ebasing.\n",
-> +					       local, shortname, origin);
-> +				else
-[...]
-> +			} else {
-> +				if (origin)
-[...]
-> +			}
-> +		} else {
-> +			if (remote_is_branch) {
-[...]
+thanks
 
-I think a table-driven version of this switchboard would be much
-easier to read, even if it would hurt gcc's -Wformat checking.  If the
--Wformat safety is too precious to lose, would something like the
-following work?
+> BTW I'm not sure if this message would be a good candidate for
+> translation. =C2=A0Especially in the --dry-run case, it feels like ou=
+tput
+> that is intended to be simple enough for scripts to parse. =C2=A0(Tho=
+ugh on
+> the other hand, I don't know of any scripts or use cases that actuall=
+y
+> parse it, so maybe nobody would mind.)
 
-	switch (tracking_msg_flags) {
-	case REBASING | REMOTE_IS_BRANCH | ORIGIN:
-		printf(_("Branch %s set up to track remote branch %s ..."),
-			...
-		break;
-	case REBASING | REMOTE_IS_BRANCH:
-		printf(_(...
+it's gray area. reflog is not categorized as plumbing. Maybe adding
+--plumbing for scripts?
+--=20
+Duy
