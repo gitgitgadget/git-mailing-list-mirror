@@ -1,80 +1,84 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 3/6] merge-recursive: remove i18n legos in conflict
- messages
-Date: Thu, 31 May 2012 08:52:22 -0500
-Message-ID: <20120531135222.GB10523@burratino>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: [PATCH 3/6] merge-recursive: remove i18n legos in conflict messages
+Date: Thu, 31 May 2012 20:56:00 +0700
+Message-ID: <CACsJy8Dnk6Nnkh94OMx4L-=8CUZK22yG8_BA6EUtW1o+=qyGxg@mail.gmail.com>
 References: <1338463242-10618-1-git-send-email-worldhello.net@gmail.com>
- <1338469482-30936-1-git-send-email-pclouds@gmail.com>
- <1338469482-30936-4-git-send-email-pclouds@gmail.com>
+ <1338469482-30936-1-git-send-email-pclouds@gmail.com> <1338469482-30936-4-git-send-email-pclouds@gmail.com>
+ <20120531135222.GB10523@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
 	Jiang Xin <worldhello.net@gmail.com>
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 31 15:53:00 2012
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Thu May 31 15:57:04 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Sa5nr-0004IG-Cu
-	for gcvg-git-2@plane.gmane.org; Thu, 31 May 2012 15:52:39 +0200
+	id 1Sa5rj-0005U2-0u
+	for gcvg-git-2@plane.gmane.org; Thu, 31 May 2012 15:56:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758072Ab2EaNwf convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 31 May 2012 09:52:35 -0400
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:35097 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757409Ab2EaNwe convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 31 May 2012 09:52:34 -0400
-Received: by yenm10 with SMTP id m10so796866yen.19
-        for <git@vger.kernel.org>; Thu, 31 May 2012 06:52:33 -0700 (PDT)
+	id S932383Ab2EaN4d convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 31 May 2012 09:56:33 -0400
+Received: from mail-wi0-f172.google.com ([209.85.212.172]:57698 "EHLO
+	mail-wi0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932378Ab2EaN4c convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 31 May 2012 09:56:32 -0400
+Received: by wibhj8 with SMTP id hj8so4997395wib.1
+        for <git@vger.kernel.org>; Thu, 31 May 2012 06:56:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=QPOpeFmmrBzqKw3i38NOLLbxhlxJOruaqj3Sgu+Uds8=;
-        b=E2U7dfxWEkfxCuEtkfEms9pJ4f0s1Xx64mqLmNt1fkQ00UoPLdyqBEpKlTEgzcdTfa
-         bzQWCwO+A4L62ApipVmYUbPBa5lLBTF9RL3glxOJF+6fgWMBl2oWzWbaCn8N+KHVA2HA
-         GQRRiuCPQ/ssvwAhk6jyr95noyx9NKFqIl3DNr+aA2Euk4S4w50B3+WhLXRBJM/UTUBY
-         eupMMfSCLYQbV0JBp6pOs/zM6t0HDmaXcz4sLexB5XEu4ArpEsr283NEL+IQtfrKApAU
-         MNgFSbRBPmzNRdx2IaadknpU1UfJoskZktYseXGNvtIhtwL+eAiLnR9ozDAUNiZ+ZC4f
-         inJw==
-Received: by 10.50.202.100 with SMTP id kh4mr1771522igc.43.1338472353520;
-        Thu, 31 May 2012 06:52:33 -0700 (PDT)
-Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
-        by mx.google.com with ESMTPS id nh1sm1514182igc.11.2012.05.31.06.52.30
-        (version=SSLv3 cipher=OTHER);
-        Thu, 31 May 2012 06:52:32 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <1338469482-30936-4-git-send-email-pclouds@gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=QDGhl1wDVvACsGDGU0nh5xnG58t/XRJAB7VPM2x3fNg=;
+        b=kxEOFn5XDzC+g7yMnm5mTdGJwMvBZ/DW7G5W4nmge30/HrY2w0vnwNcCvd3/jzyKvT
+         JHeHUNXu1uA1HVG3QCGOMcWrrvW9rnQMKctWJzf0Evr9EW0VNcOZETUv+oegQZ7FLeUf
+         KiDhaZuc9IR3G+HbdAhwrRAh/2l8R+9XA3okHBQyY8YPnrPEjVTxQ2vB0D769OpcKSaI
+         LGrj2oI+GFHF4fzB2lPhL0Z0wUjASk2O9SW7jTGhzXIogXQh1eTnTxyuR1dU29mQ04T6
+         UHhZpIp/nRVfUzRtaboXIn7n8YA2b0h+C0ZRFXpSiplH2CzkMLStScmMhyLFK9bqmMM8
+         h4RA==
+Received: by 10.216.216.95 with SMTP id f73mr13217428wep.149.1338472591001;
+ Thu, 31 May 2012 06:56:31 -0700 (PDT)
+Received: by 10.223.64.208 with HTTP; Thu, 31 May 2012 06:56:00 -0700 (PDT)
+In-Reply-To: <20120531135222.GB10523@burratino>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198900>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198901>
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
+On Thu, May 31, 2012 at 8:52 PM, Jonathan Nieder <jrnieder@gmail.com> w=
+rote:
+> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
+>
+>> + =C2=A0 =C2=A0 const char *msg[] =3D {
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 "CONFLICT (rename/delete=
+): %s deleted in %s and renamed in %s. Version %s of %s left in tree.",
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 "CONFLICT (modify/delete=
+): %s deleted in %s and modified in %s. Version %s of %s left in tree."=
+,
+>> + =C2=A0 =C2=A0 };
+>> + =C2=A0 =C2=A0 const char *renamed_msg[] =3D {
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 "CONFLICT (rename/delete=
+): %s deleted in %s and renamed in %s. Version %s of %s left in tree at=
+ %s.",
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 "CONFLICT (modify/delete=
+): %s deleted in %s and modified in %s. Version %s of %s left in tree a=
+t %s.",
+>> + =C2=A0 =C2=A0 };
+>
+> Is lego by sentence ok? =C2=A0i.e., having 4 translated messages:
+>
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0CONFLICT (rename/delete): %s deleted in %s=
+ and renamed in %s.
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0CONFLICT (modify/delete): %s deleted in %s=
+ and modified in %s.
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0Version %s of %s left in tree.
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0Version %s of %s left in tree at %s.
 
-> +	const char *msg[] =3D {
-> +		"CONFLICT (rename/delete): %s deleted in %s and renamed in %s. Ver=
-sion %s of %s left in tree.",
-> +		"CONFLICT (modify/delete): %s deleted in %s and modified in %s. Ve=
-rsion %s of %s left in tree.",
-> +	};
-> +	const char *renamed_msg[] =3D {
-> +		"CONFLICT (rename/delete): %s deleted in %s and renamed in %s. Ver=
-sion %s of %s left in tree at %s.",
-> +		"CONFLICT (modify/delete): %s deleted in %s and modified in %s. Ve=
-rsion %s of %s left in tree at %s.",
-> +	};
-
-Is lego by sentence ok?  i.e., having 4 translated messages:
-
-	CONFLICT (rename/delete): %s deleted in %s and renamed in %s.
-	CONFLICT (modify/delete): %s deleted in %s and modified in %s.
-	Version %s of %s left in tree.
-	Version %s of %s left in tree at %s.
+Yeah, should have separated these sentences, less work for translators.
+--=20
+Duy
