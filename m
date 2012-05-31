@@ -1,247 +1,129 @@
 From: Guillaume Sasdy <guillaume.sasdy@ensimag.imag.fr>
-Subject: [PATCH 1/2] FIX: t9360. NEW test t9361 for git pull and git push
-Date: Thu, 31 May 2012 20:13:11 +0200
-Message-ID: <1338487992-305-1-git-send-email-guillaume.sasdy@ensimag.imag.fr>
+Subject: [PATCH 1/3] FIX: cmd_* moved to wiki_* in test-gitmw-lib.sh and other files
+Date: Thu, 31 May 2012 20:31:50 +0200
+Message-ID: <1338489110-4843-1-git-send-email-guillaume.sasdy@ensimag.imag.fr>
 References: <4FC64B0C.6070507@ensimag.imag.fr>
 Cc: Matthieu.Moy@imag.fr, simon.cathebras@ensimag.imag.fr,
 	charles.roussel@ensimag.imag.fr, Julien.Khayat@ensimag.imag.fr,
-	Simon.Perrat@ensimag.imag.fr,
-	Guillaume Sasdy <guillaume.sasdy@ensimag.imag.fr>
+	Simon.Perrat@ensimag.imag.fr
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 31 20:31:01 2012
+X-From: git-owner@vger.kernel.org Thu May 31 20:32:05 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SaA9E-0004r6-6x
-	for gcvg-git-2@plane.gmane.org; Thu, 31 May 2012 20:31:00 +0200
+	id 1SaAAF-0005ng-68
+	for gcvg-git-2@plane.gmane.org; Thu, 31 May 2012 20:32:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758307Ab2EaSa4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 31 May 2012 14:30:56 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:50979 "EHLO shiva.imag.fr"
+	id S1758323Ab2EaSb7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 31 May 2012 14:31:59 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:51051 "EHLO shiva.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754714Ab2EaSaz (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 31 May 2012 14:30:55 -0400
+	id S1758304Ab2EaSb6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 31 May 2012 14:31:58 -0400
 Received: from ensimag.imag.fr (ensimag.imag.fr [195.221.228.12])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id q4VI57p3030272
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id q4VINXv6000406
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 31 May 2012 20:05:07 +0200
+	Thu, 31 May 2012 20:23:33 +0200
 Received: from ensibm.imag.fr (ensibm [195.221.228.8])
-	by ensimag.imag.fr (8.13.8/8.13.8/ImagV2.1.r_ens) with ESMTP id q4VIDS5P031587;
-	Thu, 31 May 2012 20:13:28 +0200
+	by ensimag.imag.fr (8.13.8/8.13.8/ImagV2.1.r_ens) with ESMTP id q4VIVs3F031686;
+	Thu, 31 May 2012 20:31:54 +0200
 Received: from ensibm.imag.fr (localhost [127.0.0.1])
-	by ensibm.imag.fr (8.13.8/8.13.8/ImagV2.1.sb_ens.pm) with ESMTP id q4VIDSGr000393;
-	Thu, 31 May 2012 20:13:28 +0200
+	by ensibm.imag.fr (8.13.8/8.13.8/ImagV2.1.sb_ens.pm) with ESMTP id q4VIVsqn004885;
+	Thu, 31 May 2012 20:31:54 +0200
 Received: (from sasdygu@localhost)
-	by ensibm.imag.fr (8.13.8/8.13.8/Submit) id q4VIDSZD000392;
-	Thu, 31 May 2012 20:13:28 +0200
+	by ensibm.imag.fr (8.13.8/8.13.8/Submit) id q4VIVsIa004884;
+	Thu, 31 May 2012 20:31:54 +0200
 X-Mailer: git-send-email 1.7.10.2.568.g4c26a3a
 In-Reply-To: <4FC64B0C.6070507@ensimag.imag.fr>
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Thu, 31 May 2012 20:05:07 +0200 (CEST)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Thu, 31 May 2012 20:23:33 +0200 (CEST)
 X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: q4VI57p3030272
+X-MailScanner-ID: q4VINXv6000406
 X-IMAG-MailScanner: Found to be clean
 X-IMAG-MailScanner-SpamCheck: 
 X-IMAG-MailScanner-From: guillaume.sasdy@ensimag.imag.fr
-MailScanner-NULL-Check: 1339092307.85392@+4MZTV2wIs69fQ5YWFrSKw
+MailScanner-NULL-Check: 1339093415.96508@boSSHvXEN92/aYpYOtSQqw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198936>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198937>
 
-t9360: change the description of the test. Test git clone
-t9361: Test git pull (add page, edit page, delete page) and git push on simple test cases (add file, edit file, delete file).
+From: Simon Cathebras <simon.cathebras@ensimag.imag.fr>
+
+Function cmd_* has been renamed in wiki_* in t/install-wiki.sh.
+Change the calls in t/test-gitmw-lib.sh
 ---
- t/t9360-git-mediawiki.sh |   4 +-
- t/t9361-git-mediawiki.sh | 156 +++++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 158 insertions(+), 2 deletions(-)
- create mode 100755 t/t9361-git-mediawiki.sh
+ t/install-wiki.sh   |  4 ++--
+ t/test-gitmw-lib.sh | 10 +++++-----
+ 2 files changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/t/t9360-git-mediawiki.sh b/t/t9360-git-mediawiki.sh
-index 8de56c5..57e05d8 100755
---- a/t/t9360-git-mediawiki.sh
-+++ b/t/t9360-git-mediawiki.sh
-@@ -12,7 +12,7 @@
+diff --git a/t/install-wiki.sh b/t/install-wiki.sh
+index 725346e..322f46d 100755
+--- a/t/install-wiki.sh
++++ b/t/install-wiki.sh
+@@ -19,11 +19,11 @@ usage () {
+ # Argument: install, delete, --help | -h
+ case "$1" in
+ 	"install")
+-		cmd_install
++		wiki_install
+ 		exit 0
+ 		;;
+ 	"delete")
+-		cmd_delete
++		wiki_delete
+ 		exit 0
+ 		;;
+ 	"--help" | "-h")
+diff --git a/t/test-gitmw-lib.sh b/t/test-gitmw-lib.sh
+index 8698625..b89b45a 100755
+--- a/t/test-gitmw-lib.sh
++++ b/t/test-gitmw-lib.sh
+@@ -136,7 +136,7 @@ fail()
  
- # tests for git-remote-mediawiki
  
--test_description='Test the Git Mediawiki remote helper'
-+test_description='Test the Git Mediawiki remote helper: git clone'
+ # Install a wiki in your web server directory.
+-cmd_install () {
++wiki_install () {
  
- . ./test-gitmw-lib.sh
- . ./test-lib.sh
-@@ -36,7 +36,7 @@ then
- fi
+ 	# Copy the generic LocalSettings.php in the web server's directory
+ 	# And modify parameters according to the ones set at the top
+@@ -206,7 +206,7 @@ cmd_install () {
+ # Argument $1 is the relative path to the folder $FILES_FOLDER
+ #
+ # Warning: This function should be not called by user. This is a private
+-# function used by cmd_install and cmd_delete
++# function used by wiki_install and wiki_delete
+ reset_db_wiki () {
  
- test_expect_success 'git clone works with page added' '
--	cmd_reset &&
-+	wiki_reset &&
- 	wiki_editpage foo "hello_world" false &&
- 	wiki_editpage bar "hi everybody !" false &&
- 	git clone mediawiki::http://localhost/wiki mw_dir &&
-diff --git a/t/t9361-git-mediawiki.sh b/t/t9361-git-mediawiki.sh
-new file mode 100755
-index 0000000..9dd7274
---- /dev/null
-+++ b/t/t9361-git-mediawiki.sh
-@@ -0,0 +1,156 @@
-+#!/bin/sh
-+#
-+# Copyright (C) 2012
-+#     Charles Roussel <charles.roussel@ensimag.imag.fr>
-+#     Simon Cathebras <simon.cathebras@ensimag.imag.fr>
-+#     Julien Khayat <julien.khayat@ensimag.imag.fr>
-+#     Guillaume Sasdy <guillaume.sasdy@ensimag.imag.fr>
-+#     Simon Perrat <simon.perrat@ensimag.imag.fr>
-+#     Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-+#
-+# License: GPL v2 or later
-+
-+# tests for git-remote-mediawiki
-+
-+test_description='Test the Git Mediawiki remote helper: git push and git pull simple test cases'
-+
-+. ./test-gitmw-lib.sh
-+. ./test-lib.sh
-+
-+if ! test_have_prereq PERL
-+then
-+	skip_all='skipping gateway git-mw tests, perl not available'
-+	test_done
-+fi
-+
-+if [ ! -f /$GIT_BUILD_DIR/git-remote-mediawiki ];
-+then
-+	skip_all='skipping gateway git-mw tests, no remote mediawiki for git found'
-+	test_done
-+fi
-+
-+if [ ! -d "$WIKI_DIR_INST/$WIKI_DIR_NAME" ] ;
-+then
-+	skip_all='skipping gateway git-mw tests, no mediawiki found'
-+	test_done
-+fi
-+
-+# Create a new file foo.mw in a freshly cloned wiki. Commit and push
-+# this file and then check that all files of the repository are similar to
-+# the wiki pages.
-+test_expect_success 'git push works after adding a file .mw' "
-+        wiki_reset &&
-+        git clone mediawiki::http://$SERVER_ADDR/$WIKI_DIR_NAME mw_dir &&
-+        wiki_getallpage ref_page &&
-+
-+        cd mw_dir &&
-+        test ! -f foo.mw && # foo.mw should not exist after wiki_reset &&
-+        touch foo.mw &&
-+        echo \"hello world\" >> foo.mw &&
-+        git add foo.mw &&
-+        git commit -m \"foo\" &&
-+        git push &&
-+        cd .. &&
-+
-+        rm -rf ref_page &&
-+        wiki_getallpage ref_page &&
-+        git_content mw_dir ref_page &&
-+        rm -rf ref_page &&
-+        rm -rf mw_dir
-+"
-+
-+# Create a new page Foo in an empty wiki. Clone the wiki and edit
-+# the file foo.mw corresponding to the page Foo. Commit and push
-+# then check that all files of the repository are similar to the wiki
-+# pages.
-+test_expect_success 'git push works after editing a file .mw' "
-+        # clone an empty wiki and add a Foo page
-+        wiki_reset &&
-+        wiki_editpage \"foo\" \"page just created before the git clone\" false &&
-+        git clone mediawiki::http://$SERVER_ADDR/$WIKI_DIR_NAME mw_dir &&
-+
-+        cd mw_dir &&
-+        echo \"new line added in the file foo.mw\" >> Foo.mw &&
-+        git commit -am \"edit file foo.mw\" &&
-+        git push &&
-+        cd .. &&
-+
-+        rm -rf ref_page &&
-+        wiki_getallpage ref_page &&
-+        git_content mw_dir ref_page &&
-+        rm -rf ref_page &&
-+        rm -rf mw_dir
-+"
-+
-+# Clone a wiki with a page Foo. Remove the corresponding file from the
-+# repository. Check that the wiki page has been actually removed.
-+test_expect_failure 'git push works after deleting a file' "
-+        wiki_reset &&
-+        wiki_editpage foo \"wiki page added before git clone\" false &&
-+        git clone mediawiki::http://$SERVER_ADDR/$WIKI_DIR_NAME mw_dir &&
-+
-+        cd mw_dir &&
-+        git rm Foo.mw &&
-+        git commit -am \"git rm delete the wiki page Foo.mw\" &&
-+        git push &&
-+        cd .. &&
-+
-+        rm -rf mw_dir &&
-+        test ! wiki_page_exist Foo
-+"
-+
-+# Clone an empty wiki. Add a page on the wiki and pull. Check 
-+# all files of the repository are similar to the wiki pages.
-+test_expect_success 'git pull works after adding a new wiki page' "
-+        wiki_reset &&
-+        git clone mediawiki::http://$SERVER_ADDR/$WIKI_DIR_NAME mw_dir &&
-+        wiki_editpage foo \"page just created after the git clone\" false &&
-+
-+        cd mw_dir &&
-+        git pull &&
-+        cd .. &&
-+
-+        rm -rf ref_page &&
-+        wiki_getallpage ref_page &&
-+        git_content mw_dir ref_page &&
-+        rm -rf ref_page &&
-+        rm -rf mw_dir
-+"
-+
-+# Clone a wiki with a page Foo. Edit the page foo on the wiki and pull.
-+# Check that all files of the repository are similar to the wiki pages.
-+test_expect_success 'git pull works after editing a wiki page' "
-+        wiki_reset &&
-+        wiki_editpage foo \"page just created before the git clone\" false &&
-+        git clone mediawiki::http://$SERVER_ADDR/$WIKI_DIR_NAME mw_dir &&
-+        wiki_editpage foo \"new line added on the wiki\" true &&
-+
-+        cd mw_dir &&
-+        git pull &&
-+        cd .. &&
-+       
-+        rm -rf ref_page &&
-+        wiki_getallpage ref_page &&
-+        git_content mw_dir ref_page &&
-+        rm -rf ref_page
-+        rm -rf mw_dir
-+"
-+
-+# Clone a wiki with a page Foo. Remove the wiki page and pull.
-+# Check that the corresponding file in the repository has been actually removed.
-+test_expect_failure 'git pull works after deleting a wiki page' "
-+        wiki_reset &&
-+        wiki_editpage foo \"wiki page added before git clone\" false &&
-+        git clone mediawiki::http://$SERVER_ADDR/$WIKI_DIR_NAME mw_dir &&
-+
-+        cd mw_dir &&
-+        wiki_delete_page foo
-+        git pull &&
-+        test ! -f Foo.mw &&
-+        cd .. &&
-+
-+        rm -rf mw_dir
-+"
-+
-+test_done
-+
+ 	# Copy initial database of the wiki
+@@ -221,7 +221,7 @@ reset_db_wiki () {
+ # Set the admin WikiAdmin with password AdminPass in the database.
+ #
+ # Warning: This function should be not called by user. This is a private
+-# function used by cmd_install and cmd_delete
++# function used by wiki_install and wiki_delete
+ set_admin_wiki () {
+ 
+ 	#Add the admin
+@@ -237,14 +237,14 @@ set_admin_wiki () {
+ # Reset the database of the wiki and the password of the admin
+ #
+ # Warning: This function must be called only in a subdirectory of t/ directory
+-cmd_reset () {
++wiki_reset () {
+ 	reset_db_wiki ".."
+ 	set_admin_wiki
+ }
+ 
+ # Delete the wiki created in the web server's directory and all its content
+ # saved in the database.
+-cmd_delete () {
++wiki_delete () {
+ 	# Delete the wiki's directory.
+ 	rm -rf "$WIKI_DIR_INST/$WIKI_DIR_NAME" ||
+ 		fail "Wiki's directory $WIKI_DIR_INST/" \
 -- 
 1.7.10.2.568.g4c26a3a
