@@ -1,82 +1,108 @@
-From: nguyenhu@minatec.inpg.fr
-Subject: Re: [PATCHv2] Possibility to read both from ~/.gitconfig and from
- $XDG_CONFIG_HOME/git/config
-Date: Thu, 31 May 2012 10:46:34 +0200
-Message-ID: <20120531104634.Horde.MtY_VHwdC4BPxy-qPK1XmXA@webmail.minatec.grenoble-inp.fr>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed; DelSp=Yes
-Cc: git@vger.kernel.org, Lucien KONG <Lucien.Kong@ensimag.imag.fr>,
-	Valentin DUPERRAY <Valentin.Duperray@ensimag.imag.fr>,
-	Thomas NGUY <Thomas.Nguy@ensimag.imag.fr>,
-	Franck JONAS <Franck.Jonas@ensimag.imag.fr>
-To: Junio C Hamano <gitster@pobox.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Thu May 31 10:47:41 2012
+From: Fredrik Gustafsson <iveqy@iveqy.com>
+Subject: [PATCH] Remove perl dependency from git-submodule.sh
+Date: Thu, 31 May 2012 10:48:46 +0200
+Message-ID: <1338454126-30441-1-git-send-email-iveqy@iveqy.com>
+Cc: jens.lehmann@web.de, gitster@pobox.com, iveqy@iveqy.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu May 31 10:49:39 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Sa12e-00023J-9i
-	for gcvg-git-2@plane.gmane.org; Thu, 31 May 2012 10:47:36 +0200
+	id 1Sa14a-0003p5-02
+	for gcvg-git-2@plane.gmane.org; Thu, 31 May 2012 10:49:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757952Ab2EaIqj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 31 May 2012 04:46:39 -0400
-Received: from v-smtp.minatec.grenoble-inp.fr ([147.173.216.28]:34043 "EHLO
-	v-smtp.minatec.grenoble-inp.fr" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1757910Ab2EaIqh (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 31 May 2012 04:46:37 -0400
-Received: from localhost (www02.minatec.grenoble-inp.fr [147.173.216.15])
-	by v-smtp.minatec.grenoble-inp.fr (Postfix) with ESMTP id 896051A02F5;
-	Thu, 31 May 2012 10:46:34 +0200 (CEST)
-Received: from wifi-029133.grenet.fr (wifi-029133.grenet.fr
- [130.190.29.133]) by webmail.minatec.grenoble-inp.fr (Horde Framework) with
- HTTP; Thu, 31 May 2012 10:46:34 +0200
-User-Agent: Internet Messaging Program (IMP) H4 (5.0.17)
-Content-Disposition: inline
+	id S1751471Ab2EaIt2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 31 May 2012 04:49:28 -0400
+Received: from mail-lpp01m010-f46.google.com ([209.85.215.46]:37784 "EHLO
+	mail-lpp01m010-f46.google.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751217Ab2EaIt0 (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 31 May 2012 04:49:26 -0400
+Received: by lahd3 with SMTP id d3so529034lah.19
+        for <git@vger.kernel.org>; Thu, 31 May 2012 01:49:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:date:message-id:x-mailer;
+        bh=XYD7gTh6pjtz82XM/GY/cFpoNX1hrZlRxnEi2v3fhfI=;
+        b=yI9DZs7UsSHe2For4E6IusSbXZV/GaM6zFX7SOVc/kAxGOr/QcRFKCO0+8h0S/VDek
+         8RvtD8zSWTfl16B4sLIuVjxHn3TxCezhLwnFosQxrCeee99+B5PzhUdp9LA8iHOYcvKz
+         LAri8LWsxg8MnayNrfP4r0PB6lauZnBY1WVwz/ibLSOVSW/K2wHAWl+oohd15/pC0k2M
+         m/nd4akB+ZR3JguFIr3P2Hz2shFTqY794+GzZhZjT+wEboBt1yhm7HW0h2ICSOyF+NI2
+         Cw8LuZwEu8pC8KHnO3WIb1Dk/Ue4GuYCDQzq2iv3INgcsdF9Jr2gchSjIfouUjjYCejN
+         llKg==
+Received: by 10.112.40.36 with SMTP id u4mr8224097lbk.70.1338454165444;
+        Thu, 31 May 2012 01:49:25 -0700 (PDT)
+Received: from paksenarrion.iveqy.com (h-184-249.a189.priv.bahnhof.se. [85.24.184.249])
+        by mx.google.com with ESMTPS id fy10sm3524175lab.0.2012.05.31.01.49.24
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 31 May 2012 01:49:24 -0700 (PDT)
+Received: from iveqy by paksenarrion.iveqy.com with local (Exim 4.72)
+	(envelope-from <iveqy@paksenarrion.iveqy.com>)
+	id 1Sa13w-0007vX-Kd; Thu, 31 May 2012 10:48:56 +0200
+X-Mailer: git-send-email 1.7.5.1180.g4bfe7.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198872>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198873>
 
+Rewrote a perl section in sh.
 
-Junio C Hamano <gitster@pobox.com> wrote:
-> Is it just me who finds the above three lines extremely unreadable?
->
-> Also can you give this patch a bit more sensible title?
-> "Possibility to" does not tell us much---anything is possible if you
-> change code after all.
->
-> I see the patch does not touch the writing codepath, which is
-> probably a good thing, but the log message should explicitly state
-> that.
+The code may be a bit slower (doing grep on strings instead of using
+perl-lists).
 
-I will change that in my next version.
+Signed-off-by: Fredrik Gustafsson <iveqy@iveqy.com>
+---
+ git-submodule.sh |   35 ++++++++++++++++++-----------------
+ 1 files changed, 18 insertions(+), 17 deletions(-)
 
-> I am not sure in what way $HOME/.gitconfig has "priority".
->
-> Your proposed log message says that You read from $HOME/.gitconfig
-> and then from $XDG_CONFIG_HOME/git/config, which means that any
-> single-valued variable set in $HOME/.gitconfig will be overwritten
-> by whatever is in $XDG_CONFIG_HOME/git/config, no?  That sounds like
-> you are giving priority to the latter to me.
-
-You are right. Git takes into account $HOME/.gitconfig if one variable  
-is defined in both configuration files. I will explains that more  
-clearly in documentation.
-
-> The original that read from $HOME/.gitconfig was simple enough so
-> having three copies of getenv("HOME") was perfectly fine, but as you
-> are introduce this much complexity to to decide which two files to
-> read from, the code added this patch needs to be refactored and
-> three copies of the same logic need to be consolidated, I would have
-> to say.
-
-Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
-> Shouldn't there be a helper function to get the path ~/.config/git/
-> and then append config? You're already computing this path twice, and
-> we'll need more instances of it if we want to give default values to
-> core.excludesfile and core.attributesfile in this directory too.
-
-I agree. I will write a function to get ~/.config/git/ and refactor code.
+diff --git a/git-submodule.sh b/git-submodule.sh
+index f46862f..d3dfb24 100755
+--- a/git-submodule.sh
++++ b/git-submodule.sh
+@@ -73,24 +73,25 @@ resolve_relative_url ()
+ #
+ module_list()
+ {
++	unmerged=
++	null_sha1=0000000000000000000000000000000000000000
+ 	git ls-files --error-unmatch --stage -- "$@" |
+-	perl -e '
+-	my %unmerged = ();
+-	my ($null_sha1) = ("0" x 40);
+-	while (<STDIN>) {
+-		chomp;
+-		my ($mode, $sha1, $stage, $path) =
+-			/^([0-7]+) ([0-9a-f]{40}) ([0-3])\t(.*)$/;
+-		next unless $mode eq "160000";
+-		if ($stage ne "0") {
+-			if (!$unmerged{$path}++) {
+-				print "$mode $null_sha1 U\t$path\n";
+-			}
+-			next;
+-		}
+-		print "$_\n";
+-	}
+-	'
++	while read mode sha1 stage path
++	do
++		if test $mode -eq 160000
++		then
++			if test $stage -ne 0
++			then
++				if test -z "$(echo $unmerged | grep "|$path|")"
++					then
++					echo "$mode $null_sha1 U\t$path"
++				fi
++				unmerged="$unmerged|$path|"
++			else
++				echo "$mode $sha1 $stage\t$path"
++			fi
++		fi
++	done
+ }
+ 
+ #
+-- 
+1.7.5.1180.g4bfe7.dirty
