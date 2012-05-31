@@ -1,80 +1,70 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Bug: rebase when an author uses accents in name on MacOSx
-Date: Wed, 30 May 2012 23:33:50 -0700
-Message-ID: <7v62bc97w1.fsf@alter.siamese.dyndns.org>
-References: <06DD2F56-F956-46DF-84A4-3443D4702CDE@spotinfluence.com>
- <7vehq18c82.fsf@alter.siamese.dyndns.org>
- <20120531011911.GC5488@sigill.intra.peff.net>
+From: Andrew Ardill <andrew.ardill@gmail.com>
+Subject: Re: [PATCHv4 1/3] wt-status.*: better advices for git status added
+Date: Thu, 31 May 2012 16:34:29 +1000
+Message-ID: <CAH5451kTS+LhVoSz_jiz4UTK_AwocMzn9HctOLyAUDN9j492Aw@mail.gmail.com>
+References: <1338226598-16056-1-git-send-email-Lucien.Kong@ensimag.imag.fr>
+ <1338384216-18782-1-git-send-email-Lucien.Kong@ensimag.imag.fr> <vpqipfcsw1x.fsf@bauges.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Thomas Rast <trast@inf.ethz.ch>,
-	Lanny Ripple <lanny@spotinfluence.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu May 31 08:33:58 2012
+Content-Type: text/plain; charset=UTF-8
+Cc: Kong Lucien <Lucien.Kong@ensimag.imag.fr>, git@vger.kernel.org,
+	Duperray Valentin <Valentin.Duperray@ensimag.imag.fr>,
+	Jonas Franck <Franck.Jonas@ensimag.imag.fr>,
+	Nguy Thomas <Thomas.Nguy@ensimag.imag.fr>,
+	Nguyen Huynh Khoi Nguyen Lucien 
+	<Huynh-Khoi-Nguyen.Nguyen@ensimag.imag.fr>
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Thu May 31 08:34:58 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SZyxJ-0003ON-Dj
-	for gcvg-git-2@plane.gmane.org; Thu, 31 May 2012 08:33:57 +0200
+	id 1SZyyE-00042T-Ss
+	for gcvg-git-2@plane.gmane.org; Thu, 31 May 2012 08:34:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752007Ab2EaGdx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 31 May 2012 02:33:53 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:52529 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750955Ab2EaGdw (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 31 May 2012 02:33:52 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 650405EBC;
-	Thu, 31 May 2012 02:33:52 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=xMR3J/CiEp24GiJek0JuUlsf0rQ=; b=sG9y9g
-	bA+qVJojCh531nBcRI1H8mJvXp61WpTT4Kq4L1iyNPtnAhyDcHML0kMaKVcdh2uU
-	fGJ8HmltrWk/gmOc2Mu3x4FZsqtGy8hE+GxbLvn4Fz4h3mBpF85RqcvbobEqTvod
-	sX/RFbq5owxVDCF0uwj+6dA36F5P6sfS3PYZw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=RyDqbGy2Ng9+YJEf0rIRjK1EEwjvUMDK
-	DSVJY0qCFPBxIof7muXwojFC9IJykJgCNsbAwBKKOFVWNgaI0yVdMHZAchRGd8Qz
-	StcSDCPyNg/rvAC47rWVaIV/3974EvTfiRmvWsbid53H7SdrvSZRMefpcdJHaV3R
-	Z9nPs2wPx0E=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5DA995EBB;
-	Thu, 31 May 2012 02:33:52 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E3ED15EBA; Thu, 31 May 2012
- 02:33:51 -0400 (EDT)
-In-Reply-To: <20120531011911.GC5488@sigill.intra.peff.net> (Jeff King's
- message of "Wed, 30 May 2012 21:19:11 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 965B232C-AAEA-11E1-BAA8-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752023Ab2EaGev (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 31 May 2012 02:34:51 -0400
+Received: from mail-wg0-f44.google.com ([74.125.82.44]:62237 "EHLO
+	mail-wg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750955Ab2EaGeu (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 31 May 2012 02:34:50 -0400
+Received: by wgbdr13 with SMTP id dr13so558524wgb.1
+        for <git@vger.kernel.org>; Wed, 30 May 2012 23:34:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=H2XADxTWRwbePItGZ6T1cprlP7eGGBnTf9y5ra3AQKY=;
+        b=07fwQtU97Xp3yLk7sv3Xd4eBkQBEUsf2o9MJyutMU+SekgT9Oztjk070/2Kq/DmBeg
+         1Y9qcoagWQaSPBMouqvpWHxiGzw3DLGsT2oc6ifbRarwGKtH1FF9Wp4eJq4e9OnGsZX/
+         r8dAILeWS6My8ZXE2EbtkI/waFZEr/pGaDMdTbGemWM8LyxedAiMoKgXEVslqOx1Hah2
+         vOHU8LaW08LUe9lFKxdD4aJRwNF+hs1jS0NvlusqSGktqU5ObmZ0mPguqx4n8WAQGjOZ
+         9tOyIPU/kvPCbx/Kh56OVUGKGlqi/QPDJC+j1mlacPp/4PhWa5yD7d0wCZrv+/Eoo9ZY
+         8lkA==
+Received: by 10.216.228.150 with SMTP id f22mr11326016weq.192.1338446089317;
+ Wed, 30 May 2012 23:34:49 -0700 (PDT)
+Received: by 10.223.86.80 with HTTP; Wed, 30 May 2012 23:34:29 -0700 (PDT)
+In-Reply-To: <vpqipfcsw1x.fsf@bauges.imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198862>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198863>
 
-Jeff King <peff@peff.net> writes:
-
-> On Wed, May 30, 2012 at 04:45:33PM -0700, Junio C Hamano wrote:
-> ...
->> So in C locale where each byte is supposed to be a single character,
->> that implementation of "sed" refuses to match a byte with high-bit
->> set when given a pattern '.'?
->> 
->> That is a surprising breakage, I would have to say.
+On 31 May 2012 16:29, Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> wrote:
+> Kong Lucien <Lucien.Kong@ensimag.imag.fr> writes:
 >
-> It should not be too surprising, since we discussed it a few months ago:
+>> The new messages are not shown when using options such as
+>> -s or --porcelain.The messages about the current
 >
->   http://thread.gmane.org/gmane.comp.version-control.git/192218
+> space between . and The (normally, 2 spaces in english).
 
-Heh, no wonder I do not recall that one, as everything happened and
-conclusions reached while I was sleeping ;-)
+It is not common practice to use 2 spaces after a period any more,
+especially on the web. A good summary of information around using 1 or
+2 spaces after a period can be found at [1]
 
-If it is not a bug in platform-sanctioned sed, but a buggy
-third-party build, then I wouldn't worry about it for this cycle,
-but pre-release freeze might be a good time to start sketching
-Thomas's --format="%'%an <%ae>%'" approach, perhaps?
+Regards,
+
+Andrew Ardill
+
+[1] http://www.webword.com/reports/period.html
