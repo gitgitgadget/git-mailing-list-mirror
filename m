@@ -1,85 +1,99 @@
-From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-Subject: Re: [PATCHv2] Possibility to read both from ~/.gitconfig and from
- $XDG_CONFIG_HOME/git/config
-Date: Thu, 31 May 2012 23:06:48 +0100
-Message-ID: <4FC7EB78.5090903@ramsay1.demon.co.uk>
-References: <1338400509-26087-1-git-send-email-Huynh-Khoi-Nguyen.Nguyen@ensimag.imag.fr> <1338412775-22840-1-git-send-email-Huynh-Khoi-Nguyen.Nguyen@ensimag.imag.fr> <7vr4u1xrkp.fsf@alter.siamese.dyndns.org>
+From: Kevin Stange <kevin@steadfast.net>
+Subject: [RFC] Deal with HTTP 401 by requesting credentials.
+Date: Thu, 31 May 2012 17:24:55 -0500
+Message-ID: <4FC7EFB7.4090704@steadfast.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jun 01 00:07:33 2012
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jun 01 00:34:02 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SaDWg-0005JP-GR
-	for gcvg-git-2@plane.gmane.org; Fri, 01 Jun 2012 00:07:26 +0200
+	id 1SaDvU-00021B-FQ
+	for gcvg-git-2@plane.gmane.org; Fri, 01 Jun 2012 00:33:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754592Ab2EaWHT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 31 May 2012 18:07:19 -0400
-Received: from anchor-post-1.mail.demon.net ([195.173.77.132]:44693 "EHLO
-	anchor-post-1.mail.demon.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754135Ab2EaWHS (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 31 May 2012 18:07:18 -0400
-Received: from ramsay1.demon.co.uk ([193.237.126.196])
-	by anchor-post-1.mail.demon.net with esmtp (Exim 4.69)
-	id 1SaDWV-0006x5-fy; Thu, 31 May 2012 22:07:17 +0000
-User-Agent: Thunderbird 1.5.0.2 (Windows/20060308)
-In-Reply-To: <7vr4u1xrkp.fsf@alter.siamese.dyndns.org>
+	id S1758566Ab2EaWcs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 31 May 2012 18:32:48 -0400
+Received: from staffmx.steadfast.net ([67.202.100.6]:50681 "EHLO
+	staffmx.steadfast.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758512Ab2EaWcX (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 31 May 2012 18:32:23 -0400
+X-Greylist: delayed 446 seconds by postgrey-1.27 at vger.kernel.org; Thu, 31 May 2012 18:32:23 EDT
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by staffmx.steadfast.net (Postfix) with ESMTP id 5488116AC09E
+	for <git@vger.kernel.org>; Thu, 31 May 2012 17:24:56 -0500 (CDT)
+X-Virus-Scanned: amavisd-new at steadfast.net
+Received: from staffmx.steadfast.net ([127.0.0.1])
+	by localhost (staffmx.steadfast.net [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id J9DrFn45Vily for <git@vger.kernel.org>;
+	Thu, 31 May 2012 17:24:55 -0500 (CDT)
+Received: from ziyal.office.steadfast.net (unknown [IPv6:2607:f128:0:1:222:4dff:fe51:2ed5])
+	by staffmx.steadfast.net (Postfix) with ESMTPSA id 9055C16AC09B
+	for <git@vger.kernel.org>; Thu, 31 May 2012 17:24:55 -0500 (CDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:12.0) Gecko/20120430 Thunderbird/12.0.1
+X-Enigmail-Version: 1.4.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198950>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198951>
 
-Junio C Hamano wrote:
-> Huynh Khoi Nguyen NGUYEN  <Huynh-Khoi-Nguyen.Nguyen@ensimag.imag.fr>
-[...]
+Request credentials from the user if none are already defined when a
+HTTP 401 is received on a restricted repository.  Then, resubmit the
+request and return the final result.
 
->> diff --git a/config.c b/config.c
->> index 71ef171..53557dc 100644
->> --- a/config.c
->> +++ b/config.c
->> @@ -939,10 +939,23 @@ int git_config_early(config_fn_t fn, void *data, const char *repo_config)
->>  
->>  	home = getenv("HOME");
->>  	if (home) {
->> -		char buf[PATH_MAX];
->> -		char *user_config = mksnpath(buf, sizeof(buf), "%s/.gitconfig", home);
->> -		if (!access(user_config, R_OK)) {
->> -			ret += git_config_from_file(fn, user_config, data);
->> +		const char *gitconfig_path = xstrdup(mkpath("%s/.gitconfig", home));
->> +		const char *xdg_config_path = NULL;
->> +		const char *xdg_config_home = NULL;
->> +
->> +		xdg_config_home = getenv("XDG_CONFIG_HOME");
->> +		if (xdg_config_home)
->> +			xdg_config_path = xstrdup(mkpath("%s/git/config", xdg_config_home));
->> +		else
->> +			xdg_config_path = xstrdup(mkpath("%s/.config/git/config", home));
-> 
-> Exactly the same comment applies here, too.
+This allows all webdav transactions to obtain credentials without having
+to individually handle the case in each request.  Having push working
+with HTTP auth is needed for a use case I have where storing the
+credentials in .netrc or using SSH keys is inappropriate.
 
-I have not tried this patch (or the v3 version, which I haven't read yet), but
-is it likely that this has re-introduced the bug addressed by commit 05bab3ea
-("config.c: Fix a static buffer overwrite bug by avoiding mkpath()", 19-11-2011)?.
+Apologies for anything wrong I might have done here.  I'm not used to
+procedures for this sort of patch submission, or terribly familiar with
+the code base.  I'm seeking advice on whether this approach is sane or
+completely crazy, and I'm willing to adjust it to make it suitable for
+inclusion.
 
-I don't know the answer, but I suspect that it may have done just that. (indeed, it
-may well have made the bug more likely to appear).
+Signed-off-by: Kevin <kevin@steadfast.net>
+---
+ http.c | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
-> 
-> The original that read from $HOME/.gitconfig was simple enough so
-> having three copies of getenv("HOME") was perfectly fine, but as you
-> are introduce this much complexity to to decide which two files to
-> read from, the code added this patch needs to be refactored and
-> three copies of the same logic need to be consolidated, I would have
-> to say.
+diff --git a/http.c b/http.c
+index 5cb87f1..e1c9e65 100644
+--- a/http.c
++++ b/http.c
+@@ -668,6 +668,21 @@ void finish_active_slot(struct active_request_slot
+*slot)
+ 	closedown_active_slot(slot);
+ 	curl_easy_getinfo(slot->curl, CURLINFO_HTTP_CODE, &slot->http_code);
 
-I agree. Also, using mksnpath() in the refactored code (rather than
-mkpath()) would be a good idea. :-P
++	if (slot->http_code == 401) {
++		if(!http_auth.username && !http_auth.password) {
++			active_requests++;
++			credential_fill(&http_auth);
++			init_curl_http_auth(slot->curl);
++			(*slot->finished) = 1;
++			if (start_active_slot(slot)) {
++				run_active_slot(slot);
++				return;
++			}
++		} else {
++			fprintf(stderr,"Authentication Failed!\n");
++		}
++	}
++
+ 	if (slot->finished != NULL)
+ 		(*slot->finished) = 1;
 
-ATB,
-Ramsay Jones
+-- 
+1.7.11.rc0.55.gb2478aa
+
+-- 
+Kevin Stange
+Chief Technology Officer
+Steadfast Networks
+http://steadfast.net
+Phone: 312-602-2689 ext. 203 | Fax: 312-602-2688 | Cell: 312-320-5867
