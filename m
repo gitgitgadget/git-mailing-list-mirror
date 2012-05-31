@@ -1,8 +1,9 @@
 From: Kong Lucien <Lucien.Kong@ensimag.imag.fr>
-Subject: [PATCHv5 1/3] wt-status.*: better advices for git status added
-Date: Thu, 31 May 2012 17:15:42 +0200
-Message-ID: <1338477344-15940-1-git-send-email-Lucien.Kong@ensimag.imag.fr>
+Subject: [PATCHv5 3/3] status: don't suggest "git rm" or "git add" if not appropriate
+Date: Thu, 31 May 2012 17:15:44 +0200
+Message-ID: <1338477344-15940-3-git-send-email-Lucien.Kong@ensimag.imag.fr>
 References: <1338384216-18782-1-git-send-email-Lucien.Kong@ensimag.imag.fr>
+ <1338477344-15940-1-git-send-email-Lucien.Kong@ensimag.imag.fr>
 Cc: Matthieu.Moy@grenoble-inp.fr,
 	Kong Lucien <Lucien.Kong@ensimag.imag.fr>,
 	Duperray Valentin <Valentin.Duperray@ensimag.imag.fr>,
@@ -11,64 +12,61 @@ Cc: Matthieu.Moy@grenoble-inp.fr,
 	Nguyen Huynh Khoi Nguyen 
 	<Huynh-Khoi-Nguyen.Nguyen@ensimag.imag.fr>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 31 17:16:09 2012
+X-From: git-owner@vger.kernel.org Thu May 31 17:16:30 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Sa76c-0007tO-Hx
-	for gcvg-git-2@plane.gmane.org; Thu, 31 May 2012 17:16:07 +0200
+	id 1Sa76y-0008EY-FG
+	for gcvg-git-2@plane.gmane.org; Thu, 31 May 2012 17:16:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932523Ab2EaPPu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 31 May 2012 11:15:50 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:49073 "EHLO shiva.imag.fr"
+	id S932459Ab2EaPPr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 31 May 2012 11:15:47 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:39154 "EHLO rominette.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932505Ab2EaPPs (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 31 May 2012 11:15:48 -0400
+	id S932327Ab2EaPPq (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 31 May 2012 11:15:46 -0400
 Received: from ensimag.imag.fr (ensimag.imag.fr [195.221.228.12])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id q4VF7N5k032367
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id q4VF7HiQ009874
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 31 May 2012 17:07:23 +0200
+	Thu, 31 May 2012 17:07:17 +0200
 Received: from ensibm.imag.fr (ensibm [195.221.228.8])
-	by ensimag.imag.fr (8.13.8/8.13.8/ImagV2.1.r_ens) with ESMTP id q4VFFihT030279;
+	by ensimag.imag.fr (8.13.8/8.13.8/ImagV2.1.r_ens) with ESMTP id q4VFFijH030283;
 	Thu, 31 May 2012 17:15:44 +0200
 Received: from ensibm.imag.fr (localhost [127.0.0.1])
-	by ensibm.imag.fr (8.13.8/8.13.8/ImagV2.1.sb_ens.pm) with ESMTP id q4VFFimX016439;
+	by ensibm.imag.fr (8.13.8/8.13.8/ImagV2.1.sb_ens.pm) with ESMTP id q4VFFia2016449;
 	Thu, 31 May 2012 17:15:44 +0200
 Received: (from konglu@localhost)
-	by ensibm.imag.fr (8.13.8/8.13.8/Submit) id q4VFFiCD016436;
+	by ensibm.imag.fr (8.13.8/8.13.8/Submit) id q4VFFiGE016447;
 	Thu, 31 May 2012 17:15:44 +0200
 X-Mailer: git-send-email 1.7.8
-In-Reply-To: <1338384216-18782-1-git-send-email-Lucien.Kong@ensimag.imag.fr>
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Thu, 31 May 2012 17:07:23 +0200 (CEST)
+In-Reply-To: <1338477344-15940-1-git-send-email-Lucien.Kong@ensimag.imag.fr>
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Thu, 31 May 2012 17:07:17 +0200 (CEST)
 X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: q4VF7N5k032367
+X-MailScanner-ID: q4VF7HiQ009874
 X-IMAG-MailScanner: Found to be clean
 X-IMAG-MailScanner-SpamCheck: 
 X-IMAG-MailScanner-From: lucien.kong@phelma.grenoble-inp.fr
-MailScanner-NULL-Check: 1339081644.26988@Eq0kOaeukjd2WpszDco0Yw
+MailScanner-NULL-Check: 1339081637.76567@87SeJYJtPHj68ndjMcWPmg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198918>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198919>
 
-This patch provides new informative help messages in the display of
-'git status' (at the top) during conflicts, rebase, am, bisect or
-cherry-pick process.
+The display of the advice '(use git add/rm [...])' (when there are
+unmerged files) after running 'git status' is now depending of the
+mark, whether it's 'both deleted', 'deleted by us/them' or others. For
+instance, when there is just one file that's marked as 'both deleted',
+'git status' shows '(use git rm [...])' and if there are two files,
+one as 'both deleted' and the other as 'added by them', the advice is
+'(use git add/rm [...])'.
 
-The new messages are not shown when using options such as -s or
---porcelain. The messages about the current situation of the user are
-always displayed but the advices on what the user needs to do in order
-to resume a rebase/bisect /am/ commit after resolving conflicts can be
-hidden by setting advice.statushints to 'false' in the config file.
+The previous tests in t7512-status-help.sh are updated.
 
-Thus, information about the updated advice.statushints key are added
-in Documentation/config.txt.
-
-Also, the test t7060-wt-status.sh is now working with the new help
-messages. Tests about suggestions of "git rm" are also added.
+Test about the case of only 'both deleted' is added in
+t7060-wtstatus.sh
 
 Signed-off-by: Kong Lucien <Lucien.Kong@ensimag.imag.fr>
 Signed-off-by: Duperray Valentin <Valentin.Duperray@ensimag.imag.fr>
@@ -76,322 +74,136 @@ Signed-off-by: Jonas Franck <Franck.Jonas@ensimag.imag.fr>
 Signed-off-by: Nguy Thomas <Thomas.Nguy@ensimag.imag.fr>
 Signed-off-by: Nguyen Huynh Khoi Nguyen <Huynh-Khoi-Nguyen.Nguyen@ensimag.imag.fr>
 ---
-The key advice.statushelp introduced in the previous patches is
-deleted. The messages are now controlled by advice.statushints.
+ t/t7060-wtstatus.sh    |   28 ++++++++++++++++++++++++++++
+ t/t7512-status-help.sh |    6 +++---
+ wt-status.c            |   37 ++++++++++++++++++++++++++++++++++++-
+ 3 files changed, 67 insertions(+), 4 deletions(-)
 
- Documentation/config.txt |    2 +
- t/t7060-wtstatus.sh      |   71 +++++++++++++++++++++
- wt-status.c              |  154 ++++++++++++++++++++++++++++++++++++++++++++++
- wt-status.h              |   11 +++
- 4 files changed, 238 insertions(+), 0 deletions(-)
-
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 915cb5a..52f5009 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -162,6 +162,8 @@ advice.*::
- 		Directions on how to stage/unstage/add shown in the
- 		output of linkgit:git-status[1] and the template shown
- 		when writing commit messages.
-+		Directions on how to end the current process shown
-+		in the output of linkgit:git-status[1].
- 	commitBeforeMerge::
- 		Advice shown when linkgit:git-merge[1] refuses to
- 		merge to avoid overwriting local changes.
 diff --git a/t/t7060-wtstatus.sh b/t/t7060-wtstatus.sh
-index b8cb490..8a6d68a 100755
+index 8a6d68a..60a1b99 100755
 --- a/t/t7060-wtstatus.sh
 +++ b/t/t7060-wtstatus.sh
-@@ -30,6 +30,8 @@ test_expect_success 'Report new path with conflict' '
- 
- cat >expect <<EOF
- # On branch side
-+# You have unmerged paths; fix conflicts and run "git commit".
-+#
- # Unmerged paths:
- #   (use "git add/rm <file>..." as appropriate to mark resolution)
- #
-@@ -118,4 +120,73 @@ test_expect_success 'git diff-index --cached -C shows 2 copies + 1 unmerged' '
- 	test_cmp expected actual
+@@ -189,4 +189,32 @@ test_expect_success 'status when conflicts with add and rm advice (both deleted)
+ 	test_cmp expect output
  '
  
 +
-+test_expect_success 'status when conflicts with add and rm advice (deleted by them)' '
-+	git init git &&
-+	cd git &&
++test_expect_success 'status when conflicts with only rm advice (both deleted)' '
 +	test_when_finished "cd ../ && rm -rf git" &&
-+	test_commit init main.txt init &&
-+	git checkout -b second_branch &&
-+	git rm main.txt &&
-+	git commit -m "main.txt deleted on second_branch" &&
-+	test_commit second conflict.txt second &&
-+	git checkout master &&
-+	test_commit on_second main.txt on_second &&
-+	test_commit master conflict.txt master &&
-+	test_must_fail git merge second_branch &&
-+	cat >expect <<-\EOF &&
-+	# On branch master
-+	# You have unmerged paths; fix conflicts and run "git commit".
-+	#
-+	# Unmerged paths:
-+	#   (use "git add/rm <file>..." as appropriate to mark resolution)
-+	#
-+	#	both added:         conflict.txt
-+	#	deleted by them:    main.txt
-+	#
-+	# Untracked files:
-+	#   (use "git add <file>..." to include in what will be committed)
-+	#
-+	#	expect
-+	#	output
-+	no changes added to commit (use "git add" and/or "git commit -a")
-+	EOF
-+	git status >output &&
-+	test_cmp expect output
-+'
-+
-+
-+test_expect_success 'status when conflicts with add and rm advice (both deleted)' '
-+	git init git &&
-+	cd git &&
-+	test_commit init main.txt init &&
-+	git branch second_branch &&
-+	git mv main.txt sub_master.txt &&
-+	git commit -m "main.txt renamed in sub_master.txt" &&
-+	git checkout second_branch &&
-+	git mv main.txt sub_second.txt &&
-+	git commit -m "main.txt renamed in sub_second.txt" &&
-+	test_must_fail git merge master &&
++	git add sub_master.txt &&
++	git add sub_second.txt &&
 +	cat >expect <<-\EOF &&
 +	# On branch second_branch
 +	# You have unmerged paths; fix conflicts and run "git commit".
 +	#
++	# Changes to be committed:
++	#
++	#	new file:   sub_master.txt
++	#
 +	# Unmerged paths:
-+	#   (use "git add/rm <file>..." as appropriate to mark resolution)
++	#   (use "git rm <file>..." to mark resolution)
 +	#
 +	#	both deleted:       main.txt
-+	#	added by them:      sub_master.txt
-+	#	added by us:        sub_second.txt
 +	#
 +	# Untracked files:
 +	#   (use "git add <file>..." to include in what will be committed)
 +	#
 +	#	expect
 +	#	output
-+	no changes added to commit (use "git add" and/or "git commit -a")
 +	EOF
 +	git status >output &&
 +	test_cmp expect output
 +'
 +
  test_done
+diff --git a/t/t7512-status-help.sh b/t/t7512-status-help.sh
+index af1d130..83c42df 100755
+--- a/t/t7512-status-help.sh
++++ b/t/t7512-status-help.sh
+@@ -27,7 +27,7 @@ test_expect_success 'status when conflicts unresolved' '
+ 	# You have unmerged paths; fix conflicts and run "git commit".
+ 	#
+ 	# Unmerged paths:
+-	#   (use "git add/rm <file>..." as appropriate to mark resolution)
++	#   (use "git add <file>..." to mark resolution)
+ 	#
+ 	#	both modified:      main.txt
+ 	#
+@@ -78,7 +78,7 @@ test_expect_success 'status when rebase in progress before resolving conflicts'
+ 	#
+ 	# Unmerged paths:
+ 	#   (use "git reset HEAD <file>..." to unstage)
+-	#   (use "git add/rm <file>..." as appropriate to mark resolution)
++	#   (use "git add <file>..." to mark resolution)
+ 	#
+ 	#	both modified:      main.txt
+ 	#
+@@ -306,7 +306,7 @@ test_expect_success 'status when cherry-picking before resolving conflicts' '
+ 	# You are currently cherry-picking: fix conflicts and run "git commit".
+ 	#
+ 	# Unmerged paths:
+-	#   (use "git add/rm <file>..." as appropriate to mark resolution)
++	#   (use "git add <file>..." to mark resolution)
+ 	#
+ 	#	both modified:      main.txt
+ 	#
 diff --git a/wt-status.c b/wt-status.c
-index dd6d8c4..f4ba021 100644
+index f4ba021..ee503b8 100644
 --- a/wt-status.c
 +++ b/wt-status.c
-@@ -23,6 +23,7 @@ static char default_wt_status_colors[][COLOR_MAXLEN] = {
- 	GIT_COLOR_GREEN,  /* WT_STATUS_LOCAL_BRANCH */
- 	GIT_COLOR_RED,    /* WT_STATUS_REMOTE_BRANCH */
- 	GIT_COLOR_NIL,    /* WT_STATUS_ONBRANCH */
-+	GIT_COLOR_NORMAL, /* WT_STATUS_IN_PROGRESS */
- };
+@@ -131,9 +131,34 @@ void wt_status_prepare(struct wt_status *s)
  
- static const char *color(int slot, struct wt_status *s)
-@@ -728,6 +729,158 @@ static void wt_status_print_tracking(struct wt_status *s)
- 	color_fprintf_ln(s->fp, color(WT_STATUS_HEADER, s), "#");
- }
- 
-+static int has_unmerged(struct wt_status *s)
-+{
+ static void wt_status_print_unmerged_header(struct wt_status *s)
+ {
 +	int i;
++	int del_mod_conflict = 0;
++	int both_deleted = 0;
++	int not_deleted = 0;
+ 	const char *c = color(WT_STATUS_HEADER, s);
+ 
+ 	status_printf_ln(s, c, _("Unmerged paths:"));
 +
 +	for (i = 0; i < s->change.nr; i++) {
-+		struct wt_status_change_data *d;
-+		d = s->change.items[i].util;
-+		if (d->stagemask)
-+			return 1;
-+	}
-+	return 0;
-+}
++		struct string_list_item *it = &(s->change.items[i]);
++		struct wt_status_change_data *d = it->util;
 +
-+static void merge_in_progress_show(struct wt_status *s,
-+				struct wt_status_state *state,
-+				const char *color)
-+{
-+	if (has_unmerged(s))
-+		status_printf_ln(s, color, _("You have unmerged paths%s"),
-+			advice_status_hints
-+			? _("; fix conflicts and run \"git commit\".") : ".");
-+	else
-+		status_printf_ln(s, color, _("You are still merging%s"),
-+			advice_status_hints
-+			? _(", run \"git commit\" to conclude merge.") : ".");
-+	wt_status_print_trailer(s);
-+}
-+
-+static void am_in_progress_show(struct wt_status *s,
-+				struct wt_status_state *state,
-+				const char *color)
-+{
-+	status_printf_ln(s, color,
-+		_("You are in the middle of an am session:"));
-+	if (state->am_empty_patch)
-+		status_printf_ln(s, color,
-+			_("The current patch is empty!"));
-+	if (advice_status_hints) {
-+		status_printf_ln(s, color,
-+			_("  When you have resolved this problem run \"git am --resolved\"."));
-+		status_printf_ln(s, color,
-+			_("  If you would prefer to skip this patch, instead run \"git am --skip\"."));
-+		status_printf_ln(s, color,
-+			_("  To restore the original branch and stop patching run \"git am --abort\"."));
-+	}
-+	wt_status_print_trailer(s);
-+}
-+
-+static void rebase_in_progress_show(struct wt_status *s,
-+				struct wt_status_state *state,
-+				const char *color)
-+{
-+	if (has_unmerged(s)) {
-+		status_printf_ln(s, color, _("You are currently rebasing%s"),
-+			advice_status_hints
-+			? _(": fix conflicts and then run \"git rebase --continue\".") : ".");
-+		if (advice_status_hints) {
-+			status_printf_ln(s, color,
-+				_("  If you would prefer to skip this patch, instead run \"git rebase --skip\"."));
-+			status_printf_ln(s, color,
-+				_("  To check out  the original branch and stop rebasing run \"git rebase --abort\"."));
-+		}
-+	} else if (state->rebase_in_progress) {
-+		status_printf_ln(s, color, _("You are currently rebasing%s"),
-+			advice_status_hints
-+			? _(": all conflicts fixed: run \"git rebase --continue\".") : ".");
-+	} else {
-+		status_printf_ln(s, color, _("You are currently editing a commit during a rebase."));
-+		if (advice_status_hints) {
-+			status_printf_ln(s, color, _("  You can amend the commit with"));
-+			status_printf_ln(s, color, _("	git commit --amend"));
-+			status_printf_ln(s, color, _("  Once you are satisfied with your changes, run"));
-+			status_printf_ln(s, color, _("	git rebase --continue"));
++		switch (d->stagemask) {
++		case 0:
++			break;
++		case 1:
++			both_deleted = 1;
++			break;
++		case 3:
++		case 5:
++			del_mod_conflict = 1;
++			break;
++		default:
++			not_deleted = 1;
++			break;
 +		}
 +	}
-+	wt_status_print_trailer(s);
-+}
 +
-+static void cherry_pick_in_progress_show(struct wt_status *s,
-+					struct wt_status_state *state,
-+					const char *color)
-+{
-+	if (has_unmerged(s))
-+		status_printf_ln(s, color, _("You are currently cherry-picking%s"),
-+			advice_status_hints
-+			? _(": fix conflicts and run \"git commit\".") : ".");
-+	else
-+		status_printf_ln(s, color, _("You are currently cherry-picking%s"),
-+			advice_status_hints
-+			? _(": all conflicts fixed: run \"git commit\".") : ".");
-+	wt_status_print_trailer(s);
-+}
+ 	if (!advice_status_hints)
+ 		return;
+ 	if (s->whence != FROM_COMMIT)
+@@ -142,7 +167,17 @@ static void wt_status_print_unmerged_header(struct wt_status *s)
+ 		status_printf_ln(s, c, _("  (use \"git reset %s <file>...\" to unstage)"), s->reference);
+ 	else
+ 		status_printf_ln(s, c, _("  (use \"git rm --cached <file>...\" to unstage)"));
+-	status_printf_ln(s, c, _("  (use \"git add/rm <file>...\" as appropriate to mark resolution)"));
 +
-+static void bisect_in_progress_show(struct wt_status *s,
-+				struct wt_status_state *state,
-+				const char *color)
-+{
-+	status_printf_ln(s, color, _("You are currently bisecting."));
-+	if (advice_status_hints)
-+		status_printf_ln(s, color,
-+			_("  To get back to the original branch run \"git bisect reset\""));
-+	wt_status_print_trailer(s);
-+}
-+
-+static void wt_status_print_state(struct wt_status *s)
-+{
-+	const char *state_color = color(WT_STATUS_IN_PROGRESS, s);
-+	struct wt_status_state *state = calloc(1, sizeof(*state));
-+	struct stat st;
-+
-+	state->merge_in_progress = 0;
-+	state->am_in_progress = 0;
-+	state->am_empty_patch = 0;
-+	state->rebase_in_progress = 0;
-+	state->rebase_interactive_in_progress = 0;
-+	state->cherry_pick_in_progress = 0;
-+	state->bisect_in_progress = 0;
-+
-+	if (!stat(git_path("MERGE_HEAD"), &st)) {
-+		state->merge_in_progress = 1;
-+	} else if (!stat(git_path("rebase-apply"), &st)) {
-+		if (!stat(git_path("rebase-apply/applying"), &st)) {
-+			state->am_in_progress = 1;
-+			if (!stat(git_path("rebase-apply/patch"), &st) && !st.st_size)
-+				state->am_empty_patch = 1;
-+		} else {
-+			state->rebase_in_progress = 1;
-+		}
-+	} else if (!stat(git_path("rebase-merge"), &st)) {
-+		if (!stat(git_path("rebase-merge/interactive"), &st))
-+			state->rebase_interactive_in_progress = 1;
++	if (!both_deleted) {
++		if (!del_mod_conflict)
++			status_printf_ln(s, c, _("  (use \"git add <file>...\" to mark resolution)"));
 +		else
-+			state->rebase_in_progress = 1;
-+	} else if (!stat(git_path("CHERRY_PICK_HEAD"), &st)) {
-+		state->cherry_pick_in_progress = 1;
++			status_printf_ln(s, c, _("  (use \"git add/rm <file>...\" as appropriate to mark resolution)"));
++	} else if (!del_mod_conflict && !not_deleted) {
++		status_printf_ln(s, c, _("  (use \"git rm <file>...\" to mark resolution)"));
++	} else {
++		status_printf_ln(s, c, _("  (use \"git add/rm <file>...\" as appropriate to mark resolution)"));
 +	}
-+	if (!stat(git_path("BISECT_LOG"), &st))
-+		state->bisect_in_progress = 1;
-+
-+	if (state->merge_in_progress)
-+		merge_in_progress_show(s, state, state_color);
-+	else if (state->am_in_progress)
-+		am_in_progress_show(s, state, state_color);
-+	else if (state->rebase_in_progress || state->rebase_interactive_in_progress)
-+		rebase_in_progress_show(s, state, state_color);
-+	else if (state->cherry_pick_in_progress)
-+		cherry_pick_in_progress_show(s, state, state_color);
-+	if (state->bisect_in_progress)
-+		bisect_in_progress_show(s, state, state_color);
-+	free(state);
-+}
-+
- void wt_status_print(struct wt_status *s)
- {
- 	const char *branch_color = color(WT_STATUS_ONBRANCH, s);
-@@ -750,6 +903,7 @@ void wt_status_print(struct wt_status *s)
- 			wt_status_print_tracking(s);
- 	}
+ 	status_printf_ln(s, c, "");
+ }
  
-+	wt_status_print_state(s);
- 	if (s->is_initial) {
- 		status_printf_ln(s, color(WT_STATUS_HEADER, s), "");
- 		status_printf_ln(s, color(WT_STATUS_HEADER, s), _("Initial commit"));
-diff --git a/wt-status.h b/wt-status.h
-index 14aa9f7..c1066a0 100644
---- a/wt-status.h
-+++ b/wt-status.h
-@@ -15,6 +15,7 @@ enum color_wt_status {
- 	WT_STATUS_LOCAL_BRANCH,
- 	WT_STATUS_REMOTE_BRANCH,
- 	WT_STATUS_ONBRANCH,
-+	WT_STATUS_IN_PROGRESS,
- 	WT_STATUS_MAXSLOT
- };
- 
-@@ -71,6 +72,16 @@ struct wt_status {
- 	struct string_list ignored;
- };
- 
-+struct wt_status_state {
-+	int merge_in_progress;
-+	int am_in_progress;
-+	int am_empty_patch;
-+	int rebase_in_progress;
-+	int rebase_interactive_in_progress;
-+	int cherry_pick_in_progress;
-+	int bisect_in_progress;
-+};
-+
- void wt_status_prepare(struct wt_status *s);
- void wt_status_print(struct wt_status *s);
- void wt_status_collect(struct wt_status *s);
 -- 
 1.7.8
