@@ -1,92 +1,70 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: bug? Python traceback on git push
-Date: Wed, 30 May 2012 21:08:20 -0400
-Message-ID: <20120531010820.GB5488@sigill.intra.peff.net>
-References: <CA+u+8CLcUtTCkWN2bZvR8JNmgnCoX+TwRK3_e64zWaV__jOo7A@mail.gmail.com>
+Subject: Re: Bug: rebase when an author uses accents in name on MacOSx
+Date: Wed, 30 May 2012 21:19:11 -0400
+Message-ID: <20120531011911.GC5488@sigill.intra.peff.net>
+References: <06DD2F56-F956-46DF-84A4-3443D4702CDE@spotinfluence.com>
+ <7vehq18c82.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Pedro Werneck <pjwerneck@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 31 03:08:31 2012
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Thomas Rast <trast@inf.ethz.ch>,
+	Lanny Ripple <lanny@spotinfluence.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu May 31 03:19:25 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SZtsL-0004Z0-0a
-	for gcvg-git-2@plane.gmane.org; Thu, 31 May 2012 03:08:29 +0200
+	id 1SZu2p-0003xF-4j
+	for gcvg-git-2@plane.gmane.org; Thu, 31 May 2012 03:19:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757622Ab2EaBIY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 May 2012 21:08:24 -0400
-Received: from 99-108-225-23.lightspeed.iplsin.sbcglobal.net ([99.108.225.23]:36686
+	id S1755011Ab2EaBTP convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 30 May 2012 21:19:15 -0400
+Received: from 99-108-225-23.lightspeed.iplsin.sbcglobal.net ([99.108.225.23]:36695
 	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757620Ab2EaBIW (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 May 2012 21:08:22 -0400
-Received: (qmail 12303 invoked by uid 107); 31 May 2012 01:08:23 -0000
+	id S1751173Ab2EaBTO (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 May 2012 21:19:14 -0400
+Received: (qmail 12874 invoked by uid 107); 31 May 2012 01:19:15 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 30 May 2012 21:08:23 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 30 May 2012 21:08:20 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 30 May 2012 21:19:15 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 30 May 2012 21:19:11 -0400
 Content-Disposition: inline
-In-Reply-To: <CA+u+8CLcUtTCkWN2bZvR8JNmgnCoX+TwRK3_e64zWaV__jOo7A@mail.gmail.com>
+In-Reply-To: <7vehq18c82.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198854>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198855>
 
-On Wed, May 30, 2012 at 07:11:38PM -0300, Pedro Werneck wrote:
+On Wed, May 30, 2012 at 04:45:33PM -0700, Junio C Hamano wrote:
 
-> git 1.7.9.5
-> 
-> I was pushing to a repository
-> 
-> push actually seems to have worked, but popped this weird python traceback
+> Lanny Ripple <lanny@spotinfluence.com> writes:
+>=20
+> >   lanny;~> echo "R=C3=A9mi Leblond" | LANG=3DC LC_ALL=3DC sed -ne '=
+s/.*/GIT_AUTHOR_NAME=3D'\''&'\''/p'
+> >   GIT_AUTHOR_NAME=3D'R'=C3=A9mi Leblond
+>=20
+> So in C locale where each byte is supposed to be a single character,
+> that implementation of "sed" refuses to match a byte with high-bit
+> set when given a pattern '.'?
+>=20
+> That is a surprising breakage, I would have to say.
 
-Not a bug in git. There is no python code at all in the push code path
-(the only python in git these days is in the experimental svn
-remote-helper). However, the remote side may have a hook that is written
-in python...
+It should not be too surprising, since we discussed it a few months ago=
+:
 
-> remote: Traceback (most recent call last):
-> remote:   File "/opt/python/domains/bitbucket.org/current/bitbucket/scripts/git/hooks/pre-receive",
-> line 9, in <module>
-> remote:     from bitbucket.apps.repo2.hooks import prehooks
-> [...]
-> remote: ImportError: No module named mercurial.lock
-> To git@bitbucket.org:titansgroup/tcf-api.git
->  ! [remote rejected] master -> master (pre-receive hook declined)
-> error: failed to push some refs to 'git@bitbucket.org:titansgroup/tcf-api.git'
+  http://thread.gmane.org/gmane.comp.version-control.git/192218
 
-...and that is exactly what happened. Bitbucket's custom python hook
-failed, and git did not allow the push to go through.
+Thomas provided a gross but workable solution here:
 
-> (tcf-env)werneck@werneck:~/devel/tcf-api/src/tcf$ git pull
-> Warning: Permanently added 'bitbucket.org,207.223.240.181' (RSA) to
-> the list of known hosts.
-> Already up-to-date.
+  http://article.gmane.org/gmane.comp.version-control.git/192237
 
-I don't know that this shows anything conclusive; depending on your
-configuration, you may or may not be pulling from the same ref you were
-trying to push to a moment ago.
-
-> (tcf-env)werneck@werneck:~/devel/tcf-api/src/tcf$ git push
-> Warning: Permanently added 'bitbucket.org,207.223.240.181' (RSA) to
-> the list of known hosts.
-> Counting objects: 15, done.
-> Delta compression using up to 4 threads.
-> Compressing objects: 100% (8/8), done.
-> Writing objects: 100% (8/8), 860 bytes, done.
-> Total 8 (delta 7), reused 0 (delta 0)
-> remote: bb/acl: pjwerneck is allowed. accepted payload.
-> To git@bitbucket.org:titansgroup/tcf-api.git
->    16b3b54..a50f671  master -> master
-
-And here you repeat the push, and you see that we had to send the data
-again (because the push did not go through last time). No clue why their
-hook failed the first time but not the second.
-
-So as far as I can tell, git is operating as advertised. You might want
-to file a report with bitbucket about their hook failing.
+and we also talked about eventually having a shell-quoting mechanism fo=
+r
+pretty placeholders.  Then the discussion rambled into "this sed is
+horribly broken, and the user should get a better sed" territory. Maybe
+we need to revisit that decision, since this is now two bug reports.
 
 -Peff
