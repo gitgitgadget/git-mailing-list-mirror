@@ -1,146 +1,84 @@
-From: Lanny Ripple <lanny@spotinfluence.com>
-Subject: Re: Bug: rebase when an author uses accents in name on MacOSx
-Date: Fri, 1 Jun 2012 12:05:36 -0500
-Message-ID: <0A6ABBD7-01D5-4A24-BF0F-78A7F2C46938@spotinfluence.com>
-References: <06DD2F56-F956-46DF-84A4-3443D4702CDE@spotinfluence.com> <7vehq18c82.fsf@alter.siamese.dyndns.org> <20120531011911.GC5488@sigill.intra.peff.net> <7v62bc97w1.fsf@alter.siamese.dyndns.org> <78E7FEAC-6587-4EB3-B78B-08D321F53BF9@spotinfluence.com> <7vtxyw6ypx.fsf@alter.siamese.dyndns.org> <69ED148F-BD10-4DE3-91F2-D31F83A0EAB7@spotinfluence.com> <7vd35k6w0i.fsf@alter.siamese.dyndns.org> <168277BB-0E71-4987-A2BE-6202034A96F1@spotinfluence.com> <20120601093039.GD32340@sigill.intra.peff.net> <7vmx4n3sz5.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0 (Apple Message framework v1278)
-Content-Type: multipart/signed; boundary="Apple-Mail=_C281127A-518F-4AE5-AA03-6EFC272B1407"; protocol="application/pgp-signature"; micalg=pgp-sha1
-Cc: Jeff King <peff@peff.net>, Thomas Rast <trast@inf.ethz.ch>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jun 01 19:05:51 2012
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: GIT PULL] ext4 updates for 3.5
+Date: Fri, 1 Jun 2012 10:56:43 -0700
+Message-ID: <CA+55aFxgZupkAotfjUuWcfwTzHDYg0Afezme62P17=EX2KN+UQ@mail.gmail.com>
+References: <E1SaTSI-0005UV-4B@tytso-glaptop.cam.corp.google.com>
+ <CA+55aFwk8oYx8EKWdT=5cMTLK7RDz8GQdGmHk2KXwcCq+Bb8PA@mail.gmail.com>
+ <CA+55aFwwfMTN=WGQGmFO7DYeBUOGA7V4_6XueQS4JAzeykwn3Q@mail.gmail.com> <20120601174336.GA15778@thunk.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: "Ted Ts'o" <tytso@mit.edu>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	linux-ext4@vger.kernel.org, linux-kernel@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: linux-ext4-owner@vger.kernel.org Fri Jun 01 19:57:10 2012
+Return-path: <linux-ext4-owner@vger.kernel.org>
+Envelope-to: gcfe-linux-ext4@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SaVIK-0008RG-Br
-	for gcvg-git-2@plane.gmane.org; Fri, 01 Jun 2012 19:05:48 +0200
+	(envelope-from <linux-ext4-owner@vger.kernel.org>)
+	id 1SaW61-0005Jt-NG
+	for gcfe-linux-ext4@plane.gmane.org; Fri, 01 Jun 2012 19:57:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759219Ab2FARFo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 1 Jun 2012 13:05:44 -0400
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:46331 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758191Ab2FARFn (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 1 Jun 2012 13:05:43 -0400
-Received: by yhmm54 with SMTP id m54so1818347yhm.19
-        for <git@vger.kernel.org>; Fri, 01 Jun 2012 10:05:41 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=subject:mime-version:content-type:from:in-reply-to:date:cc
-         :message-id:references:to:x-mailer:x-gm-message-state;
-        bh=9YRiwqtgPBgV4SX+cTQdWc0jHFSnK8o+8ylgwy9crXI=;
-        b=W0tD/l2TvwlvbqY/B+xOODh/jQgc0YQeqnI7MqkTt/o6HD68w9oXmXYEVMhCuRI0wo
-         xbB8T0GFKdKVdfoNdI/HzWy9sZz2WD0CaFBqhe+PFfIrJLbhK1PrCn1Uyl0dd6Aj5LOL
-         vL01iQbf+OzRb3S06Ve8MqJVryL89eSBpGoEod1jtyF+npUnJjPzIrqFgIs/Ed/UI2Z0
-         lli1psE8Vao85fcvF431UF4eclx01VH+VeWQjxx8DuneCiov+SSsPblvaeS+zuuPVsgx
-         K/zU1mpSV7QK+R+zhnzfLtYDBq7BXoewvbrbelvfjX/ZNE2t8AayIn2+XnrzB+Mk/nRO
-         Za3w==
-Received: by 10.50.135.1 with SMTP id po1mr2326494igb.67.1338570341251;
-        Fri, 01 Jun 2012 10:05:41 -0700 (PDT)
-Received: from [192.168.1.4] (c-98-198-192-29.hsd1.tx.comcast.net. [98.198.192.29])
-        by mx.google.com with ESMTPS id z7sm4666100igb.3.2012.06.01.10.05.38
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 01 Jun 2012 10:05:40 -0700 (PDT)
-In-Reply-To: <7vmx4n3sz5.fsf@alter.siamese.dyndns.org>
-X-Mailer: Apple Mail (2.1278)
-X-Gm-Message-State: ALoCoQltG56z6uiJDJRfRcfj0OzQqm9QoOFAILPixheHUypcb6XmBv5p5KMApjSWDXqsOU96Im3J
-Sender: git-owner@vger.kernel.org
+	id S1759261Ab2FAR5H convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcfe-linux-ext4@m.gmane.org>); Fri, 1 Jun 2012 13:57:07 -0400
+Received: from mail-wg0-f42.google.com ([74.125.82.42]:58287 "EHLO
+	mail-wg0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758809Ab2FAR5G convert rfc822-to-8bit (ORCPT
+	<rfc822;linux-ext4@vger.kernel.org>); Fri, 1 Jun 2012 13:57:06 -0400
+Received: by wgbds11 with SMTP id ds11so763504wgb.1
+        for <multiple recipients>; Fri, 01 Jun 2012 10:57:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:from:date
+         :x-google-sender-auth:message-id:subject:to:content-type
+         :content-transfer-encoding;
+        bh=v7MO6zSgVpU+P1Dk9B6zZcZnSeCFrfU46gQyvu2WtUQ=;
+        b=q3a2Q3hPeHCBfSTaTSnVhkToYayuwoajgwrwNajzmyq390bXRxMte3NI0N5CZzekkQ
+         rEeV1tZL6utthWWfTB/LYl67ITl0HW824wxnjhPmJn2GZGNAx2o7QPqb5Mqk9qg0qGSW
+         VVb2+OTVg7RwPdRMU9bj4t4ceX0VAwQoQPrWSZWXtRluXLPjKbfvwmDZOZ1S7CWtY/xW
+         vGoZLQdOadvEGjTPNDUX1Y7GueEfDJT7aRsVq42ZOoSU2X9n2H2YJO316bTI+fjcZqSl
+         Q3UUs0CUR8DL577sKmvpupvE2Qgjyog7DG4SLJ7ibL9Y7B+Fo85q27ETcoDGowDV5O3E
+         mIWg==
+Received: by 10.216.197.4 with SMTP id s4mr2819688wen.181.1338573423899; Fri,
+ 01 Jun 2012 10:57:03 -0700 (PDT)
+Received: by 10.216.225.99 with HTTP; Fri, 1 Jun 2012 10:56:43 -0700 (PDT)
+In-Reply-To: <20120601174336.GA15778@thunk.org>
+X-Google-Sender-Auth: 5b5jYqZKTZRXTifI-P41RjpAp9Q
+Sender: linux-ext4-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199006>
+List-ID: <linux-ext4.vger.kernel.org>
+X-Mailing-List: linux-ext4@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199007>
 
+On Fri, Jun 1, 2012 at 10:43 AM, Ted Ts'o <tytso@mit.edu> wrote:
+>
+> So I should do "git request-pull origin git://... ext4_for_linus" nex=
+t
+> time, right?
 
---Apple-Mail=_C281127A-518F-4AE5-AA03-6EFC272B1407
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain;
-	charset=us-ascii
+Right.
 
-I still think the best solution is figuring out if the platform sed is =
-sane at build time and using a full path (via config setup if being able =
-to change the sed used is a priority).  Short of that something as =
-simple as
+> Sorry about that. =A0I thought it had included the reference to tag
+> automatically since the text of the tag showed in the request-pull
+> text.
 
-(git-am:699+)
+Apparently git request-pull is too damn smart for its own good, and
+will find the tags even when they aren't mentioned, making you think
+it made it to me. Bot it doesn't - so then I have to go search for
+them by hand.
 
-   if test -z "$GIT_AUTHOR_EMAIL"
-   then
-           # Can occur when sed in PATH will not handle UTF8 under =
-LC_ALL=3DC.
-           gettextln "Patch does not have a valid e-mail address."
-           stop_here $this
-   fi
+Added Junio and git to the cc: if git finds the tag and uses that for
+the request-pull message text, then it should use the tagname for the
+pull request line too. Or, alternatively, don't be smart at all, and
+force users to name the tag explicitly. The current "both smart and
+dumb" combination seems to be the worst of both world.
 
-would give folks trying to troubleshoot the problem a clue to what was =
-going on.  =46rom the fink developers' list it seems Darwin and perhaps =
-FreeBSD use US-ASCII for LC_ALL=3DC or POSIX which is why Gnu sed gets =
-it wrong.
-
-My problem is still fixed whatever is decided.  Enjoy,
-  -ljr
-=09
----
-Lanny Ripple
-lanny@spotinfluence.com
-
-
-On Jun 1, 2012, at 11:19 AM, Junio C Hamano wrote:
-
-> Jeff King <peff@peff.net> writes:
->> [Please don't top-post.]
->> ...
->> But you have to keep in mind all of the people who will be led down =
-the
->> wrong path by your breadcrumb when the failure is caused by a
->> _different_ problem. What is the probability that it is helpful =
-versus
->> not helpful?  If you are going to give advice that sed might be =
-broken,
->> you should at least test to see if it is broken and report it.
->=20
-> Eek, do that at runtime in the error code path?
->=20
-> Add something like
->=20
-> 	suspected_sed_breakage () {
-> 		xxxxx=3D$(printf "\370\235\204\236\n" | LC_CTYPE=3DC sed =
-'s/./x/g')
->                if test "x$xxxxx" !=3D "xxxxx"
->                then
-> 			die "Your sed is broken; cannot run $1"
-> 		fi
-> 	}
->=20
-> to git-sh-setup, and do something like:
->=20
-> 	. "$dotest/author-script" || suspected_sed_breakage "$0"
->=20
-> in git-am?
->=20
-> The problem I see is that at that point where we have to suspect
-> something fundamental as sed broken on the platform, we cannot even
-> trust printf, test, or even the shell itself behaving sanely.
->=20
-> So I would say, although it is a fun thought-experiment, such a test
-> and breadcrumb is not really worth it.
->=20
-
-
---Apple-Mail=_C281127A-518F-4AE5-AA03-6EFC272B1407
-Content-Transfer-Encoding: 7bit
-Content-Disposition: attachment;
-	filename=signature.asc
-Content-Type: application/pgp-signature;
-	name=signature.asc
-Content-Description: Message signed with OpenPGP using GPGMail
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG/MacGPG2 v2.0.17 (Darwin)
-
-iF4EAREIAAYFAk/I9mEACgkQ+owW65SoXfje2AD+OkKvypYIZdQri2KC0Jk9xoVp
-zg7TnLeHEIc58+MvMF8BANr5TwggGOxtLOQH59POWVgwhmUoPwrzc/jW4Fc6jLpt
-=Dy46
------END PGP SIGNATURE-----
-
---Apple-Mail=_C281127A-518F-4AE5-AA03-6EFC272B1407--
+              Linus
+--
+To unsubscribe from this list: send the line "unsubscribe linux-ext4" i=
+n
+the body of a message to majordomo@vger.kernel.org
+More majordomo info at  http://vger.kernel.org/majordomo-info.html
