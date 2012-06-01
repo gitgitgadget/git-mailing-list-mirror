@@ -1,90 +1,111 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCHv5 3/3] status: don't suggest "git rm" or "git add" if not
- appropriate
-Date: Fri, 01 Jun 2012 09:38:42 -0700
-Message-ID: <7vbol33s31.fsf@alter.siamese.dyndns.org>
-References: <1338384216-18782-1-git-send-email-Lucien.Kong@ensimag.imag.fr>
- <1338477344-15940-1-git-send-email-Lucien.Kong@ensimag.imag.fr>
- <1338477344-15940-3-git-send-email-Lucien.Kong@ensimag.imag.fr>
- <CABURp0qS-bDYTTgz75mQOOZsXzM1TkF_CNjaRNcXa4MYXAg0kA@mail.gmail.com>
- <20120601160808.Horde.ij8nYXwdC4BPyMzILrtjxYA@webmail.minatec.grenoble-inp.fr>
+From: David Michael Barr <davidbarr@google.com>
+Subject: Re: [PATCH v2 3/6] vcs-svn: prefer constcmp to prefixcmp
+Date: Sat, 2 Jun 2012 02:43:02 +1000
+Message-ID: <CAFfmPPN1w+h06sYyEBrVsBy0dmKzh0audDMEZHww21tH2Yy0Fw@mail.gmail.com>
+References: <1338475290-22644-1-git-send-email-davidbarr@google.com>
+	<1338475290-22644-4-git-send-email-davidbarr@google.com>
+	<7vfwaf3sll.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Phil Hord <phil.hord@gmail.com>, git@vger.kernel.org,
-	Jeff King <peff@peff.net>,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	Matthieu.Moy@grenoble-inp.fr,
-	Duperray Valentin <Valentin.Duperray@ensimag.imag.fr>,
-	Jonas Franck <Franck.Jonas@ensimag.imag.fr>,
-	Nguy Thomas <Thomas.Nguy@ensimag.imag.fr>,
-	Nguyen Huynh Khoi Nguyen 
-	<Huynh-Khoi-Nguyen.Nguyen@ensimag.imag.fr>,
-	Kong Lucien <Lucien.Kong@ensimag.imag.fr>
-To: konglu@minatec.inpg.fr
-X-From: git-owner@vger.kernel.org Fri Jun 01 18:38:53 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jun 01 18:43:14 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SaUsE-00044J-IU
-	for gcvg-git-2@plane.gmane.org; Fri, 01 Jun 2012 18:38:50 +0200
+	id 1SaUwS-0000Vq-1l
+	for gcvg-git-2@plane.gmane.org; Fri, 01 Jun 2012 18:43:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965471Ab2FAQip (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 1 Jun 2012 12:38:45 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:46060 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S965419Ab2FAQip (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 1 Jun 2012 12:38:45 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 796C68318;
-	Fri,  1 Jun 2012 12:38:44 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=vvatLZyfj561OgRLR4HJIIyDN7I=; b=Ke2IFz
-	iWoUuayzEBUyEb+1geQtucdylOIF20OJ9N++BTlkY8ScmeKwWlqIM12RVvdEbLB2
-	7evGmPu16HwMSju/rGFix+E4TPNjUumoi02ww3yVFO/OohhUFiGglizDM63cOHJg
-	DJhVnbAoJLqoZobHDb3K3Wzc/H2KA/5aXznsA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=h7iPliGOzVOd5dO5hLQ7U1MOxfSX796E
-	e6FAnAcpeiipOoNGL0tY1sv0WOVVwkSk4Ph/KXSFNSUuu8vvmyv9MqxQQlW3Y8Gt
-	Wkx9WrfStwkKtizZiHcdJQ3a3XIgfepkmkFCVxGk3YeTx+W050B+CxwcBLWzjyIB
-	FS0HE5whLUY=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6DE3F8317;
-	Fri,  1 Jun 2012 12:38:44 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B8AAA8316; Fri,  1 Jun 2012
- 12:38:43 -0400 (EDT)
-In-Reply-To: <20120601160808.Horde.ij8nYXwdC4BPyMzILrtjxYA@webmail.minatec.grenoble-inp.fr> (konglu@minatec.inpg.fr's message of "Fri, 01 Jun 2012 16:08:08 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 4066194E-AC08-11E1-891E-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S965504Ab2FAQnF convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 1 Jun 2012 12:43:05 -0400
+Received: from mail-gh0-f174.google.com ([209.85.160.174]:44518 "EHLO
+	mail-gh0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965382Ab2FAQnD convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 1 Jun 2012 12:43:03 -0400
+Received: by ghrr11 with SMTP id r11so2237120ghr.19
+        for <git@vger.kernel.org>; Fri, 01 Jun 2012 09:43:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding:x-system-of-record;
+        bh=+gtGnUrbtGDJ7fn3QeOX25lSry3oCzxZAzZS/IRHVVw=;
+        b=af7jNOMPnrLLTlCK8GN6T/4qLmhMy+TbD0dxom0DiYZC9DC2M29wgcfTgfrb1VWPQy
+         c55j09SjfePupu72o2BvuMN7Sf77PbDbO9v8gpyH+iZGg6tdW7HQ1MIGMMGx+zUR/duP
+         A7VizyH+xpmGPBZvd20gNdvzC7RoRRe/vrtRBJKL0cefOoMwjMixl/ls5MxramhKjz86
+         VY56DKY/TthPdCSLTvUylWQC1FaZI3yp9p4UxziLfAxR9/sAsI2YxSdRHNDZiyw25g5C
+         aMY4shHUh6EDwJzIJhUVmfkq2cL+N2E5s0AhuGOZ35RChPNRpy3eFL9vk4LBFQM6O0F/
+         twoQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding:x-system-of-record
+         :x-gm-message-state;
+        bh=+gtGnUrbtGDJ7fn3QeOX25lSry3oCzxZAzZS/IRHVVw=;
+        b=TCH035z20gEsKUvWZMKwKOhLhFXS0iMveY1UZ0sohn0yB0Qrzc6gRV3gQ42cEq1u2q
+         6VVxwa6SR+juwN1qJwoIbBRJJQbWni+Blw+b9YaGrl2PaNIN98bZ35Thpytgks1RMTvE
+         lnXS7ydB1X7cJDZt92BValUEDwk/MLpUmXY3R+7GQG9F1Bs87SFheXRNwFI7wgTS8cKw
+         3K01BGyw/ENI9DCtxyDJDM5xrvwo4lokqT6pGC36UkjJY9RTtkv0RB8165NSOf7cg2AZ
+         UMnb7W3DbBIqxQ5ifM9EeadlFk31DZJjeu5vbQWti7+G3UHxriVzbVHVOl93GEatvzBZ
+         1UPg==
+Received: by 10.236.37.225 with SMTP id y61mr3342815yha.119.1338568983048;
+        Fri, 01 Jun 2012 09:43:03 -0700 (PDT)
+Received: by 10.236.37.225 with SMTP id y61mr3342801yha.119.1338568982916;
+ Fri, 01 Jun 2012 09:43:02 -0700 (PDT)
+Received: by 10.101.170.36 with HTTP; Fri, 1 Jun 2012 09:43:02 -0700 (PDT)
+In-Reply-To: <7vfwaf3sll.fsf@alter.siamese.dyndns.org>
+X-System-Of-Record: true
+X-Gm-Message-State: ALoCoQk4Km4kg25WEFuqNLgQ1QnD3X2rz72+iaHLw4zpKDSL5yclBjAJIvSgKwal0J+XdXVrvFxlYrrs0wNOvuDlavRIwJtssB43atEJ3MY6dnUIngPRoyBbrAQFyxjvsRpMTioGb1L8J31BX5BMuzqNcIpLa5GsAw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199000>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199001>
 
-konglu@minatec.inpg.fr writes:
-
-> If both sides delete the same file with "git rm", this case does not occur
-> because there is no conflict when merging. However, it can occur when
-> both sides rename the file and then merge.
+On Sat, Jun 2, 2012 at 2:27 AM, Junio C Hamano <gitster@pobox.com> wrot=
+e:
+> David Barr <davidbarr@google.com> writes:
 >
->> As this patch highlights, the only expected resolution is to 'git rm'
->> the file; why can't git figure this out for me and continue on?
+>> Comparisons in svndump.c are always guarded by length.
+>> As a bonus, elimate dependency on prefixcmp for upstream.
+>>
+>> Signed-off-by: David Barr <davidbarr@google.com>
 >
-> I agree. The only option for the user is to run "git rm".
+> It feels suboptimal, from cross-project maintenance point of view,
+> that "do not use prefixcmp() in the source in this directory" has to
+> be an unwritten rule. =A0Is there something we can do better to avoid
+> having to apply a patch like this in the future?
 
-If both sides remove the path A and one side creates a similar
-looking B but the other side does so for C, it is clear that neither
-side wants A in the result, so the only option FOR THE PATH A is to
-run "git rm".
+I should note that constcmp() is local to vcs-svn/svndump.c.
+In this particular case, using prefixcmp() was a departure from the
+style of the surrounding code.
 
-But when looking at B and C to decide, it would help knowing that
-the corresponding source of these renames is potentially A.  If we
-auto-resolved A, we would lose that information, no?
+Should prefixcmp() be referenced outside svndump_read() and
+handle_property(), I'll handle the dependency upstream.
 
-You need to look at a larger picture.
+>> =A0vcs-svn/svndump.c | =A0 =A02 +-
+>> =A01 file changed, 1 insertion(+), 1 deletion(-)
+>>
+>> diff --git a/vcs-svn/svndump.c b/vcs-svn/svndump.c
+>> index 0899790..8d0ae9c 100644
+>> --- a/vcs-svn/svndump.c
+>> +++ b/vcs-svn/svndump.c
+>> @@ -361,7 +361,7 @@ void svndump_read(const char *url)
+>> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 reset_rev_ctx(atoi(val))=
+;
+>> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 break;
+>> =A0 =A0 =A0 =A0 =A0 =A0 =A0 case sizeof("Node-path"):
+>> - =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 if (prefixcmp(t, "Node-"))
+>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 if (constcmp(t, "Node-"))
+>> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 continue=
+;
+>> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 if (!constcmp(t + strlen=
+("Node-"), "path")) {
+>> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 if (acti=
+ve_ctx =3D=3D NODE_CTX)
+
+--
+David Barr
