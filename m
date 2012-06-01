@@ -1,104 +1,139 @@
-From: konglu@minatec.inpg.fr
-Subject: Re: [PATCHv5 1/3] wt-status.*: better advices for git status added
-Date: Fri, 01 Jun 2012 11:16:51 +0200
-Message-ID: <20120601111651.Horde.R0mdSHwdC4BPyIiDyUHhUVA@webmail.minatec.grenoble-inp.fr>
-References: <1338384216-18782-1-git-send-email-Lucien.Kong@ensimag.imag.fr>
- <1338477344-15940-1-git-send-email-Lucien.Kong@ensimag.imag.fr>
- <7vmx4o58zc.fsf@alter.siamese.dyndns.org>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH 2/3] Test environment of git-remote-mw
+Date: Fri, 01 Jun 2012 11:21:58 +0200
+Message-ID: <vpq7gvridzd.fsf@bauges.imag.fr>
+References: <4FC64B0C.6070507@ensimag.imag.fr>
+	<1338397492-13360-1-git-send-email-simon.cathebras@ensimag.imag.fr>
+	<1338397492-13360-2-git-send-email-simon.cathebras@ensimag.imag.fr>
+	<vpqzk8oq0oe.fsf@bauges.imag.fr> <4FC88310.2020103@ensimag.imag.fr>
+	<vpqpq9jievq.fsf@bauges.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed	DelSp=Yes
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Kong Lucien <Lucien.Kong@ensimag.imag.fr>, git@vger.kernel.org,
-	Matthieu.Moy@grenoble-inp.fr,
-	Duperray Valentin <Valentin.Duperray@ensimag.imag.fr>,
-	Jonas Franck <Franck.Jonas@ensimag.imag.fr>,
-	Nguy Thomas <Thomas.Nguy@ensimag.imag.fr>,
-	Nguyen Huynh Khoi Nguyen 
-	<Huynh-Khoi-Nguyen.Nguyen@ensimag.imag.fr>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jun 01 11:17:11 2012
+Content-Type: text/plain
+Cc: git@vger.kernel.org, charles.roussel@ensimag.imag.fr,
+	Guillaume.Sasdy@ensimag.imag.fr, Julien.Khayat@ensimag.imag.fr,
+	Simon.Perrat@ensimag.imag.fr,
+	Charles Roussel <charles.roussel@ensimag.fr>,
+	Guillaume Sasdy <guillaume.sasdy@gmail.com>
+To: Simon.Cathebras@ensimag.imag.fr
+X-From: git-owner@vger.kernel.org Fri Jun 01 11:22:15 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SaNym-000564-5Y
-	for gcvg-git-2@plane.gmane.org; Fri, 01 Jun 2012 11:17:08 +0200
+	id 1SaO3i-0001vg-SM
+	for gcvg-git-2@plane.gmane.org; Fri, 01 Jun 2012 11:22:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758872Ab2FAJQ4 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 1 Jun 2012 05:16:56 -0400
-Received: from v-smtp.minatec.grenoble-inp.fr ([147.173.216.28]:55688 "EHLO
-	v-smtp.minatec.grenoble-inp.fr" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1759146Ab2FAJQy (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 1 Jun 2012 05:16:54 -0400
-Received: from localhost (www02.minatec.grenoble-inp.fr [147.173.216.15])
-	by v-smtp.minatec.grenoble-inp.fr (Postfix) with ESMTP id 210621A02F1;
-	Fri,  1 Jun 2012 11:16:52 +0200 (CEST)
-Received: from wifi-030054.grenet.fr (wifi-030054.grenet.fr [130.190.30.54])
- by webmail.minatec.grenoble-inp.fr (Horde Framework) with HTTP; Fri, 01 Jun
- 2012 11:16:51 +0200
-In-Reply-To: <7vmx4o58zc.fsf@alter.siamese.dyndns.org>
-User-Agent: Internet Messaging Program (IMP) H4 (5.0.17)
-Content-Disposition: inline
+	id S1751465Ab2FAJWK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 1 Jun 2012 05:22:10 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:33714 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756657Ab2FAJWI (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 1 Jun 2012 05:22:08 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id q519Dabx017421
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Fri, 1 Jun 2012 11:13:36 +0200
+Received: from bauges.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1SaO3T-0005CU-Uq; Fri, 01 Jun 2012 11:21:59 +0200
+In-Reply-To: <vpqpq9jievq.fsf@bauges.imag.fr> (Matthieu Moy's message of "Fri,
+	01 Jun 2012 11:02:33 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.93 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Fri, 01 Jun 2012 11:13:37 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: q519Dabx017421
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1339146818.69424@Osj39tT5AT/Z7VZIdxWEuA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198966>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198967>
 
+Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
 
-Junio C Hamano <gitster@pobox.com> a =E9crit=A0:
-
-> How is your development process work, by the way?  Does everybody on
-> this list have code in this patch?  Or are you just listing people
-> who are in the same class taught by Matthieu who reviewed and
-> commented on this patch?
-
-Basically, we 5 people are in the same group and work together on
-the same project. Some are more involved into improving the advices
-in git status, and some are more involved into the XDG configuration
-but we are all in the same room thus there're a lot of communication so
-everyone knows what's happening in each topics. Matthieu is helping us
-when we have technical questions but he doesn't review our code beforeh=
-and
-(he is very busy :p).
-
-Btw, we're also working on other small improvements such as the impleme=
-ntation
-of "git rebase -i --exec <cmd>".
-
-> And rename "output" to "actual" to match the existing practice
-> (unless there is a compelling reason not to).
-
-We based our coding-style on the t7508-status.sh script which
-seem to use out-of-date style (some instructions are not in
-test_expect_success for example). We will use the modern coding
-style from now on.
-
->> +	} else {
->> +		status_printf_ln(s, color, _("You are currently editing a commit =
-=20
->> during a rebase."));
->> +		if (advice_status_hints) {
->> +			status_printf_ln(s, color, _("  You can amend the commit with"))=
-;
->> +			status_printf_ln(s, color, _("	git commit --amend"));
->> +			status_printf_ln(s, color, _("  Once you are satisfied with =20
->> your changes, run"));
->> +			status_printf_ln(s, color, _("	git rebase --continue"));
+> "Simon.Cathebras" <Simon.Cathebras@ensimag.imag.fr> writes:
 >
-> For an advice in "git status" output, the above may be appropriate,
-> but would the user see this in "git commit" template, and if so,
-> isn't it because the user typed "git commit --amend"?  Does it make
-> sense to suggest to run "git commit --amend" in that context?
+>> On the other hand, considering the git-mediawiki is curently on
+>> contrib branch, shall we move our test environement from git/t to
+>> git/contrib/t ?
+>
+> If so, that would be to $git/contrib/mw-to-git/t/.
+>
+> I'm not sur what's best, depending on the future of the tool:
+>
+> If, once Git-MediaWiki is robust, well-tested, ... and enough people are
+> interested, it may make sense to move Git-MediaWiki out of the contrib/
+> directory, and integrate it as an official command (like git-svn for
+> example). That would make the installation process seamless ("make
+> install" would install git-remote-mediawiki like other commands, "make
+> doc" would generate the doc, and so on), which would be nice for the
+> user.
 
-True, the user will see the messages in the "git commit" template. We
-didn't take this case into account because we thought that not many peo=
-ple
-read the status in the "git commit" template. Anyway, just adding a con=
-dition
+Here's another attempt to be nice to the user, without getting out of
+the contrib/ directory. I suggest that you include it in your patch
+serie, and build your stuff on top of it.
 
-if (advice_status_hints && !s->amend)
+--------------- 8< ----------------- 8< ------------------------
+From 25187a652abc0b546be2fb1afb707b32b9f1d4fc Mon Sep 17 00:00:00 2001
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Date: Fri, 1 Jun 2012 11:18:20 +0200
+Subject: [PATCH] git-remote-mediawiki: simple Makefile for simple
+ installation
 
-does the job.
+This allows the user to run "make check" to install the script in Git's
+exec path, following the configuration (manual in config.mak, or through
+autoconf).
+---
+ contrib/mw-to-git/Makefile | 29 +++++++++++++++++++++++++++++
+ 1 file changed, 29 insertions(+)
+ create mode 100644 contrib/mw-to-git/Makefile
+
+diff --git a/contrib/mw-to-git/Makefile b/contrib/mw-to-git/Makefile
+new file mode 100644
+index 0000000..99b7caa
+--- /dev/null
++++ b/contrib/mw-to-git/Makefile
+@@ -0,0 +1,29 @@
++-include ../../config.mak
++-include ../../config.mak.autogen
++
++ifndef PERL_PATH
++	PERL_PATH = /usr/bin/perl
++endif
++
++PERL_PATH_SQ = $(subst ','\'',$(PERL_PATH))
++gitexecdir_SQ = $(subst ','\'',$(gitexecdir))
++
++SCRIPT=git-remote-mediawiki
++
++.PHONY: install help doc test
++help:
++	@echo 'This is the help target of the Makefile. Current configuration:'
++	@echo '  gitexecdir = $(gitexecdir_SQ)'
++	@echo '  PERL_PATH = $(PERL_PATH_SQ)'
++	@echo 'Run "$(MAKE) install" to install $(SCRIPT) in gitexecdir.'
++
++install:
++	sed -e '1s|#!.*/perl|#!$(PERL_PATH_SQ)|' $(SCRIPT) \
++            > '$(gitexecdir_SQ)/$(SCRIPT)'
++	chmod 755 '$(gitexecdir)/$(SCRIPT)'
++
++doc:
++	@echo 'Sorry, "make doc" is not implemented yet for $(SCRIPT)'
++
++test:
++	@echo 'Sorry, "make test" is not implemented yet for $(SCRIPT)'
+-- 
+1.7.10.2.817.g37218b0
+
+
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
