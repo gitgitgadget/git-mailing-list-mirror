@@ -1,98 +1,86 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCHv5 1/3] wt-status.*: better advices for git status added
-Date: Fri, 01 Jun 2012 09:57:17 -0700
-Message-ID: <7vy5o72cnm.fsf@alter.siamese.dyndns.org>
-References: <1338384216-18782-1-git-send-email-Lucien.Kong@ensimag.imag.fr>
- <1338477344-15940-1-git-send-email-Lucien.Kong@ensimag.imag.fr>
- <vpq8vg7jue4.fsf@bauges.imag.fr>
- <20120601132710.Horde.j1U5UHwdC4BPyKcOgc8zbbA@webmail.minatec.grenoble-inp.fr> <CABURp0rm2JKBmrm62uAVj1WSc3BE_LoKoHbjmxvkQhPNgnozpA@mail.gmail.com>
+Subject: Re: [RFC] Deal with HTTP 401 by requesting credentials.
+Date: Fri, 01 Jun 2012 10:01:58 -0700
+Message-ID: <7vtxyv2cft.fsf@alter.siamese.dyndns.org>
+References: <4FC7EFB7.4090704@steadfast.net>
+ <20120601083537.GA32340@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: konglu@minatec.inpg.fr,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Kong Lucien <Lucien.Kong@ensimag.imag.fr>, git@vger.kernel.org,
-	Duperray Valentin <Valentin.Duperray@ensimag.imag.fr>,
-	Jonas Franck <Franck.Jonas@ensimag.imag.fr>,
-	Nguy Thomas <Thomas.Nguy@ensimag.imag.fr>,
-	Nguyen Huynh Khoi Nguyen 
-	<Huynh-Khoi-Nguyen.Nguyen@ensimag.imag.fr>
-To: Phil Hord <phil.hord@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jun 01 18:57:31 2012
+Cc: Kevin Stange <kevin@steadfast.net>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Jun 01 19:02:16 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SaVAD-0007lq-DO
-	for gcvg-git-2@plane.gmane.org; Fri, 01 Jun 2012 18:57:25 +0200
+	id 1SaVEn-0004WL-PD
+	for gcvg-git-2@plane.gmane.org; Fri, 01 Jun 2012 19:02:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965553Ab2FAQ5V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 1 Jun 2012 12:57:21 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:55614 "EHLO
+	id S1758572Ab2FARCF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 1 Jun 2012 13:02:05 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:58150 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S965516Ab2FAQ5U (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 1 Jun 2012 12:57:20 -0400
+	id S1758167Ab2FARCC (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 1 Jun 2012 13:02:02 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0AD5688EE;
-	Fri,  1 Jun 2012 12:57:20 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 71EA98AAC;
+	Fri,  1 Jun 2012 13:02:02 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=x47wu8TN3VTBUN/UalFtP7U0WRI=; b=Lny2b0
-	+YKeGy8I2vAjtLgS/DWq/7izsNdpdBdMxLNu68fL+q+HTGqLz3MEfE9mktq/HCdr
-	NmNletwGUcvtkVmgqF2YFo6qg0cJt9PNQFvFcQk7awQNZDEPMdsTALBzsN+bjhMj
-	uNxCAhTzX3HMvrhgXEidPCeiDMhB1tB5DbLmY=
+	:content-type; s=sasl; bh=OZeUsSGv9rl2n2g29GZK7e6TjJU=; b=c7jci3
+	HP0cAdIudBw2DGiUHOVE7pxTJ1Ny5YIjR+IKpffMZImigWCu0TLVEl2wGTzBq8S3
+	suzjSRXBy/iZHQ4SRoGD/FTJQbD7Ey7z+JG7jxzt4EI8S1yVKEEZ/hbjf59GOD+3
+	oKXNyMwz6NyoUFhOSvbpXTXe1q0FCufp4HhCE=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=uklV0fVXLtuv2s+u9kwBXKwpiHGj7uRB
-	caZxEQ/kUhfFEy8Y+63RaljzO69msZTaZapIUx21pW5VS9oUue0CvvOqF49Sp+oC
-	U8No2dINYJ0OyBKwERyOrYICL7OYMVorMqAGVTQ/sOE8p6ENIotp58WkV2fAolno
-	SEeTDwICBs0=
+	:content-type; q=dns; s=sasl; b=OLfS4xcaIomv3wiLJ2lQPXCxFQ3+YL48
+	iNfB1bNgoiBRt9TftY0pTZRMIWNhAI3z76pYcIN+llyz1dBQRRpnBbAVWgSUT92g
+	9Cjwko1Cmwd63UD94BatBzedqKnCo3xgEJgfFGVfKduWBlTxj/qYzv0tHRXpYe3H
+	8B3L8As3Vls=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id F406B88ED;
-	Fri,  1 Jun 2012 12:57:19 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 694EC8AAB;
+	Fri,  1 Jun 2012 13:02:02 -0400 (EDT)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4333688EC; Fri,  1 Jun 2012
- 12:57:19 -0400 (EDT)
-In-Reply-To: <CABURp0rm2JKBmrm62uAVj1WSc3BE_LoKoHbjmxvkQhPNgnozpA@mail.gmail.com> (Phil
- Hord's message of "Fri, 1 Jun 2012 08:40:39 -0400")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A48478AA9; Fri,  1 Jun 2012
+ 13:02:01 -0400 (EDT)
+In-Reply-To: <20120601083537.GA32340@sigill.intra.peff.net> (Jeff King's
+ message of "Fri, 1 Jun 2012 04:35:37 -0400")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: D94D3730-AC0A-11E1-AE1A-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 819AC970-AC0B-11E1-B7A9-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199003>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199004>
 
-Phil Hord <phil.hord@gmail.com> writes:
+Jeff King <peff@peff.net> writes:
 
->   $ git status --sequencer
->   You have unmerged paths.
->   You are in an am session.
->   You are in the middle of an interactive rebase.
+> On Thu, May 31, 2012 at 05:24:55PM -0500, Kevin Stange wrote:
 >
->   $ git status --porcelain --sequencer
->   airu
+>> Request credentials from the user if none are already defined when a
+>> HTTP 401 is received on a restricted repository.  Then, resubmit the
+>> request and return the final result.
+>> 
+>> This allows all webdav transactions to obtain credentials without having
+>> to individually handle the case in each request.  Having push working
+>> with HTTP auth is needed for a use case I have where storing the
+>> credentials in .netrc or using SSH keys is inappropriate.
 >
-> The "--porcelain --sequencer" combination I am imagining here would
-> show the status as a script-parseable sequence of single-letter
-> indicators telling the status of these same various conditions:
->   u - unmerged paths
->   a - git-am session
->   i - interactive rebase
->   r - rebase
->   c - cherry-pick
->   m - merge
-> etc.
+> We already do this at a higher level in http_request, which in turns
+> calls into finish_active_slot. So if we were going to go this route,
+> wouldn't we also want to remove the 401 handling in http_request?
 
-Some people seem to think that machine-readable has to mean
-unreadable cryptic line noises.  It's a disease.
+Wouldn't the higher levels know a lot more about the context this
+request was made, though?  What problem does the patch try to solve?
+Some higher level callers missing the "if we got 401, then reset and
+retry" logic?  Wouldn't it be saner to fix the breakage there?
 
-If you have to write "etc.", you clearly do not know what the
-range of possible values of these things will eventually be.
+> The dumb-http push code is the only thing that does not go through
+> http_request these days. So another option would be to refactor it to go
+> through that central point.
 
-And I do not think it is your fault not to know what we would want
-to add in the future.  But it is your fault to choose unreadable
-cryptic line noises as an output format.
+It does sound like the right approach to take.
 
-Just spell them out, and do not mark them for translation.
+Thanks.
