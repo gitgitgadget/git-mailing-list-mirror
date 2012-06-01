@@ -1,123 +1,127 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Bug: git ls-files and ignored directories
-Date: Fri, 01 Jun 2012 12:22:01 -0700
-Message-ID: <7vvcja25ye.fsf@alter.siamese.dyndns.org>
-References: <20120530102218.0625CFC006A@dd24126.kasserver.com>
- <20120531101451.C35C5B4C00D@dd24126.kasserver.com>
- <20120601093757.GE32340@sigill.intra.peff.net>
- <7vr4tz3tpw.fsf@alter.siamese.dyndns.org>
- <7vipfa3n0v.fsf@alter.siamese.dyndns.org>
+From: konglu@minatec.inpg.fr
+Subject: Re: [PATCHv5 1/3] wt-status.*: better advices for git status added
+Date: Fri, 01 Jun 2012 21:39:11 +0200
+Message-ID: <20120601213911.Horde.UIs0dHwdC4BPyRpflFgUaLA@webmail.minatec.grenoble-inp.fr>
+References: <1338384216-18782-1-git-send-email-Lucien.Kong@ensimag.imag.fr>
+ <1338477344-15940-1-git-send-email-Lucien.Kong@ensimag.imag.fr>
+ <7vmx4o58zc.fsf@alter.siamese.dyndns.org>
+ <20120601111651.Horde.R0mdSHwdC4BPyIiDyUHhUVA@webmail.minatec.grenoble-inp.fr>
+ <7v396f3rhg.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Christoph Buchner <bilderbuchi@phononoia.at>,
-	Clemens Buchacher <drizzd@aon.at>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Jun 01 21:22:19 2012
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed	DelSp=Yes
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Kong Lucien <Lucien.Kong@ensimag.imag.fr>, git@vger.kernel.org,
+	Matthieu.Moy@grenoble-inp.fr,
+	Duperray Valentin <Valentin.Duperray@ensimag.imag.fr>,
+	Jonas Franck <Franck.Jonas@ensimag.imag.fr>,
+	Nguy Thomas <Thomas.Nguy@ensimag.imag.fr>,
+	Nguyen Huynh Khoi Nguyen 
+	<Huynh-Khoi-Nguyen.Nguyen@ensimag.imag.fr>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jun 01 21:39:25 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SaXQK-0007QJ-9S
-	for gcvg-git-2@plane.gmane.org; Fri, 01 Jun 2012 21:22:12 +0200
+	id 1SaXgv-0007de-96
+	for gcvg-git-2@plane.gmane.org; Fri, 01 Jun 2012 21:39:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757353Ab2FATWG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 1 Jun 2012 15:22:06 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:61222 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753265Ab2FATWE (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 1 Jun 2012 15:22:04 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EE87886A6;
-	Fri,  1 Jun 2012 15:22:03 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=kRKenhGgppJyjPvr4CBEM8VG8i8=; b=fxcy6v
-	EgD25GHIwNEjLH4ckLaR1zgxva78CO1s1Vr3nf72QbH+AZoofk7CPRzKS9tWuRfa
-	8B8c9i530QdG+fFY3DBwXoLUEpSdY7pXjVU0La0SsXbJdxiQdWCq5d1Xw0wwTatI
-	Hf7iv/k5mVQjKsNCdaUTfAnzql27vG62LpTWc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Fp/mCL16DmPsqWvY78KSzf4vNJBlKqB9
-	5qlG8dV2ZqInzjfsonvK6aeP2vXIjMHxUljtp8iwulKFhuKDp6mw+3djaW2yO2Du
-	Tx+1XEUddggqp4CxrvmDhA296wgbzH4PUvRlyoYTAMn/KMKn4HqF50N45Jid8xe+
-	6uCVQ6vBXdI=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E562786A5;
-	Fri,  1 Jun 2012 15:22:03 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4318086A3; Fri,  1 Jun 2012
- 15:22:03 -0400 (EDT)
-In-Reply-To: <7vipfa3n0v.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Fri, 01 Jun 2012 11:28:00 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 115981C4-AC1F-11E1-BC11-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S965098Ab2FATjR convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 1 Jun 2012 15:39:17 -0400
+Received: from v-smtp.minatec.grenoble-inp.fr ([147.173.216.28]:45859 "EHLO
+	v-smtp.minatec.grenoble-inp.fr" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S964865Ab2FATjQ (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 1 Jun 2012 15:39:16 -0400
+Received: from localhost (www02.minatec.grenoble-inp.fr [147.173.216.15])
+	by v-smtp.minatec.grenoble-inp.fr (Postfix) with ESMTP id 318511A02ED;
+	Fri,  1 Jun 2012 21:39:12 +0200 (CEST)
+Received: from reverse.completel.net (reverse.completel.net [92.103.38.66])
+ by webmail.minatec.grenoble-inp.fr (Horde Framework) with HTTP; Fri, 01 Jun
+ 2012 21:39:11 +0200
+In-Reply-To: <7v396f3rhg.fsf@alter.siamese.dyndns.org>
+User-Agent: Internet Messaging Program (IMP) H4 (5.0.17)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199015>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199016>
 
-Junio C Hamano <gitster@pobox.com> writes:
 
-> A naive and unoptimized implementation may look like this patch.
+Junio C Hamano <gitster@pobox.com> a =E9crit=A0:
+
+> konglu@minatec.inpg.fr writes:
 >
-> The "path_exclude_check" structure can be enhanced to record the
-> leading directory it has last checked to be known to be excluded so
-> that path_excluded() can check if the ce->name[] is still inside
-> that directory and return true early, but I'll leave it as an
-> exercise for interested readers while I look at other topics for the
-> upcoming release.
+>>>> +	} else {
+>>>> +		status_printf_ln(s, color, _("You are currently editing a commi=
+t
+>>>> during a rebase."));
+>>>> +		if (advice_status_hints) {
+>>>> +			status_printf_ln(s, color, _("  You can amend the commit with"=
+));
+>>>> +			status_printf_ln(s, color, _("	git commit --amend"));
+>>>> +			status_printf_ln(s, color, _("  Once you are satisfied with
+>>>> your changes, run"));
+>>>> +			status_printf_ln(s, color, _("	git rebase --continue"));
+>>>
+>>> For an advice in "git status" output, the above may be appropriate,
+>>> but would the user see this in "git commit" template, and if so,
+>>> isn't it because the user typed "git commit --amend"?  Does it make
+>>> sense to suggest to run "git commit --amend" in that context?
+>>
+>> True, the user will see the messages in the "git commit" template. W=
+e
+>> didn't take this case into account because we thought that not many =
+people
+>> read the status in the "git commit" template. Anyway, just adding a =
+=20
+>> condition
+>>
+>> if (advice_status_hints && !s->amend)
+>>
+>> does the job.
+>
+> Hrm, what would happen if the user ran "git commit" without --amend?
 
-And an obvious and simple optimization would look like this.
+The new advices will still be displayed (of course only if advice.statu=
+shints
+is enabled).
 
-We can keep the shallowest of the excluded directory (i.e. where a
-traversing caller would have stopped recursing) in check->path, and
-keep returning "Yes, it is excluded" as long as the path is inside
-that directory.
+> It could be done by mistake, which will be greatly helped by the
+> information you already gathered during the inspection phase.
 
- builtin/ls-files.c | 18 ++++++++++++++++++
- 1 file changed, 18 insertions(+)
+Thus, if done by mistake, the user will know that he needs to do
+"git commit --amend" to edit the commit.
 
-diff --git a/builtin/ls-files.c b/builtin/ls-files.c
-index 1385852..5beada0 100644
---- a/builtin/ls-files.c
-+++ b/builtin/ls-files.c
-@@ -218,11 +218,25 @@ static void path_exclude_check_clear(struct path_exclude_check *check)
- 	strbuf_release(&check->path);
- }
- 
-+/*
-+ * Is the ce->name excluded?  This is for a caller like show_files() that
-+ * do not honor directory hierarchy and iterate through paths that are
-+ * possibly in an ignored directory.
-+ *
-+ * A path to a directory known to be excluded is left in check->path to
-+ * optimize for repeated checks for files in the same excluded directory.
-+ */
- static int path_excluded(struct path_exclude_check *check, struct cache_entry *ce)
- {
- 	int i, dtype;
- 	struct strbuf *path = &check->path;
- 
-+	if (path->len &&
-+	    path->len <= ce_namelen(ce) &&
-+	    !memcmp(ce->name, path->buf, path->len) &&
-+	    (!ce->name[path->len] || ce->name[path->len] == '/'))
-+		return 1;
-+
- 	strbuf_setlen(path, 0);
- 	for (i = 0; ce->name[i]; i++) {
- 		int ch = ce->name[i];
-@@ -234,6 +248,10 @@ static int path_excluded(struct path_exclude_check *check, struct cache_entry *c
- 		}
- 		strbuf_addch(path, ch);
- 	}
-+
-+	/* An entry in the index; cannot be a directory with subentries */
-+	strbuf_setlen(path, 0);
-+
- 	dtype = ce_to_dtype(ce);
- 	return excluded(check->dir, ce->name, &dtype);
- }
+> This also can be done deliberately to split a commit in "rebase -i",
+> so "You are in 'rebase -i', do not commit without --amend!" is a
+> wrong message, but it may be sensible to give "are you sure you
+> meant to commit without --amend?"
+
+An interesting case. In fact, more than warning the user about running
+git commit without --amend, wouldn't it be better if there were specifi=
+c
+help messages about splitting a commit ? Like
+
+# Not currently on any branch.
+# You are currently splitting a commit.
+#   (Once your working directory is clean, run "git rebase --continue")
+#
+# Changes not staged for commit:
+#   (use "git add <file>..." to update what will be committed)
+#   (use "git checkout -- <file>..." to discard changes in working dire=
+ctory)
+#
+#       modified:   t/t7060-wtstatus.sh
+#       modified:   t/t7512-status-help.sh
+#       modified:   wt-status.c
+#
+no changes added to commit (use "git add" and/or "git commit -a")
+
+that will be the output of git status after a "git reset HEAD^" during
+a rebase -i. There's already the advice "(use git add <file>...)" so
+putting it twice is not really relevant.
+
+What do you think about it ?
