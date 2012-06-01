@@ -1,103 +1,90 @@
-From: "Simon.Cathebras" <Simon.Cathebras@ensimag.imag.fr>
-Subject: Re: [PATCH 2/3] Test environment of git-remote-mw
-Date: Fri, 01 Jun 2012 10:53:36 +0200
-Message-ID: <4FC88310.2020103@ensimag.imag.fr>
-References: <4FC64B0C.6070507@ensimag.imag.fr> <1338397492-13360-1-git-send-email-simon.cathebras@ensimag.imag.fr> <1338397492-13360-2-git-send-email-simon.cathebras@ensimag.imag.fr> <vpqzk8oq0oe.fsf@bauges.imag.fr>
-Reply-To: Simon.Cathebras@ensimag.imag.fr
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCHv5 3/3] status: don't suggest "git rm" or "git add" if not appropriate
+Date: Fri, 01 Jun 2012 10:55:10 +0200
+Message-ID: <vpqzk8nif81.fsf@bauges.imag.fr>
+References: <1338384216-18782-1-git-send-email-Lucien.Kong@ensimag.imag.fr>
+	<1338477344-15940-1-git-send-email-Lucien.Kong@ensimag.imag.fr>
+	<1338477344-15940-3-git-send-email-Lucien.Kong@ensimag.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, charles.roussel@ensimag.imag.fr,
-	Guillaume.Sasdy@ensimag.imag.fr, Julien.Khayat@ensimag.imag.fr,
-	Simon.Perrat@ensimag.imag.fr,
-	Charles Roussel <charles.roussel@ensimag.fr>,
-	Guillaume Sasdy <guillaume.sasdy@gmail.com>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Fri Jun 01 10:53:49 2012
+Content-Type: text/plain
+Cc: git@vger.kernel.org,
+	Duperray Valentin <Valentin.Duperray@ensimag.imag.fr>,
+	Jonas Franck <Franck.Jonas@ensimag.imag.fr>,
+	Nguy Thomas <Thomas.Nguy@ensimag.imag.fr>,
+	Nguyen Huynh Khoi Nguyen 
+	<Huynh-Khoi-Nguyen.Nguyen@ensimag.imag.fr>
+To: Kong Lucien <Lucien.Kong@ensimag.imag.fr>
+X-From: git-owner@vger.kernel.org Fri Jun 01 10:55:32 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SaNc8-0006Yf-2Z
-	for gcvg-git-2@plane.gmane.org; Fri, 01 Jun 2012 10:53:44 +0200
+	id 1SaNdr-0008Ny-7I
+	for gcvg-git-2@plane.gmane.org; Fri, 01 Jun 2012 10:55:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759113Ab2FAIxj convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 1 Jun 2012 04:53:39 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:50475 "EHLO shiva.imag.fr"
+	id S932382Ab2FAIzW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 1 Jun 2012 04:55:22 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:57427 "EHLO rominette.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751624Ab2FAIxi (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 1 Jun 2012 04:53:38 -0400
-Received: from ensimag.imag.fr (ensimag.imag.fr [195.221.228.12])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id q518j8do011819
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Fri, 1 Jun 2012 10:45:08 +0200
-Received: from [IPv6:::1] (ensibm [195.221.228.8])
-	by ensimag.imag.fr (8.13.8/8.13.8/ImagV2.1.r_ens) with ESMTP id q518rVHX008716;
-	Fri, 1 Jun 2012 10:53:31 +0200
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:12.0) Gecko/20120430 Thunderbird/12.0.1
-In-Reply-To: <vpqzk8oq0oe.fsf@bauges.imag.fr>
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Fri, 01 Jun 2012 10:45:08 +0200 (CEST)
+	id S932351Ab2FAIzS (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 1 Jun 2012 04:55:18 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id q518kgc1030199
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Fri, 1 Jun 2012 10:46:42 +0200
+Received: from bauges.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1SaNdY-0004Yc-6y; Fri, 01 Jun 2012 10:55:12 +0200
+In-Reply-To: <1338477344-15940-3-git-send-email-Lucien.Kong@ensimag.imag.fr>
+	(Kong Lucien's message of "Thu, 31 May 2012 17:15:44 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.93 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Fri, 01 Jun 2012 10:46:44 +0200 (CEST)
 X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: q518j8do011819
+X-MailScanner-ID: q518kgc1030199
 X-IMAG-MailScanner: Found to be clean
 X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: simon.cathebras@ensimag.imag.fr
-MailScanner-NULL-Check: 1339145112.22222@SGelblCp7f68JIbkBnIf0A
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1339145206.87059@u/xygYin4X6nTw4ifwd0Tg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198961>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198962>
 
-On 31/05/2012 09:17, Matthieu Moy wrote:
->
->> +	result=3D$(diff -r -B -w --exclude=3D".git" "$1" "$2")
-> Doesn't seem to be in POSIX:
->
-> http://pubs.opengroup.org/onlinepubs/009695399/utilities/diff.html
->
-> Will this run on all platforms?
->
-Indeed. According to the POSIX manual, the option -B and -w are merged=20
-in the single option -b.
-In addition, -r option still exists (to compare recursively two=20
-directories).
-The previous instruction will be write as follow :
-     diff -r -b "$first_folder" "$second_folder"
+Kong Lucien <Lucien.Kong@ensimag.imag.fr> writes:
 
-With this fix, it will works on all platforms. ;)
->> +my $wiki_url=3D"http://localhost/wiki/api.php";
->> +my $wiki_admin=3D'WikiAdmin';
->> +my $wiki_admin_pass=3D'AdminPass';
-> It would be nice to allow overriding these from the command-line. But=
- as
-> you are now writting tests, you may as well apply the YAGNI
-> principle ;-).
-Does it seems important for you to overriding these from CL ?
-By default, those settings work fine. You have to edit this only if you=
-=20
-need a special configuration. But it is purely optionnal.
+>  	# Unmerged paths:
+> -	#   (use "git add/rm <file>..." as appropriate to mark resolution)
+> +	#   (use "git add <file>..." to mark resolution)
+>  	#
+>  	#	both modified:      main.txt
+>  	#
 
-   Included in v2 patches:
+This makes me think of another possible improvement (unrelated from this
+one). When merging a binary file, one gets
 
-     * Fixing errors pointed above.
-     * Sqlite file excluded from the patches. Mainly with reviewing the=
-=20
-wiki_install script.
+# On branch branch
+# Unmerged paths:
+#   (use "git add/rm <file>..." as appropriate to mark resolution)
+#
+#       both modified:      binary.bin
+#
 
-On the other hand, considering the git-mediawiki is curently on contrib=
-=20
-branch, shall we move our test environement from git/t to git/contrib/t=
- ?
+But no conflict markers, as they would make no sense in the file. Then,
+it's a real pain to fix if you're not a Git expert. It would help, in
+the presence of binary files, to turn that into :
 
-SimonC
+# Unmerged paths:
+#   (use "git checkout --ours [-- path]" to checkout your version)
+#   (use "git checkout --theirs [-- path]" to checkout the version being merged)
+#   (use "git add/rm <file>..." as appropriate to mark resolution)
+#
+#       both modified:      binary.bin
+#
 
---=20
-CATHEBRAS Simon
-
-2A-ENSIMAG
-
-=46ili=E8re Ing=E9ni=E9rie des Syst=E8mes d'Information
-Membre Bug-Buster
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
