@@ -1,96 +1,63 @@
-From: nguyenhu@minatec.inpg.fr
-Subject: Re: [PATCHv3] Read from XDG configuration file, not write
-Date: Sat, 02 Jun 2012 00:07:13 +0200
-Message-ID: <20120602000713.Horde.oEKVanwdC4BPyT0RI-CkWSA@webmail.minatec.grenoble-inp.fr>
+From: Adam Mercer <ramercer@gmail.com>
+Subject: Re: Getting the commit that corresponds to a specific annotated tag
+Date: Fri, 1 Jun 2012 17:11:12 -0500
+Message-ID: <CA+mfgz0GqTKwOg6b=6rPUUnS6kwXZfCCYE7SOVHFcqrjRpOiTw@mail.gmail.com>
+References: <CA+mfgz2=ZFBetSGv1Bkq6orBbpVTS1k0gLVm0nGoR1sUDkDwqQ@mail.gmail.com>
+ <7vd35i1ymz.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed; DelSp=Yes
-Cc: git@vger.kernel.org, Lucien KONG <Lucien.Kong@ensimag.imag.fr>,
-	Valentin DUPERRAY <Valentin.Duperray@ensimag.imag.fr>,
-	Thomas NGUY <Thomas.Nguy@ensimag.imag.fr>,
-	Franck JONAS <Franck.Jonas@ensimag.imag.fr>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jun 02 00:07:55 2012
+X-From: git-owner@vger.kernel.org Sat Jun 02 00:11:59 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Saa0g-000365-7f
-	for gcvg-git-2@plane.gmane.org; Sat, 02 Jun 2012 00:07:54 +0200
+	id 1Saa4b-0007bX-J4
+	for gcvg-git-2@plane.gmane.org; Sat, 02 Jun 2012 00:11:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965503Ab2FAWHT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 1 Jun 2012 18:07:19 -0400
-Received: from v-smtp.minatec.grenoble-inp.fr ([147.173.216.28]:58570 "EHLO
-	v-smtp.minatec.grenoble-inp.fr" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S965479Ab2FAWHS (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 1 Jun 2012 18:07:18 -0400
-Received: from localhost (www02.minatec.grenoble-inp.fr [147.173.216.15])
-	by v-smtp.minatec.grenoble-inp.fr (Postfix) with ESMTP id CC2561A0258;
-	Sat,  2 Jun 2012 00:07:13 +0200 (CEST)
-Received: from etu-189-20.vpn-inp.grenoble-inp.fr
- (etu-189-20.vpn-inp.grenoble-inp.fr [147.171.189.20]) by
- webmail.minatec.grenoble-inp.fr (Horde Framework) with HTTP; Sat, 02 Jun
- 2012 00:07:13 +0200
-User-Agent: Internet Messaging Program (IMP) H4 (5.0.17)
-Content-Disposition: inline
+	id S965546Ab2FAWLx convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 1 Jun 2012 18:11:53 -0400
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:42482 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750998Ab2FAWLx convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 1 Jun 2012 18:11:53 -0400
+Received: by yenm10 with SMTP id m10so2188420yen.19
+        for <git@vger.kernel.org>; Fri, 01 Jun 2012 15:11:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=9nYOSJwaIKhQiNql9Wgi4yAQ43ziS7y8xFAIhVG8a2A=;
+        b=WW3cOIlqBsuWD02Iw8oe4diXJh9ZM/oEN2imhFnBwnfWnL1SwvUN6j/eVel22rm4K7
+         MjiFfFj3+51UXVdZIYwwkssYyZl+CMsY+uH/urqV+6G8QUgSvfqeBuUWDv9SlUBdhWAB
+         HV5s8JR8Ex8sq9zBgLtZlvI/a/DTOLThcHjnWzWNVbUbQ6aAOraOpZLmpyq9nHo0M0MV
+         hZbDa9o4jVTi3JSobpVwyrsm7kRZA5HvYJBe9wx8aAaW+tK6ZkZTfTmPUulqMgio4JuQ
+         eCO2UxDwG18vg+1W/+LzplrC7T7eZTJzEOF1//9gVEC8AtAWqc34Rq3dItpu+cePCE+q
+         CBHA==
+Received: by 10.236.126.15 with SMTP id a15mr335221yhi.14.1338588712332; Fri,
+ 01 Jun 2012 15:11:52 -0700 (PDT)
+Received: by 10.147.97.23 with HTTP; Fri, 1 Jun 2012 15:11:12 -0700 (PDT)
+In-Reply-To: <7vd35i1ymz.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199027>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199028>
 
-Junio C Hamano <gitster@pobox.com> wrote:
-> Hrm, xdg_git_path() returns allocated memory, and each call site
-> leaks its return value, no?
->
-> I didn't mean a micro-helper function like xdg_git_path() when I
-> suggested refactoring.  I meant a helper that figures out all the
-> necessary bits in one go.  For example, can't the above call site
-> look more like this?
->
->       static int get_value(const char *key_, const char *regex_)
->       {
->               int ret = -1;
->               char *global = NULL, *xdg = NULL, *repo_config = NULL;
->               const char *system_wide = NULL, *local;
->               struct config_include_data inc = CONFIG_INCLUDE_INIT;
->               config_fn_t fn;
->               void *data;
->
->               local = given_config_file;
->               if (!local) {
->                       local = repo_config = git_pathdup("config");
->                       if (git_config_system())
->                               system_wide = git_etc_gitconfig();
->                       home_config_paths(&global, &xdg);
->               }
->               ...
->
-> And then the config.c::home_config_paths() may look like:
->
->       void home_config_paths(char **global, char **xdg)
->       {
->               char *xdg_home = getenv("XDG_CONFIG_HOME");
->               char *home = getenv("HOME");
->               char *to_free = NULL;
->
->               if (!home) {
->                       *global = NULL;
->               } else {
->                       if (!xdg_home) {
->                               to_free = strdup(mkpath("%s/.config", home));
->                               xdg_home = to_free;
->                       }
->                       *global = xstrdup(mkpath("%s/.gitconfig", home));
->               }
->
->               if (!xdg_home)
->                       *xdg = NULL;
->               else
->                       *xdg = xstrdup(mkpath("%s/git/config", xdg_home));
->               free(to_free);
+On Fri, Jun 1, 2012 at 5:00 PM, Junio C Hamano <gitster@pobox.com> wrot=
+e:
 
-We adapted this code to allow reuse and introduce default values to
-core.excludesfile and core.attributesfile in the XDG directory too,
-in our V4 version.
+> I think you want
+>
+> =A0 =A0 =A0 =A0git rev-parse $tag^{commit}
+>
+> It's kind of scary, though.
+
+Thanks, that does the trick. Why do you say it's scary?
+
+Cheers
+
+Adam
