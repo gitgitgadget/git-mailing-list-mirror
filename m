@@ -1,182 +1,146 @@
-From: Kevin Stange <kevin@steadfast.net>
-Subject: Re: [RFC] Deal with HTTP 401 by requesting credentials.
-Date: Fri, 01 Jun 2012 12:02:08 -0500
-Message-ID: <4FC8F590.2070308@steadfast.net>
-References: <4FC7EFB7.4090704@steadfast.net> <20120601083537.GA32340@sigill.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature";
- boundary="------------enigD5BB78B2537C9099EB155359"
-Cc: git@vger.kernel.org
-To: unlisted-recipients:; (no To-header on input)
-X-From: git-owner@vger.kernel.org Fri Jun 01 19:02:26 2012
+From: Lanny Ripple <lanny@spotinfluence.com>
+Subject: Re: Bug: rebase when an author uses accents in name on MacOSx
+Date: Fri, 1 Jun 2012 12:05:36 -0500
+Message-ID: <0A6ABBD7-01D5-4A24-BF0F-78A7F2C46938@spotinfluence.com>
+References: <06DD2F56-F956-46DF-84A4-3443D4702CDE@spotinfluence.com> <7vehq18c82.fsf@alter.siamese.dyndns.org> <20120531011911.GC5488@sigill.intra.peff.net> <7v62bc97w1.fsf@alter.siamese.dyndns.org> <78E7FEAC-6587-4EB3-B78B-08D321F53BF9@spotinfluence.com> <7vtxyw6ypx.fsf@alter.siamese.dyndns.org> <69ED148F-BD10-4DE3-91F2-D31F83A0EAB7@spotinfluence.com> <7vd35k6w0i.fsf@alter.siamese.dyndns.org> <168277BB-0E71-4987-A2BE-6202034A96F1@spotinfluence.com> <20120601093039.GD32340@sigill.intra.peff.net> <7vmx4n3sz5.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0 (Apple Message framework v1278)
+Content-Type: multipart/signed; boundary="Apple-Mail=_C281127A-518F-4AE5-AA03-6EFC272B1407"; protocol="application/pgp-signature"; micalg=pgp-sha1
+Cc: Jeff King <peff@peff.net>, Thomas Rast <trast@inf.ethz.ch>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jun 01 19:05:51 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SaVEx-0004jR-Gm
-	for gcvg-git-2@plane.gmane.org; Fri, 01 Jun 2012 19:02:20 +0200
+	id 1SaVIK-0008RG-Br
+	for gcvg-git-2@plane.gmane.org; Fri, 01 Jun 2012 19:05:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759052Ab2FARCP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 1 Jun 2012 13:02:15 -0400
-Received: from staffmx.steadfast.net ([67.202.100.6]:53415 "EHLO
-	staffmx.steadfast.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758167Ab2FARCN (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 1 Jun 2012 13:02:13 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by staffmx.steadfast.net (Postfix) with ESMTP id D11D916AC09E
-	for <git@vger.kernel.org>; Fri,  1 Jun 2012 12:02:12 -0500 (CDT)
-X-Virus-Scanned: amavisd-new at steadfast.net
-Received: from staffmx.steadfast.net ([127.0.0.1])
-	by localhost (staffmx.steadfast.net [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id xQw1hjC+PR1z for <git@vger.kernel.org>;
-	Fri,  1 Jun 2012 12:02:08 -0500 (CDT)
-Received: from ziyal.office.steadfast.net (unknown [IPv6:2607:f128:0:1:222:4dff:fe51:2ed5])
-	by staffmx.steadfast.net (Postfix) with ESMTPSA id 7EDAD16AC09B
-	for <git@vger.kernel.org>; Fri,  1 Jun 2012 12:02:08 -0500 (CDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:12.0) Gecko/20120430 Thunderbird/12.0.1
-In-Reply-To: <20120601083537.GA32340@sigill.intra.peff.net>
-X-Enigmail-Version: 1.4.1
+	id S1759219Ab2FARFo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 1 Jun 2012 13:05:44 -0400
+Received: from mail-yw0-f46.google.com ([209.85.213.46]:46331 "EHLO
+	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758191Ab2FARFn (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 1 Jun 2012 13:05:43 -0400
+Received: by yhmm54 with SMTP id m54so1818347yhm.19
+        for <git@vger.kernel.org>; Fri, 01 Jun 2012 10:05:41 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=subject:mime-version:content-type:from:in-reply-to:date:cc
+         :message-id:references:to:x-mailer:x-gm-message-state;
+        bh=9YRiwqtgPBgV4SX+cTQdWc0jHFSnK8o+8ylgwy9crXI=;
+        b=W0tD/l2TvwlvbqY/B+xOODh/jQgc0YQeqnI7MqkTt/o6HD68w9oXmXYEVMhCuRI0wo
+         xbB8T0GFKdKVdfoNdI/HzWy9sZz2WD0CaFBqhe+PFfIrJLbhK1PrCn1Uyl0dd6Aj5LOL
+         vL01iQbf+OzRb3S06Ve8MqJVryL89eSBpGoEod1jtyF+npUnJjPzIrqFgIs/Ed/UI2Z0
+         lli1psE8Vao85fcvF431UF4eclx01VH+VeWQjxx8DuneCiov+SSsPblvaeS+zuuPVsgx
+         K/zU1mpSV7QK+R+zhnzfLtYDBq7BXoewvbrbelvfjX/ZNE2t8AayIn2+XnrzB+Mk/nRO
+         Za3w==
+Received: by 10.50.135.1 with SMTP id po1mr2326494igb.67.1338570341251;
+        Fri, 01 Jun 2012 10:05:41 -0700 (PDT)
+Received: from [192.168.1.4] (c-98-198-192-29.hsd1.tx.comcast.net. [98.198.192.29])
+        by mx.google.com with ESMTPS id z7sm4666100igb.3.2012.06.01.10.05.38
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 01 Jun 2012 10:05:40 -0700 (PDT)
+In-Reply-To: <7vmx4n3sz5.fsf@alter.siamese.dyndns.org>
+X-Mailer: Apple Mail (2.1278)
+X-Gm-Message-State: ALoCoQltG56z6uiJDJRfRcfj0OzQqm9QoOFAILPixheHUypcb6XmBv5p5KMApjSWDXqsOU96Im3J
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199005>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199006>
 
-This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
---------------enigD5BB78B2537C9099EB155359
-Content-Type: text/plain; charset=UTF-8
+
+--Apple-Mail=_C281127A-518F-4AE5-AA03-6EFC272B1407
 Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;
+	charset=us-ascii
 
-On 06/01/2012 03:35 AM, Jeff King wrote:
-> On Thu, May 31, 2012 at 05:24:55PM -0500, Kevin Stange wrote:
+I still think the best solution is figuring out if the platform sed is =
+sane at build time and using a full path (via config setup if being able =
+to change the sed used is a priority).  Short of that something as =
+simple as
+
+(git-am:699+)
+
+   if test -z "$GIT_AUTHOR_EMAIL"
+   then
+           # Can occur when sed in PATH will not handle UTF8 under =
+LC_ALL=3DC.
+           gettextln "Patch does not have a valid e-mail address."
+           stop_here $this
+   fi
+
+would give folks trying to troubleshoot the problem a clue to what was =
+going on.  =46rom the fink developers' list it seems Darwin and perhaps =
+FreeBSD use US-ASCII for LC_ALL=3DC or POSIX which is why Gnu sed gets =
+it wrong.
+
+My problem is still fixed whatever is decided.  Enjoy,
+  -ljr
+=09
+---
+Lanny Ripple
+lanny@spotinfluence.com
+
+
+On Jun 1, 2012, at 11:19 AM, Junio C Hamano wrote:
+
+> Jeff King <peff@peff.net> writes:
+>> [Please don't top-post.]
+>> ...
+>> But you have to keep in mind all of the people who will be led down =
+the
+>> wrong path by your breadcrumb when the failure is caused by a
+>> _different_ problem. What is the probability that it is helpful =
+versus
+>> not helpful?  If you are going to give advice that sed might be =
+broken,
+>> you should at least test to see if it is broken and report it.
 >=20
->> Request credentials from the user if none are already defined when a
->> HTTP 401 is received on a restricted repository.  Then, resubmit the
->> request and return the final result.
->>
->> This allows all webdav transactions to obtain credentials without havi=
-ng
->> to individually handle the case in each request.  Having push working
->> with HTTP auth is needed for a use case I have where storing the
->> credentials in .netrc or using SSH keys is inappropriate.
+> Eek, do that at runtime in the error code path?
 >=20
-> We already do this at a higher level in http_request, which in turns
-> calls into finish_active_slot. So if we were going to go this route,
-> wouldn't we also want to remove the 401 handling in http_request?
-
-I did see the work being done there, and considered removing it.  In fact=
-, I
-used it as a reference for working out what was going on in the authentic=
-ation
-process.  I decided not to do anything there until soliciting feedback an=
-d
-deciding whether my approach was reasonable.
-
-> The dumb-http push code is the only thing that does not go through
-> http_request these days. So another option would be to refactor it to g=
-o
-> through that central point. I took a brief look at this when I was
-> updating the credential code a few months ago, but didn't consider it a=
-
-> priority, as most people should be using smart http these days. Is ther=
-e
-> a reason you can't use smart-http? It's significantly more efficient.
-
-Smart HTTP didn't come up in any of my Google searches.  With that as an
-option, I might just drop this work now.  I'd rather see incomplete metho=
-ds
-that aren't recommended go away than further facilitate their use, person=
-ally.
-
-> You also don't necessarily need to handle 401 in every code path of
-> http-push; once we see the credential once, we will use it everywhere,
-> so you really only need to handle it on the initial request (assuming
-> that all requests will have the same authorization requirements).
-
-I made the change where I did because I wasn't sure if the push code was
-avoiding using http_request intentionally, and wasn't sure whether new co=
-de
-would be written that avoid it as well.
-
-If that's not the case, then I gather http-push would be better rewritten=
- to
-just use http_request, if anything.
-
->> Apologies for anything wrong I might have done here.  I'm not used to
->> procedures for this sort of patch submission, or terribly familiar wit=
-h
->> the code base.  I'm seeking advice on whether this approach is sane or=
-
->> completely crazy, and I'm willing to adjust it to make it suitable for=
-
->> inclusion.
->>
->> Signed-off-by: Kevin <kevin@steadfast.net>
->> ---
+> Add something like
 >=20
-> Cover letter material (i.e., anything that would not go into the commit=
-
-> message of the final commit) should go below the "---".
-
-Thanks, will remember this for future reference.
-
-> Is it safe to just run start_active_slot again without reinitializing
-> the request? The 401-handling code in http_request actually restarts a
-> new request. I don't immediately see any state that would need to be
-> reset; we might have written some data to the output file if curl gave
-> us any body data, but presumably it would not have done so for a 401.
-
-In my tests, this particular code flow never returns anything to the orig=
-inal
-request call because I interrupt it and start the request over.  Now that=
- I
-look at it again, there's a chance it leaks the curl response, but it doe=
-sn't
-return that response and the new request works fine, replacing the origin=
-al.
-
-> In the "else" clause you add, I don't think there's any point in
-> printing an error. The 401 should get propagated back to the caller, wh=
-o
-> will produce an error. However, you _should_ call credential_reject,
-> since you know that the credential you have doesn't work.
+> 	suspected_sed_breakage () {
+> 		xxxxx=3D$(printf "\370\235\204\236\n" | LC_CTYPE=3DC sed =
+'s/./x/g')
+>                if test "x$xxxxx" !=3D "xxxxx"
+>                then
+> 			die "Your sed is broken; cannot run $1"
+> 		fi
+> 	}
 >=20
-> Similarly, you would want to call credential_accept after a successful
-> request, so that helpers can store it.
-
-If I decide to continue working on this, I will keep these in mind.  I'm
-pretty sure that if I can get smart HTTP working, there's no reason to ev=
-en
-bother with this from my perspective, unless you think there's substantia=
-l
-value in it.
-
-Thanks for the detailed feedback on the proposed change and suggestions o=
-n
-alternative options.
-
---=20
-Kevin Stange
-Chief Technology Officer
-Steadfast Networks
-http://steadfast.net
-Phone: 312-602-2689 ext. 203 | Fax: 312-602-2688 | Cell: 312-320-5867
+> to git-sh-setup, and do something like:
+>=20
+> 	. "$dotest/author-script" || suspected_sed_breakage "$0"
+>=20
+> in git-am?
+>=20
+> The problem I see is that at that point where we have to suspect
+> something fundamental as sed broken on the platform, we cannot even
+> trust printf, test, or even the shell itself behaving sanely.
+>=20
+> So I would say, although it is a fun thought-experiment, such a test
+> and breadcrumb is not really worth it.
+>=20
 
 
---------------enigD5BB78B2537C9099EB155359
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
+--Apple-Mail=_C281127A-518F-4AE5-AA03-6EFC272B1407
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment;
+	filename=signature.asc
+Content-Type: application/pgp-signature;
+	name=signature.asc
+Content-Description: Message signed with OpenPGP using GPGMail
 
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+Version: GnuPG/MacGPG2 v2.0.17 (Darwin)
 
-iEYEARECAAYFAk/I9ZAACgkQkd/BoeKjg0gy8gCdFdhwjvREy40vOcIM1exCPUbm
-l8QAn16t50ajh850/tpkcsaLiQ+JI6Rg
-=e665
+iF4EAREIAAYFAk/I9mEACgkQ+owW65SoXfje2AD+OkKvypYIZdQri2KC0Jk9xoVp
+zg7TnLeHEIc58+MvMF8BANr5TwggGOxtLOQH59POWVgwhmUoPwrzc/jW4Fc6jLpt
+=Dy46
 -----END PGP SIGNATURE-----
 
---------------enigD5BB78B2537C9099EB155359--
+--Apple-Mail=_C281127A-518F-4AE5-AA03-6EFC272B1407--
