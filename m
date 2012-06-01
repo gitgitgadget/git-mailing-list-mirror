@@ -1,71 +1,58 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Adam Mercer <ramercer@gmail.com>
 Subject: Re: Getting the commit that corresponds to a specific annotated tag
-Date: Fri, 01 Jun 2012 15:21:34 -0700
-Message-ID: <7v8vg61xn5.fsf@alter.siamese.dyndns.org>
+Date: Fri, 1 Jun 2012 17:27:35 -0500
+Message-ID: <CA+mfgz1DOzB6=m3uLBtAULRZd7TR90M9mDDFFK2dxB+RpWC9kw@mail.gmail.com>
 References: <CA+mfgz2=ZFBetSGv1Bkq6orBbpVTS1k0gLVm0nGoR1sUDkDwqQ@mail.gmail.com>
- <7vd35i1ymz.fsf@alter.siamese.dyndns.org>
- <CA+mfgz0GqTKwOg6b=6rPUUnS6kwXZfCCYE7SOVHFcqrjRpOiTw@mail.gmail.com>
+ <7vd35i1ymz.fsf@alter.siamese.dyndns.org> <CA+mfgz0GqTKwOg6b=6rPUUnS6kwXZfCCYE7SOVHFcqrjRpOiTw@mail.gmail.com>
+ <7v8vg61xn5.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1
 Cc: git@vger.kernel.org
-To: Adam Mercer <ramercer@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jun 02 00:21:45 2012
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Jun 02 00:28:54 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SaaE2-0001eh-9p
-	for gcvg-git-2@plane.gmane.org; Sat, 02 Jun 2012 00:21:42 +0200
+	id 1SaaKv-0000lN-Ql
+	for gcvg-git-2@plane.gmane.org; Sat, 02 Jun 2012 00:28:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965589Ab2FAWVi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 1 Jun 2012 18:21:38 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:56059 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754320Ab2FAWVh (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 1 Jun 2012 18:21:37 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D627D9898;
-	Fri,  1 Jun 2012 18:21:36 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=WKIcrDWPS5/+BAarH6DqrX+77hk=; b=ER/hXv
-	1GGuuv4NyLrghPSpSJAj0R7mOUxOseW1fzmvNCy9f6YSLofpXVSkvTcmbGQX0FsA
-	DqJfMtASbiHAYSZAU4Yr73crbSwLtt5RN6DzESQfrhRGhg29hPlyWrRc6hwzoh6N
-	03EQ7W9La6z1P6o59Kswpu/rjNZ3MmnP0gYEQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=b2YL4AOuD90kh2d/zuJ9fCB+AhuUHkPV
-	/BMndTAmgVkNtyPoawpKNepTvxmgMTnw3pVWxm/FV8ujMHAqFLBv1pMhwLA9J55j
-	NWmznHh+8ae6lQ1k2Z5lWKUrH56hfBLNIFk5zh0t6F1nuUbVL8UZbu9G6kC3yq9A
-	axykHfF7k5E=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CD4409897;
-	Fri,  1 Jun 2012 18:21:36 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5EC979894; Fri,  1 Jun 2012
- 18:21:36 -0400 (EDT)
-In-Reply-To: <CA+mfgz0GqTKwOg6b=6rPUUnS6kwXZfCCYE7SOVHFcqrjRpOiTw@mail.gmail.com> (Adam
- Mercer's message of "Fri, 1 Jun 2012 17:11:12 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 269FE910-AC38-11E1-B778-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1759498Ab2FAW2R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 1 Jun 2012 18:28:17 -0400
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:55892 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754320Ab2FAW2Q (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 1 Jun 2012 18:28:16 -0400
+Received: by yenm10 with SMTP id m10so2196604yen.19
+        for <git@vger.kernel.org>; Fri, 01 Jun 2012 15:28:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=bmny/4I3VTxDTKkflcPKHeS/LD0hwLQPaFNXAlCOkUc=;
+        b=vTIbLMnidOiRhkcTFVqdREUK2V43BV2MfmTpqNo8pYI9T82VEmxf+IV8wDpRjBHkXD
+         gGf97llTjKWLpbQml5ReoxB6UvTURMDI8Yw2NXcfOPQ3TOndgsSDMwrGin2FLw8+iN4v
+         KHcn1kluDq2ndDJjUQJHUExayctouBotltj5AS8Mr0EAk+4vWuue3WD+TO7Z3AO/igIX
+         NDuYjEIJfnvm0mo6ir/opjlgAZr+KKtHDNx5oFsob4r1NNkiUDnyK7kr8sLP6fdBrDmV
+         MKi58L/z4YojpNddueNf47nN6anxOUGUNcdVyEnuoardN/XsXu6ZIuTdFMAeJWyMw2dA
+         XVqQ==
+Received: by 10.236.126.15 with SMTP id a15mr380489yhi.14.1338589695889; Fri,
+ 01 Jun 2012 15:28:15 -0700 (PDT)
+Received: by 10.147.97.23 with HTTP; Fri, 1 Jun 2012 15:27:35 -0700 (PDT)
+In-Reply-To: <7v8vg61xn5.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199029>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199030>
 
-Adam Mercer <ramercer@gmail.com> writes:
+On Fri, Jun 1, 2012 at 5:21 PM, Junio C Hamano <gitster@pobox.com> wrote:
 
-> On Fri, Jun 1, 2012 at 5:00 PM, Junio C Hamano <gitster@pobox.com> wrote:
->
->> I think you want
->>
->>        git rev-parse $tag^{commit}
->>
->> It's kind of scary, though.
->
-> Thanks, that does the trick. Why do you say it's scary?
+> Didn't you say you were writing a Porcelain?
 
-Didn't you say you were writing a Porcelain?
+Ahh, I get you. Porcelain was probably the wrong word...
+
+Cheers
+
+Adam
