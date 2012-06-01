@@ -1,192 +1,353 @@
-From: "Simon.Cathebras" <Simon.Cathebras@ensimag.imag.fr>
-Subject: Re: [PATCH 2/3] Test environment of git-remote-mw
-Date: Fri, 01 Jun 2012 16:43:13 +0200
-Message-ID: <4FC8D501.20207@ensimag.imag.fr>
-References: <4FC64B0C.6070507@ensimag.imag.fr> <1338547317-26088-1-git-send-email-guillaume.sasdy@ensimag.imag.fr> <1338547317-26088-2-git-send-email-guillaume.sasdy@ensimag.imag.fr> <vpqmx4n9rq6.fsf@bauges.imag.fr>
-Reply-To: Simon.Cathebras@ensimag.imag.fr
+From: Thomas Gummerer <t.gummerer@gmail.com>
+Subject: Re: Review of current github code [Re: [GSoC] Designing a faster
+ index format - Progress report week 6]
+Date: Fri, 1 Jun 2012 16:49:02 +0200
+Message-ID: <20120601144902.GG6449@tgummerer>
+References: <20120528214401.GB6449@tgummerer>
+ <87pq9k8i4e.fsf@thomas.inf.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Guillaume Sasdy <guillaume.sasdy@ensimag.imag.fr>,
-	git@vger.kernel.org, Charles Roussel <charles.roussel@ensimag.fr>,
-	Simon Perrat <Simon.Perrat@ensimag.imag.fr>,
-	Charles Roussel <Charles.Roussel@ensimag.imag.fr>,
-	Julien Khayat <Julien.Khayat@ensimag.imag.fr>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Fri Jun 01 16:43:25 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, gitster@pobox.com, mhagger@alum.mit.edu,
+	pclouds@gmail.com
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Fri Jun 01 16:49:18 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SaT4R-0006Kz-4X
-	for gcvg-git-2@plane.gmane.org; Fri, 01 Jun 2012 16:43:19 +0200
+	id 1SaTAD-0003d6-GZ
+	for gcvg-git-2@plane.gmane.org; Fri, 01 Jun 2012 16:49:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759066Ab2FAOnO convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 1 Jun 2012 10:43:14 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:46423 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1759031Ab2FAOnN (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 1 Jun 2012 10:43:13 -0400
-Received: from ensimag.imag.fr (ensimag.imag.fr [195.221.228.12])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id q51EYjql011846
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Fri, 1 Jun 2012 16:34:45 +0200
-Received: from [IPv6:::1] (ensibm [195.221.228.8])
-	by ensimag.imag.fr (8.13.8/8.13.8/ImagV2.1.r_ens) with ESMTP id q51Eh8Hi011286;
-	Fri, 1 Jun 2012 16:43:08 +0200
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:12.0) Gecko/20120430 Thunderbird/12.0.1
-In-Reply-To: <vpqmx4n9rq6.fsf@bauges.imag.fr>
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Fri, 01 Jun 2012 16:34:46 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: q51EYjql011846
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: simon.cathebras@ensimag.imag.fr
-MailScanner-NULL-Check: 1339166087.08959@27sEYvB6g6S2cwbKbchhSw
+	id S933413Ab2FAOtN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 1 Jun 2012 10:49:13 -0400
+Received: from mail-wg0-f44.google.com ([74.125.82.44]:41610 "EHLO
+	mail-wg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933368Ab2FAOtI (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 1 Jun 2012 10:49:08 -0400
+Received: by wgbdr13 with SMTP id dr13so2015087wgb.1
+        for <git@vger.kernel.org>; Fri, 01 Jun 2012 07:49:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=dj5oToKW2c2wzEdtqgIfpCYGUsTZXasUFz7t4tJe2rI=;
+        b=OICcuaD9yVJDZ8p3dGNxB9SgZ3qkRFS3bPR6FB8SZIJWBhj57pxGDmwGwmmsl01Cff
+         I0Kb7gvvJhhxpJG9DPqYp4iWkmq+Zfv6kLyfvl6KFjtWoTzZV9WxFrKCVbuO7zLOxx5P
+         hqqo3vMVH9z8iOn2mc7Ao4MsLt2rHdLTCJEgImRoWSIHEKxgvXOtdBEUBAvQ90CzPzNN
+         aJGnKGqYhx89kzoHX8X3dW5pKvCEjFa+jbrWF56Je3H8f0zYT8bLN8TdztG8ntaT1reC
+         WHFeh41a8tfp8dMrhCtLF17x8QYudCbnkCVAJ8eMp4lwlDY2/SJPBYraj2Zv2FE3fV3M
+         Y+Nw==
+Received: by 10.216.213.219 with SMTP id a69mr2432755wep.16.1338562146903;
+        Fri, 01 Jun 2012 07:49:06 -0700 (PDT)
+Received: from localhost ([95.171.54.129])
+        by mx.google.com with ESMTPS id dg2sm8010302wib.4.2012.06.01.07.49.04
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 01 Jun 2012 07:49:06 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <87pq9k8i4e.fsf@thomas.inf.ethz.ch>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198991>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198992>
 
-On 01/06/2012 13:49, Matthieu Moy wrote:
-> Guillaume Sasdy<guillaume.sasdy@ensimag.imag.fr>  writes:
->
->>   # CONFIGURATION VARIABLES
->> -# You might want to change those ones ...
->> +# You might want to change these ones
->>   #
->>   WIKI_DIR_NAME=3D"wiki"            # Name of the wiki's directory
->>   WIKI_DIR_INST=3D"/var/www"        # Directory of the web server
->>   TMP=3D"/tmp"                      # Temporary directory for downlo=
-ads
->> -                                # Absolute address needed!
->> +                                # Absolute path required!
->>   SERVER_ADDR=3D"localhost"         # Web server's address
->>
->> -#
->>   # CONFIGURATION
->> -# You should not change those ones unless you know what you to
->> +# You should not change these ones unless you know what you do
-> I already mentionned in in your v1, but these fixups do not belong to
-> PATCH 2/3. You do not want reviewers to see your mistakes in PATCH 1/=
-2
-> and see the fix in PATCH 2/3.
-Got it. With the problem experienced yesterday, we had still this issue=
-=20
-this morning. It is now fixed :).
->> +wiki_getpage () {
->> +	../test-gitmw.pl get_page -p "$1" "$2"
->> +}
-> Any reason why test-gitmw.pl and wiki_getpage have this slightly
-> different API? The perl version has a "-p" flag, and the shell comman=
-d
-> has only positionnal arguments.
-The "-p" flag exists to specify if we have to use the admin login on=20
-wiki to do the command. For instance, here we fetch a page from the wik=
-i=20
-with Admin privilege.
-Others arguments remains the same.
-> I'd rather have a more uniform way to wrap calls to test-gitmw.pl in
-> shell, like
->
-> wiki_<something>  () {
-> 	../test-gitmw.pl<something>  "$@"
-> }
-Do you suggest we include the "-p" flag in <something> ?
-I agree for the use of "$@".
->
-> Then, you probably want to move the API documentation (i.e. comments =
-you
-> put before the shell functions) in, or next to the Perl script, and
-> avoid repeating it in the shell.
->
-Ok.
->> +# git_content<dir_1>  <dir_2>
->> +#
->> +# Compare the contents of directories<dir_1>  and<dir_2>  with diff
->> +# and exits with error 1 if they do not match. The program will
->> +# not look into .git in the process.
->> +git_content () {
-> Didn't I already say that the naming was strange? A function that
-> compares something shouldn't be called just "content".
-Sorry, we misunderstood what you mean... Update is coming. What about=20
-git_diff_directories ?
-Because this shell function execute a special instance of diff, matchin=
-g=20
-two directories and ignoring blank character.
->> +	result=3D$(diff -r -b --exclude=3D".git" "$1" "$2")
->> +
->> +	if echo $result | grep -q ">" ; then
-> Why grep, when the exit status of diff tells you about the difference=
-s
-> already?
->
-Good idea for the exit status.
->> +# git_exist<rep_name>  <file_name>
->> +#
->> +# Check the existence of<file_name>  into the git repository
->> +#<rep_name>  and exits with error 1 if it is absent.
->> +git_exist () {
->> +	result=3D$(find "$1" -type f -name "$2")
->> +
->> +	if ! echo $result | grep -q "$2" ; then
-> Missing quotes around $result.
->
-> Why do you need grep again? You just want to check whether "$result" =
-is
-> empty (test -z).
-this function is now erased from our code... Actually, it was really=20
-useless...
->> +		echo "test failed: file $2 does not exist in $1"
->> +		exit 1
-> die
->
+On 05/31, Thomas Rast wrote:
+> As far as 174fea4 goes: I think you could split it into two separate
+> commits, one for the code movement (i.e., refactoring of a large chunk
+> of read_index_from into read_index_v2_from), and a second one for the
+> introduction of the separate header struct.  Other than that it looks
+> good.
+
+Thanks for your review. I rebased the commits now, 174fea4 is now
+5eb9c21 and 946888d. There were also two commits to the python code,
+which I moved previous of the refactoring commits. (210d1ff and b99fdf8)
+
+> The rest would look like this:
+> 
+> >  cache.h                |  32 ++++-
+> >  read-cache.c           | 315 ++++++++++++++++++++++++++++++++++++++++++++++---
+> >  5 files changed, 334 insertions(+), 29 deletions(-)
+> 
+> The review follows, though note that as usual I have snipped all hunks
+> where I didn't have anything to add:
+> 
+> > @@ -108,6 +108,13 @@ struct cache_header_v2 {
+> >  	unsigned int hdr_entries;
+> >  };
+> >  
+> > +struct cache_header_v5 {
+> > +	unsigned int hdr_ndir;
+> > +	unsigned int hdr_nfile;
+> > +	unsigned int hdr_fblockoffset;
+> > +	unsigned int hdr_nextension;
+> > +};
+> > +
+> >  #define INDEX_FORMAT_LB 2
+> >  #define INDEX_FORMAT_UB 4
+> 
+> Somewhat confusingly, the non-update to INDEX_FORMAT_UB is correct since
+> that is only used by git-update-index to verify that a user request for
+> the *write* format is valid, and we don't currently support writing v5.
+
+I left them as they are, since they aren't used in the read code, so I
+thought this would be fine.
+
+> > @@ -132,11 +139,27 @@ struct cache_entry {
+> >  	unsigned int ce_size;
+> >  	unsigned int ce_flags;
+> >  	unsigned char sha1[20];
+> > +	int ce_stat_crc;
+> 
+> This should probably be an unsigned int for correctness.  The docs for
+> zlib actually say it has type 'uLong', whatever that might mean.  Don't
+> turn it into an unsigned long though, that would be 64 bits at least on
+> x86_64 Linux.
+
+I digged a bit in the git code, uint32_t seems to be the right way to
+do it. (as in csum-file.h) I converted it to that for now.
+
+> > +	unsigned int ce_namelen;
+> 
+> You are using this to hack around the issue that we dropped the name
+> length out of the flags to save bits.  Perhaps it would be a nice
+> cleanup to keep it in the struct "in the open", instead of having the
+> odd ce_namelen() wrapper that amounts to a maybe-strlen.
+
+I guess that may better fit in a refactoring patch? I put it in
+e73adcf.
+
+> > +struct directory_entry {
+> > +	unsigned short de_flags;
+> > +	unsigned int de_foffset;
+> > +	unsigned int de_cr;
+> > +	unsigned int de_ncr;
+> > +	unsigned int de_nsubtrees;
+> > +	unsigned int de_nfiles;
+> > +	unsigned int de_nentries;
+> > +	unsigned char sha1[20];
+> > +	struct directory_entry *next;
+> > +	unsigned int de_pathlen;
+> > +	char pathname[FLEX_ARRAY];
+> > +};
+> 
+> Why are the flags out of order compared to the on-disk layout?
+> 
+> Also, if you make a linked list it would be more natural (to me) to put
+> the 'next' member at the top.  I suspect the precedent in 'cache_entry'
+> may be from times where that was the ondisk layout, and thus any
+> not-on-disk entries had to be at the end.  Perhaps Junio can clarify
+> this.
+
+They were in order at the beginning, before I moved the flags to the
+end in the ondisk format, and forgot to move them in the struct. It's
+in order now.
+
+I also moved the next member to the top. I originally put it at the
+end, because it was at the end for the cache_entry too.
+
+> > -extern void read_index_v2_from(struct index_state *, struct stat, void *mmap, int);
+> > +extern void read_index_v2(struct index_state *, struct stat, void *mmap, int);
+> > +extern void read_index_v5(struct index_state *, struct stat, void *mmap, int);
+> 
+> You should make up your mind in the refactoring patch ;-)
+
+I thing read_index_v2 makes more sense, since from sounds like we expect
+a pathname.
+
+> > diff --git a/read-cache.c b/read-cache.c
+> > index 750fbfa..fc8033a 100644
+> > --- a/read-cache.c
+> > +++ b/read-cache.c
+> > @@ -397,8 +397,9 @@ int df_name_compare(const char *name1, int len1, int mode1,
+> >  
+> >  int cache_name_compare(const char *name1, int flags1, const char *name2, int flags2)
+> >  {
+> > -	int len1 = flags1 & CE_NAMEMASK;
+> > -	int len2 = flags2 & CE_NAMEMASK;
+> > +	/* TODO: This possibly can be replaced with something faster */
+> > +	int len1 = strlen(name1);
+> > +	int len2 = strlen(name2);
+> >  	int len = len1 < len2 ? len1 : len2;
+> >  	int cmp;
+> 
+> Now that you have the ce_namelen entry, shouldn't you use that here?
+> 
+> If it is not filled in correctly by the other readers, you'd have to
+> patch them, preferably in an earlier patch where you introduce this
+> field (only -- not doing any v5 work yet).
+
+Yes, there would be more patching needed, since the function uses the
+flags too. The patch is not yet in the repository.
+
+> > +static int verify_hdr_v5(void *mmap)
+> > +{
+> > +	uint32_t crc;
+> > +	uint32_t* filecrc;
+> > +	unsigned int header_size_v5;
+> > +	struct cache_version_header *hdr;
+> > +	struct cache_header_v5 *hdr_v5;
+> > +
+> > +	hdr = mmap;
+> > +	hdr_v5 = mmap + sizeof(*hdr);
+> > +	/* Size of the header + the size of the extensionoffsets */
+> > +	header_size_v5 = sizeof(*hdr_v5) + hdr_v5->hdr_nextension * 4;
+> > +	/* Initialize crc */
+> > +	crc = crc32(0, (Bytef*)hdr, sizeof(*hdr));
+> > +	crc = crc32(crc, (Bytef*)hdr_v5, header_size_v5);
+> 
+> Can't you crc32() this block in one go?
+
+Yes, I just thought it's clearer this way, calculating the crc for the
+signature + version and the rest of the header_v5. I changed it for now
+to one block.
+
+> > +	filecrc = mmap + sizeof(*hdr) + header_size_v5;
+> > +	if (crc != ntohl(*filecrc))
+> > +		return error("bad index file header crc signature");
+> > +	return 0;
+> > +}
+> > +
+> >  static int read_index_extension(struct index_state *istate,
+> >  				const char *ext, void *data, unsigned long sz)
+> >  {
+> > @@ -1315,23 +1361,71 @@ static struct cache_entry *cache_entry_from_ondisk(struct ondisk_cache_entry *on
+> >  {
+> >  	struct cache_entry *ce = xmalloc(cache_entry_size(len));
+> >  
+> > -	ce->ce_ctime.sec = ntoh_l(ondisk->ctime.sec);
+> > -	ce->ce_mtime.sec = ntoh_l(ondisk->mtime.sec);
+> > +	ce->ce_ctime.sec  = ntoh_l(ondisk->ctime.sec);
+> > +	ce->ce_mtime.sec  = ntoh_l(ondisk->mtime.sec);
+> >  	ce->ce_ctime.nsec = ntoh_l(ondisk->ctime.nsec);
+> >  	ce->ce_mtime.nsec = ntoh_l(ondisk->mtime.nsec);
+> > -	ce->ce_dev   = ntoh_l(ondisk->dev);
+> > -	ce->ce_ino   = ntoh_l(ondisk->ino);
+> > -	ce->ce_mode  = ntoh_l(ondisk->mode);
+> > -	ce->ce_uid   = ntoh_l(ondisk->uid);
+> > -	ce->ce_gid   = ntoh_l(ondisk->gid);
+> > -	ce->ce_size  = ntoh_l(ondisk->size);
+> > -	ce->ce_flags = flags;
+> > +	ce->ce_dev        = ntoh_l(ondisk->dev);
+> > +	ce->ce_ino        = ntoh_l(ondisk->ino);
+> > +	ce->ce_mode       = ntoh_l(ondisk->mode);
+> > +	ce->ce_uid        = ntoh_l(ondisk->uid);
+> > +	ce->ce_gid        = ntoh_l(ondisk->gid);
+> > +	ce->ce_size       = ntoh_l(ondisk->size);
+> > +	ce->ce_flags      = flags;
+> > +	ce->ce_namelen    = len;
+> 
+> AFAICS all but the last one only change the alignment of the
+> assignments.  Only the last addition is a true change, related to the
+> addition of the ce_namelen field.  It would be far easier on the
+> reviewers if you first did the alignment cleanup (it can then be checked
+> to be a no-change patch simply with --ignore-space-change), and then the
+> ce_namelen, before any v5 work.
+
+Ok, this is changed in e73adcf. The alignment is done in bbc8928. Hope
+understood the alignment cleanup right.
+
+> > +static struct directory_entry *read_directories_v5(unsigned int dir_offset,
+> > +				unsigned int ndir,
+> > +				void *mmap,
+> > +				int mmap_size)
+> > +{
+> > +	int i;
+> > +	uint32_t crc;
+> > +	uint32_t* filecrc;
+> > +	struct directory_entry *entries = NULL;
+> > +	struct directory_entry *current = NULL;
+> > +
+> > +	for (i = 0; i < ndir; i++) {
+> > +		struct ondisk_directory_entry *disk_de;
+> > +		struct directory_entry *de;
+> > +		unsigned int data_len; 
+> > +		unsigned int len;
+> > +		char *name;
+> > +
+> > +		name = (char *)mmap + dir_offset;
+> > +		len = strlen(name);
+> > +		disk_de = (struct ondisk_directory_entry *)
+> > +				((char *)mmap + dir_offset + len + 1);
+> > +		de = directory_entry_from_ondisk(disk_de, name, len);
+> > +
+> > +		if (entries == NULL) {
+> > +			entries = de;
+> > +			current = de;
+> > +		} else {
+> > +			current->next = de;
+> > +			current = current->next;
+> > +			current->next = NULL;
+> > +		}
+> > +
+> > +		/* Length of pathname + nul byte for termination + size of
+> > +		 * members of ondisk_directory_entry. (Just using the size
+> > +		 * of the stuct doesn't work, because there may be padding
+> > +		 * bytes for the struct)
+> > +		 */
+> 
+> Style nit: 
+> 
+> > +		data_len = len + 1
+> > +			+ sizeof(disk_de->flags)
+> > +			+ sizeof(disk_de->foffset)
+> > +			+ sizeof(disk_de->cr)
+> > +			+ sizeof(disk_de->ncr)
+> > +			+ sizeof(disk_de->nsubtrees)
+> > +			+ sizeof(disk_de->nfiles)
+> > +			+ sizeof(disk_de->nentries)
+> > +			+ sizeof(disk_de->sha1);
+> 
+> How does this differ from
+> 
+>   data_len = len + 1 + sizeof(struct ondisk_directory_entry);
+> 
 > ?
->
->> +wiki_page_exist () {
->> +	wiki_getpage "$1" .
->> +
->> +	if test -f "$1".mw ; then
->> +		echo "test failed: file $1 not found on wiki"
->> +		exit 1
-> likewise.
-We were supposed to do it with the previous version.
-But we are facing some difficulties using die function outside the test=
-=20
-harness. We wanted to include the file "test-lib.sh" in our own script=20
-"test-gitmw-lib.sh" to use die. It doesn't work, because the harness=20
-expect the file "test-gitmw-lib.sh" to be a test script. Wich is not th=
-e=20
-case.
 
-Do you have any Idea about how to fix this problem ?
->> +fail()
->> +{
-> Style: fail () {
->
-> Plus, didn't we say "die" was already there for this?
-Agree, see above.
->> +        # Replace spaces by underscore in the page name
->> +	$pagename=3D~s/\ /_/;
-> Indent with space (didn't I already mention that?).
->
->> +my $login =3D $ARGV[0];
->> +
->> +if ($login eq "-p")
-> Feels weird. If you're not sure it's a login, why call the variable
-> $login?
-Change on the way. renaming this variable "is_login". Is this ok for yo=
-u ?
-> Any reason not to use Perl's option parsing?
-Not at all, we juste didn't thought about it.
+There is only a single 16-bit entry in struct ondisk_directory_entry
+for which the compiler adds padding so the size of the struct is a
+multiple of 32-bit. And since I'm not sure every compiler does that,
+I had to do it this way. (And adding a -2 magic number doesn't seem
+cleaner to me eiter)
 
---=20
-CATHEBRAS Simon
+> > +
+> > +		crc = crc32(0, (Bytef*)(mmap + dir_offset), data_len);
+> > +		filecrc = mmap + dir_offset + data_len;
+> > +		if (crc != ntoh_l(*filecrc))
+> > +			goto unmap;
+> 
+> The CRC checking code in general is a bit noisy on my eyes, increasing
+> the risk that I would miss a mistake in one of the calls.  I wonder if
+> you could refactor it as something like
+> 
+>   static int check_crc32_chunk(void *data, size_t len, unsigned int expected_crc);
+> 
+> Then again the pointer math would still be on the caller side.  Sigh.
 
-2A-ENSIMAG
+Yes, that makes sense, I changed it.
 
-=46ili=E8re Ing=E9ni=E9rie des Syst=E8mes d'Information
-Membre Bug-Buster
+> > +
+> > +		dir_offset += data_len + 4; /* crc code */
+> > +	}
+> > +
+> > +	return entries;
+> > +unmap:
+> > +	munmap(mmap, mmap_size);
+> > +	errno = EINVAL;
+> > +	die("directory crc doesn't match for '%s'", current->pathname);
+> > +}
+> 
+> I can see there's precedent for this in read_index_v2 (as of your patch;
+> it used to be in read_index_from); but what's the point of setting errno
+> immediately before not using it and exiting?
+
+I just copy and pasted it from there, but thinking about it id doesn't
+make sense.
+
+> That's all for today.  Thanks for reading.
+
+Thanks a lot for reviewing my code.
+
+--
+Thomas
