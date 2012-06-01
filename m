@@ -1,88 +1,89 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH 2/3] Test environment of git-remote-mw
-Date: Fri, 01 Jun 2012 11:02:33 +0200
-Message-ID: <vpqpq9jievq.fsf@bauges.imag.fr>
-References: <4FC64B0C.6070507@ensimag.imag.fr>
-	<1338397492-13360-1-git-send-email-simon.cathebras@ensimag.imag.fr>
-	<1338397492-13360-2-git-send-email-simon.cathebras@ensimag.imag.fr>
-	<vpqzk8oq0oe.fsf@bauges.imag.fr> <4FC88310.2020103@ensimag.imag.fr>
+From: Jeff King <peff@peff.net>
+Subject: Re: git version statistics
+Date: Fri, 1 Jun 2012 05:03:38 -0400
+Message-ID: <20120601090337.GC32340@sigill.intra.peff.net>
+References: <20120531114801.GA21367@sigill.intra.peff.net>
+ <20120531120018.GA24986@sigill.intra.peff.net>
+ <7v396g6t53.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, charles.roussel@ensimag.imag.fr,
-	Guillaume.Sasdy@ensimag.imag.fr, Julien.Khayat@ensimag.imag.fr,
-	Simon.Perrat@ensimag.imag.fr,
-	Charles Roussel <charles.roussel@ensimag.fr>,
-	Guillaume Sasdy <guillaume.sasdy@gmail.com>
-To: Simon.Cathebras@ensimag.imag.fr
-X-From: git-owner@vger.kernel.org Fri Jun 01 11:02:49 2012
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jun 01 11:04:08 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SaNku-0007U6-NH
-	for gcvg-git-2@plane.gmane.org; Fri, 01 Jun 2012 11:02:49 +0200
+	id 1SaNm9-0000MJ-9v
+	for gcvg-git-2@plane.gmane.org; Fri, 01 Jun 2012 11:04:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758296Ab2FAJCn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 1 Jun 2012 05:02:43 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:60370 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757763Ab2FAJCm (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 1 Jun 2012 05:02:42 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id q518s4pV031513
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Fri, 1 Jun 2012 10:54:05 +0200
-Received: from bauges.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1SaNkg-0004lp-Ns; Fri, 01 Jun 2012 11:02:34 +0200
-In-Reply-To: <4FC88310.2020103@ensimag.imag.fr> (Simon Cathebras's message of
-	"Fri, 01 Jun 2012 10:53:36 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.93 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Fri, 01 Jun 2012 10:54:05 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: q518s4pV031513
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1339145645.65311@TPGs1WP+bzMJUUBQij0Pjg
+	id S1756547Ab2FAJD5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 1 Jun 2012 05:03:57 -0400
+Received: from 99-108-225-23.lightspeed.iplsin.sbcglobal.net ([99.108.225.23]:39659
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752190Ab2FAJDm (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 1 Jun 2012 05:03:42 -0400
+Received: (qmail 31055 invoked by uid 107); 1 Jun 2012 09:03:43 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 01 Jun 2012 05:03:43 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 01 Jun 2012 05:03:38 -0400
+Content-Disposition: inline
+In-Reply-To: <7v396g6t53.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198963>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198964>
 
-"Simon.Cathebras" <Simon.Cathebras@ensimag.imag.fr> writes:
+On Thu, May 31, 2012 at 12:35:20PM -0700, Junio C Hamano wrote:
 
-> On the other hand, considering the git-mediawiki is curently on
-> contrib branch, shall we move our test environement from git/t to
-> git/contrib/t ?
+> Jeff King <peff@peff.net> writes:
+> 
+> > diff --git a/builtin/fetch-pack.c b/builtin/fetch-pack.c
+> > index 149db88..f3b8422 100644
+> > --- a/builtin/fetch-pack.c
+> > +++ b/builtin/fetch-pack.c
+> > @@ -327,6 +327,7 @@ static int find_common(int fd[2], unsigned char *result_sha1,
+> >  			if (args.no_progress)   strbuf_addstr(&c, " no-progress");
+> >  			if (args.include_tag)   strbuf_addstr(&c, " include-tag");
+> >  			if (prefer_ofs_delta)   strbuf_addstr(&c, " ofs-delta");
+> > +			strbuf_addf(&c, " agent=git/%s", git_version_string);
+> >  			packet_buf_write(&req_buf, "want %s%s\n", remote_hex, c.buf);
+> >  			strbuf_release(&c);
+> 
+> Even though the version string GIT-VERSION-GEN script deduces from
+> the repository version is designed to be safe, in general "version"
+> file can contain a string with whitespaces.  You may want to be
+> careful about that in the above.
 
-If so, that would be to $git/contrib/mw-to-git/t/.
+Yeah, I agree. I should have been more clear that this patch was an RFC
+about the idea, not the implementation.
 
-I'm not sur what's best, depending on the future of the tool:
+We could also strip off junk like ".dirty" which is unlikely to be
+interesting for statistical reporting. On the other hand, it could be
+useful for somebody debugging, and it can always be stripped later.
 
-If, once Git-MediaWiki is robust, well-tested, ... and enough people are
-interested, it may make sense to move Git-MediaWiki out of the contrib/
-directory, and integrate it as an official command (like git-svn for
-example). That would make the installation process seamless ("make
-install" would install git-remote-mediawiki like other commands, "make
-doc" would generate the doc, and so on), which would be nice for the
-user.
+I don't know if anybody cares about the security or privacy implications
+of advertising your client version. Maybe it should be configurable?
 
-My feeling is that we're still quite far from this. Although we're in
-the process of having a well-tested program, and that new features are
-going to come soon, there is still little interest of the community for
-it (at least, uncomparable to the one of git-svn for example).
+> Do we want a similar identifier string on the other side of the
+> connection?
 
-So, I'd say that we should stick to something non-intrusive, within
-contrib/, and if more people show interest in the tool and if it becomes
-mature enough, we can start trying to push it out of contrib/.
+We could. I don't see much point, unless you were going to conduct a
+similar survey by hitting random IPs looking for git ports (but even
+then, you're not likely to turn up much, because you have to know a repo
+name before you can convince git to show a capability string). I suppose
+it could also help with debugging if your client is having trouble
+talking to a server that is not under your control.
 
-What do other people think?
+Some traditional security advice I have heard is that servers should not
+advertise their versions, as it makes it more obvious what holes they
+have. Personally, I find that argument to be mostly security through
+obscurity. If I have an exploit for version X, it's generally just as
+easy to try it as it is to check the version (unless the exploit
+requires a lot of effort, like guessing a value that might take
+thousands of tries).
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+-Peff
