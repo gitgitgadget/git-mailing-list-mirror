@@ -1,125 +1,89 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCHv5 1/3] wt-status.*: better advices for git status added
-Date: Fri, 01 Jun 2012 10:42:11 +0200
-Message-ID: <vpq8vg7jue4.fsf@bauges.imag.fr>
-References: <1338384216-18782-1-git-send-email-Lucien.Kong@ensimag.imag.fr>
-	<1338477344-15940-1-git-send-email-Lucien.Kong@ensimag.imag.fr>
+From: Jeff King <peff@peff.net>
+Subject: Re: git version statistics
+Date: Fri, 1 Jun 2012 04:52:11 -0400
+Message-ID: <20120601085211.GB32340@sigill.intra.peff.net>
+References: <20120531114801.GA21367@sigill.intra.peff.net>
+ <981b755b-ca86-4320-a4fc-8aa28caa099d@mail>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org,
-	Duperray Valentin <Valentin.Duperray@ensimag.imag.fr>,
-	Jonas Franck <Franck.Jonas@ensimag.imag.fr>,
-	Nguy Thomas <Thomas.Nguy@ensimag.imag.fr>,
-	Nguyen Huynh Khoi Nguyen 
-	<Huynh-Khoi-Nguyen.Nguyen@ensimag.imag.fr>
-To: Kong Lucien <Lucien.Kong@ensimag.imag.fr>
-X-From: git-owner@vger.kernel.org Fri Jun 01 10:42:25 2012
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Stephen Bash <bash@genarts.com>
+X-From: git-owner@vger.kernel.org Fri Jun 01 10:52:28 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SaNRA-0003gh-Mk
-	for gcvg-git-2@plane.gmane.org; Fri, 01 Jun 2012 10:42:25 +0200
+	id 1SaNar-0004yT-Sg
+	for gcvg-git-2@plane.gmane.org; Fri, 01 Jun 2012 10:52:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758357Ab2FAImU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 1 Jun 2012 04:42:20 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:36689 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757796Ab2FAImS (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 1 Jun 2012 04:42:18 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id q518XnQC009707
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Fri, 1 Jun 2012 10:33:49 +0200
-Received: from bauges.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1SaNQy-0004H7-PY; Fri, 01 Jun 2012 10:42:12 +0200
-In-Reply-To: <1338477344-15940-1-git-send-email-Lucien.Kong@ensimag.imag.fr>
-	(Kong Lucien's message of "Thu, 31 May 2012 17:15:42 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.93 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Fri, 01 Jun 2012 10:33:50 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: q518XnQC009707
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1339144433.26498@uy3+bHkvXA0fpN4yBpLuxA
+	id S1758290Ab2FAIwV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 1 Jun 2012 04:52:21 -0400
+Received: from 99-108-225-23.lightspeed.iplsin.sbcglobal.net ([99.108.225.23]:39646
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754446Ab2FAIwU (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 1 Jun 2012 04:52:20 -0400
+Received: (qmail 30920 invoked by uid 107); 1 Jun 2012 08:52:21 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 01 Jun 2012 04:52:21 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 01 Jun 2012 04:52:11 -0400
+Content-Disposition: inline
+In-Reply-To: <981b755b-ca86-4320-a4fc-8aa28caa099d@mail>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198958>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198960>
 
-Kong Lucien <Lucien.Kong@ensimag.imag.fr> writes:
+On Thu, May 31, 2012 at 11:20:46AM -0400, Stephen Bash wrote:
 
-> +	cat >expect <<-\EOF &&
-[...]
-> +	# Untracked files:
-> +	#   (use "git add <file>..." to include in what will be committed)
-> +	#
-> +	#	expect
-> +	#	output
-> +	no changes added to commit (use "git add" and/or "git commit -a")
-> +	EOF
-> +	git status >output &&
+> > The interesting thing to me is how spiky it is, and where the spikes
+> > fall. I would expect to see a spike around the highest maint release
+> > of each major version (so v1.7.8.6, for example, with many fewer
+> > installs of v1.7.8.5, v1.7.8.4, and so forth). But that's not what
+> > happens.  The most popular v1.7.8.x versions are .3 and .2, and hardly
+> > anybody bothered to move to v1.7.8.6.
+> 
+> I wonder if the spikes correlate with time between releases?  For open
+> source projects I tend to download the most recent when setting up a
+> new machine (or after encountering a nasty bug), and then not upgrade
+> for a while.  So in that mode of operation, releases that are "the
+> newest" for the longest would get more users... (though at least on my
+> Mac the homebrew project is helping me break the habit and stay more
+> up-to-date)
 
-You can run
+Good point. If you assume that users pick a random day to upgrade or
+install and choose the latest version, then you will get a non-uniform
+distribution. Because the release dates are non-uniform, their time
+spent as the latest is not even. There may also be natural variations in
+installations over time (e.g., over holidays).
 
-  git status --untracked-files=no
+Here are the release dates for the v1.7.8.x series, as well as the
+adjacent master releases:
 
-instead, to get rid of these "expect" and "output". as Junio mentionned
-on another topic, these make the test scripts a bit harder to maintain,
-for example you should rename "output" to "actual", and you don't want
-that to interfere with the content of "expect".
+  v1.7.8   2011-12-02
+  v1.7.8.1 2011-12-21
+  v1.7.8.2 2011-12-28
+  v1.7.8.3 2012-01-06
+  v1.7.8.4 2012-01-18
+  v1.7.9   2012-01-27
+  v1.7.8.5 2012-02-26
+  v1.7.10  2012-04-06
+  v1.7.8.6 2012-04-26
 
-> +	} else if (state->rebase_in_progress) {
-> +		status_printf_ln(s, color, _("You are currently rebasing%s"),
-> +			advice_status_hints
-> +			? _(": all conflicts fixed: run \"git rebase --continue\".") : ".");
+So .2 and .3 were latest for 9 and 12 days, respectively. However, .4
+was also the latest for 9 days (until v1.7.9 came out), but does not
+have as many users. So why did nobody bother upgrading to v1.7.8.4?
+And why wouldn't v1.7.8 have a spike, since it was at the top for 19
+days?
 
-Avoid having two ":" in the same sentense.
+I can see why v1.7.8.5 and v1.7.8.6 are the way they are (they were
+never latest, and most people would just install v1.7.9 or v1.7.10
+instead).
 
-> +		if (advice_status_hints) {
-> +			status_printf_ln(s, color, _("  You can amend the commit with"));
-> +			status_printf_ln(s, color, _("	git commit --amend"));
-> +			status_printf_ln(s, color, _("  Once you are satisfied with your changes, run"));
-> +			status_printf_ln(s, color, _("	git rebase --continue"));
-> +		}
+So I think your theory probably explains some of the data, but not all
+(and it seems that most people don't really seem to care about old maint
+releases once a new master release is out).
 
-Can this be more consistant with other status hints? When a hint follows
-a statement on the next line, it's usually
-
-# Say something
-#   (use "git whatever" to change the current state)
-
-e.g.
-
-# Changes not staged for commit:
-#   (use "git add <file>..." to update what will be committed)
-
-So this may be turned into
-
-# Rebase in progress
-#   (use "git commit --amend" to amend the current commit)
-#   (use "git rebase --continue" once you are satisfied with your changes)
-
-> +	if (state->merge_in_progress)
-> +		merge_in_progress_show(s, state, state_color);
-> +	else if (state->am_in_progress)
-> +		am_in_progress_show(s, state, state_color);
-> +	else if (state->rebase_in_progress || state->rebase_interactive_in_progress)
-> +		rebase_in_progress_show(s, state, state_color);
-> +	else if (state->cherry_pick_in_progress)
-> +		cherry_pick_in_progress_show(s, state, state_color);
-> +	if (state->bisect_in_progress)
-> +		bisect_in_progress_show(s, state, state_color);
-
-I still disagree with the "else if" logic here. If the user started two
-operations, I think we should show both messages.
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+-Peff
