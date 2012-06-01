@@ -1,115 +1,125 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [RFC] Deal with HTTP 401 by requesting credentials.
-Date: Fri, 1 Jun 2012 04:35:37 -0400
-Message-ID: <20120601083537.GA32340@sigill.intra.peff.net>
-References: <4FC7EFB7.4090704@steadfast.net>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCHv5 1/3] wt-status.*: better advices for git status added
+Date: Fri, 01 Jun 2012 10:42:11 +0200
+Message-ID: <vpq8vg7jue4.fsf@bauges.imag.fr>
+References: <1338384216-18782-1-git-send-email-Lucien.Kong@ensimag.imag.fr>
+	<1338477344-15940-1-git-send-email-Lucien.Kong@ensimag.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Kevin Stange <kevin@steadfast.net>
-X-From: git-owner@vger.kernel.org Fri Jun 01 10:36:09 2012
+Content-Type: text/plain
+Cc: git@vger.kernel.org,
+	Duperray Valentin <Valentin.Duperray@ensimag.imag.fr>,
+	Jonas Franck <Franck.Jonas@ensimag.imag.fr>,
+	Nguy Thomas <Thomas.Nguy@ensimag.imag.fr>,
+	Nguyen Huynh Khoi Nguyen 
+	<Huynh-Khoi-Nguyen.Nguyen@ensimag.imag.fr>
+To: Kong Lucien <Lucien.Kong@ensimag.imag.fr>
+X-From: git-owner@vger.kernel.org Fri Jun 01 10:42:25 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SaNL6-0006Fa-LI
-	for gcvg-git-2@plane.gmane.org; Fri, 01 Jun 2012 10:36:09 +0200
+	id 1SaNRA-0003gh-Mk
+	for gcvg-git-2@plane.gmane.org; Fri, 01 Jun 2012 10:42:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758968Ab2FAIfo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 1 Jun 2012 04:35:44 -0400
-Received: from 99-108-225-23.lightspeed.iplsin.sbcglobal.net ([99.108.225.23]:39633
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757887Ab2FAIfm (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 1 Jun 2012 04:35:42 -0400
-Received: (qmail 30749 invoked by uid 107); 1 Jun 2012 08:35:42 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 01 Jun 2012 04:35:42 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 01 Jun 2012 04:35:37 -0400
-Content-Disposition: inline
-In-Reply-To: <4FC7EFB7.4090704@steadfast.net>
+	id S1758357Ab2FAImU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 1 Jun 2012 04:42:20 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:36689 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757796Ab2FAImS (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 1 Jun 2012 04:42:18 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id q518XnQC009707
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Fri, 1 Jun 2012 10:33:49 +0200
+Received: from bauges.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1SaNQy-0004H7-PY; Fri, 01 Jun 2012 10:42:12 +0200
+In-Reply-To: <1338477344-15940-1-git-send-email-Lucien.Kong@ensimag.imag.fr>
+	(Kong Lucien's message of "Thu, 31 May 2012 17:15:42 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.93 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Fri, 01 Jun 2012 10:33:50 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: q518XnQC009707
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1339144433.26498@uy3+bHkvXA0fpN4yBpLuxA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198957>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198958>
 
-On Thu, May 31, 2012 at 05:24:55PM -0500, Kevin Stange wrote:
+Kong Lucien <Lucien.Kong@ensimag.imag.fr> writes:
 
-> Request credentials from the user if none are already defined when a
-> HTTP 401 is received on a restricted repository.  Then, resubmit the
-> request and return the final result.
-> 
-> This allows all webdav transactions to obtain credentials without having
-> to individually handle the case in each request.  Having push working
-> with HTTP auth is needed for a use case I have where storing the
-> credentials in .netrc or using SSH keys is inappropriate.
+> +	cat >expect <<-\EOF &&
+[...]
+> +	# Untracked files:
+> +	#   (use "git add <file>..." to include in what will be committed)
+> +	#
+> +	#	expect
+> +	#	output
+> +	no changes added to commit (use "git add" and/or "git commit -a")
+> +	EOF
+> +	git status >output &&
 
-We already do this at a higher level in http_request, which in turns
-calls into finish_active_slot. So if we were going to go this route,
-wouldn't we also want to remove the 401 handling in http_request?
+You can run
 
-The dumb-http push code is the only thing that does not go through
-http_request these days. So another option would be to refactor it to go
-through that central point. I took a brief look at this when I was
-updating the credential code a few months ago, but didn't consider it a
-priority, as most people should be using smart http these days. Is there
-a reason you can't use smart-http? It's significantly more efficient.
+  git status --untracked-files=no
 
-You also don't necessarily need to handle 401 in every code path of
-http-push; once we see the credential once, we will use it everywhere,
-so you really only need to handle it on the initial request (assuming
-that all requests will have the same authorization requirements).
+instead, to get rid of these "expect" and "output". as Junio mentionned
+on another topic, these make the test scripts a bit harder to maintain,
+for example you should rename "output" to "actual", and you don't want
+that to interfere with the content of "expect".
 
-> Apologies for anything wrong I might have done here.  I'm not used to
-> procedures for this sort of patch submission, or terribly familiar with
-> the code base.  I'm seeking advice on whether this approach is sane or
-> completely crazy, and I'm willing to adjust it to make it suitable for
-> inclusion.
-> 
-> Signed-off-by: Kevin <kevin@steadfast.net>
-> ---
+> +	} else if (state->rebase_in_progress) {
+> +		status_printf_ln(s, color, _("You are currently rebasing%s"),
+> +			advice_status_hints
+> +			? _(": all conflicts fixed: run \"git rebase --continue\".") : ".");
 
-Cover letter material (i.e., anything that would not go into the commit
-message of the final commit) should go below the "---".
+Avoid having two ":" in the same sentense.
 
-> diff --git a/http.c b/http.c
-> index 5cb87f1..e1c9e65 100644
-> --- a/http.c
-> +++ b/http.c
-> @@ -668,6 +668,21 @@ void finish_active_slot(struct active_request_slot
-> *slot)
->  	closedown_active_slot(slot);
->  	curl_easy_getinfo(slot->curl, CURLINFO_HTTP_CODE, &slot->http_code);
-> 
-> +	if (slot->http_code == 401) {
-> +		if(!http_auth.username && !http_auth.password) {
-> +			active_requests++;
-> +			credential_fill(&http_auth);
-> +			init_curl_http_auth(slot->curl);
-> +			(*slot->finished) = 1;
-> +			if (start_active_slot(slot)) {
-> +				run_active_slot(slot);
-> +				return;
-> +			}
-> +		} else {
-> +			fprintf(stderr,"Authentication Failed!\n");
+> +		if (advice_status_hints) {
+> +			status_printf_ln(s, color, _("  You can amend the commit with"));
+> +			status_printf_ln(s, color, _("	git commit --amend"));
+> +			status_printf_ln(s, color, _("  Once you are satisfied with your changes, run"));
+> +			status_printf_ln(s, color, _("	git rebase --continue"));
 > +		}
-> +	}
 
-Is it safe to just run start_active_slot again without reinitializing
-the request? The 401-handling code in http_request actually restarts a
-new request. I don't immediately see any state that would need to be
-reset; we might have written some data to the output file if curl gave
-us any body data, but presumably it would not have done so for a 401.
+Can this be more consistant with other status hints? When a hint follows
+a statement on the next line, it's usually
 
-In the "else" clause you add, I don't think there's any point in
-printing an error. The 401 should get propagated back to the caller, who
-will produce an error. However, you _should_ call credential_reject,
-since you know that the credential you have doesn't work.
+# Say something
+#   (use "git whatever" to change the current state)
 
-Similarly, you would want to call credential_accept after a successful
-request, so that helpers can store it.
+e.g.
 
--Peff
+# Changes not staged for commit:
+#   (use "git add <file>..." to update what will be committed)
+
+So this may be turned into
+
+# Rebase in progress
+#   (use "git commit --amend" to amend the current commit)
+#   (use "git rebase --continue" once you are satisfied with your changes)
+
+> +	if (state->merge_in_progress)
+> +		merge_in_progress_show(s, state, state_color);
+> +	else if (state->am_in_progress)
+> +		am_in_progress_show(s, state, state_color);
+> +	else if (state->rebase_in_progress || state->rebase_interactive_in_progress)
+> +		rebase_in_progress_show(s, state, state_color);
+> +	else if (state->cherry_pick_in_progress)
+> +		cherry_pick_in_progress_show(s, state, state_color);
+> +	if (state->bisect_in_progress)
+> +		bisect_in_progress_show(s, state, state_color);
+
+I still disagree with the "else if" logic here. If the user started two
+operations, I think we should show both messages.
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
