@@ -1,59 +1,73 @@
-From: Kevin Stange <kevin@steadfast.net>
-Subject: Re: [RFC] Deal with HTTP 401 by requesting credentials.
-Date: Thu, 31 May 2012 18:18:33 -0500
-Message-ID: <4FC7FC49.4030503@steadfast.net>
-References: <4FC7EFB7.4090704@steadfast.net>
+From: Sitaram Chamarty <sitaramc@gmail.com>
+Subject: Re: git-smart-http reject push
+Date: Fri, 1 Jun 2012 09:23:35 +0530
+Message-ID: <CAMK1S_iAxdTg04ctZMUKAyoBRGT=w8rp2dTMDFvmpW_McPP-hQ@mail.gmail.com>
+References: <4FC7D6CE.30802@intland.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jun 01 01:18:41 2012
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: =?UTF-8?Q?Tajti_=C3=81kos?= <akos.tajti@intland.com>
+X-From: git-owner@vger.kernel.org Fri Jun 01 05:53:42 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SaEdc-0007iW-7z
-	for gcvg-git-2@plane.gmane.org; Fri, 01 Jun 2012 01:18:40 +0200
+	id 1SaIvm-0002Ku-1A
+	for gcvg-git-2@plane.gmane.org; Fri, 01 Jun 2012 05:53:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758607Ab2EaXSg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 31 May 2012 19:18:36 -0400
-Received: from staffmx.steadfast.net ([67.202.100.6]:52579 "EHLO
-	staffmx.steadfast.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758594Ab2EaXSf (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 31 May 2012 19:18:35 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by staffmx.steadfast.net (Postfix) with ESMTP id B185E7C4001
-	for <git@vger.kernel.org>; Thu, 31 May 2012 18:18:34 -0500 (CDT)
-X-Virus-Scanned: amavisd-new at steadfast.net
-Received: from staffmx.steadfast.net ([127.0.0.1])
-	by localhost (staffmx.steadfast.net [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id K1ESh+YZ9p-D for <git@vger.kernel.org>;
-	Thu, 31 May 2012 18:18:34 -0500 (CDT)
-Received: from ziyal.office.steadfast.net (unknown [IPv6:2607:f128:0:1:222:4dff:fe51:2ed5])
-	by staffmx.steadfast.net (Postfix) with ESMTPSA id 189F07C4002
-	for <git@vger.kernel.org>; Thu, 31 May 2012 18:18:34 -0500 (CDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:12.0) Gecko/20120430 Thunderbird/12.0.1
-In-Reply-To: <4FC7EFB7.4090704@steadfast.net>
-X-Enigmail-Version: 1.4.1
+	id S1758931Ab2FADxh convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 31 May 2012 23:53:37 -0400
+Received: from mail-ob0-f174.google.com ([209.85.214.174]:45662 "EHLO
+	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758487Ab2FADxg convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 31 May 2012 23:53:36 -0400
+Received: by obbtb18 with SMTP id tb18so2289019obb.19
+        for <git@vger.kernel.org>; Thu, 31 May 2012 20:53:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=FEtuZlGIXMJIByLovw240f22Xz60JtRxH+utQMup1YM=;
+        b=kNxQCkFSi/TaITmgMSB0P7Obslj/8oQIV7WKVp3PU1kZbdamT9USXsQbDIlUGmG0NG
+         VP+cItI6Olpw3RFPizZypVRT21hMDBaeiMwJnVWQnLEqH4jPdOTyJalMfonYXNQHRS7n
+         R1/UnMaVT4drH7hlzM1brEspLVLbaSuOCxhoUMrp0yNJVJ4yH4yEVyFCIWeVISYb4/MM
+         TX6tjNGc8WJ+axgtdqTUbaoDlog15sfme42h61A0v0RkRSuZkZZjROVVGSazPEFY9jvb
+         bwPMfhjZRMySW7dqCv7u8Rc+GSQW2sRUIfAn7mZ9O8kzQxSN80FYqCCt8wIzkSv6ZER4
+         aWvg==
+Received: by 10.60.24.165 with SMTP id v5mr958759oef.67.1338522815981; Thu, 31
+ May 2012 20:53:35 -0700 (PDT)
+Received: by 10.182.108.67 with HTTP; Thu, 31 May 2012 20:53:35 -0700 (PDT)
+In-Reply-To: <4FC7D6CE.30802@intland.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198953>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/198954>
 
-On 05/31/2012 05:24 PM, Kevin Stange wrote:
-> Apologies for anything wrong I might have done here.  I'm not used to
-> procedures for this sort of patch submission, or terribly familiar with
-> the code base.  I'm seeking advice on whether this approach is sane or
-> completely crazy, and I'm willing to adjust it to make it suitable for
-> inclusion.
+On Fri, Jun 1, 2012 at 2:08 AM, Tajti =C3=81kos <akos.tajti@intland.com=
+> wrote:
+> Dear List,
+>
+> we wrote a servlet that is basically a proxy for git-http-backend. We=
+ want
+> to control who can create a new branch. Is there a way to reject a pu=
+sh that
+> would create a new branch (without using hooks)?
 
-Of course, I failed to get my email client to send the patch unwrapped.  Only one line appears to have been affected, but I don't think this is a final patch.  I'll be sure to make a proper submission for any future patches I send.  Sorry!
+Not sure what else your servlet does or how it affects things but
+gitolite has controls to prevent branches being created (among many
+many other things, limited mostly by ones imagination!).
 
--- 
-Kevin Stange
-Chief Technology Officer
-Steadfast Networks
-http://steadfast.net
-Phone: 312-602-2689 ext. 203 | Fax: 312-602-2688 | Cell: 312-320-5867
+Gitolite is normally used with ssh but it has been tested with smart
+http also.  It itself acts as a proxy for git-http-backend, inspecting
+the URI and QUERY_STRING and such animals to decode some things, while
+the rest happens via a special update hook that is installed in each
+repo that it controls.
+
+(Specifically, the branch create check is done there, not in the part
+that is proxying the git-http-backend process.  You probably know that
+the update hook is invoked by git itself).
+
+Sitaram
