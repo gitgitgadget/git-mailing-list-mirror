@@ -1,79 +1,96 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH 2/3] Test environment of git-remote-mw
-Date: Sat, 02 Jun 2012 12:47:54 +0200
-Message-ID: <vpqipfa9ehx.fsf@bauges.imag.fr>
-References: <4FC64B0C.6070507@ensimag.imag.fr>
-	<1338547317-26088-1-git-send-email-guillaume.sasdy@ensimag.imag.fr>
-	<1338547317-26088-2-git-send-email-guillaume.sasdy@ensimag.imag.fr>
-	<vpqmx4n9rq6.fsf@bauges.imag.fr> <4FC8D501.20207@ensimag.imag.fr>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: [PATCH 03/65] i18n: archive: mark parseopt strings for translation
+Date: Sat, 2 Jun 2012 17:55:55 +0700
+Message-ID: <CACsJy8AGKQHKx9XU+baUagcmi6Sc-=faNshpED=Q46JpV_31WA@mail.gmail.com>
+References: <1336314232-21002-3-git-send-email-pclouds@gmail.com>
+ <1338203657-26486-1-git-send-email-pclouds@gmail.com> <7vr4u23f0i.fsf@alter.siamese.dyndns.org>
+ <20120529203759.GC22151@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Guillaume Sasdy <guillaume.sasdy@ensimag.imag.fr>,
-	git@vger.kernel.org, Charles Roussel <charles.roussel@ensimag.fr>,
-	Simon Perrat <Simon.Perrat@ensimag.imag.fr>,
-	Charles Roussel <Charles.Roussel@ensimag.imag.fr>,
-	Julien Khayat <Julien.Khayat@ensimag.imag.fr>
-To: Simon.Cathebras@ensimag.imag.fr
-X-From: git-owner@vger.kernel.org Sat Jun 02 12:48:51 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
+	Jiang Xin <worldhello.net@gmail.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jun 02 12:57:07 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Salt0-0004y7-1B
-	for gcvg-git-2@plane.gmane.org; Sat, 02 Jun 2012 12:48:46 +0200
+	id 1Sam12-0005ei-H9
+	for gcvg-git-2@plane.gmane.org; Sat, 02 Jun 2012 12:57:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760357Ab2FBKsE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 2 Jun 2012 06:48:04 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:35475 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1760352Ab2FBKsC (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 2 Jun 2012 06:48:02 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id q52AdTJp031493
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Sat, 2 Jun 2012 12:39:29 +0200
-Received: from bauges.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1SalsB-0005Bm-IC; Sat, 02 Jun 2012 12:47:55 +0200
-In-Reply-To: <4FC8D501.20207@ensimag.imag.fr> (Simon Cathebras's message of
-	"Fri, 01 Jun 2012 16:43:13 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.93 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Sat, 02 Jun 2012 12:39:30 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: q52AdTJp031493
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1339238372.64657@cLbRf785coVNA9WlskKdRQ
+	id S965356Ab2FBK42 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 2 Jun 2012 06:56:28 -0400
+Received: from mail-wg0-f44.google.com ([74.125.82.44]:43625 "EHLO
+	mail-wg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760368Ab2FBK41 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 2 Jun 2012 06:56:27 -0400
+Received: by wgbdr13 with SMTP id dr13so2653151wgb.1
+        for <git@vger.kernel.org>; Sat, 02 Jun 2012 03:56:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=chk0ImdXIIo+wmNXLb+LAfF/U/8i3OgA61PAGvzTYeQ=;
+        b=0I65E2/U7n9WQyky2sr+pQivj9rQWl3Mg3tp5E9ITnnyI/p+Jfx7gqG3R58vPDPzEb
+         2f+u5d4j0pvnD4qH6BsZUY9UDNZHa0Ds7Muj+SNZsGhPGDU1Xuz5cw5Ykofid8kVaLtH
+         ZCo7DL4kQuc391N6lmA/CSa8z7UtG4e5BRe/RZb4/yptFQS7aTG32jFW9OUq9C1Hge5f
+         KQU6l6D9c/Q351eT00aisnZYG8w/3L2NW8ndO2sMXH/9wpR6C8lxuVucQupudVJyhy3f
+         ta9jTOC+yF6WKJECtOHEDoMBs4IR2kY9T1d6MKgdhIH7UGPvZ/hwDNFNopdJaUMEOnjZ
+         bkVA==
+Received: by 10.216.212.157 with SMTP id y29mr4930731weo.146.1338634586280;
+ Sat, 02 Jun 2012 03:56:26 -0700 (PDT)
+Received: by 10.223.64.208 with HTTP; Sat, 2 Jun 2012 03:55:55 -0700 (PDT)
+In-Reply-To: <20120529203759.GC22151@burratino>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199037>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199038>
 
-"Simon.Cathebras" <Simon.Cathebras@ensimag.imag.fr> writes:
+On Wed, May 30, 2012 at 3:37 AM, Jonathan Nieder <jrnieder@gmail.com> w=
+rote:
+> Junio C Hamano wrote:
+>> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy =C2=A0<pclouds@gmail.com> =
+writes:
+>
+>>> --- a/archive.c
+>>> +++ b/archive.c
+>>> @@ -7,10 +7,10 @@
+>>> =C2=A0#include "unpack-trees.h"
+>>>
+>>> =C2=A0static char const * const archive_usage[] =3D {
+>>> - =C2=A0 =C2=A0"git archive [options] <tree-ish> [<path>...]",
+>>> - =C2=A0 =C2=A0"git archive --list",
+>>> - =C2=A0 =C2=A0"git archive --remote <repo> [--exec <cmd>] [options=
+] <tree-ish> [<path>...]",
+>>> - =C2=A0 =C2=A0"git archive --remote <repo> [--exec <cmd>] --list",
+>>> + =C2=A0 =C2=A0N_("git archive [options] <tree-ish> [<path>...]"),
+>>> + =C2=A0 =C2=A0N_("git archive --list"),
+>>> + =C2=A0 =C2=A0N_("git archive --remote <repo> [--exec <cmd>] [opti=
+ons] <tree-ish> [<path>...]"),
+>>> + =C2=A0 =C2=A0N_("git archive --remote <repo> [--exec <cmd>] --lis=
+t"),
+>>> =C2=A0 =C2=A0 =C2=A0NULL
+>>> =C2=A0};
+>>
+>> I can understand the "help" text member of OPT_BLAH() construct, but
+>> do we really want to translate the above?
+>
+> ...
+>
+> At least "git archive --list" should probably be kept untranslated
+> to lessen the translator workload a bit. =C2=A0Good catch.
 
->>> +wiki_getpage () {
->>> +	../test-gitmw.pl get_page -p "$1" "$2"
->>> +}
->> Any reason why test-gitmw.pl and wiki_getpage have this slightly
->> different API? The perl version has a "-p" flag, and the shell command
->> has only positionnal arguments.
-> The "-p" flag exists to specify if we have to use the admin login on
-> wiki to do the command.
+Should it? On one hand, it's like 10 strings less for translator (I
+fixed the series) but then we want to catch unmarked strings. _() will
+always be called on "git archive --list" and will give fault positive
+here. I intend to make "make test" warn every time it sees unmarked
+strings, fault positives will be annoying.
 
-(then, maybe --admin would be a better name?)
-
-> For instance, here we fetch a page from the wiki with Admin privilege.
-> Others arguments remains the same.
-
-What I don't understand is why you need the flexibility to choose
-between admin and non-admin on the Perl side, and you don't need in on
-the shell side.
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Unless we have a notion to say "this string is deliberately kept
+unstranslated", I think we better just mark them all.
+--=20
+Duy
