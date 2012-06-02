@@ -1,75 +1,79 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: Bug: git ls-files and ignored directories
-Date: Sat, 2 Jun 2012 17:33:55 +0700
-Message-ID: <CACsJy8CqMudg=uKuDmRHoYAXhUoYhOp3V2ZLuKM8W5wWWE460w@mail.gmail.com>
-References: <20120530102218.0625CFC006A@dd24126.kasserver.com>
- <20120531101451.C35C5B4C00D@dd24126.kasserver.com> <20120601093757.GE32340@sigill.intra.peff.net>
- <7vr4tz3tpw.fsf@alter.siamese.dyndns.org>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH 2/3] Test environment of git-remote-mw
+Date: Sat, 02 Jun 2012 12:47:54 +0200
+Message-ID: <vpqipfa9ehx.fsf@bauges.imag.fr>
+References: <4FC64B0C.6070507@ensimag.imag.fr>
+	<1338547317-26088-1-git-send-email-guillaume.sasdy@ensimag.imag.fr>
+	<1338547317-26088-2-git-send-email-guillaume.sasdy@ensimag.imag.fr>
+	<vpqmx4n9rq6.fsf@bauges.imag.fr> <4FC8D501.20207@ensimag.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Jeff King <peff@peff.net>,
-	Christoph Buchner <bilderbuchi@phononoia.at>,
-	Clemens Buchacher <drizzd@aon.at>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jun 02 12:35:11 2012
+Content-Type: text/plain
+Cc: Guillaume Sasdy <guillaume.sasdy@ensimag.imag.fr>,
+	git@vger.kernel.org, Charles Roussel <charles.roussel@ensimag.fr>,
+	Simon Perrat <Simon.Perrat@ensimag.imag.fr>,
+	Charles Roussel <Charles.Roussel@ensimag.imag.fr>,
+	Julien Khayat <Julien.Khayat@ensimag.imag.fr>
+To: Simon.Cathebras@ensimag.imag.fr
+X-From: git-owner@vger.kernel.org Sat Jun 02 12:48:51 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Salfl-0007JI-Gf
-	for gcvg-git-2@plane.gmane.org; Sat, 02 Jun 2012 12:35:05 +0200
+	id 1Salt0-0004y7-1B
+	for gcvg-git-2@plane.gmane.org; Sat, 02 Jun 2012 12:48:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760168Ab2FBKe2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 2 Jun 2012 06:34:28 -0400
-Received: from mail-we0-f174.google.com ([74.125.82.174]:51079 "EHLO
-	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760160Ab2FBKe1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 2 Jun 2012 06:34:27 -0400
-Received: by weyu7 with SMTP id u7so1875242wey.19
-        for <git@vger.kernel.org>; Sat, 02 Jun 2012 03:34:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=rtpMIPgxMA3YNjETCdy8KD7p9mPg2PaZvp/pQ8VhS5o=;
-        b=k/vCzWD+0qRXB9cRo/5wFJg4VzBiq+whsEYayuD7LqM6tH2Xb6EPUHaUcuWzotGqSE
-         kF5nqgB2QUo14h7LFHfLJE0xZYjVUmPgYnKO4kdtPd76DPrFwG/M073rUpCQXCS9qJOY
-         hdll+nM1CLk6JfFx0TDGpY2i7uLmaxy+TCIhZ27kbzVeDkO63fuI4ekGQCfhZD4O75zf
-         9cOSVCcOdTHdTdBvRiEeP/+6QmESo2zzY/73H/Sy0aN3xlO94x3ZR36BewdOqFPPX0Hv
-         XH2juuIVh/VDa3JRgsG5055ZwPtGLusKwur9/3h9BxXf8Sr69+MHpong3XIw/KmlusxV
-         rFCA==
-Received: by 10.216.216.95 with SMTP id f73mr4590510wep.149.1338633266431;
- Sat, 02 Jun 2012 03:34:26 -0700 (PDT)
-Received: by 10.223.64.208 with HTTP; Sat, 2 Jun 2012 03:33:55 -0700 (PDT)
-In-Reply-To: <7vr4tz3tpw.fsf@alter.siamese.dyndns.org>
+	id S1760357Ab2FBKsE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 2 Jun 2012 06:48:04 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:35475 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1760352Ab2FBKsC (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 2 Jun 2012 06:48:02 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id q52AdTJp031493
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Sat, 2 Jun 2012 12:39:29 +0200
+Received: from bauges.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1SalsB-0005Bm-IC; Sat, 02 Jun 2012 12:47:55 +0200
+In-Reply-To: <4FC8D501.20207@ensimag.imag.fr> (Simon Cathebras's message of
+	"Fri, 01 Jun 2012 16:43:13 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.93 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Sat, 02 Jun 2012 12:39:30 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: q52AdTJp031493
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1339238372.64657@cLbRf785coVNA9WlskKdRQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199036>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199037>
 
-On Fri, Jun 1, 2012 at 11:03 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Jeff King <peff@peff.net> writes:
->
->> No, I don't think anybody is working on it at the moment (at least I
->> do not see anything near the time of that old discussion, nor do I
->> recall it being discussed since).
->>
->> +cc Clemens, in case he had any work-in-progress as a result that did
->> not end up getting published.
->
-> I think the way the codepath for -i feeds path to excluded() is wrong.
->
-> The excluded() interface relies on the fact that the caller has
-> already checked foo/ before calling it for foo/bar; when asked to
-> see if "foo/bar" is excluded, it does not consider if "foo/" is
-> excluded---the caller should have already checked it.
+"Simon.Cathebras" <Simon.Cathebras@ensimag.imag.fr> writes:
 
-Sparse checkout deals with the exact same problem and it reconstructs
-a tree structure from cache list, before feeding to excluded(). I
-thought of generalizing it (e.g. for this case), but with v5 in
-progress, we'll probably have tree-based index soon. "ls-files -i"
-could be fixed by then.
+>>> +wiki_getpage () {
+>>> +	../test-gitmw.pl get_page -p "$1" "$2"
+>>> +}
+>> Any reason why test-gitmw.pl and wiki_getpage have this slightly
+>> different API? The perl version has a "-p" flag, and the shell command
+>> has only positionnal arguments.
+> The "-p" flag exists to specify if we have to use the admin login on
+> wiki to do the command.
+
+(then, maybe --admin would be a better name?)
+
+> For instance, here we fetch a page from the wiki with Admin privilege.
+> Others arguments remains the same.
+
+What I don't understand is why you need the flexibility to choose
+between admin and non-admin on the Perl side, and you don't need in on
+the shell side.
+
 -- 
-Duy
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
