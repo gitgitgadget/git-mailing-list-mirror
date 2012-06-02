@@ -1,145 +1,97 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH 2/4] version: add git_user_agent function
-Date: Sat, 2 Jun 2012 15:01:12 -0400
-Message-ID: <20120602190112.GB14369@sigill.intra.peff.net>
+Subject: [PATCH 3/4] http: get default user-agent from git_user_agent
+Date: Sat, 2 Jun 2012 15:03:08 -0400
+Message-ID: <20120602190308.GC14369@sigill.intra.peff.net>
 References: <20120602184948.GA14269@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jun 02 21:01:23 2012
+X-From: git-owner@vger.kernel.org Sat Jun 02 21:03:19 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SatZg-0002zC-G8
-	for gcvg-git-2@plane.gmane.org; Sat, 02 Jun 2012 21:01:20 +0200
+	id 1SatbX-0005or-JK
+	for gcvg-git-2@plane.gmane.org; Sat, 02 Jun 2012 21:03:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965513Ab2FBTBP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 2 Jun 2012 15:01:15 -0400
-Received: from 99-108-225-23.lightspeed.iplsin.sbcglobal.net ([99.108.225.23]:41288
+	id S965643Ab2FBTDM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 2 Jun 2012 15:03:12 -0400
+Received: from 99-108-225-23.lightspeed.iplsin.sbcglobal.net ([99.108.225.23]:41291
 	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S965489Ab2FBTBP (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 2 Jun 2012 15:01:15 -0400
-Received: (qmail 16572 invoked by uid 107); 2 Jun 2012 19:01:16 -0000
+	id S965521Ab2FBTDL (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 2 Jun 2012 15:03:11 -0400
+Received: (qmail 16622 invoked by uid 107); 2 Jun 2012 19:03:13 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Sat, 02 Jun 2012 15:01:16 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 02 Jun 2012 15:01:12 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Sat, 02 Jun 2012 15:03:13 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 02 Jun 2012 15:03:08 -0400
 Content-Disposition: inline
 In-Reply-To: <20120602184948.GA14269@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199057>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199058>
 
-This is basically a fancy way of saying "git/$GIT_VERSION",
-except that it is overridable at build-time and through the
-environment. Which means that people who don't want to
-advertise their git version (for privacy or security
-reasons) can tweak it.
+This means we will respect the GIT_USER_AGENT build-time
+configuration and run-time environment variable.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
-The next patch adapts http.c to use this, and of course the one after
-that adds support for the git protocol itself. There are a few other
-places where the git version leaks publicly, including at least:
+Note that this needs to be applied on the recent "http.o depends
+on GIT-VERSION-FILE" fix by Erik, which just went into master. It
+actually undoes that commit, but that is because the dependency no
+longer exists.
 
-  1. in the x-mailer header of send-email
-
-  2. at the bottom of format-patch emails
-
-  3. in the mime boundaries (!) of format-patch emails
-
-Since the default here is functionally identical, and the only people
-who would care are those interested in masking their version, and nobody
-has actually come forward and said they want to do that, I am inclined
-not to worry about it. I'd consider the masking to be more important (if
-it is important at all) on the server side.  Perhaps this series will
-catch the attention of people who do care, and they can decide if they
-would like to take it farther.
-
- Makefile  | 11 +++++++++++
- version.c | 13 +++++++++++++
- version.h |  2 ++
- 3 files changed, 26 insertions(+)
+ Makefile | 5 +----
+ http.c   | 3 ++-
+ 2 files changed, 3 insertions(+), 5 deletions(-)
 
 diff --git a/Makefile b/Makefile
-index b394f85..e6e65ca 100644
+index e6e65ca..62de0b4 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -296,6 +296,9 @@ all::
- # the diff algorithm.  It gives a nice speedup if your processor has
- # fast unaligned word loads.  Does NOT work on big-endian systems!
- # Enabled by default on x86_64.
-+#
-+# Define GIT_USER_AGENT if you want to change how git identifies itself during
-+# network interactions.  The default is "git/$(GIT_VERSION)".
+@@ -2104,7 +2104,7 @@ configure: configure.ac
+ 	$(RM) $<+
  
- GIT-VERSION-FILE: FORCE
- 	@$(SHELL_PATH) ./GIT-VERSION-GEN
-@@ -905,6 +908,8 @@ BUILTIN_OBJS += builtin/write-tree.o
- GITLIBS = $(LIB_FILE) $(XDIFF_LIB)
- EXTLIBS =
+ # These can record GIT_VERSION
+-version.o git.spec http.o \
++version.o git.spec \
+ 	$(patsubst %.sh,%,$(SCRIPT_SH)) \
+ 	$(patsubst %.perl,%,$(SCRIPT_PERL)) \
+ 	: GIT-VERSION-FILE
+@@ -2274,9 +2274,6 @@ attr.sp attr.s attr.o: EXTRA_CPPFLAGS = \
+ gettext.sp gettext.s gettext.o: EXTRA_CPPFLAGS = \
+ 	-DGIT_LOCALE_PATH='"$(localedir_SQ)"'
  
-+GIT_USER_AGENT = git/$(GIT_VERSION)
-+
- #
- # Platform specific tweaks
- #
-@@ -1916,6 +1921,11 @@ SHELL_PATH_CQ_SQ = $(subst ','\'',$(SHELL_PATH_CQ))
- BASIC_CFLAGS += -DSHELL_PATH='$(SHELL_PATH_CQ_SQ)'
+-http.sp http.s http.o: EXTRA_CPPFLAGS = \
+-	-DGIT_HTTP_USER_AGENT='"git/$(GIT_VERSION)"'
+-
+ ifdef NO_EXPAT
+ http-walker.sp http-walker.s http-walker.o: EXTRA_CPPFLAGS = -DNO_EXPAT
  endif
+diff --git a/http.c b/http.c
+index 5cb87f1..b61ac85 100644
+--- a/http.c
++++ b/http.c
+@@ -4,6 +4,7 @@
+ #include "run-command.h"
+ #include "url.h"
+ #include "credential.h"
++#include "version.h"
  
-+GIT_USER_AGENT_SQ = $(subst ','\'',$(GIT_USER_AGENT))
-+GIT_USER_AGENT_CQ = "$(subst ",\",$(subst \,\\,$(GIT_USER_AGENT)))"
-+GIT_USER_AGENT_CQ_SQ = $(subst ','\'',$(GIT_USER_AGENT_CQ))
-+BASIC_CFLAGS += -DGIT_USER_AGENT='$(GIT_USER_AGENT_CQ_SQ)'
-+
- ALL_CFLAGS += $(BASIC_CFLAGS)
- ALL_LDFLAGS += $(BASIC_LDFLAGS)
+ int active_requests;
+ int http_is_verbose;
+@@ -299,7 +300,7 @@ static CURL *get_curl_handle(void)
+ 		curl_easy_setopt(result, CURLOPT_VERBOSE, 1);
  
-@@ -2000,6 +2010,7 @@ sed -e '1s|#!.*/sh|#!$(SHELL_PATH_SQ)|' \
-     -e 's|@SHELL_PATH@|$(SHELL_PATH_SQ)|' \
-     -e 's|@@DIFF@@|$(DIFF_SQ)|' \
-     -e 's/@@GIT_VERSION@@/$(GIT_VERSION)/g' \
-+    -e 's|@@GIT_USER_AGENT@@|$(GIT_USER_AGENT_SQ)|g' \
-     -e 's|@@LOCALEDIR@@|$(localedir_SQ)|g' \
-     -e 's/@@NO_CURL@@/$(NO_CURL)/g' \
-     -e 's/@@USE_GETTEXT_SCHEME@@/$(USE_GETTEXT_SCHEME)/g' \
-diff --git a/version.c b/version.c
-index ca68653..f98d5a6 100644
---- a/version.c
-+++ b/version.c
-@@ -2,3 +2,16 @@
- #include "version.h"
+ 	curl_easy_setopt(result, CURLOPT_USERAGENT,
+-		user_agent ? user_agent : GIT_HTTP_USER_AGENT);
++		user_agent ? user_agent : git_user_agent());
  
- const char git_version_string[] = GIT_VERSION;
-+
-+const char *git_user_agent(void)
-+{
-+	static const char *agent = NULL;
-+
-+	if (!agent) {
-+		agent = getenv("GIT_USER_AGENT");
-+		if (!agent)
-+			agent = GIT_USER_AGENT;
-+	}
-+
-+	return agent;
-+}
-diff --git a/version.h b/version.h
-index 8d6c413..fd9cdd6 100644
---- a/version.h
-+++ b/version.h
-@@ -3,4 +3,6 @@
- 
- extern const char git_version_string[];
- 
-+const char *git_user_agent(void);
-+
- #endif /* VERSION_H */
+ 	if (curl_ftp_no_epsv)
+ 		curl_easy_setopt(result, CURLOPT_FTP_USE_EPSV, 0);
 -- 
 1.7.7.7.32.g4b73117
