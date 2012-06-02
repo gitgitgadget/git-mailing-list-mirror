@@ -1,7 +1,7 @@
 From: Jeff King <peff@peff.net>
 Subject: Re: Bug: rebase when an author uses accents in name on MacOSx
-Date: Sat, 2 Jun 2012 12:09:04 -0400
-Message-ID: <20120602160904.GB15017@sigill.intra.peff.net>
+Date: Sat, 2 Jun 2012 12:23:36 -0400
+Message-ID: <20120602162336.GC15017@sigill.intra.peff.net>
 References: <7vehq18c82.fsf@alter.siamese.dyndns.org>
  <20120531011911.GC5488@sigill.intra.peff.net>
  <7v62bc97w1.fsf@alter.siamese.dyndns.org>
@@ -11,80 +11,88 @@ References: <7vehq18c82.fsf@alter.siamese.dyndns.org>
  <7vd35k6w0i.fsf@alter.siamese.dyndns.org>
  <168277BB-0E71-4987-A2BE-6202034A96F1@spotinfluence.com>
  <20120601093039.GD32340@sigill.intra.peff.net>
- <B0BB0BD8-EFB5-4A3C-A6F7-00A1C7DE0509@spotinfluence.com>
+ <7vmx4n3sz5.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>,
+Cc: Lanny Ripple <lanny@spotinfluence.com>,
 	Thomas Rast <trast@inf.ethz.ch>, git@vger.kernel.org
-To: Lanny Ripple <lanny@spotinfluence.com>
-X-From: git-owner@vger.kernel.org Sat Jun 02 18:09:52 2012
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Jun 02 18:23:44 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Saqtf-0007Ob-Br
-	for gcvg-git-2@plane.gmane.org; Sat, 02 Jun 2012 18:09:47 +0200
+	id 1Sar7A-0000N2-0q
+	for gcvg-git-2@plane.gmane.org; Sat, 02 Jun 2012 18:23:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758119Ab2FBQJJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 2 Jun 2012 12:09:09 -0400
-Received: from 99-108-225-23.lightspeed.iplsin.sbcglobal.net ([99.108.225.23]:41131
+	id S1758315Ab2FBQXj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 2 Jun 2012 12:23:39 -0400
+Received: from 99-108-225-23.lightspeed.iplsin.sbcglobal.net ([99.108.225.23]:41141
 	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752751Ab2FBQJI (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 2 Jun 2012 12:09:08 -0400
-Received: (qmail 13782 invoked by uid 107); 2 Jun 2012 16:09:09 -0000
+	id S1754085Ab2FBQXj (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 2 Jun 2012 12:23:39 -0400
+Received: (qmail 13859 invoked by uid 107); 2 Jun 2012 16:23:41 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Sat, 02 Jun 2012 12:09:09 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 02 Jun 2012 12:09:04 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Sat, 02 Jun 2012 12:23:41 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 02 Jun 2012 12:23:36 -0400
 Content-Disposition: inline
-In-Reply-To: <B0BB0BD8-EFB5-4A3C-A6F7-00A1C7DE0509@spotinfluence.com>
+In-Reply-To: <7vmx4n3sz5.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199046>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199047>
 
-On Fri, Jun 01, 2012 at 08:56:01AM -0500, Lanny Ripple wrote:
+On Fri, Jun 01, 2012 at 09:19:26AM -0700, Junio C Hamano wrote:
 
-> I did show that sed was broken and have provided a minimal, reproducible test.
+> Jeff King <peff@peff.net> writes:
+> > [Please don't top-post.]
+> > ...
+> > But you have to keep in mind all of the people who will be led down the
+> > wrong path by your breadcrumb when the failure is caused by a
+> > _different_ problem. What is the probability that it is helpful versus
+> > not helpful?  If you are going to give advice that sed might be broken,
+> > you should at least test to see if it is broken and report it.
 > 
-> I have reported it to the sed maintainers and they are working on it.
+> Eek, do that at runtime in the error code path?
 
-Great. Do we know yet which versions are affected?
+Yes, which I think is utterly gross, but at least it is on the error
+code path, so most people will never run it.
 
-> A message or comment in the code that seds not properly handling utf8
-> characters have been shown to be the cause of the problem and that git
-> selects sed from the PATH would have been 100% effective in at least
-> one case.  I don't know the troubleshooting skills of the other two
-> people that bumped into the problem so can't comment.  Of the billions
-> of people that have not (if it existed) looked at the breadcrumb and
-> weren't led astray it's (would have) also been 100% effective.  Can
-> you in turn posit any reasonable way that get_author_ident_from_commit
-> would improperly build author-script short of a bad sed?  I guess you
-> could pull out transient or systematic disk error.
+It's slightly less gross to do it at build-time (or even as part of
+configure, I guess), but of course it is a run-time dependency, so there
+is nothing to stop the broken sed from being installed after git (or
+even a user with a different PATH than the builder triggering it).
 
-I assume from bogus commit objects. But I admit I am just guessing, and
-don't have data.
+One gross thing about doing it at run-time is that it only affects
+_this_ code path, which happens to have an easy-to-diagnose outcome from
+the bug. But how many other code paths are using sed on data which might
+contain utf-8 characters? And are they failing silently or otherwise
+simply corrupting the output?
 
-> You do, in fact, have several solutions.  I won't reiterate since they
-> are in the thread earlier.  You also have in many cases the valid
-> concern that the solutions would not be backwards compatible.  And
-> yes, this sed will get fixed but what then?  The next person that gets
-> a sed they don't expect earlier in their PATH will have to go through
-> the same steps.
+One other thing to think about: this particular manifestation of the
+bug is to cause our shell-quoting to fail. Are there are security
+implications? That is, can I execute arbitrary code by having you run
+get_author_ident_from_commit on a specially-crafted commit?
 
-When I said:
+> The problem I see is that at that point where we have to suspect
+> something fundamental as sed broken on the platform, we cannot even
+> trust printf, test, or even the shell itself behaving sanely.
 
-> > But really, I'd rather just see the broken sed fixed. Where would the
-> > breadcrumb lead people at this point, anyway? We don't actually have a
-> > solution besides "uninstall this other, crappy sed". Has the sed bug
-> > actually been fixed?
-
-I meant that there is not a fix for the _user_ to perform at that point.
-The point of a breadcrumb like that is that we are not going to put a
-fix into git, so we want to at least give the user a clue that their
-system has a problem. But what is their next step after being informed
-that their system has a problem?
+I don't think that's true. We have to deal with this kind of portability
+nonsense all the time. We assume that the tools work until we get a
+report that they don't, and then we fix it, work around it, or whatever.
+Yes, the "your sed is broken" test would not work if "test" is also
+totally broken. But we have not seen such a system in real life, or have
+reason to suspect that it exists. Whereas we do know there is a
+common[1] platform where the sed is broken in a specific way, but
+nothing else is. Dealing with that helps solve a real problem for some
+people.
 
 -Peff
+
+[1] I am just guessing about how common it is. I still haven't seen an
+    indication of how common this version of sed is, or even which
+    versions are affected.
