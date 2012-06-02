@@ -1,80 +1,54 @@
-From: Ralf Thielow <ralf.thielow@googlemail.com>
-Subject: =?UTF-8?q?=5BPATCH=5D=20l10n=3A=20de=2Epo=3A=20add=20additional=20newline?=
-Date: Sat,  2 Jun 2012 20:31:12 +0200
-Message-ID: <1338661872-13913-1-git-send-email-ralf.thielow@googlemail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: git version statistics
+Date: Sat, 2 Jun 2012 14:49:48 -0400
+Message-ID: <20120602184948.GA14269@sigill.intra.peff.net>
+References: <20120531114801.GA21367@sigill.intra.peff.net>
+ <20120531120018.GA24986@sigill.intra.peff.net>
+ <7v396g6t53.fsf@alter.siamese.dyndns.org>
+ <20120601090337.GC32340@sigill.intra.peff.net>
+ <7vzk8n3x5e.fsf@alter.siamese.dyndns.org>
+ <20120602163248.GD15017@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: worldhello.net@gmail.com, git@vger.kernel.org,
-	Ralf Thielow <ralf.thielow@googlemail.com>
-To: trast@student.ethz.ch, jk@jk.gs, stimming@tuhh.de
-X-From: git-owner@vger.kernel.org Sat Jun 02 20:31:43 2012
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Jun 02 20:50:50 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Sat6x-0004jQ-II
-	for gcvg-git-2@plane.gmane.org; Sat, 02 Jun 2012 20:31:39 +0200
+	id 1SatPM-0004Cw-Kp
+	for gcvg-git-2@plane.gmane.org; Sat, 02 Jun 2012 20:50:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964846Ab2FBSbc convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 2 Jun 2012 14:31:32 -0400
-Received: from mail-we0-f174.google.com ([74.125.82.174]:41143 "EHLO
-	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S964796Ab2FBSbS (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 2 Jun 2012 14:31:18 -0400
-Received: by weyu7 with SMTP id u7so2035648wey.19
-        for <git@vger.kernel.org>; Sat, 02 Jun 2012 11:31:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
-         :content-type:content-transfer-encoding;
-        bh=rmJlDM3Wiynsf/7bo/I/ZMClNjNAJqBmFZRNJdTR/gU=;
-        b=hwEbl+YmvRVvEPp1WwB/XrxkRjLPFaSMzoaQI7SjrboKC+6IECXzNoi6qZ0hUhT8ju
-         LHn76cktDAlGDO6LdirI5XnzVhS55/RXuYjwruz349jA+lPFy+tUbkaC+7/k4ehRtpqC
-         Nxk8IlIRQWKrmFZi+Wic5lXThpjR+T60FIa/pCYMJYBdVpn0qFo3E2m9ks3A1POl4bW+
-         Ls9YoyuGRV3teCzRwS1kb3YSM3JV84AZmnhCDEw79XuNsz657tIejJ66RUUNIGWv7Upz
-         07GdLy/9qaqsxEQsOT2fJeS2hmqy4YEUXbmR+1d+vxjO7vHw2d6cochtTb7Ozw7XWnew
-         WSjA==
-Received: by 10.216.26.201 with SMTP id c51mr4834714wea.108.1338661877033;
-        Sat, 02 Jun 2012 11:31:17 -0700 (PDT)
-Received: from localhost.localdomain (dslb-094-223-205-117.pools.arcor-ip.net. [94.223.205.117])
-        by mx.google.com with ESMTPS id gb9sm6601302wib.8.2012.06.02.11.31.16
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sat, 02 Jun 2012 11:31:16 -0700 (PDT)
-X-Mailer: git-send-email 1.7.11.rc0.105.g16abda8
+	id S965038Ab2FBStw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 2 Jun 2012 14:49:52 -0400
+Received: from 99-108-225-23.lightspeed.iplsin.sbcglobal.net ([99.108.225.23]:41272
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S965013Ab2FBStv (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 2 Jun 2012 14:49:51 -0400
+Received: (qmail 16313 invoked by uid 107); 2 Jun 2012 18:49:53 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Sat, 02 Jun 2012 14:49:53 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 02 Jun 2012 14:49:48 -0400
+Content-Disposition: inline
+In-Reply-To: <20120602163248.GD15017@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199054>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199055>
 
-The translation of "builtin/gc.c:224" was missing of
-a newline which made the second part of the message
-quite long. We simply add a newline.
+On Sat, Jun 02, 2012 at 12:32:48PM -0400, Jeff King wrote:
 
-Signed-off-by: Ralf Thielow <ralf.thielow@googlemail.com>
----
- po/de.po | 4 ++--
- 1 Datei ge=C3=A4ndert, 2 Zeilen hinzugef=C3=BCgt(+), 2 Zeilen entfernt=
-(-)
+> I'll cook up a new version of the patch.
 
-diff --git a/po/de.po b/po/de.po
-index a7774e0..23829ef 100644
---- a/po/de.po
-+++ b/po/de.po
-@@ -2812,8 +2812,8 @@ msgid ""
- "run \"git gc\" manually. See \"git help gc\" for more information.\n"
- msgstr ""
- "Die Datenbank des Projektarchivs wird f=C3=BCr eine optimale Performa=
-nce\n"
--"komprimiert. Du kannst auch \"git gc\" manuell ausf=C3=BChren. Siehe =
-\"git help gc"
--"\" f=C3=BCr weitere Informationen.\n"
-+"komprimiert. Du kannst auch \"git gc\" manuell ausf=C3=BChren.\n"
-+"Siehe \"git help gc\" f=C3=BCr weitere Informationen.\n"
-=20
- #: builtin/gc.c:251
- msgid ""
---=20
-1.7.11.rc0.105.g16abda8
+The refactoring ended up expanding this into a few patches:
+
+  [1/4]: move git_version_string into version.c
+  [2/4]: version: add git_user_agent function
+  [3/4]: http: get default user-agent from git_user_agent
+  [4/4]: include agent identifier in capability string
+
+-Peff
