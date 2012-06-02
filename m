@@ -1,66 +1,78 @@
-From: Tomas Carnecky <tomas.carnecky@gmail.com>
-Subject: Re: git version statistics
-Date: Sat, 02 Jun 2012 16:59:34 +0000
-Message-ID: <1338656374-ner-2980@calvin>
-References: <20120531114801.GA21367@sigill.intra.peff.net>
-	<20120531120018.GA24986@sigill.intra.peff.net>
-	<7v396g6t53.fsf@alter.siamese.dyndns.org>
-	<20120601090337.GC32340@sigill.intra.peff.net>
-	<7vzk8n3x5e.fsf@alter.siamese.dyndns.org>
-	<20120602163248.GD15017@sigill.intra.peff.net>
+From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+Subject: [PATCH] dir.c: Fix a sparse warning
+Date: Sat, 02 Jun 2012 18:05:36 +0100
+Message-ID: <4FCA47E0.7020700@ramsay1.demon.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jun 02 19:00:25 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	GIT Mailing-list <git@vger.kernel.org>
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jun 02 19:10:44 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Sarge-0001EG-M2
-	for gcvg-git-2@plane.gmane.org; Sat, 02 Jun 2012 19:00:24 +0200
+	id 1Sarqd-0006WC-Eo
+	for gcvg-git-2@plane.gmane.org; Sat, 02 Jun 2012 19:10:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932737Ab2FBRAP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 2 Jun 2012 13:00:15 -0400
-Received: from mail-wg0-f44.google.com ([74.125.82.44]:62726 "EHLO
-	mail-wg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932654Ab2FBRAO (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 2 Jun 2012 13:00:14 -0400
-Received: by wgbdr13 with SMTP id dr13so2831783wgb.1
-        for <git@vger.kernel.org>; Sat, 02 Jun 2012 10:00:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:subject:to:cc:references:in-reply-to:mime-version:date
-         :message-id:content-type;
-        bh=OhUGdnGpEfxjwHU2IpzwUBK4Lr1GTuoofuZXPhEoERw=;
-        b=swuEiChoKOAiNCW7rVH1SxELvc1/pgf4wtrHMdPAgYxpyUQYumEghKtaKAPlDlcJ+y
-         e1qXzVLDDZJB23kfkL66b/49fiNNdrAUZGi3XAYsbd4ErhTdcNmhwJk0lZ/OOeoYYtOL
-         fyFaZvkJJDoT5NNbbhkEWM5k0tMtojBr+TD1uM4U7GAD6xVD9BmnGk91VYKsdYy9gtuj
-         IHBZ/2A+x6/CWGmtuTYC7HiD+FQO6B17so7UzPda/lnhefDyBzRFUN3p3sXkhIJgj8bp
-         KUNExA5u8YyaukFnWh6HJ6pj4MOykrNa5M55tUZQA17QTWpwnPCEVvyYfDFDeQn2qVt8
-         Bang==
-Received: by 10.216.213.219 with SMTP id a69mr5753799wep.16.1338656411941;
-        Sat, 02 Jun 2012 10:00:11 -0700 (PDT)
-Received: from calvin.caurea.org (cust.static.46-14-151-191.swisscomdata.ch. [46.14.151.191])
-        by mx.google.com with ESMTPS id dg2sm9644116wib.4.2012.06.02.10.00.10
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sat, 02 Jun 2012 10:00:11 -0700 (PDT)
-Received: by calvin.caurea.org (Postfix, from userid 3301)
-	id 5767E3E31F1; Sat,  2 Jun 2012 16:59:34 +0000 (UTC)
-In-Reply-To: <20120602163248.GD15017@sigill.intra.peff.net>
+	id S1759713Ab2FBRKL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 2 Jun 2012 13:10:11 -0400
+Received: from anchor-post-1.mail.demon.net ([195.173.77.132]:47288 "EHLO
+	anchor-post-1.mail.demon.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1759403Ab2FBRKK (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 2 Jun 2012 13:10:10 -0400
+Received: from ramsay1.demon.co.uk ([193.237.126.196])
+	by anchor-post-1.mail.demon.net with esmtp (Exim 4.69)
+	id 1Sarq4-00071i-gz; Sat, 02 Jun 2012 17:10:08 +0000
+User-Agent: Thunderbird 1.5.0.2 (Windows/20060308)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199051>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199052>
 
-On Sat, 02 Jun 2012 12:32:48 -0400, Jeff King <peff@peff.net> wrote:
-> On Fri, Jun 01, 2012 at 07:49:17AM -0700, Junio C Hamano wrote:
-> 
-> > My initial reaction to the patch was a bit of trouble with the word
-> > "agent", as we do not call Git acting on behalf of the end user "an
-> > agent" in general.
 
-Wikipedia defines User agent as 'a software [...] that is acting on behalf of
-a user'. That fits this situation quite well, don't you think?
+In particular, sparse complains as follows:
+
+        SP dir.c
+    dir.c:291:12: warning: symbol 'wildcards' was not declared. \
+        Should it be static?
+
+In order to suppress the warning, since 'wildcards' does not need
+to be an external symbol, we simply add the static modifier to the
+declaration.
+
+Signed-off-by: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+---
+
+Hi Nguyen,
+
+If you need to re-roll the 'nd/exclude-workaround-top-heavy' branch,
+could you please squash this into commit dedbd80c ("exclude: do strcmp
+as much as possible before fnmatch", 26-05-2012).
+
+Thanks!
+
+ATB,
+Ramsay Jones
+
+ dir.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/dir.c b/dir.c
+index 1b1a325..571eb0d 100644
+--- a/dir.c
++++ b/dir.c
+@@ -288,7 +288,7 @@ int match_pathspec_depth(const struct pathspec *ps,
+ 	return retval;
+ }
+ 
+-const char *wildcards = "*?[{\\";
++static const char *wildcards = "*?[{\\";
+ 
+ static int no_wildcard(const char *string)
+ {
+-- 
+1.7.10
