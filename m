@@ -1,53 +1,64 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Gentoo is moving to git
-Date: Sun, 3 Jun 2012 19:49:54 +0700
-Message-ID: <CACsJy8DbL6RqVmEyrSFNj1w-nZR1hPnoz5+AvYJSRoibiMd1Vg@mail.gmail.com>
+From: Jim Meyering <jim@meyering.net>
+Subject: Re: [PATCH] fix many comment typos
+Date: Sun, 03 Jun 2012 14:58:20 +0200
+Message-ID: <87wr3od02b.fsf@rho.meyering.net>
+References: <8762baf8do.fsf@rho.meyering.net>
+	<7vmx4lz5bm.fsf@alter.siamese.dyndns.org>
+	<87396ceuoy.fsf@rho.meyering.net> <4FCB4E0A.5080107@lsrfire.ath.cx>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Jun 03 14:50:33 2012
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, git list <git@vger.kernel.org>
+To: =?iso-8859-1?Q?Ren=E9?= Scharfe <rene.scharfe@lsrfire.ath.cx>
+X-From: git-owner@vger.kernel.org Sun Jun 03 14:58:34 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SbAGM-0004Bu-Uk
-	for gcvg-git-2@plane.gmane.org; Sun, 03 Jun 2012 14:50:31 +0200
+	id 1SbAO9-0002Kb-M9
+	for gcvg-git-2@plane.gmane.org; Sun, 03 Jun 2012 14:58:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751393Ab2FCMu0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 3 Jun 2012 08:50:26 -0400
-Received: from mail-wg0-f42.google.com ([74.125.82.42]:40922 "EHLO
-	mail-wg0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750958Ab2FCMu0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 3 Jun 2012 08:50:26 -0400
-Received: by wgbds11 with SMTP id ds11so1718535wgb.1
-        for <git@vger.kernel.org>; Sun, 03 Jun 2012 05:50:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to:content-type;
-        bh=3+mCantUBvjx8ANnB7sH5jdOPrDz5FVPud0PN1st0K0=;
-        b=ugwNg44dc7r/kPNMnKu3VL+7VW9RRIKXutSlIybBz8mriPQL0VwSXSjoI0zHyXzioO
-         BmlUg3yEW/zU19sdQ/U/gcO6cUBB6y/q5QkaDh5UB4ZAOAAivofJyR5x2Kx6M3WXQRj0
-         CIyJZ5PA2LqDwRpdA9CAFb+GmGfqvKNQkNkKxq6BU1TN9YNa863w1BNRP/in695Ekv7t
-         IGGiclr+adH0sdtmk5nhSWU1Vpx+MzrIFTlZIvQwytJxm+FL3ODhPf7QBsHFe5cUqThX
-         6ZPHQbndn+jUCWiQaLSTN1b/JIntr+xGXAYVYfjcO7XCUcxV4Q4M6qkT6bNnhBMdkVg4
-         gqqw==
-Received: by 10.216.194.196 with SMTP id m46mr8308137wen.197.1338727824493;
- Sun, 03 Jun 2012 05:50:24 -0700 (PDT)
-Received: by 10.223.64.208 with HTTP; Sun, 3 Jun 2012 05:49:54 -0700 (PDT)
+	id S1751410Ab2FCM6a convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 3 Jun 2012 08:58:30 -0400
+Received: from smtp5-g21.free.fr ([212.27.42.5]:53424 "EHLO smtp5-g21.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751078Ab2FCM63 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 3 Jun 2012 08:58:29 -0400
+Received: from mx.meyering.net (unknown [88.168.87.75])
+	by smtp5-g21.free.fr (Postfix) with ESMTP id 3695CD480B5
+	for <git@vger.kernel.org>; Sun,  3 Jun 2012 14:58:21 +0200 (CEST)
+Received: from rho.meyering.net (localhost.localdomain [127.0.0.1])
+	by rho.meyering.net (Acme Bit-Twister) with ESMTP id 940C5600AE;
+	Sun,  3 Jun 2012 14:58:20 +0200 (CEST)
+In-Reply-To: <4FCB4E0A.5080107@lsrfire.ath.cx> (=?iso-8859-1?Q?=22Ren=E9?=
+ Scharfe"'s message of
+	"Sun, 03 Jun 2012 13:44:10 +0200")
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199085>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199086>
 
-No big news. But as Gentoo may be the first user of commit signing
-feature and the repository has a special shallow and wide tree
-structure, it may be interesting to watch how it works out:
+Ren=E9 Scharfe wrote:
+> Am 03.06.2012 09:11, schrieb Jim Meyering:
+>> Perhaps a more palatable change, here and in the other two places:
+>> s/seeked/cg-seek'd/, i.e.,
+>>
+>> - * "git bisect" showed mysterious "won't bisect on seeked tree" err=
+or message.
+>> + * "git bisect" showed mysterious "won't bisect on cg-seek'd tree"
+>> error message.
+>>
+>> Then, if someone does this again, it will be more obvious that
+>> it is not a typo.
+>
+> This change is only valid if the command "git bisect" at some point
+> printed "won't bisect on cg-seek'd tree" instead of "won't bisect on
+> seeked tree".  And even then, it doesn't make now sense to change
+> already published release notes (Documentation/RelNotes/1.5.4.4.txt),
+> after the fact.
 
-http://thread.gmane.org/gmane.linux.gentoo.devel/77537
-http://thread.gmane.org/gmane.linux.gentoo.devel/77542
-http://thread.gmane.org/gmane.linux.gentoo.devel/77193 (loong and
-probably not technically interesting)
--- 
-Duy
+You're right.  Changing the RelNotes that way would not be useful.
+However, changing git-bisect.sh should make it easier for non-native
+English speakers to understand that obscure diagnostic.
