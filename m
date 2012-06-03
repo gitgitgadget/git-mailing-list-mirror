@@ -1,170 +1,90 @@
 From: Jon Seymour <jon.seymour@gmail.com>
-Subject: [PATCH v8 4/4] submodule: fix handling of superproject origin URLs like foo, ./foo and ./foo/bar
-Date: Sun,  3 Jun 2012 19:46:50 +1000
-Message-ID: <1338716810-9881-5-git-send-email-jon.seymour@gmail.com>
-References: <1338716810-9881-1-git-send-email-jon.seymour@gmail.com>
-Cc: Jens.Lehmann@web.de, gitster@pobox.com, phil.hord@gmail.com,
-	ramsay@ramsay1.demon.co.uk, j6t@kdbg.org,
-	Jon Seymour <jon.seymour@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jun 03 11:47:34 2012
+Subject: Re: [PATCH v7 6/9] submodule: fix detection of invalid submodule URL
+Date: Sun, 3 Jun 2012 19:51:00 +1000
+Message-ID: <CAH3Anrp_aUR2O_iEwxHu4bRs83U58X6QsY6+SJ56NXKEC7LA5Q@mail.gmail.com>
+References: <1338132851-23497-1-git-send-email-jon.seymour@gmail.com>
+	<1338132851-23497-7-git-send-email-jon.seymour@gmail.com>
+	<4FC3CB7E.6000501@kdbg.org>
+	<CAH3Anrrg4Fc5GXB_VwOXRfwP=hx5Xn5bqimP56oDB0USn7c4Cg@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Jens.Lehmann@web.de, gitster@pobox.com,
+	phil.hord@gmail.com, ramsay@ramsay1.demon.co.uk
+To: Johannes Sixt <j6t@kdbg.org>
+X-From: git-owner@vger.kernel.org Sun Jun 03 11:51:08 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Sb7PH-0006Ms-2v
-	for gcvg-git-2@plane.gmane.org; Sun, 03 Jun 2012 11:47:31 +0200
+	id 1Sb7Sl-0004bZ-F0
+	for gcvg-git-2@plane.gmane.org; Sun, 03 Jun 2012 11:51:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753404Ab2FCJrV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 3 Jun 2012 05:47:21 -0400
-Received: from mail-pz0-f46.google.com ([209.85.210.46]:60718 "EHLO
-	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753046Ab2FCJrU (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 3 Jun 2012 05:47:20 -0400
-Received: by mail-pz0-f46.google.com with SMTP id y13so4601633dad.19
-        for <git@vger.kernel.org>; Sun, 03 Jun 2012 02:47:20 -0700 (PDT)
+	id S1757175Ab2FCJvD convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 3 Jun 2012 05:51:03 -0400
+Received: from mail-wg0-f44.google.com ([74.125.82.44]:52007 "EHLO
+	mail-wg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752624Ab2FCJvB convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 3 Jun 2012 05:51:01 -0400
+Received: by wgbdr13 with SMTP id dr13so3166653wgb.1
+        for <git@vger.kernel.org>; Sun, 03 Jun 2012 02:51:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=Y7O8gX5f7/Tnj1tla98HJdFtqQ0CmeSnHQiH5QYZ6rE=;
-        b=IL9q5Dt+WKKFvlqkFJcPZDbDApCDW2avvM66K+f4y3oCkMhXpJY73Im9M4hXZfBsY4
-         X6L04xT+yvSu3fJ6xctzjaIPvfrco/9UeoWIjTOhz1YQM9zYgjpw51LdcR6P6tOBdtB0
-         BqWRnhwo1B5N1IXyfhIyPs1p2utnzJvr1p2fGPDWTIzddejDFa/Qm3CCF8gmzxNTjbjr
-         h8ic6Dn8aJLGr7R5eR8YEC0q26NavYbs4M/OmvOinXrePG69CR3r6PmBfRpOMGOhl/BY
-         /J/eKb/otEeU8fRNAbE20iG/UhEqmqhpPaJ7Rya0N7MS9KjKsbKiXFDOMA/Npx3FXoVo
-         kfIg==
-Received: by 10.68.191.8 with SMTP id gu8mr28667153pbc.0.1338716840249;
-        Sun, 03 Jun 2012 02:47:20 -0700 (PDT)
-Received: from ubuntu.au.ibm.com (202-159-159-155.dyn.iinet.net.au. [202.159.159.155])
-        by mx.google.com with ESMTPS id pb10sm8385550pbc.68.2012.06.03.02.47.16
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sun, 03 Jun 2012 02:47:19 -0700 (PDT)
-X-Mailer: git-send-email 1.7.10.2.651.g2c84487
-In-Reply-To: <1338716810-9881-1-git-send-email-jon.seymour@gmail.com>
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=y/0939YDj3wW0Fjbfxho9VBvVFa7B4/XVRMdDU8tMQs=;
+        b=zbo9KEFCHfosK/QV0Fwx9MBmnPpC20id8UXC+BfWfpe/SZI+kx6vIUoQQvayI2kOKn
+         ihKt08rm3q/DYR1+M0QSsLGNNI8Ubk2Rv8ya2v2kIN5jL97Z4dVCra3yKXK/eup1ORMm
+         lW+u6LJbCJgly1mlej2SfHP8R72s4tghwbvM4KXg7K7je+k2ZWqoQNO3dXIRAwsP8Nzg
+         Jlo8X4prHnh8ngOJJ7m62dI8LobeslEh6x2lQeM/6UX1bw5lomYxxE7U5O7KbuI8hkJR
+         sumdbw8UQxjXQfDN2TUu4QKRLYefsrV4KaEGB/gHJpQtc2WVgsi77FjYWtYJIyju/VTU
+         b8AA==
+Received: by 10.216.228.135 with SMTP id f7mr8106514weq.129.1338717060355;
+ Sun, 03 Jun 2012 02:51:00 -0700 (PDT)
+Received: by 10.180.146.166 with HTTP; Sun, 3 Jun 2012 02:51:00 -0700 (PDT)
+In-Reply-To: <CAH3Anrrg4Fc5GXB_VwOXRfwP=hx5Xn5bqimP56oDB0USn7c4Cg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199078>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199079>
 
-Currently git submodule init and git submodule sync fail with an error
-if the superproject origin URL is of the form foo but succeeds if the
-superproject origin URL is of the form ./foo or ./foo/bar or foo/bar.
+On Tue, May 29, 2012 at 7:39 AM, Jon Seymour <jon.seymour@gmail.com> wr=
+ote:
+> On Tue, May 29, 2012 at 5:01 AM, Johannes Sixt <j6t@kdbg.org> wrote:
+>> Am 27.05.2012 17:34, schrieb Jon Seymour:
+>>
+>> Without understanding in detail what this series is about, I would g=
+uess
+>> that the previous two case arms are not very Windows friendly. Does =
+the
+>> right thing happen when $remoteurl is "c:/path/to/remote"? Would it =
+help
+>> to use is_absolute_path?
+>>
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0if is_absolute_path "$remoteurl"
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0then
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0variant=3D"${=
+remoteurl#*/}"
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0else
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0case "$remote=
+url" in
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0...other case=
+s go here...
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0esac
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0fi
+>>
+>> -- Hannes
+>
+> Thanks, I will investigate this as an alternative.
+>
 
-This change makes handling of the foo case behave like the handling
-of the ./foo case and also ensures that superfluous leading ./'s are
-removed from the resulting derived URLs.
+I did investigate is_absolute_path for the v8 roll of this series, but
+I found it wasn't suitable because it doesn't classify URLs of the
+form user@host:repo as absolute. You can find the alternative I did
+use in v8 3/4.
 
-Signed-off-by: Jon Seymour <jon.seymour@gmail.com>
----
- git-submodule.sh           | 14 ++++++++++++--
- t/t7400-submodule-basic.sh |  6 +++---
- t/t7403-submodule-sync.sh  |  6 +++---
- 3 files changed, 18 insertions(+), 8 deletions(-)
+Regards,
 
-diff --git a/git-submodule.sh b/git-submodule.sh
-index 314df20..5142379 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -60,8 +60,12 @@ resolve_relative_url ()
- 		*:*|/*)
- 			is_relative=
- 			;;
-+		./*|../*)
-+			is_relative=t
-+			;;
- 		*)
- 			is_relative=t
-+			remoteurl="./$remoteurl"
- 			;;
- 	esac
- 
-@@ -79,7 +83,12 @@ resolve_relative_url ()
- 				sep=:
- 				;;
- 			*)
--				die "$(eval_gettext "cannot strip one component off url '\$remoteurl'")"
-+				if test -z "$is_relative" || test "." = "$remoteurl"
-+				then
-+					die "$(eval_gettext "cannot strip one component off url '\$remoteurl'")"
-+				else
-+					remoteurl=.
-+				fi
- 				;;
- 			esac
- 			;;
-@@ -90,7 +99,8 @@ resolve_relative_url ()
- 			break;;
- 		esac
- 	done
--	echo "${is_relative:+${up_path}}$remoteurl$sep${url%/}"
-+	remoteurl="$remoteurl$sep${url%/}"
-+	echo "${is_relative:+${up_path}}${remoteurl#./}"
- }
- 
- #
-diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
-index 09e2b9b..a899e6d 100755
---- a/t/t7400-submodule-basic.sh
-+++ b/t/t7400-submodule-basic.sh
-@@ -564,7 +564,7 @@ test_expect_success '../subrepo works with scp-style URL - user@host:path/to/rep
- 	)
- '
- 
--test_expect_failure '../subrepo works with relative local path - foo' '
-+test_expect_success '../subrepo works with relative local path - foo' '
- 	(
- 		cd reltest &&
- 		cp pristine-.git-config .git/config &&
-@@ -587,7 +587,7 @@ test_expect_success '../subrepo works with relative local path - foo/bar' '
- 	)
- '
- 
--test_expect_failure '../subrepo works with relative local path - ./foo' '
-+test_expect_success '../subrepo works with relative local path - ./foo' '
- 	(
- 		cd reltest &&
- 		cp pristine-.git-config .git/config &&
-@@ -598,7 +598,7 @@ test_expect_failure '../subrepo works with relative local path - ./foo' '
- 	)
- '
- 
--test_expect_failure '../subrepo works with relative local path - ./foo/bar' '
-+test_expect_success '../subrepo works with relative local path - ./foo/bar' '
- 	(
- 		cd reltest &&
- 		cp pristine-.git-config .git/config &&
-diff --git a/t/t7403-submodule-sync.sh b/t/t7403-submodule-sync.sh
-index 98bc74a..524d5c1 100755
---- a/t/t7403-submodule-sync.sh
-+++ b/t/t7403-submodule-sync.sh
-@@ -88,7 +88,7 @@ test_expect_success '"git submodule sync" should not vivify uninteresting submod
- 	)
- '
- 
--test_expect_failure '"git submodule sync" handles origin URL of the form foo' '
-+test_expect_success '"git submodule sync" handles origin URL of the form foo' '
- 	(cd relative-clone &&
- 	 git remote set-url origin foo &&
- 	 git submodule sync &&
-@@ -110,7 +110,7 @@ test_expect_success '"git submodule sync" handles origin URL of the form foo/bar
- 	)
- '
- 
--test_expect_failure '"git submodule sync" handles origin URL of the form ./foo' '
-+test_expect_success '"git submodule sync" handles origin URL of the form ./foo' '
- 	(cd relative-clone &&
- 	 git remote set-url origin ./foo &&
- 	 git submodule sync &&
-@@ -121,7 +121,7 @@ test_expect_failure '"git submodule sync" handles origin URL of the form ./foo'
- 	)
- '
- 
--test_expect_failure '"git submodule sync" handles origin URL of the form ./foo/bar' '
-+test_expect_success '"git submodule sync" handles origin URL of the form ./foo/bar' '
- 	(cd relative-clone &&
- 	 git remote set-url origin ./foo/bar &&
- 	 git submodule sync &&
--- 
-1.7.10.2.652.gdffd412
+jon.
