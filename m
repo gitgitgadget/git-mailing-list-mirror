@@ -1,62 +1,103 @@
-From: Jiang Xin <worldhello.net@gmail.com>
-Subject: Re: [PATCH] l10n: de.po: translate 2 new, 3 fuzzy messages
-Date: Sun, 3 Jun 2012 17:52:14 +0800
-Message-ID: <CANYiYbHZPEsqd6zuKJJ1fTuO1ii4Jy_ufGx8dAt9Q7fFi1xcdw@mail.gmail.com>
-References: <1338659582-6864-1-git-send-email-ralf.thielow@googlemail.com>
-	<CANYiYbFCTkx2JdvMbMtGHqqFz4rQMNXamicwRu2kZ3P6rtgSQQ@mail.gmail.com>
-	<CACsJy8CLpNANe-6OnU=v5h6zYdcpUWjuH=_iOTAOGohd4VOD1Q@mail.gmail.com>
+From: Charles Bailey <charles@hashpling.org>
+Subject: Re: [PATCH 1/2] git-svn: use platform specific auth providers
+Date: Sun, 3 Jun 2012 11:49:14 +0100
+Message-ID: <20120603104914.GA21276@hashpling.org>
+References: <20120427082559.GC4023@login.drsnuggles.stderr.nl>
+ <20120429082341.GA32664@dcvr.yhbt.net>
+ <7vvckihyqm.fsf@alter.siamese.dyndns.org>
+ <7vk40yhv5q.fsf@alter.siamese.dyndns.org>
+ <20120430081939.GA27715@dcvr.yhbt.net>
+ <7vipghgq9a.fsf@alter.siamese.dyndns.org>
+ <20120430165315.GO4023@login.drsnuggles.stderr.nl>
+ <20120430190200.GA27108@dcvr.yhbt.net>
+ <20120430192016.GQ4023@login.drsnuggles.stderr.nl>
+ <7vy5pcd7xu.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Ralf Thielow <ralf.thielow@googlemail.com>, trast@student.ethz.ch,
-	jk@jk.gs, stimming@tuhh.de, Git List <git@vger.kernel.org>
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jun 03 11:52:21 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Eric Wong <normalperson@yhbt.net>, git@vger.kernel.org,
+	Gustav Munkby <grddev@gmail.com>,
+	Edward Rudd <urkle@outoforder.cc>,
+	Carsten Bormann <cabo@tzi.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Jun 03 12:55:59 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Sb7Tv-0006lc-BR
-	for gcvg-git-2@plane.gmane.org; Sun, 03 Jun 2012 11:52:19 +0200
+	id 1Sb8TW-0004A4-OI
+	for gcvg-git-2@plane.gmane.org; Sun, 03 Jun 2012 12:55:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757551Ab2FCJwP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 3 Jun 2012 05:52:15 -0400
-Received: from mail-ob0-f174.google.com ([209.85.214.174]:60678 "EHLO
-	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752624Ab2FCJwO (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 3 Jun 2012 05:52:14 -0400
-Received: by obbtb18 with SMTP id tb18so5525779obb.19
-        for <git@vger.kernel.org>; Sun, 03 Jun 2012 02:52:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=T/k6ZXppBf0lytnKa3kik6oT0EvvaKQTGRSRR6WEUCI=;
-        b=h5eFxGbE9vuxD6Zbj8l9O1grc/64QwBPWI+IVIFmCjWWTigV+7vi3NhbKSl4VF64lm
-         hAZsmAeVlGlkNpg8aNozC27Fyi43aHtvyc6X+Dv5NKsp3MlJf/OUzC9QsJ8ix71yBim9
-         EfFJCFg4C6S6HS6e1NdsJSNrOUZ9I1OmdfK3QI/xgRrNgHQr8cLkRgWO/P2g3eyKDLp3
-         5PyOC44SkecRW/YdQWyKTEIMc9bAs46KCF3D3OWBolfGfs/Y7zwtEMczY2A45NpHkelW
-         pfuhOAYUYkVYRgG6Rg5fsrJ1ovYMJCePVHZM5CTsme5A7M1Us7ljRaI7FjTIMZSlPu6f
-         GvdA==
-Received: by 10.50.13.180 with SMTP id i20mr5569016igc.19.1338717134190; Sun,
- 03 Jun 2012 02:52:14 -0700 (PDT)
-Received: by 10.50.111.194 with HTTP; Sun, 3 Jun 2012 02:52:14 -0700 (PDT)
-In-Reply-To: <CACsJy8CLpNANe-6OnU=v5h6zYdcpUWjuH=_iOTAOGohd4VOD1Q@mail.gmail.com>
+	id S1753195Ab2FCKzY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 3 Jun 2012 06:55:24 -0400
+Received: from avasout07.plus.net ([84.93.230.235]:54660 "EHLO
+	avasout07.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753046Ab2FCKzX (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 3 Jun 2012 06:55:23 -0400
+X-Greylist: delayed 363 seconds by postgrey-1.27 at vger.kernel.org; Sun, 03 Jun 2012 06:55:22 EDT
+Received: from hashpling.plus.com ([212.159.69.125])
+	by avasout07 with smtp
+	id HmpE1j0052iA9hg01mpFjT; Sun, 03 Jun 2012 11:49:17 +0100
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.0 cv=bujO9Tmi c=1 sm=1 a=wpJ/2au8Z6V/NgdivHIBow==:17
+ a=-GleFfVwiy8A:10 a=L1uPjF0L7rgA:10 a=mSBy96HJJ2wA:10 a=BHUvooL90DcA:10
+ a=kj9zAlcOel0A:10 a=Ew9TdX-QAAAA:8 a=ybZZDoGAAAAA:8 a=ndW7ey3SY9u8xrL1zncA:9
+ a=CjuIK1q_8ugA:10 a=qIVjreYYsbEA:10 a=wpJ/2au8Z6V/NgdivHIBow==:117
+Received: from charles by hashpling.plus.com with local (Exim 4.72)
+	(envelope-from <charles@hashpling.org>)
+	id 1Sb8N0-0005xi-MS; Sun, 03 Jun 2012 11:49:14 +0100
+Content-Disposition: inline
+In-Reply-To: <7vy5pcd7xu.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.20 (2009-08-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199080>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199081>
 
-2012/6/3 Nguyen Thai Ngoc Duy <pclouds@gmail.com>:
->> Next time the diff you generated is more clear.
->
-> It also creates a non-applicable patch. The problem with .po files is
+On Mon, Apr 30, 2012 at 06:08:29PM -0700, Junio C Hamano wrote:
+> 
+> Ok, something along the lines of this.  Perhaps instead of "compare_",
+> we may want to call it "require_", so that negative return maps naturally
+> to a failure.
+> 
+> diff --git a/git-svn.perl b/git-svn.perl
+> index 427da9e..4a2ec43 100755
+> --- a/git-svn.perl
+> +++ b/git-svn.perl
 
-It's not a big issue. The podiff driver I provided only affects 'git diff',
-'git show HEAD' commands, but command 'git format-patch' will
-work as usual. Any way, patches for '*.po' sent to this list is for
-review only, and will not be applied directly.
+snip
 
--- 
-Jiang Xin
+> @@ -5464,7 +5481,7 @@ sub _auth_providers () {
+>  
+>  	# earlier 1.6.x versions would segfault, and <= 1.5.x didn't have
+>  	# this function
+> -	if ($SVN::Core::VERSION gt '1.6.12') {
+> +	if (compare_svn_version('1.6.12') > 0) {
+>  		my $config = SVN::Core::config_get_config($config_dir);
+>  		my ($p, @a);
+>  		# config_get_config returns all config files from
+
+I presume this patch turned into this commit:
+
+commit f760c903b8525878cd3b426fc61a7a2cf8742609
+Author: Junio C Hamano <gitster@pobox.com>
+Date:   Wed May 2 19:53:50 2012 +0000
+
+    git-svn: introduce SVN version comparison function
+
+Although it was advertised as fixing the breakage introduced by
+082afee621aeb2d3746c8ae290af98823f981f34 it didn't fix things for me.
+Although I haven't investigate why, trial and error proved that I
+could fix it if I changed the comparison to:
+
+       if (::compare_svn_version('1.6.13') > 0) {
+
+For me:
+$ svn --version --quiet
+1.6.13
+
+Is this the correct fix or do I have a bad svn install on my linux
+box?
+
+Charles.
