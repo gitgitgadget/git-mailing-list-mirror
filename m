@@ -1,64 +1,60 @@
-From: Jim Meyering <jim@meyering.net>
-Subject: Re: [PATCH] fix many comment typos
-Date: Sun, 03 Jun 2012 14:58:20 +0200
-Message-ID: <87wr3od02b.fsf@rho.meyering.net>
-References: <8762baf8do.fsf@rho.meyering.net>
-	<7vmx4lz5bm.fsf@alter.siamese.dyndns.org>
-	<87396ceuoy.fsf@rho.meyering.net> <4FCB4E0A.5080107@lsrfire.ath.cx>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git list <git@vger.kernel.org>
-To: =?iso-8859-1?Q?Ren=E9?= Scharfe <rene.scharfe@lsrfire.ath.cx>
-X-From: git-owner@vger.kernel.org Sun Jun 03 14:58:34 2012
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: [PATCH 0/3] Improve credential API documentation
+Date: Sun,  3 Jun 2012 18:10:01 +0200
+Message-ID: <1338739804-32167-1-git-send-email-Matthieu.Moy@imag.fr>
+Cc: Matthieu Moy <Matthieu.Moy@imag.fr>
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Sun Jun 03 18:11:03 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SbAO9-0002Kb-M9
-	for gcvg-git-2@plane.gmane.org; Sun, 03 Jun 2012 14:58:33 +0200
+	id 1SbDOQ-0003uH-TC
+	for gcvg-git-2@plane.gmane.org; Sun, 03 Jun 2012 18:11:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751410Ab2FCM6a convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 3 Jun 2012 08:58:30 -0400
-Received: from smtp5-g21.free.fr ([212.27.42.5]:53424 "EHLO smtp5-g21.free.fr"
+	id S1753079Ab2FCQKR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 3 Jun 2012 12:10:17 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:37470 "EHLO shiva.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751078Ab2FCM63 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 3 Jun 2012 08:58:29 -0400
-Received: from mx.meyering.net (unknown [88.168.87.75])
-	by smtp5-g21.free.fr (Postfix) with ESMTP id 3695CD480B5
-	for <git@vger.kernel.org>; Sun,  3 Jun 2012 14:58:21 +0200 (CEST)
-Received: from rho.meyering.net (localhost.localdomain [127.0.0.1])
-	by rho.meyering.net (Acme Bit-Twister) with ESMTP id 940C5600AE;
-	Sun,  3 Jun 2012 14:58:20 +0200 (CEST)
-In-Reply-To: <4FCB4E0A.5080107@lsrfire.ath.cx> (=?iso-8859-1?Q?=22Ren=E9?=
- Scharfe"'s message of
-	"Sun, 03 Jun 2012 13:44:10 +0200")
+	id S1752276Ab2FCQKQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 3 Jun 2012 12:10:16 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id q53G1eef009657
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Sun, 3 Jun 2012 18:01:40 +0200
+Received: from bauges.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.72)
+	(envelope-from <moy@imag.fr>)
+	id 1SbDNa-0000C6-BL; Sun, 03 Jun 2012 18:10:10 +0200
+Received: from moy by bauges.imag.fr with local (Exim 4.72)
+	(envelope-from <moy@imag.fr>)
+	id 1SbDNa-0008Nd-6i; Sun, 03 Jun 2012 18:10:10 +0200
+X-Mailer: git-send-email 1.7.11.rc0.57.g84a04c7
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Sun, 03 Jun 2012 18:01:41 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: q53G1eef009657
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
+MailScanner-NULL-Check: 1339344101.33483@R3AWHeZ/APjY691g2oUoLw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199086>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199087>
 
-Ren=E9 Scharfe wrote:
-> Am 03.06.2012 09:11, schrieb Jim Meyering:
->> Perhaps a more palatable change, here and in the other two places:
->> s/seeked/cg-seek'd/, i.e.,
->>
->> - * "git bisect" showed mysterious "won't bisect on seeked tree" err=
-or message.
->> + * "git bisect" showed mysterious "won't bisect on cg-seek'd tree"
->> error message.
->>
->> Then, if someone does this again, it will be more obvious that
->> it is not a typo.
->
-> This change is only valid if the command "git bisect" at some point
-> printed "won't bisect on cg-seek'd tree" instead of "won't bisect on
-> seeked tree".  And even then, it doesn't make now sense to change
-> already published release notes (Documentation/RelNotes/1.5.4.4.txt),
-> after the fact.
+Follow-up to the discussion here:
+http://thread.gmane.org/gmane.comp.version-control.git/198409
 
-You're right.  Changing the RelNotes that way would not be useful.
-However, changing git-bisect.sh should make it easier for non-native
-English speakers to understand that obscure diagnostic.
+Matthieu Moy (3):
+  api-credential.txt: show the big picture first
+  api-credentials.txt: mention credential.helper explicitly
+  api-credentials.txt: add "see also" section
+
+ Documentation/technical/api-credentials.txt | 60 +++++++++++++++++++++++++++--
+ 1 file changed, 56 insertions(+), 4 deletions(-)
+
+-- 
+1.7.11.rc0.57.g84a04c7
