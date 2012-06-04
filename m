@@ -1,100 +1,82 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH] rebase [-i --exec | -ix] <CMD>...
-Date: Mon, 04 Jun 2012 22:30:54 +0200
-Message-ID: <vpqk3zmn7k1.fsf@bauges.imag.fr>
-References: <1338817674-22877-1-git-send-email-Lucien.Kong@ensimag.imag.fr>
-	<7vhaurt1m6.fsf@alter.siamese.dyndns.org>
+From: Leila <muhtasib@gmail.com>
+Subject: introduction
+Date: Mon, 4 Jun 2012 13:36:55 -0700
+Message-ID: <CAA3EhH+P_JeVGhRmL-kHOc0cTCiGQmv505XjgAv0kT1PAfjTyw@mail.gmail.com>
+References: <CAA3EhHJCRF05Q0xzzOWupVMjmKPbWAq1KNcU9Mmp8g1iH2B0zA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Kong Lucien <Lucien.Kong@ensimag.imag.fr>, git@vger.kernel.org,
-	Valentin Duperray <Valentin.Duperray@ensimag.imag.fr>,
-	Franck Jonas <Franck.Jonas@ensimag.imag.fr>,
-	Thomas Nguy <Thomas.Nguy@ensimag.imag.fr>,
-	Huynh Khoi Nguyen Nguyen 
-	<Huynh-Khoi-Nguyen.Nguyen@ensimag.imag.fr>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jun 04 22:31:09 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Jun 04 22:37:22 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Sbdvg-0002zp-Hr
-	for gcvg-git-2@plane.gmane.org; Mon, 04 Jun 2012 22:31:08 +0200
+	id 1Sbe1h-0000az-Ia
+	for gcvg-git-2@plane.gmane.org; Mon, 04 Jun 2012 22:37:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752923Ab2FDUbE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 Jun 2012 16:31:04 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:59690 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752674Ab2FDUbB (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Jun 2012 16:31:01 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id q54KML7N024549
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Mon, 4 Jun 2012 22:22:21 +0200
-Received: from bauges.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1SbdvT-0000mz-48; Mon, 04 Jun 2012 22:30:55 +0200
-In-Reply-To: <7vhaurt1m6.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Mon, 04 Jun 2012 10:42:41 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.93 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Mon, 04 Jun 2012 22:22:22 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: q54KML7N024549
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1339446143.74912@UnyapINe9lZu54uVosKi6Q
+	id S1754206Ab2FDUhR convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 4 Jun 2012 16:37:17 -0400
+Received: from mail-vb0-f46.google.com ([209.85.212.46]:45784 "EHLO
+	mail-vb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752894Ab2FDUhQ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 4 Jun 2012 16:37:16 -0400
+Received: by vbbff1 with SMTP id ff1so2737262vbb.19
+        for <git@vger.kernel.org>; Mon, 04 Jun 2012 13:37:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :content-type:content-transfer-encoding;
+        bh=dMZUgMQ6wNT5KKCJGSDN/w+FbsEHT+Hrli4zGxIFocA=;
+        b=cEJPfZ5K97nQTC3UtSvrC4s9l3GhEaBKf7MXISWXRjIkPyxmzvn72Xo7exIt3LR+Jl
+         eLRa7ZJCUMbQ2vEen6UNEuqM+bh3/X4DtIl0x3yBgHa4AiRn1cnpysSaZ83qozu3+g/d
+         /0rg7z097DpPT+P1Dn28+/nd+olw/LFxeURoN41H8eERtkGKaR0RmLjjGnojdeBlCyYZ
+         UVV6xaSUn4cxinvYjx3ru1+BJfJWj0iWN1SLC0TQgRrr1dTFVusDMNMRUkluAtyCY1/E
+         ksk/ozuMlwE0v9wULggyQP9Rum5YX/1Tn7tooPVmwsU3/jMGBLNBg4VmGCy5OcFOYgsv
+         UFkw==
+Received: by 10.52.97.41 with SMTP id dx9mr11769691vdb.89.1338842235216; Mon,
+ 04 Jun 2012 13:37:15 -0700 (PDT)
+Received: by 10.52.37.233 with HTTP; Mon, 4 Jun 2012 13:36:55 -0700 (PDT)
+In-Reply-To: <CAA3EhHJCRF05Q0xzzOWupVMjmKPbWAq1KNcU9Mmp8g1iH2B0zA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199183>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199184>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Hi everyone,
 
-> The description of this and exisitng <newbase> look very odd.  The
-> usual way to describe an option that take a parameter in the OPTIONS
-> section is to instead do:
->
-> 	--onto <newbase>::
-> 		Description of what --onto option does and how <newbase>
-> 		is used in what it does.
->
-> 	--exec <cmd>::
-> 		Description of what --exec option does, and how	<cmd> 
->                 is used in what it does.
+I'm attending Hacker School and was interested in contributing to git
+this summer and possibly afterwards. At Hacker School they encourage
+us to contribute to open source software and projects were are
+interested in. I'm in love with git, so naturally I want to contribute
+to you guys. Why git? Because it's an awesome tool that has many well
+thought out features that other source control tools lack like offline
+mode. I'd like to see more people using git, and I'd like to see it
+chosen as the source control tool used for team projects. So I was
+thinking about contributing the following (which are the reasons I've
+heard why people don't use git):
 
-(to the authors: you can add a trivial patch to fix the --onto doc, and
-base your work on it)
+1) Commands are cryptic: I was thinking I could provide a wrapper to
+simplify the commands, for example to undo a local commit, I can
+introduce a "git undo commit", that wraps "reset" and will undo the
+last commit. Or maybe "git rollback" is a better name?
 
-> Why is "pick" special?  Don't you want to run the commands after
-> "edit", "reword", "squash", "fixup"?
+2) git undo command, that will undo the last command (if possible)?
 
-I'd actually say you want to run it after a squash/fixup serie only.
+Other ideas:
 
-If the result of --autosquash is
+3) Just like we have git-svn, maybe a=A0svn-git?
 
-pick foo
-fixup bar
-fixup boz
-pick foobar
+Any help or if you can point me in the right direction, I'd appreciate
+it.=A0I can also start out by fixing some bugs to get into it. I
+couldn't figure out how to see a list of bugs though.
 
-I think you want to rewrite it as
+How does one contribute to your documentation? Would it be submitting
+a patch just like with code?
 
-pick foo
-fixup bar
-fixup boz
-exec make
-pick foobar
-exec make
+Please let me know what you think!
 
-The command is typically used to check that each new commit is OK, but
-we can forget about the intermediate states as we are precisely getting
-rid of them.
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Thanks,
+Leila
