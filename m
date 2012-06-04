@@ -1,101 +1,71 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCHv5 2/4] Let core.excludesfile default to $XDG_CONFIG_HOME/git/ignore
-Date: Mon, 04 Jun 2012 13:43:25 +0200
-Message-ID: <vpqpq9fs3oi.fsf@bauges.imag.fr>
-References: <1338585788-9764-1-git-send-email-Huynh-Khoi-Nguyen.Nguyen@ensimag.imag.fr>
-	<1338754481-27012-1-git-send-email-Huynh-Khoi-Nguyen.Nguyen@ensimag.imag.fr>
-	<1338754481-27012-2-git-send-email-Huynh-Khoi-Nguyen.Nguyen@ensimag.imag.fr>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 1/3] api-credential.txt: show the big picture first
+Date: Mon, 4 Jun 2012 07:51:08 -0400
+Message-ID: <20120604115108.GA27676@sigill.intra.peff.net>
+References: <1338739804-32167-1-git-send-email-Matthieu.Moy@imag.fr>
+ <1338739804-32167-2-git-send-email-Matthieu.Moy@imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org,
-	NGUYEN Huynh Khoi Nguyen <nguyenhu@ensibm.imag.fr>,
-	Valentin DUPERRAY <Valentin.DUPERRAY@ensimag.imag.fr>,
-	Franck JONAS <Franck.JONAS@ensimag.imag.fr>,
-	Thomas NGUY <Thomas.NGUY@ensimag.imag.fr>,
-	Lucien KONG <Lucien.KONG@ensimag.imag.fr>
-To: Huynh Khoi Nguyen NGUYEN 
-	<Huynh-Khoi-Nguyen.Nguyen@ensimag.imag.fr>
-X-From: git-owner@vger.kernel.org Mon Jun 04 13:48:14 2012
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Matthieu Moy <Matthieu.Moy@imag.fr>
+X-From: git-owner@vger.kernel.org Mon Jun 04 13:51:22 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SbVlc-0004Fp-Vy
-	for gcvg-git-2@plane.gmane.org; Mon, 04 Jun 2012 13:48:13 +0200
+	id 1SbVof-0002e5-78
+	for gcvg-git-2@plane.gmane.org; Mon, 04 Jun 2012 13:51:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759414Ab2FDLnj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 Jun 2012 07:43:39 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:43741 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754168Ab2FDLni (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Jun 2012 07:43:38 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id q54BYjUH024869
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Mon, 4 Jun 2012 13:34:46 +0200
-Received: from bauges.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1SbVh0-0006Ju-6a; Mon, 04 Jun 2012 13:43:26 +0200
-In-Reply-To: <1338754481-27012-2-git-send-email-Huynh-Khoi-Nguyen.Nguyen@ensimag.imag.fr>
-	(Huynh Khoi Nguyen NGUYEN's message of "Sun, 3 Jun 2012 22:14:39
-	+0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.93 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Mon, 04 Jun 2012 13:34:46 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: q54BYjUH024869
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1339414490.03304@6MbRoWn2H1rqSo1kI7Fw3Q
+	id S1757787Ab2FDLvR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 Jun 2012 07:51:17 -0400
+Received: from 99-108-225-23.lightspeed.iplsin.sbcglobal.net ([99.108.225.23]:42443
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752516Ab2FDLvQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Jun 2012 07:51:16 -0400
+Received: (qmail 2078 invoked by uid 107); 4 Jun 2012 11:51:18 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 04 Jun 2012 07:51:18 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 04 Jun 2012 07:51:08 -0400
+Content-Disposition: inline
+In-Reply-To: <1338739804-32167-2-git-send-email-Matthieu.Moy@imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199129>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199130>
 
-Huynh Khoi Nguyen NGUYEN <Huynh-Khoi-Nguyen.Nguyen@ensimag.imag.fr>
-writes:
+On Sun, Jun 03, 2012 at 06:10:02PM +0200, Matthieu Moy wrote:
 
-> If core.excludesfile is not defined, its default value will be
-> $XDG_CONFIG_HOME/git/ignore in order to follow XDG specification. If
-> $XDG_CONFIG_HOME is either not set or emty, $HOME/.config will be
-> used.
+> The API documentation targets two kinds of developers: those using the
+> (C) API, and those writing remote-helpers. The document was not clear
+> about which part was useful to which category, and for example, the C API
+> could be mistakenly thought as an API for writting remote helpers.
+> 
+> Based-on-patch-by: Jeff King <peff@peff.net>
+> Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+> ---
+> I took Jeff's explanation, but I insist in having a picture ;-).
 
-It's not clear whether $HOME/.config will be used to replace
-$XDG_CONFIG_HOME or $XDG_CONFIG_HOME/git/ignore. I'd say explicitely
-$HOME/.config/git/ignore to avoid this.
+Thanks. I had meant to follow-up, but it was among the least interesting
+things for me to work on, so I procrastinated. And here I am being
+rewarded for it with somebody else doing the work. :)
 
-> --- a/Documentation/config.txt
-> +++ b/Documentation/config.txt
-> @@ -483,7 +483,9 @@ core.excludesfile::
->  	'.git/info/exclude', git looks into this file for patterns
->  	of files which are not meant to be tracked.  "`~/`" is expanded
->  	to the value of `$HOME` and "`~user/`" to the specified user's
-> -	home directory.  See linkgit:gitignore[5].
-> +	home directory. Its default value is $XDG_CONFIG_HOME/git/ignore.
-> +	If $XDG_CONFIG_HOME is either not set or empty, $HOME/.config will
-> +	be used. See linkgit:gitignore[5].
+Looks good overall to me. Two minor comments:
 
-Likewise.
+> +The git code (typically a remote-helper) will call the C API to obtain
+> +credential data like a login/password couple (credential_fill). The
 
-> --- a/Documentation/gitignore.txt
-> +++ b/Documentation/gitignore.txt
-> @@ -50,7 +50,9 @@ the repository but are specific to one user's workflow) should go into
->  the `$GIT_DIR/info/exclude` file.  Patterns which a user wants git to
->  ignore in all situations (e.g., backup or temporary files generated by
->  the user's editor of choice) generally go into a file specified by
-> -`core.excludesfile` in the user's `~/.gitconfig`.
-> +`core.excludesfile` in the user's `~/.gitconfig`. Its default value is
-> +$XDG_CONFIG_HOME/git/ignore. If $XDG_CONFIG_HOME is either not set or empty,
-> +$HOME/.config will be used.
+I found the word "couple" odd here; I think "pair" would be more
+idiomatic English.
 
-Likewise.
+> +API will itself call a remote helper (e.g. "git credential-cache" or
+> +"git credential-store") that may retrieve credential data from a
+> +store. If the credential helper cannot find the information, the C API
+> +will prompt the user. Then, the caller of the API takes care of
+> +contacting the server, and do the actual authentication.
 
-Otherwise, sounds good.
+s/do/does/
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+-Peff
