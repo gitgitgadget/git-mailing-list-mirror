@@ -1,111 +1,131 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Bugreport on Ubuntu LTS: not ok - 2 Objects creation does not
- break ACLs with restrictive umask
-Date: Mon, 04 Jun 2012 15:19:47 -0700
-Message-ID: <7vy5o2ra7w.fsf@alter.siamese.dyndns.org>
-References: <CALbm-Ea5ZkAGFyB2OETqe7vK7LE+yO0zSaa_+kFMXOhO-nMwMQ@mail.gmail.com>
- <7vhauqsue3.fsf@alter.siamese.dyndns.org>
- <CALbm-EatNCPjFRO4NyGfZuSa72-FXwZcd_7cFe-f_iMOdGL4MQ@mail.gmail.com>
+Subject: Re: [PATCHv7 1/4] wt-status.*: better advices for git status added
+Date: Mon, 04 Jun 2012 16:01:45 -0700
+Message-ID: <7vtxyqr89y.fsf@alter.siamese.dyndns.org>
+References: <1338748217-16440-1-git-send-email-Lucien.Kong@ensimag.imag.fr>
+ <1338830399-31504-1-git-send-email-Lucien.Kong@ensimag.imag.fr>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Matthieu Moy <Matthieu.Moy@imag.fr>
-To: Stefan Beller <stefanbeller@googlemail.com>
-X-From: git-owner@vger.kernel.org Tue Jun 05 00:20:03 2012
+Cc: git@vger.kernel.org,
+	Valentin Duperray <Valentin.Duperray@ensimag.imag.fr>,
+	Franck Jonas <Franck.Jonas@ensimag.imag.fr>,
+	Thomas Nguy <Thomas.Nguy@ensimag.imag.fr>,
+	Huynh Khoi Nguyen Nguyen 
+	<Huynh-Khoi-Nguyen.Nguyen@ensimag.imag.fr>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+To: Kong Lucien <Lucien.Kong@ensimag.imag.fr>
+X-From: git-owner@vger.kernel.org Tue Jun 05 01:02:01 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Sbfcw-0001KC-QT
-	for gcvg-git-2@plane.gmane.org; Tue, 05 Jun 2012 00:19:55 +0200
+	id 1SbgHb-00028S-TE
+	for gcvg-git-2@plane.gmane.org; Tue, 05 Jun 2012 01:01:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761059Ab2FDWTu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 Jun 2012 18:19:50 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:54461 "EHLO
+	id S1761041Ab2FDXBv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 Jun 2012 19:01:51 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:44840 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754512Ab2FDWTt (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Jun 2012 18:19:49 -0400
+	id S1757444Ab2FDXBu (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Jun 2012 19:01:50 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6FA378C38;
-	Mon,  4 Jun 2012 18:19:49 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id F25DB8A11;
+	Mon,  4 Jun 2012 19:01:49 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=ErrlYYJAUyb6Jq1TKGUua270lH4=; b=b6sYNl
-	CrcGN6fYzscZ+0S3azOoQ8Dv94APF5LRysCNzbyS+Own41DCAtjtW6y8hftIZT52
-	fq0V1kc6a/+EZIVabzklMp4KjlScszDHggezwlEdG+V+uE1tNj2GgISx/IWDbeDa
-	Ra8hkT+iW+nJv1YjNU9l9A2Hzn+Bjj80uuMBg=
+	:content-type; s=sasl; bh=ZJE1ZckcbB5IO3C0AlHP1N/S9qQ=; b=eyOxeR
+	qFTowU+D8z+TrHlQog18zd/7VfIsGrCOawXizaX5668I8d6D6xzC0OuURF/wYiuR
+	v5TULX5j/Vfs1GaaLA+2GIHOSZXxDUdRjjd5dJcln/gwtviNYN7T6fRwltm59SVp
+	qkR5VsqNHV9TuVikl/OVBIKrqof0Q5Wp7YZ+U=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=VSVJOv5m8g3TpMRaDdxyiWilhakl/paN
-	zpectYGUyuh2xlFJ99B6JR/wv58Yf4KF64dBKW24A1BKUOIs1U+RZMGf8M1H7XqK
-	wyLC3PCtZA2KCycZ/SlnrG7HG8I1rbzOKnx0xQ383q74Y5HM0axssVTdCNOkFopJ
-	RbN9wMlFu4s=
+	:content-type; q=dns; s=sasl; b=pea8A0QBw8Tla6iy9QRgnQ56IOvwdPVO
+	9QidjKZiRIYaqxW3SZ8bMnHeACWSardT8GBzJMfknlpy4QpBNJgLCKnUprOCW1xJ
+	fSr1L1ns5oBxX6bAteBPvUPxTatkMUttUur4kUcF0h923EpoczhE6EQiAdCKwMEB
+	HRxbVVQQ0eM=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 666CF8C37;
-	Mon,  4 Jun 2012 18:19:49 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E80AB8A10;
+	Mon,  4 Jun 2012 19:01:49 -0400 (EDT)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id EC8B78C35; Mon,  4 Jun 2012
- 18:19:48 -0400 (EDT)
-In-Reply-To: <CALbm-EatNCPjFRO4NyGfZuSa72-FXwZcd_7cFe-f_iMOdGL4MQ@mail.gmail.com> (Stefan
- Beller's message of "Mon, 4 Jun 2012 22:48:30 +0200")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id AB14E8A0F; Mon,  4 Jun 2012
+ 19:01:46 -0400 (EDT)
+In-Reply-To: <1338830399-31504-1-git-send-email-Lucien.Kong@ensimag.imag.fr>
+ (Kong Lucien's message of "Mon, 4 Jun 2012 19:19:56 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 65D65AEE-AE93-11E1-A15C-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 4288DDCC-AE99-11E1-B21D-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199193>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199194>
 
-Stefan Beller <stefanbeller@googlemail.com> writes:
+Kong Lucien <Lucien.Kong@ensimag.imag.fr> writes:
 
-> I tried debugging into it:
-> In git/t/t1304-default-acl.sh there is:
-> check_perms_and_acl () {
->     test -r "$1" &&
->     getfacl "$1" > actual &&
->     grep -q "user:root:rwx" actual &&
->     grep -q "user:${LOGNAME}:rwx" actual &&
->     egrep "mask::?r--" actual > /dev/null 2>&1 &&
->     grep -q "group::---" actual || false
-> }
->
-> but when I do all the commands as in the test2:
-> test_expect_success SETFACL 'Objects creation does not break ACLs with
-> restrictive umask' '
->     # SHA1 for empty blob
->     check_perms_and_acl .git/objects/e6/9de29bb2d1d6434b8b29ae775ad8c2e48c5391
-> '
-> Now I run the second line in check_perms_and_acl ()  with
-> .git/objects/e6/9de29bb2d1d6434b8b29ae775ad8c2e48c5391
-> there is
->
-> getfacl .git/objects/e6/9de29bb2d1d6434b8b29ae775ad8c2e48c5391
-> # file: .git/objects/e6/9de29bb2d1d6434b8b29ae775ad8c2e48c5391
-> # owner: sb
-> # group: sb
-> user::r--
-> user:root:rwx			#effective:---
-> user:sb:rwx			#effective:---
-> group::---
-> mask::---
-> other::---
->
-> This command seem to fail 'egrep "mask::?r--" actual' as there is
-> mask::---
-> but expected is
-> mask::r--
->
-> That's my understanding of the test case so far.
+> The case of conflicts during a rebase -i is now taken care of. The form
+> of the tests has also been modified.
 
-Hmph.  Running the test manually does not seem to fail for me and
-gives the "r--" mask.
+> diff --git a/t/t7060-wtstatus.sh b/t/t7060-wtstatus.sh
+> index b8cb490..4326df7 100755
+> --- a/t/t7060-wtstatus.sh
+> +++ b/t/t7060-wtstatus.sh
+> @@ -30,6 +30,9 @@ test_expect_success 'Report new path with conflict' '
+>  
+>  cat >expect <<EOF
+>  # On branch side
+> +# You have unmerged paths.
+> +#   (fix conflicts and run "git commit")
+> +#
+>  # Unmerged paths:
+>  #   (use "git add/rm <file>..." as appropriate to mark resolution)
+>  #
+> @@ -118,4 +121,65 @@ test_expect_success 'git diff-index --cached -C shows 2 copies + 1 unmerged' '
+>  	test_cmp expected actual
+>  '
 
-I am lost.  Matthieu, you introduced this as a failing test with
-7aba618 (Add a testcase for ACL with restrictive umask.,
-2010-02-22), as part of the series leading to 5256b00 (Use
-git_mkstemp_mode instead of plain mkstemp to create object files,
-2010-02-22).  Any ideas (other than "Your filesystem is broken",
-that is)?  As far as I can tell, with 'mask::---', these specific
-users who are given permissions to read from the objects wouldn't be
-able to read from them, so...
+These probably would want to become test_i18ncmp.
+
+Other than that, modulo message details, the code structure is very
+pleasant to follow and this patch looks ready to be tested.
+
+Good job.
+
+> diff --git a/wt-status.c b/wt-status.c
+> index dd6d8c4..2b19fe3 100644
+> --- a/wt-status.c
+> +++ b/wt-status.c
+> @@ -728,6 +729,167 @@ static void wt_status_print_tracking(struct wt_status *s)
+> ...
+> +static void show_am_in_progress(struct wt_status *s,
+> +				struct wt_status_state *state,
+> +				const char *color)
+> +{
+> +	status_printf_ln(s, color,
+> +		_("You are in the middle of an am session."));
+> +	if (state->am_empty_patch)
+> +		status_printf_ln(s, color,
+> +			_("The current patch is empty."));
+> +	if (advice_status_hints) {
+> +		status_printf_ln(s, color,
+> +			_("  (use \"git am --abort\" to restore the original branch)"));
+> +		status_printf_ln(s, color,
+> +			_("  (use \"git am --skip\" to skip this patch)"));
+> +		if (!state->am_empty_patch)
+> +			status_printf_ln(s, color,
+> +				_("  (when you have fixed this problem run \"git am --resolved\")"));
+> +	}
+> +	wt_status_print_trailer(s);
+> +}
+
+Perhaps s/fixed this problem/resolved conflicts/ or a similar
+rephrasing is a good idea.
+
+Conflicts from mergy operations are perfectly normal parts of a
+regular workday, and it is not a "problem" that needs to be "fixed".
+Both words scare the user by implying something is broken (or worse,
+"git broke something") in the contents of user's repository.
+
+There are existing messages that use the verb "fix" on "conflicts",
+only because it is shorter than "resolve", but this one that calls a
+conflict a "problem" goes too far in the wrong direction.
