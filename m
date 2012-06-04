@@ -1,114 +1,145 @@
-From: Stefan Beller <stefanbeller@googlemail.com>
-Subject: Re: Bugreport on Ubuntu LTS: not ok - 2 Objects creation does not
- break ACLs with restrictive umask
-Date: Mon, 4 Jun 2012 22:49:36 +0200
-Message-ID: <CALbm-EYZrSU2toOOLTKTQsyT9WCejnNMGMtMYrc+Q25kTCdHaQ@mail.gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH/RFC] file import functionality for git-remote-mw
+Date: Mon, 04 Jun 2012 22:54:11 +0200
+Message-ID: <vpqd35en6h8.fsf@bauges.imag.fr>
+References: <1338837351-8996-1-git-send-email-Pavel.Volek@ensimag.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jun 04 22:49:54 2012
+Content-Type: text/plain
+Cc: git@vger.kernel.org, Volek Pavel <me@pavelvolek.cz>,
+	NGUYEN Kim Thuat <Kim-Thuat.Nguyen@ensimag.imag.fr>,
+	ROUCHER IGLESIAS Javier <roucherj@ensimag.imag.fr>
+To: Pavel Volek <Pavel.Volek@ensimag.imag.fr>
+X-From: git-owner@vger.kernel.org Mon Jun 04 22:54:24 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SbeDd-0004yL-99
-	for gcvg-git-2@plane.gmane.org; Mon, 04 Jun 2012 22:49:41 +0200
+	id 1SbeIA-0007jo-Kd
+	for gcvg-git-2@plane.gmane.org; Mon, 04 Jun 2012 22:54:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754762Ab2FDUti (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 Jun 2012 16:49:38 -0400
-Received: from mail-gg0-f174.google.com ([209.85.161.174]:46032 "EHLO
-	mail-gg0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755243Ab2FDUth (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Jun 2012 16:49:37 -0400
-Received: by gglu4 with SMTP id u4so3426975ggl.19
-        for <git@vger.kernel.org>; Mon, 04 Jun 2012 13:49:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=JITJcU57zt7yiGxUmkb+zEKYj3eOLhx/IMymuQ6aFR4=;
-        b=axe1bzXjUlrkcS/p/oY/vZpWb6dPCyQURsp4geYzqDYYul8RhlgtMAJzjfuWINDoUW
-         U3qFUa7XoziAynOgZR0Hc8+u2H865vd5LOGuH446lOmglrGb4dWAhiy6Tt2vhb4veIfz
-         9SG6Sr6El8K2yZcH/5LiRJ8H1jv/qZ/MEcVUHMd7/PSDRmitL7swNeWEjpQsSisvfAAS
-         Twc7VMXqIs7/rs3rBd4Kw/sa2ei8r5ud9i8eG5L6obVLMJhXrXvICHxuWZx7JXNZSMEC
-         2Oerw5tTITjUyp1WXr0Aj5KxPUE9z3Lht/4mc2S3JmH3ZRukEZm4xJ6zsAmKwIhnKbVZ
-         lDIg==
-Received: by 10.236.73.136 with SMTP id v8mr8373530yhd.103.1338842976679; Mon,
- 04 Jun 2012 13:49:36 -0700 (PDT)
-Received: by 10.236.175.226 with HTTP; Mon, 4 Jun 2012 13:49:36 -0700 (PDT)
+	id S1754474Ab2FDUyS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 Jun 2012 16:54:18 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:49184 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754093Ab2FDUyR (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Jun 2012 16:54:17 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id q54KjcdW026991
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Mon, 4 Jun 2012 22:45:38 +0200
+Received: from bauges.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1SbeI0-0000y2-7U; Mon, 04 Jun 2012 22:54:12 +0200
+In-Reply-To: <1338837351-8996-1-git-send-email-Pavel.Volek@ensimag.imag.fr>
+	(Pavel Volek's message of "Mon, 4 Jun 2012 21:15:51 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.93 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Mon, 04 Jun 2012 22:45:39 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: q54KjcdW026991
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1339447541.80118@6TpMJqAM8l4UQIP1/6K5fQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199186>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199187>
 
-Hi,
+Pavel Volek <Pavel.Volek@ensimag.imag.fr> writes:
 
-I tried debugging into it:
-In git/t/t1304-default-acl.sh there is:
-check_perms_and_acl () {
-   test -r "$1" &&
-   getfacl "$1" > actual &&
-   grep -q "user:root:rwx" actual &&
-   grep -q "user:${LOGNAME}:rwx" actual &&
-   egrep "mask::?r--" actual > /dev/null 2>&1 &&
-   grep -q "group::---" actual || false
+> +sub get_mw_media_pages {
+> +	mw_connect_maybe();
+> +
+> +	my %pages; # hash on page titles to avoid duplicates
+> +
+> +	# get all pages for mediafiles (they are in different namespace)
+> +	# only one namespace can be queried at the same moment
+> +	my $mw_pages = $mediawiki->list({
+> +		action => 'query',
+> +		list => 'allpages',
+> +		apnamespace => get_mw_namespace_id("File"),
+> +		aplimit => 500,
+> +	});
+
+This seems to be done unconditionally. Is this reasonable if the user
+has explicitely set remote.origin.pages or remote.origin.categories?
+
+Actually, shouldn't this be added to get_mw_pages, next to the code
+dealing with these two variables? Perhaps the function should be
+split into multiple functions, along the lines of:
+
+sub get_mw_pages {
+	mw_connect_maybe();
+
+        my %pages;
+	if (@tracked_pages) {
+		$user_defined = 1;
+		get_mw_tracked_pages(\%pages);
+	}
+	if (@tracked_categories) {
+		$user_defined = 1;
+		get_mw_tracked_categories(\%pages);
+	}
+	if (!$user_defined) {
+		get_mw_all_pages(\%pages);
+	}
+	return values(%pages);
 }
 
-but when I do all the commands as in the test2:
-test_expect_success SETFACL 'Objects creation does not break ACLs with
-restrictive umask' '
-   # SHA1 for empty blob
-   check_perms_and_acl .git/objects/e6/9de29bb2d1d6434b8b29ae775ad8c2e48c5391
-'
-Now I run the second line in check_perms_and_acl ()  with
-.git/objects/e6/9de29bb2d1d6434b8b29ae775ad8c2e48c5391
-there is
+And your code would need to take these 3 options into account.
 
-getfacl .git/objects/e6/9de29bb2d1d6434b8b29ae775ad8c2e48c5391
-# file: .git/objects/e6/9de29bb2d1d6434b8b29ae775ad8c2e48c5391
-# owner: sb
-# group: sb
-user::r--
-user:root:rwx                   #effective:---
-user:sb:rwx                     #effective:---
-group::---
-mask::---
-other::---
+> +sub get_all_mw_pages() {
+> +	my @pages = get_mw_pages();
+> +	my @media_pages = get_mw_media_pages();
+> +	push(@pages,@media_pages);
 
-This command seem to fail 'egrep "mask::?r--" actual' as there is
-mask::---
-but expected is
-mask::r--
+Space after comma.
 
-That's my understanding of the test case so far.
+> +# Returns MediaWiki id for a canonical namespace name. Ex.: "File", "Project".
+> +sub get_mw_namespace_id() {
+> +	mw_connect_maybe();
+> +	my $name = shift;
+> +	my $query = {
+> +		action => 'query',
+> +		meta => 'siteinfo',
+> +		siprop => 'namespaces',
+> +	};
+> +	my $result = $mediawiki->api($query);
 
+It may make sense to cache the result, to avoid querying the API
+multiple times if you call the function more than once. We can even
+cache this in a configuration variable as the namespace identifiers are
+unlikely to change for a given wiki.
 
-2012/6/4 Junio C Hamano <gitster@pobox.com>:
+> +	if (!defined($file)){
 
-> Stefan Beller <stefanbeller@googlemail.com> writes:
->
->> so I just pulled the new git v1.7.10.4 and tried to test it with
->>> make test
->> This yields this output:
->> stderr http://pastebin.com/V8yuZFfi
->> stdout http://dl.dropbox.com/u/6520164/git/maketest.txt
->>
->> In Test 1304 there is
->> not ok - 2 Objects creation does not break ACLs with restrictive umask
->>
->> I am running Ubuntu 12.04 with Linux sb 3.2.0-25-generic #40-Ubuntu
->> SMP Wed May 23 20:30:51 UTC 2012 x86_64 x86_64 x86_64 GNU/Linux
->
-> Interesting. I've seen t1304 break from time to time.
->
-> I set the DEFAULT_TEST_TARGET to "prove", and when the test suite
-> finishes with this failure, I noticed t3600-rm and some other test I
-> do not recall also failed, with two extra files (actual and expect)
-> at the root of the TEST_OUTPUT_DIRECTORY (set to /dev/shm/testpen
-> via "--root=/dev/shm/testpen" option).
->
-> I the breakage does not happen reproducibly with any pattern other
-> than the above (I do not know if it never happens when test target
-> is set to "test", for example), so haven't looked (and will not
-> look) into it myself further than that.
+Space between ) and { please.
+
+> +		my @prefix = split (":",$page_title);
+
+Space after , please.
+
+> +		if ($prefix[0] eq "File" || $prefix[0] eq "Image") {
+> +			# check if there is a corresponding mediafile with the same timestamp => it is page
+> +			# for new verion of the file (not only for new version of the description of the file)
+
+> +			# => download corresponding file version
+
+Don't make long lines like this. In general, we avoid lines longer than
+80 characters (or even a bit less), these are >100 and the following are
+worse.
+
+Long lines are usually an indication that you did not structure your
+code into functions, and this diagnosis seems to apply here.
+
+> +			my ($imageid,$imageinfo) = each ( %{$result->{query}->{pages}} );
+
+Space after ",".
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
