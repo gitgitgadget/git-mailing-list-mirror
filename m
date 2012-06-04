@@ -1,116 +1,179 @@
-From: Kevin Brannen <kbrannen@corp.hrsmart.com>
-Subject: bug in merge
-Date: Mon, 4 Jun 2012 11:32:06 -0500
-Message-ID: <4FCCE306.9020600@corp.hrsmart.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH/RFC] improve no-op push output
+Date: Mon, 04 Jun 2012 09:35:30 -0700
+Message-ID: <7vzk8jt4q5.fsf@alter.siamese.dyndns.org>
+References: <20120530120804.GA3501@sigill.intra.peff.net>
+ <7vr4u1zhcz.fsf@alter.siamese.dyndns.org>
+ <20120604125126.GD27676@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="ISO-8859-1"; format=flowed
-Content-Transfer-Encoding: 7bit
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Jun 04 18:32:22 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Jun 04 18:35:39 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SbaCZ-0006Qc-HI
-	for gcvg-git-2@plane.gmane.org; Mon, 04 Jun 2012 18:32:19 +0200
+	id 1SbaFm-0005op-LQ
+	for gcvg-git-2@plane.gmane.org; Mon, 04 Jun 2012 18:35:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760928Ab2FDQcP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 Jun 2012 12:32:15 -0400
-Received: from ch1ehsobe002.messaging.microsoft.com ([216.32.181.182]:5259
-	"EHLO ch1outboundpool.messaging.microsoft.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754055Ab2FDQcO (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 4 Jun 2012 12:32:14 -0400
-Received: from mail120-ch1-R.bigfish.com (10.43.68.239) by
- CH1EHSOBE018.bigfish.com (10.43.70.68) with Microsoft SMTP Server id
- 14.1.225.23; Mon, 4 Jun 2012 16:31:34 +0000
-Received: from mail120-ch1 (localhost [127.0.0.1])	by
- mail120-ch1-R.bigfish.com (Postfix) with ESMTP id 0693C1E02A6	for
- <git@vger.kernel.org>; Mon,  4 Jun 2012 16:31:34 +0000 (UTC)
-X-Forefront-Antispam-Report: CIP:157.56.234.117;KIP:(null);UIP:(null);IPV:NLI;H:SN2PRD0510HT002.namprd05.prod.outlook.com;RD:none;EFVD:NLI
-X-SpamScore: -1
-X-BigFish: PS-1(zz1418Izz1202hzzz2fh2a8h668h839hd25hf0ah)
-Received-SPF: pass (mail120-ch1: domain of corp.hrsmart.com designates 157.56.234.117 as permitted sender) client-ip=157.56.234.117; envelope-from=kbrannen@corp.hrsmart.com; helo=SN2PRD0510HT002.namprd05.prod.outlook.com ;.outlook.com ;
-Received: from mail120-ch1 (localhost.localdomain [127.0.0.1]) by mail120-ch1
- (MessageSwitch) id 1338827492862061_31081; Mon,  4 Jun 2012 16:31:32 +0000
- (UTC)
-Received: from CH1EHSMHS016.bigfish.com (snatpool1.int.messaging.microsoft.com
- [10.43.68.248])	by mail120-ch1.bigfish.com (Postfix) with ESMTP id
- C7C99320045	for <git@vger.kernel.org>; Mon,  4 Jun 2012 16:31:32 +0000 (UTC)
-Received: from SN2PRD0510HT002.namprd05.prod.outlook.com (157.56.234.117) by
- CH1EHSMHS016.bigfish.com (10.43.70.16) with Microsoft SMTP Server (TLS) id
- 14.1.225.23; Mon, 4 Jun 2012 16:31:30 +0000
-Received: from [192.168.168.42] (65.65.116.130) by pod51010.outlook.com
- (10.255.116.37) with Microsoft SMTP Server (TLS) id 14.16.164.5; Mon, 4 Jun
- 2012 16:32:00 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:11.0) Gecko/20120329 Thunderbird/11.0.1
-X-Originating-IP: [65.65.116.130]
-X-OriginatorOrg: corp.hrsmart.com
+	id S1760939Ab2FDQfe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 Jun 2012 12:35:34 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48144 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755294Ab2FDQfd (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Jun 2012 12:35:33 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A2B81815C;
+	Mon,  4 Jun 2012 12:35:32 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=UUoaqxqDcFgE3YyerZeIBWSAgnQ=; b=G/Zy43
+	2AxSpnY3efonaQe3YtFxtwApAR1t0f2yvdSdmEJHFEZ53/aS/qylLrBgeGrDeeSy
+	RwgZBYvewg5/zGlLmCofyOKwwC5UBOKjZVFTB6U+dt56jzdDBaxccxogvyRS7YWC
+	KKxGnx9E0MhOWJ1pM+nCUT4vXX5dhmeFBhrDQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=dyhUY9/vOZ1Gw17mL3unUXeViy8s1ho8
+	3ON/F9iHCpRs1eDM7G0CURYiyac+V0UJaJZpWXY5jG6AFCnPSwuCy7gdNL/lUgVr
+	CQEdazaLGBrfE6ObtCL3bp9P/poV+ske46pv/TRy8tMR06+Xi77VgY7KBDRF57cH
+	vm3JMCAUURY=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 98FF7815B;
+	Mon,  4 Jun 2012 12:35:32 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E7B8E8159; Mon,  4 Jun 2012
+ 12:35:31 -0400 (EDT)
+In-Reply-To: <20120604125126.GD27676@sigill.intra.peff.net> (Jeff King's
+ message of "Mon, 4 Jun 2012 08:51:26 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 4D4B36D2-AE63-11E1-8B4B-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199144>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199145>
 
-I believe I've just found a bug in "merge", specifically in the 
-"recursive" strategy. (Or really, here's another example of and 
-hopefully more info on a known bug.) Oh, this is with 1.7.2.3, the 
-latest I'm able to use on this machine.
+Jeff King <peff@peff.net> writes:
 
-Background:
-Over time, code as been developed and commited to our main "dev" branch. 
-So the present HEAD was formed by something like 30 commits since the 
-last merge. It is not corrupt in any way that I can tell.
+> So I think we would really need to break down each potentially confusing
+> case, and come up with a solution for each. I think we can divide the
+> push configuration into three cases: matching, single (which includes
+> "upstream", "simple", and "current"), or custom refspecs. Let's ignore
+> the final one for now. It's relatively rare, and probably the most
+> common use is mirroring (in which case we know we pushed everything,
+> anyway). And then we have a few potential confusing situations:
 
-We also have a "production" branch, which holds what's approved for 
-production. From time to time, we merge "dev" into "production". There 
-is no corruption, no unchecked out files, no unmerged files, and not 
-even untracked files in the work area. It was totally clean.
+Does "single" include "upstream", "simple" and "current", or does it
+consists of these three and nothing else? I think it is the latter,
+and I mean the latter in the remainder of my response. Specifically,
+I would exclude the case where you have remote.$there.push that only
+pushes one ref from "single".
 
-Bug:
-When I tried to merge dev into production with "git checkout production; 
-git merge dev", it would fail:
+>   1. We are on a detached HEAD; the user expects their current work to
+>      be pushed, but it is not. With the "single" cases, we should
+>      already error out.
 
-archive/cgi-bin/admin/addcompany.cgi: unmerged 
-(2ea980aa213c6a0bfb0a7e33c8d3fce3af6be91e)
-archive/cgi-bin/admin/admineditprofile.cgi: unmerged 
-(297a3a7e3229b085061668abd8d5122b48d8d53a)
-fatal: git write-tree failed to write a tree
+All the "single" cases should error out when run on a detached HEAD
+(otherwise they should be fixed).
 
-Research:
-I had to "git reset --hard" to reset production and try again. After 
-googling for this and a few tests, I found that "git merge -s resolve 
-dev" was able to successfully merge the code. In looking at the output, 
-I think it gives me a clue as to what was failing with the recursive 
-strategy.
+I have a feeling that it is not the best approach to classify the
+"detached HEAD" as a special failure mode for "single".  If you view
+"single" as "push the curent branch out, but the name of the
+destination ref may be different depending on the mode", the
+detached HEAD case is just a natural extension of the error case
+"nothing is specified to be updated from this state, hence we error
+out".
 
-Trying really trivial in-index merge...
-error: Merge requires file-level merging
-Nope.
-Trying simple merge.
-Simple merge failed, trying Automatic merge.
-Adding archive/cgi-bin/admin/addcompany.cgi
-Adding archive/cgi-bin/admin/admineditprofile.cgi
-Merge made by resolve.
-  .gitignore                                         |    4 +-
-  archive/cgi-bin/{admin => admin/addcompany.cgi}    |    0
-...
-  rename archive/cgi-bin/{admin => admin/addcompany.cgi} (100%)
-  rename {cgi-bin => archive/cgi-bin}/admin/admineditprofile.cgi (100%)
+>      For the "matching" case, we don't want to error
+>      out, but it might be worth printing a warning to say "by the way,
+>      your HEAD is detached", whether everything is up-to-date or not.
 
-Knowing what happened to the files, I think that I ended up with a 
-change tree that recursive just couldn't handle. To the best of my 
-knowledge, the changes that happened over time and over multiple 
-commits  on dev went something like (each of these being in a different 
-commit):
+Both "matching" and "specific remote.$there.push" cases are "it does
+not matter what branch happens to be checked out; I am giving you
+the set of refs I want to push out by default", so even though you
+said you ignore the specific refspec case, they fall into the same
+category here.
 
-git mv fileA dirX
-git mv dirA dirX/fileA
-git mv fileB dirX/fileB
+I find the above an unnecessarily roundabout way to help people who
+expect the current branch to always be involved in an unnamed push
+to say "your HEAD is detached"; it requires them to be intelligent
+enough to connect "HEAD detached", "no current branch" and "hence
+nothing pushed".  A more direct way "detached HEAD not pushed" may
+be better.
 
-So I think the problem is just too many renames/moves of the same object 
-and when "recursive" descends the tree, it just can't handle that 
-correctly -- or that's my guess. :)
+>   2. We are on a branch; the user expects it to be pushed, but it is
+>      not. This can't happen with the "single" cases, since they always
+>      push HEAD (or fail). For matching, again, a solution might be "by
+>      the way, your HEAD was not pushed", with the same caveats as above.
 
-HTH,
-Kevin
+Yes, "by the way, your current branch was not pushed" is much better
+than "HEAD is detached" you wrote in 1.
+
+>   3. We are on a branch; the user expects some other branch X to be
+>      pushed, but it is not.
+>      ... So I think the right solution is to just
+>      be more specific; say "X is up-to-date", or just show the
+>      single-line status table.
+
+OK.
+
+>      For the "matching" case, it's much harder.
+>
+>      If we show them the whole description of what happened and hoping
+>      they notice that their branch is not included.  When something
+>      actually gets pushed, we show the status table already, and they
+>      may or may not look through it to find the branch in question
+>      (indeed, they may not even be trying to push X at the time, but
+>      rather may later say "Hey, I thought I pushed everything; why is X
+>      not here?).
+
+We can cover both the "here are the list" and the "everything
+up-to-date" cases with "(current branch not pushed)" (or "detached
+HEAD not pushed)".
+
+>   1. For a single-ref push, always mention the ref name, even if it is
+>      up-to-date. My previous patch showed the status table, but we could
+>      also just tweak the "Everything up-to-date" to say "Ref X is
+>      up-to-date".
+
+I think this is a sane thing to do in any case.
+
+>   2. Introduce a "push.warnMatch" config option, which can be set to one
+>      of:
+>
+>        - "none"; the current behavior
+>
+>        - "branches"; mention all unmatched refs which are in refs/heads
+
+Doesn't this assume that among many existing branches, what are not
+pushed are minority (hence it is easier to spot the presense of the
+interesting branch in the output, than to spot the absense of the
+list of updated ones)? I am not convinced if that is the case, and I
+doubt it would be very useful.
+
+An alternative might be to show the usual list of refs with [up to date]
+marks even when we currently say "Everything up-to-date", like "push -v"
+does.  I.e. instead of:
+
+        $ git push ko
+        Everything up-to-date
+
+we can say
+
+	$ git push ko
+	To: kernel.org:/pub/scm/git/git.git
+        = [up to date]      maint -> maint
+        = [up to date]      master -> master
+        = [up to date]      next -> next
+        = [up to date]      pu -> pu
+
+omitting "Pushing to $where" at the beginning and "Everything up-to-date"
+at the end of the "push -v" output.
+
+>        - "head"; mention the current HEAD if it is unmatched
+
+This might be a sane thing to do unconditionally, especially if it
+can be done without taking too much screen real estate.
