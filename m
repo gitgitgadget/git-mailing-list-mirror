@@ -1,82 +1,99 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH 2/3] api-credentials.txt: mention credential.helper explicitly
-Date: Mon, 04 Jun 2012 19:51:33 +0200
-Message-ID: <vpqehpvrmmy.fsf@bauges.imag.fr>
-References: <1338739804-32167-1-git-send-email-Matthieu.Moy@imag.fr>
-	<1338739804-32167-3-git-send-email-Matthieu.Moy@imag.fr>
-	<20120604115442.GB27676@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Help: Found odd git bug
+Date: Mon, 04 Jun 2012 10:52:50 -0700
+Message-ID: <7vd35ft159.fsf@alter.siamese.dyndns.org>
+References: <4FCCE433.7090007@xiplink.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Jun 04 19:51:53 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Marc Branchaud <marcnarc@xiplink.com>
+X-From: git-owner@vger.kernel.org Mon Jun 04 19:53:03 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SbbRV-0004Y3-2d
-	for gcvg-git-2@plane.gmane.org; Mon, 04 Jun 2012 19:51:49 +0200
+	id 1SbbSb-0006uM-Ax
+	for gcvg-git-2@plane.gmane.org; Mon, 04 Jun 2012 19:52:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754824Ab2FDRvp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 Jun 2012 13:51:45 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:45595 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754478Ab2FDRvo (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Jun 2012 13:51:44 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id q54Hh1gJ005079
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Mon, 4 Jun 2012 19:43:01 +0200
-Received: from bauges.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1SbbRG-0007Ct-4W; Mon, 04 Jun 2012 19:51:34 +0200
-In-Reply-To: <20120604115442.GB27676@sigill.intra.peff.net> (Jeff King's
-	message of "Mon, 4 Jun 2012 07:54:42 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.93 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Mon, 04 Jun 2012 19:43:01 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: q54Hh1gJ005079
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1339436582.26161@Llc2wYpxlDl+ZSeiOPJ1WA
+	id S1754885Ab2FDRwx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 Jun 2012 13:52:53 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50366 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754478Ab2FDRww (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Jun 2012 13:52:52 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6072E8E43;
+	Mon,  4 Jun 2012 13:52:52 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=FXYuwwYnglZoHwGZYMRcdBB5pgw=; b=reZJEf
+	AxoFfYqVPOcqNkE0XSZNFlDaPHFSfYDfNGVPxQTSxE+ZXVIM937kQSjRw6XxzBYv
+	Sm1jHOmQaz7ROkjpNWtie3aNfeP+VGbLnF0kGjyRpWpFvZPYCJX0HqKO/b2fIezV
+	3e2fxOP7WwkOLgjBBmDdJjgz++IhlxAXXhFY4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=U9wU/UX5jN6Lrs802LxuKHy8LXCTvzE7
+	jQ5Rwsg7cruqClhDx38AeZYCyUaXgdTIf9dY1VLS71o6i1gYrVR8ivKKDeat2DPQ
+	L2/UyaNYq1N/68yDC5Gyy/JglFyUMGgGR2aR3KW0QjCzFml5YGhEqkgf6z66YxWt
+	XzGI+sW50u0=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 571E88E42;
+	Mon,  4 Jun 2012 13:52:52 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id DE6A48E41; Mon,  4 Jun 2012
+ 13:52:51 -0400 (EDT)
+In-Reply-To: <4FCCE433.7090007@xiplink.com> (Marc Branchaud's message of
+ "Mon, 04 Jun 2012 12:37:07 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 1AED23DE-AE6E-11E1-9621-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199162>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199163>
 
-Jeff King <peff@peff.net> writes:
+Marc Branchaud <marcnarc@xiplink.com> writes:
 
-> On Sun, Jun 03, 2012 at 06:10:03PM +0200, Matthieu Moy wrote:
+> A commit claims to add a line to a file.  Indeed, "git diff" shows the line
+> being added.
 >
->> --- a/Documentation/technical/api-credentials.txt
->> +++ b/Documentation/technical/api-credentials.txt
->> @@ -179,7 +179,8 @@ credentials from and to long-term storage (where "long-term" is simply
->>  longer than a single git process; e.g., credentials may be stored
->>  in-memory for a few minutes, or indefinitely on disk).
->>  
->> -Each helper is specified by a single string. The string is transformed
->> +Each helper is specified by a single string in the configuration
->> +variable credential.helper. The string is transformed
->>  by git into a command to be executed using these rules:
+> However, when I check out the commit, the file contains a *different* line,
+> with slightly modified contents.
 >
-> They may be in other variables, too (like credential.*.helper). I don't
-> know if it is worth making that distinction.
+> What's more, "git show SHA:path/to/file" shows that the blob contains the
+> wrong line.
 >
-> Originally, helpers could also use these specification strings to chain
-> to each other, but in the current implementation, there is no chaining
-> (it was more important when prompting wasn't automatic, so storage
-> helpers would chain to prompting helpers). So I think we can disregard
-> that for now, and they really do just appear in config.
+> I found this using git 1.7.9, but 1.7.11.rc1 also shows the problem.
+>
+> How can I narrow down what's causing this problem?
 
-I'd say it is not worth making the distinction, but we may just say
-"in the configuration variable credential.helper (and others, see
-linkgit:../git-config.txt[1])" to be complete.
+Without any information useful to diagnose, I would say it probably
+is not a bug but is an operator error when either of the "git diff"
+or "check out the commit" steps were done.  Even if you cannot share
+the repository, at least a _complete_ command line with arguments is
+needed.
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+For example, we can _reproduce_ your symptom description like this.
+
+	$ echo this line was added >file
+        $ git add file
+        $ git commit -m 'added a line'
+        
+	$ echo another addition >file
+        $ git diff
+	 some context
+        +another addition
+
+	Ok, the "git diff" shows the line "another addition" being
+	added.  Let's check:
+
+	$ git show HEAD:file
+
+	Huh? The output does not contain "another addition". What is
+	going on?
+
+What is going on in the above is an operator error, thinking the
+"git diff" gave the change introduced by the commit, while it asked
+the change to the working tree _since_ the commit.
