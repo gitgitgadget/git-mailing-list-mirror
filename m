@@ -1,9 +1,11 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCHv7 1/4] wt-status.*: better advices for git status added
-Date: Mon, 04 Jun 2012 16:01:45 -0700
-Message-ID: <7vtxyqr89y.fsf@alter.siamese.dyndns.org>
+Subject: Re: [PATCHv7 2/4] t7512-status-help.sh: better advices for git
+ status
+Date: Mon, 04 Jun 2012 16:12:07 -0700
+Message-ID: <7vpq9er7so.fsf@alter.siamese.dyndns.org>
 References: <1338748217-16440-1-git-send-email-Lucien.Kong@ensimag.imag.fr>
  <1338830399-31504-1-git-send-email-Lucien.Kong@ensimag.imag.fr>
+ <1338830399-31504-2-git-send-email-Lucien.Kong@ensimag.imag.fr>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org,
@@ -14,118 +16,151 @@ Cc: git@vger.kernel.org,
 	<Huynh-Khoi-Nguyen.Nguyen@ensimag.imag.fr>,
 	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
 To: Kong Lucien <Lucien.Kong@ensimag.imag.fr>
-X-From: git-owner@vger.kernel.org Tue Jun 05 01:02:01 2012
+X-From: git-owner@vger.kernel.org Tue Jun 05 01:12:20 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SbgHb-00028S-TE
-	for gcvg-git-2@plane.gmane.org; Tue, 05 Jun 2012 01:01:56 +0200
+	id 1SbgRc-0000jt-Hu
+	for gcvg-git-2@plane.gmane.org; Tue, 05 Jun 2012 01:12:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761041Ab2FDXBv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 Jun 2012 19:01:51 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:44840 "EHLO
+	id S1761163Ab2FDXML (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 Jun 2012 19:12:11 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:49357 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757444Ab2FDXBu (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Jun 2012 19:01:50 -0400
+	id S1761131Ab2FDXMK (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Jun 2012 19:12:10 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id F25DB8A11;
-	Mon,  4 Jun 2012 19:01:49 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DE4568D88;
+	Mon,  4 Jun 2012 19:12:09 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=ZJE1ZckcbB5IO3C0AlHP1N/S9qQ=; b=eyOxeR
-	qFTowU+D8z+TrHlQog18zd/7VfIsGrCOawXizaX5668I8d6D6xzC0OuURF/wYiuR
-	v5TULX5j/Vfs1GaaLA+2GIHOSZXxDUdRjjd5dJcln/gwtviNYN7T6fRwltm59SVp
-	qkR5VsqNHV9TuVikl/OVBIKrqof0Q5Wp7YZ+U=
+	:content-type; s=sasl; bh=NNEuMtRRkW6zp0QXJuApXchpls8=; b=smWIW6
+	zjk93HN4lAjj97oUW+c6z4yAsMnjIXrIxisCzN2mQFN5ZW0nBEYys/OCJaHvitQg
+	Y7m456ZA9vjEMYlG/WF+RDdS9K6yyrwQDT8mRPGDShxGpyLvzQgSVHfEr/1d9Zbc
+	ZkOibf0WRDdH+o0FDUTFR6CimnuLI++F/ANmk=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=pea8A0QBw8Tla6iy9QRgnQ56IOvwdPVO
-	9QidjKZiRIYaqxW3SZ8bMnHeACWSardT8GBzJMfknlpy4QpBNJgLCKnUprOCW1xJ
-	fSr1L1ns5oBxX6bAteBPvUPxTatkMUttUur4kUcF0h923EpoczhE6EQiAdCKwMEB
-	HRxbVVQQ0eM=
+	:content-type; q=dns; s=sasl; b=wb/tdNTUW6ZbZjdX+fhH0IuAShbMTZ29
+	A3IcYYeQpe7+sSLr7bTnsVZG6ifqP2S+4ypEnK4UWPjgmXzvKybnef/QPgeiUzLO
+	vfNBidG8Qhrrqrcy0pmZ+F7t+zmTFSYzn0jbelSY6aJZaZ4q0wKcmMRXadleEFqu
+	1E+Civqwr3s=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E80AB8A10;
-	Mon,  4 Jun 2012 19:01:49 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D09CF8D86;
+	Mon,  4 Jun 2012 19:12:09 -0400 (EDT)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id AB14E8A0F; Mon,  4 Jun 2012
- 19:01:46 -0400 (EDT)
-In-Reply-To: <1338830399-31504-1-git-send-email-Lucien.Kong@ensimag.imag.fr>
- (Kong Lucien's message of "Mon, 4 Jun 2012 19:19:56 +0200")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 301A48D85; Mon,  4 Jun 2012
+ 19:12:09 -0400 (EDT)
+In-Reply-To: <1338830399-31504-2-git-send-email-Lucien.Kong@ensimag.imag.fr>
+ (Kong Lucien's message of "Mon, 4 Jun 2012 19:19:57 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 4288DDCC-AE99-11E1-B21D-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: B5922A98-AE9A-11E1-AD88-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199194>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199195>
 
 Kong Lucien <Lucien.Kong@ensimag.imag.fr> writes:
 
-> The case of conflicts during a rebase -i is now taken care of. The form
-> of the tests has also been modified.
+> +test_description='git status advices'
+> +
+> +. ./test-lib.sh
+> +
+> +. "$TEST_DIRECTORY"/lib-rebase.sh
+> +
+> +set_fake_editor
+> +
+> +test_expect_success 'status when conflicts unresolved' '
+> +	test_commit init main.txt init &&
+> +	git branch second_branch &&
+> +	test_commit on_master main.txt on_master &&
+> +	git checkout second_branch &&
+> +	test_commit on_second_branch main.txt on_second_branch &&
+> +	test_must_fail git merge master &&
+> +	cat >expected <<-\EOF &&
+> +	# On branch second_branch
+> +	# You have unmerged paths.
+> +	#   (fix conflicts and run "git commit")
+> +	#
+> +	# Unmerged paths:
+> +	#   (use "git add/rm <file>..." as appropriate to mark resolution)
+> +	#
+> +	#	both modified:      main.txt
+> +	#
+> +	no changes added to commit (use "git add" and/or "git commit -a")
+> +	EOF
+> +	git status --untracked-files=no >actual &&
+> +	test_cmp expected actual
+> +'
 
-> diff --git a/t/t7060-wtstatus.sh b/t/t7060-wtstatus.sh
-> index b8cb490..4326df7 100755
-> --- a/t/t7060-wtstatus.sh
-> +++ b/t/t7060-wtstatus.sh
-> @@ -30,6 +30,9 @@ test_expect_success 'Report new path with conflict' '
->  
->  cat >expect <<EOF
->  # On branch side
-> +# You have unmerged paths.
-> +#   (fix conflicts and run "git commit")
-> +#
->  # Unmerged paths:
->  #   (use "git add/rm <file>..." as appropriate to mark resolution)
->  #
-> @@ -118,4 +121,65 @@ test_expect_success 'git diff-index --cached -C shows 2 copies + 1 unmerged' '
->  	test_cmp expected actual
->  '
+OK.
 
-These probably would want to become test_i18ncmp.
+> +test_expect_success 'status when conflicts resolved before commit' '
+> +	test_when_finished "
+> +		git commit -m "end_merge" &&
+> +		git checkout master &&
+> +		git branch -D second_branch &&
+> +		echo >main.txt
+> +	" &&
 
-Other than that, modulo message details, the code structure is very
-pleasant to follow and this patch looks ready to be tested.
+I do not think this is a good idea.  The previous one may have
+failed before even reaching "git merge" that was supposed to fail,
+or "git merge" may have succeeded by mistake.
 
-Good job.
+If you are assuming that all tests succeed when we didn't introduce
+any bug to Git, and when breakages happen the developer should only
+look at the first breakage, then it is better not to pretend as if
+you are prepared for some tests in the sequence to fail by giving a
+clean slate to later tests.
 
-> diff --git a/wt-status.c b/wt-status.c
-> index dd6d8c4..2b19fe3 100644
-> --- a/wt-status.c
-> +++ b/wt-status.c
-> @@ -728,6 +729,167 @@ static void wt_status_print_tracking(struct wt_status *s)
-> ...
-> +static void show_am_in_progress(struct wt_status *s,
-> +				struct wt_status_state *state,
-> +				const char *color)
-> +{
-> +	status_printf_ln(s, color,
-> +		_("You are in the middle of an am session."));
-> +	if (state->am_empty_patch)
-> +		status_printf_ln(s, color,
-> +			_("The current patch is empty."));
-> +	if (advice_status_hints) {
-> +		status_printf_ln(s, color,
-> +			_("  (use \"git am --abort\" to restore the original branch)"));
-> +		status_printf_ln(s, color,
-> +			_("  (use \"git am --skip\" to skip this patch)"));
-> +		if (!state->am_empty_patch)
-> +			status_printf_ln(s, color,
-> +				_("  (when you have fixed this problem run \"git am --resolved\")"));
-> +	}
-> +	wt_status_print_trailer(s);
-> +}
+For these two tests, I think it is much simpler and cleaner to
+organize them by
 
-Perhaps s/fixed this problem/resolved conflicts/ or a similar
-rephrasing is a good idea.
+ (1) have code to prepare two branches in the first test, tag the
+     tip of second one, and assume this test won't break;
 
-Conflicts from mergy operations are perfectly normal parts of a
-regular workday, and it is not a "problem" that needs to be "fixed".
-Both words scare the user by implying something is broken (or worse,
-"git broke something") in the contents of user's repository.
+ (2) move the remainder of the first test, starting with the merge
+     of master that is expected to fail, into a separate one; and
 
-There are existing messages that use the verb "fix" on "conflicts",
-only because it is shorter than "resolve", but this one that calls a
-conflict a "problem" goes too far in the wrong direction.
+ (3) begin the third test (the second one in your patch) with:
+
+ 	git reset --hard $that_tag_you_added_to_the_tip_of_second &&
+	test_must_fail git merge master &&
+
+     so that it begins from the state the test expects it to begin
+     in, even if the previous test somehow merged master cleanly by
+     mistake.
+
+> +test_expect_success 'status when rebase in progress before resolving conflicts' '
+> +	test_commit one_rebase main.txt one &&
+> +	test_commit two_rebase main.txt two &&
+> +	test_commit three_rebase main.txt three &&
+> +	test_must_fail git rebase HEAD^ --onto HEAD^^ &&
+> +	cat >expected <<-\EOF &&
+> +	# Not currently on any branch.
+> +	# You are currently rebasing.
+> +	#   (fix conflicts and then run "git rebase --continue")
+> +	#   (use "git rebase --skip" to skip this patch)
+> +	#   (use "git rebase --abort" to check out the original branch)
+> +	#
+> +	# Unmerged paths:
+> +	#   (use "git reset HEAD <file>..." to unstage)
+> +	#   (use "git add/rm <file>..." as appropriate to mark resolution)
+> +	#
+> +	#	both modified:      main.txt
+> +	#
+> +	no changes added to commit (use "git add" and/or "git commit -a")
+> +	EOF
+> +	git status --untracked-files=no >actual &&
+> +	test_cmp expected actual
+> +'
+> +
+> +
+> +test_expect_success 'status when rebase in progress before rebase --continue' '
+> +	test_when_finished "git rebase --abort" &&
+
+Likewise.  If anything, "git rebase --abort" belongs to the previous
+test that tried to run "git rebase".
