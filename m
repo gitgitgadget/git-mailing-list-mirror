@@ -1,80 +1,83 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: [PATCH 3/4 v2] api-credentials.txt: mention credential.helper explicitly
-Date: Mon,  4 Jun 2012 22:17:43 +0200
-Message-ID: <1338841064-32294-3-git-send-email-Matthieu.Moy@imag.fr>
-References: <1338739804-32167-1-git-send-email-Matthieu.Moy@imag.fr>
- <1338841064-32294-1-git-send-email-Matthieu.Moy@imag.fr>
-Cc: Matthieu Moy <Matthieu.Moy@imag.fr>
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Mon Jun 04 22:18:33 2012
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Bugreport on Ubuntu LTS: not ok - 2 Objects creation does not
+ break ACLs with restrictive umask
+Date: Mon, 04 Jun 2012 13:18:44 -0700
+Message-ID: <7vhauqsue3.fsf@alter.siamese.dyndns.org>
+References: <CALbm-Ea5ZkAGFyB2OETqe7vK7LE+yO0zSaa_+kFMXOhO-nMwMQ@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Stefan Beller <stefanbeller@googlemail.com>
+X-From: git-owner@vger.kernel.org Mon Jun 04 22:18:53 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SbdjU-0007Tu-4B
-	for gcvg-git-2@plane.gmane.org; Mon, 04 Jun 2012 22:18:32 +0200
+	id 1Sbdjn-0008CR-M2
+	for gcvg-git-2@plane.gmane.org; Mon, 04 Jun 2012 22:18:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757455Ab2FDUS2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 Jun 2012 16:18:28 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:37781 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757396Ab2FDUS1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Jun 2012 16:18:27 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id q54K9PYX003135
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Mon, 4 Jun 2012 22:09:25 +0200
-Received: from bauges.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.72)
-	(envelope-from <moy@imag.fr>)
-	id 1Sbdj5-0000e4-8O; Mon, 04 Jun 2012 22:18:07 +0200
-Received: from moy by bauges.imag.fr with local (Exim 4.72)
-	(envelope-from <moy@imag.fr>)
-	id 1Sbdj5-0008Q7-70; Mon, 04 Jun 2012 22:18:07 +0200
-X-Mailer: git-send-email 1.7.11.rc0.57.g84a04c7
-In-Reply-To: <1338841064-32294-1-git-send-email-Matthieu.Moy@imag.fr>
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Mon, 04 Jun 2012 22:09:25 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: q54K9PYX003135
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
-MailScanner-NULL-Check: 1339445366.24751@htO07D8Z1bLkqeDrNDfI5w
+	id S1757458Ab2FDUSr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 Jun 2012 16:18:47 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:52883 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757396Ab2FDUSr (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Jun 2012 16:18:47 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 965A48D4F;
+	Mon,  4 Jun 2012 16:18:46 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=ixua3CeohHuGU2cjF5/IGROdWy0=; b=nP72eH
+	cVVHAzB5iRZcuym3cQJplaAHhhGX3l0sozw6/FsyV9WHTrzZydKTAiSJYZFwPAse
+	f1felaSfakbs4pKq8ZhCSm5ihjZGWD+UkHuRemusPbA9K4zNsFrXaNpCx6ysCpnh
+	Fk5w3eJmwHZCJRBQyaozYp7MPLAxV+CVjC/qI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=gYj+yuWkRP+HUbH2cukmgLTReEitwPVr
+	bTI9sdggCSbMNW4cutfyZo+cRYhMEbka0Bwvd4GKA0qORWpwruXByn4jtdZXtjP7
+	P1+J7C6t8HM6OlcJJaD2xtbiq59btovE6sqD+4Tdo8GXmsV9HOSDx8k59DoRdOv/
+	0ClpjpWbfHk=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8DBF68D4E;
+	Mon,  4 Jun 2012 16:18:46 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1AA888D4D; Mon,  4 Jun 2012
+ 16:18:46 -0400 (EDT)
+In-Reply-To: <CALbm-Ea5ZkAGFyB2OETqe7vK7LE+yO0zSaa_+kFMXOhO-nMwMQ@mail.gmail.com> (Stefan
+ Beller's message of "Mon, 4 Jun 2012 17:40:35 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 7CD5CCAE-AE82-11E1-A5E1-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199181>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199182>
 
-The name of the configuration variable was mentioned only at the very
-end of the explanation, in a place specific to a specific rule, hence it
-was not very clear what the specification was about.
+Stefan Beller <stefanbeller@googlemail.com> writes:
 
-Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
----
-Added "and others" with a link to git-config(1), for completeness.
+> so I just pulled the new git v1.7.10.4 and tried to test it with
+>> make test
+> This yields this output:
+> stderr http://pastebin.com/V8yuZFfi
+> stdout http://dl.dropbox.com/u/6520164/git/maketest.txt
+>
+> In Test 1304 there is
+> not ok - 2 Objects creation does not break ACLs with restrictive umask
+>
+> I am running Ubuntu 12.04 with Linux sb 3.2.0-25-generic #40-Ubuntu
+> SMP Wed May 23 20:30:51 UTC 2012 x86_64 x86_64 x86_64 GNU/Linux
 
- Documentation/technical/api-credentials.txt | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+Interesting. I've seen t1304 break from time to time.
 
-diff --git a/Documentation/technical/api-credentials.txt b/Documentation/technical/api-credentials.txt
-index 2d6e811..969a1ff 100644
---- a/Documentation/technical/api-credentials.txt
-+++ b/Documentation/technical/api-credentials.txt
-@@ -179,8 +179,10 @@ credentials from and to long-term storage (where "long-term" is simply
- longer than a single git process; e.g., credentials may be stored
- in-memory for a few minutes, or indefinitely on disk).
- 
--Each helper is specified by a single string. The string is transformed
--by git into a command to be executed using these rules:
-+Each helper is specified by a single string in the configuration
-+variable `credential.helper` (and others, see
-+linkgit:../git-config[1]). The string is transformed by git into a
-+command to be executed using these rules:
- 
-   1. If the helper string begins with "!", it is considered a shell
-      snippet, and everything after the "!" becomes the command.
--- 
-1.7.11.rc0.57.g84a04c7
+I set the DEFAULT_TEST_TARGET to "prove", and when the test suite
+finishes with this failure, I noticed t3600-rm and some other test I
+do not recall also failed, with two extra files (actual and expect)
+at the root of the TEST_OUTPUT_DIRECTORY (set to /dev/shm/testpen
+via "--root=/dev/shm/testpen" option).
+
+I the breakage does not happen reproducibly with any pattern other
+than the above (I do not know if it never happens when test target
+is set to "test", for example), so haven't looked (and will not
+look) into it myself further than that.
