@@ -1,66 +1,98 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH 3/3] api-credentials.txt: add "see also" section
-Date: Mon, 04 Jun 2012 22:06:34 +0200
-Message-ID: <vpqpq9en8ol.fsf@bauges.imag.fr>
-References: <1338739804-32167-1-git-send-email-Matthieu.Moy@imag.fr>
-	<1338739804-32167-4-git-send-email-Matthieu.Moy@imag.fr>
-	<7vsjecvxmc.fsf@alter.siamese.dyndns.org>
-	<vpq1ulvuxd9.fsf@bauges.imag.fr>
-	<20120604115630.GC27676@sigill.intra.peff.net>
+From: Thomas Gummerer <t.gummerer@gmail.com>
+Subject: [GSoC] Designing a faster index format - Progress report week 7
+Date: Mon, 4 Jun 2012 22:07:46 +0200
+Message-ID: <20120604200746.GK6449@tgummerer>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Jun 04 22:06:50 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: trast@student.ethz.ch, gitster@pobox.com, mhagger@alum.mit.edu,
+	pclouds@gmail.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jun 04 22:08:04 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SbdY9-0006X8-M3
-	for gcvg-git-2@plane.gmane.org; Mon, 04 Jun 2012 22:06:49 +0200
+	id 1SbdZG-0000pW-AJ
+	for gcvg-git-2@plane.gmane.org; Mon, 04 Jun 2012 22:07:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757344Ab2FDUGq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 Jun 2012 16:06:46 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:52228 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752760Ab2FDUGp (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Jun 2012 16:06:45 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id q54Jw26K021553
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Mon, 4 Jun 2012 21:58:02 +0200
-Received: from bauges.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1SbdXv-0000XZ-Js; Mon, 04 Jun 2012 22:06:35 +0200
-In-Reply-To: <20120604115630.GC27676@sigill.intra.peff.net> (Jeff King's
-	message of "Mon, 4 Jun 2012 07:56:30 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.93 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Mon, 04 Jun 2012 21:58:02 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: q54Jw26K021553
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1339444683.2042@p1T6yzv9zTq/fbYYqSkSYw
+	id S1757401Ab2FDUHy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 Jun 2012 16:07:54 -0400
+Received: from mail-wg0-f44.google.com ([74.125.82.44]:57471 "EHLO
+	mail-wg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752760Ab2FDUHx (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Jun 2012 16:07:53 -0400
+Received: by wgbdr13 with SMTP id dr13so4399556wgb.1
+        for <git@vger.kernel.org>; Mon, 04 Jun 2012 13:07:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:mime-version:content-type
+         :content-disposition:user-agent;
+        bh=2jeNEI+8aN8ewrcHUMqHQatZSMgxfJC5BWDQzh7t6Wk=;
+        b=n+UXrXbcICBfydnpMKElqBab7WPbZvZdOylhZbxmqWBxw8+6qUearwGFqi8gi62WD0
+         /iNNuwSDZ+TDHh2E7uxNb21cWh4rxe3qRaopb+PTppomTQiiU/BHsuPqigZFwQDjKe6D
+         vYV2xmwgWTxoijlBDJ7jhi/9437QmuVtMzA7tCW10LSbK2FQg7IE1lqOw2wLObOEy14W
+         feAEn4UHKKpWw9jO1Wm9rMZwjdo3dF2nc6lW9qdwwH9G6F8ovmSDS4OKODFNh6hUJG8y
+         fjqUTRhsOZwaWkFbT6fRmStMfxi65yjyeCQj3OHeK/oWUpJYYkn150lVCpGIwfRmq0up
+         yGJA==
+Received: by 10.216.205.5 with SMTP id i5mr11622543weo.6.1338840470945;
+        Mon, 04 Jun 2012 13:07:50 -0700 (PDT)
+Received: from localhost ([95.171.54.129])
+        by mx.google.com with ESMTPS id dg2sm35496130wib.4.2012.06.04.13.07.48
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Mon, 04 Jun 2012 13:07:49 -0700 (PDT)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199176>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199177>
 
-Jeff King <peff@peff.net> writes:
+== Work done in the previous 6 weeks ==
 
-> We only build html documentation from technical/, not manpages. So they
-> could just all be switched to link: (the point of linkgit is to format a
-> manpage reference from either html or a manpage).
+- Definition of a tentative index file v5 format [1]. This differs
+  from the proposal in making it possible to bisect the directory
+  entries and file entries, to do a binary search. The exact bits
+  for each section were also defined. To further compress the index,
+  along with prefix compression, the stat data is hashed, since
+  it's only used for comparison, but the plain data is never used.
+  Thanks to Michael Haggerty, Nguyen Thai Ngoc Duy, Thomas Rast
+  and Robin Rosenberg for feedback.
+- Prototype of a converter from the index format v2/v3 to the index
+  format v5. [2] The converter reads the index from a git repository,
+  can output parts of the index (header, index entries as in
+  git ls-files --debug, cache tree as in test-dump-cache-tree, or
+  the reuc data). Then it writes the v5 index file format to
+  .git/index-v5. Thanks to Michael Haggerty for the code review.
+- Prototype of a reader for the new index file format. [3] The
+  reader has mainly the purpose to show the algorithm used to read
+  the index lexicographically sorted after the full name which is
+  required by the current internal memory format. Big thanks for
+  reviewing this code and giving me advice on refactoring goes
+  to Michael Haggerty.
+- Started working on the actual git code. Git is now able to read
+  the index format v5, although the mapping of the new ondisk
+  format to the internal format is not done yet. The latest code
+  is not pushed to github yet, since it still needs some polishing,
+  but if anyone is interested in the general direction it's going,
+  the initial steps are on github. [4] Thanks for reviewing the
+  first steps to Thomas Rast.
 
-OTOH, using linkgit: makes it easier to cut-and-paste from technical/ to
-man pages (which may be sensible for plumbing commands), so I think it's
-OK to keep linkgit:.
+== Work done in the last week ==
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+- Continued working on the git code, which now maps the index to
+  the internal format. This includes reading the conflicted data
+  at the far end of the index. [4]
+
+== Outlook for the next week ==
+
+- Read the cache-tree (convert the directories on the disk to the
+  current in-memory cache-tree structure)
+- Start implementing an API, as it was discussed at [5]
+
+[1] https://github.com/tgummerer/git/wiki/Index-file-format-v5
+[2] https://github.com/tgummerer/git/blob/pythonprototype/git-convert-index.py
+[3] https://github.com/tgummerer/git/blob/pythonprototype/git-read-index-v5.py
+[4] https://github.com/tgummerer/git/tree/index-v5
+[5] http://thread.gmane.org/gmane.comp.version-control.git/198283/focus=198474
