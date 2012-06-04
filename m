@@ -1,90 +1,66 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git rebase -f --autosquash
-Date: Mon, 04 Jun 2012 13:05:35 -0700
-Message-ID: <7vlik2sv00.fsf@alter.siamese.dyndns.org>
-References: <D7BE2BACB49749DB9FC37D4ACCCD008B@gmail.com>
- <1336820755.3002.11.camel@centaur.lab.cmartin.tk>
- <7vipfyiuv6.fsf@alter.siamese.dyndns.org>
- <33DF11B90FEF4CB6B4103BE0AAF9B256@gmail.com>
- <7vobpap1gb.fsf@alter.siamese.dyndns.org>
- <CABURp0p+NbYbiEO3n1iwP4jH63CjqvE6zhk6pHFjGU7+N0=vXA@mail.gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH 3/3] api-credentials.txt: add "see also" section
+Date: Mon, 04 Jun 2012 22:06:34 +0200
+Message-ID: <vpqpq9en8ol.fsf@bauges.imag.fr>
+References: <1338739804-32167-1-git-send-email-Matthieu.Moy@imag.fr>
+	<1338739804-32167-4-git-send-email-Matthieu.Moy@imag.fr>
+	<7vsjecvxmc.fsf@alter.siamese.dyndns.org>
+	<vpq1ulvuxd9.fsf@bauges.imag.fr>
+	<20120604115630.GC27676@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Andy Kitchen <kitchen.andy@gmail.com>, git@vger.kernel.org,
-	Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto <cmn@elego.de>
-To: Phil Hord <phil.hord@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jun 04 22:05:50 2012
+Content-Type: text/plain
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Jun 04 22:06:50 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SbdX8-0004Em-58
-	for gcvg-git-2@plane.gmane.org; Mon, 04 Jun 2012 22:05:46 +0200
+	id 1SbdY9-0006X8-M3
+	for gcvg-git-2@plane.gmane.org; Mon, 04 Jun 2012 22:06:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757430Ab2FDUFl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 Jun 2012 16:05:41 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:45192 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752760Ab2FDUFl (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Jun 2012 16:05:41 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2FE118886;
-	Mon,  4 Jun 2012 16:05:40 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=m91m8mz4G9w2RaQBrhvjUJnyxZk=; b=nniarC
-	QfkN4IfA671qd3+vUVBuOdp8sLbBkKyg+gxTdNyk+Cm6dMjUbaUWqhqKJylkC8wi
-	J2RwrFEvSl/fu/nYX0UVQKGZpeCE21bK/4eE2xINuM1nHNg3NVwKFaaVQVOicRfu
-	c1FSbxyzPL8cheIZKW+cOzdZPtQkq+yYtHv5o=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=LdvZ6Ck/vzyBegK8NQUPegiqLZfN10Si
-	ZBCtwdvFZoovt6UUEC6haWtQvoYyg8lb9s6omSF5JqdJB1EmV+0pJ4jwnyRl+zfG
-	BgpGe6npV70ZEh0XA01nv+6YnzDv42AB9v+T38R6fvkvi6v0QAuWEZOjOGMe2uto
-	H1puFW4YUuY=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 269B78885;
-	Mon,  4 Jun 2012 16:05:40 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1BB2B8880; Mon,  4 Jun 2012
- 16:05:39 -0400 (EDT)
-In-Reply-To: <CABURp0p+NbYbiEO3n1iwP4jH63CjqvE6zhk6pHFjGU7+N0=vXA@mail.gmail.com> (Phil
- Hord's message of "Mon, 4 Jun 2012 15:44:09 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: A7BFEF96-AE80-11E1-A743-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1757344Ab2FDUGq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 Jun 2012 16:06:46 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:52228 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752760Ab2FDUGp (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Jun 2012 16:06:45 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id q54Jw26K021553
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Mon, 4 Jun 2012 21:58:02 +0200
+Received: from bauges.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1SbdXv-0000XZ-Js; Mon, 04 Jun 2012 22:06:35 +0200
+In-Reply-To: <20120604115630.GC27676@sigill.intra.peff.net> (Jeff King's
+	message of "Mon, 4 Jun 2012 07:56:30 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.93 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Mon, 04 Jun 2012 21:58:02 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: q54Jw26K021553
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1339444683.2042@p1T6yzv9zTq/fbYYqSkSYw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199175>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199176>
 
-Phil Hord <phil.hord@gmail.com> writes:
+Jeff King <peff@peff.net> writes:
 
-> ...  That both are
-> required seems to me to be an embarrassing, historical implementation
-> detail.
+> We only build html documentation from technical/, not manpages. So they
+> could just all be switched to link: (the point of linkgit is to format a
+> manpage reference from either html or a manpage).
 
-I do not know if we are discussing the same thing.
+OTOH, using linkgit: makes it easier to cut-and-paste from technical/ to
+man pages (which may be sensible for plumbing commands), so I think it's
+OK to keep linkgit:.
 
-There is nothing historical in that "--interactive" is the word used
-to tell the command that the user wants to replay commits in an
-order that is different from the order they were found in the
-original commit DAG.  If you want to tweak the order, you use
-"interactive". If you don't, you don't.
-
-There indeed is implementation detail to worry about. The "-p" mode
-that is *not* about letting the user modify the order of replayed
-commits internally does use the same machinery as interactive, but
-that is hidden from the end user (the "implied" value in
-$interactive_rebase in git-rebase.sh makes this difference).
-
-But this case is not about replaying the commit without reordering.
-
-If you are proposing to rename "--interactive" to "--reorder" or
-something, with a solid migration plan to keep the current users
-happy, and possibly are proposing to add non-interactive autosquash
-implementation outside git-rebase--interactive.sh, the issue would
-entirely be different, but I somehow do not sense that is the
-direction in which you are trying to go.
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
