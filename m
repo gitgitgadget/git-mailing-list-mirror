@@ -1,148 +1,246 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 2/2] merge: allow fast-forwarding to an annotated but
- unsigned tag
-Date: Tue,  5 Jun 2012 12:58:32 -0700
-Message-ID: <1338926312-4239-3-git-send-email-gitster@pobox.com>
-References: <1338926312-4239-1-git-send-email-gitster@pobox.com>
+From: Lucien Kong <Lucien.Kong@ensimag.imag.fr>
+Subject: [PATCHv8 4/4] status: better advices when splitting a commit (during rebase -i)
+Date: Tue,  5 Jun 2012 22:21:27 +0200
+Message-ID: <1338927687-29822-4-git-send-email-Lucien.Kong@ensimag.imag.fr>
+References: <1338830399-31504-1-git-send-email-Lucien.Kong@ensimag.imag.fr>
+ <1338927687-29822-1-git-send-email-Lucien.Kong@ensimag.imag.fr>
+Cc: Lucien Kong <Lucien.Kong@ensimag.imag.fr>,
+	Valentin Duperray <Valentin.Duperray@ensimag.imag.fr>,
+	Franck Jonas <Franck.Jonas@ensimag.imag.fr>,
+	Thomas Nguy <Thomas.Nguy@ensimag.imag.fr>,
+	Huynh Khoi Nguyen Nguyen 
+	<Huynh-Khoi-Nguyen.Nguyen@ensimag.imag.fr>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 05 21:58:57 2012
+X-From: git-owner@vger.kernel.org Tue Jun 05 22:21:45 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Sbztx-0001tj-CS
-	for gcvg-git-2@plane.gmane.org; Tue, 05 Jun 2012 21:58:49 +0200
+	id 1Sc0G1-0001OH-Ky
+	for gcvg-git-2@plane.gmane.org; Tue, 05 Jun 2012 22:21:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752294Ab2FET6k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 5 Jun 2012 15:58:40 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:56864 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751845Ab2FET6i (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Jun 2012 15:58:38 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0C3949FD1
-	for <git@vger.kernel.org>; Tue,  5 Jun 2012 15:58:38 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:in-reply-to:references; s=sasl; bh=A1BR
-	sLuwqreADgk5U1zsg+dxvrg=; b=fbEMo0ByQrGo8vV7Vnzlb7j+9lEW5M3Z4juD
-	Ko1Vg0GqkDOkT5WWEx9CtaVXEGySup1PjcZsdaaHLCxM/VR4bXTYlu6p07ZOibSm
-	nhPh1v5wKsJJmeNXdWhSHATFllZRUPiEqFyfaEaf/lzerblqIiTRCNN5NA5poW6l
-	LSWwgNQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=n/gXXb
-	HVAh4ordhW1/dQAsk1JLGHWzqB7CrRsXFozDbhqPJscEI3ONd8mFzmWAr1E2dhwP
-	IeqTPjgBBS/P1/UiP4XWLrAebxbJ9DCplWsZ0S9pP+qN4NhZTxj5yNlHRa59gsjV
-	lGmI9k3ASG9EzFcOBGYDb7jZx/NIugt9l3th8=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0410E9FCF
-	for <git@vger.kernel.org>; Tue,  5 Jun 2012 15:58:38 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7257C9FCE for
- <git@vger.kernel.org>; Tue,  5 Jun 2012 15:58:37 -0400 (EDT)
-X-Mailer: git-send-email 1.7.11.rc1.37.g09843ac
-In-Reply-To: <1338926312-4239-1-git-send-email-gitster@pobox.com>
-X-Pobox-Relay-ID: D6D791C6-AF48-11E1-B124-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752509Ab2FEUVc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 Jun 2012 16:21:32 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:48853 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751275Ab2FEUVb (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Jun 2012 16:21:31 -0400
+Received: from ensimag.imag.fr (ensimag.imag.fr [195.221.228.12])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id q55KChls003110
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Tue, 5 Jun 2012 22:12:43 +0200
+Received: from ensibm.imag.fr (ensibm [195.221.228.8])
+	by ensimag.imag.fr (8.13.8/8.13.8/ImagV2.1.r_ens) with ESMTP id q55KLSxS029663;
+	Tue, 5 Jun 2012 22:21:28 +0200
+Received: from ensibm.imag.fr (localhost [127.0.0.1])
+	by ensibm.imag.fr (8.13.8/8.13.8/ImagV2.1.sb_ens.pm) with ESMTP id q55KLSQT029946;
+	Tue, 5 Jun 2012 22:21:28 +0200
+Received: (from konglu@localhost)
+	by ensibm.imag.fr (8.13.8/8.13.8/Submit) id q55KLSa0029945;
+	Tue, 5 Jun 2012 22:21:28 +0200
+X-Mailer: git-send-email 1.7.8
+In-Reply-To: <1338927687-29822-1-git-send-email-Lucien.Kong@ensimag.imag.fr>
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Tue, 05 Jun 2012 22:12:43 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: q55KChls003110
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: lucien.kong@phelma.grenoble-inp.fr
+MailScanner-NULL-Check: 1339531963.69534@2stn1CkZUBOmljnEdWzN3w
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199285>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199286>
 
-Update the merging_signed_tag() helper to check if the tag object
-actually has a signature-looking string, so that we do not forbid
-fast-forwarding to an annotated but unsigned tag.  By definition,
-there will be no signed payload in such a tag to be moved to the
-mergetag header, so we are not losing anything by fast-forwarding.
+Add new informative help messages at the output of 'git status' when
+the user is splitting a commit. The code figures this state by
+comparing the contents of the following files in the .git/ directory:
+	  - HEAD
+	  - ORIG_HEAD
+	  - rebase-merge/amend
+	  - rebase-merge/orig-head
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: Lucien Kong <Lucien.Kong@ensimag.imag.fr>
+Signed-off-by: Valentin Duperray <Valentin.Duperray@ensimag.imag.fr>
+Signed-off-by: Franck Jonas <Franck.Jonas@ensimag.imag.fr>
+Signed-off-by: Thomas Nguy <Thomas.Nguy@ensimag.imag.fr>
+Signed-off-by: Huynh Khoi Nguyen Nguyen <Huynh-Khoi-Nguyen.Nguyen@ensimag.imag.fr>
+Signed-off-by: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
 ---
- builtin/merge.c  | 14 +++++++++++++-
- t/t7600-merge.sh | 38 ++++++++++++++++++++++++++++++++++++++
- 2 files changed, 51 insertions(+), 1 deletion(-)
+ t/t7512-status-help.sh |   55 ++++++++++++++++++++++++++++++++++
+ wt-status.c            |   77 ++++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 132 insertions(+), 0 deletions(-)
 
-diff --git a/builtin/merge.c b/builtin/merge.c
-index 23389f2..82d343c 100644
---- a/builtin/merge.c
-+++ b/builtin/merge.c
-@@ -28,6 +28,7 @@
- #include "remote.h"
- #include "fmt-merge-msg.h"
- #include "gpg-interface.h"
-+#include "tag.h"
- 
- #define DEFAULT_TWOHEAD (1<<0)
- #define DEFAULT_OCTOPUS (1<<1)
-@@ -1102,10 +1103,21 @@ static void write_merge_state(void)
- static int merging_signed_tag(struct commit *parent)
- {
- 	struct merge_remote_desc *desc = merge_remote_util(parent);
-+	unsigned long size;
-+	enum object_type type;
-+	char *buf;
-+	size_t sig_offset;
- 
- 	if (!desc || !desc->obj || desc->obj->type != OBJ_TAG)
- 		return 0;
--	return 1;
-+
-+	buf = read_sha1_file(desc->obj->sha1, &type, &size);
-+	if (!buf || type != OBJ_TAG) {
-+		free(buf);
-+		return 0; /* error will be caught downstream */
-+	}
-+	sig_offset = parse_signature(buf, size);
-+	return (sig_offset < size);
- }
- 
- int cmd_merge(int argc, const char **argv, const char *prefix)
-diff --git a/t/t7600-merge.sh b/t/t7600-merge.sh
-index 9e27bbf..3c48327 100755
---- a/t/t7600-merge.sh
-+++ b/t/t7600-merge.sh
-@@ -695,4 +695,42 @@ test_expect_success GPG 'merge --no-edit tag should skip editor' '
- 	test_cmp actual expect
+diff --git a/t/t7512-status-help.sh b/t/t7512-status-help.sh
+index bdce192..a77574f 100755
+--- a/t/t7512-status-help.sh
++++ b/t/t7512-status-help.sh
+@@ -196,6 +196,61 @@ test_expect_success 'status when rebasing -i in edit mode' '
  '
  
-+test_expect_success 'merge ff annotated tag should just ff' '
-+	git reset --hard c0 &&
-+	git commit --allow-empty -m "A newer commit" &&
-+	git tag -a -m "An annotated tag" anno &&
-+	git reset --hard c0 &&
-+
-+	# This should not even bother with an editor session; "false"
-+	# will ensure that an attempt to run the editor is caught.
-+	EDITOR=false git merge anno &&
-+
-+	git rev-parse anno^0 >expect &&
-+	git rev-parse HEAD >actual &&
-+	test_cmp actual expect &&
-+
-+	git rev-parse c0^0 >expect &&
-+	git rev-parse HEAD^ >actual &&
-+	test_cmp actual expect
+ 
++test_expect_success 'status when splitting a commit' '
++	git reset --hard master &&
++	git checkout -b split_commit &&
++	test_commit one_split main.txt one &&
++	test_commit two_split main.txt two &&
++	test_commit three_split main.txt three &&
++	test_commit four_split main.txt four &&
++	FAKE_LINES="1 edit 2 3" &&
++	export FAKE_LINES &&
++	test_when_finished "git rebase --abort" &&
++	git rebase -i HEAD~3 &&
++	git reset HEAD^ &&
++	cat >expected <<-\EOF &&
++	# Not currently on any branch.
++	# You are currently splitting a commit.
++	#   (Once your working directory is clean, run "git rebase --continue")
++	#
++	# Changes not staged for commit:
++	#   (use "git add <file>..." to update what will be committed)
++	#   (use "git checkout -- <file>..." to discard changes in working directory)
++	#
++	#	modified:   main.txt
++	#
++	no changes added to commit (use "git add" and/or "git commit -a")
++	EOF
++	git status --untracked-files=no >actual &&
++	test_i18ncmp expected actual
 +'
 +
-+test_expect_success 'merge --no-ff annotated tag' '
-+	git reset --hard c0 &&
-+	git commit --allow-empty -m "A newer commit" &&
-+	git tag -f -a -m "An annotated tag" anno &&
-+	git reset --hard c0 &&
 +
-+	EDITOR=./editor git merge --no-ff --edit anno &&
-+	git rev-parse anno^0 >expect &&
-+	git rev-parse HEAD^2 >actual &&
-+	test_cmp actual expect &&
-+
-+	git rev-parse c0^0 >expect &&
-+	git rev-parse HEAD^ >actual &&
-+	test_cmp actual expect &&
-+
-+	git cat-file commit HEAD >raw &&
-+	grep "An annotated tag" raw
++test_expect_failure 'status after editing the last commit with --amend during a rebase -i' '
++	git reset --hard master &&
++	git checkout -b amend_last &&
++	test_commit one_amend main.txt one &&
++	test_commit two_amend main.txt two &&
++	test_commit three_amend main.txt three &&
++	test_commit four_amend main.txt four &&
++	FAKE_LINES="1 2 edit 3" &&
++	export FAKE_LINES &&
++	test_when_finished "git rebase --abort" &&
++	git rebase -i HEAD~3 &&
++	git commit --amend -m "foo" &&
++	cat >expected <<-\EOF &&
++	# Not currently on any branch.
++	# You are currently editing a commit during a rebase.
++	#   (use "git commit --amend" to amend the current commit)
++	#   (use "git rebase --continue" once you are satisfied with your changes)
++	#
++	nothing to commit (working directory clean)
++	EOF
++	git status --untracked-files=no >actual &&
++	test_i18ncmp expected actual
 +'
 +
- test_done
++
+ test_expect_success 'prepare am_session' '
+ 	git reset --hard master &&
+ 	git checkout -b am_session &&
+diff --git a/wt-status.c b/wt-status.c
+index fcde045..5445dbf 100644
+--- a/wt-status.c
++++ b/wt-status.c
+@@ -12,6 +12,7 @@
+ #include "refs.h"
+ #include "submodule.h"
+ #include "column.h"
++#include "strbuf.h"
+ 
+ static char default_wt_status_colors[][COLOR_MAXLEN] = {
+ 	GIT_COLOR_NORMAL, /* WT_STATUS_HEADER */
+@@ -817,6 +818,77 @@ static void show_am_in_progress(struct wt_status *s,
+ 	wt_status_print_trailer(s);
+ }
+ 
++static int split_commit_in_progress()
++{
++	FILE *head;
++	struct strbuf buf_head;
++	FILE *orig_head;
++	struct strbuf buf_orig_head;
++	FILE *rebase_amend;
++	struct strbuf buf_rebase_amend;
++	FILE *rebase_orig_head;
++	struct strbuf buf_rebase_orig_head;
++	int split_in_progress = 0;
++
++	head = fopen(git_path("HEAD"), "r");
++	if (!head)
++		return 0;
++
++	orig_head = fopen(git_path("ORIG_HEAD"), "r");
++	if (!orig_head) {
++		fclose(head);
++		return 0;
++	}
++
++	rebase_amend = fopen(git_path("rebase-merge/amend"), "r");
++	if (!rebase_amend) {
++		fclose(head);
++		fclose(orig_head);
++		return 0;
++	}
++
++	rebase_orig_head = fopen(git_path("rebase-merge/orig-head"), "r");
++	if (!rebase_orig_head) {
++		fclose(head);
++		fclose(orig_head);
++		fclose(rebase_amend);
++		return 0;
++	}
++
++	strbuf_init(&buf_head, 0);
++	strbuf_init(&buf_orig_head, 0);
++	strbuf_init(&buf_rebase_amend, 0);
++	strbuf_init(&buf_rebase_orig_head, 0);
++
++	strbuf_getline(&buf_head, head, '\n');
++	strbuf_getline(&buf_orig_head, orig_head, '\n');
++	strbuf_getline(&buf_rebase_amend, rebase_amend, '\n');
++	strbuf_getline(&buf_rebase_orig_head, rebase_orig_head, '\n');
++
++	fclose(head);
++	fclose(orig_head);
++	fclose(rebase_amend);
++	fclose(rebase_orig_head);
++
++	if (!strbuf_cmp(&buf_rebase_amend, &buf_rebase_orig_head)) {
++		if (strbuf_cmp(&buf_head, &buf_rebase_amend))
++			split_in_progress = 1;
++	} else if (!strbuf_cmp(&buf_orig_head, &buf_rebase_amend)) {
++		split_in_progress = 1;
++	} else if (strbuf_cmp(&buf_orig_head, &buf_rebase_orig_head)) {
++		split_in_progress = 1;
++	}
++
++	if (!strbuf_cmp(&buf_head, &buf_rebase_amend))
++		split_in_progress = 0;
++
++	strbuf_release(&buf_head);
++	strbuf_release(&buf_orig_head);
++	strbuf_release(&buf_rebase_amend);
++	strbuf_release(&buf_rebase_orig_head);
++	return split_in_progress;
++}
++
+ static void show_rebase_in_progress(struct wt_status *s,
+ 				struct wt_status_state *state,
+ 				const char *color)
+@@ -838,6 +910,11 @@ static void show_rebase_in_progress(struct wt_status *s,
+ 		if (advice_status_hints)
+ 			status_printf_ln(s, color,
+ 				_("  (all conflicts fixed: run \"git rebase --continue\")"));
++	} else if (split_commit_in_progress()) {
++		status_printf_ln(s, color, _("You are currently splitting a commit."));
++		if (advice_status_hints)
++			status_printf_ln(s, color,
++				_("  (Once your working directory is clean, run \"git rebase --continue\")"));
+ 	} else {
+ 		status_printf_ln(s, color, _("You are currently editing a commit during a rebase."));
+ 		if (advice_status_hints && !s->amend) {
 -- 
-1.7.11.rc1.37.g09843ac
+1.7.8
