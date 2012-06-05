@@ -1,57 +1,75 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [RFC 4/4] Add cat-blob report pipe from fast-import to remote-helper.
-Date: Tue, 05 Jun 2012 11:09:34 +0200
-Message-ID: <4FCDCCCE.5060201@viscovery.net>
-References: <1338830455-3091-1-git-send-email-florian.achleitner.2.6.31@gmail.com> <1338830455-3091-2-git-send-email-florian.achleitner.2.6.31@gmail.com> <1338830455-3091-3-git-send-email-florian.achleitner.2.6.31@gmail.com> <1338830455-3091-4-git-send-email-florian.achleitner.2.6.31@gmail.com> <1338830455-3091-5-git-send-email-florian.achleitner.2.6.31@gmail.com> <20120605065628.GA25809@sigill.intra.peff.net> <4FCDC894.7000905@viscovery.net>
+From: Michael Schubert <schu@schu.io>
+Subject: Re: introduction
+Date: Tue, 05 Jun 2012 11:04:11 +0200
+Message-ID: <4FCDCB8B.4000103@schu.io>
+References: <CAA3EhHJCRF05Q0xzzOWupVMjmKPbWAq1KNcU9Mmp8g1iH2B0zA@mail.gmail.com> <CAA3EhH+P_JeVGhRmL-kHOc0cTCiGQmv505XjgAv0kT1PAfjTyw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Florian Achleitner <florian.achleitner.2.6.31@gmail.com>,
-	git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Jun 05 11:09:47 2012
+Cc: git <git@vger.kernel.org>
+To: Leila <muhtasib@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jun 05 11:12:35 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Sbplm-0002qg-Ss
-	for gcvg-git-2@plane.gmane.org; Tue, 05 Jun 2012 11:09:43 +0200
+	id 1SbpoY-0001LI-31
+	for gcvg-git-2@plane.gmane.org; Tue, 05 Jun 2012 11:12:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751719Ab2FEJJi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 5 Jun 2012 05:09:38 -0400
-Received: from lilzmailso02.liwest.at ([212.33.55.13]:27395 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751446Ab2FEJJh (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Jun 2012 05:09:37 -0400
-Received: from cpe228-254-static.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.76)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1Sbpmg-0002mH-Gv; Tue, 05 Jun 2012 11:10:39 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id EA39B1660F;
-	Tue,  5 Jun 2012 11:09:34 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:12.0) Gecko/20120428 Thunderbird/12.0.1
-In-Reply-To: <4FCDC894.7000905@viscovery.net>
-X-Spam-Score: -1.4 (-)
+	id S1752007Ab2FEJMa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 Jun 2012 05:12:30 -0400
+Received: from schu.io ([178.77.73.177]:49927 "EHLO
+	lvps178-77-73-177.dedicated.hosteurope.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751479Ab2FEJM3 (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 5 Jun 2012 05:12:29 -0400
+X-Greylist: delayed 382 seconds by postgrey-1.27 at vger.kernel.org; Tue, 05 Jun 2012 05:12:29 EDT
+Received: from [10.10.10.197] (i59F7870A.versanet.de [89.247.135.10])
+	by lvps178-77-73-177.dedicated.hosteurope.de (Postfix) with ESMTPSA id 53EFEB77C713;
+	Tue,  5 Jun 2012 11:06:06 +0200 (CEST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:12.0) Gecko/20120430 Thunderbird/12.0.1
+In-Reply-To: <CAA3EhH+P_JeVGhRmL-kHOc0cTCiGQmv505XjgAv0kT1PAfjTyw@mail.gmail.com>
+X-Enigmail-Version: 1.4.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199222>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199223>
 
-Am 6/5/2012 10:51, schrieb Johannes Sixt:
-> The second problem is more severe and is at the lowest level of our
-> infrastructure: We set up our child processes so that they know only about
-> file descriptors other than 0,1,2 to the child process.
+On 06/04/2012 10:36 PM, Leila wrote:
+> 1) Commands are cryptic: I was thinking I could provide a wrapper to
+> simplify the commands, for example to undo a local commit, I can
+> introduce a "git undo commit", that wraps "reset" and will undo the
+> last commit. Or maybe "git rollback" is a better name?
 
-That should read:
+There's Legit [1], Easy Git [2] and probably more.
 
-We set up our child processes so that they know only about file
-descriptors 0,1,2.
+> 2) git undo command, that will undo the last command (if possible)?
 
-> Even if the first
-> problem were solved, the child process does not receive sufficient
-> information to know that there are open file descriptors other than 0,1,2.
-> There is a facility to pass along this information from the parent to the
-> child, but we simply do not implement it.
+Not possible in general.
+
+> 3) Just like we have git-svn, maybe a svn-git?
+
+?
+
+> Any help or if you can point me in the right direction, I'd appreciate
+> it. I can also start out by fixing some bugs to get into it. I
+> couldn't figure out how to see a list of bugs though.
+
+There's no bugtracker, just the ML.
+
+How to submit patches:
+https://raw.github.com/gitster/git/master/Documentation/SubmittingPatches
+
+You could check "old" GSoC Ideas:
+https://github.com/peff/git/wiki/SoC-2012-Ideas
+
+> How does one contribute to your documentation? Would it be submitting
+> a patch just like with code?
+
+Yes.
+
+HTH.
+
+[1] http://www.git-legit.org
+[2] http://people.gnome.org/~newren/eg/
