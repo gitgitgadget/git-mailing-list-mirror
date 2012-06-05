@@ -1,101 +1,136 @@
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: git smart protocol via WebSockets - feedback wanted
-Date: Tue, 5 Jun 2012 11:54:48 -0700
-Message-ID: <CAJo=hJue20kwo-jo8x8dC7AUVs3oP=ZC9aCq_ncq3+MWr9VmgQ@mail.gmail.com>
-References: <jqlim2$6vt$1@dough.gmane.org> <7vpq9dobjo.fsf@alter.siamese.dyndns.org>
- <jqljtk$h6d$1@dough.gmane.org>
+From: Tyler Hicks <tyhicks@canonical.com>
+Subject: Re: Bugreport on Ubuntu LTS: not ok - 2 Objects creation does not
+ break ACLs with restrictive umask
+Date: Tue, 5 Jun 2012 12:16:38 -0700
+Message-ID: <20120605191637.GC25709@boyd>
+References: <20120605075614.GE25809@sigill.intra.peff.net>
+ <vpq4nqqj8ss.fsf@bauges.imag.fr>
+ <CALbm-EbGoaxkvBXphAPF8rRkS=VFeeFHXQSFdWVrZUJJ8DYovw@mail.gmail.com>
+ <vpqk3zlhorc.fsf@bauges.imag.fr>
+ <20120605140449.GA15640@sigill.intra.peff.net>
+ <20120605141039.GB15640@sigill.intra.peff.net>
+ <20120605142813.GA17238@sigill.intra.peff.net>
+ <20120605150550.GA19843@sigill.intra.peff.net>
+ <7vpq9dpvnp.fsf@alter.siamese.dyndns.org>
+ <20120605164439.GA2694@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org
-To: Stephan Peijnik <stephan@peijnik.at>
-X-From: git-owner@vger.kernel.org Tue Jun 05 20:55:29 2012
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="96YOpH+ONegL0A3E"
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	ecryptfs@vger.kernel.org,
+	Stefan Beller <stefanbeller@googlemail.com>,
+	git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Jun 05 21:16:53 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SbyuU-0005Lj-0E
-	for gcvg-git-2@plane.gmane.org; Tue, 05 Jun 2012 20:55:18 +0200
+	id 1SbzFL-0003Yi-5r
+	for gcvg-git-2@plane.gmane.org; Tue, 05 Jun 2012 21:16:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751183Ab2FESzK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 5 Jun 2012 14:55:10 -0400
-Received: from mail-pb0-f46.google.com ([209.85.160.46]:39460 "EHLO
-	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750922Ab2FESzJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Jun 2012 14:55:09 -0400
-Received: by pbbrp8 with SMTP id rp8so7834092pbb.19
-        for <git@vger.kernel.org>; Tue, 05 Jun 2012 11:55:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=spearce.org; s=google;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=kX1iYGVowwcD3ryf2II7vl1tXi+rCDXPOubN34/OL5s=;
-        b=f17fQMEFu68N6DK1SNAv4UyzbW5NLML/IalhTf2Xbefctw+GfBc1rIjyomdcADPCY2
-         0lb1RSa77K8Obrzy1H1Y1O1hZReDX+RtFIYz0lyDpHUvdRL52M/Htjf9vPD4QdLUHzaM
-         WtLA2ORxc+0W0KBcBc/x/Jk6H2nQvE2CU/tj0=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:x-gm-message-state;
-        bh=kX1iYGVowwcD3ryf2II7vl1tXi+rCDXPOubN34/OL5s=;
-        b=CWMSAW/vesPdmDWP3suIVLpD7SemFhguXqR9jbFvqfxLtg3DCEJwmJcS305FCCyd4E
-         2jJV8XuCxo52ucmJ0PQMhasJM65rMtU8vLSC5ohSFULQNW6QihgwNio9eTq/8PMLkmIu
-         Qn4vH77/UiXx7Bw6Qc/KJRc6VrCCd+0noX9PY6hirP261pN3rQsBTuDmnxWECTQFIvFJ
-         njiQI6JXdH1x9LVtW7oYvelirX92PT8tS7L3mO3QVVYo1+TyofBs/v/PD7KEMMZkTim9
-         jcu45mzK0aWhanz0q3OFqDg77FBc2wVeB2c3FyIfFKkseY3L547R8uIJrwfXC0REGzY4
-         Dpgw==
-Received: by 10.68.223.138 with SMTP id qu10mr14354326pbc.50.1338922508444;
- Tue, 05 Jun 2012 11:55:08 -0700 (PDT)
-Received: by 10.68.52.169 with HTTP; Tue, 5 Jun 2012 11:54:48 -0700 (PDT)
-In-Reply-To: <jqljtk$h6d$1@dough.gmane.org>
-X-Gm-Message-State: ALoCoQm+t8dmLipMljgdsdq94MSJPrzz4pP4u40i6rcxkiE34LJxkYC44uMGdl9vw4z/EgstqeOl
+	id S1751313Ab2FETQr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 Jun 2012 15:16:47 -0400
+Received: from youngberry.canonical.com ([91.189.89.112]:54491 "EHLO
+	youngberry.canonical.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751194Ab2FETQq (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Jun 2012 15:16:46 -0400
+Received: from ip72-219-180-13.oc.oc.cox.net ([72.219.180.13] helo=boyd)
+	by youngberry.canonical.com with esmtpsa (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.71)
+	(envelope-from <tyhicks@canonical.com>)
+	id 1SbzFC-0002Jo-3O; Tue, 05 Jun 2012 19:16:42 +0000
+Content-Disposition: inline
+In-Reply-To: <20120605164439.GA2694@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199280>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199281>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199281>
 
-On Tue, Jun 5, 2012 at 11:41 AM, Stephan Peijnik <stephan@peijnik.at> wrote:
-> On 06/05/2012 08:31 PM, Junio C Hamano wrote:
->>
->> How does this compare with the smart-http support that tunnels the
->> git protocol over http (with some butchering)?
->
->
-> To be honest, I didn't know smart-http support yet. Is that the approach
-> introduced with git 1.6.6?
 
-Yes. So its been around for a while now. Like 2 years.
+--96YOpH+ONegL0A3E
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> If so, that approach uses multiple POST requests, meaning multiple TCP and
-> HTTP connections need to be established, multiple requests processed, etc.
+On 2012-06-05 12:44:39, Jeff King wrote:
+> On Tue, Jun 05, 2012 at 09:31:54AM -0700, Junio C Hamano wrote:
+>=20
+> > >>   setfacl -m m:rwx .
+> > >>   perl -MFcntl -e 'sysopen(X, "a", O_WRONLY|O_CREAT, 0444)'
+> > >>   umask 077
+> > >>   perl -MFcntl -e 'sysopen(X, "b", O_WRONLY|O_CREAT, 0444)'
+> > >>   getfacl a b
+> > [...]
+> > >
+> > > Reading the withdrawn posix 1003.1e and "man 5 acl", it seems pretty
+> > > clear that if a default ACL is present, it should be used, and umask
+> > > consulted only if it is not (so the umask should not be making a
+> > > difference in this case).
+> > >
+> > > The reproduction recipe above shows the minimum required to trigger i=
+t;
+> > > adding a more realistic default ACL (with actual entries for users) d=
+oes
+> > > not seem to make a difference.
+> >=20
+> > Thanks; so combining the above with your earlier patch to 1304 we
+> > would have a good detection for SETFACL prerequisite?
+>=20
+> Yes, I think we can detect it reliably. I'd like to hear back from
+> ecryptfs folks before making a final patch, though. It may be that there
+> is some subtle reason for their behavior, and I want to make sure before
+> we write it off as just buggy.
 
-Its actually only one TCP connection... assuming the servers in
-between the client and the Git endpoint correctly support HTTP
-keep-alive semantics.
+It is likely a bug in the eCryptfs filesystem stacking code.
 
-> The WebSocket approach uses a single HTTP connection which gets upgraded to
-> a WebSocket. This WebSocket then allows the same communication to happen as
-> with the ssh implementation.
+However, using the above script, I get the same results on eCryptfs as I
+do on ext4 in the Ubuntu 12.04 (Precise) LTS:
 
-How does this fair going through crappy proxy servers that perform
-man-in-the-middle attacks on SSL connections? Just last week I was
-trying to help someone whose local proxy server was MITM the SSL
-session behind Git's back, and their IT department forgot to install
-the proxy server's certificate into the system certificate directory.
-They only installed it into the browser. That proxy also doesn't
-correctly grok HTTP 1.1 keep-alive with chunked transfer encodings.
-Let alone something as new as web sockets.
+# file: a
+# owner: tyhicks
+# group: tyhicks
+user::r--
+group::r--
+other::r--
 
-> So in comparison there is possibly a lot less overhead and, in theory, the
-> performance should be comparable to running the smart protocol over ssh.
-> Personally I'd say the WebSocket approach is cleaner than the HTTP-POST
-> approach.
+# file: b
+# owner: tyhicks
+# group: tyhicks
+user::r--
+group::---
+other::---
 
-This may be true. But its also a lot more complex to implement. I
-noticed you reused Python code to help make this work. Let me know
-when there is a GPLv2 client library that implements sufficient
-semantics for WebSockets that Git can bundle it out of the box. And
-let me know when most corporate IT proxy servers correctly grok
-WebSockets. I suspect it will be many more years given that they still
-can't even grok chunked transfer encoding.
+Stefan - can you specify which LTS release you're running as well as the
+output of `cat /proc/version_signature`? Thanks!
+
+Tyler
+
+--96YOpH+ONegL0A3E
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (GNU/Linux)
+
+iQIcBAEBCgAGBQJPzlsVAAoJENaSAD2qAscKsyAP/jr7Mzcu6cqUFllkBN5WLLnz
+1crnbYMqkfHa7KIBlVX0TkEB2WZD8ca64at1wI5UcB2QF27JJflJlD++it0jXN8I
+TGYQ/T7hKhLE9XPWFaz/KHZfssdkymf8VaypTx9dMM3FIAtYkXsCs62SMwbce5lA
+MOpSgWgHw8EK0BmbOZeHer2mXQHVNHncoadJDZXqEpOL/QYQJSklgyjUnS5w1C1+
+cQdhCIxYlsz9DidB8cP0IZzSlTWjH6YYLQ2/iWADPig2mRNPxyaZ0LMAzR5gtfcr
+6gceaTlymketv1S6oBA7sHBKzGIuM4KHHd0HLq0xoe5rqJ54baSdoC36RwdlDHIr
+2vLWZmf4wXwfXh6H8Mvx8PDH0Lk3z0gyVO8Bomlhm6lPhYQx8JqzO3dXW16vO0eD
+rA0BpVBCfp2EgegRtl/HNeNaVKx0E9JcwvzXsG/UyGZKJD0R62UKFd0nWqojdQ8g
+clJwckv9uczjA8VBBHEE6+Skkj+mYdNZ2FhYexZ19SrUXoDFotR6FIpibMLvt1sx
+JWqk7DoJMOKbugSpbNZQuaMf/DKz5aKqXqVfJET8iIWJ9gPtbFTQzNg+Enp5e30l
+q86H2WSo4xibYBg86f7a8bNIQctNdGP84QUg2xTTeHrziKzodC3yjznOJd0VWOHv
+oJXqrMHLHXj9BJunwFtA
+=RJBN
+-----END PGP SIGNATURE-----
+
+--96YOpH+ONegL0A3E--
