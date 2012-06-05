@@ -1,72 +1,67 @@
-From: Shawn Pearce <spearce@spearce.org>
+From: Stephan Peijnik <stephan@peijnik.at>
 Subject: Re: git smart protocol via WebSockets - feedback wanted
-Date: Tue, 5 Jun 2012 11:36:28 -0700
-Message-ID: <CAJo=hJtUbuWrVjVMAZirgD2O3f4TXa8YSYURSLUB5t3AD8Czig@mail.gmail.com>
-References: <jqlim2$6vt$1@dough.gmane.org>
+Date: Tue, 05 Jun 2012 20:41:56 +0200
+Message-ID: <jqljtk$h6d$1@dough.gmane.org>
+References: <jqlim2$6vt$1@dough.gmane.org> <7vpq9dobjo.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org
-To: Stephan Peijnik <stephan@peijnik.at>
-X-From: git-owner@vger.kernel.org Tue Jun 05 20:36:57 2012
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jun 05 20:42:20 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Sbycg-0006QD-JY
-	for gcvg-git-2@plane.gmane.org; Tue, 05 Jun 2012 20:36:54 +0200
+	id 1Sbyht-00023Q-0C
+	for gcvg-git-2@plane.gmane.org; Tue, 05 Jun 2012 20:42:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755636Ab2FESgu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 5 Jun 2012 14:36:50 -0400
-Received: from mail-pz0-f46.google.com ([209.85.210.46]:33597 "EHLO
-	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754680Ab2FESgt (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Jun 2012 14:36:49 -0400
-Received: by dady13 with SMTP id y13so7656100dad.19
-        for <git@vger.kernel.org>; Tue, 05 Jun 2012 11:36:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=spearce.org; s=google;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=62lQw3vCGDP3kfGx72wKKcAcldCCf8WEJHpl9USPdx0=;
-        b=T9eQe47CS7rRbaZVU2Cg7wqWf3SD5gkFt2oq9qiFT87t37KBxgnRhPzcGHiHy7kgdU
-         p9dUssaV0w2cY8u26G/AkPDrhOyBha5hlzC3N6scXYhq7asUYGLMjm4eFkZqC9HRtx0n
-         aM0f5jmJwgfuv7QRnQ9/gh0eyc5kK9hRBwQsk=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:x-gm-message-state;
-        bh=62lQw3vCGDP3kfGx72wKKcAcldCCf8WEJHpl9USPdx0=;
-        b=KIzUNpwb0NQtJ5J435FaWYF1o3ChnM5veKv6GWLhQHLXVFaiy45ILKUFzurntnIiZE
-         IvW1VQiiOHEwYbszUriUUu75XdVlEqW8UG+cHP7fnd5Fr5iVLmk7n7S0Jh+UMqY0f7a8
-         EIfaBmII6Bsh1TJIrM9eOSk1ZzlH/Amv+LFVc+DtlhK/GCbzaXbrVF8ngA7mZcV2XZv7
-         RbiObCMXuclLMVoC4r16QpQP6D/ofyWG0k2Z9xhvB2MpJTdN9rvxXQ8g+5/5PtkeBU4S
-         GOA1PdBT22RLUDKCzuQcd6B+JoNR3TJMEWLWJULalR1QtVI60x/mxae0GsuJRQVuZnnH
-         mhhg==
-Received: by 10.68.219.7 with SMTP id pk7mr36905925pbc.36.1338921409203; Tue,
- 05 Jun 2012 11:36:49 -0700 (PDT)
-Received: by 10.68.52.169 with HTTP; Tue, 5 Jun 2012 11:36:28 -0700 (PDT)
-In-Reply-To: <jqlim2$6vt$1@dough.gmane.org>
-X-Gm-Message-State: ALoCoQm5WI0uGmXO83N5AT+b2DOM/UZZgF7QEEu92YlksOsSiZB7pjJXB7xl297du3bQQTjVlr7p
+	id S1755944Ab2FESmM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 Jun 2012 14:42:12 -0400
+Received: from plane.gmane.org ([80.91.229.3]:51441 "EHLO plane.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754861Ab2FESmL (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Jun 2012 14:42:11 -0400
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1Sbyhi-0001bI-RM
+	for git@vger.kernel.org; Tue, 05 Jun 2012 20:42:06 +0200
+Received: from 178-190-4-245.adsl.highway.telekom.at ([178.190.4.245])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 05 Jun 2012 20:42:06 +0200
+Received: from stephan by 178-190-4-245.adsl.highway.telekom.at with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 05 Jun 2012 20:42:06 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: 178-190-4-245.adsl.highway.telekom.at
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:12.0) Gecko/20120430 Thunderbird/12.0.1
+In-Reply-To: <7vpq9dobjo.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199278>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199279>
 
-On Tue, Jun 5, 2012 at 11:20 AM, Stephan Peijnik <stephan@peijnik.at> wrote:
-> Since I have been working on a proof of concept showing that git's smart
-> protocol can be tunneled via WebSocket connections quite easily [0] I wanted
-> to ask for some feedback on the idea in general and on my implementation
-> [1].
->
-> So, basically, what do you think about tunneling git's smart protocol via
-> WebSockets (and thus HTTP)?
-...
-> [0]
-> http://blog.sp.or.at/2012/06/git-smart-protocol-via-websockets-proof.html
-> [1] https://github.com/speijnik/gitws
+On 06/05/2012 08:31 PM, Junio C Hamano wrote:
+> How does this compare with the smart-http support that tunnels the
+> git protocol over http (with some butchering)?
 
-How does this compare with the smart HTTP protocol that has been
-supported since Git 1.6.6, and uses the git-http-backend CGI at the
-server side?
+To be honest, I didn't know smart-http support yet. Is that the approach 
+introduced with git 1.6.6?
+
+If so, that approach uses multiple POST requests, meaning multiple TCP 
+and HTTP connections need to be established, multiple requests 
+processed, etc.
+
+The WebSocket approach uses a single HTTP connection which gets upgraded 
+to a WebSocket. This WebSocket then allows the same communication to 
+happen as with the ssh implementation.
+
+So in comparison there is possibly a lot less overhead and, in theory, 
+the performance should be comparable to running the smart protocol over 
+ssh. Personally I'd say the WebSocket approach is cleaner than the 
+HTTP-POST approach.
+
+-- Stephan
