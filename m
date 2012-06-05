@@ -1,79 +1,67 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Bugreport on Ubuntu LTS: not ok - 2 Objects creation does not
- break ACLs with restrictive umask
-Date: Tue, 5 Jun 2012 10:28:13 -0400
-Message-ID: <20120605142813.GA17238@sigill.intra.peff.net>
-References: <CALbm-EatNCPjFRO4NyGfZuSa72-FXwZcd_7cFe-f_iMOdGL4MQ@mail.gmail.com>
- <7vy5o2ra7w.fsf@alter.siamese.dyndns.org>
- <vpqpq9ejnxs.fsf@bauges.imag.fr>
- <CALbm-EZrKGaj1Q7gbmPmG0wQHxksnJqaS3bz3tMDsego7Zm2ZQ@mail.gmail.com>
- <20120605075614.GE25809@sigill.intra.peff.net>
- <vpq4nqqj8ss.fsf@bauges.imag.fr>
- <CALbm-EbGoaxkvBXphAPF8rRkS=VFeeFHXQSFdWVrZUJJ8DYovw@mail.gmail.com>
- <vpqk3zlhorc.fsf@bauges.imag.fr>
- <20120605140449.GA15640@sigill.intra.peff.net>
- <20120605141039.GB15640@sigill.intra.peff.net>
+From: Rafael Reinoldes <rafareino@gmail.com>
+Subject: Re: integrate latexdiff within git
+Date: Tue, 5 Jun 2012 11:33:53 -0300
+Message-ID: <CAOZB5GEAYab=YV8i-gAT36aSD2gJFUMiZUcqYe_ePJUb72vGFA@mail.gmail.com>
+References: <CAOZB5GFMA8-rE+MXLgZDYGN6GGEVJ0j2vBVtpPXK0pRCyEfYsA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Stefan Beller <stefanbeller@googlemail.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Tue Jun 05 16:28:27 2012
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jun 05 16:34:37 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SbukE-0007ZU-8U
-	for gcvg-git-2@plane.gmane.org; Tue, 05 Jun 2012 16:28:26 +0200
+	id 1Sbuq6-0004t0-DW
+	for gcvg-git-2@plane.gmane.org; Tue, 05 Jun 2012 16:34:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757868Ab2FEO2R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 5 Jun 2012 10:28:17 -0400
-Received: from 99-108-225-23.lightspeed.iplsin.sbcglobal.net ([99.108.225.23]:43787
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756657Ab2FEO2Q (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Jun 2012 10:28:16 -0400
-Received: (qmail 19772 invoked by uid 107); 5 Jun 2012 14:28:19 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 05 Jun 2012 10:28:19 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 05 Jun 2012 10:28:13 -0400
-Content-Disposition: inline
-In-Reply-To: <20120605141039.GB15640@sigill.intra.peff.net>
+	id S1757210Ab2FEOe0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 Jun 2012 10:34:26 -0400
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:47237 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755888Ab2FEOeZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Jun 2012 10:34:25 -0400
+Received: by yenm10 with SMTP id m10so4025747yen.19
+        for <git@vger.kernel.org>; Tue, 05 Jun 2012 07:34:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :content-type;
+        bh=BsY2OgT19mnAR+r079E+5AiqSpVYsNxL/sJVb5UTewg=;
+        b=XgrjnkQSlYQPyKDRY//iQHbGTDCx/piA9dEZJ6k4eEhtdTmLlLrlbdvyhbKBgMP1KJ
+         QpOk17NvxZK0bkoPJIa1HXl6y11j3zKSxLevi9vQJlddsTgX0KEqXK8vvJ7cE2nwoL3H
+         BiowHx9eZMuYXZDYzEH5X9PallNJkVvP6T4DFvOqVj+hFsB0QoZaN56nOrKr6m8GNk1O
+         Uv/8clOW+x3L3HOEueHRF2WcrazP+aXwBECAaWGK5TwKTigVI3Qdm4wvC7YJo3drz1kI
+         8Htkg+V2RnUfGP12w5Imm6Oh85yZn4lXtbBbKdB7BSzkxSD0NzS5MFXazxYUXJ9/aWyM
+         T9Xw==
+Received: by 10.60.9.193 with SMTP id c1mr16213683oeb.47.1338906863748; Tue,
+ 05 Jun 2012 07:34:23 -0700 (PDT)
+Received: by 10.60.60.167 with HTTP; Tue, 5 Jun 2012 07:33:53 -0700 (PDT)
+In-Reply-To: <CAOZB5GFMA8-rE+MXLgZDYGN6GGEVJ0j2vBVtpPXK0pRCyEfYsA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199246>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199247>
 
-On Tue, Jun 05, 2012 at 10:10:39AM -0400, Jeff King wrote:
+Hi folks,
 
-> On Tue, Jun 05, 2012 at 10:04:49AM -0400, Jeff King wrote:
-> 
-> >   # and create some files with different permissions
-> >   perl -MFcntl -e '
-> >     sysopen(X, "a", O_WRONLY|O_CREAT, 0666);
-> >     sysopen(X, "b", O_WRONLY|O_CREAT, 0600);
-> >   '
-> Hmm, no I'm wrong. That is OK, as the mask should be restricted by the
-> group permission (and it is on ext4, too). But when I traced through
-> git, the tmp_obj_* files are created with the right permissions on ext4,
-> but not on ecryptfs. Let me trace through it again...<sigh>
+I'd to suggest a better integration of latesdiff as an alternative to
+simple diff for latex/tex files.
 
-OK, here's the _real_ issue. Git creates with mode 0444, which should
-still allow read in the mask. But it's the restrictive umask at the top
-of the test script that causes the problem. Try this:
+I've wroten a simple function in bash to acomplish this and I'm using
+it im my system. I think that it would work better in perl, but a
+d'ont have time to recode it now. So it's my implementation
+http://stackoverflow.com/a/10858993/955143, take a look and see if you
+can appropriate it.
 
-  setfacl -m m:rwx .
-  perl -MFcntl -e 'sysopen(X, "a", O_WRONLY|O_CREAT, 0444)'
-  umask 077
-  perl -MFcntl -e 'sysopen(X, "b", O_WRONLY|O_CREAT, 0444)'
-  getfacl a b
+Thanks, and sorry to cant help more.
 
-On ext4, both files will have the read bit set in the mask. On ecryptfs,
-"b" will have an empty mask. I think the wrong thing is that we should
-not be respecting umask at all when default ACLs are in play, and
-ecryptfs is getting that wrong. But I'm having trouble digging up an
-authoritative source.
+Att.
 
--Peff
+--
+Rafael Reinoldes
+rafareino@gmail.com
+
+"Experience is not what happens to a man; it is what a man does with
+what happens to him." (Aldous Huxley, Texts and Pretexts - 1932)
