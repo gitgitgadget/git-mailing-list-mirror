@@ -1,181 +1,124 @@
-From: Stefan Beller <stefanbeller@googlemail.com>
-Subject: Re: Bugreport on Ubuntu LTS: not ok - 2 Objects creation does not
- break ACLs with restrictive umask
-Date: Tue, 5 Jun 2012 09:23:47 +0200
-Message-ID: <CALbm-EZrKGaj1Q7gbmPmG0wQHxksnJqaS3bz3tMDsego7Zm2ZQ@mail.gmail.com>
-References: <CALbm-Ea5ZkAGFyB2OETqe7vK7LE+yO0zSaa_+kFMXOhO-nMwMQ@mail.gmail.com>
-	<7vhauqsue3.fsf@alter.siamese.dyndns.org>
-	<CALbm-EatNCPjFRO4NyGfZuSa72-FXwZcd_7cFe-f_iMOdGL4MQ@mail.gmail.com>
-	<7vy5o2ra7w.fsf@alter.siamese.dyndns.org>
-	<vpqpq9ejnxs.fsf@bauges.imag.fr>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 3/3] api-credentials.txt: add "see also" section
+Date: Tue, 5 Jun 2012 03:34:03 -0400
+Message-ID: <20120605073403.GC25809@sigill.intra.peff.net>
+References: <1338739804-32167-1-git-send-email-Matthieu.Moy@imag.fr>
+ <1338739804-32167-4-git-send-email-Matthieu.Moy@imag.fr>
+ <7vsjecvxmc.fsf@alter.siamese.dyndns.org>
+ <vpq1ulvuxd9.fsf@bauges.imag.fr>
+ <20120604115630.GC27676@sigill.intra.peff.net>
+ <vpqpq9en8ol.fsf@bauges.imag.fr>
+ <20120605065955.GB25809@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=utf-8
 Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
 To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Tue Jun 05 09:24:00 2012
+X-From: git-owner@vger.kernel.org Tue Jun 05 09:34:18 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Sbo7R-0006BR-3V
-	for gcvg-git-2@plane.gmane.org; Tue, 05 Jun 2012 09:23:57 +0200
+	id 1SboHN-0004fo-Vj
+	for gcvg-git-2@plane.gmane.org; Tue, 05 Jun 2012 09:34:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756146Ab2FEHXu convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 5 Jun 2012 03:23:50 -0400
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:51004 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756081Ab2FEHXr convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 5 Jun 2012 03:23:47 -0400
-Received: by yenm10 with SMTP id m10so3729844yen.19
-        for <git@vger.kernel.org>; Tue, 05 Jun 2012 00:23:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=UsQhzmegu8pi+3gds3qpPVlXuwxj5iBCcmk7I9pjEsI=;
-        b=BMueoctJSIgqd4VZwrsDxmgPOf2zjZkwAAXamu8H9gsEmj6DnXql+086rBy9n0gV71
-         SKFyREs9GIJuQnmedejo0ZVzYrF+qMfveoch1qonQ1G03B+T6WngAEsU0yAdwtswO8Pm
-         lq33FMsQFkhCkWkWaHhKVYpeIxNpps+TGF4bKnWMHtIf9TerM5WxJUJIBgaVZ6mhSEwr
-         UBT4VdgGp1vBAHH5l20GveIkc1bjtB17rIxFaR+t4/hN/cuGpTNT3iVx/4mIGk5Nk3n/
-         AQn15dKmJ1Vm+Bc80Rv3jtFuM1zQiZnsGrfXr/MCXsFE5WlWeQLiak9y1auTFv2E9pLo
-         LadA==
-Received: by 10.236.190.100 with SMTP id d64mr10253362yhn.37.1338881027090;
- Tue, 05 Jun 2012 00:23:47 -0700 (PDT)
-Received: by 10.236.175.226 with HTTP; Tue, 5 Jun 2012 00:23:47 -0700 (PDT)
-In-Reply-To: <vpqpq9ejnxs.fsf@bauges.imag.fr>
+	id S1753874Ab2FEHeI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 Jun 2012 03:34:08 -0400
+Received: from 99-108-225-23.lightspeed.iplsin.sbcglobal.net ([99.108.225.23]:43107
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753435Ab2FEHeG (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Jun 2012 03:34:06 -0400
+Received: (qmail 14620 invoked by uid 107); 5 Jun 2012 07:34:08 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 05 Jun 2012 03:34:08 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 05 Jun 2012 03:34:03 -0400
+Content-Disposition: inline
+In-Reply-To: <20120605065955.GB25809@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199210>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199211>
 
-Hi,
+On Tue, Jun 05, 2012 at 02:59:55AM -0400, Jeff King wrote:
 
-sb@sb:~/OSS/git/t$ ./t1304-default-acl.sh --verbose
-Initialized empty Git repository in /home/sb/OSS/git/t/trash
-directory.t1304-default-acl/.git/
-expecting success:
-    setfacl -m d:u::rwx,d:g::---,d:o:---,d:m:rwx $dirs_to_set &&
-    setfacl -m m:rwx               $dirs_to_set &&
-    setfacl -m u:root:rwx          $dirs_to_set &&
-    setfacl -m d:u:"${LOGNAME}":rwx  $dirs_to_set &&
-    setfacl -m d:u:root:rwx        $dirs_to_set &&
+> I wonder if we could even make asciidoc work to convert
+> linkgit:git-config[1] into the right path (i.e., to include the ".."
+> automatically) when we are in the subdir.
+> 
+> I don't really have a sense how powerful asciidoc macros are, but this
+> seems like an obvious case that they should handle.
 
-    touch file.txt &&
-    git add file.txt &&
-    git commit -m "init"
+Here is a simple fix. The Makefile bits are more hacky than I would
+like. It would be really nice if the asciidoc macro could convert "we
+are working on X/Y/Z.html" into "we need ../../ to get to the relative
+base", but I don't think it is that flexible.
 
-[master (root-commit) 47f54f4] init
- Author: A U Thor <author@example.com>
- 0 files changed
- create mode 100644 file.txt
-ok 1 - Setup test repo
+We could also replace asciidoc with a wrapper script that does the
+conversion and sets the appropriate attribute. I don't know if it is
+worth the trouble. It's not like we add documentation subdirectories
+very often.
 
-expecting success:
-    # SHA1 for empty blob
-    check_perms_and_acl .git/objects/e6/9de29bb2d1d6434b8b29ae775ad8c2e=
-48c5391
+-- >8 --
+Subject: docs: fix cross-directory linkgit references
 
-/home/sb/OSS/git/t/trash directory.t1304-default-acl
-not ok - 2 Objects creation does not break ACLs with restrictive umask
-#=09
-#	    # SHA1 for empty blob
-#	    check_perms_and_acl .git/objects/e6/9de29bb2d1d6434b8b29ae775ad8c=
-2e48c5391
-#=09
+Most of our documentation is in a single directory, so using
+linkgit:git-config[1] just generates a relative link in the
+same directory. However, this is not the case with the API
+documentation in technical/*, which need to refer to
+git-config from the parent directory.
 
-expecting success:
-    git gc &&
-    check_perms_and_acl .git/objects/pack/*.pack
+We can fix this by passing a special prefix attribute when building
+in a subdirectory, and respecting that prefix in our linkgit
+definitions.
 
-Counting objects: 3, done.
-Writing objects: 100% (3/3), done.
-Total 3 (delta 0), reused 0 (delta 0)
-/home/sb/OSS/git/t/trash directory.t1304-default-acl
-not ok - 3 git gc does not break ACLs with restrictive umask
-#=09
-#	    git gc &&
-#	    check_perms_and_acl .git/objects/pack/*.pack
-#=09
+We only have to modify the html linkgit definition.  For
+manpages, we can ignore this for two reasons:
 
-# failed 2 among 3 test(s)
-1..3
-sb@sb:~/OSS/git/t$ cat trash\ directory.t1304-default-acl/actual
-# file: .git/objects/pack/pack-ee77696bcc9be7ef581005ee3706bc17fcba376d=
-=2Epack
-# owner: sb
-# group: sb
-user::r--
-user:root:rwx	#effective:---
-user:sb:rwx	#effective:---
-group::---
-mask::---
-other::---
+  1. we do not generate actual links to the file in
+     manpages, but instead just give the name and section of
+     the linked manpage
 
-sb@sb:~/OSS/git/t$ mount
-/dev/sda3 on / type ext4 (rw,errors=3Dremount-ro)
-proc on /proc type proc (rw,noexec,nosuid,nodev)
-sysfs on /sys type sysfs (rw,noexec,nosuid,nodev)
-none on /sys/fs/fuse/connections type fusectl (rw)
-none on /sys/kernel/debug type debugfs (rw)
-none on /sys/kernel/security type securityfs (rw)
-udev on /dev type devtmpfs (rw,mode=3D0755)
-devpts on /dev/pts type devpts (rw,noexec,nosuid,gid=3D5,mode=3D0620)
-tmpfs on /run type tmpfs (rw,noexec,nosuid,size=3D10%,mode=3D0755)
-none on /run/lock type tmpfs (rw,noexec,nosuid,nodev,size=3D5242880)
-none on /run/shm type tmpfs (rw,nosuid,nodev)
-/dev/sda4 on /home type ext4 (rw)
-binfmt_misc on /proc/sys/fs/binfmt_misc type binfmt_misc
-(rw,noexec,nosuid,nodev)
-/home/sb/.Private on /home/sb type ecryptfs
-(ecryptfs_check_dev_ruid,ecryptfs_cipher=3Daes,ecryptfs_key_bytes=3D16,=
-ecryptfs_unlink_sigs,ecryptfs_sig=3D3b9d213e5c5d5780,ecryptfs_fnek_sig=3D=
-77bec2da523c0338)
-gvfs-fuse-daemon on /home/sb/.gvfs type fuse.gvfs-fuse-daemon
-(rw,nosuid,nodev,user=3Dsb)
+  2. we do not currently build manpages for subdirectories,
+     only html
 
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ Documentation/Makefile      | 2 ++
+ Documentation/asciidoc.conf | 2 +-
+ 2 files changed, 3 insertions(+), 1 deletion(-)
 
-So I am using /dev/sda4 on /home type ext4 (rw), but my user account
-has its home directory encrypted via ecryptfs.
-This is not run inside a virtual machine, it's a native computer.
-
-
-
-2012/6/5 Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>:
-> Junio C Hamano <gitster@pobox.com> writes:
->
->> Stefan Beller <stefanbeller@googlemail.com> writes:
->>
->>> I tried debugging into it:
->>> In git/t/t1304-default-acl.sh there is:
->>> check_perms_and_acl () {
->>> =A0 =A0 test -r "$1" &&
->>> =A0 =A0 getfacl "$1" > actual &&
->>> =A0 =A0 grep -q "user:root:rwx" actual &&
->>> =A0 =A0 grep -q "user:${LOGNAME}:rwx" actual &&
->>> =A0 =A0 egrep "mask::?r--" actual > /dev/null 2>&1 &&
->>> =A0 =A0 grep -q "group::---" actual || false
->>> }
->
-> Can you run it with --verbose and post the result?
->
->> Any ideas (other than "Your filesystem is broken",
->> that is)?
->
-> I'm very tempted to go for the "Your filesystem is broken" indeed.
->
->> As far as I can tell, with 'mask::---', these specific users who are
->> given permissions to read from the objects wouldn't be able to read
->> from them, so...
->
-> That's my understanding too.
->
-> Stefan, which filesystem are you using in the directory where you run
-> tests (type "mount" if you don't know)? Are you running on a virtual
-> machine?
->
-> --
-> Matthieu Moy
-> http://www-verimag.imag.fr/~moy/
+diff --git a/Documentation/Makefile b/Documentation/Makefile
+index 14286cb..b3693c8 100644
+--- a/Documentation/Makefile
++++ b/Documentation/Makefile
+@@ -280,6 +280,7 @@ technical/api-index.txt: technical/api-index-skel.txt \
+ 	technical/api-index.sh $(patsubst %,%.txt,$(API_DOCS))
+ 	$(QUIET_GEN)cd technical && '$(SHELL_PATH_SQ)' ./api-index.sh
+ 
++technical/%.html: ASCIIDOC_EXTRA += -a git-relative-html-prefix=../
+ $(patsubst %,%.html,$(API_DOCS) technical/api-index): %.html : %.txt
+ 	$(QUIET_ASCIIDOC)$(ASCIIDOC) -b xhtml11 -f asciidoc.conf \
+ 		$(ASCIIDOC_EXTRA) -agit_version=$(GIT_VERSION) $*.txt
+@@ -333,6 +334,7 @@ $(patsubst %,%.html,$(ARTICLES)) : %.html : %.txt
+ 
+ WEBDOC_DEST = /pub/software/scm/git/docs
+ 
++howto/%.html: ASCIIDOC_EXTRA += git-relative-html-prefix=../
+ $(patsubst %.txt,%.html,$(wildcard howto/*.txt)): %.html : %.txt
+ 	$(QUIET_ASCIIDOC)$(RM) $@+ $@ && \
+ 	sed -e '1,/^$$/d' $< | $(ASCIIDOC) $(ASCIIDOC_EXTRA) -b xhtml11 - >$@+ && \
+diff --git a/Documentation/asciidoc.conf b/Documentation/asciidoc.conf
+index aea8627..6d06271 100644
+--- a/Documentation/asciidoc.conf
++++ b/Documentation/asciidoc.conf
+@@ -91,5 +91,5 @@ endif::doctype-manpage[]
+ 
+ ifdef::backend-xhtml11[]
+ [linkgit-inlinemacro]
+-<a href="{target}.html">{target}{0?({0})}</a>
++<a href="{git-relative-html-prefix}{target}.html">{target}{0?({0})}</a>
+ endif::backend-xhtml11[]
+-- 
+1.7.11.rc1.3.gf8b4f5c
