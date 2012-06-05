@@ -1,69 +1,65 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] pager: drop "wait for output to run less" hack
-Date: Tue, 5 Jun 2012 12:01:57 -0400
-Message-ID: <20120605160157.GA20582@sigill.intra.peff.net>
-References: <20120605085604.GA27298@sigill.intra.peff.net>
- <CABPQNSbhgan+i_Q142R8VvRdJ5T+GyYHqgEJ6KS-BBJguRu-OQ@mail.gmail.com>
+Subject: Re: [RFC] Deal with HTTP 401 by requesting credentials.
+Date: Tue, 5 Jun 2012 12:23:09 -0400
+Message-ID: <20120605162309.GA20915@sigill.intra.peff.net>
+References: <4FC7EFB7.4090704@steadfast.net>
+ <20120601083537.GA32340@sigill.intra.peff.net>
+ <7vtxyv2cft.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Florian Achleitner <florian.achleitner.2.6.31@gmail.com>
-To: Erik Faye-Lund <kusmabite@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jun 05 18:02:07 2012
+Cc: Kevin Stange <kevin@steadfast.net>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jun 05 18:23:21 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SbwCr-0002dd-Si
-	for gcvg-git-2@plane.gmane.org; Tue, 05 Jun 2012 18:02:06 +0200
+	id 1SbwXN-0001Dh-3J
+	for gcvg-git-2@plane.gmane.org; Tue, 05 Jun 2012 18:23:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753786Ab2FEQCA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 5 Jun 2012 12:02:00 -0400
-Received: from 99-108-225-23.lightspeed.iplsin.sbcglobal.net ([99.108.225.23]:43894
+	id S1754093Ab2FEQXN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 Jun 2012 12:23:13 -0400
+Received: from 99-108-225-23.lightspeed.iplsin.sbcglobal.net ([99.108.225.23]:43918
 	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753658Ab2FEQCA (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Jun 2012 12:02:00 -0400
-Received: (qmail 20899 invoked by uid 107); 5 Jun 2012 16:02:03 -0000
+	id S1753907Ab2FEQXM (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Jun 2012 12:23:12 -0400
+Received: (qmail 21050 invoked by uid 107); 5 Jun 2012 16:23:15 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 05 Jun 2012 12:02:03 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 05 Jun 2012 12:01:57 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 05 Jun 2012 12:23:15 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 05 Jun 2012 12:23:09 -0400
 Content-Disposition: inline
-In-Reply-To: <CABPQNSbhgan+i_Q142R8VvRdJ5T+GyYHqgEJ6KS-BBJguRu-OQ@mail.gmail.com>
+In-Reply-To: <7vtxyv2cft.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199255>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199256>
 
-On Tue, Jun 05, 2012 at 05:52:24PM +0200, Erik Faye-Lund wrote:
+On Fri, Jun 01, 2012 at 10:01:58AM -0700, Junio C Hamano wrote:
 
-> On Tue, Jun 5, 2012 at 10:56 AM, Jeff King <peff@peff.net> wrote:
-> > I checked, and even RHEL5 is on less 436. So besides people on antique
-> > "I installed less from source more than 5 years ago" systems, my only
-> > concern would be that some other pager depends on this hack in a weird
-> > way. But I have never heard of such a thing, so...
+> >> Request credentials from the user if none are already defined when a
+> >> HTTP 401 is received on a restricted repository.  Then, resubmit the
+> >> request and return the final result.
+> >> 
+> >> This allows all webdav transactions to obtain credentials without having
+> >> to individually handle the case in each request.  Having push working
+> >> with HTTP auth is needed for a use case I have where storing the
+> >> credentials in .netrc or using SSH keys is inappropriate.
+> >
+> > We already do this at a higher level in http_request, which in turns
+> > calls into finish_active_slot. So if we were going to go this route,
+> > wouldn't we also want to remove the 401 handling in http_request?
 > 
-> On my RHEL5 box at work:
-> $ less --version
-> less 394
-> Copyright (C) 1984-2005 Mark Nudelman
+> Wouldn't the higher levels know a lot more about the context this
+> request was made, though?  What problem does the patch try to solve?
+> Some higher level callers missing the "if we got 401, then reset and
+> retry" logic?  Wouldn't it be saner to fix the breakage there?
 
-Then I think you are not following the bug-fix updates, as they've
-issued several updates based on 436:
-
-  https://rhn.redhat.com/errata/RHBA-2010-0214.html
-
-  https://rhn.redhat.com/errata/RHBA-2010-0805.html
-
-  http://rhn.redhat.com/errata/RHBA-2011-1468.html
-
-Looks like 394 was shipping as recently as 2009:
-
-  https://rhn.redhat.com/errata/RHBA-2009-0413.html
-
-Given that the buggy less is apparently still in the wild, and that the
-patch is a pure cleanup, I guess we should scrap it for now. <sigh>
+I don't know that the higher level really has much more context; the URL
+is really the only context we use. I think the problem is adequately
+solved in http_request; it is simply that the http-push code paths do
+not use it. The patch solves that by pushing it to a lower level.
 
 -Peff
