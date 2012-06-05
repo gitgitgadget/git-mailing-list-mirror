@@ -1,108 +1,79 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Documentation: have ls-files and ls-tree "see also" each
- other
-Date: Tue, 05 Jun 2012 08:03:38 -0700
-Message-ID: <7v62b5reb9.fsf@alter.siamese.dyndns.org>
-References: <1338873037-4343-1-git-send-email-mmogilvi_git@miniinfo.net>
- <7vehpuqpob.fsf@alter.siamese.dyndns.org> <20120605062935.GA4683@comcast.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: Bugreport on Ubuntu LTS: not ok - 2 Objects creation does not
+ break ACLs with restrictive umask
+Date: Tue, 5 Jun 2012 11:05:50 -0400
+Message-ID: <20120605150550.GA19843@sigill.intra.peff.net>
+References: <7vy5o2ra7w.fsf@alter.siamese.dyndns.org>
+ <vpqpq9ejnxs.fsf@bauges.imag.fr>
+ <CALbm-EZrKGaj1Q7gbmPmG0wQHxksnJqaS3bz3tMDsego7Zm2ZQ@mail.gmail.com>
+ <20120605075614.GE25809@sigill.intra.peff.net>
+ <vpq4nqqj8ss.fsf@bauges.imag.fr>
+ <CALbm-EbGoaxkvBXphAPF8rRkS=VFeeFHXQSFdWVrZUJJ8DYovw@mail.gmail.com>
+ <vpqk3zlhorc.fsf@bauges.imag.fr>
+ <20120605140449.GA15640@sigill.intra.peff.net>
+ <20120605141039.GB15640@sigill.intra.peff.net>
+ <20120605142813.GA17238@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Matthew Ogilvie <mmogilvi_git@miniinfo.net>
-X-From: git-owner@vger.kernel.org Tue Jun 05 17:03:52 2012
+Content-Type: text/plain; charset=utf-8
+Cc: ecryptfs@vger.kernel.org,
+	Stefan Beller <stefanbeller@googlemail.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Tue Jun 05 17:05:58 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SbvIU-0007Iw-91
-	for gcvg-git-2@plane.gmane.org; Tue, 05 Jun 2012 17:03:50 +0200
+	id 1SbvKX-0003dk-6P
+	for gcvg-git-2@plane.gmane.org; Tue, 05 Jun 2012 17:05:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751666Ab2FEPDq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 5 Jun 2012 11:03:46 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:45052 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751037Ab2FEPDp (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Jun 2012 11:03:45 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 680778B61;
-	Tue,  5 Jun 2012 11:03:40 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=LUKKaz7CEr0beZ1ZWurRSTU/BJg=; b=Wy6IuP
-	OJTaHsIJsxxKg+rJx2FLzxxDMCQsizBCvTa3+l/hLOqgvEHDoEg0CYCp/ZqD/TQd
-	b64/0878JzjlpR8tWKBMrypTNB9u+h60/N/d78DshiY+7Uote/FBa0RWXzfi+dxN
-	7MY8qMwi9dXS91hWDpWusjUDnrwT3y1Ak5k+8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=lhf2jxgwleum8PINVeoiOfiQi2ou5e0/
-	dhyeDpYAYia2IOqYsQpbtJ3toVfjQda5ch/0HW9IQaa+1dpGo1vBat6pWE149Fli
-	DVQIWiIGSCIybwq9Y7FIbTY2WHTRDgIz0lXBH5AlofsAVrNyE+07ebpZXlmoGlKB
-	nWYyFC1Emeo=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5ED0C8B60;
-	Tue,  5 Jun 2012 11:03:40 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id DDECE8B5E; Tue,  5 Jun 2012
- 11:03:39 -0400 (EDT)
-In-Reply-To: <20120605062935.GA4683@comcast.net> (Matthew Ogilvie's message
- of "Tue, 5 Jun 2012 00:29:35 -0600")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: A2466410-AF1F-11E1-B89F-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751445Ab2FEPFx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 Jun 2012 11:05:53 -0400
+Received: from 99-108-225-23.lightspeed.iplsin.sbcglobal.net ([99.108.225.23]:43826
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750912Ab2FEPFw (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Jun 2012 11:05:52 -0400
+Received: (qmail 20102 invoked by uid 107); 5 Jun 2012 15:05:56 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 05 Jun 2012 11:05:56 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 05 Jun 2012 11:05:50 -0400
+Content-Disposition: inline
+In-Reply-To: <20120605142813.GA17238@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199248>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199249>
 
-Matthew Ogilvie <mmogilvi_git@miniinfo.net> writes:
+[+cc ecryptfs@vger, as I think this is an ecryptfs bug]
 
-> On Mon, Jun 04, 2012 at 10:43:32PM -0700, Junio C Hamano wrote:
->> ...
->> That kind of overfiew is what the tutorial (for concepts like the
->> index, tree objects, commit objects, etc.) and the list of commands
->> in git(1).  Is there compelling reason other than "I didn't bother
->> to look, and it is likely other people wouldn't" to apply patches
->> like this?
->
-> Not really.  Certainly this is a low priority change.
->
-> But why do many of the man pages have "SEE ALSO"
-> sections?  Should we just get rid of such sections?  Does anyone
-> have any guidelines/rules for what makes sense to be in a
-> "SEE ALSO" section?
+On Tue, Jun 05, 2012 at 10:28:13AM -0400, Jeff King wrote:
 
-Two questions that sound similar, somewhat related to each other,
-but fundamentally different are [*1*]:
+> OK, here's the _real_ issue. Git creates with mode 0444, which should
+> still allow read in the mask. But it's the restrictive umask at the top
+> of the test script that causes the problem. Try this:
+> 
+>   setfacl -m m:rwx .
+>   perl -MFcntl -e 'sysopen(X, "a", O_WRONLY|O_CREAT, 0444)'
+>   umask 077
+>   perl -MFcntl -e 'sysopen(X, "b", O_WRONLY|O_CREAT, 0444)'
+>   getfacl a b
+> 
+> On ext4, both files will have the read bit set in the mask. On ecryptfs,
+> "b" will have an empty mask. I think the wrong thing is that we should
+> not be respecting umask at all when default ACLs are in play, and
+> ecryptfs is getting that wrong. But I'm having trouble digging up an
+> authoritative source.
 
- - Does it help knowing B to make good use of A?
+Reading the withdrawn posix 1003.1e and "man 5 acl", it seems pretty
+clear that if a default ACL is present, it should be used, and umask
+consulted only if it is not (so the umask should not be making a
+difference in this case).
 
- - Do you need to know what is in the documentation for B in order
-   to understand what is in the documentation for A?
+The reproduction recipe above shows the minimum required to trigger it;
+adding a more realistic default ACL (with actual entries for users) does
+not seem to make a difference.
 
-If the answer to either one is yes, it may be a good idea to have
-"See also B" in the documentation for A.
-
-The ls-files and ls-tree pair does not pass either of the above two
-tests. They both give list of paths (but so do "diff --name-only"
-and other things), but the similarity between them stops there, and
-more importantly, similarity does not play any role in the above two
-tests.
-
-If we had a third test:
-
- - Does it help knowing B to avoid wasting time attempting to use A
-   for a task for which A is not a suitable tool?
-
-then ls-files and ls-tree pair would qualify.  I however am not
-convinced it is particularly a good test.
-
-
-[Footnote]
-
-*1* Note that the latter is a sign that A is described in terms of B
-(i.e. "We assume you understand B; otherwise stop now, go there and
-learn B, and come back. Now we will describe A"); it is preferrable
-to avoid it if we can do so without duplication of the information
-at the source level.
+-Peff
