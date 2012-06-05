@@ -1,62 +1,70 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: [PATCH v8 3/4] submodule: fix sync handling of some relative
- superproject origin URLs
-Date: Tue, 05 Jun 2012 23:18:34 +0200
-Message-ID: <4FCE77AA.6060005@web.de>
-References: <1338716810-9881-1-git-send-email-jon.seymour@gmail.com> <1338716810-9881-4-git-send-email-jon.seymour@gmail.com>
+From: Florian Achleitner <florian.achleitner.2.6.31@gmail.com>
+Subject: Re: [RFC 4/4] Add cat-blob report pipe from fast-import to remote-helper.
+Date: Wed, 06 Jun 2012 00:16:25 +0200
+Message-ID: <5801019.gWQEmI8V81@flobuntu>
+References: <1338830455-3091-1-git-send-email-florian.achleitner.2.6.31@gmail.com> <CAFfmPPP1koMnYBFbgHt0MGr77okjL5OdAh-TMxFTevj+mDbOZQ@mail.gmail.com> <20120605081402.GF25809@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, gitster@pobox.com, phil.hord@gmail.com,
-	ramsay@ramsay1.demon.co.uk, j6t@kdbg.org
-To: Jon Seymour <jon.seymour@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jun 05 23:24:29 2012
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7Bit
+Cc: David Michael Barr <davidbarr@google.com>,
+	Florian Achleitner <florian.achleitner.2.6.31@gmail.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Jun 06 00:17:49 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Sc1Em-0007M2-7h
-	for gcvg-git-2@plane.gmane.org; Tue, 05 Jun 2012 23:24:24 +0200
+	id 1Sc24Q-0000FJ-HU
+	for gcvg-git-2@plane.gmane.org; Wed, 06 Jun 2012 00:17:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752590Ab2FEVYT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 5 Jun 2012 17:24:19 -0400
-Received: from mout.web.de ([212.227.17.12]:63145 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751087Ab2FEVYS (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Jun 2012 17:24:18 -0400
-X-Greylist: delayed 315 seconds by postgrey-1.27 at vger.kernel.org; Tue, 05 Jun 2012 17:24:18 EDT
-Received: from [192.168.178.48] ([91.3.188.21]) by smtp.web.de (mrweb003) with
- ESMTPA (Nemesis) id 0MBkKF-1SjOrS3KKN-00AQom; Tue, 05 Jun 2012 23:18:37 +0200
-User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:12.0) Gecko/20120428 Thunderbird/12.0.1
-In-Reply-To: <1338716810-9881-4-git-send-email-jon.seymour@gmail.com>
-X-Provags-ID: V02:K0:A9qFdQnnxh3dTLr+vMXdH+Kc4Jd2vLi148ftA8sNS41
- beOa65b6sRIrJYxFctZ94RQsI0+tp9wJByXC0l8fHWKi8bUPr+
- KzHIHA/Y6OQbXYCH/ABOp52CZUqFhqPpTevkfRuWq9CcZvoMrQ
- DEFyBWePRFqv0ngAhcPo0n3Y4L1SYILP08XM/iYOGq/wlUUcx0
- rahSAjncyenyZAEq6X5zA==
+	id S1752802Ab2FEWR0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 Jun 2012 18:17:26 -0400
+Received: from mail-we0-f174.google.com ([74.125.82.174]:35074 "EHLO
+	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751575Ab2FEWRZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Jun 2012 18:17:25 -0400
+Received: by weyu7 with SMTP id u7so3908746wey.19
+        for <git@vger.kernel.org>; Tue, 05 Jun 2012 15:17:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:user-agent:in-reply-to
+         :references:mime-version:content-transfer-encoding:content-type;
+        bh=/LwUqDGVwldFKCsShYLIOVQ2aQq2bfJqlZhdGYOThj0=;
+        b=SS8fP0o/bZOzyMjsLSbyLiwt/gh6TLbkptPCgeCMDsY6fDx/Efek/wkwQvRxh/Q8vc
+         b6SllyGUqHVkkC47uCKNgdQBjRI40fm0wadmKV0aOtNCmovtNmNSYwvVav7ZzH7UQ7JM
+         MJFL20kPUclmjMVOkX6Pdua/oFWUFoSInQobUjiXymE7qpVHxzoGJ3TqbVB/lirTsMFl
+         RZnWoS8k4jr7a4T2TYr7ojt6e5idjKyvboWyB+GqYTLbBiYO6OEZjXrVHY61olcz68gI
+         ZmOjHfOGZFwhlNcUM/mGSvC2qlDsD/sqew0Gh8pBILGI1092qOdfcVOsTb5hCGU6m2QE
+         sRIg==
+Received: by 10.216.228.98 with SMTP id e76mr13944881weq.150.1338934644095;
+        Tue, 05 Jun 2012 15:17:24 -0700 (PDT)
+Received: from flobuntu.localnet (m-149.vc-graz.ac.at. [193.170.224.149])
+        by mx.google.com with ESMTPS id e20sm426740wiv.7.2012.06.05.15.17.21
+        (version=SSLv3 cipher=OTHER);
+        Tue, 05 Jun 2012 15:17:23 -0700 (PDT)
+User-Agent: KMail/4.8.3 (Linux/3.2.0-24-generic; KDE/4.8.3; x86_64; ; )
+In-Reply-To: <20120605081402.GF25809@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199293>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199294>
 
-Am 03.06.2012 11:46, schrieb Jon Seymour:
-> @@ -959,19 +985,32 @@ cmd_sync()
->  	while read mode sha1 stage sm_path
->  	do
->  		name=$(module_name "$sm_path")
-> -		url=$(git config -f .gitmodules --get submodule."$name".url)
-> +		# path from superproject origin repo to submodule origin repo
+On Tuesday 05 June 2012 04:14:02 Jeff King wrote:
+> Is there a reason that the patch unconditionally creates the pipe in
+> get_helper? I.e., isn't it specific to the get_importer code path? It
+> feels a little hacky to have it infect the other code paths.
 
-This comment is misleading as it only describes part of the truth, in a lot
-of cases it'll just be an absolute URL of the submodule.
+I agree, it's a bit hacky. For me as a newbee, it was just a way to make fast-
+import have the pipe it needs. I didn't know about the history of the 
+preexec_cb as a fix for a bug in less.
 
-> +		module_url=$(git config -f .gitmodules --get submodule."$name".url)
+The pipe is created unconditionally, because at the fork-time of the remote-
+helper it is not known whether the import command will be used later together 
+with fast-import, or not. (and later, there's no way, I think).
+Helpers that don't use the pipe could simply ignore it.
 
-And I see no real value of renaming "url" to "module_url" here (but maybe
-that is just me).
-
-So I'd vote for dropping that comment and the "url" to "module_url" change.
-But apart from that and the issues Junio mentioned in his response this
-series is looking good to me.
+--
+Florian Achleitner
