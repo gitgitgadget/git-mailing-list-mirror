@@ -1,103 +1,144 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/3] Script to install, delete and clear a MediaWiki
-Date: Tue, 05 Jun 2012 09:48:01 -0700
-Message-ID: <7vhauppuwu.fsf@alter.siamese.dyndns.org>
-References: <4FCE07A5.9020001@ensimag.imag.fr>
- <1338902756-4162-1-git-send-email-simon.cathebras@ensimag.imag.fr>
+From: Brian Ericson <bericson@ptc.com>
+Subject: a diff equivalent to show?
+Date: Tue, 05 Jun 2012 11:39:43 -0500
+Message-ID: <4FCE364F.1030307@ptc.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Matthieu.Moy@imag.fr,
-	charles.roussel@ensimag.imag.fr, Guillaume.Sasdy@ensimag.imag.fr,
-	Julien.Khayat@ensimag.imag.fr, Simon.Perrat@ensimag.imag.fr,
-	peff@peff.net
-To: Simon Cathebras <simon.cathebras@ensimag.imag.fr>
-X-From: git-owner@vger.kernel.org Tue Jun 05 18:48:10 2012
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jun 05 18:49:35 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SbwvQ-0006W2-Rl
-	for gcvg-git-2@plane.gmane.org; Tue, 05 Jun 2012 18:48:09 +0200
+	id 1Sbwwl-0001Op-FO
+	for gcvg-git-2@plane.gmane.org; Tue, 05 Jun 2012 18:49:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754437Ab2FEQsG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 5 Jun 2012 12:48:06 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:61011 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754360Ab2FEQsE (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Jun 2012 12:48:04 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0532B9816;
-	Tue,  5 Jun 2012 12:48:04 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=08DTtLnS4jFPCQ4iE3ynagO7b0M=; b=V9D5qe
-	PKCt8XRb+bVU5VIL9pzgYylM6QYIhJtyvVG968opbMCU73qD0+3XKF7/OXH8h0Tk
-	Ws1AKV2FlFG5JDMmIHzs0T+PlnQUYnx3vflN+mnoG+v68ocXVzjI9bD8N/SZbSN0
-	doWeFmpEgDhQwe6ayehkObxnLInhmhXahvB0E=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=a2LWU9dcwUlIsiSB8A1SKIE28qwHed2G
-	oRV6gCHLp29VoxSjcIXENBrTjV17Vk5fyroS3asraqHrNyjfoFWEuaXI/zmhvtSw
-	oHjZ0YlLs7p5ug5VDDtCaHQKJ2wdzIppOJZ8/aSm0Sq4SFBF3nTPAzbzeapdAVsw
-	+2/LR5O05vg=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EE3B99814;
-	Tue,  5 Jun 2012 12:48:03 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2FB339812; Tue,  5 Jun 2012
- 12:48:03 -0400 (EDT)
-In-Reply-To: <1338902756-4162-1-git-send-email-simon.cathebras@ensimag.imag.fr> (Simon
- Cathebras's message of "Tue, 5 Jun 2012 15:25:54 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 3780D782-AF2E-11E1-866A-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754503Ab2FEQt1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 Jun 2012 12:49:27 -0400
+Received: from irp2.ptc.com ([12.11.148.84]:33451 "EHLO irp2.ptc.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754024Ab2FEQt1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Jun 2012 12:49:27 -0400
+X-Greylist: delayed 581 seconds by postgrey-1.27 at vger.kernel.org; Tue, 05 Jun 2012 12:49:27 EDT
+X-IronPort-AV: E=Sophos;i="4.75,718,1330923600"; 
+   d="scan'208";a="116772675"
+Received: from hq-ex3fe3.ptcnet.ptc.com ([132.253.201.67])
+  by irp2.ptc.com with ESMTP; 05 Jun 2012 12:39:44 -0400
+Received: from bericson.ptcnet.ptc.com ([132.253.201.117]) by hq-ex3fe3.ptcnet.ptc.com with Microsoft SMTPSVC(6.0.3790.4675);
+	 Tue, 5 Jun 2012 12:39:44 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:12.0) Gecko/20120430 Thunderbird/12.0.1
+X-OriginalArrivalTime: 05 Jun 2012 16:39:44.0130 (UTC) FILETIME=[CFC05E20:01CD4339]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199264>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199265>
 
-Simon Cathebras <simon.cathebras@ensimag.imag.fr> writes:
+Is there a way I can get the same results (files & diff content) using 
+"git diff" that I can get using "git show"?  I ask because I want show's 
+basic results (changes it represents via, for example, --name-status), 
+but need the options and output of diff.
 
-> From: Guillaume Sasdy <guillaume.sasdy@ensimag.imag.fr>
->
-> install_wiki.sh expects the first argument to be 'install' or 'delete'
-> 'install' installs a MediaWiki on the web's server with SQLite3
-> 'delete' deletes the previously created wiki.
-> Note those functionnalities are made to be used from the user command line in
-> the directory t/
->
-> install_wiki also defines a function wiki_reset which clear all content
-> of the previously created wiki. Note this functionnality is made to be
-> used only by our test function in a subdirectory of t/
->
-> Signed-off-by: Simon Cathebras <simon.cathebras@ensimag.imag.fr>
-> Signed-off-by: Guillaume Sasdy <guillaume.sasdy@ensimag.imag.fr>
-> Signed-off-by: Julien Khayat <julien.khayat@ensimag.imag.fr>
-> Signed-off-by: Simon Perrat <simon.perrat@ensimag.imag.fr>
-> Signed-off-by: Charles Roussel <charles.roussel@ensimag.imag.fr>
-> Signed-off-by: Matthieu Moy <matthieu.moy@imag.fr>
-> ---
->  t/install-wiki.sh                |  38 ++++++++++
->  t/install-wiki/LocalSettings.php | 129 ++++++++++++++++++++++++++++++++
->  t/install-wiki/db_install.php    | 110 ++++++++++++++++++++++++++++
->  t/test-gitmw-lib.sh              | 154 +++++++++++++++++++++++++++++++++++++++
+I'm interested, in particular, in three merge cases involving merges to 
+master from "other" (see example repo below):
+* other changed file (10241ee as "First merge.")
+* master changed file (178f994 as "Second merge.")
+* Conflicting merge resolved by keeping my changes (bc1291a as "Third 
+merge.")
 
-Hrm, I see my name on the Cc: list, but is this meant to go into my tree?
+In all three cases, "show" shows no changes (via git show bc1291a 
+178f994 10241ee).  However, I can't consistently get diff to replicate 
+the show's result, as shown via
+function differ() {
+   local RESULT=$( git --no-pager diff --name-status $1 )
+   printf "%-29s -- %s\n" "$1" "${RESULT:-OK}"
+}
 
-The t/ directory is a very strange place to put an installation
-procedure for anything.  Is this because later test scripts that
-test mw-to-git gateway need to have a mediawiki instance that runs
-locally?
+for commit in bc1291a 178f994 10241ee
+do
+   #Shouldn't this work?
+   differ $commit^!
+   #Should be equivalent to previous
+   differ "^$commit^@ $commit"
+   #Yet another way of representing the same thing.
+   differ "^$commit^1 ^$commit^2 $commit"
+   #Hrm...  This is also equivalent?!
+   differ "^$commit^1 $commit"
+   #I probably should (better) understand why order matters...
+   differ "$commit ^$commit^@"
+   #Thrown in for good measure.
+   differ "^$commit^2 $commit"
+   echo
+done
 
-I am wondering why it is not sufficient to structure the MediaWiki
-related tests more like existing tests that require a running HTTP
-server, namely, t/lib-httpd.sh that allows such tests to proceed
-only if a suitable server is available, but we do not ship a script
-to install Apache for that.
+which produces:
+10241ee^!                     -- M    file
+^10241ee^@ 10241ee            -- M    file
+^10241ee^1 ^10241ee^2 10241ee -- M    file
+^10241ee^1 10241ee            -- M    file
+10241ee ^10241ee^@            -- OK
+^10241ee^2 10241ee            -- OK
 
->  mode change 100644 => 100755 t/test-lib-functions.sh
->  mode change 100644 => 100755 t/test-lib.sh
+178f994^!                     -- A    unrelated_file
+^178f994^@ 178f994            -- A    unrelated_file
+^178f994^1 ^178f994^2 178f994 -- A    unrelated_file
+^178f994^1 178f994            -- A    unrelated_file
+178f994 ^178f994^@            -- OK
+^178f994^2 178f994            -- M    file
 
-Why?
+bc1291a^!                     -- OK
+^bc1291a^@ bc1291a            -- OK
+^bc1291a^1 ^bc1291a^2 bc1291a -- OK
+^bc1291a^1 bc1291a            -- OK
+bc1291a ^bc1291a^@            -- M    file
+^bc1291a^2 bc1291a            -- M    file
+
+Tangentially, it seems odd to me that $commit^! seems equivalent to 
+^$commit^1 $commit.  What's also odd to me is that, removing 
+--name-status, "git --no-pager diff 10241ee^!" shows a "-1" -- exactly 
+the opposite of what I'd expect ("+1"):
+diff --git a/file b/file
+index d00491f..e69de29 100644
+--- a/file
++++ b/file
+@@ -1 +0,0 @@
+-1
+
+Example repo to demonstrate:
+git init && touch file && git add file && git commit -m 'Empty file.'
+git checkout -b other && echo 1 >> file && git commit -am 'other 
+appended 1 to file.'
+git checkout master && git merge --no-ff -m 'First merge.'
+git checkout master && git merge --no-ff -m 'First merge.' other
+echo 2 >> file && git commit -am 'master appended 2 to file'
+git checkout other && touch unrelated_file && git add unrelated_file && 
+git commit -m 'other added unrelated_file.'
+git checkout master && git merge -m 'Second merge.' other
+echo 3 >> file && git commit -am 'master appended 3 to file'
+echo 4 >> file && git commit -am 'master appended 4 to file'
+git checkout other && echo 3 >> file && git commit -am 'other appended 3 
+to file'
+git checkout master && git merge other ; git checkout HEAD file && git 
+commit #Edit commit to make first line "Third merge."
+
+Here is the resulting tree:
+*   bc1291a Third merge.
+|\
+| * 11ce5db other appended 3 to file
+* | 9c92ac7 master appended 4 to file
+* | 4bd6eda master appended 3 to file
+* |   178f994 Second merge.
+|\ \
+| |/
+| * fb424bf other added unrelated_file.
+* | d854a9e master appended 2 to file
+* |   10241ee First merge.
+|\ \
+| |/
+| * 0d73874 other appended 1 to file.
+|/
+* 468a04b Empty file.
+
+I am using git version 1.7.10.2.
