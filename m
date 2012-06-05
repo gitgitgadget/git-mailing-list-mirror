@@ -1,92 +1,71 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v8 3/4] submodule: fix sync handling of some relative
- superproject origin URLs
-Date: Tue, 05 Jun 2012 15:49:28 -0700
-Message-ID: <7v7gvlnzlz.fsf@alter.siamese.dyndns.org>
-References: <1338716810-9881-1-git-send-email-jon.seymour@gmail.com>
- <1338716810-9881-4-git-send-email-jon.seymour@gmail.com>
- <4FCE77AA.6060005@web.de>
+From: Erik Faye-Lund <kusmabite@gmail.com>
+Subject: Re: [PATCH] pager: drop "wait for output to run less" hack
+Date: Wed, 6 Jun 2012 01:09:44 +0200
+Message-ID: <CABPQNSbk4h8bbhk92XAHVt5zVMCs3JLdjMf8P0wGD3wmyVEE1Q@mail.gmail.com>
+References: <20120605085604.GA27298@sigill.intra.peff.net> <CABPQNSbhgan+i_Q142R8VvRdJ5T+GyYHqgEJ6KS-BBJguRu-OQ@mail.gmail.com>
+ <20120605160157.GA20582@sigill.intra.peff.net>
+Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jon Seymour <jon.seymour@gmail.com>, git@vger.kernel.org,
-	phil.hord@gmail.com, ramsay@ramsay1.demon.co.uk, j6t@kdbg.org
-To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Wed Jun 06 00:49:39 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Florian Achleitner <florian.achleitner.2.6.31@gmail.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Jun 06 01:10:31 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Sc2ZF-00087M-CW
-	for gcvg-git-2@plane.gmane.org; Wed, 06 Jun 2012 00:49:37 +0200
+	id 1Sc2tR-00048X-GB
+	for gcvg-git-2@plane.gmane.org; Wed, 06 Jun 2012 01:10:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751163Ab2FEWtc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 5 Jun 2012 18:49:32 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64551 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750764Ab2FEWtb (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Jun 2012 18:49:31 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0E33089AD;
-	Tue,  5 Jun 2012 18:49:31 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=P7WnpVjv9HO7y2lH/eFc6ySCQCQ=; b=UTW4Va
-	ZJniSl9c1Sf++NHV4Hg/vmkDp1YvPJrg5UTz5klhe+/fhXBAQ26i6zQPtsvN+FKn
-	FNv3wFDdpBuOpCXzzLkJsfFSItKTv6Cnr9eD5j4boU9OwpuQwgU814ubuN6FwsRi
-	cvSi86tyql3qFWmkaG9C+qM72EboBZ5a0oHxs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=GG/iVnOFN25jpphGo+cajywl+gs5mCjX
-	Ix0sBiCOg8ZeDh0VDWSzUwmvRxq8OPgmO9WQuRUZoDn7moYsvtrgJ++X7pdEU+Vd
-	qUApajfT0f5f6Tk9o3OiPvLibMuo96sDonjs34ktmrZ5hB/34iKg5Tw9oI0yYgeZ
-	7iDpDo7Fgw0=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 051A989AB;
-	Tue,  5 Jun 2012 18:49:31 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5C81189AA; Tue,  5 Jun 2012
- 18:49:30 -0400 (EDT)
-In-Reply-To: <4FCE77AA.6060005@web.de> (Jens Lehmann's message of "Tue, 05
- Jun 2012 23:18:34 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: B60DC56A-AF60-11E1-9E32-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753635Ab2FEXKZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 Jun 2012 19:10:25 -0400
+Received: from mail-pb0-f46.google.com ([209.85.160.46]:60930 "EHLO
+	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753461Ab2FEXKY (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Jun 2012 19:10:24 -0400
+Received: by pbbrp8 with SMTP id rp8so8087705pbb.19
+        for <git@vger.kernel.org>; Tue, 05 Jun 2012 16:10:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=7V5UP6/R3gwM7xyNoqViUOZC2ApH8Ow5mMcKxZ3rme4=;
+        b=DwnoP87mDf7KCLj1lFwRExgCn3fpQ6jrNGlgTEv+ISUZjTkn6AX9g+OfKS0xTxQErv
+         42pFCxiZmOyjmsKIBQ8IxB4XP/bAa/+efyYH2cjbj3WduTBfvBbJ+OaLjQGgc31FSsp5
+         oBv0+gaBQIhqr2ZPApLin2AsFhRcgL99OSYXPKSETexLgeIrjedvpmxzevtwr59IPbQ9
+         2sJv3bTWl9LYTQmkbpsRV7sNQ5pA2VHpw3WLP3YQgg9HhYcsy7My5fjWx6HiK9NhYA98
+         y8WrYk5YW3Uoup3da4L1DJZTrsPpukzJW+PmMGUv+8RIY6/y7QUp4EdwY3G04rG+S8QM
+         259A==
+Received: by 10.68.197.71 with SMTP id is7mr32020695pbc.49.1338937824213; Tue,
+ 05 Jun 2012 16:10:24 -0700 (PDT)
+Received: by 10.68.40.98 with HTTP; Tue, 5 Jun 2012 16:09:44 -0700 (PDT)
+In-Reply-To: <20120605160157.GA20582@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199296>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199297>
 
-Jens Lehmann <Jens.Lehmann@web.de> writes:
-
-> Am 03.06.2012 11:46, schrieb Jon Seymour:
->> @@ -959,19 +985,32 @@ cmd_sync()
->>  	while read mode sha1 stage sm_path
->>  	do
->>  		name=$(module_name "$sm_path")
->> -		url=$(git config -f .gitmodules --get submodule."$name".url)
->> +		# path from superproject origin repo to submodule origin repo
+On Tue, Jun 5, 2012 at 6:01 PM, Jeff King <peff@peff.net> wrote:
+> On Tue, Jun 05, 2012 at 05:52:24PM +0200, Erik Faye-Lund wrote:
 >
-> This comment is misleading as it only describes part of the truth, in a lot
-> of cases it'll just be an absolute URL of the submodule.
+>> On Tue, Jun 5, 2012 at 10:56 AM, Jeff King <peff@peff.net> wrote:
+>> > I checked, and even RHEL5 is on less 436. So besides people on antique
+>> > "I installed less from source more than 5 years ago" systems, my only
+>> > concern would be that some other pager depends on this hack in a weird
+>> > way. But I have never heard of such a thing, so...
+>>
+>> On my RHEL5 box at work:
+>> $ less --version
+>> less 394
+>> Copyright (C) 1984-2005 Mark Nudelman
 >
->> +		module_url=$(git config -f .gitmodules --get submodule."$name".url)
+> Then I think you are not following the bug-fix updates, as they've
+> issued several updates based on 436:
 >
-> And I see no real value of renaming "url" to "module_url" here (but maybe
-> that is just me).
 
-I tend to agree; there is no other kind of URL involved, and I do
-not see a clear motivation behind this renaming.  Renaming url to
-module_url would not help much if it is to differenciate URLs to the
-repositories of submodule and superproject, so that can't be it.
-
-In any case, I suspect that you would be involved in maintaining
-this code in the long haul, so even if it were "just you", your
-opinion counts.
-
-> So I'd vote for dropping that comment and the "url" to "module_url" change.
-> But apart from that and the issues Junio mentioned in his response this
-> series is looking good to me.
-
-Thanks for looking this over.
+I don't know what exactly the setup is, other than that it's set up to
+match the RHEL5 setup of a major customer with a very conservative
+upgrade policy.
