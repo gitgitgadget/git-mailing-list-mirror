@@ -1,74 +1,87 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Documentation: have ls-files and ls-tree "see also" each
- other
-Date: Mon, 04 Jun 2012 22:43:32 -0700
-Message-ID: <7vehpuqpob.fsf@alter.siamese.dyndns.org>
-References: <1338873037-4343-1-git-send-email-mmogilvi_git@miniinfo.net>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: Bugreport on Ubuntu LTS: not ok - 2 Objects creation does not break ACLs with restrictive umask
+Date: Tue, 05 Jun 2012 08:02:55 +0200
+Message-ID: <vpqpq9ejnxs.fsf@bauges.imag.fr>
+References: <CALbm-Ea5ZkAGFyB2OETqe7vK7LE+yO0zSaa_+kFMXOhO-nMwMQ@mail.gmail.com>
+	<7vhauqsue3.fsf@alter.siamese.dyndns.org>
+	<CALbm-EatNCPjFRO4NyGfZuSa72-FXwZcd_7cFe-f_iMOdGL4MQ@mail.gmail.com>
+	<7vy5o2ra7w.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Matthew Ogilvie <mmogilvi_git@miniinfo.net>
-X-From: git-owner@vger.kernel.org Tue Jun 05 07:43:44 2012
+Content-Type: text/plain
+Cc: Stefan Beller <stefanbeller@googlemail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jun 05 08:03:19 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SbmYQ-0007ej-DT
-	for gcvg-git-2@plane.gmane.org; Tue, 05 Jun 2012 07:43:42 +0200
+	id 1SbmrM-00034L-LM
+	for gcvg-git-2@plane.gmane.org; Tue, 05 Jun 2012 08:03:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756266Ab2FEFng (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 5 Jun 2012 01:43:36 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:40664 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752649Ab2FEFnf (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Jun 2012 01:43:35 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B46B4623E;
-	Tue,  5 Jun 2012 01:43:34 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 s=sasl; bh=0MXtoCWhrNeqxwWoYbGEw/fXw0s=; b=NVxbXTbk9UYWRIeNe7u2
-	qrH0LuTu3goZiOQo6h2GEw2a+bELy1It/J05jinAl4pnFx90yqkU2S9uBhXFh2P4
-	SMDTVwQLLRCEsFIb4laNRGx32fcenGwHbO+1p+tgPaG/wcQRS7n7sHd1VEqXpKE8
-	lV8C+xu1u/4kajy9VWsCNaE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 q=dns; s=sasl; b=hoEqjgx3ubhS4V0Wy9Z0GjQA95ScnDqwlDHjfuMO+oC1T2
-	CxT3DSmnzbOpDtgAr6zJvSIKAOuTwvrRSROlJsTKbELseata3HPD0QJgjUinBQz6
-	D/4g7yEATlkG1TH8Pt9gdJQxPzoQ7fC2y/btnJx6MRa4/wSMWs47s4XyUCly4=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AC08A623D;
-	Tue,  5 Jun 2012 01:43:34 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 44768623C; Tue,  5 Jun 2012
- 01:43:34 -0400 (EDT)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 63C26782-AED1-11E1-A098-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1758532Ab2FEGDJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 Jun 2012 02:03:09 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:42436 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753310Ab2FEGDI (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Jun 2012 02:03:08 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id q555sDE1022247
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Tue, 5 Jun 2012 07:54:13 +0200
+Received: from bauges.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1Sbmr2-00061n-9A; Tue, 05 Jun 2012 08:02:56 +0200
+In-Reply-To: <7vy5o2ra7w.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Mon, 04 Jun 2012 15:19:47 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.93 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Tue, 05 Jun 2012 07:54:14 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: q555sDE1022247
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1339480458.549@22c0s62WHudsPGmQapITeg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199202>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199203>
 
-Matthew Ogilvie <mmogilvi_git@miniinfo.net> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> Signed-off-by: Matthew Ogilvie <mmogilvi_git@miniinfo.net>
-> ---
+> Stefan Beller <stefanbeller@googlemail.com> writes:
 >
-> I could have used these references when I was looking at git-ls-files
-> documentation and trying to figure out how to make it list files
-> from a specific commit like git-ls-tree.
+>> I tried debugging into it:
+>> In git/t/t1304-default-acl.sh there is:
+>> check_perms_and_acl () {
+>>     test -r "$1" &&
+>>     getfacl "$1" > actual &&
+>>     grep -q "user:root:rwx" actual &&
+>>     grep -q "user:${LOGNAME}:rwx" actual &&
+>>     egrep "mask::?r--" actual > /dev/null 2>&1 &&
+>>     grep -q "group::---" actual || false
+>> }
 
-I do not like this kind of patches in general.  Where will it end?
+Can you run it with --verbose and post the result?
 
-"I wanted to know how to list objects recorded in a commit, and I
-could have used a reference to git-ls-tree from git-commit, so here
-is a patch to make them refer to each other"?
+> Any ideas (other than "Your filesystem is broken",
+> that is)?
 
-That kind of overfiew is what the tutorial (for concepts like the
-index, tree objects, commit objects, etc.) and the list of commands
-in git(1).  Is there compelling reason other than "I didn't bother
-to look, and it is likely other people wouldn't" to apply patches
-like this?
+I'm very tempted to go for the "Your filesystem is broken" indeed.
+
+> As far as I can tell, with 'mask::---', these specific users who are
+> given permissions to read from the objects wouldn't be able to read
+> from them, so...
+
+That's my understanding too.
+
+Stefan, which filesystem are you using in the directory where you run
+tests (type "mount" if you don't know)? Are you running on a virtual
+machine?
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
