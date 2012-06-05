@@ -1,73 +1,229 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: introduction
-Date: Tue, 05 Jun 2012 11:40:16 +0200
-Message-ID: <4FCDD400.4020003@op5.se>
-References: <CAA3EhHJCRF05Q0xzzOWupVMjmKPbWAq1KNcU9Mmp8g1iH2B0zA@mail.gmail.com> <CAA3EhH+P_JeVGhRmL-kHOc0cTCiGQmv505XjgAv0kT1PAfjTyw@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH/RFC] improve no-op push output
+Date: Tue, 5 Jun 2012 06:10:19 -0400
+Message-ID: <20120605101019.GA30402@sigill.intra.peff.net>
+References: <20120530120804.GA3501@sigill.intra.peff.net>
+ <7vr4u1zhcz.fsf@alter.siamese.dyndns.org>
+ <20120604125126.GD27676@sigill.intra.peff.net>
+ <7vzk8jt4q5.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: git <git@vger.kernel.org>
-To: Leila <muhtasib@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jun 05 11:40:38 2012
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jun 05 12:10:38 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SbqFc-0001yS-8r
-	for gcvg-git-2@plane.gmane.org; Tue, 05 Jun 2012 11:40:32 +0200
+	id 1Sbqig-0000iB-QB
+	for gcvg-git-2@plane.gmane.org; Tue, 05 Jun 2012 12:10:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761557Ab2FEJkY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 5 Jun 2012 05:40:24 -0400
-Received: from mail-lb0-f174.google.com ([209.85.217.174]:33868 "EHLO
-	mail-lb0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757898Ab2FEJkU (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Jun 2012 05:40:20 -0400
-Received: by lbbgm6 with SMTP id gm6so3734579lbb.19
-        for <git@vger.kernel.org>; Tue, 05 Jun 2012 02:40:18 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding
-         :x-gm-message-state;
-        bh=vrSb9J4CaFHA/7cBemBu+q4/mJ6zgDs4S9cBdSfGJxM=;
-        b=lNKKAVfHFe+x2y/+w/Yl8VX9FXmo3gHbAAl3qqtO34L0zaJR9ZvEmwCJIlcR4Qj7Wp
-         E5k0jzfOHVKOQ3B+FM+ZenGIzqv5F59H9PokybtBJm1Kf/l6/vkqSTxbAF7EmDh3HlKe
-         ZWIB93a5iajEI85NoCfB4lZbeMzEieSXhWuwscVgJm2gEeURvAe3o6XigIQWqOaAYyD+
-         CUm/RmxpstWlbqc6x5ryP8+8ZaJq2nTd0aN1tlX/G9owjZkTQecUnWOKHqEFAhSI+MKO
-         g2Kxg3F1yEyKs/swlaDvoQU9bI6pO/uprOMLU6UDIDDf+gYfvu4NBqbnb83JvT69pJyl
-         qoQA==
-Received: by 10.112.32.35 with SMTP id f3mr7633882lbi.47.1338889218156;
-        Tue, 05 Jun 2012 02:40:18 -0700 (PDT)
-Received: from vix.int.op5.se (sth-vpn1.op5.com. [193.201.96.49])
-        by mx.google.com with ESMTPS id q8sm835495lbj.2.2012.06.05.02.40.16
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 05 Jun 2012 02:40:17 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:12.0) Gecko/20120430 Thunderbird/12.0.1
-In-Reply-To: <CAA3EhH+P_JeVGhRmL-kHOc0cTCiGQmv505XjgAv0kT1PAfjTyw@mail.gmail.com>
-X-Gm-Message-State: ALoCoQmdMT44Xiro1q4MBuTMiiw3HNv8ULzK+XJ4bnDLsNJ6bBxrf3ZAOFWn0oV3nm2kEGj5b7F6
+	id S1761616Ab2FEKKY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 Jun 2012 06:10:24 -0400
+Received: from 99-108-225-23.lightspeed.iplsin.sbcglobal.net ([99.108.225.23]:43196
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754457Ab2FEKKW (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Jun 2012 06:10:22 -0400
+Received: (qmail 16215 invoked by uid 107); 5 Jun 2012 10:10:25 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 05 Jun 2012 06:10:25 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 05 Jun 2012 06:10:19 -0400
+Content-Disposition: inline
+In-Reply-To: <7vzk8jt4q5.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199225>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199226>
 
-On 06/04/2012 10:36 PM, Leila wrote:
+On Mon, Jun 04, 2012 at 09:35:30AM -0700, Junio C Hamano wrote:
+
+> Jeff King <peff@peff.net> writes:
 > 
-> 3) Just like we have git-svn, maybe a svn-git?
+> > So I think we would really need to break down each potentially confusing
+> > case, and come up with a solution for each. I think we can divide the
+> > push configuration into three cases: matching, single (which includes
+> > "upstream", "simple", and "current"), or custom refspecs. Let's ignore
+> > the final one for now. It's relatively rare, and probably the most
+> > common use is mirroring (in which case we know we pushed everything,
+> > anyway). And then we have a few potential confusing situations:
 > 
+> Does "single" include "upstream", "simple" and "current", or does it
+> consists of these three and nothing else? I think it is the latter,
+> and I mean the latter in the remainder of my response. Specifically,
+> I would exclude the case where you have remote.$there.push that only
+> pushes one ref from "single".
 
-I would absolutely love "gvn" command that works more or less exactly
-like svn, but works against a git repository instead. That might allow
-me to persuade the last recalcitrant bugger to switch to a version
-control that actually allows people to work *with* the tool instead of
-*for* it.
+Yes, I think it is just those cases in my analysis (which is different
+from my original patch).  We can probably assume that somebody
+specifying a refspec on the command line, or one with configured push
+refspecs, would know what they are doing.
 
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+> >   1. We are on a detached HEAD; the user expects their current work to
+> >      be pushed, but it is not. With the "single" cases, we should
+> >      already error out.
+> 
+> All the "single" cases should error out when run on a detached HEAD
+> (otherwise they should be fixed).
 
-Considering the successes of the wars on alcohol, poverty, drugs and
-terror, I think we should give some serious thought to declaring war
-on peace.
+They do (I just checked). However, "current" only fails because the
+right-hand-side HEAD is not fully qualified, and thus the message is
+somewhat daunting:
+
+  error: unable to push to unqualified destination: HEAD
+  The destination refspec neither matches an existing ref on the remote
+  nor begins with refs/, and we are unable to guess a prefix based on
+  the source ref.
+  error: failed to push some refs to ...
+
+whereas the simple/upstream case says:
+
+  fatal: You are not currently on a branch.
+  To push the history leading to the current (detached HEAD)
+  state now, use
+
+      git push github HEAD:<name-of-remote-branch>
+
+It might be nicer for "current" to print the same message (the advice
+should be identical in both cases).
+
+> >      For the "matching" case, we don't want to error
+> >      out, but it might be worth printing a warning to say "by the way,
+> >      your HEAD is detached", whether everything is up-to-date or not.
+> 
+> Both "matching" and "specific remote.$there.push" cases are "it does
+> not matter what branch happens to be checked out; I am giving you
+> the set of refs I want to push out by default", so even though you
+> said you ignore the specific refspec case, they fall into the same
+> category here.
+
+Yes, I think they do collapse to the same case. I omitted custom
+refspecs out of simplicity in my analysis. But if they fall into the
+same slots, then all the better.
+
+> I find the above an unnecessarily roundabout way to help people who
+> expect the current branch to always be involved in an unnamed push
+> to say "your HEAD is detached"; it requires them to be intelligent
+> enough to connect "HEAD detached", "no current branch" and "hence
+> nothing pushed".  A more direct way "detached HEAD not pushed" may
+> be better.
+
+Agreed. That is what I intended, but I obviously didn't say it very
+well.
+
+> >   3. We are on a branch; the user expects some other branch X to be
+> >      pushed, but it is not.
+> >      ... So I think the right solution is to just
+> >      be more specific; say "X is up-to-date", or just show the
+> >      single-line status table.
+> [...]
+> >      For the "matching" case, it's much harder.
+> >
+> >      If we show them the whole description of what happened and hoping
+> >      they notice that their branch is not included.  When something
+> >      actually gets pushed, we show the status table already, and they
+> >      may or may not look through it to find the branch in question
+> >      (indeed, they may not even be trying to push X at the time, but
+> >      rather may later say "Hey, I thought I pushed everything; why is X
+> >      not here?).
+> 
+> We can cover both the "here are the list" and the "everything
+> up-to-date" cases with "(current branch not pushed)" (or "detached
+> HEAD not pushed)".
+
+That helps with only the current branch. The point of this scenario is
+that it is some random branch. Like:
+
+  git checkout topic
+  hack hack hack
+  git checkout master
+  hack hack hack
+  git -c push.default=matching push
+
+Git really has no way of knowing that it's interesting to you that
+"topic" didn't get pushed.
+
+The right answer might be to simply discount this scenario. I think it's
+probably less common than the "I thought I was pushing my current HEAD"
+confusion which comes up.
+
+> >   1. For a single-ref push, always mention the ref name, even if it is
+> >      up-to-date. My previous patch showed the status table, but we could
+> >      also just tweak the "Everything up-to-date" to say "Ref X is
+> >      up-to-date".
+> 
+> I think this is a sane thing to do in any case.
+
+Here, do you mean when there is a single ref attempted, or do you really
+mean "when we invoked current, simple, or upstream push.default?"
+
+> >   2. Introduce a "push.warnMatch" config option, which can be set to one
+> >      of:
+> >
+> >        - "none"; the current behavior
+> >
+> >        - "branches"; mention all unmatched refs which are in refs/heads
+> 
+> Doesn't this assume that among many existing branches, what are not
+> pushed are minority (hence it is easier to spot the presense of the
+> interesting branch in the output, than to spot the absense of the
+> list of updated ones)? I am not convinced if that is the case, and I
+> doubt it would be very useful.
+
+Yes, which is why it is configurable. For some workflows, you will push
+most of your branches, and hold back only a few as private. In that
+case, warning on unmatched branches would be helpful. For somebody like
+you, pushing to ko would look awful, because you hold back all of the
+topic branches (even though you push them elsewhere, it is not relevant
+to the ko "matching" push).
+
+So I would certainly never make "branches" the default. I am somewhat
+lukewarm on it as a concept anyway; these possible directions were not
+"we should definitely do this" but just "here is an initial sketch of
+some ideas I had".
+
+> An alternative might be to show the usual list of refs with [up to date]
+> marks even when we currently say "Everything up-to-date", like "push -v"
+> does.  I.e. instead of:
+> 
+>         $ git push ko
+>         Everything up-to-date
+> 
+> we can say
+> 
+> 	$ git push ko
+> 	To: kernel.org:/pub/scm/git/git.git
+>         = [up to date]      maint -> maint
+>         = [up to date]      master -> master
+>         = [up to date]      next -> next
+>         = [up to date]      pu -> pu
+> 
+> omitting "Pushing to $where" at the beginning and "Everything up-to-date"
+> at the end of the "push -v" output.
+
+But that has the opposite verbosity problem as above. If you have a lot
+of branches, most of which have not been updated, then we will print a
+lot of useless noise, hiding the actual interesting ref updates.
+
+If you are proposing to do it only when everything is up-to-date, that
+is slightly better. In that case, you are not hiding real ref updates
+amidst the noise. But it is still very noisy. And it does not really
+accomplish much, if your point is to show the user that the thing they
+might have wanted to push was omitted.
+
+> >        - "head"; mention the current HEAD if it is unmatched
+> 
+> This might be a sane thing to do unconditionally, especially if it
+> can be done without taking too much screen real estate.
+
+Yeah. Of the three values, I would probably suggest "head" as the
+default. With "none" for people who want to say "shut up git, I am fully
+aware of how matching works", and "branches" for people who want to be
+verbosely informed.
+
+But if we drop the "branches" setting, and the message is unobtrusive,
+it may not be worth having it configurable at all.
+
+-Peff
