@@ -1,144 +1,153 @@
-From: Brian Ericson <bericson@ptc.com>
-Subject: a diff equivalent to show?
-Date: Tue, 05 Jun 2012 11:39:43 -0500
-Message-ID: <4FCE364F.1030307@ptc.com>
+From: nguyenki <nguyenki@ensibm.imag.fr>
+Subject: Re: [PATCH/RFC] Export file attachements in git-remote-mediawiki
+Date: Tue, 05 Jun 2012 19:00:01 +0200
+Message-ID: <59db730bded272b60cbd16806c757660@ensibm.imag.fr>
+References: <1338842961-3477-1-git-send-email-nguyenkimthuat@gmail.com>
+ <vpqvcj6lq1m.fsf@bauges.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 05 18:49:35 2012
+Content-Type: text/plain; charset=UTF-8;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: <git@vger.kernel.org>, <roucherj@ensimag.imag.fr>,
+	<Pavel.Volek@ensimag.imag.fr>
+To: <Matthieu.Moy@imag.fr>
+X-From: git-owner@vger.kernel.org Tue Jun 05 19:00:16 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Sbwwl-0001Op-FO
-	for gcvg-git-2@plane.gmane.org; Tue, 05 Jun 2012 18:49:31 +0200
+	id 1Sbx75-00012j-Ny
+	for gcvg-git-2@plane.gmane.org; Tue, 05 Jun 2012 19:00:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754503Ab2FEQt1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 5 Jun 2012 12:49:27 -0400
-Received: from irp2.ptc.com ([12.11.148.84]:33451 "EHLO irp2.ptc.com"
+	id S1754569Ab2FERAG convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 5 Jun 2012 13:00:06 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:56152 "EHLO rominette.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754024Ab2FEQt1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Jun 2012 12:49:27 -0400
-X-Greylist: delayed 581 seconds by postgrey-1.27 at vger.kernel.org; Tue, 05 Jun 2012 12:49:27 EDT
-X-IronPort-AV: E=Sophos;i="4.75,718,1330923600"; 
-   d="scan'208";a="116772675"
-Received: from hq-ex3fe3.ptcnet.ptc.com ([132.253.201.67])
-  by irp2.ptc.com with ESMTP; 05 Jun 2012 12:39:44 -0400
-Received: from bericson.ptcnet.ptc.com ([132.253.201.117]) by hq-ex3fe3.ptcnet.ptc.com with Microsoft SMTPSVC(6.0.3790.4675);
-	 Tue, 5 Jun 2012 12:39:44 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:12.0) Gecko/20120430 Thunderbird/12.0.1
-X-OriginalArrivalTime: 05 Jun 2012 16:39:44.0130 (UTC) FILETIME=[CFC05E20:01CD4339]
+	id S1753156Ab2FERAE (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Jun 2012 13:00:04 -0400
+Received: from ensimag.imag.fr (ensimag.imag.fr [195.221.228.12])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id q55GpHl4011156
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Tue, 5 Jun 2012 18:51:17 +0200
+Received: from web-ensimag.imag.fr (web-ensimag [195.221.228.24])
+	by ensimag.imag.fr (8.13.8/8.13.8/ImagV2.1.r_ens) with ESMTP id q55H02aT028593;
+	Tue, 5 Jun 2012 19:00:02 +0200
+Received: from web-ensimag.imag.fr (localhost [127.0.0.1])
+	by web-ensimag.imag.fr (8.13.8/8.13.8/ImagV2.1.sb_ens) with ESMTP id q55H020q015825;
+	Tue, 5 Jun 2012 19:00:02 +0200
+Received: (from apache@localhost)
+	by web-ensimag.imag.fr (8.13.8/8.13.8/Submit) id q55H01Jl015824;
+	Tue, 5 Jun 2012 19:00:01 +0200
+X-Authentication-Warning: web-ensimag.imag.fr: apache set sender to nguyenki@ensibm.imag.fr using -f
+In-Reply-To: <vpqvcj6lq1m.fsf@bauges.imag.fr>
+X-Sender: nguyenki@ensibm.imag.fr
+User-Agent: Roundcube Webmail/0.5.3
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Tue, 05 Jun 2012 18:51:17 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: q55GpHl4011156
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: nguyenki@ensibm.imag.fr
+MailScanner-NULL-Check: 1339519877.94971@UoMQdHjIMa+gKRsVK8X5Fw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199265>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199266>
 
-Is there a way I can get the same results (files & diff content) using 
-"git diff" that I can get using "git show"?  I ask because I want show's 
-basic results (changes it represents via, for example, --name-status), 
-but need the options and output of diff.
+On Mon, 04 Jun 2012 23:34:29 +0200, Matthieu Moy wrote:
+> NGUYEN Kim Thuat <kim-thuat.nguyen@ensimag.imag.fr> writes:
+>
+>> +# Get the list of file extensions supported by the current version=20
+>> of mediawiki
+>> +my @list_file_extensions =3D get_file_extensions();
+>
+> You should do it only on demand (like $mediawiki is created lazily).
+yeah, i changed the code in this part, it look like:
 
-I'm interested, in particular, in three merge cases involving merges to 
-master from "other" (see example repo below):
-* other changed file (10241ee as "First merge.")
-* master changed file (178f994 as "Second merge.")
-* Conflicting merge resolved by keeping my changes (bc1291a as "Third 
-merge.")
+@@ -113,9 +113,6 @@ $wiki_name =3D~ s/[^\/]*:\/\///;
+  # and '@' sign, to avoid author like MWUser@HTTPUser@host.com
+  $wiki_name =3D~ s/^.*@//;
 
-In all three cases, "show" shows no changes (via git show bc1291a 
-178f994 10241ee).  However, I can't consistently get diff to replicate 
-the show's result, as shown via
-function differ() {
-   local RESULT=$( git --no-pager diff --name-status $1 )
-   printf "%-29s -- %s\n" "$1" "${RESULT:-OK}"
-}
+-# Get the list of file extensions supported by the current version of=20
+mediawiki
+-my @list_file_extensions =3D get_file_extensions();
+-
+  # Commands parser
+  my $entry;
+  my @cmd;
+@@ -654,7 +651,7 @@ sub mw_push_file {
+  	my $file_deleted =3D ($new_sha1 eq NULL_SHA1);
+  	$complete_file_name =3D mediawiki_clean_filename($complete_file_name=
+);
 
-for commit in bc1291a 178f994 10241ee
-do
-   #Shouldn't this work?
-   differ $commit^!
-   #Should be equivalent to previous
-   differ "^$commit^@ $commit"
-   #Yet another way of representing the same thing.
-   differ "^$commit^1 ^$commit^2 $commit"
-   #Hrm...  This is also equivalent?!
-   differ "^$commit^1 $commit"
-   #I probably should (better) understand why order matters...
-   differ "$commit ^$commit^@"
-   #Thrown in for good measure.
-   differ "^$commit^2 $commit"
-   echo
-done
+-	my %hashFiles =3D map {$_ =3D> 1}@list_file_extensions;
++	my %hashFiles =3D get_file_extensions_maybe($complete_file_name);
+  	my $path =3D "File:".$complete_file_name;
+  	my @extensions =3D split(/\./,$complete_file_name);
+  	my $extension =3D pop(@extensions);
 
-which produces:
-10241ee^!                     -- M    file
-^10241ee^@ 10241ee            -- M    file
-^10241ee^1 ^10241ee^2 10241ee -- M    file
-^10241ee^1 10241ee            -- M    file
-10241ee ^10241ee^@            -- OK
-^10241ee^2 10241ee            -- OK
+-sub get_file_extensions {
+-	mw_connect_maybe();
+-
+-	my $query =3D {
+-	action =3D> 'query',
+-	meta =3D> 'siteinfo',
+-	siprop =3D> 'fileextensions'
+-	};
++sub get_file_extensions_maybe {
++	my $file_name =3D shift;
++	my $est_mw_page =3D substr($file_name,-3) eq ".mw";
++	if(!$est_mw_page) {
++		mw_connect_maybe();
 
-178f994^!                     -- A    unrelated_file
-^178f994^@ 178f994            -- A    unrelated_file
-^178f994^1 ^178f994^2 178f994 -- A    unrelated_file
-^178f994^1 178f994            -- A    unrelated_file
-178f994 ^178f994^@            -- OK
-^178f994^2 178f994            -- M    file
+-	my $result =3D $mediawiki->api($query);
++		my $query =3D {
++			action =3D> 'query',
++			meta =3D> 'siteinfo',
++			siprop =3D> 'fileextensions'
++			};
 
-bc1291a^!                     -- OK
-^bc1291a^@ bc1291a            -- OK
-^bc1291a^1 ^bc1291a^2 bc1291a -- OK
-^bc1291a^1 bc1291a            -- OK
-bc1291a ^bc1291a^@            -- M    file
-^bc1291a^2 bc1291a            -- M    file
+-	my @file_extensions =3D map=20
+$_->{ext},@{$result->{query}->{fileextensions}};
++		my $result =3D $mediawiki->api($query);
++		my @file_extensions =3D map=20
+$_->{ext},@{$result->{query}->{fileextensions}};
++		my %hashFile =3D map {$_ =3D> 1}@file_extensions;
 
-Tangentially, it seems odd to me that $commit^! seems equivalent to 
-^$commit^1 $commit.  What's also odd to me is that, removing 
---name-status, "git --no-pager diff 10241ee^!" shows a "-1" -- exactly 
-the opposite of what I'd expect ("+1"):
-diff --git a/file b/file
-index d00491f..e69de29 100644
---- a/file
-+++ b/file
-@@ -1 +0,0 @@
--1
+-	return @file_extensions;
++		return %hashFile;
++	} else {
++		return ;
++	}
+  }
 
-Example repo to demonstrate:
-git init && touch file && git add file && git commit -m 'Empty file.'
-git checkout -b other && echo 1 >> file && git commit -am 'other 
-appended 1 to file.'
-git checkout master && git merge --no-ff -m 'First merge.'
-git checkout master && git merge --no-ff -m 'First merge.' other
-echo 2 >> file && git commit -am 'master appended 2 to file'
-git checkout other && touch unrelated_file && git add unrelated_file && 
-git commit -m 'other added unrelated_file.'
-git checkout master && git merge -m 'Second merge.' other
-echo 3 >> file && git commit -am 'master appended 3 to file'
-echo 4 >> file && git commit -am 'master appended 4 to file'
-git checkout other && echo 3 >> file && git commit -am 'other appended 3 
-to file'
-git checkout master && git merge other ; git checkout HEAD file && git 
-commit #Edit commit to make first line "Third merge."
+  Now, the function will list the file extensions on demand.
 
-Here is the resulting tree:
-*   bc1291a Third merge.
-|\
-| * 11ce5db other appended 3 to file
-* | 9c92ac7 master appended 4 to file
-* | 4bd6eda master appended 3 to file
-* |   178f994 Second merge.
-|\ \
-| |/
-| * fb424bf other added unrelated_file.
-* | d854a9e master appended 2 to file
-* |   10241ee First merge.
-|\ \
-| |/
-| * 0d73874 other appended 1 to file.
-|/
-* 468a04b Empty file.
 
-I am using git version 1.7.10.2.
+>> @@ -642,8 +651,14 @@ sub mw_push_file {
+>>  	my $old_sha1 =3D $diff_info_split[2];
+>>  	my $page_created =3D ($old_sha1 eq NULL_SHA1);
+>>  	my $page_deleted =3D ($new_sha1 eq NULL_SHA1);
+>> +	my $file_deleted =3D ($new_sha1 eq NULL_SHA1);
+>
+> This line looks suspiciously similar to the previous one. Do you need
+> another variable for the same value?
+Yes, it's true. I just want the code to be more visible. Because, when=20
+we delete a file attachment, it's not a page wiki.
+
+> Does this work on wiki configured in foreign languages, like french=20
+> that
+> has Sp=C3=A9cial:T=C3=A9l=C3=A9verser instead?
+>
+
+>> +	else {
+>> +		print STDERR "$complete_file_name is not supported on this=20
+>> version of Mediawiki.\n"
+>
+> It's not a matter of version, it's a matter of configuration.
+What do you think if i change it like:
+         else {
+	print STDERR "$complete_file_name is not a permitted file type. Check=20
+your configuration for more information\n"
