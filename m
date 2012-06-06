@@ -1,78 +1,77 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC/PATCH] parse-options: introduce parse_subcommands
-Date: Wed, 06 Jun 2012 10:26:12 -0700
-Message-ID: <7vobowmjwr.fsf@alter.siamese.dyndns.org>
-References: <1338802534-32394-1-git-send-email-artagnon@gmail.com>
- <7vlik3t3j2.fsf@alter.siamese.dyndns.org>
- <CALkWK0nuJ2VrAUD5PsfnZzO5yDgB+h4xn8g=CTqmUvJ8DOdPNQ@mail.gmail.com>
+Subject: Re: Handling racy entries in the v5 format [Re: [GSoC] Designing a
+ faster index format - Progress report week 7]
+Date: Wed, 06 Jun 2012 10:31:26 -0700
+Message-ID: <7vk3zkmjo1.fsf@alter.siamese.dyndns.org>
+References: <20120604200746.GK6449@tgummerer>
+ <87aa0gbwon.fsf@thomas.inf.ethz.ch>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Git List <git@vger.kernel.org>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jun 06 19:26:25 2012
+Cc: Thomas Gummerer <t.gummerer@gmail.com>, <git@vger.kernel.org>,
+	<mhagger@alum.mit.edu>, <pclouds@gmail.com>
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Wed Jun 06 19:31:37 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ScJzw-0006YB-Iy
-	for gcvg-git-2@plane.gmane.org; Wed, 06 Jun 2012 19:26:20 +0200
+	id 1ScK51-0000sk-CN
+	for gcvg-git-2@plane.gmane.org; Wed, 06 Jun 2012 19:31:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757539Ab2FFR0Q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 6 Jun 2012 13:26:16 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35956 "EHLO
+	id S1757212Ab2FFRbb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 Jun 2012 13:31:31 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:38737 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757422Ab2FFR0P (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Jun 2012 13:26:15 -0400
+	id S1752217Ab2FFRba (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Jun 2012 13:31:30 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5F270801F;
-	Wed,  6 Jun 2012 13:26:14 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BF36E8132;
+	Wed,  6 Jun 2012 13:31:28 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=SECK1G6S7ChZQLbgjTn7TuAB3sc=; b=gr8JPY
-	A52hCOmc6CEdbd19txLNMGJ6Pr9qPVGi8TccutHfmqvKHKu0/KC4kr7uG7J/AKv4
-	qJFeaZMKj3xdCt9gMs3ZGQ4toz/1aLa7y7g+FCjuw8yedWwZH/CIUUVBSdqFJh7/
-	k/C5HtyRKvBdVXHtoK5OFZJRuc8J2bxcau8KY=
+	:content-type; s=sasl; bh=DhQVTvBhUWgfgcHgNJgkjeexJ7Q=; b=exn4Bm
+	7Ble3Nbp9CB2QtbVStIUmAIhvUglt9/a+FAK3MNH643aNNqOGJzRuY8Z12XIRY9q
+	WoXlCsx1dV6bfCPriMkROAI134Mz/ZlxW4/qgVhE7N2gcPcy9RhASKArDhdqWa2p
+	2PY/ryO2LKTCLL0poz4LQrl3Xdm70opE603Ss=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=kGCIJd62A9A72Ob5W3ur6vMvMO9KdGx7
-	9cB69LnoBMytwHcX7RxIcAd9SnPbXdzOrDMkwN0ULJYbdu+jaEzi7o+HdSF6VcJ5
-	Oiym2CueWHf9yJAf6BoIAFv+28ZNOM3R2F+ivysRmfnGjr0k45RaS+YnaurpzSO+
-	VI42MEu0NBY=
+	:content-type; q=dns; s=sasl; b=ru98KFtxxHMwZttYyOUKIMXDYrtRehsk
+	Wx8C6REXfIzKY0Cl9YFPSk7WSwuugl8nulCzKVIzyVUL6z33G1WA902efw2zYv/z
+	ENC9XJFywuhzvyyf7VNW3+auJvgDj5b4EZ07Otp99ux6ro4UAqsZsGN+ucpQ4t2Z
+	eHtWjP5gywY=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 55954801E;
-	Wed,  6 Jun 2012 13:26:14 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B6C398131;
+	Wed,  6 Jun 2012 13:31:28 -0400 (EDT)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C9162801D; Wed,  6 Jun 2012
- 13:26:13 -0400 (EDT)
-In-Reply-To: <CALkWK0nuJ2VrAUD5PsfnZzO5yDgB+h4xn8g=CTqmUvJ8DOdPNQ@mail.gmail.com>
- (Ramkumar Ramachandra's message of "Wed, 6 Jun 2012 19:40:39 +0530")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2D990812F; Wed,  6 Jun 2012
+ 13:31:28 -0400 (EDT)
+In-Reply-To: <87aa0gbwon.fsf@thomas.inf.ethz.ch> (Thomas Rast's message of
+ "Wed, 6 Jun 2012 11:45:44 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: B737F5F4-AFFC-11E1-9BCE-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 7298094C-AFFD-11E1-B484-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199338>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199339>
 
-Ramkumar Ramachandra <artagnon@gmail.com> writes:
+Thomas Rast <trast@student.ethz.ch> writes:
 
->> It looks like a static version of string_list_lookup() and does not
->> have much reason to tie it to "subcommand".
+> (Michael, we have adapted it somewhat this since you left IRC.)
 >
-> How so?  I can use a string_list to keep subcommand->name and stuff
-> the callback into util.  Where do I put subcommand->help then?
+>   When writing an entry: check whether ce_mtime >= index.mtime.  If so,
+>   write out ce_mtime=0.
+>
+> The index.mtime here is a lower bound on the mtime of the new index,
+> obtained e.g. by touching the index and then stat()ing it immediately
+> before writing out the changed entries.
 
-A string_list is a mapping from a string to an arbitrary piece of
-data; there is nothing that stops you from placing a pointer to a
-structure in its util field.
+Is this even workable?  I found that "open, read a byte, write it
+back in place, then stat" was not giving useful timestamp and that
+was the reason the original racy-git code chose not to do this.
 
-> I agree that there's no reason to tie it to subcommand though.
-
-Yeah, if it were a generic API for a mapping from a string to an
-arbitrary piece of data that is determined at compile time, it would
-be a useful addition, and at that point, it is misleading to call
-that a "parse-subcommand" API.  It is just a look-up mechansim in
-a fixed table keyed by strings.
+You may be able to do "open, read a byte, write it back in place,
+fsync, close and then stat", but doing so while holding that file
+also as a lock feels somewhat dirty...
