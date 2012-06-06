@@ -1,133 +1,91 @@
-From: Stefan Beller <stefanbeller@googlemail.com>
-Subject: Re: [PATCH] t1304: improve setfacl prerequisite setup
-Date: Wed, 6 Jun 2012 18:11:06 +0200
-Message-ID: <CALbm-EZJeNCts80sA6cxGHgGLUhAHREWRd7pUqZ0nUo22ixu0Q@mail.gmail.com>
-References: <vpq4nqqj8ss.fsf@bauges.imag.fr>
-	<CALbm-EbGoaxkvBXphAPF8rRkS=VFeeFHXQSFdWVrZUJJ8DYovw@mail.gmail.com>
-	<vpqk3zlhorc.fsf@bauges.imag.fr>
-	<20120605140449.GA15640@sigill.intra.peff.net>
-	<20120605141039.GB15640@sigill.intra.peff.net>
-	<20120605142813.GA17238@sigill.intra.peff.net>
-	<20120605150550.GA19843@sigill.intra.peff.net>
-	<7vpq9dpvnp.fsf@alter.siamese.dyndns.org>
-	<20120605164439.GA2694@sigill.intra.peff.net>
-	<7v62b5pt2s.fsf@alter.siamese.dyndns.org>
-	<20120606132824.GA2597@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 0/2] Feeding an annotated but unsigned tag to "git merge"
+Date: Wed, 06 Jun 2012 09:37:52 -0700
+Message-ID: <7vzk8gmm5b.fsf@alter.siamese.dyndns.org>
+References: <1338926312-4239-1-git-send-email-gitster@pobox.com>
+ <20120606134207.GB2597@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Jun 06 18:11:15 2012
+X-From: git-owner@vger.kernel.org Wed Jun 06 18:38:03 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ScIpG-00055P-76
-	for gcvg-git-2@plane.gmane.org; Wed, 06 Jun 2012 18:11:14 +0200
+	id 1ScJFA-0004ic-SS
+	for gcvg-git-2@plane.gmane.org; Wed, 06 Jun 2012 18:38:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757222Ab2FFQLJ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 6 Jun 2012 12:11:09 -0400
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:62114 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756795Ab2FFQLH convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 6 Jun 2012 12:11:07 -0400
-Received: by yhmm54 with SMTP id m54so4996980yhm.19
-        for <git@vger.kernel.org>; Wed, 06 Jun 2012 09:11:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=toYCHiK68Tv0QeGzz3B6aANtLVKwBT7Ic+C9oAp1toc=;
-        b=UetBP8j0uAM7OM3cCjv5Zqo1CX6Rhj9B74t0KsJTQO37JPIfotII5mDGLV90M3M6Z6
-         kqGngIOs8Rivu7XUQOEU540jmmQjqpgtQ+n6Y7T+2ZgFR2XyXcqsGle+5vx255mnG/Qo
-         cHxGpW+7CaN1C/SEDLeCmR0Yg0hVAbmB1fEHmtIkFlCk5S74lLOWbM0X+cFUwqfXj14L
-         mt3Kueti4oGmRioIQrEZ3OmrAAZHo7w2JsLH4hp7TD6pV1Aa0Su+/BPy6s7QTzX8/qe6
-         9DuWadOccJ0UIGEoWKWT5wKuNMaHu+stEbWyvPFnoZ2+XnftRU8Mo3Gj20VsZPdN9M33
-         GlBA==
-Received: by 10.236.78.195 with SMTP id g43mr1376026yhe.62.1338999066888; Wed,
- 06 Jun 2012 09:11:06 -0700 (PDT)
-Received: by 10.236.185.40 with HTTP; Wed, 6 Jun 2012 09:11:06 -0700 (PDT)
-In-Reply-To: <20120606132824.GA2597@sigill.intra.peff.net>
+	id S1756292Ab2FFQh4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 Jun 2012 12:37:56 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:46713 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752936Ab2FFQhz (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Jun 2012 12:37:55 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3995684C9;
+	Wed,  6 Jun 2012 12:37:54 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=H9zwdMKhJBCPWTCsLmgHGxNanTk=; b=eQRKGH
+	S4rVKRVgMsmORBYsEn3CotqWV5k1s6H76r4w6C/NhtSDQ0kTXLW+AUxAAIrDTKEt
+	ThTyLsD8Jd+DLBJE3eLCZTG1mmMNIWO3ryxGiH52B48GZeP1tHbizh3tTG4p/JFy
+	JF9ihbqdGFbjia2/QJlmBG1ulfTPg0bXwGKo4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Lu9DFEHBkmhPGE64IuCsAOxkh/WBzpd3
+	XyPdWX06RlNg49AfRQZsUtifi0JFmKveDffzrPM+q1QcMeY6pB1sCyNY/xis6h53
+	puCk+QJdDV09nfmmofW11R0F47cZrxqTRoFLPpzR3HRgD4xBELyOqaP4bDYUS53f
+	fCPTyJbyzVA=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2FA5284C8;
+	Wed,  6 Jun 2012 12:37:54 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id BA07184C7; Wed,  6 Jun 2012
+ 12:37:53 -0400 (EDT)
+In-Reply-To: <20120606134207.GB2597@sigill.intra.peff.net> (Jeff King's
+ message of "Wed, 6 Jun 2012 09:42:07 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: F6A5AAC6-AFF5-11E1-AC06-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199335>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199336>
 
-Applying that patch, the test t1304 succeeds on my machine.
+Jeff King <peff@peff.net> writes:
 
-Tested-by: Stefan Beller <stefanbeller@googlemail.com>
+> On Tue, Jun 05, 2012 at 12:58:30PM -0700, Junio C Hamano wrote:
+> ...
+>> But since I've written it already, I thought it might be worth
+>> showing it to the list for discussion, if only to publicly reject
+>> the idea ;-).
+>
+> It has been nearly a day, and nobody has publicly rejected it. So I will
+> do so. :)
+>
+> This just doesn't make sense to me. Why would we treat annotated but
+> unsigned tags differently from signed tags? In both cases, the new
+> behavior is keeping more information about what happened, which is
+> generally a good thing.
+>
+> I haven't seen any good argument against creating these merges[1].
 
-2012/6/6 Jeff King <peff@peff.net>:
-> t1304 first runs setfacl as an experiment to see whether the
-> filesystem supports ACLs, and skips the remaining tests if
-> it does not. However, our setfacl run did not exercise the
-> ACLs very well, and some filesystems may support our initial
-> setfacl, but not the rest of the test.
->
-> In particular, some versions of ecryptfs will erroneously
-> apply the umask on top of an inherited directory ACL,
-> causing our tests to fail. Let's be more careful and make
-> sure both that we can read back the user ACL we set, and
-> that the inherited ACL is propagated correctly. The latter
-> catches the ecryptfs bug, but may also catch other bugs
-> (e.g., an implementation which does not handle inherited
-> ACLs at all).
->
-> Since we're making the setup more complex, let's move it
-> into its own test. This will hide the output for us unless
-> the user wants to run "-v" to see it (and we don't need to
-> bother printing anything about setfacl failing; the
-> remaining tests will properly print "skip" due to the
-> missing prerequisite).
->
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
-> The ecryptfs response was that it is probably a bug, so I think we
-> should go with this (especially because it is general enough to
-> potentially catch other weird errors).
->
-> =A0t/t1304-default-acl.sh | 19 +++++++++----------
-> =A01 file changed, 9 insertions(+), 10 deletions(-)
->
-> diff --git a/t/t1304-default-acl.sh b/t/t1304-default-acl.sh
-> index 2b962cf..79045ab 100755
-> --- a/t/t1304-default-acl.sh
-> +++ b/t/t1304-default-acl.sh
-> @@ -14,16 +14,15 @@ umask 077
-> =A0# We need an arbitrary other user give permission to using ACLs. r=
-oot
-> =A0# is a good candidate: exists on all unices, and it has permission
-> =A0# anyway, so we don't create a security hole running the testsuite=
-=2E
-> -
-> -setfacl_out=3D"$(setfacl -m u:root:rwx . 2>&1)"
-> -setfacl_ret=3D$?
-> -
-> -if test $setfacl_ret !=3D 0
-> -then
-> - =A0 =A0 =A0 say "Unable to use setfacl (output: '$setfacl_out'; ret=
-urn code: '$setfacl_ret')"
-> -else
-> - =A0 =A0 =A0 test_set_prereq SETFACL
-> -fi
-> +test_expect_success 'checking for a working acl setup' '
-> + =A0 =A0 =A0 if setfacl -m d:m:rwx -m u:root:rwx . &&
-> + =A0 =A0 =A0 =A0 =A0getfacl . | grep user:root:rwx &&
-> + =A0 =A0 =A0 =A0 =A0touch should-have-readable-acl &&
-> + =A0 =A0 =A0 =A0 =A0getfacl should-have-readable-acl | egrep "mask::=
-?rw-"
-> + =A0 =A0 =A0 then
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 test_set_prereq SETFACL
-> + =A0 =A0 =A0 fi
-> +'
->
-> =A0if test -z "$LOGNAME"
-> =A0then
-> --
-> 1.7.11.rc1.4.g0d3b9b3
->
+It is in line with --ff-only special casing, though.  The argument
+against it is that "we used to fast forward", I would think, even
+though in general my reaction to that would be "so what?" because I
+agree with your "keeping more information instead of discarding as
+we used to is a good feature enhancement, why should we retreat?"
+
+> [1] From the tone of your message, I think you are not the right person
+>     to be arguing that side, anyway. It sounds as though you are not all
+>     that invested in this series. :)
+
+I am actually ambivalent; instead of being 0% supportive like I
+usually am for many topics, perhaps I am 30% sympathetic to this
+one.
+
+This was triggered by
+http://thread.gmane.org/gmane.comp.version-control.git/198828
