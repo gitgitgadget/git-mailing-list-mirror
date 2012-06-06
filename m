@@ -1,67 +1,78 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: Handling racy entries in the v5 format [Re: [GSoC] Designing
- a faster index format - Progress report week 7]
-Date: Wed, 06 Jun 2012 15:01:02 +0200
-Message-ID: <4FCF548E.8060708@viscovery.net>
-References: <20120604200746.GK6449@tgummerer> <87aa0gbwon.fsf@thomas.inf.ethz.ch>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Thomas Gummerer <t.gummerer@gmail.com>, git@vger.kernel.org,
-	gitster@pobox.com, mhagger@alum.mit.edu, pclouds@gmail.com
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Wed Jun 06 15:01:16 2012
+From: Vincent van Ravesteijn <vfr@lyx.org>
+Subject: [PATCH] Use system_path to find 'po'-dir to resolve relative paths
+Date: Wed,  6 Jun 2012 13:01:15 +0000
+Message-ID: <1338987675-7388-1-git-send-email-vfr@lyx.org>
+Cc: gitster@pobox.com, Vincent van Ravesteijn <vfr@lyx.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jun 06 15:01:49 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ScFrP-0000SV-Ma
-	for gcvg-git-2@plane.gmane.org; Wed, 06 Jun 2012 15:01:16 +0200
+	id 1ScFrw-0001mI-Sn
+	for gcvg-git-2@plane.gmane.org; Wed, 06 Jun 2012 15:01:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752588Ab2FFNBK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 6 Jun 2012 09:01:10 -0400
-Received: from lilzmailso02.liwest.at ([212.33.55.13]:18403 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752304Ab2FFNBJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Jun 2012 09:01:09 -0400
-Received: from cpe228-254-static.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.76)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1ScFsF-0007VC-9r; Wed, 06 Jun 2012 15:02:07 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id 7CB7B1660F;
-	Wed,  6 Jun 2012 15:01:02 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:12.0) Gecko/20120428 Thunderbird/12.0.1
-In-Reply-To: <87aa0gbwon.fsf@thomas.inf.ethz.ch>
-X-Spam-Score: -1.4 (-)
+	id S1752676Ab2FFNBp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 Jun 2012 09:01:45 -0400
+Received: from mail-wi0-f172.google.com ([209.85.212.172]:46074 "EHLO
+	mail-wi0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752304Ab2FFNBo (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Jun 2012 09:01:44 -0400
+Received: by wibhj8 with SMTP id hj8so5007721wib.1
+        for <git@vger.kernel.org>; Wed, 06 Jun 2012 06:01:43 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:x-mailer:x-gm-message-state;
+        bh=6x0vSi5suNRIqtfHNm+2JYJTx9GNp9V3FPyMmSOySMg=;
+        b=VLKRPNbz3EwLNggajwJYtCQFcUStwrZbc8jTpdvwTMN0QHt1UyEoNOStzqAVpeu0KG
+         mikXFSVGRIAS00TYheLaOLDUYoubru70Cl0pUxfz5MYTslbUuZrmF2MK3vIHrdqMXJ1Q
+         6MbTOFFfsSOoDK07YnueuWXSga1RLoEg0jjdlEv6lY8okUAVmoSko+SKeWZJA80W0pwp
+         guTY8jPgz2OaUO5xs+AQD6rTdjjHLEPdZpJVEGFb91ENdyrdX8hbxTFD5Pnirg/ZHeqn
+         PYN7BGKp7B1KZdBlIkd2DYSmVHHAGUbRJpJl4UnlB3zYfWL9LKkLG90R7+u5js3Ug4AX
+         36zA==
+Received: by 10.216.214.82 with SMTP id b60mr17195363wep.38.1338987703317;
+        Wed, 06 Jun 2012 06:01:43 -0700 (PDT)
+Received: from localhost (j175101.upc-j.chello.nl. [24.132.175.101])
+        by mx.google.com with ESMTPS id ei4sm4068624wid.5.2012.06.06.06.01.42
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 06 Jun 2012 06:01:42 -0700 (PDT)
+X-Mailer: git-send-email 1.7.9.msysgit.0
+X-Gm-Message-State: ALoCoQnUcKPV0p50f2tCS7TK20B/s24Mwe7DyHuC7gLa45ei+eUUggPRHGd4I84d5LphUWjn0cLq
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199321>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199322>
 
-Am 6/6/2012 11:45, schrieb Thomas Rast:
-> Proposed Solution
-> -----------------
-> 
->   When writing an entry: check whether ce_mtime >= index.mtime.  If so,
->   write out ce_mtime=0.
-> 
-> The index.mtime here is a lower bound on the mtime of the new index,
-> obtained e.g. by touching the index and then stat()ing it immediately
-> before writing out the changed entries.
+If the specified path for the 'po'-files is a relative path and if
+RUNTIME_PREFIX is set, system_path must be used to resolve the directory relative to the executable.
 
-Portability note: To "touch" on Windows will mean that the file is
-modified (at least one byte is written), then closed. Only then the stat
-information is reliable. The reason is that the time stamp is only valid
-after (the last handle of) the file was closed.
+Signed-off-by: Vincent van Ravesteijn <vfr@lyx.org>
+---
+ gettext.c |    3 ++-
+ 1 files changed, 2 insertions(+), 1 deletions(-)
 
-> Note that this is a fundamentally different approach from the one taken
-> in v[2-4] indexes.  In the old approach, it is the *next* writer's
-> responsibility to ensure that all racy entries are either truly clean,
-> or smudged (since they will presumably lose their raciness).  In the new
-> approach, racy entries are immediately smudged and remain so until an
-> update.
-
--- Hannes
+diff --git a/gettext.c b/gettext.c
+index f75bca7..632ccf8 100644
+--- a/gettext.c
++++ b/gettext.c
+@@ -4,6 +4,7 @@
+ 
+ #include "git-compat-util.h"
+ #include "gettext.h"
++#include "exec_cmd.h"
+ 
+ #ifndef NO_GETTEXT
+ #	include <locale.h>
+@@ -123,7 +124,7 @@ void git_setup_gettext(void)
+ 
+ 	if (!podir)
+ 		podir = GIT_LOCALE_PATH;
+-	bindtextdomain("git", podir);
++	bindtextdomain("git", system_path(podir));
+ 	setlocale(LC_MESSAGES, "");
+ 	init_gettext_charset("git");
+ 	textdomain("git");
+-- 
+1.7.9.msysgit.0
