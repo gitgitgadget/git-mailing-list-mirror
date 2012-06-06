@@ -1,65 +1,99 @@
-From: =?ISO-8859-2?Q?Tajti_=C1kos?= <akos.tajti@intland.com>
-Subject: git-upload-pack died of signal 13
-Date: Wed, 06 Jun 2012 13:28:23 +0200
-Message-ID: <4FCF3ED7.9060503@intland.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-2;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Jun 06 13:28:37 2012
+From: Jon Seymour <jon.seymour@gmail.com>
+Subject: [PATCH v9 0/4] submodule: improve support for relative superproject origin URLs
+Date: Wed,  6 Jun 2012 21:57:26 +1000
+Message-ID: <1338983850-9872-1-git-send-email-jon.seymour@gmail.com>
+Cc: Jens.Lehmann@web.de, gitster@pobox.com, phil.hord@gmail.com,
+	ramsay@ramsay1.demon.co.uk, j6t@kdbg.org,
+	Jon Seymour <jon.seymour@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jun 06 13:58:02 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ScEPl-0002Ur-5R
-	for gcvg-git-2@plane.gmane.org; Wed, 06 Jun 2012 13:28:37 +0200
+	id 1ScEsC-0000Jj-4e
+	for gcvg-git-2@plane.gmane.org; Wed, 06 Jun 2012 13:58:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755876Ab2FFL2c convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 6 Jun 2012 07:28:32 -0400
-Received: from moutng.kundenserver.de ([212.227.17.9]:50977 "EHLO
-	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752798Ab2FFL2b (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Jun 2012 07:28:31 -0400
-Received: from [192.168.1.101] (92-249-245-147.pool.digikabel.hu [92.249.245.147])
-	by mrelayeu.kundenserver.de (node=mrbap3) with ESMTP (Nemesis)
-	id 0MKqqe-1ScEPd2skK-0001q2; Wed, 06 Jun 2012 13:28:30 +0200
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.1; hu; rv:1.9.2.28) Gecko/20120306 Thunderbird/3.1.20
-X-Provags-ID: V02:K0:SDAyvX30pfr2glogRyBAdCOG2YqW9zPVYYbu2sxhEVS
- 02mYoVNuWC6x6tMqfkoS/INb0Gw4yJexz5Be3peWTQysGa8Oxo
- jaQYjhmBWK88LbbO5KouG4kHeVVw7yItzWI2R+2VAVg4/jDF1n
- DQtT+S90xAjYsra40URqUv2aHCMpN9Rq0r0n0/Hmw+uTxu3gOu
- fzpI0FQP72hAFTmYWYuSncDT8rvyYbZ1woYxefWmbPlIkH1B8X
- ZP/2+GD+S8lgbCqFjnLk57l8Vfp/VdwdxWwVFJ5uVauTI3qPWB
- yLPDHzbIPlig0icFgUA3W+P+akYJAdm6MJG00bq1MzZF5m3r0T
- s2EdgfmPzxAYVIvtm1Eg=
+	id S1752896Ab2FFL5o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 Jun 2012 07:57:44 -0400
+Received: from mail-pz0-f46.google.com ([209.85.210.46]:65099 "EHLO
+	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751945Ab2FFL5l (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Jun 2012 07:57:41 -0400
+Received: by dady13 with SMTP id y13so8693843dad.19
+        for <git@vger.kernel.org>; Wed, 06 Jun 2012 04:57:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        bh=v+fzhDDLo6MGZVMSDAA9pUHLAeP7JEdis9HgrJY1iGo=;
+        b=elBRTJ1EGe9gHjB6NhIkwaBRUee9RSUtLxwmzTlOzH48xXsXCsCOfB7ZgSrLwx9Lvc
+         1BUUu1blh5aKK6wRU3Y9YvhMVIk3jKlENWOVm3H8VvPBQvCpz7dEJqlqrxuYuYZts3O7
+         UsjV0wODSPmLIP5RkgHhCc6m+aWk+r3qB0bgBeytqwE5TlkDmTkcoAe/vhlz0m1x8Wh6
+         UolOaHmeIl2vwBiBlSj/vByx4FCDbsGB/KrFm6TC3oOB/ZIRf75Oid+8tvN2ITjBfgZc
+         /CrzwJ0jnruiOrJ47HfIg3vybBr2EpCtUP1w2SLCRKR8ys/3gR6Lg1jdzhEXpQE6xIUh
+         II9A==
+Received: by 10.68.136.229 with SMTP id qd5mr9495628pbb.2.1338983861343;
+        Wed, 06 Jun 2012 04:57:41 -0700 (PDT)
+Received: from ubuntu.au.ibm.com ([175.103.19.195])
+        by mx.google.com with ESMTPS id pg3sm197182pbc.2.2012.06.06.04.57.37
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 06 Jun 2012 04:57:40 -0700 (PDT)
+X-Mailer: git-send-email 1.7.10.2.650.g9c513dd.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199313>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199314>
 
-Dear List,
+This series improves handling by 'git submodule' of relative superproject origin URLs. 
 
-we got "git-upload pack died of signal 13" error when pushing using thi=
-s=20
-command:
+Currently, 'git submodule':
 
-  Executing: "/usr/lib/git-core/git-http-backend" env:=20
-"CONTENT_TYPE=3Dapplication/x-git-upload-pack-request"=20
-"GIT_HTTP_EXPORT_ALL=3Dtrue" "SERVER_PORT=3D443"=20
-"CODEBEAMER_SMART_SCM_SERVLET=3Dtrue" "REMOTE_ADDR=3D91.82.170.74"=20
-"REMOTE_HOST=3D91.82.170.74" "SERVER_SOFTWARE=3DApache Tomcat/6.0.35"=20
-"SERVER_NAME=3Dcodebeamer.com"=20
-"GIT_PROJECT_ROOT=3D/home/akos/repository/git" "REMOTE_USER=3Dzl"=20
-"PATH_INFO=3D/cbdev-git/git-upload-pack" "QUERY_STRING=3D" "AUTH_TYPE=3D=
-Basic"=20
-"GATEWAY_INTERFACE=3DCGI/1.1" "SERVER_PROTOCOL=3DHTTP/1.1"=20
-"REQUEST_METHOD=3DPOST" "CONTENT_LENGTH=3D1157"=20
-"REQUEST_URI=3D/app/git/my-git/git-upload-pack"
+* incorrectly configures origin URL for submodules with a path that is relative to
+the work tree of the superproject when the configured path needs to be relative 
+to the work tree of the submodule
 
-What may be the cause?
+* unnecessarily fails with an error if the superproject origin URL is of the form: foo
 
-Thanks in advance,
-=C1kos Tajti
+This series corrects these problems for paths like the following:
+  foo
+  foo/bar
+  ./foo
+  ./foo/bar
+  ../foo
+  ../foo/bar
+
+It does not change current behaviour for URLs that begin with a leading '/' or contain
+a ':' as such URLs are deemed to be absolute URLs for which no correction is required.
+
+In addition, this series ensures that relative URLs configured by git submodule do
+not include a superfluous leading or embedded './'.
+
+This series differs from v7 by removing the patches dealing incorrect handling 
+of greedy submodule URLs (those with too many leading ../'s) and those that deal
+with improperly normalized superproject origin URLs. These patches may resubmitted
+at a later date.
+
+This series differs from v8 by fixing the indentation of case branches, using 
+a sed idiom that avoids a Solaris sed bug, and reverts the name of the 
+'module_url' variable used by cmd_sync() to 'url'. The commentary for
+resolve_relative_url is adjusted slightly to remove the implication that the 
+first argument is always a relative URL.
+
+Jon Seymour (4):
+  submodule: additional regression tests for relative URLs
+  submodule: document failure to handle relative superproject origin
+    URLs
+  submodule: fix sync handling of some relative superproject origin
+    URLs
+  submodule: fix handling of superproject origin URLs like foo, ./foo
+    and ./foo/bar
+
+ git-submodule.sh           |  60 +++++++++++++++++--
+ t/t7400-submodule-basic.sh | 144 ++++++++++++++++++++++++++++++++++++++++++++-
+ t/t7403-submodule-sync.sh  |  90 +++++++++++++++++++++++++++-
+ 3 files changed, 284 insertions(+), 10 deletions(-)
+
+-- 
+1.7.10.2.650.g9c513dd.dirty
