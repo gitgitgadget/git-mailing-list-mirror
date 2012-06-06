@@ -1,125 +1,400 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Handling racy entries in the v5 format [Re: [GSoC] Designing a faster index format - Progress report week 7]
-Date: Wed, 6 Jun 2012 11:45:44 +0200
-Message-ID: <87aa0gbwon.fsf@thomas.inf.ethz.ch>
-References: <20120604200746.GK6449@tgummerer>
-Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Cc: <git@vger.kernel.org>, <trast@student.ethz.ch>,
-	<gitster@pobox.com>, <mhagger@alum.mit.edu>, <pclouds@gmail.com>
-To: Thomas Gummerer <t.gummerer@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jun 06 11:45:55 2012
+From: Lucien Kong <Lucien.Kong@ensimag.imag.fr>
+Subject: [PATCHv2] rebase [-i --exec | -ix] <CMD>...
+Date: Wed,  6 Jun 2012 12:34:16 +0200
+Message-ID: <1338978856-26838-1-git-send-email-Lucien.Kong@ensimag.imag.fr>
+References: <1338817674-22877-1-git-send-email-Lucien.Kong@ensimag.imag.fr>
+Cc: Lucien Kong <Lucien.Kong@ensimag.imag.fr>,
+	Valentin Duperray <Valentin.Duperray@ensimag.imag.fr>,
+	Franck Jonas <Franck.Jonas@ensimag.imag.fr>,
+	Thomas Nguy <Thomas.Nguy@ensimag.imag.fr>,
+	Huynh Khoi Nguyen Nguyen 
+	<Huynh-Khoi-Nguyen.Nguyen@ensimag.imag.fr>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jun 06 12:34:28 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ScCoM-0001yb-5Z
-	for gcvg-git-2@plane.gmane.org; Wed, 06 Jun 2012 11:45:54 +0200
+	id 1ScDZK-0007FX-CG
+	for gcvg-git-2@plane.gmane.org; Wed, 06 Jun 2012 12:34:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755443Ab2FFJpt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 6 Jun 2012 05:45:49 -0400
-Received: from edge10.ethz.ch ([82.130.75.186]:43726 "EHLO edge10.ethz.ch"
+	id S1752912Ab2FFKeW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 Jun 2012 06:34:22 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:38405 "EHLO shiva.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751124Ab2FFJps (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Jun 2012 05:45:48 -0400
-Received: from CAS10.d.ethz.ch (172.31.38.210) by edge10.ethz.ch
- (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.2.298.4; Wed, 6 Jun
- 2012 11:45:43 +0200
-Received: from thomas.inf.ethz.ch.ethz.ch (129.132.153.233) by cas10.d.ethz.ch
- (172.31.38.210) with Microsoft SMTP Server (TLS) id 14.2.298.4; Wed, 6 Jun
- 2012 11:45:44 +0200
-In-Reply-To: <20120604200746.GK6449@tgummerer> (Thomas Gummerer's message of
-	"Mon, 4 Jun 2012 22:07:46 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Originating-IP: [129.132.153.233]
+	id S1752486Ab2FFKeU (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Jun 2012 06:34:20 -0400
+Received: from ensimag.imag.fr (ensimag.imag.fr [195.221.228.12])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id q56APck1030356
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Wed, 6 Jun 2012 12:25:38 +0200
+Received: from ensibm.imag.fr (ensibm [195.221.228.8])
+	by ensimag.imag.fr (8.13.8/8.13.8/ImagV2.1.r_ens) with ESMTP id q56AYGaG009985;
+	Wed, 6 Jun 2012 12:34:16 +0200
+Received: from ensibm.imag.fr (localhost [127.0.0.1])
+	by ensibm.imag.fr (8.13.8/8.13.8/ImagV2.1.sb_ens.pm) with ESMTP id q56AYGi0027419;
+	Wed, 6 Jun 2012 12:34:16 +0200
+Received: (from konglu@localhost)
+	by ensibm.imag.fr (8.13.8/8.13.8/Submit) id q56AYGbT027418;
+	Wed, 6 Jun 2012 12:34:16 +0200
+X-Mailer: git-send-email 1.7.8
+In-Reply-To: <1338817674-22877-1-git-send-email-Lucien.Kong@ensimag.imag.fr>
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Wed, 06 Jun 2012 12:25:38 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: q56APck1030356
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: lucien.kong@phelma.grenoble-inp.fr
+MailScanner-NULL-Check: 1339583139.61837@rld7TcoL7qM+siFFHjkwxQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199309>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199310>
 
-Hi,
+This patch provides a way to automatically add these "exec" lines
+between each commit applications. For instance, running 'git rebase -i
+--exec "make test"' lets you check that intermediate commits are
+compilable. It is also compatible with the option --autosquash. At
+this point, you can't use --exec without the interactive mode (-i).
 
-Michael, Thomas and me just had a lengthy discussion on IRC about racy
-entries.  I'll use "simultaneously" from the perspective of the
-filesystem's mtimes; depending on your USE_NSEC, that may mean in the
-same second, or the same nanosecond.
+Tests about this new command are also added in
+t3404-rebase-interactive.sh.
 
+Signed-off-by: Lucien Kong <Lucien.Kong@ensimag.imag.fr>
+Signed-off-by: Valentin Duperray <Valentin.Duperray@ensimag.imag.fr>
+Signed-off-by: Franck Jonas <Franck.Jonas@ensimag.imag.fr>
+Signed-off-by: Thomas Nguy <Thomas.Nguy@ensimag.imag.fr>
+Signed-off-by: Huynh Khoi Nguyen Nguyen <Huynh-Khoi-Nguyen.Nguyen@ensimag.imag.fr>
+Signed-off-by: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+---
+The part of --onto in the documentation is changed to be consistent
+with the other options. The exec line, when using the option --autosquash,
+is now only added after the squash/fixup series.
 
-Background: Racy Entries
-------------------------
+ Documentation/git-rebase.txt  |   54 +++++++++++++++--
+ git-rebase--interactive.sh    |   19 ++++++
+ git-rebase.sh                 |   20 ++++++-
+ t/t3404-rebase-interactive.sh |  124 +++++++++++++++++++++++++++++++++++++++++
+ 4 files changed, 207 insertions(+), 10 deletions(-)
 
-There are two cases of racy index entries:
-
-(A)  echo foo >foo
-     git add foo
-     echo bar >foo
-
-If the latter two commands happen simultaneously, lstat() will match the
-index entry.  Git handles this by checking foo.mtime >= index.mtime, and
-if so, doing a content check.  Such entries are called racy.
-
-(B) echo foo >foo
-    git add foo     # (i)
-    echo bar >foo
-    sleep 2
-    : >dummy
-    git add dummy   # (ii)
-
-If the commands before the sleep happen simultaneously, then foo.mtime
-has not changed since (i), but due to (ii) index.mtime has, defeating
-the raciness check.  To handle this, git checks for racy entries
-*w.r.t. the old index* immediately before it writes a new index.  For
-all[1] such entries it does a content check.  All racy entries found to
-be modified get ce_size=0, which tells the next git that "we know they
-are modified".  We call them "smudged".
-
-
-The Problem
------------
-
-The use of ce_size=0 is a problem for index v5.  The current drafts
-exclude the size field, instead wrapping it in stat_crc along with most
-of the other stat fields.
-
-There are some obvious solutions:
-
-* Put the size field back, costing us 4B/entry.
-
-* Use some other marker field for the v5 format, e.g., the stat crc.
-
-Neither of these is good, for an entirely different reason: The current
-scheme checks *all* entries for being racy w.r.t. the old index, before
-any write.  This completely defeats the point of index v5: *avoid*
-loading the entire index for small changes.
-
-
-Proposed Solution
------------------
-
-(Michael, we have adapted it somewhat this since you left IRC.)
-
-  When writing an entry: check whether ce_mtime >= index.mtime.  If so,
-  write out ce_mtime=0.
-
-The index.mtime here is a lower bound on the mtime of the new index,
-obtained e.g. by touching the index and then stat()ing it immediately
-before writing out the changed entries.
-
-Note that this is a fundamentally different approach from the one taken
-in v[2-4] indexes.  In the old approach, it is the *next* writer's
-responsibility to ensure that all racy entries are either truly clean,
-or smudged (since they will presumably lose their raciness).  In the new
-approach, racy entries are immediately smudged and remain so until an
-update.
-
-
-
-Footnotes: 
-[1]  Ignoring the case where st_size==0 at the beginning, which needs
-some arguing around because st_size is also the smudge marker.
-
+diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
+index 147fa1a..1dd95c4 100644
+--- a/Documentation/git-rebase.txt
++++ b/Documentation/git-rebase.txt
+@@ -8,9 +8,9 @@ git-rebase - Forward-port local commits to the updated upstream head
+ SYNOPSIS
+ --------
+ [verse]
+-'git rebase' [-i | --interactive] [options] [--onto <newbase>]
++'git rebase' [-i | --interactive] [options] [--exec <cmd>] [--onto <newbase>]
+ 	[<upstream>] [<branch>]
+-'git rebase' [-i | --interactive] [options] --onto <newbase>
++'git rebase' [-i | --interactive] [options] [--exec <cmd>] --onto <newbase>
+ 	--root [<branch>]
+ 'git rebase' --continue | --skip | --abort
+ 
+@@ -210,11 +210,29 @@ rebase.autosquash::
+ 
+ OPTIONS
+ -------
+-<newbase>::
+-	Starting point at which to create the new commits. If the
+-	--onto option is not specified, the starting point is
+-	<upstream>.  May be any valid commit, and not just an
+-	existing branch name.
++-x <cmd>::
++--exec <cmd>::
++	Automatically add "exec" followed by <cmd> between each commit
++	applications. Using this option along with --autosquash adds
++	the exec line after the squash/fixeup series only. <cmd>
++	stands for shell commands. The --exec option has to be
++	specified. (see INTERACTIVE MODE below)
+++
++This has to be used along with the `--interactive` option explicitly.
++You may execute several commands between each commit applications.
++For this, you can use one instance of exec:
++	git rebase -i --exec "cmd1; cmd2; ...".
++You can also insert several instances of exec, if you wish to
++only have one command per line for example:
++	git rebase -i --exec "cmd1" --exec "cmd2" ...
++
++--onto <newbase>::
++	With this option, git rebase takes all commits from <branch>,
++	that are not in <upstream>, and transplant them on top of
++	<newbase>. <newbase> is the starting point at which to create
++	the new commits. If the --onto option is not specified, the
++	starting point is <upstream>.  May be any valid commit, and
++	not just an existing branch name.
+ +
+ As a special case, you may use "A\...B" as a shortcut for the
+ merge base of A and B if there is exactly one merge base. You can
+@@ -521,6 +539,28 @@ in `$SHELL`, or the default shell if `$SHELL` is not set), so you can
+ use shell features (like "cd", ">", ";" ...). The command is run from
+ the root of the working tree.
+ 
++----------------------------------
++$ git rebase -i --exec "make test"
++----------------------------------
++
++This command lets you check that intermediate commits are compilable.
++The todo list becomes like that:
++
++--------------------
++pick 5928aea one
++exec make test
++pick 04d0fda two
++exec make test
++pick ba46169 three
++exec make test
++pick f4593f9 four
++exec make test
++--------------------
++
++If the option '-i' is missing, The command will return a message
++error. If there is no <cmd> specified behind --exec, the command will
++return a message error and the usage page of 'git rebase'.
++
+ SPLITTING COMMITS
+ -----------------
+ 
+diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
+index 0c19b7c..3539afd 100644
+--- a/git-rebase--interactive.sh
++++ b/git-rebase--interactive.sh
+@@ -684,6 +684,23 @@ rearrange_squash () {
+ 	rm -f "$1.sq" "$1.rearranged"
+ }
+ 
++# Add commands after a pick or after a squash/fixup serie
++# in the todo list.
++add_exec_commands () {
++	OIFS=$IFS
++	IFS=$LF
++	for i in $cmd
++	do
++		tmp=$(sed "/^pick .*/i\
++				exec $i" "$1")
++		echo "$tmp" >"$1"
++		tmp=$(sed '1d' "$1")
++		echo "$tmp" >"$1"
++		echo "exec $i" >>"$1"
++	done
++	IFS=$OIFS
++}
++
+ case "$action" in
+ continue)
+ 	# do we have anything to commit?
+@@ -857,6 +874,8 @@ fi
+ 
+ test -s "$todo" || echo noop >> "$todo"
+ test -n "$autosquash" && rearrange_squash "$todo"
++test -n "$cmd" && add_exec_commands "$todo"
++
+ cat >> "$todo" << EOF
+ 
+ # Rebase $shortrevisions onto $shortonto
+diff --git a/git-rebase.sh b/git-rebase.sh
+index 24a2840..19ead1a 100755
+--- a/git-rebase.sh
++++ b/git-rebase.sh
+@@ -3,7 +3,8 @@
+ # Copyright (c) 2005 Junio C Hamano.
+ #
+ 
+-USAGE='[--interactive | -i] [-v] [--force-rebase | -f] [--no-ff] [--onto <newbase>] [<upstream>|--root] [<branch>] [--quiet | -q]'
++USAGE='[--interactive | -i] [--exec | -x <cmd>] [-v] [--force-rebase | -f]
++       [--no-ff] [--onto <newbase>] [<upstream>|--root] [<branch>] [--quiet | -q]'
+ LONG_USAGE='git-rebase replaces <branch> with a new branch of the
+ same name.  When the --onto option is provided the new branch starts
+ out with a HEAD equal to <newbase>, otherwise it is equal to <upstream>
+@@ -30,8 +31,8 @@ Example:       git-rebase master~1 topic
+ SUBDIRECTORY_OK=Yes
+ OPTIONS_KEEPDASHDASH=
+ OPTIONS_SPEC="\
+-git rebase [-i] [options] [--onto <newbase>] [<upstream>] [<branch>]
+-git rebase [-i] [options] --onto <newbase> --root [<branch>]
++git rebase [-i] [options] [--exec <cmd>] [--onto <newbase>] [<upstream>] [<branch>]
++git rebase [-i] [options] [--exec <cmd>] --onto <newbase> --root [<branch>]
+ git-rebase [-i] --continue | --abort | --skip
+ --
+  Available options are
+@@ -43,6 +44,7 @@ s,strategy=!       use the given merge strategy
+ no-ff!             cherry-pick all commits, even if unchanged
+ m,merge!           use merging strategies to rebase
+ i,interactive!     let the user edit the list of commits to rebase
++x,exec=!           add exec lines after each commit of the editable list
+ k,keep-empty	   preserve empty commits during rebase
+ f,force-rebase!    force rebase even if branch is up to date
+ X,strategy-option=! pass the argument through to the merge strategy
+@@ -76,6 +78,7 @@ If you would prefer to skip this patch, instead run \"git rebase --skip\".
+ To check out the original branch and stop rebasing run \"git rebase --abort\".
+ "
+ unset onto
++cmd=
+ strategy=
+ strategy_opts=
+ do_merge=
+@@ -219,6 +222,11 @@ do
+ 		onto="$2"
+ 		shift
+ 		;;
++	-x)
++		test 2 -le "$#" || usage
++		cmd="${cmd:+"$cmd$LF"} $2"
++		shift
++		;;
+ 	-i)
+ 		interactive_rebase=explicit
+ 		;;
+@@ -304,6 +312,12 @@ do
+ done
+ test $# -gt 2 && usage
+ 
++if test -n "$cmd" &&
++   test "$interactive_rebase" != explicit
++then
++	die "--exec option must be used with --interactive option\n"
++fi
++
+ if test -n "$action"
+ then
+ 	test -z "$in_progress" && die "No rebase in progress?"
+diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
+index 025c1c6..4fe98d5 100755
+--- a/t/t3404-rebase-interactive.sh
++++ b/t/t3404-rebase-interactive.sh
+@@ -755,4 +755,128 @@ test_expect_success 'rebase-i history with funny messages' '
+ 	test_cmp expect actual
+ '
+ 
++
++test_expect_success 'prepare for rebase -i --exec' '
++	git checkout master &&
++	git checkout -b execute &&
++	test_commit one_exec main.txt one_exec &&
++	test_commit two_exec main.txt two_exec &&
++	test_commit three_exec main.txt three_exec
++'
++
++
++test_expect_success 'running "git rebase -i --exec git show HEAD"' '
++	git rebase -i --exec "git show HEAD" HEAD~2 >actual &&
++	(
++		FAKE_LINES="1 exec_git_show_HEAD 2 exec_git_show_HEAD" &&
++		export FAKE_LINES &&
++		git rebase -i HEAD~2 >expected
++	) &&
++	sed '1,9d' expected >expect &&
++	mv expect expected &&
++	test_cmp expected actual
++'
++
++
++test_expect_success 'running "git rebase --exec git show HEAD -i"' '
++	git reset --hard execute &&
++	git rebase --exec "git show HEAD" -i HEAD~2 >actual &&
++	(
++		FAKE_LINES="1 exec_git_show_HEAD 2 exec_git_show_HEAD" &&
++		export FAKE_LINES &&
++		git rebase -i HEAD~2 >expected
++	) &&
++	sed '1,9d' expected >expect &&
++	mv expect expected &&
++	test_cmp expected actual
++'
++
++
++test_expect_success 'running "git rebase -ix git show HEAD"' '
++	git reset --hard execute &&
++	git rebase -ix "git show HEAD" HEAD~2 >actual &&
++	(
++		FAKE_LINES="1 exec_git_show_HEAD 2 exec_git_show_HEAD" &&
++		export FAKE_LINES &&
++		git rebase -i HEAD~2 >expected
++	) &&
++	sed '1,9d' expected >expect &&
++	mv expect expected &&
++	test_cmp expected actual
++'
++
++
++test_expect_success 'rebase -ix with several <CMD>' '
++	git reset --hard execute &&
++	git rebase -ix "git show HEAD; pwd" HEAD~2 >actual &&
++	(
++		FAKE_LINES="1 exec_git_show_HEAD;_pwd 2 exec_git_show_HEAD;_pwd" &&
++		export FAKE_LINES &&
++		git rebase -i HEAD~2 >expected
++	) &&
++	sed '1,9d' expected >expect &&
++	mv expect expected &&
++	test_cmp expected actual
++'
++
++
++test_expect_success 'rebase -ix with several instances of --exec' '
++	git reset --hard execute &&
++	git rebase -i --exec "git show HEAD" --exec "pwd" HEAD~2 >actual &&
++	(
++		FAKE_LINES="1 exec_git_show_HEAD exec_pwd 2
++				exec_git_show_HEAD exec_pwd" &&
++		export FAKE_LINES &&
++		git rebase -i HEAD~2 >expected
++	) &&
++	sed '1,11d' expected >expect &&
++	mv expect expected &&
++	test_cmp expected actual
++'
++
++
++test_expect_success 'rebase -ix with --autosquash' '
++	git reset --hard execute &&
++	git checkout -b autosquash &&
++	echo second >second.txt &&
++	git add second.txt &&
++	git commit -m "fixup! two_exec" &&
++	echo bis >bis.txt &&
++	git add bis.txt &&
++	git commit -m "fixup! two_exec" &&
++	(
++		git checkout -b autosquash_actual &&
++		git rebase -i --exec "git show HEAD" --autosquash HEAD~4 >actual
++	) &&
++	git checkout autosquash &&
++	(
++		git checkout -b autosquash_expected &&
++		FAKE_LINES="1 fixup 3 fixup 4 exec_git_show_HEAD 2 exec_git_show_HEAD" &&
++		export FAKE_LINES &&
++		git rebase -i HEAD~4 >expected
++	) &&
++	sed '1,13d' expected >expect &&
++	mv expect expected &&
++	test_cmp expected actual
++'
++
++
++test_expect_success 'rebase --exec without -i shows error message' '
++	git reset --hard execute &&
++	test_must_fail git rebase --exec "git show HEAD" HEAD~2 2>actual &&
++	echo "--exec option must be used with --interactive option\n" >expected &&
++	test_cmp expected actual
++'
++
++
++test_expect_success 'rebase -i --exec without <CMD> shows error message and usage' '
++	git reset --hard execute &&
++	test_must_fail git rebase -i --exec 2>actual &&
++	sed '1d' actual >tmp &&
++	mv tmp actual &&
++	test_must_fail git rebase -h >expected &&
++	test_cmp expected actual &&
++	git checkout master
++'
++
+ test_done
 -- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+1.7.8
