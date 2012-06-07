@@ -1,65 +1,102 @@
-From: Herman van Rink <rink@initfour.nl>
-Subject: Re: subtree woes
-Date: Thu, 07 Jun 2012 09:33:56 +0200
-Organization: Initfour Websolutions
-Message-ID: <4FD05964.9040102@initfour.nl>
-References: <CAMSUDdYj=GJx3LwSq98bLLXpEDWjR9ssHi=rdh1Q=zopZzAm_w@mail.gmail.com> <CAMSUDdZ0BX8E26haZ-V-Grm42PaWFm3eXuSAJBcUg1LFvis7mA@mail.gmail.com> <CAMSUDdaKu7f+A3wwsWDOA1W071xunssixrWwCi1Uz21k4DFcBQ@mail.gmail.com> <CAMSUDdZAex23k7c94VaF7H9KuGxE01sFC6XCHq4c=7jUnms7-Q@mail.gmail.com>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: Please revert e371046b6473907aa6d62b7862a3afe9d33561e1
+Date: Thu, 07 Jun 2012 09:41:57 +0200
+Message-ID: <4FD05B45.2090006@alum.mit.edu>
+References: <m24nqoohss.fsf@gmail.com> <CA+39Oz4f_Wn1cVzqNWO76HZWa4AswSBpbriaRc0OznapVLJfGg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Git Users <git@vger.kernel.org>
-To: Paul Harris <harris.pc@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jun 07 09:34:12 2012
+Cc: John Wiegley <jwiegley@gmail.com>, git@vger.kernel.org
+To: Thomas Adam <thomas@xteddy.org>
+X-From: git-owner@vger.kernel.org Thu Jun 07 09:42:08 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ScXER-0005pG-B3
-	for gcvg-git-2@plane.gmane.org; Thu, 07 Jun 2012 09:34:12 +0200
+	id 1ScXM7-0005Zq-Vm
+	for gcvg-git-2@plane.gmane.org; Thu, 07 Jun 2012 09:42:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754113Ab2FGHeD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 Jun 2012 03:34:03 -0400
-Received: from hosted-by.initfour.nl ([83.137.144.7]:48354 "EHLO
-	mail.initfour.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751561Ab2FGHeB (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Jun 2012 03:34:01 -0400
-Received: from [192.168.42.73] (initfour.xs4all.nl [80.101.157.228])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	(Authenticated sender: helmo@INITFOUR.NL)
-	by mail.initfour.nl (Postfix) with ESMTPSA id 44882195440A;
-	Thu,  7 Jun 2012 09:33:57 +0200 (CEST)
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:12.0) Gecko/20120430 Thunderbird/12.0.1
-In-Reply-To: <CAMSUDdZAex23k7c94VaF7H9KuGxE01sFC6XCHq4c=7jUnms7-Q@mail.gmail.com>
-X-Enigmail-Version: 1.4.2
+	id S1755268Ab2FGHmD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Jun 2012 03:42:03 -0400
+Received: from ALUM-MAILSEC-SCANNER-1.MIT.EDU ([18.7.68.12]:53746 "EHLO
+	alum-mailsec-scanner-1.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755035Ab2FGHmC (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 7 Jun 2012 03:42:02 -0400
+X-AuditID: 1207440c-b7fc26d0000008c0-a2-4fd05b481e95
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-1.mit.edu (Symantec Messaging Gateway) with SMTP id 33.8C.02240.84B50DF4; Thu,  7 Jun 2012 03:42:00 -0400 (EDT)
+Received: from [192.168.101.152] (ssh.berlin.jpk.com [212.222.128.135])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id q577fwru009631
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Thu, 7 Jun 2012 03:41:59 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:12.0) Gecko/20120430 Thunderbird/12.0.1
+In-Reply-To: <CA+39Oz4f_Wn1cVzqNWO76HZWa4AswSBpbriaRc0OznapVLJfGg@mail.gmail.com>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprDKsWRmVeSWpSXmKPExsUixO6iqOsRfcHf4OAnQ4uuK91MFos6fzJb
+	LFzax+TA7LFz1l12j8+b5DyuvLvEHsAcxW2TlFhSFpyZnqdvl8CdsXbpaaaCmYIVZ16dY2pg
+	fMDbxcjJISFgIrGw5Sk7hC0mceHeerYuRi4OIYHLjBIbtx1kgXCOMUlcu3+FCaSKV0BbovVN
+	KzOIzSKgKrFg5l2wbjYBXYlFPc1ANRwcogJhEqsfaECUC0qcnPmEBSQsIqAs8ayNBSTMLGAl
+	sWMbyC5ODmEBZ4lrO1eAxYUEsiVOXN0DZnMKBEocP32ZEaLeTKJraxeULS+x/e0c5gmMArOQ
+	bJiFpGwWkrIFjMyrGOUSc0pzdXMTM3OKU5N1i5MT8/JSi3QN9XIzS/RSU0o3MUJCl2cH47d1
+	MocYBTgYlXh4J/ec9xdiTSwrrsw9xCjJwaQkynsj6oK/EF9SfkplRmJxRnxRaU5q8SFGCQ5m
+	JRFegTKgct6UxMqq1KJ8mJQ0B4uSOK/qEnU/IYH0xJLU7NTUgtQimKwMB4eSBO9SkKGCRanp
+	qRVpmTklCGkmDk6Q4VxSIsWpeSmpRYmlJRnxoDiNLwZGKkiKB2hvHUg7b3FBYi5QFKL1FKMu
+	x8zL564zCrHk5eelSonzTgMpEgApyijNg1sBS1SvGMWBPhbmvQRSxQNMcnCTXgEtYQJa0gqx
+	pCQRISXVwNgaNMvSbefHGSHFxsIOTxbGh+/zcGzlsBc3Wrxi3ZaS6bsjEk+8+RtxfXc6S9NU
+	j+Qrvkzbfz4J3xzjvaM1X4Zfythz6m+bEM/70/5JVDKxBk4L8Fjcleq949JqQ6O6 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199374>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199375>
 
-On 05-06-12 09:09, Paul Harris wrote:
-> Hello,
+On 06/06/2012 07:54 PM, Thomas Adam wrote:
+> On 6 June 2012 11:28, John Wiegley<jwiegley@gmail.com>  wrote:
+>> I've spoken to the author of this commit, Matthias Urlichs.  Here is an
+>> excerpt of our conversation:
+>>
+>>> On Sat, 2012-04-21 at 00:08 -0500, John Wiegley wrote:
+>>>> Just wanted to let you know that this bit me.  I have a client whose CVS
+>>>> repository I'm converting to Git, and they have _many_ log messages that
+>>>> are larger than 32k in size.
+>>>
+>>> Feel free to submit a patch that reverts this. These days, there's probably
+>>> no user of cvs2git left, but at that time it was important to get the same
 >
-> I'm shifting my projects to use a subtree system, and I'm having some trouble.
-> Looks like I'm hitting a subtree-merge bug, although I thought they
-> were all fixed by now.
->
-> I'm using cygwin, git 1.7.9 and apenwarr's git-subtrees repo.
-> I've also tried git 1.7.10.msysgit.1 with apenwarr's git-subtrees.
+> This assertion is not only wrong, it's just ludicrous.  The intended
+> functionality has a statement of intent with regards to its
+> functionality -- and as a user of cvs2git, I'd not want to lose *any*
+> of that functionality.
 
+I was confused about this conversation.  The commit that John Wiegley 
+proposes to revert is from 2005.  The "cvs2git" functionality in cvs2svn 
+was not added until 2007.  So it must be that commit e371046b64 was 
+added for compatibility with some other cvs2git script (i.e., not the 
+one that is part of the cvs2svn project).  Nowadays the only script 
+called "cvs2git" that I ever see mentioned (and I maintain a Google 
+search on that string) is the one from the cvs2svn project.  So I assume 
+that the old "cvs2git" script (the one mentioned in commit e371046b64's 
+log message) has died off.
 
-Your origin/subtrees/zlib branch contains the zlib directory, not the
-just the contents of that directory.
+The current cvs2svn-based cvs2git script doesn't have any limitation on 
+the size of log messages and doesn't clean up their whitespace.  The 
+only things that it does, in the default configuration, is check that 
+the message is ASCII (if not there are options to reencode it as UTF-8) 
+and convert all EOL sequences into LF.
 
-Please have a look in the contrib/subtree folder of git-core.
-Work is ongoing to integrate apenwarr's code.
+Therefore I don't believe that there is any reason to preserve the 
+functionality of commit e371046b64 in the name of compatibility with 
+cvs2git.
 
-My latest stuff is in: https://github.com/helmo/git
+I have no opinion about whether it makes sense to revert/preserve the 
+commit for other reasons.
+
+Michael
+(the cvs2svn/cvs2git maintainer)
 
 -- 
-Met vriendelijke groet / Regards,
-
-Herman van Rink 
-Initfour websolutions
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
