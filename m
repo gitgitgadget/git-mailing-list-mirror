@@ -1,74 +1,70 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/6] Remove i18n legos in notifying new branch tracking
- setup
-Date: Thu, 07 Jun 2012 11:44:03 -0700
-Message-ID: <7v8vfzgdxo.fsf@alter.siamese.dyndns.org>
-References: <1339070715-31417-1-git-send-email-pclouds@gmail.com>
+From: Andreas Schwab <schwab@linux-m68k.org>
+Subject: Re: Please revert e371046b6473907aa6d62b7862a3afe9d33561e1
+Date: Thu, 07 Jun 2012 20:47:14 +0200
+Message-ID: <m2sje7ufgt.fsf@igel.home>
+References: <m24nqoohss.fsf@gmail.com>
+	<CA+39Oz4f_Wn1cVzqNWO76HZWa4AswSBpbriaRc0OznapVLJfGg@mail.gmail.com>
+	<4FD05B45.2090006@alum.mit.edu>
+	<7vd35bjcd6.fsf@alter.siamese.dyndns.org> <m23967vynk.fsf@igel.home>
+	<7v3967huss.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Jonathan Niedier <jrnieder@gmail.com>,
-	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-	Jiang Xin <worldhello.net@gmail.com>
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jun 07 20:44:16 2012
+Content-Type: text/plain
+Cc: Michael Haggerty <mhagger@alum.mit.edu>,
+	Thomas Adam <thomas@xteddy.org>,
+	John Wiegley <jwiegley@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jun 07 20:47:53 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Schgq-0002GD-Pz
-	for gcvg-git-2@plane.gmane.org; Thu, 07 Jun 2012 20:44:13 +0200
+	id 1SchkK-0001D4-0Y
+	for gcvg-git-2@plane.gmane.org; Thu, 07 Jun 2012 20:47:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753269Ab2FGSoI convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 7 Jun 2012 14:44:08 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:51616 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752099Ab2FGSoH convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 7 Jun 2012 14:44:07 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A29E68D8D;
-	Thu,  7 Jun 2012 14:44:06 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=juyjf5HAVsVB
-	xE0Z+vmu2XgfREc=; b=OtNNX4vv5VpLm+OOgYRKfCV0FGRlRsveE3lo4NFijB4I
-	3chrjXsSPAHLQTw4uVZBCA5xFOKPF5gE8YlsmNochcsNXSPQ0bENnX7D8l9+NSR1
-	lbB8XVS6ygrZOUKgIfE2M6O8RXBht1WbVBjgP9ixkWPy1vKLGctKvGr4SDVC4Cg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=RBl+9Y
-	F4C+Cq2Zdphb/Y0WieSIFHpsT3HAIEsGuLYKn5laydVt6MHvh6J29SNSDKmZbNTO
-	bfqLSyBk7+S1HhFT1kvuP/XfHzGqNivgDgQ3GHcGngP9VRHnCo5H79v7ZjzXVDyy
-	wrPDNoUKJqlgWAztFOlx8Ed+pj3ptk/h5aS9Y=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9B0B18D8A;
-	Thu,  7 Jun 2012 14:44:06 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3AC408D88; Thu,  7 Jun 2012
- 14:44:05 -0400 (EDT)
-In-Reply-To: <1339070715-31417-1-git-send-email-pclouds@gmail.com>
- (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Thu, 7 Jun
- 2012 19:05:10 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: C2037C40-B0D0-11E1-B212-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S932879Ab2FGSrp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Jun 2012 14:47:45 -0400
+Received: from mail-out.m-online.net ([212.18.0.9]:57867 "EHLO
+	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932807Ab2FGSrV (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Jun 2012 14:47:21 -0400
+Received: from frontend1.mail.m-online.net (unknown [192.168.8.180])
+	by mail-out.m-online.net (Postfix) with ESMTP id 3W7bMp00Hgz4KWFs;
+	Thu,  7 Jun 2012 20:47:16 +0200 (CEST)
+Received: from igel.home (ppp-88-217-110-237.dynamic.mnet-online.de [88.217.110.237])
+	by mail.mnet-online.de (Postfix) with ESMTPA id 3W7bMm2cpLz4KKBp;
+	Thu,  7 Jun 2012 20:47:16 +0200 (CEST)
+Received: by igel.home (Postfix, from userid 501)
+	id D3A94CA2A2; Thu,  7 Jun 2012 20:47:15 +0200 (CEST)
+X-Yow: I was in EXCRUCIATING PAIN until I started reading JACK AND JILL
+ Magazine!!
+In-Reply-To: <7v3967huss.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Thu, 07 Jun 2012 10:54:27 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.1 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199436>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199437>
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
-il.com>
-> ---
->  More compact code compared to the lasst version while maintaining
->  -Wformat's effectiveness.
+> Andreas Schwab <schwab@linux-m68k.org> writes:
+>
+>> Only if the conversion is restarted from scratch.
+>
+> Yes, that was the use case I was the most worried about.
+>
+> Often a re-import is one way to validate what you have (and worse
+> yet, what you based your recent work on), so unmatching commit
+> object names are red flags.
 
-I'd hesitate to burden translators with new set of strings this late
-in the cycle.  The changes look reasonable, though.  Let's merge
-this early in the next cycle and mark the strings for translation.
+Given the notorious unreliability of cvsps that doesn't look like a very
+serious change in comparison.
 
-Thanks.
+Andreas.
+
+-- 
+Andreas Schwab, schwab@linux-m68k.org
+GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
+"And now for something completely different."
