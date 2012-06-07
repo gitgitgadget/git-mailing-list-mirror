@@ -1,102 +1,182 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: Please revert e371046b6473907aa6d62b7862a3afe9d33561e1
-Date: Thu, 07 Jun 2012 09:41:57 +0200
-Message-ID: <4FD05B45.2090006@alum.mit.edu>
-References: <m24nqoohss.fsf@gmail.com> <CA+39Oz4f_Wn1cVzqNWO76HZWa4AswSBpbriaRc0OznapVLJfGg@mail.gmail.com>
+From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [PATCH 1/4] Unindent excluded_from_list()
+Date: Thu,  7 Jun 2012 14:53:34 +0700
+Message-ID: <1339055617-23028-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: John Wiegley <jwiegley@gmail.com>, git@vger.kernel.org
-To: Thomas Adam <thomas@xteddy.org>
-X-From: git-owner@vger.kernel.org Thu Jun 07 09:42:08 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jun 07 09:53:59 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ScXM7-0005Zq-Vm
-	for gcvg-git-2@plane.gmane.org; Thu, 07 Jun 2012 09:42:08 +0200
+	id 1ScXXb-0005bd-5z
+	for gcvg-git-2@plane.gmane.org; Thu, 07 Jun 2012 09:53:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755268Ab2FGHmD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 Jun 2012 03:42:03 -0400
-Received: from ALUM-MAILSEC-SCANNER-1.MIT.EDU ([18.7.68.12]:53746 "EHLO
-	alum-mailsec-scanner-1.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755035Ab2FGHmC (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 7 Jun 2012 03:42:02 -0400
-X-AuditID: 1207440c-b7fc26d0000008c0-a2-4fd05b481e95
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-1.mit.edu (Symantec Messaging Gateway) with SMTP id 33.8C.02240.84B50DF4; Thu,  7 Jun 2012 03:42:00 -0400 (EDT)
-Received: from [192.168.101.152] (ssh.berlin.jpk.com [212.222.128.135])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id q577fwru009631
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Thu, 7 Jun 2012 03:41:59 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:12.0) Gecko/20120430 Thunderbird/12.0.1
-In-Reply-To: <CA+39Oz4f_Wn1cVzqNWO76HZWa4AswSBpbriaRc0OznapVLJfGg@mail.gmail.com>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprDKsWRmVeSWpSXmKPExsUixO6iqOsRfcHf4OAnQ4uuK91MFos6fzJb
-	LFzax+TA7LFz1l12j8+b5DyuvLvEHsAcxW2TlFhSFpyZnqdvl8CdsXbpaaaCmYIVZ16dY2pg
-	fMDbxcjJISFgIrGw5Sk7hC0mceHeerYuRi4OIYHLjBIbtx1kgXCOMUlcu3+FCaSKV0BbovVN
-	KzOIzSKgKrFg5l2wbjYBXYlFPc1ANRwcogJhEqsfaECUC0qcnPmEBSQsIqAs8ayNBSTMLGAl
-	sWMbyC5ODmEBZ4lrO1eAxYUEsiVOXN0DZnMKBEocP32ZEaLeTKJraxeULS+x/e0c5gmMArOQ
-	bJiFpGwWkrIFjMyrGOUSc0pzdXMTM3OKU5N1i5MT8/JSi3QN9XIzS/RSU0o3MUJCl2cH47d1
-	MocYBTgYlXh4J/ec9xdiTSwrrsw9xCjJwaQkynsj6oK/EF9SfkplRmJxRnxRaU5q8SFGCQ5m
-	JRFegTKgct6UxMqq1KJ8mJQ0B4uSOK/qEnU/IYH0xJLU7NTUgtQimKwMB4eSBO9SkKGCRanp
-	qRVpmTklCGkmDk6Q4VxSIsWpeSmpRYmlJRnxoDiNLwZGKkiKB2hvHUg7b3FBYi5QFKL1FKMu
-	x8zL564zCrHk5eelSonzTgMpEgApyijNg1sBS1SvGMWBPhbmvQRSxQNMcnCTXgEtYQJa0gqx
-	pCQRISXVwNgaNMvSbefHGSHFxsIOTxbGh+/zcGzlsBc3Wrxi3ZaS6bsjEk+8+RtxfXc6S9NU
-	j+Qrvkzbfz4J3xzjvaM1X4Zfythz6m+bEM/70/5JVDKxBk4L8Fjcleq949JqQ6O6 
+	id S1756260Ab2FGHxy convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 7 Jun 2012 03:53:54 -0400
+Received: from mail-pb0-f46.google.com ([209.85.160.46]:36260 "EHLO
+	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755988Ab2FGHxx (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Jun 2012 03:53:53 -0400
+Received: by pbbrp8 with SMTP id rp8so706664pbb.19
+        for <git@vger.kernel.org>; Thu, 07 Jun 2012 00:53:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
+         :content-type:content-transfer-encoding;
+        bh=mHraU0u8TXliugZnZdP8CS1onr49hF4uGNviGGnv5EE=;
+        b=dlVwlEEuK9C742H+TMkLGlviCAqB+mPTeIn0ltTvGDzelLlnBpw+U80KbS2gisdkej
+         JltzgZWuAFVxtA59BrH1DX1nEPxBfesC85QpM5tGwitrCU5iVnCfatdNZblbBJFqfn2p
+         P7bPRqLgKjMnGSBYE5y08IqazmLQAuondow85yh4xr4xCni5Oe2ILNhdsU06vxeNBApL
+         bewELtCxp3kdym23CA1ctyqpzXNPvxidTSVcA5WDj25FZWccdH34CYcXuVOuOFv/TBG0
+         aTvlw6dx4FUjI++grhLfYODwEErXIoAXaJ99X9n3Cn0xw6el0yCHNquRCNmlv+t7vZeb
+         pyEw==
+Received: by 10.68.195.97 with SMTP id id1mr6371315pbc.91.1339055632735;
+        Thu, 07 Jun 2012 00:53:52 -0700 (PDT)
+Received: from pclouds@gmail.com ([113.161.77.29])
+        by mx.google.com with ESMTPS id ql3sm3246471pbc.72.2012.06.07.00.53.48
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 07 Jun 2012 00:53:51 -0700 (PDT)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Thu, 07 Jun 2012 14:53:38 +0700
+X-Mailer: git-send-email 1.7.11.rc1.185.g281ad67
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199375>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199376>
 
-On 06/06/2012 07:54 PM, Thomas Adam wrote:
-> On 6 June 2012 11:28, John Wiegley<jwiegley@gmail.com>  wrote:
->> I've spoken to the author of this commit, Matthias Urlichs.  Here is an
->> excerpt of our conversation:
->>
->>> On Sat, 2012-04-21 at 00:08 -0500, John Wiegley wrote:
->>>> Just wanted to let you know that this bit me.  I have a client whose CVS
->>>> repository I'm converting to Git, and they have _many_ log messages that
->>>> are larger than 32k in size.
->>>
->>> Feel free to submit a patch that reverts this. These days, there's probably
->>> no user of cvs2git left, but at that time it was important to get the same
->
-> This assertion is not only wrong, it's just ludicrous.  The intended
-> functionality has a statement of intent with regards to its
-> functionality -- and as a user of cvs2git, I'd not want to lose *any*
-> of that functionality.
+Return early if el->nr =3D=3D 0. Unindent one more level for FNM_PATHNA=
+ME
+code block as this block is getting complex and may need more
+indentation.
 
-I was confused about this conversation.  The commit that John Wiegley 
-proposes to revert is from 2005.  The "cvs2git" functionality in cvs2svn 
-was not added until 2007.  So it must be that commit e371046b64 was 
-added for compatibility with some other cvs2git script (i.e., not the 
-one that is part of the cvs2svn project).  Nowadays the only script 
-called "cvs2git" that I ever see mentioned (and I maintain a Google 
-search on that string) is the one from the cvs2svn project.  So I assume 
-that the old "cvs2git" script (the one mentioned in commit e371046b64's 
-log message) has died off.
+Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+=2Ecom>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ nd/exclude-workaround-top-heavy updates. no changes on this patch.
 
-The current cvs2svn-based cvs2git script doesn't have any limitation on 
-the size of log messages and doesn't clean up their whitespace.  The 
-only things that it does, in the default configuration, is check that 
-the message is ASCII (if not there are options to reencode it as UTF-8) 
-and convert all EOL sequences into LF.
+ dir.c | 96 +++++++++++++++++++++++++++++++++--------------------------=
+--------
+ 1 file changed, 48 insertions(+), 48 deletions(-)
 
-Therefore I don't believe that there is any reason to preserve the 
-functionality of commit e371046b64 in the name of compatibility with 
-cvs2git.
-
-I have no opinion about whether it makes sense to revert/preserve the 
-commit for other reasons.
-
-Michael
-(the cvs2svn/cvs2git maintainer)
-
--- 
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
+diff --git a/dir.c b/dir.c
+index ed1510f..e756de1 100644
+--- a/dir.c
++++ b/dir.c
+@@ -498,56 +498,56 @@ int excluded_from_list(const char *pathname,
+ {
+ 	int i;
+=20
+-	if (el->nr) {
+-		for (i =3D el->nr - 1; 0 <=3D i; i--) {
+-			struct exclude *x =3D el->excludes[i];
+-			const char *exclude =3D x->pattern;
+-			int to_exclude =3D x->to_exclude;
+-
+-			if (x->flags & EXC_FLAG_MUSTBEDIR) {
+-				if (*dtype =3D=3D DT_UNKNOWN)
+-					*dtype =3D get_dtype(NULL, pathname, pathlen);
+-				if (*dtype !=3D DT_DIR)
+-					continue;
+-			}
++	if (!el->nr)
++		return -1;	/* undefined */
++
++	for (i =3D el->nr - 1; 0 <=3D i; i--) {
++		struct exclude *x =3D el->excludes[i];
++		const char *exclude =3D x->pattern;
++		int to_exclude =3D x->to_exclude;
++
++		if (x->flags & EXC_FLAG_MUSTBEDIR) {
++			if (*dtype =3D=3D DT_UNKNOWN)
++				*dtype =3D get_dtype(NULL, pathname, pathlen);
++			if (*dtype !=3D DT_DIR)
++				continue;
++		}
+=20
+-			if (x->flags & EXC_FLAG_NODIR) {
+-				/* match basename */
+-				if (x->flags & EXC_FLAG_NOWILDCARD) {
+-					if (!strcmp_icase(exclude, basename))
+-						return to_exclude;
+-				} else if (x->flags & EXC_FLAG_ENDSWITH) {
+-					if (x->patternlen - 1 <=3D pathlen &&
+-					    !strcmp_icase(exclude + 1, pathname + pathlen - x->patternlen=
+ + 1))
+-						return to_exclude;
+-				} else {
+-					if (fnmatch_icase(exclude, basename, 0) =3D=3D 0)
+-						return to_exclude;
+-				}
+-			}
+-			else {
+-				/* match with FNM_PATHNAME:
+-				 * exclude has base (baselen long) implicitly
+-				 * in front of it.
+-				 */
+-				int baselen =3D x->baselen;
+-				if (*exclude =3D=3D '/')
+-					exclude++;
+-
+-				if (pathlen < baselen ||
+-				    (baselen && pathname[baselen-1] !=3D '/') ||
+-				    strncmp_icase(pathname, x->base, baselen))
+-				    continue;
+-
+-				if (x->flags & EXC_FLAG_NOWILDCARD) {
+-					if (!strcmp_icase(exclude, pathname + baselen))
+-						return to_exclude;
+-				} else {
+-					if (fnmatch_icase(exclude, pathname+baselen,
+-						    FNM_PATHNAME) =3D=3D 0)
+-					    return to_exclude;
+-				}
++		if (x->flags & EXC_FLAG_NODIR) {
++			/* match basename */
++			if (x->flags & EXC_FLAG_NOWILDCARD) {
++				if (!strcmp_icase(exclude, basename))
++					return to_exclude;
++			} else if (x->flags & EXC_FLAG_ENDSWITH) {
++				if (x->patternlen - 1 <=3D pathlen &&
++				    !strcmp_icase(exclude + 1, pathname + pathlen - x->patternlen =
++ 1))
++					return to_exclude;
++			} else {
++				if (fnmatch_icase(exclude, basename, 0) =3D=3D 0)
++					return to_exclude;
+ 			}
++			continue;
++		}
++
++
++		/* match with FNM_PATHNAME:
++		 * exclude has base (baselen long) implicitly in front of it.
++		 */
++		if (*exclude =3D=3D '/')
++			exclude++;
++
++		if (pathlen < x->baselen ||
++		    (x->baselen && pathname[x->baselen-1] !=3D '/') ||
++		    strncmp_icase(pathname, x->base, x->baselen))
++			continue;
++
++		if (x->flags & EXC_FLAG_NOWILDCARD) {
++			if (!strcmp_icase(exclude, pathname + x->baselen))
++				return to_exclude;
++		} else {
++			if (fnmatch_icase(exclude, pathname+x->baselen,
++					  FNM_PATHNAME) =3D=3D 0)
++				return to_exclude;
+ 		}
+ 	}
+ 	return -1; /* undecided */
+--=20
+1.7.11.rc1.185.g281ad67
