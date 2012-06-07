@@ -1,76 +1,80 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] t1304: improve setfacl prerequisite setup
-Date: Thu, 07 Jun 2012 09:16:05 -0700
-Message-ID: <7vlijzjdx6.fsf@alter.siamese.dyndns.org>
-References: <vpqk3zlhorc.fsf@bauges.imag.fr>
- <20120605140449.GA15640@sigill.intra.peff.net>
- <20120605141039.GB15640@sigill.intra.peff.net>
- <20120605142813.GA17238@sigill.intra.peff.net>
- <20120605150550.GA19843@sigill.intra.peff.net>
- <7vpq9dpvnp.fsf@alter.siamese.dyndns.org>
- <20120605164439.GA2694@sigill.intra.peff.net>
- <7v62b5pt2s.fsf@alter.siamese.dyndns.org>
- <20120606132824.GA2597@sigill.intra.peff.net>
- <7vvcj4ml6a.fsf@alter.siamese.dyndns.org>
- <20120607090200.GA6087@sigill.intra.peff.net>
+Subject: Re: [PATCH 0/2] Feeding an annotated but unsigned tag to "git merge"
+Date: Thu, 07 Jun 2012 09:17:03 -0700
+Message-ID: <7vhaunjdvk.fsf@alter.siamese.dyndns.org>
+References: <1338926312-4239-1-git-send-email-gitster@pobox.com>
+ <20120606134207.GB2597@sigill.intra.peff.net>
+ <7vzk8gmm5b.fsf@alter.siamese.dyndns.org>
+ <20120607090933.GB6087@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Stefan Beller <stefanbeller@googlemail.com>,
-	git@vger.kernel.org
+Cc: git@vger.kernel.org
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Jun 07 18:16:17 2012
+X-From: git-owner@vger.kernel.org Thu Jun 07 18:17:22 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ScfNe-0006so-Pp
-	for gcvg-git-2@plane.gmane.org; Thu, 07 Jun 2012 18:16:15 +0200
+	id 1ScfOZ-0000Vf-35
+	for gcvg-git-2@plane.gmane.org; Thu, 07 Jun 2012 18:17:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752777Ab2FGQQK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 Jun 2012 12:16:10 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:53325 "EHLO
+	id S1753790Ab2FGQRG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Jun 2012 12:17:06 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:53652 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751517Ab2FGQQJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Jun 2012 12:16:09 -0400
+	id S1751517Ab2FGQRF (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Jun 2012 12:17:05 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 240A97BDE;
-	Thu,  7 Jun 2012 12:16:07 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DB2147C2F;
+	Thu,  7 Jun 2012 12:17:04 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=IdRIwQ/b3dAyVmMWOAhYVi5MHUI=; b=BcM+JB
-	J4+7qvvaBb+VQAlP5w0W87ZO2F1d05+pQ/sNFniCl6brvy+cl9MtgRaW6Cets9Vg
-	oJRJ57Ha/lrmp90WT3dAY/s9GjXoBsjzeNUYBPaJu8r8dj9dW4CZRgxyzqhH6zCQ
-	rlj2r0bNEhQz0/rhx4SzHOds0sgqCx0yXFVEA=
+	:content-type; s=sasl; bh=Q6wCrZKUR92+equh4QVHDDto70M=; b=A5rHwj
+	bHncZb5y9+M6ZwlRJGkzVoeFn/pDDDOFB56c+5EEl3zfTWlwjqgrvlpy4ivWoZf/
+	hSdqgDgZzToHji5bk6WOyi7z9R63v2FV4OEKUCrqfyBENi3sZBUJ8r11Xe46K/Vu
+	N2VRVBdJoocG7cSLGzFX3/XK7HD64sBQgIklM=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Ewl05R3YUbvJU8yRKs1mAaAsACbEsLeM
-	SCItbqy47XhjZk0urbbdJukD6C7Unsetg9Wrgdn16oks3dmp+dPBAMg1b/lTMt6z
-	8s4Dm3yCikuOuf2/pYtlevoVV/4dosc1Valv0fopVLtCgdwjlwmhgE4Ej+Y9/TlE
-	jLt+IQn6QCk=
+	:content-type; q=dns; s=sasl; b=pgGFq7yzHuOMV4KJfWpXxlzYd8AT08Se
+	QucsrpRA9k9w8rWlXFpAHBYb3SHAR+yMWjerP7b2LNJPCOdzk+nn9xXwxldlpBNU
+	SQKQ+FsKmUnX1IuCZRFiCjG8J1ciBcSPXnn2CbeUFYOUCp466yFi7OlBbIPUVa4o
+	ghMJGEnKuZo=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1B6857BDD;
-	Thu,  7 Jun 2012 12:16:07 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D26A97C2E;
+	Thu,  7 Jun 2012 12:17:04 -0400 (EDT)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id AF53D7BDC; Thu,  7 Jun 2012
- 12:16:06 -0400 (EDT)
-In-Reply-To: <20120607090200.GA6087@sigill.intra.peff.net> (Jeff King's
- message of "Thu, 7 Jun 2012 05:02:00 -0400")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 6393F7C2D; Thu,  7 Jun 2012
+ 12:17:04 -0400 (EDT)
+In-Reply-To: <20120607090933.GB6087@sigill.intra.peff.net> (Jeff King's
+ message of "Thu, 7 Jun 2012 05:09:33 -0400")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 16006B88-B0BC-11E1-B882-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 3862F5C4-B0BC-11E1-9D45-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199413>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199414>
 
 Jeff King <peff@peff.net> writes:
 
-> I intentionally did not anchor it because the tests themselves did not,
-> and I worried that that there was some subtle portability issue there
-> (especially because of the magic "let there be two colons" part of the
-> pattern).
+> On Wed, Jun 06, 2012 at 09:37:52AM -0700, Junio C Hamano wrote:
+>
+>> > This just doesn't make sense to me. Why would we treat annotated but
+>> > unsigned tags differently from signed tags? In both cases, the new
+>> > behavior is keeping more information about what happened, which is
+>> > generally a good thing.
+>> >
+>> > I haven't seen any good argument against creating these merges[1].
+>> 
+>> It is in line with --ff-only special casing, though.
+>
+> Is it?  My impression from reading b5c9f1c is that --ff-only trumps both
+> annotated _and_ signed tags. Which makes sense to me. What I was
+> objecting to is that "some tag objects are more equal than others". It's
+> OK to treat unannotated tags differently from tag objects, but treating
+> annotated but unsigned objects differently from signed objects seems
+> unnecessary and complex.
 
-OK, fair enough (the "two colons" one I think was for Solaris).
+OK, let's drop it.
