@@ -1,74 +1,147 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCHv2] rebase [-i --exec | -ix] <CMD>...
-Date: Wed, 06 Jun 2012 15:54:34 -0700
-Message-ID: <7vy5o0jbkl.fsf@alter.siamese.dyndns.org>
-References: <1338817674-22877-1-git-send-email-Lucien.Kong@ensimag.imag.fr>
- <1338978856-26838-1-git-send-email-Lucien.Kong@ensimag.imag.fr>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org,
-	Valentin Duperray <Valentin.Duperray@ensimag.imag.fr>,
-	Franck Jonas <Franck.Jonas@ensimag.imag.fr>,
-	Thomas Nguy <Thomas.Nguy@ensimag.imag.fr>,
-	Huynh Khoi Nguyen Nguyen 
-	<Huynh-Khoi-Nguyen.Nguyen@ensimag.imag.fr>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-To: Lucien Kong <Lucien.Kong@ensimag.imag.fr>
-X-From: git-owner@vger.kernel.org Thu Jun 07 00:54:54 2012
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: [PATCH v4] completion: add new zsh completion
+Date: Thu,  7 Jun 2012 03:29:44 +0200
+Message-ID: <1339032584-2877-1-git-send-email-felipe.contreras@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Matthieu Moy <matthieu.moy@grenoble-inp.fr>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jun 07 01:31:11 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ScP7q-0008Uc-Df
-	for gcvg-git-2@plane.gmane.org; Thu, 07 Jun 2012 00:54:50 +0200
+	id 1ScPgv-0003Cw-26
+	for gcvg-git-2@plane.gmane.org; Thu, 07 Jun 2012 01:31:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759189Ab2FFWyi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 6 Jun 2012 18:54:38 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:62362 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1759167Ab2FFWyh (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Jun 2012 18:54:37 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 656248B37;
-	Wed,  6 Jun 2012 18:54:36 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 s=sasl; bh=cnzadzIAsutAoWkpPhsbUxBaq0w=; b=odQ+QCblg3YXkMTb0xKl
-	Zy/NYJRcA9i/aH6e5L8WIqXvpReC1NX0YIxGsg63D/vT3pVMp1e5TKg2fdIlw4FL
-	/ilVFJrK/S/fFUQ8ZSQRsdnr75erTSYEHqFKnQ3U+DZvExbCgh5o6TcXCKsG4TTS
-	2M4m0TbfcD4tvWkPxoUbieE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 q=dns; s=sasl; b=lYtZO+kdc+vNS3VWEHfFZllY43IZ4GPZQYQyufh28Zpnrs
-	9YMUE3sRz40CM90Hj4dXFRgVfkna3PCG/NJ5waywAL80yYyDEcyGqG5OWmh3NapP
-	WhPzvIdjWyzQr4eWVs7TjZMYt8ZExvmr8fyg/+lIACy4AjHZ0q90f/L4jr+BU=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5AC978B35;
-	Wed,  6 Jun 2012 18:54:36 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id CD8598B34; Wed,  6 Jun 2012
- 18:54:35 -0400 (EDT)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 9689A02C-B02A-11E1-B423-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1756793Ab2FFXbA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 Jun 2012 19:31:00 -0400
+Received: from mail-wi0-f172.google.com ([209.85.212.172]:36717 "EHLO
+	mail-wi0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750994Ab2FFXa7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Jun 2012 19:30:59 -0400
+Received: by wibhj8 with SMTP id hj8so5518365wib.1
+        for <git@vger.kernel.org>; Wed, 06 Jun 2012 16:30:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        bh=8mtHF0MWz+02DjEWJpXkroQfVxcdUUcR5qcJX1zOutM=;
+        b=MUzkb+NMSswqMKCyMuGIvDVmFngBmgevoR1JQd/pdzrqHVlWTz3IcmjuDovZc71Opu
+         St/qhTaD8hwzz8jiyUFvoud8+if2QtXB7a7cCeOrq+fifxFWagEMCl5wU3Mp/glFaWa0
+         SRSPIHLZ8uusdl4uISHBO3yxp9LwoNH1cihrKHEwrzAqm7raRFh9sDe/mp4LNYp1ZHgq
+         S+FyOXT8iTbMnnb8lIvGng64uKUZYlw9jc7clWssxT4I64lekeZx6ra+1CsVtZ0XyBk1
+         29WG0nKS6gyeFfERE9npEoo0WEPhYzhfUIxi9LbDvE3VzX2TbEj5Kn0+ZMn/r0EYuYsC
+         4Swg==
+Received: by 10.216.211.209 with SMTP id w59mr17777052weo.160.1339025458018;
+        Wed, 06 Jun 2012 16:30:58 -0700 (PDT)
+Received: from localhost (ip-109-43-0-125.web.vodafone.de. [109.43.0.125])
+        by mx.google.com with ESMTPS id hv7sm4348262wib.0.2012.06.06.16.30.46
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 06 Jun 2012 16:30:56 -0700 (PDT)
+X-Mailer: git-send-email 1.7.10.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199360>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199361>
 
-Lucien Kong <Lucien.Kong@ensimag.imag.fr> writes:
+It seems there's always issues with zsh's bash completion emulation.
+I've tried to fix as many as I could and most of the fixes are already
+in the latest version of zsh, but still, there are issues.
 
-> The part of --onto in the documentation is changed to be consistent
-> with the other options. The exec line, when using the option --autosquash,
-> is now only added after the squash/fixup series.
+There is no point going through all that pain; the emulation is easy to
+achieve, and this patch works better than zsh's emulation.
 
-Thanks.
+Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+---
+v4:
 
-Inserting "exec" before each "pick" and then adjusting the result
-(i.e. removing the very first one and adding one at the end) is a
-clever idea. I wonder if that can be done without temporary variable
-whose value can grow to be a large string, though.
+ * Simplification updates for the latest bash completion
 
-Queued, but I've tweaked the log message a bit before queuing.
+v3:
+
+ * Simplification
+ * Avoid COMPREPLY; call compadd directly
+ * Fix _get_comp_words_by_ref
+
+ contrib/completion/git-completion.zsh |   68 +++++++++++++++++++++++++++++++++
+ 1 file changed, 68 insertions(+)
+ create mode 100644 contrib/completion/git-completion.zsh
+
+diff --git a/contrib/completion/git-completion.zsh b/contrib/completion/git-completion.zsh
+new file mode 100644
+index 0000000..07fa5a4
+--- /dev/null
++++ b/contrib/completion/git-completion.zsh
+@@ -0,0 +1,68 @@
++#compdef git gitk
++
++# zsh completion wrapper for git
++#
++# You need git's bash completion script installed somewhere, by default on the
++# same directory as this script.
++#
++# If your script is on ~/.git-completion.sh instead, you can configure it on
++# your ~/.zshrc:
++#
++#  zstyle ':completion:*:*:git:*' script ~/.git-completion.sh
++#
++# The recommended way to install this script is to copy to
++# '~/.zsh/completion/_git', and then add the following to your ~/.zshrc file:
++#
++#  fpath=(~/.zsh/completion $fpath)
++
++complete ()
++{
++	# do nothing
++	return 0
++}
++
++zstyle -s ":completion:*:*:git:*" script script
++test -z "$script" && script="$(dirname ${funcsourcetrace[1]%:*})"/git-completion.bash
++ZSH_VERSION='' . "$script"
++
++__gitcompadd ()
++{
++	compadd -Q -S "$3" -P "$2" -p "${(M)cur#*[=:]}" -- ${=1} && _ret=0
++}
++
++__gitcomp ()
++{
++	local cur_="${3-$cur}"
++
++	case "$cur_" in
++	--*=)
++		;;
++	*)
++		local IFS=$'\n'
++		__gitcompadd "$(__gitcomp_1 "${1-}")" "${2-}" ""
++		;;
++	esac
++}
++
++__gitcomp_nl ()
++{
++	local IFS=$'\n'
++	__gitcompadd "$1" "${2-}" "${4- }"
++}
++
++_git ()
++{
++	local _ret=1
++	() {
++		emulate -L ksh
++		local cur cword prev
++		cur=${words[CURRENT-1]}
++		prev=${words[CURRENT-2]}
++		let cword=CURRENT-1
++		_main_${service}
++	}
++	let _ret && _default -S '' && _ret=0
++	return _ret
++}
++
++_git
+-- 
+1.7.10.3
