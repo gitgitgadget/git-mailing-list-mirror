@@ -1,121 +1,65 @@
-From: =?ISO-2022-JP?B?S2VudGEgTXVyYXRhICgbJEJCPEVEGyhCIBskQjgtQkAbKEIp?= 
-	<mrkn@cookpad.com>
-Subject: [PATCH] Introduce --current option to git-branch builtin command.
-Date: Thu, 7 Jun 2012 16:23:14 +0900
-Message-ID: <CAECJ0BmcxeS1q8bw4hN9jDja2g8GGzNyN_v7jC3ehOW70x6CRA@mail.gmail.com>
+From: Herman van Rink <rink@initfour.nl>
+Subject: Re: subtree woes
+Date: Thu, 07 Jun 2012 09:33:56 +0200
+Organization: Initfour Websolutions
+Message-ID: <4FD05964.9040102@initfour.nl>
+References: <CAMSUDdYj=GJx3LwSq98bLLXpEDWjR9ssHi=rdh1Q=zopZzAm_w@mail.gmail.com> <CAMSUDdZ0BX8E26haZ-V-Grm42PaWFm3eXuSAJBcUg1LFvis7mA@mail.gmail.com> <CAMSUDdaKu7f+A3wwsWDOA1W071xunssixrWwCi1Uz21k4DFcBQ@mail.gmail.com> <CAMSUDdZAex23k7c94VaF7H9KuGxE01sFC6XCHq4c=7jUnms7-Q@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 07 09:23:27 2012
+Content-Transfer-Encoding: 7bit
+Cc: Git Users <git@vger.kernel.org>
+To: Paul Harris <harris.pc@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jun 07 09:34:12 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ScX3x-0000uw-EJ
-	for gcvg-git-2@plane.gmane.org; Thu, 07 Jun 2012 09:23:21 +0200
+	id 1ScXER-0005pG-B3
+	for gcvg-git-2@plane.gmane.org; Thu, 07 Jun 2012 09:34:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754312Ab2FGHXQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 Jun 2012 03:23:16 -0400
-Received: from mail-pz0-f46.google.com ([209.85.210.46]:47525 "EHLO
-	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754168Ab2FGHXP (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Jun 2012 03:23:15 -0400
-Received: by dady13 with SMTP id y13so474170dad.19
-        for <git@vger.kernel.org>; Thu, 07 Jun 2012 00:23:15 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:content-type
-         :x-gm-message-state;
-        bh=a/8dI8DDo/k1mDJ73VQIedFe3PshIN3AWksLbyEcUwc=;
-        b=deODtpL10D64WmzBWDR5J1XF0U1otKYwPksRFZcJZGXunD7sO6xw4HnOM7aO1/iIVT
-         IsWwpGloYcGHTTspXfy6KwwRizRjHa8puuh2qyoe56FlQ2f0yx92bUHm+teb6kdSjOuG
-         sANP0WgSqTEphHWPaPSQ28FR3KaYM1JGVvDUxY9AjvZchd3mqYVXfABUjrPq8AkGNNsk
-         4c61OaOrq0Bk/Oomr6u7rijIulkiqtvDbUvh5LG3KNYf9VLtxPd9QOVZAuVy8WJyORn8
-         02vC2e75IpuzxCCrlw2sPg4KWxCPeRAmCch8pytnA3QieGwygvceUPtacNxUKd8TkYVD
-         in4A==
-Received: by 10.68.217.100 with SMTP id ox4mr5784049pbc.87.1339053794635; Thu,
- 07 Jun 2012 00:23:14 -0700 (PDT)
-Received: by 10.142.114.6 with HTTP; Thu, 7 Jun 2012 00:23:14 -0700 (PDT)
-X-Gm-Message-State: ALoCoQmc3G+rawlPqbj63AybCJtqmLQqhwu7ENuRRXf99koOnEQMjkOtr500ut8DKAs/YL2Ckc4X
+	id S1754113Ab2FGHeD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Jun 2012 03:34:03 -0400
+Received: from hosted-by.initfour.nl ([83.137.144.7]:48354 "EHLO
+	mail.initfour.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751561Ab2FGHeB (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Jun 2012 03:34:01 -0400
+Received: from [192.168.42.73] (initfour.xs4all.nl [80.101.157.228])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	(Authenticated sender: helmo@INITFOUR.NL)
+	by mail.initfour.nl (Postfix) with ESMTPSA id 44882195440A;
+	Thu,  7 Jun 2012 09:33:57 +0200 (CEST)
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:12.0) Gecko/20120430 Thunderbird/12.0.1
+In-Reply-To: <CAMSUDdZAex23k7c94VaF7H9KuGxE01sFC6XCHq4c=7jUnms7-Q@mail.gmail.com>
+X-Enigmail-Version: 1.4.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199373>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199374>
 
-Introducing --current option to git-branch builtin command.
-This option allows us to simply show the current branch name.
+On 05-06-12 09:09, Paul Harris wrote:
+> Hello,
+>
+> I'm shifting my projects to use a subtree system, and I'm having some trouble.
+> Looks like I'm hitting a subtree-merge bug, although I thought they
+> were all fixed by now.
+>
+> I'm using cygwin, git 1.7.9 and apenwarr's git-subtrees repo.
+> I've also tried git 1.7.10.msysgit.1 with apenwarr's git-subtrees.
 
----
- builtin/branch.c |   12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/builtin/branch.c b/builtin/branch.c
-index 0e060f2..21e4675 100644
---- a/builtin/branch.c
-+++ b/builtin/branch.c
-@@ -19,6 +19,7 @@
- #include "column.h"
+Your origin/subtrees/zlib branch contains the zlib directory, not the
+just the contents of that directory.
 
- static const char * const builtin_branch_usage[] = {
-+       "git branch --current",
-        "git branch [options] [-r | -a] [--merged | --no-merged]",
-        "git branch [options] [-l] [-f] <branchname> [<start-point>]",
-        "git branch [options] [-r] (-d | -D) <branchname>...",
-@@ -711,7 +712,7 @@ int cmd_branch(int argc, const char **argv, const
-char *prefix)
- {
-        int delete = 0, rename = 0, force_create = 0, list = 0;
-        int verbose = 0, abbrev = -1, detached = 0;
--       int reflog = 0, edit_description = 0;
-+       int reflog = 0, edit_description = 0, show_current = 0;
-        int quiet = 0;
-        enum branch_track track;
-        int kinds = REF_LOCAL_BRANCH;
-@@ -768,6 +769,7 @@ int cmd_branch(int argc, const char **argv, const
-char *prefix)
-                        opt_parse_merge_filter, (intptr_t) "HEAD",
-                },
-                OPT_COLUMN(0, "column", &colopts, "list branches in columns"),
-+               OPT_BOOLEAN(0, "current", &show_current, "show current
-branch only"),
-                OPT_END(),
-        };
+Please have a look in the contrib/subtree folder of git-core.
+Work is ongoing to integrate apenwarr's code.
 
-@@ -794,7 +796,7 @@ int cmd_branch(int argc, const char **argv, const
-char *prefix)
-        argc = parse_options(argc, argv, prefix, options, builtin_branch_usage,
-                             0);
-
--       if (!delete && !rename && !edit_description && argc == 0)
-+       if (!delete && !rename && !edit_description && !show_current
-&& argc == 0)
-                list = 1;
-
-        if (!!delete + !!rename + !!force_create + !!list > 1)
-@@ -852,6 +854,12 @@ int cmd_branch(int argc, const char **argv, const
-char *prefix)
-                        rename_branch(argv[0], argv[1], rename > 1);
-                else
-                        usage_with_options(builtin_branch_usage, options);
-+       } else if (show_current) {
-+               const char *branch_name = head;
-+               if (detached) {
-+                       branch_name = _("(no branch)");
-+               }
-+               printf("%s\n", branch_name);
-        } else if (argc > 0 && argc <= 2) {
-                if (kinds != REF_LOCAL_BRANCH)
-                        die(_("-a and -r options to 'git branch' do
-not make sense with a branch name"));
-
+My latest stuff is in: https://github.com/helmo/git
 
 -- 
-Kenta Murata
+Met vriendelijke groet / Regards,
 
-COOKPAD Inc.
-http://cookpad.com
-
-MG Shirokanedai Bld. 5F, 5-12-7, Shirokanedai
-Minato, Tokyo, 180-0071 Japan
+Herman van Rink 
+Initfour websolutions
