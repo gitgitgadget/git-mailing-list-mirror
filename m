@@ -1,84 +1,93 @@
-From: cheng renquan <crquan@gmail.com>
-Subject: [PATCH] git fetch one tag only
-Date: Wed, 6 Jun 2012 18:40:45 -0700
-Message-ID: <CAH5vBdK_M+7Hjk=juVeP7Phqvs2+npknFD-=45OVR032k5S-0A@mail.gmail.com>
+From: Sitaram Chamarty <sitaramc@gmail.com>
+Subject: Re: git-upload-pack died of signal 13
+Date: Thu, 7 Jun 2012 07:22:25 +0530
+Message-ID: <CAMK1S_hL1Ug7-+Rs2Y_pXso01Pur4-Fs58ADtV8fcYUvBSmwcA@mail.gmail.com>
+References: <4FCF3ED7.9060503@intland.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 07 03:40:53 2012
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: =?UTF-8?Q?Tajti_=C3=81kos?= <akos.tajti@intland.com>
+X-From: git-owner@vger.kernel.org Thu Jun 07 03:53:04 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ScRiV-0001MK-6i
-	for gcvg-git-2@plane.gmane.org; Thu, 07 Jun 2012 03:40:51 +0200
+	id 1ScRuF-0002P2-Ty
+	for gcvg-git-2@plane.gmane.org; Thu, 07 Jun 2012 03:53:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759400Ab2FGBks convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 6 Jun 2012 21:40:48 -0400
-Received: from mail-wg0-f44.google.com ([74.125.82.44]:36060 "EHLO
-	mail-wg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757765Ab2FGBkq convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 6 Jun 2012 21:40:46 -0400
-Received: by wgbdr13 with SMTP id dr13so79499wgb.1
-        for <git@vger.kernel.org>; Wed, 06 Jun 2012 18:40:45 -0700 (PDT)
+	id S1759435Ab2FGBwz convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 6 Jun 2012 21:52:55 -0400
+Received: from mail-ob0-f174.google.com ([209.85.214.174]:37637 "EHLO
+	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754294Ab2FGBw0 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 6 Jun 2012 21:52:26 -0400
+Received: by obbtb18 with SMTP id tb18so165928obb.19
+        for <git@vger.kernel.org>; Wed, 06 Jun 2012 18:52:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        bh=urdgHO6hCuNQ/9x9wjxt9bKo7Mj8KmcMEoyhbUbCcvY=;
-        b=S/C8kXPAbHvqD0Bs2NiV0rjlC7V/zlSjUT1XmXx5hBJdOLP+lvUXMIgqCtNwDS6dUa
-         4t/EPz1nDkOoTVsMePd/BEOu42ENKDPEcrij7LGjo7iI4f3u7xCKhYF18PrfHC+zYQOY
-         i3frFDqdmafwIpoxGorBfKirVOlNDbygDNTomdFZQc+8fpip5oHCJ4J7eQYhIM7BS7Ji
-         mbpseXScuQJkG6ikdt6iOEl9YRDK+2deGfvFZdnXTZI37np4D0xjbwFrZ1W/2E0f3YOe
-         Rco3ErmrywavH/X4q+byfotCjPm9ONSpVPtzF07fYDqfeTA2gw6vM9nU+E867Mev6hTL
-         ad/g==
-Received: by 10.216.142.167 with SMTP id i39mr270980wej.94.1339033245131; Wed,
- 06 Jun 2012 18:40:45 -0700 (PDT)
-Received: by 10.216.136.80 with HTTP; Wed, 6 Jun 2012 18:40:45 -0700 (PDT)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=AhbT7xdS7cuPkjitpGFaoLpQ4ZK1dQMhjHdfgSBYHQY=;
+        b=UfpDWCqOi+bTFmkIIvgl3DiNMOjkrN411l+IILAjh8aRlD7BoYdHizDURH412fCRB2
+         y7cAMMUewllMwsJ+nDR0DJJlaUqQvKMgtq10GjdIQgCaEbxC4DxmwekF0Lw7ZJg4IQYD
+         KbIjbzmk+jJjjIdYlGj0pdreiUCCGDrT8FOSGg/vRmPWgv5SuQrD7Wp2UDVzhXFhbWKD
+         3KezzvpEJKxmAe+0d0J0mJqQ8u7ekw81fjwLBzdCfknEiSjYLVZ9+98eyewYaHCCqFLV
+         qOSQ5hKWmkUgnWupl/V5Gy0hDDTfWF+4GQj/cNv9ZPQPqsH78oIM4soyTteJFx8ND9vO
+         4S/g==
+Received: by 10.60.19.226 with SMTP id i2mr314233oee.20.1339033945807; Wed, 06
+ Jun 2012 18:52:25 -0700 (PDT)
+Received: by 10.182.108.67 with HTTP; Wed, 6 Jun 2012 18:52:25 -0700 (PDT)
+In-Reply-To: <4FCF3ED7.9060503@intland.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199364>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199365>
 
-Someone maybe like me is working in the way of following one central
-git repository
-while sometimes need to fetch some code or tags from a 3rd git repo,
-but unfortunately the 3rd repo may contain a lot of tags not all I want
-to fetch to mess up my local repo, at this time I want to fetch only on=
-e tag
-from the 3rd repo, but the syntax of
-  `git fetch 3rd-repo the-tag-name`
+On Wed, Jun 6, 2012 at 4:58 PM, Tajti =C3=81kos <akos.tajti@intland.com=
+> wrote:
+> Dear List,
+>
+> we got "git-upload pack died of signal 13" error when pushing using t=
+his
+> command:
+>
+> =C2=A0Executing: "/usr/lib/git-core/git-http-backend" env:
+> "CONTENT_TYPE=3Dapplication/x-git-upload-pack-request"
+> "GIT_HTTP_EXPORT_ALL=3Dtrue" "SERVER_PORT=3D443"
+> "CODEBEAMER_SMART_SCM_SERVLET=3Dtrue" "REMOTE_ADDR=3D91.82.170.74"
+> "REMOTE_HOST=3D91.82.170.74" "SERVER_SOFTWARE=3DApache Tomcat/6.0.35"
+> "SERVER_NAME=3Dcodebeamer.com" "GIT_PROJECT_ROOT=3D/home/akos/reposit=
+ory/git"
+> "REMOTE_USER=3Dzl" "PATH_INFO=3D/cbdev-git/git-upload-pack" "QUERY_ST=
+RING=3D"
+> "AUTH_TYPE=3DBasic" "GATEWAY_INTERFACE=3DCGI/1.1" "SERVER_PROTOCOL=3D=
+HTTP/1.1"
+> "REQUEST_METHOD=3DPOST" "CONTENT_LENGTH=3D1157"
+> "REQUEST_URI=3D/app/git/my-git/git-upload-pack"
+>
+> What may be the cause?
 
-really fetched the code of the-tag-name from 3rd-repo, but forgot the
-tag itself;
-this patch enhanced the above syntax to create the tag itself;
+a post-receive script that does not consume its STDIN is the usual
+cause of a SIGPIPE error.
+
+Try adding "cat >/dev/null" into it if you really don't care about the =
+input.
+
+("kill -l" will tell you what the names are for each number).
+
+>
+> Thanks in advance,
+> =C3=81kos Tajti
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at =C2=A0http://vger.kernel.org/majordomo-info.ht=
+ml
 
 
- builtin/fetch.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
-
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index bb9a074..9a3ec4a 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -439,6 +439,14 @@ static int store_updated_refs(const char
-*raw_url, const char *remote_name,
- 			else if (!prefixcmp(rm->name, "refs/tags/")) {
- 				kind =3D "tag";
- 				what =3D rm->name + 10;
-+				if (!ref) {
-+					unsigned char sha1[20];
-+					ref =3D alloc_ref(rm->name);
-+					hashcpy(ref->new_sha1, rm->old_sha1);
-+					if (!get_sha1(rm->name, sha1))
-+						hashcpy(ref->old_sha1, sha1);
-+				}
- 			}
- 			else if (!prefixcmp(rm->name, "refs/remotes/")) {
- 				kind =3D "remote-tracking branch";
 
 --=20
-cheng renquan (=E7=A8=8B=E4=BB=BB=E5=85=A8)
+Sitaram
