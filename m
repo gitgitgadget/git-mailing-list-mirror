@@ -1,433 +1,246 @@
-From: konglu@minatec.inpg.fr
-Subject: Re: commit a63d7ed3017e312ddc752ac89a7d292a745d5f11 broken on MacOS
-Date: Thu, 07 Jun 2012 16:20:32 +0200
-Message-ID: <20120607162032.Horde.3lGNYXwdC4BP0LiwzlCRupA@webmail.minatec.grenoble-inp.fr>
-References: <4FD0964E.7040302@web.de>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed	DelSp=Yes
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Torsten =?iso-8859-1?b?QvZnZXJzaGF1c2Vu?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Thu Jun 07 16:20:43 2012
+From: Javier.Roucher-Iglesias@ensimag.imag.fr
+Subject: [PATCH/RFC] credentials helpers+remote helpers
+Date: Thu,  7 Jun 2012 16:35:43 +0200
+Message-ID: <1339079743-31068-1-git-send-email-Javier.Roucher-Iglesias@ensimag.imag.fr>
+Cc: Javier Roucher <jroucher@gmail.com>,
+	Pavel Volek <Pavel.Volek@ensimag.imag.fr>,
+	NGUYEN Kim Thuat <Kim-Thuat.Nguyen@ensimag.imag.fr>,
+	ROUCHER IGLESIAS Javier <roucherj@ensimag.imag.fr>,
+	Matthieu Moy <Matthieu.Moy@imag.fr>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jun 07 16:36:10 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ScdZq-0002yi-2x
-	for gcvg-git-2@plane.gmane.org; Thu, 07 Jun 2012 16:20:42 +0200
+	id 1Scdoe-0002ll-Sz
+	for gcvg-git-2@plane.gmane.org; Thu, 07 Jun 2012 16:36:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760424Ab2FGOUh convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 7 Jun 2012 10:20:37 -0400
-Received: from v-smtp.minatec.grenoble-inp.fr ([147.173.216.28]:53957 "EHLO
-	v-smtp.minatec.grenoble-inp.fr" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751772Ab2FGOUg (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 7 Jun 2012 10:20:36 -0400
-Received: from localhost (www02.minatec.grenoble-inp.fr [147.173.216.15])
-	by v-smtp.minatec.grenoble-inp.fr (Postfix) with ESMTP id 3C9FC1A030B;
-	Thu,  7 Jun 2012 16:20:33 +0200 (CEST)
-Received: from wifi-028144.grenet.fr (wifi-028144.grenet.fr
- [130.190.28.144]) by webmail.minatec.grenoble-inp.fr (Horde Framework) with
- HTTP; Thu, 07 Jun 2012 16:20:32 +0200
-In-Reply-To: <4FD0964E.7040302@web.de>
-User-Agent: Internet Messaging Program (IMP) H4 (5.0.17)
-Content-Disposition: inline
+	id S1760902Ab2FGOf5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Jun 2012 10:35:57 -0400
+Received: from mail-wi0-f172.google.com ([209.85.212.172]:61720 "EHLO
+	mail-wi0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753356Ab2FGOfz (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Jun 2012 10:35:55 -0400
+Received: by wibhj8 with SMTP id hj8so302319wib.1
+        for <git@vger.kernel.org>; Thu, 07 Jun 2012 07:35:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:date:message-id:x-mailer;
+        bh=HvAFNnefdqT9RgHjDNaGUV7y4kq+jpVaT/h7XzkVNNA=;
+        b=cjLhWgoIEqH14qon0YuyK9OEB+ECKfon1tK23M7KRo3ZvGfUasayha+v1qRdcuj1TB
+         HGFRQ3FntJvUDb88F8rhU9VNj07ef/wtKnlel/75bZOeq1Bt02sXJASZ54G35CsXtxzn
+         WrcHu5+DToD8DdxQV0m8ObfBelTD1rvek5d8I/Sh9rfvaLGIrrfKWcw1xpEoNcYnADVE
+         M6xOBOXHrOy0o3tiHN/NYU2iimXoF/q4owT9B5eync2ar23CXvpylltIIzL3WmIpqgq9
+         jDO0Lem5q7UW0FOMvcDwKrWQlDkoSvocA046yplgT6wzGkHHUx+ZqTolgE65hTAOVsIM
+         EWcw==
+Received: by 10.216.206.159 with SMTP id l31mr1812294weo.2.1339079752179;
+        Thu, 07 Jun 2012 07:35:52 -0700 (PDT)
+Received: from SuperNova.grenet.fr (etu-189-10.vpn-inp.grenoble-inp.fr. [147.171.189.10])
+        by mx.google.com with ESMTPS id et10sm1434080wib.2.2012.06.07.07.35.50
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 07 Jun 2012 07:35:51 -0700 (PDT)
+X-Mailer: git-send-email 1.7.11.rc0.5.ge0c9cc0.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199409>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199410>
+
+From: Javier Roucher <jroucher@gmail.com>
 
 
-Torsten B=F6gershausen <tboegi@web.de> a =E9crit=A0:
+Add "git credential" plumbing command
 
-> commit a63d7ed3017e312ddc752ac89a7d292a745d5f11
-> Author: Lucien Kong <Lucien.Kong@ensimag.imag.fr>
-> Date:   Wed Jun 6 12:34:16 2012 +0200
->
->     rebase [-i --exec | -ix] <cmd>...
-> ....
->     Tests about this new command are also added in =20
-> t3404-rebase-interactive.sh.
-> ....
->
->
-> This test doesn't pass on my Mac Os box.
->
-> I run it with --debug --verbose, and it looks like another sed =20
-> problem on Mac OS, may be.
-> (My sed is /usr/bin, Mac OS X 10.6.8)
->
-> I haven't been able to dig very deep into this, but the line
-> "sed: 1: "/^pick .*/i\t\t\t\texec  gi ...": command i expects \ =20
-> followed by text"
-> looks suspicious.
+The credential API is in C, and not available to scripting languages.
+Expose the functionalities of the API by wrapping them into a new
+plumbing command "git credentials".
 
-Does it work if the whitespaces are deleted so that it becomes
-/^pick .*/i\exec gi..." ? (see the patch corrected below).
-
-
--------->8 ------
- From 1820dd24d6c93e0ba3b7a19a205f0fce79777751 Mon Sep 17 00:00:00 2001
-=46rom: Kong Lucien <Lucien.Kong@ensimag.imag.fr>
-Date: Sat, 2 Jun 2012 13:04:19 +0200
-Subject: rebase [-i --exec | -ix] <CMD>...
-
-This patch provides a way to automatically add these "exec" lines
-between each commit applications. For instance, running 'git rebase -i
---exec "make test"' lets you check that intermediate commits are
-compilable. It is also compatible with the option --autosquash. At
-this point, you can't use --exec without the interactive mode (-i).
-
-Tests about this new command are also added in
-t3404-rebase-interactive.sh.
-
-Signed-off-by: Lucien Kong <Lucien.Kong@ensimag.imag.fr>
+Signed-off-by: Pavel Volek <Pavel.Volek@ensimag.imag.fr>
+Signed-off-by: NGUYEN Kim Thuat <Kim-Thuat.Nguyen@ensimag.imag.fr>
+Signed-off-by: ROUCHER IGLESIAS Javier <roucherj@ensimag.imag.fr>
+Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
 ---
-  Documentation/git-rebase.txt  |   54 +++++++++++++++--
-  git-rebase--interactive.sh    |   18 ++++++
-  git-rebase.sh                 |   20 ++++++-
-  t/t3404-rebase-interactive.sh |  124 =20
-+++++++++++++++++++++++++++++++++++++++++
-  4 files changed, 206 insertions(+), 10 deletions(-)
+ .gitignore                       |  1 +
+ Documentation/git-credential.txt | 70 ++++++++++++++++++++++++++++++++++++++++
+ Makefile                         |  1 +
+ builtin.h                        |  1 +
+ builtin/credential.c             | 40 +++++++++++++++++++++++
+ git.c                            |  1 +
+ 6 files changed, 114 insertions(+)
+ create mode 100644 Documentation/git-credential.txt
+ create mode 100644 builtin/credential.c
 
-diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.tx=
-t
-index 147fa1a..1dd95c4 100644
---- a/Documentation/git-rebase.txt
-+++ b/Documentation/git-rebase.txt
-@@ -8,9 +8,9 @@ git-rebase - Forward-port local commits to the updated =
-=20
-upstream head
-  SYNOPSIS
-  --------
-  [verse]
--'git rebase' [-i | --interactive] [options] [--onto <newbase>]
-+'git rebase' [-i | --interactive] [options] [--exec <cmd>] [--onto <ne=
-wbase>]
-  	[<upstream>] [<branch>]
--'git rebase' [-i | --interactive] [options] --onto <newbase>
-+'git rebase' [-i | --interactive] [options] [--exec <cmd>] --onto <new=
-base>
-  	--root [<branch>]
-  'git rebase' --continue | --skip | --abort
-
-@@ -210,11 +210,29 @@ rebase.autosquash::
-
-  OPTIONS
-  -------
--<newbase>::
--	Starting point at which to create the new commits. If the
--	--onto option is not specified, the starting point is
--	<upstream>.  May be any valid commit, and not just an
--	existing branch name.
-+-x <cmd>::
-+--exec <cmd>::
-+	Automatically add "exec" followed by <cmd> between each commit
-+	applications. Using this option along with --autosquash adds
-+	the exec line after the squash/fixeup series only. <cmd>
-+	stands for shell commands. The --exec option has to be
-+	specified. (see INTERACTIVE MODE below)
-++
-+This has to be used along with the `--interactive` option explicitly.
-+You may execute several commands between each commit applications.
-+For this, you can use one instance of exec:
-+	git rebase -i --exec "cmd1; cmd2; ...".
-+You can also insert several instances of exec, if you wish to
-+only have one command per line for example:
-+	git rebase -i --exec "cmd1" --exec "cmd2" ...
+diff --git a/.gitignore b/.gitignore
+index bf66648..7d1d86e 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -31,6 +31,7 @@
+ /git-commit-tree
+ /git-config
+ /git-count-objects
++/git-credential
+ /git-credential-cache
+ /git-credential-cache--daemon
+ /git-credential-store
+diff --git a/Documentation/git-credential.txt b/Documentation/git-credential.txt
+new file mode 100644
+index 0000000..a6e1d0a
+--- /dev/null
++++ b/Documentation/git-credential.txt
+@@ -0,0 +1,70 @@
++git-credential(7)
++=================
 +
-+--onto <newbase>::
-+	With this option, git rebase takes all commits from <branch>,
-+	that are not in <upstream>, and transplant them on top of
-+	<newbase>. <newbase> is the starting point at which to create
-+	the new commits. If the --onto option is not specified, the
-+	starting point is <upstream>.  May be any valid commit, and
-+	not just an existing branch name.
-  +
-  As a special case, you may use "A\...B" as a shortcut for the
-  merge base of A and B if there is exactly one merge base. You can
-@@ -521,6 +539,28 @@ in `$SHELL`, or the default shell if `$SHELL` is =20
-not set), so you can
-  use shell features (like "cd", ">", ";" ...). The command is run from
-  the root of the working tree.
-
-+----------------------------------
-+$ git rebase -i --exec "make test"
-+----------------------------------
++NAME
++----
++git-credential - Providing and storing user credentials to git
 +
-+This command lets you check that intermediate commits are compilable.
-+The todo list becomes like that:
++SYNOPSIS
++--------
++------------------
++git credential [fill|approve|reject]
 +
-+--------------------
-+pick 5928aea one
-+exec make test
-+pick 04d0fda two
-+exec make test
-+pick ba46169 three
-+exec make test
-+pick f4593f9 four
-+exec make test
-+--------------------
++------------------
 +
-+If the option '-i' is missing, The command will return a message
-+error. If there is no <cmd> specified behind --exec, the command will
-+return a message error and the usage page of 'git rebase'.
++DESCRIPTION
++-----------
 +
-  SPLITTING COMMITS
-  -----------------
-
-diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-index 0c19b7c..dc9e7e9 100644
---- a/git-rebase--interactive.sh
-+++ b/git-rebase--interactive.sh
-@@ -684,6 +684,22 @@ rearrange_squash () {
-  	rm -f "$1.sq" "$1.rearranged"
-  }
-
-+# Add commands after a pick or after a squash/fixup serie
-+# in the todo list.
-+add_exec_commands () {
-+	OIFS=3D$IFS
-+	IFS=3D$LF
-+	for i in $cmd
-+	do
-+		tmp=3D$(sed "/^pick .*/i\exec $i" "$1")
-+		echo "$tmp" >"$1"
-+		tmp=3D$(sed '1d' "$1")
-+		echo "$tmp" >"$1"
-+		echo "exec $i" >>"$1"
-+	done
-+	IFS=3D$OIFS
++Git-credential permits to save username, password, host, path and protocol.
++When you invoke git-credential, you can ask for a password, using the command
++'git credential fill'.
++Providing them by STDIN: 
++
++		username=admin\n 
++		protocol=[http|https]\n
++		host=localhost\n
++		path=/dir\n\n
++
++-If git-credential system, have the password already stored
++git-credential will answer by STDOUT:
++	
++		username=admin\n
++		password=*****\n
++
++-If it is not stored, git-credential will ask you to enter 
++the password:
++		
++		> Password for '[http|https]admin@localhost':
++
++Then if password is correct, you can store using command
++'git crendential approve' providing the structure, by STDIN.
++
++		username=admin\n 
++		password=*****\n
++		protocol=[http|https]\n
++		host=localhost\n
++		path=/dir\n\n
++
++If the password is refused, you can delete using command
++'git credential reject' providing the same structure.
++
++
++REQUESTING CREDENTIALS
++----------------------
++
++1. The 'git credential fill' makes the structure:
++		username=foo
++		password=****
++		protocol=[http|https]
++		localhost=url
++		path=/direction
++
++   with this structure it will be able to save your
++   credentials, and if the credential is allready stored,
++   it will fill the password.
++
++2. Then 'git credential approve' to store them.
++
++3. Otherwise, if the credential is not correct you can do
++  'git credential reject' to delete the credential.
++-------------------------------------------
+diff --git a/Makefile b/Makefile
+index 4592f1f..3f53da8 100644
+--- a/Makefile
++++ b/Makefile
+@@ -827,6 +827,7 @@ BUILTIN_OBJS += builtin/commit-tree.o
+ BUILTIN_OBJS += builtin/commit.o
+ BUILTIN_OBJS += builtin/config.o
+ BUILTIN_OBJS += builtin/count-objects.o
++BUILTIN_OBJS += builtin/credential.o
+ BUILTIN_OBJS += builtin/describe.o
+ BUILTIN_OBJS += builtin/diff-files.o
+ BUILTIN_OBJS += builtin/diff-index.o
+diff --git a/builtin.h b/builtin.h
+index 338f540..48feddc 100644
+--- a/builtin.h
++++ b/builtin.h
+@@ -66,6 +66,7 @@ extern int cmd_commit(int argc, const char **argv, const char *prefix);
+ extern int cmd_commit_tree(int argc, const char **argv, const char *prefix);
+ extern int cmd_config(int argc, const char **argv, const char *prefix);
+ extern int cmd_count_objects(int argc, const char **argv, const char *prefix);
++extern int cmd_credential(int argc, const char **argv, const char *prefix);
+ extern int cmd_describe(int argc, const char **argv, const char *prefix);
+ extern int cmd_diff_files(int argc, const char **argv, const char *prefix);
+ extern int cmd_diff_index(int argc, const char **argv, const char *prefix);
+diff --git a/builtin/credential.c b/builtin/credential.c
+new file mode 100644
+index 0000000..89f976b
+--- /dev/null
++++ b/builtin/credential.c
+@@ -0,0 +1,40 @@
++#include <stdio.h>
++#include "cache.h"
++#include "credential.h"
++#include "string-list.h"
++
++static const char usage_msg[] =
++"credential <fill|approve|reject> [helper...]";
++
++void cmd_credential (int argc, char **argv, const char *prefix){
++	const char *op;
++	struct credential c = CREDENTIAL_INIT;
++	int i;
++
++	op = argv[1];
++	if (!op)
++		usage(usage_msg);
++
++	for (i = 2; i < argc; i++)
++		string_list_append(&c.helpers, argv[i]);
++
++	if (credential_read(&c, stdin) < 0)
++		die("unable to read credential from stdin");
++
++	if (!strcmp(op, "fill")) {
++		credential_fill(&c);
++		if (c.username)
++			printf("username=%s\n", c.username);
++		if (c.password)
++			printf("password=%s\n", c.password);
++	}
++	else if (!strcmp(op, "approve")) {
++		credential_approve(&c);
++	}
++	else if (!strcmp(op, "reject")) {
++		credential_reject(&c);
++	}
++	else
++		usage(usage_msg);
 +}
 +
-  case "$action" in
-  continue)
-  	# do we have anything to commit?
-@@ -857,6 +873,8 @@ fi
-
-  test -s "$todo" || echo noop >> "$todo"
-  test -n "$autosquash" && rearrange_squash "$todo"
-+test -n "$cmd" && add_exec_commands "$todo"
-+
-  cat >> "$todo" << EOF
-
-  # Rebase $shortrevisions onto $shortonto
-diff --git a/git-rebase.sh b/git-rebase.sh
-index 24a2840..19ead1a 100755
---- a/git-rebase.sh
-+++ b/git-rebase.sh
-@@ -3,7 +3,8 @@
-  # Copyright (c) 2005 Junio C Hamano.
-  #
-
--USAGE=3D'[--interactive | -i] [-v] [--force-rebase | -f] [--no-ff] =20
-[--onto <newbase>] [<upstream>|--root] [<branch>] [--quiet | -q]'
-+USAGE=3D'[--interactive | -i] [--exec | -x <cmd>] [-v] [--force-rebase=
- | -f]
-+       [--no-ff] [--onto <newbase>] [<upstream>|--root] [<branch>] =20
-[--quiet | -q]'
-  LONG_USAGE=3D'git-rebase replaces <branch> with a new branch of the
-  same name.  When the --onto option is provided the new branch starts
-  out with a HEAD equal to <newbase>, otherwise it is equal to <upstrea=
-m>
-@@ -30,8 +31,8 @@ Example:       git-rebase master~1 topic
-  SUBDIRECTORY_OK=3DYes
-  OPTIONS_KEEPDASHDASH=3D
-  OPTIONS_SPEC=3D"\
--git rebase [-i] [options] [--onto <newbase>] [<upstream>] [<branch>]
--git rebase [-i] [options] --onto <newbase> --root [<branch>]
-+git rebase [-i] [options] [--exec <cmd>] [--onto <newbase>] =20
-[<upstream>] [<branch>]
-+git rebase [-i] [options] [--exec <cmd>] --onto <newbase> --root [<bra=
-nch>]
-  git-rebase [-i] --continue | --abort | --skip
-  --
-   Available options are
-@@ -43,6 +44,7 @@ s,strategy=3D!       use the given merge strategy
-  no-ff!             cherry-pick all commits, even if unchanged
-  m,merge!           use merging strategies to rebase
-  i,interactive!     let the user edit the list of commits to rebase
-+x,exec=3D!           add exec lines after each commit of the editable =
-list
-  k,keep-empty	   preserve empty commits during rebase
-  f,force-rebase!    force rebase even if branch is up to date
-  X,strategy-option=3D! pass the argument through to the merge strategy
-@@ -76,6 +78,7 @@ If you would prefer to skip this patch, instead run =20
-\"git rebase --skip\".
-  To check out the original branch and stop rebasing run \"git rebase =20
---abort\".
-  "
-  unset onto
-+cmd=3D
-  strategy=3D
-  strategy_opts=3D
-  do_merge=3D
-@@ -219,6 +222,11 @@ do
-  		onto=3D"$2"
-  		shift
-  		;;
-+	-x)
-+		test 2 -le "$#" || usage
-+		cmd=3D"${cmd:+"$cmd$LF"} $2"
-+		shift
-+		;;
-  	-i)
-  		interactive_rebase=3Dexplicit
-  		;;
-@@ -304,6 +312,12 @@ do
-  done
-  test $# -gt 2 && usage
-
-+if test -n "$cmd" &&
-+   test "$interactive_rebase" !=3D explicit
-+then
-+	die "--exec option must be used with --interactive option\n"
-+fi
-+
-  if test -n "$action"
-  then
-  	test -z "$in_progress" && die "No rebase in progress?"
-diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive=
-=2Esh
-index 025c1c6..4fe98d5 100755
---- a/t/t3404-rebase-interactive.sh
-+++ b/t/t3404-rebase-interactive.sh
-@@ -755,4 +755,128 @@ test_expect_success 'rebase-i history with funny =
-=20
-messages' '
-  	test_cmp expect actual
-  '
-
-+
-+test_expect_success 'prepare for rebase -i --exec' '
-+	git checkout master &&
-+	git checkout -b execute &&
-+	test_commit one_exec main.txt one_exec &&
-+	test_commit two_exec main.txt two_exec &&
-+	test_commit three_exec main.txt three_exec
-+'
-+
-+
-+test_expect_success 'running "git rebase -i --exec git show HEAD"' '
-+	git rebase -i --exec "git show HEAD" HEAD~2 >actual &&
-+	(
-+		FAKE_LINES=3D"1 exec_git_show_HEAD 2 exec_git_show_HEAD" &&
-+		export FAKE_LINES &&
-+		git rebase -i HEAD~2 >expected
-+	) &&
-+	sed '1,9d' expected >expect &&
-+	mv expect expected &&
-+	test_cmp expected actual
-+'
-+
-+
-+test_expect_success 'running "git rebase --exec git show HEAD -i"' '
-+	git reset --hard execute &&
-+	git rebase --exec "git show HEAD" -i HEAD~2 >actual &&
-+	(
-+		FAKE_LINES=3D"1 exec_git_show_HEAD 2 exec_git_show_HEAD" &&
-+		export FAKE_LINES &&
-+		git rebase -i HEAD~2 >expected
-+	) &&
-+	sed '1,9d' expected >expect &&
-+	mv expect expected &&
-+	test_cmp expected actual
-+'
-+
-+
-+test_expect_success 'running "git rebase -ix git show HEAD"' '
-+	git reset --hard execute &&
-+	git rebase -ix "git show HEAD" HEAD~2 >actual &&
-+	(
-+		FAKE_LINES=3D"1 exec_git_show_HEAD 2 exec_git_show_HEAD" &&
-+		export FAKE_LINES &&
-+		git rebase -i HEAD~2 >expected
-+	) &&
-+	sed '1,9d' expected >expect &&
-+	mv expect expected &&
-+	test_cmp expected actual
-+'
-+
-+
-+test_expect_success 'rebase -ix with several <CMD>' '
-+	git reset --hard execute &&
-+	git rebase -ix "git show HEAD; pwd" HEAD~2 >actual &&
-+	(
-+		FAKE_LINES=3D"1 exec_git_show_HEAD;_pwd 2 exec_git_show_HEAD;_pwd" &=
-&
-+		export FAKE_LINES &&
-+		git rebase -i HEAD~2 >expected
-+	) &&
-+	sed '1,9d' expected >expect &&
-+	mv expect expected &&
-+	test_cmp expected actual
-+'
-+
-+
-+test_expect_success 'rebase -ix with several instances of --exec' '
-+	git reset --hard execute &&
-+	git rebase -i --exec "git show HEAD" --exec "pwd" HEAD~2 >actual &&
-+	(
-+		FAKE_LINES=3D"1 exec_git_show_HEAD exec_pwd 2
-+				exec_git_show_HEAD exec_pwd" &&
-+		export FAKE_LINES &&
-+		git rebase -i HEAD~2 >expected
-+	) &&
-+	sed '1,11d' expected >expect &&
-+	mv expect expected &&
-+	test_cmp expected actual
-+'
-+
-+
-+test_expect_success 'rebase -ix with --autosquash' '
-+	git reset --hard execute &&
-+	git checkout -b autosquash &&
-+	echo second >second.txt &&
-+	git add second.txt &&
-+	git commit -m "fixup! two_exec" &&
-+	echo bis >bis.txt &&
-+	git add bis.txt &&
-+	git commit -m "fixup! two_exec" &&
-+	(
-+		git checkout -b autosquash_actual &&
-+		git rebase -i --exec "git show HEAD" --autosquash HEAD~4 >actual
-+	) &&
-+	git checkout autosquash &&
-+	(
-+		git checkout -b autosquash_expected &&
-+		FAKE_LINES=3D"1 fixup 3 fixup 4 exec_git_show_HEAD 2 exec_git_show_H=
-EAD" &&
-+		export FAKE_LINES &&
-+		git rebase -i HEAD~4 >expected
-+	) &&
-+	sed '1,13d' expected >expect &&
-+	mv expect expected &&
-+	test_cmp expected actual
-+'
-+
-+
-+test_expect_success 'rebase --exec without -i shows error message' '
-+	git reset --hard execute &&
-+	test_must_fail git rebase --exec "git show HEAD" HEAD~2 2>actual &&
-+	echo "--exec option must be used with --interactive option\n" >expect=
-ed &&
-+	test_cmp expected actual
-+'
-+
-+
-+test_expect_success 'rebase -i --exec without <CMD> shows error =20
-message and usage' '
-+	git reset --hard execute &&
-+	test_must_fail git rebase -i --exec 2>actual &&
-+	sed '1d' actual >tmp &&
-+	mv tmp actual &&
-+	test_must_fail git rebase -h >expected &&
-+	test_cmp expected actual &&
-+	git checkout master
-+'
-+
-  test_done
---=20
-1.7.8
+diff --git a/git.c b/git.c
+index d232de9..211f01f 100644
+--- a/git.c
++++ b/git.c
+@@ -353,6 +353,7 @@ static void handle_internal_command(int argc, const char **argv)
+ 		{ "commit-tree", cmd_commit_tree, RUN_SETUP },
+ 		{ "config", cmd_config, RUN_SETUP_GENTLY },
+ 		{ "count-objects", cmd_count_objects, RUN_SETUP },
++		{ "credential", cmd_credential, RUN_SETUP },
+ 		{ "describe", cmd_describe, RUN_SETUP },
+ 		{ "diff", cmd_diff },
+ 		{ "diff-files", cmd_diff_files, RUN_SETUP | NEED_WORK_TREE },
+-- 
+1.7.11.rc0.5.ge0c9cc0.dirty
