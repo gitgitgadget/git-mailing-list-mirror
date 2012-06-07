@@ -1,73 +1,84 @@
-From: konglu@minatec.inpg.fr
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
 Subject: Re: rebase [-i --exec | -ix] <CMD>...
-Date: Thu, 07 Jun 2012 22:44:59 +0200
-Message-ID: <20120607224459.Horde.GLRVL3wdC4BP0RLLE1gTU0A@webmail.minatec.grenoble-inp.fr>
+Date: Thu, 07 Jun 2012 22:49:23 +0200
+Message-ID: <vpqboku3l0s.fsf@bauges.imag.fr>
 References: <4FD0D375.9060902@web.de>
- <1339087582-10040-1-git-send-email-Lucien.Kong@ensimag.imag.fr>
- <4FD0EB76.90501@web.de>
- <20120607200731.Horde.xzrpWHwdC4BP0O3jZ46SyWA@webmail.minatec.grenoble-inp.fr>
- <4FD0FCAC.3070408@web.de>
- <20120607215512.Horde.RVmScHwdC4BP0QcggMBjKUA@webmail.minatec.grenoble-inp.fr>
- <m2k3zivp0c.fsf@igel.home>
+	<1339087582-10040-1-git-send-email-Lucien.Kong@ensimag.imag.fr>
+	<4FD0EB76.90501@web.de>
+	<20120607200731.Horde.xzrpWHwdC4BP0O3jZ46SyWA@webmail.minatec.grenoble-inp.fr>
+	<4FD0FCAC.3070408@web.de>
+	<20120607215512.Horde.RVmScHwdC4BP0QcggMBjKUA@webmail.minatec.grenoble-inp.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=";";
-	format=flowed	DelSp=Yes
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Torsten =?utf-8?b?QsO2Z2Vyc2hhdXNlbg==?= <tboegi@web.de>,
+Content-Type: text/plain
+Cc: Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>,
 	Lucien Kong <Lucien.Kong@ensimag.imag.fr>, git@vger.kernel.org
-To: Andreas Schwab <schwab@linux-m68k.org>
-X-From: git-owner@vger.kernel.org Thu Jun 07 22:45:37 2012
+To: konglu@minatec.inpg.fr
+X-From: git-owner@vger.kernel.org Thu Jun 07 22:49:41 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ScjaI-0008Sv-OV
-	for gcvg-git-2@plane.gmane.org; Thu, 07 Jun 2012 22:45:35 +0200
+	id 1ScjeH-0008I1-67
+	for gcvg-git-2@plane.gmane.org; Thu, 07 Jun 2012 22:49:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757138Ab2FGUpF convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 7 Jun 2012 16:45:05 -0400
-Received: from v-smtp.minatec.grenoble-inp.fr ([147.173.216.28]:34168 "EHLO
-	v-smtp.minatec.grenoble-inp.fr" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754880Ab2FGUpD (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 7 Jun 2012 16:45:03 -0400
-Received: from localhost (www02.minatec.grenoble-inp.fr [147.173.216.15])
-	by v-smtp.minatec.grenoble-inp.fr (Postfix) with ESMTP id A06471A02FC;
-	Thu,  7 Jun 2012 22:44:59 +0200 (CEST)
-Received: from reverse.completel.net (reverse.completel.net [92.103.38.66])
- by webmail.minatec.grenoble-inp.fr (Horde Framework) with HTTP; Thu, 07 Jun
- 2012 22:44:59 +0200
-In-Reply-To: <m2k3zivp0c.fsf@igel.home>
-User-Agent: Internet Messaging Program (IMP) H4 (5.0.17)
-Content-Disposition: inline
+	id S932503Ab2FGUta (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Jun 2012 16:49:30 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:34271 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932086Ab2FGUt2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Jun 2012 16:49:28 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id q57KefVS032636
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Thu, 7 Jun 2012 22:40:41 +0200
+Received: from bauges.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1Scje0-0007gr-2i; Thu, 07 Jun 2012 22:49:24 +0200
+In-Reply-To: <20120607215512.Horde.RVmScHwdC4BP0QcggMBjKUA@webmail.minatec.grenoble-inp.fr>
+	(konglu@minatec.inpg.fr's message of "Thu, 07 Jun 2012 21:55:12
+	+0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.93 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Thu, 07 Jun 2012 22:40:42 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: q57KefVS032636
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1339706442.71039@B8sdvc1ER/qMZxxAujYnJA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199449>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199450>
 
+konglu@minatec.inpg.fr writes:
 
-Andreas Schwab <schwab@linux-m68k.org> a =C3=A9crit=C2=A0:
+> As you pointed out, the problem seems to come from this line
+> 	tmp=$(sed "/^pick .*/i\exec $i" "$1")
+> I think that the dquote here doesn't work on MacOS, though i've
+> never tried it.
 
-> konglu@minatec.inpg.fr writes:
->
->> As you pointed out, the problem seems to come from this line
->> 	tmp=3D$(sed "/^pick .*/i\exec $i" "$1")
->> I think that the dquote here doesn't work on MacOS, though i've
->> never tried it. Anyway, even if it's not the problem, this kind
->> of quoting is quite odd so it will be removed in the next patch
->> (I do not see other reasons of the issue, as sed's i command should
->> work on MacOS).
->
-> You need to put a newline after the backslash.
+I don't see a reason why it wouldn't. Anyway, quotes are managed by the
+shell, and in our case, sed is the one complaining.
 
-That's what we originally did. Though we did it with indentations:
-         tmp=3D$(sed "/^pick .*/i\
-                            exec $i" "$1")
-Should it be put that way (without indentations) ?
-         tmp=3D$(sed "/^pick .*/i\
-exec $i" "$1")
+I experimented a bit, and it seems Mac OS's sed insists in having a \
+and a newline after i (it seems POSIX requires it too). In your code
+above, the \ is included in double quotes, so you have to escape it.
 
-Thanks,
+This snippet works reliably on my Linux machine and on a Mac OS X one:
 
-Lucien Kong
+x=$(echo 'pick foo' | sed -e "/pick/i\\
+exec $1")
+echo "$x"
+
+> Anyway, even if it's not the problem, this kind of quoting is quite
+> odd so it will be removed in the next patch
+
+Be careful, you do need quoting around $i.
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
