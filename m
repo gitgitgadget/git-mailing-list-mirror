@@ -1,89 +1,53 @@
-From: cheng renquan <crquan@gmail.com>
-Subject: Re: [PATCH] git fetch one tag only
-Date: Thu, 7 Jun 2012 09:11:00 -0700
-Message-ID: <CAH5vBdKHOg=PTsFPgcsd3iNEuTTY_dD2gPNXkmzjRmE8NpBrXw@mail.gmail.com>
-References: <CAH5vBdK_M+7Hjk=juVeP7Phqvs2+npknFD-=45OVR032k5S-0A@mail.gmail.com>
-	<CAPc5daVwOuP_dPiHh5zcjV6kTvdb2FNhzXz_capEDhHgE5ZUKw@mail.gmail.com>
-	<CAH5vBdKPH_-cn=r-zxQKCOi5PB5D6vuSXrZxPeZJ+HYg-K9Yqw@mail.gmail.com>
-	<7vpq9bk7o5.fsf@alter.siamese.dyndns.org>
-	<CAH5vBdKXaOV3hC0E0s=j3Hc2jZ9otxhXLMhCCKiU4=Rn4Y4COA@mail.gmail.com>
+From: =?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
+Subject: Re: commit a63d7ed3017e312ddc752ac89a7d292a745d5f11 broken on MacOS
+Date: Thu, 07 Jun 2012 18:14:45 +0200
+Message-ID: <4FD0D375.9060902@web.de>
+References: <4FD0964E.7040302@web.de> <20120607162032.Horde.3lGNYXwdC4BP0LiwzlCRupA@webmail.minatec.grenoble-inp.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jun 07 18:11:12 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: =?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>,
+	Git Mailing List <git@vger.kernel.org>
+To: konglu@minatec.inpg.fr
+X-From: git-owner@vger.kernel.org Thu Jun 07 18:14:56 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ScfIi-0004Qn-LD
-	for gcvg-git-2@plane.gmane.org; Thu, 07 Jun 2012 18:11:09 +0200
+	id 1ScfMK-00044q-Bd
+	for gcvg-git-2@plane.gmane.org; Thu, 07 Jun 2012 18:14:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752798Ab2FGQLD convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 7 Jun 2012 12:11:03 -0400
-Received: from mail-we0-f174.google.com ([74.125.82.174]:56181 "EHLO
-	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752570Ab2FGQLB convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 7 Jun 2012 12:11:01 -0400
-Received: by weyu7 with SMTP id u7so463087wey.19
-        for <git@vger.kernel.org>; Thu, 07 Jun 2012 09:11:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=ZXVGWzpj8A7GKIp+YoOLf3eavxnBGkYFDYiDkbnL0wM=;
-        b=X42xv+noICcdL0Cb9WySY3lmTDR28xm3G3g3sdStbAUdDnTwPh+Oy5TKMDBO5DHHQY
-         kMCY/sWyyxGpwchOrq+I/E1dRCGk/G2MtwX5gCLw2vLA2H1LEcGbi1VNQFYLaHulsX8r
-         atPfTN87kCMEktAisjotCRKv6/hIilN0g0ndk09xxT5V1AxuuU6lFExvMpf1LPIU6jQv
-         Ijhzu9e5eAeAId4FguL/Uyd/2bP2SyNvQBa1czvRADYWq1LusYexf5t4g5m9RmmXG1yU
-         hofY6tRYEXzGxamoVhesqoYKcUbOaLnMmmFjWq5xcj1ZTp5+TZlwAAq9EnAMrGuBo6OX
-         mvNg==
-Received: by 10.216.196.218 with SMTP id r68mr1225878wen.122.1339085460148;
- Thu, 07 Jun 2012 09:11:00 -0700 (PDT)
-Received: by 10.216.136.80 with HTTP; Thu, 7 Jun 2012 09:11:00 -0700 (PDT)
-In-Reply-To: <CAH5vBdKXaOV3hC0E0s=j3Hc2jZ9otxhXLMhCCKiU4=Rn4Y4COA@mail.gmail.com>
+	id S1752570Ab2FGQOs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Jun 2012 12:14:48 -0400
+Received: from mout.web.de ([212.227.17.12]:54017 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751748Ab2FGQOr (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Jun 2012 12:14:47 -0400
+Received: from birne.lan ([194.22.188.61]) by smtp.web.de (mrweb102) with
+ ESMTPA (Nemesis) id 0MTPit-1SVl2n0dux-00SIXO; Thu, 07 Jun 2012 18:14:46 +0200
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:13.0) Gecko/20120601 Thunderbird/13.0
+In-Reply-To: <20120607162032.Horde.3lGNYXwdC4BP0LiwzlCRupA@webmail.minatec.grenoble-inp.fr>
+X-Provags-ID: V02:K0:VItvm6jnx0QuMw97XtssZY2VYWjsQiIq3fGlV+4Ixqu
+ P8DRmdV33Q9N0U2KF/nqicJEXth5kKkaCN259HUgINsdgkDcnW
+ 1qVRtofKp3Ok6BEJtDZb5yN8Ey09hhTt/ZJ8l1gu3smukKxPTD
+ TRKdGokrDwXpNSicFlZ4fAEv0wiYpMt4T28ZnG7GFCWVrft2Rt
+ U0WoqmrQNnHAXYVgxmVwQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199411>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199412>
 
-On Wed, Jun 6, 2012 at 10:47 PM, cheng renquan <crquan@gmail.com> wrote=
-:
-> ok, got it:
->
-> $ git fetch -v --no-tags linux-stable tag v3.4.1
-> From git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stabl=
-e
-> =C2=A0=3D [up to date] =C2=A0 =C2=A0 =C2=A0v3.4.1 =C2=A0 =C2=A0 -> v3=
-=2E4.1
-
-Here I still think the logic is wrong:
-
-$ git fetch linux-stable tag
-fatal: You need to specify a tag name.
-
-$ git fetch linux-stable tag v3.4.1
-[this would actually fetch all tags]
+On 07.06.12 16:20, konglu@minatec.inpg.fr wrote:
+> Does it work if the whitespaces are deleted so that it becomes
+> /^pick .*/i\exec gi..." ? (see the patch corrected below).
 
 
-from `git help fetch`:
+I didn't manage to appy the patch, either 
+fatal: corrupt patch at line 14
+or, if I remove that line
+line 14 is bad, or there is no email address.
 
-           Some short-cut notations are also supported.
-
-           =C2=B7    tag <tag> means the same as
-refs/tags/<tag>:refs/tags/<tag>; it requests fetching everything up to
-the given tag.
-
-
-Here the documentation is saying "everything up to the given tag.",
-but other tags can never be all belonging to that path, for above
-example, in the path up to given tag v3.4.1, I'm sure other tags like
-v3.3.1 are not in the path;
-
-So the `git fetch linux-stable tag v3.4.1` fetched other tags is a
-WRONG behavior,
-and why can't we fix that by disabling auto-following automatically if
-use tag syntax? Why to the user "--no-tags" is explicitly required?
+Does the patch apply on your system ?
+/Torsten
