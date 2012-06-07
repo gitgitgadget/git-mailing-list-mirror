@@ -1,114 +1,125 @@
-From: Martin Langhoff <martin.langhoff@gmail.com>
-Subject: Re: Getting pickaxe to perform looser matches, or regex matching
-Date: Thu, 7 Jun 2012 14:48:39 -0400
-Message-ID: <CACPiFCJHY4vfrrWRm_cC2Ck6RAyQosWwqijxPbs+Fn0T_AoT1w@mail.gmail.com>
-References: <CACPiFCKyhZPQR+e27Ah5THiPPJy3akajGN5xMwBumP-Wj6JrKQ@mail.gmail.com>
- <7vy5nzgg1h.fsf@alter.siamese.dyndns.org>
+From: =?UTF-8?B?WmJpZ25pZXcgSsSZZHJ6ZWpld3NraS1Tem1law==?= 
+	<zbyszek@in.waw.pl>
+Subject: Re: [eclipse7@gmx.net: [PATCH] diff: Only count lines in show_shortstats()]
+Date: Thu, 07 Jun 2012 21:05:25 +0200
+Message-ID: <4FD0FB75.4090906@in.waw.pl>
+References: <20120607122149.GA3070@akuma>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary=14dae9cdc78f2fa49004c1e656c3
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jun 07 20:49:12 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: mj@ucw.cz, Johannes Sixt <j.sixt@viscovery.net>
+To: Alexander Strasser <eclipse7@gmx.net>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jun 07 21:05:40 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Schla-0003u9-NN
-	for gcvg-git-2@plane.gmane.org; Thu, 07 Jun 2012 20:49:07 +0200
+	id 1Sci1b-0003fi-Gw
+	for gcvg-git-2@plane.gmane.org; Thu, 07 Jun 2012 21:05:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932806Ab2FGStB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 Jun 2012 14:49:01 -0400
-Received: from mail-vb0-f52.google.com ([209.85.212.52]:51214 "EHLO
-	mail-vb0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932762Ab2FGStA (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Jun 2012 14:49:00 -0400
-Received: by vbzb23 with SMTP id b23so579908vbz.11
-        for <git@vger.kernel.org>; Thu, 07 Jun 2012 11:48:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=8/XpElC9P4aSmuYD07EcK2Em1gfz2DOla5KcGGoHkqo=;
-        b=0oDZhxWxfEG22uGX0z/n2QGkdw4GCp6gQJFzlpWvKs+VOa4VvIU6/2Bn8DlB+NIF0D
-         2lcgdAKFJmE+C97wQdebpR0S4z8QrFsk6gyvmi9ANGzpPxj5Er3qlmnAO8rd1LJbPNc4
-         kev/mMwjPbAsDhaS3fufsgiyTVbXfxQemWk9N2RvI/t0Gto+cnpSa30jfHuOUON/yywQ
-         7f+i7xA+C6SvBuBcWf1pTneFX+BVZRvdKGpKpoecEwMB9pZ6pBgZoEv5rg0Vuc4IO9P3
-         g6QBNS/nBtAY9ykd8s5VgQXuRq12ByqyzmF8W77rQM31wYFXxuKJ9c9c+JgDsAoQzeFL
-         ftsQ==
-Received: by 10.220.242.78 with SMTP id lh14mr3123573vcb.64.1339094939444;
- Thu, 07 Jun 2012 11:48:59 -0700 (PDT)
-Received: by 10.52.162.34 with HTTP; Thu, 7 Jun 2012 11:48:39 -0700 (PDT)
-In-Reply-To: <7vy5nzgg1h.fsf@alter.siamese.dyndns.org>
+	id S1761346Ab2FGTFe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Jun 2012 15:05:34 -0400
+Received: from kawka.in.waw.pl ([178.63.212.103]:38144 "EHLO kawka.in.waw.pl"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1761304Ab2FGTFe (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Jun 2012 15:05:34 -0400
+Received: from aayq27.neoplus.adsl.tpnet.pl ([83.6.128.27] helo=[192.168.1.13])
+	by kawka.in.waw.pl with esmtpsa (TLS1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.72)
+	(envelope-from <zbyszek@in.waw.pl>)
+	id 1Sci1U-0004am-Ef; Thu, 07 Jun 2012 21:05:32 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:10.0.3) Gecko/20120329 Icedove/10.0.3
+In-Reply-To: <20120607122149.GA3070@akuma>
+X-Enigmail-Version: 1.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199438>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199439>
 
---14dae9cdc78f2fa49004c1e656c3
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: quoted-printable
+On 06/07/2012 02:21 PM, Alexander Strasser wrote:
+> Hello Zbigniew,
+> 
+>   could you have a look at the patch below? I submitted to it to the
+> Git mailing list and you could probably comment there?
+Hi Alexander,
+sure, thanks for finding (and fixing) the bug.
 
-On Thu, Jun 7, 2012 at 1:58 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Like more expensive -G that was recently added?
+>   I think I should have put you in CC. But I am not so sure about
+> Git patch submission policies.
+The policy is to CC everyone who might be interested, and also to add
+TO:gitster@pobox.com, if the patch is intended for merging, as yours is.
+So basically taking the address list from the discussion of e18872b
+would be the simplest and most effective choice.
 
-Yay! That does what I wanted, though the manpage relies on subtle
-wording to convey it. You have to read -S and -G twice and think about
-it. It would be much better to say something like "If -S isn't finding
-what you need, try -G and you shall find it" -- AFAICT it is true for
-the common cases.
+>   Do not mix byte and line counts. Binary files have byte counts;
+> skip them when accumulating line insertions/deletions.
+> 
+>   The regression was introduced in e18872b.
+Yeah, it seems that the condition for !binary was lost in the refactoring
+of the code.
 
-gitk doesn't seem to know how to use it. Attached is a trivial patch
-(apologies about attaching it, in lieu of proper list style). Simple,
-and works for me.
+> Signed-off-by: Alexander Strasser <eclipse7@gmx.net>
+Small note: normally the paragraphs are not indented.
 
-While I am not learned in gitk internal structure, it seems complete.
-My only doubt is whether any additional work is needed under set
-known_view_options {}. I cannot quite fathom that part of gitk. Review
-welcome.
+> ---
+> 
+>   I hope this does retain the original intent of e18872b while
+> not messing up the insertions/deletions output by --shortstat.
+> 
+>   Output of --stat was never affected AFAICT.
+> 
+>  diff.c                 | 2 +-
+>  t/t4012-diff-binary.sh | 8 ++++++++
+>  2 files changed, 9 insertions(+), 1 deletion(-)
+> 
+> diff --git a/diff.c b/diff.c
+> index 77edd50..1a594df 100644
+> --- a/diff.c
+> +++ b/diff.c
+> @@ -1700,7 +1700,7 @@ static void show_shortstats(struct diffstat_t *data, struct diff_options *option
+>  			continue;
+>  		if (!data->files[i]->is_renamed && (added + deleted == 0)) {
+>  			total_files--;
+> -		} else {
+> +		} else if (!data->files[i]->is_binary) { /* don't count bytes */
+>  			adds += added;
+>  			dels += deleted;
+>  		}
+> diff --git a/t/t4012-diff-binary.sh b/t/t4012-diff-binary.sh
+> index 8b4e80d..1a994f0 100755
+> --- a/t/t4012-diff-binary.sh
+> +++ b/t/t4012-diff-binary.sh
+> @@ -36,6 +36,14 @@ test_expect_success '"apply --stat" output for binary file change' '
+>  	test_i18ncmp expected current
+>  '
+>  
+> +cat > expected <<\EOF
+> + 4 files changed, 2 insertions(+), 2 deletions(-)
+> +EOF
+> +test_expect_success 'diff with --shortstat' '
+> +	git diff --shortstat >current &&
+> +	test_cmp expected current
+> +'
+> +
+The test is OK, and follows the style of surrounding tests, but current
+style is slightly different:
+- no space after '>'
+- expected output is inlined if it is short
+- test_i18ncmp is used, even if the message is not yet i18n-ized
 
-cheers,
+Something like this:
+test_expect_success 'diff --shortstat output for binary file change' '
+	echo " 4 files changed, 2 insertions(+), 2 deletions(-)" >expect &&
+	git diff --shortstat >current &&
+	test_i18ncmp expect current
+'
 
+>  test_expect_success 'apply --numstat notices binary file change' '
+>  	git diff >diff &&
+>  	git apply --numstat <diff >current &&
 
-
-m
---=20
-=A0martin.langhoff@gmail.com
-=A0martin@laptop.org -- Software Architect - OLPC
-=A0- ask interesting questions
-=A0- don't get distracted with shiny stuff=A0 - working code first
-=A0- http://wiki.laptop.org/go/User:Martinlanghoff
-
---14dae9cdc78f2fa49004c1e656c3
-Content-Type: application/octet-stream; 
-	name="0001-gitk-add-support-for-G-regex-pickaxe-variant.patch"
-Content-Disposition: attachment; 
-	filename="0001-gitk-add-support-for-G-regex-pickaxe-variant.patch"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: f_h366g1xm0
-
-RnJvbSBkODYxMzdjOGMyZjJhYzQyYjAzMGEwZTBiNDBjNTljNjAyOWNjZDRmIE1vbiBTZXAgMTcg
-MDA6MDA6MDAgMjAwMQpGcm9tOiBNYXJ0aW4gTGFuZ2hvZmYgPG1hcnRpbkBsYXB0b3Aub3JnPgpE
-YXRlOiBUaHUsIDcgSnVuIDIwMTIgMTQ6NDE6NTggLTA0MDAKU3ViamVjdDogW1BBVENIXSBnaXRr
-OiBhZGQgc3VwcG9ydCBmb3IgLUcncmVnZXgnIHBpY2theGUgdmFyaWFudAoKZ2l0IGxvZyAtRydy
-ZWdleCcgaXMgYSB2ZXJ5IHVzYWJsZSBhbHRlcm5hdGl2ZSB0byB0aGUgY2xhc3NpYwpwaWNrYXhl
-LiBNaW5pbWFsIHBhdGNoIHRvIG1ha2UgaXQgdXNhYmxlIGZyb20gZ2l0ay4KLS0tCiBnaXRrLWdp
-dC9naXRrIHwgICAgNSArKysrLQogMSBmaWxlcyBjaGFuZ2VkLCA0IGluc2VydGlvbnMoKyksIDEg
-ZGVsZXRpb25zKC0pCgpkaWZmIC0tZ2l0IGEvZ2l0ay1naXQvZ2l0ayBiL2dpdGstZ2l0L2dpdGsK
-aW5kZXggMjIyNzBjZS4uODc2YjhmOSAxMDA3NTUKLS0tIGEvZ2l0ay1naXQvZ2l0aworKysgYi9n
-aXRrLWdpdC9naXRrCkBAIC0yMjMyLDcgKzIyMzIsOCBAQCBwcm9jIG1ha2V3aW5kb3cge30gewog
-ICAgIHNldCBnbSBbbWFrZWRyb3BsaXN0IC50Zi5sYmFyLmdkdHR5cGUgZ2R0dHlwZSBcCiAJCVtt
-YyAiY29udGFpbmluZzoiXSBcCiAJCVttYyAidG91Y2hpbmcgcGF0aHM6Il0gXAotCQlbbWMgImFk
-ZGluZy9yZW1vdmluZyBzdHJpbmc6Il1dCisJCVttYyAiYWRkaW5nL3JlbW92aW5nIHN0cmluZzoi
-XSBcCisJCVttYyAiY2hhbmdlcyBtYXRjaCByZWdleDoiXV0KICAgICB0cmFjZSBhZGQgdmFyaWFi
-bGUgZ2R0dHlwZSB3cml0ZSBnZHR0eXBlX2NoYW5nZQogICAgIHBhY2sgLnRmLmxiYXIuZ2R0dHlw
-ZSAtc2lkZSBsZWZ0IC1maWxsIHkKIApAQCAtNDU5NSw2ICs0NTk2LDggQEAgcHJvYyBkb19maWxl
-X2hsIHtzZXJpYWx9IHsKIAlzZXQgZ2R0YXJncyBbY29uY2F0IC0tICRyZWxhdGl2ZV9wYXRoc10K
-ICAgICB9IGVsc2VpZiB7JGdkdHR5cGUgZXEgW21jICJhZGRpbmcvcmVtb3Zpbmcgc3RyaW5nOiJd
-fSB7CiAJc2V0IGdkdGFyZ3MgW2xpc3QgIi1TJGhpZ2hsaWdodF9maWxlcyJdCisgICAgfSBlbHNl
-aWYgeyRnZHR0eXBlIGVxIFttYyAiY2hhbmdlcyBtYXRjaCByZWdleDoiXX0geworCXNldCBnZHRh
-cmdzIFtsaXN0ICItRyRoaWdobGlnaHRfZmlsZXMiXQogICAgIH0gZWxzZSB7CiAJIyBtdXN0IGJl
-ICJjb250YWluaW5nOiIsIGkuZS4gd2UncmUgc2VhcmNoaW5nIGNvbW1pdCBpbmZvCiAJcmV0dXJu
-Ci0tIAoxLjcuNy42Cgo=
---14dae9cdc78f2fa49004c1e656c3--
+Zbyszek
