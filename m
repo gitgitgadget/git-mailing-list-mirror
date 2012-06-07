@@ -1,97 +1,84 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: What's cooking in git.git (Jun 2012, #02; Wed, 6)
-Date: Wed, 6 Jun 2012 19:39:04 -0500
-Message-ID: <20120607003904.GB4065@burratino>
-References: <7v62b4ksw2.fsf@alter.siamese.dyndns.org>
- <CAFfmPPOWZz8JF_BVKvnAVp0VUDzxPiVSqjG7ATPx3CVztDF=cw@mail.gmail.com>
+From: cheng renquan <crquan@gmail.com>
+Subject: [PATCH] git fetch one tag only
+Date: Wed, 6 Jun 2012 18:40:45 -0700
+Message-ID: <CAH5vBdK_M+7Hjk=juVeP7Phqvs2+npknFD-=45OVR032k5S-0A@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: David Michael Barr <davidbarr@google.com>
-X-From: git-owner@vger.kernel.org Thu Jun 07 02:39:18 2012
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jun 07 03:40:53 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ScQks-0003Ri-Ij
-	for gcvg-git-2@plane.gmane.org; Thu, 07 Jun 2012 02:39:14 +0200
+	id 1ScRiV-0001MK-6i
+	for gcvg-git-2@plane.gmane.org; Thu, 07 Jun 2012 03:40:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752501Ab2FGAjJ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 6 Jun 2012 20:39:09 -0400
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:51207 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752265Ab2FGAjI convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 6 Jun 2012 20:39:08 -0400
-Received: by yenm10 with SMTP id m10so28924yen.19
-        for <git@vger.kernel.org>; Wed, 06 Jun 2012 17:39:07 -0700 (PDT)
+	id S1759400Ab2FGBks convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 6 Jun 2012 21:40:48 -0400
+Received: from mail-wg0-f44.google.com ([74.125.82.44]:36060 "EHLO
+	mail-wg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757765Ab2FGBkq convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 6 Jun 2012 21:40:46 -0400
+Received: by wgbdr13 with SMTP id dr13so79499wgb.1
+        for <git@vger.kernel.org>; Wed, 06 Jun 2012 18:40:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=vhUQLMI0Pvj7kZvvkjiBCV4a8hnSusVK5/jmKMBwzIU=;
-        b=Z1E5/wkILYVX9EBaH9s4gk9JmmQu2nQhTJrztqBl+eyl/IMAMy+RBlGDjv206zHYCj
-         S9umT1+gavEnwuyYL7P8QI+LFv/3RlTjWNobNEYUPckCSiAdHnvvgf9RjyJ/QO3SrBG6
-         SmWLBY916qpNfiLvncXDMRFSrMQRlxrXeZOWGny5nXMTH6OiDrF+jtMWaguaWPkYBfpU
-         yfgj4DccLaVCVtjkvHY87t28rwt/g8pHKwn7jIWGv9RVs28wRZy6e1l/4XUD4lGChyUs
-         u/2cxQv8O9frt79+XQd9dTVdpjirHtsJuP7L3z/svv9LNC783DEa/sSulRr+e/Wc36mY
-         9pgQ==
-Received: by 10.50.156.194 with SMTP id wg2mr80182igb.46.1339029547340;
-        Wed, 06 Jun 2012 17:39:07 -0700 (PDT)
-Received: from burratino (cl-1372.chi-02.us.sixxs.net. [2001:4978:f:55b::2])
-        by mx.google.com with ESMTPS id z7sm2235104igb.3.2012.06.06.17.39.06
-        (version=SSLv3 cipher=OTHER);
-        Wed, 06 Jun 2012 17:39:06 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <CAFfmPPOWZz8JF_BVKvnAVp0VUDzxPiVSqjG7ATPx3CVztDF=cw@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=mime-version:date:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        bh=urdgHO6hCuNQ/9x9wjxt9bKo7Mj8KmcMEoyhbUbCcvY=;
+        b=S/C8kXPAbHvqD0Bs2NiV0rjlC7V/zlSjUT1XmXx5hBJdOLP+lvUXMIgqCtNwDS6dUa
+         4t/EPz1nDkOoTVsMePd/BEOu42ENKDPEcrij7LGjo7iI4f3u7xCKhYF18PrfHC+zYQOY
+         i3frFDqdmafwIpoxGorBfKirVOlNDbygDNTomdFZQc+8fpip5oHCJ4J7eQYhIM7BS7Ji
+         mbpseXScuQJkG6ikdt6iOEl9YRDK+2deGfvFZdnXTZI37np4D0xjbwFrZ1W/2E0f3YOe
+         Rco3ErmrywavH/X4q+byfotCjPm9ONSpVPtzF07fYDqfeTA2gw6vM9nU+E867Mev6hTL
+         ad/g==
+Received: by 10.216.142.167 with SMTP id i39mr270980wej.94.1339033245131; Wed,
+ 06 Jun 2012 18:40:45 -0700 (PDT)
+Received: by 10.216.136.80 with HTTP; Wed, 6 Jun 2012 18:40:45 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199363>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199364>
 
-Hi,
+Someone maybe like me is working in the way of following one central
+git repository
+while sometimes need to fetch some code or tags from a 3rd git repo,
+but unfortunately the 3rd repo may contain a lot of tags not all I want
+to fetch to mess up my local repo, at this time I want to fetch only on=
+e tag
+from the 3rd repo, but the syntax of
+  `git fetch 3rd-repo the-tag-name`
 
-David Michael Barr wrote:
-> On Thu, Jun 7, 2012 at 7:55 AM, Junio C Hamano <gitster@pobox.com> wr=
-ote:
+really fetched the code of the-tag-name from 3rd-repo, but forgot the
+tag itself;
+this patch enhanced the above syntax to create the tag itself;
 
->> * db/vcs-svn (2012-06-01) 6 commits
->> =C2=A0- vcs-svn: drop no-op reset methods
->> =C2=A0- vcs-svn: fix signedness warnings
->> =C2=A0- vcs-svn: prefer strstr over memmem
->> =C2=A0- vcs-svn: prefer constcmp to prefixcmp
->> =C2=A0- vcs-svn: simplify cleanup in apply_one_window()
->> =C2=A0- vcs-svn: fix clang-analyzer error
->>
->> I do not know the doneness of this series that came out of the
->> blue. =C2=A0Are people involved in vcs-svn happy with this series?
->
-> At the end of this series, vcs-svn is static-analyzer clean when
-> merged into svn-dump-fast-export.
 
-Thanks for the cc.  I generally like the code and generally dislike
-the descriptions which amount to "appease the static analyzer" and
-don't reflect the thought you actually put into the patches, which
-sets a bad precedent.  I was planning to munge the descriptions, ask
-you to look it over, and then ask Junio to pull.
+ builtin/fetch.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-The signedness patch still leaves me worried: for example, where len
-is of type (size_t) and delta_len of type (off_t *),
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index bb9a074..9a3ec4a 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -439,6 +439,14 @@ static int store_updated_refs(const char
+*raw_url, const char *remote_name,
+ 			else if (!prefixcmp(rm->name, "refs/tags/")) {
+ 				kind =3D "tag";
+ 				what =3D rm->name + 10;
++				if (!ref) {
++					unsigned char sha1[20];
++					ref =3D alloc_ref(rm->name);
++					hashcpy(ref->new_sha1, rm->old_sha1);
++					if (!get_sha1(rm->name, sha1))
++						hashcpy(ref->old_sha1, sha1);
++				}
+ 			}
+ 			else if (!prefixcmp(rm->name, "refs/remotes/")) {
+ 				kind =3D "remote-tracking branch";
 
-	-       if (len > *delta_len ||
-	+       if ((off_t) len > *delta_len ||
-
-changes the meaning for the worse if len is very large on a system
-(think: 64-bit PC) where size_t and off_t have the same width.  It's
-exploitable. :(
-
-But I like the spirit of the patches.
-
-The "drop no-op reset methods" patch is unrisky and could go in
-directly.
-
-Jonathan
+--=20
+cheng renquan (=E7=A8=8B=E4=BB=BB=E5=85=A8)
