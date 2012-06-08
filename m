@@ -1,84 +1,62 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: rebase [-i --exec | -ix] <CMD>...
-Date: Fri, 08 Jun 2012 08:34:55 -0700
-Message-ID: <7vr4tpddgg.fsf@alter.siamese.dyndns.org>
-References: <4FD0D375.9060902@web.de>
- <1339087582-10040-1-git-send-email-Lucien.Kong@ensimag.imag.fr>
- <4FD1162C.50405@kdbg.org>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH] notes: attach help text to subcommands
+Date: Fri, 8 Jun 2012 10:36:07 -0500
+Message-ID: <20120608153607.GC10380@burratino>
+References: <7vd359eu4s.fsf@alter.siamese.dyndns.org>
+ <1339169317-12134-1-git-send-email-artagnon@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Lucien Kong <Lucien.Kong@ensimag.imag.fr>, tboegi@web.de,
-	git@vger.kernel.org
-To: Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Fri Jun 08 17:35:10 2012
+Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jun 08 17:36:22 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Sd1DK-0003uW-4s
-	for gcvg-git-2@plane.gmane.org; Fri, 08 Jun 2012 17:35:02 +0200
+	id 1Sd1Ec-0005xV-0u
+	for gcvg-git-2@plane.gmane.org; Fri, 08 Jun 2012 17:36:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761273Ab2FHPe6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Jun 2012 11:34:58 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59832 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757781Ab2FHPe5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Jun 2012 11:34:57 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DAB288DE5;
-	Fri,  8 Jun 2012 11:34:56 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=oZCX73+FCeHR0YQTHtoATooVTEc=; b=xKvl2u
-	ghtlUCN5MvmbO7PocsaajWFwL/R1HtTjzfQmL62N4UMdgIq/U/vC4a4SiPVwiaas
-	LE8WnkjjrBOHmCU7cxbijuINTAmZr3E+SHPiXxJACeBO/j8CtRzgQDh70hTyTD2L
-	2aMPBK3kezgIYouIlw7xOFhZ69e64f0swEY+8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=u+8dZAKHBOEeCeadwPCJzOmZlfhfYKJJ
-	d4zWEWRvp/SoISe4VKrPw/5Zdv90WCvfyaM2SyN3asSfN5IuBXijL9bfzPwAtwhn
-	YicRC+iTp1DJXHUhtX8cUNQRLU+71FCdKQZ6ozmF9wqgEnvRnwIsbVyZw8cNcDVI
-	9hDYKyKeq9k=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D109A8DE3;
-	Fri,  8 Jun 2012 11:34:56 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 688108DE2; Fri,  8 Jun 2012
- 11:34:56 -0400 (EDT)
-In-Reply-To: <4FD1162C.50405@kdbg.org> (Johannes Sixt's message of "Thu, 07
- Jun 2012 22:59:24 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 8001E48A-B17F-11E1-AC67-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1761276Ab2FHPgS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Jun 2012 11:36:18 -0400
+Received: from mail-gg0-f174.google.com ([209.85.161.174]:46993 "EHLO
+	mail-gg0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757781Ab2FHPgR (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Jun 2012 11:36:17 -0400
+Received: by gglu4 with SMTP id u4so1354431ggl.19
+        for <git@vger.kernel.org>; Fri, 08 Jun 2012 08:36:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=AYfJzQYKI6gHJrOo5m6Ed+d77G/fhIYr5/iyX8pmN4E=;
+        b=kjn2bFleMsplGF3KAp+2J0QfVpWyeU0TFPZyqiMBzGzmvkx1uGMw+GyF4sk4Z44w3Z
+         VTXENDKipvoNc4vwxoS9ih88UcO2VlRukFHM7s+e3+jwHdkq2UQz7ImRv+OEt1wfTWAM
+         t3/o6Mgh+GFbze3XaZ5oMNozRBEc91TpVuxrM/CK5RJskcdUxQXihhwdykFDhZ2y/B4X
+         VcY52K8+EbL2R1GyGZAHuFGQYNETbWqIVjWQ0+INKeSmn0vHnLxvvBq5QiPuCoqdhGRO
+         Y9j22IVRFZLlCdIM+aypM8cLawZgVznFSUNh25VlbA8OQhQldG/grTAyFc5UBieSaVtD
+         1Wew==
+Received: by 10.236.136.8 with SMTP id v8mr7770140yhi.101.1339169777233;
+        Fri, 08 Jun 2012 08:36:17 -0700 (PDT)
+Received: from burratino (cl-1372.chi-02.us.sixxs.net. [2001:4978:f:55b::2])
+        by mx.google.com with ESMTPS id v22sm22419089yhl.2.2012.06.08.08.36.10
+        (version=SSLv3 cipher=OTHER);
+        Fri, 08 Jun 2012 08:36:10 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <1339169317-12134-1-git-send-email-artagnon@gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199505>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199506>
 
-Johannes Sixt <j6t@kdbg.org> writes:
+Ramkumar Ramachandra wrote:
 
-> How about this?
->
-> 	{
-> 		first=t
-> 		while read -r insn rest
-> 		do
-> 			case $insn in
-> 			pick)
-> 				test -n "$first" ||
-> 				printf "%s" "$cmd"
-> 				;;
-> 			esac
-> 			printf "%s %s\n" "$insn" "$rest"
-> 			first=
-> 		done
-> 		printf "%s" "$cmd"
-> 	} <"$1" >"$1.new" &&
-> 	mv "$1.new" "$1"
->
-> together with:
-> ...
+>  Thanks.  I wish we could do something aout USAGE_OPTS_WIDTH and
+>  USAGE_GAP; I stole them from parse-options.
 
-This is my favorite version among the ones I've seen so far.
+Expose them in parse-options.h?  Or put this functionality in a
+parseopt-related file?
+
+Copy+paste must die. :)
