@@ -1,96 +1,70 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH 3/3] Tests file for git-remote-mediawiki
-Date: Fri, 08 Jun 2012 11:08:54 +0200
-Message-ID: <vpqy5nyyxuh.fsf@bauges.imag.fr>
-References: <4FCE07A5.9020001@ensimag.imag.fr>
-	<1338902756-4162-1-git-send-email-simon.cathebras@ensimag.imag.fr>
-	<1338902756-4162-3-git-send-email-simon.cathebras@ensimag.imag.fr>
-	<vpqobow8a9l.fsf@bauges.imag.fr> <4FD1B209.702@ensimag.imag.fr>
-	<vpqboku18qk.fsf@bauges.imag.fr>
-	<CA+hdvHhPf-p0N36fXH6Spd-svQ2i1sU7Wc9g7T17Gh8dnA2T6Q@mail.gmail.com>
+From: Tomas Carnecky <tomas.carnecky@gmail.com>
+Subject: Re: [PATCH] Warnings before rebasing -i published history
+Date: Fri, 08 Jun 2012 09:18:44 +0000
+Message-ID: <1339147124-ner-3533@calvin>
+References: <1339104053-7782-1-git-send-email-Lucien.Kong@ensimag.imag.fr>
+	<7vwr3ieo0i.fsf@alter.siamese.dyndns.org>
+	<20120608093257.Horde.eeddeHwdC4BP0aqpIrqTaVA@webmail.minatec.grenoble-inp.fr>
+	<vpqfwa618zv.fsf@bauges.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Simon.Cathebras@ensimag.imag.fr, git@vger.kernel.org,
-	charles.roussel@ensimag.imag.fr, Guillaume.Sasdy@ensimag.imag.fr,
-	Julien.Khayat@ensimag.imag.fr, peff@peff.net, gitster@pobox.com,
-	Charles Roussel <charles.roussel@ensimag.fr>
-To: Simon Perrat <simon.perrat@ensimag.imag.fr>
-X-From: git-owner@vger.kernel.org Fri Jun 08 11:09:11 2012
+Content-Type: text/plain
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Lucien Kong <Lucien.Kong@ensimag.imag.fr>, git@vger.kernel.org,
+	Valentin Duperray <Valentin.Duperray@ensimag.imag.fr>,
+	Franck Jonas <Franck.Jonas@ensimag.imag.fr>,
+	Thomas Nguy <Thomas.Nguy@ensimag.imag.fr>,
+	Huynh Khoi Nguyen Nguyen 
+	<Huynh-Khoi-Nguyen.Nguyen@ensimag.imag.fr>
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>, konglu@minatec.inpg.fr
+X-From: git-owner@vger.kernel.org Fri Jun 08 11:19:38 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ScvBu-0008Kq-Vp
-	for gcvg-git-2@plane.gmane.org; Fri, 08 Jun 2012 11:09:11 +0200
+	id 1ScvLx-0007h3-MW
+	for gcvg-git-2@plane.gmane.org; Fri, 08 Jun 2012 11:19:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934023Ab2FHJJG convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 8 Jun 2012 05:09:06 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:36048 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754382Ab2FHJJF (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Jun 2012 05:09:05 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id q5890Bje029899
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Fri, 8 Jun 2012 11:00:11 +0200
-Received: from bauges.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1ScvBf-0007ob-3s; Fri, 08 Jun 2012 11:08:55 +0200
-In-Reply-To: <CA+hdvHhPf-p0N36fXH6Spd-svQ2i1sU7Wc9g7T17Gh8dnA2T6Q@mail.gmail.com>
-	(Simon Perrat's message of "Fri, 8 Jun 2012 11:04:00 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.93 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Fri, 08 Jun 2012 11:00:11 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: q5890Bje029899
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1339750812.68687@tA1jEWvrppGv0oaMr1dgkQ
+	id S934031Ab2FHJT3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Jun 2012 05:19:29 -0400
+Received: from mail-ey0-f174.google.com ([209.85.215.174]:49505 "EHLO
+	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760643Ab2FHJT2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Jun 2012 05:19:28 -0400
+Received: by eaak11 with SMTP id k11so926976eaa.19
+        for <git@vger.kernel.org>; Fri, 08 Jun 2012 02:19:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:subject:to:cc:references:in-reply-to:mime-version:date
+         :message-id:content-type;
+        bh=jOOw0+xHx2UEn5w1OUrrBdtnDsH4FNRQLaeFKoQiTmY=;
+        b=eAjZoUYRgguoz70CMdugnRpGrwYdIROa2xEIwxdri4ZkMuxTyuC7xFys0jmGdrYfmT
+         2Dw8QJzOHni7yn7yU5xgjs1yFt2l60C2BHzHMtzw18j1XFUX6UAfia0pV2B/DBIDx4s7
+         O+SAWkc/VOD3yhh30ScqR8uSvhLqgWQ40iKAg76imzZWiXeHogprtZryLTMO8rSkyNu5
+         eo+lwu5RaTSZQyUH1rcL53qhPPUKRyySezLtwcWljBPtQyPa+/Vhitq2DIxe5Y9LCtUM
+         hvsXGYNAuvw5Qg2/xdkXgQeuoWKEWUAOW2O+I4KboRkXfSNdf51w/AMOLnc/ar4L7JNz
+         Lrug==
+Received: by 10.14.53.77 with SMTP id f53mr3202380eec.68.1339147167208;
+        Fri, 08 Jun 2012 02:19:27 -0700 (PDT)
+Received: from calvin.caurea.org (cl-52.zrh-02.ch.sixxs.net. [2001:1620:f00:33::2])
+        by mx.google.com with ESMTPS id g51sm19981127eea.14.2012.06.08.02.19.25
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 08 Jun 2012 02:19:26 -0700 (PDT)
+Received: by calvin.caurea.org (Postfix, from userid 3301)
+	id 728E341B625; Fri,  8 Jun 2012 09:18:44 +0000 (UTC)
+In-Reply-To: <vpqfwa618zv.fsf@bauges.imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199475>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199476>
 
-Simon Perrat <simon.perrat@ensimag.imag.fr> writes:
+On Fri, 08 Jun 2012 10:52:04 +0200, Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> wrote:
+> Isn't a more conventional way to do that
+> 
+> sed -e '...' "$1" >"$1".new
+> mv "$1".new "$1"
+> 
+> ?
 
-> 2012/6/8 Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
->>
->> "Simon.Cathebras" <Simon.Cathebras@ensimag.imag.fr> writes:
->> > Do you mean that we should split the third patch into two patches =
-?
->> > For instance::
->> > =A0 =A0 Patch 3/4: tests for git pull
->> > =A0 =A0 Patch 4/4: tests for git push
->>
->> Yes, except the title should mention git-remote-mediawiki, of course=
-=2E
->>
->
-> Should we split our test file in two then ? Currently they're all in =
-t9361.
-
-The patch I was commenting does
-
- t/t9360-git-mediawiki.sh | 265 +++++++++++++++++++++++++++++++++++++++=
-++++++++
- t/t9361-git-mediawiki.sh | 213 +++++++++++++++++++++++++++++++++++++
-
-(BTW, you can find a better naming for the files, if one tests clone,
-then clone should appear in the title, same for push/pull).
-
-There's nothing wrong with touching several files in the same commit,
-but when your commit messages looks like
-
-- first file: does this
-- second file: does that
-
-and there's no dependencies, it's usually better to split the commit.
-
---=20
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Is sed -i not portable or what is the reason not to use it?
