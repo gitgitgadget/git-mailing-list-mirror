@@ -1,79 +1,80 @@
 From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH] Warnings before rebasing -i published history
-Date: Fri, 08 Jun 2012 07:55:34 -0700
-Message-ID: <7v8vfxetuh.fsf@alter.siamese.dyndns.org>
+Date: Fri, 08 Jun 2012 07:57:20 -0700
+Message-ID: <7v4nqletrj.fsf@alter.siamese.dyndns.org>
 References: <1339104053-7782-1-git-send-email-Lucien.Kong@ensimag.imag.fr>
- <7vwr3ieo0i.fsf@alter.siamese.dyndns.org>
- <20120608093257.Horde.eeddeHwdC4BP0aqpIrqTaVA@webmail.minatec.grenoble-inp.fr> <vpqfwa618zv.fsf@bauges.imag.fr> <1339147124-ner-3533@calvin>
+ <vpqy5ny22z5.fsf@bauges.imag.fr>
+ <20120608160341.Horde.IGByfXwdC4BP0gY9a0fV0PA@webmail.minatec.grenoble-inp.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	konglu@minatec.inpg.fr, Lucien Kong <Lucien.Kong@ensimag.imag.fr>,
-	git@vger.kernel.org,
+	Lucien Kong <Lucien.Kong@ensimag.imag.fr>, git@vger.kernel.org,
 	Valentin Duperray <Valentin.Duperray@ensimag.imag.fr>,
 	Franck Jonas <Franck.Jonas@ensimag.imag.fr>,
 	Thomas Nguy <Thomas.Nguy@ensimag.imag.fr>,
 	Huynh Khoi Nguyen Nguyen 
 	<Huynh-Khoi-Nguyen.Nguyen@ensimag.imag.fr>
-To: Tomas Carnecky <tomas.carnecky@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jun 08 16:55:41 2012
+To: konglu@minatec.inpg.fr
+X-From: git-owner@vger.kernel.org Fri Jun 08 16:57:36 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Sd0bF-0003Ru-Hn
-	for gcvg-git-2@plane.gmane.org; Fri, 08 Jun 2012 16:55:41 +0200
+	id 1Sd0cx-0006DD-Q7
+	for gcvg-git-2@plane.gmane.org; Fri, 08 Jun 2012 16:57:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757634Ab2FHOzi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Jun 2012 10:55:38 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:42825 "EHLO
+	id S1757603Ab2FHO5X convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 8 Jun 2012 10:57:23 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:43647 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755824Ab2FHOzh (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Jun 2012 10:55:37 -0400
+	id S1754463Ab2FHO5W convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 8 Jun 2012 10:57:22 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BDB5C841B;
-	Fri,  8 Jun 2012 10:55:36 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6EAE684E4;
+	Fri,  8 Jun 2012 10:57:22 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=MkM17mC85oV5fWm3dl0GRjggXkU=; b=B2jEpt
-	FCFjAk8W9vVSzJhn3uUXBPbaH/MZAJgPaumuXvr02io5eWaSxy4iHCWa/x8xCCTa
-	W5sKs7Tsh2ZSBm44s8IcvH6rUFGIdtR3oGjHuxMufmrj0qtNQS0l6NpQExCOixqa
-	OK9Yw5Oa5jpnMC8O0mSx7wrPa7VAkGuJJ4cpE=
+	:content-type:content-transfer-encoding; s=sasl; bh=aLNhoDGRmSkW
+	7pO2Y4AZ827oSNM=; b=Q918yhImP7nD30ir//ankss55CN6Jh0ChiNZfI+YgxIf
+	OKdjis4HOHOFtTJ2CUwj/WQsmRDu6ZPrQYS9u/4dOhmMI1qGNPnERv48Yn0JuKTK
+	6wZxtKugC8Eykb4U2gnYhqvgcNGvDoDIBJEZYkgIqwTxz2UGXB2EcCc606ldC9I=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=htrSurXIVX9u9jeclK9IyZ494/std1gP
-	JvYhrjXjL2CsLewOyXtlA6+hQELNY7/10PpyGJvaFTLs2mwkllRSTflztrpI1s8G
-	zfyu71Tp/PsqKLu5LSH6At5wN/jSTYLrWjvWa2piEvmP7qJorY2raUShW9/iML3O
-	fDQu+nZPZA4=
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=MWk2y/
+	hVPZOv4qFdOcalBNX/rkExZNnaFEYQ8OXZiulefZZBDuOjJv2XO70VghzcwTHXf9
+	gtiaNUr/v6Li9q5JyVlsSS8h97/zYm4GOeW+LPoycluiLnLuLyyxSlBakJQE6VRU
+	mEGgdP6fWeEq6n42np5HhZL5DT6gXo7txTH+c=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AD13A841A;
-	Fri,  8 Jun 2012 10:55:36 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 664B784E3;
+	Fri,  8 Jun 2012 10:57:22 -0400 (EDT)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 39A1E8419; Fri,  8 Jun 2012
- 10:55:36 -0400 (EDT)
-In-Reply-To: <1339147124-ner-3533@calvin> (Tomas Carnecky's message of "Fri,
- 08 Jun 2012 09:18:44 +0000")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id CE49A84E2; Fri,  8 Jun 2012
+ 10:57:21 -0400 (EDT)
+In-Reply-To: <20120608160341.Horde.IGByfXwdC4BP0gY9a0fV0PA@webmail.minatec.grenoble-inp.fr> (konglu@minatec.inpg.fr's message of "Fri, 08 Jun 2012 16:03:41 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 013D281C-B17A-11E1-9AC9-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 402EA4BA-B17A-11E1-9625-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199499>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199500>
 
-Tomas Carnecky <tomas.carnecky@gmail.com> writes:
+konglu@minatec.inpg.fr writes:
 
-> On Fri, 08 Jun 2012 10:52:04 +0200, Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> wrote:
->> Isn't a more conventional way to do that
->> 
->> sed -e '...' "$1" >"$1".new
->> mv "$1".new "$1"
->> 
->> ?
+> Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> a =C3=A9crit=C2=A0:
 >
-> Is sed -i not portable or what is the reason not to use it?
+>>>  test -s "$todo" || echo noop >> "$todo"
+>>>  test -n "$autosquash" && rearrange_squash "$todo"
+>>> +warn_published "$todo"
+>>
+>> That should be configurable.
+>
+> Do you mean that it should be controlled by a key config (maybe a new
+> advice.*) in the config file ? Or through an option ?
 
-It is a GNUism so it is not portable (check POSIX.1 before asking),
-and that is the reason to avoid it.
+Probably "[rebase] checkremoterefs" in .git/config; advice.*
+variables default to true by convention, and it is not suitable for
+a misleading "feature" like this one.
