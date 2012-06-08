@@ -1,80 +1,69 @@
-From: konglu@minatec.inpg.fr
-Subject: Re: [PATCHv1] git-remote-mediawiki: import "File:" attachments
-Date: Fri, 08 Jun 2012 19:03:05 +0200
-Message-ID: <20120608190305.Horde.szbWGnwdC4BP0jBJMfN12lA@webmail.minatec.grenoble-inp.fr>
-References: <1339165376-20267-1-git-send-email-Pavel.Volek@ensimag.imag.fr>
- <4FD2266B.3040706@ensimag.imag.fr>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] notes: attach help text to subcommands
+Date: Fri, 08 Jun 2012 10:03:17 -0700
+Message-ID: <7vmx4dd9d6.fsf@alter.siamese.dyndns.org>
+References: <7vd359eu4s.fsf@alter.siamese.dyndns.org>
+ <1339169317-12134-1-git-send-email-artagnon@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed	DelSp=Yes
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Volek Pavel <me@pavelvolek.cz>,
-	NGUYEN Kim Thuat <Kim-Thuat.Nguyen@ensimag.imag.fr>,
-	ROUCHER IGLESIAS Javier <roucherj@ensimag.imag.fr>,
-	Matthieu Moy <Matthieu.Moy@imag.fr>
-To: "Simon.Cathebras" <Simon.Cathebras@ensimag.imag.fr>
-X-From: git-owner@vger.kernel.org Fri Jun 08 19:03:19 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Git List <git@vger.kernel.org>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jun 08 19:03:29 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Sd2ag-0001LS-UC
-	for gcvg-git-2@plane.gmane.org; Fri, 08 Jun 2012 19:03:15 +0200
+	id 1Sd2ar-0001cu-5B
+	for gcvg-git-2@plane.gmane.org; Fri, 08 Jun 2012 19:03:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761983Ab2FHRDK convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 8 Jun 2012 13:03:10 -0400
-Received: from v-smtp.minatec.grenoble-inp.fr ([147.173.216.28]:33184 "EHLO
-	v-smtp.minatec.grenoble-inp.fr" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1761333Ab2FHRDJ (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 8 Jun 2012 13:03:09 -0400
-Received: from localhost (www02.minatec.grenoble-inp.fr [147.173.216.15])
-	by v-smtp.minatec.grenoble-inp.fr (Postfix) with ESMTP id AAB201A030B;
-	Fri,  8 Jun 2012 19:03:05 +0200 (CEST)
-Received: from wifi-030033.grenet.fr (wifi-030033.grenet.fr [130.190.30.33])
- by webmail.minatec.grenoble-inp.fr (Horde Framework) with HTTP; Fri, 08 Jun
- 2012 19:03:05 +0200
-In-Reply-To: <4FD2266B.3040706@ensimag.imag.fr>
-User-Agent: Internet Messaging Program (IMP) H4 (5.0.17)
-Content-Disposition: inline
+	id S1762119Ab2FHRDV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Jun 2012 13:03:21 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39360 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1761333Ab2FHRDU (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Jun 2012 13:03:20 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A4C779F7E;
+	Fri,  8 Jun 2012 13:03:19 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=91SnuIv+BLUE2Wv0Pnav4jCNQdY=; b=iVku92
+	AXT2XxzAGzn01Q6UBvtLe/5s+RAQv4oyejcvRWmV7ZMtacHclyuTpkUTkX3gfjvG
+	C96RPnaXCvVsy7c3lfV8FAR/eJEqKfkBjTvpdqOC873optHgmciXzQZ/wRCUj1Fk
+	DV3uCwAAuCxIVGXYjm04Y6AtjoxA3o9LjMADQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=jTjGRk7Wj52GVDXwa6zbjwKh5wGD/K9V
+	ApGYW7BPjcMHF5enUQuv0dXJRyoitx3bWgj/U4GUqFKOBOSfyILId5sJfffOXH5e
+	OKv9tM68e9WzlY2yY+3O890CByhPOXH1Sz0Y87Nv2021Arw2n6ZzuIOBZOV7obYt
+	QsIiOo7pevQ=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9B8429F7D;
+	Fri,  8 Jun 2012 13:03:19 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 296CD9F7C; Fri,  8 Jun 2012
+ 13:03:19 -0400 (EDT)
+In-Reply-To: <1339169317-12134-1-git-send-email-artagnon@gmail.com> (Ramkumar
+ Ramachandra's message of "Fri, 8 Jun 2012 20:58:37 +0530")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: D8B0119A-B18B-11E1-A109-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199513>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199514>
 
+Ramkumar Ramachandra <artagnon@gmail.com> writes:
 
-"Simon.Cathebras" <Simon.Cathebras@ensimag.imag.fr> a =E9crit=A0:
+> +struct subcommand {
+> +	const char *name;
+> +	const char *help;
+> +	int (*callback)(int, const char **, const char *);
+> +};
 
-> On 08/06/2012 16:22, Pavel Volek wrote:
->> From: Volek Pavel<me@pavelvolek.cz>
->>
->> The current version of the git-remote-mediawiki supports only =20
->> import and export
->> of the pages, doesn't support import and export of file =20
->> attachements which are
->> also exposed by MediaWiki API. This patch adds the functionality to =
-=20
->> import the
->> last versions of the files and all versions of description pages for=
- these
->> files.
->>
->> Signed-off-by: Pavel Volek<Pavel.Volek@ensimag.imag.fr>
->> Signed-off-by: NGUYEN Kim Thuat<Kim-Thuat.Nguyen@ensimag.imag.fr>
->> Signed-off-by: ROUCHER IGLESIAS Javier<roucherj@ensimag.imag.fr>
->> Signed-off-by: Matthieu Moy<Matthieu.Moy@imag.fr>
->> ---
->
->>  contrib/mw-to-git/git-remote-mediawiki | 290 =20
->> +++++++++++++++++++++++++++------
->>  1 file changed, 244 insertions(+), 46 deletions(-)
->
-> I am wondering why are you showing the removal for a v1 patch ?
-
-Why not ? The file already exists on branch master and they are
-working on it. Anyway, the patch applies correctly on master.
-BTW, are you implying that only v2+ patch could have deletions ?
-(a patch is not meant to be applied on the previous version).
-
-Lucien Kong
+In what way is this a "callback"?  It is not like you call some API
+function with this structure as its argument, and then the
+implementation of the API function calls this function back.
