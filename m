@@ -1,86 +1,97 @@
-From: =?ISO-8859-1?Q?Mart=EDn_Ochoa?= <mmochoa@gmail.com>
-Subject: gitbook link broken in spanish
-Date: Fri, 08 Jun 2012 09:37:40 -0300
-Organization: [ensamble] creatividad
-Message-ID: <4FD1F214.8020306@gmail.com>
+From: nguyenhu@minatec.inpg.fr
+Subject: Re: [PATCHv6 1/4] Read (but not write) from
+ $XDG_CONFIG_HOME/git/config file
+Date: Fri, 08 Jun 2012 14:54:23 +0200
+Message-ID: <20120608145423.Horde.qT2BG3wdC4BP0fX-GHdFAeA@webmail.minatec.grenoble-inp.fr>
+References: <1338754481-27012-1-git-send-email-Huynh-Khoi-Nguyen.Nguyen@ensimag.imag.fr>
+ <1338988885-21933-1-git-send-email-Huynh-Khoi-Nguyen.Nguyen@ensimag.imag.fr>
+ <7vpq9aenl0.fsf@alter.siamese.dyndns.org>
+ <20120608142601.Horde.Tq7UO3wdC4BP0e9ZGAy1EwA@webmail.minatec.grenoble-inp.fr>
+ <CABPQNSbSVznFbnm=iy4HdZ4PDC70UfbrqvvSKx9moy+9AOk+Rw@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed
+	format=flowed	DelSp=Yes
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jun 08 14:37:59 2012
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Huynh Khoi Nguyen NGUYEN 
+	<Huynh-Khoi-Nguyen.Nguyen@ensimag.imag.fr>, git@vger.kernel.org,
+	Matthieu.Moy@grenoble-inp.fr,
+	NGUYEN Huynh Khoi Nguyen <nguyenhu@ensibm.imag.fr>,
+	Valentin Duperray <Valentin.Duperray@ensimag.imag.fr>,
+	Franck Jonas <Franck.Jonas@ensimag.imag.fr>,
+	Lucien Kong <Lucien.Kong@ensimag.imag.fr>,
+	Thomas Nguy <Thomas.Nguy@ensimag.imag.fr>,
+	Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+To: Erik Faye-Lund <kusmabite@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jun 08 14:54:31 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ScyRr-0007Tn-TE
-	for gcvg-git-2@plane.gmane.org; Fri, 08 Jun 2012 14:37:52 +0200
+	id 1Scyhy-00084O-Qk
+	for gcvg-git-2@plane.gmane.org; Fri, 08 Jun 2012 14:54:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756553Ab2FHMhr convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 8 Jun 2012 08:37:47 -0400
-Received: from mail-qc0-f174.google.com ([209.85.216.174]:47169 "EHLO
-	mail-qc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752770Ab2FHMhq (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Jun 2012 08:37:46 -0400
-Received: by qcro28 with SMTP id o28so807541qcr.19
-        for <git@vger.kernel.org>; Fri, 08 Jun 2012 05:37:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:date:from:organization:user-agent:mime-version:to
-         :subject:content-type:content-transfer-encoding;
-        bh=dQvNawnruimXOFsbv3pG9l7OF5rOX+hLCW/EQFW2p1U=;
-        b=BGu4ztnf/HXc3GrAGsomYdLA+9nFYv6DvCCBGqVXsbejK6OSrsoUx41a+FmB8Vjrly
-         JpgL/giAoO9MPYEA7Lv9N90uYRG2I5sT/GvEyuXEQ2W2BhPiLNnrWv+zthWDf382/Gfg
-         dm7W/5rijeAoQLXxAbO6CgWOhiA8K5dMPjQ/0GS2l7Ha4eYkuvPYW9huuvn/yeLgPt5o
-         VDzCJnut2860ZiR6o5MXrHP97beYCFiR4yWw9ULN8jx6c46Zzj0gRAFaowlHzTBciKl0
-         OEMNm9Gug0oCz48R0e4+1x3uvhF9dlcpHXW/aHYkYtOsyQTAedbKiYqPzRi4xNDR2Yjx
-         SL7w==
-Received: by 10.229.136.149 with SMTP id r21mr1793487qct.75.1339159065905;
-        Fri, 08 Jun 2012 05:37:45 -0700 (PDT)
-Received: from [192.168.1.102] ([190.51.50.126])
-        by mx.google.com with ESMTPS id eg8sm10524117qab.6.2012.06.08.05.37.42
-        (version=SSLv3 cipher=OTHER);
-        Fri, 08 Jun 2012 05:37:43 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.28) Gecko/20120313 Thunderbird/3.1.20
+	id S1753039Ab2FHMy1 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 8 Jun 2012 08:54:27 -0400
+Received: from v-smtp.minatec.grenoble-inp.fr ([147.173.216.28]:42074 "EHLO
+	v-smtp.minatec.grenoble-inp.fr" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751360Ab2FHMy0 (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 8 Jun 2012 08:54:26 -0400
+Received: from localhost (www02.minatec.grenoble-inp.fr [147.173.216.15])
+	by v-smtp.minatec.grenoble-inp.fr (Postfix) with ESMTP id 7F9051A02F1;
+	Fri,  8 Jun 2012 14:54:23 +0200 (CEST)
+Received: from wifi-030031.grenet.fr (wifi-030031.grenet.fr [130.190.30.31])
+ by webmail.minatec.grenoble-inp.fr (Horde Framework) with HTTP; Fri, 08 Jun
+ 2012 14:54:23 +0200
+In-Reply-To: <CABPQNSbSVznFbnm=iy4HdZ4PDC70UfbrqvvSKx9moy+9AOk+Rw@mail.gmail.com>
+User-Agent: Internet Messaging Program (IMP) H4 (5.0.17)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199484>
-
-Hello everybody,
-
-great job and congratulation, the site is a useful tool (sorry for my=20
-poor english).
-
-I found a link broken in
-
-http://git-scm.com/book/es
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199485>
 
 
-    3. Ramificaciones en Git
-    <http://git-scm.com/book/es/Ramificaciones-en-Git>
+Erik Faye-Lund <kusmabite@gmail.com> a =E9crit=A0:
 
-   1. 3.1 =BFQu=E9 es una rama?
-      <http://git-scm.com/book/es/Ramificaciones-en-Git-%C2%BFQu%C3%A9-=
-es-una-rama?>
+>> char *mkpathdup(const char *fmt, ...)
+>> {
+>> =A0 =A0 =A0 =A0char *path;
+>> =A0 =A0 =A0 =A0struct strbuf sb =3D STRBUF_INIT;
+>> =A0 =A0 =A0 =A0va_list args;
+>>
+>> =A0 =A0 =A0 =A0va_start(args, fmt);
+>> =A0 =A0 =A0 =A0strbuf_vaddf(&sb, fmt, args);
+>> =A0 =A0 =A0 =A0va_end(args);
+>> =A0 =A0 =A0 =A0path =3D sb.buf;
+>>
+>> =A0 =A0 =A0 =A0strbuf_release(&sb);
+>> =A0 =A0 =A0 =A0return xstrdup(cleanup_path(path));
+>>
+>> }
+>
+> No, strbuf_release(&sb) frees 'sb.buf', causing 'path' to point to
+> unallocated memory. You can fix that by doing something along these
+> lines on top:
+>
+>  	va_end(args);
+> -	path =3D sb.buf;
+> +	path =3D xstrdup(cleanup_path(path));
+>
+>  	strbuf_release(&sb);
+> -	return xstrdup(cleanup_path(path));
+> +	return path;
+>  }
 
+You are right, but I think you rather mean this, no?
 
+  	va_end(args);
+-	path =3D sb.buf;
++	path =3D xstrdup(cleanup_path(sb.buf));
 
-
-http://git-scm.com/book/es/Ramificaciones-en-Git-%C2%BFQu%C3%A9-es-una-=
-rama?
-
-response a 505 error. Another subcharpets with occidental characters=20
-have the same problem.
-
-
-Thanks to all.
-
---=20
-Mart=EDn Ochoa
-------------
-CR+DIB+DG+PRG
-(54 11) (15) 68 84 61 42
-ensamble.com.ar
+  	strbuf_release(&sb);
+-	return xstrdup(cleanup_path(path));
++	return path;
+  }
