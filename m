@@ -1,142 +1,134 @@
-From: "J. Bakshi" <joydeep.bakshi@infoservices.in>
-Subject: Re: gitweb with multiple projectroot ???
-Date: Fri, 8 Jun 2012 13:27:19 +0530
-Message-ID: <20120608132719.60263607@shiva.selfip.org>
-References: <20120605174028.15e6af39@shiva.selfip.org>
-	<20120606124538.4fdd8610@shiva.selfip.org>
+From: "Simon.Cathebras" <Simon.Cathebras@ensimag.imag.fr>
+Subject: Re: [PATCH 3/3] Tests file for git-remote-mediawiki
+Date: Fri, 08 Jun 2012 10:04:25 +0200
+Message-ID: <4FD1B209.702@ensimag.imag.fr>
+References: <4FCE07A5.9020001@ensimag.imag.fr> <1338902756-4162-1-git-send-email-simon.cathebras@ensimag.imag.fr> <1338902756-4162-3-git-send-email-simon.cathebras@ensimag.imag.fr> <vpqobow8a9l.fsf@bauges.imag.fr>
+Reply-To: Simon.Cathebras@ensimag.imag.fr
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: unlisted-recipients:; (no To-header on input)
-X-From: git-owner@vger.kernel.org Fri Jun 08 09:57:39 2012
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, charles.roussel@ensimag.imag.fr,
+	Guillaume.Sasdy@ensimag.imag.fr, Julien.Khayat@ensimag.imag.fr,
+	Simon.Perrat@ensimag.imag.fr, peff@peff.net, gitster@pobox.com,
+	Charles Roussel <charles.roussel@ensimag.fr>
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Fri Jun 08 10:04:53 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Scu4d-0006zv-A6
-	for gcvg-git-2@plane.gmane.org; Fri, 08 Jun 2012 09:57:35 +0200
+	id 1ScuBa-00016Y-39
+	for gcvg-git-2@plane.gmane.org; Fri, 08 Jun 2012 10:04:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761440Ab2FHH53 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Jun 2012 03:57:29 -0400
-Received: from static.88-198-19-49.clients.your-server.de ([88.198.19.49]:52239
-	"EHLO zimbra.infoservices.in" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1760076Ab2FHH51 (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 8 Jun 2012 03:57:27 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by zimbra.infoservices.in (Postfix) with ESMTP id 5FD5ADA32E8
-	for <git@vger.kernel.org>; Fri,  8 Jun 2012 09:57:25 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at zimbra.infoservices.in
-Received: from zimbra.infoservices.in ([127.0.0.1])
-	by localhost (zimbra.infoservices.in [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id sS92hVAFoejT for <git@vger.kernel.org>;
-	Fri,  8 Jun 2012 09:57:24 +0200 (CEST)
-Received: from shiva.selfip.org (unknown [122.176.30.116])
-	by zimbra.infoservices.in (Postfix) with ESMTPSA id 71B0CDA32CD
-	for <git@vger.kernel.org>; Fri,  8 Jun 2012 09:57:23 +0200 (CEST)
-In-Reply-To: <20120606124538.4fdd8610@shiva.selfip.org>
-X-Mailer: Claws Mail 3.8.0 (GTK+ 2.24.10; x86_64-pc-linux-gnu)
+	id S1760977Ab2FHIEl convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 8 Jun 2012 04:04:41 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:42867 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1760459Ab2FHIEg (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Jun 2012 04:04:36 -0400
+Received: from ensimag.imag.fr (ensimag.imag.fr [195.221.228.12])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id q587te4K017229
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Fri, 8 Jun 2012 09:55:40 +0200
+Received: from [IPv6:::1] (ensibm [195.221.228.8])
+	by ensimag.imag.fr (8.13.8/8.13.8/ImagV2.1.r_ens) with ESMTP id q5884NuG008328;
+	Fri, 8 Jun 2012 10:04:23 +0200
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:12.0) Gecko/20120430 Thunderbird/12.0.1
+In-Reply-To: <vpqobow8a9l.fsf@bauges.imag.fr>
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Fri, 08 Jun 2012 09:55:40 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: q587te4K017229
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: simon.cathebras@ensimag.imag.fr
+MailScanner-NULL-Check: 1339746942.28751@uCwF6si1C4ymFbWlFFbREQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199467>
-
-
- Any head up ?
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199468>
 
 
 
-On Wed, 6 Jun 2012 12:45:38 +0530
-"J. Bakshi" <joydeep.bakshi@infoservices.in> wrote:
+On 06/06/2012 22:18, Matthieu Moy wrote:
+> Simon Cathebras<simon.cathebras@ensimag.imag.fr>  writes:
+>
+>> From: Charles Roussel<charles.roussel@ensimag.fr>
+>>
+>> Those scripts test the functions of git-remote-mediawiki.
+>> t9360: test cases for git clone. Including tests of cloning just a c=
+ategory, just a precise set of page and a classical use of clone on the=
+ whole wiki.
+> Avoid long lines in code and commit messages (80 columns max)
+Understood, it will be corrected in the next patch.
+>
+>> In addition, this file provide now some fonction du manipulate secti=
+ons on wiki.
+> s/du/to/
+>
+>> t9361: test cases for git pull (add page, edit page, delete page) an=
+d git push (add file, edit file, delete file).
+> When commis messages start looking like an enumeration, it usually me=
+ans
+> that either you read the GNU recommandation for ChangeLogs too much, =
+or
+> that you should split your commit (not mandatory here I think, but sh=
+ort
+> patches are easier to review).
+Do you mean that we should split the third patch into two patches ? For=
+=20
+instance::
+     Patch 3/4: tests for git pull
+     Patch 4/4: tests for git push
+>
+>> +# tests for git-remote-mediawiki
+>> +
+>> +test_description=3D'Test the Git Mediawiki remote helper: git clone=
+'
+> Why do you need a comment if you have the test_description right belo=
+w?
+Deleted.
+>
+>> +if [ ! -f /$GIT_BUILD_DIR/git-remote-mediawiki ];
+> Why / in front of $GIT_BUILD_DIR/ ?
+Good point, we didn't noticed it ...
+>> +        test_expect_code 0 ls mw_dir | wc -l | grep 1&&
+>> +        test_expect_code 0 test -e mw_dir/Main_Page.mw&&
+> Why "test_expect_code 0"? You already have&&  right?
+Yes, we haven't realised it wasn't necessary.
+We have corrected other errors like this one in our tests.
+> Doesn't a directory containing 10 files pass the tests?
+>
+> You probably want a helper function test_contains_N_files<dir>  <N>  =
+that
+> does test `ls mw_dir | wc -l` -eq 1 as you did below, but may give a
+> diagnosis when the test fails.
+Done, and replace within the existing code.
+>> +test_expect_success 'git clone only create Main_Page.mw with a wiki=
+ with no other pages ' '
+>> +        wiki_reset&&
+>> +        wiki_editpage foo "this page must be delete before the clon=
+e" false&&
+> s/delete/deleted/
+>> +	git_diff_directories mw_dir ref_page&&
+> functions in tests are usually prefixed with test_ instead.
+=46air enough. We have changed the function's name. Should we add such=20
+prefix on functions like wiki_reset or wiki_delete page ?
+>> +# clone a wiki after a page has been added then edited once
+>> +# check that the content is correct
+> It's not sufficient. You should check also that the history is correc=
+t.
+>
+Test is now correct.
 
-> 
-> From the http://www.kernel.org/pub/software/scm/git/docs/v1.7.8/gitweb.html
-> I have found the following
-> 
-> [.........]
-> 
-> Here actual project root is passed to gitweb via GITWEB_PROJECT_ROOT environment variable from a web server,
-> so you need to put the following line in gitweb configuration file (/etc/gitweb.conf in above example):
-> 
-> $projectroot = $ENV{'GITWEB_PROJECTROOT'} || "/pub/git";
-> 
-> Note that this requires to be set for each request, so either $per_request_config must be false, 
-> or the above must be put in code referenced by $per_request_config;
-> 
-> [.........]
-> 
-> 
-> I have already set  
-> 
-> $per_request_config = 'false';
-> 
-> at /etc/gitweb.conf but no effect. 
-> 
-> I appreciate if anyone put me on the right track.
-> 
-> Thanks
-> 
-> On Tue, 5 Jun 2012 17:40:28 +0530
-> "J. Bakshi" <joydeep.bakshi@infoservices.in> wrote:
-> 
-> > Dear list,
-> > 
-> > My gitweb has been running since long with a single project root, which
-> > has been defined at the /etc/gitweb.conf through $projectroot variable.
-> > 
-> > I need one more project root for gitweb, hence I have added this apache config
-> > ( not a vhost, but just calling by alias)
-> > 
-> > ````````````````````
-> >  
-> > SetEnv GIT_PROJECT_ROOT /home/newgit/
-> > SetEnv GIT_HTTP_EXPORT_ALL
-> > SetEnv  GITWEB_CONFIG  /home/newgit/gitweb.conf
-> > #git is strict about the authenticated SSL certificate only
-> > #disable the strict CA certificate check
-> > SetEnv GIT_SSL_NO_VERIFY 
-> > 
-> > AliasMatch ^/newgit/(.*/objects/[0-9a-f]{2}/[0-9a-f]{38})$       /home/newgit/$1
-> > AliasMatch ^/newgit/(.*/objects/pack/pack-[0-9a-f]{40}.(pack|idx))$ /home/newgit/$1
-> > ScriptAliasMatch \
-> >         "(?x)^/newgit/(.*/(HEAD | \
-> >                         info/refs | \
-> >                         objects/info/[^/]+ | \
-> >                         git-(upload|receive)-pack))$" \
-> >         /usr/lib/git-core/git-http-backend/$1
-> > 
-> > #same location for gitweb
-> > Alias /newgit /usr/share/gitweb
-> > <Directory /usr/share/gitweb>
-> > Options FollowSymLinks +ExecCGI
-> > AddHandler cgi-script .cgi
-> > </Directory>
-> > 
-> > #force https and authentication
-> > <LocationMatch "/newgit">
-> > # Require SSL connection for password protection.
-> > SSLRequireSSL
-> > AuthType Basic
-> > # Message to give to the committer
-> > AuthName "access requires a password"
-> > # File listing users with write (commit) access
-> > AuthUserFile /home/newgit/PASSWD
-> > Require valid-user
-> > </LocationMatch>
-> > 
-> > `````````````````````````````````````````SetEnv
-> > 
-> > But "SetEnv  GITWEB_CONFIG" as well as other SetEnv ( like SetEnv GIT_SSL_NO_VERIFY )
-> > is not been taken and as an effect the gitweb processing the default /etc/gitweb.conf and going to the
-> > old projectroot.
-> > 
-> > What am I missing here ? any clue ?
-> > 
-> > Thanks
-> > --
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+Thanks for the advices ;).
+
+--=20
+CATHEBRAS Simon
+
+2A-ENSIMAG
+
+=46ili=E8re Ing=E9ni=E9rie des Syst=E8mes d'Information
+Membre Bug-Buster
