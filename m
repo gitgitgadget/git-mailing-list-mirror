@@ -1,68 +1,80 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCHv3 2/2] rebase [-i --exec | -ix] <CMD>...
-Date: Fri, 08 Jun 2012 19:02:57 +0200
-Message-ID: <4FD23041.90908@kdbg.org>
-References: <1338978856-26838-1-git-send-email-Lucien.Kong@ensimag.imag.fr> <1339167235-2009-1-git-send-email-Lucien.Kong@ensimag.imag.fr> <1339167235-2009-2-git-send-email-Lucien.Kong@ensimag.imag.fr>
+From: konglu@minatec.inpg.fr
+Subject: Re: [PATCHv1] git-remote-mediawiki: import "File:" attachments
+Date: Fri, 08 Jun 2012 19:03:05 +0200
+Message-ID: <20120608190305.Horde.szbWGnwdC4BP0jBJMfN12lA@webmail.minatec.grenoble-inp.fr>
+References: <1339165376-20267-1-git-send-email-Pavel.Volek@ensimag.imag.fr>
+ <4FD2266B.3040706@ensimag.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org,
-	Valentin Duperray <Valentin.Duperray@ensimag.imag.fr>,
-	Franck Jonas <Franck.Jonas@ensimag.imag.fr>,
-	Thomas Nguy <Thomas.Nguy@ensimag.imag.fr>,
-	Huynh Khoi Nguyen Nguyen 
-	<Huynh-Khoi-Nguyen.Nguyen@ensimag.imag.fr>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-To: Lucien Kong <Lucien.Kong@ensimag.imag.fr>
-X-From: git-owner@vger.kernel.org Fri Jun 08 19:03:08 2012
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed	DelSp=Yes
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Volek Pavel <me@pavelvolek.cz>,
+	NGUYEN Kim Thuat <Kim-Thuat.Nguyen@ensimag.imag.fr>,
+	ROUCHER IGLESIAS Javier <roucherj@ensimag.imag.fr>,
+	Matthieu Moy <Matthieu.Moy@imag.fr>
+To: "Simon.Cathebras" <Simon.Cathebras@ensimag.imag.fr>
+X-From: git-owner@vger.kernel.org Fri Jun 08 19:03:19 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Sd2aa-00014q-5N
-	for gcvg-git-2@plane.gmane.org; Fri, 08 Jun 2012 19:03:08 +0200
+	id 1Sd2ag-0001LS-UC
+	for gcvg-git-2@plane.gmane.org; Fri, 08 Jun 2012 19:03:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761535Ab2FHRDD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Jun 2012 13:03:03 -0400
-Received: from bsmtp.bon.at ([213.33.87.14]:16458 "EHLO bsmtp.bon.at"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758198Ab2FHRDB (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Jun 2012 13:03:01 -0400
-Received: from dx.sixt.local (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTP id C613FCDF88;
-	Fri,  8 Jun 2012 19:04:12 +0200 (CEST)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-	by dx.sixt.local (Postfix) with ESMTP id 4249219F6E9;
-	Fri,  8 Jun 2012 19:02:58 +0200 (CEST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:12.0) Gecko/20120421 Thunderbird/12.0
-Newsgroups: gmane.comp.version-control.git
-In-Reply-To: <1339167235-2009-2-git-send-email-Lucien.Kong@ensimag.imag.fr>
+	id S1761983Ab2FHRDK convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 8 Jun 2012 13:03:10 -0400
+Received: from v-smtp.minatec.grenoble-inp.fr ([147.173.216.28]:33184 "EHLO
+	v-smtp.minatec.grenoble-inp.fr" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1761333Ab2FHRDJ (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 8 Jun 2012 13:03:09 -0400
+Received: from localhost (www02.minatec.grenoble-inp.fr [147.173.216.15])
+	by v-smtp.minatec.grenoble-inp.fr (Postfix) with ESMTP id AAB201A030B;
+	Fri,  8 Jun 2012 19:03:05 +0200 (CEST)
+Received: from wifi-030033.grenet.fr (wifi-030033.grenet.fr [130.190.30.33])
+ by webmail.minatec.grenoble-inp.fr (Horde Framework) with HTTP; Fri, 08 Jun
+ 2012 19:03:05 +0200
+In-Reply-To: <4FD2266B.3040706@ensimag.imag.fr>
+User-Agent: Internet Messaging Program (IMP) H4 (5.0.17)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199512>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199513>
 
-Am 08.06.2012 16:53, schrieb Lucien Kong:
-> +if test -n "$cmd" &&
-> +   test "$interactive_rebase" != explicit
-> +then
-> +	die "--exec option must be used with --interactive option\n"
-> +fi
 
-Is the \n really necessary?
+"Simon.Cathebras" <Simon.Cathebras@ensimag.imag.fr> a =E9crit=A0:
 
-> +	sed -e "1,9d" expect >expected &&
+> On 08/06/2012 16:22, Pavel Volek wrote:
+>> From: Volek Pavel<me@pavelvolek.cz>
+>>
+>> The current version of the git-remote-mediawiki supports only =20
+>> import and export
+>> of the pages, doesn't support import and export of file =20
+>> attachements which are
+>> also exposed by MediaWiki API. This patch adds the functionality to =
+=20
+>> import the
+>> last versions of the files and all versions of description pages for=
+ these
+>> files.
+>>
+>> Signed-off-by: Pavel Volek<Pavel.Volek@ensimag.imag.fr>
+>> Signed-off-by: NGUYEN Kim Thuat<Kim-Thuat.Nguyen@ensimag.imag.fr>
+>> Signed-off-by: ROUCHER IGLESIAS Javier<roucherj@ensimag.imag.fr>
+>> Signed-off-by: Matthieu Moy<Matthieu.Moy@imag.fr>
+>> ---
+>
+>>  contrib/mw-to-git/git-remote-mediawiki | 290 =20
+>> +++++++++++++++++++++++++++------
+>>  1 file changed, 244 insertions(+), 46 deletions(-)
+>
+> I am wondering why are you showing the removal for a v1 patch ?
 
-Good. But I said "Here and everywhere else". So I wonder about these
-lines ;)
+Why not ? The file already exists on branch master and they are
+working on it. Anyway, the patch applies correctly on master.
+BTW, are you implying that only v2+ patch could have deletions ?
+(a patch is not meant to be applied on the previous version).
 
-> +	sed '1,9d' expect >expected &&
-> +	sed '1,9d' expect >expected &&
-> +	sed '1,9d' expect >expected &&
-> +	sed '1,11d' expect >expected &&
-> +	sed '1,13d' expect >expected &&
-> +	sed '1d' actual >tmp &&
-
--- Hannes
+Lucien Kong
