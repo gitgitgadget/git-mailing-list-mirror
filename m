@@ -1,69 +1,100 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] notes: attach help text to subcommands
-Date: Fri, 08 Jun 2012 10:03:17 -0700
-Message-ID: <7vmx4dd9d6.fsf@alter.siamese.dyndns.org>
-References: <7vd359eu4s.fsf@alter.siamese.dyndns.org>
- <1339169317-12134-1-git-send-email-artagnon@gmail.com>
+Subject: Re: [PATCHv3 1/2] git-rebase.txt: "--onto" option updated
+Date: Fri, 08 Jun 2012 10:07:15 -0700
+Message-ID: <7vipf1d96k.fsf@alter.siamese.dyndns.org>
+References: <1338978856-26838-1-git-send-email-Lucien.Kong@ensimag.imag.fr>
+ <1339167235-2009-1-git-send-email-Lucien.Kong@ensimag.imag.fr>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Git List <git@vger.kernel.org>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jun 08 19:03:29 2012
+Cc: git@vger.kernel.org,
+	Valentin Duperray <Valentin.Duperray@ensimag.imag.fr>,
+	Franck Jonas <Franck.Jonas@ensimag.imag.fr>,
+	Thomas Nguy <Thomas.Nguy@ensimag.imag.fr>,
+	Huynh Khoi Nguyen Nguyen 
+	<Huynh-Khoi-Nguyen.Nguyen@ensimag.imag.fr>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+To: Lucien Kong <Lucien.Kong@ensimag.imag.fr>
+X-From: git-owner@vger.kernel.org Fri Jun 08 19:07:26 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Sd2ar-0001cu-5B
-	for gcvg-git-2@plane.gmane.org; Fri, 08 Jun 2012 19:03:25 +0200
+	id 1Sd2ei-0007d9-QW
+	for gcvg-git-2@plane.gmane.org; Fri, 08 Jun 2012 19:07:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762119Ab2FHRDV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Jun 2012 13:03:21 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39360 "EHLO
+	id S1762181Ab2FHRHT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Jun 2012 13:07:19 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:41271 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1761333Ab2FHRDU (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Jun 2012 13:03:20 -0400
+	id S1762120Ab2FHRHS (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Jun 2012 13:07:18 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A4C779F7E;
-	Fri,  8 Jun 2012 13:03:19 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 876DC8058;
+	Fri,  8 Jun 2012 13:07:17 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=91SnuIv+BLUE2Wv0Pnav4jCNQdY=; b=iVku92
-	AXT2XxzAGzn01Q6UBvtLe/5s+RAQv4oyejcvRWmV7ZMtacHclyuTpkUTkX3gfjvG
-	C96RPnaXCvVsy7c3lfV8FAR/eJEqKfkBjTvpdqOC873optHgmciXzQZ/wRCUj1Fk
-	DV3uCwAAuCxIVGXYjm04Y6AtjoxA3o9LjMADQ=
+	:content-type; s=sasl; bh=kOxcrUJmZO+WXHsKwCqk+muZ7lc=; b=Toh9cM
+	jZsfgC48qCfxAZT9PgkM1VoVKszxLEXKY7HqVN4HzFekvSMYMq7Z4i48do4tlgiF
+	UmWcCloSuDip6lqev4gpZy1XIMJQvWA7QUHGhX948ezckt04EX4EDXUP2012O5OA
+	Vb48y/bj1Q3k9NTsALa8oTrLnrdsyTwTtQj60=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=jTjGRk7Wj52GVDXwa6zbjwKh5wGD/K9V
-	ApGYW7BPjcMHF5enUQuv0dXJRyoitx3bWgj/U4GUqFKOBOSfyILId5sJfffOXH5e
-	OKv9tM68e9WzlY2yY+3O890CByhPOXH1Sz0Y87Nv2021Arw2n6ZzuIOBZOV7obYt
-	QsIiOo7pevQ=
+	:content-type; q=dns; s=sasl; b=s5L5aAAZVRVZ3Y6vZI+j4JDXFgdJI0J6
+	mgXKFuwCp+UUx8SLZs01HFmJAwhf+6f+p8AgOEKUOyqCkPLTD4yRxOR/emOHgXIC
+	ETj7D2Dy4SDUh7eWnBw6OkWHyfPrG6gN1R9Koiq54RdTiRdfWFeiwuDVYVFhGmce
+	a8Q22s5twUk=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9B8429F7D;
-	Fri,  8 Jun 2012 13:03:19 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7D9EB8057;
+	Fri,  8 Jun 2012 13:07:17 -0400 (EDT)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 296CD9F7C; Fri,  8 Jun 2012
- 13:03:19 -0400 (EDT)
-In-Reply-To: <1339169317-12134-1-git-send-email-artagnon@gmail.com> (Ramkumar
- Ramachandra's message of "Fri, 8 Jun 2012 20:58:37 +0530")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id F28218056; Fri,  8 Jun 2012
+ 13:07:16 -0400 (EDT)
+In-Reply-To: <1339167235-2009-1-git-send-email-Lucien.Kong@ensimag.imag.fr>
+ (Lucien Kong's message of "Fri, 8 Jun 2012 16:53:54 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: D8B0119A-B18B-11E1-A109-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 66742868-B18C-11E1-A8CF-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199514>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199515>
 
-Ramkumar Ramachandra <artagnon@gmail.com> writes:
+Lucien Kong <Lucien.Kong@ensimag.imag.fr> writes:
 
-> +struct subcommand {
-> +	const char *name;
-> +	const char *help;
-> +	int (*callback)(int, const char **, const char *);
-> +};
+> The description of the option "--onto" is changed to be consistent
+> with the format of the other options.
+> ...
+>  OPTIONS
+>  -------
+> -<newbase>::
+> -	Starting point at which to create the new commits. If the
+> -	--onto option is not specified, the starting point is
+> -	<upstream>.  May be any valid commit, and not just an
+> -	existing branch name.
+> +--onto <newbase>::
+> +	With this option, git rebase takes all commits from <branch>,
+> +	that are not in <upstream>, and transplants them on top of
+> +	<newbase>. <newbase is the starting point at which to create
+> +	the new commits. If the --onto option is not specified, the
+> +	starting point is <upstream>.  May be any valid commit, and
+> +	not just an existing branch name.
+>  +
+>  As a special case, you may use "A\...B" as a shortcut for the
+>  merge base of A and B if there is exactly one merge base. You can
 
-In what way is this a "callback"?  It is not like you call some API
-function with this structure as its argument, and then the
-implementation of the API function calls this function back.
+This is doing two unrelated things in a single patch, isn't it?
+
+I would imagine that a patch that is about "to be consistent with
+the format" would be a one-liner
+
+	-<newbase>::
+        +--onto <newbase>::
+
+without anything else.  The change this patch makes to the
+explanation is much larger, but that is not justified in the
+proposed commit log message.
+
+Besides, I find the new explanatory text much harder to understand
+than the original one.
