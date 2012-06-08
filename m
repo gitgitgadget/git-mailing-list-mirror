@@ -1,74 +1,89 @@
-From: nguyenhu@minatec.inpg.fr
-Subject: Re: [PATCHv6 1/4] Read (but not write) from
- $XDG_CONFIG_HOME/git/config file
-Date: Fri, 08 Jun 2012 11:57:11 +0200
-Message-ID: <20120608115711.Horde.-kmJPHwdC4BP0cx3RNFDX2A@webmail.minatec.grenoble-inp.fr>
-References: <1338754481-27012-1-git-send-email-Huynh-Khoi-Nguyen.Nguyen@ensimag.imag.fr>
- <1338988885-21933-1-git-send-email-Huynh-Khoi-Nguyen.Nguyen@ensimag.imag.fr>
- <7vpq9aenl0.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed	DelSp=Yes
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Huynh Khoi Nguyen NGUYEN 
-	<Huynh-Khoi-Nguyen.Nguyen@ensimag.imag.fr>, git@vger.kernel.org,
-	Matthieu.Moy@grenoble-inp.fr,
-	NGUYEN Huynh Khoi Nguyen <nguyenhu@ensibm.imag.fr>,
-	Valentin Duperray <Valentin.Duperray@ensimag.imag.fr>,
-	Franck Jonas <Franck.Jonas@ensimag.imag.fr>,
-	Lucien Kong <Lucien.Kong@ensimag.imag.fr>,
-	Thomas Nguy <Thomas.Nguy@ensimag.imag.fr>,
-	Junio C Hamano <gitster@pobox.com>
-To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-X-From: git-owner@vger.kernel.org Fri Jun 08 11:57:25 2012
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: [PATCH] commit: document a couple of options
+Date: Fri,  8 Jun 2012 15:48:30 +0530
+Message-ID: <1339150710-12281-1-git-send-email-artagnon@gmail.com>
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Jun 08 12:21:20 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ScvwV-0007hq-S7
-	for gcvg-git-2@plane.gmane.org; Fri, 08 Jun 2012 11:57:20 +0200
+	id 1ScwJh-0002ef-B5
+	for gcvg-git-2@plane.gmane.org; Fri, 08 Jun 2012 12:21:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762005Ab2FHJ5O convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 8 Jun 2012 05:57:14 -0400
-Received: from v-smtp.minatec.grenoble-inp.fr ([147.173.216.28]:59558 "EHLO
-	v-smtp.minatec.grenoble-inp.fr" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751276Ab2FHJ5N (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 8 Jun 2012 05:57:13 -0400
-Received: from localhost (www02.minatec.grenoble-inp.fr [147.173.216.15])
-	by v-smtp.minatec.grenoble-inp.fr (Postfix) with ESMTP id 983FB1A030D;
-	Fri,  8 Jun 2012 11:57:11 +0200 (CEST)
-Received: from wifi-028244.grenet.fr (wifi-028244.grenet.fr
- [130.190.28.244]) by webmail.minatec.grenoble-inp.fr (Horde Framework) with
- HTTP; Fri, 08 Jun 2012 11:57:11 +0200
-In-Reply-To: <7vpq9aenl0.fsf@alter.siamese.dyndns.org>
-User-Agent: Internet Messaging Program (IMP) H4 (5.0.17)
-Content-Disposition: inline
+	id S1762073Ab2FHKVK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Jun 2012 06:21:10 -0400
+Received: from mail-pz0-f46.google.com ([209.85.210.46]:42955 "EHLO
+	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751276Ab2FHKVJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Jun 2012 06:21:09 -0400
+Received: by dady13 with SMTP id y13so2159216dad.19
+        for <git@vger.kernel.org>; Fri, 08 Jun 2012 03:21:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:subject:date:message-id:x-mailer;
+        bh=74M7vLYVqAU8KCQAKJGZAmUN3YM3ACOf/AIP2QtEu/E=;
+        b=IknBSPHwoomdML7SVCo7eiqQV+1ccmUEnzAT052IyW/Q4mOFQhjhBVQTMpKTD9NoGV
+         D9CXiMomZVYtuhMYa1cDmRu1W0fhsOhvKv5NXlh4+N9VJQ9qRFzn7Q2uxn+vlO4nQEu6
+         DjTdQTreRLisiltF520NVTdTtUHMdd0JbKLDck9u81ctzqkI5dkPKfo3fzbPRGgb9Lkm
+         acQFGbCeLT2k3Z5ENCNFjVUiO4jb3KdMxREOdIPvxUHmQ9TDNM6nhxpN1SEvtTlbSTU7
+         /VQKuwP02ekqeYsXDXH3k71EVwg3Y/rZonjrTsOIX2fJBRthOqXXJ/LUpEczVygnlXIV
+         ORaw==
+Received: by 10.68.227.197 with SMTP id sc5mr19324098pbc.58.1339150868654;
+        Fri, 08 Jun 2012 03:21:08 -0700 (PDT)
+Received: from localhost.localdomain ([122.174.108.158])
+        by mx.google.com with ESMTPS id of1sm7392899pbb.15.2012.06.08.03.21.05
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 08 Jun 2012 03:21:07 -0700 (PDT)
+X-Mailer: git-send-email 1.7.10
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199479>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199480>
 
+Document git commit '--branch' and '--no-post-rewrite'.  Mention that
+'-z' can also be spelt as '--null'.
 
-Junio C Hamano <gitster@pobox.com> a =E9crit=A0:
+Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
+---
+ I noticed this while reading through builtin/commit.c.
 
->> +char *mkpathdup(const char *fmt, ...)
->> +{
->> +	char path[PATH_MAX];
->> +	va_list args;
->> +	unsigned len;
->> +
->> +	va_start(args, fmt);
->> +	len =3D vsnprintf(path, sizeof(path), fmt, args);
->> +	va_end(args);
->> +	if (len >=3D sizeof(path))
->> +		return xstrdup(bad_path);
->> +	return xstrdup(cleanup_path(path));
->> +}
->
-> Hrmph. If a new helper is introduced anyway, wouldn't it be a better
-> idea to get rid of the hardcoded PATH_MAX limitation, perhaps using
-> strbuf_vaddf() or something in the implementation of this function?
+ Documentation/git-commit.txt |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-Ramsay Jones, what do you think about this ?
+diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
+index 2d695f6..f400835 100644
+--- a/Documentation/git-commit.txt
++++ b/Documentation/git-commit.txt
+@@ -101,12 +101,16 @@ OPTIONS
+ 	When doing a dry-run, give the output in the short-format. See
+ 	linkgit:git-status[1] for details. Implies `--dry-run`.
+ 
++--branch::
++	Show the branch and tracking info even in short-format.
++
+ --porcelain::
+ 	When doing a dry-run, give the output in a porcelain-ready
+ 	format. See linkgit:git-status[1] for details. Implies
+ 	`--dry-run`.
+ 
+ -z::
++--null::
+ 	When showing `short` or `porcelain` status output, terminate
+ 	entries in the status output with NUL, instead of LF. If no
+ 	format is given, implies the `--porcelain` output format.
+@@ -189,6 +193,10 @@ OPTIONS
+ 	current tip -- if it was a merge, it will have the parents of
+ 	the current tip as parents -- so the current top commit is
+ 	discarded.
++
++--no-post-rewrite::
++	Bypass the post-rewrite hook.
++
+ +
+ --
+ It is a rough equivalent for:
+-- 
+1.7.10
