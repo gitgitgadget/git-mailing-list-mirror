@@ -1,77 +1,61 @@
-From: Vincent van Ravesteijn <vfr@lyx.org>
+From: Ralf Thielow <ralf.thielow@googlemail.com>
 Subject: Re: show refs points to a commit
-Date: Fri, 08 Jun 2012 21:47:24 +0200
-Message-ID: <4FD256CC.5010801@lyx.org>
+Date: Fri, 8 Jun 2012 21:51:06 +0200
+Message-ID: <CAN0XMO+FpCWgf96ffZ0qd7TNEmdBXicvvk23fnXBaTK_7weV-g@mail.gmail.com>
 References: <CAN0XMO+G6K0FZgu35OuuqGEp322vLpakXHXBTPpUQmoex68srA@mail.gmail.com>
+	<4FD256CC.5010801@lyx.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=UTF-8
 Cc: git <git@vger.kernel.org>
-To: Ralf Thielow <ralf.thielow@googlemail.com>
-X-From: git-owner@vger.kernel.org Fri Jun 08 21:47:37 2012
+To: Vincent van Ravesteijn <vfr@lyx.org>
+X-From: git-owner@vger.kernel.org Fri Jun 08 21:51:15 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Sd59i-0004eU-2x
-	for gcvg-git-2@plane.gmane.org; Fri, 08 Jun 2012 21:47:34 +0200
+	id 1Sd5DG-0001MF-Bt
+	for gcvg-git-2@plane.gmane.org; Fri, 08 Jun 2012 21:51:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933489Ab2FHTr2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Jun 2012 15:47:28 -0400
-Received: from mail-ey0-f174.google.com ([209.85.215.174]:65039 "EHLO
-	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756834Ab2FHTr1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Jun 2012 15:47:27 -0400
-Received: by eaak11 with SMTP id k11so1261366eaa.19
-        for <git@vger.kernel.org>; Fri, 08 Jun 2012 12:47:26 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding
-         :x-gm-message-state;
-        bh=yWHRUKezadHvBYBJ2Rj3f2GI/2+6k8gmrhtFCjGjqo8=;
-        b=EZv1hEiNqf7ANw2BD2NSH8sAKHWVrN5jsNSw2HF7rD4itjzFhTRVAQTXa+xLByyCf/
-         uStKKM3pP8qSAszoPiFN0q6qqA0ZjgQTo6KKOoBmKUgnGl9YmS9u1ZCoMKPHt8h1icsK
-         cV8cdJE7djZ/P1hCH53eJYH1eKrtraegXrz/cPl8kCryqKKyP6ud1WYSXqgB8c3z74Ph
-         qGxeRTfm8PB7IVuRwu7HZbYKHBo+ELfdEHTclHtuvGzKN/6QZfnt89hTOt+tYG+FinoL
-         4lVWsDfBhp7OveFZw4LrI716barAj41zYsHK+1ABfZR2MHztglNEyGFG7ejqnYbfw8WV
-         geHg==
-Received: by 10.14.47.130 with SMTP id t2mr4320788eeb.21.1339184846141;
-        Fri, 08 Jun 2012 12:47:26 -0700 (PDT)
-Received: from [192.168.1.3] (j175101.upc-j.chello.nl. [24.132.175.101])
-        by mx.google.com with ESMTPS id m5sm25406636eeh.17.2012.06.08.12.47.24
-        (version=SSLv3 cipher=OTHER);
-        Fri, 08 Jun 2012 12:47:25 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:12.0) Gecko/20120428 Thunderbird/12.0.1
-In-Reply-To: <CAN0XMO+G6K0FZgu35OuuqGEp322vLpakXHXBTPpUQmoex68srA@mail.gmail.com>
-X-Gm-Message-State: ALoCoQncl9ptgOiXEVxX7vjIdXhZKe8bZzsK3gLE75SFIyivZ+Eh+0HUSVTEJ7gKYK6dfvh9mE1H
+	id S933615Ab2FHTvK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Jun 2012 15:51:10 -0400
+Received: from mail-wg0-f44.google.com ([74.125.82.44]:36797 "EHLO
+	mail-wg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933436Ab2FHTvI (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Jun 2012 15:51:08 -0400
+Received: by wgbdr13 with SMTP id dr13so1201285wgb.1
+        for <git@vger.kernel.org>; Fri, 08 Jun 2012 12:51:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=f3WkjXq/hKTJQwHPet5sgZh95/dWwMFRz28cBbPjRWU=;
+        b=mrEoYFd3J27JhFFeNOsh2td9ymyf9jf1ZTjk2hgbf3kB6BJx9E9R3LzTMMK+ngashv
+         q2fah0y+Pu1PqLxmMB2fG4qQTHR8t2AX+2Smm52yN9BG3MdeUUz9oCseXVJBXxWTVrb6
+         89rYmfgEjq6J+F2lT5pWhNVTFKV/yPeiN8sVdZFP5ZXdsXRqXWWd4oBPVCwYMc02d8d9
+         j5OMGfPndeyIaDpZhQTuXATB86xwc8rFWFmAXCV6g8Le2Jdsyzh3hFh9BozV7xmzHv/c
+         JNqSxE0hacel/ocCYPxdYEvuVzxeVOJhOjlHw1YwtJfHiEEUElMbIAJ5k95m2ULTETCD
+         RrKQ==
+Received: by 10.216.145.97 with SMTP id o75mr1994169wej.7.1339185067024; Fri,
+ 08 Jun 2012 12:51:07 -0700 (PDT)
+Received: by 10.194.0.132 with HTTP; Fri, 8 Jun 2012 12:51:06 -0700 (PDT)
+In-Reply-To: <4FD256CC.5010801@lyx.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199521>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199522>
 
-Op 8-6-2012 21:37, Ralf Thielow schreef:
-> After playing around with submodules, I haven't
-> found a builtin way to show refs pointing to a
-> specified commit without using UNIX pipes.
+On Fri, Jun 8, 2012 at 9:47 PM, Vincent van Ravesteijn <vfr@lyx.org> wrote:
+> Is this what you mean ?
 >
-> Especially when you working with submodules, it
-> would be very helpful to know which refs
-> points to this commit in order to switch from
-> "detached HEAD" to the branch you can (maybe)
-> work with.
+> $ git rev-parse master
+> f623ca1cae600e97cb0b38131fdd33e4fb669cf8
+> $ git name-rev f623ca1cae600
+> f623ca1cae600 master
+> $ git name-rev --refs=refs/heads/* f344333cd
+> f344333cd master~10
 >
-> Or did I miss something?
 
-Is this what you mean ?
-
-$ git rev-parse master
-f623ca1cae600e97cb0b38131fdd33e4fb669cf8
-$ git name-rev f623ca1cae600
-f623ca1cae600 master
-$ git name-rev --refs=refs/heads/* f344333cd
-f344333cd master~10
-
-Vincent
+I just want to know what's the refs where
+the *tip* points to my specified commit.
