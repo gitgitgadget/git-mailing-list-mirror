@@ -1,100 +1,75 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCHv3 1/2] git-rebase.txt: "--onto" option updated
-Date: Fri, 08 Jun 2012 10:07:15 -0700
-Message-ID: <7vipf1d96k.fsf@alter.siamese.dyndns.org>
-References: <1338978856-26838-1-git-send-email-Lucien.Kong@ensimag.imag.fr>
- <1339167235-2009-1-git-send-email-Lucien.Kong@ensimag.imag.fr>
+From: Vincent van Ravesteijn <vfr@lyx.org>
+Subject: [BUG] Out of memory on git log --simplify-by-decoration --first-parent
+Date: Fri, 08 Jun 2012 20:23:44 +0200
+Message-ID: <4FD24330.2030805@lyx.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org,
-	Valentin Duperray <Valentin.Duperray@ensimag.imag.fr>,
-	Franck Jonas <Franck.Jonas@ensimag.imag.fr>,
-	Thomas Nguy <Thomas.Nguy@ensimag.imag.fr>,
-	Huynh Khoi Nguyen Nguyen 
-	<Huynh-Khoi-Nguyen.Nguyen@ensimag.imag.fr>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-To: Lucien Kong <Lucien.Kong@ensimag.imag.fr>
-X-From: git-owner@vger.kernel.org Fri Jun 08 19:07:26 2012
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jun 08 20:24:03 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Sd2ei-0007d9-QW
-	for gcvg-git-2@plane.gmane.org; Fri, 08 Jun 2012 19:07:25 +0200
+	id 1Sd3ql-0002Uz-RO
+	for gcvg-git-2@plane.gmane.org; Fri, 08 Jun 2012 20:23:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762181Ab2FHRHT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Jun 2012 13:07:19 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:41271 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1762120Ab2FHRHS (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Jun 2012 13:07:18 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 876DC8058;
-	Fri,  8 Jun 2012 13:07:17 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=kOxcrUJmZO+WXHsKwCqk+muZ7lc=; b=Toh9cM
-	jZsfgC48qCfxAZT9PgkM1VoVKszxLEXKY7HqVN4HzFekvSMYMq7Z4i48do4tlgiF
-	UmWcCloSuDip6lqev4gpZy1XIMJQvWA7QUHGhX948ezckt04EX4EDXUP2012O5OA
-	Vb48y/bj1Q3k9NTsALa8oTrLnrdsyTwTtQj60=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=s5L5aAAZVRVZ3Y6vZI+j4JDXFgdJI0J6
-	mgXKFuwCp+UUx8SLZs01HFmJAwhf+6f+p8AgOEKUOyqCkPLTD4yRxOR/emOHgXIC
-	ETj7D2Dy4SDUh7eWnBw6OkWHyfPrG6gN1R9Koiq54RdTiRdfWFeiwuDVYVFhGmce
-	a8Q22s5twUk=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7D9EB8057;
-	Fri,  8 Jun 2012 13:07:17 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id F28218056; Fri,  8 Jun 2012
- 13:07:16 -0400 (EDT)
-In-Reply-To: <1339167235-2009-1-git-send-email-Lucien.Kong@ensimag.imag.fr>
- (Lucien Kong's message of "Fri, 8 Jun 2012 16:53:54 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 66742868-B18C-11E1-A8CF-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1761315Ab2FHSXs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Jun 2012 14:23:48 -0400
+Received: from mail-ey0-f174.google.com ([209.85.215.174]:38978 "EHLO
+	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755965Ab2FHSXr (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Jun 2012 14:23:47 -0400
+Received: by eaak11 with SMTP id k11so1243159eaa.19
+        for <git@vger.kernel.org>; Fri, 08 Jun 2012 11:23:46 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:subject
+         :content-type:content-transfer-encoding:x-gm-message-state;
+        bh=lE9fH2ABpXItZR9pOssU1wlnJdIM0xTYcUYSI58Ttv8=;
+        b=PZ8dGu6443bam4EZVQdBgxv/L9Vgp3g9IwX+OGtRuFhm9EJVZ3SySRs8gHsXKMC3AX
+         1jM40QqI3FWgmYw0Wf2gZzWm8L2i9ZYCRdM+plhkYusYP4qBJWVpE4mYG9bSQVdAvySY
+         nePO4BQdx4eoe5J1kTlYdLUIrJFbaXpyjdCZ5WhNbhm/fQ7p4fQGgwqWhf0VaOFyogXh
+         7vrCjRByex++QTjVl7fVPqvB7JrIxJ+fm4/I7hDu863+t1A1W14zbd+uT+NMp8XT6SW0
+         wtCv3lw8wwIsA1dEG3Bej4P2Mfit6kicg1KDJSVeip7a07s05Ie0ujrgdI+hIHNMsO5O
+         AacQ==
+Received: by 10.14.29.4 with SMTP id h4mr3909350eea.178.1339179825567;
+        Fri, 08 Jun 2012 11:23:45 -0700 (PDT)
+Received: from [192.168.1.5] (j175101.upc-j.chello.nl. [24.132.175.101])
+        by mx.google.com with ESMTPS id m5sm24815837eeh.17.2012.06.08.11.23.44
+        (version=SSLv3 cipher=OTHER);
+        Fri, 08 Jun 2012 11:23:44 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:12.0) Gecko/20120428 Thunderbird/12.0.1
+X-Gm-Message-State: ALoCoQnkN6rGlx5n+heCdOW3pRMZ2kCbnYetgm7i4N1lm9ogG2rBFHhn6kaB4JQhW6PZtcLiZc0t
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199515>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199516>
 
-Lucien Kong <Lucien.Kong@ensimag.imag.fr> writes:
+git dies after calling the following command on the git repo:
 
-> The description of the option "--onto" is changed to be consistent
-> with the format of the other options.
-> ...
->  OPTIONS
->  -------
-> -<newbase>::
-> -	Starting point at which to create the new commits. If the
-> -	--onto option is not specified, the starting point is
-> -	<upstream>.  May be any valid commit, and not just an
-> -	existing branch name.
-> +--onto <newbase>::
-> +	With this option, git rebase takes all commits from <branch>,
-> +	that are not in <upstream>, and transplants them on top of
-> +	<newbase>. <newbase is the starting point at which to create
-> +	the new commits. If the --onto option is not specified, the
-> +	starting point is <upstream>.  May be any valid commit, and
-> +	not just an existing branch name.
->  +
->  As a special case, you may use "A\...B" as a shortcut for the
->  merge base of A and B if there is exactly one merge base. You can
+$ git log f623ca1c...b9cfa4e9 --simplify-by-decoration --first-parent
 
-This is doing two unrelated things in a single patch, isn't it?
+This happens in simplify_merges () in revision.c. The list below shows 
+the number of times the "while (list) { ..}" block is executed until git 
+dies:
 
-I would imagine that a patch that is about "to be consistent with
-the format" would be a one-liner
+1475
+3544
+8274
+19588
+45689
+106077
+245329
+565153
+1269244
+2614903
+5871845
+13138892
+fatal: Out of memory, malloc failed (tried to allocate 8 bytes)
 
-	-<newbase>::
-        +--onto <newbase>::
+Verified with msysgit and on Ubuntu Linux.
 
-without anything else.  The change this patch makes to the
-explanation is much larger, but that is not justified in the
-proposed commit log message.
-
-Besides, I find the new explanatory text much harder to understand
-than the original one.
+Vincent
