@@ -1,83 +1,117 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 3/3] revision: cull side parents before running
- simplify-merges
-Date: Fri,  8 Jun 2012 15:53:29 -0700
-Message-ID: <1339196009-14555-4-git-send-email-gitster@pobox.com>
+Subject: [PATCH 2/3] revision: note the lack of free() in simplify_merges()
+Date: Fri,  8 Jun 2012 15:53:28 -0700
+Message-ID: <1339196009-14555-3-git-send-email-gitster@pobox.com>
 References: <1339196009-14555-1-git-send-email-gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jun 09 00:54:25 2012
+X-From: git-owner@vger.kernel.org Sat Jun 09 00:54:58 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Sd84V-00005d-OB
-	for gcvg-git-2@plane.gmane.org; Sat, 09 Jun 2012 00:54:24 +0200
+	id 1Sd850-0000ut-BM
+	for gcvg-git-2@plane.gmane.org; Sat, 09 Jun 2012 00:54:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757419Ab2FHWxs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Jun 2012 18:53:48 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:51377 "EHLO
+	id S1759928Ab2FHWyU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Jun 2012 18:54:20 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:51363 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755119Ab2FHWxh (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Jun 2012 18:53:37 -0400
+	id S1754869Ab2FHWxf (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Jun 2012 18:53:35 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 060998B98
-	for <git@vger.kernel.org>; Fri,  8 Jun 2012 18:53:37 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3D0F78B95
+	for <git@vger.kernel.org>; Fri,  8 Jun 2012 18:53:35 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:in-reply-to:references; s=sasl; bh=njYd
-	NfcaQRHTGc6Pt0/NBoqeZ6A=; b=uQCYjOOoY9R2tVcJDo3oI5dgCPorjOJAAqFJ
-	+tRPGMIbZTnlW1z3t9vmiiCeBmmzn5qYXuBJuCkYgDPqWAUU7dP/37uGwLhwmluV
-	3YUUUYOCBSpYunxncJrUlO7ZNBOwId1unJnJ/tG0avuXXiMeF8qDBdAOukTeIbn8
-	WEo0K9M=
+	:subject:date:message-id:in-reply-to:references; s=sasl; bh=Fvl6
+	LwRb3r5gYHQspyMF8SrOrn4=; b=TfHtUMccpMGFXkkWEZlugOlvOloyEm0u3Blr
+	PN00dc9+83fY3Yw81iurTTSqHbgpn+X/JwHi5DxtjZyqNLH6HJkqoKyzFtp7ed0y
+	xPe4/ORv6NbgBfKTouvtjHRcdR3CqxUjPXdM7xoKzwipRIg4D5hceHWkpaDyTTUu
+	z0JfLWc=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=lOM4bD
-	g6ZzoVkg2X9sAfIPND12fDr3bmwdSF8IpZlRtPO6UFDNFq+HyQ5rKgFd0vVVfHSO
-	7an09guHPj7g5q4dLD4uvNx9iYstkYeCEs5yBZI402IErUug57lH30j/KuU8IGvi
-	eJHoBd35QYk1hF70aos3i73Ch4XDWnnBQ/zRI=
+	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=QQZNu+
+	Lo/Qtc2tGx7HAGwLEs/ld3jN/R4T+VjTLmsUlVYMd5YJnLLNjc64hK2NOm48Nwl8
+	QOQDOE81uK/uA8GL1NfbXKf5MAUFtEZcoFa7AQe0w6diPCN91bPoWzmpLWZbOqZE
+	1ewqahQkedDq/Le1u/8/maxfadzCQfnrLItV0=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id F11BD8B97
-	for <git@vger.kernel.org>; Fri,  8 Jun 2012 18:53:36 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 345868B93
+	for <git@vger.kernel.org>; Fri,  8 Jun 2012 18:53:35 -0400 (EDT)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 878AD8B96 for
- <git@vger.kernel.org>; Fri,  8 Jun 2012 18:53:36 -0400 (EDT)
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B909F8B91 for
+ <git@vger.kernel.org>; Fri,  8 Jun 2012 18:53:34 -0400 (EDT)
 X-Mailer: git-send-email 1.7.11.rc2.29.g85b30f3
 In-Reply-To: <1339196009-14555-1-git-send-email-gitster@pobox.com>
-X-Pobox-Relay-ID: C8062DD0-B1BC-11E1-A94C-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: C6F42CF8-B1BC-11E1-9700-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199539>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199540>
 
-The simplify_merges() function needs to look at all history chain to
-find the closest ancestor that is relevant after the simplification,
-but after --first-parent traversal, side parents haven't been marked
-for relevance (they are irrelevant by definition due to the nature
-of first-parent-only traversal) nor culled from the parents list of
-resulting commits.
-
-Remove these side parents from parents list before starting to
-further simplifying the result.
+Among the three similar-looking loops that walk singly linked
+commit_list, the first one is only peeking and the same list is
+later used for real work.  Leave a comment not to mistakenly
+free its elements there.
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- revision.c | 3 +++
- 1 file changed, 3 insertions(+)
+ revision.c | 23 ++++++++++++++++-------
+ 1 file changed, 16 insertions(+), 7 deletions(-)
 
 diff --git a/revision.c b/revision.c
-index 814b96f..d93eb7c 100644
+index 00aaefe..814b96f 100644
 --- a/revision.c
 +++ b/revision.c
-@@ -2031,6 +2031,9 @@ static void simplify_merges(struct rev_info *revs)
- 		 * Do not free(list) here yet; the original list
- 		 * is used later in this function.
- 		 */
-+		if (revs->first_parent_only &&
-+		    commit->parents && commit->parents->next)
-+			commit->parents->next = NULL;
- 		commit_list_insert(commit, &yet_to_do);
- 	}
+@@ -2015,23 +2015,31 @@ static struct commit_list **simplify_one(struct rev_info *revs, struct commit *c
+ 
+ static void simplify_merges(struct rev_info *revs)
+ {
+-	struct commit_list *list;
++	struct commit_list *list, *next;
+ 	struct commit_list *yet_to_do, **tail;
++	struct commit *commit;
+ 
+ 	if (!revs->prune)
+ 		return;
+ 
+ 	/* feed the list reversed */
+ 	yet_to_do = NULL;
+-	for (list = revs->commits; list; list = list->next)
+-		commit_list_insert(list->item, &yet_to_do);
++	for (list = revs->commits; list; list = next) {
++		commit = list->item;
++		next = list->next;
++		/*
++		 * Do not free(list) here yet; the original list
++		 * is used later in this function.
++		 */
++		commit_list_insert(commit, &yet_to_do);
++	}
  	while (yet_to_do) {
+ 		list = yet_to_do;
+ 		yet_to_do = NULL;
+ 		tail = &yet_to_do;
+ 		while (list) {
+-			struct commit *commit = list->item;
+-			struct commit_list *next = list->next;
++			commit = list->item;
++			next = list->next;
+ 			free(list);
+ 			list = next;
+ 			tail = simplify_one(revs, commit, tail);
+@@ -2043,9 +2051,10 @@ static void simplify_merges(struct rev_info *revs)
+ 	revs->commits = NULL;
+ 	tail = &revs->commits;
+ 	while (list) {
+-		struct commit *commit = list->item;
+-		struct commit_list *next = list->next;
+ 		struct merge_simplify_state *st;
++
++		commit = list->item;
++		next = list->next;
+ 		free(list);
+ 		list = next;
+ 		st = locate_simplify_state(revs, commit);
 -- 
 1.7.11.rc2.29.g85b30f3
