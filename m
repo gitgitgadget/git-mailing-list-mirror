@@ -1,77 +1,77 @@
-From: Brandon Casey <drafnel@gmail.com>
-Subject: Re: [PATCH] t1304: improve setfacl prerequisite setup
-Date: Thu, 7 Jun 2012 18:18:31 -0700
-Message-ID: <CA+sFfMd09Cp7qQdnhhQSTOp2p7jpOspf4HTEcbGihRZzMaz6Yg@mail.gmail.com>
-References: <vpqk3zlhorc.fsf@bauges.imag.fr>
-	<20120605140449.GA15640@sigill.intra.peff.net>
-	<20120605141039.GB15640@sigill.intra.peff.net>
-	<20120605142813.GA17238@sigill.intra.peff.net>
-	<20120605150550.GA19843@sigill.intra.peff.net>
-	<7vpq9dpvnp.fsf@alter.siamese.dyndns.org>
-	<20120605164439.GA2694@sigill.intra.peff.net>
-	<7v62b5pt2s.fsf@alter.siamese.dyndns.org>
-	<20120606132824.GA2597@sigill.intra.peff.net>
-	<7vvcj4ml6a.fsf@alter.siamese.dyndns.org>
-	<20120607090200.GA6087@sigill.intra.peff.net>
-	<7vlijzjdx6.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Jeff King <peff@peff.net>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Stefan Beller <stefanbeller@googlemail.com>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jun 08 03:18:37 2012
+From: Martin Langhoff <martin@laptop.org>
+Subject: [PATCH] gitk: add support for -G'regex' pickaxe variant
+Date: Thu,  7 Jun 2012 22:32:22 -0400
+Message-ID: <1339122742-28677-1-git-send-email-martin@laptop.org>
+Cc: Martin Langhoff <martin@laptop.org>
+To: gitster@pobox.com, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jun 08 04:32:50 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ScnqW-0000XD-OO
-	for gcvg-git-2@plane.gmane.org; Fri, 08 Jun 2012 03:18:37 +0200
+	id 1Scp0K-00082W-1k
+	for gcvg-git-2@plane.gmane.org; Fri, 08 Jun 2012 04:32:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759661Ab2FHBSc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 Jun 2012 21:18:32 -0400
-Received: from mail-ob0-f174.google.com ([209.85.214.174]:60479 "EHLO
+	id S1760230Ab2FHCcn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Jun 2012 22:32:43 -0400
+Received: from mail-ob0-f174.google.com ([209.85.214.174]:48685 "EHLO
 	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755253Ab2FHBSb (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Jun 2012 21:18:31 -0400
-Received: by obbtb18 with SMTP id tb18so1658890obb.19
-        for <git@vger.kernel.org>; Thu, 07 Jun 2012 18:18:31 -0700 (PDT)
+	with ESMTP id S1759958Ab2FHCcm (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Jun 2012 22:32:42 -0400
+Received: by obbtb18 with SMTP id tb18so1738265obb.19
+        for <git@vger.kernel.org>; Thu, 07 Jun 2012 19:32:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=xD3YFj1cWdc3C/MpJyqe0eSuA8M2YvSQRjvakcaKR9M=;
-        b=RfP6VBO8v+IbM6ZI0GCDDXcvZ0a6sWyVarJXou3jczKVeTBdFZFlXMl8ni6AvzHU4v
-         xb8KEenF2wBf3KbbcMRm8T5vvOJYSULQ+RHgyDln3zZIC0AQ77SCsaUY22H758RxJ2Ra
-         gChYQH89Y/NRtD13KX+6iBH0NTU1teaKy2IcsWi1hXDOVZo4gQrv8nsjX3mJOmlS3dor
-         m4aGlQ0/zVMb0WjsiKlOpHzO11UcKes5NK7wN6+2LI4L6FpvEPkcE6qTqD4Ipdgb+17F
-         AeiR3NjE7x+Uwy5jpZpDvENLgfoSS8Ah5YX8Ybpxc8mLBq3FaECtnmnsOtVR2dIVwCIc
-         p2/g==
-Received: by 10.60.1.37 with SMTP id 5mr3844725oej.10.1339118311225; Thu, 07
- Jun 2012 18:18:31 -0700 (PDT)
-Received: by 10.182.125.74 with HTTP; Thu, 7 Jun 2012 18:18:31 -0700 (PDT)
-In-Reply-To: <7vlijzjdx6.fsf@alter.siamese.dyndns.org>
+        h=sender:from:to:cc:subject:date:message-id:x-mailer;
+        bh=Cl658T3c1BGI+h3CVSlU6uNsiM8gO6po54eP72GDReg=;
+        b=A/DIdrex6GJfJWN7jK525roTEpdSkIzSxDHIpFkcDU+/KP6+VgSkbu0jtnuEma72Co
+         vGHTcJViJ/B8fc77/X4yddO7s6+yJ1x/qfudQGq4rShEhldugNBf2EyKWy/7XyTDHzlf
+         OPigG7x8vPiWrP99/0h+3tt6f+i5oaKAf9EuJ8tfqzdLJOV5zyJkJNs0LPySAlXnOuHT
+         PquKcu0ElkjfEWOXTj3777rAb9cAORnsZaFwz/0nIkKuock+qY0m7/mks2YB/IBqnh3p
+         igIN6P58UqQYxezTuZPGkD4TXTEIGKyuJAalTWn8pZ6LWB+GkTcYtrLhqtO7221KQdP9
+         qDPA==
+Received: by 10.60.9.134 with SMTP id z6mr4348204oea.46.1339122762222;
+        Thu, 07 Jun 2012 19:32:42 -0700 (PDT)
+Received: from martin-tp.gateway.2wire.net (108-209-173-113.lightspeed.miamfl.sbcglobal.net. [108.209.173.113])
+        by mx.google.com with ESMTPS id hd9sm4059620obc.6.2012.06.07.19.32.41
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 07 Jun 2012 19:32:41 -0700 (PDT)
+X-Mailer: git-send-email 1.7.7.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199460>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199461>
 
-On Thu, Jun 7, 2012 at 9:16 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Jeff King <peff@peff.net> writes:
->
->> I intentionally did not anchor it because the tests themselves did not,
->> and I worried that that there was some subtle portability issue there
->> (especially because of the magic "let there be two colons" part of the
->> pattern).
->
-> OK, fair enough (the "two colons" one I think was for Solaris).
+git log -G'regex' is a very usable alternative to the classic
+pickaxe. Minimal patch to make it usable from gitk.
+---
+ gitk-git/gitk |    5 ++++-
+ 1 files changed, 4 insertions(+), 1 deletions(-)
 
-It was indeed for Solaris.  I don't recall any other differences in
-the output between Solaris and Linux, so you could add the anchor and
-see if anyone makes noise.  I no longer have access to Solaris to
-test.
-
--Brandon
+diff --git a/gitk-git/gitk b/gitk-git/gitk
+index 22270ce..876b8f9 100755
+--- a/gitk-git/gitk
++++ b/gitk-git/gitk
+@@ -2232,7 +2232,8 @@ proc makewindow {} {
+     set gm [makedroplist .tf.lbar.gdttype gdttype \
+ 		[mc "containing:"] \
+ 		[mc "touching paths:"] \
+-		[mc "adding/removing string:"]]
++		[mc "adding/removing string:"] \
++		[mc "changes match regex:"]]
+     trace add variable gdttype write gdttype_change
+     pack .tf.lbar.gdttype -side left -fill y
+ 
+@@ -4595,6 +4596,8 @@ proc do_file_hl {serial} {
+ 	set gdtargs [concat -- $relative_paths]
+     } elseif {$gdttype eq [mc "adding/removing string:"]} {
+ 	set gdtargs [list "-S$highlight_files"]
++    } elseif {$gdttype eq [mc "changes match regex:"]} {
++	set gdtargs [list "-G$highlight_files"]
+     } else {
+ 	# must be "containing:", i.e. we're searching commit info
+ 	return
+-- 
+1.7.7.6
