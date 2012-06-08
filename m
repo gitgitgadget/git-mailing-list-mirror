@@ -1,82 +1,100 @@
-From: Lucien Kong <Lucien.Kong@ensimag.imag.fr>
-Subject: [PATCH] git-rebase.txt: "--onto" option updated
-Date: Fri,  8 Jun 2012 23:24:54 +0200
-Message-ID: <1339190694-11574-1-git-send-email-Lucien.Kong@ensimag.imag.fr>
-Cc: Lucien Kong <Lucien.Kong@ensimag.imag.fr>,
-	Valentin Duperray <Valentin.Duperray@ensimag.imag.fr>,
-	Franck Jonas <Franck.Jonas@ensimag.imag.fr>,
-	Thomas Nguy <Thomas.Nguy@ensimag.imag.fr>,
-	Huynh Khoi Nguyen Nguyen 
-	<Huynh-Khoi-Nguyen.Nguyen@ensimag.imag.fr>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jun 08 23:25:44 2012
+From: cheng renquan <crquan@gmail.com>
+Subject: Re: [PATCH] git fetch one tag only
+Date: Fri, 8 Jun 2012 14:46:06 -0700
+Message-ID: <CAH5vBdLGHpFCH3mWgNANTw4frzqSz=AO+kB12DSx55wn1hYJag@mail.gmail.com>
+References: <CAH5vBdK_M+7Hjk=juVeP7Phqvs2+npknFD-=45OVR032k5S-0A@mail.gmail.com>
+	<CAPc5daVwOuP_dPiHh5zcjV6kTvdb2FNhzXz_capEDhHgE5ZUKw@mail.gmail.com>
+	<CAH5vBdKPH_-cn=r-zxQKCOi5PB5D6vuSXrZxPeZJ+HYg-K9Yqw@mail.gmail.com>
+	<7vpq9bk7o5.fsf@alter.siamese.dyndns.org>
+	<7v8vfzjbhi.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jun 08 23:46:21 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Sd6gf-0008Cl-Rl
-	for gcvg-git-2@plane.gmane.org; Fri, 08 Jun 2012 23:25:42 +0200
+	id 1Sd70Z-0002qk-LE
+	for gcvg-git-2@plane.gmane.org; Fri, 08 Jun 2012 23:46:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759951Ab2FHVZD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Jun 2012 17:25:03 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:45327 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754285Ab2FHVZB (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Jun 2012 17:25:01 -0400
-Received: from ensimag.imag.fr (ensimag.imag.fr [195.221.228.12])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id q58LG9xx032100
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Fri, 8 Jun 2012 23:16:09 +0200
-Received: from ensibm.imag.fr (ensibm [195.221.228.8])
-	by ensimag.imag.fr (8.13.8/8.13.8/ImagV2.1.r_ens) with ESMTP id q58LOtTb019753;
-	Fri, 8 Jun 2012 23:24:55 +0200
-Received: from ensibm.imag.fr (localhost [127.0.0.1])
-	by ensibm.imag.fr (8.13.8/8.13.8/ImagV2.1.sb_ens.pm) with ESMTP id q58LOtDB011691;
-	Fri, 8 Jun 2012 23:24:55 +0200
-Received: (from konglu@localhost)
-	by ensibm.imag.fr (8.13.8/8.13.8/Submit) id q58LOsoT011690;
-	Fri, 8 Jun 2012 23:24:54 +0200
-X-Mailer: git-send-email 1.7.8
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Fri, 08 Jun 2012 23:16:10 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: q58LG9xx032100
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: lucien.kong@phelma.grenoble-inp.fr
-MailScanner-NULL-Check: 1339794974.24146@22OGWrg5zhfm6E25aFicIA
+	id S964914Ab2FHVqJ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 8 Jun 2012 17:46:09 -0400
+Received: from mail-we0-f174.google.com ([74.125.82.174]:59725 "EHLO
+	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S964867Ab2FHVqI convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 8 Jun 2012 17:46:08 -0400
+Received: by weyu7 with SMTP id u7so873842wey.19
+        for <git@vger.kernel.org>; Fri, 08 Jun 2012 14:46:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=Yz1NAm8+t/1rQ+IltUND1phuuhmS9Hh0MvU8tVeWG2Q=;
+        b=1BMVbuw9+76gJzCEj0J2c1litCG0hibeSL9eNrValyQpfGVko6s8ou/YYqXD8OY0Lv
+         9CG6OKj38Fk5W3LBbZ3g8I0vlwycBfoHpzuQvYJIAnjk0EFOoDcReiuSVcBgi3XgjGlY
+         6h0rHaphkXu5wmUo5+AU506PVcKy4TA1mvEF+j7nwk8oLbTogwXmjZgvjCLNuEQfOfaO
+         wfXeiBFZyOWoh6GPyj12WyUH+ai//Yro3uZMiam6BPNmHGpLsHDft/KXg51NslBeHaf2
+         QckZ2b24HXTSEp7kHZnMUzXa4VFTXSn24DmECLg/rE+DX44HmSUOTWxDS0fzj89840fZ
+         1bEA==
+Received: by 10.216.196.218 with SMTP id r68mr2029050wen.122.1339191966931;
+ Fri, 08 Jun 2012 14:46:06 -0700 (PDT)
+Received: by 10.216.136.80 with HTTP; Fri, 8 Jun 2012 14:46:06 -0700 (PDT)
+In-Reply-To: <7v8vfzjbhi.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199533>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199534>
 
-The description of the option "--onto" is changed to be consistent
-with the format of the other options.
+On Thu, Jun 7, 2012 at 10:08 AM, Junio C Hamano <gitster@pobox.com> wro=
+te:
+> =C2=A0* The auto-follow kicks in whenever you tell "fetch" to update =
+some
+> =C2=A0 refs locally. =C2=A0Maybe if we tweak the rule and auto-follow=
+ kick in
+> =C2=A0 only when you tell "fetch" to update some refs outside refs/ta=
+gs
+> =C2=A0 locally,
+>
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0$ git fetch $over_there tag v1.0.0
+>
+> =C2=A0 will fetch and store _only_ the v1.0.0 tag.
+>
+> =C2=A0 Of course, any behaviour change is a regression, and if done
+> =C2=A0 without an escape hatch, such a change robs people one useful
+> =C2=A0 feature: grab tag v1.0.0 and others older than that tag in one
+> =C2=A0 go.
+>
+> I won't be coding any of the above; just thinking aloud.
 
-Signed-off-by: Lucien Kong <Lucien.Kong@ensimag.imag.fr>
-Signed-off-by: Valentin Duperray <Valentin.Duperray@ensimag.imag.fr>
-Signed-off-by: Franck Jonas <Franck.Jonas@ensimag.imag.fr>
-Signed-off-by: Thomas Nguy <Thomas.Nguy@ensimag.imag.fr>
-Signed-off-by: Huynh Khoi Nguyen Nguyen <Huynh-Khoi-Nguyen.Nguyen@ensimag.imag.fr>
-Signed-off-by: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
----
- Documentation/git-rebase.txt |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+Here is the code to implement your 2nd approach,
+and I don't think this behaviour change is a regression,
+because if someone is really relying this fetch one tag actually fetch
+all tags feature
+he is relying on a broken feature, and should be corrected:
+if one really need to fetch all tags, that's what explicit "--tags"
+designed and documented for
 
-diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
-index 147fa1a..e6f64ab 100644
---- a/Documentation/git-rebase.txt
-+++ b/Documentation/git-rebase.txt
-@@ -210,7 +210,7 @@ rebase.autosquash::
- 
- OPTIONS
- -------
--<newbase>::
-+--onto <newbase>::
- 	Starting point at which to create the new commits. If the
- 	--onto option is not specified, the starting point is
- 	<upstream>.  May be any valid commit, and not just an
--- 
-1.7.8
+
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index bb9a074..b6d7ef3 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -158,7 +158,8 @@ static struct ref *get_ref_map(struct transport *tr=
+ansport,
+ 	if (ref_count || tags =3D=3D TAGS_SET) {
+ 		for (i =3D 0; i < ref_count; i++) {
+ 			get_fetch_map(remote_refs, &refs[i], &tail, 0);
+-			if (refs[i].dst && refs[i].dst[0])
++			if (refs[i].dst && refs[i].dst[0]
++			    && prefixcmp(refs[i].dst, "refs/tags/"))
+ 				*autotags =3D 1;
+ 		}
+ 		/* Merge everything on the command line, but not --tags */
+
+--=20
+cheng renquan (=E7=A8=8B=E4=BB=BB=E5=85=A8)
