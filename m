@@ -1,73 +1,71 @@
-From: konglu@minatec.inpg.fr
-Subject: Re: [PATCHv3 1/2] git-rebase.txt: "--onto" option updated
-Date: Fri, 08 Jun 2012 22:08:35 +0200
-Message-ID: <20120608220835.Horde.eP-uRXwdC4BP0lvDP2D2BYA@webmail.minatec.grenoble-inp.fr>
-References: <1338978856-26838-1-git-send-email-Lucien.Kong@ensimag.imag.fr>
- <1339167235-2009-1-git-send-email-Lucien.Kong@ensimag.imag.fr>
- <7vipf1d96k.fsf@alter.siamese.dyndns.org>
- <20120608210630.Horde.joXbQHwdC4BP0k02QgDFpMA@webmail.minatec.grenoble-inp.fr>
- <7v8vfxd1j3.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [BUG] Out of memory on git log --simplify-by-decoration
+ --first-parent
+Date: Fri, 08 Jun 2012 13:09:10 -0700
+Message-ID: <7vwr3hbm6x.fsf@alter.siamese.dyndns.org>
+References: <4FD24330.2030805@lyx.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed	DelSp=Yes
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Lucien Kong <Lucien.Kong@ensimag.imag.fr>, git@vger.kernel.org,
-	Valentin Duperray <Valentin.Duperray@ensimag.imag.fr>,
-	Franck Jonas <Franck.Jonas@ensimag.imag.fr>,
-	Thomas Nguy <Thomas.Nguy@ensimag.imag.fr>,
-	Huynh Khoi Nguyen Nguyen 
-	<Huynh-Khoi-Nguyen.Nguyen@ensimag.imag.fr>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jun 08 22:08:49 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Vincent van Ravesteijn <vfr@lyx.org>
+X-From: git-owner@vger.kernel.org Fri Jun 08 22:09:23 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Sd5UB-0001n0-R2
-	for gcvg-git-2@plane.gmane.org; Fri, 08 Jun 2012 22:08:44 +0200
+	id 1Sd5Uj-0002cB-Al
+	for gcvg-git-2@plane.gmane.org; Fri, 08 Jun 2012 22:09:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759009Ab2FHUIk convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 8 Jun 2012 16:08:40 -0400
-Received: from v-smtp.minatec.grenoble-inp.fr ([147.173.216.28]:59889 "EHLO
-	v-smtp.minatec.grenoble-inp.fr" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1758669Ab2FHUIj (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 8 Jun 2012 16:08:39 -0400
-Received: from localhost (www02.minatec.grenoble-inp.fr [147.173.216.15])
-	by v-smtp.minatec.grenoble-inp.fr (Postfix) with ESMTP id CF39A1A030B;
-	Fri,  8 Jun 2012 22:08:35 +0200 (CEST)
-Received: from reverse.completel.net (reverse.completel.net [92.103.38.66])
- by webmail.minatec.grenoble-inp.fr (Horde Framework) with HTTP; Fri, 08 Jun
- 2012 22:08:35 +0200
-In-Reply-To: <7v8vfxd1j3.fsf@alter.siamese.dyndns.org>
-User-Agent: Internet Messaging Program (IMP) H4 (5.0.17)
-Content-Disposition: inline
+	id S1759234Ab2FHUJN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Jun 2012 16:09:13 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50898 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1759167Ab2FHUJM (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Jun 2012 16:09:12 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 48BFE892C;
+	Fri,  8 Jun 2012 16:09:12 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=fLaOdhGGOOSV6hTifHSwlITzHEU=; b=wn8h3d
+	rj5bV99Dj6VWzxRMdVDhtxchDTxB8W4QyGYAGLBBDpFCIdEIG7esVSNSX5sqeabs
+	2iyugSW30uY+qMnAQG0gIQ7sssGF4XO9IABl5lIij2XSwJLzfgRgZYm6NR5cti6U
+	/wwSZA0DMF4NyjZEcKil5cFWWSRui8RglhQ5A=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=voOZv6QhO6bwPvBBH0oXHpMiMccGAhOO
+	Y5MUC0HbLaLUNwHLLiOukyvv+sIS0/6zuqk9l9xWtknUW/Gv0t3ebyoBYJOk+2Zm
+	oyKwgQfUMzRGndBzJix+cydTe8JH+rMYy4QwFQAMZ4o0m4hErM21SSKyqXutuFnG
+	jLW/bH1zesY=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 406D28929;
+	Fri,  8 Jun 2012 16:09:12 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id AD5558925; Fri,  8 Jun 2012
+ 16:09:11 -0400 (EDT)
+In-Reply-To: <4FD24330.2030805@lyx.org> (Vincent van Ravesteijn's message of
+ "Fri, 08 Jun 2012 20:23:44 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: D01E847A-B1A5-11E1-8B19-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199527>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199528>
 
+Vincent van Ravesteijn <vfr@lyx.org> writes:
 
-Junio C Hamano <gitster@pobox.com> a =E9crit=A0:
-
-> konglu@minatec.inpg.fr writes:
+> git dies after calling the following command on the git repo:
 >
->> That's what I thought, but it appeared to me that the description
->>
->> --onto <newbase>::
->>          Starting point at which to create the new commits.
->>          If the --onto option is not specified, the starting
->>          point is <upstream>.  May be any valid commit, and
->> 	not just an existing branch name.
->>
->> only focus on the parameter <newbase>.
->
-> Talking about <newbase> is equivalent to talking about --onto isn't
-> it?  What the command does is described far above upfront in the
-> manual page; the description of options is the place to explain what
-> details are affected by giving (or not giving) the option in the
-> behaviour that was explained earlier.
+> $ git log f623ca1c...b9cfa4e9 --simplify-by-decoration --first-parent
 
-Alright, gonna keep it unchanged then :).
+I wouldn't be surprised anything random happens when --first-parent
+is used together with simplify_merges(); the function needs full
+analysis of all commits in the specified range, and first-parent
+traversal specifically tells us not to descend into other parents.
+It might not be a bad idea to forbid this combination when the
+command line options are parsed.
+
+What information were you trying to get out of the above command?
