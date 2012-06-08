@@ -1,80 +1,130 @@
-From: Leila <muhtasib@gmail.com>
-Subject: Re: gitbook link broken in spanish
-Date: Fri, 8 Jun 2012 10:07:11 -0400
-Message-ID: <CAA3EhH+g4A8RXvmr_SVi74SzGOqXktz3U6=V1KUEUD6ZAEm9XQ@mail.gmail.com>
-References: <4FD1F214.8020306@gmail.com> <20120608130554.GA12627@sigill.intra.peff.net>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCHv1] Export file in git-remote-mediawiki
+Date: Fri, 08 Jun 2012 16:07:23 +0200
+Message-ID: <vpqwr3hrj6s.fsf@bauges.imag.fr>
+References: <1339162024-3120-1-git-send-email-nguyenkimthuat@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?ISO-8859-1?Q?Mart=EDn_Ochoa?= <mmochoa@gmail.com>,
-	git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Jun 08 16:07:40 2012
+Content-Type: text/plain
+Cc: git@vger.kernel.org, nguyenkimthuat <nguyenkimthuat@gmail.com>,
+	VOLEK Pavel <Pavel.Volek@ensimag.imag.fr>,
+	ROUCHER IGLESIAS Javier <roucherj@ensimag.imag.fr>
+To: Kim Thuat NGUYEN <kim-thuat.nguyen@ensimag.imag.fr>
+X-From: git-owner@vger.kernel.org Fri Jun 08 16:07:43 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Sczqk-0007Tm-9v
-	for gcvg-git-2@plane.gmane.org; Fri, 08 Jun 2012 16:07:38 +0200
+	id 1Sczqk-0007Tm-PD
+	for gcvg-git-2@plane.gmane.org; Fri, 08 Jun 2012 16:07:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757372Ab2FHOHe convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 8 Jun 2012 10:07:34 -0400
-Received: from mail-vb0-f46.google.com ([209.85.212.46]:45135 "EHLO
-	mail-vb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757180Ab2FHOHc convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 8 Jun 2012 10:07:32 -0400
-Received: by vbbff1 with SMTP id ff1so1091473vbb.19
-        for <git@vger.kernel.org>; Fri, 08 Jun 2012 07:07:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=iGMpGCNKrhXdwNu7smG9bIZvm/wD/mp5WoBJ2TbPhds=;
-        b=X9xA5ZLTILgGjOEvjU8Q2mp9D93y7YBKETpFTFBGxTuSPJqP9a749v84i+OdnCUzpH
-         fb3u1HLVI6j2LqqUkXNqcghmVhAUtm5bC9EGeixiAIFqWd2oo7wCr0E+Rs8BegQ0As2A
-         lkIiZCUzqKgN60WAAjk913s+/1Z/4SR1/6Ve5aefVaqSoG/BGUq1Pq+jZoqp0kOe0n7q
-         EZ98kN0otq4bBRRRRpfHdEUEcYBKLodZWFDimYc6fKfRAoPumJvyHWJoInDetMbmU62U
-         xC9NHPQSiwtMsopaLNas+l2ChQ/fyF+e1wo3jgVoBGlapwwxwT4rEZTahCwPS2VfLqRH
-         1pqg==
-Received: by 10.52.97.41 with SMTP id dx9mr5397425vdb.89.1339164452056; Fri,
- 08 Jun 2012 07:07:32 -0700 (PDT)
-Received: by 10.52.37.233 with HTTP; Fri, 8 Jun 2012 07:07:11 -0700 (PDT)
-In-Reply-To: <20120608130554.GA12627@sigill.intra.peff.net>
+	id S1757256Ab2FHOHd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Jun 2012 10:07:33 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:40940 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756555Ab2FHOHc (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Jun 2012 10:07:32 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id q58DweuX026244
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Fri, 8 Jun 2012 15:58:40 +0200
+Received: from bauges.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1SczqW-0006t3-SO; Fri, 08 Jun 2012 16:07:24 +0200
+In-Reply-To: <1339162024-3120-1-git-send-email-nguyenkimthuat@gmail.com> (Kim
+	Thuat NGUYEN's message of "Fri, 8 Jun 2012 15:27:04 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.93 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Fri, 08 Jun 2012 15:58:40 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: q58DweuX026244
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1339768721.13022@8KgKYPlgHlrtKtzc/YdP2g
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199490>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199491>
 
-The first external link 'Introductory reference and tutorial' is also b=
-roken:
-http://gitref.org/
+> Subject: Re: [PATCHv1] Export file in git-remote-mediawiki
 
-On the page:
-http://git-scm.com/doc/ext
+We usually write commit subject lines as "subsystem: description", hence
 
-I'll open an issue if it lets me.
+git-remote-mediawiki: export "File:" attachments
 
-Thanks,
-Leila
+Kim Thuat NGUYEN <kim-thuat.nguyen@ensimag.imag.fr> writes:
 
-On Fri, Jun 8, 2012 at 9:05 AM, Jeff King <peff@peff.net> wrote:
-> On Fri, Jun 08, 2012 at 09:37:40AM -0300, Mart=EDn Ochoa wrote:
+> From: nguyenkimthuat <nguyenkimthuat@gmail.com>
 >
->> I found a link broken in
->> [...]
->> http://git-scm.com/book/es/Ramificaciones-en-Git-%C2%BFQu%C3%A9-es-u=
-na-rama?
->
-> Yeah, it definitely appears broken. git-scm.com bugs are tracked at i=
-ts
-> GitHub repo. I've opened an issue for you:
->
-> =A0https://github.com/github/gitscm-next/issues/142
->
-> -Peff
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at =A0http://vger.kernel.org/majordomo-info.html
+> This patch adds the functionnality to export the file attachements from the local git's repository using the API of mediawiki. It also provides the possibility for
+> an user to delete a page in the local repository Git which means the page  will be deleted in the wiki site after user do the 'push'.
+
+Please, avoid long lines (> 80 characters).
+
+> +	open(my $g,"-|","git " . $_[0]); 
+
+Space after , please.
+
+> +	my %hashFiles = get_file_extensions_maybe($complete_file_name);
+
+What does this function do? My first understanding was that it queried
+the wiki for allowed file extensions, but why does it need the file
+name? It does nothing if $complete_file_name ends with .mw, but then why
+do you run it before entering the following if() statement?
+
+>  	if (substr($complete_file_name,-3) eq ".mw") {
+>  		my $title = substr($complete_file_name,0,-3);
+
+> @@ -653,39 +666,74 @@ sub mw_push_file {
+>  			# special priviledges. A common
+>  			# convention is to replace the page
+>  			# with this content instead:
+> -			$file_content = DELETED_CONTENT;
+> +			mw_connect_maybe();
+> +			my $re = $mediawiki->edit( {
+> +				action => 'delete',
+> +				title => $title,
+> +				reason => $summary 
+> +				} )|| die $mediawiki-> {error}->{code} . ':' . $mediawiki->{error}->{details};
+
+This is an unrelated topic, and should not appear in this patch.
+
+If you want to propagate page deletions, then you also need to deal with
+the case where the user is not allowed to do so (very common on
+MediaWiki). Also, if you change the code corresponding to the comment
+right above, you should update the comment too.
+
+> +	elsif (exists($hashFiles{$extension}))      
+> +	{
+
+Brace on the same line as else please.
+
+> +			} else {
+> +				print STDERR "Empty file. Can not upload \n ";
+> +				}
+
+Broken indentation.
+
+>  	} else {
+>  		print STDERR "$complete_file_name not a mediawiki file (Not pushable on this version of git-remote-mediawiki).\n"
+>  	}
+
+Isn't the very point of this patch to remove this error message?
+
+> @@ -825,3 +873,25 @@ sub mw_push_revision {
+>  	print STDOUT "ok $remote\n";
+>  	return 1;
+>  }
+> +
+> +sub get_file_extensions_maybe {
+> +	my $file_name = shift;
+> +	my $est_mw_page = substr($file_name,-3) eq ".mw";
+
+English please. "est" is french ;-).
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
