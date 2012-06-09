@@ -1,91 +1,78 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCHv6 4/4] Write to $XDG_CONFIG_HOME/git/config file
-Date: Fri, 08 Jun 2012 23:19:17 -0700
-Message-ID: <7vipf1aty2.fsf@alter.siamese.dyndns.org>
-References: <1338754481-27012-1-git-send-email-Huynh-Khoi-Nguyen.Nguyen@ensimag.imag.fr>
- <1338988885-21933-1-git-send-email-Huynh-Khoi-Nguyen.Nguyen@ensimag.imag.fr>
- <1338988885-21933-4-git-send-email-Huynh-Khoi-Nguyen.Nguyen@ensimag.imag.fr>
- <CAJDDKr6sCrwy99-5-sOaAuNjYmnw73CicF3PyYMe8hvf38oFvg@mail.gmail.com>
+From: konglu@minatec.inpg.fr
+Subject: Re: [PATCHv3 2/2] rebase [-i --exec | -ix] <CMD>...
+Date: Sat, 09 Jun 2012 08:47:07 +0200
+Message-ID: <20120609084707.Horde.CGejZXwdC4BP0vFrryT2xDA@webmail.minatec.grenoble-inp.fr>
+References: <1338978856-26838-1-git-send-email-Lucien.Kong@ensimag.imag.fr>
+ <1339167235-2009-1-git-send-email-Lucien.Kong@ensimag.imag.fr>
+ <1339167235-2009-2-git-send-email-Lucien.Kong@ensimag.imag.fr>
+ <4FD24AE9.8020101@web.de>
+ <20120608211540.Horde.SRiCRHwdC4BP0k9c5TdWBaA@webmail.minatec.grenoble-inp.fr>
+ <4FD258AD.6070601@web.de>
+ <20120608220751.Horde.HHn7fXwdC4BP0luXQhxWxBA@webmail.minatec.grenoble-inp.fr>
+ <4FD265C7.6050807@web.de>
+ <20120608230327.Horde.IXfFTHwdC4BP0mifi63m9KA@webmail.minatec.grenoble-inp.fr>
+ <4FD2E9B5.1010709@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Huynh Khoi Nguyen NGUYEN 
-	<Huynh-Khoi-Nguyen.Nguyen@ensimag.imag.fr>, git@vger.kernel.org,
-	Matthieu.Moy@grenoble-inp.fr,
-	NGUYEN Huynh Khoi Nguyen <nguyenhu@ensibm.imag.fr>,
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed	DelSp=Yes
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Lucien Kong <Lucien.Kong@ensimag.imag.fr>, git@vger.kernel.org,
 	Valentin Duperray <Valentin.Duperray@ensimag.imag.fr>,
 	Franck Jonas <Franck.Jonas@ensimag.imag.fr>,
-	Lucien Kong <Lucien.Kong@ensimag.imag.fr>,
-	Thomas Nguy <Thomas.Nguy@ensimag.imag.fr>
-To: David Aguilar <davvid@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jun 09 08:19:48 2012
+	Thomas Nguy <Thomas.Nguy@ensimag.imag.fr>,
+	Huynh Khoi Nguyen Nguyen 
+	<Huynh-Khoi-Nguyen.Nguyen@ensimag.imag.fr>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+To: Torsten =?iso-8859-1?b?QvZnZXJzaGF1c2Vu?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Sat Jun 09 08:56:37 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SdF1X-0000gn-Tl
-	for gcvg-git-2@plane.gmane.org; Sat, 09 Jun 2012 08:19:48 +0200
+	id 1SdFbB-0001qj-CD
+	for gcvg-git-2@plane.gmane.org; Sat, 09 Jun 2012 08:56:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751535Ab2FIGTV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 9 Jun 2012 02:19:21 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:33588 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750817Ab2FIGTU (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 9 Jun 2012 02:19:20 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BC1305297;
-	Sat,  9 Jun 2012 02:19:19 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=8noYdYYxrtiJdSHU5NNioUEplqg=; b=nizbSn
-	AOJXKOtJkSV9uuv8IyhUIlTC7RELJJBDq2JItCuUQjfYw9BxN7wy5PXA7IXizfpo
-	xxyaYMKggmO+ZCpFKpLh0LEYT99oOEo6Qjc3fWiH3TsINRYxlP6vrCncWJ+E/6lG
-	YRdizNrS7UN9uKnVA1Hv/L40TRkLk0lKm/DbI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Pgvvwp9MPdAp/TUDxHCcQbKkiJbeXOl1
-	LdrI9Zjw1dUJtEbkFxC5xtxWmRD0VNnbdeuxJUE4Qm0/LkJW2o9vr4dRqOs4eMMk
-	09rA9Qt25UG0GeUi7hQ2DwYa/Jf8mMTH64EoUsmdYHrDgS0r3pPDAdp4ToMquFsw
-	v9NCXjuTA4M=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B1FCA5296;
-	Sat,  9 Jun 2012 02:19:19 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 345CB5295; Sat,  9 Jun 2012
- 02:19:19 -0400 (EDT)
-In-Reply-To: <CAJDDKr6sCrwy99-5-sOaAuNjYmnw73CicF3PyYMe8hvf38oFvg@mail.gmail.com> (David
- Aguilar's message of "Fri, 8 Jun 2012 20:48:49 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 0BE9EEFE-B1FB-11E1-B13E-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751535Ab2FIGzu convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 9 Jun 2012 02:55:50 -0400
+Received: from v-smtp.minatec.grenoble-inp.fr ([147.173.216.28]:45461 "EHLO
+	v-smtp.minatec.grenoble-inp.fr" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751091Ab2FIGzu (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 9 Jun 2012 02:55:50 -0400
+Received: from localhost (www02.minatec.grenoble-inp.fr [147.173.216.15])
+	by v-smtp.minatec.grenoble-inp.fr (Postfix) with ESMTP id EBEAE1A1206;
+	Sat,  9 Jun 2012 08:47:07 +0200 (CEST)
+Received: from reverse.completel.net (reverse.completel.net [92.103.38.66])
+ by webmail.minatec.grenoble-inp.fr (Horde Framework) with HTTP; Sat, 09 Jun
+ 2012 08:47:07 +0200
+In-Reply-To: <4FD2E9B5.1010709@web.de>
+User-Agent: Internet Messaging Program (IMP) H4 (5.0.17)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199545>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199546>
 
-David Aguilar <davvid@gmail.com> writes:
 
-> I'm all for this change too.
+Torsten B=F6gershausen <tboegi@web.de> a =E9crit=A0:
 
-Do you mean just the general direction, or including the
-implementation?
+> Hej,
+> I have 2 patches with the headline "[PATCHv3 1/2" in my in box.
+> None of them is dealing in any kind with upgrading a command to =20
+> understand "exec".
 
-> I did a little research RE: the OSX and Windows question.
->
-> glib makes no differentiation between OSX and Linux,
-> but Windows does have its own #ifdef.
->
-> http://git.gnome.org/browse/glib/tree/glib/gutils.c#n1251
->
-> I certainly don't think this should affect this series,
-> I'm just noting it as something that the Windows folks might
-> care about.  Perhaps something for compat/ in the future?
->
-> The downside to doing the same as glib is more documentation.
-> The upside is... consistency?
+Here you can see the thread of the discussion:
 
-Probably.  I think we should follow whatever existing and prevalent
-practice is, and my gut feeling is that we would end up first doing
-POSIX only thing in my tree, and msysgit folks will quickly feed me
-updates to tweak the behaviour to match what of Windows version.
+http://thread.gmane.org/gmane.comp.version-control.git/199497
+
+> To be able to test under Mac OS it could be helpful if you just re-se=
+nd
+> one patch to my email.
+> Then I can try to re-do the patch based on f623ca1cae600e97cb0b38 and
+> test it under Mac OS.
+
+Alright, gonna send you the patch in one part so that it can be applied
+alone :).
+
+Lucien Kong
