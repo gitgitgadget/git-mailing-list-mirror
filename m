@@ -1,95 +1,89 @@
-From: nguyenhu@minatec.inpg.fr
-Subject: Re: [PATCHv6 1/4] Read (but not write) from
- $XDG_CONFIG_HOME/git/config file
-Date: Sat, 09 Jun 2012 12:53:36 +0200
-Message-ID: <20120609125336.Horde.iUq0R3wdC4BP0yswpGlGBZA@webmail.minatec.grenoble-inp.fr>
-References: <1338754481-27012-1-git-send-email-Huynh-Khoi-Nguyen.Nguyen@ensimag.imag.fr>
- <1338988885-21933-1-git-send-email-Huynh-Khoi-Nguyen.Nguyen@ensimag.imag.fr>
- <7vpq9aenl0.fsf@alter.siamese.dyndns.org>
- <20120608142601.Horde.Tq7UO3wdC4BP0e9ZGAy1EwA@webmail.minatec.grenoble-inp.fr>
- <7vvcj1dep7.fsf@alter.siamese.dyndns.org>
+From: Heiko Voigt <hvoigt@hvoigt.net>
+Subject: [PATCH] git-gui: recognize submodule diff when replaced by file
+Date: Sat, 9 Jun 2012 15:47:29 +0200
+Message-ID: <20120609134729.GA16268@book.hvoigt.net>
+References: <CAOkDyE9q1n=oLoEXXxurDjNM0B2+cZ9eoeGE57F9hEQUjK0hZg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed	DelSp=Yes
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Huynh Khoi Nguyen NGUYEN 
-	<Huynh-Khoi-Nguyen.Nguyen@ensimag.imag.fr>,
-	Matthieu.Moy@grenoble-inp.fr,
-	Valentin Duperray <Valentin.Duperray@ensimag.imag.fr>,
-	Franck Jonas <Franck.Jonas@ensimag.imag.fr>,
-	Lucien Kong <Lucien.Kong@ensimag.imag.fr>,
-	Thomas Nguy <Thomas.Nguy@ensimag.imag.fr>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jun 09 13:22:10 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Adam Spiers <git@adamspiers.org>,
+	Pat Thoyts <patthoyts@googlemail.com>
+X-From: git-owner@vger.kernel.org Sat Jun 09 15:51:33 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SdJjh-0002If-Fy
-	for gcvg-git-2@plane.gmane.org; Sat, 09 Jun 2012 13:21:41 +0200
+	id 1SdM4d-0004rZ-VG
+	for gcvg-git-2@plane.gmane.org; Sat, 09 Jun 2012 15:51:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751840Ab2FILVh convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 9 Jun 2012 07:21:37 -0400
-Received: from v-smtp.minatec.grenoble-inp.fr ([147.173.216.28]:51908 "EHLO
-	v-smtp.minatec.grenoble-inp.fr" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750884Ab2FILVg (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 9 Jun 2012 07:21:36 -0400
-Received: from localhost (www02.minatec.grenoble-inp.fr [147.173.216.15])
-	by v-smtp.minatec.grenoble-inp.fr (Postfix) with ESMTP id 04C3B1A340C;
-	Sat,  9 Jun 2012 12:53:37 +0200 (CEST)
-Received: from 183.24.91.79.rev.sfr.net (183.24.91.79.rev.sfr.net
- [79.91.24.183]) by webmail.minatec.grenoble-inp.fr (Horde Framework) with
- HTTP; Sat, 09 Jun 2012 12:53:36 +0200
-In-Reply-To: <7vvcj1dep7.fsf@alter.siamese.dyndns.org>
-User-Agent: Internet Messaging Program (IMP) H4 (5.0.17)
+	id S1753235Ab2FINu7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 9 Jun 2012 09:50:59 -0400
+Received: from smtprelay01.ispgateway.de ([80.67.18.43]:59760 "EHLO
+	smtprelay01.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751806Ab2FINu6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 9 Jun 2012 09:50:58 -0400
+Received: from [77.20.33.80] (helo=localhost)
+	by smtprelay01.ispgateway.de with esmtpsa (TLSv1:AES256-SHA:256)
+	(Exim 4.68)
+	(envelope-from <hvoigt@hvoigt.net>)
+	id 1SdM0o-0006eI-IA; Sat, 09 Jun 2012 15:47:30 +0200
 Content-Disposition: inline
+In-Reply-To: <CAOkDyE9q1n=oLoEXXxurDjNM0B2+cZ9eoeGE57F9hEQUjK0hZg@mail.gmail.com>
+User-Agent: Mutt/1.5.19 (2009-01-05)
+X-Df-Sender: aHZvaWd0QGh2b2lndC5uZXQ=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199548>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199549>
 
+When coloring the diff in submodule mode we previously just looked
+for the submodule change markers and not normal diff markers. Since
+a submodule can be replaced by a file and vice versa lets also support
+hunk, + and - lines.
 
-Junio C Hamano <gitster@pobox.com> a =E9crit=A0:
+Signed-off-by: Heiko Voigt <hvoigt@hvoigt.net>
+---
+Hi,
 
->> char *mkpathdup(const char *fmt, ...)
->> {
->> 	char *path;
->> 	struct strbuf sb =3D STRBUF_INIT;
->> 	va_list args;
->>
->> 	va_start(args, fmt);
->> 	strbuf_vaddf(&sb, fmt, args);
->> 	va_end(args);
->> 	path =3D sb.buf;
->>
->> 	strbuf_release(&sb);
->> 	return xstrdup(cleanup_path(path));
->> }
->
-> Modulo
->
-> 	path =3D strbuf_detach(&sb, NULL);
->
-> that is more or less what I meant.
+On Fri, Jun 01, 2012 at 11:31:26AM +0100, Adam Spiers wrote:
+> At this point, git citool outputs:
+> 
+>     error: Unhandled submodule diff marker: {@@ }
+>     error: Unhandled submodule diff marker: {+on}
 
-So now the mkpathdup() function looks like:
+This fixes that error message (and is hopefully doing the right thing).
 
-char *mkpathdup(const char *fmt, ...)
-{
-	char *path;
-	struct strbuf sb =3D STRBUF_INIT;
-	va_list args;
+There will be another patch fixing the error popup.
 
-	va_start(args, fmt);
-	strbuf_vaddf(&sb, fmt, args);
-	va_end(args);
-	path =3D strbuf_detach(&sb, NULL);
+Cheers Heiko
 
-	strbuf_release(&sb);
-	return path;
-}
+ git-gui/lib/diff.tcl | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
-This new variation of mkpathdup() function both fix the bug addressed
-by commit 05bab3ea and avoid the use of bounded buffer.
+diff --git a/git-gui/lib/diff.tcl b/git-gui/lib/diff.tcl
+index ec44055..a3c997b 100644
+--- a/git-gui/lib/diff.tcl
++++ b/git-gui/lib/diff.tcl
+@@ -467,8 +467,16 @@ proc read_diff {fd conflict_size cont_info} {
+ 				{  >} {set tags d_+}
+ 				{  W} {set tags {}}
+ 				default {
+-					puts "error: Unhandled submodule diff marker: {$op}"
+-					set tags {}
++					set op [string index $line 0]
++					switch -- $op {
++						{-} {set tags d_-}
++						{+} {set tags d_+}
++						{@} {set tags d_@}
++						default {
++							puts "error: Unhandled submodule diff marker: {$op}"
++							set tags {}
++						}
++					}
+ 				}
+ 				}
+ 			}
+-- 
+1.7.10.2.522.g93b45fe
