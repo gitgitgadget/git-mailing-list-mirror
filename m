@@ -1,120 +1,79 @@
 From: konglu@minatec.inpg.fr
-Subject: Re: [PATCH_v1] add 'git credential' plumbing command
-Date: Sat, 09 Jun 2012 21:52:36 +0200
-Message-ID: <20120609215236.Horde.J-h4cnwdC4BP06mEUeqxRlA@webmail.minatec.grenoble-inp.fr>
-References: <1339267502-13803-1-git-send-email-Javier.Roucher-Iglesias@ensimag.imag.fr>
+Subject: Re: [PATCH] git-status: Show empty directories
+Date: Sat, 09 Jun 2012 22:13:15 +0200
+Message-ID: <20120609221315.Horde.fN5FP3wdC4BP065b3FviijA@webmail.minatec.grenoble-inp.fr>
+References: <1339270806-65013-1-git-send-email-muhtasib@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1;
 	format=flowed	DelSp=Yes
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Javier Roucher <jroucher@gmail.com>,
-	Pavel Volek <Pavel.Volek@ensimag.imag.fr>,
-	NGUYEN Kim Thuat <Kim-Thuat.Nguyen@ensimag.imag.fr>,
-	ROUCHER IGLESIAS Javier <roucherj@ensimag.imag.fr>,
-	Matthieu Moy <Matthieu.Moy@imag.fr>
-To: Javier.Roucher-Iglesias@ensimag.imag.fr
-X-From: git-owner@vger.kernel.org Sat Jun 09 22:21:57 2012
+Cc: git@vger.kernel.org
+To: Leila Muhtasib <muhtasib@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jun 09 22:32:36 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SdSAW-00035B-Vo
-	for gcvg-git-2@plane.gmane.org; Sat, 09 Jun 2012 22:21:57 +0200
+	id 1SdSKl-0004nn-5h
+	for gcvg-git-2@plane.gmane.org; Sat, 09 Jun 2012 22:32:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752103Ab2FIUVS convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 9 Jun 2012 16:21:18 -0400
-Received: from v-smtp.minatec.grenoble-inp.fr ([147.173.216.28]:47369 "EHLO
+	id S1751895Ab2FIUbt convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 9 Jun 2012 16:31:49 -0400
+Received: from v-smtp.minatec.grenoble-inp.fr ([147.173.216.28]:32785 "EHLO
 	v-smtp.minatec.grenoble-inp.fr" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751299Ab2FIUVR (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 9 Jun 2012 16:21:17 -0400
+	by vger.kernel.org with ESMTP id S1751299Ab2FIUbs (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 9 Jun 2012 16:31:48 -0400
 Received: from localhost (www02.minatec.grenoble-inp.fr [147.173.216.15])
-	by v-smtp.minatec.grenoble-inp.fr (Postfix) with ESMTP id DD1F51A161E;
-	Sat,  9 Jun 2012 21:52:36 +0200 (CEST)
+	by v-smtp.minatec.grenoble-inp.fr (Postfix) with ESMTP id 6DEA41A0FEF;
+	Sat,  9 Jun 2012 22:13:16 +0200 (CEST)
 Received: from reverse.completel.net (reverse.completel.net [92.103.38.66])
  by webmail.minatec.grenoble-inp.fr (Horde Framework) with HTTP; Sat, 09 Jun
- 2012 21:52:36 +0200
-In-Reply-To: <1339267502-13803-1-git-send-email-Javier.Roucher-Iglesias@ensimag.imag.fr>
+ 2012 22:13:15 +0200
+In-Reply-To: <1339270806-65013-1-git-send-email-muhtasib@gmail.com>
 User-Agent: Internet Messaging Program (IMP) H4 (5.0.17)
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199555>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199556>
 
 
-Javier.Roucher-Iglesias@ensimag.imag.fr a =E9crit=A0:
+Leila Muhtasib <muhtasib@gmail.com> a =E9crit=A0:
 
-> +git-credential - Providing and strore user credentials to git
+>  wt-status.c |   24 +++++++++++++++++++-----
+>  1 files changed, 19 insertions(+), 5 deletions(-)
 
-s/Providing/Provides/ & s/strore/store
+Do not forget to also update the test that need 'git
+status'. For example, most of the tests in t7508 are
+broken with your patch (the change is not huge, just
+adding "and directories" at the end of "untracked files:"
+here and there and maybe some other minor details).
+Otherwise, the idea seems good to me :).
 
-> +-If git-credential system have the password already stored
-> +git-credential will answer with by STDOUT:
+>  	for (i =3D 0; i < dir.nr; i++) {
+>  		struct dir_entry *ent =3D dir.entries[i];
+>  		if (cache_name_is_other(ent->name, ent->len) &&
+> -		    match_pathspec(s->pathspec, ent->name, ent->len, 0, NULL))
+> -			string_list_insert(&s->untracked, ent->name);
+> +		    match_pathspec(s->pathspec, ent->name, ent->len, 0, NULL)) {
+> +			if (is_empty_dir(ent->name)) {
+> +				struct strbuf buf_name =3D STRBUF_INIT;
+> +				strbuf_addstr(&buf_name, ent->name);
+> +				strbuf_addstr(&buf_name, " (empty directories cannot be added)")=
+;
+> +				string_list_insert(&s->untracked, buf_name.buf);
+> +				strbuf_release(&buf_name);
+> +			}
+> +			else
+> +				string_list_insert(&s->untracked, ent->name);
 
-s/have/has/
-
-> +Then if the password is correct, (note: is not git credential
-> +how decides if password is correct or not. Is the external system
-> +that have to authenticate the user) it can be stored using command
-> +'git crendential approve' by providing the structure, by STDIN.
-
-Wouldn't the note be "it's not git credential that decides if the passw=
-ord is
-correct or not. That part is done by the external system" ?
-
-> +1. The 'git credential fill' makes the structure,
-> +with this structure it will be able to save your
-> +credentials, and if the credential is allready stored,
-> +it will fill the password.
-
-s/allready/already/
-
-> +void cmd_credential (int argc, char **argv, const char *prefix){
-> +	const char *op;
-> +	struct credential c =3D CREDENTIAL_INIT;
-> +	int i;
-> +
-> +	op =3D argv[1];
-> +	if (!op)
-> +		usage(usage_msg);
-> +
-> +	for (i =3D 2; i < argc; i++)
-> +		string_list_append(&c.helpers, argv[i]);
-> +
-> +	if (credential_read(&c, stdin) < 0)
-> +		die("unable to read credential from stdin");
-> +
-> +	if (!strcmp(op, "fill")) {
-> +		credential_fill(&c);
-> +		if (c.username)
-> +			printf("username=3D%s\n", c.username);
-> +		if (c.password)
-> +			printf("password=3D%s\n", c.password);
-> +	}
-> +	else if (!strcmp(op, "approve")) {
-> +		credential_approve(&c);
-> +	}
-> +	else if (!strcmp(op, "reject")) {
-> +		credential_reject(&c);
-> +	}
-> +	else
-> +		usage(usage_msg);
-
-Braces for the last "else" part. In general, the structure should be
-
+The structure is
        if (...) {
-                /*code*/
-       } else if (...) {
-                /*code*/
+              /*code*/
        } else {
-                /*code*/
+              /*code*/
        }
 
-If juste one block needs brances, all the other "else if"/"else" part
-need it too.
-
-BTW, please be aware of the white spaces (here mostly in the doc) :).
-
-Lucien Kong.
+Do not forget braces in the "else" part as the firt block needs it.
