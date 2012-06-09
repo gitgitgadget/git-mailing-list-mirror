@@ -1,7 +1,8 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH 2/3] git-svn: make Git::SVN::RA a separate file
-Date: Sat, 9 Jun 2012 17:28:10 -0500
-Message-ID: <20120609222810.GF28412@burratino>
+Subject: [PATCH 3/3] git-svn: use YAML format for mergeinfo cache when
+ possible
+Date: Sat, 9 Jun 2012 17:35:35 -0500
+Message-ID: <20120609223535.GG28412@burratino>
 References: <1313979422-21286-1-git-send-email-jgross@mit.edu>
  <20110823081546.GA28091@dcvr.yhbt.net>
  <7vobzgrrbg.fsf@alter.siamese.dyndns.org>
@@ -11,42 +12,44 @@ References: <1313979422-21286-1-git-send-email-jgross@mit.edu>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: Junio C Hamano <gitster@pobox.com>, Jason Gross <jgross@MIT.EDU>,
-	git@vger.kernel.org
+	git@vger.kernel.org,
+	Sandro Weiser <sandro.weiser@informatik.tu-chemnitz.de>,
+	Bdale Garbee <bdale@gag.com>, Andrew Myrick <amyrick@apple.com>
 To: Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Sun Jun 10 00:28:31 2012
+X-From: git-owner@vger.kernel.org Sun Jun 10 00:36:26 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SdU8s-0008S1-76
-	for gcvg-git-2@plane.gmane.org; Sun, 10 Jun 2012 00:28:23 +0200
+	id 1SdUGZ-00068X-8h
+	for gcvg-git-2@plane.gmane.org; Sun, 10 Jun 2012 00:36:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752730Ab2FIW2S (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 9 Jun 2012 18:28:18 -0400
-Received: from mail-gh0-f174.google.com ([209.85.160.174]:48422 "EHLO
-	mail-gh0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751130Ab2FIW2Q (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 9 Jun 2012 18:28:16 -0400
-Received: by ghrr11 with SMTP id r11so1919223ghr.19
-        for <git@vger.kernel.org>; Sat, 09 Jun 2012 15:28:15 -0700 (PDT)
+	id S1751968Ab2FIWfl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 9 Jun 2012 18:35:41 -0400
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:51436 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750843Ab2FIWfk (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 9 Jun 2012 18:35:40 -0400
+Received: by yenm10 with SMTP id m10so1932341yen.19
+        for <git@vger.kernel.org>; Sat, 09 Jun 2012 15:35:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-type:content-disposition:in-reply-to:user-agent;
-        bh=7DJB+OLk6fsaH7/tjR4G53GqRrK9ldBa7phIhpftuM8=;
-        b=CEsQZb7OxIiuLpCgO8D8l3uHMLZ1f9Bh1mjkJUBZovDDwTQQRQHbpUEaBmd4zH2mZk
-         B7JClTlxbLF0dL1xdH9EAlZvbGYp1qb+8sefroSUtKeKPke3kXTJEQRx/0oe2tb/F8Hr
-         CXVYDCamoehw2IqYfvY4estmTF33J8nhO8Mn8k30GTYH0udqzUM2LIEG0oS55vR2jF7M
-         YQ38XfZXB27mlQEEleXNjkCjzDOhYsSrexs9d3mhTpNKnzs0FBA8/xd6F4fXfO9pFA9t
-         iyITBSUACJXTVj0Rw36k1GfNp200Q0wlh0ISWLSjcVtAo7WXRROMJw4N3DOhTZ0UB45H
-         ANmg==
-Received: by 10.236.177.35 with SMTP id c23mr13757659yhm.26.1339280895662;
-        Sat, 09 Jun 2012 15:28:15 -0700 (PDT)
+        bh=fr7COdyNbPKMYuJE//WFRADGtQZ6FSGlkxwcfQ2EkHA=;
+        b=rdQflJLSL8+4AvKV6sH6OrI3uE928sraydhaWaqjZLizCQTv19XdQ/kP3x81tqKwIp
+         dcwEyJAfoyas63vt8Kkw4Xcq79OEYZOvBIFD43OXFOLtVMGu+OLFRmIoEdarAa3oGbWC
+         yGtFEnY17mu56XGo0rVutW+djZgvHnsO+zaCZigtKpDLSvKHm5RMsZ+1Bme8fQJCvoKs
+         TAxRxvfTvEEBkBO+vHmrChHtDA3FklsZ/jkQ8DE6CQ573/ltVzrhNllMnr99XvjOBuvr
+         K12f9zQbgxX6VRuJUWV9y2JS60hQA6UUJP3yV2uKHzcRXlZOdgRJPAjXuCz5lrgSpORV
+         m4Ow==
+Received: by 10.236.78.36 with SMTP id f24mr8958165yhe.20.1339281339772;
+        Sat, 09 Jun 2012 15:35:39 -0700 (PDT)
 Received: from burratino (cl-1372.chi-02.us.sixxs.net. [2001:4978:f:55b::2])
-        by mx.google.com with ESMTPS id v22sm37374728yhl.2.2012.06.09.15.28.13
+        by mx.google.com with ESMTPS id h3sm17003544anm.20.2012.06.09.15.35.37
         (version=SSLv3 cipher=OTHER);
-        Sat, 09 Jun 2012 15:28:15 -0700 (PDT)
+        Sat, 09 Jun 2012 15:35:38 -0700 (PDT)
 Content-Disposition: inline
 In-Reply-To: <20120609222039.GD28412@burratino>
 User-Agent: Mutt/1.5.21 (2010-09-15)
@@ -54,1317 +57,239 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199563>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199564>
 
-This slices off another 600 or so lines from the frighteningly long
-git-svn.perl script.
+Since v1.7.0-rc2~11 (git-svn: persistent memoization, 2010-01-30),
+git-svn has maintained some private per-repository caches in
+.git/svn/.caches to avoid refetching and recalculating some
+mergeinfo-related information with every "git svn fetch".
 
-The Git::SVN::Ra interface is similar enough to SVN::Ra that it is
-probably safe to ignore most of its implementation on first reading.
-(Documenting or moving functions that do not fit that pattern is left
-as an exercise to the interested reader.)
+These caches use the 'nstore' format from the perl core module
+Storable, which can be read and written quickly and was designed for
+transfer over the wire (the 'n' stands for 'network').  This format is
+endianness-independent and independent of floating-point
+representation.
 
+Unfortunately the format is *not* independent of the perl version ---
+new perl versions will write files that very old perl cannot read.
+Worse, the format is not independent of the size of a perl integer.
+So if you toggle perl's use64bitint compile-time option, then using
+'git svn fetch' on your old repositories produces errors like this:
+
+	Byte order is not compatible at ../../lib/Storable.pm (autosplit
+	into ../../lib/auto/Storable/_retrieve.al) line 380, at
+	/usr/share/perl/5.12/Memoize/Storable.pm line 21
+
+That is, upgrading perl to a version that uses use64bitint for the
+first time makes git-svn suddenly refuse to fetch in existing
+repositories.  Removing .git/svn/.caches lets git-svn recover.
+
+It's time to switch to a platform independent serializer backend with
+better compatibility guarantees.  This patch uses YAML::Any.
+
+Other choices were considered:
+
+ - thawing data from Data::Dumper involves "eval".  Doing that without
+   creating a security risk is fussy.
+
+ - the JSON API works on scalars in memory and doesn't provide a
+   standard way to serialize straight to disk.
+
+YAML::Any is reasonably fast and has a pleasant API.  In most
+backends, LoadFile() reads the entire file into a scalar anyway and
+converts it as a second step, but having an interface that allows the
+deserialization to happen on the fly without a temporary is still a
+comfort.
+
+YAML::Any is not a core perl module, so we take care to use it when
+and only when it is available.  Installations without that module
+should fall back to using Storable with all its quirks, keeping their
+cache files in
+
+	.git/svn/.caches/*.db
+
+Installations with YAML peacefully coexist by keeping a separate set
+of cache files in
+
+	.git/svn/.caches/*.yaml.
+
+In most cases, switching between is a one-time thing, so it doesn't
+seem worth the complication to migrate existing caches.
+
+The upshot: after this patch, as long as YAML::Any is installed you
+can move your git repository between machines with different perl
+installations and "git svn fetch" will work fine.  If you do not have
+YAML::Any, the behavior is unchanged (and in particular does not get
+any worse).
+
+Reported-by: Sandro Weiser <sandro.weiser@informatik.tu-chemnitz.de>
+Reported-by: Bdale Garbee <bdale@gag.com>
 Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 ---
- git-svn.perl       |  612 +-----------------------------------------------
- perl/Git/SVN/Ra.pm |  658 ++++++++++++++++++++++++++++++++++++++++++++++++++++
- perl/Makefile.PL   |    1 +
- 3 files changed, 660 insertions(+), 611 deletions(-)
- create mode 100644 perl/Git/SVN/Ra.pm
+Thanks for reading.
+
+ git-svn.perl                 |   31 +++++++++++---
+ perl/Git/SVN/Memoize/YAML.pm |   93 ++++++++++++++++++++++++++++++++++++++++++
+ perl/Makefile.PL             |    1 +
+ 3 files changed, 119 insertions(+), 6 deletions(-)
+ create mode 100644 perl/Git/SVN/Memoize/YAML.pm
 
 diff --git a/git-svn.perl b/git-svn.perl
-index 7cec4416..24c0af2e 100755
+index 24c0af2e..0b074c4c 100755
 --- a/git-svn.perl
 +++ b/git-svn.perl
-@@ -67,7 +67,6 @@ sub _req_svn {
- 	}
- }
- my $can_compress = eval { require Compress::Zlib; 1};
--push @Git::SVN::Ra::ISA, 'SVN::Ra';
- use Carp qw/croak/;
- use Digest::MD5;
- use IO::File qw//;
-@@ -80,6 +79,7 @@ use IPC::Open3;
- use Git;
- use Git::SVN::Editor qw//;
- use Git::SVN::Fetcher qw//;
-+use Git::SVN::Ra qw//;
- use Git::SVN::Prompt qw//;
+@@ -2055,6 +2055,10 @@ use Time::Local;
  use Memoize;  # core since 5.8.0, Jul 2002
+ use Memoize::Storable;
+ use POSIX qw(:signal_h);
++my $can_use_yaml;
++BEGIN {
++	$can_use_yaml = eval { require Git::SVN::Memoize::YAML; 1};
++}
  
-@@ -4326,616 +4326,6 @@ sub remove_username {
- 	$_[0] =~ s{^([^:]*://)[^@]+@}{$1};
+ my ($_gc_nr, $_gc_period);
+ 
+@@ -3577,6 +3581,17 @@ sub has_no_changes {
+ 		command_oneline("rev-parse", "$commit~1^{tree}"));
  }
  
--package Git::SVN::Ra;
--use vars qw/@ISA $config_dir $_ignore_refs_regex $_log_window_size/;
--use strict;
--use warnings;
--my ($ra_invalid, $can_do_switch, %ignored_err, $RA);
--
--BEGIN {
--	# enforce temporary pool usage for some simple functions
--	no strict 'refs';
--	for my $f (qw/rev_proplist get_latest_revnum get_uuid get_repos_root
--	              get_file/) {
--		my $SUPER = "SUPER::$f";
--		*$f = sub {
--			my $self = shift;
--			my $pool = SVN::Pool->new;
--			my @ret = $self->$SUPER(@_,$pool);
--			$pool->clear;
--			wantarray ? @ret : $ret[0];
--		};
--	}
--}
--
--sub _auth_providers () {
--	my @rv = (
--	  SVN::Client::get_simple_provider(),
--	  SVN::Client::get_ssl_server_trust_file_provider(),
--	  SVN::Client::get_simple_prompt_provider(
--	    \&Git::SVN::Prompt::simple, 2),
--	  SVN::Client::get_ssl_client_cert_file_provider(),
--	  SVN::Client::get_ssl_client_cert_prompt_provider(
--	    \&Git::SVN::Prompt::ssl_client_cert, 2),
--	  SVN::Client::get_ssl_client_cert_pw_file_provider(),
--	  SVN::Client::get_ssl_client_cert_pw_prompt_provider(
--	    \&Git::SVN::Prompt::ssl_client_cert_pw, 2),
--	  SVN::Client::get_username_provider(),
--	  SVN::Client::get_ssl_server_trust_prompt_provider(
--	    \&Git::SVN::Prompt::ssl_server_trust),
--	  SVN::Client::get_username_prompt_provider(
--	    \&Git::SVN::Prompt::username, 2)
--	);
--
--	# earlier 1.6.x versions would segfault, and <= 1.5.x didn't have
--	# this function
--	if (::compare_svn_version('1.6.12') > 0) {
--		my $config = SVN::Core::config_get_config($config_dir);
--		my ($p, @a);
--		# config_get_config returns all config files from
--		# ~/.subversion, auth_get_platform_specific_client_providers
--		# just wants the config "file".
--		@a = ($config->{'config'}, undef);
--		$p = SVN::Core::auth_get_platform_specific_client_providers(@a);
--		# Insert the return value from
--		# auth_get_platform_specific_providers
--		unshift @rv, @$p;
--	}
--	\@rv;
--}
--
--sub escape_uri_only {
--	my ($uri) = @_;
--	my @tmp;
--	foreach (split m{/}, $uri) {
--		s/([^~\w.%+-]|%(?![a-fA-F0-9]{2}))/sprintf("%%%02X",ord($1))/eg;
--		push @tmp, $_;
--	}
--	join('/', @tmp);
--}
--
--sub escape_url {
--	my ($url) = @_;
--	if ($url =~ m#^(https?)://([^/]+)(.*)$#) {
--		my ($scheme, $domain, $uri) = ($1, $2, escape_uri_only($3));
--		$url = "$scheme://$domain$uri";
--	}
--	$url;
--}
--
--sub new {
--	my ($class, $url) = @_;
--	$url =~ s!/+$!!;
--	return $RA if ($RA && $RA->{url} eq $url);
--
--	::_req_svn();
--
--	SVN::_Core::svn_config_ensure($config_dir, undef);
--	my ($baton, $callbacks) = SVN::Core::auth_open_helper(_auth_providers);
--	my $config = SVN::Core::config_get_config($config_dir);
--	$RA = undef;
--	my $dont_store_passwords = 1;
--	my $conf_t = ${$config}{'config'};
--	{
--		no warnings 'once';
--		# The usage of $SVN::_Core::SVN_CONFIG_* variables
--		# produces warnings that variables are used only once.
--		# I had not found the better way to shut them up, so
--		# the warnings of type 'once' are disabled in this block.
--		if (SVN::_Core::svn_config_get_bool($conf_t,
--		    $SVN::_Core::SVN_CONFIG_SECTION_AUTH,
--		    $SVN::_Core::SVN_CONFIG_OPTION_STORE_PASSWORDS,
--		    1) == 0) {
--			SVN::_Core::svn_auth_set_parameter($baton,
--			    $SVN::_Core::SVN_AUTH_PARAM_DONT_STORE_PASSWORDS,
--			    bless (\$dont_store_passwords, "_p_void"));
--		}
--		if (SVN::_Core::svn_config_get_bool($conf_t,
--		    $SVN::_Core::SVN_CONFIG_SECTION_AUTH,
--		    $SVN::_Core::SVN_CONFIG_OPTION_STORE_AUTH_CREDS,
--		    1) == 0) {
--			$Git::SVN::Prompt::_no_auth_cache = 1;
--		}
--	} # no warnings 'once'
--	my $self = SVN::Ra->new(url => escape_url($url), auth => $baton,
--	                      config => $config,
--			      pool => SVN::Pool->new,
--	                      auth_provider_callbacks => $callbacks);
--	$self->{url} = $url;
--	$self->{svn_path} = $url;
--	$self->{repos_root} = $self->get_repos_root;
--	$self->{svn_path} =~ s#^\Q$self->{repos_root}\E(/|$)##;
--	$self->{cache} = { check_path => { r => 0, data => {} },
--	                   get_dir => { r => 0, data => {} } };
--	$RA = bless $self, $class;
--}
--
--sub check_path {
--	my ($self, $path, $r) = @_;
--	my $cache = $self->{cache}->{check_path};
--	if ($r == $cache->{r} && exists $cache->{data}->{$path}) {
--		return $cache->{data}->{$path};
--	}
--	my $pool = SVN::Pool->new;
--	my $t = $self->SUPER::check_path($path, $r, $pool);
--	$pool->clear;
--	if ($r != $cache->{r}) {
--		%{$cache->{data}} = ();
--		$cache->{r} = $r;
--	}
--	$cache->{data}->{$path} = $t;
--}
--
--sub get_dir {
--	my ($self, $dir, $r) = @_;
--	my $cache = $self->{cache}->{get_dir};
--	if ($r == $cache->{r}) {
--		if (my $x = $cache->{data}->{$dir}) {
--			return wantarray ? @$x : $x->[0];
--		}
--	}
--	my $pool = SVN::Pool->new;
--	my ($d, undef, $props) = $self->SUPER::get_dir($dir, $r, $pool);
--	my %dirents = map { $_ => { kind => $d->{$_}->kind } } keys %$d;
--	$pool->clear;
--	if ($r != $cache->{r}) {
--		%{$cache->{data}} = ();
--		$cache->{r} = $r;
--	}
--	$cache->{data}->{$dir} = [ \%dirents, $r, $props ];
--	wantarray ? (\%dirents, $r, $props) : \%dirents;
--}
--
--sub DESTROY {
--	# do not call the real DESTROY since we store ourselves in $RA
--}
--
--# get_log(paths, start, end, limit,
--#         discover_changed_paths, strict_node_history, receiver)
--sub get_log {
--	my ($self, @args) = @_;
--	my $pool = SVN::Pool->new;
--
--	# svn_log_changed_path_t objects passed to get_log are likely to be
--	# overwritten even if only the refs are copied to an external variable,
--	# so we should dup the structures in their entirety.  Using an
--	# externally passed pool (instead of our temporary and quickly cleared
--	# pool in Git::SVN::Ra) does not help matters at all...
--	my $receiver = pop @args;
--	my $prefix = "/".$self->{svn_path};
--	$prefix =~ s#/+($)##;
--	my $prefix_regex = qr#^\Q$prefix\E#;
--	push(@args, sub {
--		my ($paths) = $_[0];
--		return &$receiver(@_) unless $paths;
--		$_[0] = ();
--		foreach my $p (keys %$paths) {
--			my $i = $paths->{$p};
--			# Make path relative to our url, not repos_root
--			$p =~ s/$prefix_regex//;
--			my %s = map { $_ => $i->$_; }
--				qw/copyfrom_path copyfrom_rev action/;
--			if ($s{'copyfrom_path'}) {
--				$s{'copyfrom_path'} =~ s/$prefix_regex//;
--			}
--			$_[0]{$p} = \%s;
--		}
--		&$receiver(@_);
--	});
--
--
--	# the limit parameter was not supported in SVN 1.1.x, so we
--	# drop it.  Therefore, the receiver callback passed to it
--	# is made aware of this limitation by being wrapped if
--	# the limit passed to is being wrapped.
--	if (::compare_svn_version('1.2.0') <= 0) {
--		my $limit = splice(@args, 3, 1);
--		if ($limit > 0) {
--			my $receiver = pop @args;
--			push(@args, sub { &$receiver(@_) if (--$limit >= 0) });
--		}
--	}
--	my $ret = $self->SUPER::get_log(@args, $pool);
--	$pool->clear;
--	$ret;
--}
--
--sub trees_match {
--	my ($self, $url1, $rev1, $url2, $rev2) = @_;
--	my $ctx = SVN::Client->new(auth => _auth_providers);
--	my $out = IO::File->new_tmpfile;
--
--	# older SVN (1.1.x) doesn't take $pool as the last parameter for
--	# $ctx->diff(), so we'll create a default one
--	my $pool = SVN::Pool->new_default_sub;
--
--	$ra_invalid = 1; # this will open a new SVN::Ra connection to $url1
--	$ctx->diff([], $url1, $rev1, $url2, $rev2, 1, 1, 0, $out, $out);
--	$out->flush;
--	my $ret = (($out->stat)[7] == 0);
--	close $out or croak $!;
--
--	$ret;
--}
--
--sub get_commit_editor {
--	my ($self, $log, $cb, $pool) = @_;
--
--	my @lock = (::compare_svn_version('1.2.0') >= 0) ? (undef, 0) : ();
--	$self->SUPER::get_commit_editor($log, $cb, @lock, $pool);
--}
--
--sub gs_do_update {
--	my ($self, $rev_a, $rev_b, $gs, $editor) = @_;
--	my $new = ($rev_a == $rev_b);
--	my $path = $gs->{path};
--
--	if ($new && -e $gs->{index}) {
--		unlink $gs->{index} or die
--		  "Couldn't unlink index: $gs->{index}: $!\n";
--	}
--	my $pool = SVN::Pool->new;
--	$editor->set_path_strip($path);
--	my (@pc) = split m#/#, $path;
--	my $reporter = $self->do_update($rev_b, (@pc ? shift @pc : ''),
--	                                1, $editor, $pool);
--	my @lock = (::compare_svn_version('1.2.0') >= 0) ? (undef) : ();
--
--	# Since we can't rely on svn_ra_reparent being available, we'll
--	# just have to do some magic with set_path to make it so
--	# we only want a partial path.
--	my $sp = '';
--	my $final = join('/', @pc);
--	while (@pc) {
--		$reporter->set_path($sp, $rev_b, 0, @lock, $pool);
--		$sp .= '/' if length $sp;
--		$sp .= shift @pc;
--	}
--	die "BUG: '$sp' != '$final'\n" if ($sp ne $final);
--
--	$reporter->set_path($sp, $rev_a, $new, @lock, $pool);
--
--	$reporter->finish_report($pool);
--	$pool->clear;
--	$editor->{git_commit_ok};
--}
--
--# this requires SVN 1.4.3 or later (do_switch didn't work before 1.4.3, and
--# svn_ra_reparent didn't work before 1.4)
--sub gs_do_switch {
--	my ($self, $rev_a, $rev_b, $gs, $url_b, $editor) = @_;
--	my $path = $gs->{path};
--	my $pool = SVN::Pool->new;
--
--	my $full_url = $self->{url};
--	my $old_url = $full_url;
--	$full_url .= '/' . $path if length $path;
--	my ($ra, $reparented);
--
--	if ($old_url =~ m#^svn(\+ssh)?://# ||
--	    ($full_url =~ m#^https?://# &&
--	     escape_url($full_url) ne $full_url)) {
--		$_[0] = undef;
--		$self = undef;
--		$RA = undef;
--		$ra = Git::SVN::Ra->new($full_url);
--		$ra_invalid = 1;
--	} elsif ($old_url ne $full_url) {
--		SVN::_Ra::svn_ra_reparent($self->{session}, $full_url, $pool);
--		$self->{url} = $full_url;
--		$reparented = 1;
--	}
--
--	$ra ||= $self;
--	$url_b = escape_url($url_b);
--	my $reporter = $ra->do_switch($rev_b, '', 1, $url_b, $editor, $pool);
--	my @lock = (::compare_svn_version('1.2.0') >= 0) ? (undef) : ();
--	$reporter->set_path('', $rev_a, 0, @lock, $pool);
--	$reporter->finish_report($pool);
--
--	if ($reparented) {
--		SVN::_Ra::svn_ra_reparent($self->{session}, $old_url, $pool);
--		$self->{url} = $old_url;
--	}
--
--	$pool->clear;
--	$editor->{git_commit_ok};
--}
--
--sub longest_common_path {
--	my ($gsv, $globs) = @_;
--	my %common;
--	my $common_max = scalar @$gsv;
--
--	foreach my $gs (@$gsv) {
--		my @tmp = split m#/#, $gs->{path};
--		my $p = '';
--		foreach (@tmp) {
--			$p .= length($p) ? "/$_" : $_;
--			$common{$p} ||= 0;
--			$common{$p}++;
--		}
--	}
--	$globs ||= [];
--	$common_max += scalar @$globs;
--	foreach my $glob (@$globs) {
--		my @tmp = split m#/#, $glob->{path}->{left};
--		my $p = '';
--		foreach (@tmp) {
--			$p .= length($p) ? "/$_" : $_;
--			$common{$p} ||= 0;
--			$common{$p}++;
--		}
--	}
--
--	my $longest_path = '';
--	foreach (sort {length $b <=> length $a} keys %common) {
--		if ($common{$_} == $common_max) {
--			$longest_path = $_;
--			last;
--		}
--	}
--	$longest_path;
--}
--
--sub gs_fetch_loop_common {
--	my ($self, $base, $head, $gsv, $globs) = @_;
--	return if ($base > $head);
--	my $inc = $_log_window_size;
--	my ($min, $max) = ($base, $head < $base + $inc ? $head : $base + $inc);
--	my $longest_path = longest_common_path($gsv, $globs);
--	my $ra_url = $self->{url};
--	my $find_trailing_edge;
--	while (1) {
--		my %revs;
--		my $err;
--		my $err_handler = $SVN::Error::handler;
--		$SVN::Error::handler = sub {
--			($err) = @_;
--			skip_unknown_revs($err);
--		};
--		sub _cb {
--			my ($paths, $r, $author, $date, $log) = @_;
--			[ $paths,
--			  { author => $author, date => $date, log => $log } ];
--		}
--		$self->get_log([$longest_path], $min, $max, 0, 1, 1,
--		               sub { $revs{$_[1]} = _cb(@_) });
--		if ($err) {
--			print "Checked through r$max\r";
--		} else {
--			$find_trailing_edge = 1;
--		}
--		if ($err and $find_trailing_edge) {
--			print STDERR "Path '$longest_path' ",
--				     "was probably deleted:\n",
--				     $err->expanded_message,
--				     "\nWill attempt to follow ",
--				     "revisions r$min .. r$max ",
--				     "committed before the deletion\n";
--			my $hi = $max;
--			while (--$hi >= $min) {
--				my $ok;
--				$self->get_log([$longest_path], $min, $hi,
--				               0, 1, 1, sub {
--				               $ok = $_[1];
--				               $revs{$_[1]} = _cb(@_) });
--				if ($ok) {
--					print STDERR "r$min .. r$ok OK\n";
--					last;
--				}
--			}
--			$find_trailing_edge = 0;
--		}
--		$SVN::Error::handler = $err_handler;
--
--		my %exists = map { $_->{path} => $_ } @$gsv;
--		foreach my $r (sort {$a <=> $b} keys %revs) {
--			my ($paths, $logged) = @{$revs{$r}};
--
--			foreach my $gs ($self->match_globs(\%exists, $paths,
--			                                   $globs, $r)) {
--				if ($gs->rev_map_max >= $r) {
--					next;
--				}
--				next unless $gs->match_paths($paths, $r);
--				$gs->{logged_rev_props} = $logged;
--				if (my $last_commit = $gs->last_commit) {
--					$gs->assert_index_clean($last_commit);
--				}
--				my $log_entry = $gs->do_fetch($paths, $r);
--				if ($log_entry) {
--					$gs->do_git_commit($log_entry);
--				}
--				$INDEX_FILES{$gs->{index}} = 1;
--			}
--			foreach my $g (@$globs) {
--				my $k = "svn-remote.$g->{remote}." .
--				        "$g->{t}-maxRev";
--				Git::SVN::tmp_config($k, $r);
--			}
--			if ($ra_invalid) {
--				$_[0] = undef;
--				$self = undef;
--				$RA = undef;
--				$self = Git::SVN::Ra->new($ra_url);
--				$ra_invalid = undef;
--			}
--		}
--		# pre-fill the .rev_db since it'll eventually get filled in
--		# with '0' x40 if something new gets committed
--		foreach my $gs (@$gsv) {
--			next if $gs->rev_map_max >= $max;
--			next if defined $gs->rev_map_get($max);
--			$gs->rev_map_set($max, 0 x40);
--		}
--		foreach my $g (@$globs) {
--			my $k = "svn-remote.$g->{remote}.$g->{t}-maxRev";
--			Git::SVN::tmp_config($k, $max);
--		}
--		last if $max >= $head;
--		$min = $max + 1;
--		$max += $inc;
--		$max = $head if ($max > $head);
--	}
--	Git::SVN::gc();
--}
--
--sub get_dir_globbed {
--	my ($self, $left, $depth, $r) = @_;
--
--	my @x = eval { $self->get_dir($left, $r) };
--	return unless scalar @x == 3;
--	my $dirents = $x[0];
--	my @finalents;
--	foreach my $de (keys %$dirents) {
--		next if $dirents->{$de}->{kind} != $SVN::Node::dir;
--		if ($depth > 1) {
--			my @args = ("$left/$de", $depth - 1, $r);
--			foreach my $dir ($self->get_dir_globbed(@args)) {
--				push @finalents, "$de/$dir";
--			}
--		} else {
--			push @finalents, $de;
--		}
--	}
--	@finalents;
--}
--
--# return value: 0 -- don't ignore, 1 -- ignore
--sub is_ref_ignored {
--	my ($g, $p) = @_;
--	my $refname = $g->{ref}->full_path($p);
--	return 1 if defined($g->{ignore_refs_regex}) &&
--	            $refname =~ m!$g->{ignore_refs_regex}!;
--	return 0 unless defined($_ignore_refs_regex);
--	return 1 if $refname =~ m!$_ignore_refs_regex!o;
--	return 0;
--}
--
--sub match_globs {
--	my ($self, $exists, $paths, $globs, $r) = @_;
--
--	sub get_dir_check {
--		my ($self, $exists, $g, $r) = @_;
--
--		my @dirs = $self->get_dir_globbed($g->{path}->{left},
--		                                  $g->{path}->{depth},
--		                                  $r);
--
--		foreach my $de (@dirs) {
--			my $p = $g->{path}->full_path($de);
--			next if $exists->{$p};
--			next if (length $g->{path}->{right} &&
--				 ($self->check_path($p, $r) !=
--				  $SVN::Node::dir));
--			next unless $p =~ /$g->{path}->{regex}/;
--			$exists->{$p} = Git::SVN->init($self->{url}, $p, undef,
--					 $g->{ref}->full_path($de), 1);
--		}
--	}
--	foreach my $g (@$globs) {
--		if (my $path = $paths->{"/$g->{path}->{left}"}) {
--			if ($path->{action} =~ /^[AR]$/) {
--				get_dir_check($self, $exists, $g, $r);
--			}
--		}
--		foreach (keys %$paths) {
--			if (/$g->{path}->{left_regex}/ &&
--			    !/$g->{path}->{regex}/) {
--				next if $paths->{$_}->{action} !~ /^[AR]$/;
--				get_dir_check($self, $exists, $g, $r);
--			}
--			next unless /$g->{path}->{regex}/;
--			my $p = $1;
--			my $pathname = $g->{path}->full_path($p);
--			next if is_ref_ignored($g, $p);
--			next if $exists->{$pathname};
--			next if ($self->check_path($pathname, $r) !=
--			         $SVN::Node::dir);
--			$exists->{$pathname} = Git::SVN->init(
--			                      $self->{url}, $pathname, undef,
--			                      $g->{ref}->full_path($p), 1);
--		}
--		my $c = '';
--		foreach (split m#/#, $g->{path}->{left}) {
--			$c .= "/$_";
--			next unless ($paths->{$c} &&
--			             ($paths->{$c}->{action} =~ /^[AR]$/));
--			get_dir_check($self, $exists, $g, $r);
--		}
--	}
--	values %$exists;
--}
--
--sub minimize_url {
--	my ($self) = @_;
--	return $self->{url} if ($self->{url} eq $self->{repos_root});
--	my $url = $self->{repos_root};
--	my @components = split(m!/!, $self->{svn_path});
--	my $c = '';
--	do {
--		$url .= "/$c" if length $c;
--		eval {
--			my $ra = (ref $self)->new($url);
--			my $latest = $ra->get_latest_revnum;
--			$ra->get_log("", $latest, 0, 1, 0, 1, sub {});
--		};
--	} while ($@ && ($c = shift @components));
--	$url;
--}
--
--sub can_do_switch {
--	my $self = shift;
--	unless (defined $can_do_switch) {
--		my $pool = SVN::Pool->new;
--		my $rep = eval {
--			$self->do_switch(1, '', 0, $self->{url},
--			                 SVN::Delta::Editor->new, $pool);
--		};
--		if ($@) {
--			$can_do_switch = 0;
--		} else {
--			$rep->abort_report($pool);
--			$can_do_switch = 1;
--		}
--		$pool->clear;
--	}
--	$can_do_switch;
--}
--
--sub skip_unknown_revs {
--	my ($err) = @_;
--	my $errno = $err->apr_err();
--	# Maybe the branch we're tracking didn't
--	# exist when the repo started, so it's
--	# not an error if it doesn't, just continue
--	#
--	# Wonderfully consistent library, eh?
--	# 160013 - svn:// and file://
--	# 175002 - http(s)://
--	# 175007 - http(s):// (this repo required authorization, too...)
--	#   More codes may be discovered later...
--	if ($errno == 175007 || $errno == 175002 || $errno == 160013) {
--		my $err_key = $err->expanded_message;
--		# revision numbers change every time, filter them out
--		$err_key =~ s/\d+/\0/g;
--		$err_key = "$errno\0$err_key";
--		unless ($ignored_err{$err_key}) {
--			warn "W: Ignoring error from SVN, path probably ",
--			     "does not exist: ($errno): ",
--			     $err->expanded_message,"\n";
--			warn "W: Do not be alarmed at the above message ",
--			     "git-svn is just searching aggressively for ",
--			     "old history.\n",
--			     "This may take a while on large repositories\n";
--			$ignored_err{$err_key} = 1;
--		}
--		return;
--	}
--	die "Error from SVN, ($errno): ", $err->expanded_message,"\n";
--}
--
- package Git::SVN::Log;
- use strict;
- use warnings;
-diff --git a/perl/Git/SVN/Ra.pm b/perl/Git/SVN/Ra.pm
++sub tie_for_persistent_memoization {
++	my $hash = shift;
++	my $path = shift;
++
++	if ($can_use_yaml) {
++		tie %$hash => 'Git::SVN::Memoize::YAML', "$path.yaml";
++	} else {
++		tie %$hash => 'Memoize::Storable', "$path.db", 'nstore';
++	}
++}
++
+ # The GIT_DIR environment variable is not always set until after the command
+ # line arguments are processed, so we can't memoize in a BEGIN block.
+ {
+@@ -3589,22 +3604,26 @@ sub has_no_changes {
+ 		my $cache_path = "$ENV{GIT_DIR}/svn/.caches/";
+ 		mkpath([$cache_path]) unless -d $cache_path;
+ 
+-		tie my %lookup_svn_merge_cache => 'Memoize::Storable',
+-		    "$cache_path/lookup_svn_merge.db", 'nstore';
++		my %lookup_svn_merge_cache;
++		my %check_cherry_pick_cache;
++		my %has_no_changes_cache;
++
++		tie_for_persistent_memoization(\%lookup_svn_merge_cache,
++		    "$cache_path/lookup_svn_merge");
+ 		memoize 'lookup_svn_merge',
+ 			SCALAR_CACHE => 'FAULT',
+ 			LIST_CACHE => ['HASH' => \%lookup_svn_merge_cache],
+ 		;
+ 
+-		tie my %check_cherry_pick_cache => 'Memoize::Storable',
+-		    "$cache_path/check_cherry_pick.db", 'nstore';
++		tie_for_persistent_memoization(\%check_cherry_pick_cache,
++		    "$cache_path/check_cherry_pick");
+ 		memoize 'check_cherry_pick',
+ 			SCALAR_CACHE => 'FAULT',
+ 			LIST_CACHE => ['HASH' => \%check_cherry_pick_cache],
+ 		;
+ 
+-		tie my %has_no_changes_cache => 'Memoize::Storable',
+-		    "$cache_path/has_no_changes.db", 'nstore';
++		tie_for_persistent_memoization(\%has_no_changes_cache,
++		    "$cache_path/has_no_changes");
+ 		memoize 'has_no_changes',
+ 			SCALAR_CACHE => ['HASH' => \%has_no_changes_cache],
+ 			LIST_CACHE => 'FAULT',
+diff --git a/perl/Git/SVN/Memoize/YAML.pm b/perl/Git/SVN/Memoize/YAML.pm
 new file mode 100644
-index 00000000..e88b4e79
+index 00000000..9676b8f2
 --- /dev/null
-+++ b/perl/Git/SVN/Ra.pm
-@@ -0,0 +1,658 @@
-+package Git::SVN::Ra;
-+use vars qw/@ISA $config_dir $_ignore_refs_regex $_log_window_size/;
-+use strict;
++++ b/perl/Git/SVN/Memoize/YAML.pm
+@@ -0,0 +1,93 @@
++package Git::SVN::Memoize::YAML;
 +use warnings;
-+use SVN::Client;
-+use SVN::Ra;
-+BEGIN {
-+	@ISA = qw(SVN::Ra);
++use strict;
++use YAML::Any ();
++
++# based on Memoize::Storable.
++
++sub TIEHASH {
++	my $package = shift;
++	my $filename = shift;
++	my $truehash = (-e $filename) ? YAML::Any::LoadFile($filename) : {};
++	my $self = {FILENAME => $filename, H => $truehash};
++	bless $self => $package;
 +}
 +
-+my ($ra_invalid, $can_do_switch, %ignored_err, $RA);
-+
-+BEGIN {
-+	# enforce temporary pool usage for some simple functions
-+	no strict 'refs';
-+	for my $f (qw/rev_proplist get_latest_revnum get_uuid get_repos_root
-+	              get_file/) {
-+		my $SUPER = "SUPER::$f";
-+		*$f = sub {
-+			my $self = shift;
-+			my $pool = SVN::Pool->new;
-+			my @ret = $self->$SUPER(@_,$pool);
-+			$pool->clear;
-+			wantarray ? @ret : $ret[0];
-+		};
-+	}
++sub STORE {
++	my $self = shift;
++	$self->{H}{$_[0]} = $_[1];
 +}
 +
-+sub _auth_providers () {
-+	my @rv = (
-+	  SVN::Client::get_simple_provider(),
-+	  SVN::Client::get_ssl_server_trust_file_provider(),
-+	  SVN::Client::get_simple_prompt_provider(
-+	    \&Git::SVN::Prompt::simple, 2),
-+	  SVN::Client::get_ssl_client_cert_file_provider(),
-+	  SVN::Client::get_ssl_client_cert_prompt_provider(
-+	    \&Git::SVN::Prompt::ssl_client_cert, 2),
-+	  SVN::Client::get_ssl_client_cert_pw_file_provider(),
-+	  SVN::Client::get_ssl_client_cert_pw_prompt_provider(
-+	    \&Git::SVN::Prompt::ssl_client_cert_pw, 2),
-+	  SVN::Client::get_username_provider(),
-+	  SVN::Client::get_ssl_server_trust_prompt_provider(
-+	    \&Git::SVN::Prompt::ssl_server_trust),
-+	  SVN::Client::get_username_prompt_provider(
-+	    \&Git::SVN::Prompt::username, 2)
-+	);
-+
-+	# earlier 1.6.x versions would segfault, and <= 1.5.x didn't have
-+	# this function
-+	if (::compare_svn_version('1.6.12') > 0) {
-+		my $config = SVN::Core::config_get_config($config_dir);
-+		my ($p, @a);
-+		# config_get_config returns all config files from
-+		# ~/.subversion, auth_get_platform_specific_client_providers
-+		# just wants the config "file".
-+		@a = ($config->{'config'}, undef);
-+		$p = SVN::Core::auth_get_platform_specific_client_providers(@a);
-+		# Insert the return value from
-+		# auth_get_platform_specific_providers
-+		unshift @rv, @$p;
-+	}
-+	\@rv;
++sub FETCH {
++	my $self = shift;
++	$self->{H}{$_[0]};
 +}
 +
-+sub escape_uri_only {
-+	my ($uri) = @_;
-+	my @tmp;
-+	foreach (split m{/}, $uri) {
-+		s/([^~\w.%+-]|%(?![a-fA-F0-9]{2}))/sprintf("%%%02X",ord($1))/eg;
-+		push @tmp, $_;
-+	}
-+	join('/', @tmp);
-+}
-+
-+sub escape_url {
-+	my ($url) = @_;
-+	if ($url =~ m#^(https?)://([^/]+)(.*)$#) {
-+		my ($scheme, $domain, $uri) = ($1, $2, escape_uri_only($3));
-+		$url = "$scheme://$domain$uri";
-+	}
-+	$url;
-+}
-+
-+sub new {
-+	my ($class, $url) = @_;
-+	$url =~ s!/+$!!;
-+	return $RA if ($RA && $RA->{url} eq $url);
-+
-+	::_req_svn();
-+
-+	SVN::_Core::svn_config_ensure($config_dir, undef);
-+	my ($baton, $callbacks) = SVN::Core::auth_open_helper(_auth_providers);
-+	my $config = SVN::Core::config_get_config($config_dir);
-+	$RA = undef;
-+	my $dont_store_passwords = 1;
-+	my $conf_t = ${$config}{'config'};
-+	{
-+		no warnings 'once';
-+		# The usage of $SVN::_Core::SVN_CONFIG_* variables
-+		# produces warnings that variables are used only once.
-+		# I had not found the better way to shut them up, so
-+		# the warnings of type 'once' are disabled in this block.
-+		if (SVN::_Core::svn_config_get_bool($conf_t,
-+		    $SVN::_Core::SVN_CONFIG_SECTION_AUTH,
-+		    $SVN::_Core::SVN_CONFIG_OPTION_STORE_PASSWORDS,
-+		    1) == 0) {
-+			SVN::_Core::svn_auth_set_parameter($baton,
-+			    $SVN::_Core::SVN_AUTH_PARAM_DONT_STORE_PASSWORDS,
-+			    bless (\$dont_store_passwords, "_p_void"));
-+		}
-+		if (SVN::_Core::svn_config_get_bool($conf_t,
-+		    $SVN::_Core::SVN_CONFIG_SECTION_AUTH,
-+		    $SVN::_Core::SVN_CONFIG_OPTION_STORE_AUTH_CREDS,
-+		    1) == 0) {
-+			$Git::SVN::Prompt::_no_auth_cache = 1;
-+		}
-+	} # no warnings 'once'
-+	my $self = SVN::Ra->new(url => escape_url($url), auth => $baton,
-+	                      config => $config,
-+			      pool => SVN::Pool->new,
-+	                      auth_provider_callbacks => $callbacks);
-+	$self->{url} = $url;
-+	$self->{svn_path} = $url;
-+	$self->{repos_root} = $self->get_repos_root;
-+	$self->{svn_path} =~ s#^\Q$self->{repos_root}\E(/|$)##;
-+	$self->{cache} = { check_path => { r => 0, data => {} },
-+	                   get_dir => { r => 0, data => {} } };
-+	$RA = bless $self, $class;
-+}
-+
-+sub check_path {
-+	my ($self, $path, $r) = @_;
-+	my $cache = $self->{cache}->{check_path};
-+	if ($r == $cache->{r} && exists $cache->{data}->{$path}) {
-+		return $cache->{data}->{$path};
-+	}
-+	my $pool = SVN::Pool->new;
-+	my $t = $self->SUPER::check_path($path, $r, $pool);
-+	$pool->clear;
-+	if ($r != $cache->{r}) {
-+		%{$cache->{data}} = ();
-+		$cache->{r} = $r;
-+	}
-+	$cache->{data}->{$path} = $t;
-+}
-+
-+sub get_dir {
-+	my ($self, $dir, $r) = @_;
-+	my $cache = $self->{cache}->{get_dir};
-+	if ($r == $cache->{r}) {
-+		if (my $x = $cache->{data}->{$dir}) {
-+			return wantarray ? @$x : $x->[0];
-+		}
-+	}
-+	my $pool = SVN::Pool->new;
-+	my ($d, undef, $props) = $self->SUPER::get_dir($dir, $r, $pool);
-+	my %dirents = map { $_ => { kind => $d->{$_}->kind } } keys %$d;
-+	$pool->clear;
-+	if ($r != $cache->{r}) {
-+		%{$cache->{data}} = ();
-+		$cache->{r} = $r;
-+	}
-+	$cache->{data}->{$dir} = [ \%dirents, $r, $props ];
-+	wantarray ? (\%dirents, $r, $props) : \%dirents;
++sub EXISTS {
++	my $self = shift;
++	exists $self->{H}{$_[0]};
 +}
 +
 +sub DESTROY {
-+	# do not call the real DESTROY since we store ourselves in $RA
-+}
-+
-+# get_log(paths, start, end, limit,
-+#         discover_changed_paths, strict_node_history, receiver)
-+sub get_log {
-+	my ($self, @args) = @_;
-+	my $pool = SVN::Pool->new;
-+
-+	# svn_log_changed_path_t objects passed to get_log are likely to be
-+	# overwritten even if only the refs are copied to an external variable,
-+	# so we should dup the structures in their entirety.  Using an
-+	# externally passed pool (instead of our temporary and quickly cleared
-+	# pool in Git::SVN::Ra) does not help matters at all...
-+	my $receiver = pop @args;
-+	my $prefix = "/".$self->{svn_path};
-+	$prefix =~ s#/+($)##;
-+	my $prefix_regex = qr#^\Q$prefix\E#;
-+	push(@args, sub {
-+		my ($paths) = $_[0];
-+		return &$receiver(@_) unless $paths;
-+		$_[0] = ();
-+		foreach my $p (keys %$paths) {
-+			my $i = $paths->{$p};
-+			# Make path relative to our url, not repos_root
-+			$p =~ s/$prefix_regex//;
-+			my %s = map { $_ => $i->$_; }
-+				qw/copyfrom_path copyfrom_rev action/;
-+			if ($s{'copyfrom_path'}) {
-+				$s{'copyfrom_path'} =~ s/$prefix_regex//;
-+			}
-+			$_[0]{$p} = \%s;
-+		}
-+		&$receiver(@_);
-+	});
-+
-+
-+	# the limit parameter was not supported in SVN 1.1.x, so we
-+	# drop it.  Therefore, the receiver callback passed to it
-+	# is made aware of this limitation by being wrapped if
-+	# the limit passed to is being wrapped.
-+	if (::compare_svn_version('1.2.0') <= 0) {
-+		my $limit = splice(@args, 3, 1);
-+		if ($limit > 0) {
-+			my $receiver = pop @args;
-+			push(@args, sub { &$receiver(@_) if (--$limit >= 0) });
-+		}
-+	}
-+	my $ret = $self->SUPER::get_log(@args, $pool);
-+	$pool->clear;
-+	$ret;
-+}
-+
-+sub trees_match {
-+	my ($self, $url1, $rev1, $url2, $rev2) = @_;
-+	my $ctx = SVN::Client->new(auth => _auth_providers);
-+	my $out = IO::File->new_tmpfile;
-+
-+	# older SVN (1.1.x) doesn't take $pool as the last parameter for
-+	# $ctx->diff(), so we'll create a default one
-+	my $pool = SVN::Pool->new_default_sub;
-+
-+	$ra_invalid = 1; # this will open a new SVN::Ra connection to $url1
-+	$ctx->diff([], $url1, $rev1, $url2, $rev2, 1, 1, 0, $out, $out);
-+	$out->flush;
-+	my $ret = (($out->stat)[7] == 0);
-+	close $out or croak $!;
-+
-+	$ret;
-+}
-+
-+sub get_commit_editor {
-+	my ($self, $log, $cb, $pool) = @_;
-+
-+	my @lock = (::compare_svn_version('1.2.0') >= 0) ? (undef, 0) : ();
-+	$self->SUPER::get_commit_editor($log, $cb, @lock, $pool);
-+}
-+
-+sub gs_do_update {
-+	my ($self, $rev_a, $rev_b, $gs, $editor) = @_;
-+	my $new = ($rev_a == $rev_b);
-+	my $path = $gs->{path};
-+
-+	if ($new && -e $gs->{index}) {
-+		unlink $gs->{index} or die
-+		  "Couldn't unlink index: $gs->{index}: $!\n";
-+	}
-+	my $pool = SVN::Pool->new;
-+	$editor->set_path_strip($path);
-+	my (@pc) = split m#/#, $path;
-+	my $reporter = $self->do_update($rev_b, (@pc ? shift @pc : ''),
-+	                                1, $editor, $pool);
-+	my @lock = (::compare_svn_version('1.2.0') >= 0) ? (undef) : ();
-+
-+	# Since we can't rely on svn_ra_reparent being available, we'll
-+	# just have to do some magic with set_path to make it so
-+	# we only want a partial path.
-+	my $sp = '';
-+	my $final = join('/', @pc);
-+	while (@pc) {
-+		$reporter->set_path($sp, $rev_b, 0, @lock, $pool);
-+		$sp .= '/' if length $sp;
-+		$sp .= shift @pc;
-+	}
-+	die "BUG: '$sp' != '$final'\n" if ($sp ne $final);
-+
-+	$reporter->set_path($sp, $rev_a, $new, @lock, $pool);
-+
-+	$reporter->finish_report($pool);
-+	$pool->clear;
-+	$editor->{git_commit_ok};
-+}
-+
-+# this requires SVN 1.4.3 or later (do_switch didn't work before 1.4.3, and
-+# svn_ra_reparent didn't work before 1.4)
-+sub gs_do_switch {
-+	my ($self, $rev_a, $rev_b, $gs, $url_b, $editor) = @_;
-+	my $path = $gs->{path};
-+	my $pool = SVN::Pool->new;
-+
-+	my $full_url = $self->{url};
-+	my $old_url = $full_url;
-+	$full_url .= '/' . $path if length $path;
-+	my ($ra, $reparented);
-+
-+	if ($old_url =~ m#^svn(\+ssh)?://# ||
-+	    ($full_url =~ m#^https?://# &&
-+	     escape_url($full_url) ne $full_url)) {
-+		$_[0] = undef;
-+		$self = undef;
-+		$RA = undef;
-+		$ra = Git::SVN::Ra->new($full_url);
-+		$ra_invalid = 1;
-+	} elsif ($old_url ne $full_url) {
-+		SVN::_Ra::svn_ra_reparent($self->{session}, $full_url, $pool);
-+		$self->{url} = $full_url;
-+		$reparented = 1;
-+	}
-+
-+	$ra ||= $self;
-+	$url_b = escape_url($url_b);
-+	my $reporter = $ra->do_switch($rev_b, '', 1, $url_b, $editor, $pool);
-+	my @lock = (::compare_svn_version('1.2.0') >= 0) ? (undef) : ();
-+	$reporter->set_path('', $rev_a, 0, @lock, $pool);
-+	$reporter->finish_report($pool);
-+
-+	if ($reparented) {
-+		SVN::_Ra::svn_ra_reparent($self->{session}, $old_url, $pool);
-+		$self->{url} = $old_url;
-+	}
-+
-+	$pool->clear;
-+	$editor->{git_commit_ok};
-+}
-+
-+sub longest_common_path {
-+	my ($gsv, $globs) = @_;
-+	my %common;
-+	my $common_max = scalar @$gsv;
-+
-+	foreach my $gs (@$gsv) {
-+		my @tmp = split m#/#, $gs->{path};
-+		my $p = '';
-+		foreach (@tmp) {
-+			$p .= length($p) ? "/$_" : $_;
-+			$common{$p} ||= 0;
-+			$common{$p}++;
-+		}
-+	}
-+	$globs ||= [];
-+	$common_max += scalar @$globs;
-+	foreach my $glob (@$globs) {
-+		my @tmp = split m#/#, $glob->{path}->{left};
-+		my $p = '';
-+		foreach (@tmp) {
-+			$p .= length($p) ? "/$_" : $_;
-+			$common{$p} ||= 0;
-+			$common{$p}++;
-+		}
-+	}
-+
-+	my $longest_path = '';
-+	foreach (sort {length $b <=> length $a} keys %common) {
-+		if ($common{$_} == $common_max) {
-+			$longest_path = $_;
-+			last;
-+		}
-+	}
-+	$longest_path;
-+}
-+
-+sub gs_fetch_loop_common {
-+	my ($self, $base, $head, $gsv, $globs) = @_;
-+	return if ($base > $head);
-+	my $inc = $_log_window_size;
-+	my ($min, $max) = ($base, $head < $base + $inc ? $head : $base + $inc);
-+	my $longest_path = longest_common_path($gsv, $globs);
-+	my $ra_url = $self->{url};
-+	my $find_trailing_edge;
-+	while (1) {
-+		my %revs;
-+		my $err;
-+		my $err_handler = $SVN::Error::handler;
-+		$SVN::Error::handler = sub {
-+			($err) = @_;
-+			skip_unknown_revs($err);
-+		};
-+		sub _cb {
-+			my ($paths, $r, $author, $date, $log) = @_;
-+			[ $paths,
-+			  { author => $author, date => $date, log => $log } ];
-+		}
-+		$self->get_log([$longest_path], $min, $max, 0, 1, 1,
-+		               sub { $revs{$_[1]} = _cb(@_) });
-+		if ($err) {
-+			print "Checked through r$max\r";
-+		} else {
-+			$find_trailing_edge = 1;
-+		}
-+		if ($err and $find_trailing_edge) {
-+			print STDERR "Path '$longest_path' ",
-+				     "was probably deleted:\n",
-+				     $err->expanded_message,
-+				     "\nWill attempt to follow ",
-+				     "revisions r$min .. r$max ",
-+				     "committed before the deletion\n";
-+			my $hi = $max;
-+			while (--$hi >= $min) {
-+				my $ok;
-+				$self->get_log([$longest_path], $min, $hi,
-+				               0, 1, 1, sub {
-+				               $ok = $_[1];
-+				               $revs{$_[1]} = _cb(@_) });
-+				if ($ok) {
-+					print STDERR "r$min .. r$ok OK\n";
-+					last;
-+				}
-+			}
-+			$find_trailing_edge = 0;
-+		}
-+		$SVN::Error::handler = $err_handler;
-+
-+		my %exists = map { $_->{path} => $_ } @$gsv;
-+		foreach my $r (sort {$a <=> $b} keys %revs) {
-+			my ($paths, $logged) = @{$revs{$r}};
-+
-+			foreach my $gs ($self->match_globs(\%exists, $paths,
-+			                                   $globs, $r)) {
-+				if ($gs->rev_map_max >= $r) {
-+					next;
-+				}
-+				next unless $gs->match_paths($paths, $r);
-+				$gs->{logged_rev_props} = $logged;
-+				if (my $last_commit = $gs->last_commit) {
-+					$gs->assert_index_clean($last_commit);
-+				}
-+				my $log_entry = $gs->do_fetch($paths, $r);
-+				if ($log_entry) {
-+					$gs->do_git_commit($log_entry);
-+				}
-+				$Git::SVN::INDEX_FILES{$gs->{index}} = 1;
-+			}
-+			foreach my $g (@$globs) {
-+				my $k = "svn-remote.$g->{remote}." .
-+				        "$g->{t}-maxRev";
-+				Git::SVN::tmp_config($k, $r);
-+			}
-+			if ($ra_invalid) {
-+				$_[0] = undef;
-+				$self = undef;
-+				$RA = undef;
-+				$self = Git::SVN::Ra->new($ra_url);
-+				$ra_invalid = undef;
-+			}
-+		}
-+		# pre-fill the .rev_db since it'll eventually get filled in
-+		# with '0' x40 if something new gets committed
-+		foreach my $gs (@$gsv) {
-+			next if $gs->rev_map_max >= $max;
-+			next if defined $gs->rev_map_get($max);
-+			$gs->rev_map_set($max, 0 x40);
-+		}
-+		foreach my $g (@$globs) {
-+			my $k = "svn-remote.$g->{remote}.$g->{t}-maxRev";
-+			Git::SVN::tmp_config($k, $max);
-+		}
-+		last if $max >= $head;
-+		$min = $max + 1;
-+		$max += $inc;
-+		$max = $head if ($max > $head);
-+	}
-+	Git::SVN::gc();
-+}
-+
-+sub get_dir_globbed {
-+	my ($self, $left, $depth, $r) = @_;
-+
-+	my @x = eval { $self->get_dir($left, $r) };
-+	return unless scalar @x == 3;
-+	my $dirents = $x[0];
-+	my @finalents;
-+	foreach my $de (keys %$dirents) {
-+		next if $dirents->{$de}->{kind} != $SVN::Node::dir;
-+		if ($depth > 1) {
-+			my @args = ("$left/$de", $depth - 1, $r);
-+			foreach my $dir ($self->get_dir_globbed(@args)) {
-+				push @finalents, "$de/$dir";
-+			}
-+		} else {
-+			push @finalents, $de;
-+		}
-+	}
-+	@finalents;
-+}
-+
-+# return value: 0 -- don't ignore, 1 -- ignore
-+sub is_ref_ignored {
-+	my ($g, $p) = @_;
-+	my $refname = $g->{ref}->full_path($p);
-+	return 1 if defined($g->{ignore_refs_regex}) &&
-+	            $refname =~ m!$g->{ignore_refs_regex}!;
-+	return 0 unless defined($_ignore_refs_regex);
-+	return 1 if $refname =~ m!$_ignore_refs_regex!o;
-+	return 0;
-+}
-+
-+sub match_globs {
-+	my ($self, $exists, $paths, $globs, $r) = @_;
-+
-+	sub get_dir_check {
-+		my ($self, $exists, $g, $r) = @_;
-+
-+		my @dirs = $self->get_dir_globbed($g->{path}->{left},
-+		                                  $g->{path}->{depth},
-+		                                  $r);
-+
-+		foreach my $de (@dirs) {
-+			my $p = $g->{path}->full_path($de);
-+			next if $exists->{$p};
-+			next if (length $g->{path}->{right} &&
-+				 ($self->check_path($p, $r) !=
-+				  $SVN::Node::dir));
-+			next unless $p =~ /$g->{path}->{regex}/;
-+			$exists->{$p} = Git::SVN->init($self->{url}, $p, undef,
-+					 $g->{ref}->full_path($de), 1);
-+		}
-+	}
-+	foreach my $g (@$globs) {
-+		if (my $path = $paths->{"/$g->{path}->{left}"}) {
-+			if ($path->{action} =~ /^[AR]$/) {
-+				get_dir_check($self, $exists, $g, $r);
-+			}
-+		}
-+		foreach (keys %$paths) {
-+			if (/$g->{path}->{left_regex}/ &&
-+			    !/$g->{path}->{regex}/) {
-+				next if $paths->{$_}->{action} !~ /^[AR]$/;
-+				get_dir_check($self, $exists, $g, $r);
-+			}
-+			next unless /$g->{path}->{regex}/;
-+			my $p = $1;
-+			my $pathname = $g->{path}->full_path($p);
-+			next if is_ref_ignored($g, $p);
-+			next if $exists->{$pathname};
-+			next if ($self->check_path($pathname, $r) !=
-+			         $SVN::Node::dir);
-+			$exists->{$pathname} = Git::SVN->init(
-+			                      $self->{url}, $pathname, undef,
-+			                      $g->{ref}->full_path($p), 1);
-+		}
-+		my $c = '';
-+		foreach (split m#/#, $g->{path}->{left}) {
-+			$c .= "/$_";
-+			next unless ($paths->{$c} &&
-+			             ($paths->{$c}->{action} =~ /^[AR]$/));
-+			get_dir_check($self, $exists, $g, $r);
-+		}
-+	}
-+	values %$exists;
-+}
-+
-+sub minimize_url {
-+	my ($self) = @_;
-+	return $self->{url} if ($self->{url} eq $self->{repos_root});
-+	my $url = $self->{repos_root};
-+	my @components = split(m!/!, $self->{svn_path});
-+	my $c = '';
-+	do {
-+		$url .= "/$c" if length $c;
-+		eval {
-+			my $ra = (ref $self)->new($url);
-+			my $latest = $ra->get_latest_revnum;
-+			$ra->get_log("", $latest, 0, 1, 0, 1, sub {});
-+		};
-+	} while ($@ && ($c = shift @components));
-+	$url;
-+}
-+
-+sub can_do_switch {
 +	my $self = shift;
-+	unless (defined $can_do_switch) {
-+		my $pool = SVN::Pool->new;
-+		my $rep = eval {
-+			$self->do_switch(1, '', 0, $self->{url},
-+			                 SVN::Delta::Editor->new, $pool);
-+		};
-+		if ($@) {
-+			$can_do_switch = 0;
-+		} else {
-+			$rep->abort_report($pool);
-+			$can_do_switch = 1;
-+		}
-+		$pool->clear;
-+	}
-+	$can_do_switch;
++	YAML::Any::DumpFile($self->{FILENAME}, $self->{H});
 +}
 +
-+sub skip_unknown_revs {
-+	my ($err) = @_;
-+	my $errno = $err->apr_err();
-+	# Maybe the branch we're tracking didn't
-+	# exist when the repo started, so it's
-+	# not an error if it doesn't, just continue
-+	#
-+	# Wonderfully consistent library, eh?
-+	# 160013 - svn:// and file://
-+	# 175002 - http(s)://
-+	# 175007 - http(s):// (this repo required authorization, too...)
-+	#   More codes may be discovered later...
-+	if ($errno == 175007 || $errno == 175002 || $errno == 160013) {
-+		my $err_key = $err->expanded_message;
-+		# revision numbers change every time, filter them out
-+		$err_key =~ s/\d+/\0/g;
-+		$err_key = "$errno\0$err_key";
-+		unless ($ignored_err{$err_key}) {
-+			warn "W: Ignoring error from SVN, path probably ",
-+			     "does not exist: ($errno): ",
-+			     $err->expanded_message,"\n";
-+			warn "W: Do not be alarmed at the above message ",
-+			     "git-svn is just searching aggressively for ",
-+			     "old history.\n",
-+			     "This may take a while on large repositories\n";
-+			$ignored_err{$err_key} = 1;
-+		}
-+		return;
-+	}
-+	die "Error from SVN, ($errno): ", $err->expanded_message,"\n";
++sub SCALAR {
++	my $self = shift;
++	scalar(%{$self->{H}});
++}
++
++sub FIRSTKEY {
++	'Fake hash from Git::SVN::Memoize::YAML';
++}
++
++sub NEXTKEY {
++	undef;
 +}
 +
 +1;
 +__END__
 +
-+Git::SVN::Ra - Subversion remote access functions for git-svn
++=head1 NAME
++
++Git::SVN::Memoize::YAML - store Memoized data in YAML format
 +
 +=head1 SYNOPSIS
 +
-+    use Git::SVN::Ra;
++    use Memoize;
++    use Git::SVN::Memoize::YAML;
 +
-+    my $ra = Git::SVN::Ra->new($branchurl);
-+    my ($dirents, $fetched_revnum, $props) =
-+        $ra->get_dir('.', $SVN::Core::INVALID_REVNUM);
++    tie my %cache => 'Git::SVN::Memoize::YAML', $filename;
++    memoize('slow_function', SCALAR_CACHE => [HASH => \%cache]);
++    slow_function(arguments);
 +
 +=head1 DESCRIPTION
 +
-+This is a wrapper around the L<SVN::Ra> module for use by B<git-svn>.
-+It fills in some default parameters (such as the authentication
-+scheme), smooths over incompatibilities between libsvn versions, adds
-+caching, and implements some functions specific to B<git-svn>.
++This module provides a class that can be used to tie a hash to a
++YAML file.  The file is read when the hash is initialized and
++rewritten when the hash is destroyed.
 +
-+Do not use it unless you are developing git-svn.  The interface will
-+change as git-svn evolves.
++The intent is to allow L<Memoize> to back its cache with a file in
++YAML format, just like L<Memoize::Storable> allows L<Memoize> to
++back its cache with a file in Storable format.  Unlike the Storable
++format, the YAML format is platform-independent and fairly stable.
++
++Carps on error.
++
++=head1 DIAGNOSTICS
++
++See L<YAML::Any>.
 +
 +=head1 DEPENDENCIES
 +
-+Subversion perl bindings,
-+L<Git::SVN>.
-+
-+C<Git::SVN::Ra> has not been tested using callers other than
-+B<git-svn> itself.
-+
-+=head1 SEE ALSO
-+
-+L<SVN::Ra>.
++L<YAML::Any> from CPAN.
 +
 +=head1 INCOMPATIBILITIES
 +
@@ -1372,18 +297,19 @@ index 00000000..e88b4e79
 +
 +=head1 BUGS
 +
-+None.
++The entire cache is read into a Perl hash when loading the file,
++so this is not very scalable.
 diff --git a/perl/Makefile.PL b/perl/Makefile.PL
-index 32caf214..08afdcb2 100644
+index 08afdcb2..2c20290f 100644
 --- a/perl/Makefile.PL
 +++ b/perl/Makefile.PL
-@@ -30,6 +30,7 @@ my %pm = (
+@@ -27,6 +27,7 @@ MAKE_FRAG
+ my %pm = (
+ 	'Git.pm' => '$(INST_LIBDIR)/Git.pm',
+ 	'Git/I18N.pm' => '$(INST_LIBDIR)/Git/I18N.pm',
++	'Git/SVN/Memoize/YAML.pm' => '$(INST_LIBDIR)/Git/SVN/Memoize/YAML.pm',
  	'Git/SVN/Fetcher.pm' => '$(INST_LIBDIR)/Git/SVN/Fetcher.pm',
  	'Git/SVN/Editor.pm' => '$(INST_LIBDIR)/Git/SVN/Editor.pm',
  	'Git/SVN/Prompt.pm' => '$(INST_LIBDIR)/Git/SVN/Prompt.pm',
-+	'Git/SVN/Ra.pm' => '$(INST_LIBDIR)/Git/SVN/Ra.pm',
- );
- 
- # We come with our own bundled Error.pm. It's not in the set of default
 -- 
 1.7.10
