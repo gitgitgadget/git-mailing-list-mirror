@@ -1,140 +1,120 @@
-From: Leila Muhtasib <muhtasib@gmail.com>
-Subject: [PATCH] git-status: Show empty directories
-Date: Sat,  9 Jun 2012 15:40:06 -0400
-Message-ID: <1339270806-65013-1-git-send-email-muhtasib@gmail.com>
-Cc: Leila Muhtasib <muhtasib@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jun 09 21:40:30 2012
+From: konglu@minatec.inpg.fr
+Subject: Re: [PATCH_v1] add 'git credential' plumbing command
+Date: Sat, 09 Jun 2012 21:52:36 +0200
+Message-ID: <20120609215236.Horde.J-h4cnwdC4BP06mEUeqxRlA@webmail.minatec.grenoble-inp.fr>
+References: <1339267502-13803-1-git-send-email-Javier.Roucher-Iglesias@ensimag.imag.fr>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed	DelSp=Yes
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Javier Roucher <jroucher@gmail.com>,
+	Pavel Volek <Pavel.Volek@ensimag.imag.fr>,
+	NGUYEN Kim Thuat <Kim-Thuat.Nguyen@ensimag.imag.fr>,
+	ROUCHER IGLESIAS Javier <roucherj@ensimag.imag.fr>,
+	Matthieu Moy <Matthieu.Moy@imag.fr>
+To: Javier.Roucher-Iglesias@ensimag.imag.fr
+X-From: git-owner@vger.kernel.org Sat Jun 09 22:21:57 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SdRWJ-0005fo-RY
-	for gcvg-git-2@plane.gmane.org; Sat, 09 Jun 2012 21:40:24 +0200
+	id 1SdSAW-00035B-Vo
+	for gcvg-git-2@plane.gmane.org; Sat, 09 Jun 2012 22:21:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751977Ab2FITkT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 9 Jun 2012 15:40:19 -0400
-Received: from mail-qc0-f174.google.com ([209.85.216.174]:38069 "EHLO
-	mail-qc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751550Ab2FITkS (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 9 Jun 2012 15:40:18 -0400
-Received: by qcro28 with SMTP id o28so1374951qcr.19
-        for <git@vger.kernel.org>; Sat, 09 Jun 2012 12:40:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        bh=fWmyd779spVbxyc8gPDHOH2oJUbJmZK5Dnvcw3UtBg4=;
-        b=BeEl7ACiKWwX4N6hQyFWEdux9HyvqI6civCve0pB6MtmjFsCOASJXzwYfK+y+3fSf2
-         24esZt89tiFXbLpAIjGJNuIGD92GZk5hzjH9OSVFgcKSFL70EQgaNxZF7cNFJohBVcfs
-         kGV5eFfB1lm2kRQxKOJIywOmuyC4AivBzLbwc8Q9KTnmGV7sUgkFd33cf0fYpUhO6eLG
-         k9Ce0jJkNkjihgKBSm1cQI6ffQG/xIJqAp1mAHmoYjJssgfRYsOwFLGo/bOS1MIRXYxd
-         6Btb/mVB4nlLqqTzJvgb7lVhxjB+12v3WxFKhDSfbhkU7PVWRqN6ejZ1gIr/QjyhYJIp
-         2YRg==
-Received: by 10.224.192.133 with SMTP id dq5mr4442600qab.51.1339270817390;
-        Sat, 09 Jun 2012 12:40:17 -0700 (PDT)
-Received: from localhost ([38.117.156.148])
-        by mx.google.com with ESMTPS id gd2sm18219470qab.18.2012.06.09.12.40.16
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sat, 09 Jun 2012 12:40:16 -0700 (PDT)
-X-Mailer: git-send-email 1.7.7.5 (Apple Git-26)
+	id S1752103Ab2FIUVS convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 9 Jun 2012 16:21:18 -0400
+Received: from v-smtp.minatec.grenoble-inp.fr ([147.173.216.28]:47369 "EHLO
+	v-smtp.minatec.grenoble-inp.fr" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751299Ab2FIUVR (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 9 Jun 2012 16:21:17 -0400
+Received: from localhost (www02.minatec.grenoble-inp.fr [147.173.216.15])
+	by v-smtp.minatec.grenoble-inp.fr (Postfix) with ESMTP id DD1F51A161E;
+	Sat,  9 Jun 2012 21:52:36 +0200 (CEST)
+Received: from reverse.completel.net (reverse.completel.net [92.103.38.66])
+ by webmail.minatec.grenoble-inp.fr (Horde Framework) with HTTP; Sat, 09 Jun
+ 2012 21:52:36 +0200
+In-Reply-To: <1339267502-13803-1-git-send-email-Javier.Roucher-Iglesias@ensimag.imag.fr>
+User-Agent: Internet Messaging Program (IMP) H4 (5.0.17)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199554>
-
-git-status now lists empty directories under the untracked header. Before this
-modification, git status did not list empty directories. The header changed
-from 'Untracked files' to instead display 'Untracked files and directories'.
-A helpful reminder is also added after empty directories indicating they cannot
-be added/staged if they are empty. git status -u is unchanged, and will still
-only show untracked files just as before. As a result, no need for
-documentation change.
-
-Empty dirs are work in progress. They result because of one of the following:
-user forgot to add files to dir, user forgot to clean up dir, user under
-impression dir is staged and will be committed or is already committed. Last
-item might occur as some users setup project and dir structures before adding files.
-
-So this patch servers as a helpful reminder to users that they have an empty dir
-so they can act upon it. Plus it clarifies git behavior to the user that empty
-dirs can't be tracked.
-
-Signed-off-by: Leila Muhtasib <muhtasib@gmail.com>
----
-
-I ran into this issue myself where I thought my dir was already tracked, and 
-when I googled and found other people were confused and asking the same question. 
-Why don't empty dirs appear under git status when they aren't tracked? So I came 
-up with this patch.
-
-In my commit message, I compiled a list of arguments in favor of this patch. 
-But I've also thought about arguments against, however I didn't think they were 
-compelling enough to not have this patch. So I've also included my own rebuttal 
-below :)
-
-1) Direcories can't be tracked, so why show them under untracked?
-Because it is a helpful reminder. See reasons in the commit message above for 
-how it is helpful. This would make git more user friendly.
-Plus untracked does not mean 'it can be tracked', it just means it's not currently 
-tracked by git.
-
-2) Empty directories should be ignored
-If someone really wants to ignore something, they can put it in the .gitignore 
-file. Otherwise, the benefits above out weight this.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199555>
 
 
- wt-status.c |   24 +++++++++++++++++++-----
- 1 files changed, 19 insertions(+), 5 deletions(-)
+Javier.Roucher-Iglesias@ensimag.imag.fr a =E9crit=A0:
 
-diff --git a/wt-status.c b/wt-status.c
-index 9ffc535..81bf1aa 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -184,7 +184,12 @@ static void wt_status_print_other_header(struct wt_status *s,
- 					 const char *how)
- {
- 	const char *c = color(WT_STATUS_HEADER, s);
--	status_printf_ln(s, c, _("%s files:"), what);
-+
-+	if (s->show_untracked_files == SHOW_NORMAL_UNTRACKED_FILES)
-+		status_printf_ln(s, c, _("%s files and directories:"), what);
-+	else if (s->show_untracked_files == SHOW_ALL_UNTRACKED_FILES)
-+		status_printf_ln(s, c, _("%s files:"), what);
-+
- 	if (!advice_status_hints)
- 		return;
- 	status_printf_ln(s, c, _("  (use \"git %s <file>...\" to include in what will be committed)"), how);
-@@ -464,16 +469,25 @@ static void wt_status_collect_untracked(struct wt_status *s)
- 		return;
- 	memset(&dir, 0, sizeof(dir));
- 	if (s->show_untracked_files != SHOW_ALL_UNTRACKED_FILES)
--		dir.flags |=
--			DIR_SHOW_OTHER_DIRECTORIES | DIR_HIDE_EMPTY_DIRECTORIES;
-+	dir.flags |=
-+	  DIR_SHOW_OTHER_DIRECTORIES;
- 	setup_standard_excludes(&dir);
- 
- 	fill_directory(&dir, s->pathspec);
- 	for (i = 0; i < dir.nr; i++) {
- 		struct dir_entry *ent = dir.entries[i];
- 		if (cache_name_is_other(ent->name, ent->len) &&
--		    match_pathspec(s->pathspec, ent->name, ent->len, 0, NULL))
--			string_list_insert(&s->untracked, ent->name);
-+		    match_pathspec(s->pathspec, ent->name, ent->len, 0, NULL)) {
-+			if (is_empty_dir(ent->name)) {
-+				struct strbuf buf_name = STRBUF_INIT;
-+				strbuf_addstr(&buf_name, ent->name);
-+				strbuf_addstr(&buf_name, " (empty directories cannot be added)");
-+				string_list_insert(&s->untracked, buf_name.buf);
-+				strbuf_release(&buf_name);
-+			}
-+			else
-+				string_list_insert(&s->untracked, ent->name);
-+		}
- 		free(ent);
- 	}
- 
--- 
-1.7.7.5 (Apple Git-26)
+> +git-credential - Providing and strore user credentials to git
+
+s/Providing/Provides/ & s/strore/store
+
+> +-If git-credential system have the password already stored
+> +git-credential will answer with by STDOUT:
+
+s/have/has/
+
+> +Then if the password is correct, (note: is not git credential
+> +how decides if password is correct or not. Is the external system
+> +that have to authenticate the user) it can be stored using command
+> +'git crendential approve' by providing the structure, by STDIN.
+
+Wouldn't the note be "it's not git credential that decides if the passw=
+ord is
+correct or not. That part is done by the external system" ?
+
+> +1. The 'git credential fill' makes the structure,
+> +with this structure it will be able to save your
+> +credentials, and if the credential is allready stored,
+> +it will fill the password.
+
+s/allready/already/
+
+> +void cmd_credential (int argc, char **argv, const char *prefix){
+> +	const char *op;
+> +	struct credential c =3D CREDENTIAL_INIT;
+> +	int i;
+> +
+> +	op =3D argv[1];
+> +	if (!op)
+> +		usage(usage_msg);
+> +
+> +	for (i =3D 2; i < argc; i++)
+> +		string_list_append(&c.helpers, argv[i]);
+> +
+> +	if (credential_read(&c, stdin) < 0)
+> +		die("unable to read credential from stdin");
+> +
+> +	if (!strcmp(op, "fill")) {
+> +		credential_fill(&c);
+> +		if (c.username)
+> +			printf("username=3D%s\n", c.username);
+> +		if (c.password)
+> +			printf("password=3D%s\n", c.password);
+> +	}
+> +	else if (!strcmp(op, "approve")) {
+> +		credential_approve(&c);
+> +	}
+> +	else if (!strcmp(op, "reject")) {
+> +		credential_reject(&c);
+> +	}
+> +	else
+> +		usage(usage_msg);
+
+Braces for the last "else" part. In general, the structure should be
+
+       if (...) {
+                /*code*/
+       } else if (...) {
+                /*code*/
+       } else {
+                /*code*/
+       }
+
+If juste one block needs brances, all the other "else if"/"else" part
+need it too.
+
+BTW, please be aware of the white spaces (here mostly in the doc) :).
+
+Lucien Kong.
