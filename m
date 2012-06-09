@@ -1,63 +1,58 @@
-From: Leila <muhtasib@gmail.com>
+From: konglu@minatec.inpg.fr
 Subject: Re: [PATCH] git-status: Show empty directories
-Date: Sat, 9 Jun 2012 17:24:36 -0400
-Message-ID: <CAA3EhHLzGG2pz27+_k6s92VC+u2S==ADyVMdCawES-=ZFt4fhg@mail.gmail.com>
+Date: Sat, 09 Jun 2012 23:47:17 +0200
+Message-ID: <20120609234717.Horde.I9rYUXwdC4BP08RlFRO2w_A@webmail.minatec.grenoble-inp.fr>
 References: <1339270806-65013-1-git-send-email-muhtasib@gmail.com>
  <20120609221315.Horde.fN5FP3wdC4BP065b3FviijA@webmail.minatec.grenoble-inp.fr>
- <CAA3EhHJ9WnisF21iFfsjQKYFSY0t0jFvNV3aBjx0eGFPm8aoGg@mail.gmail.com> <877gvgrxw7.fsf@thomas.inf.ethz.ch>
+ <CAA3EhHJ9WnisF21iFfsjQKYFSY0t0jFvNV3aBjx0eGFPm8aoGg@mail.gmail.com>
+ <877gvgrxw7.fsf@thomas.inf.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=utf-8;
+	format=flowed	DelSp=Yes
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: konglu@minatec.inpg.fr, git@vger.kernel.org
+Cc: Leila <muhtasib@gmail.com>, git@vger.kernel.org
 To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Sat Jun 09 23:25:06 2012
+X-From: git-owner@vger.kernel.org Sat Jun 09 23:48:26 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SdT9d-0002rP-GE
-	for gcvg-git-2@plane.gmane.org; Sat, 09 Jun 2012 23:25:05 +0200
+	id 1SdTW9-0002bK-2N
+	for gcvg-git-2@plane.gmane.org; Sat, 09 Jun 2012 23:48:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752238Ab2FIVY6 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 9 Jun 2012 17:24:58 -0400
-Received: from mail-vb0-f46.google.com ([209.85.212.46]:57883 "EHLO
-	mail-vb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751401Ab2FIVY5 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 9 Jun 2012 17:24:57 -0400
-Received: by vbbff1 with SMTP id ff1so1686689vbb.19
-        for <git@vger.kernel.org>; Sat, 09 Jun 2012 14:24:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=D1Cb6V0IWkYF3ogSkbZs7bZjgeCvKek7JgNMdlBSymE=;
-        b=N1NtYdV/tqW+M7Og2ImEB3RLl5rfPdWEUKrKS08QjXmoV8aaO7o+vUsp/J7ss3Rweg
-         zEhJ/p1c1L84xcTy4F+8nHEKeys/8GdRFHnAM/T3uP/sDDxmF8aWp4gnL91GbIBXFXaD
-         YncggQ0jTCtVjY2OKDtfV6TfDqINFmy+Uy5A2IhYQfEREnPt51HXBpKAyPMKvLtmYksi
-         cE4cWbDbFtHa6KEGh0ihxljAoW/zaiEgv9FX3heTa9HiJIFviAGPohdA175i0wUO3P++
-         18yisL3EpLHall+ywNDWTw25fUzjAcKTPDYx1KDAUIRum+7WAqxCQUhbKEBCMClLho+T
-         Rigg==
-Received: by 10.52.73.42 with SMTP id i10mr8122571vdv.116.1339277096685; Sat,
- 09 Jun 2012 14:24:56 -0700 (PDT)
-Received: by 10.52.37.233 with HTTP; Sat, 9 Jun 2012 14:24:36 -0700 (PDT)
+	id S1751250Ab2FIVrl convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 9 Jun 2012 17:47:41 -0400
+Received: from v-smtp.minatec.grenoble-inp.fr ([147.173.216.28]:36474 "EHLO
+	v-smtp.minatec.grenoble-inp.fr" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750843Ab2FIVrl (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 9 Jun 2012 17:47:41 -0400
+Received: from localhost (www02.minatec.grenoble-inp.fr [147.173.216.15])
+	by v-smtp.minatec.grenoble-inp.fr (Postfix) with ESMTP id A5A091A0E04;
+	Sat,  9 Jun 2012 23:47:17 +0200 (CEST)
+Received: from reverse.completel.net (reverse.completel.net [92.103.38.66])
+ by webmail.minatec.grenoble-inp.fr (Horde Framework) with HTTP; Sat, 09 Jun
+ 2012 23:47:17 +0200
 In-Reply-To: <877gvgrxw7.fsf@thomas.inf.ethz.ch>
+User-Agent: Internet Messaging Program (IMP) H4 (5.0.17)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199559>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199560>
 
-On Sat, Jun 9, 2012 at 5:14 PM, Thomas Rast <trast@student.ethz.ch> wro=
-te:
+
+Thomas Rast <trast@student.ethz.ch> a =C3=A9crit=C2=A0:
+
 > Leila <muhtasib@gmail.com> writes:
 >
 >>> The structure is
->>> =A0 =A0 =A0if (...) {
->>> =A0 =A0 =A0 =A0 =A0 =A0 /*code*/
->>> =A0 =A0 =A0} else {
->>> =A0 =A0 =A0 =A0 =A0 =A0 /*code*/
->>> =A0 =A0 =A0}
+>>> =C2=A0 =C2=A0 =C2=A0if (...) {
+>>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 /*code*/
+>>> =C2=A0 =C2=A0 =C2=A0} else {
+>>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 /*code*/
+>>> =C2=A0 =C2=A0 =C2=A0}
 >>>
 >>> Do not forget braces in the "else" part as the firt block needs it.
 >>
@@ -68,10 +63,14 @@ s
 >> remember it for the future. Thanks!
 >
 > It's not required, there's plenty of precedent, even one case within
-> wt-status.c, of '} else'. =A0Try running
+> wt-status.c, of '} else'.  Try running
 >
-> =A0git grep '} else$'
->
+>   git grep '} else$'
 
-I ran the command and was able to see that. Thanks Thomas. I'm fine
-following whichever style you guys prefer.
+It's not because "there's plenty of precedent" that we should not try
+to improve the format of the code. That's why there're coding style
+rules so that we can keep the improvements consistent.
+
+Thanks.
+
+Lucien Kong
