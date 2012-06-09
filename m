@@ -1,78 +1,59 @@
-From: konglu@minatec.inpg.fr
-Subject: Re: [PATCHv3 2/2] rebase [-i --exec | -ix] <CMD>...
-Date: Sat, 09 Jun 2012 08:47:07 +0200
-Message-ID: <20120609084707.Horde.CGejZXwdC4BP0vFrryT2xDA@webmail.minatec.grenoble-inp.fr>
-References: <1338978856-26838-1-git-send-email-Lucien.Kong@ensimag.imag.fr>
- <1339167235-2009-1-git-send-email-Lucien.Kong@ensimag.imag.fr>
- <1339167235-2009-2-git-send-email-Lucien.Kong@ensimag.imag.fr>
- <4FD24AE9.8020101@web.de>
- <20120608211540.Horde.SRiCRHwdC4BP0k9c5TdWBaA@webmail.minatec.grenoble-inp.fr>
- <4FD258AD.6070601@web.de>
- <20120608220751.Horde.HHn7fXwdC4BP0luXQhxWxBA@webmail.minatec.grenoble-inp.fr>
- <4FD265C7.6050807@web.de>
- <20120608230327.Horde.IXfFTHwdC4BP0mifi63m9KA@webmail.minatec.grenoble-inp.fr>
- <4FD2E9B5.1010709@web.de>
+From: =?UTF-8?B?WmJpZ25pZXcgSsSZZHJ6ZWpld3NraS1Tem1law==?= 
+	<zbyszek@in.waw.pl>
+Subject: Re: [PATCH] gitk: add support for -G'regex' pickaxe variant
+Date: Sat, 09 Jun 2012 11:16:38 +0200
+Message-ID: <4FD31476.90104@in.waw.pl>
+References: <1339122742-28677-1-git-send-email-martin@laptop.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed	DelSp=Yes
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Lucien Kong <Lucien.Kong@ensimag.imag.fr>, git@vger.kernel.org,
-	Valentin Duperray <Valentin.Duperray@ensimag.imag.fr>,
-	Franck Jonas <Franck.Jonas@ensimag.imag.fr>,
-	Thomas Nguy <Thomas.Nguy@ensimag.imag.fr>,
-	Huynh Khoi Nguyen Nguyen 
-	<Huynh-Khoi-Nguyen.Nguyen@ensimag.imag.fr>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-To: Torsten =?iso-8859-1?b?QvZnZXJzaGF1c2Vu?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Sat Jun 09 08:56:37 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: gitster@pobox.com, git@vger.kernel.org
+To: Martin Langhoff <martin@laptop.org>
+X-From: git-owner@vger.kernel.org Sat Jun 09 11:17:00 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SdFbB-0001qj-CD
-	for gcvg-git-2@plane.gmane.org; Sat, 09 Jun 2012 08:56:37 +0200
+	id 1SdHn0-0003pC-Lo
+	for gcvg-git-2@plane.gmane.org; Sat, 09 Jun 2012 11:16:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751535Ab2FIGzu convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 9 Jun 2012 02:55:50 -0400
-Received: from v-smtp.minatec.grenoble-inp.fr ([147.173.216.28]:45461 "EHLO
-	v-smtp.minatec.grenoble-inp.fr" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751091Ab2FIGzu (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 9 Jun 2012 02:55:50 -0400
-Received: from localhost (www02.minatec.grenoble-inp.fr [147.173.216.15])
-	by v-smtp.minatec.grenoble-inp.fr (Postfix) with ESMTP id EBEAE1A1206;
-	Sat,  9 Jun 2012 08:47:07 +0200 (CEST)
-Received: from reverse.completel.net (reverse.completel.net [92.103.38.66])
- by webmail.minatec.grenoble-inp.fr (Horde Framework) with HTTP; Sat, 09 Jun
- 2012 08:47:07 +0200
-In-Reply-To: <4FD2E9B5.1010709@web.de>
-User-Agent: Internet Messaging Program (IMP) H4 (5.0.17)
-Content-Disposition: inline
+	id S1753010Ab2FIJQy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 9 Jun 2012 05:16:54 -0400
+Received: from kawka.in.waw.pl ([178.63.212.103]:38193 "EHLO kawka.in.waw.pl"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752923Ab2FIJQx (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 9 Jun 2012 05:16:53 -0400
+Received: from aazh216.neoplus.adsl.tpnet.pl ([83.6.145.216] helo=[192.168.1.13])
+	by kawka.in.waw.pl with esmtpsa (TLS1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.72)
+	(envelope-from <zbyszek@in.waw.pl>)
+	id 1SdHmn-0005Ha-R0; Sat, 09 Jun 2012 11:16:45 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:10.0.3) Gecko/20120329 Icedove/10.0.3
+In-Reply-To: <1339122742-28677-1-git-send-email-martin@laptop.org>
+X-Enigmail-Version: 1.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199546>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199547>
 
+On 06/08/2012 04:32 AM, Martin Langhoff wrote:
+> git log -G'regex' is a very usable alternative to the classic
+> pickaxe. Minimal patch to make it usable from gitk.
 
-Torsten B=F6gershausen <tboegi@web.de> a =E9crit=A0:
+>      set gm [makedroplist .tf.lbar.gdttype gdttype \
+>  		[mc "containing:"] \
+>  		[mc "touching paths:"] \
+> -		[mc "adding/removing string:"]]
+> +		[mc "adding/removing string:"] \
+> +		[mc "changes match regex:"]]
 
-> Hej,
-> I have 2 patches with the headline "[PATCHv3 1/2" in my in box.
-> None of them is dealing in any kind with upgrading a command to =20
-> understand "exec".
+Hi,
 
-Here you can see the thread of the discussion:
+this feature is definitely useful. One nitpick: the string that you add
+becomes part of a sentence in the GUI: "prev/next commit changes match
+regex", which is in different grammatical form then the existing
+snippets. Should be something with '-ing'.
 
-http://thread.gmane.org/gmane.comp.version-control.git/199497
-
-> To be able to test under Mac OS it could be helpful if you just re-se=
-nd
-> one patch to my email.
-> Then I can try to re-do the patch based on f623ca1cae600e97cb0b38 and
-> test it under Mac OS.
-
-Alright, gonna send you the patch in one part so that it can be applied
-alone :).
-
-Lucien Kong
+Zbyszek
