@@ -1,33 +1,36 @@
 From: Heiko Voigt <hvoigt@hvoigt.net>
-Subject: [PATCH] git-gui: recognize submodule diff when replaced by file
-Date: Sat, 9 Jun 2012 15:47:29 +0200
-Message-ID: <20120609134729.GA16268@book.hvoigt.net>
+Subject: [PATCH] update-index: allow overwriting existing submodule index
+	entries
+Date: Sat, 9 Jun 2012 16:27:00 +0200
+Message-ID: <20120609142658.GB16268@book.hvoigt.net>
 References: <CAOkDyE9q1n=oLoEXXxurDjNM0B2+cZ9eoeGE57F9hEQUjK0hZg@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>
 To: Adam Spiers <git@adamspiers.org>,
-	Pat Thoyts <patthoyts@googlemail.com>
-X-From: git-owner@vger.kernel.org Sat Jun 09 15:51:33 2012
+	Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Jun 09 16:27:21 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SdM4d-0004rZ-VG
-	for gcvg-git-2@plane.gmane.org; Sat, 09 Jun 2012 15:51:28 +0200
+	id 1SdMdH-0007lg-FJ
+	for gcvg-git-2@plane.gmane.org; Sat, 09 Jun 2012 16:27:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753235Ab2FINu7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 9 Jun 2012 09:50:59 -0400
-Received: from smtprelay01.ispgateway.de ([80.67.18.43]:59760 "EHLO
-	smtprelay01.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751806Ab2FINu6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 9 Jun 2012 09:50:58 -0400
+	id S1751176Ab2FIO1H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 9 Jun 2012 10:27:07 -0400
+Received: from smtprelay05.ispgateway.de ([80.67.31.93]:44736 "EHLO
+	smtprelay05.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750795Ab2FIO1G (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 9 Jun 2012 10:27:06 -0400
+X-Greylist: delayed 2370 seconds by postgrey-1.27 at vger.kernel.org; Sat, 09 Jun 2012 10:27:06 EDT
 Received: from [77.20.33.80] (helo=localhost)
-	by smtprelay01.ispgateway.de with esmtpsa (TLSv1:AES256-SHA:256)
+	by smtprelay05.ispgateway.de with esmtpsa (TLSv1:AES256-SHA:256)
 	(Exim 4.68)
 	(envelope-from <hvoigt@hvoigt.net>)
-	id 1SdM0o-0006eI-IA; Sat, 09 Jun 2012 15:47:30 +0200
+	id 1SdMd3-000780-40; Sat, 09 Jun 2012 16:27:01 +0200
 Content-Disposition: inline
 In-Reply-To: <CAOkDyE9q1n=oLoEXXxurDjNM0B2+cZ9eoeGE57F9hEQUjK0hZg@mail.gmail.com>
 User-Agent: Mutt/1.5.19 (2009-01-05)
@@ -36,54 +39,69 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199549>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199550>
 
-When coloring the diff in submodule mode we previously just looked
-for the submodule change markers and not normal diff markers. Since
-a submodule can be replaced by a file and vice versa lets also support
-hunk, + and - lines.
+In commit e01105 Linus introduced gitlinks to update-index. He explains
+that he thinks it is not the right thing to replace a gitlink with
+something else.
+
+That commit is from the very first beginnings of submodule support.
+Since then we have gotten a lot closer to being able to remove a
+submodule without losing its history. This check prevents such a use
+case, so I think this assumption has changed.
+
+Additionally in the git add codepath we do not have such a check, so for
+consistency reasons I think removing this check is the correct thing to
+do.
 
 Signed-off-by: Heiko Voigt <hvoigt@hvoigt.net>
 ---
 Hi,
 
 On Fri, Jun 01, 2012 at 11:31:26AM +0100, Adam Spiers wrote:
-> At this point, git citool outputs:
+> Now if I press Control-T to try to stage 'two' into the index, I get a new
+> dialog which says:
 > 
->     error: Unhandled submodule diff marker: {@@ }
->     error: Unhandled submodule diff marker: {+on}
+>     Updating the Git index failed. A rescan will be automatically
+>     started to resynchronize git-gui.
+> 
+>     error: two is already a gitlink, not replacing
+>     fatal: Unable to process path two
+> 
+> 
+>                               [Unlock Index] [Continue]
+> 
+> I can work around via 'git add two', but it would be nice if citool
+> handled this correctly.
 
-This fixes that error message (and is hopefully doing the right thing).
+This is because git gui uses plumbing (update-index) for updating the
+index.
 
-There will be another patch fixing the error popup.
+This patch fixes that popup. Testsuite passes here.
+
+Is it ok this way?
 
 Cheers Heiko
 
- git-gui/lib/diff.tcl | 12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ builtin/update-index.c | 6 ------
+ 1 file changed, 6 deletions(-)
 
-diff --git a/git-gui/lib/diff.tcl b/git-gui/lib/diff.tcl
-index ec44055..a3c997b 100644
---- a/git-gui/lib/diff.tcl
-+++ b/git-gui/lib/diff.tcl
-@@ -467,8 +467,16 @@ proc read_diff {fd conflict_size cont_info} {
- 				{  >} {set tags d_+}
- 				{  W} {set tags {}}
- 				default {
--					puts "error: Unhandled submodule diff marker: {$op}"
--					set tags {}
-+					set op [string index $line 0]
-+					switch -- $op {
-+						{-} {set tags d_-}
-+						{+} {set tags d_+}
-+						{@} {set tags d_@}
-+						default {
-+							puts "error: Unhandled submodule diff marker: {$op}"
-+							set tags {}
-+						}
-+					}
- 				}
- 				}
- 			}
+diff --git a/builtin/update-index.c b/builtin/update-index.c
+index 5f038d6..5a4e9ea 100644
+--- a/builtin/update-index.c
++++ b/builtin/update-index.c
+@@ -211,12 +211,6 @@ static int process_path(const char *path)
+ 	if (S_ISDIR(st.st_mode))
+ 		return process_directory(path, len, &st);
+ 
+-	/*
+-	 * Process a regular file
+-	 */
+-	if (ce && S_ISGITLINK(ce->ce_mode))
+-		return error("%s is already a gitlink, not replacing", path);
+-
+ 	return add_one_path(ce, path, len, &st);
+ }
+ 
 -- 
 1.7.10.2.522.g93b45fe
