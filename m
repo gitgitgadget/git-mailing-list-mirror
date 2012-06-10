@@ -1,7 +1,7 @@
 From: Lucien Kong <Lucien.Kong@ensimag.imag.fr>
-Subject: [PATCHv10 4/4] status: better advices when splitting a commit (during rebase -i)
-Date: Sun, 10 Jun 2012 13:17:38 +0200
-Message-ID: <1339327058-29371-4-git-send-email-Lucien.Kong@ensimag.imag.fr>
+Subject: [PATCHv10 2/4] t7512-status-help.sh: better advices for git status
+Date: Sun, 10 Jun 2012 13:17:36 +0200
+Message-ID: <1339327058-29371-2-git-send-email-Lucien.Kong@ensimag.imag.fr>
 References: <1339075029-27109-1-git-send-email-Lucien.Kong@ensimag.imag.fr>
  <1339327058-29371-1-git-send-email-Lucien.Kong@ensimag.imag.fr>
 Cc: Lucien Kong <Lucien.Kong@ensimag.imag.fr>,
@@ -18,50 +18,49 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SdgAA-0005O2-Bz
+	id 1SdgA9-0005O2-Gd
 	for gcvg-git-2@plane.gmane.org; Sun, 10 Jun 2012 13:18:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754772Ab2FJLRn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 10 Jun 2012 07:17:43 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:38848 "EHLO shiva.imag.fr"
+	id S1754555Ab2FJLRm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 10 Jun 2012 07:17:42 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:60591 "EHLO rominette.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753276Ab2FJLRl (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1751387Ab2FJLRl (ORCPT <rfc822;git@vger.kernel.org>);
 	Sun, 10 Jun 2012 07:17:41 -0400
 Received: from ensimag.imag.fr (ensimag.imag.fr [195.221.228.12])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id q5AB8nGs030458
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id q5AB8cDs022368
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Sun, 10 Jun 2012 13:08:49 +0200
+	Sun, 10 Jun 2012 13:08:38 +0200
 Received: from ensibm.imag.fr (ensibm [195.221.228.8])
-	by ensimag.imag.fr (8.13.8/8.13.8/ImagV2.1.r_ens) with ESMTP id q5ABHd4G012117;
+	by ensimag.imag.fr (8.13.8/8.13.8/ImagV2.1.r_ens) with ESMTP id q5ABHdLf012113;
 	Sun, 10 Jun 2012 13:17:39 +0200
 Received: from ensibm.imag.fr (localhost [127.0.0.1])
-	by ensibm.imag.fr (8.13.8/8.13.8/ImagV2.1.sb_ens.pm) with ESMTP id q5ABHdr9029467;
+	by ensibm.imag.fr (8.13.8/8.13.8/ImagV2.1.sb_ens.pm) with ESMTP id q5ABHdNg029455;
 	Sun, 10 Jun 2012 13:17:39 +0200
 Received: (from konglu@localhost)
-	by ensibm.imag.fr (8.13.8/8.13.8/Submit) id q5ABHdQU029466;
+	by ensibm.imag.fr (8.13.8/8.13.8/Submit) id q5ABHdb3029454;
 	Sun, 10 Jun 2012 13:17:39 +0200
 X-Mailer: git-send-email 1.7.8
 In-Reply-To: <1339327058-29371-1-git-send-email-Lucien.Kong@ensimag.imag.fr>
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Sun, 10 Jun 2012 13:08:50 +0200 (CEST)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Sun, 10 Jun 2012 13:08:38 +0200 (CEST)
 X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: q5AB8nGs030458
+X-MailScanner-ID: q5AB8cDs022368
 X-IMAG-MailScanner: Found to be clean
 X-IMAG-MailScanner-SpamCheck: 
 X-IMAG-MailScanner-From: lucien.kong@phelma.grenoble-inp.fr
-MailScanner-NULL-Check: 1339931330.12117@msFP06gIudE0fCiSnK053g
+MailScanner-NULL-Check: 1339931319.29042@+nFcz9DKJmXWV6W7W5v/NQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199587>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199588>
 
-Add new informative help messages at the output of 'git status' when
-the user is splitting a commit. The code figures this state by
-comparing the contents of the following files in the .git/ directory:
-	  - HEAD
-	  - ORIG_HEAD
-	  - rebase-merge/amend
-	  - rebase-merge/orig-head
+The following tests include several cases in which the user needs to
+run 'git status' to know his current situation, whether there're
+conflicts or he's in rebase/bisect/am/cherry-pick progress.
+
+One of the test is about the set of the advice.statushints config key
+to 'false' in .git/config.
 
 Signed-off-by: Lucien Kong <Lucien.Kong@ensimag.imag.fr>
 Signed-off-by: Valentin Duperray <Valentin.Duperray@ensimag.imag.fr>
@@ -70,43 +69,53 @@ Signed-off-by: Thomas Nguy <Thomas.Nguy@ensimag.imag.fr>
 Signed-off-by: Huynh Khoi Nguyen Nguyen <Huynh-Khoi-Nguyen.Nguyen@ensimag.imag.fr>
 Signed-off-by: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
 ---
-The "const" have been dropped and the check about "HEAD" been
-detached or not is fixed.
+part 2/4 unchanged since v9.
 
- t/t7512-status-help.sh |  277 ++++++++++++++++++++++++++++++++++++++++++++++++
- wt-status.c            |   51 +++++++++
- 2 files changed, 328 insertions(+), 0 deletions(-)
+ t/t7512-status-help.sh |  372 ++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 files changed, 372 insertions(+), 0 deletions(-)
+ create mode 100755 t/t7512-status-help.sh
 
 diff --git a/t/t7512-status-help.sh b/t/t7512-status-help.sh
-index bdce192..3ce384a 100755
---- a/t/t7512-status-help.sh
+new file mode 100755
+index 0000000..3714e8e
+--- /dev/null
 +++ b/t/t7512-status-help.sh
-@@ -196,6 +196,283 @@ test_expect_success 'status when rebasing -i in edit mode' '
- '
- 
- 
-+test_expect_success 'status when splitting a commit' '
-+	git reset --hard master &&
-+	git checkout -b split_commit &&
-+	test_commit one_split main.txt one &&
-+	test_commit two_split main.txt two &&
-+	test_commit three_split main.txt three &&
-+	test_commit four_split main.txt four &&
-+	FAKE_LINES="1 edit 2 3" &&
-+	export FAKE_LINES &&
-+	test_when_finished "git rebase --abort" &&
-+	git rebase -i HEAD~3 &&
-+	git reset HEAD^ &&
+@@ -0,0 +1,372 @@
++#!/bin/sh
++#
++# Copyright (c) 2012 Valentin Duperray, Lucien Kong, Franck Jonas,
++#		     Thomas Nguy, Khoi Nguyen
++#		     Grenoble INP Ensimag
++#
++
++test_description='git status advices'
++
++. ./test-lib.sh
++
++. "$TEST_DIRECTORY"/lib-rebase.sh
++
++set_fake_editor
++
++test_expect_success 'prepare for conflicts' '
++	test_commit init main.txt init &&
++	git branch conflicts &&
++	test_commit on_master main.txt on_master &&
++	git checkout conflicts &&
++	test_commit on_conflicts main.txt on_conflicts
++'
++
++
++test_expect_success 'status when conflicts unresolved' '
++	test_must_fail git merge master &&
 +	cat >expected <<-\EOF &&
-+	# Not currently on any branch.
-+	# You are currently splitting a commit.
-+	#   (Once your working directory is clean, run "git rebase --continue")
++	# On branch conflicts
++	# You have unmerged paths.
++	#   (fix conflicts and run "git commit")
 +	#
-+	# Changes not staged for commit:
-+	#   (use "git add <file>..." to update what will be committed)
-+	#   (use "git checkout -- <file>..." to discard changes in working directory)
++	# Unmerged paths:
++	#   (use "git add/rm <file>..." as appropriate to mark resolution)
 +	#
-+	#	modified:   main.txt
++	#	both modified:      main.txt
 +	#
 +	no changes added to commit (use "git add" and/or "git commit -a")
 +	EOF
@@ -115,221 +124,51 @@ index bdce192..3ce384a 100755
 +'
 +
 +
-+test_expect_success 'status after editing the last commit with --amend during a rebase -i' '
-+	git reset --hard master &&
-+	git checkout -b amend_last &&
-+	test_commit one_amend main.txt one &&
-+	test_commit two_amend main.txt two &&
-+	test_commit three_amend main.txt three &&
-+	test_commit four_amend main.txt four &&
-+	FAKE_LINES="1 2 edit 3" &&
-+	export FAKE_LINES &&
-+	test_when_finished "git rebase --abort" &&
-+	git rebase -i HEAD~3 &&
-+	git commit --amend -m "foo" &&
-+	cat >expected <<-\EOF &&
-+	# Not currently on any branch.
-+	# You are currently editing a commit during a rebase.
-+	#   (use "git commit --amend" to amend the current commit)
-+	#   (use "git rebase --continue" once you are satisfied with your changes)
-+	#
-+	nothing to commit (use -u to show untracked files)
-+	EOF
-+	git status --untracked-files=no >actual &&
-+	test_i18ncmp expected actual
-+'
-+
-+
-+test_expect_success 'prepare for several edits' '
-+	git reset --hard master &&
-+	git checkout -b several_edits &&
-+	test_commit one_edits main.txt one &&
-+	test_commit two_edits main.txt two &&
-+	test_commit three_edits main.txt three &&
-+	test_commit four_edits main.txt four
-+'
-+
-+
-+test_expect_success 'status: (continue first edit) second edit' '
-+	FAKE_LINES="edit 1 edit 2 3" &&
-+	export FAKE_LINES &&
-+	test_when_finished "git rebase --abort" &&
-+	git rebase -i HEAD~3 &&
-+	git rebase --continue &&
-+	cat >expected <<-\EOF &&
-+	# Not currently on any branch.
-+	# You are currently editing a commit during a rebase.
-+	#   (use "git commit --amend" to amend the current commit)
-+	#   (use "git rebase --continue" once you are satisfied with your changes)
-+	#
-+	nothing to commit (use -u to show untracked files)
-+	EOF
-+	git status --untracked-files=no >actual &&
-+	test_i18ncmp expected actual
-+'
-+
-+
-+test_expect_success 'status: (continue first edit) second edit and split' '
-+	git reset --hard several_edits &&
-+	FAKE_LINES="edit 1 edit 2 3" &&
-+	export FAKE_LINES &&
-+	test_when_finished "git rebase --abort" &&
-+	git rebase -i HEAD~3 &&
-+	git rebase --continue &&
-+	git reset HEAD^ &&
-+	cat >expected <<-\EOF &&
-+	# Not currently on any branch.
-+	# You are currently splitting a commit.
-+	#   (Once your working directory is clean, run "git rebase --continue")
-+	#
-+	# Changes not staged for commit:
-+	#   (use "git add <file>..." to update what will be committed)
-+	#   (use "git checkout -- <file>..." to discard changes in working directory)
-+	#
-+	#	modified:   main.txt
-+	#
-+	no changes added to commit (use "git add" and/or "git commit -a")
-+	EOF
-+	git status --untracked-files=no >actual &&
-+	test_i18ncmp expected actual
-+'
-+
-+
-+test_expect_success 'status: (continue first edit) second edit and amend' '
-+	git reset --hard several_edits &&
-+	FAKE_LINES="edit 1 edit 2 3" &&
-+	export FAKE_LINES &&
-+	test_when_finished "git rebase --abort" &&
-+	git rebase -i HEAD~3 &&
-+	git rebase --continue &&
-+	git commit --amend -m "foo" &&
-+	cat >expected <<-\EOF &&
-+	# Not currently on any branch.
-+	# You are currently editing a commit during a rebase.
-+	#   (use "git commit --amend" to amend the current commit)
-+	#   (use "git rebase --continue" once you are satisfied with your changes)
-+	#
-+	nothing to commit (use -u to show untracked files)
-+	EOF
-+	git status --untracked-files=no >actual &&
-+	test_i18ncmp expected actual
-+'
-+
-+
-+test_expect_success 'status: (amend first edit) second edit' '
-+	git reset --hard several_edits &&
-+	FAKE_LINES="edit 1 edit 2 3" &&
-+	export FAKE_LINES &&
-+	test_when_finished "git rebase --abort" &&
-+	git rebase -i HEAD~3 &&
-+	git commit --amend -m "a" &&
-+	git rebase --continue &&
-+	cat >expected <<-\EOF &&
-+	# Not currently on any branch.
-+	# You are currently editing a commit during a rebase.
-+	#   (use "git commit --amend" to amend the current commit)
-+	#   (use "git rebase --continue" once you are satisfied with your changes)
-+	#
-+	nothing to commit (use -u to show untracked files)
-+	EOF
-+	git status --untracked-files=no >actual &&
-+	test_i18ncmp expected actual
-+'
-+
-+
-+test_expect_success 'status: (amend first edit) second edit and split' '
-+	git reset --hard several_edits &&
-+	FAKE_LINES="edit 1 edit 2 3" &&
-+	export FAKE_LINES &&
-+	test_when_finished "git rebase --abort" &&
-+	git rebase -i HEAD~3 &&
-+	git commit --amend -m "b" &&
-+	git rebase --continue &&
-+	git reset HEAD^ &&
-+	cat >expected <<-\EOF &&
-+	# Not currently on any branch.
-+	# You are currently splitting a commit.
-+	#   (Once your working directory is clean, run "git rebase --continue")
-+	#
-+	# Changes not staged for commit:
-+	#   (use "git add <file>..." to update what will be committed)
-+	#   (use "git checkout -- <file>..." to discard changes in working directory)
-+	#
-+	#	modified:   main.txt
-+	#
-+	no changes added to commit (use "git add" and/or "git commit -a")
-+	EOF
-+	git status --untracked-files=no >actual &&
-+	test_i18ncmp expected actual
-+'
-+
-+
-+test_expect_success 'status: (amend first edit) second edit and amend' '
-+	git reset --hard several_edits &&
-+	FAKE_LINES="edit 1 edit 2 3" &&
-+	export FAKE_LINES &&
-+	test_when_finished "git rebase --abort" &&
-+	git rebase -i HEAD~3 &&
-+	git commit --amend -m "c" &&
-+	git rebase --continue &&
-+	git commit --amend -m "d" &&
-+	cat >expected <<-\EOF &&
-+	# Not currently on any branch.
-+	# You are currently editing a commit during a rebase.
-+	#   (use "git commit --amend" to amend the current commit)
-+	#   (use "git rebase --continue" once you are satisfied with your changes)
-+	#
-+	nothing to commit (use -u to show untracked files)
-+	EOF
-+	git status --untracked-files=no >actual &&
-+	test_i18ncmp expected actual
-+'
-+
-+
-+test_expect_success 'status: (split first edit) second edit' '
-+	git reset --hard several_edits &&
-+	FAKE_LINES="edit 1 edit 2 3" &&
-+	export FAKE_LINES &&
-+	test_when_finished "git rebase --abort" &&
-+	git rebase -i HEAD~3 &&
-+	git reset HEAD^ &&
++test_expect_success 'status when conflicts resolved before commit' '
++	git reset --hard conflicts &&
++	test_must_fail git merge master &&
++	echo one >main.txt &&
 +	git add main.txt &&
-+	git commit -m "e" &&
-+	git rebase --continue &&
 +	cat >expected <<-\EOF &&
-+	# Not currently on any branch.
-+	# You are currently editing a commit during a rebase.
-+	#   (use "git commit --amend" to amend the current commit)
-+	#   (use "git rebase --continue" once you are satisfied with your changes)
++	# On branch conflicts
++	# All conflicts fixed but you are still merging.
++	#   (use "git commit" to conclude merge)
 +	#
-+	nothing to commit (use -u to show untracked files)
++	# Changes to be committed:
++	#
++	#	modified:   main.txt
++	#
++	# Untracked files not listed (use -u option to show untracked files)
 +	EOF
 +	git status --untracked-files=no >actual &&
 +	test_i18ncmp expected actual
 +'
 +
 +
-+test_expect_success 'status: (split first edit) second edit and split' '
-+	git reset --hard several_edits &&
-+	FAKE_LINES="edit 1 edit 2 3" &&
-+	export FAKE_LINES &&
++test_expect_success 'prepare for rebase conflicts' '
++	git reset --hard master &&
++	git checkout -b rebase_conflicts &&
++	test_commit one_rebase main.txt one &&
++	test_commit two_rebase main.txt two &&
++	test_commit three_rebase main.txt three
++'
++
++
++test_expect_success 'status when rebase in progress before resolving conflicts' '
 +	test_when_finished "git rebase --abort" &&
-+	git rebase -i HEAD~3 &&
-+	git reset HEAD^ &&
-+	git add main.txt &&
-+	git commit --amend -m "f" &&
-+	git rebase --continue &&
-+	git reset HEAD^ &&
++	test_must_fail git rebase HEAD^ --onto HEAD^^ &&
 +	cat >expected <<-\EOF &&
 +	# Not currently on any branch.
-+	# You are currently splitting a commit.
-+	#   (Once your working directory is clean, run "git rebase --continue")
++	# You are currently rebasing.
++	#   (fix conflicts and then run "git rebase --continue")
++	#   (use "git rebase --skip" to skip this patch)
++	#   (use "git rebase --abort" to check out the original branch)
 +	#
-+	# Changes not staged for commit:
-+	#   (use "git add <file>..." to update what will be committed)
-+	#   (use "git checkout -- <file>..." to discard changes in working directory)
++	# Unmerged paths:
++	#   (use "git reset HEAD <file>..." to unstage)
++	#   (use "git add/rm <file>..." as appropriate to mark resolution)
 +	#
-+	#	modified:   main.txt
++	#	both modified:      main.txt
 +	#
 +	no changes added to commit (use "git add" and/or "git commit -a")
 +	EOF
@@ -338,17 +177,95 @@ index bdce192..3ce384a 100755
 +'
 +
 +
-+test_expect_success 'status: (split first edit) second edit and amend' '
-+	git reset --hard several_edits &&
-+	FAKE_LINES="edit 1 edit 2 3" &&
++test_expect_success 'status when rebase in progress before rebase --continue' '
++	git reset --hard rebase_conflicts &&
++	test_when_finished "git rebase --abort" &&
++	test_must_fail git rebase HEAD^ --onto HEAD^^ &&
++	echo three >main.txt &&
++	git add main.txt &&
++	cat >expected <<-\EOF &&
++	# Not currently on any branch.
++	# You are currently rebasing.
++	#   (all conflicts fixed: run "git rebase --continue")
++	#
++	# Changes to be committed:
++	#   (use "git reset HEAD <file>..." to unstage)
++	#
++	#	modified:   main.txt
++	#
++	# Untracked files not listed (use -u option to show untracked files)
++	EOF
++	git status --untracked-files=no >actual &&
++	test_i18ncmp expected actual
++'
++
++
++test_expect_success 'prepare for rebase_i_conflicts' '
++	git reset --hard master &&
++	git checkout -b rebase_i_conflicts &&
++	test_commit one_unmerge main.txt one_unmerge &&
++	git branch rebase_i_conflicts_second &&
++	test_commit one_master main.txt one_master &&
++	git checkout rebase_i_conflicts_second &&
++	test_commit one_second main.txt one_second
++'
++
++
++test_expect_success 'status during rebase -i when conflicts unresolved' '
++	test_when_finished "git rebase --abort" &&
++	test_must_fail git rebase -i rebase_i_conflicts &&
++	cat >expected <<-\EOF &&
++	# Not currently on any branch.
++	# You are currently rebasing.
++	#   (fix conflicts and then run "git rebase --continue")
++	#   (use "git rebase --skip" to skip this patch)
++	#   (use "git rebase --abort" to check out the original branch)
++	#
++	# Unmerged paths:
++	#   (use "git reset HEAD <file>..." to unstage)
++	#   (use "git add/rm <file>..." as appropriate to mark resolution)
++	#
++	#	both modified:      main.txt
++	#
++	no changes added to commit (use "git add" and/or "git commit -a")
++	EOF
++	git status --untracked-files=no >actual &&
++	test_i18ncmp expected actual
++'
++
++
++test_expect_success 'status during rebase -i after resolving conflicts' '
++	git reset --hard rebase_i_conflicts_second &&
++	test_when_finished "git rebase --abort" &&
++	test_must_fail git rebase -i rebase_i_conflicts &&
++	git add main.txt &&
++	cat >expected <<-\EOF &&
++	# Not currently on any branch.
++	# You are currently rebasing.
++	#   (all conflicts fixed: run "git rebase --continue")
++	#
++	# Changes to be committed:
++	#   (use "git reset HEAD <file>..." to unstage)
++	#
++	#	modified:   main.txt
++	#
++	# Untracked files not listed (use -u option to show untracked files)
++	EOF
++	git status --untracked-files=no >actual &&
++	test_i18ncmp expected actual
++'
++
++
++test_expect_success 'status when rebasing -i in edit mode' '
++	git reset --hard master &&
++	git checkout -b rebase_i_edit &&
++	test_commit one_rebase_i main.txt one &&
++	test_commit two_rebase_i main.txt two &&
++	test_commit three_rebase_i main.txt three &&
++	FAKE_LINES="1 edit 2" &&
 +	export FAKE_LINES &&
 +	test_when_finished "git rebase --abort" &&
-+	git rebase -i HEAD~3 &&
-+	git reset HEAD^ &&
-+	git add main.txt &&
-+	git commit --amend -m "g" &&
-+	git rebase --continue &&
-+	git commit --amend -m "h" &&
++	git rebase -i HEAD~2 &&
 +	cat >expected <<-\EOF &&
 +	# Not currently on any branch.
 +	# You are currently editing a commit during a rebase.
@@ -362,84 +279,179 @@ index bdce192..3ce384a 100755
 +'
 +
 +
- test_expect_success 'prepare am_session' '
- 	git reset --hard master &&
- 	git checkout -b am_session &&
-diff --git a/wt-status.c b/wt-status.c
-index fcde045..5496a1f 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -12,6 +12,7 @@
- #include "refs.h"
- #include "submodule.h"
- #include "column.h"
-+#include "strbuf.h"
- 
- static char default_wt_status_colors[][COLOR_MAXLEN] = {
- 	GIT_COLOR_NORMAL, /* WT_STATUS_HEADER */
-@@ -817,6 +818,51 @@ static void show_am_in_progress(struct wt_status *s,
- 	wt_status_print_trailer(s);
- }
- 
-+static char *read_line_from_git_path(const char *filename)
-+{
-+	struct strbuf buf = STRBUF_INIT;
-+	FILE *fp = fopen(git_path("%s", filename), "r");
-+	if (!fp) {
-+		strbuf_release(&buf);
-+		return NULL;
-+	}
-+	strbuf_getline(&buf, fp, '\n');
-+	if (!fclose(fp)) {
-+		return strbuf_detach(&buf, NULL);
-+	} else {
-+		strbuf_release(&buf);
-+		return NULL;
-+	}
-+}
++test_expect_success 'prepare am_session' '
++	git reset --hard master &&
++	git checkout -b am_session &&
++	test_commit one_am one.txt "one" &&
++	test_commit two_am two.txt "two" &&
++	test_commit three_am three.txt "three"
++'
 +
-+static int split_commit_in_progress(struct wt_status *s)
-+{
-+	int split_in_progress = 0;
-+	char *head = read_line_from_git_path("HEAD");
-+	char *orig_head = read_line_from_git_path("ORIG_HEAD");
-+	char *rebase_amend = read_line_from_git_path("rebase-merge/amend");
-+	char *rebase_orig_head = read_line_from_git_path("rebase-merge/orig-head");
 +
-+	if (!head || !orig_head || !rebase_amend || !rebase_orig_head || !prefixcmp(head, "ref: "))
-+		return split_in_progress;
++test_expect_success 'status in an am session: file already exists' '
++	git checkout -b am_already_exists &&
++	test_when_finished "rm Maildir/* && git am --abort" &&
++	git format-patch -1 -oMaildir &&
++	test_must_fail git am Maildir/*.patch &&
++	cat >expected <<-\EOF &&
++	# On branch am_already_exists
++	# You are in the middle of an am session.
++	#   (fix conflicts and then run "git am --resolved")
++	#   (use "git am --skip" to skip this patch)
++	#   (use "git am --abort" to restore the original branch)
++	#
++	nothing to commit (use -u to show untracked files)
++	EOF
++	git status --untracked-files=no >actual &&
++	test_i18ncmp expected actual
++'
 +
-+	if (!strcmp(rebase_amend, rebase_orig_head)) {
-+		if (strcmp(head, rebase_amend))
-+			split_in_progress = 1;
-+	} else if (strcmp(orig_head, rebase_orig_head)) {
-+		split_in_progress = 1;
-+	}
 +
-+	if (!s->amend && !s->nowarn && !s->workdir_dirty)
-+		split_in_progress = 0;
++test_expect_success 'status in an am session: file does not exist' '
++	git reset --hard am_session &&
++	git checkout -b am_not_exists &&
++	git rm three.txt &&
++	git commit -m "delete three.txt" &&
++	test_when_finished "rm Maildir/* && git am --abort" &&
++	git format-patch -1 -oMaildir &&
++	test_must_fail git am Maildir/*.patch &&
++	cat >expected <<-\EOF &&
++	# On branch am_not_exists
++	# You are in the middle of an am session.
++	#   (fix conflicts and then run "git am --resolved")
++	#   (use "git am --skip" to skip this patch)
++	#   (use "git am --abort" to restore the original branch)
++	#
++	nothing to commit (use -u to show untracked files)
++	EOF
++	git status --untracked-files=no >actual &&
++	test_i18ncmp expected actual
++'
 +
-+	free(head);
-+	free(orig_head);
-+	free(rebase_amend);
-+	free(rebase_orig_head);
-+	return split_in_progress;
-+}
 +
- static void show_rebase_in_progress(struct wt_status *s,
- 				struct wt_status_state *state,
- 				const char *color)
-@@ -838,6 +884,11 @@ static void show_rebase_in_progress(struct wt_status *s,
- 		if (advice_status_hints)
- 			status_printf_ln(s, color,
- 				_("  (all conflicts fixed: run \"git rebase --continue\")"));
-+	} else if (split_commit_in_progress(s)) {
-+		status_printf_ln(s, color, _("You are currently splitting a commit."));
-+		if (advice_status_hints)
-+			status_printf_ln(s, color,
-+				_("  (Once your working directory is clean, run \"git rebase --continue\")"));
- 	} else {
- 		status_printf_ln(s, color, _("You are currently editing a commit during a rebase."));
- 		if (advice_status_hints && !s->amend) {
++test_expect_success 'status in an am session: empty patch' '
++	git reset --hard am_session &&
++	git checkout -b am_empty &&
++	test_when_finished "rm Maildir/* && git am --abort" &&
++	git format-patch -3 -oMaildir &&
++	git rm one.txt two.txt three.txt &&
++	git commit -m "delete all am_empty" &&
++	echo error >Maildir/0002-two_am.patch &&
++	test_must_fail git am Maildir/*.patch &&
++	cat >expected <<-\EOF &&
++	# On branch am_empty
++	# You are in the middle of an am session.
++	# The current patch is empty.
++	#   (use "git am --skip" to skip this patch)
++	#   (use "git am --abort" to restore the original branch)
++	#
++	nothing to commit (use -u to show untracked files)
++	EOF
++	git status --untracked-files=no >actual &&
++	test_i18ncmp expected actual
++'
++
++
++test_expect_success 'status when bisecting' '
++	git reset --hard master &&
++	git checkout -b bisect &&
++	test_commit one_bisect main.txt one &&
++	test_commit two_bisect main.txt two &&
++	test_commit three_bisect main.txt three &&
++	test_when_finished "git bisect reset" &&
++	git bisect start &&
++	git bisect bad &&
++	git bisect good one_bisect &&
++	cat >expected <<-\EOF &&
++	# Not currently on any branch.
++	# You are currently bisecting.
++	#   (use "git bisect reset" to get back to the original branch)
++	#
++	nothing to commit (use -u to show untracked files)
++	EOF
++	git status --untracked-files=no >actual &&
++	test_i18ncmp expected actual
++'
++
++
++test_expect_success 'status when rebase conflicts with statushints disabled' '
++	git reset --hard master &&
++	git checkout -b statushints_disabled &&
++	test_when_finished "git config --local advice.statushints true" &&
++	git config --local advice.statushints false &&
++	test_commit one_statushints main.txt one &&
++	test_commit two_statushints main.txt two &&
++	test_commit three_statushints main.txt three &&
++	test_when_finished "git rebase --abort" &&
++	test_must_fail git rebase HEAD^ --onto HEAD^^ &&
++	cat >expected <<-\EOF &&
++	# Not currently on any branch.
++	# You are currently rebasing.
++	#
++	# Unmerged paths:
++	#	both modified:      main.txt
++	#
++	no changes added to commit
++	EOF
++	git status --untracked-files=no >actual &&
++	test_i18ncmp expected actual
++'
++
++
++test_expect_success 'prepare for cherry-pick conflicts' '
++	git reset --hard master &&
++	git checkout -b cherry_branch &&
++	test_commit one_cherry main.txt one &&
++	test_commit two_cherries main.txt two &&
++	git checkout -b cherry_branch_second &&
++	test_commit second_cherry main.txt second &&
++	git checkout cherry_branch &&
++	test_commit three_cherries main.txt three
++'
++
++
++test_expect_success 'status when cherry-picking before resolving conflicts' '
++	test_when_finished "git cherry-pick --abort" &&
++	test_must_fail git cherry-pick cherry_branch_second &&
++	cat >expected <<-\EOF &&
++	# On branch cherry_branch
++	# You are currently cherry-picking.
++	#   (fix conflicts and run "git commit")
++	#
++	# Unmerged paths:
++	#   (use "git add/rm <file>..." as appropriate to mark resolution)
++	#
++	#	both modified:      main.txt
++	#
++	no changes added to commit (use "git add" and/or "git commit -a")
++	EOF
++	git status --untracked-files=no >actual &&
++	test_i18ncmp expected actual
++'
++
++
++test_expect_success 'status when cherry-picking after resolving conflicts' '
++	git reset --hard cherry_branch &&
++	test_when_finished "git cherry-pick --abort" &&
++	test_must_fail git cherry-pick cherry_branch_second &&
++	echo end >main.txt &&
++	git add main.txt &&
++	cat >expected <<-\EOF &&
++	# On branch cherry_branch
++	# You are currently cherry-picking.
++	#   (all conflicts fixed: run "git commit")
++	#
++	# Changes to be committed:
++	#
++	#	modified:   main.txt
++	#
++	# Untracked files not listed (use -u option to show untracked files)
++	EOF
++	git status --untracked-files=no >actual &&
++	test_i18ncmp expected actual
++'
++
++
++test_done
 -- 
 1.7.8
