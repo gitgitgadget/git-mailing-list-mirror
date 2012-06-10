@@ -1,119 +1,96 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] t0020: make sure the test file is lf to start with
-Date: Sun, 10 Jun 2012 13:50:35 +0100 (IST)
-Message-ID: <alpine.DEB.1.00.1206101349180.16012@bonsai2>
-References: <1339324352-7376-1-git-send-email-vfr@lyx.org> <alpine.DEB.1.00.1206101145550.16012@bonsai2> <4FD47E99.2000004@lyx.org>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCHv1] Export file in git-remote-mediawiki
+Date: Sun, 10 Jun 2012 15:01:27 +0200
+Message-ID: <vpqehpnnwwo.fsf@bauges.imag.fr>
+References: <1339162024-3120-1-git-send-email-nguyenkimthuat@gmail.com>
+	<vpqwr3hrj6s.fsf@bauges.imag.fr>
+	<c23d4a113c735e093e3e9b06e4f16a70@ensibm.imag.fr>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=ISO-8859-1
-Cc: git@vger.kernel.org, msysgit@googlegroups.com
-To: Vincent van Ravesteijn <vfr@lyx.org>
-X-From: msysgit+bncCLLz_5DuGxCmsNL-BBoENDcunQ@googlegroups.com Sun Jun 10 14:50:51 2012
-Return-path: <msysgit+bncCLLz_5DuGxCmsNL-BBoENDcunQ@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-ey0-f186.google.com ([209.85.215.186])
+Content-Type: text/plain
+Cc: <git@vger.kernel.org>
+To: nguyenki <nguyenki@ensibm.imag.fr>
+X-From: git-owner@vger.kernel.org Sun Jun 10 15:01:48 2012
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncCLLz_5DuGxCmsNL-BBoENDcunQ@googlegroups.com>)
-	id 1SdhbT-00051s-Qo
-	for gcvm-msysgit@m.gmane.org; Sun, 10 Jun 2012 14:50:47 +0200
-Received: by eaac10 with SMTP id c10sf1602801eaa.3
-        for <gcvm-msysgit@m.gmane.org>; Sun, 10 Jun 2012 05:50:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=beta;
-        h=x-beenthere:received-spf:x-authenticated:x-provags-id:date:from
-         :x-x-sender:to:cc:subject:in-reply-to:message-id:references
-         :user-agent:mime-version:x-y-gmx-trusted:x-original-sender
-         :x-original-authentication-results:precedence:mailing-list:list-id
-         :x-google-group-id:list-post:list-help:list-archive:sender
-         :list-subscribe:list-unsubscribe:content-type;
-        bh=WJbtFss3yXD7iUOvS0e17tBVXTa1TvmaFGD1ELOJN9s=;
-        b=peYVzpdoqHR3tZKldE0sg56GOaPoSAFjcrFvugKIlLzCT9X+vxud0UqPPzo5qjmfhf
-         3FCQm0k/tLe+pY4METZh68k3qDrXtEMNd+dXUn5A+1rEhiuyM/Q/BICc0Jhk/sWyobtS
-         Vl0hO3cLVyaDHJQ4Vpuinwz/ID9LDEq/QSu/k=
-Received: by 10.216.133.229 with SMTP id q79mr308801wei.88.1339332646781;
-        Sun, 10 Jun 2012 05:50:46 -0700 (PDT)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.216.214.138 with SMTP id c10ls2288412wep.3.gmail; Sun, 10 Jun
- 2012 05:50:42 -0700 (PDT)
-Received: by 10.216.140.219 with SMTP id e69mr2134107wej.1.1339332642789;
-        Sun, 10 Jun 2012 05:50:42 -0700 (PDT)
-Received: by 10.216.140.219 with SMTP id e69mr2134106wej.1.1339332642763;
-        Sun, 10 Jun 2012 05:50:42 -0700 (PDT)
-Received: from mailout-de.gmx.net (mailout-de.gmx.net. [213.165.64.22])
-        by gmr-mx.google.com with SMTP id er1si2834373wib.0.2012.06.10.05.50.42;
-        Sun, 10 Jun 2012 05:50:42 -0700 (PDT)
-Received-SPF: pass (google.com: domain of Johannes.Schindelin@gmx.de designates 213.165.64.22 as permitted sender) client-ip=213.165.64.22;
-Received: (qmail invoked by alias); 10 Jun 2012 12:50:42 -0000
-Received: from 89-168-112-76.dynamic.dsl.as9105.com (EHLO bonsai2.local) [89.168.112.76]
-  by mail.gmx.net (mp004) with SMTP; 10 Jun 2012 14:50:42 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+mWLwC6a+mgGz8fCoLXCSz9PndlHeIsk51JfhXRw
-	Tpx0okDV8tYKTh
-X-X-Sender: gene099@bonsai2
-In-Reply-To: <4FD47E99.2000004@lyx.org>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-Original-Sender: johannes.schindelin@gmx.de
-X-Original-Authentication-Results: gmr-mx.google.com; spf=pass (google.com:
- domain of Johannes.Schindelin@gmx.de designates 213.165.64.22 as permitted
- sender) smtp.mail=Johannes.Schindelin@gmx.de
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post?hl=en>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/?hl=en>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit?hl=en>
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199598>
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1Sdhm1-0000bv-Ob
+	for gcvg-git-2@plane.gmane.org; Sun, 10 Jun 2012 15:01:42 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1753154Ab2FJNBh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 10 Jun 2012 09:01:37 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:36069 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751780Ab2FJNBg (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Jun 2012 09:01:36 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id q5ACqRlJ032016
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Sun, 10 Jun 2012 14:52:27 +0200
+Received: from bauges.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1Sdhlo-0004Ds-KG; Sun, 10 Jun 2012 15:01:28 +0200
+In-Reply-To: <c23d4a113c735e093e3e9b06e4f16a70@ensibm.imag.fr>
+	(nguyenki@ensibm.imag.fr's message of "Sat, 09 Jun 2012 00:59:22
+	+0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.93 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Sun, 10 Jun 2012 14:52:28 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: q5ACqRlJ032016
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1339937552.48804@kdDdVhqz8f2a2swIi+rOig
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199599>
 
-Hi Vincent,
+nguyenki <nguyenki@ensibm.imag.fr> writes:
 
-On Sun, 10 Jun 2012, Vincent van Ravesteijn wrote:
+>>> +	my %hashFiles = get_file_extensions_maybe($complete_file_name);
+>>
+>> What does this function do? My first understanding was that it
+>> queried
+>> the wiki for allowed file extensions, but why does it need the file
+>> name? It does nothing if $complete_file_name ends with .mw, but then
+>> why
+>> do you run it before entering the following if() statement?
+>>
+>>>  	if (substr($complete_file_name,-3) eq ".mw") {
+>>>  		my $title = substr($complete_file_name,0,-3);
+>>
+>  This function will get a list of allowed file extensions. It need the
+> file name to verify if this name begins with .mw or not. If not, it
+> does nothing like
+> you said. But if $complete_file_name is not a wiki page (end with
+> .mw), the function will return the list of file extensions %hashFiles
+> to verify if this file is allowed in this condition:
 
-> Op 10-6-2012 12:47, Johannes Schindelin schreef:
-> >
-> > > Because the eol-style is now wrong from the beginning, the later
-> > > tests '.gitattributes says two is binary' and 'checkout with
-> > > existing .gitattributes' fail.
+If $complete_file_name is not a wiki page, you basically don't need to
+call this function. As I said, move the call to the function within the
+next "if" statement, and you won't need this extra complexity.
+
+> Yes, i'll correct it in the next patch.
+> For the moment, i added these lines to deal with the case similar -
+> the case when an user tries to upload a file or pages but he doesn't
+> have sufficient rights or he failed to login.
 >
-> > I wonder why it does not fail here:
-> >
-> >  https://qa.nest-initiative.org/job/msysgit-test/24/console
-> >
-> > IOW I think there is a difference between the msysGit setup and your
-> > setup...
-> 
-> I compiled git using MSVC and try to run it in the Windows cmd prompt.
-> Consequently it doesn't use the perl that is distributed with msysgit,
-> but it uses the perl that I've installed on my Windows system
-> (Strawberry Perl; http://strawberryperl.com/).
+> +sub error_insufficient_right {
+> +       print STDERR "Can not delete or upload file and wiki pages\n";
+> +       print STDERR "You don't have right to do it\n";
+> +       print STDOUT "error $_[0]\"right insufficient\"\n";
+> +       return 0;
+> +}
 
-Ah, now it makes sense. Maybe a valuable information to convey in the
-commit message?
-
-> When I modify the paths such that git uses the perl.exe distributed with
-> msysgit the tests run ok.
-
-Again, a valuable information for the commit message.
-
-Also, I suspect that many, many more places should be affected by that
-Perl's behavior...
-
-Ciao,
-Johannes
+This is still a regression. The previous version was propagating page
+deletion as "replace content with [[Category:Deleted]]", which did work
+with insufficient priviledge.
 
 -- 
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
-
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=en_US?hl=en
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
