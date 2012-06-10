@@ -1,89 +1,106 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: [PATCH v2 0/3] git-svn: use YAML format for mergeinfo cache
- when possible
-Date: Sun, 10 Jun 2012 09:00:39 +0000
-Message-ID: <20120610090039.GA12868@dcvr.yhbt.net>
-References: <1313979422-21286-1-git-send-email-jgross@mit.edu>
- <20110823081546.GA28091@dcvr.yhbt.net>
- <7vobzgrrbg.fsf@alter.siamese.dyndns.org>
- <20120527192541.GA29490@burratino>
- <20120527201450.GA3630@dcvr.yhbt.net>
- <20120609222039.GD28412@burratino>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: [PATCH] git-status: Show empty directories
+Date: Sun, 10 Jun 2012 11:01:22 +0200
+Message-ID: <87haujr15p.fsf@thomas.inf.ethz.ch>
+References: <1339270806-65013-1-git-send-email-muhtasib@gmail.com>
+	<20120609221315.Horde.fN5FP3wdC4BP065b3FviijA@webmail.minatec.grenoble-inp.fr>
+	<CAA3EhHJ9WnisF21iFfsjQKYFSY0t0jFvNV3aBjx0eGFPm8aoGg@mail.gmail.com>
+	<877gvgrxw7.fsf@thomas.inf.ethz.ch>
+	<20120609234717.Horde.I9rYUXwdC4BP08RlFRO2w_A@webmail.minatec.grenoble-inp.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, Jason Gross <jgross@MIT.EDU>,
-	git@vger.kernel.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jun 10 11:01:21 2012
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Leila <muhtasib@gmail.com>, <git@vger.kernel.org>
+To: <konglu@minatec.inpg.fr>
+X-From: git-owner@vger.kernel.org Sun Jun 10 11:01:34 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Sde1P-0001F0-EW
-	for gcvg-git-2@plane.gmane.org; Sun, 10 Jun 2012 11:01:19 +0200
+	id 1Sde1c-0001bJ-CJ
+	for gcvg-git-2@plane.gmane.org; Sun, 10 Jun 2012 11:01:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752566Ab2FJJAl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 10 Jun 2012 05:00:41 -0400
-Received: from dcvr.yhbt.net ([64.71.152.64]:38728 "EHLO dcvr.yhbt.net"
+	id S1752739Ab2FJJB2 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 10 Jun 2012 05:01:28 -0400
+Received: from edge10.ethz.ch ([82.130.75.186]:49739 "EHLO edge10.ethz.ch"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751152Ab2FJJAk (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Jun 2012 05:00:40 -0400
-Received: from localhost (dcvr.yhbt.net [127.0.0.1])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 060301F4E6;
-	Sun, 10 Jun 2012 09:00:39 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <20120609222039.GD28412@burratino>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1751152Ab2FJJB1 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 10 Jun 2012 05:01:27 -0400
+Received: from CAS21.d.ethz.ch (172.31.51.111) by edge10.ethz.ch
+ (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.2.298.4; Sun, 10 Jun
+ 2012 11:01:21 +0200
+Received: from thomas.inf.ethz.ch.ethz.ch (46.126.8.85) by CAS21.d.ethz.ch
+ (172.31.51.111) with Microsoft SMTP Server (TLS) id 14.2.298.4; Sun, 10 Jun
+ 2012 11:01:24 +0200
+In-Reply-To: <20120609234717.Horde.I9rYUXwdC4BP08RlFRO2w_A@webmail.minatec.grenoble-inp.fr>
+	(konglu@minatec.inpg.fr's message of "Sat, 09 Jun 2012 23:47:17
+	+0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Originating-IP: [46.126.8.85]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199577>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199578>
 
-Jonathan Nieder <jrnieder@gmail.com> wrote:
-> Eric Wong wrote:
-> > These should die on errors, right?
-> 
-> Yep, they do.  I didn't bother doing the CARP_NOT thing --- let's wait
-> for a bug report or rainy day and then handle errors properly (by
-> invalidating the cache when appropriate).
+konglu@minatec.inpg.fr writes:
 
-OK.
+> Thomas Rast <trast@student.ethz.ch> a =C3=A9crit=C2=A0:
+>
+>> Leila <muhtasib@gmail.com> writes:
+>>
+>>>> The structure is
+>>>> =C2=A0 =C2=A0 =C2=A0if (...) {
+>>>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 /*code*/
+>>>> =C2=A0 =C2=A0 =C2=A0} else {
+>>>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 /*code*/
+>>>> =C2=A0 =C2=A0 =C2=A0}
+>>>>
+>>>> Do not forget braces in the "else" part as the firt block needs it=
+=2E
+>>>
+>>> I was under the impression that one liners didn't require parenthes=
+is
+>>> according to the style guidelines. I didn't realize that if the 'if=
+'
+>>> required it, then the else required it. I will make that change and
+>>> remember it for the future. Thanks!
+>>
+>> It's not required, there's plenty of precedent, even one case within
+>> wt-status.c, of '} else'.  Try running
+>>
+>>   git grep '} else$'
+>
+> It's not because "there's plenty of precedent" that we should not try
+> to improve the format of the code. That's why there're coding style
+> rules so that we can keep the improvements consistent.
 
-> Patches 1-2 are independent from patch 3.  I'm sending them this way
-> for no particular reason.
-> 
-> Thoughts of all kinds welcome, as usual.
+Yeah, and the rules (Documentation/CodingGuidelines) say
 
-Thanks!  I only had a trivial conflict with 2/3, but fixed it,
-signed-off and pushed to master of git://bogomips.org/git-svn
+ - We avoid using braces unnecessarily.  I.e.
 
-> Jonathan Nieder (3):
->   git-svn: make Git::SVN::Editor a separate file
->   git-svn: make Git::SVN::RA a separate file
+	if (bla) {
+		x =3D 1;
+	}
 
-2/3 had a conflict with commit c26ddce86d7215b4d9687bd4c6b5dd43a3fabf31
-which I resolved by hand
-(git-svn: platform auth providers are working only on 1.6.15 or newer)
+   is frowned upon.  A gray area is when the statement extends
+   over a few lines, and/or you have a lengthy comment atop of
+   it.  Also, like in the Linux kernel, if there is a long list
+   of "else if" statements, it can make sense to add braces to
+   single line blocks.
 
---- a.mbox	2012-06-10 08:58:19.000000000 +0000
-+++ b.mbox	2012-06-10 08:58:23.000000000 +0000
-@@ -64,7 +64,7 @@
- -
- -	# earlier 1.6.x versions would segfault, and <= 1.5.x didn't have
- -	# this function
---	if (::compare_svn_version('1.6.12') > 0) {
-+-	if (::compare_svn_version('1.6.15') >= 0) {
- -		my $config = SVN::Core::config_get_config($config_dir);
- -		my ($p, @a);
- -		# config_get_config returns all config files from
-@@ -688,7 +688,7 @@
- +
- +	# earlier 1.6.x versions would segfault, and <= 1.5.x didn't have
- +	# this function
--+	if (::compare_svn_version('1.6.12') > 0) {
-++	if (::compare_svn_version('1.6.15') >= 0) {
- +		my $config = SVN::Core::config_get_config($config_dir);
- +		my ($p, @a);
- +		# config_get_config returns all config files from
+I'm not the one who wrote them, but I'm taking the last sentence to mea=
+n
+that you should not put the braces unless the omission will break the
+vertical alignment of the 'else if' chain.
+
+
+BTW, there are plenty of cases in git where it is better to stick to th=
+e
+existing style of the file instead of the CodingGuidelines, unless you
+are willing to clean up the file first (and nobody else works on it).
+
+--=20
+Thomas Rast
+trast@{inf,student}.ethz.ch
