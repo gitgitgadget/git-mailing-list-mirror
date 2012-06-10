@@ -1,404 +1,257 @@
-From: Lucien Kong <Lucien.Kong@ensimag.imag.fr>
-Subject: [PATCHv10 1/4] wt-status.*: better advices for git status added
-Date: Sun, 10 Jun 2012 13:17:35 +0200
-Message-ID: <1339327058-29371-1-git-send-email-Lucien.Kong@ensimag.imag.fr>
-References: <1339075029-27109-1-git-send-email-Lucien.Kong@ensimag.imag.fr>
-Cc: Lucien Kong <Lucien.Kong@ensimag.imag.fr>,
-	Valentin Duperray <Valentin.Duperray@ensimag.imag.fr>,
-	Franck Jonas <Franck.Jonas@ensimag.imag.fr>,
-	Thomas Nguy <Thomas.Nguy@ensimag.imag.fr>,
-	Huynh Khoi Nguyen Nguyen 
-	<Huynh-Khoi-Nguyen.Nguyen@ensimag.imag.fr>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jun 10 13:18:33 2012
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH_v1] add 'git credential' plumbing command
+Date: Sun, 10 Jun 2012 07:56:19 -0400
+Message-ID: <20120610115619.GA6453@sigill.intra.peff.net>
+References: <1339267502-13803-1-git-send-email-Javier.Roucher-Iglesias@ensimag.imag.fr>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, Javier Roucher <jroucher@gmail.com>,
+	Pavel Volek <Pavel.Volek@ensimag.imag.fr>,
+	NGUYEN Kim Thuat <Kim-Thuat.Nguyen@ensimag.imag.fr>,
+	ROUCHER IGLESIAS Javier <roucherj@ensimag.imag.fr>,
+	Matthieu Moy <Matthieu.Moy@imag.fr>
+To: Javier.Roucher-Iglesias@ensimag.imag.fr
+X-From: git-owner@vger.kernel.org Sun Jun 10 13:56:53 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SdgAB-0005O2-FP
-	for gcvg-git-2@plane.gmane.org; Sun, 10 Jun 2012 13:18:31 +0200
+	id 1SdglI-0000bA-8J
+	for gcvg-git-2@plane.gmane.org; Sun, 10 Jun 2012 13:56:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755721Ab2FJLSZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 10 Jun 2012 07:18:25 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:38845 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753594Ab2FJLRl (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Jun 2012 07:17:41 -0400
-Received: from ensimag.imag.fr (ensimag.imag.fr [195.221.228.12])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id q5AB8nkr030456
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Sun, 10 Jun 2012 13:08:49 +0200
-Received: from ensibm.imag.fr (ensibm [195.221.228.8])
-	by ensimag.imag.fr (8.13.8/8.13.8/ImagV2.1.r_ens) with ESMTP id q5ABHd8O012111;
-	Sun, 10 Jun 2012 13:17:39 +0200
-Received: from ensibm.imag.fr (localhost [127.0.0.1])
-	by ensibm.imag.fr (8.13.8/8.13.8/ImagV2.1.sb_ens.pm) with ESMTP id q5ABHdn0029451;
-	Sun, 10 Jun 2012 13:17:39 +0200
-Received: (from konglu@localhost)
-	by ensibm.imag.fr (8.13.8/8.13.8/Submit) id q5ABHcHH029450;
-	Sun, 10 Jun 2012 13:17:38 +0200
-X-Mailer: git-send-email 1.7.8
-In-Reply-To: <1339075029-27109-1-git-send-email-Lucien.Kong@ensimag.imag.fr>
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Sun, 10 Jun 2012 13:08:49 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: q5AB8nkr030456
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: lucien.kong@phelma.grenoble-inp.fr
-MailScanner-NULL-Check: 1339931329.99611@mEpMcrRu6iCwkEdD2mx7uQ
+	id S1753248Ab2FJL43 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 10 Jun 2012 07:56:29 -0400
+Received: from 99-108-225-23.lightspeed.iplsin.sbcglobal.net ([99.108.225.23]:48978
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751155Ab2FJL41 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Jun 2012 07:56:27 -0400
+Received: (qmail 22356 invoked by uid 107); 10 Jun 2012 11:56:27 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Sun, 10 Jun 2012 07:56:27 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 10 Jun 2012 07:56:19 -0400
+Content-Disposition: inline
+In-Reply-To: <1339267502-13803-1-git-send-email-Javier.Roucher-Iglesias@ensimag.imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199590>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199591>
 
-This patch provides new informative help messages in the display of
-'git status' (at the top) during conflicts, rebase, am, bisect or
-cherry-pick process.
+On Sat, Jun 09, 2012 at 08:45:02PM +0200, Javier.Roucher-Iglesias@ensimag.imag.fr wrote:
 
-The new messages are not shown when using options such as -s or
---porcelain. The messages about the current situation of the user are
-always displayed but the advices on what the user needs to do in order
-to resume a rebase/bisect/am/commit after resolving conflicts can be
-hidden by setting advice.statushints to 'false' in the config file.
+> +DESCRIPTION
+> +-----------
+> +
+> +Git-credential permits to the user of the script to save:
+> +username, password, host, path and protocol. When the user of script
+> +invoke git-credential, the script can ask for a password, using the command
+> +'git credential fill'.
 
-Thus, information about the updated advice.statushints key are added
-in Documentation/config.txt.
+I wonder if this description starts off a bit too literal, and should
+start with the big picture. Tell people what it is generally, how it
+fits into git, and in what circumstances they would want to run it.
 
-Also, the test t7060-wt-status.sh is now working with the new help
-messages. Tests about suggestions of "git rm" are also added.
+Like:
 
-Signed-off-by: Lucien Kong <Lucien.Kong@ensimag.imag.fr>
-Signed-off-by: Valentin Duperray <Valentin.Duperray@ensimag.imag.fr>
-Signed-off-by: Franck Jonas <Franck.Jonas@ensimag.imag.fr>
-Signed-off-by: Thomas Nguy <Thomas.Nguy@ensimag.imag.fr>
-Signed-off-by: Huynh Khoi Nguyen Nguyen <Huynh-Khoi-Nguyen.Nguyen@ensimag.imag.fr>
-Signed-off-by: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
----
-part 1/4 unchanged since v9.
+  Git has an internal interface for storing and retrieving credentials
+  from system-specific helpers, as well as prompting the user for
+  usernames and passwords. The git-credential command exposes this
+  interface to scripts which may want to retrieve, store, or prompt for
+  credentials in the same manner as git. The design of this scriptable
+  interface models the internal C API; see
+  link:technical/api-credentials.txt[the git credential API] for more
+  background on the concepts.
 
- Documentation/config.txt |    7 +-
- t/t7060-wtstatus.sh      |   64 ++++++++++++++++++
- wt-status.c              |  163 ++++++++++++++++++++++++++++++++++++++++++++++
- wt-status.h              |   11 +++
- 4 files changed, 242 insertions(+), 3 deletions(-)
+> +Taking data from the standard input, the program treats each line as a
+> +separate data item, and the end of series of data item is signalled by a 
+> +blank line.
+> +
+> +		username=admin\n 
+> +		protocol=[http|https]\n
+> +		host=localhost\n
+> +		path=/dir\n\n
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 915cb5a..ccce4f6 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -159,9 +159,10 @@ advice.*::
- 		specified a refspec that isn't your current branch) and
- 		it resulted in a non-fast-forward error.
- 	statusHints::
--		Directions on how to stage/unstage/add shown in the
--		output of linkgit:git-status[1] and the template shown
--		when writing commit messages.
-+		Show directions on how to proceed from the current
-+		state in the output of linkgit:git-status[1] and in
-+		the template shown when writing commit messages in
-+		linkgit:git-commit[1].
- 	commitBeforeMerge::
- 		Advice shown when linkgit:git-merge[1] refuses to
- 		merge to avoid overwriting local changes.
-diff --git a/t/t7060-wtstatus.sh b/t/t7060-wtstatus.sh
-index b8cb490..e8c3690 100755
---- a/t/t7060-wtstatus.sh
-+++ b/t/t7060-wtstatus.sh
-@@ -30,6 +30,9 @@ test_expect_success 'Report new path with conflict' '
- 
- cat >expect <<EOF
- # On branch side
-+# You have unmerged paths.
-+#   (fix conflicts and run "git commit")
-+#
- # Unmerged paths:
- #   (use "git add/rm <file>..." as appropriate to mark resolution)
- #
-@@ -118,4 +121,65 @@ test_expect_success 'git diff-index --cached -C shows 2 copies + 1 unmerged' '
- 	test_cmp expected actual
- '
- 
-+
-+test_expect_success 'status when conflicts with add and rm advice (deleted by them)' '
-+	git reset --hard &&
-+	git checkout master &&
-+	test_commit init main.txt init &&
-+	git checkout -b second_branch &&
-+	git rm main.txt &&
-+	git commit -m "main.txt deleted on second_branch" &&
-+	test_commit second conflict.txt second &&
-+	git checkout master &&
-+	test_commit on_second main.txt on_second &&
-+	test_commit master conflict.txt master &&
-+	test_must_fail git merge second_branch &&
-+	cat >expected <<-\EOF &&
-+	# On branch master
-+	# You have unmerged paths.
-+	#   (fix conflicts and run "git commit")
-+	#
-+	# Unmerged paths:
-+	#   (use "git add/rm <file>..." as appropriate to mark resolution)
-+	#
-+	#	both added:         conflict.txt
-+	#	deleted by them:    main.txt
-+	#
-+	no changes added to commit (use "git add" and/or "git commit -a")
-+	EOF
-+	git status --untracked-files=no >actual &&
-+	test_i18ncmp expected actual
-+'
-+
-+
-+test_expect_success 'status when conflicts with add and rm advice (both deleted)' '
-+	git reset --hard &&
-+	git checkout -b conflict &&
-+	test_commit one main.txt one &&
-+	git branch conflict_second &&
-+	git mv main.txt sub_master.txt &&
-+	git commit -m "main.txt renamed in sub_master.txt" &&
-+	git checkout conflict_second &&
-+	git mv main.txt sub_second.txt &&
-+	git commit -m "main.txt renamed in sub_second.txt" &&
-+	test_must_fail git merge conflict &&
-+	cat >expected <<-\EOF &&
-+	# On branch conflict_second
-+	# You have unmerged paths.
-+	#   (fix conflicts and run "git commit")
-+	#
-+	# Unmerged paths:
-+	#   (use "git add/rm <file>..." as appropriate to mark resolution)
-+	#
-+	#	both deleted:       main.txt
-+	#	added by them:      sub_master.txt
-+	#	added by us:        sub_second.txt
-+	#
-+	no changes added to commit (use "git add" and/or "git commit -a")
-+	EOF
-+	git status --untracked-files=no >actual &&
-+	test_i18ncmp expected actual
-+'
-+
-+
- test_done
-diff --git a/wt-status.c b/wt-status.c
-index dd6d8c4..7548509 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -23,6 +23,7 @@ static char default_wt_status_colors[][COLOR_MAXLEN] = {
- 	GIT_COLOR_GREEN,  /* WT_STATUS_LOCAL_BRANCH */
- 	GIT_COLOR_RED,    /* WT_STATUS_REMOTE_BRANCH */
- 	GIT_COLOR_NIL,    /* WT_STATUS_ONBRANCH */
-+	GIT_COLOR_NORMAL, /* WT_STATUS_IN_PROGRESS */
- };
- 
- static const char *color(int slot, struct wt_status *s)
-@@ -728,6 +729,167 @@ static void wt_status_print_tracking(struct wt_status *s)
- 	color_fprintf_ln(s->fp, color(WT_STATUS_HEADER, s), "#");
- }
- 
-+static int has_unmerged(struct wt_status *s)
-+{
-+	int i;
-+
-+	for (i = 0; i < s->change.nr; i++) {
-+		struct wt_status_change_data *d;
-+		d = s->change.items[i].util;
-+		if (d->stagemask)
-+			return 1;
-+	}
-+	return 0;
-+}
-+
-+static void show_merge_in_progress(struct wt_status *s,
-+				struct wt_status_state *state,
-+				const char *color)
-+{
-+	if (has_unmerged(s)) {
-+		status_printf_ln(s, color, _("You have unmerged paths."));
-+		if (advice_status_hints)
-+			status_printf_ln(s, color,
-+				_("  (fix conflicts and run \"git commit\")"));
-+	} else {
-+		status_printf_ln(s, color,
-+			_("All conflicts fixed but you are still merging."));
-+		if (advice_status_hints)
-+			status_printf_ln(s, color,
-+				_("  (use \"git commit\" to conclude merge)"));
-+	}
-+	wt_status_print_trailer(s);
-+}
-+
-+static void show_am_in_progress(struct wt_status *s,
-+				struct wt_status_state *state,
-+				const char *color)
-+{
-+	status_printf_ln(s, color,
-+		_("You are in the middle of an am session."));
-+	if (state->am_empty_patch)
-+		status_printf_ln(s, color,
-+			_("The current patch is empty."));
-+	if (advice_status_hints) {
-+		if (!state->am_empty_patch)
-+			status_printf_ln(s, color,
-+				_("  (fix conflicts and then run \"git am --resolved\")"));
-+		status_printf_ln(s, color,
-+			_("  (use \"git am --skip\" to skip this patch)"));
-+		status_printf_ln(s, color,
-+			_("  (use \"git am --abort\" to restore the original branch)"));
-+	}
-+	wt_status_print_trailer(s);
-+}
-+
-+static void show_rebase_in_progress(struct wt_status *s,
-+				struct wt_status_state *state,
-+				const char *color)
-+{
-+	struct stat st;
-+
-+	if (has_unmerged(s)) {
-+		status_printf_ln(s, color, _("You are currently rebasing."));
-+		if (advice_status_hints) {
-+			status_printf_ln(s, color,
-+				_("  (fix conflicts and then run \"git rebase --continue\")"));
-+			status_printf_ln(s, color,
-+				_("  (use \"git rebase --skip\" to skip this patch)"));
-+			status_printf_ln(s, color,
-+				_("  (use \"git rebase --abort\" to check out the original branch)"));
-+		}
-+	} else if (state->rebase_in_progress || !stat(git_path("MERGE_MSG"), &st)) {
-+		status_printf_ln(s, color, _("You are currently rebasing."));
-+		if (advice_status_hints)
-+			status_printf_ln(s, color,
-+				_("  (all conflicts fixed: run \"git rebase --continue\")"));
-+	} else {
-+		status_printf_ln(s, color, _("You are currently editing a commit during a rebase."));
-+		if (advice_status_hints && !s->amend) {
-+			status_printf_ln(s, color,
-+				_("  (use \"git commit --amend\" to amend the current commit)"));
-+			status_printf_ln(s, color,
-+				_("  (use \"git rebase --continue\" once you are satisfied with your changes)"));
-+		}
-+	}
-+	wt_status_print_trailer(s);
-+}
-+
-+static void show_cherry_pick_in_progress(struct wt_status *s,
-+					struct wt_status_state *state,
-+					const char *color)
-+{
-+	status_printf_ln(s, color, _("You are currently cherry-picking."));
-+	if (advice_status_hints) {
-+		if (has_unmerged(s))
-+			status_printf_ln(s, color,
-+				_("  (fix conflicts and run \"git commit\")"));
-+		else
-+			status_printf_ln(s, color,
-+				_("  (all conflicts fixed: run \"git commit\")"));
-+	}
-+	wt_status_print_trailer(s);
-+}
-+
-+static void show_bisect_in_progress(struct wt_status *s,
-+				struct wt_status_state *state,
-+				const char *color)
-+{
-+	status_printf_ln(s, color, _("You are currently bisecting."));
-+	if (advice_status_hints)
-+		status_printf_ln(s, color,
-+			_("  (use \"git bisect reset\" to get back to the original branch)"));
-+	wt_status_print_trailer(s);
-+}
-+
-+static void wt_status_print_state(struct wt_status *s)
-+{
-+	const char *state_color = color(WT_STATUS_IN_PROGRESS, s);
-+	struct wt_status_state *state = calloc(1, sizeof(*state));
-+	struct stat st;
-+
-+	state->merge_in_progress = 0;
-+	state->am_in_progress = 0;
-+	state->am_empty_patch = 0;
-+	state->rebase_in_progress = 0;
-+	state->rebase_interactive_in_progress = 0;
-+	state->cherry_pick_in_progress = 0;
-+	state->bisect_in_progress = 0;
-+
-+	if (!stat(git_path("MERGE_HEAD"), &st)) {
-+		state->merge_in_progress = 1;
-+	} else if (!stat(git_path("rebase-apply"), &st)) {
-+		if (!stat(git_path("rebase-apply/applying"), &st)) {
-+			state->am_in_progress = 1;
-+			if (!stat(git_path("rebase-apply/patch"), &st) && !st.st_size)
-+				state->am_empty_patch = 1;
-+		} else {
-+			state->rebase_in_progress = 1;
-+		}
-+	} else if (!stat(git_path("rebase-merge"), &st)) {
-+		if (!stat(git_path("rebase-merge/interactive"), &st))
-+			state->rebase_interactive_in_progress = 1;
-+		else
-+			state->rebase_in_progress = 1;
-+	} else if (!stat(git_path("CHERRY_PICK_HEAD"), &st)) {
-+		state->cherry_pick_in_progress = 1;
-+	}
-+	if (!stat(git_path("BISECT_LOG"), &st))
-+		state->bisect_in_progress = 1;
-+
-+	if (state->merge_in_progress)
-+		show_merge_in_progress(s, state, state_color);
-+	else if (state->am_in_progress)
-+		show_am_in_progress(s, state, state_color);
-+	else if (state->rebase_in_progress || state->rebase_interactive_in_progress)
-+		show_rebase_in_progress(s, state, state_color);
-+	else if (state->cherry_pick_in_progress)
-+		show_cherry_pick_in_progress(s, state, state_color);
-+	if (state->bisect_in_progress)
-+		show_bisect_in_progress(s, state, state_color);
-+	free(state);
-+}
-+
- void wt_status_print(struct wt_status *s)
- {
- 	const char *branch_color = color(WT_STATUS_ONBRANCH, s);
-@@ -750,6 +912,7 @@ void wt_status_print(struct wt_status *s)
- 			wt_status_print_tracking(s);
- 	}
- 
-+	wt_status_print_state(s);
- 	if (s->is_initial) {
- 		status_printf_ln(s, color(WT_STATUS_HEADER, s), "");
- 		status_printf_ln(s, color(WT_STATUS_HEADER, s), _("Initial commit"));
-diff --git a/wt-status.h b/wt-status.h
-index 14aa9f7..c1066a0 100644
---- a/wt-status.h
-+++ b/wt-status.h
-@@ -15,6 +15,7 @@ enum color_wt_status {
- 	WT_STATUS_LOCAL_BRANCH,
- 	WT_STATUS_REMOTE_BRANCH,
- 	WT_STATUS_ONBRANCH,
-+	WT_STATUS_IN_PROGRESS,
- 	WT_STATUS_MAXSLOT
- };
- 
-@@ -71,6 +72,16 @@ struct wt_status {
- 	struct string_list ignored;
- };
- 
-+struct wt_status_state {
-+	int merge_in_progress;
-+	int am_in_progress;
-+	int am_empty_patch;
-+	int rebase_in_progress;
-+	int rebase_interactive_in_progress;
-+	int cherry_pick_in_progress;
-+	int bisect_in_progress;
-+};
-+
- void wt_status_prepare(struct wt_status *s);
- void wt_status_print(struct wt_status *s);
- void wt_status_collect(struct wt_status *s);
--- 
-1.7.8
+It's nice to have an example like this, but there's much detail missing
+in how the format is specified. However, this format is already
+documented in the "helpers" section of api-credentials.txt, so it
+probably makes sense to refer to that document.
+
+> +-If git-credential system have the password already stored
+> +git-credential will answer with by STDOUT:
+> +	
+> +		username=admin
+> +		password=*****
+> +
+> +-If it is not stored, the user will be prompt for a password:
+> +		
+> +		> Password for '[http|https]admin@localhost':
+
+I'd rather see this broken up into a reference specification and
+separate examples. Then the reference part can be very specific about
+what happens and the behavior in each case. For example:
+
+  git-credential takes an "action" option on the command-line (one of
+  "fill", "approve", or "reject") and reads a credential description
+  on stdin. The format of the description is the same as that given to
+  credential helpers; see link:technical/api-credential.txt[the git
+  credential API] for a specification.
+
+  If the action is "fill", git-credential will attempt to add "username"
+  and "password" fields to the description by reading config files, by
+  contacting any configured credential helpers, or by prompting the
+  user. The username and password fields of the credential description
+  are then printed to stdout.
+
+  If the action is "approve", git-credential will send the description
+  to any configured credential helpers, which may store the credential
+  for later use. 
+
+  If the action is "reject", git-credential will send the description to
+  any configured credential helpers, which may erase any stored
+  credential matching the description.
+
+And now that we've introduced the actions and said what they've done, we
+can go on to describe the expected workflow, which is a good place to
+put examples:
+
+  An application using git-credential will typically follow this
+  workflow:
+
+    1. Generate a credential description based on the context.
+
+       For example, if we want a password for
+       `https://example.com/foo.git`, we might generate the following
+       credential description:
+
+           protocol=https
+           host=example.com
+           path=foo.git
+
+    2. Ask git-credential to give us a username and password for this
+       description. This is done by running `git credential fill`,
+       feeding the description from step (1) to its stdin. The username
+       and password will be produced on stdout, like:
+
+           username=bob
+           password=secr3t
+
+    3. Try to use the credential (e.g., by accessing the URL with the
+       username and password from step (2)).
+
+    4. Report on the success or failure of the password. If the
+       credential allowed the operation to complete successfully, then
+       it can be marked with an "approve" action. If the credential was
+       rejected during the operation, use the "reject" action. In either
+       case, `git credential` should be fed with the credential
+       description from step (1) concatenated with the attempted
+       credential (i.e., the output you got in step (2)).
+
+Note in the above proposed documentation I was trying to describe the
+behavior of the command in your patch. It does not reflect changes which
+I will propose to the command's behavior below. :)
+
+> diff --git a/builtin/credential.c b/builtin/credential.c
+> new file mode 100644
+> index 0000000..9f00885
+> --- /dev/null
+> +++ b/builtin/credential.c
+> @@ -0,0 +1,40 @@
+> +#include <stdio.h>
+> +#include "cache.h"
+> +#include "credential.h"
+> +#include "string-list.h"
+> +
+> +static const char usage_msg[] =
+> +"credential <fill|approve|reject>";
+> +
+> +void cmd_credential (int argc, char **argv, const char *prefix){
+> +	const char *op;
+> +	struct credential c = CREDENTIAL_INIT;
+> +	int i;
+> +
+> +	op = argv[1];
+> +	if (!op)
+> +		usage(usage_msg);
+> +
+> +	for (i = 2; i < argc; i++)
+> +		string_list_append(&c.helpers, argv[i]);
+
+So arguments past the first one become helpers that we try, regardless
+of the credential.helper config settings. Is there a reason for this to
+be in the user-facing command?
+
+I assume this got copied by looking at test-credential. I'd be OK with
+including this feature in git-credential (and converting our test
+scripts to use it, so we can drop test-credential entirely). But
+probably it should not soak up all of the command-line arguments, and
+instead should be a hidden option like:
+
+  git credential --helper=cache fill
+
+That will give us more flexibility later down the road.
+
+> +	if (credential_read(&c, stdin) < 0)
+> +		die("unable to read credential from stdin");
+
+I think we want to provide a straight credential-reader like this,
+because it is the most flexible form of describing a credential. But I
+suspect many callers will have a URL, and we are creating extra work for
+them to break it down into components themselves.
+
+Perhaps it would be simpler to accept a URL on the command line, and
+also provide a --stdin option for callers that want to feed it directly.
+So:
+
+  git credential fill https://example.com/foo.git
+
+would be identical to:
+
+  git credential --stdin fill <<\EOF
+  protocol=https
+  host=example.com
+  path=foo.git
+  EOF
+
+> +	if (!strcmp(op, "fill")) {
+> +		credential_fill(&c);
+> +		if (c.username)
+> +			printf("username=%s\n", c.username);
+> +		if (c.password)
+> +			printf("password=%s\n", c.password);
+> +	}
+
+I am tempted to suggest that this actually output the _whole_
+credential, not just the username and password. Coupled with the above
+behavior, you would get:
+
+  $ git credential fill https://example.com/foo.git
+  protocol=https
+  host=example.com
+  path=foo.git
+  username=bob
+  password=secr3t
+
+which happens to be exactly what you want to feed back to the "approve"
+and "reject" actions (and it is not really any harder to parse).
+
+We _could_ get by with allowing:
+
+  git credential --stdin approve https://example.com/foo.git <<\EOF
+  username=bob
+  password=secr3t
+  EOF
+
+and having it combine the URL on the command-line with the entries on
+stdin (and indeed, I think that is the only sane thing to do when
+--stdin and a URL are both given).
+
+But that implies that there will never be any extra attributes that are
+relevant to the approve/reject that are not in the URL (e.g., elsewhere
+there has been talk about helpers being able to add arbitrary fields to
+the descriptions in order to communicate with each other). So it may be
+that we want to encourage callers to save the result of "fill" and feed
+it back to "approve" or "reject" verbatim.
+
+-Peff
