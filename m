@@ -1,155 +1,92 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH_v1] add git credential login to remote mediawiki
-Date: Sun, 10 Jun 2012 15:37:42 +0200
-Message-ID: <vpqaa0bmgnt.fsf@bauges.imag.fr>
-References: <1339268028-13991-1-git-send-email-Javier.Roucher-Iglesias@ensimag.imag.fr>
-	<20120610121827.GB6453@sigill.intra.peff.net>
+From: nguyenhu@minatec.inpg.fr
+Subject: Re: [PATCHv6 1/4] Read (but not write) from
+ $XDG_CONFIG_HOME/git/config file
+Date: Sun, 10 Jun 2012 15:48:50 +0200
+Message-ID: <20120610154850.Horde.gYrJO3wdC4BP1KXCOvLEiCA@webmail.minatec.grenoble-inp.fr>
+References: <1338754481-27012-1-git-send-email-Huynh-Khoi-Nguyen.Nguyen@ensimag.imag.fr>
+ <1338988885-21933-1-git-send-email-Huynh-Khoi-Nguyen.Nguyen@ensimag.imag.fr>
+ <7vpq9aenl0.fsf@alter.siamese.dyndns.org>
+ <20120608142601.Horde.Tq7UO3wdC4BP0e9ZGAy1EwA@webmail.minatec.grenoble-inp.fr>
+ <7vvcj1dep7.fsf@alter.siamese.dyndns.org>
+ <20120609125336.Horde.iUq0R3wdC4BP0yswpGlGBZA@webmail.minatec.grenoble-inp.fr>
+ <7v4nqjbrdo.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Javier.Roucher-Iglesias@ensimag.imag.fr, git@vger.kernel.org,
-	Javier Roucher <jroucher@gmail.com>,
-	Pavel Volek <Pavel.Volek@ensimag.imag.fr>,
-	NGUYEN Kim Thuat <Kim-Thuat.Nguyen@ensimag.imag.fr>,
-	ROUCHER IGLESIAS Javier <roucherj@ensimag.imag.fr>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sun Jun 10 15:38:37 2012
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed	DelSp=Yes
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org,
+	Huynh Khoi Nguyen NGUYEN 
+	<Huynh-Khoi-Nguyen.Nguyen@ensimag.imag.fr>,
+	Matthieu.Moy@grenoble-inp.fr,
+	Valentin Duperray <Valentin.Duperray@ensimag.imag.fr>,
+	Franck Jonas <Franck.Jonas@ensimag.imag.fr>,
+	Lucien Kong <Lucien.Kong@ensimag.imag.fr>,
+	Thomas Nguy <Thomas.Nguy@ensimag.imag.fr>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Jun 10 15:49:45 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SdiLf-0004Mq-VA
-	for gcvg-git-2@plane.gmane.org; Sun, 10 Jun 2012 15:38:32 +0200
+	id 1SdiWN-0000f8-EI
+	for gcvg-git-2@plane.gmane.org; Sun, 10 Jun 2012 15:49:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753542Ab2FJNhw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 10 Jun 2012 09:37:52 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:56977 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752273Ab2FJNhv (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Jun 2012 09:37:51 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id q5ADSgNd003676
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Sun, 10 Jun 2012 15:28:42 +0200
-Received: from bauges.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1SdiKt-0004W1-2i; Sun, 10 Jun 2012 15:37:43 +0200
-In-Reply-To: <20120610121827.GB6453@sigill.intra.peff.net> (Jeff King's
-	message of "Sun, 10 Jun 2012 08:18:28 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.93 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Sun, 10 Jun 2012 15:28:42 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: q5ADSgNd003676
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1339939723.61394@BWm2+HqHRrbAbRj91tD8Rg
+	id S1754803Ab2FJNsy convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 10 Jun 2012 09:48:54 -0400
+Received: from v-smtp.minatec.grenoble-inp.fr ([147.173.216.28]:53648 "EHLO
+	v-smtp.minatec.grenoble-inp.fr" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752273Ab2FJNsx (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 10 Jun 2012 09:48:53 -0400
+Received: from localhost (www02.minatec.grenoble-inp.fr [147.173.216.15])
+	by v-smtp.minatec.grenoble-inp.fr (Postfix) with ESMTP id A2FD21A024F;
+	Sun, 10 Jun 2012 15:48:50 +0200 (CEST)
+Received: from 183.24.91.79.rev.sfr.net (183.24.91.79.rev.sfr.net
+ [79.91.24.183]) by webmail.minatec.grenoble-inp.fr (Horde Framework) with
+ HTTP; Sun, 10 Jun 2012 15:48:50 +0200
+In-Reply-To: <7v4nqjbrdo.fsf@alter.siamese.dyndns.org>
+User-Agent: Internet Messaging Program (IMP) H4 (5.0.17)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199603>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199604>
 
-Jeff King <peff@peff.net> writes:
 
-> On Sat, Jun 09, 2012 at 08:53:48PM +0200, Javier.Roucher-Iglesias@ensimag.imag.fr wrote:
+Junio C Hamano <gitster@pobox.com> a =E9crit=A0:
+
+>> char *mkpathdup(const char *fmt, ...)
+>> {
+>> 	char *path;
+>> 	struct strbuf sb =3D STRBUF_INIT;
+>> 	va_list args;
+>>
+>> 	va_start(args, fmt);
+>> 	strbuf_vaddf(&sb, fmt, args);
+>> 	va_end(args);
+>> 	path =3D strbuf_detach(&sb, NULL);
+>>
+>> 	strbuf_release(&sb);
+>> 	return path;
+>> }
 >
->> diff --git a/contrib/mw-to-git/git-remote-mediawiki b/contrib/mw-to-git/git-remote-mediawiki
->> index c18bfa1..4b14d78 100755
->> --- a/contrib/mw-to-git/git-remote-mediawiki
->> +++ b/contrib/mw-to-git/git-remote-mediawiki
->> @@ -152,28 +152,111 @@ while (<STDIN>) {
->>  ########################## Functions ##############################
->>  
->>  # MediaWiki API instance, created lazily.
->> +sub run_credential {
->
-> Is there any reason not to add this to perl/Git.pm? I suspect that other
-> scripts will want to use it, too (for example, send-email could probably
-> use it for SMTP credentials).
+> I didn't mean to suggest removing the call to clean-up-path
+> function.  What I meant was that strbuf_detach() is a way to take
+> the ownership of the buffer, so that you do not have to call
+> strbuf_release() on it.
 
-Currently, git-remote-mediawiki is a standalone script (doesn't use
-Git.pm). This is good because it makes it trivial to install, but bad in
-the sense that it may force us (or others) to reinvent the wheel.
+So with the call to clean-up-path function and without the call to
+strbuf_release(), mkpathdup() function becomes :
 
-Until now, the wheels we reinvented were very simple (run_git
-essentially), but we may be reaching the point where it makes sense to
-use and contribute to Git.pm.
+char *mkpathdup(const char *fmt, ...)
+{
+	struct strbuf sb =3D STRBUF_INIT;
+	va_list args;
 
-Unfortunately, from a non-technical point of view, Javier is
-contributing this as part of a student project, which ends this week,
-and it's probably not reasonable to introduce such change so late. So,
-I'd keep it here at least for now, and a move to Git.pm could be a
-separate future topic.
+	va_start(args, fmt);
+	strbuf_vaddf(&sb, fmt, args);
+	va_end(args);
 
->> +	if (scalar(@_) == 2) {
->> +		if ($_[1] eq ("store" || "cache")) {
->> +			run_git("config credential.helper \'$_[1]\'");
->> +		} else {
->> +			print STDERR "ERROR: run_credential (fill|approve|reject) [store|cache]\n";
->> +			exit 1;
->> +		}
->> +	}
->
-> This hunk looks wrong. You should never be setting the credential.helper
-> config; that is the responsibility of the user to set, as they want to
-> select whatever helper is appropriate. Nor do you need to care about
-> which helpers are in use; the point of git-credential is that it will do
-> that for you.
-
-Absolutely.
-
->   sub fill_credential {
->           my $quoted_url = quotemeta(shift);
->
->           my $verbatim = `git credential fill $quoted_url`;
->           $? and die "git-credential failed";
->
->           $verbatim =~ /^username=(.*)$/m
->                   or die "git-credential did not give us a username";
->           my $username = $1;
->           $verbatim =~ /^password=(.*)$/m
->                   or die "git-credential did not give us a password";
->
->           return ($username, $password, $verbatim);
->   }
->
->   sub report_credential {
->           my ($type, $verbatim) = @_;
->           open(my $fh, '|-', "git credential $type");
->           print $fh $verbatim;
->   }
-
-That sounds sensible too. We should be careful not to give a password as
-argument (or users of the same machine will be able to find it with e.g.
-"ps u"), but your proposal is OK with that.
-
->> +			# error if key undef
->> +			if (not defined $key) {
->> +				print STDERR "ERROR reciving reponse git credential fill\n";
->> +				exit 1;
->> +			}
-[...]
->> +	} else {
->> +		while (<Reader>) {
->> +			print STDERR "\nERROR while running git credential $op:\n$_";
->> +		}
->> +	}
->> +}
->
-> This isn't a good way to check for errors. The non-fill actions will
-> never produce output on stdout, and you are not intercepting their
-> stderr. Besides which, checking for errors by reading stderr is not a
-> good practice; you should check the return value of the command in $?
-> after it finishes.
-
-I think it should do both. In case "git credential fill" returns
-something that doesn't match the regexp, we don't want perl to error
-with "use of undefined value", but that's just being defensive because
-it shouldn't happen.
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+	return cleanup_path(strbuf_detach(&sb, NULL));
+}
