@@ -1,79 +1,86 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH_v1] add 'git credential' plumbing command
-Date: Sun, 10 Jun 2012 16:02:24 -0500
-Message-ID: <20120610210224.GA3112@burratino>
-References: <1339267502-13803-1-git-send-email-Javier.Roucher-Iglesias@ensimag.imag.fr>
- <7vzk8baca0.fsf@alter.siamese.dyndns.org>
- <vpq1ulnnw81.fsf@bauges.imag.fr>
- <20120610203259.GA2380@burratino>
+From: "Hallvard B Furuseth" <h.b.furuseth@usit.uio.no>
+Subject: Re: Keeping unreachable objects in a separate pack instead of 
+ loose?
+Date: Mon, 11 Jun 2012 01:24:21 +0200
+Message-ID: <bb7062f387c9348f702acb53803589f1.squirrel@webmail.uio.no>
+References: <E1SdhJ9-0006B1-6p@tytso-glaptop.cam.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Javier.Roucher-Iglesias@ensimag.imag.fr, git@vger.kernel.org,
-	Javier Roucher <jroucher@gmail.com>,
-	Pavel Volek <Pavel.Volek@ensimag.imag.fr>,
-	NGUYEN Kim Thuat <Kim-Thuat.Nguyen@ensimag.imag.fr>,
-	ROUCHER IGLESIAS Javier <roucherj@ensimag.imag.fr>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Sun Jun 10 23:02:46 2012
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+To: "Theodore Ts'o" <tytso@mit.edu>
+X-From: git-owner@vger.kernel.org Mon Jun 11 01:42:19 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SdpHT-0000ir-FB
-	for gcvg-git-2@plane.gmane.org; Sun, 10 Jun 2012 23:02:39 +0200
+	id 1Sdrlr-0002jf-Oy
+	for gcvg-git-2@plane.gmane.org; Mon, 11 Jun 2012 01:42:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752762Ab2FJVCe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 10 Jun 2012 17:02:34 -0400
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:36169 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751184Ab2FJVCe (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Jun 2012 17:02:34 -0400
-Received: by yenm10 with SMTP id m10so2123578yen.19
-        for <git@vger.kernel.org>; Sun, 10 Jun 2012 14:02:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=wyq9axgIVOANPQLhVYPvqm7Sv2ZjfpDC/LI3WeC0XZU=;
-        b=s630SzEEaIbndxNz//clhJaxaErOU4TXPRnQ6V4DkFTOUANJc5Yo0yTE9CjmjGu6AP
-         F+PlUA31oiOgnO2FwxmHm+K9MlQGPItgxGO/l4xOB0ER99rMf2n4kVdAKttoeaHGy1RU
-         eA178z/u0dWD9xo2E/i4El+ziDMVxxaGQcWVaL9DkhjJFc8ixKJjODkwASkE9k2fsHLc
-         AZe0xgd/Q1t6LD1g/rmAR6b9CcnVZD6xKkakUMS4bhekkNQdJ2I5fyecItGOi0hyVQwR
-         FTU7SqbJ3QrSc/HQpLbLoqZmacXG0p8JfEr6PxoYSoMetuzmyXXaqp4022R/muZbhMOw
-         l+Pg==
-Received: by 10.236.115.133 with SMTP id e5mr17439322yhh.75.1339362151565;
-        Sun, 10 Jun 2012 14:02:31 -0700 (PDT)
-Received: from burratino (cl-1372.chi-02.us.sixxs.net. [2001:4978:f:55b::2])
-        by mx.google.com with ESMTPS id a34sm48185574yhh.0.2012.06.10.14.02.30
-        (version=SSLv3 cipher=OTHER);
-        Sun, 10 Jun 2012 14:02:31 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <20120610203259.GA2380@burratino>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1753386Ab2FJXlb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 10 Jun 2012 19:41:31 -0400
+Received: from mail-out1.uio.no ([129.240.10.57]:47234 "EHLO mail-out1.uio.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751888Ab2FJXla (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Jun 2012 19:41:30 -0400
+X-Greylist: delayed 1028 seconds by postgrey-1.27 at vger.kernel.org; Sun, 10 Jun 2012 19:41:30 EDT
+Received: from mail-mx5.uio.no ([129.240.10.46])
+	by mail-out1.uio.no with esmtp (Exim 4.75)
+	(envelope-from <hbf@ulrik.uio.no>)
+	id 1SdrUb-0007wF-NN; Mon, 11 Jun 2012 01:24:21 +0200
+Received: from w3prod-wm03.uio.no ([129.240.4.40] helo=webmail.uio.no)
+	by mail-mx5.uio.no with esmtpsa (TLSv1:AES256-SHA:256)
+	user hbf (Exim 4.76)
+	(envelope-from <hbf@ulrik.uio.no>)
+	id 1SdrUb-0000jF-4H; Mon, 11 Jun 2012 01:24:21 +0200
+Received: from 195.1.106.118
+        (SquirrelMail authenticated user hbf)
+        by webmail.uio.no with HTTP;
+        Mon, 11 Jun 2012 01:24:21 +0200
+In-Reply-To: <E1SdhJ9-0006B1-6p@tytso-glaptop.cam.corp.google.com>
+User-Agent: SquirrelMail/1.4.19
+X-UiO-Ratelimit-Test: rcpts/h 2 msgs/h 1 sum rcpts/h 2 sum msgs/h 1 total rcpts 2457 max rcpts/h 20 ratelimit 0
+X-UiO-Spam-info: not spam, SpamAssassin (score=-5.0, required=5.0, autolearn=disabled, FSL_RCVD_USER=0.001,T_RP_MATCHES_RCVD=-0.01,UIO_MAIL_IS_INTERNAL=-5, uiobl=NO, uiouri=NO)
+X-UiO-Scanned: 7236257A1C8B435DD3A1CDEA88B52958901232FB
+X-UiO-SPAM-Test: remote_host: 129.240.4.40 spam_score: -49 maxlevel 80 minaction 2 bait 0 mail/h: 7 total 1391294 max/h 475 blacklist 0 greylist 0 ratelimit 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199626>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199628>
 
-Jonathan Nieder wrote:
-> Matthieu Moy wrote:
->> Junio C Hamano <gitster@pobox.com> writes:
+On Sun, June 10, 2012 14:31, Theodore Ts'o wrote:
+> I recently noticed that after a git gc, I had a huge number of loose
+> objects that were unreachable.  In fact, about 4.5 megabytes worth of
+> objects.
 
->>> Does "git credential" need to have a git repository (i.e. run in a
->>> git repository or in a working tree that is controlled by one)?
->>
->> It shouldn't (hence, should use RUN_SETUP_GENTLY).
+I got gigabytes once, and a full disk.  See thread
+"git gc == git garbage-create from removed branch", May 3 2012.
+
+> When I packed them, via:
 >
-> Rather, that means it should use 0:
+>    cd .git/objects ; find [0-9a-f][0-9a-f] -type f | git pack-objects pack
 >
-> 			{ "credential", cmd_credential },
+> the resulting pack file was 244k.
+>
+> Which got me thinking.... the whole point of leaving the objects loose
+> is to make it easier to expire them, right?   But given how expensive it
+> is to have loose objects lying around, why not:
+>
+> a)  Have git-pack-objects have an option which writes the unreachable
+>     objects into a separate pack file, instead of kicking them loose?
 
-... and it turns out I'm talking nonsense.  RUN_SETUP_GENTLY would
-be a sensible choice indeed, to allow the command to discover the
-current repository and read .git/config from there indeed.
+I think this should be the default.  It's very unintuitive that
+gc can eat up lots of disk space instead of saving space.
 
-Sorry for the confusion,
-Jonathan
+Until this is fixed, this behavior needs to be documented -
+along with how to avoid it.
+
+> b)  Have git-prune delete a pack only if *all* of the objects in the
+>     pack meet the expiry deadline?
+>
+> What would be the downsides of pursueing such a strategy?  Is it worth
+> trying to implement as proof-of-concept?
+
+Hallvard
