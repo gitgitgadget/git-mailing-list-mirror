@@ -1,159 +1,62 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH_v1] add git credential login to remote mediawiki
-Date: Sun, 10 Jun 2012 08:18:28 -0400
-Message-ID: <20120610121827.GB6453@sigill.intra.peff.net>
-References: <1339268028-13991-1-git-send-email-Javier.Roucher-Iglesias@ensimag.imag.fr>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, Javier Roucher <jroucher@gmail.com>,
-	Pavel Volek <Pavel.Volek@ensimag.imag.fr>,
-	NGUYEN Kim Thuat <Kim-Thuat.Nguyen@ensimag.imag.fr>,
-	ROUCHER IGLESIAS Javier <roucherj@ensimag.imag.fr>,
-	Matthieu Moy <Matthieu.Moy@imag.fr>
-To: Javier.Roucher-Iglesias@ensimag.imag.fr
-X-From: git-owner@vger.kernel.org Sun Jun 10 14:18:39 2012
+From: "Theodore Ts'o" <tytso@mit.edu>
+Subject: Keeping unreachable objects in a separate pack instead of loose?
+Date: Sun, 10 Jun 2012 08:31:51 -0400
+Message-ID: <E1SdhJ9-0006B1-6p@tytso-glaptop.cam.corp.google.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jun 10 14:32:36 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Sdh6K-0001EJ-Im
-	for gcvg-git-2@plane.gmane.org; Sun, 10 Jun 2012 14:18:36 +0200
+	id 1SdhJr-0003HH-1E
+	for gcvg-git-2@plane.gmane.org; Sun, 10 Jun 2012 14:32:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756062Ab2FJMSb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 10 Jun 2012 08:18:31 -0400
-Received: from 99-108-225-23.lightspeed.iplsin.sbcglobal.net ([99.108.225.23]:49004
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755446Ab2FJMSa (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Jun 2012 08:18:30 -0400
-Received: (qmail 22559 invoked by uid 107); 10 Jun 2012 12:18:30 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Sun, 10 Jun 2012 08:18:30 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 10 Jun 2012 08:18:28 -0400
-Content-Disposition: inline
-In-Reply-To: <1339268028-13991-1-git-send-email-Javier.Roucher-Iglesias@ensimag.imag.fr>
+	id S1753276Ab2FJMby (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 10 Jun 2012 08:31:54 -0400
+Received: from li9-11.members.linode.com ([67.18.176.11]:48861 "EHLO
+	imap.thunk.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751981Ab2FJMbx (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Jun 2012 08:31:53 -0400
+Received: from root (helo=tytso-glaptop.cam.corp.google.com)
+	by imap.thunk.org with local-esmtp (Exim 4.72)
+	(envelope-from <tytso@thunk.org>)
+	id 1SdhJ8-00079Y-SU; Sun, 10 Jun 2012 12:31:50 +0000
+Received: from tytso by tytso-glaptop.cam.corp.google.com with local (Exim 4.71)
+	(envelope-from <tytso@thunk.org>)
+	id 1SdhJ9-0006B1-6p; Sun, 10 Jun 2012 08:31:51 -0400
+Full-Name: Theodore Ts'o
+Phone: (781) 391-3464
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: tytso@thunk.org
+X-SA-Exim-Scanned: No (on imap.thunk.org); SAEximRunCond expanded to false
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199593>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199594>
 
-On Sat, Jun 09, 2012 at 08:53:48PM +0200, Javier.Roucher-Iglesias@ensimag.imag.fr wrote:
+I recently noticed that after a git gc, I had a huge number of loose
+objects that were unreachable.  In fact, about 4.5 megabytes worth of
+objects.
 
-> diff --git a/contrib/mw-to-git/git-remote-mediawiki b/contrib/mw-to-git/git-remote-mediawiki
-> index c18bfa1..4b14d78 100755
-> --- a/contrib/mw-to-git/git-remote-mediawiki
-> +++ b/contrib/mw-to-git/git-remote-mediawiki
-> @@ -152,28 +152,111 @@ while (<STDIN>) {
->  ########################## Functions ##############################
->  
->  # MediaWiki API instance, created lazily.
-> +sub run_credential {
+When I packed them, via:
 
-Is there any reason not to add this to perl/Git.pm? I suspect that other
-scripts will want to use it, too (for example, send-email could probably
-use it for SMTP credentials).
+   cd .git/objects ; find [0-9a-f][0-9a-f] -type f | git pack-objects pack
 
-> +	if (scalar(@_) == 2) {
-> +		if ($_[1] eq ("store" || "cache")) {
-> +			run_git("config credential.helper \'$_[1]\'");
-> +		} else {
-> +			print STDERR "ERROR: run_credential (fill|approve|reject) [store|cache]\n";
-> +			exit 1;
-> +		}
-> +	}
+the resulting pack file was 244k.
 
-This hunk looks wrong. You should never be setting the credential.helper
-config; that is the responsibility of the user to set, as they want to
-select whatever helper is appropriate. Nor do you need to care about
-which helpers are in use; the point of git-credential is that it will do
-that for you.
+Which got me thinking.... the whole point of leaving the objects loose
+is to make it easier to expire them, right?   But given how expensive it
+is to have loose objects lying around, why not:
 
-> +	my $parsed = URI->new($url);
-> +	$cre_protocol = $parsed->scheme;
-> +	$cre_host = $parsed->host;
-> +	$cre_path = $parsed->path;
-> +
-> +        if ($wiki_login ne "") {
-> +                $msg .= "username=$wiki_login\n";
-> +        }
-> +        if ($wiki_passwd ne "") {
-> +                $msg .= "password=$wiki_passwd\n";
-> +        }
-> +        if ($cre_protocol ne "") {
-> +                $msg .= "protocol=$cre_protocol\n";
-> +        }
-> +        if ($cre_host ne "") {
-> +                $msg .= "host=$cre_host\n";
-> +        }
-> +        if ($cre_path ne "") {
-> +                $msg .= "path=$cre_path\n";
-> +        }
-> +
-> +        $msg .= "\n";
+a)  Have git-pack-objects have an option which writes the unreachable
+    objects into a separate pack file, instead of kicking them loose?
 
-All of this could just go away for the "fill" case if we allow URLs on
-the command line (see my previous email if you haven't already). And for
-the "approve" and "reject" cases, we could just save the result from
-"fill" and feed it back verbatim, as I described in the earlier email.
+b)  Have git-prune delete a pack only if *all* of the objects in the
+    pack meet the expiry deadline?
 
-Then it would be as simple as:
+What would be the downsides of pursueing such a strategy?  Is it worth
+trying to implement as proof-of-concept?
 
-  sub fill_credential {
-          my $quoted_url = quotemeta(shift);
-
-          my $verbatim = `git credential fill $quoted_url`;
-          $? and die "git-credential failed";
-
-          $verbatim =~ /^username=(.*)$/m
-                  or die "git-credential did not give us a username";
-          my $username = $1;
-          $verbatim =~ /^password=(.*)$/m
-                  or die "git-credential did not give us a password";
-
-          return ($username, $password, $verbatim);
-  }
-
-  sub report_credential {
-          my ($type, $verbatim) = @_;
-          open(my $fh, '|-', "git credential $type");
-          print $fh $verbatim;
-  }
-
-> +	my $key;
-> +	my $value;
-> +	my $Prog = "git credential $op";
-> +	open2(*Reader, *Writer, $Prog);
-> +	print Writer $msg;
-> +	close (Writer);
-> +
-> +	if ($op eq "fill") {
-> +		while (<Reader>) {
-> +			my ($key, $value) = /([^=]*)=(.*)/;
-> +			# error if key undef
-> +			if (not defined $key) {
-> +				print STDERR "ERROR reciving reponse git credential fill\n";
-> +				exit 1;
-> +			}
-> +			if ($key eq "username") {
-> +				$wiki_login = $value;
-> +			}
-> +			if ($key eq "password") {
-> +				$wiki_passwd = $value;
-> +			}
-> +		}
-> +	} else {
-> +		while (<Reader>) {
-> +			print STDERR "\nERROR while running git credential $op:\n$_";
-> +		}
-> +	}
-> +}
-
-This isn't a good way to check for errors. The non-fill actions will
-never produce output on stdout, and you are not intercepting their
-stderr. Besides which, checking for errors by reading stderr is not a
-good practice; you should check the return value of the command in $?
-after it finishes.
-
--Peff
+						- Ted
