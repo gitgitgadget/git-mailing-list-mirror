@@ -1,80 +1,108 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] lessen the impression of unexpectedness on remote hangup
-Date: Sun, 10 Jun 2012 13:44:10 -0500
-Message-ID: <20120610184410.GA1115@burratino>
-References: <20120610182310.GB2427@book.hvoigt.net>
+From: Erik Faye-Lund <kusmabite@gmail.com>
+Subject: Re: [PATCHv6 1/4] Read (but not write) from $XDG_CONFIG_HOME/git/config
+ file
+Date: Sun, 10 Jun 2012 20:44:26 +0200
+Message-ID: <CABPQNSYd0hCU8nrfKJJjR+T_jQn4WC6jEaSCJPjKsuPdumEdtw@mail.gmail.com>
+References: <1338754481-27012-1-git-send-email-Huynh-Khoi-Nguyen.Nguyen@ensimag.imag.fr>
+ <1338988885-21933-1-git-send-email-Huynh-Khoi-Nguyen.Nguyen@ensimag.imag.fr>
+ <7vpq9aenl0.fsf@alter.siamese.dyndns.org> <20120608142601.Horde.Tq7UO3wdC4BP0e9ZGAy1EwA@webmail.minatec.grenoble-inp.fr>
+ <7vvcj1dep7.fsf@alter.siamese.dyndns.org> <20120609125336.Horde.iUq0R3wdC4BP0yswpGlGBZA@webmail.minatec.grenoble-inp.fr>
+ <7v4nqjbrdo.fsf@alter.siamese.dyndns.org> <20120610154850.Horde.gYrJO3wdC4BP1KXCOvLEiCA@webmail.minatec.grenoble-inp.fr>
+Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Jeff King <peff@peff.net>
-To: Heiko Voigt <hvoigt@hvoigt.net>
-X-From: git-owner@vger.kernel.org Sun Jun 10 20:44:30 2012
+	Huynh Khoi Nguyen NGUYEN 
+	<Huynh-Khoi-Nguyen.Nguyen@ensimag.imag.fr>,
+	Matthieu.Moy@grenoble-inp.fr,
+	Valentin Duperray <Valentin.Duperray@ensimag.imag.fr>,
+	Franck Jonas <Franck.Jonas@ensimag.imag.fr>,
+	Lucien Kong <Lucien.Kong@ensimag.imag.fr>,
+	Thomas Nguy <Thomas.Nguy@ensimag.imag.fr>
+To: nguyenhu@minatec.inpg.fr
+X-From: git-owner@vger.kernel.org Sun Jun 10 20:45:16 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Sdn7f-0002bk-Nq
-	for gcvg-git-2@plane.gmane.org; Sun, 10 Jun 2012 20:44:24 +0200
+	id 1Sdn8U-0004Ap-HE
+	for gcvg-git-2@plane.gmane.org; Sun, 10 Jun 2012 20:45:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755307Ab2FJSoU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 10 Jun 2012 14:44:20 -0400
-Received: from mail-gg0-f174.google.com ([209.85.161.174]:58943 "EHLO
-	mail-gg0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755206Ab2FJSoT (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Jun 2012 14:44:19 -0400
-Received: by gglu4 with SMTP id u4so2106362ggl.19
-        for <git@vger.kernel.org>; Sun, 10 Jun 2012 11:44:18 -0700 (PDT)
+	id S1755488Ab2FJSpI convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 10 Jun 2012 14:45:08 -0400
+Received: from mail-pz0-f46.google.com ([209.85.210.46]:34702 "EHLO
+	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755206Ab2FJSpH convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 10 Jun 2012 14:45:07 -0400
+Received: by dady13 with SMTP id y13so4443935dad.19
+        for <git@vger.kernel.org>; Sun, 10 Jun 2012 11:45:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=5X5Ydj2bcWAVd6Tyo0JTHfvkEiFBKKcdIsyOJTVjKtQ=;
-        b=d46EXwNkjLnKOnOmmPzGTHPM0YTl6oCoKNU8qj/I3cU9a4fTgtaCVT921D+s5avfjI
-         KxXzg0t2QMD2HFgpg06WHZ3cPXLHXs68SMtdT4eyClwjEEAel8f/6D6iGPlrh7ZypmlA
-         ycJXi7tviQ00Ma4IxzQWiv1p4AiYmvxkg21n3QGMYPrntIhFI7UKXGrRdnH+8alOHXOO
-         wNSqVY8holOqAUvce0YdJfOoD8m9ZnrshxdqRuLk5rMzVVMranE/FD2CcqplKvaCOsoh
-         bC1cZ7aBSFDux6gOmfV2YFJl8h0SMWPhoE5fkHz9XsbkRTG4YDkRKi+GsjBUANoft6YS
-         8TUQ==
-Received: by 10.236.153.4 with SMTP id e4mr14447882yhk.89.1339353858750;
-        Sun, 10 Jun 2012 11:44:18 -0700 (PDT)
-Received: from burratino (cl-1372.chi-02.us.sixxs.net. [2001:4978:f:55b::2])
-        by mx.google.com with ESMTPS id e5sm21291721ani.18.2012.06.10.11.44.17
-        (version=SSLv3 cipher=OTHER);
-        Sun, 10 Jun 2012 11:44:18 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <20120610182310.GB2427@book.hvoigt.net>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type:content-transfer-encoding;
+        bh=mRMRpNkEO5cUuhvK8WKWMaybyJWufSgnpseCGSECs7Q=;
+        b=TyRrCuNCHBfwzoMQSTnbgy7KXgwn2G09cViurdGIGO2KKv1FmLZTACy33wwoYUNDEZ
+         VL+zD8zh0vZaRECs5DJW5FT582z7ZM1Lm568U7CL7rboNQ4xzyCKy7QTaEyBXLg7P+bf
+         xoIumx3RwCODHTSHWF3zmg1TVBA1R1zG0nAW/2KfvJUF83MqdKx+n6+9vmPdPDwic5ax
+         Urjkme7hiaqM/2ZldV3eulzWPq4+hGSjAToGWSKxgOOmDPaWIyIfVN9N4FFw2E7mEI8I
+         MXPcEMk7+YLR87HeX2h5prSy6gius6Uv/z5iuGqfAKJzbPjKwcTJTrHV1/unrtLMWcBT
+         6I5g==
+Received: by 10.68.194.105 with SMTP id hv9mr18059966pbc.126.1339353907029;
+ Sun, 10 Jun 2012 11:45:07 -0700 (PDT)
+Received: by 10.68.40.98 with HTTP; Sun, 10 Jun 2012 11:44:26 -0700 (PDT)
+In-Reply-To: <20120610154850.Horde.gYrJO3wdC4BP1KXCOvLEiCA@webmail.minatec.grenoble-inp.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199619>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199620>
 
-Hi,
+On Sun, Jun 10, 2012 at 3:48 PM,  <nguyenhu@minatec.inpg.fr> wrote:
+>
+> Junio C Hamano <gitster@pobox.com> a =E9crit=A0:
+>
+>>> char *mkpathdup(const char *fmt, ...)
+>>> {
+>>> =A0 =A0 =A0 =A0char *path;
+>>> =A0 =A0 =A0 =A0struct strbuf sb =3D STRBUF_INIT;
+>>> =A0 =A0 =A0 =A0va_list args;
+>>>
+>>> =A0 =A0 =A0 =A0va_start(args, fmt);
+>>> =A0 =A0 =A0 =A0strbuf_vaddf(&sb, fmt, args);
+>>> =A0 =A0 =A0 =A0va_end(args);
+>>> =A0 =A0 =A0 =A0path =3D strbuf_detach(&sb, NULL);
+>>>
+>>> =A0 =A0 =A0 =A0strbuf_release(&sb);
+>>> =A0 =A0 =A0 =A0return path;
+>>> }
+>>
+>>
+>> I didn't mean to suggest removing the call to clean-up-path
+>> function. =A0What I meant was that strbuf_detach() is a way to take
+>> the ownership of the buffer, so that you do not have to call
+>> strbuf_release() on it.
+>
+>
+> So with the call to clean-up-path function and without the call to
+> strbuf_release(), mkpathdup() function becomes :
+>
+>
+> char *mkpathdup(const char *fmt, ...)
+> {
+> =A0 =A0 =A0 =A0struct strbuf sb =3D STRBUF_INIT;
+> =A0 =A0 =A0 =A0va_list args;
+>
+> =A0 =A0 =A0 =A0va_start(args, fmt);
+> =A0 =A0 =A0 =A0strbuf_vaddf(&sb, fmt, args);
+> =A0 =A0 =A0 =A0va_end(args);
+>
+> =A0 =A0 =A0 =A0return cleanup_path(strbuf_detach(&sb, NULL));
+>
+> }
 
-Heiko Voigt wrote:
-
-> --- a/pkt-line.c
-> +++ b/pkt-line.c
-> @@ -141,7 +141,7 @@ static void safe_read(int fd, void *buffer, unsigned size)
->  	if (ret < 0)
->  		die_errno("read error");
->  	else if (ret < size)
-> -		die("The remote end hung up unexpectedly");
-> +		die("The remote end hung up");
-
-Looks good.  Incidentally, maybe this would be a good excuse to
-revisit [1].
-
-If I remember correctly, the conclusion of that discussion was that
---informative-errors is a good default for the git daemon as long as
-
- - there is some warning when using it without --base-path
- - there is an easy way to turn it off
- - we communicate the change clearly and in advance
-
-Hope that helps,
-Jonathan
-
-[1] http://thread.gmane.org/gmane.comp.version-control.git/183604
+The awkward thing about doing this, is that the memory allocated by
+the strbuf cannot be reclaimed if you go with this. A pointer that has
+been adjusted (like cleanup_path can do) cannot be successfully fed to
+free.
