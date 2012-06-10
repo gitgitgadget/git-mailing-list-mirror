@@ -1,77 +1,74 @@
 From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH_v1] add 'git credential' plumbing command
-Date: Sun, 10 Jun 2012 15:18:54 +0200
-Message-ID: <vpqvcizmhj5.fsf@bauges.imag.fr>
-References: <1339267502-13803-1-git-send-email-Javier.Roucher-Iglesias@ensimag.imag.fr>
+Subject: Re: [PATCHv6 4/4] Write to $XDG_CONFIG_HOME/git/config file
+Date: Sun, 10 Jun 2012 15:21:37 +0200
+Message-ID: <vpqmx4bmhem.fsf@bauges.imag.fr>
+References: <1338754481-27012-1-git-send-email-Huynh-Khoi-Nguyen.Nguyen@ensimag.imag.fr>
+	<1338988885-21933-1-git-send-email-Huynh-Khoi-Nguyen.Nguyen@ensimag.imag.fr>
+	<1338988885-21933-4-git-send-email-Huynh-Khoi-Nguyen.Nguyen@ensimag.imag.fr>
+	<CAJDDKr6sCrwy99-5-sOaAuNjYmnw73CicF3PyYMe8hvf38oFvg@mail.gmail.com>
+	<7vipf1aty2.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: git@vger.kernel.org, Javier Roucher <jroucher@gmail.com>,
-	Pavel Volek <Pavel.Volek@ensimag.imag.fr>,
-	NGUYEN Kim Thuat <Kim-Thuat.Nguyen@ensimag.imag.fr>,
-	ROUCHER IGLESIAS Javier <roucherj@ensimag.imag.fr>
-To: Javier.Roucher-Iglesias@ensimag.imag.fr
-X-From: git-owner@vger.kernel.org Sun Jun 10 15:19:12 2012
+Cc: David Aguilar <davvid@gmail.com>,
+	Huynh Khoi Nguyen NGUYEN 
+	<Huynh-Khoi-Nguyen.Nguyen@ensimag.imag.fr>, git@vger.kernel.org,
+	NGUYEN Huynh Khoi Nguyen <nguyenhu@ensibm.imag.fr>,
+	Valentin Duperray <Valentin.Duperray@ensimag.imag.fr>,
+	Franck Jonas <Franck.Jonas@ensimag.imag.fr>,
+	Lucien Kong <Lucien.Kong@ensimag.imag.fr>,
+	Thomas Nguy <Thomas.Nguy@ensimag.imag.fr>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Jun 10 15:21:53 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Sdi2p-0000d0-FH
-	for gcvg-git-2@plane.gmane.org; Sun, 10 Jun 2012 15:19:03 +0200
+	id 1Sdi5U-0005mW-Su
+	for gcvg-git-2@plane.gmane.org; Sun, 10 Jun 2012 15:21:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754561Ab2FJNS7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 10 Jun 2012 09:18:59 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:36231 "EHLO rominette.imag.fr"
+	id S1755256Ab2FJNVp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 10 Jun 2012 09:21:45 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:60193 "EHLO rominette.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754586Ab2FJNS6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Jun 2012 09:18:58 -0400
+	id S1754993Ab2FJNVo (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Jun 2012 09:21:44 -0400
 Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id q5AD9shW001604
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id q5ADCbtI002160
 	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Sun, 10 Jun 2012 15:09:54 +0200
+	Sun, 10 Jun 2012 15:12:37 +0200
 Received: from bauges.imag.fr ([129.88.7.32])
 	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
 	(Exim 4.72)
 	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1Sdi2h-0004Mz-Bc; Sun, 10 Jun 2012 15:18:55 +0200
-In-Reply-To: <1339267502-13803-1-git-send-email-Javier.Roucher-Iglesias@ensimag.imag.fr>
-	(Javier Roucher-Iglesias's message of "Sat, 9 Jun 2012 20:45:02
-	+0200")
+	id 1Sdi5K-0004Oj-O8; Sun, 10 Jun 2012 15:21:38 +0200
+In-Reply-To: <7vipf1aty2.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Fri, 08 Jun 2012 23:19:17 -0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.93 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Sun, 10 Jun 2012 15:09:54 +0200 (CEST)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Sun, 10 Jun 2012 15:12:38 +0200 (CEST)
 X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: q5AD9shW001604
+X-MailScanner-ID: q5ADCbtI002160
 X-IMAG-MailScanner: Found to be clean
 X-IMAG-MailScanner-SpamCheck: 
 X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1339938595.47495@1GtxLOCZcoT2/SKdYmC/WA
+MailScanner-NULL-Check: 1339938760.96641@1W29Qi605Gp0uw1jGP/+GQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199601>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199602>
 
-Javier.Roucher-Iglesias@ensimag.imag.fr writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> +static const char usage_msg[] =
-> +"credential <fill|approve|reject>";
-[...]
-> +	for (i = 2; i < argc; i++)
-> +		string_list_append(&c.helpers, argv[i]);
+> Probably.  I think we should follow whatever existing and prevalent
+> practice is, and my gut feeling is that we would end up first doing
+> POSIX only thing in my tree, and msysgit folks will quickly feed me
+> updates to tweak the behaviour to match what of Windows version.
 
-This helpers argument is still there, and is now totally undocumented. I
-shouldn't have to repeat that so many times.
-
-> --- a/git.c
-> +++ b/git.c
-> @@ -353,6 +353,7 @@ static void handle_internal_command(int argc, const char **argv)
->  		{ "commit-tree", cmd_commit_tree, RUN_SETUP },
->  		{ "config", cmd_config, RUN_SETUP_GENTLY },
->  		{ "count-objects", cmd_count_objects, RUN_SETUP },
-> +		{ "credential", cmd_count_objects, RUN_SETUP },
-
-Your "git credential" runs cmd_count_objects. A little bit of testing
-should have found that (my remarks about lack of testing still apply).
+I don't really have opinion on what Git should do on windows, but in any
+case, the current patches only changes the behavior if the XDG file
+exists, so it may be suboptimal on windows, but shouldn't harm windows
+users.
 
 -- 
 Matthieu Moy
