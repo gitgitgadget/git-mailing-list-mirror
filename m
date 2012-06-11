@@ -1,75 +1,120 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] api-credential.txt: document that helpers field is
- filled-in automatically
-Date: Mon, 11 Jun 2012 15:08:11 -0400
-Message-ID: <20120611190811.GB20889@sigill.intra.peff.net>
-References: <7vzk897rqi.fsf@alter.siamese.dyndns.org>
- <1339437107-25909-1-git-send-email-Matthieu.Moy@imag.fr>
+From: roucherj <roucherj@telesun.imag.fr>
+Subject: Re: [PATCH v3] add 'git credential' plumbing command
+Date: Mon, 11 Jun 2012 21:12:17 +0200
+Message-ID: <edf83e30636b67d2b95bf1df8519cdcd@telesun.imag.fr>
+References: <1339440294-8010-1-git-send-email-Javier.Roucher-Iglesias@ensimag.imag.fr>
+ <vpqehpl4qm0.fsf@bauges.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Matthieu Moy <Matthieu.Moy@imag.fr>
-X-From: git-owner@vger.kernel.org Mon Jun 11 21:08:22 2012
+Content-Type: text/plain; charset=UTF-8;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: <Javier.Roucher-Iglesias@ensimag.imag.fr>, <git@vger.kernel.org>,
+	Javier Roucher <jroucher@gmail.com>,
+	Pavel Volek <Pavel.Volek@ensimag.imag.fr>,
+	NGUYEN Kim Thuat <Kim-Thuat.Nguyen@ensimag.imag.fr>,
+	ROUCHER IGLESIAS Javier <roucherj@ensimag.imag.fr>
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Mon Jun 11 21:12:28 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Se9yM-00050Y-Sx
-	for gcvg-git-2@plane.gmane.org; Mon, 11 Jun 2012 21:08:19 +0200
+	id 1SeA2N-0005ja-M8
+	for gcvg-git-2@plane.gmane.org; Mon, 11 Jun 2012 21:12:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750905Ab2FKTIP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Jun 2012 15:08:15 -0400
-Received: from 99-108-225-23.lightspeed.iplsin.sbcglobal.net ([99.108.225.23]:50285
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750711Ab2FKTIO (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Jun 2012 15:08:14 -0400
-Received: (qmail 7983 invoked by uid 107); 11 Jun 2012 19:08:15 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 11 Jun 2012 15:08:15 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 11 Jun 2012 15:08:11 -0400
-Content-Disposition: inline
-In-Reply-To: <1339437107-25909-1-git-send-email-Matthieu.Moy@imag.fr>
+	id S1751294Ab2FKTMX convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 11 Jun 2012 15:12:23 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:55052 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750977Ab2FKTMW (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Jun 2012 15:12:22 -0400
+Received: from ensimag.imag.fr (ensimag.imag.fr [195.221.228.12])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id q5BJ3N5b010809
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Mon, 11 Jun 2012 21:03:23 +0200
+Received: from web-ensimag.imag.fr (web-ensimag [195.221.228.24])
+	by ensimag.imag.fr (8.13.8/8.13.8/ImagV2.1.r_ens) with ESMTP id q5BJCH9d015408;
+	Mon, 11 Jun 2012 21:12:17 +0200
+Received: from web-ensimag.imag.fr (localhost [127.0.0.1])
+	by web-ensimag.imag.fr (8.13.8/8.13.8/ImagV2.1.sb_ens) with ESMTP id q5BJCHPh016879;
+	Mon, 11 Jun 2012 21:12:17 +0200
+Received: (from apache@localhost)
+	by web-ensimag.imag.fr (8.13.8/8.13.8/Submit) id q5BJCHUL016878;
+	Mon, 11 Jun 2012 21:12:17 +0200
+X-Authentication-Warning: web-ensimag.imag.fr: apache set sender to roucherj@telesun.imag.fr using -f
+In-Reply-To: <vpqehpl4qm0.fsf@bauges.imag.fr>
+X-Sender: roucherj@telesun.imag.fr
+User-Agent: Roundcube Webmail/0.5.3
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Mon, 11 Jun 2012 21:03:23 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: q5BJ3N5b010809
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: roucherj@telesun.imag.fr
+MailScanner-NULL-Check: 1340046205.99978@/JOZzuhD4cGFBEgfj8KDFA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199706>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199707>
 
-On Mon, Jun 11, 2012 at 07:51:47PM +0200, Matthieu Moy wrote:
+On Mon, 11 Jun 2012 21:04:39 +0200, Matthieu Moy wrote:
+>> Subject: Re: [PATCH v3] add 'git credential' plumbing command
+>
+> I guess you mean v2.
+>
 
-> It was unclear whether the field was to be specified by the user of the
-> API.
-> 
-> Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
-> ---
-> > It is correct that the C API asks helpers that the user configured,
-> > but I think it is common across three API functions, not limited to
-> > credential_fill().  credential_apply_config() is called from approve
-> > and reject, too.
-> 
-> Ah, right, so compared to v1, we can move the sentence to the
-> description of the "helpers" field, like this:
+Sorry is a miss typing.
 
-I think this is OK. Technically it loads other matching config, as well
-(filling in default username fields and respecting useHttpPath). I don't
-know if it is worth mentioning them, too.
+> Javier.Roucher-Iglesias@ensimag.imag.fr writes:
+>
+>> Changes in the version2 vs version1:
+>
+> These should not go to the commit message, but below the --- below=20
+> (and
+> before the diffstat).
+>
+>> Adding to the next patch, version3:
+>> =C2=B7 Tests files
+>
+> If the todo-list isn't empty, then mark your patch as "RFC".
+>
+>> --- /dev/null
+>> +++ b/Documentation/git-credential.txt
+>> @@ -0,0 +1,74 @@
+>> +git-credential(7)
+>> +=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+>> +
+>> +NAME
+>> +----
+>> +git-credential - Provides and store user credentials to git
+>
+> Provides -> Provide
+>
+> I'd remove the "to git" part.
+>
 
-> diff --git a/Documentation/technical/api-credentials.txt b/Documentation/technical/api-credentials.txt
-> index 21ca6a2..48f51ed 100644
-> --- a/Documentation/technical/api-credentials.txt
-> +++ b/Documentation/technical/api-credentials.txt
-> @@ -21,7 +21,9 @@ Data Structures
->  The `helpers` member of the struct is a `string_list` of helpers.  Each
->  string specifies an external helper which will be run, in order, to
->  either acquire or store credentials. See the section on credential
-> -helpers below.
-> +helpers below. This list is filled-in by the API functions
-> +according to the corresponding configuration variables before
-> +consulting helpers.
+Changed it
 
-You might want to say something like "...and therefore there is usually
-no need for a caller to modify the helpers field at all".
 
--Peff
+> Other than that, I prefer Jeff's version sent yesterday. Any reason=20
+> not
+> to use it?
+>
+> The command still isn't listed in "man git", aka=20
+> Documentation/git.txt
+> (I already mentionned it)
+>
+>> +	if (!strcmp(op, "fill")) {
+>> +		credential_fill(&c);
+>> +		if (c.username)
+>> +			printf("username=3D%s\n", c.username);
+>> +		if (c.password)
+>> +			printf("password=3D%s\n", c.password);
+>> +	}
+>
+> See Jeff's remarks. It makes sense to output all fields here
+> (protocol, path, ...).
+
+okay for the next patch i will add (protocol, path, ..)
