@@ -1,76 +1,78 @@
-From: Erik Faye-Lund <kusmabite@gmail.com>
-Subject: Re: How can I specify the "sendmail" program for git-send-email?
-Date: Mon, 11 Jun 2012 10:23:21 +0200
-Message-ID: <CABPQNSbwtP0hp8QYznwXjLAaoKVj_ZUWXQQCDG80Xb+TME1MWw@mail.gmail.com>
-References: <20120611073232.GA5602@richard>
-Reply-To: kusmabite@gmail.com
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: [RFC] l10n: de.po: translate 27 new messages
+Date: Mon, 11 Jun 2012 10:26:56 +0200
+Message-ID: <87zk8amey7.fsf@thomas.inf.ethz.ch>
+References: <1339341080-23674-1-git-send-email-ralf.thielow@googlemail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Richard Yang <weiyang@linux.vnet.ibm.com>
-X-From: git-owner@vger.kernel.org Mon Jun 11 10:24:23 2012
+Cc: <jk@jk.gs>, <stimming@tuhh.de>, <worldhello.net@gmail.com>,
+	<git@vger.kernel.org>
+To: Ralf Thielow <ralf.thielow@googlemail.com>
+X-From: git-owner@vger.kernel.org Mon Jun 11 10:27:10 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Sdzv7-0007x5-PK
-	for gcvg-git-2@plane.gmane.org; Mon, 11 Jun 2012 10:24:18 +0200
+	id 1Sdzxq-0005Y8-53
+	for gcvg-git-2@plane.gmane.org; Mon, 11 Jun 2012 10:27:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751828Ab2FKIYI convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 11 Jun 2012 04:24:08 -0400
-Received: from mail-gg0-f174.google.com ([209.85.161.174]:63676 "EHLO
-	mail-gg0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751779Ab2FKIYG convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 11 Jun 2012 04:24:06 -0400
-Received: by gglu4 with SMTP id u4so2295818ggl.19
-        for <git@vger.kernel.org>; Mon, 11 Jun 2012 01:24:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type:content-transfer-encoding;
-        bh=MsRiYPP8H8EjWhXtGCnepyZq8RQVOjMlo8NjF0h2GY4=;
-        b=JWwUSAzksmwvRL+7phTv55AHkkHzM0DsVGhDqf/6GMegfnETYi0SP7AqVptKewZEGH
-         TEeUPbKjQ42Oxx1jTto0kqcKoCQp3ZBGWxyDJv3n8grmpW4XKpw4Ls11Ar8retYBfJ33
-         GGuo9TMRCgaYCIJ8Y/KDfO7LHoPmwGvHhC30VO2DRyqr3cu5Hgj28RtYp+jz+YeNIiOD
-         DhGDpKbMZL13Xd8X80iIemLo+en5AtdG4Sljknb8lnmeTDZQeh6tmI7gODt83lt5YagN
-         zMIoBOet2lplIZhctFK3rIclKJGBzE7Hcp7eC0gxVySU9qXA29qinChZ0vPggf1tNmFM
-         2tUQ==
-Received: by 10.50.156.234 with SMTP id wh10mr5753307igb.20.1339403042580;
- Mon, 11 Jun 2012 01:24:02 -0700 (PDT)
-Received: by 10.231.108.201 with HTTP; Mon, 11 Jun 2012 01:23:21 -0700 (PDT)
-In-Reply-To: <20120611073232.GA5602@richard>
+	id S1751369Ab2FKI1A convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 11 Jun 2012 04:27:00 -0400
+Received: from edge20.ethz.ch ([82.130.99.26]:31199 "EHLO edge20.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751048Ab2FKI07 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 11 Jun 2012 04:26:59 -0400
+Received: from CAS20.d.ethz.ch (172.31.51.110) by edge20.ethz.ch
+ (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.2.298.4; Mon, 11 Jun
+ 2012 10:26:56 +0200
+Received: from thomas.inf.ethz.ch.ethz.ch (129.132.153.233) by CAS20.d.ethz.ch
+ (172.31.51.110) with Microsoft SMTP Server (TLS) id 14.2.298.4; Mon, 11 Jun
+ 2012 10:26:56 +0200
+In-Reply-To: <1339341080-23674-1-git-send-email-ralf.thielow@googlemail.com>
+	(Ralf Thielow's message of "Sun, 10 Jun 2012 17:11:20 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Originating-IP: [129.132.153.233]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199631>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199632>
 
-On Mon, Jun 11, 2012 at 9:32 AM, Richard Yang
-<weiyang@linux.vnet.ibm.com> wrote:
-> Hi, experts
->
-> I read the git-send-email manual and find the --smtp-server option ca=
-n
-> specify the sendmail-like program to send mail.
->
-> Then I use this option in command line
-> --smtp-server=3D/usr/bin/msmtp
-> This works.
->
-> While I found it not very convenient to write the option on command l=
-ine
-> every time, then I wrote it in the .gitconfig file in my home directo=
-ry.
->
-> [sendmail]
-> =A0 =A0 =A0 =A0smtpserver =3D /usr/bin/msmtp
-> =A0 =A0 =A0 =A0smtppass =A0 =A0 =A0 =3D 123456
-> =A0 =A0 =A0 =A0smtpuser =A0 =A0 =A0 =3D weiyang@linux.vnet.ibm.com
-> =A0 =A0 =A0 =A0smtpserverport =3D 143
+Ralf Thielow <ralf.thielow@googlemail.com> writes:
 
-The configuration-section for git send-mail is actually spelled
-"sendemail", and not "sendmail". Notice the additional 'e'.
+> +#: git-am.sh:95
+> +msgid ""
+> +"You seem to have moved HEAD since the last 'am' failure.\n"
+> +"Not rewinding to ORIG_HEAD"
+> +msgstr ""
+> +"Du scheinst seit dem letzten fehlerhaften 'am' die Zweigspitze (HEA=
+D)\n"
+> +"ge=C3=A4ndert zu haben.\n"
+> +"Keine Zur=C3=BCcksetzung zu ORIG_HEAD."
 
-http://git-scm.com/docs/git-send-email
+since the last 'am' failure -> seit dem letzten *gescheiterten* 'am'?
+
+> +#: git-am.sh:831
+> +msgid ""
+> +"You still have unmerged paths in your index\n"
+> +"did you forget to use 'git add'?"
+> +msgstr ""
+> +"Du hast weiterhin nicht zusammengef=C3=BChrte Pfade in der Bereitst=
+ellung.\n"
+> +"Hast du vergessen 'git add' zu benutzen?"
+
+still -> immer noch?
+
+> +#: git-bisect.sh:48
+> +msgid "You need to start by \"git bisect start\""
+> +msgstr "Du must mit \"git bisect start\" beginnen."
+                ^
+typo: musst
+
+Other than those nits I like them.  Thanks for your work!
+
+--=20
+Thomas Rast
+trast@{inf,student}.ethz.ch
