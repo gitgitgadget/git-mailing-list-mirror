@@ -1,80 +1,109 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Git repository name-guessing corner case
-Date: Mon, 11 Jun 2012 13:09:45 -0700
-Message-ID: <7vwr3d625y.fsf@alter.siamese.dyndns.org>
-References: <1339442931056-7561236.post@n2.nabble.com>
+From: "Philip Oakley" <philipoakley@iee.org>
+Subject: Re: How to pull force just one folder in dev tree?
+Date: Mon, 11 Jun 2012 21:18:49 +0100
+Organization: OPDS
+Message-ID: <8F71F33B20804F85AC15F77A30855D1C@PhilipOakley>
+References: <4FCE44D4.6050805@gmail.com> <7vlik1obdg.fsf@alter.siamese.dyndns.org>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Joseph Chiu <joechiu@joechiu.com>
-X-From: git-owner@vger.kernel.org Mon Jun 11 22:09:54 2012
+Content-Type: text/plain;
+	format=flowed;
+	charset="iso-8859-1";
+	reply-type=original
+Content-Transfer-Encoding: 7bit
+Cc: "Git List" <git@vger.kernel.org>
+To: "Junio C Hamano" <gitster@pobox.com>, "J.V." <jvsrvcs@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jun 11 22:18:26 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SeAvx-0006j7-7I
-	for gcvg-git-2@plane.gmane.org; Mon, 11 Jun 2012 22:09:53 +0200
+	id 1SeB4A-0000Ab-W5
+	for gcvg-git-2@plane.gmane.org; Mon, 11 Jun 2012 22:18:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751818Ab2FKUJt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Jun 2012 16:09:49 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:55760 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750885Ab2FKUJs (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Jun 2012 16:09:48 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7E5BB808B;
-	Mon, 11 Jun 2012 16:09:47 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=D5VGnyvsUcBaiXxmv+4Jrle+aR0=; b=AwFcgV
-	pOh5oqlVFvG6R5JRAOvOiCfDw3rlkmcTSVFKRzZ4vtuV1O8bBesdlyXG9NcJPK0d
-	gFKJ8tIklN0QjOZxn81zy6nWbxF7wV4SmtY+zOlst0Zk0aotfKOmEkLGIidYFPpL
-	J3kQ7qXnIno+vWFuJ2YxH87ApWEfRCXiEonzQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=KfA12Lm2gAnUMDkbsko/QjWQLpys73TQ
-	YIEz9clxS9bFPTM3ZT6gmZLcGVTznGXcwLswPWz5dU530kcqduBav33of+RvcgMF
-	5JMekCJnQoPMSDNUpBp6gjziazUw7AhpVOAO/pp+bWjfodUjWHIz6IX7h2fcnIQi
-	674L7OyD+/s=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 756FB808A;
-	Mon, 11 Jun 2012 16:09:47 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0BD0A8089; Mon, 11 Jun 2012
- 16:09:46 -0400 (EDT)
-In-Reply-To: <1339442931056-7561236.post@n2.nabble.com> (Joseph Chiu's
- message of "Mon, 11 Jun 2012 12:28:51 -0700 (PDT)")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 646BE6F6-B401-11E1-B490-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751976Ab2FKUSS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Jun 2012 16:18:18 -0400
+Received: from out1.ip04ir2.opaltelecom.net ([62.24.128.240]:7558 "EHLO
+	out1.ip04ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751812Ab2FKUSS (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 11 Jun 2012 16:18:18 -0400
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: AggMAPhR1k9cHlAC/2dsb2JhbABFixeoTQICgTCBCA+CBAEEAQEFCAEBLhEFCAEBIQsCAwUCAQMRAwEBAQolFAEECBACBgcPCAYBBwsIAgECAwEMBIUoBwGCIwkDDwevBA2JTopDYVCBBYNcYAOIDYUxiHKJbIR9gmGBVSM
+X-IronPort-AV: E=Sophos;i="4.77,391,1336345200"; 
+   d="scan'208";a="375220537"
+Received: from host-92-30-80-2.as13285.net (HELO PhilipOakley) ([92.30.80.2])
+  by out1.ip04ir2.opaltelecom.net with SMTP; 11 Jun 2012 21:18:16 +0100
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199715>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199716>
 
-Joseph Chiu <joechiu@joechiu.com> writes:
+From: "Junio C Hamano" <gitster@pobox.com>
+To: "J.V." <jvsrvcs@gmail.com>
+Cc: <git@vger.kernel.org>
+Sent: Tuesday, June 05, 2012 7:35 PM
+Subject: Re: How to pull force just one folder in dev tree?
 
-> On the south machine, I first accidentally created the repo wizard.git.git
-> (note the double .git), with ...
 
-We have updated the logic around this area with b3256eb (standardize
-and improve lookup rules for external local repos, 2012-02-02), and
-this is part of v1.7.9.2 and later releases.  The rule used to be
-(1) check with "/.git" appended, to cover the case where you access
-a repository with a working tree attached, (2) check with ".git"
-appended, and then (3) check without anything appended. It was very
-error prone to cause exactly the above kind of gotchas.
+> "J.V." <jvsrvcs@gmail.com> writes:
+>
+>> If I am in my source code tree down deep in a directory at the
+>> command
+>> line, how do I pull from a repo and force overwrite all files locally
+>> (and also get files that I deleted locally, just in the folder I am
+>> in?)
 
-The updated rule checks with "/.git" first andthe next possibility
-that is checked is the given name without modification, so if you
-have both wizard.git and wizard.git.git (with or without working
-tree):
+I think the particular command for this case would be
+    git checkout [-p|--patch] [<tree-ish>] [--] [<paths>.]
+where the paths are defined as a pathspec (see git glossary for
+details).
 
-        accessing with this name ... will find this repository
-        wizard                       wizard.git
-        wizard.git                   wizard.git
-        wizard.git.git               wizard.git.git
+Though you should review how you got into this sticky situation and
+consider  how you would adjust your workflow so you don't repeat the
+problem.
+e.g. creating a temporary branch earlier, with more commits or stashes.
 
-which should be much saner.
+>>
+>> I do not want to do this for the entire repo, just the directory that
+>> I am in and also on the branch I am in.  I am not in the 'master'
+>> branch, but another branch.
+>>
+>> so
+>>
+>>  $git reset --hard HEAD
+>>
+>>  Would probably do my entire local repo and from 'master' (even if I
+>> am not on master)?
+>
+> No. It asks "Please reset the index and the working tree files to
+> match what I have in the commit I checked out".  If you are on the
+> 'slave' branch, the index and the working tree files are updated to
+> match the commit at the tip of the 'slave' branch.
+>
+> It is unclear what you are trying to do, but if you made random
+> changes in files in your current directory (somewhere deep), all
+> changes are crap and you regret making them, and you are wishing to
+> go back to the state you started from, then the way to ask "I want
+> everything in this directory checked out from my current branch" is
+> to say:
+>
+> $ git checkout HEAD -- .
+>
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+>
+>
+> -----
+> No virus found in this message.
+> Checked by AVG - www.avg.com
+> Version: 2012.0.2178 / Virus Database: 2433/5048 - Release Date:
+> 06/05/12
+>
