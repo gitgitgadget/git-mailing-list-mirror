@@ -1,121 +1,109 @@
-From: Luke Diamand <luke@diamand.org>
-Subject: Re: git-p4: commits are visible in history after 'git p4 clone',
- but not a single file present
-Date: Mon, 11 Jun 2012 23:46:08 +0100
-Message-ID: <4FD67530.1090002@diamand.org>
-References: <4FD5C263.9010307@nokia.com> <CAE5ih79Lgc8vF0v=vTGZSwASsGwQWs2Q7h_AkW67RBfi-R=DCA@mail.gmail.com> <4FD6440C.7090900@nokia.com>
+From: nguyenhu@minatec.inpg.fr
+Subject: Re: [PATCHv6 1/4] Read (but not write) from
+ $XDG_CONFIG_HOME/git/config file
+Date: Tue, 12 Jun 2012 00:59:49 +0200
+Message-ID: <20120612005949.Horde.2Iy7T3wdC4BP1nhlOdxxKdA@webmail.minatec.grenoble-inp.fr>
+References: <1338754481-27012-1-git-send-email-Huynh-Khoi-Nguyen.Nguyen@ensimag.imag.fr>
+ <1338988885-21933-1-git-send-email-Huynh-Khoi-Nguyen.Nguyen@ensimag.imag.fr>
+ <7vpq9aenl0.fsf@alter.siamese.dyndns.org>
+ <20120608142601.Horde.Tq7UO3wdC4BP0e9ZGAy1EwA@webmail.minatec.grenoble-inp.fr>
+ <7vvcj1dep7.fsf@alter.siamese.dyndns.org>
+ <20120609125336.Horde.iUq0R3wdC4BP0yswpGlGBZA@webmail.minatec.grenoble-inp.fr>
+ <7v4nqjbrdo.fsf@alter.siamese.dyndns.org>
+ <20120610154850.Horde.gYrJO3wdC4BP1KXCOvLEiCA@webmail.minatec.grenoble-inp.fr>
+ <CABPQNSYd0hCU8nrfKJJjR+T_jQn4WC6jEaSCJPjKsuPdumEdtw@mail.gmail.com>
+ <7v8vft97a8.fsf@alter.siamese.dyndns.org>
+ <20120611185311.Horde.RALabXwdC4BP1iJ3aQ-w89A@webmail.minatec.grenoble-inp.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed	DelSp=Yes
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Pete Wyckoff <pw@padd.com>
-To: Ilya Dogolazky <ilya.dogolazky@nokia.com>
-X-From: git-owner@vger.kernel.org Tue Jun 12 00:46:53 2012
+Cc: Erik Faye-Lund <kusmabite@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Huynh Khoi Nguyen NGUYEN 
+	<Huynh-Khoi-Nguyen.Nguyen@ensimag.imag.fr>,
+	Matthieu.Moy@grenoble-inp.fr,
+	Valentin Duperray <Valentin.Duperray@ensimag.imag.fr>,
+	Franck Jonas <Franck.Jonas@ensimag.imag.fr>,
+	Lucien Kong <Lucien.Kong@ensimag.imag.fr>,
+	Thomas Nguy <Thomas.Nguy@ensimag.imag.fr>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jun 12 01:00:02 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SeDNk-0004iX-F5
-	for gcvg-git-2@plane.gmane.org; Tue, 12 Jun 2012 00:46:44 +0200
+	id 1SeDaa-0001Dq-C8
+	for gcvg-git-2@plane.gmane.org; Tue, 12 Jun 2012 01:00:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751753Ab2FKWqk convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 11 Jun 2012 18:46:40 -0400
-Received: from mail-wi0-f170.google.com ([209.85.212.170]:63426 "EHLO
-	mail-wi0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750948Ab2FKWqk (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Jun 2012 18:46:40 -0400
-Received: by wibhm6 with SMTP id hm6so3827512wib.1
-        for <git@vger.kernel.org>; Mon, 11 Jun 2012 15:46:39 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding
-         :x-gm-message-state;
-        bh=gPx0+1LsExPmUrn9Iyr8Z4JTMw0ZJHq0C2f6W6gf3P0=;
-        b=KgRgyW3DEmqXsbXtubwL4XJtFUE7g9CaBDGnSsuJ4QDc62QghMFy3TxplcepZFlMaS
-         XQBDVV6+vboAkojITu5IJqNm3VRALG3DctH9lQEB8kJn1hZBKwPKknMtnTubooRFjXxm
-         Z2P+cEg+B7PAHWn7vvGOL1vMdSJr8ovXvetA2FnhxPwe7xfpf/fCu7W4W31ZgSM8fa4T
-         01PBoZZcf7Q1HAh/+HGUo+S2/GTa7k76w/9QwZHrWlBp8yPA/m/oHgVNONhtTqkrr8DE
-         mABOvxHHFiHiqL3OewiFFuTLIqcT4jNs9IGUP4lsrsEfpO9nlv96kvbCW4qzCLU3HAbG
-         2jwg==
-Received: by 10.180.78.233 with SMTP id e9mr24219909wix.5.1339454798846;
-        Mon, 11 Jun 2012 15:46:38 -0700 (PDT)
-Received: from [86.6.30.7] (cpc19-cmbg14-2-0-cust6.5-4.cable.virginmedia.com. [86.6.30.7])
-        by mx.google.com with ESMTPS id k8sm2315494wia.6.2012.06.11.15.46.38
-        (version=SSLv3 cipher=OTHER);
-        Mon, 11 Jun 2012 15:46:38 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:10.0.4) Gecko/20120510 Icedove/10.0.4
-In-Reply-To: <4FD6440C.7090900@nokia.com>
-X-Gm-Message-State: ALoCoQm3n8cIQTrY9wqRtDYnqPQ1sEnoM1OjROnVqRyBh5hLOCsyQBNpIti03DNDkjzQHdZAKSm2
+	id S1752628Ab2FKW7z convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 11 Jun 2012 18:59:55 -0400
+Received: from v-smtp.minatec.grenoble-inp.fr ([147.173.216.28]:33846 "EHLO
+	v-smtp.minatec.grenoble-inp.fr" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751664Ab2FKW7y (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 11 Jun 2012 18:59:54 -0400
+Received: from localhost (www02.minatec.grenoble-inp.fr [147.173.216.15])
+	by v-smtp.minatec.grenoble-inp.fr (Postfix) with ESMTP id DC7951A02F6;
+	Tue, 12 Jun 2012 00:59:49 +0200 (CEST)
+Received: from etu-190-212.vpn-inp.grenoble-inp.fr
+ (etu-190-212.vpn-inp.grenoble-inp.fr [147.171.190.212]) by
+ webmail.minatec.grenoble-inp.fr (Horde Framework) with HTTP; Tue, 12 Jun
+ 2012 00:59:49 +0200
+In-Reply-To: <20120611185311.Horde.RALabXwdC4BP1iJ3aQ-w89A@webmail.minatec.grenoble-inp.fr>
+User-Agent: Internet Messaging Program (IMP) H4 (5.0.17)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199750>
-
-On 11/06/12 20:16, Ilya Dogolazky wrote:
-> Hi Luke!
->=20
-> 06/11/2012 06:28 PM, ext Luke Diamand =D0=BD=D0=B0=D0=BF=D0=B8=D1=81=D0=
-=B0=D0=BB:
->> If you do something like "p4 describe 17473" what does that show?
-> First I see a line containing the change number, my colleague's name =
-and=20
-> date, then the commit title (identical to one printed by "git log"),=20
-> then a list of files [every line begins with "... //xxx/yyy/"], then =
-the=20
-> word "Differences" and then something looking very much like output o=
-f=20
-> 'diff' command (the actual commit differences).
->=20
->> Are the files changed all contained with //kalma/xxx/yyy?
-> Yes, they are.
->=20
->> It could be that there's a p4 version problem going on - which versi=
-on
->> of p4 are you
->> using?
-> The output of 'p4 -V' contains "Rev. P4/LINUX26X86/2012.1/459601=20
-> (2012/05/11)". That's probably the version of my command line client.
->=20
-> The output of "p4 info" contains "P4D/LINUX26X86_64/2011.1/428451=20
-> (2012/03/08)" --- that's probably the version of the server.
->=20
-> The version of git installation (by debian package) is 1:1.7.10-1 (as=
-=20
-> reported by "dpkg -l git"). The package contains the file=20
-> "/usr/share/doc/git/contrib/fast-import/git-p4" which I copied to=20
-> $HOME/bin/git-p4 in order to have in $PATH and with executable bit.=20
-> Could it be, that I did something wrong here by making this manually?
-
-That version of git-p4 seems different to the one in the repo. I think =
-it's just a bit older.
-
->=20
->  > And which platform are you using?
-> Debian GNU/Linux.
->=20
-> I hope I provided all the needed information, of not please ask for m=
-ore.
-
-Can you try an experiment please. Try running the following commands. W=
-hen I run them I get out a file that looks correct.
-
-#!/bin/sh
-export P4PORT=3Dlocalhost:1234
-mkdir db cli
-(cd db && p4d &)
-sleep 2
-(cd cli && EDITOR=3D: p4 client && date >foo.c && p4 add foo.c && p4 su=
-bmit -d 'x')
-git-p4 clone //depot@all
-
-I've been trying out Debian's 1.7.10.1 and it seems fine, other than ha=
-ving a slightly old version of git-p4 and it not being installed proper=
-ly.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199751>
 
 
->=20
-> Cheers,
->=20
-> Ilya
+nguyenhu@minatec.inpg.fr a =E9crit=A0:
+
+> Junio C Hamano <gitster@pobox.com> a =E9crit=A0:
+>
+>> Erik Faye-Lund <kusmabite@gmail.com> writes:
+>>
+>>> The awkward thing about doing this, is that the memory allocated by
+>>> the strbuf cannot be reclaimed if you go with this. A pointer that =
+has
+>>> been adjusted (like cleanup_path can do) cannot be successfully fed=
+ to
+>>> free.
+>>
+>> Yeah, I wouldn't recommend doing that.  Either
+>>
+>> 	path =3D strbuf_detach(&sb, NULL);
+>> 	retval =3D xstrdup(cleanup_path(path));
+>>        free(path);
+>>        return retval;
+>>
+>> or
+>>
+>> 	path =3D xstrdup(cleanup_path(sb.buf));
+>>        strbuf_release(&sb);
+>>        return path;
+>>
+>> would be more sensible.
+
+In our next patch, mkpathdup() function will be
+
+char *mkpathdup(const char *fmt, ...)
+{
+	char *path;
+	struct strbuf sb =3D STRBUF_INIT;
+	va_list args;
+
+	va_start(args, fmt);
+	strbuf_vaddf(&sb, fmt, args);
+	va_end(args);
+	path =3D xstrdup(cleanup_path(sb.buf));
+
+	strbuf_release(&sb);
+	return path;
+}
+
+which looks like our previous proposal with xstrdup()
+and cleanup_path() functions at the right place.
