@@ -1,77 +1,107 @@
-From: Ted Ts'o <tytso@mit.edu>
-Subject: Re: Keeping unreachable objects in a separate pack instead of
- loose?
-Date: Mon, 11 Jun 2012 11:31:03 -0400
-Message-ID: <20120611153103.GA16086@thunk.org>
-References: <E1SdhJ9-0006B1-6p@tytso-glaptop.cam.corp.google.com>
- <bb7062f387c9348f702acb53803589f1.squirrel@webmail.uio.no>
- <87vcixaoxe.fsf@thomas.inf.ethz.ch>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH_v1] add 'git credential' plumbing command
+Date: Mon, 11 Jun 2012 08:34:55 -0700
+Message-ID: <7vlijt980w.fsf@alter.siamese.dyndns.org>
+References: <1339267502-13803-1-git-send-email-Javier.Roucher-Iglesias@ensimag.imag.fr>
+ <20120610115619.GA6453@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Hallvard B Furuseth <h.b.furuseth@usit.uio.no>,
-	git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Nicolas Pitre <nico@fluxnic.net>
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Mon Jun 11 17:31:55 2012
+Cc: Javier.Roucher-Iglesias@ensimag.imag.fr, git@vger.kernel.org,
+	Javier Roucher <jroucher@gmail.com>,
+	Pavel Volek <Pavel.Volek@ensimag.imag.fr>,
+	NGUYEN Kim Thuat <Kim-Thuat.Nguyen@ensimag.imag.fr>,
+	ROUCHER IGLESIAS Javier <roucherj@ensimag.imag.fr>,
+	Matthieu Moy <Matthieu.Moy@imag.fr>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Jun 11 17:35:23 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Se6as-0005hT-9v
-	for gcvg-git-2@plane.gmane.org; Mon, 11 Jun 2012 17:31:50 +0200
+	id 1Se6eA-0004GB-Hd
+	for gcvg-git-2@plane.gmane.org; Mon, 11 Jun 2012 17:35:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754313Ab2FKPb1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Jun 2012 11:31:27 -0400
-Received: from li9-11.members.linode.com ([67.18.176.11]:49067 "EHLO
-	imap.thunk.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751659Ab2FKPb0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Jun 2012 11:31:26 -0400
-Received: from root (helo=tytso-glaptop.cam.corp.google.com)
-	by imap.thunk.org with local-esmtp (Exim 4.72)
-	(envelope-from <tytso@thunk.org>)
-	id 1Se6aI-00034L-Ip; Mon, 11 Jun 2012 15:31:14 +0000
-Received: from tytso by tytso-glaptop.cam.corp.google.com with local (Exim 4.71)
-	(envelope-from <tytso@thunk.org>)
-	id 1Se6a7-0004KY-Cc; Mon, 11 Jun 2012 11:31:03 -0400
-Content-Disposition: inline
-In-Reply-To: <87vcixaoxe.fsf@thomas.inf.ethz.ch>
-User-Agent: Mutt/1.5.20 (2009-06-14)
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: tytso@thunk.org
-X-SA-Exim-Scanned: No (on imap.thunk.org); SAEximRunCond expanded to false
+	id S1753285Ab2FKPe7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Jun 2012 11:34:59 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:52981 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752221Ab2FKPe6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Jun 2012 11:34:58 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id ACC6B92D9;
+	Mon, 11 Jun 2012 11:34:57 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=j/DOWLtNBw/VaMu8uhm0aU5OAzc=; b=umHvwj
+	X2L1AsivUQLhSGUBtaN272/HOdigKHmoXdoufV8xUeQiDlZPHzLcxDpGNKon5+Ps
+	3QNwCOj6Ho2BU3j4oBplaA6v2RS3y5cfHlvDScWz+eTwbYgogX0jkJX24HowFtFG
+	MqZ7V+B+blwOfevZ2NdBzXFktfKeSPFDpi42Y=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=UNV8SzTN72Svyd7be/nYvZmJrYuiZTWe
+	bkjYSWSXd3MrsDXS07apTOEYW0F70T9yK1nMs3hf1gqYilTh/fcmflUWM7fTBVLq
+	/JClxAM8INKA22WS0KF20PQ8pUQMdyKLtFtqEvUC8RWgvD1gQR/Wg+hgiUQ68wXf
+	fZjLCH/XkLg=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A172692D8;
+	Mon, 11 Jun 2012 11:34:57 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 330D692D6; Mon, 11 Jun 2012
+ 11:34:57 -0400 (EDT)
+In-Reply-To: <20120610115619.GA6453@sigill.intra.peff.net> (Jeff King's
+ message of "Sun, 10 Jun 2012 07:56:19 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: FFBCE956-B3DA-11E1-9233-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199661>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199662>
 
-On Mon, Jun 11, 2012 at 04:44:29PM +0200, Thomas Rast wrote:
-> 
-> Starting with v1.7.10.2, and in the v1.7.11-rc versions, there's a
-> change by Peff: 7e52f56 (gc: do not explode objects which will be
-> immediately pruned, 2012-04-07).  Does it solve your problem?
+Jeff King <peff@peff.net> writes:
 
-I'm currently using 1.7.10.2.552.gaa3bb87, and a "git gc" still kicked
-loose a little over 4.5 megabytes of loose objects were not pruned via
-"git prune" (since they hadn't yet expired).  These loose objects
-could be stored in a 244k pack file.
+> Perhaps it would be simpler to accept a URL on the command line, and
+> also provide a --stdin option for callers that want to feed it directly.
+> So:
+>
+>   git credential fill https://example.com/foo.git
+>
+> would be identical to:
+>
+>   git credential --stdin fill <<\EOF
+>   protocol=https
+>   host=example.com
+>   path=foo.git
+>   EOF
 
-So while I'm sure that change has helped, if you happen to use a
-workflow that uses git rebase and/or guilt and/or throwaway test
-integration branches a lot, there will still be a large number of
-unexpired commits which still get kicked loose, and won't get pruned
-for a week or two.
+and "git credential fill https://peff@example.com/foo.git" would be
+identical to the latter one with user=peff already filled in?
 
-What I think would make sense is for git pack-objects to have a new
-option which outputs a list of object id's which whould have been
-kicked out as loose objects if it had been given the (undocumented)
---unpacked-unreachable option.  Then the git-repack shell script (if
-given the -A option) would use that new option instead of
---unpacked-unreachable, and then using the list created by this new
-option, create another pack which contains all of these
-unreachable-but-not-yet-expired objects.
+> I am tempted to suggest that this actually output the _whole_
+> credential, not just the username and password. Coupled with the above
+> behavior, you would get:
+>
+>   $ git credential fill https://example.com/foo.git
+>   protocol=https
+>   host=example.com
+>   path=foo.git
+>   username=bob
+>   password=secr3t
+>
+> which happens to be exactly what you want to feed back to the "approve"
+> and "reject" actions (and it is not really any harder to parse).
+>
+> We _could_ get by with allowing:
+>
+>   git credential --stdin approve https://example.com/foo.git <<\EOF
+>   username=bob
+>   password=secr3t
+>   EOF
+>
+> and having it combine the URL on the command-line with the entries on
+> stdin (and indeed, I think that is the only sane thing to do when
+> --stdin and a URL are both given).
 
-Regards,
-
-						- Ted
+All good suggestions ;-).
