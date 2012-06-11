@@ -1,105 +1,82 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH_v1] add 'git credential' plumbing command
-Date: Mon, 11 Jun 2012 20:02:06 +0200
-Message-ID: <vpqr4tl4ti9.fsf@bauges.imag.fr>
-References: <1339267502-13803-1-git-send-email-Javier.Roucher-Iglesias@ensimag.imag.fr>
-	<20120610115619.GA6453@sigill.intra.peff.net>
+From: Erik Faye-Lund <kusmabite@gmail.com>
+Subject: Re: [PATCH 0/5] transport: unify ipv4 and ipv6 code paths
+Date: Mon, 11 Jun 2012 20:12:00 +0200
+Message-ID: <CABPQNSb9EGOgHb7NtsEtDh2QkjkHYn7YemYsa8Yaqyuce-aDMw@mail.gmail.com>
+References: <20120308124857.GA7666@burratino>
+Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Javier.Roucher-Iglesias@ensimag.imag.fr, git@vger.kernel.org,
-	Javier Roucher <jroucher@gmail.com>,
-	Pavel Volek <Pavel.Volek@ensimag.imag.fr>,
-	NGUYEN Kim Thuat <Kim-Thuat.Nguyen@ensimag.imag.fr>,
-	ROUCHER IGLESIAS Javier <roucherj@ensimag.imag.fr>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Jun 11 20:02:30 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>, Eric Wong <normalperson@yhbt.net>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jun 11 20:12:52 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Se8wY-0007Rf-8W
-	for gcvg-git-2@plane.gmane.org; Mon, 11 Jun 2012 20:02:22 +0200
+	id 1Se96h-000543-Uu
+	for gcvg-git-2@plane.gmane.org; Mon, 11 Jun 2012 20:12:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751354Ab2FKSCS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Jun 2012 14:02:18 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:52471 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751066Ab2FKSCR (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Jun 2012 14:02:17 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id q5BHr29x021212
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Mon, 11 Jun 2012 19:53:02 +0200
-Received: from bauges.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1Se8wJ-0002cE-Ii; Mon, 11 Jun 2012 20:02:07 +0200
-In-Reply-To: <20120610115619.GA6453@sigill.intra.peff.net> (Jeff King's
-	message of "Sun, 10 Jun 2012 07:56:19 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.93 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Mon, 11 Jun 2012 19:53:03 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: q5BHr29x021212
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1340041985.89798@dz7Vra1O74y3SJyJjyyJEA
+	id S1752372Ab2FKSMs convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 11 Jun 2012 14:12:48 -0400
+Received: from mail-pz0-f46.google.com ([209.85.210.46]:56012 "EHLO
+	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752062Ab2FKSMr convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 11 Jun 2012 14:12:47 -0400
+Received: by dady13 with SMTP id y13so5728708dad.19
+        for <git@vger.kernel.org>; Mon, 11 Jun 2012 11:12:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type:content-transfer-encoding;
+        bh=JbP0RP8Avdq7Kd0niRBx3OpXmXxGgegDfhMkcP1togE=;
+        b=hWxCbZZ+JTBdD4l4A3cIDN2UWM+rB870LYcx6MA6q8/+rudij/WVE3784QPlr8MsiF
+         dmYlqPBKvTGl/nDyPI6pTto0mri6SlvvlGvowzCfyWrI6TesaiOvt89A9J7zP8yUn5gg
+         hIC/JuGUinNrWLD2pST3AFOIChCBjk+i98nJqztQXkPz4P8P1kqA07bq79l75nNldAq+
+         OAyA9FIaIT2MR6kkeOsJ7O3mpwI1byRr8jJPa3idSjuTyITMKwJw1w9fJY+r84VlmK63
+         wXio0qt+ZShmuMGQ1Lyb2NNVr5N8WZhJ8pT1JiQu3GsX1E2yHCho9EMK3Wo3rgcJSIIP
+         sGgw==
+Received: by 10.68.203.7 with SMTP id km7mr29422949pbc.7.1339438367115; Mon,
+ 11 Jun 2012 11:12:47 -0700 (PDT)
+Received: by 10.68.40.98 with HTTP; Mon, 11 Jun 2012 11:12:00 -0700 (PDT)
+In-Reply-To: <20120308124857.GA7666@burratino>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199686>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199687>
 
-Jeff King <peff@peff.net> writes:
-
-> It's nice to have an example like this, but there's much detail missing
-> in how the format is specified. However, this format is already
-> documented in the "helpers" section of api-credentials.txt, so it
-> probably makes sense to refer to that document.
-
-I'd do it the other way around. api-credentials.txt is in technical/,
-while the document we're writing will end-up in a man page, which cannot
-link to technical/.
-
-So, it makes more sense to move the format specification to
-git-credential.txt, and link to it from api-credentials.txt (now that we
-have a nice way to link to manpages from technical/ ;-) ).
-
-> I assume this got copied by looking at test-credential. I'd be OK with
-> including this feature in git-credential (and converting our test
-> scripts to use it, so we can drop test-credential entirely). But
-> probably it should not soak up all of the command-line arguments, and
-> instead should be a hidden option like:
+On Thu, Mar 8, 2012 at 1:48 PM, Jonathan Nieder <jrnieder@gmail.com> wr=
+ote:
+> Hi,
 >
->   git credential --helper=cache fill
+> These patches eliminate some ifdef-ery concerning NO_IPV6. =A0I used
+> them when writing the SRV patch, which applies on top, but it's
+> probably best to think of it as an independent topic.
 >
-> That will give us more flexibility later down the road.
-
-Actually, this should already be possible with
-
-  git -c credential.helper=cache credential fill
-
-I suspect that this feature will never be used outside tests, and if so,
-I don't think it deserves a command-line option.
-
-> I am tempted to suggest that this actually output the _whole_
-> credential, not just the username and password. Coupled with the above
-> behavior, you would get:
+> Patch 4 is the heart of the series. =A0It provides an interface simil=
+ar
+> to getaddrinfo that can be implemented on top of either gethostbyname
+> or getaddrinfo and puts each implementation in a separate file. =A0Th=
+is
+> way, callers can just use the common API and they do not need to have
+> two copies of their code, one for each host resolution API.
 >
->   $ git credential fill https://example.com/foo.git
->   protocol=https
->   host=example.com
->   path=foo.git
->   username=bob
->   password=secr3t
+> Patches 1-3 move code around until all the code that patch 4 touches
+> is in one place.
 >
-> which happens to be exactly what you want to feed back to the "approve"
-> and "reject" actions (and it is not really any harder to parse).
+> Patches 5 is a potential error handling improvement noticed while
+> writing patches 1-4. =A0It's probably not actually needed but it was =
+a
+> comfort to me.
+>
+> These patches have been in use in Debian since June of last year. =A0=
+I'd
+> like to see this in mainline early in the 1.7.11 cycle to make coding
+> that touches this area during that cycle more pleasant. =A0Thoughts o=
+f
+> all kinds welcome.
 
-I like that, yes.
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+What happened to this series?
