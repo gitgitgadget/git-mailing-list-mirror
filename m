@@ -1,86 +1,77 @@
-From: Luke Diamand <luke@diamand.org>
-Subject: Re: git-p4: commits are visible in history after 'git p4 clone', but
- not a single file present
-Date: Mon, 11 Jun 2012 16:28:04 +0100
-Message-ID: <CAE5ih79Lgc8vF0v=vTGZSwASsGwQWs2Q7h_AkW67RBfi-R=DCA@mail.gmail.com>
-References: <4FD5C263.9010307@nokia.com>
+From: Ted Ts'o <tytso@mit.edu>
+Subject: Re: Keeping unreachable objects in a separate pack instead of
+ loose?
+Date: Mon, 11 Jun 2012 11:31:03 -0400
+Message-ID: <20120611153103.GA16086@thunk.org>
+References: <E1SdhJ9-0006B1-6p@tytso-glaptop.cam.corp.google.com>
+ <bb7062f387c9348f702acb53803589f1.squirrel@webmail.uio.no>
+ <87vcixaoxe.fsf@thomas.inf.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: Ilya Dogolazky <ilya.dogolazky@nokia.com>
-X-From: git-owner@vger.kernel.org Mon Jun 11 17:28:30 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Hallvard B Furuseth <h.b.furuseth@usit.uio.no>,
+	git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Nicolas Pitre <nico@fluxnic.net>
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Mon Jun 11 17:31:55 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Se6Xb-0007bX-TZ
-	for gcvg-git-2@plane.gmane.org; Mon, 11 Jun 2012 17:28:28 +0200
+	id 1Se6as-0005hT-9v
+	for gcvg-git-2@plane.gmane.org; Mon, 11 Jun 2012 17:31:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755855Ab2FKP2I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Jun 2012 11:28:08 -0400
-Received: from mail-wi0-f178.google.com ([209.85.212.178]:50096 "EHLO
-	mail-wi0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755671Ab2FKP2F (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Jun 2012 11:28:05 -0400
-Received: by wibhn6 with SMTP id hn6so3072530wib.1
-        for <git@vger.kernel.org>; Mon, 11 Jun 2012 08:28:04 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:x-gm-message-state;
-        bh=tF0uZpn8G3MxHaW73VROsZyrSTOBmIee8jON7OfFn/A=;
-        b=UbqUll77Wk//Jiza9Uj+BaD+zt83+IOdNoToqjf8sa6R6bOyAbDGfH/toYX9XLEzoO
-         Eq6A+c45Bu6xvkbfzffv2DVMwT+kzMY8pRAjAh5UrzJwmZC4Wf+IkfvYbf208q61W2dF
-         YK0s6oyxp91IYuEJUFT3+0vQ0qUqEveDo08LAAxJYmaxzfHiJH1chZBzp/hj5ACec5u3
-         Ssv/1sCYXb4Ux/g2rUHZtOf53fk6VxQZY2Pnf4LVswUfzjVmcFkrRhZ3qF9CAedj5UWX
-         +cl1/+L4ycxj8imEfcLaTKw7mQSpIFR5YvewJa5PApgDINMJ0ijc9DIdzHMt/JMpBf0h
-         gLuA==
-Received: by 10.180.109.197 with SMTP id hu5mr21753810wib.8.1339428484217;
- Mon, 11 Jun 2012 08:28:04 -0700 (PDT)
-Received: by 10.216.193.160 with HTTP; Mon, 11 Jun 2012 08:28:04 -0700 (PDT)
-In-Reply-To: <4FD5C263.9010307@nokia.com>
-X-Gm-Message-State: ALoCoQm0U907NUEgcNqC+JGWukZ3RLkF+PndgXXHg28tMWSNPyxm+GxkPjZBJnf+S3F2BsfYnSkS
+	id S1754313Ab2FKPb1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Jun 2012 11:31:27 -0400
+Received: from li9-11.members.linode.com ([67.18.176.11]:49067 "EHLO
+	imap.thunk.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751659Ab2FKPb0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Jun 2012 11:31:26 -0400
+Received: from root (helo=tytso-glaptop.cam.corp.google.com)
+	by imap.thunk.org with local-esmtp (Exim 4.72)
+	(envelope-from <tytso@thunk.org>)
+	id 1Se6aI-00034L-Ip; Mon, 11 Jun 2012 15:31:14 +0000
+Received: from tytso by tytso-glaptop.cam.corp.google.com with local (Exim 4.71)
+	(envelope-from <tytso@thunk.org>)
+	id 1Se6a7-0004KY-Cc; Mon, 11 Jun 2012 11:31:03 -0400
+Content-Disposition: inline
+In-Reply-To: <87vcixaoxe.fsf@thomas.inf.ethz.ch>
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: tytso@thunk.org
+X-SA-Exim-Scanned: No (on imap.thunk.org); SAEximRunCond expanded to false
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199660>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199661>
 
-On Mon, Jun 11, 2012 at 11:03 AM, Ilya Dogolazky
-<ilya.dogolazky@nokia.com> wrote:
-> Hi !
->
-> I hope this is the right mailing list for question regarding the usage of
-> git-p4, sorry if I'm wrong.
+On Mon, Jun 11, 2012 at 04:44:29PM +0200, Thomas Rast wrote:
+> 
+> Starting with v1.7.10.2, and in the v1.7.11-rc versions, there's a
+> change by Peff: 7e52f56 (gc: do not explode objects which will be
+> immediately pruned, 2012-04-07).  Does it solve your problem?
 
-This is the right place!
+I'm currently using 1.7.10.2.552.gaa3bb87, and a "git gc" still kicked
+loose a little over 4.5 megabytes of loose objects were not pruned via
+"git prune" (since they hadn't yet expired).  These loose objects
+could be stored in a 244k pack file.
 
->
-> Here is my problem: I'm issuing the command
-> 'git p4 clone //kalma/xxx/yyy@all'. (the depot //kalma/xxx/yyy/ exists on my
-> machine and is full of files). After this command the directory 'yyy' is
-> created and the history of commits is visible there by 'git log -p'.
->
-> Every commit contains author name, a title (related to the project I'm
-> working on, so obviously coming from perforce depot) and a single line
-> looking like this:
->
-> [git-p4: depot-paths = "//kalma/xxx/yyy/": change = 17473]
->
-> Beside of that, the commit is empty: not a single line of code is
-> changed/added. And the directory 'yyy' contains only the '.git'
-> subdirectory, so not a single file of the project is visible.
->
-> Please help me to understand what could be going on there, and what could I
-> have done wrong.
+So while I'm sure that change has helped, if you happen to use a
+workflow that uses git rebase and/or guilt and/or throwaway test
+integration branches a lot, there will still be a large number of
+unexpired commits which still get kicked loose, and won't get pruned
+for a week or two.
 
-If you do something like "p4 describe 17473" what does that show?
-Are the files changed all contained with //kalma/xxx/yyy?
+What I think would make sense is for git pack-objects to have a new
+option which outputs a list of object id's which whould have been
+kicked out as loose objects if it had been given the (undocumented)
+--unpacked-unreachable option.  Then the git-repack shell script (if
+given the -A option) would use that new option instead of
+--unpacked-unreachable, and then using the list created by this new
+option, create another pack which contains all of these
+unreachable-but-not-yet-expired objects.
 
-It could be that there's a p4 version problem going on - which version
-of p4 are you
-using? And which platform are you using?
+Regards,
 
-Thanks,
-Luke
+						- Ted
