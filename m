@@ -1,97 +1,101 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-status: Show empty directories
-Date: Mon, 11 Jun 2012 08:08:48 -0700
-Message-ID: <7vtxyh998f.fsf@alter.siamese.dyndns.org>
-References: <1339270806-65013-1-git-send-email-muhtasib@gmail.com>
- <20120609221315.Horde.fN5FP3wdC4BP065b3FviijA@webmail.minatec.grenoble-inp.fr> <CAA3EhHJ9WnisF21iFfsjQKYFSY0t0jFvNV3aBjx0eGFPm8aoGg@mail.gmail.com> <877gvgrxw7.fsf@thomas.inf.ethz.ch> <20120609234717.Horde.I9rYUXwdC4BP08RlFRO2w_A@webmail.minatec.grenoble-inp.fr> <87haujr15p.fsf@thomas.inf.ethz.ch>
+Subject: Re: [PATCHv4] rebase [-i --exec | -ix] <CMD>...
+Date: Mon, 11 Jun 2012 08:14:52 -0700
+Message-ID: <7vpq9598yb.fsf@alter.siamese.dyndns.org>
+References: <1339167235-2009-2-git-send-email-Lucien.Kong@ensimag.imag.fr>
+ <1339325076-474-1-git-send-email-Lucien.Kong@ensimag.imag.fr>
+ <4FD48B70.5080600@kdbg.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: <konglu@minatec.inpg.fr>, Leila <muhtasib@gmail.com>,
-	<git@vger.kernel.org>
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Mon Jun 11 17:08:56 2012
+Cc: Lucien Kong <Lucien.Kong@ensimag.imag.fr>, git@vger.kernel.org,
+	tboegi@web.de,
+	Valentin Duperray <Valentin.Duperray@ensimag.imag.fr>,
+	Franck Jonas <Franck.Jonas@ensimag.imag.fr>,
+	Thomas Nguy <Thomas.Nguy@ensimag.imag.fr>,
+	Huynh Khoi Nguyen Nguyen 
+	<Huynh-Khoi-Nguyen.Nguyen@ensimag.imag.fr>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+To: Johannes Sixt <j6t@kdbg.org>
+X-From: git-owner@vger.kernel.org Mon Jun 11 17:15:05 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Se6Ei-00048s-9z
-	for gcvg-git-2@plane.gmane.org; Mon, 11 Jun 2012 17:08:56 +0200
+	id 1Se6Ka-0000NM-Qi
+	for gcvg-git-2@plane.gmane.org; Mon, 11 Jun 2012 17:15:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755346Ab2FKPIv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Jun 2012 11:08:51 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:38726 "EHLO
+	id S1752682Ab2FKPOz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Jun 2012 11:14:55 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:41835 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754941Ab2FKPIv (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Jun 2012 11:08:51 -0400
+	id S1751871Ab2FKPOy (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Jun 2012 11:14:54 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9ED3C8A69;
-	Mon, 11 Jun 2012 11:08:50 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2F8A28C5A;
+	Mon, 11 Jun 2012 11:14:54 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Jz46+/alWAytub2HmctIjOZVH5M=; b=uw6B+Z
-	wL17T0Num/2pO6NEjAKSka+kgRfJZysindOWsrvW1yao/Zf2N8Gh+OiMwkkH+qz3
-	2lvfWLurEAWHhayHP862l4pgp/dPB8am0cAXGKkqnvyAS0esDvfFSMIgizk/qFVL
-	/WLTGzo7G2kJqAsEYr7O9n+gjYrRqr1a+TadM=
+	:content-type; s=sasl; bh=Tn4msRI+kjkKCc8Dsguv+3K/3vo=; b=Nbmxgz
+	wvWXTf/9YSjyAB8toN6eqj8NtRVxembeyAbVp/5VU2Sdef1MQ8jkJqZ4KU/JG3sJ
+	4xWMy52HhdPBUCbkEnN03UXzFZplWMw12Eg1mU/N8vaHA/xZryaE6NYYld+3oKJy
+	m1rRMj2VUNWImDkB2vOKz+gFXeQfxlORlT1UY=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=E2rGc2hZMPH4y3ZfBIitAzlxyBVG/X8r
-	jBR1r/of/5ghTQFsDl+QJydkif9gBscKCeQ85NdW5JkkzETLDCcA7fdZlH3/wZI7
-	BndkfN5oKfruzNezVAv9YJwr+iOGIcdp45N1FeqLW3Oxck5Bk/Ywah/HAXfhgzsd
-	L5OA7uinqiY=
+	:content-type; q=dns; s=sasl; b=D9loRyqeJDsUccDMuv+rpI7MKPjimJli
+	2d5H9TgXnhyYEvJNMIXf+p+y7Ot6Cy53Bareoufch/gtkSyQw/aVzWfGVuB3dfuL
+	HMQPwxTLdWkyutXcx3p2EfM3mcXqqQRKC/OUNAB8RqgiSh7jHLS8moecEiV7sVDg
+	qP22CqW543o=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 95C498A68;
-	Mon, 11 Jun 2012 11:08:50 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 251CA8C59;
+	Mon, 11 Jun 2012 11:14:54 -0400 (EDT)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2C3E38A67; Mon, 11 Jun 2012
- 11:08:50 -0400 (EDT)
-In-Reply-To: <87haujr15p.fsf@thomas.inf.ethz.ch> (Thomas Rast's message of
- "Sun, 10 Jun 2012 11:01:22 +0200")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A5F308C54; Mon, 11 Jun 2012
+ 11:14:53 -0400 (EDT)
+In-Reply-To: <4FD48B70.5080600@kdbg.org> (Johannes Sixt's message of "Sun, 10
+ Jun 2012 13:56:32 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 59B0CB0C-B3D7-11E1-850F-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 325E5F78-B3D8-11E1-8BC2-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199658>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199659>
 
-Thomas Rast <trast@student.ethz.ch> writes:
+Johannes Sixt <j6t@kdbg.org> writes:
 
->>> It's not required, there's plenty of precedent, even one case within
->>> wt-status.c, of '} else'.  Try running
->>>
->>>   git grep '} else$'
->>
->> It's not because "there's plenty of precedent" that we should not try
->> to improve the format of the code. That's why there're coding style
->> rules so that we can keep the improvements consistent.
+> Am 10.06.2012 12:44, schrieb Lucien Kong:
+>> +test_expect_success 'rebase -i --exec without <CMD> shows error message and usage' '
+>> +	git reset --hard execute &&
+>> +	test_must_fail git rebase -i --exec 2>actual &&
+>> +	sed '1d' actual >tmp &&
+>> +	mv tmp actual &&
+>> +	test_must_fail git rebase -h >expected &&
+>> +	test_cmp expected actual &&
+>> +	git checkout master
+>> +'
 >
-> Yeah, and the rules (Documentation/CodingGuidelines) say
+> IMO, it is more important to check that the error message is present
+> rather than whether the usage blurb is correct. But since the error is
+> generated by the option parsing machinery, it is probably sufficient to
+> check *only* for failure, and don't verify the output at all.
 >
->  - We avoid using braces unnecessarily.  I.e.
+> Then change the headline of the text to the neutral
 >
-> 	if (bla) {
-> 		x = 1;
-> 	}
->
->    is frowned upon.  A gray area is when the statement extends
->    over a few lines, and/or you have a lengthy comment atop of
->    it.  Also, like in the Linux kernel, if there is a long list
->    of "else if" statements, it can make sense to add braces to
->    single line blocks.
->
-> I'm not the one who wrote them, but I'm taking the last sentence to mean
-> that you should not put the braces unless the omission will break the
-> vertical alignment of the 'else if' chain.
+> test_expect_success 'rebase -i --exec without <CMD>' '
 
-The guidelines are not black-and-white, but the spirit is to suggest
-avoiding unnecessary braces around single statement blocks while
-allowing exception when consistency across if/else if/... cascade
-makes the result easier to read.
+Makes sense; thanks for a thoughtful suggestion.
 
-> BTW, there are plenty of cases in git where it is better to stick to the
-> existing style of the file instead of the CodingGuidelines, unless you
-> are willing to clean up the file first (and nobody else works on it).
-
-Yes.
+> And, BTW, next time I point out that sed 'xy'... should be changed to
+> sed -e "xy"... you review *ALL* sed commands you introduce, not just
+> those that I point out, OK?
+>
+> And, BTW, when I point out that ...>expected && sed <expected >expect &&
+> mv expect expected should be ...>expect && sed <expect >expected, you
+> extrapolate *yourself* that the same pattern applies even if the files
+> are named "tmp" and "actual", OK?
+>
+> That's expected from thoughtful contributors.
+>
+> -- Hannes
