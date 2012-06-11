@@ -1,86 +1,76 @@
-From: "Hallvard B Furuseth" <h.b.furuseth@usit.uio.no>
-Subject: Re: Keeping unreachable objects in a separate pack instead of 
- loose?
-Date: Mon, 11 Jun 2012 01:24:21 +0200
-Message-ID: <bb7062f387c9348f702acb53803589f1.squirrel@webmail.uio.no>
-References: <E1SdhJ9-0006B1-6p@tytso-glaptop.cam.corp.google.com>
+From: Richard Yang <weiyang@linux.vnet.ibm.com>
+Subject: How can I specify the "sendmail" program for git-send-email?
+Date: Mon, 11 Jun 2012 15:32:32 +0800
+Message-ID: <20120611073232.GA5602@richard>
+Reply-To: Richard Yang <weiyang@linux.vnet.ibm.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-To: "Theodore Ts'o" <tytso@mit.edu>
-X-From: git-owner@vger.kernel.org Mon Jun 11 01:42:19 2012
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jun 11 09:32:49 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Sdrlr-0002jf-Oy
-	for gcvg-git-2@plane.gmane.org; Mon, 11 Jun 2012 01:42:12 +0200
+	id 1Sdz7H-0006rf-JY
+	for gcvg-git-2@plane.gmane.org; Mon, 11 Jun 2012 09:32:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753386Ab2FJXlb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 10 Jun 2012 19:41:31 -0400
-Received: from mail-out1.uio.no ([129.240.10.57]:47234 "EHLO mail-out1.uio.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751888Ab2FJXla (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Jun 2012 19:41:30 -0400
-X-Greylist: delayed 1028 seconds by postgrey-1.27 at vger.kernel.org; Sun, 10 Jun 2012 19:41:30 EDT
-Received: from mail-mx5.uio.no ([129.240.10.46])
-	by mail-out1.uio.no with esmtp (Exim 4.75)
-	(envelope-from <hbf@ulrik.uio.no>)
-	id 1SdrUb-0007wF-NN; Mon, 11 Jun 2012 01:24:21 +0200
-Received: from w3prod-wm03.uio.no ([129.240.4.40] helo=webmail.uio.no)
-	by mail-mx5.uio.no with esmtpsa (TLSv1:AES256-SHA:256)
-	user hbf (Exim 4.76)
-	(envelope-from <hbf@ulrik.uio.no>)
-	id 1SdrUb-0000jF-4H; Mon, 11 Jun 2012 01:24:21 +0200
-Received: from 195.1.106.118
-        (SquirrelMail authenticated user hbf)
-        by webmail.uio.no with HTTP;
-        Mon, 11 Jun 2012 01:24:21 +0200
-In-Reply-To: <E1SdhJ9-0006B1-6p@tytso-glaptop.cam.corp.google.com>
-User-Agent: SquirrelMail/1.4.19
-X-UiO-Ratelimit-Test: rcpts/h 2 msgs/h 1 sum rcpts/h 2 sum msgs/h 1 total rcpts 2457 max rcpts/h 20 ratelimit 0
-X-UiO-Spam-info: not spam, SpamAssassin (score=-5.0, required=5.0, autolearn=disabled, FSL_RCVD_USER=0.001,T_RP_MATCHES_RCVD=-0.01,UIO_MAIL_IS_INTERNAL=-5, uiobl=NO, uiouri=NO)
-X-UiO-Scanned: 7236257A1C8B435DD3A1CDEA88B52958901232FB
-X-UiO-SPAM-Test: remote_host: 129.240.4.40 spam_score: -49 maxlevel 80 minaction 2 bait 0 mail/h: 7 total 1391294 max/h 475 blacklist 0 greylist 0 ratelimit 0
+	id S1751687Ab2FKHcn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Jun 2012 03:32:43 -0400
+Received: from e23smtp03.au.ibm.com ([202.81.31.145]:45064 "EHLO
+	e23smtp03.au.ibm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750795Ab2FKHcm (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Jun 2012 03:32:42 -0400
+Received: from /spool/local
+	by e23smtp03.au.ibm.com with IBM ESMTP SMTP Gateway: Authorized Use Only! Violators will be prosecuted
+	for <git@vger.kernel.org> from <weiyang@linux.vnet.ibm.com>;
+	Mon, 11 Jun 2012 07:22:04 +1000
+Received: from d23relay04.au.ibm.com (202.81.31.246)
+	by e23smtp03.au.ibm.com (202.81.31.209) with IBM ESMTP SMTP Gateway: Authorized Use Only! Violators will be prosecuted;
+	Mon, 11 Jun 2012 07:22:02 +1000
+Received: from d23av04.au.ibm.com (d23av04.au.ibm.com [9.190.235.139])
+	by d23relay04.au.ibm.com (8.13.8/8.13.8/NCO v10.0) with ESMTP id q5B7PK1X8192364
+	for <git@vger.kernel.org>; Mon, 11 Jun 2012 17:25:20 +1000
+Received: from d23av04.au.ibm.com (loopback [127.0.0.1])
+	by d23av04.au.ibm.com (8.14.4/8.13.1/NCO v10.0 AVout) with ESMTP id q5B7WZ8p016218
+	for <git@vger.kernel.org>; Mon, 11 Jun 2012 17:32:36 +1000
+Received: from localhost ([9.123.247.68])
+	by d23av04.au.ibm.com (8.14.4/8.13.1/NCO v10.0 AVin) with ESMTP id q5B7WX4p016132
+	for <git@vger.kernel.org>; Mon, 11 Jun 2012 17:32:34 +1000
+Content-Disposition: inline
+User-Agent: Mutt/1.5.21 (2010-09-15)
+x-cbid: 12061021-6102-0000-0000-000001AA7BF9
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199628>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199630>
 
-On Sun, June 10, 2012 14:31, Theodore Ts'o wrote:
-> I recently noticed that after a git gc, I had a huge number of loose
-> objects that were unreachable.  In fact, about 4.5 megabytes worth of
-> objects.
+Hi, experts
 
-I got gigabytes once, and a full disk.  See thread
-"git gc == git garbage-create from removed branch", May 3 2012.
+I read the git-send-email manual and find the --smtp-server option can
+specify the sendmail-like program to send mail.
 
-> When I packed them, via:
->
->    cd .git/objects ; find [0-9a-f][0-9a-f] -type f | git pack-objects pack
->
-> the resulting pack file was 244k.
->
-> Which got me thinking.... the whole point of leaving the objects loose
-> is to make it easier to expire them, right?   But given how expensive it
-> is to have loose objects lying around, why not:
->
-> a)  Have git-pack-objects have an option which writes the unreachable
->     objects into a separate pack file, instead of kicking them loose?
+Then I use this option in command line 
+--smtp-server=/usr/bin/msmtp
+This works.
 
-I think this should be the default.  It's very unintuitive that
-gc can eat up lots of disk space instead of saving space.
+While I found it not very convenient to write the option on command line
+every time, then I wrote it in the .gitconfig file in my home directory.
 
-Until this is fixed, this behavior needs to be documented -
-along with how to avoid it.
+[sendmail]
+	smtpserver = /usr/bin/msmtp
+	smtppass       = 123456
+	smtpuser       = weiyang@linux.vnet.ibm.com
+        smtpserverport = 143
 
-> b)  Have git-prune delete a pack only if *all* of the objects in the
->     pack meet the expiry deadline?
->
-> What would be the downsides of pursueing such a strategy?  Is it worth
-> trying to implement as proof-of-concept?
+While this time I don't use the --smtp-server option in command line. 
 
-Hallvard
+And seems this time, it doesn't use the msmpt to send mail, since this
+time it fails.
+
+Then my second approach is not correct? 
+
+-- 
+Richard Yang
+Help you, Help me
