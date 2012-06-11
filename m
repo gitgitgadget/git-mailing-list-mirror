@@ -1,97 +1,98 @@
-From: Hallvard Breien Furuseth <h.b.furuseth@usit.uio.no>
-Subject: Re: Keeping unreachable objects in a separate pack instead of
- =?UTF-8?Q?loose=3F?=
-Date: Mon, 11 Jun 2012 22:44:39 +0200
-Message-ID: <0450a24b1f53420f36a3d864c50536cb@ulrik.uio.no>
-References: <E1SdhJ9-0006B1-6p@tytso-glaptop.cam.corp.google.com>
- <bb7062f387c9348f702acb53803589f1.squirrel@webmail.uio.no>
- <87vcixaoxe.fsf@thomas.inf.ethz.ch> <20120611153103.GA16086@thunk.org>
- <20120611160824.GB12773@sigill.intra.peff.net>
- <20120611172732.GB16086@thunk.org>
- <20120611183414.GD20134@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Help understanding git checkout behavior
+Date: Mon, 11 Jun 2012 14:04:30 -0700
+Message-ID: <7vobop5zmp.fsf@alter.siamese.dyndns.org>
+References: <CAMUXYmUFbixgA1bVMA46Zzjed1Dwmjv54kWWXyjsuyu904GpTA@mail.gmail.com>
+ <20120611202132.Horde.dPo1XHwdC4BP1jcsTvSBaFA@webmail.minatec.grenoble-inp.fr> <CAA3EhH+iD-sS-3Sg4HJDHgs4Deg2=qbCuJD4UwZWtGQsKbV5aA@mail.gmail.com> <7vaa097k3q.fsf@alter.siamese.dyndns.org> <CAMUXYmUg12z8LUcFKwjH0Utrvxx0fa5Sne0u9adgoZ=oooBbig@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
- charset=UTF-8;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Ted Ts'o <tytso@mit.edu>, Thomas Rast <trast@student.ethz.ch>,
-	<git@vger.kernel.org>, Nicolas Pitre <nico@fluxnic.net>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Jun 11 22:59:34 2012
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Leila <muhtasib@gmail.com>, konglu@minatec.inpg.fr,
+	git@vger.kernel.org, Renato Neves <nevrenato@gmail.com>
+To: =?utf-8?Q?Cl=C3=A1udio_Louren=C3=A7o?= <pt.smooke@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jun 11 23:04:40 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SeBhs-0004kM-3U
-	for gcvg-git-2@plane.gmane.org; Mon, 11 Jun 2012 22:59:24 +0200
+	id 1SeBmv-00076r-GX
+	for gcvg-git-2@plane.gmane.org; Mon, 11 Jun 2012 23:04:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751729Ab2FKU7U (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Jun 2012 16:59:20 -0400
-Received: from mail-out1.uio.no ([129.240.10.57]:40579 "EHLO mail-out1.uio.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751120Ab2FKU7T (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Jun 2012 16:59:19 -0400
-X-Greylist: delayed 871 seconds by postgrey-1.27 at vger.kernel.org; Mon, 11 Jun 2012 16:59:19 EDT
-Received: from mail-mx1.uio.no ([129.240.10.29])
-	by mail-out1.uio.no with esmtp (Exim 4.75)
-	(envelope-from <h.b.furuseth@usit.uio.no>)
-	id 1SeBTe-0005pe-FQ; Mon, 11 Jun 2012 22:44:42 +0200
-Received: from w3prod-wm02.uio.no ([129.240.4.215] helo=webmail.uio.no)
-	by mail-mx1.uio.no with esmtpsa (TLSv1:AES256-SHA:256)
-	user hbf (Exim 4.76)
-	(envelope-from <h.b.furuseth@usit.uio.no>)
-	id 1SeBTe-0008PH-20; Mon, 11 Jun 2012 22:44:42 +0200
-Received: from cA3A345C1.dhcp.bluecom.no ([193.69.163.163])
- by webmail.uio.no
- with HTTP (HTTP/1.1 POST); Mon, 11 Jun 2012 22:44:39 +0200
-In-Reply-To: <20120611183414.GD20134@sigill.intra.peff.net>
-X-Sender: h.b.furuseth@usit.uio.no
-User-Agent: Roundcube Webmail/0.4.2
-X-UiO-Ratelimit-Test: rcpts/h 5 msgs/h 1 sum rcpts/h 5 sum msgs/h 1 total rcpts 2463 max rcpts/h 20 ratelimit 0
-X-UiO-Spam-info: not spam, SpamAssassin (score=-5.0, required=5.0, autolearn=disabled, FSL_RCVD_USER=0.001,T_RP_MATCHES_RCVD=-0.01,UIO_MAIL_IS_INTERNAL=-5, uiobl=NO, uiouri=NO)
-X-UiO-Scanned: B7D348A6CA726FEF9A0D2CA755E2031B1DF77F6C
-X-UiO-SPAM-Test: remote_host: 129.240.4.215 spam_score: -49 maxlevel 80 minaction 2 bait 0 mail/h: 110 total 2418873 max/h 641 blacklist 0 greylist 0 ratelimit 0
+	id S1751745Ab2FKVEe convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 11 Jun 2012 17:04:34 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:54705 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751988Ab2FKVEc convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 11 Jun 2012 17:04:32 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E6CC28E3A;
+	Mon, 11 Jun 2012 17:04:31 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=2aFDIinloU9r
+	A1XcNcvyhKwfgFc=; b=vOC4/Q96UmQbSMZMC72PgrxzfuGMMxJbXfvrK6DBqqKB
+	SX1xZgSA+zcL4F86p5IOmWkeFJqEbEVVefScl6G93LpM4uxxvH3XMoySNr0j+jW2
+	pvImzoZOLUWXUsB5G+JR1Q7W95nu+4d7yLPs5sM9nLoA64r8dqCxl+mmXk6JrbA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=UPeeNe
+	0rI64WkzdfUzWk1+5iXXeZfMQaHLzF76cRtxDs3tlkTb9NjyeRc8gUlQYyT5GItc
+	De7+n8QDaAM5B9hYdCtzESCMad8x86sdIuKyoha6SCaWTWAvZSr0SDq1djQEea2w
+	9kCNOpg3aOP6P+2H2I5s1/FNEQJn9rGU+O8q4=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DCC9B8E39;
+	Mon, 11 Jun 2012 17:04:31 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 737378E38; Mon, 11 Jun 2012
+ 17:04:31 -0400 (EDT)
+In-Reply-To: <CAMUXYmUg12z8LUcFKwjH0Utrvxx0fa5Sne0u9adgoZ=oooBbig@mail.gmail.com>
+ (=?utf-8?Q?=22Cl=C3=A1udio_Louren=C3=A7o=22's?= message of "Mon, 11 Jun 2012
+ 21:48:06 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 0A1783CE-B409-11E1-860E-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199728>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199729>
 
- On Mon, 11 Jun 2012 14:34:14 -0400, Jeff King <peff@peff.net> wrote:
-> On Mon, Jun 11, 2012 at 01:27:32PM -0400, Ted Ts'o wrote:
->> So depending on how you would want to do the comparison, probably 
->> the
->> fairest thing to say is that I had a total "good" packs totally 
->> about
->> 16 megs, and the loose cruft objects was an additional 4.5 
->> megabytes.
->
-> OK, so that 4.5 is at least a respectable percentage of the total 
-> repo
-> size. I suspect it may be worse for small repos in that sense, (...)
+Cl=C3=A1udio Louren=C3=A7o <pt.smooke@gmail.com> writes:
 
- 'git gc' gave a 3100% increase with my example:
+> The deleted files from index, are just ignored (we think the bug come=
+s
+> from here).
 
-     $ git clone --bare --branch linux-overhaul-20010122 \
-         git://git.savannah.gnu.org/config.git
-     $ cd config.git/
-     $ git tag -d `git tag`; git branch -D master
-     $ du -s objects
-     624     objects
-     $ git gc
-     $ du -s objects
-     19840   objects
+Not really.  In general, "git checkout b" (no path arguments,
+checking out the branch "b") will try to keep the local changes you
+made to the index and to the working tree for a path that are the
+same between your current branch and the branch "b".  So it is
+perfectly normal to see:
 
- Basically: Clone/fetch a repo, keep a small part of it, drop the
- rest, and gc.  Gc explodes all the objects you no longer want.
+        $ git checkout master
+        $ git ls-files file
+        file
+	... ok, the master branch has "file"
+	$ git diff master side | grep file
+        ... ok, the side branch also has it and it is the same
+        $ git rm file
+        $ git checkout side
+	D	file
+	Switched to branch 'side'
 
- This hits you hard if your small project tracks a big one, and
- later ceases doing so.  Maybe your project is to convert a small
- part of the remote into a library, or you're just tracking a few
- files from the remote - e.g. from the GNU Config repo.
+So it actually _actively_ pays attention to paths deleted or
+modified in the index.
 
- Not something one does every day, but it does happen.
- Tweaks to expiration time etc do not help here.
+Another thing it does is when the local change to the index matches
+that of the branch you are switching to, checkout is allowed even if
+path is different between two branches.
 
- Hallvard
+When checking the differences between the two branches (the current
+and the new), unpack-trees notices that the path "something" is not
+present in "b" branch, and even though your current branch and the
+index differs (the index does not have "something" as you have
+removed it), it thinks it is OK for the result to not have it (which
+is correct).  And when it does that, it forgets that a new path
+"something/f1" still needs to be kept (which is not correct), which
+is where the problem you are seeing comes from, methinks.
