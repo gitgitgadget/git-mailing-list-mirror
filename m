@@ -1,92 +1,134 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Help understanding git checkout behavior
-Date: Mon, 11 Jun 2012 14:34:42 -0700
-Message-ID: <7vk3zd5y8d.fsf@alter.siamese.dyndns.org>
-References: <CAMUXYmUFbixgA1bVMA46Zzjed1Dwmjv54kWWXyjsuyu904GpTA@mail.gmail.com>
- <20120611202132.Horde.dPo1XHwdC4BP1jcsTvSBaFA@webmail.minatec.grenoble-inp.fr> <CAA3EhH+iD-sS-3Sg4HJDHgs4Deg2=qbCuJD4UwZWtGQsKbV5aA@mail.gmail.com> <7vaa097k3q.fsf@alter.siamese.dyndns.org> <CAMUXYmUg12z8LUcFKwjH0Utrvxx0fa5Sne0u9adgoZ=oooBbig@mail.gmail.com> <7vobop5zmp.fsf@alter.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: Keeping unreachable objects in a separate pack instead of loose?
+Date: Mon, 11 Jun 2012 17:39:48 -0400
+Message-ID: <20120611213948.GB32061@sigill.intra.peff.net>
+References: <E1SdhJ9-0006B1-6p@tytso-glaptop.cam.corp.google.com>
+ <bb7062f387c9348f702acb53803589f1.squirrel@webmail.uio.no>
+ <87vcixaoxe.fsf@thomas.inf.ethz.ch>
+ <20120611153103.GA16086@thunk.org>
+ <20120611160824.GB12773@sigill.intra.peff.net>
+ <20120611172732.GB16086@thunk.org>
+ <20120611183414.GD20134@sigill.intra.peff.net>
+ <20120611211401.GA21775@thunk.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Leila <muhtasib@gmail.com>, konglu@minatec.inpg.fr,
-	git@vger.kernel.org, Renato Neves <nevrenato@gmail.com>
-To: =?utf-8?Q?Cl=C3=A1udio_Louren=C3=A7o?= <pt.smooke@gmail.com>,
-	Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Jun 11 23:34:51 2012
+Content-Type: text/plain; charset=utf-8
+Cc: Thomas Rast <trast@student.ethz.ch>,
+	Hallvard B Furuseth <h.b.furuseth@usit.uio.no>,
+	git@vger.kernel.org, Nicolas Pitre <nico@fluxnic.net>
+To: Ted Ts'o <tytso@mit.edu>
+X-From: git-owner@vger.kernel.org Mon Jun 11 23:40:03 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SeCG9-0006yo-MV
-	for gcvg-git-2@plane.gmane.org; Mon, 11 Jun 2012 23:34:50 +0200
+	id 1SeCLD-0001Re-00
+	for gcvg-git-2@plane.gmane.org; Mon, 11 Jun 2012 23:40:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751440Ab2FKVep (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Jun 2012 17:34:45 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:36445 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751391Ab2FKVep (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Jun 2012 17:34:45 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2427494ED;
-	Mon, 11 Jun 2012 17:34:44 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=7RW8q/EP9M6Guq8AQl9JsD+qvls=; b=UFu5X+
-	ZtdR+Z1Vx5FEnvqJ11oiZZZT5VttxQ7YKCOW71jswSa2nd6PzTDkN6hyUdP06cU+
-	wJ6ndTh26uSBYMxH3yhS4MgZVwW76qiYERMjnUJYVjka1yZOfynApk0wlLdV9fsU
-	U4ZiNhyERhSHi6g0C/0vcUYgMg1MNFiZSaakk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Oahjz7BysQSA017czpCPmT8RB18Sj7F+
-	K8M8c3LFZZ+6cfGfExDG0Zlv3hxVWtRz+QsVEbS9n7sCjv8JvGFB3Pkpk8ZivSWL
-	+ZOQdx3hcmzHWwojDxUsWWA6SrYnwALWCr6y5UHnx5dEVfVph+tlx7+SvRHOjpaV
-	KXQ/0/GVXO0=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1BBFC94EC;
-	Mon, 11 Jun 2012 17:34:44 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A327D94EA; Mon, 11 Jun 2012
- 17:34:43 -0400 (EDT)
-In-Reply-To: <7vobop5zmp.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Mon, 11 Jun 2012 14:04:30 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 423EA116-B40D-11E1-BC55-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752116Ab2FKVjw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Jun 2012 17:39:52 -0400
+Received: from 99-108-225-23.lightspeed.iplsin.sbcglobal.net ([99.108.225.23]:50418
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751840Ab2FKVjv (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Jun 2012 17:39:51 -0400
+Received: (qmail 10302 invoked by uid 107); 11 Jun 2012 21:39:52 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 11 Jun 2012 17:39:52 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 11 Jun 2012 17:39:48 -0400
+Content-Disposition: inline
+In-Reply-To: <20120611211401.GA21775@thunk.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199735>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199736>
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Mon, Jun 11, 2012 at 05:14:01PM -0400, Ted Ts'o wrote:
 
-> When checking the differences between the two branches (the current
-> and the new), unpack-trees notices that the path "something" is not
-> present in "b" branch, and even though your current branch and the
-> index differs (the index does not have "something" as you have
-> removed it), it thinks it is OK for the result to not have it (which
-> is correct).  And when it does that, it forgets that a new path
-> "something/f1" still needs to be kept (which is not correct), which
-> is where the problem you are seeing comes from, methinks.
+> On Mon, Jun 11, 2012 at 02:34:14PM -0400, Jeff King wrote:
+> > You _could_ make a separate cruft pack for each pack that you repack. So
+> > if I have A.pack and B.pack, I'd pack all of the reachable objects into
+> > C.pack, and then make D.pack containing the unreachable objects from
+> > A.pack, and E.pack with the unreachable objects from B.pack. And then
+> > set the mtime of the cruft packs to that of their parent packs.
+> > 
+> > And then the next time you pack, repacking D and E would probably be a
+> > no-op that preserves mtime, but might create a new pack that ejects some
+> > now-reachable object.
+> > 
+> > To implement that, I think your --list-unreachable would just have to
+> > print a list of "<pack-mtime> <sha1>" pairs, and then you would pack
+> > each set with an identical mtime (or even a "close enough" mtime within
+> > some slop)....
+> 
+> How about this instead?  We distinguish between cruft packs and "real"
+> packs by the filename.  So we have "cruft-<SHA1>.{idx,pack}" and
+> "pack-<SHA1>.{idx.pack}".
+> 
+> Normally, git will look at any pack in the pack directory that has an
+> .idx and .pack extension, but during repack operation, it will by only
+> look in the pack-* packs first.  If it can't find an object there, it
+> will then fall back to trying to fetch the object from the cruft-*
+> packs, and if it finds the object, it copies it into the new pack
+> which is creating, thus "rescueing" an object which reappears during
+> the expiry window.  This should be a relatively rare event, and if it
+> happens, the object will be in two packs, a pack-* pack and a cruft-*
+> pack, but that's OK.
 
-So there are two paths involved in this two-way merge.
+You don't need to do anything magical for the object lookup process of
+pack-objects. By definition, the unreachable objects will not be
+included in the new pack you are creating, because it is only packing
+reachable things. So the cruft pack does not have to be a fallback at
+all; it is a regular pack from the object lookup perspective.
 
-The master branch (HEAD) has "something", but not "something/f1".
-The index does not have "something", but has "something/f1".
-The "b" branch does not have either.
+The important differences from the current behavior would be:
 
-For path "something", the rule 2 in the "Two Tree Merge" section of
-Documentation/git-read-tree.txt applies.  It does not exist in the
-index, it does exist in HEAD, and it does not exist in the other
-branch we are checking out.  The result should be to remove it.
+  1. In pack-objects, do not explode (or if just listing, do not list)
+     objects from cruft packs.
 
-For path "something/f1", the rule 4 ought to apply.  The index entry
-for it is up to date with respect to the working tree file
-(i.e. clean), the HEAD does not have it, and the other branch does
-not have it either.  We should be keeping it intact across the
-checkout.  For whatever reason, this is not happening and I suspect
-that is because we have to remove "something" due to rule 2.
+  2. In repack, make a new pack from the list of unreachable objects.
 
-I just checked the history of unpack-trees code (which is the
-underlying machinery of read-tree, which in turn is the machinery
-used to check out another branch by "git checkout"), and I suspect
-that this particular case has never worked.
+  3. During "repack -Ad", prune cruft packs only if they are older than
+     an expiration date.
+
+And then you'd end up with a new cruft pack each time. You could just
+mark it with a ".cruft" file (similar to the existing ".keep" files),
+and you don't have to worry about changing the pack-* name.
+
+> So since git pack-objects isn't even looking in the cruft-* packs
+> except when it needs to rescue an object, the objects in the cruft-*
+> packs won't get copied, and we won't need to have per-object mtimes.
+> It also means it will go faster since it's not copying the cruft-*
+> packs at all, and possibly not even looking at them.
+
+Yeah. It doesn't eliminate duplicates, but that may not be worth caring
+about. I find the "cruft" marking a little hacky, because it is only
+"objects in here _may_ be cruft", but as long as that is understood, it
+is OK (and it is understood in the sequence above; "repack -Ad" is safe
+because it knows that it would have repacked any non-cruft).
+
+You would have to be careful with "repack -d" (without the "-a"). It
+would not be necessarily be safe to remove cruft packs, because you
+might not have rescued the objects. However, AFAICT "repack -d" does not
+currently delete packs at all, so this would be no different.
+
+> It does imply that we may accumulate a new cruft-<SHA1> pack each time
+> we run git gc, but users shouldn't be running git gc all that often
+> anyway.  And even if they do run it all the time, it will still be
+> more efficient than keeping the unreachable objects as loose objects.
+
+Yeah, it would be nice to keep it all in a single pack, but that means
+doing the I/O on rewriting the cruft packs each time. And figuring out
+some way of handling the mtime in such a way that we don't keep
+refreshing the age during each gc.
+
+Speaking of which, what is the mtime of the newly created cruft pack? Is
+it the current mtime? Then those unreachable objects will stick for
+another 2 weeks, instead of being back-dated to their pack's date. You
+could back-date to the mtime of the most recent deleted pack, but that
+would still prolong the life of objects from the older packs. It may be
+acceptable to just ignore the issue, though; they will expire
+eventually.
+
+-Peff
