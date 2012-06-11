@@ -1,105 +1,67 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] lessen the impression of unexpectedness on remote hangup
-Date: Mon, 11 Jun 2012 09:41:42 -0700
-Message-ID: <7vmx497qd5.fsf@alter.siamese.dyndns.org>
-References: <20120610182310.GB2427@book.hvoigt.net>
+Subject: Re: "remote-tracking branch"?
+Date: Mon, 11 Jun 2012 09:46:06 -0700
+Message-ID: <7vipex7q5t.fsf@alter.siamese.dyndns.org>
+References: <4FD6068D.1010509@xiplink.com>
+ <7vr4tl7qu3.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Heiko Voigt <hvoigt@hvoigt.net>
-X-From: git-owner@vger.kernel.org Mon Jun 11 18:41:53 2012
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Marc Branchaud <marcnarc@xiplink.com>
+X-From: git-owner@vger.kernel.org Mon Jun 11 18:46:17 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Se7ge-0000Wy-Dn
-	for gcvg-git-2@plane.gmane.org; Mon, 11 Jun 2012 18:41:52 +0200
+	id 1Se7kt-0001gP-S3
+	for gcvg-git-2@plane.gmane.org; Mon, 11 Jun 2012 18:46:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754926Ab2FKQlr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Jun 2012 12:41:47 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59563 "EHLO
+	id S1753845Ab2FKQqK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Jun 2012 12:46:10 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:62517 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753482Ab2FKQlq (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Jun 2012 12:41:46 -0400
+	id S1754176Ab2FKQqJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Jun 2012 12:46:09 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 931B88741;
-	Mon, 11 Jun 2012 12:41:45 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6DA7A88AA;
+	Mon, 11 Jun 2012 12:46:08 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=6LCD5zBu4F4QwVY8FoeA2xrmWXQ=; b=m7NQio
-	vsQEaQSGY5wZyd5Qz8ja7CEWKVOd6cLXe/H7jQxW/MR951ajHkPaxnS6Pls9DQfr
-	Y3detTxgjdjXtiLHdkGIROFNNpeeDKaBtCM9p4p5ugG+WxN9Kt0pUiH7t36GtdoN
-	T45x1SOUZFI9mVcg/3/ktA7ca/AobuCkGNdtI=
+	:content-type; s=sasl; bh=iTk81SE3Cip9O1kBbf/XkX6/bAQ=; b=iiywsi
+	4AaX8eMYfMclooeqKiq4n04URcS+pFy9Z7xHZiH2pU+iH/5Qi+jMh4zTeoE/oVvZ
+	FE17/srJkH2bJlkyqIdAkbGwKKB1BJ+kr+uS1ORTefJyltBvkeOVf/DGADnGrz9H
+	8IDUEMykarGBKuWgeAcZZICS0K009mdVPEkQ4=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=sCL/vDVDC+FZKkKaSa9Fufu12uxLJC8n
-	y2QRj6sO1qwJkNGA/icsBwSJy+kUsGQPeYf0WU79fShL7mUnO3BtbtayCYWGbgEC
-	iys7M62HuMEH28UjCuyXi0Stvc9FIb2u0nV2c0/QnW4XxzKIpXR8P9tFk7o5fz+T
-	UUpA/R044aE=
+	:content-type; q=dns; s=sasl; b=nKKh2UdK7E8AtEsCUCqlPM/fjgApEMsk
+	qMMUOW0/JhzQtt3hEme96S+ejVCaPXF6T+g5ABpk7aopZO6UPT0Y5TpaPucsxMIE
+	2HmlduMAXb4xAgxPTEP+XxkIL+/EOqZvkdQ6TvLCZK+Dm1UFoz5QBK2y1QL2crv8
+	e0YcHjVfTso=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8A02B8740;
-	Mon, 11 Jun 2012 12:41:45 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6208588A9;
+	Mon, 11 Jun 2012 12:46:08 -0400 (EDT)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E84E3873D; Mon, 11 Jun 2012
- 12:41:44 -0400 (EDT)
-In-Reply-To: <20120610182310.GB2427@book.hvoigt.net> (Heiko Voigt's message
- of "Sun, 10 Jun 2012 20:23:10 +0200")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D900F88A6; Mon, 11 Jun 2012
+ 12:46:07 -0400 (EDT)
+In-Reply-To: <7vr4tl7qu3.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Mon, 11 Jun 2012 09:31:32 -0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 54830BA6-B3E4-11E1-93AF-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: F13C3828-B3E4-11E1-AF4F-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199673>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199674>
 
-Heiko Voigt <hvoigt@hvoigt.net> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> If a server accessed through ssh is denying access git will currently
-> issue the message
->
-> 	"fatal: The remote end hung up unexpectedly"
->
-> as the last line. This sounds as if something really ugly just happened.
-> Since this is a quite typical situation in which users regularly get
-> lets just say:
->
-> 	"fatal: The remote end hung up"
->
-> Signed-off-by: Heiko Voigt <hvoigt@hvoigt.net>
-> ---
+> Unfortunately, no concensus terminology for them exist; I find
+> myself calling them "the branch you integrate with upstream's
+> master", "the branch you forked from origin's topic", etc.
 
-This change makes sense, but you would need to adjust tests for the
-change, perhaps at least these:
-
- t/t5512-ls-remote.sh    | 2 +-
- t/t5522-pull-symlink.sh | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/t/t5512-ls-remote.sh b/t/t5512-ls-remote.sh
-index 5c546c9..a24eb42 100755
---- a/t/t5512-ls-remote.sh
-+++ b/t/t5512-ls-remote.sh
-@@ -104,7 +104,7 @@ test_expect_success 'use branch.<name>.remote if possible' '
- 
- cat >exp <<EOF
- fatal: 'refs*master' does not appear to be a git repository
--fatal: The remote end hung up unexpectedly
-+fatal: The remote end hung up
- EOF
- test_expect_success 'confuses pattern as remote when no remote specified' '
- 	#
-diff --git a/t/t5522-pull-symlink.sh b/t/t5522-pull-symlink.sh
-index 8e9b204..f06ffb4 100755
---- a/t/t5522-pull-symlink.sh
-+++ b/t/t5522-pull-symlink.sh
-@@ -46,7 +46,7 @@ test_expect_success SYMLINKS 'pulling from real subdir' '
- # Instead, the error pull gave was:
- #
- #   fatal: 'origin': unable to chdir or not a git archive
--#   fatal: The remote end hung up unexpectedly
-+#   fatal: The remote end hung up
- #
- # because git would find the .git/config for the "trash directory"
- # repo, not for the clone-repo repo.  The "trash directory" repo
+Actually, I take that "no concensus exists" back.  "upstream" is
+probably the closest to the consensus terminology, and that is why
+"git log master@{upstream}" will give you the history of the remote
+tracking branch you use to integrate with master.
