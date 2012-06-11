@@ -1,86 +1,80 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] t: Replace 'perl' by $PERL_PATH
-Date: Mon, 11 Jun 2012 12:15:03 -0700
-Message-ID: <7v1ull7j9k.fsf@alter.siamese.dyndns.org>
-References: <1339441313-5296-1-git-send-email-vfr@lyx.org>
+From: Ilya Dogolazky <ilya.dogolazky@nokia.com>
+Subject: Re: git-p4: commits are visible in history after 'git p4 clone',
+ but not a single file present
+Date: Mon, 11 Jun 2012 22:16:28 +0300
+Message-ID: <4FD6440C.7090900@nokia.com>
+References: <4FD5C263.9010307@nokia.com> <CAE5ih79Lgc8vF0v=vTGZSwASsGwQWs2Q7h_AkW67RBfi-R=DCA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, gitster@pobox.om
-To: vfr@lyx.org
-X-From: git-owner@vger.kernel.org Mon Jun 11 21:15:14 2012
+Content-Type: text/plain; charset=UTF-8;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Luke Diamand <luke@diamand.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jun 11 21:16:41 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SeA53-0003O7-W5
-	for gcvg-git-2@plane.gmane.org; Mon, 11 Jun 2012 21:15:14 +0200
+	id 1SeA6Q-0006mX-Sd
+	for gcvg-git-2@plane.gmane.org; Mon, 11 Jun 2012 21:16:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750987Ab2FKTPI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Jun 2012 15:15:08 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:57827 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750731Ab2FKTPH (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Jun 2012 15:15:07 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7CCC3937C;
-	Mon, 11 Jun 2012 15:15:06 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=q1CAGDITnhW0inBK1TwECL7vH50=; b=pQqhIi
-	trWNuLOp7bW7dV8rXsKgvHqn/Fl2gPxihRC7mw1y9LK5jDc0lqF3zj6xetUTwz8j
-	OK8fdpcxnt9VBBiZDMYD/oevBwmh72Qwv69C2Jku2+xN5egVJ0po73BT1urxF/CK
-	ASoUSTpM/QCn9xycuYDvBSfX0lA8o8/MoqqjU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=rfpgs6yxXtitdIO/mpP/ksv0cEd+RX90
-	7964musIgB65FG9bw5NSfr384Tk8KnBOjDQsaQpbSoB1hntbu8QnDdLnxN9qkY/P
-	hisaKs+z25t3yBDwRiSMcWi0hCpoKWgconrDmTuZa4DX8lpEveXjoEYpisrz/mOE
-	34DWVbEqUdc=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 749D7937B;
-	Mon, 11 Jun 2012 15:15:06 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 6BB60937A; Mon, 11 Jun 2012
- 15:15:05 -0400 (EDT)
-In-Reply-To: <1339441313-5296-1-git-send-email-vfr@lyx.org> (vfr@lyx.org's
- message of "Mon, 11 Jun 2012 19:01:53 +0000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: C06EA036-B3F9-11E1-81D8-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1750849Ab2FKTQf convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 11 Jun 2012 15:16:35 -0400
+Received: from smtp.nokia.com ([147.243.128.26]:36677 "EHLO mgw-da02.nokia.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750733Ab2FKTQe (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Jun 2012 15:16:34 -0400
+Received: from [10.162.253.82] (essapo-nirac25382.europe.nokia.com [10.162.253.82])
+	by mgw-da02.nokia.com (Sentrion-MTA-4.2.2/Sentrion-MTA-4.2.2) with ESMTP id q5BJGT37006431;
+	Mon, 11 Jun 2012 22:16:30 +0300
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:12.0) Gecko/20120428 Thunderbird/12.0.1
+In-Reply-To: <CAE5ih79Lgc8vF0v=vTGZSwASsGwQWs2Q7h_AkW67RBfi-R=DCA@mail.gmail.com>
+X-Nokia-AV: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199710>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199711>
 
-vfr@lyx.org writes:
+Hi Luke!
 
-> From: Vincent van Ravesteijn <vfr@lyx.org>
->
-> GIT-BUILD-OPTIONS defines PERL_PATH to be used in the test suite. Only a
-> few tests already actually use this variable when perl is needed. The
-> other test just call 'perl' and it might happen that the wrong perl
-> interpreter is used.
->
-> This becomes problematic on Windows, when the perl interpreter that is
-> compiled and installed on the Windows system is used, because this perl
-> interpreter might introduce some unexpected LF->CRLF conversions.
->
-> This patch makes sure that $PERL_PATH is used everywhere in the test suite
-> and that the correct perl interpreter is used.
->
-> Signed-off-by: Vincent van Ravesteijn <vfr@lyx.org>
-> ---
+06/11/2012 06:28 PM, ext Luke Diamand =D0=BD=D0=B0=D0=BF=D0=B8=D1=81=D0=
+=B0=D0=BB:
+> If you do something like "p4 describe 17473" what does that show?
+=46irst I see a line containing the change number, my colleague's name =
+and=20
+date, then the commit title (identical to one printed by "git log"),=20
+then a list of files [every line begins with "... //xxx/yyy/"], then th=
+e=20
+word "Differences" and then something looking very much like output of=20
+'diff' command (the actual commit differences).
 
-There was already this discussion:
+> Are the files changed all contained with //kalma/xxx/yyy?
+Yes, they are.
 
-    http://thread.gmane.org/gmane.comp.version-control.git/132560/focus=132561
+> It could be that there's a p4 version problem going on - which versio=
+n
+> of p4 are you
+> using?
+The output of 'p4 -V' contains "Rev. P4/LINUX26X86/2012.1/459601=20
+(2012/05/11)". That's probably the version of my command line client.
 
-which basically dismissed effort along this line with "If the perl
-in your PATH is so broken that it can't be used for simple helpers,
-then you should fix your PATH."
+The output of "p4 info" contains "P4D/LINUX26X86_64/2011.1/428451=20
+(2012/03/08)" --- that's probably the version of the server.
 
-I personally do not mind if we do this consistently, but I am not
-sure your $PERL_PATH that is not quoted is the right way to invoke
-it; look for PERL_PATH in t/ to see the existing uses.
+The version of git installation (by debian package) is 1:1.7.10-1 (as=20
+reported by "dpkg -l git"). The package contains the file=20
+"/usr/share/doc/git/contrib/fast-import/git-p4" which I copied to=20
+$HOME/bin/git-p4 in order to have in $PATH and with executable bit.=20
+Could it be, that I did something wrong here by making this manually?
+
+ > And which platform are you using?
+Debian GNU/Linux.
+
+I hope I provided all the needed information, of not please ask for mor=
+e.
+
+Cheers,
+
+Ilya
