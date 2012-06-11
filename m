@@ -1,67 +1,112 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: "remote-tracking branch"?
-Date: Mon, 11 Jun 2012 09:46:06 -0700
-Message-ID: <7vipex7q5t.fsf@alter.siamese.dyndns.org>
-References: <4FD6068D.1010509@xiplink.com>
- <7vr4tl7qu3.fsf@alter.siamese.dyndns.org>
+From: =?ISO-8859-1?Q?Cl=E1udio_Louren=E7o?= <pt.smooke@gmail.com>
+Subject: Help understanding git checkout behavior
+Date: Mon, 11 Jun 2012 17:52:26 +0100
+Message-ID: <CAMUXYmUFbixgA1bVMA46Zzjed1Dwmjv54kWWXyjsuyu904GpTA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Marc Branchaud <marcnarc@xiplink.com>
-X-From: git-owner@vger.kernel.org Mon Jun 11 18:46:17 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Renato Neves <nevrenato@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jun 11 18:52:34 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Se7kt-0001gP-S3
-	for gcvg-git-2@plane.gmane.org; Mon, 11 Jun 2012 18:46:16 +0200
+	id 1Se7qz-0007EP-VF
+	for gcvg-git-2@plane.gmane.org; Mon, 11 Jun 2012 18:52:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753845Ab2FKQqK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Jun 2012 12:46:10 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:62517 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754176Ab2FKQqJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Jun 2012 12:46:09 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6DA7A88AA;
-	Mon, 11 Jun 2012 12:46:08 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=iTk81SE3Cip9O1kBbf/XkX6/bAQ=; b=iiywsi
-	4AaX8eMYfMclooeqKiq4n04URcS+pFy9Z7xHZiH2pU+iH/5Qi+jMh4zTeoE/oVvZ
-	FE17/srJkH2bJlkyqIdAkbGwKKB1BJ+kr+uS1ORTefJyltBvkeOVf/DGADnGrz9H
-	8IDUEMykarGBKuWgeAcZZICS0K009mdVPEkQ4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=nKKh2UdK7E8AtEsCUCqlPM/fjgApEMsk
-	qMMUOW0/JhzQtt3hEme96S+ejVCaPXF6T+g5ABpk7aopZO6UPT0Y5TpaPucsxMIE
-	2HmlduMAXb4xAgxPTEP+XxkIL+/EOqZvkdQ6TvLCZK+Dm1UFoz5QBK2y1QL2crv8
-	e0YcHjVfTso=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6208588A9;
-	Mon, 11 Jun 2012 12:46:08 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D900F88A6; Mon, 11 Jun 2012
- 12:46:07 -0400 (EDT)
-In-Reply-To: <7vr4tl7qu3.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Mon, 11 Jun 2012 09:31:32 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: F13C3828-B3E4-11E1-AF4F-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751182Ab2FKQw2 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 11 Jun 2012 12:52:28 -0400
+Received: from mail-wi0-f172.google.com ([209.85.212.172]:46617 "EHLO
+	mail-wi0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750877Ab2FKQw1 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 11 Jun 2012 12:52:27 -0400
+Received: by wibhj8 with SMTP id hj8so3119843wib.1
+        for <git@vger.kernel.org>; Mon, 11 Jun 2012 09:52:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=EYMd0P4K65OYeqx0PjulvEAwqf40aAjYVQA4v6zbjIo=;
+        b=aZzaUmv6Gdx1yM2FPho3whega01HGJMOnhjxpdQ5N1mnBdVrr/nEpVN8vumCVS3WJ6
+         7cYFx7dvtDeBHKSucc7VNeSWz8d1I8zIonEpPEUZSbMdS02BteNcIoVGf9f2o+cEeZ/U
+         ATzwZ7VhfVIQh8hZNZbqCiqKscD5YFRsFa0/pgmgq1789VubKIwuxpkJ6m8Y3Y5MBc2s
+         RWkDfGyridoGISxamxu7adc4VE4Jafz+Ap26YTLerzbt1KWqfQUBEg0RxxqfpEVw6D4z
+         otLkWXYjBnNUJRxUQT5IsiVkedL6x5jkYt9BdquZjhYKxcG/y6FU4r5iBeB9Xa6yCTq8
+         TF5A==
+Received: by 10.180.102.228 with SMTP id fr4mr22367139wib.6.1339433546170;
+ Mon, 11 Jun 2012 09:52:26 -0700 (PDT)
+Received: by 10.194.28.231 with HTTP; Mon, 11 Jun 2012 09:52:26 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199674>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199675>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Hello,
 
-> Unfortunately, no concensus terminology for them exist; I find
-> myself calling them "the branch you integrate with upstream's
-> master", "the branch you forked from origin's topic", etc.
+We are master students at University of Minho in Portugal and we are
+currently=A0working on a project suggested by CSAIL (MIT), called
+"Understanding Git with Alloy". The project consists in modeling git
+using alloy and then check for some properties that git does (not)
+guarantee.
 
-Actually, I take that "no concensus exists" back.  "upstream" is
-probably the closest to the consensus terminology, and that is why
-"git log master@{upstream}" will give you the history of the remote
-tracking branch you use to integrate with master.
+The project was going pretty fine, till we start modeling the=A0checkou=
+t
+operation. We are with some problems finding useful information about
+the properties that have to be satisfied when the "git=A0checkout" is
+performed. We have concluded that if everything that is on index is
+commited then we have no problems making=A0checkout.
+The problem is when we have something on index that is not updated
+with the last commit. We cannot find a general property that says when
+checkout can be performed. We have even found some files that are
+lost, like in this case:
+
+smooke =A0teste $ git init
+Initialized empty Git repository in /home/smooke/Dropbox/teste/.git/
+smooke =A0teste $ touch f
+smooke =A0teste $ echo a > f
+smooke =A0teste $ git add f
+smooke =A0teste $ git commit -m 'first commit'
+[master (root-commit) dab04b9] first commit
+=A01 files changed, 1 insertions(+), 0 deletions(-)
+=A0create mode 100644 f
+smooke =A0teste $ git branch b
+smooke =A0teste $ touch something
+smooke =A0teste $ echo b > something
+smooke =A0teste $ git add something
+smooke =A0teste $ git commit -m 'something added'
+[master 9f2b8ad] something added
+=A01 files changed, 1 insertions(+), 0 deletions(-)
+=A0create mode 100644 something
+smooke =A0teste $ git rm something
+rm 'something'
+smooke =A0teste $ mkdir something
+smooke =A0teste $ cd something/
+smooke =A0something $ touch f1
+smooke =A0something $ echo c > f1
+smooke =A0something $ cd ..
+smooke =A0teste $ git add something/f1
+smooke =A0teste $ git checkout b
+Switched to branch 'b'
+smooke =A0teste $ ls
+f
+smooke =A0teste $ git checkout master
+Switched to branch 'master'
+smooke =A0teste $ ls
+f =A0something
+smooke =A0teste $ cat something
+b
+
+We are not sure if this behavior has an explanation of if it is just a =
+bug.
+
+We are hoping that you could clarify us about this operation or
+recommend us some place where we can find some useful information
+about this...
+
+Thank you in advance,
+Best regards,
+
+Cl=E1udio and Renato
