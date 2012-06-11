@@ -1,158 +1,86 @@
-From: roucherj <roucherj@telesun.imag.fr>
-Subject: Re: [PATCH v3] add 'git credential' plumbing command
-Date: Mon, 11 Jun 2012 21:14:00 +0200
-Message-ID: <0425823888ed7e40d9332e148ac9e77a@telesun.imag.fr>
-References: <1339440294-8010-1-git-send-email-Javier.Roucher-Iglesias@ensimag.imag.fr>
- <20120611210745.Horde.72y3YnwdC4BP1kIBup3BWrA@webmail.minatec.grenoble-inp.fr>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] t: Replace 'perl' by $PERL_PATH
+Date: Mon, 11 Jun 2012 12:15:03 -0700
+Message-ID: <7v1ull7j9k.fsf@alter.siamese.dyndns.org>
+References: <1339441313-5296-1-git-send-email-vfr@lyx.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: <Javier.Roucher-Iglesias@ensimag.imag.fr>, <git@vger.kernel.org>,
-	Javier Roucher <jroucher@gmail.com>,
-	Pavel Volek <Pavel.Volek@ensimag.imag.fr>,
-	NGUYEN Kim Thuat <Kim-Thuat.Nguyen@ensimag.imag.fr>,
-	ROUCHER IGLESIAS Javier <roucherj@ensimag.imag.fr>,
-	Matthieu Moy <Matthieu.Moy@imag.fr>
-To: <konglu@minatec.inpg.fr>
-X-From: git-owner@vger.kernel.org Mon Jun 11 21:14:38 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, gitster@pobox.om
+To: vfr@lyx.org
+X-From: git-owner@vger.kernel.org Mon Jun 11 21:15:14 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SeA4O-0001xs-8s
-	for gcvg-git-2@plane.gmane.org; Mon, 11 Jun 2012 21:14:32 +0200
+	id 1SeA53-0003O7-W5
+	for gcvg-git-2@plane.gmane.org; Mon, 11 Jun 2012 21:15:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751004Ab2FKTOO convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 11 Jun 2012 15:14:14 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:47276 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751009Ab2FKTOK (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Jun 2012 15:14:10 -0400
-Received: from ensimag.imag.fr (ensimag.imag.fr [195.221.228.12])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id q5BJ4tnK000972
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Mon, 11 Jun 2012 21:04:55 +0200
-Received: from web-ensimag.imag.fr (web-ensimag [195.221.228.24])
-	by ensimag.imag.fr (8.13.8/8.13.8/ImagV2.1.r_ens) with ESMTP id q5BJE0nR015426;
-	Mon, 11 Jun 2012 21:14:00 +0200
-Received: from web-ensimag.imag.fr (localhost [127.0.0.1])
-	by web-ensimag.imag.fr (8.13.8/8.13.8/ImagV2.1.sb_ens) with ESMTP id q5BJE0Ck017116;
-	Mon, 11 Jun 2012 21:14:00 +0200
-Received: (from apache@localhost)
-	by web-ensimag.imag.fr (8.13.8/8.13.8/Submit) id q5BJE04I017115;
-	Mon, 11 Jun 2012 21:14:00 +0200
-X-Authentication-Warning: web-ensimag.imag.fr: apache set sender to roucherj@telesun.imag.fr using -f
-In-Reply-To: <20120611210745.Horde.72y3YnwdC4BP1kIBup3BWrA@webmail.minatec.grenoble-inp.fr>
-X-Sender: roucherj@telesun.imag.fr
-User-Agent: Roundcube Webmail/0.5.3
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Mon, 11 Jun 2012 21:04:56 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: q5BJ4tnK000972
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: roucherj@telesun.imag.fr
-MailScanner-NULL-Check: 1340046299.20778@pkQWP0g4t/BqMICHqcQe6w
+	id S1750987Ab2FKTPI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Jun 2012 15:15:08 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:57827 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750731Ab2FKTPH (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Jun 2012 15:15:07 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7CCC3937C;
+	Mon, 11 Jun 2012 15:15:06 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=q1CAGDITnhW0inBK1TwECL7vH50=; b=pQqhIi
+	trWNuLOp7bW7dV8rXsKgvHqn/Fl2gPxihRC7mw1y9LK5jDc0lqF3zj6xetUTwz8j
+	OK8fdpcxnt9VBBiZDMYD/oevBwmh72Qwv69C2Jku2+xN5egVJ0po73BT1urxF/CK
+	ASoUSTpM/QCn9xycuYDvBSfX0lA8o8/MoqqjU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=rfpgs6yxXtitdIO/mpP/ksv0cEd+RX90
+	7964musIgB65FG9bw5NSfr384Tk8KnBOjDQsaQpbSoB1hntbu8QnDdLnxN9qkY/P
+	hisaKs+z25t3yBDwRiSMcWi0hCpoKWgconrDmTuZa4DX8lpEveXjoEYpisrz/mOE
+	34DWVbEqUdc=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 749D7937B;
+	Mon, 11 Jun 2012 15:15:06 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 6BB60937A; Mon, 11 Jun 2012
+ 15:15:05 -0400 (EDT)
+In-Reply-To: <1339441313-5296-1-git-send-email-vfr@lyx.org> (vfr@lyx.org's
+ message of "Mon, 11 Jun 2012 19:01:53 +0000")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: C06EA036-B3F9-11E1-81D8-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199709>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199710>
 
-On Mon, 11 Jun 2012 21:07:45 +0200, konglu@minatec.inpg.fr wrote:
-> Javier.Roucher-Iglesias@ensimag.imag.fr a =C3=A9crit=C2=A0:
->
->> +Git-credential permits to the user of the script to save:
->> +username, password, host, path and protocol. When the user of=20
->> script
->> +invoke git-credential, the script can ask for a password, using the=
-=20
->> command
->> +'git credential fill'.
->> +Taking data from the standard input, the program treats each line=20
->> as a
->> +separate data item, and the end of series of data item is signalled=
-=20
->> by a
->> +blank line.
->> +
->> +		username=3Dadmin\n
->> +		protocol=3D[http|https]\n
->> +		host=3Dlocalhost\n
->> +		path=3D/dir\n\n
->> +
->> +-If git-credential system has the password already stored
->> +git-credential will answer with by STDOUT:
->> +
->> +		username=3Dadmin
->> +		password=3D*****
->> +
->> +-If it is not stored, the user will be prompt for a password:
->> +
->> +		> Password for '[http|https]admin@localhost':
->
-> Whitespaces detected (and also some more after in the doc)
->
->> diff --git a/builtin/credential.c b/builtin/credential.c
->> new file mode 100644
->> index 0000000..a6b6962
->> --- /dev/null
->> +++ b/builtin/credential.c
->> @@ -0,0 +1,37 @@
->> +#include <stdio.h>
->> +#include "cache.h"
->> +#include "credential.h"
->> +#include "string-list.h"
->> +
->> +static const char usage_msg[] =3D
->> +"credential <fill|approve|reject>";
->> +
->> +void cmd_credential (int argc, char **argv, const char *prefix) {
->> +	const char *op;
->> +	struct credential c =3D CREDENTIAL_INIT;
->> +	int i;
->> +
->> +	op =3D argv[1];
->> +	if (!op)
->> +		usage(usage_msg);
->> +
->> +	if (credential_read(&c, stdin) < 0)
->> +		die("unable to read credential from stdin");
->> +
->> +	if (!strcmp(op, "fill")) {
->> +		credential_fill(&c);
->> +		if (c.username)
->> +			printf("username=3D%s\n", c.username);
->> +		if (c.password)
->> +			printf("password=3D%s\n", c.password);
->> +	}
->> +	else if (!strcmp(op, "approve")) {
->> +		credential_approve(&c);
->> +	}
->> +	else if (!strcmp(op, "reject")) {
->> +		credential_reject(&c);
->> +	}
->> +	else {
->> +		usage(usage_msg);
->> +	}
->> +}
->
-> Structure:
->
-> if (!strcmp(op, "fill")) {
-> 	credential_fill(&c);
-> 	if (c.username)
-> 		printf("username=3D%s\n", c.username);
-> 	if (c.password)
-> 		printf("password=3D%s\n", c.password);
-> } else if (!strcmp(op, "approve")) {
-> 	credential_approve(&c);
-> } else if (!strcmp(op, "reject")) {
-> 	credential_reject(&c);
-> } else {
-> 	usage(usage_msg);
-> }
+vfr@lyx.org writes:
 
+> From: Vincent van Ravesteijn <vfr@lyx.org>
+>
+> GIT-BUILD-OPTIONS defines PERL_PATH to be used in the test suite. Only a
+> few tests already actually use this variable when perl is needed. The
+> other test just call 'perl' and it might happen that the wrong perl
+> interpreter is used.
+>
+> This becomes problematic on Windows, when the perl interpreter that is
+> compiled and installed on the Windows system is used, because this perl
+> interpreter might introduce some unexpected LF->CRLF conversions.
+>
+> This patch makes sure that $PERL_PATH is used everywhere in the test suite
+> and that the correct perl interpreter is used.
+>
+> Signed-off-by: Vincent van Ravesteijn <vfr@lyx.org>
+> ---
 
-I will change the structure, thanks.
+There was already this discussion:
+
+    http://thread.gmane.org/gmane.comp.version-control.git/132560/focus=132561
+
+which basically dismissed effort along this line with "If the perl
+in your PATH is so broken that it can't be used for simple helpers,
+then you should fix your PATH."
+
+I personally do not mind if we do this consistently, but I am not
+sure your $PERL_PATH that is not quoted is the right way to invoke
+it; look for PERL_PATH in t/ to see the existing uses.
