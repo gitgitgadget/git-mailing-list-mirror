@@ -1,112 +1,86 @@
-From: =?ISO-8859-1?Q?Cl=E1udio_Louren=E7o?= <pt.smooke@gmail.com>
-Subject: Help understanding git checkout behavior
-Date: Mon, 11 Jun 2012 17:52:26 +0100
-Message-ID: <CAMUXYmUFbixgA1bVMA46Zzjed1Dwmjv54kWWXyjsuyu904GpTA@mail.gmail.com>
+From: nguyenhu@minatec.inpg.fr
+Subject: Re: [PATCHv6 1/4] Read (but not write) from
+ $XDG_CONFIG_HOME/git/config file
+Date: Mon, 11 Jun 2012 18:53:11 +0200
+Message-ID: <20120611185311.Horde.RALabXwdC4BP1iJ3aQ-w89A@webmail.minatec.grenoble-inp.fr>
+References: <1338754481-27012-1-git-send-email-Huynh-Khoi-Nguyen.Nguyen@ensimag.imag.fr>
+ <1338988885-21933-1-git-send-email-Huynh-Khoi-Nguyen.Nguyen@ensimag.imag.fr>
+ <7vpq9aenl0.fsf@alter.siamese.dyndns.org>
+ <20120608142601.Horde.Tq7UO3wdC4BP0e9ZGAy1EwA@webmail.minatec.grenoble-inp.fr>
+ <7vvcj1dep7.fsf@alter.siamese.dyndns.org>
+ <20120609125336.Horde.iUq0R3wdC4BP0yswpGlGBZA@webmail.minatec.grenoble-inp.fr>
+ <7v4nqjbrdo.fsf@alter.siamese.dyndns.org>
+ <20120610154850.Horde.gYrJO3wdC4BP1KXCOvLEiCA@webmail.minatec.grenoble-inp.fr>
+ <CABPQNSYd0hCU8nrfKJJjR+T_jQn4WC6jEaSCJPjKsuPdumEdtw@mail.gmail.com>
+ <7v8vft97a8.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed	DelSp=Yes
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Renato Neves <nevrenato@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jun 11 18:52:34 2012
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Huynh Khoi Nguyen NGUYEN 
+	<Huynh-Khoi-Nguyen.Nguyen@ensimag.imag.fr>,
+	Matthieu.Moy@grenoble-inp.fr,
+	Valentin Duperray <Valentin.Duperray@ensimag.imag.fr>,
+	Franck Jonas <Franck.Jonas@ensimag.imag.fr>,
+	Lucien Kong <Lucien.Kong@ensimag.imag.fr>,
+	Thomas Nguy <Thomas.Nguy@ensimag.imag.fr>
+To: Erik Faye-Lund <kusmabite@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jun 11 18:53:20 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Se7qz-0007EP-VF
-	for gcvg-git-2@plane.gmane.org; Mon, 11 Jun 2012 18:52:34 +0200
+	id 1Se7rj-0000Vo-CH
+	for gcvg-git-2@plane.gmane.org; Mon, 11 Jun 2012 18:53:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751182Ab2FKQw2 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 11 Jun 2012 12:52:28 -0400
-Received: from mail-wi0-f172.google.com ([209.85.212.172]:46617 "EHLO
-	mail-wi0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750877Ab2FKQw1 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 11 Jun 2012 12:52:27 -0400
-Received: by wibhj8 with SMTP id hj8so3119843wib.1
-        for <git@vger.kernel.org>; Mon, 11 Jun 2012 09:52:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=EYMd0P4K65OYeqx0PjulvEAwqf40aAjYVQA4v6zbjIo=;
-        b=aZzaUmv6Gdx1yM2FPho3whega01HGJMOnhjxpdQ5N1mnBdVrr/nEpVN8vumCVS3WJ6
-         7cYFx7dvtDeBHKSucc7VNeSWz8d1I8zIonEpPEUZSbMdS02BteNcIoVGf9f2o+cEeZ/U
-         ATzwZ7VhfVIQh8hZNZbqCiqKscD5YFRsFa0/pgmgq1789VubKIwuxpkJ6m8Y3Y5MBc2s
-         RWkDfGyridoGISxamxu7adc4VE4Jafz+Ap26YTLerzbt1KWqfQUBEg0RxxqfpEVw6D4z
-         otLkWXYjBnNUJRxUQT5IsiVkedL6x5jkYt9BdquZjhYKxcG/y6FU4r5iBeB9Xa6yCTq8
-         TF5A==
-Received: by 10.180.102.228 with SMTP id fr4mr22367139wib.6.1339433546170;
- Mon, 11 Jun 2012 09:52:26 -0700 (PDT)
-Received: by 10.194.28.231 with HTTP; Mon, 11 Jun 2012 09:52:26 -0700 (PDT)
+	id S1751371Ab2FKQxP convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 11 Jun 2012 12:53:15 -0400
+Received: from v-smtp.minatec.grenoble-inp.fr ([147.173.216.28]:47352 "EHLO
+	v-smtp.minatec.grenoble-inp.fr" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750877Ab2FKQxP (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 11 Jun 2012 12:53:15 -0400
+Received: from localhost (www02.minatec.grenoble-inp.fr [147.173.216.15])
+	by v-smtp.minatec.grenoble-inp.fr (Postfix) with ESMTP id E5B941A02F5;
+	Mon, 11 Jun 2012 18:53:11 +0200 (CEST)
+Received: from wifi-031216.grenet.fr (wifi-031216.grenet.fr
+ [130.190.31.216]) by webmail.minatec.grenoble-inp.fr (Horde Framework) with
+ HTTP; Mon, 11 Jun 2012 18:53:11 +0200
+In-Reply-To: <7v8vft97a8.fsf@alter.siamese.dyndns.org>
+User-Agent: Internet Messaging Program (IMP) H4 (5.0.17)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199675>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199676>
 
-Hello,
 
-We are master students at University of Minho in Portugal and we are
-currently=A0working on a project suggested by CSAIL (MIT), called
-"Understanding Git with Alloy". The project consists in modeling git
-using alloy and then check for some properties that git does (not)
-guarantee.
+Junio C Hamano <gitster@pobox.com> a =E9crit=A0:
 
-The project was going pretty fine, till we start modeling the=A0checkou=
-t
-operation. We are with some problems finding useful information about
-the properties that have to be satisfied when the "git=A0checkout" is
-performed. We have concluded that if everything that is on index is
-commited then we have no problems making=A0checkout.
-The problem is when we have something on index that is not updated
-with the last commit. We cannot find a general property that says when
-checkout can be performed. We have even found some files that are
-lost, like in this case:
+> Erik Faye-Lund <kusmabite@gmail.com> writes:
+>
+>> The awkward thing about doing this, is that the memory allocated by
+>> the strbuf cannot be reclaimed if you go with this. A pointer that h=
+as
+>> been adjusted (like cleanup_path can do) cannot be successfully fed =
+to
+>> free.
+>
+> Yeah, I wouldn't recommend doing that.  Either
+>
+> 	path =3D strbuf_detach(&sb, NULL);
+> 	retval =3D xstrdup(cleanup_path(path));
+>         free(path);
+>         return retval;
+>
+> or
+>
+> 	path =3D xstrdup(cleanup_path(sb.buf));
+>         strbuf_release(&sb);
+>         return path;
+>
+> would be more sensible.
 
-smooke =A0teste $ git init
-Initialized empty Git repository in /home/smooke/Dropbox/teste/.git/
-smooke =A0teste $ touch f
-smooke =A0teste $ echo a > f
-smooke =A0teste $ git add f
-smooke =A0teste $ git commit -m 'first commit'
-[master (root-commit) dab04b9] first commit
-=A01 files changed, 1 insertions(+), 0 deletions(-)
-=A0create mode 100644 f
-smooke =A0teste $ git branch b
-smooke =A0teste $ touch something
-smooke =A0teste $ echo b > something
-smooke =A0teste $ git add something
-smooke =A0teste $ git commit -m 'something added'
-[master 9f2b8ad] something added
-=A01 files changed, 1 insertions(+), 0 deletions(-)
-=A0create mode 100644 something
-smooke =A0teste $ git rm something
-rm 'something'
-smooke =A0teste $ mkdir something
-smooke =A0teste $ cd something/
-smooke =A0something $ touch f1
-smooke =A0something $ echo c > f1
-smooke =A0something $ cd ..
-smooke =A0teste $ git add something/f1
-smooke =A0teste $ git checkout b
-Switched to branch 'b'
-smooke =A0teste $ ls
-f
-smooke =A0teste $ git checkout master
-Switched to branch 'master'
-smooke =A0teste $ ls
-f =A0something
-smooke =A0teste $ cat something
-b
-
-We are not sure if this behavior has an explanation of if it is just a =
-bug.
-
-We are hoping that you could clarify us about this operation or
-recommend us some place where we can find some useful information
-about this...
-
-Thank you in advance,
-Best regards,
-
-Cl=E1udio and Renato
+Erik, what do you prefer ? You can have the final answer.
