@@ -1,102 +1,100 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: How can I specify the "sendmail" program for git-send-email?
-Date: Mon, 11 Jun 2012 08:57:34 -0700
-Message-ID: <7v4nqh96z5.fsf@alter.siamese.dyndns.org>
-References: <20120611073232.GA5602@richard>
- <CABPQNSbwtP0hp8QYznwXjLAaoKVj_ZUWXQQCDG80Xb+TME1MWw@mail.gmail.com>
- <20120611090431.GA23447@richard>
- <CABPQNSZ1dyAfCVLGcLxbeBdS_9A_arYOhzgKBtndReK5zxu_MA@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: Keeping unreachable objects in a separate pack instead of loose?
+Date: Mon, 11 Jun 2012 12:08:24 -0400
+Message-ID: <20120611160824.GB12773@sigill.intra.peff.net>
+References: <E1SdhJ9-0006B1-6p@tytso-glaptop.cam.corp.google.com>
+ <bb7062f387c9348f702acb53803589f1.squirrel@webmail.uio.no>
+ <87vcixaoxe.fsf@thomas.inf.ethz.ch>
+ <20120611153103.GA16086@thunk.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Richard Yang <weiyang@linux.vnet.ibm.com>, git@vger.kernel.org
-To: kusmabite@gmail.com
-X-From: git-owner@vger.kernel.org Mon Jun 11 17:57:44 2012
+Content-Type: text/plain; charset=utf-8
+Cc: Thomas Rast <trast@student.ethz.ch>,
+	Hallvard B Furuseth <h.b.furuseth@usit.uio.no>,
+	git@vger.kernel.org, Nicolas Pitre <nico@fluxnic.net>
+To: Ted Ts'o <tytso@mit.edu>
+X-From: git-owner@vger.kernel.org Mon Jun 11 18:08:39 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Se6zt-0003IO-QG
-	for gcvg-git-2@plane.gmane.org; Mon, 11 Jun 2012 17:57:42 +0200
+	id 1Se7AO-0001HZ-Mm
+	for gcvg-git-2@plane.gmane.org; Mon, 11 Jun 2012 18:08:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752828Ab2FKP5h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Jun 2012 11:57:37 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:33742 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751659Ab2FKP5h (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Jun 2012 11:57:37 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 71E539906;
-	Mon, 11 Jun 2012 11:57:36 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=EK+fk6rQCLtNlD0yA1ykCMvKqZY=; b=w9/i6C
-	FRUIOqE95UsfY32lUKMMO/svHw8ID5h0RzHMia/3ynQAKIWAtevmDPRESYWYDKhp
-	k1MBOQaEYeOVV7Zva+s/wngJiSXly1R6rfQthJZyiIrPmRq6350V1QeYWulzPkji
-	RRHDMxta+hbHJX20zwB5RpUSibd/T7fK86VTQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=REHoRq7TGmmB6HGfgN9BFpS4+s4iQvte
-	pszrhVS9BWrFjRZRMg4EAcChqUkMOgoWJZ2qpZ+WzD8RI+SpvxVqOJXRH+PcWj25
-	q9UTKfFiPZj9jL+hfJoyv+oIR/XF4kOAAPKEmu0HpLN2Ki/yenZ/DL26Of8hI0Ni
-	j9yBRPoVa78=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 68C579905;
-	Mon, 11 Jun 2012 11:57:36 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id F28009904; Mon, 11 Jun 2012
- 11:57:35 -0400 (EDT)
-In-Reply-To: <CABPQNSZ1dyAfCVLGcLxbeBdS_9A_arYOhzgKBtndReK5zxu_MA@mail.gmail.com> (Erik
- Faye-Lund's message of "Mon, 11 Jun 2012 11:15:02 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 299C2824-B3DE-11E1-AA44-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755558Ab2FKQI2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Jun 2012 12:08:28 -0400
+Received: from 99-108-225-23.lightspeed.iplsin.sbcglobal.net ([99.108.225.23]:50115
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752221Ab2FKQI1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Jun 2012 12:08:27 -0400
+Received: (qmail 4454 invoked by uid 107); 11 Jun 2012 16:08:28 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 11 Jun 2012 12:08:28 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 11 Jun 2012 12:08:24 -0400
+Content-Disposition: inline
+In-Reply-To: <20120611153103.GA16086@thunk.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199667>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199668>
 
-Erik Faye-Lund <kusmabite@gmail.com> writes:
+On Mon, Jun 11, 2012 at 11:31:03AM -0400, Ted Ts'o wrote:
 
-> Well, I've always been slightly annoyed by the "send-mail" vs
-> "sendemail" inconsistency.
+> I'm currently using 1.7.10.2.552.gaa3bb87, and a "git gc" still kicked
+> loose a little over 4.5 megabytes of loose objects were not pruned via
+> "git prune" (since they hadn't yet expired).  These loose objects
+> could be stored in a 244k pack file.
 
-Hrm, isn't it between "sendmail" (as in /usr/lib/sendmail) and
-"send-email" (a subcommand of git)?
+Out of curiosity, what is the size of the whole repo? If it's a 500M
+kernel repository, then 4.5M is not all _that_ worrisome. Not that it
+could not be better, or that it's not worth addressing (since there are
+corner cases that behave way worse). But it gives a sense of the urgency
+of the problem, if that is the scope of the issue for average use.
 
-> Perhaps we could do something along these
-> lines (plus all documentation-updates, omitted for clarity) to reduce
-> the risk of confusion?
+> What I think would make sense is for git pack-objects to have a new
+> option which outputs a list of object id's which whould have been
+> kicked out as loose objects if it had been given the (undocumented)
+> --unpacked-unreachable option.  Then the git-repack shell script (if
+> given the -A option) would use that new option instead of
+> --unpacked-unreachable, and then using the list created by this new
+> option, create another pack which contains all of these
+> unreachable-but-not-yet-expired objects.
 
-Assuming that the contrast between "sendmail" and "git send-email"
-is what you are trying to address, I fail to see how it would help
-reducing the confusion if you start naming configuration variables
-used by "git send-email" without E.
+I don't think that will work, because we will keep repacking the
+unreachable bits into new packs. And the 2-week expiration is based on
+the pack timestamp. So if your "repack -Ad" ends in two packs (the one
+you actually want, and the pack of expired crap), then you would get
+into this cycle:
 
-If the proposal were to give "send-email.$var" synomyms to
-corresponding "sendemail.$var" variables, I would have been
-persuaded to believe it may alleviate potential confusion, though.
+  1. You run "git repack -Ad". It makes A.pack, with stuff you want, and
+     B.pack, with unreachable junk. They both get a timestamp of "now".
 
-> Yeah, the leaking of $identity between different sections is a bit
-> suboptimal, but as a fallback-mechanism I don't think it actually
-> matters much.
->
-> diff --git a/git-send-email.perl b/git-send-email.perl
-> index 03292fd..d167d96 100755
-> --- a/git-send-email.perl
-> +++ b/git-send-email.perl
-> @@ -375,7 +375,11 @@ sub read_config {
->  	}
->  }
->
-> -# read configuration from [sendemail "$identity"], fall back on [sendemail]
-> +# read configuration from [sendmail "$identity"], fall back on [sendmail]
-> +$identity = Git::config(@repo, "sendmail.identity") unless (defined $identity);
-> +read_config("sendmail.$identity") if (defined $identity);
-> +read_config("sendmail");
-> +# same as above, but with legacy "sendemail"
->  $identity = Git::config(@repo, "sendemail.identity") unless (defined
-> $identity);
->  read_config("sendemail.$identity") if (defined $identity);
->  read_config("sendemail");
+  2. A day passes. You run "git repack -Ad" again. It makes C.pack, the
+     new stuff you want, and repacks all of B.pack along with the
+     new expired cruft from A.pack, making D.pack. B.pack can go away.
+     D.pack gets a timestamp of "now".
+
+And so on, as long as you repack within the two week window, the objects
+from the cruft pack will never get ejected. So you might suggest that
+the problem is that in step 2, we repack the items from B. But if you
+don't, then you will accumulate a bunch of cruft packs (2 weeks worth),
+and those objects won't be delta'd against each other.  It's probably
+better than making them all loose, of course (you get chunks of delta'd
+objects from each repack, instead of none at all), but it's far from a
+full solution to the issue.
+
+I think solving it for good would involve a separate list of per-object
+expiration dates. Obviously we get that easily with loose objects (since
+it is one object per file).
+
+As a workaround, it might be worth lowering the default pruneExpire from
+2 weeks to 1 day or something. It is really about creating safety for
+operations in progress (e.g., you write the object, and then are _about_
+to add it to the index or update a ref when it gets pruned). I think the
+2 weeks number was pulled out of a hat as "absurdly long for an
+operation to take", and was never revisited because nobody cared or
+complained.
+
+-Peff
