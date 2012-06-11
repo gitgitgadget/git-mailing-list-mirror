@@ -1,134 +1,106 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Keeping unreachable objects in a separate pack instead of loose?
-Date: Mon, 11 Jun 2012 17:39:48 -0400
-Message-ID: <20120611213948.GB32061@sigill.intra.peff.net>
+From: Hallvard Breien Furuseth <h.b.furuseth@usit.uio.no>
+Subject: Re: Keeping unreachable objects in a separate pack instead of
+ =?UTF-8?Q?loose=3F?=
+Date: Mon, 11 Jun 2012 23:41:56 +0200
+Message-ID: <97844573ed775a758d75eec5508b6c85@ulrik.uio.no>
 References: <E1SdhJ9-0006B1-6p@tytso-glaptop.cam.corp.google.com>
  <bb7062f387c9348f702acb53803589f1.squirrel@webmail.uio.no>
- <87vcixaoxe.fsf@thomas.inf.ethz.ch>
- <20120611153103.GA16086@thunk.org>
+ <87vcixaoxe.fsf@thomas.inf.ethz.ch> <20120611153103.GA16086@thunk.org>
  <20120611160824.GB12773@sigill.intra.peff.net>
  <20120611172732.GB16086@thunk.org>
  <20120611183414.GD20134@sigill.intra.peff.net>
- <20120611211401.GA21775@thunk.org>
+ <0450a24b1f53420f36a3d864c50536cb@ulrik.uio.no>
+ <20120611211414.GA32061@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Thomas Rast <trast@student.ethz.ch>,
-	Hallvard B Furuseth <h.b.furuseth@usit.uio.no>,
-	git@vger.kernel.org, Nicolas Pitre <nico@fluxnic.net>
-To: Ted Ts'o <tytso@mit.edu>
-X-From: git-owner@vger.kernel.org Mon Jun 11 23:40:03 2012
+Content-Type: text/plain;
+ charset=UTF-8;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Ted Ts'o <tytso@mit.edu>, Thomas Rast <trast@student.ethz.ch>,
+	<git@vger.kernel.org>, Nicolas Pitre <nico@fluxnic.net>,
+	=?UTF-8?Q?Ngu?= =?UTF-8?Q?y=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc_Duy?= 
+	<pclouds@gmail.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Jun 11 23:42:15 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SeCLD-0001Re-00
-	for gcvg-git-2@plane.gmane.org; Mon, 11 Jun 2012 23:40:03 +0200
+	id 1SeCND-0006Gj-VB
+	for gcvg-git-2@plane.gmane.org; Mon, 11 Jun 2012 23:42:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752116Ab2FKVjw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Jun 2012 17:39:52 -0400
-Received: from 99-108-225-23.lightspeed.iplsin.sbcglobal.net ([99.108.225.23]:50418
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751840Ab2FKVjv (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Jun 2012 17:39:51 -0400
-Received: (qmail 10302 invoked by uid 107); 11 Jun 2012 21:39:52 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 11 Jun 2012 17:39:52 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 11 Jun 2012 17:39:48 -0400
-Content-Disposition: inline
-In-Reply-To: <20120611211401.GA21775@thunk.org>
+	id S1751988Ab2FKVmD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Jun 2012 17:42:03 -0400
+Received: from mail-out2.uio.no ([129.240.10.58]:48051 "EHLO mail-out2.uio.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751424Ab2FKVmB (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Jun 2012 17:42:01 -0400
+Received: from mail-mx2.uio.no ([129.240.10.30])
+	by mail-out2.uio.no with esmtp (Exim 4.75)
+	(envelope-from <h.b.furuseth@usit.uio.no>)
+	id 1SeCN3-0003ET-T0; Mon, 11 Jun 2012 23:41:57 +0200
+Received: from w3prod-wm01.uio.no ([129.240.4.214] helo=webmail.uio.no)
+	by mail-mx2.uio.no with esmtpsa (TLSv1:AES256-SHA:256)
+	user hbf (Exim 4.76)
+	(envelope-from <h.b.furuseth@usit.uio.no>)
+	id 1SeCN3-0005MT-ER; Mon, 11 Jun 2012 23:41:57 +0200
+Received: from cA3A345C1.dhcp.bluecom.no ([193.69.163.163])
+ by webmail.uio.no
+ with HTTP (HTTP/1.1 POST); Mon, 11 Jun 2012 23:41:56 +0200
+In-Reply-To: <20120611211414.GA32061@sigill.intra.peff.net>
+X-Sender: h.b.furuseth@usit.uio.no
+User-Agent: Roundcube Webmail/0.4.2
+X-UiO-Ratelimit-Test: rcpts/h 6 msgs/h 1 sum rcpts/h 8 sum msgs/h 1 total rcpts 2469 max rcpts/h 20 ratelimit 0
+X-UiO-Spam-info: not spam, SpamAssassin (score=-5.0, required=5.0, autolearn=disabled, FSL_RCVD_USER=0.001,T_RP_MATCHES_RCVD=-0.01,UIO_MAIL_IS_INTERNAL=-5, uiobl=NO, uiouri=NO)
+X-UiO-Scanned: 8CD7D1D02376A1DDBEC3A8F03FBE71143E3DFBDC
+X-UiO-SPAM-Test: remote_host: 129.240.4.214 spam_score: -49 maxlevel 80 minaction 2 bait 0 mail/h: 84 total 2417498 max/h 663 blacklist 0 greylist 0 ratelimit 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199736>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199737>
 
-On Mon, Jun 11, 2012 at 05:14:01PM -0400, Ted Ts'o wrote:
+ On Mon, 11 Jun 2012 17:14:14 -0400, Jeff King <peff@peff.net> wrote:
+> On Mon, Jun 11, 2012 at 10:44:39PM +0200, Hallvard Breien Furuseth 
+> wrote:
+>
+>> >OK, so that 4.5 is at least a respectable percentage of the total
+>> >repo
+>> >size. I suspect it may be worse for small repos in that sense, 
+>> (...)
+>>
+>> 'git gc' gave a 3100% increase with my example:
+>>
+>>     $ git clone --bare --branch linux-overhaul-20010122 \
+>>         git://git.savannah.gnu.org/config.git
+>>     $ cd config.git/
+>>     $ git tag -d `git tag`; git branch -D master
+>>     $ du -s objects
+>>     624     objects
+>>     $ git gc
+>>     $ du -s objects
+>>     19840   objects
+>>
+>> Basically: Clone/fetch a repo, keep a small part of it, drop the
+>> rest, and gc.  Gc explodes all the objects you no longer want.
+>
+> I would argue that this is not a very interesting case in the first
+> place, since the right thing to do is use "clone --single-branch"[1] 
+> to
+> void transferring all of those objects in the first place.
 
-> On Mon, Jun 11, 2012 at 02:34:14PM -0400, Jeff King wrote:
-> > You _could_ make a separate cruft pack for each pack that you repack. So
-> > if I have A.pack and B.pack, I'd pack all of the reachable objects into
-> > C.pack, and then make D.pack containing the unreachable objects from
-> > A.pack, and E.pack with the unreachable objects from B.pack. And then
-> > set the mtime of the cruft packs to that of their parent packs.
-> > 
-> > And then the next time you pack, repacking D and E would probably be a
-> > no-op that preserves mtime, but might create a new pack that ejects some
-> > now-reachable object.
-> > 
-> > To implement that, I think your --list-unreachable would just have to
-> > print a list of "<pack-mtime> <sha1>" pairs, and then you would pack
-> > each set with an identical mtime (or even a "close enough" mtime within
-> > some slop)....
-> 
-> How about this instead?  We distinguish between cruft packs and "real"
-> packs by the filename.  So we have "cruft-<SHA1>.{idx,pack}" and
-> "pack-<SHA1>.{idx.pack}".
-> 
-> Normally, git will look at any pack in the pack directory that has an
-> .idx and .pack extension, but during repack operation, it will by only
-> look in the pack-* packs first.  If it can't find an object there, it
-> will then fall back to trying to fetch the object from the cruft-*
-> packs, and if it finds the object, it copies it into the new pack
-> which is creating, thus "rescueing" an object which reappears during
-> the expiry window.  This should be a relatively rare event, and if it
-> happens, the object will be in two packs, a pack-* pack and a cruft-*
-> pack, but that's OK.
+ Yeah, I just wanted a simple way to fetch a lot and drop most of
+ it, since that's what triggers the problem.  A simple use case
+ would be where you did a lot of work between cloing and pruning
+ most refs.  I described some actual use cases below the command.
 
-You don't need to do anything magical for the object lookup process of
-pack-objects. By definition, the unreachable objects will not be
-included in the new pack you are creating, because it is only packing
-reachable things. So the cruft pack does not have to be a fallback at
-all; it is a regular pack from the object lookup perspective.
+> But there are plenty of variant cases, where you are not just 
+> deleting
+> all of the refs, but rather doing some manipulation of the branches,
+> diffing them to make sure it is safe to drop some bits, running
+> filter-branch, etc. And it would be nice to make those cases more
+> efficient.
 
-The important differences from the current behavior would be:
-
-  1. In pack-objects, do not explode (or if just listing, do not list)
-     objects from cruft packs.
-
-  2. In repack, make a new pack from the list of unreachable objects.
-
-  3. During "repack -Ad", prune cruft packs only if they are older than
-     an expiration date.
-
-And then you'd end up with a new cruft pack each time. You could just
-mark it with a ".cruft" file (similar to the existing ".keep" files),
-and you don't have to worry about changing the pack-* name.
-
-> So since git pack-objects isn't even looking in the cruft-* packs
-> except when it needs to rescue an object, the objects in the cruft-*
-> packs won't get copied, and we won't need to have per-object mtimes.
-> It also means it will go faster since it's not copying the cruft-*
-> packs at all, and possibly not even looking at them.
-
-Yeah. It doesn't eliminate duplicates, but that may not be worth caring
-about. I find the "cruft" marking a little hacky, because it is only
-"objects in here _may_ be cruft", but as long as that is understood, it
-is OK (and it is understood in the sequence above; "repack -Ad" is safe
-because it knows that it would have repacked any non-cruft).
-
-You would have to be careful with "repack -d" (without the "-a"). It
-would not be necessarily be safe to remove cruft packs, because you
-might not have rescued the objects. However, AFAICT "repack -d" does not
-currently delete packs at all, so this would be no different.
-
-> It does imply that we may accumulate a new cruft-<SHA1> pack each time
-> we run git gc, but users shouldn't be running git gc all that often
-> anyway.  And even if they do run it all the time, it will still be
-> more efficient than keeping the unreachable objects as loose objects.
-
-Yeah, it would be nice to keep it all in a single pack, but that means
-doing the I/O on rewriting the cruft packs each time. And figuring out
-some way of handling the mtime in such a way that we don't keep
-refreshing the age during each gc.
-
-Speaking of which, what is the mtime of the newly created cruft pack? Is
-it the current mtime? Then those unreachable objects will stick for
-another 2 weeks, instead of being back-dated to their pack's date. You
-could back-date to the mtime of the most recent deleted pack, but that
-would still prolong the life of objects from the older packs. It may be
-acceptable to just ignore the issue, though; they will expire
-eventually.
-
--Peff
+-- 
+ Hallvard
