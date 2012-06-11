@@ -1,86 +1,87 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH_v1] add 'git credential' plumbing command
-Date: Mon, 11 Jun 2012 14:18:40 -0400
-Message-ID: <20120611181840.GC20134@sigill.intra.peff.net>
-References: <1339267502-13803-1-git-send-email-Javier.Roucher-Iglesias@ensimag.imag.fr>
- <20120610115619.GA6453@sigill.intra.peff.net>
- <vpqr4tl4ti9.fsf@bauges.imag.fr>
+From: Ted Ts'o <tytso@mit.edu>
+Subject: Re: Keeping unreachable objects in a separate pack instead of
+ loose?
+Date: Mon, 11 Jun 2012 14:20:12 -0400
+Message-ID: <20120611182012.GD16086@thunk.org>
+References: <E1SdhJ9-0006B1-6p@tytso-glaptop.cam.corp.google.com>
+ <bb7062f387c9348f702acb53803589f1.squirrel@webmail.uio.no>
+ <87vcixaoxe.fsf@thomas.inf.ethz.ch>
+ <20120611153103.GA16086@thunk.org>
+ <20120611160824.GB12773@sigill.intra.peff.net>
+ <alpine.LFD.2.02.1206111249270.23555@xanadu.home>
+ <20120611174507.GC16086@thunk.org>
+ <20120611175419.GB20134@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Javier.Roucher-Iglesias@ensimag.imag.fr, git@vger.kernel.org,
-	Javier Roucher <jroucher@gmail.com>,
-	Pavel Volek <Pavel.Volek@ensimag.imag.fr>,
-	NGUYEN Kim Thuat <Kim-Thuat.Nguyen@ensimag.imag.fr>,
-	ROUCHER IGLESIAS Javier <roucherj@ensimag.imag.fr>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Mon Jun 11 20:18:57 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Nicolas Pitre <nico@fluxnic.net>,
+	Thomas Rast <trast@student.ethz.ch>,
+	Hallvard B Furuseth <h.b.furuseth@usit.uio.no>,
+	git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Jun 11 20:20:46 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Se9CR-0001Hk-Jd
-	for gcvg-git-2@plane.gmane.org; Mon, 11 Jun 2012 20:18:47 +0200
+	id 1Se9EB-0004z8-CL
+	for gcvg-git-2@plane.gmane.org; Mon, 11 Jun 2012 20:20:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751632Ab2FKSSn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Jun 2012 14:18:43 -0400
-Received: from 99-108-225-23.lightspeed.iplsin.sbcglobal.net ([99.108.225.23]:50211
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751263Ab2FKSSn (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Jun 2012 14:18:43 -0400
-Received: (qmail 6725 invoked by uid 107); 11 Jun 2012 18:18:44 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 11 Jun 2012 14:18:44 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 11 Jun 2012 14:18:40 -0400
+	id S1752053Ab2FKSUb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Jun 2012 14:20:31 -0400
+Received: from li9-11.members.linode.com ([67.18.176.11]:49119 "EHLO
+	imap.thunk.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751954Ab2FKSUa (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Jun 2012 14:20:30 -0400
+Received: from root (helo=tytso-glaptop.cam.corp.google.com)
+	by imap.thunk.org with local-esmtp (Exim 4.72)
+	(envelope-from <tytso@thunk.org>)
+	id 1Se9Dz-0003dy-8g; Mon, 11 Jun 2012 18:20:23 +0000
+Received: from tytso by tytso-glaptop.cam.corp.google.com with local (Exim 4.71)
+	(envelope-from <tytso@thunk.org>)
+	id 1Se9Do-00059Y-3A; Mon, 11 Jun 2012 14:20:12 -0400
 Content-Disposition: inline
-In-Reply-To: <vpqr4tl4ti9.fsf@bauges.imag.fr>
+In-Reply-To: <20120611175419.GB20134@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: tytso@thunk.org
+X-SA-Exim-Scanned: No (on imap.thunk.org); SAEximRunCond expanded to false
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199688>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199689>
 
-On Mon, Jun 11, 2012 at 08:02:06PM +0200, Matthieu Moy wrote:
-
-> Jeff King <peff@peff.net> writes:
+On Mon, Jun 11, 2012 at 01:54:19PM -0400, Jeff King wrote:
 > 
-> > It's nice to have an example like this, but there's much detail missing
-> > in how the format is specified. However, this format is already
-> > documented in the "helpers" section of api-credentials.txt, so it
-> > probably makes sense to refer to that document.
-> 
-> I'd do it the other way around. api-credentials.txt is in technical/,
-> while the document we're writing will end-up in a man page, which cannot
-> link to technical/.
+> You're doing it wrong (but you can hardly be blamed, because there isn't
+> good tool support for doing it right). You should never prune or repack
+> in the base repo without taking into account all of the refs of its
+> children.
 
-We do so already in a few places:
+Well, I don't do a simple gc.  See the complicated set of steps I use
+to make sure I don't lose loose commits at the end of my last e-mail
+message on this thread.  It gets worse when I have multiple devel
+repos, but I simplified things for the purposes of discussion.
 
-  $ cd Documentation && git grep 'link:technical/'
-  git.txt:link:technical/api-index.html[GIT API documentation].
-  gitcredentials.txt:link:technical/api-credentials.html[credentials API] for details.
-  user-manual.txt:found in link:technical/pack-format.txt[technical/pack-format.txt].
+> We have a similar setup at github (every time you "fork" a repo, it is
+> creating a new repo that links back to a project-wide "network" repo for
+> its object store). We maintain a refs/remotes/XXX directory for each
+> child repo, which stores the complete refs/ hierarchy of that child.
 
-I think the rationale is that you would have the HTML documentation
-installed into /usr/share/doc/git-doc or similar, and asciidoc does
-correctly generate footnote references from those links. However, I
-would be fine with putting the meat of it into git-credential, and
-having api-credentials refer back to it. It's easier on the user that
-way.
+So you basically are copying the refs around and making sure the
+parent repo has an uptodate pointer of all of the child repos, such
+that when you do the repack, *all* of the commits end up in the parent
+commit, correct?
 
-> >   git credential --helper=cache fill
-> >
-> > That will give us more flexibility later down the road.
-> 
-> Actually, this should already be possible with
-> 
->   git -c credential.helper=cache credential fill
-> 
-> I suspect that this feature will never be used outside tests, and if so,
-> I don't think it deserves a command-line option.
+The system that I'm using means that objects which are local to a
+child repo stays in the child repo, and if an object is about to be
+dropped from the parent repo as a result of a gc, the child repo has
+an opportunity claim a copy of that object for itself in its object
+database.
 
-Yeah, that is even better. The tests could also use test_config.  I
-would pick whichever of the two is more convenient for a particular
-test.
+You can do things either way.  I like knowing that objects only used
+by a child repo are in the child repo's .git directory, but that's
+arguably more of a question of taste than anything else.
 
--Peff
+	      	   	       	     - Ted
