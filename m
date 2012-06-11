@@ -1,80 +1,92 @@
-From: Ilya Dogolazky <ilya.dogolazky@nokia.com>
-Subject: Re: git-p4: commits are visible in history after 'git p4 clone',
- but not a single file present
-Date: Mon, 11 Jun 2012 22:16:28 +0300
-Message-ID: <4FD6440C.7090900@nokia.com>
-References: <4FD5C263.9010307@nokia.com> <CAE5ih79Lgc8vF0v=vTGZSwASsGwQWs2Q7h_AkW67RBfi-R=DCA@mail.gmail.com>
+From: Joseph Chiu <joechiu@joechiu.com>
+Subject: Git repository name-guessing corner case
+Date: Mon, 11 Jun 2012 12:28:51 -0700 (PDT)
+Message-ID: <1339442931056-7561236.post@n2.nabble.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Luke Diamand <luke@diamand.org>
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jun 11 21:16:41 2012
+X-From: git-owner@vger.kernel.org Mon Jun 11 21:29:04 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SeA6Q-0006mX-Sd
-	for gcvg-git-2@plane.gmane.org; Mon, 11 Jun 2012 21:16:39 +0200
+	id 1SeAIM-0000FD-Ak
+	for gcvg-git-2@plane.gmane.org; Mon, 11 Jun 2012 21:28:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750849Ab2FKTQf convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 11 Jun 2012 15:16:35 -0400
-Received: from smtp.nokia.com ([147.243.128.26]:36677 "EHLO mgw-da02.nokia.com"
+	id S1750838Ab2FKT2w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Jun 2012 15:28:52 -0400
+Received: from sam.nabble.com ([216.139.236.26]:49081 "EHLO sam.nabble.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750733Ab2FKTQe (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Jun 2012 15:16:34 -0400
-Received: from [10.162.253.82] (essapo-nirac25382.europe.nokia.com [10.162.253.82])
-	by mgw-da02.nokia.com (Sentrion-MTA-4.2.2/Sentrion-MTA-4.2.2) with ESMTP id q5BJGT37006431;
-	Mon, 11 Jun 2012 22:16:30 +0300
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:12.0) Gecko/20120428 Thunderbird/12.0.1
-In-Reply-To: <CAE5ih79Lgc8vF0v=vTGZSwASsGwQWs2Q7h_AkW67RBfi-R=DCA@mail.gmail.com>
-X-Nokia-AV: Clean
+	id S1751068Ab2FKT2w (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Jun 2012 15:28:52 -0400
+Received: from jim.nabble.com ([192.168.236.80])
+	by sam.nabble.com with esmtp (Exim 4.72)
+	(envelope-from <joechiu@joechiu.com>)
+	id 1SeAIF-0002LS-29
+	for git@vger.kernel.org; Mon, 11 Jun 2012 12:28:51 -0700
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199711>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199712>
 
-Hi Luke!
+Hello,
 
-06/11/2012 06:28 PM, ext Luke Diamand =D0=BD=D0=B0=D0=BF=D0=B8=D1=81=D0=
-=B0=D0=BB:
-> If you do something like "p4 describe 17473" what does that show?
-=46irst I see a line containing the change number, my colleague's name =
-and=20
-date, then the commit title (identical to one printed by "git log"),=20
-then a list of files [every line begins with "... //xxx/yyy/"], then th=
-e=20
-word "Differences" and then something looking very much like output of=20
-'diff' command (the actual commit differences).
+I ran into an admittedly bizarre corner case, caused in part by my own
+failings, but I wanted to report it.  I haven't come across anyone else
+having had this experience (but I suspect that I haven't properly exhausted
+the right combination of search terms).
 
-> Are the files changed all contained with //kalma/xxx/yyy?
-Yes, they are.
+I maintain a big handful of my workplace's git repo's - there is a "north"
+server and a "south" git server.  They both run gitosis for access control. 
+The repo's are generally setup to sync the north and south repos to each
+other for disaster recovery purposes.
 
-> It could be that there's a p4 version problem going on - which versio=
-n
-> of p4 are you
-> using?
-The output of 'p4 -V' contains "Rev. P4/LINUX26X86/2012.1/459601=20
-(2012/05/11)". That's probably the version of my command line client.
+I'll glossing over the backstory - but the process for creating repo's for
+new projects is partially automated, and involves some manual steps.  
 
-The output of "p4 info" contains "P4D/LINUX26X86_64/2011.1/428451=20
-(2012/03/08)" --- that's probably the version of the server.
+On the north machine, I created the repo wizard.git, with the mirroring
+configured to south:wizard.git
 
-The version of git installation (by debian package) is 1:1.7.10-1 (as=20
-reported by "dpkg -l git"). The package contains the file=20
-"/usr/share/doc/git/contrib/fast-import/git-p4" which I copied to=20
-$HOME/bin/git-p4 in order to have in $PATH and with executable bit.=20
-Could it be, that I did something wrong here by making this manually?
+On the south machine, I first accidentally created the repo wizard.git.git
+(note the double .git), with the mirroring configured by default to
+north:android.git (I'll gloss over the back story here - but basically, the
+template used for repo setup used a working config file from the android
+project - and the real repo name was left in the template).
 
- > And which platform are you using?
-Debian GNU/Linux.
+On the south machine, I then created the repo wizard.git with the mirror
+configured to north:wizard.git
 
-I hope I provided all the needed information, of not please ask for mor=
-e.
+As you might guess, there was already a north:android.git and
+south:android.git repo's configured.
 
-Cheers,
+So the corner case (or perhaps just a "gotcha") that occured is this:  when
+my developer pushed their new code into the north:wizard.git repo, the hook
+to replicate the repo fired, mirroring to south:wizard.git -- however,
+instead of operating on the wizard.git bare repo, the mirroring was done to
+the wizard.git.git repo.   The hook that subsequently fired mirrored to
+north:android.git and, in turn, a mirroring was done to south:android.git.
 
-Ilya
+Because the android.git bare repo was recently set to allow deletes of
+branches and tags for housekeeping reasons, this allowed the push to the
+north:wizard.git repo to chain to the android.git repo's, deleting all
+branches in that project.
+
+I'm guessing this must be the result of the git repo name guessing code
+trying a repo name with a .git attached first.  Admittedly, this problem was
+caused by my dumb actions (template config file pointing to a real repo; not
+removing the wrong bare repo as soon as I created it) -- but I suspect that
+this is an undesired behavior.  (BTW, no permanent damage was done in my
+case - I was able to replicate a relatively recent clone back into the
+master servers.)
+
+Thanks for reading this.
+Joseph
+
+
+
+--
+View this message in context: http://git.661346.n2.nabble.com/Git-repository-name-guessing-corner-case-tp7561236.html
+Sent from the git mailing list archive at Nabble.com.
