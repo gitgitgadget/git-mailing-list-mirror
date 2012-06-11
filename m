@@ -1,120 +1,120 @@
-From: roucherj <roucherj@telesun.imag.fr>
-Subject: Re: [PATCH v3] add 'git credential' plumbing command
-Date: Mon, 11 Jun 2012 21:12:17 +0200
-Message-ID: <edf83e30636b67d2b95bf1df8519cdcd@telesun.imag.fr>
-References: <1339440294-8010-1-git-send-email-Javier.Roucher-Iglesias@ensimag.imag.fr>
- <vpqehpl4qm0.fsf@bauges.imag.fr>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH v2] add git credential login to remote mediawiki
+Date: Mon, 11 Jun 2012 21:13:49 +0200
+Message-ID: <vpqaa094q6q.fsf@bauges.imag.fr>
+References: <1339440893-8522-1-git-send-email-Javier.Roucher-Iglesias@enismag.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: <Javier.Roucher-Iglesias@ensimag.imag.fr>, <git@vger.kernel.org>,
-	Javier Roucher <jroucher@gmail.com>,
+Content-Type: text/plain
+Cc: git@vger.kernel.org, Javier Roucher <jroucher@gmail.com>,
 	Pavel Volek <Pavel.Volek@ensimag.imag.fr>,
 	NGUYEN Kim Thuat <Kim-Thuat.Nguyen@ensimag.imag.fr>,
 	ROUCHER IGLESIAS Javier <roucherj@ensimag.imag.fr>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Mon Jun 11 21:12:28 2012
+To: Javier.Roucher-Iglesias@ensimag.imag.fr
+X-From: git-owner@vger.kernel.org Mon Jun 11 21:14:04 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SeA2N-0005ja-M8
-	for gcvg-git-2@plane.gmane.org; Mon, 11 Jun 2012 21:12:28 +0200
+	id 1SeA3u-0000iE-Ig
+	for gcvg-git-2@plane.gmane.org; Mon, 11 Jun 2012 21:14:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751294Ab2FKTMX convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 11 Jun 2012 15:12:23 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:55052 "EHLO shiva.imag.fr"
+	id S1750895Ab2FKTN7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Jun 2012 15:13:59 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:55076 "EHLO shiva.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750977Ab2FKTMW (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Jun 2012 15:12:22 -0400
-Received: from ensimag.imag.fr (ensimag.imag.fr [195.221.228.12])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id q5BJ3N5b010809
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Mon, 11 Jun 2012 21:03:23 +0200
-Received: from web-ensimag.imag.fr (web-ensimag [195.221.228.24])
-	by ensimag.imag.fr (8.13.8/8.13.8/ImagV2.1.r_ens) with ESMTP id q5BJCH9d015408;
-	Mon, 11 Jun 2012 21:12:17 +0200
-Received: from web-ensimag.imag.fr (localhost [127.0.0.1])
-	by web-ensimag.imag.fr (8.13.8/8.13.8/ImagV2.1.sb_ens) with ESMTP id q5BJCHPh016879;
-	Mon, 11 Jun 2012 21:12:17 +0200
-Received: (from apache@localhost)
-	by web-ensimag.imag.fr (8.13.8/8.13.8/Submit) id q5BJCHUL016878;
-	Mon, 11 Jun 2012 21:12:17 +0200
-X-Authentication-Warning: web-ensimag.imag.fr: apache set sender to roucherj@telesun.imag.fr using -f
-In-Reply-To: <vpqehpl4qm0.fsf@bauges.imag.fr>
-X-Sender: roucherj@telesun.imag.fr
-User-Agent: Roundcube Webmail/0.5.3
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Mon, 11 Jun 2012 21:03:23 +0200 (CEST)
+	id S1750699Ab2FKTN6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Jun 2012 15:13:58 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id q5BJ4uci011086
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Mon, 11 Jun 2012 21:04:56 +0200
+Received: from bauges.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1SeA3i-0003U6-O0; Mon, 11 Jun 2012 21:13:50 +0200
+In-Reply-To: <1339440893-8522-1-git-send-email-Javier.Roucher-Iglesias@enismag.imag.fr>
+	(Javier Roucher-Iglesias's message of "Mon, 11 Jun 2012 20:54:53
+	+0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.93 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Mon, 11 Jun 2012 21:04:56 +0200 (CEST)
 X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: q5BJ3N5b010809
+X-MailScanner-ID: q5BJ4uci011086
 X-IMAG-MailScanner: Found to be clean
 X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: roucherj@telesun.imag.fr
-MailScanner-NULL-Check: 1340046205.99978@/JOZzuhD4cGFBEgfj8KDFA
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1340046301.23341@2bproilQsRDcr0HUMQedUQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199707>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199708>
 
-On Mon, 11 Jun 2012 21:04:39 +0200, Matthieu Moy wrote:
->> Subject: Re: [PATCH v3] add 'git credential' plumbing command
->
-> I guess you mean v2.
->
+Javier.Roucher-Iglesias@ensimag.imag.fr writes:
 
-Sorry is a miss typing.
+> --- a/contrib/mw-to-git/git-remote-mediawiki
+> +++ b/contrib/mw-to-git/git-remote-mediawiki
+> @@ -154,26 +154,107 @@ while (<STDIN>) {
+>  # MediaWiki API instance, created lazily.
+>  my $mediawiki;
+>  
+[...]
+> +my $mediawiki;
 
-> Javier.Roucher-Iglesias@ensimag.imag.fr writes:
->
->> Changes in the version2 vs version1:
->
-> These should not go to the commit message, but below the --- below=20
-> (and
-> before the diffstat).
->
->> Adding to the next patch, version3:
->> =C2=B7 Tests files
->
-> If the todo-list isn't empty, then mark your patch as "RFC".
->
->> --- /dev/null
->> +++ b/Documentation/git-credential.txt
->> @@ -0,0 +1,74 @@
->> +git-credential(7)
->> +=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
->> +
->> +NAME
->> +----
->> +git-credential - Provides and store user credentials to git
->
-> Provides -> Provide
->
-> I'd remove the "to git" part.
->
+You're adding a second declaration of $mediawiki. Cut-and-paste issue?
 
-Changed it
+Plus, didn't I already mention that this "my $mediawiki;" was meant to
+be right above mw_connect_maybe?
 
+> +        if ($wiki_login ne "") {
+> +                $msg .= "username=$wiki_login\n";
+> +        }
 
-> Other than that, I prefer Jeff's version sent yesterday. Any reason=20
-> not
-> to use it?
->
-> The command still isn't listed in "man git", aka=20
-> Documentation/git.txt
-> (I already mentionned it)
->
->> +	if (!strcmp(op, "fill")) {
->> +		credential_fill(&c);
->> +		if (c.username)
->> +			printf("username=3D%s\n", c.username);
->> +		if (c.password)
->> +			printf("password=3D%s\n", c.password);
->> +	}
->
-> See Jeff's remarks. It makes sense to output all fields here
-> (protocol, path, ...).
+Indentation with space.
 
-okay for the next patch i will add (protocol, path, ..)
+> +	my $key;
+> +	my $value;
+> +	my $Prog = "git credential $op";
+> +	open2(*Reader, *Writer, $Prog);
+> +	print Writer $msg;
+> +	close (Writer);
+
+No space before "(" (already mentionned off-list).
+
+> +			# error if key undef
+> +			if (not defined $key) {
+
+The comment is useless and therefore counter-productive. Remove it.
+
+> +				print STDERR "ERROR reciving reponse git credential fill\n";
+
+You can add $_ to the message. If this ever happens, the user will
+appreciate to see what's going on.
+
+>  sub mw_connect_maybe {
+> +
+>  	if ($mediawiki) {
+
+Don't add useless newlines.
+
+> +		if (!$wiki_passwd) {
+> +			#user knows, password not.
+> +			ask_login();
+>  		} else {
+> -			print STDERR "Logged in with user \"$wiki_login\".\n";
+> +			#user and password knows.
+> +			ask_login();
+>  		}
+
+What is this? You have an "if" with both branches identical.
+
+If the user didn't specify any login name, then you should try to
+connect to the wiki anonymously, which works in many wikis.
+
+(BTW, doesn't "ask_login" ask for a password more than a login? If so,
+please rename the function).
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
