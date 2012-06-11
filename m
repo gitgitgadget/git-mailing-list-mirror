@@ -1,83 +1,74 @@
-From: Erik Faye-Lund <kusmabite@gmail.com>
-Subject: Re: How can I specify the "sendmail" program for git-send-email?
-Date: Mon, 11 Jun 2012 18:25:47 +0200
-Message-ID: <CABPQNSaLtdGVfdkQyRFn4_Ze84zGVuvPwxTpr3hY8uDc0WU2Zg@mail.gmail.com>
-References: <20120611073232.GA5602@richard> <CABPQNSbwtP0hp8QYznwXjLAaoKVj_ZUWXQQCDG80Xb+TME1MWw@mail.gmail.com>
- <20120611090431.GA23447@richard> <CABPQNSZ1dyAfCVLGcLxbeBdS_9A_arYOhzgKBtndReK5zxu_MA@mail.gmail.com>
- <7v4nqh96z5.fsf@alter.siamese.dyndns.org>
-Reply-To: kusmabite@gmail.com
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: "remote-tracking branch"?
+Date: Mon, 11 Jun 2012 09:31:32 -0700
+Message-ID: <7vr4tl7qu3.fsf@alter.siamese.dyndns.org>
+References: <4FD6068D.1010509@xiplink.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Richard Yang <weiyang@linux.vnet.ibm.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jun 11 18:26:47 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Marc Branchaud <marcnarc@xiplink.com>
+X-From: git-owner@vger.kernel.org Mon Jun 11 18:31:49 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Se7S2-0006s5-EA
-	for gcvg-git-2@plane.gmane.org; Mon, 11 Jun 2012 18:26:46 +0200
+	id 1Se7Wl-00012r-6Q
+	for gcvg-git-2@plane.gmane.org; Mon, 11 Jun 2012 18:31:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754983Ab2FKQ0a (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Jun 2012 12:26:30 -0400
-Received: from mail-pz0-f46.google.com ([209.85.210.46]:35813 "EHLO
-	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753484Ab2FKQ02 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Jun 2012 12:26:28 -0400
-Received: by dady13 with SMTP id y13so5605489dad.19
-        for <git@vger.kernel.org>; Mon, 11 Jun 2012 09:26:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=SNRZ8cImOssH/LgYOlJKDMSK+FsmfHGDKt84zWr8/y0=;
-        b=M/KEwMApp4bjw4bf3YDLcAWLFN2tvgi2pmLFrpdlEjDjUnK2hqhb+oicXKiVwa7K1n
-         cBfaxiSwoB4SH1MHj+LzWxvSLyH9JIm8+IB848yYTjD184cT1InVzVZKlrYvXcOV8Hsg
-         W0cUrSO+0bkLqACrj14M1uC/14pMvf8ixZC0Tm6RWcJKbNwhrxQOOCbEsISvMmI6l/p0
-         4zEwse2LmDN0Ru++Bif/DZCz7LJwqXEqIJ/sLpMjPva3rRNObzTGb1+Zt7+3RDaSmezF
-         nUuvLuVZvSiumPeyYfCFM4CnobHuL3ZGnuZro7OiFvMNBKLkAwUouFADZcvK14vMabgQ
-         m1wg==
-Received: by 10.68.132.166 with SMTP id ov6mr28910748pbb.24.1339431988012;
- Mon, 11 Jun 2012 09:26:28 -0700 (PDT)
-Received: by 10.68.40.98 with HTTP; Mon, 11 Jun 2012 09:25:47 -0700 (PDT)
-In-Reply-To: <7v4nqh96z5.fsf@alter.siamese.dyndns.org>
+	id S1755279Ab2FKQbf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Jun 2012 12:31:35 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:53598 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755083Ab2FKQbe (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Jun 2012 12:31:34 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2CB4C83A7;
+	Mon, 11 Jun 2012 12:31:34 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=dj7UBX3Ze9yxlE8NDvoSlyr95cE=; b=P27OaS
+	gJLoOAaM4Li5YqBm5UwGmYeiqSvejuTS7C1JP0qs4MaGcHDE1Be+gOoPuszMvDkw
+	PEV3F6qXJ6QhYpereDqPyxNXTZbmc8odNgeQAgraUqYAnsnYYLEzF0Ityov+ZtHB
+	y3Z6zlzMOCfAC7a+jx17o7LGJklwO2hjuEEmU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Rm8LP6LS+/351PxAZZMiwGlvbSPYwy4M
+	S3/b2n9Nop2H8g24OSo7rlBXlbufpzAO0BPD7meh3eV5Z9o7lmOZ58qKx50nwqdk
+	Yi5RjKKHzHFetH1Ge20dSzud1n1402O0i+x4yLDLpBHqBjEIFJI8TbeXtQE101SJ
+	aYmCbmAZ4U0=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 23BF183A5;
+	Mon, 11 Jun 2012 12:31:34 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B149483A1; Mon, 11 Jun 2012
+ 12:31:33 -0400 (EDT)
+In-Reply-To: <4FD6068D.1010509@xiplink.com> (Marc Branchaud's message of
+ "Mon, 11 Jun 2012 10:54:05 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: E8318D02-B3E2-11E1-895A-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199671>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199672>
 
-On Mon, Jun 11, 2012 at 5:57 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Erik Faye-Lund <kusmabite@gmail.com> writes:
->
->> Well, I've always been slightly annoyed by the "send-mail" vs
->> "sendemail" inconsistency.
->
-> Hrm, isn't it between "sendmail" (as in /usr/lib/sendmail) and
-> "send-email" (a subcommand of git)?
->
+Marc Branchaud <marcnarc@xiplink.com> writes:
 
-Ugh, you are right. My brain must have been defective :)
+> When I first read this I was confused by the term "remote-tracking branch".
+> I see that the docs for "git remote" and "git branch" use this term for
+> branches like 'origin/master', as does the glossary.
+> ...
+> I feel my interpretation is reinforced by the --track/--no-track options in
+> "git branch".
 
->> Perhaps we could do something along these
->> lines (plus all documentation-updates, omitted for clarity) to reduce
->> the risk of confusion?
->
-> Assuming that the contrast between "sendmail" and "git send-email"
-> is what you are trying to address, I fail to see how it would help
-> reducing the confusion if you start naming configuration variables
-> used by "git send-email" without E.
->
+They were added long after "remote tracking branch" terminology has
+been established to mean the copies of last observed values of refs
+at remotes, and back then nobody noticed that these misnamed options
+were potential sources of this kind of confusion.  If anything,
+these options need to be renamed if you want to avoid confusion.
 
-No, this was just me being a moron.
-
-> If the proposal were to give "send-email.$var" synomyms to
-> corresponding "sendemail.$var" variables, I would have been
-> persuaded to believe it may alleviate potential confusion, though.
-
-This was really the way I wanted to go, but I somehow got unsure about
-the legality of the dashes in config sections. I'm a bit skeptical to
-introducing new non-letter characters if we don't have to.
-
-So let's just drop my suggestion. I wasn't thinking straight.
+Unfortunately, no concensus terminology for them exist; I find
+myself calling them "the branch you integrate with upstream's
+master", "the branch you forked from origin's topic", etc.
