@@ -1,68 +1,84 @@
-From: Vincent van Ravesteijn <vfr@lyx.org>
+From: Jeff King <peff@peff.net>
 Subject: Re: Help understanding git checkout behavior
-Date: Mon, 11 Jun 2012 20:52:32 +0200
-Message-ID: <4FD63E70.4000309@lyx.org>
+Date: Mon, 11 Jun 2012 14:55:07 -0400
+Message-ID: <20120611185507.GF20134@sigill.intra.peff.net>
 References: <CAMUXYmUFbixgA1bVMA46Zzjed1Dwmjv54kWWXyjsuyu904GpTA@mail.gmail.com>
+ <20120611202132.Horde.dPo1XHwdC4BP1jcsTvSBaFA@webmail.minatec.grenoble-inp.fr>
+ <CAA3EhH+iD-sS-3Sg4HJDHgs4Deg2=qbCuJD4UwZWtGQsKbV5aA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Renato Neves <nevrenato@gmail.com>
-To: =?ISO-8859-1?Q?Cl=E1udio_Louren=E7o?= <pt.smooke@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jun 11 20:52:41 2012
+Cc: konglu@minatec.inpg.fr,
+	=?utf-8?B?Q2zDoXVkaW8gTG91cmVuw6dv?= <pt.smooke@gmail.com>,
+	git@vger.kernel.org, Renato Neves <nevrenato@gmail.com>
+To: Leila <muhtasib@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jun 11 20:55:19 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Se9jE-00072l-35
-	for gcvg-git-2@plane.gmane.org; Mon, 11 Jun 2012 20:52:40 +0200
+	id 1Se9lk-0004OY-Ss
+	for gcvg-git-2@plane.gmane.org; Mon, 11 Jun 2012 20:55:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752342Ab2FKSwg convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 11 Jun 2012 14:52:36 -0400
-Received: from mail-ee0-f46.google.com ([74.125.83.46]:44337 "EHLO
-	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751871Ab2FKSwg (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Jun 2012 14:52:36 -0400
-Received: by eeit10 with SMTP id t10so1959663eei.19
-        for <git@vger.kernel.org>; Mon, 11 Jun 2012 11:52:34 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding
-         :x-gm-message-state;
-        bh=rs5375XOwLfaf+VvvoyoKApnGwYpSx+aCRy52wopKpY=;
-        b=orIvz61HX0hqBOGlcDn/pXTZSlfctEYf/BNg+B6dswGYOPnWMQS7mb+bV6RP7/leOC
-         wN2zE0IzZU2iSvUU4kqlYntvUaHmYbfMrpbvHbzXV4vor488ztFQLCs1LUyxuMQWg/7l
-         ahLu0YwHhz6zi1fao1WU8eXN8MTzPQ8zzgHwf7o2EQYG7R5QdcHBlpX/8gkxV4SMmuHR
-         Y7bzgX+GoNIkh6uK2XfZop4YTuGf5LiXxMmCE6KqtmeW/YSGO37PjtYryEldaOA9SXQt
-         rIjfJkj8tUnjGi54ihl4bXaiRaqxAJrlKHwyJJkggwRd5pEZgrNjW38Jv1FLvH9JvxBy
-         iDrA==
-Received: by 10.14.99.206 with SMTP id x54mr6290033eef.94.1339440754422;
-        Mon, 11 Jun 2012 11:52:34 -0700 (PDT)
-Received: from [192.168.1.6] (j175101.upc-j.chello.nl. [24.132.175.101])
-        by mx.google.com with ESMTPS id t3sm55747846eeb.15.2012.06.11.11.52.32
-        (version=SSLv3 cipher=OTHER);
-        Mon, 11 Jun 2012 11:52:33 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:12.0) Gecko/20120428 Thunderbird/12.0.1
-In-Reply-To: <CAMUXYmUFbixgA1bVMA46Zzjed1Dwmjv54kWWXyjsuyu904GpTA@mail.gmail.com>
-X-Gm-Message-State: ALoCoQmNIkqyFvK6ADqGXg6MTWBAdhgsLwnvfo1GDbnsrTnILRqgW8tlazag7h9OJYXvkRXHv9MH
+	id S1752664Ab2FKSzM convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 11 Jun 2012 14:55:12 -0400
+Received: from 99-108-225-23.lightspeed.iplsin.sbcglobal.net ([99.108.225.23]:50258
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751919Ab2FKSzK (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Jun 2012 14:55:10 -0400
+Received: (qmail 7502 invoked by uid 107); 11 Jun 2012 18:55:11 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 11 Jun 2012 14:55:11 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 11 Jun 2012 14:55:07 -0400
+Content-Disposition: inline
+In-Reply-To: <CAA3EhH+iD-sS-3Sg4HJDHgs4Deg2=qbCuJD4UwZWtGQsKbV5aA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199696>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199697>
 
-Op 11-6-2012 18:52, Cl=E1udio Louren=E7o schreef:
-> We are not sure if this behavior has an explanation of if it is just =
-a bug.
->
-> We are hoping that you could clarify us about this operation or
-> recommend us some place where we can find some useful information
-> about this...
+On Mon, Jun 11, 2012 at 02:34:01PM -0400, Leila wrote:
 
-I think it is a bug. The file "something/f1" should be retained when=20
-switching branches. So, checkout should fail because "something" would=20
-get overwritten by checkout, but it doesn't.
+> When you create a branch, it will contain everything committed on the
+> branch you created it from at that given point. So if you commit more
+> things on the master branch like you have done (after creating b),
+> then switch to branch b, they won't appear. This is the correct
+> behavior. Does that answer your question?
 
-Vincent
+No, the problem is more subtle:
+
+> >> smooke =C2=A0teste $ git rm something
+> >> rm 'something'
+> >> smooke =C2=A0teste $ mkdir something
+> >> smooke =C2=A0teste $ cd something/
+> >> smooke =C2=A0something $ touch f1
+> >> smooke =C2=A0something $ echo c > f1
+> >> smooke =C2=A0something $ cd ..
+> >> smooke =C2=A0teste $ git add something/f1
+> >> smooke =C2=A0teste $ git checkout b
+> >> Switched to branch 'b'
+> >> smooke =C2=A0teste $ ls
+> >> f
+
+We have lost "something/f1" during the switch, which was not committed
+anywhere. This is presumably an error because we see that "something"
+used to be tracked, and now we are tracking something different there.
+
+If we had put some new content into the file "something", git would
+rightfully complain with:
+
+  $ git checkout b
+  error: Your local changes to the following files would be overwritten
+  by checkout:
+          something
+  Please, commit your changes or stash them before you can switch branc=
+hes.
+  Aborting
+
+But it misses the case when "something" switches from a file into a
+directory, which is probably a bug.
+
+-Peff
