@@ -1,77 +1,92 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: [PATCH] update-index: allow overwriting existing submodule index
- entries
-Date: Mon, 11 Jun 2012 23:23:15 +0200
-Message-ID: <4FD661C3.7000105@web.de>
-References: <CAOkDyE9q1n=oLoEXXxurDjNM0B2+cZ9eoeGE57F9hEQUjK0hZg@mail.gmail.com> <20120609142658.GB16268@book.hvoigt.net> <7v3961ao1q.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Help understanding git checkout behavior
+Date: Mon, 11 Jun 2012 14:34:42 -0700
+Message-ID: <7vk3zd5y8d.fsf@alter.siamese.dyndns.org>
+References: <CAMUXYmUFbixgA1bVMA46Zzjed1Dwmjv54kWWXyjsuyu904GpTA@mail.gmail.com>
+ <20120611202132.Horde.dPo1XHwdC4BP1jcsTvSBaFA@webmail.minatec.grenoble-inp.fr> <CAA3EhH+iD-sS-3Sg4HJDHgs4Deg2=qbCuJD4UwZWtGQsKbV5aA@mail.gmail.com> <7vaa097k3q.fsf@alter.siamese.dyndns.org> <CAMUXYmUg12z8LUcFKwjH0Utrvxx0fa5Sne0u9adgoZ=oooBbig@mail.gmail.com> <7vobop5zmp.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Heiko Voigt <hvoigt@hvoigt.net>, Adam Spiers <git@adamspiers.org>,
-	Git Mailing List <git@vger.kernel.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jun 11 23:23:45 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Leila <muhtasib@gmail.com>, konglu@minatec.inpg.fr,
+	git@vger.kernel.org, Renato Neves <nevrenato@gmail.com>
+To: =?utf-8?Q?Cl=C3=A1udio_Louren=C3=A7o?= <pt.smooke@gmail.com>,
+	Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Jun 11 23:34:51 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SeC5O-0006zd-Sa
-	for gcvg-git-2@plane.gmane.org; Mon, 11 Jun 2012 23:23:43 +0200
+	id 1SeCG9-0006yo-MV
+	for gcvg-git-2@plane.gmane.org; Mon, 11 Jun 2012 23:34:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751674Ab2FKVX3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Jun 2012 17:23:29 -0400
-Received: from mout.web.de ([212.227.17.12]:62574 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751035Ab2FKVX0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Jun 2012 17:23:26 -0400
-Received: from [192.168.178.48] ([91.3.177.48]) by smtp.web.de (mrweb101) with
- ESMTPA (Nemesis) id 0MY6sm-1SQuOt1IPY-00VKUP; Mon, 11 Jun 2012 23:23:19 +0200
-User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:12.0) Gecko/20120428 Thunderbird/12.0.1
-In-Reply-To: <7v3961ao1q.fsf@alter.siamese.dyndns.org>
-X-Provags-ID: V02:K0:UBEnVX1Wp3KmTDlMkGylV09OCoBucETAiMkTj2SQDDg
- +3lM9Q0kIg8dD3F57MxrnzCh684NPUwt/rIWuzoc5OordAwN9E
- KEpcPgSCheE9KAggnFV3/EWVGrn0bwfHpv0UIGA/LnOMeC0Y5v
- TML2QpOBF2fF/ZRszGEZkpT11m9Q2jQXpMQmHGftu59sDmbrKx
- B4+jD2HkohYZ2MjnaBkgA==
+	id S1751440Ab2FKVep (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Jun 2012 17:34:45 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:36445 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751391Ab2FKVep (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Jun 2012 17:34:45 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2427494ED;
+	Mon, 11 Jun 2012 17:34:44 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=7RW8q/EP9M6Guq8AQl9JsD+qvls=; b=UFu5X+
+	ZtdR+Z1Vx5FEnvqJ11oiZZZT5VttxQ7YKCOW71jswSa2nd6PzTDkN6hyUdP06cU+
+	wJ6ndTh26uSBYMxH3yhS4MgZVwW76qiYERMjnUJYVjka1yZOfynApk0wlLdV9fsU
+	U4ZiNhyERhSHi6g0C/0vcUYgMg1MNFiZSaakk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Oahjz7BysQSA017czpCPmT8RB18Sj7F+
+	K8M8c3LFZZ+6cfGfExDG0Zlv3hxVWtRz+QsVEbS9n7sCjv8JvGFB3Pkpk8ZivSWL
+	+ZOQdx3hcmzHWwojDxUsWWA6SrYnwALWCr6y5UHnx5dEVfVph+tlx7+SvRHOjpaV
+	KXQ/0/GVXO0=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1BBFC94EC;
+	Mon, 11 Jun 2012 17:34:44 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A327D94EA; Mon, 11 Jun 2012
+ 17:34:43 -0400 (EDT)
+In-Reply-To: <7vobop5zmp.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Mon, 11 Jun 2012 14:04:30 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 423EA116-B40D-11E1-BC55-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199734>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199735>
 
-Am 11.06.2012 17:03, schrieb Junio C Hamano:
-> Heiko Voigt <hvoigt@hvoigt.net> writes:
-> 
->> In commit e01105 Linus introduced gitlinks to update-index. He explains
->> that he thinks it is not the right thing to replace a gitlink with
->> something else.
->>
->> That commit is from the very first beginnings of submodule support.
->> Since then we have gotten a lot closer to being able to remove a
->> submodule without losing its history. This check prevents such a use
->> case, so I think this assumption has changed.
-> 
-> Yeah, I think we should remove it if only to make it consistent with
-> "add" (if anything, the Porcelain level "add" should be the one that
-> is more strict and the plumbing level should be able to let you
-> shoot in the foot, not the other way around), but we need to make
-> sure "closer to" becomes reality. Can we remove and the resurrect
-> automatically when checking out a branch with a submodule when you
-> are on a branch with a directory and vice versa?
+Junio C Hamano <gitster@pobox.com> writes:
 
-Even while I suspect most of the time a submodule <=> directory
-transition will occur (moving directory content into a submodule
-or vice versa; and then there will be no replacement of a gitlink
-with something else as only the files inside the directory will be
-recorded) there is no reason why submodule <=> file or submodule
-<=> link transitions shouldn't work just fine. So yes, we can ;-)
-(See the recursive_submodule_checkout branch in my GitHub repo for
-current state of affairs, even though not all transitions work yet
-some do just fine)
+> When checking the differences between the two branches (the current
+> and the new), unpack-trees notices that the path "something" is not
+> present in "b" branch, and even though your current branch and the
+> index differs (the index does not have "something" as you have
+> removed it), it thinks it is OK for the result to not have it (which
+> is correct).  And when it does that, it forgets that a new path
+> "something/f1" still needs to be kept (which is not correct), which
+> is where the problem you are seeing comes from, methinks.
 
-If you want I can keep this patch in my GitHub repo until "closer
-to" becomes reality. Me too thinks that plumbing should not enforce
-this restriction, but I wouldn't mind to hold this patch back until
-then.
+So there are two paths involved in this two-way merge.
+
+The master branch (HEAD) has "something", but not "something/f1".
+The index does not have "something", but has "something/f1".
+The "b" branch does not have either.
+
+For path "something", the rule 2 in the "Two Tree Merge" section of
+Documentation/git-read-tree.txt applies.  It does not exist in the
+index, it does exist in HEAD, and it does not exist in the other
+branch we are checking out.  The result should be to remove it.
+
+For path "something/f1", the rule 4 ought to apply.  The index entry
+for it is up to date with respect to the working tree file
+(i.e. clean), the HEAD does not have it, and the other branch does
+not have it either.  We should be keeping it intact across the
+checkout.  For whatever reason, this is not happening and I suspect
+that is because we have to remove "something" due to rule 2.
+
+I just checked the history of unpack-trees code (which is the
+underlying machinery of read-tree, which in turn is the machinery
+used to check out another branch by "git checkout"), and I suspect
+that this particular case has never worked.
