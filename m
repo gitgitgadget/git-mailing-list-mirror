@@ -1,81 +1,76 @@
-From: Marc Branchaud <marcnarc@xiplink.com>
-Subject: "remote-tracking branch"?
-Date: Mon, 11 Jun 2012 10:54:05 -0400
-Message-ID: <4FD6068D.1010509@xiplink.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: What's cooking in git.git (Jun 2012, #01; Sun, 3)
+Date: Mon, 11 Jun 2012 07:54:28 -0700
+Message-ID: <7v7gvdaogr.fsf@alter.siamese.dyndns.org>
+References: <7vr4twudqm.fsf@alter.siamese.dyndns.org>
+ <CAMP44s0cQe3jdfzbJmFVoFS50Ho5hVPg9dpZx0KhG3sP_J8=_g@mail.gmail.com>
+ <7vbokwmifp.fsf@alter.siamese.dyndns.org>
+ <CAMP44s2VGLj8kRih-95A0VDq86WKWHF3EhLvz0etyHHtP27qLA@mail.gmail.com>
+ <7vmx4baaqc.fsf@alter.siamese.dyndns.org>
+ <CAMP44s2US+PoxfboZSML84GEvUwiHV4eQBOQSp6zhruT8xrKdg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Jun 11 16:54:35 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jun 11 16:54:46 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Se60o-0006yZ-6j
-	for gcvg-git-2@plane.gmane.org; Mon, 11 Jun 2012 16:54:34 +0200
+	id 1Se60u-0007Oh-Gk
+	for gcvg-git-2@plane.gmane.org; Mon, 11 Jun 2012 16:54:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754844Ab2FKOya (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Jun 2012 10:54:30 -0400
-Received: from smtp142.dfw.emailsrvr.com ([67.192.241.142]:39759 "EHLO
-	smtp142.dfw.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751369Ab2FKOy3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Jun 2012 10:54:29 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by smtp4.relay.dfw1a.emailsrvr.com (SMTP Server) with ESMTP id EAF513A0A41
-	for <git@vger.kernel.org>; Mon, 11 Jun 2012 10:54:28 -0400 (EDT)
-X-Virus-Scanned: OK
-Received: from smtp154.ord.emailsrvr.com (smtp154.ord.emailsrvr.com [173.203.6.154])
-	by smtp4.relay.dfw1a.emailsrvr.com (SMTP Server) with ESMTPS id AC5DB3A090F
-	for <git@vger.kernel.org>; Mon, 11 Jun 2012 10:54:28 -0400 (EDT)
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by smtp24.relay.ord1a.emailsrvr.com (SMTP Server) with ESMTP id 4E2011980F2;
-	Mon, 11 Jun 2012 10:53:57 -0400 (EDT)
-X-Virus-Scanned: OK
-Received: by smtp24.relay.ord1a.emailsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id F06E31980B0;
-	Mon, 11 Jun 2012 10:53:56 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:12.0) Gecko/20120430 Thunderbird/12.0.1
+	id S1754949Ab2FKOyc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Jun 2012 10:54:32 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:62570 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751369Ab2FKOyb (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Jun 2012 10:54:31 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 95A0585AC;
+	Mon, 11 Jun 2012 10:54:30 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=thBWe3u60hwc7JAYgO2FSlLXBZM=; b=BZmmWV
+	/gwZN1rfSwreEcgPrGBFpHl6ejwrDiofS8WqlfaIXjM2reNKwZMLz9zEASxSpifW
+	WD2+qGxjMPSj9SEXt1cQFWcLpEosiIava40kgLYYGa5ifL+vVkFXUO2oxFyumjpV
+	Y+bupY2oEFJnhwcC4q6mK2fmlpKdUpHZ31yv8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=BVMZDRsPOds3VVgUnE17y4LYSfXls50c
+	N5MukW3fWPnqzZfA0xflm5i8pOx5y61IfjqreGV7+YEk10HoypUejJtkaXsjfAWn
+	qp/woV3hm4vTge6DaHF6URmBHyc4wqbTCvEwYfPqC2DyFIQki07h/IR9Pp11s6ZI
+	ogyn0SvcWZo=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8C06085AA;
+	Mon, 11 Jun 2012 10:54:30 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 139FA859D; Mon, 11 Jun 2012
+ 10:54:29 -0400 (EDT)
+In-Reply-To: <CAMP44s2US+PoxfboZSML84GEvUwiHV4eQBOQSp6zhruT8xrKdg@mail.gmail.com> (Felipe
+ Contreras's message of "Sun, 10 Jun 2012 17:09:22 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 5907C072-B3D5-11E1-A5EC-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199654>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199655>
 
-On 12-06-11 06:04 AM, Lucien Kong wrote:
-> "git rebase -i" can be very dangerous if used on an already published
-> history. This code detects that one is rewriting a commit that is an
-> ancestor of a remote-tracking branch, and warns the user through the
-> editor. This feature is controlled by a new config key
-> rebase.checkremoterefs.
+Felipe Contreras <felipe.contreras@gmail.com> writes:
 
-When I first read this I was confused by the term "remote-tracking branch".
-I see that the docs for "git remote" and "git branch" use this term for
-branches like 'origin/master', as does the glossary.
+> You say I'm being irresponsible, I say you are being preoccupied by a
+> theoretical problem that will not occur, and would not cause any
+> problems if it does.
 
-But to me 'origin/master' is simply a "remote branch".  In my mind, a
-"remote-tracking branch" is a local branch with its "remote" and "merge"
-config values set.  So if my local config has
-	branch.public.remote = origin
-	branch.public.merge = refs/heads/master
-then my local 'public' branch is a "remote-tracking branch" that tracks the
-'master' branch in the 'origin' repository.
+See how the two implementations are different and think what happens
+when a user dot sources these two scripts in different order. Callers
+of __gitdir in one expects it to pay attention to GIT_DIR, callers in
+the other don't, but you can't have both at the same time in the
+same shell, can you?
 
-I feel my interpretation is reinforced by the --track/--no-track options in
-"git branch".
+It is not theoretical, as you yourself already made it happen.
 
-I believe the docs would be clearer if they used the terms "remote branch"
-and "remote-tracking branch" in this way.[1]  But before submitting a patch,
-I'd like to hear what others think.  Am I maybe missing some other
-interpretation of "remote branch"?  Or is there already a term for "a local
-branch that tracks a remote branch"?
-
-		M.
-
-[1] I understand that strictly speaking, all branches are local, and a
-"remote branch" like 'origin/master' is in fact a local branch named 'master'
-in the 'origin' namespace, and that it's really the fetch refspecs in a
-remote's configuration that link updates in a remote repository to some local
-branches, and there's no requirement that a remote named 'origin' be linked
-with the local 'origin' ref namespace, and so on and so on.  I think these
-details are important, and should be documented somewhere.  But I also think
-"remote branch" is a good shorthand term to refer to all that.
+Get over it.
