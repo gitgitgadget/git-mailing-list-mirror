@@ -1,100 +1,90 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Keeping unreachable objects in a separate pack instead of loose?
-Date: Mon, 11 Jun 2012 12:08:24 -0400
-Message-ID: <20120611160824.GB12773@sigill.intra.peff.net>
-References: <E1SdhJ9-0006B1-6p@tytso-glaptop.cam.corp.google.com>
- <bb7062f387c9348f702acb53803589f1.squirrel@webmail.uio.no>
- <87vcixaoxe.fsf@thomas.inf.ethz.ch>
- <20120611153103.GA16086@thunk.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] api-credential.txt: document that helpers field is
+ filled-in automatically
+Date: Mon, 11 Jun 2012 09:12:05 -0700
+Message-ID: <7vzk897rqi.fsf@alter.siamese.dyndns.org>
+References: <1339411574-22998-1-git-send-email-Matthieu.Moy@imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Thomas Rast <trast@student.ethz.ch>,
-	Hallvard B Furuseth <h.b.furuseth@usit.uio.no>,
-	git@vger.kernel.org, Nicolas Pitre <nico@fluxnic.net>
-To: Ted Ts'o <tytso@mit.edu>
-X-From: git-owner@vger.kernel.org Mon Jun 11 18:08:39 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Matthieu Moy <Matthieu.Moy@imag.fr>
+X-From: git-owner@vger.kernel.org Mon Jun 11 18:12:19 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Se7AO-0001HZ-Mm
-	for gcvg-git-2@plane.gmane.org; Mon, 11 Jun 2012 18:08:33 +0200
+	id 1Se7E0-0000kb-0b
+	for gcvg-git-2@plane.gmane.org; Mon, 11 Jun 2012 18:12:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755558Ab2FKQI2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Jun 2012 12:08:28 -0400
-Received: from 99-108-225-23.lightspeed.iplsin.sbcglobal.net ([99.108.225.23]:50115
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752221Ab2FKQI1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Jun 2012 12:08:27 -0400
-Received: (qmail 4454 invoked by uid 107); 11 Jun 2012 16:08:28 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 11 Jun 2012 12:08:28 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 11 Jun 2012 12:08:24 -0400
-Content-Disposition: inline
-In-Reply-To: <20120611153103.GA16086@thunk.org>
+	id S1755503Ab2FKQMK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Jun 2012 12:12:10 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:42535 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754816Ab2FKQMI (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Jun 2012 12:12:08 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 028399D5F;
+	Mon, 11 Jun 2012 12:12:08 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=gtJT/HDkE9UIpU5eFkkTde+/BBk=; b=c6kH0m
+	4Nkv1SQHRmlq5Rr7q1gjcBfyCr3GxHckhsI6/IMtzg9e/flXnjXqZFyMwj+KHCOX
+	eRs2egfmU7i971hhuNXJCiCUSLokEUrNtBNc14/iVekdZnyKBkjVM/p1DfzOfjz3
+	v17y0KjRpfoTZpECBOhpqcb/XtuKwz5lg4pWI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=XMG45NuX3OIdBqhCQRi1nZcuOPvgtAsD
+	R2V5bJvbzq0LYG6WwVKezrK/YuE831rIlWLYgsqJnjudJtOLPAdBSrlWciCVoSxF
+	O8QRpXGwD2lKveOVUeOKWqPC+OJHkTbPhyAY0f3gBtPHLgcB/PpgOoG0OufuqzSq
+	INpTPXmwM7s=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id ED3429D5E;
+	Mon, 11 Jun 2012 12:12:07 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 833A59D5D; Mon, 11 Jun 2012
+ 12:12:07 -0400 (EDT)
+In-Reply-To: <1339411574-22998-1-git-send-email-Matthieu.Moy@imag.fr>
+ (Matthieu Moy's message of "Mon, 11 Jun 2012 12:46:14 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 31174988-B3E0-11E1-96FA-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199668>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199669>
 
-On Mon, Jun 11, 2012 at 11:31:03AM -0400, Ted Ts'o wrote:
+Matthieu Moy <Matthieu.Moy@imag.fr> writes:
 
-> I'm currently using 1.7.10.2.552.gaa3bb87, and a "git gc" still kicked
-> loose a little over 4.5 megabytes of loose objects were not pruned via
-> "git prune" (since they hadn't yet expired).  These loose objects
-> could be stored in a 244k pack file.
+> It was unclear whether the field was to be specified by the user of the
+> API.
+>
+> Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+> ---
+>
+> A quick grep in Git's source code seems to show that no user of the
+> API explicitely modify this "helpers" field (except test-credential.c).
 
-Out of curiosity, what is the size of the whole repo? If it's a 500M
-kernel repository, then 4.5M is not all _that_ worrisome. Not that it
-could not be better, or that it's not worth addressing (since there are
-corner cases that behave way worse). But it gives a sense of the urgency
-of the problem, if that is the scope of the issue for average use.
+It is correct that the C API asks helpers that the user configured,
+but I think it is common across three API functions, not limited to
+credential_fill().  credential_apply_config() is called from approve
+and reject, too.
 
-> What I think would make sense is for git pack-objects to have a new
-> option which outputs a list of object id's which whould have been
-> kicked out as loose objects if it had been given the (undocumented)
-> --unpacked-unreachable option.  Then the git-repack shell script (if
-> given the -A option) would use that new option instead of
-> --unpacked-unreachable, and then using the list created by this new
-> option, create another pack which contains all of these
-> unreachable-but-not-yet-expired objects.
-
-I don't think that will work, because we will keep repacking the
-unreachable bits into new packs. And the 2-week expiration is based on
-the pack timestamp. So if your "repack -Ad" ends in two packs (the one
-you actually want, and the pack of expired crap), then you would get
-into this cycle:
-
-  1. You run "git repack -Ad". It makes A.pack, with stuff you want, and
-     B.pack, with unreachable junk. They both get a timestamp of "now".
-
-  2. A day passes. You run "git repack -Ad" again. It makes C.pack, the
-     new stuff you want, and repacks all of B.pack along with the
-     new expired cruft from A.pack, making D.pack. B.pack can go away.
-     D.pack gets a timestamp of "now".
-
-And so on, as long as you repack within the two week window, the objects
-from the cruft pack will never get ejected. So you might suggest that
-the problem is that in step 2, we repack the items from B. But if you
-don't, then you will accumulate a bunch of cruft packs (2 weeks worth),
-and those objects won't be delta'd against each other.  It's probably
-better than making them all loose, of course (you get chunks of delta'd
-objects from each repack, instead of none at all), but it's far from a
-full solution to the issue.
-
-I think solving it for good would involve a separate list of per-object
-expiration dates. Obviously we get that easily with loose objects (since
-it is one object per file).
-
-As a workaround, it might be worth lowering the default pruneExpire from
-2 weeks to 1 day or something. It is really about creating safety for
-operations in progress (e.g., you write the object, and then are _about_
-to add it to the index or update a ref when it gets pruned). I think the
-2 weeks number was pulled out of a hat as "absurdly long for an
-operation to take", and was never revisited because nobody cared or
-complained.
-
--Peff
+>  Documentation/technical/api-credentials.txt | 4 +++-
+>  1 file changed, 3 insertions(+), 1 deletion(-)
+>
+> diff --git a/Documentation/technical/api-credentials.txt b/Documentation/technical/api-credentials.txt
+> index 21ca6a2..fc6d2b9 100644
+> --- a/Documentation/technical/api-credentials.txt
+> +++ b/Documentation/technical/api-credentials.txt
+> @@ -46,7 +46,9 @@ Functions
+>  	consulting helpers, then asking the user. After this function
+>  	returns, the username and password fields of the credential are
+>  	guaranteed to be non-NULL. If an error occurs, the function will
+> -	die().
+> +	die(). The `helpers` member of the structure is filled-in
+> +	according to the corresponding configuration variables before
+> +	consulting helpers.
+>  
+>  `credential_reject`::
