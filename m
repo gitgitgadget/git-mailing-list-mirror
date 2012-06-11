@@ -1,43 +1,44 @@
 From: Ted Ts'o <tytso@mit.edu>
 Subject: Re: Keeping unreachable objects in a separate pack instead of
  loose?
-Date: Mon, 11 Jun 2012 13:27:32 -0400
-Message-ID: <20120611172732.GB16086@thunk.org>
+Date: Mon, 11 Jun 2012 13:45:07 -0400
+Message-ID: <20120611174507.GC16086@thunk.org>
 References: <E1SdhJ9-0006B1-6p@tytso-glaptop.cam.corp.google.com>
  <bb7062f387c9348f702acb53803589f1.squirrel@webmail.uio.no>
  <87vcixaoxe.fsf@thomas.inf.ethz.ch>
  <20120611153103.GA16086@thunk.org>
  <20120611160824.GB12773@sigill.intra.peff.net>
+ <alpine.LFD.2.02.1206111249270.23555@xanadu.home>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Thomas Rast <trast@student.ethz.ch>,
+Cc: Jeff King <peff@peff.net>, Thomas Rast <trast@student.ethz.ch>,
 	Hallvard B Furuseth <h.b.furuseth@usit.uio.no>,
-	git@vger.kernel.org, Nicolas Pitre <nico@fluxnic.net>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Jun 11 19:28:02 2012
+	git@vger.kernel.org
+To: Nicolas Pitre <nico@fluxnic.net>
+X-From: git-owner@vger.kernel.org Mon Jun 11 19:45:37 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Se8PF-0000DQ-IF
-	for gcvg-git-2@plane.gmane.org; Mon, 11 Jun 2012 19:27:57 +0200
+	id 1Se8gG-0004PC-Ak
+	for gcvg-git-2@plane.gmane.org; Mon, 11 Jun 2012 19:45:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751476Ab2FKR1w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Jun 2012 13:27:52 -0400
-Received: from li9-11.members.linode.com ([67.18.176.11]:49098 "EHLO
+	id S1751360Ab2FKRp1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Jun 2012 13:45:27 -0400
+Received: from li9-11.members.linode.com ([67.18.176.11]:49109 "EHLO
 	imap.thunk.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750942Ab2FKR1v (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Jun 2012 13:27:51 -0400
+	id S1750738Ab2FKRp0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Jun 2012 13:45:26 -0400
 Received: from root (helo=tytso-glaptop.cam.corp.google.com)
 	by imap.thunk.org with local-esmtp (Exim 4.72)
 	(envelope-from <tytso@thunk.org>)
-	id 1Se8P1-0003SR-UO; Mon, 11 Jun 2012 17:27:44 +0000
+	id 1Se8g2-0003WC-DP; Mon, 11 Jun 2012 17:45:18 +0000
 Received: from tytso by tytso-glaptop.cam.corp.google.com with local (Exim 4.71)
 	(envelope-from <tytso@thunk.org>)
-	id 1Se8Oq-00054R-La; Mon, 11 Jun 2012 13:27:32 -0400
+	id 1Se8fr-00056z-8D; Mon, 11 Jun 2012 13:45:07 -0400
 Content-Disposition: inline
-In-Reply-To: <20120611160824.GB12773@sigill.intra.peff.net>
+In-Reply-To: <alpine.LFD.2.02.1206111249270.23555@xanadu.home>
 User-Agent: Mutt/1.5.20 (2009-06-14)
 X-SA-Exim-Connect-IP: <locally generated>
 X-SA-Exim-Mail-From: tytso@thunk.org
@@ -46,78 +47,69 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199681>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199682>
 
-On Mon, Jun 11, 2012 at 12:08:24PM -0400, Jeff King wrote:
-> On Mon, Jun 11, 2012 at 11:31:03AM -0400, Ted Ts'o wrote:
+On Mon, Jun 11, 2012 at 01:04:07PM -0400, Nicolas Pitre wrote:
 > 
-> > I'm currently using 1.7.10.2.552.gaa3bb87, and a "git gc" still kicked
-> > loose a little over 4.5 megabytes of loose objects were not pruned via
-> > "git prune" (since they hadn't yet expired).  These loose objects
-> > could be stored in a 244k pack file.
-> 
-> Out of curiosity, what is the size of the whole repo? If it's a 500M
-> kernel repository, then 4.5M is not all _that_ worrisome. Not that it
-> could not be better, or that it's not worth addressing (since there are
-> corner cases that behave way worse). But it gives a sense of the urgency
-> of the problem, if that is the scope of the issue for average use.
+> IIRC, the 2 weeks number was instored when there wasn't any reflog on 
+> HEAD and the only way to salvage lost commits was to use 'git fsck 
+> --lost-found'.  These days, this is used only as a safety measure 
+> because there is always a tiny window during which objects are dangling 
+> before they're finally all referenced as you say.  But someone would 
+> have to work hard to hit that race even if the delay was only 30 
+> seconds.  So realistically this could even be set to 1 hour.
 
-It' my e2fsprogs development repo.  I have my "base" repo, which is
-what has been pushed out to the public (including a rewinding pu
-branch).  The total size of that repo is a little over 15 megs:
+There's another useful part of the two week window, and it's as a
+partial workaround using .git/objects/info/alternates with one or more
+rewinding branches.
 
-<tytso@tytso-glaptop.cam.corp.google.com> {/usr/projects/e2fsprogs/e2fsprogs}  [maint]
-899% ls ../base/objects/pack/
-total 16156
-  908 pack-6964a1516433f16e43dcdf4fcec1996052099f31.idx
-15248 pack-6964a1516433f16e43dcdf4fcec1996052099f31.pack
+My /usr/projects/e2fsprogs/base repo is a bare repo that contains all
+of my public branches, including a rewinding "pu" branch.
 
-I then have my development repo, which uses a
-.git/objects/info/alternates pointing at the bare "base" repo, so the
-only thing in this repo are my private development branches, and other
-things that haven't been pushed for public consumption.
+My /usr/projects/e2fsprogs/e2fsprogs uses an alternates file to
+minimize disk usage, and it points at the base repo.
 
-<tytso@tytso-glaptop.cam.corp.google.com> {/usr/projects/e2fsprogs/e2fsprogs}  [maint]
-900% ls .git/objects/pack/
-total 1048
- 28 5a486e6c2156109f7dfc725b36a201c10652803d.idx    28 pack-7b2a9cccab669338f61a681e34c39362976fb5de.idx
-224 5a486e6c2156109f7dfc725b36a201c10652803d.pack  768 pack-7b2a9cccab669338f61a681e34c39362976fb5de.pack
+The problem comes when I need to gc the base repo, every 3 months or
+so.  When I do that, objects that belonged to older incarnations of
+the rewinding pu branch disappear.  The two week window gives you a
+partial saving throw until development repo breaks due to objects that
+it depends upon disappearing.
 
-The 4.5 megabytes of loose objects packed down to a 224k "cruft" repo,
-and 768k worth of private development objects.
+It would be nice if a gc of the devel repo knew that some of the
+objects it was depending on were "expired cruft", and copy them to the
+its local objects directory.  But of course things don't work that
+way.
 
-So depending on how you would want to do the comparison, probably the
-fairest thing to say is that I had a total "good" packs totally about
-16 megs, and the loose cruft objects was an additional 4.5 megabytes.
+Here's what I do today (please don't barf; I know it's ugly):
 
-> I don't think that will work, because we will keep repacking the
-> unreachable bits into new packs. And the 2-week expiration is based on
-> the pack timestamp. So if your "repack -Ad" ends in two packs (the one
-> you actually want, and the pack of expired crap), then you would get
-> into this cycle:
-> 
->   1. You run "git repack -Ad". It makes A.pack, with stuff you want, and
->      B.pack, with unreachable junk. They both get a timestamp of "now".
-> 
->   2. A day passes. You run "git repack -Ad" again. It makes C.pack, the
->      new stuff you want, and repacks all of B.pack along with the
->      new expired cruft from A.pack, making D.pack. B.pack can go away.
->      D.pack gets a timestamp of "now".
+1)  cd to the base repository; run "git repack -Adfl --window=300 --depth=100"
 
-Hmm, yes.  What we'd really want to do is to make D.pack contain those
-items that were are newly unreachable, not including the objects in
-B.pack, and keep B.pack around until the expiry window goes by.  But
-that's a much more complicated thing, and the proof-of-concept
-algorithm I had outlined wouldn't do that.
+2)  cd to the objects directory, and create my base "cruft" pack:
+	find . --name [0-9a-f][0-9a-f] | tr -d / | git pack-objects pack-
 
-> I think solving it for good would involve a separate list of per-object
-> expiration dates. Obviously we get that easily with loose objects (since
-> it is one object per file).
+3)  hard link it into my devel repo's pack directory:
+	ln pack-* /usr/projects/e2fsprogs/e2fsprogs/.git/objects/pack
 
-Well, either that or we need to teach git-repack the difference
-between packs that are expected to contain good stuff, and packs that
-contain cruft, and to not copy "old cruft" to new packs, so the old
-pack can finally get nuked 2 weeks (or whatever the expire window
-might happen to be) later.
+4) to save space in my base repo, move it to the pack directory and
+   run git prune-packed:
+	mv pack-* pack
+	git prune-packed
 
-					- Ted
+4)  run "git repack -Adfl --window=300 --depth=100" in my devel repo
+
+5)  create a cruft pack in my devel repo (to save disk space):
+	cd /usr/projects/e2fsprogs/e2fsprogs/.git/objects
+	find . --name [0-9a-f][0-9a-f] | tr -d / | git pack-objects pack-
+	mv pack-* pack
+	git prune-packed
+
+This probably falls in the "don't use --shared unless you know what it
+does admonition in the git-clone man page.  :-)
+
+Don't worry, I don't recommend that anyone *else* do this.  But it
+works for me (although it would be nice if I made this workflow be a
+bit more optimized; at the very least I should make a shell script
+that does all this for me automatically, instead of typing all of the
+shell commands by hand.)
+
+   	      	     	   - Ted
