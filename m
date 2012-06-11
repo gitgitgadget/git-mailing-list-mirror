@@ -1,373 +1,247 @@
 From: Pavel Volek <Pavel.Volek@ensimag.imag.fr>
-Subject: [PATCHv2 1/2] git-remote-mediawiki: import "File:" attachments
-Date: Mon, 11 Jun 2012 21:29:04 +0200
-Message-ID: <1339442945-8561-1-git-send-email-Pavel.Volek@ensimag.imag.fr>
+Subject: [PATCHv2 2/2] git-remote-mediawiki: refactoring get_mw_pages function
+Date: Mon, 11 Jun 2012 21:29:05 +0200
+Message-ID: <1339442945-8561-2-git-send-email-Pavel.Volek@ensimag.imag.fr>
+References: <1339442945-8561-1-git-send-email-Pavel.Volek@ensimag.imag.fr>
 Cc: Volek Pavel <me@pavelvolek.cz>,
 	Pavel Volek <Pavel.Volek@ensimag.imag.fr>,
 	NGUYEN Kim Thuat <Kim-Thuat.Nguyen@ensimag.imag.fr>,
 	ROUCHER IGLESIAS Javier <roucherj@ensimag.imag.fr>,
 	Matthieu Moy <Matthieu.Moy@imag.fr>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jun 11 21:29:49 2012
+X-From: git-owner@vger.kernel.org Mon Jun 11 21:30:19 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SeAJ8-00028u-Q4
-	for gcvg-git-2@plane.gmane.org; Mon, 11 Jun 2012 21:29:47 +0200
+	id 1SeAJW-00030C-39
+	for gcvg-git-2@plane.gmane.org; Mon, 11 Jun 2012 21:30:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751127Ab2FKT3n (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Jun 2012 15:29:43 -0400
-Received: from mail-wi0-f172.google.com ([209.85.212.172]:35496 "EHLO
-	mail-wi0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751068Ab2FKT3m (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Jun 2012 15:29:42 -0400
-Received: by wibhj8 with SMTP id hj8so3258509wib.1
-        for <git@vger.kernel.org>; Mon, 11 Jun 2012 12:29:41 -0700 (PDT)
+	id S1751250Ab2FKTaD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Jun 2012 15:30:03 -0400
+Received: from mail-wg0-f44.google.com ([74.125.82.44]:53539 "EHLO
+	mail-wg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751068Ab2FKTaC (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Jun 2012 15:30:02 -0400
+Received: by wgbdr13 with SMTP id dr13so3624740wgb.1
+        for <git@vger.kernel.org>; Mon, 11 Jun 2012 12:30:01 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
-        h=sender:from:to:cc:subject:date:message-id:x-mailer
-         :x-gm-message-state;
-        bh=FxgQg6lzffJkGqdPIZtcASYB/fpsybuTPv9ZH1joHMI=;
-        b=mwztvxHCBW1InlaWLp7UPw5IBXp9VOiAy2Ummx2sk3PpxZ/nanTDqIn3mNOjcvX/OV
-         P3W/sJa2LuHdCZ5hN2JX/h5/oZe8XtkbZJ2GeE3fVLT5CsHzvdVqzS9BrTar7MAWRVda
-         4AvX+1TXkmNpYOUZvHd/6vVEamhyysvqOSOTx9ai2znlT/yQ9Y2l6rfn78JPP9SbSt87
-         TX1duK2ck32b/JQFDfa4zwOef4Ss5BHEV4G0JSLC9s+2qfzWZxxrp1B5ySj7CxkaM7JI
-         D+aKxSgOhTS+DpzzttnPJHQc/3OFNImhSo5kraU6u7Fxf65v+GTO6uInFazi6IfT9Ovu
-         jWbQ==
-Received: by 10.216.193.129 with SMTP id k1mr6879158wen.201.1339442980727;
-        Mon, 11 Jun 2012 12:29:40 -0700 (PDT)
+        h=sender:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
+         :references:x-gm-message-state;
+        bh=RqEixveFmbqS56tALRfd93k3Wr8ns0d0qCJeQNFopHA=;
+        b=A9G+AfnGpI28P7qb8o6f8yfMt7WdugaEi5e/MCIDFoGb7P0Z64fQPE1Iyzd7UHk3Uf
+         g5YnXa8/uzzW2+5UbLf6wguiLihxrjERxEBZ42VWPKG6BCJ8J4SqyNZc8mDPMfPl/KS4
+         g3O7di4nkdC1U17XS7fRoL7jbyn0blbSf39n+SxGv5tv9lpO7NnEnklfd4bi8Z7wttK/
+         h5wBIATBM1KEA7RvE1rWrj2bhzMaqM0PdH6zvUJkAIAI+HABBWlGqc9O3cmvhR7TpY/1
+         ++242xuGqDbiWZ0dGcRzHfOSv2qGKChImmUTiPb75hsPo3IOCGt66CfwIlXXyOyGpUxe
+         ETpA==
+Received: by 10.216.210.229 with SMTP id u79mr7748897weo.31.1339443000854;
+        Mon, 11 Jun 2012 12:30:00 -0700 (PDT)
 Received: from volek-HP.grenet.fr (wifi-123088.grenet.fr. [130.190.123.88])
-        by mx.google.com with ESMTPS id i10sm637391wiy.10.2012.06.11.12.29.39
+        by mx.google.com with ESMTPS id i10sm637391wiy.10.2012.06.11.12.29.59
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 11 Jun 2012 12:29:39 -0700 (PDT)
+        Mon, 11 Jun 2012 12:30:00 -0700 (PDT)
 X-Mailer: git-send-email 1.7.10.2.552.gaa3bb87
-X-Gm-Message-State: ALoCoQnUhQXrw5odXeQyjuvUioiiD1d72yjBXMyCcRb/vULHJc8cwkMq40aGzXvPh00A40CEiTvY
+In-Reply-To: <1339442945-8561-1-git-send-email-Pavel.Volek@ensimag.imag.fr>
+X-Gm-Message-State: ALoCoQmj60KGsr8/YovEdF6o0txrSuZcfXRnqcGqibs6+komZ3Cyhhh2ZB88kUNGXIcAcN56Kjut
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199713>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199714>
 
 From: Volek Pavel <me@pavelvolek.cz>
 
-The current version of the git-remote-mediawiki supports only import and export
-of the pages, doesn't support import and export of file attachments which are
-also exposed by MediaWiki API. This patch adds the functionality to import file
-attachments and description pages for these files.
+Splits the code in the get_mw_pages function into three separate functions.
+One for getting list of all pages and all file attachments, second for pages
+in category specified in configuration file and files related to these pages
+and the last function to get from MW a list of specified pages with related
+file attachments.
 
 Signed-off-by: Pavel Volek <Pavel.Volek@ensimag.imag.fr>
 Signed-off-by: NGUYEN Kim Thuat <Kim-Thuat.Nguyen@ensimag.imag.fr>
 Signed-off-by: ROUCHER IGLESIAS Javier <roucherj@ensimag.imag.fr>
 Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
 ---
- contrib/mw-to-git/git-remote-mediawiki | 225 ++++++++++++++++++++++++++++++++-
- 1 file changed, 220 insertions(+), 5 deletions(-)
+ contrib/mw-to-git/git-remote-mediawiki | 144 ++++++++++++++++++---------------
+ 1 file changed, 79 insertions(+), 65 deletions(-)
 
 diff --git a/contrib/mw-to-git/git-remote-mediawiki b/contrib/mw-to-git/git-remote-mediawiki
-index c18bfa1..14008ad 100755
+index 14008ad..c0c0df7 100755
 --- a/contrib/mw-to-git/git-remote-mediawiki
 +++ b/contrib/mw-to-git/git-remote-mediawiki
-@@ -13,9 +13,6 @@
- #
- # Known limitations:
- #
--# - Only wiki pages are managed, no support for [[File:...]]
--#   attachments.
--#
- # - Poor performance in the best case: it takes forever to check
- #   whether we're up-to-date (on fetch or push) or to fetch a few
- #   revisions from a large wiki, because we use exclusively a
-@@ -71,6 +68,9 @@ chomp(@tracked_pages);
- my @tracked_categories = split(/[ \n]/, run_git("config --get-all remote.". $remotename .".categories"));
- chomp(@tracked_categories);
- 
-+# Import media files too.
-+my $import_media = run_git("config --get --bool remote.". $remotename .".mediaimport");
-+
- my $wiki_login = run_git("config --get remote.". $remotename .".mwLogin");
- # TODO: ideally, this should be able to read from keyboard, but we're
- # inside a remote helper, so our stdin is connect to git, not to a
-@@ -225,6 +225,11 @@ sub get_mw_pages {
- 			get_mw_first_pages(\@slice, \%pages);
- 			@some_pages = @some_pages[51..$#some_pages];
- 		}
-+
-+		# Get pages of related media files.
-+		if ($import_media) {
-+			get_mw_pages_for_linked_mediafiles(\@tracked_pages, \%pages);
-+		}
+@@ -212,91 +212,105 @@ sub get_mw_pages {
+ 	my $user_defined;
+ 	if (@tracked_pages) {
+ 		$user_defined = 1;
+-		# The user provided a list of pages titles, but we
+-		# still need to query the API to get the page IDs.
+-
+-		my @some_pages = @tracked_pages;
+-		while (@some_pages) {
+-			my $last = 50;
+-			if ($#some_pages < $last) {
+-				$last = $#some_pages;
+-			}
+-			my @slice = @some_pages[0..$last];
+-			get_mw_first_pages(\@slice, \%pages);
+-			@some_pages = @some_pages[51..$#some_pages];
+-		}
+-
+-		# Get pages of related media files.
+-		if ($import_media) {
+-			get_mw_pages_for_linked_mediafiles(\@tracked_pages, \%pages);
+-		}
++		get_mw_tracked_pages(\%pages);
  	}
  	if (@tracked_categories) {
  		$user_defined = 1;
-@@ -244,6 +249,12 @@ sub get_mw_pages {
- 			foreach my $page (@{$mw_pages}) {
- 				$pages{$page->{title}} = $page;
- 			}
-+
-+			# Get pages of related media files.
-+			if ($import_media) {
-+				my @titles = map $_->{title}, @{$mw_pages};
-+				get_mw_pages_for_linked_mediafiles(\@titles, \%pages);
-+			}
- 		}
+-		foreach my $category (@tracked_categories) {
+-			if (index($category, ':') < 0) {
+-				# Mediawiki requires the Category
+-				# prefix, but let's not force the user
+-				# to specify it.
+-				$category = "Category:" . $category;
+-			}
+-			my $mw_pages = $mediawiki->list( {
+-				action => 'query',
+-				list => 'categorymembers',
+-				cmtitle => $category,
+-				cmlimit => 'max' } )
+-			    || die $mediawiki->{error}->{code} . ': ' . $mediawiki->{error}->{details};
+-			foreach my $page (@{$mw_pages}) {
+-				$pages{$page->{title}} = $page;
+-			}
+-
+-			# Get pages of related media files.
+-			if ($import_media) {
+-				my @titles = map $_->{title}, @{$mw_pages};
+-				get_mw_pages_for_linked_mediafiles(\@titles, \%pages);
+-			}
+-		}
++		get_mw_tracked_categories(\%pages);
  	}
  	if (!$user_defined) {
-@@ -263,10 +274,140 @@ sub get_mw_pages {
- 		foreach my $page (@{$mw_pages}) {
- 			$pages{$page->{title}} = $page;
- 		}
+-		# No user-provided list, get the list of pages from
+-		# the API.
++		get_mw_all_pages(\%pages);
++	}
++	return values(%pages);
++}
 +
-+		if ($import_media) {
-+			# Attach list of all pages for meadia files from the API,
-+			# they are in a different namespace, only one namespace
-+			# can be queried at the same moment
-+			my $mw_pages = $mediawiki->list({
-+				action => 'query',
-+				list => 'allpages',
-+				apnamespace => get_mw_namespace_id("File"),
-+				aplimit => 500
-+			});
-+			if (!defined($mw_pages)) {
-+				print STDERR "fatal: could not get the list of pages for media files.\n";
-+				print STDERR "fatal: '$url' does not appear to be a mediawiki\n";
-+				print STDERR "fatal: make sure '$url/api.php' is a valid page.\n";
-+				exit 1;
-+			}
-+			foreach my $page (@{$mw_pages}) {
-+				$pages{$page->{title}} = $page;
-+			}
-+		}
- 	}
- 	return values(%pages);
- }
- 
-+sub get_mw_pages_for_linked_mediafiles {
-+	my $titles = shift;
-+	my @titles = @{$titles};
++sub get_mw_all_pages {
 +	my $pages = shift;
-+
-+	# pattern 'page1|page2|...' required by the API
-+	my $mw_titles = join('|', @titles);
-+
-+	# Media files could be included or linked from
-+	# a page, get all related
-+	my $query = {
++	# No user-provided list, get the list of pages from the API.
++	my $mw_pages = $mediawiki->list({
 +		action => 'query',
-+		prop => 'links|images',
-+		titles => $mw_titles,
-+		plnamespace => get_mw_namespace_id("File"),
-+		pllimit => 500
-+	};
-+	my $result = $mediawiki->api($query);
-+
-+	while (my ($id, $page) = each(%{$result->{query}->{pages}})) {
-+		my @titles;
-+		if (defined($page->{links})) {
-+			my @link_titles = map $_->{title}, @{$page->{links}};
-+			push(@titles, @link_titles);
-+		}
-+		if (defined($page->{images})) {
-+			my @image_titles = map $_->{title}, @{$page->{images}};
-+			push(@titles, @image_titles);
-+		}
-+		if (@titles) {
-+			get_mw_first_pages(\@titles, \%{$pages});
-+		}
-+	}
-+}
-+
-+# Returns MediaWiki id for a canonical namespace name.
-+# Ex.: "File", "Project".
-+# Looks for the namespace id in the local configuration
-+# variables, if it is not found asks MW API.
-+sub get_mw_namespace_id {
-+	mw_connect_maybe();
-+
-+	my $name = shift;
-+
-+	# Look at configuration file, if the record
-+	# for that namespace is already stored.
-+	# Namespaces are stored in form: "Name_of_namespace:Id_namespace",
-+	# Ex.: "File:6".
-+	my @tracked_namespaces = split(/[ \n]/, run_git("config --get-all remote.". $remotename .".namespaces"));
-+	chomp(@tracked_namespaces);
-+	if (@tracked_namespaces) {
-+		foreach my $ns (@tracked_namespaces) {
-+			my @ns_split = split(/:/, $ns);
-+			if ($ns_split[0] eq $name) {
-+				return $ns_split[1];
-+			}
-+		}
-+	}
-+
-+	# NS not found => get namespace id from MW and store it in
-+	# configuration file.
-+	my $query = {
-+		action => 'query',
-+		meta => 'siteinfo',
-+		siprop => 'namespaces'
-+	};
-+	my $result = $mediawiki->api($query);
-+
-+	while (my ($id, $ns) = each(%{$result->{query}->{namespaces}})) {
-+		if (defined($ns->{canonical}) && ($ns->{canonical} eq $name)) {
-+			run_git("config --add remote.". $remotename .".namespaces ". $name .":". $ns->{id});
-+			return $ns->{id};
-+		}
-+	}
-+	die "Namespace $name was not found on MediaWiki.";
-+}
-+
-+sub download_mw_mediafile {
-+	my $filename = shift;
-+
-+	$mediawiki->{config}->{files_url} = $url;
-+
-+	my $file = $mediawiki->download( { title => $filename } );
-+	if (!defined($file)) {
-+		print STDERR "\tFile \'$filename\' could not be downloaded.\n";
++		list => 'allpages',
++		aplimit => 500
++	});
++	if (!defined($mw_pages)) {
++		print STDERR "fatal: could not get the list of wiki pages.\n";
++		print STDERR "fatal: '$url' does not appear to be a mediawiki\n";
++		print STDERR "fatal: make sure '$url/api.php' is a valid page.\n";
 +		exit 1;
-+	} elsif ($file eq "") {
-+		print STDERR "\tFile \'$filename\' does not exist on the wiki.\n";
-+		exit 1;
-+	} else {
-+		return $file;
++	}
++	foreach my $page (@{$mw_pages}) {
++		$pages->{$page->{title}} = $page;
++	}
++
++	if ($import_media) {
++		# Attach list of all pages for meadia files from the API,
++		# they are in a different namespace, only one namespace
++		# can be queried at the same moment
+ 		my $mw_pages = $mediawiki->list({
+ 			action => 'query',
+ 			list => 'allpages',
+-			aplimit => 500,
++			apnamespace => get_mw_namespace_id("File"),
++			aplimit => 500
+ 		});
+ 		if (!defined($mw_pages)) {
+-			print STDERR "fatal: could not get the list of wiki pages.\n";
++			print STDERR "fatal: could not get the list of pages for media files.\n";
+ 			print STDERR "fatal: '$url' does not appear to be a mediawiki\n";
+ 			print STDERR "fatal: make sure '$url/api.php' is a valid page.\n";
+ 			exit 1;
+ 		}
+ 		foreach my $page (@{$mw_pages}) {
+-			$pages{$page->{title}} = $page;
++			$pages->{$page->{title}} = $page;
++		}
 +	}
 +}
 +
-+sub download_mw_mediafile_from_archive {
-+	my $url = shift;
-+	my $file;
-+
-+	my $ua = LWP::UserAgent->new;
-+	my $response = $ua->get($url);
-+	if ($response->code) {
-+		$file = $response->decoded_content;
-+	} else {
-+		print STDERR "Error downloading a file from archive.\n";
++sub get_mw_tracked_pages {
++	my $pages = shift;
++	# The user provided a list of pages titles, but we
++	# still need to query the API to get the page IDs.
++	my @some_pages = @tracked_pages;
++	while (@some_pages) {
++		my $last = 50;
++		if ($#some_pages < $last) {
++			$last = $#some_pages;
+ 		}
++		my @slice = @some_pages[0..$last];
++		get_mw_first_pages(\@slice, \%{$pages});
++		@some_pages = @some_pages[51..$#some_pages];
 +	}
 +
-+	return $file;
++	# Get pages of related media files.
++	if ($import_media) {
++		get_mw_pages_for_linked_mediafiles(\@tracked_pages, \%{$pages});
++	}
 +}
-+
- sub run_git {
- 	open(my $git, "-|:encoding(UTF-8)", "git " . $_[0]);
- 	my $res = do { local $/; <$git> };
-@@ -466,6 +607,13 @@ sub import_file_revision {
- 	my %commit = %{$commit};
- 	my $full_import = shift;
- 	my $n = shift;
-+	my $mediafile_import = shift;
-+	my $mediafile;
-+	my %mediafile;
-+	if ($mediafile_import) {
-+		$mediafile = shift;
-+		%mediafile = %{$mediafile};
-+	}
  
- 	my $title = $commit{title};
- 	my $comment = $commit{comment};
-@@ -485,6 +633,10 @@ sub import_file_revision {
- 	if ($content ne DELETED_CONTENT) {
- 		print STDOUT "M 644 inline $title.mw\n";
- 		literal_data($content);
-+		if ($mediafile_import) {
-+			print STDOUT "M 644 inline $mediafile{title}\n";
-+			literal_data($mediafile{content});
++sub get_mw_tracked_categories {
++	my $pages = shift;
++	foreach my $category (@tracked_categories) {
++		if (index($category, ':') < 0) {
++			# Mediawiki requires the Category
++			# prefix, but let's not force the user
++			# to specify it.
++			$category = "Category:" . $category;
 +		}
- 		print STDOUT "\n\n";
- 	} else {
- 		print STDOUT "D $title.mw\n";
-@@ -525,6 +677,52 @@ sub get_more_refs {
++		my $mw_pages = $mediawiki->list( {
++			action => 'query',
++			list => 'categorymembers',
++			cmtitle => $category,
++			cmlimit => 'max' } )
++			|| die $mediawiki->{error}->{code} . ': '
++				. $mediawiki->{error}->{details};
++		foreach my $page (@{$mw_pages}) {
++			$pages->{$page->{title}} = $page;
++		}
++
++		# Get pages of related media files.
+ 		if ($import_media) {
+-			# Attach list of all pages for meadia files from the API,
+-			# they are in a different namespace, only one namespace
+-			# can be queried at the same moment
+-			my $mw_pages = $mediawiki->list({
+-				action => 'query',
+-				list => 'allpages',
+-				apnamespace => get_mw_namespace_id("File"),
+-				aplimit => 500
+-			});
+-			if (!defined($mw_pages)) {
+-				print STDERR "fatal: could not get the list of pages for media files.\n";
+-				print STDERR "fatal: '$url' does not appear to be a mediawiki\n";
+-				print STDERR "fatal: make sure '$url/api.php' is a valid page.\n";
+-				exit 1;
+-			}
+-			foreach my $page (@{$mw_pages}) {
+-				$pages{$page->{title}} = $page;
+-			}
++			my @titles = map $_->{title}, @{$mw_pages};
++			get_mw_pages_for_linked_mediafiles(\@titles, \%{$pages});
+ 		}
  	}
+-	return values(%pages);
  }
  
-+sub get_mw_mediafile_for_page_revision {
-+	# Name of the file on Wiki, with the prefix.
-+	my $mw_filename = shift;
-+	my $timestamp = shift;
-+	my %mediafile;
-+
-+	# Search if on MediaWiki exists a media file with given
-+	# timestamp. In that case download the file.
-+	my $query = {
-+		action => 'query',
-+		prop => 'imageinfo',
-+		titles => $mw_filename,
-+		iistart => $timestamp,
-+		iiend => $timestamp,
-+		iiprop => 'timestamp|archivename|url',
-+		iilimit => 1
-+	};
-+	my $result = $mediawiki->api($query);
-+
-+	my ($fileid, $file) = each ( %{$result->{query}->{pages}} );
-+	# If not defined it means there is no revision of the file for
-+	# given timestamp.
-+	if (defined($file->{imageinfo})) {
-+		# Get real name of media file.
-+		my $filename;
-+		if (index($mw_filename, 'File:') == 0) {
-+			$filename = substr $mw_filename, 5;
-+		} else {
-+			$filename = substr $mw_filename, 6;
-+		}
-+		$mediafile{title} = $filename;
-+
-+		my $fileinfo = pop(@{$file->{imageinfo}});
-+		$mediafile{timestamp} = $fileinfo->{timestamp};
-+		# If this is an old version of the file, the file has to be
-+		# obtained from the archive. Otherwise it can be downloaded
-+		# by MediaWiki API download() function.
-+		if (defined($fileinfo->{archivename})) {
-+			$mediafile{content} = download_mw_mediafile_from_archive($fileinfo->{url});
-+		} else {
-+			$mediafile{content} = download_mw_mediafile($mw_filename);
-+		}
-+	}
-+	return %mediafile;
-+}
-+
- sub mw_import {
- 	# multiple import commands can follow each other.
- 	my @refs = (shift, get_more_refs("import"));
-@@ -580,6 +778,7 @@ sub mw_import_ref {
- 
- 		$n++;
- 
-+		my $page_title = $result->{query}->{pages}->{$pagerevid->{pageid}}->{title};
- 		my %commit;
- 		$commit{author} = $rev->{user} || 'Anonymous';
- 		$commit{comment} = $rev->{comment} || '*Empty MediaWiki Message*';
-@@ -596,9 +795,25 @@ sub mw_import_ref {
- 		}
- 		$commit{date} = DateTime::Format::ISO8601->parse_datetime($last_timestamp);
- 
--		print STDERR "$n/", scalar(@revisions), ": Revision #$pagerevid->{revid} of $commit{title}\n";
-+		# Differentiates classic pages and media files.
-+		my @prefix = split (":", $page_title);
- 
--		import_file_revision(\%commit, ($fetch_from == 1), $n);
-+		my %mediafile;
-+		if ($prefix[0] eq "File" || $prefix[0] eq "Image") {
-+			# The name of the file is the same as the media page.
-+			my $filename = $page_title;
-+			%mediafile = get_mw_mediafile_for_page_revision($filename, $rev->{timestamp});
-+		}
-+		# If this is a revision of the media page for new version
-+		# of a file do one common commit for both file and media page.
-+		# Else do commit only for that page.
-+		print STDERR "$n/", scalar(@revisions), ": Revision #$pagerevid->{revid} of $commit{title}\n";
-+		if (%mediafile) {
-+			print STDERR "\tDownloading file $mediafile{title}, version $mediafile{timestamp}\n";
-+			import_file_revision(\%commit, ($fetch_from == 1), $n, 1, \%mediafile);
-+		} else {
-+			import_file_revision(\%commit, ($fetch_from == 1), $n, 0);
-+		}
- 	}
- 
- 	if ($fetch_from == 1 && $n == 0) {
+ sub get_mw_pages_for_linked_mediafiles {
 -- 
 1.7.10.2.552.gaa3bb87
