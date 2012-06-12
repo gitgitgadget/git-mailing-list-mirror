@@ -1,85 +1,96 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCHv2 2/2] git-remote-mediawiki: refactoring get_mw_pages function
-Date: Tue, 12 Jun 2012 11:25:46 +0200
-Message-ID: <vpqmx48x4o5.fsf@bauges.imag.fr>
-References: <1339442945-8561-1-git-send-email-Pavel.Volek@ensimag.imag.fr>
-	<1339442945-8561-2-git-send-email-Pavel.Volek@ensimag.imag.fr>
-	<CA+hdvHhn1G=T=KjNvgXa-2M6oh2znbHmfZFZYPdqKhtybh_MoQ@mail.gmail.com>
+From: Ilya Dogolazky <ilya.dogolazky@nokia.com>
+Subject: Re: git-p4: commits are visible in history after 'git p4 clone',
+ but not a single file present
+Date: Tue, 12 Jun 2012 12:37:47 +0300
+Message-ID: <4FD70DEB.7040506@nokia.com>
+References: <4FD5C263.9010307@nokia.com> <CAE5ih79Lgc8vF0v=vTGZSwASsGwQWs2Q7h_AkW67RBfi-R=DCA@mail.gmail.com> <4FD6440C.7090900@nokia.com> <4FD67530.1090002@diamand.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Pavel Volek <Pavel.Volek@ensimag.imag.fr>, git@vger.kernel.org,
-	Volek Pavel <me@pavelvolek.cz>,
-	NGUYEN Kim Thuat <Kim-Thuat.Nguyen@ensimag.imag.fr>,
-	ROUCHER IGLESIAS Javier <roucherj@ensimag.imag.fr>
-To: Simon Perrat <simon.perrat@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jun 12 11:26:00 2012
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Pete Wyckoff <pw@padd.com>
+To: Luke Diamand <luke@diamand.org>
+X-From: git-owner@vger.kernel.org Tue Jun 12 11:38:15 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SeNML-0006Uv-Rk
-	for gcvg-git-2@plane.gmane.org; Tue, 12 Jun 2012 11:25:58 +0200
+	id 1SeNYE-0001Vf-5O
+	for gcvg-git-2@plane.gmane.org; Tue, 12 Jun 2012 11:38:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752053Ab2FLJZy convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 12 Jun 2012 05:25:54 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:59223 "EHLO shiva.imag.fr"
+	id S1752712Ab2FLJiA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Jun 2012 05:38:00 -0400
+Received: from smtp.nokia.com ([147.243.1.47]:40586 "EHLO mgw-sa01.nokia.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751962Ab2FLJZx (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Jun 2012 05:25:53 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id q5C9GpNF011405
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Tue, 12 Jun 2012 11:16:52 +0200
-Received: from bauges.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1SeNMB-0007TP-Ou; Tue, 12 Jun 2012 11:25:47 +0200
-In-Reply-To: <CA+hdvHhn1G=T=KjNvgXa-2M6oh2znbHmfZFZYPdqKhtybh_MoQ@mail.gmail.com>
-	(Simon Perrat's message of "Tue, 12 Jun 2012 11:06:07 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.93 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Tue, 12 Jun 2012 11:16:54 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: q5C9GpNF011405
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1340097414.36988@k29I+D/OMv/rmIHf/SphLw
+	id S1752682Ab2FLJh6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Jun 2012 05:37:58 -0400
+Received: from [172.21.81.167] (esdhcp09nok081167.ntc.nokia.com [172.21.81.167])
+	by mgw-sa01.nokia.com (Sentrion-MTA-4.2.2/Sentrion-MTA-4.2.2) with ESMTP id q5C9blDI024014;
+	Tue, 12 Jun 2012 12:37:48 +0300
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:12.0) Gecko/20120428 Thunderbird/12.0.1
+In-Reply-To: <4FD67530.1090002@diamand.org>
+X-Nokia-AV: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199775>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199776>
 
-Simon Perrat <simon.perrat@gmail.com> writes:
+Hi Luke!
 
-> 2012/6/11 Pavel Volek <Pavel.Volek@ensimag.imag.fr>:
->
->> +sub get_mw_all_pages {
->> + =A0 =A0 =A0 my $pages =3D shift;
->> + =A0 =A0 =A0 # No user-provided list, get the list of pages from th=
-e API.
->> + =A0 =A0 =A0 my $mw_pages =3D $mediawiki->list({
->> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 action =3D> 'query',
->> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 list =3D> 'allpages',
->> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 aplimit =3D> 500
->> + =A0 =A0 =A0 });
->
-> Indentation should be 8 columns wide.
+ > #!/bin/sh
+ > export P4PORT=localhost:1234
+ > mkdir db cli
+ > ( cd db && p4d & )
+ > sleep 2
+ > ( cd cli && EDITOR=: p4 client && date >foo.c &&
+ >   p4 add foo.c && p4 submit -d 'x' )
+ > git-p4 clone //depot@all
 
-More precisely, indentation in Git is done with tabs, and should displa=
-y
-well with 1 tab =3D=3D 8 characters.
+I installed p4d on my machine and executed the above script.
+It works, the file foo.c is visible in the copy and one line patch is 
+visible by "git log -p". Everything is fine!
 
-It is actually the case in Pavel's patch. When seen as patches, the
-first column is used for + and -, so the first tab is rendered as only =
-7
-characters, but that's normal.
+Then I realize, that the "git-p4" call in your script is communicating 
+with the p4 daemon directly, which is much more simple setup than I 
+tried to use before. Then I changed the clone command: instead of
+  $ git p4 clone //kalma/xxx/yyy@all
+I now tried
+  $ git p4 clone //xxx/yyy@all
+after setting P4PORT etc to point to the company's perforce server. And 
+it worked!
 
-Or did I miss something?
+Then I even tried
+$ git p4 clone //xxx@all
+And it worked too (creating a huge git repository with the whole project).
 
---=20
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Until today I tried to use the following setup: first clone the whole 
+perforce repository with p4 command line client to my machine ('kalma' 
+is its name) and then make a git repository by "git-p4 clone" from this 
+intermediate location (and it seems I did something wrong there: files 
+were visible in the intermediate location after the first step, but not 
+in the end location after git-p4). I read it somewhere in documentation 
+claiming that it's the only way to use git-p4. But now I see, that it 
+seems not to be necessary. Please clarify, is it okay to skip this 
+intermediate location and use git-p4 in the same way as your script does?
+
+And another question, probably connected to above: Now I did this:
+$ git p4 clone //xxx/yyy@all
+$ cd yyy/zzz
+$ edit readme.txt (which was already present there)
+$ git commit readme.txt
+$ git p4 rebase (Current branch master is up to date)
+$ git p4 submit
+
+That last step failed with following messages:
+Submitting change 20073
+... //xxx/yyy/zzz/readme.txt -  warning: cannot submit from non-stream 
+client
+No files to submit.
+Submit failed -- fix problems above then use 'p4 submit -c 20073'.
+
+Is it somehow related to my setup?
+
+Cheers,
+
+Ilya
