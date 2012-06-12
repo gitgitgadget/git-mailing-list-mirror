@@ -1,173 +1,109 @@
-From: Javier.Roucher-Iglesias@ensimag.imag.fr
-Subject: [PATCH/RFC] add git credential login to remote mediawiki
-Date: Tue, 12 Jun 2012 16:42:05 +0200
-Message-ID: <1339512125-32761-1-git-send-email-Javier.Roucher-Iglesias@ensimag.imag.fr>
-Cc: Javier Roucher <jroucher@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 12 16:42:47 2012
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCHv5] rebase [-i --exec | -ix] <CMD>...
+Date: Tue, 12 Jun 2012 07:46:20 -0700
+Message-ID: <7vk3zc4mgz.fsf@alter.siamese.dyndns.org>
+References: <1339325076-474-1-git-send-email-Lucien.Kong@ensimag.imag.fr>
+ <1339488312-6349-1-git-send-email-Lucien.Kong@ensimag.imag.fr>
+ <4FD70A8E.7050502@in.waw.pl>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Lucien Kong <Lucien.Kong@ensimag.imag.fr>, git@vger.kernel.org,
+	Valentin Duperray <Valentin.Duperray@ensimag.imag.fr>,
+	Franck Jonas <Franck.Jonas@ensimag.imag.fr>,
+	Thomas Nguy <Thomas.Nguy@ensimag.imag.fr>,
+	Huynh Khoi Nguyen Nguyen 
+	<Huynh-Khoi-Nguyen.Nguyen@ensimag.imag.fr>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+To: Zbigniew =?utf-8?Q?J=C4=99drzejewski-Szmek?= <zbyszek@in.waw.pl>
+X-From: git-owner@vger.kernel.org Tue Jun 12 16:46:33 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SeSIx-0005jM-Cn
-	for gcvg-git-2@plane.gmane.org; Tue, 12 Jun 2012 16:42:47 +0200
+	id 1SeSMV-0006IX-Mq
+	for gcvg-git-2@plane.gmane.org; Tue, 12 Jun 2012 16:46:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753438Ab2FLOmV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Jun 2012 10:42:21 -0400
-Received: from mail-we0-f174.google.com ([74.125.82.174]:61477 "EHLO
-	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753174Ab2FLOmT (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Jun 2012 10:42:19 -0400
-Received: by weyu7 with SMTP id u7so2896824wey.19
-        for <git@vger.kernel.org>; Tue, 12 Jun 2012 07:42:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:date:message-id:x-mailer;
-        bh=1ZAabDIwYkwM2EstT/9slhl5KW/rdKlW67Qcp14qXb0=;
-        b=XvvRtFXLcbjQg55EH6UfDf9+qiF9YQcQUUN5ymZbuw/QZqw8DdW7PSwWFNa/xgq+C4
-         yAzuDcM/GfTVZx+kcfU/bAx0U13N3VzoZImjeGjcpKtpY3O9tUYehgIH8HB/pFrrruYO
-         WGq+N1KI/BJhKbGEvOe6Znznxs349D8k9YpIKPIA+LVJqhhO2NXrhG/EP5bKFKGqkMZX
-         +/ELIO3Os3+5Ry6FLUIq+GQiY3Hxfciy8H1+bx2npgbv9S+7a+xuPN+6bMk1x11a9+OF
-         S/QmskLNIzhZKUuYJlqRaxXlBpedh/mxr/6VwaXtXkBYv6CpOjQ/RGnkpuyd0IRClJO5
-         nfdg==
-Received: by 10.180.88.194 with SMTP id bi2mr29605642wib.20.1339512138176;
-        Tue, 12 Jun 2012 07:42:18 -0700 (PDT)
-Received: from SuperNova.grenet.fr ([80.214.9.0])
-        by mx.google.com with ESMTPS id f7sm9652625wiv.2.2012.06.12.07.42.16
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 12 Jun 2012 07:42:17 -0700 (PDT)
-X-Mailer: git-send-email 1.7.10.2.573.ged8bfa6
+	id S1752259Ab2FLOqX convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 12 Jun 2012 10:46:23 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48522 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751860Ab2FLOqX convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 12 Jun 2012 10:46:23 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 75DE192F5;
+	Tue, 12 Jun 2012 10:46:22 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=XrMJ4awoGdKH
+	GHXlZLe2MSpNkBY=; b=U4QWyNXZDYKlV7wW155rydDjIB+IyDQdTpyC7HBjHEL3
+	sRRgu3LYCtqK8rerayrDWRC4F64Ue+Ch/PEpcaU/3MzPQjbTcJUJfjYoTclOGVmw
+	LvYLSAMHjvsM1qoZ0pj0Amiz9UEvf8NPFOBdWZv7Qn0Sni8LGxLxq3vI/drmfRo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=iw+JfR
+	wDYNA/5YbSKOKMhkxxiaEKfXdlo/jffUsXlPLB2ucXK0h3vPUISGAp+36HimiJ1Y
+	4MwHHrx2ZSdidmegHL4kEhQPkGAJKh74HfmEkIwkIPfIAiE9s1dG9qsGj+lmZeMd
+	A6S/DZwXi/FoDr9bJs+HUSNw1/9Kbjsue6Ud8=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6B15292F4;
+	Tue, 12 Jun 2012 10:46:22 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E223C92F3; Tue, 12 Jun 2012
+ 10:46:21 -0400 (EDT)
+In-Reply-To: <4FD70A8E.7050502@in.waw.pl> ("Zbigniew =?utf-8?Q?J=C4=99drze?=
+ =?utf-8?Q?jewski-Szmek=22's?= message of "Tue, 12 Jun 2012 11:23:26 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 607EA6FE-B49D-11E1-B5DA-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199794>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199795>
 
-From: Javier Roucher <jroucher@gmail.com>
+Zbigniew J=C4=99drzejewski-Szmek  <zbyszek@in.waw.pl> writes:
 
+> On 06/12/2012 10:05 AM, Lucien Kong wrote:
+>> +-x <cmd>::
+>> +--exec <cmd>::
+>> +	Append "exec <cmd>" after each commit application line. <cmd>
+>> +	will be interpreted as one or more shell commands (see
+>> +	INTERACTIVE MODE below).
+>> ++
+>> +This option has to be used along with the `--interactive` option
+>> +explicitly.  You may execute several commands between each commit
+>> +applications.  For this, you can use one instance of exec:
+> Hi,
+>
+> this is still grammatically fishy, and has "between each commit
+> applications", which was corrected above, but not here.
 
-This path uses git credential to store the login/password of the mediawiki.
+Not just grammo, but "between" is not correct, as there will be the
+final test after the last "pick".
 
+>> +	git rebase -i --exec "cmd1; cmd2; ...".
+>> ++
+>> +You can also insert several instances of exec, if you wish to only
+>> +have one command per line. For example:
+> s/instances of exec/instances of --exec/
 
----
- contrib/mw-to-git/git-remote-mediawiki | 96 ++++++++++++++++++++++++++++------
- 1 file changed, 81 insertions(+), 15 deletions(-)
+Not just that, in the explanation part, we tend to spell `--exec` to
+make the part that needs to be literally typed stand out (also we
+want to see dash-dash, not em-dash, in the formatted output).
 
-diff --git a/contrib/mw-to-git/git-remote-mediawiki b/contrib/mw-to-git/git-remote-mediawiki
-index c18bfa1..4dcc189 100755
---- a/contrib/mw-to-git/git-remote-mediawiki
-+++ b/contrib/mw-to-git/git-remote-mediawiki
-@@ -152,29 +152,95 @@ while (<STDIN>) {
- ########################## Functions ##############################
- 
- # MediaWiki API instance, created lazily.
-+sub run_credential {
-+	my $cre_protocol = "";
-+	my $cre_host = "";
-+	my $cre_path = "";
-+	my $msg = "";
-+	my $result = "";
-+	my $op = $_[0];
-+
-+	my $parsed = URI->new($url);
-+	$cre_protocol = $parsed->scheme;
-+	$cre_host = $parsed->host;
-+	$cre_path = $parsed->path;
-+
-+	if ($wiki_login ne "") {
-+		$msg .= "username=$wiki_login\n";
-+	}
-+	if ($wiki_passwd ne "") {
-+		$msg .= "password=$wiki_passwd\n";
-+	}
-+	if ($cre_protocol ne "") {
-+		$msg .= "protocol=$cre_protocol\n";
-+	}
-+	if ($cre_host ne "") {
-+		$msg .= "host=$cre_host\n";
-+	}
-+	if ($cre_path ne "") {
-+		$msg .= "path=$cre_path\n";
-+	}
-+	$msg .= "\n";
-+
-+	my $key;
-+	my $value;
-+	my $Prog = "git credential $op";
-+	open2 (*Reader, *Writer, $Prog);
-+	print Writer $msg;
-+	close (Writer);
-+
-+	if ($op eq "fill") {
-+		while (<Reader>) {
-+			my ($key, $value) = /([^=]*)=(.*)/;
-+			if (not defined $key) {
-+				print STDERR "ERROR receiving response git credential fill\n Reponse: $_\n";
-+				# exit 1;
-+			}
-+			if ($key eq "username") {
-+				$wiki_login = $value;
-+			}
-+			if ($key eq "password") {
-+				$wiki_passwd = $value;
-+			}
-+		}
-+	} else {
-+		while (<Reader>) {
-+			print STDERR "\nERROR while running git credential $op:\n$_";
-+		}
-+	}
-+}
-+
- my $mediawiki;
- 
-+sub ask_credential {
-+	run_credential("fill");
-+
-+	if (!$mediawiki->login( {
-+		lgname => $wiki_login,
-+		lgpassword => $wiki_passwd,
-+		lgdomain => $wiki_domain,
-+		} )) {
-+			print STDERR "Failed to log in mediawiki user: $wiki_login\n on: $url\n";
-+			print STDERR "URL: $wiki_domain $url\n";
-+			print STDERR "(error " .
-+				$mediawiki->{error}->{code} . ': ' .
-+				$mediawiki->{error}->{details} . ")\n";
-+			run_credential("reject");
-+#			exit 1;
-+	} else {
-+		print STDERR "Logged in with user: $wiki_login.\n";
-+		run_credential("approve");
-+	}
-+}
-+
- sub mw_connect_maybe {
-+
- 	if ($mediawiki) {
- 	    return;
- 	}
- 	$mediawiki = MediaWiki::API->new;
- 	$mediawiki->{config}->{api_url} = "$url/api.php";
--	if ($wiki_login) {
--		if (!$mediawiki->login({
--			lgname => $wiki_login,
--			lgpassword => $wiki_passwd,
--			lgdomain => $wiki_domain,
--		})) {
--			print STDERR "Failed to log in mediawiki user \"$wiki_login\" on $url\n";
--			print STDERR "(error " .
--			    $mediawiki->{error}->{code} . ': ' .
--			    $mediawiki->{error}->{details} . ")\n";
--			exit 1;
--		} else {
--			print STDERR "Logged in with user \"$wiki_login\".\n";
--		}
--	}
-+	ask_credential();
- }
- 
- sub get_mw_first_pages {
--- 
-1.7.10.2.573.ged8bfa6
+>> +	git rebase -i --exec "cmd1" --exec "cmd2" ...
+>> ++
+>> +If --autosquash is used, the "exec" lines will not be appended for =
+the
+>> +intermediate commits, and will only appear at the end of each
+>> +squash/fixup series.
+>> +
+
+Same for `--autosquash`.
+
+I do not think it is worth another round of resend at this point, so
+please eyeball the version I fixed up and queued in 'pu' when it is
+pushed out.  I also moved the '-x <cmd>::' option description to
+where it belongs (iow, not at the very beginning).
