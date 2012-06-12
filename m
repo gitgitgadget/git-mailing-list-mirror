@@ -1,247 +1,86 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git bisect old/new
-Date: Mon, 11 Jun 2012 22:43:42 -0700
-Message-ID: <7v1ull5bld.fsf@alter.siamese.dyndns.org>
-References: <1339466625-17461-1-git-send-email-Valentin.Duperray@ensimag.imag.fr>
- <CAP8UFD1mgKNQRZpuqYgyL__DGpoZ3cOGJC0amoqWT+1Bn_0iTg@mail.gmail.com>
+From: jaseem abid <jaseemabid@gmail.com>
+Subject: Cover letter for the last patch
+Date: Tue, 12 Jun 2012 11:33:52 +0530
+Message-ID: <CAH-tXsCn+9t5dAq6ujNTvWL5Gz_Cw5nRLzwVjxw6-t8Hhwg4Aw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Valentin Duperray <Valentin.Duperray@ensimag.imag.fr>,
-	git@vger.kernel.org, Lucien Kong <Lucien.Kong@ensimag.imag.fr>,
-	Franck Jonas <Franck.Jonas@ensimag.imag.fr>,
-	Thomas Nguy <Thomas.Nguy@ensimag.imag.fr>,
-	Huynh Khoi Nguyen Nguyen 
-	<Huynh-Khoi-Nguyen.Nguyen@ensimag.imag.fr>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-To: Christian Couder <christian.couder@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jun 12 07:43:52 2012
+Content-Type: text/plain; charset=UTF-8
+Cc: Andrew Sayers <andrew-git@pileofstuff.org>,
+	=?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: git mailing list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Jun 12 08:05:09 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SeJtO-0006QR-7c
-	for gcvg-git-2@plane.gmane.org; Tue, 12 Jun 2012 07:43:50 +0200
+	id 1SeKDy-00020p-Du
+	for gcvg-git-2@plane.gmane.org; Tue, 12 Jun 2012 08:05:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751514Ab2FLFnq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Jun 2012 01:43:46 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:43544 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751164Ab2FLFnp (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Jun 2012 01:43:45 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EF27B54EB;
-	Tue, 12 Jun 2012 01:43:44 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=us4nwFx0jEyLdjjGVIChEPzszrM=; b=SCbROQ
-	N93ytldf7P1UrZVwdH0mJ21qljg+oSc7j6s0OBKwA5PhXIaOTO14vEJh7y70ZJNl
-	bF4S6jzsMHj/dq1Uuw0mfRjsVVEmTGBogolBOAuPtiorYxCd11y/kcZGVkLYh6E/
-	eiYcjjbC/0LgEzfx7e/o2M8dHuQkpCB+CLKn8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=W0zzuxeDWW5KGlYhppJCf5BKycWC5dIx
-	iSB6j55+It4UnDSm+znl5hYLl3bgjFImBA9XN0FhgdPQNyD2T4dPzpiUlrVYXlFq
-	sH7rInHf9hQiA1HIbv6318YI1CxodkagJ/3LxCx3RMgTcRdXtVcpKDmpcR+G8Ngt
-	6rBqfuaS40U=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E4B5354EA;
-	Tue, 12 Jun 2012 01:43:44 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3538654E9; Tue, 12 Jun 2012
- 01:43:44 -0400 (EDT)
-In-Reply-To: <CAP8UFD1mgKNQRZpuqYgyL__DGpoZ3cOGJC0amoqWT+1Bn_0iTg@mail.gmail.com>
- (Christian Couder's message of "Tue, 12 Jun 2012 07:25:07 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 92977B08-B451-11E1-95F1-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752224Ab2FLGEv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Jun 2012 02:04:51 -0400
+Received: from mail-we0-f174.google.com ([74.125.82.174]:45453 "EHLO
+	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751496Ab2FLGEe (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Jun 2012 02:04:34 -0400
+Received: by weyu7 with SMTP id u7so2585832wey.19
+        for <git@vger.kernel.org>; Mon, 11 Jun 2012 23:04:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to:cc:content-type;
+        bh=7UnRk/LtnOOxPOIobKO60e9rSdq9UmcBxY1rflg4Nm4=;
+        b=B8c048Y4+ptGu1APSUNT+BeIcxhbNmYEd8sykRVGlAbFUwwEVEtLGZYrW7EVjIbakZ
+         7hps2P14eumq734GncCjAErNLhBwocCECUTSN4BzjmcdO7Oru94xqA8RoAZtNJKnsl19
+         4bCLVoInWkyaCnSbwQHLfz8dI5HxYJ4EbEKeuQA0IbmcpeYlWhzlfyvzD/eO0ZLOBYFi
+         u8RRLgtmpOVeOgQwcNgp8bXra8y4NX5Ipwv6rNJKvcKC4qUm6IvX+BauokXOpF4VyBRY
+         IsjeTIL2c/LBRU4ms0eHXDYxtiQfZwffnUfE/bfHa032Fon9huOlee06sDEQa6ELuF5x
+         zLBg==
+Received: by 10.180.80.74 with SMTP id p10mr26462945wix.10.1339481072965; Mon,
+ 11 Jun 2012 23:04:32 -0700 (PDT)
+Received: by 10.227.173.142 with HTTP; Mon, 11 Jun 2012 23:03:52 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199764>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199765>
 
-Christian Couder <christian.couder@gmail.com> writes:
+Dear list,
 
-Thanks for comments.
+Sorry,  I think i missed the cover letter for the last patch.
 
-> If you used some design that was discussed on the mailing list or if
-> there have been relevant discussions on the mailing list, it would be
-> nice to have links to the email thread in the commit message.
+[PATCH/RFC] gitweb: Adding jasmine test suite files for the browser
 
-Perhaps.
+JavaScript in gitweb is almost completely handwritten.
+It is reimplementing things JavaScript library authors did a lot of times
+already. Porting the current code to a library version was proposed as a gsoc
+project this year. [ So I think I can skip why this patch is relevant]
 
->> + git bisect new [<rev>]
->> + git bisect old [<rev>...]
->
-> maybe:
->
-> git bisect (bad|new) [<rev>]
-> git bisect (good|old) [<rev>...]
+A common suggestion was to add tests to the new JavaScript code. Deciding the
+testing framework took much more time than expected after several discussions.
+People wanted tests that could be run in console with TAP so that it will
+integrate well with the existing system but since the code is ultimately going
+to be run in a browser, tests in the browser was more important.
 
-Definitely.
+After a lot of discussions here and on #git-devel, I have used jasmine BDD
+framework, nodejs and jasmine TAP reporter to solve the issues. The specs are
+written for the browser and a makefile generates t/t9503-gitweb-javascript.js
+which can be run in a console to produce TAP output.
 
->> @@ -104,6 +106,44 @@ For example, `git bisect reset HEAD` will leave you on the current
->>  bisection commit and avoid switching commits at all, while `git bisect
->>  reset bisect/bad` will check out the first bad revision.
->>
->> +Alternative research: bisect new and bisect old
->> +~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
->> +
->> +If you are not looking for a regression but for a change of a given
->> +property, you can use:
->
-> I would rather say:
-> ...
 
-Good.
+This patch series is for review only. If everyone is ok with the new testing
+framework, I will be able to send a patch with actual code in a week or 2. This
+patch series adds few sample tests to the existing code, and makes it run in a
+browser and console.
 
->> @@ -403,9 +406,10 @@ struct commit_list *find_bisection(struct commit_list *list,
->>  static int register_ref(const char *refname, const unsigned char *sha1,
->>                        int flags, void *cb_data)
->>  {
->> -       if (!strcmp(refname, "bad")) {
->> +       if (!strcmp(refname, bisect_term_bad)) {
->>                current_bad_sha1 = sha1;
->> -       } else if (!prefixcmp(refname, "good-")) {
->> +       } else if (!prefixcmp(refname, "good-") ||
->> +                       !prefixcmp(refname, "old-")) {
->
-> I don't like very much "good" and "old" to be hardcoded here.
+I have added gitweb/test/README with instructions on the new test.
 
-Really?
+Please eyeball the changes to t/Makefile as I am not very sure if that is the
+best way to do it.
 
->> @@ -731,18 +735,25 @@ static void handle_bad_merge_base(void)
->>        if (is_expected_rev(current_bad_sha1)) {
->>                char *bad_hex = sha1_to_hex(current_bad_sha1);
->>                char *good_hex = join_sha1_array_hex(&good_revs, ' ');
->> +               if (!strcmp(bisect_term_bad,"bad")) {
->> +                       fprintf(stderr, "The merge base %s is bad.\n"
->> +                               "This means the bug has been fixed "
->> +                               "between %s and [%s].\n",
->> +                               bad_hex, bad_hex, good_hex);
->> +               } else {
->> +                       fprintf(stderr, "The merge base %s is new.\n"
->> +                               "The property has changed "
->> +                               "between %s and [%s].\n",
->> +                               bad_hex, bad_hex, good_hex);
->> +               }
->
-> I don't like very much "new" to be harcoded here too.
+Reviews most welcome.
 
-Why not?  It is not like we will be adding any more synonym pair
-beyond good/bad, so... 
 
->>
->>  /*
->> - * "check_merge_bases" checks that merge bases are not "bad".
->> + * "check_merge_bases" checks that merge bases are not "bad" (resp. "new").
->>  *
->> - * - If one is "bad", it means the user assumed something wrong
->> + * - If one is "bad" (resp. "new"), it means the user assumed something wrong
->>  * and we must exit with a non 0 error code.
->> - * - If one is "good", that's good, we have nothing to do.
->> + * - If one is "good" (resp. "old"), that's good, we have nothing to do.
->>  * - If one is "skipped", we can't know but we should warn.
->>  * - If we don't know, we should check it out and ask the user to test.
->>  */
->
-> I am not sure changing the comments is worth it...
 
-I think it is probably a good idea to cast in stone that we support
-two pairs, i.e. good/bad or old/new.  I would have said "or" instead
-of "resp." above, though.
-
->> @@ -889,6 +901,30 @@ static void show_diff_tree(const char *prefix, struct commit *commit)
->>  }
->>
->>  /*
->> + * The terms used for this bisect session are stocked in
->> + * BISECT_TERMS: it can be bad/good or new/old.
->
-> I am not sure saying "it can be bad/good or new/old" adds anything.
-
-It makes it clear that we are not allowing arbitrary pair of words
-to substitute the good/bad pair, which is a plus.
-
->> +void read_bisect_terms(void)
->> +{
->> +       struct strbuf str = STRBUF_INIT;
->> +       const char *filename = git_path("BISECT_TERMS");
->> +       FILE *fp = fopen(filename, "r");
->> +
->> +       if (!fp)
->> +               die_errno("Could not open file '%s'", filename);
->
-> This is not very compatible with older git versions.
-> I know that it's kind of strange to upgrade git in the middle of a
-> bisection but why not just use "bad"/"good" if there is no file?
-
-Good thinking.
-
->> @@ -898,6 +934,8 @@ static void show_diff_tree(const char *prefix, struct commit *commit)
->>  */
->>  int bisect_next_all(const char *prefix, int no_checkout)
->>  {
->> +       read_bisect_terms();
->> +
->>        struct rev_info revs;
->>        struct commit_list *tried;
->>        int reaches = 0, all = 0, nr, steps;
->
-> We put all declarations at the beginning of functions.
-
-Good eyes.
-
->> @@ -22,7 +22,15 @@ git bisect replay <logfile>
->>  git bisect log
->>        show bisect log.
->>  git bisect run <cmd>...
->> -       use <cmd>... to automatically bisect.
->> +       use <cmd>... to automatically bisect
->
-> Why this change?
-
-To end a sentence with a full-stop?
-
-> But anyway if possible I'd rather have:
->
-> git bisect (bad|new) [<rev>]
-> git bisect (good|old) [<rev>...]
-
-Yes.
-
->> @@ -32,6 +40,8 @@ OPTIONS_SPEC=
->>
->>  _x40='[0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f]'
->>  _x40="$_x40$_x40$_x40$_x40$_x40$_x40$_x40$_x40"
->> +NEW="bad"
->> +OLD="good"
->
-> Why not BISECT_BAD_TERM/BISECT_GOOD_TERM instead of NEW/OLD?
-> It should be consistent with bisect.c
-
-It's kind of too long.  Isn't BISECT_GOOD vs BISECT_BAD good enough
-(and if so make bisect.c consistent with it).
-
->> @@ -184,8 +210,8 @@ bisect_write() {
->>        rev="$2"
->>        nolog="$3"
->>        case "$state" in
->> -               bad)            tag="$state" ;;
->> -               good|skip)      tag="$state"-"$rev" ;;
->> +               bad|new)                tag="$state" ;;
->> +               good|skip|old)  tag="$state"-"$rev" ;;
->
-> Why not "$BISECT_TERM_BAD" instead of "bad|new" and
-> "$BISECT_TERM_GOOD|skip" instead of "good|skip|old"?
-
-If the point is to make sure "git bisect good" will error out when
-we are in new/old mode, I agree (and also the other case/esac in the
-remainder of the patch that allows you feed bad and new mixed).
-
-These case arms look indented in a funny way, but is it only because
-of e-mail quoting, by the way?
-
->>                *)              die "$(eval_gettext "Bad bisect_write argument: \$state")" ;;
->>        esac
+-- 
+Jaseem Abid
+http://jaseemabid.github.com
