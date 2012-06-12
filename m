@@ -1,76 +1,66 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCHv4] rebase [-i --exec | -ix] <CMD>...
-Date: Tue, 12 Jun 2012 13:29:21 -0700
-Message-ID: <7v4nqgjmu6.fsf@alter.siamese.dyndns.org>
-References: <1339167235-2009-2-git-send-email-Lucien.Kong@ensimag.imag.fr>
- <1339325076-474-1-git-send-email-Lucien.Kong@ensimag.imag.fr>
- <4FD48B70.5080600@kdbg.org> <7vpq9598yb.fsf@alter.siamese.dyndns.org>
- <4FD790AF.5070108@kdbg.org>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: git: Wrong parsing of ssh urls with IPv6 literals ignores port
+Date: Tue, 12 Jun 2012 15:29:53 -0500
+Message-ID: <20120612202953.GG9764@burratino>
+References: <20111022001704.3115.87464.reportbug@hejmo>
+ <20120610090516.GA30177@burratino>
+ <4FD78EA0.2090306@lsrfire.ath.cx>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Lucien Kong <Lucien.Kong@ensimag.imag.fr>, git@vger.kernel.org,
-	tboegi@web.de,
-	Valentin Duperray <Valentin.Duperray@ensimag.imag.fr>,
-	Franck Jonas <Franck.Jonas@ensimag.imag.fr>,
-	Thomas Nguy <Thomas.Nguy@ensimag.imag.fr>,
-	Huynh Khoi Nguyen Nguyen 
-	<Huynh-Khoi-Nguyen.Nguyen@ensimag.imag.fr>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-To: Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Tue Jun 12 22:29:44 2012
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Eduardo =?utf-8?Q?Tr=C3=A1pani?= <etrapani@gmail.com>,
+	git@vger.kernel.org, YOSHIFUJI Hideaki <yoshfuji@linux-ipv6.org>
+To: =?utf-8?B?UmVuw6k=?= Scharfe <rene.scharfe@lsrfire.ath.cx>
+X-From: git-owner@vger.kernel.org Tue Jun 12 22:30:07 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SeXic-0007ip-L5
-	for gcvg-git-2@plane.gmane.org; Tue, 12 Jun 2012 22:29:38 +0200
+	id 1SeXj1-0000Or-2P
+	for gcvg-git-2@plane.gmane.org; Tue, 12 Jun 2012 22:30:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753511Ab2FLU30 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Jun 2012 16:29:26 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:44644 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752144Ab2FLU3Z (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Jun 2012 16:29:25 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4655C8ECF;
-	Tue, 12 Jun 2012 16:29:24 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=9Dp9xpjkNlwTPbsyrmZzT5ibwhk=; b=xkdR3d
-	DlcRwN1Qw59D6jEVBLODC+mPhxO+bSYRcULm2jw7IlomuZhsJ16GIlUo28dJHzEs
-	qGwmLkR0pyZ27eXqgWW/B4Dd6V1LRX2xCFTps3/ZhjP+eMRX2XHs0Llmn+Hf36E7
-	b3MmQtFETuginYvIru9CidXdrGEWRqFznlByE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=b7wz7ErL0GzwDlXRyeD01Hwe5HKt5k9i
-	zSTguQ7qerQyAyxrGn+ijwMYE0G8dKxafCwonzgmR/nhbY9ekfSwmryHiyGyLf49
-	16rKhTxAX3ledEJlodMi7RQMklHvl0TdnvjzJdH1NQmLWPk7pu5xcS+tdJBouJTs
-	XeqWPABuNus=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D0F6D8ECE;
-	Tue, 12 Jun 2012 16:29:23 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 543FF8ECA; Tue, 12 Jun 2012
- 16:29:23 -0400 (EDT)
-In-Reply-To: <4FD790AF.5070108@kdbg.org> (Johannes Sixt's message of "Tue, 12
- Jun 2012 20:55:43 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 4BFA7BA6-B4CD-11E1-9233-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752463Ab2FLU37 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 12 Jun 2012 16:29:59 -0400
+Received: from mail-gg0-f174.google.com ([209.85.161.174]:64605 "EHLO
+	mail-gg0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751729Ab2FLU36 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 12 Jun 2012 16:29:58 -0400
+Received: by gglu4 with SMTP id u4so3816452ggl.19
+        for <git@vger.kernel.org>; Tue, 12 Jun 2012 13:29:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=x+Ph1o18UUeItX4Z0Xwo9ceRCW7NjpVODOfpPgOonQ4=;
+        b=DpTUjCGY7nDS9eew4KQwcmyYjIQgQohZ9iiJ5Cevpm+KAH4BY3/cVXg3uT/ZcbiT5t
+         zXJYrG+1wnMDrjzc9jNpuNmTQdsHfYU2Wk/pviE9RSF3P2Z8j/jn1FXl7cS92YNvtvQP
+         3rpOwPdkJkNI9bR5G4EcLchw6yHtulzg7qdJLAP7ctjcxGxviowuK1P0ExAHRDcBf1JF
+         BABqL3tDCsIesBpREr5JU40k0rJcFKLAtkZw/NVhJy9qO+jk7KpJxlu9fHMlMpjrg8AW
+         vdeqgn+sQFFWg+XrJPXf0sOVoiT1OcbrTuuCEv16fMvAhd3A1tD3uRMjL87iQKNY8LFA
+         EHDw==
+Received: by 10.236.173.135 with SMTP id v7mr29055075yhl.19.1339532998115;
+        Tue, 12 Jun 2012 13:29:58 -0700 (PDT)
+Received: from burratino (cl-1372.chi-02.us.sixxs.net. [2001:4978:f:55b::2])
+        by mx.google.com with ESMTPS id g22sm1357305yhh.20.2012.06.12.13.29.56
+        (version=SSLv3 cipher=OTHER);
+        Tue, 12 Jun 2012 13:29:57 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <4FD78EA0.2090306@lsrfire.ath.cx>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199848>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199849>
 
-Johannes Sixt <j6t@kdbg.org> writes:
+Ren=C3=A9 Scharfe wrote:
 
-> Checking the usage blurb rather than the error message even has
-> advantages: it is immune to changes of the error messages and to i18n
-> poisoning.
+> How about this instead?
 
-Yes, to a degree.  There is no guarantee that the error message
-stays on a single line in a particular l10n ;-).
+Looks good to me.  Though it would be nice to see
 
-> In this light, the version you have queued is fine.
+	proto://[::1]trailing-nonsense/
+
+diagnosed on top, too.
