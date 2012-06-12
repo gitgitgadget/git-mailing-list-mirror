@@ -1,69 +1,104 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] api-credential.txt: document that helpers field is
- filled-in automatically
-Date: Tue, 12 Jun 2012 07:48:29 -0700
-Message-ID: <7vehpk4mde.fsf@alter.siamese.dyndns.org>
-References: <7vzk897rqi.fsf@alter.siamese.dyndns.org>
- <1339437107-25909-1-git-send-email-Matthieu.Moy@imag.fr>
- <20120611190811.GB20889@sigill.intra.peff.net>
- <vpq7gvcx40y.fsf@bauges.imag.fr>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH/RFC] add git credential login to remote mediawiki
+Date: Tue, 12 Jun 2012 16:51:18 +0200
+Message-ID: <vpq8vfsoa6x.fsf@bauges.imag.fr>
+References: <1339512125-32761-1-git-send-email-Javier.Roucher-Iglesias@ensimag.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Tue Jun 12 16:48:38 2012
+Content-Type: text/plain
+Cc: git@vger.kernel.org, Javier Roucher <jroucher@gmail.com>
+To: Javier.Roucher-Iglesias@ensimag.imag.fr
+X-From: git-owner@vger.kernel.org Tue Jun 12 16:52:02 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SeSOa-0002sn-5c
-	for gcvg-git-2@plane.gmane.org; Tue, 12 Jun 2012 16:48:36 +0200
+	id 1SeSRt-0002cP-Fj
+	for gcvg-git-2@plane.gmane.org; Tue, 12 Jun 2012 16:52:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753301Ab2FLOsc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Jun 2012 10:48:32 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:49688 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752372Ab2FLOsb (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Jun 2012 10:48:31 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5388893B9;
-	Tue, 12 Jun 2012 10:48:31 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=mKGOH1VTVpGbuOvpjaYohnvB8FQ=; b=ahksl1
-	kWFNsVvfLaH4wqDlSgFXClaWLUSkoTEqyZ17hhGkP/en22lHb3SXlP7ZS6uj2Kbd
-	Xb0dhizM3ZNzgAZeQ/b2jp/l9BYY99J5TC/nXxlokMuE5DGy2HKqxvMKAzIDjZnd
-	bdl3s0gEj+qhYiBeFdyYFh/clzAWu66E47V5A=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=vbUzm3LL117INuxJaIDyeQ/8gy83mxtL
-	Fi3PLjmffQluEUOoD0nr+WluAnwqEEXt8phX6p+ZzDwd3Rs3SulG4U+zV6AIaUVZ
-	KZtzvqoCV8CajgEV6O0lvFD28lY+rZRPJISYEJHoOuhx92klc3UE15k1PkZ6fog5
-	l+fWBOmPNog=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4ABB693B8;
-	Tue, 12 Jun 2012 10:48:31 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D324D93AD; Tue, 12 Jun 2012
- 10:48:30 -0400 (EDT)
-In-Reply-To: <vpq7gvcx40y.fsf@bauges.imag.fr> (Matthieu Moy's message of
- "Tue, 12 Jun 2012 11:39:41 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: AD558646-B49D-11E1-93A4-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753294Ab2FLOvz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Jun 2012 10:51:55 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:33773 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752555Ab2FLOvy (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Jun 2012 10:51:54 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id q5CEgMvA032025
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Tue, 12 Jun 2012 16:42:22 +0200
+Received: from bauges.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1SeSRD-0007MF-2i; Tue, 12 Jun 2012 16:51:19 +0200
+In-Reply-To: <1339512125-32761-1-git-send-email-Javier.Roucher-Iglesias@ensimag.imag.fr>
+	(Javier Roucher-Iglesias's message of "Tue, 12 Jun 2012 16:42:05
+	+0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.93 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Tue, 12 Jun 2012 16:42:22 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: q5CEgMvA032025
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1340116944.75011@vP8aD7X739NPDmyp3tKGxg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199796>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199797>
 
-Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+Javier.Roucher-Iglesias@ensimag.imag.fr writes:
 
-> Agreed. I see that Junio already has this fixup in pu. Junio, let me
-> know if you prefer a resend.
+>  # MediaWiki API instance, created lazily.
+> +sub run_credential {
 
-I take it that you told me to squash that fixup in, so will do.
-It's much easier for me ;-)
+How is the code related to the comment right above?
 
-Thanks.
+> +	my $Prog = "git credential $op";
+> +	open2 (*Reader, *Writer, $Prog);
+> +	print Writer $msg;
+> +	close (Writer);
+
+No space before "(" for function calls (already mentionned twice).
+
+>  my $mediawiki;
+
+Didn't I already mention (twice?) that this declaration was meant to
+stay right above mw_connect_maybe?
+
+> +			run_credential("reject");
+> +#			exit 1;
+
+Do you, or do you not want to "exit 1". Either remove this, or uncomment
+it.
+
+>  sub mw_connect_maybe {
+> +
+>  	if ($mediawiki) {
+
+Why do you add this blank line? (already mentionned)
+
+> -	if ($wiki_login) {
+> -		if (!$mediawiki->login({
+> -			lgname => $wiki_login,
+> -			lgpassword => $wiki_passwd,
+> -			lgdomain => $wiki_domain,
+> -		})) {
+> -			print STDERR "Failed to log in mediawiki user \"$wiki_login\" on $url\n";
+> -			print STDERR "(error " .
+> -			    $mediawiki->{error}->{code} . ': ' .
+> -			    $mediawiki->{error}->{details} . ")\n";
+> -			exit 1;
+> -		} else {
+> -			print STDERR "Logged in with user \"$wiki_login\".\n";
+> -		}
+> -	}
+> +	ask_credential();
+
+This means you can't use the wiki anonymously anymore. This is an
+unacceptable regression.
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
