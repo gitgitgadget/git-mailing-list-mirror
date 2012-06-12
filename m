@@ -1,97 +1,78 @@
-From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <rene.scharfe@lsrfire.ath.cx>
-Subject: Re: git: Wrong parsing of ssh urls with IPv6 literals ignores port
-Date: Tue, 12 Jun 2012 20:46:56 +0200
-Message-ID: <4FD78EA0.2090306@lsrfire.ath.cx>
-References: <20111022001704.3115.87464.reportbug@hejmo> <20120610090516.GA30177@burratino>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCHv4] rebase [-i --exec | -ix] <CMD>...
+Date: Tue, 12 Jun 2012 20:55:43 +0200
+Message-ID: <4FD790AF.5070108@kdbg.org>
+References: <1339167235-2009-2-git-send-email-Lucien.Kong@ensimag.imag.fr> <1339325076-474-1-git-send-email-Lucien.Kong@ensimag.imag.fr> <4FD48B70.5080600@kdbg.org> <7vpq9598yb.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?B?RWR1YXJkbyBUcsOhcGFuaQ==?= <etrapani@gmail.com>,
-	git@vger.kernel.org, YOSHIFUJI Hideaki <yoshfuji@linux-ipv6.org>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jun 12 20:47:36 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Lucien Kong <Lucien.Kong@ensimag.imag.fr>, git@vger.kernel.org,
+	tboegi@web.de,
+	Valentin Duperray <Valentin.Duperray@ensimag.imag.fr>,
+	Franck Jonas <Franck.Jonas@ensimag.imag.fr>,
+	Thomas Nguy <Thomas.Nguy@ensimag.imag.fr>,
+	Huynh Khoi Nguyen Nguyen 
+	<Huynh-Khoi-Nguyen.Nguyen@ensimag.imag.fr>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jun 12 20:56:09 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SeW7o-0003Ab-Tt
-	for gcvg-git-2@plane.gmane.org; Tue, 12 Jun 2012 20:47:33 +0200
+	id 1SeWFw-0008PA-At
+	for gcvg-git-2@plane.gmane.org; Tue, 12 Jun 2012 20:55:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752194Ab2FLSr3 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 12 Jun 2012 14:47:29 -0400
-Received: from india601.server4you.de ([85.25.151.105]:58151 "EHLO
-	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751455Ab2FLSr2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Jun 2012 14:47:28 -0400
-Received: from [192.168.2.105] (p4FFDAF57.dip.t-dialin.net [79.253.175.87])
-	by india601.server4you.de (Postfix) with ESMTPSA id 015342F8061;
-	Tue, 12 Jun 2012 20:47:25 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:12.0) Gecko/20120428 Thunderbird/12.0.1
-In-Reply-To: <20120610090516.GA30177@burratino>
+	id S1753254Ab2FLSzr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Jun 2012 14:55:47 -0400
+Received: from bsmtp.bon.at ([213.33.87.14]:47479 "EHLO bsmtp.bon.at"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751997Ab2FLSzq (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Jun 2012 14:55:46 -0400
+Received: from dx.sixt.local (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTP id 4280913005B;
+	Tue, 12 Jun 2012 20:51:15 +0200 (CEST)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+	by dx.sixt.local (Postfix) with ESMTP id 6E0AB19F673;
+	Tue, 12 Jun 2012 20:55:43 +0200 (CEST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:12.0) Gecko/20120421 Thunderbird/12.0
+In-Reply-To: <7vpq9598yb.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199831>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199832>
 
-Am 10.06.2012 11:05, schrieb Jonathan Nieder:
-> Hi Eduardo,
->=20
-> Eduardo Tr=C3=A1pani wrote[1]:
->=20
->> git clone ssh://[2001:0:53aa:64c:1845:430c:4179:d71f]:3333/deponejo/=
-unua
+Am 11.06.2012 17:14, schrieb Junio C Hamano:
+> Johannes Sixt <j6t@kdbg.org> writes:
+> 
+>> Am 10.06.2012 12:44, schrieb Lucien Kong:
+>>> +test_expect_success 'rebase -i --exec without <CMD> shows error message and usage' '
+>>> +	git reset --hard execute &&
+>>> +	test_must_fail git rebase -i --exec 2>actual &&
+>>> +	sed '1d' actual >tmp &&
+>>> +	mv tmp actual &&
+>>> +	test_must_fail git rebase -h >expected &&
+>>> +	test_cmp expected actual &&
+>>> +	git checkout master
+>>> +'
 >>
->> Will try to connect to port 22 and not 3333.  The port number seems =
-to be
->> ignored.
->=20
-> True.  How about something like this (untested)?
->=20
-> Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
-> ---
-> [1] http://bugs.debian.org/646178
->=20
->   connect.c |   14 +++++++++++---
->   1 file changed, 11 insertions(+), 3 deletions(-)
+>> IMO, it is more important to check that the error message is present
+>> rather than whether the usage blurb is correct. But since the error is
+>> generated by the option parsing machinery, it is probably sufficient to
+>> check *only* for failure, and don't verify the output at all.
 
-How about this instead?  Except perhaps with a commit message that is v=
-aguely
-understandable?
+I changed my mind. If option parsing regresses in such a way that --exec
+suddenly works without command, then the 'test_must_fail git rebase ...'
+could pass because there is a failure much later in the rebase process,
+which we would not detect if we do not check the output. It is therefore
+good to check whether the expected failure happens during option parsing.
 
--- >8 --
-If we encounter an address part shaped like "[HOST]:PORT", we skip the =
-opening
-bracket and replace the closing one with a NUL.  The variable host then=
- points
-to HOST and we've cut off the PORT part.  Thus, when we go looking for =
-it using
-host a bit later, we can't find it.  Start at end instead, which either=
- points
-to the colon, if present, or is equal to host.
+Checking the usage blurb rather than the error message even has
+advantages: it is immune to changes of the error messages and to i18n
+poisoning.
 
-Signed-off-by: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
----
-We have similar code in daemon.c.  Can we share more?  And make it test=
-able?
+In this light, the version you have queued is fine.
 
- connect.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/connect.c b/connect.c
-index 912cdde..41b7400 100644
---- a/connect.c
-+++ b/connect.c
-@@ -536,7 +536,7 @@ struct child_process *git_connect(int fd[2], const =
-char *url_orig,
- 	 * Add support for ssh port: ssh://host.xy:<port>/...
- 	 */
- 	if (protocol =3D=3D PROTO_SSH && host !=3D url)
--		port =3D get_port(host);
-+		port =3D get_port(end);
-=20
- 	if (protocol =3D=3D PROTO_GIT) {
- 		/* These underlying connection commands die() if they
---=20
-1.7.10.2
+-- Hannes
