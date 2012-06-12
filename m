@@ -1,71 +1,97 @@
-From: Andreas Schwab <schwab@linux-m68k.org>
-Subject: Re: Keeping unreachable objects in a separate pack instead of loose?
-Date: Tue, 12 Jun 2012 20:43:41 +0200
-Message-ID: <m2fwa0fk0y.fsf@igel.home>
-References: <20120611183414.GD20134@sigill.intra.peff.net>
-	<20120611211401.GA21775@thunk.org>
-	<20120611213948.GB32061@sigill.intra.peff.net>
-	<20120611221439.GE21775@thunk.org>
-	<20120611222308.GA10476@sigill.intra.peff.net>
-	<alpine.LFD.2.02.1206112024110.23555@xanadu.home>
-	<20120612171048.GB12706@sigill.intra.peff.net>
-	<alpine.LFD.2.02.1206121326490.23555@xanadu.home>
-	<20120612173214.GA16014@sigill.intra.peff.net>
-	<CAJo=hJvMtfVhadYowvVE0zUhDpbViXqGsvkmHpJpuynySLwb3A@mail.gmail.com>
-	<20120612175046.GA16522@sigill.intra.peff.net>
+From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <rene.scharfe@lsrfire.ath.cx>
+Subject: Re: git: Wrong parsing of ssh urls with IPv6 literals ignores port
+Date: Tue, 12 Jun 2012 20:46:56 +0200
+Message-ID: <4FD78EA0.2090306@lsrfire.ath.cx>
+References: <20111022001704.3115.87464.reportbug@hejmo> <20120610090516.GA30177@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Shawn Pearce <spearce@spearce.org>,
-	Nicolas Pitre <nico@fluxnic.net>, Ted Ts'o <tytso@mit.edu>,
-	Thomas Rast <trast@student.ethz.ch>,
-	Hallvard B Furuseth <h.b.furuseth@usit.uio.no>,
-	git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Jun 12 20:43:56 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?UTF-8?B?RWR1YXJkbyBUcsOhcGFuaQ==?= <etrapani@gmail.com>,
+	git@vger.kernel.org, YOSHIFUJI Hideaki <yoshfuji@linux-ipv6.org>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jun 12 20:47:36 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SeW4G-0002nA-KQ
-	for gcvg-git-2@plane.gmane.org; Tue, 12 Jun 2012 20:43:52 +0200
+	id 1SeW7o-0003Ab-Tt
+	for gcvg-git-2@plane.gmane.org; Tue, 12 Jun 2012 20:47:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752627Ab2FLSnt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Jun 2012 14:43:49 -0400
-Received: from mail-out.m-online.net ([212.18.0.9]:39076 "EHLO
-	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751816Ab2FLSns (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Jun 2012 14:43:48 -0400
-Received: from frontend1.mail.m-online.net (unknown [192.168.8.180])
-	by mail-out.m-online.net (Postfix) with ESMTP id 3WBg3L4Bqkz4KMj6;
-	Tue, 12 Jun 2012 20:43:42 +0200 (CEST)
-Received: from igel.home (ppp-88-217-99-204.dynamic.mnet-online.de [88.217.99.204])
-	by mail.mnet-online.de (Postfix) with ESMTPA id 3WBg3L0k2jz4KK6V;
-	Tue, 12 Jun 2012 20:43:42 +0200 (CEST)
-Received: by igel.home (Postfix, from userid 501)
-	id 7E8E9CA2A3; Tue, 12 Jun 2012 20:43:41 +0200 (CEST)
-X-Yow: It's the RINSE CYCLE!!  They've ALL IGNORED the RINSE CYCLE!!
-In-Reply-To: <20120612175046.GA16522@sigill.intra.peff.net> (Jeff King's
-	message of "Tue, 12 Jun 2012 13:50:46 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.1 (gnu/linux)
+	id S1752194Ab2FLSr3 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 12 Jun 2012 14:47:29 -0400
+Received: from india601.server4you.de ([85.25.151.105]:58151 "EHLO
+	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751455Ab2FLSr2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Jun 2012 14:47:28 -0400
+Received: from [192.168.2.105] (p4FFDAF57.dip.t-dialin.net [79.253.175.87])
+	by india601.server4you.de (Postfix) with ESMTPSA id 015342F8061;
+	Tue, 12 Jun 2012 20:47:25 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:12.0) Gecko/20120428 Thunderbird/12.0.1
+In-Reply-To: <20120610090516.GA30177@burratino>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199830>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199831>
 
-Jeff King <peff@peff.net> writes:
+Am 10.06.2012 11:05, schrieb Jonathan Nieder:
+> Hi Eduardo,
+>=20
+> Eduardo Tr=C3=A1pani wrote[1]:
+>=20
+>> git clone ssh://[2001:0:53aa:64c:1845:430c:4179:d71f]:3333/deponejo/=
+unua
+>>
+>> Will try to connect to port 22 and not 3333.  The port number seems =
+to be
+>> ignored.
+>=20
+> True.  How about something like this (untested)?
+>=20
+> Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+> ---
+> [1] http://bugs.debian.org/646178
+>=20
+>   connect.c |   14 +++++++++++---
+>   1 file changed, 11 insertions(+), 3 deletions(-)
 
-> We could close it in both cases by tweaking the mtime of the file
-> containing the object when we decide not to write because the object
-> already exists.
+How about this instead?  Except perhaps with a commit message that is v=
+aguely
+understandable?
 
-Though there is always the window between the existence check and the
-mtime update where pruning can hit you.
+-- >8 --
+If we encounter an address part shaped like "[HOST]:PORT", we skip the =
+opening
+bracket and replace the closing one with a NUL.  The variable host then=
+ points
+to HOST and we've cut off the PORT part.  Thus, when we go looking for =
+it using
+host a bit later, we can't find it.  Start at end instead, which either=
+ points
+to the colon, if present, or is equal to host.
 
-Andreas.
+Signed-off-by: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
+---
+We have similar code in daemon.c.  Can we share more?  And make it test=
+able?
 
--- 
-Andreas Schwab, schwab@linux-m68k.org
-GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
-"And now for something completely different."
+ connect.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/connect.c b/connect.c
+index 912cdde..41b7400 100644
+--- a/connect.c
++++ b/connect.c
+@@ -536,7 +536,7 @@ struct child_process *git_connect(int fd[2], const =
+char *url_orig,
+ 	 * Add support for ssh port: ssh://host.xy:<port>/...
+ 	 */
+ 	if (protocol =3D=3D PROTO_SSH && host !=3D url)
+-		port =3D get_port(host);
++		port =3D get_port(end);
+=20
+ 	if (protocol =3D=3D PROTO_GIT) {
+ 		/* These underlying connection commands die() if they
+--=20
+1.7.10.2
