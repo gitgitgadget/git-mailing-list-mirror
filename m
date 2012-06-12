@@ -1,9 +1,8 @@
 From: Simon Cathebras <simon.cathebras@ensimag.imag.fr>
-Subject: [PATCH 2/6] Test environment of git-remote-mediawiki
-Date: Tue, 12 Jun 2012 23:12:40 +0200
-Message-ID: <1339535563-18958-2-git-send-email-simon.cathebras@ensimag.imag.fr>
+Subject: [PATCH 1/6] Scripts to install, delete and clear a MediaWiki
+Date: Tue, 12 Jun 2012 23:12:39 +0200
+Message-ID: <1339535563-18958-1-git-send-email-simon.cathebras@ensimag.imag.fr>
 References: <20120611230954.Horde.inb-aHwdC4BP1l6iLlHhZgA@webmail.minatec.grenoble-inp.fr>
- <1339535563-18958-1-git-send-email-simon.cathebras@ensimag.imag.fr>
 Cc: gitster@pobox.com, peff@peff.net,
 	Guillaume Sasdy <guillaume.sasdy@ensimag.imag.fr>,
 	Simon Cathebras <simon.cathebras@ensimag.imag.fr>,
@@ -12,57 +11,54 @@ Cc: gitster@pobox.com, peff@peff.net,
 	Julien Khayat <julien.khayat@ensimag.imag.fr>,
 	Matthieu Moy <matthieu.moy@imag.fr>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 12 23:13:11 2012
+X-From: git-owner@vger.kernel.org Tue Jun 12 23:13:13 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SeYOk-0008Q5-6o
+	id 1SeYOj-0008Q5-CS
 	for gcvg-git-2@plane.gmane.org; Tue, 12 Jun 2012 23:13:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753930Ab2FLVNF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Jun 2012 17:13:05 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:45737 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753783Ab2FLVND (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1753871Ab2FLVND (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
 	Tue, 12 Jun 2012 17:13:03 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:34895 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753652Ab2FLVNA (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Jun 2012 17:13:00 -0400
 Received: from ensimag.imag.fr (ensimag.imag.fr [195.221.228.12])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id q5CL3t9R001168
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id q5CL3bpb001685
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Tue, 12 Jun 2012 23:03:55 +0200
+	Tue, 12 Jun 2012 23:03:37 +0200
 Received: from Hithlum.crous-grenoble.fr (ensibm [195.221.228.8])
-	by ensimag.imag.fr (8.13.8/8.13.8/ImagV2.1.r_ens) with ESMTP id q5CLCjpJ032065;
-	Tue, 12 Jun 2012 23:12:52 +0200
+	by ensimag.imag.fr (8.13.8/8.13.8/ImagV2.1.r_ens) with ESMTP id q5CLCjpI032065;
+	Tue, 12 Jun 2012 23:12:45 +0200
 X-Mailer: git-send-email 1.7.10.2.552.gaa3bb87
-In-Reply-To: <1339535563-18958-1-git-send-email-simon.cathebras@ensimag.imag.fr>
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Tue, 12 Jun 2012 23:03:55 +0200 (CEST)
+In-Reply-To: <20120611230954.Horde.inb-aHwdC4BP1l6iLlHhZgA@webmail.minatec.grenoble-inp.fr>
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Tue, 12 Jun 2012 23:03:37 +0200 (CEST)
 X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: q5CL3t9R001168
+X-MailScanner-ID: q5CL3bpb001685
 X-IMAG-MailScanner: Found to be clean
 X-IMAG-MailScanner-SpamCheck: 
 X-IMAG-MailScanner-From: simon.cathebras@ensimag.imag.fr
-MailScanner-NULL-Check: 1340139837.08844@kvpHJ3QwkNmbBtoyKBGl2Q
+MailScanner-NULL-Check: 1340139819.11515@ZCY2GumVnFNNHnsW8j+sYA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199856>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199857>
 
 From: Guillaume Sasdy <guillaume.sasdy@ensimag.imag.fr>
 
-In order to test git-remote-mediawiki, we need a package of functions
-to manage a MediaWiki: edit a page, remove a page, fetch a page,
-fetch all pages on a given wiki.
+Install_wiki.sh expects the first argument to be 'install' or 'delete'
+'install' installs a MediaWiki on the web's server with SQLite3
+'delete' deletes the previously created wiki.
+Note those functionnalities are made to be used from the user command line in
+the directory git/contrib/mw-to-git/t/
 
-We also need functions to compare the content of directories.
-
-This patch provide these functions in the file
-git/contrib/mw-to-git/t/test-gitmw-lib.sh and
-git/contrib/mw-to-git/t/test-gitmw.pl
-
-In addition, this patch provide Makefiles to execute tests.
-See README file for more details.
+install_wiki also defines a function wiki_reset which clear all content
+of the previously created wiki. Note this functionnality is made to be
+used only by our test function in a subdirectory of t/
 
 Signed-off-by: Simon Cathebras <simon.cathebras@ensimag.imag.fr>
 Signed-off-by: Simon Perrat <simon.perrat@ensimag.imag.fr>
@@ -70,299 +66,327 @@ Signed-off-by: Guillaume Sasdy <guillaume.sasdy@ensimag.imag.fr>
 Signed-off-by: Charles Roussel <charles.roussel@ensimag.imag.fr>
 Signed-off-by: Julien Khayat <julien.khayat@ensimag.imag.fr>
 Signed-off-by: Matthieu Moy <matthieu.moy@imag.fr>
----
- contrib/mw-to-git/Makefile            |  48 +++++++
- contrib/mw-to-git/t/Makefile          |  27 ++++
- contrib/mw-to-git/t/README            |  33 +++++
- contrib/mw-to-git/t/test-gitmw-lib.sh | 137 ++++++++++++++++++++
- contrib/mw-to-git/t/test-gitmw.pl     | 230 ++++++++++++++++++++++++++++++++++
- 5 files changed, 475 insertions(+)
- create mode 100644 contrib/mw-to-git/Makefile
- create mode 100644 contrib/mw-to-git/t/Makefile
- create mode 100644 contrib/mw-to-git/t/README
- create mode 100755 contrib/mw-to-git/t/test-gitmw.pl
 
-diff --git a/contrib/mw-to-git/Makefile b/contrib/mw-to-git/Makefile
-new file mode 100644
-index 0000000..c9b1795
---- /dev/null
-+++ b/contrib/mw-to-git/Makefile
-@@ -0,0 +1,48 @@
-+#
-+# Copyright (C) 2012
-+#     Charles Roussel <charles.roussel@ensimag.imag.fr>
-+#     Simon Cathebras <simon.cathebras@ensimag.imag.fr>
-+#     Julien Khayat <julien.khayat@ensimag.imag.fr>
-+#     Guillaume Sasdy <guillaume.sasdy@ensimag.imag.fr>
-+#     Simon Perrat <simon.perrat@ensimag.imag.fr>
-+#
-+## Build git-remote-mediawiki
-+
-+-include ../../config.mak.autogen
-+-include ../../config.mak
-+
-+ifndef PERL_PATH
-+	PERL_PATH = /usr/bin/perl
-+endif
-+ifndef gitexecdir
-+	gitexecdir = $(shell git --exec-path)
-+endif
-+
-+PERL_PATH_SQ = $(subst ','\'',$(PERL_PATH))
-+gitexecdir_SQ = $(subst ','\'',$(gitexecdir))
-+SCRIPT = git-remote-mediawiki
-+
-+.PHONY: install help doc test clean
-+
-+help:
-+	@echo 'This is the help target of the Makefile. Current configuration:'
-+	@echo '  gitexecdir = $(gitexecdir_SQ)'
-+	@echo '  PERL_PATH = $(PERL_PATH_SQ)'
-+	@echo 'Run "$(MAKE) install" to install $(SCRIPT) in gitexecdir'
-+	@echo 'Run "$(MAKE) test" to run the testsuite'
-+
-+install:
-+	sed -e '1s|#!.*/perl|#!$(PERL_PATH_SQ)|' $(SCRIPT) \
-+            > '$(gitexecdir_SQ)/$(SCRIPT)'
-+	chmod +x '$(gitexecdir)/$(SCRIPT)'
-+
-+doc:
-+	@echo 'Sorry, "make doc" is not implemented yet for $(SCRIPT)'
-+
-+test:
-+	$(MAKE) -C t/ test
-+
-+clean:
-+	$(RM) '$(gitexecdir)/$(SCRIPT)'
-+	$(MAKE) -C t/ clean
-+
-diff --git a/contrib/mw-to-git/t/Makefile b/contrib/mw-to-git/t/Makefile
-new file mode 100644
-index 0000000..752fd1f
---- /dev/null
-+++ b/contrib/mw-to-git/t/Makefile
-@@ -0,0 +1,27 @@
-+#
-+# Copyright (C) 2012
-+#     Charles Roussel <charles.roussel@ensimag.imag.fr>
-+#     Simon Cathebras <simon.cathebras@ensimag.imag.fr>
-+#     Julien Khayat <julien.khayat@ensimag.imag.fr>
-+#     Guillaume Sasdy <guillaume.sasdy@ensimag.imag.fr>
-+#     Simon Perrat <simon.perrat@ensimag.imag.fr>
-+#
-+## Test git-remote-mediawiki
-+
-+-include ../../../config.mak.autogen
-+-include ../../../config.mak
-+
-+T = $(wildcard t[0-9][0-9][0-9][0-9]-*.sh)
-+
-+.PHONY: help test clean
-+
-+help:
-+	@echo 'Run "$(MAKE) test" to launch test scripts'
-+	@echo 'Run "$(MAKE)" clean to remove trash folders'
-+
-+test:
-+	for t in $(T); do "./$$t"; done
-+
-+clean:
-+	$(RM) -r 'trash directory'.*
-+
-diff --git a/contrib/mw-to-git/t/README b/contrib/mw-to-git/t/README
-new file mode 100644
-index 0000000..b68147b
---- /dev/null
-+++ b/contrib/mw-to-git/t/README
-@@ -0,0 +1,33 @@
-+Tests for Mediawiki-to-Git
-+==========================
-+
-+
-+Installation
-+------------
-+These tests require a mediawiki with admin access to work on; you can install one
-+on localhost/wiki simply by running:
-+	./install-wiki.sh install
-+Be aware that the tests will flush the wiki database, thus if you own a wiki at
-+this adress, it is strongly advised to configure another name in test-gitmw-lib.sh
-+before running the script.
-+Note that the wiki will be installed in /tmp (this can be configured too), meaning
-+you might have to install it again when you run tests later.
-+
-+
-+Running
-+-------
-+You can run these tests either individually or with make (recommended). Remember
-+to use make clean when you're done. You have access to all options from git core
-+tests.
-+
-+
-+Limitations
-+-------
-+This test environment does not allow you to test the behavior of git-remote-mediawiki
-+for name containing backslashes.
-+
-+t9360: tests git clone.
-+
-+t9361: tests git pull and git push.
-+
-+t9362: tests how UTF-8 special characters are handled.
-diff --git a/contrib/mw-to-git/t/test-gitmw-lib.sh b/contrib/mw-to-git/t/test-gitmw-lib.sh
-index 160f97b..30be380 100755
---- a/contrib/mw-to-git/t/test-gitmw-lib.sh
-+++ b/contrib/mw-to-git/t/test-gitmw-lib.sh
-@@ -22,6 +22,143 @@ else
- 	WIKI_DIR_INST="$CURR_DIR/$WEB_WWW"
- fi
- 
-+
-+wiki_getpage () {
-+	"$CURR_DIR"/test-gitmw.pl get_page "$@"
-+}
-+
-+wiki_delete_page () {
-+	"$CURR_DIR"/test-gitmw.pl delete_page "$@"
-+}
-+
-+wiki_editpage () {
-+	"$CURR_DIR"/test-gitmw.pl edit_page "$@"
-+}
-+
-+die () {
-+	die_with_status 1 "$@"
-+}
-+
-+die_with_status () {
-+	status=$1
-+	shift
-+	echo >&2 "$*"
-+	exit "$status"
-+}
-+
-+
-+# Check the preconditions to run git-remote-mediawiki's tests
-+test_check_precond () {
-+	if ! test_have_prereq PERL
-+	then
-+		skip_all='skipping gateway git-mw tests, perl not available'
-+		test_done
-+	fi
-+
-+	if [ ! -f $GIT_BUILD_DIR/git-remote-mediawiki ];
-+	then
-+		skip_all='skipping gateway git-mw tests, no remote mediawiki for git found' \
-+		'please try: cp git/contrib/mw-to-git/git-remote-mediawiki git/'
-+		test_done
-+	fi
-+
-+	if [ ! -d "$WIKI_DIR_INST/$WIKI_DIR_NAME" ] ;
-+	then
-+		skip_all='skipping gateway git-mw tests, no mediawiki found'
-+		test_done
-+	fi
-+}
-+
-+# test_diff_directories <dir_git> <dir_wiki>
-+#
-+# Compare the contents of directories <dir_git> and <dir_wiki> with diff
-+# and errors if they do not match. The program will
-+# not look into .git in the process.
-+# Warning: the first argument MUST be the directory containing the git data
-+test_diff_directories () {
-+	rm -rf "$1_tmp"
-+	mkdir -p "$1_tmp"
-+	cp "$1"/*.mw "$1_tmp"
-+	diff -r -b "$1_tmp" "$2"
-+}
-+
-+# $1=<dir>
-+# $2=<N>
-+#
-+# Check that <dir> contains exactly <N> files
-+test_contains_N_files () {
-+	test `ls "$1" | wc -l` -eq "$2";
-+}
-+
-+
-+# wiki_check_content <file_name> <page_name>
-+#
-+# Compares the contents of the file <file_name> and the wiki page
-+# <page_name> and exits with error 1 if they do not match.
-+wiki_check_content () {
-+	mkdir -p wiki_tmp
-+	wiki_getpage "$2" wiki_tmp
-+	#replacement of forbidden character in file name
-+	page_name=$(printf "%s\n" "$2" | sed -e "s/\//%2F/g")
-+
-+	diff -b "$1" wiki_tmp/"$page_name".mw
-+	if test $? -ne 0
-+	then
-+		rm -rf wiki_tmp
-+		error "ERROR: file $2 not found on wiki"
-+	fi
-+	rm -rf wiki_tmp
-+}
-+
-+# wiki_page_exist <page_name>
-+#
-+# Check the existence of the page <page_name> on the wiki and exits
-+# with error if it is absent from it.
-+wiki_page_exist () {
-+	mkdir -p wiki_tmp
-+	wiki_getpage "$1" wiki_tmp
-+	page_name=$(printf "%s\n" "$1" | sed "s/\//%2F/g")
-+	if test -f wiki_tmp/"$page_name".mw ; then
-+		rm -rf wiki_tmp
-+	else
-+		rm -rf wiki_tmp
-+		error "test failed: file $1 not found on wiki"
-+	fi
-+}
-+
-+# wiki_getallpagename
-+#
-+# Fetch the name of each page on the wiki.
-+wiki_getallpagename () {
-+	$CURR_DIR/test-gitmw.pl getallpagename
-+}
-+
-+# wiki_getallpagecategory <category>
-+#
-+# Fetch the name of each page belonging to <category> on the wiki.
-+wiki_getallpagecategory () {
-+	$CURR_DIR/test-gitmw.pl getallpagename "$@"
-+}
-+
-+# wiki_getallpage <dest_dir> [<category>]
-+#
-+# Fetch all the pages from the wiki and place them in the directory
-+# <dest_dir>.
-+# If <category> is define, then wiki_getallpage fetch the pages included
-+# in <category>.
-+wiki_getallpage () {
-+	if test -z "$2";
-+	then
-+		wiki_getallpagename
-+	else
-+		wiki_getallpagecategory "$2"
-+	fi
-+	mkdir -p "$1"
-+	while read -r line; do
-+		wiki_getpage "$line" $1;
-+	done < all.txt
-+}
-+
- # ================= Install part =================
- 
- error () {
-diff --git a/contrib/mw-to-git/t/test-gitmw.pl b/contrib/mw-to-git/t/test-gitmw.pl
+---
+ contrib/mw-to-git/t/install-wiki.sh                |  45 ++++
+ contrib/mw-to-git/t/install-wiki/LocalSettings.php | 128 +++++++++
+ contrib/mw-to-git/t/install-wiki/db_install.php    | 110 ++++++++
+ contrib/mw-to-git/t/test-gitmw-lib.sh              | 285 +++++++++++++++++++++
+ contrib/mw-to-git/t/test.config                    |  35 +++
+ 5 files changed, 603 insertions(+)
+ create mode 100755 contrib/mw-to-git/t/install-wiki.sh
+ create mode 100644 contrib/mw-to-git/t/install-wiki/LocalSettings.php
+ create mode 100644 contrib/mw-to-git/t/install-wiki/db_install.php
+ create mode 100755 contrib/mw-to-git/t/test-gitmw-lib.sh
+ create mode 100644 contrib/mw-to-git/t/test.config
+
+diff --git a/contrib/mw-to-git/t/install-wiki.sh b/contrib/mw-to-git/t/install-wiki.sh
 new file mode 100755
-index 0000000..43faee5
+index 0000000..17a1fc8
 --- /dev/null
-+++ b/contrib/mw-to-git/t/test-gitmw.pl
-@@ -0,0 +1,230 @@
-+#!/usr/bin/perl -w -s
++++ b/contrib/mw-to-git/t/install-wiki.sh
+@@ -0,0 +1,45 @@
++#!/bin/sh
++
++# This script installs or deletes a MediaWiki on your computer.
++# It requires a web server with PHP and SQLite running. In addition, if you
++# do not have MediaWiki sources on your computer, the option 'install'
++# downloads them for you.
++# Please set the CONFIGURATION VARIABLES in ./test-gitmw-lib.sh
++
++WIKI_TEST_DIR=$(cd "$(dirname "$0")" && pwd)
++
++if test -z "$WIKI_TEST_DIR"
++then
++	WIKI_TEST_DIR=.
++fi
++
++. "$WIKI_TEST_DIR"/test-gitmw-lib.sh
++usage () {
++	echo "Usage: "
++	echo "	./install-wiki.sh <install | delete | help>"
++	echo "		install | -i :	Install a wiki on your computer."
++	echo "		delete | -d : Delete the wiki and all its pages and "
++	echo "			content."
++}
++
++
++# Argument: install, delete, --help | -h
++case "$1" in
++	"install" | "-i")
++		wiki_install
++		exit 0
++		;;
++	"delete" | "-d")
++		wiki_delete
++		exit 0
++		;;
++	"--help" | "-h")
++		usage
++		exit 0
++		;;
++	*)
++		echo "Invalid argument: $1"
++		usage
++		exit 1
++		;;
++esac
+diff --git a/contrib/mw-to-git/t/install-wiki/LocalSettings.php b/contrib/mw-to-git/t/install-wiki/LocalSettings.php
+new file mode 100644
+index 0000000..78d505c
+--- /dev/null
++++ b/contrib/mw-to-git/t/install-wiki/LocalSettings.php
+@@ -0,0 +1,128 @@
++<?php
++# This file was automatically generated by the MediaWiki 1.19.0
++# installer. If you make manual changes, please keep track in case you
++# need to recreate them later.
++#
++# See includes/DefaultSettings.php for all configurable settings
++# and their default values, but don't forget to make changes in _this_
++# file, not there.
++#
++# Further documentation for configuration settings may be found at:
++# http://www.mediawiki.org/wiki/Manual:Configuration_settings
++
++# Protect against web entry
++if ( !defined( 'MEDIAWIKI' ) ) {
++	exit;
++}
++
++## Uncomment this to disable output compression
++# $wgDisableOutputCompression = true;
++
++$wgSitename      = "Git-MediaWiki-Test";
++$wgMetaNamespace = "Git-MediaWiki-Test";
++
++## The URL base path to the directory containing the wiki;
++## defaults for all runtime URL paths are based off of this.
++## For more information on customizing the URLs please see:
++## http://www.mediawiki.org/wiki/Manual:Short_URL
++$wgScriptPath       = "@WG_SCRIPT_PATH@";
++$wgScriptExtension  = ".php";
++
++## The protocol and server name to use in fully-qualified URLs
++$wgServer           = "@WG_SERVER@";
++
++## The relative URL path to the skins directory
++$wgStylePath        = "$wgScriptPath/skins";
++
++## The relative URL path to the logo.  Make sure you change this from the default,
++## or else you'll overwrite your logo when you upgrade!
++$wgLogo             = "$wgStylePath/common/images/wiki.png";
++
++## UPO means: this is also a user preference option
++
++$wgEnableEmail      = true;
++$wgEnableUserEmail  = true; # UPO
++
++$wgEmergencyContact = "apache@localhost";
++$wgPasswordSender   = "apache@localhost";
++
++$wgEnotifUserTalk      = false; # UPO
++$wgEnotifWatchlist     = false; # UPO
++$wgEmailAuthentication = true;
++
++## Database settings
++$wgDBtype           = "sqlite";
++$wgDBserver         = "";
++$wgDBname           = "wikidb";
++$wgDBuser           = "";
++$wgDBpassword       = "";
++
++# SQLite-specific settings
++$wgSQLiteDataDir    = "@WG_SQLITE_DATADIR@";
++
++
++## Shared memory settings
++$wgMainCacheType    = CACHE_NONE;
++$wgMemCachedServers = array();
++
++## To enable image uploads, make sure the 'images' directory
++## is writable, then set this to true:
++$wgEnableUploads  = false;
++$wgUseImageMagick = true;
++$wgImageMagickConvertCommand ="@CONVERT@";
++
++# InstantCommons allows wiki to use images from http://commons.wikimedia.org
++$wgUseInstantCommons  = false;
++
++## If you use ImageMagick (or any other shell command) on a
++## Linux server, this will need to be set to the name of an
++## available UTF-8 locale
++$wgShellLocale = "en_US.utf8";
++
++## If you want to use image uploads under safe mode,
++## create the directories images/archive, images/thumb and
++## images/temp, and make them all writable. Then uncomment
++## this, if it's not already uncommented:
++#$wgHashedUploadDirectory = false;
++
++## Set $wgCacheDirectory to a writable directory on the web server
++## to make your wiki go slightly faster. The directory should not
++## be publically accessible from the web.
++#$wgCacheDirectory = "$IP/cache";
++
++# Site language code, should be one of the list in ./languages/Names.php
++$wgLanguageCode = "en";
++
++$wgSecretKey = "1c912bfe3519fb70f5dc523ecc698111cd43d81a11c585b3eefb28f29c2699b7";
++#$wgSecretKey = "@SECRETKEY@";
++
++
++# Site upgrade key. Must be set to a string (default provided) to turn on the
++# web installer while LocalSettings.php is in place
++$wgUpgradeKey = "ddae7dc87cd0a645";
++
++## Default skin: you can change the default skin. Use the internal symbolic
++## names, ie 'standard', 'nostalgia', 'cologneblue', 'monobook', 'vector':
++$wgDefaultSkin = "vector";
++
++## For attaching licensing metadata to pages, and displaying an
++## appropriate copyright notice / icon. GNU Free Documentation
++## License and Creative Commons licenses are supported so far.
++$wgRightsPage = ""; # Set to the title of a wiki page that describes your license/copyright
++$wgRightsUrl  = "";
++$wgRightsText = "";
++$wgRightsIcon = "";
++
++# Path to the GNU diff3 utility. Used for conflict resolution.
++$wgDiff3 = "/usr/bin/diff3";
++
++# Query string length limit for ResourceLoader. You should only set this if
++# your web server has a query string length limit (then set it to that limit),
++# or if you have suhosin.get.max_value_length set in php.ini (then set it to
++# that value)
++$wgResourceLoaderMaxQueryLength = -1;
++
++
++
++# End of automatically generated settings.
++# Add more configuration options below.
+diff --git a/contrib/mw-to-git/t/install-wiki/db_install.php b/contrib/mw-to-git/t/install-wiki/db_install.php
+new file mode 100644
+index 0000000..3111c73
+--- /dev/null
++++ b/contrib/mw-to-git/t/install-wiki/db_install.php
+@@ -0,0 +1,110 @@
++<?php
++/**
++ * This script generates a SQLite database for a MediaWiki version 1.19.0
++ * You must specify the login of the admin (argument 1) and its
++ * password (argument 2) and the folder where the database file
++ * is located (absolute path in argument 3).
++ * It is used by the script install-wiki.sh in order to make easy the
++ * installation of a MediaWiki.
++ *
++ * In order to generate a SQLite database file, MediaWiki ask the user
++ * to submit some forms in its web browser. This script simulates this
++ * behavior though the functions <get> and <submit>
++ *
++ */
++$argc = $_SERVER['argc'];
++$argv = $_SERVER['argv'];
++
++$login = $argv[2];
++$pass = $argv[3];
++$tmp = $argv[4];
++$port = $argv[5];
++
++$url = 'http://localhost:'.$port.'/wiki/mw-config/index.php';
++$db_dir = urlencode($tmp);
++$tmp_cookie = tempnam($tmp,"COOKIE_");
++/*
++ * Fetchs a page with cURL.
++ */
++function get ($page_name = "") {
++        $curl = curl_init();
++        $page_name_add = "";
++        if ($page_name != "") {
++                $page_name_add = '?page='.$page_name;
++        }
++	$url = $GLOBALS['url'].$page_name_add;
++        $tmp_cookie=$GLOBALS['tmp_cookie'];
++        curl_setopt($curl, CURLOPT_COOKIEJAR, $tmp_cookie);
++        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
++        curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
++        curl_setopt($curl, CURLOPT_COOKIEFILE, $tmp_cookie);
++        curl_setopt($curl, CURLOPT_HEADER, true);
++        curl_setopt($curl, CURLOPT_URL,$url);
++
++        $page = curl_exec($curl);
++        curl_close($curl);
++        return $page;
++}
++
++/*
++ * Submits a form with cURL.
++ */
++function submit($page_name, $option = "") {
++        $curl = curl_init();
++        $datapost = 'submit-continue=Continue+%E2%86%92';
++        if ($option != "") {
++                $datapost = $option.'&'.$datapost;
++        }
++	$url = $GLOBALS['url'].'?page='.$page_name;
++        $tmp_cookie = $GLOBALS['tmp_cookie'];
++        curl_setopt($curl, CURLOPT_URL, $url);
++        curl_setopt($curl, CURLOPT_POST, true);
++        curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
++        curl_setopt($curl, CURLOPT_POSTFIELDS, $datapost);
++        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
++        curl_setopt($curl, CURLOPT_COOKIEJAR, $tmp_cookie);
++        curl_setopt($curl, CURLOPT_COOKIEFILE, $tmp_cookie);
++
++        $page = curl_exec($curl);
++        curl_close($curl);
++        return "$page";
++}
++
++/*
++ * Here starts this script: simulates the behavior of the user
++ * submitting forms to generates the database file.
++ * Note this simulation was made for the MediaWiki version 1.19.0,
++ * we can't assume it works with other versions.
++ *
++ */
++
++$page = get();
++preg_match('/input type="hidden" value="([0-9]+)" name="LanguageRequestTime"/',
++        $page, $matches);
++$timestamp = $matches[1];
++$language = "LanguageRequestTime=$timestamp&uselang=en&ContLang=en";
++$page = submit('Language', $language);
++
++submit('Welcome');
++
++$db_config = 'DBType=sqlite';
++$db_config = $db_config.'&sqlite_wgSQLiteDataDir='.$db_dir;
++$db_config = $db_config.'&sqlite_wgDBname='.$argv[1];
++submit('DBConnect', $db_config);
++
++$wiki_config = 'config_wgSitename=TEST';
++$wiki_config = $wiki_config.'&config__NamespaceType=site-name';
++$wiki_config = $wiki_config.'&config_wgMetaNamespace=MyWiki';
++$wiki_config = $wiki_config.'&config__AdminName='.$login;
++
++$wiki_config = $wiki_config.'&config__AdminPassword='.$pass;
++$wiki_config = $wiki_config.'&config__AdminPassword2='.$pass;
++
++$wiki_config = $wiki_config.'&wiki__configEmail=email%40email.org';
++$wiki_config = $wiki_config.'&config__SkipOptional=skip';
++submit('Name', $wiki_config);
++submit('Install');
++submit('Install');
++
++unlink($tmp_cookie);
++?>
+diff --git a/contrib/mw-to-git/t/test-gitmw-lib.sh b/contrib/mw-to-git/t/test-gitmw-lib.sh
+new file mode 100755
+index 0000000..160f97b
+--- /dev/null
++++ b/contrib/mw-to-git/t/test-gitmw-lib.sh
+@@ -0,0 +1,285 @@
 +# Copyright (C) 2012
 +#     Charles Roussel <charles.roussel@ensimag.imag.fr>
 +#     Simon Cathebras <simon.cathebras@ensimag.imag.fr>
@@ -371,226 +395,323 @@ index 0000000..43faee5
 +#     Simon Perrat <simon.perrat@ensimag.imag.fr>
 +# License: GPL v2 or later
 +
-+# Usage:
-+#       ./test-gitmw.pl <command> [argument]*
-+# Execute in terminal using the name of the function to call as first
-+# parameter, and the function's arguments as following parameters
 +#
-+# Example:
-+#     ./test-gitmw.pl "get_page" foo .
-+# will call <wiki_getpage> with arguments <foo> and <.>
++# CONFIGURATION VARIABLES
++# You might want to change these ones
 +#
-+# Available functions are:
-+#     "get_page"
-+#     "delete_page"
-+#     "edit_page"
-+#     "getallpagename"
 +
-+use MediaWiki::API;
-+use Getopt::Long;
-+use Switch;
-+use encoding 'utf8';
-+use DateTime::Format::ISO8601;
-+use open ':encoding(utf8)';
-+use constant SLASH_REPLACEMENT => "%2F";
++. ./test.config
 +
-+#Parsing of the config file
++export CURR_DIR=$(pwd)
++export TEST_DIRECTORY=$CURR_DIR/../../../t
 +
-+my $configfile = "$ENV{'CURR_DIR'}/test.config";
-+my %config;
-+open (CONFIG,"< $configfile") || die "can't open $configfile: $!";
-+while (<CONFIG>)
-+{
-+        chomp;
-+        s/#.*//;
-+        s/^\s+//;
-+        s/\s+$//;
-+        next unless length;
-+        my ($key, $value) = split (/\s*=\s*/,$_, 2);
-+        $config{$key} = $value;
-+	last if ($key eq 'LIGHTTPD' and $value eq 'false');
-+	last if ($key eq 'PORT');
++if test $LIGHTTPD = "false" ; then
++	PORT=80
++else
++	WIKI_DIR_INST="$CURR_DIR/$WEB_WWW"
++fi
++
++# ================= Install part =================
++
++error () {
++	echo "$@" >&2
++	exit 1
 +}
 +
-+my $wiki_address = "http://$config{'SERVER_ADDR'}".":"."$config{'PORT'}";
-+my $wiki_url = "$wiki_address/$config{'WIKI_DIR_NAME'}/api.php";
-+my $wiki_admin = "$config{'WIKI_ADMIN'}";
-+my $wiki_admin_pass = "$config{'WIKI_PASSW'}";
-+my $mw = MediaWiki::API->new;
-+$mw->{config}->{api_url} = $wiki_url;
-+
-+sub mediawiki_clean_filename {
-+	my $filename = shift;
-+	$filename =~ s/@{[SLASH_REPLACEMENT]}/\//g;
-+	# [, ], |, {, and } are forbidden by MediaWiki, even URL-encoded.
-+	# Do a variant of URL-encoding, i.e. looks like URL-encoding,
-+	# but with _ added to prevent MediaWiki from thinking this is
-+	# an actual special character.
-+	$filename =~ s/[\[\]\{\}\|]/sprintf("_%%_%x", ord($&))/ge;
-+	# If we use the uri escape before
-+	# we should unescape here, before anything
-+
-+	return $filename;
-+}
-+
-+sub mediawiki_smudge_filename {
-+	my $filename = shift;
-+	$filename =~ s/\//@{[SLASH_REPLACEMENT]}/g;
-+	$filename =~ s/ /_/g;
-+	# Decode forbidden characters encoded in mediawiki_clean_filename
-+	$filename =~ s/_%_([0-9a-fA-F][0-9a-fA-F])/sprintf("%c", hex($1))/ge;
-+	return $filename;
-+}
-+
-+
-+# wiki_login <name> <password>
++# config_lighttpd
 +#
-+# Logs the user with <name> and <password> in the global variable
-+# of the mediawiki $mw
-+sub wiki_login {
-+	$mw->login( { lgname => "$_[0]",lgpassword => "$_[1]" } )
-+	|| die "getpage: login failed";
++# Create the configuration files and the folders necessary to start lighttpd.
++# Overwrite any existing file.
++config_lighttpd() {
++	mkdir -p $WEB
++	mkdir -p $WEB_TMP
++	mkdir -p $WEB_WWW
++	cat > $WEB/lighttpd.conf <<EOF
++	server.document-root = "$CURR_DIR/$WEB_WWW"
++	server.port = $PORT
++	server.pid-file = "$CURR_DIR/$WEB_TMP/pid"
++
++	server.modules = (
++	"mod_rewrite",
++	"mod_redirect",
++	"mod_access",
++	"mod_accesslog",
++	"mod_fastcgi"
++	)
++
++	index-file.names = ("index.php" , "index.html")
++
++	mimetype.assign		    = (
++	".pdf"		=>	"application/pdf",
++	".sig"		=>	"application/pgp-signature",
++	".spl"		=>	"application/futuresplash",
++	".class"	=>	"application/octet-stream",
++	".ps"		=>	"application/postscript",
++	".torrent"	=>	"application/x-bittorrent",
++	".dvi"		=>	"application/x-dvi",
++	".gz"		=>	"application/x-gzip",
++	".pac"		=>	"application/x-ns-proxy-autoconfig",
++	".swf"		=>	"application/x-shockwave-flash",
++	".tar.gz"	=>	"application/x-tgz",
++	".tgz"		=>	"application/x-tgz",
++	".tar"		=>	"application/x-tar",
++	".zip"		=>	"application/zip",
++	".mp3"		=>	"audio/mpeg",
++	".m3u"		=>	"audio/x-mpegurl",
++	".wma"		=>	"audio/x-ms-wma",
++	".wax"		=>	"audio/x-ms-wax",
++	".ogg"		=>	"application/ogg",
++	".wav"		=>	"audio/x-wav",
++	".gif"		=>	"image/gif",
++	".jpg"		=>	"image/jpeg",
++	".jpeg"		=>	"image/jpeg",
++	".png"		=>	"image/png",
++	".xbm"		=>	"image/x-xbitmap",
++	".xpm"		=>	"image/x-xpixmap",
++	".xwd"		=>	"image/x-xwindowdump",
++	".css"		=>	"text/css",
++	".html"		=>	"text/html",
++	".htm"		=>	"text/html",
++	".js"		=>	"text/javascript",
++	".asc"		=>	"text/plain",
++	".c"		=>	"text/plain",
++	".cpp"		=>	"text/plain",
++	".log"		=>	"text/plain",
++	".conf"		=>	"text/plain",
++	".text"		=>	"text/plain",
++	".txt"		=>	"text/plain",
++	".dtd"		=>	"text/xml",
++	".xml"		=>	"text/xml",
++	".mpeg"		=>	"video/mpeg",
++	".mpg"		=>	"video/mpeg",
++	".mov"		=>	"video/quicktime",
++	".qt"		=>	"video/quicktime",
++	".avi"		=>	"video/x-msvideo",
++	".asf"		=>	"video/x-ms-asf",
++	".asx"		=>	"video/x-ms-asf",
++	".wmv"		=>	"video/x-ms-wmv",
++	".bz2"		=>	"application/x-bzip",
++	".tbz"		=>	"application/x-bzip-compressed-tar",
++	".tar.bz2"	=>	"application/x-bzip-compressed-tar",
++	""		=>	"text/plain"
++	)
++
++	fastcgi.server = ( ".php" =>
++	("localhost" =>
++	( "socket" => "$CURR_DIR/$WEB_TMP/php.socket",
++	"bin-path" => "$PHP_DIR/php-cgi -c $CURR_DIR/$WEB/php.ini"
++
++	)
++	)
++	)
++EOF
++
++	cat > $WEB/php.ini <<EOF
++	session.save_path ='$CURR_DIR/$WEB_TMP'
++EOF
 +}
 +
-+# wiki_getpage <wiki_page> <dest_path>
++# start_lighttpd
 +#
-+# fetch a page <wiki_page> from the wiki referenced in the global variable
-+# $mw and copies its content in directory dest_path
-+sub wiki_getpage {
-+	my $pagename = $_[0];
-+	my $destdir = $_[1];
++# Start or restart daemon lighttpd. If restart, rewrite configuration files.
++start_lighttpd() {
++	if test -f "$WEB_TMP/pid"; then
++		echo "Instance already running. Restarting..."
++		stop_lighttpd
++	fi
++	config_lighttpd
++	$LIGHTTPD_DIR/lighttpd -f $WEB/lighttpd.conf
 +
-+	my $page = $mw->get_page( { title => $pagename } );
-+	if (!defined($page)) {
-+		die "getpage: wiki does not exist";
-+	}
-+
-+	my $content = $page->{'*'};
-+	if (!defined($content)) {
-+		die "getpage: page does not exist";
-+	}
-+
-+	# Replace spaces by underscore in the page name
-+	$pagename=$page->{'title'};
-+	$pagename = mediawiki_smudge_filename $pagename;
-+	open(my $file, ">$destdir/$pagename.mw");
-+	print $file "$content";
-+	close ($file);
-+
++	if test $? -ne 0 ; then
++		echo "Could not execute http deamon lighttpd"
++		exit 1
++	fi
 +}
 +
-+# wiki_delete_page <page_name>
++# stop_lighttpd
 +#
-+# delete the page with name <page_name> from the wiki referenced
-+# in the global variable $mw
-+sub wiki_delete_page {
-+	my $pagename = $_[0];
++# Kill daemon lighttpd and removes files and folders associated.
++stop_lighttpd () {
 +
-+	my $exist=$mw->get_page({title => $pagename});
-+
-+	if (defined($exist->{'*'})){
-+		$mw->edit({ action => 'delete',
-+				title => $pagename})
-+		|| die $mw->{error}->{code} . ": " . $mw->{error}->{details};
-+	} else {
-+		die "no page with such name found: $pagename\n";
-+	}
++	test -f "$WEB_TMP/pid" && kill $(cat "$WEB_TMP/pid")
++	rm -rf $WEB
 +}
 +
-+# wiki_editpage <wiki_page> <wiki_content> <wiki_append> [-c=<category>] [-s=<summary>]
++# Create the SQLite database of the MediaWiki. If the database file already
++# exists, it will be deleted.
++# This script should be runned from the directory where $FILES_FOLDER is
++# located.
++create_db () {
++	rm -f "$TMP/$DB_FILE"
++
++	echo "Generating the SQLite database file. It can take some time ..."
++	# Run the php script to generate the SQLite database file
++	# with cURL calls.
++	php "$FILES_FOLDER/$DB_INSTALL_SCRIPT" $(basename "$DB_FILE" .sqlite) \
++		"$WIKI_ADMIN" "$WIKI_PASSW" "$TMP" "$PORT"
++
++	if [ ! -f "$TMP/$DB_FILE" ] ; then
++		error "Can't create database file in TODO. Try to run ./install-wiki.sh delete first."
++	fi
++	chmod 666 "$TMP/$DB_FILE"
++
++	# Copy the generated database file into the directory the
++	# user indicated.
++	cp --preserve=mode,ownership "$TMP/$DB_FILE" "$FILES_FOLDER" ||
++		error "Unable to copy $TMP/$DB_FILE to $FILES_FOLDER"
++}
++
++# Install a wiki in your web server directory.
++wiki_install () {
++	if test $LIGHTTPD = "true" ; then
++		start_lighttpd
++	fi
++
++	SERVER_ADDR=$SERVER_ADDR:$PORT
++	# In this part, we change directory to $TMP in order to download,
++	# unpack and copy the files of MediaWiki
++	(
++	mkdir -p "$WIKI_DIR_INST/$WIKI_DIR_NAME"
++	if [ ! -d "$WIKI_DIR_INST/$WIKI_DIR_NAME" ] ; then
++		error "Folder $WIKI_DIR_INST/$WIKI_DIR_NAME doesn't exist.
++		Please create it and launch the script again."
++	fi
++
++	# Fetch MediaWiki's archive if not already present in the TMP directory
++	cd "$TMP"
++	if [ ! -f "$MW_VERSION.tar.gz" ] ; then
++		echo "Downloading $MW_VERSION sources ..."
++		wget "http://download.wikimedia.org/mediawiki/1.19/mediawiki-1.19.0.tar.gz" ||
++			error "Unable to download "\
++			"http://download.wikimedia.org/mediawiki/1.19/"\
++			"mediawiki-1.19.0.tar.gz. "\
++			"Please fix your connection and launch the script again."
++	fi
++	tar xfz "$MW_VERSION.tar.gz"
++	echo "$MW_VERSION.tar.gz downloaded in `pwd`."\
++		"You can delete it later if you want."
++
++	# Copy the files of MediaWiki wiki in the web server's directory.
++	cd "$MW_VERSION"
++	cp -Rf * "$WIKI_DIR_INST/$WIKI_DIR_NAME/" ||
++		error "Unable to copy WikiMedia's files from `pwd` to "\
++			"$WIKI_DIR_INST/$WIKI_DIR_NAME"
++	)
++
++	create_db
++
++	# Copy the generic LocalSettings.php in the web server's directory
++	# And modify parameters according to the ones set at the top
++	# of this script.
++	# Note that LocalSettings.php is never modified.
++	if [ ! -f "$FILES_FOLDER/LocalSettings.php" ] ; then
++		error "Can't find $FILES_FOLDER/LocalSettings.php " \
++			"in the current folder. "\
++		"Please run the script inside its folder."
++	fi
++	cp "$FILES_FOLDER/LocalSettings.php" \
++		"$FILES_FOLDER/LocalSettings-tmp.php" ||
++		error "Unable to copy $FILES_FOLDER/LocalSettings.php " \
++		"to $FILES_FOLDER/LocalSettings-tmp.php"
++
++	# Parse and set the LocalSettings file of the user according to the
++	# CONFIGURATION VARIABLES section at the beginning of this script
++	file_swap="$FILES_FOLDER/LocalSettings-swap.php"
++	sed "s,@WG_SCRIPT_PATH@,/$WIKI_DIR_NAME," \
++		"$FILES_FOLDER/LocalSettings-tmp.php" > "$file_swap"
++	mv "$file_swap" "$FILES_FOLDER/LocalSettings-tmp.php"
++	sed "s,@WG_SERVER@,http://$SERVER_ADDR," \
++		"$FILES_FOLDER/LocalSettings-tmp.php" > "$file_swap"
++	mv "$file_swap" "$FILES_FOLDER/LocalSettings-tmp.php"
++	sed "s,@WG_SQLITE_DATADIR@,$TMP," \
++		"$FILES_FOLDER/LocalSettings-tmp.php" > "$file_swap"
++	mv "$file_swap" "$FILES_FOLDER/LocalSettings-tmp.php"
++
++	mv "$FILES_FOLDER/LocalSettings-tmp.php" \
++		"$WIKI_DIR_INST/$WIKI_DIR_NAME/LocalSettings.php" ||
++		error "Unable to move $FILES_FOLDER/LocalSettings-tmp.php" \
++		"in $WIKI_DIR_INST/$WIKI_DIR_NAME"
++	echo "File $FILES_FOLDER/LocalSettings.php is set in" \
++		" $WIKI_DIR_INST/$WIKI_DIR_NAME"
++
++	chmod ugo+w "$FILES_FOLDER/$DB_FILE"
++
++	echo "Your wiki has been installed. You can check it at
++		http://$SERVER_ADDR/$WIKI_DIR_NAME"
++}
++
++# Reset the database of the wiki and the password of the admin
 +#
-+# Edit a page named <wiki_page> with content <wiki_content> on the wiki
-+# referenced with the global variable $mw
-+# If <wiki_append> == true : append <wiki_content> at the end of the actual
-+# content of the page <wiki_page>
-+# If <wik_page> doesn't exist, that page is created with the <wiki_content>
-+sub wiki_editpage {
-+	my $wiki_page = mediawiki_clean_filename $_[0];
-+	my $wiki_content = $_[1];
-+	my $wiki_append = $_[2];
-+	my $summary = "";
-+	my ($summ, $cat) = ();
-+	GetOptions('s=s' => \$summ, 'c=s' => \$cat);
-+
-+	my $append = 0;
-+	if (defined($wiki_append) && $wiki_append eq 'true') {
-+		$append=1;
-+	}
-+
-+	my $previous_text ="";
-+
-+	if ($append) {
-+		my $ref = $mw->get_page( { title => $wiki_page } );
-+		$previous_text = $ref->{'*'};
-+	}
-+
-+	my $text = $wiki_content;
-+	if (defined($previous_text)) {
-+		$text="$previous_text$text";
-+	}
-+
-+	# Eventually, add this page to a category.
-+	if (defined($cat)) {
-+		my $category_name="[[Category:$cat]]";
-+		$text="$text\n $category_name";
-+	}
-+	if(defined($summ)){
-+		$summary=$summ;
-+	}
-+
-+	$mw->edit( { action => 'edit', title => $wiki_page, summary => $summary, text => "$text"} );
++# Warning: This function must be called only in a subdirectory of t/ directory
++wiki_reset () {
++	# Copy initial database of the wiki
++	if [ ! -f "../$FILES_FOLDER/$DB_FILE" ] ; then
++		error "Can't find ../$FILES_FOLDER/$DB_FILE in the current folder."
++	fi
++	cp "../$FILES_FOLDER/$DB_FILE" "$TMP" ||
++		error "Can't copy ../$FILES_FOLDER/$DB_FILE in $TMP"
++	echo "File $FILES_FOLDER/$DB_FILE is set in $TMP"
 +}
 +
-+# wiki_getallpagename [<category>]
-+#
-+# Fetch all pages of the wiki referenced by the global variable $mw
-+# and print the names of each one in the file all.txt with a new line
-+# ("\n") between these.
-+# If the argument <category> is defined, then this function get only the pages
-+# belonging to <category>.
-+sub wiki_getallpagename {
-+	# fetch the pages of the wiki
-+	if (defined($_[0])) {
-+		my $mw_pages = $mw->list ( { action => 'query',
-+				list => 'categorymembers',
-+				cmtitle => "Category:$_[0]",
-+				cmnamespace => 0,
-+				cmlimit=> 500 },
-+		)
-+		|| die $mw->{error}->{code}.": ".$mw->{error}->{details};
-+		open(my $file, ">all.txt");
-+		foreach my $page (@{$mw_pages}) {
-+			print $file "$page->{title}\n";
-+		}
-+		close ($file);
++# Delete the wiki created in the web server's directory and all its content
++# saved in the database.
++wiki_delete () {
++	if test $LIGHTTPD = "true"; then
++		stop_lighttpd
++	else
++		# Delete the wiki's directory.
++		rm -rf "$WIKI_DIR_INST/$WIKI_DIR_NAME" ||
++			error "Wiki's directory $WIKI_DIR_INST/" \
++			"$WIKI_DIR_NAME could not be deleted"
++		# Delete the wiki's SQLite database.
++		rm -f "$TMP/$DB_FILE" || error "Database $TMP/$DB_FILE could not be deleted."
++	fi
 +
-+	} else {
-+		my $mw_pages = $mw->list({
-+				action => 'query',
-+				list => 'allpages',
-+				aplimit => 500,
-+			})
-+		|| die $mw->{error}->{code}.": ".$mw->{error}->{details};
-+		open(my $file, ">all.txt");
-+		foreach my $page (@{$mw_pages}) {
-+			print $file "$page->{title}\n";
-+		}
-+		close ($file);
-+	}
++	# Delete the wiki's SQLite database
++	rm -f "$TMP/$DB_FILE" || error "Database $TMP/$DB_FILE could not be deleted."
++	rm -f "$FILES_FOLDER/$DB_FILE"
++	rm -rf "$TMP/$MW_VERSION"
 +}
+diff --git a/contrib/mw-to-git/t/test.config b/contrib/mw-to-git/t/test.config
+new file mode 100644
+index 0000000..958b37b
+--- /dev/null
++++ b/contrib/mw-to-git/t/test.config
+@@ -0,0 +1,35 @@
++# Name of the web server's directory dedicated to the wiki is WIKI_DIR_NAME
++WIKI_DIR_NAME=wiki
 +
-+# Main part of this script: parse the command line arguments
-+# and select which function to execute
-+my $fct_to_call = shift;
++# Login and password of the wiki's admin
++WIKI_ADMIN=WikiAdmin
++WIKI_PASSW=AdminPass
 +
-+&wiki_login($wiki_admin,$wiki_admin_pass);
++# Address of the web server
++SERVER_ADDR=localhost
 +
-+switch ($fct_to_call) {
-+	case "get_page" { &wiki_getpage(@ARGV)}
-+	case "delete_page" { &wiki_delete_page(@ARGV)}
-+	case "edit_page" { &wiki_editpage(@ARGV)}
-+	case "getallpagename" { &wiki_getallpagename(@ARGV)}
-+	else { die("test-gitmw.pl ERROR: wrong argument")}
-+}
++# SQLite database of the wiki, named DB_FILE, is located in TMP
++TMP=/tmp
++DB_FILE=wikidb.sqlite
++
++# If LIGHTTPD is not set to true, the script will use the defaut
++# web server running in WIKI_DIR_INST.
++WIKI_DIR_INST=/var/www
++
++# If LIGHTTPD is set to true, the script will use Lighttpd to run
++# the wiki.
++LIGHTTPD=true
++
++# The variables below are useful only if LIGHTTPD is set to true.
++PORT=1234
++PHP_DIR=/usr/bin
++LIGHTTPD_DIR=/usr/sbin
++WEB=WEB
++WEB_TMP=$WEB/tmp
++WEB_WWW=$WEB/www
++
++# The variables below are used by the script to install a wiki.
++# You should not modify these unless you are modifying the script itself.
++MW_VERSION=mediawiki-1.19.0
++FILES_FOLDER=install-wiki
++DB_INSTALL_SCRIPT=db_install.php
 -- 
 1.7.10.2.552.gaa3bb87
