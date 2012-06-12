@@ -1,78 +1,83 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCHv4] rebase [-i --exec | -ix] <CMD>...
-Date: Tue, 12 Jun 2012 20:55:43 +0200
-Message-ID: <4FD790AF.5070108@kdbg.org>
-References: <1339167235-2009-2-git-send-email-Lucien.Kong@ensimag.imag.fr> <1339325076-474-1-git-send-email-Lucien.Kong@ensimag.imag.fr> <4FD48B70.5080600@kdbg.org> <7vpq9598yb.fsf@alter.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: Keeping unreachable objects in a separate pack instead of loose?
+Date: Tue, 12 Jun 2012 15:07:17 -0400
+Message-ID: <20120612190717.GA16911@sigill.intra.peff.net>
+References: <20120611213948.GB32061@sigill.intra.peff.net>
+ <20120611221439.GE21775@thunk.org>
+ <20120611222308.GA10476@sigill.intra.peff.net>
+ <alpine.LFD.2.02.1206112024110.23555@xanadu.home>
+ <20120612171048.GB12706@sigill.intra.peff.net>
+ <alpine.LFD.2.02.1206121326490.23555@xanadu.home>
+ <20120612173214.GA16014@sigill.intra.peff.net>
+ <CAJo=hJvMtfVhadYowvVE0zUhDpbViXqGsvkmHpJpuynySLwb3A@mail.gmail.com>
+ <20120612175046.GA16522@sigill.intra.peff.net>
+ <m2fwa0fk0y.fsf@igel.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Lucien Kong <Lucien.Kong@ensimag.imag.fr>, git@vger.kernel.org,
-	tboegi@web.de,
-	Valentin Duperray <Valentin.Duperray@ensimag.imag.fr>,
-	Franck Jonas <Franck.Jonas@ensimag.imag.fr>,
-	Thomas Nguy <Thomas.Nguy@ensimag.imag.fr>,
-	Huynh Khoi Nguyen Nguyen 
-	<Huynh-Khoi-Nguyen.Nguyen@ensimag.imag.fr>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jun 12 20:56:09 2012
+Content-Type: text/plain; charset=utf-8
+Cc: Shawn Pearce <spearce@spearce.org>,
+	Nicolas Pitre <nico@fluxnic.net>, Ted Ts'o <tytso@mit.edu>,
+	Thomas Rast <trast@student.ethz.ch>,
+	Hallvard B Furuseth <h.b.furuseth@usit.uio.no>,
+	git@vger.kernel.org
+To: Andreas Schwab <schwab@linux-m68k.org>
+X-From: git-owner@vger.kernel.org Tue Jun 12 21:07:38 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SeWFw-0008PA-At
-	for gcvg-git-2@plane.gmane.org; Tue, 12 Jun 2012 20:55:56 +0200
+	id 1SeWR8-00049K-GK
+	for gcvg-git-2@plane.gmane.org; Tue, 12 Jun 2012 21:07:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753254Ab2FLSzr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Jun 2012 14:55:47 -0400
-Received: from bsmtp.bon.at ([213.33.87.14]:47479 "EHLO bsmtp.bon.at"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751997Ab2FLSzq (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Jun 2012 14:55:46 -0400
-Received: from dx.sixt.local (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTP id 4280913005B;
-	Tue, 12 Jun 2012 20:51:15 +0200 (CEST)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-	by dx.sixt.local (Postfix) with ESMTP id 6E0AB19F673;
-	Tue, 12 Jun 2012 20:55:43 +0200 (CEST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:12.0) Gecko/20120421 Thunderbird/12.0
-In-Reply-To: <7vpq9598yb.fsf@alter.siamese.dyndns.org>
+	id S1754049Ab2FLTHW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Jun 2012 15:07:22 -0400
+Received: from 99-108-225-23.lightspeed.iplsin.sbcglobal.net ([99.108.225.23]:51272
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752052Ab2FLTHU (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Jun 2012 15:07:20 -0400
+Received: (qmail 24296 invoked by uid 107); 12 Jun 2012 19:07:21 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 12 Jun 2012 15:07:21 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 12 Jun 2012 15:07:17 -0400
+Content-Disposition: inline
+In-Reply-To: <m2fwa0fk0y.fsf@igel.home>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199832>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199833>
 
-Am 11.06.2012 17:14, schrieb Junio C Hamano:
-> Johannes Sixt <j6t@kdbg.org> writes:
+On Tue, Jun 12, 2012 at 08:43:41PM +0200, Andreas Schwab wrote:
+
+> Jeff King <peff@peff.net> writes:
 > 
->> Am 10.06.2012 12:44, schrieb Lucien Kong:
->>> +test_expect_success 'rebase -i --exec without <CMD> shows error message and usage' '
->>> +	git reset --hard execute &&
->>> +	test_must_fail git rebase -i --exec 2>actual &&
->>> +	sed '1d' actual >tmp &&
->>> +	mv tmp actual &&
->>> +	test_must_fail git rebase -h >expected &&
->>> +	test_cmp expected actual &&
->>> +	git checkout master
->>> +'
->>
->> IMO, it is more important to check that the error message is present
->> rather than whether the usage blurb is correct. But since the error is
->> generated by the option parsing machinery, it is probably sufficient to
->> check *only* for failure, and don't verify the output at all.
+> > We could close it in both cases by tweaking the mtime of the file
+> > containing the object when we decide not to write because the object
+> > already exists.
+> 
+> Though there is always the window between the existence check and the
+> mtime update where pruning can hit you.
 
-I changed my mind. If option parsing regresses in such a way that --exec
-suddenly works without command, then the 'test_must_fail git rebase ...'
-could pass because there is a failure much later in the rebase process,
-which we would not detect if we do not check the output. It is therefore
-good to check whether the expected failure happens during option parsing.
+For the loose object case, you could do them both atomically by calling
+utime() on the object, and considering the object to exist only if it
+succeeds.
 
-Checking the usage blurb rather than the error message even has
-advantages: it is immune to changes of the error messages and to i18n
-poisoning.
+Doing it safely for packs would be harder, though; I think you'd
+have to bump the mtime forward, do the search, and then bump it back.
+You might err by causing a pack not to be pruned, but that is better
+than the opposite.
 
-In this light, the version you have queued is fine.
+Unfortunately it gets trickier with network transfers. If somebody is
+pushing to your repository, you might tell them you have some set of
+objects, then they prepare a pack based on that assumption (which might
+take minutes or hours to transfer), and then finally at the end you find
+that you actually need the objects in question. Of course, that race is
+even harder to trigger, because we do not advertise unreachable objects.
+So you would have to have a sequence where the objects are reachable,
+the client connects and receives your ref advertisement, then the
+objects become unreachable (e.g., due to a simultaneous non-ff push or
+deletion), and you do a prune in that interval which removes the
+objects.  Unlikely, but still possible.
 
--- Hannes
+-Peff
