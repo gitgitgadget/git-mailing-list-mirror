@@ -1,238 +1,89 @@
-From: Javier.Roucher-Iglesias@ensimag.imag.fr
-Subject: [PATCH/RFC] Add 'git credential' plumbing command
-Date: Tue, 12 Jun 2012 16:24:04 +0200
-Message-ID: <1339511044-29977-1-git-send-email-Javier.Roucher-Iglesias@ensimag.imag.fr>
-Cc: Javier Roucher <jroucher@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 12 16:24:46 2012
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] fast-export: report SHA-1 instead of gibberish when
+ marks exist already
+Date: Tue, 12 Jun 2012 07:26:54 -0700
+Message-ID: <7vtxyg4ndd.fsf@alter.siamese.dyndns.org>
+References: <1339508716-51880-1-git-send-email-max@quendi.de>
+ <1339508716-51880-2-git-send-email-max@quendi.de>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <johannes.schindelin@gmx.de>,
+	Pieter de Bie <pdebie@ai.rug.nl>
+To: Max Horn <max@quendi.de>
+X-From: git-owner@vger.kernel.org Tue Jun 12 16:27:19 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SeS1P-0003b2-9A
-	for gcvg-git-2@plane.gmane.org; Tue, 12 Jun 2012 16:24:39 +0200
+	id 1SeS3q-0001K4-Fn
+	for gcvg-git-2@plane.gmane.org; Tue, 12 Jun 2012 16:27:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752254Ab2FLOYX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Jun 2012 10:24:23 -0400
-Received: from mail-we0-f174.google.com ([74.125.82.174]:40580 "EHLO
-	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751836Ab2FLOYU (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Jun 2012 10:24:20 -0400
-Received: by weyu7 with SMTP id u7so2883318wey.19
-        for <git@vger.kernel.org>; Tue, 12 Jun 2012 07:24:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:date:message-id:x-mailer;
-        bh=igNMfFHPX7yjrIOVMACtDLXwXbONS5lLWtYf2k7EtsM=;
-        b=VnMFlf/hGL2v4OAAMirRiR0vyVIEV306CSPhIHSU3ynSU3xizf2aU6fCXdS5tFtTYM
-         km4ak+8DfZ71YTV69n+Vb3iW0S5cNnQ2X3RFcgmB6kKpl3xGiIC+RJSFQscrKEuTGIF/
-         D9LoFmKtg07iWyVLank55JWKNoiKmgCsA16ivZfv64OYoADxaVtxbMyahfEGQLPS108E
-         kjgekfsNOx6odWv1/scQtuWy3iEhO684gY3xakp7jaoRTcuTbyPtMXi/KpwCCQgidw2W
-         GJvhDf8OlE88bOeOGE03WKjgG6QEZavKLvbqJhMnWyzodQhElSqMH3+8UeG/TT1ePzgR
-         ddDQ==
-Received: by 10.180.99.70 with SMTP id eo6mr29473824wib.17.1339511059304;
-        Tue, 12 Jun 2012 07:24:19 -0700 (PDT)
-Received: from SuperNova.grenet.fr ([80.214.9.0])
-        by mx.google.com with ESMTPS id gc6sm5679820wib.0.2012.06.12.07.24.15
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 12 Jun 2012 07:24:18 -0700 (PDT)
-X-Mailer: git-send-email 1.7.10.2.573.ged8bfa6
+	id S1752991Ab2FLO1A convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 12 Jun 2012 10:27:00 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39118 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752268Ab2FLO05 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 12 Jun 2012 10:26:57 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EFFB88D37;
+	Tue, 12 Jun 2012 10:26:56 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=8YoIykdc4YMe
+	/iBNw5RTMcePMAU=; b=sF/KW08WBG64u9+qjVThI9EKOUFoK+lwEFEUr9DSL1qZ
+	u74ITbBqaQEtQ2u7NnbvRC0lVvBkd4YBxo30wNphGsH8IpHuUhRSVv+Wr9j6CCNE
+	dKce3+GWnB26RxJLD62ptzjB3qJA3j+l+BWNa2P5x5B56zQSQn4C0WYpK3FrNJ8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=p9/hIv
+	37pxIsHPr0bkVM//4sMU3ig33qIES3VfSWUMup5lvXz7Vp5OS9xAGs8WdS2Ti29F
+	Jp3PjeTXuU6yVadGV7kxt/BCKMfhjiNnW7Ph7uiSoQmRznkZcu60S1bIOp7Manqc
+	A2VF7vR0E8PqoCPnbVopO5gfmQPWWxOuC73TM=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E5BBB8D35;
+	Tue, 12 Jun 2012 10:26:56 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 752E88D34; Tue, 12 Jun 2012
+ 10:26:56 -0400 (EDT)
+In-Reply-To: <1339508716-51880-2-git-send-email-max@quendi.de> (Max Horn's
+ message of "Tue, 12 Jun 2012 15:45:16 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: A9D20EE8-B49A-11E1-B46C-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199789>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199790>
 
-From: Javier Roucher <jroucher@gmail.com>
+Max Horn <max@quendi.de> writes:
 
-Test is comming
-we are working to added soon.
+> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+>
+> Cc: Pieter de Bie <pdebie@ai.rug.nl>
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> Signed-off-by: Max Horn <max@quendi.de>
+> ---
 
----
- .gitignore                       |  1 +
- Documentation/git-credential.txt | 74 ++++++++++++++++++++++++++++++++++++++++
- Makefile                         |  1 +
- builtin.h                        |  1 +
- builtin/credential.c             | 40 ++++++++++++++++++++++
- git.c                            |  1 +
- 6 files changed, 118 insertions(+)
- create mode 100644 Documentation/git-credential.txt
- create mode 100644 builtin/credential.c
+Thanks, both.  Applied.
 
-diff --git a/.gitignore b/.gitignore
-index bf66648..7d1d86e 100644
---- a/.gitignore
-+++ b/.gitignore
-@@ -31,6 +31,7 @@
- /git-commit-tree
- /git-config
- /git-count-objects
-+/git-credential
- /git-credential-cache
- /git-credential-cache--daemon
- /git-credential-store
-diff --git a/Documentation/git-credential.txt b/Documentation/git-credential.txt
-new file mode 100644
-index 0000000..fa05aad
---- /dev/null
-+++ b/Documentation/git-credential.txt
-@@ -0,0 +1,74 @@
-+git-credential(7)
-+=================
-+
-+NAME
-+----
-+git-credential - Provide and store user credentials.
-+
-+SYNOPSIS
-+--------
-+------------------
-+git credential <fill|approve|reject>
-+
-+------------------
-+
-+DESCRIPTION
-+-----------
-+
-+Git-credential permits to the user of the script to save:
-+username, password, host, path and protocol. When the user of script
-+invoke git-credential, the script can ask for a password, using the command
-+'git credential fill'.
-+Taking data from the standard input, the program treats each line as a
-+separate data item, and the end of series of data item is signalled by a 
-+blank line.
-+
-+		username=admin\n 
-+		protocol=[http|https]\n
-+		host=localhost\n
-+		path=/dir\n\n
-+
-+-If git-credential system has the password already stored
-+git-credential will answer with by STDOUT:
-+	
-+		username=admin
-+		password=*****
-+
-+-If it is not stored, the user will be prompt for a password:
-+		
-+		> Password for '[http|https]admin@localhost':
-+
-+
-+Then if the password is correct, (note: it's not git credential that
-+decides if the password is correct or not. That part is done by the 
-+external system) it can be stored using command 'git crendential approve' 
-+by providing the structure, by STDIN.
-+
-+		username=admin
-+		password=*****
-+		protocol=[http|https]
-+		host=localhost
-+		path=/dir
-+
-+If the password is refused, it can be deleted using command
-+'git credential reject' by providing the same structure.
-+
-+
-+REQUESTING CREDENTIALS
-+----------------------
-+
-+1. The 'git credential fill' makes the structure,
-+with this structure it will be able to save your
-+credentials, and if the credential is already stored,
-+it will fill the password.
-+
-+		username=foo
-+		password=****
-+		protocol=[http|https]
-+		localhost=url
-+		path=/direction
-+
-+2. Then 'git credential approve' to store them.
-+
-+3. Otherwise, if the credential is not correct you can do
-+  'git credential reject' to delete the credential.
-diff --git a/Makefile b/Makefile
-index 4592f1f..3f53da8 100644
---- a/Makefile
-+++ b/Makefile
-@@ -827,6 +827,7 @@ BUILTIN_OBJS += builtin/commit-tree.o
- BUILTIN_OBJS += builtin/commit.o
- BUILTIN_OBJS += builtin/config.o
- BUILTIN_OBJS += builtin/count-objects.o
-+BUILTIN_OBJS += builtin/credential.o
- BUILTIN_OBJS += builtin/describe.o
- BUILTIN_OBJS += builtin/diff-files.o
- BUILTIN_OBJS += builtin/diff-index.o
-diff --git a/builtin.h b/builtin.h
-index 338f540..48feddc 100644
---- a/builtin.h
-+++ b/builtin.h
-@@ -66,6 +66,7 @@ extern int cmd_commit(int argc, const char **argv, const char *prefix);
- extern int cmd_commit_tree(int argc, const char **argv, const char *prefix);
- extern int cmd_config(int argc, const char **argv, const char *prefix);
- extern int cmd_count_objects(int argc, const char **argv, const char *prefix);
-+extern int cmd_credential(int argc, const char **argv, const char *prefix);
- extern int cmd_describe(int argc, const char **argv, const char *prefix);
- extern int cmd_diff_files(int argc, const char **argv, const char *prefix);
- extern int cmd_diff_index(int argc, const char **argv, const char *prefix);
-diff --git a/builtin/credential.c b/builtin/credential.c
-new file mode 100644
-index 0000000..c8dcfbb
---- /dev/null
-+++ b/builtin/credential.c
-@@ -0,0 +1,40 @@
-+#include <stdio.h>
-+#include "cache.h"
-+#include "credential.h"
-+#include "string-list.h"
-+
-+static const char usage_msg[] =
-+"credential <fill|approve|reject>";
-+
-+void cmd_credential (int argc, char **argv, const char *prefix) {
-+	const char *op;
-+	struct credential c = CREDENTIAL_INIT;
-+	int i;
-+
-+	op = argv[1];
-+	if (!op)
-+		usage(usage_msg);
-+
-+	if (credential_read(&c, stdin) < 0)
-+		die("unable to read credential from stdin");
-+
-+	if (!strcmp(op, "fill")) {
-+		credential_fill(&c);
-+		if (c.username)
-+			printf("username=%s\n", c.username);
-+		if (c.password)
-+			printf("password=%s\n", c.password);
-+		if (c.protocol)
-+			printf("protocol=%s\n", c.protocol);
-+		if (c.host)
-+			printf("host=%s\n", c.host);
-+		if (c.path)
-+			printf("path=%s\n", c.path);
-+	} else if (!strcmp(op, "approve")) {
-+		credential_approve(&c);
-+	} else if (!strcmp(op, "reject")) {
-+		credential_reject(&c);
-+	} else {
-+		usage(usage_msg);
-+	}
-+}
-diff --git a/git.c b/git.c
-index d232de9..660c926 100644
---- a/git.c
-+++ b/git.c
-@@ -353,6 +353,7 @@ static void handle_internal_command(int argc, const char **argv)
- 		{ "commit-tree", cmd_commit_tree, RUN_SETUP },
- 		{ "config", cmd_config, RUN_SETUP_GENTLY },
- 		{ "count-objects", cmd_count_objects, RUN_SETUP },
-+		{ "credential", cmd_credential, RUN_SETUP_GENTLY },
- 		{ "describe", cmd_describe, RUN_SETUP },
- 		{ "diff", cmd_diff },
- 		{ "diff-files", cmd_diff_files, RUN_SETUP | NEED_WORK_TREE },
--- 
-1.7.10.2.573.ged8bfa6
+>  builtin/fast-export.c |    2 +-
+>  1 Datei ge=C3=A4ndert, 1 Zeile hinzugef=C3=BCgt(+), 1 Zeile entfernt=
+(-)
+>
+> diff --git a/builtin/fast-export.c b/builtin/fast-export.c
+> index 19509ea..ef7c012 100644
+> --- a/builtin/fast-export.c
+> +++ b/builtin/fast-export.c
+> @@ -610,7 +610,7 @@ static void import_marks(char *input_file)
+>  			die ("Could not read blob %s", sha1_to_hex(sha1));
+> =20
+>  		if (object->flags & SHOWN)
+> -			error("Object %s already has a mark", sha1);
+> +			error("Object %s already has a mark", sha1_to_hex(sha1));
+> =20
+>  		mark_object(object, mark);
+>  		if (last_idnum < mark)
