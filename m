@@ -1,78 +1,107 @@
-From: Ted Ts'o <tytso@mit.edu>
-Subject: Re: Keeping unreachable objects in a separate pack instead of
- loose?
-Date: Tue, 12 Jun 2012 15:19:29 -0400
-Message-ID: <20120612191929.GA12161@thunk.org>
-References: <20120611222308.GA10476@sigill.intra.peff.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: Keeping unreachable objects in a separate pack instead of loose?
+Date: Tue, 12 Jun 2012 15:23:18 -0400
+Message-ID: <20120612192318.GC16911@sigill.intra.peff.net>
+References: <20120611221439.GE21775@thunk.org>
+ <20120611222308.GA10476@sigill.intra.peff.net>
  <alpine.LFD.2.02.1206112024110.23555@xanadu.home>
  <20120612171048.GB12706@sigill.intra.peff.net>
  <alpine.LFD.2.02.1206121326490.23555@xanadu.home>
  <20120612173214.GA16014@sigill.intra.peff.net>
- <alpine.LFD.2.02.1206121345500.23555@xanadu.home>
- <20120612175438.GB16522@sigill.intra.peff.net>
- <alpine.LFD.2.02.1206121359260.23555@xanadu.home>
- <20120612183702.GD1803@thunk.org>
- <alpine.LFD.2.02.1206121509340.23555@xanadu.home>
+ <CAJo=hJvMtfVhadYowvVE0zUhDpbViXqGsvkmHpJpuynySLwb3A@mail.gmail.com>
+ <20120612175046.GA16522@sigill.intra.peff.net>
+ <m2fwa0fk0y.fsf@igel.home>
+ <alpine.LFD.2.02.1206121507120.23555@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, Thomas Rast <trast@student.ethz.ch>,
+Content-Type: text/plain; charset=utf-8
+Cc: Andreas Schwab <schwab@linux-m68k.org>,
+	Shawn Pearce <spearce@spearce.org>, Ted Ts'o <tytso@mit.edu>,
+	Thomas Rast <trast@student.ethz.ch>,
 	Hallvard B Furuseth <h.b.furuseth@usit.uio.no>,
 	git@vger.kernel.org
 To: Nicolas Pitre <nico@fluxnic.net>
-X-From: git-owner@vger.kernel.org Tue Jun 12 21:19:43 2012
+X-From: git-owner@vger.kernel.org Tue Jun 12 21:23:27 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SeWct-0001ab-Ii
-	for gcvg-git-2@plane.gmane.org; Tue, 12 Jun 2012 21:19:39 +0200
+	id 1SeWgW-0002ok-OK
+	for gcvg-git-2@plane.gmane.org; Tue, 12 Jun 2012 21:23:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753444Ab2FLTTf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Jun 2012 15:19:35 -0400
-Received: from li9-11.members.linode.com ([67.18.176.11]:49406 "EHLO
-	imap.thunk.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752104Ab2FLTTf (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Jun 2012 15:19:35 -0400
-Received: from root (helo=tytso-glaptop.cam.corp.google.com)
-	by imap.thunk.org with local-esmtp (Exim 4.72)
-	(envelope-from <tytso@thunk.org>)
-	id 1SeWcj-0007KB-82; Tue, 12 Jun 2012 19:19:29 +0000
-Received: from tytso by tytso-glaptop.cam.corp.google.com with local (Exim 4.71)
-	(envelope-from <tytso@thunk.org>)
-	id 1SeWcj-0003Aa-3K; Tue, 12 Jun 2012 15:19:29 -0400
+	id S1752773Ab2FLTXV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Jun 2012 15:23:21 -0400
+Received: from 99-108-225-23.lightspeed.iplsin.sbcglobal.net ([99.108.225.23]:51297
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752061Ab2FLTXU (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Jun 2012 15:23:20 -0400
+Received: (qmail 24648 invoked by uid 107); 12 Jun 2012 19:23:21 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 12 Jun 2012 15:23:21 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 12 Jun 2012 15:23:18 -0400
 Content-Disposition: inline
-In-Reply-To: <alpine.LFD.2.02.1206121509340.23555@xanadu.home>
-User-Agent: Mutt/1.5.20 (2009-06-14)
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: tytso@thunk.org
-X-SA-Exim-Scanned: No (on imap.thunk.org); SAEximRunCond expanded to false
+In-Reply-To: <alpine.LFD.2.02.1206121507120.23555@xanadu.home>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199837>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199838>
 
-On Tue, Jun 12, 2012 at 03:15:46PM -0400, Nicolas Pitre wrote:
-> > But the old packs are huge; in my case, a full set of packs was around
-> > 16 megabytes.  Right now, git gc *increased* my disk usage by 4.5
-> > megabytes.  If we don't delete the old backs, then git gc would
-> > increase disk usage by 16 megabytes --- which is far, far worse.
+On Tue, Jun 12, 2012 at 03:09:25PM -0400, Nicolas Pitre wrote:
+
+> > Jeff King <peff@peff.net> writes:
 > > 
-> > Writing a 244k cruft pack is a soooooo much preferable.
+> > > We could close it in both cases by tweaking the mtime of the file
+> > > containing the object when we decide not to write because the object
+> > > already exists.
+> > 
+> > Though there is always the window between the existence check and the
+> > mtime update where pruning can hit you.
 > 
-> But as you might have noticed, there are a bunch of semantic problems 
-> with that as well.
+> This is a tiny window compared to 2 weeks.
 
-I've proposed something (explicitly labelled cruft packs) which is no
-worse than before.  The one potential problem is that objects in the
-cruft pack might have their lifespan extended by two weeks (or
-whatever the expire timeout might be), but Peff has agreed that it's
-simple enough to ignore that, since the benefits far outweigh the
-potential that some objects in cruft packs will get to live a bit
-longer.
+I don't think the race window is actually 2 weeks long. If you have this
+sequence:
 
-The race condition you've pointed out exists today, with the git prune
-racing against the git fetch.
+  1. object X becomes unreferenced
 
-					- Ted
+  2. 1 week later, you create a new ref that mentions X
+
+  3. >2 weeks later, you run "git prune --expire=2.weeks.ago"
+
+we will not consider the object for pruning in step 3, because it is
+reachable. The race is more like:
+
+  1. object X becomes unreferenced
+
+  2. >2 weeks later, you run "git prune --expire=2.weeks.ago"
+
+  3. git-prune reads the list of refs
+
+  4. simultaneous to the git-prune, you reference X
+
+  5. git-prune removes X
+
+  6. your reference is now broken
+
+So the race window depends on the time it takes "git prune" to run.
+
+I wonder if git-prune could do a double-check of the refs. Something
+like:
+
+  1. calculate reachability on all refs
+
+  2. read list of objects to prune, and make a list of unreachable ones
+
+  3. calculate reachability again (which should be very cheap, because
+     you can stop when you get to an object you have already seen)
+
+  4. Drop any objects found in (3) from the list in (2), and delete
+     items from your list
+
+But I think that still has a race where objects are created before
+step 2, but are not actually referenced until after step 3. I think
+doing it safely may actually require a repo-wide prune lock.
+
+-Peff
