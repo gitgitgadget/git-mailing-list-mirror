@@ -1,313 +1,95 @@
-From: Simon Cathebras <simon.cathebras@ensimag.imag.fr>
-Subject: [PATCH 3/6] Test file for git-remote-mediawiki clone
-Date: Tue, 12 Jun 2012 23:12:41 +0200
-Message-ID: <1339535563-18958-3-git-send-email-simon.cathebras@ensimag.imag.fr>
-References: <20120611230954.Horde.inb-aHwdC4BP1l6iLlHhZgA@webmail.minatec.grenoble-inp.fr>
- <1339535563-18958-1-git-send-email-simon.cathebras@ensimag.imag.fr>
-Cc: gitster@pobox.com, peff@peff.net,
-	Guillaume Sasdy <guillaume.sasdy@ensimag.imag.fr>,
-	Simon Cathebras <simon.cathebras@ensimag.imag.fr>,
-	Simon Perrat <simon.perrat@ensimag.imag.fr>,
-	Charles Roussel <charles.roussel@ensimag.imag.fr>,
-	Julien Khayat <julien.khayat@ensimag.imag.fr>,
-	Matthieu Moy <matthieu.moy@imag.fr>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 12 23:13:38 2012
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: [PATCH] update-index: allow overwriting existing submodule index
+ entries
+Date: Tue, 12 Jun 2012 23:18:05 +0200
+Message-ID: <4FD7B20D.9080803@web.de>
+References: <CAOkDyE9q1n=oLoEXXxurDjNM0B2+cZ9eoeGE57F9hEQUjK0hZg@mail.gmail.com> <20120609142658.GB16268@book.hvoigt.net> <7v3961ao1q.fsf@alter.siamese.dyndns.org> <4FD661C3.7000105@web.de> <20120612203316.GA17053@book.hvoigt.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Adam Spiers <git@adamspiers.org>,
+	Git Mailing List <git@vger.kernel.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+To: Heiko Voigt <hvoigt@hvoigt.net>
+X-From: git-owner@vger.kernel.org Tue Jun 12 23:18:27 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SeYP2-00011D-WE
-	for gcvg-git-2@plane.gmane.org; Tue, 12 Jun 2012 23:13:29 +0200
+	id 1SeYTn-0005TR-5X
+	for gcvg-git-2@plane.gmane.org; Tue, 12 Jun 2012 23:18:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754106Ab2FLVNY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Jun 2012 17:13:24 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:34914 "EHLO rominette.imag.fr"
+	id S1754339Ab2FLVSS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Jun 2012 17:18:18 -0400
+Received: from mout.web.de ([212.227.17.12]:58090 "EHLO mout.web.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752490Ab2FLVNY (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Jun 2012 17:13:24 -0400
-Received: from ensimag.imag.fr (ensimag.imag.fr [195.221.228.12])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id q5CL3jsj001701
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Tue, 12 Jun 2012 23:03:45 +0200
-Received: from Hithlum.crous-grenoble.fr (ensibm [195.221.228.8])
-	by ensimag.imag.fr (8.13.8/8.13.8/ImagV2.1.r_ens) with ESMTP id q5CLCjpK032065;
-	Tue, 12 Jun 2012 23:12:53 +0200
-X-Mailer: git-send-email 1.7.10.2.552.gaa3bb87
-In-Reply-To: <1339535563-18958-1-git-send-email-simon.cathebras@ensimag.imag.fr>
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Tue, 12 Jun 2012 23:03:45 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: q5CL3jsj001701
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: simon.cathebras@ensimag.imag.fr
-MailScanner-NULL-Check: 1340139829.20818@A13Ns9+FJuyZGNEKOHPmgw
+	id S1752153Ab2FLVSR (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Jun 2012 17:18:17 -0400
+Received: from [192.168.178.48] ([79.193.95.43]) by smtp.web.de (mrweb101)
+ with ESMTPA (Nemesis) id 0LxOQ2-1Rth9t15Wk-0177xv; Tue, 12 Jun 2012 23:18:14
+ +0200
+User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:13.0) Gecko/20120601 Thunderbird/13.0
+In-Reply-To: <20120612203316.GA17053@book.hvoigt.net>
+X-Provags-ID: V02:K0:NjhwELCVJhtRb+Xs3UsjZkieIwyf9SdjX0DD9b946dw
+ rcTvSe+juQGnq0gAPFcXR9t+t9ZJHN9HZYJEpHQvJ6tFXYEFRI
+ Vadr0kTC1QCKE3HHh+8U/oEeHKun+GVLOMcmz3pUnHpX75hZPN
+ 4zkko9AFRxbFNlbkQ17RYVGBDd27GS127ew7cpAhkADNQzS96f
+ U9xU9mjNZSh37ptLASIJw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199860>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199862>
 
-From: Guillaume Sasdy <guillaume.sasdy@ensimag.imag.fr>
+Am 12.06.2012 22:33, schrieb Heiko Voigt:
+> Here a quick idea of what we could do:
+> 
+> We could mark a path as transitioned from submodule (similar to the
+> assume unchanged bit) if files were skipped due to removal of a
+> submodule and have submodule update clear that flag. That way we could
+> teach diff, status and so on to only show one entry for a submodule to
+> be removed and replaced with something else.
+> 
+> Thinking further: We could actually prevent adding such an out-of-date
+> submodule as a safeguard. Which in fact was something which happened by
+> mistake to some of our users. The story is that when you see a *changed*
+> submodule in a merge conflict it can be easily mistaken for needing
+> resolution and added to the merge. Most times this rewinds your
+> submodule to some old state
+> 
+> If we agree on how to handle the submodule => file(s) cases I think the
+> implementation in the submodule script possibly requires less work than
+> the fully fledged recursive checkout and could also be used for gaining
+> some experience with such transitions.
+> 
+> So the first step would be to extend submodule update to support the
+> removal of submodules. The next step is then that we finish the fully
+> automatic recursive submodule checkout.
+> 
+> What do you think of such a two step plan?
 
-This patch provides some tests for the clone in use by
-git-remote-mediawiki.
+Hmm, I suspect the real problem here is that "git submodule update" is
+run *after* the actual checkout, merge, reset or whatever. So if for
+example you want to replace a submodule with a plain directory containing
+the same files the submodule update would not only have to remove the now
+obsolete submodule but also has to remember to check out all files in the
+former submodule directory again. IMO this should be part of the initial
+unpack_trees(), not done in a later script. Imagine a submodule having
+local modifications which would be overwritten by the checkout, then the
+later submodule update would have to fail (when used without -f) to
+protect the users changes. The only sane thing to do would be to not allow
+such a checkout in the first place (when the user chose to automatically
+update submodules that is) but abort just like we do for changes to
+regular files right now telling the user to save his changes.
 
-Signed-off-by: Simon Cathebras <simon.cathebras@ensimag.imag.fr>
-Signed-off-by: Simon Perrat <simon.perrat@ensimag.imag.fr>
-Signed-off-by: Guillaume Sasdy <guillaume.sasdy@ensimag.imag.fr>
-Signed-off-by: Charles Roussel <charles.roussel@ensimag.imag.fr>
-Signed-off-by: Julien Khayat <julien.khayat@ensimag.imag.fr>
-Signed-off-by: Matthieu Moy <matthieu.moy@imag.fr>
----
- contrib/mw-to-git/t/t9360-mw-to-git-clone.sh | 238 +++++++++++++++++++++++++++
- 1 file changed, 238 insertions(+)
- create mode 100755 contrib/mw-to-git/t/t9360-mw-to-git-clone.sh
+And I suspect you would have to teach at least status and diff to give
+meaningful output in that "submodule should be removed and replaced with
+something else but submodule update hasn't run yet" case, and apart from
+the change to add you mentioned above some other commands might need
+safeguards too.
 
-diff --git a/contrib/mw-to-git/t/t9360-mw-to-git-clone.sh b/contrib/mw-to-git/t/t9360-mw-to-git-clone.sh
-new file mode 100755
-index 0000000..07e1270
---- /dev/null
-+++ b/contrib/mw-to-git/t/t9360-mw-to-git-clone.sh
-@@ -0,0 +1,238 @@
-+#!/bin/sh
-+#
-+# Copyright (C) 2012
-+#     Charles Roussel <charles.roussel@ensimag.imag.fr>
-+#     Simon Cathebras <simon.cathebras@ensimag.imag.fr>
-+#     Julien Khayat <julien.khayat@ensimag.imag.fr>
-+#     Guillaume Sasdy <guillaume.sasdy@ensimag.imag.fr>
-+#     Simon Perrat <simon.perrat@ensimag.imag.fr>
-+#
-+# License: GPL v2 or later
-+
-+
-+test_description='Test the Git Mediawiki remote helper: git clone'
-+
-+. ./test-gitmw-lib.sh
-+. $TEST_DIRECTORY/test-lib.sh
-+
-+
-+test_check_precond
-+
-+
-+test_expect_success 'Git clone creates the git log expected with one file' '
-+	wiki_reset &&
-+	wiki_editpage foo "this is not important" false -c cat -s "this must be the same" &&
-+	git clone mediawiki::http://'"$SERVER_ADDR:$PORT/$WIKI_DIR_NAME"' mw_dir_1 &&
-+	(cd mw_dir_1 &&
-+	git log --format=%s HEAD^..HEAD > log.tmp ) &&
-+	echo "this must be the same" > msg.tmp &&
-+	diff -b mw_dir_1/log.tmp msg.tmp
-+'
-+
-+
-+test_expect_success 'Git clone creates the git log expected with multiple files' '
-+	wiki_reset &&
-+	wiki_editpage daddy "this is not important" false -s="this must be the same" &&
-+	wiki_editpage daddy "neither is this" true -s="this must also be the same" &&
-+	wiki_editpage daddy "neither is this" true -s="same same same" &&
-+	wiki_editpage dj "dont care" false -s="identical" &&
-+	wiki_editpage dj "dont care either" true -s="identical too" &&
-+	git clone mediawiki::http://'"$SERVER_ADDR:$PORT/$WIKI_DIR_NAME"' mw_dir_2 &&
-+	(cd mw_dir_2 &&
-+	git log --format=%s Daddy.mw  > logDaddy.tmp &&
-+	git log --format=%s Dj.mw > logDj.tmp ) &&
-+	echo "same same same" > msgDaddy.tmp &&
-+	echo "this must also be the same" >> msgDaddy.tmp &&
-+	echo "this must be the same" >> msgDaddy.tmp &&
-+	echo "identical too" > msgDj.tmp &&
-+	echo "identical" >> msgDj.tmp &&
-+	diff -b mw_dir_2/logDaddy.tmp msgDaddy.tmp &&
-+	diff -b mw_dir_2/logDj.tmp msgDj.tmp
-+'
-+
-+
-+test_expect_success 'Git clone creates only Main_Page.mw with an empty wiki' '
-+	wiki_reset &&
-+	git clone mediawiki::http://'"$SERVER_ADDR:$PORT/$WIKI_DIR_NAME"' mw_dir_3 &&
-+	test_contains_N_files mw_dir_3 1 &&
-+	test -e mw_dir_3/Main_Page.mw
-+'
-+
-+test_expect_success 'Git clone does not fetch a deleted page' '
-+	wiki_reset &&
-+	wiki_editpage foo "this page must be deleted before the clone" false &&
-+	wiki_delete_page foo &&
-+	git clone mediawiki::http://'"$SERVER_ADDR:$PORT/$WIKI_DIR_NAME"' mw_dir_4 &&
-+	test_contains_N_files mw_dir_4 1 &&
-+	test -e mw_dir_4/Main_Page.mw &&
-+	test ! -e mw_dir_4/Foo.mw
-+'
-+
-+test_expect_success 'Git clone works with page added' '
-+	wiki_reset &&
-+	wiki_editpage foo " I will be cloned" false &&
-+	wiki_editpage bar "I will be cloned" false &&
-+	git clone mediawiki::http://'"$SERVER_ADDR:$PORT/$WIKI_DIR_NAME"' mw_dir_5 &&
-+	wiki_getallpage ref_page_5 &&
-+	test_diff_directories mw_dir_5 ref_page_5 &&
-+	wiki_delete_page foo &&
-+	wiki_delete_page bar
-+'
-+
-+test_expect_success 'Git clone works with an edited page ' '
-+	wiki_reset &&
-+	wiki_editpage foo "this page will be edited" \
-+		false -s "first edition of page foo"&&
-+	wiki_editpage foo "this page has been edited and must be on the clone " true &&
-+	git clone mediawiki::http://'"$SERVER_ADDR:$PORT/$WIKI_DIR_NAME"' mw_dir_6 &&
-+	test -e mw_dir_6/Foo.mw &&
-+	test -e mw_dir_6/Main_Page.mw &&
-+	wiki_getallpage mw_dir_6/page_ref_6 &&
-+	test_diff_directories mw_dir_6 mw_dir_6/page_ref_6 &&
-+	(cd mw_dir_6 &&
-+	git log --format=%s HEAD^ Foo.mw > ../Foo.log ) &&
-+	echo "first edition of page foo" > FooExpect.log &&
-+	diff FooExpect.log Foo.log
-+'
-+
-+
-+test_expect_success 'Git clone works with several pages and some deleted ' '
-+	wiki_reset &&
-+	wiki_editpage foo "this page will not be deleted" false &&
-+	wiki_editpage bar "I must not be erased" false &&
-+	wiki_editpage namnam "I will not be there at the end" false &&
-+	wiki_editpage nyancat "nyan nyan nyan delete me" false &&
-+	wiki_delete_page namnam &&
-+	wiki_delete_page nyancat &&
-+	git clone mediawiki::http://'"$SERVER_ADDR:$PORT/$WIKI_DIR_NAME"' mw_dir_7 &&
-+	test -e mw_dir_7/Foo.mw &&
-+	test -e mw_dir_7/Bar.mw &&
-+	test ! -e mw_dir_7/Namnam.mw &&
-+	test ! -e mw_dir_7/Nyancat.mw &&
-+	wiki_getallpage mw_dir_7/page_ref_7 &&
-+	test_diff_directories mw_dir_7 mw_dir_7/page_ref_7
-+'
-+
-+
-+test_expect_success 'Git clone works with one specific page cloned ' '
-+	wiki_reset &&
-+	wiki_editpage foo "I will not be cloned" false &&
-+	wiki_editpage bar "Do not clone me" false &&
-+	wiki_editpage namnam "I will be cloned :)" false  -s="this log must stay" &&
-+	wiki_editpage nyancat "nyan nyan nyan you cant clone me" false &&
-+	git clone -c remote.origin.pages=namnam mediawiki::http://'"$SERVER_ADDR:$PORT/$WIKI_DIR_NAME"' mw_dir_8 &&
-+	test_contains_N_files mw_dir_8 1 &&
-+	test -e mw_dir_8/Namnam.mw &&
-+	test ! -e mw_dir_8/Main_Page.mw &&
-+	(cd mw_dir_8 &&
-+	echo "this log must stay" > msg.tmp &&
-+	git log --format=%s > log.tmp &&
-+	diff -b msg.tmp log.tmp ) &&
-+	wiki_check_content mw_dir_8/Namnam.mw Namnam
-+'
-+
-+test_expect_success 'Git clone works with multiple specific page cloned ' '
-+	wiki_reset &&
-+	wiki_editpage foo "I will be there" false &&
-+	wiki_editpage bar "I will not disapear" false &&
-+	wiki_editpage namnam "I be erased" false &&
-+	wiki_editpage nyancat "nyan nyan nyan you will not erase me" false &&
-+	wiki_delete_page namnam &&
-+	git clone -c remote.origin.pages='"'foo bar nyancat namnam'"' mediawiki::http://'"$SERVER_ADDR:$PORT/$WIKI_DIR_NAME"' mw_dir_9 &&
-+	test_contains_N_files mw_dir_9 3 &&
-+	test ! -e mw_dir_9/Namnam.mw &&
-+	test -e mw_dir_9/Foo.mw &&
-+	test -e mw_dir_9/Nyancat.mw &&
-+	test -e mw_dir_9/Bar.mw &&
-+	wiki_check_content mw_dir_9/Foo.mw Foo &&
-+	wiki_check_content mw_dir_9/Bar.mw Bar &&
-+	wiki_check_content mw_dir_9/Nyancat.mw Nyancat
-+'
-+
-+test_expect_success 'Mediawiki-clone of several specific pages on wiki' '
-+	wiki_reset &&
-+	wiki_editpage foo "foo 1" false &&
-+	wiki_editpage bar "bar 1" false &&
-+	wiki_editpage dummy "dummy 1" false &&
-+	wiki_editpage cloned_1 "cloned_1 1" false &&
-+	wiki_editpage cloned_2 "cloned_2 2" false &&
-+	wiki_editpage cloned_3 "cloned_3 3" false &&
-+	mkdir -p ref_page_10 &&
-+	wiki_getpage cloned_1 ref_page_10 &&
-+	wiki_getpage cloned_2 ref_page_10 &&
-+	wiki_getpage cloned_3 ref_page_10 &&
-+	git clone -c remote.origin.pages="cloned_1 cloned_2 cloned_3" mediawiki::http://'"$SERVER_ADDR:$PORT/$WIKI_DIR_NAME"' mw_dir_10 &&
-+	test_diff_directories mw_dir_10 ref_page_10
-+'
-+
-+test_expect_success 'Git clone works with the shallow option' '
-+	wiki_reset &&
-+	wiki_editpage foo "1st revision, should be cloned" false &&
-+	wiki_editpage bar "1st revision, should be cloned" false &&
-+	wiki_editpage nyan "1st revision, should not be cloned" false &&
-+	wiki_editpage nyan "2nd revision, should be cloned" false &&
-+	git -c remote.origin.shallow=true clone mediawiki::http://'"$SERVER_ADDR:$PORT/$WIKI_DIR_NAME"' mw_dir_11 &&
-+	test_contains_N_files mw_dir_11 4 &&
-+	test -e mw_dir_11/Nyan.mw &&
-+	test -e mw_dir_11/Foo.mw &&
-+	test -e mw_dir_11/Bar.mw &&
-+	test -e mw_dir_11/Main_Page.mw &&
-+	(cd mw_dir_11 &&
-+	test `git log --oneline Nyan.mw | wc -l` -eq 1 &&
-+	test `git log --oneline Foo.mw | wc -l` -eq 1 &&
-+	test `git log --oneline Bar.mw | wc -l` -eq 1 &&
-+	test `git log --oneline Main_Page.mw | wc -l ` -eq 1 ) &&
-+	wiki_check_content mw_dir_11/Nyan.mw Nyan &&
-+	wiki_check_content mw_dir_11/Foo.mw Foo &&
-+	wiki_check_content mw_dir_11/Bar.mw Bar &&
-+	wiki_check_content mw_dir_11/Main_Page.mw Main_Page
-+'
-+
-+test_expect_success 'Git clone works with the shallow option with a delete page' '
-+	wiki_reset &&
-+	wiki_editpage foo "1st revision, will be deleted" false &&
-+	wiki_editpage bar "1st revision, should be cloned" false &&
-+	wiki_editpage nyan "1st revision, should not be cloned" false &&
-+	wiki_editpage nyan "2nd revision, should be cloned" false &&
-+	wiki_delete_page foo &&
-+	git -c remote.origin.shallow=true clone mediawiki::http://'"$SERVER_ADDR:$PORT/$WIKI_DIR_NAME"' mw_dir_12 &&
-+	test_contains_N_files mw_dir_12 3 &&
-+	test -e mw_dir_12/Nyan.mw &&
-+	test ! -e mw_dir_12/Foo.mw &&
-+	test -e mw_dir_12/Bar.mw &&
-+	test -e mw_dir_12/Main_Page.mw &&
-+	(cd mw_dir_12 &&
-+	test `git log --oneline Nyan.mw | wc -l` -eq 1 &&
-+	test `git log --oneline Bar.mw | wc -l` -eq 1 &&
-+	test `git log --oneline Main_Page.mw | wc -l ` -eq 1 ) &&
-+	wiki_check_content mw_dir_12/Nyan.mw Nyan &&
-+	wiki_check_content mw_dir_12/Bar.mw Bar &&
-+	wiki_check_content mw_dir_12/Main_Page.mw Main_Page
-+'
-+
-+test_expect_success 'Test of fetching a category' '
-+	wiki_reset &&
-+	wiki_editpage Foo "I will be cloned" false -c=Category &&
-+	wiki_editpage Bar "Meet me on the repository" false -c=Category &&
-+	wiki_editpage Dummy "I will not come" false &&
-+	wiki_editpage BarWrong "I will stay online only" false -c=NotCategory &&
-+	git clone -c remote.origin.categories="Category" mediawiki::http://'"$SERVER_ADDR:$PORT/$WIKI_DIR_NAME"' mw_dir_13 &&
-+	wiki_getallpage ref_page_13 Category &&
-+	test_diff_directories mw_dir_13 ref_page_13
-+'
-+
-+test_expect_success 'Test of resistance to modification of category on wiki for clone' '
-+	wiki_reset &&
-+	wiki_editpage Tobedeleted "this page will be deleted" false -c=Catone &&
-+	wiki_editpage Tobeedited "this page will be modified" false -c=Catone &&
-+	wiki_editpage Normalone "this page wont be modified and will be on git" false -c=Catone &&
-+	wiki_editpage Notconsidered "this page will not appear on local" false &&
-+	wiki_editpage Othercategory "this page will not appear on local" false -c=Cattwo &&
-+	wiki_editpage Tobeedited "this page have been modified" true -c=Catone &&
-+	wiki_delete_page Tobedeleted
-+	git clone -c remote.origin.categories="Catone" mediawiki::http://'"$SERVER_ADDR:$PORT/$WIKI_DIR_NAME"' mw_dir_14 &&
-+	wiki_getallpage ref_page_14 Catone &&
-+	test_diff_directories mw_dir_14 ref_page_14
-+'
-+
-+test_done
--- 
-1.7.10.2.552.gaa3bb87
+So me thinks we should skip step one and implement recursive checkout
+right away. Adding much more complexity to the submodule script for an
+intermediate solution doesn't sound like a good idea to me.
