@@ -1,62 +1,59 @@
-From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <rene.scharfe@lsrfire.ath.cx>
-Subject: Re: git: Wrong parsing of ssh urls with IPv6 literals ignores port
-Date: Wed, 13 Jun 2012 18:33:58 +0200
-Message-ID: <4FD8C0F6.8060609@lsrfire.ath.cx>
-References: <20111022001704.3115.87464.reportbug@hejmo> <20120610090516.GA30177@burratino> <4FD78EA0.2090306@lsrfire.ath.cx> <20120612202953.GG9764@burratino> <20120612210003.GA16816@burratino>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCHv3] git-remote-mediawiki: export File: attachments
+Date: Wed, 13 Jun 2012 18:36:32 +0200
+Message-ID: <vpq62avgodr.fsf@bauges.imag.fr>
+References: <1339574190-2596-1-git-send-email-Kim-Thuat.Nguyen@ensimag.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?B?RWR1YXJkbyBUcsOhcGFuaQ==?= <etrapani@gmail.com>,
-	git@vger.kernel.org, YOSHIFUJI Hideaki <yoshfuji@linux-ipv6.org>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jun 13 18:34:27 2012
+Content-Type: text/plain
+Cc: git@vger.kernel.org, VOLEK Pavel <Pavel.Volek@ensimag.imag.fr>,
+	ROUCHER IGLESIAS Javier <roucherj@ensimag.imag.fr>
+To: kim-thuat.nguyen@ensimag.imag.fr
+X-From: git-owner@vger.kernel.org Wed Jun 13 18:36:45 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SeqWX-0007cI-FX
-	for gcvg-git-2@plane.gmane.org; Wed, 13 Jun 2012 18:34:25 +0200
+	id 1SeqYk-0005VU-2X
+	for gcvg-git-2@plane.gmane.org; Wed, 13 Jun 2012 18:36:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752351Ab2FMQeU convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 13 Jun 2012 12:34:20 -0400
-Received: from india601.server4you.de ([85.25.151.105]:58238 "EHLO
-	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751688Ab2FMQeT (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Jun 2012 12:34:19 -0400
-Received: from [192.168.2.105] (p4FFDA3B2.dip.t-dialin.net [79.253.163.178])
-	by india601.server4you.de (Postfix) with ESMTPSA id 5041A2F8050;
-	Wed, 13 Jun 2012 18:34:16 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:12.0) Gecko/20120428 Thunderbird/12.0.1
-In-Reply-To: <20120612210003.GA16816@burratino>
+	id S1753120Ab2FMQgi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Jun 2012 12:36:38 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:47715 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752834Ab2FMQgh (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Jun 2012 12:36:37 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id q5DGRL8X024998
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Wed, 13 Jun 2012 18:27:21 +0200
+Received: from bauges.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1SeqYb-0004Fv-BE; Wed, 13 Jun 2012 18:36:33 +0200
+In-Reply-To: <1339574190-2596-1-git-send-email-Kim-Thuat.Nguyen@ensimag.imag.fr>
+	(kim-thuat nguyen's message of "Wed, 13 Jun 2012 09:56:30 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.93 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Wed, 13 Jun 2012 18:27:22 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: q5DGRL8X024998
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1340209643.98724@CvnLFDpAyZ8P74i+6A75mQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199897>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199898>
 
-Am 12.06.2012 23:00, schrieb Jonathan Nieder:
-> Jonathan Nieder wrote:
->> Ren=C3=A9 Scharfe wrote:
->
->>> How about this instead?
->>
->> Looks good to me.
->
-> Oh, hold on a second.  Won't this get confused by
->
-> 	ssh://[::1]/foo/bar/baz:80/qux
->
-> ?
+kim-thuat.nguyen@ensimag.imag.fr writes:
 
-It shouldn't, because the host part is NUL-terminated before get_port()=
-=20
-is called.  Let's see (with the patch):
+> From: nguyenkimthuat <Kim-Thuat.Nguyen@ensimag.imag.fr>
 
-	$ git clone ssh://[::1]/foo/bar/baz:80/qux
-	Cloning into 'qux'...
-	ssh: connect to host ::1 port 22: Connection refused
-	fatal: The remote end hung up unexpectedly
+Please, use your real name, not your login name.
 
-Ren=C3=A9
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
