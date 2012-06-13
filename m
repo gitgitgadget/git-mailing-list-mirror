@@ -1,103 +1,85 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v3 05/19] apply: factor out checkout_target() helper function
-Date: Wed, 13 Jun 2012 12:32:46 -0700
-Message-ID: <1339615980-19727-6-git-send-email-gitster@pobox.com>
-References: <1339615980-19727-1-git-send-email-gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jun 13 21:34:17 2012
+From: konglu@minatec.inpg.fr
+Subject: Re: [PATCHv5] rebase [-i --exec | -ix] <CMD>...
+Date: Wed, 13 Jun 2012 21:38:36 +0200
+Message-ID: <20120613213836.Horde.qI8GQnwdC4BP2Ow8uCTQqgA@webmail.minatec.grenoble-inp.fr>
+References: <1339325076-474-1-git-send-email-Lucien.Kong@ensimag.imag.fr>
+ <1339488312-6349-1-git-send-email-Lucien.Kong@ensimag.imag.fr>
+ <4FD70A8E.7050502@in.waw.pl> <7vk3zc4mgz.fsf@alter.siamese.dyndns.org>
+ <4FD89DD6.1070705@in.waw.pl>
+ <20120613200552.Horde.JHFYfHwdC4BP2NaA39-wrmA@webmail.minatec.grenoble-inp.fr>
+ <7vipevgjhp.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed	DelSp=Yes
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Zbigniew J?drzejewski-Szmek <zbyszek@in.waw.pl>,
+	Lucien Kong <Lucien.Kong@ensimag.imag.fr>, git@vger.kernel.org,
+	Valentin Duperray <Valentin.Duperray@ensimag.imag.fr>,
+	Franck Jonas <Franck.Jonas@ensimag.imag.fr>,
+	Thomas Nguy <Thomas.Nguy@ensimag.imag.fr>,
+	Huynh Khoi Nguyen Nguyen 
+	<Huynh-Khoi-Nguyen.Nguyen@ensimag.imag.fr>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jun 13 21:39:01 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SetKa-0001yQ-SX
-	for gcvg-git-2@plane.gmane.org; Wed, 13 Jun 2012 21:34:17 +0200
+	id 1SetP6-0007Oh-8g
+	for gcvg-git-2@plane.gmane.org; Wed, 13 Jun 2012 21:38:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754773Ab2FMTeJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Jun 2012 15:34:09 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:65379 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754748Ab2FMTdM (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Jun 2012 15:33:12 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6908D86FE
-	for <git@vger.kernel.org>; Wed, 13 Jun 2012 15:33:12 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:in-reply-to:references; s=sasl; bh=gsHb
-	Et11Z5hcLrQdYSQqMd/Fc1E=; b=w8ebcCAlrvuebAXQQOS+WL+LKi0FVyaFj8iR
-	PrsEhem3I1606cDQ6U0ucUyJWKn7AumSqoJ8GfQk725vktm4xon89bRtcOEYYAKr
-	SrTGDi8KtEEStx1Y6eUwOvoxg8ycAWQvYMJGsvSIYF6wyfBMVZzeMQ2SygM1kTSo
-	hua3+B8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=nJrb9o
-	iN8UzXXtsmRjHkYM+HPQsemWQEZxSyJwtHdz4Lss5eM3KC0IUvnlvo8KJloBHhj7
-	y8Yl4K0YyqZssyM3LZ/logPCfR1XUvlNYK8cHoNCaML7sgCsA/YbfAPeudi3Jiua
-	XLchJuakskk4ZtjS7fCVbNB30x4chPqeG/B9c=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 60F7B86FD
-	for <git@vger.kernel.org>; Wed, 13 Jun 2012 15:33:12 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E57A986FB for
- <git@vger.kernel.org>; Wed, 13 Jun 2012 15:33:11 -0400 (EDT)
-X-Mailer: git-send-email 1.7.11.rc3.30.g3bdace2
-In-Reply-To: <1339615980-19727-1-git-send-email-gitster@pobox.com>
-X-Pobox-Relay-ID: 9CDC86C4-B58E-11E1-892E-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754636Ab2FMTim convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 13 Jun 2012 15:38:42 -0400
+Received: from v-smtp.minatec.grenoble-inp.fr ([147.173.216.28]:59161 "EHLO
+	v-smtp.minatec.grenoble-inp.fr" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754472Ab2FMTil (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 13 Jun 2012 15:38:41 -0400
+Received: from localhost (www02.minatec.grenoble-inp.fr [147.173.216.15])
+	by v-smtp.minatec.grenoble-inp.fr (Postfix) with ESMTP id 5317B1A025A;
+	Wed, 13 Jun 2012 21:38:37 +0200 (CEST)
+Received: from reverse.completel.net (reverse.completel.net [92.103.38.66])
+ by webmail.minatec.grenoble-inp.fr (Horde Framework) with HTTP; Wed, 13 Jun
+ 2012 21:38:36 +0200
+In-Reply-To: <7vipevgjhp.fsf@alter.siamese.dyndns.org>
+User-Agent: Internet Messaging Program (IMP) H4 (5.0.17)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199937>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199938>
 
-When a patch wants to touch a path, if the path exists in the index
-but is missing in the working tree, "git apply --index" checks out
-the file to the working tree from the index automatically and then
-applies the patch.
 
-Split this logic out to a separate helper function.
+Junio C Hamano <gitster@pobox.com> a =E9crit=A0:
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- builtin/apply.c | 20 +++++++++++++-------
- 1 file changed, 13 insertions(+), 7 deletions(-)
+> It looks that editing
+>
+>     pick foo            pick foo
+>     exec cmd1           exec cmd1 && cmd2
+>     exec cmd2
+>     pick bar            pick bar
+>     exec cmd1           exec cmd1 && cmd2
+>     exec cmd2
+>
+> to
+>
+>     pick foo            pick foo
+>                         exec         cmd2
+>     exec cmd2
+>     pick bar            pick bar
+>     exec cmd1           exec cmd1
+>
+> would take exactly the same effort, at least to me.  And more
+> importantly, without editing don't they do *exactly* the same thing?
+> If cmd1 fails, the sequencing stops at that step without running cmd2=
+=2E
 
-diff --git a/builtin/apply.c b/builtin/apply.c
-index 3199691..6a1fdc0 100644
---- a/builtin/apply.c
-+++ b/builtin/apply.c
-@@ -3034,6 +3034,18 @@ static void prepare_fn_table(struct patch *patch)
- 	}
- }
- 
-+static int checkout_target(struct cache_entry *ce, struct stat *st)
-+{
-+	struct checkout costate;
-+
-+	memset(&costate, 0, sizeof(costate));
-+	costate.base_dir = "";
-+	costate.refresh_cache = 1;
-+	if (checkout_entry(ce, &costate, NULL) || lstat(ce->name, st))
-+		return error(_("cannot checkout %s"), ce->name);
-+	return 0;
-+}
-+
- static int apply_data(struct patch *patch, struct stat *st, struct cache_entry *ce)
- {
- 	struct strbuf buf = STRBUF_INIT;
-@@ -3163,13 +3175,7 @@ static int check_preimage(struct patch *patch, struct cache_entry **ce, struct s
- 		}
- 		*ce = active_cache[pos];
- 		if (stat_ret < 0) {
--			struct checkout costate;
--			/* checkout */
--			memset(&costate, 0, sizeof(costate));
--			costate.base_dir = "";
--			costate.refresh_cache = 1;
--			if (checkout_entry(*ce, &costate, NULL) ||
--			    lstat(old_name, st))
-+			if (checkout_target(*ce, st))
- 				return -1;
- 		}
- 		if (!cached && verify_index_match(*ce, st))
--- 
-1.7.11.rc3.30.g3bdace2
+True. I was thinking under the fact that the user would edit the comman=
+ds
+by himself but the purpose of the "--exec" option is to avoid that (or =
+at
+least that the user won't have to type all by himself). Forget what I s=
+aid
+then :).
