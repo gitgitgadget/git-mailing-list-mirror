@@ -1,57 +1,73 @@
-From: =?UTF-8?B?WmJpZ25pZXcgSsSZZHJ6ZWpld3NraS1Tem1law==?= 
-	<zbyszek@in.waw.pl>
-Subject: Re: [PATCH] gitk: avoid Meta1-F5
-Date: Thu, 14 Jun 2012 00:01:12 +0200
-Message-ID: <4FD90DA8.9080603@in.waw.pl>
-References: <1333758578-9334-1-git-send-email-felipe.contreras@gmail.com> <20120425034544.GA9660@bloggs.ozlabs.ibm.com> <CAMP44s34CAKbSKd=xKT_zS7sDOQCH-=9gXswdhmYhjFCTYPA8g@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: how to know this commit is merged by whic commit
+Date: Wed, 13 Jun 2012 15:22:48 -0700
+Message-ID: <7vzk86g8cn.fsf@alter.siamese.dyndns.org>
+References: <CAHsH0E9HooVsAq8NhWm-OSk7gSPFMmoYHsArtYqhwTmE0ngwjA@mail.gmail.com>
+ <20120613213435.GA25301@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Paul Mackerras <paulus@samba.org>, git@vger.kernel.org,
-	"Daniel A. Steffen" <das@users.sourceforge.net>,
-	Alexander Gavrilov <angavrilov@gmail.com>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jun 14 00:01:37 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: lei yang <yanglei.fage@gmail.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Jun 14 00:23:25 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Sevd5-0004Dh-9l
-	for gcvg-git-2@plane.gmane.org; Thu, 14 Jun 2012 00:01:31 +0200
+	id 1SevyB-0007Bx-RP
+	for gcvg-git-2@plane.gmane.org; Thu, 14 Jun 2012 00:23:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754595Ab2FMWB1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Jun 2012 18:01:27 -0400
-Received: from kawka.in.waw.pl ([178.63.212.103]:38483 "EHLO kawka.in.waw.pl"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751908Ab2FMWB0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Jun 2012 18:01:26 -0400
-Received: from 69-mo7-2.acn.waw.pl ([85.222.93.69] helo=[192.168.0.150])
-	by kawka.in.waw.pl with esmtpsa (TLS1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.72)
-	(envelope-from <zbyszek@in.waw.pl>)
-	id 1Sevcy-0001Wo-DH; Thu, 14 Jun 2012 00:01:24 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:10.0.3) Gecko/20120329 Icedove/10.0.3
-In-Reply-To: <CAMP44s34CAKbSKd=xKT_zS7sDOQCH-=9gXswdhmYhjFCTYPA8g@mail.gmail.com>
-X-Enigmail-Version: 1.4
+	id S1755023Ab2FMWXH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Jun 2012 18:23:07 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:55015 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755058Ab2FMWWx (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Jun 2012 18:22:53 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 360198A61;
+	Wed, 13 Jun 2012 18:22:50 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=3kIkUY3d6jJDDK+pbyRF6ED7a2A=; b=n1o7nk
+	RYUKnilfk1zQ2p5LbBHQ1kupt+6ojWZ8F1kf0eaNKnb1Yxyl8IOxZ76+K5ur1Dnk
+	Ja0ixGwdxqRoXLU/9h4q4VaDlt1BbrUziIUvyliupKONtKXOc94cdpW2+BJ3XQwD
+	b1MA9PEkvBnyPtqe4xKa+3etwbyNDAs7rETTM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=NQQodettPyL6AgWqwjoaabnoDCn2Pw0H
+	K0ddSiIdAIskCqbm7j1nZopws/fc+cRu7y2EYknHilwemwXVEVFasynW94jxUypE
+	FDK6ulB+8OVWu2QUeelQQshscb3XzDMeoMecCo019/+vRJFtiIOt4e7qBL9e+MQi
+	WhaeR8Bb8RQ=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2C65B8A5F;
+	Wed, 13 Jun 2012 18:22:50 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9C0728A5E; Wed, 13 Jun 2012
+ 18:22:49 -0400 (EDT)
+In-Reply-To: <20120613213435.GA25301@sigill.intra.peff.net> (Jeff King's
+ message of "Wed, 13 Jun 2012 17:34:35 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 4F3E25F4-B5A6-11E1-9444-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199950>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199951>
 
-On 06/13/2012 05:00 PM, Felipe Contreras wrote:
-> On Wed, Apr 25, 2012 at 5:45 AM, Paul Mackerras <paulus@samba.org> wrote:
->> On Sat, Apr 07, 2012 at 03:29:38AM +0300, Felipe Contreras wrote:
->>> This is commonly mapped by window managers and what not. Use Shift-F5
->>> instead.
->>>
->>> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
->>
->> Thanks, applied.
-> 
-> Does this translate into some action? I still don't see this change in
-> Junio's tree.
-It's in git://ozlabs.org/~paulus/gitk, the place where gitk lives.
+Jeff King <peff@peff.net> writes:
 
-Zbyszek
+> On Thu, Jun 14, 2012 at 12:50:59AM +0800, lei yang wrote:
+>
+>> I have a question as the title indicate. assume the commmit id is
+>> ee5r3343. how to know this commit is merged by  which commit?
+>
+> There is not one answer to "which commit"; there may be an infinite
+> number of commits which merge it into something else. The best you can
+> do is start at some point (e.g., the tip of "master") and walk backwards
+> looking for commits which merge it (and you still may find multiple, if
+> the commit was merged into two other lines of development, each of which
+> was merged into your starting point). There is not an option to do this
+> search automatically, so you would have to use grep, like:
+
+Or you can use "git bisect" ;-).
