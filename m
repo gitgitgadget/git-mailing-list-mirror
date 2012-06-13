@@ -1,121 +1,86 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: A slight inconvenience with 'git archive --format=tar'
-Date: Wed, 13 Jun 2012 10:45:36 -0700
-Message-ID: <7vmx47gl6n.fsf@alter.siamese.dyndns.org>
-References: <20120613144758.GA2438@blackspire>
+From: Luke Diamand <luke@diamand.org>
+Subject: Re: git-p4: commits are visible in history after 'git p4 clone',
+ but not a single file present
+Date: Wed, 13 Jun 2012 19:00:07 +0100
+Message-ID: <4FD8D527.6050703@diamand.org>
+References: <4FD5C263.9010307@nokia.com> <CAE5ih79Lgc8vF0v=vTGZSwASsGwQWs2Q7h_AkW67RBfi-R=DCA@mail.gmail.com> <4FD6440C.7090900@nokia.com> <4FD67530.1090002@diamand.org> <4FD70DEB.7040506@nokia.com> <20120612222431.GA13427@padd.com> <4FD83A08.6070208@nokia.com> <4FD88DE0.4050606@nokia.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8;
+	format=flowed
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?utf-8?B?UmFmYcWCIE11xbx5xYJv?= <galtgendo@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jun 13 19:45:46 2012
+Cc: Pete Wyckoff <pw@padd.com>, git@vger.kernel.org
+To: Ilya Dogolazky <ilya.dogolazky@nokia.com>
+X-From: git-owner@vger.kernel.org Wed Jun 13 20:00:45 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SerdY-0001ug-Pg
-	for gcvg-git-2@plane.gmane.org; Wed, 13 Jun 2012 19:45:45 +0200
+	id 1Sers2-0003L4-QO
+	for gcvg-git-2@plane.gmane.org; Wed, 13 Jun 2012 20:00:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754606Ab2FMRpj convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 13 Jun 2012 13:45:39 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:49492 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754590Ab2FMRpi convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 13 Jun 2012 13:45:38 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4DFD28771;
-	Wed, 13 Jun 2012 13:45:38 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=l41JFrlg64/0
-	OsbUgo/9E5EEDX4=; b=eTOXUs7f0HV8r3Hu7EbEj3PdWN639itzDXV1QlkZeuSs
-	gl86PKIlfbNJCxk340zwCTgSwYqwvbPf4N2z5xt81xcR2Z0mmoZTB8+s765U76XY
-	pnyDDpPBj4KGQzoW9JviEzVaVYfrm3l8OF0ugbCEpjL9dgD4R1ElCpfg5Sdd7/w=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=OMbSdO
-	4JHgCNmIMgCb3f1GG46kpULeb/erLk6kW9nxSlQJF5IMqj6FYiNOWCiRc/kPz/+c
-	F25ETo8PB5FKwxCvBcbKh9YagaY2SUfs7MJho782GudMPKr4kjlZ/t/+TniwAPt9
-	212Awt+riTPcBa01CQ/A+IHFNIugujz8O5vXU=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 42E148770;
-	Wed, 13 Jun 2012 13:45:38 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8F115876F; Wed, 13 Jun 2012
- 13:45:37 -0400 (EDT)
-In-Reply-To: <20120613144758.GA2438@blackspire> (=?utf-8?B?IlJhZmHFgiBN?=
- =?utf-8?B?dcW8ecWCbyIncw==?= message of "Wed, 13 Jun 2012 16:47:58 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 95C435C6-B57F-11E1-BDA0-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754668Ab2FMSAi convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 13 Jun 2012 14:00:38 -0400
+Received: from mail-ee0-f46.google.com ([74.125.83.46]:62212 "EHLO
+	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754507Ab2FMSAh (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Jun 2012 14:00:37 -0400
+Received: by eeit10 with SMTP id t10so306621eei.19
+        for <git@vger.kernel.org>; Wed, 13 Jun 2012 11:00:35 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding
+         :x-gm-message-state;
+        bh=OezfQTFM8qeiyHb14v2iiW8fkA5FDqMJdWZ3wG12Co8=;
+        b=c9PoGEYojPPtiEz4ZLigmln0rn+3jRgRJL8e2L+1H1Xnkr9u8s+2w1XliJIrihjTTG
+         bHXWZ5nebLMZa+21BgNQj8rBqwjf8mnIvS69rVRpy/AHfTZceRxlgBmfY0RlMs86Vw8W
+         UhFheG+/9Li8L02nItoNQzyNDRYqtRb3pu7hRY7PVFug1DcfrQuAuZOfkz4WK9uXU+t2
+         ICoRgUxehnot9VUTOzJ51eiz646EFI+w0VvTD5q6CSLulkzU3tESRrEv6VkKitvSwmvy
+         kxI3SECWU54L4L+YMZBICPQryqMdTofAH5yQpf8Jo3ydGi9fWzdse3wJOrRdefHUqOOO
+         rB3Q==
+Received: by 10.14.47.129 with SMTP id t1mr1456013eeb.179.1339610435640;
+        Wed, 13 Jun 2012 11:00:35 -0700 (PDT)
+Received: from [86.6.30.7] (cpc19-cmbg14-2-0-cust6.5-4.cable.virginmedia.com. [86.6.30.7])
+        by mx.google.com with ESMTPS id x52sm10183886eea.11.2012.06.13.11.00.34
+        (version=SSLv3 cipher=OTHER);
+        Wed, 13 Jun 2012 11:00:35 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:10.0.4) Gecko/20120510 Icedove/10.0.4
+In-Reply-To: <4FD88DE0.4050606@nokia.com>
+X-Gm-Message-State: ALoCoQlOoYxhovTYszs39yJXIdMGo/7wWlByHJVJv3ydW9/mwJ04DOROwdBZP6+yij6Bl1bdJXkv
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199911>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199912>
 
-Rafa=C5=82 Mu=C5=BCy=C5=82o <galtgendo@gmail.com> writes:
-
-> I just stumbled upon this while checking a few mailing lists.
-> I haven't found any mails about in in the archives yet, so I assume, =
-that
-> no mail have been written yet.
+On 13/06/12 13:56, Ilya Dogolazky wrote:
+> Hi !
 >
-> The problem is described here:
-> http://sourceforge.net/projects/sevenzip/forums/forum/45798/topic/532=
-2604
+> 06/13/2012 09:58 AM, Ilya Dogolazky =D0=BD=D0=B0=D0=BF=D0=B8=D1=81=D0=
+=B0=D0=BB:
+>> $ P4CLIENT=3Dxexe1 git p4 submit
+>> Error: Cannot locate perforce checkout of //xxx/yyy/ in client view
+>
+> After some playing around with git-p4 script and adding debugging
+> printing I realized, that the solution is to do
+>
+> $ P4CLIENT=3Dxexe1 git p4 clone //xxx/yyy/zzz@all ~/xexe1
+> instead of just
+> $ P4CLIENT=3Dxexe1 git p4 clone //xxx/yyy@all ~/xexe1
+>
+> After that "git-p4 submit" started to work.
+>
+> I still don't understand p4 enough in order to know why it's happenin=
+g,
+> but now at least I can clone+change+rebase+submit files into the
+> perforce repository with git-p4, which is great.
+>
+> Luke, Pete: thanks a lot for your help and patience!
 
-Thanks.  It sounds a bit more than "slight inconvenience" to me ;-)
+So - what is a p4 stream? I found some blurb on the Perforce website bu=
+t=20
+I was none the wiser after reading it.
 
--- >8 --
-Date: Wed, 13 Jun 2012 10:42:25 -0700
-Subject: [PATCH] archive: ustar header checksum is computed unsigned
-
-POSIX.1 (pax) is pretty clear on this:
-
-  The chksum field shall be the ISO/IEC 646:1991 standard IRV
-  representation of the octal value of the simple sum of all octets
-  in the header logical record. Each octet in the header shall be
-  treated as an unsigned value. These values shall be added to an
-  unsigned integer, initialized to zero, the precision of which is
-  not less than 17 bits. When calculating the checksum, the chksum
-  field is treated as if it were all <space> characters.
-
-so is GNU:
-
-  http://www.gnu.org/software/tar/manual/html_node/Checksumming.html
-
-=46ound by 7zip folks and reported by Rafa=C5=82 Mu=C5=BCy=C5=82o.
-
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- archive-tar.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
-
-diff --git a/archive-tar.c b/archive-tar.c
-index dc91c6b..0ba3f25 100644
---- a/archive-tar.c
-+++ b/archive-tar.c
-@@ -139,13 +139,13 @@ static void strbuf_append_ext_header(struct strbu=
-f *sb, const char *keyword,
-=20
- static unsigned int ustar_header_chksum(const struct ustar_header *hea=
-der)
- {
--	const char *p =3D (const char *)header;
-+	const unsigned char *p =3D (const unsigned char *)header;
- 	unsigned int chksum =3D 0;
--	while (p < header->chksum)
-+	while (p < (const unsigned char *)header->chksum)
- 		chksum +=3D *p++;
- 	chksum +=3D sizeof(header->chksum) * ' ';
- 	p +=3D sizeof(header->chksum);
--	while (p < (const char *)header + sizeof(struct ustar_header))
-+	while (p < (const unsigned char *)header + sizeof(struct ustar_header=
-))
- 		chksum +=3D *p++;
- 	return chksum;
- }
---=20
-1.7.11.rc3.25.g4c2075b
+Thanks!
+Luke
