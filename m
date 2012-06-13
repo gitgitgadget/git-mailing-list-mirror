@@ -1,164 +1,90 @@
-From: kim-thuat.nguyen@ensimag.imag.fr
-Subject: [PATCHv3] git-remote-mediawiki: export File: attachments
-Date: Wed, 13 Jun 2012 09:56:30 +0200
-Message-ID: <1339574190-2596-1-git-send-email-Kim-Thuat.Nguyen@ensimag.imag.fr>
-References: <y>
-Cc: nguyenkimthuat <Kim-Thuat.Nguyen@ensimag.imag.fr>,
-	VOLEK Pavel <Pavel.Volek@ensimag.imag.fr>,
-	ROUCHER IGLESIAS Javier <roucherj@ensimag.imag.fr>,
-	Matthieu Moy <Matthieu.Moy@imag.fr>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jun 13 09:57:11 2012
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH 2/6] Test environment of git-remote-mediawiki
+Date: Wed, 13 Jun 2012 09:56:35 +0200
+Message-ID: <vpqtxyfk5l8.fsf@bauges.imag.fr>
+References: <20120611230954.Horde.inb-aHwdC4BP1l6iLlHhZgA@webmail.minatec.grenoble-inp.fr>
+	<1339535563-18958-1-git-send-email-simon.cathebras@ensimag.imag.fr>
+	<1339535563-18958-2-git-send-email-simon.cathebras@ensimag.imag.fr>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: git@vger.kernel.org, gitster@pobox.com, peff@peff.net,
+	Guillaume Sasdy <guillaume.sasdy@ensimag.imag.fr>,
+	Simon Perrat <simon.perrat@ensimag.imag.fr>,
+	Charles Roussel <charles.roussel@ensimag.imag.fr>,
+	Julien Khayat <julien.khayat@ensimag.imag.fr>
+To: Simon Cathebras <simon.cathebras@ensimag.imag.fr>
+X-From: git-owner@vger.kernel.org Wed Jun 13 09:57:10 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SeiRq-0003Y6-Sr
+	id 1SeiRr-0003Y6-CS
 	for gcvg-git-2@plane.gmane.org; Wed, 13 Jun 2012 09:57:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752097Ab2FMH4o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Jun 2012 03:56:44 -0400
-Received: from mail-we0-f174.google.com ([74.125.82.174]:35614 "EHLO
-	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751679Ab2FMH4m (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Jun 2012 03:56:42 -0400
-Received: by weyu7 with SMTP id u7so271836wey.19
-        for <git@vger.kernel.org>; Wed, 13 Jun 2012 00:56:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
-         :references;
-        bh=FHbegGSv5XZtPu9qSzOIYXcbq4CTMJ5uaxiKsQOuC8U=;
-        b=NmVyl7RypJMvJJCS2D5MjThignfUnWGx5Wg4IEgW9d6iFExZ1ehefK0qql/mZ4S/Cc
-         2HCmqF5XqhPd2cBQiqH4rKY4i/Pok+yZlfJfOjwcT5VGN/xbQ5ypnGjTLnmIWEckSPRr
-         rnWJxZ3TRAGV8rEbjgon1qmrB5zozTNH66zsv8IsNhgtKcTqEzZqJthTSSqSbEVyHodv
-         anAMhMe49FxDoms4e+1/ylyBnDDpcnDdACEjzhDXa2JtQ5NqB1kM6QKQb4EUhFFyiOJS
-         2+BWNWQGXGu7ItaGJQVHJSEFqI8O/uhkZfwAZJYkT4+s/tkwXqa9i+xvQ0BzoCxYHpOQ
-         02lA==
-Received: by 10.216.194.23 with SMTP id l23mr1004973wen.121.1339574201289;
-        Wed, 13 Jun 2012 00:56:41 -0700 (PDT)
-Received: from nguyenkimthuat-K40IN.grenet.fr (wifi-030059.grenet.fr. [130.190.30.59])
-        by mx.google.com with ESMTPS id f19sm6870447wiw.11.2012.06.13.00.56.39
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 13 Jun 2012 00:56:40 -0700 (PDT)
-X-Mailer: git-send-email 1.7.11.rc2.10.g9fb1faf
-In-Reply-To: <y>
+	id S1751776Ab2FMH4x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Jun 2012 03:56:53 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:56716 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750928Ab2FMH4v (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Jun 2012 03:56:51 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id q5D7lc94027476
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Wed, 13 Jun 2012 09:47:38 +0200
+Received: from bauges.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1SeiRR-0001bC-0G; Wed, 13 Jun 2012 09:56:37 +0200
+In-Reply-To: <1339535563-18958-2-git-send-email-simon.cathebras@ensimag.imag.fr>
+	(Simon Cathebras's message of "Tue, 12 Jun 2012 23:12:40 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.93 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Wed, 13 Jun 2012 09:47:38 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: q5D7lc94027476
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1340178459.46412@LqEokYFPc6oAZm/mIiqNpQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199877>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199878>
 
-From: nguyenkimthuat <Kim-Thuat.Nguyen@ensimag.imag.fr>
+Simon Cathebras <simon.cathebras@ensimag.imag.fr> writes:
 
-This patch adds the functionality to export the 
-file attachements from the local git's repository 
-using the API of mediawiki.
+> +# Check the preconditions to run git-remote-mediawiki's tests
+> +test_check_precond () {
 
-Signed-off-by: VOLEK Pavel <Pavel.Volek@ensimag.imag.fr>
-Signed-off-by: NGUYEN Kim Thuat <Kim-Thuat.Nguyen@ensimag.imag.fr>
-Signed-off-by: ROUCHER IGLESIAS Javier <roucherj@ensimag.imag.fr>
-Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
----
- contrib/mw-to-git/git-remote-mediawiki | 67 +++++++++++++++++++++++++++++++++-
- 1 file changed, 65 insertions(+), 2 deletions(-)
+This is a very generic name (with risk of name clash in future versions
+of test-lib.sh). This checks the git-mediawiki preconditions, so how
+about test_check_wiki_precond?
 
-diff --git a/contrib/mw-to-git/git-remote-mediawiki b/contrib/mw-to-git/git-remote-mediawiki
-index c18bfa1..e6f8940 100755
---- a/contrib/mw-to-git/git-remote-mediawiki
-+++ b/contrib/mw-to-git/git-remote-mediawiki
-@@ -275,6 +275,14 @@ sub run_git {
- 	return $res;
- }
- 
-+sub run_git_raw {
-+	no encoding 'utf8';
-+	open(my $g, "-|", "git " . $_[0]);
-+	my $r = do { local $/; <$g> };
-+	close($g);
-+
-+	return $r;
-+}
- 
- sub get_last_local_revision {
- 	# Get note regarding last mediawiki revision
-@@ -644,7 +652,11 @@ sub mw_push_file {
- 	my $page_deleted = ($new_sha1 eq NULL_SHA1);
- 	$complete_file_name = mediawiki_clean_filename($complete_file_name);
- 
--	if (substr($complete_file_name,-3) eq ".mw") {
-+	my $path = "File:".$complete_file_name;
-+	my @extensions = split(/\./, $complete_file_name);
-+	my $extension = pop(@extensions);
-+
-+	if ($extension eq "mw") {
- 		my $title = substr($complete_file_name,0,-3);
- 
- 		my $file_content;
-@@ -687,7 +699,43 @@ sub mw_push_file {
- 		$newrevid = $result->{edit}->{newrevid};
- 		print STDERR "Pushed file: $new_sha1 - $title\n";
- 	} else {
--		print STDERR "$complete_file_name not a mediawiki file (Not pushable on this version of git-remote-mediawiki).\n"
-+		my %hashFiles = get_file_extensions();
-+		if (exists($hashFiles{$extension})) {
-+			# Deleting and uploading a file require the priviledge of the user
-+			if ($page_deleted) {
-+				mw_connect_maybe();
-+				my $res = $mediawiki->edit( {
-+					action => 'delete',
-+					title => $path,
-+					reason => $summary
-+					} )|| die $mediawiki-> {error}->{code} .
-+						':' . $mediawiki->{error}->{details};
-+			} else {
-+				my $content = run_git_raw("cat-file blob $new_sha1");
-+				if ($content ne "") {
-+					mw_connect_maybe();
-+					$mediawiki->{config}->{upload_url} = "$url/index.php/Special:Upload";
-+
-+					my $res = $mediawiki->edit ( {
-+						action => 'upload',
-+						filename => $complete_file_name,
-+						comment => $summary,
-+						file => [undef, $complete_file_name, Content => $content ],
-+						ignorewarnings => 1,
-+						}, {
-+							skip_encoding => 1 # Helps with names with accentuated characters
-+						} )  || die $mediawiki-> {error}->{code} .
-+							':' . $mediawiki->{error}->{details};
-+					my $last_file_page = $mediawiki->get_page({title =>$path});
-+					$newrevid = $last_file_page->{revid};
-+					print STDERR "Pushed file: $new_sha1 - $complete_file_name.\n";
-+				} else {
-+					print STDERR "Empty file. Can not upload.\n ";
-+				}
-+			}
-+		} else {
-+			print STDERR "$complete_file_name is not a permitted file. Check the configuration of file uploads in your mediawiki.\n";
-+		}
- 	}
- 	return ($newrevid, "ok");
- }
-@@ -825,3 +873,18 @@ sub mw_push_revision {
- 	print STDOUT "ok $remote\n";
- 	return 1;
- }
-+
-+sub get_file_extensions {
-+	mw_connect_maybe();
-+
-+	my $query = {
-+		action => 'query',
-+		meta => 'siteinfo',
-+		siprop => 'fileextensions'
-+		};
-+	my $result = $mediawiki->api($query);
-+	my @file_extensions= map $_->{ext},@{$result->{query}->{fileextensions}};
-+	my %hashFile = map {$_ => 1}@file_extensions;
-+
-+	return %hashFile;
-+}
+> +	if ! test_have_prereq PERL
+> +	then
+> +		skip_all='skipping gateway git-mw tests, perl not available'
+> +		test_done
+> +	fi
+> +
+> +	if [ ! -f $GIT_BUILD_DIR/git-remote-mediawiki ];
+
+"" around $GIT_BUILD_DIR
+
+But why $GIT_BUILD_DIR ? git-remote-mediawiki usually doesn't go there,
+it is either as source in contrib/, or installed in the $PATH.
+
+> +	then
+> +		skip_all='skipping gateway git-mw tests, no remote mediawiki for git found' \
+> +		'please try: cp git/contrib/mw-to-git/git-remote-mediawiki git/'
+
+Don't you have a "make install" target for that now?
+
++	$CURR_DIR/test-gitmw.pl getallpagename
+
+Here and elsewhere, "" around "$CURR_DIR"
+
 -- 
-1.7.11.rc2.10.g9fb1faf
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
