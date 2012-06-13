@@ -1,127 +1,150 @@
-From: Ilya Dogolazky <ilya.dogolazky@nokia.com>
-Subject: Re: git-p4: commits are visible in history after 'git p4 clone',
- but not a single file present
-Date: Wed, 13 Jun 2012 09:58:16 +0300
-Message-ID: <4FD83A08.6070208@nokia.com>
-References: <4FD5C263.9010307@nokia.com> <CAE5ih79Lgc8vF0v=vTGZSwASsGwQWs2Q7h_AkW67RBfi-R=DCA@mail.gmail.com> <4FD6440C.7090900@nokia.com> <4FD67530.1090002@diamand.org> <4FD70DEB.7040506@nokia.com> <20120612222431.GA13427@padd.com>
+From: "Simon.Cathebras" <Simon.Cathebras@ensimag.imag.fr>
+Subject: Re: [PATCH 3/6] Test file for git-remote-mediawiki clone
+Date: Wed, 13 Jun 2012 09:20:33 +0200
+Message-ID: <4FD83F41.3050101@ensimag.imag.fr>
+References: <20120611230954.Horde.inb-aHwdC4BP1l6iLlHhZgA@webmail.minatec.grenoble-inp.fr> <1339535563-18958-1-git-send-email-simon.cathebras@ensimag.imag.fr> <1339535563-18958-3-git-send-email-simon.cathebras@ensimag.imag.fr> <20120612233448.Horde.yFmTWnwdC4BP17X4iOBVZrA@webmail.minatec.grenoble-inp.fr>
+Reply-To: Simon.Cathebras@ensimag.imag.fr
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
+Content-Type: text/plain; charset=ISO-8859-1;
 	format=flowed
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Luke Diamand <luke@diamand.org>, git@vger.kernel.org
-To: ext Pete Wyckoff <pw@padd.com>
-X-From: git-owner@vger.kernel.org Wed Jun 13 08:58:40 2012
+Cc: git@vger.kernel.org, gitster@pobox.com, peff@peff.net,
+	Guillaume Sasdy <guillaume.sasdy@ensimag.imag.fr>,
+	Simon Perrat <simon.perrat@ensimag.imag.fr>,
+	Charles Roussel <charles.roussel@ensimag.imag.fr>,
+	Julien Khayat <julien.khayat@ensimag.imag.fr>,
+	Matthieu Moy <matthieu.moy@imag.fr>
+To: konglu@minatec.inpg.fr
+X-From: git-owner@vger.kernel.org Wed Jun 13 09:21:01 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SehXK-000611-4U
-	for gcvg-git-2@plane.gmane.org; Wed, 13 Jun 2012 08:58:38 +0200
+	id 1Sehsr-000690-Hm
+	for gcvg-git-2@plane.gmane.org; Wed, 13 Jun 2012 09:20:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752398Ab2FMG6c convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 13 Jun 2012 02:58:32 -0400
-Received: from smtp.nokia.com ([147.243.1.48]:49366 "EHLO mgw-sa02.nokia.com"
+	id S1751679Ab2FMHUs convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 13 Jun 2012 03:20:48 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:44206 "EHLO shiva.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752313Ab2FMG6b (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Jun 2012 02:58:31 -0400
-Received: from [10.162.252.161] (essapo-nirac252161.europe.nokia.com [10.162.252.161])
-	by mgw-sa02.nokia.com (Sentrion-MTA-4.2.2/Sentrion-MTA-4.2.2) with ESMTP id q5D6wH4m004137;
-	Wed, 13 Jun 2012 09:58:18 +0300
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:12.0) Gecko/20120428 Thunderbird/12.0.1
-In-Reply-To: <20120612222431.GA13427@padd.com>
-X-Nokia-AV: Clean
+	id S1751114Ab2FMHUr (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Jun 2012 03:20:47 -0400
+Received: from ensimag.imag.fr (ensimag.imag.fr [195.221.228.12])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id q5D7BYTL015702
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Wed, 13 Jun 2012 09:11:34 +0200
+Received: from [IPv6:::1] (ensibm [195.221.228.8])
+	by ensimag.imag.fr (8.13.8/8.13.8/ImagV2.1.r_ens) with ESMTP id q5D7KV5H008057;
+	Wed, 13 Jun 2012 09:20:31 +0200
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:12.0) Gecko/20120430 Thunderbird/12.0.1
+In-Reply-To: <20120612233448.Horde.yFmTWnwdC4BP17X4iOBVZrA@webmail.minatec.grenoble-inp.fr>
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Wed, 13 Jun 2012 09:11:34 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: q5D7BYTL015702
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: simon.cathebras@ensimag.imag.fr
+MailScanner-NULL-Check: 1340176299.03088@yPznBkfk95kSKE0B767D1A
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199874>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199875>
 
-Hi Pete !
 
-06/13/2012 01:24 AM, ext Pete Wyckoff =D0=BD=D0=B0=D0=BF=D0=B8=D1=81=D0=
-=B0=D0=BB:
-> Fascinating.  So //kalma/xxx/yyy is a depot hosted in a p4d that runs
-> on your local box, but //xxx/yyy is the depot name hosted in
-> the company's p4d?
 
-No. But now I think I understand, what I did wrong. There is no p4d=20
-running on my own machine. "kalma" in this case is the name of the so=20
-called "perforce client" I tried to use. And I think my error was to=20
-express "please use perforce client 'kalma' to access depot '//xxx/yyy'=
-"=20
-by the string "//kalma/xxx/yyy", which is wrong. I'm pretty sure it was=
-=20
-not quite my own idea to do so, probably I misunderstood some piece of=20
-documentation somewhere.
-
-> I'm completely confused that //kalma/xxx/yyy even appeard to work
-> at all.  Will be interested to see your P4PORT setting when using
-> that repo.
-
-And I think I understand now, why "//kalma/xxx/yyy" appeared to work: i=
-t=20
-took all the commits, but as I wanted to have something beginning with=20
-"kalma" I got no files, because everything begins with "xxx" (and coupl=
+On 12/06/2012 23:34, konglu@minatec.inpg.fr wrote:
+>
+> Simon Cathebras <simon.cathebras@ensimag.imag.fr> a =E9crit :
+>
+>> From: Guillaume Sasdy <guillaume.sasdy@ensimag.imag.fr>
+>>
+>> This patch provides some tests for the clone in use by
+>> git-remote-mediawiki.
+>>
+>> Signed-off-by: Simon Cathebras <simon.cathebras@ensimag.imag.fr>
+>> Signed-off-by: Simon Perrat <simon.perrat@ensimag.imag.fr>
+>> Signed-off-by: Guillaume Sasdy <guillaume.sasdy@ensimag.imag.fr>
+>> Signed-off-by: Charles Roussel <charles.roussel@ensimag.imag.fr>
+>> Signed-off-by: Julien Khayat <julien.khayat@ensimag.imag.fr>
+>> Signed-off-by: Matthieu Moy <matthieu.moy@imag.fr>
+>> ---
+>>  contrib/mw-to-git/t/t9360-mw-to-git-clone.sh | 238=20
+>> +++++++++++++++++++++++++++
+>>  1 file changed, 238 insertions(+)
+>>  create mode 100755 contrib/mw-to-git/t/t9360-mw-to-git-clone.sh
+>>
+>> diff --git a/contrib/mw-to-git/t/t9360-mw-to-git-clone.sh=20
+>> b/contrib/mw-to-git/t/t9360-mw-to-git-clone.sh
+>> new file mode 100755
+>> index 0000000..07e1270
+>> --- /dev/null
+>> +++ b/contrib/mw-to-git/t/t9360-mw-to-git-clone.sh
+>> @@ -0,0 +1,238 @@
+>> +#!/bin/sh
+>> +#
+>> +# Copyright (C) 2012
+>> +#     Charles Roussel <charles.roussel@ensimag.imag.fr>
+>> +#     Simon Cathebras <simon.cathebras@ensimag.imag.fr>
+>> +#     Julien Khayat <julien.khayat@ensimag.imag.fr>
+>> +#     Guillaume Sasdy <guillaume.sasdy@ensimag.imag.fr>
+>> +#     Simon Perrat <simon.perrat@ensimag.imag.fr>
+>> +#
+>> +# License: GPL v2 or later
+>> +
+>> +
+>> +test_description=3D'Test the Git Mediawiki remote helper: git clone=
+'
+>> +
+>> +. ./test-gitmw-lib.sh
+>> +. $TEST_DIRECTORY/test-lib.sh
+>> +
+>> +
+>> +test_check_precond
+>> +
+>> +
+>> +test_expect_success 'Git clone creates the git log expected with on=
 e=20
-of other names, none of them is equal to 'kalma'). Does this explanatio=
-n=20
-seem reasonable?
-
-> Ooh.  You're using the shiny new "streams" feature in p4,
-> I think.  Can you play with "p4 stream" to see if one is
-> defined on //xxx or //xxx/yyy?.
-
-Yes, alas I have to use it. Now I re-defined my "client" settings,=20
-included the stream there and started from the beginning. Here is what =
-I=20
-did:
-
-$ p4 client (and edit opened file .....)
-Client xexe1 saved.
-$ P4CLIENT=3Dxexe1 p4 sync
-//xxx/yyy/zzz/readme.txt#1 - added as /x/data/tmp/xexe/yyy/zzz/readme.t=
-xt
-$ P4CLIENT=3Dxexe1 git p4 clone //xxx/yyy@all ~/xexe1
-Importing from //xxx/yyy into /home/ilya/xexe1
-Initialized empty Git repository in /home/ilya/xexe1/.git/
-Doing initial import of //xxx/yyy/ from revision #head into=20
-refs/remotes/p4/master
-$ cd ~/xexe1
-$ vim zzz/readme.txt (and edit it)
-$ git commit zzz/readme.txt
-
-Until now everything worked fine, so now is time to submit the changes=20
-on readme.txt file ("rebase" is not needed, as no changes happened yet=20
-since I cloned).
-
-$ P4CLIENT=3Dxexe1 git p4 submit
-Error: Cannot locate perforce checkout of //xxx/yyy/ in client view
-
-This message comes from git-p4 script somewhere around line 1276 and I=20
-don't understand its meaning.
-
-Then I tried to set git-p4.useclientspec to "true" and I got the messag=
-e:
-$ P4CLIENT=3Dxexe1 git p4 submit
-Can't handle %n wildcards in view: //xxx/yyy/zzz/somefile%%1
-
-This "%%1" is visible in client config (as opened in editor during=20
-execution "P4CLIENT=3Dxexe1 p4 client"), but I have not added it by=20
-myself: this line [and many other similar lines in View: section] was=20
-added after I set "Stream: //xxx/yyy" there. The beginning of View:=20
-section looks like this now:
-
-//xxx/yyy/zzz/... //xexe1/zzz/...
--//xxx/yyy/zzz/somefile%%1 //xexe1/zzz/somefile%%1
-
-(yes, it begins with '-' and there are many other lines beginning with=20
-'-', but this one is the only one containing '%%')
-
-What do you think, is it now something wrong with git-p4 or is it again=
+>> file' '
+>> +    wiki_reset &&
+>> +    wiki_editpage foo "this is not important" false -c cat -s "this=
 =20
-something wrong in my setup?
+>> must be the same" &&
+>> +    git clone=20
+>> mediawiki::http://'"$SERVER_ADDR:$PORT/$WIKI_DIR_NAME"' mw_dir_1 &&
+>> +    (cd mw_dir_1 &&
+>> +    git log --format=3D%s HEAD^..HEAD > log.tmp ) &&
+>> +    echo "this must be the same" > msg.tmp &&
+>> +    diff -b mw_dir_1/log.tmp msg.tmp
+>> +'
+>
+> It's clearer to put it this way:
+>
+>         git clone [...] &&
+>         (
+>                 cd ... &&
+>                 ....
+>         ) &&
+>         ....
+>
 
-Cheers,
+Okay, we are modifiying it right now.
 
-Ilya
+> And, about style:
+>     "echo one >one" and not "echo one > one"
+>
+>
+>
+same.
+
+
+Simon C.
+
+--=20
+CATHEBRAS Simon
+
+2A-ENSIMAG
+
+=46ili=E8re Ing=E9ni=E9rie des Syst=E8mes d'Information
+Membre Bug-Buster
