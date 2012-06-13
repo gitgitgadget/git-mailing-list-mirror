@@ -1,7 +1,8 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v3 11/19] apply: accept -3/--3way command line option
-Date: Wed, 13 Jun 2012 12:32:52 -0700
-Message-ID: <1339615980-19727-12-git-send-email-gitster@pobox.com>
+Subject: [PATCH v3 10/19] apply: move "already exists" logic to
+ check_to_create()
+Date: Wed, 13 Jun 2012 12:32:51 -0700
+Message-ID: <1339615980-19727-11-git-send-email-gitster@pobox.com>
 References: <1339615980-19727-1-git-send-email-gitster@pobox.com>
 To: git@vger.kernel.org
 X-From: git-owner@vger.kernel.org Wed Jun 13 21:33:39 2012
@@ -10,139 +11,125 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SetJu-0008OY-QC
-	for gcvg-git-2@plane.gmane.org; Wed, 13 Jun 2012 21:33:35 +0200
+	id 1SetJu-0008OY-9v
+	for gcvg-git-2@plane.gmane.org; Wed, 13 Jun 2012 21:33:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754784Ab2FMTd1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Jun 2012 15:33:27 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:65519 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754636Ab2FMTdY (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1754780Ab2FMTdY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
 	Wed, 13 Jun 2012 15:33:24 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:65495 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754741Ab2FMTdW (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Jun 2012 15:33:22 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B2ED28722
-	for <git@vger.kernel.org>; Wed, 13 Jun 2012 15:33:23 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C06C98717
+	for <git@vger.kernel.org>; Wed, 13 Jun 2012 15:33:21 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:in-reply-to:references; s=sasl; bh=oyod
-	rvsarM2QrKqFkW/q6vbMwYg=; b=VzJ801R2JHzYemIGDoUFwEZSQbTqgSyWtfBp
-	7BnVl0bSCvXciu6Z2lCwc4EOIVLg/QC+k2Oj3pUCCsQ2Na7FPlByeDHVyD//Q8nx
-	mAbcGx0OFf30pzyZ/m+ur40Vltd5UMI2T9odKa2ProiFpx2DepA45ytaIiYcZGP0
-	OEiutIk=
+	:subject:date:message-id:in-reply-to:references; s=sasl; bh=SyPz
+	m6+HmS6nGHLJD5FFeo8Bozs=; b=eD0gOlGoAAScBSAzXjtaxY2Dv4LsymhTu+Pd
+	KR2fq7rNu8X/HVgPrWvhr0Ldc7QnrpoTTupt05pDMA7iGCvpxfF4oGAg14OfcGmM
+	xffDyuTeaMcvtUHrP/m+d7zdn+ofa6pCKoSe6Qt+qxmMS+tnp/KvGFE2GyRpTcuN
+	YNAFqac=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=lFSkQp
-	Ap1fTdPjGkxU9vEStA8cJQAxPhdKHaTyJVWBroiEZ3Whb/kCEeBznPmjNEQUaJuv
-	QnecjG0PHZQd7LB0BLAT8sw4ZFbCcFDI/G333Xd8qnceshAMtTG6mUBIv9Oxdpcx
-	MIhQrwl4J4hak7JPXiALaeLs4urroP5Ob3plE=
+	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=TbFy+8
+	Mcf4zlr5yK0iYj+nhjdJur3/Y8fAHAxHlEs7jRHMUId4CrPCw9+iESyZwEAdpNP7
+	ZbGzSf8QaIl56kE4COX7uy90VZWbN5Zrhy2tpafPNlGLIdl0Xg4WEsDE53j8fug4
+	5jXada4Hh2aFiINXfaUD4bILravx3Fq6/NOgU=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A9C2F8720
-	for <git@vger.kernel.org>; Wed, 13 Jun 2012 15:33:23 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B8A7A8716
+	for <git@vger.kernel.org>; Wed, 13 Jun 2012 15:33:21 -0400 (EDT)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 13B168719 for
- <git@vger.kernel.org>; Wed, 13 Jun 2012 15:33:22 -0400 (EDT)
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 300F58715 for
+ <git@vger.kernel.org>; Wed, 13 Jun 2012 15:33:21 -0400 (EDT)
 X-Mailer: git-send-email 1.7.11.rc3.30.g3bdace2
 In-Reply-To: <1339615980-19727-1-git-send-email-gitster@pobox.com>
-X-Pobox-Relay-ID: A380550A-B58E-11E1-B20D-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: A260D17C-B58E-11E1-8118-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199924>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199925>
 
-This is the beginning of teaching the three-way merge fallback logic "git
-am -3" uses to the underlying "git apply".  It only implements the command
-line parsing part, and does not do anything interesting yet, other than
-making sure that "--reject" and "--3way" are not given together and
-making "--3way" imply "--index".
+The check_to_create_blob() function used to check only the case
+where we are applying to the working tree.  Rename the function to
+check_to_create() and make it also responsible for checking the case
+where we apply to the index.  Also make its caller responsible for
+issuing an error message.
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- builtin/apply.c         | 25 +++++++++++++++++++++++--
- t/t4117-apply-reject.sh |  8 ++++++++
- 2 files changed, 31 insertions(+), 2 deletions(-)
+ builtin/apply.c | 40 +++++++++++++++++++++++++++++-----------
+ 1 file changed, 29 insertions(+), 11 deletions(-)
 
 diff --git a/builtin/apply.c b/builtin/apply.c
-index c4166b3..509a297 100644
+index 6431178..c4166b3 100644
 --- a/builtin/apply.c
 +++ b/builtin/apply.c
-@@ -46,6 +46,7 @@ static int apply_with_reject;
- static int apply_verbosely;
- static int allow_overlap;
- static int no_add;
-+static int threeway;
- static const char *fake_ancestor;
- static int line_termination = '\n';
- static unsigned int p_context = UINT_MAX;
-@@ -3139,6 +3140,12 @@ static int load_preimage(struct image *image,
+@@ -3243,9 +3243,21 @@ static int check_preimage(struct patch *patch, struct cache_entry **ce, struct s
  	return 0;
  }
  
-+static int try_threeway(struct image *image, struct patch *patch,
-+			struct stat *st, struct cache_entry *ce)
-+{
-+	return -1; /* for now */
-+}
+-static int check_to_create_blob(const char *new_name, int ok_if_exists)
 +
- static int apply_data(struct patch *patch, struct stat *st, struct cache_entry *ce)
++#define EXISTS_IN_INDEX 1
++#define EXISTS_IN_WORKTREE 2
++
++static int check_to_create(const char *new_name, int ok_if_exists)
  {
- 	struct image image;
-@@ -3146,8 +3153,11 @@ static int apply_data(struct patch *patch, struct stat *st, struct cache_entry *
- 	if (load_preimage(&image, patch, st, ce) < 0)
- 		return -1;
- 
--	if (apply_fragments(&image, patch) < 0)
--		return -1; /* note with --reject this succeeds. */
-+	if (apply_fragments(&image, patch) < 0) {
-+		/* Note: with --reject, apply_fragments() returns 0 */
-+		if (!threeway || try_threeway(&image, patch, st, ce) < 0)
-+			return -1;
-+	}
- 	patch->result = image.buf;
- 	patch->resultsize = image.len;
- 	add_to_fn_table(patch);
-@@ -4073,6 +4083,8 @@ int cmd_apply(int argc, const char **argv, const char *prefix_)
- 			"apply a patch without touching the working tree"),
- 		OPT_BOOLEAN(0, "apply", &force_apply,
- 			"also apply the patch (use with --stat/--summary/--check)"),
-+		OPT_BOOL('3', "3way", &threeway,
-+			 "attempt three-way merge if a patch does not apply"),
- 		OPT_FILENAME(0, "build-fake-ancestor", &fake_ancestor,
- 			"build a temporary index based on embedded index information"),
- 		{ OPTION_CALLBACK, 'z', NULL, NULL, NULL,
-@@ -4121,6 +4133,15 @@ int cmd_apply(int argc, const char **argv, const char *prefix_)
- 	argc = parse_options(argc, argv, prefix, builtin_apply_options,
- 			apply_usage, 0);
- 
-+	if (apply_with_reject && threeway)
-+		die("--reject and --3way cannot be used together.");
-+	if (cached && threeway)
-+		die("--cached and --3way cannot be used together.");
-+	if (threeway) {
-+		if (is_not_gitdir)
-+			die(_("--3way outside a repository"));
-+		check_index = 1;
-+	}
- 	if (apply_with_reject)
- 		apply = apply_verbosely = 1;
- 	if (!force_apply && (diffstat || numstat || summary || check || fake_ancestor))
-diff --git a/t/t4117-apply-reject.sh b/t/t4117-apply-reject.sh
-index e9ccd16..8e15ecb 100755
---- a/t/t4117-apply-reject.sh
-+++ b/t/t4117-apply-reject.sh
-@@ -46,6 +46,14 @@ test_expect_success setup '
- 	cat file1 >saved.file1
- '
- 
-+test_expect_success 'apply --reject is incompatible with --3way' '
-+	test_when_finished "cat saved.file1 >file1" &&
-+	git diff >patch.0 &&
-+	git checkout file1 &&
-+	test_must_fail git apply --reject --3way patch.0 &&
-+	git diff --exit-code
-+'
+ 	struct stat nst;
 +
- test_expect_success 'apply without --reject should fail' '
++	if (check_index &&
++	    cache_name_pos(new_name, strlen(new_name)) >= 0 &&
++	    !ok_if_exists)
++		return EXISTS_IN_INDEX;
++	if (cached)
++		return 0;
++
+ 	if (!lstat(new_name, &nst)) {
+ 		if (S_ISDIR(nst.st_mode) || ok_if_exists)
+ 			return 0;
+@@ -3259,10 +3271,10 @@ static int check_to_create_blob(const char *new_name, int ok_if_exists)
+ 		if (has_symlink_leading_path(new_name, strlen(new_name)))
+ 			return 0;
  
- 	if git apply patch.1
+-		return error(_("%s: already exists in working directory"), new_name);
+-	}
+-	else if ((errno != ENOENT) && (errno != ENOTDIR))
++		return EXISTS_IN_WORKTREE;
++	} else if ((errno != ENOENT) && (errno != ENOTDIR)) {
+ 		return error("%s: %s", new_name, strerror(errno));
++	}
+ 	return 0;
+ }
+ 
+@@ -3310,15 +3322,21 @@ static int check_patch(struct patch *patch)
+ 
+ 	if (new_name &&
+ 	    ((0 < patch->is_new) | (0 < patch->is_rename) | patch->is_copy)) {
+-		if (check_index &&
+-		    cache_name_pos(new_name, strlen(new_name)) >= 0 &&
+-		    !ok_if_exists)
++		int err = check_to_create(new_name, ok_if_exists);
++
++		switch (err) {
++		case 0:
++			break; /* happy */
++		case EXISTS_IN_INDEX:
+ 			return error(_("%s: already exists in index"), new_name);
+-		if (!cached) {
+-			int err = check_to_create_blob(new_name, ok_if_exists);
+-			if (err)
+-				return err;
++			break;
++		case EXISTS_IN_WORKTREE:
++			return error(_("%s: already exists in working directory"),
++				     new_name);
++		default:
++			return err;
+ 		}
++
+ 		if (!patch->new_mode) {
+ 			if (0 < patch->is_new)
+ 				patch->new_mode = S_IFREG | 0644;
 -- 
 1.7.11.rc3.30.g3bdace2
