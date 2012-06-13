@@ -1,61 +1,57 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: how to know this commit is merged by whic commit
-Date: Wed, 13 Jun 2012 17:34:35 -0400
-Message-ID: <20120613213435.GA25301@sigill.intra.peff.net>
-References: <CAHsH0E9HooVsAq8NhWm-OSk7gSPFMmoYHsArtYqhwTmE0ngwjA@mail.gmail.com>
+From: =?UTF-8?B?WmJpZ25pZXcgSsSZZHJ6ZWpld3NraS1Tem1law==?= 
+	<zbyszek@in.waw.pl>
+Subject: Re: [PATCH] gitk: avoid Meta1-F5
+Date: Thu, 14 Jun 2012 00:01:12 +0200
+Message-ID: <4FD90DA8.9080603@in.waw.pl>
+References: <1333758578-9334-1-git-send-email-felipe.contreras@gmail.com> <20120425034544.GA9660@bloggs.ozlabs.ibm.com> <CAMP44s34CAKbSKd=xKT_zS7sDOQCH-=9gXswdhmYhjFCTYPA8g@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: lei yang <yanglei.fage@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jun 13 23:34:52 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Paul Mackerras <paulus@samba.org>, git@vger.kernel.org,
+	"Daniel A. Steffen" <das@users.sourceforge.net>,
+	Alexander Gavrilov <angavrilov@gmail.com>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jun 14 00:01:37 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SevDD-0005hv-KR
-	for gcvg-git-2@plane.gmane.org; Wed, 13 Jun 2012 23:34:47 +0200
+	id 1Sevd5-0004Dh-9l
+	for gcvg-git-2@plane.gmane.org; Thu, 14 Jun 2012 00:01:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754607Ab2FMVek (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Jun 2012 17:34:40 -0400
-Received: from 99-108-225-23.lightspeed.iplsin.sbcglobal.net ([99.108.225.23]:52229
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754529Ab2FMVei (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Jun 2012 17:34:38 -0400
-Received: (qmail 9921 invoked by uid 107); 13 Jun 2012 21:34:40 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 13 Jun 2012 17:34:40 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 13 Jun 2012 17:34:35 -0400
-Content-Disposition: inline
-In-Reply-To: <CAHsH0E9HooVsAq8NhWm-OSk7gSPFMmoYHsArtYqhwTmE0ngwjA@mail.gmail.com>
+	id S1754595Ab2FMWB1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Jun 2012 18:01:27 -0400
+Received: from kawka.in.waw.pl ([178.63.212.103]:38483 "EHLO kawka.in.waw.pl"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751908Ab2FMWB0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Jun 2012 18:01:26 -0400
+Received: from 69-mo7-2.acn.waw.pl ([85.222.93.69] helo=[192.168.0.150])
+	by kawka.in.waw.pl with esmtpsa (TLS1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.72)
+	(envelope-from <zbyszek@in.waw.pl>)
+	id 1Sevcy-0001Wo-DH; Thu, 14 Jun 2012 00:01:24 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:10.0.3) Gecko/20120329 Icedove/10.0.3
+In-Reply-To: <CAMP44s34CAKbSKd=xKT_zS7sDOQCH-=9gXswdhmYhjFCTYPA8g@mail.gmail.com>
+X-Enigmail-Version: 1.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199949>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199950>
 
-On Thu, Jun 14, 2012 at 12:50:59AM +0800, lei yang wrote:
+On 06/13/2012 05:00 PM, Felipe Contreras wrote:
+> On Wed, Apr 25, 2012 at 5:45 AM, Paul Mackerras <paulus@samba.org> wrote:
+>> On Sat, Apr 07, 2012 at 03:29:38AM +0300, Felipe Contreras wrote:
+>>> This is commonly mapped by window managers and what not. Use Shift-F5
+>>> instead.
+>>>
+>>> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+>>
+>> Thanks, applied.
+> 
+> Does this translate into some action? I still don't see this change in
+> Junio's tree.
+It's in git://ozlabs.org/~paulus/gitk, the place where gitk lives.
 
-> I have a question as the title indicate. assume the commmit id is
-> ee5r3343. how to know this commit is merged by  which commit?
-
-There is not one answer to "which commit"; there may be an infinite
-number of commits which merge it into something else. The best you can
-do is start at some point (e.g., the tip of "master") and walk backwards
-looking for commits which merge it (and you still may find multiple, if
-the commit was merged into two other lines of development, each of which
-was merged into your starting point). There is not an option to do this
-search automatically, so you would have to use grep, like:
-
-  git log --format='%H %P' |
-  grep " $commit" |
-  cut -d' ' -f1
-
-which will list the id of all commits (%H) for which $commit appears in
-the list of parents (%P).
-
--Peff
-
-PS You didn't give any background on your problem, but you may also find
-   "git tag --contains" and "git branch --contains" useful.
+Zbyszek
