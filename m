@@ -1,7 +1,7 @@
 From: Simon Cathebras <simon.cathebras@ensimag.imag.fr>
-Subject: [PATCHv5 2/5] Test environment of git-remote-mediawiki
-Date: Wed, 13 Jun 2012 19:03:42 +0200
-Message-ID: <1339607025-22725-2-git-send-email-simon.cathebras@ensimag.imag.fr>
+Subject: [PATCHv5 3/5] Test file for git-remote-mediawiki clone
+Date: Wed, 13 Jun 2012 19:03:43 +0200
+Message-ID: <1339607025-22725-3-git-send-email-simon.cathebras@ensimag.imag.fr>
 References: <4FD8C71F.1070508@ensimag.imag.fr>
  <1339607025-22725-1-git-send-email-simon.cathebras@ensimag.imag.fr>
 Cc: gitster@pobox.com, peff@peff.net,
@@ -12,57 +12,47 @@ Cc: gitster@pobox.com, peff@peff.net,
 	Julien Khayat <julien.khayat@ensimag.imag.fr>,
 	Matthieu Moy <matthieu.moy@imag.fr>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jun 13 19:04:30 2012
+X-From: git-owner@vger.kernel.org Wed Jun 13 19:04:32 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SeqzP-00086X-Mz
-	for gcvg-git-2@plane.gmane.org; Wed, 13 Jun 2012 19:04:16 +0200
+	id 1SeqzR-00086X-A6
+	for gcvg-git-2@plane.gmane.org; Wed, 13 Jun 2012 19:04:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754569Ab2FMRED (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Jun 2012 13:04:03 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:58990 "EHLO rominette.imag.fr"
+	id S1754593Ab2FMREJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Jun 2012 13:04:09 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:38563 "EHLO shiva.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752265Ab2FMREB (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Jun 2012 13:04:01 -0400
+	id S1752624Ab2FMREH (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Jun 2012 13:04:07 -0400
 Received: from ensimag.imag.fr (ensimag.imag.fr [195.221.228.12])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id q5DGscYl028151
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id q5DGsoHR022398
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 13 Jun 2012 18:54:38 +0200
+	Wed, 13 Jun 2012 18:54:50 +0200
 Received: from Hithlum.grenet.fr (ensibm [195.221.228.8])
-	by ensimag.imag.fr (8.13.8/8.13.8/ImagV2.1.r_ens) with ESMTP id q5DH3l9O014774;
-	Wed, 13 Jun 2012 19:03:49 +0200
+	by ensimag.imag.fr (8.13.8/8.13.8/ImagV2.1.r_ens) with ESMTP id q5DH3l9P014774;
+	Wed, 13 Jun 2012 19:03:50 +0200
 X-Mailer: git-send-email 1.7.10.2.552.gaa3bb87
 In-Reply-To: <1339607025-22725-1-git-send-email-simon.cathebras@ensimag.imag.fr>
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Wed, 13 Jun 2012 18:54:38 +0200 (CEST)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Wed, 13 Jun 2012 18:54:51 +0200 (CEST)
 X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: q5DGscYl028151
+X-MailScanner-ID: q5DGsoHR022398
 X-IMAG-MailScanner: Found to be clean
 X-IMAG-MailScanner-SpamCheck: 
 X-IMAG-MailScanner-From: simon.cathebras@ensimag.imag.fr
-MailScanner-NULL-Check: 1340211280.909@dvnssjuJ1TA3Uc6753msYA
+MailScanner-NULL-Check: 1340211294.7233@VC9jbhV5jZOtLeu2FRgN5Q
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199904>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199905>
 
 From: Guillaume Sasdy <guillaume.sasdy@ensimag.imag.fr>
 
-In order to test git-remote-mediawiki, we need a package of functions
-to manage a MediaWiki: edit a page, remove a page, fetch a page,
-fetch all pages on a given wiki.
-
-We also need functions to compare the content of directories.
-
-This patch provide these functions in the file
-git/contrib/mw-to-git/t/test-gitmw-lib.sh and
-git/contrib/mw-to-git/t/test-gitmw.pl
-
-In addition, this patch provide Makefiles to execute tests.
-See README file for more details.
+This patch provides some tests for the clone in use by
+git-remote-mediawiki.
 
 Signed-off-by: Simon Cathebras <simon.cathebras@ensimag.imag.fr>
 Signed-off-by: Simon Perrat <simon.perrat@ensimag.imag.fr>
@@ -71,515 +61,265 @@ Signed-off-by: Charles Roussel <charles.roussel@ensimag.imag.fr>
 Signed-off-by: Julien Khayat <julien.khayat@ensimag.imag.fr>
 Signed-off-by: Matthieu Moy <matthieu.moy@imag.fr>
 ---
- contrib/mw-to-git/Makefile            |  48 ++++++++
- contrib/mw-to-git/t/Makefile          |  27 +++++
- contrib/mw-to-git/t/README            |  33 ++++++
- contrib/mw-to-git/t/test-gitmw-lib.sh | 141 ++++++++++++++++++++++-
- contrib/mw-to-git/t/test-gitmw.pl     | 209 ++++++++++++++++++++++++++++++++++
- 5 files changed, 456 insertions(+), 2 deletions(-)
- create mode 100644 contrib/mw-to-git/Makefile
- create mode 100644 contrib/mw-to-git/t/Makefile
- create mode 100644 contrib/mw-to-git/t/README
- create mode 100755 contrib/mw-to-git/t/test-gitmw.pl
+ contrib/mw-to-git/t/t9360-mw-to-git-clone.sh | 250 +++++++++++++++++++++++++++
+ 1 file changed, 250 insertions(+)
+ create mode 100755 contrib/mw-to-git/t/t9360-mw-to-git-clone.sh
 
-diff --git a/contrib/mw-to-git/Makefile b/contrib/mw-to-git/Makefile
-new file mode 100644
-index 0000000..c9b1795
---- /dev/null
-+++ b/contrib/mw-to-git/Makefile
-@@ -0,0 +1,48 @@
-+#
-+# Copyright (C) 2012
-+#     Charles Roussel <charles.roussel@ensimag.imag.fr>
-+#     Simon Cathebras <simon.cathebras@ensimag.imag.fr>
-+#     Julien Khayat <julien.khayat@ensimag.imag.fr>
-+#     Guillaume Sasdy <guillaume.sasdy@ensimag.imag.fr>
-+#     Simon Perrat <simon.perrat@ensimag.imag.fr>
-+#
-+## Build git-remote-mediawiki
-+
-+-include ../../config.mak.autogen
-+-include ../../config.mak
-+
-+ifndef PERL_PATH
-+	PERL_PATH = /usr/bin/perl
-+endif
-+ifndef gitexecdir
-+	gitexecdir = $(shell git --exec-path)
-+endif
-+
-+PERL_PATH_SQ = $(subst ','\'',$(PERL_PATH))
-+gitexecdir_SQ = $(subst ','\'',$(gitexecdir))
-+SCRIPT = git-remote-mediawiki
-+
-+.PHONY: install help doc test clean
-+
-+help:
-+	@echo 'This is the help target of the Makefile. Current configuration:'
-+	@echo '  gitexecdir = $(gitexecdir_SQ)'
-+	@echo '  PERL_PATH = $(PERL_PATH_SQ)'
-+	@echo 'Run "$(MAKE) install" to install $(SCRIPT) in gitexecdir'
-+	@echo 'Run "$(MAKE) test" to run the testsuite'
-+
-+install:
-+	sed -e '1s|#!.*/perl|#!$(PERL_PATH_SQ)|' $(SCRIPT) \
-+            > '$(gitexecdir_SQ)/$(SCRIPT)'
-+	chmod +x '$(gitexecdir)/$(SCRIPT)'
-+
-+doc:
-+	@echo 'Sorry, "make doc" is not implemented yet for $(SCRIPT)'
-+
-+test:
-+	$(MAKE) -C t/ test
-+
-+clean:
-+	$(RM) '$(gitexecdir)/$(SCRIPT)'
-+	$(MAKE) -C t/ clean
-+
-diff --git a/contrib/mw-to-git/t/Makefile b/contrib/mw-to-git/t/Makefile
-new file mode 100644
-index 0000000..752fd1f
---- /dev/null
-+++ b/contrib/mw-to-git/t/Makefile
-@@ -0,0 +1,27 @@
-+#
-+# Copyright (C) 2012
-+#     Charles Roussel <charles.roussel@ensimag.imag.fr>
-+#     Simon Cathebras <simon.cathebras@ensimag.imag.fr>
-+#     Julien Khayat <julien.khayat@ensimag.imag.fr>
-+#     Guillaume Sasdy <guillaume.sasdy@ensimag.imag.fr>
-+#     Simon Perrat <simon.perrat@ensimag.imag.fr>
-+#
-+## Test git-remote-mediawiki
-+
-+-include ../../../config.mak.autogen
-+-include ../../../config.mak
-+
-+T = $(wildcard t[0-9][0-9][0-9][0-9]-*.sh)
-+
-+.PHONY: help test clean
-+
-+help:
-+	@echo 'Run "$(MAKE) test" to launch test scripts'
-+	@echo 'Run "$(MAKE)" clean to remove trash folders'
-+
-+test:
-+	for t in $(T); do "./$$t"; done
-+
-+clean:
-+	$(RM) -r 'trash directory'.*
-+
-diff --git a/contrib/mw-to-git/t/README b/contrib/mw-to-git/t/README
-new file mode 100644
-index 0000000..b68147b
---- /dev/null
-+++ b/contrib/mw-to-git/t/README
-@@ -0,0 +1,33 @@
-+Tests for Mediawiki-to-Git
-+==========================
-+
-+
-+Installation
-+------------
-+These tests require a mediawiki with admin access to work on; you can install one
-+on localhost/wiki simply by running:
-+	./install-wiki.sh install
-+Be aware that the tests will flush the wiki database, thus if you own a wiki at
-+this adress, it is strongly advised to configure another name in test-gitmw-lib.sh
-+before running the script.
-+Note that the wiki will be installed in /tmp (this can be configured too), meaning
-+you might have to install it again when you run tests later.
-+
-+
-+Running
-+-------
-+You can run these tests either individually or with make (recommended). Remember
-+to use make clean when you're done. You have access to all options from git core
-+tests.
-+
-+
-+Limitations
-+-------
-+This test environment does not allow you to test the behavior of git-remote-mediawiki
-+for name containing backslashes.
-+
-+t9360: tests git clone.
-+
-+t9361: tests git pull and git push.
-+
-+t9362: tests how UTF-8 special characters are handled.
-diff --git a/contrib/mw-to-git/t/test-gitmw-lib.sh b/contrib/mw-to-git/t/test-gitmw-lib.sh
-index a948f0c..36ac654 100755
---- a/contrib/mw-to-git/t/test-gitmw-lib.sh
-+++ b/contrib/mw-to-git/t/test-gitmw-lib.sh
-@@ -14,14 +14,151 @@
- . ./test.config
- 
- export CURR_DIR=$(pwd)
--export TEST_DIRECTORY=$CURR_DIR/../../../t
-+export TEST_DIRECTORY="$CURR_DIR"/../../../t
- 
--if test $LIGHTTPD = "false" ; then
-+if test "$LIGHTTPD" = "false" ; then
- 	PORT=80
- else
- 	WIKI_DIR_INST="$CURR_DIR/$WEB_WWW"
- fi
- 
-+
-+wiki_getpage () {
-+	"$CURR_DIR"/test-gitmw.pl get_page "$@"
-+}
-+
-+wiki_delete_page () {
-+	"$CURR_DIR"/test-gitmw.pl delete_page "$@"
-+}
-+
-+wiki_editpage () {
-+	"$CURR_DIR"/test-gitmw.pl edit_page "$@"
-+}
-+
-+die () {
-+	die_with_status 1 "$@"
-+}
-+
-+die_with_status () {
-+	status=$1
-+	shift
-+	echo >&2 "$*"
-+	exit "$status"
-+}
-+
-+
-+# Check the preconditions to run git-remote-mediawiki's tests
-+test_check_precond () {
-+	if ! test_have_prereq PERL
-+	then
-+		skip_all='skipping gateway git-mw tests, perl not available'
-+		test_done
-+	fi
-+
-+	if [ ! -f "$GIT_BUILD_DIR"/git-remote-mediawiki ];
-+	then
-+		echo "No remote mediawiki for git found. Copying it in git"
-+		echo "cp $GIT_BUILD_DIR/contrib/mw-to-git/git-remote-mediawiki $GIT_BUILD_DIR/"
-+		cp "$GIT_BUILD_DIR"/contrib/mw-to-git/git-remote-mediawiki "$GIT_BUILD_DIR"
-+	fi
-+
-+	if [ ! -d "$WIKI_DIR_INST/$WIKI_DIR_NAME" ];
-+	then
-+		skip_all='skipping gateway git-mw tests, no mediawiki found'
-+		test_done
-+	fi
-+}
-+
-+# test_diff_directories <dir_git> <dir_wiki>
-+#
-+# Compare the contents of directories <dir_git> and <dir_wiki> with diff
-+# and errors if they do not match. The program will
-+# not look into .git in the process.
-+# Warning: the first argument MUST be the directory containing the git data
-+test_diff_directories () {
-+	rm -rf "$1_tmp"
-+	mkdir -p "$1_tmp"
-+	cp "$1"/*.mw "$1_tmp"
-+	diff -r -b "$1_tmp" "$2"
-+}
-+
-+# $1=<dir>
-+# $2=<N>
-+#
-+# Check that <dir> contains exactly <N> files
-+test_contains_N_files () {
-+	test `ls "$1" | wc -l` -eq "$2";
-+}
-+
-+
-+# wiki_check_content <file_name> <page_name>
-+#
-+# Compares the contents of the file <file_name> and the wiki page
-+# <page_name> and exits with error 1 if they do not match.
-+wiki_check_content () {
-+	mkdir -p wiki_tmp
-+	wiki_getpage "$2" wiki_tmp
-+	#replacement of forbidden character in file name
-+	page_name=$(printf "%s\n" "$2" | sed -e "s/\//%2F/g")
-+
-+	diff -b "$1" wiki_tmp/"$page_name".mw
-+	if test $? -ne 0
-+	then
-+		rm -rf wiki_tmp
-+		error "ERROR: file $2 not found on wiki"
-+	fi
-+	rm -rf wiki_tmp
-+}
-+
-+# wiki_page_exist <page_name>
-+#
-+# Check the existence of the page <page_name> on the wiki and exits
-+# with error if it is absent from it.
-+wiki_page_exist () {
-+	mkdir -p wiki_tmp
-+	wiki_getpage "$1" wiki_tmp
-+	page_name=$(printf "%s\n" "$1" | sed "s/\//%2F/g")
-+	if test -f wiki_tmp/"$page_name".mw ; then
-+		rm -rf wiki_tmp
-+	else
-+		rm -rf wiki_tmp
-+		error "test failed: file $1 not found on wiki"
-+	fi
-+}
-+
-+# wiki_getallpagename
-+#
-+# Fetch the name of each page on the wiki.
-+wiki_getallpagename () {
-+	$CURR_DIR/test-gitmw.pl getallpagename
-+}
-+
-+# wiki_getallpagecategory <category>
-+#
-+# Fetch the name of each page belonging to <category> on the wiki.
-+wiki_getallpagecategory () {
-+	$CURR_DIR/test-gitmw.pl getallpagename "$@"
-+}
-+
-+# wiki_getallpage <dest_dir> [<category>]
-+#
-+# Fetch all the pages from the wiki and place them in the directory
-+# <dest_dir>.
-+# If <category> is define, then wiki_getallpage fetch the pages included
-+# in <category>.
-+wiki_getallpage () {
-+	if test -z "$2";
-+	then
-+		wiki_getallpagename
-+	else
-+		wiki_getallpagecategory "$2"
-+	fi
-+	mkdir -p "$1"
-+	while read -r line; do
-+		wiki_getpage "$line" $1;
-+	done < all.txt
-+}
-+
- # ================= Install part =================
- 
- error () {
-diff --git a/contrib/mw-to-git/t/test-gitmw.pl b/contrib/mw-to-git/t/test-gitmw.pl
+diff --git a/contrib/mw-to-git/t/t9360-mw-to-git-clone.sh b/contrib/mw-to-git/t/t9360-mw-to-git-clone.sh
 new file mode 100755
-index 0000000..e6c4adf
+index 0000000..4ab46f2
 --- /dev/null
-+++ b/contrib/mw-to-git/t/test-gitmw.pl
-@@ -0,0 +1,209 @@
-+#!/usr/bin/perl -w -s
++++ b/contrib/mw-to-git/t/t9360-mw-to-git-clone.sh
+@@ -0,0 +1,250 @@
++#!/bin/sh
++#
 +# Copyright (C) 2012
 +#     Charles Roussel <charles.roussel@ensimag.imag.fr>
 +#     Simon Cathebras <simon.cathebras@ensimag.imag.fr>
 +#     Julien Khayat <julien.khayat@ensimag.imag.fr>
 +#     Guillaume Sasdy <guillaume.sasdy@ensimag.imag.fr>
 +#     Simon Perrat <simon.perrat@ensimag.imag.fr>
++#
 +# License: GPL v2 or later
 +
-+# Usage:
-+#       ./test-gitmw.pl <command> [argument]*
-+# Execute in terminal using the name of the function to call as first
-+# parameter, and the function's arguments as following parameters
-+#
-+# Example:
-+#     ./test-gitmw.pl "get_page" foo .
-+# will call <wiki_getpage> with arguments <foo> and <.>
-+#
-+# Available functions are:
-+#     "get_page"
-+#     "delete_page"
-+#     "edit_page"
-+#     "getallpagename"
 +
-+use MediaWiki::API;
-+use Getopt::Long;
-+use encoding 'utf8';
-+use DateTime::Format::ISO8601;
-+use open ':encoding(utf8)';
-+use constant SLASH_REPLACEMENT => "%2F";
++test_description='Test the Git Mediawiki remote helper: git clone'
 +
-+#Parsing of the config file
-+
-+my $configfile = "$ENV{'CURR_DIR'}/test.config";
-+my %config;
-+open my $CONFIG, "<",  $configfile or die "can't open $configfile: $!";
-+while (<$CONFIG>)
-+{
-+        chomp;
-+        s/#.*//;
-+        s/^\s+//;
-+        s/\s+$//;
-+        next unless length;
-+        my ($key, $value) = split (/\s*=\s*/,$_, 2);
-+        $config{$key} = $value;
-+	last if ($key eq 'LIGHTTPD' and $value eq 'false');
-+	last if ($key eq 'PORT');
-+}
-+close $CONFIG or die "can't close $configfile: $!";
-+
-+my $wiki_address = "http://$config{'SERVER_ADDR'}".":"."$config{'PORT'}";
-+my $wiki_url = "$wiki_address/$config{'WIKI_DIR_NAME'}/api.php";
-+my $wiki_admin = "$config{'WIKI_ADMIN'}";
-+my $wiki_admin_pass = "$config{'WIKI_PASSW'}";
-+my $mw = MediaWiki::API->new;
-+$mw->{config}->{api_url} = $wiki_url;
++. ./test-gitmw-lib.sh
++. $TEST_DIRECTORY/test-lib.sh
 +
 +
-+# wiki_login <name> <password>
-+#
-+# Logs the user with <name> and <password> in the global variable
-+# of the mediawiki $mw
-+sub wiki_login {
-+	$mw->login( { lgname => "$_[0]",lgpassword => "$_[1]" } )
-+	|| die "getpage: login failed";
-+}
++test_check_precond
 +
-+# wiki_getpage <wiki_page> <dest_path>
-+#
-+# fetch a page <wiki_page> from the wiki referenced in the global variable
-+# $mw and copies its content in directory dest_path
-+sub wiki_getpage {
-+	my $pagename = $_[0];
-+	my $destdir = $_[1];
 +
-+	my $page = $mw->get_page( { title => $pagename } );
-+	if (!defined($page)) {
-+		die "getpage: wiki does not exist";
-+	}
++test_expect_success 'Git clone creates the git log expected with one file' '
++	wiki_reset &&
++	wiki_editpage foo "this is not important" false -c cat -s "this must be the same" &&
++	git clone mediawiki::http://'"$SERVER_ADDR:$PORT/$WIKI_DIR_NAME"' mw_dir_1 &&
++	(
++		cd mw_dir_1 &&
++		git log --format=%s HEAD^..HEAD >log.tmp
++	) &&
++	echo "this must be the same" >msg.tmp &&
++	diff -b mw_dir_1/log.tmp msg.tmp
++'
 +
-+	my $content = $page->{'*'};
-+	if (!defined($content)) {
-+		die "getpage: page does not exist";
-+	}
 +
-+	$pagename=$page->{'title'};
-+	# Replace spaces by underscore in the page name
-+	$pagename =~ s/ /_/g;
-+	$pagename =~ s/\//%2F/g;
-+	open(my $file, ">$destdir/$pagename.mw");
-+	print $file "$content";
-+	close ($file);
++test_expect_success 'Git clone creates the git log expected with multiple files' '
++	wiki_reset &&
++	wiki_editpage daddy "this is not important" false -s="this must be the same" &&
++	wiki_editpage daddy "neither is this" true -s="this must also be the same" &&
++	wiki_editpage daddy "neither is this" true -s="same same same" &&
++	wiki_editpage dj "dont care" false -s="identical" &&
++	wiki_editpage dj "dont care either" true -s="identical too" &&
++	git clone mediawiki::http://'"$SERVER_ADDR:$PORT/$WIKI_DIR_NAME"' mw_dir_2 &&
++	(
++		cd mw_dir_2 &&
++		git log --format=%s Daddy.mw  >logDaddy.tmp &&
++		git log --format=%s Dj.mw >logDj.tmp
++	) &&
++	echo "same same same" >msgDaddy.tmp &&
++	echo "this must also be the same" >>msgDaddy.tmp &&
++	echo "this must be the same" >>msgDaddy.tmp &&
++	echo "identical too" >msgDj.tmp &&
++	echo "identical" >>msgDj.tmp &&
++	diff -b mw_dir_2/logDaddy.tmp msgDaddy.tmp &&
++	diff -b mw_dir_2/logDj.tmp msgDj.tmp
++'
 +
-+}
 +
-+# wiki_delete_page <page_name>
-+#
-+# delete the page with name <page_name> from the wiki referenced
-+# in the global variable $mw
-+sub wiki_delete_page {
-+	my $pagename = $_[0];
++test_expect_success 'Git clone creates only Main_Page.mw with an empty wiki' '
++	wiki_reset &&
++	git clone mediawiki::http://'"$SERVER_ADDR:$PORT/$WIKI_DIR_NAME"' mw_dir_3 &&
++	test_contains_N_files mw_dir_3 1 &&
++	test -e mw_dir_3/Main_Page.mw
++'
 +
-+	my $exist=$mw->get_page({title => $pagename});
++test_expect_success 'Git clone does not fetch a deleted page' '
++	wiki_reset &&
++	wiki_editpage foo "this page must be deleted before the clone" false &&
++	wiki_delete_page foo &&
++	git clone mediawiki::http://'"$SERVER_ADDR:$PORT/$WIKI_DIR_NAME"' mw_dir_4 &&
++	test_contains_N_files mw_dir_4 1 &&
++	test -e mw_dir_4/Main_Page.mw &&
++	test ! -e mw_dir_4/Foo.mw
++'
 +
-+	if (defined($exist->{'*'})){
-+		$mw->edit({ action => 'delete',
-+				title => $pagename})
-+		|| die $mw->{error}->{code} . ": " . $mw->{error}->{details};
-+	} else {
-+		die "no page with such name found: $pagename\n";
-+	}
-+}
++test_expect_success 'Git clone works with page added' '
++	wiki_reset &&
++	wiki_editpage foo " I will be cloned" false &&
++	wiki_editpage bar "I will be cloned" false &&
++	git clone mediawiki::http://'"$SERVER_ADDR:$PORT/$WIKI_DIR_NAME"' mw_dir_5 &&
++	wiki_getallpage ref_page_5 &&
++	test_diff_directories mw_dir_5 ref_page_5 &&
++	wiki_delete_page foo &&
++	wiki_delete_page bar
++'
 +
-+# wiki_editpage <wiki_page> <wiki_content> <wiki_append> [-c=<category>] [-s=<summary>]
-+#
-+# Edit a page named <wiki_page> with content <wiki_content> on the wiki
-+# referenced with the global variable $mw
-+# If <wiki_append> == true : append <wiki_content> at the end of the actual
-+# content of the page <wiki_page>
-+# If <wik_page> doesn't exist, that page is created with the <wiki_content>
-+sub wiki_editpage {
-+	my $wiki_page = $_[0];
-+	my $wiki_content = $_[1];
-+	my $wiki_append = $_[2];
-+	my $summary = "";
-+	my ($summ, $cat) = ();
-+	GetOptions('s=s' => \$summ, 'c=s' => \$cat);
++test_expect_success 'Git clone works with an edited page ' '
++	wiki_reset &&
++	wiki_editpage foo "this page will be edited" \
++		false -s "first edition of page foo"&&
++	wiki_editpage foo "this page has been edited and must be on the clone " true &&
++	git clone mediawiki::http://'"$SERVER_ADDR:$PORT/$WIKI_DIR_NAME"' mw_dir_6 &&
++	test -e mw_dir_6/Foo.mw &&
++	test -e mw_dir_6/Main_Page.mw &&
++	wiki_getallpage mw_dir_6/page_ref_6 &&
++	test_diff_directories mw_dir_6 mw_dir_6/page_ref_6 &&
++	(
++		cd mw_dir_6 &&
++		git log --format=%s HEAD^ Foo.mw > ../Foo.log
++	) &&
++	echo "first edition of page foo" > FooExpect.log &&
++	diff FooExpect.log Foo.log
++'
 +
-+	my $append = 0;
-+	if (defined($wiki_append) && $wiki_append eq 'true') {
-+		$append=1;
-+	}
 +
-+	my $previous_text ="";
++test_expect_success 'Git clone works with several pages and some deleted ' '
++	wiki_reset &&
++	wiki_editpage foo "this page will not be deleted" false &&
++	wiki_editpage bar "I must not be erased" false &&
++	wiki_editpage namnam "I will not be there at the end" false &&
++	wiki_editpage nyancat "nyan nyan nyan delete me" false &&
++	wiki_delete_page namnam &&
++	wiki_delete_page nyancat &&
++	git clone mediawiki::http://'"$SERVER_ADDR:$PORT/$WIKI_DIR_NAME"' mw_dir_7 &&
++	test -e mw_dir_7/Foo.mw &&
++	test -e mw_dir_7/Bar.mw &&
++	test ! -e mw_dir_7/Namnam.mw &&
++	test ! -e mw_dir_7/Nyancat.mw &&
++	wiki_getallpage mw_dir_7/page_ref_7 &&
++	test_diff_directories mw_dir_7 mw_dir_7/page_ref_7
++'
 +
-+	if ($append) {
-+		my $ref = $mw->get_page( { title => $wiki_page } );
-+		$previous_text = $ref->{'*'};
-+	}
 +
-+	my $text = $wiki_content;
-+	if (defined($previous_text)) {
-+		$text="$previous_text$text";
-+	}
++test_expect_success 'Git clone works with one specific page cloned ' '
++	wiki_reset &&
++	wiki_editpage foo "I will not be cloned" false &&
++	wiki_editpage bar "Do not clone me" false &&
++	wiki_editpage namnam "I will be cloned :)" false  -s="this log must stay" &&
++	wiki_editpage nyancat "nyan nyan nyan you cant clone me" false &&
++	git clone -c remote.origin.pages=namnam mediawiki::http://'"$SERVER_ADDR:$PORT/$WIKI_DIR_NAME"' mw_dir_8 &&
++	test_contains_N_files mw_dir_8 1 &&
++	test -e mw_dir_8/Namnam.mw &&
++	test ! -e mw_dir_8/Main_Page.mw &&
++	(
++		cd mw_dir_8 &&
++		echo "this log must stay" >msg.tmp &&
++		git log --format=%s >log.tmp &&
++		diff -b msg.tmp log.tmp
++	) &&
++	wiki_check_content mw_dir_8/Namnam.mw Namnam
++'
 +
-+	# Eventually, add this page to a category.
-+	if (defined($cat)) {
-+		my $category_name="[[Category:$cat]]";
-+		$text="$text\n $category_name";
-+	}
-+	if(defined($summ)){
-+		$summary=$summ;
-+	}
++test_expect_success 'Git clone works with multiple specific page cloned ' '
++	wiki_reset &&
++	wiki_editpage foo "I will be there" false &&
++	wiki_editpage bar "I will not disapear" false &&
++	wiki_editpage namnam "I be erased" false &&
++	wiki_editpage nyancat "nyan nyan nyan you will not erase me" false &&
++	wiki_delete_page namnam &&
++	git clone -c remote.origin.pages='"'foo bar nyancat namnam'"' mediawiki::http://'"$SERVER_ADDR:$PORT/$WIKI_DIR_NAME"' mw_dir_9 &&
++	test_contains_N_files mw_dir_9 3 &&
++	test ! -e mw_dir_9/Namnam.mw &&
++	test -e mw_dir_9/Foo.mw &&
++	test -e mw_dir_9/Nyancat.mw &&
++	test -e mw_dir_9/Bar.mw &&
++	wiki_check_content mw_dir_9/Foo.mw Foo &&
++	wiki_check_content mw_dir_9/Bar.mw Bar &&
++	wiki_check_content mw_dir_9/Nyancat.mw Nyancat
++'
 +
-+	$mw->edit( { action => 'edit', title => $wiki_page, summary => $summary, text => "$text"} );
-+}
++test_expect_success 'Mediawiki-clone of several specific pages on wiki' '
++	wiki_reset &&
++	wiki_editpage foo "foo 1" false &&
++	wiki_editpage bar "bar 1" false &&
++	wiki_editpage dummy "dummy 1" false &&
++	wiki_editpage cloned_1 "cloned_1 1" false &&
++	wiki_editpage cloned_2 "cloned_2 2" false &&
++	wiki_editpage cloned_3 "cloned_3 3" false &&
++	mkdir -p ref_page_10 &&
++	wiki_getpage cloned_1 ref_page_10 &&
++	wiki_getpage cloned_2 ref_page_10 &&
++	wiki_getpage cloned_3 ref_page_10 &&
++	git clone -c remote.origin.pages="cloned_1 cloned_2 cloned_3" mediawiki::http://'"$SERVER_ADDR:$PORT/$WIKI_DIR_NAME"' mw_dir_10 &&
++	test_diff_directories mw_dir_10 ref_page_10
++'
 +
-+# wiki_getallpagename [<category>]
-+#
-+# Fetch all pages of the wiki referenced by the global variable $mw
-+# and print the names of each one in the file all.txt with a new line
-+# ("\n") between these.
-+# If the argument <category> is defined, then this function get only the pages
-+# belonging to <category>.
-+sub wiki_getallpagename {
-+	# fetch the pages of the wiki
-+	if (defined($_[0])) {
-+		my $mw_pages = $mw->list ( { action => 'query',
-+				list => 'categorymembers',
-+				cmtitle => "Category:$_[0]",
-+				cmnamespace => 0,
-+				cmlimit=> 500 },
-+		)
-+		|| die $mw->{error}->{code}.": ".$mw->{error}->{details};
-+		open(my $file, ">all.txt");
-+		foreach my $page (@{$mw_pages}) {
-+			print $file "$page->{title}\n";
-+		}
-+		close ($file);
++test_expect_success 'Git clone works with the shallow option' '
++	wiki_reset &&
++	wiki_editpage foo "1st revision, should be cloned" false &&
++	wiki_editpage bar "1st revision, should be cloned" false &&
++	wiki_editpage nyan "1st revision, should not be cloned" false &&
++	wiki_editpage nyan "2nd revision, should be cloned" false &&
++	git -c remote.origin.shallow=true clone mediawiki::http://'"$SERVER_ADDR:$PORT/$WIKI_DIR_NAME"' mw_dir_11 &&
++	test_contains_N_files mw_dir_11 4 &&
++	test -e mw_dir_11/Nyan.mw &&
++	test -e mw_dir_11/Foo.mw &&
++	test -e mw_dir_11/Bar.mw &&
++	test -e mw_dir_11/Main_Page.mw &&
++	(
++		cd mw_dir_11 &&
++		test `git log --oneline Nyan.mw | wc -l` -eq 1 &&
++		test `git log --oneline Foo.mw | wc -l` -eq 1 &&
++		test `git log --oneline Bar.mw | wc -l` -eq 1 &&
++		test `git log --oneline Main_Page.mw | wc -l ` -eq 1
++	) &&
++	wiki_check_content mw_dir_11/Nyan.mw Nyan &&
++	wiki_check_content mw_dir_11/Foo.mw Foo &&
++	wiki_check_content mw_dir_11/Bar.mw Bar &&
++	wiki_check_content mw_dir_11/Main_Page.mw Main_Page
++'
 +
-+	} else {
-+		my $mw_pages = $mw->list({
-+				action => 'query',
-+				list => 'allpages',
-+				aplimit => 500,
-+			})
-+		|| die $mw->{error}->{code}.": ".$mw->{error}->{details};
-+		open(my $file, ">all.txt");
-+		foreach my $page (@{$mw_pages}) {
-+			print $file "$page->{title}\n";
-+		}
-+		close ($file);
-+	}
-+}
++test_expect_success 'Git clone works with the shallow option with a delete page' '
++	wiki_reset &&
++	wiki_editpage foo "1st revision, will be deleted" false &&
++	wiki_editpage bar "1st revision, should be cloned" false &&
++	wiki_editpage nyan "1st revision, should not be cloned" false &&
++	wiki_editpage nyan "2nd revision, should be cloned" false &&
++	wiki_delete_page foo &&
++	git -c remote.origin.shallow=true clone mediawiki::http://'"$SERVER_ADDR:$PORT/$WIKI_DIR_NAME"' mw_dir_12 &&
++	test_contains_N_files mw_dir_12 3 &&
++	test -e mw_dir_12/Nyan.mw &&
++	test ! -e mw_dir_12/Foo.mw &&
++	test -e mw_dir_12/Bar.mw &&
++	test -e mw_dir_12/Main_Page.mw &&
++	(
++		cd mw_dir_12 &&
++		test `git log --oneline Nyan.mw | wc -l` -eq 1 &&
++		test `git log --oneline Bar.mw | wc -l` -eq 1 &&
++		test `git log --oneline Main_Page.mw | wc -l ` -eq 1
++	) &&
++	wiki_check_content mw_dir_12/Nyan.mw Nyan &&
++	wiki_check_content mw_dir_12/Bar.mw Bar &&
++	wiki_check_content mw_dir_12/Main_Page.mw Main_Page
++'
 +
-+# Main part of this script: parse the command line arguments
-+# and select which function to execute
-+my $fct_to_call = shift;
++test_expect_success 'Test of fetching a category' '
++	wiki_reset &&
++	wiki_editpage Foo "I will be cloned" false -c=Category &&
++	wiki_editpage Bar "Meet me on the repository" false -c=Category &&
++	wiki_editpage Dummy "I will not come" false &&
++	wiki_editpage BarWrong "I will stay online only" false -c=NotCategory &&
++	git clone -c remote.origin.categories="Category" mediawiki::http://'"$SERVER_ADDR:$PORT/$WIKI_DIR_NAME"' mw_dir_13 &&
++	wiki_getallpage ref_page_13 Category &&
++	test_diff_directories mw_dir_13 ref_page_13
++'
 +
-+wiki_login($wiki_admin,$wiki_admin_pass);
++test_expect_success 'Test of resistance to modification of category on wiki for clone' '
++	wiki_reset &&
++	wiki_editpage Tobedeleted "this page will be deleted" false -c=Catone &&
++	wiki_editpage Tobeedited "this page will be modified" false -c=Catone &&
++	wiki_editpage Normalone "this page wont be modified and will be on git" false -c=Catone &&
++	wiki_editpage Notconsidered "this page will not appear on local" false &&
++	wiki_editpage Othercategory "this page will not appear on local" false -c=Cattwo &&
++	wiki_editpage Tobeedited "this page have been modified" true -c=Catone &&
++	wiki_delete_page Tobedeleted
++	git clone -c remote.origin.categories="Catone" mediawiki::http://'"$SERVER_ADDR:$PORT/$WIKI_DIR_NAME"' mw_dir_14 &&
++	wiki_getallpage ref_page_14 Catone &&
++	test_diff_directories mw_dir_14 ref_page_14
++'
 +
-+my %functions_to_call = qw(
-+    get_page       wiki_getpage
-+    delete_page    wiki_delete_page
-+    edit_page      wiki_editpage
-+    getallpagename wiki_getallpagename
-+);
-+die "$0 ERROR: wrong argument" unless exists $functions_to_call{$fct_to_call};
-+&{$functions_to_call{$fct_to_call}}(@ARGV);
++test_done
 -- 
 1.7.10.2.552.gaa3bb87
