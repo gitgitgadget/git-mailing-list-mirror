@@ -1,414 +1,106 @@
-From: Simon Cathebras <simon.cathebras@ensimag.imag.fr>
-Subject: =?UTF-8?q?=5BPATCHv5=205/5=5D=20Tests=20of=20UTF8=20character=20with=20git-remote-mediawiki?=
-Date: Wed, 13 Jun 2012 19:03:45 +0200
-Message-ID: <1339607025-22725-5-git-send-email-simon.cathebras@ensimag.imag.fr>
-References: <4FD8C71F.1070508@ensimag.imag.fr>
- <1339607025-22725-1-git-send-email-simon.cathebras@ensimag.imag.fr>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: What's cooking in git.git (Jun 2012, #01; Sun, 3)
+Date: Wed, 13 Jun 2012 10:19:54 -0700
+Message-ID: <7v8vfri0xx.fsf@alter.siamese.dyndns.org>
+References: <7vr4twudqm.fsf@alter.siamese.dyndns.org>
+ <CAMP44s0cQe3jdfzbJmFVoFS50Ho5hVPg9dpZx0KhG3sP_J8=_g@mail.gmail.com>
+ <7vbokwmifp.fsf@alter.siamese.dyndns.org>
+ <CAMP44s2VGLj8kRih-95A0VDq86WKWHF3EhLvz0etyHHtP27qLA@mail.gmail.com>
+ <7vmx4baaqc.fsf@alter.siamese.dyndns.org>
+ <CAMP44s2US+PoxfboZSML84GEvUwiHV4eQBOQSp6zhruT8xrKdg@mail.gmail.com>
+ <7v7gvdaogr.fsf@alter.siamese.dyndns.org>
+ <CAMP44s1SOOBHRD7=u78S0dyRMdY0Q=zzkULxoz72ZzBaGC8Fyg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: gitster@pobox.com, peff@peff.net,
-	Simon Cathebras <simon.cathebras@ensimag.imag.fr>,
-	Simon Perrat <simon.perrat@ensimag.imag.fr>,
-	Guillaume Sasdy <guillaume.sasdy@ensimag.imag.fr>,
-	Charles Roussel <charles.roussel@ensimag.imag.fr>,
-	Julien Khayat <julien.khayat@ensimag.imag.fr>,
-	Matthieu Moy <matthieu.moy@imag.fr>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jun 13 19:04:45 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jun 13 19:20:09 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Seqzm-0000e5-Lj
-	for gcvg-git-2@plane.gmane.org; Wed, 13 Jun 2012 19:04:39 +0200
+	id 1SerEf-0003Ye-W1
+	for gcvg-git-2@plane.gmane.org; Wed, 13 Jun 2012 19:20:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754631Ab2FMREQ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 13 Jun 2012 13:04:16 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:59001 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752624Ab2FMREM (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Jun 2012 13:04:12 -0400
-Received: from ensimag.imag.fr (ensimag.imag.fr [195.221.228.12])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id q5DGsetE028159
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 13 Jun 2012 18:54:41 +0200
-Received: from Hithlum.grenet.fr (ensibm [195.221.228.8])
-	by ensimag.imag.fr (8.13.8/8.13.8/ImagV2.1.r_ens) with ESMTP id q5DH3l9R014774;
-	Wed, 13 Jun 2012 19:03:51 +0200
-X-Mailer: git-send-email 1.7.10.2.552.gaa3bb87
-In-Reply-To: <1339607025-22725-1-git-send-email-simon.cathebras@ensimag.imag.fr>
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Wed, 13 Jun 2012 18:54:42 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: q5DGsetE028159
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: simon.cathebras@ensimag.imag.fr
-MailScanner-NULL-Check: 1340211285.93973@fOS99uemcLEab0HleNXB+Q
+	id S1754204Ab2FMRT5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Jun 2012 13:19:57 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:38318 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753719Ab2FMRT5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Jun 2012 13:19:57 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 222218097;
+	Wed, 13 Jun 2012 13:19:56 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=xtOAMFYPmAzcpPiOLJlCMxZ2Dk4=; b=sorNnF
+	KTsZsOiRhHAXq/nLVsJVITvhpSikIQAjql1Rm/Cg/V+3O5u92+lFJrfMQvly68kA
+	YSINahR5zpgbX/CiPKSLRuWC4H/2HquBoPj5bgUxhN0MBa+vtP/pFKgxMaAoiu9I
+	v9sChxc82D3DcCQY2Z2Jef8WmFxF/h+PxRVCI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=XdlFPoKo9Z4byujkTnMoRftpoAXdWtNW
+	1teX2GQaTfNTdzK4O+t3VgCfeu/3obHWMs1nc8LTfU0/wJBwydd9wr6QO8Aepo4n
+	Lt8Jfa7VU+GR2G1Db+G4SwQaDbbj3cD2uWb4jVJTdKGpsATEDXowISJiPrVnjrc7
+	iKc2oGBysvM=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 18F2D8096;
+	Wed, 13 Jun 2012 13:19:56 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 93CAB8095; Wed, 13 Jun 2012
+ 13:19:55 -0400 (EDT)
+In-Reply-To: <CAMP44s1SOOBHRD7=u78S0dyRMdY0Q=zzkULxoz72ZzBaGC8Fyg@mail.gmail.com> (Felipe
+ Contreras's message of "Wed, 13 Jun 2012 16:55:41 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: FEAC9F0A-B57B-11E1-9A89-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199906>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199907>
 
-This patch provides a sample of tests for git-remote-mediawiki's
-resistance, concerning utf8 special characters.
+Felipe Contreras <felipe.contreras@gmail.com> writes:
 
-Signed-off-by: Simon Cathebras <simon.cathebras@ensimag.imag.fr>
-Signed-off-by: Simon Perrat <simon.perrat@ensimag.imag.fr>
-Signed-off-by: Guillaume Sasdy <guillaume.sasdy@ensimag.imag.fr>
-Signed-off-by: Charles Roussel <charles.roussel@ensimag.imag.fr>
-Signed-off-by: Julien Khayat <julien.khayat@ensimag.imag.fr>
-Signed-off-by: Matthieu Moy <matthieu.moy@imag.fr>
----
- contrib/mw-to-git/t/t9362-mw-to-git-utf8.sh | 298 ++++++++++++++++++++=
-++++++++
- 1 file changed, 298 insertions(+)
- create mode 100755 contrib/mw-to-git/t/t9362-mw-to-git-utf8.sh
+> On Mon, Jun 11, 2012 at 4:54 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>> Felipe Contreras <felipe.contreras@gmail.com> writes:
+>>
+>>> You say I'm being irresponsible, I say you are being preoccupied by a
+>>> theoretical problem that will not occur, and would not cause any
+>>> problems if it does.
+>>
+>> See how the two implementations are different
+>
+> They are not.
+>
+> http://git.kernel.org/?p=git/git.git;a=blob;f=contrib/completion/git-completion.bash;h=13690eaecb4d8fafa67b79d33e804e6f8c64d742;hb=refs/heads/pu#l37
+>
+> http://git.kernel.org/?p=git/git.git;a=blob;f=contrib/completion/git-prompt.sh;h=29b1ec9eb1797e0f2c3c9f7067222432150ba85f;hb=refs/heads/pu#l54
+>
+> Where is the difference?
 
-diff --git a/contrib/mw-to-git/t/t9362-mw-to-git-utf8.sh b/contrib/mw-t=
-o-git/t/t9362-mw-to-git-utf8.sh
-new file mode 100755
-index 0000000..ee7cc9e
---- /dev/null
-+++ b/contrib/mw-to-git/t/t9362-mw-to-git-utf8.sh
-@@ -0,0 +1,298 @@
-+#!/bin/sh
-+#
-+# Copyright (C) 2012
-+#     Charles Roussel <charles.roussel@ensimag.imag.fr>
-+#     Simon Cathebras <simon.cathebras@ensimag.imag.fr>
-+#     Julien Khayat <julien.khayat@ensimag.imag.fr>
-+#     Guillaume Sasdy <guillaume.sasdy@ensimag.imag.fr>
-+#     Simon Perrat <simon.perrat@ensimag.imag.fr>
-+#
-+# License: GPL v2 or later
-+
-+# tests for git-remote-mediawiki
-+
-+test_description=3D'Test git-mediawiki with special characters in file=
-names'
-+
-+. ./test-gitmw-lib.sh
-+. $TEST_DIRECTORY/test-lib.sh
-+
-+
-+test_check_precond
-+
-+
-+test_expect_success 'Git clone works for a wiki with accents in the pa=
-ge names' '
-+	wiki_reset &&
-+	wiki_editpage f=C3=A9=C3=A9 "This page must be d=C3=A9l=C3=A9t=C3=A9d=
- before clone" false &&
-+	wiki_editpage k=C3=A8=C3=A8 "This page must be deleted before clone" =
-false &&
-+	wiki_editpage h=C3=A0=C3=A0 "This page must be deleted before clone" =
-false &&
-+	wiki_editpage k=C3=AE=C3=AE "This page must be deleted before clone" =
-false &&
-+	wiki_editpage foo "This page must be deleted before clone" false &&
-+	git clone mediawiki::http://'"$SERVER_ADDR:$PORT/$WIKI_DIR_NAME"' mw_=
-dir_1 &&
-+	wiki_getallpage ref_page_1 &&
-+	test_diff_directories mw_dir_1 ref_page_1
-+'
-+
-+
-+test_expect_success 'Git pull works with a wiki with accents in the pa=
-ges names' '
-+	wiki_reset &&
-+	wiki_editpage k=C3=AE=C3=AE "this page must be cloned" false &&
-+	wiki_editpage foo "this page must be cloned" false &&
-+	git clone mediawiki::http://'"$SERVER_ADDR:$PORT/$WIKI_DIR_NAME"' mw_=
-dir_2 &&
-+	wiki_editpage =C3=A9=C3=A0=C3=AE=C3=B4=C3=BB "This page must be pulle=
-d" false &&
-+	(
-+		cd mw_dir_2 &&
-+		git pull
-+	) &&
-+	wiki_getallpage ref_page_2 &&
-+	test_diff_directories mw_dir_2 ref_page_2
-+'
-+
-+# 3
-+test_expect_success 'Cloning a chosen page works with accents' '
-+	wiki_reset &&
-+	wiki_editpage k=C3=AE=C3=AE "this page must be cloned" false &&
-+	git clone -c remote.origin.pages=3Dk=C3=AE=C3=AE mediawiki::http://'"=
-$SERVER_ADDR:$PORT/$WIKI_DIR_NAME"' mw_dir_3 &&
-+	wiki_check_content mw_dir_3/K=C3=AE=C3=AE.mw K=C3=AE=C3=AE &&
-+	test -e mw_dir_3/K=C3=AE=C3=AE.mw &&
-+	rm -rf mw_dir_3
-+'
-+
-+
-+test_expect_success 'The shallow option works with accents' '
-+	wiki_reset &&
-+	wiki_editpage n=C3=A9o=C3=A0 "1st revision, should not be cloned" fal=
-se &&
-+	wiki_editpage n=C3=A9o=C3=A0 "2nd revision, should be cloned" false &=
-&
-+	git -c remote.origin.shallow=3Dtrue clone mediawiki::http://'"$SERVER=
-_ADDR:$PORT/$WIKI_DIR_NAME"' mw_dir_4 &&
-+	test_contains_N_files mw_dir_4 2 &&
-+	test -e mw_dir_4/N=C3=A9o=C3=A0.mw &&
-+	test -e mw_dir_4/Main_Page.mw &&
-+	(
-+		cd mw_dir_4 &&
-+		test `git log --oneline N=C3=A9o=C3=A0.mw | wc -l` -eq 1 &&
-+		test `git log --oneline Main_Page.mw | wc -l ` -eq 1
-+	) &&
-+	wiki_check_content mw_dir_4/N=C3=A9o=C3=A0.mw N=C3=A9o=C3=A0 &&
-+	wiki_check_content mw_dir_4/Main_Page.mw Main_Page
-+'
-+
-+
-+test_expect_success 'Cloning works when page name first letter has an =
-accent' '
-+	wiki_reset &&
-+	wiki_editpage =C3=AE=C3=AE "this page must be cloned" false &&
-+	git clone -c remote.origin.pages=3D=C3=AE=C3=AE mediawiki::http://'"$=
-SERVER_ADDR:$PORT/$WIKI_DIR_NAME"' mw_dir_5 &&
-+	test -e mw_dir_5/=C3=8E=C3=AE.mw &&
-+	wiki_check_content mw_dir_5/=C3=8E=C3=AE.mw =C3=8E=C3=AE
-+'
-+
-+
-+test_expect_success 'Git push works with a wiki with accents' '
-+	wiki_reset &&
-+	wiki_editpage f=C3=A9=C3=A9 "lots of accents : =C3=A9=C3=A8=C3=A0=C3=96=
-" false &&
-+	wiki_editpage foo "this page must be cloned" false &&
-+	git clone mediawiki::http://'"$SERVER_ADDR:$PORT/$WIKI_DIR_NAME"' mw_=
-dir_6 &&
-+	(
-+		cd mw_dir_6 &&
-+		echo "A wild P=C3=AEk=C3=A4ch=C3=BB appears on the wiki" >P=C3=AEk=C3=
-=A4ch=C3=BB.mw &&
-+		git add P=C3=AEk=C3=A4ch=C3=BB.mw &&
-+		git commit -m "A new page appears" &&
-+		git push
-+	) &&
-+	wiki_getallpage ref_page_6 &&
-+	test_diff_directories mw_dir_6 ref_page_6
-+'
-+
-+test_expect_success 'Git clone works with accentsand spaces' '
-+	wiki_reset &&
-+	wiki_editpage "=C3=A9 =C3=A0 =C3=AE" "this page must be d=C3=A9l=C3=A9=
-t=C3=A9 before the clone" false &&
-+	git clone mediawiki::http://'"$SERVER_ADDR:$PORT/$WIKI_DIR_NAME"' mw_=
-dir_7 &&
-+	wiki_getallpage ref_page_7 &&
-+	test_diff_directories mw_dir_7 ref_page_7
-+'
-+
-+test_expect_success 'character $ in page name (mw -> git)' '
-+	wiki_reset &&
-+	wiki_editpage file_\$_foo "expect to be called file_$_foo" false &&
-+	git clone mediawiki::http://'"$SERVER_ADDR:$PORT/$WIKI_DIR_NAME"' mw_=
-dir_8 &&
-+	test -f mw_dir_8/File_\$_foo.mw &&
-+	wiki_getallpage ref_page_8 &&
-+	test_diff_directories mw_dir_8 ref_page_8
-+'
-+
-+
-+
-+test_expect_success 'character $ in file name (git -> mw) ' '
-+	wiki_reset &&
-+	git clone mediawiki::http://'"$SERVER_ADDR:$PORT/$WIKI_DIR_NAME"' mw_=
-dir_9 &&
-+	(
-+		cd mw_dir_9 &&
-+		echo "this file is called File_\$_foo.mw" >File_\$_foo.mw &&
-+		git add . &&
-+		git commit -am "file File_\$_foo.mw" &&
-+		git pull &&
-+		git push
-+	) &&
-+	wiki_getallpage ref_page_9 &&
-+	test_diff_directories mw_dir_9 ref_page_9
-+'
-+
-+
-+test_expect_failure 'capital at the begining of file names' '
-+	wiki_reset &&
-+	git clone mediawiki::http://'"$SERVER_ADDR:$PORT/$WIKI_DIR_NAME"' mw_=
-dir_10 &&
-+	(
-+		cd mw_dir_10 &&
-+		echo "my new file foo" >foo.mw &&
-+		echo "my new file Foo... Finger crossed" >Foo.mw &&
-+		git add . &&
-+		git commit -am "file foo.mw" &&
-+		git pull &&
-+		git push
-+	) &&
-+	wiki_getallpage ref_page_10 &&
-+	test_diff_directories mw_dir_10 ref_page_10
-+'
-+
-+
-+test_expect_failure 'special character at the begining of file name fr=
-om mw to git' '
-+	wiki_reset &&
-+	git clone mediawiki::http://'"$SERVER_ADDR:$PORT/$WIKI_DIR_NAME"' mw_=
-dir_11 &&
-+	wiki_editpage {char_1 "expect to be renamed {char_1" false &&
-+	wiki_editpage [char_2 "expect to be renamed [char_2" false &&
-+	(
-+		cd mw_dir_11 &&
-+		git pull
-+	) &&
-+	test -f mw_dir_11/{char_1 &&
-+	test -f mw_dir_11/[char_2
-+'
-+
-+test_expect_success 'test of correct formating for file name from mw t=
-o git' '
-+	wiki_reset &&
-+	git clone mediawiki::http://'"$SERVER_ADDR:$PORT/$WIKI_DIR_NAME"' mw_=
-dir_12 &&
-+	wiki_editpage char_%_7b_1 "expect to be renamed char{_1" false &&
-+	wiki_editpage char_%_5b_2 "expect to be renamed char{_2" false &&
-+	(
-+		cd mw_dir_12 &&
-+		git pull
-+	) &&
-+	test -f mw_dir_12/Char\{_1.mw &&
-+	test -f mw_dir_12/Char\[_2.mw &&
-+	wiki_getallpage ref_page_12 &&
-+	mv ref_page_12/Char_%_7b_1.mw ref_page_12/Char\{_1.mw &&
-+	mv ref_page_12/Char_%_5b_2.mw ref_page_12/Char\[_2.mw &&
-+	test_diff_directories mw_dir_12 ref_page_12
-+'
-+
-+
-+test_expect_failure 'test of correct formating for file name begining =
-with special character' '
-+	wiki_reset &&
-+	git clone mediawiki::http://'"$SERVER_ADDR:$PORT/$WIKI_DIR_NAME"' mw_=
-dir_13 &&
-+	(
-+		cd mw_dir_13 &&
-+		echo "my new file {char_1" >\{char_1.mw &&
-+		echo "my new file [char_2" >\[char_2.mw &&
-+		git add . &&
-+		git commit -am "commiting some exotic file name..." &&
-+		git push &&
-+		git pull
-+	) &&
-+	wiki_getallpage ref_page_13 &&
-+	test -f ref_page_13/{char_1.mw &&
-+	test -f ref_page_13/[char_2.mw &&
-+	test_diff_directories mw_dir_13 ref_page_13
-+'
-+
-+
-+test_expect_success 'test of correct formating for file name from git =
-to mw' '
-+	wiki_reset &&
-+	git clone mediawiki::http://'"$SERVER_ADDR:$PORT/$WIKI_DIR_NAME"' mw_=
-dir_14 &&
-+	(
-+		cd mw_dir_14 &&
-+		echo "my new file char{_1" >Char\{_1.mw &&
-+		echo "my new file char[_2" >Char\[_2.mw &&
-+		git add . &&
-+		git commit -m "commiting some exotic file name..." &&
-+		git push
-+	) &&
-+	wiki_getallpage ref_page_14 &&
-+	mv mw_dir_14/Char\{_1.mw mw_dir_14/Char_%_7b_1.mw &&
-+	mv mw_dir_14/Char\[_2.mw mw_dir_14/Char_%_5b_2.mw &&
-+	test_diff_directories mw_dir_14 ref_page_14
-+'
-+
-+
-+test_expect_success 'git clone with /' '
-+	wiki_reset &&
-+	wiki_editpage \/fo\/o "this is not important" false -c=3DDeleted &&
-+	git clone mediawiki::http://'"$SERVER_ADDR:$PORT/$WIKI_DIR_NAME"' mw_=
-dir_15 &&
-+	test -f mw_dir_15/%2Ffo%2Fo.mw &&
-+	wiki_check_content mw_dir_15/%2Ffo%2Fo.mw \/fo\/o
-+'
-+
-+
-+test_expect_success 'git push with /' '
-+	wiki_reset &&
-+	git clone mediawiki::http://'"$SERVER_ADDR:$PORT/$WIKI_DIR_NAME"' mw_=
-dir_16 &&
-+	echo "I will be on the wiki" >mw_dir_16/%2Ffo%2Fo.mw &&
-+	(
-+		cd mw_dir_16 &&
-+		git add %2Ffo%2Fo.mw &&
-+		git commit -m " %2Ffo%2Fo added" &&
-+		git push
-+	) &&
-+	wiki_page_exist \/fo\/o &&
-+	wiki_check_content mw_dir_16/%2Ffo%2Fo.mw \/fo\/o
-+
-+'
-+
-+
-+test_expect_success 'git clone with \' '
-+	wiki_reset &&
-+	wiki_editpage \\ko\\o "this is not important" false -c=3DDeleted &&
-+	git clone mediawiki::http://'"$SERVER_ADDR:$PORT/$WIKI_DIR_NAME"' mw_=
-dir_17 &&
-+	test -f mw_dir_17/\\ko\\o.mw &&
-+	wiki_check_content mw_dir_17/\\ko\\o.mw \\ko\\o
-+'
-+
-+
-+test_expect_success 'git push with \' '
-+	wiki_reset &&
-+	git clone mediawiki::http://'"$SERVER_ADDR:$PORT/$WIKI_DIR_NAME"' mw_=
-dir_18 &&
-+	echo "I will be on the wiki" >mw_dir_18/\\ko\\o.mw &&
-+	(
-+		cd mw_dir_18 &&
-+		git add \\ko\\o.mw &&
-+		git commit -m " \\ko\\o added" &&
-+		git push
-+	)&&
-+	wiki_page_exist \\ko\\o &&
-+	wiki_check_content mw_dir_18/\\ko\\o.mw \\ko\\o
-+
-+'
-+
-+test_expect_success 'git clone with \ in format control' '
-+	wiki_reset &&
-+	wiki_editpage \\no\\o "this is not important" false &&
-+	git clone mediawiki::http://'"$SERVER_ADDR:$PORT/$WIKI_DIR_NAME"' mw_=
-dir_19 &&
-+	test -f mw_dir_19/\\no\\o.mw &&
-+	wiki_check_content mw_dir_19/\\no\\o.mw \\no\\o
-+'
-+
-+
-+test_expect_success 'git push with \ in format control' '
-+	wiki_reset &&
-+	git clone mediawiki::http://'"$SERVER_ADDR:$PORT/$WIKI_DIR_NAME"' mw_=
-dir_20 &&
-+	echo "I will be on the wiki" >mw_dir_20/\\fo\\o.mw &&
-+	(
-+		cd mw_dir_20 &&
-+		git add \\fo\\o.mw &&
-+		git commit -m " \\fo\\o added" &&
-+		git push
-+	)&&
-+	wiki_page_exist \\fo\\o &&
-+	wiki_check_content mw_dir_20/\\fo\\o.mw \\fo\\o
-+
-+'
-+
-+
-+test_done
---=20
-1.7.10.2.552.gaa3bb87
+Look at your patch that introduces the separate file af31a45
+(completion: split __git_ps1 into a separate script, 2012-05-22)
+instead.  The extra $GIT_DIR one in git-completion.sh bba88ea
+(completion: respect $GIT_DIR, 2012-05-09) is on another topic that
+is stalled and waiting for a reroll.
+
+And your message brings things back to my exact point. 
+
+Unlike the other topic, the topic fc/git-prompt-script we have been
+discussing is almost ready except for this nit.  If we make it
+graduate to 'master' without doing anything about the other commit,
+we will have two different versions from day one.
+
+And the worst part of the story is that you are not just placing the
+burden of noticing and having to worry about these things on other
+people (in this case, me), but are actively sabotaging the effort to
+make future mistakes less likely to happen by endlessly bitching and
+refusing to admit that there is a problem.  It seems that it is too
+difficult for you to admit that you were wrong and say "Yes there is
+a problem, and among the three approaches you suggested, this is the
+least intrusive one" or "Yes there is a problem, but I do not like
+any of the approaches you suggested, so I propose this alternative
+that is much less intrusive than any of them", and until that
+happens I do not see a point in talking with you at all.
