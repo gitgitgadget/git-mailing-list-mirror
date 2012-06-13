@@ -1,111 +1,66 @@
-From: =?utf-8?B?UmFmYcWCIE11xbx5xYJv?= <galtgendo@gmail.com>
-Subject: A slight inconvenience with 'git archive --format=tar'
-Date: Wed, 13 Jun 2012 16:47:58 +0200
-Message-ID: <20120613144758.GA2438@blackspire>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH] gitk: avoid Meta1-F5
+Date: Wed, 13 Jun 2012 17:00:30 +0200
+Message-ID: <CAMP44s34CAKbSKd=xKT_zS7sDOQCH-=9gXswdhmYhjFCTYPA8g@mail.gmail.com>
+References: <1333758578-9334-1-git-send-email-felipe.contreras@gmail.com>
+	<20120425034544.GA9660@bloggs.ozlabs.ibm.com>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary="7JfCtLOvnd9MIVvH"
-Content-Transfer-Encoding: 8bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jun 13 16:57:42 2012
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org,
+	"Daniel A. Steffen" <das@users.sourceforge.net>,
+	Alexander Gavrilov <angavrilov@gmail.com>
+To: Paul Mackerras <paulus@samba.org>
+X-From: git-owner@vger.kernel.org Wed Jun 13 17:00:48 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Sep0v-0007d5-Ia
-	for gcvg-git-2@plane.gmane.org; Wed, 13 Jun 2012 16:57:41 +0200
+	id 1Sep3u-000810-Nu
+	for gcvg-git-2@plane.gmane.org; Wed, 13 Jun 2012 17:00:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754587Ab2FMO51 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Jun 2012 10:57:27 -0400
-Received: from moh1-ve3.go2.pl ([193.17.41.134]:57228 "EHLO moh1-ve3.go2.pl"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754274Ab2FMO5Y (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Jun 2012 10:57:24 -0400
-X-Greylist: delayed 556 seconds by postgrey-1.27 at vger.kernel.org; Wed, 13 Jun 2012 10:57:23 EDT
-Received: from moh1-ve3.go2.pl (unknown [10.0.0.134])
-	by moh1-ve3.go2.pl (Postfix) with ESMTP id EAC759D83BC
-	for <git@vger.kernel.org>; Wed, 13 Jun 2012 16:48:02 +0200 (CEST)
-Received: from unknown (unknown [10.0.0.74])
-	by moh1-ve3.go2.pl (Postfix) with SMTP
-	for <git@vger.kernel.org>; Wed, 13 Jun 2012 16:48:02 +0200 (CEST)
-Received: from host-89-228-35-253.elk.mm.pl [89.228.35.253]
-	by poczta.o2.pl with ESMTP id xQMGfQ;
-	Wed, 13 Jun 2012 16:48:02 +0200
-Content-Disposition: inline
-User-Agent: Mutt/1.5.21 (2010-09-15)
-X-O2-Trust: 2, 62
-X-O2-SPF: neutral
+	id S1754483Ab2FMPAe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Jun 2012 11:00:34 -0400
+Received: from mail-lpp01m010-f46.google.com ([209.85.215.46]:38241 "EHLO
+	mail-lpp01m010-f46.google.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754447Ab2FMPAc (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 13 Jun 2012 11:00:32 -0400
+Received: by lahd3 with SMTP id d3so495152lah.19
+        for <git@vger.kernel.org>; Wed, 13 Jun 2012 08:00:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=PkXSZKBtBS6Syfa1/eUSeYmVco1P6SDUUhXksMa1zkU=;
+        b=UcXXYPjxbqyMOedq+wO217HnFKg/CSi5P95BYAnVaJAIjjfqPgEkTA7kVKIH5Ayo3g
+         U8jm8r0BPTunZhM2EjXurJ1IO2J6HMK2lw+Tc7ZLtn8bedQwuZcUoQrx52jBLOKU5X2y
+         BVTtQMkJcpchpPKrV87HATKl/F17AxGAI8qAzdFs3XK9ATlR/xRSDoUtLWCJubDLPerD
+         3wn6DmMGCJwV1zfFZwp0xvcgJpFxqt6c4buNqWyXybw6lSul2QtjPiVqoa7qngezQh63
+         LxSMbF2xM6a7Q8mbVg9DzaStbev2mya2LjIS0oW5EtZQPgvNQWAZnvvrxaX9wYMUmSZp
+         ZQVQ==
+Received: by 10.112.83.136 with SMTP id q8mr6336529lby.60.1339599631105; Wed,
+ 13 Jun 2012 08:00:31 -0700 (PDT)
+Received: by 10.112.107.65 with HTTP; Wed, 13 Jun 2012 08:00:30 -0700 (PDT)
+In-Reply-To: <20120425034544.GA9660@bloggs.ozlabs.ibm.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199894>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199895>
 
+On Wed, Apr 25, 2012 at 5:45 AM, Paul Mackerras <paulus@samba.org> wrote:
+> On Sat, Apr 07, 2012 at 03:29:38AM +0300, Felipe Contreras wrote:
+>> This is commonly mapped by window managers and what not. Use Shift-F5
+>> instead.
+>>
+>> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+>
+> Thanks, applied.
 
---7JfCtLOvnd9MIVvH
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Does this translate into some action? I still don't see this change in
+Junio's tree.
 
-I just stumbled upon this while checking a few mailing lists.
-I haven't found any mails about in in the archives yet, so I assume, that
-no mail have been written yet.
+Cheers.
 
-The problem is described here:
-http://sourceforge.net/projects/sevenzip/forums/forum/45798/topic/5322604
-
-Basically, while this is not a problem for GNU tar, the correct checksum
-should be computed using unsigned values.
-
-Attached trivial testcase shows the difference.
-
-Patch making the change shown in the testcase also attached.
-
-
---7JfCtLOvnd9MIVvH
-Content-Type: text/x-c; charset=utf-8
-Content-Disposition: attachment; filename="cksum-test.c"
-Content-Transfer-Encoding: 8bit
-
-#include <stdio.h>
-#include <string.h>
-
-static unsigned int ustar_header_chksum(const void *buffer, int sign)
-{
-  const char *p = (const char *)buffer;
-  unsigned int chksum = 0;
-  while (p < (const char *)buffer + strlen(buffer))
-  {
-    if (sign) chksum += *p++; else chksum += (unsigned char)*p++;
-  }
-  return chksum;
-}
-
-int main(int argc, char** argv)
-{
-const char* teststring = "żółte źrebię";
-printf("%u\n", ustar_header_chksum(teststring, 0));
-printf("%u\n", ustar_header_chksum(teststring, 1));
-return 0;
-}
---7JfCtLOvnd9MIVvH
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: attachment; filename="git-tar.patch"
-
---- archive-tar.c	2012-04-26 21:25:49.000000000 +0200
-+++ archive-tar.c	2012-06-13 16:43:59.220945967 +0200
-@@ -104,11 +104,11 @@ static unsigned int ustar_header_chksum(
- 	char *p = (char *)header;
- 	unsigned int chksum = 0;
- 	while (p < header->chksum)
--		chksum += *p++;
-+		chksum += (unsigned char)*p++;
- 	chksum += sizeof(header->chksum) * ' ';
- 	p += sizeof(header->chksum);
- 	while (p < (char *)header + sizeof(struct ustar_header))
--		chksum += *p++;
-+		chksum += (unsigned char)*p++;
- 	return chksum;
- }
- 
-
---7JfCtLOvnd9MIVvH--
+-- 
+Felipe Contreras
