@@ -1,126 +1,124 @@
 Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
-X-Spam-Level: 
+X-Spam-Level: **
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=0.4 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,LIST_MIRROR_BCC,RP_MATCHES_RCVD shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.0
-Received: (qmail 28750 invoked by uid 107); 31 Oct 2011 09:03:34 -0000
+X-Spam-Status: No, score=2.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INVALID_MSGID,MSGID_NOFQDN1,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+Received: (qmail 16313 invoked by uid 107); 14 Jun 2012 08:20:34 -0000
 Received: from vger.kernel.org (HELO vger.kernel.org) (209.132.180.67)
-    by peff.net (qpsmtpd/0.84) with ESMTP; Mon, 31 Oct 2011 05:03:31 -0400
+    by peff.net (qpsmtpd/0.84) with ESMTP; Thu, 14 Jun 2012 04:20:33 -0400
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932217Ab1JaI5j (ORCPT <rfc822;peff@peff.net>);
-	Mon, 31 Oct 2011 04:57:39 -0400
-Received: from fallback.mail.elte.hu ([157.181.151.13]:32806 "EHLO
-	fallback.mail.elte.hu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932119Ab1JaI5i (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 31 Oct 2011 04:57:38 -0400
-Received: from mx3.mail.elte.hu ([157.181.1.138])
-	by fallback.mail.elte.hu with esmtp (Exim)
-	id 1RKngX-0006Rr-5d
-	from <mingo@elte.hu>
-	for <git@vger.kernel.org>; Mon, 31 Oct 2011 09:57:37 +0100
-Received: from elvis.elte.hu ([157.181.1.14])
-	by mx3.mail.elte.hu with esmtp (Exim)
-	id 1RKnXM-0003Cu-6H
-	from <mingo@elte.hu>
-	for <git@vger.kernel.org>; Mon, 31 Oct 2011 09:48:08 +0100
-Received: by elvis.elte.hu (Postfix, from userid 1004)
-	id D37E53E2512; Mon, 31 Oct 2011 09:48:01 +0100 (CET)
-Date:	Mon, 31 Oct 2011 09:40:48 +0100
-From:	Ingo Molnar <mingo@elte.hu>
-To:	Linus Torvalds <torvalds@linux-foundation.org>
-Cc:	James Bottomley <James.Bottomley@hansenpartnership.com>,
-	Jeff Garzik <jeff@garzik.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	linux-ide@vger.kernel.org, LKML <linux-kernel@vger.kernel.org>
-Subject: Re: [git patches] libata updates, GPG signed (but see admin notes)
-Message-ID: <20111031084048.GA11807@elte.hu>
-References: <20111026202235.GA20928@havoc.gtf.org>
- <1319969101.5215.20.camel@dabdike>
- <CA+55aFx1NGWfNJAKDTvZfsHDDKiEtS4t4RydSgHurBeyGPyhXg@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CA+55aFx1NGWfNJAKDTvZfsHDDKiEtS4t4RydSgHurBeyGPyhXg@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-Received-SPF: neutral (mx3: 157.181.1.14 is neither permitted nor denied by domain of elte.hu) client-ip=157.181.1.14; envelope-from=mingo@elte.hu; helo=elvis.elte.hu;
-X-ELTE-SpamScore: -2.0
-X-ELTE-SpamLevel: 
-X-ELTE-SpamCheck: no
-X-ELTE-SpamVersion: ELTE 2.0 
-X-ELTE-SpamCheck-Details: score=-2.0 required=5.9 tests=BAYES_00 autolearn=no SpamAssassin version=3.3.1
-	-2.0 BAYES_00               BODY: Bayes spam probability is 0 to 1%
-	[score: 0.0000]
+	id S1755090Ab2FNIUZ (ORCPT <rfc822;peff@peff.net>);
+	Thu, 14 Jun 2012 04:20:25 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:36293 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754912Ab2FNIUW (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Jun 2012 04:20:22 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id q5E8BGeY021444
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Thu, 14 Jun 2012 10:11:16 +0200
+Received: from bauges.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.72)
+	(envelope-from <moy@imag.fr>)
+	id 1Sf5Ht-0006XW-R6; Thu, 14 Jun 2012 10:20:17 +0200
+Received: from moy by bauges.imag.fr with local (Exim 4.72)
+	(envelope-from <moy@imag.fr>)
+	id 1Sf5Ht-0007rM-P8; Thu, 14 Jun 2012 10:20:17 +0200
+From:	y@imag.fr
+To:	git@vger.kernel.org, gitster@pobox.com
+Cc:	Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: [PATCH 2/2] fixup! 38388c8 reword message when splitting a commit.
+Date:	Thu, 14 Jun 2012 10:20:14 +0200
+Message-Id: <1339662014-30173-2-git-send-email-y>
+X-Mailer: git-send-email 1.7.11.rc0.57.g84a04c7
+In-Reply-To: <1339662014-30173-1-git-send-email-y>
+References: <7vk3zag6jg.fsf@alter.siamese.dyndns.org>
+ <1339662014-30173-1-git-send-email-y>
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Thu, 14 Jun 2012 10:11:16 +0200 (CEST)
+X-IMAG-MailScanner-Information:	Please contact MI2S MIM  for more information
+X-MailScanner-ID: q5E8BGeY021444
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
+MailScanner-NULL-Check:	1340266276.86051@eyZGexNYU+8asfPNSxrdFw
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
 
-* Linus Torvalds <torvalds@linux-foundation.org> wrote:
+The "splitting a commit" is a sub-case of the "rebase" case, hence,
+mention rebase like this:
 
-> That said, even the "BEGIN PGP SIGNED MESSAGE" things are a massive 
-> pain in the butt. We need to automate this some sane way, both for 
-> the sender and for the recipient.
+  # You are currently splitting a commit during a rebase.
 
-The most practical form would be if Git supported such oneliner pull 
-requests:
+This makes the message consistant with "editing a commit":
 
- git pull git://foo.com bar.branch                           \
-  --pull-sha1 0acf00014bcfd71090c3b0d43c98e970108064e4       \
-  --gpg-by: "Ingo Molnar <mingo@kernel.org>"                 \
-  --gpg-sig: 8a6f134afd1d212fe21345
+  # You are currently editing a commit during a rebase.
 
-maintainers could just paste them into a shell and it would abort if 
-it's not trusted. The maintainer verifies the visible, 'Ingo Molnar' 
-bit. The 8a6f134afd1d212fe21345 is a signed-by-Ingo-Molnar version of 
-this content:
+Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+---
+ t/t7512-status-help.sh | 8 ++++----
+ wt-status.c            | 2 +-
+ 2 files changed, 5 insertions(+), 5 deletions(-)
 
-    git://foo.com bar.branch 0acf00014bcfd71090c3b0d43c98e970108064e4
+diff --git a/t/t7512-status-help.sh b/t/t7512-status-help.sh
+index 3ce384a..b3f6eb9 100755
+--- a/t/t7512-status-help.sh
++++ b/t/t7512-status-help.sh
+@@ -210,7 +210,7 @@ test_expect_success 'status when splitting a commit' '
+ 	git reset HEAD^ &&
+ 	cat >expected <<-\EOF &&
+ 	# Not currently on any branch.
+-	# You are currently splitting a commit.
++	# You are currently splitting a commit during a rebase.
+ 	#   (Once your working directory is clean, run "git rebase --continue")
+ 	#
+ 	# Changes not staged for commit:
+@@ -290,7 +290,7 @@ test_expect_success 'status: (continue first edit) second edit and split' '
+ 	git reset HEAD^ &&
+ 	cat >expected <<-\EOF &&
+ 	# Not currently on any branch.
+-	# You are currently splitting a commit.
++	# You are currently splitting a commit during a rebase.
+ 	#   (Once your working directory is clean, run "git rebase --continue")
+ 	#
+ 	# Changes not staged for commit:
+@@ -359,7 +359,7 @@ test_expect_success 'status: (amend first edit) second edit and split' '
+ 	git reset HEAD^ &&
+ 	cat >expected <<-\EOF &&
+ 	# Not currently on any branch.
+-	# You are currently splitting a commit.
++	# You are currently splitting a commit during a rebase.
+ 	#   (Once your working directory is clean, run "git rebase --continue")
+ 	#
+ 	# Changes not staged for commit:
+@@ -433,7 +433,7 @@ test_expect_success 'status: (split first edit) second edit and split' '
+ 	git reset HEAD^ &&
+ 	cat >expected <<-\EOF &&
+ 	# Not currently on any branch.
+-	# You are currently splitting a commit.
++	# You are currently splitting a commit during a rebase.
+ 	#   (Once your working directory is clean, run "git rebase --continue")
+ 	#
+ 	# Changes not staged for commit:
+diff --git a/wt-status.c b/wt-status.c
+index e65716d..c749267 100644
+--- a/wt-status.c
++++ b/wt-status.c
+@@ -886,7 +886,7 @@ static void show_rebase_in_progress(struct wt_status *s,
+ 			status_printf_ln(s, color,
+ 				_("  (all conflicts fixed: run \"git rebase --continue\")"));
+ 	} else if (split_commit_in_progress(s)) {
+-		status_printf_ln(s, color, _("You are currently splitting a commit."));
++		status_printf_ln(s, color, _("You are currently splitting a commit during a rebase."));
+ 		if (advice_status_hints)
+ 			status_printf_ln(s, color,
+ 				_("  (Once your working directory is clean, run \"git rebase --continue\")"));
+-- 
+1.7.11.rc0.57.g84a04c7
 
-And Git would verify that what ends up being pulled is indeed 
-0acf00014bcfd and also verifies that it was signed by me.
-
-[ If we are extra diligent/paranoid then beyond the sha1 we might 
-  even GPG sign the shortlog, or even the full raw log of all commits 
-  leading to the sha1: this introduces some Git shortlog and patch 
-  formatting version dependency though.
-
-  Git could also double check foo.com's DNS coherency, or check it 
-  against a known-trusted whitelist of domain names specified in the 
-  maintainer's .gitconfig, as an extra layer. ]
-
-Doing it in this form would remove all the mail formatting madness - 
-one could paste such a pull request into a shell straight away, from 
-HTML email, from text email, from MIME email, etc.
-
-In fact i would trust such a Git based solution far more than any 
-opaque, invisible tool that claims to have checked a signature with 
-cooperation of my mail client (ha!).
-
-The only somewhat non-obvious bit is that Git should be *very* 
-careful about its key ID and signature parsing strategy, to protect 
-against social engineering attacks.
-
-For example neither this:
-
-  --gpg-by: "Ingo Molnar <mingo@kernal.org>"
-
-nor this:
-
-  --pgp-by: "Ingo Molnar <mingo@kernel.org>"
-
-malicious pull request should slip through in any fashion:
-
- - Git should only use keys that are in your ring of trust - not pull 
-   keys from the public keyring automatically and just check 
-   coherency of the pull request or such. [I'm sure people will be 
-   tempted to have such a feature - but that temptation should be 
-   resisted.]
-
- - Git should abort the moment it sees an unknown option
-
-Thanks,
-
-	Ingo
