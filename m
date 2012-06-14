@@ -1,83 +1,108 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: drivers/block/cpqarray.c:938:2: error: too many arguments to
- function =?utf-8?Q?=E6=85=B4lk=5Frq=5Fmap=5Fsg=EF=BF=BD?=
-Date: Thu, 14 Jun 2012 10:26:20 -0700
-Message-ID: <7vpq91erer.fsf@alter.siamese.dyndns.org>
-References: <4fd91c3f.KAwMcygw9fFGn9Cx%wfg@linux.intel.com>
- <4FD984F3.3070502@kernel.dk> <20120614090151.GA12013@localhost>
- <4FD9A95D.40903@kernel.dk> <20120614092519.GA12482@localhost>
+From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+Subject: Re: [PATCHv7 1/4] Read (but not write) from $XDG_CONFIG_HOME/git/config
+ file
+Date: Thu, 14 Jun 2012 18:31:54 +0100
+Message-ID: <4FDA200A.8080200@ramsay1.demon.co.uk>
+References: <1338988885-21933-1-git-send-email-Huynh-Khoi-Nguyen.Nguyen@ensimag.imag.fr> <1339469396-29677-1-git-send-email-Huynh-Khoi-Nguyen.Nguyen@ensimag.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jens Axboe <axboe@kernel.dk>, linux-scsi@vger.kernel.org,
-	linux-raid@vger.kernel.org,
-	virtualization@lists.linux-foundation.org,
-	"git\@vger.kernel.org" <git@vger.kernel.org>
-To: Fengguang Wu <wfg@linux.intel.com>
-X-From: git-owner@vger.kernel.org Thu Jun 14 19:26:32 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org,
+	Valentin Duperray <Valentin.Duperray@ensimag.imag.fr>,
+	Franck Jonas <Franck.Jonas@ensimag.imag.fr>,
+	Lucien Kong <Lucien.Kong@ensimag.imag.fr>,
+	Thomas Nguy <Thomas.Nguy@ensimag.imag.fr>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Junio C Hamano <gitster@pobox.com>
+To: Huynh Khoi Nguyen Nguyen 
+	<Huynh-Khoi-Nguyen.Nguyen@ensimag.imag.fr>
+X-From: git-owner@vger.kernel.org Thu Jun 14 19:33:26 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SfDoR-00015Z-LX
-	for gcvg-git-2@plane.gmane.org; Thu, 14 Jun 2012 19:26:28 +0200
+	id 1SfDv9-0004NY-3w
+	for gcvg-git-2@plane.gmane.org; Thu, 14 Jun 2012 19:33:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932241Ab2FNR0Y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Jun 2012 13:26:24 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35458 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756285Ab2FNR0W (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Jun 2012 13:26:22 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4C42F8536;
-	Thu, 14 Jun 2012 13:26:22 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=tuPpT6NXW3IJ3j/WGU45q4X3YSo=; b=l3ySnu
-	G18jtyZwqupoBe5KgpFp10OuQm73FvoVQUjqWEw82/nOWgvc1/K17CNrj+rguRiq
-	XbZhIPAN6oO8jz+v8uHEPLfZvmpuKgsxhLiZQWHWY/l+alPDbgvIN7EQDrytYMsi
-	2b/drZZgQ1WhUteMP3JK8pD4sBZ1ZRgqndMvA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=yEmmGHpUNz+UYOjFp0wnwF+WNR4PPuZC
-	bBVK350Be3X/wYGroOlCCuRkfv+L5Vdc7hfvsjH9hSyUm9/Jk953vuA0uMsELfQS
-	oZ+QsBQ5wYrbmyUulDccLM3ahFtIH3xHMvYN7aQh7Edm4jjkJBI7jDJMVHZX6EvF
-	GS6oFeIAn+c=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 43A348535;
-	Thu, 14 Jun 2012 13:26:22 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B4D1B8534; Thu, 14 Jun 2012
- 13:26:21 -0400 (EDT)
-In-Reply-To: <20120614092519.GA12482@localhost> (Fengguang Wu's message of
- "Thu, 14 Jun 2012 17:25:19 +0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 0F41EA3A-B646-11E1-AB0F-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S932256Ab2FNRdT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Jun 2012 13:33:19 -0400
+Received: from anchor-post-3.mail.demon.net ([195.173.77.134]:58933 "EHLO
+	anchor-post-3.mail.demon.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S932210Ab2FNRdS (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 14 Jun 2012 13:33:18 -0400
+Received: from ramsay1.demon.co.uk ([193.237.126.196])
+	by anchor-post-3.mail.demon.net with esmtp (Exim 4.69)
+	id 1SfDv2-0005CN-ot; Thu, 14 Jun 2012 17:33:17 +0000
+User-Agent: Thunderbird 1.5.0.2 (Windows/20060308)
+In-Reply-To: <1339469396-29677-1-git-send-email-Huynh-Khoi-Nguyen.Nguyen@ensimag.imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200023>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200024>
 
-Fengguang Wu <wfg@linux.intel.com> writes:
+Huynh Khoi Nguyen Nguyen wrote:
+> Git will be able to read from $XDG_CONFIG_HOME/git/config, a new
+> configuration file following XDG specification. In the order of
+> reading, this file is between global configuration file and system
+> wide configuration file. Git currently does not write to this new
+> configuration file. If $XDG_CONFIG_HOME is either not set or empty,
+> $HOME/.config/git/config will be used.
+> 
+> Signed-off-by: Huynh Khoi Nguyen Nguyen <Huynh-Khoi-Nguyen.Nguyen@ensimag.imag.fr>
+> Signed-off-by: Valentin Duperray <Valentin.Duperray@ensimag.imag.fr>
+> Signed-off-by: Franck Jonas <Franck.Jonas@ensimag.imag.fr>
+> Signed-off-by: Lucien Kong <Lucien.Kong@ensimag.imag.fr>
+> Signed-off-by: Thomas Nguy <Thomas.Nguy@ensimag.imag.fr>
+> Signed-off-by: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+> ---
+>  Documentation/git-config.txt |   12 +++++--
+>  builtin/config.c             |   28 +++++++++++-----
+>  cache.h                      |    3 ++
+>  config.c                     |   23 ++++++++-----
+>  path.c                       |   41 ++++++++++++++++++++++++
+>  t/t1306-xdg-files.sh         |   70 ++++++++++++++++++++++++++++++++++++++++++
+>  6 files changed, 156 insertions(+), 21 deletions(-)
+>  create mode 100755 t/t1306-xdg-files.sh
 
-> If we can somehow tag the whole branch, it would be most convenient.
-> Git can add description to a branch with
->
->         git branch --edit-description [branch name]
->
-> However I don't know how to retrieve that description on a remote
-> branch..
+[...]
 
-The branch description is designed to be a place you leave your
-temporary note locally outside the history, until you are ready to
-set the contents of the branch in more permanent storage (e.g. by
-merging it to an integration branch, or sending pull requests for
-it) at which time the information is consumed (e.g. inserted in the
-merge commit message or pull request message).  The history exchange
-via "git push" / "git fetch" is by definition about exchanging the
-history, and will not transfer branch descriptions.
+> diff --git a/path.c b/path.c
+> index 6f2aa69..66acd24 100644
+> --- a/path.c
+> +++ b/path.c
+> @@ -87,6 +87,21 @@ char *git_pathdup(const char *fmt, ...)
+>  	return xstrdup(path);
+>  }
+>  
+> +char *mkpathdup(const char *fmt, ...)
+> +{
+> +	char *path;
+> +	struct strbuf sb = STRBUF_INIT;
+> +	va_list args;
+> +
+> +	va_start(args, fmt);
+> +	strbuf_vaddf(&sb, fmt, args);
+> +	va_end(args);
+> +	path = xstrdup(cleanup_path(sb.buf));
+> +
+> +	strbuf_release(&sb);
+> +	return path;
+> +}
+> +
 
-For shared and more permanent notes, "git notes" may be more
-suitable vehicle.
+As expected, this version avoids re-introducing the bug on Cygwin.
+
+I tested the series on Cygwin, MinGW and Linux and it passes it's
+own tests (t1306-xdg-files.sh) on all platforms. (Well, on MinGW
+I had to run it thus:
+
+    $ GIT_TEST_CMP='diff -ub' ./t1306-xdg-files.sh
+
+otherwise the first two tests fail because of CRLF vs LF issues).
+
+Thanks!
+
+ATB,
+Ramsay Jones
