@@ -1,87 +1,122 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: lk/more-helpful-status-hints (was Re: What's cooking in git.git (Jun 2012, #03; Wed, 13))
-Date: Thu, 14 Jun 2012 10:18:06 +0200
-Message-ID: <vpq7gvacnnl.fsf@bauges.imag.fr>
+From: y@imag.fr
+Subject: [PATCH 2/2] fixup! 38388c8 reword message when splitting a commit.
+Date: Thu, 14 Jun 2012 10:20:14 +0200
+Message-ID: <43585.3446987041$1339662031@news.gmane.org>
 References: <7vk3zag6jg.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org,
-	Valentin DUPERRAY <Valentin.Duperray@phelma.grenoble-inp.fr>,
-	Franck JONAS <Franck.Jonas@phelma.grenoble-inp.fr>,
-	Lucien KONG <Lucien.Kong@phelma.grenoble-inp.fr>,
-	Thomas NGUY <Thomas.Nguy@phelma.grenoble-inp.fr>,
-	Huynh Khoi Nguyen NGUYEN 
-	<Huynh-Khoi-Nguyen.Nguyen@phelma.grenoble-inp.fr>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jun 14 10:18:26 2012
+ <1339662014-30173-1-git-send-email-y>
+Cc: Matthieu Moy <Matthieu.Moy@imag.fr>
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Thu Jun 14 10:20:30 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Sf5G4-0000Ep-Nd
-	for gcvg-git-2@plane.gmane.org; Thu, 14 Jun 2012 10:18:25 +0200
+	id 1Sf5I5-0006VQ-LP
+	for gcvg-git-2@plane.gmane.org; Thu, 14 Jun 2012 10:20:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754631Ab2FNISS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Jun 2012 04:18:18 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:47953 "EHLO shiva.imag.fr"
+	id S1755090Ab2FNIUZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Jun 2012 04:20:25 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:36293 "EHLO shiva.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751375Ab2FNISQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Jun 2012 04:18:16 -0400
+	id S1754912Ab2FNIUW (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Jun 2012 04:20:22 -0400
 Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id q5E897sK021009
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id q5E8BGeY021444
 	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Thu, 14 Jun 2012 10:09:07 +0200
+	Thu, 14 Jun 2012 10:11:16 +0200
 Received: from bauges.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	by mail-veri.imag.fr with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
 	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1Sf5Fn-0006UG-Km; Thu, 14 Jun 2012 10:18:08 +0200
-In-Reply-To: <7vk3zag6jg.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Wed, 13 Jun 2012 16:01:55 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.93 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Thu, 14 Jun 2012 10:09:08 +0200 (CEST)
+	(envelope-from <moy@imag.fr>)
+	id 1Sf5Ht-0006XW-R6; Thu, 14 Jun 2012 10:20:17 +0200
+Received: from moy by bauges.imag.fr with local (Exim 4.72)
+	(envelope-from <moy@imag.fr>)
+	id 1Sf5Ht-0007rM-P8; Thu, 14 Jun 2012 10:20:17 +0200
+X-Mailer: git-send-email 1.7.11.rc0.57.g84a04c7
+In-Reply-To: <1339662014-30173-1-git-send-email-y>
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Thu, 14 Jun 2012 10:11:16 +0200 (CEST)
 X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: q5E897sK021009
+X-MailScanner-ID: q5E8BGeY021444
 X-IMAG-MailScanner: Found to be clean
 X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1340266148.73024@AOEHpGZarcPzCO7asvrLrA
+X-IMAG-MailScanner-From: moy@imag.fr
+MailScanner-NULL-Check: 1340266276.86051@eyZGexNYU+8asfPNSxrdFw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199976>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199977>
 
-Junio C Hamano <gitster@pobox.com> writes:
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
 
-> * lk/more-helpful-status-hints (2012-06-11) 5 commits
->  - fixup! status: better advices when splitting a commit (during rebase -i)
->  - status: better advices when splitting a commit (during rebase -i)
->  - status: don't suggest "git rm" or "git add" if not appropriate
->  - t7512-status-help.sh: better advices for git status
->  - wt-status.*: better advices for git status added
->
-> Almost there, modulo minor details pointed out by Matthieu.
+The "splitting a commit" is a sub-case of the "rebase" case, hence,
+mention rebase like this:
 
-The details I pointed out earlier are already fixed. I went through the
-serie again, and suggest two more minor fixups:
+  # You are currently splitting a commit during a rebase.
 
-fixup! reword message when splitting a commit.
-fixup! don't allocate struct wt_status_state dynamically
+This makes the message consistant with "editing a commit":
 
-patches follow.
+  # You are currently editing a commit during a rebase.
 
-> * lk/rebase-i-x (2012-06-13) 1 commit
->  - rebase -i: teach "--exec <cmd>"
->
-> Adds -x <cmd> to "rebase -i" to insert "exec <cmd>" after each
-> commit in the resulting history.
->
-> Will merge to next after 1.7.11.
+Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+---
+ t/t7512-status-help.sh | 8 ++++----
+ wt-status.c            | 2 +-
+ 2 files changed, 5 insertions(+), 5 deletions(-)
 
-Cool!
-
+diff --git a/t/t7512-status-help.sh b/t/t7512-status-help.sh
+index 3ce384a..b3f6eb9 100755
+--- a/t/t7512-status-help.sh
++++ b/t/t7512-status-help.sh
+@@ -210,7 +210,7 @@ test_expect_success 'status when splitting a commit' '
+ 	git reset HEAD^ &&
+ 	cat >expected <<-\EOF &&
+ 	# Not currently on any branch.
+-	# You are currently splitting a commit.
++	# You are currently splitting a commit during a rebase.
+ 	#   (Once your working directory is clean, run "git rebase --continue")
+ 	#
+ 	# Changes not staged for commit:
+@@ -290,7 +290,7 @@ test_expect_success 'status: (continue first edit) second edit and split' '
+ 	git reset HEAD^ &&
+ 	cat >expected <<-\EOF &&
+ 	# Not currently on any branch.
+-	# You are currently splitting a commit.
++	# You are currently splitting a commit during a rebase.
+ 	#   (Once your working directory is clean, run "git rebase --continue")
+ 	#
+ 	# Changes not staged for commit:
+@@ -359,7 +359,7 @@ test_expect_success 'status: (amend first edit) second edit and split' '
+ 	git reset HEAD^ &&
+ 	cat >expected <<-\EOF &&
+ 	# Not currently on any branch.
+-	# You are currently splitting a commit.
++	# You are currently splitting a commit during a rebase.
+ 	#   (Once your working directory is clean, run "git rebase --continue")
+ 	#
+ 	# Changes not staged for commit:
+@@ -433,7 +433,7 @@ test_expect_success 'status: (split first edit) second edit and split' '
+ 	git reset HEAD^ &&
+ 	cat >expected <<-\EOF &&
+ 	# Not currently on any branch.
+-	# You are currently splitting a commit.
++	# You are currently splitting a commit during a rebase.
+ 	#   (Once your working directory is clean, run "git rebase --continue")
+ 	#
+ 	# Changes not staged for commit:
+diff --git a/wt-status.c b/wt-status.c
+index e65716d..c749267 100644
+--- a/wt-status.c
++++ b/wt-status.c
+@@ -886,7 +886,7 @@ static void show_rebase_in_progress(struct wt_status *s,
+ 			status_printf_ln(s, color,
+ 				_("  (all conflicts fixed: run \"git rebase --continue\")"));
+ 	} else if (split_commit_in_progress(s)) {
+-		status_printf_ln(s, color, _("You are currently splitting a commit."));
++		status_printf_ln(s, color, _("You are currently splitting a commit during a rebase."));
+ 		if (advice_status_hints)
+ 			status_printf_ln(s, color,
+ 				_("  (Once your working directory is clean, run \"git rebase --continue\")"));
 -- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+1.7.11.rc0.57.g84a04c7
