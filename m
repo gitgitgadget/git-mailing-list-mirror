@@ -1,94 +1,95 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 0/5] transport: unify ipv4 and ipv6 code paths
-Date: Thu, 14 Jun 2012 00:02:03 -0500
-Message-ID: <20120614050203.GE27586@burratino>
-References: <20120308124857.GA7666@burratino>
- <CABPQNSb9EGOgHb7NtsEtDh2QkjkHYn7YemYsa8Yaqyuce-aDMw@mail.gmail.com>
+Subject: Re: [PATCH 1/3] git-blame.el: Do not use goto-line in lisp code
+Date: Thu, 14 Jun 2012 00:08:54 -0500
+Message-ID: <20120614050854.GG27586@burratino>
+References: <20120610073803.GA29461@burratino>
+ <1339329484-12088-1-git-send-email-wence@gmx.li>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>, Eric Wong <normalperson@yhbt.net>
-To: Erik Faye-Lund <kusmabite@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jun 14 07:02:17 2012
+Cc: =?utf-8?Q?R=C3=BCdiger?= Sonderfeld <ruediger@c-plusplus.de>,
+	git@vger.kernel.org, davidk@lysator.liu.se, user42@zip.com.au,
+	osv@javad.com
+To: Lawrence Mitchell <wence@gmx.li>
+X-From: git-owner@vger.kernel.org Thu Jun 14 07:09:51 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Sf2CF-00058b-0a
-	for gcvg-git-2@plane.gmane.org; Thu, 14 Jun 2012 07:02:15 +0200
+	id 1Sf2JT-0002Qs-MC
+	for gcvg-git-2@plane.gmane.org; Thu, 14 Jun 2012 07:09:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751375Ab2FNFCK convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 14 Jun 2012 01:02:10 -0400
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:54013 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750818Ab2FNFCI convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 14 Jun 2012 01:02:08 -0400
-Received: by yenl2 with SMTP id l2so613944yen.19
-        for <git@vger.kernel.org>; Wed, 13 Jun 2012 22:02:07 -0700 (PDT)
+	id S1750923Ab2FNFJC convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 14 Jun 2012 01:09:02 -0400
+Received: from mail-gg0-f174.google.com ([209.85.161.174]:52163 "EHLO
+	mail-gg0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750783Ab2FNFJA convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 14 Jun 2012 01:09:00 -0400
+Received: by gglu4 with SMTP id u4so1074607ggl.19
+        for <git@vger.kernel.org>; Wed, 13 Jun 2012 22:08:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-type:content-disposition:content-transfer-encoding
          :in-reply-to:user-agent;
-        bh=K6eHtDg9Dva+WQ26lB2DN0XtB7aU0bV1KwhFmgjRqEU=;
-        b=wq3+rck5gAIALQW+DKixN4gN5GQX1HkD6rY5gXL+I34AyFHMFnUYbOv8w9PPZvW2vv
-         m3qAlpihy5Y+M8e7Nzk6Ax80Yn95aLtd3xFkfXlCO4pZ6LLDWiXkL/MNLBe+NKuNdGck
-         lMvPeJWEW4PcWVc4R5LZxsPwjGR7HipQsx1K1HFHNR/Z1ARUzjlN6w+Jbezhm1M8FyhR
-         BhH5cNI2EzxXrNN7iF5ZGy3fvS3In/ROpd/hMIXWJ0q3XRt3GypbSTDHGN8kbv305e0n
-         7Wr4hRH9ZazE/WIn248Yqi6qNH9OdaIC6VNsLL3VSnonVh/DXY3OS0VG0DR5Pd+LdFTo
-         72Ag==
-Received: by 10.236.187.2 with SMTP id x2mr521448yhm.42.1339650127784;
-        Wed, 13 Jun 2012 22:02:07 -0700 (PDT)
+        bh=24ivhu4CgWbqpo4R+dojdKU3zZi9gd302OJCvuhLz6c=;
+        b=iy1KFJ0xByvR+Mxl7vBZ0xzLktMzD5LUS3VX1Cv15Np8YSxZv+qvD93YxWhAAjw4Ab
+         CFh8qBEUAWfbj/VnmQIbOav4FgETqj7fLz0+DRd8c1k9Bdyb1AdD6df47EKdWrnMC064
+         XdhyBdpU8gNXMljFOH46lZXyKsGheYVVWmNhtQzUNFqvyl4IFbN8p9gHe2qTtAl3Mauj
+         bHLOFMeLthdSi+lkfwc5XdphyRGW87i5sO70Tqk9xEjO6N7/Kq77f1qUfGclVWtKlPqt
+         8cJXRcJRrVJnxaDz7idm5ons1uR6hG9T164xswT2xU8hm9sao4afH0/cUDJXnfl8fOCd
+         w74A==
+Received: by 10.236.46.74 with SMTP id q50mr570489yhb.30.1339650539587;
+        Wed, 13 Jun 2012 22:08:59 -0700 (PDT)
 Received: from burratino (cl-1372.chi-02.us.sixxs.net. [2001:4978:f:55b::2])
-        by mx.google.com with ESMTPS id z42sm16901142yhd.1.2012.06.13.22.02.06
+        by mx.google.com with ESMTPS id v61sm16917331yhi.17.2012.06.13.22.08.57
         (version=SSLv3 cipher=OTHER);
-        Wed, 13 Jun 2012 22:02:07 -0700 (PDT)
+        Wed, 13 Jun 2012 22:08:58 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <CABPQNSb9EGOgHb7NtsEtDh2QkjkHYn7YemYsa8Yaqyuce-aDMw@mail.gmail.com>
+In-Reply-To: <1339329484-12088-1-git-send-email-wence@gmx.li>
 User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199968>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199969>
 
-Erik Faye-Lund wrote:
-> On Thu, Mar 8, 2012 at 1:48 PM, Jonathan Nieder <jrnieder@gmail.com> =
-wrote:
+Hi Lawrence,
 
->> Patch 4 is the heart of the series. =C2=A0It provides an interface s=
-imilar
->> to getaddrinfo that can be implemented on top of either gethostbynam=
-e
->> or getaddrinfo and puts each implementation in a separate file. =C2=A0=
-This
->> way, callers can just use the common API and they do not need to hav=
-e
->> two copies of their code, one for each host resolution API.
+Lawrence Mitchell wrote:
+
+> From: R=C3=BCdiger Sonderfeld <ruediger@c-plusplus.de>
+>
+> goto-line is a user-level command, instead use the lisp-level
+> construct recommended in Emacs documentation.
 [...]
-> What happened to this series?
+> Here we go, all R=C3=BCdiger's changes look sensible, I've split them=
+ into bits though
 
-It seemed nice in principle, but if I understood correctly then the
-API was too complicated for anyone but me to like it.  Instead of an
-interface similar to getaddrinfo, it would probably be better to
-implement an interface _identical_ to getaddrinfo for the the subset
-of functionality that git uses.
+Thanks for looking them over.
 
-See [1] for example for proof that that's possible.
+Would you mind indulging my curiosity a little by describing what bad
+behavior or potential bad behavior this change prevents?
 
-I would make some different choices from Russ if doing it myself ---
-e.g., I would want to unconditionally use
+Even without that information, I'm all for applying this patch, since
+it seems to be what all the people who know elisp recommend. :)
 
-	#define getaddrinfo git_getaddrinfo
-
-when NO_IPV6 is set so testing these code paths would be as simple as
-enabling NO_IPV6, even on systems that also provide the modern API in
-libc.
-
-Hoping that clarifies,
+Regards,
 Jonathan
 
-[1] http://git.eyrie.org/?p=3Ddevel/rra-c-util.git;a=3Dtree;f=3Dportabl=
-e
+(patch kept unsnipped for convenience)
+> diff --git a/contrib/emacs/git-blame.el b/contrib/emacs/git-blame.el
+> index 37d797e..5428ff7 100644
+> --- a/contrib/emacs/git-blame.el
+> +++ b/contrib/emacs/git-blame.el
+> @@ -389,7 +389,8 @@ See also function `git-blame-mode'."
+>      (set-buffer git-blame-file)
+>      (let ((inhibit-point-motion-hooks t)
+>            (inhibit-modification-hooks t))
+> -      (goto-line start-line)
+> +      (goto-char (point-min))
+> +      (forward-line (1- start-line))
+>        (let* ((start (point))
+>               (end (progn (forward-line num-lines) (point)))
+>               (ovl (make-overlay start end))
