@@ -1,221 +1,65 @@
-From: Pavel Volek <Pavel.Volek@ensimag.imag.fr>
-Subject: [PATCHv4 2/2] git-remote-mediawiki: refactoring get_mw_pages function
-Date: Thu, 14 Jun 2012 14:26:38 +0200
-Message-ID: <1339676798-6286-2-git-send-email-Pavel.Volek@ensimag.imag.fr>
-References: <1339676798-6286-1-git-send-email-Pavel.Volek@ensimag.imag.fr>
-Cc: Pavel Volek <Pavel.Volek@ensimag.imag.fr>,
-	NGUYEN Kim Thuat <Kim-Thuat.Nguyen@ensimag.imag.fr>,
-	ROUCHER IGLESIAS Javier <roucherj@ensimag.imag.fr>,
-	Matthieu Moy <Matthieu.Moy@imag.fr>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 14 14:27:46 2012
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH 3/3] Explicit error when curl_exec() fails
+Date: Thu, 14 Jun 2012 14:45:54 +0200
+Message-ID: <vpq7gvaawot.fsf@bauges.imag.fr>
+References: <1339607025-22725-1-git-send-email-simon.cathebras@ensimag.imag.fr>
+	<1339664243-31952-1-git-send-email-Matthieu.Moy@imag.fr>
+	<1339664243-31952-4-git-send-email-Matthieu.Moy@imag.fr>
+	<4FD9AD9F.5050708@ensimag.imag.fr>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: git@vger.kernel.org, Julien.Khayat@ensimag.imag.fr,
+	Simon.Perrat@ensimag.imag.fr, Charles.Roussel@ensimag.imag.fr,
+	Guillaume.Sasdy@ensimag.imag.fr
+To: Simon.Cathebras@ensimag.imag.fr
+X-From: git-owner@vger.kernel.org Thu Jun 14 14:46:13 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Sf99M-0004G5-JP
-	for gcvg-git-2@plane.gmane.org; Thu, 14 Jun 2012 14:27:45 +0200
+	id 1Sf9R9-0001Mz-SI
+	for gcvg-git-2@plane.gmane.org; Thu, 14 Jun 2012 14:46:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755784Ab2FNM1k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Jun 2012 08:27:40 -0400
-Received: from mail-we0-f174.google.com ([74.125.82.174]:35668 "EHLO
-	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755463Ab2FNM1j (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Jun 2012 08:27:39 -0400
-Received: by weyu7 with SMTP id u7so1212616wey.19
-        for <git@vger.kernel.org>; Thu, 14 Jun 2012 05:27:38 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=sender:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
-         :references:x-gm-message-state;
-        bh=ipvqMlpPyNIckSNuNFDdEs/64chsoG/zQic1SsxAh+0=;
-        b=T/CWfqr8+klytdgXkxzg9QGLzeqa4PcgeHljuiWlLif9y2EUPYiIW2gAGgeAHgcg+Y
-         8kvUxjJ+AfHU5uIfHXAEGLUZJFXZcNT56vVgRfzR4KvsLgf17ThBfZaZUseZIzsmQPX4
-         EDt/5S6aH4mL9jctH5LU27BEqcmAeCQ8gTphYC8IcnnOtakimMlI88d3oSu42gbqNWRA
-         tNOvvPy7CO7iVh3zsIRML20sR1GUEF289k+qpsEM+/z3Cc77Ie7wH2M3Ncxwz0lzVkX4
-         GsjneS95REpq29zIPRKABJF8xqE+I75LHK6DTgm8FdZlkDH40twKzLUGcKT9JEcXQVpt
-         yTFg==
-Received: by 10.216.142.167 with SMTP id i39mr928078wej.94.1339676858116;
-        Thu, 14 Jun 2012 05:27:38 -0700 (PDT)
-Received: from volek-HP.grenet.fr (wifi-123088.grenet.fr. [130.190.123.88])
-        by mx.google.com with ESMTPS id f19sm19973868wiw.11.2012.06.14.05.27.36
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 14 Jun 2012 05:27:37 -0700 (PDT)
-X-Mailer: git-send-email 1.7.10.2.552.gaa3bb87
-In-Reply-To: <1339676798-6286-1-git-send-email-Pavel.Volek@ensimag.imag.fr>
-X-Gm-Message-State: ALoCoQk+IAETVg4UQNYYrg6+KyEIxJ+Mz4xFAU8mFE3N7dWUrTHCzYldVVM16olCgOKCtPcdh4qi
+	id S1755612Ab2FNMqD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Jun 2012 08:46:03 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:52092 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753985Ab2FNMqB (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Jun 2012 08:46:01 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id q5ECjspe007559
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Thu, 14 Jun 2012 14:45:54 +0200
+Received: from bauges.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1Sf9Qx-0003fM-A4; Thu, 14 Jun 2012 14:45:55 +0200
+In-Reply-To: <4FD9AD9F.5050708@ensimag.imag.fr> (Simon Cathebras's message of
+	"Thu, 14 Jun 2012 11:23:43 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.93 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Thu, 14 Jun 2012 14:45:57 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: q5ECjspe007559
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1340282758.43563@Le5ReVJDxl4DkRMAr7S1Pw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200003>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200004>
 
-Splits the code in the get_mw_pages function into three separate functions.
-One for getting list of all pages and all file attachments, second for pages
-in category specified in configuration file and files related to these pages
-and the last function to get from MW a list of specified pages with related
-file attachments.
+"Simon.Cathebras" <Simon.Cathebras@ensimag.imag.fr> writes:
 
-Signed-off-by: Pavel Volek <Pavel.Volek@ensimag.imag.fr>
-Signed-off-by: NGUYEN Kim Thuat <Kim-Thuat.Nguyen@ensimag.imag.fr>
-Signed-off-by: ROUCHER IGLESIAS Javier <roucherj@ensimag.imag.fr>
-Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
----
- contrib/mw-to-git/git-remote-mediawiki | 120 ++++++++++++++++++---------------
- 1 file changed, 67 insertions(+), 53 deletions(-)
+> But there is a whitespace/indentation problem isn't it ?
 
-diff --git a/contrib/mw-to-git/git-remote-mediawiki b/contrib/mw-to-git/git-remote-mediawiki
-index a51e9ab..866bd6f 100755
---- a/contrib/mw-to-git/git-remote-mediawiki
-+++ b/contrib/mw-to-git/git-remote-mediawiki
-@@ -224,80 +224,94 @@ sub get_mw_pages {
- 	my $user_defined;
- 	if (@tracked_pages) {
- 		$user_defined = 1;
--		# The user provided a list of pages titles, but we
--		# still need to query the API to get the page IDs.
--		get_mw_first_pages(\@tracked_pages, \%pages);
--
--		if ($import_media) {
--			get_mw_pages_for_linked_mediafiles(\@tracked_pages, \%pages);
--		}
-+		get_mw_tracked_pages(\%pages);
- 	}
- 	if (@tracked_categories) {
- 		$user_defined = 1;
--		foreach my $category (@tracked_categories) {
--			if (index($category, ':') < 0) {
--				# Mediawiki requires the Category
--				# prefix, but let's not force the user
--				# to specify it.
--				$category = "Category:" . $category;
--			}
--			my $mw_pages = $mediawiki->list( {
--				action => 'query',
--				list => 'categorymembers',
--				cmtitle => $category,
--				cmlimit => 'max' } )
--				|| die $mediawiki->{error}->{code} . ': '
--					. $mediawiki->{error}->{details};
--			foreach my $page (@{$mw_pages}) {
--				$pages{$page->{title}} = $page;
--			}
--
--			if ($import_media) {
--				my @titles = map $_->{title}, @{$mw_pages};
--				get_mw_pages_for_linked_mediafiles(\@titles, \%pages);
--			}
--		}
-+		get_mw_tracked_categories(\%pages);
- 	}
- 	if (!$user_defined) {
--		# No user-provided list, get the list of pages from
--		# the API.
-+		get_mw_all_pages(\%pages);
-+	}
-+	return values(%pages);
-+}
-+
-+sub get_mw_all_pages {
-+	my $pages = shift;
-+	# No user-provided list, get the list of pages from the API.
-+	my $mw_pages = $mediawiki->list({
-+		action => 'query',
-+		list => 'allpages',
-+		aplimit => 'max'
-+	});
-+	if (!defined($mw_pages)) {
-+		print STDERR "fatal: could not get the list of wiki pages.\n";
-+		print STDERR "fatal: '$url' does not appear to be a mediawiki\n";
-+		print STDERR "fatal: make sure '$url/api.php' is a valid page.\n";
-+		exit 1;
-+	}
-+	foreach my $page (@{$mw_pages}) {
-+		$pages->{$page->{title}} = $page;
-+	}
-+
-+	if ($import_media) {
-+		# Attach list of all pages for media files from the API,
-+		# they are in a different namespace, only one namespace
-+		# can be queried at the same moment
- 		my $mw_pages = $mediawiki->list({
- 			action => 'query',
- 			list => 'allpages',
-+			apnamespace => get_mw_namespace_id("File"),
- 			aplimit => 'max'
- 		});
- 		if (!defined($mw_pages)) {
--			print STDERR "fatal: could not get the list of wiki pages.\n";
-+			print STDERR "fatal: could not get the list of pages for media files.\n";
- 			print STDERR "fatal: '$url' does not appear to be a mediawiki\n";
- 			print STDERR "fatal: make sure '$url/api.php' is a valid page.\n";
- 			exit 1;
- 		}
- 		foreach my $page (@{$mw_pages}) {
--			$pages{$page->{title}} = $page;
-+			$pages->{$page->{title}} = $page;
-+		}
-+	}
-+}
-+
-+sub get_mw_tracked_pages {
-+	my $pages = shift;
-+	# The user provided a list of pages titles, but we
-+	# still need to query the API to get the page IDs.
-+	get_mw_first_pages(\@tracked_pages, \%{$pages});
-+
-+	if ($import_media) {
-+		get_mw_pages_for_linked_mediafiles(\@tracked_pages, \%{$pages});
-+	}
-+}
-+
-+sub get_mw_tracked_categories {
-+	my $pages = shift;
-+	foreach my $category (@tracked_categories) {
-+		if (index($category, ':') < 0) {
-+			# Mediawiki requires the Category
-+			# prefix, but let's not force the user
-+			# to specify it.
-+			$category = "Category:" . $category;
-+		}
-+		my $mw_pages = $mediawiki->list( {
-+			action => 'query',
-+			list => 'categorymembers',
-+			cmtitle => $category,
-+			cmlimit => 'max' } )
-+			|| die $mediawiki->{error}->{code} . ': '
-+				. $mediawiki->{error}->{details};
-+		foreach my $page (@{$mw_pages}) {
-+			$pages->{$page->{title}} = $page;
- 		}
- 
- 		if ($import_media) {
--			# Attach list of all pages for media files from the API,
--			# they are in a different namespace, only one namespace
--			# can be queried at the same moment
--			my $mw_pages = $mediawiki->list({
--				action => 'query',
--				list => 'allpages',
--				apnamespace => get_mw_namespace_id("File"),
--				aplimit => 'max'
--			});
--			if (!defined($mw_pages)) {
--				print STDERR "fatal: could not get the list of pages for media files.\n";
--				print STDERR "fatal: '$url' does not appear to be a mediawiki\n";
--				print STDERR "fatal: make sure '$url/api.php' is a valid page.\n";
--				exit 1;
--			}
--			foreach my $page (@{$mw_pages}) {
--				$pages{$page->{title}} = $page;
--			}
-+			my @titles = map $_->{title}, @{$mw_pages};
-+			get_mw_pages_for_linked_mediafiles(\@titles, \%{$pages});
- 		}
- 	}
--	return values(%pages);
- }
- 
- sub get_mw_pages_for_linked_mediafiles {
+Yes: your code is indented with spaces.
+
+(my code has an extra space between die and "(" that said)
+
 -- 
-1.7.10.2.552.gaa3bb87
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
