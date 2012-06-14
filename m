@@ -1,42 +1,45 @@
-From: Thomas Rast <trast@student.ethz.ch>
+From: Andreas Schwab <schwab@linux-m68k.org>
 Subject: Re: How do I specify a revision for "git blame" by date?
-Date: Thu, 14 Jun 2012 12:05:56 +0200
-Message-ID: <877gva1a4b.fsf@thomas.inf.ethz.ch>
+Date: Thu, 14 Jun 2012 12:19:08 +0200
+Message-ID: <m2sjdynqlf.fsf@igel.home>
 References: <4fda029d.g99uVull9jgguc/Y%perryh@pluto.rain.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Cc: <git@vger.kernel.org>
-To: <perryh@pluto.rain.com>
-X-From: git-owner@vger.kernel.org Thu Jun 14 12:06:07 2012
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: perryh@pluto.rain.com
+X-From: git-owner@vger.kernel.org Thu Jun 14 12:19:23 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Sf6wH-0002Lk-JC
-	for gcvg-git-2@plane.gmane.org; Thu, 14 Jun 2012 12:06:05 +0200
+	id 1Sf793-0000FD-VF
+	for gcvg-git-2@plane.gmane.org; Thu, 14 Jun 2012 12:19:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755565Ab2FNKGA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Jun 2012 06:06:00 -0400
-Received: from edge20.ethz.ch ([82.130.99.26]:41688 "EHLO edge20.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755540Ab2FNKF7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Jun 2012 06:05:59 -0400
-Received: from CAS21.d.ethz.ch (172.31.51.111) by edge20.ethz.ch
- (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.2.298.4; Thu, 14 Jun
- 2012 12:05:56 +0200
-Received: from thomas.inf.ethz.ch.ethz.ch (46.126.8.85) by CAS21.d.ethz.ch
- (172.31.51.111) with Microsoft SMTP Server (TLS) id 14.2.298.4; Thu, 14 Jun
- 2012 12:05:56 +0200
+	id S1755413Ab2FNKTO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Jun 2012 06:19:14 -0400
+Received: from mail-out.m-online.net ([212.18.0.10]:45285 "EHLO
+	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755177Ab2FNKTN (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Jun 2012 06:19:13 -0400
+Received: from frontend1.mail.m-online.net (frontend1.mail.intern.m-online.net [192.168.8.180])
+	by mail-out.m-online.net (Postfix) with ESMTP id 3WCgmj0Mw3z3hhbf;
+	Thu, 14 Jun 2012 12:19:32 +0200 (CEST)
+Received: from igel.home (ppp-88-217-114-244.dynamic.mnet-online.de [88.217.114.244])
+	by mail.mnet-online.de (Postfix) with ESMTPA id 3WCgmF1SPKz4KK6v;
+	Thu, 14 Jun 2012 12:19:09 +0200 (CEST)
+Received: by igel.home (Postfix, from userid 501)
+	id AC5C9CA2A5; Thu, 14 Jun 2012 12:19:08 +0200 (CEST)
+X-Yow: Here I am in the POSTERIOR OLFACTORY LOBULE but I don't see CARL SAGAN
+ anywhere!!
 In-Reply-To: <4fda029d.g99uVull9jgguc/Y%perryh@pluto.rain.com>
 	(perryh@pluto.rain.com's message of "Thu, 14 Jun 2012 08:26:21 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Originating-IP: [46.126.8.85]
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.1 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199996>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199997>
 
 perryh@pluto.rain.com writes:
 
@@ -52,49 +55,12 @@ perryh@pluto.rain.com writes:
 >   ...
 >
 >   $ git blame <file> b4227af
->
-> but I want to have git look up the last revision prior to the given
-> date, by doing something like
->
->   $ git blame <file> @{2011-12-29}
 
-You are looking at two different dates:
+You can use any rev-list option, so --until=2011-12-27 should work.
 
-a) The dates stored within the commit object:
-
-   - committer date, similarly shown by %ci: when the commit was created.
-   - author date, shown by %ai: when "this" commit was "first created".
-
-   These are properties of the commits, and thus part of the project
-   history.  Anyone who clones the project sees the same dates.
-
-b) The dates in the reflog, tracking the movement of *your local* refs
-   (like the name implies).  The HEAD reflog tracks what *you* had
-   "currently checked out" at a given time.
-
-An automated search in (b) is possible with the @{} syntax, but note
-that it tracks the *branch state*.  It says nothing about how "current"
-a certain resulting commit was.  For example, if you say
-
-  git checkout v1.6.0
-  sleep 2
-  git checkout -
-  git show '@{1 second ago}'
-
-you will see the commit for v1.6.0 from back in 2008.
-
-An automated search in (a) is hard, mostly because in nonlinear history
-there is not usually a single (and well-defined) commit that could be
-returned.  Git could attempt to search all of your branches, like you
-have done above, but which one among all commits from that date should
-it pick?  Furthermore, the result set to pick from will change if you
-fetch more history into your repo.
-
-It's even worse with the author (as opposed to committer) dates: those
-are not even remotely close to monotonic in most repos, because they are
-kept across rewriting.  (The committer dates would be monotonic if
-everyone kept their clocks in sync and avoided filter-branch tricks.)
+Andreas.
 
 -- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+Andreas Schwab, schwab@linux-m68k.org
+GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
+"And now for something completely different."
