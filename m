@@ -1,80 +1,70 @@
-From: =?UTF-8?B?WmJpZ25pZXcgSsSZZHJ6ZWpld3NraS1Tem1law==?= 
-	<zbyszek@in.waw.pl>
-Subject: Re: [eclipse7@gmx.net: [PATCH] diff: Only count lines in show_shortstats()]
-Date: Thu, 14 Jun 2012 21:07:20 +0200
-Message-ID: <4FDA3668.3000900@in.waw.pl>
-References: <20120607122149.GA3070@akuma> <4FD0FB75.4090906@in.waw.pl> <20120607200434.GA2965@akuma> <7vk3zig92n.fsf@alter.siamese.dyndns.org>
+From: Luka Perkov <lists@lukaperkov.net>
+Subject: git-http-fetch: remove unused cmd_http_fetch
+Date: Thu, 14 Jun 2012 22:20:52 +0200
+Message-ID: <20120614202052.GA3592@w500.iskon.local>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Alexander Strasser <eclipse7@gmx.net>,
-	"git@vger.kernel.org" <git@vger.kernel.org>, mj@ucw.cz,
-	Johannes Sixt <j.sixt@viscovery.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jun 14 21:07:48 2012
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jun 14 22:20:59 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SfFOU-0003mP-SQ
-	for gcvg-git-2@plane.gmane.org; Thu, 14 Jun 2012 21:07:47 +0200
+	id 1SfGXK-0007fG-LW
+	for gcvg-git-2@plane.gmane.org; Thu, 14 Jun 2012 22:20:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756585Ab2FNTHm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Jun 2012 15:07:42 -0400
-Received: from kawka.in.waw.pl ([178.63.212.103]:38558 "EHLO kawka.in.waw.pl"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752265Ab2FNTHm (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Jun 2012 15:07:42 -0400
-Received: from 69-mo7-2.acn.waw.pl ([85.222.93.69] helo=[192.168.0.150])
-	by kawka.in.waw.pl with esmtpsa (TLS1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.72)
-	(envelope-from <zbyszek@in.waw.pl>)
-	id 1SfFOO-0002zg-QS; Thu, 14 Jun 2012 21:07:40 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:10.0.3) Gecko/20120329 Icedove/10.0.3
-In-Reply-To: <7vk3zig92n.fsf@alter.siamese.dyndns.org>
-X-Enigmail-Version: 1.4
+	id S1756334Ab2FNUUy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Jun 2012 16:20:54 -0400
+Received: from mail-wg0-f44.google.com ([74.125.82.44]:63090 "EHLO
+	mail-wg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756277Ab2FNUUx (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Jun 2012 16:20:53 -0400
+Received: by wgbdr13 with SMTP id dr13so2316044wgb.1
+        for <git@vger.kernel.org>; Thu, 14 Jun 2012 13:20:52 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=date:from:to:subject:message-id:mime-version:content-type
+         :content-disposition:user-agent:x-gm-message-state;
+        bh=rqJdRtVaEdFBm4LsWTTWe/FEqzPKYQAfbrnlw+mbJgY=;
+        b=apDYF52ITJuI5w0pKiY8DehZ7lHStjbqRJ2C+Fk/q64fj6GnkvfSo0SVD2xgbeQsdQ
+         5y8OozRaVTpaWPT8uJU3IV9DLSECLPPopHKT8yXddsgawzccapJUoVhcUuMDv/P0ordw
+         uc6wum+Ja/Gk/1uPQi6WxluzYQmb6JF8OhD4G9mmtVWnQli0j9uRW9w07JCcwnxrrDv4
+         BzRSNsnt8Td9fEsHUkiOIKWiXhhlFoTGFCvOuHK+icq1s2H8TGw1vhHFtIzicMLN5Oly
+         MeM6UVdLUj+ebrKifmRgjMVP7n88iVQBi7pAjBadSWmPqd5DoykIvGCKYF7WVuSq161k
+         srcw==
+Received: by 10.180.83.197 with SMTP id s5mr7007858wiy.9.1339705251929;
+        Thu, 14 Jun 2012 13:20:51 -0700 (PDT)
+Received: from localhost (213-191-157-151.dhcp.iskon.hr. [213.191.157.151])
+        by mx.google.com with ESMTPS id hv7sm23635658wib.0.2012.06.14.13.20.49
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 14 Jun 2012 13:20:51 -0700 (PDT)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.21 (2010-09-15)
+X-Gm-Message-State: ALoCoQkbbw+ugUYMz8s7L5iEXglRx165Nj1SEXI2/cKvYj1d0KaJmAmbcHShiHmEFGLd+t09Sruu
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200028>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200029>
 
-On 06/07/2012 10:29 PM, Junio C Hamano wrote:
->>>> >> > --- a/t/t4012-diff-binary.sh
->>>> >> > +++ b/t/t4012-diff-binary.sh
->>>> >> > @@ -36,6 +36,14 @@ test_expect_success '"apply --stat" output for binary file change' '
->>>> >> >  	test_i18ncmp expected current
->>>> >> >  '
->>>> >> >  
->>>> >> > +cat > expected <<\EOF
->>>> >> > + 4 files changed, 2 insertions(+), 2 deletions(-)
->>>> >> > +EOF
->>>> >> > +test_expect_success 'diff with --shortstat' '
->>>> >> > +	git diff --shortstat >current &&
->>>> >> > +	test_cmp expected current
->>>> >> > +'
->>>> >> > +
->>> >> The test is OK, and follows the style of surrounding tests, but current
->>> >> style is slightly different:
->>> >> - no space after '>'
->>> >> - expected output is inlined if it is short
->>> >> - test_i18ncmp is used, even if the message is not yet i18n-ized
->>> >> 
->>> >> Something like this:
->>> >> test_expect_success 'diff --shortstat output for binary file change' '
->>> >> 	echo " 4 files changed, 2 insertions(+), 2 deletions(-)" >expect &&
->>> >> 	git diff --shortstat >current &&
->>> >> 	test_i18ncmp expect current
->>> >> '
->> >
->> >   Should I rewrite the test for this patch? Or should it be changed for the
->> > whole file at once?
-> Please keep a bugfix patch to only fixes with tests.  Style fixes
-> should be done later after dust from more important changes (e.g. a
-> bugfix) settles.
-> 
-> Thanks.
-Does this need a v2?
+It was left out from commit 1088261f6fc90324014b5306cca4171987da85ce
+    
+Signed-off-by: Luka Perkov <lists@lukaperkov.net>
+---
 
-Zbyszek
+ builtin.h |    1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/builtin.h b/builtin.h
+index 338f540..f5b8ed1 100644
+--- a/builtin.h
++++ b/builtin.h
+@@ -83,7 +83,6 @@ extern int cmd_get_tar_commit_id(int argc, const char **argv, const char *prefix
+ extern int cmd_grep(int argc, const char **argv, const char *prefix);
+ extern int cmd_hash_object(int argc, const char **argv, const char *prefix);
+ extern int cmd_help(int argc, const char **argv, const char *prefix);
+-extern int cmd_http_fetch(int argc, const char **argv, const char *prefix);
+ extern int cmd_index_pack(int argc, const char **argv, const char *prefix);
+ extern int cmd_init_db(int argc, const char **argv, const char *prefix);
+ extern int cmd_log(int argc, const char **argv, const char *prefix);
