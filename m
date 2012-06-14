@@ -1,85 +1,98 @@
-From: "Simon.Cathebras" <Simon.Cathebras@ensimag.imag.fr>
-Subject: Re: [PATCH 3/3] Explicit error when curl_exec() fails
-Date: Thu, 14 Jun 2012 11:23:43 +0200
-Message-ID: <4FD9AD9F.5050708@ensimag.imag.fr>
-References: <1339607025-22725-1-git-send-email-simon.cathebras@ensimag.imag.fr> <1339664243-31952-1-git-send-email-Matthieu.Moy@imag.fr> <1339664243-31952-4-git-send-email-Matthieu.Moy@imag.fr>
-Reply-To: Simon.Cathebras@ensimag.imag.fr
+From: Fengguang Wu <wfg@linux.intel.com>
+Subject: Re: =?utf-8?Q?drivers=2Fblock=2Fcpqarray?=
+ =?utf-8?Q?=2Ec=3A938=3A2=3A_error=3A_too_many_arguments_to_function_?=
+ =?utf-8?B?5oW0bGtfcnFfbWFwX3Nn77+9?=
+Date: Thu, 14 Jun 2012 17:25:19 +0800
+Message-ID: <20120614092519.GA12482@localhost>
+References: <4fd91c3f.KAwMcygw9fFGn9Cx%wfg@linux.intel.com>
+ <4FD984F3.3070502@kernel.dk>
+ <20120614090151.GA12013@localhost>
+ <4FD9A95D.40903@kernel.dk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Julien.Khayat@ensimag.imag.fr,
-	Simon.Perrat@ensimag.imag.fr, Charles.Roussel@ensimag.imag.fr,
-	Guillaume.Sasdy@ensimag.imag.fr
-To: Matthieu Moy <Matthieu.Moy@imag.fr>
-X-From: git-owner@vger.kernel.org Thu Jun 14 11:24:23 2012
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
+Content-Type: text/plain; charset=us-ascii
+Cc: linux-scsi@vger.kernel.org, linux-raid@vger.kernel.org,
+	virtualization@lists.linux-foundation.org,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Jens Axboe <axboe@kernel.dk>
+X-From: linux-raid-owner@vger.kernel.org Thu Jun 14 11:25:37 2012
+Return-path: <linux-raid-owner@vger.kernel.org>
+Envelope-to: linux-raid@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Sf6Ho-0003Xm-CY
-	for gcvg-git-2@plane.gmane.org; Thu, 14 Jun 2012 11:24:16 +0200
+	(envelope-from <linux-raid-owner@vger.kernel.org>)
+	id 1Sf6J1-0007By-SW
+	for linux-raid@plane.gmane.org; Thu, 14 Jun 2012 11:25:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755362Ab2FNJYM convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 14 Jun 2012 05:24:12 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:42617 "EHLO shiva.imag.fr"
+	id S1755482Ab2FNJZ3 (ORCPT <rfc822;linux-raid@m.gmane.org>);
+	Thu, 14 Jun 2012 05:25:29 -0400
+Received: from mga01.intel.com ([192.55.52.88]:53924 "EHLO mga01.intel.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755429Ab2FNJXo (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Jun 2012 05:23:44 -0400
-Received: from ensimag.imag.fr (ensimag.imag.fr [195.221.228.12])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id q5E9NgJs004002
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 14 Jun 2012 11:23:42 +0200
-Received: from [IPv6:::1] (ensibm [195.221.228.8])
-	by ensimag.imag.fr (8.13.8/8.13.8/ImagV2.1.r_ens) with ESMTP id q5E9NfDM027022;
-	Thu, 14 Jun 2012 11:23:41 +0200
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:12.0) Gecko/20120430 Thunderbird/12.0.1
-In-Reply-To: <1339664243-31952-4-git-send-email-Matthieu.Moy@imag.fr>
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Thu, 14 Jun 2012 11:23:42 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: q5E9NgJs004002
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: simon.cathebras@ensimag.imag.fr
-MailScanner-NULL-Check: 1340270623.2213@p6jcxxXISZ4bnvS3lyq9YQ
-Sender: git-owner@vger.kernel.org
+	id S1755400Ab2FNJZ2 (ORCPT <rfc822;linux-raid@vger.kernel.org>);
+	Thu, 14 Jun 2012 05:25:28 -0400
+Received: from fmsmga001.fm.intel.com ([10.253.24.23])
+  by fmsmga101.fm.intel.com with ESMTP; 14 Jun 2012 02:25:27 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="4.71,315,1320652800"; 
+   d="scan'208";a="165536088"
+Received: from unknown (HELO wfg-t420.sh.intel.com) ([10.255.20.59])
+  by fmsmga001.fm.intel.com with ESMTP; 14 Jun 2012 02:25:22 -0700
+Received: from wfg by wfg-t420.sh.intel.com with local (Exim 4.77)
+	(envelope-from <wfg@linux.intel.com>)
+	id 1Sf6Ip-0003Gz-1y; Thu, 14 Jun 2012 17:25:19 +0800
+Content-Disposition: inline
+In-Reply-To: <4FD9A95D.40903@kernel.dk>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+Sender: linux-raid-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199988>
+List-ID: <linux-raid.vger.kernel.org>
+X-Mailing-List: linux-raid@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199989>
 
+On Thu, Jun 14, 2012 at 11:05:33AM +0200, Jens Axboe wrote:
+> On 06/14/2012 11:01 AM, Fengguang Wu wrote:
+> > Hi Jens,
+> > 
+> > On Thu, Jun 14, 2012 at 08:30:11AM +0200, Jens Axboe wrote:
+> >> On 06/14/2012 01:03 AM, wfg@linux.intel.com wrote:
+> >>> FYI, kernel build failed on
+> >>>
+> >>> tree:   git://git.kernel.org/pub/scm/linux/kernel/git/axboe/linux-block.git multiqueue
+> >>> head:   e9a6aa8a0b7b93195774a9fcf551632bf3abcd97
+> >>> commit: 67db7275fa4325d46853a4bfcb79acf32e48eca8 [1/3] multiqueue: a hodge podge of things
+> >>
+> >> The multiqueue branch is a private branch, it's known broken on many
+> >> configs at the moment.
+> > 
+> > OK. Sorry my script just blindly build tests every new/updated branches
+> > in the tree. It does try to reduce noise level by remembering all warned
+> > error messages. However if it still presents a problem to the private
+> > branches, I can either explicitly blacklist "multiqueue", or let the
+> > script automatically skip commits whose "^Signed-off-by:" is still missing.
+> 
+> It's not a problem that you're building various branches, as long as you
+> are expecting a bit of noise :-). In fact I applaud your effort on
+> expanding the scope of building others branches.
 
+Thank you :-)
 
-On 14/06/2012 10:57, Matthieu Moy wrote:
-> Signed-off-by: Matthieu Moy<Matthieu.Moy@imag.fr>
-> ---
->   contrib/mw-to-git/t/install-wiki/db_install.php | 3 +++
->   1 file changed, 3 insertions(+)
->
-> diff --git a/contrib/mw-to-git/t/install-wiki/db_install.php b/contri=
-b/mw-to-git/t/install-wiki/db_install.php
-> index b34772a..99d24e0 100644
-> --- a/contrib/mw-to-git/t/install-wiki/db_install.php
-> +++ b/contrib/mw-to-git/t/install-wiki/db_install.php
-> @@ -41,6 +41,9 @@ function get ($page_name =3D "") {
->           curl_setopt($curl, CURLOPT_URL, $url);
->
->           $page =3D curl_exec($curl);
-> +	if (!$page) {
-> +		die ("Could not get page: $url\n");
-> +	}
->           curl_close($curl);
->           return $page;
->   }
-Seems legitimate.
+> But it does raise the question of how do we best signal intermediate
+> branches like this, so they can be avoided until they are ready. The
+> blacklist doesn't seem like a great choice, since then I have to
+> remember to remind you when it _is_ ok to build it.
+> 
+> How about some arbitrary tag? Instead of checking a Signed-off-by, I
+> could just add a Dont-Auto-Build or something like that. What do you
+> think?
 
-But there is a whitespace/indentation problem isn't it ?
+Anything convenient to you would be fine.
 
---=20
-CATHEBRAS Simon
+If we can somehow tag the whole branch, it would be most convenient.
+Git can add description to a branch with
 
-2A-ENSIMAG
+        git branch --edit-description [branch name]
 
-=46ili=E8re Ing=E9ni=E9rie des Syst=E8mes d'Information
-Membre Bug-Buster
+However I don't know how to retrieve that description on a remote
+branch..
+
+Thanks,
+Fengguang
