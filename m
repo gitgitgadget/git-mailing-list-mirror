@@ -1,152 +1,56 @@
-From: y@imag.fr
-Subject: [PATCH 1/2] fixup! 8e00b48 don't allocate struct wt_status_state dynamically
-Date: Thu, 14 Jun 2012 10:20:13 +0200
-Message-ID: <20099.6449254037$1339662032@news.gmane.org>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH 1/2] fixup! 8e00b48 don't allocate struct wt_status_state dynamically
+Date: Thu, 14 Jun 2012 10:23:17 +0200
+Message-ID: <vpq1ulicney.fsf@bauges.imag.fr>
 References: <7vk3zag6jg.fsf@alter.siamese.dyndns.org>
-Cc: Matthieu Moy <Matthieu.Moy@imag.fr>
+Mime-Version: 1.0
+Content-Type: text/plain
 To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Thu Jun 14 10:20:31 2012
+X-From: git-owner@vger.kernel.org Thu Jun 14 10:23:41 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Sf5I5-0006VQ-5y
-	for gcvg-git-2@plane.gmane.org; Thu, 14 Jun 2012 10:20:29 +0200
+	id 1Sf5L9-0007l5-07
+	for gcvg-git-2@plane.gmane.org; Thu, 14 Jun 2012 10:23:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754925Ab2FNIUW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Jun 2012 04:20:22 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:48929 "EHLO rominette.imag.fr"
+	id S1752876Ab2FNIXe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Jun 2012 04:23:34 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:48373 "EHLO rominette.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753056Ab2FNIUU (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Jun 2012 04:20:20 -0400
+	id S1751899Ab2FNIXc (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Jun 2012 04:23:32 -0400
 Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id q5E8B2JU023608
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id q5E8E4Oe024218
 	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Thu, 14 Jun 2012 10:11:02 +0200
+	Thu, 14 Jun 2012 10:14:06 +0200
 Received: from bauges.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
 	(Exim 4.72)
-	(envelope-from <moy@imag.fr>)
-	id 1Sf5Hr-0006X7-VI; Thu, 14 Jun 2012 10:20:16 +0200
-Received: from moy by bauges.imag.fr with local (Exim 4.72)
-	(envelope-from <moy@imag.fr>)
-	id 1Sf5Hr-0007rJ-Sg; Thu, 14 Jun 2012 10:20:15 +0200
-X-Mailer: git-send-email 1.7.11.rc0.57.g84a04c7
-In-Reply-To: <7vk3zag6jg.fsf@alter.siamese.dyndns.org>
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Thu, 14 Jun 2012 10:11:02 +0200 (CEST)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1Sf5Kn-0006cW-To; Thu, 14 Jun 2012 10:23:18 +0200
+In-Reply-To: <1339662014-30173-1-git-send-email-y> (y.'s message of "Thu, 14
+	Jun 2012 10:20:13 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.93 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Thu, 14 Jun 2012 10:14:06 +0200 (CEST)
 X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: q5E8B2JU023608
+X-MailScanner-ID: q5E8E4Oe024218
 X-IMAG-MailScanner: Found to be clean
 X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
-MailScanner-NULL-Check: 1340266263.03484@aWzg1QdnAlaPtmfLH7aaog
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1340266450.56873@+sjiGNOT8ZDSC/puIRZLOQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199978>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199979>
 
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
+> To: y@imag.fr
 
-The common
+Oops, sorry, I tried answering "yes" to the wrong question. Obviously,
+this is not my real email address :-(.
 
-void function() {
-	struct wt_status_state *state = calloc(...);
-	...
-	free(state);
-}
-
-is essentially a less efficient, and more error prone way of allocating a
-variable on the stack (plus, the calloc should have been a xcalloc).
-Replace it with an on-stack variable.
-
-While we're there, also replace the individual initializations of fields
-with memset(..., 0, ...).
-
-Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
----
-
-(BTW, I didn't find a way to have both --autosquash-compliant and
-meaningfull titles)
-
- wt-status.c | 49 +++++++++++++++++++++----------------------------
- 1 file changed, 21 insertions(+), 28 deletions(-)
-
-diff --git a/wt-status.c b/wt-status.c
-index ed28b4f..e65716d 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -932,49 +932,42 @@ static void show_bisect_in_progress(struct wt_status *s,
- static void wt_status_print_state(struct wt_status *s)
- {
- 	const char *state_color = color(WT_STATUS_IN_PROGRESS, s);
--	struct wt_status_state *state = calloc(1, sizeof(*state));
-+	struct wt_status_state state;
- 	struct stat st;
- 
--	state->merge_in_progress = 0;
--	state->am_in_progress = 0;
--	state->am_empty_patch = 0;
--	state->rebase_in_progress = 0;
--	state->rebase_interactive_in_progress = 0;
--	state->cherry_pick_in_progress = 0;
--	state->bisect_in_progress = 0;
-+	memset(&state, 0, sizeof(state));
- 
- 	if (!stat(git_path("MERGE_HEAD"), &st)) {
--		state->merge_in_progress = 1;
-+		state.merge_in_progress = 1;
- 	} else if (!stat(git_path("rebase-apply"), &st)) {
- 		if (!stat(git_path("rebase-apply/applying"), &st)) {
--			state->am_in_progress = 1;
-+			state.am_in_progress = 1;
- 			if (!stat(git_path("rebase-apply/patch"), &st) && !st.st_size)
--				state->am_empty_patch = 1;
-+				state.am_empty_patch = 1;
- 		} else {
--			state->rebase_in_progress = 1;
-+			state.rebase_in_progress = 1;
- 		}
- 	} else if (!stat(git_path("rebase-merge"), &st)) {
- 		if (!stat(git_path("rebase-merge/interactive"), &st))
--			state->rebase_interactive_in_progress = 1;
-+			state.rebase_interactive_in_progress = 1;
- 		else
--			state->rebase_in_progress = 1;
-+			state.rebase_in_progress = 1;
- 	} else if (!stat(git_path("CHERRY_PICK_HEAD"), &st)) {
--		state->cherry_pick_in_progress = 1;
-+		state.cherry_pick_in_progress = 1;
- 	}
- 	if (!stat(git_path("BISECT_LOG"), &st))
--		state->bisect_in_progress = 1;
--
--	if (state->merge_in_progress)
--		show_merge_in_progress(s, state, state_color);
--	else if (state->am_in_progress)
--		show_am_in_progress(s, state, state_color);
--	else if (state->rebase_in_progress || state->rebase_interactive_in_progress)
--		show_rebase_in_progress(s, state, state_color);
--	else if (state->cherry_pick_in_progress)
--		show_cherry_pick_in_progress(s, state, state_color);
--	if (state->bisect_in_progress)
--		show_bisect_in_progress(s, state, state_color);
--	free(state);
-+		state.bisect_in_progress = 1;
-+
-+	if (state.merge_in_progress)
-+		show_merge_in_progress(s, &state, state_color);
-+	else if (state.am_in_progress)
-+		show_am_in_progress(s, &state, state_color);
-+	else if (state.rebase_in_progress || state.rebase_interactive_in_progress)
-+		show_rebase_in_progress(s, &state, state_color);
-+	else if (state.cherry_pick_in_progress)
-+		show_cherry_pick_in_progress(s, &state, state_color);
-+	if (state.bisect_in_progress)
-+		show_bisect_in_progress(s, &state, state_color);
- }
- 
- void wt_status_print(struct wt_status *s)
 -- 
-1.7.11.rc0.57.g84a04c7
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
