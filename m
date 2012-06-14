@@ -1,145 +1,94 @@
-From: Hilco Wijbenga <hilco.wijbenga@gmail.com>
-Subject: Re: Git rebase basics
-Date: Wed, 13 Jun 2012 21:39:03 -0700
-Message-ID: <CAE1pOi3uXHcXm=fpH-e6pHyBTAACS7=KkdR9jQEuEjzoXy1w=A@mail.gmail.com>
-References: <1339621152946-7561468.post@n2.nabble.com> <1339642794317-7561489.post@n2.nabble.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 0/5] transport: unify ipv4 and ipv6 code paths
+Date: Thu, 14 Jun 2012 00:02:03 -0500
+Message-ID: <20120614050203.GE27586@burratino>
+References: <20120308124857.GA7666@burratino>
+ <CABPQNSb9EGOgHb7NtsEtDh2QkjkHYn7YemYsa8Yaqyuce-aDMw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Michael Witten <mfwitten@gmail.com>
-To: lancelyons <llyons2@cox.net>
-X-From: git-owner@vger.kernel.org Thu Jun 14 06:39:31 2012
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>, Eric Wong <normalperson@yhbt.net>
+To: Erik Faye-Lund <kusmabite@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jun 14 07:02:17 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Sf1qC-00077S-J6
-	for gcvg-git-2@plane.gmane.org; Thu, 14 Jun 2012 06:39:28 +0200
+	id 1Sf2CF-00058b-0a
+	for gcvg-git-2@plane.gmane.org; Thu, 14 Jun 2012 07:02:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751208Ab2FNEjZ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 14 Jun 2012 00:39:25 -0400
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:36065 "EHLO
+	id S1751375Ab2FNFCK convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 14 Jun 2012 01:02:10 -0400
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:54013 "EHLO
 	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750965Ab2FNEjY convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 14 Jun 2012 00:39:24 -0400
-Received: by yenl2 with SMTP id l2so607540yen.19
-        for <git@vger.kernel.org>; Wed, 13 Jun 2012 21:39:23 -0700 (PDT)
+	with ESMTP id S1750818Ab2FNFCI convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 14 Jun 2012 01:02:08 -0400
+Received: by yenl2 with SMTP id l2so613944yen.19
+        for <git@vger.kernel.org>; Wed, 13 Jun 2012 22:02:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=F8KM5i0hTlnWxW1p8Z0wDx1D7g1uDRPBQnzl33xnhTI=;
-        b=Ibec5oQGd87NpmQLQoark2CAyqn91s4XAnXtF/lZnlQKtXto4NkmdL3R2afO8kEbu8
-         ZFvnYfdwaIKzqaBRBTax3s/PH7muWLX1kkFSxJStJjYX9NM4EtqE2CEiQZG3S4Pg5QkV
-         my7rkifW2SF+hx4OIKt80VPdcUVW+zv9RisnO0VmrD0t4iTdhnt8Qq2dX9Exzc+Ckxwz
-         3trzNUHkEZQrKgLVKK6XhrBvxjV2TZT77P9IJVC6yiWS8lug2uGJXwNp2hfEdiLYTJM6
-         qUuPkj2kTEIjNkLcK84pdteDcLhmx9lKCrk3CAg01eqPSiDNV5y5mGHZY+uDNqnqmVKK
-         2M7g==
-Received: by 10.101.134.6 with SMTP id l6mr165738ann.21.1339648763693; Wed, 13
- Jun 2012 21:39:23 -0700 (PDT)
-Received: by 10.236.29.230 with HTTP; Wed, 13 Jun 2012 21:39:03 -0700 (PDT)
-In-Reply-To: <1339642794317-7561489.post@n2.nabble.com>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=K6eHtDg9Dva+WQ26lB2DN0XtB7aU0bV1KwhFmgjRqEU=;
+        b=wq3+rck5gAIALQW+DKixN4gN5GQX1HkD6rY5gXL+I34AyFHMFnUYbOv8w9PPZvW2vv
+         m3qAlpihy5Y+M8e7Nzk6Ax80Yn95aLtd3xFkfXlCO4pZ6LLDWiXkL/MNLBe+NKuNdGck
+         lMvPeJWEW4PcWVc4R5LZxsPwjGR7HipQsx1K1HFHNR/Z1ARUzjlN6w+Jbezhm1M8FyhR
+         BhH5cNI2EzxXrNN7iF5ZGy3fvS3In/ROpd/hMIXWJ0q3XRt3GypbSTDHGN8kbv305e0n
+         7Wr4hRH9ZazE/WIn248Yqi6qNH9OdaIC6VNsLL3VSnonVh/DXY3OS0VG0DR5Pd+LdFTo
+         72Ag==
+Received: by 10.236.187.2 with SMTP id x2mr521448yhm.42.1339650127784;
+        Wed, 13 Jun 2012 22:02:07 -0700 (PDT)
+Received: from burratino (cl-1372.chi-02.us.sixxs.net. [2001:4978:f:55b::2])
+        by mx.google.com with ESMTPS id z42sm16901142yhd.1.2012.06.13.22.02.06
+        (version=SSLv3 cipher=OTHER);
+        Wed, 13 Jun 2012 22:02:07 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <CABPQNSb9EGOgHb7NtsEtDh2QkjkHYn7YemYsa8Yaqyuce-aDMw@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199967>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199968>
 
-On 13 June 2012 19:59, lancelyons <llyons2@cox.net> wrote:
-> Sorry about that.. I thought I was being pretty descriptive but maybe=
- I
-> missed something.
+Erik Faye-Lund wrote:
+> On Thu, Mar 8, 2012 at 1:48 PM, Jonathan Nieder <jrnieder@gmail.com> =
+wrote:
 
-Perhaps "descriptive" but certainly not "precise".
-
-> After we setup Git (msysgit) and set it up using Apache with active
-> directory authentication, I added a repository using git init --bare =
-then I
-> copied my files I wanted to add to the repository and did a git add .=
- and
-> git commit -a
->
-> So that all worked. =C2=A0 We have done several clones using git clon=
-e with this
-> remote repo. =C2=A0We have also done =C2=A0git push and git pull to v=
-erify everything
-> is working ok. =C2=A0 Everything was working fine.
->
-> So back to my original train of though.
->
-> I am trying to learn more about rebase so i have cloned the central r=
-epo two
-> times =C2=A0(I call the central repo the origin) doing the following =
-(to help you
-> understand)
->
-> git clone https://servername:port/repopath c:\clonedrepo1
->
-> git clone https://servername:port/repopath c:\clonedrepo2
->
-> and then made changes to this cloned copy (clonedrepo1) and pushed tw=
-o
-> commits back to origin.
-> (git commit -a =C2=A0two times)
->
-> so now I have the following in the remote repo (origin)
->
-> origin --> =C2=A0C1 --> C2
->
-> (Note to help you understand =C2=A0C1 =3D commit 1 and c2 =3D commit =
-2, etc)
->
-> In the other cloned copy (clonedrepo2), which I consider a branch, I =
-have
-> made two more commits =C2=A0C3 and C4
->
-> clonedrepo2 --> C3 --> =C2=A0C4
->
-> I am able to easily pull from origin to get my clonedrepo2 to look li=
-ke
-> clonerepo2 --> C3 --> C4 --> C1 --> C2 using git pull origin =C2=A0or=
- git pull
-> https://servername:port/repopath
->
-> however I was wanting to rebase the clonedrepo2 branch so that it sho=
-ws
-> clonerepo2 -> C1 --> C2 --> C3 --> C4
->
-> In other words I am wanting to rebase clonedrepo2 to the master of th=
+>> Patch 4 is the heart of the series. =C2=A0It provides an interface s=
+imilar
+>> to getaddrinfo that can be implemented on top of either gethostbynam=
 e
-> origin.
+>> or getaddrinfo and puts each implementation in a separate file. =C2=A0=
+This
+>> way, callers can just use the common API and they do not need to hav=
+e
+>> two copies of their code, one for each host resolution API.
+[...]
+> What happened to this series?
 
-What you want is "git pull --rebase origin master". See "git help
-pull". Also check "git help fetch" if you really want to keep doing
-this.
+It seemed nice in principle, but if I understood correctly then the
+API was too complicated for anyone but me to like it.  Instead of an
+interface similar to getaddrinfo, it would probably be better to
+implement an interface _identical_ to getaddrinfo for the the subset
+of functionality that git uses.
 
-But it sounds like you should simply be using a real branch. You can
-do "git pull" on your master branch and then run "git rebase master"
-on your own branch. Did you really read up on Git? It has truly
-excellent documentation. See for example http://git-scm.com/book (but
-this is just one of many).
+See [1] for example for proof that that's possible.
 
-> I thought the command to do this was =C2=A0 git rebase origin master =
-but that
-> doesnt work and I get
->
-> C:\clonedrepo2>git rebase origin master
-> Switched to branch 'master'
-> Your branch is ahead of 'origin/master' by 2 commits.
-> Current branch master is up to date.
->
-> I know my my branch is ahead by c3 and c4 but it does not have C1 and=
- C2
->
-> Thoughts.
->
-> --
-> View this message in context: http://git.661346.n2.nabble.com/Git-reb=
-ase-basics-tp7561468p7561489.html
-> Sent from the git mailing list archive at Nabble.com.
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at =C2=A0http://vger.kernel.org/majordomo-info.ht=
-ml
+I would make some different choices from Russ if doing it myself ---
+e.g., I would want to unconditionally use
+
+	#define getaddrinfo git_getaddrinfo
+
+when NO_IPV6 is set so testing these code paths would be as simple as
+enabling NO_IPV6, even on systems that also provide the modern API in
+libc.
+
+Hoping that clarifies,
+Jonathan
+
+[1] http://git.eyrie.org/?p=3Ddevel/rra-c-util.git;a=3Dtree;f=3Dportabl=
+e
