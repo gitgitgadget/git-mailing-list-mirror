@@ -1,99 +1,65 @@
-From: lancelyons <llyons2@cox.net>
-Subject: Re: Git rebase basics
-Date: Wed, 13 Jun 2012 19:59:54 -0700 (PDT)
-Message-ID: <1339642794317-7561489.post@n2.nabble.com>
-References: <1339621152946-7561468.post@n2.nabble.com>
+From: Tomas Carnecky <tomas.carnecky@gmail.com>
+Subject: Re: Checksum incorrectly uses signed values
+Date: Thu, 14 Jun 2012 04:35:21 +0000
+Message-ID: <1339648521-ner-3801@calvin>
+References: <CA+-ctj5M4XraOQJfWRVVFmRrNsUZUJyt63_Oi__OJCcYMC=ciw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 14 05:00:04 2012
+Content-Type: text/plain
+To: Brendan Brewster <brendan.brewster@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jun 14 06:36:17 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Sf0Hx-00045N-0k
-	for gcvg-git-2@plane.gmane.org; Thu, 14 Jun 2012 05:00:01 +0200
+	id 1Sf1n4-0006NZ-5N
+	for gcvg-git-2@plane.gmane.org; Thu, 14 Jun 2012 06:36:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754842Ab2FNC7z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Jun 2012 22:59:55 -0400
-Received: from sam.nabble.com ([216.139.236.26]:56792 "EHLO sam.nabble.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752015Ab2FNC7z (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Jun 2012 22:59:55 -0400
-Received: from jim.nabble.com ([192.168.236.80])
-	by sam.nabble.com with esmtp (Exim 4.72)
-	(envelope-from <llyons2@cox.net>)
-	id 1Sf0Hq-0000wV-AY
-	for git@vger.kernel.org; Wed, 13 Jun 2012 19:59:54 -0700
-In-Reply-To: <1339621152946-7561468.post@n2.nabble.com>
+	id S1750986Ab2FNEgI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Jun 2012 00:36:08 -0400
+Received: from mail-wg0-f44.google.com ([74.125.82.44]:54716 "EHLO
+	mail-wg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750926Ab2FNEgH (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Jun 2012 00:36:07 -0400
+Received: by wgbdr13 with SMTP id dr13so1427599wgb.1
+        for <git@vger.kernel.org>; Wed, 13 Jun 2012 21:36:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:subject:to:references:in-reply-to:mime-version:date:message-id
+         :content-type;
+        bh=gmIARVzLpCAUORkzKvscLSomToANUUNuhFcr0AmY4zs=;
+        b=CJ761wWeulN+dRqpsdahapln71q81lgSpbUq/Wq0mlL2VcuTQd3aUatEWkVJoWwX2Q
+         Xy0YPSfprf7nNnrdjUp+gLGzhua2TOR1hxfjCCfFn7DET2C0wExiblT5lV/Re015bRii
+         pLSZ6A3YdlVauxLvRMsd4ciGMTJgkIZMKQJMyMirsl/AMWcKufDhFEdXHcra1yE0H9mS
+         uWdzQ4p/3Km96AmcsSIT5458BZIjHXrdie1s4TO9jxf9LMGME3/FPSJ2RMtQbzEt7D6K
+         MkxrZlRrrAbMW2FhrPeYttnohQAo731WPvU8RofL19N23U7vIa+aAnDB824I2jK2WZgo
+         hreg==
+Received: by 10.216.142.102 with SMTP id h80mr188534wej.36.1339648566536;
+        Wed, 13 Jun 2012 21:36:06 -0700 (PDT)
+Received: from calvin.caurea.org (cust.static.46-14-151-191.swisscomdata.ch. [46.14.151.191])
+        by mx.google.com with ESMTPS id fm1sm16310649wib.10.2012.06.13.21.36.05
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 13 Jun 2012 21:36:05 -0700 (PDT)
+Received: by calvin.caurea.org (Postfix, from userid 3301)
+	id C4AEB42E56A; Thu, 14 Jun 2012 04:35:21 +0000 (UTC)
+In-Reply-To: <CA+-ctj5M4XraOQJfWRVVFmRrNsUZUJyt63_Oi__OJCcYMC=ciw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199965>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199966>
 
-Sorry about that.. I thought I was being pretty descriptive but maybe I
-missed something.
+On Wed, 13 Jun 2012 21:16:21 -0400, Brendan Brewster <brendan.brewster@gmail.com> wrote:
+> Hi,
+> 
+> The issue, in summary, is that 7-zip was unable to untar a tar created
+> via a "git archive" whereas gnu tar can. It seem that it may be the
+> case that git is incorrectly using signed values when creating the
+> checksum.
+> 
+> Can someone please look into this and possibly redirect if needed?
 
-After we setup Git (msysgit) and set it up using Apache with active
-directory authentication, I added a repository using git init --bare then I
-copied my files I wanted to add to the repository and did a git add . and
-git commit -a
+That was reported a day ago and Junio already wrote a patch. See
+http://article.gmane.org/gmane.comp.version-control.git/199911.
 
-So that all worked.   We have done several clones using git clone with this
-remote repo.  We have also done  git push and git pull to verify everything
-is working ok.   Everything was working fine.
-
-So back to my original train of though.
-
-I am trying to learn more about rebase so i have cloned the central repo two
-times  (I call the central repo the origin) doing the following (to help you
-understand)
-
-git clone https://servername:port/repopath c:\clonedrepo1
-
-git clone https://servername:port/repopath c:\clonedrepo2
-
-and then made changes to this cloned copy (clonedrepo1) and pushed two
-commits back to origin.
-(git commit -a  two times)
-
-so now I have the following in the remote repo (origin)   
-
-origin -->  C1 --> C2
-
-(Note to help you understand  C1 = commit 1 and c2 = commit 2, etc)
-
-In the other cloned copy (clonedrepo2), which I consider a branch, I have
-made two more commits  C3 and C4
-
-clonedrepo2 --> C3 -->  C4
-
-I am able to easily pull from origin to get my clonedrepo2 to look like 
-clonerepo2 --> C3 --> C4 --> C1 --> C2 using git pull origin  or git pull
-https://servername:port/repopath
-
-however I was wanting to rebase the clonedrepo2 branch so that it shows   
-clonerepo2 -> C1 --> C2 --> C3 --> C4
-
-In other words I am wanting to rebase clonedrepo2 to the master of the
-origin.
-
-
-I thought the command to do this was   git rebase origin master but that
-doesnt work and I get
-
-C:\clonedrepo2>git rebase origin master
-Switched to branch 'master'
-Your branch is ahead of 'origin/master' by 2 commits.
-Current branch master is up to date.
-
-I know my my branch is ahead by c3 and c4 but it does not have C1 and C2
-
-Thoughts.
-
---
-View this message in context: http://git.661346.n2.nabble.com/Git-rebase-basics-tp7561468p7561489.html
-Sent from the git mailing list archive at Nabble.com.
+tom
