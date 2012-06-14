@@ -1,78 +1,80 @@
-From: =?UTF-8?q?Zbigniew=20J=C4=99drzejewski-Szmek?= <zbyszek@in.waw.pl>
-Subject: [PATCH] gitk: add support for -G'regex' pickaxe variant
-Date: Thu, 14 Jun 2012 20:34:11 +0200
-Message-ID: <1339698851-15428-1-git-send-email-zbyszek@in.waw.pl>
-References: <7vipezaaig.fsf@alter.siamese.dyndns.org>
+From: =?UTF-8?B?WmJpZ25pZXcgSsSZZHJ6ZWpld3NraS1Tem1law==?= 
+	<zbyszek@in.waw.pl>
+Subject: Re: [eclipse7@gmx.net: [PATCH] diff: Only count lines in show_shortstats()]
+Date: Thu, 14 Jun 2012 21:07:20 +0200
+Message-ID: <4FDA3668.3000900@in.waw.pl>
+References: <20120607122149.GA3070@akuma> <4FD0FB75.4090906@in.waw.pl> <20120607200434.GA2965@akuma> <7vk3zig92n.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Martin Langhoff <martin@laptop.org>, git@vger.kernel.org,
-	gitster@pobox.com,
-	=?UTF-8?q?Zbigniew=20J=C4=99drzejewski-Szmek?= <zbyszek@in.waw.pl>
-To: Paul Mackerras <paulus@samba.org>
-X-From: git-owner@vger.kernel.org Thu Jun 14 20:34:53 2012
+Content-Transfer-Encoding: 7bit
+Cc: Alexander Strasser <eclipse7@gmx.net>,
+	"git@vger.kernel.org" <git@vger.kernel.org>, mj@ucw.cz,
+	Johannes Sixt <j.sixt@viscovery.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jun 14 21:07:48 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SfEsd-0003zF-1R
-	for gcvg-git-2@plane.gmane.org; Thu, 14 Jun 2012 20:34:51 +0200
+	id 1SfFOU-0003mP-SQ
+	for gcvg-git-2@plane.gmane.org; Thu, 14 Jun 2012 21:07:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756526Ab2FNSer convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 14 Jun 2012 14:34:47 -0400
-Received: from kawka.in.waw.pl ([178.63.212.103]:38553 "EHLO kawka.in.waw.pl"
+	id S1756585Ab2FNTHm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Jun 2012 15:07:42 -0400
+Received: from kawka.in.waw.pl ([178.63.212.103]:38558 "EHLO kawka.in.waw.pl"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756423Ab2FNSeq (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Jun 2012 14:34:46 -0400
-Received: from 69-mo7-2.acn.waw.pl ([85.222.93.69] helo=ameba.home.aster.pl)
-	by kawka.in.waw.pl with esmtpsa (TLS1.0:DHE_RSA_AES_256_CBC_SHA1:32)
+	id S1752265Ab2FNTHm (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Jun 2012 15:07:42 -0400
+Received: from 69-mo7-2.acn.waw.pl ([85.222.93.69] helo=[192.168.0.150])
+	by kawka.in.waw.pl with esmtpsa (TLS1.0:RSA_AES_256_CBC_SHA1:32)
 	(Exim 4.72)
 	(envelope-from <zbyszek@in.waw.pl>)
-	id 1SfEsT-0002TA-Ug; Thu, 14 Jun 2012 20:34:42 +0200
-X-Mailer: git-send-email 1.7.11.rc3.129.ga90bc7a.dirty
-In-Reply-To: <7vipezaaig.fsf@alter.siamese.dyndns.org>
+	id 1SfFOO-0002zg-QS; Thu, 14 Jun 2012 21:07:40 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:10.0.3) Gecko/20120329 Icedove/10.0.3
+In-Reply-To: <7vk3zig92n.fsf@alter.siamese.dyndns.org>
+X-Enigmail-Version: 1.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200027>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200028>
 
-=46rom: Martin Langhoff <martin@laptop.org>
+On 06/07/2012 10:29 PM, Junio C Hamano wrote:
+>>>> >> > --- a/t/t4012-diff-binary.sh
+>>>> >> > +++ b/t/t4012-diff-binary.sh
+>>>> >> > @@ -36,6 +36,14 @@ test_expect_success '"apply --stat" output for binary file change' '
+>>>> >> >  	test_i18ncmp expected current
+>>>> >> >  '
+>>>> >> >  
+>>>> >> > +cat > expected <<\EOF
+>>>> >> > + 4 files changed, 2 insertions(+), 2 deletions(-)
+>>>> >> > +EOF
+>>>> >> > +test_expect_success 'diff with --shortstat' '
+>>>> >> > +	git diff --shortstat >current &&
+>>>> >> > +	test_cmp expected current
+>>>> >> > +'
+>>>> >> > +
+>>> >> The test is OK, and follows the style of surrounding tests, but current
+>>> >> style is slightly different:
+>>> >> - no space after '>'
+>>> >> - expected output is inlined if it is short
+>>> >> - test_i18ncmp is used, even if the message is not yet i18n-ized
+>>> >> 
+>>> >> Something like this:
+>>> >> test_expect_success 'diff --shortstat output for binary file change' '
+>>> >> 	echo " 4 files changed, 2 insertions(+), 2 deletions(-)" >expect &&
+>>> >> 	git diff --shortstat >current &&
+>>> >> 	test_i18ncmp expect current
+>>> >> '
+>> >
+>> >   Should I rewrite the test for this patch? Or should it be changed for the
+>> > whole file at once?
+> Please keep a bugfix patch to only fixes with tests.  Style fixes
+> should be done later after dust from more important changes (e.g. a
+> bugfix) settles.
+> 
+> Thanks.
+Does this need a v2?
 
-git log -G'regex' is a very usable alternative to the classic
-pickaxe. Minimal patch to make it usable from gitk.
-
-[zj: reword message]
-Signed-off-by: Zbigniew J=C4=99drzejewski-Szmek <zbyszek@in.waw.pl>
----
-Martin's off on holidays, so I'm sending v2 after rewording.
-
- gitk-git/gitk | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
-
-diff --git a/gitk-git/gitk b/gitk-git/gitk
-index 22270ce..24eaead 100755
---- a/gitk-git/gitk
-+++ b/gitk-git/gitk
-@@ -2232,7 +2232,8 @@ proc makewindow {} {
-     set gm [makedroplist .tf.lbar.gdttype gdttype \
- 		[mc "containing:"] \
- 		[mc "touching paths:"] \
--		[mc "adding/removing string:"]]
-+		[mc "adding/removing string:"] \
-+		[mc "with changes matching regex:"]]
-     trace add variable gdttype write gdttype_change
-     pack .tf.lbar.gdttype -side left -fill y
-=20
-@@ -4595,6 +4596,8 @@ proc do_file_hl {serial} {
- 	set gdtargs [concat -- $relative_paths]
-     } elseif {$gdttype eq [mc "adding/removing string:"]} {
- 	set gdtargs [list "-S$highlight_files"]
-+    } elseif {$gdttype eq [mc "with changes matching regex:"]} {
-+	set gdtargs [list "-G$highlight_files"]
-     } else {
- 	# must be "containing:", i.e. we're searching commit info
- 	return
---=20
-1.7.11.rc3.129.ga90bc7a.dirty
+Zbyszek
