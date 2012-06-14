@@ -1,96 +1,70 @@
-From: Brendan Brewster <brendan.brewster@gmail.com>
-Subject: Checksum incorrectly uses signed values
-Date: Wed, 13 Jun 2012 21:16:21 -0400
-Message-ID: <CA+-ctj5M4XraOQJfWRVVFmRrNsUZUJyt63_Oi__OJCcYMC=ciw@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+From: Leila Muhtasib <muhtasib@gmail.com>
+Subject: [PATCH v2] CodingGuidelines: Added note about position of 'else' in C programs.
+Date: Wed, 13 Jun 2012 21:42:43 -0400
+Message-ID: <1339638163-33870-1-git-send-email-muhtasib@gmail.com>
+Cc: Leila Muhtasib <muhtasib@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 14 03:16:49 2012
+X-From: git-owner@vger.kernel.org Thu Jun 14 03:42:57 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Seyg4-0003mQ-01
-	for gcvg-git-2@plane.gmane.org; Thu, 14 Jun 2012 03:16:48 +0200
+	id 1Sez5K-0001fZ-U6
+	for gcvg-git-2@plane.gmane.org; Thu, 14 Jun 2012 03:42:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752005Ab2FNBQn convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 13 Jun 2012 21:16:43 -0400
-Received: from mail-pb0-f46.google.com ([209.85.160.46]:43818 "EHLO
-	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750732Ab2FNBQm convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 13 Jun 2012 21:16:42 -0400
-Received: by pbbrp8 with SMTP id rp8so3052500pbb.19
-        for <git@vger.kernel.org>; Wed, 13 Jun 2012 18:16:42 -0700 (PDT)
+	id S1754977Ab2FNBmv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Jun 2012 21:42:51 -0400
+Received: from mail-qc0-f174.google.com ([209.85.216.174]:36661 "EHLO
+	mail-qc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754951Ab2FNBmu (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Jun 2012 21:42:50 -0400
+Received: by qcro28 with SMTP id o28so719219qcr.19
+        for <git@vger.kernel.org>; Wed, 13 Jun 2012 18:42:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to:content-type
-         :content-transfer-encoding;
-        bh=Qwa7ozyq5ipQXVpOV6c31tkuyS+xk1fDDT/w8OofIEQ=;
-        b=euB9IyYpKXRKKN6jKnzOKlLbsGe69ALIXtsvI6/BWBKjEbJRVg59OBct30UV2QZYHX
-         r8aoiTdKvpyZW7aQkwcTpV1o+nM31W75wu5Vsnt1DwKSrr7H4l7FQdNWy496WZxLEafe
-         1Ms+VAdmtBWG2vBYTqwXj4mbdgIlh+uXe3I7LnQUEn5awGHxwrSB4+wSPeWK4gPZQSJU
-         Cq9mc2P2QxlNrU2OmGr5ppEJqVTkfKt9JchgMH0OLunhYiMfE+pShrVvrwKLOr0lBkBK
-         UfiJJQFVsbfQ3FPIdhZCCBb2b/p4LxXnjl0yZNLZ3Xb3z+l+2ckpQLkl4jTfdnZKuhoq
-         QcrA==
-Received: by 10.68.217.229 with SMTP id pb5mr1937811pbc.20.1339636602261; Wed,
- 13 Jun 2012 18:16:42 -0700 (PDT)
-Received: by 10.143.161.18 with HTTP; Wed, 13 Jun 2012 18:16:21 -0700 (PDT)
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        bh=V84h3UuFDJpP4hfPWAfDsi5DAfq+E1+80HlKbXP8gAA=;
+        b=yGz1z2B78HHDQS3CciWF+vIl10OMj0xiNQtTDJFRd0v78iFhHrC17mM+p8btOBexIm
+         jvUWdGkCT5r6yVFmOeWK87bkloQOlKMXPSncGZGF2x9c6w75NqtcmSxvuFK9ThZ5bBcv
+         iKeLSYB3fMn7HW+1fXzaGzlgiQWZujOBebNSp4Ze3yGiTkYIwfILoUKoCOlUvtkDAQpD
+         zSenxrU888cA3uBdPF89a9hGkzvpdKAVzGf9OcZ7u7vD1e9LB2mkqaxqXTVxA3YTK5wl
+         H2iPDLCnRVSKYV6CgZ/IkAmJEUhwSdo6pG0oHa8n8M6uKt14WAw+iEAmtJuESLutRd8T
+         eyVg==
+Received: by 10.229.106.147 with SMTP id x19mr11523731qco.146.1339638169602;
+        Wed, 13 Jun 2012 18:42:49 -0700 (PDT)
+Received: from localhost (user-160v4aj.cable.mindspring.com. [76.15.145.83])
+        by mx.google.com with ESMTPS id cc16sm13040946qab.16.2012.06.13.18.42.48
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 13 Jun 2012 18:42:48 -0700 (PDT)
+X-Mailer: git-send-email 1.7.7.5 (Apple Git-26)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199963>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199964>
 
-Hi,
+During code review of some patches, it was noted that 'else' should
+appear on the same line as the closing '}' of its 'if' block.
 
-I initially reported this issue to another developer thinking the
-issue resided there but after some testing and discussion, have found
-that the issue is not there but possibly here :)
+Signed-off-by: Leila Muhtasib <muhtasib@gmail.com>
+---
+ Documentation/CodingGuidelines |    3 +++
+ 1 files changed, 3 insertions(+), 0 deletions(-)
 
-The issue, in summary, is that 7-zip was unable to untar a tar created
-via a "git archive" whereas gnu tar can. It seem that it may be the
-case that git is incorrectly using signed values when creating the
-checksum.
-
-As Igor commented in the other aforementioned thread, "[t]hey use
-'char' (that is 'signed char' by default in most compilers).=A0BUT
-correct TAR must use sum of unsigned values."
-
-Please see the following:
-
-1) The thread previously opened with Igor/7-Zip:
-http://sourceforge.net/projects/sevenzip/forums/forum/45798/topic/53226=
-04
-2)=A0http://www.gnu.org/software/tar/manual/html_node/Checksumming.html
-3) TAR source code:
-=A0 =A0 =A0tar_checksum
-=A0 =A0 =A0=A0and
-=A0 =A0 =A0simple_finish_header
-=A0 =A0 =A0=A0functions.
-4) GIT source code that calculates checksum: ustar_header_chksum
-function in=A0archive-tar.c.=A0For reference, here is the snippet of th=
-e
-git source code in question:
-
-git-git-f623ca1\archive-tar.c
-static unsigned int ustar_header_chksum(const struct ustar_header=A0*he=
-ader)
-{
-=A0 =A0 =A0 =A0const char *p =3D (const char *)header;
-=A0 =A0 =A0 =A0unsigned int chksum =3D 0;
-=A0 =A0 =A0 =A0while (p < header->chksum)
-=A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0chksum +=3D *p++;
-=A0 =A0 =A0 =A0chksum +=3D sizeof(header->chksum) * ' ';
-=A0 =A0 =A0 =A0p +=3D sizeof(header->chksum);
-=A0 =A0 =A0 =A0while (p < (const char *)header + sizeof(struct ustar_he=
-ader))
-=A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0chksum +=3D *p++;
-=A0 =A0 =A0 =A0return chksum;
-}
-
-Can someone please look into this and possibly redirect if needed?
-
-Thanks,
-Brendan
+diff --git a/Documentation/CodingGuidelines b/Documentation/CodingGuidelines
+index 4557711..99588f0 100644
+--- a/Documentation/CodingGuidelines
++++ b/Documentation/CodingGuidelines
+@@ -123,6 +123,9 @@ For C programs:
+ 
+  - We try to avoid assignments inside if().
+ 
++ - "else" should be positioned on the same line as the closing
++   "}" of its "if" block.
++
+  - Try to make your code understandable.  You may put comments
+    in, but comments invariably tend to stale out when the code
+    they were describing changes.  Often splitting a function
+-- 
+1.7.7.5 (Apple Git-26)
