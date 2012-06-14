@@ -1,80 +1,131 @@
-From: Carlos =?ISO-8859-1?Q?Mart=EDn?= Nieto <cmn@elego.de>
-Subject: Re: [BUG] cherry-pick ignores some arguments
-Date: Thu, 14 Jun 2012 18:29:49 +0200
-Message-ID: <1339691389.4625.9.camel@beez.lab.cmartin.tk>
-References: <20120614114415.39cbb64c@chalon.bertin.fr>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] remove the impression of unexpectedness when access is
+ denied
+Date: Thu, 14 Jun 2012 10:11:10 -0700
+Message-ID: <7v395xg6oh.fsf@alter.siamese.dyndns.org>
+References: <20120610182310.GB2427@book.hvoigt.net>
+ <20120611190207.GA20889@sigill.intra.peff.net>
+ <20120614071259.GA51076@book.hvoigt.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg="pgp-sha1"; protocol="application/pgp-signature";
-	boundary="=-dLv17qyw5UgP38DaaL2Y"
-Cc: git list <git@vger.kernel.org>
-To: Yann Dirson <dirson@bertin.fr>
-X-From: git-owner@vger.kernel.org Thu Jun 14 18:30:09 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Heiko Voigt <hvoigt@hvoigt.net>
+X-From: git-owner@vger.kernel.org Thu Jun 14 19:11:21 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SfCvs-0002l8-AJ
-	for gcvg-git-2@plane.gmane.org; Thu, 14 Jun 2012 18:30:04 +0200
+	id 1SfDZn-0006SB-0F
+	for gcvg-git-2@plane.gmane.org; Thu, 14 Jun 2012 19:11:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932119Ab2FNQ3x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Jun 2012 12:29:53 -0400
-Received: from kimmy.cmartin.tk ([91.121.65.165]:54870 "EHLO kimmy.cmartin.tk"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932106Ab2FNQ3v (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Jun 2012 12:29:51 -0400
-Received: from [10.10.10.234] (i59F7870A.versanet.de [89.247.135.10])
-	by kimmy.cmartin.tk (Postfix) with ESMTPSA id 3F2A546149;
-	Thu, 14 Jun 2012 18:29:44 +0200 (CEST)
-In-Reply-To: <20120614114415.39cbb64c@chalon.bertin.fr>
-X-Mailer: Evolution 3.2.2-1+b1 
+	id S932123Ab2FNRLO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Jun 2012 13:11:14 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:60806 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756037Ab2FNRLN (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Jun 2012 13:11:13 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id ABB138144;
+	Thu, 14 Jun 2012 13:11:12 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=134A68mERiMsGDGLUSy5Re0TnC0=; b=tl9xg7
+	02YadVa7ApUsWvi5TFeHunnsN251+y1xJUfZCfDZEDkeqYYEaD3uP6vCdoSSpjOc
+	hNsBVNI4c1ipOEFP2cAXbCxs0iiIQnFhDGmJrPAHs2KxkELFZCOw5EhyEMCwnzUV
+	jvTWhcPrJUPuhwQOm6DFkE2k+Qi7NZnJd+AA8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=T8YSs+eos0G2vskHdT/37cLZX+bFx8Zl
+	FAbh44vwbZSqcLkuO+pICva+xcqWGOLCoI+UqJlosGiepPWoiUhj3JSen0CxONrz
+	Qv+NJ6XKJCwcuZAZFVJ0fL6VZh2WYYZL7SnADn2iBUz7fqZh+bSnsN1RWjovdDuH
+	TMI2mQG33tU=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A27AF8143;
+	Thu, 14 Jun 2012 13:11:12 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E0A3D8140; Thu, 14 Jun 2012
+ 13:11:11 -0400 (EDT)
+In-Reply-To: <20120614071259.GA51076@book.hvoigt.net> (Heiko Voigt's message
+ of "Thu, 14 Jun 2012 09:13:06 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: F0F268F4-B643-11E1-A676-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200018>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200019>
 
+Heiko Voigt <hvoigt@hvoigt.net> writes:
 
---=-dLv17qyw5UgP38DaaL2Y
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+> diff --git a/connect.c b/connect.c
+> index 912cdde..19e73d5 100644
+> --- a/connect.c
+> +++ b/connect.c
+> @@ -56,6 +56,8 @@ struct ref **get_remote_heads(int in, struct ref **list,
+>  			      unsigned int flags,
+>  			      struct extra_have_objects *extra_have)
+>  {
+> +	int got_at_least_one_head = 0;
+> +
+>  	*list = NULL;
+>  	for (;;) {
+>  		struct ref *ref;
+> @@ -64,7 +66,14 @@ struct ref **get_remote_heads(int in, struct ref **list,
+>  		char *name;
+>  		int len, name_len;
+>  
+> -		len = packet_read_line(in, buffer, sizeof(buffer));
+> +		len = packet_read_line(in, buffer, sizeof(buffer), 1);
+> +		if (len < 0) {
+> +			if (got_at_least_one_head)
+> +				die("The remote end hung up unexpectedly");
+> +			else
+> +				die("Could not read remote heads");
+> +		}
 
-On Thu, 2012-06-14 at 11:44 +0200, Yann Dirson wrote:
-> Hello list,
->=20
-> I just did a "git cherry-pick AAA BBB..CCC" using 1.7.10.3, and was surpr=
-ised
-> that only the BBB..CCC range got picked - AAA was silently ignored.
->=20
+I do not think it is particularly interesting to know we have (or
+haven't) read one packet before we got an error. It would be an
+improvement if the message lets the user know at what stage of the
+exchange the remote threw you a garbage, but using the same "The
+remote end hung up unexpectedly" as all the other packet_read_line()
+errors show makes it less useful.
 
-There is no way to know whether this is a bug without knowing how AAA,
-BBB and ccc are related? From the names, can we assume that AAA is a
-(grand)parent of BBB? If that is the case, cherry-pick is behaving as
-expected.
+How about getting rid of the new boolean variable and say
 
-See the DESCRIPTION in http://git-scm.com/docs/git-rev-list for further
-explanation, but the short of the story is that the second argument told
-it to ignore any commit before BBB, so AAA is not in the list of commits
-to be applied.
+	len = packet_read(in, buffer, sizeof(buffer));
+        if (len < 0)
+		die("The remote end hung up upon initial contact");
 
-   cmn
+or something?
 
+>  		if (!len)
+>  			break;
+>  		if (buffer[len-1] == '\n')
+> @@ -95,6 +104,7 @@ struct ref **get_remote_heads(int in, struct ref **list,
+>  		hashcpy(ref->old_sha1, old_sha1);
+>  		*list = ref;
+>  		list = &ref->next;
+> +		got_at_least_one_head = 1;
+>  	}
+>  	return list;
+>  }
 
---=-dLv17qyw5UgP38DaaL2Y
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part
-Content-Transfer-Encoding: 7bit
+It seems that all callers other than this one after this patch
+behave identically as before like this patch. It would be far more
+preferable to introduce a new function that does not die on errors
+(including but not necessarily limited to short read situation you
+are interested in this patch), and update this caller that wants to
+handle these error cases to call that new function.  Perhaps
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
+	len = packet_read(in, buffer, sizeof(buffer));
 
-iQEcBAABAgAGBQJP2hF9AAoJEHKRP1jG7ZzT46sH/jcCD89Ydg2LBpFxR6VE0QSw
-8f9JQwsI4gGHf+LF3cYoA5T318KKanThXTYT1MSRizXHptf1kF8aLEvZEj0njN7y
-nAeK4DY0TtrwKkWkfjEU8y1pvnDDikKw3IT6bw6dFC14SkKGAmYcl0eHYHeG37ya
-Sik35C6zFCF7HM36prze5rrr87QnP3OpbeA5ZeJrOwHeaxbIJGlZiUe80GUbAdGW
-oGSyoFmkRUtJsZ8v6DhrUpVtIdgnizhBA2WTfwVdUHFMgmScltp9eymBC0nZulaV
-CMFND+Wthg/w8q9ls6EByFOyhx2XFVYl+xYTINwMKyctZe820aL4yFxmfHf8q9w=
-=JCuo
------END PGP SIGNATURE-----
+that returns negative error numbers when it sees an error, with
 
---=-dLv17qyw5UgP38DaaL2Y--
+	#define PKTREAD_UNKNOWN_ERROR (-1)
+        #define PKTREAD_SHORT_READ (-2)
+        ...
+
+and then over time we should consider converting remaining callers
+of packet_read_line() to packet_read().
