@@ -1,120 +1,82 @@
-From: Heiko Voigt <hvoigt@hvoigt.net>
-Subject: Re: [PATCH] remove the impression of unexpectedness when access is
-	denied
-Date: Thu, 14 Jun 2012 22:37:14 +0200
-Message-ID: <20120614203712.GA51783@book.hvoigt.net>
-References: <20120610182310.GB2427@book.hvoigt.net> <20120611190207.GA20889@sigill.intra.peff.net> <20120614071259.GA51076@book.hvoigt.net> <7v395xg6oh.fsf@alter.siamese.dyndns.org>
+From: Phil Hord <phil.hord@gmail.com>
+Subject: Confusing error message
+Date: Thu, 14 Jun 2012 18:54:57 -0400
+Message-ID: <CABURp0qE+qJjyrhRFb8-gWucM0=3TpYwDBsnbCPrZNVe3QGQBQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jun 14 22:37:34 2012
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jun 15 00:55:32 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SfGnF-0003nA-Mi
-	for gcvg-git-2@plane.gmane.org; Thu, 14 Jun 2012 22:37:26 +0200
+	id 1SfIwq-00006L-4P
+	for gcvg-git-2@plane.gmane.org; Fri, 15 Jun 2012 00:55:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756491Ab2FNUhV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Jun 2012 16:37:21 -0400
-Received: from smtprelay04.ispgateway.de ([80.67.31.38]:45322 "EHLO
-	smtprelay04.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756085Ab2FNUhV (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Jun 2012 16:37:21 -0400
-Received: from [77.20.33.80] (helo=localhost)
-	by smtprelay04.ispgateway.de with esmtpsa (TLSv1:AES256-SHA:256)
-	(Exim 4.68)
-	(envelope-from <hvoigt@hvoigt.net>)
-	id 1SfGn4-0005Xm-PK; Thu, 14 Jun 2012 22:37:14 +0200
-Content-Disposition: inline
-In-Reply-To: <7v395xg6oh.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.19 (2009-01-05)
-X-Df-Sender: aHZvaWd0QGh2b2lndC5uZXQ=
+	id S1751618Ab2FNWzT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Jun 2012 18:55:19 -0400
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:38915 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751366Ab2FNWzS (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Jun 2012 18:55:18 -0400
+Received: by yenl2 with SMTP id l2so1426519yen.19
+        for <git@vger.kernel.org>; Thu, 14 Jun 2012 15:55:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to:content-type;
+        bh=bp1DYevjXn/fcwelNfDNd7wC6dPn7Hy+tkLR0WykLz4=;
+        b=uU9chUbeYLAFKAlJjo6dG8salmOeHsAWwOZU4kTD7LH+d1JhBMkVupB/IJciWqoOTL
+         mIS1+pWvjhouEDxgQfNI5T9QyJ8Sm07Gpr9skym0iBPbbTXTN5CEMC5dw7cW/6kgHEjl
+         m0XUP9II70nBRUus3glZITETBGY/tVzsvUjpglgk/7gZdlkn9xDFvKGYGurky82idmm5
+         3B/e6VwhLJgrbGXBOWwS+9wHRbhtw7hJNabC/Ts5Eu3gVdFbriuaDWIVt4xCI/fBw1+y
+         gO+cC3BtlHSfm6yMBs+7P8DnvlK+gav5WjdtOePYUIR/PHFaR7jR/K4dVtYNdzWuqlRV
+         TWzA==
+Received: by 10.236.75.40 with SMTP id y28mr5688279yhd.65.1339714517934; Thu,
+ 14 Jun 2012 15:55:17 -0700 (PDT)
+Received: by 10.146.150.18 with HTTP; Thu, 14 Jun 2012 15:54:57 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200032>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200033>
 
-Hi,
+I messed something up during a rebase in a moved file (probably
+because I had rename detection turned off).  So now I want to fix it.
 
-On Thu, Jun 14, 2012 at 10:11:10AM -0700, Junio C Hamano wrote:
-> Heiko Voigt <hvoigt@hvoigt.net> writes:
-> 
-> > diff --git a/connect.c b/connect.c
-> > index 912cdde..19e73d5 100644
-> > --- a/connect.c
-> > +++ b/connect.c
-> > @@ -56,6 +56,8 @@ struct ref **get_remote_heads(int in, struct ref **list,
-> >  			      unsigned int flags,
-> >  			      struct extra_have_objects *extra_have)
-> >  {
-> > +	int got_at_least_one_head = 0;
-> > +
-> >  	*list = NULL;
-> >  	for (;;) {
-> >  		struct ref *ref;
-> > @@ -64,7 +66,14 @@ struct ref **get_remote_heads(int in, struct ref **list,
-> >  		char *name;
-> >  		int len, name_len;
-> >  
-> > -		len = packet_read_line(in, buffer, sizeof(buffer));
-> > +		len = packet_read_line(in, buffer, sizeof(buffer), 1);
-> > +		if (len < 0) {
-> > +			if (got_at_least_one_head)
-> > +				die("The remote end hung up unexpectedly");
-> > +			else
-> > +				die("Could not read remote heads");
-> > +		}
-> 
-> I do not think it is particularly interesting to know we have (or
-> haven't) read one packet before we got an error. It would be an
-> improvement if the message lets the user know at what stage of the
-> exchange the remote threw you a garbage, but using the same "The
-> remote end hung up unexpectedly" as all the other packet_read_line()
-> errors show makes it less useful.
+I think I have the commit amended right, but to be sure I want to diff
+the old file and the new file.
 
-Well I thought about the case of "access denied" or "no repository
-here". I wanted to distinguish between this quite typical situation
-where you did not get anything and the situation when you already got
-something from the server. AFAIK its not so typical to hang up after you
-got the first ref or is it?
+  $ git diff newfile HEAD^:oldfile
+  fatal: Path 'oldfile' exists, but not 'oldfile'.
+  Did you mean 'HEAD^:oldfile' aka 'HEAD^:./oldfile'?
 
-So maybe something along the lines:
+This was confusing, so I tried different variants. This one produced
+no output, suggesting no differences:
 
-	if (got_at_least_one_head)
-		die("The remote end hung up upon initial contact");
-	else
-		die("Could not read from remote repository.\n"
-		    "\nPlease make sure you have the correct access"
-		    "rights and the repository exists.");
+  $ git diff -- newfile HEAD^:oldfile
 
-to give the user some suggestion what might have gone wrong?
+But this one shows me that there are differences:
 
-If I understand the loop correctly it reads one remote head per
-iteration doesn't it?
+  $ git diff HEAD^:oldfile newfile
 
-> It seems that all callers other than this one after this patch
-> behave identically as before like this patch. It would be far more
-> preferable to introduce a new function that does not die on errors
-> (including but not necessarily limited to short read situation you
-> are interested in this patch), and update this caller that wants to
-> handle these error cases to call that new function.  Perhaps
-> 
-> 	len = packet_read(in, buffer, sizeof(buffer));
-> 
-> that returns negative error numbers when it sees an error, with
-> 
-> 	#define PKTREAD_UNKNOWN_ERROR (-1)
->         #define PKTREAD_SHORT_READ (-2)
->         ...
-> 
-> and then over time we should consider converting remaining callers
-> of packet_read_line() to packet_read().
+And so did this one:
 
-Yes I agree thats what I realized to late after sending the patch. Will
-implement that in the next iteration of my patch.
+  $ git show HEAD -M
 
-Cheers Heiko
+Am I spelling the syntax wrong?  Is the <ref>:<path> syntax not
+allowed on diff?  If so, why all the inconsistency?
+
+In case I am misreading something here, here is the unmolested command
+and output I am using:
+
+$ git diff Tasker_Servers/Server_Common/GuiConfig.h
+HEAD^:./Tasker_Servers/Server_CommonGui/GuiConfig.h
+fatal: Path 'Tasker_Servers/Server_CommonGui/GuiConfig.h' exists, but
+not 'Tasker_Servers/Server_CommonGui/GuiConfig.h'.
+Did you mean 'HEAD^:Tasker_Servers/Server_CommonGui/GuiConfig.h' aka
+'HEAD^:./Tasker_Servers/Server_CommonGui/GuiConfig.h'?
+$ git --version
+git version 1.7.11.rc3.219.g94bee05
+
+Phil
