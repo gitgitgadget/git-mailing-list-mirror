@@ -1,108 +1,101 @@
-From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-Subject: Re: [PATCHv7 1/4] Read (but not write) from $XDG_CONFIG_HOME/git/config
- file
-Date: Thu, 14 Jun 2012 18:31:54 +0100
-Message-ID: <4FDA200A.8080200@ramsay1.demon.co.uk>
-References: <1338988885-21933-1-git-send-email-Huynh-Khoi-Nguyen.Nguyen@ensimag.imag.fr> <1339469396-29677-1-git-send-email-Huynh-Khoi-Nguyen.Nguyen@ensimag.imag.fr>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCHv2] git bisect old/new
+Date: Thu, 14 Jun 2012 10:34:57 -0700
+Message-ID: <7vlijper0e.fsf@alter.siamese.dyndns.org>
+References: <1339466625-17461-1-git-send-email-Valentin.Duperray@ensimag.imag.fr>
+ <1339541765-2078-1-git-send-email-Valentin.Duperray@ensimag.imag.fr>
+ <7vr4tkhys5.fsf@alter.siamese.dyndns.org>
+ <20120613200606.Horde.QkenYnwdC4BP2NaOTf8gvnA@webmail.minatec.grenoble-inp.fr> <CAP8UFD2LBKXuey2w_-0Zy9Thi1DWCgekjCL3RULmHWVK5DXCog@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org,
+Content-Type: text/plain; charset=us-ascii
+Cc: duperrav@minatec.inpg.fr,
 	Valentin Duperray <Valentin.Duperray@ensimag.imag.fr>,
-	Franck Jonas <Franck.Jonas@ensimag.imag.fr>,
+	git@vger.kernel.org, Franck Jonas <Franck.Jonas@ensimag.imag.fr>,
 	Lucien Kong <Lucien.Kong@ensimag.imag.fr>,
 	Thomas Nguy <Thomas.Nguy@ensimag.imag.fr>,
+	Huynh Khoi Nguyen Nguyen 
+	<Huynh-Khoi-Nguyen.Nguyen@ensimag.imag.fr>,
 	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Junio C Hamano <gitster@pobox.com>
-To: Huynh Khoi Nguyen Nguyen 
-	<Huynh-Khoi-Nguyen.Nguyen@ensimag.imag.fr>
-X-From: git-owner@vger.kernel.org Thu Jun 14 19:33:26 2012
+	Peff <peff@peff.net>
+To: Christian Couder <christian.couder@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jun 14 19:35:04 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SfDv9-0004NY-3w
-	for gcvg-git-2@plane.gmane.org; Thu, 14 Jun 2012 19:33:23 +0200
+	id 1SfDwl-0000sB-Py
+	for gcvg-git-2@plane.gmane.org; Thu, 14 Jun 2012 19:35:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932256Ab2FNRdT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Jun 2012 13:33:19 -0400
-Received: from anchor-post-3.mail.demon.net ([195.173.77.134]:58933 "EHLO
-	anchor-post-3.mail.demon.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S932210Ab2FNRdS (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 14 Jun 2012 13:33:18 -0400
-Received: from ramsay1.demon.co.uk ([193.237.126.196])
-	by anchor-post-3.mail.demon.net with esmtp (Exim 4.69)
-	id 1SfDv2-0005CN-ot; Thu, 14 Jun 2012 17:33:17 +0000
-User-Agent: Thunderbird 1.5.0.2 (Windows/20060308)
-In-Reply-To: <1339469396-29677-1-git-send-email-Huynh-Khoi-Nguyen.Nguyen@ensimag.imag.fr>
+	id S1755409Ab2FNRfB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Jun 2012 13:35:01 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39451 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755286Ab2FNRe7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Jun 2012 13:34:59 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 114128727;
+	Thu, 14 Jun 2012 13:34:59 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=MQVkQ7fEgacEMkDp6W88afrdGL4=; b=R8VdCi
+	CHTrzTq3GDHUplq4tAlRS7ZUh9aRkqIoVY0n7h9whKLf83RGyUj1lZkmgfpOmzs+
+	KhdNkEyI4IUN8DXnRT4o5s2uT6dTWAV7VSj+oP6CJsMGbx0N7ckLokH7ub5ryFi5
+	41sxoOm9+Q32ChdtgDMkJkrIVUVIPLxO3WsBc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=JmAGkuyUSJ4XqX2eBJFcy8+pGOxWiT93
+	pEpAJRx4T8sU5+inKSqr6uRu3vbUpuPFVHyYV5gTRAEAo8BsVRMoCPRfGQ3qByVt
+	VZcYpOTIvybYyB2bm6WmPTyboXgKrh6jWlmwj8wyi9IuiFPNGJa41uQV2COSONmE
+	Cyxo9DjrIOE=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E99528726;
+	Thu, 14 Jun 2012 13:34:58 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7571B8724; Thu, 14 Jun 2012
+ 13:34:58 -0400 (EDT)
+In-Reply-To: <CAP8UFD2LBKXuey2w_-0Zy9Thi1DWCgekjCL3RULmHWVK5DXCog@mail.gmail.com>
+ (Christian Couder's message of "Thu, 14 Jun 2012 11:56:02 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 43439788-B647-11E1-8A61-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200024>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200025>
 
-Huynh Khoi Nguyen Nguyen wrote:
-> Git will be able to read from $XDG_CONFIG_HOME/git/config, a new
-> configuration file following XDG specification. In the order of
-> reading, this file is between global configuration file and system
-> wide configuration file. Git currently does not write to this new
-> configuration file. If $XDG_CONFIG_HOME is either not set or empty,
-> $HOME/.config/git/config will be used.
-> 
-> Signed-off-by: Huynh Khoi Nguyen Nguyen <Huynh-Khoi-Nguyen.Nguyen@ensimag.imag.fr>
-> Signed-off-by: Valentin Duperray <Valentin.Duperray@ensimag.imag.fr>
-> Signed-off-by: Franck Jonas <Franck.Jonas@ensimag.imag.fr>
-> Signed-off-by: Lucien Kong <Lucien.Kong@ensimag.imag.fr>
-> Signed-off-by: Thomas Nguy <Thomas.Nguy@ensimag.imag.fr>
-> Signed-off-by: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-> ---
->  Documentation/git-config.txt |   12 +++++--
->  builtin/config.c             |   28 +++++++++++-----
->  cache.h                      |    3 ++
->  config.c                     |   23 ++++++++-----
->  path.c                       |   41 ++++++++++++++++++++++++
->  t/t1306-xdg-files.sh         |   70 ++++++++++++++++++++++++++++++++++++++++++
->  6 files changed, 156 insertions(+), 21 deletions(-)
->  create mode 100755 t/t1306-xdg-files.sh
+Christian Couder <christian.couder@gmail.com> writes:
 
-[...]
+> Peff said:
+>
+> -------
+> Hmm. I think this is not quite as nice, but it is way simpler. It may be
+> worth trying for a bit to see how people like it. If they don't, the
+> cost of failure is that we have to maintain "old/new" forever, even
+> after we implement a yes/no reversible scheme. But maintaining the
+> old/new mapping from yes/no would not be any harder than the good/bad
+> mapping, which we would need to do anyway.
+>
+> So it sounds like a reasonable first step.
+> -------
 
-> diff --git a/path.c b/path.c
-> index 6f2aa69..66acd24 100644
-> --- a/path.c
-> +++ b/path.c
-> @@ -87,6 +87,21 @@ char *git_pathdup(const char *fmt, ...)
->  	return xstrdup(path);
->  }
->  
-> +char *mkpathdup(const char *fmt, ...)
-> +{
-> +	char *path;
-> +	struct strbuf sb = STRBUF_INIT;
-> +	va_list args;
-> +
-> +	va_start(args, fmt);
-> +	strbuf_vaddf(&sb, fmt, args);
-> +	va_end(args);
-> +	path = xstrdup(cleanup_path(sb.buf));
-> +
-> +	strbuf_release(&sb);
-> +	return path;
-> +}
-> +
+The above is a very reasonable stand.  But I do not think it leads
+to the following at all.
 
-As expected, this version avoids re-introducing the bug on Cygwin.
+> So I'd rather have a file with a generic name like "BISECT_TERMS", but
+> it may contain just one line like for example "new/old".
 
-I tested the series on Cygwin, MinGW and Linux and it passes it's
-own tests (t1306-xdg-files.sh) on all platforms. (Well, on MinGW
-I had to run it thus:
+That is forcing an unnecessary complexity, when we do not even know
+if we need anything more than old/new.  We can start simple and the
+result may be sufficient and in which case we can stop there.
 
-    $ GIT_TEST_CMP='diff -ub' ./t1306-xdg-files.sh
+In fact, Peff's advice you quoted is against doing what you just
+said, which is to do more than we know that we need right now.
 
-otherwise the first two tests fail because of CRLF vs LF issues).
-
-Thanks!
-
-ATB,
-Ramsay Jones
+If we end up needing arbitrary pair of words, then at that point we
+may add a mechanism that records the pair of words in use, be they
+<yes/no>, or <frotz/xyzzy>.  And when that happens, <new/old> will
+continue to be supported for free--there is no extra work to support
+<new/old> in addition to the work needed to support <good/bad> and
+<arbitrary1/arbitrary2> that we need to support anyway.
