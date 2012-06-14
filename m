@@ -1,237 +1,84 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCHv5 1/5] Scripts to install, delete and clear a MediaWiki
-Date: Thu, 14 Jun 2012 18:17:39 +0200
-Message-ID: <vpqbokl6f6k.fsf@bauges.imag.fr>
-References: <1339607025-22725-1-git-send-email-simon.cathebras@ensimag.imag.fr>
-	<1339664243-31952-1-git-send-email-Matthieu.Moy@imag.fr>
-	<4FD9ACC6.50307@ensimag.imag.fr>
+From: lei yang <yanglei.fage-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>
+Subject: how to get the formated patches from the merge id
+Date: Fri, 15 Jun 2012 00:25:12 +0800
+Message-ID: <CAHsH0E98t7EcvXM0zSjMGHcd5u4_Lp6B7q9KAhcE0eyo-tXnWw@mail.gmail.com>
+Reply-To: git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Julien.Khayat@ensimag.imag.fr,
-	Simon.Perrat@ensimag.imag.fr, Charles.Roussel@ensimag.imag.fr,
-	Guillaume.Sasdy@ensimag.imag.fr
-To: Simon.Cathebras@ensimag.imag.fr
-X-From: git-owner@vger.kernel.org Thu Jun 14 18:17:55 2012
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: text/plain; charset=ISO-8859-1
+To: git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org, git-u79uwXL29TY76Z2rM5mHXA@public.gmane.org
+X-From: git-users+bncCJHCj86PEhDooOj-BBoEmnDTGg-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org Thu Jun 14 18:25:18 2012
+Return-path: <git-users+bncCJHCj86PEhDooOj-BBoEmnDTGg-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+Envelope-to: gcggu-git-users@m.gmane.org
+Received: from mail-vb0-f58.google.com ([209.85.212.58])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SfCk3-0008Je-Gn
-	for gcvg-git-2@plane.gmane.org; Thu, 14 Jun 2012 18:17:51 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756342Ab2FNQRr convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 14 Jun 2012 12:17:47 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:33921 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756062Ab2FNQRq (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Jun 2012 12:17:46 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id q5EGHdDC029290
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Thu, 14 Jun 2012 18:17:40 +0200
-Received: from bauges.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1SfCjs-0007yG-QC; Thu, 14 Jun 2012 18:17:40 +0200
-In-Reply-To: <4FD9ACC6.50307@ensimag.imag.fr> (Simon Cathebras's message of
-	"Thu, 14 Jun 2012 11:20:06 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.93 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Thu, 14 Jun 2012 18:17:41 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: q5EGHdDC029290
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1340295462.8573@k1Ww6MnLNWLmqyxZpK4/cQ
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200015>
+	(envelope-from <git-users+bncCJHCj86PEhDooOj-BBoEmnDTGg-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>)
+	id 1SfCrB-0006FY-GZ
+	for gcggu-git-users@m.gmane.org; Thu, 14 Jun 2012 18:25:13 +0200
+Received: by vbbez10 with SMTP id ez10sf1735986vbb.3
+        for <gcggu-git-users@m.gmane.org>; Thu, 14 Jun 2012 09:25:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=beta;
+        h=x-beenthere:received-spf:mime-version:date:message-id:subject:from
+         :to:x-original-sender:x-original-authentication-results:reply-to
+         :precedence:mailing-list:list-id:x-google-group-id:list-post
+         :list-help:list-archive:sender:list-subscribe:list-unsubscribe
+         :content-type;
+        bh=DXiDFtAAxAfNsgveBbhBPPp12sdZpHUcV6fhvk9fHAc=;
+        b=KLcbzVz+VLoK2nDT5yvkBgnT+0Q/KGiqqNXyqAUUWHRRrnYtuEKMboVKFJxKS+YGX1
+         BY6Vbt+i/NpBr16BfOnW3RxuTOvqqigWgFQtrsD04/DSwPk/OTpDM5dUCm8zL0Pjtfdg
+         Unrz38hxEx7Ghb6dpOgqy95lJScfBut0q0iqI=
+Received: by 10.52.23.65 with SMTP id k1mr192465vdf.7.1339691112977;
+        Thu, 14 Jun 2012 09:25:12 -0700 (PDT)
+X-BeenThere: git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+Received: by 10.220.219.79 with SMTP id ht15ls320528vcb.3.gmail; Thu, 14 Jun
+ 2012 09:25:12 -0700 (PDT)
+Received: by 10.52.179.69 with SMTP id de5mr1306687vdc.7.1339691112263;
+        Thu, 14 Jun 2012 09:25:12 -0700 (PDT)
+Received: by 10.52.179.69 with SMTP id de5mr1306685vdc.7.1339691112255;
+        Thu, 14 Jun 2012 09:25:12 -0700 (PDT)
+Received: from mail-vc0-f174.google.com (mail-vc0-f174.google.com [209.85.220.174])
+        by gmr-mx.google.com with ESMTPS id u6si1711882vdi.1.2012.06.14.09.25.12
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 14 Jun 2012 09:25:12 -0700 (PDT)
+Received-SPF: pass (google.com: domain of yanglei.fage-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org designates 209.85.220.174 as permitted sender) client-ip=209.85.220.174;
+Received: by vcbf11 with SMTP id f11so1435318vcb.33
+        for <git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>; Thu, 14 Jun 2012 09:25:12 -0700 (PDT)
+Received: by 10.52.100.4 with SMTP id eu4mr1154255vdb.66.1339691112124; Thu,
+ 14 Jun 2012 09:25:12 -0700 (PDT)
+Received: by 10.52.97.35 with HTTP; Thu, 14 Jun 2012 09:25:12 -0700 (PDT)
+X-Original-Sender: yanglei.fage-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org
+X-Original-Authentication-Results: gmr-mx.google.com; spf=pass (google.com:
+ domain of yanglei.fage-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org designates 209.85.220.174 as permitted
+ sender) smtp.mail=yanglei.fage-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org; dkim=pass header.i=@gmail.com
+Precedence: list
+Mailing-list: list git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org; contact git-users+owners-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+List-ID: <git-users.googlegroups.com>
+X-Google-Group-Id: 934228491576
+List-Post: <http://groups.google.com/group/git-users/post?hl=en_US>, <mailto:git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+List-Help: <http://groups.google.com/support/?hl=en_US>, <mailto:git-users+help-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+List-Archive: <http://groups.google.com/group/git-users?hl=en_US>
+Sender: git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+List-Subscribe: <http://groups.google.com/group/git-users/subscribe?hl=en_US>, <mailto:git-users+subscribe-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+List-Unsubscribe: <http://groups.google.com/group/git-users/subscribe?hl=en_US>,
+ <mailto:googlegroups-manage+934228491576+unsubscribe-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200016>
 
-"Simon.Cathebras" <Simon.Cathebras@ensimag.imag.fr> writes:
+Hello list:
 
-> Appears to be a local problem. Did you managed to run the script when
-> this was fixed ?
->
-> Anyway, please check out with the following wiki page if you have all
-> required package.
+eg:
 
-Indeed, installing php5-cgi did it. I can now run the testsuite. But
-that would have been nice to get explicit error messages about this.
+commit 0e93b4b304ae052ba1bc73f6d34a68556fe93429
+Merge: b724cc1 51bfd29
 
-> url: https://github.com/Fafinou/git/wiki
+how can I from 0e93b4b304ae052ba1bc73f6d34a68556fe93429 to get the
+formated patch ?
+(I know we can do git format-patch b724cc1..51bfd29, but how to from
+0e93b4b304ae052ba1bc73f6d34a68556fe93429 to get?)
 
-This documentation should actually appear in the README file of your
-test environment. Wikis are nice to work collaboratively on a draft, bu=
-t
-this kind of doc should really end up as close to the code as possible
-(currently, the code doesn't give a way to find the page above ...).
+Lei
 
-While testing/reviewing, I fixed a few more issues (patch below).
-
-One thing I wanted to do was to let "install-wiki.sh" be launched from
-any directory, like "./t/install-wiki.sh install", but it's still not
-there, there are relative paths here and there that break it. Maybe we
-should just run cd "$WIKI_TEST_DIR" at the top. Or error out asking the
-user to cd himself.
-
-=46rom 084babd650376437d0fb4697d680d3c325316b7c Mon Sep 17 00:00:00 200=
-1
-=46rom: Matthieu Moy <Matthieu.Moy@imag.fr>
-Date: Thu, 14 Jun 2012 18:13:20 +0200
-Subject: [PATCH] More fixups
-
----
- contrib/mw-to-git/t/Makefile                |  7 +++++--
- contrib/mw-to-git/t/t9362-mw-to-git-utf8.sh |  8 ++++----
- contrib/mw-to-git/t/test-gitmw-lib.sh       | 20 +++++++++++---------
- 3 files changed, 20 insertions(+), 15 deletions(-)
-
-diff --git a/contrib/mw-to-git/t/Makefile b/contrib/mw-to-git/t/Makefil=
-e
-index 752fd1f..0212b85 100644
---- a/contrib/mw-to-git/t/Makefile
-+++ b/contrib/mw-to-git/t/Makefile
-@@ -17,10 +17,13 @@ T =3D $(wildcard t[0-9][0-9][0-9][0-9]-*.sh)
-=20
- help:
- 	@echo 'Run "$(MAKE) test" to launch test scripts'
--	@echo 'Run "$(MAKE)" clean to remove trash folders'
-+	@echo 'Run "$(MAKE) clean" to remove trash folders'
-=20
- test:
--	for t in $(T); do "./$$t"; done
-+	@for t in $(T); do \
-+		echo "$$t"; \
-+		"./$$t" || { echo "$$t failed"; exit 1; } \
-+	done
-=20
- clean:
- 	$(RM) -r 'trash directory'.*
-diff --git a/contrib/mw-to-git/t/t9362-mw-to-git-utf8.sh b/contrib/mw-t=
-o-git/t/t9362-mw-to-git-utf8.sh
-index ee7cc9e..0add2d5 100755
---- a/contrib/mw-to-git/t/t9362-mw-to-git-utf8.sh
-+++ b/contrib/mw-to-git/t/t9362-mw-to-git-utf8.sh
-@@ -101,7 +101,7 @@ test_expect_success 'Git push works with a wiki wit=
-h accents' '
- 	test_diff_directories mw_dir_6 ref_page_6
- '
-=20
--test_expect_success 'Git clone works with accentsand spaces' '
-+test_expect_success 'Git clone works with accents and spaces' '
- 	wiki_reset &&
- 	wiki_editpage "=E9 =E0 =EE" "this page must be d=E9l=E9t=E9 before th=
-e clone" false &&
- 	git clone mediawiki::http://'"$SERVER_ADDR:$PORT/$WIKI_DIR_NAME"' mw_=
-dir_7 &&
-@@ -166,7 +166,7 @@ test_expect_failure 'special character at the begin=
-ing of file name from mw to g
- 	test -f mw_dir_11/[char_2
- '
-=20
--test_expect_success 'test of correct formating for file name from mw t=
-o git' '
-+test_expect_success 'correct formating for file name from mw to git' '
- 	wiki_reset &&
- 	git clone mediawiki::http://'"$SERVER_ADDR:$PORT/$WIKI_DIR_NAME"' mw_=
-dir_12 &&
- 	wiki_editpage char_%_7b_1 "expect to be renamed char{_1" false &&
-@@ -184,7 +184,7 @@ test_expect_success 'test of correct formating for =
-file name from mw to git' '
- '
-=20
-=20
--test_expect_failure 'test of correct formating for file name begining =
-with special character' '
-+test_expect_failure 'correct formating for file name begining with spe=
-cial character' '
- 	wiki_reset &&
- 	git clone mediawiki::http://'"$SERVER_ADDR:$PORT/$WIKI_DIR_NAME"' mw_=
-dir_13 &&
- 	(
-@@ -203,7 +203,7 @@ test_expect_failure 'test of correct formating for =
-file name begining with speci
- '
-=20
-=20
--test_expect_success 'test of correct formating for file name from git =
-to mw' '
-+test_expect_success 'correct formating for file name from git to mw' '
- 	wiki_reset &&
- 	git clone mediawiki::http://'"$SERVER_ADDR:$PORT/$WIKI_DIR_NAME"' mw_=
-dir_14 &&
- 	(
-diff --git a/contrib/mw-to-git/t/test-gitmw-lib.sh b/contrib/mw-to-git/=
-t/test-gitmw-lib.sh
-index 36ac654..f444d1f 100644
---- a/contrib/mw-to-git/t/test-gitmw-lib.sh
-+++ b/contrib/mw-to-git/t/test-gitmw-lib.sh
-@@ -10,8 +10,12 @@
- # CONFIGURATION VARIABLES
- # You might want to change these ones
- #
-+if test -z "$WIKI_TEST_DIR"
-+then
-+	WIKI_TEST_DIR=3D.
-+fi
-=20
--. ./test.config
-+. "$WIKI_TEST_DIR"/test.config
-=20
- export CURR_DIR=3D$(pwd)
- export TEST_DIRECTORY=3D"$CURR_DIR"/../../../t
-@@ -87,7 +91,7 @@ test_diff_directories () {
- #
- # Check that <dir> contains exactly <N> files
- test_contains_N_files () {
--	test `ls "$1" | wc -l` -eq "$2";
-+	test `ls -- "$1" | wc -l` -eq "$2"
- }
-=20
-=20
-@@ -101,8 +105,7 @@ wiki_check_content () {
- 	#replacement of forbidden character in file name
- 	page_name=3D$(printf "%s\n" "$2" | sed -e "s/\//%2F/g")
-=20
--	diff -b "$1" wiki_tmp/"$page_name".mw
--	if test $? -ne 0
-+	if ! diff -b "$1" wiki_tmp/"$page_name".mw
- 	then
- 		rm -rf wiki_tmp
- 		error "ERROR: file $2 not found on wiki"
-@@ -268,9 +271,9 @@ start_lighttpd() {
- 		stop_lighttpd
- 	fi
- 	config_lighttpd
--	$LIGHTTPD_DIR/lighttpd -f $WEB/lighttpd.conf
--
--	if test $? -ne 0 ; then
-+=09
-+	if ! $LIGHTTPD_DIR/lighttpd -f $WEB/lighttpd.conf
-+	then
- 		echo "Could not execute http deamon lighttpd"
- 		exit 1
- 	fi
-@@ -280,9 +283,8 @@ start_lighttpd() {
- #
- # Kill daemon lighttpd and removes files and folders associated.
- stop_lighttpd () {
--
- 	test -f "$WEB_TMP/pid" && kill $(cat "$WEB_TMP/pid")
--	rm -rf $WEB
-+	rm -rf "$WEB"
- }
-=20
- # Create the SQLite database of the MediaWiki. If the database file al=
-ready
---=20
-1.7.11.rc0.57.g84a04c7
-
---=20
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+-- 
+You received this message because you are subscribed to the Google Groups "Git for human beings" group.
+To post to this group, send email to git-users-/JYPxA39Uh5TLH3MbocFF+G/Ez6ZCGd0@public.gmane.org
+To unsubscribe from this group, send email to git-users+unsubscribe-/JYPxA39Uh5TLH3MbocFF+G/Ez6ZCGd0@public.gmane.org
+For more options, visit this group at http://groups.google.com/group/git-users?hl=en.
