@@ -1,170 +1,154 @@
 Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
-X-Spam-Level: **
+X-Spam-Level: *
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=2.3 required=3.0 tests=AWL,BAYES_00,INVALID_MSGID,
-	MSGID_NOFQDN1,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
-Received: (qmail 4469 invoked by uid 107); 13 Apr 2010 10:57:46 -0000
+X-Spam-Status: No, score=1.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INVALID_MSGID,MSGID_NOFQDN1,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+Received: (qmail 16289 invoked by uid 107); 14 Jun 2012 08:20:32 -0000
 Received: from vger.kernel.org (HELO vger.kernel.org) (209.132.180.67)
-    by peff.net (qpsmtpd/0.40) with ESMTP; Tue, 13 Apr 2010 06:57:43 -0400
+    by peff.net (qpsmtpd/0.84) with ESMTP; Thu, 14 Jun 2012 04:20:31 -0400
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751654Ab0DMK5g (ORCPT <rfc822;peff@peff.net>);
-	Tue, 13 Apr 2010 06:57:36 -0400
-Received: from avalon.gnuzifer.de ([78.46.211.2]:54947 "EHLO
-	avalon.gnuzifer.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751298Ab0DMK5f (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Apr 2010 06:57:35 -0400
-Received: from u-7-037.vpn.rwth-aachen.de ([137.226.103.37]:59009 helo=localhost)
-	by avalon.gnuzifer.de with esmtpsa (TLS1.0:DHE_RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.69)
-	(envelope-from <heipei@hackvalue.de>)
-	id 1O1do9-0003wv-SJ; Tue, 13 Apr 2010 12:57:30 +0200
-From:	y@vger.kernel.org
-To:	Git ML <git@vger.kernel.org>
-Cc:	Thomas Rast <trast@student.ethz.ch>, Jeff King <peff@peff.net>,
-	Junio C Hamano <gitster@pobox.com>,
-	Johannes Gilger <heipei@hackvalue.de>
-Subject: [PATCHv3] pretty: Initialize notes if %N is used
-Date:	Tue, 13 Apr 2010 12:57:54 +0200
-Message-Id: <1271156274-6984-1-git-send-email-y>
-X-Mailer: git-send-email 1.7.1.rc1
-In-Reply-To: <20100413103611.GA4181@dualtron.lan>
-References: <20100413103611.GA4181@dualtron.lan>
-X-Verified-Sender: yes
-X-SA-Exim-Connect-IP: 137.226.103.37
-X-SA-Exim-Mail-From: heipei@hackvalue.de
+	id S1754925Ab2FNIUW (ORCPT <rfc822;peff@peff.net>);
+	Thu, 14 Jun 2012 04:20:22 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:48929 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753056Ab2FNIUU (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Jun 2012 04:20:20 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id q5E8B2JU023608
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Thu, 14 Jun 2012 10:11:02 +0200
+Received: from bauges.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.72)
+	(envelope-from <moy@imag.fr>)
+	id 1Sf5Hr-0006X7-VI; Thu, 14 Jun 2012 10:20:16 +0200
+Received: from moy by bauges.imag.fr with local (Exim 4.72)
+	(envelope-from <moy@imag.fr>)
+	id 1Sf5Hr-0007rJ-Sg; Thu, 14 Jun 2012 10:20:15 +0200
+From:	y@imag.fr
+To:	git@vger.kernel.org, gitster@pobox.com
+Cc:	Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: [PATCH 1/2] fixup! 8e00b48 don't allocate struct wt_status_state dynamically
+Date:	Thu, 14 Jun 2012 10:20:13 +0200
+Message-Id: <1339662014-30173-1-git-send-email-y>
+X-Mailer: git-send-email 1.7.11.rc0.57.g84a04c7
+In-Reply-To: <7vk3zag6jg.fsf@alter.siamese.dyndns.org>
+References: <7vk3zag6jg.fsf@alter.siamese.dyndns.org>
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Thu, 14 Jun 2012 10:11:02 +0200 (CEST)
+X-IMAG-MailScanner-Information:	Please contact MI2S MIM  for more information
+X-MailScanner-ID: q5E8B2JU023608
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
+MailScanner-NULL-Check:	1340266263.03484@aWzg1QdnAlaPtmfLH7aaog
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-From: Johannes Gilger <heipei@hackvalue.de>
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
 
-When using git log --pretty='%N' without an explicit --show-notes, git
-would segfault. This patches fixes this behaviour by loading the needed
-notes datastructures if --pretty is used and the format contains %N.
-When --pretty='%N' is used together with --no-notes, %N won't be
-expanded.
+The common
 
-This is an extension to a proposed patch by Jeff King.
+void function() {
+	struct wt_status_state *state = calloc(...);
+	...
+	free(state);
+}
 
-Signed-off-by: Johannes Gilger <heipei@hackvalue.de>
+is essentially a less efficient, and more error prone way of allocating a
+variable on the stack (plus, the calloc should have been a xcalloc).
+Replace it with an on-stack variable.
+
+While we're there, also replace the individual initializations of fields
+with memset(..., 0, ...).
+
+Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
 ---
-Introduced space when calling userformat_find_requirements and dealt with %+N
-and %-N during the strbuf_expand phase. I hope strncmp is the right way to do
-it here. strbuf is NUL-terminated so there should not be a problem.
 
-Greetings,
-Jojo
+(BTW, I didn't find a way to have both --autosquash-compliant and
+meaningfull titles)
 
- builtin/log.c |    5 ++++-
- commit.h      |    5 +++++
- pretty.c      |   40 ++++++++++++++++++++++++++++++++++++----
- 3 files changed, 45 insertions(+), 5 deletions(-)
+ wt-status.c | 49 +++++++++++++++++++++----------------------------
+ 1 file changed, 21 insertions(+), 28 deletions(-)
 
-diff --git a/builtin/log.c b/builtin/log.c
-index b706a5f..6e6bc09 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -36,6 +36,7 @@ static void cmd_log_init(int argc, const char **argv, const char *prefix,
+diff --git a/wt-status.c b/wt-status.c
+index ed28b4f..e65716d 100644
+--- a/wt-status.c
++++ b/wt-status.c
+@@ -932,49 +932,42 @@ static void show_bisect_in_progress(struct wt_status *s,
+ static void wt_status_print_state(struct wt_status *s)
  {
- 	int i;
- 	int decoration_style = 0;
-+	struct userformat_want w;
+ 	const char *state_color = color(WT_STATUS_IN_PROGRESS, s);
+-	struct wt_status_state *state = calloc(1, sizeof(*state));
++	struct wt_status_state state;
+ 	struct stat st;
  
- 	rev->abbrev = DEFAULT_ABBREV;
- 	rev->commit_format = CMIT_FMT_DEFAULT;
-@@ -58,7 +59,9 @@ static void cmd_log_init(int argc, const char **argv, const char *prefix,
- 		usage(builtin_log_usage);
- 	argc = setup_revisions(argc, argv, rev, opt);
+-	state->merge_in_progress = 0;
+-	state->am_in_progress = 0;
+-	state->am_empty_patch = 0;
+-	state->rebase_in_progress = 0;
+-	state->rebase_interactive_in_progress = 0;
+-	state->cherry_pick_in_progress = 0;
+-	state->bisect_in_progress = 0;
++	memset(&state, 0, sizeof(state));
  
--	if (!rev->show_notes_given && !rev->pretty_given)
-+	userformat_find_requirements(NULL, &w);
-+
-+	if (!rev->show_notes_given && (!rev->pretty_given || w.notes))
- 		rev->show_notes = 1;
- 	if (rev->show_notes)
- 		init_display_notes(&rev->notes_opt);
-diff --git a/commit.h b/commit.h
-index 3cf5166..26ec8c0 100644
---- a/commit.h
-+++ b/commit.h
-@@ -74,11 +74,16 @@ struct pretty_print_context
- 	struct reflog_walk_info *reflog_info;
- };
- 
-+struct userformat_want {
-+	unsigned notes:1;
-+};
-+
- extern int has_non_ascii(const char *text);
- struct rev_info; /* in revision.h, it circularly uses enum cmit_fmt */
- extern char *reencode_commit_message(const struct commit *commit,
- 				     const char **encoding_p);
- extern void get_commit_format(const char *arg, struct rev_info *);
-+extern void userformat_find_requirements(const char *fmt, struct userformat_want *w);
- extern void format_commit_message(const struct commit *commit,
- 				  const char *format, struct strbuf *sb,
- 				  const struct pretty_print_context *context);
-diff --git a/pretty.c b/pretty.c
-index 6ba3da8..31cef5c 100644
---- a/pretty.c
-+++ b/pretty.c
-@@ -775,10 +775,13 @@ static size_t format_commit_one(struct strbuf *sb, const char *placeholder,
+ 	if (!stat(git_path("MERGE_HEAD"), &st)) {
+-		state->merge_in_progress = 1;
++		state.merge_in_progress = 1;
+ 	} else if (!stat(git_path("rebase-apply"), &st)) {
+ 		if (!stat(git_path("rebase-apply/applying"), &st)) {
+-			state->am_in_progress = 1;
++			state.am_in_progress = 1;
+ 			if (!stat(git_path("rebase-apply/patch"), &st) && !st.st_size)
+-				state->am_empty_patch = 1;
++				state.am_empty_patch = 1;
+ 		} else {
+-			state->rebase_in_progress = 1;
++			state.rebase_in_progress = 1;
  		}
- 		return 0;	/* unknown %g placeholder */
- 	case 'N':
--		format_display_notes(commit->object.sha1, sb,
--			    git_log_output_encoding ? git_log_output_encoding
--						    : git_commit_encoding, 0);
--		return 1;
-+		if (c->pretty_ctx->show_notes) {
-+			format_display_notes(commit->object.sha1, sb,
-+				    git_log_output_encoding ? git_log_output_encoding
-+							    : git_commit_encoding, 0);
-+			return 1;
-+		}
-+		return 0;
+ 	} else if (!stat(git_path("rebase-merge"), &st)) {
+ 		if (!stat(git_path("rebase-merge/interactive"), &st))
+-			state->rebase_interactive_in_progress = 1;
++			state.rebase_interactive_in_progress = 1;
+ 		else
+-			state->rebase_in_progress = 1;
++			state.rebase_in_progress = 1;
+ 	} else if (!stat(git_path("CHERRY_PICK_HEAD"), &st)) {
+-		state->cherry_pick_in_progress = 1;
++		state.cherry_pick_in_progress = 1;
  	}
- 
- 	/* For the rest we have to parse the commit header. */
-@@ -855,6 +858,35 @@ static size_t format_commit_item(struct strbuf *sb, const char *placeholder,
- 	return consumed + 1;
+ 	if (!stat(git_path("BISECT_LOG"), &st))
+-		state->bisect_in_progress = 1;
+-
+-	if (state->merge_in_progress)
+-		show_merge_in_progress(s, state, state_color);
+-	else if (state->am_in_progress)
+-		show_am_in_progress(s, state, state_color);
+-	else if (state->rebase_in_progress || state->rebase_interactive_in_progress)
+-		show_rebase_in_progress(s, state, state_color);
+-	else if (state->cherry_pick_in_progress)
+-		show_cherry_pick_in_progress(s, state, state_color);
+-	if (state->bisect_in_progress)
+-		show_bisect_in_progress(s, state, state_color);
+-	free(state);
++		state.bisect_in_progress = 1;
++
++	if (state.merge_in_progress)
++		show_merge_in_progress(s, &state, state_color);
++	else if (state.am_in_progress)
++		show_am_in_progress(s, &state, state_color);
++	else if (state.rebase_in_progress || state.rebase_interactive_in_progress)
++		show_rebase_in_progress(s, &state, state_color);
++	else if (state.cherry_pick_in_progress)
++		show_cherry_pick_in_progress(s, &state, state_color);
++	if (state.bisect_in_progress)
++		show_bisect_in_progress(s, &state, state_color);
  }
  
-+static size_t userformat_want_item(struct strbuf *sb, const char *placeholder,
-+				   void *context)
-+{
-+	struct userformat_want *w = context;
-+
-+	switch (*placeholder) {
-+		case '-':
-+		case '+':
-+			if (!strncmp(placeholder+1, "N", 1))
-+				w->notes = 1;
-+		case 'N': w->notes = 1;
-+	}
-+	return 0;
-+}
-+
-+void userformat_find_requirements(const char *fmt, struct userformat_want *w)
-+{
-+	struct strbuf dummy = STRBUF_INIT;
-+
-+	memset(w, 0, sizeof(*w));
-+	if (!fmt) {
-+		if (!user_format)
-+			return;
-+		fmt = user_format;
-+	}
-+	strbuf_expand(&dummy, user_format, userformat_want_item, w);
-+	strbuf_release(&dummy);
-+}
-+
- void format_commit_message(const struct commit *commit,
- 			   const char *format, struct strbuf *sb,
- 			   const struct pretty_print_context *pretty_ctx)
+ void wt_status_print(struct wt_status *s)
 -- 
-1.7.1.rc1
+1.7.11.rc0.57.g84a04c7
 
