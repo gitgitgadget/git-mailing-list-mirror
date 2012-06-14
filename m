@@ -1,88 +1,89 @@
-From: Leila <muhtasib@gmail.com>
-Subject: Re: translating free online git book
-Date: Thu, 14 Jun 2012 09:45:33 -0400
-Message-ID: <CAA3EhH+bZorbfttwP+huWrLjhYTsSoxgKB6rtdS8X+AKDP4L1w@mail.gmail.com>
-References: <1339659125381-7561498.post@n2.nabble.com>
+From: Marc Branchaud <marcnarc@xiplink.com>
+Subject: Re: [PATCHv5] rebase [-i --exec | -ix] <CMD>...
+Date: Thu, 14 Jun 2012 10:08:09 -0400
+Message-ID: <4FD9F049.1030808@xiplink.com>
+References: <1339325076-474-1-git-send-email-Lucien.Kong@ensimag.imag.fr> <1339488312-6349-1-git-send-email-Lucien.Kong@ensimag.imag.fr> <4FD70A8E.7050502@in.waw.pl> <7vk3zc4mgz.fsf@alter.siamese.dyndns.org> <4FD89DD6.1070705@in.waw.pl> <20120613200552.Horde.JHFYfHwdC4BP2NaA39-wrmA@webmail.minatec.grenoble-inp.fr> <7vipevgjhp.fsf@alter.siamese.dyndns.org> <20120613213836.Horde.qI8GQnwdC4BP2Ow8uCTQqgA@webmail.minatec.grenoble-inp.fr> <4FD8FF25.6030908@kdbg.org> <7vr4tig7rg.fsf@alter.siamese.dyndns.org> <4FD9177A.5030303@in.waw.pl> <vpqr4ticre1.fsf@bauges.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: javkhlan <javkhlan.sh@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jun 14 15:46:00 2012
+Cc: =?UTF-8?B?WmJpZ25pZXcgSsSZZHJ6ZWpld3NraS1Tem1law==?= 
+	<zbyszek@in.waw.pl>, Junio C Hamano <gitster@pobox.com>,
+	Johannes Sixt <j6t@kdbg.org>, konglu@minatec.inpg.fr,
+	Lucien Kong <Lucien.Kong@ensimag.imag.fr>, git@vger.kernel.org,
+	Valentin Duperray <Valentin.Duperray@ensimag.imag.fr>,
+	Franck Jonas <Franck.Jonas@ensimag.imag.fr>,
+	Thomas Nguy <Thomas.Nguy@ensimag.imag.fr>,
+	Huynh Khoi Nguyen Nguyen 
+	<Huynh-Khoi-Nguyen.Nguyen@ensimag.imag.fr>
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Thu Jun 14 16:09:02 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SfAN4-0002oe-Me
-	for gcvg-git-2@plane.gmane.org; Thu, 14 Jun 2012 15:45:59 +0200
+	id 1SfAjN-0004aY-Vd
+	for gcvg-git-2@plane.gmane.org; Thu, 14 Jun 2012 16:09:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756131Ab2FNNpy convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 14 Jun 2012 09:45:54 -0400
-Received: from mail-vb0-f46.google.com ([209.85.212.46]:64316 "EHLO
-	mail-vb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756081Ab2FNNpy convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 14 Jun 2012 09:45:54 -0400
-Received: by vbbff1 with SMTP id ff1so1083324vbb.19
-        for <git@vger.kernel.org>; Thu, 14 Jun 2012 06:45:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=x0aJxFKg3KWGAXOQbc6ux2j3CAnZ80qyIbFNiv/eyOs=;
-        b=WaHTLWhrZfPr/NekkRToHUwcxgz8a4upDjNU6ghf6tYKML2edNjQ+XgKeWx5SzGhz3
-         e2FmP0dTaI8EjddA8ZeotvQLQX20f9Uz4mBtFslEDWi8hlY//iUdKtkjPNfqdJdcw1Yp
-         qc99Ns+1VdqQ6RRaaWJTMn0yrWl4LcTmXp8psrXFdrREksEyEwuiCcTYazoirDtY0/M2
-         bNkhEEijNe+4r5PMp+s1WJz2SL5S/RBL/giBlNM7vsbU+l6QhL3kE1K03ntRmHoN1uTC
-         MSdJaUugKgQ5PhOgakxRhdkFRhF3neTxN4NufhirUbzCgrLIcRtHmDHtBlMunUVZg1uC
-         PNLA==
-Received: by 10.220.148.196 with SMTP id q4mr1028508vcv.36.1339681553314; Thu,
- 14 Jun 2012 06:45:53 -0700 (PDT)
-Received: by 10.52.37.233 with HTTP; Thu, 14 Jun 2012 06:45:33 -0700 (PDT)
-In-Reply-To: <1339659125381-7561498.post@n2.nabble.com>
+	id S1756052Ab2FNOI6 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 14 Jun 2012 10:08:58 -0400
+Received: from smtp142.dfw.emailsrvr.com ([67.192.241.142]:35982 "EHLO
+	smtp142.dfw.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756039Ab2FNOI5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Jun 2012 10:08:57 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by smtp24.relay.dfw1a.emailsrvr.com (SMTP Server) with ESMTP id B5AA7180DB5
+	for <git@vger.kernel.org>; Thu, 14 Jun 2012 10:08:56 -0400 (EDT)
+X-Virus-Scanned: OK
+Received: from smtp138.ord.emailsrvr.com (smtp138.ord.emailsrvr.com [173.203.6.138])
+	by smtp24.relay.dfw1a.emailsrvr.com (SMTP Server) with ESMTPS id 9FB6D180D9E
+	for <git@vger.kernel.org>; Thu, 14 Jun 2012 10:08:56 -0400 (EDT)
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by smtp22.relay.ord1a.emailsrvr.com (SMTP Server) with ESMTP id 3FC7320007D;
+	Thu, 14 Jun 2012 10:08:08 -0400 (EDT)
+X-Virus-Scanned: OK
+Received: by smtp22.relay.ord1a.emailsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id 1FED420009A;
+	Thu, 14 Jun 2012 10:08:07 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:12.0) Gecko/20120430 Thunderbird/12.0.1
+In-Reply-To: <vpqr4ticre1.fsf@bauges.imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200006>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200007>
 
-Hi Javkhlan,
+On 12-06-14 02:57 AM, Matthieu Moy wrote:
+> Zbigniew J=C4=99drzejewski-Szmek <zbyszek@in.waw.pl> writes:
+>=20
+>>> Shouldn't "rebase --continue" after such a "commit --amend" resume
+>>> execution from "exec cmd1", which failed in the initial run?
 
-The ProGit book is in its own repository on github. If you read the
-README.rst, it has a note about translating.
++1 for Junio's proposal.
 
-https://github.com/progit/progit
+Currently the only time --continue moves on to the next insn is in the =
+"edit"
+case, when everything up to that point (including applying the "edit" c=
+ommit)
+is fine.  But if the rebase halted due to a problem, --continue ensures=
+ the
+problem is fixed before moving on to the next insn (e.g. it makes sure =
+a
+merge conflict is resolved).
 
-Regards,
-Leila
+I think it makes the most sense for --continue after an exec-failure to=
+ try
+to re-run the exec.  Furthermore, --skip after an exec failure should j=
+ust
+skip the exec.
 
-On Thu, Jun 14, 2012 at 3:32 AM, javkhlan <javkhlan.sh@gmail.com> wrote=
-:
-> Hi,
->
-> My name is Javkhlan, I am a mongolian programmer, and i as many other=
-s in my
-> company or in ,bigger picture,
-> Mongolia use git in our projects. Language barrier sometimes is prett=
-y hard
-> to deal with, especially with the git
-> documenation.
-> Thus, i and some other my fellow programmers would like to translate =
-the
-> online free git book.
->
-> Browsing through git-scm web site and git Documentation repo i didn't=
- find
-> the git book resources.
-> Could you tell me how can i start translating it?
->
-> Thanks in advance.
->
-> --
-> View this message in context: http://git.661346.n2.nabble.com/transla=
-ting-free-online-git-book-tp7561498.html
-> Sent from the git mailing list archive at Nabble.com.
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at =A0http://vger.kernel.org/majordomo-info.html
+To me that makes --continue's (and --skip's) behaviour consistent with =
+what
+it does when any other insn operation fails.  In other words, if the re=
+base
+hits an exec failure, the user is going to want to fix it before contin=
+uing
+(just like any other failure during a rebase).  If the user decides to =
+not
+fix the failing exec, they can --skip it.
+
+		M.
