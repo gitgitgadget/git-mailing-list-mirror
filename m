@@ -1,67 +1,85 @@
-From: Lawrence Mitchell <wence@gmx.li>
-Subject: [PATCH v2 3/3] git-blame.el: Do not use bare 0 to mean (point-min)
-Date: Thu, 14 Jun 2012 10:38:00 +0100
-Message-ID: <1339666680-4381-3-git-send-email-wence@gmx.li>
-References: <87k3za9rwj.fsf@gmx.li>
- <1339666680-4381-1-git-send-email-wence@gmx.li>
- <1339666680-4381-2-git-send-email-wence@gmx.li>
-Cc: jrnieder@gmail.com, git@vger.kernel.org, davidk@lysator.liu.se,
-	user42@zip.com.au, osv@javad.com, gitster@pobox.com
-To: =?UTF-8?q?R=C3=BCdiger=20Sonderfeld?= <ruediger@c-plusplus.de>
-X-From: git-owner@vger.kernel.org Thu Jun 14 11:38:59 2012
+From: Chris Packham <judge.packham@gmail.com>
+Subject: Re: [Query] Update email-id in kernel source
+Date: Thu, 14 Jun 2012 21:44:34 +1200
+Message-ID: <4FD9B282.7090106@gmail.com>
+References: <CAOh2x=k==ZjqQk4bvvviz4Uy7Xg2yn0A+9vbYJ63VJa4qMCodA@mail.gmail.com> <4FD860A9.4000804@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: gitster@pobox.com, git@vger.kernel.org
+To: viresh kumar <viresh.linux@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jun 14 11:44:18 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Sf6W1-0004Gl-3Q
-	for gcvg-git-2@plane.gmane.org; Thu, 14 Jun 2012 11:38:57 +0200
+	id 1Sf6b4-0003Px-Lc
+	for gcvg-git-2@plane.gmane.org; Thu, 14 Jun 2012 11:44:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754595Ab2FNJin (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Jun 2012 05:38:43 -0400
-Received: from treacle.ucs.ed.ac.uk ([129.215.16.102]:37728 "EHLO
-	treacle.ucs.ed.ac.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753985Ab2FNJim (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Jun 2012 05:38:42 -0400
-Received: from lmtp1.ucs.ed.ac.uk (lmtp1.ucs.ed.ac.uk [129.215.149.64])
-	by treacle.ucs.ed.ac.uk (8.13.8/8.13.4) with ESMTP id q5E9cBXQ007646;
-	Thu, 14 Jun 2012 10:38:15 +0100 (BST)
-Received: from e4300lm.epcc.ed.ac.uk (e4300lm.epcc.ed.ac.uk [129.215.63.156])
-	(authenticated user=lmitche4 mech=PLAIN bits=0)
-	by lmtp1.ucs.ed.ac.uk (8.13.8/8.13.7) with ESMTP id q5E9c1H0025947
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Thu, 14 Jun 2012 10:38:10 +0100 (BST)
-X-Mailer: git-send-email 1.7.11.rc2.9.g10afb6c
-In-Reply-To: <1339666680-4381-2-git-send-email-wence@gmx.li>
-X-Edinburgh-Scanned: at treacle.ucs.ed.ac.uk
-    with MIMEDefang 2.60, Sophie, Sophos Anti-Virus, Clam AntiVirus
-X-Scanned-By: MIMEDefang 2.60 on 129.215.16.102
-X-Scanned-By: MIMEDefang 2.52 on 129.215.149.64
+	id S1755055Ab2FNJoF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Jun 2012 05:44:05 -0400
+Received: from mail-pb0-f46.google.com ([209.85.160.46]:34189 "EHLO
+	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753985Ab2FNJoE (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Jun 2012 05:44:04 -0400
+Received: by pbbrp8 with SMTP id rp8so3567819pbb.19
+        for <git@vger.kernel.org>; Thu, 14 Jun 2012 02:44:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=D9IxKtqVF/t8DyiQICh84kcsEtDrD7jLcKDZaUCWp30=;
+        b=jAGcaER+g7L8L+jzFvqmJGAUmuu30wkO8ii/I8goh3yDoL8EVqENgPbmKCp0A3iQ0H
+         f+BT+WA+abmMTTcFokTCdsBJRJlBhY+iz0A1sOkKXJkSYt7TGOUQWdmoAecjxSjCeBNR
+         j2F5HWwx/3m1FMaPC9kPcCH2+HWpFeznKtAX3H5IzzWHLfq6t/0+1xN5dJe58ztE0EiU
+         gv6xnHPU0FzLevTczacFVFbLjHug2FhsLf4OGxHtJmwZWGvo5aCd7uAtYZtJsKMJT37b
+         vP8qBx9bardJX0JmRmFAffAhT8SqQxNXsekZOeQRmbrB/vz2FiOioNQiO0sRsJ0h71SQ
+         afmQ==
+Received: by 10.68.227.198 with SMTP id sc6mr6077382pbc.138.1339667043515;
+        Thu, 14 Jun 2012 02:44:03 -0700 (PDT)
+Received: from [192.168.1.66] (115-188-15-163.jetstream.xtra.co.nz. [115.188.15.163])
+        by mx.google.com with ESMTPS id oy8sm8950580pbc.52.2012.06.14.02.43.57
+        (version=SSLv3 cipher=OTHER);
+        Thu, 14 Jun 2012 02:44:02 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:12.0) Gecko/20120421 Thunderbird/12.0
+In-Reply-To: <4FD860A9.4000804@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199992>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/199993>
 
-Signed-off-by: Lawrence Mitchell <wence@gmx.li>
----
- contrib/emacs/git-blame.el | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+On 06/13/2012 09:43 PM, Chris Packham wrote:
+> On 06/13/2012 09:24 PM, viresh kumar wrote:
+>> Hi guys,
+>>
+>> I have recently changed my company and am required to update my email address in
+>> kernel source.
+>>
+>> I can only see one way of doing that:
+>> - Do a git grep, update all files, commit and post the patch.
+>>
+>> Is there any better way of doing this that git provides, by which even
+>> 'git log' would show
+>> the latest id available? I heard from a friend but don't know if it exists.
+>>
+>> --
+>> Viresh
+>> --
+>> To unsubscribe from this list: send the line "unsubscribe git" in
+>> the body of a message to majordomo@vger.kernel.org
+>> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> 
+> Not sure if the kernel maintains one but projects can use a .mailmap[1]
+> file to do just this kind of thing. You'd still have to update code if
+> you want people to get hold of you from MODULE_AUTHOR statements.
+> 
+> --
+> [1] - http://www.git-scm.com/docs/git-shortlog
 
-No change from v1
+git log does support the .mailmap feature with the %aE format option but
+it looks like it doesn't do it by default. I'm guessing performance is
+probably the reason. Anyone else care to comment?
 
-diff --git a/contrib/emacs/git-blame.el b/contrib/emacs/git-blame.el
-index bb6d7bb..e671f6c 100644
---- a/contrib/emacs/git-blame.el
-+++ b/contrib/emacs/git-blame.el
-@@ -341,7 +341,7 @@ See also function `git-blame-mode'."
-     (save-excursion
-       (goto-char (process-mark proc))
-       (insert-before-markers str)
--      (goto-char 0)
-+      (goto-char (point-min))
-       (unless in-blame-filter
-         (let ((more t)
-               (in-blame-filter t))
--- 
-1.7.11.rc2.9.g10afb6c
+(Re-send. Sorry for the spam, I can't convince my phone not to send HTML)
