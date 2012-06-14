@@ -1,55 +1,55 @@
 From: Luka Perkov <lists@lukaperkov.net>
-Subject: git-http-fetch: remove unused cmd_http_fetch
-Date: Thu, 14 Jun 2012 22:20:52 +0200
-Message-ID: <20120614202052.GA3592@w500.iskon.local>
+Subject: [PATCH] git-http-fetch: remove unused cmd_http_fetch
+Date: Thu, 14 Jun 2012 22:23:37 +0200
+Message-ID: <20120614202336.GA3755@w500.iskon.local>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 14 22:20:59 2012
+X-From: git-owner@vger.kernel.org Thu Jun 14 22:23:43 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SfGXK-0007fG-LW
-	for gcvg-git-2@plane.gmane.org; Thu, 14 Jun 2012 22:20:59 +0200
+	id 1SfGZw-00070P-TJ
+	for gcvg-git-2@plane.gmane.org; Thu, 14 Jun 2012 22:23:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756334Ab2FNUUy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Jun 2012 16:20:54 -0400
-Received: from mail-wg0-f44.google.com ([74.125.82.44]:63090 "EHLO
-	mail-wg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756277Ab2FNUUx (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Jun 2012 16:20:53 -0400
-Received: by wgbdr13 with SMTP id dr13so2316044wgb.1
-        for <git@vger.kernel.org>; Thu, 14 Jun 2012 13:20:52 -0700 (PDT)
+	id S1756359Ab2FNUXh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Jun 2012 16:23:37 -0400
+Received: from mail-wi0-f178.google.com ([209.85.212.178]:48284 "EHLO
+	mail-wi0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751632Ab2FNUXg (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Jun 2012 16:23:36 -0400
+Received: by wibhn6 with SMTP id hn6so2351815wib.1
+        for <git@vger.kernel.org>; Thu, 14 Jun 2012 13:23:35 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=date:from:to:subject:message-id:mime-version:content-type
          :content-disposition:user-agent:x-gm-message-state;
         bh=rqJdRtVaEdFBm4LsWTTWe/FEqzPKYQAfbrnlw+mbJgY=;
-        b=apDYF52ITJuI5w0pKiY8DehZ7lHStjbqRJ2C+Fk/q64fj6GnkvfSo0SVD2xgbeQsdQ
-         5y8OozRaVTpaWPT8uJU3IV9DLSECLPPopHKT8yXddsgawzccapJUoVhcUuMDv/P0ordw
-         uc6wum+Ja/Gk/1uPQi6WxluzYQmb6JF8OhD4G9mmtVWnQli0j9uRW9w07JCcwnxrrDv4
-         BzRSNsnt8Td9fEsHUkiOIKWiXhhlFoTGFCvOuHK+icq1s2H8TGw1vhHFtIzicMLN5Oly
-         MeM6UVdLUj+ebrKifmRgjMVP7n88iVQBi7pAjBadSWmPqd5DoykIvGCKYF7WVuSq161k
-         srcw==
-Received: by 10.180.83.197 with SMTP id s5mr7007858wiy.9.1339705251929;
-        Thu, 14 Jun 2012 13:20:51 -0700 (PDT)
+        b=aGveEqh2MoOzcT8+mi4Mhbs9pRUbBt8QoVHm/TWoaXzCg4twiWN4FM71c2rvcTQ6Gp
+         YAzuwycxqzm/gPGoalLK62t+o7EPVUHABE5h7oOa4U7OHoRQuzrv6f8wBnRFEbyzNbno
+         6F0zZQjORKwdueSAIYuyTzQOWoOuqvuVG7HLtXuvlOvkqm72j0UMFkFQtLvq+fshFf7b
+         FKEImlTLiu8CFWAOxY8x+X6bh2LLRG9RkBiv4Jui3HVMf9Q5dRHQ06aJXEhPdkfA0xT1
+         mTt7vNkB5mT2Ytf0ARovboA3qanCxp/CnL3PNhOjZfN49L+657QwkzLkWFf2N3h4WUyZ
+         ZOaA==
+Received: by 10.180.106.137 with SMTP id gu9mr7065859wib.8.1339705415295;
+        Thu, 14 Jun 2012 13:23:35 -0700 (PDT)
 Received: from localhost (213-191-157-151.dhcp.iskon.hr. [213.191.157.151])
-        by mx.google.com with ESMTPS id hv7sm23635658wib.0.2012.06.14.13.20.49
+        by mx.google.com with ESMTPS id gb9sm20711478wib.8.2012.06.14.13.23.34
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 14 Jun 2012 13:20:51 -0700 (PDT)
+        Thu, 14 Jun 2012 13:23:34 -0700 (PDT)
 Content-Disposition: inline
 User-Agent: Mutt/1.5.21 (2010-09-15)
-X-Gm-Message-State: ALoCoQkbbw+ugUYMz8s7L5iEXglRx165Nj1SEXI2/cKvYj1d0KaJmAmbcHShiHmEFGLd+t09Sruu
+X-Gm-Message-State: ALoCoQlw8ZxxdZWB6KFhGB3AC8OL+LMuQQ0tdLFHtYCbArGhSTh9qrNysEBpPndbmBe/Um/d9S2G
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200029>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200030>
 
 It was left out from commit 1088261f6fc90324014b5306cca4171987da85ce
-    
+
 Signed-off-by: Luka Perkov <lists@lukaperkov.net>
 ---
 
