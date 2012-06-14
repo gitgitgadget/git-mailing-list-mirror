@@ -1,84 +1,55 @@
-From: lei yang <yanglei.fage-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>
-Subject: how to get the formated patches from the merge id
-Date: Fri, 15 Jun 2012 00:25:12 +0800
-Message-ID: <CAHsH0E98t7EcvXM0zSjMGHcd5u4_Lp6B7q9KAhcE0eyo-tXnWw@mail.gmail.com>
-Reply-To: git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+From: Michael Witten <mfwitten@gmail.com>
+Subject: Re: Git rebase basics
+Date: Thu, 14 Jun 2012 16:28:21 +0000
+Message-ID: <CAMOZ1BusvR=dTSRaRxHiH_wpGnk86gBU4PRvJ=sjV8xHc4OXpA@mail.gmail.com>
+References: <1339621152946-7561468.post@n2.nabble.com> <1339642794317-7561489.post@n2.nabble.com>
+ <CAE1pOi3uXHcXm=fpH-e6pHyBTAACS7=KkdR9jQEuEjzoXy1w=A@mail.gmail.com> <1339689678486-7561538.post@n2.nabble.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org, git-u79uwXL29TY76Z2rM5mHXA@public.gmane.org
-X-From: git-users+bncCJHCj86PEhDooOj-BBoEmnDTGg-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org Thu Jun 14 18:25:18 2012
-Return-path: <git-users+bncCJHCj86PEhDooOj-BBoEmnDTGg-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-Envelope-to: gcggu-git-users@m.gmane.org
-Received: from mail-vb0-f58.google.com ([209.85.212.58])
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: lancelyons <llyons2@cox.net>
+X-From: git-owner@vger.kernel.org Thu Jun 14 18:29:01 2012
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-users+bncCJHCj86PEhDooOj-BBoEmnDTGg-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>)
-	id 1SfCrB-0006FY-GZ
-	for gcggu-git-users@m.gmane.org; Thu, 14 Jun 2012 18:25:13 +0200
-Received: by vbbez10 with SMTP id ez10sf1735986vbb.3
-        for <gcggu-git-users@m.gmane.org>; Thu, 14 Jun 2012 09:25:13 -0700 (PDT)
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1SfCup-0007vw-TZ
+	for gcvg-git-2@plane.gmane.org; Thu, 14 Jun 2012 18:29:00 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S932128Ab2FNQ2y convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 14 Jun 2012 12:28:54 -0400
+Received: from mail-qc0-f174.google.com ([209.85.216.174]:35900 "EHLO
+	mail-qc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756339Ab2FNQ2x convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 14 Jun 2012 12:28:53 -0400
+Received: by qcro28 with SMTP id o28so1105508qcr.19
+        for <git@vger.kernel.org>; Thu, 14 Jun 2012 09:28:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=beta;
-        h=x-beenthere:received-spf:mime-version:date:message-id:subject:from
-         :to:x-original-sender:x-original-authentication-results:reply-to
-         :precedence:mailing-list:list-id:x-google-group-id:list-post
-         :list-help:list-archive:sender:list-subscribe:list-unsubscribe
-         :content-type;
-        bh=DXiDFtAAxAfNsgveBbhBPPp12sdZpHUcV6fhvk9fHAc=;
-        b=KLcbzVz+VLoK2nDT5yvkBgnT+0Q/KGiqqNXyqAUUWHRRrnYtuEKMboVKFJxKS+YGX1
-         BY6Vbt+i/NpBr16BfOnW3RxuTOvqqigWgFQtrsD04/DSwPk/OTpDM5dUCm8zL0Pjtfdg
-         Unrz38hxEx7Ghb6dpOgqy95lJScfBut0q0iqI=
-Received: by 10.52.23.65 with SMTP id k1mr192465vdf.7.1339691112977;
-        Thu, 14 Jun 2012 09:25:12 -0700 (PDT)
-X-BeenThere: git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
-Received: by 10.220.219.79 with SMTP id ht15ls320528vcb.3.gmail; Thu, 14 Jun
- 2012 09:25:12 -0700 (PDT)
-Received: by 10.52.179.69 with SMTP id de5mr1306687vdc.7.1339691112263;
-        Thu, 14 Jun 2012 09:25:12 -0700 (PDT)
-Received: by 10.52.179.69 with SMTP id de5mr1306685vdc.7.1339691112255;
-        Thu, 14 Jun 2012 09:25:12 -0700 (PDT)
-Received: from mail-vc0-f174.google.com (mail-vc0-f174.google.com [209.85.220.174])
-        by gmr-mx.google.com with ESMTPS id u6si1711882vdi.1.2012.06.14.09.25.12
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 14 Jun 2012 09:25:12 -0700 (PDT)
-Received-SPF: pass (google.com: domain of yanglei.fage-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org designates 209.85.220.174 as permitted sender) client-ip=209.85.220.174;
-Received: by vcbf11 with SMTP id f11so1435318vcb.33
-        for <git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>; Thu, 14 Jun 2012 09:25:12 -0700 (PDT)
-Received: by 10.52.100.4 with SMTP id eu4mr1154255vdb.66.1339691112124; Thu,
- 14 Jun 2012 09:25:12 -0700 (PDT)
-Received: by 10.52.97.35 with HTTP; Thu, 14 Jun 2012 09:25:12 -0700 (PDT)
-X-Original-Sender: yanglei.fage-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org
-X-Original-Authentication-Results: gmr-mx.google.com; spf=pass (google.com:
- domain of yanglei.fage-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org designates 209.85.220.174 as permitted
- sender) smtp.mail=yanglei.fage-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org; dkim=pass header.i=@gmail.com
-Precedence: list
-Mailing-list: list git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org; contact git-users+owners-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
-List-ID: <git-users.googlegroups.com>
-X-Google-Group-Id: 934228491576
-List-Post: <http://groups.google.com/group/git-users/post?hl=en_US>, <mailto:git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-List-Help: <http://groups.google.com/support/?hl=en_US>, <mailto:git-users+help-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-List-Archive: <http://groups.google.com/group/git-users?hl=en_US>
-Sender: git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
-List-Subscribe: <http://groups.google.com/group/git-users/subscribe?hl=en_US>, <mailto:git-users+subscribe-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-List-Unsubscribe: <http://groups.google.com/group/git-users/subscribe?hl=en_US>,
- <mailto:googlegroups-manage+934228491576+unsubscribe-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200016>
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=BWZlqzfH5Klio4NS90aGKGWsjKPgydmVyK0/8Y52lUs=;
+        b=Yh6Pw3HTr8Gm4EZI8rSAAXRtLN1P+l0EFQtZDwtKEOBzQYgkogkGM2F5iZ47nzFeqv
+         T3mXQRfCwakdqh8MlqZtDfCA4hSqAbFB35QMgx8oJ8+bxNgcdUmTvQGjnaIgkamEGKDB
+         AOhnLcma/TD3PI/U0cCyjqkxJELCKIrUClEsKtBwBBsprFJRP/ufpZthhWVa03Ai50js
+         cBXYzuFyKki0vomFg7O+Q9OStsxljvQjp80G9aSooiwBOCAQzwSc13FMC7KQ7Iq/+buT
+         WX+TbOLsD9tpRTDyp5VB6qE2xpPdNaBnvrVJPip4acwKS2Z7KokkolnCs4RQ9bedrixj
+         8HOw==
+Received: by 10.229.134.212 with SMTP id k20mr1226923qct.83.1339691332349;
+ Thu, 14 Jun 2012 09:28:52 -0700 (PDT)
+Received: by 10.229.189.13 with HTTP; Thu, 14 Jun 2012 09:28:21 -0700 (PDT)
+In-Reply-To: <1339689678486-7561538.post@n2.nabble.com>
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200017>
 
-Hello list:
+On Thu, Jun 14, 2012 at 4:01 PM, lancelyons <llyons2@cox.net> wrote:
+>
+> in my scenario =C2=A0what would git rebase origin master =C2=A0be doi=
+ng?
 
-eg:
-
-commit 0e93b4b304ae052ba1bc73f6d34a68556fe93429
-Merge: b724cc1 51bfd29
-
-how can I from 0e93b4b304ae052ba1bc73f6d34a68556fe93429 to get the
-formated patch ?
-(I know we can do git format-patch b724cc1..51bfd29, but how to from
-0e93b4b304ae052ba1bc73f6d34a68556fe93429 to get?)
-
-Lei
-
--- 
-You received this message because you are subscribed to the Google Groups "Git for human beings" group.
-To post to this group, send email to git-users-/JYPxA39Uh5TLH3MbocFF+G/Ez6ZCGd0@public.gmane.org
-To unsubscribe from this group, send email to git-users+unsubscribe-/JYPxA39Uh5TLH3MbocFF+G/Ez6ZCGd0@public.gmane.org
-For more options, visit this group at http://groups.google.com/group/git-users?hl=en.
+I suggest reading the documentation for `git rebase'.
