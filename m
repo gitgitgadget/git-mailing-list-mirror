@@ -1,148 +1,110 @@
-From: Carlos =?ISO-8859-1?Q?Mart=EDn?= Nieto <cmn@elego.de>
-Subject: Re: [BUG] cherry-pick ignores some arguments
-Date: Fri, 15 Jun 2012 15:12:23 +0200
-Message-ID: <1339765943.4625.57.camel@beez.lab.cmartin.tk>
-References: <20120614114415.39cbb64c@chalon.bertin.fr>
-	 <1339691389.4625.9.camel@beez.lab.cmartin.tk>
-	 <20120615091425.20e40af9@chalon.bertin.fr>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: [PATCH v7 0/5] git log -L, all new and shiny
+Date: Fri, 15 Jun 2012 15:29:26 +0200
+Message-ID: <8762as4sax.fsf@thomas.inf.ethz.ch>
+References: <cover.1339063659.git.trast@student.ethz.ch>
+	<7vlijpchm2.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg="pgp-sha1"; protocol="application/pgp-signature";
-	boundary="=-WsRdUMPdY3iDTjVYupwv"
-Cc: git list <git@vger.kernel.org>
-To: Yann Dirson <dirson@bertin.fr>
-X-From: git-owner@vger.kernel.org Fri Jun 15 15:12:42 2012
+Content-Type: text/plain; charset="us-ascii"
+Cc: Thomas Rast <trast@student.ethz.ch>, <git@vger.kernel.org>,
+	Bo Yang <struggleyb.nku@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jun 15 15:29:42 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SfWKM-0001VW-PZ
-	for gcvg-git-2@plane.gmane.org; Fri, 15 Jun 2012 15:12:39 +0200
+	id 1SfWal-0000CF-0O
+	for gcvg-git-2@plane.gmane.org; Fri, 15 Jun 2012 15:29:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756883Ab2FONMb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 15 Jun 2012 09:12:31 -0400
-Received: from kimmy.cmartin.tk ([91.121.65.165]:34968 "EHLO kimmy.cmartin.tk"
+	id S1756788Ab2FON3a (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 15 Jun 2012 09:29:30 -0400
+Received: from edge10.ethz.ch ([82.130.75.186]:13543 "EHLO edge10.ethz.ch"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756844Ab2FONMa (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Jun 2012 09:12:30 -0400
-Received: from [10.10.10.234] (i59F7870A.versanet.de [89.247.135.10])
-	by kimmy.cmartin.tk (Postfix) with ESMTPSA id BFAD14614A;
-	Fri, 15 Jun 2012 15:12:22 +0200 (CEST)
-In-Reply-To: <20120615091425.20e40af9@chalon.bertin.fr>
-X-Mailer: Evolution 3.2.2-1+b1 
+	id S1756294Ab2FON33 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Jun 2012 09:29:29 -0400
+Received: from CAS22.d.ethz.ch (172.31.51.112) by edge10.ethz.ch
+ (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.2.298.4; Fri, 15 Jun
+ 2012 15:29:26 +0200
+Received: from thomas.inf.ethz.ch.ethz.ch (129.132.153.233) by CAS22.d.ethz.ch
+ (172.31.51.112) with Microsoft SMTP Server (TLS) id 14.2.298.4; Fri, 15 Jun
+ 2012 15:29:26 +0200
+In-Reply-To: <7vlijpchm2.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Thu, 14 Jun 2012 21:40:53 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Originating-IP: [129.132.153.233]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200051>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200052>
 
+Junio C Hamano <gitster@pobox.com> writes:
 
---=-WsRdUMPdY3iDTjVYupwv
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+> Thomas Rast <trast@student.ethz.ch> writes:
+>
+>> I too thought it would never happen -- but then again this is still
+>> not ready, I'm just trying to give it some exposure.
+>> ...
+>> There's also a longer-term wishlist hinted at in the commit message of
+>> the main patch: the diff machinery currently makes no provisions for
+>> chaining its various bells and whistles.
+>
+> I am not convinced that it is "diff machinery makes no provivsions"
+> that is the problem. Isn't it coming from the way the series limits
+> the output line range and reimplements its own output routine?
 
-On Fri, 2012-06-15 at 09:14 +0200, Yann Dirson wrote:
-> On Thu, 14 Jun 2012 18:29:49 +0200 Carlos Mart=C3=ADn Nieto <cmn@elego.de=
-> wrote:
-> > On Thu, 2012-06-14 at 11:44 +0200, Yann Dirson wrote:
-> > > Hello list,
-> > >=20
-> > > I just did a "git cherry-pick AAA BBB..CCC" using 1.7.10.3, and was s=
-urprised
-> > > that only the BBB..CCC range got picked - AAA was silently ignored.
-> > >=20
-> >=20
-> > There is no way to know whether this is a bug without knowing how AAA,
-> > BBB and ccc are related? From the names, can we assume that AAA is a
-> > (grand)parent of BBB? If that is the case, cherry-pick is behaving as
-> > expected.
-> >
-> > See the DESCRIPTION in http://git-scm.com/docs/git-rev-list for further
-> > explanation, but the short of the story is that the second argument tol=
-d
-> > it to ignore any commit before BBB, so AAA is not in the list of commit=
-s
-> > to be applied.
->=20
-> OK, this is exactly the case.  Looking back at the cherry-pick manpage, I=
-'d say that
-> what confused me is the implicit --no-walk: the standard "git cherry-pick=
- AAA" does
-> not look like a rev-list spec at all!
+Well, in a very circular logic sense, yes: I reimplement the output
+routine because that's the only way I could think of doing it right now :-)
 
-The typical cherry-pick usage is for a few select commits out of a
-different branch. The manpage itself only started explaining the ranges
-in 2010 and they may be more of a side-effect than a conscious design
-decision. But that's neither here nor there.
+However, notice that word-diff also reimplements its own output routine,
+though it probably has a better standing since it is a different format.
 
->=20
-> At least for this command, it would seem more natural (to me at least) to=
- take
-> each arg one by one and feed it to "rev-list --no-walk" or similar.  Mayb=
-e some
-> special rev-list flag could trigger such a particular behaviour, pretty m=
-uch like
-> what --no-walk does ?
+>  - add a mechanism to pass the "interesting" line range and path
+>    down to the callchain from xdi_diff_outf() to xdiff_outf();
+>
+>  - make one of these functions filter out (i.e. not call the
+>    callback xdiff_emit_consume_fn) hunks that do not overlap with
+>    the line range you are interested in (I would presume that they
+>    would be a few new fields in xdemitconf_t structure); and
+>
+>  - while recording the corresponding line ranges in the other side
+>    of the hunks that are output,
 
-This would cause a regression, as passing it "A..B" is the same as "B
-^A" which is spellt as two different arguments. Making
+Hrm.
 
-    git cherry-pick B ^A
+This would be the first backwards coupling between the revision-walk and
+the diff generation parts, at least that I know of.  Normally the
+revision walker just calls out to the (line-wise, not tree-based) diff
+engine when it wants to show a commit.  Now suddenly the diff engine is
+used (a lot, too) in simplifying the history.
 
-internally cause
+Ideally we would want to reuse diffs that have already been generated,
+as this is a very expensive process.  The current log -L implementation
+manages to do this at the cost of reimplementing the diff output
+routines instead.
 
-    git cherry-pick B
-    git cherry-pick ^A
+You solve it instead by mandating that the diff engine itself updates
+the "interesting" ranges, but that needs a lot of inside knowledge: like
+in blame, we sometimes explore alternatives (e.g. for merges; or with
+-M, though log -L in this version does not implement that feature).
 
-to be called would cause the wrong thing to happen. Instead of
-cherry-picking the commits between B and A, it would cherry-pick B and
-then do nothing in the second run (as there were no positive commits
-specified).
+So we would end up with redoing diffs, or a very tight coupling, that
+IMHO just makes the mess worse.
 
->=20
->=20
-> Another orthogonal UI issue I see, is that rev-list could be more user-fr=
-iendly to warn
-> the user when one element of a rev list is ignored because of another one=
-.  Not sure
-> whether this would be useful for all explicit rev lists specified by the =
-user - maybe a
-> config var and associated option would be needed too.
+Or am I missing something?
 
-Doing it by default is not an option, as that would start causing all
-sorts of commands and scripts to start warning during normal operation
-with an error message that comes completely out of the blue from the
-user's perspective. It's a perfectly valid thing to give it positive
-references that are hidden by other arguments.
+I instead have the vision that eventually diffs should be represented
+internally as something like my pairs of struct range_set.  Then we
+could run more passes on them as needed, and have a "common currency"
+between all diff-related work.  Only the last one should then actually
+output the diff.
 
-Another thing is that rev-list is plumbing so it's not allowed to change
-(and it's not something users would generally be using). What I see
-looking at the cherry-pick manpage is that it doesn't mention what
-happens when you do ask rev-list to walk (which is what you do by giving
-it a range). Though it does say that no traversal is done by default, it
-doesn't say how you override that default. The EXAMPLES section isn't
-that clear either, and the explanation for rev-list's --no-walk isn't
-much help either. I'll try to create a couple of patches to make the
-behaviour clearer.
+That still doesn't properly account for the case where the data format
+is no longer in terms of hunks (such as for word-diff, or the stat
+formats), though.
 
-   cmn
-
-
---=-WsRdUMPdY3iDTjVYupwv
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part
-Content-Transfer-Encoding: 7bit
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iQEcBAABAgAGBQJP2zS3AAoJEHKRP1jG7ZzTASgH/1YnXz6nJEPX6h24cO02YR/+
-SR48aizhfIo1SMAYftk/NAad1DBeduDNTqPpESPh2HU0mbHOOhthGOcOS+WqS94d
-f3ReRW2yi0gBJ8Fnp58MpIDOkFZ1fyQVSCIV8msMcGPm4yTZgMq26OZFm4dnIk9B
-hHWGUXA75EwO7WS8BWKS+u0o7egYsElIOARCrCYOKzYJXok7XtagJez5K6py8P2V
-4t0UoWtL0RSvJwQ5/rTBxgNuic95cPT0x6KpPEnGgRIJFAfKSQNB8Xy4Rxc9Kued
-1N5p6P5puYuWxv9xrOP0xwlBFJClzBFauA0cuC4RE8PV2ss0a2tmnj1XZWKkn4g=
-=O9Yl
------END PGP SIGNATURE-----
-
---=-WsRdUMPdY3iDTjVYupwv--
+-- 
+Thomas Rast
+trast@{inf,student}.ethz.ch
