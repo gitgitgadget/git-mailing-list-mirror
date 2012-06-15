@@ -1,125 +1,88 @@
-From: lei yang <yanglei.fage-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>
-Subject: Re: Re: how to get the formated patches from the merge id
-Date: Fri, 15 Jun 2012 19:46:22 +0800
-Message-ID: <CAHsH0E995C2Fsiyr=MZOH2VyN=mFvnWjrV=6LWkfv-YLy+2RjQ@mail.gmail.com>
-References: <CAHsH0E98t7EcvXM0zSjMGHcd5u4_Lp6B7q9KAhcE0eyo-tXnWw@mail.gmail.com>
-	<9579793f-d72f-424c-9546-f2caa1fbf847@googlegroups.com>
-Reply-To: git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+From: Vincent van Ravesteijn <vfr@lyx.org>
+Subject: Re: [git-users] Re: how to get the formated patches from the merge
+ id
+Date: Fri, 15 Jun 2012 13:59:22 +0200
+Message-ID: <4FDB239A.9070803@lyx.org>
+References: <CAHsH0E98t7EcvXM0zSjMGHcd5u4_Lp6B7q9KAhcE0eyo-tXnWw@mail.gmail.com> <9579793f-d72f-424c-9546-f2caa1fbf847@googlegroups.com> <CAHsH0E995C2Fsiyr=MZOH2VyN=mFvnWjrV=6LWkfv-YLy+2RjQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git-u79uwXL29TY76Z2rM5mHXA@public.gmane.org
-To: git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org, tfnico-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org
-X-From: git-users+bncCJHCj86PEhCQwez-BBoEqnV82w-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org Fri Jun 15 13:46:26 2012
-Return-path: <git-users+bncCJHCj86PEhCQwez-BBoEqnV82w-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-Envelope-to: gcggu-git-users@m.gmane.org
-Received: from mail-yx0-f186.google.com ([209.85.213.186])
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git-users@googlegroups.com, tfnico@gmail.com, git@vger.kernel.org
+To: lei yang <yanglei.fage@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jun 15 13:59:47 2012
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-users+bncCJHCj86PEhCQwez-BBoEqnV82w-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>)
-	id 1SfUyu-0007OP-NH
-	for gcggu-git-users@m.gmane.org; Fri, 15 Jun 2012 13:46:24 +0200
-Received: by yenq6 with SMTP id q6sf2414791yen.3
-        for <gcggu-git-users@m.gmane.org>; Fri, 15 Jun 2012 04:46:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=beta;
-        h=x-beenthere:received-spf:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:x-original-sender
-         :x-original-authentication-results:reply-to:precedence:mailing-list
-         :list-id:x-google-group-id:list-post:list-help:list-archive:sender
-         :list-subscribe:list-unsubscribe:content-type;
-        bh=tdACZ9RVstadshL4K+AfHndxK7jxlPIIiorF+oAGY4k=;
-        b=XJNgqCJo5TY0JFM6Ib7PwCw+xSy59Rpridbd5AdCut37ktynyPhsDR/jYW0UuYZFyW
-         36hPOaP/z6iGiZTYbQCqaRCPcv/frlS7jlzIg83jLgr1pAJprGKDn/ykRx8w9hVpphMl
-         06bChRStT+fbCxvEjafFX0opCzt7mrgieIS4o=
-Received: by 10.52.20.51 with SMTP id k19mr383146vde.8.1339760784278;
-        Fri, 15 Jun 2012 04:46:24 -0700 (PDT)
-X-BeenThere: git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
-Received: by 10.52.69.174 with SMTP id f14ls693755vdu.2.gmail; Fri, 15 Jun
- 2012 04:46:23 -0700 (PDT)
-Received: by 10.52.240.229 with SMTP id wd5mr3410922vdc.8.1339760783207;
-        Fri, 15 Jun 2012 04:46:23 -0700 (PDT)
-Received: by 10.52.240.229 with SMTP id wd5mr3410921vdc.8.1339760783198;
-        Fri, 15 Jun 2012 04:46:23 -0700 (PDT)
-Received: from mail-vc0-f177.google.com (mail-vc0-f177.google.com [209.85.220.177])
-        by gmr-mx.google.com with ESMTPS id u6si2553671vdi.1.2012.06.15.04.46.23
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 15 Jun 2012 04:46:23 -0700 (PDT)
-Received-SPF: pass (google.com: domain of yanglei.fage-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org designates 209.85.220.177 as permitted sender) client-ip=209.85.220.177;
-Received: by vcbf13 with SMTP id f13so1759082vcb.36
-        for <git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>; Fri, 15 Jun 2012 04:46:23 -0700 (PDT)
-Received: by 10.52.29.69 with SMTP id i5mr523080vdh.84.1339760782760; Fri, 15
- Jun 2012 04:46:22 -0700 (PDT)
-Received: by 10.52.97.35 with HTTP; Fri, 15 Jun 2012 04:46:22 -0700 (PDT)
-In-Reply-To: <9579793f-d72f-424c-9546-f2caa1fbf847-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-X-Original-Sender: yanglei.fage-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org
-X-Original-Authentication-Results: gmr-mx.google.com; spf=pass (google.com:
- domain of yanglei.fage-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org designates 209.85.220.177 as permitted
- sender) smtp.mail=yanglei.fage-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org; dkim=pass header.i=@gmail.com
-Precedence: list
-Mailing-list: list git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org; contact git-users+owners-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
-List-ID: <git-users.googlegroups.com>
-X-Google-Group-Id: 934228491576
-List-Post: <http://groups.google.com/group/git-users/post?hl=en_US>, <mailto:git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-List-Help: <http://groups.google.com/support/?hl=en_US>, <mailto:git-users+help-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-List-Archive: <http://groups.google.com/group/git-users?hl=en_US>
-Sender: git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
-List-Subscribe: <http://groups.google.com/group/git-users/subscribe?hl=en_US>, <mailto:git-users+subscribe-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-List-Unsubscribe: <http://groups.google.com/group/git-users/subscribe?hl=en_US>,
- <mailto:googlegroups-manage+934228491576+unsubscribe-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200046>
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1SfVBq-0003tK-6f
+	for gcvg-git-2@plane.gmane.org; Fri, 15 Jun 2012 13:59:46 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1751554Ab2FOL71 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 15 Jun 2012 07:59:27 -0400
+Received: from mail-ee0-f46.google.com ([74.125.83.46]:49146 "EHLO
+	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751355Ab2FOL70 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Jun 2012 07:59:26 -0400
+Received: by eeit10 with SMTP id t10so898139eei.19
+        for <git@vger.kernel.org>; Fri, 15 Jun 2012 04:59:22 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding
+         :x-gm-message-state;
+        bh=Go2d0DQB86FUHVxkKvPKU/WEVSuwGgy/zoUD3QIepUw=;
+        b=hNf8VvPLe635cDYkYZD3fOYhxfvoNDItdJ5FvCHPiu/nEc3Wb18mBkwgpxFfZUzGbr
+         u9Y+5aY2Eeq++b8FtxCwfTCY7XoxKBS3yCKreLOCvPlBCgAmWmn/7mxh1BJvB9GEXyk8
+         uGsPg5Tm0xiMt7i/D+gsNEQno/GgPkW9pOTMGdkE6VXPFFdaze1h0xVLEMB+L1hqNqgu
+         8hVdLaYlrm3i6gsf86jLf4feSagcqhBabCZVLoxe9RxxOBt2pEw89UV7TM7b/PF+Fx/u
+         sFM4deAP3uvMx+71zVHyBuzc+n8vRBgUd51Y+70s+V7MnkVPkKTFYfRG1x4APJkLiQ+V
+         QOlg==
+Received: by 10.14.40.20 with SMTP id e20mr1363369eeb.119.1339761562379;
+        Fri, 15 Jun 2012 04:59:22 -0700 (PDT)
+Received: from [192.168.1.3] (j175101.upc-j.chello.nl. [24.132.175.101])
+        by mx.google.com with ESMTPS id c51sm30115335eei.12.2012.06.15.04.59.21
+        (version=SSLv3 cipher=OTHER);
+        Fri, 15 Jun 2012 04:59:21 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:12.0) Gecko/20120428 Thunderbird/12.0.1
+In-Reply-To: <CAHsH0E995C2Fsiyr=MZOH2VyN=mFvnWjrV=6LWkfv-YLy+2RjQ@mail.gmail.com>
+X-Gm-Message-State: ALoCoQmNGe9Vz/lxFz3CFN4R2Zib/nRGBjoYwPJOzLSBVtyfGo3R8/ZcVPNXCq/YLtmc+R7ZLHCL
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200047>
 
-Hi
-
-I mean,
-
-I have a commit like below
-commit 0e93b4b304ae052ba1bc73f6d34a68556fe93429
-Merge: b724cc1 51bfd29
-
-This commit done this work: merge b724cc1..51bfd29 commit,
-
-The question is how could I *onlys* through
-0e93b4b304ae052ba1bc73f6d34a68556fe93429 to get the formated patch for
-the
-commit(b724cc1..51bfd29)
-
-Lei
-
-
-On Fri, Jun 15, 2012 at 4:02 PM, Thomas Ferris Nicolaisen
-<tfnico-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org> wrote:
-> I don't really understand what you're trying to do here. Could you try
-> explaining in a little more detail?
+Op 15-6-2012 13:46, lei yang schreef:
+> Hi
 >
+> I mean,
 >
-> On Thursday, June 14, 2012 6:25:12 PM UTC+2, lei yang wrote:
->>
->> Hello list:
->>
->> eg:
->>
->> commit 0e93b4b304ae052ba1bc73f6d34a68556fe93429
->> Merge: b724cc1 51bfd29
->>
->> how can I from 0e93b4b304ae052ba1bc73f6d34a68556fe93429 to get the
->> formated patch ?
->> (I know we can do git format-patch b724cc1..51bfd29, but how to from
->> 0e93b4b304ae052ba1bc73f6d34a68556fe93429 to get?)
->>
->> Lei
+> I have a commit like below
+> commit 0e93b4b304ae052ba1bc73f6d34a68556fe93429
+> Merge: b724cc1 51bfd29
 >
-> --
-> You received this message because you are subscribed to the Google Groups
-> "Git for human beings" group.
-> To view this discussion on the web visit
-> https://groups.google.com/d/msg/git-users/-/kVcX-TK_VowJ.
-> To post to this group, send email to git-users-/JYPxA39Uh5TLH3MbocFF+G/Ez6ZCGd0@public.gmane.org
-> To unsubscribe from this group, send email to
-> git-users+unsubscribe-/JYPxA39Uh5TLH3MbocFF+G/Ez6ZCGd0@public.gmane.org
-> For more options, visit this group at
-> http://groups.google.com/group/git-users?hl=en.
+> This commit done this work: merge b724cc1..51bfd29 commit,
+>
+> The question is how could I *onlys* through
+> 0e93b4b304ae052ba1bc73f6d34a68556fe93429 to get the formated patch for
+> the
+> commit(b724cc1..51bfd29)
 
--- 
-You received this message because you are subscribed to the Google Groups "Git for human beings" group.
-To post to this group, send email to git-users-/JYPxA39Uh5TLH3MbocFF+G/Ez6ZCGd0@public.gmane.org
-To unsubscribe from this group, send email to git-users+unsubscribe-/JYPxA39Uh5TLH3MbocFF+G/Ez6ZCGd0@public.gmane.org
-For more options, visit this group at http://groups.google.com/group/git-users?hl=en.
+It is still not clear what you want to accomplish.
+
+Your proposal: "git format-patch b724cc1..51bfd29" only gives you the 
+commits that were in the branch 51bfd29 that weren't yet in the branch 
+b724cc1. This just reflect the commits of one of the branches, but not 
+the "work done by the merge commit".
+
+If this is really what you want you can do:
+
+$ git format-patch 0e93b4b3^1..0e93b4b3^2
+
+0e93b4b3^1 means the first parent of 0e93b4b3, which is b724cc1. 
+0e93b4b3^2 means the second parent, which is 51bfd29
+
+HTH,
+
+Vincent
