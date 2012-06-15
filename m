@@ -1,94 +1,74 @@
-From: Tim Henigan <tim.henigan@gmail.com>
-Subject: [PATCH v2] diff-no-index: exit(1) if 'diff --quiet <repo file> <external file>' finds changes
-Date: Fri, 15 Jun 2012 16:06:47 -0400
-Message-ID: <1339790807-28346-1-git-send-email-tim.henigan@gmail.com>
-Cc: Tim Henigan <tim.henigan@gmail.com>
-To: gitster@pobox.com, git@vger.kernel.org, peff@peff.net
-X-From: git-owner@vger.kernel.org Fri Jun 15 22:07:23 2012
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] diff: exit(1) if 'diff --quiet <repo file> <external
+ file>' finds changes
+Date: Fri, 15 Jun 2012 13:08:32 -0700
+Message-ID: <7vmx449w3j.fsf@alter.siamese.dyndns.org>
+References: <1339781463-13536-1-git-send-email-tim.henigan@gmail.com>
+ <7vzk849zxg.fsf@alter.siamese.dyndns.org>
+ <20120615193724.GB26473@sigill.intra.peff.net>
+ <CAFoueth2Hfcv0p0SZmichi_6e5--SNkemrSsSivnU73bdFOB4g@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Tim Henigan <tim.henigan@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jun 15 22:08:41 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Sfcne-0005ag-CW
-	for gcvg-git-2@plane.gmane.org; Fri, 15 Jun 2012 22:07:18 +0200
+	id 1Sfcox-0000O1-UZ
+	for gcvg-git-2@plane.gmane.org; Fri, 15 Jun 2012 22:08:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756223Ab2FOUHK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 15 Jun 2012 16:07:10 -0400
-Received: from mail-gg0-f174.google.com ([209.85.161.174]:56216 "EHLO
-	mail-gg0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752247Ab2FOUHI (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Jun 2012 16:07:08 -0400
-Received: by gglu4 with SMTP id u4so2679971ggl.19
-        for <git@vger.kernel.org>; Fri, 15 Jun 2012 13:07:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        bh=7vTwtiYaf1282sHt0OczuupSBhpbIXhY5IzkQAvMqKs=;
-        b=jqbi61y9eB70HKIbUrUGA5GyaTvVIWdpgVvmWmPQpmQFUkJnf2WCY8EKNyQbEL8rf+
-         j/UuPbj4rghSNatMBU2m9CLzk+Qna/MdJM072rFoZsKGa+DDzGcX8arVR56AbMQE6G/H
-         WwtiUH/QXW38b1RoEKdkPlCBT7Jk7fxIDTLop1buAgTDuz7aoV+L2EdZMS757fr+reRA
-         ORpyaPfM1NfMheM/TAcs4FDCpTq3mVWII5Kwyt991rHwDL3wFQyj8owCMbNev7FxAIle
-         T39XFsUVSOlVj6AX4HZ8ruUuCOwBYUyE6yvkp71fp/w7tL3/bqxKXDhu+cX8EWglZMnK
-         4THw==
-Received: by 10.50.170.69 with SMTP id ak5mr3203111igc.47.1339790827849;
-        Fri, 15 Jun 2012 13:07:07 -0700 (PDT)
-Received: from localhost (adsl-99-38-69-118.dsl.sfldmi.sbcglobal.net. [99.38.69.118])
-        by mx.google.com with ESMTPS id gs4sm3424286igc.1.2012.06.15.13.07.06
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 15 Jun 2012 13:07:07 -0700 (PDT)
-X-Mailer: git-send-email 1.7.11.rc3.6.g894ec42.dirty
+	id S1756308Ab2FOUIg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 15 Jun 2012 16:08:36 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:37727 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752247Ab2FOUIg (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Jun 2012 16:08:36 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2F99B827D;
+	Fri, 15 Jun 2012 16:08:35 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=2ZG0aOXu0Ov19aabBoj3tZJb3ls=; b=CU5s5s
+	MtZdpk0es2PB0s6D+fFFb7dEwXZ/QJEG6XygOzNYKYA5+IpF3xpNv7hgzgxjTmNa
+	vysJp2gloUBQ4zoj/PTQ2GnuHJ3FCnnnPzb6hHQi4gZaBjpVPwwA6C9IuiQAH60Q
+	gQ6zdqbhYZGzu8rYz8d6ik38yknBWNaz2Ccg8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=AvTrKpnSTFOieEIeUA9n7V7HdjDcJF0l
+	sC/n5mtvd+k2mLbQ9dx+ZWwD/06w8sYB0/a6svzlmb5JoEo1IvLMsNxVvgOmdRAX
+	myKT7PFz/Bj9jmNzuBDy2Mi3kEzl96XbrPxApcTSe+/2AkvgOLTQjFOgm4DA8veQ
+	sCgb9eT9dU8=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 26FBA827C;
+	Fri, 15 Jun 2012 16:08:35 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5A99F827B; Fri, 15 Jun 2012
+ 16:08:34 -0400 (EDT)
+In-Reply-To: <CAFoueth2Hfcv0p0SZmichi_6e5--SNkemrSsSivnU73bdFOB4g@mail.gmail.com> (Tim
+ Henigan's message of "Fri, 15 Jun 2012 15:56:11 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: E2C14FE2-B725-11E1-AA84-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200088>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200089>
 
-When running 'git diff --quiet <file1> <file2>', if file1 or file2
-is outside the repository, it will exit(0) even if the files differ.
-It should exit(1) when they differ.
+Tim Henigan <tim.henigan@gmail.com> writes:
 
-Signed-off-by: Tim Henigan <tim.henigan@gmail.com>
----
+>>> @@ -273,5 +273,6 @@ void diff_no_index(struct rev_info *revs,
+>>>        * The return code for --no-index imitates diff(1):
+>>>        * 0 = no changes, 1 = changes, else error
+>>>        */
+>>> -     exit(revs->diffopt.found_changes);
+>>> +     result = !!diff_result_code(&revs->diffopt, 0);
+>>> +     exit(result);
+>
+> I assume the '!!' before 'diff_result_code' is a typo.
 
-Changes in v2:
-  - Implemented the fix in diff-no-index.c as suggested by Junio
-    Hamano.  The previous version affected the performance of all
-    diff commands that used the '--quiet' option by forcing the
-    code through the expensive (and in this case unneccesary)
-    'diff_flush_patch' code path.
-  - Updated the test to use 'test_expect_code' as suggested by
-    Jeff King.
-
-
- diff-no-index.c       | 3 ++-
- t/t4035-diff-quiet.sh | 4 ++++
- 2 files changed, 6 insertions(+), 1 deletion(-)
-
-diff --git a/diff-no-index.c b/diff-no-index.c
-index f0b0010..b935d2a 100644
---- a/diff-no-index.c
-+++ b/diff-no-index.c
-@@ -273,5 +273,6 @@ void diff_no_index(struct rev_info *revs,
- 	 * The return code for --no-index imitates diff(1):
- 	 * 0 = no changes, 1 = changes, else error
- 	 */
--	exit(revs->diffopt.found_changes);
-+	int result = diff_result_code(&revs->diffopt, 0);
-+	exit(result);
- }
-diff --git a/t/t4035-diff-quiet.sh b/t/t4035-diff-quiet.sh
-index cdb9202..0b83235 100755
---- a/t/t4035-diff-quiet.sh
-+++ b/t/t4035-diff-quiet.sh
-@@ -76,4 +77,8 @@ test_expect_success 'git diff-index --cached HEAD' '
- 	}
- '
- 
-+test_expect_success 'git diff <tracked file> <file outside repo>' '
-+	test_expect_code 1 git diff --quiet c /dev/null
-+'
-+
- test_done
--- 
-1.7.11.rc3.6.g894ec42.dirty
+Not a typo.  I meant to use that idiom to turn 0 or not into
+boolean, as diff_result_code() can return values other than 0 or 1.
