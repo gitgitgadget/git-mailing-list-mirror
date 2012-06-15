@@ -1,104 +1,91 @@
-From: Jiang Xin <worldhello.net@gmail.com>
-Subject: Re: [PATCH 2/2] i18n: Add extra -- to seperate gettext and message
-Date: Sat, 16 Jun 2012 00:05:53 +0800
-Message-ID: <CANYiYbGnoZDMkOq-goaPO98L4Ar1HzMVS-JjjBz7rNHVgv4ywQ@mail.gmail.com>
-References: <1338764967-30103-1-git-send-email-worldhello.net@gmail.com>
-	<1338764967-30103-2-git-send-email-worldhello.net@gmail.com>
-	<CACBZZX5EGvJm0aqG5iVn7wnoqFATUqP4gbS-2tnAiLqeFQZifg@mail.gmail.com>
-	<CANYiYbFx=Z7TTYUbAhzgHFYB6O_grROWoWHbtuhuABeXdFk4-Q@mail.gmail.com>
-	<7vpq9ft3ls.fsf@alter.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: git rebase keeps saying local changes would conflict..what
+ changes?
+Date: Fri, 15 Jun 2012 12:08:13 -0400
+Message-ID: <20120615160813.GB4572@sigill.intra.peff.net>
+References: <D8381FF2-A6B4-4596-B565-7E5BB3F239D8@color.com>
+ <2652085F-C1BC-4EAB-9289-F508E64982F0@color.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0?= <avarab@gmail.com>,
-	Git List <git@vger.kernel.org>,
-	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= <pclouds@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Andreas Schwab <schwab@linux-m68k.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jun 15 18:06:03 2012
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Eric Gillum <eric@color.com>
+X-From: git-owner@vger.kernel.org Fri Jun 15 18:08:25 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SfZ27-00025j-2w
-	for gcvg-git-2@plane.gmane.org; Fri, 15 Jun 2012 18:05:59 +0200
+	id 1SfZ4O-0003xE-4N
+	for gcvg-git-2@plane.gmane.org; Fri, 15 Jun 2012 18:08:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932257Ab2FOQFz convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 15 Jun 2012 12:05:55 -0400
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:33560 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752265Ab2FOQFy convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 15 Jun 2012 12:05:54 -0400
-Received: by yenl2 with SMTP id l2so2013990yen.19
-        for <git@vger.kernel.org>; Fri, 15 Jun 2012 09:05:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=OKfKemu9/ScbcRf2qbxwqZmKnN8c+H6L3sPTZ6Ugi4M=;
-        b=trohuPMOtKo0EdLYoCs/bMsBPqDqFK3xjbHORP/g5JUkQpqtBceC/2hA83ypNnl3aN
-         8QURVx5LtANgNBpCR4uWjs0Ya2wqN6vZCrsvSTOlUo6h5hSeG07Lz/YNrnjUkHphTjgf
-         vQaYRWh31Dpetf33o560o73I5zT+MW91gYBNgFvr1eS2gmIbE3hkRGyZGkQMmR0N3hUg
-         O8rwrl4bFiSMOtgo2WQlsYW0PT6fWViYJsj8W5oAstGtiKX3fcQYnbX7ikFPmWLau8jt
-         2+jo1DrxbaBaCcfhG0r4AtWNj5SgOLyALTmreFuNzD+kY95b6NfMWJ7VBTfOH/1O2MjY
-         S1ow==
-Received: by 10.50.169.7 with SMTP id aa7mr2563651igc.52.1339776353633; Fri,
- 15 Jun 2012 09:05:53 -0700 (PDT)
-Received: by 10.50.237.38 with HTTP; Fri, 15 Jun 2012 09:05:53 -0700 (PDT)
-In-Reply-To: <7vpq9ft3ls.fsf@alter.siamese.dyndns.org>
+	id S1757203Ab2FOQIR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 15 Jun 2012 12:08:17 -0400
+Received: from 99-108-225-23.lightspeed.iplsin.sbcglobal.net ([99.108.225.23]:56432
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755063Ab2FOQIQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Jun 2012 12:08:16 -0400
+Received: (qmail 603 invoked by uid 107); 15 Jun 2012 16:08:19 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 15 Jun 2012 12:08:19 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 15 Jun 2012 12:08:13 -0400
+Content-Disposition: inline
+In-Reply-To: <2652085F-C1BC-4EAB-9289-F508E64982F0@color.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200064>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200065>
 
-2012/6/5 Junio C Hamano <gitster@pobox.com>:
-> I think there is value for having a generic solution than declaring
-> "No message shall begin with a dash".
->
-> I am not convinced that it is ideal for the implementation of
-> gettext_ln to prepend "--" in front when it calls gettext, though.
+On Thu, Jun 14, 2012 at 04:49:54PM -0700, Eric Gillum wrote:
 
-I saw =C6var's bug report on xgettext to the GNU gettext list:
+> Just found a similar problem here:
+> http://stackoverflow.com/questions/5074136. I do use Xcode, which may
+> be related. Maybe I'll try the proposed solution. But I'd still love
+> to know what the issue is, or how I can help debug it.
 
- * http://git.661346.n2.nabble.com/GETTEXT-BUG-xgettext-1-can-t-extract=
--quot-gettext-foo-quot-td7560744.html
+Reading that thread, one answer mentions that Xcode may overwrite files
+in the middle of your rebase. There is no git fix for that; tweaking
+files in the middle of a git operation can only lead to bad and
+confusing results.
 
-May be post to a more official mailing list, such as bug-gnu-utils at
-https://lists.gnu.org/mailman/listinfo/bug-gnu-utils will get some resp=
-onse,
-but I doubt there won't be a clear resolution in xgettext.
+Turning off trustctime only makes sense if Xcode is touching the file
+metadata but not modifying the file at all. Is that what's happening?
 
-The default configurations of xgettext for shell scripts are defined in=
- file
-'gettext-tools/src/x-sh.c':
+Further confusing to me is that the original poster there mentioned that
+the dirty state is untracked files in the working directory. But ctime
+shouldn't be involved at all, then. It sounds more like tracked files
+were not deleted when we switched away from the branch (either because
+of a bug in git, or because something like Xcode is re-creating them
+behind our back).
 
-      x_sh_keyword ("gettext");
-      x_sh_keyword ("ngettext:1,2");
-      x_sh_keyword ("eval_gettext");
-      x_sh_keyword ("eval_ngettext:1,2");
+> > I have a sometimes-reproducible issue when trying to rebase. In
+> > short, I've created a local branch B off of master, made several
+> > commits on B, switched to master and pulled, switched back to B,
+> > then tried "git rebase master", which fails. What I get about half
+> > the time is a failure that claims I have local changes to files that
+> > would be overridden by the merge. Nothing is reported by git status
+> > (I've even tried closing all editors), so I am forced to do git
+> > rebase --abort or --skip.
 
-Keyword "gettext" above is the same as "gettext:1". xgettext has
-no idea of options and arguments, if there is a seperator ('--') betwee=
-n
-gettext and the message, message is argument 2. For example:
+Try running "git diff-files" instead of "git status". If something is
+munging the files behind git's back, then the index (which should have
+been refreshed by "git update-index --refresh" at the start of the
+rebase) will be out of date. "git status" will refresh the index itself,
+but we would not want that if we are interested in making the same
+comparison that the rebase is doing.
 
-    gettext -- "--cached cannot be used with --files"
+> > What's wrong? Why would I get the local changes warning but have no
+> > local changes? The merge conflicts tend to be within a file that has
+> > been changed multiple times on B. These "conflicts" are literally
+> > changes I've made at one point or another on B. The relevant files
+> > were never touched on master while I was working on B. And no
+> > changes on B are amends or reverts or anything remotely tricky --
+> > they're simply more changes committed with "git commit". So why
+> > would I have to "resolve conflicts"?
 
-We can override the default settings of xgettext by passing '-k' and
-multiple '--keyword', '--flags' options to xgettext.
+You shouldn't have to if there were no changes to the same areas on
+master. But if something like Xcode were externally munging files to
+some other version, then it would make sense.
 
-    xgettext  ... --language=3DShell \
-                  -k  --keyword=3Dgettext:2 \
-                  --flag=3Dgettext:2:pass-sh-format  ...
-
-But "gettext message" will be broken.
-
-Write a wrapper for gettext  and extract messages using
-'xgettext --keyword=3D<gettext-wrapper>' is a reasonable solution.
-
-
---=20
-Jiang Xin
+-Peff
