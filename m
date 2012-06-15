@@ -1,106 +1,70 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH 2/2] do not run pager with diff --no-index --quiet
-Date: Fri, 15 Jun 2012 16:32:55 -0400
-Message-ID: <20120615203255.GB12326@sigill.intra.peff.net>
-References: <20120615202813.GA12253@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] diff: exit(1) if 'diff --quiet <repo file> <external
+ file>' finds changes
+Date: Fri, 15 Jun 2012 13:44:54 -0700
+Message-ID: <7vaa049uex.fsf@alter.siamese.dyndns.org>
+References: <1339781463-13536-1-git-send-email-tim.henigan@gmail.com>
+ <7vzk849zxg.fsf@alter.siamese.dyndns.org>
+ <20120615193724.GB26473@sigill.intra.peff.net>
+ <CAFoueth2Hfcv0p0SZmichi_6e5--SNkemrSsSivnU73bdFOB4g@mail.gmail.com>
+ <7vmx449w3j.fsf@alter.siamese.dyndns.org>
+ <20120615202441.GA12163@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Cc: Tim Henigan <tim.henigan@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jun 15 22:33:12 2012
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Jun 15 22:45:05 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SfdCY-0002t5-R2
-	for gcvg-git-2@plane.gmane.org; Fri, 15 Jun 2012 22:33:03 +0200
+	id 1SfdOA-0003fJ-HR
+	for gcvg-git-2@plane.gmane.org; Fri, 15 Jun 2012 22:45:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757725Ab2FOUc6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 15 Jun 2012 16:32:58 -0400
-Received: from 99-108-225-23.lightspeed.iplsin.sbcglobal.net ([99.108.225.23]:57786
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757589Ab2FOUc6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Jun 2012 16:32:58 -0400
-Received: (qmail 3903 invoked by uid 107); 15 Jun 2012 20:33:01 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 15 Jun 2012 16:33:01 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 15 Jun 2012 16:32:55 -0400
-Content-Disposition: inline
-In-Reply-To: <20120615202813.GA12253@sigill.intra.peff.net>
+	id S1757849Ab2FOUo6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 15 Jun 2012 16:44:58 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:53076 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757768Ab2FOUo5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Jun 2012 16:44:57 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id F17348ADB;
+	Fri, 15 Jun 2012 16:44:56 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Op3rl48PcFLOJ/7PZdYWQ4oFBfc=; b=vYnDT2
+	ctLieCgArirRjwRq5a0szUbGfFMTOjJwLWvz1qbVTfEq3LtnBG6trAyZB2bj/n+U
+	3VvGuX2WDDEzp2k+6z+QMr4tPy9PUTgog4oa+ifYZnQw9UXXxOVCqUgEkAZBiv/4
+	wN+BOGNHvZuXj9enStXCSA16yF78oEDiBqhBI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Ul6BIv72lbf+KKPxV/ZT7AkRWu5Gl7+w
+	V9lEDPjuQEYARnM3W31iebLhwMbncvyQB7NQ8bXPUjfT8zHpOvd/Xg+wlPdSOBgE
+	Sh9fe/6BnnuH4Nb61XYis5uQFMbdO1n6mB9tjQkZonfj4J5qOz5UFSL0BxuTDAaZ
+	k/KcVWfailM=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E80D38AD9;
+	Fri, 15 Jun 2012 16:44:56 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 88C1E8AD8; Fri, 15 Jun 2012
+ 16:44:55 -0400 (EDT)
+In-Reply-To: <20120615202441.GA12163@sigill.intra.peff.net> (Jeff King's
+ message of "Fri, 15 Jun 2012 16:24:41 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: F770E902-B72A-11E1-8D1B-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200096>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200097>
 
-There is no point in running a pager when --quiet is given,
-since we are producing no output. The regular diff code path
-handles this already, because --quiet implies --exit-code,
-and we check for --exit-code when deciding not to run the
-pager.
+Jeff King <peff@peff.net> writes:
 
-However, the "quiet implies exit-code" logic is done in
-diff_setup_done, and the no-index code path sets up its
-pager before running diff_setup_done, and misses this case.
+>   2. If --check is used, then we will not be compatible with diff(1) in
+>      our exit code. But diff(1) does not have --check in the first
+>      place, so there is no point in us trying to be a drop-in
+>      replacement.
 
-We can fix this by reordering our initialization.
-Currently we do:
-
-  1. read command line arguments into diff_options
-
-  2. Set pager if EXIT_CODE not requested
-
-  3. always set EXIT_CODE, since we are emulating
-     traditional diff
-
-  4. call diff_setup_done
-
-We can fix the problem by moving pager initialization (step
-2) after step 4. But step 3 must come after step 2 (since we
-want to know whether the _user_ requested --exit-code, not
-whether we turned it on unconditionally). So we must move
-both.
-
-Signed-off-by: Jeff King <peff@peff.net>
----
-We could also just check for QUICK in setup_diff_pager, which should be
-a no-op for the regular diff case. But I think doing things in the same
-order as regular diff could help prevent similar bugs in the future.
-
- diff-no-index.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
-
-diff --git a/diff-no-index.c b/diff-no-index.c
-index fc1decd..77667b8 100644
---- a/diff-no-index.c
-+++ b/diff-no-index.c
-@@ -224,8 +224,6 @@ void diff_no_index(struct rev_info *revs,
- 		}
- 	}
- 
--	setup_diff_pager(&revs->diffopt);
--
- 	if (prefix) {
- 		int len = strlen(prefix);
- 		const char *paths[3];
-@@ -250,13 +248,15 @@ void diff_no_index(struct rev_info *revs,
- 	if (!revs->diffopt.output_format)
- 		revs->diffopt.output_format = DIFF_FORMAT_PATCH;
- 
--	DIFF_OPT_SET(&revs->diffopt, EXIT_WITH_STATUS);
- 	DIFF_OPT_SET(&revs->diffopt, NO_INDEX);
- 
- 	revs->max_count = -2;
- 	if (diff_setup_done(&revs->diffopt) < 0)
- 		die("diff_setup_done failed");
- 
-+	setup_diff_pager(&revs->diffopt);
-+	DIFF_OPT_SET(&revs->diffopt, EXIT_WITH_STATUS);
-+
- 	if (queue_diff(&revs->diffopt, revs->diffopt.pathspec.raw[0],
- 		       revs->diffopt.pathspec.raw[1]))
- 		exit(1);
--- 
-1.7.11.rc2.4.g0b9de53
+Sounds sensible. Thanks.
