@@ -1,90 +1,89 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] diff: exit(1) if 'diff --quiet <repo file> <external
- file>' finds changes
-Date: Fri, 15 Jun 2012 14:40:30 -0400
-Message-ID: <20120615184030.GC14843@sigill.intra.peff.net>
-References: <1339781463-13536-1-git-send-email-tim.henigan@gmail.com>
+From: Luka Perkov <lists@lukaperkov.net>
+Subject: Re: [PATCH] git-http-fetch: remove unused cmd_http_fetch
+Date: Fri, 15 Jun 2012 20:40:59 +0200
+Message-ID: <20120615184059.GA27940@w500.iskon.local>
+References: <20120614202336.GA3755@w500.iskon.local>
+ <20120615162136.GC4572@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: gitster@pobox.com, git@vger.kernel.org
-To: Tim Henigan <tim.henigan@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jun 15 20:40:43 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Jun 15 20:41:10 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SfbRm-0000Px-41
-	for gcvg-git-2@plane.gmane.org; Fri, 15 Jun 2012 20:40:38 +0200
+	id 1SfbSC-0001hK-Tf
+	for gcvg-git-2@plane.gmane.org; Fri, 15 Jun 2012 20:41:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755410Ab2FOSke (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 15 Jun 2012 14:40:34 -0400
-Received: from 99-108-225-23.lightspeed.iplsin.sbcglobal.net ([99.108.225.23]:57672
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754165Ab2FOSkd (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Jun 2012 14:40:33 -0400
-Received: (qmail 2318 invoked by uid 107); 15 Jun 2012 18:40:36 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 15 Jun 2012 14:40:36 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 15 Jun 2012 14:40:30 -0400
+	id S1755923Ab2FOSlA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 15 Jun 2012 14:41:00 -0400
+Received: from mail-we0-f174.google.com ([74.125.82.174]:45962 "EHLO
+	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753958Ab2FOSk7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Jun 2012 14:40:59 -0400
+Received: by weyu7 with SMTP id u7so2251143wey.19
+        for <git@vger.kernel.org>; Fri, 15 Jun 2012 11:40:58 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent
+         :x-gm-message-state;
+        bh=eBkv/DkI72Mg58nxBpFvhKT8jOGDBHixTaqLJa1T+ZM=;
+        b=msk6+eYXdUaDUB678Rgcgah98C6XKEnf0BXKtI3K+6/gTztU3Yj6D6HKBb86osXBvS
+         Iu9/I5AXCSfqAPPW/WyplxAMhimBm2/cNKmLxopeIZQagy9+codoXwRPzyG7cpkD/4+n
+         VSzz411UvQwsUEEddMxLTsU5m4XwOKufUpQZxghYNihdRutUDw0JGd0byk4cRJxHoJPZ
+         lIy6UP+F/46oRV1u5bHgYX5pCCO1ATc1KI9ySWRxbOID76DWNoM5dYkn6gQACfDqM/mZ
+         693wJxWaf10yOaw9dmKfOCWh/iGrBXJPgDMMIw4xM68xPERjSD9Z/bQ5rHC5ZtOUzI7t
+         smFw==
+Received: by 10.180.83.196 with SMTP id s4mr6500111wiy.15.1339785658137;
+        Fri, 15 Jun 2012 11:40:58 -0700 (PDT)
+Received: from localhost (213-191-157-213.dhcp.iskon.hr. [213.191.157.213])
+        by mx.google.com with ESMTPS id f19sm7966449wiw.11.2012.06.15.11.40.56
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 15 Jun 2012 11:40:56 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <1339781463-13536-1-git-send-email-tim.henigan@gmail.com>
+In-Reply-To: <20120615162136.GC4572@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+X-Gm-Message-State: ALoCoQnUmYgcJExCp7FCbVA14gVUxieqZtvXDq8SCFqSTyOd0KhZhnjDsdHIjKf/hIuTh2uwcqBp
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200078>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200079>
 
-On Fri, Jun 15, 2012 at 01:31:03PM -0400, Tim Henigan wrote:
-
-> When running 'git diff --quiet <file1> <file2>', if file1 or file2
-> is outside the repository, it will exit(0) even if the files differ.
-> It should exit(1) when they differ.
-
->From your description, I would expect the fix to be in builtin/diff.c,
-or in diff-no-index.c, since that is where the code paths diverge.
-
-> This was the least invasive fix that I found.  I considered adding
-> the following when the '--quiet' option is parsed instead:
+On Fri, Jun 15, 2012 at 12:21:36PM -0400, Jeff King wrote:
+> On Thu, Jun 14, 2012 at 10:23:37PM +0200, Luka Perkov wrote:
 > 
-> +   DIFF_OPT_SET(options, EXIT_WITH_STATUS)
-> +   DIFF_OPT_SET(options, DIFF_FROM_CONTENTS)
+> > It was left out from commit 1088261f6fc90324014b5306cca4171987da85ce
+> 
+> This commit message left me scratching my head. Did we get rid of
+> http-fetch? If not, then don't we still need cmd_http_fetch? Or did we
+> just make it not a builtin, in which case we wouldn't be getting rid of
+> cmd_http_fetch, but rather converting it to main?
+> 
+> Reading the 1088261, I find the answer: we did make it not a builtin,
+> and it was indeed converted into "main". But its _declaration_ hung
+> around.
+> 
+> So maybe a better commit message would be:
+> 
+>   Subject: builtin.h: drop cmd_http_fetch declaration
+> 
+>   This was converted from a builtin into a stand-alone program by
+>   1088261f6fc90324014b5306cca4171987da85ce, but that commit forgot to
+>   drop the declaration.
 
-We already set EXIT_WITH_STATUS when we see --quiet (we just do it a
-little later, during diff_setup_done). We would not want to set
-DIFF_FROM_CONTENTS all the time with --quiet. The point of that flag is
-"we cannot know just from seeing the path sha1s whether they are
-different or not, because we are doing content-level munging" (for
-example, things like ignoring whitespace changes).
+I agree. Sorry for the confusing message.
 
-So we would not want to always set it whenever --quiet is given, because
-it means we must do a lot of extra work comparing file content.
+> Other than that, the patch looks obviously correct.
+> 
+> -Peff
+> 
+> PS There seem to be some other similar declarations: at least
+>    cmd_upload_tar and cmd_pickaxe.
 
-> diff --git a/diff.c b/diff.c
-> index 77edd50..b1d74fe 100644
-> --- a/diff.c
-> +++ b/diff.c
-> @@ -4432,9 +4432,10 @@ void diff_flush(struct diff_options *options)
->  		separator++;
->  	}
->  
-> -	if (output_format & DIFF_FORMAT_NO_OUTPUT &&
-> +	if ((output_format & DIFF_FORMAT_NO_OUTPUT &&
->  	    DIFF_OPT_TST(options, EXIT_WITH_STATUS) &&
-> -	    DIFF_OPT_TST(options, DIFF_FROM_CONTENTS)) {
-> +	    DIFF_OPT_TST(options, DIFF_FROM_CONTENTS)) ||
-> +		DIFF_OPT_TST(options, QUICK)) {
->  		/*
->  		 * run diff_flush_patch for the exit status. setting
->  		 * options->file to /dev/null should be safe, becaue we
+I noticed only cmd_http_fetch when I was hacking a patch for OpenWrt.
 
-And this is equally bad, because it means that --quiet gets much slower
-for _all_ cases, not just the no-index case.
-
-I suspect what you actually want is to set DIFF_FROM_CONTENTS in the
-no-index case, since we by definition do not have a pair of sha1s to
-compare. But it may also be that diff.c could detect this case
-automatically. I'd have to look closer.
-
--Peff
+Luka
