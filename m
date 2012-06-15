@@ -1,72 +1,163 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [BUG] cherry-pick ignores some arguments
-Date: Fri, 15 Jun 2012 08:06:50 -0700
-Message-ID: <7v62asd379.fsf@alter.siamese.dyndns.org>
-References: <20120614114415.39cbb64c@chalon.bertin.fr>
- <1339691389.4625.9.camel@beez.lab.cmartin.tk>
- <20120615091425.20e40af9@chalon.bertin.fr>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git list <git@vger.kernel.org>,
-	Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto <cmn@elego.de>
-To: Yann Dirson <dirson@bertin.fr>
-X-From: git-owner@vger.kernel.org Fri Jun 15 17:07:05 2012
+From: "David D. Kilzer" <ddkilzer@kilzer.net>
+Subject: [PATCH] rebase -i -p: use rerere to resolve conflicts if enabled
+Date: Fri, 15 Jun 2012 07:17:35 -0700
+Message-ID: <1339769855-94161-1-git-send-email-ddkilzer@kilzer.net>
+Content-Transfer-Encoding: 7BIT
+Cc: gitster@pobox.com, "David D. Kilzer" <ddkilzer@kilzer.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jun 15 17:17:50 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SfY6z-0000w1-Bu
-	for gcvg-git-2@plane.gmane.org; Fri, 15 Jun 2012 17:06:57 +0200
+	id 1SfYHP-00062w-Hf
+	for gcvg-git-2@plane.gmane.org; Fri, 15 Jun 2012 17:17:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932132Ab2FOPGx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 15 Jun 2012 11:06:53 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:41858 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932097Ab2FOPGw (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Jun 2012 11:06:52 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2BCB6866F;
-	Fri, 15 Jun 2012 11:06:52 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=+sjISEAyqnB8x2jLJap424QTjDA=; b=ICoU7b
-	w4Ds1cOyzuXA64sPuBflQM/Ze+/44VZ0AW4Y9Nzwj5kjAWDNFHC5GQqDuIb2PZX3
-	MFBs9LV8yathmOxMShXxAqIGrXnCD32rubGJ6azie9VW8bnh5aAJzQpkYiZ30i+L
-	AQS2qR/2XIaW0AiLywisJ5lCOiXmQq1LDoYD0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=XdF7brDr/naSaRg6XRVrkI+JIGpumjf5
-	GaN/SJ7jFrbctO92aImWxm+eUiATkFdhoVFdPDX8urWSDgtd5RIurJk7ZC/4FnEA
-	d6x0Q2otIdAZPC2gKAMOuS0V6/7RmDqJUTChewD+GHQEvtgfwP8l1wjNEtSmks2w
-	wQgtCzh0EsU=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2191D866E;
-	Fri, 15 Jun 2012 11:06:52 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id AC839866D; Fri, 15 Jun 2012
- 11:06:51 -0400 (EDT)
-In-Reply-To: <20120615091425.20e40af9@chalon.bertin.fr> (Yann Dirson's
- message of "Fri, 15 Jun 2012 09:14:25 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: BCB9F2CE-B6FB-11E1-9A47-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S932192Ab2FOPRj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 15 Jun 2012 11:17:39 -0400
+Received: from crispin.apple.com ([17.151.62.50]:45351 "EHLO
+	mail-out.apple.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932113Ab2FOPRi (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Jun 2012 11:17:38 -0400
+X-Greylist: delayed 3603 seconds by postgrey-1.27 at vger.kernel.org; Fri, 15 Jun 2012 11:17:38 EDT
+Received: from relay16.apple.com ([17.128.113.55])
+ by mail-out.apple.com (Oracle Communications Messaging Server 7u4-23.01
+ (7.0.4.23.0) 64bit (built Aug 10 2011))
+ with ESMTP id <0M5N00I3MX129HL2@mail-out.apple.com> for git@vger.kernel.org;
+ Fri, 15 Jun 2012 07:17:35 -0700 (PDT)
+X-AuditID: 11807137-b7f536d000006fcc-5b-4fdb43ff43a6
+Received: from ddkilzer.apple.com (ddkilzer.apple.com [17.202.44.147])
+	by relay16.apple.com (Apple SCV relay) with SMTP id 5B.B0.28620.FF34BDF4; Fri,
+ 15 Jun 2012 07:17:35 -0700 (PDT)
+X-Mailer: git-send-email 1.7.9.6 (Apple Git-31)
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrFJMWRmVeSWpSXmKPExsUieEpnsu5/59v+BpvXcFv83PuC3aLrSjeT
+	RUPvFWYHZo9F+4M9Ll5S9vi8SS6AOYrLJiU1J7MstUjfLoEro+WObMFi6Ypj//YwNTBOE+1i
+	5OSQEDCRaFy2hwnCFpO4cG89WxcjF4eQwA5GiTV3n7GAJNgEdCWeN39hBbFFBMQl3h6fyQ5i
+	Mws4SNx5tZERxBYW8JR4svACmM0ioCox78FfsF5eAWeJl49eskIs0Jc4uPU08wRGrgWMDKsY
+	BYtScxIrDc30EgsKclL1kvNzNzGCfNhQaL6DcftfuUOMAhyMSjy8F1lv+QuxJpYVV+YeYpTg
+	YFYS4RWKAgrxpiRWVqUW5ccXleakFh9ilOZgURLn5Um75i8kkJ5YkpqdmlqQWgSTZeLglGpg
+	7D9s2p9YKHx156318+RW3rjZ/7J6GceqDfGPL1Rs4Egv9WvwDfgf5ab6OW9lWZPhK9GTpa7N
+	r6Z5b//ceVGQM1x1YdTk8HuJ6p/EIuZMSW3f3so5+YnLt05Ln/1xky6wfDKPk/TcZjz99k9J
+	v8j82bZ2+8wXzZq/5vlMbrcTM+S/rwxYa3vtpxJLcUaioRZzUXEiABoH6sbdAQAA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200059>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200060>
 
-Yann Dirson <dirson@bertin.fr> writes:
+From: "David D. Kilzer" <ddkilzer@kilzer.net>
 
-> Another orthogonal UI issue I see, is that rev-list could be more
-> user-friendly to warn the user when one element of a rev list is
-> ignored because of another one.
+When performing an interactive rebase that preserves merges with
+rerere enabled, the --rerere-autoupdate switch should be passed
+to git-merge.
 
-Sometimes my maint-1.7.8 branch may still have commits that are not
-in maint branch, sometimes maint-1.7.9 branch is a true subset of
-maint branch. "rev-list ^maint maint-1.7.8 maint-1.7.9" is a very
-sensible thing to ask to find out what is still not in 'maint' out
-of stuff that are _usually_ but not always part of 'maint'.
+Signed-off-by: David D. Kilzer <ddkilzer@kilzer.net>
+---
+ git-rebase--interactive.sh                    |    7 ++-
+ t/t3420-rebase-preserve-merges-with-rerere.sh |   75 +++++++++++++++++++++++++
+ 2 files changed, 80 insertions(+), 2 deletions(-)
+ create mode 100755 t/t3420-rebase-preserve-merges-with-rerere.sh
 
-Complaining on such a query is not user-friendly at all.
+diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
+index 2e13258..958bbf8 100644
+--- a/git-rebase--interactive.sh
++++ b/git-rebase--interactive.sh
+@@ -297,9 +297,12 @@ pick_one_preserving_merges () {
+ 			msg_content="$(commit_message $sha1)"
+ 			# No point in merging the first parent, that's HEAD
+ 			new_parents=${new_parents# $first_parent}
++			# If rerere is enabled, pass the --rerere-autoupdate flag
++			test "$(git config --bool rerere.enabled)" = "true" &&
++				rerere_autoupdate=--rerere-autoupdate || rerere_autoupdate=
+ 			if ! do_with_author output \
+-				git merge --no-ff ${strategy:+-s $strategy} -m \
+-					"$msg_content" $new_parents
++				git merge --no-ff ${strategy:+-s $strategy} $rerere_autoupdate \
++					-m "$msg_content" $new_parents
+ 			then
+ 				printf "%s\n" "$msg_content" > "$GIT_DIR"/MERGE_MSG
+ 				die_with_patch $sha1 "Error redoing merge $sha1"
+diff --git a/t/t3420-rebase-preserve-merges-with-rerere.sh b/t/t3420-rebase-preserve-merges-with-rerere.sh
+new file mode 100755
+index 0000000..679937d
+--- /dev/null
++++ b/t/t3420-rebase-preserve-merges-with-rerere.sh
+@@ -0,0 +1,75 @@
++#!/bin/sh
++#
++# Copyright (c) 2007 Johannes E. Schindelin
++# Copyright (c) 2012 David D. Kilzer
++#
++
++test_description='git rebase -i -p should use rerere to resolve conflicts if enabled'
++. ./test-lib.sh
++
++. "$TEST_DIRECTORY"/lib-rebase.sh
++
++set_fake_editor
++
++# Setup
++#
++# A--AA--B    <-- master
++#     \
++#      \
++#       \
++#        C    <-- topic1
++
++test_expect_success 'setup' '
++	test_commit A file1 &&
++	test_commit AA file2 &&
++	test_commit B file1 &&
++	git checkout -b topic1 HEAD^ &&
++	test_commit C file1 &&
++	git checkout master
++'
++
++# Use rerere to resolve conflicts
++#
++# Before interactive rebase:
++#
++# A--AA--B    <-- master
++#     \   \
++#      \   M  <-- merge1-baseline, merge1
++#       \ /
++#        C    <-- topic1
++#
++# After interactive rebase:
++#
++# A--AA--B    <-- master
++#    |\   \
++#    | \   M  <-- merge1-baseline
++#    |  \ /
++#    |   C    <-- topic1
++#     \   \
++#      \   M' <-- merge1
++#       \ /
++#        B'
++
++test_expect_success 'rebase -i -p uses rerere to resolve conflicts' '
++	git config rerere.enabled true &&
++	git rerere clear &&
++
++	git checkout -b merge1 master &&
++	test_must_fail git merge topic1 &&
++	test "`git rerere status`" = "file1" &&
++	printf "B\nC\n" > file1 &&
++	git add file1 &&
++	git commit -m "M: Merge with conflict resolved." &&
++	git branch merge1-baseline &&
++
++	FAKE_LINES="edit 1 2 3" git rebase -i -p HEAD~2 &&
++	echo BB >> file2 &&
++	git add file2 &&
++	git commit -m "B'\'': Edit file2 to prevent fast-forward." --amend &&
++	test_must_fail git rebase --continue &&
++	git commit -m "M'\'': Merge with conflict resolved by rerere." &&
++	git rebase --continue &&
++	git diff --exit-code merge1-baseline..merge1 file1
++'
++
++test_done
+-- 
+1.7.9.6 (Apple Git-31)
