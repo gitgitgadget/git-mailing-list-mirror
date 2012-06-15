@@ -1,134 +1,112 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: How do I specify a revision for "git blame" by date?
-Date: Fri, 15 Jun 2012 11:01:08 -0400
-Message-ID: <20120615150107.GA4572@sigill.intra.peff.net>
-References: <4fda029d.g99uVull9jgguc/Y%perryh@pluto.rain.com>
- <877gva1a4b.fsf@thomas.inf.ethz.ch>
- <4fdb326f.WB/xRjZx4pXtMhhZ%perryh@pluto.rain.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [BUG] cherry-pick ignores some arguments
+Date: Fri, 15 Jun 2012 08:03:51 -0700
+Message-ID: <7vaa04d3c8.fsf@alter.siamese.dyndns.org>
+References: <20120614114415.39cbb64c@chalon.bertin.fr>
+ <1339691389.4625.9.camel@beez.lab.cmartin.tk>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: trast@student.ethz.ch, git@vger.kernel.org
-To: perryh@pluto.rain.com
-X-From: git-owner@vger.kernel.org Fri Jun 15 17:01:24 2012
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Yann Dirson <dirson@bertin.fr>, git list <git@vger.kernel.org>
+To: Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto <cmn@elego.de>
+X-From: git-owner@vger.kernel.org Fri Jun 15 17:04:03 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SfY1a-0001aS-Dd
-	for gcvg-git-2@plane.gmane.org; Fri, 15 Jun 2012 17:01:22 +0200
+	id 1SfY47-0000oL-4O
+	for gcvg-git-2@plane.gmane.org; Fri, 15 Jun 2012 17:03:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756982Ab2FOPBP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 15 Jun 2012 11:01:15 -0400
-Received: from 99-108-225-23.lightspeed.iplsin.sbcglobal.net ([99.108.225.23]:56373
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751469Ab2FOPBP (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Jun 2012 11:01:15 -0400
-Received: (qmail 32340 invoked by uid 107); 15 Jun 2012 15:01:17 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 15 Jun 2012 11:01:17 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 15 Jun 2012 11:01:08 -0400
-Content-Disposition: inline
-In-Reply-To: <4fdb326f.WB/xRjZx4pXtMhhZ%perryh@pluto.rain.com>
+	id S1757033Ab2FOPDz convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 15 Jun 2012 11:03:55 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:40475 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757012Ab2FOPDy convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 15 Jun 2012 11:03:54 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E8AA285B2;
+	Fri, 15 Jun 2012 11:03:53 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=LaBdbcWarxnm
+	tyYoD1vj8DSxqcc=; b=auQB7lDemI3WQpT4w+eShx6gUQvavhVPeL8Z0o8uWBwZ
+	VvEztR19GQhX1L9dbRCMlyiJwn+XOGHNp3VSde4mAEpUO0H0YXBzHkST860qIVpw
+	GBVlTBmM0eLhlgPep3RlIvM+iuF4mW/G8l6jY4lQN58T0L7Fs4FGuzKaKAGmZ3E=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=bdpeEe
+	FEbp8v6dz3LUOe5Cde1aYwVxkbsfWkrRugfq4Fy8TVgwzg5wT0kw+f+Fn6p8sc1V
+	Wh1pmP3+jNN2b1azl2wLnfVTbcgFFEr0gF8DFJgvuVasjVOj2j9rx8R11jRPCm5T
+	it+aEVxXZPwoaMAjLxnu88h7UkQ+fIPjGyCOo=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DFB5D85B1;
+	Fri, 15 Jun 2012 11:03:53 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3F30F85AF; Fri, 15 Jun 2012
+ 11:03:53 -0400 (EDT)
+In-Reply-To: <1339691389.4625.9.camel@beez.lab.cmartin.tk> ("Carlos
+ =?utf-8?Q?Mart=C3=ADn?= Nieto"'s message of "Thu, 14 Jun 2012 18:29:49
+ +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 525D1514-B6FB-11E1-8278-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200057>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200058>
 
-On Fri, Jun 15, 2012 at 06:02:39AM -0700, perryh@pluto.rain.com wrote:
+Carlos Mart=C3=ADn Nieto <cmn@elego.de> writes:
 
-> > You are looking at two different dates:
-> >
-> > a) The dates stored within the commit object:
-> >
-> >    - committer date, similarly shown by %ci: when the commit
-> >      was created.
-> >    - author date, shown by %ai: when "this" commit was "first
-> >      created".
-> >
-> >    These are properties of the commits, and thus part of the project
-> >    history.  Anyone who clones the project sees the same dates.
-> >
-> > b) The dates in the reflog, tracking the movement of *your local*
-> >    refs (like the name implies).  The HEAD reflog tracks what *you*
-> >    had "currently checked out" at a given time.
-> >
-> > An automated search in (b) is possible with the @{} syntax, but
-> > note that it tracks the *branch state*.  It says nothing about how
-> > "current" a certain resulting commit was.  For example, if you say
-> >
-> >   git checkout v1.6.0
-> >   sleep 2
-> >   git checkout -
-> >   git show '@{1 second ago}'
-> >
-> > you will see the commit for v1.6.0 from back in 2008.
-> >
-> > An automated search in (a) is hard, mostly because in nonlinear
-> > history there is not usually a single (and well-defined) commit
-> > that could be returned.
-> 
-> Given that we are discussing "git blame", which reports on the
-> history of a file (specifically the commit in which each line
-> originated), I think (a) must logically be included in the search
-> -- especially if (as in the example) the date specified is earlier
-> than any time in (b).  Perhaps such a request needs to use some
-> other syntax rather than @{}, but surely the capability ought to
-> be provided somehow.
+> On Thu, 2012-06-14 at 11:44 +0200, Yann Dirson wrote:
+>> Hello list,
+>>=20
+>> I just did a "git cherry-pick AAA BBB..CCC" using 1.7.10.3, and was =
+surprised
+>> that only the BBB..CCC range got picked - AAA was silently ignored.
+>>=20
+>
+> There is no way to know whether this is a bug without knowing how AAA=
+,
+> BBB and ccc are related? From the names, can we assume that AAA is a
+> (grand)parent of BBB? If that is the case, cherry-pick is behaving as
+> expected.
 
-It would have to use a different syntax, as reflog times (selected by
-@{}) and commit dates (usually selected via --since and --until) are
-measuring fundamentally different things, and have no meaningful
-relation to each other.
+That is correct from the "rev-list" point of view.  The request is
+telling us, by having BBB on the LHS of ".."  (which is the same as
+saying "^BBB"), that nothing that is an ancestor of BBB should be
+used, so if AAA happens to be behind BBB, it won't be picked.
 
-But that still doesn't address the issue that (a) is not well-defined.
-Imagine I have this history:
+In the context of "cherry-pick", "show", and "format-patch",
+however, "I want AAA and things *between* BBB and CCC" is not an
+unreasonable thing to ask [*1*].  You may be trying to port the
+feature implemented on your 'master' branch by commits in the
+consecutive range BBB..CCC to your 'maint' branch, but the
+implementation may happen to depend on an unrelated fix AAA that
+also is on your 'master' branch that came before BBB.
+
+It's just that the existing "AAA BBB..CCC" syntax is *not* a way to
+ask for that semantics, as it has an established "rev-list" meaning
+you explained.  Obviously you could say
+
+	git cherry-pick AAA $(git rev-list BBB..CCC)
+
+to get that semantics, but it is a mouthful to say.
+
+I am OK if somebody comes up with a different syntax to allow users
+to say "I have multiple range expressions. Please grab sets of
+commits from them *separately*, and give me a *union* of them".
+
+It is OK to add such a feature---it will have to be a lot more
+expensive from latency point of view (i.e. such a query cannot
+stream and always have to be "limited" in rev-list sense)---as long
+as such a change will not hurt performance and semantics of simpler
+cases.
 
 
-  A--B--C---G--H
-   \       /
-    D--E--F
+[Footnote]
 
-that is, two lines of development splitting at A and merging at H. And
-imagine the commit timestamps are (let's just refer to them as integers
-for the sake of simplicity, but they are representing days or seconds or
-whatever):
-
-  A(1)--B(2)--C(3)--G(7)--H(8)
-   \               /
-    D(2)--E(4)--F(6)
-
-What does it mean to ask for the commit at time=5? If you were to choose
-the commit with the highest timestamp <= 5, you would pick E. But there
-are two independent, simultaneous lines of development, and at time=5 on
-the top branch, the most current commit was C.
-
-So the question doesn't make sense. There was no one commit at time=5;
-there were multiple (as many as you have simultaneous branches). You can
-pick a winner out of them, but there are multiple ways to do it. For
-example, you might want to say "of all lines of development, the one
-that had most recently committed as of time=5" (and of course you can
-still have a tie there). Or you could say "along the first-parent
-ancestry, the commit that was most recent as of time=5". I am sure one
-could come up with others, as well.
-
-Git-blame expects you to give it a well-defined point (as it must, since
-it is a backwards walk down history showing what led to a particular set
-of content; it wouldn't make sense to feed it multiple starting points).
-You could do so by asking rev-list to walk the graph according to your
-requirements and feeding the result to blame, like:
-
-  # most recent on any line of development that is merged to HEAD
-  git blame `git rev-list -1 --until=5 HEAD`
-
-  # most recent on any line of development in the whole repo
-  git blame `git rev-list -1 --until=5 --all`
-
-  # most recent version on the first-parent; if you follow a
-  # topic-branch workflow and always merge up into "master", then this
-  # will blame what was on master at time=5
-  git blame `git rev-list -1 --until=5 --first-parent HEAD`
-
--Peff
+*1* I've said this a few times here, but the way "show --do-walk"
+walks the history is an ugly hack that merely happens to appear to
+work sometimes but is done in a wrong way.
