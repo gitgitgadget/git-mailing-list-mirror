@@ -1,124 +1,104 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: "Detailed diagnosis" perhaps broken
-Date: Thu, 14 Jun 2012 21:03:45 -0700
-Message-ID: <7vpq91cjby.fsf@alter.siamese.dyndns.org>
+Subject: Re: [PATCH v7 0/5] git log -L, all new and shiny
+Date: Thu, 14 Jun 2012 21:40:53 -0700
+Message-ID: <7vlijpchm2.fsf@alter.siamese.dyndns.org>
+References: <cover.1339063659.git.trast@student.ethz.ch>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Phil Hord <phil.hord@gmail.com>, git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@imag.fr>
-X-From: git-owner@vger.kernel.org Fri Jun 15 06:03:58 2012
+Cc: <git@vger.kernel.org>, Bo Yang <struggleyb.nku@gmail.com>
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Fri Jun 15 06:41:04 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SfNlK-0001tC-OT
-	for gcvg-git-2@plane.gmane.org; Fri, 15 Jun 2012 06:03:55 +0200
+	id 1SfOLG-0005rW-Aq
+	for gcvg-git-2@plane.gmane.org; Fri, 15 Jun 2012 06:41:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750765Ab2FOEDt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 15 Jun 2012 00:03:49 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:56083 "EHLO
+	id S1751139Ab2FOEk6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 15 Jun 2012 00:40:58 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:36957 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750725Ab2FOEDs (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Jun 2012 00:03:48 -0400
+	id S1751034Ab2FOEk5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Jun 2012 00:40:57 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7DDEC86FC;
-	Fri, 15 Jun 2012 00:03:47 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2FA0D8CB7;
+	Fri, 15 Jun 2012 00:40:57 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:date:message-id:mime-version:content-type; s=sasl; bh=Q
-	x7RBAZILzvZumSuqoOVsCqUvnw=; b=tTu7vHZXWkODPAxQSlWp6R/l2ga+r5QLa
-	JiisEQugXmR6zg2RS3HfHnkm+P+IVNgMvyoRMsz8UAhGaY6LMf4vo20CJZOca1i0
-	onMaOH57syqG7Ws/sEHZqjBF3o4yK7zmF6lZpiN6Y+IEApQMJ87AeUg0Ws+XnnZ4
-	dwprYEMzq8=
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=CXsX8uMMOmEvbzxc5su4wzY1Kn0=; b=CgzoF5
+	INNNSLdkYQB1NoCS+4tGrrZOBzF1+gLth0ge43tnpkBCTPGGZVZqCP1C1KAnG4pj
+	EnXhnzRU7KaAsWOBgCjYhOB2nCkajgUSvK4z4AlqYue/dsiOYhpVAGzCipi4sdLi
+	GUNN5jUjYF5ZhbaslErW5KW0pIIoc3JNgKuD0=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:date:message-id:mime-version:content-type; q=dns; s=
-	sasl; b=Fd1ehQSpyspycEL85KgXDzef6dcavnHGTpAZWOCqfOEK18F+p7zGImrS
-	wl+cwXkU0T7ROhaC5WlAF4jC+ev068rrWOd+kTPz5ALP7sN+CvxbkO9CFRoro3pb
-	sAfaEYtf6RwkD3jjS12xk6qfrBL0bJeWvYFEQRY62zths06sjZY=
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=QMFNB+BfOYfr3YGMTE0JrVIJcqG06J/V
+	IbUqLxlWSGJjTcKZzVoCrmGG1H7IraHTNmzrfqT33KV50KpF27aM/GjCWNCBIt0J
+	wghqkfA/kHhRNZvrUChMYEZUXXeFELKofZwc2d7XXIAuvOSk2f/J0IvKKXCsJC36
+	ADuzM19KPtA=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7451786FB;
-	Fri, 15 Jun 2012 00:03:47 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 263728CB6;
+	Fri, 15 Jun 2012 00:40:57 -0400 (EDT)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D4D5A86F7; Fri, 15 Jun 2012
- 00:03:46 -0400 (EDT)
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9B9798CB4; Fri, 15 Jun 2012
+ 00:40:55 -0400 (EDT)
+In-Reply-To: <cover.1339063659.git.trast@student.ethz.ch> (Thomas Rast's
+ message of "Thu, 7 Jun 2012 12:23:24 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 1B1DEBCA-B69F-11E1-9EDC-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 4B908A9C-B6A4-11E1-9CA6-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200038>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200039>
 
-009fee4 (Detailed diagnosis when parsing an object name fails., 2009-12-07)
-added a logic to try to see what kind of breakage the object name
-user gave in the $treeish:$path or /:$search syntax.
+Thomas Rast <trast@student.ethz.ch> writes:
 
-This logic however triggers in a funny way, leading to an idiotic
-error message.  You can try this in the git repository:
+> I too thought it would never happen -- but then again this is still
+> not ready, I'm just trying to give it some exposure.
+> ...
+> There's also a longer-term wishlist hinted at in the commit message of
+> the main patch: the diff machinery currently makes no provisions for
+> chaining its various bells and whistles.
 
-	$ git log COPYING HEAD^:COPYING
-	fatal: Path 'COPYING' exists on disk, but not in 'HEAD^'.
+I am not convinced that it is "diff machinery makes no provivsions"
+that is the problem. Isn't it coming from the way the series limits
+the output line range and reimplements its own output routine?
 
-When setup_revisions() tries to parse the command line arguments, it
-notices that there is no "--", and it makes sure that earlier
-arguments are all revs that cannot possibly refer to working tree
-files, and later arguments all refer to working tree files and
-cannot possibly refer to objects.
+All the "bells and whistles" like diffstat, word coloring, etc. go
+through the xdi_diff_outf() interface, so isn't it the matter of
+limiting lines that this interface calls back the "bells and
+whistles" callback functions with?
 
-It first looks at "COPYING", notices that it is _not_ a rev.  Which
-means that anything that follows must _not_ be an object name.  It
-calls verify_filename() on "COPYING", which is a happy filename, and
-then calls verify_filename() on "HEAD^:COPYING", and then calls
-die_verify_filename() on it, assuming that it is being fed a badly
-formed rev.
+When you enter the diff machinery, you have the path and the line
+range you are interested in of one side (lets say you are comparing
+side A and B, and have line range for side A).
 
-Obviously, this assumption is *WRONG*.
+If you
 
-Then get_sha1_with_mode_1() is called with "gently" set to 0 (in
-later code, we have a fix to flip the value of this flag and renamed
-it to "only-to-die"---we are calling this function only to let it die
-with diagnostics).  It tries to interpret HEAD^:COPYING as a rev,
-and even though get_tree_entry() call for "COPYING" inside "HEAD^"
-tree-ish succeeds, it ignores the fact that it successfully names an
-object, and calls diagnose_invalid_sha1_path() to die.
+ - add a mechanism to pass the "interesting" line range and path
+   down to the callchain from xdi_diff_outf() to xdiff_outf();
 
-	Side note.  The original motivation of the "detailed diag"
-	patch was to catch something like
+ - make one of these functions filter out (i.e. not call the
+   callback xdiff_emit_consume_fn) hunks that do not overlap with
+   the line range you are interested in (I would presume that they
+   would be a few new fields in xdemitconf_t structure); and
 
-	$ git rev-parse HEAD^:COPYIGN
+ - while recording the corresponding line ranges in the other side
+   of the hunks that are output,
 
-	and the codepath is called when the caller _knows_
-	HEAD^:COPYIGN must resolve to an object name, and made sure
-	that it does not, so in that case, it results in expected
-	behaviour.  But for this "earlier must be all revs, later
-	must be all paths" caller, it was a wrong conversion.
+that would give you
 
-That causes "Path exists on disk, but not in 'HEAD^'", which is only
-half correct (because the caller just checked and it knows the path
-exists in 'HEAD^', but it ignored the result of the check), and more
-importantly, completely misses the point.
+ - output that is limited to the "interesting" input range of side A;
 
-At least, the following patch seems to work around _this_ particular
-codepath, but I suspect that we need to check other places that can
-reach diagnose_invalid_foo() functions your commit introduced for
-similar breakages.
+ - the corresponding "interesting" range in the other side of the
+   comparison, so that you can update the "interesting" range to
+   feed to the next diff that compares side B with something else; and
 
-Ideas for better fix?
+ - for whatever processing the various "bells and whistles" callers
+   already implement, as all their callbacks see are the lines in
+   your "interesting" range.
 
- sha1_name.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/sha1_name.c b/sha1_name.c
-index c633113..574c68a 100644
---- a/sha1_name.c
-+++ b/sha1_name.c
-@@ -1127,7 +1127,7 @@ int get_sha1_with_context_1(const char *name, unsigned char *sha1,
- 			if (new_filename)
- 				filename = new_filename;
- 			ret = get_tree_entry(tree_sha1, filename, sha1, &oc->mode);
--			if (only_to_die) {
-+			if (only_to_die && ret) {
- 				diagnose_invalid_sha1_path(prefix, filename,
- 							   tree_sha1, object_name);
- 				free(object_name);
+No?  Am I missing something?
