@@ -1,142 +1,95 @@
-From: perryh@pluto.rain.com
-Subject: Re: How do I specify a revision for "git blame" by date?
-Date: Fri, 15 Jun 2012 06:02:39 -0700
-Message-ID: <4fdb326f.WB/xRjZx4pXtMhhZ%perryh@pluto.rain.com>
-References: <4fda029d.g99uVull9jgguc/Y%perryh@pluto.rain.com>
- <877gva1a4b.fsf@thomas.inf.ethz.ch>
+From: Yann Dirson <dirson@bertin.fr>
+Subject: Re: [BUG] cherry-pick ignores some arguments
+Date: Fri, 15 Jun 2012 09:14:25 +0200
+Organization: Bertin Technologies
+Message-ID: <20120615091425.20e40af9@chalon.bertin.fr>
+References: <20120614114415.39cbb64c@chalon.bertin.fr>
+ <1339691389.4625.9.camel@beez.lab.cmartin.tk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: trast@student.ethz.ch
-X-From: git-owner@vger.kernel.org Fri Jun 15 08:13:45 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Carlos =?UTF-8?B?TWFydMOtbg==?= Nieto <cmn@elego.de>
+To: git list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Jun 15 09:14:40 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SfPmv-0006wW-Cp
-	for gcvg-git-2@plane.gmane.org; Fri, 15 Jun 2012 08:13:41 +0200
+	id 1SfQju-0004fe-2T
+	for gcvg-git-2@plane.gmane.org; Fri, 15 Jun 2012 09:14:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752067Ab2FOGNd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 15 Jun 2012 02:13:33 -0400
-Received: from agora.rdrop.com ([199.26.172.34]:3907 "EHLO agora.rdrop.com"
+	id S1752394Ab2FOHO3 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 15 Jun 2012 03:14:29 -0400
+Received: from blois.bertin.fr ([195.68.26.9]:39224 "EHLO blois.bertin.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751466Ab2FOGNc (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Jun 2012 02:13:32 -0400
-Received: from agora.rdrop.com (66@localhost [127.0.0.1])
-	by agora.rdrop.com (8.13.1/8.12.7) with ESMTP id q5F6DM0G057696
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Thu, 14 Jun 2012 23:13:23 -0700 (PDT)
-	(envelope-from perryh@pluto.rain.com)
-Received: (from uucp@localhost)
-	by agora.rdrop.com (8.13.1/8.14.2/Submit) with UUCP id q5F6DMxg057695;
-	Thu, 14 Jun 2012 23:13:22 -0700 (PDT)
-	(envelope-from perryh@pluto.rain.com)
-Received: from fbsd81 ([192.168.200.81]) by pluto.rain.com (4.1/SMI-4.1-pluto-M2060407)
-	id AA07915; Thu, 14 Jun 12 23:03:59 PDT
-In-Reply-To: <877gva1a4b.fsf@thomas.inf.ethz.ch>
-User-Agent: nail 11.25 7/29/05
+	id S1751619Ab2FOHO2 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 15 Jun 2012 03:14:28 -0400
+Received: from blois.bertin.fr (localhost [127.0.0.1])
+	by postfix.imss70 (Postfix) with ESMTP id 68828542E3
+	for <git@vger.kernel.org>; Fri, 15 Jun 2012 09:14:27 +0200 (CEST)
+Received: from yport1.innovation.bertin.fr (yport1.bertin.fr [192.168.1.13])
+	by blois.bertin.fr (Postfix) with ESMTP id 47F93542B9
+	for <git@vger.kernel.org>; Fri, 15 Jun 2012 09:14:27 +0200 (CEST)
+Received: from chalon.bertin.fr ([172.16.1.1]) by yport1.innovation.bertin.fr
+ (Sun Java System Messaging Server 6.2-8.04 (built Feb 28 2007))
+ with ESMTPPA id <0M5N00AXNDG1VJ20@yport1.innovation.bertin.fr> for
+ git@vger.kernel.org; Fri, 15 Jun 2012 09:14:27 +0200 (CEST)
+In-reply-to: <1339691389.4625.9.camel@beez.lab.cmartin.tk>
+X-Mailer: Claws Mail 3.8.0 (GTK+ 2.24.10; i486-pc-linux-gnu)
+X-TM-AS-Product-Ver: IMSS-7.0.0.8220-6.8.0.1017-18970.005
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200041>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200042>
 
-Thomas Rast <trast@student.ethz.ch> wrote:
-
-> perryh@pluto.rain.com writes:
+On Thu, 14 Jun 2012 18:29:49 +0200 Carlos Mart=C3=ADn Nieto <cmn@elego.=
+de> wrote:
+> On Thu, 2012-06-14 at 11:44 +0200, Yann Dirson wrote:
+> > Hello list,
+> >=20
+> > I just did a "git cherry-pick AAA BBB..CCC" using 1.7.10.3, and was=
+ surprised
+> > that only the BBB..CCC range got picked - AAA was silently ignored.
+> >=20
+>=20
+> There is no way to know whether this is a bug without knowing how AAA=
+,
+> BBB and ccc are related? From the names, can we assume that AAA is a
+> (grand)parent of BBB? If that is the case, cherry-pick is behaving as
+> expected.
 >
-> > How do I get "git blame" to operate "as of" a particular date in
-> > the past, without having to manually look up the corresponding
-> > SHA1 using "git rev-list"?  For example, I can get a report as
-> > of 2011-12-29 by doing something like:
-> >
-> >   $ git rev-list --all --date-order --format="%h %ai" .
-> >   ...
-> >   7c69106 2012-01-03 ...
-> >   b4227af 2011-12-27 ...
-> >   ...
-> >
-> >   $ git blame <file> b4227af
-> >
-> > but I want to have git look up the last revision prior to the
-> > given date, by doing something like
-> >
-> >   $ git blame <file> @{2011-12-29}
->
-> You are looking at two different dates:
->
-> a) The dates stored within the commit object:
->
->    - committer date, similarly shown by %ci: when the commit
->      was created.
->    - author date, shown by %ai: when "this" commit was "first
->      created".
->
->    These are properties of the commits, and thus part of the project
->    history.  Anyone who clones the project sees the same dates.
->
-> b) The dates in the reflog, tracking the movement of *your local*
->    refs (like the name implies).  The HEAD reflog tracks what *you*
->    had "currently checked out" at a given time.
->
-> An automated search in (b) is possible with the @{} syntax, but
-> note that it tracks the *branch state*.  It says nothing about how
-> "current" a certain resulting commit was.  For example, if you say
->
->   git checkout v1.6.0
->   sleep 2
->   git checkout -
->   git show '@{1 second ago}'
->
-> you will see the commit for v1.6.0 from back in 2008.
->
-> An automated search in (a) is hard, mostly because in nonlinear
-> history there is not usually a single (and well-defined) commit
-> that could be returned.
+> See the DESCRIPTION in http://git-scm.com/docs/git-rev-list for furth=
+er
+> explanation, but the short of the story is that the second argument t=
+old
+> it to ignore any commit before BBB, so AAA is not in the list of comm=
+its
+> to be applied.
 
-Given that we are discussing "git blame", which reports on the
-history of a file (specifically the commit in which each line
-originated), I think (a) must logically be included in the search
--- especially if (as in the example) the date specified is earlier
-than any time in (b).  Perhaps such a request needs to use some
-other syntax rather than @{}, but surely the capability ought to
-be provided somehow.
+OK, this is exactly the case.  Looking back at the cherry-pick manpage,=
+ I'd say that
+what confused me is the implicit --no-walk: the standard "git cherry-pi=
+ck AAA" does
+not look like a rev-list spec at all!
 
-> Git could attempt to search all of your branches, like you have
-> done above ...
+At least for this command, it would seem more natural (to me at least) =
+to take
+each arg one by one and feed it to "rev-list --no-walk" or similar.  Ma=
+ybe some
+special rev-list flag could trigger such a particular behaviour, pretty=
+ much like
+what --no-walk does ?
 
-Actually, I am not at all sure that one would want --all in the
-general case; it works well in my particular case because all
-branches in this repository have been merged back to master.
 
-Intuitively, I suspect that the default search set should be all
-commits reachable from HEAD.  (BTW I may not have the terminology
-exactly right; while I have been working with other CM systems
-for a couple of decades, I am quite new to git and there is much
-about it that I do not yet understand.)
+Another orthogonal UI issue I see, is that rev-list could be more user-=
+friendly to warn
+the user when one element of a rev list is ignored because of another o=
+ne.  Not sure
+whether this would be useful for all explicit rev lists specified by th=
+e user - maybe a
+config var and associated option would be needed too.
 
-> but which one among all commits from that date should it pick?
-
-The latest one that is not later than the specified date (and time
--- a timestamp within {} can provide more granularity than just
-the day; in the example provided there were in fact no commits on
-2011-12-29 so no ambiguity would arise from using the date alone.)
-
-> Furthermore, the result set to pick from will change if you
-> fetch more history into your repo.
-
-Using the "commits reachable from HEAD" strategy above, I think
-not, unless I also merge from some of that additional history.
-
-> It's even worse with the author (as opposed to committer) dates:
-> those are not even remotely close to monotonic in most repos,
-> because they are kept across rewriting.  (The committer dates
-> would be monotonic if everyone kept their clocks in sync and
-> avoided filter-branch tricks.)
-
-Since it is the file's included commits that "git blame" reports on,
-I doubt it would be all that useful to deal in anything other than
-commit dates.  (I seem to have copy-pasted the wrong format in the
-rev-list part of the example -- it should be "%h %ci".)
+--=20
+Yann Dirson - Bertin Technologies
