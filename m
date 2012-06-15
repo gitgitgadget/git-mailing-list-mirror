@@ -1,157 +1,83 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Fix git-svn in non-MakeMaker builds
-Date: Fri, 15 Jun 2012 14:25:34 -0700
-Message-ID: <7vwr388dyp.fsf@alter.siamese.dyndns.org>
-References: <1339781427-10568-1-git-send-email-adam@roben.org>
- <20120615180505.GH10752@burratino>
+From: Alexander Strasser <eclipse7@gmx.net>
+Subject: [PATCH v3 1/2] diff: Only count lines in show_shortstats
+Date: Fri, 15 Jun 2012 23:50:30 +0200
+Message-ID: <eae8caaf80d3bc90051de3f8f022bda01016bfd8.1339796363.git.eclipse7@gmx.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Adam Roben <adam@roben.org>, git@vger.kernel.org,
-	Eric Wong <normalperson@yhbt.net>,
-	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jun 15 23:25:45 2012
+Cc: Zbigniew =?utf-8?Q?J=C4=99drzejewski-Szmek?= <zbyszek@in.waw.pl>,
+	mj@ucw.cz, Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jun 15 23:50:57 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Sfe1V-0001nh-LL
-	for gcvg-git-2@plane.gmane.org; Fri, 15 Jun 2012 23:25:42 +0200
+	id 1SfePv-00050v-DF
+	for gcvg-git-2@plane.gmane.org; Fri, 15 Jun 2012 23:50:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757336Ab2FOVZi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 15 Jun 2012 17:25:38 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:36746 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757223Ab2FOVZh (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Jun 2012 17:25:37 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C63DE92C2;
-	Fri, 15 Jun 2012 17:25:36 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=n7gCAJdriyarwcx2HjUbn4JaHw0=; b=D1wFow
-	L8P0feJUIWxu31+NI3m3ibyPWI9RSdDSdU1ssf2pbNlylCQX+Bp2OtIC6tvoxreg
-	mEPM/1YM5Be49Gb0kiv/tERyaEY+HqUMlV17FQkEa/5JNH9Q61PRy8KTsFBAFaYX
-	9Ha01bmaYnkA2AVz+fk4pQoBZ+HQmHCMOLsZM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=xjWWIuzunluWbKXrdFdif8PQ0sK+xma+
-	BT1WmhFQqOKwL0LjdEx7hmsfbZWqJbhh9MkQTQuKAMRkz5gnRxKeU0IPlMSb5d86
-	84ljKMCWQ/NxK/DASJBKpy2Rl4BAm5rKGooLH68LZyBKGVwa92X0IRnYIFFcdSmI
-	s6zItNHrnwQ=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BB57A92C1;
-	Fri, 15 Jun 2012 17:25:36 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 260D992C0; Fri, 15 Jun 2012
- 17:25:36 -0400 (EDT)
-In-Reply-To: <20120615180505.GH10752@burratino> (Jonathan Nieder's message of
- "Fri, 15 Jun 2012 13:05:05 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: A58DD694-B730-11E1-8052-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1758051Ab2FOVuq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 15 Jun 2012 17:50:46 -0400
+Received: from mailout-de.gmx.net ([213.165.64.22]:33635 "HELO
+	mailout-de.gmx.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with SMTP id S1757884Ab2FOVuo (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Jun 2012 17:50:44 -0400
+Received: (qmail invoked by alias); 15 Jun 2012 21:50:41 -0000
+Received: from p5DC36C83.dip.t-dialin.net (EHLO gmx.net) [93.195.108.131]
+  by mail.gmx.net (mp032) with SMTP; 15 Jun 2012 23:50:41 +0200
+X-Authenticated: #8251126
+X-Provags-ID: V01U2FsdGVkX18vCyMohEwv/5U1ELR61S1wHpNYB7X7mMjaRm84Lu
+	aoXhPXcWKyvsJE
+Received: by gmx.net (sSMTP sendmail emulation); Fri, 15 Jun 2012 23:50:30 +0200
+Content-Disposition: inline
+User-Agent: Mutt/1.5.21 (2010-09-15)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200101>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200102>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+Do not mix byte and line counts. Binary files have byte counts;
+skip them when accumulating line insertions/deletions.
 
-> Adam Roben wrote:
->
->> c102f4cf729a65b3520dbb17b52aa0c4fe4d4b29 and
->> a6180325e885e2226d68144000e8bb18a906a2a6 split some git-svn code into
->> separate modules, but forgot to inform the non-MakeMaker build about
->> those new modules.
->
-> Good catch.  How about this patch against master (untested)?
->
-> -- >8 --
-> Subject: perl/Makefile: install Git::SVN::* when NO_PERL_MAKEMAKER=yes, too
->
-> v1.7.11-rc1~12^2~2 (2012-05-27) and friends split some git-svn code
-> into separate modules but did not update the fallback rules to install
-> them when NO_PERL_MAKEMAKER is set.  Add the appropriate rules so
-> users without MakeMaker can use git-svn again.
->
-> Affected modules: Git::SVN::Prompt, Git::SVN::Fetcher,
-> Git::SVN::Editor, Git::SVN::Ra, Git::SVN::Memoize::YAML.
->
-> Reported-by: Adam Roben <adam@roben.org>
-> Signed-off-by: Jonathan Nieder <jrnieder@gmali.com>
-> ---
-> Sensible?
->
-> In principle this should be two patches --- one to introduce the loop,
-> another to add Git::SVN::* to that loop.  Let me know if you think
-> this would be easier to read that way and I can try it.
+The regression was introduced in e18872b.
 
->  perl/Makefile |   31 ++++++++++++++++++++++++-------
->  1 file changed, 24 insertions(+), 7 deletions(-)
->
-> diff --git a/perl/Makefile b/perl/Makefile
-> index 3e21766d..fe7a4864 100644
-> --- a/perl/Makefile
-> +++ b/perl/Makefile
-> @@ -2,6 +2,7 @@
->  # Makefile for perl support modules and routine
->  #
->  makfile:=perl.mak
-> +modules =
->  
->  PERL_PATH_SQ = $(subst ','\'',$(PERL_PATH))
->  prefix_SQ = $(subst ','\'',$(prefix))
-> @@ -22,19 +23,35 @@ clean:
->  
->  ifdef NO_PERL_MAKEMAKER
->  instdir_SQ = $(subst ','\'',$(prefix)/lib)
-> +
-> +modules += Git
-> +modules += Git/I18N
-> +modules += Git/SVN/Memoize/YAML
-> +modules += Git/SVN/Fetcher
-> +modules += Git/SVN/Editor
-> +modules += Git/SVN/Prompt
-> +modules += Git/SVN/Ra
-> +
->  $(makfile): ../GIT-CFLAGS Makefile
->  	echo all: private-Error.pm Git.pm Git/I18N.pm > $@
-> -	echo '	mkdir -p blib/lib/Git' >> $@
-> -	echo '	$(RM) blib/lib/Git.pm; cp Git.pm blib/lib/' >> $@
-> -	echo '	$(RM) blib/lib/Git/I18N.pm; cp Git/I18N.pm blib/lib/Git/' >> $@
-> +	echo '	mkdir -p blib/lib/Git/SVN/Memoize' >> $@
+Signed-off-by: Alexander Strasser <eclipse7@gmx.net>
+---
+ diff.c                 | 2 +-
+ t/t4012-diff-binary.sh | 6 ++++++
+ 2 files changed, 7 insertions(+), 1 deletion(-)
 
-Wouldn't it be much less error prone to maintain if you did not
-hardcode the "blib/lib/Git/SVN/Memoize is the deepest level" here,
-and run the "mkdir -p blib/lib/$$(basename $$i)" or something in the
-loop instead?
-
-> +	set -e; \
-> +	for i in $(modules); \
-> +	do \
-> +		echo '	$(RM) blib/lib/'$$i'.pm' >> $@; \
-> +		echo '	cp '$$i'.pm blib/lib/'$$i'.pm' >> $@; \
-> +	done
->  	echo '	$(RM) blib/lib/Error.pm' >> $@
->  	'$(PERL_PATH_SQ)' -MError -e 'exit($$Error::VERSION < 0.15009)' || \
->  	echo '	cp private-Error.pm blib/lib/Error.pm' >> $@
->  	echo install: >> $@
-> -	echo '	mkdir -p "$$(DESTDIR)$(instdir_SQ)"' >> $@
-> -	echo '	mkdir -p "$$(DESTDIR)$(instdir_SQ)/Git"' >> $@
-> -	echo '	$(RM) "$$(DESTDIR)$(instdir_SQ)/Git.pm"; cp Git.pm "$$(DESTDIR)$(instdir_SQ)"' >> $@
-> -	echo '	$(RM) "$$(DESTDIR)$(instdir_SQ)/Git/I18N.pm"; cp Git/I18N.pm "$$(DESTDIR)$(instdir_SQ)/Git"' >> $@
-> +	echo '	mkdir -p "$$(DESTDIR)$(instdir_SQ)/Git/SVN/Memoize"' >> $@
-
-Likewise.
-
-> +	set -e; \
-> +	for i in $(modules); \
-> +	do \
-> +		echo '	$(RM) "$$(DESTDIR)$(instdir_SQ)/'$$i'.pm"' >> $@; \
-> +		echo '	cp '$$i'.pm "$$(DESTDIR)$(instdir_SQ)/'$$i'.pm"' >> $@; \
-> +	done
->  	echo '	$(RM) "$$(DESTDIR)$(instdir_SQ)/Error.pm"' >> $@
->  	'$(PERL_PATH_SQ)' -MError -e 'exit($$Error::VERSION < 0.15009)' || \
->  	echo '	cp private-Error.pm "$$(DESTDIR)$(instdir_SQ)/Error.pm"' >> $@
+diff --git a/diff.c b/diff.c
+index 77edd50..1a594df 100644
+--- a/diff.c
++++ b/diff.c
+@@ -1700,7 +1700,7 @@ static void show_shortstats(struct diffstat_t *data, struct diff_options *option
+ 			continue;
+ 		if (!data->files[i]->is_renamed && (added + deleted == 0)) {
+ 			total_files--;
+-		} else {
++		} else if (!data->files[i]->is_binary) { /* don't count bytes */
+ 			adds += added;
+ 			dels += deleted;
+ 		}
+diff --git a/t/t4012-diff-binary.sh b/t/t4012-diff-binary.sh
+index 8b4e80d..7d03c1d 100755
+--- a/t/t4012-diff-binary.sh
++++ b/t/t4012-diff-binary.sh
+@@ -36,6 +36,12 @@ test_expect_success '"apply --stat" output for binary file change' '
+ 	test_i18ncmp expected current
+ '
+ 
++test_expect_success 'diff --shortstat output for binary file change' '
++	echo " 4 files changed, 2 insertions(+), 2 deletions(-)" >expected &&
++	git diff --shortstat >current &&
++	test_i18ncmp expected current
++'
++
+ test_expect_success 'apply --numstat notices binary file change' '
+ 	git diff >diff &&
+ 	git apply --numstat <diff >current &&
+-- 
+1.7.10.2.552.gaa3bb87
