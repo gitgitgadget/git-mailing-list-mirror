@@ -1,79 +1,148 @@
-From: Vincent van Ravesteijn <vfr@lyx.org>
-Subject: Re: [git-users] Re: how to get the formated patches from the merge
- id
-Date: Fri, 15 Jun 2012 15:11:59 +0200
-Message-ID: <4FDB349F.3080507@lyx.org>
-References: <CAHsH0E98t7EcvXM0zSjMGHcd5u4_Lp6B7q9KAhcE0eyo-tXnWw@mail.gmail.com> <9579793f-d72f-424c-9546-f2caa1fbf847@googlegroups.com> <CAHsH0E995C2Fsiyr=MZOH2VyN=mFvnWjrV=6LWkfv-YLy+2RjQ@mail.gmail.com> <4FDB239A.9070803@lyx.org> <CAHsH0E8MzMW8SEFGB_X80qH_5btnmvLWFxjQ-EBSaGbHSUz-Sg@mail.gmail.com>
+From: Carlos =?ISO-8859-1?Q?Mart=EDn?= Nieto <cmn@elego.de>
+Subject: Re: [BUG] cherry-pick ignores some arguments
+Date: Fri, 15 Jun 2012 15:12:23 +0200
+Message-ID: <1339765943.4625.57.camel@beez.lab.cmartin.tk>
+References: <20120614114415.39cbb64c@chalon.bertin.fr>
+	 <1339691389.4625.9.camel@beez.lab.cmartin.tk>
+	 <20120615091425.20e40af9@chalon.bertin.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: lei yang <yanglei.fage@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jun 15 15:12:31 2012
+Content-Type: multipart/signed; micalg="pgp-sha1"; protocol="application/pgp-signature";
+	boundary="=-WsRdUMPdY3iDTjVYupwv"
+Cc: git list <git@vger.kernel.org>
+To: Yann Dirson <dirson@bertin.fr>
+X-From: git-owner@vger.kernel.org Fri Jun 15 15:12:42 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SfWKD-00011r-P9
-	for gcvg-git-2@plane.gmane.org; Fri, 15 Jun 2012 15:12:30 +0200
+	id 1SfWKM-0001VW-PZ
+	for gcvg-git-2@plane.gmane.org; Fri, 15 Jun 2012 15:12:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756549Ab2FONMD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 15 Jun 2012 09:12:03 -0400
-Received: from mail-ey0-f174.google.com ([209.85.215.174]:60135 "EHLO
-	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752539Ab2FONMB (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Jun 2012 09:12:01 -0400
-Received: by eaak11 with SMTP id k11so920105eaa.19
-        for <git@vger.kernel.org>; Fri, 15 Jun 2012 06:12:00 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding
-         :x-gm-message-state;
-        bh=5szxo93/Lt+MabZHmDhQFy9ojdLPBzOa4HRNbXHYHm8=;
-        b=Nnuq5zJd3MyUxzTGD+WtYplUSy2zMPz1M/koVqHITFOa5WfqfocWVsN4zsrm+whT/Z
-         2PO3xF/h4ZrSr6Tza7GJm2vYqjCOUUxwlIqZlS8Kb7nKBk1Q89basD2TTnw/m6Gu1GFD
-         LbmhhLHUgKi/Ek5Zfoazu+DoYkFuGTf8TjvcEguYPMVG9M5WTOPXPn13vAhQhtyC4xo3
-         gcm+DNcKuoQIoeOT8tWtlFfWdhMCSIG7oylc7YKD25AEChezAxfNWgTqLjCmRet83V78
-         s2kQCz72aG6Zx9RF31+6gGEO5sWveWfgdjMlne6DKsjQvZO+JBvUJErcIVJBxFHwrZI6
-         9Kiw==
-Received: by 10.14.28.77 with SMTP id f53mr1314483eea.98.1339765920393;
-        Fri, 15 Jun 2012 06:12:00 -0700 (PDT)
-Received: from [192.168.1.3] (j175101.upc-j.chello.nl. [24.132.175.101])
-        by mx.google.com with ESMTPS id v16sm29239727eem.17.2012.06.15.06.11.58
-        (version=SSLv3 cipher=OTHER);
-        Fri, 15 Jun 2012 06:11:59 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:12.0) Gecko/20120428 Thunderbird/12.0.1
-In-Reply-To: <CAHsH0E8MzMW8SEFGB_X80qH_5btnmvLWFxjQ-EBSaGbHSUz-Sg@mail.gmail.com>
-X-Gm-Message-State: ALoCoQlaFY06+6jWiZK/QQAlvGB3AUIDzh87kT7wazaD5WuRfp5o1S0JdejVr9teX6ruIFUzeFGn
+	id S1756883Ab2FONMb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 15 Jun 2012 09:12:31 -0400
+Received: from kimmy.cmartin.tk ([91.121.65.165]:34968 "EHLO kimmy.cmartin.tk"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756844Ab2FONMa (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Jun 2012 09:12:30 -0400
+Received: from [10.10.10.234] (i59F7870A.versanet.de [89.247.135.10])
+	by kimmy.cmartin.tk (Postfix) with ESMTPSA id BFAD14614A;
+	Fri, 15 Jun 2012 15:12:22 +0200 (CEST)
+In-Reply-To: <20120615091425.20e40af9@chalon.bertin.fr>
+X-Mailer: Evolution 3.2.2-1+b1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200050>
-
-Op 15-6-2012 14:56, lei yang schreef:
-> On Fri, Jun 15, 2012 at 7:59 PM, Vincent van Ravesteijn<vfr@lyx.org>  wrote:
->> It is still not clear what you want to accomplish.
->>
->> Your proposal: "git format-patch b724cc1..51bfd29" only gives you the
->> commits that were in the branch 51bfd29 that weren't yet in the branch
->> b724cc1. This just reflect the commits of one of the branches, but not the
->> "work done by the merge commit".
->>
->
-> but,git format-patch b724cc1..51bfd29 do the same work as what you
-> said "git format-patch 0e93b4b3^1..0e93b4b3^2"
-
-Yes, that's why I said "If this is _really_ what you want, you can do ...".
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200051>
 
 
-> and I don't understand what you
-> said "branch 51bfd29",51bfd29 is not the branch
+--=-WsRdUMPdY3iDTjVYupwv
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-I assumed that the merge commit, merged two branches, but I have no clue 
-how they were named. That's why I refer to the branch as the branch 
-which had 51bfd29 as the last commit before the merge.
+On Fri, 2012-06-15 at 09:14 +0200, Yann Dirson wrote:
+> On Thu, 14 Jun 2012 18:29:49 +0200 Carlos Mart=C3=ADn Nieto <cmn@elego.de=
+> wrote:
+> > On Thu, 2012-06-14 at 11:44 +0200, Yann Dirson wrote:
+> > > Hello list,
+> > >=20
+> > > I just did a "git cherry-pick AAA BBB..CCC" using 1.7.10.3, and was s=
+urprised
+> > > that only the BBB..CCC range got picked - AAA was silently ignored.
+> > >=20
+> >=20
+> > There is no way to know whether this is a bug without knowing how AAA,
+> > BBB and ccc are related? From the names, can we assume that AAA is a
+> > (grand)parent of BBB? If that is the case, cherry-pick is behaving as
+> > expected.
+> >
+> > See the DESCRIPTION in http://git-scm.com/docs/git-rev-list for further
+> > explanation, but the short of the story is that the second argument tol=
+d
+> > it to ignore any commit before BBB, so AAA is not in the list of commit=
+s
+> > to be applied.
+>=20
+> OK, this is exactly the case.  Looking back at the cherry-pick manpage, I=
+'d say that
+> what confused me is the implicit --no-walk: the standard "git cherry-pick=
+ AAA" does
+> not look like a rev-list spec at all!
 
-Vincent
+The typical cherry-pick usage is for a few select commits out of a
+different branch. The manpage itself only started explaining the ranges
+in 2010 and they may be more of a side-effect than a conscious design
+decision. But that's neither here nor there.
+
+>=20
+> At least for this command, it would seem more natural (to me at least) to=
+ take
+> each arg one by one and feed it to "rev-list --no-walk" or similar.  Mayb=
+e some
+> special rev-list flag could trigger such a particular behaviour, pretty m=
+uch like
+> what --no-walk does ?
+
+This would cause a regression, as passing it "A..B" is the same as "B
+^A" which is spellt as two different arguments. Making
+
+    git cherry-pick B ^A
+
+internally cause
+
+    git cherry-pick B
+    git cherry-pick ^A
+
+to be called would cause the wrong thing to happen. Instead of
+cherry-picking the commits between B and A, it would cherry-pick B and
+then do nothing in the second run (as there were no positive commits
+specified).
+
+>=20
+>=20
+> Another orthogonal UI issue I see, is that rev-list could be more user-fr=
+iendly to warn
+> the user when one element of a rev list is ignored because of another one=
+.  Not sure
+> whether this would be useful for all explicit rev lists specified by the =
+user - maybe a
+> config var and associated option would be needed too.
+
+Doing it by default is not an option, as that would start causing all
+sorts of commands and scripts to start warning during normal operation
+with an error message that comes completely out of the blue from the
+user's perspective. It's a perfectly valid thing to give it positive
+references that are hidden by other arguments.
+
+Another thing is that rev-list is plumbing so it's not allowed to change
+(and it's not something users would generally be using). What I see
+looking at the cherry-pick manpage is that it doesn't mention what
+happens when you do ask rev-list to walk (which is what you do by giving
+it a range). Though it does say that no traversal is done by default, it
+doesn't say how you override that default. The EXAMPLES section isn't
+that clear either, and the explanation for rev-list's --no-walk isn't
+much help either. I'll try to create a couple of patches to make the
+behaviour clearer.
+
+   cmn
+
+
+--=-WsRdUMPdY3iDTjVYupwv
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part
+Content-Transfer-Encoding: 7bit
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iQEcBAABAgAGBQJP2zS3AAoJEHKRP1jG7ZzTASgH/1YnXz6nJEPX6h24cO02YR/+
+SR48aizhfIo1SMAYftk/NAad1DBeduDNTqPpESPh2HU0mbHOOhthGOcOS+WqS94d
+f3ReRW2yi0gBJ8Fnp58MpIDOkFZ1fyQVSCIV8msMcGPm4yTZgMq26OZFm4dnIk9B
+hHWGUXA75EwO7WS8BWKS+u0o7egYsElIOARCrCYOKzYJXok7XtagJez5K6py8P2V
+4t0UoWtL0RSvJwQ5/rTBxgNuic95cPT0x6KpPEnGgRIJFAfKSQNB8Xy4Rxc9Kued
+1N5p6P5puYuWxv9xrOP0xwlBFJClzBFauA0cuC4RE8PV2ss0a2tmnj1XZWKkn4g=
+=O9Yl
+-----END PGP SIGNATURE-----
+
+--=-WsRdUMPdY3iDTjVYupwv--
