@@ -1,108 +1,94 @@
 From: Tim Henigan <tim.henigan@gmail.com>
-Subject: Re: [PATCH] diff: exit(1) if 'diff --quiet <repo file> <external
- file>' finds changes
-Date: Fri, 15 Jun 2012 15:56:11 -0400
-Message-ID: <CAFoueth2Hfcv0p0SZmichi_6e5--SNkemrSsSivnU73bdFOB4g@mail.gmail.com>
-References: <1339781463-13536-1-git-send-email-tim.henigan@gmail.com>
-	<7vzk849zxg.fsf@alter.siamese.dyndns.org>
-	<20120615193724.GB26473@sigill.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jun 15 21:56:17 2012
+Subject: [PATCH v2] diff-no-index: exit(1) if 'diff --quiet <repo file> <external file>' finds changes
+Date: Fri, 15 Jun 2012 16:06:47 -0400
+Message-ID: <1339790807-28346-1-git-send-email-tim.henigan@gmail.com>
+Cc: Tim Henigan <tim.henigan@gmail.com>
+To: gitster@pobox.com, git@vger.kernel.org, peff@peff.net
+X-From: git-owner@vger.kernel.org Fri Jun 15 22:07:23 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Sfccz-000119-3W
-	for gcvg-git-2@plane.gmane.org; Fri, 15 Jun 2012 21:56:17 +0200
+	id 1Sfcne-0005ag-CW
+	for gcvg-git-2@plane.gmane.org; Fri, 15 Jun 2012 22:07:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754035Ab2FOT4N convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 15 Jun 2012 15:56:13 -0400
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:55917 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752210Ab2FOT4M convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 15 Jun 2012 15:56:12 -0400
-Received: by yhmm54 with SMTP id m54so2809287yhm.19
-        for <git@vger.kernel.org>; Fri, 15 Jun 2012 12:56:11 -0700 (PDT)
+	id S1756223Ab2FOUHK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 15 Jun 2012 16:07:10 -0400
+Received: from mail-gg0-f174.google.com ([209.85.161.174]:56216 "EHLO
+	mail-gg0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752247Ab2FOUHI (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Jun 2012 16:07:08 -0400
+Received: by gglu4 with SMTP id u4so2679971ggl.19
+        for <git@vger.kernel.org>; Fri, 15 Jun 2012 13:07:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=r5CpOlbK8v8r3j0enL8F82mY7X6lEYruQzZyjeF2/6U=;
-        b=jgoX872EA8Ak8fQfT6Ztuojqe8IFIzFZsVYVdnwPimr4XdgGztMmFR8XFh1ao1DYQ/
-         JkbeAjiOs2wUIstuM4DGRXCE4e6ntxMf/fImaRVJ3SnHGdHtigKEOStb2BCXkxzSjY+a
-         w+oCu9ALZ9sfQmdwgVwVynNOuCgNdh2MEDrUKl5FZfTcsjAmRDk/x8BSAdnmVum6Ri//
-         4Gg51fKwHoNzHz/D/CWjdvIVU8HKOTyRB0NiwvwPPWt8p+SduFlCnbfs6sRrSvFLTGvn
-         mM8p7+regDN9uYE42FyLY0yLbbE8/ONh/5uArmuRHcVct0e+Fv0+DnFR/4dOiBW0Tawh
-         ZX3A==
-Received: by 10.50.94.133 with SMTP id dc5mr3199444igb.16.1339790171703; Fri,
- 15 Jun 2012 12:56:11 -0700 (PDT)
-Received: by 10.231.84.147 with HTTP; Fri, 15 Jun 2012 12:56:11 -0700 (PDT)
-In-Reply-To: <20120615193724.GB26473@sigill.intra.peff.net>
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        bh=7vTwtiYaf1282sHt0OczuupSBhpbIXhY5IzkQAvMqKs=;
+        b=jqbi61y9eB70HKIbUrUGA5GyaTvVIWdpgVvmWmPQpmQFUkJnf2WCY8EKNyQbEL8rf+
+         j/UuPbj4rghSNatMBU2m9CLzk+Qna/MdJM072rFoZsKGa+DDzGcX8arVR56AbMQE6G/H
+         WwtiUH/QXW38b1RoEKdkPlCBT7Jk7fxIDTLop1buAgTDuz7aoV+L2EdZMS757fr+reRA
+         ORpyaPfM1NfMheM/TAcs4FDCpTq3mVWII5Kwyt991rHwDL3wFQyj8owCMbNev7FxAIle
+         T39XFsUVSOlVj6AX4HZ8ruUuCOwBYUyE6yvkp71fp/w7tL3/bqxKXDhu+cX8EWglZMnK
+         4THw==
+Received: by 10.50.170.69 with SMTP id ak5mr3203111igc.47.1339790827849;
+        Fri, 15 Jun 2012 13:07:07 -0700 (PDT)
+Received: from localhost (adsl-99-38-69-118.dsl.sfldmi.sbcglobal.net. [99.38.69.118])
+        by mx.google.com with ESMTPS id gs4sm3424286igc.1.2012.06.15.13.07.06
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 15 Jun 2012 13:07:07 -0700 (PDT)
+X-Mailer: git-send-email 1.7.11.rc3.6.g894ec42.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200087>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200088>
 
-On Fri, Jun 15, 2012 at 3:37 PM, Jeff King <peff@peff.net> wrote:
-> On Fri, Jun 15, 2012 at 11:45:47AM -0700, Junio C Hamano wrote:
->
->> I think this breaks a normal case of comparing revisions and tracked
->> contents in a big way.
+When running 'git diff --quiet <file1> <file2>', if file1 or file2
+is outside the repository, it will exit(0) even if the files differ.
+It should exit(1) when they differ.
 
-I didn't understand the ramifications of making the change where I
-did.  I appreciate you and Jeff taking the time to point out the
-problem (and suggest better solutions).
+Signed-off-by: Tim Henigan <tim.henigan@gmail.com>
+---
+
+Changes in v2:
+  - Implemented the fix in diff-no-index.c as suggested by Junio
+    Hamano.  The previous version affected the performance of all
+    diff commands that used the '--quiet' option by forcing the
+    code through the expensive (and in this case unneccesary)
+    'diff_flush_patch' code path.
+  - Updated the test to use 'test_expect_code' as suggested by
+    Jeff King.
 
 
->> I think the following may be a lot closer to the correct fix; I
->> didn't test many combinations of options with it, though.
->>
->> =C2=A0diff-no-index.c | 5 +++--
->> =C2=A01 file changed, 3 insertions(+), 2 deletions(-)
->>
->> diff --git a/diff-no-index.c b/diff-no-index.c
->> index f0b0010..ed74e27 100644
->> --- a/diff-no-index.c
->> +++ b/diff-no-index.c
->> @@ -172,7 +172,7 @@ void diff_no_index(struct rev_info *revs,
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0int ar=
-gc, const char **argv,
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0int no=
-ngit, const char *prefix)
->> =C2=A0{
->> - =C2=A0 =C2=A0 int i;
->> + =C2=A0 =C2=A0 int i, result;
->> =C2=A0 =C2=A0 =C2=A0 int no_index =3D 0;
->> =C2=A0 =C2=A0 =C2=A0 unsigned options =3D 0;
->>
->> @@ -273,5 +273,6 @@ void diff_no_index(struct rev_info *revs,
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0* The return code for --no-index imitates=
- diff(1):
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0* 0 =3D no changes, 1 =3D changes, else e=
-rror
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0*/
->> - =C2=A0 =C2=A0 exit(revs->diffopt.found_changes);
->> + =C2=A0 =C2=A0 result =3D !!diff_result_code(&revs->diffopt, 0);
->> + =C2=A0 =C2=A0 exit(result);
+ diff-no-index.c       | 3 ++-
+ t/t4035-diff-quiet.sh | 4 ++++
+ 2 files changed, 6 insertions(+), 1 deletion(-)
 
-I assume the '!!' before 'diff_result_code' is a typo.  Reverting my
-changes and putting this in solves the problem.
-
-=2E..
-
-> So the patch I posted elsewhere in the thread is not right; we do not
-> need to do diff_flush_patch to actually compare, because the
-> stat_unmatch code will have done everything we want (unless
-> DIFF_FROM_CONTENTS really is set). And the bug is purely one of looki=
-ng
-> at the wrong output flag.
-
-I will send v2 with the change to 'diff-no-index.c' suggested by
-Junio.  I will also include the 'test_expect_code' improvement
-suggested by Jeff.
+diff --git a/diff-no-index.c b/diff-no-index.c
+index f0b0010..b935d2a 100644
+--- a/diff-no-index.c
++++ b/diff-no-index.c
+@@ -273,5 +273,6 @@ void diff_no_index(struct rev_info *revs,
+ 	 * The return code for --no-index imitates diff(1):
+ 	 * 0 = no changes, 1 = changes, else error
+ 	 */
+-	exit(revs->diffopt.found_changes);
++	int result = diff_result_code(&revs->diffopt, 0);
++	exit(result);
+ }
+diff --git a/t/t4035-diff-quiet.sh b/t/t4035-diff-quiet.sh
+index cdb9202..0b83235 100755
+--- a/t/t4035-diff-quiet.sh
++++ b/t/t4035-diff-quiet.sh
+@@ -76,4 +77,8 @@ test_expect_success 'git diff-index --cached HEAD' '
+ 	}
+ '
+ 
++test_expect_success 'git diff <tracked file> <file outside repo>' '
++	test_expect_code 1 git diff --quiet c /dev/null
++'
++
+ test_done
+-- 
+1.7.11.rc3.6.g894ec42.dirty
