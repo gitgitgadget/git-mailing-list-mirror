@@ -1,99 +1,104 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: How do I specify a revision for "git blame" by date?
-Date: Fri, 15 Jun 2012 08:53:25 -0700
-Message-ID: <7vsjdwbmh6.fsf@alter.siamese.dyndns.org>
-References: <4fda029d.g99uVull9jgguc/Y%perryh@pluto.rain.com>
- <877gva1a4b.fsf@thomas.inf.ethz.ch>
- <4fdb326f.WB/xRjZx4pXtMhhZ%perryh@pluto.rain.com>
- <20120615150107.GA4572@sigill.intra.peff.net>
+From: Jiang Xin <worldhello.net@gmail.com>
+Subject: Re: [PATCH 2/2] i18n: Add extra -- to seperate gettext and message
+Date: Sat, 16 Jun 2012 00:05:53 +0800
+Message-ID: <CANYiYbGnoZDMkOq-goaPO98L4Ar1HzMVS-JjjBz7rNHVgv4ywQ@mail.gmail.com>
+References: <1338764967-30103-1-git-send-email-worldhello.net@gmail.com>
+	<1338764967-30103-2-git-send-email-worldhello.net@gmail.com>
+	<CACBZZX5EGvJm0aqG5iVn7wnoqFATUqP4gbS-2tnAiLqeFQZifg@mail.gmail.com>
+	<CANYiYbFx=Z7TTYUbAhzgHFYB6O_grROWoWHbtuhuABeXdFk4-Q@mail.gmail.com>
+	<7vpq9ft3ls.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: perryh@pluto.rain.com, trast@student.ethz.ch, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Jun 15 17:53:34 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0?= <avarab@gmail.com>,
+	Git List <git@vger.kernel.org>,
+	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= <pclouds@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Andreas Schwab <schwab@linux-m68k.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jun 15 18:06:03 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SfYq4-0007OO-Vk
-	for gcvg-git-2@plane.gmane.org; Fri, 15 Jun 2012 17:53:33 +0200
+	id 1SfZ27-00025j-2w
+	for gcvg-git-2@plane.gmane.org; Fri, 15 Jun 2012 18:05:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932334Ab2FOPx3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 15 Jun 2012 11:53:29 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:62168 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932218Ab2FOPx2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Jun 2012 11:53:28 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 17D2190CD;
-	Fri, 15 Jun 2012 11:53:28 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=GZb48vyiKlxXofrKBuoN3FxMFQk=; b=OPvAwk
-	H65J194OG49XgUMl/cn3jiBbWaY33bYF5QNo5bcq3zIchiXNw42qiollmbQqPGoV
-	4+eAOCP59vwgk/TPKAioaqJ7zHxJrtEDd+m1+hr/qnOkRGOslfHTUQWKnRcRgOnI
-	2AAf7R7RqWKZSDjIMWwVXEinZ9uuu2j4D29YM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=UEq675fW/jILImxL/DradjEpWr5ed+H5
-	/b9B2aK1LsgvLgQQrJjOgaHDmEapwHeXcq+Swaiz7+FKsZIw5NN048PXaES1hjb/
-	cI4qEG6Anjcp4IrvSBK7FERvOWN61pxs/EqCkVsJE8zMIFO3ZgSVF6+RK1qwyLh4
-	ngmmNwqnpTI=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0E8E190CC;
-	Fri, 15 Jun 2012 11:53:28 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C27A090CB; Fri, 15 Jun 2012
- 11:53:26 -0400 (EDT)
-In-Reply-To: <20120615150107.GA4572@sigill.intra.peff.net> (Jeff King's
- message of "Fri, 15 Jun 2012 11:01:08 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 3EBAD60C-B702-11E1-93C4-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S932257Ab2FOQFz convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 15 Jun 2012 12:05:55 -0400
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:33560 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752265Ab2FOQFy convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 15 Jun 2012 12:05:54 -0400
+Received: by yenl2 with SMTP id l2so2013990yen.19
+        for <git@vger.kernel.org>; Fri, 15 Jun 2012 09:05:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=OKfKemu9/ScbcRf2qbxwqZmKnN8c+H6L3sPTZ6Ugi4M=;
+        b=trohuPMOtKo0EdLYoCs/bMsBPqDqFK3xjbHORP/g5JUkQpqtBceC/2hA83ypNnl3aN
+         8QURVx5LtANgNBpCR4uWjs0Ya2wqN6vZCrsvSTOlUo6h5hSeG07Lz/YNrnjUkHphTjgf
+         vQaYRWh31Dpetf33o560o73I5zT+MW91gYBNgFvr1eS2gmIbE3hkRGyZGkQMmR0N3hUg
+         O8rwrl4bFiSMOtgo2WQlsYW0PT6fWViYJsj8W5oAstGtiKX3fcQYnbX7ikFPmWLau8jt
+         2+jo1DrxbaBaCcfhG0r4AtWNj5SgOLyALTmreFuNzD+kY95b6NfMWJ7VBTfOH/1O2MjY
+         S1ow==
+Received: by 10.50.169.7 with SMTP id aa7mr2563651igc.52.1339776353633; Fri,
+ 15 Jun 2012 09:05:53 -0700 (PDT)
+Received: by 10.50.237.38 with HTTP; Fri, 15 Jun 2012 09:05:53 -0700 (PDT)
+In-Reply-To: <7vpq9ft3ls.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200063>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200064>
 
-Jeff King <peff@peff.net> writes:
+2012/6/5 Junio C Hamano <gitster@pobox.com>:
+> I think there is value for having a generic solution than declaring
+> "No message shall begin with a dash".
+>
+> I am not convinced that it is ideal for the implementation of
+> gettext_ln to prepend "--" in front when it calls gettext, though.
 
-> But that still doesn't address the issue that (a) is not well-defined.
-> Imagine I have this history:
->
->   A--B--C---G--H
->    \       /
->     D--E--F
->
-> that is, two lines of development splitting at A and merging at H. And
-> imagine the commit timestamps are (let's just refer to them as integers
-> for the sake of simplicity, but they are representing days or seconds or
-> whatever):
->
->   A(1)--B(2)--C(3)--G(7)--H(8)
->    \               /
->     D(2)--E(4)--F(6)
->
-> What does it mean to ask for the commit at time=5?
-> ...
-> Git-blame expects you to give it a well-defined point (as it must, since
-> it is a backwards walk down history showing what led to a particular set
-> of content; it wouldn't make sense to feed it multiple starting points).
-> You could do so by asking rev-list to walk the graph according to your
-> requirements and feeding the result to blame, like:
->
->   # most recent on any line of development that is merged to HEAD
->   git blame `git rev-list -1 --until=5 HEAD`
->
->   # most recent on any line of development in the whole repo
->   git blame `git rev-list -1 --until=5 --all`
->
->   # most recent version on the first-parent; if you follow a
->   # topic-branch workflow and always merge up into "master", then this
->   # will blame what was on master at time=5
->   git blame `git rev-list -1 --until=5 --first-parent HEAD`
+I saw =C6var's bug report on xgettext to the GNU gettext list:
 
-Very well explained.  Thanks.
+ * http://git.661346.n2.nabble.com/GETTEXT-BUG-xgettext-1-can-t-extract=
+-quot-gettext-foo-quot-td7560744.html
 
-The short answer to the question on "Subject:" line is "You don't".
+May be post to a more official mailing list, such as bug-gnu-utils at
+https://lists.gnu.org/mailman/listinfo/bug-gnu-utils will get some resp=
+onse,
+but I doubt there won't be a clear resolution in xgettext.
+
+The default configurations of xgettext for shell scripts are defined in=
+ file
+'gettext-tools/src/x-sh.c':
+
+      x_sh_keyword ("gettext");
+      x_sh_keyword ("ngettext:1,2");
+      x_sh_keyword ("eval_gettext");
+      x_sh_keyword ("eval_ngettext:1,2");
+
+Keyword "gettext" above is the same as "gettext:1". xgettext has
+no idea of options and arguments, if there is a seperator ('--') betwee=
+n
+gettext and the message, message is argument 2. For example:
+
+    gettext -- "--cached cannot be used with --files"
+
+We can override the default settings of xgettext by passing '-k' and
+multiple '--keyword', '--flags' options to xgettext.
+
+    xgettext  ... --language=3DShell \
+                  -k  --keyword=3Dgettext:2 \
+                  --flag=3Dgettext:2:pass-sh-format  ...
+
+But "gettext message" will be broken.
+
+Write a wrapper for gettext  and extract messages using
+'xgettext --keyword=3D<gettext-wrapper>' is a reasonable solution.
+
+
+--=20
+Jiang Xin
