@@ -1,83 +1,102 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] t: Replace 'perl' by $PERL_PATH
-Date: Sun, 17 Jun 2012 15:23:43 -0700
-Message-ID: <7vk3z560i8.fsf@alter.siamese.dyndns.org>
-References: <1339441313-5296-1-git-send-email-vfr@lyx.org>
- <4FDD7AE6.6000000@web.de> <7vipeq76ke.fsf@alter.siamese.dyndns.org>
- <4FDD9A4F.2060605@web.de>
+Subject: [ANNOUNCE] Git v1.7.10.5
+Date: Sun, 17 Jun 2012 15:24:18 -0700
+Message-ID: <7vd34x60h9.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: vfr@lyx.org, git@vger.kernel.org
-To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Mon Jun 18 00:24:30 2012
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
+Content-Type: text/plain; charset=us-ascii
+Cc: Linux Kernel <linux-kernel@vger.kernel.org>
+To: git@vger.kernel.org
+X-From: linux-kernel-owner@vger.kernel.org Mon Jun 18 00:24:41 2012
+Return-path: <linux-kernel-owner@vger.kernel.org>
+Envelope-to: glk-linux-kernel-3@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SgNtT-0002dn-5u
-	for gcvg-git-2@plane.gmane.org; Mon, 18 Jun 2012 00:24:27 +0200
+	(envelope-from <linux-kernel-owner@vger.kernel.org>)
+	id 1SgNtg-000380-MS
+	for glk-linux-kernel-3@plane.gmane.org; Mon, 18 Jun 2012 00:24:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753227Ab2FQWXq convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 17 Jun 2012 18:23:46 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64417 "EHLO
+	id S1757657Ab2FQWY0 (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
+	Sun, 17 Jun 2012 18:24:26 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64649 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752544Ab2FQWXp convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 17 Jun 2012 18:23:45 -0400
+	id S1752544Ab2FQWYU (ORCPT <rfc822;linux-kernel@vger.kernel.org>);
+	Sun, 17 Jun 2012 18:24:20 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 586769920;
-	Sun, 17 Jun 2012 18:23:45 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E50359936;
+	Sun, 17 Jun 2012 18:24:19 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=iOd32uAxcuVa
-	v8KBwJuZKwIn3eE=; b=blUHyVT30CVRYg18od+kG8UJZYe3G6PeQ/zLs0PKgkiY
-	B4FEASZPzO8F1BgUZPwlklnXwCyJ92cSOerSDGtL2HpV6oKiv3MNAsBCuvGKt9WC
-	w1wJtblI+emy3+AD8HOLpqBb6AmMu+7EEI4SR/VWWmIFbQQ/TFz3e6DF1WaMuwE=
+	:subject:date:message-id:mime-version:content-type; s=sasl; bh=W
+	uNIfXWs2Fd9uFk3AmzTFzcDStA=; b=ME+Dds1OAXIn5eP5NVWiknrhl8+dl2+q/
+	h5RXNl9B6YWBr9+9dWhSwjdt89sri6Cjj8qJXFtg4f0LwdqJLcJOzwa/iDgTYE2R
+	2Uoee7D/KkaFsN2R6yPOXnQH6rJuGnPA9uq0RwXPvFAUqNkrryCmitZhOt7IP20h
+	lal0MZb/xI=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=FDeLh3
-	i88l/dpBNJY+bZd46HkQWlTQbHRuZ2lj3x0T9oPljjpSJjjtoTKrp380iCVKbbur
-	I0i0J3etm9yf2dwhmjICx9qITyGQPgAxV6vz0nhWWxSqI0ySwHD4ws3FrN2ulL64
-	27zYYdoIlK3V/lIRrd0l0+b0fDwJwOKIPvATs=
+	:subject:date:message-id:mime-version:content-type; q=dns; s=
+	sasl; b=Bg89tGEVW/qpdDsHG55FsyMU1PcsVqAtbcz+d6wwQ7RE1ZYLm2tcQ2HY
+	mWvwiq94pVXsSG0db4MVxk1FvscnvkTnRXrkJhlE8dBnyk22qa12jmM7sgcs57g6
+	ra3M5HXz/KqpsafzpPgxwi/0QY/Wk7dtC+dAr0CU1oZfRn5sRMo=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4F1C1991F;
-	Sun, 17 Jun 2012 18:23:45 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DC3B29935;
+	Sun, 17 Jun 2012 18:24:19 -0400 (EDT)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D6BE5991E; Sun, 17 Jun 2012
- 18:23:44 -0400 (EDT)
-In-Reply-To: <4FDD9A4F.2060605@web.de> ("Torsten =?utf-8?Q?B=C3=B6gershaus?=
- =?utf-8?Q?en=22's?= message of "Sun, 17 Jun 2012 10:50:23 +0200")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 6E37E9934; Sun, 17 Jun 2012
+ 18:24:19 -0400 (EDT)
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 19D24CD8-B8CB-11E1-BEF6-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
-Sender: git-owner@vger.kernel.org
+X-Pobox-Relay-ID: 2E6D51CE-B8CB-11E1-B8E7-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+Sender: linux-kernel-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200134>
+List-ID: <linux-kernel.vger.kernel.org>
+X-Mailing-List: linux-kernel@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200135>
 
-Torsten B=C3=B6gershausen <tboegi@web.de> writes:
+The latest maintenance release Git v1.7.10.5 is now available at
+the usual places.
 
->> PERL_PATH should be exported from test-lib.sh; we dot-source
->> GIT-BUILD-OPTIONS to get its value, but it is not propagated to the
->
-> Thanks, that works for me.
-> Do you squeeze some like that onto pu?
->
-> @@ -493,6 +493,7 @@ GIT_ATTR_NOSYSTEM=3D1
->  export PATH GIT_EXEC_PATH GIT_TEMPLATE_DIR GIT_CONFIG_NOSYSTEM GIT_A=
-TTR_NOSYSTEM
-> =20
->  . "$GIT_BUILD_DIR"/GIT-BUILD-OPTIONS
-> +export PERL_PATH
+The release tarballs are found at:
 
-Not on 'pu'; any fix should go on top of vr/use-our-perl-in-tests
-topic that ends at b493e6b (t/README: add a bit more Don'ts,
-2012-06-12).
+    http://code.google.com/p/git-core/downloads/list
 
-I see other uses of bare "perl" that the patch forgot to convert,
-and the worst part is that one of these uses of bare "perl" appears
-in test-lib.sh _before_ it dot-sources GIT-BUILD-OPTIONS to pick up
-the correct version of Perl, so the above single liner cannot be the
-whole fix.
+and their SHA-1 checksums are:
+
+9d0767ef195d3971a891efaf11996158cb341499  git-1.7.10.5.tar.gz
+3f205417f11a9ae478eb77541df483a8fc4a4bc8  git-htmldocs-1.7.10.5.tar.gz
+2249a6481891a349ed9a11dec89a35afec9f9edb  git-manpages-1.7.10.5.tar.gz
+
+Also the following public repositories all have a copy of the v1.7.10.5
+tag and the maint branch that the tag points at:
+
+  url = git://repo.or.cz/alt-git.git
+  url = https://code.google.com/p/git-core/
+  url = git://git.sourceforge.jp/gitroot/git-core/git.git
+  url = git://git-core.git.sourceforge.net/gitroot/git-core/git-core
+  url = https://github.com/gitster/git
+
+
+This time I didn't forget to update DEF_VER in GIT-VERSION-FILE ;-)
+
+Git v1.7.10.5 Release Notes
+===========================
+
+Fixes since v1.7.10.4
+---------------------
+
+ * "git fast-export" did not give a readable error message when the
+   same mark erroneously appeared twice in the --import-marks input.
+
+ * "git rebase -p" used to pay attention to rebase.autosquash which
+    was wrong.  "git rebase -p -i" should, but "git rebase -p" by
+    itself should not.
+
+----------------------------------------------------------------
+
+Changes since v1.7.10.4 are as follows:
+
+Johannes Schindelin (1):
+      fast-export: report SHA-1 instead of gibberish when marks exist already
+
+Junio C Hamano (1):
+      Git 1.7.10.5
+
+Vincent van Ravesteijn (1):
+      Do not autosquash in case of an implied interactive rebase
