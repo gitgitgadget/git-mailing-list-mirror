@@ -1,86 +1,75 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] rebase -i -p: use rerere to resolve conflicts if enabled
-Date: Sat, 16 Jun 2012 22:49:39 -0700
-Message-ID: <7vmx427aj0.fsf@alter.siamese.dyndns.org>
-References: <1339769855-94161-1-git-send-email-ddkilzer@kilzer.net>
- <7vwr38bmj5.fsf@alter.siamese.dyndns.org>
- <B4036488-1ECA-41C9-BD97-B2ABD116D54C@kilzer.net>
- <7vd34z96lv.fsf@alter.siamese.dyndns.org>
- <76A6615B-5758-4D67-A556-2EE131FF7B20@kilzer.net>
+From: =?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
+Subject: Re: [PATCH] t: Replace 'perl' by $PERL_PATH
+Date: Sun, 17 Jun 2012 08:36:22 +0200
+Message-ID: <4FDD7AE6.6000000@web.de>
+References: <1339441313-5296-1-git-send-email-vfr@lyx.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: David Kilzer <ddkilzer@kilzer.net>
-X-From: git-owner@vger.kernel.org Sun Jun 17 07:50:37 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, gitster@pobox.com,
+	=?ISO-8859-1?Q?Torsten_B=F6?= =?ISO-8859-1?Q?gershausen?= 
+	<tboegi@web.de>
+To: vfr@lyx.org
+X-From: git-owner@vger.kernel.org Sun Jun 17 08:41:52 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Sg8Nc-0004xB-Qk
-	for gcvg-git-2@plane.gmane.org; Sun, 17 Jun 2012 07:50:33 +0200
+	id 1Sg9BG-0005Qt-6a
+	for gcvg-git-2@plane.gmane.org; Sun, 17 Jun 2012 08:41:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751236Ab2FQFtp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 17 Jun 2012 01:49:45 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50074 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750889Ab2FQFto (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 17 Jun 2012 01:49:44 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9A4669D97;
-	Sun, 17 Jun 2012 01:49:41 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 s=sasl; bh=z57X8B2tW5i87dd5x6dfxhSdw08=; b=Ke9MXXdltM7aw+0G8gBr
-	ZbaX9bbix5yadydQYBjluma3x3yHzGlSj9PNtvG1QLalqHZFn+sBL7JESlFBEY+K
-	89QlV1SUapUJErWI1EPm7wqllmRVGC14fEwbKnYtc15t0umG5Eb6KFhkVnyWUXeU
-	rLKKElfHzt+BvY1WC4J3a6E=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 q=dns; s=sasl; b=TTv48Z78bO7QZXRTiKTqSXFOjQr8Q+aqa8TeOmk1aXJSJh
-	0jZBlckMYEuKyKP5ERQY/N09h6D0OtStofSgdlZ1KLpm54ju6eQKBv6rPLtiX4rV
-	f154GNdnRgO5KNXW9TipfeO6nBpP1sXKvSSEfKGsik28wfQUkRROkKA2aLizo=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 90C719D96;
-	Sun, 17 Jun 2012 01:49:41 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 276DD9D95; Sun, 17 Jun 2012
- 01:49:41 -0400 (EDT)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 3B64F3D6-B840-11E1-A494-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752715Ab2FQGlf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 17 Jun 2012 02:41:35 -0400
+Received: from mout.web.de ([212.227.15.4]:54111 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751383Ab2FQGlb (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 17 Jun 2012 02:41:31 -0400
+X-Greylist: delayed 305 seconds by postgrey-1.27 at vger.kernel.org; Sun, 17 Jun 2012 02:41:31 EDT
+Received: from birne.lan ([194.22.188.61]) by smtp.web.de (mrweb102) with
+ ESMTPA (Nemesis) id 0MTPit-1SWQAC025f-00SIUb; Sun, 17 Jun 2012 08:36:23 +0200
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:13.0) Gecko/20120614 Thunderbird/13.0.1
+In-Reply-To: <1339441313-5296-1-git-send-email-vfr@lyx.org>
+X-Provags-ID: V02:K0:+AAJO+u5ShtMoyQlzugyG5R3K07uy84s5XJifdeeEky
+ YZ6tR8H7Nyu3u+tro3LQ1LRLOrM3rQFvSUpbUGtyYgIHcgzP8T
+ z3wSveG8I9f9u5FCKXSUuLZ/yZ77jQ1j/VFT+SqVBr/A+wwvQe
+ 5c7m0oaeIz/vXbVnrXUJtQq4Kz/3eMYE/8YcMqSzc5TMIlIdpg
+ MMqIWomYp5JYtpN/4vtsQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200117>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200118>
 
-David Kilzer <ddkilzer@kilzer.net> writes:
 
-> On Jun 15, 2012, at 10:19 PM, Junio C Hamano wrote:
->
->> I do not use the configuration variable myself, and I didn't check
->> the code, but if you had rerere.autoupdate set, doesn't "git merge"
->> in the codepath you are touching (or anywhere for that matter)
->> already blindly take the replayed resolution and commit the result?
->
-> No, it does not.  That is what I originally expected to happen
-> when I used "git rebase -i -p" through a merge with conflicts, but
-> it currently does not behave this way.
+Hej,
+Does this work for you?
 
-After looking at what is done in t/t4200-rerere.sh, I think "git
-merge" (or anything that use --rerere-autoupdate, that is) is meant
-to exit with an error code after allowing rerere to add the result
-of replayed resolution to the index, so that the user can deal with
-any remaining paths that may be still in conflict.
+None of the 2 patches found on pu do work here:
+> a3428205e6d74542d6441baaa29d1cb1d1064d95
+>Author: Vincent van Ravesteijn <vfr@lyx.org>
+>Date:   Mon Jun 11 19:01:53 2012 +0000
+>    t: Replace 'perl' by $PERL_PATH
 
-Are you sure that the autoresolved paths are not "git add"ed when
-you have rerere.autoupdate set by "git merge" in "git rebase -i/-p"?
+[165c0e8f0b04b8573e91ead2890870d9e36bb39c] tests: enclose $PERL_PATH in duoble quotes
 
-Or are you only talking about the error exit from "git merge" that
-would cause "git rebase -i" to stop and give control back to the end
-user?
+t4030 seems to be broken.
+When I try to debug it, the $PERL_PATH seems to be empty:
 
-I suspect that the latter behaviour to stop "rebase" in the middle
-is in line with the spirit of --rerere-autoupdate, and it is not
-likely that we would want to change it.
+------------------
+./t4030-diff-textconv.sh  --verbose | less
+
+The ok 2 - file is considered binary by porcelain
+
+expecting success: 
+        git diff-tree -p HEAD^ HEAD >diff &&
+:/Users/tb/projects/git/git.git/t/trash directory.t4030-diff-textconv/hexdump: line 2: -e: command not found
+------------------
+And the hexdump line 2 uses $PERL_PATH, which is empty: 
+--------------------
+t/trash directory.t4030-diff-textconv> cat  hexdump 
+#!/bin/sh
+$PERL_PATH -e '$/ = undef; $_ = <>; s/./ord($&)/ge; print $_' < "$1"
+tb@birne:~/projects/git/git.git/t/trash directory.t4030-diff-textconv> 
+-------------------
+Can anybody help to find out what is going on?
