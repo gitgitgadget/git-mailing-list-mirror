@@ -1,94 +1,135 @@
-From: David Kilzer <ddkilzer@kilzer.net>
-Subject: Re: [PATCH] rebase -i -p: use rerere to resolve conflicts if enabled
-Date: Sun, 17 Jun 2012 06:46:03 -0700
-Message-ID: <1917D067-6FB3-4393-B178-BBE36B4B5D4E@kilzer.net>
-References: <1339769855-94161-1-git-send-email-ddkilzer@kilzer.net> <7vwr38bmj5.fsf@alter.siamese.dyndns.org> <B4036488-1ECA-41C9-BD97-B2ABD116D54C@kilzer.net> <7vd34z96lv.fsf@alter.siamese.dyndns.org> <76A6615B-5758-4D67-A556-2EE131FF7B20@kilzer.net> <7vmx427aj0.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0 (Apple Message framework v1278)
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Jun 17 15:46:21 2012
+From: Sam Varshavchik <sam.varshavchik@gmail.com>
+Subject: Push to a branch breaks origin, requires a manual gc to fix
+Date: Sun, 17 Jun 2012 11:07:50 -0400
+Message-ID: <CAMO9iftAP_QKDJwssvPhg0jm8MBjV3isCxKNuP0Ewf-X6kYtxQ@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jun 17 17:08:29 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SgFo4-0005Ro-A3
-	for gcvg-git-2@plane.gmane.org; Sun, 17 Jun 2012 15:46:20 +0200
+	id 1SgH5X-0005mI-7I
+	for gcvg-git-2@plane.gmane.org; Sun, 17 Jun 2012 17:08:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757309Ab2FQNqG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 17 Jun 2012 09:46:06 -0400
-Received: from nm13.bullet.mail.sp2.yahoo.com ([98.139.91.83]:20664 "HELO
-	nm13.bullet.mail.sp2.yahoo.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S1757204Ab2FQNqF convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 17 Jun 2012 09:46:05 -0400
-Received: from [98.139.91.63] by nm13.bullet.mail.sp2.yahoo.com with NNFMP; 17 Jun 2012 13:46:04 -0000
-Received: from [208.71.42.208] by tm3.bullet.mail.sp2.yahoo.com with NNFMP; 17 Jun 2012 13:46:04 -0000
-Received: from [127.0.0.1] by smtp219.mail.gq1.yahoo.com with NNFMP; 17 Jun 2012 13:46:04 -0000
-X-Yahoo-Newman-Id: 416575.66144.bm@smtp219.mail.gq1.yahoo.com
-X-Yahoo-Newman-Property: ymail-3
-X-YMail-OSG: laFz9P0VM1lkBxTk.5mzqGBB0ZZ_Wd6d_UT5wKgfFEhRPqq
- zqDAHgxhIg6y.frFt9GPtdVvwTHShlTPfFfXus3m6AaO0nWfi4VMSqyA_v6d
- IdlzYAcWe_PgRkedPjf6jB3FcbCNEMmD400D.0svGWAKfFZqIZ2JriXDZuJI
- kUaukI4QeHWlrp5GLiXPwULu2abUESw6U_WE6fEaG0eB98ZLLdRQLWLjkg3i
- S1GbgupQvxiP5G5xjGoPG9GTlUF.QDXjX9iYQOe1gWNLaOYmI4xRauOiR3wE
- MCtRVj51BLd4xdesk9rdKx4uQcxWanY57ceLUxVHb69iWgzQ8voipZnJB7qD
- 6XdDd0itUuGxcUoUS1x0yPCLEtPTSHM86.SuO8om51uuNwe9HllevS.RFkT5
- gQEFkbRER_vPUJZMU.KvHXpSJeWLbx1go.sIsJMu30NIbOvMBhgzBRXdDy5m
- ZBLVUQy1JSry54Goq2BTg.CupX6nzor9Zh3F4v2QVs4ujUk_5m3gi28beL2x
- fG0jyP68FUR8-
-X-Yahoo-SMTP: 1KOiJh.swBAFCIHbgY4jfyoPcdmG
-Received: from kilze0-204.kilzer.net (ddkilzer@98.207.50.178 with plain)
-        by smtp219.mail.gq1.yahoo.com with SMTP; 17 Jun 2012 06:46:04 -0700 PDT
-In-Reply-To: <7vmx427aj0.fsf@alter.siamese.dyndns.org>
-X-Mailer: Apple Mail (2.1278)
+	id S1757442Ab2FQPH4 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 17 Jun 2012 11:07:56 -0400
+Received: from mail-ob0-f174.google.com ([209.85.214.174]:56475 "EHLO
+	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757426Ab2FQPHu convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 17 Jun 2012 11:07:50 -0400
+Received: by obbtb18 with SMTP id tb18so7080749obb.19
+        for <git@vger.kernel.org>; Sun, 17 Jun 2012 08:07:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        bh=h5bdPQbL2yqzqYFmxr80CktdCQQisy+9JC+dnBQvCMQ=;
+        b=Q54gJsamxXKYKefqfBmE0yVdDLL5uF3HWa5u+O2uXP3ce6wigsahTXWHckBoh1w+L0
+         cQWlu6zCxVUjOT3zv4K8VoccD8Vp4lyOrCGe4ZZKEqyGxBMAnT8BGj+bUGInfXyL9Y1B
+         h9RH/p8s6JKckw0t7Vrc/xqqeg2XSEb+Lz3tRgAUGFaEMV9s8ByiNSTRMp6E0ews2gP3
+         recCsF5S94zLxOexiyCgh59Z1lqqnnwOkUfKNlyPvsdV4EVz/4KrnALClOEOAez5jBac
+         jVFmHBzGcXS004JFTGuP4gs5AJYH7Xo/epX5Xxevad1s0nPNwnQpQrUUfkrrlPCjqWZy
+         uZbA==
+Received: by 10.50.222.134 with SMTP id qm6mr6208085igc.49.1339945670062; Sun,
+ 17 Jun 2012 08:07:50 -0700 (PDT)
+Received: by 10.231.245.5 with HTTP; Sun, 17 Jun 2012 08:07:50 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200122>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200123>
 
-+ Johannes Schindelin  [sorry, should have added you at the beginning of the thread]
+Something's goes wrong every time I push a branch to origin.
 
-On Jun 16, 2012, at 10:49 PM, Junio C Hamano wrote:
+When I start, everything looks ok:
 
-> David Kilzer <ddkilzer@kilzer.net> writes:
-> 
->> On Jun 15, 2012, at 10:19 PM, Junio C Hamano wrote:
->> 
->>> I do not use the configuration variable myself, and I didn't check
->>> the code, but if you had rerere.autoupdate set, doesn't "git merge"
->>> in the codepath you are touching (or anywhere for that matter)
->>> already blindly take the replayed resolution and commit the result?
->> 
->> No, it does not.  That is what I originally expected to happen
->> when I used "git rebase -i -p" through a merge with conflicts, but
->> it currently does not behave this way.
-> 
-> After looking at what is done in t/t4200-rerere.sh, I think "git
-> merge" (or anything that use --rerere-autoupdate, that is) is meant
-> to exit with an error code after allowing rerere to add the result
-> of replayed resolution to the index, so that the user can deal with
-> any remaining paths that may be still in conflict.
-> 
-> Are you sure that the autoresolved paths are not "git add"ed when
-> you have rerere.autoupdate set by "git merge" in "git rebase -i/-p"?
+$ git remote show origin
+* remote origin
+=C2=A0 Fetch URL: http://monster/gitrepos/stasher.git/
+=C2=A0 Push=C2=A0 URL: http://monster/gitrepos/stasher.git/
+=C2=A0 HEAD branch: master
+=C2=A0 Remote branches:
+=C2=A0=C2=A0=C2=A0 distreboot tracked
+=C2=A0=C2=A0=C2=A0 master=C2=A0=C2=A0=C2=A0=C2=A0 tracked
+=C2=A0 Local branches configured for 'git pull':
+=C2=A0=C2=A0=C2=A0 distreboot merges with remote distreboot
+=C2=A0=C2=A0=C2=A0 master=C2=A0=C2=A0=C2=A0=C2=A0 merges with remote ma=
+ster
+=C2=A0 Local refs configured for 'git push':
+=C2=A0=C2=A0=C2=A0 distreboot pushes to distreboot (fast-forwardable)
+=C2=A0=C2=A0=C2=A0 master=C2=A0=C2=A0=C2=A0=C2=A0 pushes to master=C2=A0=
+=C2=A0=C2=A0=C2=A0 (up to date)
 
-You are correct, autoresolved paths are "git add"ed when rerere.autoupdate is true.
+I push:
 
-Argh...in my original patch, I wasn't setting rerere.autoupdate.  After fixing that in the test, it's clear that the patch is no longer needed.
+$ git push
+=46etching remote heads...
+  refs/
+  refs/heads/
+  refs/tags/
+updating 'refs/heads/distreboot'
+  from 0000000000000000000000000000000000000000
+  to   e0bce568272859eca817455acafb5f0a52b8fd5a
+    sending 6 objects
+    done
+Updating remote server info
+To http://monster/gitrepos/stasher.git/
+   6d4900e..e0bce56  distreboot -> distreboot
 
-> Or are you only talking about the error exit from "git merge" that
-> would cause "git rebase -i" to stop and give control back to the end
-> user?
-> 
-> I suspect that the latter behaviour to stop "rebase" in the middle
-> is in line with the spirit of --rerere-autoupdate, and it is not
-> likely that we would want to change it.
+This breaks something:
 
-If it could be guaranteed that all changes in a merge commit would be preserved when running "git rebase -i -p" with rerere.autoupdate enabled, I think that would be an argument for not returning control to the user during the rebase operation.  However, changes to non-conflicted files in a merge commit are currently lost in this case, so it would be too dangerous to enable this behavior now.
+$ git remote show origin
+* remote origin
+  Fetch URL: http://monster/gitrepos/stasher.git/
+  Push  URL: http://monster/gitrepos/stasher.git/
+  HEAD branch: (unknown)
+  Remote branches:
+    distreboot                 tracked
+    refs/remotes/origin/master stale (use 'git remote prune' to remove)
+  Local branches configured for 'git pull':
+    distreboot merges with remote distreboot
+    master     merges with remote master
+  Local ref configured for 'git push':
+    distreboot pushes to distreboot (up to date)
 
-Dave
+Going forward, clone will fail:
+
+$ git clone http://monster/gitrepos/stasher.git/ stasher-test
+Cloning into 'stasher-test'...
+warning: remote HEAD refers to nonexistent ref, unable to checkout.
+
+If I do some random fiddling in the origin repo (not really knowing
+what I'm doing, I can usually fix it:
+
+sh-4.2$ cat HEAD
+ref: refs/heads/master
+sh-4.2$ ls -al refs/heads
+total 16
+drwxr-xr-x 3 apache apache 4096 Jun 17 10:53 .
+drwxr-xr-x 4 apache apache 4096 May 24 10:37 ..
+drwxr-xr-x 2 apache apache 4096 Jun 17 10:53 .DAV
+-rw-r--r-- 1 apache apache   41 Jun 17 10:53 distreboot
+sh-4.2$ cat info/refs
+e0bce568272859eca817455acafb5f0a52b8fd5a	refs/heads/distreboot
+sh-4.2$ git gc
+Counting objects: 124, done.
+Delta compression using up to 8 threads.
+Compressing objects: 100% (59/59), done.
+Writing objects: 100% (124/124), done.
+Total 124 (delta 67), reused 116 (delta 63)
+sh-4.2$ cat info/refs
+e0bce568272859eca817455acafb5f0a52b8fd5a	refs/heads/distreboot
+ee94edb5fcdc7a28ffbdeaabe841e3ecff863983	refs/heads/master
+sh-4.2$ ls -al refs/heads
+total 12
+drwxr-xr-x 3 apache apache 4096 Jun 17 10:54 .
+drwxr-xr-x 4 apache apache 4096 May 24 10:37 ..
+drwxr-xr-x 2 apache apache 4096 Jun 17 10:53 .DAV
+
+git clone starts working again.
+
+Until I push the branch, and then master breaks again.
