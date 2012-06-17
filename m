@@ -1,75 +1,73 @@
-From: =?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH] t: Replace 'perl' by $PERL_PATH
-Date: Sun, 17 Jun 2012 08:36:22 +0200
-Message-ID: <4FDD7AE6.6000000@web.de>
+Date: Sun, 17 Jun 2012 00:15:13 -0700
+Message-ID: <7vipeq76ke.fsf@alter.siamese.dyndns.org>
 References: <1339441313-5296-1-git-send-email-vfr@lyx.org>
+ <4FDD7AE6.6000000@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, gitster@pobox.com,
-	=?ISO-8859-1?Q?Torsten_B=F6?= =?ISO-8859-1?Q?gershausen?= 
-	<tboegi@web.de>
-To: vfr@lyx.org
-X-From: git-owner@vger.kernel.org Sun Jun 17 08:41:52 2012
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: vfr@lyx.org, git@vger.kernel.org
+To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Sun Jun 17 09:16:00 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Sg9BG-0005Qt-6a
-	for gcvg-git-2@plane.gmane.org; Sun, 17 Jun 2012 08:41:50 +0200
+	id 1Sg9iH-0004AX-Mp
+	for gcvg-git-2@plane.gmane.org; Sun, 17 Jun 2012 09:15:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752715Ab2FQGlf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 17 Jun 2012 02:41:35 -0400
-Received: from mout.web.de ([212.227.15.4]:54111 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751383Ab2FQGlb (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 17 Jun 2012 02:41:31 -0400
-X-Greylist: delayed 305 seconds by postgrey-1.27 at vger.kernel.org; Sun, 17 Jun 2012 02:41:31 EDT
-Received: from birne.lan ([194.22.188.61]) by smtp.web.de (mrweb102) with
- ESMTPA (Nemesis) id 0MTPit-1SWQAC025f-00SIUb; Sun, 17 Jun 2012 08:36:23 +0200
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:13.0) Gecko/20120614 Thunderbird/13.0.1
-In-Reply-To: <1339441313-5296-1-git-send-email-vfr@lyx.org>
-X-Provags-ID: V02:K0:+AAJO+u5ShtMoyQlzugyG5R3K07uy84s5XJifdeeEky
- YZ6tR8H7Nyu3u+tro3LQ1LRLOrM3rQFvSUpbUGtyYgIHcgzP8T
- z3wSveG8I9f9u5FCKXSUuLZ/yZ77jQ1j/VFT+SqVBr/A+wwvQe
- 5c7m0oaeIz/vXbVnrXUJtQq4Kz/3eMYE/8YcMqSzc5TMIlIdpg
- MMqIWomYp5JYtpN/4vtsQ==
+	id S1752212Ab2FQHPR convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 17 Jun 2012 03:15:17 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:42852 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750913Ab2FQHPQ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 17 Jun 2012 03:15:16 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8102556D4;
+	Sun, 17 Jun 2012 03:15:15 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=KYNohAnJxpDS
+	Q/tOaFqbQizTmw0=; b=xGMeG0h8GOol7OEs4eqfrJPoWWibxF9aWkFfx+GAl7R/
+	EHzbyN35wj7ZzTSbMoqHrUcc3N7fqy96vNIuQ52ObV8B/8A6uIu3AsrIfcCVflQl
+	9WMEiyuGnZWqC9sTBU6D9v7uHeIF+T5fOhEjcBHKA8TN/1pC2TLrLx6eWj5eAHw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=xoY074
+	VIwcLa2XJORH0CljBWmIGKG6PIODCqR+r7dv2Pk7nkQoNxxn94T68BMa4NsBMnVt
+	uQy2v5dQStLhj3bFdaLneWfXVSogtH5KSrXLgHO3LlY57gpISdZiyWPPH6sNwPto
+	fFMdsGy7tg020HD3er+ti/ZB/W0UVopgXUx9w=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 777F156D3;
+	Sun, 17 Jun 2012 03:15:15 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id ECB2856D2; Sun, 17 Jun 2012
+ 03:15:14 -0400 (EDT)
+In-Reply-To: <4FDD7AE6.6000000@web.de> ("Torsten =?utf-8?Q?B=C3=B6gershaus?=
+ =?utf-8?Q?en=22's?= message of "Sun, 17 Jun 2012 08:36:22 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 2F62368C-B84C-11E1-B98A-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200118>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200119>
 
+Torsten B=C3=B6gershausen <tboegi@web.de> writes:
 
-Hej,
-Does this work for you?
+> When I try to debug it, the $PERL_PATH seems to be empty:
 
-None of the 2 patches found on pu do work here:
-> a3428205e6d74542d6441baaa29d1cb1d1064d95
->Author: Vincent van Ravesteijn <vfr@lyx.org>
->Date:   Mon Jun 11 19:01:53 2012 +0000
->    t: Replace 'perl' by $PERL_PATH
+Ahh, given that it does this:
 
-[165c0e8f0b04b8573e91ead2890870d9e36bb39c] tests: enclose $PERL_PATH in duoble quotes
+    cat >hexdump <<'EOF'
+    #!/bin/sh
+    perl -e '$/ =3D undef; $_ =3D <>; s/./ord($&)/ge; print $_' < "$1"
+    EOF
+    chmod +x hexdump
 
-t4030 seems to be broken.
-When I try to debug it, the $PERL_PATH seems to be empty:
-
-------------------
-./t4030-diff-textconv.sh  --verbose | less
-
-The ok 2 - file is considered binary by porcelain
-
-expecting success: 
-        git diff-tree -p HEAD^ HEAD >diff &&
-:/Users/tb/projects/git/git.git/t/trash directory.t4030-diff-textconv/hexdump: line 2: -e: command not found
-------------------
-And the hexdump line 2 uses $PERL_PATH, which is empty: 
---------------------
-t/trash directory.t4030-diff-textconv> cat  hexdump 
-#!/bin/sh
-$PERL_PATH -e '$/ = undef; $_ = <>; s/./ord($&)/ge; print $_' < "$1"
-tb@birne:~/projects/git/git.git/t/trash directory.t4030-diff-textconv> 
--------------------
-Can anybody help to find out what is going on?
+PERL_PATH should be exported from test-lib.sh; we dot-source
+GIT-BUILD-OPTIONS to get its value, but it is not propagated to the
+subprocess like this hexdump script.
