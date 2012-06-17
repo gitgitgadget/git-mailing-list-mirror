@@ -1,94 +1,61 @@
-From: perryh@pluto.rain.com
-Subject: Re: How do I specify a revision for "git blame" by date?
-Date: Fri, 15 Jun 2012 21:13:03 -0700
-Message-ID: <4fdc6a3f.nzZc1m4KnwQe3s+K%perryh@pluto.rain.com>
-References: <4fda029d.g99uVull9jgguc/Y%perryh@pluto.rain.com>
- <877gva1a4b.fsf@thomas.inf.ethz.ch>
- <4fdb326f.WB/xRjZx4pXtMhhZ%perryh@pluto.rain.com>
- <20120615150107.GA4572@sigill.intra.peff.net>
- <7vsjdwbmh6.fsf@alter.siamese.dyndns.org>
+From: =?Big5?B?pEG7xL5Z?= <ch3cooli@gmail.com>
+Subject: git commit-tree documentation incorrect parameter sequence
+Date: Sun, 17 Jun 2012 09:57:42 +0800
+Message-ID: <CAHtLG6S3ZyBV+0KxKLUSCO7yOXLGD1NGhM62sJfKPUMSeQTSoQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, trast@student.ethz.ch
-To: gitster@pobox.com, peff@peff.net
-X-From: git-owner@vger.kernel.org Sat Jun 16 22:50:06 2012
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jun 17 03:57:52 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Sfzwb-0000Hi-Ct
-	for gcvg-git-2@plane.gmane.org; Sat, 16 Jun 2012 22:50:05 +0200
+	id 1Sg4kO-0000vi-HH
+	for gcvg-git-2@plane.gmane.org; Sun, 17 Jun 2012 03:57:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756745Ab2FPUuA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 16 Jun 2012 16:50:00 -0400
-Received: from oldagora.rdrop.com ([199.26.172.14]:1093 "EHLO
-	oldagora.rdrop.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756632Ab2FPUt7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 16 Jun 2012 16:49:59 -0400
-Received: from oldagora.rdrop.com (localhost [127.0.0.1])
-	by oldagora.rdrop.com (8.13.1/8.12.7) with ESMTP id q5GKnHgI000761
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Sat, 16 Jun 2012 13:49:28 -0700 (PDT)
-	(envelope-from perryh@pluto.rain.com)
-Received: (from uucp@localhost)
-	by oldagora.rdrop.com (8.13.1/8.12.9/Submit) with UUCP id q5GKnHg3000760;
-	Sat, 16 Jun 2012 13:49:17 -0700 (PDT)
-Received: from fbsd81 ([192.168.200.81]) by pluto.rain.com (4.1/SMI-4.1-pluto-M2060407)
-	id AA13259; Fri, 15 Jun 12 21:14:25 PDT
-In-Reply-To: <7vsjdwbmh6.fsf@alter.siamese.dyndns.org>
-User-Agent: nail 11.25 7/29/05
+	id S1756205Ab2FQB5o convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 16 Jun 2012 21:57:44 -0400
+Received: from mail-lpp01m010-f46.google.com ([209.85.215.46]:43802 "EHLO
+	mail-lpp01m010-f46.google.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753535Ab2FQB5n convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 16 Jun 2012 21:57:43 -0400
+Received: by lahd3 with SMTP id d3so2840859lah.19
+        for <git@vger.kernel.org>; Sat, 16 Jun 2012 18:57:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        bh=hMayhjGK0Czs1aAgL44kxzQh1UdAOEJjZtmnHv9NnZQ=;
+        b=Fm1ZPQLFoumbOEvFcvQomVbsuq39A1V34yyWqzwQw7oiwMl/d7WoTUr6HxtA3fvsRl
+         1OQASs734UreQNpTfwz/fahWkBCizt609eZJwfqIjeIcwyxT7+y408gjUAPVGa1C8CaF
+         vjK2WcPS1pjotHilOUndP8Kdub/d7tOuur3BhKFK6TPlQg08nWW2lIKwwI4lgm4/ENhI
+         4hJjSMZG+E7QdCntzT76Oewkupam0VzQDJ/GPIvHwwFkqJvwRRiFKPf8LRuxZ0WpG4Ji
+         MRK1ofv/+4keKPzyk6zyop1b0ft8A0AO7DwoAKMu55zfzBVOnLevKBzH8PI5p0dBkien
+         yq7A==
+Received: by 10.112.30.226 with SMTP id v2mr4499721lbh.103.1339898262342; Sat,
+ 16 Jun 2012 18:57:42 -0700 (PDT)
+Received: by 10.112.42.72 with HTTP; Sat, 16 Jun 2012 18:57:42 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200113>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200115>
 
-Junio C Hamano <gitster@pobox.com> wrote:
-> Jeff King <peff@peff.net> writes:
-> > But that still doesn't address the issue that (a) is not
-> > well-defined.  Imagine I have this history:
-> >
-> >   A--B--C---G--H
-> >    \       /
-> >     D--E--F
-> >
-> > that is, two lines of development splitting at A and merging
-> > at H. And imagine the commit timestamps are (let's just refer
-> > to them as integers for the sake of simplicity, but they are
-> > representing days or seconds or whatever):
-> >
-> >   A(1)--B(2)--C(3)--G(7)--H(8)
-> >    \               /
-> >     D(2)--E(4)--F(6)
-> >
-> > What does it mean to ask for the commit at time=5?
-> > ...
-> > Git-blame expects you to give it a well-defined point ...
-> > You could do so by asking rev-list to walk the graph according
-> > to your requirements and feeding the result to blame, like:
-> >
-> >   # most recent on any line of development that is merged to HEAD
-> >   git blame `git rev-list -1 --until=5 HEAD`
-> >
-> >   # most recent on any line of development in the whole repo
-> >   git blame `git rev-list -1 --until=5 --all`
-> >
-> >   # most recent version on the first-parent; if you follow a
-> >   # topic-branch workflow and always merge up into "master",
-> >   # then this will blame what was on master at time=5
-> >   git blame `git rev-list -1 --until=5 --first-parent HEAD`
->
-> Very well explained.  Thanks.
+Dear Sir,
 
-+1
+In current git commit-tree documentation,
+the parameter sequence is incorrect.
 
-> The short answer to the question on "Subject:" line is "You don't".
+git commit-tree <tree> [(-p <parent>)=85] < changelog
+git commit-tree [(-p <parent>)=85] [(-m <message>)=85] [(-F <file>)=85]=
+ <tree>
 
-The slightly longer, but perhaps more practically useful, answer is
-"You use 'git rev-list' to look up the correct commit, and shell
-'command substitution' to pass the result to 'git blame', as Jeff
-has illustrated."  That solution sure beats displaying the entire
-revision list, and then manually selecting the desired commit from
-it.
+The second line in incorrect, and <tree> should come first
+git commit-tree <tree> [(-p <parent>)=85] [(-m <message>)=85] [(-F <fil=
+e>)=85]
+
+Regards,
+ch3cooli
