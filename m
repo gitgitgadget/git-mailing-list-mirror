@@ -1,67 +1,80 @@
-From: Michael Schubert <mschub@elegosoft.com>
-Subject: Re: [PATCH] symbolic-ref: check format of given reference
-Date: Mon, 18 Jun 2012 14:02:45 +0200
-Message-ID: <4FDF18E5.7020908@elegosoft.com>
-References: <4FDE3D7D.4090502@elegosoft.com> <7vaa017j51.fsf@alter.siamese.dyndns.org>
+From: Carlos =?ISO-8859-1?Q?Mart=EDn?= Nieto <cmn@elego.de>
+Subject: Re: unable to index file UsrClass.dat
+Date: Mon, 18 Jun 2012 15:49:49 +0200
+Message-ID: <1340027389.10106.18.camel@beez.lab.cmartin.tk>
+References: <CACUgyLmvWk0WeMqx-7Qkw0py8=1ND+4pZNJDp5JOYxEcjU-UXQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jun 18 14:04:48 2012
+Content-Type: multipart/signed; micalg="pgp-sha1"; protocol="application/pgp-signature";
+	boundary="=-9xjigutkzTcSDos0O0kc"
+Cc: git@vger.kernel.org
+To: Grant Zhao <zhao.grant@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jun 18 15:50:11 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SgahK-0004rt-LX
-	for gcvg-git-2@plane.gmane.org; Mon, 18 Jun 2012 14:04:46 +0200
+	id 1SgcLH-0002eR-Ts
+	for gcvg-git-2@plane.gmane.org; Mon, 18 Jun 2012 15:50:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751523Ab2FRMEm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 Jun 2012 08:04:42 -0400
-Received: from mx0.elegosoft.com ([78.47.87.163]:42681 "EHLO mx0.elegosoft.com"
+	id S1751715Ab2FRNt6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Jun 2012 09:49:58 -0400
+Received: from kimmy.cmartin.tk ([91.121.65.165]:41495 "EHLO kimmy.cmartin.tk"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751077Ab2FRMEm (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Jun 2012 08:04:42 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by mx0.elegosoft.com (Postfix) with ESMTP id E1DD8DE827;
-	Mon, 18 Jun 2012 14:04:40 +0200 (CEST)
-Received: from mx0.elegosoft.com ([127.0.0.1])
-	by localhost (mx0.elegosoft.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id snNSPFLKSEkV; Mon, 18 Jun 2012 14:04:40 +0200 (CEST)
-Received: from [10.10.10.250] (i59F7870A.versanet.de [89.247.135.10])
-	by mx0.elegosoft.com (Postfix) with ESMTPSA id B7F51DE825;
-	Mon, 18 Jun 2012 14:04:40 +0200 (CEST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:13.0) Gecko/20120616 Thunderbird/13.0.1
-In-Reply-To: <7vaa017j51.fsf@alter.siamese.dyndns.org>
-X-Enigmail-Version: 1.4.2
+	id S1751678Ab2FRNt4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Jun 2012 09:49:56 -0400
+Received: from [10.10.10.234] (i59F7870A.versanet.de [89.247.135.10])
+	by kimmy.cmartin.tk (Postfix) with ESMTPSA id 8D36A46057;
+	Mon, 18 Jun 2012 15:49:54 +0200 (CEST)
+In-Reply-To: <CACUgyLmvWk0WeMqx-7Qkw0py8=1ND+4pZNJDp5JOYxEcjU-UXQ@mail.gmail.com>
+X-Mailer: Evolution 3.2.2-1+b1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200140>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200141>
 
-On 06/17/2012 10:55 PM, Junio C Hamano wrote:
-> Michael Schubert <mschub@elegosoft.com> writes:
-> 
->> This was discussed earlier this year:
->>
->> http://thread.gmane.org/gmane.comp.version-control.git/189715
->>
->> What about pointing at non-existing references? Should this
->> still be allowed?
-> 
-> How else would you reimplement "checkout --orphan" in your own
-> Porcelain using symbolic-ref?
 
-Forgot about that.
+--=-9xjigutkzTcSDos0O0kc
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
->>
->> Additionally, I had to reindent two lines to make git-am happy
->> (indent with spaces).
-> 
-> I doubt that it is needed; the '-' lines show runs of HT followed by
-> fewer than 8 SP, which should not trigger "indent with spaces".
+On Mon, 2012-06-18 at 03:09 -0700, Grant Zhao wrote:
+> I used "git add .",but "fatal: adding files failed".
+> because
+>=20
+> error: open("Local Settings/Application Data/Microsoft/Windows/UsrClass.d=
+at"): P
+> ermission denied
+>=20
+> I cannot open the file "UsrClass.dat",I use Windows XP Profesional
+> Sp3, please tell me why!
 
-I've only noticed because git-am was telling me when I tried to
-apply the patch.? Am I missing something?
+Did you miss the part where is says "Permission denied"? You even quoted
+it in the e-mail.
+
+As to why you don't have permission to read the file, that shouldn't be
+related to git at all. It looks like you're trying to read someone
+else's data, which would certainly account for the lack of permissions.
+
+   cmn
+
+
+--=-9xjigutkzTcSDos0O0kc
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part
+Content-Transfer-Encoding: 7bit
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iQEcBAABAgAGBQJP3zH9AAoJEHKRP1jG7ZzTHU4IAKO+2DpHjeE5rOdQJD1ry9Qi
+auj4t3c7th9Fqkj9illr5zOSagTkY5qn04NKEhj5bqzEMP6OGQwnG/tAttyC7i6b
+4Ma+kYvY5yXoGC232jZbAtEmCEq+2MxTViGPQGFPm2Z8zVLzFkhe2ptiL5vasS7h
+tu0C0Ys4kb26XHPGFRupBhncybRFKMa4YMbvVRLyL5iwnf+telogOUzpUQ/UT2eY
+dvPEa959d+n6BcqAz3e+WsNUxi/16D5pqaVx+OKkw8mnZABOdx9duJYTl48zn+GD
+sLJ7FJ2p8pwNhn9fKQcn05xAUis8dcx65SlKi/UCSaR0UG86Ro1/7hrLI+U+03k=
+=1yaG
+-----END PGP SIGNATURE-----
+
+--=-9xjigutkzTcSDos0O0kc--
