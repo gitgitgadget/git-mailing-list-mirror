@@ -1,253 +1,189 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [ANNOUNCE] Git v1.7.11
-Date: Sun, 17 Jun 2012 15:24:22 -0700
-Message-ID: <7v62ap60h5.fsf@alter.siamese.dyndns.org>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH 2/2 RFC] verify_filename: ask the caller to chose the kind of diagnosis
+Date: Mon, 18 Jun 2012 08:42:32 +0200
+Message-ID: <vpq62apt92f.fsf@bauges.imag.fr>
+References: <vpq395tvlc0.fsf@bauges.imag.fr>
+	<1339958341-22186-1-git-send-email-Matthieu.Moy@imag.fr>
+	<1339958341-22186-2-git-send-email-Matthieu.Moy@imag.fr>
+	<7vehpd7kot.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Linux Kernel <linux-kernel@vger.kernel.org>
-To: git@vger.kernel.org
-X-From: linux-kernel-owner@vger.kernel.org Mon Jun 18 00:24:42 2012
-Return-path: <linux-kernel-owner@vger.kernel.org>
-Envelope-to: glk-linux-kernel-3@plane.gmane.org
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jun 18 08:42:45 2012
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <linux-kernel-owner@vger.kernel.org>)
-	id 1SgNth-000380-5s
-	for glk-linux-kernel-3@plane.gmane.org; Mon, 18 Jun 2012 00:24:41 +0200
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1SgVfh-0004ep-1A
+	for gcvg-git-2@plane.gmane.org; Mon, 18 Jun 2012 08:42:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757854Ab2FQWYg convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;glk-linux-kernel-3@m.gmane.org>);
-	Sun, 17 Jun 2012 18:24:36 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64704 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753328Ab2FQWYZ convert rfc822-to-8bit (ORCPT
-	<rfc822;linux-kernel@vger.kernel.org>);
-	Sun, 17 Jun 2012 18:24:25 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C70DB993F;
-	Sun, 17 Jun 2012 18:24:24 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:date:message-id:mime-version:content-type
-	:content-transfer-encoding; s=sasl; bh=5HjhAWyRSx+yb8b3YMFbg2msu
-	xE=; b=sgVgcHvuAiEDCLvernHYR4CUJpy9ICI5McxQR1MyOU7JDTfdmsxJKi/5Z
-	lCv5MtWcxXZRxeEuQf5viHqNmfvkqWD19UJ47WOCe6kScHzi02Y6dfn+4HK2ab4j
-	7o+YVlIqJNOQRPrWxC42z5Cla5UMnANmkfy+hZnZBbDi9GySkU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:date:message-id:mime-version:content-type
-	:content-transfer-encoding; q=dns; s=sasl; b=ec9O+OtIzH45P73hP5w
-	KdwMXr8x2ExSdSGE+7A91gZ2I2YcbVEkbHDQ/JfRKRq6uQKQfGbwtIiL8bO2Zy3h
-	e6wlSuJ/SidZJlYgBWgm6PWc5mh3a7bFeRA8FCIK4NOrZZuydV5JSw7kA1wu8gnT
-	25NKpbffzwaDFlVxGDeWh+Go=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B5501993E;
-	Sun, 17 Jun 2012 18:24:24 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id EB6D3993D; Sun, 17 Jun 2012
- 18:24:23 -0400 (EDT)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 311DFDB0-B8CB-11E1-B454-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
-Sender: linux-kernel-owner@vger.kernel.org
+	id S1752655Ab2FRGmm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Jun 2012 02:42:42 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:45248 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753921Ab2FRGml (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Jun 2012 02:42:41 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id q5I6gL3M026520
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Mon, 18 Jun 2012 08:42:21 +0200
+Received: from bauges.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1SgVfV-0005F4-8G; Mon, 18 Jun 2012 08:42:33 +0200
+In-Reply-To: <7vehpd7kot.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Sun, 17 Jun 2012 13:22:26 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.93 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Mon, 18 Jun 2012 08:42:22 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: q5I6gL3M026520
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1340606543.29153@+vrnNjlpDxCNzQ88zGuXPw
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <linux-kernel.vger.kernel.org>
-X-Mailing-List: linux-kernel@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200136>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200137>
 
-The latest feature release Git v1.7.11 is now available at the
-usual places.
+Junio C Hamano <gitster@pobox.com> writes:
 
-The release tarballs are found at:
+> Matthieu Moy <Matthieu.Moy@imag.fr> writes:
+>
+>> +/*
+>> + * Verify that "name" is a filename.
+>> + * The "diagnose_rev" is used to provide a user-friendly diagnosis. If
+>> + * 0, the diagnosis will try to diagnose "name" as an invalid object
+>> + * name (e.g. HEAD:foo). If non-zero, the diagnosis will only complain
+>> + * about an inexisting file.
+>> + */
+>> +extern void verify_filename(const char *prefix, const char *name, int diagnose_rev);
+>
+> The whole point of verify_filename() is to make sure, because the
+> user did not have disambiguating "--" on the command line, that the
+> first non-rev argument is a path and also it cannot be interpreted
+> as a valid rev.  It somehow feels wrong to make it also responsible,
+> for a possibly misspelled rev.
 
-    http://code.google.com/p/git-core/downloads/list
+verify_filename will check the same thing in both cases. If the caller
+looks like
 
-and their SHA-1 checksums are:
+if (name is not a valid object name) {
+        verify_filename(name);
+}
 
-15abe2c5b6b7cf9b738e3fb57ab9234ae02a1e61  git-1.7.11.tar.gz
-34d7fb39e7c5e290ca041ffca3cb1fb4256f6fb3  git-htmldocs-1.7.11.tar.gz
-9f963243dfdbf5d77049e5fbb1e8e571effa4285  git-manpages-1.7.11.tar.gz
+then it should ask for a detailed diagnosis. If the caller knows that an
+object name would not be accepted anyway, it should not.
 
-Also the following public repositories all have a copy of the v1.7.11
-tag and the master branch that the tag points at:
+> The caller can mistakenly throw 0 or 1 at random but the _only_ right
+> value for this parameter is to set it to true only for the first
+> non-rev, no?
 
-  url =3D git://repo.or.cz/alt-git.git
-  url =3D https://code.google.com/p/git-core/
-  url =3D git://git.sourceforge.jp/gitroot/git-core/git.git
-  url =3D git://git-core.git.sourceforge.net/gitroot/git-core/git-core
-  url =3D https://github.com/gitster/git
+In general, this is the case, but that's a consequence of "an object
+name would not be accepted anyway". I don't think there is any such call
+in Git's code source right now, but we could imagine a caller trying to
+verify that something is actually a file, and "verify_filename" would be
+a correct way to do it, provided you pass diagnose_rev == 0.
 
-Git v1.7.11 Release Notes
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D
+>> --- a/builtin/grep.c
+>> +++ b/builtin/grep.c
+>> @@ -927,8 +927,11 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
+>>  	/* The rest are paths */
+>>  	if (!seen_dashdash) {
+>>  		int j;
+>> -		for (j = i; j < argc; j++)
+>> -			verify_filename(prefix, argv[j]);
+>> +		if (i < argc) {
+>> +			verify_filename(prefix, argv[i], 1);
+>> +			for (j = i + 1; j < argc; j++)
+>> +				verify_filename(prefix, argv[j], 0);
+>> +		}
+>
+> This is exactly
+>
+> 	verify_filename(prefix, argv[j], j == first_non_rev)
 
-Updates since v1.7.10
----------------------
+I buy that.
 
-UI, Workflows & Features
+>> diff --git a/builtin/reset.c b/builtin/reset.c
+>> index 8c2c1d5..4cc34c9 100644
+>> --- a/builtin/reset.c
+>> +++ b/builtin/reset.c
+>> @@ -285,7 +285,7 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
+>>  			rev = argv[i++];
+>>  		} else {
+>>  			/* Otherwise we treat this as a filename */
+>> -			verify_filename(prefix, argv[i]);
+>> +			verify_filename(prefix, argv[i], 1);
+>
+> This is also checking the first non-rev, too.  We just saw
+> "florbl^{triee}" in "git reset florbl^{triee} hello.c" is not a
+> valid rev.  If "florbl^{triee}" is indeed a file, we shouldn't
+> complain and die with "This may be a misspelled rev", but take it as
+> a path.
 
- * A new mode for push, "simple", which is a cross between "current"
-   and "upstream", has been introduced. "git push" without any refspec
-   will push the current branch out to the same name at the remote
-   repository only when it is set to track the branch with the same
-   name over there.  The plan is to make this mode the new default
-   value when push.default is not configured.
+Yes, and this is what we are doing already. This verify_filename is only
+called for the first argument. We have exactly the right pattern here:
 
- * A couple of commands learned the "--column" option to produce
-   columnar output.
+		/*
+		 * Otherwise, argv[i] could be either <rev> or <paths> and
+		 * has to be unambiguous.
+		 */
+		else if (!get_sha1(argv[i], sha1)) {
+			verify_non_filename(prefix, argv[i]);
+		} else {
+			/* Otherwise we treat this as a filename */
+			verify_filename(prefix, argv[i], 1);
+		}
 
- * A third-party tool "git subtree" is distributed in contrib/
+Clearly, if "argv[i]" is a filename, it's OK and we take it as it is,
+but if it is not, then the failure is due to both "verify_filename" and
+"git_sha1" failures, and we should take that into account in the
+diagnosis. To me, the fact that this is called for the first non-rev
+argument is a detail, the real reason to pass 1 here is that we wouldn't
+have called verify_filename if it was a revision.
 
- * A remote helper that acts as a proxy and caches ssl session for the
-   https:// transport is added to the contrib/ area.
+>> @@ -81,13 +83,13 @@ static void NORETURN die_verify_filename(const char *prefix, const char *arg)
+>>   * it to be preceded by the "--" marker (or we want the user to
+>>   * use a format like "./-filename")
+>>   */
+>> -void verify_filename(const char *prefix, const char *arg)
+>> +void verify_filename(const char *prefix, const char *arg, int diagnose_rev)
+>>  {
+>>  	if (*arg == '-')
+>>  		die("bad flag '%s' used after filename", arg);
+>>  	if (check_filename(prefix, arg))
+>>  		return;
+>> -	die_verify_filename(prefix, arg);
+>> +	die_verify_filename(prefix, arg, diagnose_rev);
+>
+> And this implements the "if it is path, don't complain, but
+> otherwise diagnose misspelled rev if the caller asked us to".
+>
+> I think the patch is not wrong per-se, but diagnose_rev is probably
+> misnamed.  It tells the callee what to do, but gives little hint to
+> the caller when to set it.  s/diagnose_rev/first_non_rev/ or
+> something might make it easier to understand for future callers.
 
- * Error messages given when @{u} is used for a branch without its
-   upstream configured have been clarified.
+I considered "could_have_been_a_rev" or
+"would_have_been_ok_if_it_was_a_rev" ;-).
 
- * Even with the "-q"uiet option, "checkout" used to report setting up
-   tracking.  Also "branch" learned the "-q"uiet option to squelch
-   informational message.
+I think it would be better to document that as a comment, like this in
+cache.h:
 
- * Your build platform may support hardlinks but you may prefer not to
-   use them, e.g. when installing to DESTDIR to make a tarball and
-   untarring on a filesystem that has poor support for hardlinks.
-   There is a Makefile option NO_INSTALL_HARDLINKS for you.
+   * In most cases, the caller will want diagnose_rev == 1 when
+   * verifying the first non_rev argument, and diagnose_rev == 0 for the
+   * next ones (because we already saw a filename, there's not ambiguity
+   * anymore).
+   */
+  extern void verify_filename(const char *prefix, const char *name, int diagnose_rev);
+  
+but keep a param name that is more general.
 
- * The smart-http backend used to always override GIT_COMMITTER_*
-   variables with REMOTE_USER and REMOTE_ADDR, but these variables are
-   now preserved when set.
-
- * "git am" learned the "--include" option, which is an opposite of
-   existing the "--exclude" option.
-
- * When "git am -3" needs to fall back to an application of the patch
-   to a synthesized preimage followed by a 3-way merge, the paths that
-   needed such treatment are now reported to the end user, so that the
-   result in them can be eyeballed with extra care.
-
- * The output from "diff/log --stat" used to always allocate 4 columns
-   to show the number of modified lines, but not anymore.
-
- * "git difftool" learned the "--dir-diff" option to spawn external
-   diff tools that can compare two directory hierarchies at a time
-   after populating two temporary directories, instead of running an
-   instance of the external tool once per a file pair.
-
- * The "fmt-merge-msg" command learned to list the primary contributors
-   involved in the side topic you are merging in a comment in the merge
-   commit template.
-
- * "git rebase" learned to optionally keep commits that do not
-   introduce any change in the original history.
-
- * "git push --recurse-submodules" learned to optionally look into the
-   histories of submodules bound to the superproject and push them
-   out.
-
- * A 'snapshot' request to "gitweb" honors If-Modified-Since: header,
-   based on the commit date.
-
- * "gitweb" learned to highlight the patch it outputs even more.
-
-=46oreign Interface
-
- * "git svn" used to die with unwanted SIGPIPE when talking with an HTT=
-P
-   server that uses keep-alive.
-
- * "git svn" learned to use platform specific authentication
-   providers, e.g. gnome-keyring, kwallet, etc.
-
- * "git p4" has been moved out of the contrib/ area and has seen more
-   work on importing labels as tags from (and exporting tags as labels
-   to) p4.
-
-Performance and Internal Implementation (please report possible regress=
-ions)
-
- * Bash completion script (in contrib/) have been cleaned up to make
-   future work on it simpler.
-
- * An experimental "version 4" format of the index file has been
-   introduced to reduce on-disk footprint and I/O overhead.
-
- * "git archive" learned to produce its output without reading the
-   blob object it writes out in memory in its entirety.
-
- * "git index-pack" that runs when fetching or pushing objects to
-   complete the packfile on the receiving end learned to use multiple
-   threads to do its job when available.
-
- * The code to compute hash values for lines used by the internal diff
-   engine was optimized on little-endian machines, using the same
-   trick the kernel folks came up with.
-
- * "git apply" had some memory leaks plugged.
-
- * Setting up a revision traversal with many starting points was
-   inefficient as these were placed in a date-order priority queue
-   one-by-one.  Now they are collected in the queue unordered first,
-   and sorted immediately before getting used.
-
- * More lower-level commands learned to use the streaming API to read
-   from the object store without keeping everything in core.
-
- * The weighting parameters to suggestion command name typo have been
-   tweaked, so that "git tags" will suggest "tag?" and not "stage?".
-
- * Because "sh" on the user's PATH may be utterly broken on some
-   systems, run-command API now uses SHELL_PATH, not /bin/sh, when
-   spawning an external command (not applicable to Windows port).
-
- * The API to iterate over the refs/ hierarchy has been tweaked to
-   allow walking only a subset of it more efficiently.
-
-Also contains minor documentation updates and code clean-ups.
-
-
-=46ixes since v1.7.10
--------------------
-
-Unless otherwise noted, all the fixes since v1.7.10 in the maintenance
-releases are contained in this release (see release notes to them for
-details).
-
- * "git submodule init" used to report "registered for path ..."
-   even for submodules that were registered earlier.
-   (cherry-pick c1c259e jl/submodule-report-new-path-once later to main=
-t).
-
- * "git diff --stat" used to fully count a binary file with modified
-   execution bits whose contents is unmodified, which was not quite
-   right.
-
-----------------------------------------------------------------
-
-Changes since v1.7.11-rc3 are as follows:
-
-Alexander Strasser (1):
-      diff: Only count lines in show_shortstats
-
-Jonathan Nieder (2):
-      perl/Makefile.PL: warn about duplicate module list in perl/Makefi=
-le
-      perl/Makefile: install Git::SVN::* when NO_PERL_MAKEMAKER=3Dyes, =
-too
-
-Junio C Hamano (2):
-      Git 1.7.10.5
-      Git 1.7.11
-
-Marco Paolone (1):
-      l10n: it.po: translate 212 new messages
-
-Ramsay Allan Jones (1):
-      gitweb: Skip 'modification times' tests when no date parser avail=
-able
-
-SZEDER G=C3=A1bor (2):
-      completion: put main git and gitk completion functions back into =
-git namespace
-      completion: remove credential helpers from porcelain commands
-
-Vincent van Ravesteijn (1):
-      Do not autosquash in case of an implied interactive rebase
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
