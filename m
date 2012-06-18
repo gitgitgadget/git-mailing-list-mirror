@@ -1,74 +1,102 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/2] sha1_name: don't trigger detailed diagnosis for file
- arguments
-Date: Mon, 18 Jun 2012 10:50:36 -0700
-Message-ID: <7v62ao4ihf.fsf@alter.siamese.dyndns.org>
-References: <vpq395tvlc0.fsf@bauges.imag.fr>
- <1339958341-22186-1-git-send-email-Matthieu.Moy@imag.fr>
- <7vehpc4jpw.fsf@alter.siamese.dyndns.org> <vpqpq8wpled.fsf@bauges.imag.fr>
+From: Tim Henigan <tim.henigan@gmail.com>
+Subject: Re: [PATCH] diff: exit(1) if 'diff --quiet <repo file> <external
+ file>' finds changes
+Date: Mon, 18 Jun 2012 13:51:51 -0400
+Message-ID: <CAFouetjkSQuY6pyFdiVsM5tUnEiFK6uWTqDO38uhwUjaDVre1w@mail.gmail.com>
+References: <1339781463-13536-1-git-send-email-tim.henigan@gmail.com>
+	<7vzk849zxg.fsf@alter.siamese.dyndns.org>
+	<20120615193724.GB26473@sigill.intra.peff.net>
+	<CAFoueth2Hfcv0p0SZmichi_6e5--SNkemrSsSivnU73bdFOB4g@mail.gmail.com>
+	<7vipes9w0p.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Mon Jun 18 19:50:50 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jun 18 19:52:00 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Sgg67-000672-Eh
-	for gcvg-git-2@plane.gmane.org; Mon, 18 Jun 2012 19:50:43 +0200
+	id 1Sgg7K-00007c-Kp
+	for gcvg-git-2@plane.gmane.org; Mon, 18 Jun 2012 19:51:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752155Ab2FRRuj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 Jun 2012 13:50:39 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64555 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751629Ab2FRRui (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Jun 2012 13:50:38 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 314E58A8F;
-	Mon, 18 Jun 2012 13:50:38 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=DC/2vqi9XyqBITaEOFuvnhVXWM8=; b=sFIV49
-	4IhPZELAFdsHzb7CBghZtg23B+idSJk0MiCT/DT6kiLuBTc/RB1qSGOEZlmBXgz6
-	NaMcIrEBmr31o9RMweZJ10nn00Y7Da6Y/P7BbiG1CswMKJ1xBTjsNnk5ncWVn2cS
-	DQ3sCOj29TG6w8HuaATqaXxkuYV71GsCNuTG0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=pMSA44hNMhPQXaBicdmfKaOYU8rhIJyN
-	XHfid6PirKM51foEdpZ20qSqpF/oSwRd3oZYAeInPuTtjp36HDRkAPGmtkOHtaX5
-	7SOi4ZJAZLvJ5yTrlbfslIwB7WC3uexukJb3aaHXGTrcNZwnO6JPYwc0F0Yuc9b0
-	p7EbuEwjMQw=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 28A738A8E;
-	Mon, 18 Jun 2012 13:50:38 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 95DFD8A8C; Mon, 18 Jun 2012
- 13:50:37 -0400 (EDT)
-In-Reply-To: <vpqpq8wpled.fsf@bauges.imag.fr> (Matthieu Moy's message of
- "Mon, 18 Jun 2012 19:42:02 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 1CA98E28-B96E-11E1-B6AC-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752641Ab2FRRvz convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 18 Jun 2012 13:51:55 -0400
+Received: from mail-gh0-f174.google.com ([209.85.160.174]:56579 "EHLO
+	mail-gh0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751700Ab2FRRvy convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 18 Jun 2012 13:51:54 -0400
+Received: by ghrr11 with SMTP id r11so3904670ghr.19
+        for <git@vger.kernel.org>; Mon, 18 Jun 2012 10:51:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=Sw8MKKKh3kLkw9fVcvXBrwn2SAyaN0VgrIcR2j5HD24=;
+        b=s/QKY3Mo63bqbmTplzP1R35V2OkNMIejZqwvHT8juDBa/5JG0gkuPsidM9bwX4WeE/
+         +arogzAW2yNXkA8uFlilyoFSk75wbihFcwmXDp41cL42nh9bVefzvFQAGAC6P9PTRnsH
+         TOxGyFEMydfZ16ZZbjs5kQlJYiPbv0qTYhxcaUL7muAM30wJOhVR/TAhdVFZW7cc1xSJ
+         tmGS85EO0fBSxv5ZRv3OTQ4q869rqMbLfySQbxXtb6onXJbqA0JiF9Rc6fxE5UqFEe2H
+         FbsU8SBu9pVNehHWwENXbDZNG+/4Cvec0JRy/IYbFHjWkr2MigquuAWh5UYJ3ePGRFWy
+         Cyig==
+Received: by 10.50.236.71 with SMTP id us7mr1496646igc.16.1340041911928; Mon,
+ 18 Jun 2012 10:51:51 -0700 (PDT)
+Received: by 10.231.84.147 with HTTP; Mon, 18 Jun 2012 10:51:51 -0700 (PDT)
+In-Reply-To: <7vipes9w0p.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200150>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200151>
 
-Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
-
-> My version reads as
+On Fri, Jun 15, 2012 at 4:10 PM, Junio C Hamano <gitster@pobox.com> wro=
+te:
+> Tim Henigan <tim.henigan@gmail.com> writes:
 >
->   try something;
->   if (it failed && I'm only here to report an error)
->           report_error();
+>> I will send v2 with the change to 'diff-no-index.c' suggested by
+>> Junio. =C2=A0I will also include the 'test_expect_code' improvement
+>> suggested by Jeff.
 >
-> which I find easier to understand.
+> Also the test script shouldn't be just testing a simplest case, I
+> would think.
+>
+> For example, comparing two files with "a b c" and "a =C2=A0b c" in th=
+em
+> with "--quiet" should yield "They are different!" while running the
+> same comparison with "--quiet -w" should say "They are the same!",
+> no?
 
-I agree that _this_ part is easy to understand when written that
-way.  But then shouldn't there be a blanket "The caller is here only
-to report an error, but all the previous code didn't find any error,
-so there is something wrong" check much later in the code before it
-returns a success?  Or am I being too paranoid?
+To obtain full coverage, it seems we need to test:
+    1) git diff --quiet <file in repo> <file outside repo>
+    2) git diff --quiet <file outside repo> <file outside repo>
+
+for each of the following options:
+    a) no additional options
+    b) --ignore-space-at-eol
+    c) --ignore-all-space
+
+These seem like the only diff options that should be tested...am I
+missing anything?
+
+Because some of the tests require one directory that is a repo and one
+directory that is not, it seems best to create a new test file with
+$TEST_NO_CREATE_REPO set.  Then the setup function can create both the
+repo and the plain directory.
+
+So, I am thinking of adding 't/t4054-diff-outside-repo.sh' that does
+the following:
+
+  1) setup (includes a cd into the repo directory)
+  2) git diff --quiet, one outside repo, matching files
+  3) git diff --quiet, one outside repo, different files
+  4) git diff --quiet, one outside repo, ignore trailing whitespace
+  5) git diff --quiet, one outside repo, ignore all whitespace
+  6) git diff --quiet, both outside repo, matching files
+  7) git diff --quiet, both outside repo, different files
+  8) git diff --quiet, both outside repo, ignore trailing whitespace
+  9) git diff --quiet, both outside repo, ignore all whitespace
+  10) cleanup (cd back to $HOME test directory)
+
+Does this sound reasonable?
