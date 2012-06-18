@@ -1,86 +1,117 @@
-From: Marc Branchaud <marcnarc@xiplink.com>
-Subject: Re: [PATCH] Try harder to find a remote when on a detached HEAD or
- non-tracking branch.
-Date: Mon, 18 Jun 2012 17:40:00 -0400
-Message-ID: <4FDFA030.7080408@xiplink.com>
-References: <1340038866-24552-1-git-send-email-marcnarc@xiplink.com> <7vaa004j9f.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Jens Lehmann <Jens.Lehmann@web.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jun 18 23:40:59 2012
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH 0/9] Extending the shelf life of "git describe" output
+Date: Mon, 18 Jun 2012 15:05:29 -0700
+Message-ID: <1340057139-8311-1-git-send-email-gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jun 19 00:05:54 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Sgjgu-0005Gv-VO
-	for gcvg-git-2@plane.gmane.org; Mon, 18 Jun 2012 23:40:57 +0200
+	id 1Sgk4y-00088o-Fl
+	for gcvg-git-2@plane.gmane.org; Tue, 19 Jun 2012 00:05:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753627Ab2FRVkv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 Jun 2012 17:40:51 -0400
-Received: from smtp182.dfw.emailsrvr.com ([67.192.241.182]:51369 "EHLO
-	smtp182.dfw.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753539Ab2FRVku (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Jun 2012 17:40:50 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by smtp18.relay.dfw1a.emailsrvr.com (SMTP Server) with ESMTP id A58CA2D8369
-	for <git@vger.kernel.org>; Mon, 18 Jun 2012 17:40:49 -0400 (EDT)
-X-Virus-Scanned: OK
-Received: from smtp138.ord.emailsrvr.com (smtp138.ord.emailsrvr.com [173.203.6.138])
-	by smtp18.relay.dfw1a.emailsrvr.com (SMTP Server) with ESMTPS id 887542D8346
-	for <git@vger.kernel.org>; Mon, 18 Jun 2012 17:40:49 -0400 (EDT)
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by smtp22.relay.ord1a.emailsrvr.com (SMTP Server) with ESMTP id 3B6A02000F0;
-	Mon, 18 Jun 2012 17:40:01 -0400 (EDT)
-X-Virus-Scanned: OK
-Received: by smtp22.relay.ord1a.emailsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id EC1472001D3;
-	Mon, 18 Jun 2012 17:40:00 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:12.0) Gecko/20120430 Thunderbird/12.0.1
-In-Reply-To: <7vaa004j9f.fsf@alter.siamese.dyndns.org>
+	id S1752084Ab2FRWFn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Jun 2012 18:05:43 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:57294 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751421Ab2FRWFm (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Jun 2012 18:05:42 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 21F3197D8
+	for <git@vger.kernel.org>; Mon, 18 Jun 2012 18:05:41 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
+	:subject:date:message-id; s=sasl; bh=tPrBjppjGl+EGJuoBJwz6eigdfw
+	=; b=oovO9be4jVCu1iDXeFSo1Cw1gQE/OBz0XMsfA00/IdGFjKx9FtM3fC6KoEC
+	Hwh2cdLMwpkoXumSYPMB9Nfhf1hhHXbUmzpovQUrU3G9CvJ1c0kRa6EqbMlVfByj
+	W0p6kz6ViRNbqVum1Ng9g/3yAGygYgJuORZmSaJwrt3Ernsk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
+	:date:message-id; q=dns; s=sasl; b=ufS6QxT6fWd14IMmCU68FdCfpg4cw
+	Le6sMFT3FPmV6CR1sFsXAm7W51oJlcCnChlcTNsnFf/J7HGvfDjkUcCaqkAHAb+3
+	2JWESSu+osJi+SVLIu4WnCoERUijduYnjodsxafyXskM0ZmLCekl0x7fcB/iowF6
+	mE/Na4Vnj7tBuI=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 194C197D7
+	for <git@vger.kernel.org>; Mon, 18 Jun 2012 18:05:41 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A0FC497D6 for
+ <git@vger.kernel.org>; Mon, 18 Jun 2012 18:05:40 -0400 (EDT)
+X-Mailer: git-send-email 1.7.11
+X-Pobox-Relay-ID: BDFCE752-B991-11E1-9BCC-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200164>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200165>
 
-On 12-06-18 01:33 PM, Junio C Hamano wrote:
-> marcnarc@xiplink.com writes:
-> 
->> From: Marc Branchaud <marcnarc@xiplink.com>
->>
->> get_default_remote() tries to use the checked-out branch's 'remote' config
->> value to figure out the remote's name.  This fails if there is no currently
->> checked-out branch (i.e. HEAD is detached) or if the checked-out branch
->> doesn't track a remote.  In these cases and the function would just fall
->> back to "origin".
->>
->> Instead, let's use the first remote listed in the configuration, and fall
->> back to "origin" only if we don't find any configured remotes.
-> 
-> I admit that I wouldn't do anything that relies on any remote to be
-> used while on detached head myself, so in that sense I am a biased
-> audience, but guessing (or not guessing and blindly assuming
-> 'origin') feels wrong, and trying even harder to come up with an
-> even wilder guess feels even more wrong.
+The output from "git describe" is a tagname, dash, number, dash, and
+'g' followed by an abbreviated commit object name, and it can be
+used anywhere we expect an object name.  This is so that people can
+use it to name an exact commit in the inter-human communication. The
+recipients are expected to be able to cut & paste it to their
+command line.
 
-OK, but what would be right?  AFAIK git doesn't have any real way of
-designating an official default remote.  It seems to me that the first one in
-the config is actually better than just using "origin".  At least, that
-remote seems very likely to be the one used when the repo was cloned.
+Because it uses an abbreviated commit object name, it is possible
+that a "git describe" name taken earlier can become ambiguous over
+time, even though "git describe" ensures the uniqueness of its
+output in the repository when it runs.
 
-> Shouldn't we be erroring out instead?
+This series teaches the sha1_name machinery to only look for
+unambigous commit object names when the caller knows that the name
+must refer to a commit object.  By taking advantage of the fact that
+there are more trees and blobs in a project's history than commits
+by definition, this reduces the potential of collisions, extending
+the shelf life of "git describe" output by a little bit.
 
-That would be bad for our situation.  As I said, our automated build system
-uses detached HEADs a lot.  Erroring-out in this case would break us.  It's
-really only the near-ubiquity of the name "origin" that has kept things
-working so far.
+Building on the foundation this series lays, I can see two separate
+avenues to further extend this work:
 
-But we finally ran into a situation where someone used "git clone -o", and
-that seems to have broken relative-path submodules in some situations.  (I
-would not be at all surprised if "git clone -o" breaks an assortment of other
-features, too.  I think there are a few places in the code where "origin" is
-presumed to be a valid remote name, and also the one the user wants to use.)
+ - You will further be able to extend the lifetime of uniqueness of
+   "git describe" output if you take advantage of the "tagname" or
+   "number". The current parser does not do this.
 
-		M.
+   There are a number of ways to do this, but probably the cleanest
+   would be to (you only can do this when you have "tagname" tag
+   locally; you may not have it) pass the tag and the number down to
+   the find_short_*() routines with commit_only set, and when they
+   find a commit that match the prefix, inside is_commit_object()
+   test, check also that the commit reaches the given tag object in
+   the given number steps (otherwise discard it as it is not the one
+   you are looking for).
+
+ - Some callers that are involved in the get_sha1_1() callpath know
+   that the name they have must be referring to commit objects (e.g.
+   get_parent() and get_nth_ancestor()).  It might be worthwhile to
+   let get_sha1_1() know that the caller knows the name it is
+   feeding must refer to a commit object, and have the uniqueness
+   logic take advantage of it.
+
+   I think that most of these callers are expecting to parse a
+   committish and the user may have given them the name of a a tag
+   object that peels to a commit, so you would need to add a new
+   GET_SHORT_COMMITTISH that allows any committish, in addition to
+   the GET_SHORT_COMMIT_ONLY this series adds, if you want to do
+   this.
+
+I do not claim the ownership rights on either of the above ideas;
+people who find them interesting are welcome to pursue them (hint,
+hint).
+
+Junio C Hamano (9):
+  sha1_name.c: indentation fix
+  sha1_name.c: clarify what "fake" is for in find_short_object_filename()
+  sha1_name.c: rename "now" to "current"
+  sha1_name.c: refactor find_short_packed_object()
+  sha1_name.c: teach find_short_object_filename() a commit-only option
+  sha1_name.c: teach find_short_packed_object() a commit-only option
+  sha1_name.c: allow get_short_sha1() to take other flags
+  sha1_name.c: teach get_short_sha1() a commit-only option
+  sha1_name.c: get_describe_name() by definition groks only commits
+
+ sha1_name.c | 157 ++++++++++++++++++++++++++++++++++++++----------------------
+ 1 file changed, 101 insertions(+), 56 deletions(-)
+
+-- 
+1.7.11
