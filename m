@@ -1,78 +1,172 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH] rebase -i -p: use rerere to resolve conflicts if enabled
-Date: Mon, 18 Jun 2012 21:06:36 +0200
-Message-ID: <4FDF7C3C.90300@kdbg.org>
-References: <1339769855-94161-1-git-send-email-ddkilzer@kilzer.net> <7vwr38bmj5.fsf@alter.siamese.dyndns.org> <B4036488-1ECA-41C9-BD97-B2ABD116D54C@kilzer.net> <7vd34z96lv.fsf@alter.siamese.dyndns.org> <76A6615B-5758-4D67-A556-2EE131FF7B20@kilzer.net> <7vmx427aj0.fsf@alter.siamese.dyndns.org> <1917D067-6FB3-4393-B178-BBE36B4B5D4E@kilzer.net> <4FDE2252.5030802@kdbg.org> <B5E2DD4F-4EEB-4440-A149-DD718B0C2EFD@kilzer.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: David Kilzer <ddkilzer@kilzer.net>
-X-From: git-owner@vger.kernel.org Mon Jun 18 21:06:54 2012
+From: Tim Henigan <tim.henigan@gmail.com>
+Subject: [PATCH v3] diff-no-index: exit(1) if 'diff --quiet <repo file> <external file>' finds changes
+Date: Mon, 18 Jun 2012 15:28:24 -0400
+Message-ID: <1340047704-8752-1-git-send-email-tim.henigan@gmail.com>
+Cc: Tim Henigan <tim.henigan@gmail.com>
+To: gitster@pobox.com, git@vger.kernel.org, peff@peff.net
+X-From: git-owner@vger.kernel.org Mon Jun 18 21:29:56 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SghHh-0001j1-Dg
-	for gcvg-git-2@plane.gmane.org; Mon, 18 Jun 2012 21:06:45 +0200
+	id 1Sghe1-0006xW-SF
+	for gcvg-git-2@plane.gmane.org; Mon, 18 Jun 2012 21:29:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752873Ab2FRTGk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 Jun 2012 15:06:40 -0400
-Received: from bsmtp4.bon.at ([195.3.86.186]:17174 "EHLO bsmtp.bon.at"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1752114Ab2FRTGk (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Jun 2012 15:06:40 -0400
-Received: from dx.sixt.local (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTP id EC7EC13004B;
-	Mon, 18 Jun 2012 21:02:02 +0200 (CEST)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-	by dx.sixt.local (Postfix) with ESMTP id C7E2F19F6E2;
-	Mon, 18 Jun 2012 21:06:36 +0200 (CEST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:12.0) Gecko/20120421 Thunderbird/12.0
-In-Reply-To: <B5E2DD4F-4EEB-4440-A149-DD718B0C2EFD@kilzer.net>
+	id S1752237Ab2FRT3q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Jun 2012 15:29:46 -0400
+Received: from mail-yw0-f46.google.com ([209.85.213.46]:49774 "EHLO
+	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751776Ab2FRT3p (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Jun 2012 15:29:45 -0400
+Received: by yhmm54 with SMTP id m54so4155162yhm.19
+        for <git@vger.kernel.org>; Mon, 18 Jun 2012 12:29:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        bh=H5hX/h+/PBHiyNaYM4bkGhio09D5eWBzxSy8DywxR+A=;
+        b=mxeoTLUHFspg5mHqN+78lKYHbxnW8VY3yOXsEc4lFkF6hiANvAyNlH5RLqSdGfYBUn
+         uHghEZk7e/iv++XvAVRgniKNWkeK1V3zi1FG8H6NHjejfCVpIUTkL+znd7oFkGgkcVHm
+         GnHOVCGWCtxml6npJsA4WXe9gAGxYf577sNB2q+B3IbxXkWq9aXNKcGKqyIdQXqYPmJQ
+         wYPDxW1KFzki8mzgxhU2zLFUAXkd//ZQmbEA7YYst4h69NEJuB7iTam1YzSVykyPsec1
+         2w0TtUApe/AllkIdy8NRTAqkAokyQ1yy0cjrHIhAai1SPRmLlHtndyAuYZoc60rh88GN
+         3X4g==
+Received: by 10.42.20.201 with SMTP id h9mr6014962icb.36.1340047784423;
+        Mon, 18 Jun 2012 12:29:44 -0700 (PDT)
+Received: from localhost (adsl-99-38-69-118.dsl.sfldmi.sbcglobal.net. [99.38.69.118])
+        by mx.google.com with ESMTPS id ga6sm9904103igc.2.2012.06.18.12.29.41
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Mon, 18 Jun 2012 12:29:43 -0700 (PDT)
+X-Mailer: git-send-email 1.7.11.rc3.6.g5532165
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200159>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200160>
 
-Am 17.06.2012 23:30, schrieb David Kilzer:
-> On Jun 17, 2012, at 11:30 AM, Johannes Sixt wrote:
-> 
->> Am 17.06.2012 15:46, schrieb David Kilzer:
->>> If it could be guaranteed that all changes in a merge commit would be
->>> preserved when running "git rebase -i -p" with rerere.autoupdate
->>> enabled, I think that would be an argument for not returning control
->>> to the user during the rebase operation.  However, changes to
->>> non-conflicted files in a merge commit are currently lost in this
->>> case, so it would be too dangerous to enable this behavior now.
->>
->> You can test this patch:
->>
->>  git://repo.or.cz/git/mingw/j6t.git preserve-merges-by-cherry-pick
->>
->> I think it suits you needs unless you run into the one use-case where
->> the patch is a regression (as documented by the new test_expect_failure
->> in the test suite).
-> 
-> 
-> I'd love to try it, but I'm running into an issue pulling the repository:
-> 
-> $ git clone git://repo.or.cz/git/mingw/j6t.git -b preserve-merges-by-cherry-pick j6t.git
-> Cloning into 'j6t.git'...
-> remote: error: Could not read 942cf39b9a36ae27a4377d22093827ef4df25239
-> remote: fatal: Failed to traverse parents of commit 051ba02462dd65a0ceb3e527a75f24416378880f
-> remote: aborting due to possible repository corruption on the remote side.
-> fatal: early EOF
-> fatal: index-pack failed
+When running 'git diff --quiet <file1> <file2>', if file1 or file2
+is outside the repository, it will exit(0) even if the files differ.
+It should exit(1) when they differ.
 
-Don't do that then ;) Enter your favorite git.git clone, then
+Signed-off-by: Tim Henigan <tim.henigan@gmail.com>
+---
 
-  git pull git://repo.or.cz/git/mingw/j6t.git preserve-merges-by-cherry-pick
 
-should work like a charm. But I've now removed the branches that
-needed the missing commit, and your command should work as well.
+v3 improves the test coverage to include variations of 'diff --quiet'
+where one or both of the files are outside the repository. Tests for
+'--ignore-space-at-eol' and '--ignore-all-space' are included as well.
 
--- Hannes
+
+ diff-no-index.c       |  3 +-
+ t/t4035-diff-quiet.sh | 79 ++++++++++++++++++++++++++++++++++++++++++++++++++-
+ 2 files changed, 80 insertions(+), 2 deletions(-)
+
+diff --git a/diff-no-index.c b/diff-no-index.c
+index f0b0010..b935d2a 100644
+--- a/diff-no-index.c
++++ b/diff-no-index.c
+@@ -273,5 +273,6 @@ void diff_no_index(struct rev_info *revs,
+ 	 * The return code for --no-index imitates diff(1):
+ 	 * 0 = no changes, 1 = changes, else error
+ 	 */
+-	exit(revs->diffopt.found_changes);
++	int result = diff_result_code(&revs->diffopt, 0);
++	exit(result);
+ }
+diff --git a/t/t4035-diff-quiet.sh b/t/t4035-diff-quiet.sh
+index cdb9202..33d8980 100755
+--- a/t/t4035-diff-quiet.sh
++++ b/t/t4035-diff-quiet.sh
+@@ -10,7 +10,22 @@ test_expect_success 'setup' '
+ 	git commit -m first &&
+ 	echo 2 >b &&
+ 	git add . &&
+-	git commit -a -m second
++	git commit -a -m second &&
++	mkdir -p test-outside/repo && (
++		cd test-outside/repo &&
++		git init &&
++		echo "1 1" > a &&
++		git add . &&
++		git commit -m 1
++	) &&
++	mkdir -p test-outside/no-repo && (
++		cd test-outside/no-repo &&
++		echo "1 1" >a &&
++		echo "1 1" >matching-file &&
++		echo "1 1 " >trailing-space &&
++		echo "1   1" >extra-space &&
++		echo "2" >never-match
++	)
+ '
+ 
+ test_expect_success 'git diff-tree HEAD^ HEAD' '
+@@ -77,4 +92,66 @@ test_expect_success 'git diff-index --cached HEAD' '
+ 	}
+ '
+ 
++test_expect_success 'git diff, one file outside repo' '
++	(
++		GIT_CEILING_DIRECTORIES="$TRASH_DIRECTORY/test-outside" &&
++		export GIT_CEILING_DIRECTORIES &&
++		cd test-outside/repo &&
++		test_expect_code 0 git diff --quiet a "$TRASH_DIRECTORY/test-outside/no-repo/matching-file" &&
++		test_expect_code 1 git diff --quiet a "$TRASH_DIRECTORY/test-outside/no-repo/extra-space"
++	)
++'
++
++test_expect_success 'git diff, both files outside repo' '
++	(
++		GIT_CEILING_DIRECTORIES="$TRASH_DIRECTORY/test-outside" &&
++		export GIT_CEILING_DIRECTORIES &&
++		cd test-outside/no-repo &&
++		test_expect_code 0 git diff --quiet a matching-file &&
++		test_expect_code 1 git diff --quiet a extra-space
++	)
++'
++
++test_expect_success 'git diff --ignore-space-at-eol, one file outside repo' '
++	(
++		GIT_CEILING_DIRECTORIES="$TRASH_DIRECTORY/test-outside" &&
++		export GIT_CEILING_DIRECTORIES &&
++		cd test-outside/repo &&
++		test_expect_code 0 git diff --quiet --ignore-space-at-eol a "$TRASH_DIRECTORY/test-outside/no-repo/trailing-space" &&
++		test_expect_code 1 git diff --quiet --ignore-space-at-eol a "$TRASH_DIRECTORY/test-outside/no-repo/extra-space"
++	)
++'
++
++test_expect_success 'git diff --ignore-space-at-eol, both files outside repo' '
++	(
++		GIT_CEILING_DIRECTORIES="$TRASH_DIRECTORY/test-outside" &&
++		export GIT_CEILING_DIRECTORIES &&
++		cd test-outside/no-repo &&
++		test_expect_code 0 git diff --quiet --ignore-space-at-eol a trailing-space &&
++		test_expect_code 1 git diff --quiet --ignore-space-at-eol a extra-space
++	)
++'
++
++test_expect_success 'git diff --ignore-all-space, one file outside repo' '
++	(
++		GIT_CEILING_DIRECTORIES="$TRASH_DIRECTORY/test-outside" &&
++		export GIT_CEILING_DIRECTORIES &&
++		cd test-outside/repo &&
++		test_expect_code 0 git diff --quiet --ignore-all-space a "$TRASH_DIRECTORY/test-outside/no-repo/trailing-space" &&
++		test_expect_code 0 git diff --quiet --ignore-all-space a "$TRASH_DIRECTORY/test-outside/no-repo/extra-space" &&
++		test_expect_code 1 git diff --quiet --ignore-all-space a "$TRASH_DIRECTORY/test-outside/no-repo/never-match"
++	)
++'
++
++test_expect_success 'git diff --ignore-all-space, both files outside repo' '
++	(
++		GIT_CEILING_DIRECTORIES="$TRASH_DIRECTORY/test-outside" &&
++		export GIT_CEILING_DIRECTORIES &&
++		cd test-outside/no-repo &&
++		test_expect_code 0 git diff --quiet --ignore-all-space a trailing-space &&
++		test_expect_code 0 git diff --quiet --ignore-all-space a extra-space &&
++		test_expect_code 1 git diff --quiet --ignore-all-space a never-match
++	)
++'
++
+ test_done
+-- 
+1.7.11.rc3.6.g5532165
