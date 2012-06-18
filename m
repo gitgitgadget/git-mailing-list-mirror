@@ -1,189 +1,80 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH 2/2 RFC] verify_filename: ask the caller to chose the kind of diagnosis
-Date: Mon, 18 Jun 2012 08:42:32 +0200
-Message-ID: <vpq62apt92f.fsf@bauges.imag.fr>
-References: <vpq395tvlc0.fsf@bauges.imag.fr>
-	<1339958341-22186-1-git-send-email-Matthieu.Moy@imag.fr>
-	<1339958341-22186-2-git-send-email-Matthieu.Moy@imag.fr>
-	<7vehpd7kot.fsf@alter.siamese.dyndns.org>
+From: Grant Zhao <zhao.grant@gmail.com>
+Subject: unable to index file UsrClass.dat
+Date: Mon, 18 Jun 2012 03:09:08 -0700
+Message-ID: <CACUgyLmvWk0WeMqx-7Qkw0py8=1ND+4pZNJDp5JOYxEcjU-UXQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jun 18 08:42:45 2012
+Content-Type: multipart/mixed; boundary=e89a8f22c4115839c304c2bc5b57
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jun 18 12:09:18 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SgVfh-0004ep-1A
-	for gcvg-git-2@plane.gmane.org; Mon, 18 Jun 2012 08:42:45 +0200
+	id 1SgYtY-0002Ty-UV
+	for gcvg-git-2@plane.gmane.org; Mon, 18 Jun 2012 12:09:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752655Ab2FRGmm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 Jun 2012 02:42:42 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:45248 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753921Ab2FRGml (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Jun 2012 02:42:41 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id q5I6gL3M026520
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Mon, 18 Jun 2012 08:42:21 +0200
-Received: from bauges.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1SgVfV-0005F4-8G; Mon, 18 Jun 2012 08:42:33 +0200
-In-Reply-To: <7vehpd7kot.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Sun, 17 Jun 2012 13:22:26 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.93 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Mon, 18 Jun 2012 08:42:22 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: q5I6gL3M026520
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1340606543.29153@+vrnNjlpDxCNzQ88zGuXPw
+	id S1751207Ab2FRKJL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Jun 2012 06:09:11 -0400
+Received: from mail-lb0-f174.google.com ([209.85.217.174]:35067 "EHLO
+	mail-lb0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754892Ab2FRKJK (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Jun 2012 06:09:10 -0400
+Received: by lbbgm6 with SMTP id gm6so4157208lbb.19
+        for <git@vger.kernel.org>; Mon, 18 Jun 2012 03:09:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=q30UVQ45sKOoNi79Oz7PkkR5anRYOBD/SKOrD7Xjf1A=;
+        b=Hq1BSAE/z3hdc2kyP+xKFrA1tfTi1Gm4nyGvHt+cRA9IQOqefGdGl+IPh06/GExo3g
+         DvLqXNVWkXJljsyfrj8+T38C/ZmrDUt3JeKqJ9dvygVswwSl5dDgttjOmguUhOWpk/GP
+         c9MfVA+FqixbggA06+HZKijR6LweqQ/Fk//0RVln/kkGEIGpwR5vOA7Qn2ZkfLjgyRLS
+         AI6BxyRFhof+Acv8jRwTu1jDOX17H6cGMVuAkUQ5IIMZ7nH0Uwacf/rK7tvUD90DGg7+
+         bVmUxvJTuREoSmXPjXT+LV9HZaciQex92UJgX0XxKx0XQfCNtwhEUNOPCIB2xHRK2ZIz
+         Yeqw==
+Received: by 10.152.147.33 with SMTP id th1mr14185388lab.9.1340014148991; Mon,
+ 18 Jun 2012 03:09:08 -0700 (PDT)
+Received: by 10.112.22.199 with HTTP; Mon, 18 Jun 2012 03:09:08 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200137>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200138>
 
-Junio C Hamano <gitster@pobox.com> writes:
+--e89a8f22c4115839c304c2bc5b57
+Content-Type: text/plain; charset=ISO-8859-1
 
-> Matthieu Moy <Matthieu.Moy@imag.fr> writes:
->
->> +/*
->> + * Verify that "name" is a filename.
->> + * The "diagnose_rev" is used to provide a user-friendly diagnosis. If
->> + * 0, the diagnosis will try to diagnose "name" as an invalid object
->> + * name (e.g. HEAD:foo). If non-zero, the diagnosis will only complain
->> + * about an inexisting file.
->> + */
->> +extern void verify_filename(const char *prefix, const char *name, int diagnose_rev);
->
-> The whole point of verify_filename() is to make sure, because the
-> user did not have disambiguating "--" on the command line, that the
-> first non-rev argument is a path and also it cannot be interpreted
-> as a valid rev.  It somehow feels wrong to make it also responsible,
-> for a possibly misspelled rev.
+I used "git add .",but "fatal: adding files failed".
+because
 
-verify_filename will check the same thing in both cases. If the caller
-looks like
+error: open("Local Settings/Application Data/Microsoft/Windows/UsrClass.dat"): P
+ermission denied
 
-if (name is not a valid object name) {
-        verify_filename(name);
-}
+I cannot open the file "UsrClass.dat",I use Windows XP Profesional
+Sp3, please tell me why!
 
-then it should ask for a detailed diagnosis. If the caller knows that an
-object name would not be accepted anyway, it should not.
+thank you!
 
-> The caller can mistakenly throw 0 or 1 at random but the _only_ right
-> value for this parameter is to set it to true only for the first
-> non-rev, no?
+Grant
 
-In general, this is the case, but that's a consequence of "an object
-name would not be accepted anyway". I don't think there is any such call
-in Git's code source right now, but we could imagine a caller trying to
-verify that something is actually a file, and "verify_filename" would be
-a correct way to do it, provided you pass diagnose_rev == 0.
+--e89a8f22c4115839c304c2bc5b57
+Content-Type: text/plain; charset=US-ASCII; name="AddingFilesFailed20120618-2.txt"
+Content-Disposition: attachment; filename="AddingFilesFailed20120618-2.txt"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: file0
 
->> --- a/builtin/grep.c
->> +++ b/builtin/grep.c
->> @@ -927,8 +927,11 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
->>  	/* The rest are paths */
->>  	if (!seen_dashdash) {
->>  		int j;
->> -		for (j = i; j < argc; j++)
->> -			verify_filename(prefix, argv[j]);
->> +		if (i < argc) {
->> +			verify_filename(prefix, argv[i], 1);
->> +			for (j = i + 1; j < argc; j++)
->> +				verify_filename(prefix, argv[j], 0);
->> +		}
->
-> This is exactly
->
-> 	verify_filename(prefix, argv[j], j == first_non_rev)
-
-I buy that.
-
->> diff --git a/builtin/reset.c b/builtin/reset.c
->> index 8c2c1d5..4cc34c9 100644
->> --- a/builtin/reset.c
->> +++ b/builtin/reset.c
->> @@ -285,7 +285,7 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
->>  			rev = argv[i++];
->>  		} else {
->>  			/* Otherwise we treat this as a filename */
->> -			verify_filename(prefix, argv[i]);
->> +			verify_filename(prefix, argv[i], 1);
->
-> This is also checking the first non-rev, too.  We just saw
-> "florbl^{triee}" in "git reset florbl^{triee} hello.c" is not a
-> valid rev.  If "florbl^{triee}" is indeed a file, we shouldn't
-> complain and die with "This may be a misspelled rev", but take it as
-> a path.
-
-Yes, and this is what we are doing already. This verify_filename is only
-called for the first argument. We have exactly the right pattern here:
-
-		/*
-		 * Otherwise, argv[i] could be either <rev> or <paths> and
-		 * has to be unambiguous.
-		 */
-		else if (!get_sha1(argv[i], sha1)) {
-			verify_non_filename(prefix, argv[i]);
-		} else {
-			/* Otherwise we treat this as a filename */
-			verify_filename(prefix, argv[i], 1);
-		}
-
-Clearly, if "argv[i]" is a filename, it's OK and we take it as it is,
-but if it is not, then the failure is due to both "verify_filename" and
-"git_sha1" failures, and we should take that into account in the
-diagnosis. To me, the fact that this is called for the first non-rev
-argument is a detail, the real reason to pass 1 here is that we wouldn't
-have called verify_filename if it was a revision.
-
->> @@ -81,13 +83,13 @@ static void NORETURN die_verify_filename(const char *prefix, const char *arg)
->>   * it to be preceded by the "--" marker (or we want the user to
->>   * use a format like "./-filename")
->>   */
->> -void verify_filename(const char *prefix, const char *arg)
->> +void verify_filename(const char *prefix, const char *arg, int diagnose_rev)
->>  {
->>  	if (*arg == '-')
->>  		die("bad flag '%s' used after filename", arg);
->>  	if (check_filename(prefix, arg))
->>  		return;
->> -	die_verify_filename(prefix, arg);
->> +	die_verify_filename(prefix, arg, diagnose_rev);
->
-> And this implements the "if it is path, don't complain, but
-> otherwise diagnose misspelled rev if the caller asked us to".
->
-> I think the patch is not wrong per-se, but diagnose_rev is probably
-> misnamed.  It tells the callee what to do, but gives little hint to
-> the caller when to set it.  s/diagnose_rev/first_non_rev/ or
-> something might make it easier to understand for future callers.
-
-I considered "could_have_been_a_rev" or
-"would_have_been_ok_if_it_was_a_rev" ;-).
-
-I think it would be better to document that as a comment, like this in
-cache.h:
-
-   * In most cases, the caller will want diagnose_rev == 1 when
-   * verifying the first non_rev argument, and diagnose_rev == 0 for the
-   * next ones (because we already saw a filename, there's not ambiguity
-   * anymore).
-   */
-  extern void verify_filename(const char *prefix, const char *name, int diagnose_rev);
-  
-but keep a param name that is more general.
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+V2VsY29tZSB0byBtc3lzR2l0DQoNCg0KUnVuICdnaXQgaGVscCBnaXQnIHRvIGRpc3BsYXkgdGhl
+IGhlbHAgaW5kZXguDQpSdW4gJ2dpdCBoZWxwIDxjb21tYW5kPicgdG8gZGlzcGxheSBoZWxwIGZv
+ciBzcGVjaWZpYyBjb21tYW5kcy4NClJ1biAnL3NoYXJlL21zeXNHaXQvYWRkLXNob3J0Y3V0LnRj
+bCcgdG8gYWRkIGEgc2hvcnRjdXQgdG8gbXN5c0dpdC4NCg0KQWRtaW5pc3RyYXRvckBUSVRJQU4x
+MjUwODM5MSB+L0RvY3VtZW50cyBhbmQgU2V0dGluZ3MvTW9uaWNhIChtYXN0ZXIpDQokIGdpdCBp
+bml0DQpSZWluaXRpYWxpemVkIGV4aXN0aW5nIEdpdCByZXBvc2l0b3J5IGluIEM6L0RvY3VtZW50
+cyBhbmQgU2V0dGluZ3MvTW9uaWNhLy5naXQvDQoNCkFkbWluaXN0cmF0b3JAVElUSUFOMTI1MDgz
+OTEgfi9Eb2N1bWVudHMgYW5kIFNldHRpbmdzL01vbmljYSAobWFzdGVyKQ0KJCBnaXQgYWRkIC4N
+CmVycm9yOiBvcGVuKCJMb2NhbCBTZXR0aW5ncy9BcHBsaWNhdGlvbiBEYXRhL01pY3Jvc29mdC9X
+aW5kb3dzL1VzckNsYXNzLmRhdCIpOiBQDQplcm1pc3Npb24gZGVuaWVkDQplcnJvcjogdW5hYmxl
+IHRvIGluZGV4IGZpbGUgTG9jYWwgU2V0dGluZ3MvQXBwbGljYXRpb24gRGF0YS9NaWNyb3NvZnQv
+V2luZG93cy9Vcw0KckNsYXNzLmRhdA0KZmF0YWw6IGFkZGluZyBmaWxlcyBmYWlsZWQNCg0KQWRt
+aW5pc3RyYXRvckBUSVRJQU4xMjUwODM5MSB+L0RvY3VtZW50cyBhbmQgU2V0dGluZ3MvTW9uaWNh
+IChtYXN0ZXIpDQok
+--e89a8f22c4115839c304c2bc5b57--
