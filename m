@@ -1,155 +1,92 @@
-From: Arnaud Lacombe <lacombar@gmail.com>
-Subject: Re: [PATCH] Try harder to find a remote when on a detached HEAD or
- non-tracking branch.
-Date: Mon, 18 Jun 2012 13:53:15 -0400
-Message-ID: <CACqU3MXgb1f7MU0m-yCp48UZrnfqBztBToZoibAFraYvT+TpEg@mail.gmail.com>
-References: <1340038866-24552-1-git-send-email-marcnarc@xiplink.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH 1/2] sha1_name: don't trigger detailed diagnosis for file arguments
+Date: Mon, 18 Jun 2012 19:56:56 +0200
+Message-ID: <vpqipeopkpj.fsf@bauges.imag.fr>
+References: <vpq395tvlc0.fsf@bauges.imag.fr>
+	<1339958341-22186-1-git-send-email-Matthieu.Moy@imag.fr>
+	<7vehpc4jpw.fsf@alter.siamese.dyndns.org>
+	<vpqpq8wpled.fsf@bauges.imag.fr>
+	<7v62ao4ihf.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Jens Lehmann <Jens.Lehmann@web.de>
-To: marcnarc@xiplink.com
-X-From: git-owner@vger.kernel.org Mon Jun 18 19:53:23 2012
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jun 18 19:57:09 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Sgg8e-0002pH-Td
-	for gcvg-git-2@plane.gmane.org; Mon, 18 Jun 2012 19:53:21 +0200
+	id 1SggCK-0001zk-Qh
+	for gcvg-git-2@plane.gmane.org; Mon, 18 Jun 2012 19:57:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752499Ab2FRRxR convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 18 Jun 2012 13:53:17 -0400
-Received: from mail-wi0-f172.google.com ([209.85.212.172]:44959 "EHLO
-	mail-wi0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751700Ab2FRRxQ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 18 Jun 2012 13:53:16 -0400
-Received: by wibhj8 with SMTP id hj8so2352727wib.1
-        for <git@vger.kernel.org>; Mon, 18 Jun 2012 10:53:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=CbAG+f8MTuSJYmq56e3Sw8i0ai8mR5lrvVde7eUEFNo=;
-        b=vTAnIiy1AYR9EIkWDsaOMKM/M1RSt2Z1HAqbWGzeF99C3UN1y0ITu6zLSfGJ2ombl4
-         4CiGGQmTwutveyL/EeSwxlbF5zjnJtuxR49jOMS0/03EbnCP9xYPOmOBYyYbOytp8GIx
-         0u8jDFm9XjxMbEF6nPkO9zFpex7lo5sI9d0KKJ1RfsCLgvx5+crK8Ha+Iydqbu13QtWg
-         vz/HSxcqcAJy8bIiT5kWIA4myma6ArmpiDZ6yyZ33Hv3TxbjH87AeMYtqWevFEyL8kUR
-         XahYWHzTe6zjAya33ajvP3krStZDJG4lvTt+QBX1VrFfbC/x+EcPZffF+ORqPfUa5+hL
-         a8QQ==
-Received: by 10.180.79.166 with SMTP id k6mr25927466wix.8.1340041995414; Mon,
- 18 Jun 2012 10:53:15 -0700 (PDT)
-Received: by 10.216.214.101 with HTTP; Mon, 18 Jun 2012 10:53:15 -0700 (PDT)
-In-Reply-To: <1340038866-24552-1-git-send-email-marcnarc@xiplink.com>
+	id S1751816Ab2FRR5E (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Jun 2012 13:57:04 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:36742 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751468Ab2FRR5C (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Jun 2012 13:57:02 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id q5IHugoi030228
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Mon, 18 Jun 2012 19:56:42 +0200
+Received: from bauges.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1SggC9-0003dZ-Fs; Mon, 18 Jun 2012 19:56:57 +0200
+In-Reply-To: <7v62ao4ihf.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Mon, 18 Jun 2012 10:50:36 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.93 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Mon, 18 Jun 2012 19:56:42 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: q5IHugoi030228
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1340647004.64986@dYqGyCJ373Hd5HdPnT5qgA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200152>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200153>
 
-Hi,
+Junio C Hamano <gitster@pobox.com> writes:
 
-On Mon, Jun 18, 2012 at 1:01 PM,  <marcnarc@xiplink.com> wrote:
-> From: Marc Branchaud <marcnarc@xiplink.com>
+> Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
 >
-> get_default_remote() tries to use the checked-out branch's 'remote' c=
-onfig
-> value to figure out the remote's name. =A0This fails if there is no c=
-urrently
-> checked-out branch (i.e. HEAD is detached) or if the checked-out bran=
-ch
-> doesn't track a remote. =A0In these cases and the function would just=
- fall
-> back to "origin".
+>> My version reads as
+>>
+>>   try something;
+>>   if (it failed && I'm only here to report an error)
+>>           report_error();
+>>
+>> which I find easier to understand.
 >
-> Instead, let's use the first remote listed in the configuration, and =
-fall
-> back to "origin" only if we don't find any configured remotes.
->
-> Prior to this change, git would fail to initialize a relative-path
-> submodule if the super-repo was on a detached HEAD and it had no remo=
-te
-> named "origin".
->
-Marc, could you explain the problem you were trying to solve ? You are
-only giving hints about the change made, not the reason behind it.
+> I agree that _this_ part is easy to understand when written that
+> way.  But then shouldn't there be a blanket "The caller is here only
+> to report an error, but all the previous code didn't find any error,
+> so there is something wrong" check much later in the code before it
+> returns a success?  Or am I being too paranoid?
 
-Thanks,
- - Arnaud
+Currently, there's no problem if get_sha1_with_context_1 returns without
+dying, because the caller does:
 
-> Signed-off-by: Marc Branchaud <marcnarc@xiplink.com>
-> ---
->
-> Our build system likes to use detached HEADs, so we got tripped up wh=
-en we
-> started using relative submodule URLs.
->
-> (I'm not sure about the portability of my change, or if I should wrap=
- it
-> to 80 columns...)
->
-> =A0git-parse-remote.sh =A0 =A0 =A0 =A0| =A01 +
-> =A0t/t7400-submodule-basic.sh | 22 ++++++++++++++++++++++
-> =A02 files changed, 23 insertions(+)
->
-> diff --git a/git-parse-remote.sh b/git-parse-remote.sh
-> index 484b2e6..225ad94 100644
-> --- a/git-parse-remote.sh
-> +++ b/git-parse-remote.sh
-> @@ -8,6 +8,7 @@ get_default_remote () {
-> =A0 =A0 =A0 =A0curr_branch=3D$(git symbolic-ref -q HEAD)
-> =A0 =A0 =A0 =A0curr_branch=3D"${curr_branch#refs/heads/}"
-> =A0 =A0 =A0 =A0origin=3D$(git config --get "branch.$curr_branch.remot=
-e")
-> + =A0 =A0 =A0 test -z "$origin" && origin=3D$(git config --list | gre=
-p '^remote\.' | head -1 | awk -F . '{print $2}')
-> =A0 =A0 =A0 =A0echo ${origin:-origin}
-> =A0}
->
-> diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
-> index 81827e6..8f1ff4f 100755
-> --- a/t/t7400-submodule-basic.sh
-> +++ b/t/t7400-submodule-basic.sh
-> @@ -507,6 +507,28 @@ test_expect_success 'relative path works with us=
-er@host:path' '
-> =A0 =A0 =A0 =A0)
-> =A0'
->
-> +test_expect_success 'relative path works on detached HEAD and remote=
- is not named "origin"' '
-> + =A0 =A0 =A0 mkdir detachtest &&
-> + =A0 =A0 =A0 (
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 cd detachtest &&
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 git init &&
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 mkdir sub &&
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 (
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 cd sub &&
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 git init &&
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 test_commit foo
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 ) &&
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 git add sub &&
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 git commit -m "added sub" &&
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 git checkout HEAD@{0} &&
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 git config -f .gitmodules submodule.sub=
-=2Epath sub &&
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 git config -f .gitmodules submodule.sub=
-=2Eurl ../subrepo &&
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 git remote add awkward ssh://awkward/re=
-po &&
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 git submodule init sub &&
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 test "$(git config submodule.sub.url)" =
-=3D ssh://awkward/subrepo
-> + =A0 =A0 =A0 )
-> +'
-> +
-> =A0test_expect_success 'moving the superproject does not break submod=
-ules' '
-> =A0 =A0 =A0 =A0(
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0cd addtest &&
-> --
-> 1.7.11.dirty
->
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at =A0http://vger.kernel.org/majordomo-info.html
+	if (!(arg[0] == ':' && !isalnum(arg[1])))
+		/* try a detailed diagnostic ... */
+		get_sha1_with_mode_1(arg, sha1, &mode, 1, prefix);
+
+	/* ... or fall back the most general message. */
+	die("ambiguous argument '%s': unknown revision or path not in the working tree.\n"
+	    "Use '--' to separate paths from revisions", arg);
+
+If we failed to give a nice diagnosis, we give the generic error
+message.
+
+We could add this check within get_sha1_with_context_1 to simplify the
+task of the caller, but that would require adding it before each
+"return" statement, which I think is overkill.
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
