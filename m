@@ -1,92 +1,112 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH 1/2] sha1_name: don't trigger detailed diagnosis for file arguments
-Date: Mon, 18 Jun 2012 19:56:56 +0200
-Message-ID: <vpqipeopkpj.fsf@bauges.imag.fr>
-References: <vpq395tvlc0.fsf@bauges.imag.fr>
-	<1339958341-22186-1-git-send-email-Matthieu.Moy@imag.fr>
-	<7vehpc4jpw.fsf@alter.siamese.dyndns.org>
-	<vpqpq8wpled.fsf@bauges.imag.fr>
-	<7v62ao4ihf.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] diff: exit(1) if 'diff --quiet <repo file> <external
+ file>' finds changes
+Date: Mon, 18 Jun 2012 11:00:31 -0700
+Message-ID: <7v1ulc4i0w.fsf@alter.siamese.dyndns.org>
+References: <1339781463-13536-1-git-send-email-tim.henigan@gmail.com>
+ <7vzk849zxg.fsf@alter.siamese.dyndns.org>
+ <20120615193724.GB26473@sigill.intra.peff.net>
+ <CAFoueth2Hfcv0p0SZmichi_6e5--SNkemrSsSivnU73bdFOB4g@mail.gmail.com>
+ <7vipes9w0p.fsf@alter.siamese.dyndns.org>
+ <CAFouetjkSQuY6pyFdiVsM5tUnEiFK6uWTqDO38uhwUjaDVre1w@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jun 18 19:57:09 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Tim Henigan <tim.henigan@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jun 18 20:00:40 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SggCK-0001zk-Qh
-	for gcvg-git-2@plane.gmane.org; Mon, 18 Jun 2012 19:57:09 +0200
+	id 1SggFh-0000Uh-MI
+	for gcvg-git-2@plane.gmane.org; Mon, 18 Jun 2012 20:00:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751816Ab2FRR5E (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 Jun 2012 13:57:04 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:36742 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751468Ab2FRR5C (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Jun 2012 13:57:02 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id q5IHugoi030228
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Mon, 18 Jun 2012 19:56:42 +0200
-Received: from bauges.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1SggC9-0003dZ-Fs; Mon, 18 Jun 2012 19:56:57 +0200
-In-Reply-To: <7v62ao4ihf.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Mon, 18 Jun 2012 10:50:36 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.93 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Mon, 18 Jun 2012 19:56:42 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: q5IHugoi030228
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1340647004.64986@dYqGyCJ373Hd5HdPnT5qgA
+	id S1752633Ab2FRSAe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Jun 2012 14:00:34 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:36407 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752022Ab2FRSAd (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Jun 2012 14:00:33 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E65038DE5;
+	Mon, 18 Jun 2012 14:00:32 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=hvdC9WNU6P53rzbKyJ//c3SYqDE=; b=W5AUNC
+	5pgRLW3lTTq6dxvbgPgRsatVsyHw+ByaIH+1LLcaAv67oCMfqjTBqAQfTUjqgQMO
+	6owQxd1s/Ity0mZQevNGdvgoO3tzFk2WFJ0JORx4gvCzTNa2RCntKZPoZDEGYkPm
+	7zxazrESOMAqO397rcPg8uOhCZR2OYbTyt3cM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=FYXMI8b883Fs3G5b55RryTtCV3R3eKaK
+	AQjvkxtveN3iDNIrF3S8UaOVyK3VWj3Ep41+JU1RZo0E54y0FWB0WWKEEHs904PH
+	HHUFCrQNE/vjmgQhfKb/aIU/Nfh0QuFH4H6bkaSgL5PYhtm8Ul8zjI7Ip0x4mZ9C
+	p9Kg3EOXTs8=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DCD0E8DE4;
+	Mon, 18 Jun 2012 14:00:32 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7161F8DE3; Mon, 18 Jun 2012
+ 14:00:32 -0400 (EDT)
+In-Reply-To: <CAFouetjkSQuY6pyFdiVsM5tUnEiFK6uWTqDO38uhwUjaDVre1w@mail.gmail.com> (Tim
+ Henigan's message of "Mon, 18 Jun 2012 13:51:51 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 7F3902D4-B96F-11E1-9D56-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200153>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200154>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Tim Henigan <tim.henigan@gmail.com> writes:
 
-> Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+> To obtain full coverage, it seems we need to test:
+>     1) git diff --quiet <file in repo> <file outside repo>
+>     2) git diff --quiet <file outside repo> <file outside repo>
 >
->> My version reads as
->>
->>   try something;
->>   if (it failed && I'm only here to report an error)
->>           report_error();
->>
->> which I find easier to understand.
+> for each of the following options:
+>     a) no additional options
+>     b) --ignore-space-at-eol
+>     c) --ignore-all-space
 >
-> I agree that _this_ part is easy to understand when written that
-> way.  But then shouldn't there be a blanket "The caller is here only
-> to report an error, but all the previous code didn't find any error,
-> so there is something wrong" check much later in the code before it
-> returns a success?  Or am I being too paranoid?
+> These seem like the only diff options that should be tested...am I
+> missing anything?
+>
+> Because some of the tests require one directory that is a repo and one
+> directory that is not, it seems best to create a new test file with
+> $TEST_NO_CREATE_REPO set.  Then the setup function can create both the
+> repo and the plain directory.
 
-Currently, there's no problem if get_sha1_with_context_1 returns without
-dying, because the caller does:
+It is probably overkill to add a new test that only to add 3 (the
+"two paths outside repo" among the 6 = 2 * 3 combinations above).
+Inside t4035, you could dig new directory two levels deep, chdir to
+it and set GIT_CEILING_DIRECTORY to its first level and run test,
+no?  Something along these lines (the diff invoked would obviously
+be not between foo and bar)...
 
-	if (!(arg[0] == ':' && !isalnum(arg[1])))
-		/* try a detailed diagnostic ... */
-		get_sha1_with_mode_1(arg, sha1, &mode, 1, prefix);
+ t/t4035-diff-quiet.sh | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-	/* ... or fall back the most general message. */
-	die("ambiguous argument '%s': unknown revision or path not in the working tree.\n"
-	    "Use '--' to separate paths from revisions", arg);
-
-If we failed to give a nice diagnosis, we give the generic error
-message.
-
-We could add this check within get_sha1_with_context_1 to simplify the
-task of the caller, but that would require adding it before each
-"return" statement, which I think is overkill.
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+diff --git a/t/t4035-diff-quiet.sh b/t/t4035-diff-quiet.sh
+index cdb9202..e7065cc 100755
+--- a/t/t4035-diff-quiet.sh
++++ b/t/t4035-diff-quiet.sh
+@@ -77,4 +77,16 @@ test_expect_success 'git diff-index --cached HEAD' '
+ 	}
+ '
+ 
++test_expect_success 'git diff-no-index outside repository' '
++	mkdir -p not/here &&
++	(
++		cd not/here &&
++		GIT_CEILING_DIRECTORIES=$TRASH_DIRECTORY/not &&
++		export GIT_CEILING_DIRECTORIES &&
++		echo foo >foo &&
++		echo bar >bar &&
++		git diff foo bar
++	)
++'
++
+ test_done
