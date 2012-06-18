@@ -1,93 +1,70 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2 v2] verify_filename: ask the caller to chose the kind
- of diagnosis
-Date: Mon, 18 Jun 2012 15:25:04 -0700
-Message-ID: <7vipeo2r7j.fsf@alter.siamese.dyndns.org>
-References: <7vvcio4mbe.fsf@alter.siamese.dyndns.org>
- <1340043501-6170-1-git-send-email-Matthieu.Moy@imag.fr>
- <1340043501-6170-2-git-send-email-Matthieu.Moy@imag.fr>
+From: Phil Hord <phil.hord@gmail.com>
+Subject: Re: MERGE_RR droppings
+Date: Mon, 18 Jun 2012 18:41:05 -0400
+Message-ID: <CABURp0os2no40BW0P-biG_fXyi7MHRcLLYWmCbLTdBv1o1OXcg@mail.gmail.com>
+References: <CABURp0omkVoLrz29GeOjjoZOpN238Rm6Nu5aOKQyVxFVnPihsw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@imag.fr>
-X-From: git-owner@vger.kernel.org Tue Jun 19 00:25:20 2012
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org, davvid@gmail.com
+X-From: git-owner@vger.kernel.org Tue Jun 19 00:41:34 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SgkNp-0007xJ-04
-	for gcvg-git-2@plane.gmane.org; Tue, 19 Jun 2012 00:25:17 +0200
+	id 1SgkdX-00018p-9h
+	for gcvg-git-2@plane.gmane.org; Tue, 19 Jun 2012 00:41:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752779Ab2FRWZK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 Jun 2012 18:25:10 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:34474 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751348Ab2FRWZJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Jun 2012 18:25:09 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E44A69D3B;
-	Mon, 18 Jun 2012 18:25:08 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=WDE6HICV6dsGUtecmAkGrrLvPGM=; b=Fc2An5
-	wJ/u1q3wrZJQCsnvhB3jCyVxNHzc/4jYTWjBFogKY9JdkVT6d2ltn3DH5LgNMXOw
-	k+WySnRpBkBlokW9VOauPSfX0exTInJuFAr8rGd1JreWRzXpGUZ29ZZ8efqCURIK
-	1bBnDQWKIqE12m769dZd+77LebVGRy/5MJw1k=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=EBcmx/YcJh3OvHMEeZhXbHGoUGePtse6
-	zcRMW2glPorceo427cDi8sQLHgVWIQovDXvF5Ju1e8sJS0KPVOz8wEon+LVUweBi
-	zE6id/8ZVuBp33u0UH6JeE3UnD6kvBkROpInLZMk+WC4JxzueaXK2PjpT/zFwG95
-	jVgJDU3kMlg=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D25219D3A;
-	Mon, 18 Jun 2012 18:25:07 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 56F989D36; Mon, 18 Jun 2012
- 18:25:06 -0400 (EDT)
-In-Reply-To: <1340043501-6170-2-git-send-email-Matthieu.Moy@imag.fr>
- (Matthieu Moy's message of "Mon, 18 Jun 2012 20:18:21 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 74CC4A8E-B994-11E1-9861-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753952Ab2FRWl1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Jun 2012 18:41:27 -0400
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:41125 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753094Ab2FRWl0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Jun 2012 18:41:26 -0400
+Received: by yenl2 with SMTP id l2so3734190yen.19
+        for <git@vger.kernel.org>; Mon, 18 Jun 2012 15:41:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :content-type;
+        bh=e+aeM0JonqfFt3IFxCrdFZw/J1srRZiwY2OSiuI04nc=;
+        b=YL6P81y6wH2iUcyPZQi/GoeIrQG5ZrUDJM7LvL25x864pK6/kV7ExrNwytWe3Ab1/4
+         LbF6qA6OfQCoE3GZ55gV7eWLk0hi+uvu3naFmtDnWNCP2PBrsh2VAojCnwxI/5s2R5Tq
+         a8NlwfsPLV04Xc8LjVRydAel/PIc/DhEb6/s4oKJqs7ITJN8A1lbmWtXwuQZG6AeNbmd
+         7n3rucqRZhy8oKs/ISRqXJWJy/XV26cQjlerZSfAq0v3svOU1fAqjTnxAI6GwOfwXwdF
+         fHfT5JkJlzzQdU0Ys+et5dvjggwj0Qx6U8hsQZLygn/aUcOhMZq5SjH4rshsxEqYObl9
+         DvFg==
+Received: by 10.236.75.40 with SMTP id y28mr20158506yhd.65.1340059285674; Mon,
+ 18 Jun 2012 15:41:25 -0700 (PDT)
+Received: by 10.146.150.18 with HTTP; Mon, 18 Jun 2012 15:41:05 -0700 (PDT)
+In-Reply-To: <CABURp0omkVoLrz29GeOjjoZOpN238Rm6Nu5aOKQyVxFVnPihsw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200177>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200178>
 
-Matthieu Moy <Matthieu.Moy@imag.fr> writes:
+git mergetool decides to use rerere-remaining based on the existence
+of the .git/MERGE_RR file:
 
-> verify_filename can be called in two different contexts. Either we just
-> tried to interpret a string as an object name, and it fails, so we try
-> looking for a working tree file as a fallback, or we _know_ that we are
-> looking for a filename, and shouldn't even try interpreting the string as
-> an object name.
->
-> For example, with this change, we get:
->
->   $ git log COPYING HEAD:inexistant
->   fatal: HEAD:inexistant: no such path in the working tree.
->   Use '-- <path>...' to specify paths that do not exist locally.
->   $ git log HEAD:inexistant
->   fatal: Path 'inexistant' does not exist in 'HEAD'
->
-> Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
-> ---
+    if test -e "$GIT_DIR/MERGE_RR"
+    then
+        files=$(git rerere remaining)
+    else
+        files=$(git ls-files -u | sed -e 's/^[^ ]*      //' | sort -u)
+    fi
 
-Thanks; both patches look sensible (modulo minor nits below).
+But when I disabled rerere, I still had MERGE_RR files left over in my
+.git directory.   This causes git-mergetool to do the wrong thing.
 
-Will queue with a local fix-up.
+I do not know if the correct fix for this is to check rerere.enabled instead.
 
-> @@ -80,14 +86,28 @@ static void NORETURN die_verify_filename(const char *prefix, const char *arg)
->   * as true, because even if such a filename were to exist, we want
->   * it to be preceded by the "--" marker (or we want the user to
->   * use a format like "./-filename")
-> + *
-> + * The "diagnose_misspelt_rev" is used to provide a user-friendly
-> + * diagnosis. If 0, the diagnosis will try to diagnose "name" as an
-> + * invalid object name (e.g. HEAD:foo). If non-zero, the diagnosis
-> + * will only complain about an inexisting file.
+Is MERGE_RR leaking somewhere it should have been cleaned up?  I often
+see leftover MERGE_RR files even though I am certain the project is
+not in the middle of a merge.
 
-I have a feeling that "if 0/if non-zero" above are backwards.
+Is this a bad semaphore to check?  I do not see it being used this way
+anywhere else.
+
+
+Phil
