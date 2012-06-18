@@ -1,94 +1,137 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] symbolic-ref: check format of given reference
-Date: Mon, 18 Jun 2012 10:10:14 -0700
-Message-ID: <7vipeo4kcp.fsf@alter.siamese.dyndns.org>
-References: <4FDE3D7D.4090502@elegosoft.com>
- <7vaa017j51.fsf@alter.siamese.dyndns.org> <4FDF18E5.7020908@elegosoft.com>
- <7vr4tc4lsc.fsf@alter.siamese.dyndns.org>
+Subject: Re: [PATCH 1/2] sha1_name: don't trigger detailed diagnosis for file
+ arguments
+Date: Mon, 18 Jun 2012 10:23:55 -0700
+Message-ID: <7vehpc4jpw.fsf@alter.siamese.dyndns.org>
+References: <vpq395tvlc0.fsf@bauges.imag.fr>
+ <1339958341-22186-1-git-send-email-Matthieu.Moy@imag.fr>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git <git@vger.kernel.org>, Michael Haggerty <mhagger@alum.mit.edu>
-To: Michael Schubert <mschub@elegosoft.com>
-X-From: git-owner@vger.kernel.org Mon Jun 18 19:10:25 2012
+Cc: git@vger.kernel.org
+To: Matthieu Moy <Matthieu.Moy@imag.fr>
+X-From: git-owner@vger.kernel.org Mon Jun 18 19:24:19 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SgfT5-0000tk-Ub
-	for gcvg-git-2@plane.gmane.org; Mon, 18 Jun 2012 19:10:24 +0200
+	id 1SgfgV-0002MX-R8
+	for gcvg-git-2@plane.gmane.org; Mon, 18 Jun 2012 19:24:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752143Ab2FRRKS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 Jun 2012 13:10:18 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:46558 "EHLO
+	id S1752829Ab2FRRYB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Jun 2012 13:24:01 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:52289 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750871Ab2FRRKR (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Jun 2012 13:10:17 -0400
+	id S1752780Ab2FRRX6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Jun 2012 13:23:58 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 638867EEB;
-	Mon, 18 Jun 2012 13:10:16 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B84318283;
+	Mon, 18 Jun 2012 13:23:57 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=vqjfjTn2ctL9uVM3qeT026e3QBA=; b=sCjKAG
-	OKqys8hSCgEkT5njeNUTF603X8VEsChzuaae64OkU5ixe4SXEYi2nQj6z8Y2nNT2
-	x8C89Z0j3r1/WVNon8ApJPF6tCJzGkUtCr6YYnqZAK4Io1oFjkJQLbf21IOF6gn6
-	qNGrWMLpWYmXb4vMmw5abUIcY1zlUBvjb62Ps=
+	:content-type; s=sasl; bh=C0SKqt+4esk/bc1XrEZk9mCvKic=; b=ZrEc9k
+	Wv/RYwW02wCKHRHntSswwuFI3suFR/25MOkQO3IZVHbPxl6XM/HOnX+fgDi+Nhbz
+	1584glUzvAnbLhLZye0j1o+QfZNfm4jnogsQPoZ8HoGp/W12a6nDp9j0WiMekyb2
+	MTDbk+EMJD26S1hEzJQNSiEcDVF30Qcz3Scec=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=TGjOOAhcqTtREnmFE/kE9PqOBEU++t5n
-	nGGmiVV/cVT7F5qem52cLIUwa9YNCLZUUJ2ZNTpychGtAX2yQBehDzfTMMm9IhYo
-	F9nXE7bM1twTXhc9c8iUQvOHIs6vrpHlJlNFszzA7R+v4arNLHmk4Y/RWoc9ocMk
-	9EjTQZ0ouMY=
+	:content-type; q=dns; s=sasl; b=LigQaIGvzBxT3BCRFZHqEOQaep/40bTK
+	8ksIosrvtrR1AfX+JC4J0QaHkeic3r8sQYXficZeFghdH3i8ntwyvwigVNJOQD4l
+	Jvk3p0k0aZkyDyb5KZ9L4vWPSPdJN+sHi6dnsTVRutXAx44oWFpih26RI3Ylp8VH
+	6zBKd2qjy3g=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5B14E7EEA;
-	Mon, 18 Jun 2012 13:10:16 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AFF838282;
+	Mon, 18 Jun 2012 13:23:57 -0400 (EDT)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E4C277EE9; Mon, 18 Jun 2012
- 13:10:15 -0400 (EDT)
-In-Reply-To: <7vr4tc4lsc.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Mon, 18 Jun 2012 09:39:15 -0700")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2DF818281; Mon, 18 Jun 2012
+ 13:23:57 -0400 (EDT)
+In-Reply-To: <1339958341-22186-1-git-send-email-Matthieu.Moy@imag.fr>
+ (Matthieu Moy's message of "Sun, 17 Jun 2012 20:39:00 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 793B8E9E-B968-11E1-918A-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 62BC00AC-B96A-11E1-B1CB-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200146>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200147>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Matthieu Moy <Matthieu.Moy@imag.fr> writes:
 
-> From: Michael Schubert <mschub@elegosoft.com>
-> Date: Sun, 17 Jun 2012 22:26:37 +0200
-> Subject: [PATCH] symbolic-ref: check format of given reference
+> diagnose_invalid_sha1_path is normally meant to be called to diagnose
+> <treeish>:<pathname> when <pathname> does not exist in <treeish>.
+> However, the current code may call it if <treeish>:<pathname> is invalid
+> (which triggers another call with only_to_die == 1), but for another
+> reason. This happens when calling e.g.
 >
-> Currently, it's possible to update HEAD with a nonsense reference since
-> no strict validation is performed. Example:
+>   git log existing-file HEAD:existing-file
 >
-> 	$ git symbolic-ref HEAD 'refs/heads/master
->     >
->     >
->     > '
+> (because existing-file is a file and not a revision, the next arguments
+> are assumed to be files too), leading to incorrect message like
+> "existing-file does not exist in HEAD".
+>
+> Check that the search for <pathname> in <treeish> fails before triggering
+> the diagnosis.
+>
+> Bug report and code fix by: Junio C Hamano <gitster@pobox.com>
+> Test by: Matthieu Moy <Matthieu.Moy@imag.fr>
+>
+> Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+> ---
+>
+> This patch is very simple and should be rather uncontroversial.
 
-It would be nice to add a new test or two to t1401.  1401.3 was
-already trying to catch a malformed reference with this test:
+I am not so sure about that.  The "only-to-die" caller is not even
+expecting that the call to this codepath would successfully return.
 
-	test_must_fail git symbolic-ref HEAD foo
+Or at least, it shouldn't.
 
-and it did trigger thanks to the prefixcmp(argv[1], "refs/") test we
-already have.  Probably something like
+So it might not be a bad idea to actually catch this as a
+programming error and do
 
-	git symbolic-ref HEAD "refs/heads/.foo"
-	git symbolic-ref HEAD "refs/heads/-foo"
+	if (only_to_die) {
+        	if (!ret)
+                	die("BUG");
+		diagnose_invalid_sha1_path(...);
+	}
 
-would be a good start.
+instead, especially since we will have a more fundamental fix with
+your 2/2 patch as a longer-term fix.
 
-To make the latter _correctly_ work requires a bit of work, though.
-We should make sure all the check_refname_format() callers pass the
-full path to a ref, get rid of ALLOW_ONELEVEL, and redo commits like
-6348624 (disallow branch names that start with a hyphen, 2010-09-14)
-and 4f0accd (tag: disallow '-' as tag name, 2011-05-10).
-
-For that matter, shouldn't symbolic-ref be forbidden to point
-outside refs/heads/, not just restricted in refs/ like the current
-code does?
+>  sha1_name.c                    |  2 +-
+>  t/t1506-rev-parse-diagnosis.sh | 11 +++++++++++
+>  2 files changed, 12 insertions(+), 1 deletion(-)
+>
+> diff --git a/sha1_name.c b/sha1_name.c
+> index c633113..5d81ea0 100644
+> --- a/sha1_name.c
+> +++ b/sha1_name.c
+> @@ -1127,7 +1127,7 @@ int get_sha1_with_context_1(const char *name, unsigned char *sha1,
+>  			if (new_filename)
+>  				filename = new_filename;
+>  			ret = get_tree_entry(tree_sha1, filename, sha1, &oc->mode);
+> -			if (only_to_die) {
+> +			if (ret && only_to_die) {
+>  				diagnose_invalid_sha1_path(prefix, filename,
+>  							   tree_sha1, object_name);
+>  				free(object_name);
+> diff --git a/t/t1506-rev-parse-diagnosis.sh b/t/t1506-rev-parse-diagnosis.sh
+> index 0843a1c..4a39ac5 100755
+> --- a/t/t1506-rev-parse-diagnosis.sh
+> +++ b/t/t1506-rev-parse-diagnosis.sh
+> @@ -171,4 +171,15 @@ test_expect_success 'relative path when startup_info is NULL' '
+>  	grep "BUG: startup_info struct is not initialized." error
+>  '
+>  
+> +test_expect_success '<commit>:file correctly diagnosed after a pathname' '
+> +	test_must_fail git rev-parse file.txt HEAD:file.txt 1>actual 2>error &&
+> +	test_i18ngrep ! "exists on disk" error &&
+> +	test_i18ngrep "unknown revision or path not in the working tree" error &&
+> +	cat >expect <<EOF &&
+> +file.txt
+> +HEAD:file.txt
+> +EOF
+> +	test_cmp expect actual
+> +'
+> +
+>  test_done
