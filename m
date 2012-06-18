@@ -1,90 +1,74 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH 1/2] sha1_name: don't trigger detailed diagnosis for file arguments
-Date: Mon, 18 Jun 2012 19:42:02 +0200
-Message-ID: <vpqpq8wpled.fsf@bauges.imag.fr>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/2] sha1_name: don't trigger detailed diagnosis for file
+ arguments
+Date: Mon, 18 Jun 2012 10:50:36 -0700
+Message-ID: <7v62ao4ihf.fsf@alter.siamese.dyndns.org>
 References: <vpq395tvlc0.fsf@bauges.imag.fr>
-	<1339958341-22186-1-git-send-email-Matthieu.Moy@imag.fr>
-	<7vehpc4jpw.fsf@alter.siamese.dyndns.org>
+ <1339958341-22186-1-git-send-email-Matthieu.Moy@imag.fr>
+ <7vehpc4jpw.fsf@alter.siamese.dyndns.org> <vpqpq8wpled.fsf@bauges.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jun 18 19:42:28 2012
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Mon Jun 18 19:50:50 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Sgfy7-0005j6-6p
-	for gcvg-git-2@plane.gmane.org; Mon, 18 Jun 2012 19:42:27 +0200
+	id 1Sgg67-000672-Eh
+	for gcvg-git-2@plane.gmane.org; Mon, 18 Jun 2012 19:50:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752659Ab2FRRmL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 Jun 2012 13:42:11 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:37712 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751877Ab2FRRmK (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Jun 2012 13:42:10 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id q5IHfmeW028350
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Mon, 18 Jun 2012 19:41:48 +0200
-Received: from bauges.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1Sgfxj-0003PC-6q; Mon, 18 Jun 2012 19:42:03 +0200
-In-Reply-To: <7vehpc4jpw.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Mon, 18 Jun 2012 10:23:55 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.93 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Mon, 18 Jun 2012 19:41:49 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: q5IHfmeW028350
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1340646110.84875@DE8qOnC9BHAX4Y0wJ87kDg
+	id S1752155Ab2FRRuj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Jun 2012 13:50:39 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64555 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751629Ab2FRRui (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Jun 2012 13:50:38 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 314E58A8F;
+	Mon, 18 Jun 2012 13:50:38 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=DC/2vqi9XyqBITaEOFuvnhVXWM8=; b=sFIV49
+	4IhPZELAFdsHzb7CBghZtg23B+idSJk0MiCT/DT6kiLuBTc/RB1qSGOEZlmBXgz6
+	NaMcIrEBmr31o9RMweZJ10nn00Y7Da6Y/P7BbiG1CswMKJ1xBTjsNnk5ncWVn2cS
+	DQ3sCOj29TG6w8HuaATqaXxkuYV71GsCNuTG0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=pMSA44hNMhPQXaBicdmfKaOYU8rhIJyN
+	XHfid6PirKM51foEdpZ20qSqpF/oSwRd3oZYAeInPuTtjp36HDRkAPGmtkOHtaX5
+	7SOi4ZJAZLvJ5yTrlbfslIwB7WC3uexukJb3aaHXGTrcNZwnO6JPYwc0F0Yuc9b0
+	p7EbuEwjMQw=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 28A738A8E;
+	Mon, 18 Jun 2012 13:50:38 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 95DFD8A8C; Mon, 18 Jun 2012
+ 13:50:37 -0400 (EDT)
+In-Reply-To: <vpqpq8wpled.fsf@bauges.imag.fr> (Matthieu Moy's message of
+ "Mon, 18 Jun 2012 19:42:02 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 1CA98E28-B96E-11E1-B6AC-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200149>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200150>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
 
-> I am not so sure about that.  The "only-to-die" caller is not even
-> expecting that the call to this codepath would successfully return.
+> My version reads as
 >
-> Or at least, it shouldn't.
+>   try something;
+>   if (it failed && I'm only here to report an error)
+>           report_error();
 >
-> So it might not be a bad idea to actually catch this as a
-> programming error and do
->
-> 	if (only_to_die) {
->         	if (!ret)
->                 	die("BUG");
-> 		diagnose_invalid_sha1_path(...);
-> 	}
+> which I find easier to understand.
 
-I disagree.
-
-The only-to-die caller can expect that get_sha1_with_context_1 never
-returns when called with only-to-die, but it's a stronger assumption to
-expect that this particular place will trigger the failure.
-
-In this case, the assumption is correct because there's a "return ret;"
-a bit later in the code, but I don't think we should have to look at
-this to check the correctness of the code (for example, if something
-like "if (ret) try_some_fallback_method();" is later added before
-"return ret;", then the assumption would become false).
-
-My version reads as
-
-  try something;
-  if (it failed && I'm only here to report an error)
-          report_error();
-
-which I find easier to understand.
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+I agree that _this_ part is easy to understand when written that
+way.  But then shouldn't there be a blanket "The caller is here only
+to report an error, but all the previous code didn't find any error,
+so there is something wrong" check much later in the code before it
+returns a success?  Or am I being too paranoid?
