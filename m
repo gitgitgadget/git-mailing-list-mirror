@@ -1,115 +1,93 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: [PATCH 2/2] Fix ranges with git-show
-Date: Tue, 19 Jun 2012 22:04:58 +0200
-Message-ID: <a598bb8c20221679e295caa743197c86219eda68.1340136145.git.trast@student.ethz.ch>
-References: <d3e839101b031a7208e74a0b6e22d343d5a093e9.1340136145.git.trast@student.ethz.ch>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] Try harder to find a remote when on a detached HEAD or
+ non-tracking branch.
+Date: Tue, 19 Jun 2012 16:12:59 -0400
+Message-ID: <20120619201259.GB14692@sigill.intra.peff.net>
+References: <1340038866-24552-1-git-send-email-marcnarc@xiplink.com>
+ <7vaa004j9f.fsf@alter.siamese.dyndns.org>
+ <4FDFA030.7080408@xiplink.com>
+ <7vmx402rru.fsf@alter.siamese.dyndns.org>
+ <4FE08797.50509@xiplink.com>
+ <7vipen191a.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Jun 19 22:05:19 2012
+Content-Type: text/plain; charset=utf-8
+Cc: Marc Branchaud <marcnarc@xiplink.com>, git@vger.kernel.org,
+	Jens Lehmann <Jens.Lehmann@web.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jun 19 22:13:11 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Sh4ft-0005pv-RG
-	for gcvg-git-2@plane.gmane.org; Tue, 19 Jun 2012 22:05:18 +0200
+	id 1Sh4nV-00053O-Ph
+	for gcvg-git-2@plane.gmane.org; Tue, 19 Jun 2012 22:13:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754867Ab2FSUFF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Jun 2012 16:05:05 -0400
-Received: from edge20.ethz.ch ([82.130.99.26]:2643 "EHLO edge20.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753902Ab2FSUFE (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Jun 2012 16:05:04 -0400
-Received: from CAS20.d.ethz.ch (172.31.51.110) by edge20.ethz.ch
- (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.2.298.4; Tue, 19 Jun
- 2012 22:05:00 +0200
-Received: from thomas.inf.ethz.ch (129.132.211.105) by CAS20.d.ethz.ch
- (172.31.51.110) with Microsoft SMTP Server (TLS) id 14.2.298.4; Tue, 19 Jun
- 2012 22:05:00 +0200
-X-Mailer: git-send-email 1.7.11.266.g2b10bc0
-In-Reply-To: <d3e839101b031a7208e74a0b6e22d343d5a093e9.1340136145.git.trast@student.ethz.ch>
-X-Originating-IP: [129.132.211.105]
+	id S1754892Ab2FSUND (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Jun 2012 16:13:03 -0400
+Received: from 99-108-225-23.lightspeed.iplsin.sbcglobal.net ([99.108.225.23]:32974
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753762Ab2FSUNC (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Jun 2012 16:13:02 -0400
+Received: (qmail 12928 invoked by uid 107); 19 Jun 2012 20:13:01 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 19 Jun 2012 16:13:01 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 19 Jun 2012 16:12:59 -0400
+Content-Disposition: inline
+In-Reply-To: <7vipen191a.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200237>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200238>
 
-As explained in the previous commit, git-show's DWIM walking mode
-fails with ranges where propagating the UNINTERESTING marks is needed
-for correctness.
+On Tue, Jun 19, 2012 at 10:55:13AM -0700, Junio C Hamano wrote:
 
-To fix this issue, use a new strategy for of dealing with commits:
-handle everything else first, then pass all commits to a single
-revision walker "in bulk".  This keeps the UNINTERESTING commits and
-correctly shows all ranges.
+> Marc Branchaud <marcnarc@xiplink.com> writes:
+> 
+> > On 12-06-18 06:12 PM, Junio C Hamano wrote:
+> > ...
+> >> That reliance of "origin" is what made me think that "not guessing
+> >> and blindly assuming" a wrong thing to do.
+> >
+> > I think git can do better than erroring out, though.
+> >
+> >> It is OK that your build usesdetached HEAD, but if that is the case
+> >> shoudln't it be the one deciding which specific remote it wants to
+> >> take the updated sources from, and telling Git to do so?
+> >
+> > Sure, but I feel it did that already when it cloned.  It seems reasonable for
+> > the submodules to default to using the remote specified when the super-repo
+> > was cloned.
+> 
+> I do not have a strong opinion either way, other than that I would
+> prefer predictable behaviour over "works most of the time provided
+> if the user does X, otherwise does this random thing".  And coming
+> from that standpoint, erroring out when there needs a guess involved
+> is certainly more predictable---it is a cop-out option for me in
+> areas of the system I do not have strong preferences.
 
-Sadly we can use this only when actually walking.  In other cases,
-such as 'git show A B', it would seem more important to keep the order
-of the objects shown consistent with the command line.  There are no
-such guarantees when running the walker with several commits (even in
-no-walk mode), so we still feed them one by one.
+One thing that makes me nervous about this patch is that it is not just a
+change to git-submodule, but rather to git-parse-remote.  So it could
+affect other parts of the system, too, where a guess might not be as
+desirable.
 
-Signed-off-by: Thomas Rast <trast@student.ethz.ch>
----
- builtin/log.c   | 16 ++++++++++++----
- t/t7007-show.sh |  2 +-
- 2 files changed, 13 insertions(+), 5 deletions(-)
+The number of affected code paths is fortunately quite small, since this
+is updating the shell library, and most of the remote-handling code is
+written in C these days. But it raises a few questions:
 
-diff --git a/builtin/log.c b/builtin/log.c
-index 4f1b42a..26f6c01 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -444,6 +444,7 @@ static void show_rev_tweak_rev(struct rev_info *rev, struct setup_revision_opt *
- int cmd_show(int argc, const char **argv, const char *prefix)
- {
- 	struct rev_info rev;
-+	struct object_array commits = {0};
- 	struct object_array_entry *objects;
- 	struct setup_revision_opt opt;
- 	struct pathspec match_all;
-@@ -505,15 +506,22 @@ int cmd_show(int argc, const char **argv, const char *prefix)
- 			rev.shown_one = 1;
- 			break;
- 		case OBJ_COMMIT:
--			rev.pending.nr = rev.pending.alloc = 0;
--			rev.pending.objects = NULL;
--			add_object_array(o, name, &rev.pending);
--			ret = cmd_log_walk(&rev);
-+			add_object_array(o, name, &commits);
-+			if (rev.no_walk) {
-+				rev.pending = commits;
-+				ret = cmd_log_walk(&rev);
-+				commits.nr = commits.alloc = 0;
-+				commits.objects = NULL;
-+			}
- 			break;
- 		default:
- 			ret = error(_("Unknown type: %d"), o->type);
- 		}
- 	}
-+	if (!ret && commits.nr) {
-+		rev.pending = commits;
-+		ret = cmd_log_walk(&rev);
-+	}
- 	free(objects);
- 	return ret;
- }
-diff --git a/t/t7007-show.sh b/t/t7007-show.sh
-index 1c43963..3936ff7 100755
---- a/t/t7007-show.sh
-+++ b/t/t7007-show.sh
-@@ -57,7 +57,7 @@ EOF
- 	test_cmp expect actual.filtered
- '
- 
--test_expect_failure 'showing a range walks (Y shape, ^ last)' '
-+test_expect_success 'showing a range walks (Y shape, ^ last)' '
- 	cat >expect <<EOF &&
- commit $(git rev-parse main3)
- commit $(git rev-parse main2)
--- 
-1.7.11.266.g2b10bc0
+  1. git-pull can call into get_default_remote via get_remote_merge_branch.
+     Is it impacted by this change?
+
+  2. We install git-parse-remote as part of the plumbing API. Do we know
+     of any other 3rd-party scripts that use this interface and might be
+     affected?
+
+  3. The C code sets up remote.c:default_remote_name, which defaults to
+     "origin". Should this be consistent with what git-parse-remote
+     does?
+
+Should this be a submodule-only thing?
+
+-Peff
