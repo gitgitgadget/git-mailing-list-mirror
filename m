@@ -1,66 +1,63 @@
-From: Thomas Rast <trast@student.ethz.ch>
+From: Jeff King <peff@peff.net>
 Subject: Re: [PATCH 2/4] version: add git_user_agent function
-Date: Tue, 19 Jun 2012 20:40:04 +0200
-Message-ID: <87pq8vrvqz.fsf@thomas.inf.ethz.ch>
+Date: Tue, 19 Jun 2012 14:59:16 -0400
+Message-ID: <20120619185916.GA16429@sigill.intra.peff.net>
 References: <20120602184948.GA14269@sigill.intra.peff.net>
-	<20120602190112.GB14369@sigill.intra.peff.net>
+ <20120602190112.GB14369@sigill.intra.peff.net>
+ <87pq8vrvqz.fsf@thomas.inf.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Cc: Junio C Hamano <gitster@pobox.com>, <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Jun 19 20:40:27 2012
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Tue Jun 19 20:59:25 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Sh3Ll-0001q5-RY
-	for gcvg-git-2@plane.gmane.org; Tue, 19 Jun 2012 20:40:26 +0200
+	id 1Sh3e7-0006lm-QT
+	for gcvg-git-2@plane.gmane.org; Tue, 19 Jun 2012 20:59:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753734Ab2FSSkK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Jun 2012 14:40:10 -0400
-Received: from edge10.ethz.ch ([82.130.75.186]:58141 "EHLO edge10.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753414Ab2FSSkI (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Jun 2012 14:40:08 -0400
-Received: from CAS22.d.ethz.ch (172.31.51.112) by edge10.ethz.ch
- (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.2.298.4; Tue, 19 Jun
- 2012 20:40:02 +0200
-Received: from thomas.inf.ethz.ch.ethz.ch (129.132.153.233) by CAS22.d.ethz.ch
- (172.31.51.112) with Microsoft SMTP Server (TLS) id 14.2.298.4; Tue, 19 Jun
- 2012 20:40:04 +0200
-In-Reply-To: <20120602190112.GB14369@sigill.intra.peff.net> (Jeff King's
-	message of "Sat, 2 Jun 2012 15:01:12 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Originating-IP: [129.132.153.233]
+	id S1753122Ab2FSS7U (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Jun 2012 14:59:20 -0400
+Received: from 99-108-225-23.lightspeed.iplsin.sbcglobal.net ([99.108.225.23]:32908
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750955Ab2FSS7T (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Jun 2012 14:59:19 -0400
+Received: (qmail 12249 invoked by uid 107); 19 Jun 2012 18:59:18 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 19 Jun 2012 14:59:18 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 19 Jun 2012 14:59:16 -0400
+Content-Disposition: inline
+In-Reply-To: <87pq8vrvqz.fsf@thomas.inf.ethz.ch>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200225>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200226>
 
-I'm terribly late to the party, seeing as this is already in next, but:
+On Tue, Jun 19, 2012 at 08:40:04PM +0200, Thomas Rast wrote:
 
-Jeff King <peff@peff.net> writes:
+> I'm terribly late to the party, seeing as this is already in next, but:
 
-> This is basically a fancy way of saying "git/$GIT_VERSION",
-> except that it is overridable at build-time and through the
-> environment. Which means that people who don't want to
-> advertise their git version (for privacy or security
-> reasons) can tweak it.
-...
-> +GIT_USER_AGENT = git/$(GIT_VERSION)
-...
-> +GIT_USER_AGENT_SQ = $(subst ','\'',$(GIT_USER_AGENT))
-> +GIT_USER_AGENT_CQ = "$(subst ",\",$(subst \,\\,$(GIT_USER_AGENT)))"
-> +GIT_USER_AGENT_CQ_SQ = $(subst ','\'',$(GIT_USER_AGENT_CQ))
-> +BASIC_CFLAGS += -DGIT_USER_AGENT='$(GIT_USER_AGENT_CQ_SQ)'
+It's never too late.
 
-Unless the user manually sets GIT_USER_AGENT, This forces a full rebuild
-due to changed CFLAGS whenever the version changes.  Can you make it so
-that only version.o needs to be rebuilt, as with the normal git version
-string?
+> > +GIT_USER_AGENT = git/$(GIT_VERSION)
+> ...
+> > +GIT_USER_AGENT_SQ = $(subst ','\'',$(GIT_USER_AGENT))
+> > +GIT_USER_AGENT_CQ = "$(subst ",\",$(subst \,\\,$(GIT_USER_AGENT)))"
+> > +GIT_USER_AGENT_CQ_SQ = $(subst ','\'',$(GIT_USER_AGENT_CQ))
+> > +BASIC_CFLAGS += -DGIT_USER_AGENT='$(GIT_USER_AGENT_CQ_SQ)'
+> 
+> Unless the user manually sets GIT_USER_AGENT, This forces a full rebuild
+> due to changed CFLAGS whenever the version changes.  Can you make it so
+> that only version.o needs to be rebuilt, as with the normal git version
+> string?
 
--- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+Ick, yeah. I had though this was already the case, but it turns out that
+it was a peculiarity of my personal config.mak (I set a custom $prefix
+based on the branch, and it has a similar problem). I'll see if I can
+fix both.
+
+-Peff
