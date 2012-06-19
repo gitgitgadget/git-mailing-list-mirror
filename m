@@ -1,87 +1,60 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v7 0/5] git log -L, all new and shiny
-Date: Tue, 19 Jun 2012 03:33:18 -0700
-Message-ID: <7vpq8v1tht.fsf@alter.siamese.dyndns.org>
-References: <cover.1339063659.git.trast@student.ethz.ch>
- <7vlijpchm2.fsf@alter.siamese.dyndns.org> <8762as4sax.fsf@thomas.inf.ethz.ch>
- <7v1ulgd2f5.fsf@alter.siamese.dyndns.org>
- <7v1ulf94nq.fsf@alter.siamese.dyndns.org> <87wr33wqzl.fsf@thomas.inf.ethz.ch>
+From: Erik Faye-Lund <kusmabite@gmail.com>
+Subject: Re: git on 64bit windows - state of the art?
+Date: Tue, 19 Jun 2012 13:02:25 +0200
+Message-ID: <CABPQNSZyaW13pigA8eEnGo-7+-suVfDdvsGLj_04xTgaKfg4eg@mail.gmail.com>
+References: <CAH3AnrrzKycCGprrWxiu5S5fuTHA8-cuNTi14Wz5WdtG+6FNJA@mail.gmail.com>
+ <CAGK7Mr62y4-fTFzuLGmuOd+zLkk+h1Q-rCb30TW3dWd8VLhhAw@mail.gmail.com>
+ <CAH3AnrppdYOC_Z4PWnzNLWXPSSQMBvHd9KPnQyAt40=FTn2dFg@mail.gmail.com>
+ <CAGK7Mr5byhUOZ1vZTOMWWBVs4rXdE8RH+SS2ppz2QP1e-MiG0w@mail.gmail.com>
+ <CAH3AnromoeSc=34H14j92kFg3FjWbdg+XuZcd72Aq04zScvD8g@mail.gmail.com> <CAH3AnrpsG_XL1OpAtwu_rrMX8t5TRVGsp8yD14na1ktvKTDHDw@mail.gmail.com>
+Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Thomas Rast <trast@student.ethz.ch>, <git@vger.kernel.org>,
-	Bo Yang <struggleyb.nku@gmail.com>
-To: Thomas Rast <trast@inf.ethz.ch>
-X-From: git-owner@vger.kernel.org Tue Jun 19 12:33:36 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Philippe Vaucher <philippe.vaucher@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Jon Seymour <jon.seymour@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jun 19 13:03:31 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SgvkT-0001n4-LC
-	for gcvg-git-2@plane.gmane.org; Tue, 19 Jun 2012 12:33:25 +0200
+	id 1SgwDT-0002vc-QQ
+	for gcvg-git-2@plane.gmane.org; Tue, 19 Jun 2012 13:03:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752281Ab2FSKdV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Jun 2012 06:33:21 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:56543 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752056Ab2FSKdU (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Jun 2012 06:33:20 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4E0307CB6;
-	Tue, 19 Jun 2012 06:33:20 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=le0un1McJGkPG6B81nSFzIMjSJg=; b=SFhGpS
-	KS5g6HRA4Y97mlYIKS4EgjpFHy/7XGCdC4bMVAWqOQtKQmMzgFQzcD26Y9Sua8x0
-	ysQX+5cJjQsJVgoCs0CynvjfRrCko+4wAs7KdsBqXq74DEuMyOW3o3nD54ZyxHk5
-	OuPzM8E36L6QjoGCFnkzc4X1IZ21JdNNGkvvs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=DRU03E1/mffsCZZO+GD/TXPgqjtJytL2
-	1NS3KwFAyrBi13Q9lm2hns5HRMHSo4s9W+s6+kpdDhizNrwxaauqvEYf2DV5Koa7
-	8ygvxDWvGfuHTQ+WUsGbNzBD27VOqxYjw1LojJgQy/YqqL7sd8jcazUQMIOI31r2
-	Y/xTrwnMxuo=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 44CB87CB5;
-	Tue, 19 Jun 2012 06:33:20 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D20CB7CB4; Tue, 19 Jun 2012
- 06:33:19 -0400 (EDT)
-In-Reply-To: <87wr33wqzl.fsf@thomas.inf.ethz.ch> (Thomas Rast's message of
- "Tue, 19 Jun 2012 12:11:42 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 3027FDB8-B9FA-11E1-938C-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753142Ab2FSLDI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Jun 2012 07:03:08 -0400
+Received: from mail-pz0-f46.google.com ([209.85.210.46]:45700 "EHLO
+	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752615Ab2FSLDH (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Jun 2012 07:03:07 -0400
+Received: by dady13 with SMTP id y13so8243482dad.19
+        for <git@vger.kernel.org>; Tue, 19 Jun 2012 04:03:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=Dri+nCKWBiArMaB5cSJ9bn64mhMeKYIdEzOk3YulspA=;
+        b=JO1qsWjOF9Uwl+LYCs5thP17heVTiFkF7rS+sUPZ43c88viSzhp0t4BQEdecuPuMkM
+         AhUXEVLn2cfgAIVlCSu+Vc/z6uOEiKkE7twHv1ejslb9IgtRfg20cVv/D1Xgtd7vojNz
+         zrrfc5TMcD9m4HRkWONjjdvSos7C4K4z+4LVZRJ8CaD5k+q5HN90WsF3B/I/ESevjVVn
+         ADlfFAP8ysMcADUaaeiOPVjpQZffwnZPgYm86ZVuXljT8zuIQipZrPZDmEdVvM+J5VV7
+         pdwfkJRZr+2twOj7iG8vhkzIvhWc1JdcKgiJqNtqKsUzWFoaUqadRGr6dlHVv8fwYW8M
+         ypnw==
+Received: by 10.68.194.105 with SMTP id hv9mr2868609pbc.126.1340103786095;
+ Tue, 19 Jun 2012 04:03:06 -0700 (PDT)
+Received: by 10.68.40.98 with HTTP; Tue, 19 Jun 2012 04:02:25 -0700 (PDT)
+In-Reply-To: <CAH3AnrpsG_XL1OpAtwu_rrMX8t5TRVGsp8yD14na1ktvKTDHDw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200194>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200195>
 
-Thomas Rast <trast@inf.ethz.ch> writes:
+On Tue, Jun 19, 2012 at 11:57 AM, Jon Seymour <jon.seymour@gmail.com> wrote:
+> Would I be correct in assuming that Git For Windows doesn't support
+> "git svn" because of the dependency on a perl implementation that is
+> available with msysgit but not (perhaps?) "Git For Windows"? Or is
+> this an incorrect assumption?
 
->> Then the revision machinery looks at B.  It does the same between B
->> and A, but this time around, the diff machinery finds that, even
->> though A and B were _not_ TREESAME at the revision traversal level,
->> there is nothing to be shown after filtering with the -w option.
->> Hence no patch is shown and log message for B is not shown, either.
->
-> Thanks for the great explanations.
->
-> Having spent some time letting this sink in (and being busy doing other
-> things), I think it's actually a good idea.  It forces us to go back and
-> change it around so that the diff machinery gets a say _before_ we
-> simplify history.  I think this bit will be important for log -L history
-> to make sense, and it's a bug waiting to happen for the -w case.
-
-Note that this is not limited to "diff_patch() already filters -w".
-
-If you are running with --diff-filter=A to grab only the additions,
-for example, you may want the merge simplification to know about
-this filtering as well.
-
-So it is likely that you would want to hook diffcore_std(), not just
-diff_flush(), to the TREESAME machinery.  Obviously you would want
-to do this only for the merge commits; there is no point doing this
-for single strand of pearls where the output phase already knows how
-to squelch output correctly.
+That's an incorrect assumption. Git for Windows ships with perl.
